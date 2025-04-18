@@ -1,38 +1,23 @@
-#include "types.h"
+#include "stl/mem.h"
 
 /*
  * --INFO--
  * Address:	8021616C
  * Size:	000044
  */
-void memcmp(void)
+int memcmp(const void* __s1, const void* __s2, size_t __n)
 {
-	/*
-	.loc_0x0:
-	  subi      r6, r3, 0x1
-	  subi      r4, r4, 0x1
-	  addi      r5, r5, 0x1
-	  b         .loc_0x34
+	const u8* val1 = ((const u8*)__s1 - 1);
+	const u8* val2 = ((const u8*)__s2 - 1);
+	size_t size    = __n + 1;
 
-	.loc_0x10:
-	  lbzu      r3, 0x1(r6)
-	  lbzu      r0, 0x1(r4)
-	  cmplw     r3, r0
-	  beq-      .loc_0x34
-	  bge-      .loc_0x2C
-	  li        r3, -0x1
-	  blr
+	while (--size > 0) {
+		if (*++val1 != *++val2) {
+			return (val1[0]) < (val2[0]) ? -1 : 1;
+		}
+	}
 
-	.loc_0x2C:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x34:
-	  subic.    r5, r5, 0x1
-	  bne+      .loc_0x10
-	  li        r3, 0
-	  blr
-	*/
+	return 0;
 }
 
 /*
@@ -50,26 +35,21 @@ void __memrchr(void)
  * Address:	802161B0
  * Size:	00002C
  */
-void memchr(void)
+void* memchr(u8* s, int c, size_t n)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r4,r4,0,24,31
-	  subi      r3, r3, 0x1
-	  addi      r5, r5, 0x1
-	  b         .loc_0x1C
+	int n_count;
+	size_t char_check;
 
-	.loc_0x10:
-	  lbzu      r0, 0x1(r3)
-	  cmplw     r0, r4
-	  beqlr-
+	char_check = (u8)c;
+	s          = &s[-1];
+	n_count    = n + 1;
+	while (--n_count) {
+		if (*++s == char_check) {
+			return s;
+		}
+	}
 
-	.loc_0x1C:
-	  subic.    r5, r5, 0x1
-	  bne+      .loc_0x10
-	  li        r3, 0
-	  blr
-	*/
+	return 0;
 }
 
 /*
@@ -77,90 +57,48 @@ void memchr(void)
  * Address:	802161DC
  * Size:	0000DC
  */
-void memmove(void)
+void* memmove(void* dst, const void* src, size_t len)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r5, 0x20
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  subc      r3, r4, r31
-	  subfe     r0, r0, r0
-	  neg       r3, r0
-	  blt-      .loc_0x78
-	  xor       r0, r31, r4
-	  rlwinm.   r0,r0,0,30,31
-	  beq-      .loc_0x54
-	  cmpwi     r3, 0
-	  bne-      .loc_0x48
-	  mr        r3, r31
-	  bl        0x14C
-	  b         .loc_0x70
+	u8* csrc;
+	u8* cdst;
 
-	.loc_0x48:
-	  mr        r3, r31
-	  bl        .loc_0xDC
-	  b         .loc_0x70
+	int reverse = (u32)src < (u32)dst;
 
-	.loc_0x54:
-	  cmpwi     r3, 0
-	  bne-      .loc_0x68
-	  mr        r3, r31
-	  bl        0x29C
-	  b         .loc_0x70
+	if (len >= 32) {
+		if (((u32)dst ^ (u32)src) & 3) {
+			if (!reverse) {
+				__copy_longs_unaligned(dst, src, len);
+			} else {
+				__copy_longs_rev_unaligned(dst, src, len);
+			}
+		} else {
+			if (!reverse) {
+				__copy_longs_aligned(dst, src, len);
+			} else {
+				__copy_longs_rev_aligned(dst, src, len);
+			}
+		}
 
-	.loc_0x68:
-	  mr        r3, r31
-	  bl        0x1E4
+		return dst;
+	} else {
+		if (!reverse) {
+			csrc = ((u8*)src) - 1;
+			cdst = ((u8*)dst) - 1;
+			len++;
 
-	.loc_0x70:
-	  mr        r3, r31
-	  b         .loc_0xC8
+			while (--len > 0) {
+				*++cdst = *++csrc;
+			}
+		} else {
+			csrc = (u8*)src + len;
+			cdst = (u8*)dst + len;
+			len++;
 
-	.loc_0x78:
-	  cmpwi     r3, 0
-	  bne-      .loc_0xA4
-	  subi      r3, r4, 0x1
-	  subi      r4, r31, 0x1
-	  addi      r5, r5, 0x1
-	  b         .loc_0x98
+			while (--len > 0) {
+				*--cdst = *--csrc;
+			}
+		}
+	}
 
-	.loc_0x90:
-	  lbzu      r0, 0x1(r3)
-	  stbu      r0, 0x1(r4)
-
-	.loc_0x98:
-	  subic.    r5, r5, 0x1
-	  bne+      .loc_0x90
-	  b         .loc_0xC4
-
-	.loc_0xA4:
-	  add       r3, r4, r5
-	  add       r4, r31, r5
-	  addi      r5, r5, 0x1
-	  b         .loc_0xBC
-
-	.loc_0xB4:
-	  lbzu      r0, -0x1(r3)
-	  stbu      r0, -0x1(r4)
-
-	.loc_0xBC:
-	  subic.    r5, r5, 0x1
-	  bne+      .loc_0xB4
-
-	.loc_0xC4:
-	  mr        r3, r31
-
-	.loc_0xC8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0xDC:
-	*/
+	return dst;
 }

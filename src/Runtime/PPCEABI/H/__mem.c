@@ -1,5 +1,5 @@
-#include "types.h"
 #include "PowerPC_EABI_Support/Runtime/__mem.h"
+
 void* memcpy(void* dst, const void* src, size_t n)
 {
 	const char* p;

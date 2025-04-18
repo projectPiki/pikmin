@@ -50,7 +50,7 @@ struct _IO_FILE {
 	u8 mCharBuffer;                                  // _0D
 	u8 mCharBufferOverflow;                          // _0E
 	u8 mUngetcBuffer[__ungetc_buffer_size];          // _0F
-	wchar_t mUngetcWideBuffer[__ungetc_buffer_size]; // _12
+	//wchar_t mUngetcWideBuffer[__ungetc_buffer_size]; // _12
 	u32 mPosition;                                   // _18
 	char* mBuffer;                                   // _1C
 	u32 mBufferSize;                                 // _20

@@ -37,6 +37,8 @@
         "os.h": "c",
         "math.h": "c",
         "system.h": "c",
-        "rand.h": "c"
+        "rand.h": "c",
+        "float.h": "c",
+        "stdio.h": "c"
     },
 }

@@ -1,17 +1,88 @@
 #include "PowerPC_EABI_Support/Runtime/NMWException.h"
 #include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
+#include "PowerPC_EABI_Support/Runtime/Gecko_ExceptionPPC.h"
 
 typedef struct ThrowContext ThrowContext;
 typedef struct MWExceptionInfo MWExceptionInfo;
 typedef struct ex_specification ex_specification;
 typedef struct ex_deletepointercond ex_deletepointercond;
 
+#define RETURN_ADDRESS 4
+
+union MWE_GeckoVector64 {
+	f64 d;
+	f32 f[2];
+};
+
+typedef union MWE_GeckoVector64 MWE_GeckoVector64;
+
+struct GeckoFPRContext {
+	f64 d;
+	MWE_GeckoVector64 v;
+};
+
+typedef struct GeckoFPRContext GeckoFPRContext;
+
+typedef struct ThrowContext {
+	GeckoFPRContext FPR[32];
+	s32 GPR[32];
+	s32 CR;
+	char* SP;
+	char* FP;
+	char* throwSP;
+	char* returnaddr;
+	char* throwtype;
+	void* location;
+	void* dtor;
+	CatchInfo* catchinfo;
+} ThrowContext;
+
+typedef ThrowContext* ThrowContextPtr;
+
+typedef struct MWExceptionInfo {
+	ExceptionTableSmall* exception_record;
+	char* current_function;
+	char* action_pointer;
+	char* code_section;
+	char* data_section;
+	char* TOC;
+} MWExceptionInfo;
+
+typedef struct FragmentInfo {
+	ExceptionTableIndex* exception_start;
+	ExceptionTableIndex* exception_end;
+	char* code_start;
+	char* code_end;
+	char* data_start;
+	char* data_end;
+	char* TOC;
+	int active;
+} FragmentInfo;
+
+typedef struct ProcessInfo {
+	__eti_init_info* exception_info;
+	char* TOC;
+	int active;
+} ProcessInfo;
+
+typedef struct ActionIterator {
+	MWExceptionInfo info;
+	char* current_SP;
+	char* current_FP;
+	s32 current_R31;
+} ActionIterator;
+
+#define MAXFRAGMENTS 1
+static ProcessInfo fragmentinfo[MAXFRAGMENTS];
+
+typedef void (*DeleteFunc)(void*);
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000074
  */
-void ExPPC_LongJump(ThrowContext *, void *, void *)
+void ExPPC_LongJump(ThrowContext*, void*, void*)
 {
 	// UNUSED FUNCTION
 }
@@ -41,7 +112,7 @@ void __end__catch(void)
  * Address:	........
  * Size:	000450
  */
-void ExPPC_ThrowHandler(ThrowContext *)
+void ExPPC_ThrowHandler(ThrowContext*)
 {
 	// UNUSED FUNCTION
 }
@@ -51,7 +122,7 @@ void ExPPC_ThrowHandler(ThrowContext *)
  * Address:	........
  * Size:	000090
  */
-void ExPPC_HandleUnexpected(ThrowContext *, MWExceptionInfo *, ex_specification *)
+void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
 {
 	// UNUSED FUNCTION
 }
@@ -81,7 +152,7 @@ void __unexpected(void)
  * Address:	........
  * Size:	000098
  */
-void ExPPC_IsInSpecification(char *, ex_specification *)
+void ExPPC_IsInSpecification(char*, ex_specification*)
 {
 	// UNUSED FUNCTION
 }
@@ -91,7 +162,7 @@ void ExPPC_IsInSpecification(char *, ex_specification *)
  * Address:	........
  * Size:	000574
  */
-void ExPPC_UnwindStack(ThrowContext *, MWExceptionInfo *, void *)
+void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
 {
 	// UNUSED FUNCTION
 }
@@ -101,7 +172,7 @@ void ExPPC_UnwindStack(ThrowContext *, MWExceptionInfo *, void *)
  * Address:	........
  * Size:	000098
  */
-void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
+void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
 {
 	// UNUSED FUNCTION
 }
@@ -231,7 +302,7 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
  * Address:	........
  * Size:	00002C
  */
-void ExPPC_PopR31(char *, MWExceptionInfo *)
+void ExPPC_PopR31(char*, MWExceptionInfo*)
 {
 	// UNUSED FUNCTION
 }
@@ -241,7 +312,7 @@ void ExPPC_PopR31(char *, MWExceptionInfo *)
  * Address:	........
  * Size:	0001D4
  */
-void ExPPC_FindExceptionRecord(char *, MWExceptionInfo *)
+void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
 {
 	// UNUSED FUNCTION
 }
@@ -261,26 +332,16 @@ void ExPPC_FindExceptionRecord(char *, MWExceptionInfo *)
  * Address:	80214D58
  * Size:	000034
  */
-void __unregister_fragment(void)
+void __unregister_fragment(int fragmentID)
 {
-/*
-.loc_0x0:
-  cmpwi     r3, 0
-  blt-      .loc_0x30
-  cmpwi     r3, 0x1
-  bge-      .loc_0x30
-  mulli     r4, r3, 0xC
-  lis       r3, 0x803D
-  addi      r0, r3, 0x40E0
-  add       r3, r0, r4
-  li        r0, 0
-  stw       r0, 0x0(r3)
-  stw       r0, 0x4(r3)
-  stw       r0, 0x8(r3)
+	ProcessInfo* f;
 
-.loc_0x30:
-  blr
-*/
+	if (fragmentID >= 0 && fragmentID < MAXFRAGMENTS) {
+		f                 = &fragmentinfo[fragmentID];
+		f->exception_info = 0;
+		f->TOC            = 0;
+		f->active         = 0;
+	}
 }
 
 /*
@@ -288,34 +349,21 @@ void __unregister_fragment(void)
  * Address:	80214D8C
  * Size:	00003C
  */
-void __register_fragment(void)
+int __register_fragment(struct __eti_init_info* info, char* TOC)
 {
-/*
-.loc_0x0:
-  lis       r5, 0x803D
-  addi      r5, r5, 0x40E0
-  b         .loc_0xC
+	ProcessInfo* f = fragmentinfo;
+	int i;
 
-.loc_0xC:
-  b         .loc_0x10
+	for (i = 0; i < MAXFRAGMENTS; i++, f++) {
+		if (f->active == 0) {
+			f->exception_info = info;
+			f->TOC            = TOC;
+			f->active         = 1;
+			return i;
+		}
+	}
 
-.loc_0x10:
-  lwz       r0, 0x8(r5)
-  cmpwi     r0, 0
-  bne-      .loc_0x34
-  stw       r3, 0x0(r5)
-  li        r0, 0x1
-  li        r3, 0
-  stw       r4, 0x4(r5)
-  stw       r0, 0x8(r5)
-  b         .loc_0x38
-
-.loc_0x34:
-  li        r3, -0x1
-
-.loc_0x38:
-  blr
-*/
+	return -1;
 }
 
 // /*
