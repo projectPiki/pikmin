@@ -335,7 +335,7 @@ struct UfoSuikomiEffect : public KEffect {
 		if (mEfx) {
 			return;
 		}
-		mEfx          = effectMgr->create(EffectMgr::EFF_Rocket_Nke1, _0C, this, this);
+		mEfx          = effectMgr->create(EffectMgr::EFF_Rocket_Suck2, _0C, this, this);
 		Vector3f diff = _18 - _0C;
 		mEfx->setNewtonField(Vector3f(_18), 0.0016f, true);
 		diff.normalise();
@@ -448,7 +448,7 @@ struct WhistleTemplate : public KEffect {
  */
 struct UfoSuckEffect : public WhistleTemplate {
 	UfoSuckEffect()
-	    : WhistleTemplate(EffectMgr::EFF_Rocket_Bm2, EffectMgr::EFF_Rocket_Suck2)
+	    : WhistleTemplate(EffectMgr::EFF_Rocket_Bm1, EffectMgr::EFF_Rocket_Bm2)
 	{
 	}
 

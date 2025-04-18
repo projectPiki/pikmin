@@ -23,52 +23,52 @@ static u32 leg_ids[] = { 'leg1', 'leg2', 'leg3' };
 
 EffectMgr::effTypeTable effects[8][4] = {
 	{
-	    EffectMgr::EFF_Rocket_NJ3CA,
 	    EffectMgr::EFF_Rocket_NJ2FB,
 	    EffectMgr::EFF_Rocket_NJ2FA,
 	    EffectMgr::EFF_Rocket_NJ2CB,
+	    EffectMgr::EFF_Rocket_NJ2CA,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ3CA,
 	    EffectMgr::EFF_Rocket_NJ2FB,
-	    EffectMgr::EFF_Rocket_NJ3FA,
+	    EffectMgr::EFF_Rocket_NJ2FA,
 	    EffectMgr::EFF_Rocket_NJ3CB,
+	    EffectMgr::EFF_Rocket_NJ3CA,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ3FB2,
 	    EffectMgr::EFF_Rocket_NJ3FB,
 	    EffectMgr::EFF_Rocket_NJ3FA,
 	    EffectMgr::EFF_Rocket_NJ3CB,
+	    EffectMgr::EFF_Rocket_NJ3CA,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ3FB2,
 	    EffectMgr::EFF_Rocket_NJ3FB,
 	    EffectMgr::EFF_Rocket_NJ3FA,
 	    EffectMgr::EFF_Rocket_NJ3CB,
+	    EffectMgr::EFF_Rocket_NJ3CA,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ1CA2,
 	    EffectMgr::EFF_Rocket_NJ1FB,
 	    EffectMgr::EFF_Rocket_NJ1FA,
 	    EffectMgr::EFF_Rocket_NJ1CB,
+	    EffectMgr::EFF_Rocket_NJ1CA,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ1CA3,
 	    EffectMgr::EFF_Rocket_NJ1FB2,
 	    EffectMgr::EFF_Rocket_NJ1FA2,
 	    EffectMgr::EFF_Rocket_NJ1CB2,
+	    EffectMgr::EFF_Rocket_NJ1CA2,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ1CA4,
 	    EffectMgr::EFF_Rocket_NJ1FB3,
 	    EffectMgr::EFF_Rocket_NJ1FA3,
 	    EffectMgr::EFF_Rocket_NJ1CB3,
+	    EffectMgr::EFF_Rocket_NJ1CA3,
 	},
 	{
-	    EffectMgr::EFF_Rocket_NJ2CA,
 	    EffectMgr::EFF_Rocket_NJ1FB4,
 	    EffectMgr::EFF_Rocket_NJ1FA4,
 	    EffectMgr::EFF_Rocket_NJ1CB4,
+	    EffectMgr::EFF_Rocket_NJ1CA4,
 	},
 };
 
@@ -204,12 +204,12 @@ void UfoItem::setTroubleEffect(bool set)
  */
 void UfoItem::startTroubleEffectOne(int id)
 {
-	EffectMgr::effTypeTable ids[6] = { EffectMgr::EFF_Rocket_MkS,  EffectMgr::EFF_Rocket_Hiba, EffectMgr::EFF_Rocket_Biri,
-		                               EffectMgr::EFF_Rocket_Biri, EffectMgr::EFF_Rocket_Biri, EffectMgr::EFF_Rocket_TakeS };
+	EffectMgr::effTypeTable ids[6] = { EffectMgr::EFF_Rocket_MkB,  EffectMgr::EFF_Rocket_MkS,  EffectMgr::EFF_Rocket_Hiba,
+		                               EffectMgr::EFF_Rocket_Hiba, EffectMgr::EFF_Rocket_Hiba, EffectMgr::EFF_Rocket_Biri };
 	mTroubleFxGenList[id]          = effectMgr->create(ids[id], mTroubleFxPositionList[id], nullptr, nullptr);
 	mTroubleFxGenList[id]->setEmitPosPtr(&mTroubleFxPositionList[id]);
 
-	if (ids[id] == EffectMgr::EFF_Rocket_Biri) {
+	if (ids[id] == EffectMgr::EFF_Rocket_Hiba) {
 		playEventSound(this, SE_UFO_SPARK);
 	}
 }
@@ -303,7 +303,7 @@ void UfoItem::startLevelFlag(int flag)
 		efx->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
 	} else {
 		pos.y += 60.0f;
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_NJ1CA, pos, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_C, pos, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
 	}
 	mAnimator.startFlagMotions(flag);
@@ -571,7 +571,7 @@ void UfoItem::finishSuck(Pellet* pelt)
 {
 	if (!playerState->isTutorial()) {
 		Vector3f pos                = getSuckPos();
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_Suck1, pos, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, pos, nullptr, nullptr);
 		if (efx) {
 			Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));
 			efx->setEmitDir(dir);
@@ -624,8 +624,8 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 			switch (event.mValue) { // yes this is a switch in a switch in a switch
 			case 0:
 				if (anim == 0) {
+					effectMgr->create(EffectMgr::EFF_Rocket_Nke1, mPosition, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Nke2, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
 				}
 				break;
 			case 2:
@@ -670,22 +670,22 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 				switch (playerState->mShipUpgradeLevel) {
 				case 0:
 				case 1:
-					effectMgr->create(EffectMgr::EFF_Rocket_JetG02, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_331, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG01, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
 					break;
 				case 2:
 				case 3:
-					effectMgr->create(EffectMgr::EFF_Rocket_JetG03, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_331, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG02, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
 					break;
 				case 4:
-					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_331, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG03, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
 					break;
 				case 5:
-					effectMgr->create(EffectMgr::EFF_Rocket_MkB, mPosition, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Bstg, mPosition, nullptr, nullptr);
 					effectMgr->create(EffectMgr::EFF_Rocket_Bst1db, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mPosition, nullptr, nullptr);
 					break;
 				}
 				// no break here?
@@ -693,13 +693,13 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 				if (playerState->mShipUpgradeLevel == 5) {
 					CollPart* coll = mCollInfo->getSphere('gcen');
 					zen::particleGenerator* efx;
-					efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, coll->mCentre, nullptr, nullptr);
-					efx->setEmitPosPtr(&coll->mCentre);
 					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fb, coll->mCentre, nullptr, nullptr);
+					efx->setEmitPosPtr(&coll->mCentre);
+					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fa, coll->mCentre, nullptr, nullptr);
 					efx->setEmitPosPtr(&coll->mCentre);
 					Vector3f nrm(1.0f, 0.0f, 0.0f);
 					efx->setOrientedNormalVector(nrm);
-					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1fa, coll->mCentre, nullptr, nullptr);
+					efx = effectMgr->create(EffectMgr::EFF_Rocket_Bst1cb, coll->mCentre, nullptr, nullptr);
 					efx->setEmitPosPtr(&coll->mCentre);
 				}
 				break;
@@ -943,11 +943,11 @@ void UfoItem::setPca1Effect(bool set)
 		Vector3f dir(1.0f, 0.0f, 0.0f);
 		dir.rotate(mWorldMtx);
 
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPca1FxPosition, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, mPca1FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPca1FxPosition, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPca1FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 	}
@@ -965,11 +965,11 @@ void UfoItem::setPca2Effect(bool set)
 		Vector3f dir(-1.0f, 0.0f, 0.0f);
 		dir.rotate(mWorldMtx);
 
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPca2FxPosition, nullptr, nullptr);
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, mPca2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 
-		efx = effectMgr->create(EffectMgr::EFF_Rocket_Gep, mPca2FxPosition, nullptr, nullptr);
+		efx = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mPca2FxPosition, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 		efx->setEmitDir(dir);
 	}
