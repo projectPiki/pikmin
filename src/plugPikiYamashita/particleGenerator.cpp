@@ -99,14 +99,15 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector
 			_60 = u32ToFloat(((u32*)data)[2]);
 			_64 = u32ToFloat(((u32*)data)[3]);
 			mAnimData.set(&data[16]);
-			u8 rotType = mAnimData._02;
-			_68.m0     = mAnimData._02;
-			_68.m1     = mAnimData._02;
-			_68.m2     = 0;
-			mAnimData._02 &= 0x1;
+
+			u32 rotType = (mAnimData._02.bits._m1) & 0x7;
+			_68.m0      = (mAnimData._02.bits._m5);
+			_68.m1      = mAnimData._02.bits._m6;
+			_68.m2      = 0;
+			mAnimData._02.all &= 0x1;
 			mDrawCallBack = &drawPtclOriented;
 
-			switch ((rotType >> 4) & 0x7) {
+			switch (rotType) {
 			case 0:
 				mRotAxisCallBack = &RotAxisY;
 				break;
