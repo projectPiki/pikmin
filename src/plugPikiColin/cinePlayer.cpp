@@ -35,9 +35,9 @@ DEFINE_PRINT("CinePlayer")
  */
 void CineShapeObject::init(char* nameA, char* nameB, char* nameC)
 {
-	_14 = gameflow.loadShape(nameA, true);
+	mShape = gameflow.loadShape(nameA, true);
 	if (nameB) {
-		_30        = new AnimMgr(_14, nameB, 0x8000, nameC);
+		_30        = new AnimMgr(mShape, nameB, 0x8000, nameC);
 		_30->mName = nameB;
 	}
 }
@@ -301,13 +301,13 @@ void CinematicPlayer::loadCin(char* demoName)
 					}
 
 					if (cmd->isToken("acflags")) {
-						sscanf(cmd->getToken(true), "%d", &actor->_68);
+						sscanf(cmd->getToken(true), "%d", &actor->mFlags);
 						continue;
 					}
 
 					if (cmd->isToken("anim")) {
-						sscanf(cmd->getToken(true), "%d", &actor->_70);
-						sscanf(cmd->getToken(true), "%d", &actor->_74);
+						sscanf(cmd->getToken(true), "%d", &actor->mAnimationId);
+						sscanf(cmd->getToken(true), "%d", &actor->mColourIndex);
 						continue;
 					}
 
@@ -916,8 +916,8 @@ void CinematicPlayer::addScene(char* name)
 SceneCut* CinematicPlayer::addCut(int a1, int a2, int a3)
 {
 	SceneCut* cut    = addSceneCut();
-	cut->_20         = a1;
-	cut->mSceneData  = findScene(cut->_20);
+	cut->mSceneId    = a1;
+	cut->mSceneData  = findScene(cut->mSceneId);
 	cut->mStartFrame = a2;
 	cut->mEndFrame   = a3;
 }
@@ -953,10 +953,10 @@ void CinematicPlayer::addActor(char* nameA, char* nameB, char* nameC)
  */
 SceneCut* CinematicPlayer::addSceneCut()
 {
-	SceneCut* cut   = new SceneCut;
-	cut->_1D8       = this;
-	cut->mSceneData = findScene(cut->_20);
-	cut->mEndFrame  = cut->mSceneData->mNumFrames;
+	SceneCut* cut      = new SceneCut;
+	cut->mParentPlayer = this;
+	cut->mSceneData    = findScene(cut->mSceneId);
+	cut->mEndFrame     = cut->mSceneData->mNumFrames;
 	mCutList.add(cut);
 	return cut;
 }
@@ -1575,7 +1575,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
 
 	if (mCurrentCut) {
 		for (ActorInstance* actor = (ActorInstance*)mCurrentCut->mActor.mChild; actor; actor = (ActorInstance*)actor->mNext) {
-			actor->refresh(mtx, gfx, !(actor->_68 & 0x100) ? &mCurrentFramePosition : nullptr);
+			actor->refresh(mtx, gfx, !(actor->mFlags & 0x100) ? &mCurrentFramePosition : nullptr);
 		}
 	}
 }
@@ -1588,11 +1588,11 @@ void CinematicPlayer::refresh(Graphics& gfx)
 ActorInstance* SceneCut::addInstance(char* name)
 {
 	ActorInstance* actor = new ActorInstance;
-	actor->_7C           = _1D8;
+	actor->_7C           = mParentPlayer;
 	if (name) {
-		CineShapeObject* shape = _1D8->findActor(name);
-		actor->_5C             = shape;
-		actor->_60             = shape;
+		CineShapeObject* shape = mParentPlayer->findActor(name);
+		actor->mAnimInstance   = shape;
+		actor->mModelInstance  = shape;
 	}
 	mActor.add(actor);
 	return actor;
@@ -1633,16 +1633,16 @@ void ActorInstance::exitInstance()
 {
 	if (effectMgr) {
 		for (int i = 0; i < 9; i++) {
-			if (_138[i]) {
-				effectMgr->kill(_138[i], false);
-				_138[i] = nullptr;
+			if (mEffectList[i]) {
+				effectMgr->kill(mEffectList[i], false);
+				mEffectList[i] = nullptr;
 			}
 		}
 		for (int j = 0; j < 4; j++) {
 			for (int i = 0; i < 4; i++) {
-				if (_15C[j][i]) {
-					effectMgr->kill(_15C[j][i], false);
-					_15C[j][i] = nullptr;
+				if (mEffectGrid[j][i]) {
+					effectMgr->kill(mEffectGrid[j][i], false);
+					mEffectGrid[j][i] = nullptr;
 				}
 			}
 		}
@@ -1658,53 +1658,53 @@ f32 onionColours[] = { 10.0f, 9.0f, 8.0, 13.0, 11.0, 12.0, 7.0, 10.0, 9.0, 8.0, 
  */
 void ActorInstance::initInstance()
 {
-	_5C = _60;
+	mAnimInstance = mModelInstance;
 
-	_138[8] = nullptr;
-	_138[7] = nullptr;
-	_138[6] = nullptr;
-	_138[5] = nullptr;
-	_138[4] = nullptr;
-	_138[3] = nullptr;
-	_138[2] = nullptr;
-	_138[1] = nullptr;
-	_138[0] = nullptr;
+	mEffectList[8] = nullptr;
+	mEffectList[7] = nullptr;
+	mEffectList[6] = nullptr;
+	mEffectList[5] = nullptr;
+	mEffectList[4] = nullptr;
+	mEffectList[3] = nullptr;
+	mEffectList[2] = nullptr;
+	mEffectList[1] = nullptr;
+	mEffectList[0] = nullptr;
 
 	for (int j = 0; j < 4; j++) {
 		for (int i = 0; i < 4; i++) {
-			_15C[j][i] = nullptr;
+			mEffectGrid[j][i] = nullptr;
 		}
 	}
 
-	if (_68 & 0x200) {
-		if (_68 & 0x40000) {
-			PRINT("setting onion with multi colour %d\n", _74);
-			_80 = onionColours[_74 - 1];
+	if (mFlags & 0x200) {
+		if (mFlags & 0x40000) {
+			PRINT("setting onion with multi colour %d\n", mColourIndex);
+			mColourValue = onionColours[mColourIndex - 1];
 		}
 		if (effectMgr) {
 			PRINT("init effect instance!\n");
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_FlowLight, _9C[0], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(_9C);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_FlowLight, mJointPositions[0], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(mJointPositions);
 		}
 	}
 
-	if (_68 & 0x20 && naviMgr && naviMgr->getNavi()) {
+	if (mFlags & 0x20 && naviMgr && naviMgr->getNavi()) {
 		naviMgr->getNavi()->startDayEnd();
 	}
 
-	if (!_78) {
-		_78 = 1;
-		_58 = gameflow.loadShape("pikis/happas/leaf.mod", true);
-		_60->_14->makeInstance(mDynMat, 0);
+	if (!mIsLeaf) {
+		mIsLeaf    = 1;
+		mLeafModel = gameflow.loadShape("pikis/happas/leaf.mod", true);
+		mModelInstance->mShape->makeInstance(mDynMat, 0);
 	}
 
-	AnimMgr* mgr = _5C->_30;
-	if (mgr && _74 >= 0) {
-		mAnim.mContext          = &_5C->mContext;
+	AnimMgr* mgr = mAnimInstance->_30;
+	if (mgr && mColourIndex >= 0) {
+		mAnim.mContext          = &mAnimInstance->mContext;
 		mAnim.mMgr              = mgr;
 		mAnim.mAnimInfo         = nullptr;
 		mAnim.mAnimationCounter = 0.0f;
-		mAnim.startAnim(_70, _74, 0, 8);
+		mAnim.startAnim(mAnimationId, mColourIndex, 0, 8);
 	}
 
 	f32 badcompiler[2];
@@ -1715,15 +1715,15 @@ void ActorInstance::initInstance()
  * Address:	80071468
  * Size:	000DCC
  */
-void ActorInstance::checkEventKeys(f32 a1, f32 a2, Vector3f& pos)
+void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 {
 	for (int i = 0; i < mAnim.mAnimInfo->countEKeys(); i++) {
 		AnimKey* key = mAnim.mAnimInfo->getEventKey(i);
-		if (a1 > key->mKeyframeIndex) {
+		if (curTime > key->mKeyframeIndex) {
 			continue;
 		}
 
-		if (a2 <= key->mKeyframeIndex || key->mEventKeyType == 0 || key->mEventKeyType != 1) {
+		if (prevTime <= key->mKeyframeIndex || key->mEventKeyType == 0 || key->mEventKeyType != 1) {
 			continue;
 		}
 
@@ -1756,25 +1756,25 @@ void ActorInstance::checkEventKeys(f32 a1, f32 a2, Vector3f& pos)
 			effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, pos, nullptr, nullptr);
 			break;
 		case 4:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, _9C[0], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[0]);
-			_138[1] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, _9C[0], nullptr, nullptr);
-			_138[1]->setEmitPosPtr(&_9C[0]);
-			_138[2] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, _9C[0], nullptr, nullptr);
-			_138[2]->setEmitPosPtr(&_9C[0]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, mJointPositions[0], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
+			mEffectList[1] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, mJointPositions[0], nullptr, nullptr);
+			mEffectList[1]->setEmitPosPtr(&mJointPositions[0]);
+			mEffectList[2] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, mJointPositions[0], nullptr, nullptr);
+			mEffectList[2]->setEmitPosPtr(&mJointPositions[0]);
 			break;
 		case 5:
-			_138[3] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, _9C[1], nullptr, nullptr);
-			_138[3]->setEmitPosPtr(&_9C[1]);
-			_138[4] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, _9C[1], nullptr, nullptr);
-			_138[4]->setEmitPosPtr(&_9C[1]);
-			_138[5] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, _9C[1], nullptr, nullptr);
-			_138[5]->setEmitPosPtr(&_9C[1]);
+			mEffectList[3] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf1, mJointPositions[1], nullptr, nullptr);
+			mEffectList[3]->setEmitPosPtr(&mJointPositions[1]);
+			mEffectList[4] = effectMgr->create(EffectMgr::EFF_Rocket_Tbf2, mJointPositions[1], nullptr, nullptr);
+			mEffectList[4]->setEmitPosPtr(&mJointPositions[1]);
+			mEffectList[5] = effectMgr->create(EffectMgr::EFF_Rocket_Tbc1, mJointPositions[1], nullptr, nullptr);
+			mEffectList[5]->setEmitPosPtr(&mJointPositions[1]);
 			break;
 		case 6:
 			for (int i = 0; i < 6; i++) {
-				effectMgr->kill(_138[i], false);
-				_138[i] = nullptr;
+				effectMgr->kill(mEffectList[i], false);
+				mEffectList[i] = nullptr;
 			}
 			if (itemMgr && itemMgr->getUfo()) {
 				itemMgr->getUfo()->setJetEffect(0, false);
@@ -1793,158 +1793,158 @@ void ActorInstance::checkEventKeys(f32 a1, f32 a2, Vector3f& pos)
 			effectMgr->create(EffectMgr::EFF_MC_Debris, pos8, nullptr, nullptr);
 			break;
 		case 9:
-			_19D = 0;
+			mMeteorFlag = 0;
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
-					effectMgr->kill(_15C[j][i], false);
-					_15C[j][i] = nullptr;
+					effectMgr->kill(mEffectGrid[j][i], false);
+					mEffectGrid[j][i] = nullptr;
 				}
 			}
 			for (int i = 0; i < 9; i++) {
-				if (_138[i]) {
-					effectMgr->kill(_138[i], false);
-					_138[i] = nullptr;
+				if (mEffectList[i]) {
+					effectMgr->kill(mEffectList[i], false);
+					mEffectList[i] = nullptr;
 				}
 			}
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_7Meteor, _84, nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_84);
-			_138[1] = effectMgr->create(EffectMgr::EFF_Rocket_6Meteor, _84, nullptr, nullptr);
-			_138[1]->setEmitPosPtr(&_84);
-			_138[2] = effectMgr->create(EffectMgr::EFF_Rocket_5Meteor, _84, nullptr, nullptr);
-			_138[2]->setEmitPosPtr(&_84);
-			_138[3] = effectMgr->create(EffectMgr::EFF_Rocket_4Meteor, _84, nullptr, nullptr);
-			_138[3]->setEmitPosPtr(&_84);
-			_138[4] = effectMgr->create(EffectMgr::EFF_Rocket_3Meteor, _84, nullptr, nullptr);
-			_138[4]->setEmitPosPtr(&_84);
-			_138[5] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, _84, nullptr, nullptr);
-			_138[5]->setEmitPosPtr(&_84);
-			_138[6] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, _84, nullptr, nullptr);
-			_138[6]->setEmitPosPtr(&_84);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_7Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[1] = effectMgr->create(EffectMgr::EFF_Rocket_6Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[1]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[2] = effectMgr->create(EffectMgr::EFF_Rocket_5Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[2]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[3] = effectMgr->create(EffectMgr::EFF_Rocket_4Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[3]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[4] = effectMgr->create(EffectMgr::EFF_Rocket_3Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[4]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[5] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[5]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[6] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, mCenterPosition, nullptr, nullptr);
+			mEffectList[6]->setEmitPosPtr(&mCenterPosition);
 			_19C = 1;
 			break;
 		case 10:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01, _9C[0], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[0]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02, _9C[0], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[0]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03, _9C[0], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[0]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01, mJointPositions[0], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02, mJointPositions[0], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03, mJointPositions[0], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[0]);
 			break;
 		case 11:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[1], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[1]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[1], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[1]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[1], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[1]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[1], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[1]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[1], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[1]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[1], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[1]);
 			break;
 		case 12:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[2], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[2]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[2], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[2]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[2], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[2]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[2], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[2]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[2], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[2]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[2], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[2]);
 			break;
 		case 13:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[3], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[3]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[3], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[3]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[3], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[3]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[3], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[3]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[3], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[3]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[3], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[3]);
 			break;
 		case 14:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[4], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[4]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[4], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[4]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[4], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[4]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[4], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[4]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[4], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[4]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[4], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[4]);
 			break;
 		case 15:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[5], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[5]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[5], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[5]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[5], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[5]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[5], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[5]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[5], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[5]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[5], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[5]);
 			break;
 		case 16:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[6], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[6]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[6], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[6]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[6], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[6]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[6], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[6]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[6], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[6]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[6], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[6]);
 			break;
 		case 17:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, _9C[7], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[7]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, _9C[7], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[7]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, _9C[7], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[7]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01C, mJointPositions[7], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[7]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02C, mJointPositions[7], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[7]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01CC, mJointPositions[7], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[7]);
 			break;
 		case 18:
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, _9C[8], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[8]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, _9C[8], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[8]);
-			_138[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, _9C[8], nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_9C[8]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT02CC, mJointPositions[8], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[8]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT03CC, mJointPositions[8], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[8]);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[8], nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mJointPositions[8]);
 			break;
 		case 19:
-			_9C[0].set(-25000.0f, -25000.0f, -25000.0f);
-			_138[1] = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, _9C[0], nullptr, nullptr);
-			_138[1]->setEmitPosPtr(&_9C[0]);
-			_138[2] = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, _9C[0], nullptr, nullptr);
-			_138[2]->setEmitPosPtr(&_9C[0]);
-			_138[2]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
-			_9C[1].set(-25000.0f, -25000.0f, -25000.0f);
-			_9C[2].set(-25000.0f, -25000.0f, -25000.0f);
-			_9C[3].set(-25000.0f, -25000.0f, -25000.0f);
-			_9C[4].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[0].set(-25000.0f, -25000.0f, -25000.0f);
+			mEffectList[1] = effectMgr->create(EffectMgr::EFF_Rocket_PCA1, mJointPositions[0], nullptr, nullptr);
+			mEffectList[1]->setEmitPosPtr(&mJointPositions[0]);
+			mEffectList[2] = effectMgr->create(EffectMgr::EFF_Rocket_PCA2, mJointPositions[0], nullptr, nullptr);
+			mEffectList[2]->setEmitPosPtr(&mJointPositions[0]);
+			mEffectList[2]->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
+			mJointPositions[1].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[2].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[3].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[4].set(-25000.0f, -25000.0f, -25000.0f);
 			for (int i = 0; i < 4; i++) {
-				_15C[i][0] = effectMgr->create(EffectMgr::EFF_Rocket_Sparkles1, _9C[i + 1], nullptr, nullptr);
-				_15C[i][0]->setEmitPosPtr(&_9C[i + 1]);
+				mEffectGrid[i][0] = effectMgr->create(EffectMgr::EFF_Rocket_Sparkles1, mJointPositions[i + 1], nullptr, nullptr);
+				mEffectGrid[i][0]->setEmitPosPtr(&mJointPositions[i + 1]);
 
-				_15C[i][1] = effectMgr->create(EffectMgr::EFF_Rocket_NJ3FB2, _9C[i + 1], nullptr, nullptr);
-				_15C[i][1]->setEmitPosPtr(&_9C[i + 1]);
-				_15C[i][1]->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+				mEffectGrid[i][1] = effectMgr->create(EffectMgr::EFF_Rocket_NJ3FB2, mJointPositions[i + 1], nullptr, nullptr);
+				mEffectGrid[i][1]->setEmitPosPtr(&mJointPositions[i + 1]);
+				mEffectGrid[i][1]->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			}
-			_19D = 1;
+			mMeteorFlag = 1;
 			break;
 		case 20:
-			_138[0] = effectMgr->create(EffectMgr::EFF_MTotl01, _84, nullptr, nullptr);
-			_138[0]->setEmitPosPtr(&_84);
-			_138[1] = effectMgr->create(EffectMgr::EFF_MTotl03, _84, nullptr, nullptr);
-			_138[1]->setEmitPosPtr(&_84);
+			mEffectList[0] = effectMgr->create(EffectMgr::EFF_MTotl01, mCenterPosition, nullptr, nullptr);
+			mEffectList[0]->setEmitPosPtr(&mCenterPosition);
+			mEffectList[1] = effectMgr->create(EffectMgr::EFF_MTotl03, mCenterPosition, nullptr, nullptr);
+			mEffectList[1]->setEmitPosPtr(&mCenterPosition);
 			_19E = 1;
 			break;
 		case 21:
-			effectMgr->create(EffectMgr::EFF_Rocket_JetG01, _9C[key->mKeyframeIndex - 21], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_JetG01, mJointPositions[key->mKeyframeIndex - 21], nullptr, nullptr);
 			break;
 		case 22:
-			_9C[1].set(-25000.0f, -25000.0f, -25000.0f);
-			_9C[2].set(-25000.0f, -25000.0f, -25000.0f);
-			_9C[3].set(-25000.0f, -25000.0f, -25000.0f);
-			_9C[4].set(-25000.0f, -25000.0f, -25000.0f);
-			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[1], nullptr, nullptr)->setEmitPosPtr(&_9C[1]);
-			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[2], nullptr, nullptr)->setEmitPosPtr(&_9C[2]);
-			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[3], nullptr, nullptr)->setEmitPosPtr(&_9C[3]);
-			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _9C[4], nullptr, nullptr)->setEmitPosPtr(&_9C[4]);
+			mJointPositions[1].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[2].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[3].set(-25000.0f, -25000.0f, -25000.0f);
+			mJointPositions[4].set(-25000.0f, -25000.0f, -25000.0f);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mJointPositions[1], nullptr, nullptr)->setEmitPosPtr(&mJointPositions[1]);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mJointPositions[2], nullptr, nullptr)->setEmitPosPtr(&mJointPositions[2]);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mJointPositions[3], nullptr, nullptr)->setEmitPosPtr(&mJointPositions[3]);
+			effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mJointPositions[4], nullptr, nullptr)->setEmitPosPtr(&mJointPositions[4]);
 			_19F = 1;
 			break;
 		case 23:
-			effectMgr->create(EffectMgr::EFF_Rocket_Opa1, _84, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_Opa1, mCenterPosition, nullptr, nullptr);
 			break;
 		case 24:
-			effectMgr->create(EffectMgr::EFF_Rocket_BeBomC, _9C[0], nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Rocket_BeBomW, _9C[0], nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Rocket_BeBomH, _9C[0], nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, _9C[0], nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_Rocket_BeBomK, _9C[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomC, mJointPositions[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomW, mJointPositions[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomH, mJointPositions[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomP, mJointPositions[0], nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_BeBomK, mJointPositions[0], nullptr, nullptr);
 			break;
 		}
 	}
@@ -2871,7 +2871,7 @@ void ActorInstance::checkEventKeys(f32 a1, f32 a2, Vector3f& pos)
  */
 void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* a1)
 {
-	if ((_68 & 0xf800) && gameflow.mMoviePlayer->mIsActive && _5C) {
+	if ((mFlags & 0xf800) && gameflow.mMoviePlayer->mIsActive && mAnimInstance) {
 		return;
 	}
 
@@ -2891,59 +2891,59 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* a1)
 
 	gfx.useMatrix(Matrix4f::ident, 0);
 
-	if (_68 & 0x200) {
-		_9C[0].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 3, _9C[0]);
-		_9C[1].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 1, _9C[1]);
+	if (mFlags & 0x200) {
+		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 3, mJointPositions[0]);
+		mJointPositions[1].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 1, mJointPositions[1]);
 	}
 
-	if (_68 & 0x10000) {
-		_9C[0].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 9, _9C[0]);
-		_9C[1].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 8, _9C[1]);
-		_9C[2].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 7, _9C[2]);
-		_9C[3].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 6, _9C[3]);
-		_9C[4].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 5, _9C[4]);
-		_9C[5].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 4, _9C[5]);
-		_9C[6].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 3, _9C[6]);
-		_9C[7].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 2, _9C[7]);
-		_9C[8].set(0.0f, 0.0f, 0.0f);
-		_5C->_14->calcJointWorldPos(gfx, 1, _9C[8]);
+	if (mFlags & 0x10000) {
+		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 9, mJointPositions[0]);
+		mJointPositions[1].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 8, mJointPositions[1]);
+		mJointPositions[2].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 7, mJointPositions[2]);
+		mJointPositions[3].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 6, mJointPositions[3]);
+		mJointPositions[4].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 5, mJointPositions[4]);
+		mJointPositions[5].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 4, mJointPositions[5]);
+		mJointPositions[6].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 3, mJointPositions[6]);
+		mJointPositions[7].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 2, mJointPositions[7]);
+		mJointPositions[8].set(0.0f, 0.0f, 0.0f);
+		mAnimInstance->mShape->calcJointWorldPos(gfx, 1, mJointPositions[8]);
 	}
 
 	Vector3f pos;
-	_5C->_14->calcJointWorldPos(gfx, 0, pos);
+	mAnimInstance->mShape->calcJointWorldPos(gfx, 0, pos);
 	checkEventKeys(b, test, pos);
 
 	if (naviMgr && naviMgr->getNavi()) {
 		Vector3f pos;
-		pos.multMatrix(_5C->_14->getAnimMatrix(0));
+		pos.multMatrix(mAnimInstance->mShape->getAnimMatrix(0));
 		pos.multMatrix(gfx.mCamera->mLookAtMtx);
 		naviMgr->getNavi()->updateDayEnd(pos);
 		naviMgr->getNavi()->demoDraw(gfx, nullptr);
-	} else if (_68 & 0x21) {
-		u32 flags = _5C->_14->mSystemFlags;
-		if (_68 & 0x20000) {
-			_5C->_14->mSystemFlags |= 4;
+	} else if (mFlags & 0x21) {
+		u32 flags = mAnimInstance->mShape->mSystemFlags;
+		if (mFlags & 0x20000) {
+			mAnimInstance->mShape->mSystemFlags |= 4;
 		}
-		_5C->_14->drawshape(gfx, *gfx.mCamera, &mDynMat);
-		_5C->_14->mSystemFlags = flags;
+		mAnimInstance->mShape->drawshape(gfx, *gfx.mCamera, &mDynMat);
+		mAnimInstance->mShape->mSystemFlags = flags;
 	}
 
 	if (idk == 1) {
-		gfx.useMatrix(_5C->_14->getAnimMatrix(6), 0);
-		_58->drawshape(gfx, *gfx.mCamera, nullptr);
+		gfx.useMatrix(mAnimInstance->mShape->getAnimMatrix(6), 0);
+		mLeafModel->drawshape(gfx, *gfx.mCamera, nullptr);
 	} else if (idk == 2) {
-		gfx.useMatrix(_5C->_14->getAnimMatrix(3), 0);
-		_58->drawshape(gfx, *gfx.mCamera, nullptr);
+		gfx.useMatrix(mAnimInstance->mShape->getAnimMatrix(3), 0);
+		mLeafModel->drawshape(gfx, *gfx.mCamera, nullptr);
 	}
 
 	/*

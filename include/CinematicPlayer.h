@@ -53,20 +53,20 @@ struct ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
-		_5C        = 0;
-		_60        = 0;
-		_64        = 0;
-		mAnim.mMgr = 0;
-		_19E       = 0;
-		_19D       = 0;
-		_19F       = 0;
-		_19C       = 0;
-		_6C        = 0;
-		_70        = 1;
-		_74        = -1;
-		_80        = 0.0f;
-		_68        = 2;
-		_78        = 0;
+		mAnimInstance  = 0;
+		mModelInstance = 0;
+		_64            = 0;
+		mAnim.mMgr     = 0;
+		_19E           = 0;
+		mMeteorFlag    = 0;
+		_19F           = 0;
+		_19C           = 0;
+		_6C            = 0;
+		mAnimationId   = 1;
+		mColourIndex   = -1;
+		mColourValue   = 0.0f;
+		mFlags         = 2;
+		mIsLeaf        = 0;
 	}
 
 	void exitInstance();
@@ -79,29 +79,29 @@ struct ActorInstance : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Animator mAnim;                     // _14
-	ShapeDynMaterials mDynMat;          // _48
-	Shape* _58;                         // _58
-	CineShapeObject* _5C;               // _5C
-	CineShapeObject* _60;               // _60
-	int _64;                            // _64
-	int _68;                            // _68
-	int _6C;                            // _6C
-	int _70;                            // _70
-	int _74;                            // _74
-	int _78;                            // _78
-	CinematicPlayer* _7C;               // _7C
-	f32 _80;                            // _80
-	Vector3f _84;                       // _84
-	Vector3f _90;                       // _90
-	Vector3f _9C[9];                    // _9C
-	Vector3f _108[4];                   // _108
-	zen::particleGenerator* _138[9];    // _138
-	zen::particleGenerator* _15C[4][4]; // _15C
-	u8 _19C;                            // _19C
-	u8 _19D;                            // _19D
-	u8 _19E;                            // _19E
-	u8 _19F;                            // _19F
+	Animator mAnim;                            // _14
+	ShapeDynMaterials mDynMat;                 // _48
+	Shape* mLeafModel;                         // _58
+	CineShapeObject* mAnimInstance;            // _5C
+	CineShapeObject* mModelInstance;           // _60
+	int _64;                                   // _64
+	int mFlags;                                // _68
+	int _6C;                                   // _6C
+	int mAnimationId;                          // _70
+	int mColourIndex;                          // _74
+	int mIsLeaf;                               // _78
+	CinematicPlayer* _7C;                      // _7C
+	f32 mColourValue;                          // _80
+	Vector3f mCenterPosition;                  // _84
+	Vector3f _90;                              // _90
+	Vector3f mJointPositions[9];               // _9C
+	Vector3f _108[4];                          // _108
+	zen::particleGenerator* mEffectList[9];    // _138
+	zen::particleGenerator* mEffectGrid[4][4]; // _15C
+	u8 _19C;                                   // _19C
+	u8 mMeteorFlag;                            // _19D
+	u8 _19E;                                   // _19E
+	u8 _19F;                                   // _19F
 };
 
 /**
@@ -115,7 +115,7 @@ struct SceneCut : public CoreNode {
 		mEndFrame   = 0;
 		mActor.initCore("");
 		mFlags     = 3;
-		_20        = 0;
+		mSceneId   = 0;
 		mSceneData = 0;
 		mKey.mNext = &mKey;
 		mKey.mPrev = &mKey;
@@ -128,14 +128,14 @@ struct SceneCut : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mFlags;            // _14
-	int mStartFrame;       // _18
-	int mEndFrame;         // _1C
-	int _20;               // _20
-	SceneData* mSceneData; // _24
-	ActorInstance mActor;  // _28
-	AnimKey mKey;          // _1C8
-	CinematicPlayer* _1D8; // _1D8
+	int mFlags;                     // _14
+	int mStartFrame;                // _18
+	int mEndFrame;                  // _1C
+	int mSceneId;                   // _20
+	SceneData* mSceneData;          // _24
+	ActorInstance mActor;           // _28
+	AnimKey mKey;                   // _1C8
+	CinematicPlayer* mParentPlayer; // _1D8
 };
 
 /**
@@ -155,7 +155,7 @@ struct CineShapeObject : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Shape* _14;           // _14
+	Shape* mShape;        // _14
 	char* _18;            // _18
 	char* _1C;            // _1C
 	AnimContext mContext; // _20

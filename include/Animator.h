@@ -391,7 +391,7 @@ struct Animator {
 	AnimMgr* mMgr;         // _00
 	AnimContext* mContext; // _04
 	int _08;               // _08
-	int _0C;               // _0C
+	int mAnimationId;      // _0C
 	int _10;               // _10
 	int _14;               // _14
 	int _18;               // _18
@@ -445,7 +445,7 @@ struct AnimMgr : public CoreNode {
 	AnimMgrParams mParams; // _14
 	Shape* mParent;        // _3C
 	AnimInfo mAnimList;    // _40, parent of list of animations
-	u32 _B4;               // _B4
+	s32 mIsLoaded;         // _B4
 };
 
 /**

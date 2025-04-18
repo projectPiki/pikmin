@@ -483,8 +483,8 @@ AnimKey* AnimInfo::addKeyFrame()
 AnimMgr::AnimMgr(Shape* shape, char* p2, int p3, char* p4)
 {
 	setName("AnimMgr");
-	mParent = shape;
-	_B4     = p3 & 0x7FFF;
+	mParent   = shape;
+	mIsLoaded = p3 & 0x7FFF;
 	mAnimList.initCore("anims");
 	loadAnims(p2, p4);
 }
@@ -494,8 +494,60 @@ AnimMgr::AnimMgr(Shape* shape, char* p2, int p3, char* p4)
  * Address:	80050B04
  * Size:	0001E8
  */
-void AnimMgr::loadAnims(char*, char*)
+void AnimMgr::loadAnims(char* animPath, char* bundlePath)
 {
+	if (!animPath) {
+		return;
+	}
+
+	load(nullptr, animPath, 1);
+	if (!mIsLoaded) {
+		void* heap = gsys->getHeap(SYSHEAP_App);
+
+		s32 needsBundleLoading;
+		if (mAnimList.mNext) {
+			needsBundleLoading = 0;
+		} else {
+			needsBundleLoading = 1;
+		}
+
+		FOREACH_NODE(AnimInfo, mAnimList.mNext, p)
+		{
+			char existingAnimPath[256];
+			sprintf(existingAnimPath, "%s/%s", mParams.mBasePath().mString, p->mName);
+			if (!gsys->findAnimation(existingAnimPath)) {
+				needsBundleLoading++;
+			}
+		}
+
+		char finalBundlePath[256];
+		char finalAnimPath[268];
+		if (needsBundleLoading) {
+			gsys->mCurrentShape = mParent;
+			sprintf(finalBundlePath, bundlePath ? bundlePath : mParent->mName);
+
+			if (!bundlePath) {
+				int len = strlen(finalBundlePath);
+				sprintf(&finalAnimPath[len], "anm");
+			}
+
+			gsys->loadBundle(finalBundlePath, false);
+		}
+
+		FOREACH_NODE(AnimInfo, mAnimList.mNext, p)
+		{
+			sprintf(finalAnimPath, "%s/%s", mParams.mBasePath().mString, p->mName);
+			p->mData = gsys->loadAnimation(mParent, finalAnimPath, true);
+			if (p->mData) {
+				p->mIndex            = gsys->findAnyIndex(p->mMgr->mParams.mBasePath().mString, p->mData->mName);
+				p->mData->mAnimFlags = p->mParams.mFlags();
+				p->checkAnimData();
+			} else {
+				p->mData        = new AnimDck(mParent, mParent->mJointCount);
+				p->mData->mName = "Null Anim";
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -936,7 +988,7 @@ void Animator::finishLoop()
  */
 void Animator::finishOneShot()
 {
-	startAnim(_08, _0C, _10, _14);
+	startAnim(_08, mAnimationId, _10, _14);
 	/*
 	.loc_0x0:
 	  mflr      r0
