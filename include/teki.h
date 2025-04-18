@@ -584,6 +584,9 @@ struct YTeki : public NTeki {
 		}
 	}
 
+	// not sure if this is RunAway or something else yet, maybe rename later
+	bool getRunAwaySwitch() { return mTekiSwitches.m6; }
+
 	void setMapCode(int mapCode) { mMapCode = mapCode; }
 	int getMapCode() { return mMapCode; }
 
@@ -676,7 +679,8 @@ struct YTeki : public NTeki {
 		u32 m2 : 1;
 		u32 mStay : 1;
 		u32 mFlying : 1;
-		u32 m5 : 2;
+		u32 m5 : 1;
+		u32 m6 : 1;
 		u32 mFootEffect : 4;
 	} mTekiSwitches;                         // _4C8
 	TAIeffectAttackParam mEffectAttackParam; // _4CC

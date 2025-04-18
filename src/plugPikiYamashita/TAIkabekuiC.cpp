@@ -15,6 +15,74 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("TAIkabekuiC")
 
+/**
+ * @brief TODO
+ *
+ * @note Lives here because it needs PRINT to match.
+ */
+struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
+	TAIAtakeOffKabekuiC(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
+	{
+		mTakeoffSpeed = 0.7f;
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		teki.setFlag400();
+		teki.startFlying();
+		teki.mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+		teki.mVelocity = teki.mTargetVelocity;
+
+		teki.setDororoGravity(teki.getParameterF(TPF_FlightHeight) * 2.0f / SQUARE(mTakeoffSpeed));
+		teki.setFlyingSwitch(false);
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		if (TAIAreserveMotion::act(teki)) {
+			if (teki.mCurrentAnimEvent == KEY_Action0) {
+				f32 walkSpeed = teki.getParameterF(TPF_WalkVelocity);
+
+				teki.setFlyingSwitch(true);
+
+				f32 flyVel = teki.getDororoGravity() * mTakeoffSpeed;
+				f32 zVel   = cosf(teki.getDirection());
+				f32 xVel   = sinf(teki.getDirection());
+				teki.mTargetVelocity.set(walkSpeed * xVel, flyVel, walkSpeed * zVel);
+
+				CollTriInfo* currTriInfo = mapMgr->getCurrTri(teki.getPosition().x, teki.getPosition().z, true);
+				if (currTriInfo != nullptr && MapCode::getAttribute(currTriInfo) == ATTR_Water) {
+					mRippleEffect.create(teki);
+				}
+			}
+
+			if (teki.getFlyingSwitch()) {
+				teki.mTargetVelocity.y += -teki.getDororoGravity() * gsys->getFrameTime();
+				teki.mVelocity = teki.mTargetVelocity;
+			}
+
+			if (teki.mCurrentAnimEvent == KEY_Finished) {
+				teki.mTargetVelocity.y *= 0.1f;
+				teki.mVelocity = teki.mTargetVelocity;
+				return true;
+			}
+
+			return false;
+		}
+
+		PRINT("fake", &teki ? "fake" : "fake");
+		PRINT("fake", &teki ? "fake" : "fake");
+		return false;
+	}
+
+	// _04     = VTBL
+	// _00-_0C = TAIAreserveMotion
+	f32 mTakeoffSpeed;          // _0C
+	rippleEffect mRippleEffect; // _10
+};
+
 /*
  * --INFO--
  * Address:	801CD720
@@ -441,9 +509,9 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 	TAIAbiteForKabekuiC* kabekuiBite                  = new TAIAbiteForKabekuiC(TAIkabekuiCStateID::Unk7, 3, TAIkabekuiCMotionID::Unk10);
 	TAIAeatPiki* eatPiki                              = new TAIAeatPiki(TAIkabekuiCStateID::Unk3, TAIkabekuiCMotionID::Unk11);
 
-	TAIAlessLifeKabekuiC* alertFlightLife     = new TAIAlessLifeKabekuiC(TAIkabekuiCStateID::Unk8);
-	TAIAtakeOffKabekuiC* takeoff              = new TAIAtakeOffKabekuiC(TAIkabekuiCStateID::Unk9, TAIkabekuiCMotionID::Unk12);
-	
+	TAIAlessLifeKabekuiC* alertFlightLife = new TAIAlessLifeKabekuiC(TAIkabekuiCStateID::Unk8);
+	TAIAtakeOffKabekuiC* takeoff          = new TAIAtakeOffKabekuiC(TAIkabekuiCStateID::Unk9, TAIkabekuiCMotionID::Unk12);
+
 	TAIAflyingInTerritory* flyingInTerritory  = new TAIAflyingInTerritory(TAI_NO_TRANSIT, 0.25f);
 	TAIAflyingBaseKabekuiC* flyingBase        = new TAIAflyingBaseKabekuiC(TAI_NO_TRANSIT);
 	TAIAflyingMotionKabekuiC* flyingMotion    = new TAIAflyingMotionKabekuiC(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk3);
@@ -458,7 +526,7 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 	TAIAinvincibleOff* invincibleOff                  = new TAIAinvincibleOff(TAI_NO_TRANSIT);
 	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiCStateID::Unk13);
 	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::Unk14	, TAIkabekuiCMotionID::Unk6);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::Unk14, TAIkabekuiCMotionID::Unk6);
 
 	TAIAattackWorkObjectKabekuiC* attackWorkObject
 	    = new TAIAattackWorkObjectKabekuiC(TAIkabekuiCStateID::Unk4, TAIkabekuiCMotionID::Unk6, 8);

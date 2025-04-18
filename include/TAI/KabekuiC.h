@@ -280,8 +280,8 @@ struct TAIAlandingKabekuiC : public TAIAreserveMotion {
 				f32 walkSpeed = teki.getParameterF(TPF_WalkVelocity);
 				f32 scale     = 1.0f;
 				teki.setDororoGravity((teki.mTargetVelocity.y * scale - teki.getYFromSeaLevel()) * 2.0f / scale);
-				f32 zDir = cosf(teki.mFaceDirection);
-				f32 xDir = sinf(teki.mFaceDirection);
+				f32 zDir = cosf(teki.getDirection());
+				f32 xDir = sinf(teki.getDirection());
 				teki.mTargetVelocity.set(walkSpeed * xDir, teki.mTargetVelocity.y, walkSpeed * zDir);
 				teki.setFlyingSwitch(false);
 			}
@@ -408,11 +408,11 @@ struct TAIAflyingBaseKabekuiC : public TAIAflyingBase {
 
 	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
 	{
-		if (teki.getFlyingSwitch()) {
-			return teki.getParameterF(TAIkabekuiCFloatParms::TakeoffYVelocity);
+		if (teki.getRunAwaySwitch()) {
+			return teki.getParameterF(TAIkabekuiCFloatParms::FlightYVelocity);
 		}
 
-		return teki.getParameterF(TAIkabekuiCFloatParms::FlightYVelocity);
+		return teki.getParameterF(TAIkabekuiCFloatParms::TakeoffYVelocity);
 	}
 
 	// _04     = VTBL
@@ -422,69 +422,10 @@ struct TAIAflyingBaseKabekuiC : public TAIAflyingBase {
 
 /**
  * @brief TODO
+ *
+ * @note Lives in TAIkabekuiC.cpp because it needs PRINT to match.
  */
-struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
-	inline TAIAtakeOffKabekuiC(int nextState, int motionID) // TODO: this is a guess
-	    : TAIAreserveMotion(nextState, motionID)
-	{
-		mTakeoffSpeed = 0.7f;
-	}
-
-	virtual void start(Teki& teki) // _08
-	{
-		TAIAreserveMotion::start(teki);
-		teki.setFlag400();
-		teki.startFlying();
-		teki.mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		teki.mVelocity = teki.mTargetVelocity;
-
-		teki.setDororoGravity(teki.getParameterF(TPF_FlightHeight) * 2.0f / SQUARE(mTakeoffSpeed));
-		teki.setFlyingSwitch(false);
-	}
-
-	virtual bool act(Teki& teki) // _10
-	{
-		if (TAIAreserveMotion::act(teki)) {
-			if (teki.mCurrentAnimEvent == KEY_Action0) {
-				f32 walkSpeed = teki.getParameterF(TPF_WalkVelocity);
-
-				teki.setFlyingSwitch(true);
-
-				f32 flyVel = teki.getDororoGravity() * mTakeoffSpeed;
-				f32 zVel   = cosf(teki.mFaceDirection);
-				f32 xVel   = sinf(teki.mFaceDirection);
-				teki.mTargetVelocity.set(walkSpeed * xVel, flyVel, walkSpeed * zVel);
-
-				CollTriInfo* currTriInfo = mapMgr->getCurrTri(teki.getPosition().x, teki.getPosition().z, true);
-				if (currTriInfo != nullptr && MapCode::getAttribute(currTriInfo) == ATTR_Water) {
-					mRippleEffect.create(teki);
-				}
-			}
-
-			if (teki.getFlyingSwitch()) {
-				teki.mTargetVelocity.y += -teki.getDororoGravity() * gsys->getFrameTime();
-				teki.mVelocity = teki.mTargetVelocity;
-			}
-
-			if (teki.mCurrentAnimEvent == KEY_Finished) {
-				teki.mTargetVelocity.y *= 0.1f;
-				teki.mVelocity = teki.mTargetVelocity;
-				return true;
-			}
-
-			return false;
-		}
-
-		u32 bad[2];
-		return false;
-	}
-
-	// _04     = VTBL
-	// _00-_0C = TAIAreserveMotion
-	// TODO: members
-	f32 mTakeoffSpeed;
-	rippleEffect mRippleEffect;
-};
+struct TAIAtakeOffKabekuiC;
 
 /**
  * @brief TODO

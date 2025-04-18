@@ -800,7 +800,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/menuPanelMgr.cpp"),
             Object(Matching, "plugPikiYamashita/TAIkabekuiA.cpp"),
             Object(Matching, "plugPikiYamashita/TAIkabekuiB.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAIkabekuiC.cpp"),
+            Object(Matching, "plugPikiYamashita/TAIkabekuiC.cpp"),
             Object(Matching, "plugPikiYamashita/TAItamago.cpp"),
             Object(Equivalent, "plugPikiYamashita/TAIdororo.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIhibaA.cpp"),
