@@ -13,13 +13,13 @@ namespace zen {
 struct bBoardColourAnimData {
 	bBoardColourAnimData()
 	{
-		_00     = 0;
-		_01     = 0;
-		_02.all = 0;
-		_03     = 0;
-		_04     = 0;
-		_08     = 0;
-		_0C     = 0;
+		mBlendMode       = 0;
+		_01              = 0;
+		mFlags.all       = 0;
+		mMaxFrame        = 0;
+		mFrameThresholds = 0;
+		mPrimColors      = 0;
+		mEnvColors       = 0;
 	}
 
 	void set(u8*);
@@ -27,8 +27,8 @@ struct bBoardColourAnimData {
 	// unused/inlined:
 	~bBoardColourAnimData() { }
 
-	u8 _00; // _00
-	u8 _01; // _01
+	u8 mBlendMode; // _00
+	u8 _01;        // _01
 	union {
 		struct {
 			u8 _m0 : 1;
@@ -39,11 +39,11 @@ struct bBoardColourAnimData {
 			u8 _m7 : 1;
 		} bits;
 		u8 all;
-	} _02;   // _02
-	u8 _03;  // _03
-	u32 _04; // _04, unknown
-	u32 _08; // _08, unknown
-	u32 _0C; // _0C, unknown
+	} mFlags;              // _02
+	u8 mMaxFrame;          // _03
+	f32* mFrameThresholds; // _04
+	Colour* mPrimColors;   // _08
+	Colour* mEnvColors;    // _0C
 };
 
 /**
@@ -51,25 +51,25 @@ struct bBoardColourAnimData {
  */
 struct bBoardColourAnim {
 	void update(f32, Colour*, Colour*);
-	void init(zen::bBoardColourAnimData* data, s16 p2)
+	void init(zen::bBoardColourAnimData* data, s16 lifeTime)
 	{
-		_00       = 0.0f;
-		_04       = 0;
+		mAge      = 0.0f;
+		mFrame    = 0;
 		mAnimData = data;
 		if (mAnimData) {
-			if (mAnimData->_02.all) {
-				_06 = p2;
+			if (mAnimData->mFlags.all) {
+				mLifeTime = lifeTime;
 			} else {
-				_06 = mAnimData->_01;
+				mLifeTime = mAnimData->_01;
 			}
 		} else {
-			_06 = p2;
+			mLifeTime = lifeTime;
 		}
 	}
 
-	f32 _00;                         // _00
-	u8 _04;                          // _04
-	s16 _06;                         // _06
+	f32 mAge;                        // _00
+	u8 mFrame;                       // _04
+	s16 mLifeTime;                   // _06
 	bBoardColourAnimData* mAnimData; // _08
 };
 

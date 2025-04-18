@@ -761,7 +761,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/solidField.cpp"),
             Object(Matching, "plugPikiYamashita/particleManager.cpp"),
             Object(Matching, "plugPikiYamashita/particleMdlManager.cpp"),
-            Object(NonMatching, "plugPikiYamashita/bBoardColourAnim.cpp"),
+            Object(Matching, "plugPikiYamashita/bBoardColourAnim.cpp"),
             Object(NonMatching, "plugPikiYamashita/simpleParticle.cpp"),
             Object(Matching, "plugPikiYamashita/tekiyteki.cpp"),
             Object(Matching, "plugPikiYamashita/tekiyamashita.cpp"),

@@ -3093,17 +3093,17 @@ void DGXGraphics::setFog(bool set, Colour& color, f32 density, f32 start, f32 en
  * Address:	8004A368
  * Size:	000164
  */
-void DGXGraphics::setBlendMode(u8 blend, u8 zmode, u8 flag3)
+void DGXGraphics::setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode)
 {
-	GXSetBlendMode(GX_BM_BLEND, (GXBlendFactor)(blend & 0xf), (GXBlendFactor)(blend >> 4), GX_LO_SET);
+	GXSetBlendMode(GX_BM_BLEND, (GXBlendFactor)(blendFactor & 0xf), (GXBlendFactor)(blendFactor >> 4), GX_LO_SET);
 
-	GXSetZMode((GXBool)((zmode & 8) >> 3), (GXCompare)(zmode & 7), (GXBool)(zmode >> 4));
+	GXSetZMode((GXBool)((zMode & 8) >> 3), (GXCompare)(zMode & 7), (GXBool)(zMode >> 4));
 
 	GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 	GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 	GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_A0, GX_CA_ZERO);
 
-	switch (flag3) {
+	switch (blendMode) {
 	case 0:
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_C0, GX_CC_ONE, GX_CC_TEXC, GX_CC_ZERO);
 		break;

@@ -100,11 +100,11 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector
 			_64 = u32ToFloat(((u32*)data)[3]);
 			mAnimData.set(&data[16]);
 
-			u32 rotType = (mAnimData._02.bits._m1) & 0x7;
-			_68.m0      = (mAnimData._02.bits._m5);
-			_68.m1      = mAnimData._02.bits._m6;
+			u32 rotType = (mAnimData.mFlags.bits._m1) & 0x7;
+			_68.m0      = (mAnimData.mFlags.bits._m5);
+			_68.m1      = mAnimData.mFlags.bits._m6;
 			_68.m2      = 0;
-			mAnimData._02.all &= 0x1;
+			mAnimData.mFlags.all &= 0x1;
 			mDrawCallBack = &drawPtclOriented;
 
 			switch (rotType) {
@@ -435,8 +435,8 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 	readDDF_U8(&mFreePtclMotionTime, data, 1);
 	readDDF_U8(&_112, data, 1);
 	readDDF_U8(&mMaxPasses, data, 1);
-	readDDF_U8(&_1CB, data, 1);
-	readDDF_U8(&_1CC, data, 2);
+	readDDF_U8(&mBlendFactor, data, 1);
+	readDDF_U8(&mZMode, data, 2);
 
 	if (mParticleFlags & PTCLFLAG_UseGravityField) {
 		readDDF_Vector(&mGravFieldAccel, data);
@@ -584,7 +584,7 @@ void zen::particleGenerator::SetPtclsLife()
 		particleMdl* ptcl = pmGetParticle();
 		if (ptcl) {
 			ptcl->mLifeTime = _110 * (1.0f - Rand(_10C));
-			ptcl->_6C.init(&mAnimData, ptcl->mLifeTime);
+			ptcl->mBBoardColourAnim.init(&mAnimData, ptcl->mLifeTime);
 			PtclsGen(ptcl);
 			if (mCallBack2) {
 				mCallBack2->invoke(this, ptcl);
@@ -1226,26 +1226,26 @@ void zen::particleGenerator::UpdatePtclsStatus(f32 timeStep)
 					child->_24          = ptcl->_24 * ptcl->_50 * _114;
 
 					if (mParticleFlags & PTCLFLAG_Unk14) {
-						child->_28.r = ptcl->_28.r;
-						child->_28.g = ptcl->_28.g;
-						child->_28.b = ptcl->_28.b;
-						child->_28.a = ptcl->_28.a;
+						child->mPrimaryColor.r = ptcl->mPrimaryColor.r;
+						child->mPrimaryColor.g = ptcl->mPrimaryColor.g;
+						child->mPrimaryColor.b = ptcl->mPrimaryColor.b;
+						child->mPrimaryColor.a = ptcl->mPrimaryColor.a;
 					} else {
-						child->_28.r = _120.r;
-						child->_28.g = _120.g;
-						child->_28.b = _120.b;
-						child->_28.a = 255;
+						child->mPrimaryColor.r = _120.r;
+						child->mPrimaryColor.g = _120.g;
+						child->mPrimaryColor.b = _120.b;
+						child->mPrimaryColor.a = 255;
 					}
 
-					child->_28.a *= _118;
+					child->mPrimaryColor.a *= _118;
 					child->_2C = 0.0f;
 					child->_31 = 0;
 					child->_30 = _124;
-					child->_32 = RoundOff(child->_28.a / (child->_30 / timeStep));
+					child->_32 = RoundOff(child->mPrimaryColor.a / (child->_30 / timeStep));
 				}
 			}
 
-			ptcl->_6C.update(timeStep, &ptcl->_28, &ptcl->_68);
+			ptcl->mBBoardColourAnim.update(timeStep, &ptcl->mPrimaryColor, &ptcl->mEnvColor);
 
 			if (mCallBack2) {
 				mCallBack2->invoke(this, ptcl);
@@ -1313,7 +1313,7 @@ void zen::particleGenerator::ClearPtclsStatus(Texture* tex, Texture* childTex)
 
 	mCurrentFrame = 0;
 	mCurrentPass  = 0;
-	_1CB = _1CC = 0;
+	mBlendFactor = mZMode = 0;
 	mOrientedNormalVector.set(0.0f, 1.0f, 0.0f);
 }
 
@@ -1326,7 +1326,7 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	GXSetAlphaCompare(GX_GEQUAL, 1, GX_AOP_AND, GX_LEQUAL, 255);
-	gfx.setBlendMode(_1CB, _1CC, mAnimData._00);
+	gfx.setBlendMode(mBlendFactor, mZMode, mAnimData.mBlendMode);
 
 	if (gfx.initParticle(false)) {
 		zenList* origin = mPtclMdlListManager.getOrigin();
@@ -1335,8 +1335,8 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
 			zenList* next     = list->mNext;
 			particleMdl* ptcl = (particleMdl*)list;
 
-			Colour col(ptcl->_28.r, ptcl->_28.g, ptcl->_28.b, RoundOff(ptcl->_28.a * ptcl->_54));
-			gfx.setPrimEnv(&col, &ptcl->_68);
+			Colour col(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b, RoundOff(ptcl->mPrimaryColor.a * ptcl->_54));
+			gfx.setPrimEnv(&col, &ptcl->mEnvColor);
 			gfx.drawRotParticle(*gfx.mCamera, ptcl->mPosition + ptcl->mLocalOffset, -ptcl->_58, ptcl->_24 * ptcl->_50 * 25.0f);
 
 			list = next;
@@ -1351,7 +1351,7 @@ void zen::particleGenerator::drawPtclBillboard(Graphics& gfx)
  */
 void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 {
-	gfx.setBlendMode(_1CB, _1CC, mAnimData._00);
+	gfx.setBlendMode(mBlendFactor, mZMode, mAnimData.mBlendMode);
 	GXSetCullMode(GX_CULL_NONE);
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_PNMTXIDX, GX_DIRECT);
@@ -1389,8 +1389,8 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 
 		f32 cosVal;
 		f32 sinVal;
-		Colour col(ptcl->_28.r, ptcl->_28.g, ptcl->_28.b, RoundOff(ptcl->_28.a * ptcl->_54));
-		gfx.setPrimEnv(&col, &ptcl->_68);
+		Colour col(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b, RoundOff(ptcl->mPrimaryColor.a * ptcl->_54));
+		gfx.setPrimEnv(&col, &ptcl->mEnvColor);
 
 		PSMTXIdentity(mtx2);
 
@@ -2100,10 +2100,10 @@ void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 			pmPutParticleChild(child);
 
 		} else {
-			if (child->_28.a > child->_32) {
-				child->_28.a -= child->_32;
+			if (child->mPrimaryColor.a > child->_32) {
+				child->mPrimaryColor.a -= child->_32;
 			} else {
-				child->_28.a = 0;
+				child->mPrimaryColor.a = 0;
 			}
 			child->_2C += timeStep;
 			child->_31 = RoundOff(child->_2C);
@@ -2121,7 +2121,7 @@ void zen::particleGenerator::updatePtclChildren(f32 timeStep)
 void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-	gfx.setBlendMode(_1CB, _1CC, 0);
+	gfx.setBlendMode(mBlendFactor, mZMode, 0);
 	GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ONE, GX_CC_C0, GX_CC_ZERO);
 
 	if (!gfx.initParticle(true)) {
@@ -2135,7 +2135,7 @@ void zen::particleGenerator::drawPtclChildren(Graphics& gfx)
 		particleChildMdl* child = (particleChildMdl*)list;
 		next                    = list->mNext;
 
-		gfx.setPrimEnv(&child->_28, &child->_28);
+		gfx.setPrimEnv(&child->mPrimaryColor, &child->mPrimaryColor);
 		gfx.drawParticle(*gfx.mCamera, child->mPosition + child->mLocalOffset, 25.0f * child->_24);
 
 		list = next;

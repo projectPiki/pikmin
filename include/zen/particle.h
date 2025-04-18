@@ -123,7 +123,7 @@ struct particleMdlBase : public zenList {
 		mPosition.set(0.0f, 0.0f, 0.0f);
 		mLocalOffset.set(0.0f, 0.0f, 0.0f);
 		_24 = 1.0f;
-		_28.set(0, 0, 0, 0);
+		mPrimaryColor.set(0, 0, 0, 0);
 	}
 
 	// _00     = VTBL
@@ -131,7 +131,7 @@ struct particleMdlBase : public zenList {
 	Vector3f mPosition;    // _0C
 	Vector3f mLocalOffset; // _18
 	f32 _24;               // _24
-	Colour _28;            // _28
+	Colour mPrimaryColor;  // _28
 };
 
 /**
@@ -142,10 +142,10 @@ struct particleMdlBase : public zenList {
 struct particleMdl : public particleMdlBase {
 	particleMdl()
 	{
-		_6C._00       = 0.0f;
-		_6C._04       = 0;
-		_6C._06       = 1;
-		_6C.mAnimData = nullptr;
+		mBBoardColourAnim.mAge      = 0.0f;
+		mBBoardColourAnim.mFrame    = 0;
+		mBBoardColourAnim.mLifeTime = 1;
+		mBBoardColourAnim.mAnimData = nullptr;
 		InitParam();
 	}
 
@@ -171,28 +171,28 @@ struct particleMdl : public particleMdlBase {
 		_5A   = 0;
 		_5C.z = 1.0f;
 		_4C   = 0;
-		_68.set(0, 0, 0, 0);
-		_6C.init(nullptr, 1);
+		mEnvColor.set(0, 0, 0, 0);
+		mBBoardColourAnim.init(nullptr, 1);
 		_78 = 0;
 	}
 
 	// _00     = VTBL
 	// _00-_2C = particleMdlBase
-	s16 mLifeTime;          // _2C
-	s16 mAge;               // _2E
-	f32 _30;                // _30
-	Vector3f mVelocity;     // _34
-	Vector3f mAcceleration; // _40
-	u8 _4C;                 // _4C
-	f32 _50;                // _50
-	f32 _54;                // _54
-	u16 _58;                // _58
-	s16 _5A;                // _5A
-	Vector3f _5C;           // _5C
-	Colour _68;             // _68
-	bBoardColourAnim _6C;   // _6C
-	u32 _78;                // _78, unknown
-	u8 _7C[0x4];            // _7C, unknown
+	s16 mLifeTime;                      // _2C
+	s16 mAge;                           // _2E
+	f32 _30;                            // _30
+	Vector3f mVelocity;                 // _34
+	Vector3f mAcceleration;             // _40
+	u8 _4C;                             // _4C
+	f32 _50;                            // _50
+	f32 _54;                            // _54
+	u16 _58;                            // _58
+	s16 _5A;                            // _5A
+	Vector3f _5C;                       // _5C
+	Colour mEnvColor;                   // _68
+	bBoardColourAnim mBBoardColourAnim; // _6C
+	u32 _78;                            // _78, unknown
+	u8 _7C[0x4];                        // _7C, unknown
 };
 
 /**
@@ -532,8 +532,8 @@ struct particleGenerator : public zenList {
 	u8 _1C6;                                                 // _1C6
 	s16 mMaxFrame;                                           // _1C8
 	u8 mMaxPasses;                                           // _1CA
-	u8 _1CB;                                                 // _1CB
-	u8 _1CC;                                                 // _1CC
+	u8 mBlendFactor;                                         // _1CB
+	u8 mZMode;                                               // _1CC
 	particleMdlManager* mMdlMgr;                             // _1D0
 	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
 	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8

@@ -123,7 +123,7 @@ struct Graphics {
 	virtual void setViewport(RectArea&)       = 0;                                         // _48
 	virtual void setViewportOffset(RectArea&) = 0;                                         // _4C
 	virtual void setScissor(RectArea&)        = 0;                                         // _50
-	virtual void setBlendMode(u8, u8, u8);                                                 // _54
+	virtual void setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode);                     // _54
 	virtual int setCullFront(int)                                                     = 0; // _58
 	virtual u8 setDepth(bool)                                                         = 0; // _5C
 	virtual int setCBlending(int)                                                     = 0; // _60
@@ -146,7 +146,7 @@ struct Graphics {
 	virtual void drawOneStrip(Vector3f*, Vector3f*, Vector2f*, int)                   = 0; // _A4
 	virtual void setColour(Colour&, bool)                                             = 0; // _A8
 	virtual void setAuxColour(Colour&)                                                = 0; // _AC
-	virtual void setPrimEnv(Colour*, Colour*)                                         = 0; // _B0
+	virtual void setPrimEnv(Colour* primColor, Colour* envColor)                      = 0; // _B0
 	virtual void setClearColour(Colour&)                                              = 0; // _B4
 	virtual void setFog(bool)                                                         = 0; // _B8
 	virtual void setFog(bool, Colour&, f32, f32, f32)                                 = 0; // _BC
