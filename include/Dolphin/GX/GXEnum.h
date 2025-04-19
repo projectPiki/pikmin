@@ -468,6 +468,9 @@ typedef enum _GXTexMapID {
 	GX_TEX_DISABLE = 0x100, // No texture map look-up.
 } GXTexMapID;
 
+#define _GX_TF_CTF 0x20
+#define _GX_TF_ZTF 0x10
+
 // Texture format types.
 /**
  * RGB, RGBA, Intensity, Intensity/Alpha, Compressed, and Z texture format

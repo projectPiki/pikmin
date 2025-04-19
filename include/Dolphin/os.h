@@ -245,7 +245,8 @@ extern BOOL __OSInIPL;
 #else // _DEBUG
 
 #ifndef ASSERT
-#define ASSERT(exp) ((void)0)
+#define ASSERT(exp)                     ((void)0)
+#define ASSERTMSGLINEV(line, cond, ...) (void)0
 #endif
 
 #ifndef ASSERTLINE

@@ -19,7 +19,7 @@ typedef void (*GXDrawDoneCallback)(void);
 ////////////////////////////////////////////
 
 ///////////// BASIC FUNCTIONS //////////////
-static GXTexRegion* __GXDefaultTexRegionCallback(const GXTexObj* obj, GXTexMapID id);
+static GXTexRegion* __GXDefaultTexRegionCallback(GXTexObj* obj, GXTexMapID id);
 static GXTlutRegion* __GXDefaultTlutRegionCallback(u32 tlut);
 static BOOL __GXShutdown(BOOL final); // need to check types
 
@@ -68,7 +68,7 @@ extern void EnableWriteGatherPipe();
 extern void DisableWriteGatherPipe();
 extern void GXResetWriteGatherPipe();
 
-extern void GXReadDrawSync();
+extern u16 GXReadDrawSync();
 extern void GXTexModeSync();
 
 extern void GXPeekARGB(u16 x, u16 y, u32* color);
@@ -78,6 +78,8 @@ extern void GXPokeZ(u16 x, u16 y, u32 z);
 
 extern u32 GXCompressZ16(u32 z24, GXZFmt16 zFormat);
 extern u32 GXDecompressZ16(u32 z16, GXZFmt16 zFormat);
+
+struct OSThread* GXSetCurrentGXThread();
 
 ////////////////////////////////////////////
 

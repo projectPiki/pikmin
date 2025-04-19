@@ -6,6 +6,7 @@
 /**
  * @brief TODO
  */
+#ifdef __cplusplus
 namespace std {
 
 inline f32 sqrtf(f32 x)
@@ -46,7 +47,7 @@ inline f32 fmodf(f32 x, f32 m)
 		return x - m * c;
 	}
 }
-
 } // namespace std
+#endif
 
 #endif

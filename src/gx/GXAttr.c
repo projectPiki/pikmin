@@ -1,147 +1,124 @@
-#include "types.h"
+#include "Dolphin/gx.h"
+#include "Dolphin/os.h"
+
+#define CHECK_ATTRPTR(line, attrPtr) ASSERTMSGLINE(line, (attrPtr) != NULL, "GXSetVtxDescv: attrPtr is NULL")
+#define CHECK_ATTRNAME(line, attr) \
+	ASSERTMSGLINE(line, (attr) >= GX_VA_PNMTXIDX && (attr) < GX_VA_MAX_ATTR, "GXSetVtxDesc: Invalid vertex attribute name")
+#define CHECK_ATTRNAME2(line, attr) \
+	ASSERTMSGLINE(line, (attr) >= GX_VA_POS && (attr) <= GX_VA_MAX_ATTR, "GXSetVtxAttrFmt: Invalid vertex attribute name")
+#define CHECK_ATTRNAME3(line, attr) \
+	ASSERTMSGLINE(line, (attr) >= GX_VA_POS && (attr) <= GX_LIGHT_ARRAY, "GXSetArray: Invalid vertex attribute name")
+#define CHECK_ATTRTYPE(line, type) \
+	ASSERTMSGLINE(line, (type) >= GX_NONE && (type) <= GX_INDEX16, "GXSetVtxDesc: Invalid vertex attribute type")
+#define CHECK_VTXFMT(line, vtxfmt) ASSERTMSGLINE(line, (vtxfmt) < GX_MAX_VTXFMT, "GXSetVtxAttrFmt: Format Index is out of range")
+#define CHECK_FRAC(line, frac)     ASSERTMSGLINE(line, (frac) < 32, "GXSetVtxAttrFmt: Frac value is >= 32")
+#define CHECK_LISTPTR(line, list)  ASSERTMSGLINE(line, (list) != NULL, "GXSetVtxAttrFmt: list pointer is NULL")
 
 /*
  * --INFO--
  * Address:	8020F2A8
  * Size:	000158
  */
-void __GXXfVtxSpecs(void)
+static void __GXXfVtxSpecs(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2A68(r13)
-	  lwz       r4, 0x14(r5)
-	  rlwinm.   r0,r4,19,30,31
-	  beq-      .loc_0x18
-	  li        r3, 0x1
-	  b         .loc_0x1C
+	u32 nCols = 0;
+	u32 nNrm;
+	u32 nTex;
+	u32 reg;
 
-	.loc_0x18:
-	  li        r3, 0
+	nCols = GET_REG_FIELD(gx->vcdLo, 2, 13) ? 1 : 0;
+	nCols += GET_REG_FIELD(gx->vcdLo, 2, 15) ? 1 : 0;
+	nNrm = gx->hasBiNrms ? 2 : gx->hasNrms ? 1 : 0;
+	nTex = 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 0) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 2) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 4) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 6) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 8) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 10) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 12) ? 1 : 0;
+	nTex += GET_REG_FIELD(gx->vcdHi, 2, 14) ? 1 : 0;
+	reg = (nCols) | (nNrm << 2) | (nTex << 4);
+	GX_WRITE_XF_REG(8, reg);
+	gx->bpSent = 0;
+}
 
-	.loc_0x1C:
-	  rlwinm.   r0,r4,17,30,31
-	  beq-      .loc_0x2C
-	  li        r4, 0x1
-	  b         .loc_0x30
-
-	.loc_0x2C:
-	  li        r4, 0
-
-	.loc_0x30:
-	  lbz       r0, 0x41D(r5)
-	  add       r7, r3, r4
-	  cmplwi    r0, 0
-	  beq-      .loc_0x48
-	  li        r4, 0x2
-	  b         .loc_0x60
-
-	.loc_0x48:
-	  lbz       r0, 0x41C(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5C
-	  li        r4, 0x1
-	  b         .loc_0x60
-
-	.loc_0x5C:
-	  li        r4, 0
-
-	.loc_0x60:
-	  lwz       r6, 0x18(r5)
-	  rlwinm.   r0,r6,0,30,31
-	  beq-      .loc_0x74
-	  li        r3, 0x1
-	  b         .loc_0x78
-
-	.loc_0x74:
-	  li        r3, 0
-
-	.loc_0x78:
-	  rlwinm.   r0,r6,30,30,31
-	  beq-      .loc_0x88
-	  li        r5, 0x1
-	  b         .loc_0x8C
-
-	.loc_0x88:
-	  li        r5, 0
-
-	.loc_0x8C:
-	  rlwinm.   r0,r6,28,30,31
-	  add       r8, r3, r5
-	  beq-      .loc_0xA0
-	  li        r3, 0x1
-	  b         .loc_0xA4
-
-	.loc_0xA0:
-	  li        r3, 0
-
-	.loc_0xA4:
-	  rlwinm.   r0,r6,26,30,31
-	  add       r8, r8, r3
-	  beq-      .loc_0xB8
-	  li        r3, 0x1
-	  b         .loc_0xBC
-
-	.loc_0xB8:
-	  li        r3, 0
-
-	.loc_0xBC:
-	  rlwinm.   r0,r6,24,30,31
-	  add       r8, r8, r3
-	  beq-      .loc_0xD0
-	  li        r3, 0x1
-	  b         .loc_0xD4
-
-	.loc_0xD0:
-	  li        r3, 0
-
-	.loc_0xD4:
-	  rlwinm.   r0,r6,22,30,31
-	  add       r8, r8, r3
-	  beq-      .loc_0xE8
-	  li        r3, 0x1
-	  b         .loc_0xEC
-
-	.loc_0xE8:
-	  li        r3, 0
-
-	.loc_0xEC:
-	  rlwinm.   r0,r6,20,30,31
-	  add       r8, r8, r3
-	  beq-      .loc_0x100
-	  li        r3, 0x1
-	  b         .loc_0x104
-
-	.loc_0x100:
-	  li        r3, 0
-
-	.loc_0x104:
-	  rlwinm.   r0,r6,18,30,31
-	  add       r8, r8, r3
-	  beq-      .loc_0x118
-	  li        r6, 0x1
-	  b         .loc_0x11C
-
-	.loc_0x118:
-	  li        r6, 0
-
-	.loc_0x11C:
-	  li        r0, 0x10
-	  lwz       r3, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  add       r8, r8, r6
-	  stb       r0, -0x8000(r5)
-	  rlwinm    r0,r4,2,0,29
-	  li        r4, 0x1008
-	  stw       r4, -0x8000(r5)
-	  rlwinm    r4,r8,4,0,27
-	  or        r0, r7, r0
-	  or        r0, r4, r0
-	  stw       r0, -0x8000(r5)
-	  li        r0, 0
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type)
+{
+	switch (Attr) {
+	case GX_VA_PNMTXIDX:
+		SET_REG_FIELD(0xA8, gx->vcdLo, 1, 0, Type);
+		break;
+	case GX_VA_TEX0MTXIDX:
+		SET_REG_FIELD(0xA9, gx->vcdLo, 1, 1, Type);
+		break;
+	case GX_VA_TEX1MTXIDX:
+		SET_REG_FIELD(0xAA, gx->vcdLo, 1, 2, Type);
+		break;
+	case GX_VA_TEX2MTXIDX:
+		SET_REG_FIELD(0xAB, gx->vcdLo, 1, 3, Type);
+		break;
+	case GX_VA_TEX3MTXIDX:
+		SET_REG_FIELD(0xAC, gx->vcdLo, 1, 4, Type);
+		break;
+	case GX_VA_TEX4MTXIDX:
+		SET_REG_FIELD(0xAD, gx->vcdLo, 1, 5, Type);
+		break;
+	case GX_VA_TEX5MTXIDX:
+		SET_REG_FIELD(0xAE, gx->vcdLo, 1, 6, Type);
+		break;
+	case GX_VA_TEX6MTXIDX:
+		SET_REG_FIELD(0xAf, gx->vcdLo, 1, 7, Type);
+		break;
+	case GX_VA_TEX7MTXIDX:
+		SET_REG_FIELD(0xB0, gx->vcdLo, 1, 8, Type);
+		break;
+	case GX_VA_POS:
+		SET_REG_FIELD(0xB1, gx->vcdLo, 2, 9, Type);
+		break;
+	case GX_VA_NRM:
+		gx->hasNrms = (Type != 0);
+		if (Type != GX_NONE) {
+			gx->nrmType = Type;
+		}
+		break;
+	case GX_VA_NBT:
+		gx->hasBiNrms = (Type != 0);
+		if (Type != GX_NONE) {
+			gx->nrmType = Type;
+		}
+		break;
+	case GX_VA_CLR0:
+		SET_REG_FIELD(0xBA, gx->vcdLo, 2, 13, Type);
+		break;
+	case GX_VA_CLR1:
+		SET_REG_FIELD(0xBB, gx->vcdLo, 2, 15, Type);
+		break;
+	case GX_VA_TEX0:
+		SET_REG_FIELD(0xBC, gx->vcdHi, 2, 0, Type);
+		break;
+	case GX_VA_TEX1:
+		SET_REG_FIELD(0xBD, gx->vcdHi, 2, 2, Type);
+		break;
+	case GX_VA_TEX2:
+		SET_REG_FIELD(0xBE, gx->vcdHi, 2, 4, Type);
+		break;
+	case GX_VA_TEX3:
+		SET_REG_FIELD(0xBF, gx->vcdHi, 2, 6, Type);
+		break;
+	case GX_VA_TEX4:
+		SET_REG_FIELD(0xC0, gx->vcdHi, 2, 8, Type);
+		break;
+	case GX_VA_TEX5:
+		SET_REG_FIELD(0xC1, gx->vcdHi, 2, 10, Type);
+		break;
+	case GX_VA_TEX6:
+		SET_REG_FIELD(0xC2, gx->vcdHi, 2, 12, Type);
+		break;
+	case GX_VA_TEX7:
+		SET_REG_FIELD(0xC3, gx->vcdHi, 2, 14, Type);
+		break;
+	}
 }
 
 /*
@@ -149,225 +126,19 @@ void __GXXfVtxSpecs(void)
  * Address:	8020F400
  * Size:	000338
  */
-void GXSetVtxDesc(void)
+void GXSetVtxDesc(GXAttr attr, GXAttrType type)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0x19
-	  bgt-      .loc_0x2DC
-	  lis       r5, 0x802F
-	  subi      r5, r5, 0x7400
-	  rlwinm    r0,r3,2,0,29
-	  lwzx      r0, r5, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r3, 0x2A68(r13)
-	  lwzu      r0, 0x14(r3)
-	  rlwinm    r0,r0,0,0,30
-	  or        r0, r0, r4
-	  stw       r0, 0x0(r3)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,1,0,30
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,31,29
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,2,0,29
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,30,28
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,3,0,28
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,29,27
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,4,0,27
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,28,26
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,5,0,26
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,27,25
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,6,0,25
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,26,24
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,7,0,24
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,25,23
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,8,0,23
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,24,22
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,9,0,22
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,23,20
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  neg       r5, r4
-	  lwz       r3, 0x2A68(r13)
-	  subic     r0, r5, 0x1
-	  subfe     r0, r0, r5
-	  cmpwi     r4, 0
-	  stb       r0, 0x41C(r3)
-	  beq-      .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  stw       r4, 0x418(r3)
-	  b         .loc_0x2DC
-	  neg       r5, r4
-	  lwz       r3, 0x2A68(r13)
-	  subic     r0, r5, 0x1
-	  subfe     r0, r0, r5
-	  cmpwi     r4, 0
-	  stb       r0, 0x41D(r3)
-	  beq-      .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  stw       r4, 0x418(r3)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,13,0,18
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,19,16
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,15,0,16
-	  addi      r4, r3, 0x14
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r3,r3,0,17,14
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  lwzu      r0, 0x18(r3)
-	  rlwinm    r0,r0,0,0,29
-	  or        r0, r0, r4
-	  stw       r0, 0x0(r3)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,2,0,29
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,30,27
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,4,0,27
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,28,25
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,6,0,25
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,26,23
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,8,0,23
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,24,21
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,10,0,21
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,22,19
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,12,0,19
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,20,17
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2DC
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r4,14,0,17
-	  addi      r4, r3, 0x18
-	  lwz       r3, 0x18(r3)
-	  rlwinm    r3,r3,0,18,15
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
+	CHECK_GXBEGIN(0xCC, "GXSetVtxDesc");
+	CHECK_ATTRNAME(0xCF, attr);
+	CHECK_ATTRTYPE(0xD1, type);
 
-	.loc_0x2DC:
-	  lwz       r3, 0x2A68(r13)
-	  lbz       r0, 0x41C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2F8
-	  lbz       r0, 0x41D(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x318
-
-	.loc_0x2F8:
-	  addi      r4, r3, 0x14
-	  lwz       r0, 0x418(r3)
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r0,r0,11,0,20
-	  rlwinm    r3,r3,0,21,18
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x324
-
-	.loc_0x318:
-	  lwzu      r0, 0x14(r3)
-	  rlwinm    r0,r0,0,21,18
-	  stw       r0, 0x0(r3)
-
-	.loc_0x324:
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	SETVCDATTR(attr, type);
+	if (gx->hasNrms || gx->hasBiNrms) {
+		SET_REG_FIELD(0xD7, gx->vcdLo, 2, 11, gx->nrmType);
+	} else {
+		SET_REG_FIELD(0x00, gx->vcdLo, 2, 11, 0);
+	}
+	gx->dirtyState |= 8;
 }
 
 /*
@@ -375,238 +146,22 @@ void GXSetVtxDesc(void)
  * Address:	8020F738
  * Size:	00035C
  */
-void GXSetVtxDescv(void)
+void GXSetVtxDescv(GXVtxDescList* attrPtr)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802F
-	  subi      r4, r4, 0x7398
-	  b         .loc_0x2F4
-
-	.loc_0xC:
-	  lwz       r5, 0x0(r3)
-	  lwz       r0, 0x4(r3)
-	  cmplwi    r5, 0x19
-	  bgt-      .loc_0x2F0
-	  rlwinm    r5,r5,2,0,29
-	  lwzx      r5, r4, r5
-	  mtctr     r5
-	  bctr
-	  lwz       r5, 0x2A68(r13)
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,0,30
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,1,0,30
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,31,29
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,2,0,29
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,30,28
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,3,0,28
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,29,27
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,4,0,27
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,28,26
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,5,0,26
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,27,25
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,6,0,25
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,26,24
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,7,0,24
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,25,23
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,8,0,23
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,24,22
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,9,0,22
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,23,20
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  neg       r7, r0
-	  lwz       r5, 0x2A68(r13)
-	  subic     r6, r7, 0x1
-	  subfe     r6, r6, r7
-	  cmpwi     r0, 0
-	  stb       r6, 0x41C(r5)
-	  beq-      .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  stw       r0, 0x418(r5)
-	  b         .loc_0x2F0
-	  neg       r7, r0
-	  lwz       r5, 0x2A68(r13)
-	  subic     r6, r7, 0x1
-	  subfe     r6, r6, r7
-	  cmpwi     r0, 0
-	  stb       r6, 0x41D(r5)
-	  beq-      .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  stw       r0, 0x418(r5)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,13,0,18
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,19,16
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,15,0,16
-	  addi      r6, r5, 0x14
-	  lwz       r5, 0x14(r5)
-	  rlwinm    r5,r5,0,17,14
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,0,29
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,2,0,29
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,30,27
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,4,0,27
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,28,25
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,6,0,25
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,26,23
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,8,0,23
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,24,21
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,10,0,21
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,22,19
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,12,0,19
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,20,17
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  b         .loc_0x2F0
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r0,14,0,17
-	  addi      r6, r5, 0x18
-	  lwz       r5, 0x18(r5)
-	  rlwinm    r5,r5,0,18,15
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-
-	.loc_0x2F0:
-	  addi      r3, r3, 0x8
-
-	.loc_0x2F4:
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0xFF
-	  bne+      .loc_0xC
-	  lwz       r3, 0x2A68(r13)
-	  lbz       r0, 0x41C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x31C
-	  lbz       r0, 0x41D(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x33C
-
-	.loc_0x31C:
-	  addi      r4, r3, 0x14
-	  lwz       r0, 0x418(r3)
-	  lwz       r3, 0x14(r3)
-	  rlwinm    r0,r0,11,0,20
-	  rlwinm    r3,r3,0,21,18
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x348
-
-	.loc_0x33C:
-	  lwzu      r0, 0x14(r3)
-	  rlwinm    r0,r0,0,21,18
-	  stw       r0, 0x0(r3)
-
-	.loc_0x348:
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0xF5, "GXSetVtxDescv");
+	CHECK_ATTRPTR(0xF6, attrPtr);
+	while (attrPtr->mAttr != 0xFF) {
+		CHECK_ATTRNAME(0xFB, attrPtr->mAttr);
+		CHECK_ATTRTYPE(0xFE, attrPtr->mType);
+		SETVCDATTR(attrPtr->mAttr, attrPtr->mType);
+		attrPtr++;
+	}
+	if (gx->hasNrms || gx->hasBiNrms) {
+		SET_REG_FIELD(0x107, gx->vcdLo, 2, 11, gx->nrmType);
+	} else {
+		SET_REG_FIELD(0x107, gx->vcdLo, 2, 11, 0);
+	}
+	gx->dirtyState |= 8;
 }
 
 /*
@@ -616,101 +171,44 @@ void GXSetVtxDescv(void)
  */
 void __GXSetVCD(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0x8
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0xCC01
-	  li        r3, 0x50
-	  stwu      r1, -0x20(r1)
-	  li        r0, 0x60
-	  stw       r31, 0x1C(r1)
-	  stb       r6, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  stb       r3, -0x8000(r5)
-	  lwz       r3, 0x14(r4)
-	  stw       r3, -0x8000(r5)
-	  stb       r6, -0x8000(r5)
-	  stb       r0, -0x8000(r5)
-	  lwz       r0, 0x18(r4)
-	  stw       r0, -0x8000(r5)
-	  bl        -0x830
-	  lwz       r3, 0x2A68(r13)
-	  lhz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x154
-	  lwz       r31, 0x14(r3)
-	  addi      r9, r13, 0x2A78
-	  lwz       r4, 0x18(r3)
-	  addi      r7, r13, 0x2A70
-	  rlwinm    r0,r31,0,31,31
-	  rlwinm    r11,r31,31,31,31
-	  lbz       r5, 0x41D(r3)
-	  rlwinm    r6,r31,21,30,31
-	  rlwinm    r5,r5,1,0,30
-	  lbzx      r10, r9, r6
-	  addi      r8, r5, 0x1
-	  add       r0, r0, r11
-	  rlwinm    r12,r31,30,31,31
-	  rlwinm    r5,r31,23,30,31
-	  rlwinm    r6,r31,19,30,31
-	  lbzx      r11, r9, r5
-	  rlwinm    r5,r31,17,30,31
-	  lbzx      r6, r7, r6
-	  add       r0, r0, r12
-	  lbzx      r9, r7, r5
-	  rlwinm    r5,r31,29,31,31
-	  add       r0, r0, r5
-	  rlwinm    r5,r31,28,31,31
-	  add       r0, r0, r5
-	  rlwinm    r5,r31,27,31,31
-	  add       r0, r0, r5
-	  rlwinm    r7,r31,26,31,31
-	  mullw     r5, r10, r8
-	  add       r0, r0, r7
-	  rlwinm    r7,r31,25,31,31
-	  add       r0, r0, r7
-	  rlwinm    r7,r31,24,31,31
-	  add       r0, r0, r7
-	  add       r0, r0, r11
-	  add       r0, r0, r5
-	  add       r0, r0, r6
-	  rlwinm    r6,r4,0,30,31
-	  addi      r8, r13, 0x2A74
-	  rlwinm    r5,r4,30,30,31
-	  lbzx      r7, r8, r6
-	  add       r0, r0, r9
-	  lbzx      r6, r8, r5
-	  rlwinm    r5,r4,28,30,31
-	  add       r0, r0, r7
-	  lbzx      r7, r8, r5
-	  rlwinm    r5,r4,26,30,31
-	  add       r0, r0, r6
-	  lbzx      r6, r8, r5
-	  rlwinm    r5,r4,24,30,31
-	  add       r0, r0, r7
-	  lbzx      r7, r8, r5
-	  rlwinm    r5,r4,22,30,31
-	  add       r0, r0, r6
-	  lbzx      r6, r8, r5
-	  rlwinm    r5,r4,20,30,31
-	  add       r0, r0, r7
-	  lbzx      r5, r8, r5
-	  rlwinm    r4,r4,18,30,31
-	  add       r0, r0, r6
-	  lbzx      r4, r8, r4
-	  add       r0, r0, r5
-	  add       r0, r0, r4
-	  stw       r0, 0x4(r3)
+	static u8 tbl1[] = { 0, 4, 1, 2 };
+	static u8 tbl2[] = { 0, 8, 1, 2 };
+	static u8 tbl3[] = { 0, 12, 1, 2 };
+	unsigned long vlm;
+	unsigned long b;
+	unsigned long vl;
+	unsigned long vh;
 
-	.loc_0x154:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	GX_WRITE_SOME_REG4(8, 0x50, gx->vcdLo, -12);
+	GX_WRITE_SOME_REG4(8, 0x60, gx->vcdHi, -12);
+	__GXXfVtxSpecs();
+	if (gx->vNum != 0) {
+		vl  = gx->vcdLo;
+		vh  = gx->vcdHi;
+		vlm = GET_REG_FIELD(vl, 1, 0);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 1);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 2);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 3);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 4);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 5);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 6);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 7);
+		vlm += (u8)GET_REG_FIELD(vl, 1, 8);
+		vlm += tbl3[(u8)GET_REG_FIELD(vl, 2, 9)];
+		b = (gx->hasBiNrms << 1) + 1;
+		vlm += tbl3[(u8)GET_REG_FIELD(vl, 2, 11)] * b;
+		vlm += tbl1[(u8)GET_REG_FIELD(vl, 2, 13)];
+		vlm += tbl1[(u8)GET_REG_FIELD(vl, 2, 15)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 0)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 2)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 4)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 6)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 8)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 10)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 12)];
+		vlm += tbl2[(u8)GET_REG_FIELD(vh, 2, 14)];
+		gx->vLim = vlm;
+	}
 }
 
 /*
@@ -718,9 +216,85 @@ void __GXSetVCD(void)
  * Address:	........
  * Size:	0001B4
  */
-void GXGetVtxDesc(void)
+void GXGetVtxDesc(GXAttr attr, GXAttrType* type)
 {
-	// UNUSED FUNCTION
+	u32 cpType;
+
+	CHECK_GXBEGIN(0x185, "GXGetVtxDesc");
+	CHECK_ATTRNAME(0x187, attr);
+
+	switch (attr) {
+	case GX_VA_PNMTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 0);
+		break;
+	case GX_VA_TEX0MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 1);
+		break;
+	case GX_VA_TEX1MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 2);
+		break;
+	case GX_VA_TEX2MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 3);
+		break;
+	case GX_VA_TEX3MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 4);
+		break;
+	case GX_VA_TEX4MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 5);
+		break;
+	case GX_VA_TEX5MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 6);
+		break;
+	case GX_VA_TEX6MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 7);
+		break;
+	case GX_VA_TEX7MTXIDX:
+		cpType = GET_REG_FIELD(gx->vcdLo, 1, 8);
+		break;
+	case GX_VA_POS:
+		cpType = GET_REG_FIELD(gx->vcdLo, 2, 9);
+		break;
+	case GX_VA_NRM:
+		cpType = gx->hasNrms ? GET_REG_FIELD(gx->vcdLo, 2, 11) : 0;
+		break;
+	case GX_VA_NBT:
+		cpType = gx->hasBiNrms ? GET_REG_FIELD(gx->vcdLo, 2, 11) : 0;
+		break;
+	case GX_VA_CLR0:
+		cpType = GET_REG_FIELD(gx->vcdLo, 2, 13);
+		break;
+	case GX_VA_CLR1:
+		cpType = GET_REG_FIELD(gx->vcdLo, 2, 15);
+		break;
+	case GX_VA_TEX0:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 0);
+		break;
+	case GX_VA_TEX1:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 2);
+		break;
+	case GX_VA_TEX2:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 4);
+		break;
+	case GX_VA_TEX3:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 6);
+		break;
+	case GX_VA_TEX4:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 8);
+		break;
+	case GX_VA_TEX5:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 10);
+		break;
+	case GX_VA_TEX6:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 12);
+		break;
+	case GX_VA_TEX7:
+		cpType = GET_REG_FIELD(gx->vcdHi, 2, 14);
+		break;
+	default:
+		cpType = 0;
+		break;
+	}
+	*type = cpType;
 }
 
 /*
@@ -728,9 +302,17 @@ void GXGetVtxDesc(void)
  * Address:	........
  * Size:	000070
  */
-void GXGetVtxDescv(void)
+void GXGetVtxDescv(GXVtxDescList* vcd)
 {
-	// UNUSED FUNCTION
+	GXAttr attr;
+
+	CHECK_GXBEGIN(0x1BA, "GXGetVtxDescv");
+	CHECK_ATTRPTR(0x1BC, vcd);
+	for (attr = 0; attr < GX_VA_MAX_ATTR; attr++) {
+		vcd[attr].mAttr = attr;
+		GXGetVtxDesc(attr, &vcd[attr].mType);
+	}
+	vcd[attr].mAttr = 0xFF;
 }
 
 /*
@@ -740,28 +322,83 @@ void GXGetVtxDescv(void)
  */
 void GXClearVtxDesc(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2A68(r13)
-	  li        r4, 0
-	  stw       r4, 0x14(r3)
-	  lwz       r3, 0x2A68(r13)
-	  lwzu      r0, 0x14(r3)
-	  rlwinm    r0,r0,0,23,20
-	  ori       r0, r0, 0x200
-	  stw       r0, 0x0(r3)
-	  lwz       r3, 0x2A68(r13)
-	  stw       r4, 0x18(r3)
-	  lwz       r3, 0x2A68(r13)
-	  stb       r4, 0x41C(r3)
-	  lwz       r3, 0x2A68(r13)
-	  stb       r4, 0x41D(r3)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x8
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x1D3, "GXClearVtxDesc");
+	gx->vcdLo = 0;
+	SET_REG_FIELD(0x00, gx->vcdLo, 2, 9, 1);
+	gx->vcdHi     = 0;
+	gx->hasNrms   = 0;
+	gx->hasBiNrms = 0;
+	gx->dirtyState |= 8;
+}
+
+static inline void SETVAT(u32* va, u32* vb, u32* vc, GXAttr attr, GXCompCnt cnt, GXCompType type, u8 shft)
+{
+	switch (attr) {
+	case GX_VA_POS:
+		SET_REG_FIELD(511, *va, 1, 0, cnt);
+		SET_REG_FIELD(512, *va, 3, 1, type);
+		SET_REG_FIELD(513, *va, 5, 4, shft);
+		break;
+	case GX_VA_NRM:
+	case GX_VA_NBT:
+		SET_REG_FIELD(521, *va, 3, 10, type);
+		if (cnt == GX_NRM_NBT3) {
+			SET_REG_FIELD(0, *va, 1, 9, 1);
+			SET_REG_FIELD(0, *va, 1, 31, 1);
+		} else {
+			SET_REG_FIELD(527, *va, 1, 9, cnt);
+			SET_REG_FIELD(528, *va, 1, 31, 0);
+		}
+		break;
+	case GX_VA_CLR0:
+		SET_REG_FIELD(0x215, *va, 1, 13, cnt);
+		SET_REG_FIELD(0x216, *va, 3, 14, type);
+		break;
+	case GX_VA_CLR1:
+		SET_REG_FIELD(0x219, *va, 1, 0x11, cnt);
+		SET_REG_FIELD(0x21A, *va, 3, 18, type);
+		break;
+	case GX_VA_TEX0:
+		SET_REG_FIELD(0x21D, *va, 1, 0x15, cnt);
+		SET_REG_FIELD(0x21E, *va, 3, 0x16, type);
+		SET_REG_FIELD(0x21F, *va, 5, 0x19, shft);
+		break;
+	case GX_VA_TEX1:
+		SET_REG_FIELD(0x222, *vb, 1, 0, cnt);
+		SET_REG_FIELD(0x223, *vb, 3, 1, type);
+		SET_REG_FIELD(0x224, *vb, 5, 4, shft);
+		break;
+	case GX_VA_TEX2:
+		SET_REG_FIELD(0x227, *vb, 1, 9, cnt);
+		SET_REG_FIELD(0x228, *vb, 3, 10, type);
+		SET_REG_FIELD(0x229, *vb, 5, 13, shft);
+		break;
+	case GX_VA_TEX3:
+		SET_REG_FIELD(0x22C, *vb, 1, 18, cnt);
+		SET_REG_FIELD(0x22D, *vb, 3, 19, type);
+		SET_REG_FIELD(0x22E, *vb, 5, 22, shft);
+		break;
+	case GX_VA_TEX4:
+		SET_REG_FIELD(0x231, *vb, 1, 27, cnt);
+		SET_REG_FIELD(0x232, *vb, 3, 28, type);
+		SET_REG_FIELD(0x233, *vc, 5, 0, shft);
+		break;
+	case GX_VA_TEX5:
+		SET_REG_FIELD(0x236, *vc, 1, 5, cnt);
+		SET_REG_FIELD(0x237, *vc, 3, 6, type);
+		SET_REG_FIELD(0x238, *vc, 5, 9, shft);
+		break;
+	case GX_VA_TEX6:
+		SET_REG_FIELD(0x23B, *vc, 1, 14, cnt);
+		SET_REG_FIELD(0x23C, *vc, 3, 15, type);
+		SET_REG_FIELD(0x23D, *vc, 5, 18, shft);
+		break;
+	case GX_VA_TEX7:
+		SET_REG_FIELD(0x240, *vc, 1, 23, cnt);
+		SET_REG_FIELD(0x241, *vc, 3, 24, type);
+		SET_REG_FIELD(0x242, *vc, 5, 27, shft);
+		break;
+	}
 }
 
 /*
@@ -769,230 +406,22 @@ void GXClearVtxDesc(void)
  * Address:	8020FC48
  * Size:	00035C
  */
-void GXSetVtxAttrFmt(void)
+void GXSetVtxAttrFmt(GXVtxFmt vtxfmt, GXAttr attr, GXCompCnt cnt, GXCompType type, u8 frac)
 {
-	/*
-	.loc_0x0:
-	  subi      r0, r4, 0x9
-	  lwz       r8, 0x2A68(r13)
-	  rlwinm    r4,r3,2,0,29
-	  add       r9, r8, r4
-	  cmplwi    r0, 0x10
-	  addi      r4, r9, 0x1C
-	  addi      r8, r9, 0x3C
-	  addi      r9, r9, 0x5C
-	  bgt-      .loc_0x328
-	  lis       r10, 0x802F
-	  subi      r10, r10, 0x7330
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r10, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r0, 0x0(r4)
-	  rlwinm    r6,r6,1,0,30
-	  rlwinm    r0,r0,0,0,30
-	  or        r0, r0, r5
-	  stw       r0, 0x0(r4)
-	  rlwinm    r0,r7,4,20,27
-	  lwz       r5, 0x0(r4)
-	  rlwinm    r5,r5,0,31,27
-	  or        r5, r5, r6
-	  stw       r5, 0x0(r4)
-	  lwz       r5, 0x0(r4)
-	  rlwinm    r5,r5,0,28,22
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x328
-	  lwz       r7, 0x0(r4)
-	  rlwinm    r0,r6,10,0,21
-	  cmpwi     r5, 0x2
-	  rlwinm    r6,r7,0,22,18
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r4)
-	  bne-      .loc_0xB8
-	  lwz       r0, 0x0(r4)
-	  rlwinm    r0,r0,0,23,21
-	  ori       r0, r0, 0x200
-	  stw       r0, 0x0(r4)
-	  lwz       r0, 0x0(r4)
-	  rlwinm    r0,r0,0,1,31
-	  oris      r0, r0, 0x8000
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x328
+	u32* va;
+	u32* vb;
+	u32* vc;
 
-	.loc_0xB8:
-	  lwz       r6, 0x0(r4)
-	  rlwinm    r0,r5,9,0,22
-	  rlwinm    r5,r6,0,23,21
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r4)
-	  lwz       r0, 0x0(r4)
-	  rlwinm    r0,r0,0,1,31
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x328
-	  lwz       r7, 0x0(r4)
-	  rlwinm    r5,r5,13,0,18
-	  rlwinm    r0,r6,14,0,17
-	  rlwinm    r6,r7,0,19,17
-	  or        r5, r6, r5
-	  stw       r5, 0x0(r4)
-	  lwz       r5, 0x0(r4)
-	  rlwinm    r5,r5,0,18,14
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x328
-	  lwz       r7, 0x0(r4)
-	  rlwinm    r5,r5,17,0,14
-	  rlwinm    r0,r6,18,0,13
-	  rlwinm    r6,r7,0,15,13
-	  or        r5, r6, r5
-	  stw       r5, 0x0(r4)
-	  lwz       r5, 0x0(r4)
-	  rlwinm    r5,r5,0,14,10
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x328
-	  lwz       r8, 0x0(r4)
-	  rlwinm    r0,r5,21,0,10
-	  rlwinm    r5,r8,0,11,9
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r4)
-	  rlwinm    r5,r6,22,0,9
-	  rlwinm    r0,r7,25,0,6
-	  lwz       r6, 0x0(r4)
-	  rlwinm    r6,r6,0,10,6
-	  or        r5, r6, r5
-	  stw       r5, 0x0(r4)
-	  lwz       r5, 0x0(r4)
-	  rlwinm    r5,r5,0,7,1
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x328
-	  lwz       r0, 0x0(r8)
-	  rlwinm    r4,r6,1,0,30
-	  rlwinm    r0,r0,0,0,30
-	  or        r0, r0, r5
-	  stw       r0, 0x0(r8)
-	  rlwinm    r0,r7,4,20,27
-	  lwz       r5, 0x0(r8)
-	  rlwinm    r5,r5,0,31,27
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r8)
-	  lwz       r4, 0x0(r8)
-	  rlwinm    r4,r4,0,28,22
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x328
-	  lwz       r4, 0x0(r8)
-	  rlwinm    r0,r5,9,0,22
-	  rlwinm    r4,r4,0,23,21
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r8)
-	  rlwinm    r4,r6,10,0,21
-	  rlwinm    r0,r7,13,11,18
-	  lwz       r5, 0x0(r8)
-	  rlwinm    r5,r5,0,22,18
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r8)
-	  lwz       r4, 0x0(r8)
-	  rlwinm    r4,r4,0,19,13
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x328
-	  lwz       r4, 0x0(r8)
-	  rlwinm    r0,r5,18,0,13
-	  rlwinm    r4,r4,0,14,12
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r8)
-	  rlwinm    r4,r6,19,0,12
-	  rlwinm    r0,r7,22,2,9
-	  lwz       r5, 0x0(r8)
-	  rlwinm    r5,r5,0,13,9
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r8)
-	  lwz       r4, 0x0(r8)
-	  rlwinm    r4,r4,0,10,4
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x328
-	  lwz       r10, 0x0(r8)
-	  rlwinm    r0,r5,27,0,4
-	  rlwinm    r4,r6,28,0,3
-	  rlwinm    r5,r10,0,5,3
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r8)
-	  rlwinm    r0,r7,0,24,31
-	  lwz       r5, 0x0(r8)
-	  rlwinm    r5,r5,0,4,0
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r8)
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r4,r4,0,0,26
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  b         .loc_0x328
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r0,r5,5,0,26
-	  rlwinm    r4,r4,0,27,25
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  rlwinm    r4,r6,6,0,25
-	  rlwinm    r0,r7,9,15,22
-	  lwz       r5, 0x0(r9)
-	  rlwinm    r5,r5,0,26,22
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r9)
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r4,r4,0,23,17
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  b         .loc_0x328
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r0,r5,14,0,17
-	  rlwinm    r4,r4,0,18,16
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  rlwinm    r4,r6,15,0,16
-	  rlwinm    r0,r7,18,6,13
-	  lwz       r5, 0x0(r9)
-	  rlwinm    r5,r5,0,17,13
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r9)
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r4,r4,0,14,8
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  b         .loc_0x328
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r0,r5,23,0,8
-	  rlwinm    r4,r4,0,9,7
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  rlwinm    r0,r6,24,0,7
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r4,r4,0,8,4
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r9)
-	  lwz       r0, 0x0(r9)
-	  rlwinm    r0,r0,0,5,31
-	  rlwimi    r0,r7,27,0,4
-	  stw       r0, 0x0(r9)
-
-	.loc_0x328:
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r3,0,24,31
-	  li        r3, 0x1
-	  lwz       r4, 0x4F0(r5)
-	  slw       r0, r3, r0
-	  rlwinm    r0,r0,0,24,31
-	  ori       r3, r4, 0x10
-	  stw       r3, 0x4F0(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lbz       r3, 0x4EE(r4)
-	  or        r0, r3, r0
-	  stb       r0, 0x4EE(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x252, "GXSetVtxAttrFmt");
+	CHECK_VTXFMT(0x253, vtxfmt);
+	CHECK_ATTRNAME2(0x255, attr);
+	CHECK_FRAC(0x256, frac);
+	va = &gx->vatA[vtxfmt];
+	vb = &gx->vatB[vtxfmt];
+	vc = &gx->vatC[vtxfmt];
+	SETVAT(va, vb, vc, attr, cnt, type, frac);
+	gx->dirtyState |= 0x10;
+	gx->dirtyVAT |= (u8)(1 << (u8)vtxfmt);
 }
 
 /*
@@ -1000,242 +429,26 @@ void GXSetVtxAttrFmt(void)
  * Address:	8020FFA4
  * Size:	00037C
  */
-void GXSetVtxAttrFmtv(void)
+void GXSetVtxAttrFmtv(GXVtxFmt vtxfmt, GXVtxAttrFmtList* list)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x2A68(r13)
-	  rlwinm    r0,r3,2,0,29
-	  lis       r5, 0x802F
-	  add       r6, r6, r0
-	  addi      r8, r6, 0x1C
-	  addi      r9, r6, 0x3C
-	  addi      r10, r6, 0x5C
-	  subi      r5, r5, 0x72EC
-	  b         .loc_0x33C
+	u32* va;
+	u32* vb;
+	u32* vc;
 
-	.loc_0x24:
-	  lwz       r6, 0x0(r4)
-	  lbz       r7, 0xC(r4)
-	  subi      r11, r6, 0x9
-	  lwz       r6, 0x8(r4)
-	  cmplwi    r11, 0x10
-	  lwz       r0, 0x4(r4)
-	  bgt-      .loc_0x338
-	  rlwinm    r11,r11,2,0,29
-	  lwzx      r11, r5, r11
-	  mtctr     r11
-	  bctr
-	  lwz       r12, 0x0(r8)
-	  rlwinm    r11,r6,1,0,30
-	  rlwinm    r6,r7,4,0,27
-	  rlwinm    r7,r12,0,0,30
-	  or        r0, r7, r0
-	  stw       r0, 0x0(r8)
-	  lwz       r0, 0x0(r8)
-	  rlwinm    r0,r0,0,31,27
-	  or        r0, r0, r11
-	  stw       r0, 0x0(r8)
-	  lwz       r0, 0x0(r8)
-	  rlwinm    r0,r0,0,28,22
-	  or        r0, r0, r6
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x338
-	  lwz       r7, 0x0(r8)
-	  rlwinm    r6,r6,10,0,21
-	  cmpwi     r0, 0x2
-	  rlwinm    r7,r7,0,22,18
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r8)
-	  bne-      .loc_0xCC
-	  lwz       r0, 0x0(r8)
-	  rlwinm    r0,r0,0,23,21
-	  ori       r0, r0, 0x200
-	  stw       r0, 0x0(r8)
-	  lwz       r0, 0x0(r8)
-	  rlwinm    r0,r0,0,1,31
-	  oris      r0, r0, 0x8000
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x338
-
-	.loc_0xCC:
-	  lwz       r6, 0x0(r8)
-	  rlwinm    r0,r0,9,0,22
-	  rlwinm    r6,r6,0,23,21
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r8)
-	  lwz       r0, 0x0(r8)
-	  rlwinm    r0,r0,0,1,31
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r8)
-	  rlwinm    r7,r0,13,0,18
-	  rlwinm    r0,r6,14,0,17
-	  rlwinm    r6,r11,0,19,17
-	  or        r6, r6, r7
-	  stw       r6, 0x0(r8)
-	  lwz       r6, 0x0(r8)
-	  rlwinm    r6,r6,0,18,14
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r8)
-	  rlwinm    r7,r0,17,0,14
-	  rlwinm    r0,r6,18,0,13
-	  rlwinm    r6,r11,0,15,13
-	  or        r6, r6, r7
-	  stw       r6, 0x0(r8)
-	  lwz       r6, 0x0(r8)
-	  rlwinm    r6,r6,0,14,10
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r8)
-	  rlwinm    r0,r0,21,0,10
-	  rlwinm    r6,r6,22,0,9
-	  rlwinm    r11,r11,0,11,9
-	  or        r0, r11, r0
-	  stw       r0, 0x0(r8)
-	  rlwinm    r0,r7,25,0,6
-	  lwz       r7, 0x0(r8)
-	  rlwinm    r7,r7,0,10,6
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r8)
-	  lwz       r6, 0x0(r8)
-	  rlwinm    r6,r6,0,7,1
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r8)
-	  b         .loc_0x338
-	  lwz       r12, 0x0(r9)
-	  rlwinm    r11,r6,1,0,30
-	  rlwinm    r6,r7,4,0,27
-	  rlwinm    r7,r12,0,0,30
-	  or        r0, r7, r0
-	  stw       r0, 0x0(r9)
-	  lwz       r0, 0x0(r9)
-	  rlwinm    r0,r0,0,31,27
-	  or        r0, r0, r11
-	  stw       r0, 0x0(r9)
-	  lwz       r0, 0x0(r9)
-	  rlwinm    r0,r0,0,28,22
-	  or        r0, r0, r6
-	  stw       r0, 0x0(r9)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r9)
-	  rlwinm    r0,r0,9,0,22
-	  rlwinm    r6,r6,10,0,21
-	  rlwinm    r11,r11,0,23,21
-	  or        r0, r11, r0
-	  stw       r0, 0x0(r9)
-	  rlwinm    r0,r7,13,0,18
-	  lwz       r7, 0x0(r9)
-	  rlwinm    r7,r7,0,22,18
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r9)
-	  lwz       r6, 0x0(r9)
-	  rlwinm    r6,r6,0,19,13
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r9)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r9)
-	  rlwinm    r0,r0,18,0,13
-	  rlwinm    r6,r6,19,0,12
-	  rlwinm    r11,r11,0,14,12
-	  or        r0, r11, r0
-	  stw       r0, 0x0(r9)
-	  rlwinm    r0,r7,22,0,9
-	  lwz       r7, 0x0(r9)
-	  rlwinm    r7,r7,0,13,9
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r9)
-	  lwz       r6, 0x0(r9)
-	  rlwinm    r6,r6,0,10,4
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r9)
-	  b         .loc_0x338
-	  lwz       r12, 0x0(r9)
-	  rlwinm    r11,r0,27,0,4
-	  rlwinm    r0,r6,28,0,3
-	  rlwinm    r6,r12,0,5,3
-	  or        r6, r6, r11
-	  stw       r6, 0x0(r9)
-	  lwz       r6, 0x0(r9)
-	  rlwinm    r6,r6,0,4,0
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r9)
-	  lwz       r0, 0x0(r10)
-	  rlwinm    r0,r0,0,0,26
-	  or        r0, r0, r7
-	  stw       r0, 0x0(r10)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r10)
-	  rlwinm    r0,r0,5,0,26
-	  rlwinm    r6,r6,6,0,25
-	  rlwinm    r11,r11,0,27,25
-	  or        r0, r11, r0
-	  stw       r0, 0x0(r10)
-	  rlwinm    r0,r7,9,0,22
-	  lwz       r7, 0x0(r10)
-	  rlwinm    r7,r7,0,26,22
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r10)
-	  lwz       r6, 0x0(r10)
-	  rlwinm    r6,r6,0,23,17
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r10)
-	  b         .loc_0x338
-	  lwz       r11, 0x0(r10)
-	  rlwinm    r0,r0,14,0,17
-	  rlwinm    r6,r6,15,0,16
-	  rlwinm    r11,r11,0,18,16
-	  or        r0, r11, r0
-	  stw       r0, 0x0(r10)
-	  rlwinm    r0,r7,18,0,13
-	  lwz       r7, 0x0(r10)
-	  rlwinm    r7,r7,0,17,13
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r10)
-	  lwz       r6, 0x0(r10)
-	  rlwinm    r6,r6,0,14,8
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r10)
-	  b         .loc_0x338
-	  lwz       r12, 0x0(r10)
-	  rlwinm    r11,r0,23,0,8
-	  rlwinm    r0,r6,24,0,7
-	  rlwinm    r6,r12,0,9,7
-	  or        r6, r6, r11
-	  stw       r6, 0x0(r10)
-	  lwz       r6, 0x0(r10)
-	  rlwinm    r6,r6,0,8,4
-	  or        r0, r6, r0
-	  stw       r0, 0x0(r10)
-	  lwz       r0, 0x0(r10)
-	  rlwinm    r0,r0,0,5,31
-	  rlwimi    r0,r7,27,0,4
-	  stw       r0, 0x0(r10)
-
-	.loc_0x338:
-	  addi      r4, r4, 0x10
-
-	.loc_0x33C:
-	  lwz       r0, 0x0(r4)
-	  cmpwi     r0, 0xFF
-	  bne+      .loc_0x24
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r0,r3,0,24,31
-	  li        r3, 0x1
-	  lwz       r4, 0x4F0(r5)
-	  slw       r0, r3, r0
-	  rlwinm    r0,r0,0,24,31
-	  ori       r3, r4, 0x10
-	  stw       r3, 0x4F0(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lbz       r3, 0x4EE(r4)
-	  or        r0, r3, r0
-	  stb       r0, 0x4EE(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x27B, "GXSetVtxAttrFmtv");
+	CHECK_LISTPTR(0x27C, list);
+	CHECK_VTXFMT(0x27D, vtxfmt);
+	va = &gx->vatA[vtxfmt];
+	vb = &gx->vatB[vtxfmt];
+	vc = &gx->vatC[vtxfmt];
+	while (list->mAttr != GX_VA_NULL) {
+		CHECK_ATTRNAME2(0x286, list->attr);
+		CHECK_FRAC(0x287, list->frac);
+		SETVAT(va, vb, vc, list->mAttr, list->mCount, list->mType, list->mFrac);
+		list++;
+	}
+	gx->dirtyState |= 0x10;
+	gx->dirtyVAT |= (u8)(1 << (u8)vtxfmt);
 }
 
 /*
@@ -1245,54 +458,16 @@ void GXSetVtxAttrFmtv(void)
  */
 void __GXSetVAT(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r10, 0x2A68(r13)
-	  li        r12, 0
-	  li        r11, 0
-	  lis       r7, 0xCC01
-	  b         .loc_0x80
+	u8 i;
 
-	.loc_0x14:
-	  rlwinm    r9,r12,0,24,31
-	  lbz       r3, 0x4EE(r10)
-	  li        r0, 0x1
-	  slw       r0, r0, r9
-	  and.      r0, r3, r0
-	  beq-      .loc_0x78
-	  li        r8, 0x8
-	  stb       r8, -0x8000(r7)
-	  ori       r3, r9, 0x70
-	  addi      r0, r11, 0x1C
-	  stb       r3, -0x8000(r7)
-	  ori       r5, r9, 0x80
-	  addi      r4, r11, 0x3C
-	  lwzx      r6, r10, r0
-	  ori       r3, r9, 0x90
-	  addi      r0, r11, 0x5C
-	  stw       r6, -0x8000(r7)
-	  stb       r8, -0x8000(r7)
-	  stb       r5, -0x8000(r7)
-	  lwzx      r4, r10, r4
-	  stw       r4, -0x8000(r7)
-	  stb       r8, -0x8000(r7)
-	  stb       r3, -0x8000(r7)
-	  lwzx      r0, r10, r0
-	  stw       r0, -0x8000(r7)
-
-	.loc_0x78:
-	  addi      r11, r11, 0x4
-	  addi      r12, r12, 0x1
-
-	.loc_0x80:
-	  rlwinm    r0,r12,0,24,31
-	  cmplwi    r0, 0x8
-	  blt+      .loc_0x14
-	  lwz       r3, 0x2A68(r13)
-	  li        r0, 0
-	  stb       r0, 0x4EE(r3)
-	  blr
-	*/
+	for (i = 0; i < 8; i++) {
+		if (gx->dirtyVAT & (1 << (u8)i)) {
+			GX_WRITE_SOME_REG4(8, i | 0x70, gx->vatA[i], i - 12);
+			GX_WRITE_SOME_REG4(8, i | 0x80, gx->vatB[i], i - 12);
+			GX_WRITE_SOME_REG4(8, i | 0x90, gx->vatC[i], i - 12);
+		}
+	}
+	gx->dirtyVAT = 0;
 }
 
 /*
@@ -1300,9 +475,88 @@ void __GXSetVAT(void)
  * Address:	........
  * Size:	000248
  */
-void GXGetVtxAttrFmt(void)
+void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type, u8* frac)
 {
-	// UNUSED FUNCTION
+	u32* va;
+	u32* vb;
+	u32* vc;
+
+	CHECK_GXBEGIN(0x2CF, "GXGetVtxAttrFmt");
+	CHECK_VTXFMT(0x2D0, fmt);
+	va = &gx->vatA[fmt];
+	vb = &gx->vatB[fmt];
+	vc = &gx->vatC[fmt];
+	switch (attr) {
+	case GX_VA_POS:
+		*cnt  = GET_REG_FIELD(*va, 1, 0);
+		*type = GET_REG_FIELD(*va, 3, 1);
+		*frac = GET_REG_FIELD(*va, 5, 4);
+		return;
+	case GX_VA_NRM:
+	case GX_VA_NBT:
+		*cnt = GET_REG_FIELD(*va, 1, 9);
+		if (*cnt == GX_TEX_ST && (u8)(*va >> 0x1F) != 0) {
+			*cnt = GX_NRM_NBT3;
+		}
+		*type = GET_REG_FIELD(*va, 3, 10);
+		*frac = 0;
+		return;
+	case GX_VA_CLR0:
+		*cnt  = GET_REG_FIELD(*va, 1, 13);
+		*type = GET_REG_FIELD(*va, 3, 14);
+		*frac = 0;
+		return;
+	case GX_VA_CLR1:
+		*cnt  = GET_REG_FIELD(*va, 1, 17);
+		*type = GET_REG_FIELD(*va, 3, 18);
+		*frac = 0;
+		return;
+	case GX_VA_TEX0:
+		*cnt  = GET_REG_FIELD(*va, 1, 21);
+		*type = GET_REG_FIELD(*va, 3, 22);
+		*frac = (u8)(*va >> 0x19U) & 0x1F;
+		return;
+	case GX_VA_TEX1:
+		*cnt  = GET_REG_FIELD(*vb, 1, 0);
+		*type = GET_REG_FIELD(*vb, 3, 1);
+		*frac = (u8)(*vb >> 4U) & 0x1F;
+		return;
+	case GX_VA_TEX2:
+		*cnt  = GET_REG_FIELD(*vb, 1, 9);
+		*type = GET_REG_FIELD(*vb, 3, 10);
+		*frac = (u8)(*vb >> 0xDU) & 0x1F;
+		return;
+	case GX_VA_TEX3:
+		*cnt  = GET_REG_FIELD(*vb, 1, 18);
+		*type = GET_REG_FIELD(*vb, 3, 19);
+		*frac = (u8)(*vb >> 0x16U) & 0x1F;
+		return;
+	case GX_VA_TEX4:
+		*cnt  = GET_REG_FIELD(*vb, 1, 27);
+		*type = GET_REG_FIELD(*vb, 3, 28);
+		*frac = GET_REG_FIELD(*vc, 5, 0);
+		return;
+	case GX_VA_TEX5:
+		*cnt  = GET_REG_FIELD(*vc, 1, 5);
+		*type = GET_REG_FIELD(*vc, 3, 6);
+		*frac = (u8)(*vc >> 9U) & 0x1F;
+		return;
+	case GX_VA_TEX6:
+		*cnt  = GET_REG_FIELD(*vc, 1, 14);
+		*type = GET_REG_FIELD(*vc, 3, 15);
+		*frac = (u8)(*vc >> 0x12) & 0x1F;
+		return;
+	case GX_VA_TEX7:
+		*cnt  = GET_REG_FIELD(*vc, 1, 23);
+		*type = GET_REG_FIELD(*vc, 3, 24);
+		*frac = (int)(*vc >> 0x1BU);
+		return;
+	default:
+		*cnt  = GX_TEX_ST;
+		*type = GX_RGB565;
+		*frac = 0;
+		return;
+	}
 }
 
 /*
@@ -1310,9 +564,19 @@ void GXGetVtxAttrFmt(void)
  * Address:	........
  * Size:	000074
  */
-void GXGetVtxAttrFmtv(void)
+void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList* vat)
 {
-	// UNUSED FUNCTION
+	GXAttr attr;
+
+	CHECK_GXBEGIN(0x330, "GXGetVtxAttrFmtv");
+	CHECK_LISTPTR(0x331, vat);
+	CHECK_VTXFMT(0x332, fmt);
+	for (attr = GX_VA_POS; attr < GX_VA_MAX_ATTR; attr++) {
+		vat->mAttr = attr;
+		GXGetVtxAttrFmt(fmt, attr, &vat->mCount, &vat->mType, &vat->mFrac);
+		vat++;
+	}
+	vat->mAttr = GX_VA_NULL;
 }
 
 /*
@@ -1320,50 +584,22 @@ void GXGetVtxAttrFmtv(void)
  * Address:	802103BC
  * Size:	00008C
  */
-void GXSetArray(void)
+void GXSetArray(GXAttr attr, void* base_ptr, u8 stride)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x19
-	  bne-      .loc_0xC
-	  li        r3, 0xA
+	GXAttr cpAttr;
+	unsigned long phyAddr;
 
-	.loc_0xC:
-	  li        r0, 0x8
-	  subi      r6, r3, 0x9
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  ori       r0, r6, 0xA0
-	  rlwinm    r4,r4,0,2,31
-	  stb       r0, -0x8000(r3)
-	  subic.    r0, r6, 0xC
-	  stw       r4, -0x8000(r3)
-	  blt-      .loc_0x4C
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x4C
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  stw       r4, 0x88(r3)
+	attr; // needed to match
 
-	.loc_0x4C:
-	  li        r0, 0x8
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  ori       r0, r6, 0xB0
-	  rlwinm    r4,r5,0,24,31
-	  stb       r0, -0x8000(r3)
-	  subic.    r0, r6, 0xC
-	  stw       r4, -0x8000(r3)
-	  bltlr-
-	  cmpwi     r0, 0x4
-	  bgelr-
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  stw       r4, 0x98(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x34F, "GXSetArray");
+	if (attr == GX_VA_NBT) {
+		attr = GX_VA_NRM;
+	}
+	CHECK_ATTRNAME3(0x352, attr);
+	cpAttr  = attr - GX_VA_POS;
+	phyAddr = (u32)base_ptr & 0x3FFFFFFF;
+	GX_WRITE_SOME_REG2(8, cpAttr | 0xA0, phyAddr, cpAttr - 12);
+	GX_WRITE_SOME_REG3(8, cpAttr | 0xB0, stride, cpAttr - 12);
 }
 
 /*
@@ -1373,13 +609,8 @@ void GXSetArray(void)
  */
 void GXInvalidateVtxCache(void)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x48
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x368, "GXInvalidateVtxCache");
+	GX_WRITE_U8(0x48);
 }
 
 /*
@@ -1387,213 +618,167 @@ void GXInvalidateVtxCache(void)
  * Address:	80210458
  * Size:	0002D0
  */
-void GXSetTexCoordGen2(void)
+
+void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc src_param, u32 mtx, GXBool normalize, u32 pt_texmtx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r5, 0x14
-	  stw       r0, 0x4(r1)
-	  li        r11, 0
-	  li        r12, 0
-	  stwu      r1, -0x8(r1)
-	  li        r10, 0x5
-	  bgt-      .loc_0xB4
-	  lis       r9, 0x802F
-	  subi      r9, r9, 0x728C
-	  rlwinm    r0,r5,2,0,29
-	  lwzx      r0, r9, r0
-	  mtctr     r0
-	  bctr
-	  li        r10, 0
-	  li        r12, 0x1
-	  b         .loc_0xB4
-	  li        r10, 0x1
-	  li        r12, 0x1
-	  b         .loc_0xB4
-	  li        r10, 0x3
-	  li        r12, 0x1
-	  b         .loc_0xB4
-	  li        r10, 0x4
-	  li        r12, 0x1
-	  b         .loc_0xB4
-	  li        r10, 0x2
-	  b         .loc_0xB4
-	  li        r10, 0x2
-	  b         .loc_0xB4
-	  li        r10, 0x5
-	  b         .loc_0xB4
-	  li        r10, 0x6
-	  b         .loc_0xB4
-	  li        r10, 0x7
-	  b         .loc_0xB4
-	  li        r10, 0x8
-	  b         .loc_0xB4
-	  li        r10, 0x9
-	  b         .loc_0xB4
-	  li        r10, 0xA
-	  b         .loc_0xB4
-	  li        r10, 0xB
-	  b         .loc_0xB4
-	  li        r10, 0xC
+	u32 reg = 0;
+	u32 row;
+	u32 bumprow; // unused
+	u32 form;
+	GXAttr mtxIdAttr;
 
-	.loc_0xB4:
-	  cmpwi     r4, 0x1
-	  beq-      .loc_0xDC
-	  bge-      .loc_0xCC
-	  cmpwi     r4, 0
-	  bge-      .loc_0xF0
-	  b         .loc_0x16C
-
-	.loc_0xCC:
-	  cmpwi     r4, 0xA
-	  beq-      .loc_0x144
-	  bge-      .loc_0x16C
-	  b         .loc_0x108
-
-	.loc_0xDC:
-	  rlwinm    r0,r12,2,0,29
-	  rlwinm    r4,r0,0,28,19
-	  rlwinm    r0,r10,7,0,24
-	  or        r11, r4, r0
-	  b         .loc_0x16C
-
-	.loc_0xF0:
-	  rlwinm    r0,r12,2,0,29
-	  ori       r0, r0, 0x2
-	  rlwinm    r4,r0,0,28,19
-	  rlwinm    r0,r10,7,0,24
-	  or        r11, r4, r0
-	  b         .loc_0x16C
-
-	.loc_0x108:
-	  rlwinm    r0,r12,2,0,29
-	  rlwinm    r0,r0,0,28,24
-	  ori       r0, r0, 0x10
-	  rlwinm    r9,r0,0,25,19
-	  rlwinm    r0,r10,7,0,24
-	  or        r9, r9, r0
-	  subi      r5, r5, 0xC
-	  subi      r0, r4, 0x2
-	  rlwinm    r9,r9,0,20,16
-	  rlwinm    r4,r5,12,0,19
-	  or        r4, r9, r4
-	  rlwinm    r4,r4,0,17,13
-	  rlwinm    r0,r0,15,0,16
-	  or        r11, r4, r0
-	  b         .loc_0x16C
-
-	.loc_0x144:
-	  cmpwi     r5, 0x13
-	  rlwinm    r0,r12,2,0,29
-	  bne-      .loc_0x15C
-	  rlwinm    r0,r0,0,28,24
-	  ori       r0, r0, 0x20
-	  b         .loc_0x164
-
-	.loc_0x15C:
-	  rlwinm    r0,r0,0,28,24
-	  ori       r0, r0, 0x30
-
-	.loc_0x164:
-	  rlwinm    r0,r0,0,25,19
-	  ori       r11, r0, 0x100
-
-	.loc_0x16C:
-	  li        r10, 0x10
-	  lis       r9, 0xCC01
-	  stb       r10, -0x8000(r9)
-	  addi      r0, r3, 0x1040
-	  subi      r4, r8, 0x40
-	  stw       r0, -0x8000(r9)
-	  rlwinm    r5,r4,0,24,22
-	  rlwinm    r4,r7,8,16,23
-	  stw       r11, -0x8000(r9)
-	  addi      r0, r3, 0x1050
-	  cmplwi    r3, 0x6
-	  stb       r10, -0x8000(r9)
-	  or        r4, r5, r4
-	  stw       r0, -0x8000(r9)
-	  stw       r4, -0x8000(r9)
-	  bgt-      .loc_0x29C
-	  lis       r4, 0x802F
-	  subi      r4, r4, 0x72A8
-	  rlwinm    r0,r3,2,0,29
-	  lwzx      r0, r4, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,6,0,25
-	  addi      r5, r4, 0x80
-	  lwz       r4, 0x80(r4)
-	  rlwinm    r4,r4,0,26,19
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  b         .loc_0x2B8
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,12,0,19
-	  addi      r5, r4, 0x80
-	  lwz       r4, 0x80(r4)
-	  rlwinm    r4,r4,0,20,13
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  b         .loc_0x2B8
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,18,0,13
-	  addi      r5, r4, 0x80
-	  lwz       r4, 0x80(r4)
-	  rlwinm    r4,r4,0,14,7
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  b         .loc_0x2B8
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,24,0,7
-	  addi      r5, r4, 0x80
-	  lwz       r4, 0x80(r4)
-	  rlwinm    r4,r4,0,8,1
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  b         .loc_0x2B8
-	  lwz       r4, 0x2A68(r13)
-	  lwzu      r0, 0x84(r4)
-	  rlwinm    r0,r0,0,0,25
-	  or        r0, r0, r6
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x2B8
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,6,0,25
-	  addi      r5, r4, 0x84
-	  lwz       r4, 0x84(r4)
-	  rlwinm    r4,r4,0,26,19
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  b         .loc_0x2B8
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,12,0,19
-	  addi      r5, r4, 0x84
-	  lwz       r4, 0x84(r4)
-	  rlwinm    r4,r4,0,20,13
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  b         .loc_0x2B8
-
-	.loc_0x29C:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r6,18,0,13
-	  addi      r5, r4, 0x84
-	  lwz       r4, 0x84(r4)
-	  rlwinm    r4,r4,0,14,7
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-
-	.loc_0x2B8:
-	  addi      r3, r3, 0x1
-	  bl        0x40D8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	CHECK_GXBEGIN(936, "GXSetTexCoordGen");
+	ASSERTMSGLINE(937, dst_coord < 8, "GXSetTexCoordGen: Invalid coordinate Id");
+	form = 0;
+	row  = 5;
+	switch (src_param) {
+	case GX_TG_POS:
+		row  = 0;
+		form = 1;
+		break;
+	case GX_TG_NRM:
+		row  = 1;
+		form = 1;
+		break;
+	case GX_TG_BINRM:
+		row  = 3;
+		form = 1;
+		break;
+	case GX_TG_TANGENT:
+		row  = 4;
+		form = 1;
+		break;
+	case GX_TG_COLOR0:
+		row = 2;
+		break;
+	case GX_TG_COLOR1:
+		row = 2;
+		break;
+	case GX_TG_TEX0:
+		row = 5;
+		break;
+	case GX_TG_TEX1:
+		row = 6;
+		break;
+	case GX_TG_TEX2:
+		row = 7;
+		break;
+	case GX_TG_TEX3:
+		row = 8;
+		break;
+	case GX_TG_TEX4:
+		row = 9;
+		break;
+	case GX_TG_TEX5:
+		row = 10;
+		break;
+	case GX_TG_TEX6:
+		row = 11;
+		break;
+	case GX_TG_TEX7:
+		row = 12;
+		break;
+	case GX_TG_TEXCOORD0:
+		bumprow;
+		break;
+	case GX_TG_TEXCOORD1:
+		bumprow;
+		break;
+	case GX_TG_TEXCOORD2:
+		bumprow;
+		break;
+	case GX_TG_TEXCOORD3:
+		bumprow;
+		break;
+	case GX_TG_TEXCOORD4:
+		bumprow;
+		break;
+	case GX_TG_TEXCOORD5:
+		bumprow;
+		break;
+	case GX_TG_TEXCOORD6:
+		bumprow;
+		break;
+	default:
+		ASSERTMSGLINE(965, 0, "GXSetTexCoordGen: Invalid source parameter");
+		break;
+	}
+	switch (func) {
+	case GX_TG_MTX2X4:
+		SET_REG_FIELD(974, reg, 1, 1, 0);
+		SET_REG_FIELD(975, reg, 1, 2, form);
+		SET_REG_FIELD(976, reg, 3, 4, 0);
+		SET_REG_FIELD(977, reg, 5, 7, row);
+		break;
+	case GX_TG_MTX3X4:
+		SET_REG_FIELD(981, reg, 1, 1, 1);
+		SET_REG_FIELD(982, reg, 1, 2, form);
+		SET_REG_FIELD(983, reg, 3, 4, 0);
+		SET_REG_FIELD(984, reg, 5, 7, row);
+		break;
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+		ASSERTMSGLINE(997, src_param >= 12 && src_param <= 18, "GXSetTexCoordGen:  Bump source texture value is invalid");
+		SET_REG_FIELD(998, reg, 1, 1, 0);
+		SET_REG_FIELD(999, reg, 1, 2, form);
+		SET_REG_FIELD(1000, reg, 3, 4, 1);
+		SET_REG_FIELD(1001, reg, 5, 7, row);
+		SET_REG_FIELD(1002, reg, 3, 12, src_param - 12);
+		SET_REG_FIELD(1003, reg, 3, 15, func - 2);
+		break;
+	case GX_TG_SRTG:
+		SET_REG_FIELD(1007, reg, 1, 1, 0);
+		SET_REG_FIELD(1008, reg, 1, 2, form);
+		if (src_param == GX_TG_COLOR0) {
+			SET_REG_FIELD(0, reg, 3, 4, 2);
+		} else {
+			SET_REG_FIELD(0, reg, 3, 4, 3);
+		}
+		SET_REG_FIELD(0, reg, 5, 7, 2);
+		break;
+	default:
+		ASSERTMSGLINE(1019, 0, "GXSetTexCoordGen:  Invalid function");
+		break;
+	}
+	GX_WRITE_XF_REG(dst_coord + 0x40, reg);
+	reg = 0;
+	SET_REG_FIELD(1038, reg, 6, 0, pt_texmtx - 64);
+	SET_REG_FIELD(1039, reg, 1, 8, normalize);
+	GX_WRITE_XF_REG(dst_coord + 0x50, reg);
+	switch (dst_coord) {
+	case GX_TEXCOORD0:
+		SET_REG_FIELD(1048, gx->matIdxA, 6, 6, mtx);
+		break;
+	case GX_TEXCOORD1:
+		SET_REG_FIELD(1049, gx->matIdxA, 6, 12, mtx);
+		break;
+	case GX_TEXCOORD2:
+		SET_REG_FIELD(1050, gx->matIdxA, 6, 18, mtx);
+		break;
+	case GX_TEXCOORD3:
+		SET_REG_FIELD(1051, gx->matIdxA, 6, 24, mtx);
+		break;
+	case GX_TEXCOORD4:
+		SET_REG_FIELD(1052, gx->matIdxB, 6, 0, mtx);
+		break;
+	case GX_TEXCOORD5:
+		SET_REG_FIELD(1053, gx->matIdxB, 6, 6, mtx);
+		break;
+	case GX_TEXCOORD6:
+		SET_REG_FIELD(1054, gx->matIdxB, 6, 12, mtx);
+		break;
+	default:
+		SET_REG_FIELD(1055, gx->matIdxB, 6, 18, mtx);
+		break;
+	}
+	mtxIdAttr = dst_coord + 1;
+	__GXSetMatrixIndex(mtxIdAttr);
 }
 
 /*
@@ -1601,27 +786,10 @@ void GXSetTexCoordGen2(void)
  * Address:	80210728
  * Size:	000048
  */
-void GXSetNumTexGens(void)
+void GXSetNumTexGens(u8 nTexGens)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r7,r3,0,24,31
-	  li        r3, 0x10
-	  addi      r6, r4, 0x204
-	  lwz       r5, 0x204(r4)
-	  lis       r4, 0xCC01
-	  li        r0, 0x103F
-	  rlwinm    r5,r5,0,0,27
-	  or        r5, r5, r7
-	  stw       r5, 0x0(r6)
-	  stb       r3, -0x8000(r4)
-	  lwz       r3, 0x2A68(r13)
-	  stw       r0, -0x8000(r4)
-	  stw       r7, -0x8000(r4)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x41B, "GXSetNumTexGens");
+	SET_REG_FIELD(0x41D, gx->genMode, 4, 0, nTexGens);
+	GX_WRITE_XF_REG(0x3F, nTexGens);
+	gx->dirtyState |= 4;
 }

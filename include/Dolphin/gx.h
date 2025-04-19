@@ -24,8 +24,6 @@ extern "C" {
 #include "Dolphin/GX/GXData.h"
 #include "Dolphin/GX/GXHardware.h"
 
-void GXSetCurrentGXThread();
-
 #ifdef __cplusplus
 };
 #endif // ifdef __cplusplus

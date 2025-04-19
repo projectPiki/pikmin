@@ -1,140 +1,97 @@
-#include "types.h"
+#include "Dolphin/gx.h"
 
 /*
  * --INFO--
  * Address:	80213998
  * Size:	0001B4
  */
-void GXSetFog(void)
+void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor color)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  fcmpu     cr0, f4, f3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x3C(r1)
-	  stw       r28, 0x38(r1)
-	  addi      r28, r4, 0
-	  beq-      .loc_0x34
-	  fcmpu     cr0, f2, f1
-	  bne-      .loc_0x44
+	u32 fogclr;
+	u32 fog0;
+	u32 fog1;
+	u32 fog2;
+	u32 fog3;
+	f32 A;
+	f32 B;
+	f32 B_mant;
+	f32 C;
+	f32 a;
+	f32 c;
+	u32 B_expn;
+	u32 b_m;
+	u32 b_s;
+	u32 a_hex;
+	u32 c_hex;
 
-	.loc_0x34:
-	  lfs       f3, -0x3C58(r2)
-	  lfs       f4, -0x3C54(r2)
-	  fmr       f5, f3
-	  b         .loc_0x60
+	CHECK_GXBEGIN(0x6E, "GXSetFog");
 
-	.loc_0x44:
-	  fsubs     f0, f4, f3
-	  fsubs     f5, f2, f1
-	  fmuls     f2, f4, f3
-	  fdivs     f4, f4, f0
-	  fmuls     f0, f0, f5
-	  fdivs     f5, f1, f5
-	  fdivs     f3, f2, f0
+	ASSERTMSGLINE(0x70, farz >= 0.0f, "GXSetFog: The farz should be positive value");
+	ASSERTMSGLINE(0x71, farz >= nearz, "GXSetFog: The farz should be larger than nearz");
 
-	.loc_0x60:
-	  lfs       f1, -0x3C54(r2)
-	  li        r3, 0
-	  lfd       f0, -0x3C50(r2)
-	  b         .loc_0x78
+	if (farz == nearz || endz == startz) {
+		A = 0.0f;
+		B = 0.5f;
+		C = 0.0f;
+	} else {
+		A = (farz * nearz) / ((farz - nearz) * (endz - startz));
+		B = farz / (farz - nearz);
+		C = startz / (endz - startz);
+	}
 
-	.loc_0x70:
-	  fmuls     f4, f4, f1
-	  addi      r3, r3, 0x1
+	B_mant = B;
+	B_expn = 0;
+	while (B_mant > 1.0) {
+		B_mant *= 0.5f;
+		B_expn++;
+	}
+	while (B_mant > 0.0f && B_mant < 0.5) {
+		B_mant *= 2.0f;
+		B_expn--;
+	}
 
-	.loc_0x78:
-	  fcmpo     cr0, f4, f0
-	  bgt+      .loc_0x70
-	  lfd       f0, -0x3C40(r2)
-	  lfs       f2, -0x3C48(r2)
-	  lfs       f1, -0x3C58(r2)
-	  b         .loc_0x98
+	a   = A / (f32)(1 << (B_expn + 1));
+	b_m = 8.388638e6f * B_mant;
+	b_s = B_expn + 1;
+	c   = C;
 
-	.loc_0x90:
-	  fmuls     f4, f4, f2
-	  subi      r3, r3, 0x1
+	fog1 = 0;
+	SET_REG_FIELD(0x94, fog1, 24, 0, b_m);
+	SET_REG_FIELD(0x95, fog1, 8, 24, 0xEF);
 
-	.loc_0x98:
-	  fcmpo     cr0, f4, f1
-	  ble-      .loc_0xA8
-	  fcmpo     cr0, f4, f0
-	  blt+      .loc_0x90
+	fog2 = 0;
+	SET_REG_FIELD(0x98, fog2, 5, 0, b_s);
+	SET_REG_FIELD(0x99, fog2, 8, 24, 0xF0);
 
-	.loc_0xA8:
-	  addi      r29, r3, 0x1
-	  lfs       f0, -0x3C38(r2)
-	  li        r31, 0x1
-	  lfd       f2, -0x3C30(r2)
-	  slw       r0, r31, r29
-	  fmuls     f1, f0, f4
-	  xoris     r3, r0, 0x8000
-	  stfs      f5, 0x28(r1)
-	  lis       r0, 0x4330
-	  stw       r3, 0x34(r1)
-	  stw       r0, 0x30(r1)
-	  lfd       f0, 0x30(r1)
-	  fsubs     f0, f0, f2
-	  fdivs     f0, f3, f0
-	  stfs      f0, 0x2C(r1)
-	  bl        0x134C
-	  lwz       r0, 0x2C(r1)
-	  rlwinm    r9,r3,0,8,31
-	  lbz       r6, 0x1(r28)
-	  rlwinm    r8,r29,0,8,31
-	  rlwinm    r4,r0,20,13,20
-	  rlwimi    r4,r0,20,21,31
-	  lbz       r11, 0x2(r28)
-	  rlwinm    r0,r0,20,12,12
-	  lbz       r5, 0x0(r28)
-	  rlwimi    r0,r4,0,13,31
-	  lwz       r12, 0x28(r1)
-	  rlwinm    r7,r0,0,8,31
-	  lwz       r3, 0x2A68(r13)
-	  oris      r10, r7, 0xEE00
-	  li        r0, 0x61
-	  lis       r4, 0xCC01
-	  stb       r0, -0x8000(r4)
-	  oris      r7, r9, 0xEF00
-	  rlwinm    r6,r6,8,0,23
-	  stw       r10, -0x8000(r4)
-	  rlwinm    r10,r12,20,13,20
-	  rlwimi    r10,r12,20,21,31
-	  stb       r0, -0x8000(r4)
-	  rlwinm    r9,r12,20,12,12
-	  rlwimi    r9,r10,0,13,31
-	  stw       r7, -0x8000(r4)
-	  oris      r7, r8, 0xF000
-	  rlwimi    r6,r11,0,24,31
-	  stb       r0, -0x8000(r4)
-	  stw       r7, -0x8000(r4)
-	  rlwinm    r7,r30,21,0,10
-	  rlwimi    r7,r9,0,12,31
-	  rlwinm    r7,r7,0,8,31
-	  stb       r0, -0x8000(r4)
-	  oris      r7, r7, 0xF100
-	  stw       r7, -0x8000(r4)
-	  stb       r0, -0x8000(r4)
-	  rlwinm    r0,r5,16,0,15
-	  rlwimi    r0,r6,0,16,31
-	  rlwinm    r0,r0,0,8,31
-	  oris      r0, r0, 0xF200
-	  stw       r0, -0x8000(r4)
-	  sth       r31, 0x2(r3)
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  mtlr      r0
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  blr
-	*/
+	a_hex = *(u32*)&a;
+	c_hex = *(u32*)&c;
+
+	fog0 = 0;
+	SET_REG_FIELD(0xA0, fog0, 11, 0, (a_hex >> 12) & 0x7FF);
+	SET_REG_FIELD(0xA1, fog0, 8, 11, (a_hex >> 23) & 0xFF);
+	SET_REG_FIELD(0xA2, fog0, 1, 19, (a_hex >> 31));
+	SET_REG_FIELD(0xA3, fog0, 8, 24, 0xEE);
+
+	fog3 = 0;
+	SET_REG_FIELD(0xA6, fog3, 11, 0, (c_hex >> 12) & 0x7FF);
+	SET_REG_FIELD(0xA7, fog3, 8, 11, (c_hex >> 23) & 0xFF);
+	SET_REG_FIELD(0xA8, fog3, 1, 19, (c_hex >> 31));
+	SET_REG_FIELD(0xA9, fog3, 1, 20, 0);
+	SET_REG_FIELD(0xAA, fog3, 3, 21, type);
+	SET_REG_FIELD(0xAB, fog3, 8, 24, 0xF1);
+
+	fogclr = 0;
+	SET_REG_FIELD(0xAE, fogclr, 8, 0, color.b);
+	SET_REG_FIELD(0xAF, fogclr, 8, 8, color.g);
+	SET_REG_FIELD(0xB0, fogclr, 8, 16, color.r);
+	SET_REG_FIELD(0xB1, fogclr, 8, 24, 0xF2);
+
+	GX_WRITE_RAS_REG(fog0);
+	GX_WRITE_RAS_REG(fog1);
+	GX_WRITE_RAS_REG(fog2);
+	GX_WRITE_RAS_REG(fog3);
+	GX_WRITE_RAS_REG(fogclr);
+	gx->bpSent = 1;
 }
 
 /*
@@ -142,9 +99,35 @@ void GXSetFog(void)
  * Address:	........
  * Size:	0001C8
  */
-void GXInitFogAdjTable(void)
+void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const f32 projmtx[4][4])
 {
-	// UNUSED FUNCTION
+	f32 xi;
+	f32 iw;
+	f32 rangeVal;
+	f32 nearZ;
+	f32 sideX;
+	u32 i;
+
+	CHECK_GXBEGIN(0xCE, "GXInitFogAdjTable");
+	ASSERTMSGLINE(0xCF, table != NULL, "GXInitFogAdjTable: table pointer is null");
+	ASSERTMSGLINE(0xD0, width <= 640, "GXInitFogAdjTable: invalid width value");
+
+	if (0.0 == projmtx[3][3]) {
+		nearZ = projmtx[2][3] / (projmtx[2][2] - 1.0f);
+		sideX = (nearZ * (1.0f + projmtx[0][2])) / projmtx[0][0];
+	} else {
+		nearZ = (1.0f + projmtx[2][3]) / projmtx[2][2];
+		sideX = -(projmtx[0][3] - 1.0f) / projmtx[0][0];
+	}
+
+	iw = 2.0f / width;
+	for (i = 0; i < 10; i++) {
+		xi = (i + 1) << 5;
+		xi *= iw;
+		xi *= sideX;
+		rangeVal          = sqrtf(1.0f + ((xi * xi) / (nearZ * nearZ)));
+		table->fogVals[i] = (u32)(256.0f * rangeVal) & 0xFFF;
+	}
 }
 
 /*
@@ -152,77 +135,30 @@ void GXInitFogAdjTable(void)
  * Address:	80213B4C
  * Size:	000100
  */
-void GXSetFogRangeAdj(void)
+void GXSetFogRangeAdj(GXBool enable, u16 center, GXFogAdjTable* table)
 {
-	/*
-	.loc_0x0:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC4
-	  lhz       r8, 0x2(r5)
-	  li        r0, 0x61
-	  lhz       r10, 0x0(r5)
-	  lis       r6, 0xCC01
-	  rlwinm    r8,r8,12,0,19
-	  rlwimi    r8,r10,0,20,31
-	  stb       r0, -0x8000(r6)
-	  li        r7, 0xE9
-	  rlwinm    r9,r8,0,8,31
-	  rlwimi    r9,r7,24,0,7
-	  stw       r9, -0x8000(r6)
-	  li        r7, 0xEA
-	  rlwinm    r9,r7,24,0,7
-	  lhzu      r10, 0x4(r5)
-	  li        r7, 0xEB
-	  lhz       r8, 0x2(r5)
-	  rlwinm    r8,r8,12,0,19
-	  stb       r0, -0x8000(r6)
-	  rlwimi    r8,r10,0,20,31
-	  rlwimi    r9,r8,0,8,31
-	  stw       r9, -0x8000(r6)
-	  rlwinm    r9,r7,24,0,7
-	  li        r7, 0xEC
-	  lhz       r8, 0x6(r5)
-	  lhz       r10, 0x4(r5)
-	  rlwinm    r8,r8,12,0,19
-	  rlwimi    r8,r10,0,20,31
-	  stb       r0, -0x8000(r6)
-	  rlwimi    r9,r8,0,8,31
-	  stw       r9, -0x8000(r6)
-	  rlwinm    r9,r7,24,0,7
-	  li        r7, 0xED
-	  lhz       r8, 0xA(r5)
-	  lhz       r10, 0x8(r5)
-	  rlwinm    r8,r8,12,0,19
-	  rlwimi    r8,r10,0,20,31
-	  stb       r0, -0x8000(r6)
-	  rlwimi    r9,r8,0,8,31
-	  stw       r9, -0x8000(r6)
-	  lhz       r8, 0xE(r5)
-	  lhz       r10, 0xC(r5)
-	  rlwinm    r8,r8,12,0,19
-	  rlwimi    r8,r10,0,20,31
-	  stb       r0, -0x8000(r6)
-	  rlwinm    r9,r8,0,8,31
-	  rlwimi    r9,r7,24,0,7
-	  stw       r9, -0x8000(r6)
+	u32 i;
+	u32 range_adj;
+	u32 range_c;
 
-	.loc_0xC4:
-	  rlwinm    r5,r4,0,16,31
-	  lwz       r4, 0x2A68(r13)
-	  addi      r0, r5, 0x154
-	  rlwinm    r5,r0,0,22,20
-	  rlwinm    r0,r3,10,14,21
-	  or        r0, r5, r0
-	  rlwinm    r5,r0,0,8,31
-	  li        r0, 0x61
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  oris      r5, r5, 0xE800
-	  li        r0, 0x1
-	  stw       r5, -0x8000(r3)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x106, "GXSetFogRangeAdj");
+
+	if (enable) {
+		ASSERTMSGLINE(0x109, table != NULL, "GXSetFogRangeAdj: table pointer is null");
+		for (i = 0; i < 10; i += 2) {
+			range_adj = 0;
+			SET_REG_FIELD(0x10D, range_adj, 12, 0, table->fogVals[i]);
+			SET_REG_FIELD(0x10E, range_adj, 12, 12, table->fogVals[i + 1]);
+			SET_REG_FIELD(0x10F, range_adj, 8, 24, (i >> 1) + 0xE9);
+			GX_WRITE_RAS_REG(range_adj);
+		}
+	}
+	range_c = 0;
+	SET_REG_FIELD(0x115, range_c, 10, 0, center + 340);
+	SET_REG_FIELD(0x116, range_c, 1, 10, enable);
+	SET_REG_FIELD(0x117, range_c, 8, 24, 0xE8);
+	GX_WRITE_RAS_REG(range_c);
+	gx->bpSent = 1;
 }
 
 /*
@@ -230,78 +166,19 @@ void GXSetFogRangeAdj(void)
  * Address:	80213C4C
  * Size:	000104
  */
-void GXSetBlendMode(void)
+void GXSetBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor dst_factor, GXLogicOp op)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x1
-	  li        r9, 0x1
-	  beq-      .loc_0x18
-	  cmpwi     r3, 0x3
-	  beq-      .loc_0x18
-	  li        r9, 0
+	CHECK_GXBEGIN(0x12F, "GXSetBlendMode");
 
-	.loc_0x18:
-	  lwz       r8, 0x2A68(r13)
-	  subfic    r0, r3, 0x3
-	  cntlzw    r7, r0
-	  addi      r10, r8, 0x1D0
-	  lwz       r8, 0x1D0(r8)
-	  subfic    r0, r3, 0x2
-	  rlwinm    r3,r8,0,0,30
-	  or        r3, r3, r9
-	  stw       r3, 0x0(r10)
-	  cntlzw    r0, r0
-	  rlwinm    r3,r7,6,0,20
-	  lwz       r9, 0x2A68(r13)
-	  rlwinm    r8,r0,28,4,30
-	  lwzu      r0, 0x1D0(r9)
-	  rlwinm    r7,r6,12,0,19
-	  rlwinm    r6,r4,8,0,23
-	  rlwinm    r0,r0,0,21,19
-	  or        r0, r0, r3
-	  stw       r0, 0x0(r9)
-	  rlwinm    r4,r5,5,0,26
-	  li        r3, 0x61
-	  lwz       r9, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  li        r0, 0x1
-	  addi      r10, r9, 0x1D0
-	  lwz       r9, 0x1D0(r9)
-	  rlwinm    r9,r9,0,31,29
-	  or        r8, r9, r8
-	  stw       r8, 0x0(r10)
-	  lwz       r8, 0x2A68(r13)
-	  addi      r9, r8, 0x1D0
-	  lwz       r8, 0x1D0(r8)
-	  rlwinm    r8,r8,0,20,15
-	  or        r7, r8, r7
-	  stw       r7, 0x0(r9)
-	  lwz       r7, 0x2A68(r13)
-	  addi      r8, r7, 0x1D0
-	  lwz       r7, 0x1D0(r7)
-	  rlwinm    r7,r7,0,24,20
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r8)
-	  lwz       r6, 0x2A68(r13)
-	  addi      r7, r6, 0x1D0
-	  lwz       r6, 0x1D0(r6)
-	  rlwinm    r6,r6,0,27,23
-	  or        r4, r6, r4
-	  stw       r4, 0x0(r7)
-	  lwz       r4, 0x2A68(r13)
-	  addi      r6, r4, 0x1D0
-	  lwz       r4, 0x1D0(r4)
-	  rlwinm    r4,r4,0,8,31
-	  oris      r4, r4, 0x4100
-	  stw       r4, 0x0(r6)
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1D0(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	SET_REG_FIELD(0x135, gx->cmode0, 1, 0, (type == GX_BM_BLEND || type == GX_BM_SUBTRACT));
+	SET_REG_FIELD(0x136, gx->cmode0, 1, 11, (type == GX_BM_SUBTRACT));
+	SET_REG_FIELD(0x138, gx->cmode0, 1, 1, (type == GX_BM_LOGIC));
+	SET_REG_FIELD(0x139, gx->cmode0, 4, 12, op);
+	SET_REG_FIELD(0x13A, gx->cmode0, 3, 8, src_factor);
+	SET_REG_FIELD(0x13B, gx->cmode0, 3, 5, dst_factor);
+	SET_REG_FIELD(0x13C, gx->cmode0, 8, 24, 0x41);
+	GX_WRITE_RAS_REG(gx->cmode0);
+	gx->bpSent = 1;
 }
 
 /*
@@ -309,27 +186,12 @@ void GXSetBlendMode(void)
  * Address:	80213D50
  * Size:	000040
  */
-void GXSetColorUpdate(void)
+void GXSetColorUpdate(GXBool update_enable)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r3,3,21,28
-	  li        r3, 0x61
-	  addi      r6, r4, 0x1D0
-	  lwz       r4, 0x1D0(r4)
-	  lis       r5, 0xCC01
-	  rlwinm    r4,r4,0,29,27
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r6)
-	  li        r0, 0x1
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1D0(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x14F, "GXSetColorUpdate");
+	SET_REG_FIELD(0x150, gx->cmode0, 1, 3, update_enable);
+	GX_WRITE_RAS_REG(gx->cmode0);
+	gx->bpSent = 1;
 }
 
 /*
@@ -337,27 +199,12 @@ void GXSetColorUpdate(void)
  * Address:	80213D90
  * Size:	000040
  */
-void GXSetAlphaUpdate(void)
+void GXSetAlphaUpdate(GXBool update_enable)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r3,4,20,27
-	  li        r3, 0x61
-	  addi      r6, r4, 0x1D0
-	  lwz       r4, 0x1D0(r4)
-	  lis       r5, 0xCC01
-	  rlwinm    r4,r4,0,28,26
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r6)
-	  li        r0, 0x1
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1D0(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x158, "GXSetAlphaUpdate");
+	SET_REG_FIELD(0x159, gx->cmode0, 1, 4, update_enable);
+	GX_WRITE_RAS_REG(gx->cmode0);
+	gx->bpSent = 1;
 }
 
 /*
@@ -365,41 +212,14 @@ void GXSetAlphaUpdate(void)
  * Address:	80213DD0
  * Size:	000078
  */
-void GXSetZMode(void)
+void GXSetZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x2A68(r13)
-	  rlwinm    r0,r3,0,24,31
-	  lwz       r3, 0x1D8(r6)
-	  addi      r7, r6, 0x1D8
-	  rlwinm    r6,r4,1,0,30
-	  rlwinm    r3,r3,0,0,30
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  rlwinm    r4,r5,4,20,27
-	  li        r3, 0x61
-	  lwz       r7, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  li        r0, 0x1
-	  addi      r8, r7, 0x1D8
-	  lwz       r7, 0x1D8(r7)
-	  rlwinm    r7,r7,0,31,27
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r8)
-	  lwz       r6, 0x2A68(r13)
-	  addi      r7, r6, 0x1D8
-	  lwz       r6, 0x1D8(r6)
-	  rlwinm    r6,r6,0,28,26
-	  or        r4, r6, r4
-	  stw       r4, 0x0(r7)
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1D8(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x170, "GXSetZMode");
+	SET_REG_FIELD(0x171, gx->zmode, 1, 0, compare_enable);
+	SET_REG_FIELD(0x172, gx->zmode, 3, 1, func);
+	SET_REG_FIELD(0x173, gx->zmode, 1, 4, update_enable);
+	GX_WRITE_RAS_REG(gx->zmode);
+	gx->bpSent = 1;
 }
 
 /*
@@ -407,27 +227,12 @@ void GXSetZMode(void)
  * Address:	80213E48
  * Size:	000040
  */
-void GXSetZCompLoc(void)
+void GXSetZCompLoc(GXBool before_tex)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r3,6,18,25
-	  li        r3, 0x61
-	  addi      r6, r4, 0x1DC
-	  lwz       r4, 0x1DC(r4)
-	  lis       r5, 0xCC01
-	  rlwinm    r4,r4,0,26,24
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r6)
-	  li        r0, 0x1
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1DC(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x17C, "GXSetZCompLoc");
+	SET_REG_FIELD(0x17D, gx->peCtrl, 1, 6, before_tex);
+	GX_WRITE_RAS_REG(gx->peCtrl);
+	gx->bpSent = 1;
 }
 
 /*
@@ -435,87 +240,32 @@ void GXSetZCompLoc(void)
  * Address:	80213E88
  * Size:	000110
  */
-void GXSetPixelFmt(void)
+void GXSetPixelFmt(GXPixelFmt pix_fmt, GXZFmt16 z_fmt)
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x2A68(r13)
-	  lis       r5, 0x802F
-	  rlwinm    r6,r3,2,0,29
-	  addi      r8, r7, 0x1DC
-	  subi      r0, r5, 0x7028
-	  lwz       r7, 0x1DC(r7)
-	  add       r9, r0, r6
-	  lwz       r5, 0x0(r9)
-	  rlwinm    r6,r7,0,0,28
-	  rlwinm    r0,r4,3,0,28
-	  or        r4, r6, r5
-	  stw       r4, 0x0(r8)
-	  lwz       r4, 0x2A68(r13)
-	  addi      r5, r4, 0x1DC
-	  lwz       r4, 0x1DC(r4)
-	  rlwinm    r4,r4,0,29,25
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r5, 0x1DC(r4)
-	  cmplw     r7, r5
-	  beq-      .loc_0xA8
-	  li        r0, 0x61
-	  lis       r4, 0xCC01
-	  stb       r0, -0x8000(r4)
-	  cmpwi     r3, 0x2
-	  stw       r5, -0x8000(r4)
-	  bne-      .loc_0x78
-	  li        r0, 0x1
-	  b         .loc_0x7C
+	u32 oldPeCtrl;
+	u8 aa;
+	static u32 p2f[8] = { 0, 1, 2, 3, 4, 4, 4, 5 };
 
-	.loc_0x78:
-	  li        r0, 0
-
-	.loc_0x7C:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r0,9,15,22
-	  addi      r5, r4, 0x204
-	  lwz       r4, 0x204(r4)
-	  rlwinm    r4,r4,0,23,21
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r4)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0x4F0(r4)
-
-	.loc_0xA8:
-	  lwz       r0, 0x0(r9)
-	  cmplwi    r0, 0x4
-	  bne-      .loc_0x100
-	  lwz       r4, 0x2A68(r13)
-	  subi      r3, r3, 0x4
-	  li        r0, 0x61
-	  addi      r5, r4, 0x1D4
-	  lwz       r4, 0x1D4(r4)
-	  rlwinm    r4,r4,0,23,20
-	  rlwimi    r4,r3,9,21,22
-	  stw       r4, 0x0(r5)
-	  lis       r4, 0xCC01
-	  lwz       r3, 0x2A68(r13)
-	  addi      r5, r3, 0x1D4
-	  lwz       r3, 0x1D4(r3)
-	  rlwinm    r3,r3,0,8,31
-	  oris      r3, r3, 0x4200
-	  stw       r3, 0x0(r5)
-	  stb       r0, -0x8000(r4)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x1D4(r3)
-	  stw       r0, -0x8000(r4)
-
-	.loc_0x100:
-	  lwz       r3, 0x2A68(r13)
-	  li        r0, 0x1
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x1A1, "GXSetPixelFmt");
+	oldPeCtrl = gx->peCtrl;
+	ASSERTMSGLINE(0x1A5, pix_fmt >= 0 && pix_fmt <= 7, "Invalid Pixel format");
+	SET_REG_FIELD(0x1A7, gx->peCtrl, 3, 0, p2f[pix_fmt]);
+	SET_REG_FIELD(0x1A8, gx->peCtrl, 3, 3, z_fmt);
+	if (oldPeCtrl != gx->peCtrl) {
+		GX_WRITE_RAS_REG(gx->peCtrl);
+		if (pix_fmt == GX_PF_RGB565_Z16)
+			aa = 1;
+		else
+			aa = 0;
+		SET_REG_FIELD(0x1B1, gx->genMode, 1, 9, aa);
+		gx->dirtyState |= 4;
+	}
+	if (p2f[pix_fmt] == 4) {
+		SET_REG_FIELD(0x1B8, gx->cmode1, 2, 9, (pix_fmt - 4) & 0x3);
+		SET_REG_FIELD(0x1B9, gx->cmode1, 8, 24, 0x42);
+		GX_WRITE_RAS_REG(gx->cmode1);
+	}
+	gx->bpSent = 1;
 }
 
 /*
@@ -523,27 +273,12 @@ void GXSetPixelFmt(void)
  * Address:	80213F98
  * Size:	000040
  */
-void GXSetDither(void)
+void GXSetDither(GXBool dither)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r3,2,22,29
-	  li        r3, 0x61
-	  addi      r6, r4, 0x1D0
-	  lwz       r4, 0x1D0(r4)
-	  lis       r5, 0xCC01
-	  rlwinm    r4,r4,0,30,28
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r6)
-	  li        r0, 0x1
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1D0(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x1CD, "GXSetDither");
+	SET_REG_FIELD(0x1CE, gx->cmode0, 1, 2, dither);
+	GX_WRITE_RAS_REG(gx->cmode0);
+	gx->bpSent = 1;
 }
 
 /*
@@ -551,32 +286,13 @@ void GXSetDither(void)
  * Address:	80213FD8
  * Size:	000054
  */
-void GXSetDstAlpha(void)
+void GXSetDstAlpha(GXBool enable, u8 alpha)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r6,r3,8,16,23
-	  lwzu      r0, 0x1D4(r5)
-	  li        r3, 0x61
-	  rlwinm    r0,r0,0,0,23
-	  rlwimi    r0,r4,0,24,31
-	  stw       r0, 0x0(r5)
-	  lis       r5, 0xCC01
-	  li        r0, 0x1
-	  lwz       r4, 0x2A68(r13)
-	  addi      r7, r4, 0x1D4
-	  lwz       r4, 0x1D4(r4)
-	  rlwinm    r4,r4,0,24,22
-	  or        r4, r4, r6
-	  stw       r4, 0x0(r7)
-	  stb       r3, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x1D4(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x1E1, "GXSetDstAlpha");
+	SET_REG_FIELD(0x1E2, gx->cmode1, 8, 0, alpha);
+	SET_REG_FIELD(0x1E3, gx->cmode1, 1, 8, enable);
+	GX_WRITE_RAS_REG(gx->cmode1);
+	gx->bpSent = 1;
 }
 
 /*
@@ -584,25 +300,17 @@ void GXSetDstAlpha(void)
  * Address:	8021402C
  * Size:	000038
  */
-void GXSetFieldMask(void)
+void GXSetFieldMask(GXBool odd_mask, GXBool even_mask)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,0,24,31
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r5,r0,0,31,29
-	  rlwinm    r0,r3,1,23,30
-	  or        r0, r5, r0
-	  rlwinm    r5,r0,0,8,31
-	  li        r0, 0x61
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  oris      r5, r5, 0x4400
-	  li        r0, 0x1
-	  stw       r5, -0x8000(r3)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	u32 reg;
+
+	CHECK_GXBEGIN(0x1F9, "GXSetFieldMask");
+	reg = 0;
+	SET_REG_FIELD(0x1FB, reg, 1, 0, even_mask);
+	SET_REG_FIELD(0x1FC, reg, 1, 1, odd_mask);
+	SET_REG_FIELD(0x1FD, reg, 8, 24, 0x44);
+	GX_WRITE_RAS_REG(reg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -610,41 +318,15 @@ void GXSetFieldMask(void)
  * Address:	80214064
  * Size:	000080
  */
-void GXSetFieldMode(void)
+void GXSetFieldMode(GXBool field_mode, GXBool half_aspect_ratio)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,22,2,9
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  lis       r31, 0xCC01
-	  stw       r30, 0x18(r1)
-	  li        r30, 0x61
-	  stw       r29, 0x14(r1)
-	  mr        r29, r3
-	  lwz       r5, 0x2A68(r13)
-	  lwzu      r4, 0x7C(r5)
-	  rlwinm    r4,r4,0,10,8
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r5)
-	  stb       r30, -0x8000(r31)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x7C(r3)
-	  stw       r0, -0x8000(r31)
-	  bl        -0x1138
-	  rlwinm    r0,r29,0,24,31
-	  stb       r30, -0x8000(r31)
-	  oris      r0, r0, 0x6800
-	  stw       r0, -0x8000(r31)
-	  bl        -0x114C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	u32 reg;
+
+	CHECK_GXBEGIN(0x216, "GXSetFieldMode");
+	SET_REG_FIELD(0x21A, gx->lpSize, 1, 22, half_aspect_ratio);
+	GX_WRITE_RAS_REG(gx->lpSize);
+	__GXFlushTextureState();
+	reg = field_mode | 0x68000000;
+	GX_WRITE_RAS_REG(reg);
+	__GXFlushTextureState();
 }

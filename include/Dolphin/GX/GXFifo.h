@@ -21,6 +21,19 @@ typedef struct _GXFifoObj {
 	u8 padding[GX_FIFO_OBJ_SIZE]; // _00
 } GXFifoObj;
 
+typedef struct __GXFifoObj {
+	u8* base;
+	u8* top;
+	u32 size;
+	u32 hiWatermark;
+	u32 loWatermark;
+	void* rdPtr;
+	void* wrPtr;
+	s32 count;
+	u8 bind_cpu;
+	u8 bind_gp;
+} __GXFifoObj;
+
 // Internal struct for FIFO access.
 typedef struct _GXFifoObjPriv {
 	void* base;        // _00
@@ -187,12 +200,12 @@ extern GXBreakPtCallback GXSetBreakPtCallback(GXBreakPtCallback callback);
 ////////////////////////////////////////////
 
 /////////////// OTHER FUNCS ////////////////
-void __GXSaveCPUFifoAux(GXFifoObj* obj);
+void __GXSaveCPUFifoAux(__GXFifoObj* obj);
 void __GXFifoReadEnable();
 void __GXFifoReadDisable();
 void __GXFifoLink(u8);
-void __GXWriteFifoIntEnable(u32, u32);
-void __GXWriteFifoIntReset(u32, u32);
+void __GXWriteFifoIntEnable(u8, u8);
+void __GXWriteFifoIntReset(u8, u8);
 
 // Unused/inlined in P2.
 extern void GXSaveGPFifo(GXFifoObj* obj);

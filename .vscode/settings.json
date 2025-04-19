@@ -39,6 +39,9 @@
         "system.h": "c",
         "rand.h": "c",
         "float.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "mbstring.h": "c",
+        "wchar_io.h": "c",
+        "gxmisc.h": "c"
     },
 }
