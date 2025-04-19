@@ -79,7 +79,6 @@ struct TAItamagoAnimation : public TAIanimation {
 
 	// _0C     = VTBL
 	// _00-_0C = TAIanimation
-	// TODO: members
 };
 
 /**

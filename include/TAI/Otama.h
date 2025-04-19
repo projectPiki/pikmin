@@ -81,7 +81,8 @@ struct TAIArunAwayOtama : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAappealOtama : public TAIAflickingReserveMotion {
-	inline TAIAappealOtama() // TODO: this is a guess
+	TAIAappealOtama(int nextState, int motionID)
+	    : TAIAflickingReserveMotion(nextState, motionID)
 	{
 	}
 

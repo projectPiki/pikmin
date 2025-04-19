@@ -154,8 +154,8 @@ struct TAIAcheckInsideRangePiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAinsideTerritoryRangeNavi : public TaiAction {
-	inline TAIAinsideTerritoryRangeNavi() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAinsideTerritoryRangeNavi(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -256,9 +256,10 @@ struct TAIAunvisibleTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAstickingPiki : public TaiAction {
-	inline TAIAstickingPiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAstickingPiki(int nextState, int stickNum)
+	    : TaiAction(nextState)
 	{
+		mStickingPikiNum = stickNum;
 	}
 
 	virtual void start(Teki&) { }                              // _08
@@ -312,8 +313,8 @@ struct TAIAcheckTurnAngle : public TaiAction {
  * @brief TODO
  */
 struct TAIAoutsideTerritory : public TaiAction {
-	inline TAIAoutsideTerritory() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAoutsideTerritory(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 

@@ -1412,11 +1412,11 @@ bool BTeki::moveToward(Vector3f& target, f32 speed)
  * Address:	801475CC
  * Size:	0000C8
  */
-bool BTeki::turnToward(f32 p1, f32 p2)
+bool BTeki::turnToward(f32 targetAngle, f32 turnSpeed)
 {
 	f32 faceDir   = NMathF::roundAngle(getDirection());
-	f32 nearerDir = NMathF::calcNearerDirection(faceDir, p1);
-	f32 speed     = p2 * NSystem::getFrameTime();
+	f32 nearerDir = NMathF::calcNearerDirection(faceDir, targetAngle);
+	f32 speed     = turnSpeed * NSystem::getFrameTime();
 
 	bool res = false;
 	if (nearerDir > faceDir) {

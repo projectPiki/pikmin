@@ -193,7 +193,8 @@ struct TAIAtakeOffMar : public TAIAtakeOff {
  * @brief TODO
  */
 struct TAIAstickingPikiMar : public TAIAstickingPiki {
-	inline TAIAstickingPikiMar() // TODO: this is a guess
+	TAIAstickingPikiMar(int nextState) // TODO: this is a guess
+	    : TAIAstickingPiki(nextState, 0)
 	{
 	}
 
@@ -239,7 +240,8 @@ struct TAIAlandingMar : public TAIAlanding {
  * @brief TODO
  */
 struct TAIAstickingPikiMarFly : public TAIAstickingPiki {
-	inline TAIAstickingPikiMarFly() // TODO: this is a guess
+	TAIAstickingPikiMarFly(int nextState) // TODO: this is a guess
+	    : TAIAstickingPiki(nextState, 0)
 	{
 	}
 

@@ -2381,7 +2381,8 @@ void TAIApatrol::changeStatus(int, Teki& teki)
  * Address:	801AA6CC
  * Size:	00007C
  */
-TAIApatrol::TAIApatrol(int, int, int, int, Vector3f*, int, bool)
+TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionID, Vector3f* p5, int p6, bool p7)
+    : TAIAturnToTarget(nextState, leftMotionID, rightMotionID, p7)
 {
 	/*
 	.loc_0x0:

@@ -277,7 +277,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	bool attackableCreature(Creature&);
 	f32 calcTargetAngle(Vector3f&);
 	bool moveToward(Vector3f&, f32);
-	bool turnToward(f32, f32);
+	bool turnToward(f32 targetAngle, f32 turnSpeed);
 	void rotateTeki(f32);
 	Creature* getClosestNaviPiki(Condition&, f32*);
 	bool attackTarget(Creature&, f32, f32, Condition&);
@@ -612,6 +612,15 @@ struct YTeki : public NTeki {
 
 	zen::particleGenerator* getPtclGenPtr(ptclIndexFlag idx) { return mPtclGenPtrs[idx]; }
 	void setPtclGenPtr(ptclIndexFlag idx, zen::particleGenerator* ptclGen) { mPtclGenPtrs[idx] = ptclGen; }
+
+	void setManualAnimation(bool doSet)
+	{
+		if (doSet) {
+			setTekiOption(TEKI_OPTION_MANUAL_ANIMATION);
+		} else {
+			clearTekiOption(TEKI_OPTION_MANUAL_ANIMATION);
+		}
+	}
 
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:

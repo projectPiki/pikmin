@@ -135,9 +135,10 @@ struct TAIAsetTargetPointCircleRandom : public TaiAction {
  * @brief TODO
  */
 struct TAIAsetTargetPointCircle : public TaiAction {
-	inline TAIAsetTargetPointCircle() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAsetTargetPointCircle(int nextState, f32 p2)
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual void start(Teki&); // _08
@@ -147,15 +148,15 @@ struct TAIAsetTargetPointCircle : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	// TODO: members
+	f32 _08; // _08
 };
 
 /**
  * @brief TODO
  */
 struct TAIAgoTarget : public TAIAreserveMotion {
-	inline TAIAgoTarget() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAgoTarget(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -210,9 +211,12 @@ struct TAIAlookAround : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAturnToTarget : public TAIAreserveMotion {
-	inline TAIAturnToTarget() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAturnToTarget(int nextState, int leftMotionID, int rightMotionID, bool p4)
+	    : TAIAreserveMotion(nextState, leftMotionID)
 	{
+		mLeftTurnAnimID  = leftMotionID;
+		mRightTurnAnimID = rightMotionID;
+		_14              = p4;
 	}
 
 	virtual void start(Teki&);          // _08
@@ -226,6 +230,7 @@ struct TAIAturnToTarget : public TAIAreserveMotion {
 	// _00-_0C = TAIAreserveMotion
 	int mLeftTurnAnimID;  // _0C
 	int mRightTurnAnimID; // _10
+	bool _14;             // _14
 };
 
 /**
@@ -284,7 +289,8 @@ struct TAIAturnOccasion : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAturnFocusCreature : public TAIAturnToTarget {
-	inline TAIAturnFocusCreature() // TODO: this is a guess
+	TAIAturnFocusCreature(int nextState, int leftMotionID, int rightMotionID, bool p4)
+	    : TAIAturnToTarget(nextState, leftMotionID, rightMotionID, p4)
 	{
 	}
 

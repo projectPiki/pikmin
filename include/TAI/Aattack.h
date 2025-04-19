@@ -145,8 +145,8 @@ struct TAIAflicking : public TAIAmotion {
  * @brief TODO
  */
 struct TAIAflickingReserveMotion : public TAIAreserveMotion {
-	inline TAIAflickingReserveMotion() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAflickingReserveMotion(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
