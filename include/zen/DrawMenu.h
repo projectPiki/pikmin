@@ -4,6 +4,8 @@
 #include "types.h"
 #include "zen/DrawCommon.h"
 #include "P2D/Picture.h"
+#include "zen/SpectrumCursorMgr.h"
+#include "zen/MenuPanelMgr.h"
 #include "Colour.h"
 
 struct Colour;
@@ -23,11 +25,11 @@ namespace zen {
 struct DrawMenuText {
 	DrawMenuText()
 	{
-		_10 = 0.0f;
-		_00 = 0;
-		_14 = 1;
-		_04 = 0;
-		_00 = 0;
+		_10       = 0.0f;
+		_00       = 0;
+		mIsActive = true;
+		_04       = 0;
+		_00       = 0;
 	}
 
 	void init(bool, Colour&, Colour&);
@@ -37,8 +39,9 @@ struct DrawMenuText {
 	// unused/inlined:
 	void setScale(f32, f32);
 
+	bool getActiveSw() { return mIsActive; }
+
 	// DLL to do:
-	bool getActiveSw();
 	void setActiveSw(bool);
 	u8 colorBlend(u8, f32, u8, f32);
 
@@ -49,7 +52,7 @@ struct DrawMenuText {
 	Colour _08;      // _08
 	Colour _0C;      // _0C
 	f32 _10;         // _10
-	u8 _14;          // _14
+	bool mIsActive;  // _14
 };
 
 /**
@@ -105,8 +108,9 @@ struct DrawMenuItem {
 	int getIconRPosH() { return mIconRPane->getPosH(); }
 	int getIconRPosV() { return mIconRPane->getPosV(); }
 
+	bool getActiveSw() { return mText->getActiveSw(); }
+
 	// DLL inlines to do:
-	bool getActiveSw();
 	void setActiveSw(bool);
 	void setScale(f32, f32);
 
@@ -119,24 +123,83 @@ struct DrawMenuItem {
  * @brief TODO
  */
 struct DrawMenuBase : public DrawScreen {
+	enum Mode {
+		MODE_Sleep     = 0,
+		MODE_Operation = 1,
+	};
 
-	DrawMenuBase(char*, bool, bool);
+	typedef bool (DrawMenuBase::*ModeFunc)(Controller*);
 
-	virtual void draw(Graphics&);            // _10
-	virtual bool update(Controller*);        // _14
-	virtual void start();                    // _18
-	virtual bool modeDefault(Controller*);   // _1C
-	virtual bool modeSleep(Controller*);     // _20
-	virtual bool modeOperation(Controller*); // _24
-	virtual void setModeFunc(int);           // _28
+	DrawMenuBase(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr);
+
+	virtual void draw(Graphics&);                           // _10
+	virtual bool update(Controller*);                       // _14
+	virtual void start();                                   // _18
+	virtual bool modeDefault(Controller*) { return false; } // _1C
+	virtual bool modeSleep(Controller*);                    // _20
+	virtual bool modeOperation(Controller*);                // _24
+	virtual void setModeFunc(int);                          // _28
 
 	void init(int);
 
 	// unused/inlined:
 	~DrawMenuBase();
 
+	void setKeyAssignDecide(u32 button) { mKeyDecide = button; }
+	void setKeyAssignCancel(u32 button) { mKeyCancel = button; }
+
+	// DLL inlines to do:
+	int getSelectNo();
+	u32 getEventFlag();
+
+	static const int SELECT_CANCEL;
+
 	// _00-_100 = DrawScreen
-	// TODO: members
+	int mMode;                         // _100
+	int mCurrentSelect;                // _104
+	int _108;                          // _108
+	int mSelectCount;                  // _10C
+	u8 _110[0x4];                      // _110, unknown
+	SpectrumCursorMgr mLeftCursorMgr;  // _114
+	SpectrumCursorMgr mRightCursorMgr; // _144
+	DrawMenuItem* mMenuItems;          // _174
+	Colour _178;                       // _178
+	Colour _17C;                       // _17C
+	ModeFunc mModeFunction;            // _180
+	u32 _18C;                          // _18C, probably event flag?
+	u32 mKeyDecide;                    // _190, see KeyboardButtons enum
+	u32 mKeyCancel;                    // _194, see KeyboardButtons enum
+};
+
+/**
+ * @brief TODO
+ */
+struct DrawMenuTitle {
+
+	enum Mode {
+		MODE_Wait      = 0,
+		MODE_Start     = 1,
+		MODE_Operation = 2,
+		MODE_End       = 3,
+	};
+
+	DrawMenuTitle()
+	{
+		_04   = nullptr;
+		mMode = 0;
+	}
+
+	void setPane(P2DScreen*, P2DPane*, u32);
+	void start();
+	void wait();
+	void end();
+	bool update(f32);
+
+	// unused/inlined:
+	void operation();
+
+	int mMode;    // _00
+	P2DPane* _04; // _04
 };
 
 /**
@@ -174,47 +237,50 @@ struct DrawMenu : public DrawScreen {
 
 	int getSelectMenu()
 	{
-		if (_1D0 >= 0) {
+		if (mCancelSelectMenuNo >= 0) {
 			return _110;
 		}
 
-		return (mSelectMenuCancel) ? -1 : _110;
+		return (mIsSelectMenuCancel) ? -1 : _110;
 	}
 
 	f32 getRatio() { return mRatio; }
 
+	void setCancelSE(int soundID) { mCancelSoundID = soundID; }
+
 	// DLL inlines, to do:
-	bool checkSelectMenuCancel() { return mSelectMenuCancel; }
+	bool checkSelectMenuCancel() { return mIsSelectMenuCancel; }
 	void setCancelKeyAssign(u32);
-	void setCancelSE(int);
 	void setDecideKeyAssign(u32);
 
 	// _00     = VTBL
 	// _00-_100 = DrawScreen
-	int _100;               // _100
-	u8 _104[0x8];           // _104, unknown
-	f32 mRatio;             // _10C
-	int _110;               // _110
-	u8 _114[0xBC];          // _114, unknown
-	int _1D0;               // _1D0
-	bool mSelectMenuCancel; // _1D4
-};
-
-/**
- * @brief TODO
- */
-struct DrawMenuTitle {
-
-	void setPane(P2DScreen*, P2DPane*, u32);
-	void start();
-	void wait();
-	void end();
-	bool update(f32);
-
-	// unused/inlined:
-	void operation();
-
-	// TODO: members
+	int _100;                       // _100
+	f32 _104;                       // _104
+	f32 _108;                       // _108
+	f32 mRatio;                     // _10C
+	int _110;                       // _110
+	int mSelectCount;               // _114
+	int mSpecCount;                 // _118
+	f32 _11C;                       // _11C
+	f32 _120;                       // _120
+	Vector2f _124;                  // _124
+	Vector2f _12C;                  // _12C
+	P2DPane* mParentPane;           // _134, 'pall'
+	DrawMenuItem* mMenuItems;       // _138
+	P2DPicture** mLeftCursorIcons;  // _13C
+	P2DPicture** mRightCursorIcons; // _140
+	DrawMenuTitle mTitle;           // _144
+	SpectrumCursorMgr _14C;         // _14C
+	SpectrumCursorMgr _17C;         // _17C
+	Colour _1AC;                    // _1AC
+	Colour _1B0;                    // _1B0
+	MenuPanelMgr mMenuPanelMgr;     // _1B4
+	u32 mKeyDecide;                 // _1C4
+	u32 mKeyCancel;                 // _1C8
+	int mCancelSoundID;             // _1CC
+	int mCancelSelectMenuNo;        // _1D0
+	bool mIsSelectMenuCancel;       // _1D4
 };
 
 } // namespace zen

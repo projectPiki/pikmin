@@ -1,4 +1,8 @@
 #include "zen/DrawMenu.h"
+#include "zen/Math.h"
+#include "P2D/TextBox.h"
+#include "SoundMgr.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -13,7 +17,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("drawMenu")
 
 /*
  * --INFO--
@@ -79,76 +83,25 @@ void zen::DrawMenuText::init(bool, Colour&, Colour&)
  * Address:	801C2828
  * Size:	0000F4
  */
-void zen::DrawMenuText::setPane(P2DPane*, P2DPane*)
+void zen::DrawMenuText::setPane(P2DPane* pane, P2DPane* parent)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x88(r1)
-	  lhz       r0, 0x8(r4)
-	  cmplwi    r0, 0x13
-	  bne-      .loc_0xA0
-	  stw       r4, 0x0(r3)
-	  lwz       r4, 0x0(r3)
-	  lbz       r0, 0xF4(r4)
-	  stb       r0, 0x80(r1)
-	  lbz       r0, 0xF5(r4)
-	  stb       r0, 0x81(r1)
-	  lbz       r0, 0xF6(r4)
-	  stb       r0, 0x82(r1)
-	  lbz       r0, 0xF7(r4)
-	  stb       r0, 0x83(r1)
-	  lwz       r0, 0x80(r1)
-	  stw       r0, 0x8(r3)
-	  lwz       r4, 0x0(r3)
-	  lbz       r0, 0xF8(r4)
-	  stb       r0, 0x7C(r1)
-	  lbz       r0, 0xF9(r4)
-	  stb       r0, 0x7D(r1)
-	  lbz       r0, 0xFA(r4)
-	  stb       r0, 0x7E(r1)
-	  lbz       r0, 0xFB(r4)
-	  stb       r0, 0x7F(r1)
-	  lwz       r0, 0x7C(r1)
-	  stw       r0, 0xC(r3)
-	  lwz       r7, 0x0(r3)
-	  lha       r4, 0x18(r7)
-	  lha       r0, 0x1C(r7)
-	  lha       r6, 0x1A(r7)
-	  sub       r0, r0, r4
-	  lha       r4, 0x1E(r7)
-	  srawi     r0, r0, 0x1
-	  sub       r6, r4, r6
-	  extsh     r4, r0
-	  srawi     r0, r6, 0x1
-	  sth       r4, 0xB8(r7)
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r7)
+	if (pane->getTypeID() == PANETYPE_TextBox) {
+		_00 = (P2DTextBox*)pane;
+		_08 = _00->getCharColor();
+		_0C = _00->getGradColor();
+		_00->setOffset(_00->getWidth() >> 1, _00->getHeight() >> 1);
+	} else {
+		ERROR("This pane is not Text Box.\n");
+	}
 
-	.loc_0xA0:
-	  cmplwi    r5, 0
-	  beq-      .loc_0xEC
-	  lhz       r0, 0x8(r5)
-	  cmplwi    r0, 0x13
-	  bne-      .loc_0xEC
-	  stw       r5, 0x4(r3)
-	  lwz       r5, 0x4(r3)
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
-
-	.loc_0xEC:
-	  addi      r1, r1, 0x88
-	  blr
-	*/
+	if (parent) {
+		if (parent->getTypeID() == PANETYPE_TextBox) {
+			_04 = (P2DTextBox*)parent;
+			_04->setOffset(_04->getWidth() >> 1, _04->getHeight() >> 1);
+		} else {
+			ERROR("This pane is not Text Box.\n");
+		}
+	}
 }
 
 /*
@@ -585,47 +538,14 @@ void zen::DrawMenuText::update(bool, Colour&, Colour&)
  * Address:	801C2EE0
  * Size:	000088
  */
-void zen::DrawMenuTitle::setPane(P2DScreen*, P2DPane*, u32)
+void zen::DrawMenuTitle::setPane(P2DScreen* screen, P2DPane* parent, u32 tag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r5
-	  li        r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x0(r4)
-	  addi      r4, r6, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x4(r30)
-	  lwz       r0, 0x4(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x70
-	  li        r0, 0
-	  stw       r0, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r3, 0x4(r30)
-	  lfs       f0, -0x468C(r2)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r3, 0x4(r30)
-	  bl        -0x33AC
-
-	.loc_0x70:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_04 = screen->search(tag, false);
+	if (_04) {
+		mMode = 0;
+		_04->setScale(0.0f);
+		P2DPaneLibrary::changeParent(_04, parent);
+	}
 }
 
 /*
@@ -635,8 +555,7 @@ void zen::DrawMenuTitle::setPane(P2DScreen*, P2DPane*, u32)
  */
 void zen::DrawMenuTitle::start()
 {
-	// Generated from stw r0, 0x0(r3)
-	// _00 = 1;
+	mMode = MODE_Start;
 }
 
 /*
@@ -646,8 +565,7 @@ void zen::DrawMenuTitle::start()
  */
 void zen::DrawMenuTitle::wait()
 {
-	// Generated from stw r0, 0x0(r3)
-	// _00 = 0;
+	mMode = MODE_Wait;
 }
 
 /*
@@ -657,7 +575,7 @@ void zen::DrawMenuTitle::wait()
  */
 void zen::DrawMenuTitle::operation()
 {
-	// UNUSED FUNCTION
+	mMode = MODE_Operation;
 }
 
 /*
@@ -667,8 +585,7 @@ void zen::DrawMenuTitle::operation()
  */
 void zen::DrawMenuTitle::end()
 {
-	// Generated from stw r0, 0x0(r3)
-	// _00 = 3;
+	mMode = MODE_End;
 }
 
 /*
@@ -796,9 +713,133 @@ bool zen::DrawMenuTitle::update(f32)
  * Address:	801C30FC
  * Size:	000AFC
  */
-zen::DrawMenu::DrawMenu(char* p1, bool p2, bool p3)
-    : DrawScreen(p1, nullptr, p2, p3)
+zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
+    : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
 {
+	_100         = 0;
+	_104         = 0.0f;
+	_108         = 0.5f;
+	mRatio       = 0.0f;
+	_110         = 0;
+	mSelectCount = 1;
+	mKeyDecide   = KBBTN_START | KBBTN_A;
+	mKeyCancel   = KBBTN_B;
+	setCancelSE(SYSSE_CANCEL);
+	mIsSelectMenuCancel = false;
+	setCancelSelectMenuNo(-1);
+	mParentPane = mScreen.search('pall', true);
+	mParentPane->setOffset(mParentPane->getWidth() >> 1, mParentPane->getHeight() >> 1);
+
+	P2DPane* pane = mScreen.search('se_c', true);
+	if (pane->getTypeID() == PANETYPE_TextBox) {
+		P2DTextBox* tBox = (P2DTextBox*)pane;
+		tBox->getFontColor(_1AC, _1B0);
+	} else {
+		ERROR("tag<se_c> pane is not text box.\n");
+	}
+
+	mMenuPanelMgr.setCallBack(&mScreen, mParentPane);
+	mTitle.setPane(&mScreen, mParentPane, 'yoko');
+	int i = 0;
+	char buf[8];
+	sprintf(buf, "he%02d", 0);
+	while (mScreen.search(P2DPaneLibrary::makeTag(buf), false)) {
+		sprintf(buf, "he%02d", ++i);
+	}
+
+	mSelectCount = i;
+
+	if (i == 0) {
+		PRINT("WARNING! no select icons. \n");
+	}
+
+	mMenuItems = new DrawMenuItem[mSelectCount];
+
+	for (i = 0; i < mSelectCount; i++) {
+		sprintf(buf, "hm%02d", i);
+		P2DPane* paneM = mScreen.search(P2DPaneLibrary::makeTag(buf), false);
+		if (paneM) {
+			P2DPaneLibrary::changeParent(paneM, mParentPane);
+		}
+		sprintf(buf, "he%02d", i);
+		P2DPane* paneE = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		P2DPaneLibrary::changeParent(paneE, mParentPane);
+		mMenuItems[i].setTextPane(paneE, paneM);
+
+		sprintf(buf, "i%02dl", i);
+		P2DPane* paneL = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		if (mMenuItems[i].setIconLPane(paneL, mParentPane)) {
+			ERROR("pane [%s] is not picture.\n", buf);
+		}
+
+		sprintf(buf, "i%02dr", i);
+		P2DPane* paneR = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		mMenuItems[i].setIconRPane(paneR, mParentPane);
+		if (mMenuItems[i].setIconRPane(paneR, mParentPane)) {
+			ERROR("pane [%s] is not picture.\n", buf);
+		}
+	}
+
+	i = 0;
+	sprintf(buf, "z%02dl", 0);
+	while (mScreen.search(P2DPaneLibrary::makeTag(buf), false)) {
+		sprintf(buf, "z%02dl", ++i);
+	}
+
+	mSpecCount = i;
+
+	if (i == 0) {
+		PRINT("No Spectrum Icons \n");
+	}
+
+	mLeftCursorIcons  = new P2DPicture*[mSpecCount];
+	mRightCursorIcons = new P2DPicture*[mSpecCount];
+
+	for (i = mSpecCount - 1; i >= 0; i--) {
+		sprintf(buf, "z%02dl", i);
+		P2DPane* paneL = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		if (paneL->getTypeID() == PANETYPE_Picture) {
+			mLeftCursorIcons[i] = (P2DPicture*)paneL;
+			P2DPaneLibrary::changeParent(mLeftCursorIcons[i], mParentPane);
+			mLeftCursorIcons[i]->move(mMenuItems[_110].getIconLPosH() - 640, mMenuItems[_110].getIconLPosV());
+			mLeftCursorIcons[i]->show();
+			mLeftCursorIcons[i]->setOffset(mLeftCursorIcons[i]->getWidth() >> 1, mLeftCursorIcons[i]->getHeight() >> 1);
+			mLeftCursorIcons[i]->setScale(0.0f);
+			if (i == 0) {
+				P2DPaneLibrary::setFamilyAlpha(mLeftCursorIcons[i], 255);
+			} else {
+				P2DPaneLibrary::setFamilyAlpha(mLeftCursorIcons[i], RoundOff(100.0f * (1.0f - f32(i) / mSpecCount)));
+			}
+		}
+
+		sprintf(buf, "z%02dr", i);
+		P2DPane* paneR = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		if (paneR->getTypeID() == PANETYPE_Picture) {
+			mRightCursorIcons[i] = (P2DPicture*)paneR;
+			P2DPaneLibrary::changeParent(mRightCursorIcons[i], mParentPane);
+			mRightCursorIcons[i]->move(mMenuItems[_110].getIconRPosH() + 640, mMenuItems[_110].getIconRPosV());
+			mRightCursorIcons[i]->show();
+			mRightCursorIcons[i]->setOffset(mRightCursorIcons[i]->getWidth() >> 1, mRightCursorIcons[i]->getHeight() >> 1);
+			mRightCursorIcons[i]->setScale(0.0f);
+			if (i == 0) {
+				P2DPaneLibrary::setFamilyAlpha(mRightCursorIcons[i], 255);
+			} else {
+				P2DPaneLibrary::setFamilyAlpha(mRightCursorIcons[i], RoundOff(100.0f * (1.0f - f32(i) / mSpecCount)));
+			}
+		}
+	}
+
+	_11C   = 0.0f;
+	_120   = 0.5f;
+	_124.x = mMenuItems[_110].getIconLPosH() - 640;
+	_124.y = mMenuItems[_110].getIconLPosV();
+	_12C.x = mMenuItems[_110].getIconRPosH() + 640;
+	_12C.y = mMenuItems[_110].getIconRPosV();
+
+	_14C.init(&mScreen, mParentPane, 'z**l', mMenuItems[_110].getIconLPosH() - 640, mMenuItems[_110].getIconLPosV());
+	_17C.init(&mScreen, mParentPane, 'z**r', mMenuItems[_110].getIconRPosH() + 640, mMenuItems[_110].getIconRPosV());
+
+	updateMenuPanes();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2524,21 +2565,13 @@ void zen::DrawMenu::setMenuItemActiveSw(int, bool)
  * Address:	801C4938
  * Size:	000028
  */
-void zen::DrawMenu::setCancelSelectMenuNo(int)
+void zen::DrawMenu::setCancelSelectMenuNo(int menuNo)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0
-	  bge-      .loc_0x14
-	  li        r0, -0x1
-	  stw       r0, 0x1D0(r3)
-	  blr
-
-	.loc_0x14:
-	  lwz       r0, 0x114(r3)
-	  cmpw      r4, r0
-	  bgelr-
-	  stw       r4, 0x1D0(r3)
-	  blr
-	*/
+	if (menuNo < 0) {
+		mCancelSelectMenuNo = -1;
+	} else if (menuNo < mSelectCount) {
+		mCancelSelectMenuNo = menuNo;
+	} else {
+		ERROR("Illegal cancelSelectMenuNo %d / %d\n", menuNo, mSelectCount);
+	}
 }

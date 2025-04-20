@@ -18,14 +18,14 @@ struct RandomAccessStream;
  * @brief TODO
  */
 enum P2DPaneType {
-	PANETYPE_Unk0    = 0x0,
-	PANETYPE_Unk1    = 0x1,
-	PANETYPE_Unk2    = 0x2,
-	PANETYPE_Screen  = 0x8,
-	PANETYPE_Pane    = 0x10,
-	PANETYPE_Window  = 0x11,
-	PANETYPE_Picture = 0x12,
-	PANETYPE_TextBox = 0x13,
+	PANETYPE_Unk0    = 0x0,  // 0
+	PANETYPE_Unk1    = 0x1,  // 1
+	PANETYPE_Unk2    = 0x2,  // 2
+	PANETYPE_Screen  = 0x8,  // 8
+	PANETYPE_Pane    = 0x10, // 16
+	PANETYPE_Window  = 0x11, // 17
+	PANETYPE_Picture = 0x12, // 18
+	PANETYPE_TextBox = 0x13, // 19
 };
 
 /**

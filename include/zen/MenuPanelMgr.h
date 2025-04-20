@@ -13,6 +13,16 @@ namespace zen {
  */
 struct MenuPanelMgr {
 
+	enum statusFlag {
+		STATE_Unk0 = 0,
+	};
+
+	MenuPanelMgr()
+	{
+		changeState(STATE_Unk0, 1.0f);
+		updateRatio();
+	}
+
 	void setCallBack(P2DScreen*, P2DPane*);
 	bool update();
 	bool checkFinish();
@@ -20,7 +30,26 @@ struct MenuPanelMgr {
 	// unused/inlined:
 	void operation();
 
-	// TODO: members
+	void changeState(statusFlag state, f32 p2)
+	{
+		mState = state;
+		_04    = 0.0f;
+		_08    = p2;
+	}
+
+	void updateRatio() { mRatio = _04 / _08; }
+
+	// DLL inlines, to do:
+	void wait();
+	void start(f32);
+	void end();
+	statusFlag getStatusFlag();
+	f32 getRatio();
+
+	statusFlag mState; // _00
+	f32 _04;           // _04
+	f32 _08;           // _08
+	f32 mRatio;        // _0C
 };
 
 /**

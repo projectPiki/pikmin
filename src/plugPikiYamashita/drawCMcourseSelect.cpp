@@ -1302,13 +1302,3 @@ bool zen::DrawCMCSmenu::update(Controller*)
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	801ED478
- * Size:	000008
- */
-bool zen::DrawMenuBase::modeDefault(Controller*)
-{
-	return false;
-}

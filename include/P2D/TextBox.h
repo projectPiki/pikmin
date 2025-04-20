@@ -38,9 +38,11 @@ struct P2DTextBox : public P2DPane {
 		color2 = _F8;
 	}
 
+	// NB: these might be swapped, not sure.
+	Colour getCharColor() const { return _F4; }
+	Colour getGradColor() const { return _F8; }
+
 	// DLL inlines to do:
-	Colour getCharColor() const;
-	Colour getGradColor() const;
 	int getCursorX();
 	int getCursorY();
 	u8 getAlpha();

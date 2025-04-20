@@ -10,6 +10,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct SpectrumCursorMgr {
 	SpectrumCursorMgr()

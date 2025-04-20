@@ -18,7 +18,7 @@ namespace zen {
  */
 struct DrawScreen {
 
-	DrawScreen(char*, P2DGrafContext*, bool, bool);
+	DrawScreen(char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr);
 
 	virtual void update(); // _08
 	virtual void draw();   // _0C

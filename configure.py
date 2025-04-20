@@ -822,7 +822,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/drawCMscore.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawCMbest.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawCMresult.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawMenuBase.cpp"),
+            Object(Matching, "plugPikiYamashita/drawMenuBase.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawHiScore.cpp"),
             Object(Matching, "plugPikiYamashita/damageEffect.cpp"),
             Object(Matching, "plugPikiYamashita/alphaWipe.cpp"),
