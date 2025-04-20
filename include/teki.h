@@ -577,6 +577,9 @@ struct YTeki : public NTeki {
 	bool getRunAwaySwitch() { return mTekiSwitches.m6; }
 	void setRunAwaySwitch(bool set) { mTekiSwitches.m6 = set; }
 
+	bool getBiteSwitch() { return mTekiSwitches.mBite; }
+	void setBiteSwitch(bool isBite) { mTekiSwitches.mBite = isBite; }
+
 	void setMapCode(int mapCode) { mMapCode = mapCode; }
 	int getMapCode() { return mMapCode; }
 
@@ -646,9 +649,6 @@ struct YTeki : public NTeki {
 	    bool getTimerStart();
 	    void setTimerStart(bool);
 
-	    bool getBiteSwitch();
-	    void setBiteSwitch(bool);
-
 	    bool getChokeSwitch();
 	    void setChokeSwitch(bool);
 
@@ -672,7 +672,7 @@ struct YTeki : public NTeki {
 	f32 mDororoGravity;                      // _4C0
 	f32 mDororoBarkDesire;                   // _4C4
 	struct {
-		u32 m0 : 1;
+		u32 mBite : 1;
 		u32 m1 : 1;
 		u32 m2 : 1;
 		u32 mStay : 1;

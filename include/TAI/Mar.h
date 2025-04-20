@@ -116,7 +116,8 @@ struct TAIAflyingDistanceInTerritoryMar : public TAIAflyingDistanceInTerritory {
  * @brief TODO
  */
 struct TAIAfireBreathMar : public TAIAfireBreath {
-	inline TAIAfireBreathMar() // TODO: this is a guess
+	inline TAIAfireBreathMar(int nextState, int motionID, zen::CallBack1<Teki&>* cb)
+	    : TAIAfireBreath(nextState, motionID, cb)
 	{
 	}
 

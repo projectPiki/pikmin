@@ -115,7 +115,8 @@ struct TAIAflickingTank : public TAIAflicking {
  * @brief TODO
  */
 struct TAIAfireBreathTank : public TAIAfireBreath {
-	inline TAIAfireBreathTank() // TODO: this is a guess
+	inline TAIAfireBreathTank(int nextState, int motionID, zen::CallBack1<Teki&>* cb)
+	    : TAIAfireBreath(nextState, motionID, cb)
 	{
 	}
 
