@@ -23,7 +23,7 @@ BEGIN_ENUM_TYPE(TAImiurinFloatParams)
 enum {
 	RelaxTime = TPF_COUNT, // 50
 	EyeRollTime,           // 51
-	CheckNaviPercent,      // 52
+	CheckNaviChance,       // 52
 	AngryRotationSpeed,    // 53
 	COUNT,                 // 54
 } END_ENUM_TYPE;
@@ -38,30 +38,30 @@ enum {
 
 BEGIN_ENUM_TYPE(TAImiurinStateID)
 enum {
-	Unk0  = 0,
-	Unk1  = 1,
-	Unk2  = 2,
-	Unk3  = 3,
-	Unk4  = 4,
-	Unk5  = 5,
-	Unk6  = 6,
-	Unk7  = 7,
-	Unk8  = 8,
-	Unk9  = 9,
-	Unk10 = 10,
-	Unk11 = 11,
-	Unk12 = 12,
-	Unk13 = 13,
-	Unk14 = 14,
-	Unk15 = 15,
-	Unk16 = 16,
-	Unk17 = 17,
-	Unk18 = 18,
-	Unk19 = 19,
-	Unk20 = 20,
-	Unk21 = 21,
-	Unk22 = 22,
-	Unk23 = 23,
+	Dead   = 0,
+	Init   = 1,
+	Unk2   = 2,
+	Unk3   = 3,
+	Unk4   = 4,
+	Unk5   = 5,
+	Unk6   = 6,
+	Angry  = 7,
+	Unk8   = 8,
+	Unk9   = 9,
+	Unk10  = 10,
+	Unk11  = 11,
+	Unk12  = 12,
+	Unk13  = 13,
+	Unk14  = 14,
+	Unk15  = 15,
+	Unk16  = 16,
+	Unk17  = 17,
+	Unk18  = 18,
+	Unk19  = 19,
+	Unk20  = 20,
+	Unk21  = 21,
+	Unk22  = 22,
+	Groggy = 23,
 	COUNT, // 24
 } END_ENUM_TYPE;
 
@@ -77,6 +77,8 @@ enum {
 	Unk8  = 8,  //
 	Unk9  = 9,  //
 	Unk10 = 10, //
+	Unk11 = 11, //
+	Unk12 = 12, //
 	Unk13 = 13, //
 } END_ENUM_TYPE;
 
@@ -137,8 +139,15 @@ struct TAIAinitMiurin : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		teki.mDamageCount     = 0.0f;
+		teki.mCollisionRadius = 50.0f;
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		return true;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -264,23 +273,10 @@ struct TAIAsatisfyMiurin : public TAIAreserveMotion {
 
 /**
  * @brief TODO
+ *
+ * @note Lives in TAImiurin.cpp to use the PRINT function in that file.
  */
-struct TAIAwatchNaviMiurin : public TaiAction {
-	TAIAwatchNaviMiurin(int nextState, int p2)
-	    : TaiAction(nextState)
-	{
-		_08 = nextState;
-		_0C = p2;
-	}
-
-	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	int _08; // _08
-	int _0C; // _0C
-};
+struct TAIAwatchNaviMiurin;
 
 /**
  * @brief TODO
@@ -291,7 +287,18 @@ struct TAIAoutsideTerritoryMiurin : public TAIAoutsideTerritory {
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (TAIAoutsideTerritory::act(teki)) {
+			Creature* target = teki.getCreaturePointer(0);
+			if (target->getPosition().distance(teki.mPersonality->mNestPosition) > teki.getParameterF(TPF_DangerTerritoryRange)) {
+				res = true;
+			}
+		}
+
+		return res;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAoutsideTerritory?
@@ -307,7 +314,10 @@ struct TAIAflickingMiurin : public TAIAflickingReserveMotion {
 	{
 	}
 
-	virtual f32 getFlickDirection(Teki&); // _20
+	virtual f32 getFlickDirection(Teki& teki) // _20
+	{
+		return teki.mFaceDirection + PI;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAflickingReserveMotion?
@@ -323,8 +333,14 @@ struct TAIAflickCheckMiurin : public TAIAflickCheck {
 	{
 	}
 
-	virtual bool act(Teki&);                // _10
-	virtual int getDamageCountLimit(Teki&); // _1C
+	virtual bool act(Teki& teki) // _10
+	{
+		return TAIAflickCheck::act(teki);
+	}
+	virtual int getDamageCountLimit(Teki& teki) // _1C
+	{
+		return teki.getParameterI(TAImiurinIntParams::ShakeOffHitCount);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAflickCheck?
@@ -340,7 +356,10 @@ struct TAIAstickingPikiMiurin : public TAIAstickingPiki {
 	{
 	}
 
-	virtual int getPikiNum(Teki&); // _1C
+	virtual int getPikiNum(Teki& teki) // _1C
+	{
+		return teki.getParameterI(TAImiurinIntParams::MaxStickPiki);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAstickingPiki?
@@ -349,41 +368,17 @@ struct TAIAstickingPikiMiurin : public TAIAstickingPiki {
 
 /**
  * @brief TODO
+ *
+ * @note Lives in TAImiurin.cpp to use the PRINT function in that file.
  */
-struct TAIAcheckSatisfyMiurin : public TaiAction {
-	TAIAcheckSatisfyMiurin(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
+struct TAIAcheckSatisfyMiurin;
 
 /**
  * @brief TODO
+ *
+ * @note Lives in TAImiurin.cpp to use the PRINT function in that file.
  */
-struct TAIAattackMiurin : public TAIAreserveMotion {
-	TAIAattackMiurin(int nextState, int p2, int motionID, int p4)
-	    : TAIAreserveMotion(nextState, motionID)
-	{
-		_0C = p2;
-		_10 = p4;
-		_14 = motionID;
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	// _04     = VTBL
-	// _00-_0C = TAIAreserveMotion
-	int _0C; // _0C
-	int _10; // _10
-	int _14; // _14
-};
+struct TAIAattackMiurin;
 
 /**
  * @brief TODO
@@ -394,7 +389,15 @@ struct TAIAattackPosture : public TAIAreserveMotion {
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = TAIAreserveMotion::act(teki);
+		if (res) {
+			teki.setManualAnimation(0.0f);
+		}
+
+		return res;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -403,19 +406,10 @@ struct TAIAattackPosture : public TAIAreserveMotion {
 
 /**
  * @brief TODO
+ *
+ * @note Lives in TAImiurin.cpp to use the PRINT function in that file.
  */
-struct TAIAattackableTargetMiurin : public TAIAattackableTarget {
-	TAIAattackableTargetMiurin(int nextState)
-	    : TAIAattackableTarget(nextState)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TAIAattackableTarget?
-	// TODO: members
-};
+struct TAIAattackableTargetMiurin;
 
 /**
  * @brief TODO
@@ -426,8 +420,15 @@ struct TAIAapproachTargetPriorityFaceDirMiurin : public TAIAapproachTargetPriori
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual f32 getVelocity(Teki&); // _1C
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAapproachTargetPriorityFaceDir::start(teki);
+		teki.setAnimSpeed(60.0f);
+	}
+	virtual f32 getVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TPF_RunVelocity);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAapproachTargetPriorityFaceDir?
@@ -443,8 +444,15 @@ struct TAIAturnFocusCreatureMiurin : public TAIAturnFocusCreature {
 	{
 	}
 
-	virtual void start(Teki&);          // _08
-	virtual f32 getTurnVelocity(Teki&); // _1C
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAturnFocusCreature::start(teki);
+		teki.setAnimSpeed(60.0f);
+	}
+	virtual f32 getTurnVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAImiurinFloatParams::AngryRotationSpeed);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAturnFocusCreature?
@@ -460,8 +468,26 @@ struct TAIAdyingMiurin : public TAIAdying {
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAdying::start(teki);
+		teki.setFrameCounter(0.0f);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		teki.addFrameCounter(gsys->getFrameTime());
+		if (teki.getFrameCounter() > 1.5f) {
+			teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+		}
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			Vector3f pos(teki.getPosition());
+			pos.y = mapMgr->getMinY(pos.x, pos.z, true);
+			effectMgr->create(EffectMgr::EFF_SmokeRing_M, pos, nullptr, nullptr);
+			teki.playEventSound(&teki, SE_CHAPPY_DOWN);
+		}
+
+		return TAIAdying::act(teki);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAdying?

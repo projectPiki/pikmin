@@ -318,7 +318,10 @@ struct TAIAoutsideTerritory : public TaiAction {
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		return teki.getTerritoryDistance() > teki.getParameterF(TPF_DangerTerritoryRange);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

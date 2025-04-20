@@ -805,7 +805,7 @@ config.libs = [
             Object(Equivalent, "plugPikiYamashita/TAIdororo.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAIhibaA.cpp"),
             Object(Matching, "plugPikiYamashita/TAIAeffect.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAImiurin.cpp"),
+            Object(Matching, "plugPikiYamashita/TAImiurin.cpp"),
             Object(Matching, "plugPikiYamashita/ptclGenPack.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawProgre.cpp"),
             Object(NonMatching, "plugPikiYamashita/spectrumCursorMgr.cpp"),

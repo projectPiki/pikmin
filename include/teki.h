@@ -622,6 +622,14 @@ struct YTeki : public NTeki {
 		}
 	}
 
+	f32 setAnimSpeed(f32 speed)
+	{
+		f32 oldSpeed = mMotionSpeed;
+		setManualAnimation(true);
+		mMotionSpeed = speed;
+		return oldSpeed;
+	}
+
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
 
@@ -631,8 +639,6 @@ struct YTeki : public NTeki {
 	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initCylinderTYpePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	    void initEventTypePtclCallBack();
-
-	    f32 setAnimSpeed(f32);
 
 	    f32 getSpeed();
 	    void setSpeed(f32);
@@ -649,8 +655,6 @@ struct YTeki : public NTeki {
 
 	    bool getTimerStart();
 	    void setTimerStart(bool);
-
-	    void setManualAnimation(bool);
 
 	    bool getBiteSwitch();
 	    void setBiteSwitch(bool);

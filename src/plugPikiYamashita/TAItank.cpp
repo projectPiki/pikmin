@@ -1845,68 +1845,6 @@ bool TAIAinitTank::act(Teki&)
 
 /*
  * --INFO--
- * Address:	801A4EC8
- * Size:	0000C8
- */
-bool TAIAoutsideTerritory::act(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r8, r4, 0x94
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stfd      f31, 0x68(r1)
-	  addi      r6, r1, 0x48
-	  addi      r5, r1, 0x44
-	  lwz       r7, 0x2C4(r4)
-	  lwz       r3, 0x2C8(r4)
-	  addi      r4, r1, 0x40
-	  lwz       r7, 0x84(r7)
-	  addi      r9, r3, 0x10
-	  lfs       f0, -0x4BA8(r2)
-	  lwz       r7, 0x4(r7)
-	  lwz       r3, 0x0(r7)
-	  lfs       f31, 0x3C(r3)
-	  addi      r3, r1, 0x58
-	  stfs      f0, 0x60(r1)
-	  stfs      f0, 0x5C(r1)
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0x8(r8)
-	  lfs       f0, 0x8(r9)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x48(r1)
-	  lfs       f1, 0x4(r8)
-	  lfs       f0, 0x4(r9)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x44(r1)
-	  lfs       f1, 0x0(r8)
-	  lfs       f0, 0x0(r9)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x40(r1)
-	  bl        -0x1478BC
-	  lfs       f1, 0x58(r1)
-	  lfs       f0, 0x5C(r1)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x60(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x19732C
-	  fcmpo     cr0, f1, f31
-	  mfcr      r0
-	  rlwinm    r3,r0,2,31,31
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801A4F90
  * Size:	000010
  */

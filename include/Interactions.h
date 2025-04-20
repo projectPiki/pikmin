@@ -177,7 +177,12 @@ struct InteractBuild : public Interaction {
  * @brief TODO
  */
 struct InteractBury : public Interaction {
-	inline InteractBury(); // TODO: probably
+	InteractBury(Creature* owner, bool makeFlower, f32 p3)
+	    : Interaction(owner)
+	{
+		mMakeFlower = makeFlower;
+		_0C         = p3;
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 	virtual bool actNavi(Navi*); // _14
