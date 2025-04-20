@@ -69,9 +69,8 @@ struct TAIAsetMotionSpeed : public TAIAmotion {
 
 	virtual void start(Teki& teki) // _08
 	{
-		u32 badCompiler;
 		TAIAmotion::start(teki);
-		teki.setMotionSpeed(mMotionSpeed);
+		teki.setAnimSpeed(mMotionSpeed);
 	}
 
 	// _04     = VTBL

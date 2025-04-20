@@ -138,7 +138,7 @@ struct TAIAsetTargetPointCircle : public TaiAction {
 	TAIAsetTargetPointCircle(int nextState, f32 p2)
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mAngleOffset = p2;
 	}
 
 	virtual void start(Teki&); // _08
@@ -148,7 +148,7 @@ struct TAIAsetTargetPointCircle : public TaiAction {
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
-	f32 _08; // _08
+	f32 mAngleOffset; // _08
 };
 
 /**
@@ -160,9 +160,12 @@ struct TAIAgoTarget : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getVelocity(Teki&); // _1C
+	virtual void start(Teki&);          // _08
+	virtual bool act(Teki&);            // _10
+	virtual f32 getVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TPF_WalkVelocity);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -178,9 +181,12 @@ struct TAIAapproachTargetPriorityFaceDir : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getVelocity(Teki&); // _1C
+	virtual void start(Teki&);          // _08
+	virtual bool act(Teki&);            // _10
+	virtual f32 getVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TPF_WalkVelocity);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -191,9 +197,11 @@ struct TAIAapproachTargetPriorityFaceDir : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAlookAround : public TAIAreserveMotion {
-	inline TAIAlookAround() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAlookAround(int nextState, int motionID, int p3, int p4)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
+		_0C = p3;
+		_10 = p4;
 	}
 
 	virtual void start(Teki&); // _08
@@ -204,7 +212,8 @@ struct TAIAlookAround : public TAIAreserveMotion {
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	// TODO: members
+	int _0C; // _0C
+	int _10; // _10
 };
 
 /**
@@ -272,8 +281,8 @@ struct TAIArandomWalk : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAturnOccasion : public TAIAreserveMotion {
-	inline TAIAturnOccasion() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAturnOccasion(int nextState, int motionID) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -306,19 +315,22 @@ struct TAIAturnFocusCreature : public TAIAturnToTarget {
  * @brief TODO
  */
 struct TAIAwait : public TAIAreserveMotion {
-	TAIAwait(int nextState, int motionIdx, f32 p3)
+	TAIAwait(int nextState, int motionIdx, f32 waitCounterMax)
 	    : TAIAreserveMotion(nextState, motionIdx)
 	{
-		_0C = p3;
+		mWaitCounterMax = waitCounterMax;
 	}
 
-	virtual void start(Teki&);            // _08
-	virtual bool act(Teki&);              // _10
-	virtual f32 getWaitCounterMax(Teki&); // _1C
+	virtual void start(Teki&);                // _08
+	virtual bool act(Teki&);                  // _10
+	virtual f32 getWaitCounterMax(Teki& teki) // _1C
+	{
+		return mWaitCounterMax;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	f32 _0C; // _0C
+	f32 mWaitCounterMax; // _0C
 };
 
 /**
@@ -327,17 +339,19 @@ struct TAIAwait : public TAIAreserveMotion {
 struct TAIApatrol : public TAIAturnToTarget {
 	TAIApatrol(int, int, int, int, Vector3f*, int, bool);
 
-	virtual void start(Teki&);     // _08
-	virtual bool act(Teki&);       // _10
-	virtual f32 getTimeout(Teki&); // _20
+	virtual void start(Teki&);                     // _08
+	virtual bool act(Teki&);                       // _10
+	virtual f32 getTimeout(Teki&) { return 5.0f; } // _20
 
 	// unused/inlined:
 	void changeStatus(int, Teki&);
 	void setTargetPosition(Teki&);
 
 	// _04     = VTBL
-	// _00-_0C = TAIAturnToTarget?
-	// TODO: members
+	// _00-_18 = TAIAturnToTarget
+	Vector3f* _18; // _18
+	int _1C;       // _1C
+	int _20;       // _20
 };
 
 /**
@@ -349,9 +363,12 @@ struct TAIAstepBack : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual f32 getVelocity(Teki&); // _1C
+	virtual void start(Teki&);          // _08
+	virtual bool act(Teki&);            // _10
+	virtual f32 getVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TPF_WalkVelocity);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -362,14 +379,20 @@ struct TAIAstepBack : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAturnHome : public TAIAturnOccasion {
-	inline TAIAturnHome() { }
+	TAIAturnHome(int nextState, int motionID, int p3)
+	    : TAIAturnOccasion(nextState, motionID)
+	{
+		_0C = motionID;
+		_10 = p3;
+	}
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
 	// _04     = VTBL
-	// _00-_0C = TAIAturnOccasion?
-	// TODO: members
+	// _00-_0C = TAIAturnOccasion
+	int _0C; // _0C
+	int _10; // _10
 };
 
 /**
@@ -415,9 +438,16 @@ struct TAIAflyingBase : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&);                // _08
-	virtual bool act(Teki&);                  // _10
-	virtual f32 getFlyingStayVelocity(Teki&); // _1C
+	virtual void start(Teki&);                    // _08
+	virtual bool act(Teki&);                      // _10
+	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
+	{
+		// nice illusion of choice
+		if (teki.getRunAwaySwitch()) {
+			return teki.getParameterF(TPF_WalkVelocity);
+		}
+		return teki.getParameterF(TPF_WalkVelocity);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -431,7 +461,7 @@ struct TAIAflyingInTerritory : public TaiAction {
 	inline TAIAflyingInTerritory(int nextState, f32 p2) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
-		_08 = p2;
+		mFaceDirAdjust = p2;
 	}
 
 	virtual void start(Teki&); // _08
@@ -443,7 +473,7 @@ struct TAIAflyingInTerritory : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
-	f32 _08;
+	f32 mFaceDirAdjust;
 };
 
 /**
@@ -455,10 +485,10 @@ struct TAIAflyingToGoal : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);      // _08
-	virtual bool act(Teki&);        // _10
-	virtual bool goal(Teki&);       // _1C
-	virtual f32 getVelocity(Teki&); // _20
+	virtual void start(Teki&);                                                           // _08
+	virtual bool act(Teki&);                                                             // _10
+	virtual bool goal(Teki&) { return true; }                                            // _1C
+	virtual f32 getVelocity(Teki& teki) { return teki.getParameterF(TPF_WalkVelocity); } // _20
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -487,9 +517,12 @@ struct TAIAflyingDistance : public TaiAction, public FlyingDistance {
 	{
 	}
 
-	virtual void start(Teki&);           // _08
-	virtual bool act(Teki&);             // _10
-	virtual f32 getGoalAreaRange(Teki&); // _28
+	virtual void start(Teki&);               // _08
+	virtual bool act(Teki&);                 // _10
+	virtual f32 getGoalAreaRange(Teki& teki) // _28
+	{
+		return 0.25f * teki.getParameterF(TPF_RunVelocity);
+	}
 
 	// _04     = VTBL 1
 	// _08     = VTBL 2
@@ -525,10 +558,16 @@ struct TAIAdescent : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);               // _08
-	virtual bool act(Teki&);                 // _10
-	virtual f32 getFlyingVelocity(Teki&);    // _1C
-	virtual f32 getForceDescentFrame(Teki&); // _20
+	virtual void start(Teki&);                // _08
+	virtual bool act(Teki&);                  // _10
+	virtual f32 getFlyingVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TPF_WalkVelocity);
+	}
+	virtual f32 getForceDescentFrame(Teki& teki) // _20
+	{
+		return 0.5f;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
@@ -544,9 +583,9 @@ struct TAIAlanding : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);         // _08
-	virtual bool act(Teki&);           // _10
-	virtual void landingEffect(Teki&); // _1C
+	virtual void start(Teki&);            // _08
+	virtual bool act(Teki&);              // _10
+	virtual void landingEffect(Teki&) { } // _1C
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
