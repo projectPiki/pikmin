@@ -26,38 +26,42 @@ struct P2DTextBox : public P2DPane {
 	char* getString() const { return mText; }
 	void setString(char* text) { mText = text; }
 
+	void getFontColor(Colour& charColor, Colour& gradColor)
+	{
+		charColor = mCharColor;
+		gradColor = mGradColor;
+	}
+
+	Colour getCharColor() const { return mCharColor; }
+	void setCharColor(Colour charColor) { mCharColor = charColor; }
+	u8 getAlphaChar() { return mCharColor.a; }
+
+	Colour getGradColor() const { return mGradColor; }
+	void setGradColor(Colour gradColor) { mGradColor = gradColor; }
+	u8 getAlphaGrad() { return mGradColor.a; }
+
+	u8 getAlpha() { return mCharColor.a; }
 	void setAlpha(u8 alpha)
 	{
-		_F4.a = alpha;
-		_F8.a = alpha;
+		mCharColor.a = alpha;
+		mGradColor.a = alpha;
 	}
-
-	void getFontColor(Colour& color1, Colour& color2)
+	void setAlpha(u8 charAlpha, u8 gradAlpha)
 	{
-		color1 = _F4;
-		color2 = _F8;
+		mCharColor.a = charAlpha;
+		mGradColor.a = gradAlpha;
 	}
-
-	// NB: these might be swapped, not sure.
-	Colour getCharColor() const { return _F4; }
-	Colour getGradColor() const { return _F8; }
 
 	// DLL inlines to do:
 	int getCursorX();
 	int getCursorY();
-	u8 getAlpha();
-	u8 getAlphaChar();
-	u8 getAlphaGrad();
-	void setAlpha(u8, u8);
-	void setCharColor(Colour);
-	void setGradColor(Colour);
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
 	char* _EC;                    // _EC
 	P2DFont* mFont;               // _F0
-	Colour _F4;                   // _F4
-	Colour _F8;                   // _F8
+	Colour mCharColor;            // _F4
+	Colour mGradColor;            // _F8
 	P2DTextBoxHBinding mHBinding; // _FC
 	P2DTextBoxVBinding mVBinding; // _100
 	s16 _104;                     // _104

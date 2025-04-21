@@ -14,12 +14,15 @@ namespace zen {
 struct MenuPanelMgr {
 
 	enum statusFlag {
-		STATE_Unk0 = 0,
+		STATE_Wait      = 0,
+		STATE_Start     = 1,
+		STATE_Operation = 2,
+		STATE_End       = 3,
 	};
 
 	MenuPanelMgr()
 	{
-		changeState(STATE_Unk0, 1.0f);
+		changeState(STATE_Wait, 1.0f);
 		updateRatio();
 	}
 
@@ -28,7 +31,6 @@ struct MenuPanelMgr {
 	bool checkFinish();
 
 	// unused/inlined:
-	void operation();
 
 	void changeState(statusFlag state, f32 p2)
 	{
@@ -39,10 +41,12 @@ struct MenuPanelMgr {
 
 	void updateRatio() { mRatio = _04 / _08; }
 
+	void start(f32 p1) { changeState(STATE_Start, p1); }
+	void operation() { changeState(STATE_Operation, 1.0f); }
+	void end(f32 p1) { changeState(STATE_End, p1); }
+
 	// DLL inlines, to do:
 	void wait();
-	void start(f32);
-	void end();
 	statusFlag getStatusFlag();
 	f32 getRatio();
 

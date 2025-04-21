@@ -6,6 +6,7 @@
 #include "P2D/Picture.h"
 #include "zen/SpectrumCursorMgr.h"
 #include "zen/MenuPanelMgr.h"
+#include "zen/Math.h"
 #include "Colour.h"
 
 struct Colour;
@@ -25,34 +26,34 @@ namespace zen {
 struct DrawMenuText {
 	DrawMenuText()
 	{
-		_10       = 0.0f;
-		_00       = 0;
-		mIsActive = true;
-		_04       = 0;
-		_00       = 0;
+		mBlendTimer = 0.0f;
+		mTextPane   = 0;
+		mIsActive   = true;
+		mParentPane = 0;
+		mTextPane   = 0;
 	}
 
-	void init(bool, Colour&, Colour&);
-	void setPane(P2DPane*, P2DPane*);
+	void init(bool useNewColors, Colour& charColor, Colour& gradColor);
+	void setPane(P2DPane* textPane, P2DPane* parentPane);
 	void update(bool, Colour&, Colour&);
 
 	// unused/inlined:
-	void setScale(f32, f32);
+	void setScale(f32 xScale, f32 yScale);
 
 	bool getActiveSw() { return mIsActive; }
 
-	// DLL to do:
-	void setActiveSw(bool);
-	u8 colorBlend(u8, f32, u8, f32);
+	u8 colorBlend(u8 comp1, f32 t1, u8 comp2, f32 t2) { return RoundOff(comp1 * t1 + comp2 * t2); }
+
+	void setActiveSw(bool isActive) { mIsActive = isActive; }
 
 	static const f32 frameMax;
 
-	P2DTextBox* _00; // _00
-	P2DTextBox* _04; // _04
-	Colour _08;      // _08
-	Colour _0C;      // _0C
-	f32 _10;         // _10
-	bool mIsActive;  // _14
+	P2DTextBox* mTextPane;   // _00
+	P2DTextBox* mParentPane; // _04
+	Colour mCharColor;       // _08
+	Colour mGradColor;       // _0C
+	f32 mBlendTimer;         // _10
+	bool mIsActive;          // _14
 };
 
 /**
@@ -109,14 +110,44 @@ struct DrawMenuItem {
 	int getIconRPosV() { return mIconRPane->getPosV(); }
 
 	bool getActiveSw() { return mText->getActiveSw(); }
+	void setActiveSw(bool isActive) { mText->setActiveSw(isActive); }
 
-	// DLL inlines to do:
-	void setActiveSw(bool);
-	void setScale(f32, f32);
+	void setScale(f32 xScale, f32 yScale) { mText->setScale(xScale, yScale); }
 
 	DrawMenuText* mText;    // _00
 	P2DPicture* mIconLPane; // _04
 	P2DPicture* mIconRPane; // _08
+};
+
+/**
+ * @brief TODO
+ */
+struct DrawMenuTitle {
+
+	enum Mode {
+		MODE_Wait      = 0,
+		MODE_Start     = 1,
+		MODE_Operation = 2,
+		MODE_End       = 3,
+	};
+
+	DrawMenuTitle()
+	{
+		mTitlePane = nullptr;
+		mMode      = 0;
+	}
+
+	void setPane(P2DScreen* screen, P2DPane* parent, u32 tag);
+	void start();
+	void wait();
+	void end();
+	bool update(f32);
+
+	// unused/inlined:
+	void operation();
+
+	int mMode;           // _00
+	P2DPane* mTitlePane; // _04
 };
 
 /**
@@ -163,43 +194,12 @@ struct DrawMenuBase : public DrawScreen {
 	SpectrumCursorMgr mLeftCursorMgr;  // _114
 	SpectrumCursorMgr mRightCursorMgr; // _144
 	DrawMenuItem* mMenuItems;          // _174
-	Colour _178;                       // _178
-	Colour _17C;                       // _17C
+	Colour mCharColor;                 // _178
+	Colour mGradColor;                 // _17C
 	ModeFunc mModeFunction;            // _180
 	u32 _18C;                          // _18C, probably event flag?
 	u32 mKeyDecide;                    // _190, see KeyboardButtons enum
 	u32 mKeyCancel;                    // _194, see KeyboardButtons enum
-};
-
-/**
- * @brief TODO
- */
-struct DrawMenuTitle {
-
-	enum Mode {
-		MODE_Wait      = 0,
-		MODE_Start     = 1,
-		MODE_Operation = 2,
-		MODE_End       = 3,
-	};
-
-	DrawMenuTitle()
-	{
-		_04   = nullptr;
-		mMode = 0;
-	}
-
-	void setPane(P2DScreen*, P2DPane*, u32);
-	void start();
-	void wait();
-	void end();
-	bool update(f32);
-
-	// unused/inlined:
-	void operation();
-
-	int mMode;    // _00
-	P2DPane* _04; // _04
 };
 
 /**
@@ -233,15 +233,15 @@ struct DrawMenu : public DrawScreen {
 
 	P2DScreen* getScreenPtr() { return &mScreen; }
 
-	StatusFlag getStatusFlag() { return (StatusFlag)_100; }
+	StatusFlag getStatusFlag() { return mState; }
 
 	int getSelectMenu()
 	{
 		if (mCancelSelectMenuNo >= 0) {
-			return _110;
+			return mCurrentSelect;
 		}
 
-		return (mIsSelectMenuCancel) ? -1 : _110;
+		return (mIsSelectMenuCancel) ? -1 : mCurrentSelect;
 	}
 
 	f32 getRatio() { return mRatio; }
@@ -255,32 +255,32 @@ struct DrawMenu : public DrawScreen {
 
 	// _00     = VTBL
 	// _00-_100 = DrawScreen
-	int _100;                       // _100
-	f32 _104;                       // _104
-	f32 _108;                       // _108
-	f32 mRatio;                     // _10C
-	int _110;                       // _110
-	int mSelectCount;               // _114
-	int mSpecCount;                 // _118
-	f32 _11C;                       // _11C
-	f32 _120;                       // _120
-	Vector2f _124;                  // _124
-	Vector2f _12C;                  // _12C
-	P2DPane* mParentPane;           // _134, 'pall'
-	DrawMenuItem* mMenuItems;       // _138
-	P2DPicture** mLeftCursorIcons;  // _13C
-	P2DPicture** mRightCursorIcons; // _140
-	DrawMenuTitle mTitle;           // _144
-	SpectrumCursorMgr _14C;         // _14C
-	SpectrumCursorMgr _17C;         // _17C
-	Colour _1AC;                    // _1AC
-	Colour _1B0;                    // _1B0
-	MenuPanelMgr mMenuPanelMgr;     // _1B4
-	u32 mKeyDecide;                 // _1C4
-	u32 mKeyCancel;                 // _1C8
-	int mCancelSoundID;             // _1CC
-	int mCancelSelectMenuNo;        // _1D0
-	bool mIsSelectMenuCancel;       // _1D4
+	StatusFlag mState;                 // _100
+	f32 _104;                          // _104
+	f32 _108;                          // _108
+	f32 mRatio;                        // _10C
+	int mCurrentSelect;                // _110
+	int mSelectCount;                  // _114
+	int mSpecCount;                    // _118
+	f32 _11C;                          // _11C
+	f32 _120;                          // _120
+	Vector2f mLeftCursorPos;           // _124
+	Vector2f mRightCursorPos;          // _12C
+	P2DPane* mParentPane;              // _134, 'pall'
+	DrawMenuItem* mMenuItems;          // _138
+	P2DPicture** mLeftCursorIcons;     // _13C
+	P2DPicture** mRightCursorIcons;    // _140
+	DrawMenuTitle mTitle;              // _144
+	SpectrumCursorMgr mLeftCursorMgr;  // _14C
+	SpectrumCursorMgr mRightCursorMgr; // _17C
+	Colour mCharColor;                 // _1AC
+	Colour mGradColor;                 // _1B0
+	MenuPanelMgr mMenuPanelMgr;        // _1B4
+	u32 mKeyDecide;                    // _1C4
+	u32 mKeyCancel;                    // _1C8
+	int mCancelSoundID;                // _1CC
+	int mCancelSelectMenuNo;           // _1D0
+	bool mIsSelectMenuCancel;          // _1D4
 };
 
 } // namespace zen

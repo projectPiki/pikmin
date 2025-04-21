@@ -32,7 +32,7 @@ zen::DrawMenuBase::DrawMenuBase(char* bloFileName, bool useAlphaMgr, bool useTex
 	P2DPane* pane = mScreen.search('se_c', true);
 	if (pane->getTypeID() == PANETYPE_TextBox) {
 		P2DTextBox* tBox = (P2DTextBox*)pane;
-		tBox->getFontColor(_178, _17C);
+		tBox->getFontColor(mCharColor, mGradColor);
 	} else {
 		ERROR("tag<se_c> pane is not text box.\n");
 	}
@@ -126,7 +126,7 @@ void zen::DrawMenuBase::init(int mode)
 	mRightCursorMgr.initPos(mMenuItems[mCurrentSelect].getIconRPosH(), mMenuItems[mCurrentSelect].getIconRPosV());
 
 	for (int i = 0; i < mSelectCount; i++) {
-		mMenuItems[i].init(i == mCurrentSelect, _178, _17C);
+		mMenuItems[i].init(i == mCurrentSelect, mCharColor, mGradColor);
 	}
 
 	setModeFunc(mode); // why are we doing this twice
@@ -179,7 +179,7 @@ bool zen::DrawMenuBase::modeOperation(Controller* controller)
 	}
 
 	for (int i = 0; i < mSelectCount; i++) {
-		mMenuItems[i].update(i == mCurrentSelect, _178, _17C);
+		mMenuItems[i].update(i == mCurrentSelect, mCharColor, mGradColor);
 	}
 
 	if (startSel != mCurrentSelect) {

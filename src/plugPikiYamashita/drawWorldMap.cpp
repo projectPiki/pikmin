@@ -1036,7 +1036,7 @@ struct WorldMapConfirmMgr {
 		P2DPane* parent = confScreen->search('pall', true);
 		P2DPane* pane   = confScreen->search('se_c', true);
 		if (pane->getTypeID() == PANETYPE_TextBox) {
-			static_cast<P2DTextBox*>(pane)->getFontColor(_68, _6C);
+			static_cast<P2DTextBox*>(pane)->getFontColor(mCharColor, mGradColor);
 		} else {
 			ERROR("tag<se_c> pane is not text box.\n");
 		}
@@ -1080,7 +1080,7 @@ struct WorldMapConfirmMgr {
 		mRightSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconRPosH(), mMenuItems[mCurrentSelection].getIconRPosV());
 
 		for (int i = 0; i < SELECT_COUNT; i++) {
-			mMenuItems[i].init(i == mCurrentSelection, _68, _6C);
+			mMenuItems[i].init(i == mCurrentSelection, mCharColor, mGradColor);
 		}
 	}
 
@@ -1099,7 +1099,7 @@ struct WorldMapConfirmMgr {
 
 		currItem = &mMenuItems[mCurrentSelection];
 		for (int i = 0; i < 2; i++) {
-			mMenuItems[i].update(i == mCurrentSelection, _68, _6C);
+			mMenuItems[i].update(i == mCurrentSelection, mCharColor, mGradColor);
 		}
 		if (startSel != mCurrentSelection) {
 			SeSystem::playSysSe(SYSSE_MOVE1);
@@ -1193,8 +1193,8 @@ struct WorldMapConfirmMgr {
 	SpectrumCursorMgr mLeftSpecCursor;  // _04
 	SpectrumCursorMgr mRightSpecCursor; // _34
 	DrawMenuItem* mMenuItems;           // _64
-	Colour _68;                         // _68
-	Colour _6C;                         // _6C
+	Colour mCharColor;                  // _68
+	Colour mGradColor;                  // _6C
 	f32 _70;                            // _70
 	statusFlag mStatus;                 // _74
 	int mCurrentSelection;              // _78, see selectFlag enum
