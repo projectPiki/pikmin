@@ -829,9 +829,9 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/drawUfoParts.cpp"),
             Object(Matching, "plugPikiYamashita/zenSys.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawSaveMes.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawSaveFailure.cpp"),
+            Object(Matching, "plugPikiYamashita/drawSaveFailure.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawFinalResult.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawOptionSave.cpp"),
+            Object(Matching, "plugPikiYamashita/drawOptionSave.cpp"),
         ],
     },
     DolphinLib(

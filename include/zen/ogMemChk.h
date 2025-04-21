@@ -22,7 +22,9 @@ struct ogScrMemChkMgr {
 	 * @brief TODO
 	 */
 	enum MemChkStatus {
-		// TODO: this
+		STATE_Unk19 = 19,
+		STATE_Unk20 = 20,
+		STATE_Unk21 = 21,
 	};
 
 	ogScrMemChkMgr();

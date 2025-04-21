@@ -14,6 +14,34 @@ namespace zen {
 /**
  * @brief TODO
  *
+ * @note Might be a struct? I think it's a namespace.
+ */
+namespace P2DPaneLibrary {
+void makeResident(P2DPane*);
+void setFamilyAlpha(P2DPane*, u8);
+void setAlpha(P2DPane*, u8);
+void setFamilyMirror(P2DPane*, P2DMirror);
+P2DPane* getParentPane(P2DPane*);
+void getWorldPos(P2DPane*, int*, int*);
+void changeParent(P2DPane*, P2DPane*);
+
+// unused/inlined:
+void setMirror(P2DPane*, P2DMirror);
+void printTag(P2DPane*);
+void printUseTexName(P2DPane*, IDelegate1<char*>*);
+void printUseTexName(char*, IDelegate1<char*>*);
+
+// DLL inlines:
+inline int makeTag(char* str)
+{
+	return ((u8)str[0] << 24) | ((u8)str[1] << 16) | ((u8)str[2] << 8) | (u8)str[3];
+}
+
+}; // namespace P2DPaneLibrary
+
+/**
+ * @brief TODO
+ *
  * @note Size: 0x100.
  */
 struct DrawScreen {
@@ -28,7 +56,7 @@ struct DrawScreen {
 
 	// DLL inlines to do:
 	P2DScreen* getScreenPtr() { return &mScreen; }
-	void makeResident();
+	void makeResident() { P2DPaneLibrary::makeResident(&mScreen); }
 
 	// _00 = VTBL
 	P2DScreen mScreen;            // _04
@@ -56,34 +84,6 @@ struct BalloonPane : public P2DPaneCallBack {
 	f32 mCurrRotate;    // _38
 	f32 mGoalRotate;    // _3C
 };
-
-/**
- * @brief TODO
- *
- * @note Might be a struct? I think it's a namespace.
- */
-namespace P2DPaneLibrary {
-void makeResident(P2DPane*);
-void setFamilyAlpha(P2DPane*, u8);
-void setAlpha(P2DPane*, u8);
-void setFamilyMirror(P2DPane*, P2DMirror);
-P2DPane* getParentPane(P2DPane*);
-void getWorldPos(P2DPane*, int*, int*);
-void changeParent(P2DPane*, P2DPane*);
-
-// unused/inlined:
-void setMirror(P2DPane*, P2DMirror);
-void printTag(P2DPane*);
-void printUseTexName(P2DPane*, IDelegate1<char*>*);
-void printUseTexName(char*, IDelegate1<char*>*);
-
-// DLL inlines:
-inline int makeTag(char* str)
-{
-	return ((u8)str[0] << 24) | ((u8)str[1] << 16) | ((u8)str[2] << 8) | (u8)str[3];
-}
-
-}; // namespace P2DPaneLibrary
 
 } // namespace zen
 
