@@ -71,7 +71,7 @@ bool zen::DrawOptionSave::update(Controller* controller)
 
 	case MODE_SaveOK:
 		if (mSaveMes.update(controller)) {
-			if (mSaveMes.getModeFlag() == DrawSaveMes::MODE_Unk8) {
+			if (mSaveMes.getModeFlag() == DrawSaveMes::MODE_Finish) {
 				setMode(MODE_Unk6, nullptr);
 			} else {
 				PRINT("MODE ERROR \n");
@@ -82,7 +82,7 @@ bool zen::DrawOptionSave::update(Controller* controller)
 
 	case MODE_SaveFail:
 		if (mSaveMes.update(controller)) {
-			if (mSaveMes.getModeFlag() == DrawSaveMes::MODE_Unk8) {
+			if (mSaveMes.getModeFlag() == DrawSaveMes::MODE_Finish) {
 				setMode(MODE_Unk7, nullptr);
 			} else {
 				PRINT("MODE ERROR \n");

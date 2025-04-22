@@ -8,6 +8,7 @@
 struct Graphics;
 struct Controller;
 struct P2DPicture;
+struct P2DTextBox;
 
 namespace zen {
 
@@ -56,15 +57,16 @@ struct DrawSaveMes {
 	 * @brief TODO
 	 */
 	enum modeFlag {
-		MODE_Unk0 = 0,
-		MODE_Unk1 = 1,
-		MODE_Unk2 = 2,
-		MODE_Unk3 = 3,
-		MODE_Unk4 = 4,
-		MODE_Unk5 = 5,
-		MODE_Unk6 = 6,
-		MODE_Unk7 = 7,
-		MODE_Unk8 = 8,
+		MODE_Sleep  = -1,
+		MODE_Unk0   = 0,
+		MODE_Unk1   = 1,
+		MODE_Unk2   = 2,
+		MODE_Unk3   = 3,
+		MODE_Unk4   = 4,
+		MODE_Unk5   = 5,
+		MODE_Unk6   = 6,
+		MODE_Unk7   = 7,
+		MODE_Finish = 8,
 	};
 
 	DrawSaveMes();
@@ -84,7 +86,18 @@ struct DrawSaveMes {
 	modeFlag getModeFlag() { return mMode; }
 
 	modeFlag mMode;               // _00
-	u8 _04[0x34 - 0x4];           // _04, unknown
+	f32 _04;                      // _04
+	DrawScreen* _08;              // _08
+	DrawScreen* _0C;              // _0C
+	P2DPicture* mBackIcon;        // _10
+	P2DPicture* _14;              // _14
+	P2DTextBox* _18;              // _18
+	P2DTextBox* _1C;              // _1C
+	P2DTextBox* _20;              // _20
+	P2DTextBox* _24;              // _24
+	P2DTextBox* _28;              // _28
+	P2DTextBox* _2C;              // _2C
+	P2DPicture* _30;              // _30
 	DrawSaveFailure mSaveFailure; // _34
 };
 
