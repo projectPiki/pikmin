@@ -78,8 +78,8 @@ struct TAIAmoreLife : public TAIAjudgeLife {
  * @brief TODO
  */
 struct TAIAjudgeOptionalRange : public TaiAction {
-	inline TAIAjudgeOptionalRange() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAjudgeOptionalRange(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -99,7 +99,8 @@ struct TAIAjudgeOptionalRange : public TaiAction {
  * @brief TODO
  */
 struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
-	inline TAIAinsideOptionalRange() // TODO: this is a guess
+	TAIAinsideOptionalRange(int nextState) // TODO: this is a guess
+	    : TAIAjudgeOptionalRange(nextState)
 	{
 	}
 
@@ -116,7 +117,8 @@ struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
  * @brief TODO
  */
 struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
-	inline TAIAoutsideOptionalRange() // TODO: this is a guess
+	TAIAoutsideOptionalRange(int nextState)
+	    : TAIAjudgeOptionalRange(nextState)
 	{
 	}
 
@@ -337,7 +339,10 @@ struct TAIAattackableAngleTarget : public TAIAattackableTarget {
 	{
 	}
 
-	virtual bool judge(Teki&); // _1C
+	virtual bool judge(Teki& teki) // _1C
+	{
+		return TAIAattackableTarget::checkAngle(teki);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAattackableTarget?

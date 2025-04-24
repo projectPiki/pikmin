@@ -766,7 +766,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/tekiyteki.cpp"),
             Object(Matching, "plugPikiYamashita/tekiyamashita.cpp"),
             Object(Matching, "plugPikiYamashita/TAIanimation.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAItank.cpp"),
+            Object(Matching, "plugPikiYamashita/TAItank.cpp"),
             Object(NonMatching, "plugPikiYamashita/TAImar.cpp"),
             Object(Matching, "plugPikiYamashita/TAIAreaction.cpp"),
             Object(Equivalent, "plugPikiYamashita/TAIAmove.cpp"),

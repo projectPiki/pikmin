@@ -73,6 +73,8 @@ struct TAIeffectAttackParam {
 struct EventTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator*); // _08
 
+	void init(TAIeffectAttackParam* param) { mParam = param; }
+
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	TAIeffectAttackParam* mParam; // _04

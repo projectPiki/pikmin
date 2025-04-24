@@ -228,9 +228,12 @@ struct TAIAturnToTarget : public TAIAreserveMotion {
 		_14              = p4;
 	}
 
-	virtual void start(Teki&);          // _08
-	virtual bool act(Teki&);            // _10
-	virtual f32 getTurnVelocity(Teki&); // _1C
+	virtual void start(Teki&);              // _08
+	virtual bool act(Teki&);                // _10
+	virtual f32 getTurnVelocity(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TPF_TurnVelocity);
+	}
 
 	// unused/inlined:
 	int getTurnMotionIndex(Teki&);
@@ -358,8 +361,8 @@ struct TAIApatrol : public TAIAturnToTarget {
  * @brief TODO
  */
 struct TAIAstepBack : public TAIAreserveMotion {
-	inline TAIAstepBack() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAstepBack(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -416,8 +419,8 @@ struct TAIAgoingHome : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAgoingHomePriorityFaceDir : public TAIAreserveMotion {
-	inline TAIAgoingHomePriorityFaceDir() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAgoingHomePriorityFaceDir(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 

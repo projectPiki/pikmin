@@ -170,7 +170,8 @@ struct TAIArockAttack : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAinsideOptionalRangeBeatle : public TAIAinsideOptionalRange {
-	inline TAIAinsideOptionalRangeBeatle() // TODO: this is a guess
+	TAIAinsideOptionalRangeBeatle(int nextState)
+	    : TAIAinsideOptionalRange(nextState)
 	{
 	}
 

@@ -410,7 +410,6 @@ struct particleGenerator : public zenList {
 	f32 getInitVel() { return mInitVel; }
 	void setInitVel(f32 vel) { mInitVel = vel; }
 
-	// NB: might be getMaxFrame(), unsure
 	s16 getCurrentFrame() { return mCurrentFrame; }
 	s16 getMaxFrame() { return mMaxFrame; }
 

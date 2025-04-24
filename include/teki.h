@@ -640,13 +640,14 @@ struct YTeki : public NTeki {
 	}
 	zen::CallBack1<zen::particleGenerator*>* getCylinderTypePtclCallBack() { return &mCylinderCallBack; }
 
+	void initEventTypePtclCallBack() { mEventCallBack.init(&mEffectAttackParam); }
+	zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack() { return &mEventCallBack; }
+
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
 
 	    zen::CallBack1<zen::particleGenerator *> * getConeTypePtclCallBack();
-	    zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack();
 	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
-	    void initEventTypePtclCallBack();
 
 	    f32 getExceptionalGravity();
 	    void setExceptionalGravity(f32);
