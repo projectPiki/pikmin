@@ -121,6 +121,8 @@ struct DrawMenuItem {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x8.
  */
 struct DrawMenuTitle {
 
@@ -250,10 +252,9 @@ struct DrawMenu : public DrawScreen {
 
 	void setCancelSE(int soundID) { mCancelSoundID = soundID; }
 
-	// DLL inlines, to do:
 	bool checkSelectMenuCancel() { return mIsSelectMenuCancel; }
-	void setCancelKeyAssign(u32);
-	void setDecideKeyAssign(u32);
+	void setCancelKeyAssign(u32 key) { mKeyCancel = key; }
+	void setDecideKeyAssign(u32 key) { mKeyDecide = key; }
 
 	// _00     = VTBL
 	// _00-_100 = DrawScreen

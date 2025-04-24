@@ -807,7 +807,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/TAIAeffect.cpp"),
             Object(Matching, "plugPikiYamashita/TAImiurin.cpp"),
             Object(Matching, "plugPikiYamashita/ptclGenPack.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawProgre.cpp"),
+            Object(Matching, "plugPikiYamashita/drawProgre.cpp"),
             Object(NonMatching, "plugPikiYamashita/spectrumCursorMgr.cpp"),
             Object(Equivalent, "plugPikiYamashita/drawWorldMap.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawCountDown.cpp"),

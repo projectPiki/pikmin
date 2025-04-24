@@ -10,6 +10,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct MenuPanelMgr {
 
@@ -41,12 +43,12 @@ struct MenuPanelMgr {
 
 	void updateRatio() { mRatio = _04 / _08; }
 
+	void wait() { changeState(STATE_Wait, 1.0f); }
 	void start(f32 p1) { changeState(STATE_Start, p1); }
 	void operation() { changeState(STATE_Operation, 1.0f); }
 	void end(f32 p1) { changeState(STATE_End, p1); }
 
 	// DLL inlines, to do:
-	void wait();
 	statusFlag getStatusFlag();
 	f32 getRatio();
 
