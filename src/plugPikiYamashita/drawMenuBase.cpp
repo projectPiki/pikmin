@@ -44,14 +44,14 @@ zen::DrawMenuBase::DrawMenuBase(char* bloFileName, bool useAlphaMgr, bool useTex
 		sprintf(buf, "he%02d", ++i);
 	}
 
-	mSelectCount = i;
+	mOptionCount = i;
 	if (i == 0) {
 		ERROR("セレクトアイコンペインがありませんなァ。逝ってよし"); // 'there is no select icon pane. good riddance' lol
 	}
 
-	mMenuItems = new DrawMenuItem[mSelectCount];
+	mMenuItems = new DrawMenuItem[mOptionCount];
 
-	for (i = 0; i < mSelectCount; i++) {
+	for (i = 0; i < mOptionCount; i++) {
 		sprintf(buf, "he%02d", i);
 		P2DPane* ePane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
 		sprintf(buf, "hm%02d", i);
@@ -86,8 +86,8 @@ zen::DrawMenuBase::DrawMenuBase(char* bloFileName, bool useAlphaMgr, bool useTex
  */
 bool zen::DrawMenuBase::update(Controller* controller)
 {
-	bool res = false;
-	_18C     = 0;
+	bool res   = false;
+	mEventFlag = 0;
 	if ((this->*mModeFunction)(controller)) {
 		res = true;
 	}
@@ -116,17 +116,17 @@ void zen::DrawMenuBase::draw(Graphics&)
 void zen::DrawMenuBase::init(int mode)
 {
 	setModeFunc(mode);
-	_18C           = 0;
-	mCurrentSelect = 0;
-	_108           = 0;
+	mEventFlag    = 0;
+	mCurrentHover = 0;
+	mSelectedNum  = 0;
 	mScreen.move(0, 0);
 	mScreen.setScale(1.0f);
 	mScreen.show();
-	mLeftCursorMgr.initPos(mMenuItems[mCurrentSelect].getIconLPosH(), mMenuItems[mCurrentSelect].getIconLPosV());
-	mRightCursorMgr.initPos(mMenuItems[mCurrentSelect].getIconRPosH(), mMenuItems[mCurrentSelect].getIconRPosV());
+	mLeftCursorMgr.initPos(mMenuItems[mCurrentHover].getIconLPosH(), mMenuItems[mCurrentHover].getIconLPosV());
+	mRightCursorMgr.initPos(mMenuItems[mCurrentHover].getIconRPosH(), mMenuItems[mCurrentHover].getIconRPosV());
 
-	for (int i = 0; i < mSelectCount; i++) {
-		mMenuItems[i].init(i == mCurrentSelect, mCharColor, mGradColor);
+	for (int i = 0; i < mOptionCount; i++) {
+		mMenuItems[i].init(i == mCurrentHover, mCharColor, mGradColor);
 	}
 
 	setModeFunc(mode); // why are we doing this twice
@@ -139,8 +139,8 @@ void zen::DrawMenuBase::init(int mode)
  */
 void zen::DrawMenuBase::start()
 {
-	mCurrentSelect = 0;
-	_108           = mCurrentSelect;
+	mCurrentHover = 0;
+	mSelectedNum  = mCurrentHover;
 	init(MODE_Operation);
 }
 
@@ -163,41 +163,41 @@ bool zen::DrawMenuBase::modeOperation(Controller* controller)
 {
 	bool res = false;
 	DrawMenuItem* newItem;
-	int startSel  = mCurrentSelect;
+	int startSel  = mCurrentHover;
 	int selAdjust = controller->keyClick(KBBTN_MSTICK_DOWN) - controller->keyClick(KBBTN_MSTICK_UP);
 	if (selAdjust) {
 		do {
-			mCurrentSelect += selAdjust;
-			if (mCurrentSelect < 0) {
-				mCurrentSelect = mSelectCount - 1;
+			mCurrentHover += selAdjust;
+			if (mCurrentHover < 0) {
+				mCurrentHover = mOptionCount - 1;
 			}
-			if (mCurrentSelect >= mSelectCount) {
-				mCurrentSelect = 0;
+			if (mCurrentHover >= mOptionCount) {
+				mCurrentHover = 0;
 			}
-			newItem = &mMenuItems[mCurrentSelect];
+			newItem = &mMenuItems[mCurrentHover];
 		} while (!newItem->getActiveSw());
 	}
 
-	for (int i = 0; i < mSelectCount; i++) {
-		mMenuItems[i].update(i == mCurrentSelect, mCharColor, mGradColor);
+	for (int i = 0; i < mOptionCount; i++) {
+		mMenuItems[i].update(i == mCurrentHover, mCharColor, mGradColor);
 	}
 
-	if (startSel != mCurrentSelect) {
+	if (startSel != mCurrentHover) {
 		SeSystem::playSysSe(SYSSE_MOVE1);
 		mLeftCursorMgr.move(newItem->getIconLPosH(), newItem->getIconLPosV(), 0.5f);
 		mRightCursorMgr.move(newItem->getIconRPosH(), newItem->getIconRPosV(), 0.5f);
-		_18C |= 0x1;
+		mEventFlag |= 0x1;
 	}
 	if (controller->keyClick(mKeyCancel)) {
 		SeSystem::playSysSe(SYSSE_CANCEL);
-		_108 = SELECT_CANCEL;
-		res  = true;
+		mSelectedNum = SELECT_CANCEL;
+		res          = true;
 	} else if (controller->keyClick(mKeyDecide)) {
 		SeSystem::playSysSe(SYSSE_DECIDE1);
-		_108 = mCurrentSelect;
-		res  = true;
+		mSelectedNum = mCurrentHover;
+		res          = true;
 	} else {
-		_108 = mCurrentSelect;
+		mSelectedNum = mCurrentHover;
 	}
 
 	return res;

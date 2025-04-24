@@ -3,6 +3,11 @@
 
 #include "types.h"
 #include "zen/DrawMenu.h"
+#include "zen/ogGraph.h"
+#include "zen/Number.h"
+#include "nlib/Math.h"
+#include "gameflow.h"
+#include "stl/stdio.h"
 
 struct GameChalQuickInfo;
 struct Graphics;
@@ -11,59 +16,25 @@ struct P2DScreen;
 
 namespace zen {
 
-/**
- * @brief TODO
- */
-struct DrawCMCSmenu : public DrawMenuBase {
-
-	/**
-	 * @brief TODO
-	 */
-	struct MenuExpansion {
-		MenuExpansion();
-
-		// TODO: members
-	};
-
-	inline DrawCMCSmenu(); // TODO: this
-
-	virtual bool update(Controller*); // _14
-	virtual void start();             // _18
-	virtual void setModeFunc(int);    // _28
-
-	bool modeAppear(Controller*);
-
-	// TODO: members
-};
+struct DrawOptionSave;
+struct EffectMgr2D;
 
 /**
  * @brief TODO
- */
-struct DrawCMcourseSelect {
-	/**
-	 * @brief TODO
-	 */
-	enum returnStatusFlag {
-		// TODO: this
-	};
-
-	DrawCMcourseSelect();
-
-	void start();
-	void setBestScore();
-	bool update(Controller*);
-	void draw(Graphics&);
-	returnStatusFlag getReturnStatusFlag();
-	bool modeOperation(Controller*);
-
-	// TODO: members
-	u8 _00[0x94]; // _00
-};
-
-/**
- * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct DrawCMtitleObj {
+
+	typedef bool (DrawCMtitleObj::*ModeFunc)();
+
+	DrawCMtitleObj()
+	{
+		mTitlePane    = nullptr;
+		_10           = -1;
+		mModeFunction = nullptr;
+	}
+
 	void init(P2DScreen*);
 	void update();
 	void wait(f32);
@@ -72,25 +43,47 @@ struct DrawCMtitleObj {
 	bool modeAppear();
 	bool modeWait();
 
-	// TODO: members
+	u32 getEvent() { return mEventFlag; }
+
+	P2DPane* mTitlePane;    // _00
+	Vector3f _04;           // _04
+	int _10;                // _10
+	ModeFunc mModeFunction; // _14
+	f32 _20;                // _20
+	f32 _24;                // _24
+	u32 mEventFlag;         // _28
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x50. Lives in drawCMscore for data reasons.
  */
-struct DrawCMscoreObj {
-	DrawCMscoreObj();
-
-	bool modeMove();
-	bool modeWait();
-
-	// TODO: members
-};
+struct DrawCMscoreObj;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct DrawCMscoreMgr {
+
+	typedef bool (DrawCMscoreMgr::*ModeFunc)();
+
+	enum Mode {
+		MODE_Sleep  = -1,
+		MODE_Appear = 0,
+		MODE_Unk1   = 1,
+	};
+
+	DrawCMscoreMgr()
+	{
+		mScoreObjs    = nullptr;
+		mMode         = -1;
+		mModeFunction = nullptr;
+		mEventFlag    = 0;
+	}
+
 	void init(P2DScreen*);
 	void update();
 	void hide();
@@ -104,42 +97,52 @@ struct DrawCMscoreMgr {
 	// unused/inlined:
 	void show();
 
-	// TODO: members
+	// DLL inlines to do:
+	u32 getEventFlag() { return mEventFlag; }
+
+	static const int MEMORY_BEST_SCORE;
+
+	DrawCMscoreObj* mScoreObjs; // _00
+	int mMode;                  // _04
+	ModeFunc mModeFunction;     // _08
+	u8 _14[0x8];                // _14, unknown
+	u32 mEventFlag;             // _1C
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20. In drawCMbest.cpp for ordering reasons.
+ * If it has to be here for some reason later, we'll have to find another way of doing PRINT/ERROR.
  */
-struct DrawCMBpicObj {
-
-	/**
-	 * @brief TODO
-	 */
-	enum modeFlag {
-		// TODO: this
-	};
-
-	DrawCMBpicObj();
-
-	bool modeWait();
-	bool modeAppear();
-	bool modeSleep();
-	void setMode(modeFlag);
-
-	// TODO: members
-};
+struct DrawCMBpicObj;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct DrawCMbest {
 
+	typedef bool (DrawCMbest::*ModeFunc)();
+
 	/**
 	 * @brief TODO
 	 */
 	enum modeFlag {
-		// TODO: this
+		MODE_Sleep  = 0,
+		MODE_Appear = 1,
+		MODE_Wait   = 2,
 	};
+
+	DrawCMbest()
+	{
+		mMode         = MODE_Sleep;
+		_04           = nullptr;
+		mPicObjs      = nullptr;
+		mModeFunction = nullptr;
+		_0C           = 0;
+	}
 
 	void init(P2DScreen*);
 	void sleep();
@@ -151,38 +154,88 @@ struct DrawCMbest {
 	bool modeAppear();
 	void setMode(modeFlag);
 
-	// TODO: members
+	void show() { _04->show(); }
+	void hide() { _04->hide(); }
+
+	modeFlag mMode;          // _00
+	P2DPane* _04;            // _04
+	DrawCMBpicObj* mPicObjs; // _08
+	int _0C;                 // _0C
+	ModeFunc mModeFunction;  // _10
 };
 
 /**
  * @brief TODO
  */
 struct DrawCMresultAlpha {
+	DrawCMresultAlpha() { init(); }
 
-	virtual bool update(); // _08
+	virtual bool update() // _08
+	{
+		switch (_04) {
+		case 1:
+			if (_08 < 255) {
+				_08++;
+			}
+			break;
 
-	// TODO: members
+		case 2:
+			if (_08 != 0) {
+				_08--;
+			}
+			break;
+		}
+		return false;
+	}
+
+	void init()
+	{
+		_08 = 0;
+		_04 = 0;
+	}
+
+	void appear() { _04 = 1; }
+
+	// _00 = VTBL
+	int _04; // _04
+	u8 _08;  // _08
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct DrawCMresultGraph : public DrawCMresultAlpha {
+	DrawCMresultGraph(P2DScreen* screen) { mGraphMgr = new ogGraphMgr(screen); }
 
-	// _00 = VTBL?
-	// TODO: members
+	// DLL inlines to do:
+	void draw() { mGraphMgr->draw(_08); }
+
+	// _00     = VTBL
+	// _00-_0C = DrawCMresultAlpha
+	ogGraphMgr* mGraphMgr; // _0C
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xA0.
  */
 struct DrawCMresult {
+
+	typedef bool (DrawCMresult::*ModeFunc)(Controller*);
 
 	/**
 	 * @brief TODO
 	 */
 	enum modeFlag {
-		// TODO: this
+		MODE_Sleep      = 0,
+		MODE_WaitAppear = 1,
+		MODE_Appear     = 2,
+		MODE_Operation  = 3,
+		MODE_Save       = 4,
+		MODE_Unk5       = 5,
 	};
 
 	DrawCMresult();
@@ -199,10 +252,81 @@ struct DrawCMresult {
 	bool modeSave(Controller*);
 	void createRankInEffect();
 
-	// TODO: members
-	u8 _00[0xa0];
+	modeFlag mMode;                  // _00
+	ModeFunc mModeFunction;          // _04
+	DrawScreen* mResultScreen;       // _10
+	DrawScreen* mScoreScreen;        // _14
+	DrawScreen* mBestScreen;         // _18
+	DrawCMtitleObj mTitleObj;        // _1C
+	DrawCMscoreMgr mScoreMgr;        // _48
+	DrawCMbest mBest;                // _68
+	int _84;                         // _84
+	int _88;                         // _88
+	int _8C;                         // _8C
+	EffectMgr2D* mEffectMgr2D;       // _90
+	f32 _94;                         // _94
+	DrawCMresultGraph* mResultGraph; // _98
+	DrawOptionSave* mOptionSave;     // _9C
 };
 
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x19C. In drawCMcourseSelect because of data ordering.
+ */
+struct DrawCMCSmenu;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x94.
+ */
+struct DrawCMcourseSelect {
+	/**
+	 * @brief TODO
+	 */
+	enum returnStatusFlag {
+		RETSTATE_UnkN3 = -3,
+		RETSTATE_UnkN2 = -2,
+		RETSTATE_UnkN1 = -1,
+		RETSTATE_Unk0  = 0,
+		RETSTATE_Unk1  = 1,
+		RETSTATE_Unk2  = 2,
+		RETSTATE_Unk3  = 3,
+		RETSTATE_Unk4  = 4,
+	};
+
+	enum modeFlag {
+		MODE_Unk0 = 0,
+		MODE_Unk1 = 1,
+		MODE_Unk2 = 2,
+		MODE_Unk3 = 3,
+	};
+
+	DrawCMcourseSelect();
+
+	void start();
+	void setBestScore();
+	bool update(Controller*);
+	void draw(Graphics&);
+	returnStatusFlag getReturnStatusFlag();
+	bool modeOperation(Controller*);
+
+	DrawScreen* mSelectScreen;     // _00
+	DrawScreen* mScoreScreen;      // _04
+	DrawScreen* mBestScreen;       // _08
+	returnStatusFlag mReturnState; // _0C
+	u8 _10[0x4];                   // _10, unknown
+	modeFlag mMode;                // _14
+	u8 _18[0x4];                   // _18, unknown
+	DrawCMCSmenu* mMenu;           // _1C
+	DrawCMtitleObj mTitleObj;      // _20
+	DrawCMscoreMgr mScoreMgr;      // _4C
+	DrawCMbest mBest;              // _6C
+	EffectMgr2D* mEffectMgr2D;     // _88
+	P2DPane* _8C;                  // _8C
+	u8 _90;                        // _90
+};
 } // namespace zen
 
 #endif

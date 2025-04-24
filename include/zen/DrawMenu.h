@@ -152,6 +152,8 @@ struct DrawMenuTitle {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x198.
  */
 struct DrawMenuBase : public DrawScreen {
 	enum Mode {
@@ -174,22 +176,22 @@ struct DrawMenuBase : public DrawScreen {
 	void init(int);
 
 	// unused/inlined:
-	~DrawMenuBase();
+	~DrawMenuBase() { }
 
 	void setKeyAssignDecide(u32 button) { mKeyDecide = button; }
 	void setKeyAssignCancel(u32 button) { mKeyCancel = button; }
 
 	// DLL inlines to do:
-	int getSelectNo();
-	u32 getEventFlag();
+	int getSelectNo() { return mSelectedNum; }
+	u32 getEventFlag() { return mEventFlag; }
 
 	static const int SELECT_CANCEL;
 
 	// _00-_100 = DrawScreen
 	int mMode;                         // _100
-	int mCurrentSelect;                // _104
-	int _108;                          // _108
-	int mSelectCount;                  // _10C
+	int mCurrentHover;                 // _104
+	int mSelectedNum;                  // _108
+	int mOptionCount;                  // _10C
 	u8 _110[0x4];                      // _110, unknown
 	SpectrumCursorMgr mLeftCursorMgr;  // _114
 	SpectrumCursorMgr mRightCursorMgr; // _144
@@ -197,7 +199,7 @@ struct DrawMenuBase : public DrawScreen {
 	Colour mCharColor;                 // _178
 	Colour mGradColor;                 // _17C
 	ModeFunc mModeFunction;            // _180
-	u32 _18C;                          // _18C, probably event flag?
+	u32 mEventFlag;                    // _18C
 	u32 mKeyDecide;                    // _190, see KeyboardButtons enum
 	u32 mKeyCancel;                    // _194, see KeyboardButtons enum
 };

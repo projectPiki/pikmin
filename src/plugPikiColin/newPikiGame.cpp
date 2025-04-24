@@ -2467,8 +2467,8 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 		} else {
 			GameChalQuickInfo info;
 			PRINT("starting challenge mode window %d : %d!\n", GameStat::allPikis);
-			info.mOffset = flowCont.mCurrentStage->mChalStageID;
-			info.mPikis  = GameStat::allPikis;
+			info.mCourseID = flowCont.mCurrentStage->mChalStageID;
+			info.mPikis    = GameStat::allPikis;
 			gameflow.mGamePrefs.checkIsHiscore(info);
 			challengeWindow = new zen::DrawCMresult;
 			challengeWindow->start(info);

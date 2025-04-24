@@ -103,6 +103,8 @@ struct DrawSaveMes {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x15C.
  */
 struct DrawOptionSave {
 	enum Mode {
@@ -127,8 +129,7 @@ struct DrawOptionSave {
 	void start();
 	void setMode(u32, Controller*);
 
-	// DLL inlines to do:
-	u32 getModeFlag();
+	u32 getModeFlag() { return mMode; }
 
 	u32 mMode;                 // _00
 	DrawSaveMes mSaveMes;      // _04

@@ -272,11 +272,11 @@ void GamePrefs::setChildMode(bool set)
  */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
-	info.mInfo[0] = mHiscores.mChalModeRecords[info.mOffset]._00[0];
-	info.mInfo[1] = mHiscores.mChalModeRecords[info.mOffset]._00[4];
-	info.mInfo[2] = mHiscores.mChalModeRecords[info.mOffset]._00[8];
-	info.mInfo[3] = mHiscores.mChalModeRecords[info.mOffset]._00[12];
-	info.mInfo[4] = mHiscores.mChalModeRecords[info.mOffset]._00[16];
+	info.mScores[0] = mHiscores.mChalModeRecords[info.mCourseID]._00[0];
+	info.mScores[1] = mHiscores.mChalModeRecords[info.mCourseID]._00[4];
+	info.mScores[2] = mHiscores.mChalModeRecords[info.mCourseID]._00[8];
+	info.mScores[3] = mHiscores.mChalModeRecords[info.mCourseID]._00[12];
+	info.mScores[4] = mHiscores.mChalModeRecords[info.mCourseID]._00[16];
 
 	/*
 	.loc_0x0:
@@ -318,7 +318,7 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
 	info._08           = -1;
 	gsys->mTogglePrint = 1;
-	int index          = info.mOffset;
+	int index          = info.mCourseID;
 	int max            = info.mPikis;
 	if (mHiscores.mChalModeRecords[index]._00[0] < max) {
 		info._08 = 0;

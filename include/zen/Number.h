@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "P2D/Pane.h"
+#include "Texture.h"
 
 struct Texture;
 
@@ -16,6 +17,18 @@ struct NumberTex {
 
 	static Texture* texTable[10];       // unknown type
 	static Texture* shadowTexTable[10]; // unknown type
+
+	static void makeResident()
+	{
+		for (int i = 0; i < 10; i++) {
+			if (texTable[i]) {
+				texTable[i]->makeResident();
+			}
+			if (shadowTexTable[i]) {
+				shadowTexTable[i]->makeResident();
+			}
+		}
+	}
 
 	// empty
 };
@@ -74,9 +87,11 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 	void setTexture(P2DPane* pane)
 	{
 		if (mUseShadowTex) {
-			static_cast<P2DPicture*>(pane)->setTexture(getShadowTexPtr(), 0);
+			P2DPicture* pic = (P2DPicture*)pane;
+			pic->setTexture(getShadowTexPtr(), 0);
 		} else {
-			static_cast<P2DPicture*>(pane)->setTexture(getTexPtr(), 0);
+			P2DPicture* pic = (P2DPicture*)pane;
+			pic->setTexture(getTexPtr(), 0);
 		}
 	}
 

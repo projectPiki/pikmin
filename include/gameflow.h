@@ -72,10 +72,10 @@ enum LanguageFileType {
 };
 
 struct GameChalQuickInfo {
-	int mOffset;  // _00
-	int mPikis;   // _04
-	int _08;      // _08
-	int mInfo[5]; // _0C
+	int mCourseID;  // _00
+	int mPikis;     // _04
+	int _08;        // _08
+	int mScores[5]; // _0C
 };
 
 /**
@@ -330,7 +330,7 @@ struct GamePrefs : public CoreNode {
 	bool isStageOpen(int stageIdx)
 	{
 		if (stageIdx >= 0 && stageIdx <= 5) {
-			return _22 & (1 << stageIdx);
+			return (_22 & (1 << stageIdx)) != 0;
 		}
 		return false;
 	}

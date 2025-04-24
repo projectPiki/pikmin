@@ -11,6 +11,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x14.
  */
 struct ogGraphMgr {
 	ogGraphMgr(P2DScreen*);
@@ -19,7 +21,7 @@ struct ogGraphMgr {
 	void MakeData();
 	void draw(u8);
 
-	// TODO: members
+	u8 _00[0x14]; // _00, unknown
 };
 
 } // namespace zen
