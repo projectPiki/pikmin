@@ -816,7 +816,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/effectMgr2D.cpp"),
             Object(Matching, "plugPikiYamashita/drawWMPause.cpp"),
             Object(Matching, "plugPikiYamashita/TAIusuba.cpp"),
-            Object(NonMatching, "plugPikiYamashita/TAIotama.cpp"),
+            Object(Matching, "plugPikiYamashita/TAIotama.cpp"),
             Object(Matching, "plugPikiYamashita/drawCMcourseSelect.cpp"),
             Object(Matching, "plugPikiYamashita/drawCMtitle.cpp"),
             Object(Matching, "plugPikiYamashita/drawCMscore.cpp"),

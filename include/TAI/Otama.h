@@ -9,11 +9,41 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "NaviMgr.h"
+#include "MapCode.h"
+#include "SoundMgr.h"
 #include "PaniAnimator.h"
 
 /////////// Wolpole AI Actions ///////////
 
-/*
+BEGIN_ENUM_TYPE(TAIotamaFloatParams)
+enum {
+	MinWaitTime = TPF_COUNT, // 50
+	MaxWaitTime,             // 51
+	COUNT,                   // 52
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIotamaStateID)
+enum {
+	Dead         = 0,
+	Wait         = 1,
+	SetTarget    = 2,
+	GoTarget     = 3,
+	AppealTarget = 4,
+	AppealRun    = 5,
+	RunAway      = 6,
+	COUNT, // 7
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIotamaMotionID)
+enum {
+	Unk0 = 0, //
+	Unk2 = 2, //
+	Unk4 = 4, //
+	Unk6 = 6, //
+} END_ENUM_TYPE;
+
+/**
  * @brief TODO
  */
 struct TAIotamaSoundTable : public PaniSoundTable {
@@ -22,7 +52,7 @@ struct TAIotamaSoundTable : public PaniSoundTable {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TAIotamaParameters : public TekiParameters {
@@ -33,7 +63,7 @@ struct TAIotamaParameters : public TekiParameters {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TAIotamaStrategy : public YaiStrategy {
@@ -64,17 +94,57 @@ struct TAIotamaAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIArunAwayOtama : public TAIAreserveMotion {
-	inline TAIArunAwayOtama() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIArunAwayOtama(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		setTargetPosition(teki);
+		teki.setAnimSpeed(50.0f);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (TAIAreserveMotion::act(teki)) {
+			if (setTargetPosition(teki)) {
+				teki.setManualAnimation(false);
+				res = true;
+			}
+			teki.moveTowardPriorityFaceDir(teki.mTargetPosition, teki.getParameterF(TPF_RunVelocity));
+		}
+
+		return res;
+	}
+
+	bool setTargetPosition(Teki& teki)
+	{
+		Navi* navi = naviMgr->getNavi();
+		Vector3f offset;
+		bool res = false;
+		offset.set(teki.getPosition() - navi->getPosition());
+		f32 dist = offset.length();
+		if (dist > teki.getParameterF(TPF_VisibleRange)) {
+			res = true;
+
+		} else {
+			offset.multiply(teki.getParameterF(TPF_SafetyTerritoryRange) / dist);
+			teki.mTargetPosition.set(teki.getPosition() + offset);
+			if (teki.mTargetPosition.distance(teki.mPersonality->mNestPosition) > teki.getParameterF(TPF_DangerTerritoryRange)) {
+				offset.set(teki.mTargetPosition - teki.mPersonality->mNestPosition);
+				offset.normalize();
+				offset.multiply(teki.getParameterF(TPF_DangerTerritoryRange));
+				teki.mTargetPosition.set(teki.mPersonality->mNestPosition + offset);
+			}
+		}
+
+		return res;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	// TODO: members
 };
 
 /**
@@ -86,7 +156,20 @@ struct TAIAappealOtama : public TAIAflickingReserveMotion {
 	{
 	}
 
-	virtual void flick(Teki&); // _1C
+	virtual void flick(Teki& teki) // _1C
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			teki.flick();
+			if (teki.mGroundTriangle) {
+				if (MapCode::getAttribute(teki.mGroundTriangle) == ATTR_Water) {
+					effectMgr->create(EffectMgr::EFF_P_Bubbles, teki.getPosition(), nullptr, nullptr);
+					teki.playEventSound(&teki, SE_OTAMA_WATERJUMP);
+				} else {
+					teki.playEventSound(&teki, SE_OTAMA_JUMP);
+				}
+			}
+		}
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAflickingReserveMotion?
@@ -97,29 +180,66 @@ struct TAIAappealOtama : public TAIAflickingReserveMotion {
  * @brief TODO
  */
 struct TAIAsetTargetOtama : public TAIAsetTargetPointCircleRandom {
-	inline TAIAsetTargetOtama(int nextState) // TODO: this is a guess
+	TAIAsetTargetOtama(int nextState, int p2)
 	    : TAIAsetTargetPointCircleRandom(nextState)
 	{
+		mNormalNextState = nextState;
+		mRareNextState   = p2;
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = TAIAsetTargetPointCircleRandom::act(teki);
+		if (res) {
+			if (zen::Rand(100.0f) > 5.0f) {
+				mNextState = mNormalNextState;
+			} else {
+				mNextState = mRareNextState;
+			}
+		}
+		return res;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAsetTargetPointCircleRandom?
-	// TODO: members
+	int mNormalNextState; // _08
+	int mRareNextState;   // _0C
 };
 
 /**
  * @brief TODO
  */
 struct TAIAwaitOtama : public TAIAreserveMotion {
-	inline TAIAwaitOtama() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAwaitOtama(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		teki.setFrameCounter(0.0f);
+		teki.setFrameCounterMax(
+		    teki.getParameterF(TAIotamaFloatParams::MinWaitTime)
+		    + zen::Rand(teki.getParameterF(TAIotamaFloatParams::MaxWaitTime) - teki.getParameterF(TAIotamaFloatParams::MinWaitTime)));
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (TAIAreserveMotion::act(teki)) {
+			teki.addFrameCounter(gsys->getFrameTime());
+		}
+		teki.mTargetVelocity.x *= 0.95f;
+		teki.mTargetVelocity.z *= 0.95f;
+		teki.mVelocity = teki.mTargetVelocity;
+		if (teki.getFrameCounter() > teki.getFrameCounterMax() && zen::Abs(teki.mTargetVelocity.x) < 0.1f
+		    && zen::Abs(teki.mTargetVelocity.z) < 0.1f) {
+			res = true;
+		}
+
+		u32 badCompiler[3];
+		return res;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
