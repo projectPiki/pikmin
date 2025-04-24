@@ -12,7 +12,7 @@ struct Quat;
 
 namespace zen {
 // global utility functions:
-f32 getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
+f32 getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f lineEndPt, f32& t);
 void makeRotMatrix(Vector3f&, Matrix3f&);
 
 // DLL inlines:

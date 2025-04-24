@@ -41,13 +41,13 @@ void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3
 {
 	mParam = param;
 	mParam->init();
-	mParam->mTeki = teki;
-	mParam->_00   = 0.0f;
-	mParam->_04   = p5;
-	mParam->_0C   = p7;
-	mParam->_1C   = p4;
-	mParam->_10   = p3;
-	mParam->_28   = p4;
+	mParam->mTeki     = teki;
+	mParam->_00       = 0.0f;
+	mParam->_04       = p5;
+	mParam->_0C       = p7;
+	mParam->mVelocity = p4;
+	mParam->mPosition = p3;
+	mParam->_28       = p4;
 	mParam->_28.normalize();
 	mParam->_34 = p6;
 	mParam->_08 = p8;
@@ -71,7 +71,7 @@ void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creat
 
 	if (mParam->_44->hitCheckCulling(ptclGen, mParam, creature)) {
 		f32 pointDist
-		    = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(), mParam->_10 + mParam->_28 * mParam->_08, t);
+		    = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(), mParam->mPosition + mParam->_28 * mParam->_08, t);
 		if (pointDist < creature->getCentreSize() + mParam->_08 && t >= 0.0f && t <= 1.0f) {
 			mParam->_44->hitCreature(mParam, creature);
 		}
@@ -110,11 +110,11 @@ bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 		Vector3f vec1;
 
 		if (mParam->_4C.m0) {
-			mParam->_10.add(Vector3f(mParam->_1C * gsys->getFrameTime()));
-			vec1 = mParam->_10 - ptclGen->getEmitPos();
+			mParam->mPosition.add(Vector3f(mParam->mVelocity * gsys->getFrameTime()));
+			vec1 = mParam->mPosition - ptclGen->getEmitPos();
 			if (vec1.length() > mParam->_0C) {
 				mParam->_4C.m0 = 0;
-				mParam->_1C.normalize();
+				mParam->mVelocity.normalize();
 			} else if (mParam->_44->hitMap(mParam)) {
 				mParam->_4C.m0 = 0;
 			}
@@ -137,15 +137,15 @@ void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3f& p
 {
 	mParam = param;
 	mParam->init();
-	mParam->mTeki = teki;
-	mParam->_00   = 0.0f;
-	mParam->_04   = p5;
-	mParam->_0C   = p7;
-	mParam->_10   = p3;
-	mParam->_28   = p4;
+	mParam->mTeki     = teki;
+	mParam->_00       = 0.0f;
+	mParam->_04       = p5;
+	mParam->_0C       = p7;
+	mParam->mPosition = p3;
+	mParam->_28       = p4;
 	mParam->_28.normalize();
-	mParam->_1C = p4;
-	mParam->_34 = p8;
+	mParam->mVelocity = p4;
+	mParam->_34       = p8;
 	if (mParam->_3C && !mParam->_3C->checkEmit()) {
 		ERROR("EMIT IS ALIVE! ");
 	}
@@ -168,7 +168,7 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 {
 	Vector3f emitPos(ptclGen->getEmitPos());
 	Vector3f cPos(creature->getPosition());
-	Vector3f dir1 = mParam->_10 - ptclGen->getEmitPos();
+	Vector3f dir1 = mParam->mPosition - ptclGen->getEmitPos();
 	Vector3f dir2(cPos.x - emitPos.x, cPos.y - emitPos.y, cPos.z - emitPos.z);
 
 	if (dir1.DP(dir2) > 0.0f) {
@@ -176,7 +176,7 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 		f32 dist2 = dir2.length();
 
 		f32 val;
-		if (mParam->_1C.x == 0.0f && mParam->_1C.y == 0.0f && mParam->_1C.z == 0.0f) {
+		if (mParam->mVelocity.x == 0.0f && mParam->mVelocity.y == 0.0f && mParam->mVelocity.z == 0.0f) {
 			val = mParam->_0C;
 		} else {
 			val = dist1;
@@ -478,13 +478,13 @@ bool ConeTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 	if (nextTime < mParam->_04 && mParam->mTeki->mHealth > 0.0f) {
 		Vector3f vec1;
 
-		mParam->_10.add(Vector3f(mParam->_1C * gsys->getFrameTime()));
-		vec1 = mParam->_10 - ptclGen->getEmitPos();
+		mParam->mPosition.add(Vector3f(mParam->mVelocity * gsys->getFrameTime()));
+		vec1 = mParam->mPosition - ptclGen->getEmitPos();
 		if (vec1.length() > mParam->_0C) {
-			mParam->_1C.set(0.0f, 0.0f, 0.0f);
+			mParam->mVelocity.set(0.0f, 0.0f, 0.0f);
 		} else if (ptclGen->checkEmit()) {
 			if (mParam->_44->hitMap(mParam)) {
-				mParam->_1C.set(0.0f, 0.0f, 0.0f);
+				mParam->mVelocity.set(0.0f, 0.0f, 0.0f);
 			}
 		} else {
 			ERROR("HEN! %f %f \n", mParam->_00, mParam->_04);

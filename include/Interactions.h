@@ -223,7 +223,11 @@ struct InteractChangeHappa : public Interaction {
  * @brief TODO
  */
 struct InteractFire : public Interaction {
-	inline InteractFire(); // TODO: probably
+	InteractFire(Creature* owner, f32 damage)
+	    : Interaction(owner)
+	{
+		mDamage = damage;
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 	virtual bool actNavi(Navi*); // _14
