@@ -1922,10 +1922,10 @@ void DayOverModeState::makeTotalScoreWindow()
 	record->_10                   = gameflow.mGamePrefs.mHiscores._00;
 
 	for (int i = 0; i < 5; i++) {
-		record->_1A[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i]._00;
-		record->_24[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i]._04;
-		record->_2E[i] = gameflow.mGamePrefs.mHiscores.mBornPikminRecords[i]._00;
-		record->_38[i] = gameflow.mGamePrefs.mHiscores.mDeadPikminRecords[i]._00;
+		record->_1A[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumParts;
+		record->_24[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumDays;
+		record->_2E[i] = gameflow.mGamePrefs.mHiscores.mBornPikminRecords[i].mNumBorn;
+		record->_38[i] = gameflow.mGamePrefs.mHiscores.mDeadPikminRecords[i].mNumDead;
 		if (record->_38[i] == 9999) {
 			record->_38[i] = -1;
 		}

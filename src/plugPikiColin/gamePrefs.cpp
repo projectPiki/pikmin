@@ -748,9 +748,9 @@ void GamePrefs::write(RandomAccessStream& data)
 
 	data.writeInt(mHiscores._00);
 	for (int i = 0; i < 5; i++) {
-		data.writeInt(mHiscores.mMinDayRecords[i]._00);
-		data.writeInt(mHiscores.mBornPikminRecords[i]._00);
-		data.writeInt(mHiscores.mDeadPikminRecords[i]._00);
+		data.writeInt(mHiscores.mMinDayRecords[i].mNumParts);
+		data.writeInt(mHiscores.mBornPikminRecords[i].mNumBorn);
+		data.writeInt(mHiscores.mDeadPikminRecords[i].mNumDead);
 
 		for (int j = 0; j < 5; j++) {
 			data.writeInt(mHiscores.mChalModeRecords[i]._00[j]);
@@ -946,8 +946,8 @@ void GamePrefs::read(RandomAccessStream& input)
 	mHiscores._00 = input.readInt();
 
 	for (int i = 0; i < 5; i++) {
-		mHiscores.mMinDayRecords[i]._00 = input.readInt();
-		mHiscores.mMinDayRecords[i]._04 = input.readInt();
+		mHiscores.mMinDayRecords[i].mNumParts = input.readInt();
+		mHiscores.mMinDayRecords[i].mNumDays  = input.readInt();
 
 		for (int j = 0; j < 5; j++) {
 			mHiscores.mChalModeRecords[i]._00[j] = input.readInt();

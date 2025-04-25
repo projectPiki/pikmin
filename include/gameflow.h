@@ -203,11 +203,11 @@ struct GameRecChalCourse {
  * @note Size: 0x4.
  */
 struct GameRecDeadPikmin {
-	GameRecDeadPikmin() { _00 = 9999; }
+	GameRecDeadPikmin() { mNumDead = 9999; }
 
-	inline void init() { _00 = 9999; }
+	inline void init() { mNumDead = 9999; }
 
-	int _00; // _00
+	int mNumDead; // _00
 };
 
 /**
@@ -216,11 +216,11 @@ struct GameRecDeadPikmin {
  * @note Size: 0x4.
  */
 struct GameRecBornPikmin {
-	GameRecBornPikmin() { _00 = 0; }
+	GameRecBornPikmin() { mNumBorn = 0; }
 
-	inline void init() { _00 = 0; }
+	inline void init() { mNumBorn = 0; }
 
-	u32 _00; // _00, unknown
+	int mNumBorn; // _00, unknown
 };
 
 /**
@@ -231,18 +231,18 @@ struct GameRecBornPikmin {
 struct GameRecMinDay {
 	GameRecMinDay()
 	{
-		_00 = 0;
-		_04 = 30;
+		mNumParts = 0;
+		mNumDays  = 30;
 	}
 
 	inline void init()
 	{
-		_00 = 0;
-		_04 = 30;
+		mNumParts = 0;
+		mNumDays  = 30;
 	}
 
-	u32 _00; // _00, unknown
-	int _04; // _04
+	int mNumParts; // _00
+	int mNumDays;  // _04
 };
 
 struct GameQuickInfo {

@@ -13,7 +13,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("drawHurryUp")
 
 /*
  * --INFO--

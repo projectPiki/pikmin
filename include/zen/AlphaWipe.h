@@ -10,6 +10,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct AlphaWipe {
 
@@ -43,11 +45,15 @@ struct AlphaWipe {
 	void draw(Graphics&);
 	void start(f32, f32, typeFlag);
 
-	// DLL inlines to do:
-	void setColour(Colour&, Colour&);
-	bool isInc();
-	bool isDec();
-	bool isSleep();
+	void setColour(Colour& start, Colour& end)
+	{
+		mStartColor = start;
+		mEndColor   = end;
+	}
+
+	bool isSleep() { return mState == STATE_Inactive; }
+	bool isInc() { return (mFlags & DIR_Increasing) ? TRUE : FALSE; }
+	bool isDec() { return (mFlags & DIR_Decreasing) ? TRUE : FALSE; }
 
 	statusFlag mState;   // _00
 	u32 mFlags;          // _04, see directionFlag enum
