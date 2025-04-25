@@ -206,7 +206,7 @@ cflags_base = [
     "-maxerrors 1",
     "-nosyspath",
     "-RTTI off",
-    "-fp_contract on",
+    "-fp_contract off",
     "-str reuse",
     "-multibyte",
     "-i include",
@@ -257,7 +257,6 @@ cflags_jaudio = [
 # Game code flags
 cflags_pikmin = [
     *cflags_base,
-    "-fp_contract off",
     "-RTTI on",
 ]
 
@@ -268,12 +267,6 @@ cflags_runtime = [
     "-str reuse,readonly",
     "-common off",
     "-inline auto",
-]
-
-# Dolphin mtx library flags
-cflags_mtx = [
-    *cflags_base,
-    "-fp_contract off",
 ]
 
 config.linker_version = "GC/1.2.5"
@@ -880,7 +873,7 @@ config.libs = [
     {
         "lib": "mtx",
         "mw_version": "GC/1.2.5n",
-        "cflags": cflags_mtx,
+        "cflags": cflags_base,
         "progress_category": "sdk",
         "objects": [
             Object(NonMatching, "mtx/mtx.c"),
@@ -961,18 +954,18 @@ config.libs = [
         [
             Object(Matching, "gx/GXInit.c"),
             Object(Matching, "gx/GXFifo.c"),
-            Object(Equivalent, "gx/GXAttr.c"),
+            Object(Matching, "gx/GXAttr.c"),
             Object(Matching, "gx/GXMisc.c"),
             Object(Matching, "gx/GXGeometry.c"),
             Object(Matching, "gx/GXFrameBuf.c"),
-            Object(NonMatching, "gx/GXLight.c"),
-            Object(Equivalent, "gx/GXTexture.c"),
+            Object(Matching, "gx/GXLight.c"),
+            Object(Matching, "gx/GXTexture.c"),
             Object(Matching, "gx/GXBump.c"),
             Object(Matching, "gx/GXTev.c"),
             Object(Matching, "gx/GXPixel.c"),
             Object(Matching, "gx/GXStubs.c"),
             Object(Matching, "gx/GXDisplayList.c"),
-            Object(NonMatching, "gx/GXTransform.c"),
+            Object(Matching, "gx/GXTransform.c"),
         ]
     ),
     {
@@ -982,13 +975,13 @@ config.libs = [
         "cflags": [*cflags_runtime, "-inline deferred"],
         "objects": [
             Object(Matching, "Runtime/PPCEABI/H/__mem.c"),
-            Object(NonMatching, "Runtime/PPCEABI/H/__va_arg.c"),
+            Object(Matching, "Runtime/PPCEABI/H/__va_arg.c"),
             Object(Matching, "Runtime/PPCEABI/H/global_destructor_chain.c"),
             Object(Matching, "Runtime/PPCEABI/H/CPlusLibPPC.cp"),
-            Object(NonMatching, "Runtime/PPCEABI/H/NMWException.cp"),
+            Object(Matching, "Runtime/PPCEABI/H/NMWException.cp"),
             Object(Matching, "Runtime/PPCEABI/H/ptmf.c"),
-            Object(NonMatching, "Runtime/PPCEABI/H/ExceptionPPC.cp"),
-            Object(NonMatching, "Runtime/PPCEABI/H/runtime.c"),
+            Object(Matching, "Runtime/PPCEABI/H/ExceptionPPC.cp"),
+            Object(Matching, "Runtime/PPCEABI/H/runtime.c"),
             Object(Matching, "Runtime/PPCEABI/H/__init_cpp_exceptions.cpp"),
         ],
     },
@@ -996,7 +989,7 @@ config.libs = [
         "lib": "MSL_C.PPCEABI.bare.H",
         "mw_version": "GC/1.2.5",
         "progress_category" : "sdk",
-        "cflags": cflags_base,
+        "cflags": [*cflags_base, "-fp_contract on"],
         "objects": [
             Object(NonMatching, "MSL_C/PPCEABI/bare/H/abort_exit.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/errno.c"),

@@ -704,13 +704,13 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 		break;
 	}
 	switch (func) {
-	case GX_TG_MTX2X4:
+	case GX_TG_MTX3X4:
 		SET_REG_FIELD(974, reg, 1, 1, 0);
 		SET_REG_FIELD(975, reg, 1, 2, form);
 		SET_REG_FIELD(976, reg, 3, 4, 0);
 		SET_REG_FIELD(977, reg, 5, 7, row);
 		break;
-	case GX_TG_MTX3X4:
+	case GX_TG_MTX2X4:
 		SET_REG_FIELD(981, reg, 1, 1, 1);
 		SET_REG_FIELD(982, reg, 1, 2, form);
 		SET_REG_FIELD(983, reg, 3, 4, 0);

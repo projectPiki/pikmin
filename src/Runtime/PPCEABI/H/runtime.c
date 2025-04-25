@@ -1313,12 +1313,12 @@ ASM void __div2i(void) {
 		subfze  r3,r3
 	positive1:
 		stw     r9,8(r1)
-		rlwinm. r10,r5,0,0,0
+		rlwinm. r9,r5,0,0,0
 		beq     cr0,positive2
 		subfic  r6,r6,0
 		subfze  r5,r5
 	positive2:
-		stw     r10,12(r1)
+		stw     r9,12(r1)
 		cmpwi   cr0,r3,0
 		cntlzw  r0,r3
 		cntlzw  r9,r4

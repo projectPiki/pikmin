@@ -500,13 +500,13 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
     }
     reg = 0x5101A;
     GX_WRITE_U8(0x10);
-    GX_WRITE_U32(reg);
-    GX_WRITE_XF_REG_F(26, sx);
-    GX_WRITE_XF_REG_F(27, sy);
-    GX_WRITE_XF_REG_F(28, sz);
-    GX_WRITE_XF_REG_F(29, ox);
-    GX_WRITE_XF_REG_F(30, oy);
-    GX_WRITE_XF_REG_F(31, oz);
+    GX_WRITE_U32(0x5101A);
+    GX_WRITE_F32(sx);
+    GX_WRITE_F32(sy);
+    GX_WRITE_F32(sz);
+    GX_WRITE_F32(ox);
+    GX_WRITE_F32(oy);
+    GX_WRITE_F32(oz);
     gx->bpSent = 0;
 }
 

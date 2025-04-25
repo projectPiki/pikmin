@@ -43,6 +43,8 @@
         "mbstring.h": "c",
         "wchar_io.h": "c",
         "gxmisc.h": "c",
-        "trk.h": "c"
+        "trk.h": "c",
+        "gx.h": "c",
+        "__va_arg.h": "c"
     },
 }

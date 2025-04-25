@@ -8,7 +8,6 @@ u8 GXTexImage2Ids[8]       = { 0x90, 0x91, 0x92, 0x93, 0xB0, 0xB1, 0xB2, 0xB3 };
 u8 GXTexImage3Ids[8]       = { 0x94, 0x95, 0x96, 0x97, 0xB4, 0xB5, 0xB6, 0xB7 };
 u8 GXTexTlutIds[8]         = { 0x98, 0x99, 0x9A, 0x9B, 0xB8, 0xB9, 0xBA, 0xBB };
 static u8 GX2HWFiltConv[6] = { 0x00, 0x04, 0x01, 0x05, 0x02, 0x06 };
-static u8 HW2GXFiltConv[8] = { 0x00, 0x02, 0x04, 0x00, 0x01, 0x03, 0x05, 0x00 };
 
 /*
  * --INFO--
@@ -31,10 +30,10 @@ void __GXGetTexTileShift(GXTexFmt fmt, u32* rowTileS, u32* colTileS)
 	case 0x9:
 	case GX_TF_Z8:
 	case GX_CTF_RA4:
-	case GX_CTF_A8:
 	case GX_CTF_R8:
 	case GX_CTF_G8:
 	case GX_CTF_B8:
+	case GX_CTF_RG8:
 	case GX_CTF_Z8M:
 	case GX_CTF_Z8L:
 		*rowTileS = 3;
@@ -48,8 +47,8 @@ void __GXGetTexTileShift(GXTexFmt fmt, u32* rowTileS, u32* colTileS)
 	case GX_TF_Z16:
 	case GX_TF_Z24X8:
 	case GX_CTF_RA8:
-	case GX_CTF_RG8:
 	case GX_CTF_GB8:
+	case 0x2C:
 	case GX_CTF_Z16L:
 		*rowTileS = 2;
 		*colTileS = 2;
@@ -492,7 +491,7 @@ void GXGetTexObjLODAll(const GXTexObj* tex_obj, GXTexFilter* min_filt, GXTexFilt
 	GXTexObjPriv* t = (GXTexObjPriv*)tex_obj;
 
 	ASSERTMSGLINE(0x3A0, tex_obj, "Texture Object Pointer is null");
-	*min_filt = HW2GXFiltConv[GET_REG_FIELD(t->mode0, 3, 5)];
+	// *min_filt = HW2GXFiltConv[GET_REG_FIELD(t->mode0, 3, 5)];
 	*mag_filt = GET_REG_FIELD(t->mode0, 1, 4);
 	*min_lod  = (u8)t->mode1 / 16.0f;
 	*max_lod  = (u32)GET_REG_FIELD(t->mode1, 8, 8) / 16.0f;
@@ -513,10 +512,10 @@ void GXGetTexObjLODAll(const GXTexObj* tex_obj, GXTexFilter* min_filt, GXTexFilt
  */
 GXTexFilter GXGetTexObjMinFilt(const GXTexObj* tex_obj)
 {
-	GXTexObjPriv* t = (GXTexObjPriv*)tex_obj;
+	// GXTexObjPriv* t = (GXTexObjPriv*)tex_obj;
 
-	ASSERTMSGLINE(0x3B2, tex_obj, "Texture Object Pointer is null");
-	return HW2GXFiltConv[GET_REG_FIELD(t->mode0, 3, 5)];
+	// ASSERTMSGLINE(0x3B2, tex_obj, "Texture Object Pointer is null");
+	// return HW2GXFiltConv[GET_REG_FIELD(t->mode0, 3, 5)];
 }
 
 /*
