@@ -17,7 +17,7 @@ typedef int (*DBCommReadFunc)(u8*, int);
 typedef int (*DBCommWriteFunc)(const u8*, int);
 
 // Message buffer ID type.
-typedef int MessageBufferID;
+typedef int TRKBufferID;
 
 // Nub event ID type.
 typedef u32 NubEventID;
@@ -29,13 +29,13 @@ typedef int UARTError;
 #define TRKMSGBUF_SIZE (0x800 + 0x80)
 
 // Struct for sending and receiving messages (size 0x88C).
-typedef struct MessageBuffer {
-	u32 _00;                 // _00, unknown
+typedef struct TRKBuffer {
+	u32 mutex;               // _00
 	BOOL isInUse;            // _04
 	u32 length;              // _08
 	u32 position;            // _0C
 	u8 data[TRKMSGBUF_SIZE]; // _10
-} MessageBuffer;
+} TRKBuffer;
 
 // Struct for storing DB communication functions (size 0x28).
 typedef struct DBCommTable {
@@ -67,8 +67,8 @@ typedef struct TRKPacketSeq {
 
 // Struct for receiving packets from serial poll (size 0x14).
 typedef struct TRKFramingState {
-	MessageBufferID msgBufID;   // _00
-	MessageBuffer* buffer;      // _04
+	TRKBufferID msgBufID;       // _00
+	TRKBuffer* buffer;          // _04
 	ReceiverState receiveState; // _08
 	BOOL isEscape;              // _0C
 	u8 fcsType;                 // _10
@@ -91,9 +91,9 @@ typedef struct CommandReply {
 
 // Nub event information (size 0xC).
 typedef struct TRKEvent {
-	NubEventType eventType;   // _00
-	NubEventID eventID;       // _04
-	MessageBufferID msgBufID; // _08
+	NubEventType eventType; // _00
+	NubEventID eventID;     // _04
+	TRKBufferID msgBufID;   // _08
 } TRKEvent;
 
 // Event queue (size 0x28).

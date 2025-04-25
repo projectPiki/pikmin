@@ -17,14 +17,14 @@ extern DBInterface* __DBInterface;
 extern int DBVerbose;
 
 void DBInit(void);
-void DBInitComm(vu8**, AmcEXICallback); // possibly not this type, but some similar construction
+int DBInitComm(void*, AmcEXICallback); // possibly not this type, but some similar construction
+int DBInitInterrupts();
 
-void DBInitInterrupts();
-u32 DBQueryData();
-BOOL DBRead(void*, u32);
-BOOL DBWrite(const void*, u32);
-void DBOpen();
-void DBClose();
+int DBQueryData();
+BOOL DBRead(u8*, int);
+BOOL DBWrite(const u8*, int);
+BOOL DBOpen();
+BOOL DBClose();
 
 void __DBExceptionDestination(void);
 void DBPrintf(const char* format, ...);

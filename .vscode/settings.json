@@ -42,6 +42,7 @@
         "stdio.h": "c",
         "mbstring.h": "c",
         "wchar_io.h": "c",
-        "gxmisc.h": "c"
+        "gxmisc.h": "c",
+        "trk.h": "c"
     },
 }

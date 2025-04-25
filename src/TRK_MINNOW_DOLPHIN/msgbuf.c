@@ -1,14 +1,15 @@
-#include "types.h"
+#include "PowerPC_EABI_Support/MetroTRK/trk.h"
+
+TRKBuffer gTRKMsgBufs[3];
 
 /*
  * --INFO--
  * Address:	8021C4CC
  * Size:	000008
  */
-void TRKSetBufferUsed(void)
+void TRKSetBufferUsed(TRKBuffer* msg, BOOL state)
 {
-	// Generated from stw r4, 0x4(r3)
-	// _04 = a1;
+	msg->isInUse = state;
 }
 
 /*
@@ -16,43 +17,17 @@ void TRKSetBufferUsed(void)
  * Address:	8021C4D4
  * Size:	000078
  */
-void TRKInitializeMessageBuffers(void)
+DSError TRKInitializeTRKBuffers(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803D
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0x4320
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  stw       r30, 0x8(r1)
-	  li        r30, 0
-	  mulli     r4, r30, 0x890
-	  add       r31, r0, r4
+	int i;
+	for (i = 0; i < 3; i++) {
+		TRKInitializeMutex(&gTRKMsgBufs[i]);
+		TRKAcquireMutex(&gTRKMsgBufs[i]);
+		TRKSetBufferUsed(&gTRKMsgBufs[i], FALSE);
+		TRKReleaseMutex(&gTRKMsgBufs[i]);
+	}
 
-	.loc_0x28:
-	  mr        r3, r31
-	  bl        0x2198
-	  mr        r3, r31
-	  bl        0x2198
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x48
-	  mr        r3, r31
-	  bl        0x218C
-	  addi      r30, r30, 0x1
-	  addi      r31, r31, 0x890
-	  cmpwi     r30, 0x3
-	  blt+      .loc_0x28
-	  lwz       r31, 0xC(r1)
-	  li        r3, 0
-	  lwz       r30, 0x8(r1)
-	  addi      r1, r1, 0x10
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	return DS_NoError;
 }
 
 /*
@@ -60,58 +35,34 @@ void TRKInitializeMessageBuffers(void)
  * Address:	8021C54C
  * Size:	00009C
  */
-void TRKGetFreeBuffer(void)
+DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x20(r1)
-	  stmw      r27, 0xC(r1)
-	  addi      r28, r4, 0
-	  addi      r27, r3, 0
-	  li        r31, 0x300
-	  li        r30, 0
-	  stw       r0, 0x0(r4)
-	  b         .loc_0x7C
+	TRKBuffer* buf;
+	DSError error = DS_NoMessageBufferAvailable;
+	int i;
 
-	.loc_0x2C:
-	  mr        r3, r30
-	  bl        .loc_0x9C
-	  mr        r29, r3
-	  bl        0x211C
-	  lwz       r0, 0x4(r29)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x70
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0xE0
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0xDC
-	  stw       r29, 0x0(r28)
-	  li        r31, 0
-	  stw       r30, 0x0(r27)
-	  li        r30, 0x3
+	*outMsg = NULL;
 
-	.loc_0x70:
-	  mr        r3, r29
-	  bl        0x20E8
-	  addi      r30, r30, 0x1
+	for (i = 0; i < 3; i++) {
+		buf = TRKGetBuffer(i);
 
-	.loc_0x7C:
-	  cmpwi     r30, 0x3
-	  blt+      .loc_0x2C
-	  mr        r3, r31
-	  lmw       r27, 0xC(r1)
-	  addi      r1, r1, 0x20
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
+		TRKAcquireMutex(buf);
+		if (!buf->isInUse) {
+			TRKResetBuffer(buf, 1);
+			TRKSetBufferUsed(buf, TRUE);
+			error   = DS_NoError;
+			*outMsg = buf;
+			*msgID  = i;
+			i       = 3; // why not break? weird choice
+		}
+		TRKReleaseMutex(buf);
+	}
 
-	.loc_0x9C:
-	*/
+	if (error == DS_NoMessageBufferAvailable) {
+		usr_puts_serial("ERROR : No buffer available\n");
+	}
+
+	return error;
 }
 
 /*
@@ -119,24 +70,14 @@ void TRKGetFreeBuffer(void)
  * Address:	8021C5E8
  * Size:	00002C
  */
-void TRKGetBuffer(void)
+void* TRKGetBuffer(int idx)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0
-	  li        r0, 0
-	  blt-      .loc_0x24
-	  cmpwi     r3, 0x3
-	  bge-      .loc_0x24
-	  mulli     r4, r3, 0x890
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x4320
-	  add       r0, r0, r4
+	TRKBuffer* buf = NULL;
+	if (idx >= 0 && idx < 3) {
+		buf = &gTRKMsgBufs[idx];
+	}
 
-	.loc_0x24:
-	  mr        r3, r0
-	  blr
-	*/
+	return buf;
 }
 
 /*
@@ -144,39 +85,15 @@ void TRKGetBuffer(void)
  * Address:	8021C614
  * Size:	000068
  */
-void TRKReleaseBuffer(void)
+void TRKReleaseBuffer(int idx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r3, -0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  beq-      .loc_0x54
-	  cmpwi     r3, 0
-	  blt-      .loc_0x54
-	  cmpwi     r3, 0x3
-	  bge-      .loc_0x54
-	  mulli     r4, r3, 0x890
-	  lis       r3, 0x803D
-	  addi      r0, r3, 0x4320
-	  add       r31, r0, r4
-	  addi      r3, r31, 0
-	  bl        0x2050
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x190
-	  mr        r3, r31
-	  bl        0x2044
-
-	.loc_0x54:
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	TRKBuffer* msg;
+	if (idx != -1 && idx >= 0 && idx < 3) {
+		msg = &gTRKMsgBufs[idx];
+		TRKAcquireMutex(msg);
+		TRKSetBufferUsed(msg, FALSE);
+		TRKReleaseMutex(msg);
+	}
 }
 
 /*
@@ -184,29 +101,14 @@ void TRKReleaseBuffer(void)
  * Address:	8021C67C
  * Size:	000040
  */
-void TRKResetBuffer(void)
+void TRKResetBuffer(TRKBuffer* msg, BOOL keepData)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x8(r1)
-	  stw       r5, 0x8(r3)
-	  stw       r5, 0xC(r3)
-	  bne-      .loc_0x30
-	  addi      r3, r3, 0x10
-	  li        r4, 0
-	  li        r5, 0x880
-	  bl        -0x219220
+	msg->length   = 0;
+	msg->position = 0;
 
-	.loc_0x30:
-	  addi      r1, r1, 0x8
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	if (!keepData) {
+		TRK_memset(msg->data, 0, TRKMSGBUF_SIZE);
+	}
 }
 
 /*
@@ -214,27 +116,22 @@ void TRKResetBuffer(void)
  * Address:	8021C6BC
  * Size:	000030
  */
-void TRKSetBufferPosition(void)
+DSError TRKSetBufferPosition(TRKBuffer* msg, u32 pos)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0x880
-	  li        r5, 0
-	  ble-      .loc_0x14
-	  li        r5, 0x301
-	  b         .loc_0x28
+	DSError error = DS_NoError;
 
-	.loc_0x14:
-	  stw       r4, 0xC(r3)
-	  lwz       r0, 0x8(r3)
-	  cmplw     r4, r0
-	  ble-      .loc_0x28
-	  stw       r4, 0x8(r3)
+	if (pos > 0x880) {
+		error = DS_MessageBufferOverflow;
+	} else {
+		msg->position = pos;
+		// If the new position is past the current length,
+		// update the length
+		if (pos > msg->length) {
+			msg->length = pos;
+		}
+	}
 
-	.loc_0x28:
-	  mr        r3, r5
-	  blr
-	*/
+	return error;
 }
 
 /*
@@ -242,115 +139,69 @@ void TRKSetBufferPosition(void)
  * Address:	8021C6EC
  * Size:	0000A4
  */
-void TRKAppendBuffer(void)
+#pragma dont_inline on
+DSError TRKAppendBuffer(TRKBuffer* msg, const void* data, size_t length)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r5
-	  stw       r29, 0xC(r1)
-	  addi      r29, r3, 0
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0x88
+	DSError error = DS_NoError; // r31
+	u32 bytesLeft;
 
-	.loc_0x30:
-	  lwz       r3, 0xC(r29)
-	  subfic    r0, r3, 0x880
-	  cmplw     r0, r30
-	  bge-      .loc_0x48
-	  li        r31, 0x301
-	  mr        r30, r0
+	// Return if no bytes to append
+	if (length == 0) {
+		return DS_NoError;
+	}
 
-	.loc_0x48:
-	  cmplwi    r30, 0x1
-	  bne-      .loc_0x60
-	  lbz       r0, 0x0(r4)
-	  add       r3, r29, r3
-	  stb       r0, 0x10(r3)
-	  b         .loc_0x70
+	bytesLeft = 0x880 - msg->position;
 
-	.loc_0x60:
-	  addi      r3, r3, 0x10
-	  addi      r5, r30, 0
-	  add       r3, r29, r3
-	  bl        -0x2192F4
+	// If there isn't enough space left in the buffer, change the number
+	// of bytes to append to the remaning number of bytes
+	if (bytesLeft < length) {
+		error  = DS_MessageBufferOverflow;
+		length = bytesLeft;
+	}
 
-	.loc_0x70:
-	  lwz       r0, 0xC(r29)
-	  addi      r3, r31, 0
-	  add       r0, r0, r30
-	  stw       r0, 0xC(r29)
-	  lwz       r0, 0xC(r29)
-	  stw       r0, 0x8(r29)
+	if (length == 1) {
+		// If the length of bytes to append is 1, just copy the byte over
+		msg->data[msg->position] = ((u8*)data)[0];
+	} else {
+		// Otherwise, use memcpy
+		TRK_memcpy(msg->data + msg->position, data, length);
+	}
 
-	.loc_0x88:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  lwz       r29, 0xC(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	// Update the position and length
+	msg->position += length;
+	msg->length = msg->position;
+
+	return error;
 }
+#pragma dont_inline reset
 
 /*
  * --INFO--
  * Address:	8021C790
  * Size:	00008C
  */
-void TRKReadBuffer(void)
+DSError TRKReadBuffer(TRKBuffer* msg, void* data, size_t length)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r5
-	  stw       r29, 0xC(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r4, 0
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x70
+	DSError error = DS_NoError;
+	unsigned int bytesLeft; // this has to be unsigned int not u32 to match lmfao.
 
-	.loc_0x34:
-	  lwz       r4, 0xC(r29)
-	  lwz       r0, 0x8(r29)
-	  sub       r0, r0, r4
-	  cmplw     r30, r0
-	  ble-      .loc_0x50
-	  li        r31, 0x302
-	  mr        r30, r0
+	// Return if no bytes to read
+	if (length == 0) {
+		return DS_NoError;
+	}
 
-	.loc_0x50:
-	  addi      r4, r4, 0x10
-	  addi      r5, r30, 0
-	  add       r4, r29, r4
-	  bl        -0x219388
-	  lwz       r0, 0xC(r29)
-	  addi      r3, r31, 0
-	  add       r0, r0, r30
-	  stw       r0, 0xC(r29)
+	bytesLeft = msg->length - msg->position;
 
-	.loc_0x70:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  lwz       r29, 0xC(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	// If the number of bytes to read exceeds the buffer length, change
+	// the length to the remaining number of bytes
+	if (length > bytesLeft) {
+		error  = DS_MessageBufferReadError;
+		length = bytesLeft;
+	}
+
+	TRK_memcpy(data, msg->data + msg->position, length);
+	msg->position += length;
+	return error;
 }
 
 /*
@@ -358,36 +209,23 @@ void TRKReadBuffer(void)
  * Address:	8021C81C
  * Size:	000054
  */
-void TRKAppendBuffer1_ui16(void)
+DSError TRKAppendBuffer1_ui16(TRKBuffer* buffer, const u16 data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  sth       r4, 0x8(r1)
-	  lwz       r0, 0x4318(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x28
-	  addi      r4, r1, 0x8
-	  b         .loc_0x3C
+	u8* bigEndianData;
+	u8* byteData;
+	u8 swapBuffer[sizeof(data)];
 
-	.loc_0x28:
-	  lbz       r0, 0x9(r1)
-	  addi      r4, r1, 0xC
-	  stb       r0, 0xC(r1)
-	  lbz       r0, 0x8(r1)
-	  stb       r0, 0xD(r1)
+	if (gTRKBigEndian) {
+		bigEndianData = (u8*)&data;
+	} else {
+		byteData      = (u8*)&data;
+		bigEndianData = swapBuffer;
 
-	.loc_0x3C:
-	  li        r5, 0x2
-	  bl        -0x170
-	  addi      r1, r1, 0x10
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+		bigEndianData[0] = byteData[1];
+		bigEndianData[1] = byteData[0];
+	}
+
+	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
 
 /*
@@ -395,90 +233,53 @@ void TRKAppendBuffer1_ui16(void)
  * Address:	8021C870
  * Size:	000064
  */
-void TRKAppendBuffer1_ui32(void)
+DSError TRKAppendBuffer1_ui32(TRKBuffer* buffer, const u32 data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r4, 0x8(r1)
-	  lwz       r0, 0x4318(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x28
-	  addi      r4, r1, 0x8
-	  b         .loc_0x4C
+	u8* bigEndianData;
+	u8* byteData;
+	u8 swapBuffer[sizeof(data)];
 
-	.loc_0x28:
-	  lbz       r0, 0xB(r1)
-	  addi      r4, r1, 0xC
-	  stb       r0, 0xC(r1)
-	  lbz       r0, 0xA(r1)
-	  stb       r0, 0xD(r1)
-	  lbz       r0, 0x9(r1)
-	  stb       r0, 0xE(r1)
-	  lbz       r0, 0x8(r1)
-	  stb       r0, 0xF(r1)
+	if (gTRKBigEndian) {
+		bigEndianData = (u8*)&data;
+	} else {
+		byteData      = (u8*)&data;
+		bigEndianData = swapBuffer;
 
-	.loc_0x4C:
-	  li        r5, 0x4
-	  bl        -0x1D4
-	  addi      r1, r1, 0x10
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+		bigEndianData[0] = byteData[3];
+		bigEndianData[1] = byteData[2];
+		bigEndianData[2] = byteData[1];
+		bigEndianData[3] = byteData[0];
+	}
+
+	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
-
 /*
  * --INFO--
  * Address:	8021C8D4
  * Size:	000088
  */
-void TRKAppendBuffer1_ui64(void)
+DSError TRKAppendBuffer1_ui64(TRKBuffer* buffer, const u64 data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r5, 0x8(r1)
-	  stw       r6, 0xC(r1)
-	  lwz       r0, 0x4318(r4)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x2C
-	  addi      r4, r1, 0x8
-	  b         .loc_0x70
+	u8* bigEndianData;
+	u8* byteData;
+	u8 swapBuffer[sizeof(data)];
+	if (gTRKBigEndian) {
+		bigEndianData = (u8*)&data;
+	} else {
+		byteData      = (u8*)&data;
+		bigEndianData = swapBuffer;
 
-	.loc_0x2C:
-	  lbz       r0, 0xF(r1)
-	  addi      r4, r1, 0x10
-	  stb       r0, 0x10(r1)
-	  lbz       r0, 0xE(r1)
-	  stb       r0, 0x11(r1)
-	  lbz       r0, 0xD(r1)
-	  stb       r0, 0x12(r1)
-	  lbz       r0, 0xC(r1)
-	  stb       r0, 0x13(r1)
-	  lbz       r0, 0xB(r1)
-	  stb       r0, 0x14(r1)
-	  lbz       r0, 0xA(r1)
-	  stb       r0, 0x15(r1)
-	  lbz       r0, 0x9(r1)
-	  stb       r0, 0x16(r1)
-	  lbz       r0, 0x8(r1)
-	  stb       r0, 0x17(r1)
+		bigEndianData[0] = byteData[7];
+		bigEndianData[1] = byteData[6];
+		bigEndianData[2] = byteData[5];
+		bigEndianData[3] = byteData[4];
+		bigEndianData[4] = byteData[3];
+		bigEndianData[5] = byteData[2];
+		bigEndianData[6] = byteData[1];
+		bigEndianData[7] = byteData[0];
+	}
 
-	.loc_0x70:
-	  li        r5, 0x8
-	  bl        -0x25C
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
 
 /*
@@ -496,47 +297,16 @@ void TRKAppendBuffer1_ui128(void)
  * Address:	8021C95C
  * Size:	000068
  */
-void TRKAppendBuffer_ui8(void)
+DSError TRKAppendBuffer_ui8(TRKBuffer* buffer, const u8* data, int count)
 {
-	/*
-	.loc_0x0:
-	  li        r9, 0
-	  li        r0, 0
-	  b         .loc_0x50
+	DSError err;
+	int i;
 
-	.loc_0xC:
-	  lwz       r7, 0xC(r3)
-	  lbz       r8, 0x0(r4)
-	  cmplwi    r7, 0x880
-	  blt-      .loc_0x24
-	  li        r7, 0x301
-	  b         .loc_0x44
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKAppendBuffer1_ui8(buffer, data[i]);
+	}
 
-	.loc_0x24:
-	  addi      r6, r7, 0x1
-	  addi      r0, r7, 0x10
-	  stw       r6, 0xC(r3)
-	  li        r7, 0
-	  stbx      r8, r3, r0
-	  lwz       r6, 0x8(r3)
-	  addi      r0, r6, 0x1
-	  stw       r0, 0x8(r3)
-
-	.loc_0x44:
-	  addi      r0, r7, 0
-	  addi      r9, r9, 0x1
-	  addi      r4, r4, 0x1
-
-	.loc_0x50:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x60
-	  cmpw      r9, r5
-	  blt+      .loc_0xC
-
-	.loc_0x60:
-	  mr        r3, r0
-	  blr
-	*/
+	return err;
 }
 
 /*
@@ -554,48 +324,16 @@ void TRKAppendBuffer_ui16(void)
  * Address:	8021C9C4
  * Size:	00007C
  */
-void TRKAppendBuffer_ui32(void)
+DSError TRKAppendBuffer_ui32(TRKBuffer* buffer, const u32* data, int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  li        r30, 0
-	  rlwinm    r0,r30,2,0,29
-	  stw       r29, 0xC(r1)
-	  add       r31, r4, r0
-	  addi      r29, r5, 0
-	  stw       r28, 0x8(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0
-	  b         .loc_0x4C
+	DSError err;
+	int i;
 
-	.loc_0x38:
-	  mr        r3, r28
-	  lwz       r4, 0x0(r31)
-	  bl        -0x194
-	  addi      r30, r30, 0x1
-	  addi      r31, r31, 0x4
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKAppendBuffer1_ui32(buffer, data[i]);
+	}
 
-	.loc_0x4C:
-	  cmpwi     r3, 0
-	  bne-      .loc_0x5C
-	  cmpw      r30, r29
-	  blt+      .loc_0x38
-
-	.loc_0x5C:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  lwz       r29, 0xC(r1)
-	  lwz       r28, 0x8(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	return err;
 }
 
 /*
@@ -623,20 +361,9 @@ void TRKAppendBuffer_ui128(void)
  * Address:	8021CA40
  * Size:	000024
  */
-void TRKReadBuffer1_ui8(void)
+DSError TRKReadBuffer1_ui8(TRKBuffer* buffer, u8* data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x2C0
-	  addi      r1, r1, 0x8
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	return TRKReadBuffer(buffer, (void*)data, 1);
 }
 
 /*
@@ -644,49 +371,30 @@ void TRKReadBuffer1_ui8(void)
  * Address:	8021CA64
  * Size:	000080
  */
-void TRKReadBuffer1_ui16(void)
+DSError TRKReadBuffer1_ui16(TRKBuffer* buffer, u16* data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  lwz       r0, 0x4318(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  mr        r31, r30
-	  b         .loc_0x34
+	DSError err;
 
-	.loc_0x30:
-	  addi      r31, r1, 0x8
+	u8* bigEndianData;
+	u8* byteData;
+	u8 swapBuffer[sizeof(data)];
 
-	.loc_0x34:
-	  addi      r4, r31, 0
-	  li        r5, 0x2
-	  bl        -0x310
-	  lis       r4, 0x803D
-	  lwz       r0, 0x4318(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x68
-	  cmpwi     r3, 0
-	  bne-      .loc_0x68
-	  lbz       r0, 0x1(r31)
-	  stb       r0, 0x0(r30)
-	  lbz       r0, 0x0(r31)
-	  stb       r0, 0x1(r30)
+	if (gTRKBigEndian) {
+		bigEndianData = (u8*)data;
+	} else {
+		bigEndianData = swapBuffer;
+	}
 
-	.loc_0x68:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	err = TRKReadBuffer(buffer, (void*)bigEndianData, sizeof(*data));
+
+	if (!gTRKBigEndian && err == DS_NoError) {
+		byteData = (u8*)data;
+
+		byteData[0] = bigEndianData[1];
+		byteData[1] = bigEndianData[0];
+	}
+
+	return err;
 }
 
 /*
@@ -694,53 +402,32 @@ void TRKReadBuffer1_ui16(void)
  * Address:	8021CAE4
  * Size:	000090
  */
-void TRKReadBuffer1_ui32(void)
+DSError TRKReadBuffer1_ui32(TRKBuffer* buffer, u32* data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  lwz       r0, 0x4318(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  mr        r31, r30
-	  b         .loc_0x34
+	DSError err;
 
-	.loc_0x30:
-	  addi      r31, r1, 0x8
+	u8* bigEndianData;
+	u8* byteData;
+	u8 swapBuffer[sizeof(data)];
 
-	.loc_0x34:
-	  addi      r4, r31, 0
-	  li        r5, 0x4
-	  bl        -0x390
-	  lis       r4, 0x803D
-	  lwz       r0, 0x4318(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x78
-	  cmpwi     r3, 0
-	  bne-      .loc_0x78
-	  lbz       r0, 0x3(r31)
-	  stb       r0, 0x0(r30)
-	  lbz       r0, 0x2(r31)
-	  stb       r0, 0x1(r30)
-	  lbz       r0, 0x1(r31)
-	  stb       r0, 0x2(r30)
-	  lbz       r0, 0x0(r31)
-	  stb       r0, 0x3(r30)
+	if (gTRKBigEndian) {
+		bigEndianData = (u8*)data;
+	} else {
+		bigEndianData = swapBuffer;
+	}
 
-	.loc_0x78:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	err = TRKReadBuffer(buffer, (void*)bigEndianData, sizeof(*data));
+
+	if (!gTRKBigEndian && err == DS_NoError) {
+		byteData = (u8*)data;
+
+		byteData[0] = bigEndianData[3];
+		byteData[1] = bigEndianData[2];
+		byteData[2] = bigEndianData[1];
+		byteData[3] = bigEndianData[0];
+	}
+
+	return err;
 }
 
 /*
@@ -748,61 +435,36 @@ void TRKReadBuffer1_ui32(void)
  * Address:	8021CB74
  * Size:	0000B0
  */
-void TRKReadBuffer1_ui64(void)
+DSError TRKReadBuffer1_ui64(TRKBuffer* buffer, u64* data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  lwz       r0, 0x4318(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x30
-	  mr        r31, r30
-	  b         .loc_0x34
+	DSError err;
 
-	.loc_0x30:
-	  addi      r31, r1, 0x8
+	u8* bigEndianData;
+	u8* byteData;
+	u8 swapBuffer[sizeof(data)];
 
-	.loc_0x34:
-	  addi      r4, r31, 0
-	  li        r5, 0x8
-	  bl        -0x420
-	  lis       r4, 0x803D
-	  lwz       r0, 0x4318(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x98
-	  cmpwi     r3, 0
-	  bne-      .loc_0x98
-	  lbz       r0, 0x7(r31)
-	  stb       r0, 0x0(r30)
-	  lbz       r0, 0x6(r31)
-	  stb       r0, 0x1(r30)
-	  lbz       r0, 0x5(r31)
-	  stb       r0, 0x2(r30)
-	  lbz       r0, 0x4(r31)
-	  stb       r0, 0x3(r30)
-	  lbz       r0, 0x3(r31)
-	  stb       r0, 0x4(r30)
-	  lbz       r0, 0x2(r31)
-	  stb       r0, 0x5(r30)
-	  lbz       r0, 0x1(r31)
-	  stb       r0, 0x6(r30)
-	  lbz       r0, 0x0(r31)
-	  stb       r0, 0x7(r30)
+	if (gTRKBigEndian) {
+		bigEndianData = (u8*)data;
+	} else {
+		bigEndianData = swapBuffer;
+	}
 
-	.loc_0x98:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	err = TRKReadBuffer(buffer, (void*)bigEndianData, sizeof(*data));
+
+	if (!gTRKBigEndian && err == 0) {
+		byteData = (u8*)data;
+
+		byteData[0] = bigEndianData[7];
+		byteData[1] = bigEndianData[6];
+		byteData[2] = bigEndianData[5];
+		byteData[3] = bigEndianData[4];
+		byteData[4] = bigEndianData[3];
+		byteData[5] = bigEndianData[2];
+		byteData[6] = bigEndianData[1];
+		byteData[7] = bigEndianData[0];
+	}
+
+	return err;
 }
 
 /*
@@ -820,46 +482,16 @@ void TRKReadBuffer1_ui128(void)
  * Address:	8021CC24
  * Size:	000074
  */
-void TRKReadBuffer_ui8(void)
+DSError TRKReadBuffer_ui8(TRKBuffer* buffer, u8* data, int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0xC(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x8(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0
-	  b         .loc_0x44
+	DSError err;
+	int i;
 
-	.loc_0x34:
-	  addi      r3, r28, 0
-	  add       r4, r29, r31
-	  bl        -0x220
-	  addi      r31, r31, 0x1
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKReadBuffer1_ui8(buffer, &(data[i]));
+	}
 
-	.loc_0x44:
-	  cmpwi     r3, 0
-	  bne-      .loc_0x54
-	  cmpw      r31, r30
-	  blt+      .loc_0x34
-
-	.loc_0x54:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  lwz       r29, 0xC(r1)
-	  lwz       r28, 0x8(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	return err;
 }
 
 /*
@@ -877,48 +509,16 @@ void TRKReadBuffer_ui16(void)
  * Address:	8021CC98
  * Size:	00007C
  */
-void TRKReadBuffer_ui32(void)
+DSError TRKReadBuffer_ui32(TRKBuffer* buffer, u32* data, int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  li        r30, 0
-	  rlwinm    r0,r30,2,0,29
-	  stw       r29, 0xC(r1)
-	  add       r31, r4, r0
-	  addi      r29, r5, 0
-	  stw       r28, 0x8(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0
-	  b         .loc_0x4C
+	DSError err;
+	s32 i;
 
-	.loc_0x38:
-	  addi      r3, r28, 0
-	  addi      r4, r31, 0
-	  bl        -0x1F4
-	  addi      r30, r30, 0x1
-	  addi      r31, r31, 0x4
+	for (i = 0, err = DS_NoError; err == DS_NoError && i < count; i++) {
+		err = TRKReadBuffer1_ui32(buffer, &(data[i]));
+	}
 
-	.loc_0x4C:
-	  cmpwi     r3, 0
-	  bne-      .loc_0x5C
-	  cmpw      r30, r29
-	  blt+      .loc_0x38
-
-	.loc_0x5C:
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  lwz       r29, 0xC(r1)
-	  lwz       r28, 0x8(r1)
-	  addi      r1, r1, 0x18
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	return err;
 }
 
 /*

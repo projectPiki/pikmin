@@ -8,21 +8,10 @@ extern TRKState gTRKState;
  * Address:	8021BF4C
  * Size:	000028
  */
-void TRKHandleRequestEvent(void)
+void TRKHandleRequestEvent(TRKEvent* event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x8(r3)
-	  bl        0x68C
-	  bl        0xF94
-	  addi      r1, r1, 0x8
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	TRKBuffer* buffer = TRKGetBuffer(event->msgBufID);
+	TRKDispatchMessage(buffer);
 }
 
 /*
@@ -30,19 +19,9 @@ void TRKHandleRequestEvent(void)
  * Address:	8021BF74
  * Size:	000020
  */
-void TRKHandleSupportEvent(void)
+void TRKHandleSupportEvent(TRKEvent* event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x3A4C
-	  addi      r1, r1, 0x8
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	TRKTargetSupportRequest();
 }
 
 /*
@@ -50,24 +29,11 @@ void TRKHandleSupportEvent(void)
  * Address:	8021BF94
  * Size:	00002C
  */
-void TRKIdle(void)
+void TRKIdle()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x3B58
-	  cmpwi     r3, 0
-	  bne-      .loc_0x1C
-	  bl        0x480C
-
-	.loc_0x1C:
-	  addi      r1, r1, 0x8
-	  lwz       r0, 0x4(r1)
-	  mtlr      r0
-	  blr
-	*/
+	if (TRKTargetStopped() == FALSE) {
+		TRKTargetContinue();
+	}
 }
 
 /*
@@ -93,8 +59,7 @@ void TRKNubMainLoop(void)
 				break;
 
 			case NUBEVENT_Request:
-				msg = TRKGetBuffer(event.msgBufID);
-				TRKDispatchMessage(msg);
+				TRKHandleRequestEvent(&event);
 				break;
 
 			case NUBEVENT_Shutdown:
@@ -107,7 +72,7 @@ void TRKNubMainLoop(void)
 				break;
 
 			case NUBEVENT_Support:
-				TRKTargetSupportRequest();
+				TRKHandleSupportEvent(&event);
 				break;
 			}
 
@@ -121,9 +86,7 @@ void TRKNubMainLoop(void)
 			continue;
 		}
 
-		if (TRKTargetStopped() == FALSE) {
-			TRKTargetContinue();
-		}
+		TRKIdle();
 		isNewInput = FALSE;
 	}
 }
