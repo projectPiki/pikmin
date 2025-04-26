@@ -543,7 +543,13 @@ struct InteractWarn : public Interaction {
  * @brief TODO
  */
 struct InteractWind : public Interaction {
-	inline InteractWind(); // TODO: probably
+	InteractWind(Creature* owner, Vector3f vel, f32 p3, zen::particleGenerator* windPtclGen)
+	    : Interaction(owner)
+	    , _08(p3)
+	    , mVelocity(vel)
+	    , mWindParticles(windPtclGen)
+	{
+	}
 
 	virtual bool actCommon(Creature*); // _08
 	virtual bool actPiki(Piki*);       // _0C
@@ -551,7 +557,7 @@ struct InteractWind : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	u8 _08[0x4];                            // _08, unknown
+	f32 _08;                                // _08
 	Vector3f mVelocity;                     // _0C
 	zen::particleGenerator* mWindParticles; // _18
 };

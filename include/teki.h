@@ -580,6 +580,9 @@ struct YTeki : public NTeki {
 	bool getBiteSwitch() { return mTekiSwitches.mBite; }
 	void setBiteSwitch(bool isBite) { mTekiSwitches.mBite = isBite; }
 
+	bool getTimerStart() { return mTekiSwitches.mTimer; }
+	void setTimerStart(bool set) { mTekiSwitches.mTimer = set; }
+
 	void setMapCode(int mapCode) { mMapCode = mapCode; }
 	int getMapCode() { return mMapCode; }
 
@@ -643,17 +646,17 @@ struct YTeki : public NTeki {
 	void initEventTypePtclCallBack() { mEventCallBack.init(&mEffectAttackParam); }
 	zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack() { return &mEventCallBack; }
 
+	void initConeTypePtclCallBack(Teki* p1, Vector3f& p2, Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7, TAIeffectAttackEventCallBack* cb)
+	{
+		mConeCallBack.init(&mEffectAttackParam, p1, p2, p3, p4, p5, p6, p7, cb);
+	}
+	zen::CallBack1<zen::particleGenerator*>* getConeTypePtclCallBack() { return &mConeCallBack; }
+
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
 
-	    zen::CallBack1<zen::particleGenerator *> * getConeTypePtclCallBack();
-	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
-
 	    f32 getExceptionalGravity();
 	    void setExceptionalGravity(f32);
-
-	    bool getTimerStart();
-	    void setTimerStart(bool);
 
 	    bool getChokeSwitch();
 	    void setChokeSwitch(bool);
@@ -683,7 +686,7 @@ struct YTeki : public NTeki {
 		u32 m2 : 1;
 		u32 mStay : 1;
 		u32 mFlying : 1;
-		u32 m5 : 1;
+		u32 mTimer : 1;
 		u32 m6 : 1;
 		u32 mFootEffect : 4;
 	} mTekiSwitches;                         // _4C8

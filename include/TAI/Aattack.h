@@ -132,10 +132,10 @@ struct TAIAflicking : public TAIAmotion {
 	{
 	}
 
-	virtual void start(Teki&);            // _08
-	virtual bool act(Teki&);              // _10
-	virtual void flick(Teki&);            // _1C
-	virtual f32 getFlickDirection(Teki&); // _20
+	virtual void start(Teki&);                                             // _08
+	virtual bool act(Teki&);                                               // _10
+	virtual void flick(Teki&);                                             // _1C
+	virtual f32 getFlickDirection(Teki&) { return FLICK_BACKWARDS_ANGLE; } // _20
 
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion

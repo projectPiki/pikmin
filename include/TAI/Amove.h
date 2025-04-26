@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "TAI/Amotion.h"
+#include "NaviMgr.h"
 
 struct Vector3f;
 
@@ -483,8 +484,8 @@ struct TAIAflyingInTerritory : public TaiAction {
  * @brief TODO
  */
 struct TAIAflyingToGoal : public TAIAreserveMotion {
-	inline TAIAflyingToGoal() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAflyingToGoal(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -502,21 +503,28 @@ struct TAIAflyingToGoal : public TAIAreserveMotion {
  * @brief TODO
  */
 struct FlyingDistance {
+	FlyingDistance(f32 p1, f32 p2, f32 p3)
+	{
+		_00     = p1;
+		mOffset = p2;
+		_08     = p3;
+	}
 
 	// _0C = VTBL
 	f32 _00;     // _00
 	f32 mOffset; // _04
 	f32 _08;     // _08
 
-	virtual f32 getOffset(Teki&); // _08
+	virtual f32 getOffset(Teki&) { return mOffset; } // _08
 };
 
 /**
  * @brief TODO
  */
 struct TAIAflyingDistance : public TaiAction, public FlyingDistance {
-	inline TAIAflyingDistance() // TODO: this is a guess
-	    : TaiAction(12)
+	TAIAflyingDistance(int nextState, f32 p2, f32 p3, f32 p4)
+	    : TaiAction(nextState)
+	    , FlyingDistance(p2, p3, p4)
 	{
 	}
 
@@ -537,7 +545,9 @@ struct TAIAflyingDistance : public TaiAction, public FlyingDistance {
  * @brief TODO
  */
 struct TAIAflyingDistanceInTerritory : public TAIAflyingToGoal, public FlyingDistance {
-	inline TAIAflyingDistanceInTerritory() // TODO: this is a guess
+	TAIAflyingDistanceInTerritory(int nextState, int motionID, f32 p3, f32 p4, f32 p5)
+	    : TAIAflyingToGoal(nextState, motionID)
+	    , FlyingDistance(p3, p4, p5)
 	{
 	}
 
@@ -556,8 +566,8 @@ struct TAIAflyingDistanceInTerritory : public TAIAflyingToGoal, public FlyingDis
  * @brief TODO
  */
 struct TAIAdescent : public TAIAreserveMotion {
-	inline TAIAdescent() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAdescent(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -581,8 +591,8 @@ struct TAIAdescent : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAlanding : public TAIAreserveMotion {
-	inline TAIAlanding() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAlanding(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -599,8 +609,8 @@ struct TAIAlanding : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAtakeOff : public TAIAreserveMotion {
-	inline TAIAtakeOff() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	TAIAtakeOff(int nextState, int motionID)
+	    : TAIAreserveMotion(nextState, motionID)
 	{
 	}
 
@@ -617,13 +627,13 @@ struct TAIAtakeOff : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAwatchNavi : public TaiAction {
-	inline TAIAwatchNavi() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAwatchNavi(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) { teki.setCreaturePointer(0, naviMgr->getNavi()); } // _08
+	virtual bool act(Teki&) { return true; }                                           // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
