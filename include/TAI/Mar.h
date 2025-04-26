@@ -15,6 +15,51 @@
 
 /////////// Puffy Blowhog AI Actions ///////////
 
+BEGIN_ENUM_TYPE(TAImarFloatParams)
+enum {
+	Unk50 = TPF_COUNT, // 50
+	Unk51,             // 51
+	Unk52,             // 52
+	Unk53,             // 53
+	Unk54,             // 54
+	Unk55,             // 55
+	Unk56,             // 56
+	COUNT,             // 57
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAImarIntParams)
+enum {
+	Unk20 = TPI_COUNT, // 20
+	Unk21,             // 21
+	Unk22,             // 22
+	COUNT,             // 23
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAImarStateID)
+enum {
+	Unk0  = 0,
+	Unk1  = 1,
+	Unk2  = 2,
+	Unk3  = 3,
+	Unk4  = 4,
+	Unk5  = 5,
+	Unk6  = 6,
+	Unk7  = 7,
+	Unk8  = 8,
+	Unk9  = 9,
+	Unk10 = 10,
+	Unk11 = 11,
+	Unk12 = 12,
+	Unk13 = 13,
+	Unk14 = 14,
+	COUNT, // 15
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAImarMotionID)
+enum {
+	Unk0 = 0, //
+} END_ENUM_TYPE;
+
 /*
  * @brief TODO
  */

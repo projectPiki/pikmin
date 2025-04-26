@@ -784,7 +784,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/drawContainer.cpp"),
             Object(Matching, "plugPikiYamashita/drawCommon.cpp"),
             Object(Matching, "plugPikiYamashita/zenController.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawHurryUp.cpp"),
+            Object(Matching, "plugPikiYamashita/drawHurryUp.cpp"),
             Object(Matching, "plugPikiYamashita/texAnim.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawAccount.cpp"),
             Object(Equivalent, "plugPikiYamashita/drawMenu.cpp"),

@@ -1,5 +1,6 @@
 #include "TAI/Mar.h"
 #include "PikiMgr.h"
+#include "SoundMgr.h"
 #include "DebugLog.h"
 
 /*
@@ -24,48 +25,9 @@ DEFINE_PRINT(nullptr)
 TAImarSoundTable::TAImarSoundTable()
     : PaniSoundTable(6)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x6
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  bl        -0x86720
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  li        r3, 0x4
-	  bl        -0x15E7A4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x48
-	  addi      r0, r30, 0x80
-	  stw       r0, 0x0(r3)
-
-	.loc_0x48:
-	  lwz       r4, 0x4(r29)
-	  addi      r30, r30, 0x1
-	  stwx      r3, r4, r31
-	  addi      r31, r31, 0x4
-
-	.loc_0x58:
-	  lwz       r0, 0x0(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x30
-	  mr        r3, r29
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSoundCount; i++) {
+		mSounds[i] = new PaniSound(i + SE_MAR_FLY);
+	}
 }
 
 /*
@@ -74,8 +36,81 @@ TAImarSoundTable::TAImarSoundTable()
  * Size:	000440
  */
 TAImarParameters::TAImarParameters()
-    : TekiParameters(23, 57)
+    : TekiParameters(TAImarIntParams::COUNT, TAImarFloatParams::COUNT)
 {
+	ParaMultiParameters* multiP     = mParameters;
+	ParaParameterInfo<int>* iParams = mParameters->mIntParams->mParaInfo;
+	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
+	int j                           = TPI_COUNT;
+	iParams[j++].init("空中振り払いまでの打撃数", 0, 100); // 'num hits before being knocked out of the air'
+	iParams[j++].init("降下する引っ付きピキ数", 0, 100);   // 'descending sticky piki num'
+	iParams[j++].init("離陸する引っ付きピキ数", 0, 100);   // 'num sticky pikis taking off'
+
+	j = TPF_COUNT;
+	fParams[j++].init("攻撃位置オフセット", 0.0f, 300.0f);          // 'attack pos offset'
+	fParams[j++].init("突風攻撃当たり円錐角度", 0.0f, 360.0f);      // 'gust attack hit cone angle'
+	fParams[j++].init("突風攻撃モーション速度", 0.0f, 300.0f);      // 'gust attack motion speed'
+	fParams[j++].init("空中振り払いまでの時間（秒）", 0.0f, 30.0f); // 'time to air shake off (sec)'
+	fParams[j++].init("離陸までの時間（秒）", 0.0f, 30.0f);         // 'time until takeoff (sec)'
+	fParams[j++].init("強制的に降下する時間（秒）", 0.0f, 30.0f);   // 'forced descent time (sec)'
+	fParams[j++].init("上下移動の速度", 0.0f, 100.0f);              // 'up and down movement speed'
+
+	multiP->setI(TAImarIntParams::Unk20, 30);
+	multiP->setI(TAImarIntParams::Unk21, 10);
+	multiP->setI(TAImarIntParams::Unk22, 10);
+
+	multiP->setF(TAImarFloatParams::Unk50, 90.0f);
+	multiP->setF(TAImarFloatParams::Unk51, 70.0f);
+	multiP->setF(TAImarFloatParams::Unk52, 30.0f);
+	multiP->setF(TAImarFloatParams::Unk53, 3.0f);
+	multiP->setF(TAImarFloatParams::Unk54, 7.0f);
+	multiP->setF(TAImarFloatParams::Unk55, 0.5f);
+	multiP->setF(TAImarFloatParams::Unk56, 40.0f);
+
+	multiP->setI(TPI_SpawnType, TEKI_NULL);
+	multiP->setI(TPI_SwallowCount, 5);
+	multiP->setI(TPI_FlickPikiCount1, 10);
+	multiP->setI(TPI_FlickPikiCount2, 20);
+	multiP->setI(TPI_FlickPikiCount3, 30);
+	multiP->setI(TPI_FlickDamageCount1, 30);
+	multiP->setI(TPI_FlickDamageCount2, 30);
+	multiP->setI(TPI_FlickDamageCount3, 30);
+	multiP->setI(TPI_FlickDamageCount4, 30);
+
+	multiP->setF(TPF_Weight, 300.0f);
+	multiP->setF(TPF_Scale, 1.0f);
+	multiP->setF(TPF_Life, 2000.0f);
+	multiP->setF(TPF_WalkVelocity, 60.0f);
+	multiP->setF(TPF_RunVelocity, 100.0f);
+	multiP->setF(TPF_TurnVelocity, 5.0f * PI / 180.0f);
+	multiP->setF(TPF_VisibleRange, 270.0f);
+	multiP->setF(TPF_VisibleAngle, 180.0f);
+	multiP->setF(TPF_VisibleHeight, 1000.0f);
+	multiP->setF(TPF_AttackableRange, 0.01f);
+	multiP->setF(TPF_AttackableAngle, 5.0f);
+	multiP->setF(TPF_AttackRange, 30.0f);
+	multiP->setF(TPF_AttackHitRange, 9.0f);
+	multiP->setF(TPF_AttackPower, 0.0f);
+	multiP->setF(TPF_DangerTerritoryRange, 300.0f);
+	multiP->setF(TPF_SafetyTerritoryRange, 120.0f);
+
+	multiP->setF(TPF_LifeGaugeOffset, 40.0f);
+	multiP->setF(TPF_ShadowSize, 60.0f);
+
+	multiP->setF(TPF_DamageMotionPeriod, 0.3f);
+	multiP->setF(TPF_DamageMotionAmplitude, 0.2f);
+
+	multiP->setF(TPF_FlickProbability, 1.0f);
+	multiP->setF(TPF_UpperFlickPower, 200.0f);
+	multiP->setF(TPF_LowerFlickPower, 100.0f);
+	multiP->setF(TPF_UpperAttackPower, 0.0f);
+	multiP->setF(TPF_LowerAttackPower, 0.0f);
+
+	multiP->setF(TPF_LifeRecoverRate, 0.01f);
+	multiP->setF(TPF_TraceAngle, 60.0f);
+	multiP->setF(TPF_FlightHeight, 60.0f);
+
+	multiP->setI(TPI_CullingType, CULLAI_CullAIOffCamera);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -359,7 +394,7 @@ TAImarParameters::TAImarParameters()
  * Size:	000DE8
  */
 TAImarStrategy::TAImarStrategy()
-    : YaiStrategy(0, 0) // TODO: fix
+    : YaiStrategy(TAImarStateID::COUNT, TAImarStateID::Unk2)
 {
 	/*
 	.loc_0x0:
@@ -1353,134 +1388,37 @@ TAImarStrategy::TAImarStrategy()
  * Address:	801A6A20
  * Size:	0001CC
  */
-void TAImarStrategy::act(Teki&)
+void TAImarStrategy::act(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  stw       r30, 0xA0(r1)
-	  mr        r30, r4
-	  bl        0x42D10
-	  lis       r4, 0x6B75
-	  lwz       r3, 0x220(r30)
-	  addi      r4, r4, 0x7469
-	  bl        -0x11D338
-	  mr.       r31, r3
-	  beq-      .loc_0x1B4
-	  addi      r3, r1, 0x10
-	  addi      r4, r31, 0
-	  bl        -0x11EB44
-	  lwz       r3, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r3, 0x5C(r1)
-	  lwz       r3, 0x18(r1)
-	  stw       r0, 0x60(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r3, 0x64(r1)
-	  lwz       r3, 0x20(r1)
-	  stw       r0, 0x68(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r3, 0x6C(r1)
-	  lwz       r3, 0x28(r1)
-	  stw       r0, 0x70(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x74(r1)
-	  lwz       r3, 0x30(r1)
-	  stw       r0, 0x78(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r3, 0x7C(r1)
-	  lwz       r3, 0x38(r1)
-	  stw       r0, 0x80(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r3, 0x84(r1)
-	  lwz       r3, 0x40(r1)
-	  stw       r0, 0x88(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r3, 0x8C(r1)
-	  lwz       r3, 0x48(r1)
-	  stw       r0, 0x90(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r3, 0x94(r1)
-	  lfs       f0, -0x4B20(r2)
-	  stw       r0, 0x98(r1)
-	  stfs      f0, 0x58(r1)
-	  stfs      f0, 0x54(r1)
-	  stfs      f0, 0x50(r1)
-	  lfs       f1, 0x5C(r1)
-	  lfs       f0, 0x6C(r1)
-	  stfs      f1, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, 0x7C(r1)
-	  stfs      f0, 0x58(r1)
-	  lwz       r4, 0x498(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x13C
-	  lwz       r0, 0x80(r4)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x10C
-	  li        r0, 0
-	  stw       r0, 0x498(r30)
-	  b         .loc_0x13C
+	zen::particleGenerator* ptclGen;
+	YaiStrategy::act(teki);
+	CollPart* mouth = teki.mCollInfo->getSphere('kuti');
+	if (mouth) {
+		Matrix4f mtx = mouth->getMatrix();
+		Vector3f dir;
+		dir.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
+		ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk0);
+		if (ptclGen) {
+			if (!ptclGen->checkEmit()) {
+				teki.setPtclGenPtr(YTeki::PTCL_Unk0, nullptr);
+			} else {
+				ptclGen->setEmitPos(mouth->mCentre);
+				ptclGen->setEmitDir(dir);
+			}
+		}
 
-	.loc_0x10C:
-	  lwz       r3, 0x4(r31)
-	  lwz       r0, 0x8(r31)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0xC(r31)
-	  stw       r0, 0x14(r4)
-	  lwz       r3, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r3, 0xA0(r4)
-	  stw       r0, 0xA4(r4)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0xA8(r4)
+		ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk1);
+		if (ptclGen) {
+			ptclGen->setEmitPos(mouth->mCentre);
+			ptclGen->setEmitDir(dir);
+		}
 
-	.loc_0x13C:
-	  lwz       r4, 0x49C(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x178
-	  lwz       r3, 0x4(r31)
-	  lwz       r0, 0x8(r31)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0xC(r31)
-	  stw       r0, 0x14(r4)
-	  lwz       r3, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r3, 0xA0(r4)
-	  stw       r0, 0xA4(r4)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0xA8(r4)
-
-	.loc_0x178:
-	  lwz       r4, 0x4A0(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x1B4
-	  lwz       r3, 0x4(r31)
-	  lwz       r0, 0x8(r31)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0xC(r31)
-	  stw       r0, 0x14(r4)
-	  lwz       r3, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r3, 0xA0(r4)
-	  stw       r0, 0xA4(r4)
-	  lwz       r0, 0x58(r1)
-	  stw       r0, 0xA8(r4)
-
-	.loc_0x1B4:
-	  lwz       r0, 0xAC(r1)
-	  lwz       r31, 0xA4(r1)
-	  lwz       r30, 0xA0(r1)
-	  addi      r1, r1, 0xA8
-	  mtlr      r0
-	  blr
-	*/
+		ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk2);
+		if (ptclGen) {
+			ptclGen->setEmitPos(mouth->mCentre);
+			ptclGen->setEmitDir(dir);
+		}
+	}
 }
 
 /*
@@ -1488,72 +1426,24 @@ void TAImarStrategy::act(Teki&)
  * Address:	801A6BEC
  * Size:	0000C4
  */
-bool TAImarStrategy::interact(Teki&, TekiInteractionKey&)
+bool TAImarStrategy::interact(Teki& teki, TekiInteractionKey& key)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  lwz       r0, 0x0(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x28
-	  b         .loc_0xA8
+	switch (key.mInteractionType) {
+	case TekiInteractType::Attack:
+		InteractAttack* attack = (InteractAttack*)key.mInteraction;
+		if (!teki.getTekiOption(BTeki::TEKI_OPTION_INVINCIBLE)) {
+			teki.mStoredDamage += attack->mDamage;
+			if (teki.getTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE)) {
+				teki.mDamageCount++;
+			}
+		}
 
-	.loc_0x28:
-	  lwz       r3, 0x410(r30)
-	  lwz       r0, -0x9B4(r13)
-	  lwz       r4, 0x4(r5)
-	  and.      r0, r3, r0
-	  bne-      .loc_0x6C
-	  lfs       f1, 0x33C(r30)
-	  lfs       f0, 0x8(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x33C(r30)
-	  lwz       r3, 0x410(r30)
-	  lwz       r0, -0x9A4(r13)
-	  and.      r0, r3, r0
-	  beq-      .loc_0x6C
-	  lfs       f1, 0x340(r30)
-	  lfs       f0, -0x4AF4(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x340(r30)
+		teki.setCreaturePointer(1, attack->mOwner);
+		return true;
+	}
 
-	.loc_0x6C:
-	  lwz       r3, 0x41C(r30)
-	  lwz       r31, 0x4(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x8C
-	  beq-      .loc_0x8C
-	  bl        -0xC2900
-	  li        r0, 0
-	  stw       r0, 0x41C(r30)
-
-	.loc_0x8C:
-	  stw       r31, 0x41C(r30)
-	  lwz       r3, 0x41C(r30)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA0
-	  bl        -0xC292C
-
-	.loc_0xA0:
-	  li        r3, 0x1
-	  b         .loc_0xAC
-
-	.loc_0xA8:
-	  li        r3, 0x1
-
-	.loc_0xAC:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[2];
+	return true;
 }
 
 /*
@@ -1563,230 +1453,40 @@ bool TAImarStrategy::interact(Teki&, TekiInteractionKey&)
  */
 void TAImarAnimation::makeDefaultAnimations()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stw       r31, 0x74(r1)
-	  stw       r30, 0x70(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x4(r3)
-	  lis       r3, 0x802E
-	  subi      r31, r3, 0x1B20
-	  cmplwi    r0, 0
-	  beq-      .loc_0x314
-	  lwz       r6, 0x3160(r13)
-	  mr        r3, r30
-	  lwz       r5, 0x2DEC(r13)
-	  addi      r4, r31, 0x100
-	  lwz       r6, 0x118(r6)
-	  lwz       r0, 0x0(r6)
-	  stw       r0, 0x1FC(r5)
-	  bl        -0x3764
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x11C
-	  bl        -0x3770
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x138
-	  bl        -0x377C
-	  li        r3, 0x10
-	  bl        -0x15FD14
-	  addi      r6, r3, 0
-	  mr.       r0, r6
-	  beq-      .loc_0x8C
-	  li        r0, 0
-	  stw       r0, 0x0(r6)
-	  stb       r0, 0x6(r6)
-	  stw       r0, 0x8(r6)
-	  stw       r0, 0xC(r6)
+	if (!mAnimMgr) {
+		return;
+	}
 
-	.loc_0x8C:
-	  lwz       r4, 0x8(r30)
-	  li        r3, 0x10
-	  lwz       r5, 0x60(r4)
-	  lwz       r0, 0xC(r5)
-	  stw       r0, 0xC(r6)
-	  stw       r5, 0x8(r6)
-	  lwz       r4, 0xC(r5)
-	  stw       r6, 0x8(r4)
-	  stw       r6, 0xC(r5)
-	  bl        -0x15FD5C
-	  addi      r7, r3, 0
-	  mr.       r0, r7
-	  beq-      .loc_0xD8
-	  li        r3, 0x1
-	  stw       r3, 0x0(r7)
-	  li        r0, 0
-	  stb       r3, 0x6(r7)
-	  stw       r0, 0x8(r7)
-	  stw       r0, 0xC(r7)
+	gsys->mCurrentShape = tekiMgr->mTekiShapes[TEKI_Mar]->mShape;
+	addAnimation("tekis/mar/motion/dead.dca");
 
-	.loc_0xD8:
-	  lwz       r5, 0x8(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x154
-	  lwz       r6, 0x60(r5)
-	  lwz       r0, 0xC(r6)
-	  stw       r0, 0xC(r7)
-	  stw       r6, 0x8(r7)
-	  lwz       r5, 0xC(r6)
-	  stw       r7, 0x8(r5)
-	  stw       r7, 0xC(r6)
-	  bl        -0x381C
-	  li        r3, 0x10
-	  bl        -0x15FDB4
-	  addi      r6, r3, 0
-	  mr.       r0, r6
-	  beq-      .loc_0x12C
-	  li        r0, 0
-	  stw       r0, 0x0(r6)
-	  stb       r0, 0x6(r6)
-	  stw       r0, 0x8(r6)
-	  stw       r0, 0xC(r6)
+	addAnimation("tekis/mar/motion/damage.dca");
 
-	.loc_0x12C:
-	  lwz       r4, 0x8(r30)
-	  li        r3, 0x10
-	  lwz       r5, 0x60(r4)
-	  lwz       r0, 0xC(r5)
-	  stw       r0, 0xC(r6)
-	  stw       r5, 0x8(r6)
-	  lwz       r4, 0xC(r5)
-	  stw       r6, 0x8(r4)
-	  stw       r6, 0xC(r5)
-	  bl        -0x15FDFC
-	  addi      r7, r3, 0
-	  mr.       r0, r7
-	  beq-      .loc_0x178
-	  li        r3, 0x1
-	  stw       r3, 0x0(r7)
-	  li        r0, 0
-	  stb       r3, 0x6(r7)
-	  stw       r0, 0x8(r7)
-	  stw       r0, 0xC(r7)
+	addAnimation("tekis/mar/motion/wait1.dca");
+	addInfoKey(0, 0);
+	addInfoKey(1, 1);
 
-	.loc_0x178:
-	  lwz       r5, 0x8(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x170
-	  lwz       r6, 0x60(r5)
-	  lwz       r0, 0xC(r6)
-	  stw       r0, 0xC(r7)
-	  stw       r6, 0x8(r7)
-	  lwz       r5, 0xC(r6)
-	  stw       r7, 0x8(r5)
-	  stw       r7, 0xC(r6)
-	  bl        -0x38BC
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x190
-	  bl        -0x38C8
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x1B0
-	  bl        -0x38D4
-	  li        r3, 0x10
-	  bl        -0x15FE6C
-	  addi      r6, r3, 0
-	  mr.       r0, r6
-	  beq-      .loc_0x1E4
-	  li        r0, 0
-	  stw       r0, 0x0(r6)
-	  stb       r0, 0x6(r6)
-	  stw       r0, 0x8(r6)
-	  stw       r0, 0xC(r6)
+	addAnimation("tekis/mar/motion/wait2.dca");
+	addInfoKey(0, 0);
+	addInfoKey(1, 1);
 
-	.loc_0x1E4:
-	  lwz       r4, 0x8(r30)
-	  li        r3, 0x10
-	  lwz       r5, 0x60(r4)
-	  lwz       r0, 0xC(r5)
-	  stw       r0, 0xC(r6)
-	  stw       r5, 0x8(r6)
-	  lwz       r4, 0xC(r5)
-	  stw       r6, 0x8(r4)
-	  stw       r6, 0xC(r5)
-	  bl        -0x15FEB4
-	  addi      r7, r3, 0
-	  mr.       r0, r7
-	  beq-      .loc_0x230
-	  li        r3, 0x1
-	  stw       r3, 0x0(r7)
-	  li        r0, 0
-	  stb       r3, 0x6(r7)
-	  stw       r0, 0x8(r7)
-	  stw       r0, 0xC(r7)
+	addAnimation("tekis/mar/motion/waitact1.dck");
 
-	.loc_0x230:
-	  lwz       r5, 0x8(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x1CC
-	  lwz       r6, 0x60(r5)
-	  lwz       r0, 0xC(r6)
-	  stw       r0, 0xC(r7)
-	  stw       r6, 0x8(r7)
-	  lwz       r5, 0xC(r6)
-	  stw       r7, 0x8(r5)
-	  stw       r7, 0xC(r6)
-	  bl        -0x3974
-	  li        r3, 0x10
-	  bl        -0x15FF0C
-	  addi      r6, r3, 0
-	  mr.       r0, r6
-	  beq-      .loc_0x284
-	  li        r0, 0
-	  stw       r0, 0x0(r6)
-	  stb       r0, 0x6(r6)
-	  stw       r0, 0x8(r6)
-	  stw       r0, 0xC(r6)
+	addAnimation("tekis/mar/motion/waitact2.dca");
 
-	.loc_0x284:
-	  lwz       r4, 0x8(r30)
-	  li        r3, 0x10
-	  lwz       r5, 0x60(r4)
-	  lwz       r0, 0xC(r5)
-	  stw       r0, 0xC(r6)
-	  stw       r5, 0x8(r6)
-	  lwz       r4, 0xC(r5)
-	  stw       r6, 0x8(r4)
-	  stw       r6, 0xC(r5)
-	  bl        -0x15FF54
-	  addi      r7, r3, 0
-	  mr.       r0, r7
-	  beq-      .loc_0x2D0
-	  li        r3, 0x1
-	  stw       r3, 0x0(r7)
-	  li        r0, 0
-	  stb       r3, 0x6(r7)
-	  stw       r0, 0x8(r7)
-	  stw       r0, 0xC(r7)
+	addAnimation("tekis/mar/motion/move1.dck");
+	addInfoKey(0, 0);
+	addInfoKey(1, 1);
 
-	.loc_0x2D0:
-	  lwz       r5, 0x8(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x1E8
-	  lwz       r6, 0x60(r5)
-	  lwz       r0, 0xC(r6)
-	  stw       r0, 0xC(r7)
-	  stw       r6, 0x8(r7)
-	  lwz       r5, 0xC(r6)
-	  stw       r7, 0x8(r5)
-	  stw       r7, 0xC(r6)
-	  bl        -0x3A14
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x204
-	  bl        -0x3A20
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x220
-	  bl        -0x3A2C
+	addAnimation("tekis/mar/motion/move2.dck");
+	addInfoKey(0, 0);
+	addInfoKey(1, 1);
 
-	.loc_0x314:
-	  lwz       r0, 0x7C(r1)
-	  lwz       r31, 0x74(r1)
-	  lwz       r30, 0x70(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	addAnimation("tekis/mar/motion/attack.dca");
+
+	addAnimation("tekis/mar/motion/type1.dck");
+
+	addAnimation("tekis/mar/motion/type2.dca");
 }
 
 /*

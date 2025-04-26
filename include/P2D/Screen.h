@@ -30,7 +30,7 @@ struct P2DScreen : public P2DPane {
 	virtual P2DPane* makeUserPane(u16, P2DPane*, RandomAccessStream*); // _3C
 
 	void update();
-	void set(const char*, bool, bool, bool);
+	void set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr, bool p4);
 	void makeHiearachyPanes(P2DPane*, RandomAccessStream*, bool, bool);
 	void draw(int, int, const P2DGrafContext*);
 	void makeResName(const char*, char*);
@@ -39,8 +39,7 @@ struct P2DScreen : public P2DPane {
 	void set(RandomAccessStream*);
 	P2DPane* stop();
 
-	// DLL inlines to do:
-	void set(const char*, bool);
+	void set(const char* bloFileName, bool p2) { set(bloFileName, false, false, p2); }
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
