@@ -823,7 +823,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/zenSys.cpp"),
             Object(Matching, "plugPikiYamashita/drawSaveMes.cpp"),
             Object(Matching, "plugPikiYamashita/drawSaveFailure.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawFinalResult.cpp"),
+            Object(Matching, "plugPikiYamashita/drawFinalResult.cpp"),
             Object(Matching, "plugPikiYamashita/drawOptionSave.cpp"),
         ],
     },

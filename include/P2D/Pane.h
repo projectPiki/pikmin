@@ -158,6 +158,7 @@ struct P2DPane {
 	}
 
 	f32 getRotate() { return mRotation; }
+	void rotateX(f32 angle) { rotate(P2DROTATE_X, angle); }
 	void rotateZ(f32 angle) { rotate(P2DROTATE_Z, angle); }
 	void rotateZ(int x, int y, f32 rotZ) { rotate(x, y, P2DROTATE_Z, rotZ); }
 	void rotate(int x, int y, P2DRotateAxis axis, f32 angle)
@@ -181,7 +182,6 @@ struct P2DPane {
 
 	// DLL inlines to do:
 	const PUTRect& getBounds();
-	void rotateX(f32);
 	void getDispPos(Vector3f*);
 
 	// _00 = VTBL

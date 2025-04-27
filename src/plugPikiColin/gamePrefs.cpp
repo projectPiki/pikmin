@@ -746,7 +746,7 @@ void GamePrefs::write(RandomAccessStream& data)
 	data.writeByte(mSfxVol);
 	data.writeByte(_22);
 
-	data.writeInt(mHiscores._00);
+	data.writeInt(mHiscores.mTotalPikis);
 	for (int i = 0; i < 5; i++) {
 		data.writeInt(mHiscores.mMinDayRecords[i].mNumParts);
 		data.writeInt(mHiscores.mBornPikminRecords[i].mNumBorn);
@@ -939,11 +939,11 @@ void GamePrefs::fixSoundMode()
  */
 void GamePrefs::read(RandomAccessStream& input)
 {
-	mFlags        = input.readInt();
-	mBgmVol       = input.readByte();
-	mSfxVol       = input.readByte();
-	_22           = input.readByte();
-	mHiscores._00 = input.readInt();
+	mFlags                = input.readInt();
+	mBgmVol               = input.readByte();
+	mSfxVol               = input.readByte();
+	_22                   = input.readByte();
+	mHiscores.mTotalPikis = input.readInt();
 
 	for (int i = 0; i < 5; i++) {
 		mHiscores.mMinDayRecords[i].mNumParts = input.readInt();

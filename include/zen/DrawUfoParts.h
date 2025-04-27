@@ -39,9 +39,8 @@ struct DrawUfoParts {
 	void operation();
 	void dataSet();
 
-	// DLL inlines to do:
-	modeFlag getModeFlag();
-	returnStatusFlag getReturnStatusFlag();
+	modeFlag getModeFlag() { return mMode; }
+	returnStatusFlag getReturnStatusFlag() { return mReturnState; }
 
 	modeFlag mMode;                // _00
 	returnStatusFlag mReturnState; // _04

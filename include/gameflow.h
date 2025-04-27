@@ -248,14 +248,14 @@ struct GameRecMinDay {
 struct GameQuickInfo {
 	// This struct has no ctor or any other functions
 
-	int mParts;     // _00
-	int mDay;       // _04
-	int mPikis;     // _08
-	int mDeadPikis; // _0C
-	int _10;        // _10
-	int _14;        // _14
-	int _18;        // _18
-	int _1C;
+	int mParts;       // _00
+	int mDay;         // _04
+	int mLivingPikis; // _08
+	int mDeadPikis;   // _0C
+	int _10;          // _10
+	int _14;          // _14
+	int _18;          // _18
+	int _1C;          // _1C
 };
 
 /**
@@ -264,7 +264,7 @@ struct GameQuickInfo {
 struct GameHiscores {
 	void Initialise()
 	{
-		_00 = 0;
+		mTotalPikis = 0;
 		for (int i = 0; i < 5; i++) {
 			mMinDayRecords[i].init();
 			mBornPikminRecords[i].init();
@@ -273,7 +273,7 @@ struct GameHiscores {
 		}
 	}
 
-	int _00;                                 // _00
+	int mTotalPikis;                         // _00
 	GameRecMinDay mMinDayRecords[5];         // _04
 	GameRecBornPikmin mBornPikminRecords[5]; // _1C
 	GameRecDeadPikmin mDeadPikminRecords[5]; // _30
@@ -308,7 +308,7 @@ struct GamePrefs : public CoreNode {
 		mHiscores.Initialise();
 	}
 
-	void addBornPikis(u32 count) { mHiscores._00 += count; }
+	void addBornPikis(u32 count) { mHiscores.mTotalPikis += count; }
 
 	void setBgmVol(u8);
 	void setSfxVol(u8);

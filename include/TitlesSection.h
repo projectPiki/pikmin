@@ -123,10 +123,10 @@ struct TitleSetupSection : public Node {
 
 		mCamera.mPosition.set(200.0f, 200.0f, 50.0f);
 		GameQuickInfo info;
-		info.mDay       = 30;
-		info.mDeadPikis = 0;
-		info.mPikis     = 0;
-		info.mParts     = 0;
+		info.mDay         = 30;
+		info.mDeadPikis   = 0;
+		info.mLivingPikis = 0;
+		info.mParts       = 0;
 		gameflow.mGamePrefs.checkIsHiscore(info);
 
 		// totalWindowOn = false;

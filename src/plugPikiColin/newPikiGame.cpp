@@ -1908,26 +1908,26 @@ ModeState* DayOverModeState::update(u32& a)
 void DayOverModeState::makeTotalScoreWindow()
 {
 	GameQuickInfo info;
-	info.mDay       = gameflow.mWorldClock.mCurrentDay;
-	info.mPikis     = playerState->getLastPikmins();
-	info.mDeadPikis = playerState->getFinalDeadPikis();
-	info.mParts     = playerState->getCurrParts();
+	info.mDay         = gameflow.mWorldClock.mCurrentDay;
+	info.mLivingPikis = playerState->getLastPikmins();
+	info.mDeadPikis   = playerState->getFinalDeadPikis();
+	info.mParts       = playerState->getCurrParts();
 	gameflow.mGamePrefs.checkIsHiscore(info);
 
 	zen::TotalScoreRecord* record = new zen::TotalScoreRecord;
 	record->mParts                = info.mParts;
 	record->mDay                  = info.mDay;
-	record->mPikis                = info.mPikis;
+	record->mPikis                = info.mLivingPikis;
 	record->mDeadPikis            = info.mDeadPikis;
-	record->_10                   = gameflow.mGamePrefs.mHiscores._00;
+	record->mTotalPikis           = gameflow.mGamePrefs.mHiscores.mTotalPikis;
 
 	for (int i = 0; i < 5; i++) {
-		record->_1A[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumParts;
-		record->_24[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumDays;
-		record->_2E[i] = gameflow.mGamePrefs.mHiscores.mBornPikminRecords[i].mNumBorn;
-		record->_38[i] = gameflow.mGamePrefs.mHiscores.mDeadPikminRecords[i].mNumDead;
-		if (record->_38[i] == 9999) {
-			record->_38[i] = -1;
+		record->mRecordNumParts[i] = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumParts;
+		record->mRecordNumDays[i]  = gameflow.mGamePrefs.mHiscores.mMinDayRecords[i].mNumDays;
+		record->mRecordNumBorn[i]  = gameflow.mGamePrefs.mHiscores.mBornPikminRecords[i].mNumBorn;
+		record->mRecordNumDead[i]  = gameflow.mGamePrefs.mHiscores.mDeadPikminRecords[i].mNumDead;
+		if (record->mRecordNumDead[i] == 9999) {
+			record->mRecordNumDead[i] = -1;
 		}
 	}
 

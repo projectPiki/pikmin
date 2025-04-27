@@ -46,6 +46,7 @@ struct P2DPicture : public P2DPane {
 
 	void initWhite() { mWhite.set(255, 255, 255, 255); }
 	void setWhite(Colour white) { mWhite = white; }
+	Colour getWhite() { return mWhite; }
 
 	bool append(Texture* texture, f32 p2) { return insert(texture, mTextureCount, p2); }
 
@@ -81,7 +82,6 @@ struct P2DPicture : public P2DPane {
 
 	// DLL inlines:
 	Colour getBlack();
-	Colour getWhite();
 	Texture* getTexture(u8) const;
 
 	// _00     = VTBL
