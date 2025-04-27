@@ -12,21 +12,28 @@ namespace zen {
  * @brief TODO
  */
 struct AccountData {
-	AccountData() { }
+	AccountData()
+	{
+		mMinPikiNum  = 0;
+		mMaxPikiNum  = 0;
+		mDeadPikiNum = 0;
+		mDeadTekiNum = 0;
+		mPelletNum   = 0;
+	}
 	AccountData(s16 minPiki, s16 maxPiki, s16 deadPiki, s16 deadTeki, s16 pellets)
 	{
-		_00 = minPiki;
-		_02 = maxPiki;
-		_04 = deadPiki;
-		_06 = deadTeki;
-		_08 = pellets;
+		mMinPikiNum  = minPiki;
+		mMaxPikiNum  = maxPiki;
+		mDeadPikiNum = deadPiki;
+		mDeadTekiNum = deadTeki;
+		mPelletNum   = pellets;
 	}
 
-	s16 _00; // _00
-	s16 _02; // _02
-	s16 _04; // _04
-	s16 _06; // _06
-	s16 _08; // _08
+	s16 mMinPikiNum;  // _00
+	s16 mMaxPikiNum;  // _02
+	s16 mDeadPikiNum; // _04
+	s16 mDeadTekiNum; // _06
+	s16 mPelletNum;   // _08
 };
 
 /**
@@ -46,7 +53,12 @@ struct DrawAccount : public DrawScreen {
 	// unused/inlined:
 
 	// _00-_100 = DrawScreen
-	u8 _100[0x120 - 0x100]; // _100, unknown
+	f32 mAppearTimer;    // _100
+	f32 mAppearDuration; // _104
+	AccountData mData;   // _108
+	P2DPane* mRootPane;  // _114
+	P2DPane* mBlakPane;  // _118
+	bool mIsVisible;     // _11C
 };
 
 } // namespace zen

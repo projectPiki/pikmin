@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "P2D/Pane.h"
+#include "P2D/Picture.h"
 #include "Texture.h"
 
 struct Texture;
@@ -72,7 +73,7 @@ template <typename T>
 struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 	NumberPicCallBack(P2DPane* pane, T* amountPtr, int digit, bool p4)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
-	    , FigureTex<int>(amountPtr, digit)
+	    , FigureTex<T>(amountPtr, digit)
 	{
 		mUseShadowTex = p4;
 		mCurrentValue = *mNumberPtr;
@@ -100,7 +101,7 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 	// _04-_0C = FigureTex
 	f32 _0C;            // _0C
 	T mCurrentValue;    // _10
-	u32 _14;            // _14, unknown
+	T _14;              // _14
 	bool mUseShadowTex; // _18
 };
 

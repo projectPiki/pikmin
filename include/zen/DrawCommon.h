@@ -52,7 +52,7 @@ struct DrawScreen {
 	virtual void draw();   // _0C
 
 	// unused/inlined:
-	~DrawScreen();
+	~DrawScreen() { }
 
 	// DLL inlines to do:
 	P2DScreen* getScreenPtr() { return &mScreen; }
