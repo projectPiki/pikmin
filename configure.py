@@ -804,7 +804,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/spectrumCursorMgr.cpp"),
             Object(Equivalent, "plugPikiYamashita/drawWorldMap.cpp"),
             Object(NonMatching, "plugPikiYamashita/drawCountDown.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawGameOver.cpp"),
+            Object(Matching, "plugPikiYamashita/drawGameOver.cpp"),
             Object(Matching, "plugPikiYamashita/yai.cpp"),
             Object(Matching, "plugPikiYamashita/effectMgr2D.cpp"),
             Object(Matching, "plugPikiYamashita/drawWMPause.cpp"),
