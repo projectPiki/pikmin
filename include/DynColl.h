@@ -7,7 +7,9 @@
 
 struct Creature;
 struct MapAnimShapeObject;
+struct CollTriInfo;
 struct CollGroup;
+struct DynObjBody;
 struct MapMgr;
 struct Shape;
 
@@ -71,8 +73,8 @@ struct DynCollShape : public DynCollObject {
 	// _00-_2C = DynCollObject
 	Shape* mShape;             // _2C
 	Vector3f* mVertexList;     // _30
-	u32 _34;                   // _34
-	bool* mProgressStateList;  // _38
+	CollTriInfo* mCollTriList; // _34
+	bool* mVisibleList;        // _38
 	int mColliderCount;        // _3C
 	CollGroup** mColliderList; // _40
 	BoundBox mBoundingBox;     // _44
@@ -102,7 +104,7 @@ struct DynCollObjBody : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	u8 _140[0x4]; // _140, unknown
+	DynObjBody* _140; // _140
 };
 
 /**

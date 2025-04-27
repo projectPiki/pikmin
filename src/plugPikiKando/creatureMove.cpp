@@ -1351,7 +1351,7 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		{
 			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
 				for (int i = 0; i < collShape->mColliderCount; i++) {
-					if (collShape->mProgressStateList[collShape->mColliderList[i]->mStateIndex]) {
+					if (collShape->mVisibleList[collShape->mColliderList[i]->mStateIndex]) {
 						collShape->mColliderList[i]->mShape          = collShape->mShape;
 						collShape->mColliderList[i]->mVertexList     = collShape->mVertexList;
 						collShape->mColliderList[i]->mSourceCollider = collShape;

@@ -34,17 +34,6 @@ struct MoveTrace {
 };
 
 /**
- * @brief TODO
- */
-struct MapObjAnimator : public Animator {
-	virtual void finishOneShot(); // _10
-
-	// _30     = VTBL
-	// _00-_34 = Animator
-	// TODO: members
-};
-
-/**
  * @brief Stripped struct used in one ctor, but needed for genning a weak ctor
  */
 struct MapAnimShapeObject : public Shape { };
@@ -113,8 +102,27 @@ struct DynMapObject : public DynCollShape {
 	void nextState();
 
 	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00-_140 = DynCollShape
+	BaseShape** _140; // _140
+	Animator mAnim;   // _144
+	u8 _1XX[0x3a0];
+	int mState;               // _518
+	f32 _51C;                 // _51C
+	Vector3f mMapScale;       // _520
+	Vector3f mMapRotation;    // _52C
+	Vector3f mMapTranslation; // _538
+	int _544;                 // _544
+};
+
+/**
+ * @brief TODO
+ */
+struct MapObjAnimator : public Animator {
+	virtual void finishOneShot(); // _10
+
+	// _30     = VTBL
+	// _00-_34 = Animator
+	DynMapObject* mMapObj; // _34
 };
 
 /**
@@ -131,8 +139,9 @@ struct MapObjectPart : public DynCollShape {
 	virtual void refresh(Graphics&);                          // _44
 
 	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00-_140 = DynCollShape
+	int _140;            // _140
+	DynCollObject* _144; // _144 might be wrong
 };
 
 /**
@@ -261,7 +270,9 @@ struct MapMgr {
 	DayMgr* mDayMgr;                       // _04
 	Vector3f _08;                          // _08
 	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
-	u8 _18[0x60 - 0x18];                   // _18, unknown
+	int _18;                               // _18
+	int _1C;                               // _1C
+	u8 _20[0x60 - 0x20];                   // _20, unknown
 	Shape* mMapShape;                      // _60
 	ShapeDynMaterials mDynMaterials;       // _64
 	BaseShape* mMapPartShapes[5];          // _74
@@ -274,7 +285,7 @@ struct MapMgr {
 	BoundBox _D8;                          // _D8
 	u8 _F0[0x10C - 0xF0];                  // _F0, unknown
 	int mCollisionCheckCount;              // _10C
-	u8 _110[0x4];                          // _110, unknown
+	int _110;                              // _110, unknown
 	ShadowCaster mShadowCaster;            // _114
 	u8 _4A8[0x4];                          // _4A8, unknown
 	MapShadMatHandler* mMapShadMatHandler; // _4AC

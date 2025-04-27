@@ -3,6 +3,10 @@
 #include "MapMgr.h"
 #include "Creature.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "EffectMgr.h"
+#include "CreatureCollPart.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,189 +29,44 @@ DEFINE_PRINT(nullptr)
  */
 void DynCollShape::createDupCollData()
 {
-	// just here to check DynCollShape ctor compiles, remove later
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  stw       r28, 0x28(r1)
-	  lwz       r3, 0x2C(r3)
-	  lwz       r29, 0x238(r3)
-	  mulli     r3, r29, 0xC
-	  addi      r3, r3, 0x8
-	  bl        -0x1A7EC
-	  lis       r4, 0x8003
-	  addi      r4, r4, 0x5B24
-	  addi      r7, r29, 0
-	  li        r5, 0
-	  li        r6, 0xC
-	  bl        0x1B3420
-	  stw       r3, 0x30(r31)
-	  lwz       r4, 0x2C(r31)
-	  lwz       r3, 0x30(r31)
-	  lwz       r0, 0x238(r4)
-	  lwz       r4, 0x23C(r4)
-	  mulli     r5, r0, 0xC
-	  bl        -0x5E410
-	  lwz       r3, 0x2C(r31)
-	  lwz       r29, 0x168(r3)
-	  mulli     r3, r29, 0x58
-	  addi      r3, r3, 0x8
-	  bl        -0x1A834
-	  lis       r4, 0x8003
-	  subi      r4, r4, 0x7DEC
-	  addi      r7, r29, 0
-	  li        r5, 0
-	  li        r6, 0x58
-	  bl        0x1B33D8
-	  stw       r3, 0x34(r31)
-	  lwz       r4, 0x2C(r31)
-	  lwz       r3, 0x34(r31)
-	  lwz       r0, 0x168(r4)
-	  lwz       r4, 0x16C(r4)
-	  mulli     r5, r0, 0x58
-	  bl        -0x5E458
-	  li        r29, 0
-	  stw       r29, 0x40(r31)
-	  lwz       r3, 0x2C(r31)
-	  lwz       r3, 0x58(r3)
-	  bl        -0x1A87C
-	  stw       r3, 0x38(r31)
-	  li        r5, 0
-	  b         .loc_0xF8
+	mVertexList = new Vector3f[mShape->mVertexCount];
+	memcpy(mVertexList, mShape->mVertexList, mShape->mVertexCount * sizeof(Vector3f));
 
-	.loc_0xD0:
-	  lwz       r4, 0x5C(r3)
-	  addi      r0, r29, 0x20
-	  lwz       r3, 0x38(r31)
-	  addi      r29, r29, 0x11C
-	  lwzx      r0, r4, r0
-	  neg       r4, r0
-	  subic     r0, r4, 0x1
-	  subfe     r0, r0, r4
-	  stbx      r0, r3, r5
-	  addi      r5, r5, 0x1
+	mCollTriList = new CollTriInfo[mShape->mTriCount];
+	memcpy(mCollTriList, mShape->mTriList, mShape->mTriCount * sizeof(CollTriInfo));
 
-	.loc_0xF8:
-	  lwz       r3, 0x2C(r31)
-	  lwz       r0, 0x58(r3)
-	  cmpw      r5, r0
-	  blt+      .loc_0xD0
-	  lwz       r0, 0x170(r3)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x248
-	  stw       r0, 0x3C(r31)
-	  lwz       r0, 0x3C(r31)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x1A8DC
-	  stw       r3, 0x40(r31)
-	  li        r29, 0
-	  li        r30, 0
-	  b         .loc_0x238
+	mColliderList = nullptr;
+	mVisibleList  = new bool[mShape->mJointCount];
+	for (int i = 0; i < mShape->mJointCount; i++) {
+		mVisibleList[i] = mShape->mJointList[i].mFlags != 0;
+	}
 
-	.loc_0x134:
-	  lwz       r0, 0x168(r3)
-	  li        r28, 0
-	  li        r4, 0
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x16C
+	if (mShape->mBaseRoomCount <= 0) {
+		return;
+	}
+	mColliderCount = mShape->mBaseRoomCount;
+	mColliderList  = new CollGroup*[mColliderCount];
+	for (int i = 0; i < mShape->mBaseRoomCount; i++) {
+		int tris = 0;
+		for (int j = 0; j < mShape->mTriCount; j++) {
+			if (i == mCollTriList[j]._10) {
+				tris++;
+			}
+		}
 
-	.loc_0x14C:
-	  lwz       r3, 0x34(r31)
-	  addi      r0, r4, 0x10
-	  lhax      r0, r3, r0
-	  cmpw      r29, r0
-	  bne-      .loc_0x164
-	  addi      r28, r28, 0x1
+		mColliderList[i]                = new CollGroup;
+		mColliderList[i]->mStateIndex   = mShape->mRoomInfoList[i]._00;
+		mColliderList[i]->mTriCount     = tris;
+		mColliderList[i]->mTriangleList = new CollTriInfo*[mColliderList[i]->mTriCount];
 
-	.loc_0x164:
-	  addi      r4, r4, 0x58
-	  bdnz+     .loc_0x14C
-
-	.loc_0x16C:
-	  li        r3, 0x24
-	  bl        -0x1A92C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x190
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  sth       r0, 0x4(r3)
-	  stw       r0, 0x18(r3)
-	  stw       r0, 0xC(r3)
-
-	.loc_0x190:
-	  lwz       r4, 0x40(r31)
-	  extsh     r0, r28
-	  stwx      r3, r4, r30
-	  lwz       r4, 0x2C(r31)
-	  lwz       r3, 0x40(r31)
-	  lwz       r4, 0x174(r4)
-	  lwzx      r3, r3, r30
-	  lwzx      r4, r4, r30
-	  stw       r4, 0x18(r3)
-	  lwz       r3, 0x40(r31)
-	  lwzx      r3, r3, r30
-	  sth       r0, 0x4(r3)
-	  lwz       r3, 0x40(r31)
-	  lwzx      r3, r3, r30
-	  lha       r0, 0x4(r3)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x1A98C
-	  lwz       r4, 0x40(r31)
-	  li        r5, 0
-	  addi      r6, r5, 0
-	  lwzx      r4, r4, r30
-	  li        r7, 0
-	  stw       r3, 0x8(r4)
-	  b         .loc_0x220
-
-	.loc_0x1F0:
-	  lwz       r0, 0x34(r31)
-	  add       r4, r0, r5
-	  lha       r0, 0x10(r4)
-	  cmpw      r29, r0
-	  bne-      .loc_0x218
-	  lwz       r0, 0x40(r31)
-	  lwzx      r3, r30, r0
-	  lwz       r3, 0x8(r3)
-	  stwx      r4, r3, r6
-	  addi      r6, r6, 0x4
-
-	.loc_0x218:
-	  addi      r5, r5, 0x58
-	  addi      r7, r7, 0x1
-
-	.loc_0x220:
-	  lwz       r3, 0x2C(r31)
-	  lwz       r0, 0x168(r3)
-	  cmpw      r7, r0
-	  blt+      .loc_0x1F0
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x238:
-	  lwz       r3, 0x2C(r31)
-	  lwz       r0, 0x170(r3)
-	  cmpw      r29, r0
-	  blt+      .loc_0x134
-
-	.loc_0x248:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+		int t = 0;
+		for (int j = 0; j < mShape->mTriCount; j++) {
+			if (mCollTriList[j]._10 == i) {
+				mColliderList[i]->mTriangleList[t] = &mCollTriList[j];
+				t++;
+			}
+		}
+	}
 }
 
 /*
@@ -215,8 +74,25 @@ void DynCollShape::createDupCollData()
  * Address:	........
  * Size:	0001FC
  */
-void DynCollShape::drawAtari(Graphics&)
+void DynCollShape::drawAtari(Graphics& gfx)
 {
+	gfx.setCamera(gfx.mCamera);
+	gfx.initRender(0, 0);
+
+	gfx.setColour(Colour(255, 255, 0, 255), true);
+	gfx.useTexture(nullptr, 0);
+	gfx.setPointSize(4.0f);
+	gfx.drawPoints(mVertexList, mShape->mVertexCount);
+
+	gfx.setColour(Colour(255, 0, 0, 255), true);
+	for (int i = 0; i < mShape->mTriCount; i++) {
+		for (int j = 0; j < 3; j++) {
+			int id = (j + 1) % 3;
+			Vector3f start(mVertexList[mCollTriList[i].mVertexIndices[j]]);
+			Vector3f end(mVertexList[mCollTriList[i].mVertexIndices[id]]);
+			gfx.drawLine(start, end);
+		}
+	}
 	// UNUSED FUNCTION
 }
 
@@ -227,6 +103,29 @@ void DynCollShape::drawAtari(Graphics&)
  */
 void DynCollShape::updatePos()
 {
+	mBoundingBox.resetBound();
+	for (int i = 0; i < mShape->mVertexCount; i++) {
+		mVertexList[i].x = mTransformMtx.mMtx[0][3] + (mTransformMtx.mMtx[0][2] * mShape->mVertexList[i].z)
+		                 + (mTransformMtx.mMtx[0][1] * mShape->mVertexList[i].y) + (mTransformMtx.mMtx[0][0] * mShape->mVertexList[i].x);
+
+		mVertexList[i].y = mTransformMtx.mMtx[1][3] + (mTransformMtx.mMtx[1][2] * mShape->mVertexList[i].z)
+		                 + (mTransformMtx.mMtx[1][1] * mShape->mVertexList[i].y) + (mTransformMtx.mMtx[1][0] * mShape->mVertexList[i].x);
+
+		mVertexList[i].z = mTransformMtx.mMtx[2][3] + (mTransformMtx.mMtx[2][2] * mShape->mVertexList[i].z)
+		                 + (mTransformMtx.mMtx[2][1] * mShape->mVertexList[i].y) + (mTransformMtx.mMtx[2][0] * mShape->mVertexList[i].x);
+		mBoundingBox.expandBound(mVertexList[i]);
+	}
+
+	for (int i = 0; i < mShape->mTriCount; i++) {
+		mShape->mTriList[i].mTriangle.mNormal.rotateTo(mTransformMtx, mCollTriList[i].mTriangle.mNormal);
+		mCollTriList[i].mTriangle.mNormal.normalise();
+		mCollTriList[i].mTriangle.mNormal.y = mCollTriList[i].mTriangle.mNormal.DP(mVertexList[mCollTriList[0].mVertexIndices[i]]);
+		for (int j = 0; j < 3; j++) {
+			mShape->mTriList[i].mTriangle.mNormal.rotateTo(mTransformMtx, mCollTriList[i].mTriangle.mNormal);
+			mCollTriList[i].mTriangle.mNormal.normalise();
+			mCollTriList[i].mTriangle.mNormal.y = mCollTriList[i].mTriangle.mNormal.DP(mVertexList[mCollTriList[i].mVertexIndices[j]]);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -506,32 +405,12 @@ void DynCollShape::updatePos()
  * Address:	80061DF4
  * Size:	000044
  */
-void DynCollShape::jointVisible(int, int)
+void DynCollShape::jointVisible(int id, int set)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x2C(r3)
-	  mulli     r0, r4, 0x11C
-	  lwz       r4, 0x5C(r6)
-	  neg       r6, r5
-	  add       r4, r4, r0
-	  lwz       r4, 0x8(r4)
-	  lwz       r7, 0x10(r4)
-	  b         .loc_0x38
-
-	.loc_0x20:
-	  subic     r5, r6, 0x1
-	  lwz       r4, 0x38(r3)
-	  lwz       r0, 0x14(r7)
-	  subfe     r5, r5, r6
-	  stbx      r5, r4, r0
-	  lwz       r7, 0xC(r7)
-
-	.loc_0x38:
-	  cmplwi    r7, 0
-	  bne+      .loc_0x20
-	  blr
-	*/
+	FOREACH_NODE(Joint, mShape->mJointList[id].mParent->mChild, jnt)
+	{
+		mVisibleList[jnt->mIndex] = set != 0;
+	}
 }
 
 /*
@@ -539,48 +418,13 @@ void DynCollShape::jointVisible(int, int)
  * Address:	80061E38
  * Size:	000094
  */
-void DynCollShape::adjust(Creature*)
+void DynCollShape::adjust(Creature* obj)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  addi      r3, r31, 0x274
-	  lwz       r5, 0x94(r4)
-	  lwz       r0, 0x98(r4)
-	  addi      r4, r30, 0x9C
-	  stw       r5, 0x274(r31)
-	  stw       r0, 0x278(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x27C(r31)
-	  bl        -0x2A728
-	  lwz       r5, 0x274(r31)
-	  addi      r3, r31, 0x94
-	  lwz       r0, 0x278(r31)
-	  addi      r4, r30, 0x5C
-	  stw       r5, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r0, 0x27C(r31)
-	  stw       r0, 0x9C(r31)
-	  bl        -0x2A74C
-	  lwz       r3, 0x94(r31)
-	  lwz       r0, 0x98(r31)
-	  stw       r3, 0x1AC(r31)
-	  stw       r0, 0x1B0(r31)
-	  lwz       r0, 0x9C(r31)
-	  stw       r0, 0x1B4(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	obj->_274 = obj->mPosition;
+	obj->_274.multMatrix(mInverseMatrix);
+	obj->mPosition = obj->_274;
+	obj->mPosition.multMatrix(mTransformMtx);
+	obj->mLastPosition = obj->mPosition;
 }
 
 /*
@@ -590,27 +434,8 @@ void DynCollShape::adjust(Creature*)
  */
 void DynCollShape::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0x5C
-	  addi      r4, r31, 0x9C
-	  bl        -0x23AAC
-	  addi      r3, r31, 0x5C
-	  addi      r4, r31, 0x11C
-	  addi      r5, r31, 0x128
-	  addi      r6, r31, 0x134
-	  bl        -0x23E08
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mTransformMtx.inverse(&mInverseMatrix);
+	mTransformMtx.makeSRT(mScale, mRotation, mPosition);
 }
 
 /*
@@ -620,28 +445,9 @@ void DynCollShape::update()
  */
 void DynCollShape::updateContext()
 {
-	/*
-	.loc_0x0:
-	  li        r7, 0
-	  li        r6, 0
-	  b         .loc_0x28
-
-	.loc_0xC:
-	  lwz       r5, 0x38(r3)
-	  addi      r0, r6, 0x20
-	  lwz       r4, 0x5C(r4)
-	  addi      r6, r6, 0x11C
-	  lbzx      r5, r5, r7
-	  addi      r7, r7, 0x1
-	  stwx      r5, r4, r0
-
-	.loc_0x28:
-	  lwz       r4, 0x2C(r3)
-	  lwz       r0, 0x58(r4)
-	  cmpw      r7, r0
-	  blt+      .loc_0xC
-	  blr
-	*/
+	for (int i = 0; i < mShape->mJointCount; i++) {
+		mShape->mJointList[i].mFlags = mVisibleList[i];
+	}
 }
 
 /*
@@ -649,40 +455,10 @@ void DynCollShape::updateContext()
  * Address:	80061F50
  * Size:	000064
  */
-void DynCollShape::refresh(Graphics&)
+void DynCollShape::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0
-	  stw       r0, 0x4(r1)
-	  addi      r8, r7, 0
-	  stwu      r1, -0x8(r1)
-	  b         .loc_0x34
-
-	.loc_0x18:
-	  lwz       r6, 0x38(r3)
-	  addi      r0, r8, 0x20
-	  lwz       r5, 0x5C(r9)
-	  addi      r8, r8, 0x11C
-	  lbzx      r6, r6, r7
-	  addi      r7, r7, 0x1
-	  stwx      r6, r5, r0
-
-	.loc_0x34:
-	  lwz       r9, 0x2C(r3)
-	  lwz       r0, 0x58(r9)
-	  cmpw      r7, r0
-	  blt+      .loc_0x18
-	  lwz       r5, 0x2E4(r4)
-	  addi      r3, r9, 0
-	  li        r6, 0
-	  bl        -0x31B34
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	updateContext();
+	mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
 /*
@@ -692,24 +468,11 @@ void DynCollShape::refresh(Graphics&)
  */
 void MapObjAnimator::finishOneShot()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x18(r3)
-	  lwz       r3, 0x34(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x24
-	  bl        0x1D0
-
-	.loc_0x24:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_18 = 0;
+	if (mMapObj) {
+		mMapObj->nextState();
+	}
+	PRINT("%08x : finished animation : %f!!\n", this, mAnimationCounter);
 }
 
 /*
@@ -730,18 +493,10 @@ DynMapObject::DynMapObject(MapMgr*, MapAnimShapeObject* obj)
  */
 void DynMapObject::nextState()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x518(r3)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x518(r3)
-	  lwz       r0, 0x518(r3)
-	  cmpwi     r0, 0x6
-	  bnelr-
-	  li        r0, 0
-	  stw       r0, 0x518(r3)
-	  blr
-	*/
+	mState++;
+	if (mState == 6) {
+		mState = 0;
+	}
 }
 
 /*
@@ -751,26 +506,15 @@ void DynMapObject::nextState()
  */
 void DynMapObject::touchCallback(Plane&, Vector3f&, Vector3f&)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x518(r3)
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x30
-	  bgelr-
-	  cmpwi     r0, 0
-	  bnelr-
-	  lfs       f0, -0x7894(r2)
-	  stfs      f0, 0x51C(r3)
-	  lwz       r4, 0x518(r3)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x518(r3)
-	  blr
-
-	.loc_0x30:
-	  lfs       f0, -0x7894(r2)
-	  stfs      f0, 0x51C(r3)
-	  blr
-	*/
+	switch (mState) {
+	case 0:
+		_51C = 2.0f;
+		mState++;
+		break;
+	case 4:
+		_51C = 2.0f;
+		break;
+	}
 }
 
 /*
@@ -780,6 +524,35 @@ void DynMapObject::touchCallback(Plane&, Vector3f&, Vector3f&)
  */
 void DynMapObject::update()
 {
+	switch (mState) {
+	case 1:
+		_51C -= gsys->getFrameTime();
+		if (_51C < 0.0f) {
+			_51C = 2.0f;
+			mAnim.startAnim(2, 0, 0, 8);
+			mState++;
+		}
+		break;
+	case 3:
+		_51C -= gsys->getFrameTime();
+		if (_51C < 0.0f) {
+			_51C = 0.0f;
+			mState++;
+		}
+		break;
+	case 4:
+		_51C -= gsys->getFrameTime();
+		if (_51C < 0.0f) {
+			_51C = 0.0f;
+			mAnim.startAnim(2, 1, 0, 8);
+			mState++;
+		}
+		break;
+
+	default:
+		break;
+	}
+	DynCollShape::update();
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -906,22 +679,9 @@ void DynMapObject::update()
  * Address:	800623AC
  * Size:	00002C
  */
-void DynMapObject::draw(Graphics&)
+void DynMapObject::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	refresh(gfx);
 }
 
 /*
@@ -929,8 +689,20 @@ void DynMapObject::draw(Graphics&)
  * Address:	800623D8
  * Size:	000184
  */
-void DynMapObject::refresh(Graphics&)
+void DynMapObject::refresh(Graphics& gfx)
 {
+	Matrix4f mtx1;
+	Matrix4f mtx2;
+	mtx1.makeSRT(mMapScale, mMapRotation, mMapTranslation);
+	gfx.calcViewMatrix(mtx1, mtx2);
+	mAnim.updateContext();
+	mShape->updateAnim(gfx, mtx2, nullptr);
+
+	for (int i = 0; i < _544; i++) { }
+
+	gfx.useMatrix(Matrix4f::ident, 0);
+	mShape->drawshape(gfx, *gfx.mCamera, nullptr);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1042,23 +814,9 @@ void DynMapObject::refresh(Graphics&)
  * Address:	8006255C
  * Size:	000030
  */
-void DynCollObjBody::touchCallback(Plane&, Vector3f&, Vector3f&)
+void DynCollObjBody::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x140(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_140->touchCallback(plane, a1, a2);
 }
 
 /*
@@ -1066,23 +824,9 @@ void DynCollObjBody::touchCallback(Plane&, Vector3f&, Vector3f&)
  * Address:	8006258C
  * Size:	000030
  */
-void DynCollObjBody::applyVelocity(Plane&, Vector3f&, Vector3f&)
+void DynCollObjBody::applyVelocity(Plane& plane, Vector3f& a1, Vector3f& a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x140(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_140->applyVelocity(plane, a1, a2);
 }
 
 /*
@@ -4374,23 +4118,7 @@ MapRoom::MapRoom()
  */
 void MapMgr::initEffects()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x6B4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x1E4C0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x20
-	  bl        0x136CDC
-
-	.loc_0x20:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	new EffectMgr;
 }
 
 /*
@@ -4964,8 +4692,26 @@ void MapMgr::update()
  * Address:	80065BA4
  * Size:	0000F4
  */
-void MapMgr::preRender(Graphics&)
+void MapMgr::preRender(Graphics& gfx)
 {
+	_18 = 0;
+	_1C = 0;
+	gfx.setMatHandler(mMapShadMatHandler);
+	gfx.mRenderState = 0x300;
+
+	FOREACH_NODE(ShadowCaster, mShadowCaster.mChild, shadow)
+	{
+		shadow->mLightCamera.calcVectors(shadow->mSourcePosition, shadow->mTargetPosition);
+		shadow->mLightCamera.calcProjection(gfx, false, nullptr);
+	}
+
+	gfx.mRenderState = 0x700;
+	gfx.setMatHandler(nullptr);
+
+	if (_110) {
+		_110--;
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -7495,11 +7241,7 @@ void MapMgr::updatePos(f32, f32)
  */
 f32 MapMgr::getLight(f32, f32)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7884(r2)
-	  blr
-	*/
+	return 1.0f;
 }
 
 /*
@@ -9272,43 +9014,18 @@ void MapMgr::traceMove(Creature*, MoveTrace&, f32)
  * Address:	80069424
  * Size:	000070
  */
-Shape* MapMgr::loadPlatshape(char*)
+Shape* MapMgr::loadPlatshape(char* path)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x5F73
-	  stw       r0, 0x4(r1)
-	  addi      r5, r5, 0x6870
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r4
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x2A3D4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  lwz       r31, 0x20(r3)
+	Shape* shp       = nullptr;
+	GfxobjInfo* info = gsys->findGfxObject(path, '_shp');
+	if (info) {
+		shp = ((ShpobjInfo*)info)->mTarget;
+	}
 
-	.loc_0x38:
-	  cmplwi    r31, 0
-	  bne-      .loc_0x54
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r30, 0
-	  li        r5, 0x1
-	  bl        -0x2A26C
-	  mr        r31, r3
-
-	.loc_0x54:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!shp) {
+		shp = gsys->loadShape(path, true);
+	}
+	return shp;
 }
 
 /*
@@ -9316,52 +9033,14 @@ Shape* MapMgr::loadPlatshape(char*)
  * Address:	80069494
  * Size:	00009C
  */
-CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo*, Creature*)
+CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0x148
-	  bl        -0x224BC
-	  addi      r31, r3, 0
-	  mr.       r3, r31
-	  beq-      .loc_0x5C
-	  lwz       r4, 0x48(r29)
-	  bl        -0x74EC
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xD20
-	  stw       r0, 0x0(r31)
-	  li        r0, 0
-	  stw       r0, 0x144(r31)
-	  stw       r0, 0x140(r31)
-
-	.loc_0x5C:
-	  stw       r30, 0x28(r31)
-	  mr        r4, r31
-	  stw       r30, 0x140(r31)
-	  lwz       r0, 0x30(r29)
-	  stw       r0, 0x144(r31)
-	  lwz       r3, 0x88(r28)
-	  bl        -0x28F30
-	  mr        r3, r31
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	CreatureCollPart* part = new CreatureCollPart(info->mPlatShape);
+	part->mCreature        = obj;
+	part->_140             = obj;
+	part->mAnimMatrixID    = info->mJointIndex;
+	mCollShape->add(part);
+	return part;
 }
 
 /*
@@ -9460,20 +9139,8 @@ ShadowCaster::ShadowCaster()
  */
 void ShadowCaster::initShadow()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x14
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x100
-	  li        r5, 0x4
-	  stwu      r1, -0x8(r1)
-	  bl        -0x26368
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("making shadow buffer!\n");
+	mLightCamera.initLightmap(256, 4);
 }
 
 /*
@@ -9579,59 +9246,8 @@ void MapObjectPart::refresh(Graphics&)
  * Address:	80069760
  * Size:	000038
  */
-void MapObjectPart::touchCallback(Plane&, Vector3f&, Vector3f&)
+void MapObjectPart::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x144(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800697A4
- * Size:	000058
- */
-void __sinit_mapMgr_cpp(void)
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  lfs       f0, -0x78B0(r2)
-	  subi      r3, r3, 0x2240
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, -0x6D18(r13)
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0x8(r3)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0x14(r3)
-	  blr
-	*/
+	if (_144)
+		_144->touchCallback(plane, a1, a2);
 }

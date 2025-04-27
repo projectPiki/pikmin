@@ -17,13 +17,20 @@ struct CreatureCollPart : public DynCollShape {
 	{
 	}
 
+	CreatureCollPart(Shape* shape)
+	    : DynCollShape(shape)
+	{
+		mAnimMatrixID = 0;
+		_140          = nullptr;
+	}
+
 	virtual void update() { }                                 // _10 (weak)
 	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
 	virtual void refresh(Graphics&) { }                       // _44 (weak)
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	u8 _140[0x4];      // _140, unknown
+	Creature* _140;    // _140
 	int mAnimMatrixID; // _144, anim matrix ID?
 };
 
