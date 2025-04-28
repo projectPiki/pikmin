@@ -5,6 +5,7 @@
 #include "P2D/Pane.h"
 #include "P2D/Picture.h"
 #include "Texture.h"
+#include "nlib/Math.h"
 
 struct Texture;
 

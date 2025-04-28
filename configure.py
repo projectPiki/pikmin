@@ -781,7 +781,7 @@ config.libs = [
             Object(NonMatching, "plugPikiYamashita/P2DFont.cpp"),
             Object(Matching, "plugPikiYamashita/drawGameInfo.cpp"),
             Object(NonMatching, "plugPikiYamashita/zenGraphics.cpp"),
-            Object(NonMatching, "plugPikiYamashita/drawContainer.cpp"),
+            Object(Matching, "plugPikiYamashita/drawContainer.cpp"),
             Object(Matching, "plugPikiYamashita/drawCommon.cpp"),
             Object(Matching, "plugPikiYamashita/zenController.cpp"),
             Object(Matching, "plugPikiYamashita/drawHurryUp.cpp"),

@@ -16,24 +16,34 @@ struct TexAnim {
 	 * @brief A struct to hold the animation data.
 	 */
 	struct AnimData {
-		AnimData();
+		AnimData()
+		{
+			mTexture = nullptr;
+			mTime    = 0.0f;
+		}
 
-		// 10219570
-		inline void setData(Texture* tex, f32 time)
+		void setData(Texture* tex, f32 time)
 		{
 			mTexture = tex;
 			mTime    = time;
 		}
 
-		Texture* mTexture;
-		f32 mTime;
+		Texture* mTexture; // _00
+		f32 mTime;         // _04
 	};
 
-	void setData(u32 index, Texture* texture, f32 time); // 102193B0
-	Texture* update();                                   // 102194A0
+	TexAnim(int size)
+	{
+		mCurrentAnimIndex = 0;
+		mAnimSize         = size;
+		mData             = new AnimData[mAnimSize];
+		mAnimTimer        = 0.0f;
+	}
 
-	// 101E14A0
-	inline Texture* getTexPtr() { return mData[mCurrentAnimIndex].mTexture; }
+	void setData(u32 index, Texture* texture, f32 time);
+	Texture* update();
+
+	Texture* getTexPtr() { return mData[mCurrentAnimIndex].mTexture; }
 
 	u32 mCurrentAnimIndex; // _00
 	u32 mAnimSize;         // _04

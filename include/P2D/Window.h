@@ -24,12 +24,15 @@ struct P2DWindow : public P2DPane {
 		void draw(int, int, bool, bool);
 		void setTevMode();
 
+		void setTexture(Texture* tex) { mTexture = tex; }
+
 		// DLL inlines:
 		u16 getHeight();
 		u16 getWidth();
 		void makeResident();
 
 		// TODO: members
+		Texture* mTexture; // _00
 	};
 
 	P2DWindow(P2DPane*, RandomAccessStream*, u16);
@@ -47,11 +50,22 @@ struct P2DWindow : public P2DPane {
 	Texture* loadResource(char*);
 
 	// DLL inlines:
-	void setTexture(Texture*);
+	void setTexture(Texture* tex)
+	{
+		_104->setTexture(tex);
+		_108->setTexture(tex);
+		_10C->setTexture(tex);
+		_110->setTexture(tex);
+	}
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	u8 _EC[0x12C - 0xEC]; // _EC, unknown
+	u8 _EC[0x104 - 0xEC];   // _EC, unknown
+	P2DWindowTexture* _104; // _104
+	P2DWindowTexture* _108; // _108
+	P2DWindowTexture* _10C; // _10C
+	P2DWindowTexture* _110; // _110
+	u8 _114[0x12C - 0x114]; // _114, unknown
 };
 
 #endif

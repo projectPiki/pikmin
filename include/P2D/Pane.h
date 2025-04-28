@@ -114,7 +114,7 @@ struct P2DPane {
 	// weak
 	void rotate(P2DRotateAxis axis, f32 angle)
 	{
-		mFlag.mRotationAxis = axis & 3;
+		mFlag.mRotationAxis = axis;
 		mRotation           = angle;
 		if (mRotation < 0.0f) {
 			mRotation += TAU;
