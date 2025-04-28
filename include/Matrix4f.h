@@ -115,4 +115,13 @@ struct Matrix4f {
 extern f32 sintable[0x1000];
 extern f32 costable[0x1000];
 
+static inline f32 sinShort(u16 x)
+{
+	return sintable[(x >> 4) & 0xFFF];
+}
+static inline f32 cosShort(u16 x)
+{
+	return costable[(x >> 4) & 0xFFF];
+}
+
 #endif

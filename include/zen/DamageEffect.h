@@ -9,6 +9,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct DamageEffect {
 	DamageEffect();

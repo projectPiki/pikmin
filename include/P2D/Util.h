@@ -37,6 +37,7 @@ enum P2DWrapmode {
  */
 enum P2DRotateAxis {
 	P2DROTATE_Unk1 = 1,
+	P2DROTATE_Unk2 = 2,
 	P2DROTATE_X    = 'x', // 120
 	P2DROTATE_Y    = 'y', // 121
 	P2DROTATE_Z    = 'z', // 122

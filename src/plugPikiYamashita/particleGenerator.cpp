@@ -1398,8 +1398,8 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 		PSMTXIdentity(mtx2);
 
 		f32 a  = ptcl->mSize * ptcl->mScaleFactor;
-		cosVal = costable[ptcl->mRotAngle & 0x3FFC];
-		sinVal = sintable[ptcl->mRotAngle & 0x3FFC];
+		cosVal = cosShort(ptcl->mRotAngle);
+		sinVal = sinShort(ptcl->mRotAngle);
 		(this->*mRotAxisCallBack)(mtx3, sinVal, cosVal);
 
 		MTXTrans(mtx1.mMtx, ptcl->mLocalPosition.x + ptcl->mGlobalPosition.x, ptcl->mLocalPosition.y + ptcl->mGlobalPosition.y,
@@ -1495,7 +1495,6 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 		}
 	}
 
-	u32 badCompiler2[5];
 	/*
 	.loc_0x0:
 	  mflr      r0

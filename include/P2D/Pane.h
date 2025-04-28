@@ -143,6 +143,7 @@ struct P2DPane {
 	int getPosH() { return mBounds.mMinX; }
 	int getPosV() { return mBounds.mMinY; }
 
+	const PUTRect& getBounds() { return mBounds; }
 	void setBounds(const PUTRect& bounds) { mBounds = bounds; }
 
 	// these seem to genuinely be the same
@@ -181,7 +182,6 @@ struct P2DPane {
 	void setScale(f32 x, f32 y, f32 z) { mScale.set(x, y, z); }
 
 	// DLL inlines to do:
-	const PUTRect& getBounds();
 	void getDispPos(Vector3f*);
 
 	// _00 = VTBL
