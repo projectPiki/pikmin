@@ -4,16 +4,17 @@
 #include "types.h"
 #include "GfxObject.h"
 #include "Colour.h"
-
-struct Font;
+#include <Font.h>
 
 /**
  * @brief TODO
  */
 struct FntobjInfo : public GfxobjInfo {
+	FntobjInfo() { mFont = nullptr; }
+
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	// TODO: members
+	Font* mFont; // _20
 };
 
 /**
@@ -31,28 +32,29 @@ struct P2DFont {
 	// unused/inlined:
 	int charToIndex(int);
 
+	int getHeight() { return mFont->mCharHeight; }
+	u16 getWidth() { return mWidth; }
+	u16 getLeading() { return mLeading; }
+
 	// DLL inlines to do:
 	int getAscent();
 	int getDescent();
-	int getHeight();
 	int getNormalWidth();
 	u16 getFontType();
-	u16 getLeading();
-	u16 getWidth();
 	u8 getAlpha();
 	void loadFontTexture();
 	void makeResident();
 
-	Font* mFont; // _00
-	u16 _04;     // _04
-	u16 _06;     // _06
-	u16 _08;     // _08
-	u16 _0A;     // _0A
-	u16 _0C;     // _0C
-	Colour _10;  // _10
-	Colour _14;  // _14
-	Colour _18;  // _18
-	Colour _1C;  // _1C
+	Font* mFont;  // _00
+	u16 _04;      // _04
+	u16 mWidth;   // _06
+	u16 mLeading; // _08
+	u16 _0A;      // _0A
+	u16 _0C;      // _0C
+	Colour _10;   // _10
+	Colour _14;   // _14
+	Colour _18;   // _18
+	Colour _1C;   // _1C
 };
 
 #endif

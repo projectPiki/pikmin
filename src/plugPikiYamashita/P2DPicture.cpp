@@ -185,7 +185,8 @@ void P2DPicture::drawSelf(int x, int y)
 void P2DPicture::drawSelf(int x, int y, Matrix4f* mtx)
 {
 	if (mTextures[0]) {
-		drawFullSet(_20.mMinX + x, _20.mMinY + y, getWidth(), getHeight(), mBinding, mMirror, mTumble, mWrapS, mWrapT, mtx);
+		drawFullSet(mGlobalBounds.mMinX + x, mGlobalBounds.mMinY + y, getWidth(), getHeight(), mBinding, mMirror, mTumble, mWrapS, mWrapT,
+		            mtx);
 	}
 }
 
@@ -371,7 +372,7 @@ void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 p5, f32 p
 	GXSetNumTexGens(mTextureCount);
 
 	Matrix4f mtx1;
-	mtx->multiplyTo(_78, mtx1);
+	mtx->multiplyTo(mWorldMtx, mtx1);
 	GXLoadPosMtxImm(mtx1.mMtx, 0);
 
 	setTevMode();

@@ -1,5 +1,7 @@
 #include "P2D/Font.h"
+#include "Texture.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -20,103 +22,36 @@ DEFINE_PRINT(nullptr)
  * Address:	801B5C64
  * Size:	000150
  */
-Font* P2DFont::loadFont(char*, int&, int&)
+Font* P2DFont::loadFont(char* name, int& p2, int& p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x666F
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x130(r1)
-	  stmw      r26, 0x118(r1)
-	  addi      r29, r5, 0
-	  mr        r28, r4
-	  addi      r30, r6, 0
-	  addi      r5, r7, 0x6E74
-	  li        r31, 0
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x176C18
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C
-	  lwz       r31, 0x20(r3)
+	Font* font       = nullptr;
+	FntobjInfo* info = (FntobjInfo*)gsys->findGfxObject(name, 'font');
+	if (info) {
+		font = info->mFont;
+	}
 
-	.loc_0x3C:
-	  cmplwi    r31, 0
-	  bne-      .loc_0x128
-	  li        r3, 0x10
-	  bl        -0x16ECA8
-	  addi      r31, r3, 0
-	  li        r3, 0x24
-	  bl        -0x16ECB4
-	  mr.       r26, r3
-	  beq-      .loc_0xAC
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x795C
-	  stw       r0, 0x1C(r26)
-	  addi      r3, r26, 0xC
-	  bl        -0x171E78
-	  li        r27, 0
-	  stw       r27, 0x4(r26)
-	  lis       r4, 0x6E6F
-	  addi      r0, r13, 0x1968
-	  stw       r27, 0x0(r26)
-	  addi      r3, r26, 0xC
-	  addi      r4, r4, 0x6E65
-	  stw       r0, 0x8(r26)
-	  bl        -0x171E34
-	  lis       r3, 0x802E
-	  stw       r27, 0x18(r26)
-	  addi      r0, r3, 0x98C
-	  stw       r0, 0x1C(r26)
-	  stw       r27, 0x20(r26)
+	if (!font) {
+		font             = new Font();
+		FntobjInfo* info = new FntobjInfo();
+		info->mString    = StdSystem::stringDup(name);
+		info->mId.setID('font');
+		info->mFont = font;
+		gsys->addGfxObject(info);
 
-	.loc_0xAC:
-	  mr        r3, r28
-	  bl        -0x1759D4
-	  stw       r3, 0x8(r26)
-	  lis       r4, 0x666F
-	  addi      r3, r26, 0xC
-	  addi      r4, r4, 0x6E74
-	  bl        -0x171E64
-	  stw       r31, 0x20(r26)
-	  mr        r4, r26
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x1766D4
-	  addi      r5, r28, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x18
-	  addi      r4, r13, 0x196C
-	  bl        0x6084C
-	  lis       r4, 0x802E
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r4, 0x95C
-	  li        r5, 0x1
-	  bl        -0x176C58
-	  li        r0, 0x15
-	  stw       r0, 0x0(r29)
-	  li        r0, 0x2A
-	  addi      r4, r3, 0
-	  stw       r0, 0x0(r30)
-	  addi      r3, r31, 0
-	  lwz       r5, 0x0(r29)
-	  lwz       r6, 0x0(r30)
-	  bl        -0x18E0CC
-	  b         .loc_0x138
+		char unused[PATH_MAX];
+		sprintf(unused, "%s", name); // why.
 
-	.loc_0x128:
-	  li        r0, 0x15
-	  stw       r0, 0x0(r29)
-	  li        r0, 0x2A
-	  stw       r0, 0x0(r30)
+		Texture* fontTex = gsys->loadTexture("bigFont.bti", true);
+		p2               = 21;
+		p3               = 42;
+		font->setTexture(fontTex, p2, p3);
 
-	.loc_0x138:
-	  mr        r3, r31
-	  lmw       r26, 0x118(r1)
-	  lwz       r0, 0x134(r1)
-	  addi      r1, r1, 0x130
-	  mtlr      r0
-	  blr
-	*/
+	} else {
+		p2 = 21;
+		p3 = 42;
+	}
+
+	return font;
 }
 
 /*
@@ -124,8 +59,15 @@ Font* P2DFont::loadFont(char*, int&, int&)
  * Address:	801B5DB4
  * Size:	0000BC
  */
-P2DFont::P2DFont(char*)
+P2DFont::P2DFont(char* fileName)
 {
+	int a, b;
+	mFont    = loadFont(fileName, a, b);
+	_04      = 2;
+	mWidth   = (mFont->mTexture->mWidth / a);
+	mLeading = 5;
+	_0C      = (mFont->mTexture->mHeight / b) * 0.0f;
+	_0A      = (mFont->mTexture->mHeight / b) - _0C;
 	/*
 	.loc_0x0:
 	  mflr      r0

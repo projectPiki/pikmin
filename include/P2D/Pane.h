@@ -84,7 +84,7 @@ struct P2DPane {
 	virtual void loadResource() { }     // _08
 	virtual void makeResident() { }     // _0C
 	virtual ~P2DPane();                 // _10
-	virtual void move(int, int);        // _14 (weak)
+	virtual void move(int x, int y);    // _14 (weak)
 	virtual void move(Vector3f& newPos) // _18
 	{
 		mBounds.move(newPos.x, newPos.y);
@@ -100,15 +100,15 @@ struct P2DPane {
 		mtx.makeIdentity();
 		drawSelf(x, y, &mtx);
 	}
-	virtual void drawSelf(int, int, Matrix4f*); // _30
-	virtual P2DPane* search(u32, bool);         // _34
-	virtual void makeMatrix(int, int);          // _38
+	virtual void drawSelf(int x, int y, Matrix4f* transform); // _30
+	virtual P2DPane* search(u32 tag, bool doPanicOnNull);     // _34
+	virtual void makeMatrix(int x, int y);                    // _38
 
 	void setCallBack(P2DPaneCallBack*);
 	void printTagName(bool);
 	void update();
-	void draw(int, int, const P2DGrafContext*, bool);
-	void clip(const PUTRect&);
+	void draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor);
+	void clip(const PUTRect& clippingRect);
 	void loadChildResource();
 
 	// weak
@@ -195,11 +195,11 @@ struct P2DPane {
 	u32 mTagName;               // _10, unknown
 	f32 mPaneZ;                 // _14
 	PUTRect mBounds;            // _18
-	PUTRect _20;                // _20
-	PUTRect _28;                // _28
-	PUTRect _30;                // _30
-	Matrix4f _38;               // _38
-	Matrix4f _78;               // _78
+	PUTRect mGlobalBounds;      // _20
+	PUTRect mClipBounds;        // _28
+	PUTRect mScissorBounds;     // _30
+	Matrix4f mLocalMtx;         // _38
+	Matrix4f mWorldMtx;         // _78
 	s16 mOffsetX;               // _B8
 	s16 mOffsetY;               // _BA
 	f32 mRotation;              // _BC

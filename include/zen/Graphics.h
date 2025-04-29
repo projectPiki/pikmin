@@ -44,11 +44,10 @@ struct DrawNaviLifeCircle : public DrawLifeCircle {
 	// _00-_18 = DrawLifeCircle
 	int _18; // _18
 };
-} // namespace zen
-
 namespace zenGraphics {
-static void drawOneTri(Vector3f*, Colour&);
-static void setTevFillPolygon();
+extern void drawOneTri(Vector3f*, Colour&);
+extern void setTevFillPolygon();
 } // namespace zenGraphics
+} // namespace zen
 
 #endif

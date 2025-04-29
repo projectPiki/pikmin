@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include <Stream.h>
+#include "Colour.h"
 
 struct Colour;
 
@@ -19,7 +20,12 @@ struct P2DStream {
 	~P2DStream() { }
 
 	// DLL inlines:
-	void getColour(Colour*);
+	void getColour(Colour* color)
+	{
+		u8 comps[4];
+		mStream->read(comps, 4);
+		color->set(comps[0], comps[1], comps[2], comps[3]);
+	}
 
 	RandomAccessStream* mStream; // _00
 };

@@ -4,6 +4,8 @@
 #include "types.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
+#include "Texture.h"
+#include "Colour.h"
 
 struct Texture;
 
@@ -16,22 +18,22 @@ struct P2DWindow : public P2DPane {
 
 	/**
 	 * @brief TODO
+	 *
+	 * @note Size: 0x4.
 	 */
 	struct P2DWindowTexture {
-		P2DWindowTexture(Texture*); // DLL, to do
+		P2DWindowTexture(Texture* tex) { mTexture = tex; }
 
 		void draw(int, int, int, int, u16, u16, u16, u16);
-		void draw(int, int, bool, bool);
+		void draw(int p1, int p2, bool p3, bool p4);
 		void setTevMode();
 
 		void setTexture(Texture* tex) { mTexture = tex; }
 
-		// DLL inlines:
-		u16 getHeight();
-		u16 getWidth();
-		void makeResident();
+		void makeResident() { mTexture->makeResident(); }
+		u16 getHeight() { return mTexture->mHeight; }
+		u16 getWidth() { return mTexture->mWidth; }
 
-		// TODO: members
 		Texture* mTexture; // _00
 	};
 
@@ -39,7 +41,7 @@ struct P2DWindow : public P2DPane {
 
 	virtual void loadResource();                // _08
 	virtual void makeResident();                // _0C
-	virtual ~P2DWindow();                       // _10
+	virtual ~P2DWindow() { }                    // _10
 	virtual void drawSelf(int, int);            // _2C
 	virtual void drawSelf(int, int, Matrix4f*); // _30
 
@@ -52,20 +54,30 @@ struct P2DWindow : public P2DPane {
 	// DLL inlines:
 	void setTexture(Texture* tex)
 	{
-		_104->setTexture(tex);
-		_108->setTexture(tex);
-		_10C->setTexture(tex);
-		_110->setTexture(tex);
+		mTLCornerTexture->setTexture(tex);
+		mTRCornerTexture->setTexture(tex);
+		mBLCornerTexture->setTexture(tex);
+		mBRCornerTexture->setTexture(tex);
 	}
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	u8 _EC[0x104 - 0xEC];   // _EC, unknown
-	P2DWindowTexture* _104; // _104
-	P2DWindowTexture* _108; // _108
-	P2DWindowTexture* _10C; // _10C
-	P2DWindowTexture* _110; // _110
-	u8 _114[0x12C - 0x114]; // _114, unknown
+	char* mTLTexName;                   // _EC
+	char* mTRTexName;                   // _F0
+	char* mBLTexName;                   // _F4
+	char* mBRTexName;                   // _F8
+	PUTRect mWindowBounds;              // _FC
+	P2DWindowTexture* mTLCornerTexture; // _104
+	P2DWindowTexture* mTRCornerTexture; // _108
+	P2DWindowTexture* mBLCornerTexture; // _10C
+	P2DWindowTexture* mBRCornerTexture; // _110
+	int mWindowFlag;                    // _114
+	Colour mTLCornerColour;             // _118
+	Colour mTRCornerColour;             // _11C
+	Colour mBLCornerColour;             // _120
+	Colour mBRCornerColour;             // _124
+	s16 mMinWidth;                      // _128
+	s16 mMinHeight;                     // _12A
 };
 
 #endif

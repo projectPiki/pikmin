@@ -1,4 +1,5 @@
 #include "P2D/Print.h"
+#include "P2D/Font.h"
 #include "Colour.h"
 #include "DebugLog.h"
 
@@ -14,38 +15,16 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("P2DPrint")
 
 /*
  * --INFO--
  * Address:	801B49A4
  * Size:	000048
  */
-P2DPrint::P2DPrint(P2DFont*, int, int, Colour, Colour)
+P2DPrint::P2DPrint(P2DFont* font, int p2, int p3, Colour p4, Colour p5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x0(r8)
-	  addi      r8, r1, 0x20
-	  stw       r0, 0x20(r1)
-	  lwz       r0, 0x0(r7)
-	  addi      r7, r1, 0x24
-	  stw       r0, 0x24(r1)
-	  bl        .loc_0x48
-	  mr        r3, r31
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0x48:
-	*/
+	private_initiate(font, p2, p3, p4, p5);
 }
 
 /*
@@ -53,91 +32,34 @@ P2DPrint::P2DPrint(P2DFont*, int, int, Colour, Colour)
  * Address:	801B49EC
  * Size:	000100
  */
-void P2DPrint::private_initiate(P2DFont*, int, int, Colour, Colour)
+void P2DPrint::private_initiate(P2DFont* font, int p2, int p3, Colour p4, Colour p5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x20
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x38(r1)
-	  addi      r30, r8, 0
-	  stw       r29, 0x34(r1)
-	  addi      r29, r7, 0
-	  stw       r4, 0x0(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  lwz       r3, 0x0(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x58
-	  subis     r0, r6, 0x8000
-	  cmplwi    r0, 0
-	  beq-      .loc_0x50
-	  b         .loc_0x54
+	mFont = font;
+	_04   = p2;
+	_08   = 32;
 
-	.loc_0x50:
-	  lhz       r6, 0x8(r3)
+	if (mFont) {
+		_08 = (p3 != 0x80000000) ? p3 : mFont->getLeading(); // font inline, need to work out which
+	}
 
-	.loc_0x54:
-	  stw       r6, 0x8(r31)
+	_0C = 1;
+	_0D = 0;
+	locate(0, 0);
+	_28 = p4;
+	_30 = p5;
+	_34 = (mFont) ? s16(4 * mFont->getWidth()) : s16(80); // font inline, need to work out which
 
-	.loc_0x58:
-	  li        r0, 0x1
-	  stb       r0, 0xC(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stb       r0, 0xD(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  bl        .loc_0x100
-	  lwz       r0, 0x0(r29)
-	  stw       r0, 0x28(r31)
-	  lwz       r0, 0x0(r30)
-	  stw       r0, 0x30(r31)
-	  lwz       r3, 0x0(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA4
-	  lhz       r0, 0x6(r3)
-	  rlwinm    r0,r0,2,0,29
-	  extsh     r0, r0
-	  b         .loc_0xA8
+	if (mFont) {
+		setFontSize();
+		mFont->setGX();
+	} else {
+		PRINT("font is NULL.\n");
+		ERROR("font is NULL\n");
+		_38 = 0x80000000;
+		_3C = 0x80000000;
+	}
 
-	.loc_0xA4:
-	  li        r0, 0x50
-
-	.loc_0xA8:
-	  extsh     r0, r0
-	  stw       r0, 0x34(r31)
-	  lwz       r0, 0x0(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD0
-	  mr        r3, r31
-	  bl        0x94
-	  lwz       r3, 0x0(r31)
-	  bl        0x13BC
-	  b         .loc_0xDC
-
-	.loc_0xD0:
-	  lis       r0, 0x8000
-	  stw       r0, 0x38(r31)
-	  stw       r0, 0x3C(r31)
-
-	.loc_0xDC:
-	  mr        r3, r31
-	  bl        0x9C
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-
-	.loc_0x100:
-	*/
+	initchar();
 }
 
 /*
@@ -145,32 +67,13 @@ void P2DPrint::private_initiate(P2DFont*, int, int, Colour, Colour)
  * Address:	801B4AEC
  * Size:	000054
  */
-void P2DPrint::locate(int, int)
+void P2DPrint::locate(int p1, int p2)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  xoris     r6, r4, 0x8000
-	  xoris     r0, r5, 0x8000
-	  stw       r4, 0x10(r3)
-	  lis       r4, 0x4330
-	  stw       r6, 0x24(r1)
-	  stw       r5, 0x14(r3)
-	  stw       r4, 0x20(r1)
-	  lfd       f2, -0x4910(r2)
-	  stw       r0, 0x1C(r1)
-	  lfd       f0, 0x20(r1)
-	  stw       r4, 0x18(r1)
-	  fsubs     f1, f0, f2
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f1, 0x18(r3)
-	  stfs      f0, 0x1C(r3)
-	  lfs       f0, -0x4918(r2)
-	  stfs      f0, 0x20(r3)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	_10 = p1;
+	_14 = p2;
+	_18 = p1;
+	_1C = p2;
+	_20 = 0.0f;
 }
 
 /*
@@ -180,19 +83,10 @@ void P2DPrint::locate(int, int)
  */
 void P2DPrint::setFontSize()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x0(r3)
-	  cmplwi    r4, 0
-	  beqlr-
-	  lhz       r0, 0x6(r4)
-	  stw       r0, 0x38(r3)
-	  lwz       r4, 0x0(r3)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x3C(r3)
-	  blr
-	*/
+	if (mFont) {
+		_38 = mFont->getWidth();
+		_3C = mFont->getHeight();
+	}
 }
 
 /*
@@ -202,26 +96,14 @@ void P2DPrint::setFontSize()
  */
 void P2DPrint::initchar()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x28(r3)
-	  stw       r0, 0x24(r3)
-	  lwz       r0, 0x30(r3)
-	  stw       r0, 0x2C(r3)
-	  lwz       r0, 0x4(r3)
-	  stw       r0, 0x40(r3)
-	  lwz       r0, 0x8(r3)
-	  stw       r0, 0x44(r3)
-	  lbz       r0, 0xC(r3)
-	  stb       r0, 0x48(r3)
-	  lwz       r0, 0x34(r3)
-	  stw       r0, 0x4C(r3)
-	  lwz       r0, 0x38(r3)
-	  stw       r0, 0x50(r3)
-	  lwz       r0, 0x3C(r3)
-	  stw       r0, 0x54(r3)
-	  blr
-	*/
+	_24 = _28;
+	_2C = _30;
+	_40 = _04;
+	_44 = _08;
+	_48 = _0C;
+	_4C = _34;
+	_50 = _38;
+	_54 = _3C;
 }
 
 /*
@@ -229,181 +111,52 @@ void P2DPrint::initchar()
  * Address:	801B4BAC
  * Size:	000250
  */
-void P2DPrint::printReturn(const char*, int, int, P2DTextBoxHBinding, P2DTextBoxVBinding, int, int)
+void P2DPrint::printReturn(const char* p1, int p2, int p3, P2DTextBoxHBinding hBind, P2DTextBoxVBinding vBind, int p6, int p7)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x878(r1)
-	  stmw      r23, 0x854(r1)
-	  mr        r23, r3
-	  addi      r24, r4, 0
-	  addi      r25, r5, 0
-	  addi      r26, r6, 0
-	  addi      r27, r7, 0
-	  addi      r28, r8, 0
-	  addi      r29, r9, 0
-	  addi      r30, r10, 0
-	  lwz       r0, 0x28(r3)
-	  stw       r0, 0x24(r3)
-	  lwz       r0, 0x30(r3)
-	  stw       r0, 0x2C(r3)
-	  addi      r3, r24, 0
-	  lwz       r0, 0x4(r23)
-	  stw       r0, 0x40(r23)
-	  lwz       r0, 0x8(r23)
-	  stw       r0, 0x44(r23)
-	  lbz       r0, 0xC(r23)
-	  stb       r0, 0x48(r23)
-	  lwz       r0, 0x34(r23)
-	  stw       r0, 0x4C(r23)
-	  lwz       r0, 0x38(r23)
-	  stw       r0, 0x50(r23)
-	  lwz       r0, 0x3C(r23)
-	  stw       r0, 0x54(r23)
-	  bl        0x647EC
-	  addi      r31, r3, 0
-	  cmplwi    r31, 0x400
-	  ble-      .loc_0x88
-	  li        r31, 0x400
+	initchar();
+	u32 len = strlen(p1);
+	if (len > 0x400) {
+		len = 0x400;
+	}
 
-	.loc_0x88:
-	  addi      r3, r23, 0
-	  addi      r4, r24, 0
-	  addi      r5, r31, 0
-	  addi      r6, r25, 0
-	  addi      r7, r1, 0x38
-	  addi      r8, r1, 0x28
-	  li        r9, 0
-	  bl        .loc_0x250
-	  lwz       r3, 0x3C(r23)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x4910(r2)
-	  cmpwi     r28, 0x1
-	  xoris     r3, r3, 0x8000
-	  stw       r3, 0x84C(r1)
-	  stw       r0, 0x848(r1)
-	  lfd       f0, 0x848(r1)
-	  fsubs     f0, f0, f2
-	  fadds     f1, f1, f0
-	  beq-      .loc_0xE8
-	  bge-      .loc_0x12C
-	  cmpwi     r28, 0
-	  bge-      .loc_0x108
-	  b         .loc_0x12C
-	  b         .loc_0x12C
+	u16 buf[0x401];
+	TSize size;
 
-	.loc_0xE8:
-	  lfs       f0, -0x4908(r2)
-	  fadds     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x848(r1)
-	  lwz       r0, 0x84C(r1)
-	  sub       r0, r26, r0
-	  add       r30, r30, r0
-	  b         .loc_0x12C
+	f32 a = parse((u8*)p1, len, p2, buf, size, false);
+	a += _3C;
+	switch (vBind) {
+	case TBOXVBIND_Unk2:
+		break;
 
-	.loc_0x108:
-	  lfs       f0, -0x4908(r2)
-	  fadds     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x848(r1)
-	  lwz       r0, 0x84C(r1)
-	  sub       r0, r26, r0
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  add       r30, r30, r0
+	case TBOXVBIND_Unk1:
+		p7 += p3 - int(a + 0.5f);
+		break;
 
-	.loc_0x12C:
-	  addi      r4, r1, 0x38
-	  li        r3, 0
-	  b         .loc_0x180
+	case TBOXVBIND_Unk0:
+		p7 += (p3 - int(a + 0.5f)) / 2;
+		break;
+	}
 
-	.loc_0x138:
-	  cmpwi     r27, 0x1
-	  beq-      .loc_0x160
-	  bge-      .loc_0x150
-	  cmpwi     r27, 0
-	  bge-      .loc_0x16C
-	  b         .loc_0x17C
+	for (int i = 0; buf[i] != 0xFFFF; i++) {
+		switch (hBind) {
+		case TBOXHBIND_Unk2:
+			buf[i] = 0;
+			break;
 
-	.loc_0x150:
-	  cmpwi     r27, 0x3
-	  bge-      .loc_0x17C
-	  sth       r3, 0x0(r4)
-	  b         .loc_0x17C
+		case TBOXHBIND_Unk1:
+			buf[i] = p2 - buf[i];
+			break;
 
-	.loc_0x160:
-	  sub       r0, r25, r0
-	  sth       r0, 0x0(r4)
-	  b         .loc_0x17C
+		case TBOXHBIND_Unk0:
+			buf[i] = (p2 - buf[i]) / 2;
+			break;
+		}
+	}
 
-	.loc_0x16C:
-	  sub       r0, r25, r0
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sth       r0, 0x0(r4)
-
-	.loc_0x17C:
-	  addi      r4, r4, 0x2
-
-	.loc_0x180:
-	  lhz       r0, 0x0(r4)
-	  cmplwi    r0, 0xFFFF
-	  bne+      .loc_0x138
-	  lwz       r4, 0x28(r23)
-	  xoris     r0, r29, 0x8000
-	  stw       r0, 0x84C(r1)
-	  lis       r10, 0x4330
-	  addi      r3, r23, 0
-	  stw       r4, 0x24(r23)
-	  addi      r4, r24, 0
-	  addi      r5, r31, 0
-	  lwz       r0, 0x30(r23)
-	  mr        r6, r25
-	  stw       r10, 0x848(r1)
-	  addi      r7, r1, 0x38
-	  addi      r8, r1, 0x28
-	  stw       r0, 0x2C(r23)
-	  li        r9, 0x1
-	  lfd       f0, 0x848(r1)
-	  lwz       r0, 0x4(r23)
-	  stw       r0, 0x40(r23)
-	  lwz       r0, 0x8(r23)
-	  stw       r0, 0x44(r23)
-	  lbz       r0, 0xC(r23)
-	  stb       r0, 0x48(r23)
-	  lwz       r0, 0x34(r23)
-	  stw       r0, 0x4C(r23)
-	  lwz       r0, 0x38(r23)
-	  stw       r0, 0x50(r23)
-	  lwz       r0, 0x3C(r23)
-	  stw       r0, 0x54(r23)
-	  lfd       f2, -0x4910(r2)
-	  lfs       f1, 0x18(r23)
-	  fsubs     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r23)
-	  lwz       r0, 0x3C(r23)
-	  lfs       f1, 0x1C(r23)
-	  add       r0, r30, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x844(r1)
-	  stw       r10, 0x840(r1)
-	  lfd       f0, 0x840(r1)
-	  fsubs     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r23)
-	  bl        .loc_0x250
-	  lmw       r23, 0x854(r1)
-	  lwz       r0, 0x87C(r1)
-	  addi      r1, r1, 0x878
-	  mtlr      r0
-	  blr
-
-	.loc_0x250:
-	*/
+	initchar();
+	_18 += p6;
+	_1C += (p7 + _3C);
+	parse((u8*)p1, len, p2, buf, size, true);
 }
 
 /*
@@ -411,7 +164,7 @@ void P2DPrint::printReturn(const char*, int, int, P2DTextBoxHBinding, P2DTextBox
  * Address:	801B4DFC
  * Size:	0005C8
  */
-void P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
+f32 P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
 {
 	/*
 	.loc_0x0:
@@ -847,7 +600,7 @@ void P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
  * Address:	801B53C4
  * Size:	000624
  */
-void P2DPrint::doEscapeCode(const u8**)
+u16 P2DPrint::doEscapeCode(const u8**)
 {
 	/*
 	.loc_0x0:
@@ -1328,106 +1081,50 @@ void P2DPrint::doEscapeCode(const u8**)
  * Address:	801B59E8
  * Size:	000174
  */
-void P2DPrint::doCtrlCode(int)
+void P2DPrint::doCtrlCode(int inputChar)
 {
-	/*
-	.loc_0x0:
-	  subi      r0, r4, 0x8
-	  stwu      r1, -0x20(r1)
-	  cmplwi    r0, 0x17
-	  bgt-      .loc_0x16C
-	  lis       r4, 0x802E
-	  addi      r4, r4, 0x8F0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r4, r0
-	  mtctr     r0
-	  bctr
-	  lfs       f1, 0x18(r3)
-	  lfs       f0, 0x20(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x18(r3)
-	  lfs       f0, -0x4918(r2)
-	  stfs      f0, 0x20(r3)
-	  b         .loc_0x16C
-	  lwz       r5, 0x4C(r3)
-	  cmpwi     r5, 0
-	  ble-      .loc_0x16C
-	  lfs       f2, 0x18(r3)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x4910(r2)
-	  fctiwz    f0, f2
-	  stfd      f0, 0x18(r1)
-	  lwz       r4, 0x1C(r1)
-	  divw      r4, r4, r5
-	  mullw     r4, r5, r4
-	  add       r4, r5, r4
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x14(r1)
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x18(r3)
-	  lfs       f0, 0x18(r3)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x20(r3)
-	  b         .loc_0x16C
-	  lfs       f0, -0x4918(r2)
-	  lis       r4, 0x4330
-	  stfs      f0, 0x20(r3)
-	  lwz       r0, 0x10(r3)
-	  lfd       f2, -0x4910(r2)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x14(r1)
-	  stw       r4, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x18(r3)
-	  lwz       r0, 0x44(r3)
-	  lfs       f1, 0x1C(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x1C(r1)
-	  stw       r4, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r3)
-	  b         .loc_0x16C
-	  lfs       f0, -0x4918(r2)
-	  lis       r0, 0x4330
-	  stfs      f0, 0x20(r3)
-	  lwz       r4, 0x10(r3)
-	  lfd       f1, -0x4910(r2)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x14(r1)
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x18(r3)
-	  b         .loc_0x16C
-	  lfs       f1, 0x18(r3)
-	  lfs       f0, -0x48F8(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r3)
-	  b         .loc_0x16C
-	  lfs       f1, 0x18(r3)
-	  lfs       f0, -0x48F8(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x18(r3)
-	  b         .loc_0x16C
-	  lfs       f1, 0x1C(r3)
-	  lfs       f0, -0x48F8(r2)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x1C(r3)
-	  b         .loc_0x16C
-	  lfs       f1, 0x1C(r3)
-	  lfs       f0, -0x48F8(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r3)
+	switch (inputChar) {
+	case 0x8: // backspace
+		_18 -= _20;
+		_20 = 0.0f;
+		break;
 
-	.loc_0x16C:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	case 0x9: // horizontal tab
+		int width = _4C;
+		if (width > 0) {
+			f32 oldX = _18;
+			_18      = f32(width + width * ((int)_18 / width));
+			_20      = _18 - oldX;
+		}
+		break;
+
+	case 0xA: // line feed
+		_20 = 0.0f;
+		_18 = _10;
+		_1C = _1C + _44;
+		break;
+
+	case 0xD: // carriage return
+		_20 = 0.0f;
+		_18 = _10;
+		break;
+
+	case 0x1C: // file separator
+		_18 += 1.0f;
+		break;
+
+	case 0x1D: // group separator
+		_18 -= 1.0f;
+		break;
+
+	case 0x1E: // record separator
+		_1C -= 1.0f;
+		break;
+
+	case 0x1F: // unit separator
+		_1C += 1.0f;
+		break;
+	}
 }
 
 /*
@@ -1435,7 +1132,7 @@ void P2DPrint::doCtrlCode(int)
  * Address:	801B5B5C
  * Size:	000108
  */
-void P2DPrint::getNumber(const u8**, s32, s32, int)
+s32 P2DPrint::getNumber(const u8**, s32, s32, int)
 {
 	/*
 	.loc_0x0:
