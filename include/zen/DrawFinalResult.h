@@ -143,7 +143,7 @@ struct DrawFinalResult {
 		MODE_SaveSuccess   = 6,
 	};
 
-	DrawFinalResult(TotalScoreRecord*);
+	DrawFinalResult(TotalScoreRecord* rec = nullptr);
 
 	bool update(Controller*);
 	void draw(Graphics&);

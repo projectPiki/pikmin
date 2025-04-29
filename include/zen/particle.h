@@ -270,7 +270,11 @@ struct particleGenerator : public zenList {
 		mControlFlags  = 0;
 	}
 
-	virtual void remove(); // _0C
+	virtual void remove() // _0C
+	{
+		zenList::remove();
+		ClearPtclsStatus(nullptr, nullptr);
+	}
 
 	~particleGenerator() { }
 
@@ -621,6 +625,8 @@ struct simplePtclManager : public zenListManager {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x9C.
  */
 struct particleManager {
 	particleManager()

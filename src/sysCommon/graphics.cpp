@@ -3044,7 +3044,7 @@ void searchKanjiCode(u16)
  * Address:	80028058
  * Size:	0000DC
  */
-void Font::charToIndex(u16 c)
+int Font::charToIndex(u16 c)
 {
 	/*
 	.loc_0x0:

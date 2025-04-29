@@ -744,7 +744,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category" : "game",
         "objects": [
-            Object(NonMatching, "plugPikiYamashita/gameCourseClear.cpp"),
+            Object(Matching, "plugPikiYamashita/gameCourseClear.cpp"),
             Object(Matching, "plugPikiYamashita/gameStageClear.cpp"),
             Object(Matching, "plugPikiYamashita/gameCredits.cpp"),
             Object(Matching, "plugPikiYamashita/zenMath.cpp"),

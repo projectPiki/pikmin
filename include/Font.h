@@ -28,9 +28,12 @@ struct FontChar {
  */
 struct Font {
 	void setTexture(Texture*, int, int);
-	int charToIndex(char); // may not be int
-	void charToIndex(u16);
+	int charToIndex(char);
 	int stringWidth(char*);
+	int charToIndex(u16);
+
+	// DLL inlines:
+	int stringHeight(char* str) { return mCharHeight; }
 
 	Texture* mTexture; // _00
 	int mCharWidth;    // _04
