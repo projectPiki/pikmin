@@ -51,10 +51,19 @@ struct setTenmetuAlpha {
 	void startFadeOut(f32, f32, f32);
 	TenmetuMode update();
 
+	void update(P2DPicture* pic)
+	{
+		mPic = pic;
+		update();
+	}
+
 	// unused/inlined:
 	void calcAlpha(f32);
 
 	// TODO: members
+	int _00;
+	P2DPicture* mPic; // _04
+	u8 _08[0x124];    // _08
 };
 
 /**

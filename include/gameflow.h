@@ -338,10 +338,10 @@ struct GamePrefs : public CoreNode {
 
 	// DLL inlines to do:
 	bool getChildMode();
-	bool getStereoMode();
-	bool getVibeMode();
-	u8 getBgmVol();
-	u8 getSfxVol();
+	bool getStereoMode() { return (mFlags & 2) != 0; }
+	bool getVibeMode() { return (mFlags & 1) != 0; }
+	u8 getBgmVol() { return mBgmVol; }
+	u8 getSfxVol() { return mSfxVol; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

@@ -11,6 +11,7 @@
  */
 enum KeyboardButtons {
 	KBBTN_NULL = 0x0,
+	KBBTN_ANY  = 0xffffffff,
 
 	KBBTN_CSTICK_LEFT  = 0x1,
 	KBBTN_CSTICK_RIGHT = 0x2,
