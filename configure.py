@@ -258,6 +258,7 @@ cflags_jaudio = [
 cflags_pikmin = [
     *cflags_base,
     "-RTTI on",
+    "-char unsigned",
 ]
 
 # Metrowerks library flags
@@ -778,7 +779,7 @@ config.libs = [
             Object(Equivalent, "plugPikiYamashita/P2DWindow.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DTextBox.cpp"),
             Object(NonMatching, "plugPikiYamashita/P2DPrint.cpp"),
-            Object(NonMatching, "plugPikiYamashita/P2DFont.cpp"),
+            Object(Equivalent, "plugPikiYamashita/P2DFont.cpp"),
             Object(Matching, "plugPikiYamashita/drawGameInfo.cpp"),
             Object(Equivalent, "plugPikiYamashita/zenGraphics.cpp"),
             Object(Matching, "plugPikiYamashita/drawContainer.cpp"),

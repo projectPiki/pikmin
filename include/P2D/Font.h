@@ -33,13 +33,15 @@ struct P2DFont {
 	int charToIndex(int);
 
 	int getHeight() { return mFont->mCharHeight; }
+	int getNormalWidth() { return mWidth; }
 	u16 getWidth() { return mWidth; }
 	u16 getLeading() { return mLeading; }
 
+	// these two might be swapped, unsure
+	int getAscent() { return _0A; }
+	int getDescent() { return _0C; }
+
 	// DLL inlines to do:
-	int getAscent();
-	int getDescent();
-	int getNormalWidth();
 	u16 getFontType();
 	u8 getAlpha();
 	void loadFontTexture();
@@ -51,10 +53,10 @@ struct P2DFont {
 	u16 mLeading; // _08
 	u16 _0A;      // _0A
 	u16 _0C;      // _0C
-	Colour _10;   // _10
-	Colour _14;   // _14
-	Colour _18;   // _18
-	Colour _1C;   // _1C
+	Colour _0E;   // _0E
+	Colour _12;   // _12
+	Colour _16;   // _16
+	Colour _1A;   // _1A
 };
 
 #endif

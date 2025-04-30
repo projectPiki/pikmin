@@ -2,6 +2,7 @@
 #include "P2D/Font.h"
 #include "Colour.h"
 #include "DebugLog.h"
+#include "stl/stdlib.h"
 
 /*
  * --INFO--
@@ -600,7 +601,7 @@ f32 P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
  * Address:	801B53C4
  * Size:	000624
  */
-u16 P2DPrint::doEscapeCode(const u8**)
+u16 P2DPrint::doEscapeCode(const u8** strPtr)
 {
 	/*
 	.loc_0x0:
@@ -1132,89 +1133,48 @@ void P2DPrint::doCtrlCode(int inputChar)
  * Address:	801B5B5C
  * Size:	000108
  */
-s32 P2DPrint::getNumber(const u8**, s32, s32, int)
+s32 P2DPrint::getNumber(const u8** strPtr, s32 min, s32 max, int base)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  addi      r29, r6, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r5, 0
-	  lwz       r30, 0x0(r4)
-	  lbz       r0, 0x0(r30)
-	  cmplwi    r0, 0x5B
-	  beq-      .loc_0x40
-	  mr        r3, r28
-	  b         .loc_0xE8
+	const u8* inputStr = *strPtr;
+	s32 value          = min;
 
-	.loc_0x40:
-	  addi      r0, r30, 0x1
-	  cmpwi     r7, 0xA
-	  stw       r0, 0x0(r31)
-	  li        r3, 0
-	  bne-      .loc_0x68
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r7, 0
-	  addi      r4, r1, 0x1C
-	  bl        0x640A4
-	  b         .loc_0xB4
+	// number needs to be enclosed with []s to be valid
+	if (*inputStr != (u32)'[') {
+		return min;
+	}
 
-	.loc_0x68:
-	  cmpwi     r7, 0x10
-	  bne-      .loc_0xB4
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r7, 0
-	  addi      r4, r1, 0x1C
-	  bl        0x64178
-	  lwz       r4, 0x0(r31)
-	  lwz       r0, 0x1C(r1)
-	  sub       r0, r0, r4
-	  cmplwi    r0, 0x8
-	  beq-      .loc_0xB4
-	  cmplwi    r0, 0x6
-	  bne-      .loc_0xA8
-	  rlwinm    r0,r3,8,0,23
-	  ori       r3, r0, 0xFF
-	  b         .loc_0xB4
+	(*strPtr)++;
+	value = 0;
+	char* endStr;
 
-	.loc_0xA8:
-	  stw       r30, 0x0(r31)
-	  mr        r3, r29
-	  b         .loc_0xE8
+	if (base == 10) { // base 10, do as signed
+		value = strtol((char*)*strPtr, &endStr, base);
 
-	.loc_0xB4:
-	  lwz       r4, 0x1C(r1)
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0x5D
-	  beq-      .loc_0xD0
-	  stw       r30, 0x0(r31)
-	  mr        r3, r29
-	  b         .loc_0xE8
+	} else if (base == 16) { // base 16, do as unsigned
+		value = strtoul((char*)*strPtr, &endStr, base);
 
-	.loc_0xD0:
-	  lwz       r0, 0x0(r31)
-	  cmplw     r0, r4
-	  bne-      .loc_0xE0
-	  mr        r3, r28
+		if ((u32)endStr - (u32)*strPtr != 8) {
+			if ((u32)endStr - (u32)*strPtr == 6) {
+				value = (value << 8) | 255;
+			} else {
+				*strPtr = inputStr;
+				return max;
+			}
+		}
+	}
 
-	.loc_0xE0:
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x0(r31)
+	// number needs to be enclosed with []s to be valid
+	if (endStr[0] != (u32)']') {
+		*strPtr = inputStr;
+		return max;
+	}
 
-	.loc_0xE8:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	// no number found, string didn't change
+	if ((char*)*strPtr == (char*)endStr) {
+		// *strPtr = (const u8*)endStr + 1; // advance string
+		value = min;
+	}
+
+	*strPtr = (const u8*)endStr + 1; // advance string past number (and brackets)
+	return value;
 }
