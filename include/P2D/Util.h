@@ -47,18 +47,18 @@ enum P2DRotateAxis {
  * @brief TODO
  */
 enum P2DTextBoxHBinding {
-	TBOXHBIND_Unk0 = 0,
-	TBOXHBIND_Unk1 = 1,
-	TBOXHBIND_Unk2 = 2,
+	TBOXHBIND_Center = 0,
+	TBOXHBIND_Right  = 1,
+	TBOXHBIND_Left   = 2,
 };
 
 /**
  * @brief TODO
  */
 enum P2DTextBoxVBinding {
-	TBOXVBIND_Unk0 = 0,
-	TBOXVBIND_Unk1 = 1,
-	TBOXVBIND_Unk2 = 2,
+	TBOXVBIND_Center = 0,
+	TBOXVBIND_Bottom = 1,
+	TBOXVBIND_Top    = 2,
 };
 
 #endif

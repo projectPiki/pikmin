@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "GfxObject.h"
+#include "Dolphin/gx.h"
+#include "Texture.h"
 #include "Colour.h"
 #include <Font.h>
 
@@ -23,40 +25,43 @@ struct FntobjInfo : public GfxobjInfo {
 struct P2DFont {
 	P2DFont(char*);
 
-	Font* loadFont(char*, int&, int&);
+	Font* loadFont(char* fileName, int&, int&);
 	void setGX();
-	void setGradColor(const Colour&, const Colour&);
-	f32 getWidth(int, int);
-	f32 drawChar(f32, f32, int, int, int);
+	void setGradColor(const Colour& topColour, const Colour& bottomColour);
+	f32 getWidth(int charCode, int drawWidth);
+	f32 drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawHeight);
 
 	// unused/inlined:
-	int charToIndex(int);
+	int charToIndex(int c);
 
 	int getHeight() { return mFont->mCharHeight; }
 	int getNormalWidth() { return mWidth; }
 	u16 getWidth() { return mWidth; }
 	u16 getLeading() { return mLeading; }
+	u16 getFontType() { return mFontType; }
 
-	// these two might be swapped, unsure
-	int getAscent() { return _0A; }
-	int getDescent() { return _0C; }
+	int getAscent() { return mAscent; }
+	int getDescent() { return mDescent; }
 
-	// DLL inlines to do:
-	u16 getFontType();
-	u8 getAlpha();
-	void loadFontTexture();
-	void makeResident();
+	u8 getAlpha() { return mTLColour.a; }
 
-	Font* mFont;  // _00
-	u16 _04;      // _04
-	u16 mWidth;   // _06
-	u16 mLeading; // _08
-	u16 _0A;      // _0A
-	u16 _0C;      // _0C
-	Colour _0E;   // _0E
-	Colour _12;   // _12
-	Colour _16;   // _16
-	Colour _1A;   // _1A
+	void makeResident() { mFont->mTexture->makeResident(); }
+	void loadFontTexture()
+	{
+		mFont->mTexture->makeResident();
+		GXLoadTexObj(mFont->mTexture->mTexObj, GX_TEXMAP0);
+	}
+
+	Font* mFont;      // _00
+	u16 mFontType;    // _04
+	u16 mWidth;       // _06
+	u16 mLeading;     // _08
+	u16 mAscent;      // _0A
+	u16 mDescent;     // _0C
+	Colour mTLColour; // _0E, top left corner colour
+	Colour mTRColour; // _12, top right corner colour
+	Colour mBLColour; // _16, bottom left corner colour
+	Colour mBRColour; // _1A, bottom right corner colour
 };
 
 #endif

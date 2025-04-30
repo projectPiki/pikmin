@@ -69,6 +69,7 @@ typedef enum {
 #define OS_FONT_ENCODE_NULL -1
 #define OS_FONT_ENCODE_ANSI 0
 #define OS_FONT_ENCODE_SJIS 1
+#define OS_FONT_ENCODE_UNK2 2
 
 #define OS_FONT_SIZE_ANSI (288 + 131072)   // 9 sheets
 #define OS_FONT_SIZE_SJIS (3840 + 1179648) // 1 sheet

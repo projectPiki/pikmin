@@ -62,12 +62,12 @@ Font* P2DFont::loadFont(char* name, int& p2, int& p3)
 P2DFont::P2DFont(char* fileName)
 {
 	int a, b;
-	mFont    = loadFont(fileName, a, b);
-	_04      = 2;
-	mWidth   = (mFont->mTexture->mWidth / a);
-	mLeading = 5;
-	_0C      = (mFont->mTexture->mHeight / b) * 0.0f;
-	_0A      = (mFont->mTexture->mHeight / b) - _0C;
+	mFont     = loadFont(fileName, a, b);
+	mFontType = 2;
+	mWidth    = (mFont->mTexture->mWidth / a);
+	mLeading  = 5;
+	mDescent  = (mFont->mTexture->mHeight / b) * 0.0f;
+	mAscent   = (mFont->mTexture->mHeight / b) - mDescent;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -148,12 +148,12 @@ void P2DFont::setGX()
  * Address:	801B5F48
  * Size:	000024
  */
-void P2DFont::setGradColor(const Colour& p1, const Colour& p2)
+void P2DFont::setGradColor(const Colour& topColour, const Colour& bottomColour)
 {
-	_0E = p1;
-	_12 = p1;
-	_16 = p2;
-	_1A = p2;
+	mTLColour = topColour;
+	mTRColour = topColour;
+	mBLColour = bottomColour;
+	mBRColour = bottomColour;
 }
 
 /*
@@ -175,10 +175,10 @@ int P2DFont::charToIndex(int c)
  * Address:	801B5F6C
  * Size:	0000C4
  */
-f32 P2DFont::getWidth(int p1, int p2)
+f32 P2DFont::getWidth(int charCode, int drawWidth)
 {
-	f32 a = mFont->mChars[charToIndex(p1)].mCharSpacing;
-	f32 b = p2;
+	f32 a = mFont->mChars[charToIndex(charCode)].mCharSpacing;
+	f32 b = drawWidth;
 	return b / getWidth() * a + 1.0f;
 	/*
 	.loc_0x0:
@@ -243,15 +243,15 @@ f32 P2DFont::getWidth(int p1, int p2)
  * Address:	801B6030
  * Size:	000308
  */
-f32 P2DFont::drawChar(f32 p1, f32 p2, int p3, int p4, int p5)
+f32 P2DFont::drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawHeight)
 {
-	FontChar* fc = &mFont->mChars[charToIndex(p3)];
-	f32 a        = f32(p4) / getWidth();
-	f32 b        = f32(p5) / getHeight();
-	f32 x0       = p1 - fc->mLeftOffset * a;
-	f32 x1       = p1 + (fc->mWidth - fc->mLeftOffset) * a;
-	f32 y0       = p2 - getAscent() * b;
-	f32 y1       = p2 + getDescent() * b;
+	FontChar* fc = &mFont->mChars[charToIndex(charCode)];
+	f32 xScale   = f32(drawWidth) / getWidth();
+	f32 yScale   = f32(drawHeight) / getHeight();
+	f32 x0       = xPos - fc->mLeftOffset * xScale;
+	f32 x1       = xPos + (fc->mWidth - fc->mLeftOffset) * xScale;
+	f32 y0       = yPos - getAscent() * yScale;
+	f32 y1       = yPos + getDescent() * yScale;
 
 	u16 s0 = f32(fc->mTextureCoords.mMinX + 0.5f) * 32768.0f * mFont->mTexture->mWidthFactor;
 	u16 t0 = f32(fc->mTextureCoords.mMinY + 0.5f) * 32768.0f * mFont->mTexture->mHeightFactor;
@@ -262,19 +262,19 @@ f32 P2DFont::drawChar(f32 p1, f32 p2, int p3, int p4, int p5)
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
 	GXPosition3f32(x0, y0, 0.0f);
-	GXColor1u32(*(u32*)&_0E);
+	GXColor1u32(*(u32*)&mTLColour);
 	GXTexCoord2u16(s0, t0);
 
 	GXPosition3f32(x1, y0, 0.0f);
-	GXColor1u32(*(u32*)&_12);
+	GXColor1u32(*(u32*)&mTRColour);
 	GXTexCoord2u16(s1, t0);
 
 	GXPosition3f32(x1, y1, 0.0f);
-	GXColor1u32(*(u32*)&_1A);
+	GXColor1u32(*(u32*)&mBRColour);
 	GXTexCoord2u16(s1, t1);
 
 	GXPosition3f32(x0, y1, 0.0f);
-	GXColor1u32(*(u32*)&_16);
+	GXColor1u32(*(u32*)&mBLColour);
 	GXTexCoord2u16(s0, t1);
 
 	GXEnd();

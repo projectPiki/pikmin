@@ -6,6 +6,9 @@
 
 struct Texture;
 
+#define ASCII_PRINTABLE_MIN (0x20) // space
+#define ASCII_PRINTABLE_MAX (0x80) // one more than last printable symbol (0x7F = delete)
+
 /**
  * @brief TODO
  */

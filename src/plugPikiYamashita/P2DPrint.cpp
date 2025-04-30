@@ -2,6 +2,7 @@
 #include "P2D/Font.h"
 #include "Colour.h"
 #include "DebugLog.h"
+#include "Dolphin/gx.h"
 #include "stl/stdlib.h"
 
 /*
@@ -23,9 +24,9 @@ DEFINE_PRINT("P2DPrint")
  * Address:	801B49A4
  * Size:	000048
  */
-P2DPrint::P2DPrint(P2DFont* font, int p2, int p3, Colour p4, Colour p5)
+P2DPrint::P2DPrint(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour)
 {
-	private_initiate(font, p2, p3, p4, p5);
+	private_initiate(font, spacing, leading, topColour, bottomColour);
 }
 
 /*
@@ -33,22 +34,22 @@ P2DPrint::P2DPrint(P2DFont* font, int p2, int p3, Colour p4, Colour p5)
  * Address:	801B49EC
  * Size:	000100
  */
-void P2DPrint::private_initiate(P2DFont* font, int p2, int p3, Colour p4, Colour p5)
+void P2DPrint::private_initiate(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour)
 {
-	mFont = font;
-	_04   = p2;
-	_08   = 32;
+	mFont        = font;
+	mFontSpacing = spacing;
+	mFontLeading = 32;
 
 	if (mFont) {
-		_08 = (p3 != 0x80000000) ? p3 : mFont->getLeading(); // font inline, need to work out which
+		mFontLeading = (leading != 0x80000000) ? leading : mFont->getLeading();
 	}
 
-	_0C = 1;
-	_0D = 0;
+	mFontGradientActive = true;
+	mSkipEscCtrlCodes   = false;
 	locate(0, 0);
-	_28 = p4;
-	_30 = p5;
-	_34 = (mFont) ? s16(4 * mFont->getWidth()) : s16(80); // font inline, need to work out which
+	mFontTopColour    = topColour;
+	mFontBottomColour = bottomColour;
+	mFontTabWidth     = (mFont) ? s16(4 * mFont->getWidth()) : s16(80);
 
 	if (mFont) {
 		setFontSize();
@@ -56,8 +57,8 @@ void P2DPrint::private_initiate(P2DFont* font, int p2, int p3, Colour p4, Colour
 	} else {
 		PRINT("font is NULL.\n");
 		ERROR("font is NULL\n");
-		_38 = 0x80000000;
-		_3C = 0x80000000;
+		mFontWidth  = 0x80000000;
+		mFontHeight = 0x80000000;
 	}
 
 	initchar();
@@ -68,13 +69,13 @@ void P2DPrint::private_initiate(P2DFont* font, int p2, int p3, Colour p4, Colour
  * Address:	801B4AEC
  * Size:	000054
  */
-void P2DPrint::locate(int p1, int p2)
+void P2DPrint::locate(int x, int y)
 {
-	_10 = p1;
-	_14 = p2;
-	_18 = p1;
-	_1C = p2;
-	_20 = 0.0f;
+	mInitX         = x;
+	mInitY         = y;
+	mCursorX       = x;
+	mCursorY       = y;
+	mCurrCharWidth = 0.0f;
 }
 
 /*
@@ -85,8 +86,8 @@ void P2DPrint::locate(int p1, int p2)
 void P2DPrint::setFontSize()
 {
 	if (mFont) {
-		_38 = mFont->getWidth();
-		_3C = mFont->getHeight();
+		mFontWidth  = mFont->getWidth();
+		mFontHeight = mFont->getHeight();
 	}
 }
 
@@ -97,14 +98,14 @@ void P2DPrint::setFontSize()
  */
 void P2DPrint::initchar()
 {
-	_24 = _28;
-	_2C = _30;
-	_40 = _04;
-	_44 = _08;
-	_48 = _0C;
-	_4C = _34;
-	_50 = _38;
-	_54 = _3C;
+	mCharTopColour      = mFontTopColour;
+	mCharBottomColour   = mFontBottomColour;
+	mCharSpacing        = mFontSpacing;
+	mCharLeading        = mFontLeading;
+	mCharGradientActive = mFontGradientActive;
+	mCharTabWidth       = mFontTabWidth;
+	mCharWidth          = mFontWidth;
+	mCharHeight         = mFontHeight;
 }
 
 /*
@@ -112,52 +113,55 @@ void P2DPrint::initchar()
  * Address:	801B4BAC
  * Size:	000250
  */
-void P2DPrint::printReturn(const char* p1, int p2, int p3, P2DTextBoxHBinding hBind, P2DTextBoxVBinding vBind, int p6, int p7)
+void P2DPrint::printReturn(const char* textBuffer, int boxWidth, int boxHeight, P2DTextBoxHBinding hBind, P2DTextBoxVBinding vBind,
+                           int xOffset, int yOffset)
 {
 	initchar();
-	u32 len = strlen(p1);
-	if (len > 0x400) {
-		len = 0x400;
+	u32 textLen = strlen(textBuffer);
+
+	// can't print more than 1024 characters of text at a time!
+	if (textLen > 0x400) {
+		textLen = 0x400;
 	}
 
-	u16 buf[0x401];
+	u16 xPosBuffer[0x401];
 	TSize size;
 
-	f32 a = parse((u8*)p1, len, p2, buf, size, false);
-	a += _3C;
+	f32 blockHeight = parse((u8*)textBuffer, textLen, boxWidth, xPosBuffer, size, false);
+	blockHeight += mFontHeight;
 	switch (vBind) {
-	case TBOXVBIND_Unk2:
+	case TBOXVBIND_Top:
 		break;
 
-	case TBOXVBIND_Unk1:
-		p7 += p3 - int(a + 0.5f);
+	case TBOXVBIND_Bottom:
+		yOffset += boxHeight - int(blockHeight + 0.5f);
 		break;
 
-	case TBOXVBIND_Unk0:
-		p7 += (p3 - int(a + 0.5f)) / 2;
+	case TBOXVBIND_Center:
+		yOffset += (boxHeight - int(blockHeight + 0.5f)) / 2;
 		break;
 	}
 
-	for (int i = 0; buf[i] != 0xFFFF; i++) {
+	for (int i = 0; xPosBuffer[i] != 0xFFFF; i++) {
 		switch (hBind) {
-		case TBOXHBIND_Unk2:
-			buf[i] = 0;
+		case TBOXHBIND_Left:
+			xPosBuffer[i] = 0;
 			break;
 
-		case TBOXHBIND_Unk1:
-			buf[i] = p2 - buf[i];
+		case TBOXHBIND_Right:
+			xPosBuffer[i] = boxWidth - xPosBuffer[i];
 			break;
 
-		case TBOXHBIND_Unk0:
-			buf[i] = (p2 - buf[i]) / 2;
+		case TBOXHBIND_Center:
+			xPosBuffer[i] = (boxWidth - xPosBuffer[i]) / 2;
 			break;
 		}
 	}
 
 	initchar();
-	_18 += p6;
-	_1C += (p7 + _3C);
-	parse((u8*)p1, len, p2, buf, size, true);
+	mCursorX += xOffset;
+	mCursorY += (yOffset + mFontHeight);
+	parse((u8*)textBuffer, textLen, boxWidth, xPosBuffer, size, true);
 }
 
 /*
@@ -165,435 +169,143 @@ void P2DPrint::printReturn(const char* p1, int p2, int p3, P2DTextBoxHBinding hB
  * Address:	801B4DFC
  * Size:	0005C8
  */
-f32 P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
+f32 P2DPrint::parse(const u8* textBuffer, int textLen, int maxWidth, u16* outXPosBuffer, P2DPrint::TSize& textSize, bool doDraw)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x110(r1)
-	  stfd      f31, 0x108(r1)
-	  stfd      f30, 0x100(r1)
-	  stfd      f29, 0xF8(r1)
-	  stfd      f28, 0xF0(r1)
-	  stfd      f27, 0xE8(r1)
-	  stfd      f26, 0xE0(r1)
-	  stfd      f25, 0xD8(r1)
-	  stfd      f24, 0xD0(r1)
-	  stfd      f23, 0xC8(r1)
-	  stfd      f22, 0xC0(r1)
-	  stmw      r19, 0x8C(r1)
-	  mr        r21, r5
-	  mr        r19, r6
-	  addi      r22, r7, 0
-	  addi      r23, r8, 0
-	  addi      r24, r9, 0
-	  mr        r20, r3
-	  li        r27, 0
-	  li        r5, 0
-	  li        r6, 0x1
-	  li        r7, 0
-	  li        r8, 0
-	  li        r9, 0x2
-	  stw       r4, 0xC(r1)
-	  li        r4, 0
-	  lfs       f27, -0x4918(r2)
-	  lwz       r28, 0xC(r1)
-	  lfs       f29, 0x18(r3)
-	  fmr       f26, f27
-	  lfs       f28, 0x1C(r3)
-	  addi      r0, r28, 0x1
-	  stw       r0, 0xC(r1)
-	  lfs       f0, 0x18(r3)
-	  lfs       f1, 0x1C(r3)
-	  li        r3, 0x4
-	  fmr       f25, f0
-	  lbz       r26, 0x0(r28)
-	  fmr       f24, f0
-	  fmr       f23, f1
-	  fmr       f22, f1
-	  bl        0x5D078
-	  lwz       r3, 0x0(r20)
-	  addi      r4, r20, 0x24
-	  addi      r5, r20, 0x2C
-	  bl        0x1090
-	  lwz       r25, 0x0(r20)
-	  lwz       r3, 0x0(r25)
-	  lwz       r3, 0x0(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x0(r25)
-	  li        r4, 0
-	  lwz       r3, 0x0(r3)
-	  lwz       r3, 0x24(r3)
-	  bl        0x5D87C
-	  lfd       f31, -0x4910(r2)
-	  rlwinm    r30,r24,0,24,31
-	  lfs       f30, -0x4908(r2)
-	  xoris     r29, r19, 0x8000
-	  lis       r31, 0x4330
+	const u8* textStart = textBuffer;
+	u16 charNum         = 0;
+	f32 startX          = mCursorX;
+	f32 startY          = mCursorY;
+	f32 currLineWidth   = 0.0f;
+	f32 blockHeight     = 0.0f;
+	int currChar        = *textBuffer++;
+	f32 minX            = mCursorX;
+	f32 maxX            = minX;
+	f32 minY            = mCursorY;
+	f32 maxY            = minY;
+	GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_NONE, GX_AF_NONE);
+	mFont->setGradColor(mCharTopColour, mCharBottomColour);
+	mFont->loadFontTexture();
 
-	.loc_0x104:
-	  cmpwi     r26, 0
-	  li        r25, 0x1
-	  beq-      .loc_0x120
-	  lwz       r4, 0xC(r1)
-	  sub       r0, r4, r28
-	  cmplw     r0, r21
-	  ble-      .loc_0x150
+	while (true) {
+		bool isDrawableChar = true;
+		if (currChar == 0 || (u32)textBuffer - (u32)textStart > textLen) {
+			if (!doDraw && outXPosBuffer) {
+				outXPosBuffer[charNum] = (currLineWidth + 0.5f);
+			}
+			break;
+		}
 
-	.loc_0x120:
-	  rlwinm.   r0,r24,0,24,31
-	  bne-      .loc_0x4FC
-	  cmplwi    r22, 0
-	  beq-      .loc_0x4FC
-	  lfs       f0, -0x4908(r2)
-	  rlwinm    r0,r27,1,15,30
-	  fadds     f0, f0, f27
-	  fctiwz    f0, f0
-	  stfd      f0, 0x80(r1)
-	  lwz       r3, 0x84(r1)
-	  sthx      r3, r22, r0
-	  b         .loc_0x4FC
+		if (!mSkipEscCtrlCodes && currChar < ASCII_PRINTABLE_MIN) {
+			if (currChar == 0x1B) { // escape character
+				u16 escCode = doEscapeCode(&textBuffer);
+				if (escCode == 'HM') {
+					if (!doDraw && outXPosBuffer) {
+						outXPosBuffer[charNum] = (currLineWidth + 0.5f);
+					}
+					mCursorY = startY;
+					mCursorX = startX;
+					charNum++;
+					currLineWidth = 0.0f;
+				} else if (escCode != 0) {
+					isDrawableChar = false;
+				}
+			} else {
+				doCtrlCode(currChar);
+				isDrawableChar = false;
+				if (currChar == 0xA) { // line feed
+					if (!doDraw && outXPosBuffer) {
+						outXPosBuffer[charNum] = (currLineWidth + 0.5f);
+					}
+					charNum++;
+					mCursorX      = startX;
+					currLineWidth = 0.0f;
+				}
+			}
+		} else {
+			bool isMultiByteChar = false;
+			if (mFont->getFontType() == OS_FONT_ENCODE_SJIS) {
+				currChar = (currChar << 8) | *textBuffer++;
+				if ((u32)textBuffer - (u32)textStart <= textLen) {
+					isMultiByteChar = true;
+				} else {
+					continue;
+				}
+			} else if (mFont->getFontType() == OS_FONT_ENCODE_UNK2 && currChar >= ASCII_PRINTABLE_MAX && *textBuffer != 0) {
+				currChar = (currChar << 8) | *textBuffer++;
+				if ((u32)textBuffer - (u32)textStart <= textLen) {
+					isMultiByteChar = true;
+				} else {
+					continue;
+				}
+			}
 
-	.loc_0x150:
-	  lbz       r0, 0xD(r20)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x220
-	  cmpwi     r26, 0x20
-	  bge-      .loc_0x220
-	  cmpwi     r26, 0x1B
-	  bne-      .loc_0x1D0
-	  addi      r3, r20, 0
-	  addi      r4, r1, 0xC
-	  bl        .loc_0x5C8
-	  rlwinm    r0,r3,0,16,31
-	  cmplwi    r0, 0x484D
-	  bne-      .loc_0x1C0
-	  cmplwi    r30, 0
-	  bne-      .loc_0x1AC
-	  cmplwi    r22, 0
-	  beq-      .loc_0x1AC
-	  fadds     f0, f30, f27
-	  rlwinm    r0,r27,1,15,30
-	  fctiwz    f0, f0
-	  stfd      f0, 0x80(r1)
-	  lwz       r3, 0x84(r1)
-	  sthx      r3, r22, r0
+			mCurrCharWidth = mFont->getWidth(currChar, mCharWidth);
 
-	.loc_0x1AC:
-	  stfs      f28, 0x1C(r20)
-	  addi      r27, r27, 0x1
-	  stfs      f29, 0x18(r20)
-	  lfs       f27, -0x4918(r2)
-	  b         .loc_0x3E4
+			if (mCursorX + mCurrCharWidth - startX > maxWidth && mCursorX > startX) {
+				textBuffer -= (isMultiByteChar) ? 2 : 1;
+				mCursorY += mCharLeading;
+				if (!doDraw && outXPosBuffer) {
+					outXPosBuffer[charNum] = (currLineWidth + 0.5f);
+				}
+				charNum++;
+				mCursorX       = startX;
+				currLineWidth  = 0.0f;
+				isDrawableChar = false;
+			} else {
+				if (doDraw) {
+					if (outXPosBuffer) {
+						f32 x = ((s16*)outXPosBuffer)[charNum] + mCursorX;
+						mFont->drawChar(x, mCursorY, currChar, mCharWidth, mCharHeight);
+					} else {
+						mFont->drawChar(mCursorX, mCursorY, currChar, mCharWidth, mCharHeight);
+					}
+				}
 
-	.loc_0x1C0:
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3E4
-	  li        r25, 0
-	  b         .loc_0x3E4
+				mCursorX += mCurrCharWidth;
+			}
+		}
 
-	.loc_0x1D0:
-	  addi      r3, r20, 0
-	  addi      r4, r26, 0
-	  bl        0xA14
-	  cmpwi     r26, 0xA
-	  li        r25, 0
-	  bne-      .loc_0x3E4
-	  cmplwi    r30, 0
-	  bne-      .loc_0x210
-	  cmplwi    r22, 0
-	  beq-      .loc_0x210
-	  fadds     f0, f30, f27
-	  rlwinm    r0,r27,1,15,30
-	  fctiwz    f0, f0
-	  stfd      f0, 0x80(r1)
-	  lwz       r3, 0x84(r1)
-	  sthx      r3, r22, r0
+		if (isDrawableChar) {
+			if (mCursorX - startX > currLineWidth) {
+				currLineWidth = mCursorX - startX;
+			}
+			mCursorX += mCharSpacing;
+			mCurrCharWidth += mCharSpacing;
+			f32 descent = f32(mCharHeight) / mFont->getHeight() * mFont->getDescent();
+			if (blockHeight < mCursorY + descent) {
+				blockHeight = mCursorY + descent;
+			}
+			if (mCursorX > maxX) {
+				maxX = mCursorX;
+			}
+			if (mCursorX < minX) {
+				minX = mCursorX;
+			}
+			if (mCursorY > maxY) {
+				maxY = mCursorY;
+			}
+			if (mCursorY < minY) {
+				minY = mCursorY;
+			}
+		}
+		currChar = *textBuffer++;
+	}
 
-	.loc_0x210:
-	  stfs      f29, 0x18(r20)
-	  addi      r27, r27, 0x1
-	  lfs       f27, -0x4918(r2)
-	  b         .loc_0x3E4
+	if (outXPosBuffer) {
+		u16 next            = charNum + 1;
+		outXPosBuffer[next] = -1;
+	}
 
-	.loc_0x220:
-	  lwz       r3, 0x0(r20)
-	  li        r19, 0
-	  lhz       r0, 0x4(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x264
-	  lwz       r3, 0xC(r1)
-	  rlwinm    r4,r26,8,0,23
-	  addi      r0, r3, 0x1
-	  stw       r0, 0xC(r1)
-	  lwz       r0, 0xC(r1)
-	  lbz       r3, 0x0(r3)
-	  sub       r0, r0, r28
-	  cmplw     r0, r21
-	  or        r26, r4, r3
-	  bgt+      .loc_0x104
-	  li        r19, 0x1
-	  b         .loc_0x2AC
+	textSize.mTotalWidth      = maxX - minX;
+	textSize.mTotalHeight     = mFont->getLeading() + (maxY - minY);
+	textSize.mWidthFromStart  = maxX - startX;
+	textSize.mHeightFromStart = mFont->getLeading() + (maxY - startY);
+	if (!doDraw) {
+		mCursorX = startX;
+		mCursorY = startY;
+	}
 
-	.loc_0x264:
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x2AC
-	  cmpwi     r26, 0x80
-	  blt-      .loc_0x2AC
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2AC
-	  lwz       r3, 0xC(r1)
-	  rlwinm    r4,r26,8,0,23
-	  addi      r0, r3, 0x1
-	  stw       r0, 0xC(r1)
-	  lwz       r0, 0xC(r1)
-	  lbz       r3, 0x0(r3)
-	  sub       r0, r0, r28
-	  cmplw     r0, r21
-	  or        r26, r4, r3
-	  bgt+      .loc_0x104
-	  li        r19, 0x1
-
-	.loc_0x2AC:
-	  lwz       r3, 0x0(r20)
-	  mr        r4, r26
-	  lwz       r5, 0x50(r20)
-	  bl        0xEB8
-	  stfs      f1, 0x20(r20)
-	  stw       r29, 0x84(r1)
-	  lfs       f1, 0x18(r20)
-	  lfs       f0, 0x20(r20)
-	  stw       r31, 0x80(r1)
-	  fadds     f2, f1, f0
-	  lfd       f0, 0x80(r1)
-	  fsubs     f2, f2, f29
-	  fsubs     f0, f0, f31
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x370
-	  fcmpo     cr0, f1, f29
-	  ble-      .loc_0x370
-	  rlwinm.   r0,r19,0,24,31
-	  beq-      .loc_0x300
-	  li        r3, 0x2
-	  b         .loc_0x304
-
-	.loc_0x300:
-	  li        r3, 0x1
-
-	.loc_0x304:
-	  lwz       r0, 0xC(r1)
-	  cmplwi    r30, 0
-	  sub       r0, r0, r3
-	  stw       r0, 0xC(r1)
-	  lwz       r0, 0x44(r20)
-	  lfs       f1, 0x1C(r20)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x84(r1)
-	  stw       r31, 0x80(r1)
-	  lfd       f0, 0x80(r1)
-	  fsubs     f0, f0, f31
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1C(r20)
-	  bne-      .loc_0x35C
-	  cmplwi    r22, 0
-	  beq-      .loc_0x35C
-	  fadds     f0, f30, f27
-	  rlwinm    r0,r27,1,15,30
-	  fctiwz    f0, f0
-	  stfd      f0, 0x80(r1)
-	  lwz       r3, 0x84(r1)
-	  sthx      r3, r22, r0
-
-	.loc_0x35C:
-	  stfs      f29, 0x18(r20)
-	  li        r25, 0
-	  addi      r27, r27, 0x1
-	  lfs       f27, -0x4918(r2)
-	  b         .loc_0x3E4
-
-	.loc_0x370:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x3D4
-	  cmplwi    r22, 0
-	  beq-      .loc_0x3BC
-	  rlwinm    r0,r27,1,15,30
-	  lwz       r3, 0x0(r20)
-	  lhax      r0, r22, r0
-	  mr        r4, r26
-	  lfs       f2, 0x1C(r20)
-	  xoris     r0, r0, 0x8000
-	  lwz       r5, 0x50(r20)
-	  stw       r0, 0x84(r1)
-	  lwz       r6, 0x54(r20)
-	  stw       r31, 0x80(r1)
-	  lfd       f0, 0x80(r1)
-	  fsubs     f0, f0, f31
-	  fadds     f1, f1, f0
-	  bl        0xE80
-	  b         .loc_0x3D4
-
-	.loc_0x3BC:
-	  lwz       r3, 0x0(r20)
-	  mr        r4, r26
-	  lfs       f2, 0x1C(r20)
-	  lwz       r5, 0x50(r20)
-	  lwz       r6, 0x54(r20)
-	  bl        0xE64
-
-	.loc_0x3D4:
-	  lfs       f1, 0x18(r20)
-	  lfs       f0, 0x20(r20)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r20)
-
-	.loc_0x3E4:
-	  rlwinm.   r0,r25,0,24,31
-	  beq-      .loc_0x4E8
-	  lfs       f0, 0x18(r20)
-	  fsubs     f0, f0, f29
-	  fcmpo     cr0, f0, f27
-	  ble-      .loc_0x400
-	  fmr       f27, f0
-
-	.loc_0x400:
-	  lwz       r0, 0x40(r20)
-	  lfs       f1, 0x18(r20)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x84(r1)
-	  stw       r31, 0x80(r1)
-	  lfd       f0, 0x80(r1)
-	  fsubs     f0, f0, f31
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x18(r20)
-	  lwz       r0, 0x40(r20)
-	  lfs       f1, 0x20(r20)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x7C(r1)
-	  stw       r31, 0x78(r1)
-	  lfd       f0, 0x78(r1)
-	  fsubs     f0, f0, f31
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x20(r20)
-	  lwz       r4, 0x0(r20)
-	  lwz       r0, 0x54(r20)
-	  lwz       r3, 0x0(r4)
-	  xoris     r0, r0, 0x8000
-	  lhz       r4, 0xC(r4)
-	  lwz       r3, 0x8(r3)
-	  stw       r0, 0x74(r1)
-	  xoris     r0, r4, 0x8000
-	  xoris     r3, r3, 0x8000
-	  lfs       f2, 0x1C(r20)
-	  stw       r3, 0x6C(r1)
-	  stw       r31, 0x70(r1)
-	  stw       r31, 0x68(r1)
-	  lfd       f1, 0x70(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f1, f1, f31
-	  stw       r0, 0x64(r1)
-	  fsubs     f0, f0, f31
-	  stw       r31, 0x60(r1)
-	  fdivs     f1, f1, f0
-	  lfd       f0, 0x60(r1)
-	  fsubs     f0, f0, f31
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fcmpo     cr0, f26, f0
-	  bge-      .loc_0x4B4
-	  fmr       f26, f0
-
-	.loc_0x4B4:
-	  lfs       f0, 0x18(r20)
-	  fcmpo     cr0, f0, f24
-	  ble-      .loc_0x4C4
-	  fmr       f24, f0
-
-	.loc_0x4C4:
-	  fcmpo     cr0, f0, f25
-	  bge-      .loc_0x4D0
-	  fmr       f25, f0
-
-	.loc_0x4D0:
-	  fcmpo     cr0, f2, f22
-	  ble-      .loc_0x4DC
-	  fmr       f22, f2
-
-	.loc_0x4DC:
-	  fcmpo     cr0, f2, f23
-	  bge-      .loc_0x4E8
-	  fmr       f23, f2
-
-	.loc_0x4E8:
-	  lwz       r3, 0xC(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0xC(r1)
-	  lbz       r26, 0x0(r3)
-	  b         .loc_0x104
-
-	.loc_0x4FC:
-	  cmplwi    r22, 0
-	  beq-      .loc_0x518
-	  addi      r0, r27, 0x1
-	  lis       r3, 0x1
-	  subi      r3, r3, 0x1
-	  rlwinm    r0,r0,1,15,30
-	  sthx      r3, r22, r0
-
-	.loc_0x518:
-	  fsubs     f1, f24, f25
-	  rlwinm.   r0,r24,0,24,31
-	  lis       r4, 0x4330
-	  fsubs     f4, f22, f23
-	  fsubs     f0, f24, f29
-	  stfs      f1, 0x0(r23)
-	  fsubs     f1, f22, f28
-	  lwz       r3, 0x0(r20)
-	  lfd       f3, -0x4900(r2)
-	  lhz       r0, 0x8(r3)
-	  stw       r0, 0x64(r1)
-	  stw       r4, 0x60(r1)
-	  lfd       f2, 0x60(r1)
-	  fsubs     f2, f2, f3
-	  fadds     f2, f4, f2
-	  stfs      f2, 0x4(r23)
-	  stfs      f0, 0x8(r23)
-	  lwz       r3, 0x0(r20)
-	  lhz       r0, 0x8(r3)
-	  stw       r0, 0x6C(r1)
-	  stw       r4, 0x68(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f0, f0, f3
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r23)
-	  bne-      .loc_0x588
-	  stfs      f29, 0x18(r20)
-	  stfs      f28, 0x1C(r20)
-
-	.loc_0x588:
-	  lmw       r19, 0x8C(r1)
-	  fmr       f1, f26
-	  lwz       r0, 0x114(r1)
-	  lfd       f31, 0x108(r1)
-	  lfd       f30, 0x100(r1)
-	  lfd       f29, 0xF8(r1)
-	  lfd       f28, 0xF0(r1)
-	  lfd       f27, 0xE8(r1)
-	  lfd       f26, 0xE0(r1)
-	  lfd       f25, 0xD8(r1)
-	  lfd       f24, 0xD0(r1)
-	  lfd       f23, 0xC8(r1)
-	  lfd       f22, 0xC0(r1)
-	  addi      r1, r1, 0x110
-	  mtlr      r0
-	  blr
-
-	.loc_0x5C8:
-	*/
+	return blockHeight;
 }
 
 /*
@@ -601,480 +313,115 @@ f32 P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
  * Address:	801B53C4
  * Size:	000624
  */
-u16 P2DPrint::doEscapeCode(const u8** strPtr)
+u16 P2DPrint::doEscapeCode(const u8** textPtr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r3
-	  stw       r30, 0x40(r1)
-	  lwz       r5, 0x0(r4)
-	  lbz       r0, 0x0(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  lbz       r3, 0x1(r5)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x3C
+	const u8* inputStr = *textPtr;
+	if (**textPtr == 0 || *(*textPtr + 1) == 0) {
+		return 0;
+	}
+	u16 code = ((*textPtr)[0] << 8) | (*textPtr)[1];
+	(*textPtr) += 2;
 
-	.loc_0x34:
-	  li        r3, 0
-	  b         .loc_0x60C
+	switch (code) {
+	case 'CU':                                    // cursor up
+		mCursorY -= getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
+		break;
 
-	.loc_0x3C:
-	  rlwinm    r0,r0,8,0,23
-	  or        r0, r0, r3
-	  rlwinm    r30,r0,0,16,31
-	  addi      r0, r5, 0x2
-	  cmpwi     r30, 0x4742
-	  stw       r0, 0x0(r4)
-	  beq-      .loc_0x5F8
-	  bge-      .loc_0xC4
-	  cmpwi     r30, 0x4352
-	  beq-      .loc_0x1E4
-	  bge-      .loc_0x98
-	  cmpwi     r30, 0x4344
-	  beq-      .loc_0x164
-	  bge-      .loc_0x8C
-	  cmpwi     r30, 0x4342
-	  beq-      .loc_0x5F8
-	  bge-      .loc_0x3D8
-	  cmpwi     r30, 0x4341
-	  bge-      .loc_0x2A8
-	  b         .loc_0x5F8
+	case 'CD':                                    // cursor down
+		mCursorY += getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
+		break;
 
-	.loc_0x8C:
-	  cmpwi     r30, 0x434C
-	  beq-      .loc_0x1A4
-	  b         .loc_0x5F8
+	case 'CL':                                    // cursor left
+		mCursorX -= getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
+		break;
 
-	.loc_0x98:
-	  cmpwi     r30, 0x4658
-	  beq-      .loc_0x528
-	  bge-      .loc_0xB0
-	  cmpwi     r30, 0x4355
-	  beq-      .loc_0x124
-	  b         .loc_0x5F8
+	case 'CR':                                    // cursor right
+		mCursorX += getNumber(textPtr, 1, 0, 10); // default 1, 0 if invalid
+		break;
 
-	.loc_0xB0:
-	  cmpwi     r30, 0x4741
-	  bge-      .loc_0x340
-	  cmpwi     r30, 0x465A
-	  bge-      .loc_0x5F8
-	  b         .loc_0x54C
+	case 'LU': // current line up
+		mCursorY -= mCharLeading;
+		break;
 
-	.loc_0xC4:
-	  cmpwi     r30, 0x4C55
-	  beq-      .loc_0x224
-	  bge-      .loc_0x100
-	  cmpwi     r30, 0x484D
-	  beq-      .loc_0x608
-	  bge-      .loc_0xF4
-	  cmpwi     r30, 0x474D
-	  beq-      .loc_0x5A8
-	  bge-      .loc_0x5F8
-	  cmpwi     r30, 0x4744
-	  bge-      .loc_0x5F8
-	  b         .loc_0x480
+	case 'LD': // current line down
+		mCursorY += mCharLeading;
+		break;
 
-	.loc_0xF4:
-	  cmpwi     r30, 0x4C44
-	  beq-      .loc_0x254
-	  b         .loc_0x5F8
+	case 'ST':                                                            // string terminator
+		s32 width = getNumber(textPtr, mCharTabWidth, mCharTabWidth, 10); // default tab, tab if invalid
+		if (width > 0) {
+			mCharTabWidth = width;
+		}
+		break;
 
-	.loc_0x100:
-	  cmpwi     r30, 0x5354
-	  beq-      .loc_0x284
-	  bge-      .loc_0x118
-	  cmpwi     r30, 0x5348
-	  beq-      .loc_0x570
-	  b         .loc_0x5F8
+	case 'CA': { // char color, preserve alpha
+		// set char top colour (default font top colour, no change if invalid format)
+		u32ToColour(getNumber(textPtr, ColourTou32(mFontTopColour), ColourTou32(mCharTopColour), 16), &mCharTopColour);
+		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
+	} break;
 
-	.loc_0x118:
-	  cmpwi     r30, 0x5356
-	  beq-      .loc_0x58C
-	  b         .loc_0x5F8
+	case 'GA': { // grad color, preserve alpha
+		// set char bottom colour (default font bottom colour, no change if invalid format)
+		u32ToColour(getNumber(textPtr, ColourTou32(mFontBottomColour), ColourTou32(mCharBottomColour), 16), &mCharBottomColour);
+		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
+	} break;
 
-	.loc_0x124:
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  li        r6, 0
-	  li        r7, 0xA
-	  bl        0x664
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x4910(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, 0x1C(r31)
-	  stw       r0, 0x38(r1)
-	  lfd       f1, 0x38(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x1C(r31)
-	  b         .loc_0x608
+	case 'CC': { // char color, use font alpha
+		// set char top colour (default font top colour, no change if invalid format)
+		u32ToColour(getNumber(textPtr, ColourTou32(mFontTopColour), ColourTou32(mCharTopColour), 16), &mCharTopColour);
+		u8 alpha            = mFont->getAlpha();
+		mCharTopColour.a    = alpha;
+		mCharBottomColour.a = alpha;
+		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
+	} break;
 
-	.loc_0x164:
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  li        r6, 0
-	  li        r7, 0xA
-	  bl        0x624
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x4910(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, 0x1C(r31)
-	  stw       r0, 0x38(r1)
-	  lfd       f1, 0x38(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x1C(r31)
-	  b         .loc_0x608
+	case 'GC': { // grad color, use font alpha
+		// set char bottom colour (default font bottom colour, no change if invalid format)
+		u32ToColour(getNumber(textPtr, ColourTou32(mFontBottomColour), ColourTou32(mCharBottomColour), 16), &mCharBottomColour);
+		u8 alpha            = mFont->getAlpha();
+		mCharTopColour.a    = alpha;
+		mCharBottomColour.a = alpha;
+		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
+	} break;
 
-	.loc_0x1A4:
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  li        r6, 0
-	  li        r7, 0xA
-	  bl        0x5E4
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x4910(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, 0x18(r31)
-	  stw       r0, 0x38(r1)
-	  lfd       f1, 0x38(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x18(r31)
-	  b         .loc_0x608
+	case 'FX': {                                                    // fix x (change width)
+		int width = getNumber(textPtr, mFontWidth, mCharWidth, 10); // default = font width, invalid = no change
+		if (width >= 0) {
+			mCharWidth = width;
+		}
+	} break;
 
-	.loc_0x1E4:
-	  addi      r3, r31, 0
-	  li        r5, 0x1
-	  li        r6, 0
-	  li        r7, 0xA
-	  bl        0x5A4
-	  xoris     r0, r3, 0x8000
-	  lfd       f2, -0x4910(r2)
-	  stw       r0, 0x3C(r1)
-	  lis       r0, 0x4330
-	  lfs       f0, 0x18(r31)
-	  stw       r0, 0x38(r1)
-	  lfd       f1, 0x38(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x18(r31)
-	  b         .loc_0x608
+	case 'FY':                                                         // fix y (change height)
+		int height = getNumber(textPtr, mFontHeight, mCharHeight, 10); // default = font height, invalid = no change
+		if (height >= 0) {
+			mCharHeight = height;
+		}
+		break;
 
-	.loc_0x224:
-	  lwz       r3, 0x44(r31)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x4910(r2)
-	  xoris     r3, r3, 0x8000
-	  lfs       f2, 0x1C(r31)
-	  stw       r3, 0x3C(r1)
-	  stw       r0, 0x38(r1)
-	  lfd       f0, 0x38(r1)
-	  fsubs     f0, f0, f1
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x1C(r31)
-	  b         .loc_0x608
+	case 'SH':                                                             // scale horizontal
+		mCharSpacing = getNumber(textPtr, mFontSpacing, mCharSpacing, 10); // default = font spacing, invalid = no change
+		break;
 
-	.loc_0x254:
-	  lwz       r3, 0x44(r31)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x4910(r2)
-	  xoris     r3, r3, 0x8000
-	  lfs       f2, 0x1C(r31)
-	  stw       r3, 0x3C(r1)
-	  stw       r0, 0x38(r1)
-	  lfd       f0, 0x38(r1)
-	  fsubs     f0, f0, f1
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x1C(r31)
-	  b         .loc_0x608
+	case 'SV':                                                             // scale vertical
+		mCharLeading = getNumber(textPtr, mFontLeading, mCharLeading, 10); // default = font leading, invalid = no change
+		break;
 
-	.loc_0x284:
-	  lwz       r5, 0x4C(r31)
-	  addi      r3, r31, 0
-	  li        r7, 0xA
-	  addi      r6, r5, 0
-	  bl        0x504
-	  cmpwi     r3, 0
-	  ble-      .loc_0x608
-	  stw       r3, 0x4C(r31)
-	  b         .loc_0x608
+	case 'GM': { // gradient marker? switch gradient on/off
+		mCharGradientActive
+		    = getNumber(textPtr, !mCharGradientActive, mCharGradientActive, 10) != 0; // default = switch to opposite, invalid = no change
+		mFont->setGradColor(mCharTopColour, (mCharGradientActive) ? mCharBottomColour : mCharTopColour);
+	} break;
 
-	.loc_0x2A8:
-	  lbz       r6, 0x25(r31)
-	  mr        r3, r31
-	  lbz       r0, 0x29(r31)
-	  lbz       r9, 0x24(r31)
-	  rlwinm    r6,r6,16,0,15
-	  lbz       r5, 0x28(r31)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r10, 0x26(r31)
-	  rlwimi    r6,r9,24,0,7
-	  lbz       r7, 0x2A(r31)
-	  rlwimi    r0,r5,24,0,7
-	  lbz       r11, 0x27(r31)
-	  rlwimi    r6,r10,8,16,23
-	  lbz       r8, 0x2B(r31)
-	  rlwimi    r0,r7,8,16,23
-	  or        r6, r11, r6
-	  or        r5, r8, r0
-	  li        r7, 0x10
-	  bl        0x4A8
-	  stw       r3, 0x2C(r1)
-	  lbz       r5, 0x2F(r1)
-	  lbz       r4, 0x2E(r1)
-	  lbz       r3, 0x2D(r1)
-	  lbz       r0, 0x2C(r1)
-	  stb       r0, 0x24(r31)
-	  stb       r3, 0x25(r31)
-	  stb       r4, 0x26(r31)
-	  stb       r5, 0x27(r31)
-	  lbz       r0, 0x48(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x32C
-	  addi      r5, r31, 0x2C
-	  b         .loc_0x330
+	case 'HM': // ??
+		break;
 
-	.loc_0x32C:
-	  addi      r5, r31, 0x24
+	default:
+		(*textPtr) -= 2; // reset string
+		code = 0;
+		break;
+	}
 
-	.loc_0x330:
-	  lwz       r3, 0x0(r31)
-	  addi      r4, r31, 0x24
-	  bl        0x84C
-	  b         .loc_0x608
-
-	.loc_0x340:
-	  lbz       r6, 0x2D(r31)
-	  mr        r3, r31
-	  lbz       r0, 0x31(r31)
-	  lbz       r9, 0x2C(r31)
-	  rlwinm    r6,r6,16,0,15
-	  lbz       r5, 0x30(r31)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r10, 0x2E(r31)
-	  rlwimi    r6,r9,24,0,7
-	  lbz       r7, 0x32(r31)
-	  rlwimi    r0,r5,24,0,7
-	  lbz       r11, 0x2F(r31)
-	  rlwimi    r6,r10,8,16,23
-	  lbz       r8, 0x33(r31)
-	  rlwimi    r0,r7,8,16,23
-	  or        r6, r11, r6
-	  or        r5, r8, r0
-	  li        r7, 0x10
-	  bl        0x410
-	  stw       r3, 0x28(r1)
-	  lbz       r5, 0x2B(r1)
-	  lbz       r4, 0x2A(r1)
-	  lbz       r3, 0x29(r1)
-	  lbz       r0, 0x28(r1)
-	  stb       r0, 0x2C(r31)
-	  stb       r3, 0x2D(r31)
-	  stb       r4, 0x2E(r31)
-	  stb       r5, 0x2F(r31)
-	  lbz       r0, 0x48(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C4
-	  addi      r5, r31, 0x2C
-	  b         .loc_0x3C8
-
-	.loc_0x3C4:
-	  addi      r5, r31, 0x24
-
-	.loc_0x3C8:
-	  lwz       r3, 0x0(r31)
-	  addi      r4, r31, 0x24
-	  bl        0x7B4
-	  b         .loc_0x608
-
-	.loc_0x3D8:
-	  lbz       r6, 0x25(r31)
-	  mr        r3, r31
-	  lbz       r0, 0x29(r31)
-	  lbz       r9, 0x24(r31)
-	  rlwinm    r6,r6,16,0,15
-	  lbz       r5, 0x28(r31)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r10, 0x26(r31)
-	  rlwimi    r6,r9,24,0,7
-	  lbz       r7, 0x2A(r31)
-	  rlwimi    r0,r5,24,0,7
-	  lbz       r11, 0x27(r31)
-	  rlwimi    r6,r10,8,16,23
-	  lbz       r8, 0x2B(r31)
-	  rlwimi    r0,r7,8,16,23
-	  or        r6, r11, r6
-	  or        r5, r8, r0
-	  li        r7, 0x10
-	  bl        0x378
-	  stw       r3, 0x24(r1)
-	  lbz       r5, 0x27(r1)
-	  lbz       r4, 0x26(r1)
-	  lbz       r3, 0x25(r1)
-	  lbz       r0, 0x24(r1)
-	  stb       r0, 0x24(r31)
-	  stb       r3, 0x25(r31)
-	  stb       r4, 0x26(r31)
-	  stb       r5, 0x27(r31)
-	  lwz       r3, 0x0(r31)
-	  lbz       r0, 0x11(r3)
-	  stb       r0, 0x27(r31)
-	  stb       r0, 0x2F(r31)
-	  lbz       r0, 0x48(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x46C
-	  addi      r5, r31, 0x2C
-	  b         .loc_0x470
-
-	.loc_0x46C:
-	  addi      r5, r31, 0x24
-
-	.loc_0x470:
-	  lwz       r3, 0x0(r31)
-	  addi      r4, r31, 0x24
-	  bl        0x70C
-	  b         .loc_0x608
-
-	.loc_0x480:
-	  lbz       r6, 0x2D(r31)
-	  mr        r3, r31
-	  lbz       r0, 0x31(r31)
-	  lbz       r9, 0x2C(r31)
-	  rlwinm    r6,r6,16,0,15
-	  lbz       r5, 0x30(r31)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r10, 0x2E(r31)
-	  rlwimi    r6,r9,24,0,7
-	  lbz       r7, 0x32(r31)
-	  rlwimi    r0,r5,24,0,7
-	  lbz       r11, 0x2F(r31)
-	  rlwimi    r6,r10,8,16,23
-	  lbz       r8, 0x33(r31)
-	  rlwimi    r0,r7,8,16,23
-	  or        r6, r11, r6
-	  or        r5, r8, r0
-	  li        r7, 0x10
-	  bl        0x2D0
-	  stw       r3, 0x1C(r1)
-	  lbz       r5, 0x1F(r1)
-	  lbz       r4, 0x1E(r1)
-	  lbz       r3, 0x1D(r1)
-	  lbz       r0, 0x1C(r1)
-	  stb       r0, 0x2C(r31)
-	  stb       r3, 0x2D(r31)
-	  stb       r4, 0x2E(r31)
-	  stb       r5, 0x2F(r31)
-	  lwz       r3, 0x0(r31)
-	  lbz       r0, 0x11(r3)
-	  stb       r0, 0x27(r31)
-	  stb       r0, 0x2F(r31)
-	  lbz       r0, 0x48(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x514
-	  addi      r5, r31, 0x2C
-	  b         .loc_0x518
-
-	.loc_0x514:
-	  addi      r5, r31, 0x24
-
-	.loc_0x518:
-	  lwz       r3, 0x0(r31)
-	  addi      r4, r31, 0x24
-	  bl        0x664
-	  b         .loc_0x608
-
-	.loc_0x528:
-	  lwz       r5, 0x38(r31)
-	  mr        r3, r31
-	  lwz       r6, 0x50(r31)
-	  li        r7, 0xA
-	  bl        0x260
-	  cmpwi     r3, 0
-	  blt-      .loc_0x608
-	  stw       r3, 0x50(r31)
-	  b         .loc_0x608
-
-	.loc_0x54C:
-	  lwz       r5, 0x3C(r31)
-	  mr        r3, r31
-	  lwz       r6, 0x54(r31)
-	  li        r7, 0xA
-	  bl        0x23C
-	  cmpwi     r3, 0
-	  blt-      .loc_0x608
-	  stw       r3, 0x54(r31)
-	  b         .loc_0x608
-
-	.loc_0x570:
-	  lwz       r5, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r6, 0x40(r31)
-	  li        r7, 0xA
-	  bl        0x218
-	  stw       r3, 0x40(r31)
-	  b         .loc_0x608
-
-	.loc_0x58C:
-	  lwz       r5, 0x8(r31)
-	  mr        r3, r31
-	  lwz       r6, 0x44(r31)
-	  li        r7, 0xA
-	  bl        0x1FC
-	  stw       r3, 0x44(r31)
-	  b         .loc_0x608
-
-	.loc_0x5A8:
-	  lbz       r6, 0x48(r31)
-	  addi      r3, r31, 0
-	  li        r7, 0xA
-	  cntlzw    r0, r6
-	  rlwinm    r5,r0,27,24,31
-	  bl        0x1DC
-	  neg       r3, r3
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x48(r31)
-	  lbz       r0, 0x48(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5E4
-	  addi      r5, r31, 0x2C
-	  b         .loc_0x5E8
-
-	.loc_0x5E4:
-	  addi      r5, r31, 0x24
-
-	.loc_0x5E8:
-	  lwz       r3, 0x0(r31)
-	  addi      r4, r31, 0x24
-	  bl        0x594
-	  b         .loc_0x608
-
-	.loc_0x5F8:
-	  lwz       r3, 0x0(r4)
-	  li        r30, 0
-	  subi      r0, r3, 0x2
-	  stw       r0, 0x0(r4)
-
-	.loc_0x608:
-	  mr        r3, r30
-
-	.loc_0x60C:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	return code;
 }
 
 /*
@@ -1086,44 +433,44 @@ void P2DPrint::doCtrlCode(int inputChar)
 {
 	switch (inputChar) {
 	case 0x8: // backspace
-		_18 -= _20;
-		_20 = 0.0f;
+		mCursorX -= mCurrCharWidth;
+		mCurrCharWidth = 0.0f;
 		break;
 
 	case 0x9: // horizontal tab
-		int width = _4C;
+		int width = mCharTabWidth;
 		if (width > 0) {
-			f32 oldX = _18;
-			_18      = f32(width + width * ((int)_18 / width));
-			_20      = _18 - oldX;
+			f32 oldX       = mCursorX;
+			mCursorX       = f32(width + width * ((int)mCursorX / width));
+			mCurrCharWidth = mCursorX - oldX;
 		}
 		break;
 
 	case 0xA: // line feed
-		_20 = 0.0f;
-		_18 = _10;
-		_1C = _1C + _44;
+		mCurrCharWidth = 0.0f;
+		mCursorX       = mInitX;
+		mCursorY       = mCursorY + mCharLeading;
 		break;
 
 	case 0xD: // carriage return
-		_20 = 0.0f;
-		_18 = _10;
+		mCurrCharWidth = 0.0f;
+		mCursorX       = mInitX;
 		break;
 
 	case 0x1C: // file separator
-		_18 += 1.0f;
+		mCursorX += 1.0f;
 		break;
 
 	case 0x1D: // group separator
-		_18 -= 1.0f;
+		mCursorX -= 1.0f;
 		break;
 
 	case 0x1E: // record separator
-		_1C -= 1.0f;
+		mCursorY -= 1.0f;
 		break;
 
 	case 0x1F: // unit separator
-		_1C += 1.0f;
+		mCursorY += 1.0f;
 		break;
 	}
 }
@@ -1133,46 +480,50 @@ void P2DPrint::doCtrlCode(int inputChar)
  * Address:	801B5B5C
  * Size:	000108
  */
-s32 P2DPrint::getNumber(const u8** strPtr, s32 min, s32 max, int base)
+s32 P2DPrint::getNumber(const u8** strPtr, s32 defaultValue, s32 invalidValue, int base)
 {
 	const u8* inputStr = *strPtr;
-	s32 value          = min;
+	s32 value          = defaultValue;
 
 	// number needs to be enclosed with []s to be valid
 	if (*inputStr != (u32)'[') {
-		return min;
+		return defaultValue;
 	}
 
 	(*strPtr)++;
 	value = 0;
 	char* endStr;
 
-	if (base == 10) { // base 10, do as signed
+	if (base == 10) { // base 10, we're expecting a straight value
 		value = strtol((char*)*strPtr, &endStr, base);
 
-	} else if (base == 16) { // base 16, do as unsigned
+	} else if (base == 16) { // base 16, we're expecting a colour, either as rgb or rgba
 		value = strtoul((char*)*strPtr, &endStr, base);
 
+		// RBGA is valid length 8 format.
 		if ((u32)endStr - (u32)*strPtr != 8) {
+			// only other valid format is RGB, length 6.
 			if ((u32)endStr - (u32)*strPtr == 6) {
-				value = (value << 8) | 255;
+				value = (value << 8) | 0xFF; // set alpha to max
 			} else {
+				// invalid format!
 				*strPtr = inputStr;
-				return max;
+				return invalidValue;
 			}
 		}
 	}
 
 	// number needs to be enclosed with []s to be valid
 	if (endStr[0] != (u32)']') {
+		// invalid format!
 		*strPtr = inputStr;
-		return max;
+		return invalidValue;
 	}
 
 	// no number found, string didn't change
 	if ((char*)*strPtr == (char*)endStr) {
 		// *strPtr = (const u8*)endStr + 1; // advance string
-		value = min;
+		value = defaultValue;
 	}
 
 	*strPtr = (const u8*)endStr + 1; // advance string past number (and brackets)
