@@ -449,7 +449,7 @@ config.libs = [
             Object(NonMatching, "plugPikiColin/gauges.cpp"),
             Object(NonMatching, "plugPikiColin/genMapObject.cpp"),
             Object(NonMatching, "plugPikiColin/gui.cpp"),
-            Object(NonMatching, "plugPikiColin/parameters.cpp"),
+            Object(Matching, "plugPikiColin/parameters.cpp"),
             Object(NonMatching, "plugPikiColin/plugPiki.cpp"),
             Object(NonMatching, "plugPikiColin/titles.cpp"),
             Object(Matching, "plugPikiColin/ninLogo.cpp"),

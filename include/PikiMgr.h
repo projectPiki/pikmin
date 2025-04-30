@@ -33,7 +33,7 @@ enum PikiMgrUpdatingFlags {
  * @brief TODO
  */
 struct PikiProp : public CreatureProp {
-	PikiProp() { mCreatureProps.mFriction.setValue(0.1f); }
+	PikiProp() { mCreatureProps.mFriction(0.1f); }
 
 	/**
 	 * @brief TODO
