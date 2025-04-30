@@ -1,4 +1,16 @@
 #include "zen/ogSave.h"
+#include "P2D/Screen.h"
+#include "P2D/Picture.h"
+#include "P2D/TextBox.h"
+#include "P2D/Graph.h"
+#include "zen/ogFileChkSel.h"
+#include "zen/DrawSave.h"
+#include "zen/ogMemChk.h"
+#include "zen/ogNitaku.h"
+#include "zen/ogSub.h"
+#include "SoundMgr.h"
+#include "sysNew.h"
+#include "gameflow.h"
 #include "DebugLog.h"
 
 /*
@@ -13,7 +25,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("OgSaveSection")
 
 /*
  * --INFO--
@@ -22,496 +34,71 @@ DEFINE_PRINT("TODO: Replace")
  */
 zen::ogSaveMgr::ogSaveMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE0(r1)
-	  stw       r31, 0xDC(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0xD8(r1)
-	  stw       r29, 0xD4(r1)
-	  li        r29, 0
-	  stw       r28, 0xD0(r1)
-	  stw       r29, 0x90(r3)
-	  lis       r3, 0x802D
-	  addi      r30, r3, 0x6070
-	  stb       r29, 0x30(r31)
-	  li        r3, 0xF8
-	  bl        -0x14E774
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x98
-	  addi      r3, r1, 0xC8
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x1DE8C
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0xC8
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x1B210
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  stb       r29, 0xEC(r28)
-	  stw       r29, 0xF0(r28)
-	  stw       r29, 0xF4(r28)
+	_30     = 0;
+	mScreen = new P2DScreen;
+	mScreen->set("screen/blo/ac_save.blo", true, true, true);
+	mStatus = Status_NULL;
 
-	.loc_0x98:
-	  stw       r28, 0x8(r31)
-	  addi      r4, r30, 0x1C
-	  li        r5, 0x1
-	  lwz       r3, 0x8(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x1D410
-	  li        r0, -0x1
-	  stw       r0, 0x0(r31)
-	  lis       r29, 0x6865
-	  addi      r4, r29, 0x3030
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x34(r31)
-	  addi      r4, r29, 0x3031
-	  li        r5, 0x1
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x38(r31)
-	  lis       r29, 0x6873
-	  addi      r4, r29, 0x3030
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3C(r31)
-	  addi      r4, r29, 0x3031
-	  li        r5, 0x1
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x40(r31)
-	  lis       r3, 0x7365
-	  addi      r4, r3, 0x5F63
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x4C(r31)
-	  lis       r3, 0x6261
-	  addi      r4, r3, 0x636B
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x70(r31)
-	  lis       r29, 0x7361
-	  addi      r4, r29, 0x5F63
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x50(r31)
-	  addi      r4, r29, 0x5F73
-	  li        r5, 0x1
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x54(r31)
-	  addi      r4, r29, 0x6B63
-	  li        r5, 0x1
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x58(r31)
-	  addi      r4, r29, 0x6B73
-	  li        r5, 0x1
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x5C(r31)
-	  lis       r3, 0x3177
-	  li        r29, 0x1
-	  lwz       r6, 0x34(r31)
-	  li        r0, 0
-	  addi      r4, r3, 0x696E
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  li        r5, 0x1
-	  stb       r3, 0xC(r6)
-	  lwz       r6, 0x38(r31)
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  stb       r3, 0xC(r6)
-	  lwz       r6, 0x3C(r31)
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  stb       r3, 0xC(r6)
-	  lwz       r6, 0x40(r31)
-	  lbz       r3, 0xC(r6)
-	  rlwimi    r3,r29,7,24,24
-	  stb       r3, 0xC(r6)
-	  lwz       r3, 0x70(r31)
-	  stb       r0, 0xF0(r3)
-	  lwz       r3, 0x8(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x78(r31)
-	  li        r3, 0xC4
-	  lwz       r4, 0x78(r31)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r29,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r6, 0x78(r31)
-	  lha       r4, 0x18(r6)
-	  lha       r0, 0x1C(r6)
-	  lha       r5, 0x1A(r6)
-	  sub       r0, r0, r4
-	  lha       r4, 0x1E(r6)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r5, r4, r5
-	  extsh     r4, r0
-	  srawi     r0, r5, 0x1
-	  sth       r4, 0xB8(r6)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r6)
-	  lfs       f1, -0x4DC8(r2)
-	  lwz       r4, 0x78(r31)
-	  fmr       f0, f1
-	  stfs      f1, 0xC0(r4)
-	  stfs      f1, 0xC4(r4)
-	  stfs      f0, 0xC8(r4)
-	  bl        -0x14EA28
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x318
-	  lwz       r4, 0x8(r31)
-	  li        r8, 0x1
-	  lwz       r5, 0x34(r31)
-	  li        r9, 0x1
-	  lwz       r6, 0x38(r31)
-	  lwz       r7, 0x4C(r31)
-	  bl        0xE10
+	_34 = (P2DTextBox*)mScreen->search('he00', true);
+	_38 = (P2DTextBox*)mScreen->search('he01', true);
+	_3C = mScreen->search('hs00', true);
+	_40 = mScreen->search('hs01', true);
+	_4C = (P2DTextBox*)mScreen->search('se_c', true);
+	_70 = (P2DPicture*)mScreen->search('back', true);
+	_50 = (P2DTextBox*)mScreen->search('sa_c', true);
+	_54 = (P2DTextBox*)mScreen->search('sa_s', true);
+	_58 = mScreen->search('sakc', true);
+	_5C = mScreen->search('saks', true);
 
-	.loc_0x318:
-	  stw       r28, 0x18(r31)
-	  lis       r3, 0x6368
-	  addi      r4, r3, 0x7569
-	  lwz       r3, 0x8(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x80(r31)
-	  li        r5, 0x1
-	  li        r3, 0x20
-	  lwz       r4, 0x80(r31)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r6, 0x80(r31)
-	  lha       r4, 0x18(r6)
-	  lha       r0, 0x1C(r6)
-	  lha       r5, 0x1A(r6)
-	  sub       r0, r0, r4
-	  lha       r4, 0x1E(r6)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r5, r4, r5
-	  extsh     r4, r0
-	  srawi     r0, r5, 0x1
-	  sth       r4, 0xB8(r6)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r6)
-	  lfs       f1, -0x4DC8(r2)
-	  lwz       r4, 0x80(r31)
-	  fmr       f0, f1
-	  stfs      f1, 0xC0(r4)
-	  stfs      f1, 0xC4(r4)
-	  stfs      f0, 0xC8(r4)
-	  bl        -0x14EAE8
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x3C8
-	  lwz       r4, 0x50(r31)
-	  lbz       r5, 0xF7(r4)
-	  bl        -0x16064
+	_34->show();
+	_38->show();
+	_3C->show();
+	_40->show();
+	_70->setAlpha(0);
+	_78 = mScreen->search('1win', true);
+	_78->show();
+	_78->setOffset(_78->getWidth() / 2, _78->getHeight() / 2);
+	_78->setScale(0.0f);
 
-	.loc_0x3C8:
-	  stw       r28, 0x60(r31)
-	  li        r3, 0x20
-	  bl        -0x14EB0C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x3EC
-	  lwz       r4, 0x54(r31)
-	  lbz       r5, 0xF7(r4)
-	  bl        -0x16088
+	_18 = new ogNitakuMgr(mScreen, _34, _38, _4C, true, true);
 
-	.loc_0x3EC:
-	  stw       r28, 0x64(r31)
-	  li        r3, 0x20
-	  bl        -0x14EB30
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x410
-	  lwz       r4, 0x58(r31)
-	  li        r5, 0xFF
-	  bl        -0x160AC
+	_80 = mScreen->search('chui', true);
+	_80->show();
+	_80->setOffset(_80->getWidth() / 2, _80->getHeight() / 2);
+	_80->setScale(0.0f);
 
-	.loc_0x410:
-	  stw       r28, 0x68(r31)
-	  li        r3, 0x20
-	  bl        -0x14EB54
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x434
-	  lwz       r4, 0x5C(r31)
-	  li        r5, 0xFF
-	  bl        -0x160D0
+	_60 = new ogFadeMgr(_50, _50->getAlphaChar());
+	_64 = new ogFadeMgr(_54, _54->getAlphaChar());
+	_68 = new ogFadeMgr(_58, 255);
+	_6C = new ogFadeMgr(_5C, 255);
 
-	.loc_0x434:
-	  stw       r28, 0x6C(r31)
-	  li        r3, 0xF8
-	  bl        -0x14EB78
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x4A0
-	  addi      r3, r1, 0x7C
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x1DA88
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x7C
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x1AE0C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
+	_24 = new P2DScreen;
+	_24->set("screen/blo/black.blo", false, false, true);
+	_28 = (P2DPicture*)_24->search('blck', true);
+	_28->setAlpha(255);
 
-	.loc_0x4A0:
-	  stw       r28, 0x24(r31)
-	  addi      r4, r30, 0x34
-	  li        r5, 0
-	  lwz       r3, 0x24(r31)
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        0x1D008
-	  lwz       r3, 0x24(r31)
-	  lis       r4, 0x626C
-	  addi      r4, r4, 0x636B
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x28(r31)
-	  li        r0, 0xFF
-	  li        r3, 0xF8
-	  lwz       r4, 0x28(r31)
-	  stb       r0, 0xF0(r4)
-	  bl        -0x14EC2C
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x554
-	  addi      r3, r1, 0x70
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x1D9D4
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x70
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x1AD58
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
+	_0C = new P2DScreen;
+	_0C->set("screen/blo/ac_save2.blo", true, true, true);
+	_44 = (P2DTextBox*)_0C->search('he00', true);
+	_48 = (P2DTextBox*)_0C->search('he01', true);
 
-	.loc_0x554:
-	  stw       r28, 0xC(r31)
-	  addi      r4, r30, 0x4C
-	  li        r5, 0x1
-	  lwz       r3, 0xC(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x1CF54
-	  lwz       r3, 0xC(r31)
-	  lis       r30, 0x6865
-	  addi      r4, r30, 0x3030
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x44(r31)
-	  addi      r4, r30, 0x3031
-	  li        r5, 0x1
-	  lwz       r3, 0xC(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x48(r31)
-	  lis       r3, 0x3277
-	  addi      r4, r3, 0x696E
-	  lwz       r3, 0xC(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x7C(r31)
-	  lis       r3, 0x6261
-	  li        r7, 0x1
-	  lwz       r6, 0x7C(r31)
-	  addi      r4, r3, 0x636B
-	  li        r5, 0x1
-	  lbz       r0, 0xC(r6)
-	  rlwimi    r0,r7,7,24,24
-	  stb       r0, 0xC(r6)
-	  lwz       r7, 0x7C(r31)
-	  lha       r3, 0x18(r7)
-	  lha       r0, 0x1C(r7)
-	  lha       r6, 0x1A(r7)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r7)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r6, r3, r6
-	  extsh     r3, r0
-	  srawi     r0, r6, 0x1
-	  sth       r3, 0xB8(r7)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r7)
-	  lfs       f1, -0x4DC8(r2)
-	  lwz       r3, 0x7C(r31)
-	  fmr       f0, f1
-	  stfs      f1, 0xC0(r3)
-	  stfs      f1, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r3, 0xC(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x74(r31)
-	  li        r0, 0
-	  li        r3, 0xC4
-	  lwz       r4, 0x74(r31)
-	  stb       r0, 0xF0(r4)
-	  bl        -0x14EDB0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6A0
-	  lwz       r4, 0xC(r31)
-	  li        r8, 0x1
-	  lwz       r5, 0x44(r31)
-	  li        r9, 0x1
-	  lwz       r6, 0x48(r31)
-	  lwz       r7, 0x4C(r31)
-	  bl        0xA88
+	_7C = _0C->search('2win', true);
+	_7C->show();
+	_7C->setOffset(_7C->getWidth() / 2, _7C->getHeight() / 2);
+	_7C->setScale(0.0f);
 
-	.loc_0x6A0:
-	  stw       r28, 0x1C(r31)
-	  li        r3, 0x10C
-	  bl        -0x14EDE4
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6BC
-	  bl        -0x8DAC
+	_74 = (P2DPicture*)_0C->search('back', true);
+	_74->setAlpha(0);
 
-	.loc_0x6BC:
-	  stw       r28, 0x20(r31)
-	  li        r3, 0x18
-	  bl        -0x14EE00
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6D8
-	  bl        0x5D74C
+	_1C          = new ogNitakuMgr(_0C, _44, _48, _4C, true, true);
+	mMemCheckMgr = new ogScrMemChkMgr;
+	mSaveFail    = new DrawSaveFailure;
+	mSaveFail->init();
+	_84 = new ogScrFileChkSelMgr;
 
-	.loc_0x6D8:
-	  stw       r28, 0x2C(r31)
-	  lwz       r3, 0x2C(r31)
-	  bl        0x5DB80
-	  li        r3, 0x18
-	  bl        -0x14EE24
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6FC
-	  bl        -0x28A4
-
-	.loc_0x6FC:
-	  stw       r28, 0x84(r31)
-	  li        r4, -0x1
-	  li        r0, 0
-	  lfs       f0, -0x4DC8(r2)
-	  mr        r3, r31
-	  stfs      f0, 0x10(r31)
-	  stw       r4, 0x4(r31)
-	  sth       r0, 0x14(r31)
-	  lwz       r0, 0xE4(r1)
-	  lwz       r31, 0xDC(r1)
-	  lwz       r30, 0xD8(r1)
-	  lwz       r29, 0xD4(r1)
-	  lwz       r28, 0xD0(r1)
-	  addi      r1, r1, 0xE0
-	  mtlr      r0
-	  blr
-	*/
+	_10 = 0.0f;
+	_04 = Status_NULL;
+	_14 = 0;
 }
 
 /*
@@ -521,57 +108,19 @@ zen::ogSaveMgr::ogSaveMgr()
  */
 void zen::ogSaveMgr::start()
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0x1
-	  stw       r6, 0x0(r3)
-	  li        r5, 0
-	  lfs       f0, -0x4DC8(r2)
-	  stfs      f0, 0x10(r3)
-	  lwz       r4, 0x78(r3)
-	  stfs      f0, 0xC0(r4)
-	  stfs      f0, 0xC4(r4)
-	  stfs      f0, 0xC8(r4)
-	  lwz       r4, 0x78(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x7C(r3)
-	  stfs      f0, 0xC0(r4)
-	  stfs      f0, 0xC4(r4)
-	  stfs      f0, 0xC8(r4)
-	  lwz       r4, 0x7C(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x34(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x38(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x3C(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x40(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x50(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x54(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r3, 0x70(r3)
-	  stb       r5, 0xF0(r3)
-	  blr
-	*/
+	mStatus = Status_1;
+	_10     = 0.0f;
+	_78->setScale(0.0f);
+	_78->show();
+	_7C->setScale(0.0f);
+	_7C->show();
+	_34->show();
+	_38->show();
+	_3C->show();
+	_40->show();
+	_50->hide();
+	_54->hide();
+	_70->setAlpha(0);
 }
 
 /*
@@ -579,8 +128,12 @@ void zen::ogSaveMgr::start()
  * Address:	........
  * Size:	000138
  */
-void zen::ogSaveMgr::startDirectSave(s16)
+void zen::ogSaveMgr::startDirectSave(s16 state)
 {
+	start();
+	mStatus = Status_3;
+	_10     = 0.0f;
+	_32     = state;
 	// UNUSED FUNCTION
 }
 
@@ -589,8 +142,235 @@ void zen::ogSaveMgr::startDirectSave(s16)
  * Address:	80195F3C
  * Size:	000834
  */
-zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller*)
+zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 {
+	if (mStatus == Status_NULL) {
+		return mStatus;
+	}
+
+	if (mStatus >= 12) {
+		mStatus = Status_NULL;
+		return mStatus;
+	}
+
+	_24->update();
+	bool savefail = mSaveFail->update(input);
+	if (savefail == false) {
+		return mStatus;
+	}
+
+	zen::ogScrFileChkSelMgr::returnStatusFlag res = _84->update(input, _88);
+	if (res == 0) {
+		gameflow.mPlayState.mCourseOpenFlags = _88._04[0];
+		gameflow.mPlayState.mCourseOpenFlags = _88.mIndex + 1;
+		mStatus                              = Status_3;
+		_10                                  = 0.0f;
+		_30                                  = 0;
+	} else if (res == 5) {
+		mStatus = Status_0;
+		_30     = 0;
+		return mStatus;
+	} else if (res == 1) {
+		mStatus = Status_0;
+		_30     = 0;
+		return mStatus;
+	} else if (res != -1) {
+		_30 = 1;
+		return mStatus;
+	}
+
+	zen::ogScrMemChkMgr::MemChkStatus res2 = mMemCheckMgr->update(input);
+	if (res2 == 21) {
+		_84->startSave();
+		_30     = 1;
+		mStatus = Status_3;
+		_10     = 0.0f;
+	} else if (res2 == 20) {
+		mStatus = Status_0;
+		return mStatus;
+	} else if (res2 == 19) {
+		mStatus = Status_0;
+		return mStatus;
+	} else if (res2 != -1) {
+		return mStatus;
+	}
+
+	_10 += gsys->getFrameTime();
+	mScreen->update();
+	int nikatu1 = _18->update(input);
+	_0C->update();
+	int nikatu2 = _1C->update(input);
+	_60->update();
+	_64->update();
+	_68->update();
+	_6C->update();
+
+	switch (mStatus) {
+	case Status_0:
+		if (nikatu1 == 5) {
+			mStatus = Status_4;
+			_10     = 0.0f;
+			_34->hide();
+			_38->hide();
+			_3C->show();
+			_40->show();
+			_50->show();
+			_54->show();
+			_60->start(ogFadeMgr::Status_1, 0.25f);
+			_68->start(ogFadeMgr::Status_1, 0.25f);
+			if (gameflow.mMemoryCard.hasCardChanged()) {
+				PRINT("#############################\n");
+				PRINT("#      NOT SAME FILE        #\n");
+				PRINT("#############################\n");
+				mMemCheckMgr->start();
+				if (mMemCheckMgr->update(input) == 21) {
+					_84->startSave();
+					mStatus = Status_3;
+					_10     = 0.0f;
+				}
+			} else {
+				PRINT("#############################\n");
+				PRINT("#         SAME FILE         #\n");
+				PRINT("#############################\n");
+			}
+		} else if (nikatu1 == 6) {
+			mStatus = Status_7;
+			_10     = 0.0f;
+		} else if (nikatu1 == 4) {
+			seSystem->playSysSe(SYSSE_CANCEL);
+			_04     = Status_7;
+			mStatus = Status_2;
+			_10     = 0.0f;
+		}
+		break;
+	case Status_1:
+		if (_10 > 0.25f) {
+			_78->setScale(1.0f);
+			_18->start();
+		} else {
+			_78->setScale(_10 / 0.25f);
+			_70->setAlpha(_10 * _4C->getAlphaChar());
+		}
+		break;
+	case Status_2:
+		if (_10 > 0.25f) {
+			mStatus = _04;
+			_78->setScale(1.0f);
+		} else {
+			_78->setScale(1.0f - (_10 / 0.25f));
+			_70->setAlpha(_10 * _4C->getAlphaChar());
+		}
+		break;
+	case Status_3:
+		if (_10 > 0.25f) {
+			mStatus = Status_4;
+			_10     = 0.0f;
+			_78->setScale(1.0f);
+			_50->show();
+			_54->show();
+			_60->start(ogFadeMgr::Status_1, 0.25f);
+			_68->start(ogFadeMgr::Status_1, 0.25f);
+			PRINT("######################\n");
+			PRINT("##\tSAVE to (%d)   ##\n", _32);
+			PRINT("######################\n");
+		} else {
+			_78->setScale(1.0f - (_10 / 0.25f));
+			_70->setAlpha(_10 * _4C->getAlphaChar());
+		}
+		break;
+	case Status_4:
+		if (_10 > 0.25f) {
+			f32 scale = _10 * 3.0f;
+			if (scale > 1.0f) {
+				scale = 1.0f;
+			}
+			_80->setScale(scale);
+		} else {
+			mStatus = Status_5;
+			_10     = 0.0f;
+			seSystem->playSysSe(SYSSE_CARDACCESS);
+			gameflow.mMemoryCard.saveCurrentGame();
+		}
+		break;
+	case Status_5:
+		_80->setScale(1.0f);
+		seSystem->playSysSe(SYSSE_CARDOK);
+		if (gameflow.mMemoryCard.didSaveFail()) {
+			mSaveFail->open(1.0f);
+			_04     = Status_2;
+			mStatus = Status_1;
+			_10     = 0.0f;
+		} else {
+			mStatus = Status_6;
+			_10     = 0.0f;
+			_60->start(ogFadeMgr::Status_2, 0.25f);
+			_68->start(ogFadeMgr::Status_2, 0.25f);
+			_64->start(ogFadeMgr::Status_1, 0.25f);
+			_6C->start(ogFadeMgr::Status_1, 0.25f);
+		}
+		break;
+	case Status_6:
+		if (_10 > 1.0f) {
+			_04     = Status_5;
+			mStatus = Status_2;
+			_10     = 0.0f;
+			_64->start(ogFadeMgr::Status_2, 0.25f);
+			_6C->start(ogFadeMgr::Status_2, 0.25f);
+		}
+		break;
+	case Status_7:
+		if (_10 > 0.25f) {
+			_78->setScale(0.0f);
+			mStatus = Status_8;
+			_10     = 0.0f;
+		} else {
+			_78->setScale(1.0f - (_10 / 0.25f));
+		}
+		break;
+	case Status_8:
+		if (_10 > 0.25f) {
+			mStatus = Status_9;
+			_7C->setScale(1.0f);
+			_1C->start();
+		} else {
+			_7C->setScale((_10 / 0.25f));
+		}
+		break;
+	case Status_9:
+		if (nikatu2 == 5) {
+			_04     = Status_11;
+			mStatus = Status_10;
+			_10     = 0.0f;
+		} else if (nikatu2 == 6) {
+			_04     = Status_11;
+			mStatus = Status_10;
+			_10     = 0.0f;
+		} else if (nikatu2 == 4) {
+			seSystem->playSysSe(SYSSE_CANCEL);
+			_04     = Status_1;
+			mStatus = Status_10;
+			_10     = 0.0f;
+		}
+		break;
+	case Status_10:
+		if (_10 > 0.25f) {
+			_7C->setScale(0.0f);
+			mStatus = _04;
+			_10     = 0.0f;
+		} else {
+			_7C->setScale(1.0f - (_10 / 0.25f));
+		}
+		break;
+	case Status_11:
+		if (!savefail) {
+			_04     = Status_10;
+			mStatus = Status_2;
+			_10     = 0.0f;
+		}
+		break;
+	}
+	return mStatus;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1178,76 +958,22 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller*)
  * Address:	80196770
  * Size:	0000F4
  */
-void zen::ogSaveMgr::draw(Graphics&)
+void zen::ogSaveMgr::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stw       r31, 0xFC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xF8(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xDC
-	  lfs       f1, -0x4DB0(r2)
-	  addi      r3, r1, 0x10
-	  lfs       f2, -0x4DC0(r2)
-	  li        r4, 0
-	  lfs       f3, -0x4DAC(r2)
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x199D8
-	  addi      r3, r1, 0x10
-	  bl        0x19AE0
-	  lbz       r0, 0x30(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lwz       r3, 0x24(r30)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x1C6F4
-	  lwz       r3, 0x84(r30)
-	  mr        r4, r31
-	  bl        -0x2F0C
-	  b         .loc_0xC4
+	if (mStatus == -1) {
+		return;
+	}
 
-	.loc_0x84:
-	  lwz       r3, 0x8(r30)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x1C6D0
-	  lwz       r3, 0xC(r30)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x1C6BC
-	  lwz       r3, 0x20(r30)
-	  mr        r4, r31
-	  bl        -0x7884
-	  lwz       r3, 0x2C(r30)
-	  mr        r4, r31
-	  bl        0x5D014
+	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	graf.setPort();
 
-	.loc_0xC4:
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x10(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x10(r1)
-
-	.loc_0xDC:
-	  lwz       r0, 0x104(r1)
-	  lwz       r31, 0xFC(r1)
-	  lwz       r30, 0xF8(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	if (_30) {
+		_24->draw(0, 0, &graf);
+		_84->draw(gfx);
+	} else {
+		mScreen->draw(0, 0, &graf);
+		_0C->draw(0, 0, &graf);
+		mMemCheckMgr->draw(gfx);
+		mSaveFail->draw(gfx);
+	}
 }

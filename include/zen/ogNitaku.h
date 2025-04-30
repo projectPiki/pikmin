@@ -36,6 +36,7 @@ struct ogNitakuMgr {
 	void stop();
 
 	// TODO: members
+	u8 _00[0xc4];
 };
 
 } // namespace zen

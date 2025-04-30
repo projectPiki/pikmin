@@ -75,6 +75,9 @@ struct ogFadeMgr {
 	 * @brief TODO
 	 */
 	enum ogFadeStatusFlag {
+		Status_1 = 1,
+		Status_2 = 2,
+		Status_3 = 3,
 		// TODO: this
 	};
 
@@ -83,6 +86,8 @@ struct ogFadeMgr {
 	void start(ogFadeStatusFlag, f32);
 	void setAlpha();
 	ogFadeStatusFlag update();
+
+	u8 _00[0x20]; // _00
 };
 
 /**
