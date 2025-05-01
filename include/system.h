@@ -235,6 +235,15 @@ public:
 };
 
 /**
+ * @brief Fabricated - some structure needs to live at 0x310 in System.
+ */
+struct FakeSystemList {
+	u32 _00; // _00, unknown
+	u32 _04; // _04, unknown
+	u32 _08; // _08, unknown
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x334.
@@ -287,6 +296,16 @@ struct System : public StdSystem {
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
 
+	inline void initFakeThing1(FakeSystemList* p1, FakeSystemList* p2, u32 p3, u32 p4)
+	{
+		u32 x   = _31C._00 + p2->_08;
+		p1->_00 = p3;
+		p1->_08 = x - p4;
+		p1->_04 = p1->_00;
+	}
+
+	inline void initFakeThing2() { _328 = &_310; }
+
 	// _00      = VTBL
 	// _00-_248 = StdSystem
 	u32 _244;                           // _244
@@ -318,7 +337,10 @@ struct System : public StdSystem {
 	u32 _2BC;                           // _2BC, unknown, could be part of _2A8
 	u8 _2C0[0x308 - 0x2C0];             // _2C0, unknown, adjust with size of AddressNode
 	CacheTexture* _308;                 // _308
-	u8 _30C[0x32C - 0x30C];             // _30C
+	u8 _30C[0x4];                       // _30C
+	FakeSystemList _310;                // _310, fake
+	FakeSystemList _31C;                // _31C, fake
+	FakeSystemList* _328;               // _328, unknown
 	u32 _32C;                           // _32C
 	u32 _330;                           // _330
 };

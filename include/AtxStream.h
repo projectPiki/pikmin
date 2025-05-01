@@ -19,6 +19,8 @@ struct AtxRouter {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct AtxStream : public Stream {
 
@@ -56,6 +58,8 @@ struct AtxCommandStream : public AtxStream {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x20.
  */
 struct AtxFileStream : public RandomAccessStream {
 	virtual void read(void*, int);  // _3C

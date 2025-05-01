@@ -30,7 +30,7 @@ struct Cylinder {
  * @brief TODO
  */
 struct RectArea {
-	inline RectArea(int x0, int y0, int x1, int y1)
+	RectArea(int x0, int y0, int x1, int y1)
 	{
 		mMinX = x0;
 		mMinY = y0;
@@ -38,12 +38,18 @@ struct RectArea {
 		mMaxY = y1;
 	}
 
-	inline RectArea()
+	RectArea()
 	{
-		mMinX = 0;
-		mMinY = 0;
-		mMaxX = 0;
-		mMaxY = 0;
+		mMinY = mMaxY = 0;
+		mMinX = mMaxX = 0;
+	}
+
+	void set(int minX, int minY, int maxX, int maxY)
+	{
+		mMinX = minX;
+		mMinY = minY;
+		mMaxX = maxX;
+		mMaxY = maxY;
 	}
 
 	int mMinX; // _00, x1

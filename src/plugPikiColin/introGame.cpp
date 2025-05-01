@@ -38,6 +38,7 @@ struct QuittingModeState : public ModeState {
 	{
 		PRINT("quitter updating!\n");
 		p1 = 0;
+		return this;
 	}
 	virtual void postUpdate() // _10
 	{

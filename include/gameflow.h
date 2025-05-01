@@ -15,7 +15,7 @@ struct AnimFrameCacher;
 struct BaseApp;
 struct GameQuickInfo;
 struct GameChalQuickInfo;
-struct GameMovieInterface;
+struct GameInterface;
 struct MoviePlayer;
 struct Section;
 struct Shape;
@@ -444,7 +444,7 @@ struct GameFlow : public Node {
 	s16 mMovieType;                          // _1E2
 	s16 _1E4;                                // _1E4
 	s16 _1E6;                                // _1E6
-	GameMovieInterface* mGameInterface;      // _1E8
+	GameInterface* mGameInterface;           // _1E8
 	int _1EC;                                // _1EC
 	int mGameSectionID;                      // _1F0, see GameSectionID enum
 	s32 mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum

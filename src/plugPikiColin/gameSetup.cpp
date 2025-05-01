@@ -90,32 +90,39 @@ static char* arambundleList[][2] = {
  */
 void GameSetupSection::preCacheShapes()
 {
-	/// VVV this looks like inline
+	// what on earth is this even doing.
+	// this isn't in the DLL, so this is as close to a fake match as I can get.
+	// still refuses to addi the _310 and _31C stuff, but w/e
+	FakeSystemList* list1 = &gsys->_310;
+	FakeSystemList* list2 = &gsys->_31C;
+	gsys->initFakeThing1(list1, list2, gsys->_31C._04, gsys->_31C._04);
+	gsys->initFakeThing2();
+
 	gsys->_214.initCore("");
 	gsys->mLightFlareInfoList = (LFInfo*)&gsys->_214;
 
-	for (int i = 0; arambundleList[i][0]; i++) {
-		gsys->parseArchiveDirectory(arambundleList[i][0], arambundleList[i][1]);
+	char** bundlePair;
+	for (bundlePair = arambundleList[0]; bundlePair[0]; bundlePair += 2) {
+		gsys->parseArchiveDirectory(bundlePair[0], bundlePair[1]);
 	}
 
 	u32 print          = gsys->mTogglePrint;
 	gsys->mTogglePrint = 1;
 	gsys->mTogglePrint = print;
-	/// ^^^ to me
 
-	for (char** mainShapePair = shapeList[0]; mainShapePair[0]; mainShapePair += 2) {
-		Shape* shape = gameflow.loadShape(mainShapePair[0], true);
-		if (mainShapePair[1]) {
+	for (bundlePair = shapeList[0]; bundlePair[0]; bundlePair += 2) {
+		Shape* shape = gameflow.loadShape(bundlePair[0], true);
+		if (bundlePair[1]) {
 			gsys->mCurrentShape = shape;
-			gsys->loadBundle(mainShapePair[1], false);
+			gsys->loadBundle(bundlePair[1], false);
 		}
 	}
 
-	for (char** ufoPartPair = shapeList2[0]; ufoPartPair[0]; ufoPartPair += 2) {
-		Shape* shape = gameflow.loadShape(ufoPartPair[0], true);
-		if (ufoPartPair[1]) {
+	for (bundlePair = shapeList2[0]; bundlePair[0]; bundlePair += 2) {
+		Shape* shape = gameflow.loadShape(bundlePair[0], true);
+		if (bundlePair[1]) {
 			gsys->mCurrentShape = shape;
-			gsys->loadBundle(ufoPartPair[1], false);
+			gsys->loadBundle(bundlePair[1], false);
 		}
 	}
 	/*
@@ -246,12 +253,9 @@ void GameSetupSection::preCacheShapes()
  */
 GameSetupSection::GameSetupSection()
 {
-	u32 badCompiler[4];
-
 	Node::init("<GameSetupSection>");
-	AyuHeap* heap    = gsys->getHeap(SYSHEAP_App);
-	s32 allocType    = heap->mAllocType;
-	heap->mAllocType = 1;
+	AyuHeap* heap = gsys->getHeap(SYSHEAP_App);
+	int allocType = heap->setAllocType(1);
 
 	memStat = new MemStat();
 
@@ -287,7 +291,7 @@ GameSetupSection::GameSetupSection()
 	GlobalShape::init();
 
 	memStat->end("setup");
-	heap->mAllocType = allocType;
+	heap->setAllocType(allocType);
 	pikiInfMgr.clear();
 	gameflow.mPlayState.reset();
 }

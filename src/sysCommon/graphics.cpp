@@ -2967,8 +2967,7 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 FontChar::FontChar()
 {
 	_00 = _02 = 0;
-	mWidth    = 0;
-	mHeight   = 0;
+	mWidth = mHeight = 8;
 }
 
 /*

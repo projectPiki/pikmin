@@ -15,7 +15,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("lightPool");
+DEFINE_PRINT("LightPool");
 
 /*
  * --INFO--
@@ -24,13 +24,7 @@ DEFINE_PRINT("lightPool");
  */
 LightPool::LightPool()
 {
-#ifndef __MWERKS__
-	_650.set(0.0f);
-#endif
-
-	_64C = 0;
-
-	_65C = TAU * (gsys->getRand(1.0f));
+	_65C = TAU * gsys->getRand(1.0f);
 
 	mCamera.mPosition.set(0.0f, 50.0f, 0.0f);
 	mCamera.mFocus.set(0.0f, 10.0f, 0.00001f);
@@ -39,8 +33,8 @@ LightPool::LightPool()
 	mCamera.mNear = 1.0f;
 	mCamera.mFar  = 200.0f;
 
-	mFlags = 1;
-	mColour.set(0xFF, 0xFF, 64, 0x80);
+	mFlags = LightPoolFlags::DrawFrustum;
+	mColour.set(255, 255, 64, 128);
 }
 
 /*
@@ -50,410 +44,55 @@ LightPool::LightPool()
  */
 void LightPool::draw(Graphics& gfx)
 {
-	gfx.useMatrix(mCamera.mInverseLookAtMtx, 0);
+	LightCamera* camera = &mCamera;
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	int oldBlend = gfx.setCBlending(3);
 	gfx.setDepth(false);
+	bool lighting = gfx.setLighting(false, nullptr);
+	gfx.useTexture(mBoxTexture, 0);
+	gfx.setColour(Colour(255, 255, 64, 64), true);
+	gfx.setColour(mColour, true);
 
-	// Damn.
+	Vector3f eyeVec = camera->mPosition - camera->mFocus;
+	eyeVec.normalise();
+	eyeVec.multiply(8.0f);
+	Vector3f sideVec = camera->mPosition - camera->mFocus;
+	sideVec.normalise();
 
+	sideVec.CP(gfx.mCamera->mViewZAxis);
+	sideVec.multiply(2.5f * camera->mFov);
+
+	Vector2f texCoords[6];
+	Vector3f boxPositions[6];
+
+	boxPositions[0] = camera->mPosition + (sideVec + eyeVec);
+	texCoords[0].set(0.0f, 0.0f);
+
+	boxPositions[1] = camera->mPosition + (-(sideVec) + eyeVec);
+	texCoords[1].set(1.0f, 0.0f);
+
+	boxPositions[2] = camera->mFocus + (-(sideVec) + -(eyeVec));
+	texCoords[2].set(1.0f, 1.0f);
+
+	boxPositions[3] = camera->mFocus + (sideVec + -(eyeVec));
+	texCoords[3].set(0.0f, 1.0f);
+
+	gfx.drawOneTri(boxPositions, nullptr, texCoords, 4);
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+	gfx.useTexture(mParticleTexture, 0);
+	gfx.setCBlending(4);
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+
+	if (gfx.initParticle(true)) {
+		gfx.drawParticle(*gfx.mCamera, camera->mPosition, 80.0f);
+	}
+
+	gfx.setLighting(lighting, nullptr);
 	gfx.setCBlending(oldBlend);
 	gfx.setDepth(true);
 	if (mFlags & LightPoolFlags::DrawFrustum) {
 		gfx.setFog(false);
-		mCamera.draw(gfx);
+		camera->draw(gfx);
 		gfx.setFog(true);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x300(r1)
-	  stfd      f31, 0x2F8(r1)
-	  stfd      f30, 0x2F0(r1)
-	  stfd      f29, 0x2E8(r1)
-	  stfd      f28, 0x2E0(r1)
-	  stfd      f27, 0x2D8(r1)
-	  stfd      f26, 0x2D0(r1)
-	  stmw      r27, 0x2BC(r1)
-	  addi      r28, r4, 0
-	  addi      r27, r3, 0
-	  mr        r3, r28
-	  addi      r31, r27, 0x2F4
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r4, 0x2E4(r4)
-	  lwz       r12, 0x74(r12)
-	  addi      r4, r4, 0x1E0
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x3
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r28, 0
-	  lwz       r12, 0x3B4(r28)
-	  mr        r30, r0
-	  li        r4, 0
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r0, r3
-	  lwz       r4, 0x664(r27)
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  mr        r29, r0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0xFF
-	  stb       r3, 0x220(r1)
-	  li        r0, 0x40
-	  addi      r4, r1, 0x220
-	  stb       r3, 0x221(r1)
-	  mr        r3, r28
-	  li        r5, 0x1
-	  stb       r0, 0x222(r1)
-	  stb       r0, 0x223(r1)
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  addi      r4, r27, 0x660
-	  li        r5, 0x1
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f3, 0x164(r31)
-	  lfs       f2, 0x170(r31)
-	  lfs       f1, 0x168(r31)
-	  lfs       f0, 0x174(r31)
-	  fsubs     f31, f3, f2
-	  lfs       f2, 0x16C(r31)
-	  fsubs     f30, f1, f0
-	  lfs       f0, 0x178(r31)
-	  fmuls     f1, f31, f31
-	  fsubs     f29, f2, f0
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x657E4
-	  lfs       f0, -0x7788(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x170
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
-
-	.loc_0x170:
-	  lfs       f3, 0x164(r31)
-	  lfs       f2, 0x170(r31)
-	  lfs       f1, 0x168(r31)
-	  lfs       f0, 0x174(r31)
-	  fsubs     f28, f3, f2
-	  lfs       f2, 0x16C(r31)
-	  fsubs     f27, f1, f0
-	  lfs       f0, 0x178(r31)
-	  fmuls     f1, f28, f28
-	  fsubs     f26, f2, f0
-	  lfs       f3, -0x7768(r2)
-	  fmuls     f0, f27, f27
-	  fmuls     f2, f26, f26
-	  fmuls     f31, f31, f3
-	  fadds     f0, f1, f0
-	  fmuls     f30, f30, f3
-	  fmuls     f29, f29, f3
-	  fadds     f1, f2, f0
-	  bl        -0x65848
-	  lfs       f0, -0x7788(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x1D4
-	  fdivs     f28, f28, f1
-	  fdivs     f27, f27, f1
-	  fdivs     f26, f26, f1
-
-	.loc_0x1D4:
-	  lwz       r3, 0x2E4(r28)
-	  lfsu      f8, 0x194(r3)
-	  lfs       f2, -0x7764(r2)
-	  lfs       f5, 0x8(r3)
-	  fmuls     f7, f26, f8
-	  lfs       f9, 0x4(r3)
-	  lfs       f0, 0x1CC(r31)
-	  fmuls     f4, f27, f5
-	  lfs       f1, -0x7788(r2)
-	  fmuls     f3, f26, f9
-	  stfs      f1, 0x22C(r1)
-	  fmuls     f6, f28, f5
-	  stfs      f1, 0x228(r1)
-	  fsubs     f5, f4, f3
-	  fmuls     f4, f2, f0
-	  stfs      f1, 0x224(r1)
-	  fsubs     f0, f7, f6
-	  fmuls     f2, f28, f9
-	  stfs      f1, 0x238(r1)
-	  fmuls     f6, f0, f4
-	  stfs      f1, 0x234(r1)
-	  fmuls     f0, f27, f8
-	  fmuls     f5, f5, f4
-	  stfs      f1, 0x230(r1)
-	  fsubs     f0, f2, f0
-	  stfs      f1, 0x244(r1)
-	  fneg      f3, f6
-	  fadds     f9, f5, f31
-	  stfs      f1, 0x240(r1)
-	  fmuls     f7, f0, f4
-	  stfs      f1, 0x23C(r1)
-	  fadds     f11, f6, f30
-	  fneg      f2, f5
-	  stfs      f1, 0x250(r1)
-	  fneg      f4, f7
-	  stfs      f1, 0x24C(r1)
-	  fadds     f13, f7, f29
-	  fadds     f8, f3, f30
-	  stfs      f1, 0x248(r1)
-	  fadds     f0, f4, f29
-	  stfs      f1, 0x25C(r1)
-	  stfs      f1, 0x258(r1)
-	  stfs      f1, 0x254(r1)
-	  stfs      f1, 0x268(r1)
-	  stfs      f1, 0x264(r1)
-	  stfs      f1, 0x260(r1)
-	  lfs       f10, 0x164(r31)
-	  lfs       f12, 0x168(r31)
-	  fadds     f9, f10, f9
-	  lfs       f27, 0x16C(r31)
-	  fadds     f11, f12, f11
-	  fadds     f10, f27, f13
-	  stfs      f9, 0x224(r1)
-	  stfs      f11, 0x228(r1)
-	  stfs      f10, 0x22C(r1)
-	  stfs      f2, 0x164(r1)
-	  lfs       f9, 0x164(r1)
-	  stfs      f1, 0x26C(r1)
-	  fadds     f9, f9, f31
-	  stfs      f1, 0x270(r1)
-	  stfs      f9, 0x158(r1)
-	  lfs       f9, 0x158(r1)
-	  stfs      f9, 0x1E4(r1)
-	  stfs      f8, 0x1E8(r1)
-	  stfs      f0, 0x1EC(r1)
-	  lfs       f8, 0x164(r31)
-	  lfs       f0, 0x1E4(r1)
-	  fadds     f0, f8, f0
-	  stfs      f0, 0x14C(r1)
-	  lfs       f0, 0x14C(r1)
-	  stfs      f0, 0x1F0(r1)
-	  lfs       f8, 0x168(r31)
-	  lfs       f0, 0x1E8(r1)
-	  fadds     f0, f8, f0
-	  stfs      f0, 0x1F4(r1)
-	  lfs       f8, 0x16C(r31)
-	  lfs       f0, 0x1EC(r1)
-	  fadds     f0, f8, f0
-	  stfs      f0, 0x1F8(r1)
-	  lwz       r0, 0x1F0(r1)
-	  lwz       r3, 0x1F4(r1)
-	  stw       r0, 0x230(r1)
-	  lwz       r0, 0x1F8(r1)
-	  stw       r3, 0x234(r1)
-	  stw       r0, 0x238(r1)
-	  lfs       f0, -0x7784(r2)
-	  fneg      f11, f31
-	  stfs      f2, 0x1B4(r1)
-	  fneg      f9, f29
-	  fneg      f10, f30
-	  stfs      f0, 0x274(r1)
-	  fadds     f8, f5, f11
-	  mr        r3, r28
-	  stfs      f1, 0x278(r1)
-	  fadds     f5, f6, f10
-	  addi      r4, r1, 0x224
-	  stfs      f11, 0x13C(r1)
-	  fadds     f2, f7, f9
-	  addi      r6, r1, 0x26C
-	  stfs      f3, 0x1B8(r1)
-	  li        r5, 0
-	  li        r7, 0x4
-	  stfs      f4, 0x1BC(r1)
-	  lfs       f4, 0x1B4(r1)
-	  lfs       f3, 0x13C(r1)
-	  fadds     f3, f4, f3
-	  stfs      f3, 0x130(r1)
-	  lfs       f3, 0x130(r1)
-	  stfs      f3, 0x1C0(r1)
-	  lfs       f3, 0x1B8(r1)
-	  fadds     f3, f3, f10
-	  stfs      f3, 0x1C4(r1)
-	  lfs       f3, 0x1BC(r1)
-	  fadds     f3, f3, f9
-	  stfs      f3, 0x1C8(r1)
-	  lfs       f4, 0x170(r31)
-	  lfs       f3, 0x1C0(r1)
-	  fadds     f3, f4, f3
-	  stfs      f3, 0x124(r1)
-	  lfs       f3, 0x124(r1)
-	  stfs      f3, 0x1CC(r1)
-	  lfs       f4, 0x174(r31)
-	  lfs       f3, 0x1C4(r1)
-	  fadds     f3, f4, f3
-	  stfs      f3, 0x1D0(r1)
-	  lfs       f4, 0x178(r31)
-	  lfs       f3, 0x1C8(r1)
-	  fadds     f4, f4, f3
-	  stfs      f8, 0x10C(r1)
-	  stfs      f0, 0x27C(r1)
-	  lfs       f3, 0x10C(r1)
-	  stfs      f4, 0x1D4(r1)
-	  lwz       r0, 0x1CC(r1)
-	  lwz       r8, 0x1D0(r1)
-	  stw       r0, 0x23C(r1)
-	  lwz       r0, 0x1D4(r1)
-	  stw       r8, 0x240(r1)
-	  stw       r0, 0x244(r1)
-	  stfs      f0, 0x280(r1)
-	  stfs      f3, 0x190(r1)
-	  stfs      f5, 0x194(r1)
-	  stfs      f2, 0x198(r1)
-	  lfs       f3, 0x170(r31)
-	  lfs       f2, 0x190(r1)
-	  fadds     f2, f3, f2
-	  stfs      f2, 0x100(r1)
-	  lfs       f2, 0x100(r1)
-	  stfs      f2, 0x19C(r1)
-	  lfs       f3, 0x174(r31)
-	  lfs       f2, 0x194(r1)
-	  fadds     f2, f3, f2
-	  stfs      f2, 0x1A0(r1)
-	  lfs       f3, 0x178(r31)
-	  lfs       f2, 0x198(r1)
-	  fadds     f2, f3, f2
-	  stfs      f1, 0x284(r1)
-	  stfs      f0, 0x288(r1)
-	  stfs      f2, 0x1A4(r1)
-	  lwz       r0, 0x19C(r1)
-	  lwz       r8, 0x1A0(r1)
-	  stw       r0, 0x248(r1)
-	  lwz       r0, 0x1A4(r1)
-	  stw       r8, 0x24C(r1)
-	  stw       r0, 0x250(r1)
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r4, 0x2E4(r28)
-	  lwz       r12, 0x3B4(r28)
-	  li        r5, 0
-	  addi      r4, r4, 0x1E0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r4, 0x668(r27)
-	  lwz       r12, 0x3B4(r28)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x4
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0xFF
-	  stb       r0, 0x180(r1)
-	  addi      r4, r1, 0x180
-	  addi      r3, r28, 0
-	  stb       r0, 0x181(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x182(r1)
-	  stb       r0, 0x183(r1)
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x1
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x538
-	  mr        r3, r28
-	  lwz       r4, 0x2E4(r28)
-	  lwz       r12, 0x3B4(r28)
-	  addi      r5, r31, 0x164
-	  lfs       f1, -0x7760(r2)
-	  lwz       r12, 0x8C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x538:
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  mr        r4, r30
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x1
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0x66C(r27)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x5CC
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0
-	  addi      r4, r28, 0
-	  bl        -0x32290
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x1
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x5CC:
-	  lmw       r27, 0x2BC(r1)
-	  lwz       r0, 0x304(r1)
-	  lfd       f31, 0x2F8(r1)
-	  lfd       f30, 0x2F0(r1)
-	  lfd       f29, 0x2E8(r1)
-	  lfd       f28, 0x2E0(r1)
-	  lfd       f27, 0x2D8(r1)
-	  lfd       f26, 0x2D0(r1)
-	  addi      r1, r1, 0x300
-	  mtlr      r0
-	  blr
-	*/
 }

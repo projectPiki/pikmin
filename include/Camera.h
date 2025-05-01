@@ -169,6 +169,8 @@ struct Camera : public CullFrustum {
  * @brief TODO
  */
 struct LightCamera : public Camera {
+	LightCamera() { mLightMap = nullptr; }
+
 	void initLightmap(int, int);
 	void calcProjection(Graphics&, bool, Node*);
 

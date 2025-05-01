@@ -789,13 +789,13 @@ ModeState* RunningModeState::update(u32& a)
 
 	if (gameflow._334 && !gameflow._338 && !gameflow._33C && !gameflow.mMoviePlayer->mIsActive) {
 
-		if (mController->keyClick(KBBTN_START) && !gameflow.mGameInterface->mMesgCount) {
+		if (mController->keyClick(KBBTN_START) && !static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mMesgCount) {
 			seSystem->playSysSe(SYSSE_PAUSE);
 			pauseWindow->start(gameflow.mIsChallengeMode != 0);
 			_08           = 1 - (gameflow._338 == 0);
 			gameflow._338 = 1;
 		} else if (mController->keyClick(KBBTN_Y) && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f
-		           && !gameflow.mGameInterface->mMesgCount) {
+		           && !static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mMesgCount) {
 			gameflow.mGameInterface->message(17, 0);
 			_08           = 1 - (gameflow._338 == 0);
 			gameflow._338 = 1;

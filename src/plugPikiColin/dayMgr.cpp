@@ -11,9 +11,9 @@ struct DaySetMenu : public Menu {
 	DaySetMenu(TimeSetting* time, Controller* control, Font* font, bool flag)
 	    : Menu(control, font, flag)
 	{
-		mTimeSettings  = time;
-		mScreenMiddleX = glnWidth / 2;
-		mScreenMiddleY = glnHeight / 2 + 60;
+		mTimeSettings = time;
+		_48.mMinX     = glnWidth / 2;
+		_48.mMinY     = glnHeight / 2 + 60;
 		mDiffuseColour.set(32, 128, 32, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
@@ -1475,10 +1475,10 @@ void LightMenu::menuDecrease(Menu& menu)
 ColourMenu::ColourMenu(Colour* color, Controller* controller, Font* font, bool p4)
     : Menu(controller, font, p4)
 {
-	mColour        = (u8*)color;
-	mIsCustomMenu  = 1;
-	mScreenMiddleX = glnWidth / 2;
-	mScreenMiddleY = glnHeight / 2;
+	mColour       = (u8*)color;
+	mIsCustomMenu = 1;
+	_48.mMinX     = glnWidth / 2;
+	_48.mMinY     = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
 	mHighlightColour.set(32, 64, 32, 64);
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
@@ -2012,8 +2012,8 @@ PositionMenu::PositionMenu(Vector3f* pos, Controller* controller, Font* font, bo
 	mPosition          = pos;
 	mIsSmallAdjustment = smlAdjust;
 	mIsCustomMenu      = 1;
-	mScreenMiddleX     = glnWidth / 2;
-	mScreenMiddleY     = glnHeight / 2;
+	_48.mMinX          = glnWidth / 2;
+	_48.mMinY          = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
 	mHighlightColour.set(32, 64, 32, 64);
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
@@ -2537,10 +2537,10 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mMaxLights    = 7;
 	mTimeSettings = new TimeSetting[5];
 
-	mMenu                 = new Menu(control, gsys->mConsFont, false);
-	mMenu->mIsCustomMenu  = 1;
-	mMenu->mScreenMiddleX = glnWidth / 2;
-	mMenu->mScreenMiddleY = glnHeight / 2 + 90;
+	mMenu                = new Menu(control, gsys->mConsFont, false);
+	mMenu->mIsCustomMenu = 1;
+	mMenu->_48.mMinX     = glnWidth / 2;
+	mMenu->_48.mMinY     = glnHeight / 2 + 90;
 	mMenu->mDiffuseColour.set(32, 128, 32, 192);
 	mMenu->mHighlightColour.set(32, 64, 32, 64);
 	mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, Menu::menuCloseMenu));
@@ -4491,8 +4491,8 @@ LightMenu::LightMenu(Light* light, int* attachType, Controller* controller, Font
 	mLightAttachType   = attachType;
 	mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
 
-	mScreenMiddleX = glnWidth / 2;
-	mScreenMiddleY = glnHeight / 2;
+	_48.mMinX = glnWidth / 2;
+	_48.mMinY = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
 	mHighlightColour.set(32, 64, 32, 64);
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));
@@ -4890,11 +4890,11 @@ LightMenu::LightMenu(Light* light, int* attachType, Controller* controller, Font
 FogMenu::FogMenu(Colour* color, f32* near, f32* far, Controller* controller, Font* font, bool p6)
     : Menu(controller, font, p6)
 {
-	mNear          = near;
-	mFar           = far;
-	mIsCustomMenu  = 1;
-	mScreenMiddleX = glnWidth / 2;
-	mScreenMiddleY = glnHeight / 2;
+	mNear         = near;
+	mFar          = far;
+	mIsCustomMenu = 1;
+	_48.mMinX     = glnWidth / 2;
+	_48.mMinY     = glnHeight / 2;
 	mDiffuseColour.set(32, 128, 128, 192);
 	mHighlightColour.set(32, 64, 32, 64);
 	addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(this, menuCloseMenu));

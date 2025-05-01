@@ -82,8 +82,8 @@ struct TitleSetupSection : public Node {
 			LightPool* light = new LightPool;
 			light->mFlags    = 0;
 			light->mColour.set(255, 255, 64, 64);
-			light->mTexture = gsys->loadTexture("effects/halowhit.txe", true);
-			light->_65C     = i * 0.7853f;
+			light->mParticleTexture = gsys->loadTexture("effects/halowhit.txe", true);
+			light->_65C             = i * 0.7853f;
 
 			switch (i) {
 			case 0:
@@ -112,10 +112,10 @@ struct TitleSetupSection : public Node {
 			mLightPool.add(light);
 		}
 
-		_2C                   = 0;
-		mMenu                 = new Menu(_30, gsys->mConsFont, true);
-		mMenu->mScreenMiddleX = glnWidth / 2;
-		mMenu->mScreenMiddleY = glnHeight / 2 + 30;
+		_2C              = 0;
+		mMenu            = new Menu(_30, gsys->mConsFont, true);
+		mMenu->_48.mMinX = glnWidth / 2;
+		mMenu->_48.mMinY = glnHeight / 2 + 30;
 		mMenu->addKeyEvent(0x10, 0x1001000, new Delegate1<TitleSetupSection, Menu&>(this, menuSelectOption));
 		mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, Menu::menuCloseMenu));
 
@@ -155,7 +155,7 @@ struct TitleSetupSection : public Node {
 	u8 _38[0x14];         // _38
 	f32 _4C;              // _4C
 	CinematicPlayer* _50; // _50
-	Camera mCamera;       //_54
+	Camera mCamera;       // _54
 	f32 _39C;             // _39C
 	Vector3f _3B4;        // _3B4
 	LightPool mLightPool; // _3C4

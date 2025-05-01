@@ -673,9 +673,9 @@ struct GameCourseClearScreen : public Node {
 		Texture* tex = gsys->loadTexture("bigFont.bti", true);
 		mFont        = new Font();
 		mFont->setTexture(tex, 21, 42);
-		_1F8                 = new Menu(mController, gsys->mConsFont, false);
-		_1F8->mScreenMiddleX = glnWidth / 2;
-		_1F8->mScreenMiddleY = glnHeight / 2;
+		_1F8            = new Menu(mController, gsys->mConsFont, false);
+		_1F8->_48.mMinX = glnWidth / 2;
+		_1F8->_48.mMinY = glnHeight / 2;
 
 		_1F8->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(_1F8, &Menu::menuCloseMenu));
 		_1F8->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
