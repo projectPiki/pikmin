@@ -26,9 +26,9 @@ struct ModeState {
 
 	BaseGameSection* mSection; // _00
 
-	virtual ModeState* update(u32&);    // _08
-	virtual void postRender(Graphics&); // _0C
-	virtual void postUpdate();          // _10
+	virtual ModeState* update(u32& p1) { p1 = 3; } // _08
+	virtual void postRender(Graphics&) { }         // _0C
+	virtual void postUpdate() { }                  // _10
 
 	// _04 = VTBL
 };
@@ -76,24 +76,6 @@ struct DayOverModeState : public ModeState {
 /**
  * @brief TODO
  */
-struct IntroModeState : public ModeState {
-	IntroModeState(BaseGameSection* c)
-	    : ModeState(c)
-	{
-		mController = c->mController;
-	}
-
-	virtual ModeState* update(u32&);    // _08
-	virtual void postRender(Graphics&); // _0C
-
-	// _00     = VTBL
-	// _00-_04 = ModeState
-	Controller* mController; // _08
-};
-
-/**
- * @brief TODO
- */
 struct IntroGameModeState : public ModeState {
 	IntroGameModeState(BaseGameSection* c)
 	    : ModeState(c)
@@ -128,22 +110,6 @@ struct MessageModeState : public ModeState {
 	f32 _08; // _08
 	int _0C; // _0C
 	f32 _10; // _10
-};
-
-/**
- * @brief TODO
- */
-struct QuittingModeState : public ModeState {
-	QuittingModeState(BaseGameSection* c)
-	    : ModeState(c)
-	{
-	}
-
-	virtual ModeState* update(u32&); // _08
-	virtual void postUpdate();       // _10
-
-	// _00     = VTBL?
-	// _00-_04 = ModeState?
 };
 
 /**

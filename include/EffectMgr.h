@@ -536,9 +536,7 @@ struct EffectMgr : public CoreNode {
 	}
 
 	void cullingOn() { mDoCulling = true; }
-
-	// DLL inlines to do:
-	void cullingOff();
+	void cullingOff() { mDoCulling = false; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

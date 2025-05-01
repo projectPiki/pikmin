@@ -10,12 +10,14 @@ struct Menu;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x44.
  */
 struct BaseGameSection : public Node {
 	BaseGameSection();
 
 	virtual void draw(Graphics&); // _14
-	virtual void openMenu();      // _30
+	virtual void openMenu() { }   // _30
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -27,7 +29,7 @@ struct BaseGameSection : public Node {
 	ModeState* _34;          // _34, unknown
 	ModeState* _38;          // _38, unknown
 	u32 _3C;                 // _3C, unknown
-	u32 _40;                 // _40, unknown
+	int _40;                 // _40
 };
 
 /**

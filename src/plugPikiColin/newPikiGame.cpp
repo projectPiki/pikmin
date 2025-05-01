@@ -636,15 +636,6 @@ void BaseGameSection::draw(Graphics& gfx)
 
 /*
  * --INFO--
- * Address:	800571E0
- * Size:	000004
- */
-void ModeState::postUpdate()
-{
-}
-
-/*
- * --INFO--
  * Address:	800571E4
  * Size:	000128
  */
@@ -3859,16 +3850,6 @@ void NewPikiGameSetupSection::update()
 
 /*
  * --INFO--
- * Address:	8005A2B0
- * Size:	00000C
- */
-ModeState* ModeState::update(u32& a)
-{
-	a = 3;
-}
-
-/*
- * --INFO--
  * Address:	8005A2BC
  * Size:	00083C
  */
@@ -4483,15 +4464,6 @@ void NewPikiGameSetupSection::draw(Graphics& gfx)
 
 /*
  * --INFO--
- * Address:	8005AAF8
- * Size:	000004
- */
-void ModeState::postRender(Graphics&)
-{
-}
-
-/*
- * --INFO--
  * Address:	8005AAFC
  * Size:	000004
  */
@@ -4601,13 +4573,4 @@ void QuittingGameModeState::postUpdate()
 		Jac_SceneExit(13, 0);
 		gsys->softReset();
 	}
-}
-
-/*
- * --INFO--
- * Address:	8005AE18
- * Size:	000004
- */
-void BaseGameSection::openMenu()
-{
 }
