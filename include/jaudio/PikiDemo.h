@@ -22,7 +22,7 @@ extern "C" {
 void Jac_DemoSceneInit(void);                // args
 void Jac_StartDemo(int);                     // args
 void Jac_DemoSound(void);                    // args
-void Jac_DemoFrame(void);                    // args
+void Jac_DemoFrame(int);                     // args
 void Jac_FinishDemo(void);                   // args
 void Jac_PrepareDemo(void);                  // args
 void Jac_StartPartsFindDemo(u32 p1, int p2); // unsure on first arg

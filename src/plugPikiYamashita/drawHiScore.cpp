@@ -68,7 +68,7 @@ zen::DrawHiScore::DrawHiScore()
 			info.mCourseID = j;
 			gameflow.mGamePrefs.getChallengeScores(info);
 			sprintf(buf, "%d_%02d", j, i);
-			rewriteNumber(screen, P2DPaneLibrary::makeTag(buf), info.mScores[i], 3, true);
+			rewriteNumber(screen, P2DPaneLibrary::makeTag(buf), info.mCourseScores[i], 3, true);
 		}
 	}
 

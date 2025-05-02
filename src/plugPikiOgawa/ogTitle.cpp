@@ -35,7 +35,7 @@ void zen::ogScrTitleMgr::getGamePrefs()
 
 	_9C = gameflow.mGamePrefs.getStereoMode();
 	_A2 = gameflow.mGamePrefs.getVibeMode();
-	_A3 = gameflow.mGamePrefs.isChallengeOpen();
+	_A3 = gameflow.mGamePrefs.getChildMode();
 }
 
 /*

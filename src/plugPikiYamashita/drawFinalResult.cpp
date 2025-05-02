@@ -290,18 +290,18 @@ void zen::DrawTotalScore::playRankInFanfare()
  */
 void zen::DrawTotalScore::setRankInEffect()
 {
-	if (mTotalScoreRecord->_14 >= 0 && mTotalScoreRecord->_14 < 5) {
+	if (mTotalScoreRecord->mPartsDaysRank >= 0 && mTotalScoreRecord->mPartsDaysRank < 5) {
 		setEffect(_14[0], 2);
 		setEffect(_14[0], 3);
 		setEffect(_14[1], 2);
 		setEffect(_14[1], 3);
 	}
-	if (mTotalScoreRecord->_16 >= 0 && mTotalScoreRecord->_16 < 5) {
+	if (mTotalScoreRecord->mBornPikisRank >= 0 && mTotalScoreRecord->mBornPikisRank < 5) {
 		setEffect(_14[2], 0);
 		setEffect(_14[2], 1);
 	}
 
-	if (mTotalScoreRecord->_18 >= 0 && mTotalScoreRecord->_18 < 5) {
+	if (mTotalScoreRecord->mDeadPikisRank >= 0 && mTotalScoreRecord->mDeadPikisRank < 5) {
 		setEffect(_14[3], 0);
 		setEffect(_14[3], 1);
 	}
@@ -316,7 +316,7 @@ void zen::DrawTotalScore::setRankInColor()
 {
 	Colour color;
 	color = _7C->getWhite();
-	s16 a = mTotalScoreRecord->_14;
+	s16 a = mTotalScoreRecord->mPartsDaysRank;
 	if (a >= 0 && a < 5) {
 		mPartsDaysRecordPanes[a]->setCharColor(color);
 		mPartsDaysRecordPanes[a]->setGradColor(color);
@@ -330,7 +330,7 @@ void zen::DrawTotalScore::setRankInColor()
 		_B8->setCharColor(color);
 		_B8->setGradColor(color);
 	}
-	s16 b = mTotalScoreRecord->_16;
+	s16 b = mTotalScoreRecord->mBornPikisRank;
 	if (b >= 0 && b < 5) {
 		mLivingPikiRecordPanes[b]->setCharColor(color);
 		mLivingPikiRecordPanes[b]->setGradColor(color);
@@ -341,7 +341,7 @@ void zen::DrawTotalScore::setRankInColor()
 		_BC->setCharColor(color);
 		_BC->setGradColor(color);
 	}
-	s16 c = mTotalScoreRecord->_18;
+	s16 c = mTotalScoreRecord->mDeadPikisRank;
 	if (c >= 0 && c < 5) {
 		mDeadPikiRecordPanes[c]->setCharColor(color);
 		mDeadPikiRecordPanes[c]->setGradColor(color);

@@ -266,8 +266,8 @@ void zen::DrawCMcourseSelect::setBestScore()
 	gameflow.mGamePrefs.getChallengeScores(info);
 	PRINT("stage : %d \n", info.mCourseID);
 	for (int i = 0; i < 5; i++) {
-		PRINT("score:%d\n", info.mScores[i]);
-		mScoreMgr.setScore(i, info.mScores[i]);
+		PRINT("score:%d\n", info.mCourseScores[i]);
+		mScoreMgr.setScore(i, info.mCourseScores[i]);
 	}
 }
 

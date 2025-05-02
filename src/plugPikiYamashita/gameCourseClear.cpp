@@ -195,15 +195,15 @@ struct CMresultMode : public GameModeBase {
 	CMresultMode()
 	    : GameModeBase("チャレンジモード・リザルト") // 'challenge mode results'
 	{
-		_04              = KBBTN_Z;
-		mInfo.mCourseID  = STAGE_Yakushima;
-		mInfo.mPikis     = 0;
-		mInfo._08        = 2;
-		mInfo.mScores[0] = 982;
-		mInfo.mScores[1] = 432;
-		mInfo.mScores[2] = 353;
-		mInfo.mScores[3] = 221;
-		mInfo.mScores[4] = 123;
+		_04                    = KBBTN_Z;
+		mInfo.mCourseID        = STAGE_Yakushima;
+		mInfo.mScore           = 0;
+		mInfo.mRank            = 2;
+		mInfo.mCourseScores[0] = 982;
+		mInfo.mCourseScores[1] = 432;
+		mInfo.mCourseScores[2] = 353;
+		mInfo.mCourseScores[3] = 221;
+		mInfo.mCourseScores[4] = 123;
 	}
 
 	virtual bool update(Controller* controller) // _08

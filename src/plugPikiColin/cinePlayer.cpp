@@ -84,7 +84,7 @@ CinematicPlayer::CinematicPlayer(char* demoName)
 {
 	mFlags                 = 0;
 	mType                  = 0;
-	_48                    = 0;
+	mTarget                = 0;
 	mCurrentCut            = 0;
 	mPreviousCut           = 0;
 	mPreviousFramePosition = -1.0f;

@@ -226,11 +226,10 @@ struct CinematicPlayer {
 	void saveCin(char*);
 	void truncateName(char*);
 
-	// TODO: members
 	u32 mFlags;                 // _00
 	int mType;                  // _04
 	Matrix4f mMtx;              // _08
-	u32 _48;                    // _48
+	Creature* mTarget;          // _48
 	SceneData _4C;              // _4C
 	SceneData* mCurrentScene;   // _7C
 	CineShapeObject _80;        // _80

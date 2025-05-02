@@ -24,6 +24,15 @@ struct Texture;
 /**
  * @brief TODO
  */
+enum GamePrefsFlags {
+	GAMEPREF_Vibe   = 0x1,
+	GAMEPREF_Stereo = 0x2,
+	GAMEPREF_Child  = 0x4,
+};
+
+/**
+ * @brief TODO
+ */
 enum GameSectionID {
 	SECTION_NinLogo   = 0,
 	SECTION_Titles    = 1,
@@ -71,11 +80,24 @@ enum LanguageFileType {
 	LANGFILE_COUNT, // 5
 };
 
+struct GameQuickInfo {
+	// This struct has no ctor or any other functions
+
+	u32 mParts;         // _00
+	u32 mDay;           // _04
+	u32 mBornPikis;     // _08
+	u32 mDeadPikis;     // _0C
+	int mPartsDaysRank; // _10
+	int mBornPikisRank; // _14
+	int mDeadPikisRank; // _18
+	int _1C;            // _1C
+};
+
 struct GameChalQuickInfo {
-	int mCourseID;  // _00
-	int mPikis;     // _04
-	int _08;        // _08
-	int mScores[5]; // _0C
+	int mCourseID;        // _00, see StageID enum
+	u32 mScore;           // _04, score for this entry
+	int mRank;            // _08, 0-4, 0 being the best
+	u32 mCourseScores[5]; // _0C, all 5 top scores for mCourseID course
 };
 
 /**
@@ -172,6 +194,71 @@ struct PlayState : public CoreNode {
 /**
  * @brief TODO
  *
+ * @note Size: 0x8.
+ */
+struct GameRecMinDay {
+	GameRecMinDay()
+	{
+		mNumParts = 0;
+		mNumDays  = 30;
+	}
+
+	void Initialise()
+	{
+		mNumParts = 0;
+		mNumDays  = 30;
+	}
+
+	void read(RandomAccessStream& input)
+	{
+		mNumParts = input.readInt();
+		mNumDays  = input.readInt();
+	}
+	void write(RandomAccessStream& output)
+	{
+		output.writeInt(mNumParts);
+		output.writeInt(mNumDays);
+	}
+
+	int mNumParts; // _00
+	int mNumDays;  // _04
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x4.
+ */
+struct GameRecBornPikmin {
+	GameRecBornPikmin() { mNumBorn = 0; }
+
+	void Initialise() { mNumBorn = 0; }
+
+	void read(RandomAccessStream& input) { mNumBorn = input.readInt(); }
+	void write(RandomAccessStream& output) { output.writeInt(mNumBorn); }
+
+	int mNumBorn; // _00, unknown
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x4.
+ */
+struct GameRecDeadPikmin {
+	GameRecDeadPikmin() { mNumDead = 9999; }
+
+	void Initialise() { mNumDead = 9999; }
+
+	void read(RandomAccessStream& input) { mNumDead = input.readInt(); }
+	void write(RandomAccessStream& output) { output.writeInt(mNumDead); }
+
+	int mNumDead; // _00
+};
+
+/**
+ * @brief TODO
+ *
  * @note Size: 0x14.
  */
 struct GameRecChalCourse {
@@ -185,7 +272,7 @@ struct GameRecChalCourse {
 		*(u32*)(this + 1) = 0;
 	}
 
-	inline void init()
+	void Initialise()
 	{
 		*(u32*)(this + 1) = 0;
 		*(u32*)(this + 1) = 0;
@@ -194,68 +281,20 @@ struct GameRecChalCourse {
 		*(u32*)(this + 1) = 0;
 	}
 
-	u8 _00[0x14]; // _00, unknown
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x4.
- */
-struct GameRecDeadPikmin {
-	GameRecDeadPikmin() { mNumDead = 9999; }
-
-	inline void init() { mNumDead = 9999; }
-
-	int mNumDead; // _00
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x4.
- */
-struct GameRecBornPikmin {
-	GameRecBornPikmin() { mNumBorn = 0; }
-
-	inline void init() { mNumBorn = 0; }
-
-	int mNumBorn; // _00, unknown
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x8.
- */
-struct GameRecMinDay {
-	GameRecMinDay()
+	void read(RandomAccessStream& input)
 	{
-		mNumParts = 0;
-		mNumDays  = 30;
+		for (int i = 0; i < 5; i++) {
+			mScores[i] = input.readInt();
+		}
+	}
+	void write(RandomAccessStream& output)
+	{
+		for (int i = 0; i < 5; i++) {
+			output.writeInt(mScores[i]);
+		}
 	}
 
-	inline void init()
-	{
-		mNumParts = 0;
-		mNumDays  = 30;
-	}
-
-	int mNumParts; // _00
-	int mNumDays;  // _04
-};
-
-struct GameQuickInfo {
-	// This struct has no ctor or any other functions
-
-	int mParts;       // _00
-	int mDay;         // _04
-	int mLivingPikis; // _08
-	int mDeadPikis;   // _0C
-	int _10;          // _10
-	int _14;          // _14
-	int _18;          // _18
-	int _1C;          // _1C
+	int mScores[5]; // _00
 };
 
 /**
@@ -266,10 +305,32 @@ struct GameHiscores {
 	{
 		mTotalPikis = 0;
 		for (int i = 0; i < 5; i++) {
-			mMinDayRecords[i].init();
-			mBornPikminRecords[i].init();
-			mDeadPikminRecords[i].init();
-			mChalModeRecords[i].init();
+			mMinDayRecords[i].Initialise();
+			mBornPikminRecords[i].Initialise();
+			mDeadPikminRecords[i].Initialise();
+			mChalModeRecords[i].Initialise();
+		}
+	}
+
+	void read(RandomAccessStream& input)
+	{
+		mTotalPikis = input.readInt();
+		for (int i = 0; i < 5; i++) {
+			mMinDayRecords[i].read(input);
+			mBornPikminRecords[i].read(input);
+			mDeadPikminRecords[i].read(input);
+			mChalModeRecords[i].read(input);
+		}
+	}
+
+	void write(RandomAccessStream& output)
+	{
+		output.writeInt(mTotalPikis);
+		for (int i = 0; i < 5; i++) {
+			mMinDayRecords[i].write(output);
+			mBornPikminRecords[i].write(output);
+			mDeadPikminRecords[i].write(output);
+			mChalModeRecords[i].write(output);
 		}
 	}
 
@@ -284,7 +345,7 @@ struct GameHiscores {
  * @brief TODO
  */
 struct GamePrefs : public CoreNode {
-	inline GamePrefs()
+	GamePrefs()
 	    : CoreNode("gamePrefs")
 	{
 		Initialise();
@@ -308,8 +369,6 @@ struct GamePrefs : public CoreNode {
 		mHiscores.Initialise();
 	}
 
-	void addBornPikis(u32 count) { mHiscores.mTotalPikis += count; }
-
 	void setBgmVol(u8);
 	void setSfxVol(u8);
 	void setStereoMode(bool);
@@ -319,6 +378,8 @@ struct GamePrefs : public CoreNode {
 	void checkIsHiscore(GameChalQuickInfo&);
 	void checkIsHiscore(GameQuickInfo&);
 	void fixSoundMode();
+
+	void addBornPikis(u32 count) { mHiscores.mTotalPikis += count; }
 
 	void openStage(int stageIdx)
 	{
@@ -334,14 +395,16 @@ struct GamePrefs : public CoreNode {
 		}
 		return false;
 	}
-	bool isChallengeOpen() { return (mFlags & 4) != 0; }
 
-	// DLL inlines to do:
-	bool getChildMode();
-	bool getStereoMode() { return (mFlags & 2) != 0; }
 	bool getVibeMode() { return (mFlags & 1) != 0; }
+	bool getStereoMode() { return (mFlags & 2) != 0; }
+	bool getChildMode() { return (mFlags & 4) != 0; }
+
 	u8 getBgmVol() { return mBgmVol; }
 	u8 getSfxVol() { return mSfxVol; }
+
+	// DLL inlines to do:
+	bool isChallengeOpen();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

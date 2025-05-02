@@ -125,12 +125,12 @@ void zen::DrawCMresult::start(const GameChalQuickInfo& chalInfo)
 	mScoreMgr.sleep();
 	u32 i;
 	for (i = 0; i < 5; i++) {
-		mScoreMgr.setScore(i, chalInfo.mScores[i]);
+		mScoreMgr.setScore(i, chalInfo.mCourseScores[i]);
 	}
 
-	_84 = chalInfo.mPikis;
+	_84 = chalInfo.mScore;
 	_88 = 0;
-	_8C = chalInfo._08;
+	_8C = chalInfo.mRank;
 
 	setMode(MODE_WaitAppear);
 

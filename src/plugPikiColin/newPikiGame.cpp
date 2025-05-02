@@ -1899,16 +1899,16 @@ ModeState* DayOverModeState::update(u32& a)
 void DayOverModeState::makeTotalScoreWindow()
 {
 	GameQuickInfo info;
-	info.mDay         = gameflow.mWorldClock.mCurrentDay;
-	info.mLivingPikis = playerState->getLastPikmins();
-	info.mDeadPikis   = playerState->getFinalDeadPikis();
-	info.mParts       = playerState->getCurrParts();
+	info.mDay       = gameflow.mWorldClock.mCurrentDay;
+	info.mBornPikis = playerState->getLastPikmins();
+	info.mDeadPikis = playerState->getFinalDeadPikis();
+	info.mParts     = playerState->getCurrParts();
 	gameflow.mGamePrefs.checkIsHiscore(info);
 
 	zen::TotalScoreRecord* record = new zen::TotalScoreRecord;
 	record->mParts                = info.mParts;
 	record->mDay                  = info.mDay;
-	record->mPikis                = info.mLivingPikis;
+	record->mPikis                = info.mBornPikis;
 	record->mDeadPikis            = info.mDeadPikis;
 	record->mTotalPikis           = gameflow.mGamePrefs.mHiscores.mTotalPikis;
 
@@ -1922,9 +1922,9 @@ void DayOverModeState::makeTotalScoreWindow()
 		}
 	}
 
-	record->_14 = info._10;
-	record->_16 = info._14;
-	record->_18 = info._18;
+	record->mPartsDaysRank = info.mPartsDaysRank;
+	record->mBornPikisRank = info.mBornPikisRank;
+	record->mDeadPikisRank = info.mDeadPikisRank;
 
 	totalWindow = new zen::DrawFinalResult(record);
 
@@ -2459,7 +2459,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 			GameChalQuickInfo info;
 			PRINT("starting challenge mode window %d : %d!\n", GameStat::allPikis);
 			info.mCourseID = flowCont.mCurrentStage->mChalStageID;
-			info.mPikis    = GameStat::allPikis;
+			info.mScore    = GameStat::allPikis;
 			gameflow.mGamePrefs.checkIsHiscore(info);
 			challengeWindow = new zen::DrawCMresult;
 			challengeWindow->start(info);

@@ -252,7 +252,7 @@ void GameCoreSection::startMovie(u32 flags, bool b)
  * Address:	8010D3FC
  * Size:	000254
  */
-void GameCoreSection::endMovie(int a)
+void GameCoreSection::endMovie(int movieIdx)
 {
 	GoalItem::demoHideFlag = 0;
 	if (tekiMgr) {
@@ -290,7 +290,8 @@ void GameCoreSection::endMovie(int a)
 			PRINT("using previous camera\\n");
 		}
 		angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
-		if (a == 4 || a == 5 || a == 6 || a == 16) {
+		if (movieIdx == DEMOID_FindRedOnyon || movieIdx == DEMOID_FindYellowOnyon || movieIdx == DEMOID_FindBlueOnyon
+		    || movieIdx == DEMOID_DiscoverMainEngine) {
 			Vector3f diff = gameflow.mMoviePlayer->_12C - gameflow.mMoviePlayer->mLookAtPos;
 			diff.y        = 0.0f;
 			diff.normalise();

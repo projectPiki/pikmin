@@ -21,14 +21,14 @@ struct TotalScoreRecord {
 	// DLL inlines to do:
 	void setDummy()
 	{
-		mParts      = 11;
-		mDay        = 22;
-		mPikis      = 333;
-		mDeadPikis  = 4444;
-		mTotalPikis = 12345678;
-		_14         = 3;
-		_16         = 1;
-		_18         = -1;
+		mParts         = 11;
+		mDay           = 22;
+		mPikis         = 333;
+		mDeadPikis     = 4444;
+		mTotalPikis    = 12345678;
+		mPartsDaysRank = 3;
+		mBornPikisRank = 1;
+		mDeadPikisRank = -1;
 		for (int i = 0; i < 5; i++) {
 			if (i < 3) {
 				mRecordNumParts[i] = i + 1;
@@ -49,9 +49,9 @@ struct TotalScoreRecord {
 	int mPikis;             // _08
 	int mDeadPikis;         // _0C
 	int mTotalPikis;        // _10
-	s16 _14;                // _14
-	s16 _16;                // _16
-	s16 _18;                // _18
+	s16 mPartsDaysRank;     // _14
+	s16 mBornPikisRank;     // _16
+	s16 mDeadPikisRank;     // _18
 	s16 mRecordNumParts[5]; // _1A
 	s16 mRecordNumDays[5];  // _24
 	s16 mRecordNumBorn[5];  // _2E

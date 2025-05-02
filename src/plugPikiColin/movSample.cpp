@@ -1,11 +1,21 @@
 #include "MovSampleSection.h"
 #include "Dolphin/gx.h"
 #include "jaudio/app_inter.h"
+#include "jaudio/PikiScene.h"
 #include "Graphics.h"
+#include "FlowController.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
+u16 ImgH;
+u16 ImgW;
 GXTexObj YtexObj;
 GXTexObj UVtexObj;
+OSThread playbackThread;
+u8 playbackThreadStack[0x1000];
+bool finishPlayback;
+
+static void* playbackFunc(void*);
 
 /*
  * --INFO--
@@ -19,15 +29,207 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("MovSample")
+
+/**
+ * @brief TODO
+ */
+struct MovSampleSetupSection : public Node {
+	MovSampleSetupSection()
+	{
+		mName       = "MovSample section";
+		mController = new Controller;
+		_28         = 160;
+		_30         = 0;
+		gsys->setFade(1.0f, 3.0f);
+
+		static char* movieNames[6] = { "../MovieData/cntA_S.h4m", "../MovieData/cntB_S.h4m", "../MovieData/cntC_S.h4m",
+			                           "../MovieData/cntD_S.h4m", "../MovieData/sr_S.h4m",   "../MovieData/srhp_S.h4m" };
+		int size                   = 0xe00000;
+		u8* store                  = new (0x20) u8[size];
+		Jac_StreamMovieInit(movieNames[gameflow._2B0], store, size);
+		ImgW      = 640;
+		ImgH      = 480;
+		int size2 = 0x70800;
+		_48[0]    = new (0x20) u8[size2];
+		_48[1]    = new (0x20) u8[size2];
+		for (int i = 0; i < 2; i++) {
+			void* dest  = _48[i];
+			void* dest2 = &_48[i][ImgW * ImgH];
+			memset(dest, 0x10, ImgW * ImgH);
+			memset(dest2, 0x80, (ImgW / 2) * (ImgH / 2) * 2);
+		}
+		OSCreateThread(&playbackThread, &playbackFunc, 0, &playbackThreadStack[0x1000], 0x1000, 0x14, 1);
+		finishPlayback = false;
+		OSResumeThread(&playbackThread);
+	}
+
+	virtual void update() // _10 (weak)
+	{
+		mController->update();
+
+		int pic = 0;
+		u8* a   = nullptr;
+		int b, c;
+		if (gsys->_258 < 0) {
+			pic = Jac_StreamMovieGetPicture(&a, &b, &c);
+		}
+
+		if (a && pic) {
+			convHVQM4TexY8UV8(b, c, a, _48[_3C ^ 1]);
+			_3C ^= 1;
+		}
+
+		bool check = false;
+		if (flowCont._244 == 0 && mController->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
+			check = true;
+		}
+
+		if (check || pic == -1) {
+			Jac_StreamMovieStop();
+			OSCancelThread(&playbackThread);
+
+			if (flowCont._244) {
+				Jac_SceneExit(13, 0);
+				flowCont._244 = 0;
+			}
+
+			gameflow.mGameSectionID = SECTION_Titles;
+			gsys->softReset();
+		}
+
+		u32 badCompiler;
+	}
+	virtual void draw(Graphics& gfx) // _14 (weak)
+	{
+		// NON-MATCHING
+		gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		gfx.setClearColour(Colour(0, 0, 0, 0));
+		gfx.clearBuffer(3, false);
+		Matrix4f mtx;
+		u32 badCompiler[64];
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+
+		GXSetNumTexGens(2);
+		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
+		GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
+		GXInvalidateTexAll();
+		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_CLEAR);
+		GXSetNumTevStages(4);
+
+		GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_C0);
+		GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
+		GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_A0);
+		GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_SUB, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
+		GXSetTevKColorSel(GX_TEVSTAGE0, GX_TEV_KCSEL_K0);
+		GXSetTevKAlphaSel(GX_TEVSTAGE0, GX_TEV_KASEL_K0_A);
+		GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP1);
+
+		GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD1, GX_TEXMAP1, GX_COLOR_NULL);
+		GXSetTevColorIn(GX_TEVSTAGE1, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_CPREV);
+		GXSetTevColorOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_2, GX_FALSE, GX_TEVPREV);
+		GXSetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_APREV);
+		GXSetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_2, GX_FALSE, GX_TEVPREV);
+		GXSetTevKColorSel(GX_TEVSTAGE1, GX_TEV_KCSEL_K1);
+		GXSetTevKAlphaSel(GX_TEVSTAGE1, GX_TEV_KASEL_K1_A);
+		GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
+
+		GXSetTevOrder(GX_TEVSTAGE2, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
+		GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_CPREV);
+		GXSetTevColorOp(GX_TEVSTAGE2, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+		GXSetTevAlphaIn(GX_TEVSTAGE2, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_APREV);
+		GXSetTevAlphaOp(GX_TEVSTAGE2, GX_TEV_SUB, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+		GXSetTevKColorSel(GX_TEVSTAGE2, GX_TEV_KCSEL_K2);
+		GXSetTevKAlphaSel(GX_TEVSTAGE2, GX_TEV_KASEL_K2_A);
+		GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP2);
+
+		GXSetTevOrder(GX_TEVSTAGE3, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
+		GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_CPREV, GX_CC_APREV, GX_CC_KONST, GX_CC_ZERO);
+		GXSetTevColorOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+		GXSetTevAlphaIn(GX_TEVSTAGE3, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO);
+		GXSetTevAlphaOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+		GXSetTevSwapMode(GX_TEVSTAGE3, GX_TEV_SWAP0, GX_TEV_SWAP0);
+		GXSetTevKColorSel(GX_TEVSTAGE3, GX_TEV_KCSEL_K3);
+
+		setTevColors();
+
+		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+		GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
+		GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA, GX_CH_RED);
+
+		u8* data = _48[_3C];
+		GXInitTexObj(&YtexObj, data, ImgW, ImgH, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+		GXInitTexObjLOD(&YtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+		GXLoadTexObj(&YtexObj, GX_TEXMAP1);
+
+		GXInitTexObj(&UVtexObj, &data[ImgW * ImgH], ImgW / 2, ImgH / 2, GX_TF_IA8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+		GXInitTexObjLOD(&UVtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
+		GXLoadTexObj(&UVtexObj, GX_TEXMAP0);
+
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+
+		// WHY WONT YOU USE DIFFERENT REGISTERS
+		gfx.testRectangle(RectArea(0, 0, 640, 480));
+
+		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+		GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP0);
+		GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
+		GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP0);
+		GXSetTevSwapMode(GX_TEVSTAGE3, GX_TEV_SWAP0, GX_TEV_SWAP0);
+
+		gfx.setColour(Colour(255, 255, 64, 255), true);
+		gfx.setAuxColour(Colour(255, 0, 64, 255));
+
+		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
+	}
+
+	// not in the DLL, but needed for stack ordering
+	void setTevColors()
+	{
+		GXSetTevColorS10(GX_TEVREG0, (GXColorS10) { 0xFF91, 0x00, 0xFF76, 0x44 });
+		GXSetTevKColor(GX_KCOLOR0, (GXColor) { 0x66, 0, 0xFF, 0x32 });
+		GXSetTevKColor(GX_KCOLOR1, (GXColor) { 0x94, 0, 0x94, 0x94 });
+		GXSetTevKColor(GX_KCOLOR2, (GXColor) { 0xCB, 0, 5, 0xCF });
+		GXSetTevKColor(GX_KCOLOR3, (GXColor) { 0, 0xFF, 0, 0 });
+	}
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	int _20;                 // _20
+	int _24;                 // _24
+	int _28;                 // _28
+	Controller* mController; // _2C
+	int _30;                 // _30
+	int _34;                 // _34
+	int _38;                 // _38
+	int _3C;                 // _3C
+	int _40;                 // _40
+	int _44;                 // _44
+	u8* _48[2];              // _48
+};
 
 /*
  * --INFO--
  * Address:	80077EF0
  * Size:	0003F0
  */
-void convHVQM4TexY8UV8(int, int, u8*, u8*)
+void convHVQM4TexY8UV8(int p1, int p2, u8* p3, u8* p4)
 {
+	// unfinished, here be dragons (confusing unrolled loops with no DLL equivalent)
+	int p1Round = (p1 / 4) * 4;
+	for (int i = p2; i > 0; i -= 4) {
+		u32* src = (u32*)p3;
+		u32* dst = (u32*)p4;
+		for (int j = 0; j < p1; j++) {
+			dst[j] = src[j];
+		}
+		src += p1Round;
+		dst += p1Round;
+	}
+
+	FORCE_DONT_INLINE
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -326,818 +528,10 @@ static void* playbackFunc(void*)
 void MovSampleSection::init()
 {
 	Node::init("<MovSampleSection>");
-	gsys->mFrameRate  = 1;
+	gsys->setFrameClamp(1);
 	gsys->mTimerState = 0;
 	gsys->startLoading(nullptr, true, 60);
 
-	MovSampleSetupSection* sect = new MovSampleSetupSection;
-	add(sect);
+	add(new MovSampleSetupSection);
 	gsys->endLoading();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r25, 0x14(r1)
-	  subi      r26, r4, 0x3728
-	  lis       r4, 0x803D
-	  addi      r31, r4, 0x260
-	  addi      r28, r3, 0
-	  addi      r4, r26, 0xC4
-	  bl        -0x37C00
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x1
-	  li        r0, 0
-	  stw       r4, 0x14(r3)
-	  li        r4, 0
-	  li        r5, 0x1
-	  lwz       r3, 0x2DEC(r13)
-	  li        r6, 0x3C
-	  stw       r0, 0x18(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x2C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x50
-	  bl        -0x31378
-	  addi      r29, r3, 0
-	  mr.       r27, r29
-	  beq-      .loc_0x224
-	  addi      r3, r27, 0
-	  subi      r4, r13, 0x64C0
-	  bl        -0x433DC
-	  lis       r3, 0x8023
-	  subi      r30, r3, 0x71E0
-	  stw       r30, 0x0(r29)
-	  addi      r3, r27, 0
-	  subi      r4, r13, 0x64C0
-	  bl        -0x37C70
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x35B0
-	  stw       r0, 0x0(r29)
-	  addi      r0, r26, 0xD8
-	  li        r3, 0x50
-	  stw       r0, 0x4(r29)
-	  bl        -0x313C4
-	  addi      r25, r3, 0
-	  mr.       r0, r25
-	  beq-      .loc_0xF8
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0xEC
-	  bl        -0x43428
-	  stw       r30, 0x0(r25)
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0xEC
-	  bl        -0x37CB4
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x714C
-	  stw       r0, 0x0(r25)
-	  addi      r3, r25, 0
-	  li        r4, 0x1
-	  bl        -0x37A58
-
-	.loc_0xF8:
-	  stw       r25, 0x2C(r29)
-	  li        r0, 0xA0
-	  lis       r26, 0xE0
-	  stw       r0, 0x28(r29)
-	  li        r30, 0
-	  addi      r3, r26, 0
-	  stw       r30, 0x30(r29)
-	  li        r4, 0x20
-	  lwz       r5, 0x2DEC(r13)
-	  lfs       f0, -0x7720(r2)
-	  stfs      f0, 0x8(r5)
-	  lfs       f0, -0x771C(r2)
-	  stfs      f0, 0xC(r5)
-	  bl        -0x312D8
-	  lis       r4, 0x803A
-	  subi      r4, r4, 0x2848
-	  lwz       r0, 0x2B0(r4)
-	  lis       r4, 0x802B
-	  rlwinm    r5,r0,2,0,29
-	  subi      r0, r4, 0x367C
-	  add       r5, r0, r5
-	  addi      r4, r3, 0
-	  lwz       r3, 0x0(r5)
-	  mr        r5, r26
-	  bl        -0x6100C
-	  li        r3, 0x280
-	  li        r0, 0x1E0
-	  sth       r3, 0x2F1A(r13)
-	  lis       r3, 0x7
-	  addi      r26, r3, 0x800
-	  sth       r0, 0x2F18(r13)
-	  addi      r3, r26, 0
-	  li        r4, 0x20
-	  bl        -0x31328
-	  stw       r3, 0x48(r29)
-	  addi      r3, r26, 0
-	  li        r4, 0x20
-	  bl        -0x31338
-	  stw       r3, 0x4C(r29)
-
-	.loc_0x194:
-	  lhz       r3, 0x2F1A(r13)
-	  li        r4, 0x10
-	  lhz       r0, 0x2F18(r13)
-	  lwz       r6, 0x48(r29)
-	  mullw     r5, r3, r0
-	  addi      r3, r6, 0
-	  add       r26, r6, r5
-	  bl        -0x751A4
-	  lhz       r5, 0x2F1A(r13)
-	  mr        r3, r26
-	  lhz       r0, 0x2F18(r13)
-	  li        r4, 0x80
-	  srawi     r5, r5, 0x1
-	  addze     r5, r5
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  mullw     r0, r5, r0
-	  rlwinm    r5,r0,1,0,30
-	  bl        -0x751D0
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x2
-	  addi      r29, r29, 0x4
-	  blt+      .loc_0x194
-	  lis       r3, 0x8008
-	  subi      r4, r3, 0x7D20
-	  addi      r3, r31, 0x40
-	  addi      r6, r31, 0x1350
-	  li        r5, 0
-	  li        r7, 0x1000
-	  li        r8, 0x14
-	  li        r9, 0x1
-	  bl        0x183BA0
-	  li        r0, 0
-	  stb       r0, 0x2F1C(r13)
-	  addi      r3, r31, 0x40
-	  bl        0x184090
-
-	.loc_0x224:
-	  addi      r3, r28, 0
-	  addi      r4, r27, 0
-	  bl        -0x37F68
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r25, 0x14(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8007856C
- * Size:	00014C
- */
-void MovSampleSetupSection::update()
-{
-	mControl->update();
-
-	if (gsys->_258 < 0) {
-		Jac_StreamMovieGetPicture();
-	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  mr        r30, r3
-	  stw       r29, 0x2C(r1)
-	  lwz       r3, 0x2C(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  lwz       r3, 0x2DEC(r13)
-	  stw       r0, 0x20(r1)
-	  li        r31, 0
-	  lwz       r0, 0x258(r3)
-	  cmpwi     r0, 0
-	  bge-      .loc_0x60
-	  addi      r3, r1, 0x20
-	  addi      r4, r1, 0x1C
-	  addi      r5, r1, 0x18
-	  bl        -0x61064
-	  mr        r31, r3
-
-	.loc_0x60:
-	  lwz       r5, 0x20(r1)
-	  cmplwi    r5, 0
-	  beq-      .loc_0xA0
-	  cmpwi     r31, 0
-	  beq-      .loc_0xA0
-	  lwz       r0, 0x3C(r30)
-	  lwz       r3, 0x1C(r1)
-	  xori      r0, r0, 0x1
-	  lwz       r4, 0x18(r1)
-	  rlwinm    r0,r0,2,0,29
-	  add       r6, r30, r0
-	  lwz       r6, 0x48(r6)
-	  bl        -0x70C
-	  lwz       r0, 0x3C(r30)
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x3C(r30)
-
-	.loc_0xA0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x24E0
-	  addi      r29, r3, 0x244
-	  lwz       r0, 0x244(r3)
-	  li        r5, 0
-	  cmpwi     r0, 0
-	  bne-      .loc_0xD8
-	  lwz       r4, 0x2C(r30)
-	  lis       r3, 0x100
-	  addi      r0, r3, 0x3000
-	  lwz       r3, 0x28(r4)
-	  and.      r0, r3, r0
-	  beq-      .loc_0xD8
-	  li        r5, 0x1
-
-	.loc_0xD8:
-	  rlwinm.   r0,r5,0,24,31
-	  bne-      .loc_0xE8
-	  cmpwi     r31, -0x1
-	  bne-      .loc_0x130
-
-	.loc_0xE8:
-	  bl        -0x61174
-	  lis       r3, 0x803D
-	  addi      r3, r3, 0x2A0
-	  bl        0x183C68
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x118
-	  li        r3, 0xD
-	  li        r4, 0
-	  bl        -0x5E998
-	  li        r0, 0
-	  stw       r0, 0x0(r29)
-
-	.loc_0x118:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  li        r0, 0x1
-	  stw       r0, 0x1F0(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  stb       r0, 0x0(r3)
-
-	.loc_0x130:
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800786B8
- * Size:	0006F8
- */
-void MovSampleSetupSection::draw(Graphics& gfx)
-{
-	gfx.setViewport(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setScissor(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.setClearColour(Colour(0, 0, 0, 0));
-	gfx.clearBuffer(3, false);
-	Mtx mtx;
-	gfx.setOrthogonal(mtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-
-	GXSetNumTexGens(2);
-	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
-	GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3X4, GX_TG_TEX0, 60, 0, 125);
-	GXInvalidateTexAll();
-	GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_CLEAR);
-	GXSetNumTevStages(4);
-
-	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
-	GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_C0);
-	GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-	GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_A0);
-	GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_SUB, GX_TB_ZERO, GX_CS_SCALE_1, GX_FALSE, GX_TEVPREV);
-	GXSetTevKColorSel(GX_TEVSTAGE0, GX_TEV_KCSEL_K0);
-	GXSetTevKAlphaSel(GX_TEVSTAGE0, GX_TEV_KASEL_K0_A);
-	GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP1);
-
-	GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD1, GX_TEXMAP1, GX_COLOR_NULL);
-	GXSetTevColorIn(GX_TEVSTAGE1, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_CPREV);
-	GXSetTevColorOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_2, GX_FALSE, GX_TEVPREV);
-	GXSetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_APREV);
-	GXSetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_2, GX_FALSE, GX_TEVPREV);
-	GXSetTevKColorSel(GX_TEVSTAGE1, GX_TEV_KCSEL_K1);
-	GXSetTevKAlphaSel(GX_TEVSTAGE1, GX_TEV_KASEL_K1_A);
-	GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
-
-	GXSetTevOrder(GX_TEVSTAGE2, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
-	GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_ZERO, GX_CC_TEXC, GX_CC_KONST, GX_CC_CPREV);
-	GXSetTevColorOp(GX_TEVSTAGE2, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-	GXSetTevAlphaIn(GX_TEVSTAGE2, GX_CA_ZERO, GX_CA_TEXA, GX_CA_KONST, GX_CA_APREV);
-	GXSetTevAlphaOp(GX_TEVSTAGE2, GX_TEV_SUB, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-	GXSetTevKColorSel(GX_TEVSTAGE2, GX_TEV_KCSEL_K2);
-	GXSetTevKAlphaSel(GX_TEVSTAGE2, GX_TEV_KASEL_K2_A);
-	GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP2);
-
-	GXSetTevOrder(GX_TEVSTAGE3, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
-	GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_CPREV, GX_CC_APREV, GX_CC_KONST, GX_CC_ZERO);
-	GXSetTevColorOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-	GXSetTevAlphaIn(GX_TEVSTAGE3, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO);
-	GXSetTevAlphaOp(GX_TEVSTAGE3, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-	GXSetTevSwapMode(GX_TEVSTAGE3, GX_TEV_SWAP0, GX_TEV_SWAP0);
-	GXSetTevKColorSel(GX_TEVSTAGE3, GX_TEV_KCSEL_K3);
-
-	GXColorS10 col1 = {};
-	GXSetTevColorS10(GX_TEVREG0, col1);
-
-	GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
-	GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_ALPHA, GX_CH_ALPHA, GX_CH_ALPHA);
-	GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA, GX_CH_RED);
-
-	GXInitTexObj(&YtexObj, _48[_3C], ImgW, ImgH, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
-	GXInitTexObjLOD(&YtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-	GXLoadTexObj(&YtexObj, GX_TEXMAP1);
-
-	GXInitTexObj(&UVtexObj, _48[_3C], ImgW * 2, ImgH * 2, GX_TF_IA8, GX_CLAMP, GX_CLAMP, GX_FALSE);
-	GXInitTexObjLOD(&UVtexObj, GX_NEAR, GX_NEAR, 0.0f, 0.0f, 0.0f, GX_FALSE, GX_FALSE, GX_ANISO_1);
-	GXLoadTexObj(&UVtexObj, GX_TEXMAP0);
-
-	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.testRectangle(RectArea(0, 0, 640, 480));
-
-	GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
-	GXSetTevSwapMode(GX_TEVSTAGE0, GX_TEV_SWAP0, GX_TEV_SWAP0);
-	GXSetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
-	GXSetTevSwapMode(GX_TEVSTAGE2, GX_TEV_SWAP0, GX_TEV_SWAP0);
-	GXSetTevSwapMode(GX_TEVSTAGE3, GX_TEV_SWAP0, GX_TEV_SWAP0);
-
-	gfx.setColour(Colour(255, 255, 64, 255), true);
-	gfx.setAuxColour(Colour(255, 0, 64, 255));
-
-	gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1F8(r1)
-	  stw       r31, 0x1F4(r1)
-	  mr        r31, r4
-	  stw       r30, 0x1F0(r1)
-	  li        r30, 0
-	  stw       r29, 0x1EC(r1)
-	  stw       r28, 0x1E8(r1)
-	  mr        r28, r3
-	  lis       r3, 0x803D
-	  lwz       r5, 0x310(r4)
-	  addi      r29, r3, 0x260
-	  lwz       r0, 0x30C(r4)
-	  addi      r4, r1, 0x94
-	  mr        r3, r31
-	  stw       r30, 0x94(r1)
-	  stw       r30, 0x98(r1)
-	  stw       r0, 0x9C(r1)
-	  stw       r5, 0xA0(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r31)
-	  addi      r4, r1, 0x84
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  stw       r30, 0x84(r1)
-	  stw       r30, 0x88(r1)
-	  stw       r0, 0x8C(r1)
-	  stw       r5, 0x90(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x50(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r30, 0x80(r1)
-	  addi      r4, r1, 0x80
-	  addi      r3, r31, 0
-	  stb       r30, 0x81(r1)
-	  stb       r30, 0x82(r1)
-	  stb       r30, 0x83(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xB4(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x3
-	  li        r5, 0
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r6, 0x310(r31)
-	  addi      r5, r1, 0x70
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  addi      r4, r1, 0x1A4
-	  stw       r30, 0x70(r1)
-	  stw       r30, 0x74(r1)
-	  stw       r0, 0x78(r1)
-	  stw       r6, 0x7C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x2
-	  bl        0x197F64
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0x4
-	  li        r6, 0x3C
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x197C78
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  li        r5, 0x4
-	  li        r6, 0x3C
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x197C5C
-	  bl        0x19A120
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0x19B438
-	  li        r3, 0x4
-	  bl        0x19B148
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0xFF
-	  bl        0x19AF94
-	  li        r3, 0
-	  li        r4, 0xF
-	  li        r5, 0x8
-	  li        r6, 0xE
-	  li        r7, 0x2
-	  bl        0x19A8F8
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  bl        0x19A9E0
-	  li        r3, 0
-	  li        r4, 0x7
-	  li        r5, 0x4
-	  li        r6, 0x6
-	  li        r7, 0x1
-	  bl        0x19A944
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  bl        0x19AA6C
-	  li        r3, 0
-	  li        r4, 0xC
-	  bl        0x19AC7C
-	  li        r3, 0
-	  li        r4, 0x1C
-	  bl        0x19ACDC
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0x1
-	  bl        0x19AD38
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  li        r5, 0x1
-	  li        r6, 0xFF
-	  bl        0x19AEF0
-	  li        r3, 0x1
-	  li        r4, 0xF
-	  li        r5, 0x8
-	  li        r6, 0xE
-	  li        r7, 0
-	  bl        0x19A854
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x1
-	  li        r7, 0
-	  li        r8, 0
-	  bl        0x19A93C
-	  li        r3, 0x1
-	  li        r4, 0x7
-	  li        r5, 0x4
-	  li        r6, 0x6
-	  li        r7, 0
-	  bl        0x19A8A0
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x1
-	  li        r7, 0
-	  li        r8, 0
-	  bl        0x19A9C8
-	  li        r3, 0x1
-	  li        r4, 0xD
-	  bl        0x19ABD8
-	  li        r3, 0x1
-	  li        r4, 0x1D
-	  bl        0x19AC38
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x19AC94
-	  li        r3, 0x2
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0xFF
-	  bl        0x19AE4C
-	  li        r3, 0x2
-	  li        r4, 0xF
-	  li        r5, 0x8
-	  li        r6, 0xE
-	  li        r7, 0
-	  bl        0x19A7B0
-	  li        r3, 0x2
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x19A898
-	  li        r3, 0x2
-	  li        r4, 0x7
-	  li        r5, 0x4
-	  li        r6, 0x6
-	  li        r7, 0
-	  bl        0x19A7FC
-	  li        r3, 0x2
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x19A924
-	  li        r3, 0x2
-	  li        r4, 0xE
-	  bl        0x19AB34
-	  li        r3, 0x2
-	  li        r4, 0x1E
-	  bl        0x19AB94
-	  li        r3, 0x2
-	  li        r4, 0
-	  li        r5, 0x2
-	  bl        0x19ABF0
-	  li        r3, 0x3
-	  li        r4, 0xFF
-	  li        r5, 0xFF
-	  li        r6, 0xFF
-	  bl        0x19ADA8
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0xE
-	  li        r7, 0xF
-	  bl        0x19A70C
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x19A7F4
-	  li        r3, 0x3
-	  li        r4, 0x7
-	  li        r5, 0x7
-	  li        r6, 0x7
-	  li        r7, 0x7
-	  bl        0x19A758
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x19A880
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x19AB64
-	  li        r3, 0x3
-	  li        r4, 0xF
-	  bl        0x19AA80
-	  lwz       r3, -0x7738(r2)
-	  addi      r4, r1, 0x24
-	  lwz       r0, -0x7734(r2)
-	  stw       r3, 0x2C(r1)
-	  li        r3, 0x1
-	  stw       r0, 0x30(r1)
-	  lwz       r5, 0x2C(r1)
-	  lwz       r0, 0x30(r1)
-	  stw       r5, 0x24(r1)
-	  stw       r0, 0x28(r1)
-	  bl        0x19A96C
-	  lwz       r0, -0x7730(r2)
-	  addi      r4, r1, 0x34
-	  li        r3, 0
-	  stw       r0, 0x38(r1)
-	  lwz       r0, 0x38(r1)
-	  stw       r0, 0x34(r1)
-	  bl        0x19A9C4
-	  lwz       r0, -0x772C(r2)
-	  addi      r4, r1, 0x3C
-	  li        r3, 0x1
-	  stw       r0, 0x40(r1)
-	  lwz       r0, 0x40(r1)
-	  stw       r0, 0x3C(r1)
-	  bl        0x19A9A8
-	  lwz       r0, -0x7728(r2)
-	  addi      r4, r1, 0x44
-	  li        r3, 0x2
-	  stw       r0, 0x48(r1)
-	  lwz       r0, 0x48(r1)
-	  stw       r0, 0x44(r1)
-	  bl        0x19A98C
-	  lwz       r0, -0x7724(r2)
-	  addi      r4, r1, 0x4C
-	  li        r3, 0x3
-	  stw       r0, 0x50(r1)
-	  lwz       r0, 0x50(r1)
-	  stw       r0, 0x4C(r1)
-	  bl        0x19A970
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x2
-	  li        r7, 0x3
-	  bl        0x19AAFC
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0x3
-	  li        r6, 0x3
-	  li        r7, 0x3
-	  bl        0x19AAE4
-	  li        r3, 0x2
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x3
-	  li        r7, 0
-	  bl        0x19AACC
-	  lwz       r0, 0x3C(r28)
-	  mr        r3, r29
-	  lhz       r5, 0x2F1A(r13)
-	  li        r7, 0x1
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r28, r0
-	  lhz       r6, 0x2F18(r13)
-	  lwz       r28, 0x48(r4)
-	  li        r8, 0
-	  li        r9, 0
-	  addi      r4, r28, 0
-	  li        r10, 0
-	  bl        0x199614
-	  lfs       f1, -0x7718(r2)
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  fmr       f2, f1
-	  li        r5, 0
-	  fmr       f3, f1
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  bl        0x199840
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        0x199B78
-	  lhz       r4, 0x2F1A(r13)
-	  addi      r3, r29, 0x20
-	  lhz       r0, 0x2F18(r13)
-	  li        r7, 0x3
-	  srawi     r5, r4, 0x1
-	  mullw     r4, r4, r0
-	  addze     r5, r5
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  add       r4, r28, r4
-	  rlwinm    r5,r5,0,16,31
-	  rlwinm    r6,r0,0,16,31
-	  li        r8, 0
-	  li        r9, 0
-	  li        r10, 0
-	  bl        0x1995A0
-	  lfs       f1, -0x7718(r2)
-	  addi      r3, r29, 0x20
-	  li        r4, 0
-	  fmr       f2, f1
-	  li        r5, 0
-	  fmr       f3, f1
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  bl        0x1997CC
-	  addi      r3, r29, 0x20
-	  li        r4, 0
-	  bl        0x199B04
-	  li        r29, 0xFF
-	  stb       r29, 0x6C(r1)
-	  addi      r4, r1, 0x6C
-	  addi      r3, r31, 0
-	  stb       r29, 0x6D(r1)
-	  li        r5, 0x1
-	  stb       r29, 0x6E(r1)
-	  stb       r29, 0x6F(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r30, 0x5C(r1)
-	  li        r0, 0x280
-	  li        r5, 0x1E0
-	  stw       r30, 0x60(r1)
-	  addi      r4, r1, 0x5C
-	  addi      r3, r31, 0
-	  stw       r0, 0x64(r1)
-	  stw       r5, 0x68(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xE0(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x2
-	  li        r7, 0x3
-	  bl        0x19A978
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x19A910
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x19A900
-	  li        r3, 0x2
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x19A8F0
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x19A8E0
-	  stb       r29, 0x58(r1)
-	  li        r28, 0x40
-	  addi      r4, r1, 0x58
-	  stb       r29, 0x59(r1)
-	  mr        r3, r31
-	  li        r5, 0x1
-	  stb       r28, 0x5A(r1)
-	  stb       r29, 0x5B(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r29, 0x54(r1)
-	  addi      r4, r1, 0x54
-	  addi      r3, r31, 0
-	  stb       r30, 0x55(r1)
-	  stb       r28, 0x56(r1)
-	  stb       r29, 0x57(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r6, 0x310(r3)
-	  addi      r4, r31, 0
-	  lfs       f1, 0x314(r3)
-	  li        r5, 0
-	  bl        -0x277C4
-	  lwz       r0, 0x1FC(r1)
-	  lwz       r31, 0x1F4(r1)
-	  lwz       r30, 0x1F0(r1)
-	  lwz       r29, 0x1EC(r1)
-	  lwz       r28, 0x1E8(r1)
-	  addi      r1, r1, 0x1F8
-	  mtlr      r0
-	  blr
-	*/
 }

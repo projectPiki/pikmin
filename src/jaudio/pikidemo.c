@@ -865,7 +865,7 @@ void Jac_DemoSound(void)
  * Address:	8001AA60
  * Size:	00004C
  */
-void Jac_DemoFrame(void)
+void Jac_DemoFrame(int)
 {
 	/*
 	.loc_0x0:

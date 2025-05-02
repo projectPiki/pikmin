@@ -81,7 +81,7 @@ void TitlesSection::init()
 	gsys->startLoading(&gameflow.mGameLoadIdler, false, gameflow.mIsChallengeMode ? 0 : 60);
 
 	int beforeLang          = gameflow.mLanguageIndex;
-	gameflow.mLanguageIndex = gameflow.mGamePrefs.isChallengeOpen();
+	gameflow.mLanguageIndex = gameflow.mGamePrefs.getChildMode();
 	if (gameflow.mLanguageIndex != beforeLang) {
 		preloadLanguage();
 	}

@@ -164,6 +164,7 @@ struct StdSystem {
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
 	inline bool getPending() { return mPending; }
 	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
+	inline int getHeapNum() { return mActiveHeapIdx; }
 
 private:
 	// Use the functions!
