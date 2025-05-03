@@ -58,12 +58,11 @@ struct Graphics {
 	}
 
 	// _3B4 = VTBL
-	// In the DLL, take the offset of the variable (- 4) to get the real offset here
 	int _00;                                  // _00
-	u32 mRenderState;                         // _08
-	Matrix4f* mMatrix;                        // _0C
-	Matrix4f* mActiveMatrix;                  // _10
-	Light mLight;                             // _14
+	u32 mRenderState;                         // _04
+	Matrix4f* mMatrix;                        // _08
+	Matrix4f* mActiveMatrix;                  // _0C
+	Light mLight;                             // _10
 	Camera* mCamera;                          // _2E4
 	Texture* mActiveTexture[8];               // _2E8
 	u32 _308;                                 // _308

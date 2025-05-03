@@ -480,13 +480,13 @@ AnimKey* AnimInfo::addKeyFrame()
  * Address:	800508A4
  * Size:	000234
  */
-AnimMgr::AnimMgr(Shape* shape, char* p2, int p3, char* p4)
+AnimMgr::AnimMgr(Shape* shape, char* animPath, int flags, char* bundlePath)
 {
 	setName("AnimMgr");
 	mParent   = shape;
-	mIsLoaded = p3 & 0x7FFF;
+	mIsLoaded = flags & 0x7FFF;
 	mAnimList.initCore("anims");
-	loadAnims(p2, p4);
+	loadAnims(animPath, bundlePath);
 }
 
 /*

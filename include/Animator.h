@@ -380,12 +380,18 @@ struct AnimContext {
  * @brief TODO
  */
 struct Animator {
+	Animator() { }
+
 	void startAnim(int, int, int, int);
 	void updateContext();
 
-	// DLL inlines to make:
-	// (maybe) Animator();
-	// void init(AnimContext*, AnimMgr*);
+	void init(AnimContext* context, AnimMgr* mgr)
+	{
+		mContext          = context;
+		mMgr              = mgr;
+		mAnimInfo         = nullptr;
+		mAnimationCounter = 0.0f;
+	}
 
 	// _30 = VTBL
 	AnimMgr* mMgr;         // _00
@@ -429,11 +435,11 @@ struct AnimMgr : public CoreNode {
 		Parm<String> mBasePath; // _28
 	};
 
-	AnimMgr(Shape*, char*, int, char*);
+	AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath);
 
 	virtual void read(RandomAccessStream&); // _0C
 
-	void loadAnims(char*, char*);
+	void loadAnims(char* animPath, char* bundlePath);
 	AnimInfo* addAnimation(char*, bool);
 	int countAnims();
 

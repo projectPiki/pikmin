@@ -382,6 +382,7 @@ struct particleGenerator : public zenList {
 		mAirFieldVelocity.set(vel);
 		pmSwitch(set, PTCLFLAG_UseAirField);
 	}
+	Vector3f getAirField() { return mAirFieldVelocity; }
 
 	void setNewtonField(Vector3f attractorPos, f32 strength, bool set)
 	{
@@ -431,7 +432,6 @@ struct particleGenerator : public zenList {
 
 	/*
 	    These are still to be made/assigned from the DLL:
-	    Vector3f getAirField();
 	    f32 getNewtonFieldFrc();
 	*/
 

@@ -309,46 +309,6 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 
 /*
  * --INFO--
- * Address:	8018331C
- * Size:	000060
- */
-// f32 std::fmodf(f32, f32)
-// {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x28(r1)
-  stfd      f31, 0x20(r1)
-  fmr       f31, f2
-  stfd      f30, 0x18(r1)
-  fmr       f30, f1
-  fabs      f1, f31
-  fabs      f0, f30
-  fcmpo     cr0, f1, f0
-  ble-      .loc_0x34
-  fmr       f1, f30
-  b         .loc_0x48
-
-.loc_0x34:
-  fdivs     f1, f30, f31
-  bl        0x920A0
-  bl        0x91FE8
-  fmuls     f0, f31, f1
-  fsubs     f1, f30, f0
-
-.loc_0x48:
-  lwz       r0, 0x2C(r1)
-  lfd       f31, 0x20(r1)
-  lfd       f30, 0x18(r1)
-  addi      r1, r1, 0x28
-  mtlr      r0
-  blr
-*/
-// }
-
-/*
- * --INFO--
  * Address:	8018337C
  * Size:	00008C
  */

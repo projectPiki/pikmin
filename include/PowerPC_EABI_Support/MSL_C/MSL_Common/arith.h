@@ -12,7 +12,7 @@ typedef struct {
 	int rem;  /* remainder */
 } div_t;
 
-int abs(int __x);
+s32 abs(s32 __x);
 s32 labs(s32 __x);
 div_t div(s32 __numer, s32 __denom);
 
