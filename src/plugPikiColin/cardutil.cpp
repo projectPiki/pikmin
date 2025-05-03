@@ -18,7 +18,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("CardUtil")
 
 /*
  * --INFO--
@@ -1283,17 +1283,7 @@ void CardUtilFormat(s32)
  */
 bool CardUtilIsCardBusy()
 {
-	return CardControl.mChannel == -1;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x28B8
-	  lwz       r0, 0x20(r3)
-	  subfic    r3, r0, -0x1
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	return CardControl.mChannel != -1;
 }
 
 /*

@@ -23,6 +23,7 @@ struct AtxRouter {
  * @note Size: 0x10.
  */
 struct AtxStream : public Stream {
+	AtxStream() { init(); }
 
 	virtual void read(void*, int);  // _3C
 	virtual void write(void*, int); // _40
@@ -31,6 +32,8 @@ struct AtxStream : public Stream {
 	virtual void flush();           // _54
 
 	bool open(char*, int);
+
+	void init() { _0C = 0; }
 
 	// _04     = VTBL
 	// _00-_08 = Stream

@@ -166,11 +166,8 @@ struct StdSystem {
 	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
 	inline int getHeapNum() { return mActiveHeapIdx; }
 
-private:
-	// Use the functions!
-	bool mPending;    // _00
-	f32 mCurrentFade; // _04
-public:
+	bool mPending;                 // _00
+	f32 mCurrentFade;              // _04
 	f32 mFadeStart;                // _08
 	f32 mFadeEnd;                  // _0C
 	Font* mConsFont;               // _10
@@ -208,7 +205,7 @@ public:
 	virtual void startLoading(struct LoadIdler*, bool, u32) { }                 // _2C
 	virtual void endLoading() { }                                               // _30
 
-	u32 _1A4;                     // _1A4
+	int _1A4;                     // _1A4
 	u32 mMaterialCount;           // _1A8
 	u32 mDispCount;               // _1AC
 	u32 mLightCount;              // _1B0
@@ -296,6 +293,7 @@ struct System : public StdSystem {
 	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
+	f32 getFrameRate() { return _290; }
 
 	inline void initFakeThing1(FakeSystemList* p1, FakeSystemList* p2, u32 p3, u32 p4)
 	{

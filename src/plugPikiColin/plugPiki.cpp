@@ -2,8 +2,10 @@
 #include "timers.h"
 #include "Graphics.h"
 #include "gameflow.h"
+#include "Interface.h"
 #include "AtxStream.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -17,7 +19,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("plugPiki")
 
 /*
  * --INFO--
@@ -30,117 +32,17 @@ void PlugPikiApp::hardReset()
 	gsys->mTimer = new Timers;
 	gameflow.hardReset(this);
 	AyuHeap* heap = gsys->getHeap(0);
+	int max       = heap->getMaxFree();
+	int type      = heap->setAllocType(2);
+	u8* buf       = new u8[heap->getMaxFree()];
+	heap->setAllocType(type);
 
-	heap = gsys->getHeap(1);
-	heap->init("ovl", 2, 0, 0);
+	gsys->getHeap(1)->init("ovl", 2, buf, max);
 
 	gsys->resetHeap(1, 1);
-	gsys->getHeap(1)->mAllocType = 1;
+	gsys->getHeap(1)->setAllocType(1);
 	useHeap(1);
 	gsys->softReset();
-
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  stw       r28, 0x30(r1)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0xC
-	  bl        -0x17E24
-	  cmplwi    r3, 0
-	  beq-      .loc_0x58
-	  li        r4, 0
-	  stw       r4, 0x0(r3)
-	  li        r0, -0x1
-	  stw       r4, 0x8(r3)
-	  stw       r0, 0x4(r3)
-
-	.loc_0x58:
-	  lwz       r5, 0x2DEC(r13)
-	  lis       r4, 0x803A
-	  subi      r0, r4, 0x2848
-	  stw       r3, 0x34(r5)
-	  mr        r3, r0
-	  addi      r4, r31, 0
-	  bl        -0xCDD8
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0
-	  bl        -0x1FE4C
-	  mr        r30, r3
-	  lwz       r3, 0x8(r3)
-	  lwz       r0, 0x4(r30)
-	  sub       r0, r0, r3
-	  subic.    r3, r0, 0x8
-	  ble-      .loc_0x9C
-	  b         .loc_0xA0
-
-	.loc_0x9C:
-	  li        r3, 0
-
-	.loc_0xA0:
-	  lwz       r29, 0x0(r30)
-	  li        r0, 0x2
-	  addi      r28, r3, 0
-	  stw       r0, 0x0(r30)
-	  lwz       r3, 0x8(r30)
-	  lwz       r0, 0x4(r30)
-	  sub       r0, r0, r3
-	  subic.    r3, r0, 0x8
-	  ble-      .loc_0xC8
-	  b         .loc_0xCC
-
-	.loc_0xC8:
-	  li        r3, 0
-
-	.loc_0xCC:
-	  bl        -0x17EB8
-	  stw       r29, 0x0(r30)
-	  mr        r0, r3
-	  mr        r29, r0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x1
-	  bl        -0x1FEB4
-	  addi      r6, r29, 0
-	  addi      r7, r28, 0
-	  subi      r4, r13, 0x6EE8
-	  li        r5, 0x2
-	  bl        -0x3A5E0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x1
-	  li        r5, 0x1
-	  bl        -0x1FEC4
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, 0x1
-	  bl        -0x1FEE4
-	  li        r30, 0x1
-	  stw       r30, 0x0(r3)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  stb       r30, 0x0(r3)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -178,6 +80,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 		return;
 	}
 
+	gsys->mTimer->start("cpu draw", true);
 	gsys->mDispCount        = 0;
 	gsys->mMaterialCount    = 0;
 	gsys->_1A4              = 0;
@@ -189,15 +92,13 @@ void PlugPikiApp::draw(Graphics& gfx)
 	gsys->mSystemState      = 0;
 	Node::draw(gfx);
 
-	Mtx mtx;
-	RectArea area(0, 0, gfx.mScreenWidth, gfx.mScreenHeight);
-	gfx.setOrthogonal(mtx, area);
+	Matrix4f mtx;
+	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.useTexture(nullptr, 0);
 
 	if (gsys->mTimerState) {
-		Colour white(255, 255, 255, 255);
-		gfx.setColour(white, true);
-		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->_1A4, gsys->_1A4 * gsys->_290);
+		gfx.setColour(Colour(255, 255, 255, 255), true);
+		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->_1A4, int(gsys->_1A4 * gsys->getFrameRate()));
 		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mAnimatedPolygons);
 		gfx.texturePrintf(gsys->mConsFont, 32, 56, "%d mats", gsys->mMaterialCount);
 		gfx.texturePrintf(gsys->mConsFont, 32, 68, "%d disps", gsys->mDispCount);
@@ -206,328 +107,42 @@ void PlugPikiApp::draw(Graphics& gfx)
 		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mSystemState);
 	}
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1D8(r1)
-	  stmw      r27, 0x1C4(r1)
-	  addi      r29, r4, 0
-	  subi      r31, r5, 0x7950
-	  lwz       r0, 0x2C(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x4A8
-	  lwz       r4, 0x2DEC(r13)
-	  li        r27, 0
-	  stw       r27, 0x1AC(r4)
-	  mr        r4, r29
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1A8(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1A4(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1B4(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1B0(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1B8(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1BC(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1C0(r5)
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r27, 0x1C4(r5)
-	  bl        -0x1E884
-	  lwz       r6, 0x310(r29)
-	  addi      r5, r1, 0x60
-	  lwz       r0, 0x30C(r29)
-	  mr        r3, r29
-	  addi      r4, r1, 0x170
-	  stw       r27, 0x60(r1)
-	  stw       r27, 0x64(r1)
-	  stw       r0, 0x68(r1)
-	  stw       r6, 0x6C(r1)
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x294
-	  li        r0, 0xFF
-	  stb       r0, 0x5C(r1)
-	  addi      r4, r1, 0x5C
-	  addi      r3, r29, 0
-	  stb       r0, 0x5D(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x5E(r1)
-	  stb       r0, 0x5F(r1)
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x2DEC(r13)
-	  lis       r0, 0x4330
-	  lwz       r12, 0x3B4(r29)
-	  mr        r3, r29
-	  lwz       r8, 0x1A4(r5)
-	  lwz       r12, 0xEC(r12)
-	  addi      r7, r31, 0x1C
-	  xoris     r4, r8, 0x8000
-	  lfd       f1, -0x7938(r2)
-	  stw       r4, 0x1BC(r1)
-	  lfs       f2, 0x290(r5)
-	  mtlr      r12
-	  stw       r0, 0x1B8(r1)
-	  li        r6, 0x20
-	  lwz       r4, 0x10(r5)
-	  lfd       f0, 0x1B8(r1)
-	  crclr     6, 0x6
-	  li        r5, 0x20
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f0, f2
-	  fctiwz    f0, f0
-	  stfd      f0, 0x1B0(r1)
-	  lwz       r9, 0x1B4(r1)
-	  blrl
-	  mr        r3, r29
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  addi      r7, r31, 0x30
-	  lwz       r4, 0x10(r5)
-	  crclr     6, 0x6
-	  lwz       r12, 0xEC(r12)
-	  lwz       r8, 0x1B8(r5)
-	  li        r5, 0x20
-	  mtlr      r12
-	  li        r6, 0x2C
-	  blrl
-	  mr        r3, r29
-	  lwz       r6, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  crclr     6, 0x6
-	  lwz       r4, 0x10(r6)
-	  li        r5, 0x20
-	  lwz       r12, 0xEC(r12)
-	  lwz       r8, 0x1A8(r6)
-	  li        r6, 0x38
-	  mtlr      r12
-	  subi      r7, r13, 0x6EE4
-	  blrl
-	  mr        r3, r29
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  addi      r7, r31, 0x3C
-	  lwz       r4, 0x10(r5)
-	  crclr     6, 0x6
-	  lwz       r12, 0xEC(r12)
-	  lwz       r8, 0x1AC(r5)
-	  li        r5, 0x20
-	  mtlr      r12
-	  li        r6, 0x44
-	  blrl
-	  mr        r3, r29
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  crclr     6, 0x6
-	  lwz       r7, 0x24C(r4)
-	  li        r5, 0x20
-	  lwz       r12, 0xEC(r12)
-	  lwz       r4, 0x10(r4)
-	  li        r6, 0x50
-	  mtlr      r12
-	  lwz       r8, 0x38C(r7)
-	  subi      r7, r13, 0x6EDC
-	  blrl
-	  mr        r3, r29
-	  lwz       r6, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  addi      r7, r31, 0x48
-	  lwz       r4, 0x10(r6)
-	  crclr     6, 0x6
-	  lwz       r12, 0xEC(r12)
-	  lwz       r8, 0x1BC(r6)
-	  li        r5, 0x20
-	  mtlr      r12
-	  lwz       r9, 0x1C0(r6)
-	  li        r6, 0x5C
-	  blrl
-	  mr        r3, r29
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r12, 0x3B4(r29)
-	  addi      r7, r31, 0x68
-	  lwz       r4, 0x10(r5)
-	  crclr     6, 0x6
-	  lwz       r12, 0xEC(r12)
-	  lwz       r8, 0x1C4(r5)
-	  li        r5, 0x20
-	  mtlr      r12
-	  li        r6, 0x68
-	  blrl
+	if (gameflow._2C4 > 0.0f || gameflow._2C8 > 0.0f) {
+		gameflow._2CC -= gsys->getFrameTime();
+		if (gameflow._2CC < 0.0f) {
+			gameflow._2C8 = 0.0f;
+		}
 
-	.loc_0x294:
-	  lis       r3, 0x803A
-	  lfs       f1, -0x7940(r2)
-	  subi      r3, r3, 0x2848
-	  addi      r30, r3, 0x2C4
-	  lfs       f0, 0x2C4(r3)
-	  fcmpo     cr0, f0, f1
-	  bgt-      .loc_0x2BC
-	  lfs       f0, 0x2C8(r3)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x3E0
+		gameflow._2C4 += gsys->getFrameTime() * 1.0f * (gameflow._2C8 - gameflow._2C4);
+		if (quickABS(gameflow._2C4 - gameflow._2C8) < 0.1f) {
+			gameflow._2C4 = gameflow._2C8;
+		}
 
-	.loc_0x2BC:
-	  lwz       r4, 0x2DEC(r13)
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lfs       f1, 0x28C(r4)
-	  addi      r5, r4, 0x28C
-	  lfs       f0, 0x2CC(r3)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x2CC(r3)
-	  lfs       f1, 0x2CC(r3)
-	  lfs       f0, -0x7940(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x2F0
-	  stfs      f0, 0x2C8(r3)
+		gfx.setColour(Colour(192, 255, 255, gameflow._2C4), true);
+		gfx.setAuxColour(Colour(192, 192, 255, gameflow._2C4));
+		char buf[PATH_MAX];
+		sprintf(buf, "load took %.1f secs", gameflow._2C0);
+	}
 
-	.loc_0x2F0:
-	  lis       r3, 0x803A
-	  lfs       f2, 0x0(r30)
-	  subi      r3, r3, 0x2848
-	  lfsu      f1, 0x2C8(r3)
-	  lfs       f0, 0x0(r5)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r30)
-	  lfs       f2, 0x0(r30)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, -0x793C(r2)
-	  fsubs     f1, f2, f1
-	  stfs      f1, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  rlwinm    r0,r0,0,1,31
-	  stw       r0, 0x44(r1)
-	  lfs       f1, 0x44(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x348
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x0(r30)
+	gfx.useTexture(nullptr, 0);
+	if (gsys->mCurrentFade < gsys->mFadeStart) {
+		gsys->mCurrentFade += gsys->getFrameTime() * gsys->mFadeEnd;
+		if (gsys->mCurrentFade > gsys->mFadeStart) {
+			gsys->mCurrentFade = gsys->mFadeStart;
+		}
+	} else if (gsys->mCurrentFade > gsys->mFadeStart) {
+		gsys->mCurrentFade = gsys->mFadeStart;
+		gsys->mCurrentFade -= gsys->getFrameTime() * gsys->mFadeEnd;
+		if (gsys->mCurrentFade < gsys->mFadeStart) {
+			gsys->mCurrentFade = gsys->mFadeStart;
+		}
+	}
 
-	.loc_0x348:
-	  li        r27, 0xC0
-	  stb       r27, 0x58(r1)
-	  li        r28, 0xFF
-	  addi      r4, r1, 0x58
-	  stb       r28, 0x59(r1)
-	  mr        r3, r29
-	  li        r5, 0x1
-	  stb       r28, 0x5A(r1)
-	  lfs       f0, 0x0(r30)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x1B0(r1)
-	  lwz       r0, 0x1B4(r1)
-	  stb       r0, 0x5B(r1)
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r27, 0x54(r1)
-	  addi      r4, r1, 0x54
-	  addi      r3, r29, 0
-	  stb       r27, 0x55(r1)
-	  stb       r28, 0x56(r1)
-	  lfs       f0, 0x0(r30)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x1B8(r1)
-	  lwz       r0, 0x1BC(r1)
-	  stb       r0, 0x57(r1)
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x803A
-	  crset     6, 0x6
-	  subi      r3, r3, 0x2848
-	  lfs       f1, 0x2C0(r3)
-	  addi      r3, r1, 0x70
-	  addi      r4, r31, 0x78
-	  bl        0x1B71E0
+	if (gsys->mTimerState) {
+		gsys->mTimer->draw(gfx, gsys->mConsFont);
+	}
 
-	.loc_0x3E0:
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r3, 0x4
-	  lfs       f0, 0x8(r3)
-	  lfs       f2, 0x4(r3)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x448
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r3, 0x4
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x4(r3)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x488
-	  stfs      f1, 0x0(r4)
-	  b         .loc_0x488
-
-	.loc_0x448:
-	  ble-      .loc_0x488
-	  stfs      f0, 0x0(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f2, 0x28C(r3)
-	  lfs       f0, 0xC(r3)
-	  lfs       f1, 0x4(r3)
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x4(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r3, 0x4
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x4(r3)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x488
-	  stfs      f1, 0x0(r4)
-
-	.loc_0x488:
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r0, 0x18(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4A8
-	  lwz       r3, 0x34(r5)
-	  mr        r4, r29
-	  lwz       r5, 0x10(r5)
-	  bl        -0x1EAD4
-
-	.loc_0x4A8:
-	  lmw       r27, 0x1C4(r1)
-	  lwz       r0, 0x1DC(r1)
-	  addi      r1, r1, 0x1D8
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mTimer->stop("cpu draw");
 }
 
 /*
@@ -541,116 +156,33 @@ int PlugPikiApp::idle()
 	gsys->mTimer->newFrame();
 	gsys->mTimer->_start("all", false);
 
-	if (gsys->getPending()) {
+	gsys->_26C; // lol
+	if (gsys->mPending) {
 		gsys->detachObjs();
 		gsys->mTimer->reset();
-		gsys->clearPending();
+		gsys->mPending = false;
 		softReset();
+		PRINT("idle attach\n");
 		gsys->attachObjs();
-	} else {
-		update();
-		gsys->beginRender();
-		renderall();
-		// something here
-		gsys->doneRender();
-		// something here
-		gsys->mTimer->_stop("all");
-		gsys->waitRetrace();
-		gsys->setHeap(-1);
+		PRINT("done attaching objs!\n");
+		return 1;
 	}
+	update();
+	gsys->beginRender();
+	renderall();
+	if (gsys->_254) {
+		gsys->_254->invoke(*gsys->mGfx);
+	}
+	gsys->mTimer->start("render", true);
+	gsys->doneRender();
+	gsys->mTimer->stop("render");
+	if (gameflow.mGameInterface) {
+		gameflow.mGameInterface->parseMessages();
+	}
+	gsys->mTimer->_stop("all");
+	gsys->waitRetrace();
+	gsys->setHeap(-1);
 	return 1;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x50(r31)
-	  bl        -0x2044C
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x34(r3)
-	  bl        -0x1EB2C
-	  lwz       r3, 0x2DEC(r13)
-	  subi      r4, r13, 0x6ED4
-	  li        r5, 0
-	  lwz       r3, 0x34(r3)
-	  bl        -0x1EB30
-	  lwz       r3, 0x2DEC(r13)
-	  lbz       r0, 0x0(r3)
-	  lwz       r4, 0x26C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x94
-	  bl        -0x1FDC4
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x34(r3)
-	  bl        -0x1EB74
-	  lwz       r4, 0x2DEC(r13)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stb       r0, 0x0(r4)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x1FE94
-	  li        r3, 0x1
-	  b         .loc_0x130
-
-	.loc_0x94:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x1AACC
-	  mr        r3, r31
-	  bl        -0x12C44
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r3, 0x254(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xDC
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x24C(r4)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xDC:
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x1AA0C
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x1E8(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x108
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x108:
-	  lwz       r3, 0x2DEC(r13)
-	  subi      r4, r13, 0x6ED4
-	  lwz       r3, 0x34(r3)
-	  bl        -0x1EC04
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x1AA24
-	  lwz       r3, 0x2DEC(r13)
-	  li        r4, -0x1
-	  bl        -0x20558
-	  li        r3, 0x1
-
-	.loc_0x130:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -660,138 +192,19 @@ int PlugPikiApp::idle()
  */
 PlugPikiApp::PlugPikiApp()
 {
-	mName = "Piki the Game";
+	setName("Piki the Game");
 	gsys->setHeap(0);
 	hardReset();
 	mCommandStream = new AtxCommandStream(this);
 	if (mCommandStream->open("app", 3)) {
-		mCommandStream->mPath = 0;
+		mCommandStream->mPath = Name();
 	} else {
-		mCommandStream->mPath = mName;
+		mCommandStream = nullptr;
 	}
 	gsys->mTimerState = 1;
 	gsys->hardReset();
-	gsys->getHeap(gsys->mActiveHeapIdx);
-	gsys->getHeap(gsys->mActiveHeapIdx);
+	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,
+	      gsys->getHeap(gsys->mActiveHeapIdx)->getFree() / 1024.0f);
 	gsys->_198 = 0;
 	gsys->setHeap(-1);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r31, 0x8(r1)
-	  mr        r3, r31
-	  bl        -0x3A7FC
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x77B0
-	  lis       r3, 0x802B
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x772C
-	  lis       r3, 0x802B
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x78C4
-	  stw       r0, 0x4(r31)
-	  li        r4, 0
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x205C0
-	  mr        r3, r31
-	  bl        -0x840
-	  li        r3, 0x14
-	  bl        -0x18634
-	  cmplwi    r3, 0
-	  beq-      .loc_0x98
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x7398
-	  lis       r4, 0x8023
-	  stw       r0, 0x4(r3)
-	  subi      r0, r4, 0x703C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  lis       r4, 0x802B
-	  stw       r0, 0xC(r3)
-	  subi      r0, r4, 0x7874
-	  stw       r0, 0x4(r3)
-	  stw       r31, 0x10(r3)
-
-	.loc_0x98:
-	  lwz       r31, 0x8(r1)
-	  subi      r4, r13, 0x6ED0
-	  li        r5, 0x3
-	  stw       r3, 0x20(r31)
-	  lwz       r3, 0x20(r31)
-	  bl        -0x1BD64
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC8
-	  lwz       r0, 0x4(r31)
-	  lwz       r3, 0x20(r31)
-	  stw       r0, 0x0(r3)
-	  b         .loc_0xD0
-
-	.loc_0xC8:
-	  li        r0, 0
-	  stw       r0, 0x20(r31)
-
-	.loc_0xD0:
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x1
-	  stw       r0, 0x18(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x19E9C
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x194(r3)
-	  bl        -0x206A8
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x194(r3)
-	  bl        -0x206B4
-	  lwz       r4, 0x8(r3)
-	  li        r0, 0
-	  lwz       r3, 0x4(r3)
-	  lis       r5, 0x4330
-	  sub       r3, r3, r4
-	  xoris     r4, r3, 0x8000
-	  lwz       r3, 0x2DEC(r13)
-	  stw       r4, 0x1C(r1)
-	  li        r4, -0x1
-	  stw       r0, 0x198(r3)
-	  stw       r5, 0x18(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x206A0
-	  lwz       r3, 0x8(r1)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8005F724
- * Size:	000064
- */
-GameApp::~GameApp()
-{
-}
-
-/*
- * --INFO--
- * Address:	8005F788
- * Size:	000008
- */
-int GameApp::idle()
-{
-	return 0x1;
-}
-
-/*
- * --INFO--
- * Address:	8005F790
- * Size:	000074
- */
-PlugPikiApp::~PlugPikiApp()
-{
 }

@@ -24,7 +24,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("MemoryCard")
 
 /*
  * --INFO--
@@ -2954,6 +2954,8 @@ void MemoryCard::delFile(CardQuickInfo&)
  */
 int MemoryCard::doFormatCard()
 {
+	PRINT("*-----------------------------------------------------------*\n");
+	PRINT("Formatting memory card ....\n");
 	_68        = false;
 	gsys->_270 = true;
 	attemptFormatCard(false);

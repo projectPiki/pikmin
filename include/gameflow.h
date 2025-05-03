@@ -523,9 +523,9 @@ struct GameFlow : public Node {
 	int mIsChallengeMode;                    // _2B4
 	u32 _2B8;                                // _2B8, unknown
 	u32 mUpdateTickCount;                    // _2BC, unknown
-	u32 _2C0;                                // _2C0, unknown
+	f32 _2C0;                                // _2C0
 	f32 _2C4;                                // _2C4
-	f32 _2C8;                                // _2C8
+	vf32 _2C8;                               // _2C8
 	f32 _2CC;                                // _2CC
 	int mAppTickCounter;                     // _2D0
 	int _2D4;                                // _2D4

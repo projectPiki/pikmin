@@ -54,25 +54,28 @@ struct AyuCache {
 struct AyuStack {
 	AyuStack() { mIsActive = false; }
 
-	bool checkOverflow();
-	inline void checkStack();
-	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
-	inline int getFree() { return mSize - mTotalSize; }
-	int getMaxFree();
-	int getSize();
-	int getTopUsed() { return mInitialStackLimit - mStackLimit; }
-	int getUsed();
-	void inactivate();
-	void pop();
-	void* push(int);
 	void reset(int);
+	void* push(int);
+	void pop();
+
+	// unused/inlined:
+	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
 	void reset();
-	inline int setAllocType(int type)
+	void checkStack();
+
+	// DLL inlines:
+	int setAllocType(int type)
 	{
 		int old    = mAllocType;
 		mAllocType = type;
 		return old;
 	}
+	int getFree() { return mSize - mTotalSize; }
+	int getTopUsed() { return mInitialStackLimit - mStackLimit; }
+	int getMaxFree() { return (mSize - mTotalSize - 8 > 0) ? mSize - mTotalSize - 8 : 0; }
+
+	// DLL inlines to do:
+	void inactivate();
 
 	s32 mAllocType;         // _00
 	int mSize;              // _04
