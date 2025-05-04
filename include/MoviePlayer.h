@@ -103,6 +103,7 @@ struct MoviePlayer {
 	f32 _164;                 // _164
 	f32 _168;                 // _168
 	bool _16C;                // _16C
+	u32 _170;                 // _170, unknown
 };
 
 /**

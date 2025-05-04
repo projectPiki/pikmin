@@ -73,9 +73,7 @@ struct AyuStack {
 	int getFree() { return mSize - mTotalSize; }
 	int getTopUsed() { return mInitialStackLimit - mStackLimit; }
 	int getMaxFree() { return (mSize - mTotalSize - 8 > 0) ? mSize - mTotalSize - 8 : 0; }
-
-	// DLL inlines to do:
-	void inactivate();
+	void inactivate() { mIsActive = false; }
 
 	s32 mAllocType;         // _00
 	int mSize;              // _04

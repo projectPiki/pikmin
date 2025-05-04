@@ -2191,24 +2191,6 @@ void* loadFunc(void*)
 
 /*
  * --INFO--
- * Address:	8004654C
- * Size:	000004
- */
-void LoadIdler::draw(Graphics&)
-{
-}
-
-/*
- * --INFO--
- * Address:	80046550
- * Size:	000004
- */
-void LoadIdler::init()
-{
-}
-
-/*
- * --INFO--
  * Address:	80046554
  * Size:	000094
  */

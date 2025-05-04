@@ -148,7 +148,7 @@ struct StdSystem {
 		mFadeStart = start;
 		mFadeEnd   = end;
 	}
-	inline void setTextureDirectories(char* bloDir, char* texDir)
+	void set2DRoot(char* bloDir, char* texDir)
 	{
 		mBloDirectory = bloDir;
 		mTexDirectory = texDir;
@@ -310,7 +310,7 @@ struct System : public StdSystem {
 	u32 _244;                           // _244
 	u32 _248;                           // _248
 	DGXGraphics* mGfx;                  // _24C
-	u8 _250[0x4];                       // _250, unknown
+	u32 _250;                           // _250, unknown
 	Delegate1<System, Graphics&>* _254; // _254
 	int _258;                           // _258
 	u32 _25C;                           // _25C
