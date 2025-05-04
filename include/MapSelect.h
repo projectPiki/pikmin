@@ -26,7 +26,7 @@ extern zen::DrawCMcourseSelect* selectWindow;
 struct MapSelectSection : public Section {
 	MapSelectSection();
 
-	virtual void init(); // _30 (weak)
+	virtual void init() { } // _30 (weak)
 
 	// _00     = VTBL
 	// _00-_20 = Section

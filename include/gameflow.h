@@ -174,7 +174,7 @@ struct PlayState : public CoreNode {
 	inline bool isStageOpen(int stageIdx)
 	{
 		if (stageIdx >= 0 && stageIdx <= 5) {
-			return mCourseOpenFlags & (1 << stageIdx);
+			return (mCourseOpenFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
 	}
@@ -403,8 +403,7 @@ struct GamePrefs : public CoreNode {
 	u8 getBgmVol() { return mBgmVol; }
 	u8 getSfxVol() { return mSfxVol; }
 
-	// DLL inlines to do:
-	bool isChallengeOpen();
+	bool isChallengeOpen() { return _22 != 0; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
