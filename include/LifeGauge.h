@@ -9,6 +9,7 @@
 
 struct Colour;
 struct Graphics;
+struct LifeGauge;
 struct LFlareGroup;
 
 /**
@@ -32,17 +33,17 @@ struct GaugeInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;      // _14
-	u32 _18;      // _18
-	u32 _1C;      // _1C
-	u32 _20;      // _20
-	int _24;      // _24
-	Vector3f _28; // _28
-	f32 _34;      // _34
-	f32 _38;      // _38
-	f32 _3C;      // _3C
-	f32 _40;      // _40
-	f32 _44;      // _44
+	LifeGauge* _14; // _14
+	u32 _18;        // _18
+	int _1C;        // _1C
+	int _20;        // _20
+	int _24;        // _24
+	Vector3f _28;   // _28
+	f32 _34;        // _34
+	f32 _38;        // _38
+	f32 _3C;        // _3C
+	f32 _40;        // _40
+	f32 _44;        // _44
 };
 
 /**
@@ -78,7 +79,7 @@ struct LifeGauge {
 
 	Vector3f mPosition; // _00
 	Vector3f mOffset;   // _0C
-	u32 mIsNotFull;     // _18, unknown
+	int _18;            // _18
 	int _1C;            // _1C
 	u8 _20;             // _20
 	f32 _24;            // _24
@@ -86,7 +87,7 @@ struct LifeGauge {
 	f32 mHealthRatio;   // _2C, aka "value"
 	f32 _30;            // _30
 	f32 mScale;         // _34
-	u32 _38;            // _38, unknown
+	GaugeInfo* _38;     // _38, unknown
 };
 
 extern LifeGaugeMgr* lgMgr;
