@@ -340,9 +340,6 @@ struct AnimInfo : public CoreNode {
 	// unused/inlined:
 	void initAnimData(AnimData*);
 
-	// fake inline apparently
-	inline f32 getAnimSpeed() { return mParams.mSpeed(); }
-
 	// only DLL inline:
 	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
 
@@ -407,10 +404,13 @@ struct Animator {
 	AnimInfo* mAnimInfo;   // _28
 	f32 mAnimationCounter; // _2C
 
-	virtual void changeContext(AnimContext*); // _08
-	virtual void animate(f32);                // _0C
-	virtual void finishOneShot();             // _10
-	virtual void finishLoop();                // _14
+	virtual void changeContext(AnimContext* context) // _08
+	{
+		mContext = context;
+	}
+	virtual void animate(f32);    // _0C
+	virtual void finishOneShot(); // _10
+	virtual void finishLoop();    // _14
 };
 
 /**
@@ -421,10 +421,10 @@ struct Animator {
 struct AnimMgr : public CoreNode {
 
 	/**
-	 * @brief Fabricated. Offsets relative to AnimMgr for convenience.
+	 * @brief Offsets relative to AnimMgr for convenience.
 	 */
-	struct AnimMgrParams : public Parameters {
-		inline AnimMgrParams()
+	struct Parms : public Parameters {
+		Parms()
 		    : _18(this, 2, 0, 0, "a00", nullptr)
 		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
 		{
@@ -448,10 +448,10 @@ struct AnimMgr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	AnimMgrParams mParams; // _14
-	Shape* mParent;        // _3C
-	AnimInfo mAnimList;    // _40, parent of list of animations
-	s32 mIsLoaded;         // _B4
+	Parms mParams;      // _14
+	Shape* mParent;     // _3C
+	AnimInfo mAnimList; // _40, parent of list of animations
+	s32 mIsLoaded;      // _B4
 };
 
 /**
