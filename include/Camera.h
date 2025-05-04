@@ -15,6 +15,8 @@ struct SceneData;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x2C.
  */
 struct CullingPlane {
 	CullingPlane() { }

@@ -1314,15 +1314,6 @@ ModeState* RunningModeState::update(u32& a)
 
 /*
  * --INFO--
- * Address:	8005794C
- * Size:	000004
- */
-void GameInterface::message(int, int)
-{
-}
-
-/*
- * --INFO--
  * Address:	80057950
  * Size:	000078
  */
@@ -3770,42 +3761,6 @@ void NewPikiGameSetupSection::createMapObjects(MapMgr* map)
 
 /*
  * --INFO--
- * Address:	8005A0F8
- * Size:	000020
- */
-GameMovieInterface::ComplexMessage::ComplexMessage()
-{
-}
-
-/*
- * --INFO--
- * Address:	8005A118
- * Size:	000004
- */
-void GameInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool)
-{
-}
-
-/*
- * --INFO--
- * Address:	8005A11C
- * Size:	000004
- */
-void GameInterface::parseMessages()
-{
-}
-
-/*
- * --INFO--
- * Address:	8005A120
- * Size:	000004
- */
-void GameInterface::parse(int, int)
-{
-}
-
-/*
- * --INFO--
  * Address:	8005A124
  * Size:	000054
  */
@@ -4469,51 +4424,6 @@ void NewPikiGameSetupSection::draw(Graphics& gfx)
  */
 void NewPikiGameSection::init()
 {
-}
-
-/*
- * --INFO--
- * Address:	8005AB00
- * Size:	00003C
- */
-void GameMovieInterface::message(int a1, int a2)
-{
-	if (mMesgCount >= _08) {
-		return;
-	}
-	mMesg[mMesgCount]._00 = a1;
-	mMesg[mMesgCount]._04 = a2;
-
-	mMesgCount++;
-}
-
-/*
- * --INFO--
- * Address:	8005AB3C
- * Size:	00011C
- */
-void GameMovieInterface::movie(int id, int a1, Creature* obj, Vector3f* pos, Vector3f* dir, u32 flags, bool a2)
-{
-	if (mComplexMesgCount >= _08) {
-		return;
-	}
-	mCompMesg[mComplexMesgCount]._00 = id;
-	mCompMesg[mComplexMesgCount]._04 = a1;
-	mCompMesg[mComplexMesgCount]._08 = obj;
-	if (!pos) {
-		mCompMesg[mComplexMesgCount]._0C.set(0.0f, 0.0f, 0.0f);
-	} else {
-		mCompMesg[mComplexMesgCount]._0C = *pos;
-	}
-	if (!dir) {
-		mCompMesg[mComplexMesgCount]._18.set(0.0f, 0.0f, 0.0f);
-	} else {
-		mCompMesg[mComplexMesgCount]._18 = *dir;
-	}
-	mCompMesg[mComplexMesgCount]._24 = flags;
-	mCompMesg[mComplexMesgCount]._28 = a2;
-
-	mComplexMesgCount++;
 }
 
 /*

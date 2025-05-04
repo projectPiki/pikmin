@@ -223,6 +223,7 @@ DEFINE_ENUM_TYPE(
 /**
  * @brief TODO
  * @note 1001F2A0 in plugPiki.dll might allude to some members.
+ * @note Size: 0x670.
  */
 struct LightPool : public Node {
 	LightPool();

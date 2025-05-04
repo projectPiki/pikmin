@@ -90,7 +90,6 @@ struct GameQuickInfo {
 	int mPartsDaysRank; // _10
 	int mBornPikisRank; // _14
 	int mDeadPikisRank; // _18
-	int _1C;            // _1C
 };
 
 struct GameChalQuickInfo {
