@@ -19,6 +19,8 @@ struct ogNitakuMgr {
 	 * @brief TODO
 	 */
 	enum NitakuStatus {
+		Status_3 = 3,
+		Status_4 = 4,
 		// TODO: this
 	};
 

@@ -6,6 +6,7 @@
 struct Controller;
 struct Graphics;
 struct P2DScreen;
+struct P2DPane;
 
 namespace zen {
 
@@ -21,7 +22,13 @@ struct ogGraphMgr {
 	void MakeData();
 	void draw(u8);
 
-	u8 _00[0x14]; // _00, unknown
+	P2DPane* mPane;  // _00
+	int mMinPikis;   // _04
+	int mMaxPikis;   // _08
+	int _0C;         // _0C
+	bool mHasBlue;   // _10
+	bool mHasRed;    // _11
+	bool mHasYellow; // _12
 };
 
 } // namespace zen

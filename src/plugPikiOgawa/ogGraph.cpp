@@ -1,4 +1,8 @@
 #include "zen/ogGraph.h"
+#include "PlayerState.h"
+#include "P2D/Screen.h"
+#include "P2D/Graph.h"
+#include "GameStat.h"
 #include "DebugLog.h"
 
 /*
@@ -13,73 +17,37 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("OgResultSection")
 
 namespace zen {
+
+u16 LinePointB[32] = { 0 };
+u16 LinePointR[32] = { 0 };
+u16 LinePointY[32] = { 0 };
+
+// day 1 graph points
+u16 ogawa_per_line[15]       = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
+u8 og_piki_lines_color[3][4] = { { 0, 192, 255, 255 }, { 255, 0, 0, 255 }, { 255, 255, 0, 255 } };
 
 /*
  * --INFO--
  * Address:	80197F28
  * Size:	0000C4
  */
-ogGraphMgr::ogGraphMgr(P2DScreen*)
+ogGraphMgr::ogGraphMgr(P2DScreen* screen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x0(r4)
-	  lis       r4, 0x675F
-	  addi      r4, r4, 0x7370
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r4, 0x803D
-	  stw       r3, 0x0(r31)
-	  lis       r3, 0x803D
-	  addi      r4, r4, 0x1EA0
-	  addi      r3, r3, 0x1E70
-	  lwz       r4, 0x4(r4)
-	  lwz       r0, 0x4(r3)
-	  add       r0, r4, r0
-	  stw       r0, 0xC(r31)
-	  lwz       r3, 0x2F6C(r13)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x78
-	  li        r0, 0x1
-	  stb       r0, 0x10(r31)
-	  stb       r0, 0x11(r31)
-	  stb       r0, 0x12(r31)
-	  b         .loc_0xA4
-
-	.loc_0x78:
-	  li        r4, 0
-	  bl        -0x1179D8
-	  stb       r3, 0x10(r31)
-	  li        r4, 0x1
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x1179E8
-	  stb       r3, 0x11(r31)
-	  li        r4, 0x2
-	  lwz       r3, 0x2F6C(r13)
-	  bl        -0x1179F8
-	  stb       r3, 0x12(r31)
-
-	.loc_0xA4:
-	  mr        r3, r31
-	  bl        0x320
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mPane = screen->search('g_sp', true);
+	_0C   = GameStat::containerPikis[1] + GameStat::formationPikis[1];
+	if (playerState == nullptr) {
+		mHasBlue   = true;
+		mHasRed    = true;
+		mHasYellow = true;
+	} else {
+		mHasBlue   = playerState->displayPikiCount(Blue);
+		mHasRed    = playerState->displayPikiCount(Red);
+		mHasYellow = playerState->displayPikiCount(Yellow);
+	}
+	MakeData();
 }
 
 /*
@@ -89,6 +57,20 @@ ogGraphMgr::ogGraphMgr(P2DScreen*)
  */
 void ogGraphMgr::SetDummyLineData()
 {
+	for (int i = 0; i < 32; i++) {
+		LinePointB[i] = 0;
+		LinePointR[i] = 0;
+		LinePointY[i] = 0;
+	}
+
+	int x      = mPane->getPosH();
+	int y      = mPane->getPosV();
+	int width  = mPane->getWidth();
+	int height = mPane->getHeight();
+	for (int i = 0; i < 14; i++) {
+		LinePointR[i]     = i * (width / 12) + x;
+		LinePointR[i + 1] = (100 - ogawa_per_line[i]) * height / 100 + y;
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x58(r1)
@@ -304,6 +286,43 @@ void ogGraphMgr::SetDummyLineData()
  */
 void ogGraphMgr::MakeData()
 {
+	if (playerState == nullptr) {
+		SetDummyLineData();
+		mMinPikis = _0C;
+		mMaxPikis = 0;
+		return;
+	}
+
+	if (playerState->isTutorial()) {
+		SetDummyLineData();
+		mMinPikis = _0C;
+		mMaxPikis = 0;
+		return;
+	}
+
+	int minPikis = 0;
+	int maxPikis = 10000;
+	int start    = playerState->getStartHour();
+	int end      = playerState->getEndHour();
+	PRINT("hour (%d --> %d)\n", start, end);
+	for (int color = 0; color < 3; color++) {
+		for (int hour = start; hour < end; hour++) {
+			int count = playerState->getPikiHourCount(hour, color);
+			PRINT("p(%d) h[%d] num %d\n", color, hour, count);
+			if (count > -1) {
+				if (count > minPikis) {
+					minPikis = count;
+				}
+				if (maxPikis > count) {
+					minPikis = count;
+				}
+			}
+		}
+	}
+
+	mMinPikis = minPikis;
+	mMaxPikis = maxPikis;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -574,8 +593,56 @@ void ogGraphMgr::MakeData()
  * Address:	80198610
  * Size:	00029C
  */
-static void setGraphGX(void*, int, u8)
+static void setGraphGX(void* data, int color, u8)
 {
+	u8* graphColor = og_piki_lines_color[color];
+	int startHour, endHour;
+	if (!playerState) {
+		startHour = 7;
+		endHour   = 19;
+	} else {
+		startHour = playerState->getStartHour();
+		endHour   = playerState->getEndHour();
+	}
+	int hours = (endHour - startHour) + 1;
+
+	int segments;
+	if (!playerState || playerState->isTutorial()) {
+		segments = 13;
+	} else {
+		segments = hours;
+		for (int i = 0; i < hours; i++) {
+			int count = playerState->getPikiHourCount(startHour + i, color);
+			segments  = i;
+			if (count >= 0) {
+				segments++;
+			}
+		}
+	}
+
+	if (segments >= 2) {
+		GXClearVtxDesc();
+		GXSetAlphaUpdate(1);
+		GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+		GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_RGBA4, 0);
+		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_POS_XYZ, GX_RGBA8, 0);
+		GXSetArray(GX_VA_POS, data, sizeof(u32));
+		GXSetArray(GX_VA_CLR0, &og_piki_lines_color, 4);
+		GXSetLineWidth(0x12, GX_TO_ZERO);
+		GXBegin(GX_LINESTRIP, GX_VTXFMT0, segments);
+
+		for (int i = 0; i < segments; i++) {
+			u16* vals = (u16*)data;
+			s16 in    = vals[i];
+			s16 out   = vals[i + 1];
+
+			GX_WRITE_U16(in);
+			GX_WRITE_U16(out);
+			GX_WRITE_U32(graphColor);
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -779,8 +846,20 @@ static void setGraphGX(void*, int, u8)
  * Address:	801988AC
  * Size:	0000DC
  */
-void ogGraphMgr::draw(u8)
+void ogGraphMgr::draw(u8 a)
 {
+	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	graf.setPort();
+
+	if (mHasBlue) {
+		setGraphGX(LinePointB, Blue, a);
+	}
+	if (mHasRed) {
+		setGraphGX(LinePointR, Red, a);
+	}
+	if (mHasYellow) {
+		setGraphGX(LinePointY, Yellow, a);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

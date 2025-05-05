@@ -733,10 +733,10 @@ config.libs = [
             Object(NonMatching, "plugPikiOgawa/ogSave.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogNitaku.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogFileCopy.cpp"),
-            Object(NonMatching, "plugPikiOgawa/ogFileDelete.cpp"),
+            Object(Matching, "plugPikiOgawa/ogFileDelete.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogGraph.cpp"),
             Object(Matching, "plugPikiOgawa/ogStart.cpp"),
-            Object(NonMatching, "plugPikiOgawa/ogCallBack.cpp"),
+            Object(Matching, "plugPikiOgawa/ogCallBack.cpp"),
         ],
     },
     {
