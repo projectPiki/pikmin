@@ -24,8 +24,8 @@ DEFINE_PRINT(nullptr)
  */
 void zen::ZenQuat::GetMatrix(const Quat&, Matrix3f& outMtx)
 {
-	outMtx.mMtx[0] = 1.0f; // just for sdata2's sake
-	                       // UNUSED FUNCTION
+	outMtx.mMtx[0][0] = 1.0f; // just for sdata2's sake
+	                          // UNUSED FUNCTION
 }
 
 /*
@@ -96,15 +96,15 @@ void zen::makeRotMatrix(Vector3f& axis, Matrix3f& rotMtx)
 	xVec.cross(axis, zVec);
 	xVec.normalize();
 
-	rotMtx.mMtx[0] = xVec.x;
-	rotMtx.mMtx[3] = xVec.y;
-	rotMtx.mMtx[6] = xVec.z;
+	rotMtx.mMtx[0][0] = xVec.x;
+	rotMtx.mMtx[1][0] = xVec.y;
+	rotMtx.mMtx[2][0] = xVec.z;
 
-	rotMtx.mMtx[1] = axis.x;
-	rotMtx.mMtx[4] = axis.y;
-	rotMtx.mMtx[7] = axis.z;
+	rotMtx.mMtx[0][1] = axis.x;
+	rotMtx.mMtx[1][1] = axis.y;
+	rotMtx.mMtx[2][1] = axis.z;
 
-	rotMtx.mMtx[2] = zVec.x;
-	rotMtx.mMtx[5] = zVec.y;
-	rotMtx.mMtx[8] = zVec.z;
+	rotMtx.mMtx[0][2] = zVec.x;
+	rotMtx.mMtx[1][2] = zVec.y;
+	rotMtx.mMtx[2][2] = zVec.z;
 }

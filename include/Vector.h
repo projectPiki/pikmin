@@ -363,4 +363,12 @@ inline Vector3f operator/(const Vector3f& a, const f32& b)
 	return a * (1.0f / b);
 }
 
+inline Vector3f CP(const Vector3f& a, const Vector3f& b)
+{
+	f32 x = a.y * b.z - a.z * b.y;
+	f32 y = a.z * b.x - a.x * b.z;
+	f32 z = a.x * b.y - a.y * b.x;
+	return Vector3f(x, y, z);
+}
+
 #endif

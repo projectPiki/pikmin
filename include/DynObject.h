@@ -18,8 +18,8 @@ struct DynObjBody : public RigidBody {
 
 	virtual void initDimensions(f32 x, f32 y, f32 z) // _30
 	{
-		_50.set(x, y, z);
-		_5C = (x / 2) * (y / 2) * (z / 2) * 0.000075f;
+		mDimensions.set(x, y, z);
+		mInvMass = (x / 2) * (y / 2) * (z / 2) * 0.000075f;
 	}
 	virtual void render(Graphics&);                           // _18
 	virtual void computeForces(int, f32);                     // _34

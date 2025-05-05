@@ -435,9 +435,9 @@ config.libs = [
         "progress_category" : "game",
         "objects": [
             Object(NonMatching, "plugPikiColin/cardutil.cpp"),
-            Object(NonMatching, "plugPikiColin/dynsimulator.cpp"),
+            Object(Equivalent, "plugPikiColin/dynsimulator.cpp"),
             Object(Matching, "plugPikiColin/animMgr.cpp"),
-            Object(NonMatching, "plugPikiColin/gameflow.cpp"),
+            Object(Equivalent, "plugPikiColin/gameflow.cpp"),
             Object(Equivalent, "plugPikiColin/game.cpp"),
             Object(Matching, "plugPikiColin/gamePrefs.cpp"),
             Object(Equivalent, "plugPikiColin/gameSetup.cpp"),

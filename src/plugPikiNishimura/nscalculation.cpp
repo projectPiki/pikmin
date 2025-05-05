@@ -356,17 +356,17 @@ int calcMtxDirect(const Matrix4f&, const Matrix4f&)
  */
 void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
-	outMtx.mMtx[0] = inMtx.mMtx[0][0];
-	outMtx.mMtx[3] = inMtx.mMtx[1][0];
-	outMtx.mMtx[6] = inMtx.mMtx[2][0];
+	outMtx.mMtx[0][0] = inMtx.mMtx[0][0];
+	outMtx.mMtx[1][0] = inMtx.mMtx[1][0];
+	outMtx.mMtx[2][0] = inMtx.mMtx[2][0];
 
-	outMtx.mMtx[1] = inMtx.mMtx[0][1];
-	outMtx.mMtx[4] = inMtx.mMtx[1][1];
-	outMtx.mMtx[7] = inMtx.mMtx[2][1];
+	outMtx.mMtx[0][1] = inMtx.mMtx[0][1];
+	outMtx.mMtx[1][1] = inMtx.mMtx[1][1];
+	outMtx.mMtx[2][1] = inMtx.mMtx[2][1];
 
-	outMtx.mMtx[2] = inMtx.mMtx[0][2];
-	outMtx.mMtx[5] = inMtx.mMtx[1][2];
-	outMtx.mMtx[8] = inMtx.mMtx[2][2];
+	outMtx.mMtx[0][2] = inMtx.mMtx[0][2];
+	outMtx.mMtx[1][2] = inMtx.mMtx[1][2];
+	outMtx.mMtx[2][2] = inMtx.mMtx[2][2];
 }
 
 /*

@@ -215,11 +215,11 @@ void Vector3f::rotateInverse(Quat&)
  */
 void Quat::fromMat3f(Matrix3f& mtx)
 {
-	f32 diag = mtx.mMtx[0] + mtx.mMtx[4] + mtx.mMtx[8];
-	f32 a    = 0.25f * (1.0f + diag);                  // f4
-	f32 b    = a - 0.5f * (mtx.mMtx[4] + mtx.mMtx[8]); // f2, f5
-	f32 c    = a - 0.5f * (mtx.mMtx[8] + mtx.mMtx[0]); // f6
-	f32 d    = a - 0.5f * (mtx.mMtx[0] + mtx.mMtx[4]); // f7
+	f32 diag = mtx.mMtx[0][0] + mtx.mMtx[1][1] + mtx.mMtx[2][2];
+	f32 a    = 0.25f * (1.0f + diag);                        // f4
+	f32 b    = a - 0.5f * (mtx.mMtx[1][1] + mtx.mMtx[2][2]); // f2, f5
+	f32 c    = a - 0.5f * (mtx.mMtx[2][2] + mtx.mMtx[0][0]); // f6
+	f32 d    = a - 0.5f * (mtx.mMtx[0][0] + mtx.mMtx[1][1]); // f7
 
 	int type;
 	if (a > b) {
@@ -250,30 +250,30 @@ void Quat::fromMat3f(Matrix3f& mtx)
 	case 0: {
 		s     = std::sqrtf(a);
 		f32 t = 0.25f / s;
-		v.x   = t * (mtx.mMtx[7] - mtx.mMtx[5]);
-		v.y   = t * (mtx.mMtx[2] - mtx.mMtx[6]);
-		v.z   = t * (mtx.mMtx[3] - mtx.mMtx[1]);
+		v.x   = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
+		v.y   = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
+		v.z   = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
 	} break;
 	case 1: {
 		v.x   = std::sqrtf(b);
 		f32 t = 0.25f / v.x;
-		s     = t * (mtx.mMtx[7] - mtx.mMtx[5]);
-		v.y   = t * (mtx.mMtx[1] + mtx.mMtx[3]);
-		v.z   = t * (mtx.mMtx[2] + mtx.mMtx[6]);
+		s     = t * (mtx.mMtx[2][1] - mtx.mMtx[1][2]);
+		v.y   = t * (mtx.mMtx[0][1] + mtx.mMtx[1][0]);
+		v.z   = t * (mtx.mMtx[0][2] + mtx.mMtx[2][0]);
 	} break;
 	case 2: {
 		v.y   = std::sqrtf(c);
 		f32 t = 0.25f / v.y;
-		s     = t * (mtx.mMtx[2] - mtx.mMtx[6]);
-		v.z   = t * (mtx.mMtx[5] + mtx.mMtx[7]);
-		v.x   = t * (mtx.mMtx[3] + mtx.mMtx[1]);
+		s     = t * (mtx.mMtx[0][2] - mtx.mMtx[2][0]);
+		v.z   = t * (mtx.mMtx[1][2] + mtx.mMtx[2][1]);
+		v.x   = t * (mtx.mMtx[1][0] + mtx.mMtx[0][1]);
 	} break;
 	case 3: {
 		v.z   = std::sqrtf(d);
 		f32 t = 0.25f / v.z;
-		s     = t * (mtx.mMtx[3] - mtx.mMtx[1]);
-		v.x   = t * (mtx.mMtx[6] + mtx.mMtx[2]);
-		v.y   = t * (mtx.mMtx[7] + mtx.mMtx[5]);
+		s     = t * (mtx.mMtx[1][0] - mtx.mMtx[0][1]);
+		v.x   = t * (mtx.mMtx[2][0] + mtx.mMtx[0][2]);
+		v.y   = t * (mtx.mMtx[2][1] + mtx.mMtx[1][2]);
 	} break;
 	}
 

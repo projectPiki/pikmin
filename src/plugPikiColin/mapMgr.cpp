@@ -4408,26 +4408,6 @@ void MapMgr::initShape()
 
 /*
  * --INFO--
- * Address:	800658A8
- * Size:	000020
- */
-Collision::Collision()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800658C8
  * Size:	000004
  */

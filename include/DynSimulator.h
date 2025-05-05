@@ -5,6 +5,7 @@
 #include "Node.h"
 #include "Matrix3f.h"
 #include "BoundBox.h"
+#include "Collision.h"
 
 struct Collision;
 struct CollGroup;
@@ -15,21 +16,18 @@ struct LightCamera;
 
 /**
  * @brief TODO
- *
- * @note Genuinely not sure where to put this, but here kind of makes sense?
  */
 struct WorldSpring {
 	WorldSpring() { }
 
-	// Guessed implementation, function exists though
-	inline void init(int a, f32 x, f32 y, f32 z)
+	inline void init(int idx, f32 x, f32 y, f32 z)
 	{
-		_00 = a;
-		_04.set(x, y, z);
+		mAttachPointIdx = idx;
+		mAttachPos.set(x, y, z);
 	}
 
-	int _00;      // _00
-	Vector3f _04; // _04
+	int mAttachPointIdx; // _00
+	Vector3f mAttachPos; // _04
 };
 
 /**
@@ -47,82 +45,128 @@ struct RigidBody : public Node {
 	struct configuration {
 		configuration() { }
 
-		Matrix3f _00;        // _00
-		Quat _24;            // _24
-		Vector3f _34;        // _30
-		Vector3f _40;        // _40
-		Vector3f _4C;        // _4C
-		Vector3f _58;        // _58
-		Matrix3f _64;        // _64
-		u32 _88;             // _88, unknown
-		Vector3f _8C[0x400]; // _8C
+		Matrix3f mOrientationMtx;    // _00
+		Quat mOrientationQuat;       // _24
+		Vector3f mPosition;          // _34
+		Vector3f mLinearVel;         // _40
+		Vector3f mAngularVel;        // _4C
+		Vector3f mLocalAngularVel;   // _58
+		Matrix3f mInertiaTensor;     // _64
+		u32 _88;                     // _88, unknown
+		Vector3f mBodyPoints[0x400]; // _8C
 	};
 
 	RigidBody()
 	    : Node("rigidBody")
 	{
-		_4118[1]._88 = 0;
-		_4118[0]._88 = 0;
-		_5C          = 0.0f;
-		_90          = 0;
-		_8C          = 0;
-		_4094        = 0;
+		mIntegrationStates[1]._88 = 0;
+		mIntegrationStates[0]._88 = 0;
+		mInvMass                  = 0.0f;
+		_90                       = 0;
+		mBodyPointCount           = 0;
+		mSpringCount              = 0;
 	}
 
-	virtual void render(Graphics&);                                       // _18
-	virtual void initDimensions(f32, f32, f32);                           // _30
-	virtual void computeForces(int, f32);                                 // _34
-	virtual void integrate(int, int, f32);                                // _38
-	virtual bool resolveCollisions(int, Collision&);                      // _3C
-	virtual void calculateVertices(int);                                  // _40
-	virtual void initCollisions(int);                                     // _44
-	virtual bool checkForCollisions(int, CollState&);                     // _48
-	virtual void updateVecQuats(int, f32);                                // _4C
-	virtual void updateViewInfo(int, int);                                // _50
-	virtual void applyBodyFriction(int, Vector3f&, Vector3f&, Vector3f&); // _54
-	virtual void makeBodyQuat(Quat&);                                     // _58
-	virtual void initRender(int);                                         // _5C
-	virtual void shadrender(Graphics&, LightCamera*);                     // _60
-	virtual f32 getViewScale();                                           // _64
-	virtual void updateCont();                                            // _68
-	virtual void applyGroundForces(int, CollGroup*);                      // _6C
+	virtual void render(Graphics&);                               // _18
+	virtual void initDimensions(f32 width, f32 height, f32 depth) // _30
+	{
+		mDimensions.set(width, height, depth);
+	}
+	virtual void computeForces(int, f32) // _34
+	{
+		mLinearAccel.set(0.0f, 0.0f, 0.0f);
+		mAngularAccel.set(0.0f, 0.0f, 0.0f);
+		applyCMForce(Vector3f(0.0f, -9.81f, 0.0f));
+	}
+	virtual void integrate(int, int, f32);           // _38
+	virtual bool resolveCollisions(int, Collision&); // _3C
+	virtual void calculateVertices(int);             // _40
+	virtual void initCollisions(int configIdx)       // _44
+	{
+		configuration& state = mIntegrationStates[configIdx];
+		_1329C.resetBound();
+		for (int i = 0; i < mBodyPointCount; i++) {
+			_1329C.expandBound(state.mBodyPoints[i + _90]);
+		}
+	}
+	virtual bool checkForCollisions(int, CollState&);                                                             // _48
+	virtual void updateVecQuats(int, f32);                                                                        // _4C
+	virtual void updateViewInfo(int, int);                                                                        // _50
+	virtual void applyBodyFriction(int configIdx, Vector3f& contactNormal, Vector3f& contactPoint, Vector3f& vel) // _54
+	{
+		Vector3f frictionForce(vel);
+		frictionForce.project(contactNormal);           // keep only tangential component
+		frictionForce.multiply(-vel.length() * 0.125f); // scale friction by velocity + oppose motion
+		applyForce(configIdx, Vector3f(frictionForce), contactPoint);
+	}
+	virtual void makeBodyQuat(Quat&) { }                 // _58
+	virtual void initRender(int);                        // _5C
+	virtual void shadrender(Graphics&, LightCamera*) { } // _60
+	virtual f32 getViewScale() { return 1.0f; }          // _64
+	virtual void updateCont() { }                        // _68
+	virtual void applyGroundForces(int, CollGroup*);     // _6C
 
 	void initializeBody();
 	void applyCMForce(Vector3f&);
 
+	void applyForce(int configIdx, Vector3f& force, Vector3f& appliedPoint)
+	{
+		Vector3f arm = appliedPoint - mIntegrationStates[configIdx].mPosition;
+		mLinearAccel.x += force.x * mInvMass;
+		mLinearAccel.y += force.y * mInvMass;
+		mLinearAccel.z += force.z * mInvMass;
+		arm.CP(force);
+		mAngularAccel.x += arm.x;
+		mAngularAccel.y += arm.y;
+		mAngularAccel.z += arm.z;
+	}
+
+	// DLL inlines to do:
+	void addBoundingPoint(f32, f32, f32);
+	void addHook(f32, f32, f32);
+	void addSpring(int, f32, f32, f32);
+
 	// _00     = VTBL
 	// _00-_20 = Node
-	Vector3f _20;              // _20
-	Vector3f _2C;              // _2C
-	Vector3f _38;              // _38
-	Vector3f _44;              // _44
-	Vector3f _50;              // _50
-	f32 _5C;                   // _5C
-	u8 _60[0x4];               // _60, unknown
-	Matrix3f _64;              // _64
-	u8 _88[0x4];               // _88, unknown
-	u32 _8C;                   // _8C, unknown
-	u32 _90;                   // _90, unknown
-	Vector3f _94[0x400];       // _94
-	u8 _3094[0x4094 - 0x3094]; // _3094, unknown
-	u32 _4094;                 // _4094, unknown
-	WorldSpring _4098[0x8];    // _4098
-	configuration _4118[0x2];  // _4118
-	Vector3f _A230;            // _A230
-	Vector3f _A23C;            // _A23C
-	Vector3f _A248[0x800];     // _A248
-	Vector3f _10248[0x400];    // _10248
-	Vector3f _13248[2];        // _13248
-	Vector3f _13260;           // _13260
-	Quat _1326C[2];            // _1326C
-	Quat _1328C;               // _1328C
-	BoundBox _1329C;           // _1329C
+	Vector3f mInitPosition;              // _20
+	Vector3f mInitOrientationX;          // _2C
+	Vector3f mInitOrientationY;          // _38
+	Vector3f mInitOrientationZ;          // _44
+	Vector3f mDimensions;                // _50
+	f32 mInvMass;                        // _5C
+	f32 mMass;                           // _60
+	Matrix3f mInertiaTensor;             // _64
+	f32 mRestitutionFactor;              // _88
+	int mBodyPointCount;                 // _8C
+	int _90;                             // _90
+	Vector3f mBodyPoints[0x400];         // _94
+	int mBodyPointHitCounts[0x400];      // _3094
+	int mSpringCount;                    // _4094
+	WorldSpring mSprings[8];             // _4098
+	configuration mIntegrationStates[2]; // _4118, prev and current, which swap from frame to frame
+	Vector3f mLinearAccel;               // _A230
+	Vector3f mAngularAccel;              // _A23C
+	Vector3f _A248[2][0x400];            // _A248
+	Vector3f _10248[0x400];              // _10248
+	Vector3f _13248[2];                  // _13248
+	Vector3f _13260;                     // _13260
+	Quat _1326C[2];                      // _1326C
+	Quat _1328C;                         // _1328C
+	BoundBox _1329C;                     // _1329C
 };
 
 /**
  * @brief TODO
  */
 struct DynSimulator : public Node {
+	DynSimulator()
+	    : Node("simulator")
+	{
+		_2C = 0;
+		_20 = 0;
+		_24 = 0;
+	}
+
 	void resetWorld();
 	void doSimulation(f32, f32, Shape*);
 	void updateVecQuats(f32);
@@ -134,9 +178,19 @@ struct DynSimulator : public Node {
 	int CheckForCollisions(int, Shape*);
 	void ResolveCollisions(int);
 
+	// DLL inlines to do:
+	bool isPaused() { return _20 != 0; }
+	void InitRender();
+	void updateConts();
+	void Render(Graphics&);
+
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	int _20;               // _20
+	int _24;               // _24
+	int mCurrentConfigIdx; // _28
+	u32 _2C;               // _2C, unknown
+	CollState _30;         // _30
 };
 
 #endif

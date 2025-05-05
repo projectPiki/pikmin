@@ -352,23 +352,39 @@ struct CollGroup {
 /**
  * @brief TODO
  */
-struct CollState {
-	// unused/inlined:
-	void resetCollisions(Shape*);
-	bool add(Vector3f&, Vector3f&, RigidBody*);
+struct Collision {
+	Collision() { }
 
-	// TODO: members
+	u8 _00[0x4];            // _00, unknown
+	Vector3f mNormal;       // _04
+	Vector3f mContactPoint; // _10
+	RigidBody* _1C;         // _1C
+	u8 _20[0x4];            // _20, unknown
 };
 
 /**
  * @brief TODO
  */
-struct Collision {
-	Collision();
+struct CollState {
+	CollState()
+	{
+		_00 = 2;
+		_04 = 0.0001f;
+		_08 = 0;
+		_0C = 0;
+	}
 
-	u8 _00[0x4];  // _00, unknown
-	Vector3f _04; // _04
-	Vector3f _10; // _10
+	// unused/inlined:
+	void resetCollisions(Shape*);
+	bool add(Vector3f&, Vector3f&, RigidBody*);
+
+	int _00;                   // _00
+	f32 _04;                   // _04
+	u32 _08;                   // _08, unknown
+	int _0C;                   // _0C
+	int mCollisionCount;       // _10
+	Collision mCollisions[10]; // _14
+	Shape* mShape;             // _17C
 };
 
 #endif
