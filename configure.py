@@ -454,7 +454,7 @@ config.libs = [
             Object(Matching, "plugPikiColin/titles.cpp"),
             Object(Matching, "plugPikiColin/ninLogo.cpp"),
             Object(NonMatching, "plugPikiColin/mapMgr.cpp"),
-            Object(NonMatching, "plugPikiColin/dayMgr.cpp"),
+            Object(Matching, "plugPikiColin/dayMgr.cpp"),
             Object(Matching, "plugPikiColin/cinePlayer.cpp"),
             Object(Matching, "plugPikiColin/lightPool.cpp"),
             Object(NonMatching, "plugPikiColin/memoryCard.cpp"),
