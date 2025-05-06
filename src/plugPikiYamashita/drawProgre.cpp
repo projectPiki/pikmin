@@ -26,7 +26,7 @@ zen::DrawProgre::DrawProgre()
 {
 	mMenu = new DrawMenu("screen/blo/progre.blo", false, false);
 	mMenu->setCancelSelectMenuNo(1);
-	mMenu->setCancelKeyAssign(KBBTN_NULL); // can't cancel the progressive mode screen!
+	mMenu->setCancelKeyAssign(KBBTN_NONE); // can't cancel the progressive mode screen!
 	mMenu->setDecideKeyAssign(KBBTN_START | KBBTN_A);
 
 	mProgreMes   = new DrawProgreMes();

@@ -92,9 +92,10 @@ struct DynCollShape : public DynCollObject {
  * @note Size: 0x144.
  */
 struct DynCollObjBody : public DynCollShape {
-	DynCollObjBody() // TODO: fix this, it's implicit but required/this is just a guess
-	    : DynCollShape(nullptr)
+	DynCollObjBody(Shape* shape)
+	    : DynCollShape(shape)
 	{
+		_140 = nullptr;
 	}
 
 	virtual void update() { }                                 // _10
@@ -113,7 +114,7 @@ struct DynCollObjBody : public DynCollShape {
  * @note Size: 0x140.
  */
 struct DynBuildShape : public DynCollShape {
-	DynBuildShape(Shape* s) // TODO: fix this, it's implicit but required/this is just a guess
+	DynBuildShape(Shape* s)
 	    : DynCollShape(s)
 	{
 	}

@@ -10,7 +10,7 @@
  * @note I think these are more accurate based on Minty's notes.
  */
 enum KeyboardButtons {
-	KBBTN_NULL = 0x0,
+	KBBTN_NONE = 0x0,
 	KBBTN_ANY  = 0xffffffff,
 
 	KBBTN_CSTICK_LEFT  = 0x1,
@@ -66,10 +66,10 @@ struct Controller : public Node {
 		reset(1);
 	}
 
-	Controller(int p1)
+	Controller(int playerNum)
 	    : Node("<Controller>")
 	{
-		reset(p1);
+		reset(playerNum);
 	}
 
 	virtual void update(); // _10

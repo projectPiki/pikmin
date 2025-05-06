@@ -84,21 +84,21 @@ struct PositionMenu : public Menu {
 		char* str = new char[0x40];
 		sprintf(str, "X = %.2f", mPosition->x);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<PositionMenu, Menu&>(this, &menuEnterX));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterX));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Y = %.2f", mPosition->y);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<PositionMenu, Menu&>(this, &menuEnterY));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterY));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Z = %.2f", mPosition->z);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<PositionMenu, Menu&>(this, &menuEnterZ));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<PositionMenu, Menu&>(this, &menuEnterZ));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<PositionMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 	}
@@ -170,28 +170,28 @@ struct ColourMenu : public Menu {
 		char* str = new char[0x40];
 		sprintf(str, "R = %d", mColour->r);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<ColourMenu, Menu&>(this, &menuEnterR));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterR));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "G = %d", mColour->g);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<ColourMenu, Menu&>(this, &menuEnterG));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterG));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "B = %d", mColour->b);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<ColourMenu, Menu&>(this, &menuEnterB));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterB));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "A = %d", mColour->a);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<ColourMenu, Menu&>(this, &menuEnterA));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<ColourMenu, Menu&>(this, &menuEnterA));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<ColourMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 	}
@@ -249,14 +249,14 @@ struct FogMenu : public Menu {
 		char* str = new char[0x40];
 		sprintf(str, "Near = %.2f", *near);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<FogMenu, Menu&>(this, &menuEnterNear));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterNear));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
 
 		str = new char[0x40];
 		sprintf(str, "Far = %.2f", *far);
 		addOption(0, str, nullptr, true);
-		addKeyEvent(1, KBBTN_NULL, new Delegate1<FogMenu, Menu&>(this, &menuEnterFar));
+		addKeyEvent(1, KBBTN_NONE, new Delegate1<FogMenu, Menu&>(this, &menuEnterFar));
 		addKeyEvent(4, KBBTN_Y, new Delegate1<FogMenu, Menu&>(this, &menuDecrease));
 		addKeyEvent(4, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
 	}
@@ -342,7 +342,7 @@ struct LightMenu : public Menu {
 			char* str = new char[0x40];
 			sprintf(str, "Fov = %.2f", *mSpotFov);
 			addOption(0, str, nullptr, true);
-			addKeyEvent(1, KBBTN_NULL, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
+			addKeyEvent(1, KBBTN_NONE, new Delegate1<LightMenu, Menu&>(this, menuEnterNear));
 			addKeyEvent(4, KBBTN_Y, new Delegate1<LightMenu, Menu&>(this, menuDecrease));
 			addKeyEvent(4, KBBTN_X, new Delegate1<LightMenu, Menu&>(this, menuIncrease));
 		}

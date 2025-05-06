@@ -277,7 +277,7 @@ struct BaseShape : public CoreNode {
 	PVWTevInfo* mTevInfoList;           // _4C
 	s32 mMeshCount;                     // _50
 	Mesh* mMeshList;                    // _54
-	s32 mJointCount;                    // _58
+	int mJointCount;                    // _58
 	Joint* mJointList;                  // _5C
 	s32 mTotalMatpolyCount;             // _60
 	Joint::MatPoly** mMatpolyList;      // _64

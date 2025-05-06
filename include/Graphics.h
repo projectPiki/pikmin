@@ -248,28 +248,25 @@ struct DGXGraphics : public Graphics {
 
 	// _3B4      = VTBL
 	// _000-_3B8 = Graphics
-	GXFifoObj* _3B8;
-	u8* _3BC;
-	u8* _3C0;
-	u8* _3C4;
-	u8* _3C8;
-	int _3CC;
-	u32 _3D0;
-	bool _3D4;
-	int _3D8;
-	int _3DC;
-
-	Matrix4f _3E0;
-
-	u8 _420[0x1F0];
-
-	u8* _610;
-	int _614;
-	int _618;
-	int _61C;
-	VIRetraceCallback _620;
-	OSMessageQueue _624;
-	OSMessage _644;
+	GXFifoObj* _3B8;        // _3B8
+	u8* _3BC;               // _3BC
+	u8* _3C0;               // _3C0
+	u8* _3C4;               // _3C4
+	u8* _3C8;               // _3C8
+	int _3CC;               // _3CC
+	u32 _3D0;               // _3D0
+	bool _3D4;              // _3D4
+	int _3D8;               // _3D8
+	int _3DC;               // _3DC
+	Matrix4f _3E0;          // _3E0
+	u8 _420[0x610 - 0x420]; // _420, unknown
+	u8* _610;               // _610
+	int _614;               // _614
+	int _618;               // _618
+	int _61C;               // _61C
+	VIRetraceCallback _620; // _620
+	OSMessageQueue _624;    // _624
+	OSMessage _644;         // _644
 };
 
 extern DGXGraphics* gfx;

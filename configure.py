@@ -447,7 +447,7 @@ config.libs = [
             Object(Matching, "plugPikiColin/introGame.cpp"),
             Object(Matching, "plugPikiColin/gameExit.cpp"),
             Object(Matching, "plugPikiColin/gauges.cpp"),
-            Object(Equivalent, "plugPikiColin/genMapObject.cpp"),
+            Object(Matching, "plugPikiColin/genMapObject.cpp"),
             Object(Matching, "plugPikiColin/gui.cpp"),
             Object(Matching, "plugPikiColin/parameters.cpp"),
             Object(Matching, "plugPikiColin/plugPiki.cpp"),

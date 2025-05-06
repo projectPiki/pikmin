@@ -356,6 +356,8 @@ struct AnimInfo : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct AnimContext {
 	AnimContext()

@@ -10,6 +10,9 @@
 struct Controller;
 struct CreatureCollPart;
 struct DayMgr;
+struct DynMapObject;
+struct DynSimulator;
+struct MapObjectPart;
 
 /**
  * @brief TODO
@@ -36,29 +39,52 @@ struct MoveTrace {
 /**
  * @brief Stripped struct used in one ctor, but needed for genning a weak ctor
  */
-struct MapAnimShapeObject : public Shape { };
-
-/**
- * @brief TODO
- */
-struct MapShadMatHandler : public MaterialHandler {
-	virtual void setMaterial(Material*); // _08
-
-	// _00     = VTBL?
-	// _00-_?? = MaterialHandler?
-	// TODO: members
+struct MapAnimShapeObject {
+	Shape* mShape;            // _00
+	AnimContext mAnimContext; // _04
+	AnimMgr* mMgr;            // _14
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
+ */
+struct MapShadMatHandler : public MaterialHandler {
+	MapShadMatHandler()
+	{
+		mShadMat = new Material();
+		mShadMat->Colour().set(255, 255, 255, 255);
+	}
+
+	virtual void setMaterial(Material*); // _08
+
+	// _00     = VTBL
+	// _00-_08 = MaterialHandler
+	Material* mShadMat; // _08
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct MapProjMatHandler : public MaterialHandler {
+	MapProjMatHandler(Texture* tex)
+	{
+		_0C           = nullptr;
+		mProjMat      = new Material();
+		mProjMat->_24 = tex;
+		mProjMat->Colour().set(128, 128, 128, 32);
+	}
+
 	virtual void setMaterial(Material*); // _08
 	virtual void setTexMatrix(bool);     // _0C
 
-	// _00     = VTBL?
-	// _00-_?? = MaterialHandler?
-	// TODO: members
+	// _00     = VTBL
+	// _00-_08 = MaterialHandler
+	Material* mProjMat; // _08
+	u32 _0C;            // _0C, unknown
 };
 
 /**
@@ -91,6 +117,17 @@ struct ShadowCaster : public CoreNode {
 /**
  * @brief TODO
  */
+struct MapObjAnimator : public Animator {
+	virtual void finishOneShot(); // _10
+
+	// _30     = VTBL
+	// _00-_34 = Animator
+	DynMapObject* mMapObj; // _34
+};
+
+/**
+ * @brief TODO
+ */
 struct DynMapObject : public DynCollShape {
 	DynMapObject(MapMgr*, MapAnimShapeObject*);
 
@@ -103,35 +140,29 @@ struct DynMapObject : public DynCollShape {
 
 	// _00     = VTBL
 	// _00-_140 = DynCollShape
-	BaseShape** _140; // _140
-	Animator mAnim;   // _144
-	u8 _1XX[0x3a0];
-	int mState;               // _518
-	f32 _51C;                 // _51C
-	Vector3f mMapScale;       // _520
-	Vector3f mMapRotation;    // _52C
-	Vector3f mMapTranslation; // _538
-	int _544;                 // _544
-};
-
-/**
- * @brief TODO
- */
-struct MapObjAnimator : public Animator {
-	virtual void finishOneShot(); // _10
-
-	// _30     = VTBL
-	// _00-_34 = Animator
-	DynMapObject* mMapObj; // _34
+	MapAnimShapeObject* mShapeObject; // _140
+	MapObjAnimator mAnimator;         // _144
+	MapMgr* mMapMgr;                  // _17C
+	ShadowCaster mShadowCaster;       // _180
+	DynMapObject* _514;               // _514
+	int mState;                       // _518
+	f32 _51C;                         // _51C
+	Vector3f mMapScale;               // _520, this is an SRT according to the DLL
+	Vector3f mMapRotation;            // _52C
+	Vector3f mMapTranslation;         // _538
+	int mObjPartCount;                // _544
+	MapObjectPart** mObjParts;        // _548
 };
 
 /**
  * @brief TODO
  */
 struct MapObjectPart : public DynCollShape {
-	MapObjectPart() // TODO: fix this, it's implicit but required/this is just a guess
-	    : DynCollShape(nullptr)
+	MapObjectPart(Shape* shape)
+	    : DynCollShape(shape)
 	{
+		_140 = 0;
+		_144 = 0;
 	}
 
 	virtual void update();                                    // _10
@@ -140,8 +171,8 @@ struct MapObjectPart : public DynCollShape {
 
 	// _00     = VTBL
 	// _00-_140 = DynCollShape
-	int _140;            // _140
-	DynCollObject* _144; // _144 might be wrong
+	int _140;           // _140
+	DynMapObject* _144; // _144 might be wrong
 };
 
 /**
@@ -225,11 +256,28 @@ struct MapSlider : public MapParts {
  * @note Size: 0xC.
  */
 struct MapRoom {
-	MapRoom();
+	MapRoom()
+	{
+		_08 = 0;
+		_04 = 1.0f;
+		_00 = 1.0f;
+	}
 
 	f32 _00; // _00
 	f32 _04; // _04
 	u32 _08; // _08, unknown
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Fabricated. Has to be this structure, but no idea what it was called. Has no ctor.
+ * @note Size: 0xC.
+ */
+struct MapColls {
+	CollGroup* mCollisions; // _00
+	CollTriInfo* mTriangle; // _04
+	int _08;                // _08
 };
 
 /**
@@ -277,13 +325,21 @@ struct MapMgr {
 	ShapeDynMaterials mDynMaterials;       // _64
 	BaseShape* mMapPartShapes[5];          // _74
 	DynCollShape* mCollShape;              // _88
-	u8 _8C[0x4];                           // _8C, unknown
+	u32 _8C;                               // _8C, unknown
 	BoundBox _90;                          // _90
-	u8 _A8[0xB4 - 0xA8];                   // _A8, unknown
+	u32 _A8;                               // _A8, unknown
+	u8 _AC[0x4];                           // _AC, unknown
+	int _B0;                               // _B0
 	Vector3f _B4;                          // _B4
 	BoundBox _C0;                          // _C0
 	BoundBox _D8;                          // _D8
-	u8 _F0[0x10C - 0xF0];                  // _F0, unknown
+	MapColls* mCollisions;                 // _F0
+	f32 _F4;                               // _F4
+	f32 _F8;                               // _F8
+	f32 _FC;                               // _FC
+	f32 _100;                              // _100
+	u8 _104;                               // _104
+	DynSimulator* mDynSimulator;           // _108
 	int mCollisionCheckCount;              // _10C
 	int _110;                              // _110, unknown
 	ShadowCaster mShadowCaster;            // _114

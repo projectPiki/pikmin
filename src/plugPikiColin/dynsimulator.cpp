@@ -57,11 +57,11 @@ bool CollState::add(Vector3f& normal, Vector3f& contactPt, RigidBody* collider)
 void RigidBody::initializeBody()
 {
 	Vector3f halfExtents(mDimensions.x / 2.0f, mDimensions.y / 2.0f, mDimensions.z / 2.0f);
-	mMass = 1.0f / mInvMass;
+	mInvMass = 1.0f / mMass;
 	mInertiaTensor.identity();
-	mInertiaTensor(0, 0) = 3.0f / ((halfExtents.y * halfExtents.y + halfExtents.z * halfExtents.z) * mInvMass);
-	mInertiaTensor(1, 1) = 3.0f / ((halfExtents.x * halfExtents.x + halfExtents.z * halfExtents.z) * mInvMass);
-	mInertiaTensor(2, 2) = 3.0f / ((halfExtents.x * halfExtents.x + halfExtents.y * halfExtents.y) * mInvMass);
+	mInertiaTensor(0, 0) = 3.0f / ((halfExtents.y * halfExtents.y + halfExtents.z * halfExtents.z) * mMass);
+	mInertiaTensor(1, 1) = 3.0f / ((halfExtents.x * halfExtents.x + halfExtents.z * halfExtents.z) * mMass);
+	mInertiaTensor(2, 2) = 3.0f / ((halfExtents.x * halfExtents.x + halfExtents.y * halfExtents.y) * mMass);
 	mRestitutionFactor   = 0.4f;
 
 	for (int i = 0; i < 2; i++) {
@@ -86,8 +86,8 @@ void RigidBody::initializeBody()
 	}
 
 	for (int i = 0; i < mSpringCount; i++) {
-		Vector3f vec2 = mBodyPoints[mSprings[i].mAttachPointIdx] + mInitPosition;
-		mSprings[i].mAttachPos.add(vec2);
+		Vector3f vec2 = mBodyPoints[mSprings[i].mHookIdx] + mInitPosition;
+		mSprings[i].mOffset.add(vec2);
 	}
 }
 
@@ -121,7 +121,7 @@ void RigidBody::render(Graphics& gfx)
 		gfx.drawLine(mBodyPoints[indices[i]], mBodyPoints[indices[i + 1]]);
 	}
 
-	gfx.drawPoints(mBodyPoints, mBodyPointCount);
+	gfx.drawPoints(mBodyPoints, mBoundingPointCount);
 	gfx.setLighting(lighting, nullptr);
 }
 
@@ -132,9 +132,9 @@ void RigidBody::render(Graphics& gfx)
  */
 void RigidBody::applyCMForce(Vector3f& force)
 {
-	mLinearAccel.x += force.x * mInvMass;
-	mLinearAccel.y += force.y * mInvMass;
-	mLinearAccel.z += force.z * mInvMass;
+	mLinearAccel.x += force.x * mMass;
+	mLinearAccel.y += force.y * mMass;
+	mLinearAccel.z += force.z * mMass;
 }
 
 /*
@@ -151,7 +151,7 @@ void RigidBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 	currState.mOrientationMtx
 	    = prevState.mOrientationMtx + timeStep * Matrix3f(prevState.mAngularVel, Matrix3f::MODE_Unk0) * prevState.mOrientationMtx;
 
-	f32 v                        = timeStep * mMass;
+	f32 v                        = timeStep * mInvMass;
 	currState.mLinearVel.x       = v * mLinearAccel.x + prevState.mLinearVel.x;
 	currState.mLinearVel.y       = v * mLinearAccel.y + prevState.mLinearVel.y;
 	currState.mLinearVel.z       = v * mLinearAccel.z + prevState.mLinearVel.z;
@@ -1060,11 +1060,11 @@ bool RigidBody::resolveCollisions(int configIdx, Collision& coll)
 		// objects approaching! collision!
 		f32 a          = totalVel.DP(coll.mNormal) * -(mRestitutionFactor + 1.0f);
 		f32 b          = CP(config.mInertiaTensor * CP(bodyNormal, coll.mNormal), bodyNormal).DP(coll.mNormal);
-		f32 impulseMag = a / (mMass + b);
+		f32 impulseMag = a / (mInvMass + b);
 		Vector3f linearImpulse(impulseMag * coll.mNormal.x, impulseMag * coll.mNormal.y, impulseMag * coll.mNormal.z);
-		config.mLinearVel.x += mMass * linearImpulse.x;
-		config.mLinearVel.y += mMass * linearImpulse.y;
-		config.mLinearVel.z += mMass * linearImpulse.z;
+		config.mLinearVel.x += mInvMass * linearImpulse.x;
+		config.mLinearVel.y += mInvMass * linearImpulse.y;
+		config.mLinearVel.z += mInvMass * linearImpulse.z;
 		Vector3f angularImpulse = CP(bodyNormal, linearImpulse);
 		config.mLocalAngularVel.x += angularImpulse.x;
 		config.mLocalAngularVel.y += angularImpulse.y;
@@ -1084,12 +1084,12 @@ bool RigidBody::resolveCollisions(int configIdx, Collision& coll)
 void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 {
 	configuration& config = mIntegrationStates[configIdx];
-	for (int i = 0; i < mBodyPointCount; i++) {
+	for (int i = 0; i < mBoundingPointCount; i++) {
 		mBodyPointHitCounts[i] = 0;
 	}
 
-	for (int i = 0; i < mBodyPointCount; i++) {
-		Vector3f& bodyPt = config.mBodyPoints[i + _90];
+	for (int i = 0; i < mBoundingPointCount; i++) {
+		Vector3f& bodyPt = config.mBodyPoints[i + mHookPointCount];
 		bool skipTriCalc = collGroup ? false : true;
 		for (int j = 0; !skipTriCalc && j < collGroup->mTriCount; j++) {
 			CollTriInfo* triangle = collGroup->mTriangleList[j];
@@ -1130,7 +1130,7 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 		}
 	}
 
-	for (int i = 0; i < mBodyPointCount; i++) {
+	for (int i = 0; i < mBoundingPointCount; i++) {
 		if (mBodyPointHitCounts[i] > 1) {
 			PRINT("vert %d hit %d times\n", i, mBodyPointHitCounts[i]);
 		}
@@ -1144,7 +1144,7 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
  */
 void RigidBody::updateViewInfo(int p1, int configIdx)
 {
-	for (int i = 0; i < mBodyPointCount + _90; i++) {
+	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
 		_A248[p1][i] = mIntegrationStates[configIdx].mBodyPoints[i];
 	}
 
@@ -1164,7 +1164,7 @@ void RigidBody::updateVecQuats(int p1, f32 p2)
 	int idx1 = p1;
 	int idx2 = p1 ^ 1;
 
-	for (int i = 0; i < mBodyPointCount + _90; i++) {
+	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
 		_10248[i] = _A248[idx1][i] + (_A248[idx2][i] - _A248[idx1][i]) * p2;
 	}
 
@@ -1184,7 +1184,7 @@ void RigidBody::calculateVertices(int configIdx)
 	configuration& state2 = mIntegrationStates[configIdx]; // why
 	Vector3f& pos         = state.mPosition;
 
-	for (int i = 0; i < mBodyPointCount + _90; i++) {
+	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
 		state2.mBodyPoints[i] = pos + state.mOrientationMtx * mBodyPoints[i];
 	}
 }

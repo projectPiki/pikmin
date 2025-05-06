@@ -3,8 +3,14 @@
 #include "MapMgr.h"
 #include "Creature.h"
 #include "DebugLog.h"
+#include "FlowController.h"
+#include "Font.h"
+#include "gameflow.h"
 #include "Graphics.h"
+#include "timers.h"
 #include "EffectMgr.h"
+#include "MemStat.h"
+#include "DayMgr.h"
 #include "CreatureCollPart.h"
 #include "sysNew.h"
 
@@ -21,6 +27,14 @@ DEFINE_ERROR()
  * Size:	0000F0
  */
 DEFINE_PRINT(nullptr)
+
+BoundBox collExtents;
+MapMgr* mapMgr;
+static f32 Kda = 0.0f;
+static f32 Kdl = 1.25f;
+static u32 numRepeats; // type unsure
+static u32 numUpdated; // type unsure
+static u32 vlink;      // type unsure
 
 /*
  * --INFO--
@@ -105,299 +119,26 @@ void DynCollShape::updatePos()
 {
 	mBoundingBox.resetBound();
 	for (int i = 0; i < mShape->mVertexCount; i++) {
-		mVertexList[i].x = mTransformMtx.mMtx[0][3] + (mTransformMtx.mMtx[0][2] * mShape->mVertexList[i].z)
-		                 + (mTransformMtx.mMtx[0][1] * mShape->mVertexList[i].y) + (mTransformMtx.mMtx[0][0] * mShape->mVertexList[i].x);
-
-		mVertexList[i].y = mTransformMtx.mMtx[1][3] + (mTransformMtx.mMtx[1][2] * mShape->mVertexList[i].z)
-		                 + (mTransformMtx.mMtx[1][1] * mShape->mVertexList[i].y) + (mTransformMtx.mMtx[1][0] * mShape->mVertexList[i].x);
-
-		mVertexList[i].z = mTransformMtx.mMtx[2][3] + (mTransformMtx.mMtx[2][2] * mShape->mVertexList[i].z)
-		                 + (mTransformMtx.mMtx[2][1] * mShape->mVertexList[i].y) + (mTransformMtx.mMtx[2][0] * mShape->mVertexList[i].x);
+		mVertexList[i].x = mTransformMtx.mMtx[0][0] * mShape->mVertexList[i].x + mTransformMtx.mMtx[0][1] * mShape->mVertexList[i].y
+		                 + mTransformMtx.mMtx[0][2] * mShape->mVertexList[i].z + mTransformMtx.mMtx[0][3];
+		mVertexList[i].y = mTransformMtx.mMtx[1][0] * mShape->mVertexList[i].x + mTransformMtx.mMtx[1][1] * mShape->mVertexList[i].y
+		                 + mTransformMtx.mMtx[1][2] * mShape->mVertexList[i].z + mTransformMtx.mMtx[1][3];
+		mVertexList[i].z = mTransformMtx.mMtx[2][0] * mShape->mVertexList[i].x + mTransformMtx.mMtx[2][1] * mShape->mVertexList[i].y
+		                 + mTransformMtx.mMtx[2][2] * mShape->mVertexList[i].z + mTransformMtx.mMtx[2][3];
 		mBoundingBox.expandBound(mVertexList[i]);
 	}
 
 	for (int i = 0; i < mShape->mTriCount; i++) {
 		mShape->mTriList[i].mTriangle.mNormal.rotateTo(mTransformMtx, mCollTriList[i].mTriangle.mNormal);
 		mCollTriList[i].mTriangle.mNormal.normalise();
-		mCollTriList[i].mTriangle.mNormal.y = mCollTriList[i].mTriangle.mNormal.DP(mVertexList[mCollTriList[0].mVertexIndices[i]]);
+		mCollTriList[i].mTriangle.mOffset = mCollTriList[i].mTriangle.mNormal.DP(mVertexList[mCollTriList[i].mVertexIndices[0]]);
 		for (int j = 0; j < 3; j++) {
-			mShape->mTriList[i].mTriangle.mNormal.rotateTo(mTransformMtx, mCollTriList[i].mTriangle.mNormal);
-			mCollTriList[i].mTriangle.mNormal.normalise();
-			mCollTriList[i].mTriangle.mNormal.y = mCollTriList[i].mTriangle.mNormal.DP(mVertexList[mCollTriList[i].mVertexIndices[j]]);
+			mShape->mTriList[i].mEdgePlanes[j].mNormal.rotateTo(mTransformMtx, mCollTriList[i].mEdgePlanes[j].mNormal);
+			mCollTriList[i].mEdgePlanes[j].mNormal.normalise();
+			mCollTriList[i].mEdgePlanes[j].mOffset
+			    = mCollTriList[i].mEdgePlanes[j].mNormal.DP(mVertexList[mCollTriList[i].mVertexIndices[j]]);
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stmw      r25, 0x34(r1)
-	  addi      r26, r3, 0
-	  lfs       f0, -0x6D18(r13)
-	  stfs      f0, 0x44(r3)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f0, 0x48(r3)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0x4C(r3)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0x50(r3)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0x54(r3)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0x58(r3)
-	  b         .loc_0x1B8
-
-	.loc_0x54:
-	  lwz       r4, 0x23C(r3)
-	  addi      r3, r5, 0x4
-	  lfs       f3, 0x5C(r26)
-	  addi      r0, r5, 0x8
-	  add       r4, r4, r5
-	  lfs       f2, 0x0(r4)
-	  lfs       f1, 0x60(r26)
-	  lfs       f0, 0x4(r4)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x64(r26)
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r4)
-	  lfs       f4, 0x68(r26)
-	  fmuls     f1, f3, f1
-	  lwz       r4, 0x30(r26)
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f0, f4, f0
-	  stfsx     f0, r4, r5
-	  lwz       r4, 0x2C(r26)
-	  lfs       f3, 0x6C(r26)
-	  lwz       r4, 0x23C(r4)
-	  lfs       f1, 0x70(r26)
-	  add       r4, r4, r5
-	  lfs       f5, 0x74(r26)
-	  lfs       f2, 0x0(r4)
-	  lfs       f0, 0x4(r4)
-	  lfs       f4, 0x8(r4)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  lfs       f3, 0x78(r26)
-	  fmuls     f1, f5, f4
-	  lwz       r4, 0x30(r26)
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfsx     f0, r4, r3
-	  lwz       r3, 0x2C(r26)
-	  lfs       f3, 0x7C(r26)
-	  lwz       r3, 0x23C(r3)
-	  lfs       f1, 0x80(r26)
-	  add       r3, r3, r5
-	  lfs       f5, 0x84(r26)
-	  lfs       f2, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  lfs       f4, 0x8(r3)
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  lfs       f3, 0x88(r26)
-	  fmuls     f1, f5, f4
-	  lwz       r3, 0x30(r26)
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  fadds     f0, f3, f0
-	  stfsx     f0, r3, r0
-	  lwz       r0, 0x30(r26)
-	  lfs       f0, 0x44(r26)
-	  add       r3, r0, r5
-	  lfs       f1, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x14C
-	  stfs      f1, 0x44(r26)
-
-	.loc_0x14C:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x48(r26)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x160
-	  stfs      f1, 0x48(r26)
-
-	.loc_0x160:
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x4C(r26)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x174
-	  stfs      f1, 0x4C(r26)
-
-	.loc_0x174:
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x50(r26)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x188
-	  stfs      f1, 0x50(r26)
-
-	.loc_0x188:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x54(r26)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x19C
-	  stfs      f1, 0x54(r26)
-
-	.loc_0x19C:
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x58(r26)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x1B0
-	  stfs      f1, 0x58(r26)
-
-	.loc_0x1B0:
-	  addi      r5, r5, 0xC
-	  addi      r6, r6, 0x1
-
-	.loc_0x1B8:
-	  lwz       r3, 0x2C(r26)
-	  lwz       r0, 0x238(r3)
-	  cmpw      r6, r0
-	  blt+      .loc_0x54
-	  li        r28, 0
-	  lfs       f31, -0x78B0(r2)
-	  mulli     r29, r28, 0x58
-	  b         .loc_0x3A4
-
-	.loc_0x1D8:
-	  lwz       r4, 0x16C(r3)
-	  addi      r3, r29, 0x18
-	  lwz       r0, 0x34(r26)
-	  addi      r5, r29, 0x18
-	  add       r3, r4, r3
-	  addi      r4, r26, 0x5C
-	  add       r5, r0, r5
-	  bl        -0x2A564
-	  lwz       r0, 0x34(r26)
-	  addi      r25, r29, 0x18
-	  add       r25, r0, r25
-	  lfs       f1, 0x0(r25)
-	  lfs       f0, 0x4(r25)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x8(r25)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x5400C
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x254
-	  lfs       f0, 0x0(r25)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r25)
-	  lfs       f0, 0x4(r25)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r25)
-	  lfs       f0, 0x8(r25)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r25)
-
-	.loc_0x254:
-	  lwz       r0, 0x34(r26)
-	  li        r27, 0
-	  lwz       r3, 0x30(r26)
-	  rlwinm    r31,r27,4,0,27
-	  add       r5, r0, r29
-	  lwz       r0, 0x4(r5)
-	  li        r30, 0
-	  lfs       f3, 0x18(r5)
-	  mulli     r0, r0, 0xC
-	  lfs       f1, 0x1C(r5)
-	  lfs       f4, 0x20(r5)
-	  add       r3, r3, r0
-	  lfs       f2, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x8(r3)
-	  fmuls     f0, f1, f0
-	  fmuls     f1, f4, f3
-	  fadds     f0, f2, f0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x24(r5)
-
-	.loc_0x2A8:
-	  lwz       r3, 0x2C(r26)
-	  add       r25, r29, r31
-	  lwz       r0, 0x34(r26)
-	  addi      r5, r25, 0x28
-	  lwz       r4, 0x16C(r3)
-	  addi      r3, r25, 0x28
-	  add       r3, r4, r3
-	  addi      r4, r26, 0x5C
-	  add       r5, r0, r5
-	  bl        -0x2A63C
-	  lwz       r0, 0x34(r26)
-	  addi      r25, r25, 0x28
-	  add       r25, r0, r25
-	  lfs       f1, 0x0(r25)
-	  lfs       f0, 0x4(r25)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x8(r25)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x540E4
-	  fcmpu     cr0, f31, f1
-	  beq-      .loc_0x32C
-	  lfs       f0, 0x0(r25)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r25)
-	  lfs       f0, 0x4(r25)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r25)
-	  lfs       f0, 0x8(r25)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r25)
-
-	.loc_0x32C:
-	  lwz       r5, 0x34(r26)
-	  addi      r0, r30, 0x4
-	  add       r3, r29, r31
-	  lwz       r4, 0x30(r26)
-	  add       r6, r29, r5
-	  lwzx      r0, r6, r0
-	  addi      r3, r3, 0x28
-	  add       r3, r5, r3
-	  mulli     r0, r0, 0xC
-	  lfs       f3, 0x0(r3)
-	  lfs       f1, 0x4(r3)
-	  lfs       f4, 0x8(r3)
-	  add       r3, r4, r0
-	  lfs       f2, 0x0(r3)
-	  addi      r27, r27, 0x1
-	  lfs       f0, 0x4(r3)
-	  addi      r0, r31, 0x34
-	  fmuls     f2, f3, f2
-	  fmuls     f0, f1, f0
-	  lfs       f1, 0x8(r3)
-	  cmpwi     r27, 0x3
-	  fmuls     f1, f4, f1
-	  fadds     f0, f2, f0
-	  addi      r31, r31, 0x10
-	  addi      r30, r30, 0x4
-	  fadds     f0, f1, f0
-	  stfsx     f0, r6, r0
-	  blt+      .loc_0x2A8
-	  addi      r29, r29, 0x58
-	  addi      r28, r28, 0x1
-
-	.loc_0x3A4:
-	  lwz       r3, 0x2C(r26)
-	  lwz       r0, 0x168(r3)
-	  cmpw      r28, r0
-	  blt+      .loc_0x1D8
-	  lmw       r25, 0x34(r1)
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -480,10 +221,41 @@ void MapObjAnimator::finishOneShot()
  * Address:	........
  * Size:	000364
  */
-DynMapObject::DynMapObject(MapMgr*, MapAnimShapeObject* obj)
-    : DynCollShape(obj)
+DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
+    : DynCollShape(obj->mShape)
 {
-	// UNUSED FUNCTION
+	mShapeObject      = obj;
+	mShape            = mShapeObject->mShape;
+	mAnimator.mMapObj = this;
+	mAnimator.init(&mShapeObject->mAnimContext, mShapeObject->mMgr);
+	mAnimator.startAnim(0, 0, 0, 8);
+	mState  = 0;
+	mMapMgr = map;
+	mShadowCaster.initCore("");
+	_514                            = this;
+	mShadowCaster.mLightCamera.mFov = 20.0f;
+	mMapScale.set(1.0f, 1.0f, 1.0f);
+	mMapRotation.set(0.0f, 0.0f, 0.0f);
+	mMapTranslation.set(0.0f, 0.0f, 0.0f);
+	mObjPartCount = 0;
+	for (ObjCollInfo* info = (ObjCollInfo*)mShape->mCollisionInfo.mParentShape->Child(); info; info = (ObjCollInfo*)info->mNext) {
+		if (info->mPlatShape) {
+			mObjPartCount++;
+		}
+	}
+
+	mObjParts = new MapObjectPart*[mObjPartCount];
+	int i     = 0;
+	for (ObjCollInfo* info = (ObjCollInfo*)mShape->mCollisionInfo.mParentShape->Child(); info; info = (ObjCollInfo*)info->mNext) {
+		if (info->mPlatShape) {
+			MapObjectPart* part = new MapObjectPart(info->mPlatShape);
+			part->_144          = this;
+			part->_140          = info->mJointIndex;
+			mMapMgr->mCollShape->add(part);
+			mObjParts[i] = part;
+			i++;
+		}
+	}
 }
 
 /*
@@ -529,7 +301,7 @@ void DynMapObject::update()
 		_51C -= gsys->getFrameTime();
 		if (_51C < 0.0f) {
 			_51C = 2.0f;
-			mAnim.startAnim(2, 0, 0, 8);
+			mAnimator.startAnim(2, 0, 0, 8);
 			mState++;
 		}
 		break;
@@ -544,7 +316,7 @@ void DynMapObject::update()
 		_51C -= gsys->getFrameTime();
 		if (_51C < 0.0f) {
 			_51C = 0.0f;
-			mAnim.startAnim(2, 1, 0, 8);
+			mAnimator.startAnim(2, 1, 0, 8);
 			mState++;
 		}
 		break;
@@ -552,126 +324,11 @@ void DynMapObject::update()
 	default:
 		break;
 	}
+
+	mShadowCaster.mSourcePosition.set(mMapTranslation.x + 100.0f, mMapTranslation.y + 300.0f, mMapTranslation.z + 300.0f);
+	mShadowCaster.mTargetPosition.set(mMapTranslation.x, mMapTranslation.y + 100.0f, mMapTranslation.z);
+	mAnimator.animate(30.0f);
 	DynCollShape::update();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x518(r3)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x90
-	  bge-      .loc_0x30
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x3C
-	  b         .loc_0x114
-
-	.loc_0x30:
-	  cmpwi     r0, 0x5
-	  bge-      .loc_0x114
-	  b         .loc_0xC8
-
-	.loc_0x3C:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x51C(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x51C(r31)
-	  lfs       f1, 0x51C(r31)
-	  lfs       f0, -0x78B0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x114
-	  lfs       f0, -0x7894(r2)
-	  addi      r3, r31, 0x144
-	  li        r4, 0x2
-	  stfs      f0, 0x51C(r31)
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x8
-	  bl        -0x11310
-	  lwz       r3, 0x518(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x518(r31)
-	  b         .loc_0x114
-
-	.loc_0x90:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x51C(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x51C(r31)
-	  lfs       f1, 0x51C(r31)
-	  lfs       f0, -0x78B0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x114
-	  stfs      f0, 0x51C(r31)
-	  lwz       r3, 0x518(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x518(r31)
-	  b         .loc_0x114
-
-	.loc_0xC8:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x51C(r31)
-	  lfs       f0, 0x28C(r3)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x51C(r31)
-	  lfs       f1, 0x51C(r31)
-	  lfs       f0, -0x78B0(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x114
-	  stfs      f0, 0x51C(r31)
-	  addi      r3, r31, 0x144
-	  li        r4, 0x2
-	  li        r5, 0x1
-	  li        r6, 0
-	  li        r7, 0x8
-	  bl        -0x11398
-	  lwz       r3, 0x518(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x518(r31)
-
-	.loc_0x114:
-	  lfs       f2, -0x788C(r2)
-	  addi      r3, r31, 0x144
-	  lfs       f0, 0x538(r31)
-	  lfs       f4, -0x7890(r2)
-	  lfs       f1, 0x53C(r31)
-	  fadds     f0, f2, f0
-	  lfs       f3, 0x540(r31)
-	  fadds     f1, f4, f1
-	  stfs      f0, 0x4FC(r31)
-	  fadds     f0, f4, f3
-	  stfs      f1, 0x500(r31)
-	  stfs      f0, 0x504(r31)
-	  lfs       f1, 0x53C(r31)
-	  lfs       f0, 0x538(r31)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x508(r31)
-	  stfs      f1, 0x50C(r31)
-	  lfs       f0, 0x540(r31)
-	  stfs      f0, 0x510(r31)
-	  lwz       r12, 0x174(r31)
-	  lfs       f1, -0x7888(r2)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r31, 0x5C
-	  addi      r4, r31, 0x9C
-	  bl        -0x23F44
-	  addi      r3, r31, 0x5C
-	  addi      r4, r31, 0x11C
-	  addi      r5, r31, 0x128
-	  addi      r6, r31, 0x134
-	  bl        -0x242A0
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -695,118 +352,20 @@ void DynMapObject::refresh(Graphics& gfx)
 	Matrix4f mtx2;
 	mtx1.makeSRT(mMapScale, mMapRotation, mMapTranslation);
 	gfx.calcViewMatrix(mtx1, mtx2);
-	mAnim.updateContext();
-	mShape->updateAnim(gfx, mtx2, nullptr);
+	gsys->mTimer->start("animation", true);
+	mAnimator.updateContext();
+	mShapeObject->mShape->updateAnim(gfx, mtx2, nullptr);
+	gsys->mTimer->stop("animation");
 
-	for (int i = 0; i < _544; i++) { }
+	for (int i = 0; i < mObjPartCount; i++) {
+		MapObjectPart* part = mObjParts[i];
+		part->mTransformMtx.inverse(&part->mInverseMatrix);
+		Matrix4f animMtx = mShape->getAnimMatrix(part->_140);
+		gfx.mCamera->mInverseLookAtMtx.multiplyTo(animMtx, part->mTransformMtx);
+	}
 
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mShape->drawshape(gfx, *gfx.mCamera, nullptr);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE8(r1)
-	  stmw      r27, 0xD4(r1)
-	  addi      r28, r3, 0
-	  addi      r29, r4, 0
-	  addi      r3, r1, 0x90
-	  addi      r4, r28, 0x520
-	  addi      r5, r28, 0x52C
-	  addi      r6, r28, 0x538
-	  bl        -0x2430C
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  addi      r4, r1, 0x90
-	  addi      r5, r1, 0x50
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r28, 0x144
-	  bl        -0x11264
-	  lwz       r3, 0x140(r28)
-	  addi      r4, r29, 0
-	  addi      r5, r1, 0x50
-	  lwz       r3, 0x0(r3)
-	  li        r6, 0
-	  bl        -0x2D128
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x130
-
-	.loc_0x74:
-	  lwz       r3, 0x548(r28)
-	  lwzx      r27, r3, r31
-	  addi      r3, r27, 0x5C
-	  addi      r4, r27, 0x9C
-	  bl        -0x24020
-	  lwz       r3, 0x2C(r28)
-	  lwz       r4, 0x140(r27)
-	  bl        -0x2D480
-	  lwz       r6, 0x0(r3)
-	  addi      r4, r1, 0x10
-	  lwz       r0, 0x4(r3)
-	  addi      r5, r27, 0x5C
-	  stw       r6, 0x10(r1)
-	  stw       r0, 0x14(r1)
-	  lwz       r6, 0x8(r3)
-	  lwz       r0, 0xC(r3)
-	  stw       r6, 0x18(r1)
-	  stw       r0, 0x1C(r1)
-	  lwz       r6, 0x10(r3)
-	  lwz       r0, 0x14(r3)
-	  stw       r6, 0x20(r1)
-	  stw       r0, 0x24(r1)
-	  lwz       r6, 0x18(r3)
-	  lwz       r0, 0x1C(r3)
-	  stw       r6, 0x28(r1)
-	  stw       r0, 0x2C(r1)
-	  lwz       r6, 0x20(r3)
-	  lwz       r0, 0x24(r3)
-	  stw       r6, 0x30(r1)
-	  stw       r0, 0x34(r1)
-	  lwz       r6, 0x28(r3)
-	  lwz       r0, 0x2C(r3)
-	  stw       r6, 0x38(r1)
-	  stw       r0, 0x3C(r1)
-	  lwz       r6, 0x30(r3)
-	  lwz       r0, 0x34(r3)
-	  stw       r6, 0x40(r1)
-	  stw       r0, 0x44(r1)
-	  lwz       r6, 0x38(r3)
-	  lwz       r0, 0x3C(r3)
-	  stw       r6, 0x48(r1)
-	  stw       r0, 0x4C(r1)
-	  lwz       r3, 0x2E4(r29)
-	  addi      r3, r3, 0x220
-	  bl        -0x24428
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x130:
-	  lwz       r0, 0x544(r28)
-	  cmpw      r30, r0
-	  blt+      .loc_0x74
-	  lwz       r12, 0x3B4(r29)
-	  lis       r4, 0x803A
-	  mr        r3, r29
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2C(r28)
-	  mr        r4, r29
-	  lwz       r5, 0x2E4(r29)
-	  li        r6, 0
-	  bl        -0x320D8
-	  lmw       r27, 0xD4(r1)
-	  lwz       r0, 0xEC(r1)
-	  addi      r1, r1, 0xE8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -834,123 +393,14 @@ void DynCollObjBody::applyVelocity(Plane& plane, Vector3f& a1, Vector3f& a2)
  * Address:	800625BC
  * Size:	0001B8
  */
-void DynObjBody::touchCallback(Plane&, Vector3f&, Vector3f&)
+void DynObjBody::touchCallback(Plane& plane, Vector3f& p2, Vector3f& p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD8(r1)
-	  stfd      f31, 0xD0(r1)
-	  stfd      f30, 0xC8(r1)
-	  stfd      f29, 0xC0(r1)
-	  stw       r31, 0xBC(r1)
-	  stw       r30, 0xB8(r1)
-	  mr        r30, r5
-	  stw       r29, 0xB4(r1)
-	  mr        r29, r3
-	  lfs       f3, 0x0(r4)
-	  lfs       f2, 0x0(r6)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x4(r6)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x8(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x8(r6)
-	  lfs       f0, -0x78B0(r2)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x190
-	  fmuls     f0, f4, f1
-	  addi      r0, r1, 0x48
-	  addi      r6, r1, 0x50
-	  addi      r5, r1, 0x4C
-	  stfs      f0, 0x50(r1)
-	  addi      r3, r1, 0x94
-	  lfs       f0, 0x4(r4)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x0(r4)
-	  mr        r4, r0
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x48(r1)
-	  bl        -0x2B538
-	  lfs       f1, 0x8(r30)
-	  addis     r31, r29, 0x1
-	  lfs       f0, 0x4154(r29)
-	  addi      r6, r1, 0x44
-	  lfs       f2, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0x3318(r31)
-	  lfs       f3, 0x4(r30)
-	  addi      r5, r1, 0x40
-	  lfs       f31, 0x94(r1)
-	  stfs      f0, 0x44(r1)
-	  fmuls     f31, f31, f1
-	  lfs       f30, 0x98(r1)
-	  addi      r4, r1, 0x3C
-	  lfs       f0, 0x4150(r29)
-	  lfs       f29, 0x9C(r1)
-	  fsubs     f0, f3, f0
-	  addi      r3, r1, 0x6C
-	  fmuls     f30, f30, f1
-	  fmuls     f29, f29, f1
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x414C(r29)
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x3C(r1)
-	  bl        -0x2B59C
-	  lfs       f0, 0x5C(r29)
-	  lfs       f6, 0x6C(r1)
-	  fmuls     f1, f31, f0
-	  lfs       f7, 0x70(r1)
-	  lfs       f2, -0x5DD0(r31)
-	  fmuls     f0, f6, f29
-	  lfs       f3, 0x74(r1)
-	  fadds     f2, f2, f1
-	  fmuls     f1, f3, f31
-	  fmuls     f4, f7, f29
-	  stfs      f2, -0x5DD0(r31)
-	  fmuls     f3, f3, f30
-	  fsubs     f2, f1, f0
-	  lfs       f0, 0x5C(r29)
-	  lfs       f5, -0x5DCC(r31)
-	  fsubs     f3, f4, f3
-	  fmuls     f4, f30, f0
-	  fmuls     f1, f6, f30
-	  fmuls     f0, f7, f31
-	  fadds     f4, f5, f4
-	  fsubs     f0, f1, f0
-	  stfs      f4, -0x5DCC(r31)
-	  lfs       f1, 0x5C(r29)
-	  lfs       f4, -0x5DC8(r31)
-	  fmuls     f1, f29, f1
-	  fadds     f1, f4, f1
-	  stfs      f1, -0x5DC8(r31)
-	  lfs       f1, -0x5DC4(r31)
-	  fadds     f1, f1, f3
-	  stfs      f1, -0x5DC4(r31)
-	  lfs       f1, -0x5DC0(r31)
-	  fadds     f1, f1, f2
-	  stfs      f1, -0x5DC0(r31)
-	  lfs       f1, -0x5DBC(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, -0x5DBC(r31)
-
-	.loc_0x190:
-	  lwz       r0, 0xDC(r1)
-	  lfd       f31, 0xD0(r1)
-	  lfd       f30, 0xC8(r1)
-	  lfd       f29, 0xC0(r1)
-	  lwz       r31, 0xBC(r1)
-	  lwz       r30, 0xB8(r1)
-	  lwz       r29, 0xB4(r1)
-	  addi      r1, r1, 0xD8
-	  mtlr      r0
-	  blr
-	*/
+	if (plane.mNormal.DP(p3) < 0.0f) {
+		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
+		vec.multiply(_13318);
+		// why.
+		applyForce(0, Vector3f(vec.x, vec.y, vec.z), Vector3f(p2.x, p2.y, p2.z));
+	}
 }
 
 /*
@@ -958,123 +408,14 @@ void DynObjBody::touchCallback(Plane&, Vector3f&, Vector3f&)
  * Address:	80062774
  * Size:	0001B8
  */
-void DynObjBody::applyVelocity(Plane&, Vector3f&, Vector3f&)
+void DynObjBody::applyVelocity(Plane& plane, Vector3f& p2, Vector3f& p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD8(r1)
-	  stfd      f31, 0xD0(r1)
-	  stfd      f30, 0xC8(r1)
-	  stfd      f29, 0xC0(r1)
-	  stw       r31, 0xBC(r1)
-	  stw       r30, 0xB8(r1)
-	  mr        r30, r5
-	  stw       r29, 0xB4(r1)
-	  mr        r29, r3
-	  lfs       f3, 0x0(r4)
-	  lfs       f2, 0x0(r6)
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x4(r6)
-	  fmuls     f2, f3, f2
-	  lfs       f4, 0x8(r4)
-	  fmuls     f1, f1, f0
-	  lfs       f3, 0x8(r6)
-	  lfs       f0, -0x78B0(r2)
-	  fmuls     f3, f4, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x190
-	  fmuls     f0, f4, f1
-	  addi      r0, r1, 0x48
-	  addi      r6, r1, 0x50
-	  addi      r5, r1, 0x4C
-	  stfs      f0, 0x50(r1)
-	  addi      r3, r1, 0x94
-	  lfs       f0, 0x4(r4)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, 0x0(r4)
-	  mr        r4, r0
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0x48(r1)
-	  bl        -0x2B6F0
-	  lfs       f1, 0x8(r30)
-	  addis     r31, r29, 0x1
-	  lfs       f0, 0x4154(r29)
-	  addi      r6, r1, 0x44
-	  lfs       f2, 0x0(r30)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0x3318(r31)
-	  lfs       f3, 0x4(r30)
-	  addi      r5, r1, 0x40
-	  lfs       f31, 0x94(r1)
-	  stfs      f0, 0x44(r1)
-	  fmuls     f31, f31, f1
-	  lfs       f30, 0x98(r1)
-	  addi      r4, r1, 0x3C
-	  lfs       f0, 0x4150(r29)
-	  lfs       f29, 0x9C(r1)
-	  fsubs     f0, f3, f0
-	  addi      r3, r1, 0x6C
-	  fmuls     f30, f30, f1
-	  fmuls     f29, f29, f1
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x414C(r29)
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x3C(r1)
-	  bl        -0x2B754
-	  lfs       f0, 0x5C(r29)
-	  lfs       f6, 0x6C(r1)
-	  fmuls     f1, f31, f0
-	  lfs       f7, 0x70(r1)
-	  lfs       f2, -0x5DD0(r31)
-	  fmuls     f0, f6, f29
-	  lfs       f3, 0x74(r1)
-	  fadds     f2, f2, f1
-	  fmuls     f1, f3, f31
-	  fmuls     f4, f7, f29
-	  stfs      f2, -0x5DD0(r31)
-	  fmuls     f3, f3, f30
-	  fsubs     f2, f1, f0
-	  lfs       f0, 0x5C(r29)
-	  lfs       f5, -0x5DCC(r31)
-	  fsubs     f3, f4, f3
-	  fmuls     f4, f30, f0
-	  fmuls     f1, f6, f30
-	  fmuls     f0, f7, f31
-	  fadds     f4, f5, f4
-	  fsubs     f0, f1, f0
-	  stfs      f4, -0x5DCC(r31)
-	  lfs       f1, 0x5C(r29)
-	  lfs       f4, -0x5DC8(r31)
-	  fmuls     f1, f29, f1
-	  fadds     f1, f4, f1
-	  stfs      f1, -0x5DC8(r31)
-	  lfs       f1, -0x5DC4(r31)
-	  fadds     f1, f1, f3
-	  stfs      f1, -0x5DC4(r31)
-	  lfs       f1, -0x5DC0(r31)
-	  fadds     f1, f1, f2
-	  stfs      f1, -0x5DC0(r31)
-	  lfs       f1, -0x5DBC(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, -0x5DBC(r31)
-
-	.loc_0x190:
-	  lwz       r0, 0xDC(r1)
-	  lfd       f31, 0xD0(r1)
-	  lfd       f30, 0xC8(r1)
-	  lfd       f29, 0xC0(r1)
-	  lwz       r31, 0xBC(r1)
-	  lwz       r30, 0xB8(r1)
-	  lwz       r29, 0xB4(r1)
-	  addi      r1, r1, 0xD8
-	  mtlr      r0
-	  blr
-	*/
+	if (plane.mNormal.DP(p3) < 0.0f) {
+		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
+		vec.multiply(_13318);
+		// why.
+		applyForce(0, Vector3f(vec.x, vec.y, vec.z), Vector3f(p2.x, p2.y, p2.z));
+	}
 }
 
 /*
@@ -1082,555 +423,18 @@ void DynObjBody::applyVelocity(Plane&, Vector3f&, Vector3f&)
  * Address:	8006292C
  * Size:	000868
  */
-void DynObjBody::integrate(int, int, f32)
+void DynObjBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x308(r1)
-	  stfd      f31, 0x300(r1)
-	  stfd      f30, 0x2F8(r1)
-	  stfd      f29, 0x2F0(r1)
-	  stfd      f28, 0x2E8(r1)
-	  stfd      f27, 0x2E0(r1)
-	  stfd      f26, 0x2D8(r1)
-	  stfd      f25, 0x2D0(r1)
-	  stfd      f24, 0x2C8(r1)
-	  stfd      f23, 0x2C0(r1)
-	  stmw      r27, 0x2AC(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r5, 0
-	  bl        -0x1484C
-	  mulli     r3, r28, 0x308C
-	  addi      r30, r3, 0x4118
-	  add       r30, r27, r30
-	  addis     r3, r27, 0x1
-	  lfs       f1, 0x40(r30)
-	  lfs       f0, 0x3300(r3)
-	  addi      r28, r30, 0x1C
-	  lfs       f3, 0x44(r30)
-	  addi      r29, r30, 0x10
-	  lfs       f2, 0x3304(r3)
-	  fmuls     f0, f1, f0
-	  lfs       f4, 0x48(r30)
-	  lfs       f1, 0x3308(r3)
-	  fmuls     f2, f3, f2
-	  addi      r31, r30, 0x4
-	  stfs      f0, 0x40(r30)
-	  fmuls     f0, f4, f1
-	  stfs      f2, 0x44(r30)
-	  stfs      f0, 0x48(r30)
-	  lfs       f1, 0x58(r30)
-	  lfs       f0, 0x330C(r3)
-	  lfs       f3, 0x5C(r30)
-	  lfs       f2, 0x3310(r3)
-	  fmuls     f0, f1, f0
-	  lfs       f4, 0x60(r30)
-	  lfs       f1, 0x3314(r3)
-	  fmuls     f2, f3, f2
-	  stfs      f0, 0x58(r30)
-	  fmuls     f0, f4, f1
-	  stfs      f2, 0x5C(r30)
-	  stfs      f0, 0x60(r30)
-	  lfs       f31, 0x0(r30)
-	  lfs       f30, 0xC(r30)
-	  lfs       f29, 0x18(r30)
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  lfs       f28, 0x4(r30)
-	  fmuls     f2, f29, f29
-	  lfs       f27, 0x10(r30)
-	  fadds     f0, f1, f0
-	  lfs       f26, 0x1C(r30)
-	  fadds     f1, f2, f0
-	  bl        -0x54DD4
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x104
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	RigidBody::integrate(prevConfigIdx, currConfigIdx, timeStep);
+	configuration& config = mIntegrationStates[currConfigIdx];
+	config.mLinearVel.set(config.mLinearVel.x * mVelMask.x, config.mLinearVel.y * mVelMask.y, config.mLinearVel.z * mVelMask.z);
+	config.mLocalAngularVel.set(config.mLocalAngularVel.x * mAngularVelMask.x, config.mLocalAngularVel.y * mAngularVelMask.y,
+	                            config.mLocalAngularVel.z * mAngularVelMask.z);
+	OrthonormaliseOrientation(config.mOrientationMtx);
+	config.mOrientationQuat.fromMat3f(config.mOrientationMtx);
 
-	.loc_0x104:
-	  fmuls     f3, f30, f26
-	  fmuls     f2, f29, f27
-	  fmuls     f1, f29, f28
-	  fmuls     f0, f31, f26
-	  fsubs     f26, f3, f2
-	  fmuls     f3, f31, f27
-	  fsubs     f27, f1, f0
-	  fmuls     f2, f30, f28
-	  fmuls     f1, f26, f26
-	  fmuls     f0, f27, f27
-	  fsubs     f28, f3, f2
-	  fadds     f0, f1, f0
-	  fmuls     f1, f28, f28
-	  fadds     f1, f1, f0
-	  bl        -0x54E28
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x158
-	  fdivs     f26, f26, f1
-	  fdivs     f27, f27, f1
-	  fdivs     f28, f28, f1
-
-	.loc_0x158:
-	  fmuls     f3, f27, f29
-	  fmuls     f2, f28, f30
-	  fmuls     f1, f28, f31
-	  fmuls     f0, f26, f29
-	  fsubs     f25, f3, f2
-	  fmuls     f3, f26, f30
-	  fsubs     f24, f1, f0
-	  fmuls     f2, f27, f31
-	  fmuls     f1, f25, f25
-	  fmuls     f0, f24, f24
-	  fsubs     f23, f3, f2
-	  fadds     f0, f1, f0
-	  fmuls     f1, f23, f23
-	  fadds     f1, f1, f0
-	  bl        -0x54E7C
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x1AC
-	  fdivs     f25, f25, f1
-	  fdivs     f24, f24, f1
-	  fdivs     f23, f23, f1
-
-	.loc_0x1AC:
-	  stfs      f31, 0x0(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r30, 0x24
-	  stfs      f25, 0x0(r31)
-	  stfs      f26, 0x8(r30)
-	  stfs      f30, 0xC(r30)
-	  stfs      f24, 0x0(r29)
-	  stfs      f27, 0x14(r30)
-	  stfs      f29, 0x18(r30)
-	  stfs      f23, 0x0(r28)
-	  stfs      f28, 0x20(r30)
-	  bl        -0x2B248
-	  addi      r3, r1, 0x1D4
-	  bl        -0x13C60
-	  lfs       f1, 0x0(r30)
-	  addi      r5, r1, 0x1D4
-	  lfs       f0, 0x64(r27)
-	  addi      r6, r30, 0xC
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x70(r27)
-	  lfs       f5, 0x4(r30)
-	  addi      r5, r5, 0xC
-	  lfs       f0, 0x7C(r27)
-	  fadds     f3, f3, f2
-	  lfs       f1, 0x8(r30)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x1D4(r1)
-	  lfs       f0, 0x68(r27)
-	  lfs       f1, 0x0(r30)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x74(r27)
-	  lfs       f5, 0x4(r30)
-	  lfs       f0, 0x80(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x1D8(r1)
-	  lfs       f0, 0x6C(r27)
-	  lfs       f1, 0x0(r30)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x78(r27)
-	  lfs       f5, 0x4(r30)
-	  lfs       f1, 0x8(r30)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x84(r27)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x1DC(r1)
-	  lfs       f1, 0x0(r6)
-	  lfs       f0, 0x64(r27)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x70(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x7C(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r5)
-	  lfs       f0, 0x68(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x74(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x80(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r5)
-	  lfs       f0, 0x6C(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x78(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f1, 0x8(r6)
-	  addi      r6, r6, 0xC
-	  fadds     f3, f3, f2
-	  lfs       f0, 0x84(r27)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r5)
-	  addi      r5, r5, 0xC
-	  lfs       f1, 0x0(r6)
-	  addi      r31, r1, 0x254
-	  lfs       f0, 0x64(r27)
-	  addi      r3, r1, 0x1AC
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x70(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x7C(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r5)
-	  lfs       f0, 0x68(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x74(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x80(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r5)
-	  lfs       f0, 0x6C(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x78(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f1, 0x8(r6)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x84(r27)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r5)
-	  lwz       r0, 0x1D4(r1)
-	  lwz       r4, 0x1D8(r1)
-	  stw       r0, 0x254(r1)
-	  lwz       r0, 0x1DC(r1)
-	  stw       r4, 0x258(r1)
-	  lwz       r4, 0x1E0(r1)
-	  stw       r0, 0x25C(r1)
-	  lwz       r0, 0x1E4(r1)
-	  stw       r4, 0x260(r1)
-	  lwz       r4, 0x1E8(r1)
-	  stw       r0, 0x264(r1)
-	  lwz       r0, 0x1EC(r1)
-	  stw       r4, 0x268(r1)
-	  lwz       r4, 0x1F0(r1)
-	  stw       r0, 0x26C(r1)
-	  lwz       r0, 0x1F4(r1)
-	  stw       r4, 0x270(r1)
-	  stw       r0, 0x274(r1)
-	  bl        -0x13EC0
-	  lfs       f0, 0x0(r30)
-	  addi      r3, r1, 0x180
-	  stfs      f0, 0x1AC(r1)
-	  lfs       f0, 0x4(r30)
-	  stfs      f0, 0x1B8(r1)
-	  lfs       f0, 0x8(r30)
-	  stfs      f0, 0x1C4(r1)
-	  lfs       f0, 0xC(r30)
-	  stfs      f0, 0x1B0(r1)
-	  lfs       f0, 0x10(r30)
-	  stfs      f0, 0x1BC(r1)
-	  lfs       f0, 0x14(r30)
-	  stfs      f0, 0x1C8(r1)
-	  lfs       f0, 0x18(r30)
-	  stfs      f0, 0x1B4(r1)
-	  lfs       f0, 0x1C(r30)
-	  stfs      f0, 0x1C0(r1)
-	  lfs       f0, 0x20(r30)
-	  stfs      f0, 0x1CC(r1)
-	  lwz       r0, 0x1AC(r1)
-	  lwz       r4, 0x1B0(r1)
-	  stw       r0, 0x230(r1)
-	  lwz       r0, 0x1B4(r1)
-	  stw       r4, 0x234(r1)
-	  lwz       r4, 0x1B8(r1)
-	  stw       r0, 0x238(r1)
-	  lwz       r0, 0x1BC(r1)
-	  stw       r4, 0x23C(r1)
-	  lwz       r4, 0x1C0(r1)
-	  stw       r0, 0x240(r1)
-	  lwz       r0, 0x1C4(r1)
-	  stw       r4, 0x244(r1)
-	  lwz       r4, 0x1C8(r1)
-	  stw       r0, 0x248(r1)
-	  lwz       r0, 0x1CC(r1)
-	  stw       r4, 0x24C(r1)
-	  stw       r0, 0x250(r1)
-	  bl        -0x13F58
-	  lfs       f0, 0x230(r1)
-	  addi      r4, r1, 0x180
-	  lfs       f1, 0x254(r1)
-	  addi      r5, r31, 0xC
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x23C(r1)
-	  lfs       f5, 0x258(r1)
-	  addi      r4, r4, 0xC
-	  lfs       f1, 0x25C(r1)
-	  fadds     f3, f3, f2
-	  lfs       f0, 0x248(r1)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x180(r1)
-	  lfs       f0, 0x234(r1)
-	  lfs       f1, 0x254(r1)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x240(r1)
-	  lfs       f5, 0x258(r1)
-	  lfs       f1, 0x25C(r1)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x24C(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x184(r1)
-	  lfs       f0, 0x238(r1)
-	  lfs       f1, 0x254(r1)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x244(r1)
-	  lfs       f5, 0x258(r1)
-	  lfs       f1, 0x25C(r1)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x250(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x188(r1)
-	  lfs       f0, 0x230(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x23C(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x248(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r4)
-	  lfs       f0, 0x234(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x240(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x24C(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r4)
-	  lfs       f0, 0x238(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x244(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  addi      r5, r5, 0xC
-	  fadds     f3, f3, f2
-	  lfs       f0, 0x250(r1)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r4)
-	  addi      r4, r4, 0xC
-	  lfs       f0, 0x230(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x23C(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x248(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r4)
-	  lfs       f0, 0x234(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x240(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x24C(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r4)
-	  lfs       f0, 0x238(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x244(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x250(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r4)
-	  lwz       r0, 0x180(r1)
-	  lwz       r3, 0x184(r1)
-	  stw       r0, 0x278(r1)
-	  lwz       r0, 0x188(r1)
-	  stw       r3, 0x27C(r1)
-	  lwz       r3, 0x18C(r1)
-	  stw       r0, 0x280(r1)
-	  lwz       r0, 0x190(r1)
-	  stw       r3, 0x284(r1)
-	  lwz       r3, 0x194(r1)
-	  stw       r0, 0x288(r1)
-	  lwz       r0, 0x198(r1)
-	  stw       r3, 0x28C(r1)
-	  lwz       r3, 0x19C(r1)
-	  stw       r0, 0x290(r1)
-	  lwz       r0, 0x1A0(r1)
-	  stw       r3, 0x294(r1)
-	  stw       r0, 0x298(r1)
-	  lwz       r3, 0x278(r1)
-	  lwz       r0, 0x27C(r1)
-	  stw       r3, 0x64(r30)
-	  stw       r0, 0x68(r30)
-	  lwz       r3, 0x280(r1)
-	  lwz       r0, 0x284(r1)
-	  stw       r3, 0x6C(r30)
-	  stw       r0, 0x70(r30)
-	  lwz       r3, 0x288(r1)
-	  lwz       r0, 0x28C(r1)
-	  stw       r3, 0x74(r30)
-	  stw       r0, 0x78(r30)
-	  lwz       r3, 0x290(r1)
-	  lwz       r0, 0x294(r1)
-	  stw       r3, 0x7C(r30)
-	  stw       r0, 0x80(r30)
-	  lwz       r0, 0x298(r1)
-	  stw       r0, 0x84(r30)
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0x17C(r1)
-	  stfs      f0, 0x178(r1)
-	  stfs      f0, 0x174(r1)
-	  lfs       f4, 0x58(r30)
-	  lfs       f1, 0x64(r30)
-	  lfs       f3, 0x5C(r30)
-	  lfs       f0, 0x68(r30)
-	  fmuls     f1, f4, f1
-	  lfs       f5, 0x60(r30)
-	  fmuls     f0, f3, f0
-	  lfs       f2, 0x6C(r30)
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x174(r1)
-	  lfs       f1, 0x70(r30)
-	  lfs       f0, 0x74(r30)
-	  lfs       f2, 0x78(r30)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x178(r1)
-	  lfs       f1, 0x7C(r30)
-	  lfs       f0, 0x80(r30)
-	  lfs       f2, 0x84(r30)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x17C(r1)
-	  lfs       f0, 0x174(r1)
-	  stfs      f0, 0x224(r1)
-	  lfs       f0, 0x178(r1)
-	  stfs      f0, 0x228(r1)
-	  lfs       f0, 0x17C(r1)
-	  stfs      f0, 0x22C(r1)
-	  lwz       r3, 0x224(r1)
-	  lwz       r0, 0x228(r1)
-	  stw       r3, 0x4C(r30)
-	  stw       r0, 0x50(r30)
-	  lwz       r0, 0x22C(r1)
-	  stw       r0, 0x54(r30)
-	  lmw       r27, 0x2AC(r1)
-	  lwz       r0, 0x30C(r1)
-	  lfd       f31, 0x300(r1)
-	  lfd       f30, 0x2F8(r1)
-	  lfd       f29, 0x2F0(r1)
-	  lfd       f28, 0x2E8(r1)
-	  lfd       f27, 0x2E0(r1)
-	  lfd       f26, 0x2D8(r1)
-	  lfd       f25, 0x2D0(r1)
-	  lfd       f24, 0x2C8(r1)
-	  lfd       f23, 0x2C0(r1)
-	  addi      r1, r1, 0x308
-	  mtlr      r0
-	  blr
-	*/
+	config.mInertiaTensor = config.mOrientationMtx * mInertiaTensor * Transpose(config.mOrientationMtx);
+	config.mAngularVel    = config.mInertiaTensor * config.mLocalAngularVel;
 }
 
 /*
@@ -1638,571 +442,23 @@ void DynObjBody::integrate(int, int, f32)
  * Address:	80063194
  * Size:	0008A8
  */
-void DynObjSeeSaw::integrate(int, int, f32)
+void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x308(r1)
-	  stfd      f31, 0x300(r1)
-	  stfd      f30, 0x2F8(r1)
-	  stfd      f29, 0x2F0(r1)
-	  stfd      f28, 0x2E8(r1)
-	  stfd      f27, 0x2E0(r1)
-	  stfd      f26, 0x2D8(r1)
-	  stfd      f25, 0x2D0(r1)
-	  stfd      f24, 0x2C8(r1)
-	  stfd      f23, 0x2C0(r1)
-	  stmw      r27, 0x2AC(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r5, 0
-	  bl        -0x150B4
-	  mulli     r3, r28, 0x308C
-	  addi      r30, r3, 0x4118
-	  add       r30, r27, r30
-	  addis     r4, r27, 0x1
-	  addi      r3, r30, 0x40
-	  addi      r4, r4, 0x335C
-	  bl        -0x2BBE0
-	  addis     r4, r27, 0x1
-	  addi      r3, r30, 0x58
-	  addi      r4, r4, 0x335C
-	  bl        -0x2BBF0
-	  addis     r31, r27, 0x1
-	  lfs       f1, 0x40(r30)
-	  lfs       f0, 0x3300(r31)
-	  mr        r4, r31
-	  lfs       f3, 0x44(r30)
-	  addi      r3, r30, 0x40
-	  lfs       f2, 0x3304(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f4, 0x48(r30)
-	  lfs       f1, 0x3308(r31)
-	  fmuls     f2, f3, f2
-	  addi      r4, r4, 0x331C
-	  stfs      f0, 0x40(r30)
-	  fmuls     f0, f4, f1
-	  stfs      f2, 0x44(r30)
-	  stfs      f0, 0x48(r30)
-	  lfs       f1, 0x58(r30)
-	  lfs       f0, 0x330C(r31)
-	  lfs       f3, 0x5C(r30)
-	  lfs       f2, 0x3310(r31)
-	  fmuls     f0, f1, f0
-	  lfs       f4, 0x60(r30)
-	  lfs       f1, 0x3314(r31)
-	  fmuls     f2, f3, f2
-	  stfs      f0, 0x58(r30)
-	  fmuls     f0, f4, f1
-	  stfs      f2, 0x5C(r30)
-	  stfs      f0, 0x60(r30)
-	  bl        -0x2BC64
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x58
-	  addi      r4, r4, 0x331C
-	  bl        -0x2BC74
-	  lfs       f31, 0x0(r30)
-	  addi      r28, r30, 0x1C
-	  lfs       f30, 0xC(r30)
-	  addi      r29, r30, 0x10
-	  fmuls     f1, f31, f31
-	  fmuls     f0, f30, f30
-	  lfs       f29, 0x18(r30)
-	  addi      r31, r30, 0x4
-	  lfs       f27, 0x10(r30)
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  lfs       f28, 0x4(r30)
-	  lfs       f26, 0x1C(r30)
-	  fadds     f1, f2, f0
-	  bl        -0x5567C
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x144
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
+	RigidBody::integrate(prevConfigIdx, currConfigIdx, timeStep);
+	configuration& config = mIntegrationStates[currConfigIdx];
+	config.mLinearVel.rotate(_1335C);
+	config.mLocalAngularVel.rotate(_1335C);
+	config.mLinearVel.set(config.mLinearVel.x * mVelMask.x, config.mLinearVel.y * mVelMask.y, config.mLinearVel.z * mVelMask.z);
+	config.mLocalAngularVel.set(config.mLocalAngularVel.x * mAngularVelMask.x, config.mLocalAngularVel.y * mAngularVelMask.y,
+	                            config.mLocalAngularVel.z * mAngularVelMask.z);
+	config.mLinearVel.rotate(_1331C);
+	config.mLocalAngularVel.rotate(_1331C);
 
-	.loc_0x144:
-	  fmuls     f3, f30, f26
-	  fmuls     f2, f29, f27
-	  fmuls     f1, f29, f28
-	  fmuls     f0, f31, f26
-	  fsubs     f26, f3, f2
-	  fmuls     f3, f31, f27
-	  fsubs     f27, f1, f0
-	  fmuls     f2, f30, f28
-	  fmuls     f1, f26, f26
-	  fmuls     f0, f27, f27
-	  fsubs     f28, f3, f2
-	  fadds     f0, f1, f0
-	  fmuls     f1, f28, f28
-	  fadds     f1, f1, f0
-	  bl        -0x556D0
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x198
-	  fdivs     f26, f26, f1
-	  fdivs     f27, f27, f1
-	  fdivs     f28, f28, f1
+	OrthonormaliseOrientation(config.mOrientationMtx);
+	config.mOrientationQuat.fromMat3f(config.mOrientationMtx);
 
-	.loc_0x198:
-	  fmuls     f3, f27, f29
-	  fmuls     f2, f28, f30
-	  fmuls     f1, f28, f31
-	  fmuls     f0, f26, f29
-	  fsubs     f25, f3, f2
-	  fmuls     f3, f26, f30
-	  fsubs     f24, f1, f0
-	  fmuls     f2, f27, f31
-	  fmuls     f1, f25, f25
-	  fmuls     f0, f24, f24
-	  fsubs     f23, f3, f2
-	  fadds     f0, f1, f0
-	  fmuls     f1, f23, f23
-	  fadds     f1, f1, f0
-	  bl        -0x55724
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x1EC
-	  fdivs     f25, f25, f1
-	  fdivs     f24, f24, f1
-	  fdivs     f23, f23, f1
-
-	.loc_0x1EC:
-	  stfs      f31, 0x0(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r30, 0x24
-	  stfs      f25, 0x0(r31)
-	  stfs      f26, 0x8(r30)
-	  stfs      f30, 0xC(r30)
-	  stfs      f24, 0x0(r29)
-	  stfs      f27, 0x14(r30)
-	  stfs      f29, 0x18(r30)
-	  stfs      f23, 0x0(r28)
-	  stfs      f28, 0x20(r30)
-	  bl        -0x2BAF0
-	  addi      r3, r1, 0x1D4
-	  bl        -0x14508
-	  lfs       f1, 0x0(r30)
-	  addi      r5, r1, 0x1D4
-	  lfs       f0, 0x64(r27)
-	  addi      r6, r30, 0xC
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x70(r27)
-	  lfs       f5, 0x4(r30)
-	  addi      r5, r5, 0xC
-	  lfs       f0, 0x7C(r27)
-	  fadds     f3, f3, f2
-	  lfs       f1, 0x8(r30)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x1D4(r1)
-	  lfs       f0, 0x68(r27)
-	  lfs       f1, 0x0(r30)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x74(r27)
-	  lfs       f5, 0x4(r30)
-	  lfs       f0, 0x80(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x1D8(r1)
-	  lfs       f0, 0x6C(r27)
-	  lfs       f1, 0x0(r30)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x78(r27)
-	  lfs       f5, 0x4(r30)
-	  lfs       f1, 0x8(r30)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x84(r27)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x1DC(r1)
-	  lfs       f1, 0x0(r6)
-	  lfs       f0, 0x64(r27)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x70(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x7C(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r5)
-	  lfs       f0, 0x68(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x74(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x80(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r5)
-	  lfs       f0, 0x6C(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x78(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f1, 0x8(r6)
-	  addi      r6, r6, 0xC
-	  fadds     f3, f3, f2
-	  lfs       f0, 0x84(r27)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r5)
-	  addi      r5, r5, 0xC
-	  lfs       f1, 0x0(r6)
-	  addi      r31, r1, 0x254
-	  lfs       f0, 0x64(r27)
-	  addi      r3, r1, 0x1AC
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x70(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x7C(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r5)
-	  lfs       f0, 0x68(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x74(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f0, 0x80(r27)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f1, 0x8(r6)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r5)
-	  lfs       f0, 0x6C(r27)
-	  lfs       f1, 0x0(r6)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x78(r27)
-	  lfs       f5, 0x4(r6)
-	  lfs       f1, 0x8(r6)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x84(r27)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r5)
-	  lwz       r0, 0x1D4(r1)
-	  lwz       r4, 0x1D8(r1)
-	  stw       r0, 0x254(r1)
-	  lwz       r0, 0x1DC(r1)
-	  stw       r4, 0x258(r1)
-	  lwz       r4, 0x1E0(r1)
-	  stw       r0, 0x25C(r1)
-	  lwz       r0, 0x1E4(r1)
-	  stw       r4, 0x260(r1)
-	  lwz       r4, 0x1E8(r1)
-	  stw       r0, 0x264(r1)
-	  lwz       r0, 0x1EC(r1)
-	  stw       r4, 0x268(r1)
-	  lwz       r4, 0x1F0(r1)
-	  stw       r0, 0x26C(r1)
-	  lwz       r0, 0x1F4(r1)
-	  stw       r4, 0x270(r1)
-	  stw       r0, 0x274(r1)
-	  bl        -0x14768
-	  lfs       f0, 0x0(r30)
-	  addi      r3, r1, 0x180
-	  stfs      f0, 0x1AC(r1)
-	  lfs       f0, 0x4(r30)
-	  stfs      f0, 0x1B8(r1)
-	  lfs       f0, 0x8(r30)
-	  stfs      f0, 0x1C4(r1)
-	  lfs       f0, 0xC(r30)
-	  stfs      f0, 0x1B0(r1)
-	  lfs       f0, 0x10(r30)
-	  stfs      f0, 0x1BC(r1)
-	  lfs       f0, 0x14(r30)
-	  stfs      f0, 0x1C8(r1)
-	  lfs       f0, 0x18(r30)
-	  stfs      f0, 0x1B4(r1)
-	  lfs       f0, 0x1C(r30)
-	  stfs      f0, 0x1C0(r1)
-	  lfs       f0, 0x20(r30)
-	  stfs      f0, 0x1CC(r1)
-	  lwz       r0, 0x1AC(r1)
-	  lwz       r4, 0x1B0(r1)
-	  stw       r0, 0x230(r1)
-	  lwz       r0, 0x1B4(r1)
-	  stw       r4, 0x234(r1)
-	  lwz       r4, 0x1B8(r1)
-	  stw       r0, 0x238(r1)
-	  lwz       r0, 0x1BC(r1)
-	  stw       r4, 0x23C(r1)
-	  lwz       r4, 0x1C0(r1)
-	  stw       r0, 0x240(r1)
-	  lwz       r0, 0x1C4(r1)
-	  stw       r4, 0x244(r1)
-	  lwz       r4, 0x1C8(r1)
-	  stw       r0, 0x248(r1)
-	  lwz       r0, 0x1CC(r1)
-	  stw       r4, 0x24C(r1)
-	  stw       r0, 0x250(r1)
-	  bl        -0x14800
-	  lfs       f0, 0x230(r1)
-	  addi      r4, r1, 0x180
-	  lfs       f1, 0x254(r1)
-	  addi      r5, r31, 0xC
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x23C(r1)
-	  lfs       f5, 0x258(r1)
-	  addi      r4, r4, 0xC
-	  lfs       f1, 0x25C(r1)
-	  fadds     f3, f3, f2
-	  lfs       f0, 0x248(r1)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x180(r1)
-	  lfs       f0, 0x234(r1)
-	  lfs       f1, 0x254(r1)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x240(r1)
-	  lfs       f5, 0x258(r1)
-	  lfs       f1, 0x25C(r1)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x24C(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x184(r1)
-	  lfs       f0, 0x238(r1)
-	  lfs       f1, 0x254(r1)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x244(r1)
-	  lfs       f5, 0x258(r1)
-	  lfs       f1, 0x25C(r1)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x250(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x188(r1)
-	  lfs       f0, 0x230(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x23C(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x248(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r4)
-	  lfs       f0, 0x234(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x240(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x24C(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r4)
-	  lfs       f0, 0x238(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x244(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  addi      r5, r5, 0xC
-	  fadds     f3, f3, f2
-	  lfs       f0, 0x250(r1)
-	  fmuls     f2, f5, f4
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r4)
-	  addi      r4, r4, 0xC
-	  lfs       f0, 0x230(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x23C(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x248(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x0(r4)
-	  lfs       f0, 0x234(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x240(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x24C(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x4(r4)
-	  lfs       f0, 0x238(r1)
-	  lfs       f1, 0x0(r5)
-	  lfs       f3, -0x78B0(r2)
-	  fmuls     f2, f1, f0
-	  lfs       f4, 0x244(r1)
-	  lfs       f5, 0x4(r5)
-	  lfs       f1, 0x8(r5)
-	  fadds     f3, f3, f2
-	  fmuls     f2, f5, f4
-	  lfs       f0, 0x250(r1)
-	  fmuls     f0, f1, f0
-	  fadds     f3, f3, f2
-	  fadds     f3, f3, f0
-	  stfs      f3, 0x8(r4)
-	  lwz       r0, 0x180(r1)
-	  lwz       r3, 0x184(r1)
-	  stw       r0, 0x278(r1)
-	  lwz       r0, 0x188(r1)
-	  stw       r3, 0x27C(r1)
-	  lwz       r3, 0x18C(r1)
-	  stw       r0, 0x280(r1)
-	  lwz       r0, 0x190(r1)
-	  stw       r3, 0x284(r1)
-	  lwz       r3, 0x194(r1)
-	  stw       r0, 0x288(r1)
-	  lwz       r0, 0x198(r1)
-	  stw       r3, 0x28C(r1)
-	  lwz       r3, 0x19C(r1)
-	  stw       r0, 0x290(r1)
-	  lwz       r0, 0x1A0(r1)
-	  stw       r3, 0x294(r1)
-	  stw       r0, 0x298(r1)
-	  lwz       r3, 0x278(r1)
-	  lwz       r0, 0x27C(r1)
-	  stw       r3, 0x64(r30)
-	  stw       r0, 0x68(r30)
-	  lwz       r3, 0x280(r1)
-	  lwz       r0, 0x284(r1)
-	  stw       r3, 0x6C(r30)
-	  stw       r0, 0x70(r30)
-	  lwz       r3, 0x288(r1)
-	  lwz       r0, 0x28C(r1)
-	  stw       r3, 0x74(r30)
-	  stw       r0, 0x78(r30)
-	  lwz       r3, 0x290(r1)
-	  lwz       r0, 0x294(r1)
-	  stw       r3, 0x7C(r30)
-	  stw       r0, 0x80(r30)
-	  lwz       r0, 0x298(r1)
-	  stw       r0, 0x84(r30)
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0x17C(r1)
-	  stfs      f0, 0x178(r1)
-	  stfs      f0, 0x174(r1)
-	  lfs       f4, 0x58(r30)
-	  lfs       f1, 0x64(r30)
-	  lfs       f3, 0x5C(r30)
-	  lfs       f0, 0x68(r30)
-	  fmuls     f1, f4, f1
-	  lfs       f5, 0x60(r30)
-	  fmuls     f0, f3, f0
-	  lfs       f2, 0x6C(r30)
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x174(r1)
-	  lfs       f1, 0x70(r30)
-	  lfs       f0, 0x74(r30)
-	  lfs       f2, 0x78(r30)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x178(r1)
-	  lfs       f1, 0x7C(r30)
-	  lfs       f0, 0x80(r30)
-	  lfs       f2, 0x84(r30)
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f5, f2
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x17C(r1)
-	  lfs       f0, 0x174(r1)
-	  stfs      f0, 0x224(r1)
-	  lfs       f0, 0x178(r1)
-	  stfs      f0, 0x228(r1)
-	  lfs       f0, 0x17C(r1)
-	  stfs      f0, 0x22C(r1)
-	  lwz       r3, 0x224(r1)
-	  lwz       r0, 0x228(r1)
-	  stw       r3, 0x4C(r30)
-	  stw       r0, 0x50(r30)
-	  lwz       r0, 0x22C(r1)
-	  stw       r0, 0x54(r30)
-	  lmw       r27, 0x2AC(r1)
-	  lwz       r0, 0x30C(r1)
-	  lfd       f31, 0x300(r1)
-	  lfd       f30, 0x2F8(r1)
-	  lfd       f29, 0x2F0(r1)
-	  lfd       f28, 0x2E8(r1)
-	  lfd       f27, 0x2E0(r1)
-	  lfd       f26, 0x2D8(r1)
-	  lfd       f25, 0x2D0(r1)
-	  lfd       f24, 0x2C8(r1)
-	  lfd       f23, 0x2C0(r1)
-	  addi      r1, r1, 0x308
-	  mtlr      r0
-	  blr
-	*/
+	config.mInertiaTensor = config.mOrientationMtx * mInertiaTensor * Transpose(config.mOrientationMtx);
+	config.mAngularVel    = config.mInertiaTensor * config.mLocalAngularVel;
 }
 
 /*
@@ -2212,71 +468,9 @@ void DynObjSeeSaw::integrate(int, int, f32)
  */
 void DynObjBody::initRender(int)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  addis     r3, r31, 0x1
-	  lfs       f0, -0x6CC8(r13)
-	  addis     r4, r31, 0x1
-	  addis     r5, r31, 0x1
-	  lfs       f1, -0x6CC4(r13)
-	  stfs      f0, 0x10(r1)
-	  lfs       f0, -0x6CC0(r13)
-	  addi      r6, r1, 0x10
-	  stfs      f1, 0x14(r1)
-	  addi      r3, r3, 0x32BC
-	  addi      r4, r4, 0x3260
-	  stfs      f0, 0x18(r1)
-	  addi      r5, r5, 0x328C
-	  bl        -0x24D80
-	  addis     r31, r31, 0x1
-	  lwz       r4, 0x32FC(r31)
-	  addi      r3, r4, 0x5C
-	  addi      r4, r4, 0x9C
-	  bl        -0x2565C
-	  lwz       r4, 0x32FC(r31)
-	  lwz       r3, 0x32BC(r31)
-	  lwz       r0, 0x32C0(r31)
-	  stw       r3, 0x5C(r4)
-	  stw       r0, 0x60(r4)
-	  lwz       r3, 0x32C4(r31)
-	  lwz       r0, 0x32C8(r31)
-	  stw       r3, 0x64(r4)
-	  stw       r0, 0x68(r4)
-	  lwz       r3, 0x32CC(r31)
-	  lwz       r0, 0x32D0(r31)
-	  stw       r3, 0x6C(r4)
-	  stw       r0, 0x70(r4)
-	  lwz       r3, 0x32D4(r31)
-	  lwz       r0, 0x32D8(r31)
-	  stw       r3, 0x74(r4)
-	  stw       r0, 0x78(r4)
-	  lwz       r3, 0x32DC(r31)
-	  lwz       r0, 0x32E0(r31)
-	  stw       r3, 0x7C(r4)
-	  stw       r0, 0x80(r4)
-	  lwz       r3, 0x32E4(r31)
-	  lwz       r0, 0x32E8(r31)
-	  stw       r3, 0x84(r4)
-	  stw       r0, 0x88(r4)
-	  lwz       r3, 0x32EC(r31)
-	  lwz       r0, 0x32F0(r31)
-	  stw       r3, 0x8C(r4)
-	  stw       r0, 0x90(r4)
-	  lwz       r3, 0x32F4(r31)
-	  lwz       r0, 0x32F8(r31)
-	  stw       r3, 0x94(r4)
-	  stw       r0, 0x98(r4)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	_132BC.makeVQS(_13260, _1328C, Vector3f(1.0f, 1.0f, 1.0f));
+	mCollObj->mTransformMtx.inverse(&mCollObj->mInverseMatrix);
+	mCollObj->mTransformMtx = _132BC;
 }
 
 /*
@@ -2284,267 +478,23 @@ void DynObjBody::initRender(int)
  * Address:	80063B34
  * Size:	0003E8
  */
-void DynObjBody::applyWorldSpring(int, int, Vector3f&)
+void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, Vector3f& p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  mulli     r0, r5, 0xC
-	  stwu      r1, -0x1E0(r1)
-	  stfd      f31, 0x1D8(r1)
-	  addi      r5, r1, 0xA4
-	  stfd      f30, 0x1D0(r1)
-	  stfd      f29, 0x1C8(r1)
-	  stfd      f28, 0x1C0(r1)
-	  stfd      f27, 0x1B8(r1)
-	  stfd      f26, 0x1B0(r1)
-	  stfd      f25, 0x1A8(r1)
-	  stfd      f24, 0x1A0(r1)
-	  stfd      f23, 0x198(r1)
-	  stfd      f22, 0x190(r1)
-	  stfd      f21, 0x188(r1)
-	  stw       r31, 0x184(r1)
-	  mulli     r31, r4, 0x308C
-	  stw       r30, 0x180(r1)
-	  addi      r30, r31, 0x4118
-	  stw       r29, 0x17C(r1)
-	  mr        r29, r6
-	  addi      r6, r1, 0xA8
-	  stw       r28, 0x178(r1)
-	  addi      r28, r3, 0
-	  add       r30, r28, r30
-	  add       r4, r30, r0
-	  lfs       f1, 0x3C(r30)
-	  lfs       f22, 0x94(r4)
-	  addi      r3, r1, 0xFC
-	  lfs       f23, 0x90(r4)
-	  lfs       f0, 0x38(r30)
-	  fsubs     f3, f22, f1
-	  lfs       f1, 0x50(r30)
-	  fsubs     f4, f23, f0
-	  lfs       f0, 0x54(r30)
-	  fmuls     f1, f1, f3
-	  lfs       f24, 0x8C(r4)
-	  addi      r4, r1, 0xA0
-	  fmuls     f0, f0, f4
-	  lfs       f2, 0x34(r30)
-	  fsubs     f2, f24, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA0(r1)
-	  lfs       f1, 0x54(r30)
-	  lfs       f0, 0x4C(r30)
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f3
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA4(r1)
-	  lfs       f1, 0x4C(r30)
-	  lfs       f0, 0x50(r30)
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA8(r1)
-	  bl        -0x2CAF8
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x0(r29)
-	  fsubs     f27, f1, f23
-	  lfs       f2, 0x8(r29)
-	  fsubs     f26, f0, f24
-	  lfs       f1, -0x78B0(r2)
-	  fsubs     f28, f2, f22
-	  fmuls     f2, f26, f26
-	  lfs       f7, 0x48(r30)
-	  fmuls     f0, f27, f27
-	  lfs       f4, 0x104(r1)
-	  fmuls     f3, f28, f28
-	  fadds     f0, f2, f0
-	  lfs       f6, 0x44(r30)
-	  lfs       f5, 0x100(r1)
-	  fadds     f31, f7, f4
-	  lfs       f4, 0x40(r30)
-	  fadds     f0, f3, f0
-	  lfs       f2, 0xFC(r1)
-	  fadds     f30, f6, f5
-	  fadds     f29, f4, f2
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x19C
-	  fsqrte    f2, f0
-	  lfd       f4, -0x78A8(r2)
-	  lfd       f3, -0x78A0(r2)
-	  fmul      f1, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f1, f0, f1
-	  fsub      f1, f3, f1
-	  fmul      f2, f2, f1
-	  fmul      f1, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f1, f0, f1
-	  fsub      f1, f3, f1
-	  fmul      f2, f2, f1
-	  fmul      f1, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f1, f0, f1
-	  fsub      f1, f3, f1
-	  fmul      f1, f2, f1
-	  fmul      f1, f0, f1
-	  frsp      f1, f1
-	  stfs      f1, 0xBC(r1)
-	  lfs       f3, 0xBC(r1)
-	  b         .loc_0x1A0
+	u32 badCompiler[4];
+	configuration& config = mIntegrationStates[configIdx];
+	Vector3f attachPt(config.mBodyPoints[attachPointIdx]);
+	Vector3f vec2 = attachPt - config.mPosition;
+	Vector3f vec3 = config.mLinearVel + CP(config.mAngularVel, vec2);
+	Vector3f vec4 = p3 - attachPt;
+	f32 b         = vec4.length() - 20.0f;
+	f32 c         = 1.3f;
+	c += (1.0f - vec4.length() / 20.0f) * 0.2f;
+	Vector3f vec5 = vec4 * (b / vec4.length());
+	Vector3f vec6 = (vec5.DP(vec3) / vec5.DP(vec5) * -c) * vec5;
+	vec5.add(vec6);
+	applyForce(configIdx, vec5, attachPt);
 
-	.loc_0x19C:
-	  fmr       f3, f0
-
-	.loc_0x1A0:
-	  lfs       f1, -0x78B0(r2)
-	  lfs       f2, -0x7898(r2)
-	  fcmpo     cr0, f0, f1
-	  lfs       f21, -0x7880(r2)
-	  fsubs     f25, f3, f2
-	  ble-      .loc_0x210
-	  fsqrte    f2, f0
-	  lfd       f4, -0x78A8(r2)
-	  lfd       f3, -0x78A0(r2)
-	  fmul      f1, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f1, f0, f1
-	  fsub      f1, f3, f1
-	  fmul      f2, f2, f1
-	  fmul      f1, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f1, f0, f1
-	  fsub      f1, f3, f1
-	  fmul      f2, f2, f1
-	  fmul      f1, f2, f2
-	  fmul      f2, f4, f2
-	  fmul      f1, f0, f1
-	  fsub      f1, f3, f1
-	  fmul      f1, f2, f1
-	  fmul      f0, f0, f1
-	  frsp      f0, f0
-	  stfs      f0, 0xB8(r1)
-	  lfs       f0, 0xB8(r1)
-
-	.loc_0x210:
-	  lfs       f3, -0x7898(r2)
-	  fmuls     f2, f26, f26
-	  fmuls     f1, f27, f27
-	  lfs       f4, -0x7884(r2)
-	  fdivs     f0, f0, f3
-	  lfs       f5, -0x787C(r2)
-	  fsubs     f4, f4, f0
-	  fmuls     f3, f28, f28
-	  fadds     f0, f2, f1
-	  fmuls     f2, f5, f4
-	  fadds     f1, f3, f0
-	  fadds     f21, f21, f2
-	  bl        -0x56134
-	  fdivs     f0, f25, f1
-	  addi      r6, r1, 0x9C
-	  addi      r5, r1, 0x98
-	  addi      r4, r1, 0x94
-	  addi      r3, r1, 0xD8
-	  fmuls     f25, f26, f0
-	  fmuls     f27, f27, f0
-	  fmuls     f26, f28, f0
-	  fmuls     f3, f25, f29
-	  fmuls     f2, f27, f30
-	  fmuls     f1, f25, f25
-	  fmuls     f0, f27, f27
-	  fadds     f3, f3, f2
-	  fmuls     f4, f26, f31
-	  fadds     f0, f1, f0
-	  fmuls     f2, f26, f26
-	  fadds     f1, f4, f3
-	  fneg      f3, f21
-	  fadds     f0, f2, f0
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f3, f0
-	  fmuls     f2, f26, f0
-	  fmuls     f1, f27, f0
-	  fmuls     f0, f25, f0
-	  stfs      f2, 0x9C(r1)
-	  stfs      f1, 0x98(r1)
-	  stfs      f0, 0x94(r1)
-	  bl        -0x2CCC8
-	  add       r7, r28, r31
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0x4154(r7)
-	  addi      r6, r1, 0x90
-	  lfs       f3, 0xD8(r1)
-	  fadds     f26, f26, f1
-	  fsubs     f0, f22, f0
-	  lfs       f2, 0xDC(r1)
-	  fadds     f22, f25, f3
-	  addi      r5, r1, 0x8C
-	  stfs      f0, 0x90(r1)
-	  fadds     f25, f27, f2
-	  addi      r4, r1, 0x88
-	  lfs       f0, 0x4150(r7)
-	  addi      r3, r1, 0xCC
-	  fsubs     f0, f23, f0
-	  stfs      f0, 0x8C(r1)
-	  lfs       f0, 0x414C(r7)
-	  fsubs     f0, f24, f0
-	  stfs      f0, 0x88(r1)
-	  bl        -0x2CD1C
-	  lfs       f0, 0x5C(r28)
-	  addis     r3, r28, 0x1
-	  lfs       f6, 0xCC(r1)
-	  fmuls     f1, f22, f0
-	  lfs       f7, 0xD0(r1)
-	  lfs       f2, -0x5DD0(r3)
-	  fmuls     f0, f6, f26
-	  lfs       f3, 0xD4(r1)
-	  fadds     f2, f2, f1
-	  fmuls     f1, f3, f22
-	  fmuls     f4, f7, f26
-	  stfs      f2, -0x5DD0(r3)
-	  fmuls     f3, f3, f25
-	  fsubs     f2, f1, f0
-	  lfs       f0, 0x5C(r28)
-	  lfs       f5, -0x5DCC(r3)
-	  fsubs     f3, f4, f3
-	  fmuls     f4, f25, f0
-	  fmuls     f1, f6, f25
-	  fmuls     f0, f7, f22
-	  fadds     f4, f5, f4
-	  fsubs     f0, f1, f0
-	  stfs      f4, -0x5DCC(r3)
-	  lfs       f1, 0x5C(r28)
-	  lfs       f4, -0x5DC8(r3)
-	  fmuls     f1, f26, f1
-	  fadds     f1, f4, f1
-	  stfs      f1, -0x5DC8(r3)
-	  lfs       f1, -0x5DC4(r3)
-	  fadds     f1, f1, f3
-	  stfs      f1, -0x5DC4(r3)
-	  lfs       f1, -0x5DC0(r3)
-	  fadds     f1, f1, f2
-	  stfs      f1, -0x5DC0(r3)
-	  lfs       f1, -0x5DBC(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, -0x5DBC(r3)
-	  lwz       r0, 0x1E4(r1)
-	  lfd       f31, 0x1D8(r1)
-	  lfd       f30, 0x1D0(r1)
-	  lfd       f29, 0x1C8(r1)
-	  lfd       f28, 0x1C0(r1)
-	  lfd       f27, 0x1B8(r1)
-	  lfd       f26, 0x1B0(r1)
-	  lfd       f25, 0x1A8(r1)
-	  lfd       f24, 0x1A0(r1)
-	  lfd       f23, 0x198(r1)
-	  lfd       f22, 0x190(r1)
-	  lfd       f21, 0x188(r1)
-	  lwz       r31, 0x184(r1)
-	  lwz       r30, 0x180(r1)
-	  lwz       r29, 0x17C(r1)
-	  lwz       r28, 0x178(r1)
-	  addi      r1, r1, 0x1E0
-	  mtlr      r0
-	  blr
-	*/
+	FORCE_DONT_INLINE;
 }
 
 /*
@@ -2552,126 +502,20 @@ void DynObjBody::applyWorldSpring(int, int, Vector3f&)
  * Address:	80063F1C
  * Size:	0001AC
  */
-void DynObjBody::render(Graphics&)
+void DynObjBody::render(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r4, 0
-	  addi      r5, r1, 0x14
-	  stw       r30, 0x60(r1)
-	  addi      r30, r3, 0
-	  addis     r4, r30, 0x1
-	  stw       r29, 0x5C(r1)
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x32BC
-	  stw       r28, 0x58(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  addis     r4, r30, 0x1
-	  lwz       r5, 0x2E4(r31)
-	  addi      r0, r4, 0x3260
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x154(r5)
-	  lbz       r0, 0x154(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lwz       r3, 0x3260(r4)
-	  lwz       r0, 0x3264(r4)
-	  stw       r3, 0x158(r5)
-	  stw       r0, 0x15C(r5)
-	  lwz       r0, 0x3268(r4)
-	  stw       r0, 0x160(r5)
+	Matrix4f mtx;
+	gfx.calcViewMatrix(_132BC, mtx);
+	gfx.mCamera->setBoundOffset(&_13260);
+	gfx.useMatrix(mtx, 0);
+	gfx.mCamera->setBoundOffset(nullptr);
+	gfx.useTexture(nullptr, 0);
+	gfx.setColour(Colour(255, 255, 255, 255), true);
+	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
-	.loc_0x84:
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x14
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x2E4(r31)
-	  li        r0, 0
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD0
-	  lwz       r3, 0x0(r0)
-	  lwz       r0, 0x4(r0)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x8(r0)
-	  stw       r0, 0x160(r4)
-
-	.loc_0xD0:
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0xFF
-	  stb       r0, 0x10(r1)
-	  addi      r4, r1, 0x10
-	  addi      r3, r31, 0
-	  stb       r0, 0x11(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x12(r1)
-	  stb       r0, 0x13(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x2E4(r31)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  addi      r4, r4, 0x1E0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r28, 0
-	  rlwinm    r0,r28,4,0,27
-	  add       r29, r30, r0
-	  b         .loc_0x180
-
-	.loc_0x14C:
-	  lwz       r0, 0x4098(r29)
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r5, r29, 0x409C
-	  mulli     r4, r0, 0xC
-	  lwz       r12, 0x98(r12)
-	  addis     r4, r4, 0x1
-	  mtlr      r12
-	  addi      r4, r4, 0x248
-	  add       r4, r30, r4
-	  blrl
-	  addi      r29, r29, 0x10
-	  addi      r28, r28, 0x1
-
-	.loc_0x180:
-	  lwz       r0, 0x4094(r30)
-	  cmpw      r28, r0
-	  blt+      .loc_0x14C
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  lwz       r29, 0x5C(r1)
-	  lwz       r28, 0x58(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < mSpringCount; i++) {
+		gfx.drawLine(_10248[mSprings[i].mHookIdx], mSprings[i].mOffset);
+	}
 }
 
 /*
@@ -2679,141 +523,29 @@ void DynObjBody::render(Graphics&)
  * Address:	800640C8
  * Size:	0001E0
  */
-void DynObjBody::computeForces(int, f32)
+void DynObjBody::computeForces(int configIdx, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stmw      r26, 0x70(r1)
-	  addi      r30, r4, 0
-	  mulli     r4, r30, 0x308C
-	  addi      r29, r3, 0
-	  addis     r3, r29, 0x1
-	  addi      r31, r4, 0x4118
-	  add       r31, r29, r31
-	  lwz       r5, 0x32B8(r3)
-	  lfs       f1, 0x34(r31)
-	  lfs       f0, 0x140(r5)
-	  lfs       f3, 0x158(r5)
-	  fsubs     f2, f1, f0
-	  lfs       f1, 0x3C(r31)
-	  lfs       f0, 0x148(r5)
-	  fdivs     f2, f2, f3
-	  fctiwz    f2, f2
-	  fsubs     f0, f1, f0
-	  stfd      f2, 0x58(r1)
-	  fdivs     f0, f0, f3
-	  lwz       r0, 0x5C(r1)
-	  stfd      f2, 0x68(r1)
-	  cmpwi     r0, 0
-	  lwz       r4, 0x6C(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x60(r1)
-	  lwz       r3, 0x64(r1)
-	  blt-      .loc_0x98
-	  cmpwi     r3, 0
-	  blt-      .loc_0x98
-	  lwz       r6, 0x15C(r5)
-	  cmpw      r4, r6
-	  bge-      .loc_0x98
-	  lwz       r0, 0x160(r5)
-	  cmpw      r3, r0
-	  blt-      .loc_0xA0
+	configuration& config = mIntegrationStates[configIdx];
+	CollGroup* coll       = _132B8->getCollTris(config.mPosition);
+	applyCMForce(Vector3f(0.0f, -140.81f, 0.0f));
 
-	.loc_0x98:
-	  li        r0, 0
-	  b         .loc_0xB4
+	for (int i = 0; i < mSpringCount; i++) {
+		applyWorldSpring(configIdx, mSprings[i].mHookIdx, mSprings[i].mOffset);
+	}
 
-	.loc_0xA0:
-	  mullw     r0, r3, r6
-	  lwz       r3, 0x164(r5)
-	  add       r0, r4, r0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
+	// gsys->mTimer->start("applyGround", true);
+	applyGroundForces(configIdx, coll);
+	// gsys->mTimer->stop("applyGround");
 
-	.loc_0xB4:
-	  lfs       f0, -0x6CBC(r13)
-	  addi      r4, r1, 0x30
-	  lfs       f1, -0x6CB8(r13)
-	  mr        r27, r0
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, -0x6CB4(r13)
-	  mr        r3, r29
-	  stfs      f1, 0x34(r1)
-	  stfs      f0, 0x38(r1)
-	  bl        -0x160D4
-	  li        r26, 0
-	  rlwinm    r0,r26,4,0,27
-	  add       r28, r29, r0
-	  b         .loc_0x108
+	f32 a = Kdl;
+	f32 b = Kda / 1.0f;
 
-	.loc_0xEC:
-	  lwz       r5, 0x4098(r28)
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  addi      r6, r28, 0x409C
-	  bl        -0x690
-	  addi      r28, r28, 0x10
-	  addi      r26, r26, 0x1
+	Vector3f vec(-a * config.mLinearVel.x, -a * config.mLinearVel.y, -a * config.mLinearVel.z);
+	vec.multiply(mMass);
+	mLinearAccel.add(vec);
 
-	.loc_0x108:
-	  lwz       r0, 0x4094(r29)
-	  cmpw      r26, r0
-	  blt+      .loc_0xEC
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  addi      r4, r30, 0
-	  addi      r5, r27, 0
-	  lwz       r12, 0x6C(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f0, -0x6CCC(r13)
-	  addis     r3, r29, 0x1
-	  lfs       f1, 0x2F04(r13)
-	  fneg      f5, f0
-	  lfs       f2, 0x40(r31)
-	  lfs       f0, 0x44(r31)
-	  fneg      f6, f1
-	  lfs       f1, 0x48(r31)
-	  fmuls     f3, f5, f2
-	  lfs       f2, 0x5C(r29)
-	  fmuls     f4, f5, f0
-	  lfs       f0, -0x5DD0(r3)
-	  fmuls     f1, f5, f1
-	  fmuls     f3, f3, f2
-	  fmuls     f4, f4, f2
-	  fmuls     f1, f1, f2
-	  fadds     f0, f0, f3
-	  stfs      f0, -0x5DD0(r3)
-	  lfs       f0, -0x5DCC(r3)
-	  fadds     f0, f0, f4
-	  stfs      f0, -0x5DCC(r3)
-	  lfs       f0, -0x5DC8(r3)
-	  fadds     f0, f0, f1
-	  stfs      f0, -0x5DC8(r3)
-	  lfs       f0, 0x4C(r31)
-	  lfs       f1, -0x5DC4(r3)
-	  fmuls     f0, f6, f0
-	  lfs       f3, 0x54(r31)
-	  lfs       f2, 0x50(r31)
-	  fmuls     f3, f6, f3
-	  fadds     f0, f1, f0
-	  fmuls     f1, f6, f2
-	  stfs      f0, -0x5DC4(r3)
-	  lfs       f0, -0x5DC0(r3)
-	  fadds     f0, f0, f1
-	  stfs      f0, -0x5DC0(r3)
-	  lfs       f0, -0x5DBC(r3)
-	  fadds     f0, f0, f3
-	  stfs      f0, -0x5DBC(r3)
-	  lwz       r0, 0x8C(r1)
-	  lmw       r26, 0x70(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f vec2(-b * config.mAngularVel.x, -b * config.mAngularVel.y, -b * config.mAngularVel.z);
+	mAngularAccel.add(vec2);
 }
 
 /*
@@ -2823,187 +555,29 @@ void DynObjBody::computeForces(int, f32)
  */
 void DynObjBody::initBodyCollisions()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r8, 0
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  mr        r31, r3
-	  stw       r30, 0x30(r1)
-	  addis     r30, r31, 0x1
-	  stw       r29, 0x2C(r1)
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0x18(r1)
-	  stfs      f0, 0x14(r1)
-	  stfs      f0, 0x10(r1)
-	  stfs      f0, 0x24(r1)
-	  stfs      f0, 0x20(r1)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f1, -0x6D18(r13)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f1, 0x10(r1)
-	  stfs      f0, 0x14(r1)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0x18(r1)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0x24(r1)
-	  b         .loc_0x1BC
+	BoundBox box;
+	for (int i = 0; i < mBodyShell->mVertexCount; i++) {
+		bool check = false;
+		for (int j = 0; j < mBoundingPointCount; j++) {
+			if (mBodyShell->mVertexList[i].x == mBodyPoints[j + mHookPointCount].x
+			    && mBodyShell->mVertexList[i].y == mBodyPoints[j + mHookPointCount].y
+			    && mBodyShell->mVertexList[i].z == mBodyPoints[j + mHookPointCount].z) {
+				check = true;
+				break;
+			}
+		}
+		if (!check) {
+			addBoundingPoint(mBodyShell->mVertexList[i].x, mBodyShell->mVertexList[i].y, mBodyShell->mVertexList[i].z);
+			box.expandBound(mBodyShell->mVertexList[i]);
+		}
+	}
 
-	.loc_0x78:
-	  lwz       r7, 0x8C(r31)
-	  li        r9, 0
-	  li        r10, 0
-	  cmpwi     r7, 0
-	  mtctr     r7
-	  ble-      .loc_0xE8
-
-	.loc_0x90:
-	  lwz       r3, 0x90(r31)
-	  lwz       r0, 0x23C(r4)
-	  add       r3, r10, r3
-	  mulli     r3, r3, 0xC
-	  add       r6, r31, r3
-	  add       r3, r0, r5
-	  lfs       f1, 0x94(r6)
-	  lfs       f0, 0x0(r3)
-	  fcmpu     cr0, f1, f0
-	  bne-      .loc_0xE0
-	  lfs       f1, 0x98(r6)
-	  lfs       f0, 0x4(r3)
-	  fcmpu     cr0, f1, f0
-	  bne-      .loc_0xE0
-	  lfs       f1, 0x9C(r6)
-	  lfs       f0, 0x8(r3)
-	  fcmpu     cr0, f1, f0
-	  bne-      .loc_0xE0
-	  li        r9, 0x1
-	  b         .loc_0xE8
-
-	.loc_0xE0:
-	  addi      r10, r10, 0x1
-	  bdnz+     .loc_0x90
-
-	.loc_0xE8:
-	  rlwinm.   r0,r9,0,24,31
-	  bne-      .loc_0x1B4
-	  lwz       r0, 0x90(r31)
-	  lwz       r4, 0x23C(r4)
-	  add       r0, r7, r0
-	  mulli     r3, r0, 0xC
-	  add       r4, r4, r5
-	  addi      r3, r3, 0x94
-	  lfs       f2, 0x8(r4)
-	  lfs       f1, 0x4(r4)
-	  add       r3, r31, r3
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, 0x0(r3)
-	  stfs      f1, 0x4(r3)
-	  stfs      f2, 0x8(r3)
-	  lwz       r3, 0x8C(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8C(r31)
-	  lwz       r3, 0x32B4(r30)
-	  lfs       f0, 0x10(r1)
-	  lwz       r0, 0x23C(r3)
-	  add       r3, r0, r5
-	  lfs       f1, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x150
-	  stfs      f1, 0x10(r1)
-
-	.loc_0x150:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x14(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x164
-	  stfs      f1, 0x14(r1)
-
-	.loc_0x164:
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x18(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x178
-	  stfs      f1, 0x18(r1)
-
-	.loc_0x178:
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x1C(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x18C
-	  stfs      f1, 0x1C(r1)
-
-	.loc_0x18C:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x20(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x1A0
-	  stfs      f1, 0x20(r1)
-
-	.loc_0x1A0:
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x24(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x1B4
-	  stfs      f1, 0x24(r1)
-
-	.loc_0x1B4:
-	  addi      r5, r5, 0xC
-	  addi      r8, r8, 0x1
-
-	.loc_0x1BC:
-	  lwz       r4, 0x32B4(r30)
-	  lwz       r0, 0x238(r4)
-	  cmpw      r8, r0
-	  blt+      .loc_0x78
-	  lfs       f0, -0x78B0(r2)
-	  mr        r3, r31
-	  stfs      f0, 0x88(r31)
-	  lwz       r12, 0x0(r31)
-	  lfs       f1, 0x1C(r1)
-	  lfs       f0, 0x10(r1)
-	  lwz       r12, 0x30(r12)
-	  lfs       f4, 0x20(r1)
-	  fsubs     f1, f1, f0
-	  lfs       f2, 0x14(r1)
-	  mtlr      r12
-	  lfs       f3, 0x24(r1)
-	  lfs       f0, 0x18(r1)
-	  fsubs     f2, f4, f2
-	  fsubs     f3, f3, f0
-	  blrl
-	  li        r3, 0x144
-	  bl        -0x1D4B4
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x23C
-	  lwz       r4, 0x32B4(r30)
-	  bl        -0x24E4
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x6DB8
-	  stw       r0, 0x0(r29)
-	  li        r0, 0
-	  stw       r0, 0x140(r29)
-
-	.loc_0x23C:
-	  addis     r3, r31, 0x1
-	  stw       r29, 0x32FC(r3)
-	  lwz       r3, 0x32FC(r3)
-	  stw       r31, 0x140(r3)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	PRINT("used %d verts\n", mBoundingPointCount);
+	mRestitutionFactor = 0.0f;
+	initDimensions(box.mMax.x - box.mMin.x, box.mMax.y - box.mMin.y, box.mMax.z - box.mMin.z);
+	PRINT("mass = %f\n", mMass);
+	mCollObj       = new DynCollObjBody(mBodyShell);
+	mCollObj->_140 = this;
 }
 
 /*
@@ -3011,264 +585,77 @@ void DynObjBody::initBodyCollisions()
  * Address:	80064510
  * Size:	0003A4
  */
-void DynObjBody::readScript(MapMgr*, char*)
+void DynObjBody::readScript(MapMgr* map, char* fileName)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x802B
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stmw      r27, 0x4C(r1)
-	  mr        r31, r3
-	  addi      r27, r4, 0
-	  addi      r4, r5, 0
-	  subi      r29, r6, 0x7298
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r30, r3
-	  beq-      .loc_0x390
-	  li        r3, 0x11C
-	  bl        -0x1D558
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x64
-	  mr        r4, r30
-	  bl        -0x239F4
+	RandomAccessStream* stream = gsys->openFile(fileName, true, true);
+	if (!stream) {
+		return;
+	}
 
-	.loc_0x64:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  mr        r30, r28
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  addis     r28, r31, 0x1
-	  b         .loc_0x354
+	CmdStream* cmds = new CmdStream(stream);
+	stream->close();
 
-	.loc_0x84:
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x234EC
-	  addi      r3, r30, 0
-	  subi      r4, r13, 0x6CB0
-	  bl        -0x231D4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xBC
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x2350C
-	  bl        -0x24280
-	  stw       r3, 0x4(r31)
-	  b         .loc_0x354
+	while (!cmds->endOfCmds() && !cmds->endOfSection()) {
+		cmds->getToken(true);
+		if (cmds->isToken("name")) {
+			setName(StdSystem::stringDup(cmds->getToken(true)));
+			continue;
+		}
 
-	.loc_0xBC:
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0xC
-	  bl        -0x23200
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF0
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23538
-	  addi      r4, r3, 0
-	  addi      r3, r27, 0
-	  bl        0x4E30
-	  stw       r3, 0x32B4(r28)
-	  b         .loc_0x354
+		if (cmds->isToken("body_shell")) {
+			mBodyShell = map->loadPlatshape(cmds->getToken(true));
+			continue;
+		}
 
-	.loc_0xF0:
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0x18
-	  bl        -0x23234
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x190
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x2356C
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x40
-	  subi      r4, r13, 0x6CA8
-	  bl        0x1B3A68
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23588
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x3C
-	  subi      r4, r13, 0x6CA8
-	  bl        0x1B3A4C
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x235A4
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x38
-	  subi      r4, r13, 0x6CA8
-	  bl        0x1B3A30
-	  lwz       r0, 0x90(r31)
-	  lfs       f2, 0x38(r1)
-	  mulli     r3, r0, 0xC
-	  lfs       f1, 0x3C(r1)
-	  lfs       f0, 0x40(r1)
-	  addi      r3, r3, 0x94
-	  add       r3, r31, r3
-	  stfs      f0, 0x0(r3)
-	  stfs      f1, 0x4(r3)
-	  stfs      f2, 0x8(r3)
-	  lwz       r3, 0x90(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x90(r31)
-	  b         .loc_0x354
+		if (cmds->isToken("add_hook")) {
+			f32 x;
+			sscanf(cmds->getToken(true), "%f", &x);
+			f32 y;
+			sscanf(cmds->getToken(true), "%f", &y);
+			f32 z;
+			sscanf(cmds->getToken(true), "%f", &z);
+			PRINT("adding hook at %f, %f, %f\n", x, y, z);
+			addHook(x, y, z);
+			continue;
+		}
 
-	.loc_0x190:
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0x24
-	  bl        -0x232D4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x254
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x2360C
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x34
-	  subi      r4, r13, 0x6CA4
-	  bl        0x1B39C8
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23628
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x30
-	  subi      r4, r13, 0x6CA8
-	  bl        0x1B39AC
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23644
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x2C
-	  subi      r4, r13, 0x6CA8
-	  bl        0x1B3990
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23660
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x28
-	  subi      r4, r13, 0x6CA8
-	  bl        0x1B3974
-	  lwz       r0, 0x4094(r31)
-	  lfs       f2, 0x28(r1)
-	  rlwinm    r3,r0,4,0,27
-	  lfs       f1, 0x2C(r1)
-	  addi      r3, r3, 0x4098
-	  lfs       f0, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  add       r3, r31, r3
-	  stw       r0, 0x0(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f1, 0x8(r3)
-	  stfs      f2, 0xC(r3)
-	  lwz       r3, 0x4094(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x4094(r31)
-	  b         .loc_0x354
+		if (cmds->isToken("add_spring")) {
+			int hookIdx;
+			sscanf(cmds->getToken(true), "%d", &hookIdx);
+			f32 x;
+			sscanf(cmds->getToken(true), "%f", &x);
+			f32 y;
+			sscanf(cmds->getToken(true), "%f", &y);
+			f32 z;
+			sscanf(cmds->getToken(true), "%f", &z);
+			PRINT("adding spring to hook %d at offset %f, %f, %f\n", hookIdx, x, y, z);
+			addSpring(hookIdx, x, y, z);
+			continue;
+		}
 
-	.loc_0x254:
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0x30
-	  bl        -0x23398
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x354
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0x3C
-	  bl        -0x233AC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2E0
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x236E4
-	  addis     r5, r31, 0x1
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA8
-	  addi      r5, r5, 0x3300
-	  bl        0x1B38EC
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23704
-	  addis     r5, r31, 0x1
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA8
-	  addi      r5, r5, 0x3304
-	  bl        0x1B38CC
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x23724
-	  addis     r5, r31, 0x1
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA8
-	  addi      r5, r5, 0x3308
-	  bl        0x1B38AC
-	  b         .loc_0x354
+		if (cmds->isToken("use_verts")) {
+			PRINT("using shapes' vertices\n");
+			continue;
+		}
 
-	.loc_0x2E0:
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0x48
-	  bl        -0x23424
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x354
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x2375C
-	  addis     r5, r31, 0x1
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA8
-	  addi      r5, r5, 0x330C
-	  bl        0x1B3874
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x2377C
-	  addis     r5, r31, 0x1
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA8
-	  addi      r5, r5, 0x3310
-	  bl        0x1B3854
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x2379C
-	  addis     r5, r31, 0x1
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA8
-	  addi      r5, r5, 0x3314
-	  bl        0x1B3834
+		if (cmds->isToken("vel_mask")) {
+			sscanf(cmds->getToken(true), "%f", &mVelMask.x);
+			sscanf(cmds->getToken(true), "%f", &mVelMask.y);
+			sscanf(cmds->getToken(true), "%f", &mVelMask.z);
+			continue;
+		}
 
-	.loc_0x354:
-	  mr        r3, r30
-	  bl        -0x23B10
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x374
-	  mr        r3, r30
-	  bl        -0x233F0
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0x84
+		if (cmds->isToken("ang_mask")) {
+			sscanf(cmds->getToken(true), "%f", &mAngularVelMask.x);
+			sscanf(cmds->getToken(true), "%f", &mAngularVelMask.y);
+			sscanf(cmds->getToken(true), "%f", &mAngularVelMask.z);
+			continue;
+		}
+	}
 
-	.loc_0x374:
-	  mr        r3, r30
-	  bl        -0x23B30
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x390
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        -0x237EC
-
-	.loc_0x390:
-	  lmw       r27, 0x4C(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	if (!cmds->endOfCmds()) {
+		cmds->getToken(true);
+	}
 }
 
 /*
@@ -3276,365 +663,38 @@ void DynObjBody::readScript(MapMgr*, char*)
  * Address:	800648B4
  * Size:	000538
  */
-void DynObjPushable::render(Graphics&)
+void DynObjPushable::render(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1D8(r1)
-	  stmw      r27, 0x1C4(r1)
-	  addi      r31, r4, 0
-	  addi      r30, r3, 0
-	  addis     r4, r30, 0x1
-	  addi      r3, r31, 0
-	  addi      r5, r1, 0x17C
-	  addi      r4, r4, 0x32BC
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x17C
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  addis     r3, r30, 0x1
-	  lfs       f0, -0x78B0(r2)
-	  lfs       f2, -0x5DD0(r3)
-	  lfs       f1, -0x5DCC(r3)
-	  fmuls     f2, f2, f2
-	  lfs       f3, -0x5DC8(r3)
-	  fmuls     f1, f1, f1
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xDC
-	  fsqrte    f1, f4
-	  lfd       f3, -0x78A8(r2)
-	  lfd       f2, -0x78A0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x20(r1)
-	  lfs       f4, 0x20(r1)
+	Matrix4f mtx;
+	gfx.calcViewMatrix(_132BC, mtx);
+	gfx.useMatrix(mtx, 0);
 
-	.loc_0xDC:
-	  lfs       f3, -0x78B0(r2)
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x17C
-	  addis     r3, r30, 0x1
-	  lfs       f1, -0x5DD0(r3)
-	  lfs       f0, -0x5DCC(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, -0x5DC8(r3)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f4, f2, f0
-	  fcmpo     cr0, f4, f3
-	  ble-      .loc_0x16C
-	  fsqrte    f1, f4
-	  lfd       f3, -0x78A8(r2)
-	  lfd       f2, -0x78A0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x1C(r1)
-	  lfs       f4, 0x1C(r1)
+	if (mLinearAccel.length() > 0.0f) {
+		mCurrPushStrength = mLinearAccel.length() * mInvMass;
+	}
 
-	.loc_0x16C:
-	  lfs       f0, 0x60(r30)
-	  addis     r3, r30, 0x1
-	  fmuls     f0, f0, f4
-	  stfs      f0, 0x331C(r3)
+	if (mCurrPushStrength < mMinStrengthToMove) {
+		mLinearAccel.set(0.0f, 0.0f, 0.0f);
+		mAngularAccel.set(0.0f, 0.0f, 0.0f);
+	} else {
+		mLinearAccel.normalise();
+		mLinearAccel.multiply(mMovingPushStrength);
+	}
 
-	.loc_0x17C:
-	  addis     r29, r30, 0x1
-	  lfs       f1, 0x331C(r29)
-	  lfs       f0, 0x3320(r29)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1C4
-	  lfs       f0, -0x6CA0(r13)
-	  stfs      f0, -0x5DD0(r29)
-	  lfs       f0, -0x6C9C(r13)
-	  stfs      f0, -0x5DCC(r29)
-	  lfs       f0, -0x6C98(r13)
-	  stfs      f0, -0x5DC8(r29)
-	  lfs       f0, -0x6C94(r13)
-	  stfs      f0, -0x5DC4(r29)
-	  lfs       f0, -0x6C90(r13)
-	  stfs      f0, -0x5DC0(r29)
-	  lfs       f0, -0x6C8C(r13)
-	  stfs      f0, -0x5DBC(r29)
-	  b         .loc_0x244
+	bool lighting = gfx.setLighting(false, nullptr);
+	gfx.useMatrix(Matrix4f::ident, 0);
+	gfx.setColour(Colour(255, 255, 255, 255), true);
 
-	.loc_0x1C4:
-	  lfs       f1, -0x5DD0(r29)
-	  lfs       f0, -0x5DCC(r29)
-	  fmuls     f1, f1, f1
-	  lfs       f2, -0x5DC8(r29)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x56E58
-	  lfs       f0, -0x78B0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x218
-	  lfs       f0, -0x5DD0(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, -0x5DD0(r29)
-	  lfs       f0, -0x5DCC(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, -0x5DCC(r29)
-	  lfs       f0, -0x5DC8(r29)
-	  fdivs     f0, f0, f1
-	  stfs      f0, -0x5DC8(r29)
-
-	.loc_0x218:
-	  addis     r3, r30, 0x1
-	  lfs       f1, 0x3324(r3)
-	  lfs       f0, -0x5DD0(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, -0x5DD0(r3)
-	  lfs       f0, -0x5DCC(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, -0x5DCC(r3)
-	  lfs       f0, -0x5DC8(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, -0x5DC8(r3)
-
-	.loc_0x244:
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x3B4(r31)
-	  addi      r0, r3, 0
-	  lis       r4, 0x803A
-	  lwz       r12, 0x74(r12)
-	  addi      r3, r31, 0
-	  subi      r4, r4, 0x77C0
-	  mtlr      r12
-	  mr        r28, r0
-	  li        r5, 0
-	  blrl
-	  li        r0, 0xFF
-	  stb       r0, 0x6C(r1)
-	  addi      r4, r1, 0x6C
-	  addi      r3, r31, 0
-	  stb       r0, 0x6D(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x6E(r1)
-	  stb       r0, 0x6F(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, -0x6C88(r13)
-	  mr        r27, r3
-	  lfs       f0, -0x6C84(r13)
-	  addis     r29, r30, 0x1
-	  stfs      f1, 0x170(r1)
-	  addi      r3, r1, 0x170
-	  stfs      f0, 0x174(r1)
-	  lfs       f0, -0x6C80(r13)
-	  stfs      f0, 0x178(r1)
-	  lfs       f1, 0x170(r1)
-	  lfs       f0, 0x3260(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x170(r1)
-	  lfs       f1, 0x174(r1)
-	  lfs       f0, 0x3264(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x174(r1)
-	  lfs       f1, 0x178(r1)
-	  lfs       f0, 0x3268(r29)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x178(r1)
-	  lwz       r4, 0x2E4(r31)
-	  addi      r4, r4, 0x1E0
-	  bl        -0x2D494
-	  lfs       f1, 0x331C(r29)
-	  addi      r3, r1, 0x70
-	  crset     6, 0x6
-	  subi      r4, r13, 0x6C7C
-	  bl        0x1B19A4
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x70
-	  lwz       r3, 0x10(r3)
-	  bl        -0x3CAD0
-	  lwz       r12, 0x3B4(r31)
-	  srawi     r0, r3, 0x1
-	  lwz       r4, 0x2DEC(r13)
-	  addze     r0, r0
-	  lwz       r12, 0xF0(r12)
-	  lwz       r4, 0x10(r4)
-	  addi      r3, r31, 0
-	  mtlr      r12
-	  neg       r6, r0
-	  addi      r5, r1, 0x170
-	  crclr     6, 0x6
-	  addi      r8, r1, 0x70
-	  li        r7, 0
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  mr        r4, r27
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r28, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x3B4(r31)
-	  mr        r4, r29
-	  mr        r3, r31
-	  lwz       r12, 0x70(r12)
-	  addi      r5, r1, 0x24
-	  addi      r4, r4, 0x32BC
-	  mtlr      r12
-	  blrl
-	  addi      r0, r29, 0x3260
-	  lwz       r4, 0x2E4(r31)
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x41C
-	  lwz       r3, 0x3260(r29)
-	  lwz       r0, 0x3264(r29)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x3268(r29)
-	  stw       r0, 0x160(r4)
-
-	.loc_0x41C:
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x24
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x2E4(r31)
-	  li        r0, 0
-	  stb       r0, 0x154(r4)
-	  lbz       r0, 0x154(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x468
-	  lwz       r3, 0x0(r0)
-	  lwz       r0, 0x4(r0)
-	  stw       r3, 0x158(r4)
-	  stw       r0, 0x15C(r4)
-	  lwz       r0, 0x8(r0)
-	  stw       r0, 0x160(r4)
-
-	.loc_0x468:
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0xFF
-	  stb       r0, 0x64(r1)
-	  addi      r4, r1, 0x64
-	  addi      r3, r31, 0
-	  stb       r0, 0x65(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x66(r1)
-	  stb       r0, 0x67(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x2E4(r31)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  addi      r4, r4, 0x1E0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r29, 0
-	  rlwinm    r0,r29,4,0,27
-	  add       r28, r30, r0
-	  b         .loc_0x518
-
-	.loc_0x4E4:
-	  lwz       r0, 0x4098(r28)
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r5, r28, 0x409C
-	  mulli     r4, r0, 0xC
-	  lwz       r12, 0x98(r12)
-	  addis     r4, r4, 0x1
-	  mtlr      r12
-	  addi      r4, r4, 0x248
-	  add       r4, r30, r4
-	  blrl
-	  addi      r28, r28, 0x10
-	  addi      r29, r29, 0x1
-
-	.loc_0x518:
-	  lwz       r0, 0x4094(r30)
-	  cmpw      r29, r0
-	  blt+      .loc_0x4E4
-	  lmw       r27, 0x1C4(r1)
-	  lwz       r0, 0x1DC(r1)
-	  addi      r1, r1, 0x1D8
-	  mtlr      r0
-	  blr
-	*/
+	int blend = gfx.setCBlending(0);
+	Vector3f vec(0.0f, 90.0f, 0.0f);
+	vec.add(_13260);
+	vec.multMatrix(gfx.mCamera->mLookAtMtx);
+	char buf[PATH_MAX];
+	sprintf(buf, "%.1f", mCurrPushStrength);
+	gfx.perspPrintf(gsys->mConsFont, vec, -(gsys->mConsFont->stringWidth(buf) / 2), 0, buf);
+	gfx.setCBlending(blend);
+	gfx.setLighting(lighting, nullptr);
+	DynObjBody::render(gfx);
 }
 
 /*
@@ -3642,473 +702,72 @@ void DynObjPushable::render(Graphics&)
  * Address:	80064DEC
  * Size:	0006B0
  */
-MapMgr::MapMgr(Controller*)
+MapMgr::MapMgr(Controller* controller)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802B
-	  stw       r30, 0x60(r1)
-	  subi      r30, r3, 0x7298
-	  addi      r3, r31, 0x114
-	  stw       r29, 0x5C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x58(r1)
-	  li        r28, 0
-	  lfs       f2, -0x78B0(r2)
-	  stfs      f2, 0x10(r31)
-	  fmr       f1, f2
-	  fmr       f0, f2
-	  stfs      f2, 0xC(r31)
-	  stfs      f2, 0x8(r31)
-	  stw       r28, 0x64(r31)
-	  stw       r28, 0x68(r31)
-	  stw       r28, 0x6C(r31)
-	  stw       r28, 0x70(r31)
-	  stfs      f2, 0x98(r31)
-	  stfs      f2, 0x94(r31)
-	  stfs      f2, 0x90(r31)
-	  stfs      f1, 0xA4(r31)
-	  stfs      f1, 0xA0(r31)
-	  stfs      f1, 0x9C(r31)
-	  lfs       f1, -0x6D18(r13)
-	  stfs      f1, 0x90(r31)
-	  lfs       f1, -0x6D14(r13)
-	  stfs      f1, 0x94(r31)
-	  lfs       f1, -0x6D10(r13)
-	  stfs      f1, 0x98(r31)
-	  lfs       f1, -0x6D0C(r13)
-	  stfs      f1, 0x9C(r31)
-	  lfs       f1, -0x6D08(r13)
-	  stfs      f1, 0xA0(r31)
-	  lfs       f1, -0x6D04(r13)
-	  stfs      f1, 0xA4(r31)
-	  stfs      f0, 0xBC(r31)
-	  stfs      f0, 0xB8(r31)
-	  stfs      f0, 0xB4(r31)
-	  stfs      f2, 0xC8(r31)
-	  stfs      f2, 0xC4(r31)
-	  stfs      f2, 0xC0(r31)
-	  stfs      f2, 0xD4(r31)
-	  stfs      f2, 0xD0(r31)
-	  stfs      f2, 0xCC(r31)
-	  lfs       f0, -0x6D18(r13)
-	  stfs      f0, 0xC0(r31)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f0, 0xC4(r31)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0xC8(r31)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0xCC(r31)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0xD0(r31)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0xD4(r31)
-	  stfs      f2, 0xE0(r31)
-	  stfs      f2, 0xDC(r31)
-	  stfs      f2, 0xD8(r31)
-	  stfs      f2, 0xEC(r31)
-	  stfs      f2, 0xE8(r31)
-	  stfs      f2, 0xE4(r31)
-	  lfs       f0, -0x6D18(r13)
-	  stfs      f0, 0xD8(r31)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f0, 0xDC(r31)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0xE0(r31)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0xE4(r31)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0xE8(r31)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0xEC(r31)
-	  bl        0x4604
-	  stw       r29, 0x0(r31)
-	  li        r0, 0x91
-	  subi      r4, r13, 0x6C74
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0x4C4(r31)
-	  stfs      f0, 0x4C0(r31)
-	  stfs      f0, 0x4CC(r31)
-	  stfs      f0, 0x4C8(r31)
-	  stw       r28, 0x3180(r13)
-	  stw       r0, 0x4BC(r31)
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x217DC
-	  li        r3, 0x1418
-	  bl        -0x1DF60
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x194
-	  lwz       r5, 0x0(r31)
-	  mr        r4, r31
-	  bl        0x6538
+	mController = controller;
+	_4C4        = 0.0f;
+	_4C0        = 0.0f;
+	_4CC        = 0.0f;
+	_4C8        = 0.0f;
+	effectMgr   = nullptr;
+	mBlur       = 145;
 
-	.loc_0x194:
-	  stw       r28, 0x4(r31)
-	  subi      r4, r13, 0x6C74
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x218BC
-	  li        r3, 0
-	  stw       r3, 0x10C(r31)
-	  li        r0, 0x12C
-	  stw       r3, 0x60(r31)
-	  stw       r3, 0xA8(r31)
-	  stw       r0, 0xB0(r31)
-	  lwz       r0, 0xB0(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x1F0
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x54
-	  bl        0x2177C
-	  lwz       r0, 0xB0(r31)
-	  mulli     r3, r0, 0xC
-	  bl        -0x1DFC4
-	  stw       r3, 0xF0(r31)
-	  addi      r4, r30, 0x54
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x21870
+	memStat->start("dayMgr");
+	mDayMgr = new DayMgr(this, mController);
+	memStat->end("dayMgr");
 
-	.loc_0x1F0:
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x60
-	  bl        0x21754
-	  li        r3, 0x148
-	  bl        -0x1DFE8
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x230
-	  li        r4, 0
-	  bl        -0x3018
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0xD20
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stw       r0, 0x144(r28)
-	  stw       r0, 0x140(r28)
+	mCollisionCheckCount = 0;
+	mMapShape            = nullptr;
 
-	.loc_0x230:
-	  stw       r28, 0x4D0(r31)
-	  li        r29, 0
-	  subi      r0, r13, 0x6CD0
-	  lwz       r3, 0x4D0(r31)
-	  addi      r4, r30, 0x60
-	  stw       r29, 0x10(r3)
-	  stw       r29, 0xC(r3)
-	  stw       r29, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x21804
-	  lfs       f0, -0x6D18(r13)
-	  subi      r4, r13, 0x6C6C
-	  stfs      f0, 0x90(r31)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f0, 0x94(r31)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0x98(r31)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0x9C(r31)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0xA0(r31)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0xA4(r31)
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x216B8
-	  li        r3, 0xC08
-	  bl        -0x1E084
-	  lis       r4, 0x8006
-	  addi      r4, r4, 0x549C
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x100
-	  bl        0x1AFB88
-	  stw       r3, 0x14(r31)
-	  subi      r4, r13, 0x6C6C
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x21798
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x6C
-	  bl        0x2167C
-	  li        r3, 0x140
-	  bl        -0x1E0C0
-	  mr.       r28, r3
-	  beq-      .loc_0x434
-	  addi      r3, r28, 0
-	  subi      r4, r13, 0x6CD0
-	  bl        -0x30120
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r28)
-	  addi      r3, r28, 0
-	  subi      r4, r13, 0x6CD0
-	  bl        -0x249B4
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x6C4C
-	  stw       r0, 0x0(r28)
-	  lis       r3, 0x802B
-	  li        r4, -0x1
-	  stw       r29, 0x20(r28)
-	  subi      r0, r3, 0x6BCC
-	  addi      r3, r28, 0x44
-	  stw       r4, 0x24(r28)
-	  subi      r4, r13, 0x6D18
-	  subi      r5, r13, 0x6D14
-	  stw       r29, 0x28(r28)
-	  subi      r6, r13, 0x6D10
-	  stw       r0, 0x0(r28)
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0x4C(r28)
-	  stfs      f0, 0x48(r28)
-	  stfs      f0, 0x44(r28)
-	  stfs      f0, 0x58(r28)
-	  stfs      f0, 0x54(r28)
-	  stfs      f0, 0x50(r28)
-	  bl        -0x7ABC
-	  addi      r3, r28, 0x50
-	  subi      r4, r13, 0x6D0C
-	  subi      r5, r13, 0x6D08
-	  subi      r6, r13, 0x6D04
-	  bl        -0x7AD0
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0x124(r28)
-	  stfs      f0, 0x120(r28)
-	  stfs      f0, 0x11C(r28)
-	  stfs      f0, 0x130(r28)
-	  stfs      f0, 0x12C(r28)
-	  stfs      f0, 0x128(r28)
-	  stfs      f0, 0x13C(r28)
-	  stfs      f0, 0x138(r28)
-	  stfs      f0, 0x134(r28)
-	  stw       r29, 0x2C(r28)
-	  lwz       r0, 0x2C(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3B4
-	  mr        r3, r28
-	  bl        -0x39DC
+	_A8 = 0;
+	_B0 = 300;
 
-	.loc_0x3B4:
-	  lfs       f0, -0x6D00(r13)
-	  addi      r3, r28, 0x5C
-	  lfs       f1, -0x6CFC(r13)
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, -0x6CF8(r13)
-	  stfs      f1, 0x44(r1)
-	  stfs      f0, 0x48(r1)
-	  lwz       r4, 0x40(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r4, 0x11C(r28)
-	  stw       r0, 0x120(r28)
-	  lwz       r0, 0x48(r1)
-	  stw       r0, 0x124(r28)
-	  lfs       f0, -0x6CF4(r13)
-	  lfs       f1, -0x6CF0(r13)
-	  stfs      f0, 0x4C(r1)
-	  lfs       f0, -0x6CEC(r13)
-	  stfs      f1, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-	  lwz       r4, 0x4C(r1)
-	  lwz       r0, 0x50(r1)
-	  stw       r4, 0x134(r28)
-	  stw       r0, 0x138(r28)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x13C(r28)
-	  lwz       r4, 0x134(r28)
-	  lwz       r0, 0x138(r28)
-	  stw       r4, 0x128(r28)
-	  stw       r0, 0x12C(r28)
-	  lwz       r0, 0x13C(r28)
-	  stw       r0, 0x130(r28)
-	  bl        -0x27460
+	if (_B0) {
+		memStat->start("collisions");
+		mCollisions = new MapColls[_B0];
+		memStat->end("collisions");
+	}
 
-	.loc_0x434:
-	  stw       r28, 0x88(r31)
-	  addi      r4, r30, 0x6C
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x2161C
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x78
-	  bl        0x21500
-	  li        r0, 0x3
-	  stw       r0, 0x110(r31)
-	  li        r28, 0
-	  subi      r0, r13, 0x6CD0
-	  stw       r28, 0x124(r31)
-	  li        r3, 0xC
-	  stw       r28, 0x120(r31)
-	  stw       r28, 0x11C(r31)
-	  stw       r0, 0x118(r31)
-	  bl        -0x1E25C
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x4D4
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x7DA8
-	  stw       r0, 0x4(r29)
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x709C
-	  stw       r28, 0x0(r29)
-	  li        r3, 0x9C
-	  stw       r0, 0x4(r29)
-	  bl        -0x1E28C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x4B8
-	  bl        -0x35658
+	memStat->start("collparts");
+	_4D0 = new CreatureCollPart();
+	_4D0->initCore("");
+	memStat->end("collparts");
+	_90.resetBound();
 
-	.loc_0x4B8:
-	  stw       r28, 0x8(r29)
-	  li        r0, 0xFF
-	  lwz       r3, 0x8(r29)
-	  stbu      r0, 0x2C(r3)
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x3(r3)
+	memStat->start("rooms");
+	mMapRooms = new MapRoom[256];
+	memStat->end("rooms");
 
-	.loc_0x4D4:
-	  stw       r29, 0x4AC(r31)
-	  li        r0, 0x100
-	  li        r3, 0x10
-	  lwz       r4, 0x4AC(r31)
-	  lwz       r4, 0x8(r4)
-	  stw       r0, 0x18(r4)
-	  bl        -0x1E2D4
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x564
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x7DA8
-	  stw       r0, 0x4(r28)
-	  li        r4, 0
-	  lis       r3, 0x802B
-	  stw       r4, 0x0(r28)
-	  subi      r0, r3, 0x70CC
-	  li        r3, 0x9C
-	  stw       r0, 0x4(r28)
-	  stw       r4, 0xC(r28)
-	  bl        -0x1E30C
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x538
-	  bl        -0x356D8
+	memStat->start("dyncolshape");
+	mCollShape = new DynCollShape(nullptr);
+	memStat->end("dyncolshape");
 
-	.loc_0x538:
-	  stw       r29, 0x8(r28)
-	  li        r5, 0
-	  li        r3, 0x80
-	  lwz       r4, 0x8(r28)
-	  li        r0, 0x20
-	  stw       r5, 0x24(r4)
-	  lwz       r4, 0x8(r28)
-	  stbu      r3, 0x2C(r4)
-	  stb       r3, 0x1(r4)
-	  stb       r3, 0x2(r4)
-	  stb       r0, 0x3(r4)
+	memStat->start("shadMats");
+	_110 = 3;
+	mShadowCaster.initCore("");
+	mMapShadMatHandler                   = new MapShadMatHandler();
+	mMapShadMatHandler->mShadMat->mFlags = 0x100;
 
-	.loc_0x564:
-	  stw       r28, 0x4B0(r31)
-	  lis       r3, 0x1
-	  subi      r5, r3, 0x7F00
-	  lwz       r3, 0x4B0(r31)
-	  li        r0, 0xFF
-	  addi      r4, r30, 0x78
-	  lwz       r3, 0x8(r3)
-	  stw       r5, 0x18(r3)
-	  lwz       r3, 0x4B0(r31)
-	  lwz       r3, 0x8(r3)
-	  stbu      r0, 0x2C(r3)
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x3(r3)
-	  lwz       r3, 0x2FE8(r13)
-	  bl        0x214BC
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x84
-	  bl        0x213A0
-	  li        r3, 0x3C
-	  bl        -0x1E39C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x5C8
-	  bl        -0x2121C
+	mMapProjMatHandler                   = new MapProjMatHandler(nullptr);
+	mMapProjMatHandler->mProjMat->mFlags = 0x8100;
 
-	.loc_0x5C8:
-	  stw       r28, 0x4B4(r31)
-	  li        r0, 0x105
-	  li        r4, 0x140
-	  lfs       f0, -0x7874(r2)
-	  li        r5, 0xF0
-	  lwz       r3, 0x4B4(r31)
-	  li        r6, 0x8
-	  li        r7, 0
-	  stfs      f0, 0x28(r3)
-	  lfs       f0, -0x7870(r2)
-	  lwz       r3, 0x4B4(r31)
-	  stfs      f0, 0x2C(r3)
-	  lwz       r3, 0x4B4(r31)
-	  sth       r0, 0x6(r3)
-	  lwz       r3, 0x4B4(r31)
-	  bl        -0x20E8C
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r5, r30, 0x94
-	  lwz       r4, 0x4B4(r31)
-	  bl        -0x25C08
-	  li        r3, 0x3C
-	  bl        -0x1E404
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x630
-	  bl        -0x21284
+	mMapProjMatHandler->mProjMat->Colour().set(255, 255, 255, 255);
+	memStat->end("shadMats");
 
-	.loc_0x630:
-	  stw       r28, 0x4B8(r31)
-	  li        r0, 0x105
-	  li        r4, 0x140
-	  lfs       f0, -0x7874(r2)
-	  li        r5, 0xF0
-	  lwz       r3, 0x4B8(r31)
-	  li        r6, 0
-	  li        r7, 0
-	  stfs      f0, 0x28(r3)
-	  lfs       f0, -0x7870(r2)
-	  lwz       r3, 0x4B8(r31)
-	  stfs      f0, 0x2C(r3)
-	  lwz       r3, 0x4B8(r31)
-	  sth       r0, 0x6(r3)
-	  lwz       r3, 0x4B8(r31)
-	  bl        -0x20EF4
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r5, r30, 0x94
-	  lwz       r4, 0x4B8(r31)
-	  bl        -0x25C70
-	  lwz       r3, 0x2FE8(r13)
-	  addi      r4, r30, 0x84
-	  bl        0x213D4
-	  mr        r3, r31
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  lwz       r29, 0x5C(r1)
-	  lwz       r28, 0x58(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006549C
- * Size:	000018
- */
-MapRoom::MapRoom()
-{
-	_08 = 0;
-	_04 = 1.0f;
-	_00 = 1.0f;
+	memStat->start("blurTextures");
+	_4B4                = new Texture();
+	_4B4->mWidthFactor  = 0.003125f;
+	_4B4->mHeightFactor = 0.004166667f;
+	_4B4->mTexFlags     = 0x105;
+	_4B4->createBuffer(320, 240, 8, nullptr);
+	gsys->addTexture(_4B4, "internalLightmap");
+	_4B8                = new Texture();
+	_4B8->mWidthFactor  = 0.003125f;
+	_4B8->mHeightFactor = 0.004166667f;
+	_4B8->mTexFlags     = 0x105;
+	_4B8->createBuffer(320, 240, 0, nullptr);
+	gsys->addTexture(_4B8, "internalLightmap");
+	memStat->end("blurTextures");
 }
 
 /*
@@ -4118,6 +777,7 @@ MapRoom::MapRoom()
  */
 void MapMgr::initEffects()
 {
+	// hmm.
 	new EffectMgr;
 }
 
@@ -4128,282 +788,42 @@ void MapMgr::initEffects()
  */
 void MapMgr::initShape()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x24E0
-	  lis       r5, 0x803A
-	  stwu      r1, -0x70(r1)
-	  lis       r6, 0x802B
-	  addi      r4, r4, 0xB0
-	  stfd      f31, 0x68(r1)
-	  stfd      f30, 0x60(r1)
-	  stmw      r25, 0x44(r1)
-	  addi      r26, r3, 0
-	  li        r25, 0
-	  subi      r3, r5, 0x2848
-	  subi      r29, r6, 0x7298
-	  li        r5, 0x1
-	  stw       r25, 0x8C(r26)
-	  bl        -0x12818
-	  stw       r3, 0x60(r26)
-	  addi      r4, r26, 0x64
-	  li        r5, 0
-	  lwz       r3, 0x60(r26)
-	  lwz       r0, 0x14(r3)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0x14(r3)
-	  lwz       r3, 0x60(r26)
-	  bl        -0x35C20
-	  lwz       r3, 0x60(r26)
-	  li        r6, 0
-	  lwz       r5, 0x58(r3)
-	  cmpwi     r5, 0
-	  ble-      .loc_0xC8
-	  cmpwi     r5, 0x8
-	  subi      r4, r5, 0x8
-	  ble-      .loc_0x3A0
-	  addi      r0, r4, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r4, 0
-	  mtctr     r0
-	  ble-      .loc_0x3A0
+	_8C       = 0;
+	mMapShape = gameflow.loadShape(flowCont.mAnimationTestPath, true);
+	mMapShape->mSystemFlags |= 0x4;
+	mMapShape->makeInstance(mDynMaterials, 0);
 
-	.loc_0xA0:
-	  addi      r25, r25, 0x8E0
-	  addi      r6, r6, 0x8
-	  bdnz+     .loc_0xA0
-	  b         .loc_0x3A0
+	for (int i = 0; i < mMapShape->mJointCount; i++) {
+		PRINT("got bound (%.1f, %.1f, %.1f) - (%.1f, %.1f, %.1f)\n", mMapShape->mJointList[i].mBounds.mMin.x,
+		      mMapShape->mJointList[i].mBounds.mMin.y, mMapShape->mJointList[i].mBounds.mMin.z, mMapShape->mJointList[i].mBounds.mMax.x,
+		      mMapShape->mJointList[i].mBounds.mMax.y, mMapShape->mJointList[i].mBounds.mMax.z);
+	}
 
-	.loc_0xB0:
-	  sub       r0, r5, r6
-	  cmpw      r6, r5
-	  mtctr     r0
-	  bge-      .loc_0xC8
+	mMapShape->createCollisions(64);
+	_90.expandBound(mMapShape->mCourseExtents);
+	mDynSimulator = new DynSimulator();
 
-	.loc_0xC0:
-	  addi      r4, r4, 0x11C
-	  bdnz+     .loc_0xC0
+	_FC  = 0.016666668f;
+	_100 = 0.0125f;
+	_F4  = 0.0f;
+	_F8  = 0.0f;
 
-	.loc_0xC8:
-	  li        r4, 0x40
-	  bl        -0x31858
-	  lwz       r3, 0x60(r26)
-	  lfs       f0, 0x90(r26)
-	  lfsu      f1, 0x140(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xE8
-	  stfs      f1, 0x90(r26)
+	// sigh. this is really there.
+	// similar code exists in GenObjectMapObject::birth, but the assembly is actually stripped there.
+	for (int i = 0; i < 0; i++) {
+		DynObjBody* body = new DynObjBody();
+		body->_132B8     = mMapShape;
+		body->readScript(this, "traffic/specLog.ini");
+		body->initBodyCollisions();
+		body->mInitPosition.set(0.0f, 60.0f, 100.0f);
+		body->mInitOrientationZ = Vector3f(1.0f, 0.0f, 0.0f);
+		body->mInitOrientationX = Vector3f(0.0f, 1.0f, 0.0f);
+		body->mInitOrientationY = Vector3f(0.0f, 0.0f, 1.0f);
+		mDynSimulator->add(body);
+		mCollShape->add(body->mCollObj);
+	}
 
-	.loc_0xE8:
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, 0x94(r26)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xFC
-	  stfs      f1, 0x94(r26)
-
-	.loc_0xFC:
-	  lfs       f1, 0x8(r3)
-	  lfs       f0, 0x98(r26)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x110
-	  stfs      f1, 0x98(r26)
-
-	.loc_0x110:
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x9C(r26)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x124
-	  stfs      f1, 0x9C(r26)
-
-	.loc_0x124:
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, 0xA0(r26)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x138
-	  stfs      f1, 0xA0(r26)
-
-	.loc_0x138:
-	  lfs       f1, 0x14(r3)
-	  lfs       f0, 0xA4(r26)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x14C
-	  stfs      f1, 0xA4(r26)
-
-	.loc_0x14C:
-	  li        r3, 0x1B0
-	  bl        -0x1E630
-	  mr.       r27, r3
-	  beq-      .loc_0x1F4
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r27)
-	  addi      r0, r3, 0x737C
-	  stw       r0, 0x0(r27)
-	  li        r25, 0
-	  addi      r3, r27, 0
-	  stw       r25, 0x10(r27)
-	  addi      r4, r29, 0xB4
-	  stw       r25, 0xC(r27)
-	  stw       r25, 0x8(r27)
-	  bl        -0x4079C
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x71E0
-	  stw       r0, 0x0(r27)
-	  addi      r3, r27, 0
-	  addi      r4, r29, 0xB4
-	  bl        -0x24F4C
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x712C
-	  lis       r3, 0x8006
-	  stw       r0, 0x0(r27)
-	  addi      r4, r3, 0x58A8
-	  addi      r3, r27, 0x44
-	  li        r5, 0
-	  li        r6, 0x24
-	  li        r7, 0xA
-	  bl        0x1AF3C0
-	  li        r0, 0x2
-	  stw       r0, 0x30(r27)
-	  lfs       f0, -0x7868(r2)
-	  stfs      f0, 0x34(r27)
-	  stw       r25, 0x38(r27)
-	  stw       r25, 0x3C(r27)
-	  stw       r25, 0x2C(r27)
-	  stw       r25, 0x20(r27)
-	  stw       r25, 0x24(r27)
-
-	.loc_0x1F4:
-	  stw       r27, 0x108(r26)
-	  lis       r3, 0x802B
-	  subi      r31, r3, 0x6F80
-	  lfs       f0, -0x7864(r2)
-	  li        r27, 0
-	  lis       r30, 0x1
-	  stfs      f0, 0xFC(r26)
-	  lfs       f0, -0x7860(r2)
-	  stfs      f0, 0x100(r26)
-	  lfs       f31, -0x78B0(r2)
-	  stfs      f31, 0xF4(r26)
-	  stfs      f31, 0xF8(r26)
-	  lfs       f30, -0x7884(r2)
-	  b         .loc_0x38C
-
-	.loc_0x22C:
-	  addi      r3, r30, 0x331C
-	  bl        -0x1E710
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x2A4
-	  bl        -0x84B8
-	  stw       r31, 0x0(r28)
-	  addis     r3, r28, 0x1
-	  li        r0, 0
-	  stfs      f31, 0x3308(r3)
-	  stfs      f31, 0x3304(r3)
-	  stfs      f31, 0x3300(r3)
-	  stfs      f31, 0x3314(r3)
-	  stfs      f31, 0x3310(r3)
-	  stfs      f31, 0x330C(r3)
-	  stw       r0, 0x32B4(r3)
-	  stw       r0, 0x8C(r28)
-	  lfs       f0, -0x6CE8(r13)
-	  stfs      f0, 0x3300(r3)
-	  lfs       f0, -0x6CE4(r13)
-	  stfs      f0, 0x3304(r3)
-	  lfs       f0, -0x6CE0(r13)
-	  stfs      f0, 0x3308(r3)
-	  lfs       f0, -0x6CDC(r13)
-	  stfs      f0, 0x330C(r3)
-	  lfs       f0, -0x6CD8(r13)
-	  stfs      f0, 0x3310(r3)
-	  lfs       f0, -0x6CD4(r13)
-	  stfs      f0, 0x3314(r3)
-	  stfs      f30, 0x3318(r3)
-
-	.loc_0x2A4:
-	  lwz       r0, 0x60(r26)
-	  addis     r25, r28, 0x1
-	  addi      r3, r28, 0
-	  stw       r0, 0x32B8(r25)
-	  addi      r4, r26, 0
-	  addi      r5, r29, 0xC0
-	  bl        -0x1290
-	  mr        r3, r28
-	  bl        -0x1500
-	  lfs       f0, -0x6C64(r13)
-	  mr        r4, r28
-	  stfs      f0, 0x20(r28)
-	  lfs       f0, -0x6C60(r13)
-	  stfs      f0, 0x24(r28)
-	  lfs       f0, -0x6C5C(r13)
-	  stfs      f0, 0x28(r28)
-	  lfs       f0, -0x6C58(r13)
-	  lfs       f1, -0x6C54(r13)
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, -0x6C50(r13)
-	  stfs      f1, 0x38(r1)
-	  stfs      f0, 0x3C(r1)
-	  lwz       r3, 0x34(r1)
-	  lwz       r0, 0x38(r1)
-	  stw       r3, 0x44(r28)
-	  stw       r0, 0x48(r28)
-	  lwz       r0, 0x3C(r1)
-	  stw       r0, 0x4C(r28)
-	  lfs       f0, -0x6C4C(r13)
-	  lfs       f1, -0x6C48(r13)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x6C44(r13)
-	  stfs      f1, 0x2C(r1)
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x2C(r28)
-	  stw       r0, 0x30(r28)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x34(r28)
-	  lfs       f0, -0x6C40(r13)
-	  lfs       f1, -0x6C3C(r13)
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, -0x6C38(r13)
-	  stfs      f1, 0x20(r1)
-	  stfs      f0, 0x24(r1)
-	  lwz       r3, 0x1C(r1)
-	  lwz       r0, 0x20(r1)
-	  stw       r3, 0x38(r28)
-	  stw       r0, 0x3C(r28)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x40(r28)
-	  lwz       r3, 0x108(r26)
-	  bl        -0x25284
-	  lwz       r3, 0x88(r26)
-	  lwz       r4, 0x32FC(r25)
-	  bl        -0x25290
-	  addi      r27, r27, 0x1
-
-	.loc_0x38C:
-	  cmpwi     r27, 0
-	  blt+      .loc_0x22C
-	  li        r0, 0x1
-	  stb       r0, 0x104(r26)
-	  b         .loc_0x3A8
-
-	.loc_0x3A0:
-	  mulli     r4, r6, 0x11C
-	  b         .loc_0xB0
-
-	.loc_0x3A8:
-	  lmw       r25, 0x44(r1)
-	  lwz       r0, 0x74(r1)
-	  lfd       f31, 0x68(r1)
-	  lfd       f30, 0x60(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	_104 = 1;
 }
 
 /*
@@ -4422,86 +842,27 @@ void MapMgr::createLights()
  */
 void MapMgr::updateSimulation()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  mr        r30, r3
-	  lbz       r0, 0x104(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  lwz       r3, 0x108(r30)
-	  bl        -0x15D30
-	  li        r0, 0
-	  stb       r0, 0x104(r30)
-	  lwz       r3, 0x108(r30)
-	  stw       r0, 0x20(r3)
+	if (_104) {
+		mDynSimulator->resetWorld();
+		_104               = 0;
+		mDynSimulator->_20 = 0;
+	}
 
-	.loc_0x3C:
-	  lwz       r3, 0x108(r30)
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r0, 0x20(r3)
-	  lfs       f1, 0x28C(r4)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xE4
-	  lfs       f0, 0xF8(r30)
-	  fadds     f0, f0, f1
-	  stfs      f0, 0xF8(r30)
-	  b         .loc_0xC0
+	f32 time = gsys->getFrameTime();
+	if (!mDynSimulator->isPaused()) {
+		_F8 += time * 1.0f;
+		while (_F8 - _F4 > _FC) {
+			if (!mDynSimulator->isPaused()) {
+				mDynSimulator->updateConts();
+				mDynSimulator->doSimulation(_FC, _100, mMapShape);
+			}
 
-	.loc_0x64:
-	  lwz       r3, 0x108(r30)
-	  lwz       r0, 0x20(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xB0
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x94
+			_F4 += _FC;
+		}
 
-	.loc_0x7C:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x68(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x94:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x7C
-	  lwz       r3, 0x108(r30)
-	  lfs       f1, 0xFC(r30)
-	  lfs       f2, 0x100(r30)
-	  lwz       r4, 0x60(r30)
-	  bl        -0x15CFC
-
-	.loc_0xB0:
-	  lfs       f1, 0xF4(r30)
-	  lfs       f0, 0xFC(r30)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xF4(r30)
-
-	.loc_0xC0:
-	  lfs       f1, 0xF8(r30)
-	  lfs       f0, 0xF4(r30)
-	  lfs       f2, 0xFC(r30)
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f2
-	  bgt+      .loc_0x64
-	  fdivs     f1, f0, f2
-	  lwz       r3, 0x108(r30)
-	  bl        -0x15A14
-
-	.loc_0xE4:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		f32 a = (_F8 - _F4) / _FC;
+		mDynSimulator->updateVecQuats(a);
+	}
 }
 
 /*
@@ -4511,160 +872,42 @@ void MapMgr::updateSimulation()
  */
 void MapMgr::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  mr        r29, r3
-	  bl        -0x118
-	  lwz       r30, 0x108(r29)
-	  lwz       r31, 0x10(r30)
-	  b         .loc_0x48
+	updateSimulation();
+	mDynSimulator->InitRender();
 
-	.loc_0x2C:
-	  mr        r3, r31
-	  lwz       r4, 0x28(r30)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0xC(r31)
+	gsys->mTimer->start("updDynPlat", true);
 
-	.loc_0x48:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x2C
-	  lwz       r3, 0x88(r29)
-	  lwz       r31, 0x10(r3)
-	  b         .loc_0x1B0
+	// these are genuinely unused in the DLL too
+	int total        = 0;
+	int wallCount    = 0;
+	int workObjCount = 0;
+	int tekiCount1   = 0;
+	int tekiCount2   = 0;
+	FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
+	{
+		Creature* creature = coll->mCreature;
+		if (!creature || creature->alwaysUpdatePlatform()
+		    || (creature->aiCullable() || !creature->mGrid.aiCulling())
+		           && (!creature->isSluice() && creature->mObjType != OBJTYPE_WorkObject || !creature->mGrid.aiCulling())) {
+			coll->update();
+			coll->updatePos();
+			coll->mContactCount = 0;
+			if (creature) {
+				if (creature->isSluice()) {
+					wallCount++;
+				} else if (creature->mObjType == OBJTYPE_Teki) {
+					tekiCount1++;
+				} else if (creature->isTeki()) {
+					tekiCount2++;
+				} else if (creature->mObjType == OBJTYPE_WorkObject) {
+					workObjCount++;
+				}
+			}
+			total++;
+		}
+	}
 
-	.loc_0x5C:
-	  lwz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  mr        r30, r0
-	  beq-      .loc_0x110
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x110
-	  lwz       r0, 0xC8(r30)
-	  rlwinm.   r0,r0,0,12,12
-	  beq-      .loc_0xA4
-	  addi      r3, r30, 0x40
-	  bl        0x2E730
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1AC
-
-	.loc_0xA4:
-	  lwz       r5, 0x6C(r30)
-	  li        r3, 0x1
-	  addi      r4, r3, 0
-	  cmpwi     r5, 0x16
-	  addi      r0, r3, 0
-	  beq-      .loc_0xC8
-	  cmpwi     r5, 0x17
-	  beq-      .loc_0xC8
-	  li        r0, 0
-
-	.loc_0xC8:
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0xDC
-	  cmpwi     r5, 0x18
-	  beq-      .loc_0xDC
-	  li        r4, 0
-
-	.loc_0xDC:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0xF0
-	  cmpwi     r5, 0x19
-	  beq-      .loc_0xF0
-	  li        r3, 0
-
-	.loc_0xF0:
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x100
-	  cmpwi     r5, 0x26
-	  bne-      .loc_0x110
-
-	.loc_0x100:
-	  addi      r3, r30, 0x40
-	  bl        0x2E6C4
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x1AC
-
-	.loc_0x110:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        -0x40C8
-	  li        r0, 0
-	  cmplwi    r30, 0
-	  stw       r0, 0x20(r31)
-	  beq-      .loc_0x1AC
-	  lwz       r6, 0x6C(r30)
-	  li        r3, 0x1
-	  addi      r4, r3, 0
-	  cmpwi     r6, 0x16
-	  addi      r5, r3, 0
-	  beq-      .loc_0x160
-	  cmpwi     r6, 0x17
-	  beq-      .loc_0x160
-	  mr        r5, r0
-
-	.loc_0x160:
-	  rlwinm.   r0,r5,0,24,31
-	  bne-      .loc_0x174
-	  cmpwi     r6, 0x18
-	  beq-      .loc_0x174
-	  li        r4, 0
-
-	.loc_0x174:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0x188
-	  cmpwi     r6, 0x19
-	  beq-      .loc_0x188
-	  li        r3, 0
-
-	.loc_0x188:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x194
-	  b         .loc_0x1AC
-
-	.loc_0x194:
-	  cmpwi     r6, 0x37
-	  bne-      .loc_0x1A0
-	  b         .loc_0x1AC
-
-	.loc_0x1A0:
-	  bne-      .loc_0x1A8
-	  b         .loc_0x1AC
-
-	.loc_0x1A8:
-	  cmpwi     r6, 0x26
-
-	.loc_0x1AC:
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x1B0:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x5C
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mTimer->stop("updDynPlat");
 }
 
 /*
@@ -4681,8 +924,9 @@ void MapMgr::preRender(Graphics& gfx)
 
 	FOREACH_NODE(ShadowCaster, mShadowCaster.mChild, shadow)
 	{
-		shadow->mLightCamera.calcVectors(shadow->mSourcePosition, shadow->mTargetPosition);
-		shadow->mLightCamera.calcProjection(gfx, false, nullptr);
+		LightCamera& cam = shadow->mLightCamera;
+		cam.calcVectors(shadow->mSourcePosition, shadow->mTargetPosition);
+		cam.calcProjection(gfx, false, _110 > 0 ? nullptr : *(Node**)(shadow + 1)); // wut
 	}
 
 	gfx.mRenderState = 0x700;
@@ -4691,81 +935,6 @@ void MapMgr::preRender(Graphics& gfx)
 	if (_110) {
 		_110--;
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  stw       r0, 0x18(r3)
-	  addi      r3, r29, 0
-	  stw       r0, 0x1C(r28)
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r4, 0x4AC(r28)
-	  lwz       r12, 0xC0(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x300
-	  stw       r0, 0x4(r29)
-	  lwz       r31, 0x124(r28)
-	  b         .loc_0x98
-
-	.loc_0x58:
-	  addi      r30, r31, 0x14
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x37C
-	  addi      r5, r31, 0x388
-	  bl        -0x22E68
-	  lwz       r0, 0x110(r28)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x80
-	  li        r6, 0
-	  b         .loc_0x84
-
-	.loc_0x80:
-	  lwz       r6, 0x394(r31)
-
-	.loc_0x84:
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0
-	  li        r5, 0
-	  bl        -0x22850
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x98:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x58
-	  li        r0, 0x700
-	  stw       r0, 0x4(r29)
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  lwz       r12, 0x3B4(r29)
-	  lwz       r12, 0xC0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x110(r28)
-	  cmpwi     r3, 0
-	  beq-      .loc_0xD4
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x110(r28)
-
-	.loc_0xD4:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

@@ -15,6 +15,8 @@ struct CreatureCollPart : public DynCollShape {
 	CreatureCollPart() // TODO: fix this, it's implicit but required/this is just a guess
 	    : DynCollShape(nullptr)
 	{
+		mAnimMatrixID = 0;
+		_140          = nullptr;
 	}
 
 	CreatureCollPart(Shape* shape)

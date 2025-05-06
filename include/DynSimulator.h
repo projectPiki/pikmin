@@ -20,14 +20,14 @@ struct LightCamera;
 struct WorldSpring {
 	WorldSpring() { }
 
-	inline void init(int idx, f32 x, f32 y, f32 z)
+	void init(int hookIdx, f32 x, f32 y, f32 z)
 	{
-		mAttachPointIdx = idx;
-		mAttachPos.set(x, y, z);
+		mHookIdx = hookIdx;
+		mOffset.set(x, y, z);
 	}
 
-	int mAttachPointIdx; // _00
-	Vector3f mAttachPos; // _04
+	int mHookIdx;     // _00
+	Vector3f mOffset; // _04
 };
 
 /**
@@ -61,9 +61,9 @@ struct RigidBody : public Node {
 	{
 		mIntegrationStates[1]._88 = 0;
 		mIntegrationStates[0]._88 = 0;
-		mInvMass                  = 0.0f;
-		_90                       = 0;
-		mBodyPointCount           = 0;
+		mMass                     = 0.0f;
+		mHookPointCount           = 0;
+		mBoundingPointCount       = 0;
 		mSpringCount              = 0;
 	}
 
@@ -78,15 +78,15 @@ struct RigidBody : public Node {
 		mAngularAccel.set(0.0f, 0.0f, 0.0f);
 		applyCMForce(Vector3f(0.0f, -9.81f, 0.0f));
 	}
-	virtual void integrate(int, int, f32);           // _38
-	virtual bool resolveCollisions(int, Collision&); // _3C
-	virtual void calculateVertices(int);             // _40
-	virtual void initCollisions(int configIdx)       // _44
+	virtual void integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep); // _38
+	virtual bool resolveCollisions(int, Collision&);                            // _3C
+	virtual void calculateVertices(int);                                        // _40
+	virtual void initCollisions(int configIdx)                                  // _44
 	{
 		configuration& state = mIntegrationStates[configIdx];
 		_1329C.resetBound();
-		for (int i = 0; i < mBodyPointCount; i++) {
-			_1329C.expandBound(state.mBodyPoints[i + _90]);
+		for (int i = 0; i < mBoundingPointCount; i++) {
+			_1329C.expandBound(state.mBodyPoints[i + mHookPointCount]);
 		}
 	}
 	virtual bool checkForCollisions(int, CollState&);                                                             // _48
@@ -112,19 +112,32 @@ struct RigidBody : public Node {
 	void applyForce(int configIdx, Vector3f& force, Vector3f& appliedPoint)
 	{
 		Vector3f arm = appliedPoint - mIntegrationStates[configIdx].mPosition;
-		mLinearAccel.x += force.x * mInvMass;
-		mLinearAccel.y += force.y * mInvMass;
-		mLinearAccel.z += force.z * mInvMass;
+		mLinearAccel.x += force.x * mMass;
+		mLinearAccel.y += force.y * mMass;
+		mLinearAccel.z += force.z * mMass;
 		arm.CP(force);
 		mAngularAccel.x += arm.x;
 		mAngularAccel.y += arm.y;
 		mAngularAccel.z += arm.z;
 	}
 
-	// DLL inlines to do:
-	void addBoundingPoint(f32, f32, f32);
-	void addHook(f32, f32, f32);
-	void addSpring(int, f32, f32, f32);
+	void addBoundingPoint(f32 x, f32 y, f32 z)
+	{
+		mBodyPoints[mBoundingPointCount + mHookPointCount].set(x, y, z);
+		mBoundingPointCount++;
+	}
+
+	void addHook(f32 x, f32 y, f32 z)
+	{
+		mBodyPoints[mHookPointCount].set(x, y, z);
+		mHookPointCount++;
+	}
+
+	void addSpring(int hookIdx, f32 x, f32 y, f32 z)
+	{
+		mSprings[mSpringCount].init(hookIdx, x, y, z);
+		mSpringCount++;
+	}
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -133,13 +146,13 @@ struct RigidBody : public Node {
 	Vector3f mInitOrientationY;          // _38
 	Vector3f mInitOrientationZ;          // _44
 	Vector3f mDimensions;                // _50
-	f32 mInvMass;                        // _5C
-	f32 mMass;                           // _60
+	f32 mMass;                           // _5C
+	f32 mInvMass;                        // _60
 	Matrix3f mInertiaTensor;             // _64
 	f32 mRestitutionFactor;              // _88
-	int mBodyPointCount;                 // _8C
-	int _90;                             // _90
-	Vector3f mBodyPoints[0x400];         // _94
+	int mBoundingPointCount;             // _8C
+	int mHookPointCount;                 // _90
+	Vector3f mBodyPoints[0x400];         // _94, hook points, then bounding points
 	int mBodyPointHitCounts[0x400];      // _3094
 	int mSpringCount;                    // _4094
 	WorldSpring mSprings[8];             // _4098
@@ -178,10 +191,21 @@ struct DynSimulator : public Node {
 	int CheckForCollisions(int, Shape*);
 	void ResolveCollisions(int);
 
-	// DLL inlines to do:
 	bool isPaused() { return _20 != 0; }
-	void InitRender();
-	void updateConts();
+	void updateConts()
+	{
+		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
+			body->updateCont();
+		}
+	}
+	void InitRender()
+	{
+		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
+			body->initRender(mCurrentConfigIdx);
+		}
+	}
+
+	// DLL inlines to do:
 	void Render(Graphics&);
 
 	// _00     = VTBL
