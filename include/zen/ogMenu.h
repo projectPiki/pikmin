@@ -92,7 +92,7 @@ struct ogScrMenuMgr {
 
 	void start();
 	returnStatusFlag update(Controller*);
-	void draw(Graphics&);
+	bool draw(Graphics&);
 
 	// unused/inlined:
 	void updateInfo(Controller*);

@@ -36,8 +36,8 @@ struct GameMovieInterface : public GameInterface {
 	 * @brief TODO
 	 */
 	struct SimpleMessage {
-		int _00;
-		int _04;
+		int mCommand; // _00
+		int _04;      // _04
 	};
 
 	/**
@@ -46,13 +46,13 @@ struct GameMovieInterface : public GameInterface {
 	struct ComplexMessage {
 		ComplexMessage() { }
 
-		int _00;       // _00
-		int _04;       // _04
-		Creature* _08; // _08
-		Vector3f _0C;  // _0C
-		Vector3f _18;  // _18
-		int _24;       // _24
-		bool _28;      // _28
+		int mMovieIdx;      // _00
+		int _04;            // _04
+		Creature* mTarget;  // _08
+		Vector3f mPosition; // _0C
+		Vector3f mRotation; // _18
+		int mFlags;         // _24
+		bool mIsPlaying;    // _28
 	};
 
 	virtual void message(int a1, int a2) // _08
@@ -60,8 +60,8 @@ struct GameMovieInterface : public GameInterface {
 		if (mMesgCount >= _08) {
 			return;
 		}
-		mMesg[mMesgCount]._00 = a1;
-		mMesg[mMesgCount]._04 = a2;
+		mMesg[mMesgCount].mCommand = a1;
+		mMesg[mMesgCount]._04      = a2;
 
 		mMesgCount++;
 	}
@@ -70,21 +70,21 @@ struct GameMovieInterface : public GameInterface {
 		if (mComplexMesgCount >= _08) {
 			return;
 		}
-		mCompMesg[mComplexMesgCount]._00 = id;
-		mCompMesg[mComplexMesgCount]._04 = a1;
-		mCompMesg[mComplexMesgCount]._08 = obj;
+		mCompMesg[mComplexMesgCount].mMovieIdx = id;
+		mCompMesg[mComplexMesgCount]._04       = a1;
+		mCompMesg[mComplexMesgCount].mTarget   = obj;
 		if (!pos) {
-			mCompMesg[mComplexMesgCount]._0C.set(0.0f, 0.0f, 0.0f);
+			mCompMesg[mComplexMesgCount].mPosition.set(0.0f, 0.0f, 0.0f);
 		} else {
-			mCompMesg[mComplexMesgCount]._0C = *pos;
+			mCompMesg[mComplexMesgCount].mPosition = *pos;
 		}
 		if (!dir) {
-			mCompMesg[mComplexMesgCount]._18.set(0.0f, 0.0f, 0.0f);
+			mCompMesg[mComplexMesgCount].mRotation.set(0.0f, 0.0f, 0.0f);
 		} else {
-			mCompMesg[mComplexMesgCount]._18 = *dir;
+			mCompMesg[mComplexMesgCount].mRotation = *dir;
 		}
-		mCompMesg[mComplexMesgCount]._24 = flags;
-		mCompMesg[mComplexMesgCount]._28 = a2;
+		mCompMesg[mComplexMesgCount].mFlags     = flags;
+		mCompMesg[mComplexMesgCount].mIsPlaying = a2;
 
 		mComplexMesgCount++;
 	}

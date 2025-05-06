@@ -61,7 +61,7 @@ struct MoviePlayer {
 	void resetMovieList();
 	void fixMovieList();
 	void initMovie(MovieInfo*, int);
-	void startMovie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool);
+	void startMovie(int movieIdx, int, Creature* target, Vector3f* pos, Vector3f* rot, u32 p6, bool isPlaying);
 	void sndStartMovie(MovieInfo*);
 	void initMovieFlags(MovieInfo*);
 	void sndStopMovie(MovieInfo*);

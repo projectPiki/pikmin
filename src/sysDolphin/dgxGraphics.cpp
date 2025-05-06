@@ -701,7 +701,7 @@ void DGXGraphics::waitRetrace()
 
 	// this mess is probably an inline
 	bool test = true;
-	if (!gsys->_268 && !gsys->getPending()) {
+	if (!gsys->_268 && !gsys->resetPending()) {
 		test = false;
 	}
 	bool set = test ? false : true;

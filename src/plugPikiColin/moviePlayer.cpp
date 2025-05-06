@@ -376,7 +376,7 @@ int MoviePlayer::translateIndex(int idx, int stage)
  * Address:	80077160
  * Size:	00049C
  */
-void MoviePlayer::startMovie(int movieIdx, int p2, Creature* target, Vector3f* pos, Vector3f* rot, u32 p6, bool p7)
+void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos, Vector3f* rot, u32 p6, bool isPlaying)
 {
 	MovieInfo* info;
 	if (movieIdx < 0) {
@@ -456,7 +456,7 @@ void MoviePlayer::startMovie(int movieIdx, int p2, Creature* target, Vector3f* p
 
 	info->mCin->mMtx       = info->_1C;
 	info->mCin->mTarget    = target;
-	info->mCin->mIsPlaying = p7;
+	info->mCin->mIsPlaying = isPlaying;
 
 	bool doPlayMovie = false;
 	if (mPlayInfoList.getChildCount() == 0) {

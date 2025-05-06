@@ -16,7 +16,7 @@ struct CardQuickInfo {
 	CardQuickInfo() { _08 = 0; }
 
 	u32 mIndex;          // _00, unknown
-	u8 _04[0x4];         // _04, unknown
+	u32 _04;             // _04, unknown
 	u32 _08;             // _08, unknown
 	int mCurrentDay;     // _0C, to do with day count?
 	u8 _10[0x24 - 0x10]; // _10, unknown

@@ -2397,7 +2397,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller*)
  * Address:	801931CC
  * Size:	0003C8
  */
-void zen::ogScrMenuMgr::draw(Graphics&)
+bool zen::ogScrMenuMgr::draw(Graphics&)
 {
 	/*
 	.loc_0x0:

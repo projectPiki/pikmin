@@ -42,7 +42,7 @@ struct QuittingModeState : public ModeState {
 	}
 	virtual void postUpdate() // _10
 	{
-		if (!gsys->getPending()) {
+		if (!gsys->resetPending()) {
 			PRINT("sending softreset!\n");
 
 			memStat->reset();
@@ -191,7 +191,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		BaseGameSection::draw(gfx);
 
 		if (!_3A4) {
-			if (!gsys->getPending() && (!_20 || gameflow.mMoviePlayer->mIsActive)) {
+			if (!gsys->resetPending() && (!_20 || gameflow.mMoviePlayer->mIsActive)) {
 				if (_38) {
 					_34 = _38;
 					_38 = nullptr;

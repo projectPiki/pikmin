@@ -108,7 +108,7 @@ struct StdSystem {
 
 	void onceInit();
 	AyuHeap* getHeap(int heapIdx);
-	void resetHeap(int, int);
+	void resetHeap(int heapIdx, int flag);
 	int setHeap(int);
 	GfxobjInfo* findGfxObject(char*, u32);
 	Texture* loadTexture(char*, bool);
@@ -162,7 +162,7 @@ struct StdSystem {
 	inline void softReset() { mPending = true; }
 	inline void clearPending() { mPending = false; } // no idea what this should be called
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
-	inline bool getPending() { return mPending; }
+	inline bool resetPending() { return mPending; }
 	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
 	inline int getHeapNum() { return mActiveHeapIdx; }
 

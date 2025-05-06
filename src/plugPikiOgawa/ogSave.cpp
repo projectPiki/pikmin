@@ -161,7 +161,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	zen::ogScrFileChkSelMgr::returnStatusFlag res = _84->update(input, _88);
 	if (res == 0) {
-		gameflow.mPlayState.mCourseOpenFlags = _88._04[0];
+		gameflow.mPlayState._23              = _88._04;
 		gameflow.mPlayState.mCourseOpenFlags = _88.mIndex + 1;
 		mStatus                              = Status_3;
 		_10                                  = 0.0f;

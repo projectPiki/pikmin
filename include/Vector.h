@@ -188,12 +188,13 @@ struct Vector3f {
 	// unused/inlined (ALL HAVE NOT BEEN CHECKED FOR ACCURACY):
 	void normalize() { normalise(); }
 
-	void project(Vector3f& other)
+	// NB: this gets the orthogonal component, not the projected component.
+	void project(Vector3f& dirToRemove)
 	{
-		f32 dp = DP(other);
-		x      = -(dp * other.x - x);
-		y      = -(dp * other.y - y);
-		z      = -(dp * other.z - z);
+		f32 projAmt = DP(dirToRemove);
+		x           = -(projAmt * dirToRemove.x - x);
+		y           = -(projAmt * dirToRemove.y - y);
+		z           = -(projAmt * dirToRemove.z - z);
 	}
 
 	void middle(Vector3f& a, Vector3f& b)

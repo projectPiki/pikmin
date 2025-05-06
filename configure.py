@@ -443,7 +443,7 @@ config.libs = [
             Object(Equivalent, "plugPikiColin/gameSetup.cpp"),
             Object(Matching, "plugPikiColin/cardSelect.cpp"),
             Object(Matching, "plugPikiColin/mapSelect.cpp"),
-            Object(NonMatching, "plugPikiColin/newPikiGame.cpp"),
+            Object(Matching, "plugPikiColin/newPikiGame.cpp"),
             Object(Matching, "plugPikiColin/introGame.cpp"),
             Object(Matching, "plugPikiColin/gameExit.cpp"),
             Object(Matching, "plugPikiColin/gauges.cpp"),
