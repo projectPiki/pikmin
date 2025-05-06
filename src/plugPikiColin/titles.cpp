@@ -7,6 +7,7 @@
 #include "jaudio/verysimple.h"
 #include "Graphics.h"
 #include "DebugLog.h"
+#include "Controller.h"
 
 zen::ogScrTitleMgr* titleWindow;
 bool titleWindowOn;
@@ -114,8 +115,8 @@ struct TitleSetupSection : public Node {
 		mMenu->_48.mMinX = glnWidth / 2;
 		mMenu->_48.mMinY = glnHeight / 2 + 80;
 
-		mMenu->addKeyEvent(0x10, 0x1001000, new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
-		mMenu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+		mMenu->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
+		mMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 		_24 = 0;
 
 		gameflow.mFrameCacher = new AnimFrameCacher(8000);
