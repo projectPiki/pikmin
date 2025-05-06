@@ -90,12 +90,13 @@ zen::ogSaveMgr::ogSaveMgr()
 	_74 = (P2DPicture*)_0C->search('back', true);
 	_74->setAlpha(0);
 
-	_1C          = new ogNitakuMgr(_0C, _44, _48, _4C, true, true);
+	_1C = new ogNitakuMgr(_0C, _44, _48, _4C, true, true);
+	PRINT("%%%%%%%%%%%%%%%%%%%%   OGAWA SAVE STEP 1   %%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
 	mMemCheckMgr = new ogScrMemChkMgr;
 	mSaveFail    = new DrawSaveFailure;
 	mSaveFail->init();
 	_84 = new ogScrFileChkSelMgr;
-
+	PRINT("%%%%%%%%%%%%%%%%%%%%   OGAWA SAVE STEP 2   %%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
 	_10 = 0.0f;
 	_04 = Status_NULL;
 	_14 = 0;
