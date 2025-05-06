@@ -20,6 +20,7 @@
 #include "sysNew.h"
 #include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Controller.h"
 
 GameFlow gameflow;
 BaseApp* app;
@@ -362,8 +363,8 @@ void GameFlow::addFilterMenu(Menu* parent)
 		char* buf = new char[0x40];
 		sprintf(buf, "Filter setting %d", mFilters[i]);
 		parent->addOption(i, buf, nullptr, true);
-		parent->addKeyEvent(8, 0x8000, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
-		parent->addKeyEvent(8, 0x4000, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
+		parent->addKeyEvent(8, KBBTN_Y, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
+		parent->addKeyEvent(8, KBBTN_X, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
 	}
 }
 

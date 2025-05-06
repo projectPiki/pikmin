@@ -9,6 +9,7 @@
 #include "Font.h"
 #include "Delegate.h"
 #include "DebugLog.h"
+#include "Controller.h"
 
 /*
  * --INFO--
@@ -677,7 +678,7 @@ struct GameCourseClearScreen : public Node {
 		_1F8->_48.mMinX = glnWidth / 2;
 		_1F8->_48.mMinY = glnHeight / 2;
 
-		_1F8->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(_1F8, &Menu::menuCloseMenu));
+		_1F8->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(_1F8, &Menu::menuCloseMenu));
 		_1F8->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
 		_1FC = 0;
 		gsys->setFade(1.0f, 3.0f);
