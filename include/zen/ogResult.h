@@ -46,6 +46,8 @@ struct ogScrResultMgr {
 	u8 _00[0x55C]; // _00, unknown
 };
 
+extern char* bloFile_Res_Table[];
+
 } // namespace zen
 
 #endif

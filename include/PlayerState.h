@@ -184,11 +184,10 @@ struct PlayerState {
 
 	void setDayCollectCount(int day, int parts) { mPartsCollectedByDay[day] = parts; }
 	void setDayPowerupCount(int day, int parts) { mPartsToNextByDay[day] = parts; }
-
+	int getDayCollectCount(int day) { return mPartsCollectedByDay[day]; }
+	int getDayPowerupCount(int day) { return mPartsToNextByDay[day]; }
 	/*
 	    All remaining DLL inlines:
-
-	    int getDayCollectCount(int);
 	    int getLastPikmins();
 	*/
 
