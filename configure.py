@@ -713,7 +713,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category" : "game",
         "objects": [
-            Object(NonMatching, "plugPikiOgawa/ogTest.cpp"),
+            Object(Matching, "plugPikiOgawa/ogTest.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogSub.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogTitle.cpp"),
             Object(Matching, "plugPikiOgawa/ogPause.cpp"),

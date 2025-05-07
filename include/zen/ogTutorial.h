@@ -48,6 +48,9 @@ struct ogScrTutorialMgr {
 	void backPage();
 	void setCursorXY(P2DTextBox*);
 
+	// DLL inlines:
+	ogScrMessageMgr* getScrMsgMgr() { return mMessageMgr; }
+
 	ogScrMessageMgr* mMessageMgr;                  // _00
 	zen::ogScrTutorialMgr::TutorialStatus mStatus; // _04
 };

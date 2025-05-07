@@ -35,7 +35,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("OgTestSection")
 
 /*
  * --INFO--
@@ -44,8 +44,6 @@ DEFINE_PRINT("TODO: Replace")
  */
 zen::OgTestScreen::OgTestScreen()
 {
-	u32 badCompiler[10];
-
 	setName("OgTestScreen");
 	mController      = new Controller();
 	_20              = 0;
@@ -68,11 +66,13 @@ zen::OgTestScreen::OgTestScreen()
 		setSpecialNumber(i, -123);
 	}
 
-	gsys->getHeap(gsys->mActiveHeapIdx);
-
+	int before = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 	mMemChkMgr = new ogScrMemChkMgr();
+	int size   = before - gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 
-	gsys->getHeap(gsys->mActiveHeapIdx);
+	PRINT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	PRINT("Target Mgr. MemSize = %d\n", size);
+	PRINT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 
 	mPauseMgr             = new ogScrPauseMgr();
 	mResultMgr            = new ogScrResultMgr();
@@ -85,6 +85,10 @@ zen::OgTestScreen::OgTestScreen()
 	mStartMgr             = new ogScrStartMgr();
 	mZenController        = new ZenController(nullptr);
 	KeyRepeat::repeatTime = 0.5f;
+
+	PRINT("**********************************************\n");
+	PRINT("**\tTEST CONST FINISHED !!\t    \t\t   **\n");
+	PRINT("**********************************************\n");
 }
 
 /*
@@ -273,12 +277,16 @@ void zen::OgTestScreen::update()
 		modeSelectSub();
 	}
 
-	if (mResultMgr->update(mController) >= 7) {
+	int resRes = mResultMgr->update(mController);
+	if (resRes >= 7) {
 		mActiveMode = TESTMODE_INACTIVE;
+		PRINT("Result status = (%d)\n", resRes);
 	}
 
-	if (mTitleMgr->update(mController) >= 3) {
+	int titleRes = mTitleMgr->update(mController);
+	if (titleRes >= 3) {
 		mActiveMode = TESTMODE_INACTIVE;
+		PRINT("Title Status (%d)\n", titleRes);
 	}
 
 	if (mPauseMgr->update(mController) >= 5) {
@@ -309,8 +317,10 @@ void zen::OgTestScreen::update()
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	if (mFileChkSelMgr->update(mController, CardQuickInfo()) >= ogScrFileChkSelMgr::FILECHKSEL_Exit) {
+	int fileCheckRes = mFileChkSelMgr->update(mController, CardQuickInfo());
+	if (fileCheckRes >= ogScrFileChkSelMgr::FILECHKSEL_Exit) {
 		mActiveMode = TESTMODE_INACTIVE;
+		PRINT("File Check & Select (%d)\n", fileCheckRes);
 	}
 }
 
@@ -355,14 +365,14 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 0, 255));
 
-		char scrnSelectorText[128];
+		char scrnSelectorText[PATH_MAX];
 		sprintf(scrnSelectorText, "２Ｄスクリーン・セレクター"); // '2D screen selector'
 		gfx.texturePrintf(mFont, 320 - mFont->stringWidth(scrnSelectorText) / 2, 20, scrnSelectorText);
 
 		gfx.setColour(Colour(200, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(50, 50, 255, 255));
 
-		char optionsTexts[11][256];
+		char optionsTexts[11][PATH_MAX];
 
 		sprintf(optionsTexts[0], "タイトル (%d)", mTitleMode);               // 'Title (%d)'
 		sprintf(optionsTexts[1], "チュートリアル (%d)", mTutorialMode);      // 'Tutorial (%d)'
@@ -394,450 +404,15 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 150, 255));
 
-		ogScrMessageMgr* msgMgr = mTutorialMgr->mMessageMgr;
-		char tutorialText[256];
-		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->_A59C); // '<<< Tutorial >>> Number of tx?? (%d)'
+		ogScrMessageMgr* msgMgr = mTutorialMgr->getScrMsgMgr();
+		char tutorialText[PATH_MAX];
+		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->getTxtLineMax()); // '<<< Tutorial >>> Number of tx?? (%d)'
 		gfx.texturePrintf(mFont, 30, 20, tutorialText);
 		gfx.texturePrintf(mFont, 30, 40, msgMgr->getPageInfo()->_00);
 	}
 
 	mMemChkMgr->draw(gfx);
 	gfx.setLighting(false, nullptr);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x12C8(r1)
-	  stmw      r26, 0x12B0(r1)
-	  li        r27, 0
-	  mr        r31, r4
-	  mr        r30, r3
-	  addi      r3, r31, 0
-	  addi      r29, r5, 0x2468
-	  lwz       r6, 0x310(r4)
-	  lwz       r0, 0x30C(r4)
-	  addi      r4, r1, 0x6C
-	  stw       r27, 0x6C(r1)
-	  stw       r27, 0x70(r1)
-	  stw       r0, 0x74(r1)
-	  stw       r6, 0x78(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r31)
-	  addi      r4, r1, 0x5C
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  stw       r27, 0x5C(r1)
-	  stw       r27, 0x60(r1)
-	  stw       r0, 0x64(r1)
-	  stw       r5, 0x68(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x50(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r27, 0x58(r1)
-	  li        r28, 0xFF
-	  addi      r4, r1, 0x58
-	  stb       r27, 0x59(r1)
-	  mr        r3, r31
-	  stb       r27, 0x5A(r1)
-	  stb       r28, 0x5B(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xB4(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x3
-	  li        r5, 0
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0xF58
-	  bl        -0x13AFA0
-	  lfs       f1, 0x8E8(r13)
-	  addi      r3, r1, 0xF58
-	  lfs       f0, 0x8F4(r13)
-	  addi      r4, r1, 0xF0C
-	  stfs      f1, 0xF0C(r1)
-	  lfs       f1, 0x8EC(r13)
-	  addi      r5, r1, 0xF00
-	  stfs      f0, 0xF00(r1)
-	  lfs       f0, 0x8F8(r13)
-	  stfs      f1, 0xF10(r1)
-	  lfs       f1, 0x8F0(r13)
-	  stfs      f0, 0xF04(r1)
-	  lfs       f0, 0x8FC(r13)
-	  stfs      f1, 0xF14(r1)
-	  stfs      f0, 0xF08(r1)
-	  bl        -0x13B400
-	  lwz       r5, 0x30C(r31)
-	  lis       r4, 0x4330
-	  lwz       r0, 0x310(r31)
-	  addi      r3, r1, 0xF58
-	  xoris     r5, r5, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r5, 0x12AC(r1)
-	  lfd       f5, -0x50F0(r2)
-	  stw       r0, 0x12A4(r1)
-	  lfs       f2, -0x50FC(r2)
-	  stw       r4, 0x12A8(r1)
-	  lfs       f3, -0x5108(r2)
-	  stw       r4, 0x12A0(r1)
-	  lfd       f1, 0x12A8(r1)
-	  lfd       f0, 0x12A0(r1)
-	  fsubs     f1, f1, f5
-	  lfs       f4, -0x50F8(r2)
-	  fsubs     f0, f0, f5
-	  fdivs     f1, f1, f0
-	  bl        -0x13B5A0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0xF58
-	  lwz       r12, 0x6C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x70(r12)
-	  subi      r4, r4, 0x77C0
-	  addi      r5, r1, 0xF18
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lfs       f1, 0x1124(r1)
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x11B8
-	  lfs       f2, 0x111C(r1)
-	  lwz       r12, 0x3C(r12)
-	  lfs       f3, 0x1128(r1)
-	  mtlr      r12
-	  lfs       f4, 0x112C(r1)
-	  lfs       f5, -0x5108(r2)
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x2E4(r31)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  addi      r4, r4, 0x1E0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x390(r30)
-	  mr        r4, r31
-	  bl        0x6D18
-	  lwz       r3, 0x394(r30)
-	  mr        r4, r31
-	  bl        0x3D84
-	  lwz       r3, 0x39C(r30)
-	  mr        r4, r31
-	  bl        0x47EC
-	  lwz       r3, 0x3A0(r30)
-	  mr        r4, r31
-	  bl        0x50D4
-	  lwz       r3, 0x398(r30)
-	  mr        r4, r31
-	  bl        0x4A1C
-	  lwz       r3, 0x3B4(r30)
-	  mr        r4, r31
-	  bl        0x12EE4
-	  lwz       r3, 0x3A8(r30)
-	  mr        r4, r31
-	  bl        0x15614
-	  lwz       r3, 0x3AC(r30)
-	  mr        r4, r31
-	  bl        0x16B04
-	  lwz       r3, 0x3B0(r30)
-	  mr        r4, r31
-	  bl        0x1A9BC
-	  lwz       r0, 0x24(r30)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x54C
-	  lwz       r6, 0x310(r31)
-	  addi      r5, r1, 0x48
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  addi      r4, r1, 0xEC0
-	  stw       r27, 0x48(r1)
-	  stw       r27, 0x4C(r1)
-	  stw       r0, 0x50(r1)
-	  stw       r6, 0x54(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r28, 0x44(r1)
-	  addi      r4, r1, 0x44
-	  addi      r3, r31, 0
-	  stb       r28, 0x45(r1)
-	  li        r5, 0x1
-	  stb       r28, 0x46(r1)
-	  stb       r28, 0x47(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r28, 0x40(r1)
-	  addi      r4, r1, 0x40
-	  addi      r3, r31, 0
-	  stb       r28, 0x41(r1)
-	  stb       r27, 0x42(r1)
-	  stb       r28, 0x43(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0xDC0
-	  crclr     6, 0x6
-	  addi      r4, r29, 0x78
-	  bl        0x98210
-	  lwz       r3, 0x30(r30)
-	  addi      r4, r1, 0xDC0
-	  bl        -0x156260
-	  lwz       r12, 0x3B4(r31)
-	  srawi     r0, r3, 0x1
-	  addze     r0, r0
-	  lwz       r4, 0x30(r30)
-	  lwz       r12, 0xEC(r12)
-	  addi      r3, r31, 0
-	  crclr     6, 0x6
-	  mtlr      r12
-	  subfic    r5, r0, 0x140
-	  addi      r7, r1, 0xDC0
-	  li        r6, 0x14
-	  blrl
-	  li        r0, 0xC8
-	  stb       r0, 0x3C(r1)
-	  addi      r4, r1, 0x3C
-	  addi      r3, r31, 0
-	  stb       r28, 0x3D(r1)
-	  li        r5, 0x1
-	  stb       r28, 0x3E(r1)
-	  stb       r28, 0x3F(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x32
-	  stb       r0, 0x38(r1)
-	  addi      r4, r1, 0x38
-	  addi      r3, r31, 0
-	  stb       r0, 0x39(r1)
-	  stb       r28, 0x3A(r1)
-	  stb       r28, 0x3B(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r5, 0x38E(r30)
-	  addi      r3, r1, 0x2C0
-	  addi      r4, r29, 0x94
-	  crclr     6, 0x6
-	  bl        0x98164
-	  lha       r5, 0x37E(r30)
-	  addi      r3, r1, 0x3C0
-	  addi      r4, r29, 0xA4
-	  crclr     6, 0x6
-	  bl        0x98150
-	  lha       r5, 0x388(r30)
-	  addi      r3, r1, 0x4C0
-	  addi      r4, r29, 0xB8
-	  crclr     6, 0x6
-	  bl        0x9813C
-	  lha       r5, 0x386(r30)
-	  addi      r3, r1, 0x5C0
-	  addi      r4, r29, 0xCC
-	  crclr     6, 0x6
-	  bl        0x98128
-	  lha       r5, 0x384(r30)
-	  addi      r3, r1, 0x6C0
-	  addi      r4, r29, 0xD8
-	  crclr     6, 0x6
-	  bl        0x98114
-	  lbz       r5, 0x38D(r30)
-	  addi      r3, r1, 0x7C0
-	  addi      r4, r29, 0xF0
-	  crclr     6, 0x6
-	  bl        0x98100
-	  lha       r5, 0x380(r30)
-	  addi      r3, r1, 0x8C0
-	  addi      r4, r29, 0x108
-	  crclr     6, 0x6
-	  bl        0x980EC
-	  addi      r3, r1, 0x9C0
-	  crclr     6, 0x6
-	  addi      r4, r29, 0x114
-	  bl        0x980DC
-	  lbz       r5, 0x38C(r30)
-	  addi      r3, r1, 0xAC0
-	  addi      r4, r29, 0x120
-	  crclr     6, 0x6
-	  bl        0x980C8
-	  addi      r3, r1, 0xBC0
-	  crclr     6, 0x6
-	  addi      r4, r29, 0x12C
-	  bl        0x980B8
-	  addi      r3, r1, 0xCC0
-	  crclr     6, 0x6
-	  addi      r4, r29, 0x13C
-	  bl        0x980A8
-	  li        r26, 0
-	  mulli     r3, r26, 0x1E
-	  rlwinm    r0,r26,8,0,23
-	  addi      r27, r1, 0x2C0
-	  add       r27, r27, r0
-	  addi      r28, r3, 0x3C
-
-	.loc_0x478:
-	  mr        r3, r31
-	  lwz       r4, 0x30(r30)
-	  lwz       r12, 0x3B4(r31)
-	  addi      r6, r28, 0
-	  addi      r7, r27, 0
-	  crclr     6, 0x6
-	  lwz       r12, 0xEC(r12)
-	  li        r5, 0xC8
-	  mtlr      r12
-	  blrl
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0xB
-	  addi      r27, r27, 0x100
-	  addi      r28, r28, 0x1E
-	  blt+      .loc_0x478
-	  li        r27, 0xFF
-	  stb       r27, 0x34(r1)
-	  addi      r4, r1, 0x34
-	  addi      r3, r31, 0
-	  stb       r27, 0x35(r1)
-	  li        r5, 0x1
-	  stb       r27, 0x36(r1)
-	  stb       r27, 0x37(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r27, 0x30(r1)
-	  addi      r4, r1, 0x30
-	  addi      r3, r31, 0
-	  stb       r27, 0x31(r1)
-	  stb       r27, 0x32(r1)
-	  stb       r27, 0x33(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x1C0
-	  crclr     6, 0x6
-	  addi      r4, r13, 0x900
-	  bl        0x97FEC
-	  mr        r3, r31
-	  lha       r0, 0x37C(r30)
-	  lwz       r12, 0x3B4(r31)
-	  addi      r7, r1, 0x1C0
-	  mulli     r5, r0, 0x1E
-	  lwz       r4, 0x30(r30)
-	  lwz       r12, 0xEC(r12)
-	  crclr     6, 0x6
-	  mtlr      r12
-	  addi      r6, r5, 0x3C
-	  li        r5, 0xAA
-	  blrl
-
-	.loc_0x54C:
-	  lwz       r0, 0x24(r30)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x66C
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x20
-	  addi      r3, r31, 0
-	  stw       r0, 0x20(r1)
-	  addi      r4, r1, 0x180
-	  stw       r0, 0x24(r1)
-	  stw       r6, 0x28(r1)
-	  stw       r7, 0x2C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  li        r27, 0xFF
-	  stb       r27, 0x1C(r1)
-	  addi      r4, r1, 0x1C
-	  addi      r3, r31, 0
-	  stb       r27, 0x1D(r1)
-	  li        r5, 0x1
-	  stb       r27, 0x1E(r1)
-	  stb       r27, 0x1F(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r27, 0x18(r1)
-	  li        r0, 0x96
-	  addi      r4, r1, 0x18
-	  stb       r27, 0x19(r1)
-	  mr        r3, r31
-	  stb       r0, 0x1A(r1)
-	  stb       r27, 0x1B(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x398(r30)
-	  addi      r3, r1, 0x7C
-	  addi      r4, r29, 0x148
-	  crclr     6, 0x6
-	  lwz       r27, 0x0(r5)
-	  addis     r5, r27, 0x1
-	  lha       r5, -0x5A64(r5)
-	  bl        0x97EFC
-	  mr        r3, r31
-	  lwz       r4, 0x30(r30)
-	  lwz       r12, 0x3B4(r31)
-	  addi      r7, r1, 0x7C
-	  crclr     6, 0x6
-	  li        r5, 0x1E
-	  lwz       r12, 0xEC(r12)
-	  li        r6, 0x14
-	  mtlr      r12
-	  blrl
-	  lha       r0, 0x4D0(r27)
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  crclr     6, 0x6
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r27, r0
-	  lwz       r12, 0xEC(r12)
-	  lwz       r6, 0x1C(r4)
-	  li        r5, 0x1E
-	  mtlr      r12
-	  lwz       r4, 0x30(r30)
-	  lwz       r7, 0x0(r6)
-	  li        r6, 0x28
-	  blrl
-
-	.loc_0x66C:
-	  lwz       r3, 0x3A4(r30)
-	  mr        r4, r31
-	  bl        0x10898
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r26, 0x12B0(r1)
-	  lwz       r0, 0x12CC(r1)
-	  addi      r1, r1, 0x12C8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
