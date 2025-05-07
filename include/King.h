@@ -219,8 +219,7 @@ struct King : public Boss {
 	KingAi* mKingAi;            // _3BC
 	KingBody* mKingBody;        // _3C0
 	CreaturePlatMgr mPlatMgr;   // _3C4
-	ShadowCaster mShadowCaster; // _40C
-	KingDrawer* mKingDrawer;    // _7A0
+	ShadowCaster mShadowCaster; // _40C, cast mDrawer to KingDrawer*
 };
 
 /**

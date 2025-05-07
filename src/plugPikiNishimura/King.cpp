@@ -42,7 +42,7 @@ King::King(CreatureProp* props)
 	mKingBody = new KingBody(this);
 	mShadowCaster.initCore("");
 	mShadowCaster.initShadow();
-	mKingDrawer = new KingDrawer(this);
+	mShadowCaster.mDrawer = new KingDrawer(this);
 }
 
 /*

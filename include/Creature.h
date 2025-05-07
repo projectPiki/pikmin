@@ -392,7 +392,7 @@ struct Creature : public RefCountable, public EventTalker {
 	CollTriInfo* mClimbingTri;           // _288
 	CollTriInfo* mGroundTriangle;        // _28C
 	CollTriInfo* mPreviousTriangle;      // _290
-	u8 _294[0x4];                        // _294, unknown
+	Shape* mCurrCollisionModel;          // _294
 	u32 _298;                            // _298, unknown
 	Vector3f _29C;                       // _29C
 	SmartPtr<Creature> mHoldingCreature; // _2A8, what is holding this creature (e.g. what piki if this is a bomb)

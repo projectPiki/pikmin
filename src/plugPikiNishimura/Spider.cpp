@@ -42,7 +42,7 @@ Spider::Spider(CreatureProp* props)
 	mSpiderLeg = new SpiderLeg(this);
 	mShadowCaster.initCore("");
 	mShadowCaster.initShadow();
-	mSpiderDrawer = new SpiderDrawer(this);
+	mShadowCaster.mDrawer = new SpiderDrawer(this);
 }
 
 /*

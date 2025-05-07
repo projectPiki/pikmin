@@ -162,11 +162,11 @@ struct Vector3f {
 
 	void bounce(Vector3f& surface, f32 elasticity)
 	{
-		f32 dp = -dot(surface) * elasticity;
+		f32 dp = -DP(surface) * elasticity;
 		if (dp > 0.0f) {
-			x = dp * surface.x + x;
-			y = dp * surface.y + y;
-			z = dp * surface.z + z;
+			x = surface.x * dp + x;
+			y = surface.y * dp + y;
+			z = surface.z * dp + z;
 		}
 	}
 

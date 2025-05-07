@@ -166,8 +166,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	RippleEffect* mRippleEffect;         // _318
 	SlimeEffect* mSlimeEffect;           // _31C
 	NaviStateMachine* mStateMachine;     // _320
-	ShadowCaster mShadowCaster;          // _324
-	NaviDrawer* mNaviDrawer;             // _6B8
+	ShadowCaster mShadowCaster;          // _324, cast mDrawer to NaviDrawer*
 	f32 mMotionSpeed;                    // _6BC
 	int mIsDayEnd;                       // _6C0
 	ShapeDynMaterials mNaviDynMats;      // _6C4

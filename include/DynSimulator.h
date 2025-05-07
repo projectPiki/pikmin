@@ -204,9 +204,12 @@ struct DynSimulator : public Node {
 			body->initRender(mCurrentConfigIdx);
 		}
 	}
-
-	// DLL inlines to do:
-	void Render(Graphics&);
+	void Render(Graphics& gfx)
+	{
+		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
+			body->render(gfx);
+		}
+	}
 
 	// _00     = VTBL
 	// _00-_20 = Node

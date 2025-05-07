@@ -1,5 +1,5 @@
-#include "DynObject.h"
 #include "DynColl.h"
+#include "DynObject.h"
 #include "MapMgr.h"
 #include "Creature.h"
 #include "DebugLog.h"
@@ -7,8 +7,11 @@
 #include "Font.h"
 #include "gameflow.h"
 #include "Graphics.h"
+#include "MoviePlayer.h"
 #include "timers.h"
+#include "CreatureProp.h"
 #include "EffectMgr.h"
+#include "AIPerf.h"
 #include "MemStat.h"
 #include "DayMgr.h"
 #include "CreatureCollPart.h"
@@ -28,13 +31,142 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT(nullptr)
 
+/**
+ * @brief Fabricated name. Some struct has to exist here, but I don't think it's exposed anywhere.
+ */
+struct SoftLightLight {
+	u32 _00;             // _00
+	SoftLightLight* _04; // _04
+	u8* _08;             // _08
+	s16 _0C;             // _0C
+};
+
 BoundBox collExtents;
 MapMgr* mapMgr;
-static f32 Kda = 0.0f;
-static f32 Kdl = 1.25f;
+static f32 Kda;
 static u32 numRepeats; // type unsure
 static u32 numUpdated; // type unsure
-static u32 vlink;      // type unsure
+static SoftLightLight* vlink;
+
+/**
+ * @brief TODO
+ */
+struct SoftLight {
+	void addLight(u32 p1, LShortColour*, Shape*)
+	{
+		if (_30) {
+			for (int i = 0; i < _28; i++) {
+				if (_30[i]->_00 != p1) {
+					_30[i]->_04 = vlink;
+					vlink       = _30[i];
+					_30[i]->_00 = p1;
+				}
+				_30[i]->_0C += (_34[i] * _0C.r) >> 8;
+			}
+		}
+	}
+	void subLight(LShortColour*)
+	{
+		if (_30) {
+			for (int i = 0; i < _28; i++) {
+				_30[i]->_0C -= (_34[i] * _0C.r) >> 8;
+			}
+		}
+		FORCE_DONT_INLINE;
+	}
+
+	Vector3f _00;         // _00
+	Colour _0C;           // _0C
+	Colour _10;           // _10
+	f32 _14;              // _14
+	f32 _18;              // _18
+	f32 _1C;              // _1C
+	int _20;              // _20
+	int _24;              // _24
+	int _28;              // _28
+	u8 _2C;               // _2C
+	SoftLightLight** _30; // _30
+	s16* _34;             // _34
+};
+
+/**
+ * @brief TODO
+ */
+struct MapLightMgr {
+
+	void updateLights()
+	{
+		_14++;
+		numUpdated = 0;
+		numRepeats = 0;
+		vlink      = nullptr;
+
+		for (int i = 0; i < mLightCount; i++) {
+			sinf(mLights[i]->_1C);
+
+			bool check = false;
+			if (mLights[i]->_1C != mLights[i]->_18) {
+				f32 a = (mLights[i]->_24) ? 2.0f : 0.5f;
+				mLights[i]->_1C += gsys->getFrameTime() * a * (mLights[i]->_18 - mLights[i]->_1C);
+				check = true;
+			}
+
+			if (check) {
+				if (!mLights[i]->_2C) {
+					mLights[i]->subLight(_10);
+				}
+				mLights[i]->_2C = 0;
+				f32 a           = sinf(mLights[i]->_1C);
+				if (a > 0.95f) {
+					mLights[i]->_1C = mLights[i]->_18;
+				}
+
+				mLights[i]->_0C.set(mLights[i]->_10.r * a, mLights[i]->_10.g * a, mLights[i]->_10.b * a, 255);
+				mLights[i]->addLight(_14, _10, _00);
+			}
+		}
+
+		if (vlink) {
+			for (SoftLightLight* c = vlink; c; c = c->_04) {
+				u8 a      = (c->_0C < 255) ? (u8)c->_0C : 255;
+				c->_08[0] = a;
+				c->_08[1] = a;
+				c->_08[2] = a;
+				c->_08[3] = a;
+			}
+		}
+	}
+
+	void touchLights(Vector3f& pos)
+	{
+		for (int i = 0; i < mLightCount; i++) {
+			if (mLights[i]->_18 != HALF_PI) {
+				f32 a = (mLights[i]->_24) ? mLights[i]->_14 * 0.5f : mLights[i]->_14 * 1.5f;
+				if (mLights[i]->_00.distance(pos) < a) {
+					mLights[i]->_18 = HALF_PI;
+				}
+
+				if (mLights[i]->_24) {
+					for (int j = 0; j < mLightCount; j++) {
+						if (i != j && mLights[j]->_20 == mLights[i]->_20 && mLights[j]->_1C > 0.4f) {
+							f32 d = mLights[i]->_00.distance(mLights[j]->_00);
+							if (d < mLights[i]->_14) {
+								mLights[i]->_18 = HALF_PI;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	Shape* _00;          // _00
+	SoftLight** mLights; // _04
+	u8 _08[0x4];         // _08, unknown
+	int mLightCount;     // _0C
+	LShortColour* _10;   // _10
+	u32 _14;             // _14
+};
 
 /*
  * --INFO--
@@ -232,7 +364,7 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
 	mState  = 0;
 	mMapMgr = map;
 	mShadowCaster.initCore("");
-	_514                            = this;
+	mShadowCaster.mDrawer           = this;
 	mShadowCaster.mLightCamera.mFov = 20.0f;
 	mMapScale.set(1.0f, 1.0f, 1.0f);
 	mMapRotation.set(0.0f, 0.0f, 0.0f);
@@ -368,6 +500,7 @@ void DynMapObject::refresh(Graphics& gfx)
 	mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 }
 
+static f32 Kdl = 1.25f;
 /*
  * --INFO--
  * Address:	8006255C
@@ -788,7 +921,7 @@ void MapMgr::initEffects()
  */
 void MapMgr::initShape()
 {
-	_8C       = 0;
+	mLightMgr = 0;
 	mMapShape = gameflow.loadShape(flowCont.mAnimationTestPath, true);
 	mMapShape->mSystemFlags |= 0x4;
 	mMapShape->makeInstance(mDynMaterials, 0);
@@ -926,7 +1059,7 @@ void MapMgr::preRender(Graphics& gfx)
 	{
 		LightCamera& cam = shadow->mLightCamera;
 		cam.calcVectors(shadow->mSourcePosition, shadow->mTargetPosition);
-		cam.calcProjection(gfx, false, _110 > 0 ? nullptr : *(Node**)(shadow + 1)); // wut
+		cam.calcProjection(gfx, false, _110 > 0 ? nullptr : shadow->mDrawer);
 	}
 
 	gfx.mRenderState = 0x700;
@@ -942,118 +1075,31 @@ void MapMgr::preRender(Graphics& gfx)
  * Address:	80065C98
  * Size:	00019C
  */
-void MapMgr::drawShadowCasters(Graphics&)
+void MapMgr::drawShadowCasters(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r25, 0x14(r1)
-	  addi      r26, r4, 0
-	  addi      r25, r3, 0
-	  addi      r3, r26, 0
-	  li        r4, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  li        r4, 0x2
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x1
-	  lwz       r28, 0x124(r25)
-	  lis       r4, 0x803A
-	  addi      r29, r3, 0
-	  subi      r30, r5, 0x7900
-	  subi      r31, r4, 0x77C0
-	  b         .loc_0x150
+	gfx.setFog(false);
+	int blend = gfx.setCBlending(2);
 
-	.loc_0x64:
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  addi      r27, r28, 0x14
-	  addi      r5, r27, 0
-	  lwz       r12, 0xE4(r12)
-	  li        r4, 0x1
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x4B0(r25)
-	  mr        r3, r26
-	  lwz       r0, 0x358(r27)
-	  lwz       r4, 0x8(r4)
-	  stw       r0, 0x24(r4)
-	  lwz       r4, 0x4B0(r25)
-	  stw       r27, 0xC(r4)
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r4, 0x4B0(r25)
-	  lwz       r12, 0xC0(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r30, 0x4(r26)
-	  addi      r3, r26, 0
-	  addi      r4, r31, 0
-	  stw       r27, 0x338(r26)
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x60(r25)
-	  mr        r4, r26
-	  lwz       r5, 0x2E4(r26)
-	  li        r6, 0
-	  bl        -0x3608C
-	  li        r0, 0
-	  stw       r0, 0x338(r26)
-	  li        r0, 0x700
-	  addi      r3, r26, 0
-	  stw       r0, 0x4(r26)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0xC4(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  li        r4, 0
-	  lwz       r12, 0xC0(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xE4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r28, 0xC(r28)
+	FOREACH_NODE(ShadowCaster, mShadowCaster.mChild, shadow)
+	{
+		LightCamera* cam = &shadow->mLightCamera;
+		gfx.initProjTex(true, cam);
+		mMapProjMatHandler->mProjMat->_24 = cam->mLightMap;
+		mMapProjMatHandler->mLightCamera  = cam;
+		gfx.setMatHandler(mMapProjMatHandler);
+		gfx.mRenderState = 0x8700;
+		gfx.mLightCam    = cam;
+		gfx.useMatrix(Matrix4f::ident, 0);
+		mMapShape->drawculled(gfx, *gfx.mCamera, nullptr);
+		gfx.mLightCam    = nullptr;
+		gfx.mRenderState = 0x700;
+		gfx.setMaterial(nullptr, false);
+		gfx.setMatHandler(nullptr);
+		gfx.initProjTex(false, nullptr);
+	}
 
-	.loc_0x150:
-	  cmplwi    r28, 0
-	  bne+      .loc_0x64
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  mr        r4, r29
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  li        r4, 0x1
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  lmw       r25, 0x14(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	gfx.setCBlending(blend);
+	gfx.setFog(true);
 }
 
 /*
@@ -1061,414 +1107,43 @@ void MapMgr::drawShadowCasters(Graphics&)
  * Address:	80065E34
  * Size:	000438
  */
-void MapMgr::refresh(Graphics&)
+void MapMgr::refresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x138(r1)
-	  stfd      f31, 0x130(r1)
-	  stfd      f30, 0x128(r1)
-	  stmw      r26, 0x110(r1)
-	  addi      r28, r4, 0
-	  addi      r27, r3, 0
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  lwz       r12, 0x3B4(r28)
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r29, 0x8C(r27)
-	  cmplwi    r29, 0
-	  beq-      .loc_0x244
-	  lwz       r3, 0x14(r29)
-	  li        r31, 0
-	  rlwinm    r30,r31,2,0,29
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x14(r29)
-	  lis       r26, 0x4330
-	  stw       r31, 0x2F0C(r13)
-	  lfs       f30, -0x785C(r2)
-	  stw       r31, 0x2F08(r13)
-	  lfd       f31, -0x7858(r2)
-	  stw       r31, 0x2F10(r13)
-	  b         .loc_0x1E4
+	gfx.setCBlending(0);
+	if (mLightMgr) {
+		gsys->mTimer->start("SoftLights", true);
+		mLightMgr->updateLights();
+		gsys->mTimer->stop("SoftLights");
+	}
 
-	.loc_0x74:
-	  lwz       r3, 0x4(r29)
-	  lwzx      r3, r3, r30
-	  lfs       f1, 0x1C(r3)
-	  bl        0x1B5E34
-	  lwz       r3, 0x4(r29)
-	  li        r0, 0
-	  lwzx      r3, r3, r30
-	  addi      r4, r3, 0x1C
-	  lfs       f1, 0x18(r3)
-	  lfs       f0, 0x1C(r3)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xE0
-	  lwz       r0, 0x24(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xB8
-	  lfs       f3, -0x7894(r2)
-	  b         .loc_0xBC
+	if (mMapShape) {
+		// this goes in the if condition above in the DLL, but fixes the stack in DOL if it's just empty.
+		if (!mController->keyDown(KBBTN_DPAD_UP)) { }
+		mDynMaterials.animate(nullptr);
+		gfx._324 = 1;
+		Matrix4f mtx1;
+		Matrix4f mtx2;
+		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+		gfx.calcViewMatrix(mtx2, mtx1);
+		gfx.setLighting(true, nullptr);
+		gfx.mRenderState = 0x300;
+		mMapShape->updateAnim(gfx, mtx1, nullptr);
+		gfx.useMatrix(Matrix4f::ident, 0);
+		mMapShape->drawculled(gfx, *gfx.mCamera, &mDynMaterials);
+		gfx.mRenderState = 0x700;
+		gfx._324         = 0;
 
-	.loc_0xB8:
-	  lfs       f3, -0x7878(r2)
-
-	.loc_0xBC:
-	  lwz       r3, 0x2DEC(r13)
-	  fsubs     f1, f1, f0
-	  lfs       f2, 0x0(r4)
-	  li        r0, 0x1
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f3, f0
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x0(r4)
-
-	.loc_0xE0:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x1DC
-	  lwz       r3, 0x4(r29)
-	  lwzx      r3, r3, r30
-	  lbz       r0, 0x2C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x104
-	  lwz       r4, 0x10(r29)
-	  bl        0x3CC
-
-	.loc_0x104:
-	  lwz       r3, 0x4(r29)
-	  li        r0, 0
-	  lwzx      r3, r3, r30
-	  stb       r0, 0x2C(r3)
-	  lwz       r3, 0x4(r29)
-	  lwzx      r3, r3, r30
-	  lfs       f1, 0x1C(r3)
-	  bl        0x1B5D94
-	  fcmpo     cr0, f1, f30
-	  ble-      .loc_0x13C
-	  lwz       r3, 0x4(r29)
-	  lwzx      r3, r3, r30
-	  lfs       f0, 0x18(r3)
-	  stfs      f0, 0x1C(r3)
-
-	.loc_0x13C:
-	  lwz       r3, 0x4(r29)
-	  li        r0, 0xFF
-	  lwzx      r6, r3, r30
-	  lbz       r3, 0x10(r6)
-	  lbz       r4, 0x11(r6)
-	  stw       r3, 0xEC(r1)
-	  lbz       r3, 0x12(r6)
-	  stw       r26, 0xE8(r1)
-	  stw       r4, 0xFC(r1)
-	  lfd       f0, 0xE8(r1)
-	  stw       r3, 0x10C(r1)
-	  fsubs     f0, f0, f31
-	  stw       r26, 0xF8(r1)
-	  stw       r26, 0x108(r1)
-	  fmuls     f0, f1, f0
-	  lfd       f2, 0xF8(r1)
-	  lfd       f3, 0x108(r1)
-	  fsubs     f2, f2, f31
-	  fctiwz    f0, f0
-	  fsubs     f3, f3, f31
-	  fmuls     f2, f1, f2
-	  stfd      f0, 0xE0(r1)
-	  fmuls     f1, f1, f3
-	  fctiwz    f0, f2
-	  lwz       r3, 0xE4(r1)
-	  fctiwz    f1, f1
-	  stb       r3, 0xC(r6)
-	  stfd      f0, 0xF0(r1)
-	  stfd      f1, 0x100(r1)
-	  lwz       r4, 0xF4(r1)
-	  lwz       r3, 0x104(r1)
-	  stb       r4, 0xD(r6)
-	  stb       r3, 0xE(r6)
-	  stb       r0, 0xF(r6)
-	  lwz       r3, 0x4(r29)
-	  lwz       r4, 0x14(r29)
-	  lwzx      r3, r3, r30
-	  lwz       r5, 0x10(r29)
-	  lwz       r6, 0x0(r29)
-	  bl        .loc_0x438
-
-	.loc_0x1DC:
-	  addi      r30, r30, 0x4
-	  addi      r31, r31, 0x1
-
-	.loc_0x1E4:
-	  lwz       r0, 0xC(r29)
-	  cmpw      r31, r0
-	  blt+      .loc_0x74
-	  lwz       r4, 0x2F10(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x244
-	  b         .loc_0x23C
-
-	.loc_0x200:
-	  lha       r0, 0xC(r4)
-	  cmpwi     r0, 0xFF
-	  bge-      .loc_0x214
-	  rlwinm    r0,r0,0,24,31
-	  b         .loc_0x218
-
-	.loc_0x214:
-	  li        r0, 0xFF
-
-	.loc_0x218:
-	  lwz       r3, 0x8(r4)
-	  stb       r0, 0x0(r3)
-	  lwz       r3, 0x8(r4)
-	  stb       r0, 0x1(r3)
-	  lwz       r3, 0x8(r4)
-	  stb       r0, 0x2(r3)
-	  lwz       r3, 0x8(r4)
-	  stb       r0, 0x3(r3)
-	  lwz       r4, 0x4(r4)
-
-	.loc_0x23C:
-	  cmplwi    r4, 0
-	  bne+      .loc_0x200
-
-	.loc_0x244:
-	  lwz       r0, 0x60(r27)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x41C
-	  addi      r3, r27, 0x64
-	  li        r4, 0
-	  bl        -0x36FF0
-	  li        r0, 0x1
-	  stw       r0, 0x324(r28)
-	  addi      r6, r1, 0x3C
-	  addi      r5, r1, 0x48
-	  lfs       f2, -0x6C1C(r13)
-	  addi      r4, r1, 0x54
-	  lfs       f1, -0x6C28(r13)
-	  addi      r3, r1, 0x60
-	  lfs       f0, -0x6C34(r13)
-	  stfs      f2, 0x3C(r1)
-	  lfs       f2, -0x6C18(r13)
-	  stfs      f1, 0x48(r1)
-	  lfs       f1, -0x6C24(r13)
-	  stfs      f0, 0x54(r1)
-	  lfs       f0, -0x6C30(r13)
-	  stfs      f2, 0x40(r1)
-	  lfs       f2, -0x6C14(r13)
-	  stfs      f1, 0x4C(r1)
-	  lfs       f1, -0x6C20(r13)
-	  stfs      f0, 0x58(r1)
-	  lfs       f0, -0x6C2C(r13)
-	  stfs      f2, 0x44(r1)
-	  stfs      f1, 0x50(r1)
-	  stfs      f0, 0x5C(r1)
-	  bl        -0x27FFC
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  addi      r4, r1, 0x60
-	  addi      r5, r1, 0xA0
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  li        r4, 0x1
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x300
-	  stw       r0, 0x4(r28)
-	  addi      r4, r28, 0
-	  addi      r5, r1, 0xA0
-	  lwz       r3, 0x60(r27)
-	  li        r6, 0
-	  bl        -0x30E30
-	  lwz       r12, 0x3B4(r28)
-	  lis       r4, 0x803A
-	  mr        r3, r28
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x60(r27)
-	  mr        r4, r28
-	  lwz       r5, 0x2E4(r28)
-	  addi      r6, r27, 0x64
-	  bl        -0x36484
-	  li        r0, 0x700
-	  stw       r0, 0x4(r28)
-	  li        r0, 0
-	  stw       r0, 0x324(r28)
-	  lwz       r3, 0x88(r27)
-	  lwz       r26, 0x10(r3)
-	  b         .loc_0x3E4
-
-	.loc_0x364:
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  addi      r4, r26, 0x5C
-	  addi      r5, r26, 0xDC
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r28
-	  lwz       r12, 0x3B4(r28)
-	  addi      r4, r26, 0xDC
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x324(r28)
-	  addi      r3, r28, 0
-	  li        r4, 0x1
-	  lwz       r12, 0x3B4(r28)
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  mr        r4, r28
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0
-	  stw       r0, 0x324(r28)
-	  lwz       r26, 0xC(r26)
-
-	.loc_0x3E4:
-	  cmplwi    r26, 0
-	  bne+      .loc_0x364
-	  lwz       r3, 0x108(r27)
-	  lwz       r26, 0x10(r3)
-	  b         .loc_0x414
-
-	.loc_0x3F8:
-	  mr        r3, r26
-	  lwz       r12, 0x0(r26)
-	  mr        r4, r28
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r26, 0xC(r26)
-
-	.loc_0x414:
-	  cmplwi    r26, 0
-	  bne+      .loc_0x3F8
-
-	.loc_0x41C:
-	  lmw       r26, 0x110(r1)
-	  lwz       r0, 0x13C(r1)
-	  lfd       f31, 0x130(r1)
-	  lfd       f30, 0x128(r1)
-	  addi      r1, r1, 0x138
-	  mtlr      r0
-	  blr
-
-	.loc_0x438:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8006626C
- * Size:	000094
- */
-void SoftLight::addLight(u32, LShortColour*, Shape*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x30(r3)
-	  cmplwi    r0, 0
-	  beqlr-
-	  li        r7, 0
-	  addi      r8, r7, 0
-	  li        r9, 0
-	  b         .loc_0x84
-
-	.loc_0x1C:
-	  lwz       r5, 0x30(r3)
-	  lwzx      r5, r5, r7
-	  lwz       r0, 0x0(r5)
-	  cmplw     r4, r0
-	  beq-      .loc_0x50
-	  lwz       r0, 0x2F10(r13)
-	  stw       r0, 0x4(r5)
-	  lwz       r5, 0x30(r3)
-	  lwzx      r0, r5, r7
-	  stw       r0, 0x2F10(r13)
-	  lwz       r5, 0x30(r3)
-	  lwzx      r5, r5, r7
-	  stw       r4, 0x0(r5)
-
-	.loc_0x50:
-	  lwz       r5, 0x34(r3)
-	  addi      r9, r9, 0x1
-	  lwz       r6, 0x30(r3)
-	  lhax      r0, r5, r8
-	  addi      r8, r8, 0x2
-	  lbz       r5, 0xC(r3)
-	  lwzx      r6, r6, r7
-	  addi      r7, r7, 0x4
-	  mullw     r0, r5, r0
-	  lha       r5, 0xC(r6)
-	  srawi     r0, r0, 0x8
-	  add       r0, r5, r0
-	  sth       r0, 0xC(r6)
-
-	.loc_0x84:
-	  lwz       r0, 0x28(r3)
-	  cmpw      r9, r0
-	  blt+      .loc_0x1C
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80066300
- * Size:	000060
- */
-void SoftLight::subLight(LShortColour*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x30(r3)
-	  cmplwi    r0, 0
-	  beqlr-
-	  li        r6, 0
-	  addi      r7, r6, 0
-	  li        r8, 0
-	  b         .loc_0x50
-
-	.loc_0x1C:
-	  lwz       r5, 0x34(r3)
-	  addi      r8, r8, 0x1
-	  lwz       r4, 0x30(r3)
-	  lhax      r0, r5, r6
-	  addi      r6, r6, 0x2
-	  lbz       r5, 0xC(r3)
-	  lwzx      r4, r4, r7
-	  addi      r7, r7, 0x4
-	  mullw     r5, r5, r0
-	  lha       r0, 0xC(r4)
-	  srawi     r5, r5, 0x8
-	  sub       r0, r0, r5
-	  sth       r0, 0xC(r4)
-
-	.loc_0x50:
-	  lwz       r0, 0x28(r3)
-	  cmpw      r8, r0
-	  blt+      .loc_0x1C
-	  blr
-	*/
+		FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
+		{
+			gfx.calcViewMatrix(coll->mTransformMtx, coll->mWorldMatrix);
+			gfx.useMatrix(coll->mWorldMatrix, 0);
+			gfx._324 = 1;
+			gfx.setLighting(true, nullptr);
+			coll->refresh(gfx);
+			gfx._324 = 0;
+		}
+		mDynSimulator->Render(gfx);
+	}
 }
 
 /*
@@ -1476,608 +1151,95 @@ void SoftLight::subLight(LShortColour*)
  * Address:	80066360
  * Size:	00078C
  */
-void MapMgr::showCollisions(Vector3f&)
+void MapMgr::showCollisions(Vector3f& pos)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0xF8(r1)
-	  lis       r5, 0x4330
-	  lwz       r6, 0x0(r4)
-	  lwz       r0, 0x4(r4)
-	  stw       r6, 0xB4(r3)
-	  stw       r0, 0xB8(r3)
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0xBC(r3)
-	  lfs       f6, 0x90(r3)
-	  lfs       f0, 0xB4(r3)
-	  lfs       f5, -0x7850(r2)
-	  fsubs     f1, f0, f6
-	  lfs       f7, 0x98(r3)
-	  lfs       f0, 0xBC(r3)
-	  lfd       f3, -0x7848(r2)
-	  fmuls     f2, f1, f5
-	  fsubs     f1, f0, f7
-	  lfs       f4, -0x784C(r2)
-	  lfs       f0, -0x6D18(r13)
-	  fctiwz    f2, f2
-	  stfs      f0, 0xC0(r3)
-	  fmuls     f1, f1, f5
-	  stfd      f2, 0xF0(r1)
-	  lfs       f0, -0x6D14(r13)
-	  lwz       r0, 0xF4(r1)
-	  fctiwz    f1, f1
-	  stfs      f0, 0xC4(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0xEC(r1)
-	  lfs       f0, -0x6D10(r13)
-	  stfd      f1, 0xE0(r1)
-	  stw       r5, 0xE8(r1)
-	  lwz       r0, 0xE4(r1)
-	  stfs      f0, 0xC8(r3)
-	  lfd       f1, 0xE8(r1)
-	  xoris     r0, r0, 0x8000
-	  lfs       f0, -0x6D0C(r13)
-	  stw       r0, 0xDC(r1)
-	  fsubs     f1, f1, f3
-	  stfs      f0, 0xCC(r3)
-	  fmuls     f0, f1, f4
-	  stw       r5, 0xD8(r1)
-	  lfs       f1, -0x6D08(r13)
-	  lfd       f2, 0xD8(r1)
-	  fadds     f0, f6, f0
-	  stfs      f1, 0xD0(r3)
-	  fsubs     f2, f2, f3
-	  lfs       f1, -0x6D04(r13)
-	  fsubs     f5, f0, f4
-	  stfs      f1, 0xD4(r3)
-	  fmuls     f1, f2, f4
-	  lfs       f2, 0xC0(r3)
-	  lfs       f3, 0x94(r3)
-	  fadds     f1, f7, f1
-	  fcmpo     cr0, f5, f2
-	  fsubs     f3, f3, f4
-	  fsubs     f4, f1, f4
-	  bge-      .loc_0xEC
-	  stfs      f5, 0xC0(r3)
+	_B4   = pos;
+	f32 a = 64.0f;
+	int b = (_90.mMax.x - _90.mMin.x + a) / a;
+	int c = (_90.mMax.z - _90.mMin.z + a) / a;
+	int d = (_B4.x - _90.mMin.x) / a;
+	int e = (_B4.z - _90.mMin.z) / a;
+	f32 f = _90.mMin.x + d * a;
+	f32 g = _90.mMin.z + e * a;
+	f32 h = a * 1.0f;
 
-	.loc_0xEC:
-	  lfs       f2, 0xC4(r3)
-	  fcmpo     cr0, f3, f2
-	  bge-      .loc_0xFC
-	  stfs      f3, 0xC4(r3)
+	_C0.resetBound();
+	_C0.expandBound(Vector3f(f - h, _90.mMin.y - h, g - h));
+	_C0.expandBound(Vector3f(f + a + h, _90.mMax.y + h, g + a + h));
 
-	.loc_0xFC:
-	  lfs       f2, 0xC8(r3)
-	  fcmpo     cr0, f4, f2
-	  bge-      .loc_0x10C
-	  stfs      f4, 0xC8(r3)
+	_D8.resetBound();
+	_D8.expandBound(Vector3f(f, _90.mMin.y - h, g));
+	_D8.expandBound(Vector3f(f + a, _90.mMax.y + h, g + a));
+	collExtents = _D8;
 
-	.loc_0x10C:
-	  lfs       f2, 0xCC(r3)
-	  fcmpo     cr0, f5, f2
-	  ble-      .loc_0x11C
-	  stfs      f5, 0xCC(r3)
+	BoundBox box;
+	box.expandBound(pos);
+	box.mMin.sub(Vector3f(16.0f, 16.0f, 16.0f));
+	box.mMax.add(Vector3f(16.0f, 16.0f, 16.0f));
+	CollGroup* collGroup = nullptr;
+	FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
+	{
+		if (box.intersects(coll->mBoundingBox)) {
+			for (int i = 0; i < coll->mColliderCount; i++) {
+				if (coll->mVisibleList[coll->mColliderList[i]->mStateIndex]) {
+					coll->mColliderList[i]->mShape          = coll->mShape;
+					coll->mColliderList[i]->mVertexList     = coll->mVertexList;
+					coll->mColliderList[i]->mSourceCollider = coll;
+					coll->mColliderList[i]->mNextCollider   = collGroup;
+					collGroup                               = coll->mColliderList[i];
+				}
+			}
+		}
+	}
 
-	.loc_0x11C:
-	  lfs       f2, 0xD0(r3)
-	  fcmpo     cr0, f3, f2
-	  ble-      .loc_0x12C
-	  stfs      f3, 0xD0(r3)
+	CollGroup* coll = mMapShape->getCollTris(pos);
+	if (coll && coll->mTriCount) {
+		coll->mShape          = mMapShape;
+		coll->mVertexList     = mMapShape->mVertexList;
+		coll->mSourceCollider = nullptr;
+		coll->mNextCollider   = collGroup;
+		collGroup             = coll;
+	}
 
-	.loc_0x12C:
-	  lfs       f2, 0xD4(r3)
-	  fcmpo     cr0, f4, f2
-	  ble-      .loc_0x13C
-	  stfs      f4, 0xD4(r3)
+	for (coll = collGroup; coll; coll = coll->mNextCollider) {
+		if (!coll) {
+			continue;
+		}
+		if (coll->mTriCount == 0) {
+			continue;
+		}
 
-	.loc_0x13C:
-	  lfs       f6, -0x784C(r2)
-	  lfs       f4, 0xA0(r3)
-	  fadds     f3, f0, f6
-	  lfs       f2, 0xC0(r3)
-	  fadds     f5, f1, f6
-	  fadds     f4, f4, f6
-	  fadds     f7, f6, f3
-	  fadds     f3, f6, f5
-	  fcmpo     cr0, f7, f2
-	  bge-      .loc_0x168
-	  stfs      f7, 0xC0(r3)
+		_AC += coll->mTriCount - coll->_06;
+		int count = coll->mTriCount - coll->_06;
+		if (coll->mTriCount == coll->_06) {
+			PRINT("grid(%d,%d) collGroup : total %d far %d tris\n", d, e, coll->mTriCount, coll->_06);
+			for (int i = 0; i < coll->_06; i++) {
+				PRINT("\t%d : dist = %d\n", i, coll->_0C[i]);
+			}
+		}
 
-	.loc_0x168:
-	  lfs       f2, 0xC4(r3)
-	  fcmpo     cr0, f4, f2
-	  bge-      .loc_0x178
-	  stfs      f4, 0xC4(r3)
+		for (int i = 0; i < coll->mTriCount; i++) {
+			if (_A8 < _B0) {
+				if (AIPerf::showColls) {
+					if (i < count) {
+						mCollisions[_A8]._08 = 0;
+					} else {
+						if (coll->_0C[i - count] < 16) {
+							mCollisions[_A8]._08 = 2;
+						} else {
+							mCollisions[_A8]._08 = 1;
+						}
+					}
+				} else {
+					mCollisions[_A8]._08 = 0;
+				}
 
-	.loc_0x178:
-	  lfs       f2, 0xC8(r3)
-	  fcmpo     cr0, f3, f2
-	  bge-      .loc_0x188
-	  stfs      f3, 0xC8(r3)
-
-	.loc_0x188:
-	  lfs       f2, 0xCC(r3)
-	  fcmpo     cr0, f7, f2
-	  ble-      .loc_0x198
-	  stfs      f7, 0xCC(r3)
-
-	.loc_0x198:
-	  lfs       f2, 0xD0(r3)
-	  fcmpo     cr0, f4, f2
-	  ble-      .loc_0x1A8
-	  stfs      f4, 0xD0(r3)
-
-	.loc_0x1A8:
-	  lfs       f2, 0xD4(r3)
-	  fcmpo     cr0, f3, f2
-	  ble-      .loc_0x1B8
-	  stfs      f3, 0xD4(r3)
-
-	.loc_0x1B8:
-	  lfs       f2, -0x6D18(r13)
-	  stfs      f2, 0xD8(r3)
-	  lfs       f2, -0x6D14(r13)
-	  stfs      f2, 0xDC(r3)
-	  lfs       f2, -0x6D10(r13)
-	  stfs      f2, 0xE0(r3)
-	  lfs       f2, -0x6D0C(r13)
-	  stfs      f2, 0xE4(r3)
-	  lfs       f2, -0x6D08(r13)
-	  stfs      f2, 0xE8(r3)
-	  lfs       f2, -0x6D04(r13)
-	  stfs      f2, 0xEC(r3)
-	  lfs       f2, 0xD8(r3)
-	  lfs       f4, 0x94(r3)
-	  lfs       f3, -0x784C(r2)
-	  fcmpo     cr0, f0, f2
-	  fsubs     f3, f4, f3
-	  bge-      .loc_0x204
-	  stfs      f0, 0xD8(r3)
-
-	.loc_0x204:
-	  lfs       f2, 0xDC(r3)
-	  fcmpo     cr0, f3, f2
-	  bge-      .loc_0x214
-	  stfs      f3, 0xDC(r3)
-
-	.loc_0x214:
-	  lfs       f2, 0xE0(r3)
-	  fcmpo     cr0, f1, f2
-	  bge-      .loc_0x224
-	  stfs      f1, 0xE0(r3)
-
-	.loc_0x224:
-	  lfs       f2, 0xE4(r3)
-	  fcmpo     cr0, f0, f2
-	  ble-      .loc_0x234
-	  stfs      f0, 0xE4(r3)
-
-	.loc_0x234:
-	  lfs       f2, 0xE8(r3)
-	  fcmpo     cr0, f3, f2
-	  ble-      .loc_0x244
-	  stfs      f3, 0xE8(r3)
-
-	.loc_0x244:
-	  lfs       f2, 0xEC(r3)
-	  fcmpo     cr0, f1, f2
-	  ble-      .loc_0x254
-	  stfs      f1, 0xEC(r3)
-
-	.loc_0x254:
-	  lfs       f3, -0x784C(r2)
-	  lfs       f2, 0xA0(r3)
-	  fadds     f4, f0, f3
-	  lfs       f0, 0xD8(r3)
-	  fadds     f5, f1, f3
-	  fadds     f1, f2, f3
-	  fcmpo     cr0, f4, f0
-	  bge-      .loc_0x278
-	  stfs      f4, 0xD8(r3)
-
-	.loc_0x278:
-	  lfs       f0, 0xDC(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x288
-	  stfs      f1, 0xDC(r3)
-
-	.loc_0x288:
-	  lfs       f0, 0xE0(r3)
-	  fcmpo     cr0, f5, f0
-	  bge-      .loc_0x298
-	  stfs      f5, 0xE0(r3)
-
-	.loc_0x298:
-	  lfs       f0, 0xE4(r3)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x2A8
-	  stfs      f4, 0xE4(r3)
-
-	.loc_0x2A8:
-	  lfs       f0, 0xE8(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x2B8
-	  stfs      f1, 0xE8(r3)
-
-	.loc_0x2B8:
-	  lfs       f0, 0xEC(r3)
-	  fcmpo     cr0, f5, f0
-	  ble-      .loc_0x2C8
-	  stfs      f5, 0xEC(r3)
-
-	.loc_0x2C8:
-	  lwz       r5, 0xD8(r3)
-	  lis       r6, 0x803A
-	  lwz       r0, 0xDC(r3)
-	  stwu      r5, -0x2240(r6)
-	  stw       r0, 0x4(r6)
-	  lwz       r5, 0xE0(r3)
-	  lwz       r0, 0xE4(r3)
-	  stw       r5, 0x8(r6)
-	  stw       r0, 0xC(r6)
-	  lwz       r5, 0xE8(r3)
-	  lwz       r0, 0xEC(r3)
-	  stw       r5, 0x10(r6)
-	  stw       r0, 0x14(r6)
-	  lfs       f0, -0x78B0(r2)
-	  stfs      f0, 0xAC(r1)
-	  stfs      f0, 0xA8(r1)
-	  stfs      f0, 0xA4(r1)
-	  stfs      f0, 0xB8(r1)
-	  stfs      f0, 0xB4(r1)
-	  stfs      f0, 0xB0(r1)
-	  lfs       f1, -0x6D18(r13)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f1, 0xA4(r1)
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0xB4(r1)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0xB8(r1)
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0xA4(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x35C
-	  stfs      f1, 0xA4(r1)
-
-	.loc_0x35C:
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0xA8(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x370
-	  stfs      f1, 0xA8(r1)
-
-	.loc_0x370:
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, 0xAC(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x384
-	  stfs      f1, 0xAC(r1)
-
-	.loc_0x384:
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0xB0(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x398
-	  stfs      f1, 0xB0(r1)
-
-	.loc_0x398:
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0xB4(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x3AC
-	  stfs      f1, 0xB4(r1)
-
-	.loc_0x3AC:
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, 0xB8(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x3C0
-	  stfs      f1, 0xB8(r1)
-
-	.loc_0x3C0:
-	  lfs       f2, 0xA4(r1)
-	  li        r5, 0
-	  lfs       f1, -0x6C10(r13)
-	  lfs       f0, -0x6C0C(r13)
-	  fsubs     f1, f2, f1
-	  stfs      f1, 0xA4(r1)
-	  lfs       f1, 0xA8(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xA8(r1)
-	  lfs       f1, 0xAC(r1)
-	  lfs       f0, -0x6C08(r13)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xAC(r1)
-	  lfs       f1, 0xB0(r1)
-	  lfs       f0, -0x6C04(r13)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xB0(r1)
-	  lfs       f1, 0xB4(r1)
-	  lfs       f0, -0x6C00(r13)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xB4(r1)
-	  lfs       f1, 0xB8(r1)
-	  lfs       f0, -0x6BFC(r13)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xB8(r1)
-	  lwz       r6, 0x88(r3)
-	  lwz       r9, 0x10(r6)
-	  b         .loc_0x534
-
-	.loc_0x430:
-	  lfs       f1, 0x44(r9)
-	  lfs       f0, 0xB0(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x4B0
-	  lfs       f1, 0x50(r9)
-	  lfs       f0, 0xA4(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x4B0
-	  lfs       f1, 0x48(r9)
-	  lfs       f0, 0xB4(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x4B0
-	  lfs       f1, 0x54(r9)
-	  lfs       f0, 0xA8(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x4B0
-	  lfs       f1, 0x4C(r9)
-	  lfs       f0, 0xB8(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x4B0
-	  lfs       f1, 0x58(r9)
-	  lfs       f0, 0xAC(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x4B0
-	  li        r0, 0x1
-	  b         .loc_0x4B4
-
-	.loc_0x4B0:
-	  li        r0, 0
-
-	.loc_0x4B4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x530
-	  li        r10, 0
-	  li        r8, 0
-	  b         .loc_0x524
-
-	.loc_0x4C8:
-	  lwz       r6, 0x40(r9)
-	  lwz       r7, 0x38(r9)
-	  lwzx      r6, r6, r8
-	  lwz       r0, 0x18(r6)
-	  lbzx      r0, r7, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x51C
-	  lwz       r0, 0x2C(r9)
-	  stw       r0, 0x10(r6)
-	  lwz       r6, 0x40(r9)
-	  lwz       r0, 0x30(r9)
-	  lwzx      r6, r6, r8
-	  stw       r0, 0x14(r6)
-	  lwz       r6, 0x40(r9)
-	  lwzx      r6, r6, r8
-	  stw       r9, 0x1C(r6)
-	  lwz       r6, 0x40(r9)
-	  lwzx      r6, r6, r8
-	  stw       r5, 0x20(r6)
-	  lwz       r5, 0x40(r9)
-	  lwzx      r5, r5, r8
-
-	.loc_0x51C:
-	  addi      r8, r8, 0x4
-	  addi      r10, r10, 0x1
-
-	.loc_0x524:
-	  lwz       r0, 0x3C(r9)
-	  cmpw      r10, r0
-	  blt+      .loc_0x4C8
-
-	.loc_0x530:
-	  lwz       r9, 0xC(r9)
-
-	.loc_0x534:
-	  cmplwi    r9, 0
-	  bne+      .loc_0x430
-	  lwz       r8, 0x60(r3)
-	  lfs       f1, 0x0(r4)
-	  lfs       f0, 0x140(r8)
-	  lfs       f3, 0x158(r8)
-	  fsubs     f2, f1, f0
-	  lfs       f1, 0x8(r4)
-	  lfs       f0, 0x148(r8)
-	  fdivs     f2, f2, f3
-	  fctiwz    f2, f2
-	  fsubs     f0, f1, f0
-	  stfd      f2, 0xE8(r1)
-	  fdivs     f0, f0, f3
-	  lwz       r0, 0xEC(r1)
-	  stfd      f2, 0xD8(r1)
-	  cmpwi     r0, 0
-	  lwz       r6, 0xDC(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0xE0(r1)
-	  lwz       r4, 0xE4(r1)
-	  blt-      .loc_0x5AC
-	  cmpwi     r4, 0
-	  blt-      .loc_0x5AC
-	  lwz       r7, 0x15C(r8)
-	  cmpw      r6, r7
-	  bge-      .loc_0x5AC
-	  lwz       r0, 0x160(r8)
-	  cmpw      r4, r0
-	  blt-      .loc_0x5B4
-
-	.loc_0x5AC:
-	  li        r6, 0
-	  b         .loc_0x5C8
-
-	.loc_0x5B4:
-	  mullw     r0, r4, r7
-	  lwz       r4, 0x164(r8)
-	  add       r0, r6, r0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r6, r4, r0
-
-	.loc_0x5C8:
-	  cmplwi    r6, 0
-	  beq-      .loc_0x5FC
-	  lha       r0, 0x4(r6)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5FC
-	  stw       r8, 0x10(r6)
-	  li        r0, 0
-	  lwz       r4, 0x60(r3)
-	  lwz       r4, 0x23C(r4)
-	  stw       r4, 0x14(r6)
-	  stw       r0, 0x1C(r6)
-	  stw       r5, 0x20(r6)
-	  mr        r5, r6
-
-	.loc_0x5FC:
-	  lbz       r0, -0x5F17(r13)
-	  b         .loc_0x774
-
-	.loc_0x604:
-	  cmplwi    r5, 0
-	  beq-      .loc_0x770
-	  lha       r7, 0x4(r5)
-	  extsh.    r4, r7
-	  beq-      .loc_0x770
-	  lha       r4, 0x6(r5)
-	  lwz       r6, 0xAC(r3)
-	  sub       r4, r7, r4
-	  add       r4, r6, r4
-	  stw       r4, 0xAC(r3)
-	  lha       r8, 0x6(r5)
-	  lha       r4, 0x4(r5)
-	  cmpw      r4, r8
-	  sub       r6, r4, r8
-	  bne-      .loc_0x688
-	  cmpwi     r8, 0
-	  li        r9, 0
-	  ble-      .loc_0x688
-	  cmpwi     r8, 0x8
-	  subi      r7, r8, 0x8
-	  ble-      .loc_0x674
-	  addi      r4, r7, 0x7
-	  rlwinm    r4,r4,29,3,31
-	  cmpwi     r7, 0
-	  mtctr     r4
-	  ble-      .loc_0x674
-
-	.loc_0x66C:
-	  addi      r9, r9, 0x8
-	  bdnz+     .loc_0x66C
-
-	.loc_0x674:
-	  sub       r4, r8, r9
-	  cmpw      r9, r8
-	  mtctr     r4
-	  bge-      .loc_0x688
-
-	.loc_0x684:
-	  bdnz-     .loc_0x684
-
-	.loc_0x688:
-	  li        r7, 0
-	  li        r4, 0
-	  b         .loc_0x764
-
-	.loc_0x694:
-	  lwz       r10, 0xA8(r3)
-	  lwz       r8, 0xB0(r3)
-	  cmpw      r10, r8
-	  bge-      .loc_0x75C
-	  cmplwi    r0, 0
-	  beq-      .loc_0x710
-	  cmpw      r7, r6
-	  bge-      .loc_0x6CC
-	  mulli     r8, r10, 0xC
-	  lwz       r9, 0xF0(r3)
-	  addi      r8, r8, 0x8
-	  li        r10, 0
-	  stwx      r10, r9, r8
-	  b         .loc_0x724
-
-	.loc_0x6CC:
-	  lwz       r9, 0xC(r5)
-	  sub       r8, r7, r6
-	  lbzx      r8, r9, r8
-	  cmplwi    r8, 0x10
-	  bge-      .loc_0x6F8
-	  mulli     r8, r10, 0xC
-	  lwz       r9, 0xF0(r3)
-	  addi      r8, r8, 0x8
-	  li        r10, 0x2
-	  stwx      r10, r9, r8
-	  b         .loc_0x724
-
-	.loc_0x6F8:
-	  mulli     r8, r10, 0xC
-	  lwz       r9, 0xF0(r3)
-	  addi      r8, r8, 0x8
-	  li        r10, 0x1
-	  stwx      r10, r9, r8
-	  b         .loc_0x724
-
-	.loc_0x710:
-	  mulli     r8, r10, 0xC
-	  lwz       r9, 0xF0(r3)
-	  addi      r8, r8, 0x8
-	  li        r10, 0
-	  stwx      r10, r9, r8
-
-	.loc_0x724:
-	  lwz       r8, 0xA8(r3)
-	  lwz       r9, 0xF0(r3)
-	  mulli     r8, r8, 0xC
-	  stwx      r5, r9, r8
-	  lwz       r8, 0xA8(r3)
-	  lwz       r10, 0x8(r5)
-	  mulli     r8, r8, 0xC
-	  lwz       r9, 0xF0(r3)
-	  lwzx      r10, r10, r4
-	  addi      r8, r8, 0x4
-	  stwx      r10, r9, r8
-	  lwz       r8, 0xA8(r3)
-	  addi      r8, r8, 0x1
-	  stw       r8, 0xA8(r3)
-
-	.loc_0x75C:
-	  addi      r4, r4, 0x4
-	  addi      r7, r7, 0x1
-
-	.loc_0x764:
-	  lha       r8, 0x4(r5)
-	  cmpw      r7, r8
-	  blt+      .loc_0x694
-
-	.loc_0x770:
-	  lwz       r5, 0x20(r5)
-
-	.loc_0x774:
-	  cmplwi    r5, 0
-	  bne+      .loc_0x604
-	  b         .loc_0x784
-	  b         .loc_0x674
-
-	.loc_0x784:
-	  addi      r1, r1, 0xF8
-	  blr
-	*/
+				mCollisions[_A8].mCollisions = coll;
+				mCollisions[_A8].mTriangle   = coll->mTriangleList[i];
+				_A8++;
+			}
+		}
+	}
 }
 
 /*
@@ -2095,101 +1257,28 @@ bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
  * Address:	80066AEC
  * Size:	000160
  */
-void MapMgr::drawXLU(Graphics&)
+void MapMgr::drawXLU(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stw       r31, 0xBC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xB8(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x60(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x148
-	  lwz       r3, 0x4(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        0x8474
-	  li        r0, 0x1
-	  stw       r0, 0x324(r31)
-	  addi      r6, r1, 0x10
-	  addi      r5, r1, 0x1C
-	  lfs       f2, -0x6BE0(r13)
-	  addi      r4, r1, 0x28
-	  lfs       f1, -0x6BEC(r13)
-	  addi      r3, r1, 0x34
-	  lfs       f0, -0x6BF8(r13)
-	  stfs      f2, 0x10(r1)
-	  lfs       f2, -0x6BDC(r13)
-	  stfs      f1, 0x1C(r1)
-	  lfs       f1, -0x6BE8(r13)
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, -0x6BF4(r13)
-	  stfs      f2, 0x14(r1)
-	  lfs       f2, -0x6BD8(r13)
-	  stfs      f1, 0x20(r1)
-	  lfs       f1, -0x6BE4(r13)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, -0x6BF0(r13)
-	  stfs      f2, 0x18(r1)
-	  stfs      f1, 0x24(r1)
-	  stfs      f0, 0x30(r1)
-	  bl        -0x28A90
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x34
-	  addi      r5, r1, 0x74
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x74
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x1
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0x400
-	  stw       r0, 0x4(r31)
-	  addi      r4, r31, 0
-	  addi      r5, r1, 0x74
-	  lwz       r3, 0x60(r30)
-	  li        r6, 0
-	  bl        -0x318E0
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x60(r30)
-	  mr        r4, r31
-	  lwz       r5, 0x2E4(r31)
-	  addi      r6, r30, 0x64
-	  bl        -0x367BC
-	  li        r0, 0x700
-	  stw       r0, 0x4(r31)
-
-	.loc_0x148:
-	  lwz       r0, 0xC4(r1)
-	  lwz       r31, 0xBC(r1)
-	  lwz       r30, 0xB8(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	if (mMapShape) {
+		// gsys->mTimer->start("mapPost", true);
+		mDayMgr->setFog(gfx, nullptr);
+		// DLL only condition
+		// if (!mController->keyDown(KBBTN_DPAD_DOWN)) {
+		gfx._324 = 1;
+		Matrix4f mtx1;
+		Matrix4f mtx2;
+		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+		gfx.calcViewMatrix(mtx2, mtx1);
+		gfx.useMatrix(mtx1, 0);
+		gfx.setLighting(true, nullptr);
+		gfx.mRenderState = 0x400;
+		mMapShape->updateAnim(gfx, mtx1, nullptr);
+		gfx.useMatrix(Matrix4f::ident, 0);
+		mMapShape->drawshape(gfx, *gfx.mCamera, &mDynMaterials);
+		gfx.mRenderState = 0x700;
+		// }
+		// gsys->mTimer->stop("mapPost");
+	}
 }
 
 /*
@@ -2197,1002 +1286,174 @@ void MapMgr::drawXLU(Graphics&)
  * Address:	80066C4C
  * Size:	000EDC
  */
-void MapMgr::postrefresh(Graphics&)
+void MapMgr::postrefresh(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x468(r1)
-	  stfd      f31, 0x460(r1)
-	  stfd      f30, 0x458(r1)
-	  stfd      f29, 0x450(r1)
-	  stmw      r21, 0x424(r1)
-	  mr        r30, r3
-	  addi      r31, r4, 0
-	  lwz       r0, 0x60(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xEBC
-	  lwz       r3, 0x4(r30)
-	  addi      r4, r31, 0
-	  li        r5, 0
-	  bl        0x830C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0xFFC
-	  lwz       r3, 0x2EAC(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x68
-	  bl        -0xAE10
-	  lwz       r3, 0x2EAC(r13)
-	  mr        r4, r31
-	  bl        -0xADDC
+	if (mMapShape) {
+		// gsys->mTimer->start("mapPost", true);
+		mDayMgr->setFog(gfx, nullptr);
+		drawShadowCasters(gfx);
+		if (lgMgr) {
+			lgMgr->update();
+			lgMgr->refresh(gfx);
+		}
 
-	.loc_0x68:
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  bl        -0x3E60C
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r4, r31
-	  bl        -0x2715C
-	  lwz       r3, 0x3180(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB0
-	  mr        r4, r31
-	  bl        0x135CF8
+		gfx.useMatrix(Matrix4f::ident, 0);
+		gfx.flushCachedShapes();
+		gsys->flushLFlares(gfx);
 
-	.loc_0xB0:
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x340
-	  lwz       r7, 0x310(r31)
-	  li        r0, 0
-	  lwz       r6, 0x30C(r31)
-	  addi      r5, r1, 0x1C4
-	  addi      r3, r31, 0
-	  stw       r0, 0x1C4(r1)
-	  addi      r4, r1, 0x380
-	  stw       r0, 0x1C8(r1)
-	  stw       r6, 0x1CC(r1)
-	  stw       r7, 0x1D0(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x3B4(r31)
-	  mr        r22, r0
-	  li        r4, 0
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r21, 0xFF
-	  stb       r21, 0x1C0(r1)
-	  addi      r4, r1, 0x1C0
-	  addi      r3, r31, 0
-	  stb       r21, 0x1C1(r1)
-	  li        r5, 0x1
-	  stb       r21, 0x1C2(r1)
-	  stb       r21, 0x1C3(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r21, 0x1BC(r1)
-	  addi      r4, r1, 0x1BC
-	  addi      r3, r31, 0
-	  stb       r21, 0x1BD(r1)
-	  stb       r21, 0x1BE(r1)
-	  stb       r21, 0x1BF(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x4B4(r30)
-	  li        r6, 0
-	  li        r7, 0x1
-	  lhz       r4, 0x8(r3)
-	  lhz       r5, 0xA(r3)
-	  bl        -0x227A4
-	  mr        r3, r31
-	  lwz       r4, 0x4B8(r30)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x4B4(r30)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  lwz       r3, 0x1DC(r3)
-	  lbz       r0, 0x124(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x200
-	  lfs       f0, -0x78B0(r2)
-	  lwz       r3, 0x2E4(r31)
-	  stfs      f0, 0x344(r3)
+		if (effectMgr) {
+			// gsys->mTimer->start("eff draw", true);
+			effectMgr->drawshapes(gfx);
+			// gsys->mTimer->stop("eff draw");
+		}
 
-	.loc_0x200:
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x6
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x2E4(r31)
-	  addi      r6, r3, 0
-	  li        r0, 0xFF
-	  lfs       f0, 0x344(r5)
-	  addi      r4, r1, 0x1B8
-	  addi      r3, r31, 0
-	  fctiwz    f0, f0
-	  stb       r0, 0x1B8(r1)
-	  mr        r21, r6
-	  stb       r0, 0x1B9(r1)
-	  li        r5, 0
-	  stfd      f0, 0x418(r1)
-	  stb       r0, 0x1BA(r1)
-	  lwz       r0, 0x41C(r1)
-	  stb       r0, 0x1BB(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xB0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r6, 0x310(r31)
-	  li        r0, 0
-	  lwz       r5, 0x30C(r31)
-	  addi      r4, r1, 0x1A8
-	  addi      r3, r31, 0
-	  stw       r0, 0x1A8(r1)
-	  stw       r0, 0x1AC(r1)
-	  stw       r5, 0x1B0(r1)
-	  stw       r6, 0x1B4(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xD8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  mr        r4, r21
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x4B8(r30)
-	  li        r6, 0
-	  li        r7, 0x1
-	  lhz       r4, 0x8(r3)
-	  lhz       r5, 0xA(r3)
-	  bl        -0x228C8
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x1
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r22, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r5, 0x2E4(r31)
-	  lwz       r12, 0x3B4(r31)
-	  lfs       f1, 0x1CC(r5)
-	  addi      r4, r5, 0x260
-	  lwz       r12, 0x3C(r12)
-	  lfs       f2, 0x1C4(r5)
-	  mtlr      r12
-	  lfs       f3, 0x1D0(r5)
-	  lfs       f4, 0x1D4(r5)
-	  lfs       f5, -0x7884(r2)
-	  blrl
+		if (gsys->mToggleBlur) {
+			Matrix4f mtx;
+			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			bool lighting = gfx.setLighting(false, nullptr);
+			gfx.setFog(false);
+			gfx.setColour(Colour(255, 255, 255, 255), true);
+			gfx.setAuxColour(Colour(255, 255, 255, 255));
+			_4B4->grabBuffer(_4B4->mWidth, _4B4->mHeight, false, true);
+			gfx.useTexture(_4B8, 0);
+			gfx.useTexture(_4B4, 1);
+			if (gameflow.mMoviePlayer->mIsActive) {
+				gfx.mCamera->mBlur = 0.0f;
+			}
 
-	.loc_0x340:
-	  lfs       f2, 0x4C4(r30)
-	  lfs       f0, 0x4CC(r30)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x380
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7894(r2)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x4C4(r30)
-	  lfs       f0, 0x4C4(r30)
-	  lfs       f1, 0x4CC(r30)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x3B0
-	  stfs      f1, 0x4C4(r30)
-	  b         .loc_0x3B0
+			int blend = gfx.setCBlending(6);
+			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlur), nullptr);
+			gfx.blatRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			gfx.setCBlending(blend);
+			_4B8->grabBuffer(_4B8->mWidth, _4B8->mHeight, false, true);
+			gfx.resetCopyFilter();
+			gfx.setFog(true);
+			gfx.setLighting(lighting, nullptr);
+			gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
+			                   gfx.mCamera->mFar, 1.0f);
+		}
 
-	.loc_0x380:
-	  ble-      .loc_0x3B0
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7894(r2)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x4C4(r30)
-	  lfs       f0, 0x4C4(r30)
-	  lfs       f1, 0x4CC(r30)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x3B0
-	  stfs      f1, 0x4C4(r30)
+		if (_4C4 < _4CC) {
+			_4C4 += 2.0f * gsys->getFrameTime();
+			if (_4C4 > _4CC) {
+				_4C4 = _4CC;
+			}
+		} else if (_4C4 > _4CC) {
+			_4C4 -= 2.0f * gsys->getFrameTime();
+			if (_4C4 < _4CC) {
+				_4C4 = _4CC;
+			}
+		}
 
-	.loc_0x3B0:
-	  lfs       f2, 0x4C0(r30)
-	  lfs       f0, 0x4C8(r30)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x3F0
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7894(r2)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x4C0(r30)
-	  lfs       f0, 0x4C0(r30)
-	  lfs       f1, 0x4C8(r30)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x420
-	  stfs      f1, 0x4C0(r30)
-	  b         .loc_0x420
+		if (_4C0 < _4C8) {
+			_4C0 += 2.0f * gsys->getFrameTime();
+			if (_4C0 > _4C8) {
+				_4C0 = _4C8;
+			}
+		} else if (_4C0 > _4C8) {
+			_4C0 -= 2.0f * gsys->getFrameTime();
+			if (_4C0 < _4C8) {
+				_4C0 = _4C8;
+			}
+		}
 
-	.loc_0x3F0:
-	  ble-      .loc_0x420
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, -0x7894(r2)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x4C0(r30)
-	  lfs       f0, 0x4C0(r30)
-	  lfs       f1, 0x4C8(r30)
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x420
-	  stfs      f1, 0x4C0(r30)
+		if (_4C0 > 0.0f || _4C4 > 0.0f) {
+			Matrix4f mtx;
+			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
+			gfx.setColour(Colour(160, 160, 160, (int)(_4C0 * 255.0f)), true);
+			gfx.useTexture(_4B8, 0);
+			gfx.drawRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight), RectArea(0, 0, _4B8->mWidth, _4B8->mHeight), nullptr);
+			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
+			gfx.setColour(Colour(0, 0, 0, int(_4C4 * 255.0f)), true);
+			gfx.useTexture(nullptr, 0);
+			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+		}
 
-	.loc_0x420:
-	  lfs       f0, 0x4C0(r30)
-	  lfs       f1, -0x78B0(r2)
-	  fcmpo     cr0, f0, f1
-	  bgt-      .loc_0x43C
-	  lfs       f0, 0x4C4(r30)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x5EC
+		if (_A8) {
+			int blend     = gfx.setCBlending(0);
+			bool lighting = gfx.setLighting(false, nullptr);
+			gfx.setFog(false);
+			gfx.useTexture(nullptr, 0);
+			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
-	.loc_0x43C:
-	  lwz       r6, 0x310(r31)
-	  li        r21, 0
-	  lwz       r0, 0x30C(r31)
-	  addi      r5, r1, 0x198
-	  addi      r3, r31, 0
-	  stw       r21, 0x198(r1)
-	  addi      r4, r1, 0x340
-	  stw       r21, 0x19C(r1)
-	  stw       r0, 0x1A0(r1)
-	  stw       r6, 0x1A4(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x3
-	  bl        0x1AC57C
-	  lfs       f1, -0x7840(r2)
-	  li        r0, 0xA0
-	  lfs       f0, 0x4C0(r30)
-	  addi      r4, r1, 0x194
-	  addi      r3, r31, 0
-	  fmuls     f0, f1, f0
-	  stb       r0, 0x194(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x195(r1)
-	  fctiwz    f0, f0
-	  stb       r0, 0x196(r1)
-	  stfd      f0, 0x418(r1)
-	  lwz       r0, 0x41C(r1)
-	  stb       r0, 0x197(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x4B8(r30)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r6, 0x4B8(r30)
-	  addi      r5, r1, 0x174
-	  addi      r4, r1, 0x184
-	  lhz       r7, 0xA(r6)
-	  mr        r3, r31
-	  lhz       r0, 0x8(r6)
-	  li        r6, 0
-	  stw       r21, 0x174(r1)
-	  stw       r21, 0x178(r1)
-	  stw       r0, 0x17C(r1)
-	  stw       r7, 0x180(r1)
-	  lwz       r7, 0x310(r31)
-	  lwz       r0, 0x30C(r31)
-	  stw       r21, 0x184(r1)
-	  stw       r21, 0x188(r1)
-	  stw       r0, 0x18C(r1)
-	  stw       r7, 0x190(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xD0(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x2
-	  li        r7, 0x3
-	  bl        0x1AC4AC
-	  lfs       f0, 0x4C4(r30)
-	  addi      r4, r1, 0x170
-	  lfs       f1, -0x7840(r2)
-	  mr        r3, r31
-	  stb       r21, 0x170(r1)
-	  fmuls     f0, f1, f0
-	  li        r5, 0x1
-	  stb       r21, 0x171(r1)
-	  fctiwz    f0, f0
-	  stb       r21, 0x172(r1)
-	  stfd      f0, 0x410(r1)
-	  lwz       r0, 0x414(r1)
-	  stb       r0, 0x173(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r31)
-	  addi      r4, r1, 0x160
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  stw       r21, 0x160(r1)
-	  stw       r21, 0x164(r1)
-	  stw       r0, 0x168(r1)
-	  stw       r5, 0x16C(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xD4(r12)
-	  mtlr      r12
-	  blrl
+			Colour colours[3];
+			colours[0].set(255, 255, 0, 255);
+			colours[1].set(255, 0, 0, 255);
+			colours[2].set(0, 0, 255, 255);
 
-	.loc_0x5EC:
-	  lwz       r0, 0xA8(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xEAC
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x3B4(r31)
-	  mr        r29, r0
-	  li        r4, 0
-	  lwz       r12, 0x30(r12)
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x3B4(r31)
-	  mr        r28, r0
-	  li        r4, 0
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x2E4(r31)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  addi      r4, r4, 0x1E0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r0, 0xFF
-	  lfs       f0, -0x78B0(r2)
-	  stb       r0, 0x334(r1)
-	  lis       r3, 0x5555
-	  li        r23, 0
-	  stb       r0, 0x335(r1)
-	  addi      r26, r3, 0x5556
-	  li        r22, 0
-	  stb       r23, 0x336(r1)
-	  stb       r0, 0x337(r1)
-	  stb       r0, 0x338(r1)
-	  stb       r23, 0x339(r1)
-	  stb       r23, 0x33A(r1)
-	  stb       r0, 0x33B(r1)
-	  stb       r23, 0x33C(r1)
-	  stb       r23, 0x33D(r1)
-	  stb       r0, 0x33E(r1)
-	  stb       r0, 0x33F(r1)
-	  stfs      f0, 0x318(r1)
-	  stfs      f0, 0x314(r1)
-	  stfs      f0, 0x310(r1)
-	  stfs      f0, 0x324(r1)
-	  stfs      f0, 0x320(r1)
-	  stfs      f0, 0x31C(r1)
-	  stfs      f0, 0x330(r1)
-	  stfs      f0, 0x32C(r1)
-	  stfs      f0, 0x328(r1)
-	  b         .loc_0x960
+			Vector3f vecs[3];
 
-	.loc_0x700:
-	  lwz       r0, 0xF0(r30)
-	  lfs       f5, -0x6BD4(r13)
-	  add       r3, r0, r23
-	  lwz       r4, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lwz       r0, 0x4(r4)
-	  lfsu      f0, 0x18(r4)
-	  mulli     r0, r0, 0xC
-	  lwz       r3, 0x14(r3)
-	  lfs       f2, 0x4(r4)
-	  fmuls     f1, f0, f5
-	  lfs       f4, 0x8(r4)
-	  add       r3, r3, r0
-	  fmuls     f3, f2, f5
-	  lfs       f0, 0x0(r3)
-	  fmuls     f5, f4, f5
-	  lfs       f2, 0x4(r3)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x8(r3)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x310(r1)
-	  fadds     f1, f5, f4
-	  stfs      f2, 0x314(r1)
-	  stfs      f1, 0x318(r1)
-	  lwz       r0, 0xF0(r30)
-	  lfs       f3, -0x6BD0(r13)
-	  add       r3, r0, r23
-	  lwz       r5, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f0, 0x18(r5)
-	  lwz       r0, 0x8(r5)
-	  lfs       f2, 0x20(r5)
-	  fmuls     f0, f0, f3
-	  lfs       f1, 0x1C(r5)
-	  mulli     r0, r0, 0xC
-	  lwz       r3, 0x14(r3)
-	  fmuls     f1, f1, f3
-	  stfs      f0, 0xDC(r1)
-	  fmuls     f2, f2, f3
-	  add       r3, r3, r0
-	  lfs       f0, 0xDC(r1)
-	  stfs      f0, 0x13C(r1)
-	  stfs      f1, 0x140(r1)
-	  stfs      f2, 0x144(r1)
-	  lfs       f1, 0x13C(r1)
-	  lfs       f0, 0x0(r3)
-	  lfs       f3, -0x6BCC(r13)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xD0(r1)
-	  lfs       f0, 0xD0(r1)
-	  stfs      f0, 0x148(r1)
-	  lfs       f1, 0x140(r1)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14C(r1)
-	  lfs       f1, 0x144(r1)
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x150(r1)
-	  lwz       r0, 0x148(r1)
-	  lwz       r3, 0x14C(r1)
-	  stw       r0, 0x31C(r1)
-	  lwz       r0, 0x150(r1)
-	  stw       r3, 0x320(r1)
-	  stw       r0, 0x324(r1)
-	  lwz       r0, 0xF0(r30)
-	  add       r3, r0, r23
-	  lwz       r5, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f0, 0x18(r5)
-	  lwz       r0, 0xC(r5)
-	  lfs       f2, 0x20(r5)
-	  fmuls     f0, f0, f3
-	  lfs       f1, 0x1C(r5)
-	  mulli     r0, r0, 0xC
-	  lwz       r3, 0x14(r3)
-	  fmuls     f1, f1, f3
-	  stfs      f0, 0xCC(r1)
-	  fmuls     f2, f2, f3
-	  add       r3, r3, r0
-	  lfs       f0, 0xCC(r1)
-	  stfs      f0, 0x124(r1)
-	  stfs      f1, 0x128(r1)
-	  stfs      f2, 0x12C(r1)
-	  lfs       f1, 0x124(r1)
-	  lfs       f0, 0x0(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0xC0(r1)
-	  stfs      f0, 0x130(r1)
-	  lfs       f1, 0x128(r1)
-	  lfs       f0, 0x4(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x134(r1)
-	  lfs       f1, 0x12C(r1)
-	  li        r24, 0
-	  lfs       f0, 0x8(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x138(r1)
-	  lwz       r0, 0x130(r1)
-	  lwz       r3, 0x134(r1)
-	  stw       r0, 0x328(r1)
-	  lwz       r0, 0x138(r1)
-	  stw       r3, 0x32C(r1)
-	  stw       r0, 0x330(r1)
+			for (int i = 0; i < _A8; i++) {
+				vecs[0] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
+				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[0]];
+				vecs[1] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
+				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[1]];
+				vecs[2] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
+				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[2]];
 
-	.loc_0x8A4:
-	  mr        r3, r31
-	  lwz       r5, 0xF0(r30)
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x334
-	  addi      r0, r5, 0x8
-	  lwzx      r0, r23, r0
-	  li        r5, 0x1
-	  lwz       r12, 0xA8(r12)
-	  rlwinm    r0,r0,2,0,29
-	  mtlr      r12
-	  add       r4, r4, r0
-	  blrl
-	  mulhw     r5, r26, r24
-	  addi      r4, r24, 0x1
-	  mulhw     r3, r26, r4
-	  rlwinm    r0,r5,1,31,31
-	  add       r5, r5, r0
-	  rlwinm    r0,r3,1,31,31
-	  mulli     r5, r5, 0x3
-	  add       r0, r3, r0
-	  mulli     r0, r0, 0x3
-	  addi      r3, r31, 0
-	  sub       r5, r24, r5
-	  lwz       r12, 0x3B4(r31)
-	  sub       r0, r4, r0
-	  lwz       r12, 0x98(r12)
-	  mulli     r4, r5, 0xC
-	  mtlr      r12
-	  addi      r21, r1, 0x310
-	  add       r21, r21, r4
-	  mulli     r0, r0, 0xC
-	  addi      r5, r1, 0x310
-	  addi      r4, r21, 0
-	  add       r5, r5, r0
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r21, 0
-	  li        r5, 0x1
-	  lwz       r12, 0x9C(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r24, r24, 0x1
-	  cmpwi     r24, 0x3
-	  blt+      .loc_0x8A4
-	  addi      r23, r23, 0xC
-	  addi      r22, r22, 0x1
+				for (int j = 0; j < 3; j++) {
+					gfx.setColour(colours[mCollisions[i]._08], true);
+					gfx.drawLine(vecs[j % 3], vecs[(j + 1) % 3]);
+					gfx.drawPoints(&vecs[j % 3], 1);
+				}
+			}
 
-	.loc_0x960:
-	  lwz       r0, 0xA8(r30)
-	  cmpw      r22, r0
-	  blt+      .loc_0x700
-	  li        r0, 0xFF
-	  stb       r0, 0x120(r1)
-	  addi      r4, r1, 0x120
-	  addi      r3, r31, 0
-	  stb       r0, 0x121(r1)
-	  li        r5, 0x1
-	  stb       r0, 0x122(r1)
-	  stb       r0, 0x123(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f2, -0x786C(r2)
-	  addi      r3, r1, 0x304
-	  lfs       f1, 0xB8(r30)
-	  lfs       f0, 0xB4(r30)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x304(r1)
-	  stfs      f1, 0x308(r1)
-	  lfs       f0, 0xBC(r30)
-	  stfs      f0, 0x30C(r1)
-	  lwz       r4, 0x2E4(r31)
-	  addi      r4, r4, 0x1E0
-	  bl        -0x2FEC8
-	  lbz       r0, -0x5F17(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x9F4
-	  lwz       r5, 0xAC(r30)
-	  addi      r3, r1, 0x204
-	  lwz       r6, 0xA8(r30)
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6BC4
-	  bl        0x1AEF60
-	  b         .loc_0xA08
+			gfx.setColour(Colour(255, 255, 255, 255), true);
+			Vector3f pos(_B4.x, _B4.y + 50.0f, _B4.z);
+			pos.multMatrix(gfx.mCamera->mLookAtMtx);
 
-	.loc_0x9F4:
-	  lwz       r5, 0xA8(r30)
-	  addi      r3, r1, 0x204
-	  crclr     6, 0x6
-	  subi      r4, r13, 0x6CA4
-	  bl        0x1AEF48
+			char buffer[PATH_MAX];
+			if (AIPerf::showColls) {
+				sprintf(buffer, "%d / %d", _AC, _A8);
+			} else {
+				sprintf(buffer, "%d", _A8);
+			}
 
-	.loc_0xA08:
-	  lwz       r12, 0x3B4(r31)
-	  lis       r4, 0x803A
-	  mr        r3, r31
-	  lwz       r12, 0x74(r12)
-	  subi      r4, r4, 0x77C0
-	  li        r5, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x204
-	  lwz       r3, 0x10(r3)
-	  bl        -0x3F54C
-	  lwz       r12, 0x3B4(r31)
-	  srawi     r0, r3, 0x1
-	  lwz       r4, 0x2DEC(r13)
-	  addze     r0, r0
-	  lwz       r12, 0xF0(r12)
-	  lwz       r4, 0x10(r4)
-	  addi      r3, r31, 0
-	  mtlr      r12
-	  neg       r6, r0
-	  addi      r5, r1, 0x304
-	  crclr     6, 0x6
-	  addi      r8, r1, 0x204
-	  li        r7, 0
-	  blrl
-	  lis       r3, 0x803A
-	  lfd       f31, -0x7848(r2)
-	  lfs       f29, -0x783C(r2)
-	  subi      r27, r3, 0x2240
-	  addi      r25, r1, 0xA4
-	  addi      r24, r1, 0xA0
-	  addi      r23, r1, 0x9C
-	  li        r21, 0
-	  li        r22, 0
-	  lis       r26, 0x4330
-	  b         .loc_0xDA8
+			gfx.useMatrix(Matrix4f::ident, 0);
+			gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(buffer) / 2), 0, buffer);
 
-	.loc_0xA9C:
-	  lwz       r0, 0xF0(r30)
-	  add       r4, r0, r22
-	  lwz       r3, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x4(r3)
-	  lwz       r3, 0x14(r4)
-	  mulli     r0, r0, 0xC
-	  add       r3, r3, r0
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x1F8(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x1FC(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x200(r1)
-	  lwz       r0, 0xF0(r30)
-	  add       r4, r0, r22
-	  lwz       r3, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x8(r3)
-	  lwz       r3, 0x14(r4)
-	  mulli     r0, r0, 0xC
-	  add       r3, r3, r0
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x1EC(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x1F0(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x1F4(r1)
-	  lwz       r0, 0xF0(r30)
-	  add       r4, r0, r22
-	  lwz       r3, 0x4(r4)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0xC(r3)
-	  lwz       r3, 0x14(r4)
-	  mulli     r0, r0, 0xC
-	  add       r3, r3, r0
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x1E0(r1)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x1E4(r1)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x1E8(r1)
-	  lfs       f0, 0x1F8(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x410(r1)
-	  lwz       r0, 0x414(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x41C(r1)
-	  stw       r26, 0x418(r1)
-	  lfd       f0, 0x418(r1)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x1F8(r1)
-	  lfs       f0, 0x200(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x408(r1)
-	  lwz       r0, 0x40C(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x404(r1)
-	  stw       r26, 0x400(r1)
-	  lfd       f0, 0x400(r1)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x200(r1)
-	  lfs       f0, 0x1EC(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x3F8(r1)
-	  lwz       r0, 0x3FC(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x3F4(r1)
-	  stw       r26, 0x3F0(r1)
-	  lfd       f0, 0x3F0(r1)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x1EC(r1)
-	  lfs       f0, 0x1F4(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x3E8(r1)
-	  lwz       r0, 0x3EC(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x3E4(r1)
-	  stw       r26, 0x3E0(r1)
-	  lfd       f0, 0x3E0(r1)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x1F4(r1)
-	  lfs       f0, 0x1E0(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x3D8(r1)
-	  lwz       r0, 0x3DC(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x3D4(r1)
-	  stw       r26, 0x3D0(r1)
-	  lfd       f0, 0x3D0(r1)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x1E0(r1)
-	  lfs       f0, 0x1E8(r1)
-	  addi      r6, r27, 0
-	  addi      r3, r1, 0x1F8
-	  fctiwz    f0, f0
-	  addi      r4, r1, 0x1EC
-	  addi      r5, r1, 0x1E0
-	  li        r7, 0
-	  stfd      f0, 0x3C8(r1)
-	  lwz       r0, 0x3CC(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x3C4(r1)
-	  stw       r26, 0x3C0(r1)
-	  lfd       f0, 0x3C0(r1)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x1E8(r1)
-	  bl        -0x2E870
-	  lfs       f3, 0x200(r1)
-	  fmr       f30, f1
-	  lfs       f0, 0x1F4(r1)
-	  mr        r4, r23
-	  lfs       f2, 0x1F8(r1)
-	  fadds     f3, f3, f0
-	  lfs       f0, 0x1EC(r1)
-	  mr        r5, r24
-	  mr        r6, r25
-	  stfs      f3, 0xA4(r1)
-	  fadds     f0, f2, f0
-	  addi      r3, r1, 0x108
-	  lfs       f2, 0x1FC(r1)
-	  lfs       f1, 0x1F0(r1)
-	  fadds     f1, f2, f1
-	  stfs      f0, 0x9C(r1)
-	  stfs      f1, 0xA0(r1)
-	  bl        -0x307C0
-	  lfs       f1, 0x108(r1)
-	  addi      r0, r22, 0x4
-	  lfs       f0, 0x1E0(r1)
-	  addi      r3, r1, 0x1D4
-	  lfs       f3, 0x10C(r1)
-	  lfs       f2, 0x1E4(r1)
-	  fadds     f0, f1, f0
-	  lfs       f1, 0x1E8(r1)
-	  lfs       f4, 0x110(r1)
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x1D4(r1)
-	  fadds     f0, f4, f1
-	  stfs      f2, 0x1D8(r1)
-	  stfs      f0, 0x1DC(r1)
-	  lfs       f0, 0x1D4(r1)
-	  fmuls     f0, f0, f29
-	  stfs      f0, 0x1D4(r1)
-	  lfs       f0, 0x1D8(r1)
-	  fmuls     f0, f0, f29
-	  stfs      f0, 0x1D8(r1)
-	  lfs       f0, 0x1DC(r1)
-	  fmuls     f0, f0, f29
-	  stfs      f0, 0x1DC(r1)
-	  lwz       r4, 0xF0(r30)
-	  lfs       f6, -0x6BC8(r13)
-	  lwzx      r4, r4, r0
-	  lfsu      f0, 0x18(r4)
-	  lfs       f1, 0x1D4(r1)
-	  lfs       f2, 0x4(r4)
-	  fmuls     f0, f0, f6
-	  lfs       f5, 0x8(r4)
-	  fmuls     f2, f2, f6
-	  lfs       f3, 0x1D8(r1)
-	  fadds     f0, f1, f0
-	  lfs       f4, 0x1DC(r1)
-	  fmuls     f5, f5, f6
-	  fadds     f2, f3, f2
-	  stfs      f0, 0x1D4(r1)
-	  fadds     f1, f4, f5
-	  stfs      f2, 0x1D8(r1)
-	  stfs      f1, 0x1DC(r1)
-	  lwz       r4, 0x2E4(r31)
-	  addi      r4, r4, 0x1E0
-	  bl        -0x30240
-	  fmr       f1, f30
-	  addi      r3, r1, 0x204
-	  crset     6, 0x6
-	  subi      r4, r13, 0x6C7C
-	  bl        0x1AEBF8
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r1, 0x204
-	  lwz       r3, 0x10(r3)
-	  bl        -0x3F87C
-	  lwz       r12, 0x3B4(r31)
-	  srawi     r0, r3, 0x1
-	  lwz       r4, 0x2DEC(r13)
-	  addze     r0, r0
-	  lwz       r12, 0xF0(r12)
-	  lwz       r4, 0x10(r4)
-	  addi      r3, r31, 0
-	  mtlr      r12
-	  neg       r6, r0
-	  addi      r5, r1, 0x1D4
-	  crclr     6, 0x6
-	  addi      r8, r1, 0x204
-	  li        r7, 0
-	  blrl
-	  addi      r22, r22, 0xC
-	  addi      r21, r21, 0x1
+			for (int i = 0; i < _A8; i++) {
+				Vector3f vert1(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[0]]);
+				Vector3f vert2(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[1]]);
+				Vector3f vert3(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[2]]);
 
-	.loc_0xDA8:
-	  lwz       r0, 0xA8(r30)
-	  cmpw      r21, r0
-	  blt+      .loc_0xA9C
-	  mr        r3, r31
-	  lwz       r4, 0x2E4(r31)
-	  lwz       r12, 0x3B4(r31)
-	  li        r5, 0
-	  addi      r4, r4, 0x1E0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, -0x5F17(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xE20
-	  li        r6, 0xFF
-	  stb       r6, 0xF8(r1)
-	  li        r0, 0x80
-	  addi      r4, r1, 0xF8
-	  stb       r0, 0xF9(r1)
-	  mr        r3, r31
-	  li        r5, 0x1
-	  stb       r6, 0xFA(r1)
-	  stb       r6, 0xFB(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r30, 0xD8
-	  addi      r4, r31, 0
-	  bl        -0x2F170
+				vert1.x = (int)vert1.x;
+				vert1.z = (int)vert1.z;
+				vert2.x = (int)vert2.x;
+				vert2.z = (int)vert2.z;
+				vert3.x = (int)vert3.x;
+				vert3.z = (int)vert3.z;
 
-	.loc_0xE20:
-	  li        r0, 0x40
-	  stb       r0, 0xF4(r1)
-	  li        r0, 0xFF
-	  addi      r4, r1, 0xF4
-	  stb       r0, 0xF5(r1)
-	  mr        r3, r31
-	  li        r5, 0x1
-	  stb       r0, 0xF6(r1)
-	  stb       r0, 0xF7(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r30, 0xC0
-	  addi      r4, r31, 0
-	  bl        -0x2F1B0
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  li        r4, 0x1
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r28, 0
-	  li        r5, 0
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  mr        r4, r29
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
+				f32 dist = triRectDistance(&vert1, &vert2, &vert3, collExtents, false);
 
-	.loc_0xEAC:
-	  li        r0, 0
-	  stw       r0, 0xA8(r30)
-	  stw       r0, 0xAC(r30)
-	  stw       r0, 0x324(r31)
+				Vector3f midPt = vert1 + vert2 + vert3;
+				midPt.multiply(1.0f / 3.0f);
+				midPt = midPt + mCollisions[i].mTriangle->mTriangle.mNormal * 10.0f;
+				midPt.multMatrix(gfx.mCamera->mLookAtMtx);
+				sprintf(buffer, "%.1f", dist);
+				gfx.perspPrintf(gsys->mConsFont, midPt, -(gsys->mConsFont->stringWidth(buffer) / 2), 0, buffer);
+			}
 
-	.loc_0xEBC:
-	  lmw       r21, 0x424(r1)
-	  lwz       r0, 0x46C(r1)
-	  lfd       f31, 0x460(r1)
-	  lfd       f30, 0x458(r1)
-	  lfd       f29, 0x450(r1)
-	  addi      r1, r1, 0x468
-	  mtlr      r0
-	  blr
-	*/
+			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
+
+			if (AIPerf::showColls) {
+				gfx.setColour(Colour(255, 128, 255, 255), true);
+				_D8.draw(gfx);
+			}
+
+			gfx.setColour(Colour(64, 255, 255, 255), true);
+			_C0.draw(gfx);
+			gfx.setFog(true);
+			gfx.setLighting(lighting, nullptr);
+			gfx.setCBlending(blend);
+		}
+
+		_A8 = 0;
+		_AC = 0;
+		// gsys->mTimer->stop("mapPost");
+		gfx._324 = 0;
+	}
 }
 
 /*
@@ -3200,187 +1461,14 @@ void MapMgr::postrefresh(Graphics&)
  * Address:	80067B28
  * Size:	000270
  */
-void MapMgr::updatePos(f32, f32)
+void MapMgr::updatePos(f32 x, f32 z)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stfd      f31, 0xF8(r1)
-	  stfd      f30, 0xF0(r1)
-	  stfd      f29, 0xE8(r1)
-	  stfd      f28, 0xE0(r1)
-	  stfd      f27, 0xD8(r1)
-	  stfd      f26, 0xD0(r1)
-	  stfd      f25, 0xC8(r1)
-	  fmr       f25, f2
-	  stfd      f24, 0xC0(r1)
-	  fmr       f24, f1
-	  stfd      f23, 0xB8(r1)
-	  stmw      r21, 0x8C(r1)
-	  lwz       r23, 0x8C(r3)
-	  lfs       f26, -0x6BBC(r13)
-	  cmplwi    r23, 0
-	  beq-      .loc_0x238
-	  li        r31, 0
-	  lfs       f31, -0x78B0(r2)
-	  lfs       f30, -0x7830(r2)
-	  mr        r24, r31
-	  lfs       f23, -0x7838(r2)
-	  addi      r27, r1, 0x3C
-	  lfs       f28, -0x7878(r2)
-	  lfs       f29, -0x7834(r2)
-	  addi      r26, r1, 0x38
-	  addi      r25, r1, 0x34
-	  addi      r30, r1, 0x48
-	  addi      r29, r1, 0x44
-	  addi      r28, r1, 0x40
-	  b         .loc_0x22C
-
-	.loc_0x84:
-	  lwz       r3, 0x4(r23)
-	  lwzx      r7, r3, r24
-	  lfs       f0, 0x18(r7)
-	  fcmpu     cr0, f23, f0
-	  beq-      .loc_0x224
-	  lwz       r0, 0x24(r7)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xB0
-	  lfs       f0, 0x14(r7)
-	  fmuls     f27, f28, f0
-	  b         .loc_0xB8
-
-	.loc_0xB0:
-	  lfs       f0, 0x14(r7)
-	  fmuls     f27, f29, f0
-
-	.loc_0xB8:
-	  stfs      f31, 0x6C(r1)
-	  addi      r4, r28, 0
-	  addi      r5, r29, 0
-	  stfs      f31, 0x68(r1)
-	  addi      r6, r30, 0
-	  addi      r3, r1, 0x64
-	  stfs      f31, 0x64(r1)
-	  lfs       f0, 0x8(r7)
-	  fsubs     f0, f25, f0
-	  stfs      f0, 0x48(r1)
-	  lfs       f0, 0x4(r7)
-	  fsubs     f0, f26, f0
-	  stfs      f0, 0x44(r1)
-	  lfs       f0, 0x0(r7)
-	  fsubs     f0, f24, f0
-	  stfs      f0, 0x40(r1)
-	  bl        -0xA594
-	  lfs       f1, 0x64(r1)
-	  lfs       f0, 0x68(r1)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x6C(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x5A004
-	  fcmpo     cr0, f1, f27
-	  bge-      .loc_0x134
-	  lwz       r3, 0x4(r23)
-	  lwzx      r3, r3, r24
-	  stfs      f23, 0x18(r3)
-
-	.loc_0x134:
-	  lwz       r3, 0x4(r23)
-	  lwzx      r3, r3, r24
-	  lwz       r0, 0x24(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x224
-	  li        r22, 0
-	  addi      r21, r22, 0
-	  b         .loc_0x218
-
-	.loc_0x154:
-	  cmpw      r31, r22
-	  beq-      .loc_0x210
-	  lwz       r3, 0x4(r23)
-	  lwzx      r7, r3, r21
-	  lwzx      r8, r24, r3
-	  lwz       r3, 0x20(r7)
-	  lwz       r0, 0x20(r8)
-	  cmpw      r3, r0
-	  bne-      .loc_0x210
-	  lfs       f0, 0x1C(r7)
-	  fcmpo     cr0, f0, f30
-	  ble-      .loc_0x210
-	  stfs      f31, 0x5C(r1)
-	  addi      r4, r25, 0
-	  addi      r5, r26, 0
-	  stfs      f31, 0x58(r1)
-	  addi      r6, r27, 0
-	  addi      r3, r1, 0x54
-	  stfs      f31, 0x54(r1)
-	  lfs       f1, 0x8(r7)
-	  lfs       f0, 0x8(r8)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x3C(r1)
-	  lfs       f1, 0x4(r7)
-	  lfs       f0, 0x4(r8)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x38(r1)
-	  lfs       f1, 0x0(r7)
-	  lfs       f0, 0x0(r8)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x34(r1)
-	  bl        -0xA66C
-	  lfs       f1, 0x54(r1)
-	  lfs       f0, 0x58(r1)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x5C(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x5A0DC
-	  lwz       r0, 0x4(r23)
-	  lwzx      r3, r24, r0
-	  lfs       f0, 0x14(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x210
-	  stfs      f23, 0x18(r3)
-
-	.loc_0x210:
-	  addi      r21, r21, 0x4
-	  addi      r22, r22, 0x1
-
-	.loc_0x218:
-	  lwz       r0, 0xC(r23)
-	  cmpw      r22, r0
-	  blt+      .loc_0x154
-
-	.loc_0x224:
-	  addi      r24, r24, 0x4
-	  addi      r31, r31, 0x1
-
-	.loc_0x22C:
-	  lwz       r0, 0xC(r23)
-	  cmpw      r31, r0
-	  blt+      .loc_0x84
-
-	.loc_0x238:
-	  lmw       r21, 0x8C(r1)
-	  lwz       r0, 0x104(r1)
-	  lfd       f31, 0xF8(r1)
-	  lfd       f30, 0xF0(r1)
-	  lfd       f29, 0xE8(r1)
-	  lfd       f28, 0xE0(r1)
-	  lfd       f27, 0xD8(r1)
-	  lfd       f26, 0xD0(r1)
-	  lfd       f25, 0xC8(r1)
-	  lfd       f24, 0xC0(r1)
-	  lfd       f23, 0xB8(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos(x, 0.0f, z);
+	if (mLightMgr) {
+		gsys->mTimer->start("touchLights", true);
+		mLightMgr->touchLights(pos);
+		gsys->mTimer->stop("touchLights");
+	}
 }
 
 /*
@@ -3398,122 +1486,31 @@ f32 MapMgr::getLight(f32, f32)
  * Address:	80067DA0
  * Size:	000164
  */
-CollGroup* MapMgr::getCollGroupList(f32, f32, bool)
+CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 {
-	/*
-	.loc_0x0:
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x50(r1)
-	  li        r7, 0
-	  beq-      .loc_0xB8
-	  lwz       r4, 0x88(r3)
-	  lwz       r8, 0x10(r4)
-	  b         .loc_0xB0
+	CollGroup* collList = nullptr;
+	if (doCheckDynColl) {
+		FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
+		{
+			if (x >= coll->mBoundingBox.mMin.x && x < coll->mBoundingBox.mMax.x && z >= coll->mBoundingBox.mMin.z
+			    && z < coll->mBoundingBox.mMax.z && coll->mShape->mSystemFlags & 0x10) {
+				for (int i = 0; i < coll->mColliderCount; i++) {
+					if (coll->mVisibleList[coll->mColliderList[i]->mStateIndex]) {
+						coll->mColliderList[i]->mNextCollider = collList;
+						collList                              = coll->mColliderList[i];
+					}
+				}
+			}
+		}
+	}
 
-	.loc_0x1C:
-	  lfs       f0, 0x44(r8)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xAC
-	  lfs       f0, 0x50(r8)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xAC
-	  lfs       f0, 0x4C(r8)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xAC
-	  lfs       f0, 0x58(r8)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0xAC
-	  lwz       r4, 0x2C(r8)
-	  lwz       r0, 0x14(r4)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0xAC
-	  li        r9, 0
-	  li        r6, 0
-	  b         .loc_0xA0
+	CollGroup* mapColl = mMapShape->getCollTris(Vector3f(x, 0.0f, z));
+	if (mapColl && mapColl->mTriCount) {
+		mapColl->mNextCollider = collList;
+		collList               = mapColl;
+	}
 
-	.loc_0x70:
-	  lwz       r4, 0x40(r8)
-	  lwz       r5, 0x38(r8)
-	  lwzx      r4, r4, r6
-	  lwz       r0, 0x18(r4)
-	  lbzx      r0, r5, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x98
-	  stw       r7, 0x20(r4)
-	  lwz       r4, 0x40(r8)
-	  lwzx      r7, r4, r6
-
-	.loc_0x98:
-	  addi      r6, r6, 0x4
-	  addi      r9, r9, 0x1
-
-	.loc_0xA0:
-	  lwz       r0, 0x3C(r8)
-	  cmpw      r9, r0
-	  blt+      .loc_0x70
-
-	.loc_0xAC:
-	  lwz       r8, 0xC(r8)
-
-	.loc_0xB0:
-	  cmplwi    r8, 0
-	  bne+      .loc_0x1C
-
-	.loc_0xB8:
-	  lwz       r5, 0x60(r3)
-	  lfs       f3, 0x140(r5)
-	  lfs       f0, 0x148(r5)
-	  fsubs     f1, f1, f3
-	  lfs       f3, 0x158(r5)
-	  fsubs     f0, f2, f0
-	  fdivs     f1, f1, f3
-	  fctiwz    f1, f1
-	  fdivs     f0, f0, f3
-	  stfd      f1, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stfd      f1, 0x48(r1)
-	  cmpwi     r0, 0
-	  fctiwz    f0, f0
-	  lwz       r4, 0x4C(r1)
-	  stfd      f0, 0x40(r1)
-	  lwz       r3, 0x44(r1)
-	  blt-      .loc_0x120
-	  cmpwi     r3, 0
-	  blt-      .loc_0x120
-	  lwz       r6, 0x15C(r5)
-	  cmpw      r4, r6
-	  bge-      .loc_0x120
-	  lwz       r0, 0x160(r5)
-	  cmpw      r3, r0
-	  blt-      .loc_0x128
-
-	.loc_0x120:
-	  li        r3, 0
-	  b         .loc_0x13C
-
-	.loc_0x128:
-	  mullw     r0, r3, r6
-	  lwz       r3, 0x164(r5)
-	  add       r0, r4, r0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r3, r3, r0
-
-	.loc_0x13C:
-	  cmplwi    r3, 0
-	  beq-      .loc_0x158
-	  lha       r0, 0x4(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x158
-	  stw       r7, 0x20(r3)
-	  mr        r7, r3
-
-	.loc_0x158:
-	  mr        r3, r7
-	  addi      r1, r1, 0x50
-	  blr
-	*/
+	return collList;
 }
 
 /*
@@ -3521,128 +1518,30 @@ CollGroup* MapMgr::getCollGroupList(f32, f32, bool)
  * Address:	80067F04
  * Size:	000164
  */
-f32 MapMgr::getMinY(f32, f32, bool)
+f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  fmr       f30, f2
-	  stfd      f29, 0x40(r1)
-	  fmr       f29, f1
-	  lwz       r5, 0x18(r3)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x18(r3)
-	  lfs       f31, -0x782C(r2)
-	  bl        -0x194
-	  lbz       r8, -0x5F17(r13)
-	  lfs       f0, -0x78B0(r2)
-	  b         .loc_0x128
+	_18++;
+	f32 minY = -32768.0f;
+	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
+		int count = (AIPerf::showColls) ? colls->mTriCount - colls->_06 : colls->mTriCount;
+		if (count == 0) {
+			count = colls->mTriCount;
+		}
 
-	.loc_0x40:
-	  cmplwi    r8, 0
-	  beq-      .loc_0x58
-	  lha       r4, 0x6(r3)
-	  lha       r0, 0x4(r3)
-	  sub       r0, r0, r4
-	  b         .loc_0x5C
+		for (int i = 0; i < count; i++) {
+			if (colls->mTriangleList[i]->mTriangle.mNormal.y > 0.0f) {
+				Vector3f triPos(x, 0.0f, z);
+				if (colls->mTriangleList[i]->inTriClampTo(triPos) && triPos.y > minY) {
+					minY = triPos.y;
+				}
+			}
+		}
+	}
 
-	.loc_0x58:
-	  lha       r0, 0x4(r3)
-
-	.loc_0x5C:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x68
-	  lha       r0, 0x4(r3)
-
-	.loc_0x68:
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  li        r7, 0
-	  ble-      .loc_0x124
-
-	.loc_0x78:
-	  lwz       r4, 0x8(r3)
-	  lwzx      r9, r4, r7
-	  lfs       f4, 0x1C(r9)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x11C
-	  lfs       f2, 0x18(r9)
-	  li        r5, 0x1
-	  lfs       f1, 0x20(r9)
-	  li        r4, 0
-	  fmuls     f3, f29, f2
-	  fmuls     f2, f30, f1
-	  lfs       f1, 0x24(r9)
-	  fadds     f2, f3, f2
-	  fsubs     f1, f2, f1
-	  fneg      f1, f1
-	  fdivs     f5, f1, f4
-	  b         .loc_0xF8
-
-	.loc_0xBC:
-	  lfs       f2, 0x28(r9)
-	  lfs       f1, 0x2C(r9)
-	  fmuls     f3, f2, f29
-	  lfs       f4, 0x30(r9)
-	  fmuls     f2, f1, f5
-	  lfs       f1, 0x34(r9)
-	  fmuls     f4, f4, f30
-	  fadds     f2, f3, f2
-	  fadds     f2, f4, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xF0
-	  li        r5, 0
-
-	.loc_0xF0:
-	  addi      r9, r9, 0x10
-	  addi      r4, r4, 0x1
-
-	.loc_0xF8:
-	  rlwinm.   r0,r5,0,24,31
-	  beq-      .loc_0x108
-	  cmpwi     r4, 0x3
-	  blt+      .loc_0xBC
-
-	.loc_0x108:
-	  rlwinm.   r0,r5,0,24,31
-	  beq-      .loc_0x11C
-	  fcmpo     cr0, f5, f31
-	  ble-      .loc_0x11C
-	  fmr       f31, f5
-
-	.loc_0x11C:
-	  addi      r7, r7, 0x4
-	  bdnz+     .loc_0x78
-
-	.loc_0x124:
-	  lwz       r3, 0x20(r3)
-
-	.loc_0x128:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x40
-	  lfs       f0, -0x782C(r2)
-	  fcmpu     cr0, f0, f31
-	  bne-      .loc_0x144
-	  lfs       f1, -0x78B0(r2)
-	  b         .loc_0x148
-
-	.loc_0x144:
-	  fmr       f1, f31
-
-	.loc_0x148:
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lfd       f29, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	if (minY == -32768.0f) {
+		return 0.0f;
+	}
+	return minY;
 }
 
 /*
@@ -3650,131 +1549,30 @@ f32 MapMgr::getMinY(f32, f32, bool)
  * Address:	80068068
  * Size:	000170
  */
-f32 MapMgr::getMaxY(f32, f32, bool)
+f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  fmr       f30, f2
-	  stfd      f29, 0x40(r1)
-	  fmr       f29, f1
-	  lwz       r5, 0x18(r3)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x18(r3)
-	  lfs       f31, -0x7828(r2)
-	  bl        -0x2F8
-	  lbz       r8, -0x5F17(r13)
-	  lfs       f1, -0x78B0(r2)
-	  lfs       f0, -0x7824(r2)
-	  b         .loc_0x134
+	_18++;
+	f32 minY = 32768.0f;
+	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
+		int count = (AIPerf::showColls) ? colls->mTriCount - colls->_06 : colls->mTriCount;
+		if (count == 0) {
+			count = colls->mTriCount;
+		}
 
-	.loc_0x44:
-	  cmplwi    r8, 0
-	  beq-      .loc_0x5C
-	  lha       r4, 0x6(r3)
-	  lha       r0, 0x4(r3)
-	  sub       r0, r0, r4
-	  b         .loc_0x60
+		for (int i = 0; i < count; i++) {
+			if (colls->mTriangleList[i]->mTriangle.mNormal.y > 0.0f) {
+				Vector3f triPos(x, 0.0f, z);
+				if (colls->mTriangleList[i]->inTriClampTo(triPos) && triPos.y > -2500.0f && triPos.y < minY) {
+					minY = triPos.y;
+				}
+			}
+		}
+	}
 
-	.loc_0x5C:
-	  lha       r0, 0x4(r3)
-
-	.loc_0x60:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x6C
-	  lha       r0, 0x4(r3)
-
-	.loc_0x6C:
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  li        r7, 0
-	  ble-      .loc_0x130
-
-	.loc_0x7C:
-	  lwz       r4, 0x8(r3)
-	  lwzx      r9, r4, r7
-	  lfs       f5, 0x1C(r9)
-	  fcmpo     cr0, f5, f1
-	  ble-      .loc_0x128
-	  lfs       f3, 0x18(r9)
-	  li        r5, 0x1
-	  lfs       f2, 0x20(r9)
-	  li        r4, 0
-	  fmuls     f4, f29, f3
-	  fmuls     f3, f30, f2
-	  lfs       f2, 0x24(r9)
-	  fadds     f3, f4, f3
-	  fsubs     f2, f3, f2
-	  fneg      f2, f2
-	  fdivs     f6, f2, f5
-	  b         .loc_0xFC
-
-	.loc_0xC0:
-	  lfs       f3, 0x28(r9)
-	  lfs       f2, 0x2C(r9)
-	  fmuls     f4, f3, f29
-	  lfs       f5, 0x30(r9)
-	  fmuls     f3, f2, f6
-	  lfs       f2, 0x34(r9)
-	  fmuls     f5, f5, f30
-	  fadds     f3, f4, f3
-	  fadds     f3, f5, f3
-	  fsubs     f2, f3, f2
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0xF4
-	  li        r5, 0
-
-	.loc_0xF4:
-	  addi      r9, r9, 0x10
-	  addi      r4, r4, 0x1
-
-	.loc_0xFC:
-	  rlwinm.   r0,r5,0,24,31
-	  beq-      .loc_0x10C
-	  cmpwi     r4, 0x3
-	  blt+      .loc_0xC0
-
-	.loc_0x10C:
-	  rlwinm.   r0,r5,0,24,31
-	  beq-      .loc_0x128
-	  fcmpo     cr0, f6, f0
-	  ble-      .loc_0x128
-	  fcmpo     cr0, f6, f31
-	  bge-      .loc_0x128
-	  fmr       f31, f6
-
-	.loc_0x128:
-	  addi      r7, r7, 0x4
-	  bdnz+     .loc_0x7C
-
-	.loc_0x130:
-	  lwz       r3, 0x20(r3)
-
-	.loc_0x134:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x44
-	  lfs       f0, -0x7828(r2)
-	  fcmpu     cr0, f0, f31
-	  bne-      .loc_0x150
-	  lfs       f1, -0x78B0(r2)
-	  b         .loc_0x154
-
-	.loc_0x150:
-	  fmr       f1, f31
-
-	.loc_0x154:
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lfd       f29, 0x40(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	if (minY == 32768.0f) {
+		return 0.0f;
+	}
+	return minY;
 }
 
 /*
@@ -3782,122 +1580,26 @@ f32 MapMgr::getMaxY(f32, f32, bool)
  * Address:	800681D8
  * Size:	00015C
  */
-CollTriInfo* MapMgr::getCurrTri(f32, f32, bool)
+CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stfd      f31, 0x58(r1)
-	  stfd      f30, 0x50(r1)
-	  fmr       f30, f2
-	  stfd      f29, 0x48(r1)
-	  fmr       f29, f1
-	  stw       r31, 0x44(r1)
-	  li        r31, 0
-	  lwz       r5, 0x1C(r3)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x1C(r3)
-	  lfs       f31, -0x782C(r2)
-	  bl        -0x470
-	  lbz       r9, -0x5F17(r13)
-	  lfs       f0, -0x78B0(r2)
-	  b         .loc_0x130
+	_1C++;
+	CollTriInfo* tri = nullptr;
+	f32 minY         = -32768.0f;
+	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
+		int count = (AIPerf::showColls) ? colls->mTriCount - colls->_06 : colls->mTriCount;
+		if (count == 0) {
+			count = colls->mTriCount;
+		}
 
-	.loc_0x48:
-	  cmplwi    r9, 0
-	  beq-      .loc_0x60
-	  lha       r4, 0x6(r3)
-	  lha       r0, 0x4(r3)
-	  sub       r0, r0, r4
-	  b         .loc_0x64
-
-	.loc_0x60:
-	  lha       r0, 0x4(r3)
-
-	.loc_0x64:
-	  cmpwi     r0, 0
-	  bne-      .loc_0x70
-	  lha       r0, 0x4(r3)
-
-	.loc_0x70:
-	  cmpwi     r0, 0
-	  mtctr     r0
-	  li        r8, 0
-	  ble-      .loc_0x12C
-
-	.loc_0x80:
-	  lwz       r4, 0x8(r3)
-	  li        r6, 0x1
-	  li        r5, 0
-	  lwzx      r10, r4, r8
-	  lfs       f2, 0x18(r10)
-	  mr        r7, r10
-	  lfs       f1, 0x20(r10)
-	  fmuls     f4, f29, f2
-	  lfs       f2, 0x24(r10)
-	  fmuls     f3, f30, f1
-	  lfs       f1, 0x1C(r10)
-	  fadds     f3, f4, f3
-	  fsubs     f2, f3, f2
-	  fneg      f2, f2
-	  fdivs     f5, f2, f1
-	  b         .loc_0xFC
-
-	.loc_0xC0:
-	  lfs       f2, 0x28(r7)
-	  lfs       f1, 0x2C(r7)
-	  fmuls     f3, f2, f29
-	  lfs       f4, 0x30(r7)
-	  fmuls     f2, f1, f5
-	  lfs       f1, 0x34(r7)
-	  fmuls     f4, f4, f30
-	  fadds     f2, f3, f2
-	  fadds     f2, f4, f2
-	  fsubs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xF4
-	  li        r6, 0
-
-	.loc_0xF4:
-	  addi      r7, r7, 0x10
-	  addi      r5, r5, 0x1
-
-	.loc_0xFC:
-	  rlwinm.   r0,r6,0,24,31
-	  beq-      .loc_0x10C
-	  cmpwi     r5, 0x3
-	  blt+      .loc_0xC0
-
-	.loc_0x10C:
-	  rlwinm.   r0,r6,0,24,31
-	  beq-      .loc_0x124
-	  fcmpo     cr0, f5, f31
-	  ble-      .loc_0x124
-	  mr        r31, r10
-	  fmr       f31, f5
-
-	.loc_0x124:
-	  addi      r8, r8, 0x4
-	  bdnz+     .loc_0x80
-
-	.loc_0x12C:
-	  lwz       r3, 0x20(r3)
-
-	.loc_0x130:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x48
-	  mr        r3, r31
-	  lwz       r0, 0x64(r1)
-	  lfd       f31, 0x58(r1)
-	  lfd       f30, 0x50(r1)
-	  lfd       f29, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+		for (int i = 0; i < count; i++) {
+			Vector3f triPos(x, 0.0f, z);
+			if (colls->mTriangleList[i]->inTriClampTo(triPos) && triPos.y > minY) {
+				tri  = colls->mTriangleList[i];
+				minY = triPos.y;
+			}
+		}
+	}
+	return tri;
 }
 
 /*
@@ -3905,214 +1607,44 @@ CollTriInfo* MapMgr::getCurrTri(f32, f32, bool)
  * Address:	80068334
  * Size:	0002EC
  */
-f32 MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&)
+f32 MapMgr::findEdgePenetration(CollTriInfo& tri, Vector3f* vertexList, Vector3f& pos, f32 rad, Vector3f& normal)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x5555
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x188(r1)
-	  stfd      f31, 0x180(r1)
-	  fmr       f31, f1
-	  stfd      f30, 0x178(r1)
-	  stfd      f29, 0x170(r1)
-	  stfd      f28, 0x168(r1)
-	  fneg      f28, f31
-	  stfd      f27, 0x160(r1)
-	  stfd      f26, 0x158(r1)
-	  stfd      f25, 0x150(r1)
-	  stmw      r24, 0x130(r1)
-	  addi      r25, r4, 0
-	  addi      r26, r5, 0
-	  addi      r27, r6, 0
-	  addi      r28, r7, 0
-	  addi      r30, r25, 0
-	  addi      r31, r3, 0x5556
-	  li        r29, 0
-	  lfs       f30, -0x78B0(r2)
-	  lfs       f29, -0x7884(r2)
+	for (int i = 0; i < 3; i++) {
+		f32 dist = tri.mEdgePlanes[i].dist(pos);
+		if (dist < 0.0f && dist >= -rad) {
+			Vector3f& vtx1 = vertexList[tri.mVertexIndices[i % 3]];
+			Vector3f& vtx2 = vertexList[tri.mVertexIndices[(i + 1) % 3]];
 
-	.loc_0x5C:
-	  lfs       f1, 0x28(r30)
-	  lfs       f5, 0x0(r27)
-	  lfs       f0, 0x2C(r30)
-	  lfs       f3, 0x4(r27)
-	  fmuls     f4, f1, f5
-	  lfs       f6, 0x30(r30)
-	  fmuls     f2, f0, f3
-	  lfs       f1, 0x8(r27)
-	  lfs       f0, 0x34(r30)
-	  fmuls     f6, f6, f1
-	  fadds     f2, f4, f2
-	  fadds     f2, f6, f2
-	  fsubs     f0, f2, f0
-	  fcmpo     cr0, f0, f30
-	  bge-      .loc_0x2A8
-	  fcmpo     cr0, f0, f28
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x2A8
-	  mulhw     r5, r31, r29
-	  addi      r4, r29, 0x1
-	  mulhw     r3, r31, r4
-	  rlwinm    r0,r5,1,31,31
-	  add       r0, r5, r0
-	  mulli     r5, r0, 0x3
-	  rlwinm    r0,r3,1,31,31
-	  add       r0, r3, r0
-	  sub       r3, r29, r5
-	  mulli     r0, r0, 0x3
-	  rlwinm    r3,r3,2,0,29
-	  addi      r3, r3, 0x4
-	  sub       r0, r4, r0
-	  lwzx      r4, r25, r3
-	  rlwinm    r3,r0,2,0,29
-	  mulli     r0, r4, 0xC
-	  add       r4, r26, r0
-	  addi      r0, r3, 0x4
-	  lfs       f4, 0x0(r4)
-	  lwzx      r0, r25, r0
-	  lfs       f0, 0x8(r4)
-	  fsubs     f27, f5, f4
-	  mulli     r0, r0, 0xC
-	  lfs       f2, 0x4(r4)
-	  fsubs     f25, f1, f0
-	  fsubs     f26, f3, f2
-	  add       r24, r26, r0
-	  lfs       f8, 0x8(r24)
-	  lfs       f7, 0x4(r24)
-	  lfs       f6, 0x0(r24)
-	  fsubs     f11, f8, f0
-	  fsubs     f12, f7, f2
-	  stfs      f27, 0x94(r1)
-	  fsubs     f13, f6, f4
-	  fmuls     f10, f11, f25
-	  lfs       f6, 0x94(r1)
-	  fmuls     f8, f12, f26
-	  fmuls     f9, f13, f6
-	  fmuls     f7, f13, f13
-	  fmuls     f6, f12, f12
-	  fadds     f9, f9, f8
-	  fmuls     f8, f11, f11
-	  fadds     f6, f7, f6
-	  fadds     f7, f10, f9
-	  fadds     f6, f8, f6
-	  fdivs     f6, f7, f6
-	  fcmpo     cr0, f6, f30
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x1FC
-	  fcmpo     cr0, f6, f29
-	  bge-      .loc_0x1FC
-	  fmuls     f8, f13, f6
-	  fmuls     f7, f12, f6
-	  fmuls     f6, f11, f6
-	  fadds     f4, f4, f8
-	  fadds     f2, f2, f7
-	  fadds     f0, f0, f6
-	  fsubs     f4, f5, f4
-	  fsubs     f2, f3, f2
-	  fsubs     f0, f1, f0
-	  stfs      f4, 0x0(r28)
-	  stfs      f2, 0x4(r28)
-	  stfs      f0, 0x8(r28)
-	  lfs       f1, 0x0(r28)
-	  lfs       f0, 0x4(r28)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x8(r28)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x5A8B4
-	  fcmpu     cr0, f30, f1
-	  beq-      .loc_0x1F0
-	  lfs       f0, 0x0(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x0(r28)
-	  lfs       f0, 0x4(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x4(r28)
-	  lfs       f0, 0x8(r28)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x8(r28)
+			Vector3f edge12 = vtx2 - vtx1;
+			f32 edgeLen     = edge12.x * edge12.x + edge12.y * edge12.y + edge12.z * edge12.z;
+			f32 t           = edge12.DP(pos - vtx1) / edgeLen;
+			if (t >= 0.0f && t < 1.0f) {
+				Vector3f edgePos(edge12.x * t + vtx1.x, edge12.y * t + vtx1.y, edge12.z * t + vtx1.z);
+				Vector3f dirEdge(pos.x - edgePos.x, pos.y - edgePos.y, pos.z - edgePos.z);
+				normal.set(dirEdge.x, dirEdge.y, dirEdge.z);
+				f32 distEdge = normal.normalise();
+				if (distEdge < rad) {
+					return distEdge;
+				}
+			} else {
+				Vector3f dirVtx1(pos.x - vtx1.x, pos.y - vtx1.y, pos.z - vtx1.z);
+				f32 distVtx1 = dirVtx1.normalise();
+				if (distVtx1 < rad) {
+					normal.set(dirVtx1.x, dirVtx1.y, dirVtx1.z);
+					return distVtx1;
+				}
 
-	.loc_0x1F0:
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x2A8
-	  b         .loc_0x2BC
+				Vector3f dirVtx2(pos.x - vtx2.x, pos.y - vtx2.y, pos.z - vtx2.z);
+				f32 distVtx2 = dirVtx2.normalise();
+				if (distVtx2 < rad) {
+					normal.set(dirVtx2.x, dirVtx2.y, dirVtx2.z);
+					return distVtx2;
+				}
+			}
+		}
+	}
 
-	.loc_0x1FC:
-	  fmuls     f1, f27, f27
-	  fmuls     f0, f26, f26
-	  fmuls     f2, f25, f25
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x5A904
-	  fcmpu     cr0, f30, f1
-	  beq-      .loc_0x228
-	  fdivs     f27, f27, f1
-	  fdivs     f26, f26, f1
-	  fdivs     f25, f25, f1
-
-	.loc_0x228:
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x240
-	  stfs      f27, 0x0(r28)
-	  stfs      f26, 0x4(r28)
-	  stfs      f25, 0x8(r28)
-	  b         .loc_0x2BC
-
-	.loc_0x240:
-	  lfs       f3, 0x0(r27)
-	  lfs       f2, 0x0(r24)
-	  lfs       f1, 0x4(r27)
-	  lfs       f0, 0x4(r24)
-	  fsubs     f25, f3, f2
-	  lfs       f2, 0x8(r27)
-	  fsubs     f26, f1, f0
-	  lfs       f0, 0x8(r24)
-	  fmuls     f1, f25, f25
-	  fsubs     f27, f2, f0
-	  fmuls     f0, f26, f26
-	  fmuls     f2, f27, f27
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x5A96C
-	  fcmpu     cr0, f30, f1
-	  beq-      .loc_0x290
-	  fdivs     f25, f25, f1
-	  fdivs     f26, f26, f1
-	  fdivs     f27, f27, f1
-
-	.loc_0x290:
-	  fcmpo     cr0, f1, f31
-	  bge-      .loc_0x2A8
-	  stfs      f25, 0x0(r28)
-	  stfs      f26, 0x4(r28)
-	  stfs      f27, 0x8(r28)
-	  b         .loc_0x2BC
-
-	.loc_0x2A8:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  addi      r30, r30, 0x10
-	  blt+      .loc_0x5C
-	  lfs       f1, -0x78B0(r2)
-
-	.loc_0x2BC:
-	  lmw       r24, 0x130(r1)
-	  lwz       r0, 0x18C(r1)
-	  lfd       f31, 0x180(r1)
-	  lfd       f30, 0x178(r1)
-	  lfd       f29, 0x170(r1)
-	  lfd       f28, 0x168(r1)
-	  lfd       f27, 0x160(r1)
-	  lfd       f26, 0x158(r1)
-	  lfd       f25, 0x150(r1)
-	  addi      r1, r1, 0x188
-	  mtlr      r0
-	  blr
-	*/
+	return 0.0f;
 }
 
 /*
@@ -4120,600 +1652,126 @@ f32 MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3
  * Address:	80068620
  * Size:	00082C
  */
-void MapMgr::recTraceMove(CollGroup*, MoveTrace&, f32)
+void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x158(r1)
-	  stfd      f31, 0x150(r1)
-	  stfd      f30, 0x148(r1)
-	  stfd      f29, 0x140(r1)
-	  stfd      f28, 0x138(r1)
-	  stfd      f27, 0x130(r1)
-	  stfd      f26, 0x128(r1)
-	  stmw      r21, 0xFC(r1)
-	  mr        r23, r5
-	  addi      r21, r3, 0
-	  addi      r22, r4, 0
-	  lfs       f0, 0xC(r5)
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0x10(r5)
-	  stfs      f0, 0xE4(r1)
-	  lfs       f0, 0x14(r5)
-	  stfs      f0, 0xE8(r1)
-	  lfs       f2, 0x1C(r5)
-	  lfs       f0, 0xE0(r1)
-	  fmuls     f1, f1, f2
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0xE4(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xE4(r1)
-	  lfs       f0, 0xE8(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xE8(r1)
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0xE4(r1)
-	  fmuls     f5, f1, f1
-	  lfs       f2, 0xE8(r1)
-	  fmuls     f3, f0, f0
-	  lfs       f4, -0x78B0(r2)
-	  fmuls     f6, f2, f2
-	  fadds     f3, f5, f3
-	  fadds     f3, f6, f3
-	  fcmpo     cr0, f3, f4
-	  ble-      .loc_0x100
-	  fsqrte    f5, f3
-	  lfd       f7, -0x78A8(r2)
-	  lfd       f6, -0x78A0(r2)
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f3, f4
-	  fsub      f4, f6, f4
-	  fmul      f5, f5, f4
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f3, f4
-	  fsub      f4, f6, f4
-	  fmul      f5, f5, f4
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f3, f4
-	  fsub      f4, f6, f4
-	  fmul      f4, f5, f4
-	  fmul      f4, f3, f4
-	  frsp      f4, f4
-	  stfs      f4, 0x70(r1)
-	  lfs       f5, 0x70(r1)
-	  b         .loc_0x104
+	f32 offset;
+	Vector3f vel(trace.mVelocity);
+	vel.multiply(timeStep * trace.mStepFraction);
+	if (vel.length() >= trace.mRadius) {
+		PRINT("speed violation!! %f\n", vel.length());
+	}
 
-	.loc_0x100:
-	  fmr       f5, f3
+	Vector3f nextPos = trace.mPosition + vel;
+	Vector3f* v      = &vel; // this is just for stack fixing
+	offset           = 0.05f;
+	f32 radPlus      = trace.mRadius + offset;
+	f32 radMinus     = trace.mRadius - 0.05f;
+	u8 radInt        = radPlus;
 
-	.loc_0x104:
-	  lfs       f4, 0x18(r23)
-	  fcmpo     cr0, f5, f4
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x178
-	  lfs       f4, -0x78B0(r2)
-	  fcmpo     cr0, f3, f4
-	  ble-      .loc_0x178
-	  fsqrte    f5, f3
-	  lfd       f7, -0x78A8(r2)
-	  lfd       f6, -0x78A0(r2)
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f3, f4
-	  fsub      f4, f6, f4
-	  fmul      f5, f5, f4
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f3, f4
-	  fsub      f4, f6, f4
-	  fmul      f5, f5, f4
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f3, f4
-	  fsub      f4, f6, f4
-	  fmul      f4, f5, f4
-	  fmul      f3, f3, f4
-	  frsp      f3, f3
-	  stfs      f3, 0x6C(r1)
-	  lfs       f3, 0x6C(r1)
+	BoundBox box;
+	box.expandBound(nextPos);
+	box.mMin.sub(Vector3f(radPlus, radPlus, radPlus));
+	box.mMax.add(Vector3f(radPlus, radPlus, radPlus));
 
-	.loc_0x178:
-	  lfs       f3, 0x0(r23)
-	  lfs       f4, 0x4(r23)
-	  fadds     f1, f3, f1
-	  lfs       f3, 0x8(r23)
-	  fadds     f4, f4, f0
-	  fadds     f0, f3, f2
-	  stfs      f1, 0xD4(r1)
-	  stfs      f4, 0xD8(r1)
-	  stfs      f0, 0xDC(r1)
-	  lfs       f2, 0x18(r23)
-	  lfs       f1, -0x7820(r2)
-	  lfs       f0, -0x78B0(r2)
-	  fadds     f3, f2, f1
-	  stfs      f0, 0xBC(r1)
-	  stfs      f0, 0xB8(r1)
-	  fctiwz    f2, f3
-	  stfs      f0, 0xB4(r1)
-	  stfs      f0, 0xC8(r1)
-	  stfs      f0, 0xC4(r1)
-	  stfs      f0, 0xC0(r1)
-	  lfs       f1, -0x6D18(r13)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f1, 0xB4(r1)
-	  stfs      f0, 0xB8(r1)
-	  lfs       f0, -0x6D10(r13)
-	  stfd      f2, 0xF0(r1)
-	  stfs      f0, 0xBC(r1)
-	  lwz       r0, 0xF4(r1)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0xC8(r1)
-	  lfs       f1, 0xD4(r1)
-	  lfs       f0, 0xB4(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x214
-	  stfs      f1, 0xB4(r1)
+	CollGroup* currColls = colls;
+	Vector3f vec;
+	bool check1 = false;
 
-	.loc_0x214:
-	  lfs       f2, 0xD8(r1)
-	  lfs       f0, 0xB8(r1)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x228
-	  stfs      f2, 0xB8(r1)
+	for (currColls; currColls; currColls = currColls->mNextCollider) {
+		int count = currColls->mTriCount - currColls->_06;
+		if (!count) {
+			count = colls->mTriCount;
+		}
 
-	.loc_0x228:
-	  lfs       f4, 0xDC(r1)
-	  lfs       f0, 0xBC(r1)
-	  fcmpo     cr0, f4, f0
-	  bge-      .loc_0x23C
-	  stfs      f4, 0xBC(r1)
+		for (int i = 0; i < currColls->mTriCount; i++) {
+			CollTriInfo* tri = currColls->mTriangleList[i];
+			if (AIPerf::showColls && i >= count && currColls->_0C[i - count] > radInt + 4) {
+				if (AIPerf::useCollSort) {
+					break;
+				}
+				continue;
+			}
 
-	.loc_0x23C:
-	  lfs       f0, 0xC0(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x24C
-	  stfs      f1, 0xC0(r1)
+			int a = 0;
+			Vector3f normal(tri->mTriangle.mNormal);
+			f32 rad = trace.mRadius;
+			f32 pen = tri->mTriangle.dist(nextPos);
+			if (pen < rad && pen > 0.0f) {
+				if (tri->behindEdge(nextPos) == -1) {
+					a = 1;
+				} else {
+					pen = findEdgePenetration(*tri, currColls->mVertexList, nextPos, rad, normal);
+					if (pen != 0.0f) {
+						a = 2;
+					}
+				}
+			}
 
-	.loc_0x24C:
-	  lfs       f0, 0xC4(r1)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x25C
-	  stfs      f2, 0xC4(r1)
+			if (a == 0) {
+				continue;
+			}
 
-	.loc_0x25C:
-	  lfs       f0, 0xC8(r1)
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x26C
-	  stfs      f4, 0xC8(r1)
+			f32 bounceFactor = 1.0f;
+			if (trace.mObject && trace.mObject->mProps) {
+				bounceFactor = trace.mObject->mProps->mCreatureProps.mBounceFactor();
+			}
+			if (trace.mObject) {
+				trace.mObject->_1A8 = 1;
+			}
+			bool check2 = false;
+			if (!currColls->mSourceCollider) {
+				check1 = true;
+				vec    = normal;
+				trace.mVelocity.bounce(normal, bounceFactor);
+				vel.bounce(normal, bounceFactor);
+			} else {
+				if (check1 && vec.DP(normal) < -0.5f) {
+					check2 = true;
+				} else {
+					if (trace.mObject && currColls->mSourceCollider && currColls->mSourceCollider->mCreature) {
+						bounceFactor = 1.0f;
+					}
+					trace.mVelocity.bounce(normal, bounceFactor);
+					vel.bounce(normal, bounceFactor);
+				}
+			}
+			if (!check2) {
+				nextPos.x += normal.x * (rad - pen);
+				nextPos.y += normal.y * (rad - pen);
+				nextPos.z += normal.z * (rad - pen);
+			}
 
-	.loc_0x26C:
-	  lfs       f0, 0xB4(r1)
-	  rlwinm    r3,r0,0,24,31
-	  addi      r29, r22, 0
-	  fsubs     f0, f0, f3
-	  addi      r30, r3, 0x4
-	  li        r28, 0
-	  stfs      f0, 0xB4(r1)
-	  lfs       f0, 0xB8(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0xB8(r1)
-	  lfs       f0, 0xBC(r1)
-	  fsubs     f0, f0, f3
-	  stfs      f0, 0xBC(r1)
-	  lfs       f0, 0xC0(r1)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0xC0(r1)
-	  lfs       f0, 0xC4(r1)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0xC4(r1)
-	  lfs       f0, 0xC8(r1)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0xC8(r1)
-	  lfs       f31, -0x78B0(r2)
-	  stfs      f31, 0xB0(r1)
-	  stfs      f31, 0xAC(r1)
-	  stfs      f31, 0xA8(r1)
-	  lfs       f26, -0x7818(r2)
-	  lfs       f27, -0x7878(r2)
-	  lfs       f28, -0x781C(r2)
-	  b         .loc_0x7E0
+			if (trace.mObject) {
+				if (normal.y > 0.6f) {
+					trace.mObject->mGroundTriangle     = tri;
+					trace.mObject->mCurrCollisionModel = currColls->mShape;
+				}
+				if (a && tri->mTriangle.mNormal.y < 0.5f && tri->mTriangle.mNormal.y > -0.5f) {
+					trace.mObject->wallCallback(tri->mTriangle, currColls->mSourceCollider);
+				}
+				trace.mObject->mCollPlatform   = currColls->mSourceCollider;
+				trace.mObject->mCollPlatNormal = &tri->mTriangle.mNormal;
 
-	.loc_0x2E4:
-	  lha       r3, 0x6(r29)
-	  lha       r0, 0x4(r29)
-	  sub.      r0, r0, r3
-	  mr        r27, r0
-	  bne-      .loc_0x2FC
-	  lha       r27, 0x4(r22)
+				if (currColls->mSourceCollider && trace.mObject->mObjType == OBJTYPE_Piki) {
+					trace.mObject->mClimbingTri = tri;
+				} else {
+					trace.mObject->mClimbingTri = nullptr;
+				}
 
-	.loc_0x2FC:
-	  li        r26, 0
-	  li        r31, 0
-	  b         .loc_0x7D0
+				if (currColls->mSourceCollider) {
+					if (a == 1 && currColls->mSourceCollider->_24 != mCollisionCheckCount) {
+						currColls->mSourceCollider->mContactCount++;
+						currColls->mSourceCollider->_24 = mCollisionCheckCount;
+					}
+					currColls->mSourceCollider->touchCallback(tri->mTriangle, nextPos, trace.mVelocity);
+				}
+			}
+		}
+	}
+	trace.mPosition = nextPos;
 
-	.loc_0x308:
-	  lbz       r0, -0x5F17(r13)
-	  lwz       r3, 0x8(r29)
-	  cmplwi    r0, 0
-	  lwzx      r25, r3, r31
-	  beq-      .loc_0x348
-	  cmpw      r26, r27
-	  blt-      .loc_0x348
-	  lwz       r3, 0xC(r29)
-	  sub       r0, r26, r27
-	  lbzx      r0, r3, r0
-	  cmpw      r0, r30
-	  ble-      .loc_0x348
-	  lbz       r0, -0x5F16(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7DC
-	  b         .loc_0x7C8
-
-	.loc_0x348:
-	  lfs       f0, 0x18(r25)
-	  li        r24, 0
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0x1C(r25)
-	  stfs      f0, 0xA0(r1)
-	  lfs       f0, 0x20(r25)
-	  stfs      f0, 0xA4(r1)
-	  lfs       f3, 0x18(r25)
-	  lfs       f2, 0xD4(r1)
-	  lfs       f1, 0x1C(r25)
-	  lfs       f0, 0xD8(r1)
-	  fmuls     f2, f3, f2
-	  lfs       f3, 0x20(r25)
-	  fmuls     f1, f1, f0
-	  lfs       f0, 0xDC(r1)
-	  lfs       f4, 0x18(r23)
-	  fmuls     f3, f3, f0
-	  lfs       f0, 0x24(r25)
-	  fadds     f1, f2, f1
-	  fmr       f30, f4
-	  fadds     f1, f3, f1
-	  fsubs     f0, f1, f0
-	  fcmpo     cr0, f0, f4
-	  fmr       f29, f0
-	  bge-      .loc_0x3FC
-	  fcmpo     cr0, f0, f31
-	  ble-      .loc_0x3FC
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0xD4
-	  bl        -0x301A8
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x3D0
-	  li        r24, 0x1
-	  b         .loc_0x3FC
-
-	.loc_0x3D0:
-	  fmr       f1, f30
-	  lwz       r5, 0x14(r29)
-	  addi      r3, r21, 0
-	  addi      r4, r25, 0
-	  addi      r6, r1, 0xD4
-	  addi      r7, r1, 0x9C
-	  bl        -0x6D4
-	  fmr       f29, f1
-	  fcmpu     cr0, f31, f29
-	  beq-      .loc_0x3FC
-	  li        r24, 0x2
-
-	.loc_0x3FC:
-	  cmpwi     r24, 0
-	  beq-      .loc_0x7C8
-	  lwz       r3, 0x24(r23)
-	  lfs       f0, -0x7884(r2)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x424
-	  lwz       r4, 0x224(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x424
-	  lfs       f0, 0x50(r4)
-
-	.loc_0x424:
-	  cmplwi    r3, 0
-	  beq-      .loc_0x434
-	  li        r0, 0x1
-	  stw       r0, 0x1A8(r3)
-
-	.loc_0x434:
-	  lwz       r3, 0x1C(r29)
-	  li        r4, 0
-	  cmplwi    r3, 0
-	  bne-      .loc_0x53C
-	  lwz       r0, 0x9C(r1)
-	  li        r28, 0x1
-	  lwz       r3, 0xA0(r1)
-	  stw       r0, 0xA8(r1)
-	  lwz       r0, 0xA4(r1)
-	  stw       r3, 0xAC(r1)
-	  lfs       f5, 0x9C(r1)
-	  stw       r0, 0xB0(r1)
-	  lfs       f6, 0xC(r23)
-	  lfs       f2, 0x10(r23)
-	  lfs       f1, 0xA0(r1)
-	  fmuls     f3, f6, f5
-	  lfs       f4, 0x14(r23)
-	  fmuls     f1, f2, f1
-	  lfs       f2, 0xA4(r1)
-	  fmuls     f2, f4, f2
-	  fadds     f1, f3, f1
-	  fadds     f1, f2, f1
-	  fneg      f1, f1
-	  fmuls     f3, f0, f1
-	  fcmpo     cr0, f3, f31
-	  ble-      .loc_0x4D0
-	  fmuls     f1, f5, f3
-	  fadds     f1, f6, f1
-	  stfs      f1, 0xC(r23)
-	  lfs       f1, 0xA0(r1)
-	  lfs       f2, 0x10(r23)
-	  fmuls     f1, f1, f3
-	  fadds     f1, f2, f1
-	  stfs      f1, 0x10(r23)
-	  lfs       f1, 0xA4(r1)
-	  lfs       f2, 0x14(r23)
-	  fmuls     f1, f1, f3
-	  fadds     f1, f2, f1
-	  stfs      f1, 0x14(r23)
-
-	.loc_0x4D0:
-	  lfs       f3, 0xE0(r1)
-	  lfs       f5, 0x9C(r1)
-	  lfs       f1, 0xE4(r1)
-	  lfs       f6, 0xA0(r1)
-	  fmuls     f2, f3, f5
-	  lfs       f4, 0xE8(r1)
-	  fmuls     f1, f1, f6
-	  lfs       f7, 0xA4(r1)
-	  fmuls     f4, f4, f7
-	  fadds     f1, f2, f1
-	  fadds     f1, f4, f1
-	  fneg      f1, f1
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f0, f31
-	  ble-      .loc_0x67C
-	  fmuls     f2, f5, f0
-	  fmuls     f1, f6, f0
-	  fmuls     f0, f7, f0
-	  fadds     f2, f3, f2
-	  stfs      f2, 0xE0(r1)
-	  lfs       f2, 0xE4(r1)
-	  fadds     f1, f2, f1
-	  stfs      f1, 0xE4(r1)
-	  lfs       f1, 0xE8(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xE8(r1)
-	  b         .loc_0x67C
-
-	.loc_0x53C:
-	  rlwinm.   r0,r28,0,24,31
-	  beq-      .loc_0x580
-	  lfs       f4, 0xA8(r1)
-	  lfs       f3, 0x9C(r1)
-	  lfs       f2, 0xAC(r1)
-	  lfs       f1, 0xA0(r1)
-	  fmuls     f3, f4, f3
-	  lfs       f4, 0xB0(r1)
-	  fmuls     f1, f2, f1
-	  lfs       f2, 0xA4(r1)
-	  fmuls     f2, f4, f2
-	  fadds     f1, f3, f1
-	  fadds     f1, f2, f1
-	  fcmpo     cr0, f1, f28
-	  bge-      .loc_0x580
-	  li        r4, 0x1
-	  b         .loc_0x67C
-
-	.loc_0x580:
-	  lwz       r0, 0x24(r23)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5A4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x5A4
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5A4
-	  lfs       f0, -0x7884(r2)
-
-	.loc_0x5A4:
-	  lfs       f6, 0xC(r23)
-	  lfs       f5, 0x9C(r1)
-	  lfs       f2, 0x10(r23)
-	  lfs       f1, 0xA0(r1)
-	  fmuls     f3, f6, f5
-	  lfs       f4, 0x14(r23)
-	  fmuls     f1, f2, f1
-	  lfs       f2, 0xA4(r1)
-	  fmuls     f2, f4, f2
-	  fadds     f1, f3, f1
-	  fadds     f1, f2, f1
-	  fneg      f1, f1
-	  fmuls     f3, f0, f1
-	  fcmpo     cr0, f3, f31
-	  ble-      .loc_0x614
-	  fmuls     f1, f5, f3
-	  fadds     f1, f6, f1
-	  stfs      f1, 0xC(r23)
-	  lfs       f1, 0xA0(r1)
-	  lfs       f2, 0x10(r23)
-	  fmuls     f1, f1, f3
-	  fadds     f1, f2, f1
-	  stfs      f1, 0x10(r23)
-	  lfs       f1, 0xA4(r1)
-	  lfs       f2, 0x14(r23)
-	  fmuls     f1, f1, f3
-	  fadds     f1, f2, f1
-	  stfs      f1, 0x14(r23)
-
-	.loc_0x614:
-	  lfs       f3, 0xE0(r1)
-	  lfs       f5, 0x9C(r1)
-	  lfs       f1, 0xE4(r1)
-	  lfs       f6, 0xA0(r1)
-	  fmuls     f2, f3, f5
-	  lfs       f4, 0xE8(r1)
-	  fmuls     f1, f1, f6
-	  lfs       f7, 0xA4(r1)
-	  fmuls     f4, f4, f7
-	  fadds     f1, f2, f1
-	  fadds     f1, f4, f1
-	  fneg      f1, f1
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f0, f31
-	  ble-      .loc_0x67C
-	  fmuls     f2, f5, f0
-	  fmuls     f1, f6, f0
-	  fmuls     f0, f7, f0
-	  fadds     f2, f3, f2
-	  stfs      f2, 0xE0(r1)
-	  lfs       f2, 0xE4(r1)
-	  fadds     f1, f2, f1
-	  stfs      f1, 0xE4(r1)
-	  lfs       f1, 0xE8(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xE8(r1)
-
-	.loc_0x67C:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0x6C4
-	  fsubs     f2, f30, f29
-	  lfs       f0, 0x9C(r1)
-	  lfs       f1, 0xD4(r1)
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xD4(r1)
-	  lfs       f0, 0xA0(r1)
-	  lfs       f1, 0xD8(r1)
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xD8(r1)
-	  lfs       f0, 0xA4(r1)
-	  lfs       f1, 0xDC(r1)
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xDC(r1)
-
-	.loc_0x6C4:
-	  lwz       r3, 0x24(r23)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x7C8
-	  lfs       f0, 0xA0(r1)
-	  fcmpo     cr0, f0, f26
-	  ble-      .loc_0x6EC
-	  stw       r25, 0x28C(r3)
-	  lwz       r0, 0x10(r29)
-	  lwz       r3, 0x24(r23)
-	  stw       r0, 0x294(r3)
-
-	.loc_0x6EC:
-	  cmpwi     r24, 0
-	  beq-      .loc_0x724
-	  lfs       f0, 0x1C(r25)
-	  fcmpo     cr0, f0, f27
-	  bge-      .loc_0x724
-	  fcmpo     cr0, f0, f28
-	  ble-      .loc_0x724
-	  lwz       r3, 0x24(r23)
-	  addi      r4, r25, 0x18
-	  lwz       r5, 0x1C(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xB4(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x724:
-	  lwz       r4, 0x1C(r29)
-	  addi      r0, r25, 0x18
-	  lwz       r3, 0x24(r23)
-	  stw       r4, 0x280(r3)
-	  lwz       r3, 0x24(r23)
-	  stw       r0, 0x284(r3)
-	  lwz       r0, 0x1C(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x760
-	  lwz       r3, 0x24(r23)
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x760
-	  stw       r25, 0x288(r3)
-	  b         .loc_0x76C
-
-	.loc_0x760:
-	  lwz       r3, 0x24(r23)
-	  li        r0, 0
-	  stw       r0, 0x288(r3)
-
-	.loc_0x76C:
-	  lwz       r4, 0x1C(r29)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x7C8
-	  cmpwi     r24, 0x1
-	  bne-      .loc_0x7A8
-	  lwz       r3, 0x24(r4)
-	  lwz       r0, 0x10C(r21)
-	  cmplw     r3, r0
-	  beq-      .loc_0x7A8
-	  lwz       r3, 0x20(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x20(r4)
-	  lwz       r0, 0x10C(r21)
-	  lwz       r3, 0x1C(r29)
-	  stw       r0, 0x24(r3)
-
-	.loc_0x7A8:
-	  lwz       r3, 0x1C(r29)
-	  addi      r4, r25, 0x18
-	  addi      r5, r1, 0xD4
-	  lwz       r12, 0x0(r3)
-	  addi      r6, r23, 0xC
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x7C8:
-	  addi      r31, r31, 0x4
-	  addi      r26, r26, 0x1
-
-	.loc_0x7D0:
-	  lha       r0, 0x4(r29)
-	  cmpw      r26, r0
-	  blt+      .loc_0x308
-
-	.loc_0x7DC:
-	  lwz       r29, 0x20(r29)
-
-	.loc_0x7E0:
-	  cmplwi    r29, 0
-	  bne+      .loc_0x2E4
-	  lwz       r3, 0xD4(r1)
-	  lwz       r0, 0xD8(r1)
-	  stw       r3, 0x0(r23)
-	  stw       r0, 0x4(r23)
-	  lwz       r0, 0xDC(r1)
-	  stw       r0, 0x8(r23)
-	  lwz       r0, 0x15C(r1)
-	  lfd       f31, 0x150(r1)
-	  lfd       f30, 0x148(r1)
-	  lfd       f29, 0x140(r1)
-	  lfd       f28, 0x138(r1)
-	  lfd       f27, 0x130(r1)
-	  lfd       f26, 0x128(r1)
-	  lmw       r21, 0xFC(r1)
-	  addi      r1, r1, 0x158
-	  mtlr      r0
-	  blr
-	*/
+	check1 ? "fake" : "fake";
+	check1 ? "fake" : "fake";
 }
 
 /*
@@ -4721,8 +1779,65 @@ void MapMgr::recTraceMove(CollGroup*, MoveTrace&, f32)
  * Address:	80068E54
  * Size:	0005D0
  */
-void MapMgr::traceMove(Creature*, MoveTrace&, f32)
+void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 {
+	trace.mPosition.add(Vector3f(0.0f, trace.mRadius, 0.0f));
+	int a = 1;
+	int b = 0;
+	for (f32 i = trace.mVelocity.length() * timeStep; b < 100 && i >= trace.mRadius; i *= 0.5f) {
+		b++;
+		a *= 2;
+	}
+
+	if (b > 50) {
+		PRINT("Too many iterations [cr %08x : rad = %f : spd = %f]!!\n", creature, trace.mRadius, trace.mVelocity.length() * timeStep);
+	}
+	mCollisionCheckCount++;
+	trace.mStepFraction = 1.0f / a;
+
+	for (int i = 0; i < a; i++) {
+		BoundBox box;
+		box.expandBound(trace.mPosition);
+		box.mMin.sub(Vector3f(2.0f * trace.mRadius, 4.0f * trace.mRadius, 2.0f * trace.mRadius));
+		box.mMax.add(Vector3f(2.0f * trace.mRadius, 4.0f * trace.mRadius, 2.0f * trace.mRadius));
+		trace.mObject        = creature;
+		CollGroup* collGroup = nullptr;
+
+		if (!trace._20) {
+			FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
+			{
+				if ((!coll->mCreature || coll->mCreature != creature) && box.intersects(coll->mBoundingBox)) {
+					for (int j = 0; j < coll->mColliderCount; j++) {
+						if (coll->mVisibleList[coll->mColliderList[j]->mStateIndex]) {
+							coll->mColliderList[j]->mShape          = coll->mShape;
+							coll->mColliderList[j]->mVertexList     = coll->mVertexList;
+							coll->mColliderList[j]->mSourceCollider = coll;
+							coll->mColliderList[j]->mNextCollider   = collGroup;
+							collGroup                               = coll->mColliderList[j];
+						}
+					}
+				}
+			}
+		}
+
+		CollGroup* mapColls = mMapShape->getCollTris(trace.mPosition);
+		if (mapColls && mapColls->mTriCount) {
+			mapColls->mShape          = mMapShape;
+			mapColls->mVertexList     = mMapShape->mVertexList;
+			mapColls->mSourceCollider = nullptr;
+			mapColls->mNextCollider   = collGroup;
+			collGroup                 = mapColls;
+		}
+		if (collGroup) {
+			recTraceMove(collGroup, trace, timeStep);
+		} else {
+			Vector3f vel(trace.mVelocity);
+			vel.multiply(timeStep * trace.mStepFraction);
+			trace.mPosition.add(vel);
+		}
+	}
+
+	trace.mPosition.sub(Vector3f(0.0f, trace.mRadius, 0.0f));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5198,87 +2313,18 @@ CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
  * Size:	000134
  */
 ShadowCaster::ShadowCaster()
+    : CoreNode("")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r4, r13, 0x6CD0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x802B
-	  stw       r0, 0x0(r30)
-	  subi      r0, r3, 0x717C
-	  addi      r3, r30, 0x14
-	  stw       r31, 0x10(r30)
-	  stw       r31, 0xC(r30)
-	  stw       r31, 0x8(r30)
-	  stw       r4, 0x4(r30)
-	  stw       r0, 0x0(r30)
-	  bl        -0x263C4
-	  lfs       f0, -0x78B0(r2)
-	  li        r0, 0x1
-	  addi      r3, r30, 0
-	  stfs      f0, 0x378(r30)
-	  stfs      f0, 0x374(r30)
-	  stfs      f0, 0x370(r30)
-	  stw       r31, 0x36C(r30)
-	  stfs      f0, 0x384(r30)
-	  stfs      f0, 0x380(r30)
-	  stfs      f0, 0x37C(r30)
-	  stfs      f0, 0x390(r30)
-	  stfs      f0, 0x38C(r30)
-	  stfs      f0, 0x388(r30)
-	  lwz       r4, 0x2DEC(r13)
-	  addi      r5, r4, 0x1C
-	  lwz       r4, 0x1C(r4)
-	  stw       r0, 0x0(r5)
-	  neg       r4, r4
-	  subic     r0, r4, 0x1
-	  lfs       f0, -0x6BA8(r13)
-	  subfe     r0, r0, r4
-	  rlwinm    r0,r0,0,24,31
-	  stfs      f0, 0x178(r30)
-	  lfs       f0, -0x6BA4(r13)
-	  stfs      f0, 0x17C(r30)
-	  lfs       f0, -0x6BA0(r13)
-	  stfs      f0, 0x180(r30)
-	  lfs       f0, -0x6B9C(r13)
-	  stfs      f0, 0x184(r30)
-	  lfs       f0, -0x6B98(r13)
-	  stfs      f0, 0x188(r30)
-	  lfs       f0, -0x6B94(r13)
-	  stfs      f0, 0x18C(r30)
-	  lfs       f0, -0x6B90(r13)
-	  stfs      f0, 0x334(r30)
-	  lfs       f0, -0x6B8C(r13)
-	  stfs      f0, 0x338(r30)
-	  lfs       f0, -0x6B88(r13)
-	  stfs      f0, 0x33C(r30)
-	  lfs       f0, -0x7814(r2)
-	  stfs      f0, 0x1E0(r30)
-	  lfs       f0, -0x7884(r2)
-	  stfs      f0, 0x1E4(r30)
-	  lfs       f0, -0x7810(r2)
-	  stfs      f0, 0x1E8(r30)
-	  lwz       r4, 0x2DEC(r13)
-	  stw       r0, 0x1C(r4)
-	  stw       r31, 0x394(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	int togglePrint    = !!gsys->mTogglePrint;
+	gsys->mTogglePrint = 1;
+	mLightCamera.mPosition.set(0.0f, 10.0f, 0.0f);
+	mLightCamera.mFocus.set(0.0f, 0.0f, 0.00001f);
+	mLightCamera.mRotation.set(0.0f, 0.0f, 0.0f);
+	mLightCamera.mFov  = 90.0f;
+	mLightCamera.mNear = 1.0f;
+	mLightCamera.mFar  = 3000.0f;
+	gsys->mTogglePrint = togglePrint;
+	mDrawer            = nullptr;
 }
 
 /*
@@ -5290,113 +2336,4 @@ void ShadowCaster::initShadow()
 {
 	PRINT("making shadow buffer!\n");
 	mLightCamera.initLightmap(256, 4);
-}
-
-/*
- * --INFO--
- * Address:	80069690
- * Size:	00003C
- */
-void MapProjMatHandler::setMaterial(Material*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x1
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x0(r3)
-	  lwz       r4, 0x8(r4)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xC4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800696CC
- * Size:	000038
- */
-void MapProjMatHandler::setTexMatrix(bool)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x0(r3)
-	  lwz       r5, 0xC(r5)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xE4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80069704
- * Size:	00003C
- */
-void MapShadMatHandler::setMaterial(Material*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r4, r3
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x1
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x0(r3)
-	  lwz       r4, 0x8(r4)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xC4(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80069758
- * Size:	000004
- */
-void MapObjectPart::update()
-{
-}
-
-/*
- * --INFO--
- * Address:	8006975C
- * Size:	000004
- */
-void MapObjectPart::refresh(Graphics&)
-{
-}
-
-/*
- * --INFO--
- * Address:	80069760
- * Size:	000038
- */
-void MapObjectPart::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
-{
-	if (_144)
-		_144->touchCallback(plane, a1, a2);
 }

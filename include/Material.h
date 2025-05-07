@@ -6,6 +6,8 @@
 #include "GfxObject.h"
 #include "PVW.h"
 
+struct Graphics;
+
 /**
  * @brief TODO
  * @note Size: 0x9C.
@@ -83,9 +85,9 @@ struct MatobjInfo : public GfxobjInfo {
  * @brief TODO
  */
 struct MaterialHandler {
-	MaterialHandler() { _00 = 0; }
+	MaterialHandler() { mGfx = nullptr; }
 
-	u32 _00; // _00
+	Graphics* mGfx; // _00
 	// _04     = VTBL
 
 	virtual void setMaterial(Material*); // _08

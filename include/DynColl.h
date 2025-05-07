@@ -33,7 +33,7 @@ struct DynCollObject : public Node {
 	// _00     = VTBL
 	// _00-_20 = Node
 	u32 mContactCount;   // _20, unknown
-	u32 _24;             // _24, maybe int?
+	u32 _24;             // _24
 	Creature* mCreature; // _28
 };
 
