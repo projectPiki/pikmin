@@ -20,19 +20,19 @@
  * Address:	........
  * Size:	00009C
  */
-// DEFINE_ERROR()
+DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("OgDiarySection")
 
 namespace zen {
-char** bloFiles_default_Diary = bloFile_Res_Table;
-char* bloFile_Diary_Table[10];
-char** bloFiles_Diary = bloFile_Diary_Table;
+static char* bloFile_Diary_Table[10];
+static char** bloFiles_default_Diary[2] = { &bloFile_Res_Table[1], nullptr };
+static char** bloFiles_Diary[2]         = { bloFile_Diary_Table, nullptr };
 }; // namespace zen
 
 /*
@@ -50,7 +50,7 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
 	mController->setRepeatTime(0.5f);
 
 	mMesgMgr = new ogScrMessageMgr("screen/blo/tu_base.blo");
-	mMesgMgr->MakeAndSetPageInfo(&bloFiles_default_Diary);
+	mMesgMgr->MakeAndSetPageInfo(&bloFiles_default_Diary[0]);
 	mMesgMgr->setLastPageAbutton(true);
 	mMesgMgr->setSolidMode(false);
 	P2DScreen* screen = mMesgMgr->getScreenPtr();
@@ -145,7 +145,7 @@ void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 		}
 
 		bloFile_Diary_Table[max] = "END";
-		mMesgMgr->MakeAndSetPageInfo(&bloFiles_Diary);
+		mMesgMgr->MakeAndSetPageInfo(bloFiles_Diary);
 	}
 	mStatus = Status_0;
 	mMesgMgr->setLastPageAbutton(true);
@@ -252,7 +252,19 @@ void zen::ogScrDiaryMgr::setCursorXY(P2DTextBox* textBox)
  */
 void zen::ogScrDiaryMgr::updateDiary(Controller* input)
 {
-	_24 = 0;
+	_24     = 0;
+	int res = _1C->update(input);
+	if (res == 0) {
+		int selRes = _20->update(input) + 1;
+		if (selRes != 0) {
+			s16 day = playerState->getCurrDay();
+			if (day > 0) {
+				f32 x = _20->getOpenX();
+				f32 y = _20->getOpenY();
+				_1C->open(x, y, day);
+			}
+		}
+	}
 	// UNUSED FUNCTION
 }
 
@@ -472,149 +484,11 @@ void zen::ogDrawSelectDiary::start()
 	}
 
 	for (int i = mDay + 1; i < 30; i++) {
-		_248[i]->setAlpha(0);
+		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
+		obj->setAlpha(0);
 	}
 	_2D0->start();
 	setCursorAlpha();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  lwz       r0, 0x2F6C(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  mr        r3, r0
-	  bl        -0x10F9C8
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x2E8(r31)
-	  b         .loc_0x44
-
-	.loc_0x3C:
-	  li        r0, 0xF
-	  sth       r0, 0x2E8(r31)
-
-	.loc_0x44:
-	  lha       r0, 0x2E8(r31)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x1AC
-	  li        r0, 0x1
-	  stw       r0, 0x0(r31)
-	  li        r29, 0
-	  rlwinm    r0,r29,2,0,29
-	  lfs       f0, -0x4EC8(r2)
-	  li        r3, 0
-	  li        r4, 0xFF
-	  stfs      f0, 0x2EC(r31)
-	  add       r30, r31, r0
-	  sth       r3, 0x2E0(r31)
-	  sth       r3, 0x2E2(r31)
-	  sth       r3, 0x2E4(r31)
-	  sth       r3, 0x2E6(r31)
-	  lwz       r3, 0x2C8(r31)
-	  stb       r4, 0xF0(r3)
-
-	.loc_0x8C:
-	  lha       r0, 0x2E8(r31)
-	  cmpw      r29, r0
-	  ble-      .loc_0xA8
-	  lwz       r3, 0x1D0(r30)
-	  li        r4, 0x50
-	  bl        0x2F2EC
-	  b         .loc_0xB4
-
-	.loc_0xA8:
-	  lwz       r3, 0x1D0(r30)
-	  li        r4, 0xFF
-	  bl        0x2F2DC
-
-	.loc_0xB4:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x1E
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x8C
-	  lha       r3, 0x2E8(r31)
-	  li        r5, 0
-	  addi      r3, r3, 0x1
-	  cmpwi     r3, 0x1E
-	  rlwinm    r0,r3,2,0,29
-	  add       r6, r31, r0
-	  subfic    r3, r3, 0x1E
-	  bge-      .loc_0x19C
-	  rlwinm.   r0,r3,29,3,31
-	  mtctr     r0
-	  beq-      .loc_0x180
-
-	.loc_0xF0:
-	  lwz       r4, 0x248(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x24C(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x250(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x254(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x258(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x25C(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x260(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x264(r6)
-	  addi      r6, r6, 0x20
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  bdnz+     .loc_0xF0
-	  andi.     r3, r3, 0x7
-	  beq-      .loc_0x19C
-
-	.loc_0x180:
-	  mtctr     r3
-
-	.loc_0x184:
-	  lwz       r4, 0x248(r6)
-	  addi      r6, r6, 0x4
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  bdnz+     .loc_0x184
-
-	.loc_0x19C:
-	  lwz       r3, 0x2D0(r31)
-	  bl        -0x11070
-	  mr        r3, r31
-	  bl        .loc_0x1C8
-
-	.loc_0x1AC:
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-
-	.loc_0x1C8:
-	*/
 }
 
 /*
@@ -692,42 +566,43 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 
 	if (mStatus == SELECT_0) {
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
-			f32 x = _1D0[_2E4]->getPosH() + _1D0[_2E4]->getWidth() / 2;
-			f32 y = _1D0[_2E4]->getPosV() + _1D0[_2E4]->getHeight() / 2;
+			P2DPane* pane = _1D0[_2E4];
+			f32 x         = pane->getPosH() + pane->getWidth() / 2;
+			f32 y         = pane->getPosV() + pane->getHeight() / 2;
 			_2D4->open(x, y, _2E4 + 1);
 			seSystem->playSysSe(SYSSE_DECIDE1);
 			mStatus = SELECT_3;
 			return mStatus;
 		}
 
-		if (input->keyClick(KBBTN_MSTICK_UP)) {
-			mStatus = SELECT_3;
+		if (input->keyClick(KBBTN_B | KBBTN_Y)) {
+			mStatus = SELECT_2;
 			_2EC    = 0.0f;
 			return mStatus;
 		}
 
-		if (_2E0 > 0 && input->keyDown(KBBTN_MSTICK_LEFT)) {
+		if (mController->keyRepeat(KBBTN_MSTICK_LEFT) && _2E0 > 0) {
 			_2E0--;
 			if (MoveCursor()) {
 				_2E0++;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
-		} else if (_2E0 > 8 && input->keyDown(KBBTN_MSTICK_RIGHT)) {
-			_2E0--;
+		} else if (mController->keyRepeat(KBBTN_MSTICK_RIGHT) && _2E0 < 9) {
+			_2E0++;
 			if (MoveCursor()) {
 				_2E0--;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
-		} else if (_2E2 < 0 && input->keyDown(KBBTN_MSTICK_UP)) {
+		} else if (mController->keyRepeat(KBBTN_MSTICK_UP) && _2E2 > 0) {
 			_2E2--;
 			if (MoveCursor()) {
 				_2E2++;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
-		} else if (_2E2 > 2 && input->keyDown(KBBTN_MSTICK_DOWN)) {
+		} else if (mController->keyRepeat(KBBTN_MSTICK_DOWN) && _2E2 < 2) {
 			_2E2++;
 			if (MoveCursor()) {
 				_2E2--;
@@ -744,17 +619,19 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	_2D8 = _2D4->update(input);
 	_2C4->update();
 	for (int i = mDay + 1; i < 30; i++) {
-		_248[i]->setAlpha(0);
+		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
+		obj->setAlpha(0);
 	}
 
 	for (int i = 0; i <= mDay; i++) {
 		f32 a = _2EC;
 		if (a >= 1.0f) {
-			a = a - 1.0f;
+			a -= 1.0f;
 		}
-		f32 scale = sinf((a - i * 0.1f) * TAU);
+		a -= f32(i) * 0.1f;
+		f32 scale = 0.05f * sinf(TAU * a) + 1.0f;
 		_1D0[i]->setOffset(_1D0[i]->getWidth() / 2, _1D0[i]->getHeight() / 2);
-		_1D0[i]->setScale(scale * 0.05f + 1.0f);
+		_1D0[i]->setScale(scale);
 	}
 
 	if (mStatus == SELECT_3 && _2D8 == 0) {
@@ -762,622 +639,6 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	}
 
 	return mStatus;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x1A0(r1)
-	  stfd      f31, 0x198(r1)
-	  stfd      f30, 0x190(r1)
-	  stfd      f29, 0x188(r1)
-	  stfd      f28, 0x180(r1)
-	  stfd      f27, 0x178(r1)
-	  stw       r31, 0x174(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x170(r1)
-	  mr        r30, r3
-	  stw       r29, 0x16C(r1)
-	  stw       r28, 0x168(r1)
-	  lwz       r3, 0x0(r3)
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x48
-	  b         .loc_0x84C
-
-	.loc_0x48:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x2EC(r30)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x2EC(r30)
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0x4
-	  bne-      .loc_0x78
-	  li        r0, -0x1
-	  stw       r0, 0x0(r30)
-	  lwz       r3, 0x0(r30)
-	  b         .loc_0x84C
-
-	.loc_0x78:
-	  lwz       r3, 0x2DC(r30)
-	  stw       r31, 0x0(r3)
-	  lwz       r3, 0x2DC(r30)
-	  bl        0x2F9FC
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xDC
-	  lfs       f1, 0x2EC(r30)
-	  lfs       f0, -0x4ED8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xB4
-	  li        r0, 0
-	  stw       r0, 0x0(r30)
-	  lwz       r3, 0x0(r30)
-	  b         .loc_0x84C
-
-	.loc_0xB4:
-	  fdivs     f0, f1, f0
-	  lfs       f1, -0x4EB4(r2)
-	  lfs       f2, -0x4EA4(r2)
-	  lwz       r3, 0x2C8(r30)
-	  fsubs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x160(r1)
-	  lwz       r0, 0x164(r1)
-	  stb       r0, 0xF0(r3)
-
-	.loc_0xDC:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x128
-	  lfs       f1, 0x2EC(r30)
-	  lfs       f0, -0x4ED8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x108
-	  li        r0, 0x4
-	  stw       r0, 0x0(r30)
-	  lwz       r3, 0x0(r30)
-	  b         .loc_0x84C
-
-	.loc_0x108:
-	  fdivs     f0, f1, f0
-	  lfs       f1, -0x4EA4(r2)
-	  lwz       r3, 0x2C8(r30)
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x160(r1)
-	  lwz       r0, 0x164(r1)
-	  stb       r0, 0xF0(r3)
-
-	.loc_0x128:
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x668
-	  lis       r3, 0x100
-	  lwz       r4, 0x28(r31)
-	  addi      r0, r3, 0x1000
-	  and.      r0, r4, r0
-	  beq-      .loc_0x1DC
-	  lha       r6, 0x2E4(r30)
-	  lis       r5, 0x4330
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r6,2,0,29
-	  lwz       r3, 0x2D4(r30)
-	  add       r4, r30, r0
-	  lwz       r9, 0x1D0(r4)
-	  addi      r4, r6, 0x1
-	  lha       r7, 0x18(r9)
-	  lha       r0, 0x1C(r9)
-	  lha       r8, 0x1A(r9)
-	  sub       r6, r0, r7
-	  lha       r0, 0x1E(r9)
-	  srawi     r6, r6, 0x1
-	  addze     r6, r6
-	  sub       r0, r0, r8
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  add       r6, r7, r6
-	  add       r0, r8, r0
-	  xoris     r6, r6, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r6, 0x164(r1)
-	  stw       r0, 0x15C(r1)
-	  stw       r5, 0x160(r1)
-	  stw       r5, 0x158(r1)
-	  lfd       f1, 0x160(r1)
-	  lfd       f0, 0x158(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        -0xF18
-	  li        r3, 0x111
-	  bl        -0xEB778
-	  li        r0, 0x3
-	  stw       r0, 0x0(r30)
-	  lwz       r3, 0x0(r30)
-	  b         .loc_0x84C
-
-	.loc_0x1DC:
-	  andi.     r0, r4, 0xA000
-	  beq-      .loc_0x1FC
-	  li        r0, 0x2
-	  stw       r0, 0x0(r30)
-	  lfs       f0, -0x4EC8(r2)
-	  stfs      f0, 0x2EC(r30)
-	  lwz       r3, 0x0(r30)
-	  b         .loc_0x84C
-
-	.loc_0x1FC:
-	  lwz       r3, 0x2DC(r30)
-	  lwz       r4, 0x4(r3)
-	  rlwinm.   r0,r4,0,9,9
-	  beq-      .loc_0x318
-	  lha       r3, 0x2E0(r30)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x318
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x2E0(r30)
-	  lha       r0, 0x2E2(r30)
-	  lha       r4, 0x2E0(r30)
-	  mulli     r3, r0, 0xA
-	  lha       r0, 0x2E8(r30)
-	  add       r3, r4, r3
-	  extsh     r3, r3
-	  cmpw      r3, r0
-	  ble-      .loc_0x248
-	  li        r0, 0x1
-	  b         .loc_0x2F4
-
-	.loc_0x248:
-	  sth       r3, 0x2E4(r30)
-	  lis       r29, 0x4330
-	  addi      r3, r30, 0x8
-	  lha       r0, 0x2E4(r30)
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0x68(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x15C(r1)
-	  stw       r0, 0x164(r1)
-	  stw       r29, 0x158(r1)
-	  stw       r29, 0x160(r1)
-	  lfd       f1, 0x158(r1)
-	  lfd       f0, 0x160(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49FE8
-	  lha       r0, 0x2E4(r30)
-	  addi      r3, r30, 0x38
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0xE0(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x154(r1)
-	  stw       r0, 0x14C(r1)
-	  stw       r29, 0x150(r1)
-	  stw       r29, 0x148(r1)
-	  lfd       f1, 0x150(r1)
-	  lfd       f0, 0x148(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49F98
-	  li        r0, 0
-
-	.loc_0x2F4:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x30C
-	  lha       r3, 0x2E0(r30)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x2E0(r30)
-	  b         .loc_0x650
-
-	.loc_0x30C:
-	  li        r3, 0x112
-	  bl        -0xEB8C0
-	  b         .loc_0x650
-
-	.loc_0x318:
-	  rlwinm.   r0,r4,0,11,11
-	  beq-      .loc_0x42C
-	  lha       r3, 0x2E0(r30)
-	  cmpwi     r3, 0x9
-	  bge-      .loc_0x42C
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x2E0(r30)
-	  lha       r0, 0x2E2(r30)
-	  lha       r4, 0x2E0(r30)
-	  mulli     r3, r0, 0xA
-	  lha       r0, 0x2E8(r30)
-	  add       r3, r4, r3
-	  extsh     r3, r3
-	  cmpw      r3, r0
-	  ble-      .loc_0x35C
-	  li        r0, 0x1
-	  b         .loc_0x408
-
-	.loc_0x35C:
-	  sth       r3, 0x2E4(r30)
-	  lis       r29, 0x4330
-	  addi      r3, r30, 0x8
-	  lha       r0, 0x2E4(r30)
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0x68(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x14C(r1)
-	  stw       r0, 0x154(r1)
-	  stw       r29, 0x148(r1)
-	  stw       r29, 0x150(r1)
-	  lfd       f1, 0x148(r1)
-	  lfd       f0, 0x150(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49ED4
-	  lha       r0, 0x2E4(r30)
-	  addi      r3, r30, 0x38
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0xE0(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x15C(r1)
-	  stw       r0, 0x164(r1)
-	  stw       r29, 0x158(r1)
-	  stw       r29, 0x160(r1)
-	  lfd       f1, 0x158(r1)
-	  lfd       f0, 0x160(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49E84
-	  li        r0, 0
-
-	.loc_0x408:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x420
-	  lha       r3, 0x2E0(r30)
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x2E0(r30)
-	  b         .loc_0x650
-
-	.loc_0x420:
-	  li        r3, 0x112
-	  bl        -0xEB9D4
-	  b         .loc_0x650
-
-	.loc_0x42C:
-	  rlwinm.   r0,r4,0,12,12
-	  beq-      .loc_0x540
-	  lha       r3, 0x2E2(r30)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x540
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x2E2(r30)
-	  lha       r0, 0x2E2(r30)
-	  lha       r4, 0x2E0(r30)
-	  mulli     r3, r0, 0xA
-	  lha       r0, 0x2E8(r30)
-	  add       r3, r4, r3
-	  extsh     r3, r3
-	  cmpw      r3, r0
-	  ble-      .loc_0x470
-	  li        r0, 0x1
-	  b         .loc_0x51C
-
-	.loc_0x470:
-	  sth       r3, 0x2E4(r30)
-	  lis       r29, 0x4330
-	  addi      r3, r30, 0x8
-	  lha       r0, 0x2E4(r30)
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0x68(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x14C(r1)
-	  stw       r0, 0x154(r1)
-	  stw       r29, 0x148(r1)
-	  stw       r29, 0x150(r1)
-	  lfd       f1, 0x148(r1)
-	  lfd       f0, 0x150(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49DC0
-	  lha       r0, 0x2E4(r30)
-	  addi      r3, r30, 0x38
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0xE0(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x15C(r1)
-	  stw       r0, 0x164(r1)
-	  stw       r29, 0x158(r1)
-	  stw       r29, 0x160(r1)
-	  lfd       f1, 0x158(r1)
-	  lfd       f0, 0x160(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49D70
-	  li        r0, 0
-
-	.loc_0x51C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x534
-	  lha       r3, 0x2E2(r30)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x2E2(r30)
-	  b         .loc_0x650
-
-	.loc_0x534:
-	  li        r3, 0x112
-	  bl        -0xEBAE8
-	  b         .loc_0x650
-
-	.loc_0x540:
-	  rlwinm.   r0,r4,0,10,10
-	  beq-      .loc_0x650
-	  lha       r3, 0x2E2(r30)
-	  cmpwi     r3, 0x2
-	  bge-      .loc_0x650
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x2E2(r30)
-	  lha       r0, 0x2E2(r30)
-	  lha       r4, 0x2E0(r30)
-	  mulli     r3, r0, 0xA
-	  lha       r0, 0x2E8(r30)
-	  add       r3, r4, r3
-	  extsh     r3, r3
-	  cmpw      r3, r0
-	  ble-      .loc_0x584
-	  li        r0, 0x1
-	  b         .loc_0x630
-
-	.loc_0x584:
-	  sth       r3, 0x2E4(r30)
-	  lis       r29, 0x4330
-	  addi      r3, r30, 0x8
-	  lha       r0, 0x2E4(r30)
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0x68(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x14C(r1)
-	  stw       r0, 0x154(r1)
-	  stw       r29, 0x148(r1)
-	  stw       r29, 0x150(r1)
-	  lfd       f1, 0x148(r1)
-	  lfd       f0, 0x150(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49CAC
-	  lha       r0, 0x2E4(r30)
-	  addi      r3, r30, 0x38
-	  lfd       f2, -0x4ED0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4EA8(r2)
-	  add       r4, r30, r0
-	  lwz       r5, 0xE0(r4)
-	  lha       r4, 0x18(r5)
-	  lha       r0, 0x1A(r5)
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x15C(r1)
-	  stw       r0, 0x164(r1)
-	  stw       r29, 0x158(r1)
-	  stw       r29, 0x160(r1)
-	  lfd       f1, 0x158(r1)
-	  lfd       f0, 0x160(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f2, f0, f2
-	  bl        0x49C5C
-	  li        r0, 0
-
-	.loc_0x630:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x648
-	  lha       r3, 0x2E2(r30)
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x2E2(r30)
-	  b         .loc_0x650
-
-	.loc_0x648:
-	  li        r3, 0x112
-	  bl        -0xEBBFC
-
-	.loc_0x650:
-	  addi      r3, r30, 0x8
-	  bl        0x4989C
-	  addi      r3, r30, 0x38
-	  bl        0x49894
-	  lwz       r3, 0x2D0(r30)
-	  bl        -0x11840
-
-	.loc_0x668:
-	  lwz       r3, 0x4(r30)
-	  bl        0x21BC0
-	  lwz       r3, 0x2D4(r30)
-	  mr        r4, r31
-	  bl        -0x1138
-	  stw       r3, 0x2D8(r30)
-	  lwz       r3, 0x2C4(r30)
-	  bl        0x21BA8
-	  lha       r3, 0x2E8(r30)
-	  li        r5, 0
-	  addi      r3, r3, 0x1
-	  cmpwi     r3, 0x1E
-	  rlwinm    r0,r3,2,0,29
-	  add       r6, r30, r0
-	  subfic    r3, r3, 0x1E
-	  bge-      .loc_0x760
-	  rlwinm.   r0,r3,29,3,31
-	  mtctr     r0
-	  beq-      .loc_0x744
-
-	.loc_0x6B4:
-	  lwz       r4, 0x248(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x24C(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x250(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x254(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x258(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x25C(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x260(r6)
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  lwz       r4, 0x264(r6)
-	  addi      r6, r6, 0x20
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  bdnz+     .loc_0x6B4
-	  andi.     r3, r3, 0x7
-	  beq-      .loc_0x760
-
-	.loc_0x744:
-	  mtctr     r3
-
-	.loc_0x748:
-	  lwz       r4, 0x248(r6)
-	  addi      r6, r6, 0x4
-	  lwz       r4, 0xE0(r4)
-	  lwz       r4, 0xC(r4)
-	  stb       r5, 0xF0(r4)
-	  bdnz+     .loc_0x748
-
-	.loc_0x760:
-	  lfs       f27, -0x4EB4(r2)
-	  mr        r28, r30
-	  lfs       f28, -0x4EA0(r2)
-	  li        r31, 0
-	  lfd       f29, -0x4ED0(r2)
-	  lfs       f30, -0x4E98(r2)
-	  lis       r29, 0x4330
-	  lfs       f31, -0x4E9C(r2)
-	  b         .loc_0x81C
-
-	.loc_0x784:
-	  lfs       f0, 0x2EC(r30)
-	  fcmpo     cr0, f0, f27
-	  fmr       f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x79C
-	  fsubs     f1, f1, f27
-
-	.loc_0x79C:
-	  xoris     r0, r31, 0x8000
-	  stw       r0, 0x14C(r1)
-	  stw       r29, 0x148(r1)
-	  lfd       f0, 0x148(r1)
-	  fsubs     f0, f0, f29
-	  fmuls     f0, f28, f0
-	  fsubs     f1, f1, f0
-	  fmuls     f1, f30, f1
-	  bl        0x8AC08
-	  lwz       r5, 0x1D0(r28)
-	  fmuls     f0, f31, f1
-	  addi      r31, r31, 0x1
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  fadds     f0, f27, f0
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
-	  lwz       r3, 0x1D0(r28)
-	  addi      r28, r28, 0x4
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-
-	.loc_0x81C:
-	  lha       r0, 0x2E8(r30)
-	  cmpw      r31, r0
-	  ble+      .loc_0x784
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x848
-	  lwz       r0, 0x2D8(r30)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x848
-	  li        r0, 0
-	  stw       r0, 0x0(r30)
-
-	.loc_0x848:
-	  lwz       r3, 0x0(r30)
-
-	.loc_0x84C:
-	  lwz       r0, 0x1A4(r1)
-	  lfd       f31, 0x198(r1)
-	  lfd       f30, 0x190(r1)
-	  lfd       f29, 0x188(r1)
-	  lfd       f28, 0x180(r1)
-	  lfd       f27, 0x178(r1)
-	  lwz       r31, 0x174(r1)
-	  lwz       r30, 0x170(r1)
-	  lwz       r29, 0x16C(r1)
-	  lwz       r28, 0x168(r1)
-	  addi      r1, r1, 0x1A0
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

@@ -398,7 +398,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		char tutorialText[256];
 		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->_A59C); // '<<< Tutorial >>> Number of tx?? (%d)'
 		gfx.texturePrintf(mFont, 30, 20, tutorialText);
-		gfx.texturePrintf(mFont, 30, 40, *msgMgr->_1C[msgMgr->_4D0]);
+		gfx.texturePrintf(mFont, 30, 40, msgMgr->getPageInfo()->_00);
 	}
 
 	mMemChkMgr->draw(gfx);

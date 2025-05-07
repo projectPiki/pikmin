@@ -333,7 +333,7 @@ void zen::ogScrMessageMgr::backPage()
  * Address:	8018BE3C
  * Size:	0001DC
  */
-void zen::ogScrMessageMgr::makePageInfo(char***)
+s16 zen::ogScrMessageMgr::makePageInfo(char***)
 {
 	/*
 	.loc_0x0:

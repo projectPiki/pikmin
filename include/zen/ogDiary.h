@@ -18,6 +18,8 @@ namespace zen {
 struct ZenController;
 struct EffectMgr2D;
 struct setTenmetuAlpha;
+struct ogDrawDiary;
+struct ogDrawSelectDiary;
 
 /**
  * @brief TODO
@@ -59,9 +61,9 @@ struct ogScrDiaryMgr {
 	ZenController* mController; // _10
 	Font* mFont;                // _14
 	P2DPane* mPaneCapu;         // _18
-	int _1C;                    // _1C
-	int _20;                    // _20
-	int _24;                    // _24
+	ogDrawDiary* _1C;           // _1C
+	ogDrawSelectDiary* _20;     // _20
+	u8 _24;                     // _24
 };
 
 /**
@@ -129,8 +131,8 @@ struct ogDrawSelectDiary {
 	SelectDiaryStatus update(Controller*);
 	void draw(Graphics&);
 
-	int getOpenX();
-	int getOpenY();
+	int getOpenX() { return _2C0->getPosH() + _2C0->getWidth() / 2; }
+	int getOpenY() { return _2C0->getPosV() + _2C0->getHeight() / 2; }
 
 	SelectDiaryStatus mStatus;  // _00
 	P2DScreen* mScreen;         // _04
@@ -141,7 +143,7 @@ struct ogDrawSelectDiary {
 	P2DPane* _168[30];          // _168
 	P2DPane* _1D0[30];          // _1D0
 	P2DPicture* _248[30];       // _248
-	int _2C0;                   // _2C0
+	P2DPane* _2C0;              // _2C0
 	P2DScreen* _2C4;            // _2C4
 	P2DPicture* _2C8;           // _2C8
 	P2DPicture* _2CC;           // _2CC
