@@ -64,18 +64,18 @@ struct ogScrTitleMgr {
 	P2DPicture* mBgmVolPanes[10];  // _40
 	P2DPicture* mSfxVolPanes[10];  // _68
 	f32 mNoInputTimer;             // _90
-	int mCurentSelection;          // _94
+	int mCurrentSelection;         // _94
 	s16 mCurrentMenu;              // _98
-	s16 _9A;
-	u8 _9C;
-	u8 _9D;
-	s16 mBgmVol; // _9E
-	s16 mSfxVol; // _A0
-	u8 _A2;
-	u8 _A3;
-	u8 _A4;
-	u8 _A5;
-	u16 _A6;
+	s16 _9A;                       // _9A
+	bool mStereoMode;              // _9C
+	u8 _9D;                        // _9D
+	s16 mBgmVol;                   // _9E
+	s16 mSfxVol;                   // _A0
+	bool mVibeMode;                // _A2
+	bool mChildMode;               // _A3
+	u8 _A4;                        // _A4
+	u8 _A5;                        // _A5
+	u16 _A6;                       // _A6
 };
 
 } // namespace zen
