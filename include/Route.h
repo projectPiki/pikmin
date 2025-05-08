@@ -63,15 +63,7 @@ struct RouteLink : public CoreNode {
  * @brief TODO
  */
 struct RoutePoint : public CoreNode {
-	RoutePoint()
-	    : CoreNode("rp")
-	{
-		mLink.initCore("");
-		_20     = 8.0f;
-		mIndex  = 0;
-		mState  = 1;
-		mRadius = 10.0f;
-	}
+	RoutePoint();
 
 	void loadini(CmdStream*);
 
@@ -86,7 +78,7 @@ struct RoutePoint : public CoreNode {
 	f32 _20;            // _20
 	f32 mRadius;        // _24
 	Vector3f mPosition; // _28
-	u32 mState;         // _34
+	int mState;         // _34
 	int mIndex;         // _38
 	RouteLink mLink;    // _3C
 };

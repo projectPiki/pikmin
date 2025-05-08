@@ -401,7 +401,7 @@ config.libs = [
             Object(Equivalent, "sysCommon/shapeBase.cpp"),
             Object(Matching, "sysCommon/shpLightFlares.cpp"),
             Object(Matching, "sysCommon/shpObjColl.cpp"),
-            Object(NonMatching, "sysCommon/shpRoutes.cpp"),
+            Object(Matching, "sysCommon/shpRoutes.cpp"),
             Object(Matching, "sysCommon/sysMath.cpp"),
             Object(Matching, "sysCommon/matMath.cpp"),
             Object(Matching, "sysCommon/stdSystem.cpp"),
