@@ -409,7 +409,7 @@ config.libs = [
             Object(Matching, "sysCommon/timers.cpp"),
             Object(Matching, "sysCommon/controller.cpp"),
             Object(Matching, "sysCommon/cmdStream.cpp"),
-            Object(NonMatching, "sysCommon/camera.cpp"),
+            Object(Matching, "sysCommon/camera.cpp"),
             Object(Matching, "sysCommon/atx.cpp"),
             Object(Matching, "sysCommon/id32.cpp"),
         ],
