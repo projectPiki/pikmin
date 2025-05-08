@@ -391,7 +391,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category" : "game",
         "objects": [
-            Object(NonMatching, "sysCommon/ayuStack.cpp"),
+            Object(Matching, "sysCommon/ayuStack.cpp"),
             Object(Matching, "sysCommon/baseApp.cpp"),
             Object(Matching, "sysCommon/stream.cpp"),
             Object(Matching, "sysCommon/streamBufferedInput.cpp"),

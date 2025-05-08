@@ -14,7 +14,11 @@ struct ayuID {
 	u32 mID; // _00
 };
 
-struct MemHead { };
+struct MemHead {
+	u32 _00;      // _00
+	MemHead* _04; // _04
+	MemHead* _08; // _08
+};
 
 /**
  * @brief TODO
@@ -33,13 +37,9 @@ struct AyuCache {
 	void deleteIdAll(u32);
 	u32 amountFree();
 
-	u32 _00;     // _00
-	u32 _04;     // _04
-	u32 _08;     // _08
+	MemHead _00; // _00
 	s8 _0C;      // _0C
-	u32 _10;     // _10
-	u32 _14;     // _14
-	u32 _18;     // _18
+	MemHead _10; // _10
 	u32 _1C;     // _1C
 	u32 _20;     // _20
 	u32 _24;     // _24
