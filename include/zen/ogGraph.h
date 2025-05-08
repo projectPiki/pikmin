@@ -2,6 +2,7 @@
 #define _ZEN_OGGRAPH_H
 
 #include "types.h"
+#include "Piki.h"
 
 struct Controller;
 struct Graphics;
@@ -22,13 +23,11 @@ struct ogGraphMgr {
 	void MakeData();
 	void draw(u8);
 
-	P2DPane* mPane;  // _00
-	int mMinPikis;   // _04
-	int mMaxPikis;   // _08
-	int _0C;         // _0C
-	bool mHasBlue;   // _10
-	bool mHasRed;    // _11
-	bool mHasYellow; // _12
+	P2DPane* mPane;                 // _00
+	int mMaxPikis;                  // _04
+	int mMinPikis;                  // _08
+	int _0C;                        // _0C
+	bool mHasColor[PikiColorCount]; // _10
 };
 
 } // namespace zen

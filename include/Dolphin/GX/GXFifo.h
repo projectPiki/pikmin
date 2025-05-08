@@ -74,6 +74,7 @@ volatile PPCWGPipe GXWGFifo : GXFIFO_ADDR;
 //////////// FIFO MACROS/INLINES ///////////
 #define GX_WRITE_U8(val)  (GXWGFifo.u8 = val)
 #define GX_WRITE_U16(val) (GXWGFifo.u16 = val)
+#define GX_WRITE_S16(val) (GXWGFifo.s16 = val)
 #define GX_WRITE_U32(val) (GXWGFifo.u32 = (u32)val)
 #define GX_WRITE_F32(val) (GXWGFifo.f32 = (f32)val)
 
@@ -140,6 +141,12 @@ static inline void GXPosition2u16(u16 x, u16 y)
 {
 	GXWGFifo.u16 = x;
 	GXWGFifo.u16 = y;
+}
+
+static inline void GXPosition2s16(s16 x, s16 y)
+{
+	GXWGFifo.s16 = x;
+	GXWGFifo.s16 = y;
 }
 
 static inline void GXTexCoord2s16(const s16 u, const s16 v)

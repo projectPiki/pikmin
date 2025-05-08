@@ -21,13 +21,13 @@ DEFINE_PRINT("OgResultSection")
 
 namespace zen {
 
-u16 LinePointB[32] = { 0 };
-u16 LinePointR[32] = { 0 };
-u16 LinePointY[32] = { 0 };
+static s16 LinePointB[32] ATTRIBUTE_ALIGN(32) = { 0 };
+static s16 LinePointR[32]                     = { 0 };
+static s16 LinePointY[32]                     = { 0 };
 
 // day 1 graph points
-u16 ogawa_per_line[15]       = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
-u8 og_piki_lines_color[3][4] = { { 0, 192, 255, 255 }, { 255, 0, 0, 255 }, { 255, 255, 0, 255 } };
+static s16 ogawa_per_line[15]     = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
+static u32 og_piki_lines_color[3] = { 0x00C0FFFF, 0xFF0000FF, 0xFFFF00FF };
 
 /*
  * --INFO--
@@ -37,15 +37,15 @@ u8 og_piki_lines_color[3][4] = { { 0, 192, 255, 255 }, { 255, 0, 0, 255 }, { 255
 ogGraphMgr::ogGraphMgr(P2DScreen* screen)
 {
 	mPane = screen->search('g_sp', true);
-	_0C   = GameStat::containerPikis[1] + GameStat::formationPikis[1];
+	_0C   = GameStat::containerPikis[Red] + GameStat::formationPikis[Red];
 	if (playerState == nullptr) {
-		mHasBlue   = true;
-		mHasRed    = true;
-		mHasYellow = true;
+		mHasColor[Blue]   = true;
+		mHasColor[Red]    = true;
+		mHasColor[Yellow] = true;
 	} else {
-		mHasBlue   = playerState->displayPikiCount(Blue);
-		mHasRed    = playerState->displayPikiCount(Red);
-		mHasYellow = playerState->displayPikiCount(Yellow);
+		mHasColor[Blue]   = playerState->displayPikiCount(Blue);
+		mHasColor[Red]    = playerState->displayPikiCount(Red);
+		mHasColor[Yellow] = playerState->displayPikiCount(Yellow);
 	}
 	MakeData();
 }
@@ -63,220 +63,18 @@ void ogGraphMgr::SetDummyLineData()
 		LinePointY[i] = 0;
 	}
 
-	int x      = mPane->getPosH();
-	int y      = mPane->getPosV();
-	int width  = mPane->getWidth();
-	int height = mPane->getHeight();
-	for (int i = 0; i < 14; i++) {
-		LinePointR[i]     = i * (width / 12) + x;
-		LinePointR[i + 1] = (100 - ogawa_per_line[i]) * height / 100 + y;
+	s16 width  = mPane->getWidth() / 12;
+	s16 x      = mPane->getPosH();
+	s16 y      = mPane->getPosV();
+	s16 height = mPane->getHeight();
+	s16* dummy = LinePointR;
+	for (int i = 0; i <= 13; i++) {
+		int a    = 100 - ogawa_per_line[i];
+		s16 pt1  = y + a * height / 100;
+		dummy[0] = x + i * width;
+		dummy[1] = pt1;
+		dummy += 2;
 	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x58(r1)
-	  lis       r4, 0x802D
-	  addi      r4, r4, 0x6120
-	  stw       r31, 0x54(r1)
-	  li        r0, 0x4
-	  mtctr     r0
-	  addi      r5, r4, 0x20
-	  stw       r30, 0x50(r1)
-	  addi      r6, r4, 0x60
-	  addi      r7, r4, 0xA0
-
-	.loc_0x28:
-	  li        r0, 0
-	  sth       r0, 0x0(r5)
-	  sth       r0, 0x0(r6)
-	  sth       r0, 0x0(r7)
-	  sth       r0, 0x2(r5)
-	  sth       r0, 0x2(r6)
-	  sth       r0, 0x2(r7)
-	  sth       r0, 0x4(r5)
-	  sth       r0, 0x4(r6)
-	  sth       r0, 0x4(r7)
-	  sth       r0, 0x6(r5)
-	  sth       r0, 0x6(r6)
-	  sth       r0, 0x6(r7)
-	  sth       r0, 0x8(r5)
-	  sth       r0, 0x8(r6)
-	  sth       r0, 0x8(r7)
-	  sth       r0, 0xA(r5)
-	  sth       r0, 0xA(r6)
-	  sth       r0, 0xA(r7)
-	  sth       r0, 0xC(r5)
-	  sth       r0, 0xC(r6)
-	  sth       r0, 0xC(r7)
-	  sth       r0, 0xE(r5)
-	  addi      r5, r5, 0x10
-	  sth       r0, 0xE(r6)
-	  addi      r6, r6, 0x10
-	  sth       r0, 0xE(r7)
-	  addi      r7, r7, 0x10
-	  bdnz+     .loc_0x28
-	  lwz       r7, 0x0(r3)
-	  lis       r3, 0x2AAB
-	  subi      r6, r3, 0x5555
-	  lha       r5, 0x18(r7)
-	  lis       r10, 0x51EC
-	  lha       r0, 0x1C(r7)
-	  addi      r9, r4, 0x60
-	  lha       r11, 0x1A(r7)
-	  sub       r3, r0, r5
-	  lha       r0, 0x1E(r7)
-	  mulhw     r3, r6, r3
-	  lha       r6, 0x18(r7)
-	  srawi     r3, r3, 0x1
-	  rlwinm    r5,r3,1,31,31
-	  add       r3, r3, r5
-	  sub       r0, r0, r11
-	  extsh     r7, r3
-	  extsh     r8, r0
-	  addi      r3, r4, 0xE0
-	  extsh     r5, r11
-	  subi      r0, r10, 0x7AE1
-	  lha       r11, 0x0(r3)
-	  li        r10, 0x1
-	  mullw     r12, r10, r7
-	  sth       r6, 0x0(r9)
-	  subfic    r10, r11, 0x64
-	  mullw     r10, r10, r8
-	  mulhw     r10, r0, r10
-	  srawi     r10, r10, 0x5
-	  rlwinm    r11,r10,1,31,31
-	  add       r10, r10, r11
-	  add       r10, r5, r10
-	  sth       r10, 0x2(r9)
-	  li        r10, 0x2
-	  mullw     r11, r10, r7
-	  lha       r10, 0x2(r3)
-	  subfic    r10, r10, 0x64
-	  mullw     r10, r10, r8
-	  mulhw     r10, r0, r10
-	  srawi     r30, r10, 0x5
-	  rlwinm    r31,r30,1,31,31
-	  add       r10, r6, r12
-	  add       r12, r30, r31
-	  sth       r10, 0x4(r9)
-	  add       r10, r5, r12
-	  sth       r10, 0x6(r9)
-	  li        r10, 0x3
-	  mullw     r12, r10, r7
-	  lha       r10, 0x4(r3)
-	  subfic    r10, r10, 0x64
-	  mullw     r10, r10, r8
-	  mulhw     r10, r0, r10
-	  srawi     r30, r10, 0x5
-	  rlwinm    r31,r30,1,31,31
-	  add       r10, r6, r11
-	  add       r11, r30, r31
-	  sth       r10, 0x8(r9)
-	  add       r10, r5, r11
-	  sth       r10, 0xA(r9)
-	  li        r10, 0x4
-	  mullw     r11, r10, r7
-	  lha       r10, 0x6(r3)
-	  subfic    r10, r10, 0x64
-	  mullw     r10, r10, r8
-	  mulhw     r10, r0, r10
-	  srawi     r31, r10, 0x5
-	  rlwinm    r30,r31,1,31,31
-	  add       r10, r6, r12
-	  add       r12, r31, r30
-	  sth       r10, 0xC(r9)
-	  add       r10, r5, r12
-	  sth       r10, 0xE(r9)
-	  li        r10, 0x5
-	  mullw     r10, r10, r7
-	  lha       r12, 0x8(r3)
-	  subfic    r12, r12, 0x64
-	  mullw     r12, r12, r8
-	  mulhw     r12, r0, r12
-	  srawi     r12, r12, 0x5
-	  rlwinm    r31,r12,1,31,31
-	  add       r11, r6, r11
-	  add       r12, r12, r31
-	  sth       r11, 0x10(r9)
-	  add       r11, r5, r12
-	  sth       r11, 0x12(r9)
-	  add       r11, r6, r10
-	  li        r10, 0x6
-	  lha       r12, 0xA(r3)
-	  mullw     r10, r10, r7
-	  sth       r11, 0x14(r9)
-	  subfic    r11, r12, 0x64
-	  mullw     r11, r11, r8
-	  mulhw     r11, r0, r11
-	  srawi     r11, r11, 0x5
-	  rlwinm    r12,r11,1,31,31
-	  add       r11, r11, r12
-	  add       r11, r5, r11
-	  sth       r11, 0x16(r9)
-	  add       r10, r6, r10
-	  lha       r11, 0xC(r3)
-	  subfic    r11, r11, 0x64
-	  sth       r10, 0x18(r9)
-	  mullw     r10, r11, r8
-	  mulhw     r10, r0, r10
-	  srawi     r10, r10, 0x5
-	  rlwinm    r11,r10,1,31,31
-	  add       r10, r10, r11
-	  add       r10, r5, r10
-	  sth       r10, 0x1A(r9)
-	  li        r10, 0x7
-	  mullw     r10, r10, r7
-	  lha       r3, 0xE(r3)
-	  subfic    r3, r3, 0x64
-	  mullw     r3, r3, r8
-	  mulhw     r3, r0, r3
-	  srawi     r11, r3, 0x5
-	  add       r3, r6, r10
-	  rlwinm    r12,r11,1,31,31
-	  sth       r3, 0x1C(r9)
-	  add       r10, r11, r12
-	  add       r3, r5, r10
-	  sth       r3, 0x1E(r9)
-	  li        r12, 0x8
-	  addi      r9, r9, 0x20
-	  b         .loc_0x2E0
-
-	.loc_0x290:
-	  subfic    r3, r12, 0xE
-	  cmpwi     r12, 0xD
-	  mtctr     r3
-	  bgt-      .loc_0x2F4
-
-	.loc_0x2A0:
-	  lha       r4, 0x0(r10)
-	  add       r3, r6, r11
-	  add       r11, r11, r7
-	  subfic    r4, r4, 0x64
-	  sth       r3, 0x0(r9)
-	  mullw     r3, r4, r8
-	  mulhw     r3, r0, r3
-	  srawi     r3, r3, 0x5
-	  rlwinm    r4,r3,1,31,31
-	  add       r3, r3, r4
-	  add       r3, r5, r3
-	  sth       r3, 0x2(r9)
-	  addi      r10, r10, 0x2
-	  addi      r9, r9, 0x4
-	  bdnz+     .loc_0x2A0
-	  b         .loc_0x2F4
-
-	.loc_0x2E0:
-	  mullw     r11, r12, r7
-	  rlwinm    r3,r12,1,0,30
-	  add       r10, r4, r3
-	  addi      r10, r10, 0xE0
-	  b         .loc_0x290
-
-	.loc_0x2F4:
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  addi      r1, r1, 0x58
-	  blr
-	*/
 }
 
 /*
@@ -286,306 +84,118 @@ void ogGraphMgr::SetDummyLineData()
  */
 void ogGraphMgr::MakeData()
 {
+	u32 badCompiler;
+	s16* line;
 	if (playerState == nullptr) {
 		SetDummyLineData();
-		mMinPikis = _0C;
-		mMaxPikis = 0;
+		mMaxPikis = _0C;
+		mMinPikis = 0;
 		return;
 	}
 
 	if (playerState->isTutorial()) {
 		SetDummyLineData();
-		mMinPikis = _0C;
-		mMaxPikis = 0;
+		mMaxPikis = _0C;
+		mMinPikis = 0;
 		return;
 	}
 
-	int minPikis = 0;
-	int maxPikis = 10000;
-	int start    = playerState->getStartHour();
-	int end      = playerState->getEndHour();
+	int maxPikis = 0;
+	int minPikis = 10000;
+	int hour;
+	int color;
+	int start = playerState->getStartHour();
+	int end   = playerState->getEndHour();
+	int count;
 	PRINT("hour (%d --> %d)\n", start, end);
-	for (int color = 0; color < 3; color++) {
-		for (int hour = start; hour < end; hour++) {
-			int count = playerState->getPikiHourCount(hour, color);
-			PRINT("p(%d) h[%d] num %d\n", color, hour, count);
-			if (count > -1) {
-				if (count > minPikis) {
-					minPikis = count;
-				}
-				if (maxPikis > count) {
-					minPikis = count;
+	for (color = 0; color < 3; color++) {
+		if (mHasColor[color]) {
+			for (hour = start; hour <= end; hour++) {
+				count = playerState->getPikiHourCount(hour, color);
+				PRINT("p(%d) h[%d] num %d\n", color, hour, count);
+				if (count >= 0) {
+					if (count > maxPikis) {
+						maxPikis = count;
+					}
+					if (count < minPikis) {
+						minPikis = count;
+					}
 				}
 			}
 		}
 	}
 
-	mMinPikis = minPikis;
-	mMaxPikis = maxPikis;
+	PRINT("piki Max = %d  Min = %d\n", maxPikis, minPikis);
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stmw      r18, 0x48(r1)
-	  addi      r31, r3, 0
-	  addi      r28, r4, 0x6120
-	  lwz       r0, 0x2F6C(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x44
-	  mr        r3, r31
-	  bl        -0x330
-	  lwz       r3, 0xC(r31)
-	  li        r0, 0
-	  stw       r3, 0x4(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0x30C
+	mMaxPikis = (s16)maxPikis;
+	mMinPikis = (s16)minPikis;
 
-	.loc_0x44:
-	  mr        r3, r0
-	  bl        -0x117EC4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x70
-	  mr        r3, r31
-	  bl        -0x35C
-	  lwz       r3, 0xC(r31)
-	  li        r0, 0
-	  stw       r3, 0x4(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0x30C
+	int x      = mPane->getPosH();
+	int y      = mPane->getPosV();
+	int width  = mPane->getWidth() / 12;
+	int height = mPane->getHeight();
 
-	.loc_0x70:
-	  lwz       r3, 0x2F6C(r13)
-	  li        r18, 0
-	  li        r21, 0x2710
-	  bl        -0x1177A0
-	  mr        r0, r3
-	  lwz       r3, 0x2F6C(r13)
-	  mr        r20, r0
-	  bl        -0x117788
-	  addi      r29, r3, 0
-	  li        r23, 0
+	if (maxPikis - minPikis >= 100) {
+		for (color = 0; color < PikiColorCount; color++) {
+			if (mHasColor[color]) {
+				switch (color) {
+				case Blue:
+					line = LinePointB;
+					break;
 
-	.loc_0x98:
-	  addi      r0, r23, 0x10
-	  lbzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0xEC
-	  mr        r19, r20
-	  b         .loc_0xE4
+				case Red:
+					line = LinePointR;
+					break;
 
-	.loc_0xB0:
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r4, r19, 0
-	  addi      r5, r23, 0
-	  bl        -0x117790
-	  cmpwi     r3, 0
-	  blt-      .loc_0xE0
-	  cmpw      r3, r18
-	  ble-      .loc_0xD4
-	  mr        r18, r3
+				case Yellow:
+					line = LinePointY;
+					break;
+				}
 
-	.loc_0xD4:
-	  cmpw      r3, r21
-	  bge-      .loc_0xE0
-	  mr        r21, r3
+				for (hour = start; hour <= end; hour++) {
+					count = playerState->getPikiHourCount(hour, color);
+					s16 a = -10;
+					if (count >= 0) {
+						a = 100 * (count - minPikis) / (maxPikis - minPikis);
+					}
 
-	.loc_0xE0:
-	  addi      r19, r19, 0x1
+					line[0] = x + (hour - 7) * width;
+					line[1] = y + (100 - a) * height / 100;
+					line += 2;
+				}
+			}
+		}
+	} else {
+		for (color = 0; color < PikiColorCount; color++) {
+			if (mHasColor[color]) {
+				switch (color) {
+				case Blue:
+					line = LinePointB;
+					break;
 
-	.loc_0xE4:
-	  cmpw      r19, r29
-	  ble+      .loc_0xB0
+				case Red:
+					line = LinePointR;
+					break;
 
-	.loc_0xEC:
-	  addi      r23, r23, 0x1
-	  cmpwi     r23, 0x3
-	  blt+      .loc_0x98
-	  extsh     r0, r18
-	  stw       r0, 0x4(r31)
-	  extsh     r0, r21
-	  lis       r3, 0x2AAB
-	  stw       r0, 0x8(r31)
-	  sub       r26, r18, r21
-	  subi      r4, r3, 0x5555
-	  lwz       r5, 0x0(r31)
-	  cmpwi     r26, 0x64
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r25, 0x1A(r5)
-	  sub       r3, r0, r3
-	  lha       r0, 0x1E(r5)
-	  mulhw     r3, r4, r3
-	  lha       r27, 0x18(r5)
-	  srawi     r3, r3, 0x1
-	  rlwinm    r4,r3,1,31,31
-	  add       r19, r3, r4
-	  sub       r18, r0, r25
-	  blt-      .loc_0x228
-	  lis       r3, 0x51EC
-	  subi      r30, r3, 0x7AE1
-	  li        r24, 0
+				case Yellow:
+					line = LinePointY;
+					break;
+				}
 
-	.loc_0x158:
-	  addi      r0, r24, 0x10
-	  lbzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x218
-	  cmpwi     r24, 0x1
-	  beq-      .loc_0x194
-	  bge-      .loc_0x180
-	  cmpwi     r24, 0
-	  bge-      .loc_0x18C
-	  b         .loc_0x1A0
+				for (hour = start; hour <= end; hour++) {
+					count = playerState->getPikiHourCount(hour, color);
+					s16 a = -10;
+					if (count >= 0) {
+						a = 100 * (count - minPikis) / 100;
+					}
 
-	.loc_0x180:
-	  cmpwi     r24, 0x3
-	  bge-      .loc_0x1A0
-	  b         .loc_0x19C
-
-	.loc_0x18C:
-	  addi      r22, r28, 0x20
-	  b         .loc_0x1A0
-
-	.loc_0x194:
-	  addi      r22, r28, 0x60
-	  b         .loc_0x1A0
-
-	.loc_0x19C:
-	  addi      r22, r28, 0xA0
-
-	.loc_0x1A0:
-	  mr        r23, r20
-	  b         .loc_0x210
-
-	.loc_0x1A8:
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r4, r23, 0
-	  addi      r5, r24, 0
-	  bl        -0x117888
-	  cmpwi     r3, 0
-	  li        r0, -0xA
-	  blt-      .loc_0x1D4
-	  sub       r0, r3, r21
-	  mulli     r0, r0, 0x64
-	  divw      r0, r0, r26
-	  extsh     r0, r0
-
-	.loc_0x1D4:
-	  extsh     r0, r0
-	  subfic    r0, r0, 0x64
-	  mullw     r0, r0, r18
-	  subi      r3, r23, 0x7
-	  mulhw     r0, r30, r0
-	  mullw     r3, r3, r19
-	  srawi     r0, r0, 0x5
-	  add       r4, r27, r3
-	  rlwinm    r3,r0,1,31,31
-	  sth       r4, 0x0(r22)
-	  add       r0, r0, r3
-	  add       r0, r25, r0
-	  sth       r0, 0x2(r22)
-	  addi      r22, r22, 0x4
-	  addi      r23, r23, 0x1
-
-	.loc_0x210:
-	  cmpw      r23, r29
-	  ble+      .loc_0x1A8
-
-	.loc_0x218:
-	  addi      r24, r24, 0x1
-	  cmpwi     r24, 0x3
-	  blt+      .loc_0x158
-	  b         .loc_0x30C
-
-	.loc_0x228:
-	  lis       r3, 0x51EC
-	  subi      r30, r3, 0x7AE1
-	  li        r26, 0
-
-	.loc_0x234:
-	  addi      r0, r26, 0x10
-	  lbzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x300
-	  cmpwi     r26, 0x1
-	  beq-      .loc_0x270
-	  bge-      .loc_0x25C
-	  cmpwi     r26, 0
-	  bge-      .loc_0x268
-	  b         .loc_0x27C
-
-	.loc_0x25C:
-	  cmpwi     r26, 0x3
-	  bge-      .loc_0x27C
-	  b         .loc_0x278
-
-	.loc_0x268:
-	  addi      r22, r28, 0x20
-	  b         .loc_0x27C
-
-	.loc_0x270:
-	  addi      r22, r28, 0x60
-	  b         .loc_0x27C
-
-	.loc_0x278:
-	  addi      r22, r28, 0xA0
-
-	.loc_0x27C:
-	  mr        r24, r20
-	  b         .loc_0x2F8
-
-	.loc_0x284:
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r4, r24, 0
-	  addi      r5, r26, 0
-	  bl        -0x117964
-	  cmpwi     r3, 0
-	  li        r0, -0xA
-	  blt-      .loc_0x2BC
-	  sub       r0, r3, r21
-	  mulli     r0, r0, 0x64
-	  mulhw     r0, r30, r0
-	  srawi     r0, r0, 0x5
-	  rlwinm    r3,r0,1,31,31
-	  add       r0, r0, r3
-	  extsh     r0, r0
-
-	.loc_0x2BC:
-	  extsh     r0, r0
-	  subfic    r0, r0, 0x64
-	  mullw     r0, r0, r18
-	  subi      r3, r24, 0x7
-	  mulhw     r0, r30, r0
-	  mullw     r3, r3, r19
-	  srawi     r0, r0, 0x5
-	  add       r4, r27, r3
-	  rlwinm    r3,r0,1,31,31
-	  sth       r4, 0x0(r22)
-	  add       r0, r0, r3
-	  add       r0, r25, r0
-	  sth       r0, 0x2(r22)
-	  addi      r22, r22, 0x4
-	  addi      r24, r24, 0x1
-
-	.loc_0x2F8:
-	  cmpw      r24, r29
-	  ble+      .loc_0x284
-
-	.loc_0x300:
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0x3
-	  blt+      .loc_0x234
-
-	.loc_0x30C:
-	  lmw       r18, 0x48(r1)
-	  lwz       r0, 0x84(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
+					line[0] = x + (hour - 7) * width;
+					line[1] = y + (100 - a) * height / 100;
+					line += 2;
+				}
+			}
+		}
+	}
 }
 
 /*
@@ -593,9 +203,12 @@ void ogGraphMgr::MakeData()
  * Address:	80198610
  * Size:	00029C
  */
-static void setGraphGX(void* data, int color, u8)
+static void setGraphGX(void* data, int color, u8 alpha)
 {
-	u8* graphColor = og_piki_lines_color[color];
+	u32 graphColor = og_piki_lines_color[color];
+	int hours;
+	graphColor &= 0xFFFFFF00; // mask out alpha
+	graphColor |= alpha;      // replace alpha
 	int startHour, endHour;
 	if (!playerState) {
 		startHour = 7;
@@ -604,23 +217,23 @@ static void setGraphGX(void* data, int color, u8)
 		startHour = playerState->getStartHour();
 		endHour   = playerState->getEndHour();
 	}
-	int hours = (endHour - startHour) + 1;
+	hours = (endHour - startHour) + 1;
 
-	int segments;
+	int i;
 	if (!playerState || playerState->isTutorial()) {
-		segments = 13;
+		hours = 13;
 	} else {
-		segments = hours;
-		for (int i = 0; i < hours; i++) {
+		// segments = hours;
+		for (i = 0; i < hours; i++) {
 			int count = playerState->getPikiHourCount(startHour + i, color);
-			segments  = i;
-			if (count >= 0) {
-				segments++;
+			if (count < 0) {
+				hours = i;
+				break;
 			}
 		}
 	}
 
-	if (segments >= 2) {
+	if (hours >= 2) {
 		GXClearVtxDesc();
 		GXSetAlphaUpdate(1);
 		GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -630,215 +243,15 @@ static void setGraphGX(void* data, int color, u8)
 		GXSetArray(GX_VA_POS, data, sizeof(u32));
 		GXSetArray(GX_VA_CLR0, &og_piki_lines_color, 4);
 		GXSetLineWidth(0x12, GX_TO_ZERO);
-		GXBegin(GX_LINESTRIP, GX_VTXFMT0, segments);
+		GXBegin(GX_LINESTRIP, GX_VTXFMT0, hours);
 
-		for (int i = 0; i < segments; i++) {
-			u16* vals = (u16*)data;
-			s16 in    = vals[i];
-			s16 out   = vals[i + 1];
-
-			GX_WRITE_U16(in);
-			GX_WRITE_U16(out);
-			GX_WRITE_U32(graphColor);
+		for (i = 0; i < hours; i++) {
+			s16 x = ((s16*)data)[2 * i];
+			s16 y = ((s16*)data)[2 * i + 1];
+			GXPosition2s16(x, y);
+			GXColor1u32(graphColor);
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  mr        r26, r4
-	  lis       r4, 0x802D
-	  rlwinm    r6,r26,2,0,29
-	  addi      r0, r4, 0x6220
-	  add       r4, r0, r6
-	  rlwinm    r0,r5,0,24,31
-	  addi      r29, r3, 0
-	  lwz       r7, 0x2F6C(r13)
-	  lwz       r31, 0x0(r4)
-	  cmplwi    r7, 0
-	  rlwinm    r31,r31,0,0,23
-	  or        r31, r31, r0
-	  bne-      .loc_0x50
-	  li        r28, 0x7
-	  li        r3, 0x13
-	  b         .loc_0x68
-
-	.loc_0x50:
-	  mr        r3, r7
-	  bl        -0x117A98
-	  mr        r0, r3
-	  lwz       r3, 0x2F6C(r13)
-	  mr        r28, r0
-	  bl        -0x117A80
-
-	.loc_0x68:
-	  lwz       r0, 0x2F6C(r13)
-	  sub       r3, r3, r28
-	  addi      r30, r3, 0x1
-	  cmplwi    r0, 0
-	  beq-      .loc_0x8C
-	  mr        r3, r0
-	  bl        -0x11821C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x94
-
-	.loc_0x8C:
-	  li        r30, 0xD
-	  b         .loc_0xC8
-
-	.loc_0x94:
-	  li        r27, 0
-	  b         .loc_0xC0
-
-	.loc_0x9C:
-	  lwz       r3, 0x2F6C(r13)
-	  addi      r5, r26, 0
-	  add       r4, r28, r27
-	  bl        -0x117A9C
-	  cmpwi     r3, 0
-	  bge-      .loc_0xBC
-	  mr        r30, r27
-	  b         .loc_0xC8
-
-	.loc_0xBC:
-	  addi      r27, r27, 0x1
-
-	.loc_0xC0:
-	  cmpw      r27, r30
-	  blt+      .loc_0x9C
-
-	.loc_0xC8:
-	  cmpwi     r30, 0x2
-	  blt-      .loc_0x288
-	  bl        0x7751C
-	  li        r3, 0x1
-	  bl        0x7B6A8
-	  li        r3, 0x9
-	  li        r4, 0x1
-	  bl        0x76D0C
-	  li        r3, 0xB
-	  li        r4, 0x1
-	  bl        0x76D00
-	  li        r3, 0
-	  li        r4, 0x9
-	  li        r5, 0
-	  li        r6, 0x3
-	  li        r7, 0
-	  bl        0x77530
-	  li        r3, 0
-	  li        r4, 0xB
-	  li        r5, 0x1
-	  li        r6, 0x5
-	  li        r7, 0
-	  bl        0x77518
-	  addi      r4, r29, 0
-	  li        r3, 0x9
-	  li        r5, 0x4
-	  bl        0x77C7C
-	  lis       r3, 0x802D
-	  addi      r4, r3, 0x6220
-	  li        r3, 0xB
-	  li        r5, 0x4
-	  bl        0x77C68
-	  li        r3, 0x12
-	  li        r4, 0
-	  bl        0x785D8
-	  rlwinm    r5,r30,0,16,31
-	  li        r3, 0xB0
-	  li        r4, 0
-	  bl        0x78464
-	  cmpwi     r30, 0
-	  li        r5, 0
-	  ble-      .loc_0x288
-	  cmpwi     r30, 0x8
-	  subi      r3, r30, 0x8
-	  ble-      .loc_0x27C
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  addi      r4, r29, 0
-	  lis       r3, 0xCC01
-	  ble-      .loc_0x27C
-
-	.loc_0x198:
-	  lha       r6, 0x2(r4)
-	  addi      r5, r5, 0x8
-	  lha       r0, 0x0(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0x6(r4)
-	  lha       r0, 0x4(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0xA(r4)
-	  lha       r0, 0x8(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0xE(r4)
-	  lha       r0, 0xC(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0x12(r4)
-	  lha       r0, 0x10(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0x16(r4)
-	  lha       r0, 0x14(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0x1A(r4)
-	  lha       r0, 0x18(r4)
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lha       r6, 0x1E(r4)
-	  lha       r0, 0x1C(r4)
-	  addi      r4, r4, 0x20
-	  sth       r0, -0x8000(r3)
-	  sth       r6, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  bdnz+     .loc_0x198
-	  b         .loc_0x27C
-
-	.loc_0x248:
-	  sub       r0, r30, r5
-	  cmpw      r5, r30
-	  mtctr     r0
-	  lis       r3, 0xCC01
-	  bge-      .loc_0x288
-
-	.loc_0x25C:
-	  lha       r5, 0x2(r4)
-	  lha       r0, 0x0(r4)
-	  addi      r4, r4, 0x4
-	  sth       r0, -0x8000(r3)
-	  sth       r5, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  bdnz+     .loc_0x25C
-	  b         .loc_0x288
-
-	.loc_0x27C:
-	  rlwinm    r0,r5,2,0,29
-	  add       r4, r29, r0
-	  b         .loc_0x248
-
-	.loc_0x288:
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -851,78 +264,14 @@ void ogGraphMgr::draw(u8 a)
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	graf.setPort();
 
-	if (mHasBlue) {
+	if (mHasColor[Blue]) {
 		setGraphGX(LinePointB, Blue, a);
 	}
-	if (mHasRed) {
+	if (mHasColor[Red]) {
 		setGraphGX(LinePointR, Red, a);
 	}
-	if (mHasYellow) {
+	if (mHasColor[Yellow]) {
 		setGraphGX(LinePointY, Yellow, a);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802D
-	  stw       r0, 0x4(r1)
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  stwu      r1, -0x108(r1)
-	  stw       r31, 0x104(r1)
-	  addi      r31, r5, 0x6120
-	  li        r5, 0
-	  stw       r30, 0x100(r1)
-	  mr        r30, r4
-	  li        r4, 0
-	  stw       r29, 0xFC(r1)
-	  mr        r29, r3
-	  addi      r3, r1, 0x10
-	  lfs       f1, -0x4D20(r2)
-	  lfs       f2, -0x4D1C(r2)
-	  lfs       f3, -0x4D18(r2)
-	  bl        0x1789C
-	  addi      r3, r1, 0x10
-	  bl        0x179A4
-	  lbz       r0, 0x10(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x70
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0x20
-	  li        r4, 0
-	  bl        -0x308
-
-	.loc_0x70:
-	  lbz       r0, 0x11(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x8C
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0x60
-	  li        r4, 0x1
-	  bl        -0x324
-
-	.loc_0x8C:
-	  lbz       r0, 0x12(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA8
-	  addi      r5, r30, 0
-	  addi      r3, r31, 0xA0
-	  li        r4, 0x2
-	  bl        -0x340
-
-	.loc_0xA8:
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x10(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x10(r1)
-	  lwz       r0, 0x10C(r1)
-	  lwz       r31, 0x104(r1)
-	  lwz       r30, 0x100(r1)
-	  lwz       r29, 0xFC(r1)
-	  addi      r1, r1, 0x108
-	  mtlr      r0
-	  blr
-	*/
 }
 } // namespace zen

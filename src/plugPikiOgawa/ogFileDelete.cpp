@@ -46,10 +46,10 @@ void zen::ogScrFileSelectMgr::DeleteEffectStart()
 	Vector3f pos1, pos2;
 
 	pos1.set(0.0f, 0.0f, 0.0f);
-	f32 w  = mPanes[_134]->getPosH() + mPanes[_134]->getWidth() / 2.0f;
+	f32 w  = _3B0[_134]->getPosH() + _3B0[_134]->getWidth() / 2.0f;
 	pos1.x = w;
 
-	f32 h  = mPanes[_134]->getPosV() + mPanes[_134]->getHeight() / 2.0f;
+	f32 h  = _3B0[_134]->getPosV() + _3B0[_134]->getHeight() / 2.0f;
 	pos1.y = 480.0f - h;
 	mEfxMgr->create(EFF2D_Unk44, pos1, nullptr, nullptr);
 

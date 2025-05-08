@@ -4,6 +4,8 @@
 #include "types.h"
 #include "zen/SpectrumCursorMgr.h"
 #include "MemoryCard.h"
+#include "Vector.h"
+#include "Colour.h"
 
 struct Controller;
 struct CardQuickInfo;
@@ -80,6 +82,13 @@ struct ogScrFileSelectMgr {
 	returnStatusFlag update(Controller*, CardQuickInfo&);
 	void draw(Graphics&);
 
+	void setOperateMode_Copy();
+	void CopyEffectStart();
+	void OperateCopy(Controller*);
+
+	void setOperateMode_Delete();
+	void OperateDelete(Controller*);
+
 	// unused/inlined:
 	void UpDateYesNoWindow();
 	void setOperateMode_Normal();
@@ -88,11 +97,6 @@ struct ogScrFileSelectMgr {
 	void ScaleAnimeData();
 	void init();
 	void setDataScale();
-	void setOperateMode_Copy();
-	void CopyEffectStart();
-	void OperateCopy(Controller*);
-	void setOperateMode_Delete();
-	void OperateDelete(Controller*);
 	void BeginFadeOut();
 	int CanToCopy(int);
 	void TailEffectMove(int, int);
@@ -113,26 +117,50 @@ struct ogScrFileSelectMgr {
 	f32 _11C[3];              // _11C
 	f32 _128[3];              // _128
 	s16 _134;                 // _134
-	u8 _138[0x134];           // _138
+	u8 _138[0x188 - 0x138];   // _138, unknown
+	Vector3f _188[3];         // _188
+	Vector3f _1AC[3];         // _1AC
+	u8 _1D0[0x26C - 0x1D0];   // _1D0, unknown
 	ogNitakuMgr* mNitaku;     // _26C
-	u8 _270[0x4C];            // _270
+	u8 _270[0x2C];            // _270
+	P2DScreen* _29C[3];       // _29C
+	P2DScreen* _2A8[3];       // _2A8
+	P2DScreen* _2B4;          // _2B4
+	P2DScreen* _2B8;          // _2B8
 	P2DScreen* _2BC;          // _2BC
-	int _2C0[3];              // _2C0
+	P2DScreen* _2C0;          // _2C0
+	u8 _2C4[0x8];             // _2C4, unknown
 	P2DPicture* _2CC;         // _2CC
 	P2DPicture* _2D0;         // _2D0
 	P2DTextBox* _2D4;         // _2D4
 	P2DPane* _2D8;            // _2D8
-	int _2DC[7];              // _2DC
+	u8 _2DC[0x2F8 - 0x2DC];   // _2DC, unknown
 	P2DPane* _2F8;            // _2F8
 	P2DPane* _2FC;            // _2FC
 	P2DPane* _300;            // _300
-	int _304[4];              // _304
+	u8 _304[0x10];            // _304, unknown
 	P2DPane* _314;            // _314
-	int _318[38];             // _318
-	P2DPane* mPanes[3];       // _3B0
-	int _3BC[35];             // _3BC
+	u8 _318[0x380 - 0x318];   // _318, unknown
+	P2DPane* _380[3];         // _380
+	u8 _38C[0x3B0 - 0x38C];   // _38C, unknown
+	P2DPane* _3B0[3];         // _3B0
+	P2DPane* _3BC[3];         // _3BC
+	u8 _3C8[0x3D4 - 0x3C8];   // _3C8, unknown
+	P2DPane* _3D4[3];         // _3D4
+	P2DPane* _3E0[3];         // _3E0
+	u8 _3EC[0x448 - 0x3EC];   // _3EC, unknown
 	P2DPane* _448;            // _448
-	u8 _44C[0xd3C];           // _44C
+	P2DPicture* _44C;         // _44C
+	u8 _450[0x4BC - 0x450];   // _450, unknown
+	SpectrumCursorMgr _4BC;   // _4BC
+	u8 _4EC[0x10];            // _4EC, unknown
+	SpectrumCursorMgr _4FC;   // _4FC
+	u8 _52C[0x550 - 0x52C];   // _52C, unknown
+	Colour _550;              // _550
+	Colour _554;              // _554
+	Colour _558;              // _558
+	Colour _55C;              // _55C
+	u8 _560[0x1188 - 0x560];  // _560, unknown
 	f32 _1188;                // _1188
 	f32 _118C;                // _118C
 	u32 _1190;                // _1190
