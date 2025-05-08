@@ -41,6 +41,10 @@ struct ogSaveMgr {
 		Status_9    = 9,
 		Status_10   = 10,
 		Status_11   = 11,
+		Status_12   = 12,
+		Status_13   = 13,
+		Status_14   = 14,
+		Status_15   = 15,
 	};
 
 	ogSaveMgr();

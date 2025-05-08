@@ -116,6 +116,11 @@ struct KTri;
 struct KRect;
 struct KSegment;
 
+static inline f32 fmod(f32 x, f32 m)
+{
+	return std::fmodf(x, m);
+}
+
 f32 roundAng(f32 angle);
 f32 angDist(f32 x, f32 z);
 f32 qdist2(f32 x0, f32 z0, f32 x1, f32 z1);

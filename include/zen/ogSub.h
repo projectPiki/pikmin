@@ -2,6 +2,8 @@
 #define _ZEN_OGSUB_H
 
 #include "types.h"
+#include "P2D/Picture.h"
+#include "P2D/TextBox.h"
 
 struct Matrix3f;
 struct P2DPane;
@@ -135,10 +137,25 @@ struct ogMsgCtrlTagMgr {
  * @note Size: 0x418.
  */
 struct TypingTextMgr {
+	enum EnumPCTextStat {
+		// TODO: this
+	};
+
 	TypingTextMgr(P2DTextBox*);
 
 	void start();
 	void update();
+
+	void transCursor(P2DPicture* cursor)
+	{
+		int x = mTextBox->getPosH() + mTextBox->getCursorX();
+		int y = mTextBox->getPosV() + mTextBox->getCursorY() - 24;
+		cursor->move(x, y);
+	}
+
+	// DLL inlines to do:
+	void off();
+	EnumPCTextStat check();
 
 	int _00;                      // _00
 	ogMsgCtrlTagMgr* mCtrlTagMgr; // _04

@@ -52,9 +52,8 @@ struct P2DTextBox : public P2DPane {
 		mGradColor.a = gradAlpha;
 	}
 
-	// DLL inlines to do:
-	int getCursorX();
-	int getCursorY();
+	int getCursorX() { return mCursorX; }
+	int getCursorY() { return mCursorY; }
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
@@ -70,8 +69,8 @@ struct P2DTextBox : public P2DPane {
 	char* mText;                  // _10C
 	s16 _110;                     // _110
 	s16 _112;                     // _112
-	s16 _114;                     // _114
-	s16 _116;                     // _116
+	s16 mCursorX;                 // _114
+	s16 mCursorY;                 // _116
 };
 
 #endif
