@@ -15,9 +15,9 @@ struct ayuID {
 };
 
 struct MemHead {
-	u32 _00;      // _00
-	MemHead* _04; // _04
-	MemHead* _08; // _08
+	u32 mTagAndSize; // _00, stores a tag in the most significant byte and size in 16-byte units in the lower bytes
+	MemHead* mNext;  // _04
+	MemHead* mPrev;  // _08
 };
 
 /**
@@ -37,15 +37,15 @@ struct AyuCache {
 	void deleteIdAll(u32);
 	u32 amountFree();
 
-	MemHead _00; // _00
-	s8 _0C;      // _0C
-	MemHead _10; // _10
-	u32 _1C;     // _1C
-	u32 _20;     // _20
-	u32 _24;     // _24
-	u32 _28;     // _28
-	u8 _2C[256]; // _2C
-	u32 _12C;    // _12C
+	MemHead mFreeBlockHead;      // _00
+	s8 _;                        // _0C, padding to align
+	MemHead mAllocatedBlockHead; // _10
+	u32 mBlockGuardValue;        // _1C, Magic number (e.g., 0x87654321) used as a guard/canary for memory blocks
+	u32 mCurrentAllocationTag;   // _20, tag value (0-255) applied to new allocations via mallocL, stored in the high byte of MemHead's flag
+	u32 mTotalAllocatedUnits;    // _24
+	u32 mTotalCacheSizeBytes;    // _28
+	u8 mPageIndexPool[256];      // _2C
+	u32 mNextPageSlot;           // _12C
 };
 
 /**

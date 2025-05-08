@@ -37,12 +37,12 @@ DEFINE_PRINT("Gauges")
  */
 void GaugeInfo::init()
 {
-	_18 = 0;
-	_34 = 0.0f;
-	_3C = 0.0f;
-	_38 = 0.0f;
+	mUpdateState    = 0;
+	mAnimationPhase = 0.0f;
+	mTextAlpha      = 0.0f;
+	mHeightOffset   = 0.0f;
 	PRINT("gauge init\n");
-	_24 = 0;
+	mIsPendingRemoval = 0;
 }
 
 /*
@@ -52,33 +52,33 @@ void GaugeInfo::init()
  */
 void GaugeInfo::update()
 {
-	switch (_18) {
+	switch (mUpdateState) {
 	case 0: {
-		_34 += gsys->getFrameTime() * 2.0f;
+		mAnimationPhase += gsys->getFrameTime() * 2.0f;
 
-		if (_34 >= HALF_PI) {
-			_18 = 1;
+		if (mAnimationPhase >= HALF_PI) {
+			mUpdateState = 1;
 		}
 
-		f32 rotation = _34 < HALF_PI ? _34 : HALF_PI;
+		f32 rotation = mAnimationPhase < HALF_PI ? mAnimationPhase : HALF_PI;
 
-		_3C = sinf(rotation) * 255.0f;
-		_38 = sinf(rotation) * 30.0f;
-		_40 = sinf(rotation) * 8.0f;
-		_44 = sinf(rotation) * 8.0f;
+		mTextAlpha       = sinf(rotation) * 255.0f;
+		mHeightOffset    = sinf(rotation) * 30.0f;
+		mDigitBaseWidth  = sinf(rotation) * 8.0f;
+		mDigitBaseHeight = sinf(rotation) * 8.0f;
 		break;
 	}
 
 	case 1:
-		if (_24) {
-			_18 = 2;
+		if (mIsPendingRemoval) {
+			mUpdateState = 2;
 		}
 		break;
 
 	case 2:
-		_3C -= gsys->getFrameTime() * 1200.0f;
-		if (_3C < 0.0f) {
-			_3C = 0.0f;
+		mTextAlpha -= gsys->getFrameTime() * 1200.0f;
+		if (mTextAlpha < 0.0f) {
+			mTextAlpha = 0.0f;
 			lgMgr->removeLG(this);
 		}
 	}
@@ -124,20 +124,20 @@ void GaugeInfo::showDigits(Vector3f position, Colour& colour, int number, f32 wi
  */
 void GaugeInfo::refresh(Graphics& gfx)
 {
-	Vector3f pos(_14->mPosition.x, _14->mPosition.y + _38, _14->mPosition.z);
+	Vector3f pos(mOwner->mPosition.x, mOwner->mPosition.y + mHeightOffset, mOwner->mPosition.z);
 	pos.multMatrix(gfx.mCamera->mLookAtMtx);
 	Colour colour;
-	colour.set(255, 32, 32, (int)_3C);
-	f32 a = (_1C < _20) ? 0.75f : 1.0f;
-	f32 b = (_1C < _20) ? 1.0f : 0.75f;
-	showDigits(pos, colour, _1C, _40 * a, _44 * a);
+	colour.set(255, 32, 32, (int)mTextAlpha);
+	f32 a = (mPrimaryValue < mSecondaryValue) ? 0.75f : 1.0f;
+	f32 b = (mPrimaryValue < mSecondaryValue) ? 1.0f : 0.75f;
+	showDigits(pos, colour, mPrimaryValue, mDigitBaseWidth * a, mDigitBaseHeight * a);
 	pos.y += 10.0f;
 	f32 c = 1.0f;
 	f32 d = 10.0f / 11.0f;
-	lgMgr->mLFlare->addLFlare(colour, pos, Vector2f(_40, _44), &Vector2f(d, 0.0f), &Vector2f(c, 1.0f));
+	lgMgr->mLFlare->addLFlare(colour, pos, Vector2f(mDigitBaseWidth, mDigitBaseHeight), &Vector2f(d, 0.0f), &Vector2f(c, 1.0f));
 	pos.y += 10.0f;
-	colour.set(32, 32, 255, (int)_3C);
-	showDigits(pos, colour, _20, _40 * b, _44 * b);
+	colour.set(32, 32, 255, (int)mTextAlpha);
+	showDigits(pos, colour, mSecondaryValue, mDigitBaseWidth * b, mDigitBaseHeight * b);
 
 	u32 badCompiler;
 	FORCE_DONT_INLINE;
@@ -150,13 +150,13 @@ void GaugeInfo::refresh(Graphics& gfx)
  */
 void LifeGaugeMgr::init(int count)
 {
-	_00.initCore("");
-	_48.initCore("");
+	mActiveGaugeList.initCore("");
+	mInactiveGaugeList.initCore("");
 
 	GaugeInfo* gaugeList = new GaugeInfo[count];
 
 	for (int i = 0; i < count; i++) {
-		_48.add(&gaugeList[i]);
+		mInactiveGaugeList.add(&gaugeList[i]);
 	}
 
 	mLFlare             = gsys->registerLFlare(gsys->loadTexture("intro/item_0_9.bti", true));
@@ -170,7 +170,7 @@ void LifeGaugeMgr::init(int count)
  */
 void LifeGaugeMgr::update()
 {
-	FOREACH_NODE(GaugeInfo, _00.mChild, gauge)
+	FOREACH_NODE(GaugeInfo, mActiveGaugeList.mChild, gauge)
 	{
 		gauge->update();
 	}
@@ -185,7 +185,7 @@ void LifeGaugeMgr::refresh(Graphics& gfx)
 {
 	// WTF
 	if (!gameflow.mMoviePlayer->mIsActive) {
-		FOREACH_NODE(GaugeInfo, _00.mChild, gauge)
+		FOREACH_NODE(GaugeInfo, mActiveGaugeList.mChild, gauge)
 		{
 			gauge->refresh(gfx);
 		}
@@ -199,8 +199,8 @@ void LifeGaugeMgr::refresh(Graphics& gfx)
  */
 GaugeInfo* LifeGaugeMgr::getGaugeInfo()
 {
-	if (_48.mChild) {
-		GaugeInfo* info = (GaugeInfo*)_48.mChild;
+	if (mInactiveGaugeList.mChild) {
+		GaugeInfo* info = (GaugeInfo*)mInactiveGaugeList.mChild;
 		info->init();
 		info->del();
 		info->initCore("");
@@ -216,7 +216,7 @@ GaugeInfo* LifeGaugeMgr::getGaugeInfo()
  */
 void LifeGaugeMgr::addLG(GaugeInfo* info)
 {
-	_00.add(info);
+	mActiveGaugeList.add(info);
 }
 
 /*
@@ -228,7 +228,7 @@ void LifeGaugeMgr::removeLG(GaugeInfo* info)
 {
 	info->del();
 	info->initCore("");
-	_48.add(info);
+	mInactiveGaugeList.add(info);
 }
 
 /*
@@ -238,13 +238,13 @@ void LifeGaugeMgr::removeLG(GaugeInfo* info)
  */
 LifeGauge::LifeGauge()
 {
-	_1C          = 0;
-	_18          = 0;
-	_24          = 0.0f;
-	_28          = 0.0f;
-	_20          = 0;
-	_30          = 1.0f;
-	mHealthRatio = 1.0f;
+	mRenderStyle               = 0;
+	mDisplayState              = 0;
+	mFadeTransitionValue       = 0.0f;
+	mVisibleHoldTimer          = 0.0f;
+	mSnapToTargetHealth        = 0;
+	mCurrentDisplayHealthRatio = 1.0f;
+	mHealthRatio               = 1.0f;
 
 	lgborder.set(0x80, 0x80, 0x80, 0xC0);
 	lglev3.set(0x00, 0xFF, 0x00, 0xFF);
@@ -253,8 +253,8 @@ LifeGauge::LifeGauge()
 	lglev0.set(0xFF, 0x00, 0x00, 0xFF);
 
 	mOffset.set(0.0f, 100.0f, 0.0f);
-	mScale = 48.0f;
-	_38    = 0;
+	mScale       = 48.0f;
+	mActiveGauge = 0;
 }
 
 /*
@@ -265,8 +265,8 @@ LifeGauge::LifeGauge()
 void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 {
 	mHealthRatio = currHealth / maxHealth;
-	if (mHealthRatio < 1.0f && _24 != 1.0f) {
-		_18 = 1;
+	if (mHealthRatio < 1.0f && mFadeTransitionValue != 1.0f) {
+		mDisplayState = 1;
 	}
 }
 
@@ -277,9 +277,9 @@ void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
  */
 void LifeGauge::adjustValue()
 {
-	_30 += 2.0f * gsys->getFrameTime() * (mHealthRatio - _30);
-	if (_20 || absF(_30 - mHealthRatio) < 1.0f / 64.0f) {
-		_30 = mHealthRatio;
+	mCurrentDisplayHealthRatio += 2.0f * gsys->getFrameTime() * (mHealthRatio - mCurrentDisplayHealthRatio);
+	if (mSnapToTargetHealth || absF(mCurrentDisplayHealthRatio - mHealthRatio) < 1.0f / 64.0f) {
+		mCurrentDisplayHealthRatio = mHealthRatio;
 	}
 }
 
@@ -294,48 +294,48 @@ void LifeGauge::refresh(Graphics& gfx)
 		return;
 	}
 
-	switch (_18) {
+	switch (mDisplayState) {
 	case 1:
 		adjustValue();
-		_24 += 2.0f * gsys->getFrameTime();
-		if (_24 > 1.0f) {
-			_24 = 1.0f;
-			_18 = 2;
-			_28 = 5.0f;
+		mFadeTransitionValue += 2.0f * gsys->getFrameTime();
+		if (mFadeTransitionValue > 1.0f) {
+			mFadeTransitionValue = 1.0f;
+			mDisplayState        = 2;
+			mVisibleHoldTimer    = 5.0f;
 		}
 		break;
 
 	case 2:
 		adjustValue();
-		_28 -= gsys->getFrameTime();
-		if (_28 <= 0.0f) {
-			_28 = 0.0f;
-			if (_1C == 0 || _30 <= 0.0f || _30 >= 1.0f) {
-				_18 = 3;
+		mVisibleHoldTimer -= gsys->getFrameTime();
+		if (mVisibleHoldTimer <= 0.0f) {
+			mVisibleHoldTimer = 0.0f;
+			if (mRenderStyle == 0 || mCurrentDisplayHealthRatio <= 0.0f || mCurrentDisplayHealthRatio >= 1.0f) {
+				mDisplayState = 3;
 			}
 		}
 		break;
 
 	case 3:
-		_24 -= 2.0f * gsys->getFrameTime();
-		if (_24 < 0.0f) {
-			_24 = 0.0f;
-			_18 = 0;
+		mFadeTransitionValue -= 2.0f * gsys->getFrameTime();
+		if (mFadeTransitionValue < 0.0f) {
+			mFadeTransitionValue = 0.0f;
+			mDisplayState        = 0;
 		}
 		break;
 	}
 
-	if (_18 == 0) {
+	if (mDisplayState == 0) {
 		return;
 	}
 
 	Colour colour;
-	if (_30 > 0.75f) {
-		lglev3.lerpTo(lglev2, 1.0f - (_30 - 0.75f) / 0.25f, colour);
-	} else if (_30 > 0.5f) {
-		lglev2.lerpTo(lglev1, 1.0f - (_30 - 0.5f) / 0.25f, colour);
-	} else if (_30 > 0.25f) {
-		lglev1.lerpTo(lglev0, 1.0f - (_30 - 0.25f) / 0.25f, colour);
+	if (mCurrentDisplayHealthRatio > 0.75f) {
+		lglev3.lerpTo(lglev2, 1.0f - (mCurrentDisplayHealthRatio - 0.75f) / 0.25f, colour);
+	} else if (mCurrentDisplayHealthRatio > 0.5f) {
+		lglev2.lerpTo(lglev1, 1.0f - (mCurrentDisplayHealthRatio - 0.5f) / 0.25f, colour);
+	} else if (mCurrentDisplayHealthRatio > 0.25f) {
+		lglev1.lerpTo(lglev0, 1.0f - (mCurrentDisplayHealthRatio - 0.25f) / 0.25f, colour);
 	} else {
 		colour = lglev0;
 	}
@@ -351,17 +351,18 @@ void LifeGauge::refresh(Graphics& gfx)
 
 	u32 badCompiler[2];
 	if (proj1 > 0.0f && proj2 > 0.0f) {
-		if (_1C == 0) {
-			gfx.setColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * _24)), true);
-			gfx.setAuxColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * _24)));
+		if (mRenderStyle == 0) {
+			gfx.setColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * mFadeTransitionValue)), true);
+			gfx.setAuxColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * mFadeTransitionValue)));
 			gfx.lineRectangle(RectArea(pos2.x - 19.0f, pos2.y - 10.0f, pos2.x + 19.0f, pos2.y - 6.0f));
 
 			gfx.drawLine(Vector3f(pos2.x - 10.0f, pos2.y - 5.0f, 0.0f), Vector3f(pos1.x, pos1.y, 0.0f));
 			gfx.drawLine(Vector3f(pos2.x - 5.0f, pos2.y - 5.0f, 0.0f), Vector3f(pos1.x, pos1.y, 0.0f));
 
-			gfx.setColour(Colour(colour.r, colour.g, colour.b, (int)(f32(colour.a) * _24)), true);
-			gfx.setAuxColour(Colour(colour.r, colour.g, colour.b, (int)(f32(colour.a) * _24)));
-			gfx.fillRectangle(RectArea(pos2.x - 18.0f, pos2.y - 9.0f, pos2.x - 18.0f + (_30 * 37.0f), pos2.y - 7.0f));
+			gfx.setColour(Colour(colour.r, colour.g, colour.b, (int)(f32(colour.a) * mFadeTransitionValue)), true);
+			gfx.setAuxColour(Colour(colour.r, colour.g, colour.b, (int)(f32(colour.a) * mFadeTransitionValue)));
+			gfx.fillRectangle(
+			    RectArea(pos2.x - 18.0f, pos2.y - 9.0f, pos2.x - 18.0f + (mCurrentDisplayHealthRatio * 37.0f), pos2.y - 7.0f));
 			return;
 		}
 
@@ -382,7 +383,7 @@ void LifeGauge::refresh(Graphics& gfx)
 			vecs3D[0].set(pos2.x, pos2.y, 0.0f);
 			vecs3D[1].set(sinf(angle2) * -a + pos2.x, cosf(angle2) * -a + pos2.y, 0.0f);
 			vecs3D[2].set(sinf(angle1) * -a + pos2.x, cosf(angle1) * -a + pos2.y, 0.0f);
-			if ((_30 > 0.0f && i == 0) || i < int(32.0f * _30)) {
+			if ((mCurrentDisplayHealthRatio > 0.0f && i == 0) || i < int(32.0f * mCurrentDisplayHealthRatio)) {
 				gfx.setColour(colour, true);
 				gfx.drawOneTri(vecs3D, nullptr, vecs2D, 3);
 			} else {
@@ -408,30 +409,30 @@ void LifeGauge::refresh(Graphics& gfx)
  */
 void LifeGauge::countOn(Vector3f& p1, int p2, int p3)
 {
-	if (!_38) {
-		_30 = p2;
-		_18 = 0;
-		_28 = 0.0f;
-		if (_38) {
-			_38->_24 = 1;
-			_38      = nullptr;
+	if (!mActiveGauge) {
+		mCurrentDisplayHealthRatio = p2;
+		mDisplayState              = 0;
+		mVisibleHoldTimer          = 0.0f;
+		if (mActiveGauge) {
+			mActiveGauge->mIsPendingRemoval = 1;
+			mActiveGauge                    = nullptr;
 		}
 		GaugeInfo* info = lgMgr->getGaugeInfo();
 		if (info) {
-			info->_14 = this;
-			info->_1C = p2;
-			info->_20 = p3;
+			info->mOwner          = this;
+			info->mPrimaryValue   = p2;
+			info->mSecondaryValue = p3;
 			lgMgr->addLG(info);
-			_38 = info;
+			mActiveGauge = info;
 		}
 	} else {
-		_38->_1C = p2;
-		_38->_20 = p3;
+		mActiveGauge->mPrimaryValue   = p2;
+		mActiveGauge->mSecondaryValue = p3;
 	}
 
 	mPosition = p1;
-	if (_38) {
-		_38->_28 = mPosition;
+	if (mActiveGauge) {
+		mActiveGauge->mOwnerCachedPosition = mPosition;
 	}
 
 	u32 badCompiler;
@@ -444,10 +445,10 @@ void LifeGauge::countOn(Vector3f& p1, int p2, int p3)
  */
 void LifeGauge::countOff()
 {
-	_18 = -1;
-	_28 = 0.0f;
-	if (_38) {
-		_38->_24 = 1;
-		_38      = nullptr;
+	mDisplayState     = -1;
+	mVisibleHoldTimer = 0.0f;
+	if (mActiveGauge) {
+		mActiveGauge->mIsPendingRemoval = 1;
+		mActiveGauge                    = nullptr;
 	}
 }

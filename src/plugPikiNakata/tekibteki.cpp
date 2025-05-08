@@ -273,19 +273,19 @@ bool BTeki::arrivedAt(f32 distance, f32 speed)
 BTeki::BTeki()
     : Creature(nullptr)
 {
-	mObjType             = OBJTYPE_Teki;
-	mLifeGauge._1C       = 1;
-	mProps               = new CreatureProp();
-	mPersonality         = new TekiPersonality();
-	mTekiAnimator        = new PaniTekiAnimator();
-	mVibrationController = new NVibrationFunction();
-	mRouteWayPointMax    = 20;
-	mRouteWayPoints      = new WayPoint*[mRouteWayPointMax];
-	mRouteWayPointCount  = 0;
-	mParticleGenerators  = new zen::particleGenerator*[4];
-	mCollInfo            = new CollInfo(22);
-	mSeContext           = new SeContext(this, 1);
-	mParticleGenPack     = new zen::PtclGenPack(3);
+	mObjType                = OBJTYPE_Teki;
+	mLifeGauge.mRenderStyle = 1;
+	mProps                  = new CreatureProp();
+	mPersonality            = new TekiPersonality();
+	mTekiAnimator           = new PaniTekiAnimator();
+	mVibrationController    = new NVibrationFunction();
+	mRouteWayPointMax       = 20;
+	mRouteWayPoints         = new WayPoint*[mRouteWayPointMax];
+	mRouteWayPointCount     = 0;
+	mParticleGenerators     = new zen::particleGenerator*[4];
+	mCollInfo               = new CollInfo(22);
+	mSeContext              = new SeContext(this, 1);
+	mParticleGenPack        = new zen::PtclGenPack(3);
 }
 
 /*

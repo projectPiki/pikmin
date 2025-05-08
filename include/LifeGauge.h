@@ -21,7 +21,7 @@ struct GaugeInfo : public CoreNode {
 	GaugeInfo()
 	    : CoreNode("")
 	{
-		_14 = 0;
+		mOwner = 0;
 	}
 
 	void update();
@@ -33,17 +33,17 @@ struct GaugeInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	LifeGauge* _14; // _14
-	u32 _18;        // _18
-	int _1C;        // _1C
-	int _20;        // _20
-	int _24;        // _24
-	Vector3f _28;   // _28
-	f32 _34;        // _34
-	f32 _38;        // _38
-	f32 _3C;        // _3C
-	f32 _40;        // _40
-	f32 _44;        // _44
+	LifeGauge* mOwner;             // _14
+	u32 mUpdateState;              // _18
+	int mPrimaryValue;             // _1C
+	int mSecondaryValue;           // _20
+	int mIsPendingRemoval;         // _24
+	Vector3f mOwnerCachedPosition; // _28
+	f32 mAnimationPhase;           // _34
+	f32 mHeightOffset;             // _38
+	f32 mTextAlpha;                // _3C
+	f32 mDigitBaseWidth;           // _40
+	f32 mDigitBaseHeight;          // _44
 };
 
 /**
@@ -59,10 +59,10 @@ struct LifeGaugeMgr {
 	void addLG(GaugeInfo*);
 	void removeLG(GaugeInfo*);
 
-	GaugeInfo _00;        // _00
-	GaugeInfo _48;        // _48
-	LFlareGroup* mLFlare; // _90
-	Material _94;         // _94
+	GaugeInfo mActiveGaugeList;   // _00
+	GaugeInfo mInactiveGaugeList; // _48
+	LFlareGroup* mLFlare;         // _90
+	Material _94;                 // _94
 };
 
 /**
@@ -77,17 +77,17 @@ struct LifeGauge {
 	void countOn(Vector3f&, int, int);
 	void countOff();
 
-	Vector3f mPosition; // _00
-	Vector3f mOffset;   // _0C
-	int _18;            // _18
-	int _1C;            // _1C
-	u8 _20;             // _20
-	f32 _24;            // _24
-	f32 _28;            // _28
-	f32 mHealthRatio;   // _2C, aka "value"
-	f32 _30;            // _30
-	f32 mScale;         // _34
-	GaugeInfo* _38;     // _38, unknown
+	Vector3f mPosition;             // _00
+	Vector3f mOffset;               // _0C
+	int mDisplayState;              // _18
+	int mRenderStyle;               // _1C
+	u8 mSnapToTargetHealth;         // _20
+	f32 mFadeTransitionValue;       // _24
+	f32 mVisibleHoldTimer;          // _28
+	f32 mHealthRatio;               // _2C, aka "value"
+	f32 mCurrentDisplayHealthRatio; // _30
+	f32 mScale;                     // _34
+	GaugeInfo* mActiveGauge;        // _38
 };
 
 extern LifeGaugeMgr* lgMgr;

@@ -2516,9 +2516,9 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
     : ItemCreature(objType, props, nullptr)
     , mBuildCollision(0)
 {
-	mItemShapeObject = itemShape;
-	mStateMachine    = ai;
-	mLifeGauge._1C   = 1;
+	mItemShapeObject        = itemShape;
+	mStateMachine           = ai;
+	mLifeGauge.mRenderStyle = 1;
 }
 
 /*
