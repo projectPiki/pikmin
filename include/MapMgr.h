@@ -22,20 +22,20 @@ struct MapLightMgr;
 struct MoveTrace {
 	MoveTrace(Vector3f& position, Vector3f& velocity, f32 radius, bool p4)
 	{
-		_20           = p4;
-		mPosition     = position;
-		mVelocity     = velocity;
-		mRadius       = radius;
-		mObject       = nullptr;
-		mStepFraction = 1.0f;
+		mIgnoreDynamicColliders = p4;
+		mPosition               = position;
+		mVelocity               = velocity;
+		mRadius                 = radius;
+		mObject                 = nullptr;
+		mStepFraction           = 1.0f;
 	}
 
-	Vector3f mPosition; // _00
-	Vector3f mVelocity; // _0C
-	f32 mRadius;        // _18
-	f32 mStepFraction;  // _1C
-	bool _20;           // _20
-	Creature* mObject;  // _24, the thing moving
+	Vector3f mPosition;           // _00
+	Vector3f mVelocity;           // _0C
+	f32 mRadius;                  // _18
+	f32 mStepFraction;            // _1C
+	bool mIgnoreDynamicColliders; // _20
+	Creature* mObject;            // _24, the thing moving
 };
 
 /**
@@ -147,7 +147,7 @@ struct DynMapObject : public DynCollShape {
 	MapMgr* mMapMgr;                  // _17C
 	ShadowCaster mShadowCaster;       // _180, cast mDrawer to DynMapObject*
 	int mState;                       // _518
-	f32 _51C;                         // _51C
+	f32 mStateTransitionTimer;        // _51C
 	Vector3f mMapScale;               // _520, this is an SRT according to the DLL
 	Vector3f mMapRotation;            // _52C
 	Vector3f mMapTranslation;         // _538
@@ -162,22 +162,22 @@ struct MapObjectPart : public DynCollShape {
 	MapObjectPart(Shape* shape)
 	    : DynCollShape(shape)
 	{
-		_140 = 0;
-		_144 = 0;
+		mJointIndex      = 0;
+		mParentMapObject = 0;
 	}
 
 	virtual void update() { }                                            // _10
 	virtual void refresh(Graphics&) { }                                  // _44
 	virtual void touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2) // _38
 	{
-		if (_144)
-			_144->touchCallback(plane, a1, a2);
+		if (mParentMapObject)
+			mParentMapObject->touchCallback(plane, a1, a2);
 	}
 
 	// _00     = VTBL
 	// _00-_140 = DynCollShape
-	int _140;           // _140
-	DynMapObject* _144; // _144 might be wrong
+	int mJointIndex;                // _140
+	DynMapObject* mParentMapObject; // _144 might be wrong
 };
 
 /**
@@ -280,9 +280,9 @@ struct MapRoom {
  * @note Size: 0xC.
  */
 struct MapColls {
-	CollGroup* mCollisions; // _00
-	CollTriInfo* mTriangle; // _04
-	int _08;                // _08
+	CollGroup* mCollisions;    // _00
+	CollTriInfo* mTriangle;    // _04
+	int mDisplayColorCategory; // _08
 };
 
 /**
@@ -319,45 +319,45 @@ struct MapMgr {
 	// unused/inlined:
 	bool closeCollTri(CollGroup*, CollTriInfo*);
 
-	Controller* mController;               // _00
-	DayMgr* mDayMgr;                       // _04
-	Vector3f _08;                          // _08
-	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
-	int _18;                               // _18
-	int _1C;                               // _1C
-	u8 _20[0x60 - 0x20];                   // _20, unknown
-	Shape* mMapShape;                      // _60
-	ShapeDynMaterials mDynMaterials;       // _64
-	BaseShape* mMapPartShapes[5];          // _74
-	DynCollShape* mCollShape;              // _88
-	MapLightMgr* mLightMgr;                // _8C
-	BoundBox _90;                          // _90
-	int _A8;                               // _A8
-	int _AC;                               // _AC
-	int _B0;                               // _B0
-	Vector3f _B4;                          // _B4
-	BoundBox _C0;                          // _C0
-	BoundBox _D8;                          // _D8
-	MapColls* mCollisions;                 // _F0
-	f32 _F4;                               // _F4
-	f32 _F8;                               // _F8
-	f32 _FC;                               // _FC
-	f32 _100;                              // _100
-	u8 _104;                               // _104
-	DynSimulator* mDynSimulator;           // _108
-	int mCollisionCheckCount;              // _10C
-	int _110;                              // _110, unknown
-	ShadowCaster mShadowCaster;            // _114
-	MapShadMatHandler* mMapShadMatHandler; // _4AC
-	MapProjMatHandler* mMapProjMatHandler; // _4B0
-	Texture* _4B4;                         // _4B4
-	Texture* _4B8;                         // _4B8
-	int mBlur;                             // _4BC
-	f32 _4C0;                              // _4C0
-	f32 _4C4;                              // _4C4
-	f32 _4C8;                              // _4C8
-	f32 _4CC;                              // _4CC
-	CreatureCollPart* _4D0;                // _4D0
+	Controller* mController;                         // _00
+	DayMgr* mDayMgr;                                 // _04
+	Vector3f _08;                                    // _08
+	MapRoom* mMapRooms;                              // _14, array of 256 MapRooms
+	int mVerticalRaycastCallCount;                   // _18
+	int mGroundTriangleRaycastCallCount;             // _1C
+	u8 _20[0x60 - 0x20];                             // _20, unknown
+	Shape* mMapShape;                                // _60
+	ShapeDynMaterials mDynMaterials;                 // _64
+	BaseShape* mMapPartShapes[5];                    // _74
+	DynCollShape* mCollShape;                        // _88
+	MapLightMgr* mLightMgr;                          // _8C
+	BoundBox mCompleteMapBounds;                     // _90
+	int mCurrentDebugCollisionCount;                 // _A8
+	int mEffectiveTriDisplayCount;                   // _AC
+	int mMaxDebugDisplayCollisions;                  // _B0
+	Vector3f mDebugCollisionFocusPoint;              // _B4
+	BoundBox mDebugCollisionBroadPhaseBox;           // _C0
+	BoundBox mDebugCollisionQueryBox;                // _D8
+	MapColls* mCollisions;                           // _F0
+	f32 mLastPhysicsUpdateTimeProcessed;             // _F4
+	f32 mAccumulatedFrameTimeForPhysics;             // _F8
+	f32 mPhysicsFixedTimeStep;                       // _FC
+	f32 mPhysicsIntegrationSubStep;                  // _100
+	u8 mNeedsPhysicsWorldReset;                      // _104
+	DynSimulator* mDynSimulator;                     // _108
+	int mCollisionCheckCount;                        // _10C
+	int mShadowFullRenderCountdown;                  // _110, unknown
+	ShadowCaster mShadowCaster;                      // _114
+	MapShadMatHandler* mMapShadMatHandler;           // _4AC
+	MapProjMatHandler* mMapProjMatHandler;           // _4B0
+	Texture* mScreenCaptureTextureForBlur;           // _4B4
+	Texture* mBlurredPreviousFrameTexture;           // _4B8
+	int mBlur;                                       // _4BC
+	f32 mGreyscaleDesaturationLevel;                 // _4C0
+	f32 mFadeToBlackProgress;                        // _4C4
+	f32 mTargetGreyscaleDesaturationLevel;           // _4C8
+	f32 mTargetFadeToBlackLevel;                     // _4CC
+	CreatureCollPart* mDefaultCreatureCollisionPart; // _4D0
 };
 
 extern MapMgr* mapMgr;

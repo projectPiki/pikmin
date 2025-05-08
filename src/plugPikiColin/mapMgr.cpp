@@ -35,10 +35,10 @@ DEFINE_PRINT(nullptr)
  * @brief Fabricated name. Some struct has to exist here, but I don't think it's exposed anywhere.
  */
 struct SoftLightLight {
-	u32 _00;             // _00
-	SoftLightLight* _04; // _04
-	u8* _08;             // _08
-	s16 _0C;             // _0C
+	u32 mLastUpdateTick;       // _00
+	SoftLightLight* mNext;     // _04
+	u8* mColorChannels;        // _08
+	s16 mAccumulatedIntensity; // _0C
 };
 
 BoundBox collExtents;
@@ -54,39 +54,39 @@ static SoftLightLight* vlink;
 struct SoftLight {
 	void addLight(u32 p1, LShortColour*, Shape*)
 	{
-		if (_30) {
-			for (int i = 0; i < _28; i++) {
-				if (_30[i]->_00 != p1) {
-					_30[i]->_04 = vlink;
-					vlink       = _30[i];
-					_30[i]->_00 = p1;
+		if (mSublightList) {
+			for (int i = 0; i < mLightListSize; i++) {
+				if (mSublightList[i]->mLastUpdateTick != p1) {
+					mSublightList[i]->mNext           = vlink;
+					vlink                             = mSublightList[i];
+					mSublightList[i]->mLastUpdateTick = p1;
 				}
-				_30[i]->_0C += (_34[i] * _0C.r) >> 8;
+				mSublightList[i]->mAccumulatedIntensity += (mIntensityScales[i] * mEffectiveColour.r) >> 8;
 			}
 		}
 	}
 	void subLight(LShortColour*)
 	{
-		if (_30) {
-			for (int i = 0; i < _28; i++) {
-				_30[i]->_0C -= (_34[i] * _0C.r) >> 8;
+		if (mSublightList) {
+			for (int i = 0; i < mLightListSize; i++) {
+				mSublightList[i]->mAccumulatedIntensity -= (mIntensityScales[i] * mEffectiveColour.r) >> 8;
 			}
 		}
 		FORCE_DONT_INLINE;
 	}
 
-	Vector3f _00;         // _00
-	Colour _0C;           // _0C
-	Colour _10;           // _10
-	f32 _14;              // _14
-	f32 _18;              // _18
-	f32 _1C;              // _1C
-	int _20;              // _20
-	int _24;              // _24
-	int _28;              // _28
-	u8 _2C;               // _2C
-	SoftLightLight** _30; // _30
-	s16* _34;             // _34
+	Vector3f mPosition;             // _00
+	Colour mEffectiveColour;        // _0C
+	Colour mBaseColour;             // _10
+	f32 mInteractionRadius;         // _14
+	f32 mTargetPhaseAngle;          // _18
+	f32 mCurrentPhaseAngle;         // _1C
+	int mGroupId;                   // _20
+	int mAnimationFlag;             // _24
+	int mLightListSize;             // _28
+	u8 _2C;                         // _2C
+	SoftLightLight** mSublightList; // _30
+	s16* mIntensityScales;          // _34
 };
 
 /**
@@ -96,43 +96,45 @@ struct MapLightMgr {
 
 	void updateLights()
 	{
-		_14++;
+		mCurrentUpdateTick++;
 		numUpdated = 0;
 		numRepeats = 0;
 		vlink      = nullptr;
 
 		for (int i = 0; i < mLightCount; i++) {
-			sinf(mLights[i]->_1C);
+			sinf(mLights[i]->mCurrentPhaseAngle);
 
 			bool check = false;
-			if (mLights[i]->_1C != mLights[i]->_18) {
-				f32 a = (mLights[i]->_24) ? 2.0f : 0.5f;
-				mLights[i]->_1C += gsys->getFrameTime() * a * (mLights[i]->_18 - mLights[i]->_1C);
+			if (mLights[i]->mCurrentPhaseAngle != mLights[i]->mTargetPhaseAngle) {
+				f32 a = (mLights[i]->mAnimationFlag) ? 2.0f : 0.5f;
+				mLights[i]->mCurrentPhaseAngle
+				    += gsys->getFrameTime() * a * (mLights[i]->mTargetPhaseAngle - mLights[i]->mCurrentPhaseAngle);
 				check = true;
 			}
 
 			if (check) {
 				if (!mLights[i]->_2C) {
-					mLights[i]->subLight(_10);
+					mLights[i]->subLight(mGlobalAmbientColorRef);
 				}
 				mLights[i]->_2C = 0;
-				f32 a           = sinf(mLights[i]->_1C);
+				f32 a           = sinf(mLights[i]->mCurrentPhaseAngle);
 				if (a > 0.95f) {
-					mLights[i]->_1C = mLights[i]->_18;
+					mLights[i]->mCurrentPhaseAngle = mLights[i]->mTargetPhaseAngle;
 				}
 
-				mLights[i]->_0C.set(mLights[i]->_10.r * a, mLights[i]->_10.g * a, mLights[i]->_10.b * a, 255);
-				mLights[i]->addLight(_14, _10, _00);
+				mLights[i]->mEffectiveColour.set(mLights[i]->mBaseColour.r * a, mLights[i]->mBaseColour.g * a,
+				                                 mLights[i]->mBaseColour.b * a, 255);
+				mLights[i]->addLight(mCurrentUpdateTick, mGlobalAmbientColorRef, mDefaultShape);
 			}
 		}
 
 		if (vlink) {
-			for (SoftLightLight* c = vlink; c; c = c->_04) {
-				u8 a      = (c->_0C < 255) ? (u8)c->_0C : 255;
-				c->_08[0] = a;
-				c->_08[1] = a;
-				c->_08[2] = a;
-				c->_08[3] = a;
+			for (SoftLightLight* c = vlink; c; c = c->mNext) {
+				u8 a                 = (c->mAccumulatedIntensity < 255) ? (u8)c->mAccumulatedIntensity : 255;
+				c->mColorChannels[0] = a;
+				c->mColorChannels[1] = a;
+				c->mColorChannels[2] = a;
+				c->mColorChannels[3] = a;
 			}
 		}
 	}
@@ -140,18 +142,18 @@ struct MapLightMgr {
 	void touchLights(Vector3f& pos)
 	{
 		for (int i = 0; i < mLightCount; i++) {
-			if (mLights[i]->_18 != HALF_PI) {
-				f32 a = (mLights[i]->_24) ? mLights[i]->_14 * 0.5f : mLights[i]->_14 * 1.5f;
-				if (mLights[i]->_00.distance(pos) < a) {
-					mLights[i]->_18 = HALF_PI;
+			if (mLights[i]->mTargetPhaseAngle != HALF_PI) {
+				f32 a = (mLights[i]->mAnimationFlag) ? mLights[i]->mInteractionRadius * 0.5f : mLights[i]->mInteractionRadius * 1.5f;
+				if (mLights[i]->mPosition.distance(pos) < a) {
+					mLights[i]->mTargetPhaseAngle = HALF_PI;
 				}
 
-				if (mLights[i]->_24) {
+				if (mLights[i]->mAnimationFlag) {
 					for (int j = 0; j < mLightCount; j++) {
-						if (i != j && mLights[j]->_20 == mLights[i]->_20 && mLights[j]->_1C > 0.4f) {
-							f32 d = mLights[i]->_00.distance(mLights[j]->_00);
-							if (d < mLights[i]->_14) {
-								mLights[i]->_18 = HALF_PI;
+						if (i != j && mLights[j]->mGroupId == mLights[i]->mGroupId && mLights[j]->mCurrentPhaseAngle > 0.4f) {
+							f32 d = mLights[i]->mPosition.distance(mLights[j]->mPosition);
+							if (d < mLights[i]->mInteractionRadius) {
+								mLights[i]->mTargetPhaseAngle = HALF_PI;
 							}
 						}
 					}
@@ -160,12 +162,12 @@ struct MapLightMgr {
 		}
 	}
 
-	Shape* _00;          // _00
-	SoftLight** mLights; // _04
-	u8 _08[0x4];         // _08, unknown
-	int mLightCount;     // _0C
-	LShortColour* _10;   // _10
-	u32 _14;             // _14
+	Shape* mDefaultShape;                 // _00
+	SoftLight** mLights;                  // _04
+	u8 padding[0x4];                      // _08, unknown
+	int mLightCount;                      // _0C
+	LShortColour* mGlobalAmbientColorRef; // _10
+	u32 mCurrentUpdateTick;               // _14
 };
 
 /*
@@ -195,7 +197,7 @@ void DynCollShape::createDupCollData()
 	for (int i = 0; i < mShape->mBaseRoomCount; i++) {
 		int tris = 0;
 		for (int j = 0; j < mShape->mTriCount; j++) {
-			if (i == mCollTriList[j]._10) {
+			if (i == mCollTriList[j].mCollRoomId) {
 				tris++;
 			}
 		}
@@ -207,7 +209,7 @@ void DynCollShape::createDupCollData()
 
 		int t = 0;
 		for (int j = 0; j < mShape->mTriCount; j++) {
-			if (mCollTriList[j]._10 == i) {
+			if (mCollTriList[j].mCollRoomId == i) {
 				mColliderList[i]->mTriangleList[t] = &mCollTriList[j];
 				t++;
 			}
@@ -293,9 +295,9 @@ void DynCollShape::jointVisible(int id, int set)
  */
 void DynCollShape::adjust(Creature* obj)
 {
-	obj->_274 = obj->mPosition;
-	obj->_274.multMatrix(mInverseMatrix);
-	obj->mPosition = obj->_274;
+	obj->mPositionInShapeSpace = obj->mPosition;
+	obj->mPositionInShapeSpace.multMatrix(mInverseMatrix);
+	obj->mPosition = obj->mPositionInShapeSpace;
 	obj->mPosition.multMatrix(mTransformMtx);
 	obj->mLastPosition = obj->mPosition;
 }
@@ -341,7 +343,7 @@ void DynCollShape::refresh(Graphics& gfx)
  */
 void MapObjAnimator::finishOneShot()
 {
-	_18 = 0;
+	mIsPlaying = 0;
 	if (mMapObj) {
 		mMapObj->nextState();
 	}
@@ -380,9 +382,9 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
 	int i     = 0;
 	for (ObjCollInfo* info = (ObjCollInfo*)mShape->mCollisionInfo.mParentShape->Child(); info; info = (ObjCollInfo*)info->mNext) {
 		if (info->mPlatShape) {
-			MapObjectPart* part = new MapObjectPart(info->mPlatShape);
-			part->_144          = this;
-			part->_140          = info->mJointIndex;
+			MapObjectPart* part    = new MapObjectPart(info->mPlatShape);
+			part->mParentMapObject = this;
+			part->mJointIndex      = info->mJointIndex;
 			mMapMgr->mCollShape->add(part);
 			mObjParts[i] = part;
 			i++;
@@ -412,11 +414,11 @@ void DynMapObject::touchCallback(Plane&, Vector3f&, Vector3f&)
 {
 	switch (mState) {
 	case 0:
-		_51C = 2.0f;
+		mStateTransitionTimer = 2.0f;
 		mState++;
 		break;
 	case 4:
-		_51C = 2.0f;
+		mStateTransitionTimer = 2.0f;
 		break;
 	}
 }
@@ -430,24 +432,24 @@ void DynMapObject::update()
 {
 	switch (mState) {
 	case 1:
-		_51C -= gsys->getFrameTime();
-		if (_51C < 0.0f) {
-			_51C = 2.0f;
+		mStateTransitionTimer -= gsys->getFrameTime();
+		if (mStateTransitionTimer < 0.0f) {
+			mStateTransitionTimer = 2.0f;
 			mAnimator.startAnim(2, 0, 0, 8);
 			mState++;
 		}
 		break;
 	case 3:
-		_51C -= gsys->getFrameTime();
-		if (_51C < 0.0f) {
-			_51C = 0.0f;
+		mStateTransitionTimer -= gsys->getFrameTime();
+		if (mStateTransitionTimer < 0.0f) {
+			mStateTransitionTimer = 0.0f;
 			mState++;
 		}
 		break;
 	case 4:
-		_51C -= gsys->getFrameTime();
-		if (_51C < 0.0f) {
-			_51C = 0.0f;
+		mStateTransitionTimer -= gsys->getFrameTime();
+		if (mStateTransitionTimer < 0.0f) {
+			mStateTransitionTimer = 0.0f;
 			mAnimator.startAnim(2, 1, 0, 8);
 			mState++;
 		}
@@ -492,7 +494,7 @@ void DynMapObject::refresh(Graphics& gfx)
 	for (int i = 0; i < mObjPartCount; i++) {
 		MapObjectPart* part = mObjParts[i];
 		part->mTransformMtx.inverse(&part->mInverseMatrix);
-		Matrix4f animMtx = mShape->getAnimMatrix(part->_140);
+		Matrix4f animMtx = mShape->getAnimMatrix(part->mJointIndex);
 		gfx.mCamera->mInverseLookAtMtx.multiplyTo(animMtx, part->mTransformMtx);
 	}
 
@@ -508,7 +510,7 @@ static f32 Kdl = 1.25f;
  */
 void DynCollObjBody::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
 {
-	_140->touchCallback(plane, a1, a2);
+	mParentRigidBody->touchCallback(plane, a1, a2);
 }
 
 /*
@@ -518,7 +520,7 @@ void DynCollObjBody::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
  */
 void DynCollObjBody::applyVelocity(Plane& plane, Vector3f& a1, Vector3f& a2)
 {
-	_140->applyVelocity(plane, a1, a2);
+	mParentRigidBody->applyVelocity(plane, a1, a2);
 }
 
 /*
@@ -530,7 +532,7 @@ void DynObjBody::touchCallback(Plane& plane, Vector3f& p2, Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
 		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
-		vec.multiply(_13318);
+		vec.multiply(mImpactResponseForceScale);
 		// why.
 		applyForce(0, Vector3f(vec.x, vec.y, vec.z), Vector3f(p2.x, p2.y, p2.z));
 	}
@@ -545,7 +547,7 @@ void DynObjBody::applyVelocity(Plane& plane, Vector3f& p2, Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
 		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
-		vec.multiply(_13318);
+		vec.multiply(mImpactResponseForceScale);
 		// why.
 		applyForce(0, Vector3f(vec.x, vec.y, vec.z), Vector3f(p2.x, p2.y, p2.z));
 	}
@@ -579,13 +581,13 @@ void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 {
 	RigidBody::integrate(prevConfigIdx, currConfigIdx, timeStep);
 	configuration& config = mIntegrationStates[currConfigIdx];
-	config.mLinearVel.rotate(_1335C);
-	config.mLocalAngularVel.rotate(_1335C);
+	config.mLinearVel.rotate(mPreMaskVelRotationMtx);
+	config.mLocalAngularVel.rotate(mPreMaskVelRotationMtx);
 	config.mLinearVel.set(config.mLinearVel.x * mVelMask.x, config.mLinearVel.y * mVelMask.y, config.mLinearVel.z * mVelMask.z);
 	config.mLocalAngularVel.set(config.mLocalAngularVel.x * mAngularVelMask.x, config.mLocalAngularVel.y * mAngularVelMask.y,
 	                            config.mLocalAngularVel.z * mAngularVelMask.z);
-	config.mLinearVel.rotate(_1331C);
-	config.mLocalAngularVel.rotate(_1331C);
+	config.mLinearVel.rotate(mPostMaskVelRotationMtx);
+	config.mLocalAngularVel.rotate(mPostMaskVelRotationMtx);
 
 	OrthonormaliseOrientation(config.mOrientationMtx);
 	config.mOrientationQuat.fromMat3f(config.mOrientationMtx);
@@ -601,9 +603,9 @@ void DynObjSeeSaw::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
  */
 void DynObjBody::initRender(int)
 {
-	_132BC.makeVQS(_13260, _1328C, Vector3f(1.0f, 1.0f, 1.0f));
+	mRenderTransformMtx.makeVQS(mRenderPosition, mRenderOrientation, Vector3f(1.0f, 1.0f, 1.0f));
 	mCollObj->mTransformMtx.inverse(&mCollObj->mInverseMatrix);
-	mCollObj->mTransformMtx = _132BC;
+	mCollObj->mTransformMtx = mRenderTransformMtx;
 }
 
 /*
@@ -638,8 +640,8 @@ void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, Vector3f& p
 void DynObjBody::render(Graphics& gfx)
 {
 	Matrix4f mtx;
-	gfx.calcViewMatrix(_132BC, mtx);
-	gfx.mCamera->setBoundOffset(&_13260);
+	gfx.calcViewMatrix(mRenderTransformMtx, mtx);
+	gfx.mCamera->setBoundOffset(&mRenderPosition);
 	gfx.useMatrix(mtx, 0);
 	gfx.mCamera->setBoundOffset(nullptr);
 	gfx.useTexture(nullptr, 0);
@@ -647,7 +649,7 @@ void DynObjBody::render(Graphics& gfx)
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
 	for (int i = 0; i < mSpringCount; i++) {
-		gfx.drawLine(_10248[mSprings[i].mHookIdx], mSprings[i].mOffset);
+		gfx.drawLine(mBodySpaceHookPoints[mSprings[i].mHookIdx], mSprings[i].mOffset);
 	}
 }
 
@@ -659,7 +661,7 @@ void DynObjBody::render(Graphics& gfx)
 void DynObjBody::computeForces(int configIdx, f32 p2)
 {
 	configuration& config = mIntegrationStates[configIdx];
-	CollGroup* coll       = _132B8->getCollTris(config.mPosition);
+	CollGroup* coll       = mStaticEnvironmentShape->getCollTris(config.mPosition);
 	applyCMForce(Vector3f(0.0f, -140.81f, 0.0f));
 
 	for (int i = 0; i < mSpringCount; i++) {
@@ -709,8 +711,8 @@ void DynObjBody::initBodyCollisions()
 	mRestitutionFactor = 0.0f;
 	initDimensions(box.mMax.x - box.mMin.x, box.mMax.y - box.mMin.y, box.mMax.z - box.mMin.z);
 	PRINT("mass = %f\n", mMass);
-	mCollObj       = new DynCollObjBody(mBodyShell);
-	mCollObj->_140 = this;
+	mCollObj                   = new DynCollObjBody(mBodyShell);
+	mCollObj->mParentRigidBody = this;
 }
 
 /*
@@ -799,7 +801,7 @@ void DynObjBody::readScript(MapMgr* map, char* fileName)
 void DynObjPushable::render(Graphics& gfx)
 {
 	Matrix4f mtx;
-	gfx.calcViewMatrix(_132BC, mtx);
+	gfx.calcViewMatrix(mRenderTransformMtx, mtx);
 	gfx.useMatrix(mtx, 0);
 
 	if (mLinearAccel.length() > 0.0f) {
@@ -820,7 +822,7 @@ void DynObjPushable::render(Graphics& gfx)
 
 	int blend = gfx.setCBlending(0);
 	Vector3f vec(0.0f, 90.0f, 0.0f);
-	vec.add(_13260);
+	vec.add(mRenderPosition);
 	vec.multMatrix(gfx.mCamera->mLookAtMtx);
 	char buf[PATH_MAX];
 	sprintf(buf, "%.1f", mCurrPushStrength);
@@ -837,13 +839,13 @@ void DynObjPushable::render(Graphics& gfx)
  */
 MapMgr::MapMgr(Controller* controller)
 {
-	mController = controller;
-	_4C4        = 0.0f;
-	_4C0        = 0.0f;
-	_4CC        = 0.0f;
-	_4C8        = 0.0f;
-	effectMgr   = nullptr;
-	mBlur       = 145;
+	mController                       = controller;
+	mFadeToBlackProgress              = 0.0f;
+	mGreyscaleDesaturationLevel       = 0.0f;
+	mTargetFadeToBlackLevel           = 0.0f;
+	mTargetGreyscaleDesaturationLevel = 0.0f;
+	effectMgr                         = nullptr;
+	mBlur                             = 145;
 
 	memStat->start("dayMgr");
 	mDayMgr = new DayMgr(this, mController);
@@ -852,20 +854,20 @@ MapMgr::MapMgr(Controller* controller)
 	mCollisionCheckCount = 0;
 	mMapShape            = nullptr;
 
-	_A8 = 0;
-	_B0 = 300;
+	mCurrentDebugCollisionCount = 0;
+	mMaxDebugDisplayCollisions  = 300;
 
-	if (_B0) {
+	if (mMaxDebugDisplayCollisions) {
 		memStat->start("collisions");
-		mCollisions = new MapColls[_B0];
+		mCollisions = new MapColls[mMaxDebugDisplayCollisions];
 		memStat->end("collisions");
 	}
 
 	memStat->start("collparts");
-	_4D0 = new CreatureCollPart();
-	_4D0->initCore("");
+	mDefaultCreatureCollisionPart = new CreatureCollPart();
+	mDefaultCreatureCollisionPart->initCore("");
 	memStat->end("collparts");
-	_90.resetBound();
+	mCompleteMapBounds.resetBound();
 
 	memStat->start("rooms");
 	mMapRooms = new MapRoom[256];
@@ -876,7 +878,7 @@ MapMgr::MapMgr(Controller* controller)
 	memStat->end("dyncolshape");
 
 	memStat->start("shadMats");
-	_110 = 3;
+	mShadowFullRenderCountdown = 3;
 	mShadowCaster.initCore("");
 	mMapShadMatHandler                   = new MapShadMatHandler();
 	mMapShadMatHandler->mShadMat->mFlags = 0x100;
@@ -888,18 +890,18 @@ MapMgr::MapMgr(Controller* controller)
 	memStat->end("shadMats");
 
 	memStat->start("blurTextures");
-	_4B4                = new Texture();
-	_4B4->mWidthFactor  = 0.003125f;
-	_4B4->mHeightFactor = 0.004166667f;
-	_4B4->mTexFlags     = 0x105;
-	_4B4->createBuffer(320, 240, 8, nullptr);
-	gsys->addTexture(_4B4, "internalLightmap");
-	_4B8                = new Texture();
-	_4B8->mWidthFactor  = 0.003125f;
-	_4B8->mHeightFactor = 0.004166667f;
-	_4B8->mTexFlags     = 0x105;
-	_4B8->createBuffer(320, 240, 0, nullptr);
-	gsys->addTexture(_4B8, "internalLightmap");
+	mScreenCaptureTextureForBlur                = new Texture();
+	mScreenCaptureTextureForBlur->mWidthFactor  = 0.003125f;
+	mScreenCaptureTextureForBlur->mHeightFactor = 0.004166667f;
+	mScreenCaptureTextureForBlur->mTexFlags     = 0x105;
+	mScreenCaptureTextureForBlur->createBuffer(320, 240, 8, nullptr);
+	gsys->addTexture(mScreenCaptureTextureForBlur, "internalLightmap");
+	mBlurredPreviousFrameTexture                = new Texture();
+	mBlurredPreviousFrameTexture->mWidthFactor  = 0.003125f;
+	mBlurredPreviousFrameTexture->mHeightFactor = 0.004166667f;
+	mBlurredPreviousFrameTexture->mTexFlags     = 0x105;
+	mBlurredPreviousFrameTexture->createBuffer(320, 240, 0, nullptr);
+	gsys->addTexture(mBlurredPreviousFrameTexture, "internalLightmap");
 	memStat->end("blurTextures");
 }
 
@@ -933,19 +935,19 @@ void MapMgr::initShape()
 	}
 
 	mMapShape->createCollisions(64);
-	_90.expandBound(mMapShape->mCourseExtents);
+	mCompleteMapBounds.expandBound(mMapShape->mCourseExtents);
 	mDynSimulator = new DynSimulator();
 
-	_FC  = 0.016666668f;
-	_100 = 0.0125f;
-	_F4  = 0.0f;
-	_F8  = 0.0f;
+	mPhysicsFixedTimeStep           = 0.016666668f;
+	mPhysicsIntegrationSubStep      = 0.0125f;
+	mLastPhysicsUpdateTimeProcessed = 0.0f;
+	mAccumulatedFrameTimeForPhysics = 0.0f;
 
 	// sigh. this is really there.
 	// similar code exists in GenObjectMapObject::birth, but the assembly is actually stripped there.
 	for (int i = 0; i < 0; i++) {
-		DynObjBody* body = new DynObjBody();
-		body->_132B8     = mMapShape;
+		DynObjBody* body              = new DynObjBody();
+		body->mStaticEnvironmentShape = mMapShape;
 		body->readScript(this, "traffic/specLog.ini");
 		body->initBodyCollisions();
 		body->mInitPosition.set(0.0f, 60.0f, 100.0f);
@@ -956,7 +958,7 @@ void MapMgr::initShape()
 		mCollShape->add(body->mCollObj);
 	}
 
-	_104 = 1;
+	mNeedsPhysicsWorldReset = 1;
 }
 
 /*
@@ -975,25 +977,25 @@ void MapMgr::createLights()
  */
 void MapMgr::updateSimulation()
 {
-	if (_104) {
+	if (mNeedsPhysicsWorldReset) {
 		mDynSimulator->resetWorld();
-		_104               = 0;
-		mDynSimulator->_20 = 0;
+		mNeedsPhysicsWorldReset = 0;
+		mDynSimulator->_20      = 0;
 	}
 
 	f32 time = gsys->getFrameTime();
 	if (!mDynSimulator->isPaused()) {
-		_F8 += time * 1.0f;
-		while (_F8 - _F4 > _FC) {
+		mAccumulatedFrameTimeForPhysics += time * 1.0f;
+		while (mAccumulatedFrameTimeForPhysics - mLastPhysicsUpdateTimeProcessed > mPhysicsFixedTimeStep) {
 			if (!mDynSimulator->isPaused()) {
 				mDynSimulator->updateConts();
-				mDynSimulator->doSimulation(_FC, _100, mMapShape);
+				mDynSimulator->doSimulation(mPhysicsFixedTimeStep, mPhysicsIntegrationSubStep, mMapShape);
 			}
 
-			_F4 += _FC;
+			mLastPhysicsUpdateTimeProcessed += mPhysicsFixedTimeStep;
 		}
 
-		f32 a = (_F8 - _F4) / _FC;
+		f32 a = (mAccumulatedFrameTimeForPhysics - mLastPhysicsUpdateTimeProcessed) / mPhysicsFixedTimeStep;
 		mDynSimulator->updateVecQuats(a);
 	}
 }
@@ -1050,8 +1052,8 @@ void MapMgr::update()
  */
 void MapMgr::preRender(Graphics& gfx)
 {
-	_18 = 0;
-	_1C = 0;
+	mVerticalRaycastCallCount       = 0;
+	mGroundTriangleRaycastCallCount = 0;
 	gfx.setMatHandler(mMapShadMatHandler);
 	gfx.mRenderState = 0x300;
 
@@ -1059,14 +1061,14 @@ void MapMgr::preRender(Graphics& gfx)
 	{
 		LightCamera& cam = shadow->mLightCamera;
 		cam.calcVectors(shadow->mSourcePosition, shadow->mTargetPosition);
-		cam.calcProjection(gfx, false, _110 > 0 ? nullptr : shadow->mDrawer);
+		cam.calcProjection(gfx, false, mShadowFullRenderCountdown > 0 ? nullptr : shadow->mDrawer);
 	}
 
 	gfx.mRenderState = 0x700;
 	gfx.setMatHandler(nullptr);
 
-	if (_110) {
-		_110--;
+	if (mShadowFullRenderCountdown) {
+		mShadowFullRenderCountdown--;
 	}
 }
 
@@ -1153,24 +1155,24 @@ void MapMgr::refresh(Graphics& gfx)
  */
 void MapMgr::showCollisions(Vector3f& pos)
 {
-	_B4   = pos;
-	f32 a = 64.0f;
-	int b = (_90.mMax.x - _90.mMin.x + a) / a;
-	int c = (_90.mMax.z - _90.mMin.z + a) / a;
-	int d = (_B4.x - _90.mMin.x) / a;
-	int e = (_B4.z - _90.mMin.z) / a;
-	f32 f = _90.mMin.x + d * a;
-	f32 g = _90.mMin.z + e * a;
-	f32 h = a * 1.0f;
+	mDebugCollisionFocusPoint = pos;
+	f32 a                     = 64.0f;
+	int b                     = (mCompleteMapBounds.mMax.x - mCompleteMapBounds.mMin.x + a) / a;
+	int c                     = (mCompleteMapBounds.mMax.z - mCompleteMapBounds.mMin.z + a) / a;
+	int d                     = (mDebugCollisionFocusPoint.x - mCompleteMapBounds.mMin.x) / a;
+	int e                     = (mDebugCollisionFocusPoint.z - mCompleteMapBounds.mMin.z) / a;
+	f32 f                     = mCompleteMapBounds.mMin.x + d * a;
+	f32 g                     = mCompleteMapBounds.mMin.z + e * a;
+	f32 h                     = a * 1.0f;
 
-	_C0.resetBound();
-	_C0.expandBound(Vector3f(f - h, _90.mMin.y - h, g - h));
-	_C0.expandBound(Vector3f(f + a + h, _90.mMax.y + h, g + a + h));
+	mDebugCollisionBroadPhaseBox.resetBound();
+	mDebugCollisionBroadPhaseBox.expandBound(Vector3f(f - h, mCompleteMapBounds.mMin.y - h, g - h));
+	mDebugCollisionBroadPhaseBox.expandBound(Vector3f(f + a + h, mCompleteMapBounds.mMax.y + h, g + a + h));
 
-	_D8.resetBound();
-	_D8.expandBound(Vector3f(f, _90.mMin.y - h, g));
-	_D8.expandBound(Vector3f(f + a, _90.mMax.y + h, g + a));
-	collExtents = _D8;
+	mDebugCollisionQueryBox.resetBound();
+	mDebugCollisionQueryBox.expandBound(Vector3f(f, mCompleteMapBounds.mMin.y - h, g));
+	mDebugCollisionQueryBox.expandBound(Vector3f(f + a, mCompleteMapBounds.mMax.y + h, g + a));
+	collExtents = mDebugCollisionQueryBox;
 
 	BoundBox box;
 	box.expandBound(pos);
@@ -1209,34 +1211,34 @@ void MapMgr::showCollisions(Vector3f& pos)
 			continue;
 		}
 
-		_AC += coll->mTriCount - coll->_06;
-		int count = coll->mTriCount - coll->_06;
-		if (coll->mTriCount == coll->_06) {
-			PRINT("grid(%d,%d) collGroup : total %d far %d tris\n", d, e, coll->mTriCount, coll->_06);
-			for (int i = 0; i < coll->_06; i++) {
-				PRINT("\t%d : dist = %d\n", i, coll->_0C[i]);
+		mEffectiveTriDisplayCount += coll->mTriCount - coll->mFarCulledTriCount;
+		int count = coll->mTriCount - coll->mFarCulledTriCount;
+		if (coll->mTriCount == coll->mFarCulledTriCount) {
+			PRINT("grid(%d,%d) collGroup : total %d far %d tris\n", d, e, coll->mTriCount, coll->mFarCulledTriCount);
+			for (int i = 0; i < coll->mFarCulledTriCount; i++) {
+				PRINT("\t%d : dist = %d\n", i, coll->mFarCulledTriDistances[i]);
 			}
 		}
 
 		for (int i = 0; i < coll->mTriCount; i++) {
-			if (_A8 < _B0) {
+			if (mCurrentDebugCollisionCount < mMaxDebugDisplayCollisions) {
 				if (AIPerf::showColls) {
 					if (i < count) {
-						mCollisions[_A8]._08 = 0;
+						mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 0;
 					} else {
-						if (coll->_0C[i - count] < 16) {
-							mCollisions[_A8]._08 = 2;
+						if (coll->mFarCulledTriDistances[i - count] < 16) {
+							mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 2;
 						} else {
-							mCollisions[_A8]._08 = 1;
+							mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 1;
 						}
 					}
 				} else {
-					mCollisions[_A8]._08 = 0;
+					mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 0;
 				}
 
-				mCollisions[_A8].mCollisions = coll;
-				mCollisions[_A8].mTriangle   = coll->mTriangleList[i];
-				_A8++;
+				mCollisions[mCurrentDebugCollisionCount].mCollisions = coll;
+				mCollisions[mCurrentDebugCollisionCount].mTriangle   = coll->mTriangleList[i];
+				mCurrentDebugCollisionCount++;
 			}
 		}
 	}
@@ -1314,9 +1316,10 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setFog(false);
 			gfx.setColour(Colour(255, 255, 255, 255), true);
 			gfx.setAuxColour(Colour(255, 255, 255, 255));
-			_4B4->grabBuffer(_4B4->mWidth, _4B4->mHeight, false, true);
-			gfx.useTexture(_4B8, 0);
-			gfx.useTexture(_4B4, 1);
+			mScreenCaptureTextureForBlur->grabBuffer(mScreenCaptureTextureForBlur->mWidth, mScreenCaptureTextureForBlur->mHeight, false,
+			                                         true);
+			gfx.useTexture(mBlurredPreviousFrameTexture, 0);
+			gfx.useTexture(mScreenCaptureTextureForBlur, 1);
 			if (gameflow.mMoviePlayer->mIsActive) {
 				gfx.mCamera->mBlur = 0.0f;
 			}
@@ -1325,7 +1328,8 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlur), nullptr);
 			gfx.blatRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			gfx.setCBlending(blend);
-			_4B8->grabBuffer(_4B8->mWidth, _4B8->mHeight, false, true);
+			mBlurredPreviousFrameTexture->grabBuffer(mBlurredPreviousFrameTexture->mWidth, mBlurredPreviousFrameTexture->mHeight, false,
+			                                         true);
 			gfx.resetCopyFilter();
 			gfx.setFog(true);
 			gfx.setLighting(lighting, nullptr);
@@ -1333,44 +1337,45 @@ void MapMgr::postrefresh(Graphics& gfx)
 			                   gfx.mCamera->mFar, 1.0f);
 		}
 
-		if (_4C4 < _4CC) {
-			_4C4 += 2.0f * gsys->getFrameTime();
-			if (_4C4 > _4CC) {
-				_4C4 = _4CC;
+		if (mFadeToBlackProgress < mTargetFadeToBlackLevel) {
+			mFadeToBlackProgress += 2.0f * gsys->getFrameTime();
+			if (mFadeToBlackProgress > mTargetFadeToBlackLevel) {
+				mFadeToBlackProgress = mTargetFadeToBlackLevel;
 			}
-		} else if (_4C4 > _4CC) {
-			_4C4 -= 2.0f * gsys->getFrameTime();
-			if (_4C4 < _4CC) {
-				_4C4 = _4CC;
-			}
-		}
-
-		if (_4C0 < _4C8) {
-			_4C0 += 2.0f * gsys->getFrameTime();
-			if (_4C0 > _4C8) {
-				_4C0 = _4C8;
-			}
-		} else if (_4C0 > _4C8) {
-			_4C0 -= 2.0f * gsys->getFrameTime();
-			if (_4C0 < _4C8) {
-				_4C0 = _4C8;
+		} else if (mFadeToBlackProgress > mTargetFadeToBlackLevel) {
+			mFadeToBlackProgress -= 2.0f * gsys->getFrameTime();
+			if (mFadeToBlackProgress < mTargetFadeToBlackLevel) {
+				mFadeToBlackProgress = mTargetFadeToBlackLevel;
 			}
 		}
 
-		if (_4C0 > 0.0f || _4C4 > 0.0f) {
+		if (mGreyscaleDesaturationLevel < mTargetGreyscaleDesaturationLevel) {
+			mGreyscaleDesaturationLevel += 2.0f * gsys->getFrameTime();
+			if (mGreyscaleDesaturationLevel > mTargetGreyscaleDesaturationLevel) {
+				mGreyscaleDesaturationLevel = mTargetGreyscaleDesaturationLevel;
+			}
+		} else if (mGreyscaleDesaturationLevel > mTargetGreyscaleDesaturationLevel) {
+			mGreyscaleDesaturationLevel -= 2.0f * gsys->getFrameTime();
+			if (mGreyscaleDesaturationLevel < mTargetGreyscaleDesaturationLevel) {
+				mGreyscaleDesaturationLevel = mTargetGreyscaleDesaturationLevel;
+			}
+		}
+
+		if (mGreyscaleDesaturationLevel > 0.0f || mFadeToBlackProgress > 0.0f) {
 			Matrix4f mtx;
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
-			gfx.setColour(Colour(160, 160, 160, (int)(_4C0 * 255.0f)), true);
-			gfx.useTexture(_4B8, 0);
-			gfx.drawRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight), RectArea(0, 0, _4B8->mWidth, _4B8->mHeight), nullptr);
+			gfx.setColour(Colour(160, 160, 160, (int)(mGreyscaleDesaturationLevel * 255.0f)), true);
+			gfx.useTexture(mBlurredPreviousFrameTexture, 0);
+			gfx.drawRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight),
+			                  RectArea(0, 0, mBlurredPreviousFrameTexture->mWidth, mBlurredPreviousFrameTexture->mHeight), nullptr);
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
-			gfx.setColour(Colour(0, 0, 0, int(_4C4 * 255.0f)), true);
+			gfx.setColour(Colour(0, 0, 0, int(mFadeToBlackProgress * 255.0f)), true);
 			gfx.useTexture(nullptr, 0);
 			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		}
 
-		if (_A8) {
+		if (mCurrentDebugCollisionCount) {
 			int blend     = gfx.setCBlending(0);
 			bool lighting = gfx.setLighting(false, nullptr);
 			gfx.setFog(false);
@@ -1384,7 +1389,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			Vector3f vecs[3];
 
-			for (int i = 0; i < _A8; i++) {
+			for (int i = 0; i < mCurrentDebugCollisionCount; i++) {
 				vecs[0] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
 				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[0]];
 				vecs[1] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
@@ -1393,27 +1398,27 @@ void MapMgr::postrefresh(Graphics& gfx)
 				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[2]];
 
 				for (int j = 0; j < 3; j++) {
-					gfx.setColour(colours[mCollisions[i]._08], true);
+					gfx.setColour(colours[mCollisions[i].mDisplayColorCategory], true);
 					gfx.drawLine(vecs[j % 3], vecs[(j + 1) % 3]);
 					gfx.drawPoints(&vecs[j % 3], 1);
 				}
 			}
 
 			gfx.setColour(Colour(255, 255, 255, 255), true);
-			Vector3f pos(_B4.x, _B4.y + 50.0f, _B4.z);
+			Vector3f pos(mDebugCollisionFocusPoint.x, mDebugCollisionFocusPoint.y + 50.0f, mDebugCollisionFocusPoint.z);
 			pos.multMatrix(gfx.mCamera->mLookAtMtx);
 
 			char buffer[PATH_MAX];
 			if (AIPerf::showColls) {
-				sprintf(buffer, "%d / %d", _AC, _A8);
+				sprintf(buffer, "%d / %d", mEffectiveTriDisplayCount, mCurrentDebugCollisionCount);
 			} else {
-				sprintf(buffer, "%d", _A8);
+				sprintf(buffer, "%d", mCurrentDebugCollisionCount);
 			}
 
 			gfx.useMatrix(Matrix4f::ident, 0);
 			gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(buffer) / 2), 0, buffer);
 
-			for (int i = 0; i < _A8; i++) {
+			for (int i = 0; i < mCurrentDebugCollisionCount; i++) {
 				Vector3f vert1(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[0]]);
 				Vector3f vert2(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[1]]);
 				Vector3f vert3(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[2]]);
@@ -1439,18 +1444,18 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			if (AIPerf::showColls) {
 				gfx.setColour(Colour(255, 128, 255, 255), true);
-				_D8.draw(gfx);
+				mDebugCollisionQueryBox.draw(gfx);
 			}
 
 			gfx.setColour(Colour(64, 255, 255, 255), true);
-			_C0.draw(gfx);
+			mDebugCollisionBroadPhaseBox.draw(gfx);
 			gfx.setFog(true);
 			gfx.setLighting(lighting, nullptr);
 			gfx.setCBlending(blend);
 		}
 
-		_A8 = 0;
-		_AC = 0;
+		mCurrentDebugCollisionCount = 0;
+		mEffectiveTriDisplayCount   = 0;
 		// gsys->mTimer->stop("mapPost");
 		gfx._324 = 0;
 	}
@@ -1520,10 +1525,10 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
  */
 f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 {
-	_18++;
+	mVerticalRaycastCallCount++;
 	f32 minY = -32768.0f;
 	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
-		int count = (AIPerf::showColls) ? colls->mTriCount - colls->_06 : colls->mTriCount;
+		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
 		if (count == 0) {
 			count = colls->mTriCount;
 		}
@@ -1551,10 +1556,10 @@ f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
  */
 f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 {
-	_18++;
+	mVerticalRaycastCallCount++;
 	f32 minY = 32768.0f;
 	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
-		int count = (AIPerf::showColls) ? colls->mTriCount - colls->_06 : colls->mTriCount;
+		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
 		if (count == 0) {
 			count = colls->mTriCount;
 		}
@@ -1582,11 +1587,11 @@ f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
  */
 CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 {
-	_1C++;
+	mGroundTriangleRaycastCallCount++;
 	CollTriInfo* tri = nullptr;
 	f32 minY         = -32768.0f;
 	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
-		int count = (AIPerf::showColls) ? colls->mTriCount - colls->_06 : colls->mTriCount;
+		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
 		if (count == 0) {
 			count = colls->mTriCount;
 		}
@@ -1678,14 +1683,14 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 	bool check1 = false;
 
 	for (currColls; currColls; currColls = currColls->mNextCollider) {
-		int count = currColls->mTriCount - currColls->_06;
+		int count = currColls->mTriCount - currColls->mFarCulledTriCount;
 		if (!count) {
 			count = colls->mTriCount;
 		}
 
 		for (int i = 0; i < currColls->mTriCount; i++) {
 			CollTriInfo* tri = currColls->mTriangleList[i];
-			if (AIPerf::showColls && i >= count && currColls->_0C[i - count] > radInt + 4) {
+			if (AIPerf::showColls && i >= count && currColls->mFarCulledTriDistances[i - count] > radInt + 4) {
 				if (AIPerf::useCollSort) {
 					break;
 				}
@@ -1716,7 +1721,7 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 				bounceFactor = trace.mObject->mProps->mCreatureProps.mBounceFactor();
 			}
 			if (trace.mObject) {
-				trace.mObject->_1A8 = 1;
+				trace.mObject->mCollisionOccurred = 1;
 			}
 			bool check2 = false;
 			if (!currColls->mSourceCollider) {
@@ -1759,9 +1764,9 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 				}
 
 				if (currColls->mSourceCollider) {
-					if (a == 1 && currColls->mSourceCollider->_24 != mCollisionCheckCount) {
+					if (a == 1 && currColls->mSourceCollider->mLastContactFrameID != mCollisionCheckCount) {
 						currColls->mSourceCollider->mContactCount++;
-						currColls->mSourceCollider->_24 = mCollisionCheckCount;
+						currColls->mSourceCollider->mLastContactFrameID = mCollisionCheckCount;
 					}
 					currColls->mSourceCollider->touchCallback(tri->mTriangle, nextPos, trace.mVelocity);
 				}
@@ -1803,7 +1808,7 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 		trace.mObject        = creature;
 		CollGroup* collGroup = nullptr;
 
-		if (!trace._20) {
+		if (!trace.mIgnoreDynamicColliders) {
 			FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
 			{
 				if ((!coll->mCreature || coll->mCreature != creature) && box.intersects(coll->mBoundingBox)) {
@@ -1838,439 +1843,6 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 	}
 
 	trace.mPosition.sub(Vector3f(0.0f, trace.mRadius, 0.0f));
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stfd      f31, 0xF8(r1)
-	  stfd      f30, 0xF0(r1)
-	  stfd      f29, 0xE8(r1)
-	  stfd      f28, 0xE0(r1)
-	  fmr       f28, f1
-	  stmw      r27, 0xCC(r1)
-	  mr        r27, r3
-	  mr        r29, r5
-	  mr        r28, r4
-	  li        r31, 0x1
-	  li        r3, 0
-	  lfs       f0, -0x6BB8(r13)
-	  lfs       f2, 0x0(r5)
-	  lfs       f1, 0x18(r5)
-	  fadds     f0, f2, f0
-	  lfs       f2, -0x6BB4(r13)
-	  stfs      f0, 0x0(r5)
-	  lfs       f0, 0x4(r5)
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x4(r5)
-	  lfs       f0, 0x8(r5)
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x8(r5)
-	  lfs       f1, 0xC(r5)
-	  lfs       f0, 0x10(r5)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x14(r5)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x78B0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0xEC
-	  fsqrte    f1, f4
-	  lfd       f3, -0x78A8(r2)
-	  lfd       f2, -0x78A0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x44(r1)
-	  lfs       f4, 0x44(r1)
-
-	.loc_0xEC:
-	  fmuls     f2, f28, f4
-	  lfs       f1, -0x7878(r2)
-	  b         .loc_0x104
-
-	.loc_0xF8:
-	  fmuls     f2, f2, f1
-	  rlwinm    r31,r31,1,0,30
-	  addi      r3, r3, 0x1
-
-	.loc_0x104:
-	  cmpwi     r3, 0x64
-	  bge-      .loc_0x11C
-	  lfs       f0, 0x18(r29)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  beq+      .loc_0xF8
-
-	.loc_0x11C:
-	  cmpwi     r3, 0x32
-	  ble-      .loc_0x1A8
-	  lfs       f1, 0xC(r29)
-	  lfs       f0, 0x10(r29)
-	  fmuls     f2, f1, f1
-	  lfs       f3, 0x14(r29)
-	  fmuls     f1, f0, f0
-	  lfs       f0, -0x78B0(r2)
-	  fmuls     f3, f3, f3
-	  fadds     f1, f2, f1
-	  fadds     f4, f3, f1
-	  fcmpo     cr0, f4, f0
-	  ble-      .loc_0x1A8
-	  fsqrte    f1, f4
-	  lfd       f3, -0x78A8(r2)
-	  lfd       f2, -0x78A0(r2)
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f1, f1, f0
-	  fmul      f0, f1, f1
-	  fmul      f1, f3, f1
-	  fmul      f0, f4, f0
-	  fsub      f0, f2, f0
-	  fmul      f0, f1, f0
-	  fmul      f0, f4, f0
-	  frsp      f0, f0
-	  stfs      f0, 0x40(r1)
-	  lfs       f4, 0x40(r1)
-
-	.loc_0x1A8:
-	  xoris     r0, r31, 0x8000
-	  lwz       r3, 0x10C(r27)
-	  stw       r0, 0xC4(r1)
-	  lis       r0, 0x4330
-	  addi      r3, r3, 0x1
-	  stw       r3, 0x10C(r27)
-	  li        r30, 0
-	  stw       r0, 0xC0(r1)
-	  lfd       f1, -0x7848(r2)
-	  lfd       f0, 0xC0(r1)
-	  lfs       f2, -0x7884(r2)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f2, f0
-	  stfs      f0, 0x1C(r29)
-	  lfs       f29, -0x78B0(r2)
-	  lfs       f30, -0x7894(r2)
-	  lfs       f31, -0x78AC(r2)
-	  b         .loc_0x574
-
-	.loc_0x1F0:
-	  stfs      f29, 0xA0(r1)
-	  stfs      f29, 0x9C(r1)
-	  stfs      f29, 0x98(r1)
-	  stfs      f29, 0xAC(r1)
-	  stfs      f29, 0xA8(r1)
-	  stfs      f29, 0xA4(r1)
-	  lfs       f1, -0x6D18(r13)
-	  lfs       f0, -0x6D14(r13)
-	  stfs      f1, 0x98(r1)
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, -0x6D10(r13)
-	  stfs      f0, 0xA0(r1)
-	  lfs       f0, -0x6D0C(r13)
-	  stfs      f0, 0xA4(r1)
-	  lfs       f0, -0x6D08(r13)
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, -0x6D04(r13)
-	  stfs      f0, 0xAC(r1)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x98(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x24C
-	  stfs      f1, 0x98(r1)
-
-	.loc_0x24C:
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x9C(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x260
-	  stfs      f1, 0x9C(r1)
-
-	.loc_0x260:
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0xA0(r1)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x274
-	  stfs      f1, 0xA0(r1)
-
-	.loc_0x274:
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0xA4(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x288
-	  stfs      f1, 0xA4(r1)
-
-	.loc_0x288:
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0xA8(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x29C
-	  stfs      f1, 0xA8(r1)
-
-	.loc_0x29C:
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0xAC(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x2B0
-	  stfs      f1, 0xAC(r1)
-
-	.loc_0x2B0:
-	  lfs       f0, 0x18(r29)
-	  li        r4, 0
-	  lfs       f1, 0x98(r1)
-	  fmuls     f2, f30, f0
-	  fmuls     f0, f31, f0
-	  fsubs     f1, f1, f2
-	  stfs      f1, 0x98(r1)
-	  lfs       f1, 0x9C(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x9C(r1)
-	  lfs       f0, 0xA0(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0xA0(r1)
-	  lfs       f0, 0x18(r29)
-	  lfs       f1, 0xA4(r1)
-	  fmuls     f2, f30, f0
-	  fmuls     f0, f31, f0
-	  fadds     f1, f1, f2
-	  stfs      f1, 0xA4(r1)
-	  lfs       f1, 0xA8(r1)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xA8(r1)
-	  lfs       f0, 0xAC(r1)
-	  fadds     f0, f0, f2
-	  stfs      f0, 0xAC(r1)
-	  stw       r28, 0x24(r29)
-	  lbz       r0, 0x20(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x450
-	  lwz       r3, 0x88(r27)
-	  lwz       r7, 0x10(r3)
-	  b         .loc_0x448
-
-	.loc_0x330:
-	  lwz       r0, 0x28(r7)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x344
-	  cmplw     r0, r28
-	  beq-      .loc_0x444
-
-	.loc_0x344:
-	  lfs       f1, 0x44(r7)
-	  lfs       f0, 0xA4(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x3C4
-	  lfs       f1, 0x50(r7)
-	  lfs       f0, 0x98(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x3C4
-	  lfs       f1, 0x48(r7)
-	  lfs       f0, 0xA8(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x3C4
-	  lfs       f1, 0x54(r7)
-	  lfs       f0, 0x9C(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x3C4
-	  lfs       f1, 0x4C(r7)
-	  lfs       f0, 0xAC(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x3C4
-	  lfs       f1, 0x58(r7)
-	  lfs       f0, 0xA0(r1)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x3C4
-	  li        r0, 0x1
-	  b         .loc_0x3C8
-
-	.loc_0x3C4:
-	  li        r0, 0
-
-	.loc_0x3C8:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x444
-	  li        r8, 0
-	  li        r6, 0
-	  b         .loc_0x438
-
-	.loc_0x3DC:
-	  lwz       r3, 0x40(r7)
-	  lwz       r5, 0x38(r7)
-	  lwzx      r3, r3, r6
-	  lwz       r0, 0x18(r3)
-	  lbzx      r0, r5, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x430
-	  lwz       r0, 0x2C(r7)
-	  stw       r0, 0x10(r3)
-	  lwz       r3, 0x40(r7)
-	  lwz       r0, 0x30(r7)
-	  lwzx      r3, r3, r6
-	  stw       r0, 0x14(r3)
-	  lwz       r3, 0x40(r7)
-	  lwzx      r3, r3, r6
-	  stw       r7, 0x1C(r3)
-	  lwz       r3, 0x40(r7)
-	  lwzx      r3, r3, r6
-	  stw       r4, 0x20(r3)
-	  lwz       r3, 0x40(r7)
-	  lwzx      r4, r3, r6
-
-	.loc_0x430:
-	  addi      r6, r6, 0x4
-	  addi      r8, r8, 0x1
-
-	.loc_0x438:
-	  lwz       r0, 0x3C(r7)
-	  cmpw      r8, r0
-	  blt+      .loc_0x3DC
-
-	.loc_0x444:
-	  lwz       r7, 0xC(r7)
-
-	.loc_0x448:
-	  cmplwi    r7, 0
-	  bne+      .loc_0x330
-
-	.loc_0x450:
-	  lwz       r7, 0x60(r27)
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, 0x140(r7)
-	  lfs       f3, 0x158(r7)
-	  fsubs     f2, f1, f0
-	  lfs       f1, 0x8(r29)
-	  lfs       f0, 0x148(r7)
-	  fdivs     f2, f2, f3
-	  fctiwz    f2, f2
-	  fsubs     f0, f1, f0
-	  stfd      f2, 0xB0(r1)
-	  fdivs     f0, f0, f3
-	  lwz       r0, 0xB4(r1)
-	  stfd      f2, 0xC0(r1)
-	  cmpwi     r0, 0
-	  lwz       r5, 0xC4(r1)
-	  fctiwz    f0, f0
-	  stfd      f0, 0xB8(r1)
-	  lwz       r3, 0xBC(r1)
-	  blt-      .loc_0x4C0
-	  cmpwi     r3, 0
-	  blt-      .loc_0x4C0
-	  lwz       r6, 0x15C(r7)
-	  cmpw      r5, r6
-	  bge-      .loc_0x4C0
-	  lwz       r0, 0x160(r7)
-	  cmpw      r3, r0
-	  blt-      .loc_0x4C8
-
-	.loc_0x4C0:
-	  li        r5, 0
-	  b         .loc_0x4DC
-
-	.loc_0x4C8:
-	  mullw     r0, r3, r6
-	  lwz       r3, 0x164(r7)
-	  add       r0, r5, r0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r5, r3, r0
-
-	.loc_0x4DC:
-	  cmplwi    r5, 0
-	  beq-      .loc_0x510
-	  lha       r0, 0x4(r5)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x510
-	  stw       r7, 0x10(r5)
-	  li        r0, 0
-	  lwz       r3, 0x60(r27)
-	  lwz       r3, 0x23C(r3)
-	  stw       r3, 0x14(r5)
-	  stw       r0, 0x1C(r5)
-	  stw       r4, 0x20(r5)
-	  mr        r4, r5
-
-	.loc_0x510:
-	  cmplwi    r4, 0
-	  beq-      .loc_0x52C
-	  fmr       f1, f28
-	  addi      r3, r27, 0
-	  addi      r5, r29, 0
-	  bl        -0xD58
-	  b         .loc_0x570
-
-	.loc_0x52C:
-	  lfs       f0, 0x1C(r29)
-	  lfs       f2, 0xC(r29)
-	  fmuls     f1, f28, f0
-	  lfs       f3, 0x10(r29)
-	  lfs       f4, 0x14(r29)
-	  lfs       f0, 0x0(r29)
-	  fmuls     f2, f2, f1
-	  fmuls     f3, f3, f1
-	  fmuls     f4, f4, f1
-	  fadds     f0, f0, f2
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x4(r29)
-	  fadds     f0, f0, f3
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0x8(r29)
-	  fadds     f0, f0, f4
-	  stfs      f0, 0x8(r29)
-
-	.loc_0x570:
-	  addi      r30, r30, 0x1
-
-	.loc_0x574:
-	  cmpw      r30, r31
-	  blt+      .loc_0x1F0
-	  lfs       f1, 0x0(r29)
-	  lfs       f0, -0x6BB0(r13)
-	  lfs       f2, 0x18(r29)
-	  fsubs     f0, f1, f0
-	  lfs       f1, -0x6BAC(r13)
-	  stfs      f0, 0x0(r29)
-	  lfs       f0, 0x4(r29)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x4(r29)
-	  lfs       f0, 0x8(r29)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x8(r29)
-	  lwz       r0, 0x104(r1)
-	  lfd       f31, 0xF8(r1)
-	  lfd       f30, 0xF0(r1)
-	  lfd       f29, 0xE8(r1)
-	  lfd       f28, 0xE0(r1)
-	  lmw       r27, 0xCC(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

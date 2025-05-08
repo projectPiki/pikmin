@@ -109,7 +109,7 @@ void RigidBody::render(Graphics& gfx)
 {
 	int indices[] = { 0, 1, 1, 5, 5, 4, 4, 0, 2, 3, 3, 7, 7, 6, 6, 2, 0, 2, 1, 3, 5, 7, 4, 6 };
 	Matrix4f mtx1;
-	mtx1.makeVQS(_13260, _1328C, Vector3f(1.0f, 1.0f, 1.0f));
+	mtx1.makeVQS(mRenderPosition, mRenderOrientation, Vector3f(1.0f, 1.0f, 1.0f));
 	Matrix4f mtx2;
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
@@ -1165,12 +1165,12 @@ void RigidBody::updateVecQuats(int p1, f32 p2)
 	int idx2 = p1 ^ 1;
 
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
-		_10248[i] = _A248[idx1][i] + (_A248[idx2][i] - _A248[idx1][i]) * p2;
+		mBodySpaceHookPoints[i] = _A248[idx1][i] + (_A248[idx2][i] - _A248[idx1][i]) * p2;
 	}
 
-	_13260 = _13248[idx1] + (_13248[idx2] - _13248[idx1]) * p2;
-	_1328C = _1326C[idx1];
-	_1328C.slerp(_1326C[idx2], p2, 1);
+	mRenderPosition    = _13248[idx1] + (_13248[idx2] - _13248[idx1]) * p2;
+	mRenderOrientation = _1326C[idx1];
+	mRenderOrientation.slerp(_1326C[idx2], p2, 1);
 }
 
 /*

@@ -141,31 +141,31 @@ struct RigidBody : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Vector3f mInitPosition;              // _20
-	Vector3f mInitOrientationX;          // _2C
-	Vector3f mInitOrientationY;          // _38
-	Vector3f mInitOrientationZ;          // _44
-	Vector3f mDimensions;                // _50
-	f32 mMass;                           // _5C
-	f32 mInvMass;                        // _60
-	Matrix3f mInertiaTensor;             // _64
-	f32 mRestitutionFactor;              // _88
-	int mBoundingPointCount;             // _8C
-	int mHookPointCount;                 // _90
-	Vector3f mBodyPoints[0x400];         // _94, hook points, then bounding points
-	int mBodyPointHitCounts[0x400];      // _3094
-	int mSpringCount;                    // _4094
-	WorldSpring mSprings[8];             // _4098
-	configuration mIntegrationStates[2]; // _4118, prev and current, which swap from frame to frame
-	Vector3f mLinearAccel;               // _A230
-	Vector3f mAngularAccel;              // _A23C
-	Vector3f _A248[2][0x400];            // _A248
-	Vector3f _10248[0x400];              // _10248
-	Vector3f _13248[2];                  // _13248
-	Vector3f _13260;                     // _13260
-	Quat _1326C[2];                      // _1326C
-	Quat _1328C;                         // _1328C
-	BoundBox _1329C;                     // _1329C
+	Vector3f mInitPosition;               // _20
+	Vector3f mInitOrientationX;           // _2C
+	Vector3f mInitOrientationY;           // _38
+	Vector3f mInitOrientationZ;           // _44
+	Vector3f mDimensions;                 // _50
+	f32 mMass;                            // _5C
+	f32 mInvMass;                         // _60
+	Matrix3f mInertiaTensor;              // _64
+	f32 mRestitutionFactor;               // _88
+	int mBoundingPointCount;              // _8C
+	int mHookPointCount;                  // _90
+	Vector3f mBodyPoints[0x400];          // _94, hook points, then bounding points
+	int mBodyPointHitCounts[0x400];       // _3094
+	int mSpringCount;                     // _4094
+	WorldSpring mSprings[8];              // _4098
+	configuration mIntegrationStates[2];  // _4118, prev and current, which swap from frame to frame
+	Vector3f mLinearAccel;                // _A230
+	Vector3f mAngularAccel;               // _A23C
+	Vector3f _A248[2][0x400];             // _A248
+	Vector3f mBodySpaceHookPoints[0x400]; // _10248
+	Vector3f _13248[2];                   // _13248
+	Vector3f mRenderPosition;             // _13260
+	Quat _1326C[2];                       // _1326C
+	Quat mRenderOrientation;              // _1328C
+	BoundBox _1329C;                      // _1329C
 };
 
 /**

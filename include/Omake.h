@@ -213,7 +213,7 @@ struct ClothFader : public AttentionCamera::Fader {
 	void draw(Graphics& gfx)
 	{
 		// this inline has some minor issues.
-		gfx.useTexture(mapMgr->_4B8, 0);
+		gfx.useTexture(mapMgr->mBlurredPreviousFrameTexture, 0);
 		GXClearVtxDesc();
 		GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 		GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -351,7 +351,7 @@ struct SimpleFader : public AttentionCamera::Fader {
 		u32 badCompiler[4];
 
 		gfx.setAuxColour(Colour(255, 255, 255, alpha));
-		gfx.useTexture(mapMgr->_4B8, 0);
+		gfx.useTexture(mapMgr->mBlurredPreviousFrameTexture, 0);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
@@ -367,7 +367,7 @@ struct SimpleFader : public AttentionCamera::Fader {
 		u32 badCompiler[4];
 
 		gfx.setAuxColour(Colour(255, 255, 255, alpha));
-		gfx.useTexture(mapMgr->_4B8, 0);
+		gfx.useTexture(mapMgr->mBlurredPreviousFrameTexture, 0);
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
 		GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
@@ -422,7 +422,7 @@ struct DefaultFader : public AttentionCamera::Fader {
 
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 255, 255));
-		gfx.useTexture(mapMgr->_4B8, 0);
+		gfx.useTexture(mapMgr->mBlurredPreviousFrameTexture, 0);
 
 		RectArea area2(x, y, 640 - x, 480 - y);
 		gfx.drawRectangle(area2, RectArea(0, 0, 320, 240), nullptr);
@@ -455,7 +455,7 @@ struct DefaultFader : public AttentionCamera::Fader {
 
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 255, 255));
-		gfx.useTexture(mapMgr->_4B8, 0);
+		gfx.useTexture(mapMgr->mBlurredPreviousFrameTexture, 0);
 
 		RectArea area2(x, y, 640 - x, 480 - y);
 		gfx.drawRectangle(area2, RectArea(0, 0, 320, 240), nullptr);

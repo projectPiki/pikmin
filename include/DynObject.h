@@ -17,7 +17,7 @@ struct DynObjBody : public RigidBody {
 		mBoundingPointCount = 0;
 		mVelMask.set(1.0f, 1.0f, 1.0f);
 		mAngularVelMask.set(1.0f, 1.0f, 1.0f);
-		_13318 = 1.0f;
+		mImpactResponseForceScale = 1.0f;
 	}
 
 	virtual void initDimensions(f32 x, f32 y, f32 z) // _30
@@ -38,13 +38,13 @@ struct DynObjBody : public RigidBody {
 
 	// _00        = VTBL
 	// _00-_132B4 = RigidBody
-	Shape* mBodyShell;        // _132B4
-	Shape* _132B8;            // _132B8
-	Matrix4f _132BC;          // _132BC
-	DynCollObjBody* mCollObj; // _132FC, probably
-	Vector3f mVelMask;        // _13300
-	Vector3f mAngularVelMask; // _1330C
-	f32 _13318;               // _13318
+	Shape* mBodyShell;              // _132B4
+	Shape* mStaticEnvironmentShape; // _132B8
+	Matrix4f mRenderTransformMtx;   // _132BC
+	DynCollObjBody* mCollObj;       // _132FC, probably
+	Vector3f mVelMask;              // _13300
+	Vector3f mAngularVelMask;       // _1330C
+	f32 mImpactResponseForceScale;  // _13318
 };
 
 /**
@@ -81,8 +81,8 @@ struct DynObjSeeSaw : public DynObjBody {
 
 	// _00        = VTBL
 	// _00-_1331C = DynObjBody
-	Matrix4f _1331C; // _1331C
-	Matrix4f _1335C; // _1335C
+	Matrix4f mPostMaskVelRotationMtx; // _1331C
+	Matrix4f mPreMaskVelRotationMtx;  // _1335C
 };
 
 #endif

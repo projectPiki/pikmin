@@ -399,7 +399,7 @@ struct Animator {
 	int mAnimationId;      // _0C
 	int _10;               // _10
 	int _14;               // _14
-	int _18;               // _18
+	int mIsPlaying;        // _18
 	int mCurrentAnimID;    // _1C
 	int mFirstFrameIndex;  // _20
 	int mLastFrameIndex;   // _24

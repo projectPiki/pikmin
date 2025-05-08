@@ -473,7 +473,7 @@ void Animator::startAnim(int p1, int animID, int firstKeyFrameIdx, int lastKeyFr
 	}
 
 	mCurrentAnimID   = animID;
-	_18              = p1;
+	mIsPlaying       = p1;
 	mFirstFrameIndex = firstKeyFrameIdx;
 	mLastFrameIndex  = lastKeyFrameIdx;
 }
@@ -522,11 +522,11 @@ void Animator::animate(f32 speed)
 
 	f32 firstFrame = mAnimInfo->getKeyValue(mFirstFrameIndex);
 	f32 lastFrame  = mAnimInfo->getKeyValue(mLastFrameIndex);
-	if (_18) {
+	if (mIsPlaying) {
 		if (lastFrame > firstFrame) {
 			mAnimationCounter += gsys->getFrameTime() * speed;
 			if (mAnimationCounter >= lastFrame) {
-				if (_18 == 1) {
+				if (mIsPlaying == 1) {
 					mAnimationCounter -= (lastFrame - firstFrame);
 					if (mAnimationCounter >= lastFrame) {
 						mAnimationCounter = firstFrame;
@@ -541,7 +541,7 @@ void Animator::animate(f32 speed)
 		} else {
 			mAnimationCounter -= gsys->getFrameTime() * speed;
 			if (mAnimationCounter < lastFrame) {
-				if (_18 == 1) {
+				if (mIsPlaying == 1) {
 					mAnimationCounter += (firstFrame - lastFrame);
 					if (mAnimationCounter < lastFrame) {
 						mAnimationCounter = lastFrame;

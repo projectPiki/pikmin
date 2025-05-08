@@ -586,8 +586,8 @@ ModeState* MessageModeState::update(u32& a)
 		case 0:
 			_10 -= gsys->getFrameTime();
 			if (_10 < 0.0f) {
-				_10          = 2.0f;
-				mapMgr->_4C8 = 1.0f;
+				_10                                       = 2.0f;
+				mapMgr->mTargetGreyscaleDesaturationLevel = 1.0f;
 				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == 30) && gameoverWindow) {
 					gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
 				}
@@ -597,9 +597,9 @@ ModeState* MessageModeState::update(u32& a)
 		case 1:
 			_10 -= gsys->getFrameTime();
 			if (_10 < 0.0f) {
-				_10          = 3.0f;
-				mapMgr->_4CC = 1.0f;
-				_0C          = 2;
+				_10                             = 3.0f;
+				mapMgr->mTargetFadeToBlackLevel = 1.0f;
+				_0C                             = 2;
 			}
 			break;
 		case 2:
@@ -610,8 +610,8 @@ ModeState* MessageModeState::update(u32& a)
 			}
 			break;
 		case 3:
-			mapMgr->_4CC = 0.0f;
-			mapMgr->_4C8 = 0.0f;
+			mapMgr->mTargetFadeToBlackLevel           = 0.0f;
+			mapMgr->mTargetGreyscaleDesaturationLevel = 0.0f;
 			PRINT("DOING FORCE RESULTS SCREEN !!!\n");
 			DayOverModeState* state = new DayOverModeState(mSection, 1);
 			state->_08              = 0;
@@ -1473,7 +1473,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::modeFlag(1), 40.0f);
 					}
-					mapMgr->_4CC = 0.0f;
+					mapMgr->mTargetFadeToBlackLevel = 0.0f;
 				} else {
 					flowCont._234 = 0;
 				}

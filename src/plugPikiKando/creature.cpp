@@ -724,7 +724,7 @@ void Creature::update()
 	}
 
 	mHasCollChangedVelocity = 0;
-	_1A8                    = 0;
+	mCollisionOccurred      = 0;
 
 	// Handle AI and animations if not frozen
 	if (!mIsFrozen) {

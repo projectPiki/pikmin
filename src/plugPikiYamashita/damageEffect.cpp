@@ -47,7 +47,7 @@ bool zen::DamageEffect::update()
 void zen::DamageEffect::draw(Graphics& gfx)
 {
 	if (mDamageAlpha > 0.0f) {
-		gfx.useTexture(mapMgr->_4B8, 0);
+		gfx.useTexture(mapMgr->mBlurredPreviousFrameTexture, 0);
 		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);

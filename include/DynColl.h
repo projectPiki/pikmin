@@ -20,9 +20,9 @@ struct DynCollObject : public Node {
 	DynCollObject()
 	    : Node("")
 	{
-		mContactCount = 0;
-		_24           = -1;
-		mCreature     = nullptr;
+		mContactCount       = 0;
+		mLastContactFrameID = -1;
+		mCreature           = nullptr;
 	}
 
 	virtual void adjust(Creature*) { }                           // _30
@@ -32,9 +32,9 @@ struct DynCollObject : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 mContactCount;   // _20, unknown
-	u32 _24;             // _24
-	Creature* mCreature; // _28
+	u32 mContactCount;       // _20, unknown
+	u32 mLastContactFrameID; // _24
+	Creature* mCreature;     // _28
 };
 
 /**
@@ -95,7 +95,7 @@ struct DynCollObjBody : public DynCollShape {
 	DynCollObjBody(Shape* shape)
 	    : DynCollShape(shape)
 	{
-		_140 = nullptr;
+		mParentRigidBody = nullptr;
 	}
 
 	virtual void update() { }                                 // _10
@@ -105,7 +105,7 @@ struct DynCollObjBody : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	DynObjBody* _140; // _140
+	DynObjBody* mParentRigidBody; // _140
 };
 
 /**

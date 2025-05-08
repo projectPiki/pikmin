@@ -283,7 +283,7 @@ struct BaseCollTriInfo {
 		mVertexIndices[0]      = input.readInt();
 		mVertexIndices[1]      = input.readInt();
 		mVertexIndices[2]      = input.readInt();
-		_10                    = input.readShort();
+		mCollRoomId            = input.readShort();
 		mAdjacentTriIndices[0] = input.readShort();
 		mAdjacentTriIndices[1] = input.readShort();
 		mAdjacentTriIndices[2] = input.readShort();
@@ -292,7 +292,7 @@ struct BaseCollTriInfo {
 
 	u32 mMapCode;               // _00
 	u32 mVertexIndices[3];      // _04
-	s16 _10;                    // _10
+	s16 mCollRoomId;            // _10
 	s16 mAdjacentTriIndices[3]; // _12
 	Plane mTriangle;            // _18
 };
@@ -334,14 +334,14 @@ struct CollGroup {
 		mTriangleList = nullptr;
 		mTriCount     = 0;
 		mStateIndex   = 0;
-		_0C           = nullptr;
+		mFarCulledTriDistances           = nullptr;
 	}
 
 	u8 _00[0x4];                   // _00, unknown
 	s16 mTriCount;                 // _04
-	s16 _06;                       // _06
+	s16 mFarCulledTriCount;        // _06
 	CollTriInfo** mTriangleList;   // _08
-	u8* _0C;                       // _0C
+	u8* mFarCulledTriDistances;                       // _0C
 	Shape* mShape;                 // _10
 	Vector3f* mVertexList;         // _14
 	int mStateIndex;               // _18

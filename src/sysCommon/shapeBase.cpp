@@ -2540,9 +2540,9 @@ void BaseShape::read(RandomAccessStream& stream)
 			CollGroup* tmpGroups = new CollGroup[groupCount];
 
 			for (int i = 0; i < groupCount; i++) {
-				tmpGroups[i]._06           = stream.readShort();
-				tmpGroups[i].mTriCount     = stream.readShort();
-				tmpGroups[i].mTriangleList = new CollTriInfo*[tmpGroups[i].mTriCount];
+				tmpGroups[i].mFarCulledTriCount = stream.readShort();
+				tmpGroups[i].mTriCount          = stream.readShort();
+				tmpGroups[i].mTriangleList      = new CollTriInfo*[tmpGroups[i].mTriCount];
 
 				if (tmpGroups[i].mTriCount > maxTrisPerGroup) {
 					maxTrisPerGroup = tmpGroups[i].mTriCount;
@@ -2553,10 +2553,10 @@ void BaseShape::read(RandomAccessStream& stream)
 					tmpGroups[i].mTriangleList[j] = &mTriList[idx];
 				}
 
-				if (tmpGroups[i]._06) {
-					tmpGroups[i]._0C = new u8[tmpGroups[i]._06];
-					for (int j = 0; j < tmpGroups[i]._06; j++) {
-						tmpGroups[i]._0C[j] = stream.readByte();
+				if (tmpGroups[i].mFarCulledTriCount) {
+					tmpGroups[i].mFarCulledTriDistances = new u8[tmpGroups[i].mFarCulledTriCount];
+					for (int j = 0; j < tmpGroups[i].mFarCulledTriCount; j++) {
+						tmpGroups[i].mFarCulledTriDistances[j] = stream.readByte();
 					}
 				}
 			}
