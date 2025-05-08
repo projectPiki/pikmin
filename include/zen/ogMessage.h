@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "P2D/Screen.h"
+#include "P2D/TextBox.h"
 
 struct Controller;
 struct Graphics;
@@ -66,7 +67,11 @@ struct ogScrMessageMgr {
 	void setLastPageAbutton(bool set) { _4DE = set; } // guessing which of these is which
 	void setSolidMode(bool set) { _4E0 = set; }
 
-	void setCursorXY(P2DTextBox* textBox) { }
+	void setCursorXY(P2DTextBox* textBox)
+	{
+		_4E4 = textBox->getPosH() + textBox->getCursorX();
+		_4E6 = textBox->getPosV() + textBox->getCursorY() - 24;
+	}
 	void setScale(f32 scale)
 	{
 		mScreen->setScale(scale);
@@ -99,16 +104,20 @@ struct ogScrMessageMgr {
 	bool _4DF;                     // _4DF
 	u8 _4E0;                       // _4E0
 	u16 _4E2;                      // _4E2
-	u8 _4E4[0x4];                  // _4E4, unknown
+	s16 _4E4;                      // _4E4
+	s16 _4E6;                      // _4E6
 	u16 _4E8;                      // _4E8, might be s16
 	u16 _4EA;                      // _4EA, might be s16
-	u16 _4EC;                      // _4EC, might be s16
+	s16 _4EC;                      // _4EC
 	u16 _4EE;                      // _4EE, might be s16
-	u8 _4F0[0x54F2 - 0x4F0];       // _4F0, unknown
-	u16 _54F2;                     // _54F2, might be s16
+	s16 _4F0;                      // _4F0
+	char _4F2[20][0x400];          // _4F2
+	s16 _54F2;                     // _54F2, might be s16
 	u8 _54F4;                      // _54F4
 	P2DScreen* _54F8;              // _54F8
-	u8 _54FC[0xA59C - 0x54FC];     // _54FC
+	P2DPane* _54FC[20];            // _54FC
+	char* _554C[0x1400];           // _554C
+	char* _A54C[20];               // _A54C
 	s16 _A59C;                     // _A59C
 	char _A59E[12];                // _A59E
 	char _A5AA[34];                // _A5AA, unknown size
