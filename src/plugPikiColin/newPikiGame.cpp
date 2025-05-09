@@ -1108,7 +1108,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 	virtual void openMenu() // _30
 	{
-		mActiveMenu = mActiveMenu;
+		mActiveMenu = mSectionMenu;
 		mActiveMenu->open(false);
 		mActiveMenu->mIsMenuChanging = true;
 	}
@@ -1373,7 +1373,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	// _00-_44 = BaseGameSection
 	int _44;                       // _44
 	u8 _48[8];                     // _48
-	Menu* mActiveMenu;             // _50
+	Menu* mSectionMenu;            // _50
 	Controller* mSecondController; // _54
 	Font* mGameFont;               // _58
 	Camera mGameCamera;            // _5C
