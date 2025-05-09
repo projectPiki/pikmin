@@ -728,7 +728,7 @@ config.libs = [
             Object(Matching, "plugPikiOgawa/ogDiary.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogMenu.cpp"),
             Object(Matching, "plugPikiOgawa/ogFileChkSel.cpp"),
-            Object(NonMatching, "plugPikiOgawa/ogMakeDefault.cpp"),
+            Object(Matching, "plugPikiOgawa/ogMakeDefault.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogTotalScore.cpp"),
             Object(Matching, "plugPikiOgawa/ogSave.cpp"),
             Object(Matching, "plugPikiOgawa/ogNitaku.cpp"),
