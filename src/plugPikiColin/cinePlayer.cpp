@@ -90,7 +90,7 @@ CinematicPlayer::CinematicPlayer(char* demoName)
 	mCurrentCut            = nullptr;
 	mPreviousCut           = nullptr;
 	mPreviousFramePosition = -1.0f;
-	_2E4                   = false;
+	mUseStaticCamera       = false;
 	init(demoName);
 	mCutTransitionFlag = 0;
 }
@@ -428,12 +428,12 @@ int CinematicPlayer::update()
 	if (mCurrentScene) {
 		int i;
 		for (i = 0; i < mCurrentScene->mNumCameras; i++) {
-			mCurrentScene->mCameraData[i].mBlendRatio     = mCameraBlendRatio;
-			mCurrentScene->mCameraData[i].mTargetFov      = mCameraTargetFov;
-			mCurrentScene->mCameraData[i].mCameraPosition = mCameraPosition;
-			mCurrentScene->mCameraData[i].mCameraLookAt   = mCameraLookAt;
-			mCurrentScene->mCameraData[i].mUseStaticCam   = _2E4;
-			mCurrentScene->mCameraData[i].mStaticLookAt   = _2D0;
+			mCurrentScene->mCameraData[i].mBlendRatio      = mCameraBlendRatio;
+			mCurrentScene->mCameraData[i].mTargetFov       = mCameraTargetFov;
+			mCurrentScene->mCameraData[i].mCameraPosition  = mCameraPosition;
+			mCurrentScene->mCameraData[i].mCameraLookAt    = mCameraLookAt;
+			mCurrentScene->mCameraData[i].mUseStaticCamera = mUseStaticCamera;
+			mCurrentScene->mCameraData[i].mStaticLookAt    = mStaticLookAt;
 			mCurrentScene->mCameraData[i].update(mCurrentFramePosition, mMtx);
 		}
 		for (i = 0; i < mCurrentScene->mNumLights; i++) {
@@ -462,7 +462,7 @@ void CinematicPlayer::addLights(Graphics& gfx)
 
 	gfx.useMatrix(Matrix4f::ident, 0);
 	for (int i = 0; i < mCurrentScene->mNumLights; i++) {
-		if (mCurrentScene->mLightData[i]._54) {
+		if (mCurrentScene->mLightData[i].mIsActive) {
 			gfx.addLight(&mCurrentScene->mLightData[i].mLight);
 		}
 	}
@@ -867,7 +867,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 {
 	// feels like a typo.
-	if ((mFlags & 0xf800) && !(gameflow.mMoviePlayer->_128 & (mFlags & 0xF800))) {
+	if ((mFlags & 0xf800) && !(gameflow.mMoviePlayer->mMaskFlags & (mFlags & 0xF800))) {
 		return;
 	}
 
@@ -1110,7 +1110,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 	} else {
 		u32 flags = mAnimInstance->mShape->mSystemFlags;
 		if (mFlags & 0x20000) {
-			mAnimInstance->mShape->mSystemFlags |= 4;
+			mAnimInstance->mShape->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 		}
 		mAnimInstance->mShape->drawshape(gfx, *gfx.mCamera, &mDynMat);
 		mAnimInstance->mShape->mSystemFlags = flags;

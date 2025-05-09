@@ -724,7 +724,7 @@ struct GameCourseClearScreen : public Node {
 		if (_1FC) {
 			_1FC = _1FC->doUpdate(false);
 		} else if (_1F0 == 0) {
-			gameflow.mIsEventNoControllerActive = 0;
+			gameflow.mDisableController = 0;
 			Node::update();
 		} else if (_1F0 == 1 && !_1FC && gsys->getFade() == 0.0f) {
 			_1F0                             = -1;

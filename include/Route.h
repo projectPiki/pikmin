@@ -119,13 +119,13 @@ struct RouteGroup : public EditNode {
 
 	// _00     = VTBL
 	// _00-_14 = EditNode?
-	Colour mColour;            // _14
-	char mRouteName[0x40];     // _18
-	u32 mIntID;                // _58, yep, this isn't an ID32...
-	char mStringID[8];         // _5C
-	BaseShape* mParentShape;   // _64
-	RoutePoint mPointListRoot; // _68
-	Texture* _BC;              // _BC
+	Colour mColour;                 // _14
+	char mRouteName[0x40];          // _18
+	u32 mIntID;                     // _58, yep, this isn't an ID32...
+	char mStringID[8];              // _5C
+	BaseShape* mParentShape;        // _64
+	RoutePoint mPointListRoot;      // _68
+	Texture* mDebugWaypointTexture; // _BC
 };
 
 /**

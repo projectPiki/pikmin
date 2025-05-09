@@ -270,15 +270,15 @@ struct PVWTevColReg {
 
 	void read(RandomAccessStream& input)
 	{
-		_00.read(input);
-		_08 = input.readInt();
-		_0C = input.readFloat();
+		mAnimatedColor.read(input);
+		mIsAnimEnabled = input.readInt();
+		_0C            = input.readFloat();
 		_10.read(input);
 		_18.read(input);
 	}
 
-	ShortColour _00;                 // _00
-	u32 _08;                         // _08, unknown
+	ShortColour mAnimatedColor;      // _00
+	u32 mIsAnimEnabled;              // _08, unknown
 	f32 _0C;                         // _0C
 	PVWAnimInfo3<PVWKeyInfoS10> _10; // _10
 	PVWAnimInfo1<PVWKeyInfoS10> _18; // _10
@@ -384,24 +384,24 @@ struct PVWTevInfo {
 struct PVWTextureData {
 	PVWTextureData()
 	{
-		_58 = 0.0f;
-		_08 = nullptr;
-		_16 = 0;
+		_58      = 0.0f;
+		mTexture = nullptr;
+		_16      = 0;
 	}
 
 	void animate(f32*, Matrix4f&);
 	void read(RandomAccessStream&);
 
-	u32 _00;                         // _00
-	TexAttr* _04;                    // _04
-	Texture* _08;                    // _08
+	u32 mSourceAttrIndex;            // _00
+	TexAttr* mTextureAttribute;      // _04
+	Texture* mTexture;               // _08
 	u16 _0C;                         // _0C
 	u16 _0E;                         // _0E
 	u8 _10;                          // _10
 	u8 _11;                          // _11
 	u8 _12;                          // _12
 	u8 _13;                          // _13
-	u8 _14;                          // _14
+	u8 mAnimationFactor;             // _14
 	u8 _15;                          // _15
 	u8 _16;                          // _16
 	u32 _18;                         // _18
@@ -418,7 +418,7 @@ struct PVWTextureData {
 	PVWAnimInfo3<PVWKeyInfoF32> _48; // _48
 	PVWAnimInfo3<PVWKeyInfoF32> _50; // _50
 	f32 _58;                         // _58
-	Matrix4f _5C;                    // _5C
+	Matrix4f mAnimatedTexMtx;        // _5C
 };
 
 /**

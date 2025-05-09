@@ -344,9 +344,11 @@ void DynCollShape::refresh(Graphics& gfx)
 void MapObjAnimator::finishOneShot()
 {
 	mIsPlaying = 0;
+
 	if (mMapObj) {
 		mMapObj->nextState();
 	}
+
 	PRINT("%08x : finished animation : %f!!\n", this, mAnimationCounter);
 }
 
@@ -925,7 +927,7 @@ void MapMgr::initShape()
 {
 	mLightMgr = 0;
 	mMapShape = gameflow.loadShape(flowCont.mAnimationTestPath, true);
-	mMapShape->mSystemFlags |= 0x4;
+	mMapShape->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 	mMapShape->makeInstance(mDynMaterials, 0);
 
 	for (int i = 0; i < mMapShape->mJointCount; i++) {
@@ -1086,8 +1088,8 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
 	{
 		LightCamera* cam = &shadow->mLightCamera;
 		gfx.initProjTex(true, cam);
-		mMapProjMatHandler->mProjMat->_24 = cam->mLightMap;
-		mMapProjMatHandler->mLightCamera  = cam;
+		mMapProjMatHandler->mProjMat->mTexture = cam->mLightMap;
+		mMapProjMatHandler->mLightCamera       = cam;
 		gfx.setMatHandler(mMapProjMatHandler);
 		gfx.mRenderState = 0x8700;
 		gfx.mLightCam    = cam;
@@ -1498,7 +1500,7 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 		FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
 		{
 			if (x >= coll->mBoundingBox.mMin.x && x < coll->mBoundingBox.mMax.x && z >= coll->mBoundingBox.mMin.z
-			    && z < coll->mBoundingBox.mMax.z && coll->mShape->mSystemFlags & 0x10) {
+			    && z < coll->mBoundingBox.mMax.z && coll->mShape->mSystemFlags & ShapeFlags::IsPlatform) {
 				for (int i = 0; i < coll->mColliderCount; i++) {
 					if (coll->mVisibleList[coll->mColliderList[i]->mStateIndex]) {
 						coll->mColliderList[i]->mNextCollider = collList;

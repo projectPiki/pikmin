@@ -224,7 +224,7 @@ struct CinematicPlayer {
 	void saveCin(char*);
 	void truncateName(char*);
 
-	u32 mFlags;                 // _00
+	u32 mFlags;                 // _00, 0x20000 = use static camera
 	int mType;                  // _04
 	Matrix4f mMtx;              // _08
 	Creature* mTarget;          // _48
@@ -244,10 +244,10 @@ struct CinematicPlayer {
 	int mCutTransitionFlag;     // _2B4
 	Vector3f mCameraPosition;   // _2B8
 	Vector3f mCameraLookAt;     // _2CC
-	Vector3f _2D0;              // _2D0
+	Vector3f mStaticLookAt;     // _2D0
 	f32 mCameraTargetFov;       // _2DC
 	f32 mCameraBlendRatio;      // _2E0
-	bool _2E4;                  // _2E4
+	bool mUseStaticCamera;      // _2E4
 	bool mIsPlaying;            // _2E5
 };
 

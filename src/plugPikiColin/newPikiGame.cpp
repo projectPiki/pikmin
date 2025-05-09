@@ -230,7 +230,7 @@ static void createMenuWindow()
 
 	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
-	gsys->_2A0               = 0;
+	gsys->mRetraceCount      = 0;
 	gsys->mPrevHeapAllocType = heapold;
 	gsys->endLoading();
 	PRINT("menu window attach\n");
@@ -275,11 +275,11 @@ static void createTutorialWindow(int a1, int a2, bool flag)
 	tutorialWindow = new zen::ogScrTutorialMgr;
 	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)a1);
 
-	gsys->getHeap(5)->setAllocType(oldtype);
+	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
 	showFrame(false, 0.5f);
 	gameflow.mIsTutorialActive = 1;
-	gsys->_2A0                 = 0;
+	gsys->mRetraceCount        = 0;
 	gsys->mPrevHeapAllocType   = heapold;
 	gsys->endLoading();
 	PRINT("tutorial window attach\n");
@@ -450,7 +450,7 @@ ModeState* RunningModeState::update(u32& a)
 	if (static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mMesgCount) {
 		mesgsPending = true;
 	}
-	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow.mIsEventNoControllerActive
+	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow.mDisableController
 	    && !gameflow.mMoviePlayer->mIsActive) {
 
 		if (mController->keyClick(KBBTN_START)) {
@@ -547,7 +547,7 @@ void RunningModeState::postRender(Graphics& gfx)
 		gamecore->draw1D(gfx);
 	}
 
-	if (gameflow.mIsEventNoControllerActive == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & 4) {
+	if (gameflow.mDisableController == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & 4) {
 		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
 		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
 		if (time >= 0.0f && time < 1.0f) {
@@ -1116,10 +1116,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	{
 		mUpdateCountdown--;
 		if (!gameflow.mMoviePlayer->mIsActive) {
-			if (gsys->getHeap(5)->getTopUsed()) {
+			if (gsys->getHeap(SYSHEAP_Movie)->getTopUsed()) {
 				bool old           = gsys->mTogglePrint != 0;
 				gsys->mTogglePrint = 1;
-				gsys->resetHeap(5, true);
+				gsys->resetHeap(SYSHEAP_Movie, true);
 				gsys->mTogglePrint = old;
 			}
 		}
@@ -1185,9 +1185,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		// gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow.mIsEventNoControllerActive == 0 && gameflow.mIsUiOverlayActive == 0 || gameflow.mIsTutorialActive) {
+			if (gameflow.mDisableController == 0 && gameflow.mIsUiOverlayActive == 0 || gameflow.mIsTutorialActive) {
 				bool check = true;
-				if (gsys->_258 >= 0) {
+				if (gsys->mDvdErrorCode >= 0) {
 					check = false;
 				}
 				if (check) {
@@ -1238,7 +1238,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		BaseGameSection::draw(gfx);
 		if (!mIsInitialSetup) {
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
-				if (!gameflow.mIsEventNoControllerActive && !gameflow.mIsUiOverlayActive) {
+				if (!gameflow.mDisableController && !gameflow.mIsUiOverlayActive) {
 					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & 0x2 && !playerState->isTutorial()) {
 						f32 tod = gameflow.mWorldClock.mTimeOfDay;
 						gameflow.mWorldClock.update(1.0f);

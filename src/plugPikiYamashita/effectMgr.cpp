@@ -539,7 +539,7 @@ EffectParticleRegistration::EffectParticleRegistration(char* pcrFile, char* ptcl
 void EffectShape::initShape(char* modelFile)
 {
 	mModel = gameflow.loadShape(modelFile, true);
-	mModel->mSystemFlags |= 0x4;
+	mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 	mModel->makeInstance(mDynMats, 0);
 }
 

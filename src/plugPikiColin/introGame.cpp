@@ -161,9 +161,9 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow.mIsEventNoControllerActive == 0 && gameflow.mIsUiOverlayActive == 0) {
+			if (gameflow.mDisableController == 0 && gameflow.mIsUiOverlayActive == 0) {
 				bool check = true;
-				if (gsys->_258 >= 0) {
+				if (gsys->mDvdErrorCode >= 0) {
 					check = false;
 				}
 				if (check) {

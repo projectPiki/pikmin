@@ -31,17 +31,17 @@ void PlugPikiApp::hardReset()
 	useHeap(0);
 	gsys->mTimer = new Timers;
 	gameflow.hardReset(this);
-	AyuHeap* heap = gsys->getHeap(0);
+	AyuHeap* heap = gsys->getHeap(SYSHEAP_Sys);
 	int max       = heap->getMaxFree();
 	int type      = heap->setAllocType(2);
 	u8* buf       = new u8[heap->getMaxFree()];
 	heap->setAllocType(type);
 
-	gsys->getHeap(1)->init("ovl", 2, buf, max);
+	gsys->getHeap(SYSHEAP_Ovl)->init("ovl", 2, buf, max);
 
-	gsys->resetHeap(1, 1);
-	gsys->getHeap(1)->setAllocType(1);
-	useHeap(1);
+	gsys->resetHeap(SYSHEAP_Ovl, 1);
+	gsys->getHeap(SYSHEAP_Ovl)->setAllocType(1);
+	useHeap(SYSHEAP_Ovl);
 	gsys->softReset();
 }
 
@@ -156,7 +156,7 @@ int PlugPikiApp::idle()
 	gsys->mTimer->newFrame();
 	gsys->mTimer->_start("all", false);
 
-	gsys->_26C; // lol
+	gsys->mIsRendering; // lol
 	if (gsys->mIsSystemOperationPending) {
 		gsys->detachObjs();
 		gsys->mTimer->reset();
@@ -170,8 +170,8 @@ int PlugPikiApp::idle()
 	update();
 	gsys->beginRender();
 	renderall();
-	if (gsys->_254) {
-		gsys->_254->invoke(*gsys->mGfx);
+	if (gsys->mDvdErrorCallback) {
+		gsys->mDvdErrorCallback->invoke(*gsys->mGfx);
 	}
 	gsys->mTimer->start("render", true);
 	gsys->doneRender();
@@ -205,6 +205,6 @@ PlugPikiApp::PlugPikiApp()
 	gsys->hardReset();
 	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,
 	      gsys->getHeap(gsys->mActiveHeapIdx)->getFree() / 1024.0f);
-	gsys->_198 = 0;
+	gsys->mForceTogglePrint = 0;
 	gsys->setHeap(-1);
 }

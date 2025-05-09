@@ -35,7 +35,7 @@ void* System::alloc(u32 size)
 			PRINT("new[] %d failed in heap '%s'", gsys->mActiveHeapIdx, size);
 		}
 
-		if (size == 0 || gsys->_198) {
+		if (size == 0 || gsys->mForceTogglePrint) {
 			u32 print          = gsys->mTogglePrint;
 			gsys->mTogglePrint = 1;
 			gsys->mTogglePrint = print != 0;

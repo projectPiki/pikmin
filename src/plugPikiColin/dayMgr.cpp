@@ -300,19 +300,19 @@ struct LightMenu : public Menu {
 
 	void menuDecrease(Menu& menu)
 	{
-		*_C4 -= 1.0f;
-		updateComponent(menu, _C8, _C4);
+		*mActiveValuePtr -= 1.0f;
+		updateComponent(menu, mActiveValueName, mActiveValuePtr);
 	}
 	void menuIncrease(Menu& menu)
 	{
-		*_C4 += 1.0f;
-		updateComponent(menu, _C8, _C4);
+		*mActiveValuePtr += 1.0f;
+		updateComponent(menu, mActiveValueName, mActiveValuePtr);
 	}
 	void menuEnterNear(Menu& menu)
 	{
-		_C4 = mSpotFov;
-		_C8 = "Fov";
-		updateComponent(menu, _C8, _C4);
+		mActiveValuePtr  = mSpotFov;
+		mActiveValueName = "Fov";
+		updateComponent(menu, mActiveValueName, mActiveValuePtr);
 	}
 	void menuChangeType(Menu& menu)
 	{
@@ -366,8 +366,8 @@ struct LightMenu : public Menu {
 	int* mLightAttachType;  //_B8
 	Light* mLight;          // _BC
 	f32* mSpotFov;          // _C0
-	f32* _C4;               // _C4
-	char* _C8;              // _C8
+	f32* mActiveValuePtr;   // _C4
+	char* mActiveValueName; // _C8
 };
 
 struct DaySetMenu : public Menu {
@@ -669,10 +669,10 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 	mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(time / 24.0f * PI - HALF_PI, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 	mSunPosition.set(0.0f, 2500.0f, 0.0f);
 	mSunPosition.multMatrix(mtx);
-	f32 z          = mSunPosition.z;
-	mSunPosition.z = mSunPosition.x;
-	mSunPosition.x = -z;
-	gfx._33C       = mSunPosition;
+	f32 z            = mSunPosition.z;
+	mSunPosition.z   = mSunPosition.x;
+	mSunPosition.x   = -z;
+	gfx.mSunPosition = mSunPosition;
 
 	if (mMapMgr) {
 		mMapMgr->_08.set(mSunPosition.x / 20.0f, mSunPosition.y / 5.0f, mSunPosition.z / 20.0f);

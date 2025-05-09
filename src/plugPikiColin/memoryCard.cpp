@@ -243,7 +243,7 @@ bool MemoryCard::hasCardFinished()
 		CardUtilUnmount(0);
 		CardUtilIdleWhileBusy();
 		if (CardUtilResultCode() < -1) {
-			_68 = true;
+			mDidSaveFail = true;
 		}
 	}
 
@@ -584,13 +584,13 @@ void MemoryCard::checkUseFile()
 {
 	CARDStat stat;
 	for (int i = 0; i < 127; i++) {
-		if (CARDGetStatus(_34, i, &stat) < 1) {
+		if (CARDGetStatus(mCardChannel, i, &stat) < 1) {
 			OSTime time = OS_TIMER_CLOCK;
 			OSCalendarTime calendar;
 			OSTicksToCalendarTime(time, &calendar);
 			if (!strncmp(stat.fileName, basecardname, 15)) {
 				strcpy(mFilePath, stat.fileName);
-				_38 = i;
+				mSaveFileIndex = i;
 				return;
 			}
 
@@ -687,36 +687,36 @@ void MemoryCard::checkUseFile()
 int MemoryCard::getMemoryCardState(bool flag)
 {
 
-	_34        = -1;
-	mErrorCode = CARD_RESULT_READY;
-	_38        = -1;
-	_3C        = -1;
+	mCardChannel   = -1;
+	mErrorCode     = CARD_RESULT_READY;
+	mSaveFileIndex = -1;
+	_3C            = -1;
 
 	if (getCardStatus(0)) {
-		_34 = 0;
+		mCardChannel = 0;
 		checkUseFile();
-		if (_38 == -1) {
+		if (mSaveFileIndex == -1) {
 			s32 temp, temp2;
-			if (CARDFreeBlocks(_34, &temp, &temp2) < 0) {
-				CARDUnmount(_34);
-				_34        = -1;
-				mErrorCode = CARD_RESULT_NOFILE;
+			if (CARDFreeBlocks(mCardChannel, &temp, &temp2) < 0) {
+				CARDUnmount(mCardChannel);
+				mCardChannel = -1;
+				mErrorCode   = CARD_RESULT_NOFILE;
 			}
 			if (temp2 < 1) {
-				CARDUnmount(_34);
-				_38        = -2;
-				mErrorCode = CARD_RESULT_NOENT;
+				CARDUnmount(mCardChannel);
+				mSaveFileIndex = -2;
+				mErrorCode     = CARD_RESULT_NOENT;
 			}
-			if (temp < _40) {
-				CARDUnmount(_34);
-				_38        = -2;
-				mErrorCode = CARD_RESULT_NOCARD;
+			if (temp < mRequiredFreeSpace) {
+				CARDUnmount(mCardChannel);
+				mSaveFileIndex = -2;
+				mErrorCode     = CARD_RESULT_NOCARD;
 			}
-			CARDUnmount(_34);
+			CARDUnmount(mCardChannel);
 		}
 	}
 
-	if (flag && _34 >= 0 && _38 != -2) {
+	if (flag && mCardChannel >= 0 && mSaveFileIndex != -2) {
 		loadCurrentFile();
 		mErrorCode = CARD_RESULT_READY;
 	} else if (_3C != -1) {
@@ -849,8 +849,8 @@ void MemoryCard::loadCurrentFile()
 {
 	CardUtilMount(0, &CardWorkArea);
 	CardUtilIdleWhileBusy();
-	CARDGetStatus(0, _38, &cst);
-	CardUtilOpen(0, _38, &cardData);
+	CARDGetStatus(0, mSaveFileIndex, &cst);
+	CardUtilOpen(0, mSaveFileIndex, &cardData);
 	CardUtilIdleWhileBusy();
 	CardUtilUnmount(0);
 	CardUtilIdleWhileBusy();
@@ -1117,20 +1117,20 @@ void MemoryCard::loadOptions()
  */
 void MemoryCard::saveOptions()
 {
-	gsys->_270 = 1;
-	_68        = false;
-	if (getMemoryCardState(true) == 0 && _38 > 0) {
+	gsys->mIsMemoryCardSaving = 1;
+	mDidSaveFail              = false;
+	if (getMemoryCardState(true) == 0 && mSaveFileIndex > 0) {
 		int id = getNewestOptionsIndex();
 		if (id != -1) {
 			id ^= id;
 			initOptionsArea(id);
 			CardUtilMount(0, &CardWorkArea);
 			CardUtilIdleWhileBusy();
-			CardUtilWrite(0, _38, cardData + id * 0x800, id * 0x2000 + 0x2000, 0x2000);
+			CardUtilWrite(0, mSaveFileIndex, cardData + id * 0x800, id * 0x2000 + 0x2000, 0x2000);
 			while (!hasCardFinished()) { }
 		}
 	}
-	gsys->_270 = false;
+	gsys->mIsMemoryCardSaving = false;
 
 	/*
 	.loc_0x0:
@@ -2956,10 +2956,10 @@ int MemoryCard::doFormatCard()
 {
 	PRINT("*-----------------------------------------------------------*\n");
 	PRINT("Formatting memory card ....\n");
-	_68        = false;
-	gsys->_270 = true;
+	mDidSaveFail              = false;
+	gsys->mIsMemoryCardSaving = true;
 	attemptFormatCard(false);
-	gsys->_270 = false;
+	gsys->mIsMemoryCardSaving = false;
 	gameflow.mMemoryCard.getMemoryCardState(false);
 	return mErrorCode;
 	/*
@@ -3585,7 +3585,7 @@ bool MemoryCard::isFileBroken()
 {
 	if (gameflow.mMemoryCard.getMemoryCardState(false) == 0 && gameflow.mCurrentStageId) {
 		mErrorCode = getOkSections();
-		if (_5C < 3)
+		if (mValidBlockCount < 3)
 			return true;
 	}
 	return false;
@@ -4044,7 +4044,7 @@ void MemoryCard::repairFile()
  */
 bool MemoryCard::didSaveFail()
 {
-	bool fail = _68;
+	bool fail = mDidSaveFail;
 	if (CARDProbe(0) == 0) {
 		fail = true;
 	}

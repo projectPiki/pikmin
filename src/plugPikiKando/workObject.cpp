@@ -524,7 +524,7 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 HinderRock::HinderRock(Shape* shape)
 {
 	mBoxShape = shape;
-	mBoxShape->mSystemFlags |= 0x10;
+	mBoxShape->mSystemFlags |= ShapeFlags::IsPlatform;
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
 	mCollInfo              = new CollInfo(20);
@@ -1627,8 +1627,8 @@ Bridge::Bridge(Shape* shape, bool a3)
 	mDoUseJointSegments = a3;
 	mBridgeShape        = shape;
 
-	mBridgeShape->mSystemFlags |= 0x10;
-	mBridgeShape->mSystemFlags |= 0x4;
+	mBridgeShape->mSystemFlags |= ShapeFlags::IsPlatform;
+	mBridgeShape->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;

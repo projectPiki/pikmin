@@ -30,11 +30,11 @@ struct MemoryCard : public CoreNode {
 	inline MemoryCard()
 	    : CoreNode("memoryCard")
 	{
-		_3C        = -1;
-		_34        = -1;
-		_38        = -1;
-		_40        = 0x26000;
-		mErrorCode = 0;
+		_3C                = -1;
+		mCardChannel       = -1;
+		mSaveFileIndex     = -1;
+		mRequiredFreeSpace = 0x26000;
+		mErrorCode         = 0;
 	}
 
 	int getOptionsOffset(int);
@@ -87,22 +87,22 @@ struct MemoryCard : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	char mFilePath[32]; // _14
-	int _34;            // _34
-	int _38;            // _38
-	int _3C;            // _3C
-	u32 _40;            // _40
-	u32 mErrorCode;     // _44
-	u32 _48;            // _48
-	u32 _4C;            // _4C
-	u32 _50;            // _50
-	u32 _54;            // _54
-	u32 _58;            // _58
-	u32 _5C;            // _5C
-	u32 _60;            // _60
-	u32 _64;            // _64
-	bool _68;           // _68
-	int _6C;            // _6C
+	char mFilePath[32];     // _14
+	int mCardChannel;       // _34
+	int mSaveFileIndex;     // _38
+	int _3C;                // _3C
+	u32 mRequiredFreeSpace; // _40
+	u32 mErrorCode;         // _44
+	u32 _48;                // _48
+	u32 _4C;                // _4C
+	u32 _50;                // _50
+	u32 _54;                // _54
+	u32 _58;                // _58
+	u32 mValidBlockCount;   // _5C
+	u32 _60;                // _60
+	u32 _64;                // _64
+	bool mDidSaveFail;      // _68
+	int _6C;                // _6C
 };
 
 #endif

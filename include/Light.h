@@ -234,7 +234,7 @@ struct LightPool : public Node {
 	// _00-_20 = Node
 	Light mLight;              // _20
 	LightCamera mCamera;       // _2F4
-	f32 _65C;                  // _65C
+	f32 mFocusRotationAngle;   // _65C
 	Colour mColour;            // _660
 	Texture* mBoxTexture;      // _664
 	Texture* mParticleTexture; // _668
@@ -252,7 +252,7 @@ struct LightDataInfo {
 	AnimParam mLightPosAnims[3];     // _00
 	AnimParam mLightColourAnims[3];  // _24
 	AnimParam mLightVisibleAnims[1]; // _48
-	int _54;                         // _54
+	int mIsActive;                   // _54
 	Light mLight;                    // _58
 	int mLightIdx;                   // _32C
 	SceneData* mSceneData;           // _330

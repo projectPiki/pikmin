@@ -255,7 +255,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			bool child  = gameflow.mGamePrefs.getChildMode();
 			u8 bgmVol   = gameflow.mGamePrefs.getBgmVol();
 			u8 sfxVol   = gameflow.mGamePrefs.getSfxVol();
-			if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard._38 >= 0) {
+			if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 				gameflow.mMemoryCard.loadOptions();
 			}
 			gameflow.mGamePrefs.setVibeMode(vibe);

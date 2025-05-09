@@ -392,8 +392,8 @@ void preloadLanguage()
 	gsys->getHeap(gsys->getHeapNum());
 	FakeSystemList* fake = &gsys->_31C;
 	fake->_04            = fake->_00;
-	gsys->_200.initCore("");
-	gsys->mLightFlareInfoList = (LFInfo*)&gsys->_200;
+	gsys->mDvdFileTreeRoot.initCore("");
+	gsys->mLightFlareInfoList = (LFInfo*)&gsys->mDvdFileTreeRoot;
 	gsys->_328                = &gsys->_31C;
 	gsys->parseArchiveDirectory(gameflow.mLangModes[gameflow.mLanguageIndex].mDirPath,
 	                            gameflow.mLangModes[gameflow.mLanguageIndex].mArcPath);
@@ -524,11 +524,11 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	_360                    = 21;
 	_361                    = 0;
 	_362                    = 0;
-	_1EC                    = -1;
+	mNextSectionID          = -1;
 	mGameSectionID          = SECTION_NinLogo;
 	mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
 	_200                    = 0;
-	_2AC                    = 0;
+	mIntroMovieIdCycle      = 0;
 	mLanguageIndex          = 0;
 
 	mLangModes[0].set("archives/blo_eng.dir", "dataDir/archives/blo_eng.arc", "screen/eng_tex/screen.bun", "screen/eng_blo/",
@@ -591,7 +591,7 @@ void GameFlow::softReset()
 	int togglePrint    = gsys->mTogglePrint;
 	gsys->mTogglePrint = 0;
 
-	if (mGameSectionID != _1EC) {
+	if (mGameSectionID != mNextSectionID) {
 		gsys->resetHeap(1, 2);
 		gsys->getHeap(SYSHEAP_Ovl)->setAllocType(2);
 		app->useHeap(1);
@@ -640,9 +640,9 @@ void GameFlow::softReset()
 	gsys->mFlareGroupList = new LFlareGroup();
 	gsys->initLFlares(256);
 	mMoviePlayer->resetMovieList();
-	f32 time                 = gsys->getTime();
-	gsys->_23C               = 0;
-	gsys->mDvdReadBytesCount = 0;
+	f32 time                  = gsys->getTime();
+	gsys->mDvdOpenFileCounter = 0;
+	gsys->mDvdReadBytesCount  = 0;
 
 	if (mGameSectionID != SECTION_OnePlayer && mGameSectionID != SECTION_Titles && mGameSectionID != SECTION_NinLogo) {
 		PRINT("doing start load!\n");
@@ -668,16 +668,16 @@ void GameFlow::softReset()
 	mAppTickCounter    = 0;
 	gsys->mTogglePrint = 1;
 	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n",
-	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->_23C, gsys->mDvdReadBytesCount / 1024.0f, _2C0,
+	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFileCounter, gsys->mDvdReadBytesCount / 1024.0f, _2C0,
 	      gsys->mDvdReadBytesCount / 1048576.0f / _2C0);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
-	mIsEventNoControllerActive = 0;
-	mIsUiOverlayActive         = 0;
-	_348                       = 0;
-	_34C                       = 0;
-	mIsGameplayInputEnabled    = 1;
-	_1EC                       = mGameSectionID;
+	mDisableController      = 0;
+	mIsUiOverlayActive      = 0;
+	_348                    = 0;
+	_34C                    = 0;
+	mIsGameplayInputEnabled = 1;
+	mNextSectionID          = mGameSectionID;
 
 	u32 badCompiler[2];
 }

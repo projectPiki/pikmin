@@ -55,19 +55,19 @@ DGXGraphics::DGXGraphics(bool flag)
 	_3B8 = GXInit(_3BC, kDefaultFifoSize);
 
 	if (flag) {
-		_00 = 1;
+		mRenderMode = 1;
 	} else {
-		_00 = 0;
+		mRenderMode = 0;
 	}
 
-	mScreenWidth  = sScreenMode[_00]->fbWidth;
-	mScreenHeight = sScreenMode[_00]->efbHeight;
-	GXSetDispCopySrc(0, 0, sScreenMode[_00]->fbWidth, sScreenMode[_00]->efbHeight);
-	GXSetDispCopyDst(sScreenMode[_00]->fbWidth, sScreenMode[_00]->xfbHeight);
-	GXSetDispCopyYScale((f32)sScreenMode[_00]->xfbHeight / (f32)sScreenMode[_00]->efbHeight);
-	GXSetCopyFilter(sScreenMode[_00]->aa, sScreenMode[_00]->sample_pattern, GX_TRUE, sScreenMode[_00]->vfilter);
+	mScreenWidth  = sScreenMode[mRenderMode]->fbWidth;
+	mScreenHeight = sScreenMode[mRenderMode]->efbHeight;
+	GXSetDispCopySrc(0, 0, sScreenMode[mRenderMode]->fbWidth, sScreenMode[mRenderMode]->efbHeight);
+	GXSetDispCopyDst(sScreenMode[mRenderMode]->fbWidth, sScreenMode[mRenderMode]->xfbHeight);
+	GXSetDispCopyYScale((f32)sScreenMode[mRenderMode]->xfbHeight / (f32)sScreenMode[mRenderMode]->efbHeight);
+	GXSetCopyFilter(sScreenMode[mRenderMode]->aa, sScreenMode[mRenderMode]->sample_pattern, GX_TRUE, sScreenMode[mRenderMode]->vfilter);
 
-	if (sScreenMode[_00]->aa) {
+	if (sScreenMode[mRenderMode]->aa) {
 		GXSetPixelFmt(GX_PF_RGB565_Z16, GX_ZC_LINEAR);
 	} else {
 		GXSetPixelFmt(GX_PF_RGB8_Z24, GX_ZC_LINEAR);
@@ -76,29 +76,29 @@ DGXGraphics::DGXGraphics(bool flag)
 	VIInit();
 	videoReset();
 
-	sFrameSize = (sScreenMode[_00]->fbWidth + 0xf & 0xfff0) * sScreenMode[_00]->xfbHeight * 2;
+	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * sScreenMode[mRenderMode]->xfbHeight * 2;
 
 	int backup = gsys->getHeap(gsys->mActiveHeapIdx)->mAllocType;
 	gsys->getHeap(gsys->mActiveHeapIdx)->setAllocType(2);
 
-	_610      = new (0x20) u8[sFrameSize];
-	u16* test = (u16*)_610;
+	mDisplayBuffer = new (0x20) u8[sFrameSize];
+	u16* test      = (u16*)mDisplayBuffer;
 	for (int i = 0; i < sFrameSize / 2; i++) {
 		test[i] = 0x1080;
 	}
 
-	DCFlushRange(_610, sFrameSize);
+	DCFlushRange(mDisplayBuffer, sFrameSize);
 	gsys->getHeap(gsys->mActiveHeapIdx)->mAllocType = backup;
 	VISetBlack(TRUE);
-	VISetNextFrameBuffer(_610);
+	VISetNextFrameBuffer(mDisplayBuffer);
 	VIFlush();
 	VIWaitForRetrace();
 	setupRender();
-	gfx  = this;
-	_614 = 0;
-	_618 = VIGetRetraceCount();
-	_61C = gsys->mFrameRate;
-	_620 = VISetPostRetraceCallback(retraceProc);
+	gfx              = this;
+	_614             = 0;
+	mRetraceCount    = VIGetRetraceCount();
+	mSystemFrameRate = gsys->mFrameRate;
+	_620             = VISetPostRetraceCallback(retraceProc);
 	OSInitMessageQueue(&_624, &_644, 1);
 
 	f32 badcompiler[2];
@@ -111,13 +111,13 @@ DGXGraphics::DGXGraphics(bool flag)
  */
 void DGXGraphics::setVerticalFilter(u8* vf)
 {
-	sScreenMode[_00]->vfilter[0] = vf[0];
-	sScreenMode[_00]->vfilter[1] = vf[1];
-	sScreenMode[_00]->vfilter[2] = vf[2];
-	sScreenMode[_00]->vfilter[3] = vf[3];
-	sScreenMode[_00]->vfilter[4] = vf[4];
-	sScreenMode[_00]->vfilter[5] = vf[5];
-	sScreenMode[_00]->vfilter[6] = vf[6];
+	sScreenMode[mRenderMode]->vfilter[0] = vf[0];
+	sScreenMode[mRenderMode]->vfilter[1] = vf[1];
+	sScreenMode[mRenderMode]->vfilter[2] = vf[2];
+	sScreenMode[mRenderMode]->vfilter[3] = vf[3];
+	sScreenMode[mRenderMode]->vfilter[4] = vf[4];
+	sScreenMode[mRenderMode]->vfilter[5] = vf[5];
+	sScreenMode[mRenderMode]->vfilter[6] = vf[6];
 }
 
 /*
@@ -127,13 +127,13 @@ void DGXGraphics::setVerticalFilter(u8* vf)
  */
 void DGXGraphics::getVerticalFilter(u8* vf)
 {
-	vf[0] = sScreenMode[_00]->vfilter[0];
-	vf[1] = sScreenMode[_00]->vfilter[1];
-	vf[2] = sScreenMode[_00]->vfilter[2];
-	vf[3] = sScreenMode[_00]->vfilter[3];
-	vf[4] = sScreenMode[_00]->vfilter[4];
-	vf[5] = sScreenMode[_00]->vfilter[5];
-	vf[6] = sScreenMode[_00]->vfilter[6];
+	vf[0] = sScreenMode[mRenderMode]->vfilter[0];
+	vf[1] = sScreenMode[mRenderMode]->vfilter[1];
+	vf[2] = sScreenMode[mRenderMode]->vfilter[2];
+	vf[3] = sScreenMode[mRenderMode]->vfilter[3];
+	vf[4] = sScreenMode[mRenderMode]->vfilter[4];
+	vf[5] = sScreenMode[mRenderMode]->vfilter[5];
+	vf[6] = sScreenMode[mRenderMode]->vfilter[6];
 }
 
 /*
@@ -145,10 +145,10 @@ void DGXGraphics::videoReset()
 {
 	static int videoModeAsIs = -1;
 
-	if (videoModeAsIs != _00) {
-		videoModeAsIs = _00;
+	if (videoModeAsIs != mRenderMode) {
+		videoModeAsIs = mRenderMode;
 		sFirstFrame   = 2;
-		VIConfigure(sScreenMode[_00]);
+		VIConfigure(sScreenMode[mRenderMode]);
 		VIFlush();
 		VIWaitForRetrace();
 		VIWaitForRetrace();
@@ -162,7 +162,7 @@ void DGXGraphics::videoReset()
  */
 void DGXGraphics::resetCopyFilter()
 {
-	GXSetCopyFilter(sScreenMode[_00]->aa, sScreenMode[_00]->sample_pattern, GX_TRUE, sScreenMode[_00]->vfilter);
+	GXSetCopyFilter(sScreenMode[mRenderMode]->aa, sScreenMode[mRenderMode]->sample_pattern, GX_TRUE, sScreenMode[mRenderMode]->vfilter);
 }
 
 /*
@@ -172,9 +172,9 @@ void DGXGraphics::resetCopyFilter()
  */
 void DGXGraphics::setupRender()
 {
-	_618 = VIGetRetraceCount();
-	_3C8 = _3C4;
-	_3CC = kDefaultDLSize;
+	mRetraceCount = VIGetRetraceCount();
+	_3C8          = _3C4;
+	_3CC          = kDefaultDLSize;
 }
 
 /*
@@ -219,7 +219,7 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 		return 0;
 	}
 
-	gsys->_26C;
+	gsys->mIsRendering;
 	u8* dl               = gsys->mGfx->getDListPtr();
 	mat->mDisplayListPtr = dl;
 	GXBeginDisplayList(dl, getDListRemainSize());
@@ -257,7 +257,7 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	GXSetTevKColor(GX_KCOLOR1, *(GXColor*)((GXColor*)mat->mTevInfo + 28));
 	GXSetTevKColor(GX_KCOLOR2, *(GXColor*)((GXColor*)mat->mTevInfo + 29));
 	GXSetTevKColor(GX_KCOLOR3, *(GXColor*)((GXColor*)mat->mTevInfo + 30));
-	for (int i = 0; i < mat->mTevInfo->mTevColRegs[0]._00.r; i++) { }
+	for (int i = 0; i < mat->mTevInfo->mTevColRegs[0].mAnimatedColor.r; i++) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -653,8 +653,8 @@ void DGXGraphics::initRender(int a1, int a2)
  */
 void DGXGraphics::beginRender()
 {
-	gsys->_26C; // volatile ints are very cool
-	gsys->_26C = 1;
+	gsys->mIsRendering; // volatile ints are very cool
+	gsys->mIsRendering = 1;
 	GXInvalidateTexAll();
 	GXInvalidateVtxCache();
 }
@@ -678,7 +678,7 @@ void DGXGraphics::doneRender()
 {
 	GXFlush();
 	GXDrawDone();
-	gsys->_26C = 0;
+	gsys->mIsRendering = 0;
 }
 
 /*
@@ -701,14 +701,14 @@ void DGXGraphics::waitRetrace()
 
 	// this mess is probably an inline
 	bool test = true;
-	if (!gsys->_268 && !gsys->resetPending()) {
+	if (!gsys->mIsLoadingScreenActive && !gsys->resetPending()) {
 		test = false;
 	}
 	bool set = test ? false : true;
-	GXCopyDisp(_610, set);
+	GXCopyDisp(mDisplayBuffer, set);
 
-	_618 = VIGetRetraceCount();
-	_61C = gsys->mFrameRate;
+	mRetraceCount    = VIGetRetraceCount();
+	mSystemFrameRate = gsys->mFrameRate;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -782,7 +782,7 @@ void DGXGraphics::waitPostRetrace()
 {
 	BOOL interrupt = OSDisableInterrupts();
 
-	int a = _61C - (VIGetRetraceCount() - _618) - 1;
+	int a = mSystemFrameRate - (VIGetRetraceCount() - mRetraceCount) - 1;
 	if (a > 0) {
 		_614 = a;
 		OSReceiveMessage(&_624, nullptr, 1);
@@ -799,12 +799,12 @@ void DGXGraphics::waitPostRetrace()
 void DGXGraphics::retraceProc(u32)
 {
 	gsys->nudgeDvdThread();
-	if (gsys->_260) {
+	if (gsys->mIsLoadingThreadActive) {
 		gsys->nudgeLoading();
 		return;
 	}
 
-	gsys->_2A0++;
+	gsys->mRetraceCount++;
 	if (gfx->_614 != 0 && --gfx->_614 == 0) {
 		OSSendMessage(&gfx->_624, (OSMessage)'DONE', 0);
 	}

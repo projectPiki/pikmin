@@ -77,9 +77,9 @@ struct MapShadMatHandler : public MaterialHandler {
 struct MapProjMatHandler : public MaterialHandler {
 	MapProjMatHandler(Texture* tex)
 	{
-		mLightCamera  = nullptr;
-		mProjMat      = new Material();
-		mProjMat->_24 = tex;
+		mLightCamera       = nullptr;
+		mProjMat           = new Material();
+		mProjMat->mTexture = tex;
 		mProjMat->Colour().set(128, 128, 128, 32);
 	}
 
@@ -346,7 +346,7 @@ struct MapMgr {
 	u8 mNeedsPhysicsWorldReset;                      // _104
 	DynSimulator* mDynSimulator;                     // _108
 	int mCollisionCheckCount;                        // _10C
-	int mShadowFullRenderCountdown;                  // _110, unknown
+	int mShadowFullRenderCountdown;                  // _110
 	ShadowCaster mShadowCaster;                      // _114
 	MapShadMatHandler* mMapShadMatHandler;           // _4AC
 	MapProjMatHandler* mMapProjMatHandler;           // _4B0

@@ -450,7 +450,7 @@ void AnimMgr::read(RandomAccessStream& input)
  * Address:	80050F70
  * Size:	00021C
  */
-void Animator::startAnim(int p1, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
+void Animator::startAnim(int isPlaying, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
 {
 	mAnimInfo = mMgr->findAnim(animID);
 	if (firstKeyFrameIdx == -1 && mCurrentAnimID == animID) {
@@ -473,7 +473,7 @@ void Animator::startAnim(int p1, int animID, int firstKeyFrameIdx, int lastKeyFr
 	}
 
 	mCurrentAnimID   = animID;
-	mIsPlaying       = p1;
+	mIsPlaying       = isPlaying;
 	mFirstFrameIndex = firstKeyFrameIdx;
 	mLastFrameIndex  = lastKeyFrameIdx;
 }
@@ -494,7 +494,7 @@ void Animator::finishLoop()
  */
 void Animator::finishOneShot()
 {
-	startAnim(_08, mAnimationId, _10, _14);
+	startAnim(mIsOneShotFinish, mAnimationId, mFirstKeyframe, mLastKeyframe);
 }
 
 /*

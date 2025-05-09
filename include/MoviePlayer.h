@@ -34,7 +34,7 @@ struct MovieInfo : public CoreNode {
 	MovieInfo()
 	    : CoreNode("")
 	{
-		mCin = nullptr;
+		mPlayer = nullptr;
 	}
 
 	// unused/inlined:
@@ -44,10 +44,10 @@ struct MovieInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mMovieIndex;       // _14
-	CinematicPlayer* mCin; // _18
-	Matrix4f _1C;          // _1C
-	u32 _5C;               // _5C
+	u32 mMovieIndex;          // _14
+	CinematicPlayer* mPlayer; // _18
+	Matrix4f mRootTransform;  // _1C
+	u32 mMaskFlags;           // _5C
 };
 
 /**
@@ -81,29 +81,29 @@ struct MoviePlayer {
 
 	void setGameCamInfo(bool flag, f32 a1, Vector3f& a2, Vector3f& a3)
 	{
-		_16C = flag;
-		_160 = a1;
-		_148 = a2;
-		_154 = a3;
+		_16C                    = flag;
+		mPreCutsceneCamFov      = a1;
+		mPreCutsceneCamPosition = a2;
+		mPreCutsceneCamLookAt   = a3;
 	}
 
-	MovieInfo mPlayInfoList;   // _00
-	MovieInfo mMovieInfoList;  // _60
-	MovieInfo mStackInfoList;  // _C0
-	int mCurrentFrame;         // _120
-	bool mIsActive;            // _124
-	u8 _125;                   // _125
-	u32 _128;                  // _128
-	Vector3f mTargetViewpoint; // _12C
-	Vector3f mLookAtPos;       // _138
-	f32 mTargetFov;            // _144
-	Vector3f _148;             // _148
-	Vector3f _154;             // _154
-	f32 _160;                  // _160
-	f32 _164;                  // _164
-	f32 mCamTransitionFactor;  // _168
-	bool _16C;                 // _16C
-	u32 _170;                  // _170, unknown
+	MovieInfo mPlayInfoList;          // _00
+	MovieInfo mMovieInfoList;         // _60
+	MovieInfo mStackInfoList;         // _C0
+	int mCurrentFrame;                // _120
+	bool mIsActive;                   // _124
+	u8 _125;                          // _125
+	u32 mMaskFlags;                   // _128
+	Vector3f mTargetViewpoint;        // _12C
+	Vector3f mLookAtPos;              // _138
+	f32 mTargetFov;                   // _144
+	Vector3f mPreCutsceneCamPosition; // _148
+	Vector3f mPreCutsceneCamLookAt;   // _154
+	f32 mPreCutsceneCamFov;           // _160
+	f32 mInitialCamBlend;             // _164
+	f32 mCamTransitionFactor;         // _168
+	bool _16C;                        // _16C
+	u32 _170;                         // _170, unknown
 };
 
 /**

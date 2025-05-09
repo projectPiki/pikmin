@@ -84,9 +84,9 @@ struct RigidBody : public Node {
 	virtual void initCollisions(int configIdx)                                  // _44
 	{
 		configuration& state = mIntegrationStates[configIdx];
-		_1329C.resetBound();
+		mCollisionBounds.resetBound();
 		for (int i = 0; i < mBoundingPointCount; i++) {
-			_1329C.expandBound(state.mBodyPoints[i + mHookPointCount]);
+			mCollisionBounds.expandBound(state.mBodyPoints[i + mHookPointCount]);
 		}
 	}
 	virtual bool checkForCollisions(int, CollState&);                                                             // _48
@@ -165,7 +165,7 @@ struct RigidBody : public Node {
 	Vector3f mRenderPosition;             // _13260
 	Quat mBufferedOrientations[2];        // _1326C
 	Quat mRenderOrientation;              // _1328C
-	BoundBox _1329C;                      // _1329C
+	BoundBox mCollisionBounds;                      // _1329C
 };
 
 /**

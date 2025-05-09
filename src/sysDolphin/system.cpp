@@ -95,33 +95,33 @@ RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
 	sprintf(strPath, "%s", a1 ? mCurrentDirectory : "");
 	sprintf(strPath, "%s%s%s", a1 ? mDataRoot : "", path);
 
-	if (a1 && (_200.getChildCount() || _214.getChildCount())) {
+	if (a1 && (mDvdFileTreeRoot.getChildCount() || mAramFileTreeRoot.getChildCount())) {
 
-		FOREACH_NODE(CoreNode, _200.mChild, node)
+		FOREACH_NODE(CoreNode, mDvdFileTreeRoot.mChild, node)
 		{
 			if (!strcmp(node->mName, path)) {
-				aramStream.mPending = 0;
-				aramStream._08      = 0;
-				aramStream._0C      = 0;
-				aramStream.mPath    = path;
+				aramStream.mPending     = 0;
+				aramStream.mBaseAddress = 0;
+				aramStream.mOffset      = 0;
+				aramStream.mPath        = path;
 				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mOffset);
 			}
 		}
 
-		FOREACH_NODE(CoreNode, _214.mChild, node)
+		FOREACH_NODE(CoreNode, mAramFileTreeRoot.mChild, node)
 		{
 			if (!strcmp(node->mName, path)) {
-				aramStream.mPending = 0;
-				aramStream._08      = 0;
-				aramStream._0C      = 0;
-				aramStream.mPath    = path;
+				aramStream.mPending     = 0;
+				aramStream.mBaseAddress = 0;
+				aramStream.mOffset      = 0;
+				aramStream.mPath        = path;
 				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mOffset);
 			}
 		}
 	}
 
 	dvdStream.mPath = strPath;
-	_23C++;
+	mDvdOpenFileCounter++;
 	dvdStream.mIsFileOpen = DVDOpen(dvdStream.mPath, &dvdStream.mFileInfo) != FALSE;
 	dvdStream.mOffset     = 0;
 	dvdStream.mPending    = dvdStream.mOffset;
@@ -139,7 +139,7 @@ RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
 	PRINT("Opened file %s\n", strPath);
 	gsys->mTogglePrint = old;
 	dvdStream.mOffset  = 0;
-	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, _25C);
+	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
 	return &dvdBufferedStream;
 
 	u32 badcompiler[2];
@@ -352,7 +352,7 @@ void System::initSoftReset()
  */
 void System::beginRender()
 {
-	_2A0 = 0;
+	mRetraceCount = 0;
 	static_cast<DGXGraphics*>(mGfx)->beginRender();
 	mGfx->clearBuffer(3, false);
 	GXSetViewport(0.0f, 0.0f, glnWidth, glnHeight, 0.0f, 1.0f);
@@ -422,10 +422,10 @@ f32 System::getTime()
 void System::updateSysClock()
 {
 	OSTick tick = OSGetTick();
-	_294++;
-	_288       = tick - _280;
-	mDeltaTime = _288 / (f64)OS_TIMER_CLOCK;
-	_29C++;
+	mEngineRunningFrameCount++;
+	mFrameDurationTicks = tick - mPreviousTickTime;
+	mDeltaTime          = mFrameDurationTicks / (f64)OS_TIMER_CLOCK;
+	mEngineTotalFrames++;
 	if (mDeltaTime > f32(1.0f / 30.0f)) {
 		mDeltaTime = f32(1.0f / 30.0f);
 	}
@@ -433,13 +433,13 @@ void System::updateSysClock()
 		mDeltaTime = 0.0f;
 	}
 
-	int time = tick - _284;
+	int time = tick - mFpsSamplePeriodStartTick;
 	if (time > OS_TIMER_CLOCK) {
-		_290 = (f64)(OS_TIMER_CLOCK * (_294 - _298)) / time;
-		_284 = tick;
-		_298 = _294;
+		mFramesPerSecond               = (f64)(OS_TIMER_CLOCK * (mEngineRunningFrameCount - mFrameCountAtSamplePeriodStart)) / time;
+		mFpsSamplePeriodStartTick      = tick;
+		mFrameCountAtSamplePeriodStart = mEngineRunningFrameCount;
 	}
-	_280 = tick;
+	mPreviousTickTime = tick;
 }
 
 /*
@@ -1251,8 +1251,8 @@ void System::findAddress(u32)
  */
 void System::hardReset()
 {
-	int old = _198 != false;
-	_198    = 0;
+	int old           = mForceTogglePrint != false;
+	mForceTogglePrint = 0;
 	if (useSymbols) {
 		gsys->getHeap(gsys->mActiveHeapIdx);
 		OSGetTick();
@@ -1260,14 +1260,14 @@ void System::hardReset()
 		OSGetTick();
 		gsys->getHeap(gsys->mActiveHeapIdx);
 	}
-	_198 = old;
+	mForceTogglePrint = old;
 
 	mCacher  = new TextureCacher(0x96000);
 	int size = 0x20000;
 	gsys->mHeaps[SYSHEAP_Lang].init("language", 2, alloc(size), size);
 	preloadLanguage();
 
-	_29C = 0;
+	mEngineTotalFrames = 0;
 
 	u32 badcompiler[16];
 	/*
@@ -1357,25 +1357,25 @@ void System::hardReset()
  */
 System::System()
 {
-	mTimerState        = TS_Off;
-	mTogglePrint       = 0;
-	mToggleDebugInfo   = 0;
-	mToggleDebugExtra  = 0;
-	mToggleBlur        = 1;
-	mToggleColls       = 0;
-	_25C               = 0x40000;
-	mCurrentThread     = OSGetCurrentThread();
-	_254               = 0;
-	_258               = -1;
-	mPrevHeapAllocType = 0;
-	_32C               = 1;
-	_330               = 1;
-	mCurrentDirectory  = "";
-	mAtxRouter         = nullptr;
-	mActiveHeapIdx     = -1;
-	gsys               = this;
-	_2BC               = 0;
-	mTimer             = nullptr;
+	mTimerState              = TS_Off;
+	mTogglePrint             = 0;
+	mToggleDebugInfo         = 0;
+	mToggleDebugExtra        = 0;
+	mToggleBlur              = 1;
+	mToggleColls             = 0;
+	mDvdBufferSize           = 0x40000;
+	mCurrentThread           = OSGetCurrentThread();
+	mDvdErrorCallback        = 0;
+	mDvdErrorCode            = -1;
+	mPrevHeapAllocType       = 0;
+	mDmaTransferComplete     = 1;
+	mTextureTransferComplete = 1;
+	mCurrentDirectory        = "";
+	mAtxRouter               = nullptr;
+	mActiveHeapIdx           = -1;
+	gsys                     = this;
+	_2BC                     = 0;
+	mTimer                   = nullptr;
 }
 
 /*
@@ -1419,7 +1419,7 @@ void initBigFont()
  */
 void System::showDvdError(Graphics& gfx)
 {
-	if (_258 < 0) {
+	if (mDvdErrorCode < 0) {
 		return;
 	}
 
@@ -1428,9 +1428,9 @@ void System::showDvdError(Graphics& gfx)
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
 
-	if (_258) {
+	if (mDvdErrorCode) {
 		int y = 160;
-		for (const char* str = errorList[_258][0]; str, str++;) {
+		for (const char* str = errorList[mDvdErrorCode][0]; str, str++;) {
 			int x = bigFont->stringWidth((char*)str);
 			y += 28;
 			gfx.texturePrintf(bigFont, 320 - x / 2, y, (char*)str);
@@ -1553,14 +1553,14 @@ void System::Initialise()
 {
 	OSInit();
 	CARDInit();
-	void* lo = OSGetArenaLo();
-	void* hi = OSGetArenaHi();
-	_244     = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
-	_248     = OSRoundDown32B(hi) - _244;
-	if (_248 < 0x1800000) {
+	void* lo         = OSGetArenaLo();
+	void* hi         = OSGetArenaHi();
+	mSystemHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
+	mSystemHeapEnd   = OSRoundDown32B(hi) - mSystemHeapStart;
+	if (mSystemHeapEnd < 0x1800000) {
 		useSymbols = false;
 	}
-	mHeaps[0].init("sys", 1, (void*)_244, _248);
+	mHeaps[0].init("sys", 1, (void*)mSystemHeapStart, mSystemHeapEnd);
 	setHeap(0);
 	sysCon = new LogStream;
 	errCon = sysCon;
@@ -1568,7 +1568,7 @@ void System::Initialise()
 	if (!dvdStream.readBuffer) {
 		dvdStream.readBuffer = new (0x20) u8[dvdStream.mOffset];
 	}
-	gsys->getHeap(0);
+	gsys->getHeap(SYSHEAP_Sys);
 	static u32 mMemoryTable;
 	ARInit(&mMemoryTable, 3);
 	ARQInit();
@@ -1585,7 +1585,7 @@ void System::Initialise()
 
 	bigFont = new Font;
 	bigFont->setTexture(loadTexture("bigFont.bti", true), 21, 42);
-	_254 = new Delegate1<System, Graphics&>(this, showDvdError);
+	mDvdErrorCallback = new Delegate1<System, Graphics&>(this, showDvdError);
 	startLoading(nullptr, true, 0);
 
 	Font* cons = new Font;
@@ -2197,11 +2197,11 @@ void* loadFunc(void*)
 void System::startLoading(LoadIdler* idler, bool a1, u32 a2)
 {
 	gsys->mPrevHeapAllocType = 0;
-	if (_260 == 0) {
-		_264 = a2;
-		_268 = a1;
+	if (mIsLoadingThreadActive == 0) {
+		_264                   = a2;
+		mIsLoadingScreenActive = a1;
 		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, 0);
-		_260 = 1;
+		mIsLoadingThreadActive = 1;
 		OSResumeThread(&Thread);
 	}
 }
@@ -2224,12 +2224,12 @@ void System::nudgeLoading()
 void System::endLoading()
 {
 	gsys->mPrevHeapAllocType = 1;
-	if (_260) {
+	if (mIsLoadingThreadActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', 1);
 		OSJoinThread(&Thread, nullptr);
 		GXSetCurrentGXThread();
-		_260 = 0;
-		_268 = 0;
+		mIsLoadingThreadActive = 0;
+		mIsLoadingScreenActive = 0;
 	}
 }
 
@@ -2271,7 +2271,7 @@ void doneDMA(u32)
  */
 void System::copyWaitUntilDone()
 {
-	while (_32C == 0) { }
+	while (mDmaTransferComplete == 0) { }
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x32C(r3)
@@ -2292,7 +2292,7 @@ u32 System::copyRamToCache(u32 a1, u32 a2, u32 a3)
 
 	BOOL inter = OSDisableInterrupts();
 	OSRestoreInterrupts(inter);
-	gsys->_32C = 0;
+	gsys->mDmaTransferComplete = 0;
 	DCStoreRange((void*)a1, a2);
 	ARQPostRequest(0, 0, 0, 1, a1, a3, a2, doneDMA);
 	return a3;
@@ -2380,9 +2380,9 @@ void System::copyCacheToRam(u32 a1, u32 a2, u32 a3)
 	copyWaitUntilDone();
 
 	BOOL inter = OSDisableInterrupts();
-	_308->mCacheInfo->remove();
+	mTextureCache->mSystemCache->remove();
 	OSRestoreInterrupts(inter);
-	gsys->_32C = 0;
+	gsys->mDmaTransferComplete = 0;
 	DCInvalidateRange((void*)a1, a3);
 	ARQPostRequest(0, 0, 1, 1, a1, a3, a2, doneDMA);
 
@@ -2508,18 +2508,18 @@ void freeBuffer(u32)
 void System::copyCacheToTexture(CacheTexture* tex)
 {
 	BOOL inter = OSDisableInterrupts();
-	_308->mCacheInfo->remove();
+	mTextureCache->mSystemCache->remove();
 
-	int a   = tex->_48;
+	int a   = tex->mAramAddress;
 	void* b = tex->mTexImage->mTextureData;
 	void* c = tex->mTexImage->mPixelData;
 
 	OSRestoreInterrupts(inter);
-	gsys->_330 = 0;
+	gsys->mTextureTransferComplete = 0;
 	DCInvalidateRange(b, (u32)c);
 	ARQPostRequest(0, (u32)tex, 1, 1, a, (u32)b, (u32)c, freeBuffer);
 
-	while (_330 == 0) { }
+	while (mTextureTransferComplete == 0) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2607,7 +2607,7 @@ void* dvdFunc(void*)
 				stopped = true;
 			}
 		} else {
-			if (OSGetResetSwitchState() == 0 && gsys->_26C == 0 && gsys->_270 == 0) {
+			if (OSGetResetSwitchState() == 0 && gsys->mIsRendering == 0 && gsys->mIsMemoryCardSaving == 0) {
 				PADRecalibrate(0xf0000000);
 				Jac_Freeze();
 				VISetBlack(1);
@@ -2619,18 +2619,18 @@ void* dvdFunc(void*)
 		}
 
 		s32 stat = DVDGetDriveStatus();
-		if (stat == DVD_STATE_FATAL_ERROR)
-			gsys->_258 = 1;
-		else if (stat == DVD_STATE_RETRY)
-			gsys->_258 = 2;
-		else if (stat == DVD_STATE_NO_DISK)
-			gsys->_258 = 3;
-		else if (stat == DVD_STATE_COVER_OPEN)
-			gsys->_258 = 4;
-		else if (stat == DVD_STATE_WRONG_DISK)
-			gsys->_258 = 5;
-		else {
-			int* test = &gsys->_258;
+		if (stat == DVD_STATE_FATAL_ERROR) {
+			gsys->mDvdErrorCode = 1;
+		} else if (stat == DVD_STATE_RETRY) {
+			gsys->mDvdErrorCode = 2;
+		} else if (stat == DVD_STATE_NO_DISK) {
+			gsys->mDvdErrorCode = 3;
+		} else if (stat == DVD_STATE_COVER_OPEN) {
+			gsys->mDvdErrorCode = 4;
+		} else if (stat == DVD_STATE_WRONG_DISK) {
+			gsys->mDvdErrorCode = 5;
+		} else {
+			int* test = &gsys->mDvdErrorCode;
 			if (*test != -1 && stat == 1) {
 				*test = 0;
 			} else {
@@ -2638,10 +2638,10 @@ void* dvdFunc(void*)
 			}
 		}
 
-		if (gsys->_258 >= 0 && !playedSe) {
+		if (gsys->mDvdErrorCode >= 0 && !playedSe) {
 			Jac_PlaySystemSe(0x26); // no idea what sound these are
 			playedSe = true;
-		} else if (gsys->_258 < 0 && playedSe) {
+		} else if (gsys->mDvdErrorCode < 0 && playedSe) {
 			Jac_PlaySystemSe(0x27);
 			playedSe = false;
 		}
@@ -2916,7 +2916,7 @@ int AramStream::getPending()
 void AramStream::read(void* data, int size)
 {
 	int readSize = OSRoundUp32B(size);
-	gsys->copyCacheToRam((u32)data, _08 + _0C, readSize);
+	gsys->copyCacheToRam((u32)data, mBaseAddress + mOffset, readSize);
 	gsys->copyWaitUntilDone();
-	_0C += readSize;
+	mOffset += readSize;
 }

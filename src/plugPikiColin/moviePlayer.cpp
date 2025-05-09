@@ -124,9 +124,9 @@ static MovieListInfo movieTitles[] = {
 bool MovieInfo::update()
 {
 	bool res = false;
-	if (mCin) {
-		mCin->mPlaybackSpeed = 30.0f;
-		res                  = mCin->update() != 0;
+	if (mPlayer) {
+		mPlayer->mPlaybackSpeed = 30.0f;
+		res                     = mPlayer->update() != 0;
 	}
 	return !res;
 }
@@ -139,8 +139,8 @@ bool MovieInfo::update()
 bool MovieInfo::setCamera(Graphics& gfx)
 {
 	bool res = false;
-	if (mCin->mCurrentScene) {
-		gfx.setCamera(&mCin->mCurrentScene->mCameraData->mCamera);
+	if (mPlayer->mCurrentScene) {
+		gfx.setCamera(&mPlayer->mCurrentScene->mCameraData->mCamera);
 		gfx.mCamera->update(gfx.mCamera->mAspectRatio, gfx.mCamera->mFov, gfx.mCamera->mNear, gfx.mCamera->mFar);
 		res = true;
 	}
@@ -234,17 +234,17 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		gsys->setHeap(SYSHEAP_Movie);
 		type = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
 	}
-	info->mCin = new CinematicPlayer(info->mName);
-	if (_16C && info->mCin->mFlags & 0x200) {
-		_164 = 1.0f;
-		_16C = 0;
+	info->mPlayer = new CinematicPlayer(info->mName);
+	if (_16C && info->mPlayer->mFlags & 0x200) {
+		mInitialCamBlend = 1.0f;
+		_16C             = 0;
 	}
 
 	if (heapid != 2) {
 		gsys->getHeap(SYSHEAP_Movie)->setAllocType(type);
 		gsys->setHeap(heapid);
 	}
-	gsys->_2A0               = 0;
+	gsys->mRetraceCount      = 0;
 	gsys->mPrevHeapAllocType = old;
 }
 
@@ -376,7 +376,7 @@ int MoviePlayer::translateIndex(int idx, int stage)
  * Address:	80077160
  * Size:	00049C
  */
-void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos, Vector3f* rot, u32 p6, bool isPlaying)
+void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos, Vector3f* rot, u32 mask, bool isPlaying)
 {
 	MovieInfo* info;
 	if (movieIdx < 0) {
@@ -428,7 +428,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	info->del();
 	info->initCore(movie->mCinFileName);
 	info->mMovieIndex = translatedIdx;
-	info->_5C         = p6;
+	info->mMaskFlags  = mask;
 	if (translatedIdx == DEMOID_PikminInOnyonTutorial || translatedIdx == DEMOID_PikminInOnyonForest) {
 		gsys->startLoading(nullptr, false, 0);
 	} else {
@@ -445,28 +445,28 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	PRINT("movie attach\n");
 	gsys->attachObjs();
 
-	if (pos && (info->mCin->mFlags & 0x1)) {
+	if (pos && (info->mPlayer->mFlags & 0x1)) {
 		if (pos && rot) {
 			PRINT("    localized at (%.1f, %.1f, %.1f) (%.1f, %.1f, %.1f)\n", pos->x, pos->y, pos->z, rot->x, rot->y, rot->z);
 		}
-		info->_1C.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), rot ? *rot : Vector3f(0.0f, 0.0f, 0.0f), *pos);
+		info->mRootTransform.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), rot ? *rot : Vector3f(0.0f, 0.0f, 0.0f), *pos);
 	} else {
-		info->_1C.makeIdentity();
+		info->mRootTransform.makeIdentity();
 	}
 
-	info->mCin->mMtx       = info->_1C;
-	info->mCin->mTarget    = target;
-	info->mCin->mIsPlaying = isPlaying;
+	info->mPlayer->mMtx       = info->mRootTransform;
+	info->mPlayer->mTarget    = target;
+	info->mPlayer->mIsPlaying = isPlaying;
 
 	bool doPlayMovie = false;
 	if (mPlayInfoList.getChildCount() == 0) {
 		doPlayMovie = true;
 	} else {
-		if (info->mCin->mFlags & 0x100) {
+		if (info->mPlayer->mFlags & 0x100) {
 			bool check = false;
 			FOREACH_NODE(MovieInfo, mStackInfoList.mChild, stackInfo)
 			{
-				if (!(stackInfo->mCin->mFlags & 0x100)) {
+				if (!(stackInfo->mPlayer->mFlags & 0x100)) {
 					check = true;
 					break;
 				}
@@ -480,8 +480,8 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	if (doPlayMovie) {
 		PRINT("playing movie %s\n", info->mName);
 		initMovieFlags(info);
-		if (info->mCin->mFlags & 0x80000) {
-			gameflow.mIsEventNoControllerActive = 1;
+		if (info->mPlayer->mFlags & 0x80000) {
+			gameflow.mDisableController = 1;
 		}
 		info->update();
 		mPlayInfoList.add(info);
@@ -528,8 +528,8 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
  */
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
-	bool check = (info->mCin->mFlags & 0x4) != 0;
-	FOREACH_NODE(SceneCut, info->mCin->mCutList.mChild, cut)
+	bool check = (info->mPlayer->mFlags & 0x4) != 0;
+	FOREACH_NODE(SceneCut, info->mPlayer->mCutList.mChild, cut)
 	{
 		FOREACH_NODE(ActorInstance, cut->mActor.mChild, actor)
 		{
@@ -539,17 +539,17 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 			}
 		}
 	}
-	if (info->mCin->mFlags & 0x80) {
+	if (info->mPlayer->mFlags & 0x80) {
 		PRINT("Killing all effects!!!\n");
 		effectMgr->killAll();
 	}
 
-	if (info->mCin->mFlags & 0x400000) {
+	if (info->mPlayer->mFlags & 0x400000) {
 		mCamTransitionFactor = 1.0f;
 	}
 
 	if (gameflow.mGameInterface) {
-		gameflow.mGameInterface->message(7, (check ? 0x80000000 : 0) | info->mCin->mFlags & ~(0xFFCA0383));
+		gameflow.mGameInterface->message(7, (check ? 0x80000000 : 0) | info->mPlayer->mFlags & ~(0xFFCA0383));
 	}
 }
 
@@ -586,40 +586,40 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 void MoviePlayer::update()
 {
 	gameflow.mDemoFlags = 0;
-	if (gsys->_258 >= 0) {
+	if (gsys->mDvdErrorCode >= 0) {
 		return;
 	}
 
-	if (mIsActive && _125 && static_cast<MovieInfo*>(mPlayInfoList.mChild)->mCin->mCurrentPlaybackTime > 0.0f) {
-		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mCin->mCurrentPlaybackTime -= 1.0f;
+	if (mIsActive && _125 && static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime > 0.0f) {
+		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime -= 1.0f;
 	}
 
 	MovieInfo* next;
 	for (MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild; info; info = next) {
 		next = (MovieInfo*)info->mNext;
-		gameflow.mDemoFlags |= info->mCin->mFlags & 0x4FC;
-		if (_164 > 0.0f) {
-			_164 -= gsys->getFrameTime() * 0.6f;
-			if (_164 < 0.0f) {
-				_164 = 0.0f;
-				if (info->mCin) {
-					info->mCin->mCameraBlendRatio = 0.0f;
+		gameflow.mDemoFlags |= info->mPlayer->mFlags & 0x4FC;
+		if (mInitialCamBlend > 0.0f) {
+			mInitialCamBlend -= gsys->getFrameTime() * 0.6f;
+			if (mInitialCamBlend < 0.0f) {
+				mInitialCamBlend = 0.0f;
+				if (info->mPlayer) {
+					info->mPlayer->mCameraBlendRatio = 0.0f;
 				}
 			}
 		}
-		if (info->mCin && _164 > 0.0f) {
-			info->mCin->mCameraTargetFov  = _160;
-			info->mCin->mCameraPosition   = _148;
-			info->mCin->mCameraLookAt     = _154;
-			info->mCin->mCameraBlendRatio = (sinf(_164 * PI - HALF_PI) + 1.0f) * 0.5f;
+		if (info->mPlayer && mInitialCamBlend > 0.0f) {
+			info->mPlayer->mCameraTargetFov  = mPreCutsceneCamFov;
+			info->mPlayer->mCameraPosition   = mPreCutsceneCamPosition;
+			info->mPlayer->mCameraLookAt     = mPreCutsceneCamLookAt;
+			info->mPlayer->mCameraBlendRatio = (sinf(mInitialCamBlend * PI - HALF_PI) + 1.0f) * 0.5f;
 		}
 
-		if (info->mCin && info->mCin->mTarget && info->mCin->mFlags & 0x20000) {
-			info->mCin->_2E4 = true;
-			info->mCin->_2D0 = info->mCin->mTarget->mPosition;
+		if (info->mPlayer && info->mPlayer->mTarget && info->mPlayer->mFlags & 0x20000) {
+			info->mPlayer->mUseStaticCamera = true;
+			info->mPlayer->mStaticLookAt    = info->mPlayer->mTarget->mPosition;
 		}
 
-		_128 = info->_5C;
+		mMaskFlags = info->mMaskFlags;
 		if (!info->update()) {
 			PRINT("movie end!\n");
 			sndStopMovie(info);
@@ -638,7 +638,7 @@ void MoviePlayer::update()
 				if (!mStackInfoList.mChild) {
 					break;
 				}
-				if (!(static_cast<MovieInfo*>(mStackInfoList.mChild)->mCin->mFlags & 0x100)) {
+				if (!(static_cast<MovieInfo*>(mStackInfoList.mChild)->mPlayer->mFlags & 0x100)) {
 					break;
 				}
 			}
@@ -653,8 +653,8 @@ void MoviePlayer::update()
 				gsys->mTogglePrint = 1;
 				PRINT("clearing top heap!\n");
 				gsys->resetHeap(SYSHEAP_Movie, 1);
-				gsys->mTogglePrint                  = togglePrint;
-				gameflow.mIsEventNoControllerActive = 0;
+				gsys->mTogglePrint          = togglePrint;
+				gameflow.mDisableController = 0;
 				PRINT("all movies ended!\n");
 			}
 
@@ -686,7 +686,7 @@ void MoviePlayer::skipScene(int id)
 	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
 	while (info) {
 		MovieInfo* next = (MovieInfo*)info->mNext;
-		info->mCin->skipScene(id);
+		info->mPlayer->skipScene(id);
 		info = next;
 	}
 }
@@ -731,7 +731,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 {
 	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
 	while (info) {
-		CinematicPlayer* cin = info->mCin;
+		CinematicPlayer* cin = info->mPlayer;
 		MovieInfo* next      = (MovieInfo*)info->mNext;
 		if (cin->mFlags & 0x80) {
 			cin->addLights(gfx);
@@ -751,7 +751,7 @@ void MoviePlayer::refresh(Graphics& gfx)
 	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
 	while (info) {
 		MovieInfo* next = (MovieInfo*)info->mNext;
-		info->mCin->refresh(gfx);
+		info->mPlayer->refresh(gfx);
 		info = next;
 	}
 }
@@ -763,7 +763,7 @@ void MoviePlayer::refresh(Graphics& gfx)
  */
 void MoviePlayer::nextFrame()
 {
-	static_cast<MovieInfo*>(mPlayInfoList.mChild)->mCin->mCurrentPlaybackTime++;
+	static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime++;
 }
 
 /*
@@ -773,8 +773,8 @@ void MoviePlayer::nextFrame()
  */
 void MoviePlayer::backFrame()
 {
-	if (static_cast<MovieInfo*>(mPlayInfoList.mChild)->mCin->mCurrentPlaybackTime > 0.0f) {
+	if (static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime > 0.0f) {
 		// should this be --? in the DLL it's ++, go figure.
-		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mCin->mCurrentPlaybackTime++;
+		static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime++;
 	}
 }

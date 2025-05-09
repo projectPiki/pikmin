@@ -395,10 +395,10 @@ struct Animator {
 	// _30 = VTBL
 	AnimMgr* mMgr;         // _00
 	AnimContext* mContext; // _04
-	int _08;               // _08
+	int mIsOneShotFinish;  // _08
 	int mAnimationId;      // _0C
-	int _10;               // _10
-	int _14;               // _14
+	int mFirstKeyframe;    // _10
+	int mLastKeyframe;     // _14
 	int mIsPlaying;        // _18
 	int mCurrentAnimID;    // _1C
 	int mFirstFrameIndex;  // _20

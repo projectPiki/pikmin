@@ -189,7 +189,7 @@ struct StdSystem {
 	char* mDataRoot;                // _50
 	AyuHeap mHeaps[SYSHEAP_COUNT];  // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
 	int mActiveHeapIdx;             // _194
-	int _198;                       // _198
+	int mForceTogglePrint;          // _198
 	MemInfo* mCurrMemInfo;          // _19C
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
@@ -221,14 +221,14 @@ struct StdSystem {
 	char* mTextureBase1;          // _1F4
 	char* mTextureBase2;          // _1F8
 	Shape* mCurrentShape;         // _1FC
-	CoreNode _200;                // _200
-	CoreNode _214;                // _214
+	CoreNode mDvdFileTreeRoot;    // _200, why is this used for light flares? (something aram'y)
+	CoreNode mAramFileTreeRoot;   // _214, why is this used for light flares?
 	LFInfo* mLightFlareInfoList;  // _228
 	int mFlareCount;              // _22C
 	int mLfInfoCount;             // _230
 	LFInfo* mFlareInfoList;       // _234
 	LFlareGroup* mFlareGroupList; // _238
-	int _23C;                     // _23C
+	int mDvdOpenFileCounter;      // _23C
 	u32 mDvdReadBytesCount;       // _240
 };
 
@@ -293,7 +293,7 @@ struct System : public StdSystem {
 	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
-	f32 getFrameRate() { return _290; }
+	f32 getFrameRate() { return mFramesPerSecond; }
 
 	inline void initFakeThing1(FakeSystemList* p1, FakeSystemList* p2, u32 p3, u32 p4)
 	{
@@ -307,41 +307,41 @@ struct System : public StdSystem {
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
-	u32 _244;                           // _244
-	u32 _248;                           // _248
-	Graphics* mGfx;                     // _24C
-	u32 _250;                           // _250, unknown
-	Delegate1<System, Graphics&>* _254; // _254
-	int _258;                           // _258
-	u32 _25C;                           // _25C
-	u32 _260;                           // _260
-	u32 _264;                           // _264
-	u32 _268;                           // _268
-	vu32 _26C;                          // _26C
-	u32 _270;                           // _270
-	OSThread* mCurrentThread;           // _274
-	AtxRouter* mAtxRouter;              // _278
-	ControllerMgr mControllerMgr;       // _27C
-	u32 _280;                           // _280
-	u32 _284;                           // _284
-	int _288;                           // _288
-	f32 mDeltaTime;                     // _28C
-	f32 _290;                           // _290
-	u32 _294;                           // _294
-	u32 _298;                           // _298
-	u32 _29C;                           // _29C
-	u32 _2A0;                           // _2A0
-	u32 mPrevHeapAllocType;             // _2A4, unknown
-	AddressNode _2A8;                   // _2A8, unknown size
-	u32 _2BC;                           // _2BC, unknown, could be part of _2A8
-	u8 _2C0[0x308 - 0x2C0];             // _2C0, unknown, adjust with size of AddressNode
-	CacheTexture* _308;                 // _308
-	u8 _30C[0x4];                       // _30C
-	FakeSystemList _310;                // _310, fake
-	FakeSystemList _31C;                // _31C, fake
-	FakeSystemList* _328;               // _328, unknown
-	u32 _32C;                           // _32C
-	u32 _330;                           // _330
+	u32 mSystemHeapStart;                            // _244
+	u32 mSystemHeapEnd;                              // _248
+	Graphics* mGfx;                                  // _24C
+	u32 _250;                                        // _250, unknown
+	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
+	int mDvdErrorCode;                               // _258
+	u32 mDvdBufferSize;                              // _25C
+	u32 mIsLoadingThreadActive;                      // _260
+	u32 _264;                                        // _264
+	u32 mIsLoadingScreenActive;                      // _268
+	vu32 mIsRendering;                               // _26C
+	u32 mIsMemoryCardSaving;                         // _270
+	OSThread* mCurrentThread;                        // _274
+	AtxRouter* mAtxRouter;                           // _278
+	ControllerMgr mControllerMgr;                    // _27C
+	u32 mPreviousTickTime;                           // _280
+	u32 mFpsSamplePeriodStartTick;                   // _284
+	int mFrameDurationTicks;                         // _288
+	f32 mDeltaTime;                                  // _28C
+	f32 mFramesPerSecond;                            // _290
+	u32 mEngineRunningFrameCount;                    // _294
+	u32 mFrameCountAtSamplePeriodStart;              // _298
+	u32 mEngineTotalFrames;                          // _29C
+	u32 mRetraceCount;                               // _2A0
+	u32 mPrevHeapAllocType;                          // _2A4
+	AddressNode _2A8;                                // _2A8, unknown size
+	u32 _2BC;                                        // _2BC, unknown, could be part of _2A8
+	u8 _2C0[0x308 - 0x2C0];                          // _2C0, unknown, adjust with size of AddressNode
+	CacheTexture* mTextureCache;                     // _308
+	u8 _30C[0x4];                                    // _30C
+	FakeSystemList _310;                             // _310, fake
+	FakeSystemList _31C;                             // _31C, fake
+	FakeSystemList* _328;                            // _328, unknown
+	u32 mDmaTransferComplete;                        // _32C
+	u32 mTextureTransferComplete;                    // _330
 };
 
 extern System* gsys;
@@ -372,9 +372,9 @@ struct AramStream : public RandomAccessStream {
 
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream
-	u32 _08;      // _08, start address maybe?
-	u32 _0C;      // _0C, offset/position maybe?
-	int mPending; // _10
+	u32 mBaseAddress; // _08, start address maybe?
+	u32 mOffset;      // _0C, offset/position maybe?
+	int mPending;     // _10
 };
 
 /**

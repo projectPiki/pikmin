@@ -47,7 +47,7 @@ struct MovSampleSetupSection : public Node {
 			                           "../MovieData/cntD_S.h4m", "../MovieData/sr_S.h4m",   "../MovieData/srhp_S.h4m" };
 		int size                   = 0xe00000;
 		u8* store                  = new (0x20) u8[size];
-		Jac_StreamMovieInit(movieNames[gameflow._2B0], store, size);
+		Jac_StreamMovieInit(movieNames[gameflow.mIntroMovieId], store, size);
 		ImgW      = 640;
 		ImgH      = 480;
 		int size2 = 0x70800;
@@ -71,7 +71,7 @@ struct MovSampleSetupSection : public Node {
 		int pic = 0;
 		u8* a   = nullptr;
 		int b, c;
-		if (gsys->_258 < 0) {
+		if (gsys->mDvdErrorCode < 0) {
 			pic = Jac_StreamMovieGetPicture(&a, &b, &c);
 		}
 

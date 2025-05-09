@@ -224,19 +224,19 @@ struct TexCacheInfo : public CacheInfo {
 struct CacheTexture : public Texture {
 	CacheTexture()
 	{
-		mCacheInfo = nullptr;
-		mTexImage  = 0;
-		_40        = 0;
+		mSystemCache = nullptr;
+		mTexImage    = 0;
+		mActiveCache = 0;
 	}
 
 	virtual void makeResident(); // _10
 
 	// _00     = VTBL
 	// _00-_3C = Texture
-	TexCacheInfo* mCacheInfo; // _3C
-	TexCacheInfo* _40;        // _40
-	TexImg* mTexImage;        // _44
-	u32 _48;                  // _48
+	TexCacheInfo* mSystemCache; // _3C
+	TexCacheInfo* mActiveCache; // _40
+	TexImg* mTexImage;          // _44
+	u32 mAramAddress;           // _48
 };
 
 /**

@@ -188,7 +188,6 @@ typedef struct RLDecoder {
 	u32 count; // _04
 } RLDecoder;
 
-// Global functions.
 void HVQM4InitDecoder();
 void HVQM4InitSeqObj(SeqObj* seqObj, VideoInfo* videoInfo);
 u32 HVQM4BuffSize(SeqObj* seqObj);

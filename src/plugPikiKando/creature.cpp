@@ -1211,7 +1211,7 @@ void Creature::drawShadow(Graphics& gfx)
 
 		gfx.setColour(Colour(255, 255, 255, u8(255.0f * alpha)), true);
 
-		Vector3f diff1 = gfx._33C - shadowPos;
+		Vector3f diff1 = gfx.mSunPosition - shadowPos;
 		f32 diff1Y     = diff1.y;
 		diff1.project(Vector3f(0.0f, 1.0f, 0.0f));
 		f32 yRatio    = diff1.length() / diff1Y;

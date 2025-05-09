@@ -58,7 +58,7 @@ struct Graphics {
 	}
 
 	// _3B4 = VTBL
-	int _00;                                  // _00
+	int mRenderMode;                          // _00, 0 = localNtsc480IntDf, 1 = progressiveRenderMode
 	u32 mRenderState;                         // _04
 	Matrix4f* mMatrix;                        // _08
 	Matrix4f* mActiveMatrix;                  // _0C
@@ -79,9 +79,9 @@ struct Graphics {
 	int mCullMode;                            // _330
 	u32 _334;                                 // _334
 	LightCamera* mLightCam;                   // _338
-	Vector3f _33C;                            // _33C
+	Vector3f mSunPosition;                    // _33C
 	u32 _348;                                 // _348
-	MaterialHandler* _34C;                    // _34C
+	MaterialHandler* mDefaultMaterialHandler; // _34C
 	MaterialHandler* mCurrentMaterialHandler; // _350
 	Material* mCurrentMaterial;               // _354
 	f32 mFogStart;                            // _358
@@ -98,7 +98,7 @@ struct Graphics {
 	Matrix4f* mSystemMatrices;                // _384, no idea
 	u32 mMaxMatrixCount;                      // _388
 	u32 mActiveMatrixIdx;                     // _38C
-	CachedShape _390;                         // _390
+	CachedShape mShapeCache;                  // _390
 	CachedShape* mCachedShapes;               // _3A8
 	u32 mCachedShapeMax;                      // _3AC
 	u32 mCachedShapeCount;                    // _3B0
@@ -155,7 +155,7 @@ struct Graphics {
 			mCurrentMaterialHandler->setMaterial(nullptr);
 		}
 
-		mCurrentMaterialHandler       = (handler) ? handler : _34C;
+		mCurrentMaterialHandler       = (handler) ? handler : mDefaultMaterialHandler;
 		mCurrentMaterialHandler->mGfx = this;
 	}
 	virtual void setMaterial(Material*, bool) = 0;                                         // _C4
@@ -268,10 +268,10 @@ struct DGXGraphics : public Graphics {
 	int _3DC;               // _3DC
 	Matrix4f _3E0;          // _3E0
 	u8 _420[0x610 - 0x420]; // _420, unknown
-	u8* _610;               // _610
+	u8* mDisplayBuffer;     // _610
 	int _614;               // _614
-	int _618;               // _618
-	int _61C;               // _61C
+	int mRetraceCount;      // _618
+	int mSystemFrameRate;   // _61C
 	VIRetraceCallback _620; // _620
 	OSMessageQueue _624;    // _624
 	OSMessage _644;         // _644

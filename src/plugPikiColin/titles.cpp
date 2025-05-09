@@ -37,18 +37,18 @@ struct TitleSetupSection : public Node {
 	TitleSetupSection()
 	{
 		setName("Titles section");
-		_48 = 20.0f;
-		_A40.set(0.0f, 20.0f, 0.0f);
+		mStartTransitionTimer = 20.0f;
+		mCameraFocusPoint.set(0.0f, 20.0f, 0.0f);
 		gameflow.mGameInterface = new TitlesMovieInterface(this);
 		mController             = new Controller;
-		_20                     = 0;
+		mState                  = 0;
 		titleWindow             = new zen::ogScrTitleMgr;
 		titleWindowOn           = false;
-		_A3C                    = new DayMgr(nullptr, mController);
+		mDayMgr                 = new DayMgr(nullptr, mController);
 		gameflow.mDemoFlags     = 0;
-		mCinPlayer              = new CinematicPlayer("cinemas/opening.cin");
-		mCinPlayer->mMtx.makeIdentity();
-		mCinPlayer->mIsPlaying = true;
+		mPlayer                 = new CinematicPlayer("cinemas/opening.cin");
+		mPlayer->mMtx.makeIdentity();
+		mPlayer->mIsPlaying = true;
 
 		RandomAccessStream* data = gsys->openFile("cinemas/opening.ini", true, true);
 		if (data) {
@@ -57,7 +57,7 @@ struct TitleSetupSection : public Node {
 				stream->getToken(true);
 				if (stream->isToken("dayMgr")) {
 					stream->getToken(true);
-					_A3C->init(stream);
+					mDayMgr->init(stream);
 				}
 			}
 			if (!stream->endOfCmds()) {
@@ -65,13 +65,13 @@ struct TitleSetupSection : public Node {
 			}
 			data->close();
 		}
-		_4C  = 0.45f;
-		_39C = 1.0f;
+		mCameraDistanceScale = 0.45f;
+		_39C                 = 1.0f;
 
 		// PRINT("big font!\n");
 		// mFont = new Font();
 		// mFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 42); // DLL exclusive
-		_A34 = 0;
+		mEnableLightPool = 0;
 		mLightPool.initCore("lightPools");
 
 		// i love code that never runs.
@@ -79,8 +79,8 @@ struct TitleSetupSection : public Node {
 			LightPool* light = new LightPool;
 			light->mFlags    = 0;
 			light->mColour.set(255, 255, 64, 64);
-			light->mParticleTexture = gsys->loadTexture("effects/halowhit.txe", true);
-			light->_65C             = i * QUARTER_PI;
+			light->mParticleTexture    = gsys->loadTexture("effects/halowhit.txe", true);
+			light->mFocusRotationAngle = i * QUARTER_PI;
 
 			switch (i) {
 			case 0:
@@ -110,14 +110,14 @@ struct TitleSetupSection : public Node {
 			mLightPool.add(light);
 		}
 
-		_2C                       = nullptr;
+		mCurrentMenu              = nullptr;
 		mMenu                     = new Menu(mController, gsys->mConsFont, false);
 		mMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 80;
 
 		mMenu->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
 		mMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
-		_24 = 0;
+		mNextSectionId = 0;
 
 		gameflow.mFrameCacher = new AnimFrameCacher(8000);
 
@@ -140,24 +140,24 @@ struct TitleSetupSection : public Node {
 	virtual void update() // _10
 	{
 		mController->update();
-		if (!_20 && startWindowOn) {
-			_48 -= gsys->getFrameTime();
-			if (_48 < 0.0f) {
-				_48           = 0.0f;
-				gameflow._2B0 = gameflow._2AC;
-				gameflow._2AC = (gameflow._2AC + 1) & 0x3;
-				_24           = 0x20000;
-				_20           = 1;
+		if (!mState && startWindowOn) {
+			mStartTransitionTimer -= gsys->getFrameTime();
+			if (mStartTransitionTimer < 0.0f) {
+				mStartTransitionTimer       = 0.0f;
+				gameflow.mIntroMovieId      = gameflow.mIntroMovieIdCycle;
+				gameflow.mIntroMovieIdCycle = (gameflow.mIntroMovieIdCycle + 1) & 0x3;
+				mNextSectionId              = 0x20000;
+				mState                      = 1;
 				gsys->setFade(0.0f, 3.0f);
 				return;
 			}
 		}
 
-		if (!_2C) {
+		if (!mCurrentMenu) {
 			gameflow.mWorldClock.update(1.0f);
 		}
 
-		if (!_2C) {
+		if (!mCurrentMenu) {
 			f32 stickX = mController->mMainStickX * 1.25f;
 			f32 stickY = mController->mMainStickY * 1.25f;
 
@@ -165,13 +165,13 @@ struct TitleSetupSection : public Node {
 			xVec.project(Vector3f(0.0f, 1.0f, 0.0f));
 			Vector3f yVec(mCamera.mViewZAxis.x * stickY, 0.0f, mCamera.mViewZAxis.z * stickY);
 			yVec.project(Vector3f(0.0f, 1.0f, 0.0f));
-			_A40.add(xVec);
-			_A40.add(yVec);
+			mCameraFocusPoint.add(xVec);
+			mCameraFocusPoint.add(yVec);
 
 			if (mController->keyDown(KBBTN_L)) {
-				_4C += gsys->getFrameTime() * 1.0f;
+				mCameraDistanceScale += gsys->getFrameTime() * 1.0f;
 			} else if (mController->keyDown(KBBTN_R)) {
-				_4C -= gsys->getFrameTime() * 1.0f;
+				mCameraDistanceScale -= gsys->getFrameTime() * 1.0f;
 			}
 
 			if (mController->keyDown(KBBTN_CSTICK_RIGHT)) {
@@ -182,21 +182,21 @@ struct TitleSetupSection : public Node {
 		}
 
 		Vector3f camPos;
-		camPos.x          = sinf(mCamera.mRotation.x) * (1500.0f * _4C) + _A40.x;
-		camPos.y          = sinf(mCamera.mRotation.y) + _A40.y + (2.0f * _4C) * 450.0f;
-		camPos.z          = cosf(mCamera.mRotation.x) * (1500.0f * _4C) + _A40.z;
+		camPos.x          = sinf(mCamera.mRotation.x) * (1500.0f * mCameraDistanceScale) + mCameraFocusPoint.x;
+		camPos.y          = sinf(mCamera.mRotation.y) + mCameraFocusPoint.y + (2.0f * mCameraDistanceScale) * 450.0f;
+		camPos.z          = cosf(mCamera.mRotation.x) * (1500.0f * mCameraDistanceScale) + mCameraFocusPoint.z;
 		mCamera.mPosition = camPos;
-		mCamera.calcLookAt(camPos, _A40, nullptr);
+		mCamera.calcLookAt(camPos, mCameraFocusPoint, nullptr);
 
-		if (_2C) {
-			_2C                        = _2C->doUpdate(false);
-			mCinPlayer->mPlaybackSpeed = 30.0f;
-			mCinPlayer->update();
+		if (mCurrentMenu) {
+			mCurrentMenu            = mCurrentMenu->doUpdate(false);
+			mPlayer->mPlaybackSpeed = 30.0f;
+			mPlayer->update();
 		} else {
-			mCinPlayer->mPlaybackSpeed = 30.0f;
-			mCinPlayer->update();
+			mPlayer->mPlaybackSpeed = 30.0f;
+			mPlayer->update();
 
-			if (_20 == 0) {
+			if (mState == 0) {
 				if (totalWindow && totalWindow->update(mController)) {
 					totalWindowOn = false;
 					startWindow->start();
@@ -216,11 +216,11 @@ struct TitleSetupSection : public Node {
 					zen::ogScrTitleMgr::TitleStatus titleState = titleWindow->update(mController);
 					if (titleState == zen::ogScrTitleMgr::Status_6) {
 						PRINT("going to CHALLENGE MODE SETUP!\n");
-						_24                              = 0x40000;
+						mNextSectionId                   = 0x40000;
 						gameflow.mGamePrefs.mHasSaveGame = false;
 						gameflow.mIsChallengeMode        = true;
 						Jac_SceneExit(13, 0);
-						_20 = 1;
+						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 
 					} else if (titleState == zen::ogScrTitleMgr::Status_7) {
@@ -231,12 +231,12 @@ struct TitleSetupSection : public Node {
 					} else if (titleState == zen::ogScrTitleMgr::Status_4) {
 						PRINT("going to SETUP!\n");
 						if (gameflow.mGamePrefs.mHasSaveGame) {
-							_24 = 0x40000;
+							mNextSectionId = 0x40000;
 						} else {
-							_24 = 0x40000;
+							mNextSectionId = 0x40000;
 						}
 						Jac_SceneExit(13, 0);
-						_20 = 1;
+						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 					} else if (titleState == zen::ogScrTitleMgr::Status_5 || titleState == zen::ogScrTitleMgr::Status_3) {
 						bool child = gameflow.mGamePrefs.getChildMode();
@@ -247,7 +247,7 @@ struct TitleSetupSection : public Node {
 							u8 bgmVol   = gameflow.mGamePrefs.getBgmVol();
 							u8 sfxVol   = gameflow.mGamePrefs.getSfxVol();
 
-							if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard._38 >= 0) {
+							if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 								gameflow.mMemoryCard.loadOptions();
 							}
 
@@ -262,7 +262,7 @@ struct TitleSetupSection : public Node {
 
 						if (gameflow.mLanguageIndex != child) {
 							gameflow.mLanguageIndex = -1;
-							_20                     = 1;
+							mState                  = 1;
 							gsys->setFade(0.0f, 3.0f);
 						} else {
 							startWindow->start();
@@ -282,29 +282,29 @@ struct TitleSetupSection : public Node {
 			}
 		}
 
-		if (_20 == 1 && !_2C && gsys->getFade() == 0.0f) {
-			_20                              = -1;
-			gameflow.mGameSectionID          = _24 >> 16;
-			gameflow.mNextOnePlayerSectionID = u16(_24);
+		if (mState == 1 && !mCurrentMenu && gsys->getFade() == 0.0f) {
+			mState                           = -1;
+			gameflow.mGameSectionID          = mNextSectionId >> 16;
+			gameflow.mNextOnePlayerSectionID = u16(mNextSectionId);
 			gsys->softReset();
 		}
 	}
 	virtual void draw(Graphics& gfx) // _14
 	{
-		if (mCinPlayer->mCurrentScene) {
-			gfx.setCamera(&mCinPlayer->mCurrentScene->mCameraData->mCamera);
+		if (mPlayer->mCurrentScene) {
+			gfx.setCamera(&mPlayer->mCurrentScene->mCameraData->mCamera);
 		} else {
 			gfx.setCamera(&mCamera);
 			mCamera.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), mCamera.mFov, 100.0f, 15000.0f);
 		}
 
-		if (_A34) {
+		if (mEnableLightPool) {
 			FOREACH_NODE(LightPool, mLightPool.mChild, lightPool)
 			{
 				LightCamera& cam = lightPool->mCamera;
-				lightPool->_65C += gsys->getFrameTime() * 0.0175f;
-				cam.mFocus.set(sinf(lightPool->_65C) * 20.0f + cam.mPosition.x, cam.mFocus.y,
-				               cosf(lightPool->_65C) * 20.0f + cam.mPosition.z);
+				lightPool->mFocusRotationAngle += gsys->getFrameTime() * 0.0175f;
+				cam.mFocus.set(sinf(lightPool->mFocusRotationAngle) * 20.0f + cam.mPosition.x, cam.mFocus.y,
+				               cosf(lightPool->mFocusRotationAngle) * 20.0f + cam.mPosition.z);
 				cam.mLightMap = nullptr;
 				cam.calcVectors(cam.mPosition, cam.mFocus);
 				cam.calcProjection(gfx, true, nullptr);
@@ -336,10 +336,10 @@ struct TitleSetupSection : public Node {
 		u32 badCompiler;
 
 		if (!(gameflow.mDemoFlags & 0x80)) {
-			_A3C->refresh(gfx, 25.0f, 8);
-			_A3C->setFog(gfx, nullptr);
+			mDayMgr->refresh(gfx, 25.0f, 8);
+			mDayMgr->setFog(gfx, nullptr);
 		} else {
-			mCinPlayer->addLights(gfx);
+			mPlayer->addLights(gfx);
 		}
 
 		gfx.calcLighting(1.0f);
@@ -356,7 +356,7 @@ struct TitleSetupSection : public Node {
 			chas--;
 		}
 
-		mCinPlayer->refresh(gfx);
+		mPlayer->refresh(gfx);
 
 		static f32 rspin = 0.0f;
 		rspin += gsys->getFrameTime() * 5.0f;
@@ -368,7 +368,7 @@ struct TitleSetupSection : public Node {
 		f32 unused = mController->mTriggerR / 170.0f * 4.0f + 3.0f;
 		gfx.useMatrix(Matrix4f::ident, 0);
 
-		if (_A34) {
+		if (mEnableLightPool) {
 			FOREACH_NODE(LightPool, mLightPool.mChild, lightPool)
 			{
 				lightPool->draw(gfx);
@@ -384,7 +384,7 @@ struct TitleSetupSection : public Node {
 
 		static f32 mfade = 0.0f;
 
-		if (_2C) {
+		if (mCurrentMenu) {
 			mfade -= gsys->getFrameTime() * 400.0f;
 			if (mfade < 0.0f) {
 				mfade = 0.0f;
@@ -403,10 +403,10 @@ struct TitleSetupSection : public Node {
 
 		gfx.setCBlending(0);
 
-		_2C ? "fake" : "fake";
-		_2C ? "fake" : "fake";
-		if (_2C) {
-			drawMenu(gfx, _2C, 1.0f);
+		mCurrentMenu ? "fake" : "fake";
+		mCurrentMenu ? "fake" : "fake";
+		if (mCurrentMenu) {
+			drawMenu(gfx, mCurrentMenu, 1.0f);
 		} else {
 			startWindow->draw(gfx);
 			titleWindow->draw(gfx);
@@ -429,11 +429,11 @@ struct TitleSetupSection : public Node {
 
 	void menuSelectOption(Menu& parent)
 	{
-		_24                       = parent.mCurrentItem->mFilterIndex;
+		mNextSectionId            = parent.mCurrentItem->mFilterIndex;
 		gameflow.mIsChallengeMode = 0;
 		Jac_SceneExit(13, 0);
 		parent.close();
-		_20 = 1;
+		mState = 1;
 		gsys->setFade(0.0f, 3.0f);
 	}
 	void drawMenu(Graphics& gfx, Menu* menu, f32 p3)
@@ -450,27 +450,27 @@ struct TitleSetupSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;                     // _20
-	u32 _24;                     // _24
-	Menu* mMenu;                 // _28
-	Menu* _2C;                   // _2C
-	Controller* mController;     // _30
-	Font* mFont;                 // _34
-	u8 _38[0x10];                // _38
-	f32 _48;                     // _48
-	f32 _4C;                     // _4C
-	CinematicPlayer* mCinPlayer; // _50
-	Camera mCamera;              // _54
-	f32 _39C;                    // _39C
-	u8 _3A0[0x3B4 - 0x3A0];      // _3A0, unknown
-	Vector3f _3B4;               // _3B4
-	u8 _3C0[0x4];                // _3C0, unknown
-	LightPool mLightPool;        // _3C4
-	int _A34;                    // _A34
-	u8 _A38[0x4];                // _A38, unknown
-	DayMgr* _A3C;                // _A3C
-	Vector3f _A40;               // _A40
-	                             // this has two extra CoreNodes at the end in the DLL, but not in the DOL
+	u32 mState;                 // _20
+	u32 mNextSectionId;         // _24
+	Menu* mMenu;                // _28
+	Menu* mCurrentMenu;         // _2C
+	Controller* mController;    // _30
+	Font* mFont;                // _34
+	u8 _38[0x10];               // _38
+	f32 mStartTransitionTimer;  // _48
+	f32 mCameraDistanceScale;   // _4C
+	CinematicPlayer* mPlayer;   // _50
+	Camera mCamera;             // _54
+	f32 _39C;                   // _39C
+	u8 _3A0[0x3B4 - 0x3A0];     // _3A0, unknown
+	Vector3f _3B4;              // _3B4
+	u8 _3C0[0x4];               // _3C0, unknown
+	LightPool mLightPool;       // _3C4
+	int mEnableLightPool;       // _A34
+	u8 _A38[0x4];               // _A38, unknown
+	DayMgr* mDayMgr;            // _A3C
+	Vector3f mCameraFocusPoint; // _A40
+	                            // this has two extra CoreNodes at the end in the DLL, but not in the DOL
 };
 
 /*
@@ -504,7 +504,7 @@ void TitlesSection::init()
 	gameflow.mLevelBannerFadeValue   = 1.0f;
 	gameflow.mGamePrefs.mHasSaveGame = true;
 
-	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard._38 >= 0) {
+	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 		gameflow.mMemoryCard.loadOptions();
 	}
 	gameflow.mGamePrefs.fixSoundMode();
@@ -522,7 +522,7 @@ void TitlesSection::init()
 	}
 	gameflow.mIsChallengeMode = 0;
 	gameflow._2B8             = 0;
-	gameflow._2B0             = 0;
+	gameflow.mIntroMovieId    = 0;
 
 	switch (gameflow.mNextOnePlayerSectionID) {
 	case ONEPLAYER_GameSetup:

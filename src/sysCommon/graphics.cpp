@@ -1676,30 +1676,30 @@ void PVWTextureData::animate(f32*, Matrix4f&)
  */
 void PVWTextureData::read(RandomAccessStream& stream)
 {
-	_00 = stream.readInt();
-	_0C = stream.readShort();
-	_0E = stream.readShort();
-	_10 = stream.readByte();
-	_11 = stream.readByte();
-	_12 = stream.readByte();
-	_13 = stream.readByte();
-	_14 = stream.readInt();
-	_38 = stream.readInt();
-	_3C = stream.readFloat();
-	_1C = stream.readFloat();
-	_20 = stream.readFloat();
-	_24 = stream.readFloat();
-	_28 = stream.readFloat();
-	_2C = stream.readFloat();
-	_30 = stream.readFloat();
-	_34 = stream.readFloat();
+	mSourceAttrIndex = stream.readInt();
+	_0C              = stream.readShort();
+	_0E              = stream.readShort();
+	_10              = stream.readByte();
+	_11              = stream.readByte();
+	_12              = stream.readByte();
+	_13              = stream.readByte();
+	mAnimationFactor = stream.readInt();
+	_38              = stream.readInt();
+	_3C              = stream.readFloat();
+	_1C              = stream.readFloat();
+	_20              = stream.readFloat();
+	_24              = stream.readFloat();
+	_28              = stream.readFloat();
+	_2C              = stream.readFloat();
+	_30              = stream.readFloat();
+	_34              = stream.readFloat();
 
 	_40.read(stream);
 	_48.read(stream);
 	_50.read(stream);
 
-	if (_14 != 0xFF) {
-		PRINT("fake", _14);
+	if (mAnimationFactor != 0xFF) {
+		PRINT("fake", mAnimationFactor);
 	}
 }
 
@@ -1863,7 +1863,7 @@ void Material::read(RandomAccessStream& input)
 	mTextureIndex = input.readInt();
 	Colour().read(input);
 	if (mFlags & 0x1) {
-		_8C = input.readInt();
+		mTevInfoIndex = input.readInt();
 		mColourInfo.read(input);
 		mLightingInfo.read(input);
 		mPeInfo.read(input);
@@ -2228,7 +2228,7 @@ Graphics::Graphics()
 {
 	PRINT("dgxgraphics constructor\n");
 
-	_00 = 0;
+	mRenderMode = 0;
 
 	for (int i = 0; i < 0x1000; i++) {
 		sintable[i] = NMathF::sin(i / 4096.0f * TAU);
@@ -2252,7 +2252,7 @@ Graphics::Graphics()
 	Matrix4f::ident.makeIdentity();
 
 	mCurrentMaterialHandler = nullptr;
-	_34C                    = new MaterialHandler();
+	mDefaultMaterialHandler = new MaterialHandler();
 
 	mMaxMatrixCount = gsys->mMatrixCount;
 	mSystemMatrices = gsys->mMatrices;
@@ -2325,8 +2325,8 @@ Matrix4f* Graphics::getMatrices(int requestedMatrixCount)
  */
 void Graphics::resetCacheBuffer()
 {
-	_390.mNext = &_390;
-	_390.mPrev = &_390;
+	mShapeCache.mNext = &mShapeCache;
+	mShapeCache.mPrev = &mShapeCache;
 
 	mCachedShapeCount = nullptr;
 }
@@ -2347,7 +2347,7 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 	cache->mDistanceFromOrigin = pos.length();
 
 	bool far = false;
-	for (CachedShape* i = _390.mPrev; i != &_390; i = i->mPrev) {
+	for (CachedShape* i = mShapeCache.mPrev; i != &mShapeCache; i = i->mPrev) {
 		if (cache->mDistanceFromOrigin >= i->mDistanceFromOrigin) {
 			i->insertAfter(cache);
 			far = true;
@@ -2356,7 +2356,7 @@ void Graphics::cacheShape(BaseShape* shape, ShapeDynMaterials* mats)
 	}
 
 	if (!far) {
-		_390.insertAfter(cache);
+		mShapeCache.insertAfter(cache);
 	}
 
 	cache->mDynMaterials = mats;
@@ -2375,7 +2375,7 @@ void Graphics::flushCachedShapes()
 	u32 oldRenderState = mRenderState;
 
 	mRenderState = 1024;
-	for (CachedShape* i = _390.mPrev; i != &_390; i = i->mPrev) {
+	for (CachedShape* i = mShapeCache.mPrev; i != &mShapeCache; i = i->mPrev) {
 		if (i->mDynMaterials) {
 			for (ShapeDynMaterials* j = i->mDynMaterials; j; j = j->mParent) {
 				j->updateContext();
@@ -3644,8 +3644,8 @@ int Graphics::calcBoxLighting(BoundBox&)
  */
 void CacheTexture::makeResident()
 {
-	if (gsys->mCacher && !gsys->_260) {
-		if (!_40) {
+	if (gsys->mCacher && !gsys->mIsLoadingThreadActive) {
+		if (!mActiveCache) {
 			gsys->mCacher->cacheTexture(this);
 			gsys->copyCacheToTexture(this);
 		} else {

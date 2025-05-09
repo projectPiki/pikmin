@@ -168,7 +168,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 		gfx.setColour(Colour(255, 255, 0, 64), true);
 		gfx.drawLine(point->mPosition, Vector3f(point->mPosition.x, point->mPosition.y + 8.0f, point->mPosition.z));
 		gfx.setColour(Colour(255, 255, 255, alpha), true);
-		gfx.useTexture(_BC, 0);
+		gfx.useTexture(mDebugWaypointTexture, 0);
 
 		point->refresh(gfx);
 	}
