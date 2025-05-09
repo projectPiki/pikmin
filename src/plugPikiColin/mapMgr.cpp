@@ -1211,7 +1211,7 @@ void MapMgr::showCollisions(Vector3f& pos)
 			continue;
 		}
 
-		mEffectiveTriDisplayCount += coll->mTriCount - coll->mFarCulledTriCount;
+		mActiveTriangleDisplayCount += coll->mTriCount - coll->mFarCulledTriCount;
 		int count = coll->mTriCount - coll->mFarCulledTriCount;
 		if (coll->mTriCount == coll->mFarCulledTriCount) {
 			PRINT("grid(%d,%d) collGroup : total %d far %d tris\n", d, e, coll->mTriCount, coll->mFarCulledTriCount);
@@ -1410,7 +1410,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			char buffer[PATH_MAX];
 			if (AIPerf::showColls) {
-				sprintf(buffer, "%d / %d", mEffectiveTriDisplayCount, mCurrentDebugCollisionCount);
+				sprintf(buffer, "%d / %d", mActiveTriangleDisplayCount, mCurrentDebugCollisionCount);
 			} else {
 				sprintf(buffer, "%d", mCurrentDebugCollisionCount);
 			}
@@ -1455,7 +1455,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 		}
 
 		mCurrentDebugCollisionCount = 0;
-		mEffectiveTriDisplayCount   = 0;
+		mActiveTriangleDisplayCount = 0;
 		// gsys->mTimer->stop("mapPost");
 		gfx._324 = 0;
 	}

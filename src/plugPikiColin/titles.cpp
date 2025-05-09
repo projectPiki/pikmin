@@ -110,10 +110,10 @@ struct TitleSetupSection : public Node {
 			mLightPool.add(light);
 		}
 
-		_2C              = nullptr;
-		mMenu            = new Menu(mController, gsys->mConsFont, false);
-		mMenu->_48.mMinX = glnWidth / 2;
-		mMenu->_48.mMinY = glnHeight / 2 + 80;
+		_2C                       = nullptr;
+		mMenu                     = new Menu(mController, gsys->mConsFont, false);
+		mMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 80;
 
 		mMenu->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
 		mMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));

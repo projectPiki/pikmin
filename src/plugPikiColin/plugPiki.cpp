@@ -157,10 +157,10 @@ int PlugPikiApp::idle()
 	gsys->mTimer->_start("all", false);
 
 	gsys->_26C; // lol
-	if (gsys->mPending) {
+	if (gsys->mIsSystemOperationPending) {
 		gsys->detachObjs();
 		gsys->mTimer->reset();
-		gsys->mPending = false;
+		gsys->mIsSystemOperationPending = false;
 		softReset();
 		PRINT("idle attach\n");
 		gsys->attachObjs();

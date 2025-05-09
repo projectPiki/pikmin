@@ -75,8 +75,8 @@ struct PositionMenu : public Menu {
 		mPosition          = pos;
 		mIsSmallAdjustment = smlAdjust;
 		mIsCustomMenu      = 1;
-		_48.mMinX          = glnWidth / 2;
-		_48.mMinY          = glnHeight / 2;
+		mAnchorPoint.mMinX = glnWidth / 2;
+		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
@@ -159,10 +159,10 @@ struct ColourMenu : public Menu {
 	ColourMenu(Colour* color, Controller* controller, Font* font, bool p4)
 	    : Menu(controller, font, p4)
 	{
-		mColour       = color;
-		mIsCustomMenu = 1;
-		_48.mMinX     = glnWidth / 2;
-		_48.mMinY     = glnHeight / 2;
+		mColour            = color;
+		mIsCustomMenu      = 1;
+		mAnchorPoint.mMinX = glnWidth / 2;
+		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
@@ -235,11 +235,11 @@ struct FogMenu : public Menu {
 	FogMenu(Colour* color, f32* near, f32* far, Controller* controller, Font* font, bool p6)
 	    : Menu(controller, font, p6)
 	{
-		mNear         = near;
-		mFar          = far;
-		mIsCustomMenu = 1;
-		_48.mMinX     = glnWidth / 2;
-		_48.mMinY     = glnHeight / 2;
+		mNear              = near;
+		mFar               = far;
+		mIsCustomMenu      = 1;
+		mAnchorPoint.mMinX = glnWidth / 2;
+		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
@@ -289,8 +289,8 @@ struct LightMenu : public Menu {
 		mLightAttachType   = attachType;
 		mLight->mLightType = mLight->mLightType & 0xFFFFFF00 | lightTypes[mSelectedLightType];
 
-		_48.mMinX = glnWidth / 2;
-		_48.mMinY = glnHeight / 2;
+		mAnchorPoint.mMinX = glnWidth / 2;
+		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
@@ -374,9 +374,9 @@ struct DaySetMenu : public Menu {
 	DaySetMenu(TimeSetting* time, Controller* control, Font* font, bool flag)
 	    : Menu(control, font, flag)
 	{
-		mTimeSettings = time;
-		_48.mMinX     = glnWidth / 2;
-		_48.mMinY     = glnHeight / 2 + 60;
+		mTimeSettings      = time;
+		mAnchorPoint.mMinX = glnWidth / 2;
+		mAnchorPoint.mMinY = glnHeight / 2 + 60;
 		mDiffuseColour.set(32, 128, 32, 192);
 		mHighlightColour.set(32, 64, 32, 64);
 		addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(this, &menuCloseMenu));
@@ -454,10 +454,10 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mMaxLights    = 7;
 	mTimeSettings = new TimeSetting[5];
 
-	mMenu                = new Menu(control, gsys->mConsFont, false);
-	mMenu->mIsCustomMenu = 1;
-	mMenu->_48.mMinX     = glnWidth / 2;
-	mMenu->_48.mMinY     = glnHeight / 2 + 90;
+	mMenu                     = new Menu(control, gsys->mConsFont, false);
+	mMenu->mIsCustomMenu      = 1;
+	mMenu->mAnchorPoint.mMinX = glnWidth / 2;
+	mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 90;
 	mMenu->mDiffuseColour.set(32, 128, 32, 192);
 	mMenu->mHighlightColour.set(32, 64, 32, 64);
 	mMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));

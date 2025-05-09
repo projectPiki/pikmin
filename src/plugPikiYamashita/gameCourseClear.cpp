@@ -674,9 +674,9 @@ struct GameCourseClearScreen : public Node {
 		Texture* tex = gsys->loadTexture("bigFont.bti", true);
 		mFont        = new Font();
 		mFont->setTexture(tex, 21, 42);
-		_1F8            = new Menu(mController, gsys->mConsFont, false);
-		_1F8->_48.mMinX = glnWidth / 2;
-		_1F8->_48.mMinY = glnHeight / 2;
+		_1F8                     = new Menu(mController, gsys->mConsFont, false);
+		_1F8->mAnchorPoint.mMinX = glnWidth / 2;
+		_1F8->mAnchorPoint.mMinY = glnHeight / 2;
 
 		_1F8->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(_1F8, &Menu::menuCloseMenu));
 		_1F8->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
@@ -724,7 +724,7 @@ struct GameCourseClearScreen : public Node {
 		if (_1FC) {
 			_1FC = _1FC->doUpdate(false);
 		} else if (_1F0 == 0) {
-			gameflow._33C = 0;
+			gameflow.mIsEventNoControllerActive = 0;
 			Node::update();
 		} else if (_1F0 == 1 && !_1FC && gsys->getFade() == 0.0f) {
 			_1F0                             = -1;

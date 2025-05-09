@@ -338,7 +338,7 @@ RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
  */
 void System::initSoftReset()
 {
-	gsys->_2A4 = 0;
+	gsys->mPrevHeapAllocType = 0;
 	StdSystem::initSoftReset();
 	if (mGfx) {
 		static_cast<DGXGraphics*>(mGfx)->setupRender();
@@ -1357,25 +1357,25 @@ void System::hardReset()
  */
 System::System()
 {
-	mTimerState       = TS_Off;
-	mTogglePrint      = 0;
-	mToggleDebugInfo  = 0;
-	mToggleDebugExtra = 0;
-	mToggleBlur       = 1;
-	mToggleColls      = 0;
-	_25C              = 0x40000;
-	mCurrentThread    = OSGetCurrentThread();
-	_254              = 0;
-	_258              = -1;
-	_2A4              = 0;
-	_32C              = 1;
-	_330              = 1;
-	mCurrentDirectory = "";
-	mAtxRouter        = nullptr;
-	mActiveHeapIdx    = -1;
-	gsys              = this;
-	_2BC              = 0;
-	mTimer            = nullptr;
+	mTimerState        = TS_Off;
+	mTogglePrint       = 0;
+	mToggleDebugInfo   = 0;
+	mToggleDebugExtra  = 0;
+	mToggleBlur        = 1;
+	mToggleColls       = 0;
+	_25C               = 0x40000;
+	mCurrentThread     = OSGetCurrentThread();
+	_254               = 0;
+	_258               = -1;
+	mPrevHeapAllocType = 0;
+	_32C               = 1;
+	_330               = 1;
+	mCurrentDirectory  = "";
+	mAtxRouter         = nullptr;
+	mActiveHeapIdx     = -1;
+	gsys               = this;
+	_2BC               = 0;
+	mTimer             = nullptr;
 }
 
 /*
@@ -2196,7 +2196,7 @@ void* loadFunc(void*)
  */
 void System::startLoading(LoadIdler* idler, bool a1, u32 a2)
 {
-	gsys->_2A4 = 0;
+	gsys->mPrevHeapAllocType = 0;
 	if (_260 == 0) {
 		_264 = a2;
 		_268 = a1;
@@ -2223,7 +2223,7 @@ void System::nudgeLoading()
  */
 void System::endLoading()
 {
-	gsys->_2A4 = 1;
+	gsys->mPrevHeapAllocType = 1;
 	if (_260) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', 1);
 		OSJoinThread(&Thread, nullptr);

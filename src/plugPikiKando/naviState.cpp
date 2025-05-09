@@ -1939,7 +1939,7 @@ void NaviUfoState::exec(Navi* navi)
 		mState = 3;
 	}
 
-	if (mState == 3 && gameflow._338 == 0) {
+	if (mState == 3 && gameflow.mIsUiOverlayActive == 0) {
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -2023,9 +2023,9 @@ void NaviContainerState::init(Navi* navi)
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField(), exitPikis + GameStat::mapPikis,
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField());
 	PRINT("FINISH START CONAINER WINDOW ***\n");
-	gameflow._33C = 1;
-	_18           = 0;
-	_1C           = 0;
+	gameflow.mIsEventNoControllerActive = 1;
+	_18                                 = 0;
+	_1C                                 = 0;
 }
 
 /*
@@ -2144,7 +2144,7 @@ void NaviContainerState::exitPikis(Navi* navi, int p2)
 void NaviContainerState::cleanup(Navi* navi)
 {
 	PRINT("cleanup\n");
-	gameflow._33C = 0;
+	gameflow.mIsEventNoControllerActive = 0;
 	navi->mGoalItem->setSpotActive(true);
 }
 
@@ -2797,7 +2797,7 @@ void NaviGatherState::exec(Navi* navi)
 		if (navi->_AB8 > C_NAVI_PROP(navi)._AC()) {
 			navi->_AB8 = C_NAVI_PROP(navi)._AC();
 
-			if (!gameflow._33C) {
+			if (!gameflow.mIsEventNoControllerActive) {
 				navi->callPikis(C_NAVI_PROP(navi)._8C());
 			} else {
 				navi->callDebugs(C_NAVI_PROP(navi)._8C());
@@ -2819,7 +2819,7 @@ void NaviGatherState::exec(Navi* navi)
 		navi->_AB8 = 0.0f;
 		navi->_ABC = 2;
 		_14        = scale;
-		if (!gameflow._33C) {
+		if (!gameflow.mIsEventNoControllerActive) {
 			navi->callPikis(scale);
 		} else {
 			navi->callDebugs(scale);
@@ -2830,7 +2830,7 @@ void NaviGatherState::exec(Navi* navi)
 	if (navi->_ABC != 2) {
 		return;
 	}
-	if (!gameflow._33C) {
+	if (!gameflow.mIsEventNoControllerActive) {
 		navi->callPikis(_14);
 	} else {
 		navi->callDebugs(_14);
@@ -4869,8 +4869,8 @@ void NaviClearState::exec(Navi* navi)
 void NaviClearState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	if (msg->mKeyEvent->mEventType == 0) {
-		flowCont._234 = 3;
-		flowCont._248 = navi->getPlatePikis();
+		flowCont.mGameEndCondition = 3;
+		flowCont._248              = navi->getPlatePikis();
 	}
 }
 
@@ -5232,7 +5232,7 @@ void NaviPartsAccessState::init(Navi* navi)
  */
 void NaviPartsAccessState::exec(Navi* navi)
 {
-	if (_10 == true && !gameflow._338) {
+	if (_10 == true && !gameflow.mIsUiOverlayActive) {
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -5305,7 +5305,7 @@ void NaviUfoAccessState::init(Navi* navi)
  */
 void NaviUfoAccessState::exec(Navi* navi)
 {
-	if (_10 == 1 && gameflow._338 == 0) {
+	if (_10 == 1 && gameflow.mIsUiOverlayActive == 0) {
 		PRINT("TRANSIT TO WALK !\n");
 		transit(navi, NAVISTATE_Walk);
 	}

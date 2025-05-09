@@ -295,7 +295,7 @@ void GamePrefs::read(RandomAccessStream& input)
 void PlayState::write(RandomAccessStream& output)
 {
 	output.writeByte(_20);
-	output.writeByte(_23);
+	output.writeByte(mSaveFlags);
 	output.writeByte(_21);
 	output.writeByte(_22);
 	output.writeInt(_14);
@@ -312,7 +312,7 @@ void PlayState::write(RandomAccessStream& output)
 void PlayState::read(RandomAccessStream& input)
 {
 	_20              = input.readByte();
-	_23              = input.readByte();
+	mSaveFlags       = input.readByte();
 	_21              = input.readByte();
 	_22              = input.readByte();
 	_14              = input.readInt();

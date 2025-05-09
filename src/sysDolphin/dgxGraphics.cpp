@@ -804,7 +804,7 @@ void DGXGraphics::retraceProc(u32)
 		return;
 	}
 
-	gsys->_2A0++;
+	gsys->_2AO++;
 	if (gfx->_614 != 0 && --gfx->_614 == 0) {
 		OSSendMessage(&gfx->_624, (OSMessage)'DONE', 0);
 	}

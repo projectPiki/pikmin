@@ -99,13 +99,13 @@ struct Menu : public Node {
 	int mUseCustomPosition;                     // _3C
 	int mMenuCount;                             // _40, option count?
 	f32 mAnimationProgress;                     // _44
-	RectArea _48;                               // _48
+	RectArea mAnchorPoint;                      // _48
 	Controller* mController;                    // _58
 	u32 _5C;                                    // _5C, unknown
 	Colour mDiffuseColour;                      // _60
 	Colour mHighlightColour;                    // _64
 	RectArea _68;                               // _68
-	RectArea _78;                               // _78
+	RectArea mDefaultMargin;                    // _78
 	IDelegate1<Menu&>* mOnEnterCallBack;        // _88
 	IDelegate1<Menu&>* mOnExitCallBack;         // _8C
 	u8 _90[0x4];                                // _90, unknown
@@ -113,7 +113,7 @@ struct Menu : public Node {
 	bool mIsMenuChanging;                       // _98
 	bool mIsOptionSelected;                     // _99
 	Font* mFont;                                // _9C
-	int _A0;                                    // _A0
+	int mCurrentItemDisplayIndex;               // _A0
 	int mInputCode;                             // _A4
 	BOOL mIsCustomMenu;                         // _A8
 	int mState;                                 // _AC, see MenuState enum

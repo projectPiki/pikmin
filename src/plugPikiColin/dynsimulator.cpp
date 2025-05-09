@@ -25,10 +25,10 @@ DEFINE_PRINT("DynSimulator")
  */
 void CollState::resetCollisions(Shape* shape)
 {
-	_00             = 2;
+	mStatus         = 2;
 	mShape          = shape;
 	mCollisionCount = 0;
-	_0C++;
+	mResetCount++;
 }
 
 /*
@@ -39,10 +39,10 @@ void CollState::resetCollisions(Shape* shape)
 bool CollState::add(Vector3f& normal, Vector3f& contactPt, RigidBody* collider)
 {
 	if (mCollisionCount < 10) {
-		_00                                        = 1;
+		mStatus                                    = 1;
 		mCollisions[mCollisionCount].mNormal       = normal;
 		mCollisions[mCollisionCount].mContactPoint = contactPt;
-		mCollisions[mCollisionCount]._1C           = collider;
+		mCollisions[mCollisionCount].mColliderRb   = collider;
 		mCollisionCount++;
 	}
 
@@ -1145,13 +1145,13 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 void RigidBody::updateViewInfo(int p1, int configIdx)
 {
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
-		_A248[p1][i] = mIntegrationStates[configIdx].mBodyPoints[i];
+		mBufferedPoints[p1][i] = mIntegrationStates[configIdx].mBodyPoints[i];
 	}
 
-	_13248[p1] = mIntegrationStates[configIdx].mPosition;
-	_1326C[p1] = mIntegrationStates[configIdx].mOrientationQuat;
+	mBufferedPositions[p1]    = mIntegrationStates[configIdx].mPosition;
+	mBufferedOrientations[p1] = mIntegrationStates[configIdx].mOrientationQuat;
 
-	makeBodyQuat(_1326C[p1]);
+	makeBodyQuat(mBufferedOrientations[p1]);
 }
 
 /*
@@ -1165,12 +1165,12 @@ void RigidBody::updateVecQuats(int p1, f32 p2)
 	int idx2 = p1 ^ 1;
 
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
-		mBodySpaceHookPoints[i] = _A248[idx1][i] + (_A248[idx2][i] - _A248[idx1][i]) * p2;
+		mBodySpaceHookPoints[i] = mBufferedPoints[idx1][i] + (mBufferedPoints[idx2][i] - mBufferedPoints[idx1][i]) * p2;
 	}
 
-	mRenderPosition    = _13248[idx1] + (_13248[idx2] - _13248[idx1]) * p2;
-	mRenderOrientation = _1326C[idx1];
-	mRenderOrientation.slerp(_1326C[idx2], p2, 1);
+	mRenderPosition    = mBufferedPositions[idx1] + (mBufferedPositions[idx2] - mBufferedPositions[idx1]) * p2;
+	mRenderOrientation = mBufferedOrientations[idx1];
+	mRenderOrientation.slerp(mBufferedOrientations[idx2], p2, 1);
 }
 
 /*
@@ -1217,7 +1217,7 @@ void DynSimulator::resetWorld()
 		}
 	}
 
-	_30._00 = 2;
+	mWorldState.mStatus = 2;
 }
 
 /*
@@ -1257,10 +1257,10 @@ void DynSimulator::doSimulation(f32 p1, f32 p2, Shape* p3)
 
 	FOREACH_NODE(RigidBody, mChild, body)
 	{
-		body->updateViewInfo(_24, mCurrentConfigIdx ^ 1);
+		body->updateViewInfo(mWriteTargetRenderBufferIndex, mCurrentConfigIdx ^ 1);
 	}
 
-	_24 ^= 1;
+	mWriteTargetRenderBufferIndex ^= 1;
 }
 
 /*
@@ -1301,7 +1301,7 @@ void DynSimulator::CalculateVertices(int)
 void DynSimulator::updateVecQuats(f32 p1)
 {
 	for (RigidBody* body = (RigidBody*)mChild; body; body = (RigidBody*)body->Next()) {
-		body->updateVecQuats(_24, p1);
+		body->updateVecQuats(mWriteTargetRenderBufferIndex, p1);
 	}
 }
 

@@ -90,14 +90,14 @@ struct IntroModeState : public ModeState {
 struct IntroGameSetupSection : public BaseGameSection {
 	IntroGameSetupSection()
 	{
-		_34 = new IntroModeState(this);
+		mCurrentModeState = new IntroModeState(this);
 
 		gameflow.mMoviePlayer->setGameCamInfo(false, 60.0f, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 
-		_3A4          = true;
-		gameflow._1E4 = 0;
-		_44           = 0;
-		_38           = 0;
+		_3A4                     = true;
+		gameflow.mIsDayEndActive = 0;
+		_44                      = 0;
+		mNextModeState           = 0;
 		Jac_SceneSetup(11, 0);
 		EffectMgr* mgr = new EffectMgr;
 		mgr->cullingOff();
@@ -136,7 +136,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		mtx.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 		Matrix4f mtx2;
 		gfx.mRenderState = 0x700;
-		_34->postRender(gfx);
+		mCurrentModeState->postRender(gfx);
 		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	}
 
@@ -161,7 +161,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow._33C == 0 && gameflow._338 == 0) {
+			if (gameflow.mIsEventNoControllerActive == 0 && gameflow.mIsUiOverlayActive == 0) {
 				bool check = true;
 				if (gsys->_258 >= 0) {
 					check = false;
@@ -191,21 +191,21 @@ struct IntroGameSetupSection : public BaseGameSection {
 		BaseGameSection::draw(gfx);
 
 		if (!_3A4) {
-			if (!gsys->resetPending() && (!_20 || gameflow.mMoviePlayer->mIsActive)) {
-				if (_38) {
-					_34 = _38;
-					_38 = nullptr;
+			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
+				if (mNextModeState) {
+					mCurrentModeState = mNextModeState;
+					mNextModeState    = nullptr;
 				}
-				_34 = _34->update(_3C);
+				mCurrentModeState = mCurrentModeState->update(mUpdateFlags);
 			}
 		} else {
 			_3A4 = false;
 		}
 
-		if (_38) {
+		if (mNextModeState) {
 			PRINT("FORCING MODE !!!!\n");
-			_34 = _38;
-			_38 = nullptr;
+			mCurrentModeState = mNextModeState;
+			mNextModeState    = nullptr;
 		}
 	}
 

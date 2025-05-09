@@ -164,7 +164,7 @@ void MovieInfo::refresh(Graphics&)
  */
 MoviePlayer::MoviePlayer()
 {
-	_168 = 0.0f;
+	mCamTransitionFactor = 0.0f;
 }
 
 /*
@@ -225,9 +225,9 @@ MovieListInfo* MoviePlayer::findMovie(int id)
  */
 void MoviePlayer::initMovie(MovieInfo* info, int)
 {
-	int old    = !!gsys->_2A4; // required for regalloc lol.
-	gsys->_2A4 = 0;
-	int heapid = gsys->getHeapNum();
+	int old                  = !!gsys->mPrevHeapAllocType; // required for regalloc lol.
+	gsys->mPrevHeapAllocType = 0;
+	int heapid               = gsys->getHeapNum();
 	int type;
 	if (heapid == SYSHEAP_App) {
 		PRINT("using movie heap!\n");
@@ -244,8 +244,8 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		gsys->getHeap(SYSHEAP_Movie)->setAllocType(type);
 		gsys->setHeap(heapid);
 	}
-	gsys->_2A0 = 0;
-	gsys->_2A4 = old;
+	gsys->_2AO               = 0;
+	gsys->mPrevHeapAllocType = old;
 }
 
 int movie04table[STAGE_COUNT]
@@ -481,7 +481,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 		PRINT("playing movie %s\n", info->mName);
 		initMovieFlags(info);
 		if (info->mCin->mFlags & 0x80000) {
-			gameflow._33C = 1;
+			gameflow.mIsEventNoControllerActive = 1;
 		}
 		info->update();
 		mPlayInfoList.add(info);
@@ -515,10 +515,10 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	Jac_SetDemoOnyons(onyons);
 	effectMgr->cullingOff();
 	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
-	u32 old    = gsys->_2A4 != 0;
-	gsys->_2A4 = 0;
+	u32 old                  = gsys->mPrevHeapAllocType != 0;
+	gsys->mPrevHeapAllocType = 0;
 	Jac_StartDemo(info->mMovieIndex);
-	gsys->_2A4 = old;
+	gsys->mPrevHeapAllocType = old;
 }
 
 /*
@@ -545,7 +545,7 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 	}
 
 	if (info->mCin->mFlags & 0x400000) {
-		_168 = 1.0f;
+		mCamTransitionFactor = 1.0f;
 	}
 
 	if (gameflow.mGameInterface) {
@@ -653,8 +653,8 @@ void MoviePlayer::update()
 				gsys->mTogglePrint = 1;
 				PRINT("clearing top heap!\n");
 				gsys->resetHeap(SYSHEAP_Movie, 1);
-				gsys->mTogglePrint = togglePrint;
-				gameflow._33C      = 0;
+				gsys->mTogglePrint                  = togglePrint;
+				gameflow.mIsEventNoControllerActive = 0;
 				PRINT("all movies ended!\n");
 			}
 
@@ -715,9 +715,9 @@ bool MoviePlayer::setCamera(Graphics& gfx)
 		res |= info->setCamera(gfx);
 	}
 	if (res) {
-		_144       = gfx.mCamera->mFov;
-		_12C       = gfx.mCamera->mPosition;
-		mLookAtPos = gfx.mCamera->mFocus;
+		mTargetFov       = gfx.mCamera->mFov;
+		mTargetViewpoint = gfx.mCamera->mPosition;
+		mLookAtPos       = gfx.mCamera->mFocus;
 	}
 	return res;
 }

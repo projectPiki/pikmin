@@ -146,8 +146,8 @@ struct PlayState : public CoreNode {
 	inline PlayState()
 	    : CoreNode("playState")
 	{
-		_23 = 0;
-		_20 = 1;
+		mSaveFlags = 0;
+		_20        = 1;
 	}
 
 	virtual void read(RandomAccessStream&);  // _0C
@@ -182,7 +182,7 @@ struct PlayState : public CoreNode {
 	u8 _20;               // _20
 	u8 _21;               // _21
 	u8 _22;               // _22
-	u8 _23;               // _23
+	u8 mSaveFlags;        // _23
 	u32 mCourseOpenFlags; // _24, bitflag
 };
 
@@ -487,67 +487,67 @@ struct GameFlow : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Parms* mParameters;            // _20
-	MemoryCard mMemoryCard;        // _24
-	GamePrefs mGamePrefs;          // _94
-	u32 mSaveGameCrc;              // _1A0
-	PlayState mPlayState;          // _1A4
-	int _1CC;                      // _1CC
-	int mLastUnlockedStageId;      // _1D0
-	u32 _1D4;                      // _1D4, unknown
-	u32 mDemoFlags;                // _1D8, bitflag of some description
-	MoviePlayer* mMoviePlayer;     // _1DC
-	s16 mMovieInfoNum;             // _1E0
-	s16 mMovieType;                // _1E2
-	s16 _1E4;                      // _1E4
-	s16 _1E6;                      // _1E6
-	GameInterface* mGameInterface; // _1E8
-	int _1EC;                      // _1EC
-	int mGameSectionID;            // _1F0, see GameSectionID enum
-	s32 mNextOnePlayerSectionID;   // _1F4, see OnePlayerSectionID enum
-	u8 _1F8[0x4];                  // _1F8, unknown
-	int mLevelIndex;               // _1FC
-	u32 _200;                      // _200, unknown
-	Section* mGameSection;         // _204
-	LangMode mLangModes[2];        // _208
-	u8 _230[0x2A8 - 0x230];        // _230, unknown
-	int mLanguageIndex;            // _2A8, related to language?
-	u32 _2AC;                      // _2AC, unknown
-	u32 _2B0;                      // _2B0, could be int
-	int mIsChallengeMode;          // _2B4
-	u32 _2B8;                      // _2B8, unknown
-	u32 mUpdateTickCount;          // _2BC, unknown
-	f32 _2C0;                      // _2C0
-	f32 _2C4;                      // _2C4
-	vf32 _2C8;                     // _2C8
-	f32 _2CC;                      // _2CC
-	int mAppTickCounter;           // _2D0
-	int _2D4;                      // _2D4
-	WorldClock mWorldClock;        // _2D8
-	f32 mTimeMultiplier;           // _304
-	AnimFrameCacher* mFrameCacher; // _308
-	GameGenFlow* mGenFlow;         // _30C
-	Texture* mLevelBannerTexture;  // _310
-	f32 mLevelBannerFadeValue;     // _314
-	Texture* mLoadBannerTexture;   // _318
-	GameLoadIdler mGameLoadIdler;  // _31C
-	u8 _330;                       // _330
-	int _334;                      // _334
-	int _338;                      // _338
-	int _33C;                      // _33C, unknown
-	int _340;                      // _340
-	u8 _344[0x4];                  // _344, unknown
-	u32 _348;                      // _348, unknown
-	u32 _34C;                      // _34C, unknown
-	int mFilterType;               // _350
-	u8 mFilters[8];                // _354
-	u8 _35C;                       // _35C, maybe Colour?
-	u8 _35D;                       // _35D
-	u8 _35E;                       // _35E
-	u8 _35F;                       // _35F
-	u8 _360;                       // _360
-	u8 _361;                       // _361
-	u8 _362;                       // _362
+	Parms* mParameters;             // _20
+	MemoryCard mMemoryCard;         // _24
+	GamePrefs mGamePrefs;           // _94
+	u32 mSaveGameCrc;               // _1A0
+	PlayState mPlayState;           // _1A4
+	int mCurrentStageId;            // _1CC
+	int mLastUnlockedStageId;       // _1D0
+	u32 _1D4;                       // _1D4, unknown
+	u32 mDemoFlags;                 // _1D8, bitflag of some description
+	MoviePlayer* mMoviePlayer;      // _1DC
+	s16 mMovieInfoNum;              // _1E0
+	s16 mMovieType;                 // _1E2
+	s16 mIsDayEndActive;            // _1E4
+	s16 mIsDayEndTriggered;         // _1E6
+	GameInterface* mGameInterface;  // _1E8
+	int _1EC;                       // _1EC
+	int mGameSectionID;             // _1F0, see GameSectionID enum
+	s32 mNextOnePlayerSectionID;    // _1F4, see OnePlayerSectionID enum
+	u8 _1F8[0x4];                   // _1F8, unknown
+	int mLevelIndex;                // _1FC
+	u32 _200;                       // _200, unknown
+	Section* mGameSection;          // _204
+	LangMode mLangModes[2];         // _208
+	u8 _230[0x2A8 - 0x230];         // _230, unknown
+	int mLanguageIndex;             // _2A8, related to language?
+	u32 _2AC;                       // _2AC, unknown
+	u32 _2B0;                       // _2B0, could be int
+	int mIsChallengeMode;           // _2B4
+	u32 _2B8;                       // _2B8, unknown
+	u32 mUpdateTickCount;           // _2BC, unknown
+	f32 _2C0;                       // _2C0
+	f32 _2C4;                       // _2C4
+	vf32 _2C8;                      // _2C8
+	f32 _2CC;                       // _2CC
+	int mAppTickCounter;            // _2D0
+	int _2D4;                       // _2D4
+	WorldClock mWorldClock;         // _2D8
+	f32 mTimeMultiplier;            // _304
+	AnimFrameCacher* mFrameCacher;  // _308
+	GameGenFlow* mGenFlow;          // _30C
+	Texture* mLevelBannerTexture;   // _310
+	f32 mLevelBannerFadeValue;      // _314
+	Texture* mLoadBannerTexture;    // _318
+	GameLoadIdler mGameLoadIdler;   // _31C
+	u8 _330;                        // _330
+	int mIsGameplayInputEnabled;    // _334
+	int mIsUiOverlayActive;         // _338
+	int mIsEventNoControllerActive; // _33C, unknown
+	int mIsTutorialActive;          // _340
+	u8 _344[0x4];                   // _344, unknown
+	u32 _348;                       // _348, unknown
+	u32 _34C;                       // _34C, unknown
+	int mFilterType;                // _350
+	u8 mFilters[8];                 // _354
+	u8 _35C;                        // _35C, maybe Colour?
+	u8 _35D;                        // _35D
+	u8 _35E;                        // _35E
+	u8 _35F;                        // _35F
+	u8 _360;                        // _360
+	u8 _361;                        // _361
+	u8 _362;                        // _362
 };
 
 extern GameFlow gameflow;

@@ -111,7 +111,7 @@ struct CardSelectSetupSection : public Node {
 					gameflow.mNextOnePlayerSectionID = ONEPLAYER_MapSelect;
 				}
 
-				gameflow._1CC                 = -1;
+				gameflow.mCurrentStageId      = -1;
 				gameflow.mLastUnlockedStageId = -1;
 			}
 

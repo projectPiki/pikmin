@@ -672,12 +672,12 @@ void GameFlow::softReset()
 	      gsys->mDvdReadBytesCount / 1048576.0f / _2C0);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
-	_33C = 0;
-	_338 = 0;
-	_348 = 0;
-	_34C = 0;
-	_334 = 1;
-	_1EC = mGameSectionID;
+	mIsEventNoControllerActive = 0;
+	mIsUiOverlayActive         = 0;
+	_348                       = 0;
+	_34C                       = 0;
+	mIsGameplayInputEnabled    = 1;
+	_1EC                       = mGameSectionID;
 
 	u32 badCompiler[2];
 }

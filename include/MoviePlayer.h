@@ -87,23 +87,23 @@ struct MoviePlayer {
 		_154 = a3;
 	}
 
-	MovieInfo mPlayInfoList;  // _00
-	MovieInfo mMovieInfoList; // _60
-	MovieInfo mStackInfoList; // _C0
-	int mCurrentFrame;        // _120
-	bool mIsActive;           // _124
-	u8 _125;                  // _125
-	u32 _128;                 // _128
-	Vector3f _12C;            // _12C
-	Vector3f mLookAtPos;      // _138
-	f32 _144;                 // _144
-	Vector3f _148;            // _148
-	Vector3f _154;            // _154
-	f32 _160;                 // _160
-	f32 _164;                 // _164
-	f32 _168;                 // _168
-	bool _16C;                // _16C
-	u32 _170;                 // _170, unknown
+	MovieInfo mPlayInfoList;   // _00
+	MovieInfo mMovieInfoList;  // _60
+	MovieInfo mStackInfoList;  // _C0
+	int mCurrentFrame;         // _120
+	bool mIsActive;            // _124
+	u8 _125;                   // _125
+	u32 _128;                  // _128
+	Vector3f mTargetViewpoint; // _12C
+	Vector3f mLookAtPos;       // _138
+	f32 mTargetFov;            // _144
+	Vector3f _148;             // _148
+	Vector3f _154;             // _154
+	f32 _160;                  // _160
+	f32 _164;                  // _164
+	f32 mCamTransitionFactor;  // _168
+	bool _16C;                 // _16C
+	u32 _170;                  // _170, unknown
 };
 
 /**

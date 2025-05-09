@@ -61,7 +61,7 @@ void zen::bBoardColourAnimData::set(u8* data)
 {
 	if (data) {
 		bBoard_readU8(&mBlendMode, data, 1);
-		bBoard_readU8(&_01, data, 1);
+		bBoard_readU8(&mDuration, data, 1);
 		bBoard_readU8(&mFlags.all, data, 1);
 		bBoard_readU8(&mMaxFrame, data, 1);
 		bBoard_readFloatArray(&mFrameThresholds, data, mMaxFrame);
@@ -77,33 +77,33 @@ void zen::bBoardColourAnimData::set(u8* data)
  */
 void zen::bBoardColourAnim::update(f32 timeStep, Colour* primColor, Colour* envColor)
 {
-	f32 currThresh = (mLifeTime - 1) * mAnimData->mFrameThresholds[mFrame];
-	f32 nextThresh = (mLifeTime - 1) * mAnimData->mFrameThresholds[mFrame + 1];
-	f32 t          = (mAge - currThresh) / (nextThresh - currThresh);
+	f32 currThresh = (mDuration - 1) * mAnimData->mFrameThresholds[mCurrentFrame];
+	f32 nextThresh = (mDuration - 1) * mAnimData->mFrameThresholds[mCurrentFrame + 1];
+	f32 t          = (mProgress - currThresh) / (nextThresh - currThresh);
 
 	if (t > 1.0f) {
 		t = 1.0f;
 	}
 
-	bBoard_lerpColor(primColor, &mAnimData->mPrimColors[mFrame], 1.0f - t, &mAnimData->mPrimColors[mFrame + 1], t);
-	bBoard_lerpColor(envColor, &mAnimData->mEnvColors[mFrame], 1.0f - t, &mAnimData->mEnvColors[mFrame + 1], t);
+	bBoard_lerpColor(primColor, &mAnimData->mPrimColors[mCurrentFrame], 1.0f - t, &mAnimData->mPrimColors[mCurrentFrame + 1], t);
+	bBoard_lerpColor(envColor, &mAnimData->mEnvColors[mCurrentFrame], 1.0f - t, &mAnimData->mEnvColors[mCurrentFrame + 1], t);
 
-	if (mAge >= nextThresh && ++mFrame >= mAnimData->mMaxFrame - 1) {
+	if (mProgress >= nextThresh && ++mCurrentFrame >= mAnimData->mMaxFrame - 1) {
 		if (mAnimData->mFlags.all) {
-			mFrame = mAnimData->mMaxFrame - 1;
+			mCurrentFrame = mAnimData->mMaxFrame - 1;
 		} else {
-			mFrame = 0;
+			mCurrentFrame = 0;
 		}
 	}
 
-	mAge += timeStep;
-	if (mAge >= mLifeTime) {
+	mProgress += timeStep;
+	if (mProgress >= mDuration) {
 		if (mAnimData->mFlags.all) {
-			mAge   = mLifeTime;
-			mFrame = mAnimData->mMaxFrame - 1;
+			mProgress     = mDuration;
+			mCurrentFrame = mAnimData->mMaxFrame - 1;
 		} else {
-			mAge   = 0.0f;
-			mFrame = 0;
+			mProgress     = 0.0f;
+			mCurrentFrame = 0;
 		}
 	}
 }

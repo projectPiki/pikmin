@@ -333,7 +333,7 @@ struct MapMgr {
 	MapLightMgr* mLightMgr;                          // _8C
 	BoundBox mCompleteMapBounds;                     // _90
 	int mCurrentDebugCollisionCount;                 // _A8
-	int mEffectiveTriDisplayCount;                   // _AC
+	int mActiveTriangleDisplayCount;                 // _AC
 	int mMaxDebugDisplayCollisions;                  // _B0
 	Vector3f mDebugCollisionFocusPoint;              // _B4
 	BoundBox mDebugCollisionBroadPhaseBox;           // _C0

@@ -1659,7 +1659,7 @@ void MemoryCard::writeCurrentGame(RandomAccessStream*, PlayState&)
 void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
 	gameflow.mPlayState.read(*data);
-	if (gameflow._1CC == 2 && playerState) {
+	if (gameflow.mCurrentStageId == 2 && playerState) {
 		playerState->loadCard(*data);
 	}
 	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState._20;
@@ -3583,7 +3583,7 @@ u32 MemoryCard::getOkSections()
  */
 bool MemoryCard::isFileBroken()
 {
-	if (gameflow.mMemoryCard.getMemoryCardState(false) == 0 && gameflow._1CC) {
+	if (gameflow.mMemoryCard.getMemoryCardState(false) == 0 && gameflow.mCurrentStageId) {
 		mErrorCode = getOkSections();
 		if (_5C < 3)
 			return true;

@@ -159,38 +159,38 @@ struct StdSystem {
 		mTextureBase2 = base2;
 	}
 	inline void setDataRoot(char* dir) { mDataRoot = dir; }
-	inline void softReset() { mPending = true; }
-	inline void clearPending() { mPending = false; } // no idea what this should be called
+	inline void softReset() { mIsSystemOperationPending = true; }
+	inline void clearPending() { mIsSystemOperationPending = false; } // no idea what this should be called
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
-	inline bool resetPending() { return mPending; }
+	inline bool resetPending() { return mIsSystemOperationPending; }
 	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
 	inline int getHeapNum() { return mActiveHeapIdx; }
 
-	bool mPending;                 // _00
-	f32 mCurrentFade;              // _04
-	f32 mFadeStart;                // _08
-	f32 mFadeEnd;                  // _0C
-	Font* mConsFont;               // _10
-	s32 mFrameRate;                // _14
-	u32 mTimerState;               // _18, see TimerState enum
-	u32 mTogglePrint;              // _1C
-	u32 mToggleDebugInfo;          // _20
-	u32 mToggleDebugExtra;         // _24
-	u32 mToggleBlur;               // _28
-	u32 mToggleFileInfo;           // _2C
-	u32 mToggleColls;              // _30
-	Timers* mTimer;                // _34
-	TextureCacher* mCacher;        // _38
-	u32 mMatrixCount;              // _3C
-	Matrix4f* mMatrices;           // _40
-	char* mBloDirectory;           // _44
-	char* mTexDirectory;           // _48
-	char* mCurrentDirectory;       // _4C
-	char* mDataRoot;               // _50
-	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
-	int mActiveHeapIdx;            // _194
-	int _198;                      // _198
-	MemInfo* mCurrMemInfo;         // _19C
+	bool mIsSystemOperationPending; // _00
+	f32 mCurrentFade;               // _04
+	f32 mFadeStart;                 // _08
+	f32 mFadeEnd;                   // _0C
+	Font* mConsFont;                // _10
+	s32 mFrameRate;                 // _14
+	u32 mTimerState;                // _18, see TimerState enum
+	u32 mTogglePrint;               // _1C
+	u32 mToggleDebugInfo;           // _20
+	u32 mToggleDebugExtra;          // _24
+	u32 mToggleBlur;                // _28
+	u32 mToggleFileInfo;            // _2C
+	u32 mToggleColls;               // _30
+	Timers* mTimer;                 // _34
+	TextureCacher* mCacher;         // _38
+	u32 mMatrixCount;               // _3C
+	Matrix4f* mMatrices;            // _40
+	char* mBloDirectory;            // _44
+	char* mTexDirectory;            // _48
+	char* mCurrentDirectory;        // _4C
+	char* mDataRoot;                // _50
+	AyuHeap mHeaps[SYSHEAP_COUNT];  // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
+	int mActiveHeapIdx;             // _194
+	int _198;                       // _198
+	MemInfo* mCurrMemInfo;          // _19C
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
 	virtual void initSoftReset();                                               // _08
@@ -330,8 +330,8 @@ struct System : public StdSystem {
 	u32 _294;                           // _294
 	u32 _298;                           // _298
 	u32 _29C;                           // _29C
-	u32 _2A0;                           // _2A0
-	u32 _2A4;                           // _2A4, unknown
+	u32 _2AO;                           // _2A0
+	u32 mPrevHeapAllocType;             // _2A4, unknown
 	AddressNode _2A8;                   // _2A8, unknown size
 	u32 _2BC;                           // _2BC, unknown, could be part of _2A8
 	u8 _2C0[0x308 - 0x2C0];             // _2C0, unknown, adjust with size of AddressNode

@@ -59,8 +59,8 @@ struct RunningModeState : public ModeState {
 	RunningModeState(BaseGameSection* c)
 	    : ModeState(c)
 	{
-		_08         = 0;
-		mController = c->mController;
+		mCachedPauseFlag = 0;
+		mController      = c->mController;
 	}
 
 	virtual void postRender(Graphics&); // _0C
@@ -68,8 +68,7 @@ struct RunningModeState : public ModeState {
 
 	// _00     = VTBL?
 	// _00-_04 = ModeState?
-	// TODO: member
-	u8 _08;                  // _08
+	u8 mCachedPauseFlag;     // _08
 	Controller* mController; // _0C
 };
 

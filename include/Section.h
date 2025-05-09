@@ -21,15 +21,15 @@ struct BaseGameSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Menu* _20;               // _20
-	Controller* mController; // _24
-	f32 mCurrentFade;        // _28
-	f32 mTargetFade;         // _2C
-	f32 mFadeSpeed;          // _30
-	ModeState* _34;          // _34, unknown
-	ModeState* _38;          // _38, unknown
-	u32 _3C;                 // _3C, unknown
-	int _40;                 // _40
+	Menu* mActiveMenu;            // _20
+	Controller* mController;      // _24
+	f32 mCurrentFade;             // _28
+	f32 mTargetFade;              // _2C
+	f32 mFadeSpeed;               // _30
+	ModeState* mCurrentModeState; // _34, unknown
+	ModeState* mNextModeState;    // _38, unknown
+	u32 mUpdateFlags;             // _3C, unknown
+	int mNextSectionId;           // _40
 };
 
 /**

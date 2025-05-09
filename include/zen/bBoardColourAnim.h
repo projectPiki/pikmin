@@ -14,7 +14,7 @@ struct bBoardColourAnimData {
 	bBoardColourAnimData()
 	{
 		mBlendMode       = 0;
-		_01              = 0;
+		mDuration        = 0;
 		mFlags.all       = 0;
 		mMaxFrame        = 0;
 		mFrameThresholds = 0;
@@ -28,7 +28,7 @@ struct bBoardColourAnimData {
 	~bBoardColourAnimData() { }
 
 	u8 mBlendMode; // _00
-	u8 _01;        // _01
+	u8 mDuration;  // _01
 	union {
 		struct {
 			u8 _m0 : 1;
@@ -53,23 +53,23 @@ struct bBoardColourAnim {
 	void update(f32, Colour*, Colour*);
 	void init(zen::bBoardColourAnimData* data, s16 lifeTime)
 	{
-		mAge      = 0.0f;
-		mFrame    = 0;
-		mAnimData = data;
+		mProgress     = 0.0f;
+		mCurrentFrame = 0;
+		mAnimData     = data;
 		if (mAnimData) {
 			if (mAnimData->mFlags.all) {
-				mLifeTime = lifeTime;
+				mDuration = lifeTime;
 			} else {
-				mLifeTime = mAnimData->_01;
+				mDuration = mAnimData->mDuration;
 			}
 		} else {
-			mLifeTime = lifeTime;
+			mDuration = lifeTime;
 		}
 	}
 
-	f32 mAge;                        // _00
-	u8 mFrame;                       // _04
-	s16 mLifeTime;                   // _06
+	f32 mProgress;                   // _00
+	u8 mCurrentFrame;                // _04
+	s16 mDuration;                   // _06
 	bBoardColourAnimData* mAnimData; // _08
 };
 

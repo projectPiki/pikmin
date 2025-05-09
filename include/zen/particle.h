@@ -142,10 +142,10 @@ struct particleMdlBase : public zenList {
 struct particleMdl : public particleMdlBase {
 	particleMdl()
 	{
-		mBBoardColourAnim.mAge      = 0.0f;
-		mBBoardColourAnim.mFrame    = 0;
-		mBBoardColourAnim.mLifeTime = 1;
-		mBBoardColourAnim.mAnimData = nullptr;
+		mBBoardColourAnim.mProgress     = 0.0f;
+		mBBoardColourAnim.mCurrentFrame = 0;
+		mBBoardColourAnim.mDuration     = 1;
+		mBBoardColourAnim.mAnimData     = nullptr;
 		InitParam();
 	}
 

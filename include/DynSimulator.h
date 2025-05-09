@@ -159,11 +159,11 @@ struct RigidBody : public Node {
 	configuration mIntegrationStates[2];  // _4118, prev and current, which swap from frame to frame
 	Vector3f mLinearAccel;                // _A230
 	Vector3f mAngularAccel;               // _A23C
-	Vector3f _A248[2][0x400];             // _A248
+	Vector3f mBufferedPoints[2][0x400];   // _A248
 	Vector3f mBodySpaceHookPoints[0x400]; // _10248
-	Vector3f _13248[2];                   // _13248
+	Vector3f mBufferedPositions[2];       // _13248
 	Vector3f mRenderPosition;             // _13260
-	Quat _1326C[2];                       // _1326C
+	Quat mBufferedOrientations[2];        // _1326C
 	Quat mRenderOrientation;              // _1328C
 	BoundBox _1329C;                      // _1329C
 };
@@ -175,9 +175,9 @@ struct DynSimulator : public Node {
 	DynSimulator()
 	    : Node("simulator")
 	{
-		_2C = 0;
-		_20 = 0;
-		_24 = 0;
+		_2C                           = 0;
+		_20                           = 0;
+		mWriteTargetRenderBufferIndex = 0;
 	}
 
 	void resetWorld();
@@ -213,11 +213,11 @@ struct DynSimulator : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	int _20;               // _20
-	int _24;               // _24
-	int mCurrentConfigIdx; // _28
-	u32 _2C;               // _2C, unknown
-	CollState _30;         // _30
+	int _20;                           // _20
+	int mWriteTargetRenderBufferIndex; // _24
+	int mCurrentConfigIdx;             // _28
+	u32 _2C;                           // _2C, unknown
+	CollState mWorldState;             // _30
 };
 
 #endif

@@ -42,8 +42,8 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 	mCurrentItem = nullptr;
 	mFirstItem   = nullptr;
 
-	_48.set(160, 120, 0, 0);
-	_78.set(6, 12, 6, 12);
+	mAnchorPoint.set(160, 120, 0, 0);
+	mDefaultMargin.set(6, 12, 6, 12);
 
 	mDiffuseColour.set(32, 32, 128, 192);
 	mHighlightColour.set(32, 32, 32, 64);
@@ -508,8 +508,8 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 					if (menu->mNextMenu->mUseCustomPosition) {
 						const int kMenuItemHeight = 14;
 
-						menu->mNextMenu->_48.mMinY
-						    = menu->_48.mMinY - (menu->mMenuCount * kMenuItemHeight) / 2 + menu->_A0 * kMenuItemHeight;
+						menu->mNextMenu->mAnchorPoint.mMinY = menu->mAnchorPoint.mMinY - (menu->mMenuCount * kMenuItemHeight) / 2
+						                                    + menu->mCurrentItemDisplayIndex * kMenuItemHeight;
 					}
 
 					menu->mIsMenuChanging                      = true;
@@ -535,7 +535,7 @@ bool Menu::MenuItem::checkEvents(Menu* menu, int events)
 void Menu::draw(Graphics& gfx, f32 fadePct)
 {
 	// Determine the maximum string width for the menu items
-	int baseYPosition  = _48.mMinY - (14 * mMenuCount / 2);
+	int baseYPosition  = mAnchorPoint.mMinY - (14 * mMenuCount / 2);
 	int maxStringWidth = 0;
 
 	MenuItem* currentItem;
@@ -551,7 +551,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	maxStringWidth += 8;
 
 	// Set up initial box dimensions based on the maximum string width
-	int x  = _48.mMinX;
+	int x  = mAnchorPoint.mMinX;
 	int y  = 3 + baseYPosition + 7 * mMenuCount;
 	int x2 = maxStringWidth + 8;
 	int y2 = 7 * mMenuCount + 14;
@@ -596,7 +596,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 		f32 alpha      = mDiffuseColour.a * fadePct;
 		MenuItem* item = mLastItem->mNext;
 
-		_A0 = 0;
+		mCurrentItemDisplayIndex = 0;
 		for (int i = 0; i < mMenuCount; i++) {
 			if (item->mName) {
 				// Determine the color for the current menu item
@@ -605,8 +605,8 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 						// fun fact: these int casts are necessary for codegen :')
 						gfx.setColour(Colour(192, 192, 0, (int)alpha), true);
 					} else {
-						_A0   = i;
-						int v = int((sinf(mAnimationProgress) + 1.0f) * 64.0f) + 64;
+						mCurrentItemDisplayIndex = i;
+						int v                    = int((sinf(mAnimationProgress) + 1.0f) * 64.0f) + 64;
 						gfx.setColour(Colour(v, v, v, (int)alpha), true);
 					}
 				} else if (!item->mIsEnabled) {
@@ -628,11 +628,11 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 		}
 
 		// Highlight the currently selected item with a rectangle
-		int y3 = baseYPosition + 14 * _A0 + 1;
+		int y3 = baseYPosition + 14 * mCurrentItemDisplayIndex + 1;
 		gfx.setColour(Colour(128, 128, 128, 128), true);
 		gfx.setAuxColour(Colour(192, 192, 192, 128));
 		gfx.useTexture(nullptr, 0);
-		gfx.lineRectangle(RectArea(x - maxStringWidth + 4, y3, _48.mMinX + maxStringWidth - 4, y3 + 14));
+		gfx.lineRectangle(RectArea(x - maxStringWidth + 4, y3, mAnchorPoint.mMinX + maxStringWidth - 4, y3 + 14));
 	}
 }
 

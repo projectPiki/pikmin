@@ -95,7 +95,7 @@ void GameCoreSection::startTextDemo(Creature*, int p2)
  */
 void GameCoreSection::updateTextDemo()
 {
-	if (gameflow._338) {
+	if (gameflow.mIsUiOverlayActive) {
 		return;
 	}
 	switch (textDemoState) {
@@ -292,7 +292,7 @@ void GameCoreSection::endMovie(int movieIdx)
 		angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
 		if (movieIdx == DEMOID_FindRedOnyon || movieIdx == DEMOID_FindYellowOnyon || movieIdx == DEMOID_FindBlueOnyon
 		    || movieIdx == DEMOID_DiscoverMainEngine) {
-			Vector3f diff = gameflow.mMoviePlayer->_12C - gameflow.mMoviePlayer->mLookAtPos;
+			Vector3f diff = gameflow.mMoviePlayer->mTargetViewpoint - gameflow.mMoviePlayer->mLookAtPos;
 			diff.y        = 0.0f;
 			diff.normalise();
 			angle = atan2f(diff.x, diff.z);
@@ -1284,9 +1284,9 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	particleHeap = new DynParticleHeap(0x400);
 	memStat->end("dynamics");
 
-	mAiPerfDebugMenu            = new Menu(mController, gsys->mConsFont, false);
-	mAiPerfDebugMenu->_48.mMinX = glnWidth / 2;
-	mAiPerfDebugMenu->_48.mMinY = glnHeight / 2;
+	mAiPerfDebugMenu                     = new Menu(mController, gsys->mConsFont, false);
+	mAiPerfDebugMenu->mAnchorPoint.mMinX = glnWidth / 2;
+	mAiPerfDebugMenu->mAnchorPoint.mMinY = glnHeight / 2;
 	AIPerf p;
 	p.addMenu(mAiPerfDebugMenu);
 	GlobalShape::init();
@@ -1414,7 +1414,8 @@ void GameCoreSection::update()
 {
 	u32 badCompiler[2];
 	if (!gameflow.mMoviePlayer->mIsActive && mDoneSundownWarn == false
-	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning() && (flowCont._234 != 1 || flowCont._234 != 2)) {
+	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
+	    && (flowCont.mGameEndCondition != 1 || flowCont.mGameEndCondition != 2)) {
 		if (playerState->inDayEnd()) {
 			PRINT("======== IN DAY END *** \n");
 		} else {
@@ -1428,7 +1429,7 @@ void GameCoreSection::update()
 	accountWindow->update();
 	routeMgr->update();
 
-	if (gameflow._33C == 0 && gameflow._338 == 0) {
+	if (gameflow.mIsEventNoControllerActive == 0 && gameflow.mIsUiOverlayActive == 0) {
 		playerState->update();
 	}
 
@@ -1569,11 +1570,11 @@ void GameCoreSection::updateAI()
 	pikiOptUpdateMgr->update();
 	tekiOptUpdateMgr->update();
 	mMapMgr->update();
-	if (gameflow._338 == 0) {
+	if (gameflow.mIsUiOverlayActive == 0) {
 		naviMgr->update();
 	}
 
-	if (gameflow._338 == 0) {
+	if (gameflow.mIsUiOverlayActive == 0) {
 		if (tekiMgr) {
 			if (AIPerf::insQuick) {
 				naviMgr->invalidateSearch();
@@ -1594,7 +1595,7 @@ void GameCoreSection::updateAI()
 			}
 		}
 
-		if (gameflow._33C == 0) {
+		if (gameflow.mIsEventNoControllerActive == 0) {
 			if (!inPause() && bossMgr) {
 				if (!hideTeki()) {
 					bossMgr->update();
@@ -1617,11 +1618,11 @@ void GameCoreSection::updateAI()
 	}
 	if (tekiMgr) {
 		f32 time = gsys->getFrameTime();
-		if (gameflow._338 == 0) {
+		if (gameflow.mIsUiOverlayActive == 0) {
 			naviMgr->postUpdate(0, time);
 		}
 
-		if (!gameflow._338 && !inPause() && !gameflow._33C) {
+		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow.mIsEventNoControllerActive) {
 			pikiMgr->postUpdate(0, time);
 			itemMgr->postUpdate(0, time);
 			pelletMgr->postUpdate(0, time);
@@ -1857,7 +1858,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 		}
 		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		containerWindow->draw(gfx);
-		if (!gameflow.mMoviePlayer->mIsActive && !gameflow._338) {
+		if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsUiOverlayActive) {
 			hurryupWindow->draw(gfx);
 		}
 		accountWindow->draw(gfx);

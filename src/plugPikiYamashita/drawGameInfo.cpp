@@ -439,7 +439,7 @@ struct SunAnim {
 		P2DPicture* pic = (P2DPicture*)pane;
 		if (gameflow.mWorldClock.mTimeOfDay >= 7.0f && gameflow.mWorldClock.mTimeOfDay <= 19.0f) {
 			pic->show();
-			if (gameflow._338 == 0) {
+			if (gameflow.mIsUiOverlayActive == 0) {
 				f32 t = NMathF::sin(2.0f * pane->getRotate());
 				pic->rotate(pane->getWidth() >> 1, pane->getHeight() >> 1, P2DROTATE_Unk2, pane->getRotate() + mIncrementAngle);
 				pic->setScale(0.1f * t + 0.9f);

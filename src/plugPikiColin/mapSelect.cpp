@@ -58,9 +58,9 @@ struct MapSelectSetupSection : public Node {
 
 	void makeMapsMenu()
 	{
-		_28            = new Menu(mController, mConsFont, false);
-		_28->_48.mMinX = glnWidth / 2;
-		_28->_48.mMinY = glnHeight / 2 + 30;
+		_28                     = new Menu(mController, mConsFont, false);
+		_28->mAnchorPoint.mMinX = glnWidth / 2;
+		_28->mAnchorPoint.mMinY = glnHeight / 2 + 30;
 		_28->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
 		_28->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(_28, &Menu::menuCloseMenu));
 
@@ -118,11 +118,11 @@ struct MapSelectSetupSection : public Node {
 
 			bool old           = gsys->mTogglePrint != 0;
 			gsys->mTogglePrint = 1;
-			PRINT("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow._1CC != 0);
+			PRINT("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId != 0);
 			gsys->mTogglePrint = old;
 
 			mapWindow->start(zen::DrawWorldMap::startModeFlag(gameflow.mLastUnlockedStageId == -1 ? 0 : gameflow.mLastUnlockedStageId),
-			                 zen::DrawWorldMap::startPlaceFlag(gameflow._1CC == -1 ? 0 : gameflow._1CC));
+			                 zen::DrawWorldMap::startPlaceFlag(gameflow.mCurrentStageId == -1 ? 0 : gameflow.mCurrentStageId));
 		} else {
 			gameflow.mWorldClock.mCurrentDay = 1;
 			selectWindow                     = new zen::DrawCMcourseSelect;
