@@ -153,9 +153,14 @@ struct TypingTextMgr {
 		cursor->move(x, y);
 	}
 
+	void off()
+	{
+		mTextBox->hide();
+		_00 = 0;
+	}
+
 	// DLL inlines to do:
-	void off();
-	EnumPCTextStat check();
+	EnumPCTextStat check() { return (EnumPCTextStat)_00; };
 
 	int _00;                      // _00
 	ogMsgCtrlTagMgr* mCtrlTagMgr; // _04
