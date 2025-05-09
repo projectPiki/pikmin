@@ -13,7 +13,11 @@ struct Texture;
  * @brief TODO
  */
 struct FontChar {
-	FontChar();
+	FontChar()
+	{
+		_00 = _02 = 0;
+		mWidth = mHeight = 8;
+	}
 
 	u16 _00;                 // _00
 	u16 _02;                 // _02

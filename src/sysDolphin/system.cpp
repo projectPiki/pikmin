@@ -341,7 +341,7 @@ void System::initSoftReset()
 	gsys->_2A4 = 0;
 	StdSystem::initSoftReset();
 	if (mGfx) {
-		mGfx->setupRender();
+		static_cast<DGXGraphics*>(mGfx)->setupRender();
 	}
 }
 
@@ -353,7 +353,7 @@ void System::initSoftReset()
 void System::beginRender()
 {
 	_2A0 = 0;
-	mGfx->beginRender();
+	static_cast<DGXGraphics*>(mGfx)->beginRender();
 	mGfx->clearBuffer(3, false);
 	GXSetViewport(0.0f, 0.0f, glnWidth, glnHeight, 0.0f, 1.0f);
 	GXSetScissor(0, 0, glnWidth, glnHeight);
@@ -369,7 +369,7 @@ void System::beginRender()
  */
 void System::doneRender()
 {
-	mGfx->doneRender();
+	static_cast<DGXGraphics*>(mGfx)->doneRender();
 }
 
 /*
@@ -379,7 +379,7 @@ void System::doneRender()
  */
 void System::waitRetrace()
 {
-	mGfx->waitRetrace();
+	static_cast<DGXGraphics*>(mGfx)->waitRetrace();
 }
 
 /*

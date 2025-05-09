@@ -103,26 +103,26 @@ struct Graphics {
 	u32 mCachedShapeMax;                      // _3AC
 	u32 mCachedShapeCount;                    // _3B0
 
-	virtual void videoReset();                                                             // _08
-	virtual void setVerticalFilter(u8*);                                                   // _0C
-	virtual void getVerticalFilter(u8*);                                                   // _10
-	virtual u8* getDListPtr();                                                             // _14
-	virtual u32 getDListRemainSize();                                                      // _18
+	virtual void videoReset() { }                                                          // _08
+	virtual void setVerticalFilter(u8*) { }                                                // _0C
+	virtual void getVerticalFilter(u8*) { }                                                // _10
+	virtual u8* getDListPtr() { return nullptr; }                                          // _14
+	virtual u32 getDListRemainSize() { return 0; }                                         // _18
 	virtual u32 compileMaterial(Material*) { return 0; }                                   // _1C
 	virtual void useDList(u32) { }                                                         // _20
 	virtual void initRender(int, int);                                                     // _24
 	virtual void resetCopyFilter() = 0;                                                    // _28
-	virtual void setAmbient();                                                             // _2C
+	virtual void setAmbient() { }                                                          // _2C
 	virtual bool setLighting(bool, PVWLightingInfo*)          = 0;                         // _30
 	virtual void setLight(Light*, int)                        = 0;                         // _34
 	virtual void clearBuffer(int, bool)                       = 0;                         // _38
 	virtual void setPerspective(Mtx, f32, f32, f32, f32, f32) = 0;                         // _3C
 	virtual void setOrthogonal(Mtx, RectArea&)                = 0;                         // _40
-	virtual void setLightcam(LightCamera*);                                                // _44
+	virtual void setLightcam(LightCamera* cam) { mLightCam = cam; }                        // _44
 	virtual void setViewport(RectArea&)       = 0;                                         // _48
 	virtual void setViewportOffset(RectArea&) = 0;                                         // _4C
 	virtual void setScissor(RectArea&)        = 0;                                         // _50
-	virtual void setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode);                     // _54
+	virtual void setBlendMode(u8 blendFactor, u8 zMode, u8 blendMode) { }                  // _54
 	virtual int setCullFront(int)                                                     = 0; // _58
 	virtual u8 setDepth(bool)                                                         = 0; // _5C
 	virtual int setCBlending(int)                                                     = 0; // _60
@@ -149,15 +149,23 @@ struct Graphics {
 	virtual void setClearColour(Colour&)                                              = 0; // _B4
 	virtual void setFog(bool)                                                         = 0; // _B8
 	virtual void setFog(bool, Colour&, f32, f32, f32)                                 = 0; // _BC
-	virtual void setMatHandler(MaterialHandler*);                                          // _C0
+	virtual void setMatHandler(MaterialHandler* handler)                                   // _C0
+	{
+		if (mCurrentMaterialHandler && !handler) {
+			mCurrentMaterialHandler->setMaterial(nullptr);
+		}
+
+		mCurrentMaterialHandler       = (handler) ? handler : _34C;
+		mCurrentMaterialHandler->mGfx = this;
+	}
 	virtual void setMaterial(Material*, bool) = 0;                                         // _C4
-	virtual void useMaterial(Material*);                                                   // _C8
+	virtual void useMaterial(Material* mat) { mCurrentMaterialHandler->setMaterial(mat); } // _C8
 	virtual void useTexture(Texture*, int)                      = 0;                       // _CC
 	virtual void drawRectangle(RectArea&, RectArea&, Vector3f*) = 0;                       // _D0
 	virtual void fillRectangle(RectArea&)                       = 0;                       // _D4
 	virtual void blatRectangle(RectArea&)                       = 0;                       // _D8
 	virtual void lineRectangle(RectArea&)                       = 0;                       // _DC
-	virtual void testRectangle(RectArea&);                                                 // _E0
+	virtual void testRectangle(RectArea&) { }                                              // _E0
 	virtual void initProjTex(bool, LightCamera*)                            = 0;           // _E4
 	virtual void initReflectTex(bool)                                       = 0;           // _E8
 	virtual void texturePrintf(Font* font, int x, int y, char* format, ...) = 0;           // _EC
@@ -277,6 +285,11 @@ extern DGXGraphics* gfx;
 struct GfxInfo {
 	// unused/inlined:
 	void createCollData(Vector3f*, f32);
+
+	BoundBox mBox;           // _00
+	u8 _18[0x4];             // _18, unknown
+	s16* _1C;                // _1C, this is probably actually a pointer to a struct
+	CollTriInfo* mTriangles; // _20
 };
 
 #endif

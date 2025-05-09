@@ -16,6 +16,17 @@ struct Texture;
  * @brief TODO
  */
 struct PVWKeyInfoU8 {
+
+	void read(RandomAccessStream& input)
+	{
+		_00 = input.readByte();
+		input.readByte();
+		input.readByte();
+		input.readByte();
+		_04 = input.readFloat();
+		_08 = input.readFloat();
+	}
+
 	u8 _00;  // _00
 	f32 _04; // _04
 	f32 _08; // _08
@@ -39,6 +50,13 @@ struct PVWKeyInfoS10 {
 };
 
 struct PVWKeyInfoF32 {
+	void read(RandomAccessStream& input)
+	{
+		_00 = input.readFloat();
+		_04 = input.readFloat();
+		_08 = input.readFloat();
+	}
+
 	f32 _00; // _00
 	f32 _04; // _04
 	f32 _08; // _08
@@ -52,7 +70,7 @@ struct PVWAnimInfo1Intermediate {
 		_04.read(input);
 	}
 
-	int _00; // _00
+	u32 _00; // _00
 	T _04;   // _04
 };
 
@@ -66,7 +84,7 @@ struct PVWAnimInfo3Intermediate {
 		_24.read(input);
 	}
 
-	int _00; // _00
+	u32 _00; // _00
 	T _04;   // _04
 	T _14;   // _14
 	T _24;   // _24
@@ -153,8 +171,9 @@ struct AKeyInfo {
 struct PVWColourAnimInfo {
 	void extract(f32, Colour&);
 
-	u32 mTotalFrameCount;                  // _00
-	PVWAnimInfo3<PVWKeyInfoU8>* mAnimInfo; // _04
+	void read(RandomAccessStream& input) { mAnimInfo.read(input); }
+
+	PVWAnimInfo3<PVWKeyInfoU8> mAnimInfo; // _00
 };
 
 /**
@@ -164,8 +183,9 @@ struct PVWColourAnimInfo {
 struct PVWAlphaAnimInfo {
 	void extract(f32, Colour&);
 
-	u32 mTotalFrameCount;                  // _00
-	PVWAnimInfo1<PVWKeyInfoU8>* mAnimInfo; // _04
+	void read(RandomAccessStream& input) { mAnimInfo.read(input); }
+
+	PVWAnimInfo1<PVWKeyInfoU8> mAnimInfo; // _00
 };
 
 /**
@@ -176,6 +196,15 @@ struct PVWPolygonColourInfo {
 	PVWPolygonColourInfo() { mCurrentFrame = 0.0f; }
 
 	void animate(f32*, Colour&);
+
+	void read(RandomAccessStream& input)
+	{
+		mColour.read(input);
+		mTotalFrameCount = input.readInt();
+		mSpeed           = input.readFloat();
+		mColourInfo.read(input);
+		mAlphaInfo.read(input);
+	}
 
 	Colour mColour;                // _00
 	u32 mTotalFrameCount;          // _04
@@ -223,7 +252,7 @@ struct PVWTextureInfo {
 	void read(RandomAccessStream&);
 
 	Vector3f _00;                 // _00
-	int mTextureDataCount;        // _0C
+	u32 mTextureDataCount;        // _0C
 	u32 mTexGenDataCount;         // _10
 	u32 _14;                      // _14
 	u32 mTevStageCount;           // _18
@@ -353,38 +382,43 @@ struct PVWTevInfo {
  * @note Size: 0x9C.
  */
 struct PVWTextureData {
-	PVWTextureData();
+	PVWTextureData()
+	{
+		_58 = 0.0f;
+		_08 = nullptr;
+		_16 = 0;
+	}
 
 	void animate(f32*, Matrix4f&);
 	void read(RandomAccessStream&);
 
-	u32 _00;                        // _00
-	TexAttr* _04;                   // _04
-	Texture* _08;                   // _08
-	u16 _0C;                        // _0C
-	u16 _0E;                        // _0E
-	u8 _10;                         // _10
-	u8 _11;                         // _11
-	u8 _12;                         // _12
-	u8 _13;                         // _13
-	u8 _14;                         // _14
-	u8 _15;                         // _15
-	u8 _16;                         // _16
-	u32 _18;                        // _18
-	f32 _1C;                        // _1C
-	f32 _20;                        // _20
-	f32 _24;                        // _24
-	f32 _28;                        // _28
-	f32 _2C;                        // _2C
-	f32 _30;                        // _30
-	f32 _34;                        // _34
-	u32 _38;                        // _38
-	f32 _3C;                        // _3C
-	PVWAnimInfo1<PVWKeyInfoU8> _40; // _40
-	PVWAnimInfo1<PVWKeyInfoU8> _48; // _48
-	PVWAnimInfo1<PVWKeyInfoU8> _50; // _50
-	u32 _58;                        // _58, unknown
-	Matrix4f _5C;                   // _5C
+	u32 _00;                         // _00
+	TexAttr* _04;                    // _04
+	Texture* _08;                    // _08
+	u16 _0C;                         // _0C
+	u16 _0E;                         // _0E
+	u8 _10;                          // _10
+	u8 _11;                          // _11
+	u8 _12;                          // _12
+	u8 _13;                          // _13
+	u8 _14;                          // _14
+	u8 _15;                          // _15
+	u8 _16;                          // _16
+	u32 _18;                         // _18
+	f32 _1C;                         // _1C
+	f32 _20;                         // _20
+	f32 _24;                         // _24
+	f32 _28;                         // _28
+	f32 _2C;                         // _2C
+	f32 _30;                         // _30
+	f32 _34;                         // _34
+	u32 _38;                         // _38
+	f32 _3C;                         // _3C
+	PVWAnimInfo3<PVWKeyInfoF32> _40; // _40
+	PVWAnimInfo3<PVWKeyInfoF32> _48; // _48
+	PVWAnimInfo3<PVWKeyInfoF32> _50; // _50
+	f32 _58;                         // _58
+	Matrix4f _5C;                    // _5C
 };
 
 /**
@@ -392,7 +426,12 @@ struct PVWTextureData {
  */
 struct PVWTexGenData {
 	// unused/inlined:
-	void read(RandomAccessStream&);
+	void read(RandomAccessStream& input);
+
+	u8 _00; // _00
+	u8 _01; // _01
+	u8 _02; // _02
+	u8 _03; // _03
 };
 
 /**
@@ -400,7 +439,13 @@ struct PVWTexGenData {
  * @note Size: 0x10.
  */
 struct PVWPeInfo {
-	void read(RandomAccessStream&);
+	void read(RandomAccessStream& input)
+	{
+		_00                = input.readInt();
+		mAlphaCompareFlags = input.readInt();
+		mDepthTestFlags    = input.readInt();
+		mBlendModeFlags    = input.readInt();
+	}
 
 	u32 _00;                // _00
 	u32 mAlphaCompareFlags; // _04

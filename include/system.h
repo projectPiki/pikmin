@@ -309,7 +309,7 @@ struct System : public StdSystem {
 	// _00-_248 = StdSystem
 	u32 _244;                           // _244
 	u32 _248;                           // _248
-	DGXGraphics* mGfx;                  // _24C
+	Graphics* mGfx;                     // _24C
 	u32 _250;                           // _250, unknown
 	Delegate1<System, Graphics&>* _254; // _254
 	int _258;                           // _258

@@ -303,7 +303,7 @@ struct BaseCollTriInfo {
  * @note Size: 0x58.
  */
 struct CollTriInfo : public BaseCollTriInfo {
-	CollTriInfo();
+	CollTriInfo() { }
 
 	void init(RoomInfo*, Vector3f*);
 	int behindEdge(Vector3f&);
@@ -331,17 +331,17 @@ struct CollTriInfo : public BaseCollTriInfo {
 struct CollGroup {
 	CollGroup()
 	{
-		mTriangleList = nullptr;
-		mTriCount     = 0;
-		mStateIndex   = 0;
-		mFarCulledTriDistances           = nullptr;
+		mTriangleList          = nullptr;
+		mTriCount              = 0;
+		mStateIndex            = 0;
+		mFarCulledTriDistances = nullptr;
 	}
 
 	u8 _00[0x4];                   // _00, unknown
 	s16 mTriCount;                 // _04
 	s16 mFarCulledTriCount;        // _06
 	CollTriInfo** mTriangleList;   // _08
-	u8* mFarCulledTriDistances;                       // _0C
+	u8* mFarCulledTriDistances;    // _0C
 	Shape* mShape;                 // _10
 	Vector3f* mVertexList;         // _14
 	int mStateIndex;               // _18
