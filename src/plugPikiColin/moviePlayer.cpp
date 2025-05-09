@@ -244,7 +244,7 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		gsys->getHeap(SYSHEAP_Movie)->setAllocType(type);
 		gsys->setHeap(heapid);
 	}
-	gsys->_2AO               = 0;
+	gsys->_2A0               = 0;
 	gsys->mPrevHeapAllocType = old;
 }
 

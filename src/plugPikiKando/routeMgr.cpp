@@ -931,7 +931,7 @@ void RouteMgr::initLinks()
 
 	// same with this stuff
 	gsys->mPrevHeapAllocType = check;
-	gsys->_2AO               = 0;
+	gsys->_2A0               = 0;
 }
 
 /*

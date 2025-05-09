@@ -330,7 +330,7 @@ struct System : public StdSystem {
 	u32 _294;                           // _294
 	u32 _298;                           // _298
 	u32 _29C;                           // _29C
-	u32 _2AO;                           // _2A0
+	u32 _2A0;                           // _2A0
 	u32 mPrevHeapAllocType;             // _2A4, unknown
 	AddressNode _2A8;                   // _2A8, unknown size
 	u32 _2BC;                           // _2BC, unknown, could be part of _2A8

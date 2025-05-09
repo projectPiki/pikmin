@@ -230,7 +230,7 @@ static void createMenuWindow()
 
 	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
-	gsys->_2AO               = 0;
+	gsys->_2A0               = 0;
 	gsys->mPrevHeapAllocType = heapold;
 	gsys->endLoading();
 	PRINT("menu window attach\n");
@@ -279,7 +279,7 @@ static void createTutorialWindow(int a1, int a2, bool flag)
 	gsys->setHeap(heapid);
 	showFrame(false, 0.5f);
 	gameflow.mIsTutorialActive = 1;
-	gsys->_2AO                 = 0;
+	gsys->_2A0                 = 0;
 	gsys->mPrevHeapAllocType   = heapold;
 	gsys->endLoading();
 	PRINT("tutorial window attach\n");
