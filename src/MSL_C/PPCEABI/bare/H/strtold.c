@@ -41,7 +41,7 @@ enum hex_scan_states {
  * Address:	8021942C
  * Size:	00008C
  */
-void atof(void)
+f64 atof(const char*)
 {
 	/*
 	.loc_0x0:

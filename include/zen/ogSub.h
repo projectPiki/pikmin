@@ -17,23 +17,6 @@ namespace zen {
 
 /**
  * @brief TODO
- *
- * @note Size: 0x198
- */
-struct PikaAlphaMgr {
-	PikaAlphaMgr(P2DScreen*);
-
-	void start();
-	void startFadeIn(f32);
-	void startFadeOut(f32);
-	void update();
-
-	// TODO: members
-	u8 _00[0x198]; // _00, unknown
-};
-
-/**
- * @brief TODO
  */
 struct setTenmetuAlpha {
 
@@ -41,7 +24,10 @@ struct setTenmetuAlpha {
 	 * @brief TODO
 	 */
 	enum TenmetuMode {
-		// TODO: this
+		MODE_Unk0 = 0,
+		MODE_Unk1 = 1,
+		MODE_Unk2 = 2,
+		MODE_Unk3 = 3,
 	};
 
 	setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8);
@@ -62,10 +48,55 @@ struct setTenmetuAlpha {
 	// unused/inlined:
 	void calcAlpha(f32);
 
-	// TODO: members
-	int _00;
-	P2DPicture* mPic; // _04
-	u8 _08[0x124];    // _08
+	// DLL inlines to do:
+	void setColorTab(u16 p1, Colour* p2, Colour* p3, f32 p4)
+	{
+		if (p1 < 20) {
+			_30[p1] = *p2;
+			_80[p1] = *p3;
+			_D0[p1] = p4;
+			_128    = p1 + 1;
+		}
+	}
+
+	TenmetuMode mMode; // _00
+	P2DPicture* mPic;  // _04
+	f32 _08;           // _08
+	f32 _0C;           // _0C
+	f32 _10;           // _10
+	f32 _14;           // _14
+	f32 _18;           // _18
+	u8 _1C;            // _1C
+	u8 _1D;            // _1D
+	f32 _20;           // _20
+	f32 _24;           // _24
+	f32 _28;           // _28
+	u8 _2C[0x4];       // _2C, unknown
+	Colour _30[20];    // _30
+	Colour _80[20];    // _80
+	f32 _D0[20];       // _D0
+	f32 _120;          // _120
+	f32 _124;          // _124
+	s16 _128;          // _128
+	s16 _12A;          // _12A
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x198
+ */
+struct PikaAlphaMgr {
+	PikaAlphaMgr(P2DScreen*);
+
+	void start();
+	void startFadeIn(f32);
+	void startFadeOut(f32);
+	void update();
+
+	int mState;                           // _00
+	s16 _04;                              // _04
+	setTenmetuAlpha* mTenmetuAlphas[100]; // _08
 };
 
 /**

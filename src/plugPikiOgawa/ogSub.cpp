@@ -1,7 +1,12 @@
 #include "zen/ogSub.h"
 #include "zen/Number.h"
+#include "zen/DrawCommon.h"
 #include "P2D/TextBox.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
+#include "P2D/Screen.h"
 #include "gameflow.h"
+#include "nlib/Math.h"
 #include "DebugLog.h"
 #include "sysNew.h"
 
@@ -32,7 +37,7 @@ static int SpecialNumber[100] = {};
  * Address:	8017E850
  * Size:	00002C
  */
-bool zen::ogCheckInsCard()
+bool ogCheckInsCard()
 {
 	return gameflow.mMemoryCard.isCardInserted();
 }
@@ -42,16 +47,16 @@ bool zen::ogCheckInsCard()
  * Address:	8017E87C
  * Size:	000068
  */
-f32 zen::calcPuruPuruScale(f32 p1)
+f32 calcPuruPuruScale(f32 p1)
 {
-	u32 badCompiler[2];
+	u32 badCompiler;
 
 	f32 val = (p1 / 0.5f);
 	if (val > 1.0f) {
 		val = 1.0f;
 	}
-	f32 cosVal = cosf(2.0f * TAU * val);
-	return 1.0f + (0.08f * (1.0f - val) * (1.0f + cosVal));
+	f32 x = (1.0f - val) * 0.08f;
+	return (NMathF::cos(2.0f * TAU * val) + 1.0f) * x + 1.0f;
 }
 
 /*
@@ -59,112 +64,10 @@ f32 zen::calcPuruPuruScale(f32 p1)
  * Address:	8017E8E4
  * Size:	000174
  */
-void zen::setNumberTag(P2DScreen*, u32, int*, int)
+void setNumberTag(P2DScreen* screen, u32 tag, int* valuePtr, int digit)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  stw       r30, 0x48(r1)
-	  stw       r29, 0x44(r1)
-	  addi      r29, r6, 0
-	  stw       r28, 0x40(r1)
-	  mr        r28, r5
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r3, 0
-	  li        r3, 0x1C
-	  bl        -0x137920
-	  mr.       r30, r3
-	  beq-      .loc_0x148
-	  lis       r3, 0x802D
-	  addi      r0, r3, 0x3004
-	  stw       r0, 0x0(r30)
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x4
-	  li        r5, 0x12
-	  bl        0x31DB8
-	  lis       r3, 0x802D
-	  addi      r0, r3, 0x2FF4
-	  stw       r0, 0x0(r30)
-	  addi      r3, r30, 0x4
-	  bl        0x40D94
-	  stw       r28, 0x4(r30)
-	  lis       r3, 0x802D
-	  addi      r0, r3, 0x2FE4
-	  stw       r29, 0x8(r30)
-	  li        r4, 0
-	  stw       r0, 0x0(r30)
-	  stb       r4, 0x18(r30)
-	  lwz       r3, 0x4(r30)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x10(r30)
-	  stw       r4, 0x14(r30)
-	  lfs       f0, -0x50D8(r2)
-	  stfs      f0, 0xC(r30)
-	  lbz       r0, 0x18(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xEC
-	  addi      r3, r30, 0x4
-	  bl        .loc_0x174
-	  lbz       r0, 0xF1(r31)
-	  lis       r4, 0x803D
-	  rlwinm    r5,r3,2,0,29
-	  addi      r3, r4, 0x2388
-	  add       r3, r3, r5
-	  cmplwi    r0, 0
-	  lwz       r0, 0x0(r3)
-	  ble-      .loc_0x118
-	  stw       r0, 0xEC(r31)
-	  b         .loc_0x118
-
-	.loc_0xEC:
-	  addi      r3, r30, 0x4
-	  bl        .loc_0x174
-	  lbz       r0, 0xF1(r31)
-	  lis       r4, 0x803D
-	  rlwinm    r5,r3,2,0,29
-	  addi      r3, r4, 0x2360
-	  add       r3, r3, r5
-	  cmplwi    r0, 0
-	  lwz       r0, 0x0(r3)
-	  ble-      .loc_0x118
-	  stw       r0, 0xEC(r31)
-
-	.loc_0x118:
-	  lha       r5, 0x1A(r31)
-	  lha       r4, 0x1E(r31)
-	  lha       r3, 0x18(r31)
-	  lha       r0, 0x1C(r31)
-	  sub       r4, r4, r5
-	  srawi     r4, r4, 0x1
-	  sub       r0, r0, r3
-	  srawi     r0, r0, 0x1
-	  extsh     r0, r0
-	  sth       r0, 0xB8(r31)
-	  extsh     r0, r4
-	  sth       r0, 0xBA(r31)
-
-	.loc_0x148:
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        0x31C68
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  lwz       r30, 0x48(r1)
-	  lwz       r29, 0x44(r1)
-	  lwz       r28, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-
-	.loc_0x174:
-	*/
+	P2DPane* pane = screen->search(tag, true);
+	pane->setCallBack(new NumberPicCallBack<int>(pane, valuePtr, digit, false));
 }
 
 /*
@@ -172,36 +75,13 @@ void zen::setNumberTag(P2DScreen*, u32, int*, int)
  * Address:	8017EA94
  * Size:	000064
  */
-void zen::setTextColor(P2DTextBox*, P2DPicture*)
+void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x30(r1)
-	  li        r0, 0
-	  lbz       r5, 0xF4(r3)
-	  stb       r5, 0x2C(r1)
-	  lbz       r5, 0xF5(r3)
-	  stb       r5, 0x2D(r1)
-	  lbz       r5, 0xF6(r3)
-	  stb       r5, 0x2E(r1)
-	  lbz       r5, 0xF7(r3)
-	  stb       r5, 0x2F(r1)
-	  lbz       r5, 0xF8(r3)
-	  stb       r5, 0x28(r1)
-	  lbz       r5, 0xF9(r3)
-	  stb       r5, 0x29(r1)
-	  lbz       r5, 0xFA(r3)
-	  stb       r5, 0x2A(r1)
-	  lbz       r3, 0xFB(r3)
-	  stb       r3, 0x2B(r1)
-	  stb       r0, 0x2B(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r0, 0x108(r4)
-	  lwz       r0, 0x28(r1)
-	  stw       r0, 0x10C(r4)
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	Colour white = tbox->getCharColor();
+	Colour black = tbox->getGradColor();
+	black.a      = 0;
+	pic->setWhite(white);
+	pic->setBlack(black);
 }
 
 /*
@@ -209,59 +89,37 @@ void zen::setTextColor(P2DTextBox*, P2DPicture*)
  * Address:	8017EAF8
  * Size:	000088
  */
-bool zen::getStringCVS(char*, char*, s16)
+bool getStringCVS(char* p1, char* p2, s16 p3)
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0x200
-	  b         .loc_0x34
+	s16 count = 512;
+	while (p3 > 0) {
+		char a = *p2;
+		if (!a) {
+			return true;
+		}
+		if (a == ',' || a == '\n') {
+			p3--;
+		}
+		p2++;
+	}
 
-	.loc_0x8:
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1C
-	  li        r3, 0x1
-	  blr
+	while (true) {
+		char a = *p2;
+		if (a != 0 && a != ',' && a != '\n') {
+			*p1++ = a;
+			p2++;
+			count--;
+			if (count < 0) {
+				PRINT("文字列が%d文字を超えました。\n", 0); // 'the string exceeds %d characters.'
+				return true;
+			}
+		} else {
+			break;
+		}
+	};
 
-	.loc_0x1C:
-	  cmplwi    r0, 0x2C
-	  beq-      .loc_0x2C
-	  cmplwi    r0, 0xA
-	  bne-      .loc_0x30
-
-	.loc_0x2C:
-	  subi      r5, r5, 0x1
-
-	.loc_0x30:
-	  addi      r4, r4, 0x1
-
-	.loc_0x34:
-	  extsh.    r0, r5
-	  bgt+      .loc_0x8
-
-	.loc_0x3C:
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x78
-	  cmplwi    r0, 0x2C
-	  beq-      .loc_0x78
-	  cmplwi    r0, 0xA
-	  beq-      .loc_0x78
-	  subi      r6, r6, 0x1
-	  stb       r0, 0x0(r3)
-	  extsh.    r0, r6
-	  addi      r3, r3, 0x1
-	  addi      r4, r4, 0x1
-	  bge+      .loc_0x3C
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x78:
-	  li        r0, 0
-	  stb       r0, 0x0(r3)
-	  li        r3, 0
-	  blr
-	*/
+	*p1 = 0;
+	return false;
 }
 
 /*
@@ -269,225 +127,75 @@ bool zen::getStringCVS(char*, char*, s16)
  * Address:	8017EB80
  * Size:	000328
  */
-zen::PikaAlphaMgr::PikaAlphaMgr(P2DScreen*)
+PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x2A8(r1)
-	  stfd      f31, 0x2A0(r1)
-	  stfd      f30, 0x298(r1)
-	  stmw      r19, 0x264(r1)
-	  addi      r26, r3, 0
-	  addi      r27, r4, 0
-	  li        r30, 0
-	  sth       r0, 0x4(r3)
+	_04 = 0;
+	char str[512];
+	char buf[8];
+	for (int i = 0; i < 100; i++) {
+		sprintf(buf, "pk%02d", i);
+		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), false);
+		if (!pane) {
+			continue;
+		}
 
-	.loc_0x2C:
-	  addi      r5, r30, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x54
-	  addi      r4, r13, 0x958
-	  bl        0x979DC
-	  lwz       r12, 0x0(r27)
-	  mr        r3, r27
-	  lbz       r0, 0x55(r1)
-	  li        r5, 0
-	  lwz       r12, 0x34(r12)
-	  lbz       r4, 0x54(r1)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r6, 0x56(r1)
-	  mtlr      r12
-	  rlwimi    r0,r4,24,0,7
-	  lbz       r7, 0x57(r1)
-	  rlwimi    r0,r6,8,16,23
-	  or        r4, r7, r0
-	  blrl
-	  mr.       r31, r3
-	  beq-      .loc_0x2FC
-	  lwz       r3, 0xE0(r31)
-	  lwz       r4, 0xC(r3)
-	  lhz       r0, 0x8(r4)
-	  cmplwi    r0, 0x12
-	  bne-      .loc_0x2FC
-	  lwz       r28, 0x10C(r31)
-	  li        r3, 0
-	  lbz       r0, 0xC(r31)
-	  rlwimi    r0,r3,7,24,24
-	  addi      r29, r4, 0
-	  stb       r0, 0xC(r31)
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  li        r5, 0
-	  bl        -0x140
-	  addi      r3, r1, 0x5C
-	  bl        0x9A7EC
-	  frsp      f31, f1
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  li        r5, 0x1
-	  bl        -0x15C
-	  addi      r3, r1, 0x5C
-	  bl        0x9A7D0
-	  frsp      f30, f1
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  bl        0x31A38
-	  lbz       r0, 0xF4(r31)
-	  li        r3, 0x12C
-	  stb       r0, 0x44(r1)
-	  lbz       r0, 0xF5(r31)
-	  stb       r0, 0x45(r1)
-	  lbz       r0, 0xF6(r31)
-	  stb       r0, 0x46(r1)
-	  lbz       r0, 0xF7(r31)
-	  stb       r0, 0x47(r1)
-	  lbz       r24, 0x47(r1)
-	  lbz       r0, 0xF8(r31)
-	  stb       r0, 0x40(r1)
-	  lbz       r0, 0xF9(r31)
-	  stb       r0, 0x41(r1)
-	  lbz       r0, 0xFA(r31)
-	  stb       r0, 0x42(r1)
-	  lbz       r0, 0xFB(r31)
-	  stb       r0, 0x43(r1)
-	  lbz       r31, 0x43(r1)
-	  bl        -0x137CB8
-	  addi      r25, r3, 0
-	  mr.       r3, r25
-	  beq-      .loc_0x164
-	  fmr       f1, f31
-	  addi      r4, r29, 0
-	  fmr       f2, f30
-	  addi      r5, r24, 0
-	  addi      r6, r31, 0
-	  bl        0x454
+		P2DPane* parent = pane->getPaneTree()->getParent()->getObject();
+		if (parent->getTypeID() != PANETYPE_Picture) {
+			continue;
+		}
 
-	.loc_0x164:
-	  lha       r0, 0x4(r26)
-	  li        r29, 0
-	  li        r31, 0
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x8
-	  stwx      r25, r26, r0
+		P2DPicture* pic  = (P2DPicture*)parent;
+		P2DTextBox* tbox = (P2DTextBox*)pane;
+		char* text       = tbox->getString();
+		tbox->hide();
+		getStringCVS(str, text, 0);
+		f32 val0 = atof(str);
+		getStringCVS(str, text, 1);
+		f32 val1 = atof(str);
 
-	.loc_0x17C:
-	  extsh     r24, r31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x2
-	  bl        -0x214
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9AE80
-	  rlwinm    r25,r3,0,24,31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x3
-	  bl        -0x238
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9AE5C
-	  rlwinm    r23,r3,0,24,31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x4
-	  bl        -0x25C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9AE38
-	  rlwinm    r22,r3,0,24,31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x5
-	  bl        -0x280
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9AE14
-	  rlwinm    r21,r3,0,24,31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x6
-	  bl        -0x2A4
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9ADF0
-	  rlwinm    r20,r3,0,24,31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x7
-	  bl        -0x2C8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9ADCC
-	  rlwinm    r19,r3,0,24,31
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x5C
-	  addi      r5, r24, 0x8
-	  bl        -0x2EC
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x2F0
-	  addi      r3, r1, 0x5C
-	  bl        0x9A638
-	  stb       r25, 0x4C(r1)
-	  rlwinm    r4,r29,0,16,31
-	  li        r0, 0xFF
-	  frsp      f0, f1
-	  stb       r21, 0x48(r1)
-	  cmplwi    r4, 0x14
-	  stb       r23, 0x4D(r1)
-	  stb       r20, 0x49(r1)
-	  stb       r22, 0x4E(r1)
-	  stb       r19, 0x4A(r1)
-	  stb       r0, 0x4F(r1)
-	  stb       r0, 0x4B(r1)
-	  lha       r0, 0x4(r26)
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x8
-	  lwzx      r5, r26, r0
-	  bge-      .loc_0x2E0
-	  rlwinm    r3,r4,2,0,29
-	  lwz       r0, 0x4C(r1)
-	  add       r6, r5, r3
-	  stw       r0, 0x30(r6)
-	  addi      r0, r4, 0x1
-	  lwz       r3, 0x48(r1)
-	  stw       r3, 0x80(r6)
-	  stfs      f0, 0xD0(r6)
-	  sth       r0, 0x128(r5)
+		pic->printTagName(false);
+		u8 cAlpha = tbox->getCharColor().a;
+		u8 gAlpha = tbox->getGradColor().a;
 
-	.loc_0x2E0:
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x14
-	  addi      r31, r31, 0x7
-	  blt+      .loc_0x17C
+		mTenmetuAlphas[_04] = new setTenmetuAlpha(pic, val0, val1, cAlpha, gAlpha);
 
-	.loc_0x2F0:
-	  lha       r3, 0x4(r26)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x4(r26)
+		for (int j = 0; j < 20; j++) {
+			s16 idx = 7 * j;
+			if (getStringCVS(str, text, idx + 2)) {
+				break;
+			}
+			u8 red1 = atoi(str);
+			if (getStringCVS(str, text, idx + 3)) {
+				break;
+			}
+			u8 green1 = atoi(str);
+			if (getStringCVS(str, text, idx + 4)) {
+				break;
+			}
+			u8 blue1 = atoi(str);
+			if (getStringCVS(str, text, idx + 5)) {
+				break;
+			}
+			u8 red2 = atoi(str);
+			if (getStringCVS(str, text, idx + 6)) {
+				break;
+			}
+			u8 green2 = atoi(str);
+			if (getStringCVS(str, text, idx + 7)) {
+				break;
+			}
+			u8 blue2 = atoi(str);
+			if (getStringCVS(str, text, idx + 8)) {
+				break;
+			}
+			f32 val2 = atof(str);
 
-	.loc_0x2FC:
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x64
-	  blt+      .loc_0x2C
-	  mr        r3, r26
-	  lmw       r19, 0x264(r1)
-	  lwz       r0, 0x2AC(r1)
-	  lfd       f31, 0x2A0(r1)
-	  lfd       f30, 0x298(r1)
-	  addi      r1, r1, 0x2A8
-	  mtlr      r0
-	  blr
-	*/
+			Colour col1(red1, green1, blue1, 255);
+			Colour col2(red2, green2, blue2, 255);
+			mTenmetuAlphas[_04]->setColorTab(j, &col1, &col2, val2);
+		}
+		_04++;
+	}
 }
 
 /*
@@ -495,42 +203,12 @@ zen::PikaAlphaMgr::PikaAlphaMgr(P2DScreen*)
  * Address:	8017EEA8
  * Size:	00006C
  */
-void zen::PikaAlphaMgr::start()
+void PikaAlphaMgr::start()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  rlwinm    r0,r30,2,0,29
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  li        r3, 0
-	  stw       r3, 0x0(r29)
-	  add       r31, r29, r0
-	  b         .loc_0x44
-
-	.loc_0x34:
-	  lwz       r3, 0x8(r31)
-	  bl        0x79C
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x44:
-	  lha       r0, 0x4(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x34
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mState = 0;
+	for (int i = 0; i < _04; i++) {
+		mTenmetuAlphas[i]->start();
+	}
 }
 
 /*
@@ -538,48 +216,12 @@ void zen::PikaAlphaMgr::start()
  * Address:	8017EF14
  * Size:	000084
  */
-void zen::PikaAlphaMgr::startFadeIn(f32)
+void PikaAlphaMgr::startFadeIn(f32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  rlwinm    r0,r30,2,0,29
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  li        r3, 0x1
-	  stw       r3, 0x0(r29)
-	  add       r31, r29, r0
-	  b         .loc_0x58
-
-	.loc_0x3C:
-	  fmr       f1, f31
-	  lwz       r3, 0x8(r31)
-	  lfs       f2, -0x50D8(r2)
-	  lfs       f3, -0x50E4(r2)
-	  bl        0x740
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x58:
-	  lha       r0, 0x4(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x3C
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mState = 1;
+	for (int i = 0; i < _04; i++) {
+		mTenmetuAlphas[i]->startFadeIn(p1, 0.0f, 1.0f);
+	}
 }
 
 /*
@@ -587,48 +229,12 @@ void zen::PikaAlphaMgr::startFadeIn(f32)
  * Address:	8017EF98
  * Size:	000084
  */
-void zen::PikaAlphaMgr::startFadeOut(f32)
+void PikaAlphaMgr::startFadeOut(f32 p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  rlwinm    r0,r30,2,0,29
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  li        r3, 0x2
-	  stw       r3, 0x0(r29)
-	  add       r31, r29, r0
-	  b         .loc_0x58
-
-	.loc_0x3C:
-	  fmr       f1, f31
-	  lwz       r3, 0x8(r31)
-	  lfs       f2, -0x50D8(r2)
-	  lfs       f3, -0x50E4(r2)
-	  bl        0x71C
-	  addi      r31, r31, 0x4
-	  addi      r30, r30, 0x1
-
-	.loc_0x58:
-	  lha       r0, 0x4(r29)
-	  cmpw      r30, r0
-	  blt+      .loc_0x3C
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mState = 2;
+	for (int i = 0; i < _04; i++) {
+		mTenmetuAlphas[i]->startFadeOut(p1, 0.0f, 1.0f);
+	}
 }
 
 /*
@@ -636,107 +242,35 @@ void zen::PikaAlphaMgr::startFadeOut(f32)
  * Address:	8017F01C
  * Size:	000118
  */
-void zen::PikaAlphaMgr::update()
+void PikaAlphaMgr::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  stw       r28, 0x10(r1)
-	  mr        r28, r3
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x40
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF8
-	  bge-      .loc_0xCC
-	  b         .loc_0xF8
+	int i;
+	switch (mState) {
+	case 1:
+		for (i = 0; i < _04; i++) {
+			if (mTenmetuAlphas[i]->update() == 1) {
+				mState = 0;
+			}
+		}
+		break;
 
-	.loc_0x40:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0xF8
-	  b         .loc_0x8C
+	case 2:
+		for (i = 0; i < _04; i++) {
+			if (mTenmetuAlphas[i]->update() == 0) {
+				mState = -1;
+			}
+		}
+		break;
 
-	.loc_0x4C:
-	  li        r29, 0
-	  rlwinm    r0,r29,2,0,29
-	  add       r30, r28, r0
-	  li        r31, 0
-	  b         .loc_0x7C
+	case 0:
+		for (i = 0; i < _04; i++) {
+			mTenmetuAlphas[i]->update();
+		}
+		break;
 
-	.loc_0x60:
-	  lwz       r3, 0x8(r30)
-	  bl        0x6C8
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0x74
-	  stw       r31, 0x0(r28)
-
-	.loc_0x74:
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x7C:
-	  lha       r0, 0x4(r28)
-	  cmpw      r29, r0
-	  blt+      .loc_0x60
-	  b         .loc_0xF8
-
-	.loc_0x8C:
-	  li        r29, 0
-	  rlwinm    r0,r29,2,0,29
-	  add       r30, r28, r0
-	  li        r31, -0x1
-	  b         .loc_0xBC
-
-	.loc_0xA0:
-	  lwz       r3, 0x8(r30)
-	  bl        0x688
-	  cmpwi     r3, 0
-	  bne-      .loc_0xB4
-	  stw       r31, 0x0(r28)
-
-	.loc_0xB4:
-	  addi      r30, r30, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0xBC:
-	  lha       r0, 0x4(r28)
-	  cmpw      r29, r0
-	  blt+      .loc_0xA0
-	  b         .loc_0xF8
-
-	.loc_0xCC:
-	  li        r31, 0
-	  rlwinm    r0,r31,2,0,29
-	  add       r30, r28, r0
-	  b         .loc_0xEC
-
-	.loc_0xDC:
-	  lwz       r3, 0x8(r30)
-	  bl        0x64C
-	  addi      r30, r30, 0x4
-	  addi      r31, r31, 0x1
-
-	.loc_0xEC:
-	  lha       r0, 0x4(r28)
-	  cmpw      r31, r0
-	  blt+      .loc_0xDC
-
-	.loc_0xF8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  lwz       r28, 0x10(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	case -1:
+		break;
+	}
 }
 
 /*
@@ -744,71 +278,21 @@ void zen::PikaAlphaMgr::update()
  * Address:	8017F134
  * Size:	0000F0
  */
-zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8)
+setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x8003
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  fmr       f31, f2
-	  stfd      f30, 0x40(r1)
-	  fmr       f30, f1
-	  stmw      r27, 0x2C(r1)
-	  mr        r27, r3
-	  subi      r31, r7, 0x3C8
-	  addi      r29, r5, 0
-	  addi      r30, r6, 0
-	  addi      r28, r4, 0
-	  addi      r4, r31, 0
-	  addi      r3, r27, 0x30
-	  li        r5, 0
-	  li        r6, 0x4
-	  li        r7, 0x14
-	  bl        0x958F0
-	  addi      r4, r31, 0
-	  addi      r3, r27, 0x80
-	  li        r5, 0
-	  li        r6, 0x4
-	  li        r7, 0x14
-	  bl        0x958D8
-	  li        r6, 0
-	  stw       r6, 0x0(r27)
-	  lis       r0, 0x4330
-	  addi      r3, r27, 0
-	  stw       r28, 0x4(r27)
-	  stfs      f30, 0x8(r27)
-	  stfs      f31, 0xC(r27)
-	  stb       r29, 0x1C(r27)
-	  stb       r30, 0x1D(r27)
-	  lbz       r5, 0x1C(r27)
-	  lbz       r4, 0x1D(r27)
-	  lfd       f1, -0x50D0(r2)
-	  sub       r4, r4, r5
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x24(r1)
-	  stw       r0, 0x20(r1)
-	  lfd       f0, 0x20(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x18(r27)
-	  sth       r6, 0x128(r27)
-	  sth       r6, 0x12A(r27)
-	  stfs      f31, 0x120(r27)
-	  stfs      f31, 0x124(r27)
-	  lfs       f0, -0x50D8(r2)
-	  stfs      f0, 0x10(r27)
-	  lfs       f0, -0x50E4(r2)
-	  stfs      f0, 0x14(r27)
-	  lwz       r0, 0x54(r1)
-	  lfd       f31, 0x48(r1)
-	  lfd       f30, 0x40(r1)
-	  lmw       r27, 0x2C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	mMode = MODE_Unk0;
+	mPic  = pic;
+	_08   = p2;
+	_0C   = p3;
+	_1C   = p4;
+	_1D   = p5;
+	_18   = (_1D - _1C);
+	_128  = 0;
+	_12A  = 0;
+	_120  = p3;
+	_124  = p3;
+	_10   = 0.0f;
+	_14   = 1.0f;
 }
 
 /*
@@ -816,71 +300,21 @@ zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8)
  * Address:	8017F224
  * Size:	0000F0
  */
-zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, f32)
+setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8003
-	  stw       r0, 0x4(r1)
-	  li        r6, 0x4
-	  li        r7, 0x14
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  fmr       f31, f1
-	  stw       r31, 0x2C(r1)
-	  subi      r31, r5, 0x3C8
-	  li        r5, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r4, 0
-	  addi      r4, r31, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r29, 0x30
-	  bl        0x95808
-	  addi      r4, r31, 0
-	  addi      r3, r29, 0x80
-	  li        r5, 0
-	  li        r6, 0x4
-	  li        r7, 0x14
-	  bl        0x957F0
-	  li        r6, 0
-	  stw       r6, 0x0(r29)
-	  li        r4, 0xFF
-	  lis       r0, 0x4330
-	  stw       r30, 0x4(r29)
-	  mr        r3, r29
-	  stfs      f31, 0x8(r29)
-	  lfs       f2, -0x50D8(r2)
-	  stfs      f2, 0xC(r29)
-	  stb       r6, 0x1C(r29)
-	  stb       r4, 0x1D(r29)
-	  lbz       r5, 0x1C(r29)
-	  lbz       r4, 0x1D(r29)
-	  lfd       f1, -0x50D0(r2)
-	  sub       r4, r4, r5
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x1C(r1)
-	  stw       r0, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x18(r29)
-	  sth       r6, 0x128(r29)
-	  sth       r6, 0x12A(r29)
-	  stfs      f2, 0x120(r29)
-	  stfs      f2, 0x124(r29)
-	  stfs      f2, 0x10(r29)
-	  lfs       f0, -0x50E4(r2)
-	  stfs      f0, 0x14(r29)
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	mMode = MODE_Unk0;
+	mPic  = pic;
+	_08   = p2;
+	_0C   = 0.0f;
+	_1C   = 0;
+	_1D   = 255;
+	_18   = (_1D - _1C);
+	_128  = 0;
+	_12A  = 0;
+	_120  = 0.0f;
+	_124  = 0.0f;
+	_10   = 0.0f;
+	_14   = 1.0f;
 }
 
 /*
@@ -888,235 +322,42 @@ zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, f32)
  * Address:	8017F314
  * Size:	000368
  */
-void zen::setTenmetuAlpha::updateColor()
+void setTenmetuAlpha::updateColor()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0xA0(r1)
-	  lha       r7, 0x128(r3)
-	  extsh.    r0, r7
-	  ble-      .loc_0x360
-	  lha       r5, 0x12A(r3)
-	  addi      r4, r5, 0x1
-	  divw      r0, r4, r7
-	  rlwinm    r8,r5,2,0,29
-	  addi      r6, r8, 0x30
-	  add       r6, r3, r6
-	  lbz       r5, 0x0(r6)
-	  mullw     r0, r0, r7
-	  stb       r5, 0x38(r1)
-	  lbz       r5, 0x1(r6)
-	  sub       r0, r4, r0
-	  stb       r5, 0x39(r1)
-	  rlwinm    r4,r0,2,0,29
-	  addi      r5, r4, 0x30
-	  lbz       r0, 0x2(r6)
-	  add       r5, r3, r5
-	  add       r4, r3, r8
-	  stb       r0, 0x3A(r1)
-	  lbz       r0, 0x3(r6)
-	  stb       r0, 0x3B(r1)
-	  lbz       r0, 0x0(r5)
-	  stb       r0, 0x34(r1)
-	  lbz       r0, 0x1(r5)
-	  stb       r0, 0x35(r1)
-	  lbz       r0, 0x2(r5)
-	  stb       r0, 0x36(r1)
-	  lbz       r0, 0x3(r5)
-	  stb       r0, 0x37(r1)
-	  lfs       f2, 0x120(r3)
-	  lfs       f1, 0xD0(r4)
-	  lfs       f0, -0x50E4(r2)
-	  fdivs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x9C
-	  fmr       f1, f0
+	if (_128 > 0) {
+		Colour col1 = _30[_12A];
+		Colour col2 = _30[(_12A + 1) % _128];
+		f32 t       = _120 / _D0[_12A];
 
-	.loc_0x9C:
-	  lbz       r4, 0x38(r1)
-	  lis       r5, 0x4330
-	  lbz       r0, 0x34(r1)
-	  stw       r4, 0x9C(r1)
-	  lfs       f0, -0x50E4(r2)
-	  stw       r0, 0x94(r1)
-	  lfd       f4, -0x50C8(r2)
-	  fsubs     f5, f0, f1
-	  stw       r5, 0x98(r1)
-	  stw       r5, 0x90(r1)
-	  lfd       f3, 0x98(r1)
-	  lfd       f2, 0x90(r1)
-	  fsubs     f3, f3, f4
-	  fsubs     f2, f2, f4
-	  fmuls     f3, f3, f5
-	  fmuls     f2, f2, f1
-	  fadds     f2, f3, f2
-	  fctiwz    f2, f2
-	  stfd      f2, 0x88(r1)
-	  lwz       r0, 0x8C(r1)
-	  stb       r0, 0x30(r1)
-	  lbz       r4, 0x39(r1)
-	  lbz       r0, 0x35(r1)
-	  stw       r4, 0x84(r1)
-	  stw       r0, 0x7C(r1)
-	  stw       r5, 0x80(r1)
-	  stw       r5, 0x78(r1)
-	  lfd       f3, 0x80(r1)
-	  lfd       f2, 0x78(r1)
-	  fsubs     f3, f3, f4
-	  fsubs     f2, f2, f4
-	  fmuls     f3, f3, f5
-	  fmuls     f2, f2, f1
-	  fadds     f2, f3, f2
-	  fctiwz    f2, f2
-	  stfd      f2, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  stb       r0, 0x31(r1)
-	  lbz       r4, 0x3A(r1)
-	  lbz       r0, 0x36(r1)
-	  stw       r4, 0x6C(r1)
-	  stw       r0, 0x64(r1)
-	  stw       r5, 0x68(r1)
-	  stw       r5, 0x60(r1)
-	  lfd       f3, 0x68(r1)
-	  lfd       f2, 0x60(r1)
-	  fsubs     f3, f3, f4
-	  fsubs     f2, f2, f4
-	  fmuls     f3, f3, f5
-	  fmuls     f2, f2, f1
-	  fadds     f2, f3, f2
-	  fctiwz    f2, f2
-	  stfd      f2, 0x58(r1)
-	  lwz       r0, 0x5C(r1)
-	  stb       r0, 0x32(r1)
-	  lbz       r4, 0x3B(r1)
-	  lbz       r0, 0x37(r1)
-	  stw       r4, 0x54(r1)
-	  stw       r0, 0x4C(r1)
-	  stw       r5, 0x50(r1)
-	  stw       r5, 0x48(r1)
-	  lfd       f3, 0x50(r1)
-	  lfd       f2, 0x48(r1)
-	  fsubs     f3, f3, f4
-	  fsubs     f2, f2, f4
-	  fmuls     f3, f3, f5
-	  fmuls     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fctiwz    f1, f1
-	  stfd      f1, 0x40(r1)
-	  lwz       r0, 0x44(r1)
-	  stb       r0, 0x33(r1)
-	  lwz       r4, 0x4(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x108(r4)
-	  lha       r4, 0x12A(r3)
-	  rlwinm    r0,r4,2,0,29
-	  add       r6, r3, r0
-	  lwz       r0, 0x80(r6)
-	  addi      r5, r4, 0x1
-	  stw       r0, 0x38(r1)
-	  lha       r4, 0x128(r3)
-	  divw      r0, r5, r4
-	  mullw     r0, r0, r4
-	  sub       r0, r5, r0
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r3, r0
-	  lwz       r0, 0x80(r4)
-	  stw       r0, 0x34(r1)
-	  lfs       f2, 0x120(r3)
-	  lfs       f1, 0xD0(r6)
-	  fdivs     f3, f2, f1
-	  fcmpo     cr0, f3, f0
-	  ble-      .loc_0x218
-	  fmr       f3, f0
+		if (t > 1.0f) {
+			t = 1.0f;
+		}
 
-	.loc_0x218:
-	  lbz       r4, 0x38(r1)
-	  lis       r6, 0x4330
-	  lbz       r0, 0x34(r1)
-	  li        r5, 0
-	  stw       r4, 0x44(r1)
-	  lfs       f0, -0x50E4(r2)
-	  stw       r0, 0x4C(r1)
-	  lfd       f2, -0x50C8(r2)
-	  fsubs     f4, f0, f3
-	  stw       r6, 0x40(r1)
-	  stw       r6, 0x48(r1)
-	  lfd       f1, 0x40(r1)
-	  lfd       f0, 0x48(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stb       r0, 0x30(r1)
-	  lbz       r4, 0x39(r1)
-	  lbz       r0, 0x35(r1)
-	  stw       r4, 0x5C(r1)
-	  stw       r0, 0x64(r1)
-	  stw       r6, 0x58(r1)
-	  stw       r6, 0x60(r1)
-	  lfd       f1, 0x58(r1)
-	  lfd       f0, 0x60(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stb       r0, 0x31(r1)
-	  lbz       r4, 0x3A(r1)
-	  lbz       r0, 0x36(r1)
-	  stw       r4, 0x74(r1)
-	  stw       r0, 0x7C(r1)
-	  stw       r6, 0x70(r1)
-	  stw       r6, 0x78(r1)
-	  lfd       f1, 0x70(r1)
-	  lfd       f0, 0x78(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fmuls     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x80(r1)
-	  lwz       r0, 0x84(r1)
-	  stb       r0, 0x32(r1)
-	  stb       r5, 0x33(r1)
-	  lwz       r4, 0x4(r3)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x10C(r4)
-	  lwz       r4, 0x2DEC(r13)
-	  lfs       f1, 0x120(r3)
-	  lfs       f0, 0x28C(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x120(r3)
-	  lha       r0, 0x12A(r3)
-	  lfs       f1, 0x120(r3)
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r3, r0
-	  lfs       f0, 0xD0(r4)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x360
-	  lfs       f0, -0x50D8(r2)
-	  stfs      f0, 0x120(r3)
-	  lha       r4, 0x12A(r3)
-	  addi      r0, r4, 0x1
-	  sth       r0, 0x12A(r3)
-	  lha       r4, 0x12A(r3)
-	  lha       r0, 0x128(r3)
-	  cmpw      r4, r0
-	  blt-      .loc_0x360
-	  sth       r5, 0x12A(r3)
+		f32 tComp = 1.0f - t;
 
-	.loc_0x360:
-	  addi      r1, r1, 0xA0
-	  blr
-	*/
+		Colour targCol(col1.r * tComp + col2.r * t, col1.g * tComp + col2.g * t, col1.b * tComp + col2.b * t, col1.a * tComp + col2.a * t);
+		mPic->setWhite(targCol);
+		col1 = _80[_12A];
+		col2 = _80[(_12A + 1) % _128];
+		t    = _120 / _D0[_12A];
+		if (t > 1.0f) {
+			t = 1.0f;
+		}
+
+		tComp = 1.0f - t;
+
+		targCol.set(col1.r * tComp + col2.r * t, col1.g * tComp + col2.g * t, col1.b * tComp + col2.b * t, 0);
+		mPic->setBlack(targCol);
+
+		_120 += gsys->getFrameTime();
+		if (_120 > _D0[_12A]) {
+			_120 = 0.0f;
+			_12A++;
+			if (_12A >= _128) {
+				_12A = 0;
+			}
+		}
+	}
 }
 
 /*
@@ -1124,20 +365,12 @@ void zen::setTenmetuAlpha::updateColor()
  * Address:	8017F67C
  * Size:	000024
  */
-void zen::setTenmetuAlpha::start()
+void setTenmetuAlpha::start()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  sth       r0, 0x12A(r3)
-	  li        r0, 0x1
-	  lfs       f0, 0x124(r3)
-	  stfs      f0, 0xC(r3)
-	  lfs       f0, 0x124(r3)
-	  stfs      f0, 0x120(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	_12A  = 0;
+	_0C   = _124;
+	_120  = _124;
+	mMode = MODE_Unk1;
 }
 
 /*
@@ -1145,37 +378,25 @@ void zen::setTenmetuAlpha::start()
  * Address:	8017F6A0
  * Size:	000060
  */
-void zen::setTenmetuAlpha::startFadeIn(f32, f32, f32)
+void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0x1
-	  beqlr-
-	  lfs       f0, -0x50D8(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x20
-	  lfs       f1, -0x50C0(r2)
+	if (mMode == MODE_Unk1) {
+		return;
+	}
 
-	.loc_0x20:
-	  li        r0, 0
-	  fsubs     f0, f3, f2
-	  sth       r0, 0x12A(r3)
-	  li        r0, 0x2
-	  lfs       f4, 0x124(r3)
-	  stfs      f4, 0xC(r3)
-	  lfs       f4, 0x124(r3)
-	  stfs      f4, 0x120(r3)
-	  stfs      f1, 0x14(r3)
-	  lfs       f1, -0x50D8(r2)
-	  stfs      f1, 0x10(r3)
-	  stfs      f2, 0x24(r3)
-	  stfs      f3, 0x28(r3)
-	  stfs      f0, 0x20(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	if (p1 <= 0.0f) {
+		p1 = 0.01f;
+	}
+
+	_12A  = 0;
+	_0C   = _124;
+	_120  = _124;
+	_14   = p1;
+	_10   = 0.0f;
+	_24   = p2;
+	_28   = p3;
+	_20   = p3 - p2;
+	mMode = MODE_Unk2;
 }
 
 /*
@@ -1183,31 +404,22 @@ void zen::setTenmetuAlpha::startFadeIn(f32, f32, f32)
  * Address:	8017F700
  * Size:	000048
  */
-void zen::setTenmetuAlpha::startFadeOut(f32, f32, f32)
+void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  beqlr-
-	  lfs       f0, -0x50D8(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x20
-	  lfs       f1, -0x50C0(r2)
+	if (mMode == MODE_Unk0) {
+		return;
+	}
 
-	.loc_0x20:
-	  stfs      f1, 0x14(r3)
-	  fsubs     f0, f3, f2
-	  li        r0, 0x3
-	  lfs       f1, -0x50D8(r2)
-	  stfs      f1, 0x10(r3)
-	  stfs      f2, 0x24(r3)
-	  stfs      f3, 0x28(r3)
-	  stfs      f0, 0x20(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	if (p1 <= 0.0f) {
+		p1 = 0.01f;
+	}
+
+	_14   = p1;
+	_10   = 0.0f;
+	_24   = p2;
+	_28   = p3;
+	_20   = p3 - p2;
+	mMode = MODE_Unk3;
 }
 
 /*
@@ -1215,9 +427,20 @@ void zen::setTenmetuAlpha::startFadeOut(f32, f32, f32)
  * Address:	........
  * Size:	0000F0
  */
-void zen::setTenmetuAlpha::calcAlpha(f32)
+void setTenmetuAlpha::calcAlpha(f32 p1)
 {
-	// UNUSED FUNCTION
+	if (_08 > 0.0f) {
+		_0C += gsys->getFrameTime();
+		if (_0C > _08) {
+			_0C -= _08;
+		}
+
+		updateColor();
+		f32 angle = TAU * _0C / _08;
+		u8 alpha  = u8(_1C + int((sinf(angle) + 1.0f) * _18 / 2.0f));
+		alpha     = alpha * p1;
+		mPic->setAlpha(alpha);
+	}
 }
 
 /*
@@ -1225,253 +448,47 @@ void zen::setTenmetuAlpha::calcAlpha(f32)
  * Address:	8017F748
  * Size:	000358
  */
-zen::setTenmetuAlpha::TenmetuMode zen::setTenmetuAlpha::update()
+setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  stfd      f31, 0x80(r1)
-	  stw       r31, 0x7C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x0(r3)
-	  cmpwi     r3, 0
-	  bne-      .loc_0x28
-	  b         .loc_0x340
+	if (mMode == MODE_Unk0) {
+		return mMode;
+	}
 
-	.loc_0x28:
-	  cmpwi     r3, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x40
-	  cmpwi     r3, 0x1
-	  bge-      .loc_0x280
-	  b         .loc_0x33C
+	switch (mMode) {
+	case MODE_Unk2:
+		_10 += gsys->getFrameTime();
+		f32 t = _10 / _14;
+		if (t < 0.0f) {
+			t = 0.0f;
+		}
+		if (t > 1.0f) {
+			t     = 1.0f;
+			mMode = MODE_Unk1;
+		}
 
-	.loc_0x40:
-	  cmpwi     r3, 0x4
-	  bge-      .loc_0x33C
-	  b         .loc_0x168
+		calcAlpha(_24 + _20 * t);
+		break;
 
-	.loc_0x4C:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f2, 0x10(r31)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, -0x50D8(r2)
-	  fdivs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  fmr       f3, f1
-	  bge-      .loc_0x80
-	  fmr       f3, f0
+	case MODE_Unk3:
+		_10 += gsys->getFrameTime();
+		t = _10 / _14;
+		if (t < 0.0f) {
+			t = 0.0f;
+		}
+		if (t > 1.0f) {
+			t     = 1.0f;
+			mMode = MODE_Unk0;
+		}
 
-	.loc_0x80:
-	  lfs       f0, -0x50E4(r2)
-	  fcmpo     cr0, f3, f0
-	  ble-      .loc_0x98
-	  li        r0, 0x1
-	  fmr       f3, f0
-	  stw       r0, 0x0(r31)
+		calcAlpha(_28 - _20 * t);
+		break;
 
-	.loc_0x98:
-	  lfs       f2, 0x20(r31)
-	  lfs       f1, 0x8(r31)
-	  lfs       f0, -0x50D8(r2)
-	  fmuls     f2, f2, f3
-	  lfs       f3, 0x24(r31)
-	  fcmpo     cr0, f1, f0
-	  fadds     f31, f3, f2
-	  ble-      .loc_0x33C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r31)
-	  lfs       f0, 0xC(r31)
-	  lfs       f1, 0x8(r31)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0xE4
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0xC(r31)
+	case MODE_Unk1:
+		calcAlpha(1.0f);
+		break;
+	}
 
-	.loc_0xE4:
-	  mr        r3, r31
-	  bl        -0x51C
-	  lfs       f2, -0x50BC(r2)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x8(r31)
-	  fmuls     f1, f2, f1
-	  fdivs     f1, f1, f0
-	  bl        0x9C4A0
-	  lfs       f0, -0x50E4(r2)
-	  lis       r0, 0x4330
-	  lfs       f2, 0x18(r31)
-	  fadds     f3, f0, f1
-	  lfs       f0, -0x50E8(r2)
-	  lbz       r4, 0x1C(r31)
-	  lfd       f1, -0x50C8(r2)
-	  fmuls     f2, f2, f3
-	  lwz       r3, 0x4(r31)
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x70(r1)
-	  lwz       r5, 0x74(r1)
-	  add       r4, r4, r5
-	  rlwinm    r4,r4,0,24,31
-	  stw       r4, 0x6C(r1)
-	  stw       r0, 0x68(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f0, f31
-	  fctiwz    f0, f0
-	  stfd      f0, 0x60(r1)
-	  lwz       r0, 0x64(r1)
-	  stb       r0, 0xF0(r3)
-	  b         .loc_0x33C
-
-	.loc_0x168:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r31)
-	  lfs       f2, 0x10(r31)
-	  lfs       f1, 0x14(r31)
-	  lfs       f0, -0x50D8(r2)
-	  fdivs     f3, f2, f1
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x198
-	  fmr       f3, f0
-
-	.loc_0x198:
-	  lfs       f0, -0x50E4(r2)
-	  fcmpo     cr0, f3, f0
-	  ble-      .loc_0x1B0
-	  li        r0, 0
-	  fmr       f3, f0
-	  stw       r0, 0x0(r31)
-
-	.loc_0x1B0:
-	  lfs       f2, 0x20(r31)
-	  lfs       f1, 0x8(r31)
-	  lfs       f0, -0x50D8(r2)
-	  fmuls     f2, f2, f3
-	  lfs       f3, 0x28(r31)
-	  fcmpo     cr0, f1, f0
-	  fsubs     f31, f3, f2
-	  ble-      .loc_0x33C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r31)
-	  lfs       f0, 0xC(r31)
-	  lfs       f1, 0x8(r31)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x1FC
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0xC(r31)
-
-	.loc_0x1FC:
-	  mr        r3, r31
-	  bl        -0x634
-	  lfs       f2, -0x50BC(r2)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x8(r31)
-	  fmuls     f1, f2, f1
-	  fdivs     f1, f1, f0
-	  bl        0x9C388
-	  lfs       f0, -0x50E4(r2)
-	  lis       r0, 0x4330
-	  lfs       f2, 0x18(r31)
-	  fadds     f3, f0, f1
-	  lfs       f0, -0x50E8(r2)
-	  lbz       r4, 0x1C(r31)
-	  lfd       f1, -0x50C8(r2)
-	  fmuls     f2, f2, f3
-	  lwz       r3, 0x4(r31)
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x60(r1)
-	  lwz       r5, 0x64(r1)
-	  add       r4, r4, r5
-	  rlwinm    r4,r4,0,24,31
-	  stw       r4, 0x6C(r1)
-	  stw       r0, 0x68(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f0, f31
-	  fctiwz    f0, f0
-	  stfd      f0, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  stb       r0, 0xF0(r3)
-	  b         .loc_0x33C
-
-	.loc_0x280:
-	  lfs       f1, 0x8(r31)
-	  lfs       f0, -0x50D8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x33C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xC(r31)
-	  lfs       f0, 0xC(r31)
-	  lfs       f1, 0x8(r31)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x2BC
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0xC(r31)
-
-	.loc_0x2BC:
-	  mr        r3, r31
-	  bl        -0x6F4
-	  lfs       f2, -0x50BC(r2)
-	  lfs       f1, 0xC(r31)
-	  lfs       f0, 0x8(r31)
-	  fmuls     f1, f2, f1
-	  fdivs     f1, f1, f0
-	  bl        0x9C2C8
-	  lfs       f4, -0x50E4(r2)
-	  lis       r0, 0x4330
-	  lfs       f2, 0x18(r31)
-	  fadds     f3, f4, f1
-	  lfs       f0, -0x50E8(r2)
-	  lbz       r4, 0x1C(r31)
-	  lfd       f1, -0x50C8(r2)
-	  fmuls     f2, f2, f3
-	  lwz       r3, 0x4(r31)
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x60(r1)
-	  lwz       r5, 0x64(r1)
-	  add       r4, r4, r5
-	  rlwinm    r4,r4,0,24,31
-	  stw       r4, 0x6C(r1)
-	  stw       r0, 0x68(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f0, f4
-	  fctiwz    f0, f0
-	  stfd      f0, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  stb       r0, 0xF0(r3)
-
-	.loc_0x33C:
-	  lwz       r3, 0x0(r31)
-
-	.loc_0x340:
-	  lwz       r0, 0x8C(r1)
-	  lfd       f31, 0x80(r1)
-	  lwz       r31, 0x7C(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	return mMode;
 }
 
 /*
@@ -1479,7 +496,7 @@ zen::setTenmetuAlpha::TenmetuMode zen::setTenmetuAlpha::update()
  * Address:	8017FAA0
  * Size:	000080
  */
-zen::ogFadeMgr::ogFadeMgr(P2DPane*, u8)
+ogFadeMgr::ogFadeMgr(P2DPane*, u8)
 {
 	/*
 	.loc_0x0:
@@ -1523,7 +540,7 @@ zen::ogFadeMgr::ogFadeMgr(P2DPane*, u8)
  * Address:	8017FB20
  * Size:	000068
  */
-void zen::ogFadeMgr::start(zen::ogFadeMgr::ogFadeStatusFlag, f32)
+void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag, f32)
 {
 	/*
 	.loc_0x0:
@@ -1571,7 +588,7 @@ void zen::ogFadeMgr::start(zen::ogFadeMgr::ogFadeStatusFlag, f32)
  * Address:	8017FB88
  * Size:	000078
  */
-void zen::ogFadeMgr::setAlpha()
+void ogFadeMgr::setAlpha()
 {
 	/*
 	.loc_0x0:
@@ -1621,7 +638,7 @@ void zen::ogFadeMgr::setAlpha()
  * Address:	8017FC00
  * Size:	000140
  */
-zen::ogFadeMgr::ogFadeStatusFlag zen::ogFadeMgr::update()
+ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 {
 	/*
 	.loc_0x0:
@@ -1735,7 +752,7 @@ zen::ogFadeMgr::ogFadeStatusFlag zen::ogFadeMgr::update()
  * Address:	........
  * Size:	00003C
  */
-void zen::movePicturePos(P2DPicture*, P2DPicture*)
+void movePicturePos(P2DPicture*, P2DPicture*)
 {
 	// UNUSED FUNCTION
 }
@@ -1767,7 +784,7 @@ void P2DPane::move(int x, int y)
  * Address:	8017FD64
  * Size:	000178
  */
-zen::ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*)
+ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*)
 {
 	/*
 	.loc_0x0:
@@ -1879,7 +896,7 @@ zen::ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*)
  * Address:	........
  * Size:	000108
  */
-void zen::ogTexAnimSubMgr::update()
+void ogTexAnimSubMgr::update()
 {
 	// UNUSED FUNCTION
 }
@@ -1889,7 +906,7 @@ void zen::ogTexAnimSubMgr::update()
  * Address:	8017FEDC
  * Size:	0000F4
  */
-zen::ogTexAnimMgr::ogTexAnimMgr(P2DScreen*)
+ogTexAnimMgr::ogTexAnimMgr(P2DScreen*)
 {
 	/*
 	.loc_0x0:
@@ -1968,7 +985,7 @@ zen::ogTexAnimMgr::ogTexAnimMgr(P2DScreen*)
  * Address:	8017FFD0
  * Size:	00014C
  */
-void zen::ogTexAnimMgr::update()
+void ogTexAnimMgr::update()
 {
 	/*
 	.loc_0x0:
@@ -2071,7 +1088,7 @@ void zen::ogTexAnimMgr::update()
  * Address:	8018011C
  * Size:	000030
  */
-int zen::getSpecialNumber(int idx)
+int getSpecialNumber(int idx)
 {
 	if (idx < 0 || idx > 99) {
 		return -1;
@@ -2085,7 +1102,7 @@ int zen::getSpecialNumber(int idx)
  * Address:	8018014C
  * Size:	00002C
  */
-void zen::setSpecialNumber(int idx, int value)
+void setSpecialNumber(int idx, int value)
 {
 	if (idx < 0 || idx > 99) {
 		return;
@@ -2099,7 +1116,7 @@ void zen::setSpecialNumber(int idx, int value)
  * Address:	80180178
  * Size:	000218
  */
-void zen::cnvSpecialNumber(char*)
+void cnvSpecialNumber(char*)
 {
 	/*
 	.loc_0x0:
@@ -2267,7 +1284,7 @@ void zen::cnvSpecialNumber(char*)
  * Address:	80180390
  * Size:	000090
  */
-zen::TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
+TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 {
 	mTextBox = textBox;
 	mTextPtr = textBox->getString();
@@ -2285,7 +1302,7 @@ zen::TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
  * Address:	80180420
  * Size:	000074
  */
-void zen::TypingTextMgr::start()
+void TypingTextMgr::start()
 {
 	u32 badCompiler;
 
@@ -2302,7 +1319,7 @@ void zen::TypingTextMgr::start()
  * Address:	80180494
  * Size:	000160
  */
-zen::ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
+ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 {
 	/*
 	.loc_0x0:
@@ -2404,7 +1421,7 @@ zen::ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  * Address:	801805F4
  * Size:	0003A8
  */
-bool zen::ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
+bool ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -2674,7 +1691,7 @@ bool zen::ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
  * Address:	8018099C
  * Size:	000104
  */
-void zen::TypingTextMgr::update()
+void TypingTextMgr::update()
 {
 	/*
 	.loc_0x0:
@@ -2763,7 +1780,7 @@ void zen::TypingTextMgr::update()
  * Address:	80180AA0
  * Size:	0003B4
  */
-void zen::cnvSpecialNumberHyphen(char*)
+void cnvSpecialNumberHyphen(char*)
 {
 	/*
 	.loc_0x0:
