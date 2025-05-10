@@ -90,7 +90,11 @@ struct P2DPane {
 		mBounds.move(newPos.x, newPos.y);
 		mPaneZ = newPos.z;
 	}
-	virtual void move(int, int, f32);                                             // _1C
+	virtual void move(int x, int y, f32 z)
+	{
+		mBounds.move(x, y);
+		mPaneZ = z;
+	} // _1C
 	virtual void moveZ(f32 newZ) { mPaneZ = newZ; }                               // _20
 	virtual void add(int x, int y) { mBounds.add(x, y); }                         // _24
 	virtual void resize(int width, int height) { mBounds.resize(width, height); } // _28

@@ -52,6 +52,7 @@ struct ogRaderMgr {
 	void DrawCircle(u8, u8, u8, u8, f32);
 
 	// TODO: members
+	u8 _00[0x45C]; // _00
 };
 
 // unused/inlined global functions:
