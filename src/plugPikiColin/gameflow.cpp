@@ -669,7 +669,7 @@ void GameFlow::softReset()
 	gsys->mTogglePrint   = 1;
 	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n",
 	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFileCounter, gsys->mDvdReadBytesCount / 1024.0f,
-	      mLoadTimeSeconds, gsys->mDvdReadBytesCount / 1048576.0f / mLoadTimeSeconds);
+	      mLoadTimeSeconds, gsys->mDvdReadBytesCount / (1024.0f * 1024.0f) / mLoadTimeSeconds);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
 	mDisableController      = 0;

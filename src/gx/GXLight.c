@@ -308,9 +308,9 @@ void GXInitSpecularDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 	obj->ldir[0] = vx * mag;
 	obj->ldir[1] = vy * mag;
 	obj->ldir[2] = vz * mag;
-	obj->lpos[0] = -nx * 1048576.0f;
-	obj->lpos[1] = -ny * 1048576.0f;
-	obj->lpos[2] = -nz * 1048576.0f;
+	obj->lpos[0] = -nx * (1024.0f * 1024.0f);
+	obj->lpos[1] = -ny * (1024.0f * 1024.0f);
+	obj->lpos[2] = -nz * (1024.0f * 1024.0f);
 }
 
 /*
@@ -329,9 +329,9 @@ void GXInitSpecularDirHA(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz, f32 hx, f32
 	obj->ldir[0] = hx;
 	obj->ldir[1] = hy;
 	obj->ldir[2] = hz;
-	obj->lpos[0] = -nx * 1048576.0f;
-	obj->lpos[1] = -ny * 1048576.0f;
-	obj->lpos[2] = -nz * 1048576.0f;
+	obj->lpos[0] = -nx * (1024.0f * 1024.0f);
+	obj->lpos[1] = -ny * (1024.0f * 1024.0f);
+	obj->lpos[2] = -nz * (1024.0f * 1024.0f);
 }
 
 /*
