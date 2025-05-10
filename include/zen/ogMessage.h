@@ -32,7 +32,12 @@ struct ogScrMessageMgr {
 	 * @brief TODO
 	 */
 	enum MessageStatus {
-		// TODO: this
+		STATE_NULL = -1,
+		STATE_Unk0 = 0,
+		STATE_Unk1 = 1,
+		STATE_Unk2 = 2,
+		STATE_Unk3 = 3,
+		STATE_Unk4 = 4,
 	};
 
 	ogScrMessageMgr(char*);
@@ -94,7 +99,7 @@ struct ogScrMessageMgr {
 	setTenmetuAlpha* _14;          // _14
 	setTenmetuAlpha* _18;          // _18
 	TextInfoType* mPageInfos[300]; // _1C, unsure of array size, make it less if necessary
-	int _4CC;                      // _4CC
+	MessageStatus mState;          // _4CC
 	s16 mCurrPageNum;              // _4D0
 	f32 _4D4;                      // _4D4
 	f32 _4D8;                      // _4D8
@@ -103,33 +108,26 @@ struct ogScrMessageMgr {
 	bool _4DE;                     // _4DE
 	bool _4DF;                     // _4DF
 	u8 _4E0;                       // _4E0
-	u16 _4E2;                      // _4E2
+	s16 _4E2;                      // _4E2
 	s16 _4E4;                      // _4E4
 	s16 _4E6;                      // _4E6
-	u16 _4E8;                      // _4E8, might be s16
-	u16 _4EA;                      // _4EA, might be s16
+	s16 _4E8;                      // _4E8, might be s16
+	s16 _4EA;                      // _4EA
 	s16 _4EC;                      // _4EC
-	u16 _4EE;                      // _4EE, might be s16
+	s16 _4EE;                      // _4EE
 	s16 _4F0;                      // _4F0
 	char _4F2[20][0x400];          // _4F2
 	s16 _54F2;                     // _54F2, might be s16
 	u8 _54F4;                      // _54F4
 	P2DScreen* _54F8;              // _54F8
 	P2DPane* _54FC[20];            // _54FC
-	char* _554C[0x1400];           // _554C
+	char _554C[20][0x400];         // _554C
 	char* _A54C[20];               // _A54C
 	s16 _A59C;                     // _A59C
 	char _A59E[12];                // _A59E
 	char _A5AA[34];                // _A5AA, unknown size
 	char* _A5CC;                   // _A5CC
-	char* _A5D0;                   // _A5D0
-	char* _A5D4;                   // _A5D4
-	char* _A5D8;                   // _A5D8
-	char* _A5DC;                   // _A5DC
-	char* _A5E0;                   // _A5E0
-	char* _A5E4;                   // _A5E4
-	char* _A5E8;                   // _A5E8
-	char* _A5EC;                   // _A5EC
+	char* _A5D0[8];                // _A5D0
 };
 
 } // namespace zen

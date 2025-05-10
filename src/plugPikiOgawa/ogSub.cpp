@@ -2404,7 +2404,7 @@ zen::ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  * Address:	801805F4
  * Size:	0003A8
  */
-void zen::ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
+bool zen::ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
 {
 	/*
 	.loc_0x0:

@@ -126,7 +126,7 @@ struct ogTexAnimSubMgr {
 struct ogMsgCtrlTagMgr {
 	ogMsgCtrlTagMgr();
 
-	void CheckCtrlTag(char*, s16*, f32*);
+	bool CheckCtrlTag(char*, s16*, f32*);
 
 	u8 _00[0x18]; // _00, unknown
 };

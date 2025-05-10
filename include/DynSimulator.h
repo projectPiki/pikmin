@@ -165,7 +165,7 @@ struct RigidBody : public Node {
 	Vector3f mRenderPosition;             // _13260
 	Quat mBufferedOrientations[2];        // _1326C
 	Quat mRenderOrientation;              // _1328C
-	BoundBox mCollisionBounds;                      // _1329C
+	BoundBox mCollisionBounds;            // _1329C
 };
 
 /**
