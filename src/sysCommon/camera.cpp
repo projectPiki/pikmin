@@ -197,7 +197,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[0]);
 	planes[0].CheckMinMaxDir();
-	planes[0]._28 = 1;
+	planes[0].mIsEnabled = 1;
 
 	vec.x = -mWidth / absF(rightScale);
 	vec.y = 0.0f;
@@ -205,7 +205,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[1]);
 	planes[1].CheckMinMaxDir();
-	planes[1]._28 = 1;
+	planes[1].mIsEnabled = 1;
 
 	vec.x = 0.0f;
 	vec.y = absF(bottomScale) * -mWidth;
@@ -213,7 +213,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[2]);
 	planes[2].CheckMinMaxDir();
-	planes[2]._28 = 1;
+	planes[2].mIsEnabled = 1;
 
 	vec.x = 0.0f;
 	vec.y = absF(topScale) * mWidth;
@@ -221,7 +221,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[3]);
 	planes[3].CheckMinMaxDir();
-	planes[3]._28 = 1;
+	planes[3].mIsEnabled = 1;
 
 	mTotalPlaneCount = &planes[4] - mCullPlanes;
 }
@@ -241,12 +241,12 @@ void CullFrustum::createViewPlanes()
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
 	planes[0].mPlane.mOffset += mNear;
 	planes[0].CheckMinMaxDir();
-	planes[0]._28 = 1;
+	planes[0].mIsEnabled = 1;
 
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, -1.0f), planes[1]);
 	planes[1].mPlane.mOffset -= 2600.0f;
 	planes[1].CheckMinMaxDir();
-	planes[1]._28 = 1;
+	planes[1].mIsEnabled = 1;
 
 	mViewPlaneIdx = &planes[2] - mCullPlanes;
 

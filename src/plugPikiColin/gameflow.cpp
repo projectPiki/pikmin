@@ -558,10 +558,10 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	gsys->startLoading(&mGameLoadIdler, true, 0);
 	PRINT("done starting loading\n");
 
-	_2CC            = 0.0f;
-	_2C8            = 0.0f;
-	_2C4            = 0.0f;
-	mAppTickCounter = 2;
+	mEffectDurationTimer = 0.0f;
+	mTargetEffectAlpha   = 0.0f;
+	mCurrentEffectAlpha  = 0.0f;
+	mAppTickCounter      = 2;
 
 	PRINT("reading parms\n");
 	PRINT("load params\n");
@@ -660,16 +660,16 @@ void GameFlow::softReset()
 
 	f32 diff = gsys->getTime() - time;
 	if (mAppTickCounter > 1 || diff / 1000.0f >= 0.02f) {
-		_2C0 = diff / 1000.0f;
+		mLoadTimeSeconds = diff / 1000.0f;
 	}
 
-	_2CC               = 15.0f;
-	_2C8               = 255.0f;
-	mAppTickCounter    = 0;
-	gsys->mTogglePrint = 1;
+	mEffectDurationTimer = 15.0f;
+	mTargetEffectAlpha   = 255.0f;
+	mAppTickCounter      = 0;
+	gsys->mTogglePrint   = 1;
 	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n",
-	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFileCounter, gsys->mDvdReadBytesCount / 1024.0f, _2C0,
-	      gsys->mDvdReadBytesCount / 1048576.0f / _2C0);
+	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFileCounter, gsys->mDvdReadBytesCount / 1024.0f,
+	      mLoadTimeSeconds, gsys->mDvdReadBytesCount / 1048576.0f / mLoadTimeSeconds);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
 	mDisableController      = 0;

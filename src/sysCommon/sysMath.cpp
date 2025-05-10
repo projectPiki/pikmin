@@ -92,27 +92,27 @@ void Plane::frictionVector(Vector3f&, f32)
 void CullingPlane::CheckMinMaxDir()
 {
 	if (mPlane.mNormal.x < 0.0f) {
-		_10 = 3;
-		_1C = 0;
+		mPVertexXIndex = 3;
+		mNVertexXIndex = 0;
 	} else {
-		_10 = 0;
-		_1C = 3;
+		mPVertexXIndex = 0;
+		mNVertexXIndex = 3;
 	}
 
 	if (mPlane.mNormal.y < 0.0f) {
-		_14 = 4;
-		_20 = 1;
+		mPVertexYIndex = 4;
+		mNVertexYIndex = 1;
 	} else {
-		_14 = 1;
-		_20 = 4;
+		mPVertexYIndex = 1;
+		mNVertexYIndex = 4;
 	}
 
 	if (mPlane.mNormal.z < 0.0f) {
-		_18 = 5;
-		_24 = 2;
+		mPVertexZIndex = 5;
+		mNVertexZIndex = 2;
 	} else {
-		_18 = 2;
-		_24 = 5;
+		mPVertexZIndex = 2;
+		mNVertexZIndex = 5;
 	}
 }
 

@@ -19,18 +19,17 @@ struct TypingTextMgr;
  * @brief TODO
  */
 struct ogScrMakeDefaultMgr {
-
 	/**
-	 * @brief TODO
+	 * @brief Defines the states for the "make default save file" screen manager.
 	 */
 	enum MakeDefaultStatus {
-		Status_NULL = -1,
-		Status_0    = 0,
-		Status_1    = 1,
-		Status_2    = 2,
-		Status_3    = 3,
-		Status_4    = 4,
-		Status_5    = 5,
+		Status_Inactive = -1,        // Screen is not active, or the 'make default file' process has fully completed.
+		Status_Processing,           // 'Make default file' operation is in progress; waiting for memory card, initial message is displayed.
+		Status_AwaitingConfirmation, // Operation result (success or failure) is displayed; waiting for user (A button) to confirm.
+		Status_Initialising,         // Fading in the UI and initiating the 'make default file' operation on the memory card.
+		Status_Exiting,              // Fading out the UI after user confirmation before Success or Failure.
+		Status_Success,              // 'Make default file' operation completed successfully. The screen will then become Inactive.
+		Status_Failure,              // 'Make default file' operation failed. The screen will then become Inactive.
 	};
 
 	ogScrMakeDefaultMgr();
@@ -40,29 +39,27 @@ struct ogScrMakeDefaultMgr {
 	void draw(Graphics&);
 	bool checkTypingAll();
 
-	// unused/inlined:
-
-	MakeDefaultStatus mStatus; // _00
-	MakeDefaultStatus _04;     // _04
-	P2DScreen* mScreen;        // _08
-	P2DScreen* mScreen2;       // _0C
-	P2DPicture* _10;           // _10
-	int _14;                   // _14
-	P2DPicture* _18;           // _18
-	P2DPicture* _1C;           // _1C
-	setTenmetuAlpha* _20;      // _20
-	setTenmetuAlpha* _24;      // _24
-	TypingTextMgr* _28;        // _28
-	P2DTextBox* _2C;           // _2C
-	TypingTextMgr* _30;        // _30
-	P2DTextBox* _34;           // _34
-	TypingTextMgr* _38;        // _38
-	P2DTextBox* _3C;           // _3C
-	TypingTextMgr* _40;        // _40
-	P2DPane* _44;              // _44
-	P2DPane* _48;              // _48
-	P2DPane* _4C;              // _4C
-	f32 _50;                   // _50
+	MakeDefaultStatus mStatus;                    // _00
+	MakeDefaultStatus mNextStatus;                // _04
+	P2DScreen* mScreen;                           // _08
+	P2DScreen* mScreen2;                          // _0C
+	P2DPicture* mBlackScreenOverlay;              // _10
+	int _14;                                      // _14
+	P2DPicture* mCursorPicture;                   // _18
+	P2DPicture* mAButtonPromptPicture;            // _1C
+	setTenmetuAlpha* mCursorAlphaAnimator;        // _20
+	setTenmetuAlpha* mAButtonPromptAlphaAnimator; // _24
+	TypingTextMgr* mActiveTypingTextMgr;          // _28
+	P2DTextBox* mOkMessageTextBox;                // _2C
+	TypingTextMgr* mOkMessageTypingMgr;           // _30
+	P2DTextBox* mFailMessageTextBox;              // _34
+	TypingTextMgr* mFailMessageTypingMgr;         // _38
+	P2DTextBox* mDefaultMessageTextBox;           // _3C
+	TypingTextMgr* mDefaultMessageTypingMgr;      // _40
+	P2DPane* mAdditionalTextPane1;                // _44
+	P2DPane* mAdditionalTextPane2;                // _48
+	P2DPane* mAdditionalTextPane3;                // _4C
+	f32 mStateTimer;                              // _50
 };
 
 } // namespace zen

@@ -34,7 +34,7 @@ struct BaseApp : public Node {
 	AtxCommandStream* mCommandStream; // _20
 	AgeServer* mAgeServer;            // _24
 	s8 _28;                           // _28
-	s32 _2C;                          // _2C
+	s32 mIsReadyToDraw;               // _2C
 	Node mWindowNode;                 // _30
 	u32 mHeapIndex;                   // _50
 };

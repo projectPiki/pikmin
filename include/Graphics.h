@@ -95,7 +95,7 @@ struct Graphics {
 	u32 mActiveLightMask;                     // _378
 	f32 mLineWidth;                           // _37C
 	u32 _380;                                 // _380
-	Matrix4f* mSystemMatrices;                // _384, no idea
+	Matrix4f* mSystemMatrices;                // _384
 	u32 mMaxMatrixCount;                      // _388
 	u32 mActiveMatrixIdx;                     // _38C
 	CachedShape mShapeCache;                  // _390
@@ -256,25 +256,25 @@ struct DGXGraphics : public Graphics {
 
 	// _3B4      = VTBL
 	// _000-_3B8 = Graphics
-	GXFifoObj* _3B8;        // _3B8
-	u8* _3BC;               // _3BC
-	u8* _3C0;               // _3C0
-	u8* _3C4;               // _3C4
-	u8* _3C8;               // _3C8
-	int _3CC;               // _3CC
-	u32 _3D0;               // _3D0
-	bool _3D4;              // _3D4
-	int _3D8;               // _3D8
-	int _3DC;               // _3DC
-	Matrix4f _3E0;          // _3E0
-	u8 _420[0x610 - 0x420]; // _420, unknown
-	u8* mDisplayBuffer;     // _610
-	int _614;               // _614
-	int mRetraceCount;      // _618
-	int mSystemFrameRate;   // _61C
-	VIRetraceCallback _620; // _620
-	OSMessageQueue _624;    // _624
-	OSMessage _644;         // _644
+	GXFifoObj* mGpFifo;                  // _3B8
+	u8* mDefaultFifoBuffer;              // _3BC
+	u8* mTempFifoBuffer;                 // _3C0
+	u8* mDefaultDLBuffer;                // _3C4
+	u8* mDisplayListPtr;                 // _3C8
+	int mDisplayListSize;                // _3CC
+	u32 _3D0;                            // _3D0
+	bool _3D4;                           // _3D4
+	int mCurrentMatrixId;                // _3D8
+	int _3DC;                            // _3DC
+	Matrix4f mProjectionTextureMatrix;   // _3E0
+	u8 _420[0x610 - 0x420];              // _420, unknown
+	u8* mDisplayBuffer;                  // _610
+	int mPostRetraceWaitCount;           // _614
+	int mRetraceCount;                   // _618
+	int mSystemFrameRate;                // _61C
+	VIRetraceCallback mRetraceCallback;  // _620
+	OSMessageQueue mPostRetraceMsgQueue; // _624
+	OSMessage mPostRetraceMsgBuffer;     // _644
 };
 
 extern DGXGraphics* gfx;

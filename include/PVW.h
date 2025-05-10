@@ -441,13 +441,13 @@ struct PVWTexGenData {
 struct PVWPeInfo {
 	void read(RandomAccessStream& input)
 	{
-		_00                = input.readInt();
+		mControlFlags      = input.readInt();
 		mAlphaCompareFlags = input.readInt();
 		mDepthTestFlags    = input.readInt();
 		mBlendModeFlags    = input.readInt();
 	}
 
-	u32 _00;                // _00
+	u32 mControlFlags;      // _00
 	u32 mAlphaCompareFlags; // _04
 	u32 mDepthTestFlags;    // _08
 	u32 mBlendModeFlags;    // _0C

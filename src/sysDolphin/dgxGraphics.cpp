@@ -49,10 +49,10 @@ GXColor GColors[3];
  */
 DGXGraphics::DGXGraphics(bool flag)
 {
-	_3BC = new (0x20) u8[kDefaultFifoSize];
-	_3C0 = new (0x20) u8[kTempFifoSize];
-	_3C4 = new (0x20) u8[kDefaultDLSize];
-	_3B8 = GXInit(_3BC, kDefaultFifoSize);
+	mDefaultFifoBuffer = new (0x20) u8[kDefaultFifoSize];
+	mTempFifoBuffer    = new (0x20) u8[kTempFifoSize];
+	mDefaultDLBuffer   = new (0x20) u8[kDefaultDLSize];
+	mGpFifo            = GXInit(mDefaultFifoBuffer, kDefaultFifoSize);
 
 	if (flag) {
 		mRenderMode = 1;
@@ -94,12 +94,12 @@ DGXGraphics::DGXGraphics(bool flag)
 	VIFlush();
 	VIWaitForRetrace();
 	setupRender();
-	gfx              = this;
-	_614             = 0;
-	mRetraceCount    = VIGetRetraceCount();
-	mSystemFrameRate = gsys->mFrameRate;
-	_620             = VISetPostRetraceCallback(retraceProc);
-	OSInitMessageQueue(&_624, &_644, 1);
+	gfx                   = this;
+	mPostRetraceWaitCount = 0;
+	mRetraceCount         = VIGetRetraceCount();
+	mSystemFrameRate      = gsys->mFrameRate;
+	mRetraceCallback      = VISetPostRetraceCallback(retraceProc);
+	OSInitMessageQueue(&mPostRetraceMsgQueue, &mPostRetraceMsgBuffer, 1);
 
 	f32 badcompiler[2];
 }
@@ -172,9 +172,9 @@ void DGXGraphics::resetCopyFilter()
  */
 void DGXGraphics::setupRender()
 {
-	mRetraceCount = VIGetRetraceCount();
-	_3C8          = _3C4;
-	_3CC          = kDefaultDLSize;
+	mRetraceCount    = VIGetRetraceCount();
+	mDisplayListPtr  = mDefaultDLBuffer;
+	mDisplayListSize = kDefaultDLSize;
 }
 
 /*
@@ -184,7 +184,7 @@ void DGXGraphics::setupRender()
  */
 u8* DGXGraphics::getDListPtr()
 {
-	return _3C8;
+	return mDisplayListPtr;
 }
 
 /*
@@ -194,7 +194,7 @@ u8* DGXGraphics::getDListPtr()
  */
 u32 DGXGraphics::getDListRemainSize()
 {
-	return _3CC;
+	return mDisplayListSize;
 }
 
 /*
@@ -204,8 +204,8 @@ u32 DGXGraphics::getDListRemainSize()
  */
 void DGXGraphics::useDList(u32 num)
 {
-	_3CC -= num;
-	_3C8 += num;
+	mDisplayListSize -= num;
+	mDisplayListPtr += num;
 }
 
 /*
@@ -224,7 +224,7 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	mat->mDisplayListPtr = dl;
 	GXBeginDisplayList(dl, getDListRemainSize());
 
-	if (mat->mPeInfo._00 & 1) {
+	if (mat->mPeInfo.mControlFlags & 1) {
 		u32 data = mat->mPeInfo.mBlendModeFlags;
 		GXSetBlendMode((GXBlendMode)(data & 0xf), (GXBlendFactor)(data >> 4 & 0xf), (GXBlendFactor)(data >> 8 & 0xf),
 		               (GXLogicOp)(data >> 12 & 0xf));
@@ -235,19 +235,19 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 
 		data2 = mat->mPeInfo.mDepthTestFlags;
 		GXSetZMode(bool(data2 & 1), (GXCompare)(data2 >> 8), bool(data2 & 2));
-	} else if (mat->mPeInfo._00 & 0x8000) {
+	} else if (mat->mPeInfo.mControlFlags & 0x8000) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-	} else if (mat->mPeInfo._00 & 0x100) {
+	} else if (mat->mPeInfo.mControlFlags & 0x100) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mPeInfo._00 & 0x200) {
+	} else if (mat->mPeInfo.mControlFlags & 0x200) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mPeInfo._00 & 0x400) {
+	} else if (mat->mPeInfo.mControlFlags & 0x400) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
@@ -621,7 +621,7 @@ void DGXGraphics::initRender(int a1, int a2)
 	useTexture(nullptr, 0);
 	setMatHandler(nullptr);
 	mRenderState      = 0x700;
-	_3D8              = 0;
+	mCurrentMatrixId  = 0;
 	_3DC              = 30;
 	oldVerts          = 0;
 	oldCols           = 0;
@@ -784,8 +784,8 @@ void DGXGraphics::waitPostRetrace()
 
 	int a = mSystemFrameRate - (VIGetRetraceCount() - mRetraceCount) - 1;
 	if (a > 0) {
-		_614 = a;
-		OSReceiveMessage(&_624, nullptr, 1);
+		mPostRetraceWaitCount = a;
+		OSReceiveMessage(&mPostRetraceMsgQueue, nullptr, 1);
 	}
 
 	OSRestoreInterrupts(interrupt);
@@ -805,8 +805,8 @@ void DGXGraphics::retraceProc(u32)
 	}
 
 	gsys->mRetraceCount++;
-	if (gfx->_614 != 0 && --gfx->_614 == 0) {
-		OSSendMessage(&gfx->_624, (OSMessage)'DONE', 0);
+	if (gfx->mPostRetraceWaitCount != 0 && --gfx->mPostRetraceWaitCount == 0) {
+		OSSendMessage(&gfx->mPostRetraceMsgQueue, (OSMessage)'DONE', 0);
 	}
 	/*
 	.loc_0x0:
@@ -1464,10 +1464,11 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 {
 	f32 badcompiler[0x3c];
 	if (set) {
-		MTXLightPerspective(_3E0.mMtx, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y, 0.5f, 0.5f);
+		MTXLightPerspective(mProjectionTextureMatrix.mMtx, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y,
+		                    0.5f, 0.5f);
 		Matrix4f mtx;
-		PSMTXConcat(_3E0.mMtx, cam->mLookAtMtx.mMtx, _3E0.mMtx);
-		PSMTXConcat(_3E0.mMtx, Matrix4f::ident.mMtx, mtx.mMtx);
+		PSMTXConcat(mProjectionTextureMatrix.mMtx, cam->mLookAtMtx.mMtx, mProjectionTextureMatrix.mMtx);
+		PSMTXConcat(mProjectionTextureMatrix.mMtx, Matrix4f::ident.mMtx, mtx.mMtx);
 		GXLoadTexMtxImm(mtx.mMtx, 30, GX_MTX3x4);
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2X4, GX_TG_POS, 30, GX_FALSE, 125);
 	} else {
@@ -1653,8 +1654,8 @@ void DGXGraphics::useMatrixQuick(Matrix4f&, int)
 void DGXGraphics::useMatrix(Matrix4f& mtx, int a)
 {
 	useMatrixQuick(mtx, a);
-	_3D8 = a * 3;
-	GXSetCurrentMtx(_3D8);
+	mCurrentMatrixId = a * 3;
+	GXSetCurrentMtx(mCurrentMatrixId);
 }
 
 /*

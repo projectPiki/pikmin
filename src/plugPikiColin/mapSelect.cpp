@@ -40,7 +40,7 @@ struct MapSelectSetupSection : public Node {
 
 		makeMapsMenu();
 
-		parent.mPreviousMenu = _28;
+		parent.mPreviousMenu = mMapListMenu;
 		parent.mPreviousMenu ? "fake" : "fake";
 	}
 	void openAllChMaps(Menu& parent)
@@ -52,29 +52,29 @@ struct MapSelectSetupSection : public Node {
 
 		makeMapsMenu();
 
-		parent.mPreviousMenu = _28;
+		parent.mPreviousMenu = mMapListMenu;
 		parent.mPreviousMenu ? "fake" : "fake";
 	}
 
 	void makeMapsMenu()
 	{
-		_28                     = new Menu(mController, mConsFont, false);
-		_28->mAnchorPoint.mMinX = glnWidth / 2;
-		_28->mAnchorPoint.mMinY = glnHeight / 2 + 30;
-		_28->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
-		_28->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(_28, &Menu::menuCloseMenu));
+		mMapListMenu                     = new Menu(mController, mConsFont, false);
+		mMapListMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		mMapListMenu->mAnchorPoint.mMinY = glnHeight / 2 + 30;
+		mMapListMenu->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
+		mMapListMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
 
 		for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
 			if (gameflow.mIsChallengeMode) {
 				PRINT("checking map in challenge mode!\n");
 				bool valid = gameflow.mGamePrefs.isStageOpen(inf->mChalStageID);
 				if (inf->mIsVisible && valid) {
-					_28->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
 				}
 			} else {
 				bool valid = gameflow.mPlayState.isStageOpen(inf->mStageID);
 				if (inf->mIsVisible && valid && inf->mChalStageID == 7) {
-					_28->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
+					mMapListMenu->addOption((int)inf, StdSystem::stringDup(inf->mStageName), nullptr, true);
 				}
 			}
 		}
@@ -86,30 +86,30 @@ struct MapSelectSetupSection : public Node {
 		StageInfo* info = (StageInfo*)parent.mCurrentItem->mFilterIndex;
 
 		enterCourse(info);
-		_24 = 0x70000;
+		mNextSectionId = 0x70000;
 		parent.close();
 
 		gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-		_20 = 1;
+		mSectionState = 1;
 		gsys->setFade(0.0f, 3.0f);
 	}
 
 	MapSelectSetupSection()
 	{
 		setName("MapSelect section");
-		mController = new Controller;
-		_20         = 0;
-		mConsFont   = new Font;
+		mController   = new Controller;
+		mSectionState = 0;
+		mConsFont     = new Font;
 		mConsFont->setTexture(gsys->loadTexture("consFont.bti", true), 16, 8);
 		mBigFont = new Font;
 		mBigFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 42);
 		makeMapsMenu();
-		_28->addOption(0, nullptr, nullptr, true);
-		_28->addOption(0, "Open All Maps",
-		               !gameflow.mIsChallengeMode ? new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllMaps)
-		                                          : new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllChMaps),
-		               true);
-		_2C = nullptr;
+		mMapListMenu->addOption(0, nullptr, nullptr, true);
+		mMapListMenu->addOption(0, "Open All Maps",
+		                        !gameflow.mIsChallengeMode ? new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllMaps)
+		                                                   : new Delegate1<MapSelectSetupSection, Menu&>(this, &openAllChMaps),
+		                        true);
+		mActiveOverlayMenu = nullptr;
 
 		mapWindow    = nullptr;
 		selectWindow = nullptr;
@@ -129,21 +129,21 @@ struct MapSelectSetupSection : public Node {
 			selectWindow->start();
 		}
 		gsys->setFade(1.0f, 3.0f);
-		_24 = 0xb0000;
+		mNextSectionId = 0xb0000;
 	}
 
 	virtual void update() // _10 (weak)
 	{
 		mController->update();
 
-		if (_2C) {
-			_2C = _2C->doUpdate(false);
-		} else if (!_20) {
+		if (mActiveOverlayMenu) {
+			mActiveOverlayMenu = mActiveOverlayMenu->doUpdate(false);
+		} else if (!mSectionState) {
 
 			if (selectWindow && selectWindow->update(mController)) {
 				int status = selectWindow->getReturnStatusFlag();
 				if (status == -2) {
-					_20 = 1;
+					mSectionState = 1;
 					gsys->setFade(0.0f, 3.0f);
 				} else {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
@@ -152,13 +152,13 @@ struct MapSelectSetupSection : public Node {
 							sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
 							sprintf(flowCont.mStagePath2, "%s", inf->mFileName);
 
-							if (gameflow.mGamePrefs._22)
+							if (gameflow.mGamePrefs.mUnlockedStageFlags)
 								gameflow.mGamePrefs.openStage(inf->mStageID);
 
-							_24 = 0x70000;
+							mNextSectionId = 0x70000;
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-							_20 = 1;
+							mSectionState = 1;
 							gsys->setFade(0.0f, 3.0f);
 							break;
 						}
@@ -169,7 +169,7 @@ struct MapSelectSetupSection : public Node {
 			if (mapWindow && mapWindow->update(mController)) {
 				int status = mapWindow->_08;
 				if (status == 6) {
-					_20 = 1;
+					mSectionState = 1;
 					gsys->setFade(0.0f, 3.0f);
 				} else {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
@@ -178,13 +178,13 @@ struct MapSelectSetupSection : public Node {
 							sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
 							sprintf(flowCont.mStagePath2, "%s", inf->mFileName);
 
-							if (gameflow.mGamePrefs._22)
+							if (gameflow.mGamePrefs.mUnlockedStageFlags)
 								gameflow.mGamePrefs.openStage(inf->mStageID);
 
-							_24 = 0x70000;
+							mNextSectionId = 0x70000;
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
-							_20 = 1;
+							mSectionState = 1;
 							gsys->setFade(0.0f, 3.0f);
 							break;
 						}
@@ -193,9 +193,9 @@ struct MapSelectSetupSection : public Node {
 			}
 		}
 
-		if (_20 == 1 && !_2C && gsys->getFade() == 0.0f) {
-			_20                              = -1;
-			gameflow.mNextOnePlayerSectionID = _24 >> 0x10;
+		if (mSectionState == 1 && !mActiveOverlayMenu && gsys->getFade() == 0.0f) {
+			mSectionState                    = -1;
+			gameflow.mNextOnePlayerSectionID = mNextSectionId >> 0x10;
 			Jac_SceneExit(13, 0);
 			gsys->softReset();
 		}
@@ -223,8 +223,8 @@ struct MapSelectSetupSection : public Node {
 		Matrix4f mtx2;
 		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 
-		if (_2C) {
-			_2C->draw(gfx, 1.0f);
+		if (mActiveOverlayMenu) {
+			mActiveOverlayMenu->draw(gfx, 1.0f);
 		}
 	}
 
@@ -243,14 +243,14 @@ struct MapSelectSetupSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;                 // _20
-	u32 _24;                 // _24
-	Menu* _28;               // _28
-	Menu* _2C;               // _2C
-	Controller* mController; // _30
-	Font* mConsFont;         // _34
-	Font* mBigFont;          // _38
-	Camera mCamera;          // _3C
+	u32 mSectionState;        // _20
+	u32 mNextSectionId;       // _24
+	Menu* mMapListMenu;       // _28
+	Menu* mActiveOverlayMenu; // _2C
+	Controller* mController;  // _30
+	Font* mConsFont;          // _34
+	Font* mBigFont;           // _38
+	Camera mCamera;           // _3C
 };
 
 /*

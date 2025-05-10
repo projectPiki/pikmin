@@ -25,7 +25,7 @@ DEFINE_PRINT("baseApp");
  */
 BaseApp::BaseApp()
 {
-	_2C            = 0;
+	mIsReadyToDraw = 0;
 	mCommandStream = 0;
 	mAgeServer     = 0;
 	_28            = 1;

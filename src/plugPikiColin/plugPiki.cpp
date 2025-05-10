@@ -54,7 +54,7 @@ void PlugPikiApp::softReset()
 {
 	BaseApp::softReset();
 	gameflow.softReset();
-	_2C = 1;
+	mIsReadyToDraw = 1;
 }
 
 /*
@@ -76,14 +76,14 @@ void PlugPikiApp::update()
  */
 void PlugPikiApp::draw(Graphics& gfx)
 {
-	if (!_2C) {
+	if (!mIsReadyToDraw) {
 		return;
 	}
 
 	gsys->mTimer->start("cpu draw", true);
 	gsys->mDispCount        = 0;
 	gsys->mMaterialCount    = 0;
-	gsys->_1A4              = 0;
+	gsys->mPolygonCount     = 0;
 	gsys->mActiveLightCount = 0;
 	gsys->mLightCount       = 0;
 	gsys->mAnimatedPolygons = 0;
@@ -98,7 +98,8 @@ void PlugPikiApp::draw(Graphics& gfx)
 
 	if (gsys->mTimerState) {
 		gfx.setColour(Colour(255, 255, 255, 255), true);
-		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->_1A4, int(gsys->_1A4 * gsys->getFrameRate()));
+		gfx.texturePrintf(gsys->mConsFont, 32, 32, "%d polys = %d pps", gsys->mPolygonCount,
+		                  int(gsys->mPolygonCount * gsys->getFrameRate()));
 		gfx.texturePrintf(gsys->mConsFont, 32, 44, "%d anims", gsys->mAnimatedPolygons);
 		gfx.texturePrintf(gsys->mConsFont, 32, 56, "%d mats", gsys->mMaterialCount);
 		gfx.texturePrintf(gsys->mConsFont, 32, 68, "%d disps", gsys->mDispCount);
@@ -107,21 +108,21 @@ void PlugPikiApp::draw(Graphics& gfx)
 		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mSystemState);
 	}
 
-	if (gameflow._2C4 > 0.0f || gameflow._2C8 > 0.0f) {
-		gameflow._2CC -= gsys->getFrameTime();
-		if (gameflow._2CC < 0.0f) {
-			gameflow._2C8 = 0.0f;
+	if (gameflow.mCurrentEffectAlpha > 0.0f || gameflow.mTargetEffectAlpha > 0.0f) {
+		gameflow.mEffectDurationTimer -= gsys->getFrameTime();
+		if (gameflow.mEffectDurationTimer < 0.0f) {
+			gameflow.mTargetEffectAlpha = 0.0f;
 		}
 
-		gameflow._2C4 += gsys->getFrameTime() * 1.0f * (gameflow._2C8 - gameflow._2C4);
-		if (quickABS(gameflow._2C4 - gameflow._2C8) < 0.1f) {
-			gameflow._2C4 = gameflow._2C8;
+		gameflow.mCurrentEffectAlpha += gsys->getFrameTime() * 1.0f * (gameflow.mTargetEffectAlpha - gameflow.mCurrentEffectAlpha);
+		if (quickABS(gameflow.mCurrentEffectAlpha - gameflow.mTargetEffectAlpha) < 0.1f) {
+			gameflow.mCurrentEffectAlpha = gameflow.mTargetEffectAlpha;
 		}
 
-		gfx.setColour(Colour(192, 255, 255, gameflow._2C4), true);
-		gfx.setAuxColour(Colour(192, 192, 255, gameflow._2C4));
+		gfx.setColour(Colour(192, 255, 255, gameflow.mCurrentEffectAlpha), true);
+		gfx.setAuxColour(Colour(192, 192, 255, gameflow.mCurrentEffectAlpha));
 		char buf[PATH_MAX];
-		sprintf(buf, "load took %.1f secs", gameflow._2C0);
+		sprintf(buf, "load took %.1f secs", gameflow.mLoadTimeSeconds);
 	}
 
 	gfx.useTexture(nullptr, 0);

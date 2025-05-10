@@ -40,6 +40,7 @@ typedef volatile f128 vf128;
 typedef u16 wchar_t;
 #endif
 
+// Workaround for strongly typed enums (our version of C++ doesn't support them)
 #define DEFINE_ENUM_TYPE(name, ...)  \
 	struct name {                    \
 		enum Values { __VA_ARGS__ }; \

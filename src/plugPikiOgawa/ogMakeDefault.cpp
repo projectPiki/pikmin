@@ -34,31 +34,31 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 	mScreen2 = new P2DScreen;
 	mScreen2->set("screen/blo/black.blo", false, false, true);
 
-	_10 = (P2DPicture*)mScreen2->search('blck', true);
-	_10->setAlpha(255);
-	_1C = (P2DPicture*)mScreen->search('abtn', true);
-	_24 = new setTenmetuAlpha(_1C, 1.0f);
-	_1C->hide();
+	mBlackScreenOverlay = (P2DPicture*)mScreen2->search('blck', true);
+	mBlackScreenOverlay->setAlpha(255);
+	mAButtonPromptPicture       = (P2DPicture*)mScreen->search('abtn', true);
+	mAButtonPromptAlphaAnimator = new setTenmetuAlpha(mAButtonPromptPicture, 1.0f);
+	mAButtonPromptPicture->hide();
 
-	_3C = (P2DTextBox*)mScreen->search('tx00', true);
-	_40 = new TypingTextMgr(_3C);
-	_28 = _40;
+	mDefaultMessageTextBox   = (P2DTextBox*)mScreen->search('tx00', true);
+	mDefaultMessageTypingMgr = new TypingTextMgr(mDefaultMessageTextBox);
+	mActiveTypingTextMgr     = mDefaultMessageTypingMgr;
 
-	_44 = mScreen->search('tx01', true);
-	_48 = mScreen->search('tx02', true);
-	_4C = mScreen->search('tx03', true);
+	mAdditionalTextPane1 = mScreen->search('tx01', true);
+	mAdditionalTextPane2 = mScreen->search('tx02', true);
+	mAdditionalTextPane3 = mScreen->search('tx03', true);
 
-	_18 = (P2DPicture*)mScreen->search('curs', true);
-	_20 = new setTenmetuAlpha(_18, 0.5f);
+	mCursorPicture       = (P2DPicture*)mScreen->search('curs', true);
+	mCursorAlphaAnimator = new setTenmetuAlpha(mCursorPicture, 0.5f);
 
-	_2C = (P2DTextBox*)mScreen->search('pfok', true);
-	_30 = new TypingTextMgr(_2C);
+	mOkMessageTextBox   = (P2DTextBox*)mScreen->search('pfok', true);
+	mOkMessageTypingMgr = new TypingTextMgr(mOkMessageTextBox);
 
-	_34 = (P2DTextBox*)mScreen->search('pfxx', true);
-	_38 = new TypingTextMgr(_34);
+	mFailMessageTextBox   = (P2DTextBox*)mScreen->search('pfxx', true);
+	mFailMessageTypingMgr = new TypingTextMgr(mFailMessageTextBox);
 
-	_50     = 0.0f;
-	mStatus = Status_NULL;
+	mStateTimer = 0.0f;
+	mStatus     = Status_Inactive;
 }
 
 /*
@@ -68,17 +68,17 @@ zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
  */
 void zen::ogScrMakeDefaultMgr::start()
 {
-	mStatus = Status_2;
-	_50     = 0.0f;
-	_1C->hide();
-	_44->hide();
-	_48->hide();
-	_4C->hide();
-	_20->start();
-	_28->off();
-	_28 = _40;
-	_28->start();
-	_28->transCursor(_18);
+	mStatus     = Status_Initialising;
+	mStateTimer = 0.0f;
+	mAButtonPromptPicture->hide();
+	mAdditionalTextPane1->hide();
+	mAdditionalTextPane2->hide();
+	mAdditionalTextPane3->hide();
+	mCursorAlphaAnimator->start();
+	mActiveTypingTextMgr->off();
+	mActiveTypingTextMgr = mDefaultMessageTypingMgr;
+	mActiveTypingTextMgr->start();
+	mActiveTypingTextMgr->transCursor(mCursorPicture);
 }
 
 /*
@@ -88,83 +88,83 @@ void zen::ogScrMakeDefaultMgr::start()
  */
 zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Controller* input)
 {
-	if (mStatus == Status_NULL) {
+	if (mStatus == Status_Inactive) {
 		return mStatus;
 	}
 
 	if (mStatus >= 4) {
-		mStatus = Status_NULL;
+		mStatus = Status_Inactive;
 		return mStatus;
 	}
 
-	_50 += gsys->getFrameTime();
+	mStateTimer += gsys->getFrameTime();
 
-	if (_50 > 1.0f) {
-		_44->show();
+	if (mStateTimer > 1.0f) {
+		mAdditionalTextPane1->show();
 	}
-	if (_50 > 2.0f) {
-		_48->show();
+	if (mStateTimer > 2.0f) {
+		mAdditionalTextPane2->show();
 	}
-	if (_50 > 3.0f) {
-		_4C->show();
+	if (mStateTimer > 3.0f) {
+		mAdditionalTextPane3->show();
 	}
 	mScreen->update();
 	mScreen2->update();
-	_20->update();
-	_24->update();
-	_28->update();
-	_28->transCursor(_18);
+	mCursorAlphaAnimator->update();
+	mAButtonPromptAlphaAnimator->update();
+	mActiveTypingTextMgr->update();
+	mActiveTypingTextMgr->transCursor(mCursorPicture);
 
-	if (mStatus == Status_2) {
-		if (_50 < 0.5f) {
-			_10->setAlpha(255 - (int)((_50 * 255.0f) / 0.5f));
+	if (mStatus == Status_Initialising) {
+		if (mStateTimer < 0.5f) {
+			mBlackScreenOverlay->setAlpha(255 - (int)((mStateTimer * 255.0f) / 0.5f));
 		} else {
-			mStatus = Status_0;
-			_50     = 0.0f;
+			mStatus     = Status_Processing;
+			mStateTimer = 0.0f;
 			gameflow.mMemoryCard.makeDefaultFile();
-			_10->setAlpha(0);
+			mBlackScreenOverlay->setAlpha(0);
 		}
 		return mStatus;
-	} else if (mStatus == Status_3) {
-		if (_50 < 0.5f) {
-			_10->setAlpha((_50 * 255.0f) / 0.5f);
+	} else if (mStatus == Status_Exiting) {
+		if (mStateTimer < 0.5f) {
+			mBlackScreenOverlay->setAlpha((mStateTimer * 255.0f) / 0.5f);
 		} else {
-			_10->setAlpha(255);
-			mStatus = _04;
-			_50     = 0.0f;
+			mBlackScreenOverlay->setAlpha(255);
+			mStatus     = mNextStatus;
+			mStateTimer = 0.0f;
 		}
 		return mStatus;
 	}
 
 	switch (mStatus) {
-	case Status_0:
-		if (_50 > 2.0f && gameflow.mMemoryCard.hasCardFinished()) {
+	case Status_Processing:
+		if (mStateTimer > 2.0f && gameflow.mMemoryCard.hasCardFinished()) {
 			BOOL save = !gameflow.mMemoryCard.didSaveFail();
 			if (save) {
-				_28->off();
-				_28 = _30;
-				_28->start();
-				_04 = Status_4;
+				mActiveTypingTextMgr->off();
+				mActiveTypingTextMgr = mOkMessageTypingMgr;
+				mActiveTypingTextMgr->start();
+				mNextStatus = Status_Success;
 			} else {
-				_28->off();
-				_28 = _38;
-				_28->start();
-				_04 = Status_5;
+				mActiveTypingTextMgr->off();
+				mActiveTypingTextMgr = mFailMessageTypingMgr;
+				mActiveTypingTextMgr->start();
+				mNextStatus = Status_Failure;
 			}
-			_3C->hide();
-			mStatus = Status_1;
-			_50     = 0.0f;
-			_24->start();
+			mDefaultMessageTextBox->hide();
+			mStatus     = Status_AwaitingConfirmation;
+			mStateTimer = 0.0f;
+			mAButtonPromptAlphaAnimator->start();
 		}
 		break;
 
-	case Status_1:
+	case Status_AwaitingConfirmation:
 		if (checkTypingAll()) {
-			_1C->show();
+			mAButtonPromptPicture->show();
 			if (input->keyClick(KBBTN_A)) {
 				seSystem->playSysSe(SYSSE_DECIDE1);
-				mStatus = Status_3;
-				_50     = 0.0f;
+				mStatus     = Status_Exiting;
+				mStateTimer = 0.0f;
 			}
 		}
 		break;
@@ -179,7 +179,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
  */
 void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
 {
-	if (mStatus != Status_NULL && mStatus < Status_4) {
+	if (mStatus != Status_Inactive && mStatus < Status_Success) {
 		P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 		graf.setPort();
 		mScreen->draw(0, 0, &graf);
@@ -194,7 +194,7 @@ void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
  */
 bool zen::ogScrMakeDefaultMgr::checkTypingAll()
 {
-	if (_28->check() == 2) {
+	if (mActiveTypingTextMgr->check() == 2) {
 		return true;
 	}
 	return false;

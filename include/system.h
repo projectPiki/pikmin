@@ -205,7 +205,7 @@ struct StdSystem {
 	virtual void startLoading(struct LoadIdler*, bool, u32) { }                 // _2C
 	virtual void endLoading() { }                                               // _30
 
-	int _1A4;                     // _1A4
+	int mPolygonCount;            // _1A4
 	u32 mMaterialCount;           // _1A8
 	u32 mDispCount;               // _1AC
 	u32 mLightCount;              // _1B0

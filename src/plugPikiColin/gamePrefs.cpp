@@ -245,7 +245,7 @@ void GamePrefs::write(RandomAccessStream& output)
 	output.writeInt(mFlags);
 	output.writeByte(mBgmVol);
 	output.writeByte(mSfxVol);
-	output.writeByte(_22);
+	output.writeByte(mUnlockedStageFlags);
 
 	mHiscores.write(output);
 
@@ -271,10 +271,10 @@ void GamePrefs::fixSoundMode()
 void GamePrefs::read(RandomAccessStream& input)
 {
 	PRINT("reading game prefs\n");
-	mFlags  = input.readInt();
-	mBgmVol = input.readByte();
-	mSfxVol = input.readByte();
-	_22     = input.readByte();
+	mFlags              = input.readInt();
+	mBgmVol             = input.readByte();
+	mSfxVol             = input.readByte();
+	mUnlockedStageFlags = input.readByte();
 	mHiscores.read(input);
 
 	fixSoundMode();

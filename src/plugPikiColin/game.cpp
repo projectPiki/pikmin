@@ -234,7 +234,7 @@ void OnePlayerSection::init()
 			currentSection = new MapSelectSection();
 			break;
 
-		case ONEPLAYER_Unk2:
+		case ONEPLAYER_Demo_LoadImpactSite:
 			if (!gameflow.mLevelBannerTexture) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
@@ -249,7 +249,7 @@ void OnePlayerSection::init()
 			gameflow.mLevelIndex             = 3;
 			break;
 
-		case ONEPLAYER_Unk3:
+		case ONEPLAYER_Demo_LoadForestOfHope:
 			if (!gameflow.mLevelBannerTexture) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
@@ -263,7 +263,7 @@ void OnePlayerSection::init()
 			gameflow.mLevelIndex             = 4;
 			break;
 
-		case ONEPLAYER_Unk4:
+		case ONEPLAYER_Demo_LoadE3ForestOfHope:
 			if (!gameflow.mLevelBannerTexture) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);

@@ -23,15 +23,14 @@ struct CullingPlane {
 
 	void CheckMinMaxDir();
 
-	// TODO: members
-	Plane mPlane; // _00
-	int _10;      // _10
-	int _14;      // _10
-	int _18;      // _10
-	int _1C;      // _10
-	int _20;      // _10
-	int _24;      // _24
-	u8 _28;       // _28
+	Plane mPlane;       // _00
+	int mPVertexXIndex; // _10
+	int mPVertexYIndex; // _10
+	int mPVertexZIndex; // _10
+	int mNVertexXIndex; // _10
+	int mNVertexYIndex; // _10
+	int mNVertexZIndex; // _24
+	u8 mIsEnabled;      // _28
 };
 
 /**
@@ -82,30 +81,32 @@ struct CullFrustum {
 		f32* boundArray = (f32*)&bound;
 		for (int i = 0; i < mActivePlaneCount; i++) {
 			CullingPlane* plane = mPlanePointers[i];
-			if (plane->_28 && (planeFlag & (1 << i))) {
+			if (plane->mIsEnabled && (planeFlag & (1 << i))) {
 				if (mHasBoundOffset) {
-					if ((boundArray[plane->_1C] + mBoundOffset.x) * plane->mPlane.mNormal.x
-					        + (boundArray[plane->_20] + mBoundOffset.y) * plane->mPlane.mNormal.y
-					        + (boundArray[plane->_24] + mBoundOffset.z) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					if ((boundArray[plane->mNVertexXIndex] + mBoundOffset.x) * plane->mPlane.mNormal.x
+					        + (boundArray[plane->mNVertexYIndex] + mBoundOffset.y) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->mNVertexZIndex] + mBoundOffset.z) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
 					    < 0.0f) {
 						return 0;
 					}
 
-					if ((boundArray[plane->_10] + mBoundOffset.x) * plane->mPlane.mNormal.x
-					        + (boundArray[plane->_14] + mBoundOffset.y) * plane->mPlane.mNormal.y
-					        + (boundArray[plane->_18] + mBoundOffset.z) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					if ((boundArray[plane->mPVertexXIndex] + mBoundOffset.x) * plane->mPlane.mNormal.x
+					        + (boundArray[plane->mPVertexYIndex] + mBoundOffset.y) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->mPVertexZIndex] + mBoundOffset.z) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
 					    >= 0.0f) {
 						planeFlag &= ~(1 << i);
 					}
 				} else {
-					if ((boundArray[plane->_1C]) * plane->mPlane.mNormal.x + (boundArray[plane->_20]) * plane->mPlane.mNormal.y
-					        + (boundArray[plane->_24]) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					if ((boundArray[plane->mNVertexXIndex]) * plane->mPlane.mNormal.x
+					        + (boundArray[plane->mNVertexYIndex]) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->mNVertexZIndex]) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
 					    < 0.0f) {
 						return 0;
 					}
 
-					if ((boundArray[plane->_10]) * plane->mPlane.mNormal.x + (boundArray[plane->_14]) * plane->mPlane.mNormal.y
-					        + (boundArray[plane->_18]) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
+					if ((boundArray[plane->mPVertexXIndex]) * plane->mPlane.mNormal.x
+					        + (boundArray[plane->mPVertexYIndex]) * plane->mPlane.mNormal.y
+					        + (boundArray[plane->mPVertexZIndex]) * plane->mPlane.mNormal.z - plane->mPlane.mOffset
 					    >= 0.0f) {
 						planeFlag &= ~(1 << i);
 					}

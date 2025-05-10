@@ -47,18 +47,18 @@ enum GameSectionID {
  * @brief TODO
  */
 enum OnePlayerSectionID {
-	ONEPLAYER_GameSetup       = 0,
-	ONEPLAYER_CardSelect      = 1,
-	ONEPLAYER_Unk2            = 2,
-	ONEPLAYER_Unk3            = 3,
-	ONEPLAYER_Unk4            = 4,
-	ONEPLAYER_IntroGame       = 5,
-	ONEPLAYER_MapSelect       = 6,
-	ONEPLAYER_NewPikiGame     = 7,
-	ONEPLAYER_GameCourseClear = 8,
-	ONEPLAYER_GameStageClear  = 9,
-	ONEPLAYER_GameCredits     = 10,
-	ONEPLAYER_GameExit        = 11,
+	ONEPLAYER_GameSetup               = 0,
+	ONEPLAYER_CardSelect              = 1,
+	ONEPLAYER_Demo_LoadImpactSite     = 2,
+	ONEPLAYER_Demo_LoadForestOfHope   = 3,
+	ONEPLAYER_Demo_LoadE3ForestOfHope = 4,
+	ONEPLAYER_IntroGame               = 5,
+	ONEPLAYER_MapSelect               = 6,
+	ONEPLAYER_NewPikiGame             = 7,
+	ONEPLAYER_GameCourseClear         = 8,
+	ONEPLAYER_GameStageClear          = 9,
+	ONEPLAYER_GameCredits             = 10,
+	ONEPLAYER_GameExit                = 11,
 };
 
 /**
@@ -351,16 +351,16 @@ struct GamePrefs : public CoreNode {
 
 	void Initialise()
 	{
-		mFlags          = 3;
-		mBgmVol         = 8;
-		mSfxVol         = 8;
-		_108            = 0;
-		mHasSaveGame    = 0;
-		mSaveGameIndex  = 0;
-		mSpareSaveGames = 0;
-		_1F             = 0;
-		_22             = 0;
-		mIsChanged      = false;
+		mFlags              = 3;
+		mBgmVol             = 8;
+		mSfxVol             = 8;
+		_108                = 0;
+		mHasSaveGame        = 0;
+		mSaveGameIndex      = 0;
+		mSpareSaveGames     = 0;
+		_1F                 = 0;
+		mUnlockedStageFlags = 0;
+		mIsChanged          = false;
 		mHiscores.Initialise();
 	}
 
@@ -379,14 +379,14 @@ struct GamePrefs : public CoreNode {
 	void openStage(int stageIdx)
 	{
 		if (stageIdx >= 0 && stageIdx <= STAGE_END) {
-			_22 |= (1 << stageIdx);
+			mUnlockedStageFlags |= (1 << stageIdx);
 		}
 	}
 
 	bool isStageOpen(int stageIdx)
 	{
 		if (stageIdx >= 0 && stageIdx <= 5) {
-			return (_22 & (1 << stageIdx)) != 0;
+			return (mUnlockedStageFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
 	}
@@ -398,7 +398,7 @@ struct GamePrefs : public CoreNode {
 	u8 getBgmVol() { return mBgmVol; }
 	u8 getSfxVol() { return mSfxVol; }
 
-	bool isChallengeOpen() { return _22 != 0; }
+	bool isChallengeOpen() { return mUnlockedStageFlags != 0; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -410,7 +410,7 @@ struct GamePrefs : public CoreNode {
 	u8 _1F;                 // _1F
 	u8 mSaveGameIndex;      // _20
 	u8 mSpareSaveGames;     // _21
-	u8 _22;                 // _22
+	u8 mUnlockedStageFlags; // _22
 	u8 _23;                 // _23
 	GameHiscores mHiscores; // _24
 	u8 _DC[0x108 - 0xDC];   // _DC, unknown
@@ -517,10 +517,10 @@ struct GameFlow : public Node {
 	int mIsChallengeMode;          // _2B4
 	u32 _2B8;                      // _2B8, unknown
 	u32 mUpdateTickCount;          // _2BC
-	f32 _2C0;                      // _2C0
-	f32 _2C4;                      // _2C4
-	vf32 _2C8;                     // _2C8
-	f32 _2CC;                      // _2CC
+	f32 mLoadTimeSeconds;          // _2C0
+	f32 mCurrentEffectAlpha;       // _2C4
+	vf32 mTargetEffectAlpha;       // _2C8
+	f32 mEffectDurationTimer;      // _2CC
 	int mAppTickCounter;           // _2D0
 	int _2D4;                      // _2D4, makes the load logo red?
 	WorldClock mWorldClock;        // _2D8

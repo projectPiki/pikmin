@@ -94,14 +94,14 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 		gameflow.mMoviePlayer->setGameCamInfo(false, 60.0f, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 
-		_3A4                     = true;
+		mIsFirstFrame            = true;
 		gameflow.mIsDayEndActive = 0;
 		_44                      = 0;
 		mNextModeState           = 0;
 		Jac_SceneSetup(11, 0);
 		EffectMgr* mgr = new EffectMgr;
 		mgr->cullingOff();
-		_39C = new DayMgr(nullptr, mController);
+		mDayManager = new DayMgr(nullptr, mController);
 
 		int size        = 0x500000;
 		int badCompiler = size;
@@ -120,8 +120,8 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, gfx.mCamera->mFov, gfx.mCamera->mAspectRatio, gfx.mCamera->mNear,
 		                   gfx.mCamera->mFar, 1.0f);
 		gfx.useMatrix(Matrix4f::ident, 0);
-		_39C->refresh(gfx, 25.0f, 8);
-		_39C->setFog(gfx, nullptr);
+		mDayManager->refresh(gfx, 25.0f, 8);
+		mDayManager->setFog(gfx, nullptr);
 		gfx.calcLighting(1.0f);
 		gameflow.mMoviePlayer->refresh(gfx);
 		gfx.useMatrix(Matrix4f::ident, 0);
@@ -150,10 +150,10 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 		gameflow.mMoviePlayer->update();
 		if (!gameflow.mMoviePlayer->setCamera(gfx)) {
-			gfx.setCamera(&_50);
+			gfx.setCamera(&mLocalCamera);
 			f32 w = gfx.mScreenWidth;
 			f32 h = gfx.mScreenHeight;
-			_50.update(w / h, _50.mFov, 100.0f, _398);
+			mLocalCamera.update(w / h, mLocalCamera.mFov, 100.0f, mLocalCameraFar);
 		}
 
 		gsys->mTimer->start("mainRender", true);
@@ -190,7 +190,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 		BaseGameSection::draw(gfx);
 
-		if (!_3A4) {
+		if (!mIsFirstFrame) {
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
 				if (mNextModeState) {
 					mCurrentModeState = mNextModeState;
@@ -199,7 +199,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 				mCurrentModeState = mCurrentModeState->update(mUpdateFlags);
 			}
 		} else {
-			_3A4 = false;
+			mIsFirstFrame = false;
 		}
 
 		if (mNextModeState) {
@@ -211,14 +211,14 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 	// _00     = VTBL
 	// _00-_44 = BaseGameSection
-	u32 _44;      // _44
-	u32 _48;      // _48
-	u32 _4C;      // _4C
-	Camera _50;   // _50
-	f32 _398;     // _398
-	DayMgr* _39C; // _39C
-	Colour _3A0;  // _3A0
-	u8 _3A4;      // _3A4
+	u32 _44;             // _44
+	u32 _48;             // _48
+	u32 _4C;             // _4C
+	Camera mLocalCamera; // _50
+	f32 mLocalCameraFar; // _398
+	DayMgr* mDayManager; // _39C
+	Colour _3A0;         // _3A0
+	u8 mIsFirstFrame;    // _3A4
 };
 
 static IntroGameSetupSection* igss;
