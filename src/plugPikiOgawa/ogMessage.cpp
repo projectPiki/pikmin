@@ -87,8 +87,8 @@ DEFINE_PRINT("OgMessageSection")
  */
 s16 zen::ogScrMessageMgr::SearchTopPage(int a)
 {
-	for (s16 i = 0; i < _4F0; i++) {
-		if (mPageInfos[i] && mPageInfos[i]->_04 == a) {
+	for (s16 i = 0; i < mPageInfoEntryCount; i++) {
+		if (mPageInfos[i] && mPageInfos[i]->mMsgUniqueId == a) {
 			return i;
 		}
 	}
@@ -115,34 +115,34 @@ void zen::ogScrMessageMgr::setMessagePage(int page)
  */
 void zen::ogScrMessageMgr::resetPage()
 {
-	if (_54F4) {
-		_4D4  = -0.25f;
-		_54F4 = false;
+	if (mIsInitialPageLoad) {
+		mTextAnimationProgress = -0.25f;
+		mIsInitialPageLoad     = false;
 	} else {
-		_4D4 = -0.5f;
+		mTextAnimationProgress = -0.5f;
 	}
-	_54F2 = 5;
-	_4EA  = 0;
-	_4E8  = 0;
-	_4EC  = -1;
-	if (_54FC[0] == 0) {
-		_4E4 = 0;
-		_4E6 = 0;
+	mPageDrawDelayTimer    = 5;
+	mNextPaneId            = 0;
+	mCurrentTextCharOffset = 0;
+	mActivePaneId          = -1;
+	if (mPagePaneList[0] == 0) {
+		mCursorTargetX = 0;
+		mCursorTargetY = 0;
 	} else {
-		_4E4 = _54FC[0]->getPosH();
-		_4E6 = _54FC[0]->getPosV();
+		mCursorTargetX = mPagePaneList[0]->getPosH();
+		mCursorTargetY = mPagePaneList[0]->getPosV();
 	}
-	_0C->move(_4E4, _4E6);
-	_4DD = false;
-	_4DC = false;
+	mCursorPane->move(mCursorTargetX, mCursorTargetY);
+	mIsTextPausedByTag   = false;
+	mIsPageFullyRevealed = false;
 
-	for (int i = 0; i < _A59C; i++) {
-		switch (_54FC[i]->getTypeID()) {
+	for (int i = 0; i < mActivePaneCount; i++) {
+		switch (mPagePaneList[i]->getTypeID()) {
 		case PANETYPE_TextBox:
-			((P2DTextBox*)_54FC[i])->setString("");
+			((P2DTextBox*)mPagePaneList[i])->setString("");
 			break;
 		case PANETYPE_Picture:
-			_54FC[i]->hide();
+			mPagePaneList[i]->hide();
 			break;
 		}
 	}
@@ -155,11 +155,11 @@ void zen::ogScrMessageMgr::resetPage()
  */
 void zen::ogScrMessageMgr::start(int page)
 {
-	mState = STATE_Unk1;
-	_4E2   = 3;
-	_4D8   = 0.0f;
-	_10->hide();
-	_54F4 = 1;
+	mState           = STATE_StartDelay;
+	mStateEntryDelay = 3;
+	mScreenFadeTimer = 0.0f;
+	mButtonPromptPane->hide();
+	mIsInitialPageLoad = 1;
 	if (page >= 0) {
 		setMessagePage(SearchTopPage(page));
 	}
@@ -175,7 +175,7 @@ void zen::ogScrMessageMgr::setPage(int page)
 	if (page < 0) {
 		page = 0;
 	}
-	if (page >= _4F0) {
+	if (page >= mPageInfoEntryCount) {
 		page = 0;
 	}
 	setMessagePage(page);
@@ -190,7 +190,7 @@ void zen::ogScrMessageMgr::nextPage()
 {
 	int id = mCurrPageNum;
 	id++;
-	if (id >= _4F0) {
+	if (id >= mPageInfoEntryCount) {
 		id = 0;
 	}
 	setMessagePage(id);
@@ -206,7 +206,7 @@ void zen::ogScrMessageMgr::backPage()
 	int id = mCurrPageNum;
 	id--;
 	if (id < 0) {
-		id = _4F0 - 1;
+		id = mPageInfoEntryCount - 1;
 	}
 	setMessagePage(id);
 }
@@ -230,16 +230,16 @@ s16 zen::ogScrMessageMgr::makePageInfo(char*** data)
 				break;
 			}
 
-			mPageInfos[idx]    = new TextInfoType;
-			TextInfoType* info = mPageInfos[idx];
-			info->_04          = i;
-			info->_00          = str;
+			mPageInfos[idx]           = new TextInfoType;
+			TextInfoType* info        = mPageInfos[idx];
+			info->mMsgUniqueId        = i;
+			info->mScreenResourcePath = str;
 			a++;
 			idx++;
 		}
 
 		for (int j = 1; j <= a; j++) {
-			mPageInfos[idx - j]->_06 = a;
+			mPageInfos[idx - j]->mMsgSegmentCount = a;
 		}
 	}
 
@@ -340,13 +340,13 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 	char tc1[4];
 	tc1[0]     = c;
 	tc1[1]     = 0;
-	char* data = strchr(&_A59E[0], c);
+	char* data = strchr(&mButtonTagChars[0], c);
 	PRINT("tc1 = \'%s\' \n", tc1);
 	int len = 2;
 	if (data) {
-		int offset = data - _A59E;
+		int offset = data - mButtonTagChars;
 		if (offset < 8) {
-			char* a = &_A5AA[2 * offset];
+			char* a = &mButtonTagIconStrings[2 * offset];
 			char tmp1[4];
 			tmp1[0] = a[0];
 			tmp1[1] = a[1];
@@ -356,8 +356,8 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 			tmp2[1] = 0;
 
 			char buf1[PATH_MAX];
-			sprintf(buf1, "%sFX[32]%sFY[28]%sCC[%s]%s%sCC[%s]%sFX[24]%sFY[24]", tmp2, tmp2, tmp2, _A5D0[offset], tmp1, tmp2, _A5CC, tmp2,
-			        tmp2);
+			sprintf(buf1, "%sFX[32]%sFY[28]%sCC[%s]%s%sCC[%s]%sFX[24]%sFY[24]", tmp2, tmp2, tmp2, mButtonMarkupColours[offset], tmp1, tmp2,
+			        mDefaultButtonMarkupColour, tmp2, tmp2);
 			len = strlen(buf1);
 			char buf2[1024];
 			sprintf(buf2, "%s%s", buf1, tmp + 2);
@@ -390,43 +390,43 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 		gsys->setHeap(SYSHEAP_Message);
 		gsys->resetHeap(SYSHEAP_Message, 2);
 	}
-	_54F8 = new P2DScreen;
-	_54F8->set(info->_00, true, true, true);
-	P2DPaneLibrary::makeResident(_54F8);
-	_54F2 = 5;
+	mCurrentScreen = new P2DScreen;
+	mCurrentScreen->set(info->mScreenResourcePath, true, true, true);
+	P2DPaneLibrary::makeResident(mCurrentScreen);
+	mPageDrawDelayTimer = 5;
 	PRINT("*********************************\n");
 	PRINT("*                               *\n");
 	PRINT("*   makeResident OGAWA          *\n");
 	PRINT("*                               *\n");
 	PRINT("*********************************\n");
-	_A59C = 0;
+	mActivePaneCount = 0;
 
 	char name[8];
 	u32 badCompiler;
 	for (int i = 0; i < 20; i++) {
 		sprintf(name, "tx%02d", i);
 
-		int id    = _A59C;
-		_54FC[id] = _54F8->search(P2DPaneLibrary::makeTag(name), false);
+		int id            = mActivePaneCount;
+		mPagePaneList[id] = mCurrentScreen->search(P2DPaneLibrary::makeTag(name), false);
 
-		if (_54FC[id]) {
-			switch (_54FC[id]->getTypeID()) {
+		if (mPagePaneList[id]) {
+			switch (mPagePaneList[id]->getTypeID()) {
 			case PANETYPE_TextBox:
-				sprintf(_554C[id], "%s", ((P2DTextBox*)_54FC[id])->getString());
-				_A54C[id] = _554C[id];
-				cnvSingleMulti(_A54C[id]);
-				cnvButtonIcon(_A54C[id]);
-				((P2DTextBox*)_54FC[id])->setString("");
+				sprintf(mRawPageTextBoxStrings[id], "%s", ((P2DTextBox*)mPagePaneList[id])->getString());
+				mProcessedTextBoxStrings[id] = mRawPageTextBoxStrings[id];
+				cnvSingleMulti(mProcessedTextBoxStrings[id]);
+				cnvButtonIcon(mProcessedTextBoxStrings[id]);
+				((P2DTextBox*)mPagePaneList[id])->setString("");
 				id++;
 				break;
 
 			case PANETYPE_Picture:
-				_54FC[id]->hide();
+				mPagePaneList[id]->hide();
 				id++;
 				break;
 			}
 		}
-		_A59C = id;
+		mActivePaneCount = id;
 	}
 
 	gsys->setHeap(old);
@@ -440,7 +440,7 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 void zen::ogScrMessageMgr::ReadAllScreen()
 {
 	PRINT("ReadAllScreen() start\n");
-	for (int i = 0; i < _4F0; i++) {
+	for (int i = 0; i < mPageInfoEntryCount; i++) {
 		mCurrPageNum = i;
 		setPageInfoSub();
 	}
@@ -455,7 +455,7 @@ void zen::ogScrMessageMgr::ReadAllScreen()
  */
 void zen::ogScrMessageMgr::MakeAndSetPageInfo(char*** data)
 {
-	_4F0 = makePageInfo(data);
+	mPageInfoEntryCount = makePageInfo(data);
 	setMessagePage(0);
 }
 
@@ -466,46 +466,46 @@ void zen::ogScrMessageMgr::MakeAndSetPageInfo(char*** data)
  */
 zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
 {
-	mScreen = new P2DScreen;
-	mScreen->set(path, true, true, true);
-	P2DPaneLibrary::makeResident(mScreen);
-	_4E0         = 0;
-	mCtrlTagMgr  = new ogMsgCtrlTagMgr;
-	_54F2        = 5;
-	Texture* tex = gsys->loadTexture("bigFont.bti", true);
-	mFont        = new Font;
+	mBaseScreen = new P2DScreen;
+	mBaseScreen->set(path, true, true, true);
+	P2DPaneLibrary::makeResident(mBaseScreen);
+	mAlwaysShowNextPrompt = 0;
+	mCtrlTagMgr           = new ogMsgCtrlTagMgr;
+	mPageDrawDelayTimer   = 5;
+	Texture* tex          = gsys->loadTexture("bigFont.bti", true);
+	mFont                 = new Font;
 	mFont->setTexture(tex, 21, 42);
-	_54F8        = nullptr;
-	mState       = STATE_NULL;
-	_4DE         = false;
-	_4DF         = false;
-	mCurrPageNum = 0;
-	_4EE         = 0;
-	_0C          = (P2DPicture*)mScreen->search('curs', true);
-	_10          = (P2DPicture*)mScreen->search('a_bt', true);
-	_14          = new setTenmetuAlpha(_0C, 0.5f);
-	_18          = new setTenmetuAlpha(_10, 1.0f);
-	_14->start();
-	_18->start();
-	_10->hide();
-	_4DD = false;
-	_4DC = false;
-	_4D4 = 0.0f;
-	_4E8 = 0;
-	_4EA = 0;
-	_4EC = -1;
-	sprintf(_A59E, "abcxyzlr");
-	sprintf(_A5AA, "日目時私未知星大地横名");
-	_A5CC    = "b4ffff";
-	_A5D0[0] = "00ff00";
-	_A5D0[1] = "ff0000";
-	_A5D0[2] = "ffff00";
-	_A5D0[3] = "808080";
-	_A5D0[4] = "808080";
-	_A5D0[5] = "4040ff";
-	_A5D0[6] = "808080";
-	_A5D0[7] = "808080";
-	P2DPaneLibrary::setFamilyAlpha(mScreen, nullptr);
+	mCurrentScreen            = nullptr;
+	mState                    = STATE_Inactive;
+	mIsUiInputDisabled        = false;
+	mHasDrawOccurredThisFrame = false;
+	mCurrPageNum              = 0;
+	mCurrentMessageId         = 0;
+	mCursorPane               = (P2DPicture*)mBaseScreen->search('curs', true);
+	mButtonPromptPane         = (P2DPicture*)mBaseScreen->search('a_bt', true);
+	mCursorBlinker            = new setTenmetuAlpha(mCursorPane, 0.5f);
+	mButtonPromptBlinker      = new setTenmetuAlpha(mButtonPromptPane, 1.0f);
+	mCursorBlinker->start();
+	mButtonPromptBlinker->start();
+	mButtonPromptPane->hide();
+	mIsTextPausedByTag     = false;
+	mIsPageFullyRevealed   = false;
+	mTextAnimationProgress = 0.0f;
+	mCurrentTextCharOffset = 0;
+	mNextPaneId            = 0;
+	mActivePaneId          = -1;
+	sprintf(mButtonTagChars, "abcxyzlr");
+	sprintf(mButtonTagIconStrings, "日目時私未知星大地横名");
+	mDefaultButtonMarkupColour = "b4ffff";
+	mButtonMarkupColours[0]    = "00ff00";
+	mButtonMarkupColours[1]    = "ff0000";
+	mButtonMarkupColours[2]    = "ffff00";
+	mButtonMarkupColours[3]    = "808080";
+	mButtonMarkupColours[4]    = "808080";
+	mButtonMarkupColours[5]    = "4040ff";
+	mButtonMarkupColours[6]    = "808080";
+	mButtonMarkupColours[7]    = "808080";
+	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, nullptr);
 }
 
 /*
@@ -515,8 +515,8 @@ zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
  */
 void zen::ogScrMessageMgr::setScreenAlpha(u8 alpha)
 {
-	P2DPaneLibrary::setFamilyAlpha(_54F8, alpha);
-	P2DPaneLibrary::setFamilyAlpha(mScreen, alpha);
+	P2DPaneLibrary::setFamilyAlpha(mCurrentScreen, alpha);
+	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, alpha);
 }
 
 /*
@@ -526,35 +526,35 @@ void zen::ogScrMessageMgr::setScreenAlpha(u8 alpha)
  */
 void zen::ogScrMessageMgr::dispAll()
 {
-	_4EC = -1;
+	mActivePaneId = -1;
 
-	for (int i = 0; i < _A59C; i++) {
-		switch (_54FC[i]->getTypeID()) {
+	for (int i = 0; i < mActivePaneCount; i++) {
+		switch (mPagePaneList[i]->getTypeID()) {
 		case PANETYPE_Picture:
-			P2DPicture* pic = (P2DPicture*)_54FC[i];
+			P2DPicture* pic = (P2DPicture*)mPagePaneList[i];
 			pic->show();
 			P2DPaneLibrary::setFamilyAlpha(pic, 255);
 			pic->initWhite();
 			pic->initBlack();
 			break;
 		case PANETYPE_TextBox:
-			strcpy(_4F2[i], _A54C[i]);
-			cnvSpecialNumber(_4F2[i]);
-			((P2DTextBox*)_54FC[i])->setString(_4F2[i]);
-			_4EC = i;
+			strcpy(mFormattedDisplayStrings[i], mProcessedTextBoxStrings[i]);
+			cnvSpecialNumber(mFormattedDisplayStrings[i]);
+			((P2DTextBox*)mPagePaneList[i])->setString(mFormattedDisplayStrings[i]);
+			mActivePaneId = i;
 			break;
 		}
 	}
 
-	_4EA = _A59C - 1;
-	_4DD = true;
-	_4DC = true;
-	_4D4 = 100.0f;
-	if (_4DE) {
-		_0C->hide();
+	mNextPaneId            = mActivePaneCount - 1;
+	mIsTextPausedByTag     = true;
+	mIsPageFullyRevealed   = true;
+	mTextAnimationProgress = 100.0f;
+	if (mIsUiInputDisabled) {
+		mCursorPane->hide();
 	}
-	if (_4EC >= 0) {
-		setCursorXY((P2DTextBox*)_54FC[_4EC]);
+	if (mActivePaneId >= 0) {
+		setCursorXY((P2DTextBox*)mPagePaneList[mActivePaneId]);
 	}
 }
 
@@ -565,8 +565,8 @@ void zen::ogScrMessageMgr::dispAll()
  */
 void zen::ogScrMessageMgr::fadeOut()
 {
-	_4D8   = 0.0f;
-	mState = STATE_Unk3;
+	mScreenFadeTimer = 0.0f;
+	mState           = STATE_FadingOut;
 }
 
 /*
@@ -576,20 +576,20 @@ void zen::ogScrMessageMgr::fadeOut()
  */
 zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* input)
 {
-	if (mState == STATE_NULL) {
+	if (mState == STATE_Inactive) {
 		return mState;
 	}
 
-	if (mState == STATE_Unk4) {
-		mState = STATE_NULL;
+	if (mState == STATE_TransitionToInactive) {
+		mState = STATE_Inactive;
 		return mState;
 	}
 
-	if (mState == STATE_Unk1) {
-		_4E2--;
-		if (_4E2 <= 0) {
-			_4D8   = 0.0f;
-			mState = STATE_Unk2;
+	if (mState == STATE_StartDelay) {
+		mStateEntryDelay--;
+		if (mStateEntryDelay <= 0) {
+			mScreenFadeTimer = 0.0f;
+			mState           = STATE_FadingIn;
 		}
 		return mState;
 	}
@@ -600,62 +600,62 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 		return mState;
 	}
 
-	mScreen->update();
+	mBaseScreen->update();
 
-	if (!_4DE) {
-		_14->update();
+	if (!mIsUiInputDisabled) {
+		mCursorBlinker->update();
 	}
 
-	_54F8->update();
+	mCurrentScreen->update();
 
-	if (mState == STATE_Unk2) {
-		_4D8 += gsys->getFrameTime();
-		if (_4D8 >= 0.25f) {
-			mState = STATE_Unk0;
+	if (mState == STATE_FadingIn) {
+		mScreenFadeTimer += gsys->getFrameTime();
+		if (mScreenFadeTimer >= 0.25f) {
+			mState = STATE_ActiveDisplay;
 		} else {
-			setScreenAlpha((u8)(255.0f * _4D8 / 0.25f));
+			setScreenAlpha((u8)(255.0f * mScreenFadeTimer / 0.25f));
 		}
 		return mState;
 	}
 
-	if (mState == STATE_Unk3) {
-		_4D8 += gsys->getFrameTime();
-		if (_4D8 >= 0.25f) {
-			mState = STATE_Unk4;
+	if (mState == STATE_FadingOut) {
+		mScreenFadeTimer += gsys->getFrameTime();
+		if (mScreenFadeTimer >= 0.25f) {
+			mState = STATE_TransitionToInactive;
 		} else {
-			setScreenAlpha((u8)((0.25f - _4D8) * 255.0f / 0.25f));
+			setScreenAlpha((u8)((0.25f - mScreenFadeTimer) * 255.0f / 0.25f));
 		}
 		return mState;
 	}
 
-	if (!_4DC && _4DD) {
-		_4D4 = -0.6864f;
-		_4E8 = 0;
-		_4EA++;
-		if (_4EA >= _A59C) {
-			_4EA = _A59C - 1;
-			_4DC = true;
+	if (!mIsPageFullyRevealed && mIsTextPausedByTag) {
+		mTextAnimationProgress = -0.6864f;
+		mCurrentTextCharOffset = 0;
+		mNextPaneId++;
+		if (mNextPaneId >= mActivePaneCount) {
+			mNextPaneId          = mActivePaneCount - 1;
+			mIsPageFullyRevealed = true;
 		}
-		_4DD = false;
+		mIsTextPausedByTag = false;
 	}
 
-	if (_4EC >= 0) {
-		setCursorXY((P2DTextBox*)_54FC[_4EC]);
-		_0C->move(_4E4, _4E6);
+	if (mActivePaneId >= 0) {
+		setCursorXY((P2DTextBox*)mPagePaneList[mActivePaneId]);
+		mCursorPane->move(mCursorTargetX, mCursorTargetY);
 	}
 
-	if (_4DC) {
-		if (info->_06 > 1 || _4E0) {
-			_10->show();
-			_18->update();
+	if (mIsPageFullyRevealed) {
+		if (info->mMsgSegmentCount > 1 || mAlwaysShowNextPrompt) {
+			mButtonPromptPane->show();
+			mButtonPromptBlinker->update();
 		}
 
-		if (!_4DE && input->keyClick(KBBTN_A | KBBTN_B)) {
-			_4EE++;
-			if (_4EE >= info->_06) {
-				_4EE   = 0;
-				_4D8   = 0.0f;
-				mState = STATE_Unk3;
+		if (!mIsUiInputDisabled && input->keyClick(KBBTN_A | KBBTN_B)) {
+			mCurrentMessageId++;
+			if (mCurrentMessageId >= info->mMsgSegmentCount) {
+				mCurrentMessageId = 0;
+				mScreenFadeTimer  = 0.0f;
+				mState            = STATE_FadingOut;
 				SeSystem::playSysSe(SYSSE_MESSAGE_CLOSE);
 				PRINT("END MESSAGE!\n");
 				return mState;
@@ -665,60 +665,60 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 		return mState;
 	}
 
-	if (!_4DE && input->keyClick(KBBTN_B)) {
+	if (!mIsUiInputDisabled && input->keyClick(KBBTN_B)) {
 		dispAll();
 		return mState;
 	}
 
-	if (!_4DC && _4EA < _A59C) {
+	if (!mIsPageFullyRevealed && mNextPaneId < mActivePaneCount) {
 		f32 speed = 1.0f;
 		if (input->keyDown(KBBTN_A)) {
 			speed = 5.0f;
 		}
-		_4D4 += gsys->getFrameTime() * speed;
+		mTextAnimationProgress += gsys->getFrameTime() * speed;
 
-		switch (_54FC[_4EA]->getTypeID()) {
+		switch (mPagePaneList[mNextPaneId]->getTypeID()) {
 		case PANETYPE_Picture:
-			P2DPicture* pic = (P2DPicture*)_54FC[_4EA];
+			P2DPicture* pic = (P2DPicture*)mPagePaneList[mNextPaneId];
 			pic->show();
-			if (_4D4 < 1.0f) {
+			if (mTextAnimationProgress < 1.0f) {
 				u8 alpha = 0;
-				if (_4D4 > 0.0f) {
-					alpha = 255.0f * _4D4;
+				if (mTextAnimationProgress > 0.0f) {
+					alpha = 255.0f * mTextAnimationProgress;
 				}
 				P2DPaneLibrary::setFamilyAlpha(pic, alpha);
 			} else {
-				_4D4 = -0.0f; // ? guess we're making minus zeros now
-				_4E8 = 0;
-				_4EA++;
+				mTextAnimationProgress = -0.0f; // ? guess we're making minus zeros now
+				mCurrentTextCharOffset = 0;
+				mNextPaneId++;
 			}
 			break;
 
 		case PANETYPE_TextBox:
-			if (_4D4 >= 0.029639998f) {
-				_4EC = _4EA;
-				_4D4 = 0.0f;
+			if (mTextAnimationProgress >= 0.029639998f) {
+				mActivePaneId          = mNextPaneId;
+				mTextAnimationProgress = 0.0f;
 
 				f32 a;
-				if (mCtrlTagMgr->CheckCtrlTag(_A54C[_4EA], &_4E8, &a)) {
-					_4DD = true;
+				if (mCtrlTagMgr->CheckCtrlTag(mProcessedTextBoxStrings[mNextPaneId], &mCurrentTextCharOffset, &a)) {
+					mIsTextPausedByTag = true;
 				}
 
 				if (a > 0.0f) {
-					_4D4 = -a;
+					mTextAnimationProgress = -a;
 				}
-				strncpy(_4F2[_4EA], _A54C[_4EA], _4E8);
-				_4F2[_4EA][_4E8] = 0;
-				cnvSpecialNumber(_4F2[_4EA]);
-				static_cast<P2DTextBox*>(_54FC[_4EA])->setString(_4F2[_4EA]);
+				strncpy(mFormattedDisplayStrings[mNextPaneId], mProcessedTextBoxStrings[mNextPaneId], mCurrentTextCharOffset);
+				mFormattedDisplayStrings[mNextPaneId][mCurrentTextCharOffset] = 0;
+				cnvSpecialNumber(mFormattedDisplayStrings[mNextPaneId]);
+				static_cast<P2DTextBox*>(mPagePaneList[mNextPaneId])->setString(mFormattedDisplayStrings[mNextPaneId]);
 			}
-			_10->hide();
+			mButtonPromptPane->hide();
 			break;
 		}
 	}
 
-	if (_4EA >= _A59C) {
-		_4DC = true;
+	if (mNextPaneId >= mActivePaneCount) {
+		mIsPageFullyRevealed = true;
 	}
 
 	return mState;
@@ -731,19 +731,19 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
  */
 void zen::ogScrMessageMgr::draw(Graphics& gfx)
 {
-	if (mState != STATE_NULL && mState != STATE_Unk1) {
+	if (mState != STATE_Inactive && mState != STATE_StartDelay) {
 		GXColor color = { 0, 0, 0, 0 };
 		GXSetFog(GX_FOG_NONE, 0.0f, 1.0f, 0.1f, 1.0f, color);
 		GXSetFogRangeAdj(GX_FALSE, 0, nullptr);
 		P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 		graf.setPort();
-		mScreen->draw(0, 0, &graf);
-		if (_54F2 > 0) {
-			_54F2--;
-			_4DF = false;
+		mBaseScreen->draw(0, 0, &graf);
+		if (mPageDrawDelayTimer > 0) {
+			mPageDrawDelayTimer--;
+			mHasDrawOccurredThisFrame = false;
 		} else {
-			_54F8->draw(0, 0, &graf);
-			_4DF = true;
+			mCurrentScreen->draw(0, 0, &graf);
+			mHasDrawOccurredThisFrame = true;
 		}
 	}
 }

@@ -53,7 +53,7 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
 	mMesgMgr->MakeAndSetPageInfo(&bloFiles_default_Diary[0]);
 	mMesgMgr->setLastPageAbutton(true);
 	mMesgMgr->setSolidMode(false);
-	P2DScreen* screen = mMesgMgr->getScreenPtr();
+	P2DScreen* screen = mMesgMgr->getBaseScreenPtr();
 	mPaneCapu         = screen->search('capu', true);
 	screen->search('base', true)->hide();
 	_08     = 0;
@@ -112,7 +112,7 @@ void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 
 		char path[256];
 		sprintf(path, "tx??の数(%d個)", mMesgMgr->getTxtLineMax());
-		gfx.texturePrintf(mFont, 30, 20, mMesgMgr->getPageInfo()->_00);
+		gfx.texturePrintf(mFont, 30, 20, mMesgMgr->getPageInfo()->mScreenResourcePath);
 		gfx.texturePrintf(mFont, 30, 40, path);
 	}
 }
@@ -200,7 +200,7 @@ void zen::ogScrDiaryMgr::typePage()
  */
 bool zen::ogScrDiaryMgr::nextPage()
 {
-	if (mMesgMgr->getPageInfo()->_06 <= 1) {
+	if (mMesgMgr->getPageInfo()->mMsgSegmentCount <= 1) {
 		return false;
 	}
 
@@ -308,8 +308,8 @@ void zen::ogDrawDiary::start()
 void zen::ogDrawDiary::setOffset()
 {
 	mScreen->setOffset(_14, _18);
-	mDiaryMgr->getScrMsgMgr()->getBaseScreenPtr()->setOffset(_14, _18);
 	mDiaryMgr->getScrMsgMgr()->getScreenPtr()->setOffset(_14, _18);
+	mDiaryMgr->getScrMsgMgr()->getBaseScreenPtr()->setOffset(_14, _18);
 }
 
 /*

@@ -408,7 +408,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		char tutorialText[PATH_MAX];
 		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->getTxtLineMax()); // '<<< Tutorial >>> Number of tx?? (%d)'
 		gfx.texturePrintf(mFont, 30, 20, tutorialText);
-		gfx.texturePrintf(mFont, 30, 40, msgMgr->getPageInfo()->_00);
+		gfx.texturePrintf(mFont, 30, 40, msgMgr->getPageInfo()->mScreenResourcePath);
 	}
 
 	mMemChkMgr->draw(gfx);

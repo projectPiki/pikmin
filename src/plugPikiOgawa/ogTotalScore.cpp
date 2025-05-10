@@ -102,6 +102,7 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 		cnvSpecialNumber(str);
 		mPartDayRecordTexts[i]->setString(str);
 	}
+
 	for (int i = 0; i < 5; i++) {
 		sprintf(buf, "lp%02d", i + 1);
 		mBornRecordTexts[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
@@ -110,6 +111,7 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 		cnvSpecialNumber(str);
 		mBornRecordTexts[i]->setString(str);
 	}
+
 	for (int i = 0; i < 5; i++) {
 		sprintf(buf, "dp%02d", i + 1);
 		mDeadRecordTexts[i] = (P2DTextBox*)screen->search(P2DPaneLibrary::makeTag(buf), true);
@@ -294,6 +296,7 @@ void zen::ogScrTotalScoreMgr::setRankInColor()
 		mDaysHeading->setCharColor(colour);
 		mDaysHeading->setGradColor(colour);
 	}
+
 	s16 bornRank = mScores->mBornPikisRank;
 	if (bornRank >= 0 && bornRank < 5) {
 		mBornRecordTexts[bornRank]->setCharColor(colour);
@@ -305,6 +308,7 @@ void zen::ogScrTotalScoreMgr::setRankInColor()
 		mBornHeading->setCharColor(colour);
 		mBornHeading->setGradColor(colour);
 	}
+
 	s16 deadRank = mScores->mDeadPikisRank;
 	if (deadRank >= 0 && deadRank < 5) {
 		mDeadRecordTexts[deadRank]->setCharColor(colour);

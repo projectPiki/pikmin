@@ -16,9 +16,9 @@ struct ogMsgCtrlTagMgr;
 struct setTenmetuAlpha;
 
 struct TextInfoType {
-	char* _00; // _00
-	s16 _04;   // _04
-	s16 _06;   // _06
+	char* mScreenResourcePath; // _00
+	s16 mMsgUniqueId;          // _04
+	s16 mMsgSegmentCount;      // _06
 };
 
 /**
@@ -27,17 +27,16 @@ struct TextInfoType {
  * @note Size: 0xA5F0.
  */
 struct ogScrMessageMgr {
-
 	/**
-	 * @brief TODO
+	 * @brief Defines the operational states of the message manager.
 	 */
 	enum MessageStatus {
-		STATE_NULL = -1,
-		STATE_Unk0 = 0,
-		STATE_Unk1 = 1,
-		STATE_Unk2 = 2,
-		STATE_Unk3 = 3,
-		STATE_Unk4 = 4,
+		STATE_Inactive = -1,        // The manager is idle and not displaying any message.
+		STATE_ActiveDisplay,        // Message is fully displayed and active, awaiting user interaction.
+		STATE_StartDelay,           // An initial delay period before the message begins to fade in.
+		STATE_FadingIn,             // Message is currently fading into view. Alpha is progressively increased.
+		STATE_FadingOut,            // Message is currently fading out of view. Alpha is progressively decreased.
+		STATE_TransitionToInactive, // A transitional state before the manager becomes fully inactive, follows STATE_FadingOut
 	};
 
 	ogScrMessageMgr(char*);
@@ -65,69 +64,69 @@ struct ogScrMessageMgr {
 
 	// DLL inlines
 	TextInfoType* getPageInfo() { return mPageInfos[mCurrPageNum]; }
-	s16 getTxtLineMax() { return _A59C; }
-	P2DScreen* getBaseScreenPtr() { return _54F8; } // these might be swapped?
-	P2DScreen* getScreenPtr() { return mScreen; }
+	s16 getTxtLineMax() { return mActivePaneCount; }
+	P2DScreen* getBaseScreenPtr() { return mBaseScreen; }
+	P2DScreen* getScreenPtr() { return mCurrentScreen; }
 
-	void setLastPageAbutton(bool set) { _4DE = set; } // guessing which of these is which
-	void setSolidMode(bool set) { _4E0 = set; }
+	void setLastPageAbutton(bool set) { mIsUiInputDisabled = set; }
+	void setSolidMode(bool set) { mAlwaysShowNextPrompt = set; }
 
 	void setCursorXY(P2DTextBox* textBox)
 	{
-		_4E4 = textBox->getPosH() + textBox->getCursorX();
-		_4E6 = textBox->getPosV() + textBox->getCursorY() - 24;
+		mCursorTargetX = textBox->getPosH() + textBox->getCursorX();
+		mCursorTargetY = textBox->getPosV() + textBox->getCursorY() - 24;
 	}
 	void setScale(f32 scale)
 	{
-		mScreen->setScale(scale);
-		_54F8->setScale(scale);
+		mBaseScreen->setScale(scale);
+		mCurrentScreen->setScale(scale);
 	}
 
-	bool checkDisp() { return _4DF; }
+	bool checkDisp() { return mHasDrawOccurredThisFrame; }
 
 	void move(int x, int y)
 	{
-		mScreen->move(x, y);
-		_54F8->move(x, y);
+		mBaseScreen->move(x, y);
+		mCurrentScreen->move(x, y);
 	}
 
-	P2DScreen* mScreen;            // _00
-	ogMsgCtrlTagMgr* mCtrlTagMgr;  // _04
-	Font* mFont;                   // _08
-	P2DPicture* _0C;               // _0C
-	P2DPicture* _10;               // _10
-	setTenmetuAlpha* _14;          // _14
-	setTenmetuAlpha* _18;          // _18
-	TextInfoType* mPageInfos[300]; // _1C, unsure of array size, make it less if necessary
-	MessageStatus mState;          // _4CC
-	s16 mCurrPageNum;              // _4D0
-	f32 _4D4;                      // _4D4
-	f32 _4D8;                      // _4D8
-	bool _4DC;                     // _4DC
-	bool _4DD;                     // _4DD
-	bool _4DE;                     // _4DE
-	bool _4DF;                     // _4DF
-	u8 _4E0;                       // _4E0
-	s16 _4E2;                      // _4E2
-	s16 _4E4;                      // _4E4
-	s16 _4E6;                      // _4E6
-	s16 _4E8;                      // _4E8, might be s16
-	s16 _4EA;                      // _4EA
-	s16 _4EC;                      // _4EC
-	s16 _4EE;                      // _4EE
-	s16 _4F0;                      // _4F0
-	char _4F2[20][0x400];          // _4F2
-	s16 _54F2;                     // _54F2, might be s16
-	u8 _54F4;                      // _54F4
-	P2DScreen* _54F8;              // _54F8
-	P2DPane* _54FC[20];            // _54FC
-	char _554C[20][0x400];         // _554C
-	char* _A54C[20];               // _A54C
-	s16 _A59C;                     // _A59C
-	char _A59E[12];                // _A59E
-	char _A5AA[34];                // _A5AA, unknown size
-	char* _A5CC;                   // _A5CC
-	char* _A5D0[8];                // _A5D0
+	P2DScreen* mBaseScreen;                   // _00
+	ogMsgCtrlTagMgr* mCtrlTagMgr;             // _04
+	Font* mFont;                              // _08
+	P2DPicture* mCursorPane;                  // _0C
+	P2DPicture* mButtonPromptPane;            // _10
+	setTenmetuAlpha* mCursorBlinker;          // _14
+	setTenmetuAlpha* mButtonPromptBlinker;    // _18
+	TextInfoType* mPageInfos[300];            // _1C, unsure of array size, make it less if necessary
+	MessageStatus mState;                     // _4CC
+	s16 mCurrPageNum;                         // _4D0
+	f32 mTextAnimationProgress;               // _4D4
+	f32 mScreenFadeTimer;                     // _4D8
+	bool mIsPageFullyRevealed;                // _4DC
+	bool mIsTextPausedByTag;                  // _4DD
+	bool mIsUiInputDisabled;                  // _4DE
+	bool mHasDrawOccurredThisFrame;           // _4DF
+	u8 mAlwaysShowNextPrompt;                 // _4E0
+	s16 mStateEntryDelay;                     // _4E2
+	s16 mCursorTargetX;                       // _4E4
+	s16 mCursorTargetY;                       // _4E6
+	s16 mCurrentTextCharOffset;               // _4E8
+	s16 mNextPaneId;                          // _4EA
+	s16 mActivePaneId;                        // _4EC
+	s16 mCurrentMessageId;                    // _4EE
+	s16 mPageInfoEntryCount;                  // _4F0
+	char mFormattedDisplayStrings[20][0x400]; // _4F2
+	s16 mPageDrawDelayTimer;                  // _54F2
+	u8 mIsInitialPageLoad;                    // _54F4
+	P2DScreen* mCurrentScreen;                // _54F8
+	P2DPane* mPagePaneList[20];               // _54FC
+	char mRawPageTextBoxStrings[20][0x400];   // _554C
+	char* mProcessedTextBoxStrings[20];       // _A54C
+	s16 mActivePaneCount;                     // _A59C
+	char mButtonTagChars[12];                 // _A59E
+	char mButtonTagIconStrings[34];           // _A5AA, unknown size
+	char* mDefaultButtonMarkupColour;         // _A5CC
+	char* mButtonMarkupColours[8];            // _A5D0
 };
 
 } // namespace zen
