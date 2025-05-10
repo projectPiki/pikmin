@@ -5,6 +5,7 @@
 #include "Colour.h"
 #include "Vector.h"
 #include "system.h"
+#include "nlib/Math.h"
 #include "P2D/Screen.h"
 
 struct Controller;
@@ -47,8 +48,12 @@ struct ogDrawScrMenu {
 	}
 	P2DPane* getRoot() { return _08; }
 	P2DScreen* getPsc() { return mScreen; }
-	void setAngle(f32 a) { }
-	void setMaxR(f32 a) { }
+	void setAngle(f32 a)
+	{
+		_0C = a;
+		_10 = a;
+	}
+	void setMaxR(f32 a) { _1C = a; }
 	void start(int state)
 	{
 		_20 = state;
@@ -56,9 +61,7 @@ struct ogDrawScrMenu {
 		setMaxR(600.0f);
 		_14 = 0.0f;
 
-		f32 c = cosf(_0C);
-		f32 s = sinf(_0C);
-		_08->move(c + _1C, (-_1C * s) + _1C, 0.0f);
+		_08->move((_1C * NMathF::sin(_0C)), 0, (-_1C * NMathF::cos(_0C)) + _1C);
 		_08->rotate(320, 240, P2DROTATE_Y, -_0C);
 	}
 
@@ -66,11 +69,11 @@ struct ogDrawScrMenu {
 	returnStatusFlag _04; // _04
 	P2DPane* _08;         // _08
 	f32 _0C;              // _0C
-	f32 _10;              // _10
+	vf32 _10;             // _10
 	f32 _14;              // _14
 	int _18;              // _18
 	f32 _1C;              // _1C
-	int _20;              // _20
+	s16 _20;              // _20
 };
 
 /**
@@ -203,9 +206,9 @@ struct ogDrawLR {
 	void update()
 	{
 		f32 time = gsys->getFrameTime();
-		_14      = sinf(-_10) * 0.25f + 0.75f;
-		_18      = sinf(-_10) * 0.25f + 0.75f;
-		_1C      = cosf(-_10) * 0.125f + 0.875f;
+		_14      = NMathF::sin(-_10) * 0.25f + 0.75f;
+		_18      = NMathF::sin(-_10) * 0.25f + 0.75f;
+		_1C      = NMathF::cos(-_10) * 0.125f + 0.875f;
 		_08->setOffset(48, 48);
 		_0C->setOffset(0, 48);
 		_08->setScale(_14, _1C, 1.0f);

@@ -7,6 +7,7 @@ struct P2DPane;
 struct P2DPicture;
 struct Controller;
 struct Graphics;
+struct P2DScreen;
 struct Vector3f;
 
 namespace zen {
@@ -51,8 +52,13 @@ struct ogRaderMgr {
 	void RotatePos(f32*, f32*);
 	void DrawCircle(u8, u8, u8, u8, f32);
 
+	// DLL inlines to do:
+	P2DScreen* getScrPtr() { return _3C; }
+
 	// TODO: members
-	u8 _00[0x45C]; // _00
+	u8 _00[0x3C];         // _00
+	P2DScreen* _3C;       // _3C
+	u8 _40[0x45C - 0x40]; // _40, unknown
 };
 
 // unused/inlined global functions:
