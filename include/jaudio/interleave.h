@@ -6,24 +6,23 @@
 /**
  * @brief TODO
  */
-typedef struct il_buf {
-	BOOL _00; // _00
-	u8* _04;  // _04
-	u32 _08;  // _08
-	int _0C;  // _0C
-	u32 _10;  // _10
-	u32 _14;  // _14
-	u32 _18;  // _18
-} il_buf;
+struct il_buf {
+	BOOL mIsInitialized; // _00
+	u8* mBufData;        // _04
+	u32 mBufSize;        // _08
+	u32 mBufSendIdx;     // _0C
+	u32 mBufGetIdx;      // _10
+	u32 mStreamRemain;   // _14
+	u32 mStreamFree;     // _18
+};
 
-// Global functions:
-void Jac_SendStreamData(u8*, u32);
-BOOL Jac_CheckStreamFree(u32);
-BOOL Jac_CheckStreamRemain(u32);
-void Jac_GetStreamData(u8*, u32);
-void Jac_InitStreamData(u8*, u32);
+typedef struct il_buf InterleaveBuffer;
 
-// Unused functions:
-void Jac_GetStreamRemain();
+BOOL Jac_SendStreamData(u8* data, u32 size);
+BOOL Jac_CheckStreamFree(u32 size);
+BOOL Jac_CheckStreamRemain(u32 size);
+u32 Jac_GetStreamRemain(); // UNUSED
+u32 Jac_GetStreamData(u8* data, u32 size);
+void Jac_InitStreamData(u8* data, u32 size);
 
 #endif
