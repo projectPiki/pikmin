@@ -3,15 +3,15 @@
 
 #include "types.h"
 
-void Jaf_InitSeqArchive2(char*, u8*, u8*);
-void Jaf_CheckSeqSize(u32);
-void Jaf_LoadSeq(u32, u8*);
+void Jaf_InitSeqArchive2(char* volatile, u8*, u8*);
+u32 Jaf_CheckSeqSize(u32 arcHandleMask);
+BOOL Jaf_LoadSeq(u32, u8*);
 void Jaf_ClearSeq(u32);
-void Jaf_CheckSeq(u32);
-void Jaf_ReadySeq(u32, u32);
-void Jaf_PlaySeq(u32);
-void Jaf_StartSeq(u32, u32);
-void Jaf_StopSeq(u32);
+u8* Jaf_CheckSeq(u32);
+unknown Jaf_ReadySeq(u32, u32);
+BOOL Jaf_PlaySeq(u32);
+BOOL Jaf_StartSeq(u32, u32);
+BOOL Jaf_StopSeq(u32);
 void Jaf_GetJamHandle(u32);
 void Jaf_HandleToSeq(u32);
 void Jaf_LoadStartFinish(u32);
