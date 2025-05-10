@@ -4302,9 +4302,38 @@ void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
  * Address:	........
  * Size:	0002D4
  */
-void Navi::renderParabola(Graphics&, f32, f32)
+void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 {
-	// UNUSED FUNCTION
+	if (mStateMachine->getCurrID(this) != NAVISTATE_ThrowWait) {
+		return;
+	}
+
+	PRINT("len %f height %f\n", len, height);
+
+	f32 a = -4.0f * height / (len * len);
+	f32 b = height;
+	Vector3f prevPos(mPosition);
+	Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));
+	Vector3f up(0.0f, 1.0f, 0.0f);
+
+	Vector3f nextPos;
+	int segmentCount = 16;
+	f32 inc          = len / 16.0f;
+	f32 x            = 0.0f;
+	gfx.setLighting(false, nullptr);
+	gfx.useTexture(nullptr, 0);
+	gfx.setColour(Colour(0, 255, 0, 255), true);
+
+	for (int i = 0; i < segmentCount - 1; i++) {
+		x += inc;
+		f32 y = (x - len * 0.5f) * a * (x - len * 0.5f) + b;
+		PRINT(" %d : x:%.1f/%.1f y : %f\n", i, x, len, y);
+		nextPos = prevPos;
+		nextPos = nextPos + x * dir;
+		nextPos = nextPos + y * up;
+		gfx.drawLine(prevPos, nextPos);
+		prevPos = nextPos;
+	}
 }
 
 /*
