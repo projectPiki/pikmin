@@ -121,7 +121,7 @@ void JV_InitHeader_M(char*, u8*, u8*)
  * Address:	8000E6C0
  * Size:	00007C
  */
-void JV_GetArchiveHandle(char*)
+u32 JV_GetArchiveHandle(char*)
 {
 	/*
 	.loc_0x0:
@@ -258,7 +258,7 @@ void JV_GetRealHandle(u32)
  * Address:	8000E7C0
  * Size:	000034
  */
-void JV_CheckSize(u32)
+u32 JV_CheckSize(u32)
 {
 	/*
 	.loc_0x0:
@@ -297,7 +297,7 @@ void __JV_Callback(u32)
  * Address:	8000E800
  * Size:	0000D0
  */
-void JV_LoadFile(u32, u8*, u32, u32)
+unknown JV_LoadFile(u32, u8*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -363,7 +363,7 @@ void JV_LoadFile(u32, u8*, u32, u32)
  * Address:	8000E8E0
  * Size:	0000E0
  */
-void JV_LoadFile_Async2(u32, u8*, u32, u32, void (*)(u32), u32)
+unknown JV_LoadFile_Async2(u32, u8*, u32, u32, void (*)(u32), u32)
 {
 	/*
 	.loc_0x0:

@@ -11,12 +11,12 @@ extern "C" {
 
 void Jaq_Reset(void);
 void Jaq_GetRemainFreeTracks(void);
-void Jaq_HandleToSeq(void);
-void Jaq_StopSeq(void);
-void Jaq_SetSeqData(void);
-void Jaq_SetSeqData_Limit(void);
+unknown Jaq_HandleToSeq(u32 handle);
+BOOL Jaq_StopSeq(u32 index);
+unknown Jaq_SetSeqData(unknown, u8*, u32, unknown);
+unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown);
 void Jaq_SetBankNumber(void);
-void Jaq_StartSeq(void);
+void Jaq_StartSeq(u32);
 void Jaq_OpenTrack(void);
 void Jaq_CloseTrack(void);
 

@@ -235,7 +235,7 @@ void DeAllocRoot(seqp_*)
  * Address:	80014020
  * Size:	000018
  */
-void Jaq_HandleToSeq(void)
+unknown Jaq_HandleToSeq(u32 handle)
 {
 	/*
 	.loc_0x0:
@@ -511,7 +511,7 @@ static void Init_Track(seqp_*, u32, seqp_*)
  * Address:	800143C0
  * Size:	0000A0
  */
-void Jaq_StopSeq(void)
+BOOL Jaq_StopSeq(u32 index)
 {
 	/*
 	.loc_0x0:
@@ -610,20 +610,9 @@ static void __StopSeq(seqp_*)
  * Address:	800144C0
  * Size:	000024
  */
-void Jaq_SetSeqData(void)
+unknown Jaq_SetSeqData(unknown param_1, u8* param_2, u32 param_3, unknown param_4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x30
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return Jaq_SetSeqData_Limit(param_1, param_2, param_3, param_4, 0);
 }
 
 /*
@@ -631,7 +620,7 @@ void Jaq_SetSeqData(void)
  * Address:	80014500
  * Size:	000170
  */
-void Jaq_SetSeqData_Limit(void)
+unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown)
 {
 	/*
 	.loc_0x0:
@@ -780,7 +769,7 @@ void Jaq_SetBankNumber(void)
  * Address:	800146C0
  * Size:	0000B4
  */
-void Jaq_StartSeq(void)
+void Jaq_StartSeq(u32)
 {
 	/*
 	.loc_0x0:
