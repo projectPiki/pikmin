@@ -41,39 +41,39 @@ struct ogDrawScrMenu {
 
 	bool chkStopAngle()
 	{
-		if (_0C == _10 && _14 == 0.0f) {
+		if (mCurrentAngle == mTargetAngle && mAngularVelocity == 0.0f) {
 			return true;
 		}
 		return false;
 	}
-	P2DPane* getRoot() { return _08; }
+	P2DPane* getRoot() { return mRootPane; }
 	P2DScreen* getPsc() { return mScreen; }
 	void setAngle(f32 a)
 	{
-		_0C = a;
-		_10 = a;
+		mCurrentAngle = a;
+		mTargetAngle  = a;
 	}
-	void setMaxR(f32 a) { _1C = a; }
+	void setMaxR(f32 a) { mOrbitRadius = a; }
 	void start(int state)
 	{
-		_20 = state;
+		mInitialState = state;
 		setAngle((f32)(state - 1) * TAU / 6.0f);
 		setMaxR(600.0f);
-		_14 = 0.0f;
+		mAngularVelocity = 0.0f;
 
-		_08->move((_1C * NMathF::sin(_0C)), 0, (-_1C * NMathF::cos(_0C)) + _1C);
-		_08->rotate(320, 240, P2DROTATE_Y, -_0C);
+		mRootPane->move((mOrbitRadius * NMathF::sin(mCurrentAngle)), 0, (-mOrbitRadius * NMathF::cos(mCurrentAngle)) + mOrbitRadius);
+		mRootPane->rotate(320, 240, P2DROTATE_Y, -mCurrentAngle);
 	}
 
-	P2DScreen* mScreen;   // _00
-	returnStatusFlag _04; // _04
-	P2DPane* _08;         // _08
-	f32 _0C;              // _0C
-	vf32 _10;             // _10
-	f32 _14;              // _14
-	int _18;              // _18
-	f32 _1C;              // _1C
-	s16 _20;              // _20
+	P2DScreen* mScreen;                   // _00
+	returnStatusFlag mUpdateResultStatus; // _04
+	P2DPane* mRootPane;                   // _08
+	f32 mCurrentAngle;                    // _0C
+	vf32 mTargetAngle;                    // _10
+	f32 mAngularVelocity;                 // _14
+	int mMenuDisplayMode;                 // _18
+	f32 mOrbitRadius;                     // _1C
+	s16 mInitialState;                    // _20
 };
 
 /**
@@ -89,20 +89,19 @@ struct ogDrawScrController {
 	void setOriginalColor();
 	void setHantenColor();
 
-	// TODO: members
-	ogDrawScrMenu _00;  // _00
-	P2DPicture* _24[9]; // _24
-	P2DPicture* _48[9]; // _48
-	P2DTextBox* _6C[9]; // _6C
-	P2DPicture* _90[9]; // _90
-	P2DPicture* _B4;    // _B4
-	s16 _B8;            // _B8
-	f32 _BC;            // _BC
-	f32 _C0;            // _C0
-	Colour _C4;         // _C4
-	Colour _C8;         // _C8
-	int _CC;            // _CC
-	bool _D0;           // _D0
+	ogDrawScrMenu mControllerScreenMenu;         // _00
+	P2DPicture* mButtonMaskPanes[9];             // _24
+	P2DPicture* mButtonBasePanes[9];             // _48
+	P2DTextBox* mButtonTextBoxes[9];             // _6C
+	P2DPicture* mButtonBackgroundWindowPanes[9]; // _90
+	P2DPicture* mMasterBackgroundWindowPane;     // _B4
+	s16 mCurrentButtonIndex;                     // _B8
+	f32 mCycleTimer;                             // _BC
+	f32 mFlashTimer;                             // _C0
+	Colour mHighlightWhiteColor;                 // _C4
+	Colour mHighlightBlackColor;                 // _C8
+	int _CC;                                     // _CC
+	bool mIsColorInverted;                       // _D0
 };
 
 /**
@@ -116,29 +115,29 @@ struct ogDrawScrInfo {
 	// unused/inlined:
 	void update(Controller*);
 
-	ogDrawScrMenu _00; // _00
-	int _24;           // _24
-	P2DPane* _28[5];   // _28
-	P2DPane* _3C;      // _3C
-	P2DPane* _40;      // _40
-	P2DPane* _44;      // _44
-	int _48[7];        // _48
-	P2DPane* _64;      // _64
-	P2DPane* _68;      // _68
-	P2DPane* _6C;      // _6C
-	P2DPane* _70;      // _70
-	P2DPane* _74;      // _74
-	P2DPane* _78;      // _78
-	int _7C;           // _7C
-	int _80;           // _80
-	int _84;           // _84
-	int _88;           // _88
-	int _8C;           // _8C
-	int _90;           // _90
-	int _94;           // _94
-	int _98;           // _98
-	int _9C;           // _9C
-	int _A0;           // _A0
+	ogDrawScrMenu mInfoScreenMenu;   // _00
+	int _24;                         // _24
+	P2DPane* mStageTitlePanes[5];    // _28
+	P2DPane* mRootPane;              // _3C
+	P2DPane* mRadarMovementPane;     // _40
+	P2DPane* mRadarZoomPane;         // _44
+	int _48[7];                      // _48
+	P2DPane* mRedPikminFieldPane;    // _64
+	P2DPane* mRedPikminTotalPane;    // _68
+	P2DPane* mBluePikminFieldPane;   // _6C
+	P2DPane* mBluePikminTotalPane;   // _70
+	P2DPane* mYellowPikminFieldPane; // _74
+	P2DPane* mYellowPikminTotalPane; // _78
+	int mRedPikminInSquadCount;      // _7C
+	int mBluePikminInSquadCount;     // _80
+	int mYellowPikminInSquadCount;   // _84
+	int mRedPikminTotalCount;        // _88
+	int mBluePikminTotalCount;       // _8C
+	int mYellowPikminTotalCount;     // _90
+	int mCurrentShipPartsCount;      // _94
+	int mTotalShipPartsCount;        // _98
+	int mPikminInSquadAndOnionCount; // _9C
+	int mFieldPikminCount;           // _A0
 };
 
 struct ogDrawScrInfo2 {
@@ -149,12 +148,12 @@ struct ogDrawScrInfo2 {
 	void update(Controller*);
 	void drawHougaku(Graphics&);
 
-	P2DPane* getPaneMaps() { return _24; }
+	P2DPane* getPaneMaps() { return mMapsPane; }
 
-	ogDrawScrMenu _00; // _00
-	P2DPane* _24;      // _24
-	Vector3f _28;      // _28
-	P2DPane* _34;      // _34
+	ogDrawScrMenu mMinimapScreenMenu; // _00
+	P2DPane* mMapsPane;               // _24
+	Vector3f mMapAnchorPosition;      // _28
+	P2DPane* mDirectionArrowPane;     // _34
 };
 
 // This struct is completely inlined
@@ -213,7 +212,7 @@ struct ogDrawLR {
 		_0C->setOffset(0, 48);
 		_08->setScale(_14, _1C, 1.0f);
 		_0C->setScale(_18, _1C, 1.0f);
-		_10 += time / 0.016666666f * 0.2f;
+		_10 += time / 0.016666666f * 0.2f; // 0.016666666f = 1/60
 		if (_10 >= TAU) {
 			_10 -= TAU;
 		}
@@ -234,14 +233,15 @@ struct ogDrawLR {
  * @brief TODO
  */
 struct ogScrMenuMgr {
-
+	/**
+	 * @brief Defines the operational states of the screen menu manager.
+	 */
 	enum returnStatusFlag {
-		Status_NULL = -1,
-		Status_0    = 0,
-		Status_1    = 1,
-		Status_2    = 2,
-		Status_3    = 3,
-		// TODO: this
+		STATE_Inactive      = -1, // The manager is idle and not displaying any menu.
+		STATE_ActiveDisplay = 0,  // Menu is fully displayed and active, awaiting user interaction.
+		STATE_FadingIn      = 1,  // Menu is currently fading into view. Element scale and overlay alpha are progressively increased.
+		STATE_FadingOut     = 2,  // Menu is currently fading out of view. Element scale and overlay alpha are progressively decreased.
+		STATE_TransitionToInactive = 3, // A transitional state after fading out, leading to the manager becoming fully inactive.
 	};
 
 	ogScrMenuMgr();
@@ -254,25 +254,25 @@ struct ogScrMenuMgr {
 	void updateInfo(Controller*);
 	void updateCont(Controller*);
 
-	returnStatusFlag mStatus; // _00
-	s16 _04;                  // _04
-	P2DScreen* _08;           // _08
-	P2DPicture* _0C;          // _0C
-	ogDrawLR* _10;            // _10
-	ogRaderMgr* _14;          // _14
-	ogDrawScrMenu* _18[3];    // _18
-	int _24[3];               // _24
-	P2DPane* _30[3];          // _30
-	int _3C[3];               // _3C
-	ogDrawScrInfo* _48;       // _48
-	ogDrawScrController* _4C; // _4C
-	ogDrawScrInfo2* _50;      // _50
-	bool _54;                 // _54
-	bool _55;                 // _55
-	f32 _58;                  // _58
-	u8 _5C;                   // _5C
-	u8 mAlpha;                // _5D
-	Vector3f _60;             // _60
+	returnStatusFlag mStatus;               // _00
+	s16 mCurrentScreenIndex;                // _04
+	P2DScreen* mBlackScreen;                // _08
+	P2DPicture* mFadeOverlayPane;           // _0C
+	ogDrawLR* mLeftRightIndicator;          // _10
+	ogRaderMgr* mRadarManager;              // _14
+	ogDrawScrMenu* mScreenMenus[3];         // _18
+	int _24[3];                             // _24
+	P2DPane* mScreenRootPanes[3];           // _30
+	int _3C[3];                             // _3C
+	ogDrawScrInfo* mInfoScreen;             // _48
+	ogDrawScrController* mControllerScreen; // _4C
+	ogDrawScrInfo2* mMinimapScreen;         // _50
+	bool mSwitchLeftRequested;              // _54
+	bool mSwitchRightRequested;             // _55
+	f32 mTransitionTimer;                   // _58
+	u8 mTransitionCalcAlpha;                // _5C
+	u8 mAlpha;                              // _5D
+	Vector3f mRadarScaleVector;             // _60
 };
 
 // unused global functions:

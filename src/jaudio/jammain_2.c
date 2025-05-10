@@ -1495,7 +1495,7 @@ int Jam_WritePortAppDirect(seqp_*, int, int)
  * Address:	80010400
  * Size:	000030
  */
-void Jam_ReadPortAppDirect(seqp_*, unknown32, u16*)
+void Jam_ReadPortAppDirect(seqp_*, u32, u16*)
 {
 	/*
 	.loc_0x0:

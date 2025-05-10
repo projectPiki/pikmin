@@ -15,7 +15,7 @@ struct seqp_ {
 	u32 _88;             // _88;
 };
 
-typedef unknown32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
+typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,9 +34,9 @@ void Jam_CheckImportApp(void);
 void Jam_WritePortIndirect(void);
 void Jam_ReadPortIndirect(void);
 void Jam_CheckPortIndirect(void);
-int Jam_WritePortAppDirect(seqp_*, int, int);        // TODO: types unknown;
-void Jam_ReadPortAppDirect(seqp_*, unknown32, u16*); // TODO: types unknown
-int Jam_CheckPortAppDirect(seqp_*, int, int);        // TODO: types unknown
+int Jam_WritePortAppDirect(seqp_*, int, int);  // TODO: types unknown;
+void Jam_ReadPortAppDirect(seqp_*, u32, u16*); // TODO: types unknown
+int Jam_CheckPortAppDirect(seqp_*, int, int);  // TODO: types unknown
 void Jam_WritePort(void);
 void Jam_ReadPort(void);
 void Jam_WritePortChild(void);

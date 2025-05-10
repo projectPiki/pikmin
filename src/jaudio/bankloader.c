@@ -12,9 +12,9 @@
  */
 void Bank_Setup(char* filename)
 {
-	unknown32 iVar1;
-	unknown32 iVar2;
-	unknown32 iVar3;
+	u32 iVar1;
+	u32 iVar2;
+	u32 iVar3;
 
 	u32 i;
 	u8* space;
@@ -31,22 +31,22 @@ void Bank_Setup(char* filename)
 	// Super Mario Sunshine's `TBasicWaveBank` seems promising.
 	// FYI: This function is used to load pikibank.bx
 
-	iVar1 = *(unknown32*)(space + 0);
-	iVar2 = *(unknown32*)(space + 4);
+	iVar1 = *(u32*)(space + 0);
+	iVar2 = *(u32*)(space + 4);
 	iVar3 = 0;
 	for (i = 0; i < iVar2; ++i) {
-		if (*(unknown32*)(space + iVar3 + iVar1 + 4)) {
-			Wavegroup_Regist(space + *(unknown32*)(space + iVar3 + iVar1), i);
+		if (*(u32*)(space + iVar3 + iVar1 + 4)) {
+			Wavegroup_Regist(space + *(u32*)(space + iVar3 + iVar1), i);
 		}
 		iVar3 += 8;
 	}
 
-	iVar1 = *(unknown32*)(space + 8);
-	iVar2 = *(unknown32*)(space + 12);
+	iVar1 = *(u32*)(space + 8);
+	iVar2 = *(u32*)(space + 12);
 	iVar3 = 0;
 	for (i = 0; i < iVar2; ++i) {
-		if (*(unknown32*)(space + iVar3 + iVar1 + 4)) {
-			Bank_Regist(space + *(unknown32*)(space + iVar3 + iVar1), i);
+		if (*(u32*)(space + iVar3 + iVar1 + 4)) {
+			Bank_Regist(space + *(u32*)(space + iVar3 + iVar1), i);
 		}
 		iVar3 += 8;
 	}

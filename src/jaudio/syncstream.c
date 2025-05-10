@@ -1941,7 +1941,7 @@ void StreamSyncCheckReadyID(void)
  * Address:	8001D3E0
  * Size:	000054
  */
-BOOL StreamSyncCheckBusy(unknown, unknown)
+BOOL StreamSyncCheckBusy(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -2393,7 +2393,7 @@ void StreamGetCurrentFrame(void)
  * Address:	8001D920
  * Size:	00003C
  */
-void StreamSetDVDPause(unknown, unknown)
+void StreamSetDVDPause(u32, u32)
 {
 	/*
 	.loc_0x0:

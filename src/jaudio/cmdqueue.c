@@ -42,7 +42,7 @@ void Del_Queue(CmdQueue*)
  * Address:	8001B9A0
  * Size:	000060
  */
-void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, unknown8 param_3)
+void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
 {
 	BOOL restoreInterrupts;
 

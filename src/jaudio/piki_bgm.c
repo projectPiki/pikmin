@@ -159,7 +159,7 @@ void Jac_InitBgm(void)
  * Address:	80018B40
  * Size:	00002C
  */
-void Jac_FadeOutBgm(unknown, unknown)
+void Jac_FadeOutBgm(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -494,7 +494,7 @@ void Jac_ChangeBgmMode(void)
  * Address:	80018F40
  * Size:	0000A8
  */
-void Jac_SetBgmModeFlag(unknown, unknown, unknown)
+void Jac_SetBgmModeFlag(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -961,7 +961,7 @@ void Jac_GameVolume(u8 bgmVol, u8 seVol)
  * Address:	80019500
  * Size:	0000E4
  */
-void Jac_EasyCrossFade(unknown, unknown)
+void Jac_EasyCrossFade(u32, u32)
 {
 	/*
 	.loc_0x0:

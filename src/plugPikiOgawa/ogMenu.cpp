@@ -45,7 +45,7 @@ void zen::ogDrawScrMenu::setScreen(char* path)
 {
 	PRINT("setScreen(%s) \n", path);
 	mScreen->set(path, true, true, true);
-	_08 = mScreen->search('root', true);
+	mRootPane = mScreen->search('root', true);
 }
 
 /*
@@ -56,12 +56,12 @@ void zen::ogDrawScrMenu::setScreen(char* path)
 zen::ogDrawScrMenu::ogDrawScrMenu()
 {
 	PRINT("ogDrawScrMenu() \n");
-	mScreen = new P2DScreen;
-	_0C     = 0.0f;
-	_10     = 0.0f;
-	_14     = 0.0f;
-	_1C     = 600.0f;
-	_18     = 0;
+	mScreen          = new P2DScreen;
+	mCurrentAngle    = 0.0f;
+	mTargetAngle     = 0.0f;
+	mAngularVelocity = 0.0f;
+	mOrbitRadius     = 600.0f;
+	mMenuDisplayMode = 0;
 }
 
 /*
@@ -75,9 +75,11 @@ void zen::ChkAngle(f32* out)
 	if (angle < 0.0f) {
 		angle += TAU;
 	}
+
 	if (angle >= TAU) {
 		angle -= TAU;
 	}
+
 	*out = angle;
 	// UNUSED FUNCTION
 }
@@ -89,14 +91,14 @@ void zen::ChkAngle(f32* out)
  */
 void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
 {
-	f32 temp = _10 - _0C;
+	f32 temp = mTargetAngle - mCurrentAngle;
 	if (temp < -PI) {
 		temp += TAU;
 	}
 	if (temp > PI) {
 		temp -= TAU;
 	}
-	_14 += temp / angle;
+	mAngularVelocity += temp / angle;
 }
 
 /*
@@ -107,46 +109,46 @@ void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
 zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* input, bool a1, bool a2)
 {
 	if (a1) {
-		_10 += THIRD_PI;
-		zen::ChkAngle(&_10);
-		_14 = 0.0f;
+		mTargetAngle += THIRD_PI;
+		zen::ChkAngle(&mTargetAngle);
+		mAngularVelocity = 0.0f;
 		calcAngleSpeed(5.0f);
 		seSystem->playSysSe(SYSSE_CMENU_SELECT);
 	}
 
 	if (a2) {
-		_10 -= THIRD_PI;
-		zen::ChkAngle(&_10);
-		_14 = 0.0f;
+		mTargetAngle -= THIRD_PI;
+		zen::ChkAngle(&mTargetAngle);
+		mAngularVelocity = 0.0f;
 		calcAngleSpeed(5.0f);
 		seSystem->playSysSe(SYSSE_CMENU_SELECT);
 	}
 
 	calcAngleSpeed(10.0f);
-	_14 -= _14 * 0.4f;
-	f32 a = _14;
+	mAngularVelocity -= mAngularVelocity * 0.4f;
+	f32 a = mAngularVelocity;
 	if (quickABS(a) < 0.005f) {
-		a = _0C - _10;
+		a = mCurrentAngle - mTargetAngle;
 		if (quickABS(a) < 0.005f) {
-			_0C = _10;
-			_14 = 0.0f;
+			mCurrentAngle    = mTargetAngle;
+			mAngularVelocity = 0.0f;
 		}
 	}
-	_0C += _14 * (gsys->getFrameTime() / 0.016666666f);
-	ChkAngle(&_0C);
+	mCurrentAngle += mAngularVelocity * (gsys->getFrameTime() / 0.016666666f);
+	ChkAngle(&mCurrentAngle);
 
-	_08->move((_1C * NMathF::sin(_0C)), 0, (-_1C * NMathF::cos(_0C)) + _1C);
+	mRootPane->move((mOrbitRadius * NMathF::sin(mCurrentAngle)), 0, (-mOrbitRadius * NMathF::cos(mCurrentAngle)) + mOrbitRadius);
 
-	_08->rotate(320, 240, P2DROTATE_Y, -_0C);
-	if (_0C > 1.2566371f && _0C < 5.0265484f) {
-		_08->hide();
+	mRootPane->rotate(320, 240, P2DROTATE_Y, -mCurrentAngle);
+	if (mCurrentAngle > 1.2566371f && mCurrentAngle < 5.0265484f) {
+		mRootPane->hide();
 	} else {
-		_08->show();
+		mRootPane->show();
 	}
 	mScreen->update();
 
 	u32 badCompiler;
-	return _04;
+	return mUpdateResultStatus;
 }
 
 /*
@@ -169,12 +171,12 @@ bool zen::ogDrawScrMenu::draw(Graphics& gfx)
  */
 zen::ogDrawScrController::ogDrawScrController()
 {
-	_00.setScreen("screen/blo/cont_00.blo");
-	P2DScreen* screen = _00.getPsc();
+	mControllerScreenMenu.setScreen("screen/blo/cont_00.blo");
+	P2DScreen* screen = mControllerScreenMenu.getPsc();
 	setTextColor((P2DTextBox*)screen->search('st_c', false), (P2DPicture*)screen->search('st', false));
-	_C4.set(255, 255, 255, 255);
-	_C8.set(0, 0, 0, 0);
-	_B4 = (P2DPicture*)screen->search('3d_w', true);
+	mHighlightWhiteColor.set(255, 255, 255, 255);
+	mHighlightBlackColor.set(0, 0, 0, 0);
+	mMasterBackgroundWindowPane = (P2DPicture*)screen->search('3d_w', true);
 
 	static u32 pane_name[9]  = { 'l_m', 'r_m', 'z_m', 'y_m', 'x_m', 'a_m', 'b_m', 'c_m', '3d_m' };
 	static u32 pane_name2[9] = { 'l', 'r', 'z', 'y', 'x', 'a', 'b', 'c', '3d' };
@@ -182,16 +184,16 @@ zen::ogDrawScrController::ogDrawScrController()
 	static u32 pane_name4[9] = { 'l_w', 'r_w', 'z_w', 'y_w', 'x_w', 'a_w', 'b_w', 'c_w', '3d_w' };
 
 	for (int i = 0; i < 9; i++) {
-		_24[i] = (P2DPicture*)screen->search(pane_name[i], true);
-		_48[i] = (P2DPicture*)screen->search(pane_name2[i], true);
-		_6C[i] = (P2DTextBox*)screen->search(pane_name3[i], true);
-		_90[i] = (P2DPicture*)screen->search(pane_name4[i], true);
-		setTextColor(_6C[i], _24[i]);
-		setTextColor(_6C[i], _48[i]);
+		mButtonMaskPanes[i]             = (P2DPicture*)screen->search(pane_name[i], true);
+		mButtonBasePanes[i]             = (P2DPicture*)screen->search(pane_name2[i], true);
+		mButtonTextBoxes[i]             = (P2DTextBox*)screen->search(pane_name3[i], true);
+		mButtonBackgroundWindowPanes[i] = (P2DPicture*)screen->search(pane_name4[i], true);
+		setTextColor(mButtonTextBoxes[i], mButtonMaskPanes[i]);
+		setTextColor(mButtonTextBoxes[i], mButtonBasePanes[i]);
 	}
-	_B8 = 0;
-	_BC = 1.0f;
-	_D0 = true;
+	mCurrentButtonIndex = 0;
+	mCycleTimer         = 1.0f;
+	mIsColorInverted    = true;
 }
 
 /*
@@ -201,9 +203,9 @@ zen::ogDrawScrController::ogDrawScrController()
  */
 void zen::ogDrawScrController::setWinColor()
 {
-	Colour white = _B4->getWhite();
+	Colour white = mMasterBackgroundWindowPane->getWhite();
 	for (int i = 0; i < 9; i++) {
-		_90[i]->setWhite(white);
+		mButtonBackgroundWindowPanes[i]->setWhite(white);
 	}
 }
 
@@ -214,15 +216,15 @@ void zen::ogDrawScrController::setWinColor()
  */
 void zen::ogDrawScrController::setOriginalColor()
 {
-	Colour white = _6C[_B8]->getCharColor();
-	Colour black = _6C[_B8]->getGradColor();
+	Colour white = mButtonTextBoxes[mCurrentButtonIndex]->getCharColor();
+	Colour black = mButtonTextBoxes[mCurrentButtonIndex]->getGradColor();
 	black.a      = 0;
 
-	_24[_B8]->setWhite(white);
-	_24[_B8]->setBlack(black);
-	_48[_B8]->setWhite(white);
-	_48[_B8]->setBlack(black);
-	_D0 = false;
+	mButtonMaskPanes[mCurrentButtonIndex]->setWhite(white);
+	mButtonMaskPanes[mCurrentButtonIndex]->setBlack(black);
+	mButtonBasePanes[mCurrentButtonIndex]->setWhite(white);
+	mButtonBasePanes[mCurrentButtonIndex]->setBlack(black);
+	mIsColorInverted = false;
 }
 
 /*
@@ -232,11 +234,11 @@ void zen::ogDrawScrController::setOriginalColor()
  */
 void zen::ogDrawScrController::setHantenColor()
 {
-	_24[_B8]->setWhite(_C4);
-	_24[_B8]->setBlack(_C8);
-	_48[_B8]->setWhite(_C4);
-	_48[_B8]->setBlack(_C8);
-	_D0 = true;
+	mButtonMaskPanes[mCurrentButtonIndex]->setWhite(mHighlightWhiteColor);
+	mButtonMaskPanes[mCurrentButtonIndex]->setBlack(mHighlightBlackColor);
+	mButtonBasePanes[mCurrentButtonIndex]->setWhite(mHighlightWhiteColor);
+	mButtonBasePanes[mCurrentButtonIndex]->setBlack(mHighlightBlackColor);
+	mIsColorInverted = true;
 }
 
 /*
@@ -246,21 +248,21 @@ void zen::ogDrawScrController::setHantenColor()
  */
 void zen::ogDrawScrController::update()
 {
-	_BC -= gsys->getFrameTime();
-	if (_BC <= 0.0f) {
-		_BC = 1.0f;
+	mCycleTimer -= gsys->getFrameTime();
+	if (mCycleTimer <= 0.0f) {
+		mCycleTimer = 1.0f;
 		setOriginalColor();
-		_B8++;
-		if (_B8 >= 9) {
-			_B8 = 0;
+		mCurrentButtonIndex++;
+		if (mCurrentButtonIndex >= 9) {
+			mCurrentButtonIndex = 0;
 		}
 		setHantenColor();
-		_C0 = 0.166666f;
+		mFlashTimer = 0.166666f;
 	} else {
-		_C0 -= gsys->getFrameTime();
-		if (_C0 < 0.0f) {
-			_C0 = 0.166666f;
-			if (_D0) {
+		mFlashTimer -= gsys->getFrameTime();
+		if (mFlashTimer < 0.0f) {
+			mFlashTimer = 0.166666f;
+			if (mIsColorInverted) {
 				setOriginalColor();
 			} else {
 				setHantenColor();
@@ -277,69 +279,69 @@ void zen::ogDrawScrController::update()
  */
 zen::ogDrawScrInfo::ogDrawScrInfo()
 {
-	_00.setScreen("screen/blo/m_menu2.blo");
-	P2DScreen* screen = _00.getPsc();
-	_3C               = screen->search('root', true);
-	_40               = screen->search('idou', true);
-	_44               = screen->search('zoom', true);
+	mInfoScreenMenu.setScreen("screen/blo/m_menu2.blo");
+	P2DScreen* screen  = mInfoScreenMenu.getPsc();
+	mRootPane          = screen->search('root', true);
+	mRadarMovementPane = screen->search('idou', true);
+	mRadarZoomPane     = screen->search('zoom', true);
 
-	_7C = 0;
-	_80 = 0;
-	_84 = 0;
-	_88 = 0;
-	_8C = 0;
-	_90 = 0;
-	_94 = 0;
-	_98 = 0;
+	mRedPikminInSquadCount    = 0;
+	mBluePikminInSquadCount   = 0;
+	mYellowPikminInSquadCount = 0;
+	mRedPikminTotalCount      = 0;
+	mBluePikminTotalCount     = 0;
+	mYellowPikminTotalCount   = 0;
+	mCurrentShipPartsCount    = 0;
+	mTotalShipPartsCount      = 0;
 
-	setNumberTag(screen, 'rp_l', &_7C, 100);
-	setNumberTag(screen, 'rp_c', &_7C, 10);
-	setNumberTag(screen, 'rp_r', &_7C, 1);
+	setNumberTag(screen, 'rp_l', &mRedPikminInSquadCount, 100);
+	setNumberTag(screen, 'rp_c', &mRedPikminInSquadCount, 10);
+	setNumberTag(screen, 'rp_r', &mRedPikminInSquadCount, 1);
 
-	setNumberTag(screen, 'bp_l', &_80, 100);
-	setNumberTag(screen, 'bp_c', &_80, 10);
-	setNumberTag(screen, 'bp_r', &_80, 1);
+	setNumberTag(screen, 'bp_l', &mBluePikminInSquadCount, 100);
+	setNumberTag(screen, 'bp_c', &mBluePikminInSquadCount, 10);
+	setNumberTag(screen, 'bp_r', &mBluePikminInSquadCount, 1);
 
-	setNumberTag(screen, 'yp_l', &_84, 100);
-	setNumberTag(screen, 'yp_c', &_84, 10);
-	setNumberTag(screen, 'yp_r', &_84, 1);
+	setNumberTag(screen, 'yp_l', &mYellowPikminInSquadCount, 100);
+	setNumberTag(screen, 'yp_c', &mYellowPikminInSquadCount, 10);
+	setNumberTag(screen, 'yp_r', &mYellowPikminInSquadCount, 1);
 
-	setNumberTag(screen, 'rc_l', &_88, 100);
-	setNumberTag(screen, 'rc_c', &_88, 10);
-	setNumberTag(screen, 'rc_r', &_88, 1);
+	setNumberTag(screen, 'rc_l', &mRedPikminTotalCount, 100);
+	setNumberTag(screen, 'rc_c', &mRedPikminTotalCount, 10);
+	setNumberTag(screen, 'rc_r', &mRedPikminTotalCount, 1);
 
-	setNumberTag(screen, 'bc_l', &_8C, 100);
-	setNumberTag(screen, 'bc_c', &_8C, 10);
-	setNumberTag(screen, 'bc_r', &_8C, 1);
+	setNumberTag(screen, 'bc_l', &mBluePikminTotalCount, 100);
+	setNumberTag(screen, 'bc_c', &mBluePikminTotalCount, 10);
+	setNumberTag(screen, 'bc_r', &mBluePikminTotalCount, 1);
 
-	setNumberTag(screen, 'yc_l', &_90, 100);
-	setNumberTag(screen, 'yc_c', &_90, 10);
-	setNumberTag(screen, 'yc_r', &_90, 1);
+	setNumberTag(screen, 'yc_l', &mYellowPikminTotalCount, 100);
+	setNumberTag(screen, 'yc_c', &mYellowPikminTotalCount, 10);
+	setNumberTag(screen, 'yc_r', &mYellowPikminTotalCount, 1);
 
-	setNumberTag(screen, 'rt_l', &_98, 10);
-	setNumberTag(screen, 'rt_r', &_98, 1);
+	setNumberTag(screen, 'rt_l', &mTotalShipPartsCount, 10);
+	setNumberTag(screen, 'rt_r', &mTotalShipPartsCount, 1);
 
-	setNumberTag(screen, 'ro_l', &_94, 10);
-	setNumberTag(screen, 'ro_r', &_94, 1);
+	setNumberTag(screen, 'ro_l', &mCurrentShipPartsCount, 10);
+	setNumberTag(screen, 'ro_r', &mCurrentShipPartsCount, 1);
 
-	setNumberTag(screen, 'fp_l', &_A0, 100);
-	setNumberTag(screen, 'fp_c', &_A0, 10);
-	setNumberTag(screen, 'fp_r', &_A0, 1);
+	setNumberTag(screen, 'fp_l', &mFieldPikminCount, 100);
+	setNumberTag(screen, 'fp_c', &mFieldPikminCount, 10);
+	setNumberTag(screen, 'fp_r', &mFieldPikminCount, 1);
 
-	_64 = screen->search('p_rp', true);
-	_68 = screen->search('p_rc', true);
-	_6C = screen->search('p_bp', true);
-	_70 = screen->search('p_bc', true);
-	_74 = screen->search('p_yp', true);
-	_78 = screen->search('p_yc', true);
+	mRedPikminFieldPane    = screen->search('p_rp', true);
+	mRedPikminTotalPane    = screen->search('p_rc', true);
+	mBluePikminFieldPane   = screen->search('p_bp', true);
+	mBluePikminTotalPane   = screen->search('p_bc', true);
+	mYellowPikminFieldPane = screen->search('p_yp', true);
+	mYellowPikminTotalPane = screen->search('p_yc', true);
 
-	_28[0] = screen->search('ti00', true);
-	_28[1] = screen->search('ti01', true);
-	_28[2] = screen->search('ti02', true);
-	_28[3] = screen->search('ti03', true);
-	_28[4] = screen->search('ti04', true);
+	mStageTitlePanes[0] = screen->search('ti00', true);
+	mStageTitlePanes[1] = screen->search('ti01', true);
+	mStageTitlePanes[2] = screen->search('ti02', true);
+	mStageTitlePanes[3] = screen->search('ti03', true);
+	mStageTitlePanes[4] = screen->search('ti04', true);
 	for (int i = 0; i < 5; i++) {
-		_28[i]->hide();
+		mStageTitlePanes[i]->hide();
 	}
 }
 
@@ -350,52 +352,52 @@ zen::ogDrawScrInfo::ogDrawScrInfo()
  */
 void zen::ogDrawScrInfo::start()
 {
-	_80 = GameStat::formationPikis[0];
-	_7C = GameStat::formationPikis[1];
-	_84 = GameStat::formationPikis[2];
+	mBluePikminInSquadCount   = GameStat::formationPikis[0];
+	mRedPikminInSquadCount    = GameStat::formationPikis[1];
+	mYellowPikminInSquadCount = GameStat::formationPikis[2];
 	PRINT("ScrInfo start!\n");
-	_8C = pikiInfMgr.getColorTotal(0);
-	_88 = pikiInfMgr.getColorTotal(1);
-	_90 = pikiInfMgr.getColorTotal(2);
+	mBluePikminTotalCount   = pikiInfMgr.getColorTotal(0);
+	mRedPikminTotalCount    = pikiInfMgr.getColorTotal(1);
+	mYellowPikminTotalCount = pikiInfMgr.getColorTotal(2);
 
-	_9C = GameStat::formationPikis + GameStat::containerPikis;
-	_A0 = GameStat::freePikis + GameStat::workPikis + GameStat::mePikis;
+	mPikminInSquadAndOnionCount = GameStat::formationPikis + GameStat::containerPikis; // All Pikmin in formation + in the onion
+	mFieldPikminCount           = GameStat::freePikis + GameStat::workPikis + GameStat::mePikis;
 
 	if (playerState) {
-		_94 = playerState->getCurrParts();
-		_98 = playerState->getTotalParts();
+		mCurrentShipPartsCount = playerState->getCurrParts();
+		mTotalShipPartsCount   = playerState->getTotalParts();
 	} else {
-		_94 = 1;
-		_98 = 77;
+		mCurrentShipPartsCount = 1;
+		mTotalShipPartsCount   = 77;
 	}
 
-	_28[flowCont.mCurrentStage->mStageID]->show();
-	_64->hide();
-	_68->hide();
-	_6C->hide();
-	_70->hide();
-	_74->hide();
-	_78->hide();
+	mStageTitlePanes[flowCont.mCurrentStage->mStageID]->show();
+	mRedPikminFieldPane->hide();
+	mRedPikminTotalPane->hide();
+	mBluePikminFieldPane->hide();
+	mBluePikminTotalPane->hide();
+	mYellowPikminFieldPane->hide();
+	mYellowPikminTotalPane->hide();
 
 	if (playerState->displayPikiCount(Blue)) {
-		_6C->show();
-		_70->show();
+		mBluePikminFieldPane->show();
+		mBluePikminTotalPane->show();
 	}
 	if (playerState->displayPikiCount(Red)) {
-		_64->show();
-		_68->show();
+		mRedPikminFieldPane->show();
+		mRedPikminTotalPane->show();
 	}
 	if (playerState->displayPikiCount(Yellow)) {
-		_74->show();
-		_78->show();
+		mYellowPikminFieldPane->show();
+		mYellowPikminTotalPane->show();
 	}
 
 	if (playerState->hasRadar()) {
-		_40->show();
-		_44->show();
+		mRadarMovementPane->show();
+		mRadarZoomPane->show();
 	} else {
-		_40->hide();
-		_44->hide();
+		mRadarMovementPane->hide();
+		mRadarZoomPane->hide();
 	}
 
 	PRINT("ScrInfo end STAGE(%d)\n", flowCont.mCurrentStage->mStageID);
@@ -418,12 +420,12 @@ void zen::ogDrawScrInfo::update(Controller*)
  */
 zen::ogDrawScrInfo2::ogDrawScrInfo2()
 {
-	_00.setScreen("screen/blo/m_menu2m.blo");
-	P2DScreen* screen = _00.getPsc();
+	mMinimapScreenMenu.setScreen("screen/blo/m_menu2m.blo");
+	P2DScreen* screen = mMinimapScreenMenu.getPsc();
 
-	_28.set(0.0f, 0.0f, 0.0f);
-	_24 = screen->search('maps', true);
-	_34 = screen->search('yaji', true);
+	mMapAnchorPosition.set(0.0f, 0.0f, 0.0f);
+	mMapsPane           = screen->search('maps', true);
+	mDirectionArrowPane = screen->search('yaji', true);
 	// UNUSED FUNCTION
 }
 
@@ -454,8 +456,8 @@ void zen::ogDrawScrInfo2::update(Controller*)
  */
 void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 {
-	int w     = _34->getWidth() / 2;
-	int h     = _34->getHeight() / 2;
+	int w     = mDirectionArrowPane->getWidth() / 2;
+	int h     = mDirectionArrowPane->getHeight() / 2;
 	f32 a     = -gfx.mCamera->mViewZAxis.z;
 	f32 angle = atan2f(-gfx.mCamera->mViewZAxis.x, -gfx.mCamera->mViewZAxis.z);
 
@@ -463,12 +465,12 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 	if (flowCont.mCurrentStage->mStageID == 4) {
 		angle += PI;
 	}
-	_34->rotateZ(w, h, angle);
+	mDirectionArrowPane->rotateZ(w, h, angle);
 
 	if (!playerState->hasRadar()) {
-		_34->hide();
+		mDirectionArrowPane->hide();
 	} else {
-		_34->show();
+		mDirectionArrowPane->show();
 	}
 	// UNUSED FUNCTION
 }
@@ -480,34 +482,34 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
  */
 zen::ogScrMenuMgr::ogScrMenuMgr()
 {
-	_10 = new ogDrawLR;
-	_10->setAct_L(false);
-	_10->setAct_R(false);
+	mLeftRightIndicator = new ogDrawLR;
+	mLeftRightIndicator->setAct_L(false);
+	mLeftRightIndicator->setAct_R(false);
 
-	_14 = new ogRaderMgr;
-	_48 = new ogDrawScrInfo;
-	_4C = new ogDrawScrController;
-	_50 = new ogDrawScrInfo2;
+	mRadarManager     = new ogRaderMgr;
+	mInfoScreen       = new ogDrawScrInfo;
+	mControllerScreen = new ogDrawScrController;
+	mMinimapScreen    = new ogDrawScrInfo2;
 
-	_18[0] = &_48->_00;
-	_18[1] = &_4C->_00;
-	_18[2] = &_50->_00;
+	mScreenMenus[0] = &mInfoScreen->mInfoScreenMenu;
+	mScreenMenus[1] = &mControllerScreen->mControllerScreenMenu;
+	mScreenMenus[2] = &mMinimapScreen->mMinimapScreenMenu;
 
 	for (int i = 0; i < 3; i++) {
-		_30[i] = _18[i]->getRoot();
+		mScreenRootPanes[i] = mScreenMenus[i]->getRoot();
 	}
 
-	_08 = new P2DScreen;
-	_08->set("screen/blo/black.blo", false, false, true);
-	_0C = (P2DPicture*)_08->search('blck', true);
+	mBlackScreen = new P2DScreen;
+	mBlackScreen->set("screen/blo/black.blo", false, false, true);
+	mFadeOverlayPane = (P2DPicture*)mBlackScreen->search('blck', true);
 
-	P2DTextBox* txt = (P2DTextBox*)_48->_00.getPsc()->search('se_c', true);
+	P2DTextBox* txt = (P2DTextBox*)mInfoScreen->mInfoScreenMenu.getPsc()->search('se_c', true);
 	mAlpha          = txt->getAlphaChar();
 	PRINT("se_c = %d\n", mAlpha);
-	_0C->setAlpha(0);
-	_04 = 0;
-	_60.set(1.0f, 0.0f, 1.0f);
-	mStatus = Status_NULL;
+	mFadeOverlayPane->setAlpha(0);
+	mCurrentScreenIndex = 0;
+	mRadarScaleVector.set(1.0f, 0.0f, 1.0f);
+	mStatus = STATE_Inactive;
 	mStatus ? "fake" : "fake";
 }
 
@@ -518,17 +520,17 @@ zen::ogScrMenuMgr::ogScrMenuMgr()
  */
 void zen::ogScrMenuMgr::start()
 {
-	mStatus = Status_1;
-	_58     = 0;
-	_04     = 1;
-	_10->start();
-	_10->setAct_L(false);
-	_10->setAct_R(false);
-	_48->start();
-	_18[0]->start(1);
-	_18[1]->start(2);
-	_18[2]->start(1);
-	_14->startMenu(_50->getPaneMaps());
+	mStatus             = STATE_FadingIn;
+	mTransitionTimer    = 0;
+	mCurrentScreenIndex = 1;
+	mLeftRightIndicator->start();
+	mLeftRightIndicator->setAct_L(false);
+	mLeftRightIndicator->setAct_R(false);
+	mInfoScreen->start();
+	mScreenMenus[0]->start(1);
+	mScreenMenus[1]->start(2);
+	mScreenMenus[2]->start(1);
+	mRadarManager->startMenu(mMinimapScreen->getPaneMaps());
 	seSystem->playSysSe(SYSSE_CMENU_ON);
 }
 
@@ -539,12 +541,12 @@ void zen::ogScrMenuMgr::start()
  */
 void zen::ogScrMenuMgr::updateInfo(Controller* input)
 {
-	_10->setAct_L(false);
-	_10->setAct_R(true);
+	mLeftRightIndicator->setAct_L(false);
+	mLeftRightIndicator->setAct_R(true);
 	if (!input->keyClick(KBBTN_L) && input->keyClick(KBBTN_R)) {
-		_04++;
-		_55 = true;
-		_14->end();
+		mCurrentScreenIndex++;
+		mSwitchRightRequested = true;
+		mRadarManager->end();
 	}
 	// UNUSED FUNCTION
 }
@@ -556,12 +558,12 @@ void zen::ogScrMenuMgr::updateInfo(Controller* input)
  */
 void zen::ogScrMenuMgr::updateCont(Controller* input)
 {
-	_10->setAct_L(true);
-	_10->setAct_R(false);
+	mLeftRightIndicator->setAct_L(true);
+	mLeftRightIndicator->setAct_R(false);
 	if (input->keyClick(KBBTN_L)) {
-		_04--;
-		_54 = true;
-		_14->MapOn();
+		mCurrentScreenIndex--;
+		mSwitchLeftRequested = true;
+		mRadarManager->MapOn();
 	}
 	// UNUSED FUNCTION
 }
@@ -573,79 +575,79 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
  */
 zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 {
-	if (mStatus == Status_NULL) {
+	if (mStatus == STATE_Inactive) {
 		return mStatus;
 	}
 
 	for (int i = 0; i < 3; i++) {
-		_18[i]->update(input, _54, _55);
+		mScreenMenus[i]->update(input, mSwitchLeftRequested, mSwitchRightRequested);
 	}
-	_48->update(input);
+	mInfoScreen->update(input);
 
-	if (mStatus == Status_1) {
-		_58 += gsys->getFrameTime();
-		if (_58 >= 0.3f) {
-			mStatus = Status_0;
+	if (mStatus == STATE_FadingIn) {
+		mTransitionTimer += gsys->getFrameTime();
+		if (mTransitionTimer >= 0.3f) {
+			mStatus = STATE_ActiveDisplay;
 			for (int i = 0; i < 3; i++) {
-				_30[i]->setScale(1.0f);
+				mScreenRootPanes[i]->setScale(1.0f);
 			}
-			_0C->setAlpha(mAlpha);
+			mFadeOverlayPane->setAlpha(mAlpha);
 		} else {
-			f32 scale = _58 / 0.3f;
-			_5C       = 255.0f * scale;
+			f32 scale            = mTransitionTimer / 0.3f;
+			mTransitionCalcAlpha = 255.0f * scale;
 			for (int i = 0; i < 3; i++) {
-				_30[i]->setScale(scale);
-				_0C->setAlpha(mAlpha * scale);
+				mScreenRootPanes[i]->setScale(scale);
+				mFadeOverlayPane->setAlpha(mAlpha * scale);
 			}
 		}
 		return mStatus;
 	}
 
-	if (mStatus == Status_2) {
-		_58 += gsys->getFrameTime();
-		if (_58 >= 0.3f) {
-			mStatus = Status_3;
+	if (mStatus == STATE_FadingOut) {
+		mTransitionTimer += gsys->getFrameTime();
+		if (mTransitionTimer >= 0.3f) {
+			mStatus = STATE_TransitionToInactive;
 			for (int i = 0; i < 3; i++) {
-				_30[i]->setScale(0.0f);
+				mScreenRootPanes[i]->setScale(0.0f);
 			}
-			_0C->setAlpha(0);
+			mFadeOverlayPane->setAlpha(0);
 		} else {
-			f32 scale = (0.3f - _58) / 0.3f;
-			_5C       = (0.3f - _58) * 255.0f / 0.3f; // sure, DONT use the temp you just made. that's fine.
+			f32 scale            = (0.3f - mTransitionTimer) / 0.3f;
+			mTransitionCalcAlpha = (0.3f - mTransitionTimer) * 255.0f / 0.3f; // sure, DONT use the temp you just made. that's fine.
 			for (int i = 0; i < 3; i++) {
-				_30[i]->setScale(scale);
-				_0C->setAlpha(mAlpha * scale);
+				mScreenRootPanes[i]->setScale(scale);
+				mFadeOverlayPane->setAlpha(mAlpha * scale);
 			}
 		}
 		return mStatus;
 	}
 
-	if (mStatus == Status_3) {
-		mStatus = Status_NULL;
+	if (mStatus == STATE_TransitionToInactive) {
+		mStatus = STATE_Inactive;
 		return mStatus;
 	}
 
-	_54 = false;
-	_55 = false;
+	mSwitchLeftRequested  = false;
+	mSwitchRightRequested = false;
 
 	if (input->keyClick(KBBTN_Y | KBBTN_B)) {
-		_58     = 0.0f;
-		mStatus = Status_2;
+		mTransitionTimer = 0.0f;
+		mStatus          = STATE_FadingOut;
 		seSystem->playSysSe(SYSSE_CMENU_OFF);
-		_14->end();
+		mRadarManager->end();
 	}
 
-	if (_04) {
-		if (_04 == 1) {
+	if (mCurrentScreenIndex) {
+		if (mCurrentScreenIndex == 1) {
 			updateInfo(input);
-			_14->update(input);
-		} else if (_04 == 2) {
+			mRadarManager->update(input);
+		} else if (mCurrentScreenIndex == 2) {
 			updateCont(input);
-			_4C->update();
+			mControllerScreen->update();
 		}
 	}
-	_10->update();
-	_08->update();
+	mLeftRightIndicator->update();
+	mBlackScreen->update();
 
 	return mStatus;
 }
@@ -657,7 +659,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
  */
 bool zen::ogScrMenuMgr::draw(Graphics& gfx)
 {
-	if (mStatus == Status_NULL) {
+	if (mStatus == STATE_Inactive) {
 		return false;
 	}
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
@@ -667,34 +669,34 @@ bool zen::ogScrMenuMgr::draw(Graphics& gfx)
 	GXSetFog(GX_FOG_NONE, 0.0f, 1.0f, 0.1f, 1.0f, color);
 	GXSetFogRangeAdj(GX_FALSE, 0, nullptr);
 
-	_08->draw(0, 0, &graf);
-	_18[0]->draw(gfx);
-	_18[1]->draw(gfx);
+	mBlackScreen->draw(0, 0, &graf);
+	mScreenMenus[0]->draw(gfx);
+	mScreenMenus[1]->draw(gfx);
 
-	if (_04 == 1 && _48->_00.chkStopAngle()) {
-		f32 y = _60.y;
+	if (mCurrentScreenIndex == 1 && mInfoScreen->mInfoScreenMenu.chkStopAngle()) {
+		f32 y = mRadarScaleVector.y;
 		if (y < 1.0f) {
 			y += 0.2f;
 			if (y > 1.0f) {
 				y = 1.0f;
 			}
 		}
-		_60.set(1.0f, y, 1.0f);
+		mRadarScaleVector.set(1.0f, y, 1.0f);
 	} else {
-		_60.set(1.0f, 0.0f, 1.0f);
+		mRadarScaleVector.set(1.0f, 0.0f, 1.0f);
 	}
 
-	P2DPane* maps    = _50->getPaneMaps();
-	P2DScreen* rader = _14->getScrPtr();
+	P2DPane* maps    = mMinimapScreen->getPaneMaps();
+	P2DScreen* rader = mRadarManager->getScrPtr();
 
-	rader->setScale(_60);
+	rader->setScale(mRadarScaleVector);
 	rader->setOffset(maps->getPosH() + (maps->getWidth() / 2), maps->getPosV() + (maps->getHeight() / 2));
 
-	if (mStatus == Status_0) {
-		_14->draw(gfx);
-		_50->drawHougaku(gfx);
-		_18[2]->draw(gfx);
-		_10->draw();
+	if (mStatus == STATE_ActiveDisplay) {
+		mRadarManager->draw(gfx);
+		mMinimapScreen->drawHougaku(gfx);
+		mScreenMenus[2]->draw(gfx);
+		mLeftRightIndicator->draw();
 	}
 
 	mStatus ? "fake" : "fake";
