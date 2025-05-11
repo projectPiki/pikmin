@@ -81,20 +81,23 @@ struct P2DPane {
 	P2DPane(u16, u32, const PUTRect&);           // unused/inlined
 	P2DPane(P2DPane*, RandomAccessStream*, u16); // unused/inlined
 
-	virtual void loadResource() { }     // _08
-	virtual void makeResident() { }     // _0C
-	virtual ~P2DPane();                 // _10
-	virtual void move(int x, int y);    // _14 (weak)
+	virtual void loadResource() { } // _08
+	virtual void makeResident() { } // _0C
+	virtual ~P2DPane();             // _10
+	virtual void move(int x, int y) // _14 (weak)
+	{
+		mBounds.move(x, y);
+	}
 	virtual void move(Vector3f& newPos) // _18
 	{
 		mBounds.move(newPos.x, newPos.y);
 		mPaneZ = newPos.z;
 	}
-	virtual void move(int x, int y, f32 z)
+	virtual void move(int x, int y, f32 z) // _1C
 	{
 		mBounds.move(x, y);
 		mPaneZ = z;
-	} // _1C
+	}
 	virtual void moveZ(f32 newZ) { mPaneZ = newZ; }                               // _20
 	virtual void add(int x, int y) { mBounds.add(x, y); }                         // _24
 	virtual void resize(int width, int height) { mBounds.resize(width, height); } // _28

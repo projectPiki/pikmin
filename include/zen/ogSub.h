@@ -108,6 +108,7 @@ struct ogFadeMgr {
 	 * @brief TODO
 	 */
 	enum ogFadeStatusFlag {
+		Status_0 = 0,
 		Status_1 = 1,
 		Status_2 = 2,
 		Status_3 = 3,
@@ -120,7 +121,34 @@ struct ogFadeMgr {
 	void setAlpha();
 	ogFadeStatusFlag update();
 
-	u8 _00[0x20]; // _00
+	ogFadeStatusFlag mState; // _00, unknown
+	P2DPane* mPane;          // _04
+	u16 mPaneType;           // _08
+	f32 _0C;                 // _0C
+	f32 _10;                 // _10
+	f32 _14;                 // _14
+	f32 _18;                 // _18
+	f32 _1C;                 // _1C
+};
+
+/**
+ * @brief TODO
+ */
+struct ogTexAnimSubMgr {
+	ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*);
+
+	// unused/inlined:
+	void update();
+
+	P2DPicture* mPicture;  // _00
+	P2DTextBox* mTextBox;  // _04
+	f32 _08;               // _08
+	f32 _0C;               // _0C
+	f32 _10;               // _10
+	s16 _14;               // _14
+	s16 _16;               // _16
+	f32 _18[100];          // _18
+	P2DPicture* _1A8[100]; // _1A8
 };
 
 /**
@@ -134,19 +162,8 @@ struct ogTexAnimMgr {
 	void update();
 
 	// TODO: members
-	u8 _00[0x194]; // _00, unknown
-};
-
-/**
- * @brief TODO
- */
-struct ogTexAnimSubMgr {
-	ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*);
-
-	// unused/inlined:
-	void update();
-
-	// TODO: members
+	int _00; // _00
+	ogTexAnimSubMgr* mSubMgrs[100];
 };
 
 /**
@@ -159,7 +176,9 @@ struct ogMsgCtrlTagMgr {
 
 	bool CheckCtrlTag(char*, s16*, f32*);
 
-	u8 _00[0x18]; // _00, unknown
+	char _00[8]; // _00
+	char _08[8]; // _08
+	char _10[8]; // _10
 };
 
 /**

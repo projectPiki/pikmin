@@ -496,43 +496,17 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
  * Address:	8017FAA0
  * Size:	000080
  */
-ogFadeMgr::ogFadeMgr(P2DPane*, u8)
+ogFadeMgr::ogFadeMgr(P2DPane* pane, u8 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm    r5,r5,0,24,31
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  stw       r0, 0x0(r3)
-	  lis       r0, 0x4330
-	  stw       r4, 0x4(r3)
-	  lfs       f0, -0x50E4(r2)
-	  stw       r5, 0x24(r1)
-	  stfs      f0, 0xC(r31)
-	  lfs       f1, -0x50D8(r2)
-	  stw       r0, 0x20(r1)
-	  stfs      f1, 0x10(r31)
-	  lfd       f0, 0x20(r1)
-	  stfs      f1, 0x14(r31)
-	  stfs      f1, 0x18(r31)
-	  lfd       f1, -0x50C8(r2)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x1C(r31)
-	  lwz       r4, 0x4(r31)
-	  lhz       r0, 0x8(r4)
-	  sth       r0, 0x8(r31)
-	  bl        0x84
-	  mr        r3, r31
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mState    = Status_0;
+	mPane     = pane;
+	_0C       = 1.0f;
+	_10       = 0.0f;
+	_14       = 0.0f;
+	_18       = 0.0f;
+	_1C       = p2;
+	mPaneType = mPane->getTypeID();
+	setAlpha();
 }
 
 /*
@@ -540,47 +514,25 @@ ogFadeMgr::ogFadeMgr(P2DPane*, u8)
  * Address:	8017FB20
  * Size:	000068
  */
-void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag, f32)
+void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f0, -0x50D8(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x58
-	  stw       r4, 0x0(r3)
-	  stfs      f1, 0xC(r3)
-	  stfs      f0, 0x10(r3)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x54
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x40
-	  b         .loc_0x54
+	if (p2 == 0.0f) {
+		return;
+	}
+	mState = state;
+	_0C    = p2;
+	_10    = 0.0f;
+	switch (mState) {
+	case Status_1:
+		_14 = _18;
+		break;
 
-	.loc_0x40:
-	  lfs       f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  b         .loc_0x54
+	case Status_2:
+		_14 = _1C;
+		break;
+	}
 
-	.loc_0x4C:
-	  lfs       f0, 0x1C(r3)
-	  stfs      f0, 0x14(r3)
-
-	.loc_0x54:
-	  bl        .loc_0x68
-
-	.loc_0x58:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x68:
-	*/
+	setAlpha();
 }
 
 /*
@@ -590,47 +542,21 @@ void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag, f32)
  */
 void ogFadeMgr::setAlpha()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  lhz       r0, 0x8(r3)
-	  cmpwi     r0, 0x13
-	  beq-      .loc_0x3C
-	  bge-      .loc_0x5C
-	  cmpwi     r0, 0x12
-	  bge-      .loc_0x20
-	  b         .loc_0x5C
+	switch (mPaneType) {
+	case PANETYPE_Picture:
+		P2DPicture* pic = (P2DPicture*)mPane;
+		pic->setAlpha(_14);
+		break;
 
-	.loc_0x20:
-	  lfs       f0, 0x14(r3)
-	  lwz       r3, 0x4(r3)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stb       r0, 0xF0(r3)
-	  b         .loc_0x70
+	case PANETYPE_TextBox:
+		P2DTextBox* tbox = (P2DTextBox*)mPane;
+		tbox->setAlpha(_14);
+		break;
 
-	.loc_0x3C:
-	  lfs       f0, 0x14(r3)
-	  lwz       r3, 0x4(r3)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stb       r0, 0xF7(r3)
-	  stb       r0, 0xFB(r3)
-	  b         .loc_0x70
-
-	.loc_0x5C:
-	  lwz       r3, 0x4(r3)
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-
-	.loc_0x70:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	default:
+		mPane->hide();
+		break;
+	}
 }
 
 /*
@@ -640,111 +566,33 @@ void ogFadeMgr::setAlpha()
  */
 ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x38(r1)
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x18
-	  mr        r3, r0
-	  b         .loc_0x138
+	if (mState == Status_0) {
+		return mState;
+	}
 
-	.loc_0x18:
-	  lwz       r4, 0x2DEC(r13)
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, 0x28C(r4)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x10(r3)
-	  lfs       f0, 0x10(r3)
-	  lfs       f1, 0xC(r3)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x40
-	  stfs      f1, 0x10(r3)
+	_10 += gsys->getFrameTime();
+	if (_10 > _0C) {
+		_10 = _0C;
+	}
 
-	.loc_0x40:
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, 0xC(r3)
-	  lwz       r0, 0x0(r3)
-	  fdivs     f3, f1, f0
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x8C
-	  bge-      .loc_0xAC
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x68
-	  b         .loc_0xAC
+	f32 t = _10 / _0C;
+	switch (mState) {
+	case Status_1:
+		_14 = _18 * (1.0f - t) + _1C * t;
+		break;
 
-	.loc_0x68:
-	  lfs       f1, -0x50E4(r2)
-	  lfs       f0, 0x1C(r3)
-	  fsubs     f1, f1, f3
-	  lfs       f2, 0x18(r3)
-	  fmuls     f0, f0, f3
-	  fmuls     f1, f2, f1
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r3)
-	  b         .loc_0xAC
+	case Status_2:
+		_14 = _1C * (1.0f - t) + _18 * t;
+		break;
+	}
 
-	.loc_0x8C:
-	  lfs       f1, -0x50E4(r2)
-	  lfs       f0, 0x18(r3)
-	  fsubs     f1, f1, f3
-	  lfs       f2, 0x1C(r3)
-	  fmuls     f0, f0, f3
-	  fmuls     f1, f2, f1
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x14(r3)
+	setAlpha();
 
-	.loc_0xAC:
-	  lhz       r0, 0x8(r3)
-	  cmpwi     r0, 0x13
-	  beq-      .loc_0xE4
-	  bge-      .loc_0x104
-	  cmpwi     r0, 0x12
-	  bge-      .loc_0xC8
-	  b         .loc_0x104
+	if (_10 >= _0C) {
+		mState = Status_0;
+	}
 
-	.loc_0xC8:
-	  lfs       f0, 0x14(r3)
-	  lwz       r4, 0x4(r3)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stb       r0, 0xF0(r4)
-	  b         .loc_0x118
-
-	.loc_0xE4:
-	  lfs       f0, 0x14(r3)
-	  lwz       r4, 0x4(r3)
-	  fctiwz    f0, f0
-	  stfd      f0, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stb       r0, 0xF7(r4)
-	  stb       r0, 0xFB(r4)
-	  b         .loc_0x118
-
-	.loc_0x104:
-	  lwz       r4, 0x4(r3)
-	  li        r5, 0
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-
-	.loc_0x118:
-	  lfs       f1, 0x10(r3)
-	  lfs       f0, 0xC(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x134
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-
-	.loc_0x134:
-	  lwz       r3, 0x0(r3)
-
-	.loc_0x138:
-	  addi      r1, r1, 0x38
-	  blr
-	*/
+	return mState;
 }
 
 /*
@@ -752,31 +600,11 @@ ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
  * Address:	........
  * Size:	00003C
  */
-void movePicturePos(P2DPicture*, P2DPicture*)
+void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
 {
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8017FD40
- * Size:	000024
- */
-void P2DPane::move(int x, int y)
-{
-	mBounds.move(x, y);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r3, 0x18
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x339D4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	int x = alignPic->getPosH();
+	int y = alignPic->getPosV();
+	movingPic->move(x, y);
 }
 
 /*
@@ -784,111 +612,44 @@ void P2DPane::move(int x, int y)
  * Address:	8017FD64
  * Size:	000178
  */
-ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*)
+ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox* tbox)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x250(r1)
-	  stmw      r25, 0x234(r1)
-	  addi      r25, r3, 0
-	  li        r27, 0
-	  rlwinm    r29,r27,1,0,30
-	  mr        r26, r4
-	  addi      r31, r25, 0
-	  addi      r30, r29, 0x1
-	  sth       r0, 0x14(r3)
-	  stw       r5, 0x0(r3)
-	  stw       r6, 0x4(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r28, 0x10C(r3)
+	char tmpStr[512];
+	_14        = 0;
+	mPicture   = pic;
+	mTextBox   = tbox;
+	char* text = mTextBox->getString();
 
-	.loc_0x40:
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x2C
-	  extsh     r5, r29
-	  bl        -0x12B8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xFC
-	  addi      r3, r1, 0x2C
-	  addi      r4, r13, 0x960
-	  bl        0x99400
-	  cmpwi     r3, 0
-	  beq-      .loc_0xFC
-	  lwz       r12, 0x0(r26)
-	  mr        r3, r26
-	  lbz       r0, 0x2D(r1)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  lbz       r4, 0x2C(r1)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r6, 0x2E(r1)
-	  mtlr      r12
-	  rlwimi    r0,r4,24,0,7
-	  lbz       r7, 0x2F(r1)
-	  rlwimi    r0,r6,8,16,23
-	  or        r4, r7, r0
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0xFC
-	  stw       r3, 0x1A8(r31)
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x2C
-	  extsh     r5, r30
-	  bl        -0x1328
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0xFC
-	  addi      r3, r1, 0x2C
-	  bl        0x995FC
-	  frsp      f0, f1
-	  addi      r27, r27, 0x1
-	  cmpwi     r27, 0x64
-	  addi      r29, r29, 0x2
-	  stfs      f0, 0x18(r31)
-	  addi      r31, r31, 0x4
-	  lha       r3, 0x14(r25)
-	  addi      r30, r30, 0x2
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x14(r25)
-	  blt+      .loc_0x40
+	for (int i = 0; i < 100; i++) {
+		if (getStringCVS(tmpStr, text, 2 * i)) {
+			break;
+		}
 
-	.loc_0xFC:
-	  li        r0, 0
-	  sth       r0, 0x16(r25)
-	  lfs       f0, -0x50D8(r2)
-	  stfs      f0, 0xC(r25)
-	  lfs       f0, -0x50E4(r2)
-	  stfs      f0, 0x10(r25)
-	  lha       r0, 0x14(r25)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x160
-	  lha       r0, 0x16(r25)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r25, r0
-	  lfs       f0, 0x18(r3)
-	  stfs      f0, 0x8(r25)
-	  lha       r0, 0x16(r25)
-	  lwz       r5, 0x0(r25)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r25, r0
-	  lha       r4, 0x18(r5)
-	  lwz       r3, 0x1A8(r3)
-	  lha       r5, 0x1A(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
+		if (strcmp(tmpStr, "") == 0) {
+			break;
+		}
 
-	.loc_0x160:
-	  mr        r3, r25
-	  lmw       r25, 0x234(r1)
-	  lwz       r0, 0x254(r1)
-	  addi      r1, r1, 0x250
-	  mtlr      r0
-	  blr
-	*/
+		P2DPicture* pane = (P2DPicture*)screen->search(P2DPaneLibrary::makeTag(tmpStr), true);
+		if (!pane) {
+			break;
+		}
+
+		_1A8[i] = pane;
+		if (getStringCVS(tmpStr, text, 2 * i + 1)) {
+			break;
+		}
+
+		_18[i] = atof(tmpStr);
+		_14++;
+	}
+
+	_16 = 0;
+	_0C = 0.0f;
+	_10 = 1.0f;
+	if (_14 > 0) {
+		_08 = _18[_16];
+		movePicturePos(mPicture, _1A8[_16]);
+	}
 }
 
 /*
@@ -898,7 +659,21 @@ ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*)
  */
 void ogTexAnimSubMgr::update()
 {
-	// UNUSED FUNCTION
+	if (_14) {
+		_0C += gsys->getFrameTime() * _10;
+		if (_0C > _08) {
+			_1A8[_16]->hide();
+			_16++;
+			if (_16 >= _14) {
+				_16 = 0;
+			}
+
+			_0C = 0.0f;
+			_08 = _18[_16];
+			movePicturePos(mPicture, _1A8[_16]);
+			_1A8[_16]->show();
+		}
+	}
 }
 
 /*
@@ -906,78 +681,25 @@ void ogTexAnimSubMgr::update()
  * Address:	8017FEDC
  * Size:	0000F4
  */
-ogTexAnimMgr::ogTexAnimMgr(P2DScreen*)
+ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x58(r1)
-	  stmw      r25, 0x3C(r1)
-	  addi      r28, r3, 0
-	  addi      r29, r4, 0
-	  addi      r31, r28, 0
-	  li        r30, 0
-	  stw       r0, 0x0(r3)
+	char buf[8];
+	_00 = 0;
+	for (int i = 0; i < 100; i++) {
+		sprintf(buf, "at%02d", i);
+		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), false);
+		if (!pane) {
+			continue;
+		}
 
-	.loc_0x28:
-	  addi      r5, r30, 0
-	  crclr     6, 0x6
-	  addi      r3, r1, 0x30
-	  addi      r4, r13, 0x964
-	  bl        0x96684
-	  lwz       r12, 0x0(r29)
-	  mr        r3, r29
-	  lbz       r0, 0x31(r1)
-	  li        r5, 0
-	  lwz       r12, 0x34(r12)
-	  lbz       r4, 0x30(r1)
-	  rlwinm    r0,r0,16,0,15
-	  lbz       r6, 0x32(r1)
-	  mtlr      r12
-	  rlwimi    r0,r4,24,0,7
-	  lbz       r7, 0x33(r1)
-	  rlwimi    r0,r6,8,16,23
-	  or        r4, r7, r0
-	  blrl
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  lwz       r4, 0xE0(r3)
-	  lwz       r4, 0xC(r4)
-	  lhz       r0, 0x8(r4)
-	  cmplwi    r0, 0x12
-	  bne-      .loc_0xCC
-	  addi      r26, r4, 0
-	  addi      r25, r3, 0
-	  li        r3, 0x338
-	  bl        -0x138F74
-	  addi      r27, r3, 0
-	  mr.       r3, r27
-	  beq-      .loc_0xBC
-	  addi      r4, r29, 0
-	  addi      r5, r26, 0
-	  addi      r6, r25, 0
-	  bl        -0x230
-
-	.loc_0xBC:
-	  stw       r27, 0x4(r31)
-	  lwz       r3, 0x0(r28)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r28)
-
-	.loc_0xCC:
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x64
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x28
-	  mr        r3, r28
-	  lmw       r25, 0x3C(r1)
-	  lwz       r0, 0x5C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+		P2DPane* parent = pane->getPaneTree()->getParent()->getObject();
+		if (parent->getTypeID() == PANETYPE_Picture) {
+			P2DPicture* pic  = (P2DPicture*)parent;
+			P2DTextBox* tbox = (P2DTextBox*)pane;
+			mSubMgrs[i]      = new ogTexAnimSubMgr(screen, pic, tbox);
+			_00++;
+		}
+	}
 }
 
 /*
@@ -987,100 +709,9 @@ ogTexAnimMgr::ogTexAnimMgr(P2DScreen*)
  */
 void ogTexAnimMgr::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  li        r29, 0
-	  stw       r28, 0x28(r1)
-	  mr        r28, r3
-	  addi      r31, r28, 0
-	  lfs       f31, -0x50D8(r2)
-	  b         .loc_0x11C
-
-	.loc_0x34:
-	  lwz       r30, 0x4(r31)
-	  lha       r0, 0x14(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x114
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x10(r30)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0xC(r30)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xC(r30)
-	  lfs       f1, 0xC(r30)
-	  lfs       f0, 0x8(r30)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x114
-	  lha       r0, 0x16(r30)
-	  li        r4, 0
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x1A8
-	  lwzx      r3, r30, r0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lha       r3, 0x16(r30)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x16(r30)
-	  lha       r3, 0x16(r30)
-	  lha       r0, 0x14(r30)
-	  cmpw      r3, r0
-	  blt-      .loc_0xB0
-	  sth       r4, 0x16(r30)
-
-	.loc_0xB0:
-	  stfs      f31, 0xC(r30)
-	  lha       r0, 0x16(r30)
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x18
-	  lfsx      f0, r30, r0
-	  stfs      f0, 0x8(r30)
-	  lha       r0, 0x16(r30)
-	  lwz       r5, 0x0(r30)
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x1A8
-	  lha       r4, 0x18(r5)
-	  lwzx      r3, r30, r0
-	  lha       r5, 0x1A(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lha       r0, 0x16(r30)
-	  li        r4, 0x1
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x1A8
-	  lwzx      r3, r30, r0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-
-	.loc_0x114:
-	  addi      r31, r31, 0x4
-	  addi      r29, r29, 0x1
-
-	.loc_0x11C:
-	  lwz       r0, 0x0(r28)
-	  cmpw      r29, r0
-	  blt+      .loc_0x34
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < _00; i++) {
+		mSubMgrs[i]->update();
+	}
 }
 
 /*
@@ -1116,167 +747,83 @@ void setSpecialNumber(int idx, int value)
  * Address:	80180178
  * Size:	000218
  */
-void cnvSpecialNumber(char*)
+void cnvSpecialNumber(char* str)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r25, 0x14(r1)
-	  addi      r30, r4, 0x2750
-	  addi      r31, r3, 0
-	  addi      r29, r31, 0
-	  addi      r28, r30, 0x1C
-	  addi      r3, r30, 0x51C
-	  addi      r4, r13, 0x96C
-	  bl        0x991B4
+	char* tmp  = str;
+	char* work = wkstr;
+	strcpy(formatStr, "%d");
 
-	.loc_0x30:
-	  lbz       r3, 0x0(r29)
-	  lbz       r27, 0x1(r29)
-	  cmplwi    r3, 0
-	  lbz       r26, 0x2(r29)
-	  lbz       r25, 0x3(r29)
-	  beq-      .loc_0x1F0
-	  cmplwi    r3, 0x1B
-	  bne-      .loc_0x1C0
-	  addi      r3, r29, 0x1
-	  addi      r4, r13, 0x970
-	  li        r5, 0x2
-	  bl        0x98FB0
-	  cmpwi     r3, 0
-	  bne-      .loc_0x70
-	  addi      r29, r29, 0x3
-	  b         .loc_0x30
+	while (true) {
+		char a = tmp[0];
+		char b = tmp[1];
+		char c = tmp[2];
+		char d = tmp[3];
 
-	.loc_0x70:
-	  cmplwi    r27, 0x5A
-	  bne-      .loc_0xD0
-	  cmplwi    r26, 0
-	  beq-      .loc_0x1F0
-	  cmplwi    r26, 0x30
-	  blt-      .loc_0xC8
-	  cmplwi    r26, 0x39
-	  bgt-      .loc_0xC8
-	  subi      r0, r26, 0x30
-	  cmpwi     r0, 0x1
-	  mr        r5, r0
-	  addi      r29, r29, 0x3
-	  ble-      .loc_0xB8
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x51C
-	  addi      r4, r13, 0x974
-	  bl        0x96370
-	  b         .loc_0x30
+		if (a == 0) {
+			break;
+		}
 
-	.loc_0xB8:
-	  addi      r3, r30, 0x51C
-	  addi      r4, r13, 0x96C
-	  bl        0x99120
-	  b         .loc_0x30
-
-	.loc_0xC8:
-	  addi      r29, r29, 0x1
-	  b         .loc_0x30
-
-	.loc_0xD0:
-	  cmplwi    r27, 0x64
-	  bne-      .loc_0x1AC
-	  cmplwi    r26, 0
-	  beq-      .loc_0x1F0
-	  cmplwi    r26, 0x30
-	  blt-      .loc_0x1A4
-	  cmplwi    r26, 0x39
-	  bgt-      .loc_0x1A4
-	  cmplwi    r25, 0x30
-	  blt-      .loc_0x158
-	  cmplwi    r25, 0x39
-	  bgt-      .loc_0x158
-	  subi      r0, r26, 0x30
-	  crclr     6, 0x6
-	  mulli     r3, r0, 0xA
-	  add       r3, r25, r3
-	  subi      r3, r3, 0x30
-	  rlwinm    r0,r3,2,0,29
-	  add       r3, r30, r0
-	  lwz       r25, 0x61C(r3)
-	  addi      r3, r28, 0
-	  addi      r4, r30, 0x51C
-	  addi      r5, r25, 0
-	  addi      r29, r29, 0x4
-	  bl        0x962F0
-	  addi      r5, r25, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x41C
-	  addi      r4, r30, 0x51C
-	  bl        0x962DC
-	  addi      r3, r30, 0x41C
-	  bl        0x99148
-	  add       r28, r28, r3
-	  b         .loc_0x30
-
-	.loc_0x158:
-	  subi      r0, r26, 0x30
-	  crclr     6, 0x6
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lwz       r25, 0x61C(r3)
-	  addi      r3, r28, 0
-	  addi      r4, r30, 0x51C
-	  addi      r5, r25, 0
-	  addi      r29, r29, 0x3
-	  bl        0x962A4
-	  addi      r5, r25, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x41C
-	  addi      r4, r30, 0x51C
-	  bl        0x96290
-	  addi      r3, r30, 0x41C
-	  bl        0x990FC
-	  add       r28, r28, r3
-	  b         .loc_0x30
-
-	.loc_0x1A4:
-	  addi      r29, r29, 0x2
-	  b         .loc_0x30
-
-	.loc_0x1AC:
-	  lbz       r0, 0x0(r29)
-	  addi      r29, r29, 0x1
-	  stb       r0, 0x0(r28)
-	  addi      r28, r28, 0x1
-	  b         .loc_0x30
-
-	.loc_0x1C0:
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0x1E0
-	  stb       r3, 0x0(r28)
-	  lbz       r0, 0x1(r29)
-	  addi      r29, r29, 0x2
-	  stb       r0, 0x1(r28)
-	  addi      r28, r28, 0x2
-	  b         .loc_0x30
-
-	.loc_0x1E0:
-	  stb       r3, 0x0(r28)
-	  addi      r28, r28, 0x1
-	  addi      r29, r29, 0x1
-	  b         .loc_0x30
-
-	.loc_0x1F0:
-	  li        r0, 0
-	  stb       r0, 0x0(r28)
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0x1C
-	  bl        0x98FE0
-	  lmw       r25, 0x14(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+		if (a == 0x1B) { // esc character
+			if (strncmp(tmp + 1, "TM", 2) == 0) {
+				tmp += 3;
+			} else if (b == 'Z') {
+				if (c == 0) {
+					break;
+				}
+				if (c >= '0' && c <= '9') {
+					int digit = c - '0';
+					PRINT("zero_long = %d\n", digit);
+					tmp += 3;
+					if (digit > 1) {
+						sprintf(formatStr, "%%0%dd", digit);
+					} else {
+						strcpy(formatStr, "%d");
+					}
+					PRINT("formatStr = '%s'\n", formatStr);
+				} else {
+					tmp++;
+				}
+			} else if (b == 'd') {
+				if (c == 0) {
+					break;
+				}
+				if (c >= '0' && c <= '9') {
+					if (d >= '0' && d <= '9') {
+						int idx = 10 * (c - '0');
+						idx += d - '0';
+						int num = SpecialNumber[idx];
+						tmp += 4;
+						sprintf(work, formatStr, num);
+						sprintf(numStrBuf, formatStr, num);
+						work += strlen(numStrBuf);
+					} else {
+						int num = SpecialNumber[c - '0'];
+						tmp += 3;
+						sprintf(work, formatStr, num);
+						sprintf(numStrBuf, formatStr, num);
+						work += strlen(numStrBuf);
+					}
+				} else {
+					tmp += 2;
+				}
+			} else {
+				PRINT("ERR ? \n");
+				*work++ = *tmp++;
+			}
+		} else if (a & 0x80) {
+			*work  = a;
+			char e = tmp[1];
+			tmp += 2;
+			work[1] = e;
+			work += 2;
+		} else {
+			*work = a;
+			work++;
+			tmp++;
+		}
+	}
+	*work = 0;
+	strcpy(str, wkstr);
 }
 
 /*
@@ -1321,99 +868,16 @@ void TypingTextMgr::start()
  */
 ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0xF8
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  bl        -0x1394B4
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x8C
-	  addi      r28, r29, 0
-	  addi      r3, r1, 0xC
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x33148
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0xC
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x304CC
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r29)
-	  li        r0, 0
-	  stb       r0, 0xEC(r29)
-	  stw       r0, 0xF0(r29)
-	  stw       r0, 0xF4(r29)
+	P2DScreen* screen = new P2DScreen();
+	screen->set("screen/blo/wait_char.blo", false, false, true);
 
-	.loc_0x8C:
-	  lis       r3, 0x802D
-	  addi      r28, r29, 0
-	  addi      r4, r3, 0x2EFC
-	  addi      r3, r28, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        0x326C4
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lis       r4, 0x6D61
-	  addi      r4, r4, 0x7275
-	  lwz       r12, 0x34(r12)
-	  li        r5, 0x1
-	  mtlr      r12
-	  blrl
-	  addi      r30, r3, 0
-	  addi      r3, r28, 0
-	  lwz       r12, 0x0(r28)
-	  lis       r4, 0x74
-	  addi      r4, r4, 0x656E
-	  lwz       r12, 0x34(r12)
-	  li        r5, 0x1
-	  mtlr      r12
-	  blrl
-	  addi      r29, r3, 0
-	  addi      r3, r28, 0
-	  lwz       r12, 0x0(r28)
-	  lis       r4, 0x68
-	  addi      r4, r4, 0x616E
-	  lwz       r12, 0x34(r12)
-	  li        r5, 0x1
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x10C(r30)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  bl        0x98DA4
-	  lwz       r4, 0x10C(r29)
-	  addi      r3, r31, 0x8
-	  bl        0x98D98
-	  lwz       r4, 0x10C(r30)
-	  addi      r3, r31, 0x10
-	  bl        0x98D8C
-	  mr        r3, r31
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	P2DTextBox* onesBox     = (P2DTextBox*)screen->search('maru', true);
+	P2DTextBox* tensBox     = (P2DTextBox*)screen->search('ten', true);
+	P2DTextBox* hundredsBox = (P2DTextBox*)screen->search('han', true);
+
+	strcpy(_00, onesBox->getString());
+	strcpy(_08, tensBox->getString());
+	strcpy(_10, hundredsBox->getString());
 }
 
 /*
