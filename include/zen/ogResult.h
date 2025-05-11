@@ -146,7 +146,7 @@ struct ogScrResultMgr {
 	int mSaveStatus;              // _558
 };
 
-extern char* bloFile_Res_Table[149];
+extern char* bloFile_Res_Table[];
 
 } // namespace zen
 
