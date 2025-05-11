@@ -56,6 +56,8 @@ struct ogSaveMgr {
 	// unused/inlined:
 	void startDirectSave(s16);
 
+	bool isFileMode() { return _30; }
+
 	SaveStatus mStatus;           // _00
 	SaveStatus _04;               // _04
 	P2DScreen* mScreen;           // _08
