@@ -1,4 +1,13 @@
 #include "zen/ogMemChk.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/ogNitaku.h"
+#include "zen/ogSub.h"
+#include "zen/ogMakeDefault.h"
+#include "P2D/Screen.h"
+#include "P2D/Picture.h"
+#include "P2D/Graph.h"
+#include "SoundMgr.h"
+#include "gameflow.h"
 #include "DebugLog.h"
 
 /*
@@ -6,14 +15,14 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+// DEFINE_ERROR()
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--
@@ -22,683 +31,110 @@ DEFINE_PRINT("TODO: Replace")
  */
 zen::ogScrMemChkMgr::ogScrMemChkMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xA0(r1)
-	  stmw      r26, 0x88(r1)
-	  li        r28, 0
-	  addi      r31, r3, 0
-	  stb       r28, 0x0(r3)
-	  li        r3, 0xF8
-	  bl        -0x146068
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x84
-	  addi      r26, r29, 0
-	  addi      r3, r1, 0x80
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x26594
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x80
-	  addi      r3, r26, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x23918
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r29)
-	  stb       r28, 0xEC(r29)
-	  stw       r28, 0xF0(r29)
-	  stw       r28, 0xF4(r29)
+	_00 = 0;
+	PRINT("---------------------------- ogScrMemChkMgr begin -----------\n");
 
-	.loc_0x84:
-	  stw       r29, 0x24(r31)
-	  lis       r3, 0x802D
-	  addi      r4, r3, 0x5CC8
-	  lwz       r3, 0x24(r31)
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        0x25B14
-	  lwz       r3, 0x24(r31)
-	  lis       r4, 0x626C
-	  addi      r4, r4, 0x636B
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x28(r31)
-	  li        r0, 0xFF
-	  li        r3, 0x4C4
-	  lwz       r4, 0x28(r31)
-	  stb       r0, 0xF0(r4)
-	  bl        -0x146120
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0xF8
-	  li        r4, 0x20
-	  li        r5, 0x80
-	  li        r6, 0x80
-	  bl        0x5C780
+	_24 = new P2DScreen;
+	_24->set("screen/blo/black.blo", false, false, true);
+	_28 = (P2DPicture*)_24->search('blck', true);
+	_28->setAlpha(255);
 
-	.loc_0xF8:
-	  stw       r28, 0xC(r31)
-	  li        r28, 0
-	  li        r3, 0xF8
-	  stw       r28, 0x10(r31)
-	  stw       r28, 0x14(r31)
-	  bl        -0x146154
-	  addi      r29, r3, 0
-	  mr.       r0, r29
-	  beq-      .loc_0x170
-	  addi      r26, r29, 0
-	  addi      r3, r1, 0x74
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x264A8
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x74
-	  addi      r3, r26, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x2382C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r29)
-	  stb       r28, 0xEC(r29)
-	  stw       r28, 0xF0(r29)
-	  stw       r28, 0xF4(r29)
+	_0C = new EffectMgr2D(0x20, 0x80, 0x80);
+	_10 = 0;
+	_14 = 0;
 
-	.loc_0x170:
-	  stw       r29, 0x2C(r31)
-	  lis       r3, 0x802D
-	  addi      r4, r3, 0x5CE0
-	  lwz       r3, 0x2C(r31)
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x25A28
-	  lwz       r27, 0x2C(r31)
-	  lis       r28, 0x7368
-	  addi      r4, r28, 0x6F6D
-	  addi      r3, r27, 0
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x74(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x6F74
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x78(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x6368
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x80(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x6F69
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x84(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x6F6B
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x88(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x6F73
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x7C(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x68
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6169
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xAC(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x69
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6965
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xB0(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6861
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6963
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xB4(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6969
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6563
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xB8(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x7566
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x8C(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x7369
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x90(r31)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0x7878
-	  lwz       r12, 0x0(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x94(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x7361
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x7269
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xEC(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6D65
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6D6F
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xF0(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6272
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6F6D
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xF4(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6B61
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x696D
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xF8(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x696A
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6F6D
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xFC(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6E61
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x696D
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x100(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6669
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x6C65
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x104(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x796E
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x5F77
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x98(r31)
-	  addi      r3, r27, 0
-	  lis       r4, 0x6370
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r4, 0x736C
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x9C(r31)
-	  lis       r3, 0x6162
-	  addi      r4, r3, 0x746E
-	  lwz       r3, 0x2C(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xA4(r31)
-	  li        r3, 0x12C
-	  bl        -0x1464FC
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x4D0
-	  lwz       r4, 0xA4(r31)
-	  lfs       f1, -0x4F00(r2)
-	  bl        -0xE2F4
+	_2C = new P2DScreen;
+	_2C->set("screen/blo/data_m.blo", true, true, true);
 
-	.loc_0x4D0:
-	  stw       r28, 0xA0(r31)
-	  lis       r3, 0x6D61
-	  li        r30, 0
-	  lwz       r6, 0xA4(r31)
-	  addi      r4, r3, 0x696E
-	  li        r5, 0x1
-	  lbz       r0, 0xC(r6)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r6)
-	  lwz       r3, 0x2C(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xA8(r31)
-	  lis       r3, 0x6375
-	  addi      r4, r3, 0x7273
-	  lwz       r3, 0x74(r31)
-	  li        r5, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x78(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x80(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x7C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x84(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x88(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x8C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x90(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x94(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xEC(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xF0(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xF4(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xF8(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xFC(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xFC(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x104(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x2C(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xC0(r31)
-	  li        r3, 0x12C
-	  bl        -0x14667C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x650
-	  lwz       r4, 0xC0(r31)
-	  lfs       f1, -0x4EFC(r2)
-	  bl        -0xE474
+	P2DScreen* screen = _2C;
 
-	.loc_0x650:
-	  stw       r28, 0xBC(r31)
-	  li        r3, 0x418
-	  bl        -0x1466A0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x670
-	  lwz       r4, 0x74(r31)
-	  bl        -0xD328
+	_74  = (P2DTextBox*)screen->search('shom', true);
+	_78  = (P2DTextBox*)screen->search('shot', true);
+	_80  = (P2DTextBox*)screen->search('shch', true);
+	_84  = (P2DTextBox*)screen->search('shoi', true);
+	_88  = (P2DTextBox*)screen->search('shok', true);
+	_7C  = (P2DTextBox*)screen->search('shos', true);
+	_AC  = (P2DTextBox*)screen->search('hai', true);
+	_B0  = (P2DTextBox*)screen->search('iie', true);
+	_B4  = (P2DTextBox*)screen->search('haic', true);
+	_B8  = (P2DTextBox*)screen->search('iiec', true);
+	_8C  = (P2DTextBox*)screen->search('shuf', true);
+	_90  = (P2DTextBox*)screen->search('shsi', true);
+	_94  = (P2DTextBox*)screen->search('shxx', true);
+	_EC  = (P2DTextBox*)screen->search('sari', true);
+	_F0  = (P2DTextBox*)screen->search('memo', true);
+	_F4  = (P2DTextBox*)screen->search('brom', true);
+	_F8  = (P2DTextBox*)screen->search('kaim', true);
+	_FC  = (P2DTextBox*)screen->search('ijom', true);
+	_100 = (P2DTextBox*)screen->search('naim', true);
+	_104 = (P2DTextBox*)screen->search('file', true);
+	_98  = screen->search('yn_w', true);
+	_9C  = screen->search('cpsl', true);
 
-	.loc_0x670:
-	  stw       r28, 0x34(r31)
-	  li        r3, 0x418
-	  bl        -0x1466C0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x690
-	  lwz       r4, 0x80(r31)
-	  bl        -0xD348
+	_A4 = (P2DPicture*)_2C->search('abtn', true);
+	_A0 = new setTenmetuAlpha(_A4, 1.0f);
+	_A4->hide();
+	_A8 = (P2DPicture*)_2C->search('main', true);
 
-	.loc_0x690:
-	  stw       r28, 0x40(r31)
-	  li        r3, 0x418
-	  bl        -0x1466E0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6B0
-	  lwz       r4, 0x78(r31)
-	  bl        -0xD368
+	_74->hide();
+	_78->hide();
+	_80->hide();
+	_7C->hide();
+	_84->hide();
+	_88->hide();
+	_8C->hide();
+	_90->hide();
+	_94->hide();
+	_EC->hide();
+	_F0->hide();
+	_F4->hide();
+	_F8->hide();
+	_FC->hide();
+	_FC->hide();
+	_104->hide();
 
-	.loc_0x6B0:
-	  stw       r28, 0x38(r31)
-	  li        r3, 0x418
-	  bl        -0x146700
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6D0
-	  lwz       r4, 0x7C(r31)
-	  bl        -0xD388
+	_C0 = (P2DPicture*)_2C->search('curs', true);
+	_BC = new setTenmetuAlpha(_C0, 0.5f);
 
-	.loc_0x6D0:
-	  stw       r28, 0x3C(r31)
-	  li        r3, 0x418
-	  bl        -0x146720
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x6F0
-	  lwz       r4, 0x84(r31)
-	  bl        -0xD3A8
+	_34 = new TypingTextMgr(_74);
+	_40 = new TypingTextMgr(_80);
+	_38 = new TypingTextMgr(_78);
+	_3C = new TypingTextMgr(_7C);
+	_44 = new TypingTextMgr(_84);
+	_48 = new TypingTextMgr(_88);
+	_4C = new TypingTextMgr(_8C);
+	_50 = new TypingTextMgr(_90);
+	_54 = new TypingTextMgr(_94);
+	_58 = new TypingTextMgr(_EC);
+	_5C = new TypingTextMgr(_F0);
+	_60 = new TypingTextMgr(_F4);
+	_64 = new TypingTextMgr(_F8);
+	_68 = new TypingTextMgr(_FC);
+	_6C = new TypingTextMgr(_100);
+	_70 = new TypingTextMgr(_104);
 
-	.loc_0x6F0:
-	  stw       r28, 0x44(r31)
-	  li        r3, 0x418
-	  bl        -0x146740
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x710
-	  lwz       r4, 0x88(r31)
-	  bl        -0xD3C8
+	_30 = _58;
+	_1C = STATE_NULL;
+	_20 = -1;
 
-	.loc_0x710:
-	  stw       r28, 0x48(r31)
-	  li        r3, 0x418
-	  bl        -0x146760
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x730
-	  lwz       r4, 0x8C(r31)
-	  bl        -0xD3E8
+	P2DTextBox* a1 = (P2DTextBox*)_2C->search('fomt', true);
+	P2DTextBox* a2 = (P2DTextBox*)_2C->search('cws', true);
+	P2DTextBox* a3 = (P2DTextBox*)_2C->search('rtry', true);
+	P2DTextBox* a4 = (P2DTextBox*)_2C->search('se_c', true);
+	_D4            = new ogNitakuMgr(_2C, _B4, _B8, a4, false, false);
+	a1->hide();
+	a2->hide();
+	a3->hide();
+	_D8 = _AC->getString();
+	_DC = _B0->getString();
+	_E0 = a1->getString();
+	_E4 = a2->getString();
+	_E8 = a3->getString();
 
-	.loc_0x730:
-	  stw       r28, 0x4C(r31)
-	  li        r3, 0x418
-	  bl        -0x146780
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x750
-	  lwz       r4, 0x90(r31)
-	  bl        -0xD408
-
-	.loc_0x750:
-	  stw       r28, 0x50(r31)
-	  li        r3, 0x418
-	  bl        -0x1467A0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x770
-	  lwz       r4, 0x94(r31)
-	  bl        -0xD428
-
-	.loc_0x770:
-	  stw       r28, 0x54(r31)
-	  li        r3, 0x418
-	  bl        -0x1467C0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x790
-	  lwz       r4, 0xEC(r31)
-	  bl        -0xD448
-
-	.loc_0x790:
-	  stw       r28, 0x58(r31)
-	  li        r3, 0x418
-	  bl        -0x1467E0
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x7B0
-	  lwz       r4, 0xF0(r31)
-	  bl        -0xD468
-
-	.loc_0x7B0:
-	  stw       r28, 0x5C(r31)
-	  li        r3, 0x418
-	  bl        -0x146800
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x7D0
-	  lwz       r4, 0xF4(r31)
-	  bl        -0xD488
-
-	.loc_0x7D0:
-	  stw       r28, 0x60(r31)
-	  li        r3, 0x418
-	  bl        -0x146820
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x7F0
-	  lwz       r4, 0xF8(r31)
-	  bl        -0xD4A8
-
-	.loc_0x7F0:
-	  stw       r28, 0x64(r31)
-	  li        r3, 0x418
-	  bl        -0x146840
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x810
-	  lwz       r4, 0xFC(r31)
-	  bl        -0xD4C8
-
-	.loc_0x810:
-	  stw       r28, 0x68(r31)
-	  li        r3, 0x418
-	  bl        -0x146860
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x830
-	  lwz       r4, 0x100(r31)
-	  bl        -0xD4E8
-
-	.loc_0x830:
-	  stw       r28, 0x6C(r31)
-	  li        r3, 0x418
-	  bl        -0x146880
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x850
-	  lwz       r4, 0x104(r31)
-	  bl        -0xD508
-
-	.loc_0x850:
-	  stw       r28, 0x70(r31)
-	  lis       r3, 0x666F
-	  li        r0, -0x1
-	  lwz       r6, 0x58(r31)
-	  addi      r4, r3, 0x6D74
-	  li        r5, 0x1
-	  stw       r6, 0x30(r31)
-	  stw       r0, 0x1C(r31)
-	  stw       r0, 0x20(r31)
-	  lwz       r3, 0x2C(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-	  lwz       r3, 0x2C(r31)
-	  lis       r4, 0x63
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r4, 0x7773
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-	  lwz       r3, 0x2C(r31)
-	  lis       r4, 0x7274
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r4, 0x7279
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  lwz       r3, 0x2C(r31)
-	  lis       r4, 0x7365
-	  lwz       r12, 0x0(r3)
-	  addi      r4, r4, 0x5F63
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r26, r3, 0
-	  li        r3, 0xC4
-	  bl        -0x146944
-	  addi      r27, r3, 0
-	  mr.       r3, r27
-	  beq-      .loc_0x928
-	  lwz       r4, 0x2C(r31)
-	  mr        r7, r26
-	  lwz       r5, 0xB4(r31)
-	  li        r8, 0
-	  lwz       r6, 0xB8(r31)
-	  li        r9, 0
-	  bl        0x8EF4
-
-	.loc_0x928:
-	  stw       r27, 0xD4(r31)
-	  li        r4, 0
-	  li        r3, 0x54
-	  lbz       r0, 0xC(r28)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r28)
-	  lbz       r0, 0xC(r29)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r29)
-	  lbz       r0, 0xC(r30)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r30)
-	  lwz       r4, 0xAC(r31)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0xD8(r31)
-	  lwz       r4, 0xB0(r31)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0xDC(r31)
-	  lwz       r0, 0x10C(r28)
-	  stw       r0, 0xE0(r31)
-	  lwz       r0, 0x10C(r29)
-	  stw       r0, 0xE4(r31)
-	  lwz       r0, 0x10C(r30)
-	  stw       r0, 0xE8(r31)
-	  bl        -0x1469D0
-	  addi      r27, r3, 0
-	  mr.       r3, r27
-	  beq-      .loc_0x99C
-	  bl        0x5FB8
-
-	.loc_0x99C:
-	  stw       r27, 0x18(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0x2C4
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x2F0
-	  mr        r3, r31
-	  lmw       r26, 0x88(r1)
-	  lwz       r0, 0xA4(r1)
-	  addi      r1, r1, 0xA0
-	  mtlr      r0
-	  blr
-	*/
+	_18 = new ogScrMakeDefaultMgr;
+	DispYesNo(true);
+	DispAcup(false);
+	PRINT("---------------------------- ogScrMemChkMgr finish -----------\n");
 }
 
 /*
@@ -708,7 +144,10 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
  */
 void zen::ogScrMemChkMgr::SetNitaku_Y_N()
 {
-	// UNUSED FUNCTION
+	_AC->setString(_D8);
+	_B0->setString(_DC);
+	_B4->setString(_D8);
+	_B8->setString(_DC);
 }
 
 /*
@@ -718,7 +157,10 @@ void zen::ogScrMemChkMgr::SetNitaku_Y_N()
  */
 void zen::ogScrMemChkMgr::SetNitaku_W_R()
 {
-	// UNUSED FUNCTION
+	_AC->setString(_E4);
+	_B0->setString(_E8);
+	_B4->setString(_E4);
+	_B8->setString(_E8);
 }
 
 /*
@@ -728,7 +170,10 @@ void zen::ogScrMemChkMgr::SetNitaku_W_R()
  */
 void zen::ogScrMemChkMgr::SetNitaku_F_N()
 {
-	// UNUSED FUNCTION
+	_AC->setString(_E0);
+	_B0->setString(_DC);
+	_B4->setString(_E0);
+	_B8->setString(_DC);
 }
 
 /*
@@ -738,7 +183,14 @@ void zen::ogScrMemChkMgr::SetNitaku_F_N()
  */
 void zen::ogScrMemChkMgr::StartSub()
 {
-	// UNUSED FUNCTION
+	_30->off();
+	_30->transCursor(_C0);
+	_BC->start();
+	_A4->hide();
+	DispAcup(false);
+	DispYesNo(true);
+	_D4->start();
+	_08 = 3;
 }
 
 /*
@@ -748,171 +200,75 @@ void zen::ogScrMemChkMgr::StartSub()
  */
 void zen::ogScrMemChkMgr::StatusCheck()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xB8(r1)
-	  stw       r31, 0xB4(r1)
-	  mr        r31, r3
-	  lwz       r0, 0xD8(r3)
-	  lwz       r3, 0xAC(r3)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xDC(r31)
-	  lwz       r3, 0xB0(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xD8(r31)
-	  lwz       r3, 0xB4(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xDC(r31)
-	  lwz       r3, 0xB8(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0x1C(r31)
-	  cmpwi     r0, 0xB
-	  beq-      .loc_0xB0
-	  bge-      .loc_0xFC
-	  cmpwi     r0, 0xA
-	  bge-      .loc_0x60
-	  b         .loc_0xFC
+	SetNitaku_Y_N();
 
-	.loc_0x60:
-	  li        r0, 0xA
-	  stw       r0, 0x20(r31)
-	  li        r0, 0x1
-	  addi      r3, r31, 0
-	  stw       r0, 0x1C(r31)
-	  lwz       r4, 0x48(r31)
-	  bl        .loc_0x258
-	  lwz       r0, 0xE0(r31)
-	  lwz       r3, 0xAC(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xDC(r31)
-	  lwz       r3, 0xB0(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE0(r31)
-	  lwz       r3, 0xB4(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xDC(r31)
-	  lwz       r3, 0xB8(r31)
-	  stw       r0, 0x10C(r3)
-	  b         .loc_0xFC
+	switch (_1C) {
+	case 10:
+		_20 = 10;
+		_1C = STATE_Unk1;
+		setPCtex(_48);
+		SetNitaku_F_N();
+		break;
+	case 11:
+		_20 = 11;
+		_1C = STATE_Unk1;
+		setPCtex(_44);
+		SetNitaku_F_N();
+		break;
+	}
 
-	.loc_0xB0:
-	  li        r0, 0xB
-	  stw       r0, 0x20(r31)
-	  li        r0, 0x1
-	  addi      r3, r31, 0
-	  stw       r0, 0x1C(r31)
-	  lwz       r4, 0x44(r31)
-	  bl        .loc_0x258
-	  lwz       r0, 0xE0(r31)
-	  lwz       r3, 0xAC(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xDC(r31)
-	  lwz       r3, 0xB0(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE0(r31)
-	  lwz       r3, 0xB4(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xDC(r31)
-	  lwz       r3, 0xB8(r31)
-	  stw       r0, 0x10C(r3)
+	// Because the first switch wasnt good enough
+	switch (_1C) {
+	case 1:
+		break;
+	case 8:
+		setPCtex(_58);
+		PRINT("<<<<<<<<<< ERR_NOCARD in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 9:
+		setPCtex(_6C);
+		PRINT("<<<<<<<<<< ERR_NOTACARD in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 10:
+		setPCtex(_64);
+		PRINT("<<<<<<<<<< ERR_ENCODING in ogMemChk >>>>>>>>>>\n");
+		SetNitaku_W_R();
+		break;
+	case 11:
+		setPCtex(_68);
+		PRINT("<<<<<<<<<< ERR_BROKEN in ogMemChk >>>>>>>>>>\n");
+		SetNitaku_W_R();
+		break;
+	case 12:
+		setPCtex(_5C);
+		PRINT("<<<<<<<<<< ERR_FULLUP in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 13:
+		setPCtex(_60);
+		PRINT("<<<<<<<<<< ERR_UNUSABLE in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 14:
+		setPCtex(_70);
+		PRINT("<<<<<<<<<< ERR_NOFILE in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 16:
+		setPCtex(_4C);
+		PRINT("<<<<<<<<<< REPAIR_NOW in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 17:
+		setPCtex(_50);
+		PRINT("<<<<<<<<<< REPAIR_END in ogMemChk >>>>>>>>>>\n");
+		break;
+	case 18:
+		setPCtex(_54);
+		PRINT("<<<<<<<<<< REPAIR_MISS in ogMemChk >>>>>>>>>>\n");
+		break;
+	default:
+		_30->off();
+		break;
+	}
 
-	.loc_0xFC:
-	  lwz       r0, 0x1C(r31)
-	  cmplwi    r0, 0x12
-	  bgt-      .loc_0x220
-	  lis       r3, 0x802D
-	  addi      r3, r3, 0x5CF8
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  mr        r3, r31
-	  lwz       r4, 0x58(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x6C(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x64(r31)
-	  bl        .loc_0x258
-	  lwz       r0, 0xE4(r31)
-	  lwz       r3, 0xAC(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE8(r31)
-	  lwz       r3, 0xB0(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE4(r31)
-	  lwz       r3, 0xB4(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE8(r31)
-	  lwz       r3, 0xB8(r31)
-	  stw       r0, 0x10C(r3)
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x68(r31)
-	  bl        .loc_0x258
-	  lwz       r0, 0xE4(r31)
-	  lwz       r3, 0xAC(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE8(r31)
-	  lwz       r3, 0xB0(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE4(r31)
-	  lwz       r3, 0xB4(r31)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0xE8(r31)
-	  lwz       r3, 0xB8(r31)
-	  stw       r0, 0x10C(r3)
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x5C(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x60(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x70(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x4C(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x50(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-	  mr        r3, r31
-	  lwz       r4, 0x54(r31)
-	  bl        .loc_0x258
-	  b         .loc_0x23C
-
-	.loc_0x220:
-	  lwz       r5, 0x30(r31)
-	  li        r4, 0
-	  lwz       r3, 0x8(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  stw       r4, 0x0(r5)
-
-	.loc_0x23C:
-	  lfs       f0, -0x4EF8(r2)
-	  stfs      f0, 0xC8(r31)
-	  lwz       r0, 0xBC(r1)
-	  lwz       r31, 0xB4(r1)
-	  addi      r1, r1, 0xB8
-	  mtlr      r0
-	  blr
-
-	.loc_0x258:
-	*/
+	_C8 = 0.0f;
 }
 
 /*
@@ -920,28 +276,11 @@ void zen::ogScrMemChkMgr::StatusCheck()
  * Address:	8018DC74
  * Size:	000044
  */
-void zen::ogScrMemChkMgr::setPCtex(zen::TypingTextMgr*)
+void zen::ogScrMemChkMgr::setPCtex(TypingTextMgr* text)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r7, 0x30(r3)
-	  lwz       r5, 0x8(r7)
-	  lbz       r0, 0xC(r5)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r5)
-	  stw       r6, 0x0(r7)
-	  stw       r4, 0x30(r3)
-	  lwz       r3, 0x30(r3)
-	  bl        -0xD884
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	_30->off();
+	_30 = text;
+	_30->start();
 }
 
 /*
@@ -949,27 +288,13 @@ void zen::ogScrMemChkMgr::setPCtex(zen::TypingTextMgr*)
  * Address:	8018DCB8
  * Size:	000038
  */
-void zen::ogScrMemChkMgr::DispYesNo(bool)
+void zen::ogScrMemChkMgr::DispYesNo(bool set)
 {
-	/*
-	.loc_0x0:
-	  rlwinm.   r0,r4,0,24,31
-	  beq-      .loc_0x20
-	  lwz       r3, 0x98(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-
-	.loc_0x20:
-	  lwz       r3, 0x98(r3)
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	*/
+	if (set) {
+		_98->show();
+	} else {
+		_98->hide();
+	}
 }
 
 /*
@@ -977,27 +302,13 @@ void zen::ogScrMemChkMgr::DispYesNo(bool)
  * Address:	8018DCF0
  * Size:	000038
  */
-void zen::ogScrMemChkMgr::DispAcup(bool)
+void zen::ogScrMemChkMgr::DispAcup(bool set)
 {
-	/*
-	.loc_0x0:
-	  rlwinm.   r0,r4,0,24,31
-	  beq-      .loc_0x20
-	  lwz       r3, 0x9C(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-
-	.loc_0x20:
-	  lwz       r3, 0x9C(r3)
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	*/
+	if (set) {
+		_9C->show();
+	} else {
+		_9C->hide();
+	}
 }
 
 /*
@@ -1007,7 +318,9 @@ void zen::ogScrMemChkMgr::DispAcup(bool)
  */
 void zen::ogScrMemChkMgr::MakeDefFileStart()
 {
-	// UNUSED FUNCTION
+	_18->start();
+	_1C = STATE_Unk15;
+	_C8 = 0.0f;
 }
 
 /*
@@ -1017,7 +330,11 @@ void zen::ogScrMemChkMgr::MakeDefFileStart()
  */
 void zen::ogScrMemChkMgr::RepairFileStart()
 {
-	// UNUSED FUNCTION
+	gameflow.mMemoryCard.repairFile();
+	_1C = STATE_Unk16;
+	setPCtex(_4C);
+	_C8 = 0.0f;
+	DispYesNo(false);
 }
 
 /*
@@ -1027,164 +344,41 @@ void zen::ogScrMemChkMgr::RepairFileStart()
  */
 void zen::ogScrMemChkMgr::start()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x68(r1)
-	  stw       r29, 0x64(r1)
-	  li        r29, 0
-	  stw       r28, 0x60(r1)
-	  stb       r29, 0x0(r3)
-	  stw       r29, 0x1C(r3)
-	  bl        -0xF504
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x44
-	  li        r0, 0x8
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
+	_00 = 0;
+	_1C = STATE_Unk0;
+	if (!ogCheckInsCard()) {
+		PRINT("ERR_NOCARD in ogMemChk\n");
+		_1C = STATE_Unk8;
+	} else {
+		int cardstate = gameflow.mMemoryCard.getMemoryCardState(false);
+		PRINT("ogMemChk error = %d \n", cardstate);
+		if (cardstate == -2) {
+			PRINT("ERR_NOTACARD in ogMemChk\n");
+			_1C = STATE_Unk9;
+		} else if (cardstate == -5) {
+			PRINT("ERR_ENCODING in ogMemChk\n");
+			_1C = STATE_Unk10;
+		} else if (cardstate == -4) {
+			PRINT("ERR_BROKEN in ogMemChk\n");
+			_1C = STATE_Unk11;
+		} else if (cardstate == -3) {
+			PRINT("ERR_FULLUP in ogMemChk\n");
+			_1C = STATE_Unk12;
+		} else if (cardstate == -6) {
+			PRINT("ERR_UNUSABLE in ogMemChk\n");
+			_1C = STATE_Unk13;
+		} else if (cardstate == -8) {
+			PRINT("ERR_NOFILE in ogMemChk\n");
+			_1C = STATE_Unk14;
+		} else if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
+			MakeDefFileStart();
+		} else if (gameflow.mMemoryCard.isFileBroken()) {
+			RepairFileStart();
+		}
+	}
 
-	.loc_0x44:
-	  lis       r3, 0x803A
-	  subi      r30, r3, 0x2848
-	  addi      r28, r30, 0x24
-	  addi      r3, r28, 0
-	  li        r4, 0
-	  bl        -0x119E90
-	  cmpwi     r3, -0x2
-	  bne-      .loc_0x70
-	  li        r0, 0x9
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
-
-	.loc_0x70:
-	  cmpwi     r3, -0x5
-	  bne-      .loc_0x84
-	  li        r0, 0xA
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
-
-	.loc_0x84:
-	  cmpwi     r3, -0x4
-	  bne-      .loc_0x98
-	  li        r0, 0xB
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
-
-	.loc_0x98:
-	  cmpwi     r3, -0x3
-	  bne-      .loc_0xAC
-	  li        r0, 0xC
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
-
-	.loc_0xAC:
-	  cmpwi     r3, -0x6
-	  bne-      .loc_0xC0
-	  li        r0, 0xD
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
-
-	.loc_0xC0:
-	  cmpwi     r3, -0x8
-	  bne-      .loc_0xD4
-	  li        r0, 0xE
-	  stw       r0, 0x1C(r31)
-	  b         .loc_0x15C
-
-	.loc_0xD4:
-	  lwz       r0, 0x5C(r30)
-	  cmpwi     r0, 0
-	  bge-      .loc_0xFC
-	  lwz       r3, 0x18(r31)
-	  bl        0x5EF0
-	  li        r0, 0xF
-	  stw       r0, 0x1C(r31)
-	  lfs       f0, -0x4EF8(r2)
-	  stfs      f0, 0xC8(r31)
-	  b         .loc_0x15C
-
-	.loc_0xFC:
-	  mr        r3, r28
-	  bl        -0x1179CC
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x15C
-	  mr        r3, r28
-	  bl        -0x11793C
-	  li        r0, 0x10
-	  stw       r0, 0x1C(r31)
-	  lwz       r5, 0x30(r31)
-	  lwz       r4, 0x4C(r31)
-	  lwz       r3, 0x8(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r29,7,24,24
-	  stb       r0, 0xC(r3)
-	  stw       r29, 0x0(r5)
-	  stw       r4, 0x30(r31)
-	  lwz       r3, 0x30(r31)
-	  bl        -0xDA48
-	  lfs       f0, -0x4EF8(r2)
-	  stfs      f0, 0xC8(r31)
-	  lwz       r3, 0x98(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r29,7,24,24
-	  stb       r0, 0xC(r3)
-
-	.loc_0x15C:
-	  lwz       r4, 0x30(r31)
-	  li        r30, 0
-	  lwz       r3, 0x8(r4)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  stw       r30, 0x0(r4)
-	  lwz       r4, 0x30(r31)
-	  lwz       r3, 0xC0(r31)
-	  lwz       r7, 0x8(r4)
-	  lwz       r12, 0x0(r3)
-	  lha       r4, 0x116(r7)
-	  lwz       r12, 0x14(r12)
-	  subi      r5, r4, 0x18
-	  lha       r0, 0x1A(r7)
-	  lha       r6, 0x114(r7)
-	  mtlr      r12
-	  lha       r4, 0x18(r7)
-	  add       r5, r0, r5
-	  add       r4, r4, r6
-	  blrl
-	  lwz       r3, 0xBC(r31)
-	  bl        -0xE860
-	  lwz       r3, 0xA4(r31)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x9C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x98(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xD4(r31)
-	  bl        0x8D30
-	  li        r0, 0x3
-	  sth       r0, 0x8(r31)
-	  mr        r3, r31
-	  bl        -0x50C
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  lwz       r28, 0x60(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	StartSub();
+	StatusCheck();
 }
 
 /*
@@ -1192,119 +386,28 @@ void zen::ogScrMemChkMgr::start()
  * Address:	8018DF4C
  * Size:	000190
  */
-void zen::ogScrMemChkMgr::DebugStart(int)
+void zen::ogScrMemChkMgr::DebugStart(int state)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r4, 0x1
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x68(r1)
-	  stb       r0, 0x0(r3)
-	  stw       r4, 0x4(r3)
-	  blt-      .loc_0x170
-	  cmpwi     r4, 0x9
-	  bgt-      .loc_0x170
-	  addi      r0, r4, 0x7
-	  cmpwi     r4, 0x8
-	  stw       r0, 0x1C(r31)
-	  bne-      .loc_0x60
-	  lwz       r3, 0x18(r31)
-	  bl        0x5D68
-	  li        r0, 0xF
-	  stw       r0, 0x1C(r31)
-	  lfs       f0, -0x4EF8(r2)
-	  stfs      f0, 0xC8(r31)
-	  b         .loc_0xC4
+	_00 = 1;
+	_04 = state;
+	PRINT("@@@@@@@@@@@@@@ DebugStart(%d)  status = %d @@@@@@@@@@@@@@\n", state, _1C);
 
-	.loc_0x60:
-	  cmpwi     r4, 0x9
-	  bne-      .loc_0xC4
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x2848
-	  addi      r3, r3, 0x24
-	  bl        -0x117AC4
-	  li        r0, 0x10
-	  stw       r0, 0x1C(r31)
-	  li        r30, 0
-	  lwz       r5, 0x30(r31)
-	  lwz       r4, 0x4C(r31)
-	  lwz       r3, 0x8(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  stw       r30, 0x0(r5)
-	  stw       r4, 0x30(r31)
-	  lwz       r3, 0x30(r31)
-	  bl        -0xDBD4
-	  lfs       f0, -0x4EF8(r2)
-	  stfs      f0, 0xC8(r31)
-	  lwz       r3, 0x98(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
+	if (state >= 1 && state <= 9) {
 
-	.loc_0xC4:
-	  lwz       r4, 0x30(r31)
-	  li        r30, 0
-	  lwz       r3, 0x8(r4)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  stw       r30, 0x0(r4)
-	  lwz       r4, 0x30(r31)
-	  lwz       r3, 0xC0(r31)
-	  lwz       r7, 0x8(r4)
-	  lwz       r12, 0x0(r3)
-	  lha       r4, 0x116(r7)
-	  lwz       r12, 0x14(r12)
-	  subi      r5, r4, 0x18
-	  lha       r0, 0x1A(r7)
-	  lha       r6, 0x114(r7)
-	  mtlr      r12
-	  lha       r4, 0x18(r7)
-	  add       r5, r0, r5
-	  add       r4, r4, r6
-	  blrl
-	  lwz       r3, 0xBC(r31)
-	  bl        -0xE9EC
-	  lwz       r3, 0xA4(r31)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x9C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r30,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x98(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0xD4(r31)
-	  bl        0x8BA4
-	  li        r0, 0x3
-	  sth       r0, 0x8(r31)
-	  mr        r3, r31
-	  bl        -0x698
-	  b         .loc_0x178
+		_1C = (MemChkStatus)(state + 7);
 
-	.loc_0x170:
-	  mr        r3, r31
-	  bl        -0x398
+		if (state == 8) {
+			MakeDefFileStart();
+		} else if (state == 9) {
+			RepairFileStart();
+		}
 
-	.loc_0x178:
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+		StartSub();
+		StatusCheck();
+		return;
+	}
+
+	start();
 }
 
 /*
@@ -1314,6 +417,13 @@ void zen::ogScrMemChkMgr::DebugStart(int)
  */
 void zen::ogScrMemChkMgr::FormatEffectStart()
 {
+	Vector3f pos;
+	pos.set(320.0f, 240.0f, 0.0f);
+	pos.x = _A8->getWidth() / 2 + _A8->getPosH();
+	pos.y = 480.0f - (_A8->getHeight() / 2 + _A8->getPosV());
+	PRINT("FormatEffectStart !! (%f,%f)\n", pos.x, pos.y);
+	_10 = _0C->create(EFF2D_Unk39, pos, nullptr, nullptr);
+	_14 = _0C->create(EFF2D_Unk40, pos, nullptr, nullptr);
 	// UNUSED FUNCTION
 }
 
@@ -1324,6 +434,10 @@ void zen::ogScrMemChkMgr::FormatEffectStart()
  */
 bool zen::ogScrMemChkMgr::checkTypingAll()
 {
+	if (_30->check() == 2) {
+		return true;
+	}
+	return false;
 	// UNUSED FUNCTION
 }
 
@@ -1332,8 +446,19 @@ bool zen::ogScrMemChkMgr::checkTypingAll()
  * Address:	........
  * Size:	0000A8
  */
-void zen::ogScrMemChkMgr::checkErrNitaku(zen::ogNitakuMgr*, Controller*)
+void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 {
+	if (checkTypingAll()) {
+		DispYesNo(true);
+		int status = mgr->update(input);
+		if (status == 6) {
+			_1C = STATE_Unk19;
+		} else if (status == 5) {
+			_1C = STATE_Unk20;
+		}
+	} else {
+		DispYesNo(false);
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1344,6 +469,22 @@ void zen::ogScrMemChkMgr::checkErrNitaku(zen::ogNitakuMgr*, Controller*)
  */
 void zen::ogScrMemChkMgr::setNoCard()
 {
+	_1C = STATE_Unk8;
+	setErrorMessage();
+	DispYesNo(false);
+	_A4->hide();
+	DispAcup(false);
+	SetNitaku_Y_N();
+	_D4->start();
+	setPCtex(_58);
+
+	if (_10) {
+		_10->finish();
+	}
+
+	if (_14) {
+		_14->finish();
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1352,8 +493,239 @@ void zen::ogScrMemChkMgr::setNoCard()
  * Address:	8018E0DC
  * Size:	000EC4
  */
-zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller*)
+zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 {
+	if (_1C == STATE_NULL) {
+		return _1C;
+	}
+
+	if (_1C == STATE_Unk0) {
+		_1C = STATE_Unk21;
+		return _1C;
+	}
+
+	if (_1C >= STATE_Unk19) {
+		_1C = STATE_NULL;
+		return _1C;
+	}
+
+	_C8 += gsys->getFrameTime();
+
+	bool hasCard = ogCheckInsCard();
+	if (!hasCard && _1C != STATE_Unk8) {
+		setNoCard();
+	}
+
+	switch (_1C) {
+	case STATE_Unk1:
+		if (checkTypingAll()) {
+			_1C = STATE_Unk2;
+			SetNitaku_F_N();
+			_D4->start();
+			DispYesNo(true);
+		} else {
+			DispYesNo(false);
+		}
+		break;
+	case STATE_Unk2: {
+		int stat = _D4->update(input);
+		if (stat > 3) {
+			if (stat == 5) {
+				setPCtex(_34);
+				_1C = STATE_Unk3;
+				_C8 = 0.0f;
+			} else {
+				_C4 = 0.0f;
+				if (_20 == 10) {
+					setPCtex(_64);
+					_1C = STATE_Unk10;
+					_D4->start();
+				} else if (_20 == 11) {
+					setPCtex(_68);
+					_1C = STATE_Unk11;
+					_D4->start();
+				} else {
+					_1C = STATE_Unk1;
+				}
+				_C8 = 0.0f;
+			}
+		}
+		break;
+	}
+	case STATE_Unk3:
+		if (checkTypingAll()) {
+			_1C = STATE_Unk4;
+			SetNitaku_Y_N();
+			_D4->start();
+			DispYesNo(true);
+		} else {
+			DispYesNo(false);
+		}
+		break;
+	case STATE_Unk8:
+		if (hasCard) {
+			start();
+			return _1C;
+		}
+		checkErrNitaku(_D4, input);
+		break;
+	case STATE_Unk9:
+	case STATE_Unk13:
+		checkErrNitaku(_D4, input);
+		break;
+	case STATE_Unk10:
+		SetNitaku_W_R();
+		PRINT("##### MEMCHK_DISP_ERR_KAIGAI  ######\n");
+		checkErrNitaku(_D4, input);
+		break;
+	case STATE_Unk11:
+		SetNitaku_W_R();
+		PRINT("##### MEMCHK_DISP_ERR_IJYOU  ######\n");
+		checkErrNitaku(_D4, input);
+		break;
+	case STATE_Unk12:
+	case STATE_Unk14:
+		SetNitaku_W_R();
+		checkErrNitaku(_D4, input);
+		break;
+	case STATE_Unk4: {
+		int stat = _D4->update(input);
+		if (stat > 3) {
+			if (stat == 5) {
+				setPCtex(_40);
+				_1C = STATE_Unk5;
+				DispYesNo(false);
+				DispAcup(false);
+				_C8 = 0.0f;
+				FormatEffectStart();
+			} else {
+				if (_20 == 10) {
+					setPCtex(_48);
+				} else if (_20 == 11) {
+					setPCtex(_64);
+				}
+				_C8 = 0.0f;
+				_1C = STATE_Unk1;
+			}
+		}
+		break;
+	case STATE_Unk5:
+		DispYesNo(false);
+		DispAcup(true);
+		if (checkTypingAll() && _C8 > 6.0f) {
+			_10->finish();
+			_14->finish();
+			if (!gameflow.mMemoryCard.doFormatCard()) {
+				setPCtex(_38);
+				_A4->show();
+				_A0->start();
+				_1C = STATE_Unk6;
+			} else {
+				setPCtex(_3C);
+				_A4->show();
+				_A0->start();
+				_1C = STATE_Unk7;
+			}
+		}
+		break;
+	case STATE_Unk6:
+		DispYesNo(false);
+		DispAcup(true);
+		_A0->update();
+		if (input->keyClick(KBBTN_A | KBBTN_START)) {
+			seSystem->playSysSe(SYSSE_DECIDE1);
+			_C4 = 0.0f;
+			if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
+				MakeDefFileStart();
+			} else {
+				_1C = STATE_Unk21;
+			}
+		}
+		break;
+	case STATE_Unk7:
+		_A0->update();
+		if (input->keyClick(KBBTN_A | KBBTN_START)) {
+			seSystem->playSysSe(SYSSE_DECIDE1);
+			_C4 = 0.0f;
+			_1C = STATE_NULL;
+			start();
+		}
+		break;
+	case STATE_Unk15: {
+		int stat = _18->update(input);
+		if (stat == 4) {
+			_1C = STATE_Unk21;
+		} else if (stat == 5) {
+			setPCtex(_68);
+			_1C = STATE_Unk11;
+			SetNitaku_Y_N();
+			_D4->start();
+			_C4 = 0.0f;
+			_C8 = 0.0f;
+		}
+	} break;
+	case STATE_Unk16:
+		DispYesNo(false);
+		DispAcup(true);
+		if (checkTypingAll() && _C8 > 10.0f) {
+			u8 fail = gameflow.mMemoryCard.didSaveFail();
+			if (!fail) {
+				_1C = STATE_Unk17;
+				setPCtex(_50);
+			} else {
+				_1C = STATE_Unk18;
+				setPCtex(_54);
+			}
+			_C8 = 0.0f;
+			_A0->start();
+		}
+		break;
+	case STATE_Unk17:
+		DispYesNo(false);
+		DispAcup(true);
+		if (checkTypingAll()) {
+			_A4->show();
+			_A0->update();
+			if (input->keyClick(KBBTN_A | KBBTN_START)) {
+				seSystem->playSysSe(SYSSE_DECIDE1);
+				_1C = STATE_Unk21;
+			}
+		}
+		break;
+	case STATE_Unk18:
+		DispYesNo(false);
+		DispAcup(true);
+		if (checkTypingAll()) {
+			_A4->show();
+			_A0->update();
+			if (input->keyClick(KBBTN_A | KBBTN_START)) {
+				seSystem->playSysSe(SYSSE_DECIDE1);
+				setPCtex(_68);
+				_1C = STATE_Unk11;
+				SetNitaku_W_R();
+				_D4->start();
+				_C4 = 0.0f;
+				_C8 = 0.0f;
+			}
+		}
+		break;
+	}
+	}
+
+	setErrorMessage();
+
+	if (_1C >= STATE_Unk19) {
+		return _1C;
+	} else {
+		_0C->update();
+		_2C->update();
+		_BC->update();
+		_30->update();
+		_30->transCursor(_C0);
+		_24->update();
+	}
+
+	return _1C;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2421,87 +1793,39 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller*)
  * Address:	8018EFA0
  * Size:	000110
  */
-void zen::ogScrMemChkMgr::draw(Graphics&)
+void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x100(r1)
-	  stw       r31, 0xFC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xF8(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x1C(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF8
-	  cmpwi     r0, 0x13
-	  bge-      .loc_0xF8
-	  lha       r3, 0x8(r30)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x48
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x8(r30)
-	  b         .loc_0xF8
+	if (_1C == STATE_NULL) {
+		return;
+	}
+	if (_1C >= STATE_Unk19) {
+		return;
+	}
 
-	.loc_0x48:
-	  lfs       f1, -0x4EE0(r2)
-	  addi      r3, r1, 0x10
-	  lfs       f2, -0x4F00(r2)
-	  li        r4, 0
-	  lfs       f3, -0x4EDC(r2)
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x21188
-	  addi      r3, r1, 0x10
-	  bl        0x21290
-	  lwz       r3, 0x24(r30)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x23EB0
-	  lwz       r3, 0x1C(r30)
-	  subi      r0, r3, 0x8
-	  cmplwi    r0, 0xD
-	  bgt-      .loc_0xC0
-	  lis       r3, 0x802D
-	  addi      r3, r3, 0x5D90
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r3, 0x18(r30)
-	  mr        r4, r31
-	  bl        0x50E4
-	  b         .loc_0xE0
+	if (_08 > 0) {
+		_08--;
+		return;
+	}
 
-	.loc_0xC0:
-	  lwz       r3, 0x2C(r30)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x23E64
-	  lwz       r3, 0xC(r30)
-	  mr        r4, r31
-	  bl        0x5AB30
+	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	graf.setPort();
+	_24->draw(0, 0, &graf);
 
-	.loc_0xE0:
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x10(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x10(r1)
+	switch (_1C) {
+	case STATE_Unk15:
+		_18->draw(gfx);
+		break;
 
-	.loc_0xF8:
-	  lwz       r0, 0x104(r1)
-	  lwz       r31, 0xFC(r1)
-	  lwz       r30, 0xF8(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-	*/
+	case STATE_Unk19:
+	case STATE_Unk21:
+		break;
+
+	case STATE_Unk8:
+	default:
+		_2C->draw(0, 0, &graf);
+		_0C->draw(gfx);
+		break;
+	}
 }
 
 /*
@@ -2511,88 +1835,35 @@ void zen::ogScrMemChkMgr::draw(Graphics&)
  */
 void zen::ogScrMemChkMgr::setErrorMessage()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0xEC(r3)
-	  li        r5, 0
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x100(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0xF8(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0xFC(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0xF0(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0xF4(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x104(r3)
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  lwz       r4, 0x1C(r3)
-	  subi      r0, r4, 0x8
-	  cmplwi    r0, 0x6
-	  bgtlr-
-	  lis       r4, 0x802D
-	  addi      r4, r4, 0x5DC8
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r4, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r3, 0xEC(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	  lwz       r3, 0x100(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	  lwz       r3, 0xF8(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	  lwz       r3, 0xFC(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	  lwz       r3, 0xF0(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	  lwz       r3, 0xF4(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	  lwz       r3, 0x104(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	*/
+	_EC->hide();
+	_100->hide();
+	_F8->hide();
+	_FC->hide();
+	_F0->hide();
+	_F4->hide();
+	_104->hide();
+
+	switch (_1C) {
+	case STATE_Unk8:
+		_EC->show();
+		break;
+	case STATE_Unk9:
+		_100->show();
+		break;
+	case STATE_Unk10:
+		_F8->show();
+		break;
+	case STATE_Unk11:
+		_FC->show();
+		break;
+	case STATE_Unk12:
+		_F0->show();
+		break;
+	case STATE_Unk13:
+		_F4->show();
+		break;
+	case STATE_Unk14:
+		_104->show();
+		break;
+	}
 }
