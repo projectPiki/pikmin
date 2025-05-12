@@ -7,6 +7,7 @@
 #include "P2D/Screen.h"
 #include "gameflow.h"
 #include "nlib/Math.h"
+#include "SoundMgr.h"
 #include "DebugLog.h"
 #include "sysNew.h"
 
@@ -885,269 +886,71 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  * Address:	801805F4
  * Size:	0003A8
  */
-bool ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
+bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r25, 0x24(r1)
-	  addi      r26, r4, 0
-	  mr        r27, r5
-	  addi      r28, r6, 0
-	  addi      r25, r3, 0
-	  lha       r31, 0x0(r5)
-	  lfs       f0, -0x50D8(r2)
-	  add       r4, r26, r31
-	  lbz       r0, 0x0(r4)
-	  addi      r29, r4, 0
-	  mr.       r30, r0
-	  stfs      f0, 0x0(r6)
-	  bne-      .loc_0x48
-	  li        r3, 0x1
-	  b         .loc_0x394
+	u32 badCompiler;
+	int a         = *p2;
+	char* tmpStr1 = &p1[*p2];
+	char b        = *tmpStr1;
+	*p3           = 0.0f;
 
-	.loc_0x48:
-	  addi      r3, r29, 0
-	  addi      r4, r25, 0
-	  li        r5, 0x2
-	  bl        0x98B3C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x70
-	  lfs       f0, -0x50B8(r2)
-	  addi      r29, r31, 0x2
-	  stfs      f0, 0x0(r28)
-	  b         .loc_0x38C
+	if (b == 0) {
+		return true;
+	}
 
-	.loc_0x70:
-	  addi      r3, r29, 0
-	  addi      r4, r25, 0x8
-	  li        r5, 0x2
-	  bl        0x98B14
-	  cmpwi     r3, 0
-	  bne-      .loc_0x98
-	  lfs       f0, -0x50B8(r2)
-	  addi      r29, r31, 0x2
-	  stfs      f0, 0x0(r28)
-	  b         .loc_0x38C
+	s16 c;
+	if (strncmp(tmpStr1, _00, 2) == 0) {
+		PRINT("Hit MARU !!\n");
+		*p3 = 0.25f;
+		c   = a + 2;
+	} else if (strncmp(tmpStr1, _08, 2) == 0) {
+		PRINT("Hit TEN !!\n");
+		*p3 = 0.25f;
+		c   = a + 2;
+	} else if (b == 0x1B) { // esc character
+		c       = a + 1;
+		char* d = p1 + c;
+		if (strncmp(d, "CC", 2) == 0 || strncmp(d, "GC", 2) == 0 || strncmp(d, "TM", 2) == 0 || strncmp(d, "Z", 1) == 0
+		    || strncmp(d, "CA", 2) == 0 || strncmp(d, "GA", 2) == 0 || strncmp(d, "TB", 2) == 0 || strncmp(d, "BS", 2) == 0
+		    || strncmp(d, "CU", 2) == 0 || strncmp(d, "CD", 2) == 0 || strncmp(d, "CL", 2) == 0 || strncmp(d, "CR", 2) == 0
+		    || strncmp(d, "LU", 2) == 0 || strncmp(d, "LD", 2) == 0 || strncmp(d, "HM", 2) == 0 || strncmp(d, "ST", 2) == 0
+		    || strncmp(d, "FX", 2) == 0 || strncmp(d, "FY", 2) == 0 || strncmp(d, "SH", 2) == 0 || strncmp(d, "SV", 2) == 0
+		    || strncmp(d, "GM", 2) == 0) {
+			if (strncmp(d, "Z", 1) == 0) {
+				c++;
+			} else if (strncmp(d, "TM", 2) == 0) {
+				*p3 = 0.25f;
+				c += 2;
+			} else {
+				char* tmp = strstr(d, "]");
+				if (tmp) {
+					int count = tmp - d + 1;
+					strncpy(workString, d, count);
+					workString[count] = 0;
+					PRINT("SKIP '%s'\n", workString);
+					c += count;
+				} else {
+					c += 2;
+				}
+			}
+		} else {
+			PRINT("Tag ERROR !!! (%s)\n", d);
+		}
+	} else if (b & 0x80) {
+		c = a + 2;
+		SeSystem::playSysSe(SYSSE_TYPEWRITER);
+	} else if (strchr(_10, b)) {
+		PRINT("Hit HANKAKU WAIT!!\n");
+		*p3 = 0.25f;
+		SeSystem::playSysSe(SYSSE_TYPEWRITER);
+		c = a + 1;
+	} else {
+		c = a + 1;
+		SeSystem::playSysSe(SYSSE_TYPEWRITER);
+	}
 
-	.loc_0x98:
-	  cmplwi    r30, 0x1B
-	  bne-      .loc_0x33C
-	  addi      r29, r31, 0x1
-	  extsh     r0, r29
-	  add       r30, r26, r0
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x97C
-	  li        r5, 0x2
-	  bl        0x98AD8
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x980
-	  li        r5, 0x2
-	  bl        0x98AC0
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x970
-	  li        r5, 0x2
-	  bl        0x98AA8
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x984
-	  li        r5, 0x1
-	  bl        0x98A90
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x988
-	  li        r5, 0x2
-	  bl        0x98A78
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x98C
-	  li        r5, 0x2
-	  bl        0x98A60
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x990
-	  li        r5, 0x2
-	  bl        0x98A48
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x994
-	  li        r5, 0x2
-	  bl        0x98A30
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x998
-	  li        r5, 0x2
-	  bl        0x98A18
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x99C
-	  li        r5, 0x2
-	  bl        0x98A00
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9A0
-	  li        r5, 0x2
-	  bl        0x989E8
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9A4
-	  li        r5, 0x2
-	  bl        0x989D0
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9A8
-	  li        r5, 0x2
-	  bl        0x989B8
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9AC
-	  li        r5, 0x2
-	  bl        0x989A0
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9B0
-	  li        r5, 0x2
-	  bl        0x98988
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9B4
-	  li        r5, 0x2
-	  bl        0x98970
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9B8
-	  li        r5, 0x2
-	  bl        0x98958
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9BC
-	  li        r5, 0x2
-	  bl        0x98940
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9C0
-	  li        r5, 0x2
-	  bl        0x98928
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9C4
-	  li        r5, 0x2
-	  bl        0x98910
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2A4
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9C8
-	  li        r5, 0x2
-	  bl        0x988F8
-	  cmpwi     r3, 0
-	  bne-      .loc_0x38C
-
-	.loc_0x2A4:
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x984
-	  li        r5, 0x1
-	  bl        0x988E0
-	  cmpwi     r3, 0
-	  bne-      .loc_0x2C4
-	  addi      r29, r29, 0x1
-	  b         .loc_0x38C
-
-	.loc_0x2C4:
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x970
-	  li        r5, 0x2
-	  bl        0x988C0
-	  cmpwi     r3, 0
-	  bne-      .loc_0x2EC
-	  lfs       f0, -0x50B8(r2)
-	  addi      r29, r29, 0x2
-	  stfs      f0, 0x0(r28)
-	  b         .loc_0x38C
-
-	.loc_0x2EC:
-	  addi      r3, r30, 0
-	  addi      r4, r13, 0x9CC
-	  bl        0x98800
-	  cmplwi    r3, 0
-	  beq-      .loc_0x334
-	  sub       r4, r3, r30
-	  lis       r3, 0x803D
-	  addi      r28, r4, 0x1
-	  addi      r31, r3, 0x1EE0
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  addi      r5, r28, 0
-	  bl        0x98A04
-	  add       r3, r31, r28
-	  li        r0, 0
-	  stb       r0, 0x0(r3)
-	  add       r29, r29, r28
-	  b         .loc_0x38C
-
-	.loc_0x334:
-	  addi      r29, r29, 0x2
-	  b         .loc_0x38C
-
-	.loc_0x33C:
-	  rlwinm.   r0,r30,0,24,24
-	  beq-      .loc_0x354
-	  addi      r29, r31, 0x2
-	  li        r3, 0x11E
-	  bl        -0xDB5CC
-	  b         .loc_0x38C
-
-	.loc_0x354:
-	  addi      r3, r25, 0x10
-	  addi      r4, r30, 0
-	  bl        0x98804
-	  cmplwi    r3, 0
-	  beq-      .loc_0x380
-	  lfs       f0, -0x50B8(r2)
-	  li        r3, 0x11E
-	  stfs      f0, 0x0(r28)
-	  bl        -0xDB5F4
-	  addi      r29, r31, 0x1
-	  b         .loc_0x38C
-
-	.loc_0x380:
-	  addi      r29, r31, 0x1
-	  li        r3, 0x11E
-	  bl        -0xDB608
-
-	.loc_0x38C:
-	  sth       r29, 0x0(r27)
-	  li        r3, 0
-
-	.loc_0x394:
-	  lmw       r25, 0x24(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	*p2 = c;
+	return false;
 }
 
 /*
@@ -1157,86 +960,32 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
  */
 void TypingTextMgr::update()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x38
-	  lwz       r3, 0x8(r31)
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0xF0
+	if (_00 == 0) {
+		mTextBox->hide();
+		return;
+	}
+	if (_00 == 2) {
+		mTextBox->setString(mTextPtr);
+		return;
+	}
 
-	.loc_0x38:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x50
-	  lwz       r0, 0xC(r31)
-	  lwz       r3, 0x8(r31)
-	  stw       r0, 0x10C(r3)
-	  b         .loc_0xF0
+	_410 += gsys->getFrameTime();
+	if (_410 >= 0.029639998f) {
+		_410 -= 0.029639998f;
+		f32 a;
+		if (mCtrlTagMgr->CheckCtrlTag(mTextPtr, &_414, &a)) {
+			_00 = 2;
+		}
 
-	.loc_0x50:
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x410(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x410(r31)
-	  lfs       f1, 0x410(r31)
-	  lfs       f0, -0x50B4(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xF0
-	  fsubs     f0, f1, f0
-	  addi      r5, r31, 0x414
-	  addi      r6, r1, 0x24
-	  stfs      f0, 0x410(r31)
-	  lwz       r3, 0x4(r31)
-	  lwz       r4, 0xC(r31)
-	  bl        -0x438
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xA4
-	  li        r0, 0x2
-	  stw       r0, 0x0(r31)
-
-	.loc_0xA4:
-	  lfs       f1, 0x24(r1)
-	  lfs       f0, -0x50D8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0xBC
-	  fneg      f0, f1
-	  stfs      f0, 0x410(r31)
-
-	.loc_0xBC:
-	  lha       r0, 0x414(r31)
-	  cmpwi     r0, 0x3FF
-	  ble-      .loc_0xD0
-	  li        r0, 0x3FF
-	  sth       r0, 0x414(r31)
-
-	.loc_0xD0:
-	  lwz       r4, 0xC(r31)
-	  addi      r3, r31, 0x10
-	  lha       r5, 0x414(r31)
-	  bl        0x9889C
-	  lha       r0, 0x414(r31)
-	  li        r4, 0
-	  add       r3, r31, r0
-	  stb       r4, 0x10(r3)
-
-	.loc_0xF0:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+		if (a > 0.0f) {
+			_410 = -a;
+		}
+		if (_414 > 1023) {
+			_414 = 1023;
+		}
+		strncpy(mTextBuf, mTextPtr, _414);
+		mTextBuf[_414] = 0;
+	}
 }
 
 /*
@@ -1244,298 +993,95 @@ void TypingTextMgr::update()
  * Address:	80180AA0
  * Size:	0003B4
  */
-void cnvSpecialNumberHyphen(char*)
+void cnvSpecialNumberHyphen(char* str)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802D
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x240(r1)
-	  stmw      r22, 0x218(r1)
-	  addi      r30, r4, 0x2750
-	  addi      r26, r3, 0
-	  addi      r29, r26, 0
-	  addi      r28, r30, 0x1C
-	  addi      r3, r30, 0x51C
-	  li        r27, 0
-	  addi      r4, r13, 0x96C
-	  bl        0x98888
-	  addi      r25, r1, 0x14
-	  addi      r31, r1, 0x118
+	char* tmp  = str;
+	char* work = wkstr;
+	int num    = 0;
+	strcpy(formatStr, "%d");
 
-	.loc_0x3C:
-	  lbz       r3, 0x0(r29)
-	  lbz       r24, 0x1(r29)
-	  cmplwi    r3, 0
-	  lbz       r23, 0x2(r29)
-	  lbz       r22, 0x3(r29)
-	  beq-      .loc_0x370
-	  cmplwi    r3, 0x1B
-	  bne-      .loc_0x340
-	  addi      r3, r29, 0x1
-	  addi      r4, r13, 0x970
-	  li        r5, 0x2
-	  bl        0x9867C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x7C
-	  addi      r29, r29, 0x3
-	  b         .loc_0x3C
+	while (true) {
+		char a = tmp[0];
+		char b = tmp[1];
+		char c = tmp[2];
+		char d = tmp[3];
 
-	.loc_0x7C:
-	  cmplwi    r24, 0x5A
-	  bne-      .loc_0xD0
-	  cmplwi    r23, 0x30
-	  blt+      .loc_0x3C
-	  cmplwi    r23, 0x39
-	  bgt+      .loc_0x3C
-	  subi      r0, r23, 0x30
-	  cmpwi     r0, 0x1
-	  mr        r27, r0
-	  addi      r29, r29, 0x3
-	  ble-      .loc_0xC0
-	  addi      r5, r27, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x51C
-	  addi      r4, r13, 0x974
-	  bl        0x95A40
-	  b         .loc_0x3C
+		if (a == 0) {
+			break;
+		}
 
-	.loc_0xC0:
-	  addi      r3, r30, 0x51C
-	  addi      r4, r13, 0x96C
-	  bl        0x987F0
-	  b         .loc_0x3C
+		if (a == 0x1B) { // esc character
+			if (strncmp(tmp + 1, "TM", 2) == 0) {
+				tmp += 3;
+			} else if (b == 'Z') {
+				if (c >= '0' && c <= '9') {
+					num = c - '0';
+					tmp += 3;
+					if (num > 1) {
+						sprintf(formatStr, "%%0%dd", num);
+					} else {
+						strcpy(formatStr, "%d");
+					}
+				}
+			} else if (b == 'd') {
+				if (c >= '0' && c <= '9') {
+					if (d >= '0' && d <= '9') {
+						int idx = 10 * (c - '0');
+						idx += d - '0';
+						int num2 = SpecialNumber[idx];
+						tmp += 4;
+						if (num2 >= 0) {
+							sprintf(work, formatStr, num2);
+							sprintf(numStrBuf, formatStr, num2);
+						} else {
+							char buf[PATH_MAX];
+							u32 badCompiler;
+							for (int i = 0; i < num; i++) {
+								buf[i] = '*';
+							}
+							buf[num] = 0;
+							sprintf(work, "%s", buf);
+							sprintf(numStrBuf, "%s", buf);
+						}
+						work += strlen(numStrBuf);
+					} else {
+						int num2 = SpecialNumber[c - '0'];
+						tmp += 3;
+						if (num2 >= 0) {
+							sprintf(work, formatStr, num2);
+							sprintf(numStrBuf, formatStr, num2);
+						} else {
+							char buf[PATH_MAX];
+							for (int i = 0; i < num; i++) {
+								buf[i] = '*';
+							}
+							buf[num] = 0;
+							sprintf(work, "%s", buf);
+							sprintf(numStrBuf, "%s", buf);
+						}
+						work += strlen(numStrBuf);
+					}
+				} else {
+					tmp += 2;
+				}
+			} else {
+				*work++ = *tmp++;
+			}
+		} else if (a & 0x80) {
+			*work  = a;
+			char e = tmp[1];
+			tmp += 2;
+			work[1] = e;
+			work += 2;
+		} else {
+			*work = a;
+			work++;
+			tmp++;
+		}
+	}
 
-	.loc_0xD0:
-	  cmplwi    r24, 0x64
-	  bne-      .loc_0x32C
-	  cmplwi    r23, 0x30
-	  blt-      .loc_0x324
-	  cmplwi    r23, 0x39
-	  bgt-      .loc_0x324
-	  cmplwi    r22, 0x30
-	  blt-      .loc_0x214
-	  cmplwi    r22, 0x39
-	  bgt-      .loc_0x214
-	  subi      r0, r23, 0x30
-	  mulli     r3, r0, 0xA
-	  add       r3, r22, r3
-	  subi      r3, r3, 0x30
-	  rlwinm    r0,r3,2,0,29
-	  add       r3, r30, r0
-	  lwz       r0, 0x61C(r3)
-	  addi      r29, r29, 0x4
-	  cmpwi     r0, 0
-	  mr        r22, r0
-	  blt-      .loc_0x150
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  addi      r5, r22, 0
-	  addi      r4, r30, 0x51C
-	  bl        0x959C4
-	  addi      r5, r22, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x41C
-	  addi      r4, r30, 0x51C
-	  bl        0x959B0
-	  b         .loc_0x204
-
-	.loc_0x150:
-	  cmpwi     r27, 0
-	  li        r4, 0
-	  ble-      .loc_0x1D4
-	  cmpwi     r27, 0x8
-	  subi      r3, r27, 0x8
-	  ble-      .loc_0x388
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  addi      r3, r1, 0x118
-	  li        r0, 0x2A
-	  ble-      .loc_0x388
-
-	.loc_0x184:
-	  stb       r0, 0x0(r3)
-	  addi      r4, r4, 0x8
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x3(r3)
-	  stb       r0, 0x4(r3)
-	  stb       r0, 0x5(r3)
-	  stb       r0, 0x6(r3)
-	  stb       r0, 0x7(r3)
-	  addi      r3, r3, 0x8
-	  bdnz+     .loc_0x184
-	  b         .loc_0x388
-
-	.loc_0x1B4:
-	  sub       r0, r27, r4
-	  cmpw      r4, r27
-	  mtctr     r0
-	  li        r0, 0x2A
-	  bge-      .loc_0x1D4
-
-	.loc_0x1C8:
-	  stb       r0, 0x0(r3)
-	  addi      r3, r3, 0x1
-	  bdnz+     .loc_0x1C8
-
-	.loc_0x1D4:
-	  li        r0, 0
-	  crclr     6, 0x6
-	  stbx      r0, r31, r27
-	  addi      r3, r28, 0
-	  addi      r5, r31, 0
-	  addi      r4, r13, 0x9D0
-	  bl        0x9590C
-	  addi      r5, r31, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x41C
-	  addi      r4, r13, 0x9D0
-	  bl        0x958F8
-
-	.loc_0x204:
-	  addi      r3, r30, 0x41C
-	  bl        0x98764
-	  add       r28, r28, r3
-	  b         .loc_0x3C
-
-	.loc_0x214:
-	  subi      r0, r23, 0x30
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lwz       r0, 0x61C(r3)
-	  addi      r29, r29, 0x3
-	  cmpwi     r0, 0
-	  mr        r22, r0
-	  blt-      .loc_0x260
-	  addi      r3, r28, 0
-	  crclr     6, 0x6
-	  addi      r5, r22, 0
-	  addi      r4, r30, 0x51C
-	  bl        0x958B4
-	  addi      r5, r22, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x41C
-	  addi      r4, r30, 0x51C
-	  bl        0x958A0
-	  b         .loc_0x314
-
-	.loc_0x260:
-	  cmpwi     r27, 0
-	  li        r4, 0
-	  ble-      .loc_0x2E4
-	  cmpwi     r27, 0x8
-	  subi      r3, r27, 0x8
-	  ble-      .loc_0x394
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  addi      r3, r1, 0x14
-	  li        r0, 0x2A
-	  ble-      .loc_0x394
-
-	.loc_0x294:
-	  stb       r0, 0x0(r3)
-	  addi      r4, r4, 0x8
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x3(r3)
-	  stb       r0, 0x4(r3)
-	  stb       r0, 0x5(r3)
-	  stb       r0, 0x6(r3)
-	  stb       r0, 0x7(r3)
-	  addi      r3, r3, 0x8
-	  bdnz+     .loc_0x294
-	  b         .loc_0x394
-
-	.loc_0x2C4:
-	  sub       r0, r27, r4
-	  cmpw      r4, r27
-	  mtctr     r0
-	  li        r0, 0x2A
-	  bge-      .loc_0x2E4
-
-	.loc_0x2D8:
-	  stb       r0, 0x0(r3)
-	  addi      r3, r3, 0x1
-	  bdnz+     .loc_0x2D8
-
-	.loc_0x2E4:
-	  li        r0, 0
-	  crclr     6, 0x6
-	  stbx      r0, r25, r27
-	  addi      r3, r28, 0
-	  addi      r5, r25, 0
-	  addi      r4, r13, 0x9D0
-	  bl        0x957FC
-	  addi      r5, r25, 0
-	  crclr     6, 0x6
-	  addi      r3, r30, 0x41C
-	  addi      r4, r13, 0x9D0
-	  bl        0x957E8
-
-	.loc_0x314:
-	  addi      r3, r30, 0x41C
-	  bl        0x98654
-	  add       r28, r28, r3
-	  b         .loc_0x3C
-
-	.loc_0x324:
-	  addi      r29, r29, 0x2
-	  b         .loc_0x3C
-
-	.loc_0x32C:
-	  lbz       r0, 0x0(r29)
-	  addi      r29, r29, 0x1
-	  stb       r0, 0x0(r28)
-	  addi      r28, r28, 0x1
-	  b         .loc_0x3C
-
-	.loc_0x340:
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0x360
-	  stb       r3, 0x0(r28)
-	  lbz       r0, 0x1(r29)
-	  addi      r29, r29, 0x2
-	  stb       r0, 0x1(r28)
-	  addi      r28, r28, 0x2
-	  b         .loc_0x3C
-
-	.loc_0x360:
-	  stb       r3, 0x0(r28)
-	  addi      r28, r28, 0x1
-	  addi      r29, r29, 0x1
-	  b         .loc_0x3C
-
-	.loc_0x370:
-	  li        r0, 0
-	  stb       r0, 0x0(r28)
-	  addi      r3, r26, 0
-	  addi      r4, r30, 0x1C
-	  bl        0x98538
-	  b         .loc_0x3A0
-
-	.loc_0x388:
-	  addi      r3, r1, 0x118
-	  add       r3, r3, r4
-	  b         .loc_0x1B4
-
-	.loc_0x394:
-	  addi      r3, r1, 0x14
-	  add       r3, r3, r4
-	  b         .loc_0x2C4
-
-	.loc_0x3A0:
-	  lmw       r22, 0x218(r1)
-	  lwz       r0, 0x244(r1)
-	  addi      r1, r1, 0x240
-	  mtlr      r0
-	  blr
-	*/
+	*work = 0;
+	strcpy(str, wkstr);
 }
 
 } // namespace zen

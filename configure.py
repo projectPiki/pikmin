@@ -714,7 +714,7 @@ config.libs = [
         "progress_category" : "game",
         "objects": [
             Object(Matching, "plugPikiOgawa/ogTest.cpp"),
-            Object(NonMatching, "plugPikiOgawa/ogSub.cpp"),
+            Object(Matching, "plugPikiOgawa/ogSub.cpp"),
             Object(Matching, "plugPikiOgawa/ogTitle.cpp"),
             Object(Matching, "plugPikiOgawa/ogPause.cpp"),
             Object(Matching, "plugPikiOgawa/ogTutorial.cpp"),

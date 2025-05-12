@@ -218,7 +218,7 @@ struct TypingTextMgr {
 	char* mTextPtr;               // _0C
 	char mTextBuf[0x400];         // _10
 	f32 _410;                     // _410
-	u16 _414;                     // _414
+	s16 _414;                     // _414
 };
 
 // global utility functions
