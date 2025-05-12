@@ -724,7 +724,7 @@ config.libs = [
             Object(NonMatching, "plugPikiOgawa/ogRader.cpp"),
             Object(NonMatching, "plugPikiOgawa/ogFileSelect.cpp"),
             Object(Matching, "plugPikiOgawa/ogMessage.cpp"),
-            Object(NonMatching, "plugPikiOgawa/ogMemChk.cpp"),
+            Object(Matching, "plugPikiOgawa/ogMemChk.cpp"),
             Object(Matching, "plugPikiOgawa/ogDiary.cpp"),
             Object(Matching, "plugPikiOgawa/ogMenu.cpp"),
             Object(Matching, "plugPikiOgawa/ogFileChkSel.cpp"),

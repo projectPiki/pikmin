@@ -85,7 +85,7 @@ struct ogScrMemChkMgr {
 	particleGenerator* _10;   // _10
 	particleGenerator* _14;   // _14
 	ogScrMakeDefaultMgr* _18; // _18
-	MemChkStatus _1C;         // _1C
+	MemChkStatus mState;      // _1C
 	int _20;                  // _20
 	P2DScreen* _24;           // _24
 	P2DPicture* _28;          // _28
@@ -145,8 +145,6 @@ struct ogScrMemChkMgr {
 	P2DTextBox* _100;         // _100
 	P2DTextBox* _104;         // _104
 	int _108;                 // _108
-
-	// u8 _00[0x10C]; // _00, unknown
 };
 
 } // namespace zen
