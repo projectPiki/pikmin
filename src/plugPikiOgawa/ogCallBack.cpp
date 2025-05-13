@@ -23,14 +23,14 @@ DEFINE_PRINT("OgCallBackSection")
 zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
     : P2DPaneCallBack(pane, PANETYPE_TextBox)
 {
-	mTextBox = (P2DTextBox*)pane;
-	_08      = false;
-	_0C      = 1.0f;
-	_10      = 0.0f;
-	_14      = mTextBox->getCharColor();
-	_18      = mTextBox->getGradColor();
-	_1C      = _14;
-	_20      = _18;
+	mTextBox            = (P2DTextBox*)pane;
+	mIsTransitionActive = false;
+	mTransitionDuration = 1.0f;
+	mElapsedTime        = 0.0f;
+	mInitialCharColor   = mTextBox->getCharColor();
+	mInitialGradColor   = mTextBox->getGradColor();
+	mTargetCharColor    = mInitialCharColor;
+	mTargetGradColor    = mInitialGradColor;
 }
 
 /*
@@ -38,22 +38,23 @@ zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
  * Address:	80198E18
  * Size:	0000C4
  */
-void zen::TextColorCallBack::setTargetColor(Colour& col1, Colour& col2, f32 a1)
+void zen::TextColorCallBack::setTargetColor(Colour& tCharColor, Colour& tGradColor, f32 duration)
 {
-	_1C = col1;
-	_20 = col2;
-	_0C = a1;
-	_10 = 0.0f;
-	if (a1 > 0.0f) {
-		_08 = true;
-		_14 = mTextBox->getCharColor();
-		_18 = mTextBox->getGradColor();
+	mTargetCharColor    = tCharColor;
+	mTargetGradColor    = tGradColor;
+	mTransitionDuration = duration;
+	mElapsedTime        = 0.0f;
+
+	if (duration > 0.0f) {
+		mIsTransitionActive = true;
+		mInitialCharColor   = mTextBox->getCharColor();
+		mInitialGradColor   = mTextBox->getGradColor();
 	} else {
-		_08 = false;
-		_14 = col1;
-		_18 = col2;
-		mTextBox->setCharColor(col1);
-		mTextBox->setGradColor(col2);
+		mIsTransitionActive = false;
+		mInitialCharColor   = tCharColor;
+		mInitialGradColor   = tGradColor;
+		mTextBox->setCharColor(tCharColor);
+		mTextBox->setGradColor(tGradColor);
 	}
 }
 
@@ -64,27 +65,31 @@ void zen::TextColorCallBack::setTargetColor(Colour& col1, Colour& col2, f32 a1)
  */
 bool zen::TextColorCallBack::invoke(P2DPane* pane)
 {
-	if (_08) {
-		Colour color1;
-		Colour color2;
+	if (mIsTransitionActive) {
+		Colour characterColor;
+		Colour gradientColor;
 
-		_10 += gsys->getFrameTime();
-		if (_10 > _0C) {
-			_08 = false;
-			_10 = _0C;
+		mElapsedTime += gsys->getFrameTime();
+		if (mElapsedTime > mTransitionDuration) {
+			mIsTransitionActive = false;
+			mElapsedTime        = mTransitionDuration;
 		}
-		f32 in   = _10 / _0C;
-		f32 out  = 1.0f - in;
-		color1.r = colorMerge(_1C.r, in, _14.r, out);
-		color1.g = colorMerge(_1C.g, in, _14.g, out);
-		color1.b = colorMerge(_1C.b, in, _14.b, out);
-		color1.a = mTextBox->getAlphaChar();
-		color2.r = colorMerge(_20.r, in, _18.r, out);
-		color2.g = colorMerge(_20.g, in, _18.g, out);
-		color2.b = colorMerge(_20.b, in, _18.b, out);
-		color2.a = mTextBox->getAlphaChar();
-		mTextBox->setCharColor(color1);
-		mTextBox->setGradColor(color2);
+
+		f32 in           = mElapsedTime / mTransitionDuration;
+		f32 out          = 1.0f - in;
+		characterColor.r = colorMerge(mTargetCharColor.r, in, mInitialCharColor.r, out);
+		characterColor.g = colorMerge(mTargetCharColor.g, in, mInitialCharColor.g, out);
+		characterColor.b = colorMerge(mTargetCharColor.b, in, mInitialCharColor.b, out);
+		characterColor.a = mTextBox->getAlphaChar();
+
+		gradientColor.r = colorMerge(mTargetGradColor.r, in, mInitialGradColor.r, out);
+		gradientColor.g = colorMerge(mTargetGradColor.g, in, mInitialGradColor.g, out);
+		gradientColor.b = colorMerge(mTargetGradColor.b, in, mInitialGradColor.b, out);
+		gradientColor.a = mTextBox->getAlphaChar();
+
+		mTextBox->setCharColor(characterColor);
+		mTextBox->setGradColor(gradientColor);
 	}
+
 	return true;
 }

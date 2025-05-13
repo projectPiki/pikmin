@@ -64,9 +64,7 @@ struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBack
 	virtual bool invoke(P2DPane*) = 0;           // _08
 	virtual bool draw(P2DPane*) { return true; } // _0C (weak)
 
-	// _00     = VTBL
-	// _00-_04 = zen::CallBack1
-	// _04-_04 = P2DPaneCallBackBase (empty)
+	// _00 - VTBL
 };
 
 /**

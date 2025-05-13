@@ -20,6 +20,16 @@ const f32 NMathF::degreePerRadian = 57.295776f;
 const f32 NMathF::radianPerDegree = 0.017453292f;
 const f32 NMathF::pi              = 3.1415927f;
 
+/**
+ * @brief Lookup table for arctangent values.
+ *
+ * Stores precomputed `atan(r)` for `r` in [0, 1].
+ * The values are u16, scaled such that 0x2000 represents pi/4 radians (45 degrees).
+ * The table is indexed by `ratio * 1024`, so it should contain 1025 entries
+ * for ratios from 0.0 to 1.0 (indices 0 to 1024).
+ * `AtanTable[0]` corresponds to `atan(0.0)`.
+ * `AtanTable[1024]` corresponds to `atan(1.0)`, which is `0x2000`.
+ */
 u16 AtanTable[] = {
 	0x0,    0xA,    0x14,   0x1F,   0x29,   0x33,   0x3D,   0x47,   0x51,   0x5C,   0x66,   0x70,   0x7A,   0x84,   0x8F,   0x99,   0xA3,
 	0xAD,   0xB7,   0xC2,   0xCC,   0xD6,   0xE0,   0xEA,   0xF4,   0xFF,   0x109,  0x113,  0x11D,  0x127,  0x131,  0x13C,  0x146,  0x150,
@@ -95,10 +105,27 @@ u16 GetAtanTable(f32 x, f32 y)
 		return AtanTable[0];
 	}
 
+	// Calculate index: (ratio * 1024) rounded to nearest int.
+	// This maps ratio [0,1] to table indices [0, 1024].
 	return AtanTable[int((x / y) * 1024.0f + 0.5f)];
 }
 
 /*
+ * @brief Calculates the angle of a 2D vector (x, y) using a lookup table.
+ *
+ * This function computes the arctangent of y/x, considering the signs of x and y
+ * to determine the correct quadrant. The result is a 16-bit unsigned integer
+ * representing the angle, where the full circle (0 to 2*pi radians or 0 to 360 degrees)
+ * is mapped to the range [0, 0xFFFF].
+ * - 0x0000 represents 0 radians (0 degrees).
+ * - 0x4000 represents pi/2 radians (90 degrees).
+ * - 0x8000 represents pi radians (180 degrees).
+ * - 0xC000 represents 3pi/2 radians (270 degrees).
+ *
+ * @param x The x-coordinate of the vector.
+ * @param y The y-coordinate of the vector.
+ * @return u16 The angle in the scaled 16-bit format.
+ *
  * --INFO--
  * Address:	8011DB48
  * Size:	0002C0
@@ -106,31 +133,37 @@ u16 GetAtanTable(f32 x, f32 y)
 u16 atan(f32 x, f32 y)
 {
 	int res;
-	if (y >= 0.0f) {
-		if (x >= 0.0f) {
-			if (x >= y) {
-				res = GetAtanTable(y, x);
-			} else {
-				res = 0x4000 - GetAtanTable(x, y);
-			}
 
-		} else if (-x < y) {
-			res = GetAtanTable(-x, y) + 0x4000;
-		} else {
-			res = 0x8000 - GetAtanTable(y, -x);
-		}
-	} else {
-		y = -y;
-		if (x < 0.0f) {
-			if (-x >= y) {
-				res = GetAtanTable(y, -x) + 0x8000;
-			} else {
-				res = 0xC000 - GetAtanTable(-x, y);
+	// Handle quadrants and octants to use AtanTable (which covers [0, pi/4])
+	if (y >= 0.0f) {                               // Upper half-plane (y >= 0)
+		if (x >= 0.0f) {                           // Quadrant 1 (x >= 0, y >= 0)
+			if (x >= y) {                          // Octant 1 (0 to pi/4 radians)
+				res = GetAtanTable(y, x);          // Angle = atan(y/x)
+			} else {                               // Octant 2 (pi/4 to pi/2 radians)
+				res = 0x4000 - GetAtanTable(x, y); // Angle = pi/2 - atan(x/y)
 			}
-		} else if (x < y) {
-			res = GetAtanTable(x, y) + 0xC000;
-		} else {
-			res = -GetAtanTable(y, x);
+		} else {                                    // Quadrant 2 (x < 0, y >= 0)
+			if (-x < y) {                           // Octant 3 (pi/2 to 3pi/4 radians)
+				res = GetAtanTable(-x, y) + 0x4000; // Angle = atan(-x/y) + pi/2
+			} else {                                // Octant 4 (3pi/4 to pi radians)
+				res = 0x8000 - GetAtanTable(y, -x); // Angle = pi - atan(y/-x)
+			}
+		}
+	} else {                                        // Lower half-plane (y < 0)
+		y = -y;                                     // Work with positive y' = -y
+		if (x < 0.0f) {                             // Quadrant 3 (x < 0, y < 0)
+			if (-x >= y) {                          // Octant 5 (pi to 5pi/4 radians)
+				res = GetAtanTable(y, -x) + 0x8000; // Angle = atan(y'/-x) + pi
+			} else {                                // Octant 6 (5pi/4 to 3pi/2 radians)
+				res = 0xC000 - GetAtanTable(-x, y); // Angle = 3pi/2 - atan(-x/y')
+			}
+		} else {                                   // Quadrant 4 (x >= 0, y < 0)
+			if (x < y) {                           // Octant 7 (3pi/2 to 7pi/4 radians)
+				res = GetAtanTable(x, y) + 0xC000; // Angle = atan(x/y') + 3pi/2
+			} else {                               // Octant 8 (7pi/4 to 2pi radians)
+				// Angle = 2pi - atan(y'/x), for u16, -val is equivalent to 0x10000 - val.
+				res = -GetAtanTable(y, x);
+			}
 		}
 	}
 
