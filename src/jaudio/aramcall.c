@@ -1,6 +1,4 @@
-#include "types.h"
-
-typedef struct jaheap_ jaheap_;
+#include "jaudio/aramcall.h"
 
 /*
  * --INFO--
