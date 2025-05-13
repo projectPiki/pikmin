@@ -188,6 +188,7 @@ struct ogMsgCtrlTagMgr {
  */
 struct TypingTextMgr {
 	enum EnumPCTextStat {
+		STATE_2 = 2,
 		// TODO: this
 	};
 

@@ -29,29 +29,29 @@ struct ogScrMemChkMgr {
 	 * @brief TODO
 	 */
 	enum MemChkStatus {
-		STATE_NULL  = -1,
-		STATE_Unk0  = 0,
-		STATE_Unk1  = 1,
-		STATE_Unk2  = 2,
-		STATE_Unk3  = 3,
-		STATE_Unk4  = 4,
-		STATE_Unk5  = 5,
-		STATE_Unk6  = 6,
-		STATE_Unk7  = 7,
-		STATE_Unk8  = 8,
-		STATE_Unk9  = 9,
-		STATE_Unk10 = 10,
-		STATE_Unk11 = 11,
-		STATE_Unk12 = 12,
-		STATE_Unk13 = 13,
-		STATE_Unk14 = 14,
-		STATE_Unk15 = 15,
-		STATE_Unk16 = 16,
-		STATE_Unk17 = 17,
-		STATE_Unk18 = 18,
-		STATE_Unk19 = 19,
-		STATE_Unk20 = 20,
-		STATE_Unk21 = 21,
+		STATE_NULL               = -1,
+		STATE_Unk0               = 0,
+		STATE_WritingFormatMesg  = 1,
+		STATE_DoFormatSelection  = 2,
+		STATE_FormatConfirmation = 3,
+		STATE_DoYouFormat        = 4,
+		STATE_Formatting         = 5,
+		STATE_FormatSuccess      = 6,
+		STATE_FormatFail         = 7,
+		STATE_NoCard             = 8,
+		STATE_NotACard           = 9,
+		STATE_UnformattedCard    = 10,
+		STATE_BrokenCard         = 11,
+		STATE_CardFull           = 12,
+		STATE_UnusableCard       = 13,
+		STATE_FileNotMade        = 14,
+		STATE_MakeDefaultFile    = 15,
+		STATE_RepairFile         = 16,
+		STATE_RepairSuccess      = 17,
+		STATE_RepairFail         = 18,
+		STATE_ErrorA             = 19,
+		STATE_ErrorB             = 20,
+		STATE_Finished           = 21,
 	};
 
 	ogScrMemChkMgr();
@@ -78,73 +78,73 @@ struct ogScrMemChkMgr {
 	void checkErrNitaku(zen::ogNitakuMgr*, Controller*);
 	void setNoCard();
 
-	u8 _00;                   // _00
-	int _04;                  // _04
-	s16 _08;                  // _08
-	EffectMgr2D* _0C;         // _0C
-	particleGenerator* _10;   // _10
-	particleGenerator* _14;   // _14
-	ogScrMakeDefaultMgr* _18; // _18
-	MemChkStatus mState;      // _1C
-	int _20;                  // _20
-	P2DScreen* _24;           // _24
-	P2DPicture* _28;          // _28
-	P2DScreen* _2C;           // _2C
-	TypingTextMgr* _30;       // _30
-	TypingTextMgr* _34;       // _34
-	TypingTextMgr* _38;       // _38
-	TypingTextMgr* _3C;       // _3C
-	TypingTextMgr* _40;       // _40
-	TypingTextMgr* _44;       // _44
-	TypingTextMgr* _48;       // _48
-	TypingTextMgr* _4C;       // _4C
-	TypingTextMgr* _50;       // _50
-	TypingTextMgr* _54;       // _54
-	TypingTextMgr* _58;       // _58
-	TypingTextMgr* _5C;       // _5C
-	TypingTextMgr* _60;       // _60
-	TypingTextMgr* _64;       // _64
-	TypingTextMgr* _68;       // _68
-	TypingTextMgr* _6C;       // _6C
-	TypingTextMgr* _70;       // _70
-	P2DTextBox* _74;          // _74
-	P2DTextBox* _78;          // _78
-	P2DTextBox* _7C;          // _7C
-	P2DTextBox* _80;          // _80
-	P2DTextBox* _84;          // _84
-	P2DTextBox* _88;          // _88
-	P2DTextBox* _8C;          // _8C
-	P2DTextBox* _90;          // _90
-	P2DTextBox* _94;          // _94
-	P2DPane* _98;             // _98
-	P2DPane* _9C;             // _9C
-	setTenmetuAlpha* _A0;     // _A0
-	P2DPicture* _A4;          // _A4
-	P2DPane* _A8;             // _A8
-	P2DTextBox* _AC;          // _AC
-	P2DTextBox* _B0;          // _B0
-	P2DTextBox* _B4;          // _B4
-	P2DTextBox* _B8;          // _B8
-	setTenmetuAlpha* _BC;     // _BC
-	P2DPicture* _C0;          // _C0
-	f32 _C4;                  // _C4
-	f32 _C8;                  // _C8
-	P2DPane* _CC;             // _CC
-	P2DPane* _D0;             // _D0
-	ogNitakuMgr* _D4;         // _D4
-	char* _D8;                // _D8
-	char* _DC;                // _DC
-	char* _E0;                // _E0
-	char* _E4;                // _E4
-	char* _E8;                // _E8
-	P2DTextBox* _EC;          // _EC
-	P2DTextBox* _F0;          // _F0
-	P2DTextBox* _F4;          // _F4
-	P2DTextBox* _F8;          // _F8
-	P2DTextBox* _FC;          // _FC
-	P2DTextBox* _100;         // _100
-	P2DTextBox* _104;         // _104
-	int _108;                 // _108
+	bool mIsDebugMode;                       // _00
+	int mDebugState;                         // _04
+	s16 mDrawWaitCounter;                    // _08
+	EffectMgr2D* mEfxMgr;                    // _0C
+	particleGenerator* mEfxA;                // _10
+	particleGenerator* mEfxB;                // _14
+	ogScrMakeDefaultMgr* mMakeDefaultMgr;    // _18
+	MemChkStatus mState;                     // _1C
+	int mPrevStatusCheck;                    // _20
+	P2DScreen* mBlackScreen;                 // _24
+	P2DPicture* mBlackPane;                  // _28
+	P2DScreen* mMainScreen;                  // _2C
+	TypingTextMgr* mActiveTextMgr;           // _30
+	TypingTextMgr* mFormatConfirmTextMgr;    // _34
+	TypingTextMgr* mFormattedTextMgr;        // _38
+	TypingTextMgr* mCantFormatTextMgr;       // _3C
+	TypingTextMgr* mFormattingTextMgr;       // _40
+	TypingTextMgr* mNeedFormatTextMgr;       // _44
+	TypingTextMgr* mDoFixUnformattedTextMgr; // _48
+	TypingTextMgr* mRepairFileTextMgr;       // _4C
+	TypingTextMgr* mRepairSuccessTextMgr;    // _50
+	TypingTextMgr* mRepairFailTextMgr;       // _54
+	TypingTextMgr* mNoCardTextMgr;           // _58
+	TypingTextMgr* mCardFullTextMgr;         // _5C
+	TypingTextMgr* mUnusableCardTextMgr;     // _60
+	TypingTextMgr* mUnformattedCardTextMgr;  // _64
+	TypingTextMgr* mBrokenCardTextMgr;       // _68
+	TypingTextMgr* mNotACardTextMgr;         // _6C
+	TypingTextMgr* mFileNotMadeTextMgr;      // _70
+	P2DTextBox* mFormatConfirmTextBox;       // _74
+	P2DTextBox* mFormattedTextBox;           // _78
+	P2DTextBox* mCantFormatTextBox;          // _7C
+	P2DTextBox* mFormattingTextBox;          // _80
+	P2DTextBox* mNeedFormatTextBox;          // _84
+	P2DTextBox* mDoFixUnformattedTextBox;    // _88
+	P2DTextBox* mRepairFileTextBox;          // _8C
+	P2DTextBox* mRepairSuccessTextBox;       // _90
+	P2DTextBox* mRepairFailTextBox;          // _94
+	P2DPane* mYesNoWindow;                   // _98
+	P2DPane* mCapsulePane;                   // _9C
+	setTenmetuAlpha* mAButtonAlphaMgr;       // _A0
+	P2DPicture* mAButtonPane;                // _A4
+	P2DPane* mFormatEffPane;                 // _A8
+	P2DTextBox* mYesPane;                    // _AC
+	P2DTextBox* mNoPane;                     // _B0
+	P2DTextBox* mYesPane2;                   // _B4
+	P2DTextBox* mNoPane2;                    // _B8
+	setTenmetuAlpha* mCursorAlphaMgr;        // _BC
+	P2DPicture* mCursorPane;                 // _C0
+	f32 _C4;                                 // _C4
+	f32 mWaitTimer;                          // _C8
+	int _CC;                                 // _CC
+	int _D0;                                 // _D0
+	ogNitakuMgr* mNitakuMgr;                 // _D4
+	char* mYesText;                          // _D8
+	char* mNoText;                           // _DC
+	char* mFormatText;                       // _E0
+	char* mContinueNoSaveText;               // _E4
+	char* mRetryText;                        // _E8
+	P2DTextBox* mNoCardTextBox;              // _EC
+	P2DTextBox* mCardFullTextBox;            // _F0
+	P2DTextBox* mUnusableCardTextBox;        // _F4
+	P2DTextBox* mUnformattedCardTextBox;     // _F8
+	P2DTextBox* mBrokenCardTextBox;          // _FC
+	P2DTextBox* mNotACardTextBox;            // _100
+	P2DTextBox* mFileNotMadeTextBox;         // _104
+	int _108;                                // _108
 };
 
 } // namespace zen

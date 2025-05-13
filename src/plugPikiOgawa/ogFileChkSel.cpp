@@ -106,7 +106,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 	}
 
 	int memChkState = mMemChkMgr->update(controller);
-	if (memChkState == 21) {
+	if (memChkState == ogScrMemChkMgr::STATE_Finished) {
 		if (_0D) {
 			mState = FILECHKSEL_Unk5;
 			return mState;
@@ -115,15 +115,15 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 		mFileSelectMgr->start(_04, 0);
 		mIsScreenVisible = true;
 
-	} else if (memChkState == 20) {
+	} else if (memChkState == ogScrMemChkMgr::STATE_ErrorB) {
 		mState = FILECHKSEL_Unk5;
 		return mState;
 
-	} else if (memChkState == 19) {
+	} else if (memChkState == ogScrMemChkMgr::STATE_ErrorA) {
 		mState = FILECHKSEL_Unk1;
 		return mState;
 
-	} else if (memChkState == -1) {
+	} else if (memChkState == ogScrMemChkMgr::STATE_NULL) {
 		if (!ogCheckInsCard()) {
 			SeSystem::stopSysSe(SYSSE_CARDACCESS);
 			SeSystem::playSysSe(SYSSE_CARDERROR);

@@ -301,7 +301,7 @@ void zen::OgTestScreen::update()
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	if (mMemChkMgr->update(mController) >= 19) {
+	if (mMemChkMgr->update(mController) >= ogScrMemChkMgr::STATE_ErrorA) {
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
