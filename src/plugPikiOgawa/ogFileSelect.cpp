@@ -1,5 +1,18 @@
 #include "zen/ogFileSelect.h"
+#include "zen/ogNitaku.h"
+#include "zen/ogSub.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/DrawCommon.h"
+#include "P2D/Graph.h"
+#include "P2D/Pane.h"
+#include "P2D/Picture.h"
+#include "P2D/TextBox.h"
+#include "P2D/Screen.h"
+#include "SoundMgr.h"
+#include "gameflow.h"
+#include "Graphics.h"
 #include "MemoryCard.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -14,7 +27,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("OgFileSelectSection")
 
 /*
  * --INFO--
@@ -23,89 +36,12 @@ DEFINE_PRINT("TODO: Replace")
  */
 void zen::ogScrFileSelectMgr::copyCardInfosSub()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  subi      r4, r4, 0x2848
-	  stwu      r1, -0xC0(r1)
-	  stw       r31, 0xBC(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0x24
-	  stw       r0, 0x20(r1)
-	  addi      r4, r1, 0x18
-	  stw       r0, 0x48(r1)
-	  stw       r0, 0x70(r1)
-	  stw       r0, 0x98(r1)
-	  bl        -0x110D60
-	  lwz       r3, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r3, 0x2C(r31)
-	  stw       r0, 0x30(r31)
-	  lwz       r3, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r3, 0x34(r31)
-	  stw       r0, 0x38(r31)
-	  lwz       r3, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r3, 0x3C(r31)
-	  stw       r0, 0x40(r31)
-	  lwz       r3, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r3, 0x44(r31)
-	  stw       r0, 0x48(r31)
-	  lwz       r3, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r3, 0x4C(r31)
-	  stw       r0, 0x50(r31)
-	  lwz       r3, 0x40(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r3, 0x54(r31)
-	  stw       r0, 0x58(r31)
-	  lwz       r3, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r3, 0x5C(r31)
-	  stw       r0, 0x60(r31)
-	  lwz       r3, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r3, 0x64(r31)
-	  stw       r0, 0x68(r31)
-	  lwz       r3, 0x58(r1)
-	  lwz       r0, 0x5C(r1)
-	  stw       r3, 0x6C(r31)
-	  stw       r0, 0x70(r31)
-	  lwz       r3, 0x60(r1)
-	  lwz       r0, 0x64(r1)
-	  stw       r3, 0x74(r31)
-	  stw       r0, 0x78(r31)
-	  lwz       r3, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r3, 0x7C(r31)
-	  stw       r0, 0x80(r31)
-	  lwz       r3, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  stw       r3, 0x84(r31)
-	  stw       r0, 0x88(r31)
-	  lwz       r3, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  stw       r3, 0x8C(r31)
-	  stw       r0, 0x90(r31)
-	  lwz       r3, 0x80(r1)
-	  lwz       r0, 0x84(r1)
-	  stw       r3, 0x94(r31)
-	  stw       r0, 0x98(r31)
-	  lwz       r3, 0x88(r1)
-	  lwz       r0, 0x8C(r1)
-	  stw       r3, 0x9C(r31)
-	  stw       r0, 0xA0(r31)
-	  lwz       r0, 0xC4(r1)
-	  lwz       r31, 0xBC(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	CardQuickInfo infos[4];
+	gameflow.mMemoryCard.getQuickInfos(infos);
+
+	for (int i = 0; i < 3; i++) {
+		_2C[i] = infos[i];
+	}
 }
 
 /*
@@ -115,138 +51,26 @@ void zen::ogScrFileSelectMgr::copyCardInfosSub()
  */
 bool zen::ogScrFileSelectMgr::getCardFileInfos()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE0(r1)
-	  stmw      r24, 0xC0(r1)
-	  subi      r28, r4, 0x2848
-	  addi      r27, r28, 0x24
-	  addi      r29, r3, 0
-	  addi      r3, r27, 0
-	  li        r4, 0x1
-	  bl        -0x113A08
-	  cmpwi     r3, 0
-	  bne-      .loc_0x1DC
-	  lwz       r0, 0x5C(r28)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x1DC
-	  lwz       r7, 0xAC(r28)
-	  mr        r3, r27
-	  lbz       r31, 0xB0(r28)
-	  rlwinm    r0,r7,0,31,31
-	  lbz       r30, 0xB1(r28)
-	  neg       r6, r0
-	  subic     r5, r6, 0x1
-	  rlwinm    r4,r7,0,30,30
-	  rlwinm    r0,r7,0,29,29
-	  subfe     r26, r5, r6
-	  neg       r5, r4
-	  subic     r4, r5, 0x1
-	  subfe     r25, r4, r5
-	  neg       r4, r0
-	  subic     r0, r4, 0x1
-	  subfe     r24, r0, r4
-	  bl        -0x113660
-	  addi      r28, r28, 0x94
-	  addi      r3, r28, 0
-	  addi      r4, r26, 0
-	  bl        -0x133BA8
-	  addi      r3, r28, 0
-	  addi      r4, r25, 0
-	  bl        -0x133C50
-	  addi      r3, r28, 0
-	  addi      r4, r24, 0
-	  bl        -0x133B08
-	  addi      r3, r28, 0
-	  addi      r4, r31, 0
-	  bl        -0x133CE8
-	  addi      r3, r28, 0
-	  addi      r4, r30, 0
-	  bl        -0x133CB4
-	  li        r0, 0
-	  stw       r0, 0x20(r1)
-	  addi      r3, r27, 0
-	  addi      r4, r1, 0x18
-	  stw       r0, 0x48(r1)
-	  stw       r0, 0x70(r1)
-	  stw       r0, 0x98(r1)
-	  bl        -0x110F48
-	  lwz       r4, 0x18(r1)
-	  li        r3, 0x1
-	  lwz       r0, 0x1C(r1)
-	  stw       r4, 0x2C(r29)
-	  stw       r0, 0x30(r29)
-	  lwz       r4, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r4, 0x34(r29)
-	  stw       r0, 0x38(r29)
-	  lwz       r4, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r4, 0x3C(r29)
-	  stw       r0, 0x40(r29)
-	  lwz       r4, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r4, 0x44(r29)
-	  stw       r0, 0x48(r29)
-	  lwz       r4, 0x38(r1)
-	  lwz       r0, 0x3C(r1)
-	  stw       r4, 0x4C(r29)
-	  stw       r0, 0x50(r29)
-	  lwz       r4, 0x40(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r4, 0x54(r29)
-	  stw       r0, 0x58(r29)
-	  lwz       r4, 0x48(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r4, 0x5C(r29)
-	  stw       r0, 0x60(r29)
-	  lwz       r4, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r4, 0x64(r29)
-	  stw       r0, 0x68(r29)
-	  lwz       r4, 0x58(r1)
-	  lwz       r0, 0x5C(r1)
-	  stw       r4, 0x6C(r29)
-	  stw       r0, 0x70(r29)
-	  lwz       r4, 0x60(r1)
-	  lwz       r0, 0x64(r1)
-	  stw       r4, 0x74(r29)
-	  stw       r0, 0x78(r29)
-	  lwz       r4, 0x68(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r4, 0x7C(r29)
-	  stw       r0, 0x80(r29)
-	  lwz       r4, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  stw       r4, 0x84(r29)
-	  stw       r0, 0x88(r29)
-	  lwz       r4, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  stw       r4, 0x8C(r29)
-	  stw       r0, 0x90(r29)
-	  lwz       r4, 0x80(r1)
-	  lwz       r0, 0x84(r1)
-	  stw       r4, 0x94(r29)
-	  stw       r0, 0x98(r29)
-	  lwz       r4, 0x88(r1)
-	  lwz       r0, 0x8C(r1)
-	  stw       r4, 0x9C(r29)
-	  stw       r0, 0xA0(r29)
-	  b         .loc_0x1E0
+	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
+		bool vibe   = gameflow.mGamePrefs.getVibeMode();
+		bool stereo = gameflow.mGamePrefs.getStereoMode();
+		bool child  = gameflow.mGamePrefs.getChildMode();
+		u8 bgmVol   = gameflow.mGamePrefs.getBgmVol();
+		u8 sfxVol   = gameflow.mGamePrefs.mSfxVol; // stack's one too big, something's gotta give
 
-	.loc_0x1DC:
-	  li        r3, 0
+		gameflow.mMemoryCard.loadOptions();
 
-	.loc_0x1E0:
-	  lmw       r24, 0xC0(r1)
-	  lwz       r0, 0xE4(r1)
-	  addi      r1, r1, 0xE0
-	  mtlr      r0
-	  blr
-	*/
+		gameflow.mGamePrefs.setVibeMode(vibe);
+		gameflow.mGamePrefs.setStereoMode(stereo);
+		gameflow.mGamePrefs.setChildMode(child);
+		gameflow.mGamePrefs.setBgmVol(bgmVol);
+		gameflow.mGamePrefs.setSfxVol(sfxVol);
+
+		copyCardInfosSub();
+		return true;
+	}
+
+	return false;
 }
 
 /*
@@ -254,21 +78,13 @@ bool zen::ogScrFileSelectMgr::getCardFileInfos()
  * Address:	80187AC4
  * Size:	000020
  */
-void zen::ogScrFileSelectMgr::paneOnOffXY(bool)
+void zen::ogScrFileSelectMgr::paneOnOffXY(bool set)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x18
-	  li        r0, 0
-	  stb       r0, 0x278(r3)
-	  blr
-
-	.loc_0x18:
-	  stb       r4, 0x278(r3)
-	  blr
-	*/
+	if (mSaveMode) {
+		_278 = false;
+	} else {
+		_278 = set;
+	}
 }
 
 /*
@@ -278,73 +94,36 @@ void zen::ogScrFileSelectMgr::paneOnOffXY(bool)
  */
 void zen::ogScrFileSelectMgr::MovePaneXY()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  mr        r29, r3
-	  lwz       r7, 0x2C8(r29)
-	  lwz       r3, 0x2C4(r3)
-	  lbz       r0, 0x278(r29)
-	  lha       r6, 0x18(r7)
-	  cmplwi    r0, 0
-	  lha       r4, 0x18(r3)
-	  lha       r5, 0x1A(r3)
-	  mr        r31, r6
-	  lha       r30, 0x1A(r7)
-	  beq-      .loc_0x80
-	  lwz       r0, 0x270(r29)
-	  cmpw      r4, r0
-	  ble-      .loc_0x60
-	  subi      r4, r4, 0x28
-	  cmpw      r4, r0
-	  bge-      .loc_0x60
-	  mr        r4, r0
+	int x0 = _2C4->getPosH();
+	int y0 = _2C4->getPosV();
+	int x1 = _2C8->getPosH();
+	int y1 = _2C8->getPosV();
 
-	.loc_0x60:
-	  lwz       r0, 0x274(r29)
-	  cmpw      r6, r0
-	  ble-      .loc_0x98
-	  subi      r31, r31, 0x14
-	  cmpw      r31, r0
-	  bge-      .loc_0x98
-	  mr        r31, r0
-	  b         .loc_0x98
+	if (_278) {
+		if (x0 > _270) {
+			x0 -= 40;
+			if (x0 < _270) {
+				x0 = _270;
+			}
+		}
 
-	.loc_0x80:
-	  cmpwi     r4, 0x28A
-	  bge-      .loc_0x8C
-	  addi      r4, r4, 0x28
+		if (x1 > _274) {
+			x1 -= 20;
+			if (x1 < _274) {
+				x1 = _274;
+			}
+		}
+	} else {
+		if (x0 < 650) {
+			x0 += 40;
+		}
+		if (x1 < 650) {
+			x1 += 20;
+		}
+	}
 
-	.loc_0x8C:
-	  cmpwi     r6, 0x28A
-	  bge-      .loc_0x98
-	  addi      r31, r31, 0x14
-
-	.loc_0x98:
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2C8(r29)
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
+	_2C4->move(x0, y0);
+	_2C8->move(x1, y1);
 }
 
 /*
@@ -354,54 +133,16 @@ void zen::ogScrFileSelectMgr::MovePaneXY()
  */
 void zen::ogScrFileSelectMgr::OpenYesNoWindow()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  li        r31, 0x1
-	  stw       r30, 0x38(r1)
-	  addi      r30, r3, 0
-	  stb       r31, 0x28D(r3)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x290(r3)
-	  lwz       r3, 0x26C(r3)
-	  bl        0xF058
-	  lwz       r3, 0x2D8(r30)
-	  li        r0, 0
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r6, 0x2D8(r30)
-	  lha       r3, 0x18(r6)
-	  lha       r5, 0x1A(r6)
-	  srawi     r3, r3, 0x1
-	  addze     r3, r3
-	  extsh     r4, r3
-	  srawi     r3, r5, 0x1
-	  sth       r4, 0xB8(r6)
-	  addze     r3, r3
-	  extsh     r3, r3
-	  sth       r3, 0xBA(r6)
-	  lwz       r4, 0x2D8(r30)
-	  lbz       r3, 0xC(r4)
-	  rlwimi    r3,r31,7,24,24
-	  stb       r3, 0xC(r4)
-	  lwz       r4, 0x2D0(r30)
-	  lbz       r3, 0xC(r4)
-	  rlwimi    r3,r31,7,24,24
-	  stb       r3, 0xC(r4)
-	  lwz       r3, 0x2D0(r30)
-	  stb       r0, 0xF0(r3)
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	_28D = 1;
+	_290 = 0.0f;
+	mNitaku->start();
+	_2D8->setScale(0.0f);
+	int x = _2D8->getPosH() / 2;
+	int y = _2D8->getPosV() / 2;
+	_2D8->setOffset(x, y);
+	_2D8->show();
+	_2D0->show();
+	_2D0->setAlpha(0);
 }
 
 /*
@@ -411,14 +152,8 @@ void zen::ogScrFileSelectMgr::OpenYesNoWindow()
  */
 void zen::ogScrFileSelectMgr::CloseYesNoWindow()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stb       r0, 0x28D(r3)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x290(r3)
-	  blr
-	*/
+	_28D = 0;
+	_290 = 0.0f;
 }
 
 /*
@@ -428,7 +163,19 @@ void zen::ogScrFileSelectMgr::CloseYesNoWindow()
  */
 void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
 {
-	// UNUSED FUNCTION
+	if (_290 < 0.25f) {
+		_290 += gsys->getFrameTime();
+		f32 t = _290 / 0.25f;
+		if (_28D) {
+			_2D8->setScale(t);
+			f32 alpha = _2D4->getAlpha() * t;
+			_2D0->setAlpha(alpha);
+		} else {
+			_2D8->setScale(1.0f - t);
+			f32 alpha = _2D4->getAlpha() * (1.0f - t);
+			_2D0->setAlpha(alpha);
+		}
+	}
 }
 
 /*
@@ -438,7 +185,15 @@ void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Normal()
 {
-	// UNUSED FUNCTION
+	SetTitleMsg(titleMsg_1);
+	if (_1190[_134]) {
+		paneOnOffXY(false);
+	} else {
+		paneOnOffXY(true);
+	}
+
+	_A4.scale(0.0f, 0.2f);
+	_D4.scale(0.0f, 0.2f);
 }
 
 /*
@@ -446,89 +201,22 @@ void zen::ogScrFileSelectMgr::setOperateMode_Normal()
  * Address:	80187C8C
  * Size:	0000F0
  */
-void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperateMode)
+void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperateMode mode)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  stw       r4, 0x24(r3)
-	  lwz       r0, 0x24(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xC8
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0
-	  bge-      .loc_0x40
-	  b         .loc_0xDC
+	mOperateMode = mode;
+	switch (mOperateMode) {
+	case OPMODE_Normal:
+		setOperateMode_Normal();
+		break;
 
-	.loc_0x34:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0xDC
-	  b         .loc_0xD4
+	case OPMODE_Copy:
+		setOperateMode_Copy();
+		break;
 
-	.loc_0x40:
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0x13E0
-	  lha       r0, 0x134(r31)
-	  add       r3, r31, r0
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x78
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0xA4
-
-	.loc_0x78:
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0xA4
-
-	.loc_0x84:
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x9C
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0xA4
-
-	.loc_0x9C:
-	  li        r0, 0x1
-	  stb       r0, 0x278(r31)
-
-	.loc_0xA4:
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xA4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x52EDC
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xD4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x52ECC
-	  b         .loc_0xDC
-
-	.loc_0xC8:
-	  mr        r3, r31
-	  bl        0xF444
-	  b         .loc_0xDC
-
-	.loc_0xD4:
-	  mr        r3, r31
-	  bl        0xFD74
-
-	.loc_0xDC:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	case OPMODE_Delete:
+		setOperateMode_Delete();
+		break;
+	}
 }
 
 /*
@@ -538,329 +226,52 @@ void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperat
  */
 void zen::ogScrFileSelectMgr::getPane_FileTop1()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  mr        r31, r3
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  lis       r29, 0x705F
-	  addi      r4, r29, 0x636F
-	  lwz       r3, 0x2B4(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2C4(r31)
-	  addi      r4, r29, 0x7368
-	  li        r5, 0x1
-	  lwz       r3, 0x2B4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2C8(r31)
-	  li        r0, 0
-	  addi      r4, r29, 0x6D61
-	  lwz       r3, 0x2C4(r31)
-	  li        r5, 0x1
-	  lha       r3, 0x18(r3)
-	  stw       r3, 0x270(r31)
-	  lwz       r3, 0x2C8(r31)
-	  lha       r3, 0x18(r3)
-	  stw       r3, 0x274(r31)
-	  stb       r0, 0x278(r31)
-	  lwz       r3, 0x2B4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2DC(r31)
-	  lis       r3, 0x796E
-	  addi      r4, r3, 0x5F77
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2D8(r31)
-	  lis       r3, 0x6368
-	  addi      r4, r3, 0x7569
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2CC(r31)
-	  lis       r3, 0x6261
-	  addi      r4, r3, 0x636B
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2D0(r31)
-	  lis       r3, 0x7365
-	  addi      r4, r3, 0x5F63
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2D4(r31)
-	  lis       r3, 0x68
-	  addi      r4, r3, 0x6169
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2E0(r31)
-	  lis       r3, 0x69
-	  addi      r4, r3, 0x6965
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2E4(r31)
-	  lis       r29, 0x646F
-	  addi      r4, r29, 0x6E6F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2E8(r31)
-	  lis       r3, 0x6873
-	  addi      r4, r3, 0x686F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x310(r31)
-	  lis       r3, 0x73
-	  addi      r4, r3, 0x686F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2EC(r31)
-	  lis       r3, 0x6473
-	  addi      r4, r3, 0x686F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2F0(r31)
-	  addi      r4, r29, 0x6B6F
-	  li        r5, 0x1
-	  lwz       r3, 0x2B4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2F4(r31)
-	  lis       r3, 0x6431
-	  addi      r4, r3, 0x636F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x314(r31)
-	  lis       r3, 0x636F
-	  addi      r4, r3, 0x7063
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2F8(r31)
-	  lis       r30, 0x6463
-	  addi      r4, r30, 0x7878
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2FC(r31)
-	  addi      r4, r30, 0x6F70
-	  li        r5, 0x1
-	  lwz       r3, 0x2B4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x300(r31)
-	  lis       r3, 0x6461
-	  addi      r4, r3, 0x7361
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x318(r31)
-	  addi      r4, r29, 0x7361
-	  li        r5, 0x1
-	  lwz       r3, 0x2B4(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x304(r31)
-	  lis       r3, 0x7361
-	  addi      r4, r3, 0x7663
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x308(r31)
-	  lis       r3, 0x6464
-	  addi      r4, r3, 0x7878
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x30C(r31)
-	  lis       r3, 0x7561
-	  addi      r4, r3, 0x7361
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x31C(r31)
-	  lis       r3, 0x7531
-	  addi      r4, r3, 0x636F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x320(r31)
-	  lis       r3, 0x7573
-	  addi      r4, r3, 0x686F
-	  lwz       r3, 0x2B4(r31)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x324(r31)
-	  li        r5, 0xFF
-	  li        r3, 0x108
-	  stb       r5, 0x44(r1)
-	  stb       r5, 0x45(r1)
-	  stb       r5, 0x46(r1)
-	  stb       r5, 0x47(r1)
-	  lwz       r4, 0x31C(r31)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0xF4(r4)
-	  lwz       r4, 0x31C(r31)
-	  stb       r5, 0xF7(r4)
-	  stb       r5, 0xFB(r4)
-	  lwz       r4, 0x320(r31)
-	  stb       r5, 0xF7(r4)
-	  stb       r5, 0xFB(r4)
-	  lwz       r4, 0x324(r31)
-	  stb       r5, 0xF7(r4)
-	  stb       r5, 0xFB(r4)
-	  bl        -0x14116C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x410
-	  lwz       r4, 0x310(r31)
-	  stw       r4, 0x0(r3)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x4(r3)
+	_2C4 = _2B4->search('p_co', true);
+	_2C8 = _2B4->search('p_sh', true);
+	_270 = _2C4->getPosH();
+	_274 = _2C8->getPosH();
+	_278 = false;
 
-	.loc_0x410:
-	  stw       r3, 0x260(r31)
-	  li        r3, 0x108
-	  bl        -0x141190
-	  cmplwi    r3, 0
-	  beq-      .loc_0x434
-	  lwz       r4, 0x314(r31)
-	  stw       r4, 0x0(r3)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x4(r3)
+	_2DC = _2B4->search('p_ma', true);
+	_2D8 = _2B4->search('yn_w', true);
+	_2CC = (P2DPicture*)_2B4->search('chui', true);
+	_2D0 = (P2DPicture*)_2B4->search('back', true);
+	_2D4 = (P2DTextBox*)_2B4->search('se_c', true);
+	_2E0 = (P2DTextBox*)_2B4->search('hai', true);
+	_2E4 = (P2DTextBox*)_2B4->search('iie', true);
+	_2E8 = _2B4->search('dono', true);
+	_310 = (P2DTextBox*)_2B4->search('hsho', true);
+	_2EC = _2B4->search('sho', true);
+	_2F0 = _2B4->search('dsho', true);
+	_2F4 = _2B4->search('doko', true);
+	_314 = (P2DTextBox*)_2B4->search('d1co', true);
+	_2F8 = _2B4->search('copc', true);
+	_2FC = _2B4->search('dcxx', true);
+	_300 = _2B4->search('dcop', true);
+	_318 = (P2DTextBox*)_2B4->search('dasa', true);
+	_304 = _2B4->search('dosa', true);
+	_308 = _2B4->search('savc', true);
+	_30C = _2B4->search('ddxx', true);
+	_31C = (P2DTextBox*)_2B4->search('uasa', true);
+	_320 = (P2DTextBox*)_2B4->search('u1co', true);
+	_324 = (P2DTextBox*)_2B4->search('usho', true);
 
-	.loc_0x434:
-	  stw       r3, 0x264(r31)
-	  li        r3, 0x108
-	  bl        -0x1411B4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x458
-	  lwz       r4, 0x318(r31)
-	  stw       r4, 0x0(r3)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x4(r3)
+	Colour colour;
+	colour.set(255, 255, 255, 255);
+	_31C->setCharColor(colour);
+	_31C->setAlpha(255);
+	_320->setAlpha(255);
+	_324->setAlpha(255);
 
-	.loc_0x458:
-	  stw       r3, 0x268(r31)
-	  li        r3, 0xC4
-	  bl        -0x1411D8
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0x48C
-	  lwz       r4, 0x2B4(r31)
-	  li        r8, 0
-	  lwz       r5, 0x2E0(r31)
-	  li        r9, 0x1
-	  lwz       r6, 0x2E4(r31)
-	  lwz       r7, 0x2D4(r31)
-	  bl        0xE660
+	_260 = new ogCnvStringMgr(_310);
+	_264 = new ogCnvStringMgr(_314);
+	_268 = new ogCnvStringMgr(_318);
 
-	.loc_0x48C:
-	  stw       r29, 0x26C(r31)
-	  li        r4, 0
-	  lwz       r3, 0x2D0(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x2D8(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x2CC(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+	mNitaku = new ogNitakuMgr(_2B4, _2E0, _2E4, _2D4, false, true);
+
+	_2D0->hide();
+	_2D8->hide();
+	_2CC->hide();
 }
 
 /*
@@ -870,214 +281,32 @@ void zen::ogScrFileSelectMgr::getPane_FileTop1()
  */
 void zen::ogScrFileSelectMgr::getPane_FileTop2()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r27, 0x2C(r1)
-	  mr        r27, r3
-	  lis       r28, 0x6461
-	  addi      r4, r28, 0x5F31
-	  lwz       r3, 0x2B8(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x328(r27)
-	  addi      r4, r28, 0x5F32
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x32C(r27)
-	  addi      r4, r28, 0x5F33
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x330(r27)
-	  lis       r29, 0x726F
-	  addi      r4, r29, 0x5F6C
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x338(r27)
-	  addi      r4, r29, 0x5F72
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x33C(r27)
-	  lis       r29, 0x7274
-	  addi      r4, r29, 0x5F6C
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x340(r27)
-	  addi      r4, r29, 0x5F72
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x344(r27)
-	  lis       r29, 0x7263
-	  addi      r4, r29, 0x5F6C
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x348(r27)
-	  addi      r4, r29, 0x5F63
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x34C(r27)
-	  addi      r4, r29, 0x5F72
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x350(r27)
-	  lis       r30, 0x6263
-	  addi      r4, r30, 0x5F6C
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x354(r27)
-	  addi      r4, r30, 0x5F63
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x358(r27)
-	  addi      r4, r30, 0x5F72
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x35C(r27)
-	  lis       r31, 0x7963
-	  addi      r4, r31, 0x5F6C
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x360(r27)
-	  addi      r4, r31, 0x5F63
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x364(r27)
-	  addi      r4, r31, 0x5F72
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x368(r27)
-	  addi      r4, r29, 0x6F6E
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x36C(r27)
-	  addi      r4, r30, 0x6F6E
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x370(r27)
-	  addi      r4, r31, 0x6F6E
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x374(r27)
-	  addi      r4, r28, 0x6C6C
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r27)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x334(r27)
-	  lis       r3, 0x6E61
-	  addi      r4, r3, 0x7669
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x378(r27)
-	  lis       r3, 0x6E65
-	  addi      r4, r3, 0x7764
-	  lwz       r3, 0x2B8(r27)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x37C(r27)
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  lwz       r5, 0x374(r27)
-	  lha       r0, 0x18(r5)
-	  stw       r0, 0x294(r27)
-	  lwz       r5, 0x374(r27)
-	  lha       r0, 0x1A(r5)
-	  stw       r0, 0x298(r27)
-	  bl        .loc_0x32C
-	  lmw       r27, 0x2C(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
+	_328 = _2B8->search('da_1', true);
+	_32C = _2B8->search('da_2', true);
+	_330 = _2B8->search('da_3', true);
+	_338 = _2B8->search('ro_l', true);
+	_33C = _2B8->search('ro_r', true);
+	_340 = _2B8->search('rt_l', true);
+	_344 = _2B8->search('rt_r', true);
+	_348 = _2B8->search('rc_l', true);
+	_34C = _2B8->search('rc_c', true);
+	_350 = _2B8->search('rc_r', true);
+	_354 = _2B8->search('bc_l', true);
+	_358 = _2B8->search('bc_c', true);
+	_35C = _2B8->search('bc_r', true);
+	_360 = _2B8->search('yc_l', true);
+	_364 = _2B8->search('yc_c', true);
+	_368 = _2B8->search('yc_r', true);
+	_36C = _2B8->search('rcon', true);
+	_370 = _2B8->search('bcon', true);
+	_374 = _2B8->search('ycon', true);
+	_334 = _2B8->search('dall', true);
+	_378 = _2B8->search('navi', true);
+	_37C = _2B8->search('newd', true);
 
-	.loc_0x32C:
-	*/
+	_294 = _374->getPosH();
+	_298 = _374->getPosV();
+	setFileData(0);
 }
 
 /*
@@ -1085,100 +314,28 @@ void zen::ogScrFileSelectMgr::getPane_FileTop2()
  * Address:	80188588
  * Size:	000164
  */
-void zen::ogScrFileSelectMgr::setFileData(int)
+void zen::ogScrFileSelectMgr::setFileData(int fileNum)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0xA
-	  stw       r0, 0x4(r1)
-	  mulli     r0, r4, 0x28
-	  stwu      r1, -0x30(r1)
-	  stmw      r25, 0x14(r1)
-	  addi      r25, r3, 0
-	  add       r4, r25, r0
-	  addi      r26, r4, 0x3C
-	  li        r0, 0x1E
-	  lis       r31, 0x726F
-	  addi      r5, r26, 0
-	  addi      r29, r4, 0x40
-	  addi      r28, r4, 0x48
-	  addi      r27, r4, 0x44
-	  lwz       r30, 0x2B8(r3)
-	  addi      r4, r31, 0x5F6C
-	  stw       r0, 0x154(r3)
-	  addi      r3, r30, 0
-	  bl        -0x9CF0
-	  addi      r3, r30, 0
-	  addi      r5, r26, 0
-	  addi      r4, r31, 0x5F72
-	  li        r6, 0x1
-	  bl        -0x9D04
-	  lis       r31, 0x7274
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x5F6C
-	  addi      r5, r25, 0x154
-	  li        r6, 0xA
-	  bl        -0x9D1C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0x5F72
-	  addi      r5, r25, 0x154
-	  li        r6, 0x1
-	  bl        -0x9D30
-	  lis       r31, 0x7263
-	  addi      r3, r30, 0
-	  addi      r5, r29, 0
-	  addi      r4, r31, 0x5F6C
-	  li        r6, 0x64
-	  bl        -0x9D48
-	  addi      r3, r30, 0
-	  addi      r5, r29, 0
-	  addi      r4, r31, 0x5F63
-	  li        r6, 0xA
-	  bl        -0x9D5C
-	  addi      r3, r30, 0
-	  addi      r5, r29, 0
-	  addi      r4, r31, 0x5F72
-	  li        r6, 0x1
-	  bl        -0x9D70
-	  lis       r31, 0x6263
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  addi      r4, r31, 0x5F6C
-	  li        r6, 0x64
-	  bl        -0x9D88
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  addi      r4, r31, 0x5F63
-	  li        r6, 0xA
-	  bl        -0x9D9C
-	  addi      r3, r30, 0
-	  addi      r5, r28, 0
-	  addi      r4, r31, 0x5F72
-	  li        r6, 0x1
-	  bl        -0x9DB0
-	  lis       r31, 0x7963
-	  addi      r3, r30, 0
-	  addi      r5, r27, 0
-	  addi      r4, r31, 0x5F6C
-	  li        r6, 0x64
-	  bl        -0x9DC8
-	  addi      r3, r30, 0
-	  addi      r5, r27, 0
-	  addi      r4, r31, 0x5F63
-	  li        r6, 0xA
-	  bl        -0x9DDC
-	  addi      r3, r30, 0
-	  addi      r5, r27, 0
-	  addi      r4, r31, 0x5F72
-	  li        r6, 0x1
-	  bl        -0x9DF0
-	  lmw       r25, 0x14(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	P2DScreen* screen = _2B8;
+	int* redNum       = &_2C[fileNum].mRedPikiCount;
+	int* blueNum      = &_2C[fileNum].mBluePikiCount;
+	int* yellowNum    = &_2C[fileNum].mYellowPikiCount;
+	int* partsNum     = &_2C[fileNum].mCurrentPartsCount;
+	mMaxPartsNum      = 30;
+
+	setNumberTag(screen, 'ro_l', partsNum, 10);
+	setNumberTag(screen, 'ro_r', partsNum, 1);
+	setNumberTag(screen, 'rt_l', &mMaxPartsNum, 10);
+	setNumberTag(screen, 'rt_r', &mMaxPartsNum, 1);
+	setNumberTag(screen, 'rc_l', redNum, 100);
+	setNumberTag(screen, 'rc_c', redNum, 10);
+	setNumberTag(screen, 'rc_r', redNum, 1);
+	setNumberTag(screen, 'bc_l', blueNum, 100);
+	setNumberTag(screen, 'bc_c', blueNum, 10);
+	setNumberTag(screen, 'bc_r', blueNum, 1);
+	setNumberTag(screen, 'yc_l', yellowNum, 100);
+	setNumberTag(screen, 'yc_c', yellowNum, 10);
+	setNumberTag(screen, 'yc_r', yellowNum, 1);
 }
 
 /*
@@ -1188,7 +345,17 @@ void zen::ogScrFileSelectMgr::setFileData(int)
  */
 void zen::ogScrFileSelectMgr::set_SM_C()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 3; i++) {
+		Colour colour = _434[i]->getWhite();
+		u8 alpha      = _434[i]->getAlpha();
+
+		_3F8[i]->setWhite(colour);
+		_3F8[i]->setAlpha(alpha);
+		_41C[i]->setWhite(colour);
+		_41C[i]->setAlpha(alpha);
+		_428[i]->setWhite(colour);
+		_428[i]->setAlpha(alpha);
+	}
 }
 
 /*
@@ -1198,341 +365,87 @@ void zen::ogScrFileSelectMgr::set_SM_C()
  */
 void zen::ogScrFileSelectMgr::getPane_FileIcon()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x6E6F
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x5F63
-	  li        r5, 0x1
-	  stwu      r1, -0x1B0(r1)
-	  stfd      f31, 0x1A8(r1)
-	  stmw      r20, 0x178(r1)
-	  mr        r20, r3
-	  lwz       r3, 0x29C(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x440(r20)
-	  lis       r25, 0x6E65
-	  addi      r4, r25, 0x5F63
-	  lwz       r3, 0x29C(r20)
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x444(r20)
-	  addi      r24, r20, 0
-	  addi      r23, r20, 0
-	  lfs       f31, -0x4F84(r2)
-	  li        r22, 0
-	  lis       r26, 0x726F
-	  lis       r27, 0x6670
-	  lis       r28, 0x6365
-	  lis       r29, 0x6566
-	  lis       r30, 0x6463
-	  lis       r31, 0x736D
+	_440 = _29C[0]->search('no_c', true);
+	_444 = _29C[0]->search('ne_c', true);
 
-	.loc_0x88:
-	  lwz       r21, 0x29C(r24)
-	  addi      r4, r26, 0x6F74
-	  li        r5, 0x1
-	  addi      r3, r21, 0
-	  lwz       r12, 0x0(r21)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x38C(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r25, 0x7769
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x398(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r25, 0x6D69
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3A4(r24)
-	  li        r7, 0
-	  addi      r3, r21, 0
-	  lwz       r6, 0x398(r24)
-	  li        r4, 0x6670
-	  li        r5, 0x1
-	  lbz       r0, 0xC(r6)
-	  rlwimi    r0,r7,7,24,24
-	  stb       r0, 0xC(r6)
-	  lwz       r6, 0x3A4(r24)
-	  lbz       r0, 0xC(r6)
-	  rlwimi    r0,r7,7,24,24
-	  stb       r0, 0xC(r6)
-	  lwz       r12, 0x0(r21)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3B0(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r27, 0x5F6D
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3BC(r24)
-	  li        r4, 0x1
-	  lwz       r3, 0x3B0(r24)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3BC(r24)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r5, 0x3B0(r24)
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
-	  lwz       r5, 0x3BC(r24)
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
-	  lwz       r5, 0x398(r24)
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
-	  lwz       r5, 0x3A4(r24)
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
-	  lwz       r3, 0x3B0(r24)
-	  lha       r0, 0x18(r3)
-	  stw       r0, 0x158(r24)
-	  lwz       r3, 0x3B0(r24)
-	  lha       r0, 0x1A(r3)
-	  stw       r0, 0x164(r24)
-	  lwz       r3, 0x3BC(r24)
-	  lha       r0, 0x18(r3)
-	  stw       r0, 0x170(r24)
-	  lwz       r3, 0x3BC(r24)
-	  lha       r0, 0x1A(r3)
-	  stw       r0, 0x17C(r24)
-	  lwz       r4, 0x3B0(r24)
-	  lwz       r3, 0xC0(r4)
-	  lwz       r0, 0xC4(r4)
-	  stw       r3, 0x188(r23)
-	  stw       r0, 0x18C(r23)
-	  lwz       r0, 0xC8(r4)
-	  stw       r0, 0x190(r23)
-	  lwz       r4, 0x3BC(r24)
-	  lwz       r3, 0xC0(r4)
-	  lwz       r0, 0xC4(r4)
-	  stw       r3, 0x1AC(r23)
-	  stw       r0, 0x1B0(r23)
-	  lwz       r0, 0xC8(r4)
-	  stw       r0, 0x1B4(r23)
-	  lwz       r5, 0x398(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r28, 0x5F70
-	  lha       r0, 0x18(r5)
-	  li        r5, 0x1
-	  stw       r0, 0x200(r24)
-	  lwz       r6, 0x398(r24)
-	  lha       r0, 0x1A(r6)
-	  stw       r0, 0x20C(r24)
-	  lwz       r6, 0x3A4(r24)
-	  lha       r0, 0x18(r6)
-	  stw       r0, 0x230(r24)
-	  lwz       r6, 0x3A4(r24)
-	  lha       r0, 0x1A(r6)
-	  stw       r0, 0x23C(r24)
-	  lwz       r12, 0x0(r21)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3C8(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r29, 0x5F63
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3D4(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r29, 0x6D63
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3E0(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r30, 0x5F63
-	  lwz       r7, 0x3C8(r24)
-	  li        r5, 0x1
-	  lwz       r6, 0x29C(r24)
-	  lha       r0, 0x18(r7)
-	  lha       r7, 0x1A(r7)
-	  sth       r0, 0xB8(r6)
-	  sth       r7, 0xBA(r6)
-	  lwz       r6, 0x29C(r24)
-	  stfs      f31, 0xC0(r6)
-	  stfs      f31, 0xC4(r6)
-	  stfs      f31, 0xC8(r6)
-	  lwz       r6, 0x2A8(r24)
-	  sth       r0, 0xB8(r6)
-	  sth       r7, 0xBA(r6)
-	  lwz       r6, 0x2A8(r24)
-	  stfs      f31, 0xC0(r6)
-	  stfs      f31, 0xC4(r6)
-	  stfs      f31, 0xC8(r6)
-	  lwz       r12, 0x0(r21)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3EC(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r30, 0x6D63
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x3F8(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r30, 0x5F6C
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x404(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r30, 0x5F72
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x410(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r30, 0x6D6C
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x41C(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r30, 0x6D72
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x428(r24)
-	  addi      r3, r21, 0
-	  addi      r4, r31, 0x5F63
-	  lwz       r12, 0x0(r21)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x434(r24)
-	  addi      r3, r20, 0
-	  addi      r4, r22, 0
-	  lwz       r5, 0x434(r24)
-	  lbz       r6, 0x109(r5)
-	  lbz       r7, 0x10A(r5)
-	  lbz       r8, 0x10B(r5)
-	  lbz       r0, 0x108(r5)
-	  stb       r0, 0x168(r1)
-	  stb       r6, 0x169(r1)
-	  stb       r7, 0x16A(r1)
-	  stb       r8, 0x16B(r1)
-	  lwz       r6, 0x434(r24)
-	  lwz       r5, 0x3F8(r24)
-	  lbz       r6, 0xF0(r6)
-	  lwz       r0, 0x168(r1)
-	  stw       r0, 0x108(r5)
-	  lwz       r5, 0x3F8(r24)
-	  stb       r6, 0xF0(r5)
-	  lwz       r5, 0x41C(r24)
-	  lwz       r0, 0x168(r1)
-	  stw       r0, 0x108(r5)
-	  lwz       r5, 0x41C(r24)
-	  stb       r6, 0xF0(r5)
-	  lwz       r5, 0x428(r24)
-	  lwz       r0, 0x168(r1)
-	  stw       r0, 0x108(r5)
-	  lwz       r5, 0x428(r24)
-	  stb       r6, 0xF0(r5)
-	  bl        .loc_0x520
-	  addi      r22, r22, 0x1
-	  cmpwi     r22, 0x3
-	  addi      r24, r24, 0x4
-	  addi      r23, r23, 0xC
-	  blt+      .loc_0x88
-	  lmw       r20, 0x178(r1)
-	  lwz       r0, 0x1B4(r1)
-	  lfd       f31, 0x1A8(r1)
-	  addi      r1, r1, 0x1B0
-	  mtlr      r0
-	  blr
+	for (int i = 0; i < 3; i++) {
+		P2DScreen* screen = _29C[i];
+		_38C[i]           = screen->search('root', true);
+		_398[i]           = screen->search('newi', true);
+		_3A4[i]           = screen->search('nemi', true);
+		_398[i]->hide();
+		_3A4[i]->hide();
 
-	.loc_0x520:
-	*/
+		_3B0[i] = screen->search('fp', true);
+		_3BC[i] = screen->search('fp_m', true);
+
+		_3B0[i]->show();
+		_3BC[i]->show();
+
+		int x = _3B0[i]->getWidth();
+		int y = _3B0[i]->getHeight();
+		_3B0[i]->setOffset(x / 2, y / 2);
+
+		x = _3BC[i]->getWidth();
+		y = _3BC[i]->getHeight();
+		_3BC[i]->setOffset(x / 2, y / 2);
+
+		x = _398[i]->getWidth();
+		y = _398[i]->getHeight();
+		_398[i]->setOffset(x / 2, y / 2);
+
+		x = _3A4[i]->getWidth();
+		y = _3A4[i]->getHeight();
+		_3A4[i]->setOffset(x / 2, y / 2);
+
+		_158[i] = _3B0[i]->getPosH();
+		_164[i] = _3B0[i]->getPosV();
+		_170[i] = _3BC[i]->getPosH();
+		_17C[i] = _3BC[i]->getPosV();
+
+		_188[i] = _3B0[i]->getScale();
+		_1AC[i] = _3BC[i]->getScale();
+
+		_200[i] = _398[i]->getPosH();
+		_20C[i] = _398[i]->getPosV();
+
+		_230[i] = _3A4[i]->getPosH();
+		_23C[i] = _3A4[i]->getPosV();
+
+		_3C8[i] = screen->search('ce_p', true);
+		_3D4[i] = screen->search('ef_c', true);
+		_3E0[i] = screen->search('efmc', true);
+
+		f32 scale = 0.7f;
+		int x0    = _3C8[i]->getPosH();
+		int y0    = _3C8[i]->getPosV();
+		_29C[i]->setOffset(x0, y0);
+		_29C[i]->setScale(scale);
+		_2A8[i]->setOffset(x0, y0);
+		_2A8[i]->setScale(scale);
+
+		_3EC[i] = screen->search('dc_c', true);
+		_3F8[i] = (P2DPicture*)screen->search('dcmc', true);
+		_404[i] = screen->search('dc_l', true);
+		_410[i] = screen->search('dc_r', true);
+		_41C[i] = (P2DPicture*)screen->search('dcml', true);
+		_428[i] = (P2DPicture*)screen->search('dcmr', true);
+		_434[i] = (P2DPicture*)screen->search('sm_c', true);
+
+		Colour white = _434[i]->getWhite();
+		u8 alpha     = _434[i]->getAlpha();
+
+		PRINT("data %d : wc(%d,%d,%d) a %d\n", i, white.r, white.g, white.b, alpha);
+
+		_3F8[i]->setWhite(white);
+		_3F8[i]->setAlpha(alpha);
+		_41C[i]->setWhite(white);
+		_41C[i]->setAlpha(alpha);
+		_428[i]->setWhite(white);
+		_428[i]->setAlpha(alpha);
+
+		OnOffKetaNissuu(i);
+	}
 }
 
 /*
@@ -1540,125 +453,36 @@ void zen::ogScrFileSelectMgr::getPane_FileIcon()
  * Address:	80188C0C
  * Size:	0001B8
  */
-void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int)
+void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int fileNum)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mulli     r6, r4, 0x28
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  add       r5, r3, r6
-	  rlwinm    r4,r4,2,0,29
-	  stw       r31, 0x54(r1)
-	  add       r31, r3, r4
-	  stw       r30, 0x50(r1)
-	  stw       r29, 0x4C(r1)
-	  stw       r28, 0x48(r1)
-	  addi      r28, r6, 0x38
-	  add       r28, r3, r28
-	  lwz       r0, 0x38(r5)
-	  lwz       r29, 0x29C(r31)
-	  cmpwi     r0, 0xA
-	  bge-      .loc_0xDC
-	  lis       r30, 0x6463
-	  addi      r3, r29, 0
-	  addi      r5, r28, 0
-	  addi      r4, r30, 0x5F63
-	  li        r6, 0x1
-	  bl        -0xA380
-	  addi      r3, r29, 0
-	  addi      r5, r28, 0
-	  addi      r4, r30, 0x6D63
-	  li        r6, 0x1
-	  bl        -0xA394
-	  lwz       r3, 0x3EC(r31)
-	  li        r5, 0x1
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3F8(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x404(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x410(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x41C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x428(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x198
+	P2DScreen* screen = _29C[fileNum];
+	int* dayNum       = &_2C[fileNum].mCurrentDay;
 
-	.loc_0xDC:
-	  lis       r30, 0x6463
-	  addi      r3, r29, 0
-	  addi      r5, r28, 0
-	  addi      r4, r30, 0x5F6C
-	  li        r6, 0xA
-	  bl        -0xA418
-	  addi      r3, r29, 0
-	  addi      r5, r28, 0
-	  addi      r4, r30, 0x5F72
-	  li        r6, 0x1
-	  bl        -0xA42C
-	  addi      r3, r29, 0
-	  addi      r5, r28, 0
-	  addi      r4, r30, 0x6D6C
-	  li        r6, 0xA
-	  bl        -0xA440
-	  addi      r3, r29, 0
-	  addi      r5, r28, 0
-	  addi      r4, r30, 0x6D72
-	  li        r6, 0x1
-	  bl        -0xA454
-	  lwz       r3, 0x404(r31)
-	  li        r5, 0x1
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x410(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x41C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x428(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3EC(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3F8(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
+	if (_2C[fileNum].mCurrentDay < 10) {
+		setNumberTag(screen, 'dc_c', dayNum, 1);
+		setNumberTag(screen, 'dcmc', dayNum, 1);
 
-	.loc_0x198:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  lwz       r28, 0x48(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+		_3EC[fileNum]->show();
+		_3F8[fileNum]->show();
+		_404[fileNum]->hide();
+		_410[fileNum]->hide();
+		_41C[fileNum]->hide();
+		_428[fileNum]->hide();
+	} else {
+		setNumberTag(screen, 'dc_l', dayNum, 10);
+		setNumberTag(screen, 'dc_r', dayNum, 1);
+		setNumberTag(screen, 'dcml', dayNum, 10);
+		setNumberTag(screen, 'dcmr', dayNum, 1);
+
+		_404[fileNum]->show();
+		_410[fileNum]->show();
+		_41C[fileNum]->show();
+		_428[fileNum]->show();
+		_3EC[fileNum]->hide();
+		_3F8[fileNum]->hide();
+	}
+
+	u32 badCompiler;
 }
 
 /*
@@ -1668,197 +492,38 @@ void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int)
  */
 void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC0(r1)
-	  stmw      r24, 0xA0(r1)
-	  mr        r26, r3
-	  lwz       r27, 0x2BC(r3)
-	  lis       r3, 0x726F
-	  addi      r4, r3, 0x6F74
-	  lwz       r12, 0x0(r27)
-	  addi      r3, r27, 0
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x448(r26)
-	  addi      r3, r27, 0
-	  lis       r24, 0x6930
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r24, 0x3075
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r25, r3, 0
-	  addi      r3, r27, 0
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r24, 0x3064
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r28, r3, 0
-	  addi      r3, r27, 0
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r24, 0x3175
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r29, r3, 0
-	  addi      r3, r27, 0
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r24, 0x3164
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r30, r3, 0
-	  addi      r3, r27, 0
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r24, 0x3275
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r3, 0
-	  addi      r3, r27, 0
-	  lwz       r12, 0x0(r27)
-	  addi      r4, r24, 0x3264
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r0, 0xC(r25)
-	  li        r5, 0
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r25)
-	  lis       r0, 0x4330
-	  lbz       r4, 0xC(r28)
-	  rlwimi    r4,r5,7,24,24
-	  stb       r4, 0xC(r28)
-	  lbz       r4, 0xC(r29)
-	  rlwimi    r4,r5,7,24,24
-	  stb       r4, 0xC(r29)
-	  lbz       r4, 0xC(r30)
-	  rlwimi    r4,r5,7,24,24
-	  stb       r4, 0xC(r30)
-	  lbz       r4, 0xC(r31)
-	  rlwimi    r4,r5,7,24,24
-	  stb       r4, 0xC(r31)
-	  lbz       r4, 0xC(r3)
-	  rlwimi    r4,r5,7,24,24
-	  stb       r4, 0xC(r3)
-	  lha       r4, 0x18(r25)
-	  lfd       f1, -0x4F80(r2)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x9C(r1)
-	  stw       r0, 0x98(r1)
-	  lfd       f0, 0x98(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x104(r26)
-	  lha       r4, 0x1A(r25)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x94(r1)
-	  stw       r0, 0x90(r1)
-	  lfd       f0, 0x90(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x11C(r26)
-	  lha       r4, 0x18(r29)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x8C(r1)
-	  stw       r0, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x108(r26)
-	  lha       r4, 0x1A(r29)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x84(r1)
-	  stw       r0, 0x80(r1)
-	  lfd       f0, 0x80(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x120(r26)
-	  lha       r4, 0x18(r31)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x7C(r1)
-	  stw       r0, 0x78(r1)
-	  lfd       f0, 0x78(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x10C(r26)
-	  lha       r4, 0x1A(r31)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x74(r1)
-	  stw       r0, 0x70(r1)
-	  lfd       f0, 0x70(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x124(r26)
-	  lha       r4, 0x18(r28)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x6C(r1)
-	  stw       r0, 0x68(r1)
-	  lfd       f0, 0x68(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x110(r26)
-	  lha       r4, 0x1A(r28)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x64(r1)
-	  stw       r0, 0x60(r1)
-	  lfd       f0, 0x60(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x128(r26)
-	  lha       r4, 0x18(r30)
-	  xoris     r4, r4, 0x8000
-	  stw       r4, 0x5C(r1)
-	  stw       r0, 0x58(r1)
-	  lfd       f0, 0x58(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x114(r26)
-	  lha       r5, 0x1A(r30)
-	  lis       r28, 0x7A30
-	  addi      r4, r27, 0
-	  xoris     r5, r5, 0x8000
-	  stw       r5, 0x54(r1)
-	  addi      r6, r28, 0x306C
-	  stw       r0, 0x50(r1)
-	  lfd       f0, 0x50(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x12C(r26)
-	  lha       r5, 0x18(r3)
-	  xoris     r5, r5, 0x8000
-	  stw       r5, 0x4C(r1)
-	  stw       r0, 0x48(r1)
-	  lfd       f0, 0x48(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x118(r26)
-	  lha       r5, 0x1A(r3)
-	  addi      r3, r26, 0xA4
-	  xoris     r5, r5, 0x8000
-	  stw       r5, 0x44(r1)
-	  stw       r0, 0x40(r1)
-	  lfd       f0, 0x40(r1)
-	  fsubs     f0, f0, f1
-	  stfs      f0, 0x130(r26)
-	  lwz       r5, 0x448(r26)
-	  lfs       f1, 0x104(r26)
-	  lfs       f2, 0x11C(r26)
-	  bl        0x51BBC
-	  lwz       r5, 0x448(r26)
-	  mr        r4, r27
-	  lfs       f1, 0x110(r26)
-	  addi      r3, r26, 0xD4
-	  lfs       f2, 0x128(r26)
-	  addi      r6, r28, 0x3072
-	  bl        0x51BA0
-	  lmw       r24, 0xA0(r1)
-	  lwz       r0, 0xC4(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	P2DScreen* screen  = _2BC;
+	_448               = screen->search('root', true);
+	P2DPane* paneUp0   = screen->search('i00u', true);
+	P2DPane* paneDown0 = screen->search('i00d', true);
+	P2DPane* paneUp1   = screen->search('i01u', true);
+	P2DPane* paneDown1 = screen->search('i01d', true);
+	P2DPane* paneUp2   = screen->search('i02u', true);
+	P2DPane* paneDown2 = screen->search('i02d', true);
+
+	paneUp0->hide();
+	paneDown0->hide();
+	paneUp1->hide();
+	paneDown1->hide();
+	paneUp2->hide();
+	paneDown2->hide();
+
+	_104[0] = paneUp0->getPosH();
+	_11C[0] = paneUp0->getPosV();
+	_104[1] = paneUp1->getPosH();
+	_11C[1] = paneUp1->getPosV();
+	_104[2] = paneUp2->getPosH();
+	_11C[2] = paneUp2->getPosV();
+
+	_110[0] = paneDown0->getPosH();
+	_128[0] = paneDown0->getPosV();
+	_110[1] = paneDown1->getPosH();
+	_128[1] = paneDown1->getPosV();
+	_110[2] = paneDown2->getPosH();
+	_128[2] = paneDown2->getPosV();
+
+	_A4.init(screen, _448, 'z00l', _104[0], _11C[0]);
+	_D4.init(screen, _448, 'z00r', _110[0], _128[0]);
 }
 
 /*
@@ -1866,223 +531,91 @@ void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
  * Address:	801890B4
  * Size:	000340
  */
-void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageFlag)
+void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageFlag flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0xD0(r1)
-	  stw       r31, 0xCC(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0xC8(r1)
-	  mr        r30, r3
-	  stw       r29, 0xC4(r1)
-	  lwz       r5, 0x2E8(r3)
-	  li        r3, 0x6
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x310(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x2EC(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x2F0(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x2F4(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x314(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x2F8(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x2FC(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x300(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x318(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x304(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x308(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lwz       r5, 0x30C(r30)
-	  lbz       r4, 0xC(r5)
-	  rlwimi    r4,r0,7,24,24
-	  stb       r4, 0xC(r5)
-	  lha       r4, 0x134(r30)
-	  addi      r4, r4, 0x1
-	  bl        -0x9068
-	  lwz       r4, 0x119C(r30)
-	  li        r3, 0x7
-	  addi      r4, r4, 0x1
-	  bl        -0x9078
-	  lwz       r29, 0x260(r30)
-	  lwz       r4, 0x4(r29)
-	  addi      r3, r29, 0x8
-	  bl        0x90184
-	  addi      r3, r29, 0x8
-	  bl        -0x9064
-	  lwz       r3, 0x0(r29)
-	  addi      r0, r29, 0x8
-	  stw       r0, 0x10C(r3)
-	  lwz       r29, 0x264(r30)
-	  lwz       r4, 0x4(r29)
-	  addi      r3, r29, 0x8
-	  bl        0x90160
-	  addi      r3, r29, 0x8
-	  bl        -0x9088
-	  lwz       r3, 0x0(r29)
-	  addi      r0, r29, 0x8
-	  stw       r0, 0x10C(r3)
-	  lwz       r29, 0x268(r30)
-	  lwz       r4, 0x4(r29)
-	  addi      r3, r29, 0x8
-	  bl        0x9013C
-	  addi      r3, r29, 0x8
-	  bl        -0x90AC
-	  lwz       r3, 0x0(r29)
-	  addi      r0, r29, 0x8
-	  stw       r0, 0x10C(r3)
-	  lwz       r4, 0x318(r30)
-	  lwz       r3, 0x31C(r30)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x10C(r3)
-	  lwz       r4, 0x314(r30)
-	  lwz       r3, 0x320(r30)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x10C(r3)
-	  lwz       r4, 0x310(r30)
-	  lwz       r3, 0x324(r30)
-	  lwz       r0, 0x10C(r4)
-	  stw       r0, 0x10C(r3)
-	  lwz       r0, 0x27C(r30)
-	  cmpw      r31, r0
-	  beq-      .loc_0x1D0
-	  stw       r31, 0x27C(r30)
-	  li        r0, 0x1
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x280(r30)
-	  stb       r0, 0x284(r30)
+	_2E8->hide();
+	_310->hide();
+	_2EC->hide();
+	_2F0->hide();
+	_2F4->hide();
+	_314->hide();
+	_2F8->hide();
+	_2FC->hide();
+	_300->hide();
+	_318->hide();
+	_304->hide();
+	_308->hide();
+	_30C->hide();
 
-	.loc_0x1D0:
-	  cmplwi    r31, 0xD
-	  bgt-      .loc_0x324
-	  lis       r3, 0x802D
-	  addi      r3, r3, 0x51B0
-	  rlwinm    r0,r31,2,0,29
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lwz       r3, 0x2E8(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x310(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x2EC(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x2F0(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x2F4(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x314(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x2F8(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x2FC(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x300(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x318(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x304(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x308(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0x324
-	  lwz       r3, 0x30C(r30)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
+	setSpecialNumber(6, _134 + 1);
+	setSpecialNumber(7, _119C + 1);
+	_260->convert();
+	_264->convert();
+	_268->convert();
 
-	.loc_0x324:
-	  lwz       r0, 0xD4(r1)
-	  lwz       r31, 0xCC(r1)
-	  lwz       r30, 0xC8(r1)
-	  lwz       r29, 0xC4(r1)
-	  addi      r1, r1, 0xD0
-	  mtlr      r0
-	  blr
-	*/
+	_31C->setString(_318->getString());
+	_320->setString(_314->getString());
+	_324->setString(_310->getString());
+
+	if (flag != mTitleMsg) {
+		mTitleMsg = flag;
+		_280      = 0.0f;
+		_284      = 1;
+	}
+
+	switch (flag) {
+	case titleMsg_1:
+		_2E8->show();
+		break;
+
+	case titleMsg_2:
+		_310->show();
+		break;
+
+	case titleMsg_3:
+		_2EC->show();
+		break;
+
+	case titleMsg_4:
+		_2F0->show();
+		break;
+
+	case titleMsg_5:
+		_2F4->show();
+		break;
+
+	case titleMsg_6:
+		_314->show();
+		break;
+
+	case titleMsg_7:
+		_2F8->show();
+		break;
+
+	case titleMsg_8:
+		_2FC->show();
+		break;
+
+	case titleMsg_9:
+		_300->show();
+		break;
+
+	case titleMsg_10:
+		_318->show();
+		break;
+
+	case titleMsg_11:
+		_304->show();
+		break;
+
+	case titleMsg_12:
+		_308->show();
+		break;
+
+	case titleMsg_13:
+		_30C->show();
+		break;
+	}
 }
 
 /*
@@ -2092,7 +625,18 @@ void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageF
  */
 void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
 {
-	// UNUSED FUNCTION
+	if (_284) {
+		_280 += gsys->getFrameTime();
+		if (_280 > 5.0f) {
+			_284 = 0;
+		}
+
+		f32 scale = calcPuruPuruScale(_280);
+		_2DC->setScale(scale, scale, 1.0f);
+		int x = _2DC->getWidth();
+		int y = _2DC->getHeight();
+		_2DC->setOffset(x / 2, y / 2);
+	}
 }
 
 /*
@@ -2102,7 +646,18 @@ void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
  */
 void zen::ogScrFileSelectMgr::ScaleAnimeData()
 {
-	// UNUSED FUNCTION
+	if (_28C) {
+		_288 += gsys->getFrameTime();
+		if (_288 > 5.0f) {
+			_28C = 0;
+		}
+
+		f32 scale = calcPuruPuruScale(_288);
+		_2B8->setScale(scale, scale, 1.0f);
+		_2DC->getWidth(); // nice copy and pasting ogawa
+		_2DC->getHeight();
+		_2B8->setOffset(320, 400);
+	}
 }
 
 /*
@@ -2110,203 +665,54 @@ void zen::ogScrFileSelectMgr::ScaleAnimeData()
  * Address:	801893F4
  * Size:	0002C8
  */
-void zen::ogScrFileSelectMgr::setDataNumber(int)
+void zen::ogScrFileSelectMgr::setDataNumber(int p1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0x1
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  cmpwi     r4, 0x1
-	  stwu      r1, -0x98(r1)
-	  stw       r31, 0x94(r1)
-	  addi      r31, r3, 0
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x288(r3)
-	  stb       r6, 0x28C(r3)
-	  lwz       r3, 0x328(r3)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x32C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x330(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r3)
-	  beq-      .loc_0x90
-	  bge-      .loc_0x70
-	  cmpwi     r4, 0
-	  bge-      .loc_0x7C
-	  b         .loc_0xB4
+	_288 = 0.0f;
+	_28C = 1;
+	_328->hide();
+	_32C->hide();
+	_330->hide();
 
-	.loc_0x70:
-	  cmpwi     r4, 0x3
-	  bge-      .loc_0xB4
-	  b         .loc_0xA4
+	switch (p1) {
+	case 0:
+		_328->show();
+		break;
 
-	.loc_0x7C:
-	  lwz       r3, 0x328(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0xB4
+	case 1:
+		_32C->show();
+		break;
 
-	.loc_0x90:
-	  lwz       r3, 0x32C(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r3)
-	  b         .loc_0xB4
+	case 2:
+		_330->show();
+		break;
+	}
 
-	.loc_0xA4:
-	  lwz       r3, 0x330(r31)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r3)
+	ChkNewData();
+	ChkOnyonOnOff();
 
-	.loc_0xB4:
-	  mr        r3, r31
-	  bl        0xF3C
-	  mr        r3, r31
-	  bl        0xE7C
-	  lha       r0, 0x134(r31)
-	  lis       r4, 0x4330
-	  lfs       f0, -0x4FA0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  lwz       r6, 0x3B0(r3)
-	  stfs      f0, 0x6C(r1)
-	  stfs      f0, 0x68(r1)
-	  stfs      f0, 0x64(r1)
-	  lfs       f1, 0xCD8(r13)
-	  lfs       f0, 0xCDC(r13)
-	  stfs      f1, 0x64(r1)
-	  stfs      f0, 0x68(r1)
-	  lfs       f0, 0xCE0(r13)
-	  stfs      f0, 0x6C(r1)
-	  lha       r5, 0x18(r6)
-	  lha       r0, 0x1C(r6)
-	  xoris     r3, r5, 0x8000
-	  lfd       f4, -0x4F80(r2)
-	  sub       r0, r0, r5
-	  stw       r3, 0x8C(r1)
-	  xoris     r0, r0, 0x8000
-	  lfs       f3, -0x4F74(r2)
-	  stw       r0, 0x84(r1)
-	  lfs       f2, -0x4F70(r2)
-	  stw       r4, 0x80(r1)
-	  lfd       f0, 0x80(r1)
-	  stw       r4, 0x88(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0x88(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x64(r1)
-	  lha       r5, 0x1A(r6)
-	  lha       r0, 0x1E(r6)
-	  xoris     r3, r5, 0x8000
-	  sub       r0, r0, r5
-	  stw       r3, 0x7C(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x74(r1)
-	  stw       r4, 0x70(r1)
-	  lfd       f0, 0x70(r1)
-	  stw       r4, 0x78(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0x78(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x68(r1)
-	  lwz       r3, 0x14(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1A0
-	  bl        0x1766C
+	P2DPane* pane = _3B0[_134];
+	Vector3f pos;
+	pos.set(0.0f, 0.0f, 0.0f);
+	pos.x = f32(pane->getPosH()) + f32(pane->getWidth()) / 2.0f;
+	pos.y = 480.0f - (f32(pane->getPosV()) + f32(pane->getHeight()) / 2.0f);
 
-	.loc_0x1A0:
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x64
-	  li        r4, 0x24
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x60594
-	  stw       r3, 0x14(r31)
-	  lis       r4, 0x4330
-	  lha       r0, 0x134(r31)
-	  lfs       f0, -0x4FA0(r2)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  lwz       r6, 0x3BC(r3)
-	  stfs      f0, 0x60(r1)
-	  stfs      f0, 0x5C(r1)
-	  stfs      f0, 0x58(r1)
-	  lfs       f1, 0xCE4(r13)
-	  lfs       f0, 0xCE8(r13)
-	  stfs      f1, 0x58(r1)
-	  stfs      f0, 0x5C(r1)
-	  lfs       f0, 0xCEC(r13)
-	  stfs      f0, 0x60(r1)
-	  lha       r5, 0x18(r6)
-	  lha       r0, 0x1C(r6)
-	  xoris     r3, r5, 0x8000
-	  lfd       f4, -0x4F80(r2)
-	  sub       r0, r0, r5
-	  stw       r3, 0x74(r1)
-	  xoris     r0, r0, 0x8000
-	  lfs       f3, -0x4F74(r2)
-	  stw       r0, 0x7C(r1)
-	  lfs       f2, -0x4F70(r2)
-	  stw       r4, 0x78(r1)
-	  lfd       f0, 0x78(r1)
-	  stw       r4, 0x70(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0x70(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x58(r1)
-	  lha       r5, 0x1A(r6)
-	  lha       r0, 0x1E(r6)
-	  xoris     r3, r5, 0x8000
-	  sub       r0, r0, r5
-	  stw       r3, 0x84(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x8C(r1)
-	  stw       r4, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  stw       r4, 0x80(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0x80(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x5C(r1)
-	  lwz       r3, 0x18(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x298
-	  bl        0x17574
+	if (_14) {
+		_14->forceFinish();
+	}
 
-	.loc_0x298:
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x58
-	  li        r4, 0x23
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x6049C
-	  stw       r3, 0x18(r31)
-	  lwz       r0, 0x9C(r1)
-	  lwz       r31, 0x94(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	_14 = mEfxMgr->create(EFF2D_Unk36, pos, nullptr, nullptr);
+
+	pane = _3BC[_134];
+	Vector3f pos2;
+	pos2.set(0.0f, 0.0f, 0.0f);
+	pos2.x = f32(pane->getPosH()) + f32(pane->getWidth()) / 2.0f;
+	pos2.y = 480.0f - (f32(pane->getPosV()) + f32(pane->getHeight()) / 2.0f);
+
+	if (_18) {
+		_18->forceFinish();
+	}
+
+	_18 = mEfxMgr->create(EFF2D_Unk35, pos2, nullptr, nullptr);
 }
 
 /*
@@ -2316,7 +722,19 @@ void zen::ogScrFileSelectMgr::setDataNumber(int)
  */
 void zen::ogScrFileSelectMgr::init()
 {
-	// UNUSED FUNCTION
+	mState    = STATE_NULL;
+	_1193     = 0;
+	_1194     = 0;
+	_1195     = 0;
+	_1196     = 0;
+	_1198     = 0;
+	mSaveMode = 0;
+	_150      = 0.0f;
+	_1180     = 0;
+	_294      = 0;
+	_298      = 0;
+	_14       = 0;
+	_18       = 0;
 }
 
 /*
@@ -2326,625 +744,49 @@ void zen::ogScrFileSelectMgr::init()
  */
 zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8019
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x604C
-	  li        r5, 0
-	  stwu      r1, -0x88(r1)
-	  li        r6, 0x28
-	  li        r7, 0x3
-	  stmw      r27, 0x74(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802D
-	  addi      r30, r3, 0x5188
-	  addi      r3, r31, 0x2C
-	  bl        0x8B380
-	  li        r28, 0
-	  stw       r28, 0xA4(r31)
-	  lis       r3, 0x8003
-	  addi      r29, r3, 0x5B24
-	  stw       r28, 0xA8(r31)
-	  addi      r4, r29, 0
-	  addi      r3, r31, 0x188
-	  lfs       f5, -0x4F98(r2)
-	  li        r5, 0
-	  li        r6, 0xC
-	  stfs      f5, 0xB0(r31)
-	  fmr       f3, f5
-	  fmr       f2, f5
-	  li        r7, 0x3
-	  stfs      f5, 0xAC(r31)
-	  fmr       f1, f5
-	  lfs       f4, -0x4FA0(r2)
-	  fmr       f0, f5
-	  stfs      f4, 0xC0(r31)
-	  stfs      f4, 0xBC(r31)
-	  stfs      f4, 0xB8(r31)
-	  stfs      f4, 0xB4(r31)
-	  stfs      f5, 0xC8(r31)
-	  stfs      f5, 0xC4(r31)
-	  stfs      f3, 0xD0(r31)
-	  stfs      f3, 0xCC(r31)
-	  stw       r28, 0xD4(r31)
-	  stw       r28, 0xD8(r31)
-	  stfs      f2, 0xE0(r31)
-	  stfs      f2, 0xDC(r31)
-	  stfs      f4, 0xF0(r31)
-	  stfs      f4, 0xEC(r31)
-	  stfs      f4, 0xE8(r31)
-	  stfs      f4, 0xE4(r31)
-	  stfs      f1, 0xF8(r31)
-	  stfs      f1, 0xF4(r31)
-	  stfs      f0, 0x100(r31)
-	  stfs      f0, 0xFC(r31)
-	  bl        0x8B2E4
-	  addi      r4, r29, 0
-	  addi      r3, r31, 0x1AC
-	  li        r5, 0
-	  li        r6, 0xC
-	  li        r7, 0x3
-	  bl        0x8B2CC
-	  stw       r28, 0x4BC(r31)
-	  li        r0, -0x1
-	  li        r3, 0x4C4
-	  stw       r28, 0x4C0(r31)
-	  lfs       f6, -0x4F98(r2)
-	  stfs      f6, 0x4C8(r31)
-	  fmr       f4, f6
-	  fmr       f3, f6
-	  stfs      f6, 0x4C4(r31)
-	  fmr       f2, f6
-	  fmr       f1, f6
-	  lfs       f5, -0x4FA0(r2)
-	  stfs      f5, 0x4D8(r31)
-	  fmr       f0, f5
-	  stfs      f5, 0x4D4(r31)
-	  stfs      f5, 0x4D0(r31)
-	  stfs      f5, 0x4CC(r31)
-	  stfs      f6, 0x4E0(r31)
-	  stfs      f6, 0x4DC(r31)
-	  stfs      f4, 0x4E8(r31)
-	  stfs      f4, 0x4E4(r31)
-	  stw       r28, 0x4FC(r31)
-	  stw       r28, 0x500(r31)
-	  stfs      f3, 0x508(r31)
-	  stfs      f3, 0x504(r31)
-	  stfs      f5, 0x518(r31)
-	  stfs      f5, 0x514(r31)
-	  stfs      f5, 0x510(r31)
-	  stfs      f5, 0x50C(r31)
-	  stfs      f2, 0x520(r31)
-	  stfs      f2, 0x51C(r31)
-	  stfs      f1, 0x528(r31)
-	  stfs      f1, 0x524(r31)
-	  stw       r0, 0x20(r31)
-	  stb       r28, 0x1193(r31)
-	  stb       r28, 0x1194(r31)
-	  stb       r28, 0x1195(r31)
-	  stb       r28, 0x1196(r31)
-	  stb       r28, 0x1198(r31)
-	  stb       r28, 0x28(r31)
-	  stfs      f0, 0x150(r31)
-	  stb       r28, 0x1180(r31)
-	  stw       r28, 0x294(r31)
-	  stw       r28, 0x298(r31)
-	  stw       r28, 0x14(r31)
-	  stw       r28, 0x18(r31)
-	  bl        -0x14285C
-	  addi      r28, r3, 0
-	  mr.       r3, r28
-	  beq-      .loc_0x1C4
-	  li        r4, 0x10
-	  li        r5, 0x400
-	  li        r6, 0x400
-	  bl        0x60044
+	init();
+	mEfxMgr = new EffectMgr2D(16, 0x400, 0x400);
+	_29C[0] = new P2DScreen();
+	_29C[1] = new P2DScreen();
+	_29C[2] = new P2DScreen();
+	_29C[0]->set("screen/blo/data1.blo", true, true, true);
+	_29C[1]->set("screen/blo/data2.blo", true, true, true);
+	_29C[2]->set("screen/blo/data3.blo", true, true, true);
 
-	.loc_0x1C4:
-	  stw       r28, 0x0(r31)
-	  li        r3, 0xF8
-	  bl        -0x142884
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x234
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x68
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29D78
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x68
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x270FC
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
+	_2A8[0] = new P2DScreen();
+	_2A8[1] = new P2DScreen();
+	_2A8[2] = new P2DScreen();
+	_2A8[0]->set("screen/blo/data1_n.blo", true, true, true);
+	_2A8[1]->set("screen/blo/data2_n.blo", true, true, true);
+	_2A8[2]->set("screen/blo/data3_n.blo", true, true, true);
+	int i;
+	for (i = 0; i < 3; i++) {
+		_380[i] = _2A8[i]->search('root', true);
+	}
 
-	.loc_0x234:
-	  stw       r28, 0x29C(r31)
-	  li        r3, 0xF8
-	  bl        -0x1428F4
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x2A4
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x60
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29D08
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x60
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x2708C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
+	_2B4 = new P2DScreen();
+	_2B4->set("screen/blo/data_t1.blo", true, true, true);
+	_2B8 = new P2DScreen();
+	_2B8->set("screen/blo/data_t2.blo", true, true, true);
+	_2BC = new P2DScreen();
+	_2BC->set("screen/blo/data_i.blo", true, true, true);
+	_2C0 = new P2DScreen();
+	_2C0->set("screen/blo/black.blo", false, false, true);
 
-	.loc_0x2A4:
-	  stw       r28, 0x2A0(r31)
-	  li        r3, 0xF8
-	  bl        -0x142964
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x314
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x58
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29C98
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x58
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x2701C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
+	_44C = (P2DPicture*)_2C0->search('blck', true);
+	_44C->setAlpha(255);
 
-	.loc_0x314:
-	  stw       r28, 0x2A4(r31)
-	  addi      r4, r30, 0x60
-	  li        r5, 0x1
-	  lwz       r3, 0x29C(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x29218
-	  lwz       r3, 0x2A0(r31)
-	  addi      r4, r30, 0x78
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x29200
-	  lwz       r3, 0x2A4(r31)
-	  addi      r4, r30, 0x90
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x291E8
-	  li        r3, 0xF8
-	  bl        -0x142A1C
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x3CC
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x50
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29BE0
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x50
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26F64
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
+	getPane_FileTop1();
+	getPane_FileTop2();
+	getPane_FileIcon();
+	getPane_CpyCurScreen();
+	SetTitleMsg(titleMsg_1);
+	setOperateMode(OPMODE_Normal);
 
-	.loc_0x3CC:
-	  stw       r28, 0x2A8(r31)
-	  li        r3, 0xF8
-	  bl        -0x142A8C
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x43C
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x48
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29B70
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x48
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26EF4
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
-
-	.loc_0x43C:
-	  stw       r28, 0x2AC(r31)
-	  li        r3, 0xF8
-	  bl        -0x142AFC
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x4AC
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x40
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29B00
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x40
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26E84
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
-
-	.loc_0x4AC:
-	  stw       r28, 0x2B0(r31)
-	  addi      r4, r30, 0xA8
-	  li        r5, 0x1
-	  lwz       r3, 0x2A8(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x29080
-	  lwz       r3, 0x2AC(r31)
-	  addi      r4, r30, 0xC0
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x29068
-	  lwz       r3, 0x2B0(r31)
-	  addi      r4, r30, 0xD8
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x29050
-	  li        r27, 0
-	  rlwinm    r0,r27,2,0,29
-	  add       r28, r31, r0
-	  lis       r29, 0x726F
-
-	.loc_0x508:
-	  lwz       r3, 0x2A8(r28)
-	  addi      r4, r29, 0x6F74
-	  li        r5, 0x1
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r27, r27, 0x1
-	  stw       r3, 0x380(r28)
-	  cmpwi     r27, 0x3
-	  addi      r28, r28, 0x4
-	  blt+      .loc_0x508
-	  li        r3, 0xF8
-	  bl        -0x142BF4
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x5A4
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x38
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29A08
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x38
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26D8C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
-
-	.loc_0x5A4:
-	  stw       r28, 0x2B4(r31)
-	  addi      r4, r30, 0xF0
-	  li        r5, 0x1
-	  lwz       r3, 0x2B4(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x28F88
-	  li        r3, 0xF8
-	  bl        -0x142C7C
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x62C
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x30
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29980
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x30
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26D04
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
-
-	.loc_0x62C:
-	  stw       r28, 0x2B8(r31)
-	  addi      r4, r30, 0x108
-	  li        r5, 0x1
-	  lwz       r3, 0x2B8(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x28F00
-	  li        r3, 0xF8
-	  bl        -0x142D04
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x6B4
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x28
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x298F8
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x28
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26C7C
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
-
-	.loc_0x6B4:
-	  stw       r28, 0x2BC(r31)
-	  addi      r4, r30, 0x120
-	  li        r5, 0x1
-	  lwz       r3, 0x2BC(r31)
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  bl        0x28E78
-	  li        r3, 0xF8
-	  bl        -0x142D8C
-	  addi      r28, r3, 0
-	  mr.       r0, r28
-	  beq-      .loc_0x73C
-	  addi      r27, r28, 0
-	  addi      r3, r1, 0x20
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x29870
-	  lis       r4, 0x726F
-	  addi      r7, r4, 0x6F74
-	  addi      r8, r1, 0x20
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  li        r5, 0x8
-	  li        r6, 0x1
-	  bl        0x26BF4
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x7E0
-	  stw       r0, 0x0(r28)
-	  li        r0, 0
-	  stb       r0, 0xEC(r28)
-	  stw       r0, 0xF0(r28)
-	  stw       r0, 0xF4(r28)
-
-	.loc_0x73C:
-	  stw       r28, 0x2C0(r31)
-	  addi      r4, r30, 0x138
-	  li        r5, 0
-	  lwz       r3, 0x2C0(r31)
-	  li        r6, 0
-	  li        r7, 0x1
-	  bl        0x28DF0
-	  lwz       r3, 0x2C0(r31)
-	  lis       r4, 0x626C
-	  addi      r4, r4, 0x636B
-	  lwz       r12, 0x0(r3)
-	  li        r5, 0x1
-	  lwz       r12, 0x34(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x44C(r31)
-	  li        r0, 0xFF
-	  addi      r3, r31, 0
-	  lwz       r4, 0x44C(r31)
-	  stb       r0, 0xF0(r4)
-	  bl        -0x20CC
-	  mr        r3, r31
-	  bl        -0x1BF4
-	  mr        r3, r31
-	  bl        -0x176C
-	  mr        r3, r31
-	  bl        -0x109C
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0xDB8
-	  li        r30, 0
-	  stw       r30, 0x24(r31)
-	  lwz       r0, 0x24(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x860
-	  bge-      .loc_0x7D8
-	  cmpwi     r0, 0
-	  bge-      .loc_0x7E4
-	  b         .loc_0x874
-
-	.loc_0x7D8:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x874
-	  b         .loc_0x86C
-
-	.loc_0x7E4:
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0xDF4
-	  lha       r0, 0x134(r31)
-	  add       r3, r31, r0
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x820
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x818
-	  stb       r30, 0x278(r31)
-	  b         .loc_0x83C
-
-	.loc_0x818:
-	  stb       r30, 0x278(r31)
-	  b         .loc_0x83C
-
-	.loc_0x820:
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x834
-	  stb       r30, 0x278(r31)
-	  b         .loc_0x83C
-
-	.loc_0x834:
-	  li        r0, 0x1
-	  stb       r0, 0x278(r31)
-
-	.loc_0x83C:
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xA4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x50D14
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xD4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x50D04
-	  b         .loc_0x874
-
-	.loc_0x860:
-	  mr        r3, r31
-	  bl        0xD27C
-	  b         .loc_0x874
-
-	.loc_0x86C:
-	  mr        r3, r31
-	  bl        0xDBAC
-
-	.loc_0x874:
-	  lfs       f2, -0x4F98(r2)
-	  mr        r3, r31
-	  lwz       r4, 0x29C(r31)
-	  fmr       f1, f2
-	  stfs      f2, 0xC0(r4)
-	  fmr       f0, f2
-	  stfs      f2, 0xC4(r4)
-	  stfs      f1, 0xC8(r4)
-	  lwz       r4, 0x2A8(r31)
-	  stfs      f0, 0xC0(r4)
-	  stfs      f2, 0xC4(r4)
-	  stfs      f2, 0xC8(r4)
-	  lwz       r4, 0x2A0(r31)
-	  stfs      f2, 0xC0(r4)
-	  stfs      f2, 0xC4(r4)
-	  stfs      f2, 0xC8(r4)
-	  lwz       r4, 0x2AC(r31)
-	  stfs      f2, 0xC0(r4)
-	  stfs      f2, 0xC4(r4)
-	  stfs      f2, 0xC8(r4)
-	  lwz       r4, 0x2A4(r31)
-	  stfs      f2, 0xC0(r4)
-	  stfs      f2, 0xC4(r4)
-	  stfs      f2, 0xC8(r4)
-	  lwz       r4, 0x2B0(r31)
-	  stfs      f2, 0xC0(r4)
-	  stfs      f2, 0xC4(r4)
-	  stfs      f2, 0xC8(r4)
-	  lmw       r27, 0x74(r1)
-	  lwz       r0, 0x8C(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 3; i++) {
+		_29C[i]->setScale(1.0f);
+		_2A8[i]->setScale(1.0f);
+	}
 }
 
 /*
@@ -2954,7 +796,10 @@ zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
  */
 void zen::ogScrFileSelectMgr::setDataScale()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 3; i++) {
+		_38C[i]->setScale(_138[i]);
+		_380[i]->setScale(_144[i]);
+	}
 }
 
 /*
@@ -2964,125 +809,26 @@ void zen::ogScrFileSelectMgr::setDataScale()
  */
 void zen::ogScrFileSelectMgr::chaseDataScale()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stfd      f31, 0x38(r1)
-	  stfd      f30, 0x30(r1)
-	  stfd      f29, 0x28(r1)
-	  stfd      f28, 0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  li        r30, 0
-	  stw       r29, 0x14(r1)
-	  mr        r29, r3
-	  mr        r31, r29
-	  lfs       f28, -0x4F84(r2)
-	  lfs       f29, -0x4F6C(r2)
-	  lfs       f30, -0x4F9C(r2)
-	  lfs       f31, -0x4F98(r2)
+	for (int i = 0; i < 3; i++) {
+		if (_134 == i) {
+			_138[i] += (1.0f - _138[i]) / 10.0f;
+			_144[i] += (1.0f - _144[i]) / 4.0f;
+			P2DPaneLibrary::setFamilyAlpha(_3B0[i], 255);
+			P2DPaneLibrary::setFamilyAlpha(_3BC[i], 70);
+			P2DPaneLibrary::setFamilyAlpha(_398[i], 255);
+			P2DPaneLibrary::setFamilyAlpha(_3A4[i], 255);
 
-	.loc_0x44:
-	  lha       r0, 0x134(r29)
-	  cmpw      r0, r30
-	  bne-      .loc_0xAC
-	  lfs       f1, 0x138(r31)
-	  li        r4, 0xFF
-	  fsubs     f0, f31, f1
-	  fdivs     f0, f0, f29
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x138(r31)
-	  lfs       f1, 0x144(r31)
-	  fsubs     f0, f31, f1
-	  fmuls     f0, f0, f30
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x144(r31)
-	  lwz       r3, 0x3B0(r31)
-	  bl        0x35898
-	  lwz       r3, 0x3BC(r31)
-	  li        r4, 0x46
-	  bl        0x3588C
-	  lwz       r3, 0x398(r31)
-	  li        r4, 0xFF
-	  bl        0x35880
-	  lwz       r3, 0x3A4(r31)
-	  li        r4, 0xFF
-	  bl        0x35874
-	  b         .loc_0x104
+		} else {
+			_138[i] += (0.7f - _138[i]) / 10.0f;
+			_144[i] += (0.7f - _144[i]) / 4.0f;
+			P2DPaneLibrary::setFamilyAlpha(_3B0[i], 128);
+			P2DPaneLibrary::setFamilyAlpha(_3BC[i], 64);
+			P2DPaneLibrary::setFamilyAlpha(_398[i], 128);
+			P2DPaneLibrary::setFamilyAlpha(_3A4[i], 128);
+		}
+	}
 
-	.loc_0xAC:
-	  lfs       f1, 0x138(r31)
-	  li        r4, 0x80
-	  fsubs     f0, f28, f1
-	  fdivs     f0, f0, f29
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x138(r31)
-	  lfs       f1, 0x144(r31)
-	  fsubs     f0, f28, f1
-	  fmuls     f0, f0, f30
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x144(r31)
-	  lwz       r3, 0x3B0(r31)
-	  bl        0x3583C
-	  lwz       r3, 0x3BC(r31)
-	  li        r4, 0x40
-	  bl        0x35830
-	  lwz       r3, 0x398(r31)
-	  li        r4, 0x80
-	  bl        0x35824
-	  lwz       r3, 0x3A4(r31)
-	  li        r4, 0x80
-	  bl        0x35818
-
-	.loc_0x104:
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x3
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x44
-	  lfs       f0, 0x138(r29)
-	  lwz       r3, 0x38C(r29)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x144(r29)
-	  lwz       r3, 0x380(r29)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x13C(r29)
-	  lwz       r3, 0x390(r29)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x148(r29)
-	  lwz       r3, 0x384(r29)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x140(r29)
-	  lwz       r3, 0x394(r29)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x14C(r29)
-	  lwz       r3, 0x388(r29)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r0, 0x44(r1)
-	  lfd       f31, 0x38(r1)
-	  lfd       f30, 0x30(r1)
-	  lfd       f29, 0x28(r1)
-	  lfd       f28, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	setDataScale();
 }
 
 /*
@@ -3090,129 +836,35 @@ void zen::ogScrFileSelectMgr::chaseDataScale()
  * Address:	8018A178
  * Size:	0001B8
  */
-void zen::ogScrFileSelectMgr::OnOffNewPane(int)
+void zen::ogScrFileSelectMgr::OnOffNewPane(int fileNum)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x58(r1)
-	  stw       r31, 0x54(r1)
-	  stw       r30, 0x50(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x4C(r1)
-	  addi      r29, r3, 0
-	  add       r3, r29, r30
-	  stw       r28, 0x48(r1)
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xDC
-	  rlwinm    r0,r30,2,0,29
-	  add       r5, r29, r0
-	  lwz       r3, 0x398(r5)
-	  li        r6, 0x1
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3A4(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3B0(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x3BC(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lha       r0, 0x134(r29)
-	  cmpw      r30, r0
-	  bne-      .loc_0x198
-	  lwz       r3, 0x334(r29)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x378(r29)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x37C(r29)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r6,7,24,24
-	  stb       r0, 0xC(r3)
-	  lbz       r0, 0x28(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD4
-	  stb       r4, 0x278(r29)
-	  b         .loc_0x198
+	if (_1190[fileNum]) {
+		_398[fileNum]->show();
+		_3A4[fileNum]->show();
+		_3B0[fileNum]->hide();
+		_3BC[fileNum]->hide();
 
-	.loc_0xD4:
-	  stb       r4, 0x278(r29)
-	  b         .loc_0x198
+		if (fileNum == _134) {
+			_334->hide();
+			_378->hide();
+			_37C->show();
+			paneOnOffXY(false);
+		}
+	} else {
+		_398[fileNum]->hide();
+		_3A4[fileNum]->hide();
+		_3B0[fileNum]->show();
+		_3BC[fileNum]->show();
+		OnOffKetaNissuu(fileNum);
 
-	.loc_0xDC:
-	  rlwinm    r0,r30,2,0,29
-	  add       r6, r29, r0
-	  lwz       r4, 0x398(r6)
-	  li        r31, 0
-	  li        r28, 0x1
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r31,7,24,24
-	  addi      r3, r29, 0
-	  stb       r0, 0xC(r4)
-	  mr        r4, r30
-	  lwz       r5, 0x3A4(r6)
-	  lbz       r0, 0xC(r5)
-	  rlwimi    r0,r31,7,24,24
-	  stb       r0, 0xC(r5)
-	  lwz       r5, 0x3B0(r6)
-	  lbz       r0, 0xC(r5)
-	  rlwimi    r0,r28,7,24,24
-	  stb       r0, 0xC(r5)
-	  lwz       r5, 0x3BC(r6)
-	  lbz       r0, 0xC(r5)
-	  rlwimi    r0,r28,7,24,24
-	  stb       r0, 0xC(r5)
-	  bl        -0x16A0
-	  lha       r0, 0x134(r29)
-	  cmpw      r30, r0
-	  bne-      .loc_0x198
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        -0x1D3C
-	  lwz       r3, 0x334(r29)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r28,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x378(r29)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r28,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x37C(r29)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r31,7,24,24
-	  stb       r0, 0xC(r3)
-	  lbz       r0, 0x28(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x194
-	  stb       r31, 0x278(r29)
-	  b         .loc_0x198
-
-	.loc_0x194:
-	  stb       r28, 0x278(r29)
-
-	.loc_0x198:
-	  lwz       r0, 0x5C(r1)
-	  lwz       r31, 0x54(r1)
-	  lwz       r30, 0x50(r1)
-	  lwz       r29, 0x4C(r1)
-	  lwz       r28, 0x48(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+		if (fileNum == _134) {
+			setFileData(fileNum);
+			_334->show();
+			_378->show();
+			_37C->hide();
+			paneOnOffXY(true);
+		}
+	}
 }
 
 /*
@@ -3222,65 +874,26 @@ void zen::ogScrFileSelectMgr::OnOffNewPane(int)
  */
 void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x134(r3)
-	  mulli     r0, r0, 0x28
-	  add       r4, r3, r0
-	  lwz       r0, 0x40(r4)
-	  lwz       r6, 0x48(r4)
-	  cmpwi     r0, 0
-	  lwz       r7, 0x44(r4)
-	  bge-      .loc_0x38
-	  lwz       r4, 0x36C(r3)
-	  li        r5, 0
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  b         .loc_0x4C
+	int fileNum = _134;
+	int reds    = _2C[fileNum].mRedPikiCount;
+	int blues   = _2C[fileNum].mBluePikiCount;
+	int yellows = _2C[fileNum].mYellowPikiCount;
 
-	.loc_0x38:
-	  lwz       r4, 0x36C(r3)
-	  li        r5, 0x1
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-
-	.loc_0x4C:
-	  cmpwi     r6, 0
-	  bge-      .loc_0x6C
-	  lwz       r4, 0x370(r3)
-	  li        r5, 0
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-	  b         .loc_0x80
-
-	.loc_0x6C:
-	  lwz       r4, 0x370(r3)
-	  li        r5, 0x1
-	  lbz       r0, 0xC(r4)
-	  rlwimi    r0,r5,7,24,24
-	  stb       r0, 0xC(r4)
-
-	.loc_0x80:
-	  cmpwi     r7, 0
-	  bge-      .loc_0xA0
-	  lwz       r3, 0x374(r3)
-	  li        r4, 0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-
-	.loc_0xA0:
-	  lwz       r3, 0x374(r3)
-	  li        r4, 0x1
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  blr
-	*/
+	if (reds < 0) {
+		_36C->hide();
+	} else {
+		_36C->show();
+	}
+	if (blues < 0) {
+		_370->hide();
+	} else {
+		_370->show();
+	}
+	if (yellows < 0) {
+		_374->hide();
+	} else {
+		_374->show();
+	}
 }
 
 /*
@@ -3290,45 +903,13 @@ void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
  */
 void zen::ogScrFileSelectMgr::ChkNewData()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x34(r3)
-	  subfic    r0, r0, 0x1
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,5,31
-	  stb       r0, 0x1190(r3)
-	  lwz       r0, 0x5C(r3)
-	  subfic    r0, r0, 0x1
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,5,31
-	  stb       r0, 0x1191(r3)
-	  lwz       r0, 0x84(r3)
-	  subfic    r0, r0, 0x1
-	  cntlzw    r0, r0
-	  rlwinm    r0,r0,27,5,31
-	  stb       r0, 0x1192(r3)
+	_1190[0] = _2C[0]._08 == 1;
+	_1190[1] = _2C[1]._08 == 1;
+	_1190[2] = _2C[2]._08 == 1;
 
-	.loc_0x58:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x2D0
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0x3
-	  blt+      .loc_0x58
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < 3; i++) {
+		OnOffNewPane(i);
+	}
 }
 
 /*
@@ -3336,286 +917,96 @@ void zen::ogScrFileSelectMgr::ChkNewData()
  * Address:	8018A470
  * Size:	000404
  */
-void zen::ogScrFileSelectMgr::start(bool, int)
+void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, -0x1
-	  stwu      r1, -0x58(r1)
-	  stfd      f31, 0x50(r1)
-	  stfd      f30, 0x48(r1)
-	  stw       r31, 0x44(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  stw       r0, 0x20(r3)
-	  li        r0, 0
-	  stb       r0, 0x1193(r3)
-	  stb       r0, 0x1194(r3)
-	  stb       r0, 0x1195(r3)
-	  stb       r0, 0x1196(r3)
-	  stb       r0, 0x1198(r3)
-	  stb       r0, 0x28(r3)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x150(r3)
-	  stb       r0, 0x1180(r3)
-	  stw       r0, 0x294(r3)
-	  stw       r0, 0x298(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x18(r3)
-	  stb       r4, 0x28(r3)
-	  lbz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  addi      r3, r31, 0
-	  li        r4, 0xB
-	  bl        -0x1438
-	  b         .loc_0x90
+	PRINT("///////////// ogScrFileSelectMgr start() save_mode = %d  FS-Mode %d //////////////\n", saveMode, fileSelMode);
+	init();
+	mSaveMode = saveMode;
+	if (mSaveMode) {
+		SetTitleMsg(titleMsg_11);
+	} else {
+		SetTitleMsg(titleMsg_1);
+	}
 
-	.loc_0x84:
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x1448
+	_14 = nullptr;
+	_18 = nullptr;
+	getCardFileInfos();
 
-	.loc_0x90:
-	  li        r30, 0
-	  stw       r30, 0x14(r31)
-	  mr        r3, r31
-	  stw       r30, 0x18(r31)
-	  bl        -0x2C40
-	  stb       r30, 0x1193(r31)
-	  li        r0, 0x1
-	  li        r3, 0
-	  stb       r30, 0x1194(r31)
-	  stb       r30, 0x1195(r31)
-	  stb       r30, 0x1196(r31)
-	  stb       r30, 0x1197(r31)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x54C(r31)
-	  stfs      f0, 0x1184(r31)
-	  stw       r0, 0x20(r31)
-	  lha       r0, 0x134(r31)
-	  cmpw      r3, r0
-	  beq-      .loc_0xE4
-	  stw       r3, 0x119C(r31)
-	  b         .loc_0x108
+	_1193  = 0;
+	_1194  = 0;
+	_1195  = 0;
+	_1196  = 0;
+	_1197  = 0;
+	_54C   = 0.0f;
+	_1184  = 0.0f;
+	mState = STATE_Unk1;
+	int i;
+	for (i = 0; i < 3; i++) {
+		if (i != _134) {
+			_119C = i;
+			break;
+		}
+	}
 
-	.loc_0xE4:
-	  li        r3, 0x1
-	  cmpw      r3, r0
-	  beq-      .loc_0xF8
-	  stw       r3, 0x119C(r31)
-	  b         .loc_0x108
+	_134 = 0;
+	setDataNumber(_134);
 
-	.loc_0xF8:
-	  li        r3, 0x2
-	  cmpw      r3, r0
-	  beq-      .loc_0x108
-	  stw       r3, 0x119C(r31)
+	for (i = 0; i < 3; i++) {
+		if (_134 == i) {
+			_138[i] = 1.0f;
+			_144[i] = 1.0f;
+		} else {
+			_138[i] = 0.7f;
+			_144[i] = 0.7f;
+		}
 
-	.loc_0x108:
-	  li        r29, 0
-	  sth       r29, 0x134(r31)
-	  mr        r3, r31
-	  lha       r4, 0x134(r31)
-	  bl        -0x1194
-	  lfs       f30, -0x4F98(r2)
-	  mr        r30, r31
-	  lfs       f31, -0x4F84(r2)
+		_1D0[i] = _158[i];
+		_1DC[i] = _164[i];
+		_1E8[i] = _170[i];
+		_1F4[i] = _17C[i];
 
-	.loc_0x128:
-	  lha       r0, 0x134(r31)
-	  cmpw      r0, r29
-	  bne-      .loc_0x140
-	  stfs      f30, 0x138(r30)
-	  stfs      f30, 0x144(r30)
-	  b         .loc_0x148
+		_3B0[i]->move(_1D0[i], _1DC[i]);
+		_3B0[i]->setScale(1.0f);
 
-	.loc_0x140:
-	  stfs      f31, 0x138(r30)
-	  stfs      f31, 0x144(r30)
+		_3BC[i]->move(_1E8[i], _1F4[i]);
+		_3BC[i]->setScale(1.0f);
 
-	.loc_0x148:
-	  lwz       r0, 0x158(r30)
-	  stw       r0, 0x1D0(r30)
-	  lwz       r0, 0x164(r30)
-	  stw       r0, 0x1DC(r30)
-	  lwz       r0, 0x170(r30)
-	  stw       r0, 0x1E8(r30)
-	  lwz       r0, 0x17C(r30)
-	  stw       r0, 0x1F4(r30)
-	  lwz       r3, 0x3B0(r30)
-	  lwz       r4, 0x1D0(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x1DC(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3B0(r30)
-	  stfs      f30, 0xC0(r3)
-	  stfs      f30, 0xC4(r3)
-	  stfs      f30, 0xC8(r3)
-	  lwz       r3, 0x3BC(r30)
-	  lwz       r4, 0x1E8(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x1F4(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3BC(r30)
-	  li        r4, 0xFF
-	  stfs      f30, 0xC0(r3)
-	  stfs      f30, 0xC4(r3)
-	  stfs      f30, 0xC8(r3)
-	  lwz       r3, 0x3B0(r30)
-	  bl        0x352A0
-	  lwz       r0, 0x200(r30)
-	  stw       r0, 0x218(r30)
-	  lwz       r0, 0x20C(r30)
-	  stw       r0, 0x224(r30)
-	  lwz       r3, 0x398(r30)
-	  lwz       r4, 0x218(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x224(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x398(r30)
-	  stfs      f30, 0xC0(r3)
-	  stfs      f30, 0xC4(r3)
-	  stfs      f30, 0xC8(r3)
-	  lwz       r0, 0x230(r30)
-	  stw       r0, 0x248(r30)
-	  lwz       r0, 0x23C(r30)
-	  stw       r0, 0x254(r30)
-	  lwz       r3, 0x3A4(r30)
-	  lwz       r4, 0x248(r30)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x254(r30)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x3A4(r30)
-	  addi      r29, r29, 0x1
-	  cmpwi     r29, 0x3
-	  stfs      f30, 0xC0(r3)
-	  addi      r30, r30, 0x4
-	  stfs      f30, 0xC4(r3)
-	  stfs      f30, 0xC8(r3)
-	  blt+      .loc_0x128
-	  li        r3, 0
-	  stb       r3, 0x1180(r31)
-	  li        r0, 0xFF
-	  stw       r3, 0x27C(r31)
-	  stb       r3, 0x284(r31)
-	  stb       r3, 0x28C(r31)
-	  lwz       r3, 0x44C(r31)
-	  stb       r0, 0xF0(r3)
-	  lfs       f0, 0x138(r31)
-	  lwz       r3, 0x38C(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x144(r31)
-	  lwz       r3, 0x380(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x13C(r31)
-	  lwz       r3, 0x390(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x148(r31)
-	  lwz       r3, 0x384(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x140(r31)
-	  lwz       r3, 0x394(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f0, 0x14C(r31)
-	  lwz       r3, 0x388(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x3E0
-	  lfs       f0, -0x4FA0(r2)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x11
-	  stfs      f0, 0x30(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stfs      f0, 0x2C(r1)
-	  stfs      f0, 0x28(r1)
-	  lfs       f1, 0xCF0(r13)
-	  lfs       f0, 0xCF4(r13)
-	  stfs      f1, 0x28(r1)
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, 0xCF8(r13)
-	  stfs      f0, 0x30(r1)
-	  lwz       r3, 0x0(r31)
-	  bl        0x5F398
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x12
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F380
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x13
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F368
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x14
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F350
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x15
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F338
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x16
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F320
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x17
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F308
-	  lwz       r3, 0x0(r31)
-	  addi      r5, r1, 0x28
-	  li        r4, 0x18
-	  li        r6, 0
-	  li        r7, 0
-	  bl        0x5F2F0
+		P2DPaneLibrary::setFamilyAlpha(_3B0[i], 255);
 
-	.loc_0x3E0:
-	  lwz       r0, 0x5C(r1)
-	  lfd       f31, 0x50(r1)
-	  lfd       f30, 0x48(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x58
-	  mtlr      r0
-	  blr
-	*/
+		_218[i] = _200[i];
+		_224[i] = _20C[i];
+		_398[i]->move(_218[i], _224[i]);
+		_398[i]->setScale(1.0f);
+
+		_248[i] = _230[i];
+		_254[i] = _23C[i];
+		_3A4[i]->move(_248[i], _254[i]);
+		_3A4[i]->setScale(1.0f);
+	}
+
+	_1180     = 0;
+	mTitleMsg = titleMsg_0;
+	_284      = 0;
+	_28C      = 0;
+
+	_44C->setAlpha(255);
+
+	setDataScale();
+
+	if (!mSaveMode) {
+		Vector3f pos;
+		pos.set(320.0f, 240.0f, 0.0f);
+		mEfxMgr->create(EFF2D_Unk17, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk18, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk19, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk20, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk21, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk22, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk23, pos, nullptr, nullptr);
+		mEfxMgr->create(EFF2D_Unk24, pos, nullptr, nullptr);
+	}
+
+	PRINT("///////////// ogScrFileSelectMgr start() end //////////////\n");
 }
 
 /*
@@ -3625,7 +1016,8 @@ void zen::ogScrFileSelectMgr::start(bool, int)
  */
 void zen::ogScrFileSelectMgr::BeginFadeOut()
 {
-	// UNUSED FUNCTION
+	mState = STATE_Unk2;
+	_1184  = 0.0f;
 }
 
 /*
@@ -3633,9 +1025,16 @@ void zen::ogScrFileSelectMgr::BeginFadeOut()
  * Address:	........
  * Size:	000060
  */
-int zen::ogScrFileSelectMgr::CanToCopy(int)
+int zen::ogScrFileSelectMgr::CanToCopy(int p1)
 {
-	// UNUSED FUNCTION
+	int res = 0;
+	for (int i = 0; i < 3; i++) {
+		if (_1190[i] && i != p1) {
+			res++;
+		}
+	}
+
+	return res;
 }
 
 /*
@@ -3643,284 +1042,72 @@ int zen::ogScrFileSelectMgr::CanToCopy(int)
  * Address:	8018A874
  * Size:	00036C
  */
-void zen::ogScrFileSelectMgr::OperateSelect(Controller*)
+void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  stw       r30, 0x10(r1)
-	  lwz       r4, 0x28(r4)
-	  rlwinm.   r0,r4,0,9,9
-	  beq-      .loc_0x54
-	  lha       r0, 0x134(r31)
-	  cmpwi     r0, 0
-	  ble-      .loc_0x54
-	  li        r3, 0x112
-	  bl        -0xE5534
-	  lha       r4, 0x134(r31)
-	  addi      r3, r31, 0
-	  subi      r0, r4, 0x1
-	  sth       r0, 0x134(r31)
-	  lha       r4, 0x134(r31)
-	  bl        -0x14CC
-	  b         .loc_0x354
+	if (controller->keyClick(KBBTN_MSTICK_LEFT) && _134 > 0) {
+		SeSystem::playSysSe(SYSSE_MOVE1);
+		_134--;
+		setDataNumber(_134);
+		return;
+	}
 
-	.loc_0x54:
-	  rlwinm.   r0,r4,0,11,11
-	  beq-      .loc_0x8C
-	  lha       r0, 0x134(r31)
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x8C
-	  li        r3, 0x112
-	  bl        -0xE556C
-	  lha       r4, 0x134(r31)
-	  addi      r3, r31, 0
-	  addi      r0, r4, 0x1
-	  sth       r0, 0x134(r31)
-	  lha       r4, 0x134(r31)
-	  bl        -0x1504
-	  b         .loc_0x354
+	if (controller->keyClick(KBBTN_MSTICK_RIGHT) && _134 < 2) {
+		SeSystem::playSysSe(SYSSE_MOVE1);
+		_134++;
+		setDataNumber(_134);
+		return;
+	}
 
-	.loc_0x8C:
-	  rlwinm.   r0,r4,0,19,19
-	  beq-      .loc_0x110
-	  li        r3, 0x111
-	  bl        -0xE5598
-	  mr        r3, r31
-	  bl        .loc_0x36C
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xCC
-	  li        r0, 0x2
-	  stw       r0, 0x20(r31)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x1184(r31)
-	  stw       r0, 0x20(r31)
-	  stfs      f0, 0x1184(r31)
-	  b         .loc_0x354
+	if (controller->keyClick(KBBTN_A)) {
+		SeSystem::playSysSe(SYSSE_DECIDE1);
+		KetteiEffectStart();
+		if (mSaveMode) {
+			mState = STATE_Unk2;
+			_1184  = 0.0f;
+			BeginFadeOut();
+		} else {
+			_150   = 0.0f;
+			mState = STATE_Unk3;
+			_53C   = 0.1f;
+			if (_14) {
+				_14->forceFinish();
+			}
+			if (_18) {
+				_18->forceFinish();
+			}
 
-	.loc_0xCC:
-	  lfs       f0, -0x4FA0(r2)
-	  li        r0, 0x3
-	  stfs      f0, 0x150(r31)
-	  stw       r0, 0x20(r31)
-	  lfs       f0, -0x4F68(r2)
-	  stfs      f0, 0x53C(r31)
-	  lwz       r3, 0x14(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF4
-	  bl        0x16298
+			TailEffectStart();
+		}
+		return;
+	}
 
-	.loc_0xF4:
-	  lwz       r3, 0x18(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x104
-	  bl        0x16288
+	if (controller->keyClick(KBBTN_B)) {
+		_1193 = 1;
+		BeginFadeOut();
+		SeSystem::playSysSe(SYSSE_CANCEL);
+		if (_14) {
+			_14->forceFinish();
+		}
+		if (_18) {
+			_18->forceFinish();
+		}
+		return;
+	}
 
-	.loc_0x104:
-	  mr        r3, r31
-	  bl        0x460
-	  b         .loc_0x354
+	if (controller->keyClick(KBBTN_Y)) {
+		if (!_1190[_134] && !mSaveMode) {
+			SeSystem::playSysSe(SYSSE_DECIDE1);
+			setOperateMode(OPMODE_Copy);
+		}
+		return;
+	}
 
-	.loc_0x110:
-	  rlwinm.   r0,r4,0,18,18
-	  beq-      .loc_0x15C
-	  li        r0, 0x1
-	  stb       r0, 0x1193(r31)
-	  li        r0, 0x2
-	  li        r3, 0x11D
-	  stw       r0, 0x20(r31)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x1184(r31)
-	  bl        -0xE5634
-	  lwz       r3, 0x14(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x148
-	  bl        0x16244
-
-	.loc_0x148:
-	  lwz       r3, 0x18(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x354
-	  bl        0x16234
-	  b         .loc_0x354
-
-	.loc_0x15C:
-	  rlwinm.   r0,r4,0,16,16
-	  beq-      .loc_0x258
-	  lha       r0, 0x134(r31)
-	  add       r3, r31, r0
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x354
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x354
-	  li        r3, 0x111
-	  bl        -0xE5688
-	  li        r30, 0x1
-	  stw       r30, 0x24(r31)
-	  lwz       r0, 0x24(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x240
-	  bge-      .loc_0x1B0
-	  cmpwi     r0, 0
-	  bge-      .loc_0x1BC
-	  b         .loc_0x354
-
-	.loc_0x1B0:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x354
-	  b         .loc_0x24C
-
-	.loc_0x1BC:
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x1984
-	  lha       r0, 0x134(r31)
-	  add       r3, r31, r0
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x200
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1F4
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0x21C
-
-	.loc_0x1F4:
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0x21C
-
-	.loc_0x200:
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x218
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0x21C
-
-	.loc_0x218:
-	  stb       r30, 0x278(r31)
-
-	.loc_0x21C:
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xA4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x5017C
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xD4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x5016C
-	  b         .loc_0x354
-
-	.loc_0x240:
-	  mr        r3, r31
-	  bl        0xC6E4
-	  b         .loc_0x354
-
-	.loc_0x24C:
-	  mr        r3, r31
-	  bl        0xD014
-	  b         .loc_0x354
-
-	.loc_0x258:
-	  rlwinm.   r0,r4,0,17,17
-	  beq-      .loc_0x354
-	  lha       r0, 0x134(r31)
-	  add       r3, r31, r0
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x354
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x354
-	  li        r3, 0x111
-	  bl        -0xE5784
-	  li        r0, 0x2
-	  stw       r0, 0x24(r31)
-	  lwz       r0, 0x24(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x340
-	  bge-      .loc_0x2AC
-	  cmpwi     r0, 0
-	  bge-      .loc_0x2B8
-	  b         .loc_0x354
-
-	.loc_0x2AC:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x354
-	  b         .loc_0x34C
-
-	.loc_0x2B8:
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        -0x1A80
-	  lha       r0, 0x134(r31)
-	  add       r3, r31, r0
-	  lbz       r0, 0x1190(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2FC
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2F0
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0x31C
-
-	.loc_0x2F0:
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0x31C
-
-	.loc_0x2FC:
-	  lbz       r0, 0x28(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x314
-	  li        r0, 0
-	  stb       r0, 0x278(r31)
-	  b         .loc_0x31C
-
-	.loc_0x314:
-	  li        r0, 0x1
-	  stb       r0, 0x278(r31)
-
-	.loc_0x31C:
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xA4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x5007C
-	  lfs       f1, -0x4FA0(r2)
-	  addi      r3, r31, 0xD4
-	  lfs       f2, -0x4F88(r2)
-	  bl        0x5006C
-	  b         .loc_0x354
-
-	.loc_0x340:
-	  mr        r3, r31
-	  bl        0xC5E4
-	  b         .loc_0x354
-
-	.loc_0x34C:
-	  mr        r3, r31
-	  bl        0xCF14
-
-	.loc_0x354:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0x36C:
-	*/
+	if (controller->keyClick(KBBTN_X)) {
+		if (!_1190[_134] && !mSaveMode) {
+			SeSystem::playSysSe(SYSSE_DECIDE1);
+			setOperateMode(OPMODE_Delete);
+		}
+	}
 }
 
 /*
@@ -3930,136 +1117,17 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller*)
  */
 void zen::ogScrFileSelectMgr::KetteiEffectStart()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x25
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stwu      r1, -0xC0(r1)
-	  stw       r31, 0xBC(r1)
-	  lis       r31, 0x4330
-	  addi      r5, r1, 0x6C
-	  stw       r30, 0xB8(r1)
-	  addi      r30, r3, 0
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x74(r1)
-	  stfs      f0, 0x70(r1)
-	  stfs      f0, 0x6C(r1)
-	  lfs       f1, 0xCFC(r13)
-	  lfs       f0, 0xD00(r13)
-	  stfs      f1, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0xD04(r13)
-	  stfs      f0, 0x74(r1)
-	  lha       r0, 0x134(r3)
-	  lfd       f4, -0x4F80(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f3, -0x4F74(r2)
-	  add       r3, r30, r0
-	  lfs       f2, -0x4F70(r2)
-	  lwz       r8, 0x3B0(r3)
-	  lha       r3, 0x18(r8)
-	  lha       r0, 0x1C(r8)
-	  lha       r8, 0x18(r8)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0xAC(r1)
-	  xoris     r0, r8, 0x8000
-	  stw       r31, 0xA8(r1)
-	  stw       r0, 0xB4(r1)
-	  lfd       f0, 0xA8(r1)
-	  stw       r31, 0xB0(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0xB0(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x6C(r1)
-	  lha       r0, 0x134(r30)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lwz       r9, 0x3B0(r3)
-	  lha       r8, 0x1A(r9)
-	  lha       r3, 0x1A(r9)
-	  lha       r0, 0x1E(r9)
-	  xoris     r8, r8, 0x8000
-	  stw       r8, 0xA4(r1)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r31, 0xA0(r1)
-	  stw       r0, 0x9C(r1)
-	  lfd       f0, 0xA0(r1)
-	  stw       r31, 0x98(r1)
-	  fsubs     f1, f0, f4
-	  lfd       f0, 0x98(r1)
-	  fsubs     f0, f0, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x70(r1)
-	  lwz       r3, 0x0(r30)
-	  bl        0x5EE4C
-	  lha       r0, 0x134(r30)
-	  addi      r5, r1, 0x6C
-	  lfd       f4, -0x4F80(r2)
-	  li        r4, 0x22
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lfs       f3, -0x4F74(r2)
-	  lwz       r8, 0x3BC(r3)
-	  li        r6, 0
-	  lfs       f2, -0x4F70(r2)
-	  li        r7, 0
-	  lha       r3, 0x18(r8)
-	  lha       r0, 0x1C(r8)
-	  lha       r8, 0x18(r8)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x8C(r1)
-	  xoris     r0, r8, 0x8000
-	  stw       r31, 0x88(r1)
-	  stw       r0, 0x94(r1)
-	  lfd       f0, 0x88(r1)
-	  stw       r31, 0x90(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0x90(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x6C(r1)
-	  lha       r0, 0x134(r30)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lwz       r8, 0x3BC(r3)
-	  lha       r3, 0x1A(r8)
-	  lha       r0, 0x1E(r8)
-	  lha       r8, 0x1A(r8)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x7C(r1)
-	  xoris     r0, r8, 0x8000
-	  stw       r31, 0x78(r1)
-	  stw       r0, 0x84(r1)
-	  lfd       f0, 0x78(r1)
-	  stw       r31, 0x80(r1)
-	  fsubs     f0, f0, f4
-	  lfd       f1, 0x80(r1)
-	  fsubs     f1, f1, f4
-	  fmuls     f0, f0, f3
-	  fadds     f0, f1, f0
-	  fsubs     f0, f2, f0
-	  stfs      f0, 0x70(r1)
-	  lwz       r3, 0x0(r30)
-	  bl        0x5ED7C
-	  lwz       r0, 0xC4(r1)
-	  lwz       r31, 0xBC(r1)
-	  lwz       r30, 0xB8(r1)
-	  addi      r1, r1, 0xC0
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos;
+	pos.set(0.0f, 0.0f, 0.0f);
+	pos.x = f32(_3B0[_134]->getPosH()) + f32(_3B0[_134]->getWidth()) / 2.0f;
+	pos.y = 480.0f - (f32(_3B0[_134]->getPosV()) + f32(_3B0[_134]->getHeight()) / 2.0f);
+
+	mEfxMgr->create(EFF2D_Unk37, pos, nullptr, nullptr);
+
+	pos.x = f32(_3BC[_134]->getPosH()) + f32(_3BC[_134]->getWidth()) / 2.0f;
+	pos.y = 480.0f - (f32(_3BC[_134]->getPosV()) + f32(_3BC[_134]->getHeight()) / 2.0f);
+
+	mEfxMgr->create(EFF2D_Unk34, pos, nullptr, nullptr);
 }
 
 /*
@@ -4069,126 +1137,17 @@ void zen::ogScrFileSelectMgr::KetteiEffectStart()
  */
 void zen::ogScrFileSelectMgr::TailEffectStart()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x26
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stwu      r1, -0xB0(r1)
-	  stw       r31, 0xAC(r1)
-	  lis       r31, 0x4330
-	  addi      r5, r1, 0x6C
-	  stw       r30, 0xA8(r1)
-	  addi      r30, r3, 0
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x74(r1)
-	  stfs      f0, 0x70(r1)
-	  stfs      f0, 0x6C(r1)
-	  lfs       f1, 0xD08(r13)
-	  lfs       f0, 0xD0C(r13)
-	  stfs      f1, 0x6C(r1)
-	  stfs      f0, 0x70(r1)
-	  lfs       f0, 0xD10(r13)
-	  stfs      f0, 0x74(r1)
-	  lha       r0, 0x134(r3)
-	  lfd       f4, -0x4F80(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f0, -0x4F74(r2)
-	  add       r3, r30, r0
-	  lfs       f1, -0x4F70(r2)
-	  lwz       r8, 0x3B0(r3)
-	  lha       r3, 0x18(r8)
-	  lha       r0, 0x1C(r8)
-	  lha       r8, 0x18(r8)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x9C(r1)
-	  xoris     r0, r8, 0x8000
-	  stw       r31, 0x98(r1)
-	  stw       r0, 0xA4(r1)
-	  lfd       f2, 0x98(r1)
-	  stw       r31, 0xA0(r1)
-	  fsubs     f2, f2, f4
-	  lfd       f3, 0xA0(r1)
-	  fsubs     f3, f3, f4
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x6C(r1)
-	  lha       r0, 0x134(r30)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lwz       r8, 0x3B0(r3)
-	  lha       r3, 0x1A(r8)
-	  lha       r0, 0x1E(r8)
-	  lha       r8, 0x1A(r8)
-	  sub       r0, r0, r3
-	  add       r0, r8, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x94(r1)
-	  stw       r31, 0x90(r1)
-	  lfd       f0, 0x90(r1)
-	  fsubs     f0, f0, f4
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x70(r1)
-	  lwz       r3, 0x0(r30)
-	  bl        0x5EC68
-	  stw       r3, 0xC(r30)
-	  addi      r5, r1, 0x6C
-	  li        r4, 0x21
-	  lha       r0, 0x134(r30)
-	  li        r6, 0
-	  lfd       f4, -0x4F80(r2)
-	  li        r7, 0
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lfs       f0, -0x4F74(r2)
-	  lwz       r8, 0x3BC(r3)
-	  lfs       f1, -0x4F70(r2)
-	  lha       r3, 0x18(r8)
-	  lha       r0, 0x1C(r8)
-	  lha       r8, 0x18(r8)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x84(r1)
-	  xoris     r0, r8, 0x8000
-	  stw       r31, 0x80(r1)
-	  stw       r0, 0x8C(r1)
-	  lfd       f2, 0x80(r1)
-	  stw       r31, 0x88(r1)
-	  fsubs     f2, f2, f4
-	  lfd       f3, 0x88(r1)
-	  fsubs     f3, f3, f4
-	  fmuls     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x6C(r1)
-	  lha       r0, 0x134(r30)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r30, r0
-	  lwz       r8, 0x3BC(r3)
-	  lha       r3, 0x1A(r8)
-	  lha       r0, 0x1E(r8)
-	  lha       r8, 0x1A(r8)
-	  sub       r0, r0, r3
-	  add       r0, r8, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x7C(r1)
-	  stw       r31, 0x78(r1)
-	  lfd       f0, 0x78(r1)
-	  fsubs     f0, f0, f4
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x70(r1)
-	  lwz       r3, 0x0(r30)
-	  bl        0x5EBAC
-	  stw       r3, 0x10(r30)
-	  lwz       r0, 0xB4(r1)
-	  lwz       r31, 0xAC(r1)
-	  lwz       r30, 0xA8(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	Vector3f pos;
+	pos.set(0.0f, 0.0f, 0.0f);
+	pos.x = f32(_3B0[_134]->getPosH()) + f32(_3B0[_134]->getWidth()) / 2.0f;
+	pos.y = 480.0f - (_3B0[_134]->getPosV() + _3B0[_134]->getHeight());
+
+	_0C = mEfxMgr->create(EFF2D_Unk38, pos, nullptr, nullptr);
+
+	pos.x = f32(_3BC[_134]->getPosH()) + f32(_3BC[_134]->getWidth()) / 2.0f;
+	pos.y = 480.0f - (_3BC[_134]->getPosV() + _3BC[_134]->getHeight());
+
+	_10 = mEfxMgr->create(EFF2D_Unk33, pos, nullptr, nullptr);
 }
 
 /*
@@ -4196,9 +1155,14 @@ void zen::ogScrFileSelectMgr::TailEffectStart()
  * Address:	........
  * Size:	0000B4
  */
-void zen::ogScrFileSelectMgr::TailEffectMove(int, int)
+void zen::ogScrFileSelectMgr::TailEffectMove(int x, int y)
 {
-	// UNUSED FUNCTION
+	Vector3f pos;
+	int newX = x + _3B0[_134]->getWidth() / 2;
+	int newY = y + _3B0[_134]->getHeight();
+
+	pos.set(newX, 480 - newY, 0.0f);
+	_0C->setEmitPos(pos);
 }
 
 /*
@@ -4206,9 +1170,14 @@ void zen::ogScrFileSelectMgr::TailEffectMove(int, int)
  * Address:	........
  * Size:	0000B4
  */
-void zen::ogScrFileSelectMgr::TailEffectMoveM(int, int)
+void zen::ogScrFileSelectMgr::TailEffectMoveM(int x, int y)
 {
-	// UNUSED FUNCTION
+	Vector3f pos;
+	int newX = x + _3BC[_134]->getWidth() / 2;
+	int newY = y + _3BC[_134]->getHeight();
+
+	pos.set(newX, 480 - newY + 100, 0.0f);
+	_10->setEmitPos(pos);
 }
 
 /*
@@ -4218,7 +1187,13 @@ void zen::ogScrFileSelectMgr::TailEffectMoveM(int, int)
  */
 void zen::ogScrFileSelectMgr::quit()
 {
-	// UNUSED FUNCTION
+	mState = STATE_NULL;
+	if (_14) {
+		_14->forceFinish();
+	}
+	if (_18) {
+		_18->forceFinish();
+	}
 }
 
 /*
@@ -4226,851 +1201,181 @@ void zen::ogScrFileSelectMgr::quit()
  * Address:	8018AFB0
  * Size:	000A20
  */
-zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Controller*, CardQuickInfo&)
+zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x288(r1)
-	  stw       r31, 0x284(r1)
-	  stw       r30, 0x280(r1)
-	  stw       r29, 0x27C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x278(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x20(r3)
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x34
-	  b         .loc_0xA00
+	if (mState == STATE_NULL) {
+		return mState;
+	}
 
-	.loc_0x34:
-	  lha       r0, 0x134(r28)
-	  mulli     r0, r0, 0x28
-	  add       r4, r28, r0
-	  lwz       r3, 0x2C(r4)
-	  lwz       r0, 0x30(r4)
-	  stw       r3, 0x0(r5)
-	  stw       r0, 0x4(r5)
-	  lwz       r3, 0x34(r4)
-	  lwz       r0, 0x38(r4)
-	  stw       r3, 0x8(r5)
-	  stw       r0, 0xC(r5)
-	  lwz       r3, 0x3C(r4)
-	  lwz       r0, 0x40(r4)
-	  stw       r3, 0x10(r5)
-	  stw       r0, 0x14(r5)
-	  lwz       r3, 0x44(r4)
-	  lwz       r0, 0x48(r4)
-	  stw       r3, 0x18(r5)
-	  stw       r0, 0x1C(r5)
-	  lwz       r3, 0x4C(r4)
-	  lwz       r0, 0x50(r4)
-	  stw       r3, 0x20(r5)
-	  stw       r0, 0x24(r5)
-	  lwz       r3, 0x0(r28)
-	  bl        0x5EB44
-	  li        r31, 0
-	  addi      r30, r28, 0
+	cardInfo = _2C[_134];
+	mEfxMgr->update();
+	set_SM_C();
+	MovePaneXY();
+	ScaleAnimeTitle();
+	ScaleAnimeData();
+	UpDateYesNoWindow();
 
-	.loc_0xA0:
-	  lwz       r4, 0x434(r30)
-	  addi      r3, r1, 0x1EC
-	  addi      r4, r4, 0x108
-	  bl        .loc_0xA20
-	  lbz       r3, 0x1EC(r1)
-	  addi      r31, r31, 0x1
-	  lbz       r0, 0x1ED(r1)
-	  cmpwi     r31, 0x3
-	  stb       r3, 0x1E4(r1)
-	  lbz       r3, 0x1EE(r1)
-	  stb       r0, 0x1E5(r1)
-	  lbz       r0, 0x1EF(r1)
-	  stb       r3, 0x1E6(r1)
-	  stb       r0, 0x1E7(r1)
-	  lwz       r4, 0x434(r30)
-	  lwz       r3, 0x3F8(r30)
-	  lbz       r4, 0xF0(r4)
-	  lwz       r0, 0x1E4(r1)
-	  stw       r0, 0x108(r3)
-	  lwz       r3, 0x3F8(r30)
-	  stb       r4, 0xF0(r3)
-	  lwz       r3, 0x41C(r30)
-	  lwz       r0, 0x1E4(r1)
-	  stw       r0, 0x108(r3)
-	  lwz       r3, 0x41C(r30)
-	  stb       r4, 0xF0(r3)
-	  lwz       r3, 0x428(r30)
-	  lwz       r0, 0x1E4(r1)
-	  stw       r0, 0x108(r3)
-	  lwz       r3, 0x428(r30)
-	  addi      r30, r30, 0x4
-	  stb       r4, 0xF0(r3)
-	  blt+      .loc_0xA0
-	  mr        r3, r28
-	  bl        -0x35F4
-	  lbz       r0, 0x284(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1BC
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x280(r28)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x280(r28)
-	  lfs       f1, 0x280(r28)
-	  lfs       f0, -0x4F78(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x164
-	  li        r0, 0
-	  stb       r0, 0x284(r28)
+	if (_54C < 1.0f) {
+		_54C += gsys->getFrameTime();
+	}
 
-	.loc_0x164:
-	  lfs       f1, 0x280(r28)
-	  bl        -0xC89C
-	  lwz       r3, 0x2DC(r28)
-	  stfs      f1, 0xC0(r3)
-	  stfs      f1, 0xC4(r3)
-	  lfs       f0, -0x4F98(r2)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r5, 0x2DC(r28)
-	  lha       r3, 0x18(r5)
-	  lha       r0, 0x1C(r5)
-	  lha       r4, 0x1A(r5)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r5)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  sub       r4, r3, r4
-	  extsh     r3, r0
-	  srawi     r0, r4, 0x1
-	  sth       r3, 0xB8(r5)
-	  addze     r0, r0
-	  extsh     r0, r0
-	  sth       r0, 0xBA(r5)
+	_A4.update();
+	_D4.update();
 
-	.loc_0x1BC:
-	  lbz       r0, 0x28C(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x224
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x288(r28)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x288(r28)
-	  lfs       f1, 0x288(r28)
-	  lfs       f0, -0x4F78(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x1F4
-	  li        r0, 0
-	  stb       r0, 0x28C(r28)
+	if (mState == STATE_Unk1) {
+		_1184 += gsys->getFrameTime();
+		if (_1184 >= 0.5f) {
+			mState = STATE_Unk0;
+		} else {
+			_1180 = 255.0f * _1184 / 0.5f;
+			_44C->setAlpha(255 - _1180);
+		}
 
-	.loc_0x1F4:
-	  lfs       f1, 0x288(r28)
-	  bl        -0xC92C
-	  lwz       r4, 0x2B8(r28)
-	  li        r3, 0x140
-	  li        r0, 0x190
-	  stfs      f1, 0xC0(r4)
-	  stfs      f1, 0xC4(r4)
-	  lfs       f0, -0x4F98(r2)
-	  stfs      f0, 0xC8(r4)
-	  lwz       r4, 0x2B8(r28)
-	  sth       r3, 0xB8(r4)
-	  sth       r0, 0xBA(r4)
+		if (_1184 < 0.05f) {
+			return mState;
+		}
+	} else if (mState == STATE_Unk2) {
+		_1184 += gsys->getFrameTime();
+		if (_1184 >= 0.5f) {
+			mEfxMgr->killAll(true);
+			if (_1193) {
+				mState = STATE_Unk6;
+			} else {
+				switch (_134) {
+				case 0:
+					mState = STATE_Unk7;
+					break;
 
-	.loc_0x224:
-	  lfs       f2, 0x290(r28)
-	  lfs       f1, -0x4F9C(r2)
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x2F4
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x290(r28)
-	  lfs       f0, 0x290(r28)
-	  lbz       r0, 0x28D(r28)
-	  fdivs     f2, f0, f1
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2A4
-	  lwz       r3, 0x2D8(r28)
-	  lis       r0, 0x4330
-	  stfs      f2, 0xC0(r3)
-	  stfs      f2, 0xC4(r3)
-	  stfs      f2, 0xC8(r3)
-	  lwz       r3, 0x2D4(r28)
-	  lfd       f1, -0x4F90(r2)
-	  lbz       r4, 0xF7(r3)
-	  lwz       r3, 0x2D0(r28)
-	  stw       r4, 0x274(r1)
-	  stw       r0, 0x270(r1)
-	  lfd       f0, 0x270(r1)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x268(r1)
-	  lwz       r0, 0x26C(r1)
-	  stb       r0, 0xF0(r3)
-	  b         .loc_0x2F4
+				case 1:
+					mState = STATE_Unk8;
+					break;
 
-	.loc_0x2A4:
-	  lfs       f0, -0x4F98(r2)
-	  lis       r0, 0x4330
-	  lwz       r3, 0x2D8(r28)
-	  fsubs     f2, f0, f2
-	  stfs      f2, 0xC0(r3)
-	  stfs      f2, 0xC4(r3)
-	  stfs      f2, 0xC8(r3)
-	  lwz       r3, 0x2D4(r28)
-	  lfd       f1, -0x4F90(r2)
-	  lbz       r4, 0xF7(r3)
-	  lwz       r3, 0x2D0(r28)
-	  stw       r4, 0x26C(r1)
-	  stw       r0, 0x268(r1)
-	  lfd       f0, 0x268(r1)
-	  fsubs     f0, f0, f1
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x270(r1)
-	  lwz       r0, 0x274(r1)
-	  stb       r0, 0xF0(r3)
+				case 2:
+					mState = STATE_Unk9;
+					break;
 
-	.loc_0x2F4:
-	  lfs       f1, 0x54C(r28)
-	  lfs       f0, -0x4F98(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x314
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x54C(r28)
+				default:
+					mState = STATE_Unk10;
+					break;
+				}
+			}
+		} else {
+			_1180 = 255.0f * (0.5f - _1184) / 0.5f;
+			_44C->setAlpha(255 - _1180);
+		}
+		return mState;
 
-	.loc_0x314:
-	  addi      r3, r28, 0xA4
-	  bl        0x4F54C
-	  addi      r3, r28, 0xD4
-	  bl        0x4F544
-	  lwz       r0, 0x20(r28)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x3A8
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x1184(r28)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1184(r28)
-	  lfs       f2, 0x1184(r28)
-	  lfs       f1, -0x4F74(r2)
-	  fcmpo     cr0, f2, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x364
-	  li        r0, 0
-	  stw       r0, 0x20(r28)
-	  b         .loc_0x390
+	} else if (mState >= STATE_Unk6) {
+		quit();
+		mState = STATE_NULL;
+		return mState;
+	}
 
-	.loc_0x364:
-	  lfs       f0, -0x4F64(r2)
-	  fmuls     f0, f0, f2
-	  fdivs     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x268(r1)
-	  lwz       r0, 0x26C(r1)
-	  stb       r0, 0x1180(r28)
-	  lbz       r0, 0x1180(r28)
-	  lwz       r3, 0x44C(r28)
-	  subfic    r0, r0, 0xFF
-	  stb       r0, 0xF0(r3)
+	chaseDataScale();
 
-	.loc_0x390:
-	  lfs       f1, 0x1184(r28)
-	  lfs       f0, -0x4F60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x4CC
-	  lwz       r3, 0x20(r28)
-	  b         .loc_0xA00
+	for (int i = 0; i < 3; i++) {
+		_29C[i]->update();
+		_2A8[i]->update();
+	}
 
-	.loc_0x3A8:
-	  cmpwi     r0, 0x2
-	  bne-      .loc_0x48C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x1184(r28)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x1184(r28)
-	  lfs       f0, 0x1184(r28)
-	  lfs       f2, -0x4F74(r2)
-	  fcmpo     cr0, f0, f2
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x454
-	  lwz       r3, 0x0(r28)
-	  li        r4, 0x1
-	  bl        0x5E944
-	  lbz       r0, 0x1193(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3FC
-	  li        r0, 0x6
-	  stw       r0, 0x20(r28)
-	  b         .loc_0x484
+	_2B4->update();
+	_2B8->update();
+	_2BC->update();
+	_2C0->update();
 
-	.loc_0x3FC:
-	  lha       r0, 0x134(r28)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x430
-	  bge-      .loc_0x418
-	  cmpwi     r0, 0
-	  bge-      .loc_0x424
-	  b         .loc_0x448
+	_150 += gsys->getFrameTime();
 
-	.loc_0x418:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x448
-	  b         .loc_0x43C
+	if (mState == STATE_Unk3) {
+		_53C += 0.4f;
+		_1DC[_134] -= _53C;
+		_1F4[_134] += _53C;
+		_3B0[_134]->move(_1D0[_134], _1DC[_134]);
+		_3BC[_134]->move(_1E8[_134], _1F4[_134]);
 
-	.loc_0x424:
-	  li        r0, 0x7
-	  stw       r0, 0x20(r28)
-	  b         .loc_0x484
+		_224[_134] -= _53C;
+		_254[_134] += _53C;
+		_398[_134]->move(_218[_134], _224[_134]);
+		_3A4[_134]->move(_248[_134], _254[_134]);
 
-	.loc_0x430:
-	  li        r0, 0x8
-	  stw       r0, 0x20(r28)
-	  b         .loc_0x484
+		TailEffectMove(_1D0[_134], _1DC[_134]);
+		TailEffectMoveM(_1E8[_134], _1F4[_134]);
+		int diff = _164[_134] - _1DC[_134];
+		f32 v    = fabs((f64)diff);
+		if (v > 200.0f) {
+			v = 200.0f;
+		}
 
-	.loc_0x43C:
-	  li        r0, 0x9
-	  stw       r0, 0x20(r28)
-	  b         .loc_0x484
+		u32 badCompiler;
+		Vector3f scale = _3B0[_134]->getScale();
+		scale.x        = 1.0f - v / 200.0f;
+		scale.y        = 1.0f - v / 200.0f;
 
-	.loc_0x448:
-	  li        r0, 0xA
-	  stw       r0, 0x20(r28)
-	  b         .loc_0x484
+		_3B0[_134]->setScale(scale);
+		_3BC[_134]->setScale(scale);
+		_398[_134]->setScale(scale);
+		_3A4[_134]->setScale(scale);
 
-	.loc_0x454:
-	  fsubs     f0, f2, f0
-	  lfs       f1, -0x4F64(r2)
-	  fmuls     f0, f1, f0
-	  fdivs     f0, f0, f2
-	  fctiwz    f0, f0
-	  stfd      f0, 0x268(r1)
-	  lwz       r0, 0x26C(r1)
-	  stb       r0, 0x1180(r28)
-	  lbz       r0, 0x1180(r28)
-	  lwz       r3, 0x44C(r28)
-	  subfic    r0, r0, 0xFF
-	  stb       r0, 0xF0(r3)
+		if (_150 > 1.0f) {
+			BeginFadeOut();
+			_0C->finish();
+			_10->finish();
+		}
 
-	.loc_0x484:
-	  lwz       r3, 0x20(r28)
-	  b         .loc_0xA00
+		return mState;
+	}
 
-	.loc_0x48C:
-	  cmpwi     r0, 0x6
-	  blt-      .loc_0x4CC
-	  li        r0, -0x1
-	  stw       r0, 0x20(r28)
-	  lwz       r3, 0x14(r28)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4AC
-	  bl        0x157A4
+	if (_150 > 1.0f) {
+		switch (mOperateMode) {
+		case OPMODE_Normal:
+			OperateSelect(controller);
+			break;
 
-	.loc_0x4AC:
-	  lwz       r3, 0x18(r28)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x4BC
-	  bl        0x15794
+		case OPMODE_Copy:
+			OperateCopy(controller);
+			break;
 
-	.loc_0x4BC:
-	  li        r0, -0x1
-	  stw       r0, 0x20(r28)
-	  lwz       r3, 0x20(r28)
-	  b         .loc_0xA00
+		case OPMODE_Delete:
+			OperateDelete(controller);
+			break;
+		}
+	}
 
-	.loc_0x4CC:
-	  mr        r3, r28
-	  bl        -0x14C0
-	  li        r31, 0
-	  rlwinm    r0,r31,2,0,29
-	  add       r30, r28, r0
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
+	mState ? "fake" : "fake";
 
-	.loc_0x4E0:
-	  lwz       r3, 0x29C(r30)
-	  bl        0x276BC
-	  lwz       r3, 0x2A8(r30)
-	  bl        0x276B4
-	  addi      r31, r31, 0x1
-	  cmpwi     r31, 0x3
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x4E0
-	  lwz       r3, 0x2B4(r28)
-	  bl        0x2769C
-	  lwz       r3, 0x2B8(r28)
-	  bl        0x27694
-	  lwz       r3, 0x2BC(r28)
-	  bl        0x2768C
-	  lwz       r3, 0x2C0(r28)
-	  bl        0x27684
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f1, 0x150(r28)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x150(r28)
-	  lwz       r0, 0x20(r28)
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x998
-	  lfs       f1, 0x53C(r28)
-	  lis       r31, 0x4330
-	  lfs       f0, -0x4F5C(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x53C(r28)
-	  lha       r0, 0x134(r28)
-	  lfd       f2, -0x4F80(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f0, 0x53C(r28)
-	  add       r3, r28, r0
-	  lwz       r0, 0x1DC(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x26C(r1)
-	  stw       r31, 0x268(r1)
-	  lfd       f1, 0x268(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x270(r1)
-	  lwz       r0, 0x274(r1)
-	  stw       r0, 0x1DC(r3)
-	  lha       r0, 0x134(r28)
-	  lfs       f0, 0x53C(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r28, r0
-	  lwz       r0, 0x1F4(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x264(r1)
-	  stw       r31, 0x260(r1)
-	  lfd       f1, 0x260(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x258(r1)
-	  lwz       r0, 0x25C(r1)
-	  stw       r0, 0x1F4(r3)
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r5, r28, r0
-	  lwz       r3, 0x3B0(r5)
-	  lwz       r4, 0x1D0(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x1DC(r5)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r5, r28, r0
-	  lwz       r3, 0x3BC(r5)
-	  lwz       r4, 0x1E8(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x1F4(r5)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lha       r0, 0x134(r28)
-	  lfd       f2, -0x4F80(r2)
-	  rlwinm    r0,r0,2,0,29
-	  lfs       f0, 0x53C(r28)
-	  add       r3, r28, r0
-	  lwz       r0, 0x224(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x254(r1)
-	  stw       r31, 0x250(r1)
-	  lfd       f1, 0x250(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x248(r1)
-	  lwz       r0, 0x24C(r1)
-	  stw       r0, 0x224(r3)
-	  lha       r0, 0x134(r28)
-	  lfs       f0, 0x53C(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r28, r0
-	  lwz       r0, 0x254(r3)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x244(r1)
-	  stw       r31, 0x240(r1)
-	  lfd       f1, 0x240(r1)
-	  fsubs     f1, f1, f2
-	  fadds     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x238(r1)
-	  lwz       r0, 0x23C(r1)
-	  stw       r0, 0x254(r3)
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r5, r28, r0
-	  lwz       r3, 0x398(r5)
-	  lwz       r4, 0x218(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x224(r5)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r5, r28, r0
-	  lwz       r3, 0x3A4(r5)
-	  lwz       r4, 0x248(r5)
-	  lwz       r12, 0x0(r3)
-	  lwz       r5, 0x254(r5)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f1, -0x4FA0(r2)
-	  stfs      f1, 0x1A0(r1)
-	  stfs      f1, 0x19C(r1)
-	  stfs      f1, 0x198(r1)
-	  lfd       f2, -0x4F80(r2)
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r6, r28, r0
-	  lwz       r7, 0x3B0(r6)
-	  lwz       r4, 0x1D0(r6)
-	  lha       r3, 0x18(r7)
-	  lha       r0, 0x1C(r7)
-	  lha       r5, 0x1A(r7)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r7)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  add       r0, r4, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x234(r1)
-	  sub       r3, r3, r5
-	  stw       r31, 0x230(r1)
-	  lfd       f0, 0x230(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x198(r1)
-	  lwz       r0, 0x1DC(r6)
-	  add       r0, r0, r3
-	  subfic    r0, r0, 0x1E0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x22C(r1)
-	  stw       r31, 0x228(r1)
-	  lfd       f0, 0x228(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x19C(r1)
-	  lfs       f0, 0xD14(r13)
-	  stfs      f0, 0x1A0(r1)
-	  lwz       r4, 0xC(r28)
-	  lwz       r3, 0x198(r1)
-	  lwz       r0, 0x19C(r1)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0x1A0(r1)
-	  stw       r0, 0x14(r4)
-	  stfs      f1, 0x17C(r1)
-	  stfs      f1, 0x178(r1)
-	  stfs      f1, 0x174(r1)
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r6, r28, r0
-	  lwz       r7, 0x3BC(r6)
-	  lwz       r4, 0x1E8(r6)
-	  lha       r3, 0x18(r7)
-	  lha       r0, 0x1C(r7)
-	  lha       r5, 0x1A(r7)
-	  sub       r0, r0, r3
-	  lha       r3, 0x1E(r7)
-	  srawi     r0, r0, 0x1
-	  addze     r0, r0
-	  add       r0, r4, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x224(r1)
-	  sub       r3, r3, r5
-	  stw       r31, 0x220(r1)
-	  lfd       f0, 0x220(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x174(r1)
-	  lwz       r0, 0x1F4(r6)
-	  add       r0, r0, r3
-	  subfic    r0, r0, 0x244
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x21C(r1)
-	  stw       r31, 0x218(r1)
-	  lfd       f0, 0x218(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x178(r1)
-	  lfs       f0, 0xD18(r13)
-	  stfs      f0, 0x17C(r1)
-	  lwz       r4, 0x10(r28)
-	  lwz       r3, 0x174(r1)
-	  lwz       r0, 0x178(r1)
-	  stw       r3, 0xC(r4)
-	  stw       r0, 0x10(r4)
-	  lwz       r0, 0x17C(r1)
-	  stw       r0, 0x14(r4)
-	  lha       r0, 0x134(r28)
-	  lfs       f0, -0x4F58(r2)
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r28, r0
-	  lwz       r3, 0x1DC(r4)
-	  lwz       r0, 0x164(r4)
-	  sub       r0, r0, r3
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x214(r1)
-	  stw       r31, 0x210(r1)
-	  lfd       f1, 0x210(r1)
-	  fsub      f1, f1, f2
-	  fabs      f1, f1
-	  frsp      f1, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x880
-	  fmr       f1, f0
-
-	.loc_0x880:
-	  lha       r0, 0x134(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r28, r0
-	  lwz       r3, 0x3B0(r3)
-	  lfs       f0, 0xC0(r3)
-	  addi      r4, r3, 0xC0
-	  stfs      f0, 0x1FC(r1)
-	  lfs       f0, 0xC4(r3)
-	  stfs      f0, 0x200(r1)
-	  lfs       f0, -0x4F58(r2)
-	  lfs       f2, 0xC8(r3)
-	  fdivs     f0, f1, f0
-	  lfs       f1, -0x4F98(r2)
-	  stfs      f2, 0x204(r1)
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x1FC(r1)
-	  stfs      f0, 0x200(r1)
-	  lwz       r3, 0x1FC(r1)
-	  lwz       r0, 0x200(r1)
-	  stw       r3, 0x0(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r0, 0x204(r1)
-	  stw       r0, 0x8(r4)
-	  lha       r0, 0x134(r28)
-	  lwz       r3, 0x1FC(r1)
-	  rlwinm    r4,r0,2,0,29
-	  lwz       r0, 0x200(r1)
-	  add       r4, r28, r4
-	  lwz       r4, 0x3BC(r4)
-	  stw       r3, 0xC0(r4)
-	  stw       r0, 0xC4(r4)
-	  lwz       r0, 0x204(r1)
-	  stw       r0, 0xC8(r4)
-	  lha       r0, 0x134(r28)
-	  lwz       r3, 0x1FC(r1)
-	  rlwinm    r4,r0,2,0,29
-	  lwz       r0, 0x200(r1)
-	  add       r4, r28, r4
-	  lwz       r4, 0x398(r4)
-	  stw       r3, 0xC0(r4)
-	  stw       r0, 0xC4(r4)
-	  lwz       r0, 0x204(r1)
-	  stw       r0, 0xC8(r4)
-	  lha       r0, 0x134(r28)
-	  lwz       r3, 0x1FC(r1)
-	  rlwinm    r4,r0,2,0,29
-	  lwz       r0, 0x200(r1)
-	  add       r4, r28, r4
-	  lwz       r4, 0x3A4(r4)
-	  stw       r3, 0xC0(r4)
-	  stw       r0, 0xC4(r4)
-	  lwz       r0, 0x204(r1)
-	  stw       r0, 0xC8(r4)
-	  lfs       f0, 0x150(r28)
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x990
-	  li        r0, 0x2
-	  stw       r0, 0x20(r28)
-	  lfs       f0, -0x4FA0(r2)
-	  stfs      f0, 0x1184(r28)
-	  lwz       r3, 0xC(r28)
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r3)
-	  lwz       r3, 0x10(r28)
-	  lwz       r0, 0x80(r3)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x80(r3)
-
-	.loc_0x990:
-	  lwz       r3, 0x20(r28)
-	  b         .loc_0xA00
-
-	.loc_0x998:
-	  lfs       f1, 0x150(r28)
-	  lfs       f0, -0x4F98(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x9FC
-	  lwz       r0, 0x24(r28)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x9E0
-	  bge-      .loc_0x9C4
-	  cmpwi     r0, 0
-	  bge-      .loc_0x9D0
-	  b         .loc_0x9FC
-
-	.loc_0x9C4:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x9FC
-	  b         .loc_0x9F0
-
-	.loc_0x9D0:
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        -0x1114
-	  b         .loc_0x9FC
-
-	.loc_0x9E0:
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        0xBCB8
-	  b         .loc_0x9FC
-
-	.loc_0x9F0:
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        0xC194
-
-	.loc_0x9FC:
-	  lwz       r3, 0x20(r28)
-
-	.loc_0xA00:
-	  lwz       r0, 0x28C(r1)
-	  lwz       r31, 0x284(r1)
-	  lwz       r30, 0x280(r1)
-	  lwz       r29, 0x27C(r1)
-	  lwz       r28, 0x278(r1)
-	  addi      r1, r1, 0x288
-	  mtlr      r0
-	  blr
-
-	.loc_0xA20:
-	*/
+	return mState;
 }
-
-// /*
-//  * --INFO--
-//  * Address:	8018B9D0
-//  * Size:	000024
-//  */
-// Colour::Colour(const Colour&)
-// {
-// 	/*
-// 	.loc_0x0:
-// 	  lbz       r0, 0x0(r4)
-// 	  stb       r0, 0x0(r3)
-// 	  lbz       r0, 0x1(r4)
-// 	  stb       r0, 0x1(r3)
-// 	  lbz       r0, 0x2(r4)
-// 	  stb       r0, 0x2(r3)
-// 	  lbz       r0, 0x3(r4)
-// 	  stb       r0, 0x3(r3)
-// 	  blr
-// 	*/
-// }
 
 /*
  * --INFO--
  * Address:	8018B9F4
  * Size:	00015C
  */
-void zen::ogScrFileSelectMgr::draw(Graphics&)
+void zen::ogScrFileSelectMgr::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x108(r1)
-	  stw       r31, 0x104(r1)
-	  stw       r30, 0x100(r1)
-	  stw       r29, 0xFC(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0xF8(r1)
-	  mr        r28, r3
-	  lwz       r0, 0x20(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x13C
-	  lfs       f1, -0x4F54(r2)
-	  addi      r3, r1, 0x10
-	  lfs       f2, -0x4F98(r2)
-	  li        r4, 0
-	  lfs       f3, -0x4F50(r2)
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x2474C
-	  addi      r3, r1, 0x10
-	  bl        0x24854
-	  li        r30, 0
-	  rlwinm    r0,r30,2,0,29
-	  add       r31, r28, r0
+	if (mState == STATE_NULL) {
+		return;
+	}
 
-	.loc_0x68:
-	  lwz       r3, 0x29C(r31)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x27468
-	  lwz       r3, 0x2A8(r31)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x27454
-	  addi      r30, r30, 0x1
-	  cmpwi     r30, 0x3
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x68
-	  lwz       r3, 0x0(r28)
-	  mr        r4, r29
-	  bl        0x5E110
-	  mr        r3, r29
-	  lwz       r12, 0x3B4(r29)
-	  li        r4, 0
-	  lwz       r12, 0xB8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  li        r4, 0x7
-	  li        r5, 0
-	  bl        0x8830C
-	  lwz       r3, 0x2BC(r28)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x273FC
-	  lwz       r3, 0x2B4(r28)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x273E8
-	  lwz       r3, 0x2B8(r28)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x273D4
-	  lwz       r3, 0x2C0(r28)
-	  addi      r6, r1, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x273C0
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x10(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x10(r1)
+	P2DPerspGraph perspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	perspGraph.setPort();
 
-	.loc_0x13C:
-	  lwz       r0, 0x10C(r1)
-	  lwz       r31, 0x104(r1)
-	  lwz       r30, 0x100(r1)
-	  lwz       r29, 0xFC(r1)
-	  lwz       r28, 0xF8(r1)
-	  addi      r1, r1, 0x108
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < 3; i++) {
+		_29C[i]->draw(0, 0, &perspGraph);
+		_2A8[i]->draw(0, 0, &perspGraph);
+	}
+
+	mEfxMgr->draw(gfx);
+	gfx.setFog(false);
+	GXSetZMode(GX_FALSE, GX_ALWAYS, GX_FALSE);
+	_2BC->draw(0, 0, &perspGraph);
+	_2B4->draw(0, 0, &perspGraph);
+	_2B8->draw(0, 0, &perspGraph);
+	_2C0->draw(0, 0, &perspGraph);
 }

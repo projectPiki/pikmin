@@ -111,7 +111,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		_118C -= gsys->getFrameTime();
 		if (_118C < 0.0f) {
 			_1198 = false;
-			setOperateMode(fileOp_0);
+			setOperateMode(OPMODE_Normal);
 			_300->hide();
 		}
 		return;
@@ -154,7 +154,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 	if (_11A0) {
 		if (input->keyClick(KBBTN_B)) {
 			seSystem->playSysSe(SYSSE_CANCEL);
-			setOperateMode(fileOp_0);
+			setOperateMode(OPMODE_Normal);
 		} else if (input->keyClick(KBBTN_A)) {
 			seSystem->playSysSe(SYSSE_DECIDE1);
 			_11A0 = false;
@@ -193,16 +193,16 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 	}
 	if (status == ogNitakuMgr::Status_4) {
 		seSystem->playSysSe(SYSSE_CANCEL);
-		setOperateMode(fileOp_0);
+		setOperateMode(OPMODE_Normal);
 	} else if (status == 5) {
 		_1197 = true;
 		_118C = 3.0f;
 		seSystem->playSysSe(SYSSE_CARDACCESS);
-		gameflow.mMemoryCard.copyFile(_24[_134], _24[_119C]);
+		gameflow.mMemoryCard.copyFile(_2C[_134], _2C[_119C]);
 		CopyEffectStart();
 		_314->hide();
 	} else if (status == 6) {
-		setOperateMode(fileOp_0);
+		setOperateMode(OPMODE_Normal);
 	}
 
 	f32 badcompiler[4];

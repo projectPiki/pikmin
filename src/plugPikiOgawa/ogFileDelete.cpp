@@ -69,7 +69,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 		_1188 -= gsys->getFrameTime();
 		if (_1188 < 0.0f) {
 			_1196 = false;
-			setOperateMode(fileOp_0);
+			setOperateMode(OPMODE_Normal);
 		}
 		return;
 	}
@@ -115,15 +115,15 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 	}
 	if (status == ogNitakuMgr::Status_4) {
 		seSystem->playSysSe(SYSSE_CANCEL);
-		setOperateMode(fileOp_0);
+		setOperateMode(OPMODE_Normal);
 	} else if (status == 5) {
 		seSystem->playSysSe(SYSSE_CARDACCESS);
-		gameflow.mMemoryCard.delFile(_24[_134]);
+		gameflow.mMemoryCard.delFile(_2C[_134]);
 		DeleteEffectStart();
 		_1188 = 2.0f;
 		_1195 = true;
 		_1199 = false;
 	} else if (status == 6) {
-		setOperateMode(fileOp_0);
+		setOperateMode(OPMODE_Normal);
 	}
 }

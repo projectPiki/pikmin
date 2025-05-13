@@ -100,7 +100,7 @@ struct ogRaderMgr {
 	P2DPicture* _74;          // _74
 	P2DPicture* _78;          // _78
 	P2DPicture* _7C;          // _7C
-	P2DPane* _80;             // _80
+	P2DPicture* _80;          // _80
 	P2DPicture* _84[30];      // _84
 	s16 _FC;                  // _FC
 	PikiRaderEntry _100[100]; // _100
@@ -117,8 +117,6 @@ struct ogRaderMgr {
 	s16 _458;                 // _458
 	s16 _45A;                 // _45A
 };
-
-// unused/inlined global functions:
 
 } // namespace zen
 
