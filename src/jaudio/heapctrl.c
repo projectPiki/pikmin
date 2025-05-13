@@ -1,13 +1,11 @@
-#include "types.h"
-
-typedef struct jaheap_ jaheap_;
+#include "jaudio/heapctrl.h"
 
 /*
  * --INFO--
  * Address:	8000E9C0
  * Size:	000034
  */
-void ARAMFinish(u32)
+static void ARAMFinish(u32)
 {
 	/*
 	.loc_0x0:
@@ -32,7 +30,7 @@ void ARAMFinish(u32)
  * Address:	8000EA00
  * Size:	0000E8
  */
-void ARAM_TO_ARAM_DMA(u32, u32, u32)
+static void ARAM_TO_ARAM_DMA(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -110,7 +108,7 @@ void ARAM_TO_ARAM_DMA(u32, u32, u32)
  * Address:	8000EB00
  * Size:	0000FC
  */
-void DRAM_TO_DRAM_DMA(u32, u32, u32)
+static void DRAM_TO_DRAM_DMA(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -732,7 +730,7 @@ void Jac_DeleteHeap(jaheap_*)
  * Address:	8000F1C0
  * Size:	000064
  */
-void Jac_Move_Children(jaheap_*, s32)
+static void Jac_Move_Children(jaheap_*, s32)
 {
 	/*
 	.loc_0x0:
