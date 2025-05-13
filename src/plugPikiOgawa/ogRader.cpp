@@ -1,7 +1,17 @@
 #include "zen/ogRader.h"
 #include "zen/ogSub.h"
-#include "Vector.h"
-#include "P2D/Pane.h"
+#include "P2D/Screen.h"
+#include "P2D/Graph.h"
+#include "FlowController.h"
+#include "NaviMgr.h"
+#include "GoalItem.h"
+#include "RadarInfo.h"
+#include "UfoItem.h"
+#include "PikiHeadItem.h"
+#include "PlayerState.h"
+#include "PikiMgr.h"
+#include "SoundMgr.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -16,15 +26,28 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("OgRaderSection")
+
+namespace zen {
+f32 map_area_data[5][3] = { { -698.0f, 2024.0f, 2880.0f },
+	                        { -334.0f, 2024.0f, 2880.0f },
+	                        { -170.0f, 554.0f, 2654.0f },
+	                        { -480.0f, 160.0f, 3950.0f },
+	                        { -44.0f, 1504.0f, 2322.0f } };
+}; // namespace zen
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000058
  */
-Vector3f zen::ogRaderMgr::ogCalcDispXZ(Vector3f)
+Vector3f zen::ogRaderMgr::ogCalcDispXZ(Vector3f in)
 {
+	Vector3f disp;
+	disp.y = 0.0f;
+	disp.x = ((in.x + 2800.0f) * 310.0f * 10.0f) / 5400.0f;
+	disp.z = ((in.z + 4300.0f) * 528.0f * 10.0f) / 9200.0f;
+	return disp;
 	// UNUSED FUNCTION
 }
 
@@ -33,9 +56,9 @@ Vector3f zen::ogRaderMgr::ogCalcDispXZ(Vector3f)
  * Address:	........
  * Size:	00003C
  */
-void zen::setOffsetSub(P2DPicture*)
+void zen::setOffsetSub(P2DPicture* pic)
 {
-	// UNUSED FUNCTION
+	pic->setOffset(pic->getWidth() / 2, pic->getHeight() / 2);
 }
 
 /*
@@ -45,6 +68,126 @@ void zen::setOffsetSub(P2DPicture*)
  */
 zen::ogRaderMgr::ogRaderMgr()
 {
+	P2DScreen* screen = new P2DScreen;
+
+	int stage = flowCont.mCurrentStage->mStageID;
+	PRINT("----- RADER MAP (%d) -----\n", stage);
+	_24 = map_area_data[stage][0];
+	_28 = map_area_data[stage][1];
+	_2C = map_area_data[stage][2];
+
+	switch (stage) {
+	case 0:
+		_54 = 0;
+		screen->set("screen/blo/p_map00.blo", true);
+		_4C = (P2DPicture*)screen->search('map0', true);
+		break;
+	case 1:
+		_54 = 1;
+		screen->set("screen/blo/p_map01.blo", true);
+		_4C = (P2DPicture*)screen->search('map1', true);
+		break;
+	case 2:
+		_54 = 2;
+		screen->set("screen/blo/p_map02.blo", true);
+		_4C = (P2DPicture*)screen->search('map2', true);
+		break;
+	case 3:
+		_54 = 3;
+		screen->set("screen/blo/p_map03.blo", true);
+		_4C = (P2DPicture*)screen->search('map3', true);
+		break;
+	case 4:
+		_54 = 4;
+		screen->set("screen/blo/p_map04.blo", true);
+		_4C = (P2DPicture*)screen->search('map4', true);
+		break;
+	default:
+		PRINT("----- UNKNOWN MAP !!! -----\n");
+		_54 = 0;
+		screen->set("screen/blo/p_map00.blo", true);
+		_4C = (P2DPicture*)screen->search('map0', true);
+		break;
+	}
+
+	_50         = new PikaAlphaMgr(screen);
+	_450        = 0.0f;
+	mMainScreen = screen;
+	_58         = screen->search('root', true);
+	_5C         = (P2DPicture*)screen->search('mbpi', true);
+	_60         = (P2DPicture*)screen->search('mrpi', true);
+	_64         = (P2DPicture*)screen->search('mypi', true);
+	_68         = (P2DPicture*)screen->search('mmpi', true);
+	_80         = screen->search('part', true);
+	_6C         = (P2DPicture*)screen->search('orim', true);
+	_70         = (P2DPicture*)screen->search('mbci', true);
+	_74         = (P2DPicture*)screen->search('mrci', true);
+	_78         = (P2DPicture*)screen->search('myci', true);
+	_7C         = (P2DPicture*)screen->search('mroi', true);
+
+	setOffsetSub(_6C);
+	setOffsetSub(_70);
+	setOffsetSub(_74);
+	setOffsetSub(_78);
+	setOffsetSub(_7C);
+
+	_5C->hide();
+	_60->hide();
+	_64->hide();
+	_68->hide();
+	_80->hide();
+	_424 = screen->search('i_bs', true);
+	Colour white(255, 255, 255, 255);
+	Colour black(0, 0, 0, 0);
+
+	PikiRaderEntry* data = _100;
+	for (int i = 0; i < 100; i++) {
+		data->mPic = new P2DPicture(_5C->getTexture(0));
+		_424->appendChild(data->mPic);
+		data->mPic->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
+		data->mPic->setScale(10.0f);
+		data->mPic->setWhite(white);
+		data->mPic->setBlack(black);
+		data->mPic->hide();
+		setOffsetSub(data->mPic);
+		data++;
+	}
+
+	// hardcoded ship part count my beloved
+	for (int i = 0; i < 30; i++) {
+		_84[i] = new P2DPicture(_5C->getTexture(0));
+		_424->appendChild(_84[i]);
+		_84[i]->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
+		_84[i]->setScale(7.5f);
+		_84[i]->setWhite(white);
+		_84[i]->setBlack(black);
+		_84[i]->hide();
+		setOffsetSub(_84[i]);
+	}
+
+	int w = _4C->getTexture(0)->mWidth;
+	int h = _4C->getTexture(0)->mHeight;
+	PRINT("MAP(%d,%d)\n", w, h);
+	_4C->hide();
+	_420 = _4C;
+	_420->setOffset(0, 0);
+	_424->setOffset(0, 0);
+	_458 = 0;
+	_420->setAlpha(_458);
+	white.set(128, 128, 255, 255);
+	_420->setWhite(white);
+	_420->show();
+	_424->show();
+	setRaderScroll(0, 0);
+	_428 = 2.0f;
+	_34  = 0.0f;
+	_38  = 0.0f;
+	_454 = 0.0f;
+	setRaderAngle(_454);
+	mStatus = STATE_NULL;
+
+	f32 badcompiler[20];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -701,8 +844,12 @@ zen::ogRaderMgr::ogRaderMgr()
  * Address:	........
  * Size:	00003C
  */
-void zen::ogRaderMgr::setRaderScale(f32)
+void zen::ogRaderMgr::setRaderScale(f32 scale)
 {
+	_428 = scale;
+	_42C = scale;
+	_420->setScale(_428);
+	_424->setScale(_428 / 10.0f);
 	// UNUSED FUNCTION
 }
 
@@ -711,8 +858,11 @@ void zen::ogRaderMgr::setRaderScale(f32)
  * Address:	........
  * Size:	00004C
  */
-void zen::ogRaderMgr::chaseRaderScale(f32)
+void zen::ogRaderMgr::chaseRaderScale(f32 scale)
 {
+	_428 += (scale - _428) / 5.0f;
+	_420->setScale(_428);
+	_424->setScale(_428 / 10.0f);
 	// UNUSED FUNCTION
 }
 
@@ -721,50 +871,10 @@ void zen::ogRaderMgr::chaseRaderScale(f32)
  * Address:	80185A10
  * Size:	00008C
  */
-void zen::ogRaderMgr::setRaderAngle(f32)
+void zen::ogRaderMgr::setRaderAngle(f32 angle)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  li        r4, 0x2
-	  lfs       f0, 0xC(r3)
-	  lfs       f2, 0x10(r3)
-	  fctiwz    f0, f0
-	  lwz       r5, 0x58(r3)
-	  fctiwz    f2, f2
-	  stfd      f0, 0x18(r1)
-	  stfd      f2, 0x20(r1)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r6, 0x24(r1)
-	  extsh     r0, r0
-	  sth       r0, 0xB8(r5)
-	  extsh     r0, r6
-	  sth       r0, 0xBA(r5)
-	  lwz       r3, 0x58(r3)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,5,25,26
-	  stb       r0, 0xC(r3)
-	  stfs      f1, 0xBC(r3)
-	  lfs       f1, 0xBC(r3)
-	  lfs       f0, -0x5014(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x70
-	  lfs       f0, -0x5004(r2)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0xBC(r3)
-	  b         .loc_0x84
-
-	.loc_0x70:
-	  lfs       f0, -0x5004(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x84
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xBC(r3)
-
-	.loc_0x84:
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	_58->setOffset(_0C, _10);
+	_58->rotate(P2DROTATE_Unk2, angle);
 }
 
 /*
@@ -772,49 +882,13 @@ void zen::ogRaderMgr::setRaderAngle(f32)
  * Address:	80185A9C
  * Size:	000098
  */
-void zen::ogRaderMgr::setRaderScroll(int, int)
+void zen::ogRaderMgr::setRaderScroll(int x, int y)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  mr        r29, r3
-	  lfs       f1, 0xC(r3)
-	  lfs       f0, 0x10(r3)
-	  fctiwz    f1, f1
-	  lwz       r3, 0x420(r3)
-	  fctiwz    f0, f0
-	  lwz       r12, 0x0(r3)
-	  stfd      f1, 0x20(r1)
-	  lwz       r12, 0x14(r12)
-	  stfd      f0, 0x18(r1)
-	  lwz       r6, 0x24(r1)
-	  mtlr      r12
-	  lwz       r0, 0x1C(r1)
-	  add       r30, r4, r6
-	  add       r31, r5, r0
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  blrl
-	  lwz       r3, 0x424(r29)
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	int oy, ox;
+	ox = _0C;
+	oy = _10;
+	_420->move(x + ox, y + oy);
+	_424->move(x + ox, y + oy);
 }
 
 /*
@@ -824,7 +898,17 @@ void zen::ogRaderMgr::setRaderScroll(int, int)
  */
 void zen::ogRaderMgr::getOrimaPos()
 {
-	// UNUSED FUNCTION
+	Navi* navi = naviMgr->getNavi();
+	_430       = navi->getPosition();
+
+	_43C = ogCalcDispXZ(_430);
+	_448 = _43C.x;
+	_44C = _43C.z;
+	_6C->move(_448, _44C);
+	_6C->setScale(10.0f / _428);
+	_450 = PI - navi->mFaceDirection;
+	_6C->rotate(P2DROTATE_Unk2, _450);
+	setRaderScroll((_428 * -(_43C.x + _34)) / 10.0f, (_428 * -(_43C.z + _38)) / 10.0f);
 }
 
 /*
@@ -834,7 +918,18 @@ void zen::ogRaderMgr::getOrimaPos()
  */
 void zen::ogRaderMgr::getContainerPos()
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 3; i++) {
+		GoalItem* goal = itemMgr->getContainer(i);
+		if (goal) {
+			Vector3f pos  = goal->getPosition();
+			Vector3f disp = ogCalcDispXZ(pos);
+			_40[i]->move(disp.x, disp.z);
+			_40[i]->setScale(10.0f / _428);
+			_40[i]->show();
+		} else {
+			_40[i]->hide();
+		}
+	}
 }
 
 /*
@@ -844,7 +939,13 @@ void zen::ogRaderMgr::getContainerPos()
  */
 void zen::ogRaderMgr::getRocketPos()
 {
-	// UNUSED FUNCTION
+	// hmm what a rather unfortunate lack of a null check here
+	UfoItem* ufo = itemMgr->getUfo();
+	Vector3f pos = ufo->getPosition();
+
+	Vector3f disp = ogCalcDispXZ(pos);
+	_7C->move(disp.x, disp.z);
+	_7C->setScale(10.0f / _428);
 }
 
 /*
@@ -854,6 +955,22 @@ void zen::ogRaderMgr::getRocketPos()
  */
 void zen::ogRaderMgr::getPartsPos()
 {
+	for (int i = 0; i < 30; i++) {
+		_84[i]->hide();
+	}
+
+	int i = 0;
+	for (RadarInfo::PartsInfo* info = (RadarInfo::PartsInfo*)radarInfo->mAlivePartsList.Child(); info;
+	     info                       = (RadarInfo::PartsInfo*)info->Next()) {
+
+		Vector3f pos = ogCalcDispXZ(info->getPos());
+		_84[i]->show();
+		_84[i]->move(pos.x, pos.z);
+		_84[i]->setScale(7.5f / _428);
+		i++;
+	}
+
+	f32 badcompiler[14];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1018,358 +1135,44 @@ void zen::ogRaderMgr::getPartsPos()
  */
 void zen::ogRaderMgr::getAllPikiPos()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x6
-	  mtctr     r0
-	  stwu      r1, -0x180(r1)
-	  stfd      f31, 0x178(r1)
-	  stfd      f30, 0x170(r1)
-	  stfd      f29, 0x168(r1)
-	  stfd      f28, 0x160(r1)
-	  stfd      f27, 0x158(r1)
-	  stfd      f26, 0x150(r1)
-	  stfd      f25, 0x148(r1)
-	  stmw      r27, 0x134(r1)
-	  addi      r28, r3, 0
-	  li        r3, 0
-	  addi      r5, r28, 0x100
-	  sth       r3, 0xFC(r28)
+	PikiRaderEntry* data = _100;
+	_FC                  = 0;
+	for (int i = 0; i < 100; i++) {
+		data->mPic->hide();
+		data++;
+	}
 
-	.loc_0x48:
-	  lwz       r3, 0x0(r5)
-	  li        r4, 0
-	  addi      r6, r6, 0x10
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x8(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x10(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x18(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x20(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x28(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x30(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x38(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x40(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x48(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x50(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x58(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x60(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x68(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x70(r5)
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x78(r5)
-	  addi      r5, r5, 0x80
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  bdnz+     .loc_0x48
-	  subfic    r0, r6, 0x64
-	  cmpwi     r6, 0x64
-	  mtctr     r0
-	  bge-      .loc_0x180
+	data = _100;
+	Iterator iterator(pikiMgr);
+	CI_LOOP(iterator)
+	{
+		Piki* piki = (Piki*)*iterator;
+		if (piki->isAlive()) {
+			Vector3f pos = ogCalcDispXZ(piki->mPosition);
+			data->mColor = piki->mColor;
+			data->mPic->show();
+			data->mPic->move(pos.x, pos.z);
+			data->mPic->setScale(10.0f / _428);
+			data++;
+			_FC++;
+		}
+	}
 
-	.loc_0x168:
-	  lwz       r3, 0x0(r5)
-	  addi      r5, r5, 0x8
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  stb       r0, 0xC(r3)
-	  bdnz+     .loc_0x168
+	Iterator iterator2(itemMgr->getPikiHeadMgr());
+	CI_LOOP(iterator2)
+	{
+		PikiHeadItem* piki = (PikiHeadItem*)*iterator2;
 
-	.loc_0x180:
-	  lwz       r31, 0x3068(r13)
-	  addi      r29, r28, 0x100
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f31, -0x5030(r2)
-	  mr        r30, r3
-	  lfs       f30, -0x5020(r2)
-	  lfs       f29, -0x501C(r2)
-	  lfs       f28, -0x5018(r2)
-	  lfs       f27, -0x502C(r2)
-	  lfs       f26, -0x5028(r2)
-	  lfs       f25, -0x5024(r2)
-	  b         .loc_0x2CC
+		Vector3f pos = ogCalcDispXZ(piki->mPosition);
+		data->mColor = -1;
+		data->mPic->show();
+		data->mPic->move(pos.x, pos.z);
+		data->mPic->setScale(10.0f / _428);
+		data++;
+		_FC++;
+	}
 
-	.loc_0x1C0:
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x1E4
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x1FC
-
-	.loc_0x1E4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x1FC:
-	  mr        r27, r3
-	  lwz       r12, 0x0(r27)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2B0
-	  lfs       f1, 0x94(r27)
-	  li        r4, 0x1
-	  lfs       f0, 0x9C(r27)
-	  fadds     f1, f29, f1
-	  lha       r0, 0x510(r27)
-	  fadds     f0, f26, f0
-	  sth       r0, 0x4(r29)
-	  fmuls     f1, f30, f1
-	  fmuls     f0, f27, f0
-	  lwz       r3, 0x0(r29)
-	  fmuls     f1, f31, f1
-	  lbz       r0, 0xC(r3)
-	  fmuls     f0, f31, f0
-	  rlwimi    r0,r4,7,24,24
-	  fdivs     f1, f1, f28
-	  stb       r0, 0xC(r3)
-	  lwz       r3, 0x0(r29)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  fdivs     f0, f0, f25
-	  mtlr      r12
-	  fctiwz    f1, f1
-	  fctiwz    f0, f0
-	  stfd      f1, 0x128(r1)
-	  stfd      f0, 0x120(r1)
-	  lwz       r4, 0x12C(r1)
-	  lwz       r5, 0x124(r1)
-	  blrl
-	  lfs       f0, 0x428(r28)
-	  lwz       r3, 0x0(r29)
-	  addi      r29, r29, 0x8
-	  fdivs     f0, f31, f0
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lha       r3, 0xFC(r28)
-	  addi      r0, r3, 0x1
-	  sth       r0, 0xFC(r28)
-
-	.loc_0x2B0:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x2CC:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x2F4
-	  li        r0, 0x1
-	  b         .loc_0x320
-
-	.loc_0x2F4:
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x31C
-	  li        r0, 0x1
-	  b         .loc_0x320
-
-	.loc_0x31C:
-	  li        r0, 0
-
-	.loc_0x320:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x1C0
-	  lwz       r3, 0x30AC(r13)
-	  lwz       r30, 0x64(r3)
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f25, -0x5030(r2)
-	  mr        r31, r3
-	  lfs       f26, -0x5020(r2)
-	  lfs       f27, -0x501C(r2)
-	  lfs       f28, -0x5018(r2)
-	  lfs       f29, -0x502C(r2)
-	  lfs       f30, -0x5028(r2)
-	  lfs       f31, -0x5024(r2)
-	  b         .loc_0x458
-
-	.loc_0x368:
-	  cmpwi     r31, -0x1
-	  bne-      .loc_0x38C
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x3A4
-
-	.loc_0x38C:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x3A4:
-	  lfs       f1, 0x94(r3)
-	  li        r0, -0x1
-	  lfs       f0, 0x9C(r3)
-	  li        r4, 0x1
-	  fadds     f1, f27, f1
-	  fadds     f0, f30, f0
-	  sth       r0, 0x4(r29)
-	  fmuls     f1, f26, f1
-	  lwz       r3, 0x0(r29)
-	  fmuls     f0, f29, f0
-	  lbz       r0, 0xC(r3)
-	  rlwimi    r0,r4,7,24,24
-	  fmuls     f1, f25, f1
-	  stb       r0, 0xC(r3)
-	  fmuls     f0, f25, f0
-	  lwz       r3, 0x0(r29)
-	  fdivs     f1, f1, f28
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  fdivs     f0, f0, f31
-	  fctiwz    f1, f1
-	  fctiwz    f0, f0
-	  stfd      f1, 0x120(r1)
-	  stfd      f0, 0x128(r1)
-	  lwz       r4, 0x124(r1)
-	  lwz       r5, 0x12C(r1)
-	  blrl
-	  lfs       f0, 0x428(r28)
-	  mr        r3, r30
-	  lwz       r5, 0x0(r29)
-	  mr        r4, r31
-	  fdivs     f0, f25, f0
-	  addi      r29, r29, 0x8
-	  stfs      f0, 0xC0(r5)
-	  stfs      f0, 0xC4(r5)
-	  stfs      f0, 0xC8(r5)
-	  lha       r5, 0xFC(r28)
-	  addi      r0, r5, 0x1
-	  sth       r0, 0xFC(r28)
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r31, r3
-
-	.loc_0x458:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x480
-	  li        r0, 0x1
-	  b         .loc_0x4AC
-
-	.loc_0x480:
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x4A8
-	  li        r0, 0x1
-	  b         .loc_0x4AC
-
-	.loc_0x4A8:
-	  li        r0, 0
-
-	.loc_0x4AC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x368
-	  lmw       r27, 0x134(r1)
-	  lwz       r0, 0x184(r1)
-	  lfd       f31, 0x178(r1)
-	  lfd       f30, 0x170(r1)
-	  lfd       f29, 0x168(r1)
-	  lfd       f28, 0x160(r1)
-	  lfd       f27, 0x158(r1)
-	  lfd       f26, 0x150(r1)
-	  lfd       f25, 0x148(r1)
-	  addi      r1, r1, 0x180
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[4];
 }
 
 /*
@@ -1379,6 +1182,35 @@ void zen::ogRaderMgr::getAllPikiPos()
  */
 void zen::ogRaderMgr::startSub()
 {
+	mStatus = STATE_4;
+	_50->startFadeIn(0.5f);
+	_458 = 0;
+	_420->setAlpha(_458);
+	setRaderScale(2.0f);
+	PRINT("ogRader start!\n");
+
+	_6C->alone();
+	_424->appendChild(_6C);
+
+	_40[0] = _70;
+	_40[1] = _74;
+	_40[2] = _78;
+	for (int i = 0; i < 3; i++) {
+		_40[i]->alone();
+		_424->appendChild(_40[i]);
+	}
+
+	_7C->alone();
+	_424->appendChild(_7C);
+
+	getOrimaPos();
+	getContainerPos();
+	getRocketPos();
+	getAllPikiPos();
+	_34 = 0.0f;
+	_38 = 0.0f;
+
+	f32 badcompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1786,6 +1618,17 @@ void zen::ogRaderMgr::startSub()
  */
 void zen::ogRaderMgr::start()
 {
+	if (mStatus == -1) {
+		_04  = 0;
+		_45A = 64;
+		_0C  = 320.0f;
+		_10  = 220.0f;
+		_1C  = 155;
+		_20  = 264;
+		_14  = 320 - _1C / 2;
+		_18  = 220 - _20 / 2;
+		startSub();
+	}
 	// UNUSED FUNCTION
 }
 
@@ -1794,89 +1637,30 @@ void zen::ogRaderMgr::start()
  * Address:	80186854
  * Size:	000128
  */
-void zen::ogRaderMgr::startMenu(P2DPane*)
+void zen::ogRaderMgr::startMenu(P2DPane* pane)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x114
-	  lwz       r3, 0x2F6C(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  lbz       r0, 0x11(r3)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x114
+	if (mStatus == -1 && (!playerState || playerState->hasRadar())) {
+		_04  = 1;
+		_00  = 0;
+		_01  = 0;
+		_02  = 0;
+		_45A = 200;
 
-	.loc_0x38:
-	  li        r0, 0x1
-	  stw       r0, 0x4(r31)
-	  li        r6, 0
-	  li        r0, 0xC8
-	  stb       r6, 0x0(r31)
-	  lis       r5, 0x4330
-	  addi      r3, r31, 0
-	  stb       r6, 0x1(r31)
-	  stb       r6, 0x2(r31)
-	  sth       r0, 0x45A(r31)
-	  lha       r6, 0x18(r4)
-	  lha       r0, 0x1C(r4)
-	  lha       r7, 0x1A(r4)
-	  sub       r8, r0, r6
-	  lha       r4, 0x1E(r4)
-	  srawi     r0, r8, 0x1
-	  lfd       f2, -0x4FF8(r2)
-	  addze     r0, r0
-	  sub       r9, r4, r7
-	  add       r4, r6, r0
-	  srawi     r0, r9, 0x1
-	  xoris     r4, r4, 0x8000
-	  addze     r0, r0
-	  stw       r4, 0x44(r1)
-	  add       r0, r7, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r5, 0x40(r1)
-	  stw       r0, 0x3C(r1)
-	  lfd       f0, 0x40(r1)
-	  stw       r5, 0x38(r1)
-	  fsubs     f1, f0, f2
-	  lfd       f0, 0x38(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f1, 0xC(r31)
-	  stfs      f0, 0x10(r31)
-	  stw       r8, 0x1C(r31)
-	  stw       r9, 0x20(r31)
-	  stw       r6, 0x14(r31)
-	  stw       r7, 0x18(r31)
-	  bl        -0x6F0
-	  lfs       f0, -0x500C(r2)
-	  stfs      f0, 0x428(r31)
-	  stfs      f0, 0x42C(r31)
-	  lfs       f0, 0x428(r31)
-	  lwz       r3, 0x420(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f1, 0x428(r31)
-	  lfs       f0, -0x5030(r2)
-	  lwz       r3, 0x424(r31)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
+		int posH = pane->getPosH();
+		int posV = pane->getPosV();
+		int w    = pane->getWidth();
+		int h    = pane->getHeight();
+		_0C      = posH + w / 2;
+		_10      = posV + h / 2;
+		_1C      = w;
+		_20      = h;
+		_14      = posH;
+		_18      = posV;
+		startSub();
+		setRaderScale(2.0f);
+	}
 
-	.loc_0x114:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -1886,20 +1670,9 @@ void zen::ogRaderMgr::startMenu(P2DPane*)
  */
 void zen::ogRaderMgr::MapOn()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2F6C(r13)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x18
-	  lbz       r0, 0x11(r4)
-	  rlwinm.   r0,r0,0,31,31
-	  beqlr-
-
-	.loc_0x18:
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  blr
-	*/
+	if (!playerState || playerState->hasRadar()) {
+		mStatus = STATE_0;
+	}
 }
 
 /*
@@ -1909,7 +1682,9 @@ void zen::ogRaderMgr::MapOn()
  */
 void zen::ogRaderMgr::MapOff()
 {
-	// UNUSED FUNCTION
+	if (!playerState || playerState->hasRadar()) {
+		mStatus = STATE_6;
+	}
 }
 
 /*
@@ -1917,117 +1692,38 @@ void zen::ogRaderMgr::MapOff()
  * Address:	801869A0
  * Size:	000168
  */
-void zen::ogRaderMgr::updateGame(Controller*)
+void zen::ogRaderMgr::updateGame(Controller* input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x28(r4)
-	  rlwinm.   r0,r0,0,21,21
-	  beq-      .loc_0xA0
-	  lwz       r0, 0x8(r31)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x74
-	  bge-      .loc_0x40
-	  cmpwi     r0, 0
-	  beq-      .loc_0x4C
-	  bge-      .loc_0x60
-	  b         .loc_0x108
+	if (input->keyClick(KBBTN_DPAD_UP)) {
+		switch (mStatus) {
+		case 0:
+			_42C    = 2.0f;
+			mStatus = STATE_1;
+			break;
+		case 1:
+			_42C    = 4.0f;
+			mStatus = STATE_2;
+			break;
+		case 2:
+			_42C    = 8.0f;
+			mStatus = STATE_3;
+			break;
+		case 3:
+			mStatus = STATE_5;
+			_50->startFadeOut(0.2f);
+			break;
+		}
+	} else if (input->keyDown(KBBTN_DPAD_LEFT) && _45A > 0) {
+		_45A--;
+		_458 = _45A;
+		_420->setAlpha(_458);
+	} else if (input->keyDown(KBBTN_DPAD_RIGHT) && _45A < 255) {
+		_45A++;
+		_458 = _45A;
+		_420->setAlpha(_458);
+	}
 
-	.loc_0x40:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x108
-	  b         .loc_0x88
-
-	.loc_0x4C:
-	  lfs       f0, -0x500C(r2)
-	  li        r0, 0x1
-	  stfs      f0, 0x42C(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0x108
-
-	.loc_0x60:
-	  lfs       f0, -0x4FF0(r2)
-	  li        r0, 0x2
-	  stfs      f0, 0x42C(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0x108
-
-	.loc_0x74:
-	  lfs       f0, -0x4FEC(r2)
-	  li        r0, 0x3
-	  stfs      f0, 0x42C(r31)
-	  stw       r0, 0x8(r31)
-	  b         .loc_0x108
-
-	.loc_0x88:
-	  li        r0, 0x5
-	  stw       r0, 0x8(r31)
-	  lwz       r3, 0x50(r31)
-	  lfs       f1, -0x4FE8(r2)
-	  bl        -0x7AA0
-	  b         .loc_0x108
-
-	.loc_0xA0:
-	  lwz       r4, 0x20(r4)
-	  rlwinm.   r0,r4,0,23,23
-	  beq-      .loc_0xD8
-	  lha       r3, 0x45A(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0xD8
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x45A(r31)
-	  lha       r0, 0x45A(r31)
-	  sth       r0, 0x458(r31)
-	  lha       r0, 0x458(r31)
-	  lwz       r3, 0x420(r31)
-	  stb       r0, 0xF0(r3)
-	  b         .loc_0x108
-
-	.loc_0xD8:
-	  rlwinm.   r0,r4,0,22,22
-	  beq-      .loc_0x108
-	  lha       r3, 0x45A(r31)
-	  cmpwi     r3, 0xFF
-	  bge-      .loc_0x108
-	  addi      r0, r3, 0x1
-	  sth       r0, 0x45A(r31)
-	  lha       r0, 0x45A(r31)
-	  sth       r0, 0x458(r31)
-	  lha       r0, 0x458(r31)
-	  lwz       r3, 0x420(r31)
-	  stb       r0, 0xF0(r3)
-
-	.loc_0x108:
-	  lfs       f2, 0x428(r31)
-	  lfs       f1, 0x42C(r31)
-	  lfs       f0, -0x5008(r2)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x428(r31)
-	  lfs       f0, 0x428(r31)
-	  lwz       r3, 0x420(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f1, 0x428(r31)
-	  lfs       f0, -0x5030(r2)
-	  lwz       r3, 0x424(r31)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	chaseRaderScale(_42C);
 }
 
 /*
@@ -2035,8 +1731,24 @@ void zen::ogRaderMgr::updateGame(Controller*)
  * Address:	80186B08
  * Size:	000100
  */
-void zen::ogRaderMgr::AreaScroll(f32*, f32*, f32, f32)
+void zen::ogRaderMgr::AreaScroll(f32* a1, f32* a2, f32 a3, f32 a4)
 {
+	a3 += a1[0];
+	a4 += a2[0];
+	f32 x1 = (a3 + _430.x) - _24;
+	f32 z1 = (a4 + _430.z) - _28;
+	PRINT("scroll(%7.2f, %7.2f)  orima(%7.2f, %7.2f)  area(%7.2f, %7.2f)\n", a3, a4, _430.x, _430.z, _24, _28);
+	if (std::sqrtf(x1 * x1 + z1 * z1) < _2C) {
+		a1[0] = a3;
+		a2[0] = a4;
+		seSystem->playSysSe(SYSSE_YMENU_SCROLL);
+		_00 = 1;
+	} else {
+		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
+		_00 = 0;
+	}
+
+	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2117,201 +1829,62 @@ void zen::ogRaderMgr::AreaScroll(f32*, f32*, f32, f32)
  * Address:	80186C08
  * Size:	000298
  */
-void zen::ogRaderMgr::updateMenu(Controller*)
+void zen::ogRaderMgr::updateMenu(Controller* input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  stfd      f30, 0x28(r1)
-	  stfd      f29, 0x20(r1)
-	  stfd      f28, 0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  stw       r30, 0x10(r1)
-	  addi      r30, r4, 0
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x270
-	  lfs       f31, 0x428(r31)
-	  mr        r3, r30
-	  bl        -0x146104
-	  fmr       f28, f1
-	  lfs       f0, -0x4FD0(r2)
-	  fcmpo     cr0, f28, f0
-	  ble-      .loc_0xA0
-	  lfs       f1, -0x4FCC(r2)
-	  lfs       f0, -0x5030(r2)
-	  fmuls     f31, f31, f1
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x80
-	  fmr       f31, f0
-	  li        r3, 0x130
-	  bl        -0xE18D0
-	  li        r0, 0
-	  stb       r0, 0x1(r31)
-	  b         .loc_0xF4
+	if (mStatus != -1) {
+		f32 x = _428;
+		f32 y = input->getSubStickY();
+		if (y > 0.3f) {
+			x *= 1.1f;
+			if (x > 10.0f) {
+				x = 10.0f;
+				seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
+				_01 = 0;
+			} else if (!_01) {
+				seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
+				_01 = true;
+			}
+		} else if (y < -0.3f) {
+			x *= 0.9f;
+			if (x < 1.0f) {
+				x = 1.0f;
+				seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
+				_02 = 0;
+			} else if (!_02) {
+				seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
+				_02 = true;
+			}
+		}
 
-	.loc_0x80:
-	  lbz       r0, 0x1(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xF4
-	  li        r3, 0x130
-	  bl        -0xE1924
-	  li        r0, 0x1
-	  stb       r0, 0x1(r31)
-	  b         .loc_0xF4
+		f32 c = cosf(_454);
+		f32 s = sinf(_454);
+		if (input->keyDown(KBBTN_MSTICK_UP)) {
+			AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
+		} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
+			AreaScroll(&_34, &_38, s * 20.0f, c * 20.0f);
+		}
+		if (input->keyDown(KBBTN_MSTICK_LEFT)) {
+			AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
+		} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
+			AreaScroll(&_34, &_38, c * 20.0f, s * -20.0f);
+		}
 
-	.loc_0xA0:
-	  lfs       f0, -0x4FC8(r2)
-	  fcmpo     cr0, f28, f0
-	  bge-      .loc_0xF4
-	  lfs       f1, -0x4FC4(r2)
-	  lfs       f0, -0x4FC0(r2)
-	  fmuls     f31, f31, f1
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0xD8
-	  fmr       f31, f0
-	  li        r3, 0x131
-	  bl        -0xE1928
-	  li        r0, 0
-	  stb       r0, 0x2(r31)
-	  b         .loc_0xF4
-
-	.loc_0xD8:
-	  lbz       r0, 0x2(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xF4
-	  li        r3, 0x131
-	  bl        -0xE197C
-	  li        r0, 0x1
-	  stb       r0, 0x2(r31)
-
-	.loc_0xF4:
-	  lfs       f1, 0x454(r31)
-	  bl        0x94E54
-	  fmr       f29, f1
-	  lfs       f1, 0x454(r31)
-	  bl        0x94FDC
-	  lwz       r3, 0x20(r30)
-	  fmr       f30, f1
-	  rlwinm.   r0,r3,0,12,12
-	  beq-      .loc_0x138
-	  lfs       f0, -0x4FBC(r2)
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0x34
-	  fmuls     f1, f0, f30
-	  addi      r5, r31, 0x38
-	  fmuls     f2, f0, f29
-	  bl        -0x230
-	  b         .loc_0x15C
-
-	.loc_0x138:
-	  rlwinm.   r0,r3,0,10,10
-	  beq-      .loc_0x15C
-	  lfs       f0, -0x4FB8(r2)
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0x34
-	  fmuls     f1, f0, f30
-	  addi      r5, r31, 0x38
-	  fmuls     f2, f0, f29
-	  bl        -0x258
-
-	.loc_0x15C:
-	  lwz       r3, 0x20(r30)
-	  rlwinm.   r0,r3,0,9,9
-	  beq-      .loc_0x18C
-	  lfs       f1, -0x4FBC(r2)
-	  mr        r3, r31
-	  lfs       f0, -0x4FB8(r2)
-	  addi      r4, r31, 0x34
-	  fmuls     f1, f1, f29
-	  fmuls     f2, f0, f30
-	  addi      r5, r31, 0x38
-	  bl        -0x284
-	  b         .loc_0x1B4
-
-	.loc_0x18C:
-	  rlwinm.   r0,r3,0,11,11
-	  beq-      .loc_0x1B4
-	  lfs       f1, -0x4FB8(r2)
-	  mr        r3, r31
-	  lfs       f0, -0x4FBC(r2)
-	  addi      r4, r31, 0x34
-	  fmuls     f1, f1, f29
-	  fmuls     f2, f0, f30
-	  addi      r5, r31, 0x38
-	  bl        -0x2B0
-
-	.loc_0x1B4:
-	  lbz       r0, 0x0(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1DC
-	  lwz       r0, 0x20(r30)
-	  rlwinm.   r0,r0,0,9,12
-	  bne-      .loc_0x1DC
-	  li        r3, 0x132
-	  bl        -0xE1A30
-	  li        r0, 0
-	  stb       r0, 0x0(r31)
-
-	.loc_0x1DC:
-	  lbz       r0, 0x1(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x204
-	  lfs       f0, -0x4FE8(r2)
-	  fcmpo     cr0, f28, f0
-	  bge-      .loc_0x204
-	  li        r3, 0x130
-	  bl        -0xE1A58
-	  li        r0, 0
-	  stb       r0, 0x1(r31)
-
-	.loc_0x204:
-	  lbz       r0, 0x2(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x22C
-	  lfs       f0, -0x4FB4(r2)
-	  fcmpo     cr0, f28, f0
-	  ble-      .loc_0x22C
-	  li        r3, 0x131
-	  bl        -0xE1A80
-	  li        r0, 0
-	  stb       r0, 0x2(r31)
-
-	.loc_0x22C:
-	  lfs       f0, 0x428(r31)
-	  fcmpu     cr0, f31, f0
-	  beq-      .loc_0x270
-	  stfs      f31, 0x428(r31)
-	  stfs      f31, 0x42C(r31)
-	  lfs       f0, 0x428(r31)
-	  lwz       r3, 0x420(r31)
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-	  lfs       f1, 0x428(r31)
-	  lfs       f0, -0x5030(r2)
-	  lwz       r3, 0x424(r31)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  stfs      f0, 0xC8(r3)
-
-	.loc_0x270:
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  lfd       f30, 0x28(r1)
-	  lfd       f29, 0x20(r1)
-	  lfd       f28, 0x18(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+		if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
+			seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
+			_00 = false;
+		}
+		if (_01 && y < 0.2f) {
+			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
+			_01 = false;
+		}
+		if (_02 && y > -0.2f) {
+			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
+			_02 = false;
+		}
+		if (x != _428) {
+			setRaderScale(x);
+		}
+	}
 }
 
 /*
@@ -2319,8 +1892,97 @@ void zen::ogRaderMgr::updateMenu(Controller*)
  * Address:	80186EA0
  * Size:	000748
  */
-zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller*)
+zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 {
+	if (mStatus == STATE_NULL) {
+		return mStatus;
+	}
+
+	if (mStatus == STATE_7) {
+		mStatus = STATE_NULL;
+		return mStatus;
+	}
+
+	if (mStatus == STATE_5) {
+		if (_458 > 0) {
+			_458 -= 10;
+			if (_458 < 0) {
+				_458 = 0;
+			}
+			_420->setAlpha(_458);
+		} else {
+			mStatus = STATE_7;
+		}
+		return mStatus;
+	}
+
+	if (mStatus == STATE_4) {
+		if (_458 < _45A) {
+			_458 += 10;
+			if (_458 > _45A) {
+				_458 = _45A;
+			}
+			_420->setAlpha(_458);
+		} else {
+			mStatus = STATE_0;
+		}
+		return mStatus;
+	}
+
+	_50->update();
+
+	if (mStatus != STATE_6) {
+		if (_04 == 0) {
+			updateGame(input);
+		} else if (_04 == 1) {
+			updateMenu(input);
+		}
+	}
+
+	getOrimaPos();
+	getContainerPos();
+	getRocketPos();
+	getAllPikiPos();
+	getPartsPos();
+
+	PikiRaderEntry* data = _100;
+	for (int i = 0; i < _FC; i++) {
+		Colour col1;
+		Colour col2;
+		u8 alpha;
+		switch (data->mColor) {
+		case Blue:
+			col1  = _5C->getWhite();
+			col2  = _5C->getBlack();
+			alpha = _5C->getAlpha();
+			break;
+		case Red:
+			col1  = _60->getWhite();
+			col2  = _60->getBlack();
+			alpha = _60->getAlpha();
+			break;
+		case Yellow:
+			col1  = _64->getWhite();
+			col2  = _64->getBlack();
+			alpha = _64->getAlpha();
+			break;
+		default: // seeds
+			col1  = _68->getWhite();
+			col2  = _68->getBlack();
+			alpha = _68->getAlpha();
+			break;
+		}
+		data->mPic->setWhite(col1);
+		data->mPic->setBlack(col2);
+		data->mPic->setAlpha(alpha);
+		data++;
+	}
+
+	mMainScreen->update();
+
+	return mStatus;
+
+	f32 badcompiler[8];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2845,8 +2507,21 @@ zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller*)
  * Address:	........
  * Size:	000098
  */
-void zen::ogRaderMgr::RotatePos(f32*, f32*)
+void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 {
+	Matrix4f mtx;
+	mtx.makeIdentity();
+	mtx.rotateZ(-_454);
+
+	Vector3f pos;
+	pos.x = *x;
+	pos.y = *y;
+	pos.z = 0.0f;
+	pos.rotateTranspose(mtx);
+
+	*x = pos.x;
+	*y = pos.y;
+
 	// UNUSED FUNCTION
 }
 
@@ -2857,6 +2532,8 @@ void zen::ogRaderMgr::RotatePos(f32*, f32*)
  */
 void zen::ogRaderMgr::DrawCircle(u8, u8, u8, u8, f32)
 {
+	// No
+
 	// UNUSED FUNCTION
 }
 
@@ -2867,24 +2544,10 @@ void zen::ogRaderMgr::DrawCircle(u8, u8, u8, u8, f32)
  */
 void zen::ogRaderMgr::end()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, -0x1
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x8(r3)
-	  li        r3, 0x132
-	  bl        -0xE2258
-	  li        r3, 0x130
-	  bl        -0xE2260
-	  li        r3, 0x131
-	  bl        -0xE2268
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mStatus = STATE_NULL;
+	seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
+	seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
+	seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
 }
 
 /*
@@ -2892,106 +2555,25 @@ void zen::ogRaderMgr::end()
  * Address:	80187624
  * Size:	00016C
  */
-void zen::ogRaderMgr::draw(Graphics&)
+void zen::ogRaderMgr::draw(Graphics& gfx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x118(r1)
-	  stw       r31, 0x114(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x158
-	  lwz       r3, 0x2E4(r4)
-	  lfs       f1, 0x194(r3)
-	  lfs       f0, 0x19C(r3)
-	  fneg      f1, f1
-	  fneg      f2, f0
-	  bl        0x943A0
-	  stfs      f1, 0x454(r31)
-	  li        r4, 0x2
-	  lfs       f0, 0xC(r31)
-	  lfs       f2, 0x10(r31)
-	  fctiwz    f0, f0
-	  lfs       f1, 0x454(r31)
-	  fctiwz    f2, f2
-	  lwz       r3, 0x58(r31)
-	  stfd      f0, 0x100(r1)
-	  stfd      f2, 0x108(r1)
-	  lwz       r0, 0x104(r1)
-	  lwz       r5, 0x10C(r1)
-	  extsh     r0, r0
-	  sth       r0, 0xB8(r3)
-	  extsh     r0, r5
-	  sth       r0, 0xBA(r3)
-	  lwz       r3, 0x58(r31)
-	  bl        -0xE94
-	  lwz       r0, 0x8(r31)
-	  cmpwi     r0, 0x6
-	  beq-      .loc_0x158
-	  lfs       f2, -0x4FC0(r2)
-	  addi      r4, r1, 0x14
-	  lwz       r0, -0x4FB0(r2)
-	  li        r3, 0
-	  fmr       f4, f2
-	  stw       r0, 0x14(r1)
-	  lfs       f1, -0x5014(r2)
-	  lfs       f3, -0x4FAC(r2)
-	  bl        0x8C2C8
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x8C46C
-	  lfs       f1, -0x4FA8(r2)
-	  addi      r3, r1, 0x18
-	  lfs       f2, -0x4FC0(r2)
-	  li        r4, 0
-	  lfs       f3, -0x4FA4(r2)
-	  li        r5, 0
-	  li        r6, 0x280
-	  li        r7, 0x1E0
-	  bl        0x28A8C
-	  addi      r3, r1, 0x18
-	  bl        0x28B94
-	  lwz       r0, 0x4(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x10C
-	  lwz       r3, 0x14(r31)
-	  lwz       r4, 0x18(r31)
-	  lwz       r5, 0x1C(r31)
-	  lwz       r6, 0x20(r31)
-	  bl        0x8CFA4
+	if (mStatus != STATE_NULL) {
+		_454 = atan2f(-gfx.mCamera->mViewZAxis.x, -gfx.mCamera->mViewZAxis.z);
+		setRaderAngle(_454);
 
-	.loc_0x10C:
-	  lwz       r3, 0x3C(r31)
-	  addi      r6, r1, 0x18
-	  li        r4, 0
-	  li        r5, 0
-	  bl        0x2B794
-	  lwz       r0, 0x4(r31)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x140
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0x280
-	  li        r6, 0x1E0
-	  bl        0x8CF70
-
-	.loc_0x140:
-	  lis       r3, 0x802E
-	  addi      r0, r3, 0x698
-	  lis       r3, 0x802E
-	  stw       r0, 0x18(r1)
-	  addi      r0, r3, 0x5D4
-	  stw       r0, 0x18(r1)
-
-	.loc_0x158:
-	  lwz       r0, 0x11C(r1)
-	  lwz       r31, 0x114(r1)
-	  addi      r1, r1, 0x118
-	  mtlr      r0
-	  blr
-	*/
+		if (mStatus != STATE_6) {
+			GXColor col = { 0 };
+			GXSetFog(GX_FOG_NONE, 0.0f, 1.0f, 0.1f, 1.0f, col);
+			GXSetFogRangeAdj(GX_FALSE, 0, nullptr);
+			P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+			graf.setPort();
+			if (_04 == 1) {
+				GXSetScissor(_14, _18, _1C, _20);
+			}
+			mMainScreen->draw(0, 0, &graf);
+			if (_04 == 1) {
+				GXSetScissor(0, 0, 640, 480);
+			}
+		}
+	}
 }
