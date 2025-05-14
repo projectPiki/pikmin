@@ -45,6 +45,8 @@
         "gxmisc.h": "c",
         "trk.h": "c",
         "gx.h": "c",
-        "__va_arg.h": "c"
+        "__va_arg.h": "c",
+        "ansi_fp.h": "c",
+        "ansi_files.h": "c"
     },
 }
