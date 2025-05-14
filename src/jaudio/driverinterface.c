@@ -1,9 +1,8 @@
 #include "jaudio/driverinterface.h"
 
-typedef struct jc_ jc_;
-typedef struct jcs_ jcs_;
+#include "jaudio/dspinterface.h"
+
 typedef struct PanMatrix_ PanMatrix_;
-typedef struct dspch_ dspch_;
 
 /*
  * --INFO--
@@ -31,7 +30,7 @@ void Channel_SetMixerLevel(f32)
  * Address:	80009440
  * Size:	00000C
  */
-JCS* Get_GlobalHandle()
+jcs_* Get_GlobalHandle()
 {
 	/*
 	.loc_0x0:

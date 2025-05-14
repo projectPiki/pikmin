@@ -7,31 +7,31 @@
 /////////// JAUDIO DRIVER INTERFACE DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).
 void Channel_SetMixerLevel(f32);
-JCS* Get_GlobalHandle();
-void List_CountChannel(JC**);
-void List_CutChannel(JC*);
-void List_GetChannel(JC**);
-void List_AddChannelTail(JC**, JC*);
-void List_AddChannel(JC**, JC*);
-void FixAllocChannel(JCS*, u32);
-void FixReleaseChannel(JC*);
-void FixReleaseChannelAll(JCS*);
-void FixMoveChannelAll(JCS*, JCS*);
-void InitJcs(JCS*);
-void Channel_Init(JC*);
+jcs_* Get_GlobalHandle();
+void List_CountChannel(jc_**);
+void List_CutChannel(jc_*);
+void List_GetChannel(jc_**);
+void List_AddChannelTail(jc_**, jc_*);
+void List_AddChannel(jc_**, jc_*);
+void FixAllocChannel(jcs_*, u32);
+void FixReleaseChannel(jc_*);
+void FixReleaseChannelAll(jcs_*);
+void FixMoveChannelAll(jcs_*, jcs_*);
+void InitJcs(jcs_*);
+void Channel_Init(jc_*);
 void InitGlobalChannel();
-void UpdateJcToDSP(JC*);
-void UpdateEffecterParam(JC*);
-void DoEffectOsc(JC*, u8, f32);
-void StopLogicalChannel(JC*);
-void CheckLogicalChannel(JC*);
-void PlayLogicalChannel(JC*);
-void ResetInitialVolume(JC*);
-void Add_WaitDSPChannel(JC*);
-void Del_WaitDSPChannel(JC*);
+void UpdateJcToDSP(jc_*);
+void UpdateEffecterParam(jc_*);
+void DoEffectOsc(jc_*, u8, f32);
+void StopLogicalChannel(jc_*);
+void CheckLogicalChannel(jc_*);
+void PlayLogicalChannel(jc_*);
+void ResetInitialVolume(jc_*);
+void Add_WaitDSPChannel(jc_*);
+void Del_WaitDSPChannel(jc_*);
 void __Entry_WaitChannel(u8);
 void EntryCheck_WaitDSPChannel();
-void ForceStopLogicalChannel(JC*);
+void ForceStopLogicalChannel(jc_*);
 
 ///////////////////////////////////////////////////////////
 
