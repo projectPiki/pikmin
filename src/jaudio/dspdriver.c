@@ -148,7 +148,7 @@ void AllocDSPchannel(u32, u32)
  * Address:	8000AE80
  * Size:	0000DC
  */
-void DeAllocDSPchannel(DSPChannel*, u32)
+void DeAllocDSPchannel(dspch_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -392,7 +392,7 @@ void GetLowerActiveDSPchannel()
  * Address:	8000B160
  * Size:	00007C
  */
-void ForceStopDSPchannel(DSPChannel*)
+void ForceStopDSPchannel(dspch_*)
 {
 	/*
 	.loc_0x0:
@@ -575,7 +575,7 @@ void BreakLowerActiveDSPchannel(u8)
  * Address:	........
  * Size:	000008
  */
-void UpdateDSPchannel(DSPChannel*)
+void UpdateDSPchannel(dspch_*)
 {
 	// UNUSED FUNCTION
 }
