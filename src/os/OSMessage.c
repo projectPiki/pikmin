@@ -20,7 +20,7 @@ void OSInitMessageQueue(OSMessageQueue* queue, OSMessage* msgArray, s32 msgCount
  * Address:	801F9814
  * Size:	0000C8
  */
-BOOL OSSendMessage(OSMessageQueue* queue, void* msg, s32 flags)
+BOOL OSSendMessage(OSMessageQueue* queue, OSMessage msg, s32 flags)
 {
 	int mesgId;
 	u32 interrupt;
@@ -50,7 +50,7 @@ BOOL OSSendMessage(OSMessageQueue* queue, void* msg, s32 flags)
  * Address:	801F98DC
  * Size:	0000DC
  */
-BOOL OSReceiveMessage(OSMessageQueue* queue, void** buffer, s32 flags)
+BOOL OSReceiveMessage(OSMessageQueue* queue, OSMessage* buffer, s32 flags)
 {
 	u32 interrupt;
 
@@ -82,7 +82,7 @@ BOOL OSReceiveMessage(OSMessageQueue* queue, void** buffer, s32 flags)
  * Address:	........
  * Size:	0000D4
  */
-BOOL OSJamMessage(OSMessageQueue* queue, void* msg, s32 flags)
+BOOL OSJamMessage(OSMessageQueue* queue, OSMessage msg, s32 flags)
 {
 	// UNUSED FUNCTION
 }
