@@ -1,25 +1,18 @@
 #include "jaudio/cmdstack.h"
+#include "jaudio/playercall.h"
+#include "Dolphin/os.h"
+
+JPorthead_ cmd_once;
+JPorthead_ cmd_stay;
 
 /*
  * --INFO--
  * Address:	8000E300
  * Size:	000028
  */
-void Add_PortcmdOnce(void)
+void Add_PortcmdOnce(u32* a1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r13, 0x2C00
-	  stwu      r1, -0x8(r1)
-	  bl        0x4C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Add_Portcmd(&cmd_once, a1);
 }
 
 /*
@@ -37,17 +30,13 @@ void Add_PortcmdStay(void)
  * Address:	8000E340
  * Size:	000018
  */
-void Set_Portcmd(void)
+int Set_Portcmd(int* a1, int a2, int a3)
 {
-	/*
-	.loc_0x0:
-	  stw       r4, 0x14(r3)
-	  li        r0, 0
-	  stw       r5, 0x18(r3)
-	  stw       r0, 0xC(r3)
-	  li        r3, 0x1
-	  blr
-	*/
+	// Is this a struct? I have no idea
+	a1[5] = a2;
+	a1[6] = a3;
+	a1[3] = 0;
+	return 1;
 }
 
 /*
@@ -55,49 +44,26 @@ void Set_Portcmd(void)
  * Address:	8000E360
  * Size:	000078
  */
-void Add_Portcmd(void)
+BOOL Add_Portcmd(JPorthead_* port, u32* a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  bl        0x1EAC04
-	  lwz       r0, 0xC(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x34
-	  bl        0x1EAC1C
-	  li        r3, 0
-	  b         .loc_0x64
+	BOOL interrupt = OSDisableInterrupts();
 
-	.loc_0x34:
-	  lwz       r4, 0x4(r30)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x48
-	  stw       r31, 0x10(r4)
-	  b         .loc_0x4C
+	if (a2[3]) {
+		OSRestoreInterrupts(interrupt);
+		return FALSE;
+	}
 
-	.loc_0x48:
-	  stw       r31, 0x0(r30)
+	if (port->_04) {
+		((int*)port->_04)[4] = (int)a2;
+	} else {
+		port->_00 = (int)a2;
+	}
 
-	.loc_0x4C:
-	  stw       r31, 0x4(r30)
-	  li        r0, 0
-	  stw       r0, 0x10(r31)
-	  stw       r30, 0xC(r31)
-	  bl        0x1EABE8
-	  li        r3, 0x1
-
-	.loc_0x64:
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	port->_04 = (int)a2;
+	a2[4]     = 0;
+	a2[3]     = (int)port;
+	OSRestoreInterrupts(interrupt);
+	return TRUE;
 }
 
 /*
@@ -105,8 +71,20 @@ void Add_Portcmd(void)
  * Address:	8000E3E0
  * Size:	000040
  */
-static void Get_Portcmd(JPorthead_*)
+static int Get_Portcmd(JPorthead_* port)
 {
+	u32 a = port->_00;
+	if (a) {
+		port->_00 = ((int*)a)[4];
+		if (port->_00 == 0) {
+			port->_04 = 0;
+		}
+		((int*)a)[3] = 0;
+	} else {
+		a = 0;
+	}
+
+	return a;
 	/*
 	.loc_0x0:
 	  lwz       r4, 0x0(r3)
@@ -159,35 +137,18 @@ void Cancel_PortcmdStay(void)
  * Address:	8000E420
  * Size:	000050
  */
-void Jac_Portcmd_Proc_Once(void)
+int Jac_Portcmd_Proc_Once(JPorthead_* port)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-
-	.loc_0x14:
-	  mr        r3, r31
-	  bl        -0x58
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  lwz       r12, 0x14(r3)
-	  lwz       r3, 0x18(r3)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x14
-
-	.loc_0x38:
-	  lwz       r0, 0x1C(r1)
-	  li        r3, 0
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	u32 p;
+	while (1) {
+		p = Get_Portcmd(port);
+		if (!p) {
+			break;
+		}
+		// Ckit ahh moment unless someone figures out what type Get_Portcmd actually returns
+		((int (*)(int)) * (int*)(p + 0x14))(((int*)p)[6]);
+	}
+	return 0;
 }
 
 /*
@@ -195,34 +156,18 @@ void Jac_Portcmd_Proc_Once(void)
  * Address:	8000E480
  * Size:	00004C
  */
-void Jac_Portcmd_Proc_Stay(void)
+int Jac_Portcmd_Proc_Stay(JPorthead_* port)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r31, 0x0(r3)
+	u32 p = port->_00;
+	while (1) {
+		if (!p) {
+			break;
+		}
+		((int (*)(int)) * (int*)(p + 0x14))(((int*)p)[6]);
 
-	.loc_0x14:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x34
-	  lwz       r12, 0x14(r31)
-	  lwz       r3, 0x18(r31)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0x10(r31)
-	  b         .loc_0x14
-
-	.loc_0x34:
-	  lwz       r0, 0x1C(r1)
-	  li        r3, 0
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+		p = ((u32*)p)[4];
+	}
+	return 0;
 }
 
 /*
@@ -230,23 +175,11 @@ void Jac_Portcmd_Proc_Stay(void)
  * Address:	8000E4E0
  * Size:	000030
  */
-static void Portcmd_Main(void*)
+static s32 Portcmd_Main(void* a)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r13, 0x2C00
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xD0
-	  addi      r3, r13, 0x2C08
-	  bl        -0x78
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jac_Portcmd_Proc_Once(&cmd_once);
+	Jac_Portcmd_Proc_Stay(&cmd_stay);
+	return 0;
 }
 
 /*
@@ -254,15 +187,10 @@ static void Portcmd_Main(void*)
  * Address:	8000E520
  * Size:	000010
  */
-void Jac_Porthead_Init(void)
+void Jac_Porthead_Init(JPorthead_* port)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  blr
-	*/
+	port->_00 = 0;
+	port->_04 = 0;
 }
 
 /*
@@ -272,24 +200,9 @@ void Jac_Porthead_Init(void)
  */
 void Jac_Portcmd_Init(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r3, r13, 0x2C00
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x30
-	  addi      r3, r13, 0x2C08
-	  bl        -0x38
-	  lis       r3, 0x8001
-	  li        r4, 0
-	  subi      r3, r3, 0x1B20
-	  bl        -0x7348
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jac_Porthead_Init(&cmd_once);
+	Jac_Porthead_Init(&cmd_stay);
+	Jac_RegisterPlayerCallback(Portcmd_Main, 0);
 }
 
 /*
