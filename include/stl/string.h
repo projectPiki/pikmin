@@ -8,18 +8,18 @@
 extern "C" {
 #endif
 
-char* strcpy(char*, const char*);
-char* strncpy(char*, const char*, size_t);
+char* strcpy(char* dst, const char* src);
+char* strncpy(char* dst, const char* src, size_t n);
 
-char* strcat(char*, const char*);
-char* strncat(char*, const char*, size_t);
+char* strcat(char* dst, const char* src);
+char* strncat(char* dst, const char* src, size_t n);
 
-int strcmp(const char*, const char*);
-int strncmp(const char*, const char*, size_t);
-char* strchr(const char*, int);
-char* strstr(const char*, const char*);
+int strcmp(const char* lhs, const char* rhs);
+int strncmp(const char* lhs, const char* rhs, size_t n);
+char* strchr(const char* str, int ch);
+char* strstr(const char* str, const char* substr);
 char* strrchr(const char* str, int chr);
-size_t strlen(const char*);
+size_t strlen(const char* str);
 
 #ifdef __cplusplus
 }

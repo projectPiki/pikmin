@@ -18,7 +18,7 @@ void __strerror(void)
  * Address:	........
  * Size:	0000F8
  */
-void strerror(void)
+char* strerror(int errnum)
 {
 	// UNUSED FUNCTION
 }
@@ -28,7 +28,7 @@ void strerror(void)
  * Address:	802190E8
  * Size:	00006C
  */
-void strstr(void)
+char* strstr(const char* str, const char* substr)
 {
 	/*
 	.loc_0x0:
@@ -75,7 +75,7 @@ void strstr(void)
  * Address:	........
  * Size:	00013C
  */
-void strtok(void)
+char* strtok(char* str, const char* delim)
 {
 	// UNUSED FUNCTION
 }
@@ -85,7 +85,7 @@ void strtok(void)
  * Address:	........
  * Size:	0000C0
  */
-void strcspn(void)
+size_t strcspn(const char* dst, const char* src)
 {
 	// UNUSED FUNCTION
 }
@@ -95,7 +95,7 @@ void strcspn(void)
  * Address:	........
  * Size:	0000C0
  */
-void strspn(void)
+size_t strspn(const char* dst, const char* src)
 {
 	// UNUSED FUNCTION
 }
@@ -105,7 +105,7 @@ void strspn(void)
  * Address:	........
  * Size:	0000C4
  */
-void strpbrk(void)
+char* strpbrk(const char* dst, const char* breakset)
 {
 	// UNUSED FUNCTION
 }
@@ -115,7 +115,7 @@ void strpbrk(void)
  * Address:	........
  * Size:	000048
  */
-void strrchr(void)
+char* strrchr(const char* str, int ch)
 {
 	// UNUSED FUNCTION
 }
@@ -125,7 +125,7 @@ void strrchr(void)
  * Address:	........
  * Size:	00005C
  */
-void strxfrm(void)
+size_t strxfrm(char* dst, const char* src, size_t n)
 {
 	// UNUSED FUNCTION
 }
@@ -135,7 +135,7 @@ void strxfrm(void)
  * Address:	........
  * Size:	000020
  */
-void strcoll(void)
+int strcoll(const char* lhs, const char* rhs)
 {
 	// UNUSED FUNCTION
 }
@@ -163,10 +163,10 @@ char* strchr(const char* str, int chr)
  * Address:	80219184
  * Size:	000040
  */
-int strncmp(const char* str1, const char* str2, size_t n)
+int strncmp(const char* lhs, const char* rhs, size_t n)
 {
-	const u8* p1 = (u8*)str1 - 1;
-	const u8* p2 = (u8*)str2 - 1;
+	const u8* p1 = (u8*)lhs - 1;
+	const u8* p2 = (u8*)rhs - 1;
 	u32 c1, c2;
 
 	n++;
@@ -184,12 +184,12 @@ int strncmp(const char* str1, const char* str2, size_t n)
  * Address:	802191C4
  * Size:	000124
  */
-int strcmp(const char* str1, const char* str2)
+int strcmp(const char* lhs, const char* rhs)
 {
 	// bless metrowerks for this implementation
 
-	register u8* left  = (u8*)str1;
-	register u8* right = (u8*)str2;
+	register u8* left  = (u8*)lhs;
+	register u8* right = (u8*)rhs;
 	u32 align, l1, r1, x;
 
 	l1 = *left;
@@ -264,7 +264,7 @@ bytecopy:
  * Address:	........
  * Size:	00004C
  */
-void strncat(void)
+char* strncat(char* dst, const char* src, size_t n)
 {
 	// UNUSED FUNCTION
 }
@@ -317,7 +317,7 @@ char* strncpy(char* dst, const char* src, size_t n)
  * Address:	80219358
  * Size:	0000B4
  */
-char*(strcpy)(char* dst, const char* src)
+char* strcpy(char* dst, const char* src)
 {
 	register u8 *destb, *fromb;
 	register u32 w, t, align;
@@ -377,7 +377,7 @@ bytecopy:
  * Address:	8021940C
  * Size:	000020
  */
-size_t(strlen)(const char* str)
+size_t strlen(const char* str)
 {
 	size_t len = -1;
 	u8* p      = (u8*)str - 1;
