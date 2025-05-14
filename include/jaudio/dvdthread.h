@@ -30,21 +30,21 @@ typedef struct DVDCall_ {
 // Global functions (all C++, so no extern C wrap).
 void DVDT_SetRootPath(char* path);
 void DVDT_ExtendPath(char* dst, char* ext);
-s32 DVDT_AddTask(TaskCallback callback, void* stackp, size_t len);
+s32 DVDT_AddTask(TaskCallback callback, void* stack, size_t len);
 void jac_dvdproc_init();
 void* jac_dvdproc(void*);
 s32 DVDT_LoadtoDRAM_Main(void*);
-s32 DVDT_LoadtoDRAM(u32, char*, u32, u32, u32, u32*, Jac_DVDCallback);
+s32 DVDT_LoadtoDRAM(u32 owner, char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback);
 void DVDT_SetBuffer(u8*, u32, u32);
 s32 DVDT_CloseBuffer(u8*);
 s32 DVDT_LoadtoARAM_Main(void*);
-s32 DVDT_LoadtoARAM(u32, char*, u32, u32, u32, u32*, Jac_DVDCallback);
-s32 DVDT_CheckFile(char*);
-s32 DVDT_LoadFile(char*, u8*);
-void DVDT_CheckPass(u32, u32*, Jac_DVDCallback);
-s32 Jac_RegisterExtFastOpen(char*);
-s32 Jac_RegisterFastOpen(char*);
-BOOL Jac_DVDOpen(char*, DVDFileInfo*);
+s32 DVDT_LoadtoARAM(u32 owner, char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback);
+s32 DVDT_CheckFile(char* file);
+s32 DVDT_LoadFile(char* file, u8* p2);
+void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback);
+s32 Jac_RegisterExtFastOpen(char* ext);
+s32 Jac_RegisterFastOpen(char* file);
+BOOL Jac_DVDOpen(char* name, DVDFileInfo* info);
 
 /////////////////////////////////////////////////////
 
