@@ -5,16 +5,18 @@
 
 typedef struct jaheap_ jaheap_;
 
-void Jac_RegisterARAMCallback(u32 (*)(char*, u32, u32, u32*, jaheap_*));
-void LoadAram(char*, u32*, u32);
-void LoadAramSingle(char*, u32, u32, u32*, u32);
-void Jac_WaveDirectorySet(char*);
-void Get_AramMotherHeap();
-void Show_AramMotherHeap();
-void Collect_AramMotherHeap();
-void Init_AramMotherHeap();
-void LoadAram_Default(char*, u32, u32, u32*, jaheap_*);
-void LoadAram_All(char*, u32*, jaheap_*);
-void LoadAram_One(char*, u32, u32, u32*, jaheap_*);
+typedef u32 (*ARAMCallback)(char* filename, u32 src, u32 length, u32* status, jaheap_* heap);
+
+void Jac_RegisterARAMCallback(ARAMCallback callback);
+u32 LoadAram(char* filepath, u32* status, u32 dst);
+u32 LoadAramSingle(char* filepath, u32 src, u32 length, u32* status, u32 dst);
+void Jac_WaveDirectorySet(char* directory);
+jaheap_* Get_AramMotherHeap(void);
+void Show_AramMotherHeap(void);
+void Collect_AramMotherHeap(void);
+void Init_AramMotherHeap(void);
+u32 LoadAram_Default(char* filename, u32 src, u32 length, u32* status, jaheap_* heap);
+u32 LoadAram_All(char* filename, u32* status, jaheap_* heap);
+u32 LoadAram_One(char* filename, u32 src, u32 length, u32* status, jaheap_* heap);
 
 #endif

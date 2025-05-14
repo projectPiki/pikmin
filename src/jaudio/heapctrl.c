@@ -285,7 +285,7 @@ void Jac_InitMotherHeap(jaheap_* heap, u32 param_2, u32 param_3, u8 param_4)
  * Address:	8000EE40
  * Size:	0001B4
  */
-void Jac_AllocHeap(jaheap_*, jaheap_*, u32)
+BOOL Jac_AllocHeap(jaheap_*, jaheap_*, u32)
 {
 	/*
 	.loc_0x0:
