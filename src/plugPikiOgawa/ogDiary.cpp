@@ -1,19 +1,14 @@
-#include "zen/ogDiary.h"
-#include "zen/ogResult.h"
 #include "zen/ZenController.h"
-#include "zen/DrawCommon.h"
-#include "zen/ogMessage.h"
-#include "zen/ogSub.h"
 #include "zen/EffectMgr2D.h"
-#include "P2D/Screen.h"
-#include "P2D/Picture.h"
-#include "P2D/Graph.h"
+#include "zen/DrawCommon.h"
+#include "zen/ogResult.h"
+#include "zen/ogDiary.h"
 #include "PlayerState.h"
-#include "Graphics.h"
+#include "zen/ogSub.h"
+#include "P2D/Graph.h"
 #include "SoundMgr.h"
-#include "Font.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Font.h"
 
 /*
  * --INFO--
@@ -29,6 +24,7 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("OgDiarySection")
 
+// Table of blo files used for diary entries
 namespace zen {
 static char* bloFile_Diary_Table[10];
 static char** bloFiles_default_Diary[2] = { &bloFile_Res_Table[1], nullptr };
@@ -53,12 +49,14 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
 	mMesgMgr->MakeAndSetPageInfo(&bloFiles_default_Diary[0]);
 	mMesgMgr->setLastPageAbutton(true);
 	mMesgMgr->setSolidMode(false);
+
 	P2DScreen* screen = mMesgMgr->getBaseScreenPtr();
 	mPaneCapu         = screen->search('capu', true);
 	screen->search('base', true)->hide();
-	_08     = 0;
-	_0C     = 0;
-	mStatus = Status_Null;
+
+	mMessageMgrPosX = 0;
+	mMessageMgrPosY = 0;
+	mStatus         = Inactive;
 }
 
 /*
@@ -66,18 +64,18 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
  * Address:	8018F344
  * Size:	0000FC
  */
-zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
+zen::ogScrDiaryMgr::DiaryMgrStatus zen::ogScrDiaryMgr::update(Controller* input)
 {
-	if (mStatus == Status_Null) {
+	if (mStatus == Inactive) {
 		return mStatus;
 	}
 
-	int msgState = mMesgMgr->update(input);
+	ogScrMessageMgr::MessageStatus msgState = mMesgMgr->update(input);
 	mController->setContPtr(input);
 	mController->update();
 
-	// controls for debug menu
-	if (playerState == nullptr && mMesgMgr->checkDisp() && msgState == 0) {
+	// Controls for debug menu
+	if (playerState == nullptr && mMesgMgr->checkDisp() && msgState == ogScrMessageMgr::STATE_ActiveDisplay) {
 		if (mController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_DPAD_LEFT)) {
 			backPage();
 		} else if (mController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_DPAD_RIGHT)) {
@@ -89,7 +87,7 @@ zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 		}
 	}
 
-	return (DiaryStatus)msgState;
+	return (DiaryMgrStatus)msgState;
 }
 
 /*
@@ -99,7 +97,7 @@ zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
  */
 void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 {
-	if (mStatus == Status_Null) {
+	if (mStatus == Inactive) {
 		return;
 	}
 	mMesgMgr->draw(gfx);
@@ -125,34 +123,37 @@ void zen::ogScrDiaryMgr::draw(Graphics& gfx)
 void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 {
 	if (playerState) {
-		int max;
-		int res = playerState->mResultFlags.getDayDocument(day, max);
-		if (max == 0) {
+		int length;
+		int screenId = playerState->mResultFlags.getDayDocument(day, length);
+		if (length == 0) {
 			return;
 		}
-		if (max == 1) {
+
+		if (length == 1) {
 			mPaneCapu->hide();
 		} else {
 			mPaneCapu->show();
 		}
-		if (max >= 10) {
-			max = 9;
+
+		if (length >= 10) {
+			length = 9;
 		}
 
-		for (int i = 0; i < max; i++) {
-			bloFile_Diary_Table[i] = bloFile_Res_Table[res + i];
-			PRINT("Diary blo[%d] = \'%s\' (%d)\n", i, bloFile_Diary_Table[i], res + i);
+		for (int i = 0; i < length; i++) {
+			bloFile_Diary_Table[i] = bloFile_Res_Table[screenId + i];
+			PRINT("Diary blo[%d] = \'%s\' (%d)\n", i, bloFile_Diary_Table[i], screenId + i);
 		}
 
-		bloFile_Diary_Table[max] = "END";
+		bloFile_Diary_Table[length] = "END";
 		mMesgMgr->MakeAndSetPageInfo(bloFiles_Diary);
 	}
-	mStatus = Status_0;
+
+	mStatus = Active;
 	mMesgMgr->setLastPageAbutton(true);
 	setSpecialNumber(1, day);
 	mMesgMgr->start(-1);
 	mMesgMgr->setPage(0);
-	mMesgMgr->move(_08, _0C);
+	mMesgMgr->move(mMessageMgrPosX, mMessageMgrPosY);
 	mMesgMgr->dispAll();
 }
 
@@ -167,12 +168,14 @@ void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
 	int daysleft = 30 - day;
 	int parts    = 77;
 	int powerup  = 77;
+
 	if (playerState) {
 		partsDay = playerState->getDayCollectCount(day - 1);
 		parts    = playerState->getTotalParts();
 		parts -= partsDay;
 		powerup = playerState->getDayPowerupCount(day - 1);
 	}
+
 	setSpecialNumber(1, day);
 	setSpecialNumber(2, partsDay);
 	setSpecialNumber(3, parts);
@@ -190,7 +193,7 @@ void zen::ogScrDiaryMgr::typePage()
 	mMesgMgr->setLastPageAbutton(false);
 	mMesgMgr->start(-1);
 	mMesgMgr->resetPage();
-	mMesgMgr->move(_08, _0C);
+	mMesgMgr->move(mMessageMgrPosX, mMessageMgrPosY);
 }
 
 /*
@@ -206,7 +209,7 @@ bool zen::ogScrDiaryMgr::nextPage()
 
 	mMesgMgr->setLastPageAbutton(true);
 	mMesgMgr->nextPage();
-	mMesgMgr->move(_08, _0C);
+	mMesgMgr->move(mMessageMgrPosX, mMessageMgrPosY);
 	mMesgMgr->dispAll();
 	return true;
 }
@@ -220,7 +223,7 @@ void zen::ogScrDiaryMgr::backPage()
 {
 	mMesgMgr->setLastPageAbutton(true);
 	mMesgMgr->backPage();
-	mMesgMgr->move(_08, _0C);
+	mMesgMgr->move(mMessageMgrPosX, mMessageMgrPosY);
 	mMesgMgr->dispAll();
 }
 
@@ -242,7 +245,6 @@ void zen::ogScrDiaryMgr::exit()
 void zen::ogScrDiaryMgr::setCursorXY(P2DTextBox* textBox)
 {
 	mMesgMgr->setCursorXY(textBox);
-	// UNUSED FUNCTION
 }
 
 /*
@@ -252,20 +254,25 @@ void zen::ogScrDiaryMgr::setCursorXY(P2DTextBox* textBox)
  */
 void zen::ogScrDiaryMgr::updateDiary(Controller* input)
 {
-	_24     = 0;
-	int res = _1C->update(input);
-	if (res == 0) {
-		int selRes = _20->update(input) + 1;
-		if (selRes != 0) {
-			s16 day = playerState->getCurrDay();
-			if (day > 0) {
-				f32 x = _20->getOpenX();
-				f32 y = _20->getOpenY();
-				_1C->open(x, y, day);
-			}
-		}
+	_UNUSED24 = 0;
+
+	ogDrawDiary::DiaryStatus status = mDiaryInstance->update(input);
+	if (status != ogDrawDiary::Closed) {
+		return;
 	}
-	// UNUSED FUNCTION
+
+	ogDrawSelectDiary::SelectDiaryStatus selectStatus
+	    = static_cast<ogDrawSelectDiary::SelectDiaryStatus>(mSelectDiaryInstance->update(input) + 1);
+	if (selectStatus == ogDrawSelectDiary::Active) {
+		return;
+	}
+
+	s16 day = playerState->getCurrDay();
+	if (day > 0) {
+		f32 x = mSelectDiaryInstance->getOpenX();
+		f32 y = mSelectDiaryInstance->getOpenY();
+		mDiaryInstance->open(x, y, day);
+	}
 }
 
 /*
@@ -278,14 +285,14 @@ zen::ogDrawDiary::ogDrawDiary()
 	mScreen = new P2DScreen();
 	mScreen->set("screen/blo/m_menu_b.blo", true, true, true);
 	mScreenScale = 0.0f;
-	mStatus      = Status_0;
+	mStatus      = Closed;
 	mScreen->setScale(mScreenScale);
-	mEfxMgr      = new EffectMgr2D(16, 0x400, 0x400);
-	mDiaryMgr    = new ogScrDiaryMgr;
-	mScreenScale = 0.0f;
-	mStatus      = Status_0;
-	_14          = 320.0f;
-	_18          = 240.0f;
+	mEfxMgr        = new EffectMgr2D(16, 0x400, 0x400);
+	mDiaryMgr      = new ogScrDiaryMgr;
+	mScreenScale   = 0.0f;
+	mStatus        = Closed;
+	mScreenCenterX = 320.0f;
+	mScreenCenterY = 240.0f;
 	mScreen->setOffset(320, 240);
 }
 
@@ -297,7 +304,7 @@ zen::ogDrawDiary::ogDrawDiary()
 void zen::ogDrawDiary::start()
 {
 	mScreenScale = 0.0f;
-	mStatus      = Status_0;
+	mStatus      = Closed;
 }
 
 /*
@@ -307,9 +314,9 @@ void zen::ogDrawDiary::start()
  */
 void zen::ogDrawDiary::setOffset()
 {
-	mScreen->setOffset(_14, _18);
-	mDiaryMgr->getScrMsgMgr()->getScreenPtr()->setOffset(_14, _18);
-	mDiaryMgr->getScrMsgMgr()->getBaseScreenPtr()->setOffset(_14, _18);
+	mScreen->setOffset(mScreenCenterX, mScreenCenterY);
+	mDiaryMgr->getScrMsgMgr()->getScreenPtr()->setOffset(mScreenCenterX, mScreenCenterY);
+	mDiaryMgr->getScrMsgMgr()->getBaseScreenPtr()->setOffset(mScreenCenterX, mScreenCenterY);
 }
 
 /*
@@ -320,26 +327,29 @@ void zen::ogDrawDiary::setOffset()
 void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
 {
 	mDiaryMgr->setDiarySpecialNumber(day);
-	if (mStatus == Status_0) {
-		mScreenScale = 0.01f;
-		mStatus      = Status_1;
-		_14          = a1;
-		_18          = a2;
-		_1C          = _14;
-		_20          = _18;
-		setOffset();
-		mDiaryMgr->start(0, day);
-		Vector3f pos;
-		pos.set(320.0f, 240.0f, 0.0f);
-		mEfxMgr->create(EFF2D_Unk4, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk5, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk6, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk7, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk8, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk9, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk10, pos, nullptr, nullptr);
-		mEfxMgr->create(EFF2D_Unk11, pos, nullptr, nullptr);
+	if (mStatus != Closed) {
+		return;
 	}
+
+	mScreenScale    = 0.01f;
+	mStatus         = Opening;
+	mScreenCenterX  = a1;
+	mScreenCenterY  = a2;
+	mOpeningOriginX = mScreenCenterX;
+	mOpeningOriginY = mScreenCenterY;
+	setOffset();
+	mDiaryMgr->start(0, day);
+
+	Vector3f pos;
+	pos.set(320.0f, 240.0f, 0.0f);
+	mEfxMgr->create(EFF2D_Unk4, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk5, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk6, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk7, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk8, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk9, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk10, pos, nullptr, nullptr);
+	mEfxMgr->create(EFF2D_Unk11, pos, nullptr, nullptr);
 }
 
 /*
@@ -349,21 +359,21 @@ void zen::ogDrawDiary::open(f32 a1, f32 a2, s16 day)
  */
 zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 {
-	if (mStatus == Status_0) {
+	if (mStatus == Closed) {
 		return mStatus;
 	}
 
-	if (mStatus == 1) {
+	if (mStatus == ogDrawDiary::Opening) {
 		mScreenScale *= 1.5f;
 		if (mScreenScale >= 1.0f) {
 			mScreenScale = 1.0f;
-			mStatus      = Status_2;
+			mStatus      = Active;
 		}
 	}
 
-	if (mStatus == 2) {
+	if (mStatus == ogDrawDiary::Active) {
 		if (input->keyClick(KBBTN_B)) {
-			mStatus = Status_3;
+			mStatus = Closing;
 			mEfxMgr->killAll(true);
 			seSystem->playSysSe(SYSSE_CANCEL);
 		} else if (input->keyClick(KBBTN_A)) {
@@ -373,11 +383,11 @@ zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 		}
 	}
 
-	if (mStatus == 3) {
-		mScreenScale *= 0.6666667f;
+	if (mStatus == ogDrawDiary::Closing) {
+		mScreenScale *= (2.0f / 3.0f);
 		if (mScreenScale <= 0.01f) {
 			mScreenScale = 0.0f;
-			mStatus      = Status_0;
+			mStatus      = Closed;
 		}
 	}
 
@@ -397,12 +407,11 @@ zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
  */
 void zen::ogDrawDiary::draw(Graphics& gfx)
 {
-	if (mStatus != Status_0) {
+	if (mStatus != Closed) {
 		mScreen->draw(0, 0, nullptr);
 		mEfxMgr->draw(gfx);
 		mDiaryMgr->draw(gfx);
 	}
-	// UNUSED FUNCTION
 }
 
 /*
@@ -414,40 +423,40 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 {
 	mScreen = new P2DScreen;
 	mScreen->set("screen/blo/m_menu_r.blo", true, true, true);
-	_2C4 = new P2DScreen;
-	_2C4->set("screen/blo/black.blo", false, false, true);
-	_2C8 = (P2DPicture*)_2C4->search('blck', true);
-	_2C8->setAlpha(255);
+	mBlackFadeScreen = new P2DScreen;
+	mBlackFadeScreen->set("screen/blo/black.blo", false, false, true);
+	mBlackFadePicture = (P2DPicture*)mBlackFadeScreen->search('blck', true);
+	mBlackFadePicture->setAlpha(255);
 	mController = new ZenController(nullptr);
 	mController->setRepeatTime(0.2f);
-	_2CC = (P2DPicture*)mScreen->search('abtn', true);
-	_2D0 = new setTenmetuAlpha(_2CC, 1.0f);
-	_2D4 = new ogDrawDiary;
-	mDay = 0;
+	mAButtonIcon          = (P2DPicture*)mScreen->search('abtn', true);
+	mAButtonAlphaAnimator = new setTenmetuAlpha(mAButtonIcon, 1.0f);
+	mDiaryInstance        = new ogDrawDiary;
+	mCurrentDay           = 0;
 
 	for (int i = 0; i < 30; i++) {
 		char name[4];
 		sprintf(name, "i%02du", i);
-		_68[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
-		_68[i]->hide();
+		mDayIconUpPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
+		mDayIconUpPanes[i]->hide();
 
 		sprintf(name, "i%02dd", i);
-		_E0[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
-		_E0[i]->hide();
+		mDayIconDownPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
+		mDayIconDownPanes[i]->hide();
 
 		sprintf(name, "pi%02d", i);
-		_1D0[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
+		mDayDisplayPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
 
 		sprintf(name, "pk%02d", i + 14);
 		_248[i] = (P2DPicture*)mScreen->search(P2DPaneLibrary::makeTag(name), true);
 	}
 
-	_2E0    = 0;
-	_2E2    = 0;
-	_2E4    = 0;
-	_2E6    = 0;
-	_2EC    = 0.0f;
-	mStatus = SELECT_NULL;
+	mSelectedColumnIndex = 0;
+	mSelectedRowIndex    = 0;
+	mSelectionIndex      = 0;
+	_UNUSED2E6           = 0;
+	mTransitionTimer     = 0.0f;
+	mStatus              = Inactive;
 	setCursorAlpha();
 }
 
@@ -459,35 +468,38 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 void zen::ogDrawSelectDiary::start()
 {
 	if (playerState) {
-		mDay = playerState->getCurrDay() - 1;
-		PRINT("ogDrawSelectDiary  currDay = (%d)\n", mDay);
+		mCurrentDay = playerState->getCurrDay() - 1;
+		PRINT("ogDrawSelectDiary  currDay = (%d)\n", mCurrentDay);
 	} else {
-		mDay = 15;
+		mCurrentDay = 15;
 	}
-	if (mDay < 0) {
+
+	if (mCurrentDay < 0) {
 		return;
 	}
-	mStatus = SELECT_1;
-	_2EC    = 0.0f;
-	_2E0    = 0;
-	_2E2    = 0;
-	_2E4    = 0;
-	_2E6    = 0;
-	_2C8->setAlpha(255);
+
+	mStatus              = FadingIn;
+	mTransitionTimer     = 0.0f;
+	mSelectedColumnIndex = 0;
+	mSelectedRowIndex    = 0;
+	mSelectionIndex      = 0;
+	_UNUSED2E6           = 0;
+	mBlackFadePicture->setAlpha(255);
 
 	for (int i = 0; i < 30; i++) {
-		if (i > mDay) {
-			P2DPaneLibrary::setFamilyAlpha(_1D0[i], 80);
+		if (i > mCurrentDay) {
+			P2DPaneLibrary::setFamilyAlpha(mDayDisplayPanes[i], 80);
 		} else {
-			P2DPaneLibrary::setFamilyAlpha(_1D0[i], 255);
+			P2DPaneLibrary::setFamilyAlpha(mDayDisplayPanes[i], 255);
 		}
 	}
 
-	for (int i = mDay + 1; i < 30; i++) {
+	for (int i = mCurrentDay + 1; i < 30; i++) {
 		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
 		obj->setAlpha(0);
 	}
-	_2D0->start();
+
+	mAButtonAlphaAnimator->start();
 	setCursorAlpha();
 }
 
@@ -499,12 +511,12 @@ void zen::ogDrawSelectDiary::start()
 void zen::ogDrawSelectDiary::setCursorAlpha()
 {
 	P2DPane* pane = mScreen->search('root', true);
-	f32 x         = _68[0]->getPosH();
-	f32 y         = _68[0]->getPosV();
-	_08.init(mScreen, pane, 'z00l', x, y);
-	x = _E0[0]->getPosH();
-	y = _E0[0]->getPosV();
-	_38.init(mScreen, pane, 'z00r', x, y);
+	f32 x         = mDayIconUpPanes[0]->getPosH();
+	f32 y         = mDayIconUpPanes[0]->getPosV();
+	mLeftCursorMgr.init(mScreen, pane, 'z00l', x, y);
+	x = mDayIconDownPanes[0]->getPosH();
+	y = mDayIconDownPanes[0]->getPosV();
+	mRightCursorMgr.init(mScreen, pane, 'z00r', x, y);
 	MoveCursor();
 }
 
@@ -515,19 +527,20 @@ void zen::ogDrawSelectDiary::setCursorAlpha()
  */
 bool zen::ogDrawSelectDiary::MoveCursor()
 {
-	s16 sel = _2E0 + _2E2 * 10;
-	if (sel > mDay) {
+	s16 idx = mSelectedColumnIndex + mSelectedRowIndex * 10;
+	if (idx > mCurrentDay) {
 		return true;
 	}
-	_2E4 = sel;
 
-	f32 x = _68[_2E4]->getPosH();
-	f32 y = _68[_2E4]->getPosV();
-	_08.move(x, y, 0.25f);
+	mSelectionIndex = idx;
 
-	x = _E0[_2E4]->getPosH();
-	y = _E0[_2E4]->getPosV();
-	_38.move(x, y, 0.25f);
+	f32 x = mDayIconUpPanes[mSelectionIndex]->getPosH();
+	f32 y = mDayIconUpPanes[mSelectionIndex]->getPosV();
+	mLeftCursorMgr.move(x, y, 0.25f);
+
+	x = mDayIconDownPanes[mSelectionIndex]->getPosH();
+	y = mDayIconDownPanes[mSelectionIndex]->getPosV();
+	mRightCursorMgr.move(x, y, 0.25f);
 	return false;
 }
 
@@ -538,104 +551,109 @@ bool zen::ogDrawSelectDiary::MoveCursor()
  */
 zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Controller* input)
 {
-	if (mStatus == SELECT_NULL) {
+	if (mStatus == Inactive) {
 		return mStatus;
 	}
-	_2EC += gsys->getFrameTime();
-	if (mStatus == SELECT_4) {
-		mStatus = SELECT_NULL;
+
+	mTransitionTimer += gsys->getFrameTime();
+	if (mStatus == Exited) {
+		mStatus = Inactive;
 		return mStatus;
 	}
+
 	mController->setContPtr(input);
 	mController->update();
-	if (mStatus == SELECT_1) {
-		if (_2EC > 0.5f) {
-			mStatus = SELECT_0;
+	if (mStatus == FadingIn) {
+		if (mTransitionTimer > 0.5f) {
+			mStatus = Active;
 			return mStatus;
 		}
-		_2C8->setAlpha((1.0f - _2EC / 0.5f) * 255.0f);
+
+		mBlackFadePicture->setAlpha((1.0f - mTransitionTimer / 0.5f) * 255.0f);
 	}
 
-	if (mStatus == SELECT_2) {
-		if (_2EC > 0.5f) {
-			mStatus = SELECT_4;
+	if (mStatus == FadingOut) {
+		if (mTransitionTimer > 0.5f) {
+			mStatus = Exited;
 			return mStatus;
 		}
-		_2C8->setAlpha((_2EC / 0.5f) * 255.0f);
+
+		mBlackFadePicture->setAlpha((mTransitionTimer / 0.5f) * 255.0f);
 	}
 
-	if (mStatus == SELECT_0) {
+	if (mStatus == Active) {
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
-			P2DPane* pane = _1D0[_2E4];
+			P2DPane* pane = mDayDisplayPanes[mSelectionIndex];
 			f32 x         = pane->getPosH() + pane->getWidth() / 2;
 			f32 y         = pane->getPosV() + pane->getHeight() / 2;
-			_2D4->open(x, y, _2E4 + 1);
+			mDiaryInstance->open(x, y, mSelectionIndex + 1);
 			seSystem->playSysSe(SYSSE_DECIDE1);
-			mStatus = SELECT_3;
+			mStatus = ViewingSingleDiary;
 			return mStatus;
 		}
 
 		if (input->keyClick(KBBTN_B | KBBTN_Y)) {
-			mStatus = SELECT_2;
-			_2EC    = 0.0f;
+			mStatus          = FadingOut;
+			mTransitionTimer = 0.0f;
 			return mStatus;
 		}
 
-		if (mController->keyRepeat(KBBTN_MSTICK_LEFT) && _2E0 > 0) {
-			_2E0--;
+		if (mController->keyRepeat(KBBTN_MSTICK_LEFT) && mSelectedColumnIndex > 0) {
+			mSelectedColumnIndex--;
 			if (MoveCursor()) {
-				_2E0++;
+				mSelectedColumnIndex++;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
-		} else if (mController->keyRepeat(KBBTN_MSTICK_RIGHT) && _2E0 < 9) {
-			_2E0++;
+		} else if (mController->keyRepeat(KBBTN_MSTICK_RIGHT) && mSelectedColumnIndex < 9) {
+			mSelectedColumnIndex++;
 			if (MoveCursor()) {
-				_2E0--;
+				mSelectedColumnIndex--;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
-		} else if (mController->keyRepeat(KBBTN_MSTICK_UP) && _2E2 > 0) {
-			_2E2--;
+		} else if (mController->keyRepeat(KBBTN_MSTICK_UP) && mSelectedRowIndex > 0) {
+			mSelectedRowIndex--;
 			if (MoveCursor()) {
-				_2E2++;
+				mSelectedRowIndex++;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
-		} else if (mController->keyRepeat(KBBTN_MSTICK_DOWN) && _2E2 < 2) {
-			_2E2++;
+		} else if (mController->keyRepeat(KBBTN_MSTICK_DOWN) && mSelectedRowIndex < 2) {
+			mSelectedRowIndex++;
 			if (MoveCursor()) {
-				_2E2--;
+				mSelectedRowIndex--;
 			} else {
 				seSystem->playSysSe(SYSSE_MOVE1);
 			}
 		}
-		_08.update();
-		_38.update();
-		_2D0->update();
+		mLeftCursorMgr.update();
+		mRightCursorMgr.update();
+		mAButtonAlphaAnimator->update();
 	}
 
 	mScreen->update();
-	_2D8 = _2D4->update(input);
-	_2C4->update();
-	for (int i = mDay + 1; i < 30; i++) {
+	mDiaryStatus = mDiaryInstance->update(input);
+	mBlackFadeScreen->update();
+	for (int i = mCurrentDay + 1; i < 30; i++) {
 		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
 		obj->setAlpha(0);
 	}
 
-	for (int i = 0; i <= mDay; i++) {
-		f32 a = _2EC;
-		if (a >= 1.0f) {
-			a -= 1.0f;
+	for (int i = 0; i <= mCurrentDay; i++) {
+		f32 phase = mTransitionTimer;
+		if (phase >= 1.0f) {
+			phase -= 1.0f;
 		}
-		a -= f32(i) * 0.1f;
-		f32 scale = 0.05f * sinf(TAU * a) + 1.0f;
-		_1D0[i]->setOffset(_1D0[i]->getWidth() / 2, _1D0[i]->getHeight() / 2);
-		_1D0[i]->setScale(scale);
+
+		phase -= f32(i) * 0.1f;
+		f32 scale = 0.05f * sinf(TAU * phase) + 1.0f;
+		mDayDisplayPanes[i]->setOffset(mDayDisplayPanes[i]->getWidth() / 2, mDayDisplayPanes[i]->getHeight() / 2);
+		mDayDisplayPanes[i]->setScale(scale);
 	}
 
-	if (mStatus == SELECT_3 && _2D8 == 0) {
-		mStatus = SELECT_0;
+	if (mStatus == ViewingSingleDiary && mDiaryStatus == ogDrawDiary::Closed) {
+		mStatus = Active;
 	}
 
 	return mStatus;
@@ -648,11 +666,13 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
  */
 void zen::ogDrawSelectDiary::draw(Graphics& gfx)
 {
-	if (mStatus != SELECT_NULL) {
-		P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
-		graf.setPort();
-		mScreen->draw(0, 0, &graf);
-		_2D4->draw(gfx);
-		_2C4->draw(0, 0, &graf);
+	if (mStatus == Inactive) {
+		return;
 	}
+
+	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+	graf.setPort();
+	mScreen->draw(0, 0, &graf);
+	mDiaryInstance->draw(gfx);
+	mBlackFadeScreen->draw(0, 0, &graf);
 }

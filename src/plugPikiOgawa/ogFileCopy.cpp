@@ -29,23 +29,28 @@ DEFINE_PRINT(nullptr)
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 {
-	SetTitleMsg(titleMsg_5);
+	SetTitleMsg(SelectSourceFileForCopy);
 
 	for (int i = 0; i < 3; i++) {
-		if (i != _134) {
-			_119C = i;
+		if (i != mCurrSlotIdx) {
+			mCopyTargetFileIndex = i;
 			break;
 		}
 	}
 
-	PRINT("cL(%d,%d)  cR(%d,%d)\n", _104[_119C], _11C[_119C], _110[_119C], _128[_119C]);
-	_A4.init(_2BC, _448, 'z00l', _104[_119C], _11C[_119C]);
-	_D4.init(_2BC, _448, 'z00r', _110[_119C], _128[_119C]);
-	_448->show();
+	PRINT("cL(%d,%d)  cR(%d,%d)\n", mCopyCursorLPosX[mCopyTargetFileIndex], mCopyCursorLPosY[mCopyTargetFileIndex],
+	      mCopyCursorRPosX[mCopyTargetFileIndex], mCopyCursorRPosY[mCopyTargetFileIndex]);
+
+	mCopyLeftCursor.init(mCopyCursorsScreen, mOperationCursorsScreenPane, 'z00l', mCopyCursorLPosX[mCopyTargetFileIndex],
+	                     mCopyCursorLPosY[mCopyTargetFileIndex]);
+	mCopyRightCursor.init(mCopyCursorsScreen, mOperationCursorsScreenPane, 'z00r', mCopyCursorRPosX[mCopyTargetFileIndex],
+	                      mCopyCursorRPosY[mCopyTargetFileIndex]);
+
+	mOperationCursorsScreenPane->show();
 	paneOnOffXY(false);
-	_11A0 = 1;
-	_A4.scale(1.0f, 0.25f);
-	_D4.scale(1.0f, 0.25f);
+	mIsCopyTargetSelectionActive = 1;
+	mCopyLeftCursor.scale(1.0f, 0.25f);
+	mCopyRightCursor.scale(1.0f, 0.25f);
 
 	f32 badcompiler[4];
 }
@@ -57,8 +62,8 @@ void zen::ogScrFileSelectMgr::setOperateMode_Copy()
  */
 void zen::ogScrFileSelectMgr::MoveCpyCursor(int id, f32 a2)
 {
-	_A4.move(_104[id], _11C[id], a2);
-	_D4.move(_110[id], _128[id], a2);
+	mCopyLeftCursor.move(mCopyCursorLPosX[id], mCopyCursorLPosY[id], a2);
+	mCopyRightCursor.move(mCopyCursorRPosX[id], mCopyCursorRPosY[id], a2);
 }
 
 /*
@@ -71,8 +76,8 @@ void zen::ogScrFileSelectMgr::CopyEffectStart()
 	Vector3f effPos;
 	Vector3f attractorPos;
 
-	P2DPane* pane1 = _3B0[_134];
-	P2DPane* pane2 = _3D4[_119C];
+	P2DPane* pane1 = mIconOnyonPanes[mCurrSlotIdx];
+	P2DPane* pane2 = mIconOnyonDestPanes[mCopyTargetFileIndex];
 
 	effPos.set(0.0f, 0.0f, 0.0f);
 	effPos.x = f32(pane1->getPosH()) + f32(pane1->getWidth()) / 2.0f;
@@ -81,11 +86,11 @@ void zen::ogScrFileSelectMgr::CopyEffectStart()
 	pane2->getDispPos(&attractorPos);
 	attractorPos.y = 480.0f - attractorPos.y;
 
-	mEfx = mEfxMgr->create(EFF2D_Unk42, effPos, nullptr, nullptr);
-	mEfx->setNewtonField(attractorPos, 0.0046f, true);
+	mFileCopyEffectOnyon = mFxMgr->create(EFF2D_Unk42, effPos, nullptr, nullptr);
+	mFileCopyEffectOnyon->setNewtonField(attractorPos, 0.0046f, true);
 
-	pane1 = _3BC[_134];
-	pane2 = _3E0[_119C];
+	pane1 = mIconPikminPanes[mCurrSlotIdx];
+	pane2 = mIconPikminDestPanes[mCopyTargetFileIndex];
 
 	effPos.set(0.0f, 0.0f, 0.0f);
 	effPos.x = f32(pane1->getPosH()) + f32(pane1->getWidth()) / 2.0f;
@@ -94,8 +99,8 @@ void zen::ogScrFileSelectMgr::CopyEffectStart()
 	pane2->getDispPos(&attractorPos);
 	attractorPos.y = 480.0f - attractorPos.y;
 
-	mEfx2 = mEfxMgr->create(EFF2D_Unk41, effPos, nullptr, nullptr);
-	mEfx2->setNewtonField(attractorPos, 0.0046f, true);
+	mFileCopyEffectPikminGroup = mFxMgr->create(EFF2D_Unk41, effPos, nullptr, nullptr);
+	mFileCopyEffectPikminGroup->setNewtonField(attractorPos, 0.0046f, true);
 }
 
 /*
@@ -105,85 +110,87 @@ void zen::ogScrFileSelectMgr::CopyEffectStart()
  */
 void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 {
-
-	if (_1198) {
-		_300->show();
-		_118C -= gsys->getFrameTime();
-		if (_118C < 0.0f) {
-			_1198 = false;
-			setOperateMode(OPMODE_Normal);
-			_300->hide();
+	if (mIsCopyCompleteMessageActive) {
+		mOpCompletePane->show();
+		mCopyAnimTimer -= gsys->getFrameTime();
+		if (mCopyAnimTimer < 0.0f) {
+			mIsCopyCompleteMessageActive = false;
+			setOperateMode(Normal);
+			mOpCompletePane->hide();
 		}
 		return;
 	}
 
-	if (_1197) {
-		_2F8->show();
-		_2CC->show();
-		f32 rate = _118C;
+	if (mIsCopyingFileActive) {
+		mOpInProgressPane->show();
+		mCardAccessIcon->show();
+
+		f32 rate = mCopyAnimTimer;
 		int x, y;
 		if (rate > 2.7f) {
-			y = _2CC->getPosV();
+			y = mCardAccessIcon->getPosV();
 			x = (rate - 2.7f) / 0.3f * 640.0f;
 		} else if (rate < 0.3f) {
-			y = _2CC->getPosV();
+			y = mCardAccessIcon->getPosV();
 			x = (rate - 0.3f) / 0.3f * 640.0f;
-			_2CC->move(x, y);
+			mCardAccessIcon->move(x, y);
 		} else {
-			x = _2CC->getPosH();
-			y = _2CC->getPosV();
+			x = mCardAccessIcon->getPosH();
+			y = mCardAccessIcon->getPosV();
 		}
-		_2CC->move(x, y);
-		_118C -= gsys->getFrameTime();
 
-		if (_118C < 0.0f && gameflow.mMemoryCard.hasCardFinished()) {
+		mCardAccessIcon->move(x, y);
+		mCopyAnimTimer -= gsys->getFrameTime();
+
+		if (mCopyAnimTimer < 0.0f && gameflow.mMemoryCard.hasCardFinished()) {
 			seSystem->playSysSe(SYSSE_CARDOK);
 			copyCardInfosSub();
 			ChkNewData();
-			_1197 = false;
-			_1198 = true;
-			_118C = 1.0f;
-			_2F8->hide();
-			_2CC->hide();
-			mEfx->finish();
-			mEfx2->finish();
+			mIsCopyingFileActive         = false;
+			mIsCopyCompleteMessageActive = true;
+			mCopyAnimTimer               = 1.0f;
+			mOpInProgressPane->hide();
+			mCardAccessIcon->hide();
+			mFileCopyEffectOnyon->finish();
+			mFileCopyEffectPikminGroup->finish();
 		}
 		return;
 	}
 
-	if (_11A0) {
+	if (mIsCopyTargetSelectionActive) {
 		if (input->keyClick(KBBTN_B)) {
 			seSystem->playSysSe(SYSSE_CANCEL);
-			setOperateMode(OPMODE_Normal);
+			setOperateMode(Normal);
 		} else if (input->keyClick(KBBTN_A)) {
 			seSystem->playSysSe(SYSSE_DECIDE1);
-			_11A0 = false;
-			_2D8->show();
-			_2D0->show();
-			_2D0->setAlpha(_2D4->getAlphaChar());
-			_A4.scale(0.0f, 0.25f);
-			_D4.scale(0.0f, 0.25f);
+			mIsCopyTargetSelectionActive = false;
+			mYesNoDialogPane->show();
+			mYesNoDialogImage->show();
+			mYesNoDialogImage->setAlpha(mYesNoDialogPromptText->getAlphaChar());
+			mCopyLeftCursor.scale(0.0f, 0.25f);
+			mCopyRightCursor.scale(0.0f, 0.25f);
 			OpenYesNoWindow();
-			SetTitleMsg(titleMsg_6);
+			SetTitleMsg(ConfirmFileCopy);
 		} else if (input->keyClick(KBBTN_MSTICK_LEFT)) {
 			for (int i = 0; i < 3; i++) {
-				if (i != _134) {
+				if (i != mCurrSlotIdx) {
 					seSystem->playSysSe(SYSSE_MOVE1);
-					_119C = i;
+					mCopyTargetFileIndex = i;
 					break;
 				}
 			}
-			MoveCpyCursor(_119C, 0.25f);
+			MoveCpyCursor(mCopyTargetFileIndex, 0.25f);
 		} else if (input->keyClick(KBBTN_MSTICK_RIGHT)) {
 			for (int i = 2; i >= 0; i--) {
-				if (i != _134) {
+				if (i != mCurrSlotIdx) {
 					seSystem->playSysSe(SYSSE_MOVE1);
-					_119C = i;
+					mCopyTargetFileIndex = i;
 					break;
 				}
 			}
-			MoveCpyCursor(_119C, 0.25f);
+			MoveCpyCursor(mCopyTargetFileIndex, 0.25f);
 		}
+
 		return;
 	}
 
@@ -193,16 +200,16 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 	}
 	if (status == ogNitakuMgr::Status_4) {
 		seSystem->playSysSe(SYSSE_CANCEL);
-		setOperateMode(OPMODE_Normal);
-	} else if (status == 5) {
-		_1197 = true;
-		_118C = 3.0f;
+		setOperateMode(Normal);
+	} else if (status == ogNitakuMgr::Status_5) {
+		mIsCopyingFileActive = true;
+		mCopyAnimTimer       = 3.0f;
 		seSystem->playSysSe(SYSSE_CARDACCESS);
-		gameflow.mMemoryCard.copyFile(_2C[_134], _2C[_119C]);
+		gameflow.mMemoryCard.copyFile(mCardInfo[mCurrSlotIdx], mCardInfo[mCopyTargetFileIndex]);
 		CopyEffectStart();
-		_314->hide();
-	} else if (status == 6) {
-		setOperateMode(OPMODE_Normal);
+		mConfirmCopyText->hide();
+	} else if (status == ogNitakuMgr::Status_6) {
+		setOperateMode(Normal);
 	}
 
 	f32 badcompiler[4];

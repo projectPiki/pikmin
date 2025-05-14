@@ -69,12 +69,15 @@ bool zen::TextColorCallBack::invoke(P2DPane* pane)
 		Colour characterColor;
 		Colour gradientColor;
 
+		// Calculate the elapsed time and clamp it to the transition duration
 		mElapsedTime += gsys->getFrameTime();
 		if (mElapsedTime > mTransitionDuration) {
 			mIsTransitionActive = false;
 			mElapsedTime        = mTransitionDuration;
 		}
 
+		// Calculate the interpolation factor (in) and its complement (out)
+		// and interpolate the character and gradient colors
 		f32 in           = mElapsedTime / mTransitionDuration;
 		f32 out          = 1.0f - in;
 		characterColor.r = colorMerge(mTargetCharColor.r, in, mInitialCharColor.r, out);

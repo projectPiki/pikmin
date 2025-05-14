@@ -233,27 +233,29 @@ void ResultFlags::setSeen(int flag)
  * Address:	80083A74
  * Size:	0000A0
  */
-int ResultFlags::getDayDocument(int day, int& res)
+int ResultFlags::getDayDocument(int dayIndex, int& length)
 {
-	int id = mDaysSeen[day];
+	int id = mDaysSeen[dayIndex];
 	if (id == -1) {
-		res = 0;
+		length = 0;
 		return -1;
 	}
 
 	for (int i = 0; i < mActiveCount; i++) {
-		int temp = flagTable[i].mScreenId;
-		if (temp == id) {
+		int currentId = flagTable[i].mScreenId;
+
+		if (currentId == id) {
 			if (flagTable[i + 1].mScreenId == -1) {
-				res = 1;
-				return temp;
+				length = 1;
+				return currentId;
 			}
-			res = flagTable[i + 1].mScreenId - flagTable[i].mScreenId;
-			return temp;
+
+			length = flagTable[i + 1].mScreenId - flagTable[i].mScreenId;
+			return currentId;
 		}
 	}
 
-	res = 0;
+	length = 0;
 	return -1;
 }
 

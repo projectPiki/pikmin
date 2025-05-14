@@ -24,16 +24,15 @@ struct ogScrFileChkSelMgr {
 	 * @brief TODO
 	 */
 	enum returnStatusFlag {
-		FILECHKSEL_NULL = -1,
-		FILECHKSEL_Unk0 = 0,
+		Null                  = -1,
+		MemoryCheckInProgress = 0,
+		ErrorOrCompleted      = 1,
+		FILECHKSEL_SelectionA = 2,
+		FILECHKSEL_SelectionB = 3,
+		FILECHKSEL_SelectionC = 4,
+		FILECHKSEL_Unk5       = 5,
 
-		FILECHKSEL_Unk1 = 1,
-		FILECHKSEL_Unk2 = 2,
-		FILECHKSEL_Unk3 = 3,
-		FILECHKSEL_Unk4 = 4,
-		FILECHKSEL_Unk5 = 5,
-
-		FILECHKSEL_Exit = FILECHKSEL_Unk1, // anything above this is an error/exit
+		FILECHKSEL_Exit = ErrorOrCompleted, // anything above this is an error/exit
 	};
 
 	ogScrFileChkSelMgr();
@@ -48,10 +47,10 @@ struct ogScrFileChkSelMgr {
 	void startSub();
 
 	returnStatusFlag mState;            // _00
-	bool _04;                           // _04
+	bool mIsSaveOperation;              // _04
 	P2DScreen* mDataBScreen;            // _08
-	bool _0C;                           // _0C
-	bool _0D;                           // _0D
+	bool _UNUSED0C;                     // _0C
+	bool mSkipFileSelect;               // _0D
 	bool mIsScreenVisible;              // _0E
 	ogScrMemChkMgr* mMemChkMgr;         // _10
 	ogScrFileSelectMgr* mFileSelectMgr; // _14

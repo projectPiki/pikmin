@@ -17,7 +17,7 @@ extern u8 cardData[];
 struct CardQuickInfo {
 	CardQuickInfo() { _08 = 0; }
 
-	u32 mIndex;             // _00, unknown
+	u32 mIndex;             // _00
 	u32 _04;                // _04, unknown
 	u32 _08;                // _08, maybe int
 	int mCurrentDay;        // _0C
@@ -26,7 +26,7 @@ struct CardQuickInfo {
 	int mYellowPikiCount;   // _18
 	int mBluePikiCount;     // _1C
 	u8 _20[0x4];            // _20, unknown
-	u32 mCrc;               // _24, unknown
+	u32 mCrc;               // _24
 };
 
 /**

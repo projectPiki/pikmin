@@ -167,8 +167,8 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	}
 
 	ogScrFileChkSelMgr::returnStatusFlag fileChkSelRes = _84->update(input, _88);
-	if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk2 || fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk3
-	    || fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk4) {
+	if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_SelectionA || fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_SelectionB
+	    || fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_SelectionC) {
 		gameflow.mPlayState.mSaveFlags      = _88._04;
 		gameflow.mGamePrefs.mSpareSaveGames = _88.mIndex + 1;
 		mStatus                             = Status_3;
@@ -180,12 +180,12 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		_30     = 0;
 		return mStatus;
 
-	} else if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk1) {
+	} else if (fileChkSelRes == ogScrFileChkSelMgr::ErrorOrCompleted) {
 		mStatus = Status_12;
 		_30     = 0;
 		return mStatus;
 
-	} else if (fileChkSelRes != ogScrFileChkSelMgr::FILECHKSEL_NULL) {
+	} else if (fileChkSelRes != ogScrFileChkSelMgr::Null) {
 		_30 = 1;
 		return mStatus;
 	}

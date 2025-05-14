@@ -1759,7 +1759,7 @@ bool zen::DrawWorldMap::update(Controller* controller)
 				}
 			}
 		} else if (_04 == 6) {
-			if (mSelectDiary.update(controller) == ogDrawSelectDiary::SELECT_NULL) {
+			if (mSelectDiary.update(controller) == ogDrawSelectDiary::Inactive) {
 				_04 = 7;
 				mWipeMgr->set(320, 240);
 				mWipeMgr->open(0.5f);

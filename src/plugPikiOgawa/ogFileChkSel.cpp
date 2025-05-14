@@ -20,7 +20,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--
@@ -39,9 +39,9 @@ void zen::ogScrFileChkSelMgr::init()
  */
 zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
-	mState           = FILECHKSEL_NULL;
-	_04              = false;
-	_0D              = false;
+	mState           = Null;
+	mIsSaveOperation = false;
+	mSkipFileSelect  = false;
 	mIsScreenVisible = false;
 	mDataBScreen     = new P2DScreen();
 	mDataBScreen->set("screen/blo/data_b.blo", true, true, true);
@@ -66,11 +66,11 @@ void zen::ogScrFileChkSelMgr::startSub()
  */
 void zen::ogScrFileChkSelMgr::start(bool p1)
 {
-	_0D    = p1;
-	_04    = false;
-	mState = FILECHKSEL_Unk0;
+	mSkipFileSelect  = p1;
+	mIsSaveOperation = false;
+	mState           = MemoryCheckInProgress;
 	mMemChkMgr->start();
-	_0C              = false;
+	_UNUSED0C        = false;
 	mIsScreenVisible = false;
 }
 
@@ -81,11 +81,11 @@ void zen::ogScrFileChkSelMgr::start(bool p1)
  */
 void zen::ogScrFileChkSelMgr::startSave()
 {
-	_0D    = false;
-	_04    = true;
-	mState = FILECHKSEL_Unk0;
+	mSkipFileSelect  = false;
+	mIsSaveOperation = true;
+	mState           = MemoryCheckInProgress;
 	mMemChkMgr->start();
-	_0C              = false;
+	_UNUSED0C        = false;
 	mIsScreenVisible = false;
 }
 
@@ -96,23 +96,23 @@ void zen::ogScrFileChkSelMgr::startSave()
  */
 zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
-	if (mState == FILECHKSEL_NULL) {
+	if (mState == Null) {
 		return mState;
 	}
 
 	if (mState >= FILECHKSEL_Exit) {
-		mState = FILECHKSEL_NULL;
+		mState = Null;
 		return mState;
 	}
 
 	int memChkState = mMemChkMgr->update(controller);
 	if (memChkState == ogScrMemChkMgr::STATE_Finished) {
-		if (_0D) {
+		if (mSkipFileSelect) {
 			mState = FILECHKSEL_Unk5;
 			return mState;
 		}
 
-		mFileSelectMgr->start(_04, 0);
+		mFileSelectMgr->start(mIsSaveOperation, 0);
 		mIsScreenVisible = true;
 
 	} else if (memChkState == ogScrMemChkMgr::STATE_ErrorB) {
@@ -120,30 +120,30 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 		return mState;
 
 	} else if (memChkState == ogScrMemChkMgr::STATE_ErrorA) {
-		mState = FILECHKSEL_Unk1;
+		mState = ErrorOrCompleted;
 		return mState;
 
 	} else if (memChkState == ogScrMemChkMgr::STATE_NULL) {
 		if (!ogCheckInsCard()) {
 			SeSystem::stopSysSe(SYSSE_CARDACCESS);
 			SeSystem::playSysSe(SYSSE_CARDERROR);
-			mState = FILECHKSEL_Unk1;
+			mState = ErrorOrCompleted;
 			return mState;
 		}
 
 		mDataBScreen->update();
 		switch (mFileSelectMgr->update(controller, cardInfo)) {
 		case 6:
-			mState = FILECHKSEL_Unk1;
+			mState = ErrorOrCompleted;
 			break;
 		case 7:
-			mState = FILECHKSEL_Unk2;
+			mState = FILECHKSEL_SelectionA;
 			break;
 		case 8:
-			mState = FILECHKSEL_Unk3;
+			mState = FILECHKSEL_SelectionB;
 			break;
 		case 9:
-			mState = FILECHKSEL_Unk4;
+			mState = FILECHKSEL_SelectionC;
 			break;
 		case 10:
 			mState = FILECHKSEL_Unk5;
@@ -161,7 +161,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
  */
 void zen::ogScrFileChkSelMgr::draw(Graphics& gfx)
 {
-	if (mState == FILECHKSEL_NULL) {
+	if (mState == Null) {
 		return;
 	}
 
