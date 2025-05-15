@@ -27,6 +27,7 @@
 static CmdQueue system_se;      // TODO: type uncertain
 static CmdQueue system_se_stop; // TODO: type undertain
 
+CmdQueue* queue_list;
 static BOOL cmdqueue_reset;
 static u32 countdown_count;  // TODO: type uncertain
 static BOOL pausemode;       // TODO: type uncertain

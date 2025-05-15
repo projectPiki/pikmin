@@ -360,7 +360,7 @@ config.libs = [
             Object(Matching, "jaudio/verysimple.c"),
             Object(Matching, "jaudio/app_inter.c"),
             Object(NonMatching, "jaudio/pikiinter.c"),
-            Object(NonMatching, "jaudio/piki_player.c"),
+            Object(Matching, "jaudio/piki_player.c"),
             Object(NonMatching, "jaudio/piki_bgm.c"),
             Object(NonMatching, "jaudio/piki_scene.c"),
             Object(NonMatching, "jaudio/pikidemo.c"),
