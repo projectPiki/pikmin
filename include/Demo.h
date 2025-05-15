@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Node.h"
 #include "Parameters.h"
+#include "GlobalGameOptions.h"
 
 struct Creature;
 
@@ -49,7 +50,7 @@ enum EDemoFlags {
 	DEMOFLAG_FirstNoon              = 31,
 	DEMOFLAG_UfoPartDiscoveryOffset = 32, // each part's discovery text is this + partID
 
-	DEMOFLAG_COUNT = DEMOFLAG_UfoPartDiscoveryOffset + 30 + 1,
+	DEMOFLAG_COUNT = DEMOFLAG_UfoPartDiscoveryOffset + MAX_UFO_PARTS + 1,
 };
 
 /**

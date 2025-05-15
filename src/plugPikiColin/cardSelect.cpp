@@ -82,7 +82,7 @@ struct CardSelectSetupSection : public Node {
 					if (gameflow.mGamePrefs.mHasSaveGame) {
 						gameflow.mMemoryCard.loadCurrentGame();
 						if (gameflow.mPlayState._20 == 1) {
-							gameflow.mPlayState.reset();
+							gameflow.mPlayState.Initialise();
 							gameflow.mPlayState._20 = 2;
 						}
 
@@ -90,7 +90,7 @@ struct CardSelectSetupSection : public Node {
 
 					} else {
 						PRINT("NO SAVE GAMES!\n");
-						gameflow.mPlayState.reset();
+						gameflow.mPlayState.Initialise();
 						gameflow.mNextOnePlayerSectionID = ONEPLAYER_IntroGame;
 					}
 
@@ -104,7 +104,7 @@ struct CardSelectSetupSection : public Node {
 					}
 				} else {
 					PRINT("CHALLENGE MODE!!!\n");
-					gameflow.mPlayState.reset();
+					gameflow.mPlayState.Initialise();
 					if (gameflow.mIsChallengeMode) {
 						playerState->setChallengeMode();
 					}

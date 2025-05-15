@@ -570,7 +570,7 @@ struct MapPikminWindowCallBack : public P2DPaneCallBack {
 			_08 -= 2.0f;
 		}
 
-		if (zen::pGameInfo->mMapPikiNum == 100) {
+		if (zen::pGameInfo->mMapPikiNum == MAX_PIKI_ON_FIELD) {
 			_04 += gsys->getFrameTime();
 			if (_04 > 1.0f) {
 				_04 = 1.0f;

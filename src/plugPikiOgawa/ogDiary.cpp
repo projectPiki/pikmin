@@ -165,7 +165,7 @@ void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
 {
 	int partsDay = 77;
-	int daysleft = 30 - day;
+	int daysleft = MAX_DAYS - day;
 	int parts    = 77;
 	int powerup  = 77;
 
@@ -434,7 +434,7 @@ zen::ogDrawSelectDiary::ogDrawSelectDiary()
 	mDiaryInstance        = new ogDrawDiary;
 	mCurrentDay           = 0;
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < MAX_DAYS; i++) {
 		char name[4];
 		sprintf(name, "i%02du", i);
 		mDayIconUpPanes[i] = mScreen->search(P2DPaneLibrary::makeTag(name), true);
@@ -486,7 +486,7 @@ void zen::ogDrawSelectDiary::start()
 	_UNUSED2E6           = 0;
 	mBlackFadePicture->setAlpha(255);
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < MAX_DAYS; i++) {
 		if (i > mCurrentDay) {
 			P2DPaneLibrary::setFamilyAlpha(mDayDisplayPanes[i], 80);
 		} else {
@@ -494,7 +494,7 @@ void zen::ogDrawSelectDiary::start()
 		}
 	}
 
-	for (int i = mCurrentDay + 1; i < 30; i++) {
+	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
 		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
 		obj->setAlpha(0);
 	}
@@ -635,7 +635,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 	mScreen->update();
 	mDiaryStatus = mDiaryInstance->update(input);
 	mBlackFadeScreen->update();
-	for (int i = mCurrentDay + 1; i < 30; i++) {
+	for (int i = mCurrentDay + 1; i < MAX_DAYS; i++) {
 		P2DPicture* obj = (P2DPicture*)_248[i]->getPaneTree()->getParent()->getObject();
 		obj->setAlpha(0);
 	}

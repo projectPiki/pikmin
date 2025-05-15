@@ -940,7 +940,7 @@ void GameCoreSection::initStage()
 	}
 	mNavi->reset();
 
-	sprintf(path2, "%s%d.gen", path, (gameflow.mWorldClock.mCurrentDay - 1) % 30);
+	sprintf(path2, "%s%d.gen", path, (gameflow.mWorldClock.mCurrentDay - 1) % MAX_DAYS);
 	data = gsys->openFile(path2, true, true);
 	if (data) {
 		PRINT("** FILE %s READING\n", path2);
@@ -1191,7 +1191,7 @@ void GameCoreSection::finalSetup()
 	} else {
 		if (playerState->isTutorial()) {
 			cameraMgr->mCamera->startCamera(mNavi, 0, 0);
-			if (playerState->isTutorial() && playerState->_11 & 8) {
+			if (playerState->isTutorial() && playerState->mShipEffectPartFlag & 8) {
 				cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 				cameraMgr->mCamera->_30 = 0;
 			}

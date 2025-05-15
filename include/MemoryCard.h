@@ -6,6 +6,7 @@
 
 struct CARDStat;
 struct PlayState;
+struct RamStream;
 
 extern u8 cardData[];
 
@@ -48,12 +49,12 @@ struct MemoryCard : public CoreNode {
 	u32 calcChecksum(void*, u32);
 	bool hasCardFinished();
 	bool attemptFormatCard(int);
-	int waitWhileBusy(int);
+	s32 waitWhileBusy(int);
 	bool getCardStatus(int);
 	void checkUseFile();
-	int getMemoryCardState(bool);
+	s32 getMemoryCardState(bool);
 	void loadCurrentFile();
-	int getNewestOptionsIndex();
+	s32 getNewestOptionsIndex();
 	void loadOptions();
 	void saveOptions();
 	void loadCurrentGame();
@@ -62,7 +63,7 @@ struct MemoryCard : public CoreNode {
 	void readCurrentGame(RandomAccessStream*);
 	void initBannerArea(CARDStat&, char*);
 	void initOptionsArea(int);
-	int makeDefaultFile();
+	s32 makeDefaultFile();
 	void copyFile(CardQuickInfo&, CardQuickInfo&);
 	void delFile(CardQuickInfo&);
 	int doFormatCard();
@@ -78,11 +79,11 @@ struct MemoryCard : public CoreNode {
 	// unused/inlined:
 	void GetBlockSize(s32);
 	void getBannerPtr();
-	void getOptionsPtr(int);
-	void getGameFilePtr(int);
+	void* getOptionsPtr(int);
+	void* getGameFilePtr(int);
 	void getBannerStream();
-	void getOptionsStream(int);
-	void getGameFileStream(int);
+	RamStream* getOptionsStream(int);
+	RamStream* getGameFileStream(int);
 	void waitPolling();
 	void createFile(CARDStat&);
 	void writeOneBanner();
@@ -104,9 +105,9 @@ struct MemoryCard : public CoreNode {
 	u32 _50;                // _50
 	u32 _54;                // _54
 	u32 _58;                // _58
-	u32 mValidBlockCount;   // _5C
-	u32 _60;                // _60
-	u32 _64;                // _64
+	int mValidBlockCount;   // _5C
+	int _60;                // _60
+	u32 mSectorSize;        // _64
 	bool mDidSaveFail;      // _68
 	int _6C;                // _6C
 };

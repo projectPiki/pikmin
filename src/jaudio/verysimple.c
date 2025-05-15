@@ -445,7 +445,7 @@ void Jac_StopSoundAll(void)
  */
 void Jac_Freeze_Precall()
 {
-	BOOL level  = OSDisableInterrupts();
+	BOOL level   = OSDisableInterrupts();
 	jcs_* handle = Get_GlobalHandle();
 	AllStop_1Shot(handle);
 	FlushRelease_1Shot(handle);

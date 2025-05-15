@@ -2094,7 +2094,7 @@ void NaviContainerState::exec(Navi* navi)
 void NaviContainerState::enterPikis(Navi* navi, int max)
 {
 	PRINT("goal color = %d\n", navi->mGoalItem->mOnionColour);
-	Piki* buffer[200];
+	Piki* buffer[MAX_PIKI_ON_FIELD + 100];
 	int numPikis = 0;
 	Iterator it(navi->mPlateMgr);
 

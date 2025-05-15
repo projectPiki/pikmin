@@ -321,7 +321,7 @@ void zen::ogScrFileSelectMgr::setFileData(int fileNum)
 	int* blueNum      = &mCardInfo[fileNum].mBluePikiCount;
 	int* yellowNum    = &mCardInfo[fileNum].mYellowPikiCount;
 	int* partsNum     = &mCardInfo[fileNum].mCurrentPartsCount;
-	mMaxPartsNum      = 30;
+	mMaxPartsNum      = MAX_UFO_PARTS;
 
 	setNumberTag(screen, 'ro_l', partsNum, 10);
 	setNumberTag(screen, 'ro_r', partsNum, 1);

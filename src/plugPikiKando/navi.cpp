@@ -279,7 +279,7 @@ void Navi::updateDayEnd(Vector3f& pos)
  */
 void Navi::enterAllPikis()
 {
-	Piki* pikiList[200];
+	Piki* pikiList[MAX_PIKI_ON_FIELD + 100];
 	GoalItem* onyons[PikiColorCount];
 	int i;
 	for (i = 0; i < PikiColorCount; i++) {
@@ -1355,7 +1355,7 @@ void Navi::callDebugs(f32 radius)
 void Navi::releasePikis()
 {
 	Iterator iter(mPlateMgr);
-	Piki* pikiList[200];
+	Piki* pikiList[MAX_PIKI_ON_FIELD + 100];
 	int pikiCount = 0;
 	CI_LOOP(iter)
 	{

@@ -92,7 +92,7 @@ Creature* ActShoot::decideTarget()
 {
 	f32 minDist = 12800.0f;
 	u32 unused  = 0;
-	Creature* targets[100];
+	Creature* targets[MAX_PIKI_ON_FIELD];
 	Iterator iter(mTargetObjectPool);
 	int count = 0;
 	CI_LOOP(iter)

@@ -174,9 +174,9 @@ void DemoEventMgr::act(int id, int id2)
 				PRINT("boot onion\n");
 				goal->startBoot();
 				playerState->setContainer(goalID + 3);
-				if (playerState->isTutorial() && playerState->_11 & 8) {
+				if (playerState->isTutorial() && playerState->mShipEffectPartFlag & 8) {
 					naviMgr->getNavi();
-					playerState->_11 &= ~8;
+					playerState->mShipEffectPartFlag &= ~8;
 					cameraMgr->mCamera->finishMotion();
 					cameraMgr->mCamera->_30 = 1;
 					cameraMgr->mCamera->startMotion(1, 0);

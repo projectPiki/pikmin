@@ -342,7 +342,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	mCurrentDay    = 77;
 	mRemainingDays = 88;
 	mCurrentParts  = 99;
-	mTotalDays     = 30;
+	mTotalDays     = MAX_DAYS;
 	mTotalParts    = 55;
 
 	if (playerState == nullptr) {
@@ -444,8 +444,8 @@ void zen::ogScrResultMgr::start()
 		mRemainingDays     = 2;
 		mRemainingParts    = 3;
 		mCurrentParts      = 77;
-		mTotalParts        = 30;
-		mTotalDays         = 30;
+		mTotalParts        = MAX_UFO_PARTS;
+		mTotalDays         = MAX_DAYS;
 		mSproutedPikis     = 2345;
 		mPikisLostToBattle = 3456;
 		mLeftBehindPikis   = 4567;

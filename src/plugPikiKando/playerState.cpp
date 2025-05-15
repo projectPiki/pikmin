@@ -17,7 +17,7 @@
 #include "AIPerf.h"
 #include "DebugLog.h"
 
-int PlayerState::totalUfoParts = 30;
+int PlayerState::totalUfoParts = MAX_UFO_PARTS;
 
 bool preloadUFO = false;
 PlayerState* playerState;
@@ -115,11 +115,11 @@ int TimeGraph::get(u16 time, int color)
 
 bool PlayerState::isEnding()
 {
-	if (getCurrDay() >= 29) {
+	if (getCurrDay() >= (MAX_DAYS - 1)) {
 		// we've hit our 30-day limit
 		return true;
 
-	} else if (getCurrParts() >= 30) {
+	} else if (getCurrParts() >= MAX_UFO_PARTS) {
 		// we've collected every part
 		return true;
 	}
@@ -164,7 +164,7 @@ bool PlayerState::existUfoParts(u32 id)
 void PlayerState::initGame()
 {
 	int i;
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mPartsCollectedByDay[i] = 0;
 		mPartsToNextByDay[i]    = 0;
 	}
@@ -178,13 +178,13 @@ void PlayerState::initGame()
 	_1A0                  = 0;
 	_1A4                  = 0;
 	mDisplayPikiFlag      = 0;
-	_11                   = 8;
+	mShipEffectPartFlag   = 8;
 	mTotalRegisteredParts = 0;
 	mTotalParts           = totalUfoParts;
 	_180                  = 0;
 	mCurrParts            = 0;
 	_14                   = 0;
-	_184                  = 0;
+	mContainerFlag        = 0;
 	setContainer(1);
 	setDisplayPikiCount(1);
 	mTotalRegisteredParts = 0;
@@ -193,7 +193,7 @@ void PlayerState::initGame()
 		mUfoParts[i]._DC = 0;
 	}
 
-	_185 = true;
+	mIsTutorialMode = true;
 	for (i = 0; i < 5; i++) {
 		_187[i] = false;
 	}
@@ -217,7 +217,7 @@ void PlayerState::initGame()
 PlayerState::PlayerState()
 {
 	int i;
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mPartsCollectedByDay[i] = 0;
 		mPartsToNextByDay[i]    = 0;
 	}
@@ -230,15 +230,15 @@ PlayerState::PlayerState()
 	_1A0                  = 0;
 	_1A4                  = 0;
 	mDisplayPikiFlag      = 0;
-	_11                   = 8;
+	mShipEffectPartFlag   = 8;
 	mTotalRegisteredParts = 0;
 	mTotalParts           = totalUfoParts;
 
-	mUfoParts  = new UfoParts[mTotalParts];
-	_180       = 0;
-	mCurrParts = 0;
-	_14        = 0;
-	_184       = 0;
+	mUfoParts      = new UfoParts[mTotalParts];
+	_180           = 0;
+	mCurrParts     = 0;
+	_14            = 0;
+	mContainerFlag = 0;
 	setContainer(1);
 	setDisplayPikiCount(1);
 	mTotalRegisteredParts = 0;
@@ -248,7 +248,7 @@ PlayerState::PlayerState()
 	}
 	_18C.create(getStartHour(), getEndHour());
 	_198.create(0, getTotalDays());
-	_185 = true;
+	mIsTutorialMode = true;
 	for (i = 0; i < 5; i++) {
 		_187[i] = false;
 	}
@@ -305,11 +305,11 @@ void PlayerState::setChallengeMode()
 		mDemoFlags.setFlagOnly(i);
 	}
 
-	_185             = 0;
-	_184             = 255;
-	_186             = 0;
-	mDisplayPikiFlag = 0xFF;
-	_11              = 1;
+	mIsTutorialMode     = 0;
+	mContainerFlag      = 255;
+	_186                = 0;
+	mDisplayPikiFlag    = 0xFF;
+	mShipEffectPartFlag = 1;
 }
 
 /*
@@ -366,7 +366,7 @@ int PlayerState::getCardUfoPartsCount()
  */
 int PlayerState::getUfoPercentage()
 {
-	return getTotalParts() / 30.0f * 100.0f;
+	return getTotalParts() / (MAX_UFO_PARTS) * 100.0f;
 	// UNUSED FUNCTION
 }
 
@@ -397,7 +397,7 @@ int PlayerState::getTotalPikiCount(int color)
 void PlayerState::saveCard(RandomAccessStream& data)
 {
 	int i;
-	_185 = false;
+	mIsTutorialMode = false;
 
 	ID32 id;
 
@@ -435,10 +435,10 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	data.writeInt(_0C);
 	data.writeInt(mCurrParts);
 	data.writeInt(_180);
-	data.writeByte(_184);
-	data.writeByte(_185);
+	data.writeByte(mContainerFlag);
+	data.writeByte(mIsTutorialMode);
 	data.writeByte(_186);
-	data.writeByte(_11);
+	data.writeByte(mShipEffectPartFlag);
 	data.writeByte(mDisplayPikiFlag);
 
 	for (i = 0; i < 5; i++) {
@@ -469,7 +469,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 		node = (StageInfo*)node->mNext;
 	}
 
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		data.writeByte(mPartsCollectedByDay[i]);
 		data.writeByte(mPartsToNextByDay[i]);
 	}
@@ -518,24 +518,25 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	}
 	PRINT("**** LOADING @ %d\n", data.getPosition());
 
-	mSproutedNum     = data.readInt();
-	mLostBattlePikis = data.readInt();
-	mLeftBehindPikis = data.readInt();
-	_0C              = data.readInt();
-	mCurrParts       = data.readInt();
-	_180             = data.readInt();
-	_184             = data.readByte();
-	_185             = data.readByte();
-	_186             = data.readByte();
-	_11              = data.readByte();
-	mDisplayPikiFlag = data.readByte();
+	mSproutedNum        = data.readInt();
+	mLostBattlePikis    = data.readInt();
+	mLeftBehindPikis    = data.readInt();
+	_0C                 = data.readInt();
+	mCurrParts          = data.readInt();
+	_180                = data.readInt();
+	mContainerFlag      = data.readByte();
+	mIsTutorialMode     = data.readByte();
+	_186                = data.readByte();
+	mShipEffectPartFlag = data.readByte();
+	mDisplayPikiFlag    = data.readByte();
 	for (i = 0; i < 5; i++) {
 		_187[i] = data.readByte();
 	}
 	_1A0 = data.readInt();
 	_1A4 = data.readInt();
-	PRINT("*** loaded : %d %d %d\n", mCurrParts, _184, _185);
-	PRINT("| ufo level %d ufo parts %d container flag %d tutorialmode %s\n", mShipUpgradeLevel, mCurrParts, _184, _185 ? "yes" : "no");
+	PRINT("*** loaded : %d %d %d\n", mCurrParts, mContainerFlag, mIsTutorialMode);
+	PRINT("| ufo level %d ufo parts %d container flag %d tutorialmode %s\n", mShipUpgradeLevel, mCurrParts, mContainerFlag,
+	      mIsTutorialMode ? "yes" : "no");
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
 
@@ -559,7 +560,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	PRINT("*******************************************************************************\n");
 	generatorCache->dump();
 
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mPartsCollectedByDay[i] = data.readByte();
 		mPartsToNextByDay[i]    = data.readByte();
 	}
@@ -580,7 +581,7 @@ bool PlayerState::isTutorial()
 		return false;
 	}
 
-	return _185;
+	return mIsTutorialMode;
 }
 
 /*
@@ -686,7 +687,7 @@ void PlayerState::update()
 		mDemoFlags.update();
 	}
 
-	if (isCM || !_185) {
+	if (isCM || !mIsTutorialMode) {
 		int time = gameflow.mWorldClock.mCurrentTime;
 		if (time != _194) {
 			GameStat::update();
@@ -791,7 +792,7 @@ void PlayerState::initCourse()
 	int id = flowCont.mCurrentStage->mStageIndex;
 	_194   = -1;
 	if (id != 0) {
-		_185 = false;
+		mIsTutorialMode = false;
 	}
 	_C0 = naviMgr->mNaviShapeObject[0];
 	mPikiAnimMgr.init(_C0->mAnimMgr, &_C0->mAnimatorB, &_C0->mAnimatorA, naviMgr->mMotionTable);
@@ -818,7 +819,7 @@ void PlayerState::exitCourse()
 		}
 		PRINT("*** HOUR %d : (%3d %3d %3d)\n", hour, counts[0], counts[1], counts[2]);
 	}
-	_185 = false;
+	mIsTutorialMode = false;
 }
 
 /*
@@ -896,7 +897,7 @@ int PlayerState::getCurrDay()
  */
 int PlayerState::getTotalDays()
 {
-	return 30;
+	return MAX_DAYS;
 }
 
 /*
@@ -1218,7 +1219,7 @@ void PlayerState::getUfoParts(u32 partID, bool flag)
 
 	switch (partID) {
 	case 'uf01':
-		_11 |= 1;
+		mShipEffectPartFlag |= 1;
 		for (int i = 0; i < 10; i++) {
 			PRINT("U GOT RADAR !\n");
 		}
@@ -1228,7 +1229,7 @@ void PlayerState::getUfoParts(u32 partID, bool flag)
 		break;
 
 	case 'uf10':
-		_11 |= 2;
+		mShipEffectPartFlag |= 2;
 		for (int i = 0; i < 10; i++) {
 			PRINT("U GOT LEFT HORN !\n");
 		}
@@ -1238,7 +1239,7 @@ void PlayerState::getUfoParts(u32 partID, bool flag)
 		break;
 
 	case 'uf11':
-		_11 |= 4;
+		mShipEffectPartFlag |= 4;
 		for (int i = 0; i < 10; i++) {
 			PRINT("U GOT RIGHT HORN !\n");
 		}
@@ -1340,7 +1341,7 @@ int PlayerState::getNextPowerupNumber()
 	counts[2] = AIConstant::_instance->mConstants._164();
 	counts[3] = AIConstant::_instance->mConstants._174();
 	counts[4] = AIConstant::_instance->mConstants._184();
-	counts[5] = 30;
+	counts[5] = MAX_UFO_PARTS;
 	return counts[mShipUpgradeLevel] - mCurrParts;
 }
 
@@ -1361,7 +1362,7 @@ void PlayerState::preloadHenkaMovie()
 		level = 3;
 	} else if (AIConstant::_instance->mConstants._174() == parts) {
 		level = 4;
-	} else if (30 == parts) {
+	} else if (MAX_UFO_PARTS == parts) {
 		level = 5;
 	}
 

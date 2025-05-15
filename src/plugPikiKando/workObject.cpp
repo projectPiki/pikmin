@@ -325,7 +325,7 @@ int WorkObjectMgr::getSize()
  */
 GenObjectWorkObject::GenObjectWorkObject()
     : GenObject('work', "仕事オブジェクト")
-    , mDay(this, 0, 0, 30, "p00", "day")
+    , mDay(this, 0, 0, MAX_DAYS, "p00", "day")
     , mHour(this, 0, 0, 24, "p01", "hour")
     , _38(this, 10, 0, 100, "p02", "動かすのに必要なピキ数") // "Number of pikis required to move"
     , _48(this, 30.0f, 0.0f, 400.0f, "p03", "移動速度")      // "movement speed"

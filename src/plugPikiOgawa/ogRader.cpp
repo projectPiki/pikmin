@@ -146,7 +146,7 @@ zen::ogRaderMgr::ogRaderMgr()
 	Colour black(0, 0, 0, 0);
 
 	PikiRaderEntry* data = _100;
-	for (i = 0; i < 100; i++) {
+	for (i = 0; i < MAX_PIKI_ON_FIELD; i++) {
 		data->mPic = new P2DPicture(_5C->getTexture(0));
 		_424->appendChild(data->mPic);
 		data->mPic->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
@@ -159,7 +159,7 @@ zen::ogRaderMgr::ogRaderMgr()
 	}
 
 	// hardcoded ship part count my beloved
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_UFO_PARTS; i++) {
 		_84[i] = new P2DPicture(_80->getTexture(0));
 		_424->appendChild(_84[i]);
 		_84[i]->move((i % 10) * 10 + 10, (i / 10) * 10 + 10);
@@ -315,7 +315,7 @@ void zen::ogRaderMgr::getRocketPos()
  */
 void zen::ogRaderMgr::getPartsPos()
 {
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < MAX_UFO_PARTS; i++) {
 		_84[i]->hide();
 	}
 
@@ -340,7 +340,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 {
 	PikiRaderEntry* data = _100;
 	_FC                  = 0;
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < MAX_PIKI_ON_FIELD; i++) {
 		data->mPic->hide();
 		data++;
 	}

@@ -9,6 +9,7 @@
 #include "String.h"
 #include "OnePlayerSection.h"
 #include "WorldClock.h"
+#include "GlobalGameOptions.h"
 #include "Ayu.h"
 
 struct AnimFrameCacher;
@@ -94,10 +95,10 @@ struct GameQuickInfo {
 };
 
 struct GameChalQuickInfo {
-	int mCourseID;        // _00, see StageID enum
-	u32 mScore;           // _04, score for this entry
-	int mRank;            // _08, 0-4, 0 being the best
-	u32 mCourseScores[5]; // _0C, all 5 top scores for mCourseID course
+	int mCourseID;                    // _00, see StageID enum
+	u32 mScore;                       // _04, score for this entry
+	int mRank;                        // _08, 0-4, 0 being the best
+	u32 mCourseScores[MAX_HI_SCORES]; // _0C, all 5 top scores for mCourseID course
 };
 
 /**
@@ -143,7 +144,7 @@ struct GameGenNode : public Node {
  * @note Size: 0x24.
  */
 struct PlayState : public CoreNode {
-	inline PlayState()
+	PlayState()
 	    : CoreNode("playState")
 	{
 		mSaveFlags = 0;
@@ -155,7 +156,7 @@ struct PlayState : public CoreNode {
 
 	void openStage(int);
 
-	inline void reset()
+	void Initialise()
 	{
 		_20              = 1;
 		_1C              = -1;
@@ -166,9 +167,9 @@ struct PlayState : public CoreNode {
 		mCourseOpenFlags = 1;
 	}
 
-	inline bool isStageOpen(int stageIdx)
+	bool isStageOpen(int stageIdx)
 	{
-		if (stageIdx >= 0 && stageIdx <= 5) {
+		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
 			return (mCourseOpenFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
@@ -176,9 +177,9 @@ struct PlayState : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14;              // _14, might be u32
-	int _18;              // _18, might be u32
-	int _1C;              // _1C, might be u32
+	int _14;              // _14
+	int _18;              // _18
+	int _1C;              // _1C
 	u8 _20;               // _20
 	u8 _21;               // _21
 	u8 _22;               // _22
@@ -195,13 +196,13 @@ struct GameRecMinDay {
 	GameRecMinDay()
 	{
 		mNumParts = 0;
-		mNumDays  = 30;
+		mNumDays  = MAX_DAYS;
 	}
 
 	void Initialise()
 	{
 		mNumParts = 0;
-		mNumDays  = 30;
+		mNumDays  = MAX_DAYS;
 	}
 
 	void read(RandomAccessStream& input)
@@ -289,7 +290,7 @@ struct GameRecChalCourse {
 		}
 	}
 
-	int mScores[5]; // _00
+	int mScores[MAX_HI_SCORES]; // _00
 };
 
 /**
@@ -299,7 +300,7 @@ struct GameHiscores {
 	void Initialise()
 	{
 		mTotalPikis = 0;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			mMinDayRecords[i].Initialise();
 			mBornPikminRecords[i].Initialise();
 			mDeadPikminRecords[i].Initialise();
@@ -310,7 +311,7 @@ struct GameHiscores {
 	void read(RandomAccessStream& input)
 	{
 		mTotalPikis = input.readInt();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			mMinDayRecords[i].read(input);
 			mBornPikminRecords[i].read(input);
 			mDeadPikminRecords[i].read(input);
@@ -321,7 +322,7 @@ struct GameHiscores {
 	void write(RandomAccessStream& output)
 	{
 		output.writeInt(mTotalPikis);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			mMinDayRecords[i].write(output);
 			mBornPikminRecords[i].write(output);
 			mDeadPikminRecords[i].write(output);
@@ -329,11 +330,11 @@ struct GameHiscores {
 		}
 	}
 
-	int mTotalPikis;                         // _00
-	GameRecMinDay mMinDayRecords[5];         // _04
-	GameRecBornPikmin mBornPikminRecords[5]; // _1C
-	GameRecDeadPikmin mDeadPikminRecords[5]; // _30
-	GameRecChalCourse mChalModeRecords[5];   // _44
+	int mTotalPikis;                                     // _00
+	GameRecMinDay mMinDayRecords[MAX_HI_SCORES];         // _04
+	GameRecBornPikmin mBornPikminRecords[MAX_HI_SCORES]; // _1C
+	GameRecDeadPikmin mDeadPikminRecords[MAX_HI_SCORES]; // _30
+	GameRecChalCourse mChalModeRecords[MAX_HI_SCORES];   // _44
 };
 
 /**
@@ -378,14 +379,14 @@ struct GamePrefs : public CoreNode {
 
 	void openStage(int stageIdx)
 	{
-		if (stageIdx >= 0 && stageIdx <= STAGE_END) {
+		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
 			mUnlockedStageFlags |= (1 << stageIdx);
 		}
 	}
 
 	bool isStageOpen(int stageIdx)
 	{
-		if (stageIdx >= 0 && stageIdx <= 5) {
+		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
 			return (mUnlockedStageFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
@@ -413,7 +414,9 @@ struct GamePrefs : public CoreNode {
 	u8 mUnlockedStageFlags; // _22
 	u8 _23;                 // _23
 	GameHiscores mHiscores; // _24
-	u8 _DC[0x108 - 0xDC];   // _DC, unknown
+	u32 _DC;                // _DC, unknown
+	u32 _E0;                // _E0
+	u8 _E4[0x108 - 0xE4];   // _E4, unknown
 	u32 _108;               // _108, unknown
 };
 

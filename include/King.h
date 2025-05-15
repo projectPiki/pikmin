@@ -7,6 +7,7 @@
 #include "zen/Particle.h"
 #include "CreatureCollPart.h"
 #include "EffectMgr.h"
+#include "GlobalGameOptions.h"
 #include "MapMgr.h"
 
 #define KING_PROP         (static_cast<KingProp*>(mProps)->mKingProps)
@@ -94,7 +95,7 @@ struct KingProp : public BossProp, public CoreNode {
 		    , mAttackTerritoryRadius(this, 275.0f, 0.0f, 0.0f, "t10", nullptr)
 		    , mJumpAttackRangeXZ(this, 250.0f, 0.0f, 0.0f, "t11", nullptr)
 		    , mMaxJumpAttackAngle(this, 120.0f, 0.0f, 0.0f, "t12", nullptr)
-		    , mMaxEatPikiNum(this, 100, 0, 0, "i00", nullptr)
+		    , mMaxEatPikiNum(this, MAX_PIKI_ON_FIELD, 0, 0, "i00", nullptr)
 		    , mSwallowedBombsMin(this, 0, 0, 0, "i10", nullptr)
 		    , mSwallowedBombsMax(this, 10, 0, 0, "i11", nullptr)
 		    , mEatBombDamageLoopMin(this, 4, 0, 0, "i12", nullptr)

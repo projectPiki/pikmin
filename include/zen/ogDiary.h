@@ -4,6 +4,7 @@
 #include "types.h"
 #include "zen/ogMessage.h"
 #include "zen/SpectrumCursorMgr.h"
+#include "GlobalGameOptions.h"
 
 struct Controller;
 struct Graphics;
@@ -134,11 +135,11 @@ struct ogDrawSelectDiary {
 	P2DScreen* mScreen;                         // _04
 	SpectrumCursorMgr mLeftCursorMgr;           // _08
 	SpectrumCursorMgr mRightCursorMgr;          // _38
-	P2DPane* mDayIconUpPanes[30];               // _68
-	P2DPane* mDayIconDownPanes[30];             // _E0
-	P2DPane* _UNUSED168[30];                    // _168
-	P2DPane* mDayDisplayPanes[30];              // _1D0
-	P2DPicture* _248[30];                       // _248, no idea what this is
+	P2DPane* mDayIconUpPanes[MAX_DAYS];         // _68
+	P2DPane* mDayIconDownPanes[MAX_DAYS];       // _E0
+	P2DPane* _UNUSED168[MAX_DAYS];              // _168
+	P2DPane* mDayDisplayPanes[MAX_DAYS];        // _1D0
+	P2DPicture* _248[MAX_DAYS];                 // _248, no idea what this is
 	P2DPane* mOpenTargetPane;                   // _2C0
 	P2DScreen* mBlackFadeScreen;                // _2C4
 	P2DPicture* mBlackFadePicture;              // _2C8

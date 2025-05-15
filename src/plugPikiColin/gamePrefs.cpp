@@ -131,7 +131,7 @@ void GamePrefs::setChildMode(bool set)
  */
 void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 {
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		info.mCourseScores[i] = mHiscores.mChalModeRecords[info.mCourseID].mScores[i];
 	}
 }
@@ -146,18 +146,18 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 	info.mRank         = -1;
 	gsys->mTogglePrint = 1;
 	PRINT("checking challenge info for course %d, top scores are :-\n", info.mCourseID);
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		PRINT("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mCourseID].mScores[i]);
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mScore > mHiscores.mChalModeRecords[info.mCourseID].mScores[i]) {
 			info.mRank = i;
 			break;
 		}
 	}
 
-	if (info.mRank >= 0 && info.mRank < 5) {
+	if (info.mRank >= 0 && info.mRank < MAX_HI_SCORES) {
 		for (int i = 4; i > info.mRank; i--) {
 			mHiscores.mChalModeRecords[info.mCourseID].mScores[i] = mHiscores.mChalModeRecords[info.mCourseID].mScores[i - 1];
 		}
@@ -181,7 +181,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	info.mDeadPikisRank = -1;
 	info.mPartsDaysRank = -1;
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mParts > mHiscores.mMinDayRecords[i].mNumParts) {
 			info.mPartsDaysRank = i;
 			break;
@@ -193,8 +193,8 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		}
 	}
 
-	if (info.mPartsDaysRank >= 0 && info.mPartsDaysRank < 5) {
-		for (int i = 4; i > info.mPartsDaysRank; i--) {
+	if (info.mPartsDaysRank >= 0 && info.mPartsDaysRank < MAX_HI_SCORES) {
+		for (int i = (MAX_HI_SCORES - 1); i > info.mPartsDaysRank; i--) {
 			mHiscores.mMinDayRecords[i].mNumDays  = mHiscores.mMinDayRecords[i - 1].mNumDays;
 			mHiscores.mMinDayRecords[i].mNumParts = mHiscores.mMinDayRecords[i - 1].mNumParts;
 		}
@@ -202,23 +202,23 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 		mHiscores.mMinDayRecords[info.mPartsDaysRank].mNumParts = info.mParts;
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < MAX_HI_SCORES; i++) {
 		if (info.mBornPikis > mHiscores.mBornPikminRecords[i].mNumBorn) {
 			info.mBornPikisRank = i;
 			break;
 		}
 	}
 
-	if (info.mBornPikisRank >= 0 && info.mBornPikisRank < 5) {
-		for (int i = 4; i > info.mBornPikisRank; i--) {
+	if (info.mBornPikisRank >= 0 && info.mBornPikisRank < MAX_HI_SCORES) {
+		for (int i = (MAX_HI_SCORES - 1); i > info.mBornPikisRank; i--) {
 			mHiscores.mBornPikminRecords[i].mNumBorn = mHiscores.mBornPikminRecords[i - 1].mNumBorn;
 		}
 		mHiscores.mBornPikminRecords[info.mBornPikisRank].mNumBorn = info.mBornPikis;
 	}
 
 	// only check/update dead pikmin ranking if we finish the ship
-	if (info.mParts == 30) {
-		for (int i = 0; i < 5; i++) {
+	if (info.mParts == MAX_UFO_PARTS) {
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
 			if (info.mDeadPikis < mHiscores.mDeadPikminRecords[i].mNumDead) {
 				info.mDeadPikisRank = i;
 				break;
@@ -227,7 +227,7 @@ void GamePrefs::checkIsHiscore(GameQuickInfo& info)
 	}
 
 	if (info.mDeadPikisRank >= 0 && info.mDeadPikisRank < 5) {
-		for (int i = 4; i > info.mDeadPikisRank; i--) {
+		for (int i = (MAX_HI_SCORES - 1); i > info.mDeadPikisRank; i--) {
 			mHiscores.mDeadPikminRecords[i].mNumDead = mHiscores.mDeadPikminRecords[i - 1].mNumDead;
 		}
 		mHiscores.mDeadPikminRecords[info.mDeadPikisRank].mNumDead = info.mDeadPikis;

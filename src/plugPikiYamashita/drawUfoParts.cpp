@@ -161,7 +161,7 @@ void zen::DrawUfoParts::dataSet()
 	int i;
 	char buf[8];
 	P2DScreen* screen = mScreen->getScreenPtr();
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_UFO_PARTS; i++) {
 		sprintf(buf, "ui%02d", i + 1);
 		P2DPicture* partIcon = (P2DPicture*)screen->search(P2DPaneLibrary::makeTag(buf), true);
 		sprintf(buf, "un%02d", i + 1);

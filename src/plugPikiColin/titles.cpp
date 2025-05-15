@@ -123,7 +123,7 @@ struct TitleSetupSection : public Node {
 
 		_3B4.set(200.0f, 200.0f, 50.0f);
 		GameQuickInfo info;
-		info.mDay       = 30;
+		info.mDay       = MAX_DAYS;
 		info.mBornPikis = 0;
 		info.mDeadPikis = 0;
 		info.mParts     = 0;

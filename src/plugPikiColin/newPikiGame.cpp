@@ -146,7 +146,7 @@ struct DayOverModeState : public ModeState {
 		if (flag == 0) {
 			gamecore->cleanupDayEnd();
 
-			if (gameflow.mWorldClock.mCurrentDay < 30 && playerState->getCurrParts() != 30 && !gameflow.mIsChallengeMode) {
+			if (gameflow.mWorldClock.mCurrentDay < MAX_DAYS && playerState->getCurrParts() != MAX_UFO_PARTS && !gameflow.mIsChallengeMode) {
 				mSection->mCurrentFade = -0.1f;
 				gameflow.mMoviePlayer->startMovie(28, 0, nullptr, nullptr, nullptr, -1, true);
 			}
@@ -436,7 +436,7 @@ ModeState* RunningModeState::update(u32& a)
 	if (gameflow.mIsDayEndTriggered && !gameflow.mIsUiOverlayActive) {
 		gameflow.mIsDayEndActive    = 1;
 		gameflow.mIsDayEndTriggered = 0;
-		if (playerState->getCurrParts() != 30 && gameflow.mWorldClock.mCurrentDay == 30) {
+		if (playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 			if (playerState->happyEndable()) {
 				flowCont._244 = 1;
 				gameflow.mGameInterface->message(0, 28);
@@ -591,7 +591,7 @@ ModeState* MessageModeState::update(u32& a)
 			if (mMessageTimer < 0.0f) {
 				mMessageTimer                             = 2.0f;
 				mapMgr->mTargetGreyscaleDesaturationLevel = 1.0f;
-				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == 30) && gameoverWindow) {
+				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) && gameoverWindow) {
 					gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
 				}
 				mMessagePhase = 1;
@@ -621,7 +621,7 @@ ModeState* MessageModeState::update(u32& a)
 			mSection->mNextModeState = state;
 			gamecore->cleanupDayEnd();
 			if (!gameflow.mIsChallengeMode) {
-				if (gameflow.mWorldClock.mCurrentDay != 30) {
+				if (gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
 					gameflow.mMoviePlayer->startMovie(52, 0, nullptr, nullptr, nullptr, -1, true);
 					if (gameoverWindow) {
 						gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
@@ -744,7 +744,7 @@ ModeState* DayOverModeState::update(u32& a)
 				PRINT("doing save now!!\n");
 				gameflow.mMemoryCard.saveCurrentGame();
 				if (mSection->mController->keyDown(KBBTN_Z)) {
-					kio->startWrite(0, cardData, 0x26000);
+					kio->startWrite(0, (u8*)cardData, 0x26000);
 				}
 				gsys->mTogglePrint = sysbackup;
 				u32 badCompiler2;
@@ -802,7 +802,7 @@ void DayOverModeState::makeTotalScoreWindow()
  */
 ModeState* DayOverModeState::initialisePhaseOne()
 {
-	if (playerState->getCurrParts() == 30) {
+	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
 		PRINT("EXITDAYEND!!!!\n");
 		gamecore->exitDayEnd();
 		gsys->resetHeap(SYSHEAP_Teki, 2);
@@ -810,7 +810,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingWave, 0, nullptr, nullptr, nullptr, -1, true);
 		gsys->setHeap(old);
 
-	} else if (gameflow.mWorldClock.mCurrentDay >= 30) {
+	} else if (gameflow.mWorldClock.mCurrentDay >= MAX_DAYS) {
 		PRINT("EXITDAYEND!!!!\n");
 		gamecore->exitDayEnd();
 		gsys->resetHeap(SYSHEAP_Teki, 2);
@@ -880,10 +880,10 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	gsys->resetHeap(SYSHEAP_Teki, 2);
 	int old = gsys->setHeap(SYSHEAP_Teki);
 
-	if (playerState->getCurrParts() == 30) {
+	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
 		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingTakeOff, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
 
-	} else if (gameflow.mWorldClock.mCurrentDay < 30) {
+	} else if (gameflow.mWorldClock.mCurrentDay < MAX_DAYS) {
 		PRINT("LOADING YOZURA MOVIE!!\n");
 		gameflow.mMoviePlayer->startMovie(DEMOID_EndOfDayResults, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
 
@@ -953,9 +953,9 @@ ModeState* DayOverModeState::initialisePhaseThree()
 	int old = gsys->setHeap(4);
 	playerState->setNavi(false);
 
-	if (playerState->getCurrParts() == 30) {
+	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
 		gameflow.mMoviePlayer->startMovie(DEMOID_GoodEndingOnyons, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
-	} else if (gameflow.mWorldClock.mCurrentDay == 30) {
+	} else if (gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 		if (playerState->happyEndable()) {
 			gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
 			makeTotalScoreWindow();
@@ -995,7 +995,7 @@ ModeState* DayOverModeState::initialisePhaseFour()
 	gsys->resetHeap(4, 2);
 	int old = gsys->setHeap(4);
 
-	if (playerState->getCurrParts() == 30) {
+	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
 		gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
 		makeTotalScoreWindow();
 	} else {
@@ -1470,7 +1470,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	case 5:
 		if (index == 0) {
 			if (flowCont.mGameEndCondition == 1) {
-				if (!gameflow.mIsChallengeMode && gameflow.mWorldClock.mCurrentDay != 30) {
+				if (!gameflow.mIsChallengeMode && gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
 					gameflow.mMoviePlayer->startMovie(DEMOID_ExtDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
 					gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 					if (gameoverWindow) {
@@ -1485,7 +1485,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 				PRINT("got zero pikis flag!!\n");
 				Navi* navi = naviMgr->getNavi(0);
 				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mPosition, &navi->mRotation, -1, true);
-				if (gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == 30) {
+				if (gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::modeFlag(1), 40.0f);
 					}

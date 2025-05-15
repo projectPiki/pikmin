@@ -725,7 +725,7 @@ bool UfoItem::needShadow()
  * Size:	0001F4
  */
 UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
-    : Suckable(30, prop)
+    : Suckable(OBJTYPE_Ufo, prop)
 {
 	for (int i = 0; i < 6; i++) {
 		mTroubleFxGenList[i] = nullptr;

@@ -192,7 +192,7 @@ Creature* ActAttack::findTarget()
 Creature* ActAttack::decideTarget()
 {
 	f32 minDist = 12800.0f;
-	Creature* targetList[100];
+	Creature* targetList[MAX_PIKI_ON_FIELD];
 	Iterator iter(_20);
 	int count = 0;
 	CI_LOOP(iter)

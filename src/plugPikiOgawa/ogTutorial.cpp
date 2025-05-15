@@ -87,7 +87,7 @@ void zen::ogScrTutorialMgr::start(EnumTutorial state)
 {
 	int days       = 1;
 	int parts      = 10;
-	int totalParts = 30;
+	int totalParts = MAX_UFO_PARTS;
 	int totalDays  = 1;
 	int powerup    = 77;
 

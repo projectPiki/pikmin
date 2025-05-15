@@ -41,14 +41,14 @@ void ActPullout::init(Creature* target)
 {
 	if (!target) {
 		Iterator iter(pikiMgr);
-		Creature* pikiList[100];
+		Creature* pikiList[MAX_PIKI_ON_FIELD];
 		f32 minDist = 300.0f;
 		int count   = 0;
 		CI_LOOP(iter)
 		{
 			Piki* piki = static_cast<Piki*>(*iter);
 			f32 dist   = qdist2(piki, mPiki);
-			if (piki != mPiki && piki->isBuried() && dist < minDist && count < 100) {
+			if (piki != mPiki && piki->isBuried() && dist < minDist && count < MAX_PIKI_ON_FIELD) {
 				pikiList[count++] = piki;
 			}
 		}

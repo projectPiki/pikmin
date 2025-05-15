@@ -261,7 +261,7 @@ GameSetupSection::GameSetupSection()
 
 	memStat->start("setup");
 
-	gameflow.mPlayState.reset();
+	gameflow.mPlayState.Initialise();
 	gameflow.mWorldClock.mCurrentDay = 1;
 	flowCont._248                    = 0;
 	flowCont._254                    = 0;
@@ -293,7 +293,7 @@ GameSetupSection::GameSetupSection()
 	memStat->end("setup");
 	heap->setAllocType(allocType);
 	pikiInfMgr.clear();
-	gameflow.mPlayState.reset();
+	gameflow.mPlayState.Initialise();
 }
 
 /*

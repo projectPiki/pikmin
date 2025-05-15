@@ -129,7 +129,7 @@ ResultFlags::ResultFlags()
 		mActiveCount++;
 	}
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = -1;
 	}
 
@@ -162,14 +162,14 @@ void ResultFlags::initGame()
 		}
 	}
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = -1;
 	}
 
-	setSeen(27);
-	setSeen(29);
-	setSeen(31);
-	setSeen(38);
+	setSeen(RESFLAG_UnusedControls1);
+	setSeen(RESFLAG_UnusedControls2);
+	setSeen(RESFLAG_UnusedControls3);
+	setSeen(RESFLAG_BluePikminWaterImmunity);
 }
 
 /*
@@ -184,7 +184,7 @@ void ResultFlags::saveCard(RandomAccessStream& stream)
 		stream.writeByte(mStates[i]);
 	}
 
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		stream.writeShort(mDaysSeen[i]);
 	}
 }
@@ -201,7 +201,7 @@ void ResultFlags::loadCard(RandomAccessStream& stream)
 		mStates[i] = stream.readByte();
 	}
 
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < MAX_DAYS; i++) {
 		mDaysSeen[i] = stream.readShort();
 	}
 }

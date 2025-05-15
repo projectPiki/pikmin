@@ -2900,7 +2900,7 @@ PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 	PRINT("PIKIHEADMGR *** this = %x\n", this);
 	mPikiHeadProps = new PikiHeadItemProp();
 	mPikiHeadAI    = new PikiHeadAI();
-	create(100);
+	create(MAX_PIKI_ON_FIELD);
 	PRINT("=====================================\n");
 }
 

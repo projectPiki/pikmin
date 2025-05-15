@@ -2,6 +2,7 @@
 #define _RESULTFLAGS_H
 
 #include "types.h"
+#include "GlobalGameOptions.h"
 
 struct RandomAccessStream;
 struct Creature;
@@ -132,7 +133,7 @@ struct ResultFlags {
 	u16 mActiveCount;        // _02
 	u16 mTableSize;          // _04
 	u8* mStates;             // _08
-	s16 mDaysSeen[30];       // _0C, what log id was seen for each day
+	s16 mDaysSeen[MAX_DAYS]; // _0C, what log id was seen for each day
 	u32* mScreenToTableList; // _48
 };
 
