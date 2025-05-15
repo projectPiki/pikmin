@@ -108,7 +108,7 @@ BOOL Jac_DemoCheck()
  * Address:	8001A1E0
  * Size:	000080
  */
-void Jac_DemoWalkCheck()
+BOOL Jac_DemoWalkCheck()
 {
 	/*
 	.loc_0x0:
