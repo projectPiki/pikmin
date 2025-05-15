@@ -1,11 +1,9 @@
 #include "zen/ogFileSelect.h"
 #include "zen/EffectMgr2D.h"
 #include "zen/ogNitaku.h"
-#include "P2D/Pane.h"
-#include "gameflow.h"
-#include "SoundMgr.h"
-#include "P2D/Picture.h"
 #include "DebugLog.h"
+#include "SoundMgr.h"
+#include "gameflow.h"
 
 /*
  * --INFO--

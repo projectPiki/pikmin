@@ -12,21 +12,21 @@ struct P2DPane;
 namespace zen {
 
 /**
- * @brief TODO
+ * @brief Manages calculation and rendering of Pikmin population graphs, typically for result screens.
  *
  * @note Size: 0x14.
  */
 struct ogGraphMgr {
-	ogGraphMgr(P2DScreen*);
+	ogGraphMgr(P2DScreen* pParent);
 
 	void SetDummyLineData();
 	void MakeData();
-	void draw(u8);
+	void draw(u8 alpha);
 
-	P2DPane* mPane;                 // _00
+	P2DPane* mParent;               // _00
 	int mMaxPikis;                  // _04
 	int mMinPikis;                  // _08
-	int _0C;                        // _0C
+	int mDefaultMaxPikmin;          // _0C
 	bool mHasColor[PikiColorCount]; // _10
 };
 

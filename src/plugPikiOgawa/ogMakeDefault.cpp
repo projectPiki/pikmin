@@ -102,12 +102,15 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 	if (mStateTimer > 1.0f) {
 		mAdditionalTextPane1->show();
 	}
+
 	if (mStateTimer > 2.0f) {
 		mAdditionalTextPane2->show();
 	}
+
 	if (mStateTimer > 3.0f) {
 		mAdditionalTextPane3->show();
 	}
+	
 	mScreen->update();
 	mScreen2->update();
 	mCursorAlphaAnimator->update();

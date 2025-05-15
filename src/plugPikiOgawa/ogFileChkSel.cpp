@@ -1,12 +1,11 @@
+#include "zen/ogFileSelect.h"
 #include "zen/ogFileChkSel.h"
 #include "zen/ogMemChk.h"
-#include "zen/ogFileSelect.h"
-#include "zen/ogSub.h"
 #include "P2D/Screen.h"
 #include "P2D/Graph.h"
+#include "DebugLog.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -45,13 +45,13 @@ enum ChalStageID {
 };
 
 /**
- * @brief TODO
+ * @brief Identifies the specific color types of Pikmin.
  */
 enum PikiColor {
 	Blue   = 0,
 	Red    = 1,
 	Yellow = 2,
-	PikiColorCount, // 3
+	PikiColorCount, // 3 - the total number of distinct Pikmin colors
 
 	PikiMinColor = Blue,
 	PikiMaxColor = Yellow,
