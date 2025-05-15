@@ -151,24 +151,18 @@ void Jac_PlaySystemSe(s32 id)
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		break;
 	case 7:
-		if (container != TRUE) {
-			return;
+		if (container == TRUE) {
+			Jac_SetBgmModeFlag(0, 4, 0);
+			Jac_SetBgmModeFlag(1, 4, 0);
+			container = FALSE;
+			Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
+			Jac_UnPauseOrimaSe();
+			Jac_StopSystemSe(0x23);
+			Jac_StopSystemSe(0x21);
+			break;
 		}
-		Jac_SetBgmModeFlag(0, 4, 0);
-		Jac_SetBgmModeFlag(1, 4, 0);
-		container = FALSE;
-		Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
-		Jac_UnPauseOrimaSe();
-		Jac_StopSystemSe(0x23);
-		Jac_StopSystemSe(0x21);
-		break;
-	// FIXME: This is able to fakematch if `default` is replaced with any case from 3 to 40 (inclusive) that isn't
-	// already being handled. However, the jumptable will be wrong. My theory is this must be the default case, but
-	// something (that was later optimized away) was put before the return that forced this case to generate inside
-	// the body of the function. As it is, this empty case with a return is optimized to instead affect the compiler-
-	// generated bounds check before the jumptable is used.
-	default:
 		return;
+
 	case 3:
 		if (container == FALSE) {
 			Jac_SetBgmModeFlag(0, 4, 1);
