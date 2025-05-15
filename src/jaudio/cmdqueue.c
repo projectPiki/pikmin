@@ -20,11 +20,11 @@ static void Add_Queue(CmdQueue* cmdQueue)
 		queue_list = cmdQueue;
 		return;
 	}
-	while (curr) {
-		prev = curr;
-		curr = prev->next;
+
+	while (prev = curr->next) {
+		curr = prev;
 	}
-	prev->next = cmdQueue;
+	curr->next = cmdQueue;
 }
 
 /*
