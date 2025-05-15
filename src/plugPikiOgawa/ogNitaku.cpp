@@ -184,7 +184,7 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			mStatus = Status_3;
 		}
 		break;
-	case Status_2:
+	case Exiting:
 		mWaitTimer += gsys->getFrameTime();
 		if (mWaitTimer >= 0.2f) {
 			mStatus = mStatus2;
@@ -207,18 +207,19 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			seSystem->playSysSe(SYSSE_MOVE1);
 		} else if (input->keyClick(KBBTN_START | KBBTN_A)) {
 			if (mIsYes) {
-				mStatus2 = Status_5;
+				mStatus2 = ExitSuccess;
 			} else {
-				mStatus2 = Status_6;
+				mStatus2 = ExitFailure;
 			}
+
 			mWaitTimer = 0.0f;
-			mStatus    = Status_2;
+			mStatus    = Exiting;
 			cursorDisable(0.2f);
 			seSystem->playSysSe(SYSSE_DECIDE1);
 		} else if (mCanCancel && input->keyClick(KBBTN_B)) {
 			mStatus2   = Status_4;
 			mWaitTimer = 0.0f;
-			mStatus    = Status_2;
+			mStatus    = Exiting;
 			cursorDisable(0.2f);
 		}
 		break;
@@ -226,9 +227,9 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 
 	if (mStatus >= Status_4) {
 		return mStatus;
-	} else {
-		mLeftCursorMgr.update();
-		mRightCursorMgr.update();
-		return mStatus;
 	}
+
+	mLeftCursorMgr.update();
+	mRightCursorMgr.update();
+	return mStatus;
 }

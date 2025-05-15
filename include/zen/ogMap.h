@@ -25,11 +25,11 @@ struct ogScrMapMgr {
 	 * @brief TODO
 	 */
 	enum MapStatus {
-		MAP_NULL = -1,
-		MAP_Unk0 = 0,
-		MAP_Unk1 = 1,
-		MAP_Unk2 = 2,
-		MAP_Unk4 = 4,
+		Inactive     = -1,
+		Active       = 0,
+		Initialising = 1,
+		Exiting      = 2,
+		Finished     = 4,
 	};
 
 	ogScrMapMgr();

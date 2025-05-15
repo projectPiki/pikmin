@@ -97,8 +97,10 @@ void Jac_UpdateRocketParam(void)
  */
 void Jac_SysSEDemoFadeCheck()
 {
-	if (sys_voldown_flag == 0)
+	if (sys_voldown_flag == 0) {
 		return;
+	}
+
 	if (sys_voldown_flag == 1) {
 		if (!StreamSyncCheckBusy(0, 5)) {
 			Jac_DemoFade(1.0f, 0, 100);
@@ -132,6 +134,7 @@ void Jac_PlaySystemSe(s32 id)
 		if (Jac_DemoCheck() == TRUE || Jac_PauseCheck() == TRUE || Jac_GetCurrentScene() != 5) {
 			return;
 		}
+
 		break;
 	case 5:
 		++countdown_count;
@@ -140,9 +143,11 @@ void Jac_PlaySystemSe(s32 id)
 			Jac_FadeOutBgm(1, 60);
 		}
 		break;
+
 	case 4:
 		Jac_SetBgmModeFlag(0, 2, 1);
 		break;
+
 	case 6:
 		Jac_SetBgmModeFlag(0, 4, 1);
 		Jac_SetBgmModeFlag(1, 4, 1);
@@ -151,6 +156,7 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_PauseOrimaSe();
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		break;
+
 	case 7:
 		if (container == TRUE) {
 			Jac_SetBgmModeFlag(0, 4, 0);
@@ -174,6 +180,7 @@ void Jac_PlaySystemSe(s32 id)
 		}
 		pausemode = TRUE;
 		break;
+
 	case 15:
 		if (pausemode != FALSE) {
 			if (container == FALSE) {
@@ -189,10 +196,12 @@ void Jac_PlaySystemSe(s32 id)
 			return;
 		}
 		break;
+
 	case 18:
 		WaveScene_Set(0xd, 6);
 		Jac_PlayDemoSequenceDirect(8);
 		return;
+
 	case 32:
 		if (sys_voldown_flag == FALSE) {
 			Jac_DemoFade(0.15f, 1, 5);
@@ -200,6 +209,7 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_StartDemoSound(5);
 		sys_voldown_flag = 0x14;
 		return;
+
 	case 38:
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_PauseTrack(Jam_GetTrackHandle(0x1000f), 1);
@@ -210,6 +220,7 @@ void Jac_PlaySystemSe(s32 id)
 		StreamSetDVDPause(0, 1);
 		id = 0x1c;
 		break;
+
 	case 39:
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x1000f), 1);
@@ -218,12 +229,14 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_SetBgmModeFlag(0, 4, 0);
 		Jac_SetBgmModeFlag(1, 4, 0);
 		return;
+
 	case 40:
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jac_Orima_Formation(0, 0);
 		pausemode = TRUE;
 		return;
 	}
+
 	if (cmdqueue_reset == TRUE) {
 		Jal_SendCmdQueue_Noblock(&system_se, id);
 	}
@@ -239,6 +252,7 @@ void Jac_StopSystemSe(s32 id)
 	if (cmdqueue_reset == FALSE) {
 		cmdqueue_reset = InitQueue();
 	}
+
 	switch (id) {
 	case 16:
 		Jac_StopOrimaSe(14);

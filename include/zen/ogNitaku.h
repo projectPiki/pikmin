@@ -23,13 +23,13 @@ struct ogNitakuMgr {
 	 * @brief TODO
 	 */
 	enum NitakuStatus {
-		Status_0 = 0,
-		Status_1 = 1,
-		Status_2 = 2,
-		Status_3 = 3,
-		Status_4 = 4,
-		Status_5 = 5,
-		Status_6 = 6,
+		Status_0    = 0,
+		Status_1    = 1,
+		Exiting     = 2,
+		Status_3    = 3,
+		Status_4    = 4,
+		ExitSuccess = 5,
+		ExitFailure = 6,
 		// TODO: this
 	};
 

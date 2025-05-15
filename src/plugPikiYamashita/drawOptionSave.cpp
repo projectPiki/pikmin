@@ -130,13 +130,13 @@ void zen::DrawOptionSave::modeCardCheck(Controller* controller)
 {
 	if (controller) {
 		switch (mMemChkMgr.update(controller)) {
-		case ogScrMemChkMgr::STATE_ErrorA:
+		case ogScrMemChkMgr::ExitFailure:
 			setMode(MODE_Unk7, nullptr);
 			break;
-		case ogScrMemChkMgr::STATE_ErrorB:
+		case ogScrMemChkMgr::ExitSuccess:
 			setMode(MODE_Unk9, nullptr);
 			break;
-		case ogScrMemChkMgr::STATE_Finished:
+		case ogScrMemChkMgr::Finished:
 			setMode(MODE_Saving, nullptr);
 			break;
 		}

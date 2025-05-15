@@ -293,7 +293,7 @@ void zen::OgTestScreen::update()
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	if (mMapMgr->update(mController) >= 4) {
+	if (mMapMgr->update(mController) >= ogScrMapMgr::Finished) {
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
@@ -301,7 +301,7 @@ void zen::OgTestScreen::update()
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	if (mMemChkMgr->update(mController) >= ogScrMemChkMgr::STATE_ErrorA) {
+	if (mMemChkMgr->update(mController) >= ogScrMemChkMgr::ExitFailure) {
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 

@@ -1,10 +1,10 @@
-#include "zen/ogMemChk.h"
-#include "zen/EffectMgr2D.h"
-#include "zen/ogNitaku.h"
-#include "zen/ogSub.h"
 #include "zen/ogMakeDefault.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/ogMemChk.h"
+#include "Dolphin/card.h"
+#include "zen/ogNitaku.h"
 #include "P2D/Screen.h"
-#include "P2D/Picture.h"
+#include "zen/ogSub.h"
 #include "P2D/Graph.h"
 #include "SoundMgr.h"
 #include "gameflow.h"
@@ -50,48 +50,66 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 
 	// "If you format this Memory Card, all saved files will be erased. Is this OK?"
 	mFormatConfirmTextBox = (P2DTextBox*)screen->search('shom', true);
+
 	// "The Memory Card has been formatted."
 	mFormattedTextBox = (P2DTextBox*)screen->search('shot', true);
+
 	// "Formatting the Memory Card... Do not touch the Memory Card or POWER Button."
 	mFormattingTextBox = (P2DTextBox*)screen->search('shch', true);
+
 	// The Memory Card in Slot A is corrupted and needs to be formatted."
 	mNeedFormatTextBox = (P2DTextBox*)screen->search('shoi', true);
+
 	// "The Memory Card in Slot A is not formatted for use in this market. It must be formatted. Is this OK?"
 	mDoFixUnformattedTextBox = (P2DTextBox*)screen->search('shok', true);
+
 	// "The Memory Card could not be formatted."
 	mCantFormatTextBox = (P2DTextBox*)screen->search('shos', true);
-	mYesPane           = (P2DTextBox*)screen->search('hai', true);  // "Yes"
-	mNoPane            = (P2DTextBox*)screen->search('iie', true);  // "No"
-	mYesPane2          = (P2DTextBox*)screen->search('haic', true); // "Yes"
-	mNoPane2           = (P2DTextBox*)screen->search('iiec', true); // "No"
+
+	mYesPane  = (P2DTextBox*)screen->search('hai', true);  // "Yes"
+	mNoPane   = (P2DTextBox*)screen->search('iie', true);  // "No"
+	mYesPane2 = (P2DTextBox*)screen->search('haic', true); // "Yes"
+	mNoPane2  = (P2DTextBox*)screen->search('iiec', true); // "No"
+
 	// "Some Pikmin save data is corrupted. The Pikmin file will now be repaired. Do not touch the Memory Card or POWER Button."
 	mRepairFileTextBox = (P2DTextBox*)screen->search('shuf', true);
+
 	// "The Pikmin file has been repaired."
 	mRepairSuccessTextBox = (P2DTextBox*)screen->search('shsi', true);
+
 	// "Some Pikmin save data could not be repaired."
 	mRepairFailTextBox = (P2DTextBox*)screen->search('shxx', true);
+
 	// There is no Memory Card in Slot A, so you won't be able to save your game. Continue without saving?"
 	mNoCardTextBox = (P2DTextBox*)screen->search('sari', true);
+
 	// The Memory Card in Slot A does not have enough space available. Pikmin needs 1 file and 19 blocks of memory to save. Continue
 	// without saving?"
 	mCardFullTextBox = (P2DTextBox*)screen->search('memo', true);
+
 	// "The Memory Card in Slot A is not compatible with Pikmin. You can't save.  Continue without saving?"
 	mUnusableCardTextBox = (P2DTextBox*)screen->search('brom', true);
+
 	// "The Memory Card inserted in Slot A is not formatted for use in this market. It must be formatted. Is this OK?"
 	mUnformattedCardTextBox = (P2DTextBox*)screen->search('kaim', true);
+
 	// "The Memory Card inserted  in Slot A is damaged or corrupted. You can't save. Do you still want to continue?"
 	mBrokenCardTextBox = (P2DTextBox*)screen->search('ijom', true);
+
 	// "The device in Slot A cannot be used. You can't save. Is this OK?"
 	mNotACardTextBox = (P2DTextBox*)screen->search('naim', true);
+
 	// The Memory Card in Slot A does not have enough space available. Pikmin needs 1 file and 19 blocks of memory to save. Continue
 	// without saving?"
 	mFileNotMadeTextBox = (P2DTextBox*)screen->search('file', true);
-	mYesNoWindow        = screen->search('yn_w', true);
-	mCapsulePane        = screen->search('cpsl', true);
+
+	mYesNoWindow = screen->search('yn_w', true);
+	mCapsulePane = screen->search('cpsl', true);
 
 	mAButtonPane     = (P2DPicture*)mMainScreen->search('abtn', true);
 	mAButtonAlphaMgr = new setTenmetuAlpha(mAButtonPane, 1.0f);
 	mAButtonPane->hide();
+
 	mFormatEffPane = (P2DPicture*)mMainScreen->search('main', true);
 
 	mFormatConfirmTextBox->hide();
@@ -107,8 +125,11 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mCardFullTextBox->hide();
 	mUnusableCardTextBox->hide();
 	mUnformattedCardTextBox->hide();
+
+	// gotta hide this one twice, just to be sure
 	mBrokenCardTextBox->hide();
-	mBrokenCardTextBox->hide(); // gotta hide this one twice, just to be sure
+	mBrokenCardTextBox->hide();
+
 	mFileNotMadeTextBox->hide();
 
 	mCursorPane     = (P2DPicture*)mMainScreen->search('curs', true);
@@ -132,8 +153,8 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mFileNotMadeTextMgr      = new TypingTextMgr(mFileNotMadeTextBox);
 
 	mActiveTextMgr   = mNoCardTextMgr;
-	mState           = STATE_NULL;
-	mPrevStatusCheck = STATE_NULL;
+	mStatus          = Inactive;
+	mPrevStatusCheck = Inactive;
 
 	P2DTextBox* a1 = (P2DTextBox*)mMainScreen->search('fomt', true); // "Format"
 	P2DTextBox* a2 = (P2DTextBox*)mMainScreen->search('cws', true);  // "Continue without saving"
@@ -221,64 +242,64 @@ void zen::ogScrMemChkMgr::StatusCheck()
 {
 	SetNitaku_Y_N();
 
-	switch (mState) {
-	case STATE_UnformattedCard:
-		mPrevStatusCheck = STATE_UnformattedCard;
-		mState           = STATE_WritingFormatMesg;
+	switch (mStatus) {
+	case UnformattedCard:
+		mPrevStatusCheck = UnformattedCard;
+		mStatus          = WritingFormatMsg;
 		setPCtex(mDoFixUnformattedTextMgr);
 		SetNitaku_F_N();
 		break;
-	case STATE_BrokenCard:
-		mPrevStatusCheck = STATE_BrokenCard;
-		mState           = STATE_WritingFormatMesg;
+	case BrokenCard:
+		mPrevStatusCheck = BrokenCard;
+		mStatus          = WritingFormatMsg;
 		setPCtex(mNeedFormatTextMgr);
 		SetNitaku_F_N();
 		break;
 	}
 
 	// Because the first switch wasnt good enough
-	switch (mState) {
-	case STATE_WritingFormatMesg:
+	switch (mStatus) {
+	case WritingFormatMsg:
 		break;
-	case STATE_NoCard:
+	case NoCard:
 		setPCtex(mNoCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_NOCARD in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_NotACard:
+	case NotACard:
 		setPCtex(mNotACardTextMgr);
 		PRINT("<<<<<<<<<< ERR_NOTACARD in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_UnformattedCard:
+	case UnformattedCard:
 		setPCtex(mUnformattedCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_ENCODING in ogMemChk >>>>>>>>>>\n");
 		SetNitaku_W_R();
 		break;
-	case STATE_BrokenCard:
+	case BrokenCard:
 		setPCtex(mBrokenCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_BROKEN in ogMemChk >>>>>>>>>>\n");
 		SetNitaku_W_R();
 		break;
-	case STATE_CardFull:
+	case CardFull:
 		setPCtex(mCardFullTextMgr);
 		PRINT("<<<<<<<<<< ERR_FULLUP in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_UnusableCard:
+	case UnusableCard:
 		setPCtex(mUnusableCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_UNUSABLE in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_FileNotMade:
+	case FileNotMade:
 		setPCtex(mFileNotMadeTextMgr);
 		PRINT("<<<<<<<<<< ERR_NOFILE in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_RepairFile:
+	case RepairFile:
 		setPCtex(mRepairFileTextMgr);
 		PRINT("<<<<<<<<<< REPAIR_NOW in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_RepairSuccess:
+	case RepairSuccess:
 		setPCtex(mRepairSuccessTextMgr);
 		PRINT("<<<<<<<<<< REPAIR_END in ogMemChk >>>>>>>>>>\n");
 		break;
-	case STATE_RepairFail:
+	case RepairFail:
 		setPCtex(mRepairFailTextMgr);
 		PRINT("<<<<<<<<<< REPAIR_MISS in ogMemChk >>>>>>>>>>\n");
 		break;
@@ -338,7 +359,7 @@ void zen::ogScrMemChkMgr::DispAcup(bool set)
 void zen::ogScrMemChkMgr::MakeDefFileStart()
 {
 	mMakeDefaultMgr->start();
-	mState     = STATE_MakeDefaultFile;
+	mStatus    = MakeDefaultFile;
 	mWaitTimer = 0.0f;
 }
 
@@ -350,7 +371,7 @@ void zen::ogScrMemChkMgr::MakeDefFileStart()
 void zen::ogScrMemChkMgr::RepairFileStart()
 {
 	gameflow.mMemoryCard.repairFile();
-	mState = STATE_RepairFile;
+	mStatus = RepairFile;
 	setPCtex(mRepairFileTextMgr);
 	mWaitTimer = 0.0f;
 	DispYesNo(false);
@@ -364,31 +385,32 @@ void zen::ogScrMemChkMgr::RepairFileStart()
 void zen::ogScrMemChkMgr::start()
 {
 	mIsDebugMode = false;
-	mState       = STATE_Unk0;
-	if (!ogCheckInsCard()) {
+	mStatus      = Starting;
+
+	if (!ogCheckInsCard()) { // why is this not CARD_RESULT_NOCARD, Ogawa?
 		PRINT("ERR_NOCARD in ogMemChk\n");
-		mState = STATE_NoCard;
+		mStatus = NoCard;
 	} else {
 		int cardstate = gameflow.mMemoryCard.getMemoryCardState(false);
 		PRINT("ogMemChk error = %d \n", cardstate);
-		if (cardstate == -2) {
+		if (cardstate == CARD_RESULT_WRONGDEVICE) {
 			PRINT("ERR_NOTACARD in ogMemChk\n");
-			mState = STATE_NotACard;
-		} else if (cardstate == -5) {
+			mStatus = NotACard;
+		} else if (cardstate == CARD_RESULT_IOERROR) {
 			PRINT("ERR_ENCODING in ogMemChk\n");
-			mState = STATE_UnformattedCard;
-		} else if (cardstate == -4) {
+			mStatus = UnformattedCard;
+		} else if (cardstate == CARD_RESULT_NOFILE) {
 			PRINT("ERR_BROKEN in ogMemChk\n");
-			mState = STATE_BrokenCard;
-		} else if (cardstate == -3) {
+			mStatus = BrokenCard;
+		} else if (cardstate == CARD_RESULT_NOCARD) {
 			PRINT("ERR_FULLUP in ogMemChk\n");
-			mState = STATE_CardFull;
-		} else if (cardstate == -6) {
+			mStatus = CardFull;
+		} else if (cardstate == CARD_RESULT_BROKEN) {
 			PRINT("ERR_UNUSABLE in ogMemChk\n");
-			mState = STATE_UnusableCard;
-		} else if (cardstate == -8) {
+			mStatus = UnusableCard;
+		} else if (cardstate == CARD_RESULT_NOENT) {
 			PRINT("ERR_NOFILE in ogMemChk\n");
-			mState = STATE_FileNotMade;
+			mStatus = FileNotMade;
 		} else if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
 			MakeDefFileStart();
 		} else if (gameflow.mMemoryCard.isFileBroken()) {
@@ -409,15 +431,16 @@ void zen::ogScrMemChkMgr::DebugStart(int state)
 {
 	mIsDebugMode = true;
 	mDebugState  = state;
-	PRINT("@@@@@@@@@@@@@@ DebugStart(%d)  status = %d @@@@@@@@@@@@@@\n", state, mState);
+	PRINT("@@@@@@@@@@@@@@ DebugStart(%d)  status = %d @@@@@@@@@@@@@@\n", state, mStatus);
 
-	if (state >= 1 && state <= 9) {
+	if (state >= WritingFormatMsg && state <= NotACard) {
 
-		mState = (MemChkStatus)(state + 7);
+		mStatus = static_cast<MemChkStatus>(state + 7);
 
-		if (state == 8) {
+		// If there's no card, create a default file
+		if (state == NoCard) {
 			MakeDefFileStart();
-		} else if (state == 9) {
+		} else if (state == NotACard) {
 			RepairFileStart();
 		}
 
@@ -453,10 +476,7 @@ void zen::ogScrMemChkMgr::FormatEffectStart()
  */
 bool zen::ogScrMemChkMgr::checkTypingAll()
 {
-	if (mActiveTextMgr->check() == TypingTextMgr::STATE_2) {
-		return true;
-	}
-	return false;
+	return mActiveTextMgr->check() == TypingTextMgr::STATE_2 ? true : false;
 }
 
 /*
@@ -469,10 +489,10 @@ void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 	if (checkTypingAll()) {
 		DispYesNo(true);
 		ogNitakuMgr::NitakuStatus status = mgr->update(input);
-		if (status == ogNitakuMgr::Status_6) {
-			mState = STATE_ErrorA;
-		} else if (status == ogNitakuMgr::Status_5) {
-			mState = STATE_ErrorB;
+		if (status == ogNitakuMgr::ExitFailure) {
+			mStatus = ExitFailure;
+		} else if (status == ogNitakuMgr::ExitSuccess) {
+			mStatus = ExitSuccess;
 		}
 	} else {
 		DispYesNo(false);
@@ -486,7 +506,7 @@ void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
  */
 void zen::ogScrMemChkMgr::setNoCard()
 {
-	mState = STATE_NoCard;
+	mStatus = NoCard;
 	setErrorMessage();
 	DispYesNo(false);
 	mAButtonPane->hide();
@@ -511,62 +531,62 @@ void zen::ogScrMemChkMgr::setNoCard()
  */
 zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 {
-	if (mState == STATE_NULL) {
-		return mState;
+	if (mStatus == Inactive) {
+		return mStatus;
 	}
 
-	if (mState == STATE_Unk0) {
-		mState = STATE_Finished;
-		return mState;
+	if (mStatus == Starting) {
+		mStatus = Finished;
+		return mStatus;
 	}
 
-	if (mState >= STATE_ErrorA) {
-		mState = STATE_NULL;
-		return mState;
+	if (mStatus >= ExitFailure) {
+		mStatus = Inactive;
+		return mStatus;
 	}
 
 	mWaitTimer += gsys->getFrameTime();
 
 	bool hasCard = ogCheckInsCard();
-	if (!hasCard && mState != STATE_NoCard) {
+	if (!hasCard && mStatus != NoCard) {
 		setNoCard();
 	}
 
-	switch (mState) {
-	case STATE_NoCard:
+	switch (mStatus) {
+	case NoCard:
 		if (hasCard) {
 			start();
-			return mState;
+			return mStatus;
 		}
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-	case STATE_UnformattedCard:
+	case UnformattedCard:
 		SetNitaku_W_R();
 		PRINT("##### MEMCHK_DISP_ERR_KAIGAI  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-	case STATE_BrokenCard:
+	case BrokenCard:
 		SetNitaku_W_R();
 		PRINT("##### MEMCHK_DISP_ERR_IJYOU  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-	case STATE_CardFull:
-	case STATE_FileNotMade:
+	case CardFull:
+	case FileNotMade:
 		SetNitaku_W_R();
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-	case STATE_NotACard:
-	case STATE_UnusableCard:
+	case NotACard:
+	case UnusableCard:
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
-	case STATE_WritingFormatMesg:
+	case WritingFormatMsg:
 		if (checkTypingAll()) {
-			mState = STATE_DoFormatSelection;
+			mStatus = DoFormatSelection;
 			SetNitaku_F_N();
 			mNitakuMgr->start();
 			DispYesNo(true);
@@ -575,34 +595,34 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		}
 		break;
 
-	case STATE_DoFormatSelection: {
+	case DoFormatSelection: {
 		int stat = mNitakuMgr->update(input);
 		if (stat >= ogNitakuMgr::Status_4) {
-			if (stat == ogNitakuMgr::Status_5) {
+			if (stat == ogNitakuMgr::ExitSuccess) {
 				setPCtex(mFormatConfirmTextMgr);
-				mState     = STATE_FormatConfirmation;
+				mStatus    = FormatConfirmation;
 				mWaitTimer = 0.0f;
 			} else {
-				_C4 = 0.0f;
-				if (mPrevStatusCheck == STATE_UnformattedCard) {
+				_UNUSEDC4 = 0.0f;
+				if (mPrevStatusCheck == UnformattedCard) {
 					setPCtex(mUnformattedCardTextMgr);
-					mState = STATE_UnformattedCard;
+					mStatus = UnformattedCard;
 					mNitakuMgr->start();
-				} else if (mPrevStatusCheck == STATE_BrokenCard) {
+				} else if (mPrevStatusCheck == BrokenCard) {
 					setPCtex(mBrokenCardTextMgr);
-					mState = STATE_BrokenCard;
+					mStatus = BrokenCard;
 					mNitakuMgr->start();
 				} else {
-					mState = STATE_WritingFormatMesg;
+					mStatus = WritingFormatMsg;
 				}
 				mWaitTimer = 0.0f;
 			}
 		}
 	} break;
 
-	case STATE_FormatConfirmation:
+	case FormatConfirmation:
 		if (checkTypingAll()) {
-			mState = STATE_DoYouFormat;
+			mStatus = DoYouFormat;
 			SetNitaku_Y_N();
 			mNitakuMgr->start();
 			DispYesNo(true);
@@ -611,29 +631,29 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		}
 		break;
 
-	case STATE_DoYouFormat: {
+	case DoYouFormat: {
 		int stat = mNitakuMgr->update(input);
 		if (stat >= ogNitakuMgr::Status_4) {
-			if (stat == ogNitakuMgr::Status_5) {
+			if (stat == ogNitakuMgr::ExitSuccess) {
 				setPCtex(mFormattingTextMgr);
-				mState = STATE_Formatting;
+				mStatus = Formatting;
 				DispYesNo(false);
 				DispAcup(false);
 				mWaitTimer = 0.0f;
 				FormatEffectStart();
 			} else {
-				if (mPrevStatusCheck == STATE_UnformattedCard) {
+				if (mPrevStatusCheck == UnformattedCard) {
 					setPCtex(mDoFixUnformattedTextMgr);
-				} else if (mPrevStatusCheck == STATE_BrokenCard) {
+				} else if (mPrevStatusCheck == BrokenCard) {
 					setPCtex(mNeedFormatTextMgr);
 				}
 				mWaitTimer = 0.0f;
-				mState     = STATE_WritingFormatMesg;
+				mStatus    = WritingFormatMsg;
 			}
 		}
 	} break;
 
-	case STATE_Formatting:
+	case Formatting:
 		DispYesNo(false);
 		DispAcup(true);
 		if (checkTypingAll() && mWaitTimer > 6.0f) {
@@ -643,69 +663,70 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			if (gameflow.mMemoryCard.doFormatCard()) {
 				format = false;
 			}
+
 			if (format) {
 				setPCtex(mFormattedTextMgr);
 				mAButtonPane->show();
 				mAButtonAlphaMgr->start();
-				mState = STATE_FormatSuccess;
+				mStatus = FormatSuccess;
 			} else {
 				setPCtex(mCantFormatTextMgr);
 				mAButtonPane->show();
 				mAButtonAlphaMgr->start();
-				mState = STATE_FormatFail;
+				mStatus = FormatFail;
 			}
 		}
 		break;
 
-	case STATE_FormatSuccess:
+	case FormatSuccess:
 		DispYesNo(false);
 		DispAcup(true);
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
 			seSystem->playSysSe(SYSSE_DECIDE1);
-			_C4 = 0.0f;
+			_UNUSEDC4 = 0.0f;
 			if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
 				MakeDefFileStart();
 			} else {
-				mState = STATE_Finished;
+				mStatus = Finished;
 			}
 		}
 		break;
 
-	case STATE_FormatFail:
+	case FormatFail:
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
 			seSystem->playSysSe(SYSSE_DECIDE1);
-			_C4    = 0.0f;
-			mState = STATE_NULL;
+			_UNUSEDC4 = 0.0f;
+			mStatus   = Inactive;
 			start();
 		}
 		break;
 
-	case STATE_MakeDefaultFile: {
+	case MakeDefaultFile: {
 		int stat = mMakeDefaultMgr->update(input);
-		if (stat == ogScrMakeDefaultMgr::Status_Success) {
-			mState = STATE_Finished;
-		} else if (stat == ogScrMakeDefaultMgr::Status_Failure) {
+		if (stat == ogScrMakeDefaultMgr::Success) {
+			mStatus = Finished;
+		} else if (stat == ogScrMakeDefaultMgr::Failure) {
 			setPCtex(mBrokenCardTextMgr);
-			mState = STATE_BrokenCard;
+			mStatus = BrokenCard;
 			SetNitaku_Y_N();
 			mNitakuMgr->start();
-			_C4        = 0.0f;
+			_UNUSEDC4  = 0.0f;
 			mWaitTimer = 0.0f;
 		}
 	} break;
 
-	case STATE_RepairFile:
+	case RepairFile:
 		DispYesNo(false);
 		DispAcup(true);
 		if (checkTypingAll() && mWaitTimer > 10.0f) {
 			int fail = !gameflow.mMemoryCard.didSaveFail();
 			if (fail) {
-				mState = STATE_RepairSuccess;
+				mStatus = RepairSuccess;
 				setPCtex(mRepairSuccessTextMgr);
 			} else {
-				mState = STATE_RepairFail;
+				mStatus = RepairFail;
 				setPCtex(mRepairFailTextMgr);
 			}
 			mWaitTimer = 0.0f;
@@ -713,7 +734,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		}
 		break;
 
-	case STATE_RepairSuccess:
+	case RepairSuccess:
 		DispYesNo(false);
 		DispAcup(true);
 		if (checkTypingAll()) {
@@ -721,12 +742,12 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
 				seSystem->playSysSe(SYSSE_DECIDE1);
-				mState = STATE_Finished;
+				mStatus = Finished;
 			}
 		}
 		break;
 
-	case STATE_RepairFail:
+	case RepairFail:
 		DispYesNo(false);
 		DispAcup(true);
 		if (checkTypingAll()) {
@@ -735,10 +756,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
 				seSystem->playSysSe(SYSSE_DECIDE1);
 				setPCtex(mBrokenCardTextMgr);
-				mState = STATE_BrokenCard;
+				mStatus = BrokenCard;
 				SetNitaku_W_R();
 				mNitakuMgr->start();
-				_C4        = 0.0f;
+				_UNUSEDC4  = 0.0f;
 				mWaitTimer = 0.0f;
 			}
 		}
@@ -747,8 +768,8 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 
 	setErrorMessage();
 
-	if (mState >= STATE_ErrorA) {
-		return mState;
+	if (mStatus >= ExitFailure) {
+		return mStatus;
 	}
 	mEfxMgr->update();
 	mMainScreen->update();
@@ -757,17 +778,17 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	mActiveTextMgr->transCursor(mCursorPane);
 	mBlackScreen->update();
 
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	mState ? "fake" : "fake";
-	return mState;
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	mStatus ? "fake" : "fake";
+	return mStatus;
 }
 
 /*
@@ -777,10 +798,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
  */
 void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 {
-	if (mState == STATE_NULL) {
+	if (mStatus == Inactive) {
 		return;
 	}
-	if (mState >= STATE_ErrorA) {
+	if (mStatus >= ExitFailure) {
 		return;
 	}
 
@@ -793,16 +814,16 @@ void zen::ogScrMemChkMgr::draw(Graphics& gfx)
 	graf.setPort();
 	mBlackScreen->draw(0, 0, &graf);
 
-	switch (mState) {
-	case STATE_MakeDefaultFile:
+	switch (mStatus) {
+	case MakeDefaultFile:
 		mMakeDefaultMgr->draw(gfx);
 		break;
 
-	case STATE_ErrorA:
-	case STATE_Finished:
+	case ExitFailure:
+	case Finished:
 		break;
 
-	case STATE_NoCard:
+	case NoCard:
 	default:
 		mMainScreen->draw(0, 0, &graf);
 		mEfxMgr->draw(gfx);
@@ -825,26 +846,26 @@ void zen::ogScrMemChkMgr::setErrorMessage()
 	mUnusableCardTextBox->hide();
 	mFileNotMadeTextBox->hide();
 
-	switch (mState) {
-	case STATE_NoCard:
+	switch (mStatus) {
+	case NoCard:
 		mNoCardTextBox->show();
 		break;
-	case STATE_NotACard:
+	case NotACard:
 		mNotACardTextBox->show();
 		break;
-	case STATE_UnformattedCard:
+	case UnformattedCard:
 		mUnformattedCardTextBox->show();
 		break;
-	case STATE_BrokenCard:
+	case BrokenCard:
 		mBrokenCardTextBox->show();
 		break;
-	case STATE_CardFull:
+	case CardFull:
 		mCardFullTextBox->show();
 		break;
-	case STATE_UnusableCard:
+	case UnusableCard:
 		mUnusableCardTextBox->show();
 		break;
-	case STATE_FileNotMade:
+	case FileNotMade:
 		mFileNotMadeTextBox->show();
 		break;
 	}

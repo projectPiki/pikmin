@@ -191,20 +191,20 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	}
 
 	zen::ogScrMemChkMgr::MemChkStatus memCheckRes = mMemCheckMgr->update(input);
-	if (memCheckRes == ogScrMemChkMgr::STATE_Finished) {
+	if (memCheckRes == ogScrMemChkMgr::Finished) {
 		_84->startSave();
 		_30     = 1;
 		mStatus = Status_3;
 		_10     = 0.0f;
-	} else if (memCheckRes == ogScrMemChkMgr::STATE_ErrorB) {
+	} else if (memCheckRes == ogScrMemChkMgr::ExitSuccess) {
 		mStatus = Status_13;
 		return mStatus;
 
-	} else if (memCheckRes == ogScrMemChkMgr::STATE_ErrorA) {
+	} else if (memCheckRes == ogScrMemChkMgr::ExitFailure) {
 		mStatus = Status_12;
 		return mStatus;
 
-	} else if (memCheckRes != ogScrMemChkMgr::STATE_NULL) {
+	} else if (memCheckRes != ogScrMemChkMgr::Inactive) {
 		return mStatus;
 	}
 
@@ -284,7 +284,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 				PRINT("#      NOT SAME FILE        #\n");
 				PRINT("#############################\n");
 				mMemCheckMgr->start();
-				if (mMemCheckMgr->update(input) == ogScrMemChkMgr::STATE_Finished) {
+				if (mMemCheckMgr->update(input) == ogScrMemChkMgr::Finished) {
 					_84->startSave();
 					mStatus = Status_3;
 					_10     = 0.0f;

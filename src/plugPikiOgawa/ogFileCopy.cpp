@@ -199,14 +199,14 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 	if (status == ogNitakuMgr::Status_4) {
 		seSystem->playSysSe(SYSSE_CANCEL);
 		setOperateMode(Normal);
-	} else if (status == ogNitakuMgr::Status_5) {
+	} else if (status == ogNitakuMgr::ExitSuccess) {
 		mIsCopyingFileActive = true;
 		mCopyAnimTimer       = 3.0f;
 		seSystem->playSysSe(SYSSE_CARDACCESS);
 		gameflow.mMemoryCard.copyFile(mCardInfo[mCurrSlotIdx], mCardInfo[mCopyTargetFileIndex]);
 		CopyEffectStart();
 		mConfirmCopyText->hide();
-	} else if (status == ogNitakuMgr::Status_6) {
+	} else if (status == ogNitakuMgr::ExitFailure) {
 		setOperateMode(Normal);
 	}
 

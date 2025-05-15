@@ -29,29 +29,29 @@ struct ogScrMemChkMgr {
 	 * @brief TODO
 	 */
 	enum MemChkStatus {
-		STATE_NULL               = -1,
-		STATE_Unk0               = 0,
-		STATE_WritingFormatMesg  = 1,
-		STATE_DoFormatSelection  = 2,
-		STATE_FormatConfirmation = 3,
-		STATE_DoYouFormat        = 4,
-		STATE_Formatting         = 5,
-		STATE_FormatSuccess      = 6,
-		STATE_FormatFail         = 7,
-		STATE_NoCard             = 8,
-		STATE_NotACard           = 9,
-		STATE_UnformattedCard    = 10,
-		STATE_BrokenCard         = 11,
-		STATE_CardFull           = 12,
-		STATE_UnusableCard       = 13,
-		STATE_FileNotMade        = 14,
-		STATE_MakeDefaultFile    = 15,
-		STATE_RepairFile         = 16,
-		STATE_RepairSuccess      = 17,
-		STATE_RepairFail         = 18,
-		STATE_ErrorA             = 19,
-		STATE_ErrorB             = 20,
-		STATE_Finished           = 21,
+		Inactive = -1,
+		Starting,
+		WritingFormatMsg,
+		DoFormatSelection,
+		FormatConfirmation,
+		DoYouFormat,
+		Formatting,
+		FormatSuccess,
+		FormatFail,
+		NoCard,
+		NotACard,
+		UnformattedCard,
+		BrokenCard,
+		CardFull,
+		UnusableCard,
+		FileNotMade,
+		MakeDefaultFile,
+		RepairFile,
+		RepairSuccess,
+		RepairFail,
+		ExitFailure,
+		ExitSuccess,
+		Finished,
 	};
 
 	ogScrMemChkMgr();
@@ -85,7 +85,7 @@ struct ogScrMemChkMgr {
 	particleGenerator* mEfxA;                // _10
 	particleGenerator* mEfxB;                // _14
 	ogScrMakeDefaultMgr* mMakeDefaultMgr;    // _18
-	MemChkStatus mState;                     // _1C
+	MemChkStatus mStatus;                    // _1C
 	int mPrevStatusCheck;                    // _20
 	P2DScreen* mBlackScreen;                 // _24
 	P2DPicture* mBlackPane;                  // _28
@@ -127,7 +127,7 @@ struct ogScrMemChkMgr {
 	P2DTextBox* mNoPane2;                    // _B8
 	setTenmetuAlpha* mCursorAlphaMgr;        // _BC
 	P2DPicture* mCursorPane;                 // _C0
-	f32 _C4;                                 // _C4
+	f32 _UNUSEDC4;                           // _C4
 	f32 mWaitTimer;                          // _C8
 	int _CC;                                 // _CC
 	int _D0;                                 // _D0

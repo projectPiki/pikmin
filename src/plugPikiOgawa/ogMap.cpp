@@ -19,7 +19,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("")
 
 /*
  * --INFO--
@@ -29,9 +29,9 @@ DEFINE_PRINT("TODO: Replace")
 void zen::ogScrMapMgr::start(s16 p1)
 {
 	mMode  = p1;
-	mState = MAP_Unk1;
+	mState = Initialising;
 
-	if (mMode == 1) {
+	if (mMode == Initialising) {
 		mCurrentScreen = mTest2Screen;
 		mPic1          = mCurrentScreen->search('pic1', true);
 		mPic1PositionX = mPic1->getPosH();
@@ -64,7 +64,7 @@ zen::ogScrMapMgr::ogScrMapMgr()
 
 	mCursorPane = (P2DPicture*)mTest2Screen->search('curs', true);
 	mFrameTimer = 0.0f;
-	mState      = MAP_NULL;
+	mState      = Inactive;
 }
 
 /*
@@ -74,35 +74,36 @@ zen::ogScrMapMgr::ogScrMapMgr()
  */
 zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 {
-	if (mState == MAP_NULL) {
+	if (mState == Inactive) {
 		return mState;
 	}
 
 	mFrameTimer += gsys->getFrameTime();
 	mCurrentScreen->update();
 
-	if (mState == MAP_Unk1) {
-		mState = MAP_Unk0;
+	if (mState == Initialising) {
+		mState = Active;
 		return mState;
 	}
 
-	if (mState == MAP_Unk2) {
-		mState = MAP_Unk4;
+	if (mState == Exiting) {
+		mState = Finished;
 		return mState;
 	}
 
-	if (mState == MAP_Unk4) {
-		mState = MAP_NULL;
+	if (mState == Finished) {
+		mState = Inactive;
 		return mState;
 	}
 
 	if (controller->keyClick(KBBTN_B)) {
-		mState = MAP_Unk2;
+		mState = Exiting;
 	}
 
-	if (mMode == 1) {
+	if (mMode == Initialising) {
 		mTypingTextMgr->update();
 		mTypingTextMgr->transCursor(mCursorPane);
+
 		f32 scale  = sinf(fmod(mFrameTimer, 1.0f) * TAU) + 1.0f;
 		int width  = mPic1->getWidth();
 		int height = mPic1->getHeight();
@@ -113,12 +114,15 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 		if (controller->keyDown(KBBTN_MSTICK_LEFT)) {
 			mPic1PositionX -= 4.0f;
 		}
+
 		if (controller->keyDown(KBBTN_MSTICK_RIGHT)) {
 			mPic1PositionX += 4.0f;
 		}
+
 		if (controller->keyDown(KBBTN_MSTICK_UP)) {
 			mPic1PositionY -= 4.0f;
 		}
+
 		if (controller->keyDown(KBBTN_MSTICK_DOWN)) {
 			mPic1PositionY += 4.0f;
 		}
@@ -129,12 +133,15 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
 	if (controller->keyDown(KBBTN_CSTICK_LEFT)) {
 		mScreenPosX -= 4;
 	}
+
 	if (controller->keyDown(KBBTN_CSTICK_RIGHT)) {
 		mScreenPosX += 4;
 	}
+
 	if (controller->keyDown(KBBTN_CSTICK_UP)) {
 		mScreenPosY -= 4;
 	}
+
 	if (controller->keyDown(KBBTN_CSTICK_DOWN)) {
 		mScreenPosY += 4;
 	}
@@ -149,7 +156,7 @@ zen::ogScrMapMgr::MapStatus zen::ogScrMapMgr::update(Controller* controller)
  */
 void zen::ogScrMapMgr::draw(Graphics& gfx)
 {
-	if (mState == MAP_NULL) {
+	if (mState == Inactive) {
 		return;
 	}
 
