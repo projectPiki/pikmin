@@ -162,7 +162,7 @@ struct PlayState : public CoreNode {
 		_1C              = -1;
 		_18              = -1;
 		_14              = -1;
-		_21              = 1;
+		mSavedDay        = 1;
 		_22              = 0;
 		mCourseOpenFlags = 1;
 	}
@@ -181,7 +181,7 @@ struct PlayState : public CoreNode {
 	int _18;              // _18
 	int _1C;              // _1C
 	u8 _20;               // _20
-	u8 _21;               // _21
+	u8 mSavedDay;         // _21
 	u8 _22;               // _22
 	u8 mSaveFlags;        // _23
 	u32 mCourseOpenFlags; // _24, bitflag

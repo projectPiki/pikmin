@@ -18,7 +18,7 @@ extern u8 cardData[];
 struct CardQuickInfo {
 	CardQuickInfo() { _08 = 0; }
 
-	u32 mIndex;             // _00
+	int mIndex;             // _00
 	u32 _04;                // _04, unknown
 	u32 _08;                // _08, maybe int
 	int mCurrentDay;        // _0C
@@ -26,7 +26,7 @@ struct CardQuickInfo {
 	int mRedPikiCount;      // _14
 	int mYellowPikiCount;   // _18
 	int mBluePikiCount;     // _1C
-	u8 _20[0x4];            // _20, unknown
+	int _20;                // _20
 	u32 mCrc;               // _24
 };
 
@@ -78,10 +78,10 @@ struct MemoryCard : public CoreNode {
 
 	// unused/inlined:
 	void GetBlockSize(s32);
-	void getBannerPtr();
+	void* getBannerPtr();
 	void* getOptionsPtr(int);
 	void* getGameFilePtr(int);
-	void getBannerStream();
+	RamStream* getBannerStream();
 	RamStream* getOptionsStream(int);
 	RamStream* getGameFileStream(int);
 	void waitPolling();
@@ -101,10 +101,7 @@ struct MemoryCard : public CoreNode {
 	u32 mRequiredFreeSpace; // _40
 	u32 mErrorCode;         // _44
 	u32 _48;                // _48
-	u32 _4C;                // _4C
-	u32 _50;                // _50
-	u32 _54;                // _54
-	u32 _58;                // _58
+	BOOL _4C[4];            // _4C
 	int mValidBlockCount;   // _5C
 	int _60;                // _60
 	u32 mSectorSize;        // _64

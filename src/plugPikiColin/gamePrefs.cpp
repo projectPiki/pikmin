@@ -296,7 +296,7 @@ void PlayState::write(RandomAccessStream& output)
 {
 	output.writeByte(_20);
 	output.writeByte(mSaveFlags);
-	output.writeByte(_21);
+	output.writeByte(mSavedDay);
 	output.writeByte(_22);
 	output.writeInt(_14);
 	output.writeInt(_18);
@@ -313,7 +313,7 @@ void PlayState::read(RandomAccessStream& input)
 {
 	_20              = input.readByte();
 	mSaveFlags       = input.readByte();
-	_21              = input.readByte();
+	mSavedDay        = input.readByte();
 	_22              = input.readByte();
 	_14              = input.readInt();
 	_18              = input.readInt();
