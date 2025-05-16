@@ -11,8 +11,8 @@ extern "C" {
 void Jac_InitBgm(void);                 // args
 void Jac_FadeOutBgm(u32, u32);          // args
 void Jac_StopBgm(u32);                  // arg type unsure
-void Jac_ReadyBgm(void);                // args
-void Jac_PlayBgm(void);                 // args
+void Jac_ReadyBgm(int);                 // args
+void Jac_PlayBgm(int, int);             // args
 void Jac_ChangeBgmMode(void);           // args
 void Jac_SetBgmModeFlag(u32, u32, u32); // args
 void Jac_BgmFrameWork(void);            // args

@@ -53,7 +53,7 @@ void Jam_OnExtSwitchD(int*, int);
 void Jam_OffExtSwitchD(void);
 void Jam_SetExtSwitchDirectD(void);
 void Jam_SetExtFirFilter(void);
-void Jam_SetExtParam(void);
+void Jam_SetExtParam(f32, int*, int);
 void Jam_OnExtSwitch(void);
 void Jam_OffExtSwitch(void);
 void Jam_SetExtSwitchDirect(void);

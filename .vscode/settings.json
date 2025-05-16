@@ -48,6 +48,7 @@
         "__va_arg.h": "c",
         "ansi_fp.h": "c",
         "ansi_files.h": "c",
-        "cmdstack.h": "c"
+        "cmdstack.h": "c",
+        "pikiinter.h": "c"
     },
 }

@@ -14,21 +14,21 @@ extern "C" {
 
 void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(void);
-void StreamAudio_Start(void);
-void RegisterStreamCallback(void);
+void StreamAudio_Start(int, int, char*, int, int, int);
+void RegisterStreamCallback(int (*)(u32, s32));
 void Jac_Decode_ADPCM(void);
 void StreamSyncCheckReady(void);
-void StreamSyncCheckReadyID(void);
+int StreamSyncCheckReadyID(int, int);
 BOOL StreamSyncCheckBusy(u32, u32);
-void StreamSyncPlayAudio(void);
+int StreamSyncPlayAudio(f32, int, int, int);
 void StreamSyncStopAudio(void);
 void StreamChgPitch(void);
-void StreamChgVolume(void);
-void StreamChgMixLevel(void);
+void StreamChgVolume(int, int, int);
+void StreamChgMixLevel(int, int, int);
 void StreamGetCurrentFrame(void);
 void StreamSetDVDPause(u32, u32);
 void StreamCheckRemainBuffers(void);
-void StreamCheckAudioFormat(void);
+int StreamCheckAudioFormat(int);
 void StreamCheckBufferEmpty(void);
 void StreamCheckBufferRemainSize(void);
 
