@@ -215,21 +215,99 @@ struct MovSampleSetupSection : public Node {
  * Address:	80077EF0
  * Size:	0003F0
  */
-void convHVQM4TexY8UV8(int p1, int p2, u8* p3, u8* p4)
+void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 {
-	// unfinished, here be dragons (confusing unrolled loops with no DLL equivalent)
-	int p1Round = (p1 / 4) * 4;
-	for (int i = p2; i > 0; i -= 4) {
-		u32* src = (u32*)p3;
-		u32* dst = (u32*)p4;
-		for (int j = 0; j < p1; j++) {
-			dst[j] = src[j];
+	int i, j;
+	// Part 1: Y plane processing
+	u32* y0 = (u32*)src;         // r11
+	u32* y1 = y0 + (stride / 4); // r0
+	u32* y2 = y1 + (stride / 4); // r7
+	u32* y3 = y2 + (stride / 4); // r26
+	u32* dy = (u32*)dst;         // r9
+
+	for (i = height; i > 0; i -= 4) {
+		for (j = 0; j < stride; j += 8) {
+			dy[0] = y0[0];
+			dy[1] = y0[1];
+			dy[2] = y1[0];
+			dy[3] = y1[1];
+			dy[4] = y2[0];
+			dy[5] = y2[1];
+			dy[6] = y3[0];
+			dy[7] = y3[1];
+
+			y0 += 2;
+			y1 += 2;
+			y2 += 2;
+			y3 += 2;
+			dy += 8;
 		}
-		src += p1Round;
-		dst += p1Round;
+
+		// advance to next 4 lines
+		y0 = y3;
+		y1 = y0 + (stride / 4);
+		y2 = y1 + (stride / 4);
+		y3 = y2 + (stride / 4);
 	}
 
-	FORCE_DONT_INLINE
+	// Part 2: UV plane processing
+	// base pointers for four lines of U and V
+	u8* u0 = src + (stride * height); // r4
+	u8* u1 = u0 + (stride / 2);
+	u8* u2 = u1 + (stride / 2);
+	u8* u3 = u2 + (stride / 2);
+
+	u8* v0 = src + (stride * height) + ((stride / 2) * (height / 2)); // r8/r9
+	u8* v1 = v0 + (stride / 2);
+	u8* v2 = v1 + (stride / 2);
+	u8* v3 = v2 + (stride / 2);
+
+	u32* duv = (u32*)(dst + (stride * height));
+
+	for (i = height / 2; i > 0; i -= 4) {
+		for (j = 0; j < (stride / 2); j += 4) {
+			// two packed pixels per line per iteration
+			// Line 0
+			duv[0] = ((u32)u0[0] << 24) | ((u32)v0[0] << 16) | ((u32)u0[1] << 8) | ((u32)v0[1]);
+			duv[1] = ((u32)u0[2] << 24) | ((u32)v0[2] << 16) | ((u32)u0[3] << 8) | ((u32)v0[3]);
+			u0 += 4;
+			v0 += 4;
+
+			// Line 1
+			duv[2] = ((u32)u1[0] << 24) | ((u32)v1[0] << 16) | ((u32)u1[1] << 8) | ((u32)v1[1]);
+			duv[3] = ((u32)u1[2] << 24) | ((u32)v1[2] << 16) | ((u32)u1[3] << 8) | ((u32)v1[3]);
+			u1 += 4;
+			v1 += 4;
+
+			// Line 2
+			duv[4] = ((u32)u2[0] << 24) | ((u32)v2[0] << 16) | ((u32)u2[1] << 8) | ((u32)v2[1]);
+			duv[5] = ((u32)u2[2] << 24) | ((u32)v2[2] << 16) | ((u32)u2[3] << 8) | ((u32)v2[3]);
+			u2 += 4;
+			v2 += 4;
+
+			// Line 3
+			duv[6] = ((u32)u3[0] << 24) | ((u32)v3[0] << 16) | ((u32)u3[1] << 8) | ((u32)v3[1]);
+			duv[7] = ((u32)u3[2] << 24) | ((u32)v3[2] << 16) | ((u32)u3[3] << 8) | ((u32)v3[3]);
+			u3 += 4;
+			v3 += 4;
+
+			duv += 8;
+		}
+
+		// advance to next block of 4 UV lines
+		u0 = u3;
+		u1 = u0 + (stride / 2);
+		u2 = u1 + (stride / 2);
+		u3 = u2 + (stride / 2);
+
+		v0 = v3;
+		v1 = v0 + (stride / 2);
+		v2 = v1 + (stride / 2);
+		v3 = v2 + (stride / 2);
+	}
+
+	DCStoreRange(dst, (stride * height) + ((stride / 2) * (height / 2)) * 2);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
