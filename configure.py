@@ -368,7 +368,7 @@ config.libs = [
             Object(Matching, "jaudio/cmdqueue.c"),
             Object(Matching, "jaudio/filter3d.c"),
             Object(NonMatching, "jaudio/syncstream.c"),
-            Object(NonMatching, "jaudio/bankloader.c"),
+            Object(Matching, "jaudio/bankloader.c"),
             Object(Matching, "jaudio/interleave.c"),
             Object(Matching, "jaudio/pikiseq.c"),
             Object(NonMatching, "jaudio/hplaybss.c"),
