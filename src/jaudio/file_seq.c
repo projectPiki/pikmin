@@ -189,7 +189,7 @@ void Jaf_GetJamHandle(u32)
  * Address:	8001B780
  * Size:	000014
  */
-void Jaf_HandleToSeq(u32)
+int* Jaf_HandleToSeq(u32)
 {
 	/*
 	.loc_0x0:

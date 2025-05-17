@@ -15,7 +15,7 @@ unknown Jaq_HandleToSeq(u32 handle);
 BOOL Jaq_StopSeq(u32 index);
 unknown Jaq_SetSeqData(unknown, u8*, u32, unknown);
 unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown);
-void Jaq_SetBankNumber(void);
+void Jaq_SetBankNumber(int*, u8);
 void Jaq_StartSeq(u32);
 void Jaq_OpenTrack(void);
 void Jaq_CloseTrack(void);

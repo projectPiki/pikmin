@@ -13,7 +13,7 @@ BOOL Jaf_PlaySeq(u32);
 BOOL Jaf_StartSeq(u32, u32);
 BOOL Jaf_StopSeq(u32);
 void Jaf_GetJamHandle(u32);
-void Jaf_HandleToSeq(u32);
+int* Jaf_HandleToSeq(u32);
 void Jaf_LoadStartFinish(u32);
 void Jaf_LoadStartSeqA(u32, u32, u8*);
 void Jaf_LoadSeqA(u32, u8*);

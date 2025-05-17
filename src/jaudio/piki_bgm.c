@@ -1,35 +1,46 @@
 #include "types.h"
 #include "jaudio/PikiBgm.h"
+#include "jaudio/playercall.h"
+#include "jaudio/file_seq.h"
+#include "jaudio/seqsetup.h"
+#include "jaudio/interface.h"
+#include "jaudio/PikiScene.h"
+#include "Dolphin/os.h"
 
-typedef struct BgmControl_ BgmControl_;
+// This struct might be something else entirely, not BgmControl
+typedef struct BgmControl_ {
+	int _00; // _00, BgmControl_* ?
+	u8 _04[0x458];
+	f32 _45C; // _45C
+} BgmControl_;
+BgmControl_ bgm[1]; // no idea how to handle this
 
+int call_counter;
+static int fadeouttime = 30;
+u8* buffer[2];
+int last_crossmode;
+u8 lastside;
+int bgm_semaphore;
+int buffer_mus[2]   = { -1, -1 };
+f32 game_bgm_volume = 1.0f;
+int last_bgm_level  = -1;
+
+f32 GAMEBGM_VOL_TABLE[]    = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
+u16 GAMEDEMO_VOL_TABLE[]   = { 0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 10000, 12000, 0 };
+u16 GAMESE_VOL_TABLE[]     = { 0, 1000, 2000, 4000, 7000, 10000, 13000, 16000, 20000, 25000, 0x7fff };
+u16 GAMESTREAM_VOL_TABLE[] = { 0, 600, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000, 12000 };
 /*
  * --INFO--
  * Address:	80018980
  * Size:	00003C
  */
-void Jac_BgmFrameCallback(void*)
+s32 Jac_BgmFrameCallback(void* a1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2D00(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2D00(r13)
-	  lwz       r0, 0x2D00(r13)
-	  rlwinm.   r0,r0,0,29,31
-	  bne-      .loc_0x28
-	  bl        0x65C
-
-	.loc_0x28:
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	call_counter += 1;
+	if ((call_counter & 7) == 0) {
+		Jac_BgmFrameWork();
+	}
+	return 0;
 }
 
 /*
@@ -39,6 +50,13 @@ void Jac_BgmFrameCallback(void*)
  */
 void Jac_InitBgm(void)
 {
+	for (int i = 0; i < 3; i++) {
+		bgm[i]._00 = 0;
+	}
+
+	buffer[0] = (u8*)OSAlloc(0x8000);
+	buffer[1] = (u8*)OSAlloc(0x8000);
+	Jac_RegisterPlayerCallback(Jac_BgmFrameCallback, 0);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -159,22 +177,10 @@ void Jac_InitBgm(void)
  * Address:	80018B40
  * Size:	00002C
  */
-void Jac_FadeOutBgm(u32, u32)
+void Jac_FadeOutBgm(u32 flag, u32 fade)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  stw       r4, -0x7F98(r13)
-	  li        r4, 0x8
-	  bl        0x3E8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	fadeouttime = fade;
+	Jac_SetBgmModeFlag(flag, 8, 1);
 }
 
 /*
@@ -182,34 +188,12 @@ void Jac_FadeOutBgm(u32, u32)
  * Address:	80018B80
  * Size:	000054
  */
-void Jac_StopBgm(u32)
+void Jac_StopBgm(u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mulli     r4, r3, 0x468
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x8036
-	  addi      r0, r3, 0x38E0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  add       r31, r0, r4
-	  lwz       r0, 0x0(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x40
-	  lbz       r3, 0xD(r31)
-	  extsb     r3, r3
-	  bl        0x2B4C
-	  li        r0, 0
-	  stw       r0, 0x0(r31)
-
-	.loc_0x40:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (bgm[id]._00) {
+		Jaf_StopSeq((s8)bgm[id]._04[9]);
+		bgm[id]._00 = 0;
+	}
 }
 
 /*
@@ -217,8 +201,21 @@ void Jac_StopBgm(u32)
  * Address:	80018BE0
  * Size:	0000A0
  */
-void Jac_ReadyBgm(void)
+void Jac_ReadyBgm(int id)
 {
+	u32 bgm = id;
+	if (id < 2) {
+		bgm = 2;
+	}
+	if (Jaf_CheckSeq(bgm) == 0) {
+		if (buffer_mus[lastside] != -1) {
+			Jaf_ClearSeq(buffer_mus[lastside]);
+		}
+		Jaf_LoadSeqA(bgm, buffer[lastside]);
+
+		buffer_mus[lastside] = bgm;
+		lastside             = 1 - lastside;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -275,8 +272,77 @@ void Jac_ReadyBgm(void)
  * Address:	80018C80
  * Size:	000244
  */
-void Jac_PlayBgm(void)
+void Jac_PlayBgm(int a, int b)
 {
+	Jac_SetProcessStatus(8);
+	if (bgm[a]._00) {
+		Jac_StopBgm(a);
+	}
+
+	// this is nearly just Jac_ReadyBgm again
+	u32 id = b;
+	if (b < 2) {
+		id = 2;
+	}
+	int check = (int)Jaf_CheckSeq(id);
+	if (check == 0) {
+		if (buffer_mus[lastside] != -1) {
+			Jaf_ClearSeq(buffer_mus[lastside]);
+		}
+		Jaf_LoadSeq(id, buffer[lastside]);
+
+		buffer_mus[lastside] = id;
+		lastside             = 1 - lastside;
+	} else if (check == 1) {
+		int stop = 1;
+		while (stop == 1) {
+			stop = (int)Jaf_CheckSeq(id);
+		}
+	}
+
+	int* seq = Jaf_HandleToSeq(a + 3);
+
+	bgm[a]._04[0]  = 1;
+	bgm[a]._04[1]  = 1;
+	int id2        = a + 3;
+	bgm[a]._04[2]  = 0;
+	bgm[a]._04[6]  = 0;
+	bgm[a]._04[3]  = 0;
+	bgm[a]._04[5]  = id - 2;
+	bgm[a]._04[13] = id2;
+
+	Jac_SetBgmModeFlag(a, 2, 0);
+	Jac_SetBgmModeFlag(a, 1, 0);
+	Jac_SetBgmModeFlag(a, 4, 0);
+	Jac_SetBgmModeFlag(a, 8, 0);
+	Jaf_ReadySeq(id2, id);
+	Jac_BgmFrameWork();
+	Jaq_SetBankNumber(Jaf_HandleToSeq(id2), id);
+	bgm[a]._00 = 0;
+
+	if (a == 0) {
+		bgm[a]._45C = game_bgm_volume;
+		Jam_MuteTrack(seq, 0);
+		last_crossmode = 0;
+	} else {
+		bgm[a]._45C = game_bgm_volume;
+		Jam_MuteTrack(seq, 1);
+	}
+
+	Jam_SetExtParam(bgm[a]._45C, seq, 1);
+	Jam_OnExtSwitch(seq, 1);
+
+	// Challenge mode tempo speedup?
+	if (Jac_TellChgMode() == TRUE && Jac_GetCurrentScene() == 5) {
+		Jam_OnExtSwitch(seq, 0x40);
+		Jam_SetExtParam(1.2f, seq, 0x40);
+	} else {
+		Jam_OffExtSwitch(seq, 0x40);
+	}
+	seq[100] = 74; // this is some struct
+	Jaf_PlaySeq(a + 3);
+	Jac_SetProcessStatus(9);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -454,8 +520,19 @@ void Jac_PlayBgm(void)
  * Address:	80018EE0
  * Size:	000058
  */
-void Jac_ChangeBgmMode(void)
+BOOL Jac_ChangeBgmMode(int id, int type)
 {
+	if (type == bgm[id]._04[0]) {
+		return;
+	}
+
+	if (bgm[id]._00) {
+		bgm[id]._04[3] = type;
+		bgm[id]._04[2] = 1;
+		return FALSE;
+	}
+
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mulli     r6, r3, 0x468
@@ -494,7 +571,7 @@ void Jac_ChangeBgmMode(void)
  * Address:	80018F40
  * Size:	0000A8
  */
-void Jac_SetBgmModeFlag(u32, u32, u32)
+void Jac_SetBgmModeFlag(u32 a, u32 b, u32 c)
 {
 	/*
 	.loc_0x0:
@@ -562,6 +639,27 @@ void Jac_SetBgmModeFlag(u32, u32, u32)
  */
 void Jac_BgmFrameWork(void)
 {
+	if (bgm_semaphore == 0) {
+		bgm_semaphore = TRUE;
+
+		for (int i = 0; i < 3; i++) {
+			if (bgm[i]._00) {
+				if (bgm[i]._04[0]) {
+					Jac_ChangeBgmTrackVol(bgm[i]._00);
+					continue;
+				}
+				if (bgm[i]._04[1]) {
+					Jac_ChangeBgmTrackVol(bgm[i]._00);
+					bgm[i]._04[1] = 0;
+				}
+				if (bgm[i]._04[12]) {
+					Jac_MoveBgmTrackVol(bgm[i]._00);
+				}
+			}
+		}
+
+		bgm_semaphore = FALSE;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -659,8 +757,9 @@ void Jac_BgmFrameWork(void)
  * Address:	80019140
  * Size:	0000BC
  */
-void Jac_MoveBgmTrackVol(void)
+void Jac_MoveBgmTrackVol(int seq)
 {
+	Jaf_HandleToSeq(seq);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -847,7 +946,7 @@ void Jac_ChangeBgmTrackVol(void)
  * Address:	80019380
  * Size:	00008C
  */
-void Jac_UpdateBgmCrossVol(BgmControl_*)
+void Jac_UpdateBgmCrossVol(BgmControl_* control)
 {
 	/*
 	.loc_0x0:
@@ -900,6 +999,16 @@ void Jac_UpdateBgmCrossVol(BgmControl_*)
  */
 void Jac_GameVolume(u8 bgmVol, u8 seVol)
 {
+	game_bgm_volume = GAMEBGM_VOL_TABLE[bgmVol];
+	if (last_bgm_level != bgmVol) {
+		Jac_EasyCrossFade(2, 10);
+	}
+
+	last_bgm_level = bgmVol;
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x30000), 2, GAMEDEMO_VOL_TABLE[bgmVol]);
+	Jac_SetStreamLevel(GAMESTREAM_VOL_TABLE[bgmVol], GAMESTREAM_VOL_TABLE[bgmVol]);
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x10000), 0, GAMESE_VOL_TABLE[seVol]);
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x20000), 0, GAMESE_VOL_TABLE[seVol]);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -961,8 +1070,19 @@ void Jac_GameVolume(u8 bgmVol, u8 seVol)
  * Address:	80019500
  * Size:	0000E4
  */
-void Jac_EasyCrossFade(u32, u32)
+void Jac_EasyCrossFade(u32 type, u32 val)
 {
+	switch (type) {
+	case 0:
+		/* code */
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	}
+
+	last_crossmode = type;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1118,19 +1238,7 @@ void Jac_DemoFade(f32, int, int)
  */
 void Jac_EnterBossMode(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x1
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x64
-	  stwu      r1, -0x8(r1)
-	  bl        -0x1F4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jac_EasyCrossFade(1, 100);
 }
 
 /*
@@ -1140,17 +1248,5 @@ void Jac_EnterBossMode(void)
  */
 void Jac_ExitBossMode(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x64
-	  stwu      r1, -0x8(r1)
-	  bl        -0x234
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jac_EasyCrossFade(0, 100);
 }
