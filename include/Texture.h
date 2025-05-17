@@ -5,6 +5,7 @@
 #include "GfxObject.h"
 #include "Dolphin/gx.h"
 #include "Ayu.h"
+#include "Stream.h"
 
 struct Texture;
 struct TexImg;
@@ -15,6 +16,7 @@ struct TexobjInfo;
  * @brief TODO
  */
 enum TexImgFormat {
+	TEX_FMT_NULL   = -1,
 	TEX_FMT_RGB565 = 0,
 	TEX_FMT_S3TC   = 1,
 	TEX_FMT_RGB5A3 = 2,
@@ -71,6 +73,60 @@ struct TexAttr : public CoreNode {
 };
 
 /**
+ * @brief Fabricated, need Some structure for importBti
+ */
+struct TexBti {
+	void read(RandomAccessStream& input)
+	{
+		_00 = input.readByte();
+		_01 = input.readByte();
+		_02 = input.readShort();
+		_04 = input.readShort();
+		_06 = input.readByte();
+		_07 = input.readByte();
+		_08 = input.readByte();
+		_09 = input.readByte();
+		_0A = input.readShort();
+		_0C = input.readInt();
+		_10 = input.readByte();
+		_11 = input.readByte();
+		_12 = input.readByte();
+		_13 = input.readByte();
+		_14 = input.readByte();
+		_15 = input.readByte();
+		_16 = input.readByte();
+		_17 = input.readByte();
+		_18 = input.readByte();
+		_19 = input.readByte();
+		_1A = input.readShort();
+		_1C = input.readInt();
+	}
+
+	u8 _00;  // _00
+	u8 _01;  // _01
+	u16 _02; // _02
+	u16 _04; // _04
+	u8 _06;  // _06
+	u8 _07;  // _07
+	u8 _08;  // _08
+	u8 _09;  // _09
+	u16 _0A; // _0A
+	u32 _0C; // _0C, unknown
+	u8 _10;  // _10
+	u8 _11;  // _11
+	u8 _12;  // _12
+	u8 _13;  // _13
+	u8 _14;  // _14
+	u8 _15;  // _15
+	u8 _16;  // _16
+	u8 _17;  // _17
+	u8 _18;  // _18
+	u8 _19;  // _19
+	u16 _1A; // _1A
+	u32 _1C; // _1C, unknown
+};
+
+/**
  * @brief TODO
  */
 struct TexImg : public CoreNode {
@@ -90,7 +146,7 @@ struct TexImg : public CoreNode {
 	static char* formatName(u32 texFmt);
 
 	// unused/inlined:
-	void convFormat(u32);
+	u32 convFormat(u32);
 	void setColour(Colour&);
 	void readTexData(Texture*, RandomAccessStream&, u8*);
 	void dumpBti(Texture*, char*, RandomAccessStream&, RandomAccessStream&);

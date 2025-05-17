@@ -1748,7 +1748,7 @@ void ShapeDynMaterials::animate(f32* data)
 			}
 
 			for (int j = 0; j < 3; j++) {
-				if (mat.mTevInfo->mTevColRegs[j].mIsAnimEnabled) {
+				if (mat.mTevInfo->mTevColRegs[j]._08) {
 					mat.mTevInfo->mTevColRegs[j].animate(data, mat.mTevInfo->mTevColRegs[j].mAnimatedColor);
 				}
 			}
@@ -1777,7 +1777,7 @@ void ShapeDynMaterials::updateContext()
 			mShape->mMaterialList[mat.mIndex].Colour() = mat.Colour();
 
 			for (int j = 0; j < 3; j++) {
-				if (mat.mTevInfo->mTevColRegs[j].mIsAnimEnabled) {
+				if (mat.mTevInfo->mTevColRegs[j]._08) {
 					mShape->mMaterialList[mat.mIndex].mTevInfo->mTevColRegs[j].mAnimatedColor = mat.mTevInfo->mTevColRegs[j].mAnimatedColor;
 				}
 			}
@@ -1885,7 +1885,7 @@ void BaseShape::countMaterials(Joint* joint, u32 p2)
 						check2 = true;
 					}
 					for (int j = 0; j < 3; j++) {
-						if (mat->mTevInfo->mTevColRegs[j].mIsAnimEnabled) {
+						if (mat->mTevInfo->mTevColRegs[j]._08) {
 							check2 = true;
 						}
 					}

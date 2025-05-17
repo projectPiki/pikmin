@@ -219,6 +219,8 @@ struct PVWPolygonColourInfo {
  */
 struct PVWColourShortAnimInfo {
 	void extract(f32, ShortColour&);
+
+	PVWAnimInfo3<PVWKeyInfoS10> mInfo; // _00
 };
 
 /**
@@ -226,6 +228,8 @@ struct PVWColourShortAnimInfo {
  */
 struct PVWAlphaShortAnimInfo {
 	void extract(f32, ShortColour&);
+
+	PVWAnimInfo1<PVWKeyInfoS10> mInfo; // _00
 };
 
 /**
@@ -233,6 +237,8 @@ struct PVWAlphaShortAnimInfo {
  */
 struct PVWTexAnimInfo {
 	void extract(f32, Vector3f&);
+
+	PVWAnimInfo3<PVWKeyInfoF32> mInfo; // _00
 };
 
 struct PVWTextureData;
@@ -271,18 +277,18 @@ struct PVWTevColReg {
 	void read(RandomAccessStream& input)
 	{
 		mAnimatedColor.read(input);
-		mIsAnimEnabled = input.readInt();
-		_0C            = input.readFloat();
-		_10.read(input);
-		_18.read(input);
+		_08 = input.readInt();
+		_0C = input.readFloat();
+		_10.mInfo.read(input);
+		_18.mInfo.read(input);
 	}
 
-	ShortColour mAnimatedColor;      // _00
-	u32 mIsAnimEnabled;              // _08, unknown
-	f32 _0C;                         // _0C
-	PVWAnimInfo3<PVWKeyInfoS10> _10; // _10
-	PVWAnimInfo1<PVWKeyInfoS10> _18; // _10
-	f32 _20;                         // _20
+	ShortColour mAnimatedColor; // _00
+	u32 _08;                    // _08
+	f32 _0C;                    // _0C
+	PVWColourShortAnimInfo _10; // _10
+	PVWAlphaShortAnimInfo _18;  // _10
+	f32 _20;                    // _20
 };
 
 /**
@@ -392,33 +398,33 @@ struct PVWTextureData {
 	void animate(f32*, Matrix4f&);
 	void read(RandomAccessStream&);
 
-	u32 mSourceAttrIndex;            // _00
-	TexAttr* mTextureAttribute;      // _04
-	Texture* mTexture;               // _08
-	u16 _0C;                         // _0C
-	u16 _0E;                         // _0E
-	u8 _10;                          // _10
-	u8 _11;                          // _11
-	u8 _12;                          // _12
-	u8 _13;                          // _13
-	u8 mAnimationFactor;             // _14
-	u8 _15;                          // _15
-	u8 _16;                          // _16
-	u32 _18;                         // _18
-	f32 _1C;                         // _1C
-	f32 _20;                         // _20
-	f32 _24;                         // _24
-	f32 _28;                         // _28
-	f32 _2C;                         // _2C
-	f32 _30;                         // _30
-	f32 _34;                         // _34
-	u32 _38;                         // _38
-	f32 _3C;                         // _3C
-	PVWAnimInfo3<PVWKeyInfoF32> _40; // _40
-	PVWAnimInfo3<PVWKeyInfoF32> _48; // _48
-	PVWAnimInfo3<PVWKeyInfoF32> _50; // _50
-	f32 _58;                         // _58
-	Matrix4f mAnimatedTexMtx;        // _5C
+	u32 mSourceAttrIndex;       // _00
+	TexAttr* mTextureAttribute; // _04
+	Texture* mTexture;          // _08
+	u16 _0C;                    // _0C
+	u16 _0E;                    // _0E
+	u8 _10;                     // _10
+	u8 _11;                     // _11
+	u8 _12;                     // _12
+	u8 _13;                     // _13
+	u8 mAnimationFactor;        // _14
+	u8 _15;                     // _15
+	u8 _16;                     // _16
+	u32 _18;                    // _18
+	f32 _1C;                    // _1C
+	f32 _20;                    // _20
+	f32 _24;                    // _24
+	f32 _28;                    // _28
+	f32 _2C;                    // _2C
+	f32 _30;                    // _30
+	f32 _34;                    // _34
+	u32 _38;                    // _38
+	f32 _3C;                    // _3C
+	PVWTexAnimInfo _40;         // _40
+	PVWTexAnimInfo _48;         // _48
+	PVWTexAnimInfo _50;         // _50
+	f32 _58;                    // _58
+	Matrix4f mAnimatedTexMtx;   // _5C
 };
 
 /**

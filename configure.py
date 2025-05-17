@@ -396,7 +396,7 @@ config.libs = [
             Object(Matching, "sysCommon/stream.cpp"),
             Object(Matching, "sysCommon/streamBufferedInput.cpp"),
             Object(Matching, "sysCommon/string.cpp"),
-            Object(NonMatching, "sysCommon/graphics.cpp"),
+            Object(Equivalent, "sysCommon/graphics.cpp"),
             Object(Matching, "sysCommon/grLight.cpp"),
             Object(Equivalent, "sysCommon/shapeBase.cpp"),
             Object(Matching, "sysCommon/shpLightFlares.cpp"),
@@ -434,7 +434,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category" : "game",
         "objects": [
-            Object(NonMatching, "plugPikiColin/cardutil.cpp"),
+            Object(Equivalent, "plugPikiColin/cardutil.cpp"),
             Object(Equivalent, "plugPikiColin/dynsimulator.cpp"),
             Object(Matching, "plugPikiColin/animMgr.cpp"),
             Object(Equivalent, "plugPikiColin/gameflow.cpp"),
@@ -459,7 +459,7 @@ config.libs = [
             Object(Matching, "plugPikiColin/lightPool.cpp"),
             Object(Equivalent, "plugPikiColin/memoryCard.cpp"),
             Object(Matching, "plugPikiColin/moviePlayer.cpp"),
-            Object(NonMatching, "plugPikiColin/movSample.cpp"),
+            Object(Equivalent, "plugPikiColin/movSample.cpp"),
         ],
     },
     {
