@@ -38,7 +38,7 @@ void CardUtilNumFiles()
  */
 void CardUtilLockDirectory()
 {
-	// UNUSED FUNCTION
+	OSLockMutex(&CardControl.mMutex2);
 }
 
 /*
@@ -48,7 +48,7 @@ void CardUtilLockDirectory()
  */
 void CardUtilUnlockDirectory()
 {
-	// UNUSED FUNCTION
+	OSUnlockMutex(&CardControl.mMutex2);
 }
 
 /*
@@ -56,9 +56,9 @@ void CardUtilUnlockDirectory()
  * Address:	........
  * Size:	000010
  */
-void CardUtilByteNotUsed()
+s32 CardUtilByteNotUsed()
 {
-	// UNUSED FUNCTION
+	return CardControl.mByteNotUsed;
 }
 
 /*
@@ -66,7 +66,7 @@ void CardUtilByteNotUsed()
  * Address:	........
  * Size:	000028
  */
-void CardUtilBlocksNotUsed()
+s32 CardUtilBlocksNotUsed()
 {
 	// UNUSED FUNCTION
 }
@@ -76,9 +76,9 @@ void CardUtilBlocksNotUsed()
  * Address:	........
  * Size:	000010
  */
-void CardUtilFilesNotUsed()
+s32 CardUtilFilesNotUsed()
 {
-	// UNUSED FUNCTION
+	return CardControl.mFilesNotUsed;
 }
 
 /*
@@ -86,9 +86,9 @@ void CardUtilFilesNotUsed()
  * Address:	........
  * Size:	000010
  */
-void CardUtilSectorSize()
+s32 CardUtilSectorSize()
 {
-	// UNUSED FUNCTION
+	return CardControl.mSectorSize;
 }
 
 /*
@@ -101,10 +101,10 @@ static int DoMount(s32 channel, void* a2)
 	OSLockMutex(&CardControl.mMutex2);
 	CardControl._6C = 0;
 	OSUnlockMutex(&CardControl.mMutex2);
-	CardControl.mFreeFileNum = 0;
-	CardControl.mFreeBytes   = 0;
-	CardControl._4C          = 0xA000;
-	s32 res                  = CARDMount(channel, (CARDMemoryCard*)a2, 0);
+	CardControl.mFilesNotUsed = 0;
+	CardControl.mByteNotUsed  = 0;
+	CardControl._4C           = 0xA000;
+	s32 res                   = CARDMount(channel, (CARDMemoryCard*)a2, 0);
 	switch (res) {
 	case CARD_RESULT_READY:
 	case CARD_RESULT_BROKEN:
@@ -126,7 +126,7 @@ static int DoMount(s32 channel, void* a2)
 	}
 
 	if (res == CARD_RESULT_READY) {
-		res = CARDFreeBlocks(channel, &CardControl.mFreeBytes, &CardControl.mFreeFileNum);
+		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 	}
 	return res;
 }
@@ -157,7 +157,7 @@ static int DoFormat(s32 channel)
 	CardControl._4C = 0xA000;
 	int res         = CARDFormat(channel);
 	if (res == CARD_RESULT_READY) {
-		res = CARDFreeBlocks(channel, &CardControl.mFreeBytes, &CardControl.mFreeFileNum);
+		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 	}
 	return res;
 }
@@ -193,7 +193,7 @@ static int DoErase(s32 chan, s32 fileNo)
 		}
 	}
 
-	return CARDFreeBlocks(chan, &CardControl.mFreeBytes, &CardControl.mFreeFileNum);
+	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 }
 
 /*
@@ -201,9 +201,139 @@ static int DoErase(s32 chan, s32 fileNo)
  * Address:	8004CB3C
  * Size:	0005CC
  */
-static int DoList(s32, CardUtilDirent*)
+static int DoList(s32 chan, CardUtilDirent* dirent)
 {
-	FORCE_DONT_INLINE;
+	DVDDiskID* diskID = DVDGetCurrentDiskID();
+	int res           = CARD_RESULT_READY;
+	OSLockMutex(&CardControl.mMutex2);
+	CardControl._68 = dirent;
+	int prevIdx     = CardControl._6C;
+	CardControl._6C = 0;
+	OSUnlockMutex(&CardControl.mMutex2);
+	if (!dirent) {
+		return CARD_RESULT_READY;
+	}
+
+	memset(dirent, 0, 127 * sizeof(CardUtilDirent));
+
+	CARDFileInfo info;
+	char buf2[36];
+	char buf[36];
+	for (int i = 0; i < 127; i++) {
+		CardUtilDirent& entry = dirent[CardControl._6C];
+		if (CARDGetStatus(chan, i, &entry.mState) < 0) {
+			continue;
+		}
+
+		if (memcmp(entry.mState.gameName, diskID->gameName, 4) != 0) {
+			continue;
+		}
+
+		if (memcmp(entry.mState.company, diskID->company, 2) != 0) {
+			continue;
+		}
+
+		if (entry.mState.fileName[0] == '~') {
+			strncpy(buf, entry.mState.fileName, CARD_FILENAME_MAX);
+			buf[CARD_FILENAME_MAX] = 0;
+			strncpy(buf2, &buf[1], CARD_FILENAME_MAX);
+			buf2[CARD_FILENAME_MAX] = 0;
+
+			if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
+				if (CARDRename(chan, buf, buf2) == 0) {
+					// renamed! redo this entry with the new name
+					i--;
+					continue;
+				}
+			}
+
+			res = CARDFastDelete(chan, i);
+			if (res >= 0) {
+				res = CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+				if (res >= 0) {
+					continue;
+				}
+			}
+			return res;
+		}
+
+		memset(&entry._00[0x5A00], 0, 0x40);
+		if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
+			int resOpen = CARDFastOpen(chan, i, &info);
+			if (resOpen >= 0) {
+
+			} else {
+				return resOpen;
+			}
+
+			s32 offset = TRUNC(entry.mState.commentAddr, 0x200);
+			s32 addr   = entry.mState.commentAddr + 0x40;
+			res        = CARDRead(&info, &entry, ALIGN_NEXT(addr - offset, 0x200), offset);
+			CARDClose(&info);
+			if (res < 0) {
+				return res;
+			}
+			memmove(&entry._00[0x5A00], &entry._00[OFFSET(entry.mState.commentAddr, 0x200)], 0x40);
+		}
+
+		if (entry.mState.bannerFormat || entry.mState.iconSpeed) {
+			if (entry.mState.offsetData <= entry.mState.length && entry.mState.iconAddr < entry.mState.offsetData) {
+				int resOpen = CARDFastOpen(chan, i, &info);
+				if (resOpen >= 0) {
+
+				} else {
+					return resOpen;
+				}
+
+				s32 offset = TRUNC(entry.mState.iconAddr, 0x200);
+				s32 addr   = entry.mState.offsetData;
+				res        = CARDRead(&info, &entry, ALIGN_NEXT(addr - offset, 0x200), offset);
+				CARDClose(&info);
+				if (res < 0) {
+					return res;
+				}
+
+				memmove(&entry, &entry._00[OFFSET(entry.mState.iconAddr, 0x200)], entry.mState.offsetData - entry.mState.iconAddr);
+
+				DCFlushRange(&entry, entry.mState.offsetData - entry.mState.iconAddr);
+
+				entry._5AB0 = 0;
+				int a; // r9
+				int d; // r5
+				for (int j = 0; j < 8; j++) {
+					int speed = CARDGetIconSpeed(&entry.mState, j);
+					if (!speed) {
+						break;
+					}
+
+					entry._5AB4[j] = entry._5AB0;
+					entry._5AEC[j] = a;
+					entry._5AB0 += speed << 2;
+
+					int format = CARDGetIconFormat(&entry.mState, a);
+					if (format) {
+						a++;
+					}
+					d++;
+				}
+
+				if (CARDGetIconAnim(&entry.mState) == CARD_STAT_ANIM_BOUNCE && d > 2) {
+					for (int j = d - 2, k = 0; j > 0; j--, k++) {
+						int speed          = CARDGetIconSpeed(&entry.mState, j);
+						entry._5AB4[d + k] = entry._5AB0;
+						entry._5AEC[d + k] = entry._5AEC[j];
+						entry._5AB0 += speed << 2;
+					}
+				}
+			}
+		}
+		entry.mFileNo = i;
+		OSLockMutex(&CardControl.mMutex2);
+		CardControl._6C++;
+		OSUnlockMutex(&CardControl.mMutex2);
+	}
+
+	return res;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -682,9 +812,135 @@ static int DoWrite(s32 chan, s32 fileNo, void* addr, u32 length, u32 offset)
  * Address:	8004D108
  * Size:	0005AC
  */
-static int DoSave(s32, CARDStat*, void*)
+static int DoSave(s32 chan, CARDStat* state, void* addr)
 {
-	FORCE_DONT_INLINE;
+	CARDFileInfo info;
+	char buf[36];
+	strncpy(buf, state->fileName, CARD_FILENAME_MAX);
+	buf[CARD_FILENAME_MAX] = 0;
+	if (strlen(buf) >= CARD_FILENAME_MAX) {
+		return CARD_RESULT_NAMETOOLONG;
+	}
+
+	if (buf[0] == '~') {
+		// dramatic
+		return CARD_RESULT_FATAL_ERROR;
+	}
+
+	char buf2[36];
+	buf2[0] = '~';
+	strncpy(&buf2[1], state->fileName, CARD_FILENAME_MAX - 1);
+	buf2[CARD_FILENAME_MAX] = 0;
+
+	int newFileNo;
+	int fileNo = -1;
+	if (CARDOpen(chan, buf, &info) == CARD_RESULT_READY) {
+		fileNo = info.fileNo;
+		CARDClose(&info);
+	}
+
+	CardControl._4C = state->length + 0x8000;
+	if (fileNo >= 0 && fileNo < 127) {
+		CardControl._4C += 0x4000;
+	}
+
+	int resCreate = CARDCreate(chan, buf2, state->length, &info);
+	if (resCreate >= 0) {
+
+	} else {
+		return resCreate;
+	}
+
+	newFileNo    = info.fileNo;
+	int resWrite = CARDWrite(&info, addr, state->length, 0);
+	CARDClose(&info);
+	if (resWrite < 0 || (resWrite = CARDSetStatus(chan, newFileNo, state)) < 0) {
+		return resWrite;
+	}
+
+	if (fileNo >= 0 && fileNo < 127) {
+		int resDel = CARDFastDelete(chan, fileNo);
+		if (resDel >= 0) {
+
+		} else {
+			return resDel;
+		}
+	}
+	int resRename = CARDRename(chan, buf2, buf);
+	if (resRename >= 0) {
+
+	} else {
+		return resRename;
+	}
+
+	if (!CardControl._68) {
+		return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+	}
+
+	OSLockMutex(&CardControl.mMutex2);
+	CardUtilDirent* entry;
+	if (fileNo == -1) {
+		entry = &CardControl._68[CardControl._6C];
+		CardControl._6C++;
+	} else {
+		entry                    = CardControl._68;
+		CardUtilDirent* altEntry = &CardControl._68[CardControl._6C];
+		for (entry; entry < altEntry; entry++) {
+			if (entry->mFileNo == fileNo) {
+				break;
+			}
+		}
+		if (entry == altEntry) {
+			CardControl._6C++;
+		}
+	}
+
+	memset(&entry->_00[0x5A00], 0, 0x40);
+
+	if (state->commentAddr <= state->length - 0x40) {
+		memmove(&entry->_00[0x5A00], (void*)((u32)addr + state->commentAddr), 0x40);
+	}
+
+	entry->_5AB0 = 0;
+	if (state->bannerFormat || state->iconFormat) {
+		memmove(entry, (void*)((u32)addr + state->iconAddr), state->offsetData - state->iconAddr);
+		DCFlushRange(entry, state->offsetData - state->iconAddr);
+
+		int a = 0;
+		int d = 0;
+		for (int i = 0; i < 8; i++) {
+			int speed = CARDGetIconSpeed(&entry->mState, i);
+			if (!speed) {
+				break;
+			}
+
+			entry->_5AB4[i] = entry->_5AB0;
+			entry->_5AEC[i] = a;
+			entry->_5AB0 += speed << 2;
+
+			int format = CARDGetIconFormat(&entry->mState, a);
+			if (format) {
+				a++;
+			}
+			d++;
+		}
+
+		if (CARDGetIconAnim(&entry->mState) == CARD_STAT_ANIM_BOUNCE && d > 2) {
+			int max = d - 2;
+			for (int i = max, j = 0; i > 0; i--, j++) {
+				int speed           = CARDGetIconSpeed(state, i);
+				entry->_5AB4[d + j] = entry->_5AB0;
+				entry->_5AEC[d + j] = entry->_5AEC[i];
+				entry->_5AB0 += speed << 2;
+			}
+		}
+	}
+
+	memcpy(&entry->mState, state, sizeof(CARDStat));
+	entry->mFileNo = newFileNo;
+	OSUnlockMutex(&CardControl.mMutex2);
+	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
