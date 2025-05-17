@@ -65,7 +65,7 @@ struct CardUtilControl {
 	u32 _4C;             // _4C, unknown
 	OSMutex mMutex2;     // _50
 	CardUtilDirent* _68; // _68, unknown
-	u32 _6C;             // _6C, unknown
+	int _6C;             // _6C
 };
 
 // Global CARD utility functions:
