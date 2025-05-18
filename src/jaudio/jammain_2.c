@@ -1,5 +1,22 @@
 #include "jaudio/jammain_2.h"
 
+#include "jaudio/oneshot.h"
+#include "jaudio/jamosc.h"
+
+// TODO IN THIS FILE: What do the return values for the `Cmd_` functions signify?
+// 0 is probably success / "no error".  Return values 1 and 2 have been observed.
+
+typedef struct SEQ_ARG_t SEQ_ARG_t;
+
+struct SEQ_ARG_t {
+	u32 _00;             // _00
+	u32 _04;             // _04
+	u8 _08[0x20 - 0x08]; // _00
+};
+
+static seqp_* SEQ_P;
+static SEQ_ARG_t SEQ_ARG;
+
 /*
  * --INFO--
  * Address:	8000F400
@@ -444,21 +461,11 @@ void Jam_SEQtimeToDSPtime(seqp_*, s32, u8)
  * Address:	8000F8C0
  * Size:	000020
  */
-void Extend8to16(u8)
+u16 Extend8to16(u8 value)
 {
-	/*
-	.loc_0x0:
-	  rlwinm.   r0,r3,0,24,24
-	  rlwinm    r4,r3,0,24,31
-	  beq-      .loc_0x18
-	  addis     r3, r4, 0x1
-	  subi      r3, r3, 0x100
-	  blr
-
-	.loc_0x18:
-	  mr        r3, r4
-	  blr
-	*/
+	if (value & 0x80)
+		return value + 0xFF00;
+	return value;
 }
 
 /*
@@ -1704,7 +1711,7 @@ void Jam_RegistTrack(seqp_*, u32)
  * Address:	800105C0
  * Size:	00008C
  */
-void Jam_UnRegistTrack(void)
+void Jam_UnRegistTrack(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -2540,7 +2547,7 @@ void Jam_UpdateTrackAll(void)
  * Address:	80010E00
  * Size:	00000C
  */
-static void OSf32tos8(void)
+extern "C" static void OSf32tos8(f32* in, s8* out)
 {
 	/*
 	.loc_0x0:
@@ -2555,7 +2562,7 @@ static void OSf32tos8(void)
  * Address:	80010E20
  * Size:	0004A8
  */
-void Jam_UpdateTrack(void)
+void Jam_UpdateTrack(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -3373,7 +3380,7 @@ void Jam_TryInterrupt(void)
  * Address:	80011800
  * Size:	000038
  */
-static void Cmd_OpenTrack()
+static u32 Cmd_OpenTrack()
 {
 	/*
 	.loc_0x0:
@@ -3399,7 +3406,7 @@ static void Cmd_OpenTrack()
  * Address:	80011840
  * Size:	000050
  */
-static void Cmd_OpenTrackBros()
+static u32 Cmd_OpenTrackBros()
 {
 	/*
 	.loc_0x0:
@@ -3437,7 +3444,7 @@ static void Cmd_OpenTrackBros()
  * Address:	800118A0
  * Size:	00003C
  */
-static void Cmd_Call()
+static u32 Cmd_Call()
 {
 	/*
 	.loc_0x0:
@@ -3464,7 +3471,7 @@ static void Cmd_Call()
  * Address:	800118E0
  * Size:	000100
  */
-static void Cmd_CallF()
+static u32 Cmd_CallF()
 {
 	/*
 	.loc_0x0:
@@ -3552,21 +3559,10 @@ static void Cmd_CallF()
  * Address:	800119E0
  * Size:	000028
  */
-static void Cmd_Ret()
+static u32 Cmd_Ret()
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2C30(r13)
-	  li        r3, 0
-	  lwz       r4, 0x8(r5)
-	  subi      r4, r4, 0x1
-	  rlwinm    r0,r4,2,0,29
-	  stw       r4, 0x8(r5)
-	  add       r4, r5, r0
-	  lwz       r0, 0xC(r4)
-	  stw       r0, 0x4(r5)
-	  blr
-	*/
+	SEQ_P->_04 = SEQ_P->_0C[--SEQ_P->_08];
+	return 0;
 }
 
 /*
@@ -3574,7 +3570,7 @@ static void Cmd_Ret()
  * Address:	80011A20
  * Size:	000060
  */
-static void Cmd_RetF()
+static u32 Cmd_RetF()
 {
 	/*
 	.loc_0x0:
@@ -3612,18 +3608,10 @@ static void Cmd_RetF()
  * Address:	80011A80
  * Size:	00001C
  */
-static void Cmd_Jmp()
+static u32 Cmd_Jmp()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  subi      r5, r3, 0x580
-	  li        r3, 0
-	  lwz       r0, 0x4(r5)
-	  stw       r0, 0x4(r4)
-	  blr
-	*/
+	SEQ_P->_04 = SEQ_ARG._04;
+	return 0;
 }
 
 /*
@@ -3631,19 +3619,9 @@ static void Cmd_Jmp()
  * Address:	80011AA0
  * Size:	000020
  */
-static void Cmd_JmpF()
+static u32 Cmd_JmpF()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x1CC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Cmd_CallF();
 }
 
 /*
@@ -3651,7 +3629,7 @@ static void Cmd_JmpF()
  * Address:	80011AC0
  * Size:	000048
  */
-static void Cmd_LoopS()
+static u32 Cmd_LoopS()
 {
 	/*
 	.loc_0x0:
@@ -3681,7 +3659,7 @@ static void Cmd_LoopS()
  * Address:	80011B20
  * Size:	000078
  */
-static void Cmd_LoopE()
+static u32 Cmd_LoopE()
 {
 	/*
 	.loc_0x0:
@@ -3729,7 +3707,7 @@ static void Cmd_LoopE()
  * Address:	80011BA0
  * Size:	000054
  */
-static void Cmd_ReadPort()
+static u32 Cmd_ReadPort()
 {
 	/*
 	.loc_0x0:
@@ -3762,7 +3740,7 @@ static void Cmd_ReadPort()
  * Address:	80011C00
  * Size:	000040
  */
-static void Cmd_WritePort()
+static u32 Cmd_WritePort()
 {
 	/*
 	.loc_0x0:
@@ -3790,7 +3768,7 @@ static void Cmd_WritePort()
  * Address:	80011C40
  * Size:	000044
  */
-static void Cmd_CheckPortImport()
+static u32 Cmd_CheckPortImport()
 {
 	/*
 	.loc_0x0:
@@ -3819,7 +3797,7 @@ static void Cmd_CheckPortImport()
  * Address:	80011CA0
  * Size:	000044
  */
-static void Cmd_CheckPortExport()
+static u32 Cmd_CheckPortExport()
 {
 	/*
 	.loc_0x0:
@@ -3848,24 +3826,10 @@ static void Cmd_CheckPortExport()
  * Address:	80011D00
  * Size:	00002C
  */
-static void Cmd_WaitReg()
+static u32 Cmd_WaitReg()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8032
-	  lwz       r3, 0x2C30(r13)
-	  lwzu      r0, -0x580(r4)
-	  stw       r0, 0x8C(r3)
-	  lwz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x24
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x24:
-	  li        r3, 0
-	  blr
-	*/
+	SEQ_P->_8C = SEQ_ARG._00;
+	return SEQ_ARG._00 ? 1 : 0;
 }
 
 /*
@@ -3873,21 +3837,10 @@ static void Cmd_WaitReg()
  * Address:	80011D40
  * Size:	000028
  */
-static void Cmd_ConnectName()
+static u32 Cmd_ConnectName()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  subi      r6, r3, 0x580
-	  li        r3, 0
-	  lwz       r5, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  rlwinm    r5,r5,16,0,15
-	  or        r0, r5, r0
-	  stw       r0, 0x84(r4)
-	  blr
-	*/
+	SEQ_P->_84 = SEQ_ARG._00 << 16 | SEQ_ARG._04;
+	return 0;
 }
 
 /*
@@ -3895,7 +3848,7 @@ static void Cmd_ConnectName()
  * Address:	80011D80
  * Size:	000040
  */
-static void Cmd_ParentWritePort()
+static u32 Cmd_ParentWritePort()
 {
 	/*
 	.loc_0x0:
@@ -3923,7 +3876,7 @@ static void Cmd_ParentWritePort()
  * Address:	80011DC0
  * Size:	000048
  */
-static void Cmd_ChildWritePort()
+static u32 Cmd_ChildWritePort()
 {
 	/*
 	.loc_0x0:
@@ -3953,23 +3906,11 @@ static void Cmd_ChildWritePort()
  * Address:	80011E20
  * Size:	000030
  */
-static void Cmd_SetLastNote()
+static u32 Cmd_SetLastNote()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  subi      r5, r3, 0x580
-	  li        r3, 0
-	  lwz       r0, 0x0(r5)
-	  stb       r0, 0xD5(r4)
-	  lwz       r5, 0x2C30(r13)
-	  lbz       r4, 0xD5(r5)
-	  lbz       r0, 0x397(r5)
-	  add       r0, r4, r0
-	  stb       r0, 0xD5(r5)
-	  blr
-	*/
+	SEQ_P->_D5 = SEQ_ARG._00;
+	SEQ_P->_D5 += SEQ_P->_397;
+	return 0;
 }
 
 /*
@@ -3977,18 +3918,10 @@ static void Cmd_SetLastNote()
  * Address:	80011E60
  * Size:	00001C
  */
-static void Cmd_TimeRelate()
+static u32 Cmd_TimeRelate()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  subi      r5, r3, 0x580
-	  li        r3, 0
-	  lwz       r0, 0x0(r5)
-	  stb       r0, 0x33C(r4)
-	  blr
-	*/
+	SEQ_P->_33C = SEQ_ARG._00;
+	return 0;
 }
 
 /*
@@ -3996,24 +3929,10 @@ static void Cmd_TimeRelate()
  * Address:	80011E80
  * Size:	000034
  */
-static void Cmd_SimpleOsc()
+static u32 Cmd_SimpleOsc()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8032
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, -0x580(r4)
-	  lwz       r3, 0x2C30(r13)
-	  rlwinm    r4,r0,0,24,31
-	  bl        0x2F24
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Osc_Setup_Simple(SEQ_P, SEQ_ARG._00);
+	return 0;
 }
 
 /*
@@ -4021,25 +3940,10 @@ static void Cmd_SimpleOsc()
  * Address:	80011EC0
  * Size:	000038
  */
-static void Cmd_SimpleEnv()
+static u32 Cmd_SimpleEnv()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8032
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwzu      r0, -0x580(r4)
-	  lwz       r3, 0x2C30(r13)
-	  lwz       r5, 0x4(r4)
-	  rlwinm    r4,r0,0,24,31
-	  bl        0x2FE0
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Osc_Setup_SimpleEnv(SEQ_P, SEQ_ARG._00, SEQ_ARG._04);
+	return 0;
 }
 
 /*
@@ -4047,7 +3951,7 @@ static void Cmd_SimpleEnv()
  * Address:	80011F00
  * Size:	000064
  */
-static void Cmd_SimpleADSR()
+static u32 Cmd_SimpleADSR()
 {
 	/*
 	.loc_0x0:
@@ -4086,7 +3990,7 @@ static void Cmd_SimpleADSR()
  * Address:	80011F80
  * Size:	000048
  */
-static void Cmd_Transpose()
+static u32 Cmd_Transpose()
 {
 	/*
 	.loc_0x0:
@@ -4120,7 +4024,7 @@ static void Cmd_Transpose()
  * Address:	80011FE0
  * Size:	000068
  */
-static void Cmd_CloseTrack()
+static u32 Cmd_CloseTrack()
 {
 	/*
 	.loc_0x0:
@@ -4162,7 +4066,7 @@ static void Cmd_CloseTrack()
  * Address:	80012060
  * Size:	000038
  */
-static void Cmd_OutSwitch()
+static u32 Cmd_OutSwitch()
 {
 	/*
 	.loc_0x0:
@@ -4190,24 +4094,10 @@ static void Cmd_OutSwitch()
  * Address:	800120A0
  * Size:	000034
  */
-static void Cmd_UpdateSync()
+static u32 Cmd_UpdateSync()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8032
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x580
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C30(r13)
-	  lwz       r4, 0x0(r4)
-	  bl        -0x129C
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jam_UpdateTrack(SEQ_P, SEQ_ARG._00);
+	return 0;
 }
 
 /*
@@ -4215,24 +4105,12 @@ static void Cmd_UpdateSync()
  * Address:	800120E0
  * Size:	00002C
  */
-static void Cmd_BusConnect()
+static u32 Cmd_BusConnect()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwzu      r0, -0x580(r3)
-	  cmplwi    r0, 0x6
-	  bge-      .loc_0x24
-	  lwz       r4, 0x4(r3)
-	  rlwinm    r0,r0,1,0,30
-	  lwz       r3, 0x2C30(r13)
-	  add       r3, r3, r0
-	  sth       r4, 0x126(r3)
-
-	.loc_0x24:
-	  li        r3, 0
-	  blr
-	*/
+	if (SEQ_ARG._00 < 6) {
+		SEQ_P->_126[SEQ_ARG._00] = SEQ_ARG._04;
+	}
+	return 0;
 }
 
 /*
@@ -4240,18 +4118,10 @@ static void Cmd_BusConnect()
  * Address:	80012120
  * Size:	00001C
  */
-static void Cmd_PauseStatus()
+static u32 Cmd_PauseStatus()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  subi      r5, r3, 0x580
-	  li        r3, 0
-	  lwz       r0, 0x0(r5)
-	  stb       r0, 0x39D(r4)
-	  blr
-	*/
+	SEQ_P->_39D = SEQ_ARG._00;
+	return 0;
 }
 
 /*
@@ -4259,7 +4129,7 @@ static void Cmd_PauseStatus()
  * Address:	80012140
  * Size:	000044
  */
-static void Cmd_SetInterrupt()
+static u32 Cmd_SetInterrupt()
 {
 	/*
 	.loc_0x0:
@@ -4288,23 +4158,10 @@ static void Cmd_SetInterrupt()
  * Address:	800121A0
  * Size:	000030
  */
-static void Cmd_DisInterrupt()
+static u32 Cmd_DisInterrupt()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  lwz       r6, -0x580(r3)
-	  li        r5, 0x1
-	  lbz       r0, 0x3A6(r4)
-	  li        r3, 0
-	  rlwinm    r6,r6,0,24,31
-	  slw       r5, r5, r6
-	  rlwinm    r5,r5,0,24,31
-	  andc      r0, r0, r5
-	  stb       r0, 0x3A6(r4)
-	  blr
-	*/
+	SEQ_P->_3A6 &= ~(u8)(1 << (SEQ_ARG._00 & 0x3f));
+	return 0;
 }
 
 /*
@@ -4312,16 +4169,10 @@ static void Cmd_DisInterrupt()
  * Address:	800121E0
  * Size:	000014
  */
-static void Cmd_ClrI()
+static u32 Cmd_ClrI()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2C30(r13)
-	  li        r0, 0
-	  li        r3, 0
-	  stb       r0, 0x3A4(r4)
-	  blr
-	*/
+	SEQ_P->_3A4 = 0;
+	return 0;
 }
 
 /*
@@ -4329,16 +4180,10 @@ static void Cmd_ClrI()
  * Address:	80012200
  * Size:	000014
  */
-static void Cmd_SetI()
+static u32 Cmd_SetI()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2C30(r13)
-	  li        r0, 0x1
-	  li        r3, 0
-	  stb       r0, 0x3A4(r4)
-	  blr
-	*/
+	SEQ_P->_3A4 = 1;
+	return 0;
 }
 
 /*
@@ -4346,22 +4191,12 @@ static void Cmd_SetI()
  * Address:	80012220
  * Size:	00002C
  */
-static void Cmd_RetI()
+static u32 Cmd_RetI()
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2C30(r13)
-	  li        r0, 0
-	  li        r3, 0x2
-	  lwz       r4, 0x3CC(r5)
-	  stw       r4, 0x8C(r5)
-	  lwz       r4, 0x2C30(r13)
-	  stb       r0, 0x3A4(r4)
-	  lwz       r4, 0x2C30(r13)
-	  lwz       r0, 0x3C8(r4)
-	  stw       r0, 0x4(r4)
-	  blr
-	*/
+	SEQ_P->_8C  = SEQ_P->_3CC;
+	SEQ_P->_3A4 = 0;
+	SEQ_P->_04  = SEQ_P->_3C8;
+	return 2;
 }
 
 /*
@@ -4369,24 +4204,12 @@ static void Cmd_RetI()
  * Address:	80012260
  * Size:	000034
  */
-static void Cmd_IntTimer()
+static u32 Cmd_IntTimer()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x8032
-	  lwz       r4, 0x2C30(r13)
-	  subi      r5, r3, 0x580
-	  li        r3, 0
-	  lwz       r0, 0x0(r5)
-	  stb       r0, 0x3A7(r4)
-	  lwzu      r0, 0x4(r5)
-	  lwz       r4, 0x2C30(r13)
-	  stw       r0, 0x3D0(r4)
-	  lwz       r0, 0x0(r5)
-	  lwz       r4, 0x2C30(r13)
-	  stw       r0, 0x3D4(r4)
-	  blr
-	*/
+	SEQ_P->_3A7 = SEQ_ARG._00;
+	SEQ_P->_3D0 = SEQ_ARG._04;
+	SEQ_P->_3D4 = SEQ_ARG._04;
+	return 0;
 }
 
 /*
@@ -4394,22 +4217,10 @@ static void Cmd_IntTimer()
  * Address:	800122A0
  * Size:	00002C
  */
-static void Cmd_ConnectOpen()
+static u32 Cmd_ConnectOpen()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C30(r13)
-	  lwz       r4, 0x84(r3)
-	  bl        -0x1DB4
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jam_RegistTrack(SEQ_P, SEQ_P->_84);
+	return 0;
 }
 
 /*
@@ -4417,21 +4228,10 @@ static void Cmd_ConnectOpen()
  * Address:	800122E0
  * Size:	000028
  */
-static void Cmd_ConnectClose()
+static u32 Cmd_ConnectClose()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C30(r13)
-	  bl        -0x1D30
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jam_UnRegistTrack(SEQ_P);
+	return 0;
 }
 
 /*
@@ -4439,7 +4239,7 @@ static void Cmd_ConnectClose()
  * Address:	80012320
  * Size:	000060
  */
-static void Cmd_SyncCPU()
+static u32 Cmd_SyncCPU()
 {
 	/*
 	.loc_0x0:
@@ -4479,25 +4279,11 @@ static void Cmd_SyncCPU()
  * Address:	80012380
  * Size:	000038
  */
-static void Cmd_FlushAll()
+static u32 Cmd_FlushAll()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C30(r13)
-	  addi      r3, r3, 0xD8
-	  bl        0x392C
-	  lwz       r3, 0x2C30(r13)
-	  addi      r3, r3, 0xD8
-	  bl        0x3C40
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	AllStop_1Shot(SEQ_P->_D8);
+	FlushRelease_1Shot(SEQ_P->_D8);
+	return 0;
 }
 
 /*
@@ -4505,22 +4291,10 @@ static void Cmd_FlushAll()
  * Address:	800123C0
  * Size:	00002C
  */
-static void Cmd_FlushRelease()
+static u32 Cmd_FlushRelease()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2C30(r13)
-	  addi      r3, r3, 0xD8
-	  bl        0x3C0C
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	FlushRelease_1Shot(SEQ_P->_D8);
+	return 0;
 }
 
 /*
@@ -4528,24 +4302,10 @@ static void Cmd_FlushRelease()
  * Address:	80012400
  * Size:	00002C
  */
-static void Cmd_Wait3()
+static u32 Cmd_Wait3()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8032
-	  lwz       r3, 0x2C30(r13)
-	  lwzu      r0, -0x580(r4)
-	  stw       r0, 0x8C(r3)
-	  lwz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x24
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x24:
-	  li        r3, 0
-	  blr
-	*/
+	SEQ_P->_8C = SEQ_ARG._00;
+	return SEQ_ARG._00 ? 1 : 0;
 }
 
 /*
@@ -4553,7 +4313,7 @@ static void Cmd_Wait3()
  * Address:	80012440
  * Size:	000044
  */
-static void Cmd_TimeBase()
+static u32 Cmd_TimeBase()
 {
 	/*
 	.loc_0x0:
@@ -4584,7 +4344,7 @@ static void Cmd_TimeBase()
  * Address:	800124A0
  * Size:	000050
  */
-static void Cmd_Tempo()
+static u32 Cmd_Tempo()
 {
 	/*
 	.loc_0x0:
@@ -4620,7 +4380,7 @@ static void Cmd_Tempo()
  * Address:	80012500
  * Size:	0000CC
  */
-static void Cmd_Finish()
+static u32 Cmd_Finish()
 {
 	/*
 	.loc_0x0:
@@ -4693,7 +4453,7 @@ static void Cmd_Finish()
  */
 static u32 Cmd_Nop()
 {
-	return 0x0;
+	return 0;
 }
 
 /*
@@ -4701,7 +4461,7 @@ static u32 Cmd_Nop()
  * Address:	80012600
  * Size:	0000AC
  */
-static void Cmd_PanPowSet()
+static u32 Cmd_PanPowSet()
 {
 	/*
 	.loc_0x0:
@@ -4760,7 +4520,7 @@ static void Cmd_PanPowSet()
  * Address:	800126C0
  * Size:	000094
  */
-static void Cmd_IIRSet()
+static u32 Cmd_IIRSet()
 {
 	/*
 	.loc_0x0:
@@ -4811,7 +4571,7 @@ static void Cmd_IIRSet()
  * Address:	80012760
  * Size:	000044
  */
-static void Cmd_FIRSet()
+static u32 Cmd_FIRSet()
 {
 	/*
 	.loc_0x0:
@@ -4840,7 +4600,7 @@ static void Cmd_FIRSet()
  * Address:	800127C0
  * Size:	000050
  */
-static void Cmd_EXTSet()
+static u32 Cmd_EXTSet()
 {
 	/*
 	.loc_0x0:
@@ -4872,7 +4632,7 @@ static void Cmd_EXTSet()
  * Address:	80012820
  * Size:	0000C4
  */
-static void Cmd_PanSwSet()
+static u32 Cmd_PanSwSet()
 {
 	/*
 	.loc_0x0:
@@ -4935,7 +4695,7 @@ static void Cmd_PanSwSet()
  * Address:	80012900
  * Size:	000040
  */
-static void Cmd_OscRoute()
+static u32 Cmd_OscRoute()
 {
 	/*
 	.loc_0x0:
@@ -4965,7 +4725,7 @@ static void Cmd_OscRoute()
  * Address:	80012940
  * Size:	0000A0
  */
-static void Cmd_IIRCutOff()
+static u32 Cmd_IIRCutOff()
 {
 	/*
 	.loc_0x0:
@@ -5019,7 +4779,7 @@ static void Cmd_IIRCutOff()
  * Address:	800129E0
  * Size:	000040
  */
-static void Cmd_OscFull()
+static u32 Cmd_OscFull()
 {
 	/*
 	.loc_0x0:
@@ -5047,7 +4807,7 @@ static void Cmd_OscFull()
  * Address:	80012A20
  * Size:	000068
  */
-static void Cmd_CheckWave()
+static u32 Cmd_CheckWave()
 {
 	/*
 	.loc_0x0:
@@ -5085,7 +4845,7 @@ static void Cmd_CheckWave()
  * Address:	80012AA0
  * Size:	000204
  */
-static void Cmd_Printf()
+static u32 Cmd_Printf()
 {
 	/*
 	.loc_0x0:
@@ -5264,7 +5024,7 @@ static void Cmd_Printf()
  * Address:	80012CC0
  * Size:	000130
  */
-void Cmd_Process(seqp_*, u8, u16)
+u32 Cmd_Process(seqp_*, u8, u16)
 {
 	/*
 	.loc_0x0:
