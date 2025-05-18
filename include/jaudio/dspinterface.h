@@ -25,7 +25,7 @@ void DSP_SetMixerInitVolume(volatile u8 idx, volatile u8 mixer, s16 volume, u8 p
 void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4);
 void DSP_SetOscInfo(u8 idx, u32 samplesSourceType);
 void DSP_SetPauseFlag(u8 idx, u8 pauseFlag);
-void DSP_SetWaveInfo(u8 idx, Wave* wave, u32 baseAddress);
+void DSP_SetWaveInfo(u8 idx, Wave_* wave, u32 baseAddress);
 void DSP_SetBusConnect(u8 idx, u8 mixer, u8 busConnect);
 void DSP_PlayStop(u8 idx);
 void DSP_AllocInit(u8 idx);

@@ -201,7 +201,7 @@ void DSP_SetPauseFlag(u8 idx, u8 pauseFlag)
  * Address:	8000B720
  * Size:	0000B0
  */
-void DSP_SetWaveInfo(u8 idx, Wave* wave, u32 baseAddress)
+void DSP_SetWaveInfo(u8 idx, Wave_* wave, u32 baseAddress)
 {
 	DSPBuffer* buf = &CH_BUF[idx];
 

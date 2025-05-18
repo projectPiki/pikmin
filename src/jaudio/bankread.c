@@ -1,28 +1,22 @@
 #include "jaudio/bankread.h"
 
-static u8 bankp[0x400]; // TODO: placeholder
+#include "jaudio/connect.h"
+#include "jaudio/bx.h"
+
+#define BANKP_SIZE (0x100)
+static Bank_* bankp[BANKP_SIZE];
 
 /*
  * --INFO--
  * Address:	8000BE00
  * Size:	000024
  */
-static void PTconvert(void**, u32)
+static void PTconvert(void** pointer, u32 base_address)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  cmplw     r0, r4
-	  bgelr-
-	  cmplwi    r0, 0
-	  bne-      .loc_0x18
-	  blr
-
-	.loc_0x18:
-	  add       r0, r0, r4
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	if (*pointer >= (void*)base_address || *pointer == NULL) {
+		return;
+	}
+	*pointer = *(char**)pointer + base_address;
 }
 
 /*
@@ -30,8 +24,24 @@ static void PTconvert(void**, u32)
  * Address:	8000BE40
  * Size:	000270
  */
-void Bank_Test(u8*)
+Bank_* Bank_Test(u8* ibnk_address)
 {
+	int i, j;
+	Bank_* bank;
+
+	bank = &((Ibnk_*)ibnk_address)->bank;
+	if (bank->magic != 'BANK') {
+		return NULL;
+	}
+	for (i = 0; i < BANK_ENTRY_COUNT; ++i) {
+		PTconvert(bank->entry + i, (u32)ibnk_address);
+		void* entry = bank->entry[i];
+		if (entry) {
+
+			;
+		}
+		// for (j = 0;)
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -238,41 +248,13 @@ void Bank_Test(u8*)
  * Address:	8000C0C0
  * Size:	000068
  */
-static void __Bank_Regist_Inner(u8*, u32, u32)
+static BOOL __Bank_Regist_Inner(u8* ibnk, u32 param_2, u32 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  addi      r3, r5, 0
-	  bl        0xE44
-	  mr        r3, r30
-	  bl        -0x2A4
-	  lis       r4, 0x8031
-	  rlwinm    r5,r31,2,0,29
-	  subi      r0, r4, 0x3520
-	  add       r4, r0, r5
-	  stw       r3, 0x0(r4)
-	  lwz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0x54
-
-	.loc_0x50:
-	  li        r3, 0x1
-
-	.loc_0x54:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	Jac_BnkConnectTableSet(param_3, param_2);
+	bankp[param_2] = Bank_Test(ibnk);
+	if (!bankp[param_2])
+		return FALSE;
+	return TRUE;
 }
 
 /*
@@ -280,20 +262,9 @@ static void __Bank_Regist_Inner(u8*, u32, u32)
  * Address:	8000C140
  * Size:	000024
  */
-void Bank_Regist(void*, u32)
+BOOL Bank_Regist(void* ibnk, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r5, 0x8(r3)
-	  bl        -0x90
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return __Bank_Regist_Inner((u8*)ibnk, param_2, ((Ibnk_*)ibnk)->_08);
 }
 
 /*
@@ -301,9 +272,9 @@ void Bank_Regist(void*, u32)
  * Address:	........
  * Size:	000020
  */
-void Bank_Regist_Direct(void*, u32, u32)
+BOOL Bank_Regist_Direct(void* ibnk, u32 param_2, u32 param_3)
 {
-	// UNUSED FUNCTION
+	return __Bank_Regist_Inner((u8*)ibnk, param_2, param_3);
 }
 
 /*
@@ -313,22 +284,9 @@ void Bank_Regist_Direct(void*, u32, u32)
  */
 void Bank_Init()
 {
-	/*
-	.loc_0x0:
-	  li        r3, 0
-	  lis       r4, 0x8031
-	  li        r0, 0x100
-	  addi      r6, r3, 0
-	  subi      r5, r4, 0x3520
-	  mtctr     r0
-
-	.loc_0x18:
-	  add       r4, r5, r3
-	  addi      r3, r3, 0x4
-	  stw       r6, 0x0(r4)
-	  bdnz+     .loc_0x18
-	  blr
-	*/
+	for (int i = 0; i < BANKP_SIZE; ++i) {
+		bankp[i] = NULL;
+	}
 }
 
 /*
@@ -336,21 +294,10 @@ void Bank_Init()
  * Address:	8000C1C0
  * Size:	000028
  */
-void Bank_Get(u32)
+Bank_* Bank_Get(u32 index)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0x100
-	  blt-      .loc_0x10
-	  li        r3, 0
-	  blr
-
-	.loc_0x10:
-	  lis       r4, 0x8031
-	  rlwinm    r3,r3,2,0,29
-	  subi      r0, r4, 0x3520
-	  add       r3, r0, r3
-	  lwz       r3, 0x0(r3)
-	  blr
-	*/
+	if (index >= BANKP_SIZE) {
+		return NULL;
+	}
+	return bankp[index];
 }

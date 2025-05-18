@@ -1,31 +1,26 @@
 #include "jaudio/bankdrv.h"
 
+#include "jaudio/random.h"
+#include "jaudio/rate.h"
+#include "jaudio/bx.h"
+
+static u32 FORCE_RELEASE_TABLE[3] = { 5, 15, 0 };
+
 /*
  * --INFO--
  * Address:	8000CFC0
  * Size:	000030
  */
-void Bank_InstChange(Bank_*, u32)
+Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  cmplwi    r3, 0
-	  stw       r4, 0xC(r1)
-	  lwz       r0, 0xC(r1)
-	  bne-      .loc_0x1C
-	  li        r3, 0
-	  b         .loc_0x28
+	u32 badCompiler;
+	u32 index;
 
-	.loc_0x1C:
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x4(r3)
-
-	.loc_0x28:
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	index = VOLATILE_index;
+	if (!bank) {
+		return NULL;
+	}
+	return bank->inst[index];
 }
 
 /*
@@ -33,9 +28,16 @@ void Bank_InstChange(Bank_*, u32)
  * Address:	........
  * Size:	000030
  */
-void Bank_VoiceChange(Bank_*, u32)
+Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
-	// UNUSED FUNCTION
+	u32 badCompiler;
+	u32 index;
+
+	index = VOLATILE_index;
+	if (!bank) {
+		return NULL;
+	}
+	return bank->voice[index];
 }
 
 /*
@@ -43,27 +45,16 @@ void Bank_VoiceChange(Bank_*, u32)
  * Address:	8000D000
  * Size:	000030
  */
-void Bank_PercChange(Bank_*, u32)
+Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  cmplwi    r3, 0
-	  stw       r4, 0xC(r1)
-	  lwz       r0, 0xC(r1)
-	  bne-      .loc_0x1C
-	  li        r3, 0
-	  b         .loc_0x28
+	u32 badCompiler;
+	u32 index;
 
-	.loc_0x1C:
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x4(r3)
-
-	.loc_0x28:
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	index = VOLATILE_index;
+	if (!bank) {
+		return NULL;
+	}
+	return bank->perc[index];
 }
 
 /*
@@ -71,42 +62,22 @@ void Bank_PercChange(Bank_*, u32)
  * Address:	8000D040
  * Size:	00005C
  */
-void Bank_GetInstKeymap(Inst_*, u8)
+int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  bne-      .loc_0x10
-	  li        r3, 0
-	  blr
+	int index;
 
-	.loc_0x10:
-	  lwz       r0, 0x28(r3)
-	  rlwinm    r6,r4,0,24,31
-	  li        r7, 0
-	  li        r4, 0
-	  mtctr     r0
-	  cmplwi    r0, 0
-	  ble-      .loc_0x54
+	if (!inst) {
+		return 0;
+	}
 
-	.loc_0x2C:
-	  addi      r0, r4, 0x2C
-	  lwzx      r5, r3, r0
-	  lbz       r0, 0x0(r5)
-	  cmplw     r6, r0
-	  bgt-      .loc_0x48
-	  mr        r3, r7
-	  blr
-
-	.loc_0x48:
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x2C
-
-	.loc_0x54:
-	  li        r3, -0x1
-	  blr
-	*/
+	for (index = inst->_28;; --index) {
+		if (index == 0) {
+			return -1;
+		}
+		// if (inst->_2C[index] >= param_2) {
+		// 	return index;
+		// }
+	}
 }
 
 /*
@@ -114,8 +85,25 @@ void Bank_GetInstKeymap(Inst_*, u8)
  * Address:	8000D0A0
  * Size:	000090
  */
-void Bank_GetInstVmap(Inst_*, u8, u8)
+int Bank_GetInstVmap(Inst_* inst, u8 param_2, volatile u8 param_3)
 {
+	u32 badCompiler;
+	int keymap;
+
+	if (!inst) {
+		return 0;
+	}
+
+	keymap = Bank_GetInstKeymap(inst, param_2);
+	if (keymap != -1) {
+		return keymap;
+	}
+	for (int i = 0; i < inst->_2C[keymap]->_04; ++i) {
+		u8 uh = inst->_2C[keymap]->_08->_00;
+		if (param_3 <= uh) {
+			return uh;
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -172,7 +160,7 @@ void Bank_GetInstVmap(Inst_*, u8, u8)
  * Address:	8000D140
  * Size:	000068
  */
-void Bank_GetPercVmap(Perc_*, u8, u8)
+int Bank_GetPercVmap(Perc_*, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -218,7 +206,7 @@ void Bank_GetPercVmap(Perc_*, u8, u8)
  * Address:	........
  * Size:	000010
  */
-void Bank_GetVoiceMap(Voice_*, u16)
+int Bank_GetVoiceMap(Voice_*, u16)
 {
 	// UNUSED FUNCTION
 }
@@ -228,7 +216,7 @@ void Bank_GetVoiceMap(Voice_*, u16)
  * Address:	8000D1C0
  * Size:	000104
  */
-void Bank_SenseToOfs(Sense_*, u8)
+int Bank_SenseToOfs(Sense_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -315,33 +303,17 @@ void Bank_SenseToOfs(Sense_*, u8)
  * Address:	8000D2E0
  * Size:	000048
  */
-void Bank_RandToOfs(Rand_*)
+f32 Bank_RandToOfs(Rand_* rand)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr.       r31, r3
-	  bne-      .loc_0x20
-	  lfs       f1, -0x7F98(r2)
-	  b         .loc_0x34
+	f32 value;
 
-	.loc_0x20:
-	  bl        0x540
-	  lfs       f2, 0x8(r31)
-	  lfs       f0, 0x4(r31)
-	  fmuls     f1, f1, f2
-	  fadds     f1, f1, f0
-
-	.loc_0x34:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (!rand) {
+		return 1.0f;
+	}
+	value = GetRandom_sf32();
+	value *= rand->_08;
+	value += rand->_04;
+	return value;
 }
 
 /*
@@ -349,7 +321,7 @@ void Bank_RandToOfs(Rand_*)
  * Address:	8000D340
  * Size:	0003F8
  */
-void Bank_OscToOfs(Osc_*, Oscbuf_*)
+int Bank_OscToOfs(Osc_*, Oscbuf_*)
 {
 	/*
 	.loc_0x0:

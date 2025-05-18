@@ -1,33 +1,30 @@
 #include "jaudio/waveread.h"
 
+#include "jaudio/connect.h"
+#include "jaudio/bx.h"
+
+#define WAVEARC_SIZE   (0x100)
+#define WAVEGROUP_SIZE (0x100)
+
+static WaveArchiveBank_* wavearc[WAVEARC_SIZE];
+static CtrlGroup_* wavegroup[WAVEGROUP_SIZE];
+
 /*
  * --INFO--
  * Address:	8000C200
  * Size:	000038
  */
-static void PTconvert(void**, u32)
+
+static void PTconvert(void** pointer, u32 base_address)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x18
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  blr
-
-	.loc_0x18:
-	  cmplw     r0, r4
-	  bgelr-
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2C
-	  blr
-
-	.loc_0x2C:
-	  add       r0, r0, r4
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	if (*pointer == NULL) {
+		*pointer = NULL;
+		return;
+	}
+	if (*pointer >= (void*)base_address || *pointer == NULL) {
+		return;
+	}
+	*pointer = *(char**)pointer + base_address;
 }
 
 /*
@@ -261,8 +258,10 @@ void GetSound_Test(u32)
  * Address:	8000C4E0
  * Size:	000084
  */
-void Wavegroup_Regist(void*, u32)
+BOOL Wavegroup_Regist(void* param_1, u32 param_2)
 {
+	// Jac_WsConnectTableSet();
+	Wave_Test((u8*)param_1);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -312,22 +311,9 @@ void Wavegroup_Regist(void*, u32)
  */
 void Wavegroup_Init()
 {
-	/*
-	.loc_0x0:
-	  li        r3, 0
-	  lis       r4, 0x8031
-	  li        r0, 0x100
-	  addi      r6, r3, 0
-	  subi      r5, r4, 0x2D20
-	  mtctr     r0
-
-	.loc_0x18:
-	  add       r4, r5, r3
-	  addi      r3, r3, 0x4
-	  stw       r6, 0x0(r4)
-	  bdnz+     .loc_0x18
-	  blr
-	*/
+	for (int i = 0; i < WAVEGROUP_SIZE; ++i) {
+		wavegroup[i] = NULL;
+	}
 }
 
 /*
@@ -335,44 +321,22 @@ void Wavegroup_Init()
  * Address:	8000C5C0
  * Size:	000064
  */
-void WaveidToWavegroup(u32, u32)
+CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,16,16,31
-	  stwu      r1, -0x20(r1)
-	  sth       r0, 0x18(r1)
-	  lhz       r3, 0x18(r1)
-	  cmplwi    r3, 0xFFFF
-	  bne-      .loc_0x28
-	  rlwinm    r3,r4,0,16,31
-	  b         .loc_0x2C
+	u32 index;
+	volatile u16 VOLATILE_param_1;
 
-	.loc_0x28:
-	  bl        0x898
+	u32 badCompiler[2];
 
-	.loc_0x2C:
-	  rlwinm    r0,r3,0,16,31
-	  cmplwi    r0, 0x100
-	  blt-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x54
+	VOLATILE_param_1 = param_1 >> 16;
 
-	.loc_0x40:
-	  lis       r3, 0x8031
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x2D20
-	  add       r3, r0, r4
-	  lwz       r3, 0x0(r3)
+	if (VOLATILE_param_1 == 0xFFFF) {
+		index = param_1;
+	} else {
+		index = Jac_WsVirtualToPhysical(VOLATILE_param_1);
+	}
 
-	.loc_0x54:
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	return index >= WAVEGROUP_SIZE ? NULL : wavegroup[index];
 }
 
 /*
@@ -380,54 +344,26 @@ void WaveidToWavegroup(u32, u32)
  * Address:	8000C640
  * Size:	00008C
  */
-static void __WaveScene_Set(u32, u32, int)
+static BOOL __WaveScene_Set(volatile u32 VOLATILE_param_1, volatile u32 VOLATILE_param_2, BOOL param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r6, r5
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r0, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  cmplwi    r0, 0x100
-	  blt-      .loc_0x2C
-	  li        r3, 0
-	  b         .loc_0x7C
+	u32 badCompiler[4];
 
-	.loc_0x2C:
-	  lis       r3, 0x8031
-	  rlwinm    r7,r0,2,0,29
-	  subi      r0, r3, 0x2D20
-	  add       r3, r0, r7
-	  lwz       r4, 0x0(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x50
-	  li        r3, 0
-	  b         .loc_0x7C
+	CtrlGroup_* group;
+	u32 param_1;
+	u32 param_2;
 
-	.loc_0x50:
-	  lwz       r5, 0xC(r1)
-	  lwz       r0, 0x8(r4)
-	  cmplw     r5, r0
-	  blt-      .loc_0x68
-	  li        r3, 0
-	  b         .loc_0x7C
-
-	.loc_0x68:
-	  lis       r3, 0x8031
-	  subi      r0, r3, 0x3120
-	  add       r3, r0, r7
-	  lwz       r3, 0x0(r3)
-	  bl        0x468
-
-	.loc_0x7C:
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	param_1 = VOLATILE_param_1;
+	if (param_1 >= WAVEGROUP_SIZE) {
+		return FALSE;
+	}
+	if (!(group = wavegroup[param_1])) {
+		return FALSE;
+	}
+	param_2 = VOLATILE_param_2;
+	if (param_2 >= group->_08) {
+		return FALSE;
+	}
+	return Jac_SceneSet(wavearc[param_1], group, param_2, param_3);
 }
 
 /*
@@ -435,20 +371,9 @@ static void __WaveScene_Set(u32, u32, int)
  * Address:	8000C6E0
  * Size:	000024
  */
-BOOL WaveScene_Set(u32, u32)
+BOOL WaveScene_Set(u32 param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xB0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return __WaveScene_Set(param_1, param_2, TRUE);
 }
 
 /*
@@ -456,20 +381,9 @@ BOOL WaveScene_Set(u32, u32)
  * Address:	8000C720
  * Size:	000024
  */
-void WaveScene_Load(u32, u32)
+BOOL WaveScene_Load(u32 param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xF0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return __WaveScene_Set(param_1, param_2, FALSE);
 }
 
 /*
@@ -477,42 +391,26 @@ void WaveScene_Load(u32, u32)
  * Address:	8000C760
  * Size:	000074
  */
-static void __WaveScene_Close(u32, u32, int)
+static void __WaveScene_Close(volatile u32 VOLATILE_param_1, volatile u32 VOLATILE_param_2, BOOL param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r6, r5
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r0, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  cmplwi    r0, 0x100
-	  bge-      .loc_0x64
-	  lis       r3, 0x8031
-	  rlwinm    r7,r0,2,0,29
-	  subi      r0, r3, 0x2D20
-	  add       r3, r0, r7
-	  lwz       r4, 0x0(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x64
-	  lwz       r5, 0xC(r1)
-	  lwz       r0, 0x8(r4)
-	  cmplw     r5, r0
-	  bge-      .loc_0x64
-	  lis       r3, 0x8031
-	  subi      r0, r3, 0x3120
-	  add       r3, r0, r7
-	  lwz       r3, 0x0(r3)
-	  bl        0x2C0
+	u32 badCompiler[4];
 
-	.loc_0x64:
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	CtrlGroup_* group;
+
+	u32 param_1;
+	u32 param_2;
+
+	param_1 = VOLATILE_param_1;
+
+	if (param_1 >= WAVEGROUP_SIZE) {
+		return;
+	}
+	if (group = wavegroup[param_1]) {
+		param_2 = VOLATILE_param_2;
+		if (param_2 < group->_08) {
+			Jac_SceneClose(wavearc[param_1], group, param_2, param_3);
+		}
+	}
 }
 
 /*
@@ -520,20 +418,9 @@ static void __WaveScene_Close(u32, u32, int)
  * Address:	8000C7E0
  * Size:	000024
  */
-void WaveScene_Close(u32, u32)
+void WaveScene_Close(u32 param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x90
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	__WaveScene_Close(param_1, param_2, TRUE);
 }
 
 /*
@@ -541,18 +428,7 @@ void WaveScene_Close(u32, u32)
  * Address:	8000C820
  * Size:	000024
  */
-void WaveScene_Erase(u32, u32)
+void WaveScene_Erase(u32 param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xD0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	__WaveScene_Close(param_1, param_2, FALSE);
 }
