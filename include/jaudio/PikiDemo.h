@@ -7,7 +7,7 @@
 void Jac_DemoEventUnPauseCheck();
 BOOL Jac_DemoCheck();
 BOOL Jac_DemoWalkCheck();
-void Jac_DemoCheckEvent(u8);
+BOOL Jac_DemoCheckEvent(u8);
 void Jac_PlayDemoSequenceDirect(u32);
 void Jac_InitDemoSystem();
 void Jac_DemoBGMForceStop();
@@ -19,19 +19,19 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
-void Jac_DemoSceneInit(void);                // args
-void Jac_StartDemo(int);                     // args
-void Jac_DemoSound(void);                    // args
-void Jac_DemoFrame(int);                     // args
-void Jac_FinishDemo(void);                   // args
-void Jac_PrepareDemo(void);                  // args
-void Jac_StartPartsFindDemo(u32 p1, int p2); // unsure on first arg
-void Jac_FinishPartsFindDemo(void);          // args
-void Jac_StartTextDemo(int);                 // args
-void Jac_FinishTextDemo(void);               // args
-void Jac_SetDemoPartsID(int);                // args
-void Jac_SetDemoOnyons(int);                 // args
-void Jac_SetDemoPartsCount(int);             // args
+void Jac_DemoSceneInit(void);                 // args
+void Jac_StartDemo(int);                      // args
+void Jac_DemoSound(volatile int);             // args
+BOOL Jac_DemoFrame(int);                      // args
+void Jac_FinishDemo(void);                    // args
+void Jac_PrepareDemo(int);                    // args
+void Jac_StartPartsFindDemo(vu32 p1, int p2); // unsure on first arg
+void Jac_FinishPartsFindDemo(void);           // args
+void Jac_StartTextDemo(int);                  // args
+void Jac_FinishTextDemo(void);                // args
+void Jac_SetDemoPartsID(volatile int);        // args
+void Jac_SetDemoOnyons(int);                  // args
+void Jac_SetDemoPartsCount(int);              // args
 
 /////////////////////////////////////////////////////////
 

@@ -435,7 +435,7 @@ static void __WaveScene_Set(u32, u32, int)
  * Address:	8000C6E0
  * Size:	000024
  */
-void WaveScene_Set(u32, u32)
+BOOL WaveScene_Set(u32, u32)
 {
 	/*
 	.loc_0x0:
