@@ -17,7 +17,7 @@ typedef struct Jac_MessageQueue Jac_MessageQueue;
 typedef struct JCMgr JCMgr;
 typedef struct jc_ jc_;
 typedef struct jcs_ jcs_;
-typedef struct Wave_ Wave;
+typedef struct Wave_ Wave_;
 
 /**
  * @brief Audio heap.

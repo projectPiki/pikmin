@@ -12,15 +12,15 @@ typedef struct Rand_ Rand_;
 typedef struct Osc_ Osc_;
 typedef struct Oscbuf_ Oscbuf_;
 
-void Bank_InstChange(Bank_*, u32);
-void Bank_VoiceChange(Bank_*, u32);
-void Bank_PercChange(Bank_*, u32);
-void Bank_GetInstKeymap(Inst_*, u8);
-void Bank_GetInstVmap(Inst_*, u8, u8);
-void Bank_GetPercVmap(Perc_*, u8, u8);
-void Bank_GetVoiceMap(Voice_*, u16);
-void Bank_SenseToOfs(Sense_*, u8);
-void Bank_RandToOfs(Rand_*);
-void Bank_OscToOfs(Osc_*, Oscbuf_*);
+Inst_* Bank_InstChange(Bank_*, u32);
+Voice_* Bank_VoiceChange(Bank_*, u32);
+Perc_* Bank_PercChange(Bank_*, u32);
+int Bank_GetInstKeymap(Inst_*, u8);
+int Bank_GetInstVmap(Inst_*, u8, u8);
+int Bank_GetPercVmap(Perc_*, u8, u8);
+int Bank_GetVoiceMap(Voice_*, u16);
+int Bank_SenseToOfs(Sense_*, u8);
+f32 Bank_RandToOfs(Rand_* rand);
+int Bank_OscToOfs(Osc_*, Oscbuf_*);
 
 #endif
