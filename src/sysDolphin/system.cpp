@@ -19,31 +19,29 @@
 
 System sys;
 
-bool useSymbols = false;
-System* gsys    = nullptr;
+static bool useSymbols = false;
+System* gsys           = nullptr;
 Stream* sysCon;
 Stream* errCon;
-char* dvdMesgBuffer;
-char* loadMesgBuffer;
-char* sysMesgBuffer;
+static char* dvdMesgBuffer;
+static char* loadMesgBuffer;
+static char* sysMesgBuffer;
 
 int glnWidth  = 640;
 int glnHeight = 480;
 
-OSMessageQueue dvdMesgQueue;
-OSMessageQueue loadMesgQueue;
-OSMessageQueue sysMesgQueue;
+static OSMessageQueue dvdMesgQueue;
+static OSMessageQueue loadMesgQueue;
+static OSMessageQueue sysMesgQueue;
 
 u32 DVDStream::numOpen    = 0;
 u8* DVDStream::readBuffer = 0;
-Font* bigFont;
+static Font* bigFont;
 
-AramStream aramStream;
-char lastName[PATH_MAX];
-DVDStream dvdStream;
-OSThread Thread;
-OSThread dvdThread;
-BufferedInputStream dvdBufferedStream;
+static AramStream aramStream;
+static char lastName[PATH_MAX];
+static DVDStream dvdStream;
+static BufferedInputStream dvdBufferedStream;
 
 /*
  * --INFO--
@@ -59,21 +57,6 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT(nullptr)
 
-const char* errorList[][6] = {
-	{ "Reading Game Disc...", nullptr },
-
-	{ "An error has occurred.", "Turn the power OFF and", "check the NINTENDO GAMECUBE", "Instruction Booklet for", "instructions.",
-	  nullptr },
-
-	{ "The Game Disc could not be read.", "Please read the", "NINTENDO GAMECUBE", "Instruction Booklet", "for more information.", nullptr },
-
-	{ "Please insert a", "Pikmin Game Disc.", nullptr },
-
-	{ "Please close the", "Disc Cover.", nullptr },
-
-	{ "This is not a", "Pikmin Game Disc.", "Please insert a", "Pikmin Game Disc.", nullptr },
-};
-
 /*
  * --INFO--
  * Address:	........
@@ -81,6 +64,9 @@ const char* errorList[][6] = {
  */
 void DVDStream::init()
 {
+	mOffset  = 0;
+	mPending = mFileInfo.length;
+	sprintf(lastName, mPath);
 	// UNUSED FUNCTION
 }
 
@@ -93,44 +79,35 @@ RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
 {
 	char strPath[PATH_MAX];
 	sprintf(strPath, "%s", a1 ? mCurrentDirectory : "");
-	sprintf(strPath, "%s%s%s", a1 ? mDataRoot : "", path);
+	sprintf(strPath, "%s%s%s", strPath, a1 ? mDataRoot : "", path);
 
 	if (a1 && (mDvdFileTreeRoot.getChildCount() || mAramFileTreeRoot.getChildCount())) {
 
-		FOREACH_NODE(CoreNode, mDvdFileTreeRoot.mChild, node)
+		FOREACH_NODE(DirEntry, mDvdFileTreeRoot.mChild, node)
 		{
-			if (!strcmp(node->mName, path)) {
-				aramStream.mPending     = 0;
-				aramStream.mBaseAddress = 0;
-				aramStream.mOffset      = 0;
-				aramStream.mPath        = path;
-				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mOffset);
+			if (strcmp(node->mName, path) == 0) {
+				aramStream.init(path, node->mAddress, node->mPending);
+				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mSize);
 			}
 		}
 
-		FOREACH_NODE(CoreNode, mAramFileTreeRoot.mChild, node)
+		FOREACH_NODE(DirEntry, mAramFileTreeRoot.mChild, node)
 		{
 			if (!strcmp(node->mName, path)) {
-				aramStream.mPending     = 0;
-				aramStream.mBaseAddress = 0;
-				aramStream.mOffset      = 0;
-				aramStream.mPath        = path;
-				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mOffset);
+				aramStream.init(path, node->mAddress, node->mPending);
+				return new BufferedInputStream(&aramStream, DVDStream::readBuffer, dvdStream.mSize);
 			}
 		}
 	}
 
-	dvdStream.mPath = strPath;
 	mDvdOpenFileCounter++;
-	dvdStream.mIsFileOpen = DVDOpen(dvdStream.mPath, &dvdStream.mFileInfo) != FALSE;
-	dvdStream.mOffset     = 0;
-	dvdStream.mPending    = dvdStream.mOffset;
-	sprintf(lastName, dvdStream.mPath);
-	dvdStream.numOpen++;
+	dvdStream.mPath       = strPath;
+	dvdStream.mIsFileOpen = DVDOpen(strPath, &dvdStream.mFileInfo);
+	dvdStream.init();
+	DVDStream::numOpen++;
 
 	if (!dvdStream.mIsFileOpen) {
-		if (dvdStream.numOpen--)
-			DVDClose(&dvdStream.mFileInfo);
+		dvdStream.close();
 		return nullptr;
 	}
 
@@ -138,197 +115,11 @@ RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
 	gsys->mTogglePrint = 1;
 	PRINT("Opened file %s\n", strPath);
 	gsys->mTogglePrint = old;
-	dvdStream.mOffset  = 0;
+	dvdStream.mPath    = path;
 	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
 	return &dvdBufferedStream;
 
 	u32 badcompiler[2];
-	/*
-	    .loc_0x0:
-	      mflr      r0
-	      stw       r0, 0x4(r1)
-	      rlwinm.   r0,r5,0,24,31
-	      stwu      r1, -0x138(r1)
-	      stmw      r27, 0x124(r1)
-	      addi      r27, r5, 0
-	      lis       r5, 0x803A
-	      addi      r29, r3, 0
-	      addi      r30, r4, 0
-	      subi      r31, r5, 0x7780
-	      beq-      .loc_0x34
-	      lwz       r5, 0x4C(r29)
-	      b         .loc_0x38
-
-	    .loc_0x34:
-	      subi      r5, r13, 0x7840
-
-	    .loc_0x38:
-	      crclr     6, 0x6
-	      addi      r3, r1, 0x1C
-	      subi      r4, r13, 0x783C
-	      bl        0x1D1D78
-	      rlwinm.   r0,r27,0,24,31
-	      beq-      .loc_0x58
-	      lwz       r6, 0x50(r29)
-	      b         .loc_0x5C
-
-	    .loc_0x58:
-	      subi      r6, r13, 0x7840
-
-	    .loc_0x5C:
-	      addi      r3, r1, 0x1C
-	      crclr     6, 0x6
-	      addi      r5, r3, 0
-	      addi      r7, r30, 0
-	      subi      r4, r13, 0x7838
-	      bl        0x1D1D4C
-	      rlwinm.   r0,r27,0,24,31
-	      beq-      .loc_0x17C
-	      addi      r3, r29, 0x200
-	      bl        -0x41DC
-	      cmpwi     r3, 0
-	      bne-      .loc_0x9C
-	      addi      r3, r29, 0x214
-	      bl        -0x41EC
-	      cmpwi     r3, 0
-	      beq-      .loc_0x17C
-
-	    .loc_0x9C:
-	      lwz       r27, 0x210(r29)
-	      b         .loc_0x104
-
-	    .loc_0xA4:
-	      lwz       r3, 0x4(r27)
-	      mr        r4, r30
-	      bl        0x1D493C
-	      cmpwi     r3, 0
-	      bne-      .loc_0x100
-	      lwz       r5, 0x14(r27)
-	      li        r0, 0
-	      lwz       r4, 0x18(r27)
-	      li        r3, 0x20
-	      stw       r30, 0x3A0(r31)
-	      stw       r5, 0x3B0(r31)
-	      stw       r4, 0x3A8(r31)
-	      stw       r0, 0x3AC(r31)
-	      bl        0x2750
-	      addi      r29, r3, 0
-	      mr.       r3, r29
-	      beq-      .loc_0xF8
-	      lwz       r5, 0x2E04(r13)
-	      addi      r4, r31, 0x3A0
-	      lwz       r6, 0x504(r31)
-	      bl        -0x1F338
-
-	    .loc_0xF8:
-	      mr        r3, r29
-	      b         .loc_0x240
-
-	    .loc_0x100:
-	      lwz       r27, 0xC(r27)
-
-	    .loc_0x104:
-	      cmplwi    r27, 0
-	      bne+      .loc_0xA4
-	      lwz       r27, 0x224(r29)
-	      b         .loc_0x174
-
-	    .loc_0x114:
-	      lwz       r3, 0x4(r27)
-	      mr        r4, r30
-	      bl        0x1D48CC
-	      cmpwi     r3, 0
-	      bne-      .loc_0x170
-	      lwz       r5, 0x14(r27)
-	      li        r0, 0
-	      lwz       r4, 0x18(r27)
-	      li        r3, 0x20
-	      stw       r30, 0x3A0(r31)
-	      stw       r5, 0x3B0(r31)
-	      stw       r4, 0x3A8(r31)
-	      stw       r0, 0x3AC(r31)
-	      bl        0x26E0
-	      addi      r29, r3, 0
-	      mr.       r3, r29
-	      beq-      .loc_0x168
-	      lwz       r5, 0x2E04(r13)
-	      addi      r4, r31, 0x3A0
-	      lwz       r6, 0x504(r31)
-	      bl        -0x1F3A8
-
-	    .loc_0x168:
-	      mr        r3, r29
-	      b         .loc_0x240
-
-	    .loc_0x170:
-	      lwz       r27, 0xC(r27)
-
-	    .loc_0x174:
-	      cmplwi    r27, 0
-	      bne+      .loc_0x114
-
-	    .loc_0x17C:
-	      lwz       r4, 0x23C(r29)
-	      addi      r3, r1, 0x1C
-	      addi      r27, r31, 0x4BC
-	      addi      r0, r4, 0x1
-	      stw       r0, 0x23C(r29)
-	      mr        r4, r27
-	      stw       r3, 0x4B4(r31)
-	      bl        0x1BA998
-	      neg       r3, r3
-	      crclr     6, 0x6
-	      subic     r0, r3, 0x1
-	      subfe     r0, r0, r3
-	      stb       r0, 0x500(r31)
-	      li        r0, 0
-	      addi      r28, r31, 0x500
-	      stw       r0, 0x4F8(r31)
-	      addi      r3, r31, 0x3B4
-	      lwz       r0, 0x4F0(r31)
-	      stw       r0, 0x4FC(r31)
-	      lwz       r4, 0x4B4(r31)
-	      bl        0x1D1BF0
-	      lwz       r3, 0x2E08(r13)
-	      addi      r0, r3, 0x1
-	      stw       r0, 0x2E08(r13)
-	      lbz       r0, 0x0(r28)
-	      cmplwi    r0, 0
-	      bne-      .loc_0x208
-	      lwz       r3, 0x2E08(r13)
-	      subi      r0, r3, 0x1
-	      stw       r0, 0x2E08(r13)
-	      beq-      .loc_0x200
-	      mr        r3, r27
-	      bl        0x1BA9FC
-
-	    .loc_0x200:
-	      li        r3, 0
-	      b         .loc_0x240
-
-	    .loc_0x208:
-	      lwz       r4, 0x2DEC(r13)
-	      li        r0, 0x1
-	      addi      r3, r31, 0x508
-	      addi      r5, r4, 0x1C
-	      lwz       r6, 0x1C(r4)
-	      addi      r4, r31, 0x4B4
-	      stw       r0, 0x0(r5)
-	      lwz       r5, 0x2DEC(r13)
-	      stw       r6, 0x1C(r5)
-	      stw       r30, 0x4B4(r31)
-	      lwz       r5, 0x2E04(r13)
-	      lwz       r6, 0x25C(r29)
-	      bl        -0x1F514
-	      addi      r3, r31, 0x508
-
-	    .loc_0x240:
-	      lmw       r27, 0x124(r1)
-	      lwz       r0, 0x13C(r1)
-	      addi      r1, r1, 0x138
-	      mtlr      r0
-	      blr
-	    */
 }
 
 /*
@@ -449,11 +240,66 @@ void System::updateSysClock()
  */
 void System::parseArchiveDirectory(char* path1, char* path2)
 {
-	gsys->getHeap(gsys->mActiveHeapIdx);
+	int free = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+	u32 time = OSTicksToMilliseconds(OSGetTick());
 	DVDStream stream;
-	stream.mPath       = path1;
-	stream.mIsFileOpen = DVDOpen(path1, &stream.mFileInfo) != 0;
-	sprintf(lastName, stream.mPath);
+	stream.mPath = path2;
+	PRINT("fake start time?", time / 1000.0f);
+	stream.mIsFileOpen = DVDOpen(path2, &stream.mFileInfo) != 0;
+	stream.init();
+	DVDStream::numOpen++;
+	if (!stream.mIsFileOpen) {
+		stream.close();
+	}
+
+	u32 a                = 0;
+	FakeSystemList* list = _328;
+	u32 addr             = list->_04 + ALIGN_NEXT(stream.mPending, 0x20);
+	if (addr <= list->_00 + list->_08) {
+		a         = list->_04;
+		list->_04 = addr;
+	}
+
+	u32 badCompiler;
+	// this is necessary to get it to call the vtable ptr not just inline it.
+	((DVDStream*)&stream)->getPending();
+	u32 pos  = 0;
+	u32 pend = ((DVDStream*)&stream)->getPending();
+	while (pend != 0) {
+		u32 size = pend;
+		if (pend > stream.mSize) {
+			size = stream.mSize;
+		}
+		((DVDStream*)&stream)->read(DVDStream::readBuffer, size);
+		gsys->copyRamToCache((u32)DVDStream::readBuffer, size, a + pos);
+		gsys->copyWaitUntilDone();
+		pos += size;
+		pend -= size;
+	}
+
+	stream.close();
+
+	RandomAccessStream* file = gsys->openFile(path1, true, true);
+	if (file) {
+		file->readInt();
+		u32 num = file->readInt();
+		for (int i = 0; i < num; i++) {
+			u32 b = file->readInt();
+			u32 c = file->readInt();
+			String str(0);
+			file->readString(str);
+
+			DirEntry* entry = new DirEntry();
+			entry->mName    = str.mString;
+			entry->mPending = c;
+			entry->mAddress = a + b;
+			mFileTreeList->add(entry);
+		}
+		file->close();
+	}
+	PRINT("fake end time?", OSTicksToMilliseconds(OSGetTick()) / 1000.0f);
+	int freeEnd = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -712,38 +558,57 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 
 /*
  * --INFO--
- * Address:	80045144
- * Size:	00008C
- */
-void DVDStream::read(void* addr, int size)
-{
-	int roundedSize = ALIGN_NEXT(size, 32);
-	s32 result      = -1;
-	gsys->mDvdReadBytesCount += roundedSize;
-	while (result == -1) {
-		result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
-	}
-
-	mOffset += roundedSize;
-}
-
-/*
- * --INFO--
- * Address:	800451D0
- * Size:	000008
- */
-int DVDStream::getPending()
-{
-	return mPending;
-}
-
-/*
- * --INFO--
  * Address:	800451D8
  * Size:	000648
  */
 void ParseMapFile()
 {
+	RandomAccessStream* file = gsys->openFile("build.map", true, true);
+	if (!file) {
+		return;
+	}
+
+	CmdStream* cmds = new CmdStream(file);
+	while (!cmds->endOfCmds() && !cmds->endOfSection()) {
+		cmds->getToken(true);
+		if (!cmds->isToken(".text")) {
+			continue;
+		}
+
+		cmds->skipLine();
+		cmds->skipLine();
+		cmds->skipLine();
+		cmds->skipLine();
+
+		while (!cmds->endOfCmds()) {
+			cmds->getToken(true);
+			if (cmds->isToken("UNUSED")) {
+				cmds->skipLine();
+			} else {
+				u32 a;
+				sscanf(cmds->getToken(true), "%08x", &a);
+				u32 b;
+				sscanf(cmds->getToken(true), "%08x", &b);
+				u32 c;
+				sscanf(cmds->getToken(true), "%d", &c);
+
+				cmds->skipLine();
+
+				for (int i = 0; i < strlen(cmds->mCurrentToken); i++) {
+					// ghrk
+				}
+			}
+
+			if (cmds->isToken(".ctors")) {
+				break;
+			}
+		}
+	}
+	if (!cmds->endOfCmds()) {
+		cmds->getToken(true);
+	}
+
+	file->close();
 	FORCE_DONT_INLINE;
 	/*
 	.loc_0x0:
@@ -1251,14 +1116,14 @@ void System::findAddress(u32)
  */
 void System::hardReset()
 {
-	int old           = mForceTogglePrint != false;
+	int old           = !!mForceTogglePrint;
 	mForceTogglePrint = 0;
 	if (useSymbols) {
-		gsys->getHeap(gsys->mActiveHeapIdx);
-		OSGetTick();
+		int a = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+		int c = OSTicksToMilliseconds(OSGetTick());
 		ParseMapFile();
-		OSGetTick();
-		gsys->getHeap(gsys->mActiveHeapIdx);
+		int d = OSTicksToMilliseconds(OSGetTick());
+		int b = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 	}
 	mForceTogglePrint = old;
 
@@ -1269,85 +1134,7 @@ void System::hardReset()
 
 	mEngineTotalFrames = 0;
 
-	u32 badcompiler[16];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x60(r1)
-	  stw       r31, 0x5C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x58(r1)
-	  stw       r29, 0x54(r1)
-	  lwz       r3, 0x198(r3)
-	  stw       r0, 0x198(r31)
-	  neg       r4, r3
-	  subic     r3, r4, 0x1
-	  lbz       r0, 0x2DE8(r13)
-	  subfe     r3, r3, r4
-	  rlwinm    r30,r3,0,24,31
-	  cmplwi    r0, 0
-	  beq-      .loc_0x68
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x194(r3)
-	  bl        -0x684C
-	  bl        0x1B7B48
-	  bl        -0x69C
-	  bl        0x1B7B40
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x194(r3)
-	  bl        -0x6864
-
-	.loc_0x68:
-	  stw       r30, 0x198(r31)
-	  li        r3, 0x18
-	  bl        0x1774
-	  addi      r30, r3, 0
-	  mr.       r0, r30
-	  beq-      .loc_0xBC
-	  li        r0, 0
-	  stw       r0, 0x10(r30)
-	  li        r3, 0x130
-	  bl        0x1758
-	  addi      r29, r3, 0
-	  mr.       r3, r29
-	  beq-      .loc_0xA8
-	  lis       r4, 0x9
-	  addi      r4, r4, 0x6000
-	  bl        -0x20F48
-
-	.loc_0xA8:
-	  stw       r29, 0x14(r30)
-	  subi      r0, r13, 0x780C
-	  stw       r0, 0x0(r30)
-	  stw       r30, 0x4(r30)
-	  stw       r30, 0x8(r30)
-
-	.loc_0xBC:
-	  lis       r29, 0x2
-	  stw       r30, 0x38(r31)
-	  mr        r3, r29
-	  bl        0x171C
-	  lwz       r5, 0x2DEC(r13)
-	  lis       r4, 0x802A
-	  addi      r6, r3, 0
-	  addi      r3, r5, 0x16C
-	  addi      r4, r4, 0x5158
-	  addi      r7, r29, 0
-	  li        r5, 0x2
-	  bl        -0x21000
-	  bl        0xC59C
-	  li        r0, 0
-	  stw       r0, 0x29C(r31)
-	  lwz       r0, 0x64(r1)
-	  lwz       r31, 0x5C(r1)
-	  lwz       r30, 0x58(r1)
-	  lwz       r29, 0x54(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	u32 badcompiler[4];
 }
 
 /*
@@ -1412,6 +1199,38 @@ void initBigFont()
 	tex->attach();
 }
 
+static char* errorMessages[] = {
+	"Reading Game Disc...",
+	nullptr,
+	"An error has occurred.",
+	"Turn the power OFF and",
+	"check the NINTENDO GAMECUBE",
+	"Instruction Booklet for",
+	"instructions.",
+	nullptr,
+	"The Game Disc could not be read.",
+	"Please read the",
+	"NINTENDO GAMECUBE",
+	"Instruction Booklet",
+	"for more information.",
+	nullptr,
+	"Please insert a",
+	"Pikmin Game Disc.",
+	nullptr,
+	"Please close the",
+	"Disc Cover.",
+	nullptr,
+	"This is not a",
+	"Pikmin Game Disc.",
+	"Please insert a",
+	"Pikmin Game Disc.",
+	nullptr,
+};
+
+static char** errorList[6] = {
+	&errorMessages[0], &errorMessages[2], &errorMessages[8], &errorMessages[14], &errorMessages[17], &errorMessages[20],
+};
+
 /*
  * --INFO--
  * Address:	80045B9C
@@ -1429,119 +1248,13 @@ void System::showDvdError(Graphics& gfx)
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
 
 	if (mDvdErrorCode) {
-		int y = 160;
-		for (const char* str = errorList[mDvdErrorCode][0]; str, str++;) {
-			int x = bigFont->stringWidth((char*)str);
-			y += 28;
-			gfx.texturePrintf(bigFont, 320 - x / 2, y, (char*)str);
+		int y         = 160;
+		char** errors = errorList[mDvdErrorCode];
+		while (*errors) {
+			gfx.texturePrintf(bigFont, 320 - (bigFont->stringWidth(*errors) / 2), y += 28, *errors);
+			errors++;
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  stw       r28, 0x30(r1)
-	  mr        r28, r3
-	  lwz       r0, 0x258(r3)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x160
-	  li        r29, 0
-	  stb       r29, 0x28(r1)
-	  li        r30, 0xFF
-	  addi      r4, r1, 0x28
-	  stb       r29, 0x29(r1)
-	  mr        r3, r31
-	  li        r5, 0x1
-	  stb       r29, 0x2A(r1)
-	  stb       r30, 0x2B(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r31)
-	  addi      r4, r1, 0x18
-	  lwz       r0, 0x30C(r31)
-	  mr        r3, r31
-	  stw       r29, 0x18(r1)
-	  stw       r29, 0x1C(r1)
-	  stw       r0, 0x20(r1)
-	  stw       r5, 0x24(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xD4(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r30, 0x14(r1)
-	  addi      r4, r1, 0x14
-	  addi      r3, r31, 0
-	  stb       r30, 0x15(r1)
-	  li        r5, 0x1
-	  stb       r30, 0x16(r1)
-	  stb       r30, 0x17(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r30, 0x10(r1)
-	  addi      r4, r1, 0x10
-	  addi      r3, r31, 0
-	  stb       r30, 0x11(r1)
-	  stb       r30, 0x12(r1)
-	  stb       r30, 0x13(r1)
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x258(r28)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x160
-	  lis       r3, 0x802A
-	  rlwinm    r4,r0,2,0,29
-	  addi      r0, r3, 0x5328
-	  add       r3, r0, r4
-	  lwz       r28, 0x0(r3)
-	  li        r30, 0xA0
-	  b         .loc_0x154
-
-	.loc_0x110:
-	  lwz       r3, 0x2E0C(r13)
-	  mr        r4, r29
-	  bl        -0x1DB80
-	  lwz       r12, 0x3B4(r31)
-	  srawi     r0, r3, 0x1
-	  addze     r0, r0
-	  lwz       r4, 0x2E0C(r13)
-	  lwz       r12, 0xEC(r12)
-	  addi      r30, r30, 0x1C
-	  crclr     6, 0x6
-	  mtlr      r12
-	  addi      r3, r31, 0
-	  subfic    r5, r0, 0x140
-	  addi      r6, r30, 0
-	  addi      r7, r29, 0
-	  blrl
-	  addi      r28, r28, 0x4
-
-	.loc_0x154:
-	  lwz       r29, 0x0(r28)
-	  cmplwi    r29, 0
-	  bne+      .loc_0x110
-
-	.loc_0x160:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  lwz       r28, 0x30(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1569,8 +1282,8 @@ void System::Initialise()
 		dvdStream.readBuffer = new (0x20) u8[dvdStream.mOffset];
 	}
 	gsys->getHeap(SYSHEAP_Sys);
-	static u32 mMemoryTable;
-	ARInit(&mMemoryTable, 3);
+	static u32 mMemoryTable[3];
+	ARInit(mMemoryTable, 3);
 	ARQInit();
 
 	onceInit();
@@ -2189,6 +1902,11 @@ void* loadFunc(void*)
 	*/
 }
 
+OSThread Thread;
+u8 ThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
+OSThread dvdThread;
+u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
+
 /*
  * --INFO--
  * Address:	80046554
@@ -2272,13 +1990,6 @@ void doneDMA(u32)
 void System::copyWaitUntilDone()
 {
 	while (mDmaTransferComplete == 0) { }
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x32C(r3)
-	  cmplwi    r0, 0
-	  beq+      .loc_0x0
-	  blr
-	*/
 }
 
 /*
@@ -2286,16 +1997,30 @@ void System::copyWaitUntilDone()
  * Address:	800466F0
  * Size:	000104
  */
-u32 System::copyRamToCache(u32 a1, u32 a2, u32 a3)
+u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 {
 	copyWaitUntilDone();
-
-	BOOL inter = OSDisableInterrupts();
+	u32 a = dest;
+	if (!dest) {
+		u32 b                = 0;
+		FakeSystemList* list = _328;
+		u32 addr             = list->_04 + size;
+		if (addr <= list->_00 + list->_08) {
+			b         = list->_04;
+			list->_04 = addr;
+		}
+		a = b;
+	}
+	BOOL inter         = OSDisableInterrupts();
+	SystemCache* cache = _2E8.mNext;
+	cache->remove();
+	_2C0.insertAfter(cache);
 	OSRestoreInterrupts(inter);
+
 	gsys->mDmaTransferComplete = 0;
-	DCStoreRange((void*)a1, a2);
-	ARQPostRequest(0, 0, 0, 1, a1, a3, a2, doneDMA);
-	return a3;
+	DCStoreRange((void*)src, size);
+	ARQPostRequest(cache, (u32)cache, 0, 1, src, a, size, doneDMA);
+	return dest;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2375,69 +2100,18 @@ u32 System::copyRamToCache(u32 a1, u32 a2, u32 a3)
  * Address:	800467F4
  * Size:	0000C4
  */
-void System::copyCacheToRam(u32 a1, u32 a2, u32 a3)
+void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 {
 	copyWaitUntilDone();
 
-	BOOL inter = OSDisableInterrupts();
-	mTextureCache->mSystemCache->remove();
+	BOOL inter         = OSDisableInterrupts();
+	SystemCache* cache = _2E8.mNext;
+	cache->remove();
+	_2C0.insertAfter(cache);
 	OSRestoreInterrupts(inter);
 	gsys->mDmaTransferComplete = 0;
-	DCInvalidateRange((void*)a1, a3);
-	ARQPostRequest(0, 0, 1, 1, a1, a3, a2, doneDMA);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  mr        r27, r3
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  addi      r30, r6, 0
-	  lwz       r12, 0x1A0(r27)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  bl        0x1B2758
-	  lwz       r31, 0x308(r27)
-	  addi      r0, r27, 0x2C0
-	  lwz       r5, 0x24(r31)
-	  lwz       r4, 0x20(r31)
-	  stw       r5, 0x24(r4)
-	  lwz       r5, 0x20(r31)
-	  lwz       r4, 0x24(r31)
-	  stw       r5, 0x20(r4)
-	  lwz       r4, 0x2E0(r27)
-	  stw       r4, 0x20(r31)
-	  stw       r0, 0x24(r31)
-	  lwz       r4, 0x2E0(r27)
-	  stw       r31, 0x24(r4)
-	  stw       r31, 0x2E0(r27)
-	  bl        0x1B2744
-	  lwz       r4, 0x2DEC(r13)
-	  li        r0, 0
-	  addi      r3, r28, 0
-	  stw       r0, 0x32C(r4)
-	  mr        r4, r30
-	  bl        0x1B0340
-	  lis       r3, 0x8004
-	  addi      r10, r3, 0x6694
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0
-	  addi      r7, r29, 0
-	  addi      r8, r28, 0
-	  addi      r9, r30, 0
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  bl        0x1C1418
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	DCInvalidateRange((void*)dst, size);
+	ARQPostRequest(cache, (u32)cache, 1, 1, src, dst, size, doneDMA);
 }
 
 /*
@@ -2507,75 +2181,22 @@ void freeBuffer(u32)
  */
 void System::copyCacheToTexture(CacheTexture* tex)
 {
-	BOOL inter = OSDisableInterrupts();
-	mTextureCache->mSystemCache->remove();
+	BOOL inter         = OSDisableInterrupts();
+	SystemCache* cache = _2E8.mNext;
+	cache->remove();
+	_2C0.insertAfter(cache);
+	tex->mSystemCache = cache;
 
-	int a   = tex->mAramAddress;
-	void* b = tex->mTexImage->mTextureData;
-	void* c = tex->mTexImage->mPixelData;
+	u32 data     = (u32)tex->mTexImage->mTextureData;
+	u32 aramAddr = tex->mAramAddress;
+	u32 size     = tex->mTexImage->mDataSize;
 
 	OSRestoreInterrupts(inter);
 	gsys->mTextureTransferComplete = 0;
-	DCInvalidateRange(b, (u32)c);
-	ARQPostRequest(0, (u32)tex, 1, 1, a, (u32)b, (u32)c, freeBuffer);
+	DCInvalidateRange((void*)data, size);
+	ARQPostRequest(cache, (u32)tex, 1, 1, aramAddr, (u32)data, size, freeBuffer);
 
 	while (mTextureTransferComplete == 0) { }
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r26, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  bl        0x1B25EC
-	  lwz       r29, 0x308(r30)
-	  addi      r0, r30, 0x2C0
-	  lwz       r5, 0x24(r29)
-	  lwz       r4, 0x20(r29)
-	  stw       r5, 0x24(r4)
-	  lwz       r5, 0x20(r29)
-	  lwz       r4, 0x24(r29)
-	  stw       r5, 0x20(r4)
-	  lwz       r4, 0x2E0(r30)
-	  stw       r4, 0x20(r29)
-	  stw       r0, 0x24(r29)
-	  lwz       r4, 0x2E0(r30)
-	  stw       r29, 0x24(r4)
-	  stw       r29, 0x2E0(r30)
-	  stw       r29, 0x3C(r31)
-	  lwz       r4, 0x44(r31)
-	  lwz       r27, 0x48(r31)
-	  lwz       r28, 0x2C(r4)
-	  lwz       r26, 0x28(r4)
-	  bl        0x1B25C4
-	  lwz       r4, 0x2DEC(r13)
-	  li        r0, 0
-	  addi      r3, r28, 0
-	  stw       r0, 0x330(r4)
-	  mr        r4, r26
-	  bl        0x1B01C0
-	  lis       r3, 0x8004
-	  addi      r10, r3, 0x68B8
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0
-	  addi      r7, r27, 0
-	  addi      r8, r28, 0
-	  addi      r9, r26, 0
-	  li        r5, 0x1
-	  li        r6, 0x1
-	  bl        0x1C1298
-
-	.loc_0xAC:
-	  lwz       r0, 0x330(r30)
-	  cmplwi    r0, 0
-	  beq+      .loc_0xAC
-	  lmw       r26, 0x10(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2665,258 +2286,6 @@ void System::nudgeDvdThread()
  */
 void System::startDvdThread()
 {
-	OSCreateThread(&dvdThread, dvdFunc, nullptr, 0, 0x2000, 0xf, 1);
+	OSCreateThread(&dvdThread, dvdFunc, nullptr, dvdThreadStack + 0x2000, 0x2000, 0xf, 1);
 	OSResumeThread(&dvdThread);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r5, 0
-	  li        r7, 0x2000
-	  stwu      r1, -0x18(r1)
-	  li        r8, 0xF
-	  li        r9, 0x1
-	  stw       r31, 0x14(r1)
-	  subi      r31, r3, 0x7780
-	  lis       r3, 0x8004
-	  addi      r4, r3, 0x6A44
-	  addi      r3, r31, 0x2860
-	  addi      r6, r31, 0x4B80
-	  bl        0x1B53F0
-	  addi      r3, r31, 0x2860
-	  bl        0x1B58E8
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80046CF4
- * Size:	000060
- */
-void LogStream::flush()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x8(r3)
-	  add       r3, r31, r0
-	  stb       r4, 0x10(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x1C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x44
-	  addi      r4, r31, 0x10
-	  crclr     6, 0x6
-	  subi      r3, r13, 0x77D0
-	  bl        0x1B0B5C
-
-	.loc_0x44:
-	  li        r0, 0
-	  stw       r0, 0x8(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80046D54
- * Size:	00011C
- */
-void LogStream::write(void*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r5, 0
-	  addi      r28, r4, 0
-	  li        r31, 0
-	  b         .loc_0x100
-
-	.loc_0x24:
-	  lbz       r27, 0x0(r28)
-	  cmplwi    r27, 0xA
-	  bne-      .loc_0x48
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0xF8
-
-	.loc_0x48:
-	  cmplwi    r27, 0x9
-	  bne-      .loc_0xC4
-	  lwz       r0, 0x8(r29)
-	  cmpwi     r0, 0xFF
-	  blt-      .loc_0x70
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x70:
-	  lwz       r3, 0x8(r29)
-	  li        r4, 0x20
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r29)
-	  addi      r0, r3, 0x10
-	  stbx      r4, r29, r0
-	  lwz       r0, 0x8(r29)
-	  cmpwi     r0, 0xFF
-	  blt-      .loc_0xA8
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xA8:
-	  lwz       r3, 0x8(r29)
-	  li        r4, 0x20
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r29)
-	  addi      r0, r3, 0x10
-	  stbx      r4, r29, r0
-	  b         .loc_0xF8
-
-	.loc_0xC4:
-	  lwz       r0, 0x8(r29)
-	  cmpwi     r0, 0xFF
-	  blt-      .loc_0xE4
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x54(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0xE4:
-	  lwz       r3, 0x8(r29)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x8(r29)
-	  addi      r0, r3, 0x10
-	  stbx      r27, r29, r0
-
-	.loc_0xF8:
-	  addi      r28, r28, 0x1
-	  addi      r31, r31, 0x1
-
-	.loc_0x100:
-	  cmpw      r31, r30
-	  blt+      .loc_0x24
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80046E70
- * Size:	00003C
- */
-void DVDStream::close()
-{
-	numOpen--;
-	if (mIsFileOpen) {
-		DVDClose(&mFileInfo);
-	}
-}
-
-/*
- * --INFO--
- * Address:	80046EDC
- * Size:	0000A4
- */
-void __sinit_system_cpp(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  subi      r31, r3, 0x7780
-	  addi      r3, r31, 0xC
-	  bl        -0x15C4
-	  lis       r4, 0x8004
-	  addi      r4, r4, 0x61B8
-	  addi      r5, r31, 0
-	  bl        0x1CDAA4
-	  lis       r3, 0x8022
-	  addi      r6, r3, 0x7398
-	  lis       r3, 0x8022
-	  stw       r6, 0x3A4(r31)
-	  addi      r5, r3, 0x74C8
-	  lis       r3, 0x802A
-	  stw       r5, 0x3A4(r31)
-	  addi      r0, r3, 0x5644
-	  stw       r0, 0x3A4(r31)
-	  lis       r4, 0x802A
-	  addi      r0, r4, 0x5510
-	  stw       r6, 0x4B8(r31)
-	  lis       r3, 0x8022
-	  lis       r4, 0x4
-	  stw       r5, 0x4B8(r31)
-	  addi      r3, r3, 0x7464
-	  stw       r0, 0x4B8(r31)
-	  li        r0, 0
-	  stw       r4, 0x504(r31)
-	  stw       r6, 0x50C(r31)
-	  stw       r5, 0x50C(r31)
-	  stw       r3, 0x50C(r31)
-	  stw       r0, 0x510(r31)
-	  stw       r0, 0x524(r31)
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80046F80
- * Size:	000008
- * (Should be weak)
- */
-int AramStream::getPending()
-{
-	return mPending;
-}
-
-/*
- * --INFO--
- * Address:	80046F88
- * Size:	00007C
- */
-void AramStream::read(void* data, int size)
-{
-	int readSize = OSRoundUp32B(size);
-	gsys->copyCacheToRam((u32)data, mBaseAddress + mOffset, readSize);
-	gsys->copyWaitUntilDone();
-	mOffset += readSize;
 }

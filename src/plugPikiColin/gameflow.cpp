@@ -393,8 +393,8 @@ void preloadLanguage()
 	FakeSystemList* fake = &gsys->_31C;
 	fake->_04            = fake->_00;
 	gsys->mDvdFileTreeRoot.initCore("");
-	gsys->mLightFlareInfoList = (LFInfo*)&gsys->mDvdFileTreeRoot;
-	gsys->_328                = &gsys->_31C;
+	gsys->mFileTreeList = (DirEntry*)&gsys->mDvdFileTreeRoot;
+	gsys->_328          = &gsys->_31C;
 	gsys->parseArchiveDirectory(gameflow.mLangModes[gameflow.mLanguageIndex].mDirPath,
 	                            gameflow.mLangModes[gameflow.mLanguageIndex].mArcPath);
 	gsys->loadBundle(gameflow.mLangModes[gameflow.mLanguageIndex].mBunPath, true);

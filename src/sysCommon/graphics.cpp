@@ -2600,14 +2600,14 @@ void TexImg::dumpBti(Texture* tex, char* name, RandomAccessStream& input, Random
  * Address:	80028990
  * Size:	0003EC
  */
-void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* p3)
+void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* data)
 {
-	TexBti bti;
+	BtiHeader bti;
 	bti.read(input);
 
-	mFormat = (TexImgFormat)convFormat(bti._00);
-	mWidth  = bti._02;
-	mHeight = bti._04;
+	mFormat = (TexImgFormat)convFormat(bti.mImageFormat);
+	mWidth  = bti.mWidth;
+	mHeight = bti.mHeight;
 
 	u32 x;
 	u32 y;
@@ -2615,13 +2615,13 @@ void TexImg::importBti(Texture* tex, RandomAccessStream& input, u8* p3)
 	if (mWidth % x || mHeight % y) {
 		ERROR("Texture %s is not correct size %d x %d\n", input.mPath, mWidth, mHeight);
 	}
-	if (bti._1C != 32) {
-		ERROR("Bti file has imageData at offset %d!!!\n", bti._1C);
+	if (bti.mImageDataOffset != sizeof(BtiHeader)) {
+		ERROR("Bti file has imageData at offset %d!!!\n", bti.mImageDataOffset);
 	}
 
-	tex->mTexFlags = (!bti._06 ? 0x1 : 0) | (!bti._07 ? 0x100 : 0);
+	tex->mTexFlags = (!bti.mWrapS ? 0x1 : 0) | (!bti.mWrapT ? 0x100 : 0);
 
-	readTexData(tex, input, p3);
+	readTexData(tex, input, data);
 }
 
 /*
@@ -2664,7 +2664,7 @@ void TexAttr::initImage()
 
 	if (_20) {
 		mTexture->mTextureData = (u32*)(mImage->_24 - 1);
-		mTexture->mLODBias     = _24;
+		mTexture->mLODBias     = mLODBias;
 	} else {
 		mTexture->mTextureData = nullptr;
 		mTexture->mLODBias     = 0.0f;
@@ -2700,7 +2700,7 @@ void TexAttr::read(RandomAccessStream& stream)
 	stream.readShort();
 	mTilingType = stream.readShort();
 	_20         = stream.readShort();
-	_24         = stream.readFloat();
+	mLODBias    = stream.readFloat();
 }
 
 /*

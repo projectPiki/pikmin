@@ -11,6 +11,7 @@ struct Texture;
 struct TexImg;
 struct Colour;
 struct TexobjInfo;
+struct SystemCache;
 
 /**
  * @brief TODO
@@ -51,7 +52,7 @@ struct TexAttr : public CoreNode {
 		mImage       = nullptr;
 		mTilingType  = TILING_REPEAT;
 		_20          = 0;
-		_24          = 0.0f;
+		mLODBias     = 0.0f;
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -66,64 +67,64 @@ struct TexAttr : public CoreNode {
 	s16 mFlags;         // _1E
 	u16 _20;            // _20
 	s16 _22;            // _22
-	f32 _24;            // _24
+	f32 mLODBias;       // _24
 	char* mTextureName; // _28
 	Texture* mTexture;  // _2C
 	TexImg* mImage;     // _30
 };
 
 /**
- * @brief Fabricated, need Some structure for importBti
+ * @brief TODO
  */
-struct TexBti {
+struct BtiHeader {
 	void read(RandomAccessStream& input)
 	{
-		_00 = input.readByte();
-		_01 = input.readByte();
-		_02 = input.readShort();
-		_04 = input.readShort();
-		_06 = input.readByte();
-		_07 = input.readByte();
-		_08 = input.readByte();
-		_09 = input.readByte();
-		_0A = input.readShort();
-		_0C = input.readInt();
-		_10 = input.readByte();
-		_11 = input.readByte();
-		_12 = input.readByte();
-		_13 = input.readByte();
-		_14 = input.readByte();
-		_15 = input.readByte();
-		_16 = input.readByte();
-		_17 = input.readByte();
-		_18 = input.readByte();
-		_19 = input.readByte();
-		_1A = input.readShort();
-		_1C = input.readInt();
+		mImageFormat       = input.readByte();
+		mIsAlphaEnabled    = input.readByte();
+		mWidth             = input.readShort();
+		mHeight            = input.readShort();
+		mWrapS             = input.readByte();
+		mWrapT             = input.readByte();
+		_08                = input.readByte();
+		_09                = input.readByte();
+		mNumPaletteEntries = input.readShort();
+		mPaletteDataOffset = input.readInt();
+		mIsMipmapEnabled   = input.readByte();
+		mIsEdgeLODEnabled  = input.readByte();
+		mDoClampLODBias    = input.readByte();
+		mMaxAnisotropy     = input.readByte();
+		mMiniFilterType    = input.readByte();
+		mMaxiFilterType    = input.readByte();
+		mMinLOD            = input.readByte();
+		mMaxLOD            = input.readByte();
+		mNumImages         = input.readByte();
+		_19                = input.readByte();
+		mLODBias           = input.readShort();
+		mImageDataOffset   = input.readInt();
 	}
 
-	u8 _00;  // _00
-	u8 _01;  // _01
-	u16 _02; // _02
-	u16 _04; // _04
-	u8 _06;  // _06
-	u8 _07;  // _07
-	u8 _08;  // _08
-	u8 _09;  // _09
-	u16 _0A; // _0A
-	u32 _0C; // _0C, unknown
-	u8 _10;  // _10
-	u8 _11;  // _11
-	u8 _12;  // _12
-	u8 _13;  // _13
-	u8 _14;  // _14
-	u8 _15;  // _15
-	u8 _16;  // _16
-	u8 _17;  // _17
-	u8 _18;  // _18
-	u8 _19;  // _19
-	u16 _1A; // _1A
-	u32 _1C; // _1C, unknown
+	u8 mImageFormat;        // _00
+	u8 mIsAlphaEnabled;     // _01
+	u16 mWidth;             // _02
+	u16 mHeight;            // _04
+	u8 mWrapS;              // _06
+	u8 mWrapT;              // _07
+	u8 _08;                 // _08
+	u8 _09;                 // _09
+	u16 mNumPaletteEntries; // _0A
+	u32 mPaletteDataOffset; // _0C
+	u8 mIsMipmapEnabled;    // _10
+	u8 mIsEdgeLODEnabled;   // _11
+	u8 mDoClampLODBias;     // _12
+	u8 mMaxAnisotropy;      // _13
+	u8 mMiniFilterType;     // _14
+	u8 mMaxiFilterType;     // _15
+	u8 mMinLOD;             // _16
+	u8 mMaxLOD;             // _17
+	u8 mNumImages;          // _18
+	u8 _19;                 // _19
+	u16 mLODBias;           // _1A
+	u32 mImageDataOffset;   // _1C
 };
 
 /**
@@ -281,15 +282,15 @@ struct CacheTexture : public Texture {
 	CacheTexture()
 	{
 		mSystemCache = nullptr;
-		mTexImage    = 0;
-		mActiveCache = 0;
+		mTexImage    = nullptr;
+		mActiveCache = nullptr;
 	}
 
 	virtual void makeResident(); // _10
 
 	// _00     = VTBL
 	// _00-_3C = Texture
-	TexCacheInfo* mSystemCache; // _3C
+	SystemCache* mSystemCache;  // _3C
 	TexCacheInfo* mActiveCache; // _40
 	TexImg* mTexImage;          // _44
 	u32 mAramAddress;           // _48

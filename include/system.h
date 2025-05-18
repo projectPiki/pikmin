@@ -10,6 +10,7 @@
 #include "Dolphin/dvd.h"
 #include "Dolphin/rand.h"
 #include "Dolphin/os.h"
+#include "Dolphin/ar.h"
 #include "Delegate.h"
 
 struct DGXGraphics;
@@ -77,9 +78,15 @@ struct AddressNode : public CoreNode {
  * @brief TODO
  */
 struct DirEntry : public CoreNode {
+	DirEntry()
+	    : CoreNode("")
+	{
+	}
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	int mPending; // _14
+	u32 mAddress; // _18
 };
 
 /**
@@ -94,6 +101,30 @@ struct BinobjInfo : public GfxobjInfo {
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
 	char* mData; // _20
+};
+
+/**
+ * @brief TODO
+ */
+struct SystemCache : public ARQRequest {
+	void remove()
+	{
+		mNext->mPrev = mPrev;
+		mPrev->mNext = mNext;
+	}
+
+	void insertAfter(SystemCache* other)
+	{
+		other->mNext = mNext;
+		other->mPrev = this;
+
+		mNext->mPrev = other;
+		mNext        = other;
+	}
+
+	// _00-_20 = ARQRequest
+	SystemCache* mNext; // _20
+	SystemCache* mPrev; // _24
 };
 
 DEFINE_ENUM_TYPE(SystemFlags, Shutdown = 0x80000000);
@@ -223,7 +254,7 @@ struct StdSystem {
 	Shape* mCurrentShape;         // _1FC
 	CoreNode mDvdFileTreeRoot;    // _200, why is this used for light flares? (something aram'y)
 	CoreNode mAramFileTreeRoot;   // _214, why is this used for light flares?
-	LFInfo* mLightFlareInfoList;  // _228
+	DirEntry* mFileTreeList;      // _228
 	int mFlareCount;              // _22C
 	int mLfInfoCount;             // _230
 	LFInfo* mFlareInfoList;       // _234
@@ -334,14 +365,13 @@ struct System : public StdSystem {
 	u32 mPrevHeapAllocType;                          // _2A4
 	AddressNode _2A8;                                // _2A8, unknown size
 	u32 _2BC;                                        // _2BC, unknown, could be part of _2A8
-	u8 _2C0[0x308 - 0x2C0];                          // _2C0, unknown, adjust with size of AddressNode
-	CacheTexture* mTextureCache;                     // _308
-	u8 _30C[0x4];                                    // _30C
+	SystemCache _2C0;                                // _2C0
+	SystemCache _2E8;                                // _2E8
 	FakeSystemList _310;                             // _310, fake
 	FakeSystemList _31C;                             // _31C, fake
 	FakeSystemList* _328;                            // _328, unknown
-	u32 mDmaTransferComplete;                        // _32C
-	u32 mTextureTransferComplete;                    // _330
+	vu32 mDmaTransferComplete;                       // _32C
+	vu32 mTextureTransferComplete;                   // _330
 };
 
 extern System* gsys;
@@ -354,21 +384,70 @@ extern System* gsys;
 struct LogStream : public Stream {
 	LogStream() { }
 
-	virtual void write(void*, int); // _40 (weak)
-	virtual void flush();           // _54 (weak)
+	virtual void flush() // _54 (weak)
+	{
+		mBuffer[_08] = 0;
+		if (gsys->mTogglePrint) {
+			OSReport("%s\n", mBuffer);
+		}
+
+		_08 = 0;
+	}
+	virtual void write(void* data, int size) // _40 (weak)
+	{
+		for (int i = 0; i < size; i++) {
+			char c = ((char*)data)[i];
+			if (c == 0xA) { // line feed
+				flush();
+				continue;
+			}
+
+			if (c == 0x9) { // horizontal tab
+				if (_08 >= 255) {
+					flush();
+				}
+				mBuffer[_08++] = ' ';
+				if (_08 >= 255) {
+					flush();
+				}
+				mBuffer[_08++] = ' ';
+				continue;
+			}
+
+			if (_08 >= 255) {
+				flush();
+			}
+			mBuffer[_08++] = c;
+		}
+	}
 
 	// _04     = VTBL
 	// _00-_08 = Stream
-	// TODO: members
-	u8 _0C[0x108]; // _08
+	int _08;             // _08
+	u8 _0C[0x4];         // _0C, unknown
+	char mBuffer[0x100]; // _10
 };
 
 /**
  * @brief TODO
  */
 struct AramStream : public RandomAccessStream {
-	virtual void read(void*, int); // _3C (weak)
-	virtual int getPending();      // _44 (weak)
+	virtual int getPending() { return mPending; } // _44 (weak)
+	virtual void read(void* data, int size)       // _3C (weak)
+	{
+		int readSize = OSRoundUp32B(size);
+		gsys->copyCacheToRam((u32)data, mBaseAddress + mOffset, readSize);
+		gsys->copyWaitUntilDone();
+		mOffset += readSize;
+	}
+
+	inline void init(char* path, u32 address, int pending)
+	{
+		mPath        = path;
+		mPending     = pending;
+		mBaseAddress = address;
+		mOffset      = 0;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream
@@ -381,9 +460,27 @@ struct AramStream : public RandomAccessStream {
  * @brief TODO
  */
 struct DVDStream : public RandomAccessStream {
-	virtual void read(void*, int); // _3C (weak)
-	virtual int getPending();      // _44 (weak)
-	virtual void close();          // _4C (weak)
+	DVDStream() { mSize = 0x40000; }
+
+	virtual void read(void* addr, int size) // _3C (weak)
+	{
+		int roundedSize = ALIGN_NEXT(size, 32);
+		s32 result      = -1;
+		gsys->mDvdReadBytesCount += roundedSize;
+		while (result == -1) {
+			result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
+		}
+
+		mOffset += roundedSize;
+	}
+	virtual int getPending() { return mPending; } // _44 (weak)
+	virtual void close()                          // _4C (weak)
+	{
+		numOpen--;
+		if (mIsFileOpen) {
+			DVDClose(&mFileInfo);
+		}
+	}
 
 	void init();
 
@@ -396,6 +493,7 @@ struct DVDStream : public RandomAccessStream {
 	u32 mOffset;           // _44
 	int mPending;          // _48
 	bool mIsFileOpen;      // _4C, trigger to do DVDClose on close()
+	int mSize;             // _50
 };
 
 extern int glnWidth;
