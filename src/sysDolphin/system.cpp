@@ -9,6 +9,7 @@
 #include "Dolphin/card.h"
 #include "Dolphin/pad.h"
 #include "DebugLog.h"
+#include "timers.h"
 #include "gameflow.h"
 #include "Graphics.h"
 #include "BaseApp.h"
@@ -17,15 +18,29 @@
 #include "jaudio/verysimple.h"
 #include "jaudio/interface.h"
 
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00009C
+ */
+DEFINE_ERROR()
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000F0
+ */
+DEFINE_PRINT("System")
+
 System sys;
 
 static bool useSymbols = false;
 System* gsys           = nullptr;
 Stream* sysCon;
 Stream* errCon;
-static char* dvdMesgBuffer;
-static char* loadMesgBuffer;
-static char* sysMesgBuffer;
+static OSMessage* dvdMesgBuffer;
+static OSMessage* loadMesgBuffer;
+static OSMessage* sysMesgBuffer;
 
 int glnWidth  = 640;
 int glnHeight = 480;
@@ -42,20 +57,6 @@ static AramStream aramStream;
 static char lastName[PATH_MAX];
 static DVDStream dvdStream;
 static BufferedInputStream dvdBufferedStream;
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-DEFINE_ERROR()
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
- */
-DEFINE_PRINT(nullptr)
 
 /*
  * --INFO--
@@ -131,8 +132,8 @@ void System::initSoftReset()
 {
 	gsys->mPrevHeapAllocType = 0;
 	StdSystem::initSoftReset();
-	if (mGfx) {
-		static_cast<DGXGraphics*>(mGfx)->setupRender();
+	if (mDGXGfx) {
+		static_cast<DGXGraphics*>(mDGXGfx)->setupRender();
 	}
 }
 
@@ -144,13 +145,13 @@ void System::initSoftReset()
 void System::beginRender()
 {
 	mRetraceCount = 0;
-	static_cast<DGXGraphics*>(mGfx)->beginRender();
-	mGfx->clearBuffer(3, false);
+	static_cast<DGXGraphics*>(mDGXGfx)->beginRender();
+	mDGXGfx->clearBuffer(3, false);
 	GXSetViewport(0.0f, 0.0f, glnWidth, glnHeight, 0.0f, 1.0f);
 	GXSetScissor(0, 0, glnWidth, glnHeight);
 	GXSetColorUpdate(GX_TRUE);
-	mGfx->useTexture(nullptr, 0);
-	mGfx->initRender(glnWidth, glnHeight);
+	mDGXGfx->useTexture(nullptr, 0);
+	mDGXGfx->initRender(glnWidth, glnHeight);
 }
 
 /*
@@ -160,7 +161,7 @@ void System::beginRender()
  */
 void System::doneRender()
 {
-	static_cast<DGXGraphics*>(mGfx)->doneRender();
+	static_cast<DGXGraphics*>(mDGXGfx)->doneRender();
 }
 
 /*
@@ -170,7 +171,7 @@ void System::doneRender()
  */
 void System::waitRetrace()
 {
-	static_cast<DGXGraphics*>(mGfx)->waitRetrace();
+	static_cast<DGXGraphics*>(mDGXGfx)->waitRetrace();
 }
 
 /*
@@ -580,23 +581,135 @@ void ParseMapFile()
 		cmds->skipLine();
 		cmds->skipLine();
 
+		char* bufPtr = nullptr;
+
 		while (!cmds->endOfCmds()) {
 			cmds->getToken(true);
 			if (cmds->isToken("UNUSED")) {
 				cmds->skipLine();
 			} else {
-				u32 a;
-				sscanf(cmds->getToken(true), "%08x", &a);
-				u32 b;
-				sscanf(cmds->getToken(true), "%08x", &b);
-				u32 c;
-				sscanf(cmds->getToken(true), "%d", &c);
+				// this... doesn't seem to be the same format as the build map we have?
+				// that should be address | size | virtual_address, but the %08xs vs %ds seem to say otherwise
+				// I assume their map was actually address | virtual_address | size
+				// (two of these are unused, the middle gets written to the list alongside the func name)
+				// (would make sense if it were the virtual address)
+				u32 addr; // 0x28
+				sscanf(cmds->getToken(true), "%08x", &addr);
+				u32 virtAddr; // 0x24
+				sscanf(cmds->getToken(true), "%08x", &virtAddr);
+				u32 funcSize; // 0x20
+				sscanf(cmds->getToken(true), "%d", &funcSize);
 
 				cmds->skipLine();
 
-				for (int i = 0; i < strlen(cmds->mCurrentToken); i++) {
-					// ghrk
+				bool isLastCharValid = false;
+				int i;
+				int funcNameLength  = 0;
+				int classNameLength = 0;
+				int classNameOffset = 0;
+				int fileInfoOffset  = 0;
+				int fileInfoLength  = 0;
+				for (i = 0; i < strlen(cmds->mCurrentToken); i++) {
+					char currChar = cmds->mCurrentToken[i];
+					if (currChar != ' ' && currChar != '_') {
+						isLastCharValid = true;
+						funcNameLength++;
+						continue;
+					}
+
+					if (!isLastCharValid) {
+						funcNameLength++;
+						break;
+					}
+
+					if (!isLastCharValid) {
+						break;
+					}
+
+					if (currChar != '_') {
+						break;
+					}
+
+					if (cmds->mCurrentToken[i + 1] == '_') {
+						// look ahead to find the length/namespace length for the class
+						char digit1 = cmds->mCurrentToken[i + 2];
+						if (digit1 >= '0' && digit1 <= '9') {
+							char digit2 = cmds->mCurrentToken[i + 3];
+							if (digit2 >= '0' && digit2 <= '9') {
+								// two digit class length
+								classNameLength = digit2 + (digit1 - '0') * 10;
+								classNameLength -= '0';
+								// skip two underscores and the class length
+								classNameOffset = i + 4;
+							} else {
+								// one digit class length
+								classNameLength = digit1 - '0';
+								// skip two underscores and the class length
+								classNameOffset = i + 3;
+							}
+
+							for (int j = i; j < strlen(cmds->mCurrentToken); j++) {
+								if (cmds->mCurrentToken[j] == ' ') {
+									fileInfoOffset = j + 1;
+									fileInfoLength = strlen(cmds->mCurrentToken) - fileInfoOffset;
+									break;
+								}
+							}
+						}
+						break;
+					}
+
+					funcNameLength++;
 				}
+
+				int size;
+				if (classNameLength) {
+					size = classNameLength + 2;
+				} else {
+					size = 0;
+				}
+
+				size = funcNameLength + size + 3 + fileInfoLength;
+
+				// i assume this buffer is meant to be some dedicated class but w/e
+				char* buffer      = new char[ALIGN_NEXT(size, 4) + 8];
+				((u32*)buffer)[0] = 0;
+				((u32*)buffer)[1] = virtAddr;
+
+				int d = 8;
+
+				if (bufPtr) {
+					((u32*)bufPtr)[0] = (u32)buffer;
+				} else {
+					gsys->mBuildMapFuncList = (u32)buffer;
+				}
+
+				bufPtr = buffer;
+
+				// demangle! example: kill__8CreatureFb 	plugPikiKando.a creature.cpp
+				// write class name (e.g. Creature::)
+				if (classNameLength) {
+					for (int j = 0; j < classNameLength; j++) {
+						buffer[d++] = cmds->mCurrentToken[j + classNameOffset];
+					}
+					buffer[d++] = ':';
+					buffer[d++] = ':';
+				}
+
+				// write function name (e.g. kill)
+				for (int j = 0; j < funcNameLength; j++) {
+					buffer[d++] = cmds->mCurrentToken[j];
+				}
+
+				buffer[d++] = ' ';
+				buffer[d++] = ' ';
+
+				// write file name and library (e.g. plugPikiKando.a creature.cpp)
+				for (int j = 0; j < fileInfoLength; j++) {
+					buffer[d++] = cmds->mCurrentToken[j + fileInfoOffset];
+				}
+
+				buffer[d++] = 0;
 			}
 
 			if (cmds->isToken(".ctors")) {
@@ -608,495 +721,8 @@ void ParseMapFile()
 		cmds->getToken(true);
 	}
 
+	u32 badCompiler[2];
 	file->close();
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802A
-	  stw       r0, 0x4(r1)
-	  addi      r4, r4, 0x514C
-	  li        r5, 0x1
-	  stwu      r1, -0x60(r1)
-	  li        r6, 0x1
-	  stmw      r21, 0x34(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r30, r3
-	  beq-      .loc_0x634
-	  li        r3, 0x11C
-	  bl        0x1DEC
-	  addi      r22, r3, 0
-	  mr.       r31, r22
-	  beq-      .loc_0x5C
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        -0x46B4
-
-	.loc_0x5C:
-	  mr        r29, r22
-	  b         .loc_0x5C8
-
-	.loc_0x64:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x4194
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7830
-	  bl        -0x3E7C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x5C8
-	  mr        r3, r29
-	  bl        -0x4344
-	  mr        r3, r29
-	  bl        -0x434C
-	  mr        r3, r29
-	  bl        -0x4354
-	  mr        r3, r29
-	  bl        -0x435C
-	  li        r28, 0
-	  b         .loc_0x5B8
-
-	.loc_0xAC:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x41DC
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7828
-	  bl        -0x3EC4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xD8
-	  mr        r3, r29
-	  bl        -0x438C
-	  b         .loc_0x5A4
-
-	.loc_0xD8:
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x4208
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x28
-	  subi      r4, r13, 0x7820
-	  bl        0x1D2DCC
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x4224
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x24
-	  subi      r4, r13, 0x7820
-	  bl        0x1D2DB0
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x4240
-	  crclr     6, 0x6
-	  addi      r5, r1, 0x20
-	  subi      r4, r13, 0x7818
-	  bl        0x1D2D94
-	  mr        r3, r29
-	  bl        -0x43EC
-	  li        r21, 0
-	  li        r26, 0
-	  li        r25, 0
-	  li        r24, 0
-	  li        r23, 0
-	  li        r22, 0
-	  li        r27, 0
-	  b         .loc_0x234
-
-	.loc_0x154:
-	  add       r4, r31, r27
-	  lbz       r3, 0x8(r4)
-	  cmplwi    r3, 0x20
-	  beq-      .loc_0x178
-	  cmplwi    r3, 0x5F
-	  beq-      .loc_0x178
-	  li        r21, 0x1
-	  addi      r26, r26, 0x1
-	  b         .loc_0x230
-
-	.loc_0x178:
-	  rlwinm.   r0,r21,0,24,31
-	  bne-      .loc_0x188
-	  addi      r26, r26, 0x1
-	  b         .loc_0x244
-
-	.loc_0x188:
-	  beq-      .loc_0x244
-	  cmplwi    r3, 0x5F
-	  bne-      .loc_0x244
-	  lbz       r0, 0x9(r4)
-	  cmplwi    r0, 0x5F
-	  bne-      .loc_0x22C
-	  lbz       r3, 0xA(r4)
-	  cmplwi    r3, 0x30
-	  blt-      .loc_0x244
-	  cmplwi    r3, 0x39
-	  bgt-      .loc_0x244
-	  lbz       r4, 0xB(r4)
-	  cmplwi    r4, 0x30
-	  blt-      .loc_0x1E0
-	  cmplwi    r4, 0x39
-	  bgt-      .loc_0x1E0
-	  subi      r0, r3, 0x30
-	  mulli     r0, r0, 0xA
-	  add       r25, r4, r0
-	  subi      r25, r25, 0x30
-	  addi      r24, r27, 0x4
-	  b         .loc_0x1E8
-
-	.loc_0x1E0:
-	  subi      r25, r3, 0x30
-	  addi      r24, r27, 0x3
-
-	.loc_0x1E8:
-	  mr        r21, r27
-	  b         .loc_0x218
-
-	.loc_0x1F0:
-	  addi      r0, r21, 0x8
-	  lbzx      r0, r31, r0
-	  cmplwi    r0, 0x20
-	  bne-      .loc_0x214
-	  addi      r23, r21, 0x1
-	  addi      r3, r29, 0x8
-	  bl        0x1D402C
-	  sub       r22, r3, r23
-	  b         .loc_0x244
-
-	.loc_0x214:
-	  addi      r21, r21, 0x1
-
-	.loc_0x218:
-	  addi      r3, r29, 0x8
-	  bl        0x1D4018
-	  cmplw     r21, r3
-	  blt+      .loc_0x1F0
-	  b         .loc_0x244
-
-	.loc_0x22C:
-	  addi      r26, r26, 0x1
-
-	.loc_0x230:
-	  addi      r27, r27, 0x1
-
-	.loc_0x234:
-	  addi      r3, r29, 0x8
-	  bl        0x1D3FFC
-	  cmplw     r27, r3
-	  blt+      .loc_0x154
-
-	.loc_0x244:
-	  cmpwi     r25, 0
-	  beq-      .loc_0x254
-	  addi      r3, r25, 0x2
-	  b         .loc_0x258
-
-	.loc_0x254:
-	  li        r3, 0
-
-	.loc_0x258:
-	  addi      r0, r3, 0x3
-	  add       r3, r0, r22
-	  add       r3, r26, r3
-	  addi      r0, r3, 0x3
-	  rlwinm    r3,r0,0,0,29
-	  addi      r3, r3, 0x8
-	  bl        0x1BBC
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  cmplwi    r28, 0
-	  li        r5, 0x8
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x4(r3)
-	  beq-      .loc_0x298
-	  stw       r3, 0x0(r28)
-	  b         .loc_0x2A0
-
-	.loc_0x298:
-	  lwz       r4, 0x2DEC(r13)
-	  stw       r3, 0x2BC(r4)
-
-	.loc_0x2A0:
-	  cmpwi     r25, 0
-	  addi      r28, r3, 0
-	  beq-      .loc_0x3AC
-	  li        r6, 0
-	  ble-      .loc_0x390
-	  cmpwi     r25, 0x8
-	  subi      r4, r25, 0x8
-	  ble-      .loc_0x61C
-	  addi      r0, r4, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r4, 0
-	  mtctr     r0
-	  add       r4, r31, r24
-	  ble-      .loc_0x61C
-
-	.loc_0x2D8:
-	  lbz       r7, 0x8(r4)
-	  mr        r0, r5
-	  addi      r5, r5, 0x1
-	  stbx      r7, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r8, 0x9(r4)
-	  addi      r7, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r8, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r8, 0xA(r4)
-	  addi      r9, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r8, r3, r7
-	  addi      r8, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r10, 0xB(r4)
-	  addi      r7, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r10, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r10, 0xC(r4)
-	  addi      r6, r6, 0x8
-	  stbx      r10, r3, r9
-	  lbz       r9, 0xD(r4)
-	  stbx      r9, r3, r8
-	  lbz       r8, 0xE(r4)
-	  stbx      r8, r3, r7
-	  lbz       r7, 0xF(r4)
-	  addi      r4, r4, 0x8
-	  stbx      r7, r3, r0
-	  bdnz+     .loc_0x2D8
-	  b         .loc_0x61C
-
-	.loc_0x368:
-	  sub       r0, r25, r6
-	  cmpw      r6, r25
-	  mtctr     r0
-	  bge-      .loc_0x390
-
-	.loc_0x378:
-	  lbz       r4, 0x8(r7)
-	  mr        r0, r5
-	  addi      r7, r7, 0x1
-	  stbx      r4, r3, r0
-	  addi      r5, r5, 0x1
-	  bdnz+     .loc_0x378
-
-	.loc_0x390:
-	  addi      r0, r5, 0
-	  li        r4, 0x3A
-	  stbx      r4, r3, r0
-	  addi      r5, r5, 0x1
-	  addi      r0, r5, 0
-	  stbx      r4, r3, r0
-	  addi      r5, r5, 0x1
-
-	.loc_0x3AC:
-	  cmpwi     r26, 0
-	  li        r4, 0
-	  ble-      .loc_0x494
-	  cmpwi     r26, 0x8
-	  subi      r6, r26, 0x8
-	  ble-      .loc_0x468
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x468
-
-	.loc_0x3D8:
-	  addi      r10, r4, 0x8
-	  add       r10, r31, r10
-	  lbz       r6, 0x0(r10)
-	  mr        r0, r5
-	  addi      r5, r5, 0x1
-	  stbx      r6, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r7, 0x1(r10)
-	  addi      r6, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r7, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r7, 0x2(r10)
-	  addi      r8, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r7, r3, r6
-	  addi      r7, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r9, 0x3(r10)
-	  addi      r6, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r9, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r9, 0x4(r10)
-	  addi      r4, r4, 0x8
-	  stbx      r9, r3, r8
-	  lbz       r8, 0x5(r10)
-	  stbx      r8, r3, r7
-	  lbz       r7, 0x6(r10)
-	  stbx      r7, r3, r6
-	  lbz       r6, 0x7(r10)
-	  stbx      r6, r3, r0
-	  bdnz+     .loc_0x3D8
-
-	.loc_0x468:
-	  sub       r0, r26, r4
-	  cmpw      r4, r26
-	  mtctr     r0
-	  bge-      .loc_0x494
-
-	.loc_0x478:
-	  addi      r0, r4, 0x8
-	  lbzx      r6, r31, r0
-	  mr        r0, r5
-	  addi      r4, r4, 0x1
-	  stbx      r6, r3, r0
-	  addi      r5, r5, 0x1
-	  bdnz+     .loc_0x478
-
-	.loc_0x494:
-	  addi      r0, r5, 0
-	  li        r4, 0x20
-	  stbx      r4, r3, r0
-	  addi      r5, r5, 0x1
-	  addi      r0, r5, 0
-	  stbx      r4, r3, r0
-	  cmpwi     r22, 0
-	  li        r4, 0
-	  addi      r5, r5, 0x1
-	  ble-      .loc_0x598
-	  cmpwi     r22, 0x8
-	  subi      r6, r22, 0x8
-	  ble-      .loc_0x628
-	  addi      r0, r6, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r6, 0
-	  mtctr     r0
-	  add       r10, r31, r23
-	  ble-      .loc_0x628
-
-	.loc_0x4E0:
-	  lbz       r6, 0x8(r10)
-	  mr        r0, r5
-	  addi      r5, r5, 0x1
-	  stbx      r6, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r7, 0x9(r10)
-	  addi      r6, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r7, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r7, 0xA(r10)
-	  addi      r8, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r7, r3, r6
-	  addi      r7, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r9, 0xB(r10)
-	  addi      r6, r5, 0
-	  addi      r5, r5, 0x1
-	  stbx      r9, r3, r0
-	  addi      r0, r5, 0
-	  addi      r5, r5, 0x1
-	  lbz       r9, 0xC(r10)
-	  addi      r4, r4, 0x8
-	  stbx      r9, r3, r8
-	  lbz       r8, 0xD(r10)
-	  stbx      r8, r3, r7
-	  lbz       r7, 0xE(r10)
-	  stbx      r7, r3, r6
-	  lbz       r6, 0xF(r10)
-	  addi      r10, r10, 0x8
-	  stbx      r6, r3, r0
-	  bdnz+     .loc_0x4E0
-	  b         .loc_0x628
-
-	.loc_0x570:
-	  sub       r0, r22, r4
-	  cmpw      r4, r22
-	  mtctr     r0
-	  bge-      .loc_0x598
-
-	.loc_0x580:
-	  lbz       r4, 0x8(r6)
-	  mr        r0, r5
-	  addi      r6, r6, 0x1
-	  stbx      r4, r3, r0
-	  addi      r5, r5, 0x1
-	  bdnz+     .loc_0x580
-
-	.loc_0x598:
-	  addi      r0, r5, 0
-	  li        r4, 0
-	  stbx      r4, r3, r0
-
-	.loc_0x5A4:
-	  addi      r3, r29, 0
-	  subi      r4, r13, 0x7814
-	  bl        -0x43B0
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x5C8
-
-	.loc_0x5B8:
-	  mr        r3, r29
-	  bl        -0x4A3C
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0xAC
-
-	.loc_0x5C8:
-	  mr        r3, r29
-	  bl        -0x4A4C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x5E8
-	  mr        r3, r29
-	  bl        -0x432C
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0x64
-
-	.loc_0x5E8:
-	  mr        r3, r29
-	  bl        -0x4A6C
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x604
-	  addi      r3, r29, 0
-	  li        r4, 0x1
-	  bl        -0x4728
-
-	.loc_0x604:
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x634
-
-	.loc_0x61C:
-	  add       r7, r24, r6
-	  add       r7, r31, r7
-	  b         .loc_0x368
-
-	.loc_0x628:
-	  add       r6, r23, r4
-	  add       r6, r31, r6
-	  b         .loc_0x570
-
-	.loc_0x634:
-	  lmw       r21, 0x34(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1161,7 +787,7 @@ System::System()
 	mAtxRouter               = nullptr;
 	mActiveHeapIdx           = -1;
 	gsys                     = this;
-	_2BC                     = 0;
+	mBuildMapFuncList        = 0;
 	mTimer                   = nullptr;
 }
 
@@ -1269,7 +895,8 @@ void System::Initialise()
 	void* lo         = OSGetArenaLo();
 	void* hi         = OSGetArenaHi();
 	mSystemHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
-	mSystemHeapEnd   = OSRoundDown32B(hi) - mSystemHeapStart;
+	hi               = (void*)OSRoundDown32B(hi);
+	mSystemHeapEnd   = (u32)hi - mSystemHeapStart;
 	if (mSystemHeapEnd < 0x1800000) {
 		useSymbols = false;
 	}
@@ -1279,20 +906,31 @@ void System::Initialise()
 	errCon = sysCon;
 	DVDInit();
 	if (!dvdStream.readBuffer) {
-		dvdStream.readBuffer = new (0x20) u8[dvdStream.mOffset];
+		dvdStream.readBuffer = new (0x20) u8[dvdStream.mSize];
 	}
-	gsys->getHeap(SYSHEAP_Sys);
+	PRINT("fake start size?", gsys->getHeap(SYSHEAP_Sys)->getFree() / 1024.0f);
 	static u32 mMemoryTable[3];
 	ARInit(mMemoryTable, 3);
 	ARQInit();
 
+	_2C0.mNext = _2C0.mPrev = &_2C0;
+	_2E8.mNext = _2E8.mPrev = &_2E8;
+
+	SystemCache* cacheStack = new SystemCache[64];
+	for (int i = 0; i < 64; i++) {
+		_2E8.insertAfter(&cacheStack[i]);
+	}
+
 	onceInit();
 
-	mGfx = new DGXGraphics(false);
+	mDGXGfx                = new DGXGraphics(false);
+	mGraphics              = mDGXGfx;
+	mIsRendering           = 0;
+	mIsLoadingThreadActive = 0;
 
-	// OSInitMessageQueue(&dvdMesgQueue, &dvdMesgBuffer, 1);
-	// OSInitMessageQueue(&loadMesgQueue, &loadMesgBuffer, 1);
-	// OSInitMessageQueue(&sysMesgQueue, &sysMesgBuffer, 1);
+	OSInitMessageQueue(&dvdMesgQueue, dvdMesgBuffer, 1);
+	OSInitMessageQueue(&loadMesgQueue, loadMesgBuffer, 1);
+	OSInitMessageQueue(&sysMesgQueue, sysMesgBuffer, 1);
 	initBigFont();
 	startDvdThread();
 
@@ -1301,8 +939,23 @@ void System::Initialise()
 	mDvdErrorCallback = new Delegate1<System, Graphics&>(this, showDvdError);
 	startLoading(nullptr, true, 0);
 
+	u32 audioHeapSize = 0x80000;
+	Jac_Start(new (0x20) u8[audioHeapSize], audioHeapSize, 0x800000, "/dataDir/SndData/");
+	Jac_AddDVDBuffer((u8*)mMatrices, mMatrixCount * sizeof(Matrix4f)); // wack.
+	_31C._00 = 0x800000;
+	_31C._08 = 0x800000;
+	_31C._04 = _31C._00;
+	_328     = &_31C;
+	mDvdFileTreeRoot.initCore("");
+	mAramFileTreeRoot.initCore("");
+	mFileTreeList = (DirEntry*)&mDvdFileTreeRoot;
+
+	mControllerMgr.init();
+	mTimer = new Timers();
+
 	Font* cons = new Font;
 	cons->setTexture(loadTexture("consFont.bti", true), 16, 8);
+	cons->mTexture->attach();
 	mConsFont = cons;
 
 	endLoading();
@@ -1663,243 +1316,71 @@ bool System::hasDebugInfo()
  * Address:	80046204
  * Size:	000348
  */
-void* loadFunc(void*)
+void* loadFunc(void* idler)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD8(r1)
-	  stfd      f31, 0xD0(r1)
-	  stmw      r20, 0xA0(r1)
-	  addi      r24, r3, 0
-	  beq-      .loc_0x34
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
+	LoadIdler* loadIdler = (LoadIdler*)idler;
+	if (idler) {
+		loadIdler->init();
+	}
 
-	.loc_0x34:
-	  li        r23, 0
-	  li        r22, 0x2
-	  bl        0x1C9014
-	  bl        0x1B7174
-	  lis       r3, 0x803A
-	  lfd       f31, -0x7B80(r2)
-	  addi      r27, r1, 0x30
-	  addi      r26, r1, 0x2C
-	  addi      r25, r1, 0x1C
-	  addi      r28, r1, 0x34
-	  subi      r29, r3, 0x7420
-	  lis       r31, 0x4330
+	int a = 0; // r23
+	int b = 2; // r22
+	GXSetCurrentGXThread();
+	OSGetTick();
 
-	.loc_0x64:
-	  addi      r3, r29, 0
-	  addi      r4, r1, 0x88
-	  li        r5, 0x1
-	  bl        0x1B3668
-	  lwz       r3, 0x88(r1)
-	  subis     r0, r3, 0x5155
-	  cmplwi    r0, 0x4954
-	  bne-      .loc_0xA0
-	  lis       r3, 0x803A
-	  lis       r4, 0x434F
-	  subi      r3, r3, 0x7400
-	  addi      r4, r4, 0x4E54
-	  li        r5, 0
-	  bl        0x1B3578
-	  b         .loc_0x32C
+	while (true) {
+		OSMessage msg;
+		OSReceiveMessage(&loadMesgQueue, &msg, OS_MESSAGE_BLOCK);
+		if ((u32)msg == 'QUIT') {
+			OSSendMessage(&sysMesgQueue, (void*)'CONT', OS_MESSAGE_NOBLOCK);
+			break;
+		}
 
-	.loc_0xA0:
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x26C(r3)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x64
-	  bl        0x1B7104
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  addi      r23, r23, 0x1
-	  bl        0x1CDB08
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x268(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xEC
-	  lwz       r3, 0x24C(r3)
-	  li        r4, 0
-	  lwz       r3, 0x610(r3)
-	  bl        0x1CB35C
-	  b         .loc_0x110
+		if (gsys->mIsRendering) {
+			continue;
+		}
+		OSGetTick();
+		a++;
+		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+		if (!gsys->mIsLoadingScreenActive) {
+			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, GX_FALSE);
+		} else {
+			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, (a >= gsys->_264) ? GX_TRUE : GX_FALSE);
+		}
 
-	.loc_0xEC:
-	  lwz       r0, 0x264(r3)
-	  cmplw     r23, r0
-	  blt-      .loc_0x100
-	  li        r4, 0x1
-	  b         .loc_0x104
+		gsys->beginRender();
+		u32 badCompiler;
+		Matrix4f mtx;
+		DGXGraphics* gfx = gsys->mDGXGfx;
+		gfx->setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
 
-	.loc_0x100:
-	  li        r4, 0
+		if (gsys->mIsLoadingScreenActive) {
+			gfx->setColour(Colour(0, 0, 0, 32), true);
+			gfx->setAuxColour(Colour(0, 0, 0, 32));
+			gfx->fillRectangle(RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
+		}
 
-	.loc_0x104:
-	  lwz       r3, 0x24C(r3)
-	  lwz       r3, 0x610(r3)
-	  bl        0x1CB334
+		if (loadIdler && a >= gsys->_264) {
+			loadIdler->draw(*gfx);
+		}
 
-	.loc_0x110:
-	  lwz       r20, 0x2DEC(r13)
-	  li        r30, 0
-	  stw       r30, 0x2A0(r20)
-	  lwz       r3, 0x24C(r20)
-	  bl        0x1D48
-	  lwz       r3, 0x24C(r20)
-	  li        r4, 0x3
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, -0x7848(r13)
-	  lwz       r0, -0x7844(r13)
-	  xoris     r3, r3, 0x8000
-	  lfs       f1, -0x7B88(r2)
-	  xoris     r0, r0, 0x8000
-	  stw       r3, 0x9C(r1)
-	  fmr       f2, f1
-	  lfs       f6, -0x7B84(r2)
-	  stw       r0, 0x94(r1)
-	  fmr       f5, f1
-	  stw       r31, 0x98(r1)
-	  stw       r31, 0x90(r1)
-	  lfd       f3, 0x98(r1)
-	  lfd       f0, 0x90(r1)
-	  fsubs     f3, f3, f31
-	  fsubs     f4, f0, f31
-	  bl        0x1CE328
-	  lwz       r5, -0x7848(r13)
-	  li        r3, 0
-	  lwz       r6, -0x7844(r13)
-	  li        r4, 0
-	  bl        0x1CE338
-	  li        r3, 0x1
-	  bl        0x1CD9B0
-	  lwz       r3, 0x24C(r20)
-	  li        r4, 0
-	  li        r5, 0
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x24C(r20)
-	  lwz       r4, -0x7848(r13)
-	  lwz       r12, 0x3B4(r3)
-	  lwz       r5, -0x7844(r13)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r5, r28, 0
-	  addi      r4, r1, 0x44
-	  lwz       r21, 0x24C(r3)
-	  lwz       r6, 0x310(r21)
-	  mr        r3, r21
-	  lwz       r0, 0x30C(r21)
-	  stw       r30, 0x34(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r0, 0x3C(r1)
-	  stw       r6, 0x40(r1)
-	  lwz       r12, 0x3B4(r21)
-	  lwz       r12, 0x40(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x268(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2AC
-	  stb       r30, 0x30(r1)
-	  li        r20, 0x20
-	  addi      r3, r21, 0
-	  stb       r30, 0x31(r1)
-	  addi      r4, r27, 0
-	  li        r5, 0x1
-	  stb       r30, 0x32(r1)
-	  stb       r20, 0x33(r1)
-	  lwz       r12, 0x3B4(r21)
-	  lwz       r12, 0xA8(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r30, 0x2C(r1)
-	  addi      r3, r21, 0
-	  addi      r4, r26, 0
-	  stb       r30, 0x2D(r1)
-	  stb       r30, 0x2E(r1)
-	  stb       r20, 0x2F(r1)
-	  lwz       r12, 0x3B4(r21)
-	  lwz       r12, 0xAC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r5, 0x310(r21)
-	  mr        r3, r21
-	  lwz       r0, 0x30C(r21)
-	  mr        r4, r25
-	  stw       r30, 0x1C(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r0, 0x24(r1)
-	  stw       r5, 0x28(r1)
-	  lwz       r12, 0x3B4(r21)
-	  lwz       r12, 0xD4(r12)
-	  mtlr      r12
-	  blrl
+		if (gsys->mDvdErrorCallback) {
+			// gross but necessary to avoid a Delegate1 weak function spawning too early
+			static_cast<IDelegate1<Graphics&>*>(gsys->mDvdErrorCallback)->invoke(*gsys->mDGXGfx);
+		}
 
-	.loc_0x2AC:
-	  cmplwi    r24, 0
-	  beq-      .loc_0x2DC
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x264(r3)
-	  cmplw     r23, r0
-	  blt-      .loc_0x2DC
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  mr        r4, r21
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
+		gsys->mDGXGfx->doneRender();
+		if (b && --b == 0) {
+			VISetBlack(FALSE);
+			VIFlush();
+		}
+	}
 
-	.loc_0x2DC:
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r3, 0x254(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x300
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, 0x24C(r4)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x300:
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r3, 0x24C(r3)
-	  bl        0x1B98
-	  cmpwi     r22, 0
-	  beq+      .loc_0x64
-	  subic.    r22, r22, 0x1
-	  bne+      .loc_0x64
-	  li        r3, 0
-	  bl        0x1BD520
-	  bl        0x1BD394
-	  b         .loc_0x64
-
-	.loc_0x32C:
-	  lmw       r20, 0xA0(r1)
-	  li        r3, 0
-	  lwz       r0, 0xDC(r1)
-	  lfd       f31, 0xD0(r1)
-	  addi      r1, r1, 0xD8
-	  mtlr      r0
-	  blr
-	*/
+	a ? "fake" : "fake";
+	a ? "fake" : "fake";
+	a ? "fake" : "fake";
+	a ? "fake" : "fake";
+	return nullptr;
 }
 
 OSThread Thread;
@@ -1956,30 +1437,12 @@ void System::endLoading()
  * Address:	80046694
  * Size:	00004C
  */
-void doneDMA(u32)
+void doneDMA(u32 cache)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x4(r3)
-	  li        r0, 0x1
-	  lwz       r4, 0x24(r5)
-	  lwz       r3, 0x20(r5)
-	  stw       r4, 0x24(r3)
-	  lwz       r4, 0x20(r5)
-	  lwz       r3, 0x24(r5)
-	  stw       r4, 0x20(r3)
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r3, 0x2E8
-	  lwz       r3, 0x308(r3)
-	  stw       r3, 0x20(r5)
-	  stw       r4, 0x24(r5)
-	  lwz       r3, 0x20(r4)
-	  stw       r5, 0x24(r3)
-	  stw       r5, 0x20(r4)
-	  lwz       r3, 0x2DEC(r13)
-	  stw       r0, 0x32C(r3)
-	  blr
-	*/
+	SystemCache* sysCache = (SystemCache*)((SystemCache*)cache)->owner;
+	sysCache->remove();
+	gsys->_2E8.insertAfter(sysCache);
+	gsys->mDmaTransferComplete = TRUE;
 }
 
 /*
@@ -2119,59 +1582,20 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
  * Address:	800468B8
  * Size:	0000C0
  */
-void freeBuffer(u32)
+void freeBuffer(u32 cache)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  lwz       r31, 0x4(r3)
-	  lwz       r3, 0x44(r31)
-	  lwz       r0, 0x2C(r3)
-	  stw       r0, 0x14(r31)
-	  lwz       r4, 0x44(r31)
-	  lwz       r3, 0x14(r31)
-	  lwz       r4, 0x28(r4)
-	  bl        0x1B0338
-	  lwz       r6, 0x3C(r31)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  lwz       r5, 0x24(r6)
-	  lwz       r4, 0x20(r6)
-	  stw       r5, 0x24(r4)
-	  lwz       r5, 0x20(r6)
-	  lwz       r4, 0x24(r6)
-	  stw       r5, 0x20(r4)
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r6, 0x3C(r31)
-	  addi      r5, r4, 0x2E8
-	  lwz       r4, 0x308(r4)
-	  stw       r4, 0x20(r6)
-	  stw       r5, 0x24(r6)
-	  lwz       r4, 0x20(r5)
-	  stw       r6, 0x24(r4)
-	  stw       r6, 0x20(r5)
-	  stw       r0, 0x3C(r31)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0x1
-	  stw       r0, 0x330(r3)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	CacheTexture* texCache = (CacheTexture*)(((ARQRequest*)cache)->owner);
+	texCache->mPixelData   = texCache->mTexImage->mTextureData;
+	DCStoreRange(texCache->mPixelData, texCache->mTexImage->mDataSize);
+
+	texCache->mSystemCache->remove();
+	gsys->_2E8.insertAfter(texCache->mSystemCache);
+	texCache->mSystemCache = nullptr;
+	texCache->detach();
+	texCache->attach();
+	gsys->mTextureTransferComplete = TRUE;
+
+	u32 badCompiler[2];
 }
 
 /*

@@ -252,8 +252,8 @@ struct StdSystem {
 	char* mTextureBase1;          // _1F4
 	char* mTextureBase2;          // _1F8
 	Shape* mCurrentShape;         // _1FC
-	CoreNode mDvdFileTreeRoot;    // _200, why is this used for light flares? (something aram'y)
-	CoreNode mAramFileTreeRoot;   // _214, why is this used for light flares?
+	CoreNode mDvdFileTreeRoot;    // _200
+	CoreNode mAramFileTreeRoot;   // _214
 	DirEntry* mFileTreeList;      // _228
 	int mFlareCount;              // _22C
 	int mLfInfoCount;             // _230
@@ -340,7 +340,7 @@ struct System : public StdSystem {
 	// _00-_248 = StdSystem
 	u32 mSystemHeapStart;                            // _244
 	u32 mSystemHeapEnd;                              // _248
-	Graphics* mGfx;                                  // _24C
+	DGXGraphics* mDGXGfx;                            // _24C
 	u32 _250;                                        // _250, unknown
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258
@@ -363,8 +363,8 @@ struct System : public StdSystem {
 	u32 mEngineTotalFrames;                          // _29C
 	u32 mRetraceCount;                               // _2A0
 	u32 mPrevHeapAllocType;                          // _2A4
-	AddressNode _2A8;                                // _2A8, unknown size
-	u32 _2BC;                                        // _2BC, unknown, could be part of _2A8
+	AddressNode _2A8;                                // _2A8
+	u32 mBuildMapFuncList;                           // _2BC, structure is nextItemPtr, virtAddr, char buf w/ demangled name/filename
 	SystemCache _2C0;                                // _2C0
 	SystemCache _2E8;                                // _2E8
 	FakeSystemList _310;                             // _310, fake
@@ -382,7 +382,11 @@ extern System* gsys;
  * @brief TODO
  */
 struct LogStream : public Stream {
-	LogStream() { }
+	LogStream()
+	{
+		_08 = 0;
+		_0C = 0;
+	}
 
 	virtual void flush() // _54 (weak)
 	{
@@ -424,7 +428,7 @@ struct LogStream : public Stream {
 	// _04     = VTBL
 	// _00-_08 = Stream
 	int _08;             // _08
-	u8 _0C[0x4];         // _0C, unknown
+	u32 _0C;             // _0C, unknown
 	char mBuffer[0x100]; // _10
 };
 

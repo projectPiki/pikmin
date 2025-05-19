@@ -308,8 +308,8 @@ void GameFlow::menuChangeFilter(Menu& menu)
 {
 	mFilterType ^= 1;
 	sprintf(menu.mCurrentItem->mName, "type = %s", filterNames[mFilterType]);
-	gsys->mGfx->setVerticalFilter(&mFilters[mFilterType * 8]);
-	gsys->mGfx->videoReset();
+	gsys->mDGXGfx->setVerticalFilter(&mFilters[mFilterType * 8]);
+	gsys->mDGXGfx->videoReset();
 }
 
 /*
@@ -325,8 +325,8 @@ void GameFlow::menuIncreaseFilter(Menu& menu)
 
 	sprintf(menu.mCurrentItem->mName, "Filter setting %d", mFilters[menu.mCurrentItem->mFilterIndex]);
 	if (mFilterType == FILTER_Custom) {
-		gsys->mGfx->setVerticalFilter(mFilters);
-		gsys->mGfx->videoReset();
+		gsys->mDGXGfx->setVerticalFilter(mFilters);
+		gsys->mDGXGfx->videoReset();
 	}
 }
 
@@ -343,8 +343,8 @@ void GameFlow::menuDecreaseFilter(Menu& menu)
 
 	sprintf(menu.mCurrentItem->mName, "Filter setting %d", mFilters[menu.mCurrentItem->mFilterIndex]);
 	if (mFilterType == FILTER_Custom) {
-		gsys->mGfx->setVerticalFilter(mFilters);
-		gsys->mGfx->videoReset();
+		gsys->mDGXGfx->setVerticalFilter(mFilters);
+		gsys->mDGXGfx->videoReset();
 	}
 }
 

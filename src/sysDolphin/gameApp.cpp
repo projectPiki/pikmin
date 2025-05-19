@@ -23,5 +23,5 @@ DEFINE_PRINT(nullptr)
  */
 void GameApp::renderall()
 {
-	draw((Graphics&)*gsys->mGfx);
+	draw((Graphics&)*gsys->mDGXGfx);
 }

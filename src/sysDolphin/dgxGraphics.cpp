@@ -220,7 +220,7 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	}
 
 	gsys->mIsRendering;
-	u8* dl               = gsys->mGfx->getDListPtr();
+	u8* dl               = gsys->mDGXGfx->getDListPtr();
 	mat->mDisplayListPtr = dl;
 	GXBeginDisplayList(dl, getDListRemainSize());
 

@@ -1826,7 +1826,7 @@ void PVWTevColReg::animate(f32* p1, ShortColour& color)
  */
 void Material::attach()
 {
-	gsys->mGfx->useDList(gsys->mGfx->compileMaterial(this));
+	gsys->mDGXGfx->useDList(gsys->mDGXGfx->compileMaterial(this));
 }
 
 /*

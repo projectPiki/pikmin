@@ -51,8 +51,8 @@ struct NinLogoSetupSection : public Node {
 			int windowStatus = progresWindow->update(mController);
 			if (windowStatus == 1) {
 				OSSetProgressiveMode(TRUE);
-				gsys->mGfx->mRenderMode = 1;
-				gsys->mGfx->videoReset();
+				gsys->mDGXGfx->mRenderMode = 1;
+				gsys->mDGXGfx->videoReset();
 				progresWindow = nullptr;
 				return;
 			}
