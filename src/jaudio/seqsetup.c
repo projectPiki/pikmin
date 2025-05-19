@@ -844,7 +844,7 @@ void Jaq_StartSeq(u32)
  * Address:	80014780
  * Size:	00014C
  */
-void Jaq_OpenTrack(void)
+void Jaq_OpenTrack(seqp_*, unknown, unknown)
 {
 	/*
 	.loc_0x0:

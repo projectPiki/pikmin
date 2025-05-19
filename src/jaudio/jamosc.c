@@ -342,7 +342,7 @@ void Osc_Setup_ADSR(void)
  * Address:	80015020
  * Size:	00010C
  */
-void Osc_Setup_Full(void)
+void Osc_Setup_Full(seqp_*, u8, u32, u32)
 {
 	/*
 	.loc_0x0:

@@ -15,7 +15,7 @@ void Osc_Clear_Overwrite(void);
 void Osc_Init_Env(void);
 void Osc_Setup_SimpleEnv(seqp_*, u8, u32);
 void Osc_Setup_ADSR(void);
-void Osc_Setup_Full(void);
+void Osc_Setup_Full(seqp_*, u8, u32, u32);
 
 #ifdef __cplusplus
 };
