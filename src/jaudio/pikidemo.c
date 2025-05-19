@@ -512,7 +512,7 @@ static void DoSequence(u32 id, u32 a2)
 void Jac_PlayDemoSequenceDirect(u32 id)
 {
 	demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
-	Jam_WritePortAppDirect(demo_bgm_seqp, 0, (u16)id);
+	Jam_WritePortAppDirect(demo_bgm_seqp, 0, id);
 }
 
 /*
@@ -538,7 +538,7 @@ void Jac_StartDemo(int id)
 {
 	Jam_WritePortAppDirect(demo_seqp, 0, (u16)id);
 	if (-1 < demo_mml_active) {
-		Jam_WritePortAppDirect(demo_seqp, 1, (u16)id);
+		Jam_WritePortAppDirect(demo_seqp, 1, id);
 	}
 	Jac_Orima_Formation(0, 0);
 	Jac_SetProcessStatus(5);

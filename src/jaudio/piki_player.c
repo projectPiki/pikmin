@@ -15,7 +15,7 @@ static u32 gaya_timer;
  * Address:	80018120
  * Size:	0000DC
  */
-void Jac_Orima_Walk(u16 soundID, u32 p2)
+void Jac_Orima_Walk(s32 soundID, u32 p2)
 {
 	static seqp_* seqp = nullptr;
 	static u8 status   = 0;
@@ -86,8 +86,8 @@ void Jac_Orima_Formation(s32 a1, s32 a2)
 	}
 
 	int s = sqrtf2(a1 * a1 + a2 * a2);
-	Jam_WritePortAppDirect(stick_seqp, 2, (u16)a1);
-	Jam_WritePortAppDirect(stick_seqp, 3, (u16)s);
+	Jam_WritePortAppDirect(stick_seqp, 2, a1);
+	Jam_WritePortAppDirect(stick_seqp, 3, s);
 
 	if (a1 == 0 && s == 0) {
 		if (flag) {
@@ -298,10 +298,10 @@ void Jac_UpdatePikiGaya()
 			volume = 0.0f;
 		}
 		if (pikis == 0) {
-			Jam_WritePortAppDirect(seqp, 0, pikis & 0xFFFF);
+			Jam_WritePortAppDirect(seqp, 0, pikis);
 		}
 	} else if (gaya_timer >= 240) {
-		Jam_WritePortAppDirect(seqp, 0, pikis & 0xFFFF);
+		Jam_WritePortAppDirect(seqp, 0, pikis);
 		volume += 0.05f;
 		if (volume > 1.0f) {
 			volume = 1.0f;

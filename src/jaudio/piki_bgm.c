@@ -5,6 +5,7 @@
 #include "jaudio/seqsetup.h"
 #include "jaudio/interface.h"
 #include "jaudio/PikiScene.h"
+#include "jaudio/jammain_2.h"
 #include "Dolphin/os.h"
 
 // This struct might be something else entirely, not BgmControl

@@ -1,13 +1,13 @@
 #ifndef _JAUDIO_SEQSETUP_H
 #define _JAUDIO_SEQSETUP_H
 
-#include "jaudio/jammain_2.h"
-
 #include "types.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif // ifdef __cplusplus
+
+typedef struct seqp_ seqp_;
 
 void Jaq_Reset(void);
 void Jaq_GetRemainFreeTracks(void);
@@ -17,14 +17,11 @@ unknown Jaq_SetSeqData(unknown, u8*, u32, unknown);
 unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown);
 void Jaq_SetBankNumber(int*, u8);
 void Jaq_StartSeq(u32);
-void Jaq_OpenTrack(void);
+void Jaq_OpenTrack(seqp_*, unknown, unknown);
 void Jaq_CloseTrack(void);
 
 #ifdef __cplusplus
 };
 #endif // ifdef __cplusplus
-
-void AllocNewRoot(seqp_*);
-void DeAllocRoot(seqp_*);
 
 #endif

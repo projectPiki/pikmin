@@ -974,7 +974,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (mGroundTriangle) {
 			attr = MapCode::getAttribute(mGroundTriangle);
 		}
-		u16 soundType;
+		int soundType;
 		switch (attr) {
 		case ATTR_Soil:
 			soundType = 1;
