@@ -254,6 +254,8 @@ struct DGXGraphics : public Graphics {
 	void directPrint(int, int, char*, ...);
 	void directErase(RectArea&, bool);
 
+	static DGXGraphics* gfx;
+
 	// _3B4      = VTBL
 	// _000-_3B8 = Graphics
 	GXFifoObj* mGpFifo;                  // _3B8
@@ -269,7 +271,7 @@ struct DGXGraphics : public Graphics {
 	Matrix4f mProjectionTextureMatrix;   // _3E0
 	u8 _420[0x610 - 0x420];              // _420, unknown
 	u8* mDisplayBuffer;                  // _610
-	int mPostRetraceWaitCount;           // _614
+	vu32 mPostRetraceWaitCount;          // _614
 	int mRetraceCount;                   // _618
 	int mSystemFrameRate;                // _61C
 	VIRetraceCallback mRetraceCallback;  // _620

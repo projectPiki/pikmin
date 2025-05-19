@@ -18,12 +18,64 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("DGXGraphics")
 
-DGXGraphics* gfx;
+GXRenderModeObj progressiveRenderMode = {
+	VI_TVMODE_NTSC_PROG, // viTVmode
+	640,                 // fbWidth
+	480,                 // efbHeight
+	480,                 // xfbHeight
+	40,                  // viXOrigin
+	0,                   // viYOrigin
+	640,                 // viWidth
+	480,                 // viHeight
+	VI_XFBMODE_SF,       // xFBmode
+	0,                   // fiend_rendering
+	0,                   // aa
+	{
+	    { 6, 6 }, // sample_pattern
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	},
+	{ 0, 0, 21, 22, 21, 0, 0 }, // vfilter
+};
+GXRenderModeObj localNtsc480IntDf = {
+	VI_TVMODE_NTSC_INT, // viTVmode
+	640,                // fbWidth
+	480,                // efbHeight
+	480,                // xfbHeight
+	40,                 // viXOrigin
+	0,                  // viYOrigin
+	640,                // viWidth
+	480,                // viHeight
+	VI_XFBMODE_DF,      // xFBmode
+	0,                  // fiend_rendering
+	0,                  // aa
+	{
+	    { 6, 6 }, // sample_pattern
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	},
+	{ 5, 6, 14, 14, 14, 6, 5 }, // vfilter
+};
 
-GXRenderModeObj progressiveRenderMode = { VI_TVMODE_NTSC_PROG, 640, 480, 480, 40, 0, 640, 480, VI_XFBMODE_SF };
-GXRenderModeObj localNtsc480IntDf     = { VI_TVMODE_NTSC_INT, 640, 480, 480, 40, 0, 640, 480, VI_XFBMODE_SF };
-
-GXRenderModeObj* sScreenMode[2] = { &localNtsc480IntDf, &progressiveRenderMode };
+static GXRenderModeObj* sScreenMode[2] = { &localNtsc480IntDf, &progressiveRenderMode };
 
 static int sFirstFrame      = 4;
 static int kDefaultFifoSize = 0x60000;
@@ -32,15 +84,45 @@ static int kDefaultDLSize   = 0x20000;
 static bool sendMtxIndx     = true;
 static bool sendTxUVIndx    = true;
 
-u32 sFrameSize;
-int frameNum;
-int oldCull;
-int oldVerts;
-int oldNorms;
-int oldCols;
+static u32 sFrameSize;
+static int oldVerts;
+static int oldNorms;
+static int oldCols;
+static int oldCull;
+static int oldTevGroup;
+static int frameNum;
 
-int oldTexs[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-GXColor GColors[3];
+static int oldTexs[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+GXColor GColors[2] = { { 255, 255, 255, 255 }, { 255, 255, 255, 255 } };
+
+static char* mtxTypes[] = {
+	"GX_TEXMTX0", "GX_TEXMTX1", "GX_TEXMTX2", "GX_TEXMTX3", "GX_TEXMTX4",  "GX_TEXMTX5",
+	"GX_TEXMTX6", "GX_TEXMTX7", "GX_TEXMTX8", "GX_TEXMTX9", "GX_IDENTITY",
+};
+static char* genSrcs[] = {
+	"GX_TG_POS",       "GX_TG_NRM",       "GX_TG_BINRM",     "GX_TG_TANGENT",   "GX_TG_TEX0",      "GX_TG_TEX1",      "GX_TG_TEX2",
+	"GX_TG_TEX3",      "GX_TG_TEX4",      "GX_TG_TEX5",      "GX_TG_TEX6",      "GX_TG_TEX7",      "GX_TG_TEXCOORD0", "GX_TG_TEXCOORD1",
+	"GX_TG_TEXCOORD2", "GX_TG_TEXCOORD3", "GX_TG_TEXCOORD4", "GX_TG_TEXCOORD5", "GX_TG_TEXCOORD6", "GX_TG_COLOR0",    "GX_TG_COLOR1",
+};
+
+static GXVtxDescList meshVCD[] = {
+	{ GX_VA_PNMTXIDX, GX_DIRECT }, { GX_VA_TEX0MTXIDX, GX_NONE }, { GX_VA_TEX1MTXIDX, GX_NONE }, { GX_VA_TEX2MTXIDX, GX_NONE },
+	{ GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX4MTXIDX, GX_NONE }, { GX_VA_TEX5MTXIDX, GX_NONE }, { GX_VA_TEX6MTXIDX, GX_NONE },
+	{ GX_VA_TEX7MTXIDX, GX_NONE }, { GX_VA_POS, GX_INDEX16 },     { GX_VA_NBT, GX_NONE },        { GX_VA_NRM, GX_INDEX16 },
+	{ GX_VA_CLR0, GX_NONE },       { GX_VA_CLR1, GX_NONE },       { GX_VA_TEX0, GX_INDEX16 },    { GX_VA_TEX1, GX_NONE },
+	{ GX_VA_TEX2, GX_NONE },       { GX_VA_TEX3, GX_NONE },       { GX_VA_TEX4, GX_NONE },       { GX_VA_TEX5, GX_NONE },
+	{ GX_VA_TEX6, GX_NONE },       { GX_VA_TEX7, GX_NONE },       { GX_VA_NULL, GX_NONE },
+};
+
+static GXVtxDescList meshVAT[] = {
+	{ GX_VA_POS, GX_DIRECT },  { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_NRM, GX_NONE },    { GX_VA_TEX3MTXIDX, GX_NONE },
+	{ GX_VA_TEX0, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX1, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
+	{ GX_VA_TEX2, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX3, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
+	{ GX_VA_TEX4, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX5, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
+	{ GX_VA_TEX6, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX7, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
+	{ GX_VA_NULL, GX_DIRECT }, { GX_VA_TEX2MTXIDX, GX_NONE },
+};
 
 /*
  * --INFO--
@@ -165,6 +247,12 @@ void DGXGraphics::resetCopyFilter()
 	GXSetCopyFilter(sScreenMode[mRenderMode]->aa, sScreenMode[mRenderMode]->sample_pattern, GX_TRUE, sScreenMode[mRenderMode]->vfilter);
 }
 
+DGXGraphics* DGXGraphics::gfx;
+
+static bool sendTxIndx;  // type unsure
+static bool sendColIndx; // type unsure
+static bool sendNbtIndx; // type unsure
+
 /*
  * --INFO--
  * Address:	8004798C
@@ -225,39 +313,59 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	GXBeginDisplayList(dl, getDListRemainSize());
 
 	if (mat->mPeInfo.mControlFlags & 1) {
-		u32 data = mat->mPeInfo.mBlendModeFlags;
-		GXSetBlendMode((GXBlendMode)(data & 0xf), (GXBlendFactor)(data >> 4 & 0xf), (GXBlendFactor)(data >> 8 & 0xf),
-		               (GXLogicOp)(data >> 12 & 0xf));
+		// u32 data = mat->mPeInfo.mBlendModeFlags;
+		GXSetBlendMode((GXBlendMode)(mat->mPeInfo.mBlendModeFlags & 0xf), (GXBlendFactor)(mat->mPeInfo.mBlendModeFlags >> 4 & 0xf),
+		               (GXBlendFactor)(mat->mPeInfo.mBlendModeFlags >> 8 & 0xf), (GXLogicOp)(mat->mPeInfo.mBlendModeFlags >> 12 & 0xf));
 
-		u32 data2 = mat->mPeInfo.mAlphaCompareFlags;
-		GXSetAlphaCompare((GXCompare)(data2 & 0xf), (GXBlendFactor)(data2 >> 4 & 0xf), (GXAlphaOp)(data2 >> 16 & 0xf),
-		                  (GXCompare)(data2 >> 20 & 0xf), (GXAlphaOp)(data2 >> 24 & 0xf));
+		// u32 data2 = mat->mPeInfo.mAlphaCompareFlags;
+		GXSetAlphaCompare((GXCompare)(mat->mPeInfo.mAlphaCompareFlags & 0xF), (mat->mPeInfo.mAlphaCompareFlags >> 4 & 0xFF),
+		                  (GXAlphaOp)(mat->mPeInfo.mAlphaCompareFlags >> 16 & 0xF),
+		                  (GXCompare)(mat->mPeInfo.mAlphaCompareFlags >> 20 & 0xF), mat->mPeInfo.mAlphaCompareFlags >> 24 & 0xFF);
 
-		data2 = mat->mPeInfo.mDepthTestFlags;
-		GXSetZMode(bool(data2 & 1), (GXCompare)(data2 >> 8), bool(data2 & 2));
-	} else if (mat->mPeInfo.mControlFlags & 0x8000) {
+		// u32 data2 = mat->mPeInfo.mDepthTestFlags;
+		GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
+		           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
+	} else if (mat->mFlags & 0x8000) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-	} else if (mat->mPeInfo.mControlFlags & 0x100) {
+	} else if (mat->mFlags & 0x100) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mPeInfo.mControlFlags & 0x200) {
+	} else if (mat->mFlags & 0x200) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mPeInfo.mControlFlags & 0x400) {
+	} else if (mat->mFlags & 0x400) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 	}
 
-	GXSetTevKColor(GX_KCOLOR0, *(GXColor*)((GXColor*)mat->mTevInfo + 27)); // this probably isnt right
-	GXSetTevKColor(GX_KCOLOR1, *(GXColor*)((GXColor*)mat->mTevInfo + 28));
-	GXSetTevKColor(GX_KCOLOR2, *(GXColor*)((GXColor*)mat->mTevInfo + 29));
-	GXSetTevKColor(GX_KCOLOR3, *(GXColor*)((GXColor*)mat->mTevInfo + 30));
-	for (int i = 0; i < mat->mTevInfo->mTevColRegs[0].mAnimatedColor.r; i++) { }
+	GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->_6C[0]));
+	GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->_6C[1]));
+	GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->_6C[2]));
+	GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->_6C[3]));
+	for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
+		PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
+		GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage._06._00, (GXTevColorArg)stage._06._01, (GXTevColorArg)stage._06._02,
+		                (GXTevColorArg)stage._06._03);
+		GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage._06._04, (GXTevBias)stage._06._05, (GXTevScale)stage._06._06, (GXBool)stage._06._07,
+		                (GXTevRegID)stage._06._08);
+		GXSetTevAlphaIn((GXTevStageID)i, (GXTevAlphaArg)stage._12._00, (GXTevAlphaArg)stage._12._01, (GXTevAlphaArg)stage._12._02,
+		                (GXTevAlphaArg)stage._12._03);
+		GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage._12._04, (GXTevBias)stage._12._05, (GXTevScale)stage._12._06, (GXBool)stage._12._07,
+		                (GXTevRegID)stage._12._08);
+	}
+
+	PVWLightingInfo* lightInfo = &mat->mLightingInfo;
+	u32 check                  = mat->mLightingInfo._00 != 0;
+	if (lightInfo) {
+		u32 check2 = mat->mLightingInfo._00 != 0;
+	}
+
+	GXSetChanCtrl(GX_COLOR0A0, (GXBool)check, GX_SRC_REG, GX_SRC_REG, 3, GX_DF_CLAMP, (!check) ? GX_AF_NONE : GX_AF_SPOT);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -699,78 +807,11 @@ void DGXGraphics::waitRetrace()
 	VIWaitForRetrace();
 	GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 
-	// this mess is probably an inline
-	bool test = true;
-	if (!gsys->mIsLoadingScreenActive && !gsys->resetPending()) {
-		test = false;
-	}
-	bool set = test ? false : true;
+	bool set = (gsys->mIsLoadingScreenActive || gsys->mIsSystemOperationPending) ? false : true;
 	GXCopyDisp(mDisplayBuffer, set);
 
 	mRetraceCount    = VIGetRetraceCount();
 	mSystemFrameRate = gsys->mFrameRate;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        .loc_0xC4
-	  lwz       r3, -0x7768(r13)
-	  cmpwi     r3, 0
-	  beq-      .loc_0x40
-	  subi      r0, r3, 0x1
-	  stw       r0, -0x7768(r13)
-	  lwz       r0, -0x7768(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x40
-	  li        r0, 0
-	  stw       r0, -0x7768(r13)
-
-	.loc_0x40:
-	  bl        0x1BB7A8
-	  bl        0x1BAC40
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CBCA8
-	  lwz       r4, 0x2DEC(r13)
-	  li        r3, 0x1
-	  lwz       r0, 0x268(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7C
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7C
-	  li        r3, 0
-
-	.loc_0x7C:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x8C
-	  li        r0, 0
-	  b         .loc_0x90
-
-	.loc_0x8C:
-	  li        r0, 0x1
-
-	.loc_0x90:
-	  mr        r4, r0
-	  lwz       r3, 0x610(r31)
-	  bl        0x1C94D8
-	  bl        0x1BB950
-	  stw       r3, 0x618(r31)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x14(r3)
-	  stw       r0, 0x61C(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-
-	.loc_0xC4:
-	*/
 }
 
 /*
@@ -808,46 +849,6 @@ void DGXGraphics::retraceProc(u32)
 	if (gfx->mPostRetraceWaitCount != 0 && --gfx->mPostRetraceWaitCount == 0) {
 		OSSendMessage(&gfx->mPostRetraceMsgQueue, (OSMessage)'DONE', 0);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2DEC(r13)
-	  bl        -0x15B0
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r0, 0x260(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2C
-	  bl        -0x1C44
-	  b         .loc_0x74
-
-	.loc_0x2C:
-	  lwz       r4, 0x2A0(r3)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2A0(r3)
-	  lwz       r3, 0x2E34(r13)
-	  addi      r4, r3, 0x614
-	  lwz       r0, 0x614(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74
-	  lwz       r3, 0x0(r4)
-	  subic.    r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-	  bne-      .loc_0x74
-	  lwz       r5, 0x2E34(r13)
-	  lis       r3, 0x444F
-	  addi      r4, r3, 0x4E45
-	  addi      r3, r5, 0x624
-	  li        r5, 0
-	  bl        0x1B159C
-
-	.loc_0x74:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1363,25 +1364,7 @@ void DGXGraphics::setOrthogonal(Mtx mtx, RectArea& bounds)
  */
 void DGXGraphics::setScissor(RectArea& bounds)
 {
-	GXSetScissor(bounds.mMinX, bounds.mMinY, bounds.mMaxX - bounds.mMinX, bounds.mMaxY - bounds.mMinY);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x0(r4)
-	  lwz       r0, 0x8(r4)
-	  lwz       r7, 0x4(r4)
-	  lwz       r6, 0xC(r4)
-	  sub       r5, r0, r3
-	  addi      r4, r7, 0
-	  sub       r6, r6, r7
-	  bl        0x1CBADC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	GXSetScissor(bounds.mMinX, bounds.mMinY, bounds.width(), bounds.height());
 }
 
 /*
@@ -1391,49 +1374,7 @@ void DGXGraphics::setScissor(RectArea& bounds)
  */
 void DGXGraphics::setViewport(RectArea& bounds)
 {
-	GXSetViewport(bounds.mMinX, bounds.mMinY, bounds.mMaxX - bounds.mMinX, bounds.mMaxY - bounds.mMinY, 0.0f, 1.0f);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x4330
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  lwz       r7, 0x4(r4)
-	  lwz       r0, 0xC(r4)
-	  xoris     r5, r7, 0x8000
-	  lwz       r8, 0x0(r4)
-	  lwz       r3, 0x8(r4)
-	  sub       r4, r0, r7
-	  xoris     r0, r8, 0x8000
-	  stw       r5, 0x24(r1)
-	  sub       r3, r3, r8
-	  stw       r0, 0x2C(r1)
-	  xoris     r3, r3, 0x8000
-	  xoris     r0, r4, 0x8000
-	  lfd       f4, -0x7B48(r2)
-	  stw       r3, 0x1C(r1)
-	  lfs       f5, -0x7B58(r2)
-	  stw       r0, 0x14(r1)
-	  lfs       f6, -0x7B60(r2)
-	  stw       r6, 0x20(r1)
-	  stw       r6, 0x28(r1)
-	  lfd       f0, 0x20(r1)
-	  stw       r6, 0x18(r1)
-	  lfd       f1, 0x28(r1)
-	  fsubs     f2, f0, f4
-	  stw       r6, 0x10(r1)
-	  lfd       f3, 0x18(r1)
-	  fsubs     f1, f1, f4
-	  lfd       f0, 0x10(r1)
-	  fsubs     f3, f3, f4
-	  fsubs     f4, f0, f4
-	  bl        0x1CBA20
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	GXSetViewport(bounds.mMinX, bounds.mMinY, bounds.width(), bounds.height(), 0.0f, 1.0f);
 }
 
 /*
@@ -1463,10 +1404,10 @@ void DGXGraphics::initReflectTex(bool)
 void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 {
 	f32 badcompiler[0x3c];
+	Matrix4f mtx;
 	if (set) {
 		MTXLightPerspective(mProjectionTextureMatrix.mMtx, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y,
 		                    0.5f, 0.5f);
-		Matrix4f mtx;
 		PSMTXConcat(mProjectionTextureMatrix.mMtx, cam->mLookAtMtx.mMtx, mProjectionTextureMatrix.mMtx);
 		PSMTXConcat(mProjectionTextureMatrix.mMtx, Matrix4f::ident.mMtx, mtx.mMtx);
 		GXLoadTexMtxImm(mtx.mMtx, 30, GX_MTX3x4);
@@ -3016,63 +2957,8 @@ void DGXGraphics::setFog(bool set)
 			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", "dgxGraphics.cpp", 1683);
 		}
 	} else {
-		GXColor col = { 0, 0, 0, 0 };
-		GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, col);
+		GXSetFog(GX_FOG_NONE, 0.0f, 0.0f, 0.0f, 0.0f, (GXColor) { 0, 0, 0, 0 });
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r6, r3, 0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x20(r1)
-	  beq-      .loc_0x78
-	  lwz       r3, 0x2E4(r6)
-	  lfs       f1, 0x1D0(r3)
-	  lfs       f0, 0x1D4(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x58
-	  lwz       r0, 0x364(r6)
-	  addi      r4, r1, 0x1C
-	  li        r3, 0x2
-	  stw       r0, 0x1C(r1)
-	  lwz       r5, 0x2E4(r6)
-	  lfs       f1, 0x358(r6)
-	  lfs       f2, 0x35C(r6)
-	  lfs       f3, 0x1D0(r5)
-	  lfs       f4, 0x1D4(r5)
-	  bl        0x1C96D4
-	  b         .loc_0xA4
-
-	.loc_0x58:
-	  lis       r3, 0x802A
-	  crclr     6, 0x6
-	  lis       r4, 0x802A
-	  addi      r3, r3, 0x5B2C
-	  addi      r4, r4, 0x56E8
-	  li        r5, 0x693
-	  bl        0x1AD5AC
-	  b         .loc_0xA4
-
-	.loc_0x78:
-	  lwz       r0, -0x7B40(r2)
-	  addi      r4, r1, 0x18
-	  lfs       f1, -0x7B58(r2)
-	  li        r3, 0
-	  stw       r0, 0x14(r1)
-	  fmr       f2, f1
-	  lwz       r0, 0x14(r1)
-	  fmr       f3, f1
-	  fmr       f4, f1
-	  stw       r0, 0x18(r1)
-	  bl        0x1C9684
-
-	.loc_0xA4:
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

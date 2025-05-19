@@ -52,6 +52,12 @@ struct RectArea {
 		mMaxY = maxY;
 	}
 
+	int width() { return mMaxX - mMinX; }
+	int height() { return mMaxY - mMinY; }
+
+	// other DLL inlines to do:
+	bool pointInside(int, int);
+
 	int mMinX; // _00, x1
 	int mMinY; // _04, y1
 	int mMaxX; // _08, x2
