@@ -94,7 +94,7 @@ static int frameNum;
 
 static int oldTexs[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-GXColor GColors[2] = { { 255, 255, 255, 255 }, { 255, 255, 255, 255 } };
+GColor GColors[1];
 
 static char* mtxTypes[] = {
 	"GX_TEXMTX0", "GX_TEXMTX1", "GX_TEXMTX2", "GX_TEXMTX3", "GX_TEXMTX4",  "GX_TEXMTX5",
@@ -313,16 +313,13 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	GXBeginDisplayList(dl, getDListRemainSize());
 
 	if (mat->mPeInfo.mControlFlags & 1) {
-		// u32 data = mat->mPeInfo.mBlendModeFlags;
 		GXSetBlendMode((GXBlendMode)(mat->mPeInfo.mBlendModeFlags & 0xf), (GXBlendFactor)(mat->mPeInfo.mBlendModeFlags >> 4 & 0xf),
 		               (GXBlendFactor)(mat->mPeInfo.mBlendModeFlags >> 8 & 0xf), (GXLogicOp)(mat->mPeInfo.mBlendModeFlags >> 12 & 0xf));
 
-		// u32 data2 = mat->mPeInfo.mAlphaCompareFlags;
 		GXSetAlphaCompare((GXCompare)(mat->mPeInfo.mAlphaCompareFlags & 0xF), (mat->mPeInfo.mAlphaCompareFlags >> 4 & 0xFF),
 		                  (GXAlphaOp)(mat->mPeInfo.mAlphaCompareFlags >> 16 & 0xF),
 		                  (GXCompare)(mat->mPeInfo.mAlphaCompareFlags >> 20 & 0xF), mat->mPeInfo.mAlphaCompareFlags >> 24 & 0xFF);
 
-		// u32 data2 = mat->mPeInfo.mDepthTestFlags;
 		GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
 		           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
 	} else if (mat->mFlags & 0x8000) {
@@ -349,355 +346,52 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->_6C[3]));
 	for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 		PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
-		GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage._06._00, (GXTevColorArg)stage._06._01, (GXTevColorArg)stage._06._02,
-		                (GXTevColorArg)stage._06._03);
-		GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage._06._04, (GXTevBias)stage._06._05, (GXTevScale)stage._06._06, (GXBool)stage._06._07,
-		                (GXTevRegID)stage._06._08);
-		GXSetTevAlphaIn((GXTevStageID)i, (GXTevAlphaArg)stage._12._00, (GXTevAlphaArg)stage._12._01, (GXTevAlphaArg)stage._12._02,
-		                (GXTevAlphaArg)stage._12._03);
-		GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage._12._04, (GXTevBias)stage._12._05, (GXTevScale)stage._12._06, (GXBool)stage._12._07,
-		                (GXTevRegID)stage._12._08);
+		GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA, (GXTevColorArg)stage.mTevColorCombiner.mInArgB,
+		                (GXTevColorArg)stage.mTevColorCombiner.mInArgC, (GXTevColorArg)stage.mTevColorCombiner.mInArgD);
+		GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage.mTevColorCombiner.mTevOp, (GXTevBias)stage.mTevColorCombiner.mBias,
+		                (GXTevScale)stage.mTevColorCombiner.mScale, (GXBool)stage.mTevColorCombiner.mDoClamp,
+		                (GXTevRegID)stage.mTevColorCombiner.mOutReg);
+		GXSetTevAlphaIn((GXTevStageID)i, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgA, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgB,
+		                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgC, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgD);
+		GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage.mTevAlphaCombiner.mTevOp, (GXTevBias)stage.mTevAlphaCombiner.mBias,
+		                (GXTevScale)stage.mTevAlphaCombiner.mScale, (GXBool)stage.mTevAlphaCombiner.mDoClamp,
+		                (GXTevRegID)stage.mTevAlphaCombiner.mOutReg);
 	}
 
 	PVWLightingInfo* lightInfo = &mat->mLightingInfo;
-	u32 check                  = mat->mLightingInfo._00 != 0;
+	bool doCombined            = (mat->mLightingInfo.mCtrlFlag & 0x1) != 0;
 	if (lightInfo) {
-		u32 check2 = mat->mLightingInfo._00 != 0;
+		bool doEnableColor0 = (lightInfo->mCtrlFlag & 0x1);
+		u32 diffFnColor0    = (lightInfo->mCtrlFlag >> 3) & 0x3;
+		u32 diffFnAlpha0    = (lightInfo->mCtrlFlag >> 5) & 0x3;
+		bool doEnableAlpha0 = (lightInfo->mCtrlFlag & 0x4);
+		bool ambSrcColor0   = (lightInfo->mCtrlFlag & 0x200);
+		bool ambSrcAlpha0   = (lightInfo->mCtrlFlag & 0x400);
+		bool matSrcColor0   = (lightInfo->mCtrlFlag & 0x800);
+		bool matSrcAlpha0   = (lightInfo->mCtrlFlag & 0x1000);
+
+		GXSetChanCtrl(GX_COLOR0, doEnableColor0, (GXColorSrc)ambSrcColor0, (GXColorSrc)matSrcColor0, 3, (GXDiffuseFn)diffFnColor0,
+		              (!doEnableColor0) ? GX_AF_NONE : GX_AF_SPOT);
+		GXSetChanCtrl(GX_ALPHA0, doEnableAlpha0, (GXColorSrc)ambSrcAlpha0, (GXColorSrc)matSrcAlpha0, 3, (GXDiffuseFn)diffFnAlpha0,
+		              (!doEnableAlpha0) ? GX_AF_NONE : GX_AF_SPOT);
+
+	} else {
+		GXBool enable = doCombined;
+		GXSetChanCtrl(GX_COLOR0A0, enable, GX_SRC_REG, GX_SRC_REG, 3, GX_DF_CLAMP, !doCombined ? GX_AF_NONE : GX_AF_SPOT);
 	}
 
-	GXSetChanCtrl(GX_COLOR0A0, (GXBool)check, GX_SRC_REG, GX_SRC_REG, 3, GX_DF_CLAMP, (!check) ? GX_AF_NONE : GX_AF_SPOT);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
+	int numChans = 1;
+	if (lightInfo && lightInfo->mCtrlFlag & 0x2) {
+		GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, 0x80, (GXDiffuseFn)((lightInfo->mCtrlFlag >> 7) & 0x3), GX_AF_SPEC);
+		GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0x80, GX_DF_CLAMP, GX_AF_NONE);
+		numChans = 2;
+	} else {
+		GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_NONE, GX_AF_NONE);
+	}
 
-	  blrl
-	  mr        r28, r3
-	  stw       r28, 0x98(r31)
-	  mr        r3, r26
-	  lwz       r12, 0x3B4(r26)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r4, r3, 0
-	  addi      r3, r28, 0
-	  bl        0x1CC684
-	  lwz       r0, 0x58(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0xE0
-	  lwz       r0, 0x64(r31)
-	  rlwinm    r3,r0,0,28,31
-	  rlwinm    r4,r0,28,28,31
-	  rlwinm    r5,r0,24,28,31
-	  rlwinm    r6,r0,20,28,31
-	  bl        0x1CC1C4
-	  lwz       r0, 0x5C(r31)
-	  rlwinm    r3,r0,0,28,31
-	  rlwinm    r4,r0,28,24,31
-	  rlwinm    r5,r0,16,28,31
-	  rlwinm    r6,r0,12,28,31
-	  rlwinm    r7,r0,8,24,31
-	  bl        0x1CBC4C
-	  lwz       r6, 0x60(r31)
-	  rlwinm    r0,r6,0,31,31
-	  neg       r4, r0
-	  subic     r3, r4, 0x1
-	  rlwinm    r0,r6,0,30,30
-	  subfe     r3, r3, r4
-	  neg       r5, r0
-	  subic     r0, r5, 0x1
-	  rlwinm    r4,r6,24,24,31
-	  subfe     r5, r0, r5
-	  bl        0x1CC300
-	  b         .loc_0x200
-
-	.loc_0xE0:
-	  lwz       r3, 0x18(r31)
-	  rlwinm.   r0,r3,0,16,16
-	  beq-      .loc_0x12C
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0x3
-	  li        r6, 0
-	  bl        0x1CC158
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CBBE4
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0
-	  bl        0x1CC2B4
-	  b         .loc_0x200
-
-	.loc_0x12C:
-	  rlwinm.   r0,r3,0,23,23
-	  beq-      .loc_0x174
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  bl        0x1CC110
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CBB9C
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CC26C
-	  b         .loc_0x200
-
-	.loc_0x174:
-	  rlwinm.   r0,r3,0,22,22
-	  beq-      .loc_0x1BC
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  bl        0x1CC0C8
-	  li        r3, 0x6
-	  li        r4, 0x80
-	  li        r5, 0
-	  li        r6, 0x3
-	  li        r7, 0xFF
-	  bl        0x1CBB54
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CC224
-	  b         .loc_0x200
-
-	.loc_0x1BC:
-	  rlwinm.   r0,r3,0,21,21
-	  beq-      .loc_0x200
-	  li        r3, 0x1
-	  li        r4, 0x4
-	  li        r5, 0x5
-	  li        r6, 0x3
-	  bl        0x1CC080
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CBB0C
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0
-	  bl        0x1CC1DC
-
-	.loc_0x200:
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x1C
-	  lwz       r0, 0x6C(r3)
-	  li        r3, 0
-	  stw       r0, 0x1C(r1)
-	  bl        0x1CB8A0
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x18
-	  lwz       r0, 0x70(r3)
-	  li        r3, 0x1
-	  stw       r0, 0x18(r1)
-	  bl        0x1CB888
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x14
-	  lwz       r0, 0x74(r3)
-	  li        r3, 0x2
-	  stw       r0, 0x14(r1)
-	  bl        0x1CB870
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x10
-	  lwz       r0, 0x78(r3)
-	  li        r3, 0x3
-	  stw       r0, 0x10(r1)
-	  bl        0x1CB858
-	  li        r29, 0
-	  li        r28, 0
-	  b         .loc_0x2E4
-
-	.loc_0x26C:
-	  lwz       r0, 0x80(r3)
-	  addi      r3, r29, 0
-	  add       r30, r0, r28
-	  lbz       r4, 0x6(r30)
-	  lbz       r5, 0x7(r30)
-	  lbz       r6, 0x8(r30)
-	  lbz       r7, 0x9(r30)
-	  bl        0x1CB4C0
-	  lbz       r4, 0xA(r30)
-	  mr        r3, r29
-	  lbz       r5, 0xB(r30)
-	  lbz       r6, 0xC(r30)
-	  lbz       r7, 0xD(r30)
-	  lbz       r8, 0xE(r30)
-	  bl        0x1CB5A8
-	  lbz       r4, 0x12(r30)
-	  mr        r3, r29
-	  lbz       r5, 0x13(r30)
-	  lbz       r6, 0x14(r30)
-	  lbz       r7, 0x15(r30)
-	  bl        0x1CB50C
-	  lbz       r4, 0x16(r30)
-	  mr        r3, r29
-	  lbz       r5, 0x17(r30)
-	  lbz       r6, 0x18(r30)
-	  lbz       r7, 0x19(r30)
-	  lbz       r8, 0x1A(r30)
-	  bl        0x1CB634
-	  addi      r28, r28, 0x1E
-	  addi      r29, r29, 0x1
-
-	.loc_0x2E4:
-	  lwz       r3, 0x90(r31)
-	  lwz       r0, 0x7C(r3)
-	  cmplw     r29, r0
-	  blt+      .loc_0x26C
-	  lwz       r0, 0x4C(r31)
-	  addi      r30, r31, 0x4C
-	  rlwinm    r0,r0,0,31,31
-	  neg       r3, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  addic.    r0, r31, 0x4C
-	  beq-      .loc_0x3F4
-	  lwz       r0, 0x0(r30)
-	  rlwinm    r3,r0,0,31,31
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r6, r4, r5
-	  rlwinm    r3,r0,0,29,29
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r7, r4, r5
-	  rlwinm    r3,r0,0,22,22
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  rlwinm    r3,r0,0,21,21
-	  subfe     r10, r4, r5
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r9, r4, r5
-	  rlwinm    r3,r0,0,20,20
-	  neg       r5, r3
-	  rlwinm    r8,r7,0,24,31
-	  addi      r26, r8, 0
-	  subic     r4, r5, 0x1
-	  rlwinm    r11,r6,0,24,31
-	  subfe     r6, r4, r5
-	  rlwinm    r3,r0,0,19,19
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r7, r4, r5
-	  rlwinm.   r3,r11,0,24,31
-	  addi      r4, r11, 0
-	  rlwinm    r8,r0,29,30,31
-	  rlwinm    r27,r0,27,30,31
-	  rlwinm    r5,r10,0,24,31
-	  rlwinm    r28,r9,0,24,31
-	  rlwinm    r6,r6,0,24,31
-	  rlwinm    r29,r7,0,24,31
-	  bne-      .loc_0x3B0
-	  li        r9, 0x2
-	  b         .loc_0x3B4
-
-	.loc_0x3B0:
-	  li        r9, 0x1
-
-	.loc_0x3B4:
-	  li        r3, 0
-	  li        r7, 0x3
-	  bl        0x1CA16C
-	  rlwinm.   r0,r26,0,24,31
-	  bne-      .loc_0x3D0
-	  li        r9, 0x2
-	  b         .loc_0x3D4
-
-	.loc_0x3D0:
-	  li        r9, 0x1
-
-	.loc_0x3D4:
-	  addi      r4, r26, 0
-	  addi      r5, r28, 0
-	  addi      r6, r29, 0
-	  addi      r8, r27, 0
-	  li        r3, 0x2
-	  li        r7, 0x3
-	  bl        0x1CA13C
-	  b         .loc_0x424
-
-	.loc_0x3F4:
-	  rlwinm.   r0,r3,0,24,31
-	  addi      r4, r3, 0
-	  bne-      .loc_0x408
-	  li        r9, 0x2
-	  b         .loc_0x40C
-
-	.loc_0x408:
-	  li        r9, 0x1
-
-	.loc_0x40C:
-	  li        r3, 0x4
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x3
-	  li        r8, 0x2
-	  bl        0x1CA108
-
-	.loc_0x424:
-	  cmplwi    r30, 0
-	  li        r26, 0x1
-	  beq-      .loc_0x484
-	  lwz       r3, 0x0(r30)
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x484
-	  rlwinm    r8,r3,25,30,31
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x80
-	  li        r9, 0
-	  bl        0x1CA0D0
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x80
-	  li        r8, 0x2
-	  li        r9, 0x2
-	  bl        0x1CA0B0
-	  li        r26, 0x2
-	  b         .loc_0x4A4
-
-	.loc_0x484:
-	  li        r3, 0x5
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  li        r9, 0x2
-	  bl        0x1CA088
-
-	.loc_0x4A4:
-	  stw       r26, 0x50(r31)
-	  bl        0x1CC310
-	  stw       r3, 0x94(r31)
-	  lwz       r3, 0x94(r31)
-
-	.loc_0x4B4:
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	mat->mLightingInfo.mNumChans = numChans;
+	mat->mDisplayListSize  = GXEndDisplayList();
+	return mat->mDisplayListSize;
 }
 
 /*
@@ -930,13 +624,13 @@ int DGXGraphics::setCullFront(int cull)
  */
 void DGXGraphics::setAmbient()
 {
-	GColors[1].r = mAmbientFogColour.r;
-	GColors[1].g = mAmbientFogColour.g;
-	GColors[1].b = mAmbientFogColour.b;
-	GColors[1].a = f32(mAmbientFogColour.a) * mLightIntensity;
+	GColors[0].mAmbColor.r = mAmbientFogColour.r;
+	GColors[0].mAmbColor.g = mAmbientFogColour.g;
+	GColors[0].mAmbColor.b = mAmbientFogColour.b;
+	GColors[0].mAmbColor.a = f32(mAmbientFogColour.a) * mLightIntensity;
 
-	GXSetChanAmbColor(GX_COLOR0A0, GColors[1]);
-	GXSetChanMatColor(GX_COLOR1A1, GColors[0]);
+	GXSetChanAmbColor(GX_COLOR0A0, GColors[0].mAmbColor);
+	GXSetChanMatColor(GX_COLOR1A1, GColors[0].mMatColor);
 }
 
 /*
@@ -944,147 +638,41 @@ void DGXGraphics::setAmbient()
  * Address:	80048484
  * Size:	0001D0
  */
-bool DGXGraphics::setLighting(bool, PVWLightingInfo*)
+bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r25, 0x1C(r1)
-	  mr.       r29, r5
-	  addi      r28, r3, 0
-	  lbz       r31, 0x320(r3)
-	  stb       r4, 0x320(r3)
-	  beq-      .loc_0x104
-	  lwz       r0, 0x0(r29)
-	  rlwinm    r3,r0,0,31,31
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r6, r4, r5
-	  rlwinm    r3,r0,0,29,29
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r7, r4, r5
-	  rlwinm    r3,r0,0,22,22
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  rlwinm    r3,r0,0,21,21
-	  subfe     r10, r4, r5
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r9, r4, r5
-	  rlwinm    r3,r0,0,20,20
-	  neg       r5, r3
-	  rlwinm    r8,r7,0,24,31
-	  addi      r30, r8, 0
-	  subic     r4, r5, 0x1
-	  rlwinm    r11,r6,0,24,31
-	  subfe     r6, r4, r5
-	  rlwinm    r3,r0,0,19,19
-	  neg       r5, r3
-	  subic     r4, r5, 0x1
-	  subfe     r7, r4, r5
-	  rlwinm.   r3,r11,0,24,31
-	  addi      r4, r11, 0
-	  rlwinm    r8,r0,29,30,31
-	  rlwinm    r25,r0,27,30,31
-	  rlwinm    r5,r10,0,24,31
-	  rlwinm    r26,r9,0,24,31
-	  rlwinm    r6,r6,0,24,31
-	  rlwinm    r27,r7,0,24,31
-	  bne-      .loc_0xC0
-	  li        r9, 0x2
-	  b         .loc_0xC4
+	bool prevSetting   = mIsLightingEnabled;
+	mIsLightingEnabled = set;
+	if (lightInfo) {
+		bool doEnableColor0 = (lightInfo->mCtrlFlag & 0x1);
+		u32 diffFnColor0    = (lightInfo->mCtrlFlag >> 3) & 0x3;
+		u32 diffFnAlpha0    = (lightInfo->mCtrlFlag >> 5) & 0x3;
+		bool doEnableAlpha0 = (lightInfo->mCtrlFlag & 0x4);
+		bool ambSrcColor0   = (lightInfo->mCtrlFlag & 0x200);
+		bool ambSrcAlpha0   = (lightInfo->mCtrlFlag & 0x400);
+		bool matSrcColor0   = (lightInfo->mCtrlFlag & 0x800);
+		bool matSrcAlpha0   = (lightInfo->mCtrlFlag & 0x1000);
 
-	.loc_0xC0:
-	  li        r9, 0x1
+		GXSetChanCtrl(GX_COLOR0, doEnableColor0, (GXColorSrc)ambSrcColor0, (GXColorSrc)matSrcColor0, mActiveLightMask,
+		              (GXDiffuseFn)diffFnColor0, (!doEnableColor0) ? GX_AF_NONE : GX_AF_SPOT);
+		GXSetChanCtrl(GX_ALPHA0, doEnableAlpha0, (GXColorSrc)ambSrcAlpha0, (GXColorSrc)matSrcAlpha0, mActiveLightMask,
+		              (GXDiffuseFn)diffFnAlpha0, (!doEnableAlpha0) ? GX_AF_NONE : GX_AF_SPOT);
 
-	.loc_0xC4:
-	  lwz       r7, 0x378(r28)
-	  li        r3, 0
-	  bl        0x1C99D0
-	  rlwinm.   r0,r30,0,24,31
-	  bne-      .loc_0xE0
-	  li        r9, 0x2
-	  b         .loc_0xE4
+	} else {
+		GXBool enable = set;
+		GXSetChanCtrl(GX_COLOR0A0, enable, GX_SRC_REG, GX_SRC_REG, mActiveLightMask, GX_DF_CLAMP, !set ? GX_AF_NONE : GX_AF_SPOT);
+	}
 
-	.loc_0xE0:
-	  li        r9, 0x1
+	int numChans = 1;
+	if (lightInfo && lightInfo->mCtrlFlag & 0x2) {
+		GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, 0x80, (GXDiffuseFn)((lightInfo->mCtrlFlag >> 7) & 0x3), GX_AF_SPEC);
+		GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0x80, GX_DF_CLAMP, GX_AF_NONE);
+		numChans = 2;
+	} else {
+		GXSetChanCtrl(GX_COLOR1A1, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_NONE, GX_AF_NONE);
+	}
 
-	.loc_0xE4:
-	  lwz       r7, 0x378(r28)
-	  addi      r4, r30, 0
-	  addi      r5, r26, 0
-	  addi      r6, r27, 0
-	  addi      r8, r25, 0
-	  li        r3, 0x2
-	  bl        0x1C99A0
-	  b         .loc_0x130
-
-	.loc_0x104:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0x114
-	  li        r9, 0x2
-	  b         .loc_0x118
-
-	.loc_0x114:
-	  li        r9, 0x1
-
-	.loc_0x118:
-	  lwz       r7, 0x378(r28)
-	  li        r3, 0x4
-	  li        r5, 0
-	  li        r6, 0
-	  li        r8, 0x2
-	  bl        0x1C9970
-
-	.loc_0x130:
-	  cmplwi    r29, 0
-	  li        r25, 0x1
-	  beq-      .loc_0x190
-	  lwz       r3, 0x0(r29)
-	  rlwinm.   r0,r3,0,30,30
-	  beq-      .loc_0x190
-	  rlwinm    r8,r3,25,30,31
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x80
-	  li        r9, 0
-	  bl        0x1C9938
-	  li        r3, 0x3
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x80
-	  li        r8, 0x2
-	  li        r9, 0x2
-	  bl        0x1C9918
-	  li        r25, 0x2
-	  b         .loc_0x1B0
-
-	.loc_0x190:
-	  li        r3, 0x5
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0
-	  li        r9, 0x2
-	  bl        0x1C98F0
-
-	.loc_0x1B0:
-	  rlwinm    r3,r25,0,24,31
-	  bl        0x1C989C
-	  mr        r3, r31
-	  lmw       r25, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	GXSetNumChans(numChans);
+	return prevSetting;
 }
 
 /*

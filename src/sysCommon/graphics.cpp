@@ -101,8 +101,8 @@ void Colour::write(Stream& s)
  */
 void PVWLightingInfo::read(RandomAccessStream& s)
 {
-	_00 = s.readInt();
-	_08 = s.readFloat();
+	mCtrlFlag = s.readInt();
+	_08       = s.readFloat();
 }
 
 /*

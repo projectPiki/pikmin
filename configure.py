@@ -592,7 +592,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/utkando.cpp"),
             Object(Matching, "plugPikiKando/naviMgr.cpp"),
             Object(Matching, "plugPikiKando/genMapParts.cpp"),
-            Object(Equivalent, "plugPikiKando/mapParts.cpp"),
+            Object(Matching, "plugPikiKando/mapParts.cpp"),
             Object(Matching, "plugPikiKando/panipikianimator.cpp"),
             Object(Matching, "plugPikiKando/actor.cpp"),
             Object(Matching, "plugPikiKando/actorMgr.cpp"),

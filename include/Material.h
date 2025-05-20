@@ -34,7 +34,7 @@ struct Material : public CoreNode {
 
 	void setColour(struct Colour& color)
 	{
-		if (mLightingInfo._00 & 2) {
+		if (mLightingInfo.mCtrlFlag & 2) {
 			mTevInfo->mTevColRegs[0].mAnimatedColor.r = color.r;
 			mTevInfo->mTevColRegs[0].mAnimatedColor.g = color.g;
 			mTevInfo->mTevColRegs[0].mAnimatedColor.b = color.b;

@@ -28,6 +28,25 @@ struct Texture;
 struct Vector2f;
 struct Vector3f;
 
+struct GColor {
+	GColor()
+	{
+		mMatColor.r = 255;
+		mMatColor.g = 255;
+		mMatColor.b = 255;
+		mMatColor.a = 255;
+		mAmbColor.r = 255;
+		mAmbColor.g = 255;
+		mAmbColor.b = 255;
+		mAmbColor.a = 255;
+	}
+
+	GXColor mMatColor; // _00
+	GXColor mAmbColor; // _04
+};
+
+extern GColor GColors[];
+
 /**
  * @brief TODO
  *
@@ -71,7 +90,7 @@ struct Graphics {
 	Colour mBufferClearColour;                // _314
 	Colour mPrimaryColour;                    // _318
 	Colour mAuxiliaryColour;                  // _31C
-	u8 mIsLightingEnabled;                    // _320
+	bool mIsLightingEnabled;                  // _320
 	u8 mDepthMode;                            // _321
 	u32 _324;                                 // _324
 	u32 _328;                                 // _328

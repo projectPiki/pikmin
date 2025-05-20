@@ -137,16 +137,16 @@ struct PVWAnimInfo3 {
 struct PVWLightingInfo {
 	PVWLightingInfo()
 	{
-		_04 = 1;
-		_00 = 1;
-		_08 = 50.0f;
+		mNumChans       = 1;
+		mCtrlFlag = 1;
+		_08       = 50.0f;
 	}
 
 	void read(RandomAccessStream&);
 
-	u32 _00; // _00
-	u32 _04; // _04
-	f32 _08; // _08
+	u32 mCtrlFlag; // _00
+	u32 mNumChans;       // _04
+	f32 _08;       // _08
 };
 
 struct AKeyInfo {
@@ -297,32 +297,32 @@ struct PVWTevColReg {
 struct PVWCombiner {
 	void read(RandomAccessStream& input)
 	{
-		_00 = input.readByte();
-		_01 = input.readByte();
-		_02 = input.readByte();
-		_03 = input.readByte();
-		_04 = input.readByte();
-		_05 = input.readByte();
-		_06 = input.readByte();
-		_07 = input.readByte();
-		_08 = input.readByte();
-		_09 = input.readByte();
-		_0A = input.readByte();
-		_0B = input.readByte();
+		mInArgA  = input.readByte();
+		mInArgB  = input.readByte();
+		mInArgC  = input.readByte();
+		mInArgD  = input.readByte();
+		mTevOp   = input.readByte();
+		mBias    = input.readByte();
+		mScale   = input.readByte();
+		mDoClamp = input.readByte();
+		mOutReg  = input.readByte();
+		_09      = input.readByte();
+		_0A      = input.readByte();
+		_0B      = input.readByte();
 	}
 
-	u8 _00; // _00
-	u8 _01; // _01
-	u8 _02; // _02
-	u8 _03; // _03
-	u8 _04; // _04
-	u8 _05; // _05
-	u8 _06; // _06
-	u8 _07; // _07
-	u8 _08; // _08
-	u8 _09; // _09
-	u8 _0A; // _0A
-	u8 _0B; // _0B
+	u8 mInArgA;  // _00
+	u8 mInArgB;  // _01
+	u8 mInArgC;  // _02
+	u8 mInArgD;  // _03
+	u8 mTevOp;   // _04
+	u8 mBias;    // _05
+	u8 mScale;   // _06
+	u8 mDoClamp; // _07
+	u8 mOutReg;  // _08
+	u8 _09;      // _09
+	u8 _0A;      // _0A
+	u8 _0B;      // _0B
 };
 
 /**
@@ -339,18 +339,18 @@ struct PVWTevStage {
 		_05        = input.readByte();
 		u8 unused  = input.readByte();
 		u8 unused2 = input.readByte();
-		_06.read(input);
-		_12.read(input);
+		mTevColorCombiner.read(input);
+		mTevAlphaCombiner.read(input);
 	}
 
-	u8 _00;          // _00
-	u8 _01;          // _01
-	u8 _02;          // _02
-	u8 _03;          // _03
-	u8 _04;          // _04
-	u8 _05;          // _05
-	PVWCombiner _06; // _06
-	PVWCombiner _12; // _12
+	u8 _00;                        // _00
+	u8 _01;                        // _01
+	u8 _02;                        // _02
+	u8 _03;                        // _03
+	u8 _04;                        // _04
+	u8 _05;                        // _05
+	PVWCombiner mTevColorCombiner; // _06
+	PVWCombiner mTevAlphaCombiner; // _12
 };
 
 /**
