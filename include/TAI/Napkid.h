@@ -142,8 +142,6 @@ struct TaiNapkidWanderingRouteAction : public TaiContinuousMotionAction {
 	f32 _0C;
 };
 
-int t = sizeof(TaiContinuousMotionAction);
-
 /**
  * @brief TODO
  */
