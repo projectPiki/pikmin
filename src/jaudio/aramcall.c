@@ -28,10 +28,13 @@ void Jac_RegisterARAMCallback(ARAMCallback callback)
  */
 u32 LoadAram(char* filepath, u32* status, u32 dst)
 {
-	// Smells like volatile...
-	u32 badCompiler[2]; // or 3
+	// GUH MUH BRUH 
+	volatile char** filepathGuh = &filepath;
+	volatile u32* dstGuh = &dst;
+	char* filepathMruh = *filepathGuh;
+	u32 dstMruh = *dstGuh;
 
-	if (DVDT_LoadtoARAM(0, filepath, dst, 0, 0, status, NULL) == -1) {
+	if (DVDT_LoadtoARAM(0, filepathMruh, dstMruh, 0, 0, status, NULL) == -1) {
 		return 0;
 	}
 	return dst;
@@ -44,10 +47,18 @@ u32 LoadAram(char* filepath, u32* status, u32 dst)
  */
 u32 LoadAramSingle(char* filepath, u32 src, u32 length, u32* status, u32 dst)
 {
-	// Smells like volatile...
-	u32 badCompiler[4]; // or 5
+	//GUH MUH BRUH (this function is very stupidly written, why does this match?)
+	u32 pad[1];
+	volatile char** filepathGuh = &filepath;
+	volatile u32* srcGuh = &src;
+	volatile u32* lengthGuh = &length;
+	char* filepathMruh = *filepathGuh;
+	u32 lengthMuh = *lengthGuh;
+	u32 srcMuh = *srcGuh;
+	//u32 dstMuh = *dstGuh;
 
-	if (DVDT_LoadtoARAM(0, filepath, dst, src, length, status, NULL) == -1) {
+	//Why is normal dst passed into this function when everything else isn't???
+	if (DVDT_LoadtoARAM(0, filepathMruh, dst, srcMuh, lengthMuh, status, NULL) == -1) {
 		return 0;
 	}
 	return dst;

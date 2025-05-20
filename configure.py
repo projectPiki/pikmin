@@ -343,7 +343,7 @@ config.libs = [
             Object(Matching, "jaudio/tables.c"),
             Object(NonMatching, "jaudio/bankdrv.c"),
             Object(Matching, "jaudio/random.c"),
-            Object(Equivalent, "jaudio/aramcall.c"),
+            Object(Matching, "jaudio/aramcall.c"),
             Object(Matching, "jaudio/ja_calc.c"),
             Object(NonMatching, "jaudio/fat.c"),
             Object(Matching, "jaudio/cmdstack.c"),
