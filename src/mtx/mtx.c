@@ -520,28 +520,31 @@ void MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 s
  */
 void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
 {
-	f32 angle;
-	f32 cot;
-
+	//f32 angle;
+	//f32 x, y;
 	ASSERTMSGLINE(2605, m, "MTXLightPerspective():  NULL MtxPtr 'm' ");
 	ASSERTMSGLINE(2606, (fovY > 0.0) && (fovY < 180.0), "MTXLightPerspective():  'fovY' out of range ");
 	ASSERTMSGLINE(2607, 0 != aspect, "MTXLightPerspective():  'aspect' is 0 ");
 
-	angle   = (0.5f * fovY);
-	angle   = MTXDegToRad(angle);
-	cot     = 1 / tanf(angle);
-	m[0][0] = (scaleS * (cot / aspect));
-	m[0][1] = 0;
-	m[0][2] = -transS;
-	m[0][3] = 0;
-	m[1][0] = 0;
-	m[1][1] = (cot * scaleT);
-	m[1][2] = -transT;
-	m[1][3] = 0;
-	m[2][0] = 0;
-	m[2][1] = 0;
-	m[2][2] = -1;
-	m[2][3] = 0;
+	
+	fovY     = 1.0f / tanf(0.5f * MTXDegToRad(fovY));
+	transS = -transS;
+	transT = -transT;
+	fovY /= aspect;
+	scaleT *= fovY;
+	fovY *= scaleS;
+	m[0][0] = fovY;
+	m[0][1] = 0.0f;
+	m[0][2] = transS;
+	m[0][3] =  0.0f;
+	m[1][0] =  0.0f;
+	m[1][1] = scaleT;
+	m[1][2] = transT;
+	m[1][3] =  0.0f;
+	m[2][0] =  0.0f;
+	m[2][1] =  0.0f;
+	m[2][2] = -1.0f;
+	m[2][3] = 0.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -75,7 +75,7 @@ static int Get_Portcmd(JPorthead_* port)
 {
 	u32 a = port->_00;
 	if (a) {
-		port->_00 = ((int*)a)[4];
+		port->_00 = ((int*)port->_00)[4];
 		if (port->_00 == 0) {
 			port->_04 = 0;
 		}
@@ -85,31 +85,6 @@ static int Get_Portcmd(JPorthead_* port)
 	}
 
 	return a;
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x0(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x34
-	  lwz       r0, 0x10(r4)
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28
-	  li        r0, 0
-	  stw       r0, 0x4(r3)
-
-	.loc_0x28:
-	  li        r0, 0
-	  stw       r0, 0xC(r4)
-	  b         .loc_0x38
-
-	.loc_0x34:
-	  li        r4, 0
-
-	.loc_0x38:
-	  mr        r3, r4
-	  blr
-	*/
 }
 
 /*
