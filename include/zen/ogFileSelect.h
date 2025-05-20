@@ -58,7 +58,7 @@ struct ogScrFileSelectMgr {
 	/**
 	 * @brief Defines the current operation mode for file management.
 	 */
-	enum FileOperationMode {
+	enum FileOperateMode {
 		Normal = 0, // Standard file selection mode
 		Copy   = 1, // File copying mode
 		Delete = 2  // File deletion mode
@@ -67,7 +67,7 @@ struct ogScrFileSelectMgr {
 	/**
 	 * @brief Flags indicating which title message to display.
 	 */
-	enum TitleMessageIndex {
+	enum titleMessageFlag {
 		SelectDataToLoadOrSave = 0, // Message for selecting a file to load or save
 		SelectDataToSave,           // Message for selecting a file to save
 		DataCorrupted,              // Message indicating data is corrupted
@@ -110,14 +110,14 @@ struct ogScrFileSelectMgr {
 	void MovePaneXY();
 	void OpenYesNoWindow();
 	void CloseYesNoWindow();
-	void setOperateMode(FileOperationMode mode);
+	void setOperateMode(FileOperateMode mode);
 	void getPane_FileTop1();
 	void getPane_FileTop2();
 	void setFileData(int fileSlotIndex);
 	void getPane_FileIcon();
 	void OnOffKetaNissuu(int fileSlotIndex);
 	void getPane_CpyCurScreen();
-	void SetTitleMsg(TitleMessageIndex msgId);
+	void SetTitleMsg(titleMessageFlag msgId);
 	void setDataNumber(int fileSlotIndex);
 	void chaseDataScale();
 	void OnOffNewPane(int fileSlotIndex);
@@ -162,7 +162,7 @@ struct ogScrFileSelectMgr {
 	particleGenerator* mCursorMoveEffectPikminGroup;       // _18
 	u8 _UNUSED1C[0x4];                                     // _1C, unknown
 	FileSelectUpdateResult mSelectState;                   // _20
-	FileOperationMode mOperation;                          // _24
+	FileOperateMode mOperation;                            // _24
 	bool mSaveMode;                                        // _28
 	CardQuickInfo mCardInfo[3];                            // _2C
 	SpectrumCursorMgr mCopyLeftCursor;                     // _A4
@@ -201,7 +201,7 @@ struct ogScrFileSelectMgr {
 	int mMainRootPaneTargetPosX;                           // _270
 	int mPositioningPaneTargetPosX;                        // _274
 	bool mIsLayoutActive;                                  // _278
-	TitleMessageIndex mTitleMsg;                           // _27C
+	titleMessageFlag mTitleMsg;                            // _27C
 	f32 mFadeOutTimer;                                     // _280
 	u8 mIsFadingOut;                                       // _284
 	f32 mTitleAnimationTimer;                              // _288

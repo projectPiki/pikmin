@@ -195,7 +195,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Normal()
  * Address:	80187C8C
  * Size:	0000F0
  */
-void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperationMode mode)
+void zen::ogScrFileSelectMgr::setOperateMode(zen::ogScrFileSelectMgr::FileOperateMode mode)
 {
 	mOperation = mode;
 	switch (mOperation) {
@@ -525,7 +525,7 @@ void zen::ogScrFileSelectMgr::getPane_CpyCurScreen()
  * Address:	801890B4
  * Size:	000340
  */
-void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::TitleMessageIndex flag)
+void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageFlag flag)
 {
 	mPromptSelectSavePane->hide();
 	mCorruptText->hide();
