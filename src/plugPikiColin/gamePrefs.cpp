@@ -97,7 +97,7 @@ void GamePrefs::setVibeMode(bool set)
 	if (set != getVibeMode()) {
 		if (set) {
 			PRINT("bbrrrrr\n"); // lol
-			rumbleMgr->start(0, 0, 0);
+			rumbleMgr->start(RUMBLE_Unk0, 0, nullptr);
 		} else {
 			rumbleMgr->stop();
 		}

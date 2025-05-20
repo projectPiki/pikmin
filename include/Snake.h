@@ -202,13 +202,6 @@ DEFINE_ENUM_TYPE(
 );
 // clang-format on
 
-struct SnakeAnimPosition {
-	Vector3f mDirection;
-	Vector3f mRight;
-	Vector3f mUp;
-	Vector3f mPosition;
-};
-
 /**
  * @brief Snake Body controller
  *
@@ -329,7 +322,7 @@ struct Snake : public Boss {
 	// _00-_3B8 = Boss
 	BoundSphereUpdater* mBoundsUpdater; // _3B8
 	bool mBossType;                     // _3BC
-	f32 mFaceDirection;                 // _3C0
+	f32 _3C0;                           // _3C0
 	f32 _3C4;                           // _3C4
 	SnakeAi* mSnakeAi;                  // _3C8
 	SnakeBody* mSnakeBody;              // _3CC

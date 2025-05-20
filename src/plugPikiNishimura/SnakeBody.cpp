@@ -174,7 +174,7 @@ void SnakeBody::setInitializePosition()
 void SnakeBody::copyAnimPosition()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < SnakeJointType::SegmentCount; i++) {
 			for (int j = 0; j < 4; j++) {
 				mSegmentMatrices[i].getColumn(j, mAnimPosList[i][j]);
 			}
@@ -189,12 +189,12 @@ void SnakeBody::copyAnimPosition()
 void SnakeBody::makeHeadDirection()
 {
 	if (mSnake->getCurrentState() >= SNAKEAI_ChaseNavi && mSnake->getCurrentState() <= SNAKEAI_ChasePiki) {
-		SnakeAnimPosition& pos = (SnakeAnimPosition&)mAnimPosList[SnakeJointType::Neck];
-
 		// Calculate the direction from the snake's neck to the target position
-		pos.mDirection.sub(*mSnake->getTargetPosition(), pos.mPosition);
-		NsCalculation::calcOuterPro(pos.mDirection, pos.mRight, pos.mUp);
-		NsCalculation::calcOuterPro(pos.mUp, pos.mDirection, pos.mRight);
+		mAnimPosList[SnakeJointType::Neck][0].sub(*mSnake->getTargetPosition(), mAnimPosList[SnakeJointType::Neck][3]);
+		NsCalculation::calcOuterPro(mAnimPosList[SnakeJointType::Neck][0], mAnimPosList[SnakeJointType::Neck][1],
+		                            mAnimPosList[SnakeJointType::Neck][2]);
+		NsCalculation::calcOuterPro(mAnimPosList[SnakeJointType::Neck][2], mAnimPosList[SnakeJointType::Neck][0],
+		                            mAnimPosList[SnakeJointType::Neck][1]);
 	}
 }
 
@@ -389,7 +389,7 @@ void SnakeBody::createDeadHeadEffect()
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadSpecks, vec, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadFeathers, vec, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_DeadHeadCloud, vec, nullptr, nullptr);
-	rumbleMgr->start(14, 0, vec);
+	rumbleMgr->start(RUMBLE_Unk14, 0, vec);
 
 	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mHeadPelletIndex());
 
@@ -430,7 +430,7 @@ void SnakeBody::createDeadBodyEffect()
 
 	effectMgr->create(EffectMgr::EFF_Snake_DeadBody1, vec, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_DeadBody2, vec, nullptr, nullptr);
-	rumbleMgr->start(15, 0, vec);
+	rumbleMgr->start(RUMBLE_Unk15, 0, vec);
 
 	createDeadPellet(vec, C_SNAKE_PROP(mSnake).mBodyPelletIndex());
 
@@ -455,16 +455,16 @@ void SnakeBody::makeDeadPattern01()
 		scaleSpeed = C_SNAKE_PROP(mSnake).mDeadHeadScaleSpeed();
 		scaleTime  = C_SNAKE_PROP(mSnake).mDeadHeadScaleTimer();
 	} else { // body
-		scaleTime = C_SNAKE_PROP(mSnake).mDeadBodyScaleTimer()
-		          - (6 - mDeadEffectSegmentIndex) * C_SNAKE_PROP(mSnake).mDeadBodyScaleSegmentRatio();
 		scaleSpeed = C_SNAKE_PROP(mSnake).mDeadBodyScaleSpeed();
+		scaleTime  = C_SNAKE_PROP(mSnake).mDeadBodyScaleTimer()
+		          - (6 - mDeadEffectSegmentIndex) * C_SNAKE_PROP(mSnake).mDeadBodyScaleSegmentRatio();
 	}
 
 	mSnake->addWalkTimer(gsys->getFrameTime());
 
 	// take _30 to 0 with steps of size frameTime * b
-	mSegmentScaleList[mDeadEffectSegmentIndex]
-	    = NsLibMath<f32>::toGoal(mSegmentScaleList[mDeadEffectSegmentIndex], 0.0f, gsys->getFrameTime() * scaleSpeed);
+	f32 step                                   = gsys->getFrameTime() * scaleSpeed;
+	mSegmentScaleList[mDeadEffectSegmentIndex] = NsLibMath<f32>::toGoal(mSegmentScaleList[mDeadEffectSegmentIndex], 0.0f, step);
 
 	if (!prev && mIsDying) {
 		if (mDeadEffectSegmentIndex == 7) {

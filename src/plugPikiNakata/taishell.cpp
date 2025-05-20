@@ -155,7 +155,7 @@ void TaiShellStrategy::createEffect(Teki& teki, int p2)
 		NVector3f spawnPos;
 		teki.outputSpawnPosition(spawnPos);
 		effectMgr->create(EffectMgr::EFF_BigDustRing, spawnPos, nullptr, nullptr);
-		rumbleMgr->start(4, 0, spawnPos);
+		rumbleMgr->start(RUMBLE_Unk4, 0, spawnPos);
 	}
 }
 

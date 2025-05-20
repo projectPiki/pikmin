@@ -475,7 +475,7 @@ bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 			InteractSpore& spore = InteractSpore(&teki);
 			TekiAndCondition andCond(&TekiRecognitionCondition(&teki), &TekiDistanceCondition(&teki, teki.getAttackRange()));
 			teki.interactNaviPiki(spore, andCond);
-			rumbleMgr->start(6, 0, teki.getPosition());
+			rumbleMgr->start(RUMBLE_Unk6, 0, teki.getPosition());
 		}
 	}
 	return false;

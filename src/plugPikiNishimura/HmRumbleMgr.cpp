@@ -128,14 +128,14 @@ f32 ChannelMgr::update()
 
 	if (mData) {
 		mRumbleTimer += gsys->getFrameTime();
-		for (int i = 0; i < mData->mRumblePoint->mFrameLength - 1; i++) {
+		for (int i = 0; i < *mData->mRumblePoint - 1; i++) {
 			if (mRumbleTimer > mData->mRumbleFrame[i]) {
 				f32 ratio        = (mRumbleTimer - mData->mRumbleFrame[i]) / (mData->mRumbleFrame[i + 1] - mData->mRumbleFrame[i]);
 				mRumbleIntensity = (1.0f - ratio) * mData->mRumblePower[i] + ratio * mData->mRumblePower[i + 1];
 			}
 		}
 
-		if (mRumbleTimer > mData->mRumbleFrame[mData->mRumblePoint->mFrameLength - 1]) {
+		if (mRumbleTimer > mData->mRumbleFrame[*mData->mRumblePoint - 1]) {
 			reset();
 		}
 	}

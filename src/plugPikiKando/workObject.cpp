@@ -2410,7 +2410,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 		if (_3CA != -1) {
 			PRINT("abunai!"); // 'dangerous!'
 		}
-		rumbleMgr->start(7, 0, mPosition);
+		rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
 
 		f32 z = 0.0f;
 		if (stageIndex <= 0) {

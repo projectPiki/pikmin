@@ -534,7 +534,7 @@ void BombAI::BombInit::act(AICreature* item)
 	f32 unused   = pikiMgr->mPikiParms->mPikiParms._41C();
 	item->setMotionSpeed(30.0f);
 	playerState->mResultFlags.setOn(RESFLAG_YellowWithBomb);
-	rumbleMgr->start(8, 0, item->mPosition);
+	rumbleMgr->start(RUMBLE_Unk8, 0, item->mPosition);
 	EffectParm parm(item->mPosition);
 	if (item->mCurrAnimId == 1) {
 		utEffectMgr->cast(KandoEffect::BombLight, parm);

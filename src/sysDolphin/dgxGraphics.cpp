@@ -390,7 +390,7 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	}
 
 	mat->mLightingInfo.mNumChans = numChans;
-	mat->mDisplayListSize  = GXEndDisplayList();
+	mat->mDisplayListSize        = GXEndDisplayList();
 	return mat->mDisplayListSize;
 }
 

@@ -39,7 +39,7 @@ struct TAIAangryMiurin : public TAIAmotion {
 		                                     teki.mFaceDirection + PI);
 		teki.flick(flick, flick);
 		cameraMgr->startVibrationEvent(3, teki.getPosition());
-		rumbleMgr->start(11, 0, teki.getPosition());
+		rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
 	}
 	virtual bool act(Teki& teki) // _10
 	{
@@ -242,7 +242,7 @@ struct TAIAattackMiurin : public TAIAreserveMotion {
 
 			teki.playEventSound(&teki, SE_MIURIN_PUNCH);
 			cameraMgr->startVibrationEvent(3, teki.getPosition());
-			rumbleMgr->start(10, 0, teki.getPosition());
+			rumbleMgr->start(RUMBLE_Unk10, 0, teki.getPosition());
 
 		} else {
 			PRINT("ARIMASEN. ITTE YOSI!"); // 'there is nothing. go on!'

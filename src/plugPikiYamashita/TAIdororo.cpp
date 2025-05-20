@@ -267,7 +267,7 @@ struct TAIAbarkDororo : public TAIAmotionLoop {
 			setDororoEffect(teki);
 			cameraMgr->startVibrationEvent(3, teki.getPosition());
 			teki.playEventSound(&teki, SE_DORORO_CRY);
-			rumbleMgr->start(5, 0, teki.getPosition());
+			rumbleMgr->start(RUMBLE_Unk5, 0, teki.getPosition());
 		}
 
 		return res;
@@ -996,7 +996,7 @@ void TAIdororoStrategy::createCloudOfDust(Teki& teki, CollPart* part)
 		}
 	}
 
-	rumbleMgr->start(10, 0, part->mCentre);
+	rumbleMgr->start(RUMBLE_Unk10, 0, part->mCentre);
 }
 
 /*

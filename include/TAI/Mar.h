@@ -357,7 +357,7 @@ struct TAIAlandingMar : public TAIAlanding {
 		}
 
 		cameraMgr->startVibrationEvent(3, teki.getPosition());
-		rumbleMgr->start(11, 0, teki.getPosition());
+		rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
 	}
 
 	// _04     = VTBL

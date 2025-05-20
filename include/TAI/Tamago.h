@@ -143,7 +143,7 @@ struct TAIAhatch : public TAIAmotion {
 		teki.spawnTeki(teki.getParameterI(TPI_SpawnType));
 		teki.playEventSound(&teki, SE_DORORO_EGG_CRASH);
 		cameraMgr->startVibrationEvent(2, teki.getPosition());
-		rumbleMgr->start(11, 0, teki.getPosition());
+		rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
 	}
 
 	// _04     = VTBL

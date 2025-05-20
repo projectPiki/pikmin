@@ -146,7 +146,7 @@ void KingAi::keyAction0()
 		fallBackSide();
 		mKing->calcFlickPiki();
 		effectMgr->create(EffectMgr::EFF_King_Flick, mKing->mPosition, nullptr, nullptr);
-		rumbleMgr->start(4, 0, mKing->mPosition);
+		rumbleMgr->start(RUMBLE_Unk4, 0, mKing->mPosition);
 		cameraMgr->startVibrationEvent(2, mKing->mPosition);
 		break;
 
@@ -168,7 +168,7 @@ void KingAi::keyAction1()
 {
 	switch (mKing->getCurrentState()) {
 	case KINGAI_Die:
-		rumbleMgr->start(5, 0, mKing->mPosition);
+		rumbleMgr->start(RUMBLE_Unk5, 0, mKing->mPosition);
 		break;
 
 	case KINGAI_Damage:
@@ -182,7 +182,7 @@ void KingAi::keyAction1()
 	case KINGAI_JumpAttack:
 		fallBackSide();
 		mKing->calcFlickPiki();
-		rumbleMgr->start(5, 0, mKing->mPosition);
+		rumbleMgr->start(RUMBLE_Unk5, 0, mKing->mPosition);
 		cameraMgr->startVibrationEvent(2, mKing->mPosition);
 		break;
 	}
@@ -426,36 +426,39 @@ int KingAi::getMouthCollPart(int partNum)
  */
 void KingAi::pikiStickToKingMouth()
 {
+
 	if (mIsTongueOut) {
 		int stickMouthPikiNum = mKing->getStickMouthPikiCount();
 		if (stickMouthPikiNum < C_KING_PROP(mKing).mMaxEatPikiNum()) {
-			CollPart* slot1  = mKing->mCollInfo->getSphere('slt1');
-			CollPart* slot2  = mKing->mCollInfo->getSphere('slt2');
-			int slot1Num     = slot1->getChildCount();
-			int slot2Num     = slot2->getChildCount();
-			int lastSlot     = mMaxMouthSlots - 1;
+			CollPart* slot1 = mKing->mCollInfo->getSphere('slt1');
+			CollPart* slot2 = mKing->mCollInfo->getSphere('slt2');
+			int slot1Num    = slot1->getChildCount();
+			int slot2Num    = slot2->getChildCount();
+			int lastSlot    = mMaxMouthSlots - 1;
+			int randSlotIndex;
+			int i;
 			bool isMouthFull = false;
-
 			Iterator iter(pikiMgr);
 			CI_LOOP(iter)
 			{
-				// pretty sure this needs to be Creature* then cast to Piki at points, but the cast is never required?
-				// idk what Nishimura was doing. maybe it was Piki* with a down cast? I can't get either to work properly
-				Piki* piki = (Piki*)*iter;
+				Creature* cPiki = *iter;
 
 				// Ignore invalid objects
-				if (!piki) {
+				if (!cPiki) {
 					continue;
 				}
 
 				// Ignore dead, invisible, buried, or already stuck piki
-				if (!piki->isAlive() || !piki->isVisible() || piki->isBuried() || piki->getStickObject() == mKing) {
+				if (!cPiki->isAlive() || !cPiki->isVisible() || cPiki->isBuried() || cPiki->getStickObject() == mKing) {
 					continue;
 				}
 
 				// Check if piki is close enough to king's mouth and within the tongue range
-				if (qdist2(piki->mPosition.x, piki->mPosition.z, slot2->mCentre.x, slot2->mCentre.z) < C_KING_PROP(mKing).mTongueRangeXZ()
-				    && NsLibMath<f32>::abs(piki->mPosition.y - slot2->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY()) {
+				if (!(qdist2(cPiki->mPosition.x, cPiki->mPosition.z, slot2->mCentre.x, slot2->mCentre.z)
+				      < C_KING_PROP(mKing).mTongueRangeXZ())) {
+					continue;
+				}
+				if (NsLibMath<f32>::abs(cPiki->mPosition.y - slot2->mCentre.y) < C_KING_PROP(mKing).mTongueRangeY()) {
 					// Increment the number of piki stuck in the king's mouth
 					stickMouthPikiNum++;
 					if (stickMouthPikiNum > C_KING_PROP(mKing).mMaxEatPikiNum()) {
@@ -465,13 +468,13 @@ void KingAi::pikiStickToKingMouth()
 					// Check if the king's mouth is full
 					if (isMouthFull) {
 						InteractSwallow eat(mKing, slot1->getChildAt(0), 0);
-						piki->stimulate(eat);
+						cPiki->stimulate(eat);
 						continue;
 					}
 
 					// Randomly select slots to stick the piki in
-					int randSlotIndex = NsMathI::getRand(mMaxMouthSlots);
-					for (int i = 0; i < mMaxMouthSlots; i++) {
+					randSlotIndex = NsMathI::getRand(mMaxMouthSlots);
+					for (i = 0; i < mMaxMouthSlots; i++) {
 						if (randSlotIndex > lastSlot) {
 							randSlotIndex = 0;
 						}
@@ -481,10 +484,10 @@ void KingAi::pikiStickToKingMouth()
 							// Stick the piki in the slot
 							if (randSlotIndex < slot1Num) {
 								InteractSwallow eat(mKing, slot1->getChildAt(randSlotIndex), 0);
-								piki->stimulate(eat);
+								cPiki->stimulate(eat);
 							} else {
 								InteractSwallow eat(mKing, slot2->getChildAt(randSlotIndex - slot1Num), 0);
-								piki->stimulate(eat);
+								cPiki->stimulate(eat);
 							}
 
 							setMouthCollPart(randSlotIndex);
@@ -494,7 +497,7 @@ void KingAi::pikiStickToKingMouth()
 						// Check if the last slot has been reached
 						if (i == lastSlot) {
 							InteractSwallow eat(mKing, slot1->getChildAt(0), 0);
-							piki->stimulate(eat);
+							cPiki->stimulate(eat);
 							isMouthFull = true;
 						}
 
@@ -504,327 +507,6 @@ void KingAi::pikiStickToKingMouth()
 			}
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x128(r1)
-	  stfd      f31, 0x120(r1)
-	  stfd      f30, 0x118(r1)
-	  stfd      f29, 0x110(r1)
-	  stfd      f28, 0x108(r1)
-	  stfd      f27, 0x100(r1)
-	  stmw      r17, 0xC4(r1)
-	  mr        r30, r3
-	  lbz       r0, 0x9(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x438
-	  lwz       r3, 0x4(r30)
-	  bl        -0x1DE68
-	  lwz       r4, 0x4(r30)
-	  mr        r22, r3
-	  lwz       r3, 0x224(r4)
-	  lwz       r0, 0x3E0(r3)
-	  cmpw      r22, r0
-	  bge-      .loc_0x438
-	  lis       r17, 0x736C
-	  lwz       r3, 0x220(r4)
-	  addi      r4, r17, 0x7431
-	  bl        -0xE37F8
-	  lwz       r4, 0x4(r30)
-	  mr        r21, r3
-	  lwz       r3, 0x220(r4)
-	  addi      r4, r17, 0x7432
-	  bl        -0xE380C
-	  addi      r20, r3, 0
-	  addi      r3, r21, 0
-	  bl        -0xE5198
-	  addi      r26, r3, 0
-	  addi      r3, r20, 0
-	  bl        -0xE51A4
-	  lwz       r24, 0x3068(r13)
-	  li        r31, 0
-	  lwz       r4, 0x10(r30)
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  subi      r19, r4, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r5, 0x802B
-	  lfd       f28, -0x5368(r2)
-	  lis       r4, 0x802B
-	  lfs       f29, -0x5370(r2)
-	  lfs       f30, -0x5378(r2)
-	  mr        r23, r3
-	  lfs       f31, -0x536C(r2)
-	  subi      r28, r5, 0x3064
-	  lfs       f27, -0x5390(r2)
-	  subi      r29, r4, 0x3244
-	  lis       r27, 0x4330
-	  b         .loc_0x3DC
-
-	.loc_0xE4:
-	  cmpwi     r23, -0x1
-	  bne-      .loc_0x10C
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-	  b         .loc_0x128
-
-	.loc_0x10C:
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  mr        r4, r23
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r25, r3
-
-	.loc_0x128:
-	  cmplwi    r25, 0
-	  addi      r17, r25, 0
-	  beq-      .loc_0x3C0
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x3C0
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x3C0
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x3C0
-	  lwz       r0, 0x184(r25)
-	  lwz       r18, 0x4(r30)
-	  cmplw     r0, r18
-	  beq-      .loc_0x3C0
-	  lfs       f1, 0x94(r17)
-	  lfs       f2, 0x9C(r17)
-	  lfs       f3, 0x4(r20)
-	  lfs       f4, 0xC(r20)
-	  bl        -0x134A28
-	  lwz       r3, 0x224(r18)
-	  lfs       f0, 0x270(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x3C0
-	  lfs       f1, 0x98(r25)
-	  lfs       f0, 0x8(r20)
-	  lwz       r3, 0x4(r30)
-	  fsubs     f1, f1, f0
-	  lwz       r4, 0x224(r3)
-	  fcmpo     cr0, f1, f27
-	  addi      r3, r4, 0x280
-	  ble-      .loc_0x1E0
-	  b         .loc_0x1E4
-
-	.loc_0x1E0:
-	  fneg      f1, f1
-
-	.loc_0x1E4:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x3C0
-	  lwz       r0, 0x3E0(r4)
-	  addi      r22, r22, 0x1
-	  cmpw      r22, r0
-	  bgt-      .loc_0x438
-	  rlwinm.   r0,r31,0,24,31
-	  beq-      .loc_0x24C
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  bl        -0xE52CC
-	  lwz       r5, 0x4(r30)
-	  li        r0, 0
-	  addi      r4, r1, 0x88
-	  stw       r28, 0x88(r1)
-	  stw       r5, 0x8C(r1)
-	  stw       r29, 0x88(r1)
-	  stw       r0, 0x90(r1)
-	  stw       r3, 0x94(r1)
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x3C0
-
-	.loc_0x24C:
-	  lwz       r18, 0x10(r30)
-	  bl        0xAAF78
-	  xoris     r0, r3, 0x8000
-	  stw       r0, 0xBC(r1)
-	  xoris     r0, r18, 0x8000
-	  li        r18, 0
-	  stw       r27, 0xB8(r1)
-	  lfd       f0, 0xB8(r1)
-	  stw       r0, 0xB4(r1)
-	  fsubs     f0, f0, f28
-	  stw       r27, 0xB0(r1)
-	  fdivs     f1, f0, f29
-	  lfd       f0, 0xB0(r1)
-	  fsubs     f0, f0, f28
-	  fmuls     f1, f30, f1
-	  fmuls     f0, f31, f0
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0xA8(r1)
-	  lwz       r25, 0xAC(r1)
-	  b         .loc_0x3B4
-
-	.loc_0x2A0:
-	  cmpw      r25, r19
-	  ble-      .loc_0x2AC
-	  li        r25, 0
-
-	.loc_0x2AC:
-	  lwz       r0, 0xC(r30)
-	  sraw      r0, r0, r25
-	  rlwinm.   r0,r0,0,31,31
-	  bne-      .loc_0x360
-	  cmpw      r25, r26
-	  bge-      .loc_0x308
-	  addi      r3, r21, 0
-	  addi      r4, r25, 0
-	  bl        -0xE5388
-	  lwz       r5, 0x4(r30)
-	  li        r0, 0
-	  addi      r4, r1, 0x78
-	  stw       r28, 0x78(r1)
-	  stw       r5, 0x7C(r1)
-	  stw       r29, 0x78(r1)
-	  stw       r0, 0x80(r1)
-	  stw       r3, 0x84(r1)
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x348
-
-	.loc_0x308:
-	  addi      r3, r20, 0
-	  sub       r4, r25, r26
-	  bl        -0xE53CC
-	  lwz       r5, 0x4(r30)
-	  li        r0, 0
-	  addi      r4, r1, 0x68
-	  stw       r28, 0x68(r1)
-	  stw       r5, 0x6C(r1)
-	  stw       r29, 0x68(r1)
-	  stw       r0, 0x70(r1)
-	  stw       r3, 0x74(r1)
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x348:
-	  li        r0, 0x1
-	  lwz       r3, 0xC(r30)
-	  slw       r0, r0, r25
-	  or        r0, r3, r0
-	  stw       r0, 0xC(r30)
-	  b         .loc_0x3C0
-
-	.loc_0x360:
-	  cmpw      r18, r19
-	  bne-      .loc_0x3AC
-	  addi      r3, r21, 0
-	  li        r4, 0
-	  bl        -0xE542C
-	  lwz       r5, 0x4(r30)
-	  li        r0, 0
-	  addi      r4, r1, 0x58
-	  stw       r28, 0x58(r1)
-	  stw       r5, 0x5C(r1)
-	  stw       r29, 0x58(r1)
-	  stw       r0, 0x60(r1)
-	  stw       r3, 0x64(r1)
-	  mr        r3, r17
-	  lwz       r12, 0x0(r17)
-	  lwz       r12, 0xA0(r12)
-	  mtlr      r12
-	  blrl
-	  li        r31, 0x1
-
-	.loc_0x3AC:
-	  addi      r25, r25, 0x1
-	  addi      r18, r18, 0x1
-
-	.loc_0x3B4:
-	  lwz       r0, 0x10(r30)
-	  cmpw      r18, r0
-	  blt+      .loc_0x2A0
-
-	.loc_0x3C0:
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  mr        r4, r23
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r23, r3
-
-	.loc_0x3DC:
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  mr        r4, r23
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x404
-	  li        r0, 0x1
-	  b         .loc_0x430
-
-	.loc_0x404:
-	  mr        r3, r24
-	  lwz       r12, 0x0(r24)
-	  mr        r4, r23
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x42C
-	  li        r0, 0x1
-	  b         .loc_0x430
-
-	.loc_0x42C:
-	  li        r0, 0
-
-	.loc_0x430:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xE4
-
-	.loc_0x438:
-	  lmw       r17, 0xC4(r1)
-	  lwz       r0, 0x12C(r1)
-	  lfd       f31, 0x120(r1)
-	  lfd       f30, 0x118(r1)
-	  lfd       f29, 0x110(r1)
-	  lfd       f28, 0x108(r1)
-	  lfd       f27, 0x100(r1)
-	  addi      r1, r1, 0x128
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1833,7 +1515,7 @@ void KingAi::initAppear(int nextState)
 	effectMgr->create(EffectMgr::EFF_King_AppearC, mKing->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_King_AppearA, mKing->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_King_AppearD, mKing->mPosition, nullptr, nullptr);
-	rumbleMgr->start(5, 0, mKing->mPosition);
+	rumbleMgr->start(RUMBLE_Unk5, 0, mKing->mPosition);
 	cameraMgr->startVibrationEvent(4, mKing->mPosition);
 }
 

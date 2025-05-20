@@ -2590,7 +2590,7 @@ void BuildingItem::startAI(int)
 void BuildingItem::startBreakEffect()
 {
 	playEventSound(this, SEB_WALL_DOWN);
-	rumbleMgr->start(7, 0, mPosition);
+	rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
 	_3D8.init(mPosition, EffectMgr::EFF_Wl_Brk00);
 	_3E8.init(mPosition, EffectMgr::EFF_Wl_Brk01);
 	if (_3D8.mPtclGen) {

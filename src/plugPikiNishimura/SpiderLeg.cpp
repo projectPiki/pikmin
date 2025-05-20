@@ -212,7 +212,7 @@ void SpiderLeg::createDeadBombEffect()
 	setDeadBombEffect('leg4');
 	CollPart* body = mSpider->mCollInfo->getSphere('tama');
 	effectMgr->create(EffectMgr::EFF_Spider_DeadBombSparks, body->mCentre, nullptr, nullptr);
-	rumbleMgr->start(5, 0, mSpider->mPosition);
+	rumbleMgr->start(RUMBLE_Unk5, 0, mSpider->mPosition);
 	if (mSpider->mSeContext) {
 		mSpider->mSeContext->playSound(SE_SPIDER_DEAD);
 	}
@@ -230,17 +230,17 @@ void SpiderLeg::createSmallSparkEffect(int count)
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	};
 
-	int boundedCount = NsLibMath<int>::revice(count, 1, 11);
-	for (i = 0; i < boundedCount; i++) {
+	int tmp1 = NsLibMath<int>::revice(count, 1, 11);
+	for (i = 0; i < tmp1; i++) {
 		legVals[i] = 1;
 	}
 
 	// shuffle
 	for (i = 0; i < 12; i++) {
-		int rand      = NsMathI::getRand(12);
+		tmp1          = NsMathI::getRand(12);
 		int tmp       = legVals[i];
-		legVals[i]    = legVals[rand];
-		legVals[rand] = tmp;
+		legVals[i]    = legVals[tmp1];
+		legVals[tmp1] = tmp;
 	}
 
 	setSmallSparkEffect('leg1', &legVals[0]);
@@ -325,12 +325,14 @@ void SpiderLeg::setLegScaleParam(int jointIdx)
 	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
 	if (jointIdx < 3) {
 		for (int i = 0; i < 4; i++) {
-			_20[Kumo::leg_index[i][jointIdx]]
-			    = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
+			f32 goal                          = 0.0f;
+			f32 step                          = gsys->getFrameTime() * stepTime;
+			_20[Kumo::leg_index[i][jointIdx]] = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], goal, step);
 		}
 	} else {
 		for (int i = 0; i < 4; i++) {
-			_20[i] = NsLibMath<f32>::toGoal(_20[i], 0.0f, gsys->getFrameTime() * stepTime);
+			f32 step = gsys->getFrameTime() * stepTime;
+			_20[i]   = NsLibMath<f32>::toGoal(_20[i], 0.0f, step);
 		}
 	}
 	/*
@@ -632,9 +634,9 @@ void SpiderLeg::setLegParameter()
 	}
 
 	for (int i = 0; i < 4; i++) {
-		f32 goal = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
-		mFootRaiseHeightList[i]
-		    = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
+		f32 goal                = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
+		f32 step                = C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime();
+		mFootRaiseHeightList[i] = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, step);
 
 		if (mFootRaiseHeightList[i] < C_SPIDER_PROP(mSpider)._284()) {
 			mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._284();
@@ -795,7 +797,7 @@ void SpiderLeg::setShakeOffNewParameter()
 	_264.y += 1.5f * sinf(30.0f * _CC);
 
 	if (_04 && mSpider->mSeContext) {
-		rumbleMgr->start(3, 0, mSpider->mPosition);
+		rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mPosition);
 		mSpider->mSeContext->playSound(SE_SPIDER_SWING);
 		_04 = false;
 	}
@@ -834,7 +836,7 @@ void SpiderLeg::setBodyShakeNewParameter()
 		}
 
 		if (_04 && mSpider->mSeContext) {
-			rumbleMgr->start(3, 0, mSpider->mPosition);
+			rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mPosition);
 			mSpider->mSeContext->playSound(SE_SPIDER_SWING);
 			_04 = false;
 		}
@@ -951,7 +953,8 @@ void SpiderLeg::setWalkNewPosition()
 
 		if (_09[i]) {
 			f32 goal     = _70[i] + mFootRaiseHeightList[i];
-			_1BC[i][1].y = NsLibMath<f32>::toGoal(_1BC[i][1].y, goal, C_SPIDER_PROP(mSpider)._4B4() * gsys->getFrameTime());
+			f32 step     = C_SPIDER_PROP(mSpider)._4B4() * gsys->getFrameTime();
+			_1BC[i][1].y = NsLibMath<f32>::toGoal(_1BC[i][1].y, goal, step);
 		}
 	}
 }
@@ -1434,7 +1437,7 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 		mSpider->mSeContext->playSound(SE_SPIDER_WALK);
 	}
 
-	rumbleMgr->start(14, 0, _12C[legNum][0]);
+	rumbleMgr->start(RUMBLE_Unk14, 0, _12C[legNum][0]);
 	cameraMgr->startVibrationEvent(3, _12C[legNum][0]);
 	_258.y -= 1.0f;
 }

@@ -635,7 +635,7 @@ void NaviWalkState::exec(Navi* navi)
 			onyon->setSpotActive(true);
 			if (navi->mKontroller->keyClick(KBBTN_A)) {
 				navi->mGoalItem = onyon;
-				rumbleMgr->start(2, 0, nullptr);
+				rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 				transit(navi, NAVISTATE_Container);
 				return;
 			}
@@ -2670,7 +2670,7 @@ void NaviGeyzerState::procBounceMsg(Navi* navi, MsgBounce* msg)
 	if (mGeyserState != 0) {
 		mGeyserState = 3;
 		_14          = 0.3f + (0.2f * gsys->getRand(1.0f));
-		rumbleMgr->start(10, 0, nullptr);
+		rumbleMgr->start(RUMBLE_Unk10, 0, nullptr);
 	}
 }
 
@@ -2737,7 +2737,7 @@ void NaviGatherState::init(Navi* navi)
 	UtEffectMgr::cast(kEffID, parm);
 	UtEffectMgr::cast(KandoEffect::NaviFue0, parm);
 	_18 = 0;
-	rumbleMgr->start(3, 0, nullptr);
+	rumbleMgr->start(RUMBLE_Unk3, 0, nullptr);
 }
 
 /*
@@ -3693,7 +3693,7 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
 		_14->mFSM->transit(_14, 14);
-		rumbleMgr->start(2, 0, nullptr);
+		rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 
 		// none of this is used for anything
 		f32 test
@@ -4749,7 +4749,7 @@ void NaviAttackState::exec(Navi* navi)
 						dir = navi->mPosition + dir * 11.0f;
 						effectMgr->create(EffectMgr::EFF_Navi_PunchA, dir, nullptr, nullptr);
 						effectMgr->create(EffectMgr::EFF_Navi_PunchB, dir, nullptr, nullptr);
-						rumbleMgr->start(2, 0, nullptr);
+						rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 						navi->playEventSound(teki, SE_PIKI_ATTACK_HIT);
 						_10 = 2;
 					} else {

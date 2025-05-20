@@ -83,7 +83,7 @@ void Snake::init(Vector3f& pos)
 	mCollisionRadius = 15.0f;
 	setShadowSize(30.0f);
 	mBossType      = true;
-	mFaceDirection = mRotation.y;
+	_3C0           = mRotation.y;
 	_3C4           = 0.0f;
 	mSpawnPosition = pos;
 	mSnakeAi->initAI(this);

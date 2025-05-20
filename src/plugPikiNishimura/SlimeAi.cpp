@@ -515,7 +515,7 @@ void SlimeAi::inCaseOfContract()
 		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeS, midPoint, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowS, midPoint, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, midPoint, nullptr, nullptr);
-		rumbleMgr->start(15, 0, midPoint);
+		rumbleMgr->start(RUMBLE_Unk15, 0, midPoint);
 		if (mSlime->mSeContext) {
 			mSlime->mSeContext->playSound(SE_SLIME_HIT_SMALL);
 		}
@@ -524,7 +524,7 @@ void SlimeAi::inCaseOfContract()
 		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeM, midPoint, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowM, midPoint, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveM, midPoint, nullptr, nullptr);
-		rumbleMgr->start(10, 0, midPoint);
+		rumbleMgr->start(RUMBLE_Unk10, 0, midPoint);
 		if (mSlime->mSeContext) {
 			mSlime->mSeContext->playSound(SE_SLIME_HIT_MID);
 		}
@@ -533,7 +533,7 @@ void SlimeAi::inCaseOfContract()
 		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, midPoint, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, midPoint, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, midPoint, nullptr, nullptr);
-		rumbleMgr->start(14, 0, midPoint);
+		rumbleMgr->start(RUMBLE_Unk14, 0, midPoint);
 		if (mSlime->mSeContext) {
 			mSlime->mSeContext->playSound(SE_SLIME_HIT_LARGE);
 		}

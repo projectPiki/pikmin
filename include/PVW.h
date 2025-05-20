@@ -137,7 +137,7 @@ struct PVWAnimInfo3 {
 struct PVWLightingInfo {
 	PVWLightingInfo()
 	{
-		mNumChans       = 1;
+		mNumChans = 1;
 		mCtrlFlag = 1;
 		_08       = 50.0f;
 	}
@@ -145,7 +145,7 @@ struct PVWLightingInfo {
 	void read(RandomAccessStream&);
 
 	u32 mCtrlFlag; // _00
-	u32 mNumChans;       // _04
+	u32 mNumChans; // _04
 	f32 _08;       // _08
 };
 

@@ -131,7 +131,7 @@ struct BreathEffect : public zen::CallBack1<Teki&> {
 				ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			}
 
-			rumbleMgr->start(11, 0, teki.getPosition());
+			rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
 		}
 
 		return true;

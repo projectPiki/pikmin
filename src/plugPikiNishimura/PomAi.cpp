@@ -364,7 +364,7 @@ void PomAi::createPikiHead()
 		}
 	}
 
-	rumbleMgr->start(10, 0, mPom->mPosition);
+	rumbleMgr->start(RUMBLE_Unk10, 0, mPom->mPosition);
 	playSound(3);
 	mReleasedSeedCount++;
 	u32 badCompiler;
