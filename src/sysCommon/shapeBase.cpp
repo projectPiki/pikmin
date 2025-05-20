@@ -1753,7 +1753,7 @@ void ShapeDynMaterials::animate(f32* data)
 				}
 			}
 
-			for (int j = 0; j < mat.mTextureInfo.mTextureDataCount; j++) {
+			for (int j = 0; j < (int)mat.mTextureInfo.mTextureDataCount; j++) {
 				if (mat.mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
 					mat.mTextureInfo.mTextureData[j].animate(data, mat.mTextureInfo.mTextureData[j].mAnimatedTexMtx);
 				}
@@ -1782,7 +1782,7 @@ void ShapeDynMaterials::updateContext()
 				}
 			}
 
-			for (int j = 0; j < mat.mTextureInfo.mTextureDataCount; j++) {
+			for (int j = 0; j < (int)mat.mTextureInfo.mTextureDataCount; j++) {
 				if (mat.mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
 					mShape->mMaterialList[mat.mIndex].mTextureInfo.mTextureData[j].mAnimatedTexMtx
 					    = mat.mTextureInfo.mTextureData[j].mAnimatedTexMtx;
@@ -1889,7 +1889,7 @@ void BaseShape::countMaterials(Joint* joint, u32 p2)
 							check2 = true;
 						}
 					}
-					for (int j = 0; j < mat->mTextureInfo.mTextureDataCount; j++) {
+					for (int j = 0; j < (int)mat->mTextureInfo.mTextureDataCount; j++) {
 						if (mat->mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
 							check2 = true;
 						}
