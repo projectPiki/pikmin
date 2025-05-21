@@ -1,34 +1,43 @@
 #include "jaudio/fat.h"
+#include "jaudio/aictrl.h"
+#include "jaudio/sample.h"
+
+int ACTIVE_FATS;
+int USEFAT_TAIL;
+u8* fatheapptr;
+
+typedef struct FATEntry FATEntry;
+
+struct FATEntry {
+	u16 _00;  // _00
+	u16 _02;  // _02
+	u8* addr; // _04
+};
+
+#define FAT_SIZE (256)
+
+static struct FAT_info2 {
+	u16 _00;
+	u16 _02;
+} FH_TO_FAT[FAT_SIZE];
+
+static FATEntry FAT[FAT_SIZE];
+
+// havent figured this out yet
+static struct FAT_info2 fattmp[FAT_SIZE * 2];
 
 /*
  * --INFO--
  * Address:	8000DDE0
  * Size:	000044
  */
-void Jac_FatMemory_Init(u32)
+void Jac_FatMemory_Init(u32 size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x8674
-	  stw       r3, 0x2BF8(r13)
-	  lwz       r3, 0x2BF8(r13)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x30
-	  mr        r4, r31
-	  bl        0x34
+	fatheapptr = (u8*)OSAlloc2(size);
 
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (fatheapptr) {
+		FAT_InitSystem(fatheapptr, size);
+	}
 }
 
 /*
@@ -36,8 +45,38 @@ void Jac_FatMemory_Init(u32)
  * Address:	8000DE40
  * Size:	0000BC
  */
-void FAT_InitSystem(u8*, u32)
+void FAT_InitSystem(u8* heap, u32 size)
 {
+	u32 i;
+
+	int fats = 0;
+	for (i = 0; i < FAT_SIZE; i++) {
+		if (size < 0x1000) {
+			break;
+		}
+
+		// WHY DOES IT INSIST ON CHANGING THE ORDER
+		size -= 0x1000;
+		fats++;
+		heap += 0x1000;
+
+		FAT[i].addr = heap;
+		FAT[i]._02  = 0x1000;
+		FAT[i]._00  = 0xffff;
+	}
+
+	ACTIVE_FATS = fats;
+	USEFAT_TAIL = 0;
+
+	for (i = ACTIVE_FATS; i < FAT_SIZE; i++) {
+		FAT[i]._00 = 0xffff;
+		FAT[i]._02 = 0;
+	}
+
+	for (i = 0; i < FAT_SIZE; i++) {
+		FH_TO_FAT[i]._00 = -1;
+		FH_TO_FAT[i]._02 = 0;
+	}
 	/*
 	.loc_0x0:
 	  lis       r6, 0x8031
@@ -105,8 +144,40 @@ void FAT_InitSystem(u8*, u32)
  * Address:	8000DF00
  * Size:	0000D4
  */
-void FAT_AllocateMemory(u32)
+int FAT_AllocateMemory(u32 size)
 {
+	u32 a = 0;
+
+	for (int i = 0; i < FAT_SIZE; i++) {
+		if (FH_TO_FAT[i]._02 == 0) {
+			break;
+		}
+		a++;
+	}
+
+	if (a == FAT_SIZE) {
+		return 0xffff;
+	}
+	u16 res = a;
+
+	if (size == 0) {
+		return 0xffff;
+	}
+
+	int b = size + 0xfff >> 0xc;
+	if (ACTIVE_FATS - USEFAT_TAIL < b) {
+		return 0xffff;
+	}
+
+	for (u32 i = USEFAT_TAIL + b; i < ACTIVE_FATS; i++) {
+		FAT[i]._00 = a;
+	}
+
+	FH_TO_FAT[a]._00 = USEFAT_TAIL;
+	FH_TO_FAT[a]._02 = b;
+
+	USEFAT_TAIL += b;
+	return res;
 	/*
 	.loc_0x0:
 	  lis       r4, 0x8031
@@ -184,8 +255,18 @@ void FAT_AllocateMemory(u32)
  * Address:	8000DFE0
  * Size:	000190
  */
-void FAT_FreeMemory(u16)
+int FAT_FreeMemory(u16 size)
 {
+	int total = 0;
+	int old0  = FAT[size]._00;
+	int old1  = FAT[size]._02;
+	u16 size2 = old0 + old1;
+	u16 tail  = USEFAT_TAIL - size2;
+	if (tail == 0) {
+		USEFAT_TAIL = USEFAT_TAIL - old1;
+	}
+	FAT[size]._02 = 0;
+	return 0;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x20(r1)
@@ -318,8 +399,15 @@ void FAT_FreeMemory(u16)
  * Address:	8000E180
  * Size:	000048
  */
-void FAT_GetPointer(u16, u32)
+u8* FAT_GetPointer(u16 a, u32 b)
 {
+	u16 c = b >> 0xc;
+	if (FAT[a]._02 <= c) {
+		return 0;
+	}
+
+	return FAT[c + FH_TO_FAT[a]._00].addr + b;
+
 	/*
 	.loc_0x0:
 	  lis       r5, 0x8031
@@ -350,28 +438,13 @@ void FAT_GetPointer(u16, u32)
  * Address:	8000E1E0
  * Size:	000034
  */
-void FAT_ReadByte(u16, u32)
+u8 FAT_ReadByte(u16 a, u32 b)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x6C
-	  cmplwi    r3, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  lbz       r3, 0x0(r3)
-
-	.loc_0x24:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	u8* ptr = FAT_GetPointer(a, b);
+	if (ptr == nullptr) {
+		return 0;
+	}
+	return *ptr;
 }
 
 /*
@@ -379,8 +452,15 @@ void FAT_ReadByte(u16, u32)
  * Address:	........
  * Size:	000034
  */
-void FAT_ReadWord(u16, u32)
+u32 FAT_ReadWord(u16 a, u32 b)
 {
+	// Guessing based on name/size
+
+	u32* ptr = (u32*)FAT_GetPointer(a, b);
+	if (ptr == nullptr) {
+		return 0;
+	}
+	return *ptr;
 	// UNUSED FUNCTION
 }
 
@@ -389,7 +469,7 @@ void FAT_ReadWord(u16, u32)
  * Address:	........
  * Size:	000050
  */
-void FAT_ReadWordD(u16, u32)
+void FAT_ReadWordD(u16 a, u32 b)
 {
 	// UNUSED FUNCTION
 }
@@ -419,8 +499,37 @@ void FAT_ReadLongD(u16, u32)
  * Address:	8000E220
  * Size:	0000E0
  */
-void FAT_StoreBlock(u8*, u16, u32, u32)
+int FAT_StoreBlock(u8* ptr, u16 a, u32 b, u32 c)
 {
+	u8* ptr2 = FAT_GetPointer(a, b);
+
+	int size = b - (b & 0xfff);
+	// this whole thing is wrong
+	for (int i = b & 0xfff; i != 0x1000; i++) {
+		if (c == 0) {
+			c = 0;
+			break;
+		}
+		c--;
+		ptr2[i] = ptr[i];
+	}
+
+	size += 0x1000;
+
+	ptr2 = FAT_GetPointer(a, size);
+
+	for (; 0x1000 <= c;) {
+		Jac_bcopy(ptr, ptr2, 0x1000);
+		size += 0x1000;
+		ptr += 0x1000;
+		c -= 0x1000;
+		ptr2 = FAT_GetPointer(a, size);
+	}
+
+	if (c != 0) {
+		Jac_bcopy(ptr, ptr2, c);
+	}
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
