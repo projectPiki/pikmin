@@ -28,11 +28,11 @@ void Jac_RegisterARAMCallback(ARAMCallback callback)
  */
 u32 LoadAram(char* filepath, u32* status, u32 dst)
 {
-	// GUH MUH BRUH 
+	// GUH MUH BRUH
 	volatile char** filepathGuh = &filepath;
-	volatile u32* dstGuh = &dst;
-	char* filepathMruh = *filepathGuh;
-	u32 dstMruh = *dstGuh;
+	volatile u32* dstGuh        = &dst;
+	char* filepathMruh          = *filepathGuh;
+	u32 dstMruh                 = *dstGuh;
 
 	if (DVDT_LoadtoARAM(0, filepathMruh, dstMruh, 0, 0, status, NULL) == -1) {
 		return 0;
@@ -47,17 +47,17 @@ u32 LoadAram(char* filepath, u32* status, u32 dst)
  */
 u32 LoadAramSingle(char* filepath, u32 src, u32 length, u32* status, u32 dst)
 {
-	//GUH MUH BRUH (this function is very stupidly written, why does this match?)
+	// GUH MUH BRUH (this function is very stupidly written, why does this match?)
 	u32 pad[1];
 	volatile char** filepathGuh = &filepath;
-	volatile u32* srcGuh = &src;
-	volatile u32* lengthGuh = &length;
-	char* filepathMruh = *filepathGuh;
-	u32 lengthMuh = *lengthGuh;
-	u32 srcMuh = *srcGuh;
-	//u32 dstMuh = *dstGuh;
+	volatile u32* srcGuh        = &src;
+	volatile u32* lengthGuh     = &length;
+	char* filepathMruh          = *filepathGuh;
+	u32 lengthMuh               = *lengthGuh;
+	u32 srcMuh                  = *srcGuh;
+	// u32 dstMuh = *dstGuh;
 
-	//Why is normal dst passed into this function when everything else isn't???
+	// Why is normal dst passed into this function when everything else isn't???
 	if (DVDT_LoadtoARAM(0, filepathMruh, dst, srcMuh, lengthMuh, status, NULL) == -1) {
 		return 0;
 	}

@@ -149,7 +149,7 @@ if not config.non_matching:
 
 # Tool versions
 config.binutils_tag = "2.42-1"
-config.compilers_tag = "20240706"
+config.compilers_tag = "20250520"
 config.dtk_tag = "v1.3.0"
 config.objdiff_tag = "v2.4.0"
 config.sjiswrap_tag = "v1.2.0"
@@ -1034,14 +1034,14 @@ config.libs = [
     },
     {
         "lib": "TRK_MINNOW_DOLPHIN",
-        "mw_version": "GC/1.2.5",
+        "mw_version": "GC/1.1p1",
         "progress_category" : "sdk",
         "cflags": [*cflags_runtime, "-pool off", "-enum min", "-inline off"],
         "objects": [
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/mainloop.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/nubevent.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/nubevent.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/nubinit.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/msg.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/msg.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/msgbuf.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/serpoll.c"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/usr_put.c"),
@@ -1058,7 +1058,7 @@ config.libs = [
             Object(Matching, "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/main_TRK.c"),
             Object(NonMatching, "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
-            Object(NonMatching, "TRK_MINNOW_DOLPHIN/targcont.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/targcont.c"),
         ],
     },
     {
