@@ -370,7 +370,7 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
  *
  * @note Size: 0x24.
  */
-struct ActBoMake : public Action, public PaniAnimKeyListener {
+struct ActBoMake : public Action, private PaniAnimKeyListener {
 
 	/**
 	 * @brief TODO
