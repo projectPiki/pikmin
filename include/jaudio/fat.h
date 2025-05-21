@@ -9,9 +9,9 @@ int FAT_AllocateMemory(u32);
 int FAT_FreeMemory(u16);
 u8* FAT_GetPointer(u16, u32);
 u8 FAT_ReadByte(u16, u32);
-u32 FAT_ReadWord(u16, u32);   // UNUSED, but these were probably global
+u16 FAT_ReadWord(u16, u32);   // UNUSED, but these were probably global
 void FAT_ReadWordD(u16, u32); // UNUSED, but these were probably global
-void FAT_ReadLong(u16, u32);  // UNUSED, but these were probably global
+u32 FAT_ReadLong(u16, u32);   // UNUSED, but these were probably global
 void FAT_ReadLongD(u16, u32); // UNUSED, but these were probably global
 int FAT_StoreBlock(u8*, u16, u32, u32);
 
