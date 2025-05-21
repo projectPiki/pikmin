@@ -1418,7 +1418,7 @@ struct ActPullout : public AndAction {
  *
  * @note Size: 0x28.
  */
-struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
+struct ActPulloutCreature : public Action, private PaniAnimKeyListener {
 
 	/**
 	 * @brief TODO

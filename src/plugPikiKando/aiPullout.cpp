@@ -28,6 +28,7 @@ DEFINE_PRINT("aiPullout")
 ActPullout::ActPullout(Piki* piki)
     : AndAction(piki)
 {
+	//setName("chungus");
 	setChildren(CHILD_COUNT, new ActGoto(piki), nullptr, new ActAdjust(piki), nullptr, new ActPulloutCreature(piki), nullptr);
 	mTarget.clear();
 }
@@ -42,13 +43,13 @@ void ActPullout::init(Creature* target)
 	if (!target) {
 		Iterator iter(pikiMgr);
 		Creature* pikiList[MAX_PIKI_ON_FIELD];
-		f32 minDist = 300.0f;
+		//f32 minDist = 300.0f;
 		int count   = 0;
 		CI_LOOP(iter)
 		{
 			Piki* piki = static_cast<Piki*>(*iter);
 			f32 dist   = qdist2(piki, mPiki);
-			if (piki != mPiki && piki->isBuried() && dist < minDist && count < MAX_PIKI_ON_FIELD) {
+			if (piki != mPiki && piki->isBuried() && dist < 300.0f && count < MAX_PIKI_ON_FIELD) {
 				pikiList[count++] = piki;
 			}
 		}
