@@ -610,7 +610,7 @@ void GoalItem::startAI(int)
 
 	int i;
 	for (i = 0; i < 3; i++) {
-		GoalLeg* leg    = &_444[i];
+		GoalLeg* leg = (GoalLeg*)((&this->_444) + i*2);
 		CollPart* coll  = mCollInfo->getSphere(leg_ids[i]);
 		CollPart* child = coll->getChild();
 		Vector3f diff   = coll->mCentre - child->mCentre;
@@ -1099,7 +1099,7 @@ void GoalItem::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 
 	for (int i = 0; i < 3; i++) {
-		GoalLeg* leg = &_444[i];
+		GoalLeg* leg = (GoalLeg*)((&this->_444) + i*2);
 		if (pikiMgr->containerDebug) {
 			PRINT("leg %d : (%.1f %.1f %.1f) \n", i, leg->mRope->mPosition.x, leg->mRope->mPosition.y, leg->mRope->mPosition.z);
 		}
