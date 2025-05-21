@@ -36,9 +36,20 @@ int GetTRKConnected(void);
 
 DSError TRKGetFreeBuffer(int*, TRKBuffer**);
 void OutputData(void* data, int length);
-void TRKResetBuffer(TRKBuffer* msg, BOOL keepData);
+void TRKResetBuffer(TRKBuffer* msg, u8 keepData);
 
+DSError TRKReadBuffer_ui8(TRKBuffer* buffer, u8* data, int count);
+DSError TRKReadBuffer_ui32(TRKBuffer* buffer, u32* data, int count);
+
+DSError TRKReadBuffer1_ui8(TRKBuffer* buffer, u8* data);
+DSError TRKReadBuffer1_ui16(TRKBuffer* buffer, u16* data);
+DSError TRKReadBuffer1_ui32(TRKBuffer* buffer, u32* data);
 DSError TRKReadBuffer1_ui64(TRKBuffer* buffer, u64* data);
+
+DSError TRKAppendBuffer_ui8(TRKBuffer* buffer, const u8* data, int count);
+DSError TRKAppendBuffer_ui32(TRKBuffer* buffer, const u32* data, int count);
+DSError TRKAppendBuffer1_ui16(TRKBuffer* buffer, const u16 data);
+DSError TRKAppendBuffer1_ui32(TRKBuffer* buffer, const u32 data);
 DSError TRKAppendBuffer1_ui64(TRKBuffer* buffer, const u64 data);
 ////////////////////////////////////
 
@@ -135,7 +146,7 @@ void* TRK_memcpy(void* dst, const void* src, size_t n);
 
 /////// INITIALIZE FUNCTIONS ///////
 DSError TRKInitializeEventQueue();
-DSError TRKInitializeTRKBuffers();
+DSError TRKInitializeMessageBuffers();
 DSError TRKInitializeDispatcher();
 DSError InitializeProgramEndTrap();
 DSError TRKInitializeSerialHandler();
@@ -158,6 +169,12 @@ DSError TRKRequestSend();
 u32 TRKAccessFile(u32, u32, u32*, u8*);
 ////////////////////////////////////
 
+///// SERIAL POLLING FUNCTIONS /////
+TRKBufferID TRKTestForPacker();
+void TRKGetInput();
+void TRKProcessInput(TRKBufferID bufID);
+////////////////////////////////////
+
 ////////// OTHER FUNCTIONS /////////
 DSError TRK_main(void);
 UARTError InitializeUART(UARTBaudRate baudRate);
@@ -169,6 +186,7 @@ void usr_put_initialize();
 void TRKTargetSetInputPendingPtr(void*);
 void SetUseSerialIO(u8);
 u8 GetUseSerialIO(void);
+u8 TRKTargetCPUMinorType();
 
 DSError TRKTargetAddStopInfo(TRKBuffer*);
 DSError TRKTargetAddExceptionInfo(TRKBuffer*);

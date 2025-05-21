@@ -8,16 +8,12 @@
  */
 inline DSError TRKWaitForACK(TRKBuffer* msg, MessageCommandID cmd)
 {
-	DSError err;
-
 	if (msg->position >= 0x880) {
-		err = DS_MessageBufferOverflow;
-	} else {
-		msg->data[msg->position++] = cmd;
-		msg->length += 1;
-		err = 0;
+		return DS_MessageBufferOverflow;
 	}
-	return err;
+	msg->data[msg->position++] = cmd;
+	msg->length += 1;
+	return DS_NoError;
 }
 
 /*
@@ -25,12 +21,12 @@ inline DSError TRKWaitForACK(TRKBuffer* msg, MessageCommandID cmd)
  * Address:	8021E6B0
  * Size:	0000D8
  */
-DSError TRKDoNotifyStopped(MessageCommandID cmd)
+DSError TRKDoNotifyStopped(u8 cmd)
 {
 	DSError err;
 	int reqIdx;
-	int bufIdx;
 	TRKBuffer* msg;
+	int bufIdx;
 
 	err = TRKGetFreeBuffer(&bufIdx, &msg);
 	if (err == DS_NoError) {

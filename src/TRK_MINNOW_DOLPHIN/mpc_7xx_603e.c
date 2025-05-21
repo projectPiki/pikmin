@@ -257,7 +257,7 @@ lbl_8037149C:
  * Address:	80220410
  * Size:	000008
  */
-u32 TRKTargetCPUMinorType(void)
+u8 TRKTargetCPUMinorType(void)
 {
 	return 0x54;
 }

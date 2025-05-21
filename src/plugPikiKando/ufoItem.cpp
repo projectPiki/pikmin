@@ -802,8 +802,8 @@ void UfoItem::startAI(int)
 
 	mConeEffectId = KandoEffect::UfoSuck;
 
-	//This is an incredibly dumb thing for them to do, but I SAW THAT THEY DID THIS!!!
-	//I COULD SEEEEE THEY WROTE THIS INSTEAD OF TWO FOR LOOPS!!! 
+	// This is an incredibly dumb thing for them to do, but I SAW THAT THEY DID THIS!!!
+	// I COULD SEEEEE THEY WROTE THIS INSTEAD OF TWO FOR LOOPS!!!
 	int* x = (int*)mEngineParticleGenList;
 	for (int i = 0; i < 16; i++) {
 		x[i] = nullptr;

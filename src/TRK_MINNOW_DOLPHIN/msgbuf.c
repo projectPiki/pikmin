@@ -7,7 +7,7 @@ TRKBuffer gTRKMsgBufs[3];
  * Address:	8021C4CC
  * Size:	000008
  */
-void TRKSetBufferUsed(TRKBuffer* msg, BOOL state)
+static void TRKSetBufferUsed(TRKBuffer* msg, BOOL state)
 {
 	msg->isInUse = state;
 }
@@ -17,7 +17,7 @@ void TRKSetBufferUsed(TRKBuffer* msg, BOOL state)
  * Address:	8021C4D4
  * Size:	000078
  */
-DSError TRKInitializeTRKBuffers(void)
+DSError TRKInitializeMessageBuffers(void)
 {
 	int i;
 	for (i = 0; i < 3; i++) {
@@ -37,14 +37,12 @@ DSError TRKInitializeTRKBuffers(void)
  */
 DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 {
-	TRKBuffer* buf;
 	DSError error = DS_NoMessageBufferAvailable;
 	int i;
-
 	*outMsg = NULL;
 
 	for (i = 0; i < 3; i++) {
-		buf = TRKGetBuffer(i);
+		TRKBuffer* buf = TRKGetBuffer(i);
 
 		TRKAcquireMutex(buf);
 		if (!buf->isInUse) {
@@ -56,10 +54,6 @@ DSError TRKGetFreeBuffer(int* msgID, TRKBuffer** outMsg)
 			i       = 3; // why not break? weird choice
 		}
 		TRKReleaseMutex(buf);
-	}
-
-	if (error == DS_NoMessageBufferAvailable) {
-		usr_puts_serial("ERROR : No buffer available\n");
 	}
 
 	return error;
@@ -101,7 +95,7 @@ void TRKReleaseBuffer(int idx)
  * Address:	8021C67C
  * Size:	000040
  */
-void TRKResetBuffer(TRKBuffer* msg, BOOL keepData)
+void TRKResetBuffer(TRKBuffer* msg, u8 keepData)
 {
 	msg->length   = 0;
 	msg->position = 0;

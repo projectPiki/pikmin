@@ -10,7 +10,7 @@ s32 gReadCount;
 s32 gReadPos;
 s32 gWritePos;
 
-DBCommTable gDBCommTable = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+DBCommTable gDBCommTable = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 
 /*
  * --INFO--
@@ -80,27 +80,25 @@ int InitMetroTRKCommTable(int hwId)
 	int result;
 
 	if (hwId == HARDWARE_GDEV) {
-		OSReport("MetroTRK : Set to GDEV hardware\n");
 		result = Hu_IsStub();
 
-		gDBCommTable.initialize_func      = DBInitComm;
-		gDBCommTable.init_interrupts_func = DBInitInterrupts;
-		gDBCommTable.peek_func            = DBQueryData;
-		gDBCommTable.read_func            = DBRead;
-		gDBCommTable.write_func           = DBWrite;
-		gDBCommTable.open_func            = DBOpen;
-		gDBCommTable.close_func           = DBClose;
+		gDBCommTable.initialize_func      = (DBCommInitFunc)DBInitComm;
+		gDBCommTable.init_interrupts_func = (DBCommFunc)DBInitInterrupts;
+		gDBCommTable.peek_func            = (DBCommFunc)DBQueryData;
+		gDBCommTable.read_func            = (DBCommReadFunc)DBRead;
+		gDBCommTable.write_func           = (DBCommWriteFunc)DBWrite;
+		gDBCommTable.open_func            = (DBCommFunc)DBOpen;
+		gDBCommTable.close_func           = (DBCommFunc)DBClose;
 	} else {
-		OSReport("MetroTRK : Set to AMC DDH hardware\n");
 		result = AMC_IsStub();
 
-		// gDBCommTable.initialize_func      = EXI2_Init;
-		// gDBCommTable.init_interrupts_func = EXI2_EnableInterrupts;
-		// gDBCommTable.peek_func            = EXI2_Poll;
-		// gDBCommTable.read_func            = EXI2_ReadN;
-		// gDBCommTable.write_func           = EXI2_WriteN;
-		// gDBCommTable.open_func            = EXI2_Reserve;
-		// gDBCommTable.close_func           = EXI2_Unreserve;
+		gDBCommTable.initialize_func      = (DBCommInitFunc)EXI2_Init;
+		gDBCommTable.init_interrupts_func = (DBCommFunc)EXI2_EnableInterrupts;
+		gDBCommTable.peek_func            = (DBCommFunc)EXI2_Poll;
+		gDBCommTable.read_func            = (DBCommReadFunc)EXI2_ReadN;
+		gDBCommTable.write_func           = (DBCommWriteFunc)EXI2_WriteN;
+		gDBCommTable.open_func            = (DBCommFunc)EXI2_Reserve;
+		gDBCommTable.close_func           = (DBCommFunc)EXI2_Unreserve;
 	}
 
 	return result;
@@ -141,7 +139,7 @@ void EnableEXI2Interrupts(void)
  * Address:	8022067C
  * Size:	000030
  */
-inline int TRKPollUART(void)
+int TRKPollUART(void)
 {
 	return gDBCommTable.peek_func();
 }
@@ -151,7 +149,7 @@ inline int TRKPollUART(void)
  * Address:	802206AC
  * Size:	000044
  */
-inline UARTError TRKReadUARTN(void* bytes, u32 length)
+UARTError TRKReadUARTN(void* bytes, u32 length)
 {
 	int readErr = gDBCommTable.read_func(bytes, length);
 	return readErr == 0 ? 0 : -1;
@@ -162,7 +160,7 @@ inline UARTError TRKReadUARTN(void* bytes, u32 length)
  * Address:	802206F0
  * Size:	000044
  */
-inline UARTError TRKWriteUARTN(const void* bytes, u32 length)
+UARTError TRKWriteUARTN(const void* bytes, u32 length)
 {
 	int writeErr = gDBCommTable.write_func(bytes, length);
 	return writeErr == 0 ? 0 : -1;

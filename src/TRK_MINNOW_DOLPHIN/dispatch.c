@@ -11,7 +11,7 @@ struct DispatchEntry gTRKDispatchTable[33] = {
 	{ &TRKDoSupportMask }, { &TRKDoCPUType },     { &TRKDoUnsupported }, { &TRKDoUnsupported },   { &TRKDoUnsupported },
 	{ &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoUnsupported },   { &TRKDoUnsupported },
 	{ &TRKDoUnsupported }, { &TRKDoReadMemory },  { &TRKDoWriteMemory }, { &TRKDoReadRegisters }, { &TRKDoWriteRegisters },
-	{ &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoFlushCache },  { &TRKDoSetOption },     { &TRKDoContinue },
+	{ &TRKDoUnsupported }, { &TRKDoUnsupported }, { &TRKDoFlushCache },  { &TRKDoUnsupported },   { &TRKDoContinue },
 	{ &TRKDoStep },        { &TRKDoStop },        { &TRKDoUnsupported }, { &TRKDoUnsupported },   { &TRKDoUnsupported },
 	{ &TRKDoUnsupported }, { &TRKDoUnsupported },
 };

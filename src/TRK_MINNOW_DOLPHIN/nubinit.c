@@ -1,5 +1,7 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
+BOOL gTRKBigEndian;
+
 /*
  * --INFO--
  * Address:	8021C310
@@ -17,7 +19,7 @@ DSError TRKInitializeNub(void)
 	if (ret == DS_NoError)
 		ret = TRKInitializeEventQueue();
 	if (ret == DS_NoError)
-		ret = TRKInitializeTRKBuffers();
+		ret = TRKInitializeMessageBuffers();
 	if (ret == DS_NoError)
 		ret = TRKInitializeDispatcher();
 
@@ -55,7 +57,7 @@ DSError TRKTerminateNub(void)
  */
 void TRKNubWelcome(void)
 {
-	TRK_board_display("MetroTRK for GAMECUBE v0.10");
+	TRK_board_display("MetroTRK for Dolphin v0.8");
 	return;
 }
 

@@ -134,6 +134,8 @@ typedef u16 wchar_t;
 #define ASM
 #endif
 
+#define INIT DECL_SECT(".init")
+
 // Disable clangd warnings
 #ifdef __clang__
 // Allow string literals to be converted to char*

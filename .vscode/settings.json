@@ -49,6 +49,7 @@
         "ansi_fp.h": "c",
         "ansi_files.h": "c",
         "cmdstack.h": "c",
-        "pikiinter.h": "c"
+        "pikiinter.h": "c",
+        "serpoll.h": "c"
     },
 }

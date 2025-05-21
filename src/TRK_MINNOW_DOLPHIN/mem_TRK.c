@@ -1,14 +1,31 @@
 #include "types.h"
 
-DECL_SECT(".init") void* TRK_memcpy(void* dst, const void* src, size_t n);
-DECL_SECT(".init") void* TRK_memset(void* dst, int val, size_t n);
+static void TRK_fill_mem(void* dest, int val, size_t count);
+
+INIT void* TRK_memcpy(void* dest, const void* src, size_t count)
+{
+	u8* s = (u8*)src - 1;
+	u8* d = (u8*)dest - 1;
+
+	count++;
+
+	while (--count) {
+		*++d = *++s;
+	}
+}
+
+INIT void* TRK_memset(void* dest, int val, size_t count)
+{
+	TRK_fill_mem(dest, val, count);
+	return dest;
+}
 
 /*
  * --INFO--
  * Address:	8021E7C0
  * Size:	0000C4
  */
-void TRK_fill_mem(void* dest, int value, u32 length)
+static void TRK_fill_mem(void* dest, int value, size_t length)
 {
 #define cDest ((u8*)dest)
 #define lDest ((u32*)dest)

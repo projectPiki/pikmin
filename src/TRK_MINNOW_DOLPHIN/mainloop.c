@@ -43,7 +43,6 @@ void TRKIdle()
  */
 void TRKNubMainLoop(void)
 {
-	void* msg;
 	TRKEvent event;
 	BOOL isShutdownRequested;
 	BOOL isNewInput;

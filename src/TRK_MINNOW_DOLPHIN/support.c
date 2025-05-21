@@ -5,17 +5,17 @@
  * Address:	8021E21C
  * Size:	0002D8
  */
-DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count, DSIOResult* io_result, BOOL need_reply, BOOL read)
+DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count, u8* io_result, BOOL need_reply, BOOL read)
 {
-	DSError error;
-	int replyBufferId;
 	TRKBuffer* replyBuffer;
-	int bufferId;
-	TRKBuffer* buffer;
+	int replyBufferId;
 	u32 length;
+	TRKBuffer* buffer;
+	int bufferId;
+	DSError error;
 	u32 done;
-	u8 replyIOResult;
 	u16 replyLength;
+	u8 replyIOResult;
 	BOOL exit;
 
 	if (data == NULL || *count == 0) {
@@ -52,7 +52,7 @@ DSError TRKSuppAccessFile(u32 file_handle, u8* data, size_t* count, DSIOResult* 
 				replyLength   = 0;
 				replyIOResult = 0;
 
-				error = TRKRequestSend(buffer, &replyBufferId, read ? 5 : 5, 3, !(read && file_handle == 0));
+				error = (0, TRKRequestSend(buffer, &replyBufferId, read ? 5 : 5, 3, !(read && file_handle == 0)));
 				if (error == DS_NoError) {
 					replyBuffer = (TRKBuffer*)TRKGetBuffer(replyBufferId);
 					TRKSetBufferPosition(replyBuffer, 2);
@@ -108,8 +108,8 @@ DSError TRKRequestSend(TRKBuffer* msgBuf, int* bufferId, u32 p1, u32 p2, int p3)
 	TRKBuffer* buffer;
 	u32 timer;
 	int tries;
-	u8 msg_command;
 	u8 msg_error;
+	u8 msg_command;
 	BOOL badReply = TRUE;
 
 	*bufferId = -1;
