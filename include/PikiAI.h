@@ -1986,7 +1986,7 @@ struct ActWatch : public Action {
  *
  * @note Size: 0x2C.
  */
-struct ActWeed : public Action, public PaniAnimKeyListener {
+struct ActWeed : public Action, private PaniAnimKeyListener {
 
 #define GRASS_NECTAR_CHANCE (0.08f)
 
