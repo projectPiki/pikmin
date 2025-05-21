@@ -1018,7 +1018,7 @@ void __AllNoteOff(seqp_*)
  * Address:	800149A0
  * Size:	000120
  */
-void Jaq_CloseTrack(void)
+void Jaq_CloseTrack(seqp_*)
 {
 	/*
 	.loc_0x0:

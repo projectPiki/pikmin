@@ -1560,7 +1560,7 @@ static void Jesus1Shot_Update(jc_*, JCSTATUS)
  * Address:	80016280
  * Size:	000098
  */
-void One_CheckInstWave(SOUNDID_)
+u32 One_CheckInstWave(SOUNDID_)
 {
 	/*
 	.loc_0x0:
