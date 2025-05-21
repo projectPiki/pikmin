@@ -478,7 +478,7 @@ config.libs = [
             Object(Equivalent, "plugPikiKando/simpleAI.cpp"),
             Object(Equivalent, "plugPikiKando/formationMgr.cpp"),
             Object(Matching, "plugPikiKando/globalShapes.cpp"),
-            Object(Equivalent, "plugPikiKando/playerState.cpp"),
+            Object(Matching, "plugPikiKando/playerState.cpp"),
             Object(Matching, "plugPikiKando/gameDemo.cpp"),
             Object(Matching, "plugPikiKando/demoInvoker.cpp"),
             Object(Matching, "plugPikiKando/demoEvent.cpp"),

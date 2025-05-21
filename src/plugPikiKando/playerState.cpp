@@ -682,6 +682,9 @@ bool PlayerState::hasUfoParts(u32 idx)
  */
 void PlayerState::update()
 {
+	
+	u32 badCompiler[2];
+	
 	bool isCM = isChallengeMode();
 	if (!isCM) {
 		mDemoFlags.update();
@@ -693,9 +696,14 @@ void PlayerState::update()
 			GameStat::update();
 			_194 = time;
 
-			_18C.set(_194, Blue, GameStat::allPikis[Blue]);
-			_18C.set(_194, Red, GameStat::allPikis[Red]);
-			_18C.set(_194, Yellow, GameStat::allPikis[Yellow]);
+			//When I'm in a WTF competition and my opponent is this
+			int* b = (int*)(&GameStat::allPikis) + Blue;
+			int* r = (int*)(&GameStat::allPikis) + Red;
+			int* y = (int*)(&GameStat::allPikis) + Yellow;
+
+			_18C.set(_194, Blue, *b);
+			_18C.set(_194, Red, *r);
+			_18C.set(_194, Yellow, *y);
 			PRINT("record (%d %d %d) = %d\n", GameStat::allPikis, GameStat::allPikis[0], GameStat::allPikis[1], GameStat::allPikis[2]);
 		}
 	}
