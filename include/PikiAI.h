@@ -1805,7 +1805,7 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x2C.
  */
-struct ActStone : public Action, public PaniAnimKeyListener {
+struct ActStone : public Action, private PaniAnimKeyListener {
 
 #define STONE_NECTAR_CHANCE (0.08f)
 
