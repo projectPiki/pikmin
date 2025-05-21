@@ -260,9 +260,12 @@ zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
 	mParentPane = mScreen.search('pall', true);
 	mParentPane->setOffset(mParentPane->getWidth() >> 1, mParentPane->getHeight() >> 1);
 
-	P2DPane* pane = mScreen.search('se_c', true);
-	if (pane->getTypeID() == PANETYPE_TextBox) {
-		P2DTextBox* tBox = (P2DTextBox*)pane;
+	//Why question why having two panes specifically works when you
+	//Can just enjoy having the linked file? 
+	P2DPane* pane;
+	P2DPane* paneAlso = mScreen.search('se_c', true);
+	if (paneAlso->getTypeID() == PANETYPE_TextBox) {
+		P2DTextBox* tBox = (P2DTextBox*)paneAlso;
 		tBox->getFontColor(mCharColor, mGradColor);
 	} else {
 		ERROR("tag<se_c> pane is not text box.\n");
@@ -284,28 +287,27 @@ zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
 	}
 
 	mMenuItems = new DrawMenuItem[mSelectCount];
-
 	for (i = 0; i < mSelectCount; i++) {
 		sprintf(buf, "hm%02d", i);
-		P2DPane* paneM = mScreen.search(P2DPaneLibrary::makeTag(buf), false);
-		if (paneM) {
-			P2DPaneLibrary::changeParent(paneM, mParentPane);
+		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), false);
+		if (pane) {
+			P2DPaneLibrary::changeParent(pane, mParentPane);
 		}
 		sprintf(buf, "he%02d", i);
 		P2DPane* paneE = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
 		P2DPaneLibrary::changeParent(paneE, mParentPane);
-		mMenuItems[i].setTextPane(paneE, paneM);
+		mMenuItems[i].setTextPane(paneE, pane);
 
 		sprintf(buf, "i%02dl", i);
-		P2DPane* paneL = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
-		if (mMenuItems[i].setIconLPane(paneL, mParentPane)) {
+		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		if (mMenuItems[i].setIconLPane(pane, mParentPane)) {
 			ERROR("pane [%s] is not picture.\n", buf);
 		}
 
 		sprintf(buf, "i%02dr", i);
-		P2DPane* paneR = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
-		mMenuItems[i].setIconRPane(paneR, mParentPane);
-		if (mMenuItems[i].setIconRPane(paneR, mParentPane)) {
+		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		mMenuItems[i].setIconRPane(pane, mParentPane);
+		if (mMenuItems[i].setIconRPane(pane, mParentPane)) {
 			ERROR("pane [%s] is not picture.\n", buf);
 		}
 	}
@@ -327,9 +329,9 @@ zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
 
 	for (i = mSpecCount - 1; i >= 0; i--) {
 		sprintf(buf, "z%02dl", i);
-		P2DPane* paneL = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
-		if (paneL->getTypeID() == PANETYPE_Picture) {
-			mLeftCursorIcons[i] = (P2DPicture*)paneL;
+		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		if (pane->getTypeID() == PANETYPE_Picture) {
+			mLeftCursorIcons[i] = (P2DPicture*)pane;
 			P2DPaneLibrary::changeParent(mLeftCursorIcons[i], mParentPane);
 			mLeftCursorIcons[i]->move(mMenuItems[mCurrentSelect].getIconLPosH() - 640, mMenuItems[mCurrentSelect].getIconLPosV());
 			mLeftCursorIcons[i]->show();
@@ -343,9 +345,9 @@ zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
 		}
 
 		sprintf(buf, "z%02dr", i);
-		P2DPane* paneR = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
-		if (paneR->getTypeID() == PANETYPE_Picture) {
-			mRightCursorIcons[i] = (P2DPicture*)paneR;
+		pane = mScreen.search(P2DPaneLibrary::makeTag(buf), true);
+		if (pane->getTypeID() == PANETYPE_Picture) {
+			mRightCursorIcons[i] = (P2DPicture*)pane;
 			P2DPaneLibrary::changeParent(mRightCursorIcons[i], mParentPane);
 			mRightCursorIcons[i]->move(mMenuItems[mCurrentSelect].getIconRPosH() + 640, mMenuItems[mCurrentSelect].getIconRPosV());
 			mRightCursorIcons[i]->show();
