@@ -101,6 +101,8 @@ struct ClothFader : public AttentionCamera::Fader {
 		_20 = _1C;
 		reset();
 		gsys->mToggleBlur = 0;
+
+		f32 badcompiler[2];
 	}
 	virtual void initFadeOut() // _14
 	{
@@ -108,6 +110,8 @@ struct ClothFader : public AttentionCamera::Fader {
 		_20 = _1C;
 		reset();
 		gsys->mToggleBlur = 0;
+
+		f32 badcompiler[2];
 	}
 	virtual bool updateFadeIn() // _0C
 	{
@@ -182,15 +186,12 @@ struct ClothFader : public AttentionCamera::Fader {
 
 	void reset()
 	{
-		int x      = 640 / (_0E - 1);
-		int y      = 480 / (_10 - 1);
-		int unused = 0;
+		int x = 640 / (_0E - 1);
+		int y = 480 / (_10 - 1);
 		int i, j;
 		for (i = 0; i < _0E; i++) {
 			for (j = 0; j < _10; j++) {
-				int a = x * i;
-				int b = y * j;
-				mParticles[i + j * _0E]._00.set(a, b, 0.0f);
+				mParticles[i + j * _0E]._00.set(x * i, y * j, 0.0f);
 				mParticles[i + j * _0E]._0C.set(0.0f, 0.0f, 0.0f);
 			}
 		}
@@ -232,13 +233,14 @@ struct ClothFader : public AttentionCamera::Fader {
 		f32 height = (480 / (_10 - 1)) / 480.0f;
 
 		for (int i = 0; i < _0E - 1; i++) {
-			f32 x0 = width * f32(i);
+			f32 x0 = width * i;
 
 			for (int j = 0; j < _10 - 1; j++) {
-				f32 y0 = height * f32(j);
+				f32 y0 = height * j;
 
-				int a         = i + j * _0E;
-				int b         = i + (j + 1) * _0E;
+				int a = i + j * _0E;
+				int b = i + (j + 1) * _0E;
+
 				Vector3f vec1 = mParticles[i + j * _0E]._00;
 				Vector3f vec2 = mParticles[i + 1 + j * _0E]._00;
 				Vector3f vec3 = mParticles[i + (j + 1) * _0E]._00;
@@ -263,6 +265,7 @@ struct ClothFader : public AttentionCamera::Fader {
 			}
 		}
 	}
+
 	void simulate()
 	{
 		int i;
