@@ -55,14 +55,13 @@ void FAT_InitSystem(u8* heap, u32 size)
 			break;
 		}
 
-		// WHY DOES IT INSIST ON CHANGING THE ORDER
 		size -= 0x1000;
+		FAT[i].addr = heap;
 		fats++;
 		heap += 0x1000;
 
-		FAT[i].addr = heap;
-		FAT[i]._02  = 0x1000;
-		FAT[i]._00  = 0xffff;
+		FAT[i]._02 = 0x1000;
+		FAT[i]._00 = 0xffff;
 	}
 
 	ACTIVE_FATS = fats;
