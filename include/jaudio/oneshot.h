@@ -9,14 +9,21 @@ typedef struct Pmap_ Pmap_;
 typedef struct Osc_ Osc_;
 typedef struct jcs_ jcs_;
 typedef struct CtrlWave_ CtrlWave_;
+typedef struct JCSTATUS JCSTATUS;
+typedef struct SOUNDID_ SOUNDID_;
 
-typedef enum JCSTATUS {
-	// TODO: this
-} JCSTATUS;
+struct JCSTATUS {
+	// TODO: This is probably also a struct and not an enum.  Confirm.
+};
 
-typedef enum SOUNDID_ {
-	// TODO: this
-} SOUNDID_;
+/**
+ * @brief This is a "boxed" integer type to be passed by value.
+ *
+ * @note Size: 4. Why wasn't this just an enum... This compiler is not smart enough to optimize this.
+ */
+struct SOUNDID_ {
+	u32 value; // _00
+};
 
 void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32);
 void PercRead(u32, u32);
@@ -32,7 +39,7 @@ void Gate_1Shot(jc_*, u8, u8, s32);
 void UpdatePause_1Shot(jc_*, u8 a1);
 void UpdatePanPower_1Shot(jc_*, f32, f32, f32, f32);
 void FlushRelease_1Shot(jcs_*);
-void One_CheckInstWave(SOUNDID_);
+u32 One_CheckInstWave(SOUNDID_); // Return type unsure
 void Play_1shot(jcs_*, SOUNDID_, u32);
 void Play_1shot_Perc(jcs_*, SOUNDID_, u32);
 void Play_1shot_Osc(jcs_*, SOUNDID_, u32);

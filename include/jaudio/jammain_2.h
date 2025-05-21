@@ -10,17 +10,25 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 typedef struct seqp_ seqp_;
-typedef struct seqp_port seqp_port;
+typedef struct seqp__Invented1 seqp__Invented1;
+typedef struct seqp__Invented2 seqp__Invented2;
 
 /**
  * @brief This is an invented type of an unknown name.
  *
  * @note Size: 4
  */
-struct seqp_port {
+struct seqp__Invented1 {
 	u8 cmdImport;        // _00
 	u8 cmdExport;        // _01
 	u8 _02[0x04 - 0x02]; // _02
+};
+
+struct seqp__Invented2 {
+	f32 _00; // _00
+	f32 _04; // _04
+	f32 _08; // _08
+	f32 _0C; // _0C
 };
 
 /**
@@ -40,8 +48,7 @@ struct seqp_ {
 	u8 _3E;                                       // _03E
 	u8 _3F[0x040 - 0x03f];                        // _03F
 	seqp_* _40;                                   // _040
-	seqp_* _44[2];                                // _044 | Exact length unknown, but it is an array.
-	u8 _4C[0x084 - 0x04C];                        // _04C
+	seqp_* _44[16];                               // _044 | Exact length confirmed. `Cmd_CloseTrack` bounds check.
 	u32 _84;                                      // _084
 	u32 _88;                                      // _088;
 	u32 _8C;                                      // _08C
@@ -51,13 +58,16 @@ struct seqp_ {
 	jcs_ _D8;                                     // _0D8
 	u8 _PADDING1[0x126 - (0x0d8 + sizeof(jcs_))]; //
 	u16 _126[2];                                  // _126 | Exact length unknown, but it is an array.
-	u8 _12A[0x1f2 - 0x12a];                       // _12A
+	u8 _12A[0x14c - 0x12a];                       // _12A
+	seqp__Invented2* _14C[4];                     // _14C
+	u8 _15C[0x1f2 - 0x15c];                       // _15C
 	u16 _1F2[2];                                  // _1F2 | Exact length unknown, but it is an array.
 	u8 _1F6[0x2ac - 0x1f6];                       // _1F6
 	u16* _2AC;                                    // _2AC | Are you really?
 	u8 _2B0[0x2f0 - 0x2b0];                       // _2B0
-	seqp_port _2F0[2];                            // _2F0 | Exact length unknown, but it is an array.
-	u8 _2F8[0x338 - 0x2f8];                       // _2F8
+	seqp__Invented1 _2F0[2];                      // _2F0 | Exact length unknown, but it is an array.
+	u8 _2F8[0x334 - 0x2f8];                       // _2F8
+	f32 _334;                                     // _334
 	u16 _338;                                     // _338
 	u16 _33A;                                     // _33A
 	u8 _33C;                                      // _33C
@@ -90,7 +100,7 @@ typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
 void* Jam_OfsToAddr(seqp_*, u32); // TODO: Change return type to u8* if that's more convenient.
 void Jam_WriteRegDirect(seqp_*, u32, u8);
 void Jam_WriteRegParam(void);
-void Jam_ReadRegDirect(void);
+u16 Jam_ReadRegDirect(seqp_*, u32);
 u32 Jam_ReadReg32(void);
 void Jam_WriteRegXY(void);
 void Jam_WritePortApp(void);
@@ -139,7 +149,7 @@ void Jam_MuteChildTracks(void);
 void Jam_PauseTrack(seqp_*, u32); // TODO: types uncertain
 void Jam_UnPauseTrack(seqp_*, u32);
 void Jam_SetInterrupt(void);
-void Jam_TryInterrupt(void);
+void Jam_TryInterrupt(seqp_*);
 void Jam_SeqmainNote(void);
 void SeqUpdate(void);
 

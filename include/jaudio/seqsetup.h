@@ -18,7 +18,7 @@ unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown);
 void Jaq_SetBankNumber(int*, u8);
 void Jaq_StartSeq(u32);
 void Jaq_OpenTrack(seqp_*, unknown, unknown);
-void Jaq_CloseTrack(void);
+void Jaq_CloseTrack(seqp_*);
 
 #ifdef __cplusplus
 };

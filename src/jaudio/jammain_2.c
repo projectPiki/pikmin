@@ -12,10 +12,8 @@
 typedef struct SEQ_ARG_t SEQ_ARG_t;
 
 struct SEQ_ARG_t {
-	u32 _00;             // _00 | Most likely unsigned.
-	u32 _04;             // _04 | These other members might instead be further elements in an array?
-	u32 _08;             // _08 | In that case, SEQ_ARG might literally be a u32[8].
-	u8 _0C[0x20 - 0x0C]; // _0C | We'll have to find out what the rest of this struct contains to be sure.
+	u32 _00[4];          // _00 | Most likely unsigned.
+	u8 _10[0x20 - 0x10]; // _10 | Could this be floats?
 };
 
 static seqp_* SEQ_P;
@@ -74,37 +72,10 @@ static u16 __WordReadOfs(seqp_* seq, u32 ofs)
  * Address:	8000F520
  * Size:	000068
  */
-static void __24ReadOfs(seqp_*, u32)
+static u32 __24ReadOfs(seqp_* param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  bl        -0xD8
-	  rlwinm    r0,r3,0,24,31
-	  addi      r3, r29, 0
-	  rlwinm    r31,r0,16,0,15
-	  addi      r4, r30, 0x1
-	  bl        -0xEC
-	  rlwinm    r0,r3,0,24,31
-	  addi      r3, r29, 0
-	  rlwinm    r0,r0,8,0,23
-	  addi      r4, r30, 0x2
-	  or        r31, r31, r0
-	  bl        -0x104
-	  rlwinm    r0,r3,0,24,31
-	  or        r31, r31, r0
-	  addi      r3, r31, 0
-	  lwz       r0, 0x24(r1)
-	  lmw       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	// TODO: FIXME
+	return (__ByteReadOfs(param_1, param_2 + 1) << 8) | (__ByteReadOfs(param_1, param_2 + 2) << 16) | __ByteReadOfs(param_1, param_2);
 }
 
 /*
@@ -144,47 +115,17 @@ static void __LongReadOfs(seqp_*, u32)
  * Address:	8000F600
  * Size:	000070
  */
-static u8 __ByteRead(seqp_*)
+static u8 __ByteRead(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lbz       r0, 0x3D(r3)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x2C
-	  blt-      .loc_0x5C
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x5C
-	  b         .loc_0x44
-
-	.loc_0x2C:
-	  lwz       r3, 0x4(r5)
-	  lwz       r4, 0x0(r5)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x4(r5)
-	  lbzx      r3, r4, r3
-	  b         .loc_0x60
-
-	.loc_0x44:
-	  lwz       r4, 0x4(r5)
-	  lbz       r3, 0x3E(r5)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x4(r5)
-	  bl        -0x1474
-	  b         .loc_0x60
-
-	.loc_0x5C:
-	  li        r3, 0
-
-	.loc_0x60:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	// TODO: What do 0, 1, and 2 mean?
+	switch (seq->_3D) {
+	case 0:
+		return seq->_00[seq->_04++];
+	case 1:
+	case 2:
+		return FAT_ReadByte(seq->_3E, seq->_04++);
+	}
+	return 0;
 }
 
 /*
@@ -327,51 +268,17 @@ static void __ConditionCheck(seqp_*, u8)
  * Address:	8000F820
  * Size:	000090
  */
-void Jam_SEQtimeToDSPtime(seqp_*, s32, u8)
+int Jam_SEQtimeToDSPtime(seqp_* seq, s32 param_2, u8 param_3)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  xoris     r0, r4, 0x8000
-	  rlwinm    r4,r5,0,24,31
-	  lis       r5, 0x4330
-	  stw       r0, 0x24(r1)
-	  lbz       r0, 0x33C(r3)
-	  stw       r4, 0x1C(r1)
-	  lfd       f3, -0x7F20(r2)
-	  cmplwi    r0, 0x1
-	  stw       r5, 0x20(r1)
-	  lfd       f2, -0x7F18(r2)
-	  stw       r5, 0x18(r1)
-	  lfd       f0, 0x20(r1)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f3, f0, f3
-	  lfs       f0, -0x7F28(r2)
-	  fsubs     f1, f1, f2
-	  fmuls     f1, f3, f1
-	  fdivs     f1, f1, f0
-	  bne-      .loc_0x5C
-	  lfs       f0, 0x334(r3)
-	  fdivs     f1, f1, f0
-	  b         .loc_0x7C
+	f32 result;
 
-	.loc_0x5C:
-	  lhz       r0, 0x338(r3)
-	  lfs       f0, -0x7F24(r2)
-	  stw       r0, 0x1C(r1)
-	  fmuls     f1, f0, f1
-	  stw       r5, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f2
-	  fdivs     f1, f1, f0
-
-	.loc_0x7C:
-	  fctiwz    f0, f1
-	  stfd      f0, 0x18(r1)
-	  lwz       r3, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	result = (f32)param_2 * (f32)param_3 / 100.0f;
+	if (seq->_33C == 1) {
+		result = result / seq->_334;
+	} else {
+		result = result * 120.0f / seq->_338;
+	}
+	return result;
 }
 
 /*
@@ -1043,7 +950,7 @@ void Jam_WriteRegParam(void)
  * Address:	800100A0
  * Size:	00016C
  */
-void Jam_ReadRegDirect(void)
+u16 Jam_ReadRegDirect(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -3208,7 +3115,7 @@ void Jam_SetInterrupt(void)
  * Address:	80011760
  * Size:	000090
  */
-void Jam_TryInterrupt(void)
+void Jam_TryInterrupt(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -3264,7 +3171,7 @@ void Jam_TryInterrupt(void)
  */
 static u32 Cmd_OpenTrack()
 {
-	Jaq_OpenTrack(SEQ_P, SEQ_ARG._00, SEQ_ARG._04);
+	Jaq_OpenTrack(SEQ_P, SEQ_ARG._00[0], SEQ_ARG._00[1]);
 	return 0;
 }
 
@@ -3276,7 +3183,7 @@ static u32 Cmd_OpenTrack()
 static u32 Cmd_OpenTrackBros()
 {
 	if (SEQ_P->_40) {
-		Jaq_OpenTrack(SEQ_P->_40, SEQ_ARG._00, SEQ_ARG._04);
+		Jaq_OpenTrack(SEQ_P->_40, SEQ_ARG._00[0], SEQ_ARG._00[1]);
 		return 0;
 	}
 	return 0x40;
@@ -3290,7 +3197,7 @@ static u32 Cmd_OpenTrackBros()
 static u32 Cmd_Call()
 {
 	SEQ_P->_0C[SEQ_P->_08++] = SEQ_P->_04;
-	SEQ_P->_04               = SEQ_ARG._00;
+	SEQ_P->_04               = SEQ_ARG._00[0];
 	return 0;
 }
 
@@ -3438,7 +3345,7 @@ static u32 Cmd_RetF()
  */
 static u32 Cmd_Jmp()
 {
-	SEQ_P->_04 = SEQ_ARG._04;
+	SEQ_P->_04 = SEQ_ARG._00[1];
 	return 0;
 }
 
@@ -3460,7 +3367,7 @@ static u32 Cmd_JmpF()
 static u32 Cmd_LoopS()
 {
 	SEQ_P->_0C[SEQ_P->_08]   = SEQ_P->_04;
-	SEQ_P->_2C[SEQ_P->_08++] = SEQ_ARG._00;
+	SEQ_P->_2C[SEQ_P->_08++] = SEQ_ARG._00[0];
 	return 0;
 }
 
@@ -3471,45 +3378,24 @@ static u32 Cmd_LoopS()
  */
 static u32 Cmd_LoopE()
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2C30(r13)
-	  addi      r5, r3, 0x8
-	  lwz       r0, 0x8(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1C
-	  li        r3, 0x80
-	  blr
+	u16 uVar1;
 
-	.loc_0x1C:
-	  rlwinm    r0,r0,1,0,30
-	  add       r3, r3, r0
-	  lhzu      r0, 0x2A(r3)
-	  cmplwi    r0, 0
-	  mr        r4, r0
-	  beq-      .loc_0x38
-	  subi      r4, r4, 0x1
+	if (SEQ_P->_08 == 0) {
+		return 0x80;
+	}
 
-	.loc_0x38:
-	  rlwinm.   r0,r4,0,16,31
-	  bne-      .loc_0x54
-	  lwz       r4, 0x0(r5)
-	  li        r3, 0
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x0(r5)
-	  blr
+	uVar1 = SEQ_P->_2C[SEQ_P->_08 - 1];
+	if (uVar1 != 0) {
+		uVar1 -= 1;
+	}
+	if (uVar1 == 0) {
+		SEQ_P->_08 -= 1;
+		return 0;
+	}
 
-	.loc_0x54:
-	  sth       r4, 0x0(r3)
-	  li        r3, 0
-	  lwz       r5, 0x2C30(r13)
-	  lwz       r0, 0x8(r5)
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r5, r0
-	  lwz       r0, 0x8(r4)
-	  stw       r0, 0x4(r5)
-	  blr
-	*/
+	SEQ_P->_2C[SEQ_P->_08 - 1] = uVar1;
+	SEQ_P->_04                 = SEQ_P->_0C[SEQ_P->_08 - 1];
+	return 0;
 }
 
 /*
@@ -3580,7 +3466,7 @@ static u32 Cmd_WritePort()
  */
 static u32 Cmd_CheckPortImport()
 {
-	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->_2F0[SEQ_ARG._00].cmdImport);
+	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->_2F0[SEQ_ARG._00[0]].cmdImport);
 	return 0;
 }
 
@@ -3591,7 +3477,7 @@ static u32 Cmd_CheckPortImport()
  */
 static u32 Cmd_CheckPortExport()
 {
-	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->_2F0[SEQ_ARG._00].cmdExport);
+	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->_2F0[SEQ_ARG._00[0]].cmdExport);
 	return 0;
 }
 
@@ -3602,8 +3488,8 @@ static u32 Cmd_CheckPortExport()
  */
 static u32 Cmd_WaitReg()
 {
-	SEQ_P->_8C = SEQ_ARG._00;
-	return SEQ_ARG._00 ? 1 : 0;
+	SEQ_P->_8C = SEQ_ARG._00[0];
+	return SEQ_ARG._00[0] ? 1 : 0;
 }
 
 /*
@@ -3613,7 +3499,7 @@ static u32 Cmd_WaitReg()
  */
 static u32 Cmd_ConnectName()
 {
-	SEQ_P->_84 = SEQ_ARG._00 << 16 | SEQ_ARG._04;
+	SEQ_P->_84 = SEQ_ARG._00[0] << 16 | SEQ_ARG._00[1];
 	return 0;
 }
 
@@ -3652,7 +3538,7 @@ static u32 Cmd_ParentWritePort()
  */
 static u32 Cmd_ChildWritePort()
 {
-	Jam_WritePortAppDirect(SEQ_P->_44[(SEQ_ARG._00 / 4)], SEQ_ARG._00 & 0xf, SEQ_ARG._04);
+	Jam_WritePortAppDirect(SEQ_P->_44[(SEQ_ARG._00[0] / 4)], SEQ_ARG._00[0] & 0xf, SEQ_ARG._00[1]);
 	return 0;
 }
 
@@ -3663,7 +3549,7 @@ static u32 Cmd_ChildWritePort()
  */
 static u32 Cmd_SetLastNote()
 {
-	SEQ_P->_D5 = SEQ_ARG._00;
+	SEQ_P->_D5 = SEQ_ARG._00[0];
 	SEQ_P->_D5 += SEQ_P->_397;
 	return 0;
 }
@@ -3675,7 +3561,7 @@ static u32 Cmd_SetLastNote()
  */
 static u32 Cmd_TimeRelate()
 {
-	SEQ_P->_33C = SEQ_ARG._00;
+	SEQ_P->_33C = SEQ_ARG._00[0];
 	return 0;
 }
 
@@ -3686,7 +3572,7 @@ static u32 Cmd_TimeRelate()
  */
 static u32 Cmd_SimpleOsc()
 {
-	Osc_Setup_Simple(SEQ_P, SEQ_ARG._00);
+	Osc_Setup_Simple(SEQ_P, SEQ_ARG._00[0]);
 	return 0;
 }
 
@@ -3697,7 +3583,7 @@ static u32 Cmd_SimpleOsc()
  */
 static u32 Cmd_SimpleEnv()
 {
-	Osc_Setup_SimpleEnv(SEQ_P, SEQ_ARG._00, SEQ_ARG._04);
+	Osc_Setup_SimpleEnv(SEQ_P, SEQ_ARG._00[0], SEQ_ARG._00[1]);
 	return 0;
 }
 
@@ -3747,7 +3633,7 @@ static u32 Cmd_SimpleADSR()
  */
 static u32 Cmd_Transpose()
 {
-	SEQ_P->_396 = SEQ_ARG._00;
+	SEQ_P->_396 = SEQ_ARG._00[0];
 	if (SEQ_P->_40) {
 		SEQ_P->_397 = SEQ_P->_40->_396 + SEQ_P->_396;
 	} else {
@@ -3763,39 +3649,13 @@ static u32 Cmd_Transpose()
  */
 static u32 Cmd_CloseTrack()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8032
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  lwz       r0, -0x580(r3)
-	  rlwinm    r3,r0,0,24,31
-	  cmplwi    r3, 0x10
-	  blt-      .loc_0x2C
-	  li        r3, 0x80
-	  b         .loc_0x54
-
-	.loc_0x2C:
-	  lwz       r0, 0x2C30(r13)
-	  rlwinm    r31,r3,2,0,29
-	  add       r3, r0, r31
-	  lwz       r3, 0x44(r3)
-	  bl        0x2984
-	  lwz       r0, 0x2C30(r13)
-	  li        r5, 0
-	  li        r3, 0
-	  add       r4, r0, r31
-	  stw       r5, 0x44(r4)
-
-	.loc_0x54:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	u8 index = SEQ_ARG._00[0];
+	if (index >= ARRAY_SIZE(SEQ_P->_44)) {
+		return 0x80;
+	}
+	Jaq_CloseTrack(SEQ_P->_44[index]);
+	SEQ_P->_44[index] = NULL;
+	return 0;
 }
 
 /*
@@ -3807,7 +3667,7 @@ static u32 Cmd_OutSwitch()
 {
 	// This seems unlikely. Does it actually point to a struct?
 	if (SEQ_P->_2AC) {
-		SEQ_P->_2AC[4] = SEQ_ARG._00;
+		SEQ_P->_2AC[4] = SEQ_ARG._00[0];
 		SEQ_P->_2AC[5] = 0xffff;
 	}
 	return 0;
@@ -3820,7 +3680,7 @@ static u32 Cmd_OutSwitch()
  */
 static u32 Cmd_UpdateSync()
 {
-	Jam_UpdateTrack(SEQ_P, SEQ_ARG._00);
+	Jam_UpdateTrack(SEQ_P, SEQ_ARG._00[0]);
 	return 0;
 }
 
@@ -3831,8 +3691,8 @@ static u32 Cmd_UpdateSync()
  */
 static u32 Cmd_BusConnect()
 {
-	if (SEQ_ARG._00 < 6) {
-		SEQ_P->_126[SEQ_ARG._00] = SEQ_ARG._04;
+	if (SEQ_ARG._00[0] < 6) {
+		SEQ_P->_126[SEQ_ARG._00[0]] = SEQ_ARG._00[1];
 	}
 	return 0;
 }
@@ -3844,7 +3704,7 @@ static u32 Cmd_BusConnect()
  */
 static u32 Cmd_PauseStatus()
 {
-	SEQ_P->_39D = SEQ_ARG._00;
+	SEQ_P->_39D = SEQ_ARG._00[0];
 	return 0;
 }
 
@@ -3855,8 +3715,8 @@ static u32 Cmd_PauseStatus()
  */
 static u32 Cmd_SetInterrupt()
 {
-	SEQ_P->_3A6 |= (1 << SEQ_ARG._00);
-	SEQ_P->_3A8[SEQ_ARG._00] = SEQ_ARG._04;
+	SEQ_P->_3A6 |= (1 << SEQ_ARG._00[0]);
+	SEQ_P->_3A8[SEQ_ARG._00[0]] = SEQ_ARG._00[1];
 	return 0;
 }
 
@@ -3867,7 +3727,7 @@ static u32 Cmd_SetInterrupt()
  */
 static u32 Cmd_DisInterrupt()
 {
-	SEQ_P->_3A6 &= ~(u8)(1 << (u8)SEQ_ARG._00);
+	SEQ_P->_3A6 &= ~(u8)(1 << (u8)SEQ_ARG._00[0]);
 	return 0;
 }
 
@@ -3913,9 +3773,9 @@ static u32 Cmd_RetI()
  */
 static u32 Cmd_IntTimer()
 {
-	SEQ_P->_3A7 = SEQ_ARG._00;
-	SEQ_P->_3D0 = SEQ_ARG._04;
-	SEQ_P->_3D4 = SEQ_ARG._04;
+	SEQ_P->_3A7 = SEQ_ARG._00[0];
+	SEQ_P->_3D0 = SEQ_ARG._00[1];
+	SEQ_P->_3D4 = SEQ_ARG._00[1];
 	return 0;
 }
 
@@ -4011,8 +3871,8 @@ static u32 Cmd_FlushRelease()
  */
 static u32 Cmd_Wait3()
 {
-	SEQ_P->_8C = SEQ_ARG._00;
-	return SEQ_ARG._00 ? 1 : 0;
+	SEQ_P->_8C = SEQ_ARG._00[0];
+	return SEQ_ARG._00[0] ? 1 : 0;
 }
 
 /*
@@ -4022,7 +3882,7 @@ static u32 Cmd_Wait3()
  */
 static u32 Cmd_TimeBase()
 {
-	SEQ_P->_338 = SEQ_ARG._00;
+	SEQ_P->_338 = SEQ_ARG._00[0];
 	if (!SEQ_P->_40) {
 		Jam_UpdateTempo();
 	}
@@ -4036,7 +3896,7 @@ static u32 Cmd_TimeBase()
  */
 static u32 Cmd_Tempo()
 {
-	SEQ_P->_33A = SEQ_ARG._00;
+	SEQ_P->_33A = SEQ_ARG._00[0];
 	if (!SEQ_P->_40) {
 		Jam_UpdateTempo();
 	} else {
@@ -4192,48 +4052,19 @@ static u32 Cmd_PanPowSet()
  */
 static u32 Cmd_IIRSet()
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lis       r3, 0x8032
-	  li        r0, 0x4
-	  subi      r6, r3, 0x580
-	  lwz       r8, 0x2C30(r13)
-	  li        r9, 0
-	  lfd       f4, -0x7F20(r2)
-	  li        r3, 0
-	  lfs       f3, -0x7F10(r2)
-	  lis       r4, 0x4330
-	  lfs       f1, -0x7F0C(r2)
-	  lfs       f0, -0x7F08(r2)
-	  mtctr     r0
+	int i;
+	seqp_* seq;
+	seqp__Invented2* temp;
 
-	.loc_0x34:
-	  add       r5, r6, r3
-	  addi      r7, r9, 0xC
-	  lwz       r0, 0x0(r5)
-	  rlwinm    r5,r7,4,0,27
-	  addi      r5, r5, 0x14C
-	  addi      r9, r9, 0x1
-	  extsh     r0, r0
-	  add       r5, r8, r5
-	  xoris     r0, r0, 0x8000
-	  addi      r3, r3, 0x4
-	  stw       r0, 0x14(r1)
-	  stw       r4, 0x10(r1)
-	  lfd       f2, 0x10(r1)
-	  fsubs     f2, f2, f4
-	  fdivs     f2, f2, f3
-	  stfs      f2, 0x4(r5)
-	  lfs       f2, 0x4(r5)
-	  stfs      f2, 0x0(r5)
-	  stfs      f1, 0xC(r5)
-	  stfs      f0, 0x8(r5)
-	  bdnz+     .loc_0x34
-	  li        r3, 0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	seq = SEQ_P;
+	for (i = 0; i < 4; ++i) {
+		temp      = seq->_14C[i];
+		temp->_04 = SEQ_ARG._00[i] / 32768.0f;
+		temp->_00 = temp->_04;
+		temp->_0C = 0.0f;
+		temp->_08 = 1.0f;
+	}
+	return 0;
 }
 
 /*
@@ -4243,7 +4074,7 @@ static u32 Cmd_IIRSet()
  */
 static u32 Cmd_FIRSet()
 {
-	Jam_SetExtFirFilterD(SEQ_P->_2AC, Jam_OfsToAddr(SEQ_P, SEQ_ARG._00));
+	Jam_SetExtFirFilterD(SEQ_P->_2AC, Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]));
 	return 0;
 }
 
@@ -4256,7 +4087,7 @@ static u32 Cmd_EXTSet()
 {
 	int* buffer; // TODO: No, no, no.  Bad.  What type is this, really?
 
-	buffer = (int*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00);
+	buffer = (int*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]);
 	Jam_InitExtBuffer(buffer);
 	Jam_AssignExtBuffer(SEQ_P, buffer);
 	return 0;
@@ -4335,8 +4166,8 @@ static u32 Cmd_OscRoute()
 	u8 uVar1;
 	u8 uVar2;
 
-	uVar1 = SEQ_ARG._00 & 0xf;
-	uVar2 = SEQ_ARG._00 >> 4 & 0xf;
+	uVar1 = SEQ_ARG._00[0] & 0xf;
+	uVar2 = SEQ_ARG._00[0] >> 4 & 0xf;
 
 	SEQ_P->_370[uVar2] = uVar1;
 	if (uVar1 == 0xe) {
@@ -4406,7 +4237,7 @@ static u32 Cmd_IIRCutOff()
  */
 static u32 Cmd_OscFull()
 {
-	Osc_Setup_Full(SEQ_P, SEQ_ARG._00, SEQ_ARG._04, SEQ_ARG._08);
+	Osc_Setup_Full(SEQ_P, SEQ_ARG._00[0], SEQ_ARG._00[1], SEQ_ARG._00[2]);
 	return 0;
 }
 
@@ -4417,35 +4248,13 @@ static u32 Cmd_OscFull()
  */
 static u32 Cmd_CheckWave()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x6
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  lwz       r3, 0x2C30(r13)
-	  bl        -0x2994
-	  lis       r4, 0x8032
-	  addi      r5, r1, 0x8
-	  lwz       r0, -0x580(r4)
-	  rlwinm    r4,r3,16,0,15
-	  addi      r3, r5, 0
-	  or        r0, r0, r4
-	  stw       r0, 0xC(r1)
-	  lwz       r0, 0xC(r1)
-	  stw       r0, 0x8(r1)
-	  bl        0x3824
-	  mr        r0, r3
-	  lwz       r3, 0x2C30(r13)
-	  rlwinm    r5,r0,0,24,31
-	  li        r4, 0x3
-	  bl        -0x2FD0
-	  li        r3, 0
-	  lwz       r0, 0x14(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	SOUNDID_ soundID;
+	u32 uVar2;
+
+	soundID.value = SEQ_ARG._00[0] | (Jam_ReadRegDirect(SEQ_P, 6) << 16);
+	uVar2         = One_CheckInstWave(soundID);
+	Jam_WriteRegDirect(SEQ_P, 3, uVar2);
+	return 0;
 }
 
 /*
