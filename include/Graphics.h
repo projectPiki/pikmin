@@ -92,7 +92,7 @@ struct Graphics {
 	Colour mAuxiliaryColour;                  // _31C
 	bool mIsLightingEnabled;                  // _320
 	u8 mDepthMode;                            // _321
-	u32 _324;                                 // _324
+	int _324;                                 // _324
 	u32 _328;                                 // _328
 	u32 mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
 	int mCullMode;                            // _330
@@ -113,7 +113,7 @@ struct Graphics {
 	f32 mLightIntensity;                      // _374
 	u32 mActiveLightMask;                     // _378
 	f32 mLineWidth;                           // _37C
-	u32 _380;                                 // _380
+	Vector3f* _380;                           // _380
 	Matrix4f* mSystemMatrices;                // _384
 	u32 mMaxMatrixCount;                      // _388
 	u32 mActiveMatrixIdx;                     // _38C
@@ -219,12 +219,12 @@ struct DGXGraphics : public Graphics {
 	virtual int setCullFront(int);                                                     // _58
 	virtual u8 setDepth(bool);                                                         // _5C
 	virtual int setCBlending(int);                                                     // _60
-	virtual void setPointSize(f32);                                                    // _64 (weak)
+	virtual void setPointSize(f32) { }                                                 // _64 (weak)
 	virtual f32 setLineWidth(f32);                                                     // _68
 	virtual void setCamera(Camera*);                                                   // _6C
 	virtual void calcViewMatrix(Matrix4f&, Matrix4f&);                                 // _70
 	virtual void useMatrix(Matrix4f&, int);                                            // _74
-	virtual void setClippingPlane(bool, Plane*);                                       // _78 (weak)
+	virtual void setClippingPlane(bool, Plane*) { }                                    // _78 (weak)
 	virtual void initMesh(Shape*);                                                     // _7C
 	virtual void drawSingleMatpoly(Shape*, Joint::MatPoly*);                           // _80
 	virtual void drawMeshes(Camera&, Shape*);                                          // _84
@@ -235,7 +235,6 @@ struct DGXGraphics : public Graphics {
 	virtual void drawLine(Vector3f&, Vector3f&);                                       // _98
 	virtual void drawPoints(Vector3f*, int);                                           // _9C
 	virtual void drawOneTri(Vector3f*, Vector3f*, Vector2f*, int);                     // _A0
-	virtual void drawOneStrip(Vector3f*, Vector3f*, Vector2f*, int);                   // _A4 (weak)
 	virtual void setColour(Colour&, bool);                                             // _A8
 	virtual void setAuxColour(Colour&);                                                // _AC
 	virtual void setPrimEnv(Colour*, Colour*);                                         // _B0
@@ -253,7 +252,8 @@ struct DGXGraphics : public Graphics {
 	virtual void initReflectTex(bool);                                                 // _E8
 	virtual void texturePrintf(Font* font, int x, int y, char* format, ...);           // _EC
 	virtual void useMatrixQuick(Matrix4f&, int);                                       // _F4
-	virtual void drawOutline(Camera&, Shape*);                                         // _F8 (weak)
+	virtual void drawOutline(Camera&, Shape*) { }                                      // _F8 (weak)
+	virtual void drawOneStrip(Vector3f*, Vector3f*, Vector2f*, int) { }                // _A4 (weak)
 
 	void setupRender();
 	void beginRender();

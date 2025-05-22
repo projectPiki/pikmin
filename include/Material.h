@@ -51,7 +51,7 @@ struct Material : public CoreNode {
 	int mTextureIndex;                // _1C
 	TexAttr* mAttribute;              // _20
 	Texture* mTexture;                // _24
-	u32 _28;                          // _28
+	Texture* _28;                     // _28
 	PVWPolygonColourInfo mColourInfo; // _2C [0x20]
 	PVWLightingInfo mLightingInfo;    // _4C [0x0C]
 	PVWPeInfo mPeInfo;                // _58 [0x10]

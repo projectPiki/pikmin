@@ -314,7 +314,7 @@ struct BaseShape : public CoreNode {
 	Colour* mVtxColorList;          // _244
 	s32 mTotalActiveTexCoords;      // _248
 	s32 mTexCoordCounts[8];         // _24C
-	Vector2f* mTexCoordList[8];     // _250
+	Vector2f* mTexCoordList[8];     // _26C
 	s32 mNormalCount;               // _28C
 	Vector3f* mNormalList;          // _290
 	int mNBTCount;                  // _294

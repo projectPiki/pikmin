@@ -1,6 +1,7 @@
 #include "Graphics.h"
 #include "Dolphin/os.h"
 #include "Shape.h"
+#include "Mesh.h"
 #include "sysNew.h"
 #include "DebugLog.h"
 
@@ -82,7 +83,7 @@ static int kDefaultFifoSize = 0x60000;
 static int kTempFifoSize    = 0x10000;
 static int kDefaultDLSize   = 0x20000;
 static bool sendMtxIndx     = true;
-static bool sendTxUVIndx    = true;
+static bool sendTxUVIndx[8] = { true, false, false, false, false, false, false, false };
 
 static u32 sFrameSize;
 static int oldVerts;
@@ -115,13 +116,11 @@ static GXVtxDescList meshVCD[] = {
 	{ GX_VA_TEX6, GX_NONE },       { GX_VA_TEX7, GX_NONE },       { GX_VA_NULL, GX_NONE },
 };
 
-static GXVtxDescList meshVAT[] = {
-	{ GX_VA_POS, GX_DIRECT },  { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_NRM, GX_NONE },    { GX_VA_TEX3MTXIDX, GX_NONE },
-	{ GX_VA_TEX0, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX1, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
-	{ GX_VA_TEX2, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX3, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
-	{ GX_VA_TEX4, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX5, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
-	{ GX_VA_TEX6, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE }, { GX_VA_TEX7, GX_DIRECT }, { GX_VA_TEX3MTXIDX, GX_NONE },
-	{ GX_VA_NULL, GX_DIRECT }, { GX_VA_TEX2MTXIDX, GX_NONE },
+static GXVtxAttrFmtList meshVAT[] = {
+	{ GX_VA_POS, GX_POS_XYZ, GX_F32, 0 }, { GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0 }, { GX_VA_TEX0, GX_TEX_ST, GX_F32, 0 },
+	{ GX_VA_TEX1, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX2, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX3, GX_TEX_ST, GX_F32, 0 },
+	{ GX_VA_TEX4, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX5, GX_TEX_ST, GX_F32, 0 }, { GX_VA_TEX6, GX_TEX_ST, GX_F32, 0 },
+	{ GX_VA_TEX7, GX_TEX_ST, GX_F32, 0 }, { GX_VA_NULL, GX_TEX_ST, GX_S16, 0 },
 };
 
 /*
@@ -820,109 +819,50 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
  * Address:	80048DA4
  * Size:	000168
  */
-void DGXGraphics::useMatrixQuick(Matrix4f&, int)
+void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x150(r1)
-	  stw       r31, 0x14C(r1)
-	  mulli     r31, r5, 0x3
-	  stw       r30, 0x148(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x144(r1)
-	  addi      r29, r3, 0
-	  addi      r4, r31, 0
-	  stw       r30, 0xC(r3)
-	  addi      r3, r30, 0
-	  bl        0x1CB680
-	  lwz       r4, 0x380(r29)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x8C
-	  lfs       f1, 0x0(r4)
-	  addi      r3, r1, 0x110
-	  lfs       f2, 0x4(r4)
-	  lfs       f3, 0x8(r4)
-	  bl        0x1B5028
-	  addi      r3, r30, 0
-	  addi      r4, r1, 0x80
-	  bl        0x1B4EDC
-	  addi      r3, r1, 0x80
-	  addi      r4, r1, 0xE0
-	  bl        0x1B4E80
-	  addi      r3, r1, 0xE0
-	  addi      r4, r1, 0x110
-	  addi      r5, r1, 0xB0
-	  bl        0x1B4DA4
-	  addi      r3, r1, 0xB0
-	  addi      r4, r31, 0
-	  bl        0x1CB668
-	  b         .loc_0x98
+	int gxID      = id * 3;
+	mActiveMatrix = &mtx;
+	GXLoadPosMtxImm(mtx.mMtx, gxID);
 
-	.loc_0x8C:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x1CB658
+	if (_380) {
+		Mtx mtx2; // 0x110
+		Mtx mtx3; // 0xE0
+		Mtx mtx4; // 0xB0
+		Mtx mtx5; // 0x80
 
-	.loc_0x98:
-	  lwz       r0, 0x338(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xCC
-	  lis       r3, 0x803A
-	  subi      r4, r3, 0x77C0
-	  addi      r3, r29, 0x3E0
-	  addi      r5, r1, 0x50
-	  bl        0x1B4D68
-	  addi      r3, r1, 0x50
-	  li        r4, 0x1E
-	  li        r5, 0
-	  bl        0x1CB6A4
-	  b         .loc_0x14C
+		MTXScale(mtx2, _380->x, _380->y, _380->z);
+		PSMTXInverse(mtx.mMtx, mtx5);
+		PSMTXTranspose(mtx5, mtx3);
+		PSMTXConcat(mtx3, mtx2, mtx4);
+		GXLoadNrmMtxImm(mtx4, gxID);
+	} else {
+		GXLoadNrmMtxImm(mtx.mMtx, gxID);
+	}
 
-	.loc_0xCC:
-	  lwz       r0, 0x324(r29)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x14C
-	  mr        r3, r30
-	  bl        0x1B5224
-	  lfs       f2, -0x7B54(r2)
-	  addi      r3, r1, 0x20
-	  lfs       f0, 0x0(r30)
-	  li        r5, 0x1
-	  fdivs     f1, f2, f1
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x4(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x24(r1)
-	  lfs       f0, 0x8(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x28(r1)
-	  stfs      f2, 0x2C(r1)
-	  lfs       f0, 0x10(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x30(r1)
-	  lfs       f0, 0x14(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x18(r30)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x38(r1)
-	  stfs      f2, 0x3C(r1)
-	  lwz       r0, 0x3DC(r29)
-	  add       r4, r0, r31
-	  bl        0x1CB620
+	if (mLightCam) {
+		Mtx tmpLightMtx;
+		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, tmpLightMtx);
+		GXLoadTexMtxImm(tmpLightMtx, 30, GX_MTX3x4);
+		return;
+	}
 
-	.loc_0x14C:
-	  lwz       r0, 0x154(r1)
-	  lwz       r31, 0x14C(r1)
-	  lwz       r30, 0x148(r1)
-	  lwz       r29, 0x144(r1)
-	  addi      r1, r1, 0x150
-	  mtlr      r0
-	  blr
-	*/
+	if (_324) {
+		Mtx texMtx;
+		f32 mag      = 0.5f / VECMag((Vec*)mtx.mMtx);
+		texMtx[0][0] = mag * mtx.mMtx[0][0];
+		texMtx[0][1] = mag * mtx.mMtx[0][1];
+		texMtx[0][2] = mag * mtx.mMtx[0][2];
+		texMtx[0][3] = 0.5f;
+		texMtx[1][0] = mag * mtx.mMtx[1][0];
+		texMtx[1][1] = mag * mtx.mMtx[1][1];
+		texMtx[1][2] = mag * mtx.mMtx[1][2];
+		texMtx[1][3] = 0.5f;
+
+		GXLoadTexMtxImm(texMtx, _3DC + gxID, GX_MTX2x4);
+	}
+
+	u32 badCompiler[3];
 }
 
 /*
@@ -968,8 +908,35 @@ void DGXGraphics::useTexture(Texture* texture, int id)
  * Address:	80049058
  * Size:	000148
  */
-void DGXGraphics::setMatMatrices(Material*, int)
+void DGXGraphics::setMatMatrices(Material* mat, int p2)
 {
+	_324 = (mat->mTextureInfo.mTevStageCount) ? true : false;
+	GXSetNumTexGens(mat->mTextureInfo.mTexGenDataCount);
+
+	int mtxID = 30;
+	for (int i = 0, j = 0; i < mat->mTextureInfo.mTexGenDataCount; i++) {
+		GXSetTexCoordGen2(GXTexCoordID(mat->mTextureInfo.mTexGenData[i]._00), GXTexGenType(mat->mTextureInfo.mTexGenData[i]._01),
+		                  GXTexGenSrc(mat->mTextureInfo.mTexGenData[i]._02), (mat->mTextureInfo.mTexGenData[i]._03 != 10) ? mtxID : 60,
+		                  GX_FALSE, GX_PTIDENTITY);
+
+		if (mat->mTextureInfo.mTexGenData[i]._01 != 1) {
+			continue;
+		}
+
+		int animFactor = mat->mTextureInfo.mTextureData[j].mAnimationFactor;
+		if (animFactor != 0xFF) {
+			int id = (animFactor != 10) ? mtxID : 60;
+			GXLoadTexMtxImm(mat->mTextureInfo.mTextureData[j].mAnimatedTexMtx.mMtx, id, GX_MTX2x4);
+
+			if (_324 && mat->mTextureInfo.mTexGenData[i]._02 == 1) {
+				_3DC = mtxID;
+				mtxID += (mat->mTextureInfo.mTevStageCount * p2) * 3;
+			} else {
+				mtxID += 3;
+			}
+		}
+		j++;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1084,604 +1051,186 @@ void DGXGraphics::setMatMatrices(Material*, int)
  * Address:	800491A0
  * Size:	000864
  */
-void DGXGraphics::setMaterial(Material*, bool)
+void DGXGraphics::setMaterial(Material* mat, bool p2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x98(r1)
-	  stmw      r27, 0x84(r1)
-	  mr.       r31, r4
-	  addi      r30, r3, 0
-	  beq-      .loc_0x7C8
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r3, 0x1A8(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x1A8(r4)
-	  lwz       r4, 0x18(r31)
-	  rlwinm.   r0,r4,0,31,31
-	  beq-      .loc_0x4DC
-	  lwz       r3, 0x98(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x5C
-	  lwz       r4, 0x94(r31)
-	  bl        0x1CB09C
-	  lwz       r0, 0x50(r31)
-	  rlwinm    r3,r0,0,24,31
-	  bl        0x1C8CE0
-	  b         .loc_0x318
+	if (mat) {
+		gsys->mMaterialCount++;
 
-	.loc_0x5C:
-	  lwz       r0, 0x58(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0xCC
-	  lwz       r0, 0x64(r31)
-	  rlwinm    r3,r0,0,28,31
-	  rlwinm    r4,r0,28,28,31
-	  rlwinm    r5,r0,24,28,31
-	  rlwinm    r6,r0,20,28,31
-	  bl        0x1CAA30
-	  lwz       r0, 0x5C(r31)
-	  rlwinm    r3,r0,0,28,31
-	  rlwinm    r4,r0,28,24,31
-	  rlwinm    r5,r0,16,28,31
-	  rlwinm    r6,r0,12,28,31
-	  rlwinm    r7,r0,8,24,31
-	  bl        0x1CA4B8
-	  lwz       r6, 0x60(r31)
-	  rlwinm    r0,r6,0,31,31
-	  neg       r4, r0
-	  subic     r3, r4, 0x1
-	  rlwinm    r0,r6,0,30,30
-	  subfe     r3, r3, r4
-	  neg       r5, r0
-	  subic     r0, r5, 0x1
-	  rlwinm    r4,r6,24,24,31
-	  subfe     r5, r0, r5
-	  bl        0x1CAB6C
-	  b         .loc_0x1E8
+		if (mat->mFlags & 0x1) {
+			if (mat->mDisplayListPtr) {
+				GXCallDisplayList(mat->mDisplayListPtr, mat->mDisplayListSize);
+				GXSetNumChans(mat->mLightingInfo.mNumChans);
+			} else {
+				if (mat->mPeInfo.mControlFlags & 1) {
+					GXSetBlendMode(
+					    (GXBlendMode)(mat->mPeInfo.mBlendModeFlags & 0xf), (GXBlendFactor)(mat->mPeInfo.mBlendModeFlags >> 4 & 0xf),
+					    (GXBlendFactor)(mat->mPeInfo.mBlendModeFlags >> 8 & 0xf), (GXLogicOp)(mat->mPeInfo.mBlendModeFlags >> 12 & 0xf));
 
-	.loc_0xCC:
-	  rlwinm.   r0,r4,0,16,16
-	  beq-      .loc_0x114
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0x3
-	  li        r6, 0
-	  bl        0x1CA9C8
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CA454
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0
-	  bl        0x1CAB24
-	  b         .loc_0x1E8
+					GXSetAlphaCompare((GXCompare)(mat->mPeInfo.mAlphaCompareFlags & 0xF), (mat->mPeInfo.mAlphaCompareFlags >> 4 & 0xFF),
+					                  (GXAlphaOp)(mat->mPeInfo.mAlphaCompareFlags >> 16 & 0xF),
+					                  (GXCompare)(mat->mPeInfo.mAlphaCompareFlags >> 20 & 0xF),
+					                  mat->mPeInfo.mAlphaCompareFlags >> 24 & 0xFF);
 
-	.loc_0x114:
-	  rlwinm.   r0,r4,0,23,23
-	  beq-      .loc_0x15C
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  bl        0x1CA980
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CA40C
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CAADC
-	  b         .loc_0x1E8
+					GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
+					           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
+				} else if (mat->mFlags & 0x8000) {
+					GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
+					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
+				} else if (mat->mFlags & 0x100) {
+					GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
+					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+				} else if (mat->mFlags & 0x200) {
+					GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
+					GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
+					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+				} else if (mat->mFlags & 0x400) {
+					GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
+					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
+				}
 
-	.loc_0x15C:
-	  rlwinm.   r0,r4,0,22,22
-	  beq-      .loc_0x1A4
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  bl        0x1CA938
-	  li        r3, 0x6
-	  li        r4, 0x80
-	  li        r5, 0
-	  li        r6, 0x3
-	  li        r7, 0xFF
-	  bl        0x1CA3C4
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CAA94
-	  b         .loc_0x1E8
+				GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->_6C[0]));
+				GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->_6C[1]));
+				GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->_6C[2]));
+				GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->_6C[3]));
+				for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
+					PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
+					GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
+					                (GXTevColorArg)stage.mTevColorCombiner.mInArgB, (GXTevColorArg)stage.mTevColorCombiner.mInArgC,
+					                (GXTevColorArg)stage.mTevColorCombiner.mInArgD);
+					GXSetTevColorOp((GXTevStageID)i, (GXTevOp)stage.mTevColorCombiner.mTevOp, (GXTevBias)stage.mTevColorCombiner.mBias,
+					                (GXTevScale)stage.mTevColorCombiner.mScale, (GXBool)stage.mTevColorCombiner.mDoClamp,
+					                (GXTevRegID)stage.mTevColorCombiner.mOutReg);
+					GXSetTevAlphaIn((GXTevStageID)i, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgA,
+					                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgB, (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgC,
+					                (GXTevAlphaArg)stage.mTevAlphaCombiner.mInArgD);
+					GXSetTevAlphaOp((GXTevStageID)i, (GXTevOp)stage.mTevAlphaCombiner.mTevOp, (GXTevBias)stage.mTevAlphaCombiner.mBias,
+					                (GXTevScale)stage.mTevAlphaCombiner.mScale, (GXBool)stage.mTevAlphaCombiner.mDoClamp,
+					                (GXTevRegID)stage.mTevAlphaCombiner.mOutReg);
+				}
 
-	.loc_0x1A4:
-	  rlwinm.   r0,r4,0,21,21
-	  beq-      .loc_0x1E8
-	  li        r3, 0x1
-	  li        r4, 0x4
-	  li        r5, 0x5
-	  li        r6, 0x3
-	  bl        0x1CA8F0
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CA37C
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0
-	  bl        0x1CAA4C
+				gsys->mLightingSets++;
+				setLighting((mat->mLightingInfo.mCtrlFlag & 0x1) != 0, &mat->mLightingInfo);
+			}
 
-	.loc_0x1E8:
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x64
-	  lwz       r0, 0x6C(r3)
-	  li        r3, 0
-	  stw       r0, 0x64(r1)
-	  bl        0x1CA110
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x60
-	  lwz       r0, 0x70(r3)
-	  li        r3, 0x1
-	  stw       r0, 0x60(r1)
-	  bl        0x1CA0F8
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x5C
-	  lwz       r0, 0x74(r3)
-	  li        r3, 0x2
-	  stw       r0, 0x5C(r1)
-	  bl        0x1CA0E0
-	  lwz       r3, 0x90(r31)
-	  addi      r4, r1, 0x58
-	  lwz       r0, 0x78(r3)
-	  li        r3, 0x3
-	  stw       r0, 0x58(r1)
-	  bl        0x1CA0C8
-	  li        r28, 0
-	  li        r29, 0
-	  b         .loc_0x2CC
+			for (int i = 0; i < mat->mTextureInfo.mTextureDataCount; i++) {
+				if (mat->mTextureInfo.mTextureData[i].mTexture != mActiveTexture[i]) {
+					mActiveTexture[i] = mat->mTextureInfo.mTextureData[i].mTexture;
+					mActiveTexture[i]->makeResident();
+					GXLoadTexObj(mActiveTexture[i]->mTexObj, GXTexMapID(i));
+				}
+			}
 
-	.loc_0x254:
-	  lwz       r0, 0x80(r3)
-	  addi      r3, r28, 0
-	  add       r27, r0, r29
-	  lbz       r4, 0x6(r27)
-	  lbz       r5, 0x7(r27)
-	  lbz       r6, 0x8(r27)
-	  lbz       r7, 0x9(r27)
-	  bl        0x1C9D30
-	  lbz       r4, 0xA(r27)
-	  mr        r3, r28
-	  lbz       r5, 0xB(r27)
-	  lbz       r6, 0xC(r27)
-	  lbz       r7, 0xD(r27)
-	  lbz       r8, 0xE(r27)
-	  bl        0x1C9E18
-	  lbz       r4, 0x12(r27)
-	  mr        r3, r28
-	  lbz       r5, 0x13(r27)
-	  lbz       r6, 0x14(r27)
-	  lbz       r7, 0x15(r27)
-	  bl        0x1C9D7C
-	  lbz       r4, 0x16(r27)
-	  mr        r3, r28
-	  lbz       r5, 0x17(r27)
-	  lbz       r6, 0x18(r27)
-	  lbz       r7, 0x19(r27)
-	  lbz       r8, 0x1A(r27)
-	  bl        0x1C9EA4
-	  addi      r29, r29, 0x1E
-	  addi      r28, r28, 0x1
+			GXSetTevColorS10(GX_TEVREG0, *(GXColorS10*)&mat->mTevInfo->mTevColRegs[0].mAnimatedColor);
+			GXSetTevColorS10(GX_TEVREG1, *(GXColorS10*)&mat->mTevInfo->mTevColRegs[1].mAnimatedColor);
+			GXSetTevColorS10(GX_TEVREG2, *(GXColorS10*)&mat->mTevInfo->mTevColRegs[2].mAnimatedColor);
 
-	.loc_0x2CC:
-	  lwz       r3, 0x90(r31)
-	  lwz       r0, 0x7C(r3)
-	  cmplw     r28, r0
-	  blt+      .loc_0x254
-	  lwz       r6, 0x2DEC(r13)
-	  addi      r3, r30, 0
-	  addi      r5, r31, 0x4C
-	  lwz       r4, 0x1C0(r6)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x1C0(r6)
-	  lwz       r0, 0x4C(r31)
-	  lwz       r12, 0x3B4(r30)
-	  rlwinm    r0,r0,0,31,31
-	  lwz       r12, 0x30(r12)
-	  neg       r4, r0
-	  subic     r0, r4, 0x1
-	  mtlr      r12
-	  subfe     r4, r0, r4
-	  blrl
+			GXSetNumTevStages(mat->mTevInfo->mTevStageCount);
 
-	.loc_0x318:
-	  addi      r28, r30, 0
-	  li        r27, 0
-	  li        r29, 0
-	  b         .loc_0x374
+			for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
+				PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
+				GXSetTevOrder(GXTevStageID(i), GXTexCoordID(stage._01), GXTexMapID(stage._02), GXChannelID(stage._03));
+				GXSetTevKColorSel(GXTevStageID(i), GXTevKColorSel(stage._04));
+				GXSetTevKAlphaSel(GXTevStageID(i), GXTevKAlphaSel(stage._05));
+			}
 
-	.loc_0x328:
-	  lwz       r4, 0x84(r31)
-	  addi      r3, r29, 0x8
-	  lwz       r0, 0x2E8(r28)
-	  lwzx      r3, r4, r3
-	  cmplw     r3, r0
-	  beq-      .loc_0x368
-	  stw       r3, 0x2E8(r28)
-	  lwz       r3, 0x2E8(r28)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2E8(r28)
-	  mr        r4, r27
-	  lwz       r3, 0x24(r3)
-	  bl        0x1C9260
+			Colour color;
+			color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
+			          mLightIntensity * mat->mColourInfo.mColour.a);
+			GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
 
-	.loc_0x368:
-	  addi      r29, r29, 0x9C
-	  addi      r28, r28, 0x4
-	  addi      r27, r27, 0x1
+			if (mat->mTextureInfo._14) {
+				_380 = &mat->mTextureInfo._00;
+			} else {
+				_380 = nullptr;
+			}
 
-	.loc_0x374:
-	  lwz       r0, 0x74(r31)
-	  cmplw     r27, r0
-	  blt+      .loc_0x328
-	  lwz       r6, 0x90(r31)
-	  addi      r4, r1, 0x50
-	  li        r3, 0x1
-	  lwz       r5, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  stw       r5, 0x50(r1)
-	  stw       r0, 0x54(r1)
-	  bl        0x1C9EFC
-	  lwz       r6, 0x90(r31)
-	  addi      r4, r1, 0x48
-	  li        r3, 0x2
-	  lwz       r5, 0x24(r6)
-	  lwz       r0, 0x28(r6)
-	  stw       r5, 0x48(r1)
-	  stw       r0, 0x4C(r1)
-	  bl        0x1C9EDC
-	  lwz       r6, 0x90(r31)
-	  addi      r4, r1, 0x40
-	  li        r3, 0x3
-	  lwz       r5, 0x48(r6)
-	  lwz       r0, 0x4C(r6)
-	  stw       r5, 0x40(r1)
-	  stw       r0, 0x44(r1)
-	  bl        0x1C9EBC
-	  lwz       r3, 0x90(r31)
-	  lwz       r0, 0x7C(r3)
-	  rlwinm    r3,r0,0,24,31
-	  bl        0x1CA3D8
-	  li        r27, 0
-	  li        r28, 0
-	  b         .loc_0x438
+			setMatMatrices(mat, _328);
 
-	.loc_0x3FC:
-	  lwz       r0, 0x80(r3)
-	  addi      r3, r27, 0
-	  add       r29, r0, r28
-	  lbz       r4, 0x1(r29)
-	  lbz       r5, 0x2(r29)
-	  lbz       r6, 0x3(r29)
-	  bl        0x1CA210
-	  mr        r3, r27
-	  lbz       r4, 0x4(r29)
-	  bl        0x1C9F60
-	  mr        r3, r27
-	  lbz       r4, 0x5(r29)
-	  bl        0x1C9FC0
-	  addi      r28, r28, 0x1E
-	  addi      r27, r27, 0x1
+			return;
+		}
 
-	.loc_0x438:
-	  lwz       r3, 0x90(r31)
-	  lwz       r0, 0x7C(r3)
-	  cmplw     r27, r0
-	  blt+      .loc_0x3FC
-	  lbz       r3, 0x2F(r31)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x7B68(r2)
-	  addi      r4, r1, 0x3C
-	  stw       r3, 0x7C(r1)
-	  lfs       f2, 0x374(r30)
-	  li        r3, 0x4
-	  stw       r0, 0x78(r1)
-	  lbz       r6, 0x2E(r31)
-	  lfd       f0, 0x78(r1)
-	  lbz       r5, 0x2D(r31)
-	  fsubs     f0, f0, f1
-	  lbz       r0, 0x2C(r31)
-	  stb       r0, 0x6C(r1)
-	  fmuls     f0, f2, f0
-	  stb       r5, 0x6D(r1)
-	  fctiwz    f0, f0
-	  stb       r6, 0x6E(r1)
-	  stfd      f0, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  stb       r0, 0x6F(r1)
-	  lwz       r0, 0x6C(r1)
-	  stw       r0, 0x3C(r1)
-	  bl        0x1C8728
-	  lwz       r0, 0x7C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C0
-	  addi      r0, r31, 0x68
-	  stw       r0, 0x380(r30)
-	  b         .loc_0x4C8
+		_380 = nullptr;
+		if (mat->mFlags & 0x8000) {
+			GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
+			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
+		} else if (mat->mFlags & 0x100) {
+			GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
+			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+		} else if (mat->mFlags & 0x200) {
+			GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
+			GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
+			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+		} else if (mat->mFlags & 0x400) {
+			GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
+			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
+			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
+		}
 
-	.loc_0x4C0:
-	  li        r0, 0
-	  stw       r0, 0x380(r30)
+		useTexture(mat->mTexture, 0);
+		Colour color;
+		color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
+		          mLightIntensity * mat->mColourInfo.mColour.a);
+		GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
 
-	.loc_0x4C8:
-	  lwz       r5, 0x328(r30)
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0x61C
-	  b         .loc_0x850
+		if (mLightCam) {
+			return;
+		}
 
-	.loc_0x4DC:
-	  li        r0, 0
-	  stw       r0, 0x380(r30)
-	  lwz       r3, 0x18(r31)
-	  rlwinm.   r0,r3,0,16,16
-	  beq-      .loc_0x530
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0x3
-	  li        r6, 0
-	  bl        0x1CA5AC
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1CA038
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0
-	  bl        0x1CA708
-	  b         .loc_0x604
+		if (mat->_28) {
+			if (!_3D4) {
+				useTexture(mat->_28, 1);
+				if (mat->mTexture) {
+					GXSetNumTexGens(2);
+					GXSetNumTevStages(2);
+				} else {
+					GXSetNumTexGens(1);
+					GXSetNumTevStages(1);
+				}
 
-	.loc_0x530:
-	  rlwinm.   r0,r3,0,23,23
-	  beq-      .loc_0x578
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  bl        0x1CA564
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1C9FF0
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CA6C0
-	  b         .loc_0x604
+				GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3X4, GX_TG_NRM, mCurrentMatrixId + 30, GX_FALSE, GX_PTIDENTITY);
+				GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD1, GX_TEXMAP1, GX_COLOR_NULL);
+				if (mat->mTexture) {
+					GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
+					GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
+				}
 
-	.loc_0x578:
-	  rlwinm.   r0,r3,0,22,22
-	  beq-      .loc_0x5C0
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  li        r6, 0x3
-	  bl        0x1CA51C
-	  li        r3, 0x6
-	  li        r4, 0x80
-	  li        r5, 0
-	  li        r6, 0x3
-	  li        r7, 0xFF
-	  bl        0x1C9FA8
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0x1
-	  bl        0x1CA678
-	  b         .loc_0x604
+				GXSetTevColorIn(GX_TEVSTAGE1, GX_CC_CPREV, GX_CC_ONE, GX_CC_TEXC, GX_CC_ZERO);
+				GXSetTevColorOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+				GXSetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_APREV, GX_CA_TEXA, GX_CA_ZERO);
+				GXSetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+				_3D4 = true;
+			}
 
-	.loc_0x5C0:
-	  rlwinm.   r0,r3,0,21,21
-	  beq-      .loc_0x604
-	  li        r3, 0x1
-	  li        r4, 0x4
-	  li        r5, 0x5
-	  li        r6, 0x3
-	  bl        0x1CA4D4
-	  li        r3, 0x7
-	  li        r4, 0
-	  li        r5, 0x1
-	  li        r6, 0x7
-	  li        r7, 0
-	  bl        0x1C9F60
-	  li        r3, 0x1
-	  li        r4, 0x3
-	  li        r5, 0
-	  bl        0x1CA630
+			_324 = 1;
+			return;
+		}
+	}
 
-	.loc_0x604:
-	  mr        r3, r30
-	  lwz       r4, 0x24(r31)
-	  lwz       r12, 0x3B4(r30)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r3, 0x2F(r31)
-	  lis       r0, 0x4330
-	  lfd       f1, -0x7B68(r2)
-	  addi      r4, r1, 0x38
-	  stw       r3, 0x74(r1)
-	  lfs       f2, 0x374(r30)
-	  li        r3, 0x4
-	  stw       r0, 0x70(r1)
-	  lbz       r6, 0x2E(r31)
-	  lfd       f0, 0x70(r1)
-	  lbz       r5, 0x2D(r31)
-	  fsubs     f0, f0, f1
-	  lbz       r0, 0x2C(r31)
-	  stb       r0, 0x68(r1)
-	  fmuls     f0, f2, f0
-	  stb       r5, 0x69(r1)
-	  fctiwz    f0, f0
-	  stb       r6, 0x6A(r1)
-	  stfd      f0, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  stb       r0, 0x6B(r1)
-	  lwz       r0, 0x68(r1)
-	  stw       r0, 0x38(r1)
-	  bl        0x1C8550
-	  lwz       r0, 0x338(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x850
-	  lwz       r4, 0x28(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x7C8
-	  lbz       r0, 0x3D4(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7BC
-	  lwz       r12, 0x3B4(r30)
-	  mr        r3, r30
-	  li        r5, 0x1
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x6DC
-	  li        r3, 0x2
-	  bl        0x1C6EBC
-	  li        r3, 0x2
-	  bl        0x1CA0F0
-	  b         .loc_0x6EC
+	_380 = nullptr;
+	if (_3D4) {
+		GXSetTevOp(GX_TEVSTAGE1, GX_PASSCLR);
+		GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3X4, GX_TG_TEX1, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+		GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
+		_3D4 = false;
+	}
 
-	.loc_0x6DC:
-	  li        r3, 0x1
-	  bl        0x1C6EA8
-	  li        r3, 0x1
-	  bl        0x1CA0DC
+	GXSetNumTevStages(1);
+	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+	oldCull = FALSE;
+	GXSetCullMode(GX_CULL_BACK);
 
-	.loc_0x6EC:
-	  lwz       r5, 0x3D8(r30)
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  addi      r6, r5, 0x1E
-	  li        r5, 0x1
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x1C6BB0
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  li        r5, 0x1
-	  li        r6, 0xFF
-	  bl        0x1C9F08
-	  lwz       r0, 0x24(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x74C
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0x1C96C8
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x4
-	  bl        0x1C9EDC
-
-	.loc_0x74C:
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0xC
-	  li        r6, 0x8
-	  li        r7, 0xF
-	  bl        0x1C9840
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x1C9928
-	  li        r3, 0x1
-	  li        r4, 0x7
-	  li        r5, 0
-	  li        r6, 0x4
-	  li        r7, 0x7
-	  bl        0x1C988C
-	  li        r3, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x1C99B4
-	  li        r0, 0x1
-	  stb       r0, 0x3D4(r30)
-
-	.loc_0x7BC:
-	  li        r0, 0x1
-	  stw       r0, 0x324(r30)
-	  b         .loc_0x850
-
-	.loc_0x7C8:
-	  li        r31, 0
-	  stw       r31, 0x380(r30)
-	  lbz       r0, 0x3D4(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x81C
-	  li        r3, 0x1
-	  li        r4, 0x4
-	  bl        0x1C9618
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  li        r5, 0x5
-	  li        r6, 0x3C
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x1C6AB8
-	  li        r3, 0x1
-	  li        r4, 0xFF
-	  li        r5, 0xFF
-	  li        r6, 0xFF
-	  bl        0x1C9E10
-	  stb       r31, 0x3D4(r30)
-
-	.loc_0x81C:
-	  li        r3, 0x1
-	  bl        0x1C9FA4
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0x4
-	  li        r6, 0x3C
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x1C6A7C
-	  li        r0, 0
-	  stw       r0, 0x2E20(r13)
-	  li        r3, 0x2
-	  bl        0x1C745C
-
-	.loc_0x850:
-	  lmw       r27, 0x84(r1)
-	  lwz       r0, 0x9C(r1)
-	  addi      r1, r1, 0x98
-	  mtlr      r0
-	  blr
-	*/
+	_380 ? "fake" : "fake";
+	_380 ? "fake" : "fake";
+	_380 ? "fake" : "fake";
+	_380 ? "fake" : "fake";
+	_380 ? "fake" : "fake";
+	_380 ? "fake" : "fake";
+	_380 ? "fake" : "fake";
 }
 
 /*
@@ -1689,150 +1238,67 @@ void DGXGraphics::setMaterial(Material*, bool)
  * Address:	80049A04
  * Size:	0001D4
  */
-void DGXGraphics::initMesh(Shape*)
+void DGXGraphics::initMesh(Shape* model)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x802A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  li        r3, 0
-	  stw       r0, 0x2E24(r13)
-	  addi      r0, r5, 0x5A7C
-	  mr        r4, r0
-	  bl        0x1C6570
-	  lis       r3, 0x802A
-	  addi      r3, r3, 0x59C4
-	  bl        0x1C5CF8
-	  lwz       r3, 0x23C(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x74
-	  lwz       r0, 0x13C(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x64
-	  lwz       r0, 0x238(r31)
-	  mulli     r4, r0, 0xC
-	  bl        0x1AD1B8
+	oldTevGroup = 0;
+	GXSetVtxAttrFmtv(GX_VTXFMT0, meshVAT);
+	GXSetVtxDescv(meshVCD);
+	if (model->mVertexList) {
+		if (model->_13C & 0x1) {
+			DCStoreRange(model->mVertexList, model->mVertexCount * sizeof(Vector3f));
+		}
+		GXSetArray(GX_VA_POS, model->mVertexList, sizeof(Vector3f));
+	}
 
-	.loc_0x64:
-	  lwz       r4, 0x23C(r31)
-	  li        r3, 0x9
-	  li        r5, 0xC
-	  bl        0x1C6948
+	if (model->mNormalList) {
+		if (model->_13C & 0x2) {
+			DCStoreRange(model->mNormalList, model->mNormalCount * sizeof(Vector3f));
+		}
+		GXSetArray(GX_VA_NRM, model->mNormalList, sizeof(Vector3f));
+	}
 
-	.loc_0x74:
-	  lwz       r3, 0x290(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA8
-	  lwz       r0, 0x13C(r31)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x98
-	  lwz       r0, 0x28C(r31)
-	  mulli     r4, r0, 0xC
-	  bl        0x1AD184
+	if (model->mNBTList) {
+		if (model->_13C & 0x4) {
+			DCStoreRange(model->mNBTList, model->mNBTCount * sizeof(NBT));
+		}
+	}
 
-	.loc_0x98:
-	  lwz       r4, 0x290(r31)
-	  li        r3, 0xA
-	  li        r5, 0xC
-	  bl        0x1C6914
+	int i;
+	for (i = 0; i < model->mTotalActiveTexCoords; i++) {
+		if (model->mTexCoordList[i]) {
+			if (model->_13C & (1 << (i + 5))) {
+				DCStoreRange(model->mTexCoordList[i], model->mTexCoordCounts[i] * sizeof(Vector2f));
+			}
+			GXSetArray((GXAttr)(GX_VA_TEX0 + i), model->mTexCoordList[i], sizeof(Vector2f));
+		}
+	}
 
-	.loc_0xA8:
-	  lwz       r3, 0x298(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xCC
-	  lwz       r0, 0x13C(r31)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0xCC
-	  lwz       r0, 0x294(r31)
-	  mulli     r4, r0, 0x24
-	  bl        0x1AD150
+	if (model->mVtxColorList) {
+		if (model->_13C & 0x10) {
+			DCStoreRange(model->mVtxColorList, model->mVertexCount * sizeof(Colour));
+		}
 
-	.loc_0xCC:
-	  addi      r28, r31, 0
-	  li        r27, 0
-	  li        r29, 0x1
-	  b         .loc_0x120
+		GXSetArray(GX_VA_CLR0, model->mVtxColorList, sizeof(Colour));
+	}
 
-	.loc_0xDC:
-	  lwz       r3, 0x26C(r28)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x118
-	  addi      r0, r27, 0x5
-	  lwz       r4, 0x13C(r31)
-	  slw       r0, r29, r0
-	  and.      r0, r4, r0
-	  beq-      .loc_0x108
-	  lwz       r0, 0x24C(r28)
-	  rlwinm    r4,r0,3,0,28
-	  bl        0x1AD114
+	model->_13C = 0;
 
-	.loc_0x108:
-	  lwz       r4, 0x26C(r28)
-	  addi      r3, r27, 0xD
-	  li        r5, 0x8
-	  bl        0x1C68A4
+	sendTxIndx      = false;
+	sendMtxIndx     = true;
+	sendColIndx     = false;
+	sendNbtIndx     = false;
+	sendTxUVIndx[0] = true;
+	sendTxUVIndx[1] = false;
+	sendTxUVIndx[2] = false;
+	sendTxUVIndx[3] = false;
+	sendTxUVIndx[4] = false;
+	sendTxUVIndx[5] = false;
+	sendTxUVIndx[6] = false;
+	sendTxUVIndx[7] = false;
 
-	.loc_0x118:
-	  addi      r28, r28, 0x4
-	  addi      r27, r27, 0x1
-
-	.loc_0x120:
-	  lwz       r0, 0x248(r31)
-	  cmpw      r27, r0
-	  blt+      .loc_0xDC
-	  lwz       r3, 0x244(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x160
-	  lwz       r0, 0x13C(r31)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x150
-	  lwz       r0, 0x238(r31)
-	  rlwinm    r4,r0,2,0,29
-	  bl        0x1AD0CC
-
-	.loc_0x150:
-	  lwz       r4, 0x244(r31)
-	  li        r3, 0xB
-	  li        r5, 0x4
-	  bl        0x1C685C
-
-	.loc_0x160:
-	  li        r4, 0
-	  stw       r4, 0x13C(r31)
-	  li        r0, 0x1
-	  subi      r3, r13, 0x7754
-	  stb       r4, 0x2E38(r13)
-	  stb       r0, -0x7758(r13)
-	  stb       r4, 0x2E39(r13)
-	  stb       r4, 0x2E3A(r13)
-	  stb       r0, -0x7754(r13)
-	  stb       r4, 0x1(r3)
-	  stb       r4, 0x2(r3)
-	  stb       r4, 0x3(r3)
-	  stb       r4, 0x4(r3)
-	  stb       r4, 0x5(r3)
-	  stb       r4, 0x6(r3)
-	  stb       r4, 0x7(r3)
-	  stw       r4, 0x2E8(r30)
-	  stw       r4, 0x2EC(r30)
-	  stw       r4, 0x2F0(r30)
-	  stw       r4, 0x2F4(r30)
-	  stw       r4, 0x2F8(r30)
-	  stw       r4, 0x2FC(r30)
-	  stw       r4, 0x300(r30)
-	  stw       r4, 0x304(r30)
-	  lwz       r0, 0x34(r1)
-	  lmw       r27, 0x1C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 8; i++) {
+		mActiveTexture[i] = nullptr;
+	}
 }
 
 /*
@@ -1840,185 +1306,75 @@ void DGXGraphics::initMesh(Shape*)
  * Address:	80049BD8
  * Size:	000260
  */
-void DGXGraphics::setupVtxDesc(Shape*, Material*, Mesh*)
+void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r6
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r4, 0
-	  lwz       r0, 0x2C(r6)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x58
-	  lbz       r0, -0x7758(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x78
-	  li        r3, 0
-	  li        r4, 0x1
-	  bl        0x1C57E0
-	  li        r0, 0x1
-	  stb       r0, -0x7758(r13)
-	  b         .loc_0x78
+	if (mesh->mVertexDescriptor & 0x1) {
+		if (!sendMtxIndx) {
+			GXSetVtxDesc(GX_VA_PNMTXIDX, GX_DIRECT);
+			sendMtxIndx = true;
+		}
+	} else {
+		if (sendMtxIndx) {
+			GXSetVtxDesc(GX_VA_PNMTXIDX, GX_NONE);
+			sendMtxIndx = false;
+		}
+	}
 
-	.loc_0x58:
-	  lbz       r0, -0x7758(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x78
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0x1C57BC
-	  li        r0, 0
-	  stb       r0, -0x7758(r13)
+	if (mesh->mVertexDescriptor & 0x2) {
+		if (!sendTxIndx) {
+			GXSetVtxDesc(GX_VA_TEX1MTXIDX, GX_DIRECT);
+			sendTxIndx = true;
+		}
+	} else {
+		if (sendTxIndx) {
+			GXSetVtxDesc(GX_VA_TEX1MTXIDX, GX_NONE);
+			sendTxIndx = false;
+		}
+	}
 
-	.loc_0x78:
-	  lwz       r0, 0x2C(r31)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0xA8
-	  lbz       r0, 0x2E38(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC8
-	  li        r3, 0x2
-	  li        r4, 0x1
-	  bl        0x1C5790
-	  li        r0, 0x1
-	  stb       r0, 0x2E38(r13)
-	  b         .loc_0xC8
+	if (_380) {
+		if (!sendNbtIndx) {
+			GXSetArray(GX_VA_NBT, model->mNBTList, sizeof(NBT));
+			GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_F32, 0);
+			GXSetVtxDesc(GX_VA_NRM, GX_NONE);
+			GXSetVtxDesc(GX_VA_NBT, GX_INDEX16);
+			sendNbtIndx = true;
+		}
+	} else {
+		if (sendNbtIndx) {
+			GXSetArray(GX_VA_NRM, model->mNormalList, sizeof(Vector3f));
+			GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
+			GXSetVtxDesc(GX_VA_NRM, GX_INDEX16);
+			GXSetVtxDesc(GX_VA_NBT, GX_NONE);
+			sendNbtIndx = false;
+		}
+	}
 
-	.loc_0xA8:
-	  lbz       r0, 0x2E38(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC8
-	  li        r3, 0x2
-	  li        r4, 0
-	  bl        0x1C576C
-	  li        r0, 0
-	  stb       r0, 0x2E38(r13)
+	for (int i = 0; i < 8; i++) {
+		if (mesh->mVertexDescriptor & (1 << (i + 3))) {
+			if (!sendTxUVIndx[i]) {
+				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + i), GX_INDEX16);
+				sendTxUVIndx[i] = true;
+			}
+		} else {
+			if (sendTxUVIndx[i]) {
+				GXSetVtxDesc(GXAttr(GX_VA_TEX0 + i), GX_NONE);
+				sendTxUVIndx[i] = false;
+			}
+		}
+	}
 
-	.loc_0xC8:
-	  lwz       r0, 0x380(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x12C
-	  lbz       r0, 0x2E3A(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x180
-	  lwz       r4, 0x298(r28)
-	  li        r3, 0x19
-	  li        r5, 0x24
-	  bl        0x1C66F8
-	  li        r3, 0
-	  li        r4, 0x19
-	  li        r5, 0x1
-	  li        r6, 0x4
-	  li        r7, 0
-	  bl        0x1C5F6C
-	  li        r3, 0xA
-	  li        r4, 0
-	  bl        0x1C5718
-	  li        r3, 0x19
-	  li        r4, 0x3
-	  bl        0x1C570C
-	  li        r0, 0x1
-	  stb       r0, 0x2E3A(r13)
-	  b         .loc_0x180
-
-	.loc_0x12C:
-	  lbz       r0, 0x2E3A(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x180
-	  lwz       r4, 0x290(r28)
-	  li        r3, 0xA
-	  li        r5, 0xC
-	  bl        0x1C66A0
-	  li        r3, 0
-	  li        r4, 0xA
-	  li        r5, 0
-	  li        r6, 0x4
-	  li        r7, 0
-	  bl        0x1C5F14
-	  li        r3, 0xA
-	  li        r4, 0x3
-	  bl        0x1C56C0
-	  li        r3, 0x19
-	  li        r4, 0
-	  bl        0x1C56B4
-	  li        r0, 0
-	  stb       r0, 0x2E3A(r13)
-
-	.loc_0x180:
-	  li        r28, 0
-	  subi      r29, r13, 0x7754
-
-	.loc_0x188:
-	  addi      r0, r28, 0x3
-	  lwz       r3, 0x2C(r31)
-	  li        r30, 0x1
-	  slw       r0, r30, r0
-	  and.      r0, r3, r0
-	  beq-      .loc_0x1C0
-	  lbz       r0, 0x0(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1E0
-	  addi      r3, r28, 0xD
-	  li        r4, 0x3
-	  bl        0x1C5674
-	  stb       r30, 0x0(r29)
-	  b         .loc_0x1E0
-
-	.loc_0x1C0:
-	  lbz       r0, 0x0(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1E0
-	  addi      r3, r28, 0xD
-	  li        r4, 0
-	  bl        0x1C5654
-	  li        r0, 0
-	  stb       r0, 0x0(r29)
-
-	.loc_0x1E0:
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x8
-	  addi      r29, r29, 0x1
-	  blt+      .loc_0x188
-	  lwz       r0, 0x2C(r31)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x220
-	  lbz       r0, 0x2E39(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x240
-	  li        r3, 0xB
-	  li        r4, 0x3
-	  bl        0x1C5618
-	  li        r0, 0x1
-	  stb       r0, 0x2E39(r13)
-	  b         .loc_0x240
-
-	.loc_0x220:
-	  lbz       r0, 0x2E39(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x240
-	  li        r3, 0xB
-	  li        r4, 0
-	  bl        0x1C55F4
-	  li        r0, 0
-	  stb       r0, 0x2E39(r13)
-
-	.loc_0x240:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (mesh->mVertexDescriptor & 0x4) {
+		if (!sendColIndx) {
+			GXSetVtxDesc(GX_VA_CLR0, GX_INDEX16);
+			sendColIndx = true;
+		}
+	} else {
+		if (sendColIndx) {
+			GXSetVtxDesc(GX_VA_CLR0, GX_NONE);
+			sendColIndx = false;
+		}
+	}
 }
 
 /*
@@ -2026,178 +1382,52 @@ void DGXGraphics::setupVtxDesc(Shape*, Material*, Mesh*)
  * Address:	80049E38
  * Size:	000244
  */
-void DGXGraphics::drawSingleMatpoly(Shape*, Joint::MatPoly*)
+void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r23, 0x1C(r1)
-	  addi      r23, r3, 0
-	  mr        r24, r4
-	  lwz       r6, 0x20(r5)
-	  lwz       r0, 0x1C(r5)
-	  mulli     r3, r6, 0x30
-	  lwz       r5, 0x54(r4)
-	  lwz       r4, 0x44(r4)
-	  add       r5, r5, r3
-	  lwz       r3, 0x28(r5)
-	  mulli     r0, r0, 0x9C
-	  cmplwi    r3, 0
-	  addi      r29, r5, 0
-	  add       r25, r4, r0
-	  beq-      .loc_0x230
-	  lwz       r4, 0x18(r25)
-	  rlwinm.   r0,r4,0,15,15
-	  beq-      .loc_0x58
-	  b         .loc_0x230
+	Mesh& mesh    = model->mMeshList[matPoly->mMeshIndex];
+	Material& mat = model->mMaterialList[matPoly->mIndex];
 
-	.loc_0x58:
-	  lwz       r0, 0x20(r3)
-	  cntlzw    r0, r0
-	  rlwinm.   r0,r0,27,31,31
-	  bne-      .loc_0x230
-	  lwz       r0, 0x4(r23)
-	  and.      r0, r4, r0
-	  beq-      .loc_0x230
-	  lwz       r0, 0x1C(r29)
-	  addi      r3, r23, 0
-	  addi      r4, r25, 0
-	  stw       r0, 0x328(r23)
-	  lwz       r12, 0x3B4(r23)
-	  lwz       r12, 0xC8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r23, 0
-	  addi      r4, r24, 0
-	  addi      r5, r25, 0
-	  addi      r6, r29, 0
-	  bl        -0x304
-	  li        r28, 0
-	  li        r30, 0
-	  b         .loc_0x224
+	if (!mesh.mJointList || mat.mFlags & 0x10000) {
+		return;
+	}
+	if ((!mesh.mJointList->mFlags) & 0x1) { // is this a typo? feels like a typo.
+		return;
+	}
+	if (!(mat.mFlags & mRenderState)) {
+		return;
+	}
 
-	.loc_0xB4:
-	  lwz       r0, 0x24(r29)
-	  li        r26, 0
-	  li        r31, 0
-	  add       r27, r0, r30
-	  b         .loc_0x194
+	_328 = mesh.mMtxDepIndex;
+	useMaterial(&mat);
+	setupVtxDesc(model, &mat, &mesh);
 
-	.loc_0xC8:
-	  lwz       r3, 0x4(r27)
-	  lwzx      r0, r3, r31
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x18C
-	  lwz       r3, 0x18(r24)
-	  rlwinm    r4,r0,3,0,28
-	  lwz       r5, 0x3C(r24)
-	  lwz       r0, 0x0(r3)
-	  add       r5, r5, r4
-	  cmplwi    r0, 0
-	  beq-      .loc_0x160
-	  lbz       r0, 0x0(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x12C
-	  mr        r3, r24
-	  lwz       r4, 0x4(r5)
-	  bl        -0x14F58
-	  lwz       r12, 0x3B4(r23)
-	  addi      r4, r3, 0
-	  addi      r3, r23, 0
-	  lwz       r12, 0xF4(r12)
-	  mr        r5, r26
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x18C
+	for (int i = 0; i < mesh.mMtxGroupCount; i++) {
+		MtxGroup& group = mesh.mMtxGroupList[i];
+		for (int j = 0; j < group.mDependencyLength; j++) {
+			if (group.mDependencyList[j] == -1) {
+				continue;
+			}
 
-	.loc_0x12C:
-	  lwz       r4, 0x58(r24)
-	  mr        r3, r24
-	  lwz       r0, 0x4(r5)
-	  add       r4, r4, r0
-	  bl        -0x14F8C
-	  lwz       r12, 0x3B4(r23)
-	  addi      r4, r3, 0
-	  addi      r3, r23, 0
-	  lwz       r12, 0xF4(r12)
-	  mr        r5, r26
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x18C
+			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDependencyList[j]];
+			if (model->mCurrentAnimation->mData) {
+				if (vtxMtx.mHasPartialWeights) {
+					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), j);
+				} else {
+					useMatrixQuick(model->getAnimMatrix(model->mJointCount + vtxMtx.mIndex), j);
+				}
+			} else {
+				useMatrixQuick(model->mJointList[vtxMtx.mIndex].mAnimMatrix, j);
+			}
+		}
 
-	.loc_0x160:
-	  mr        r3, r23
-	  lwz       r0, 0x4(r5)
-	  lwz       r12, 0x3B4(r23)
-	  addi      r5, r26, 0
-	  mulli     r4, r0, 0x11C
-	  lwz       r0, 0x5C(r24)
-	  lwz       r12, 0xF4(r12)
-	  addi      r4, r4, 0x48
-	  mtlr      r12
-	  add       r4, r0, r4
-	  blrl
-
-	.loc_0x18C:
-	  addi      r31, r31, 0x4
-	  addi      r26, r26, 0x1
-
-	.loc_0x194:
-	  lwz       r0, 0x0(r27)
-	  cmpw      r26, r0
-	  blt+      .loc_0xC8
-	  li        r26, 0
-	  li        r31, 0
-	  b         .loc_0x210
-
-	.loc_0x1AC:
-	  mr        r3, r23
-	  lwz       r0, 0xC(r27)
-	  lwz       r12, 0x3B4(r23)
-	  add       r25, r0, r31
-	  lwz       r0, 0x334(r23)
-	  lwz       r4, 0x14(r25)
-	  lwz       r12, 0x58(r12)
-	  rlwinm    r4,r4,0,30,31
-	  mtlr      r12
-	  xor       r4, r4, r0
-	  blrl
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r0, 0x28(r25)
-	  lwz       r3, 0x1A4(r4)
-	  add       r0, r3, r0
-	  stw       r0, 0x1A4(r4)
-	  lwz       r4, 0x2DEC(r13)
-	  lwz       r3, 0x1AC(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x1AC(r4)
-	  lwz       r3, 0x1C(r25)
-	  lwz       r4, 0x18(r25)
-	  bl        0x1CA248
-	  addi      r31, r31, 0x74
-	  addi      r26, r26, 0x1
-
-	.loc_0x210:
-	  lwz       r0, 0x8(r27)
-	  cmpw      r26, r0
-	  blt+      .loc_0x1AC
-	  addi      r30, r30, 0x10
-	  addi      r28, r28, 0x1
-
-	.loc_0x224:
-	  lwz       r0, 0x20(r29)
-	  cmpw      r28, r0
-	  blt+      .loc_0xB4
-
-	.loc_0x230:
-	  lmw       r23, 0x1C(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		for (int j = 0; j < group.mDispListLength; j++) {
+			DispList& list = group.mDispList[j];
+			setCullFront((list.mFlags & 3) ^ _334);
+			gsys->mPolygonCount += list.mFaceCount;
+			gsys->mDispCount++;
+			GXCallDisplayList(list.mData, list.mDataLength);
+		}
+	}
 }
 
 /*
@@ -4591,6 +3821,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
  */
 void DGXGraphics::showCrash(u16, OSContext*)
 {
+	OSReport("Unknown addr !!");
 	// UNUSED FUNCTION
 }
 
@@ -4599,10 +3830,36 @@ void DGXGraphics::showCrash(u16, OSContext*)
  * Address:	........
  * Size:	000184
  */
-void DGXGraphics::showError(char*, char*, int)
+void DGXGraphics::showError(char* msg1, char* fileName, int line)
 {
+	OSReport("ERROR: %s", msg1);
+	OSReport("ERROR: in %s at line %d", fileName, line);
 	// UNUSED FUNCTION
 }
+
+static char sAsciiTable[] = {
+	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x29, 0xFF, 0xFF, 0xFF, 0x2B, 0xFF, 0xFF, 0x25, 0x26, 0xFF, 0x2A,
+	0xFF, 0x27, 0x2C, 0xFF, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x24, 0xFF, 0xFF, 0xFF, 0xFF, 0x28, 0xFF, 0x0A,
+	0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20,
+	0x21, 0x22, 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
+	0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21, 0x22, 0x23, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+};
+
+static char sFontData[] = {
+	0x70, 0x87, 0x1C, 0x30, 0x89, 0x88, 0xA2, 0x50, 0x88, 0x80, 0x82, 0x90, 0x88, 0x83, 0x1C, 0x90, 0x88, 0x84, 0x02, 0xF8, 0x88, 0x88,
+	0x22, 0x10, 0x71, 0xCF, 0x9C, 0x10, 0xF9, 0xCF, 0x9C, 0x70, 0x82, 0x28, 0xA2, 0x88, 0xF2, 0x00, 0xA2, 0x88, 0x0B, 0xC1, 0x1C, 0x78,
+	0x0A, 0x22, 0x22, 0x08, 0x8A, 0x22, 0x22, 0x88, 0x71, 0xC2, 0x1C, 0x70, 0x23, 0xC7, 0x38, 0xF8, 0x52, 0x28, 0xA4, 0x80, 0x8A, 0x28,
+	0x22, 0x80, 0x8B, 0xC8, 0x22, 0xF0, 0xFA, 0x28, 0x22, 0x80, 0x8A, 0x28, 0xA4, 0x80, 0x8B, 0xC7, 0x38, 0xF8, 0xF9, 0xC8, 0x9C, 0x08,
+	0x82, 0x28, 0x88, 0x08, 0x82, 0x08, 0x88, 0x08, 0xF2, 0xEF, 0x88, 0x08, 0x82, 0x28, 0x88, 0x88, 0x82, 0x28, 0x88, 0x88, 0x81, 0xC8,
+	0x9C, 0x70, 0x8A, 0x08, 0xA2, 0x70, 0x92, 0x0D, 0xA2, 0x88, 0xA2, 0x0A, 0xB2, 0x88, 0xC2, 0x0A, 0xAA, 0x88, 0xA2, 0x08, 0xA6, 0x88,
+	0x92, 0x08, 0xA2, 0x88, 0x8B, 0xE8, 0xA2, 0x70, 0xF1, 0xCF, 0x1C, 0xF8, 0x8A, 0x28, 0xA2, 0x20, 0x8A, 0x28, 0xA0, 0x20, 0xF2, 0x2F,
+	0x1C, 0x20, 0x82, 0xAA, 0x02, 0x20, 0x82, 0x49, 0x22, 0x20, 0x81, 0xA8, 0x9C, 0x20, 0x8A, 0x28, 0xA2, 0x88, 0x8A, 0x28, 0xA2, 0x88,
+	0x8A, 0x28, 0x94, 0x88, 0x8A, 0x2A, 0x88, 0x50, 0x89, 0x4A, 0x94, 0x20, 0x89, 0x4A, 0xA2, 0x20, 0x70, 0x85, 0x22, 0x20, 0xF8, 0x01,
+	0x10, 0x00, 0x08, 0x02, 0x08, 0x00, 0x10, 0x84, 0x04, 0x00, 0x20, 0x04, 0x04, 0x70, 0x40, 0x84, 0x04, 0x00, 0x80, 0x02, 0x08, 0x00,
+	0xF8, 0x01, 0x10, 0x00, 0x70, 0x80, 0x00, 0x00, 0x88, 0x82, 0x22, 0x00, 0x08, 0x82, 0x04, 0x00, 0x10, 0x8F, 0x88, 0x00, 0x20, 0x82,
+	0x10, 0x00, 0x00, 0x02, 0x22, 0x00, 0x20, 0x80, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00,
+};
 
 /*
  * --INFO--
@@ -4660,165 +3917,28 @@ Shape::Shape()
  */
 void Shape::optimize()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r25, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x26C(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x58
-	  li        r3, 0x10
-	  bl        -0x57B0
-	  lis       r4, 0x8003
-	  addi      r4, r4, 0x38B4
-	  li        r5, 0
-	  li        r6, 0x8
-	  li        r7, 0x1
-	  bl        0x1C845C
-	  stw       r3, 0x26C(r31)
-	  lfs       f0, -0x7B58(r2)
-	  lwz       r3, 0x26C(r31)
-	  stfs      f0, 0x0(r3)
-	  lwz       r3, 0x26C(r31)
-	  stfs      f0, 0x4(r3)
+	if (!mTexCoordList[0]) {
+		mTexCoordList[0]      = new Vector2f[1];
+		mTexCoordList[0][0].x = 0.0f;
+		mTexCoordList[0][0].y = 0.0f;
+	}
 
-	.loc_0x58:
-	  li        r0, 0x17
-	  stw       r0, 0x13C(r31)
-	  li        r5, 0
-	  li        r3, 0x1
-	  b         .loc_0x84
+	_13C = 0x1 | 0x2 | 0x4 | 0x10;
+	for (int i = 0; i < mTotalActiveTexCoords; i++) {
+		_13C |= (1 << (i + 5));
+	}
 
-	.loc_0x6C:
-	  addi      r0, r5, 0x5
-	  lwz       r4, 0x13C(r31)
-	  slw       r0, r3, r0
-	  or        r0, r4, r0
-	  stw       r0, 0x13C(r31)
-	  addi      r5, r5, 0x1
+	if (!mMeshCount) {
+		return;
+	}
 
-	.loc_0x84:
-	  lwz       r0, 0x248(r31)
-	  cmpw      r5, r0
-	  blt+      .loc_0x6C
-	  lwz       r0, 0x50(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x128
-	  li        r28, 0
-	  li        r29, 0
-	  b         .loc_0x11C
-
-	.loc_0xA8:
-	  li        r27, 0
-	  li        r30, 0
-	  b         .loc_0x100
-
-	.loc_0xB4:
-	  lwz       r3, 0x24(r3)
-	  addi      r0, r30, 0xC
-	  li        r25, 0
-	  lwzx      r26, r3, r0
-	  b         .loc_0xDC
-
-	.loc_0xC8:
-	  lwz       r3, 0x1C(r26)
-	  lwz       r4, 0x18(r26)
-	  bl        0x1AA3BC
-	  addi      r26, r26, 0x74
-	  addi      r25, r25, 0x1
-
-	.loc_0xDC:
-	  lwz       r3, 0x54(r31)
-	  addi      r0, r3, 0x24
-	  lwzx      r3, r29, r0
-	  addi      r0, r3, 0x8
-	  lwzx      r0, r30, r0
-	  cmpw      r25, r0
-	  blt+      .loc_0xC8
-	  addi      r30, r30, 0x10
-	  addi      r27, r27, 0x1
-
-	.loc_0x100:
-	  lwz       r0, 0x54(r31)
-	  add       r3, r29, r0
-	  lwz       r0, 0x20(r3)
-	  cmpw      r27, r0
-	  blt+      .loc_0xB4
-	  addi      r29, r29, 0x30
-	  addi      r28, r28, 0x1
-
-	.loc_0x11C:
-	  lwz       r0, 0x50(r31)
-	  cmpw      r28, r0
-	  blt+      .loc_0xA8
-
-	.loc_0x128:
-	  lmw       r25, 0x14(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8004C8CC
- * Size:	000004
- */
-void DGXGraphics::setPointSize(f32)
-{
-}
-
-/*
- * --INFO--
- * Address:	8004C8D0
- * Size:	000004
- */
-void DGXGraphics::setClippingPlane(bool, Plane*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8004C8D4
- * Size:	000004
- */
-void DGXGraphics::drawOutline(Camera&, Shape*)
-{
-}
-
-/*
- * --INFO--
- * Address:	8004C8D8
- * Size:	000004
- */
-void DGXGraphics::drawOneStrip(Vector3f*, Vector3f*, Vector2f*, int)
-{
-}
-
-/*
- * --INFO--
- * Address:	8004C8DC
- * Size:	00002C
- */
-void __sinit_dgxGraphics_cpp(void)
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0xFF
-	  lis       r3, 0x803A
-	  stbu      r0, -0x2BD0(r3)
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x3(r3)
-	  stb       r0, 0x4(r3)
-	  stb       r0, 0x5(r3)
-	  stb       r0, 0x6(r3)
-	  stb       r0, 0x7(r3)
-	  blr
-	*/
+	for (int i = 0; i < mMeshCount; i++) {
+		for (int j = 0; j < mMeshList[i].mMtxGroupCount; j++) {
+			DispList* list = mMeshList[i].mMtxGroupList[j].mDispList;
+			for (int k = 0; k < mMeshList[i].mMtxGroupList[j].mDispListLength; k++) {
+				DCStoreRange(list->mData, list->mDataLength);
+				list++; // why.
+			}
+		}
+	}
 }
