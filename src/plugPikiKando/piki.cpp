@@ -3406,7 +3406,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 		return;
 	}
 
-	u32 badCompiler[4]; // idk what this is from
+	u32 badCompiler[2]; // idk what this is from
 }
 
 /*
@@ -3926,8 +3926,6 @@ void Piki::init(Navi* navi)
 	mRouteDestinationIndex = -1;
 	mRouteSourceIndex      = -1;
 	mRouteTargetCreature   = nullptr;
-
-	u32 badCompiler[2];
 }
 
 /*
@@ -4014,8 +4012,6 @@ void Piki::updateLookCreature()
 
 		mLookAtTarget.set(newTarget);
 	}
-
-	u32 badCompiler[2];
 }
 
 /*
