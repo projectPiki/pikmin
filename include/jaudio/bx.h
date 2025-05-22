@@ -63,12 +63,42 @@ struct Inst_Invented1 {
 	u8 _0C[0x10 - 0x0C]; // _0C
 };
 
+struct Sense_ {
+	int _00; // _00
+};
+
+struct Osc_ {
+	u8 _00;  // _00
+	f32 _04; // _04
+	int _08; // _08
+	int _0C; // _0C
+	f32 _10; // _10
+	int _14; // _14
+};
+
+struct Oscbuf_ {
+	u8 _00;
+	int _04;
+	int _08;
+	int _0C;
+	int _10;
+	u16 _14;
+};
+
 /**
  * @note Size: 0x40.
  */
 struct Inst_ {
 	int magic;              // _00 : 'INST'
-	u8 _04[0x28 - 0x04];    // _04
+	u8 _04[4];              // _04
+	int _08;                // _08
+	int _0C;                // _0C
+	u32 _10;                // _10
+	int _14;                // _14
+	Rand_* _18;             // _18
+	int _1C;                // _1C
+	Sense_* _20;            // _20
+	u32 _24;                // _24
 	u32 _28;                // _28
 	Inst_Invented1* _2C[5]; // _2C
 };
@@ -78,6 +108,11 @@ struct Rand_ {
 	f32 _04;             // _04
 	f32 _08;             // _08
 	u8 _0C[0x10 - 0x0C]; // _0C
+};
+
+struct Pmap_ {
+	Rand_* _00;
+	int _04;
 };
 
 #endif

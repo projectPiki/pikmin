@@ -45,7 +45,7 @@ jcs_* Get_GlobalHandle()
  * Address:	80009460
  * Size:	000020
  */
-void List_CountChannel(jc_**)
+int List_CountChannel(jc_** jc)
 {
 	/*
 	.loc_0x0:
@@ -143,7 +143,7 @@ void List_CutChannel(jc_*)
  * Address:	80009500
  * Size:	000030
  */
-void List_GetChannel(jc_**)
+jc_* List_GetChannel(jc_** jc)
 {
 	/*
 	.loc_0x0:
@@ -220,7 +220,7 @@ void List_AddChannel(jc_**, jc_*)
  * Address:	800095C0
  * Size:	00009C
  */
-void FixAllocChannel(jcs_*, u32)
+BOOL FixAllocChannel(jcs_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -1586,7 +1586,7 @@ void StopLogicalChannel(jc_*)
  * Address:	8000A700
  * Size:	000028
  */
-void CheckLogicalChannel(jc_*)
+BOOL CheckLogicalChannel(jc_*)
 {
 	/*
 	.loc_0x0:
@@ -1610,7 +1610,7 @@ void CheckLogicalChannel(jc_*)
  * Address:	8000A740
  * Size:	000180
  */
-void PlayLogicalChannel(jc_*)
+BOOL PlayLogicalChannel(jc_*)
 {
 	/*
 	.loc_0x0:
@@ -1787,7 +1787,7 @@ void ResetInitialVolume(jc_*)
  * Address:	8000A940
  * Size:	0000B0
  */
-void Add_WaitDSPChannel(jc_*)
+BOOL Add_WaitDSPChannel(jc_* jc)
 {
 	/*
 	.loc_0x0:

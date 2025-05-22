@@ -27,7 +27,7 @@ struct CtrlGroup_ {
 
 void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL);
 BOOL Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL);
-void GetSoundHandle(CtrlGroup_*, u32);
+int GetSoundHandle(CtrlGroup_*, u32);
 u16 Jac_WsVirtualToPhysical(u16);
 u16 Jac_BnkVirtualToPhysical(u16);
 u16 Jac_BnkPhysicalToVirtual(u16);

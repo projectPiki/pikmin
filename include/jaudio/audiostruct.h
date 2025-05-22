@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Dolphin/os.h"
+#include "jaudio/bx.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,6 +19,10 @@ typedef struct JCMgr JCMgr;
 typedef struct jc_ jc_;
 typedef struct jcs_ jcs_;
 typedef struct Wave_ Wave_;
+
+typedef enum JCSTATUS {
+	// TODO: This is probably also a struct and not an enum.  Confirm.
+} JCSTATUS;
 
 /**
  * @brief Audio heap.
@@ -50,6 +55,26 @@ struct dspch_ {
 	// DSPBuffer* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
 };
 
+struct panData {
+	f32 _00; // maybe this is a vector3, I have no idea
+	f32 _04;
+	f32 _08;
+};
+
+/**
+ * @brief TODO.
+ */
+struct jcs_ {
+	u32 _00;
+	int _04;
+	jc_* _08;
+	jc_* _0C;
+	jc_* _10;
+	jc_* _14;
+	u8 _18[0x70 - 0x18];
+	int _70;
+};
+
 struct JCMgr {
 	u32 _00;     // _00
 	u32 _04;     // _04
@@ -80,65 +105,47 @@ struct JCMgr {
  * @brief TODO.
  */
 struct jc_ {
-	u8 _00;                  // _00
-	u8 _01;                  // _01
-	u8 _02;                  // _02
-	u8 _03;                  // _03
-	JCMgr* mMgr;             // _04
-	void** _08;              // _08
-	u8 _0C;                  // _0C
-	void* _10;               // _10
-	u32 _14;                 // _14
-	u32 _18;                 // _18
-	char _1C[4];             // _1C
-	dspch_* _20;             // _20
-	void* mNext;             // _24
-	BOOL (*_28)(void*, u32); // _28
-	void (*_2C)(void*, u32); // _2C
-	s32 _30;                 // _30
-	s32 _34;                 // _34
-	void* _38[4];            // _38
-	f32 _48;                 // _48
-	char _4C[4];             // _4C
-	f32 _50;                 // _50
-	char _54[8];             // _4C
-	f32 _5C;                 // _5C
-	f32 _60;                 // _60
-	f32 _64;                 // _64
-	char _68[4];             // _68
-	f32 _6C;                 // _6C
-	char _70[8];             // _70
-	f32 _78;                 // _78
-	char _7C[8];             // _7C
-	f32 _84;                 // _84
-	char _88[4];             // _88
-	f32 _8C;                 // _8C
-	f32 _90;                 // _90
-	f32 _94;                 // _94
-	u16 _98;                 // _98
-	u16 _9A;                 // _9A
-	void* _9C;               // _9C
-	char _A0[8];             // _A0
-	u16 _A8[6];              // _A8
-	s16 _B4[6];              // _B4
-	u32 _C0;                 // _C0
-	u16 _C4;                 // _C4
-	u16 _C6;                 // _C6
-	u32 _C8;                 // _C8
-	char _CC[4];             // _CC
-	s32 _D0;                 // _D0
-	char _D4[12];            // _D4
-	u8 _E0[0xF8 - 0xE0];     // _E0
-	u16 _F8;                 // _F8
-	u8 _FA[0x114 - 0xFA];    // _FA
-	u16 _114[6];             // _114
-};
-
-/**
- * @brief TODO.
- */
-struct jcs_ {
-	// TODO
+	u8 _00;                      // _00
+	u8 _01;                      // _01
+	u8 _02;                      // _02
+	u8 _03;                      // _03
+	JCMgr* mMgr;                 // _04
+	void** _08;                  // _08
+	u8 _0C;                      // _0C
+	void* _10;                   // _10
+	u32 _14;                     // _14
+	u32 _18;                     // _18
+	char _1C[4];                 // _1C
+	dspch_* _20;                 // _20
+	void* mNext;                 // _24
+	BOOL (*_28)(jc_*, JCSTATUS); // _28
+	BOOL (*_2C)(jc_*, JCSTATUS); // _2C
+	s32 _30;                     // _30
+	s32 _34;                     // _34
+	struct Osc_* _38[4];         // _38
+	struct Oscbuf_ _48[2];       // _48
+	f32 _78;                     // _78
+	char _7C[8];                 // _7C
+	f32 _84;                     // _84
+	char _88[4];                 // _88
+	f32 _8C;                     // _8C
+	f32 _90;                     // _90
+	f32 _94;                     // _94
+	u16 _98;                     // _98
+	u16 _9A;                     // _9A
+	void* _9C;                   // _9C
+	char _A0[8];                 // _A0
+	f32 _A8;                     // _A8
+	f32 _AC;                     // _AC
+	f32 _B0;                     // _B0
+	f32 _B4;                     // _B4
+	f32 _B8;                     // _B8
+	struct panData _BC[4];       // _BC
+	f32 _E8[3];                  // _E8
+	u16 _F8;                     // _F8
+	u16 _FA;                     // _FA
+	u8 _FC[0x114 - 0xFC];        // _FC
+	u16 _114[6];                 // _114
 };
 
 /**

@@ -5,16 +5,17 @@
 
 typedef struct jc_ jc_;
 typedef struct Inst_ Inst_;
+typedef struct Perc_ Perc_;
 typedef struct Pmap_ Pmap_;
 typedef struct Osc_ Osc_;
 typedef struct jcs_ jcs_;
-typedef struct CtrlWave_ CtrlWave_;
-typedef struct JCSTATUS JCSTATUS;
+typedef struct CtrlWave_ {
+	int _00; // _00
+	int _04; // _04
+	int _08; // _08
+	u32 _0C; // _0C
+} CtrlWave_;
 typedef struct SOUNDID_ SOUNDID_;
-
-struct JCSTATUS {
-	// TODO: This is probably also a struct and not an enum.  Confirm.
-};
 
 /**
  * @brief This is a "boxed" integer type to be passed by value.
@@ -26,9 +27,9 @@ struct SOUNDID_ {
 };
 
 void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32);
-void PercRead(u32, u32);
-void InstRead(u32, u32);
-void VmapRead(Inst_*, u8, u8);
+Perc_* PercRead(u32, u32);
+Inst_* InstRead(u32, u32);
+int VmapRead(Inst_*, u8, u8);
 void Init_1shot(jcs_*, u32);
 void Stop_1Shot(jc_*);
 void Stop_1Shot_R(jc_*, u16);

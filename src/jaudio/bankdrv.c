@@ -216,7 +216,7 @@ int Bank_GetVoiceMap(Voice_*, u16)
  * Address:	8000D1C0
  * Size:	000104
  */
-int Bank_SenseToOfs(Sense_*, u8)
+f32 Bank_SenseToOfs(Sense_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -321,7 +321,7 @@ f32 Bank_RandToOfs(Rand_* rand)
  * Address:	8000D340
  * Size:	0003F8
  */
-int Bank_OscToOfs(Osc_*, Oscbuf_*)
+f32 Bank_OscToOfs(Osc_*, Oscbuf_*)
 {
 	/*
 	.loc_0x0:

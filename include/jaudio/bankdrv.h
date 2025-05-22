@@ -19,8 +19,8 @@ int Bank_GetInstKeymap(Inst_*, u8);
 int Bank_GetInstVmap(Inst_*, u8, u8);
 int Bank_GetPercVmap(Perc_*, u8, u8);
 int Bank_GetVoiceMap(Voice_*, u16);
-int Bank_SenseToOfs(Sense_*, u8);
+f32 Bank_SenseToOfs(Sense_*, u8);
 f32 Bank_RandToOfs(Rand_* rand);
-int Bank_OscToOfs(Osc_*, Oscbuf_*);
+f32 Bank_OscToOfs(Osc_*, Oscbuf_*);
 
 #endif

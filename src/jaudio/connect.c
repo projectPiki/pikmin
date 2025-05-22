@@ -486,7 +486,7 @@ void __GetSoundHandle(CtrlGroup_*, u32, u32)
  * Address:	8000CE00
  * Size:	000074
  */
-void GetSoundHandle(CtrlGroup_*, u32)
+int GetSoundHandle(CtrlGroup_*, u32)
 {
 	/*
 	.loc_0x0:
