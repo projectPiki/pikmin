@@ -27,8 +27,8 @@ DEFINE_PRINT("Kontroller")
 Kontroller::Kontroller(int p1)
     : Controller(p1)
 {
-	_50         = 0;
-	_54         = 0;
+	mState      = 0;
+	mDuration   = 0;
 	mDataStream = nullptr;
 }
 
@@ -40,10 +40,10 @@ Kontroller::Kontroller(int p1)
 void Kontroller::save(RamStream* stream, int p2)
 {
 	PRINT("************ save start\n");
-	_54         = p2;
+	mDuration   = p2;
 	mDataStream = stream;
 	stream->setPosition(0);
-	_50 = 1;
+	mState = 1;
 }
 
 /*
@@ -54,10 +54,10 @@ void Kontroller::save(RamStream* stream, int p2)
 void Kontroller::load(RamStream* stream, int p2)
 {
 	PRINT("************ load start\n");
-	_54         = p2;
+	mDuration   = p2;
 	mDataStream = stream;
 	stream->setPosition(0);
-	_50 = 2;
+	mState = 2;
 }
 
 /*
@@ -68,9 +68,9 @@ void Kontroller::load(RamStream* stream, int p2)
 void Kontroller::stop()
 {
 	PRINT("************ stopped\n");
-	_50         = 0;
+	mState      = 0;
 	mDataStream = nullptr;
-	_54         = 0;
+	mDuration   = 0;
 }
 
 /*
@@ -78,17 +78,12 @@ void Kontroller::stop()
  * Address:	80115CF8
  * Size:	000168
  */
- 
-int unkflush(volatile void* addr, volatile int x) {
-
-}
- 
 void Kontroller::update()
 {
-	switch (_50) {
+	switch (mState) {
 	case 2:
 		read(*mDataStream);
-		if (--_54 <= 0) {
+		if (--mDuration <= 0) {
 			stop();
 		}
 		updateCont(_5C);
@@ -96,14 +91,15 @@ void Kontroller::update()
 	case 1:
 		Controller::update();
 		write(*mDataStream);
-		if (--_54 <= 0) {
+		if (--mDuration <= 0) {
 			void* addr = mDataStream->mBufferAddr;
 			DCFlushRange(addr, mDataStream->getPosition());
 
-			// SLOP SLOP SLOP (this code is needed to match somehow!!!)
-			u32 slop = 0;
-            for (int slop_i = 0; slop_i != 16; slop_i++) { 
-				!(slop += 0x8);
+			//! What the actual fuck is this?
+			//! Seriously, all to generate 4 instructions.
+			u32 test = 0;
+			for (int i = 0; i != 16; i++) {
+				!(test += 0x8);
 			}
 
 			mDataStream->close();
