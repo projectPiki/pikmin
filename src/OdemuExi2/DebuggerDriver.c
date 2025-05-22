@@ -131,13 +131,14 @@ void DBGCheckID(void)
  */
 static BOOL DBGWriteMailbox(u32 p1)
 {
-	u32 cmd = 0xc0000000;
-	u32 v;
-	u32 base   = p1;
 	BOOL total = FALSE;
+	u32 v;
 
-	DBGEXISelect(4);
-	v = (base & 0x1fffffff) | (cmd);
+	if (!DBGEXISelect(4)) {
+		return FALSE;
+	}
+
+	v = (p1 & 0x1fffffff) | (0xC0000000);
 	total |= IS_FALSE(DBGEXIImm(&v, sizeof(v), 1));
 	total |= IS_FALSE(DBGEXISync());
 	total |= IS_FALSE(DBGEXIDeselect());
@@ -155,7 +156,9 @@ static BOOL DBGReadMailbox(u32* p1)
 	BOOL total = FALSE;
 	u32 v;
 
-	DBGEXISelect(4);
+	if (!DBGEXISelect(4)) {
+		return FALSE;
+	}
 
 	v = 0x60000000;
 	total |= IS_FALSE(DBGEXIImm(&v, 2, 1));
@@ -181,7 +184,9 @@ static BOOL DBGRead(u32 count, u32* buffer, s32 param3)
 	u32 v1;
 	u32 v;
 
-	DBGEXISelect(4);
+	if (!DBGEXISelect(4)) {
+		return FALSE;
+	}
 
 	v1 = (count & 0x1fffc) << 8 | 0x20000000;
 	total |= IS_FALSE(DBGEXIImm(&v1, sizeof(v1), 1));
@@ -215,7 +220,9 @@ static BOOL DBGWrite(u32 count, void* buffer, s32 param3)
 	u32 v1;
 	u32 v;
 
-	DBGEXISelect(4);
+	if (!DBGEXISelect(4)) {
+		return FALSE;
+	}
 
 	v1 = (count & 0x1fffc) << 8 | 0xa0000000;
 	total |= IS_FALSE(DBGEXIImm(&v1, sizeof(v1), 1));
@@ -247,10 +254,12 @@ static BOOL DBGReadStatus(u32* p1)
 	BOOL total = FALSE;
 	u32 v;
 
-	DBGEXISelect(4);
+	if (!DBGEXISelect(4)) {
+		return FALSE;
+	}
 
 	v = 1 << 30;
-	total |= IS_FALSE(DBGEXIImm(&v, 2, 1));
+	total |= IS_FALSE(DBGEXIImm((u8*)&v, 2, 1));
 	total |= IS_FALSE(DBGEXISync());
 
 	total |= IS_FALSE(DBGEXIImm(p1, 4, 0));
@@ -386,11 +395,13 @@ BOOL DBRead(u32* buffer, s32 count)
  * Address:	80221CF0
  * Size:	000260
  */
-BOOL DBWrite(void* src, u32 size)
+BOOL DBWrite(const void* src, u32 size)
 {
 	u32 v;
 	u32 busyFlag;
-	BOOL interrupts = OSDisableInterrupts();
+	BOOL interrupts;
+
+	interrupts = OSDisableInterrupts();
 
 	do {
 		DBGReadStatus(&busyFlag);
@@ -399,15 +410,15 @@ BOOL DBWrite(void* src, u32 size)
 	SendCount++;
 	v = ((SendCount & 1) ? 0x1000 : 0);
 
-	while (!DBGWrite(v | 0x1c000, src, ROUND_UP(size, 4)))
+	while (!DBGWrite(v | 0x1c000, (u32*)src, ROUND_UP(size, 4)))
 		;
 
 	do {
 		DBGReadStatus(&busyFlag);
 	} while (busyFlag & 2);
 
-	v = SendCount;
-	while (!DBGWriteMailbox((0x1f000000) | v << 0x10 | size))
+	v = (SendCount << 0x10) | 0x1F000000 | size;
+	while (!DBGWriteMailbox(v))
 		;
 
 	do {

@@ -1086,7 +1086,7 @@ config.libs = [
         "progress_category" : "sdk",
         "cflags": cflags_base,
         "objects": [
-            Object(NonMatching, "OdemuExi2/DebuggerDriver.c"),
+            Object(Matching, "OdemuExi2/DebuggerDriver.c"),
         ],
     },
     {
