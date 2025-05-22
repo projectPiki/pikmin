@@ -468,7 +468,7 @@ config.libs = [
         "mw_version": "GC/1.2.5n",
         "progress_category" : "game",
         "objects": [
-            Object(Equivalent, "plugPikiKando/omake.cpp"),
+            Object(Matching, "plugPikiKando/omake.cpp"),
             Object(Matching, "plugPikiKando/radarInfo.cpp"),
             Object(Matching, "plugPikiKando/interactBattle.cpp"),
             Object(Matching, "plugPikiKando/interactGrab.cpp"),

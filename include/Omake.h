@@ -231,20 +231,19 @@ struct ClothFader : public AttentionCamera::Fader {
 
 		f32 width  = (640 / (_0E - 1)) / 640.0f;
 		f32 height = (480 / (_10 - 1)) / 480.0f;
-
 		for (int i = 0; i < _0E - 1; i++) {
-			f32 x0 = width * i;
 
 			for (int j = 0; j < _10 - 1; j++) {
+
+				Vector3f vec1 = mParticles[j * _0E + i]._00;
+				Vector3f vec2 = mParticles[i + 1 + j * _0E]._00;
+				Vector3f vec3 = mParticles[(j + 1) * _0E + i]._00;
+				Vector3f vec4 = mParticles[i + 1 + (j + 1) * _0E]._00;
+
+				f32 x0 = width * i;
 				f32 y0 = height * j;
 
-				int a = i + j * _0E;
-				int b = i + (j + 1) * _0E;
-
-				Vector3f vec1 = mParticles[i + j * _0E]._00;
-				Vector3f vec2 = mParticles[i + 1 + j * _0E]._00;
-				Vector3f vec3 = mParticles[i + (j + 1) * _0E]._00;
-				Vector3f vec4 = mParticles[i + 1 + (j + 1) * _0E]._00;
+				f32 a = x0;
 
 				GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 				GXPosition3f32(vec1.x, vec1.y, vec1.z);
