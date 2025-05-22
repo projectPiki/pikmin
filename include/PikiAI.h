@@ -1304,11 +1304,11 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 
 	ActPick(Piki*);
 
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 	virtual ~ActPick() { }                               // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
 	// _00     = VTBL
 	// _00-_14 = Action
