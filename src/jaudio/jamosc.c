@@ -280,7 +280,7 @@ void Osc_Setup_SimpleEnv(seqp_*, u8, u32)
  * Address:	80014F60
  * Size:	0000B0
  */
-void Osc_Setup_ADSR(void)
+void Osc_Setup_ADSR(seqp_*, s16*)
 {
 	/*
 	.loc_0x0:

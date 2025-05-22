@@ -12,13 +12,14 @@
 typedef struct SEQ_ARG_t SEQ_ARG_t;
 
 struct SEQ_ARG_t {
-	u32 _00[4];          // _00 | Most likely unsigned.
-	u8 _10[0x20 - 0x10]; // _10 | Could this be floats?
+	u32 _00[5];          // _00 | Most likely unsigned.
+	u8 _14[0x20 - 0x14]; // _10 | Is this whole struct actually just a u32[8]?
 };
 
 static seqp_* SEQ_P;
 static u8 TRACK_LIST[0x100]; // TODO: placeholder
 static SEQ_ARG_t SEQ_ARG;
+static TrackCallback JAM_CALLBACK_FUNC = NULL;
 
 /*
  * --INFO--
@@ -83,7 +84,7 @@ static u32 __24ReadOfs(seqp_* param_1, u32 param_2)
  * Address:	8000F5A0
  * Size:	000050
  */
-static void __LongReadOfs(seqp_*, u32)
+static u32 __LongReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -188,79 +189,45 @@ static void __32Read(seqp_*)
  * Address:	8000F740
  * Size:	0000D0
  */
-static void __ConditionCheck(seqp_*, u8)
+static BOOL __ConditionCheck(seqp_* seq, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0x3
-	  bl        0x948
-	  rlwinm    r0,r31,0,28,31
-	  li        r4, 0
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x80
-	  bge-      .loc_0x48
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x60
-	  bge-      .loc_0x70
-	  cmpwi     r0, 0
-	  bge-      .loc_0x58
-	  b         .loc_0xB8
+	BOOL result;
+	u16 uVar1;
 
-	.loc_0x48:
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0xA8
-	  bge-      .loc_0xB8
-	  b         .loc_0x94
+	uVar1  = Jam_ReadRegDirect(seq, 3);
+	result = FALSE;
 
-	.loc_0x58:
-	  li        r4, 0x1
-	  b         .loc_0xB8
-
-	.loc_0x60:
-	  rlwinm.   r0,r3,0,16,31
-	  bne-      .loc_0xB8
-	  li        r4, 0x1
-	  b         .loc_0xB8
-
-	.loc_0x70:
-	  rlwinm.   r0,r3,0,16,31
-	  beq-      .loc_0xB8
-	  li        r4, 0x1
-	  b         .loc_0xB8
-
-	.loc_0x80:
-	  rlwinm    r0,r3,0,16,31
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xB8
-	  li        r4, 0x1
-	  b         .loc_0xB8
-
-	.loc_0x94:
-	  rlwinm    r0,r3,0,16,31
-	  cmplwi    r0, 0x8000
-	  blt-      .loc_0xB8
-	  li        r4, 0x1
-	  b         .loc_0xB8
-
-	.loc_0xA8:
-	  rlwinm    r0,r3,0,16,31
-	  cmplwi    r0, 0x8000
-	  bge-      .loc_0xB8
-	  li        r4, 0x1
-
-	.loc_0xB8:
-	  lwz       r0, 0x1C(r1)
-	  mr        r3, r4
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	switch (param_2 & 0x0f) {
+	case 0:
+		result = TRUE;
+		break;
+	case 1:
+		if (uVar1 == 0) {
+			result = TRUE;
+		}
+		break;
+	case 2:
+		if (uVar1 != 0) {
+			result = TRUE;
+		}
+		break;
+	case 3:
+		if (uVar1 == 1) {
+			result = TRUE;
+		}
+		break;
+	case 4:
+		if (uVar1 >= 0x8000) {
+			result = TRUE;
+		}
+		break;
+	case 5:
+		if (uVar1 < 0x8000) {
+			result = TRUE;
+		}
+		break;
+	}
+	return result;
 }
 
 /*
@@ -436,7 +403,7 @@ void Jam_WriteTimeParam(seqp_*, u8)
  * Address:	8000FAA0
  * Size:	0000AC
  */
-void Jam_WriteRegDirect(seqp_*, u32, u8)
+void Jam_WriteRegDirect(seqp_*, u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -503,63 +470,27 @@ void Jam_WriteRegDirect(seqp_*, u32, u8)
  * Address:	8000FB60
  * Size:	000098
  */
-static void LoadTbl(seqp_*, u32, u32, u32)
+static u32 LoadTbl(seqp_* seq, u32 param_2, u32 param_3, u32 param_4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r6, 0x6
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x28
-	  cmpwi     r6, 0x4
-	  beq-      .loc_0x38
-	  bge-      .loc_0x48
-	  b         .loc_0x84
+	// TODO: FIXME
+	u32 result;
 
-	.loc_0x28:
-	  cmpwi     r6, 0x8
-	  beq-      .loc_0x78
-	  bge-      .loc_0x84
-	  b         .loc_0x74
-
-	.loc_0x38:
-	  add       r4, r4, r5
-	  bl        -0x73C
-	  rlwinm    r0,r3,0,24,31
-	  b         .loc_0x84
-
-	.loc_0x48:
-	  rlwinm    r5,r5,1,0,30
-	  add       r4, r4, r5
-	  bl        -0x6F0
-	  rlwinm    r0,r3,0,16,31
-	  b         .loc_0x84
-
-	.loc_0x5C:
-	  rlwinm    r0,r5,1,0,30
-	  add       r5, r5, r0
-	  add       r4, r4, r5
-	  bl        -0x6A8
-	  mr        r0, r3
-	  b         .loc_0x84
-
-	.loc_0x74:
-	  rlwinm    r5,r5,2,0,29
-
-	.loc_0x78:
-	  add       r4, r4, r5
-	  bl        -0x63C
-	  mr        r0, r3
-
-	.loc_0x84:
-	  mr        r3, r0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	switch (param_4) {
+	case 2:
+		result = __ByteReadOfs(seq, param_2 + param_3 * 1);
+		break;
+	case 3: // Without this case statement, the compiler-generated conditions look crazy.
+	case 4:
+		result = __WordReadOfs(seq, param_2 + param_3 * 2);
+		break;
+	case 6:
+		result = __24ReadOfs(seq, param_2 + param_3 * 3);
+		break;
+	case 8:
+		result = __LongReadOfs(seq, param_2 + param_3 * 4);
+		break;
+	}
+	return result;
 }
 
 /*
@@ -1260,7 +1191,7 @@ void Jam_CheckPortIndirect(void)
  * Address:	80010380
  * Size:	000078
  */
-s32 Jam_WritePortAppDirect(seqp_*, u32, u16)
+s32 Jam_WritePortAppDirect(seqp_*, u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -2051,14 +1982,10 @@ void Jam_CheckRunningCounter(void)
  * Address:	80010A60
  * Size:	00000C
  */
-void Jam_RegisterTrackCallback(TrackCallback)
+BOOL Jam_RegisterTrackCallback(TrackCallback callback)
 {
-	/*
-	.loc_0x0:
-	  stw       r3, 0x2C28(r13)
-	  li        r3, 0x1
-	  blr
-	*/
+	JAM_CALLBACK_FUNC = callback;
+	return TRUE;
 }
 
 /*
@@ -3307,35 +3234,11 @@ static u32 Cmd_Ret()
  */
 static u32 Cmd_RetF()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8032
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, -0x580(r4)
-	  lwz       r3, 0x2C30(r13)
-	  rlwinm    r4,r0,0,28,31
-	  bl        -0x22FC
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x4C
-	  lwz       r4, 0x2C30(r13)
-	  lwz       r3, 0x8(r4)
-	  subi      r3, r3, 0x1
-	  rlwinm    r0,r3,2,0,29
-	  stw       r3, 0x8(r4)
-	  add       r3, r4, r0
-	  lwz       r0, 0xC(r3)
-	  stw       r0, 0x4(r4)
-
-	.loc_0x4C:
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	// But why cast it...?  And why check if it explicitly equals TRUE...?
+	if ((u8)__ConditionCheck(SEQ_P, SEQ_ARG._00[0] & 0x0f) == TRUE) {
+		SEQ_P->_04 = SEQ_P->_0C[--SEQ_P->_08];
+	}
+	return 0;
 }
 
 /*
@@ -3405,30 +3308,13 @@ static u32 Cmd_LoopE()
  */
 static u32 Cmd_ReadPort()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8032
-	  stw       r0, 0x4(r1)
-	  subi      r4, r3, 0x580
-	  li        r0, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x0(r4)
-	  lwz       r5, 0x2C30(r13)
-	  rlwinm    r3,r3,2,0,29
-	  add       r3, r5, r3
-	  lhz       r5, 0x2F2(r3)
-	  stb       r0, 0x2F0(r3)
-	  lwz       r0, 0x4(r4)
-	  lwz       r3, 0x2C30(r13)
-	  rlwinm    r4,r0,0,24,31
-	  bl        -0x213C
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	// TODO: Ghidra really hates the array of struct at _2F0.
+	u16 temp;
+
+	SEQ_P->_2F0[SEQ_ARG._00[0]].cmdImport = 0;
+	temp                                  = SEQ_P->_2F0[SEQ_ARG._00[0]]._02;
+	Jam_WriteRegDirect(SEQ_P, SEQ_ARG._00[1], temp);
+	return 0;
 }
 
 /*
@@ -3510,25 +3396,8 @@ static u32 Cmd_ConnectName()
  */
 static u32 Cmd_ParentWritePort()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8032
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwzu      r4, -0x580(r3)
-	  lwz       r5, 0x2C30(r13)
-	  lwz       r0, 0x4(r3)
-	  rlwinm    r4,r4,0,28,31
-	  lwz       r3, 0x40(r5)
-	  rlwinm    r5,r0,0,16,31
-	  bl        -0x1A28
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	Jam_WritePortAppDirect(SEQ_P->_40, SEQ_ARG._00[0] & 0x0f, SEQ_ARG._00[1]);
+	return 0;
 }
 
 /*
@@ -3594,36 +3463,14 @@ static u32 Cmd_SimpleEnv()
  */
 static u32 Cmd_SimpleADSR()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8032
-	  stw       r0, 0x4(r1)
-	  subi      r7, r3, 0x580
-	  li        r0, 0x5
-	  li        r3, 0
-	  stwu      r1, -0x18(r1)
-	  li        r4, 0
-	  addi      r5, r1, 0x8
-	  mtctr     r0
+	int i;
+	s16 local_10[5];
 
-	.loc_0x28:
-	  add       r6, r7, r4
-	  addi      r4, r4, 0x4
-	  lwz       r0, 0x0(r6)
-	  extsh     r0, r0
-	  sthx      r0, r5, r3
-	  addi      r3, r3, 0x2
-	  bdnz+     .loc_0x28
-	  lwz       r3, 0x2C30(r13)
-	  addi      r4, r1, 0x8
-	  bl        0x3014
-	  li        r3, 0
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 5; ++i) {
+		local_10[i] = SEQ_ARG._00[i];
+	}
+	Osc_Setup_ADSR(SEQ_P, local_10);
+	return 0;
 }
 
 /*
@@ -3665,7 +3512,7 @@ static u32 Cmd_CloseTrack()
  */
 static u32 Cmd_OutSwitch()
 {
-	// This seems unlikely. Does it actually point to a struct?
+	// TODO: This seems unlikely. Does it actually point to a struct?
 	if (SEQ_P->_2AC) {
 		SEQ_P->_2AC[4] = SEQ_ARG._00[0];
 		SEQ_P->_2AC[5] = 0xffff;
@@ -3808,37 +3655,15 @@ static u32 Cmd_ConnectClose()
  */
 static u32 Cmd_SyncCPU()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8032
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x2C28(r13)
-	  lwz       r0, -0x580(r3)
-	  cmplwi    r12, 0
-	  rlwinm    r4,r0,0,16,31
-	  beq-      .loc_0x38
-	  lwz       r3, 0x2C30(r13)
-	  mtlr      r12
-	  blrl
-	  mr        r5, r3
-	  b         .loc_0x40
+	u16 param_3;
 
-	.loc_0x38:
-	  lis       r3, 0x1
-	  subi      r5, r3, 0x1
-
-	.loc_0x40:
-	  lwz       r3, 0x2C30(r13)
-	  li        r4, 0x3
-	  bl        -0x28C8
-	  li        r3, 0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (JAM_CALLBACK_FUNC) {
+		param_3 = JAM_CALLBACK_FUNC(SEQ_P, SEQ_ARG._00[0]);
+	} else {
+		param_3 = 0xffff;
+	}
+	Jam_WriteRegDirect(SEQ_P, 3, param_3);
+	return 0;
 }
 
 /*
@@ -4253,7 +4078,7 @@ static u32 Cmd_CheckWave()
 
 	soundID.value = SEQ_ARG._00[0] | (Jam_ReadRegDirect(SEQ_P, 6) << 16);
 	uVar2         = One_CheckInstWave(soundID);
-	Jam_WriteRegDirect(SEQ_P, 3, uVar2);
+	Jam_WriteRegDirect(SEQ_P, 3, (u8)uVar2);
 	return 0;
 }
 
