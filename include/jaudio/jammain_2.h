@@ -21,7 +21,7 @@ typedef struct seqp__Invented2 seqp__Invented2;
 struct seqp__Invented1 {
 	u8 cmdImport;        // _00
 	u8 cmdExport;        // _01
-	u8 _02[0x04 - 0x02]; // _02
+	u16 _02;             // _02
 };
 
 struct seqp__Invented2 {
@@ -98,7 +98,7 @@ struct seqp_ {
 typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
 
 void* Jam_OfsToAddr(seqp_*, u32); // TODO: Change return type to u8* if that's more convenient.
-void Jam_WriteRegDirect(seqp_*, u32, u8);
+void Jam_WriteRegDirect(seqp_*, u8, u16); // Is param_3 is u8 or a u16?
 void Jam_WriteRegParam(void);
 u16 Jam_ReadRegDirect(seqp_*, u32);
 u32 Jam_ReadReg32(void);
@@ -110,7 +110,7 @@ void Jam_CheckImportApp(void);
 void Jam_WritePortIndirect(void);
 void Jam_ReadPortIndirect(void);
 void Jam_CheckPortIndirect(void);
-s32 Jam_WritePortAppDirect(seqp_*, u32, u16);
+s32 Jam_WritePortAppDirect(seqp_*, u8, u16);
 s32 Jam_ReadPortAppDirect(seqp_*, u32, u16*);
 s32 Jam_CheckPortAppDirect(seqp_*, u32, u16);
 void Jam_WritePort(void);
@@ -139,7 +139,7 @@ void Jam_OnExtSwitchP(void);
 void Jam_OffExtSwitchP(void);
 void Jam_SetExtSwitchDirectP(void);
 void Jam_CheckRunningCounter(void);
-void Jam_RegisterTrackCallback(TrackCallback);
+BOOL Jam_RegisterTrackCallback(TrackCallback);
 void Jam_SetTrackExtPanPower(void);
 void Jam_UpdateTrackAll(void);
 void Jam_UpdateTrack(seqp_*, u32);
