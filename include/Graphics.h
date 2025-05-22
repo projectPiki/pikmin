@@ -287,8 +287,8 @@ struct DGXGraphics : public Graphics {
 	bool _3D4;                           // _3D4
 	int mCurrentMatrixId;                // _3D8
 	int _3DC;                            // _3DC
-	Matrix4f mProjectionTextureMatrix;   // _3E0
-	u8 _420[0x610 - 0x420];              // _420, unknown
+	Mtx mProjectionTextureMatrix;        // _3E0, Mtx (3x4) not Matrix4f (4x4)
+	GXLightObj mGXLights[8];             // _410
 	u8* mDisplayBuffer;                  // _610
 	vu32 mPostRetraceWaitCount;          // _614
 	int mRetraceCount;                   // _618

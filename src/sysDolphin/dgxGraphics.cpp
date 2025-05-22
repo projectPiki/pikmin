@@ -680,232 +680,41 @@ bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
  * Address:	80048654
  * Size:	000344
  */
-void DGXGraphics::setLight(Light*, int)
+void DGXGraphics::setLight(Light* light, int idx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  stw       r30, 0x68(r1)
-	  addi      r30, r5, 0
-	  rlwinm    r5,r5,6,0,25
-	  stw       r29, 0x64(r1)
-	  addi      r31, r5, 0x410
-	  addi      r29, r4, 0
-	  stw       r28, 0x60(r1)
-	  addi      r28, r3, 0
-	  add       r31, r28, r31
-	  lwz       r7, 0x2DEC(r13)
-	  mr        r3, r31
-	  lwz       r6, 0x1C4(r7)
-	  addi      r0, r6, 0x1
-	  stw       r0, 0x1C4(r7)
-	  lfs       f1, 0x38(r4)
-	  lfs       f2, 0x3C(r4)
-	  lfs       f3, 0x40(r4)
-	  lfs       f4, 0x2C(r4)
-	  lfs       f5, 0x30(r4)
-	  lfs       f6, 0x34(r4)
-	  bl        0x1C92C8
-	  lfs       f0, 0x54(r29)
-	  addi      r3, r1, 0x40
-	  stfs      f0, 0x40(r1)
-	  lfs       f0, 0x58(r29)
-	  stfs      f0, 0x44(r1)
-	  lfs       f0, 0x5C(r29)
-	  stfs      f0, 0x48(r1)
-	  lwz       r4, 0x2E4(r28)
-	  addi      r4, r4, 0x1E0
-	  bl        -0x10F90
-	  lfs       f1, 0x40(r1)
-	  mr        r3, r31
-	  lfs       f2, 0x44(r1)
-	  lfs       f3, 0x48(r1)
-	  bl        0x1C92A8
-	  lfs       f0, -0x7B58(r2)
-	  stfs      f0, 0x3C(r1)
-	  stfs      f0, 0x38(r1)
-	  stfs      f0, 0x34(r1)
-	  lwz       r0, 0x14(r29)
-	  rlwinm    r0,r0,0,24,31
-	  cmpwi     r0, 0x3
-	  bne-      .loc_0x154
-	  lwz       r3, 0x60(r29)
-	  lwz       r0, 0x64(r29)
-	  stw       r3, 0x34(r1)
-	  stw       r0, 0x38(r1)
-	  lwz       r0, 0x68(r29)
-	  stw       r0, 0x3C(r1)
-	  lfs       f1, 0x34(r1)
-	  lfs       f0, 0x38(r1)
-	  lfs       f2, 0x3C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x3AB0C
-	  lfs       f0, -0x7B58(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x12C
-	  lfs       f0, 0x34(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x38(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x3C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3C(r1)
+	gsys->mLightSetNum++;
+	GXLightObj* gxLight = &mGXLights[idx];
+	GXInitLightAttn(gxLight, light->mSpotConstTerm, light->mSpotLinearTerm, light->mSpotQuadTerm, light->mConstantAttn, light->mLinearAttn,
+	                light->mQuadAttn);
+	Vector3f lightPos(light->mPosition);
+	lightPos.multMatrix(mCamera->mLookAtMtx);
+	GXInitLightPos(gxLight, lightPos.x, lightPos.y, lightPos.z);
 
-	.loc_0x12C:
-	  lwz       r4, 0x2E4(r28)
-	  addi      r3, r1, 0x34
-	  addi      r4, r4, 0x1E0
-	  bl        -0x11180
-	  lfs       f1, 0x34(r1)
-	  mr        r3, r31
-	  lfs       f2, 0x38(r1)
-	  lfs       f3, 0x3C(r1)
-	  bl        0x1C9208
-	  b         .loc_0x1EC
+	Vector3f lightDir;
+	if (int(light->mLightType & 0xFF) == 3) {
+		lightDir = light->mDirection;
+		lightDir.normalise();
+		lightDir.rotate(mCamera->mLookAtMtx);
+		GXInitLightDir(gxLight, lightDir.x, lightDir.y, lightDir.z);
+	} else if (int(light->mLightType & 0xFF) == 1) {
+		lightDir = light->mPosition;
+		lightDir.normalise();
+		lightDir.rotate(mCamera->mLookAtMtx);
+		GXInitLightDir(gxLight, lightDir.x, lightDir.y, lightDir.z);
+	}
 
-	.loc_0x154:
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x1EC
-	  lwz       r3, 0x54(r29)
-	  lwz       r0, 0x58(r29)
-	  stw       r3, 0x34(r1)
-	  stw       r0, 0x38(r1)
-	  lwz       r0, 0x5C(r29)
-	  stw       r0, 0x3C(r1)
-	  lfs       f1, 0x34(r1)
-	  lfs       f0, 0x38(r1)
-	  lfs       f2, 0x3C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x3ABA8
-	  lfs       f0, -0x7B58(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x1C8
-	  lfs       f0, 0x34(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x38(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x3C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3C(r1)
+	Colour lightColour = light->mDiffuseColour;
+	if (idx == 7) {
+		lightDir = light->mDirection;
+		lightDir.normalise();
+		lightDir.rotate(mCamera->mLookAtMtx);
+		GXInitSpecularDir(gxLight, lightDir.x, lightDir.y, lightDir.z);
+		GXInitLightAttn(gxLight, 0.0f, 0.0f, 1.0f, _370 / 2.0f, 0.0f, 1.0f - (_370 / 2.0f));
+	}
 
-	.loc_0x1C8:
-	  lwz       r4, 0x2E4(r28)
-	  addi      r3, r1, 0x34
-	  addi      r4, r4, 0x1E0
-	  bl        -0x1121C
-	  lfs       f1, 0x34(r1)
-	  mr        r3, r31
-	  lfs       f2, 0x38(r1)
-	  lfs       f3, 0x3C(r1)
-	  bl        0x1C916C
-
-	.loc_0x1EC:
-	  lbz       r0, 0x6C(r29)
-	  cmpwi     r30, 0x7
-	  stb       r0, 0x30(r1)
-	  lbz       r0, 0x6D(r29)
-	  stb       r0, 0x31(r1)
-	  lbz       r0, 0x6E(r29)
-	  stb       r0, 0x32(r1)
-	  lbz       r0, 0x6F(r29)
-	  stb       r0, 0x33(r1)
-	  bne-      .loc_0x2CC
-	  lwz       r3, 0x60(r29)
-	  lwz       r0, 0x64(r29)
-	  stw       r3, 0x34(r1)
-	  stw       r0, 0x38(r1)
-	  lwz       r0, 0x68(r29)
-	  stw       r0, 0x3C(r1)
-	  lfs       f1, 0x34(r1)
-	  lfs       f0, 0x38(r1)
-	  lfs       f2, 0x3C(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x3AC60
-	  lfs       f0, -0x7B58(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x280
-	  lfs       f0, 0x34(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x34(r1)
-	  lfs       f0, 0x38(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x38(r1)
-	  lfs       f0, 0x3C(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0x3C(r1)
-
-	.loc_0x280:
-	  lwz       r4, 0x2E4(r28)
-	  addi      r3, r1, 0x34
-	  addi      r4, r4, 0x1E0
-	  bl        -0x112D4
-	  lfs       f1, 0x34(r1)
-	  mr        r3, r31
-	  lfs       f2, 0x38(r1)
-	  lfs       f3, 0x3C(r1)
-	  bl        0x1C90D0
-	  lfs       f2, 0x370(r28)
-	  mr        r3, r31
-	  lfs       f0, -0x7B54(r2)
-	  lfs       f1, -0x7B58(r2)
-	  fmuls     f4, f2, f0
-	  lfs       f3, -0x7B60(r2)
-	  fmr       f2, f1
-	  fmr       f5, f1
-	  fsubs     f6, f3, f4
-	  bl        0x1C9060
-
-	.loc_0x2CC:
-	  lbz       r3, 0x33(r1)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x7B68(r2)
-	  addi      r4, r1, 0x2C
-	  stw       r3, 0x5C(r1)
-	  lfs       f0, 0x374(r28)
-	  mr        r3, r31
-	  stw       r0, 0x58(r1)
-	  lfd       f1, 0x58(r1)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x50(r1)
-	  lwz       r0, 0x54(r1)
-	  stb       r0, 0x33(r1)
-	  lwz       r0, 0x30(r1)
-	  stw       r0, 0x2C(r1)
-	  bl        0x1C9134
-	  li        r0, 0x1
-	  addi      r3, r31, 0
-	  slw       r4, r0, r30
-	  bl        0x1C914C
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  lwz       r28, 0x60(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	lightColour.a *= mLightIntensity;
+	GXInitLightColor(gxLight, *(GXColor*)&lightColour);
+	GXLoadLightObjImm(gxLight, GXLightID(1 << idx));
 }
 
 /*
@@ -991,78 +800,19 @@ void DGXGraphics::initReflectTex(bool)
  */
 void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 {
-	f32 badcompiler[0x3c];
-	Matrix4f mtx;
+	f32 badcompiler[0x40];
+	Mtx mtx;
 	if (set) {
-		MTXLightPerspective(mProjectionTextureMatrix.mMtx, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y,
-		                    0.5f, 0.5f);
-		PSMTXConcat(mProjectionTextureMatrix.mMtx, cam->mLookAtMtx.mMtx, mProjectionTextureMatrix.mMtx);
-		PSMTXConcat(mProjectionTextureMatrix.mMtx, Matrix4f::ident.mMtx, mtx.mMtx);
-		GXLoadTexMtxImm(mtx.mMtx, 30, GX_MTX3x4);
+		MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y, 0.5f,
+		                    0.5f);
+		Matrix4f& camMtx = cam->mLookAtMtx;
+		PSMTXConcat(mProjectionTextureMatrix, camMtx.mMtx, mProjectionTextureMatrix);
+		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, mtx);
+		GXLoadTexMtxImm(mtx, 30, GX_MTX3x4);
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2X4, GX_TG_POS, 30, GX_FALSE, 125);
 	} else {
 		GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 60, GX_FALSE, 125);
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,24,31
-	  stwu      r1, -0x150(r1)
-	  stw       r31, 0x14C(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x148(r1)
-	  addi      r30, r3, 0
-	  beq-      .loc_0x9C
-	  lfs       f0, 0x360(r31)
-	  addi      r3, r30, 0x3E0
-	  lfs       f5, -0x7B54(r2)
-	  fneg      f4, f0
-	  lfs       f1, 0x1CC(r31)
-	  fmr       f6, f5
-	  lfs       f2, 0x1C4(r31)
-	  lfs       f3, 0x35C(r31)
-	  bl        0x1B513C
-	  addi      r3, r30, 0x3E0
-	  addi      r4, r31, 0x1E0
-	  addi      r5, r3, 0
-	  bl        0x1B4E98
-	  lis       r3, 0x803A
-	  subi      r4, r3, 0x77C0
-	  addi      r3, r30, 0x3E0
-	  addi      r5, r1, 0x14
-	  bl        0x1B4E84
-	  addi      r3, r1, 0x14
-	  li        r4, 0x1E
-	  li        r5, 0
-	  bl        0x1CB7C0
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x1E
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x1C76F0
-	  b         .loc_0xB8
-
-	.loc_0x9C:
-	  li        r3, 0
-	  li        r4, 0x1
-	  li        r5, 0x4
-	  li        r6, 0x3C
-	  li        r7, 0
-	  li        r8, 0x7D
-	  bl        0x1C76D0
-
-	.loc_0xB8:
-	  lwz       r0, 0x154(r1)
-	  lwz       r31, 0x14C(r1)
-	  lwz       r30, 0x148(r1)
-	  addi      r1, r1, 0x150
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

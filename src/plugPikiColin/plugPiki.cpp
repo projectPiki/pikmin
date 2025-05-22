@@ -89,7 +89,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 	gsys->mAnimatedPolygons = 0;
 	gsys->mLightingSkips    = 0;
 	gsys->mLightingSets     = 0;
-	gsys->mSystemState      = 0;
+	gsys->mLightSetNum      = 0;
 	Node::draw(gfx);
 
 	Matrix4f mtx;
@@ -105,7 +105,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 		gfx.texturePrintf(gsys->mConsFont, 32, 68, "%d disps", gsys->mDispCount);
 		gfx.texturePrintf(gsys->mConsFont, 32, 80, "%d mtxs", gsys->mDGXGfx->mActiveMatrixIdx);
 		gfx.texturePrintf(gsys->mConsFont, 32, 92, "%d / %d lighting skips / sets", gsys->mLightingSkips, gsys->mLightingSets);
-		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mSystemState);
+		gfx.texturePrintf(gsys->mConsFont, 32, 104, "%d light sets", gsys->mLightSetNum);
 	}
 
 	if (gameflow.mCurrentEffectAlpha > 0.0f || gameflow.mTargetEffectAlpha > 0.0f) {

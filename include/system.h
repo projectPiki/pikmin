@@ -244,7 +244,7 @@ struct StdSystem {
 	u32 mAnimatedPolygons;        // _1B8
 	u32 mLightingSkips;           // _1BC
 	u32 mLightingSets;            // _1C0
-	u32 mSystemState;             // _1C4
+	u32 mLightSetNum;             // _1C4
 	u32 mSystemFlags;             // _1C8
 	Graphics* mGraphics;          // _1CC
 	GfxobjInfo mGfxobjInfo;       // _1D0

@@ -546,7 +546,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
  * Address:	........
  * Size:	000004
  */
-void printMatrix(char*, Matrix4f&)
+static void printMatrix(char*, Matrix4f&)
 {
 	// UNUSED FUNCTION
 }

@@ -260,8 +260,8 @@ zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
 	mParentPane = mScreen.search('pall', true);
 	mParentPane->setOffset(mParentPane->getWidth() >> 1, mParentPane->getHeight() >> 1);
 
-	//Why question why having two panes specifically works when you
-	//Can just enjoy having the linked file? 
+	// Why question why having two panes specifically works when you
+	// Can just enjoy having the linked file?
 	P2DPane* pane;
 	P2DPane* paneAlso = mScreen.search('se_c', true);
 	if (paneAlso->getTypeID() == PANETYPE_TextBox) {

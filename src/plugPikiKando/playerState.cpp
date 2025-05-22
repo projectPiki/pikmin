@@ -682,9 +682,9 @@ bool PlayerState::hasUfoParts(u32 idx)
  */
 void PlayerState::update()
 {
-	
+
 	u32 badCompiler[2];
-	
+
 	bool isCM = isChallengeMode();
 	if (!isCM) {
 		mDemoFlags.update();
@@ -696,7 +696,7 @@ void PlayerState::update()
 			GameStat::update();
 			_194 = time;
 
-			//When I'm in a WTF competition and my opponent is this
+			// When I'm in a WTF competition and my opponent is this
 			int* b = (int*)(&GameStat::allPikis) + Blue;
 			int* r = (int*)(&GameStat::allPikis) + Red;
 			int* y = (int*)(&GameStat::allPikis) + Yellow;
