@@ -1662,9 +1662,10 @@ void Jac_PrepareDemo(int id)
  * Address:	8001B120
  * Size:	0000D0
  */
-void Jac_StartPartsFindDemo(vu32 p1, int p2)
+void Jac_StartPartsFindDemo(u32 p1, int p2)
 {
-	int badcompiler[4];
+	int badcompiler[2];
+	u32* REF_p1;
 
 	if (parts_find_demo_state == 1) {
 		if (p2) {
@@ -1681,6 +1682,7 @@ void Jac_StartPartsFindDemo(vu32 p1, int p2)
 	if (p2) {
 		Jac_DemoFade(0.1, 1, 0xf);
 
+		REF_p1 = &p1;
 		if (p1 == 0) {
 			Jac_PlaySystemSe(0x24);
 		} else {
