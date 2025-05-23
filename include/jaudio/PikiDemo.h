@@ -6,8 +6,8 @@
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C++) ////////////
 void Jac_DemoEventUnPauseCheck();
 BOOL Jac_DemoCheck();
-void Jac_DemoWalkCheck();
-void Jac_DemoCheckEvent(u8);
+BOOL Jac_DemoWalkCheck();
+BOOL Jac_DemoCheckEvent(u8);
 void Jac_PlayDemoSequenceDirect(u32);
 void Jac_InitDemoSystem();
 void Jac_DemoBGMForceStop();
@@ -21,10 +21,10 @@ extern "C" {
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
 void Jac_DemoSceneInit(void);                // args
 void Jac_StartDemo(int);                     // args
-void Jac_DemoSound(void);                    // args
-void Jac_DemoFrame(void);                    // args
+void Jac_DemoSound(int);                     // args
+BOOL Jac_DemoFrame(int);                     // args
 void Jac_FinishDemo(void);                   // args
-void Jac_PrepareDemo(void);                  // args
+void Jac_PrepareDemo(int);                   // args
 void Jac_StartPartsFindDemo(u32 p1, int p2); // unsure on first arg
 void Jac_FinishPartsFindDemo(void);          // args
 void Jac_StartTextDemo(int);                 // args

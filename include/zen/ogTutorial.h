@@ -29,7 +29,12 @@ struct ogScrTutorialMgr {
 	 * @brief TODO
 	 */
 	enum TutorialStatus {
-		// TODO: this
+		Status_Null = -1,
+		Status_0    = 0,
+		Status_1    = 1,
+		Status_2    = 2,
+		Status_3    = 3,
+		Status_4    = 4,
 	};
 
 	ogScrTutorialMgr();
@@ -43,8 +48,11 @@ struct ogScrTutorialMgr {
 	void backPage();
 	void setCursorXY(P2DTextBox*);
 
-	ogScrMessageMgr* mMessageMgr; // _00
-	int _04;                      // _04
+	// DLL inlines:
+	ogScrMessageMgr* getScrMsgMgr() { return mMessageMgr; }
+
+	ogScrMessageMgr* mMessageMgr;                  // _00
+	zen::ogScrTutorialMgr::TutorialStatus mStatus; // _04
 };
 
 extern char** bloFiles_Tutorial[];

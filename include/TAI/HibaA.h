@@ -9,10 +9,33 @@
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
 #include "PaniAnimator.h"
+#include "MapMgr.h"
 
 /////////// Fire Geyser AI Actions ///////////
 
-/*
+BEGIN_ENUM_TYPE(TAIhibaAFloatParams)
+enum {
+	WaitTime = TPF_COUNT, // 50
+	AttackTime,           // 51
+	COUNT,                // 52
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIhibaAStateID)
+enum {
+	Init   = 0,
+	Wait   = 1,
+	Attack = 2,
+	COUNT, // 3
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIhibaAMotionID)
+enum {
+	Unk0 = 0, //
+	Unk2 = 2, //
+	Unk8 = 8, //
+} END_ENUM_TYPE;
+
+/**
  * @brief TODO
  */
 struct TAIhibaASoundTable : public PaniSoundTable {
@@ -21,7 +44,7 @@ struct TAIhibaASoundTable : public PaniSoundTable {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TAIhibaAParameters : public TekiParameters {
@@ -32,7 +55,7 @@ struct TAIhibaAParameters : public TekiParameters {
 	// TODO: members
 };
 
-/*
+/**
  * @brief TODO
  */
 struct TAIhibaAStrategy : public YaiStrategy {
@@ -66,10 +89,58 @@ struct TAIhibaAAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
-	virtual bool hitCreature(TAIeffectAttackParam*, Creature*);                              // _08
-	virtual bool hitMap(TAIeffectAttackParam*);                                              // _14
-	virtual void ptclHitMap(zen::particleGenerator*, TAIeffectAttackParam*);                 // _1C
-	virtual bool hitCheckCulling(zen::particleGenerator*, TAIeffectAttackParam*, Creature*); // _20
+	virtual bool hitCreature(TAIeffectAttackParam* param, Creature* target) // _08
+	{
+		InteractFire fire(target, gsys->getFrameTime() * param->_34);
+		target->stimulate(fire);
+		return false;
+	}
+	virtual bool hitMap(TAIeffectAttackParam* param) // _14
+	{
+		bool res = false;
+		Vector3f vec1;
+		MoveTrace trace(param->mPosition, param->mVelocity, 10.0f, false);
+		mapMgr->traceMove(nullptr, trace, gsys->getFrameTime());
+		if (param->mVelocity.x != trace.mVelocity.x || param->mVelocity.y != trace.mVelocity.y || param->mVelocity.z != trace.mVelocity.z) {
+			trace.mVelocity.normalize();
+			param->mVelocity = trace.mVelocity;
+			res              = true;
+		}
+
+		return res;
+	}
+	virtual void ptclHitMap(zen::particleGenerator* ptclGen, TAIeffectAttackParam* param) // _1C
+	{
+		if (!param->_4C.m0) {
+			zen::zenListManager& ptclMgr = ptclGen->getPtclMdlListManager();
+			zen::zenList* list;
+			zen::zenList* end = ptclMgr.getOrigin();
+			zen::zenList* next;
+			for (list = ptclMgr.getTopList(); list != end; list = next) {
+				next = list->mNext;
+
+				zen::particleMdl* ptcl = (zen::particleMdl*)list;
+				f32 t;
+				zen::getDistPointAndLine(ptcl->mLocalPosition + ptcl->mGlobalPosition, ptclGen->getEmitPos(), param->mPosition, t);
+				if (t >= 1.0f) { // if we've gone past the "line"
+					f32 speed = ptcl->mVelocity.length() * 0.25f;
+					ptcl->mVelocity.set(param->mVelocity * speed);
+				}
+			}
+		}
+	}
+	virtual bool hitCheckCulling(zen::particleGenerator* ptclGen, TAIeffectAttackParam* param, Creature* target) // _20
+	{
+		bool res  = false;
+		f32 limit = target->getCentreSize() + param->_08;
+		if (zen::Abs(target->getPosition().x - ptclGen->getEmitPos().x) < limit
+		    && zen::Abs(target->getPosition().z - ptclGen->getEmitPos().z) < limit) {
+			res = true;
+		}
+
+		u32 badCompiler[3];
+		return res;
+	}
 
 	// _00     = VTBL
 	// _00-_04 = TAIeffectAttackEventCallBack?
@@ -80,13 +151,18 @@ struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
  * @brief TODO
  */
 struct TAIAinitHibaA : public TaiAction {
-	inline TAIAinitHibaA() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAinitHibaA(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
+		teki.setCreatureFlag(CF_Unk10);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ORGANIC);
+	}
+	virtual bool act(Teki&) { return true; } // _10
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -95,22 +171,10 @@ struct TAIAinitHibaA : public TaiAction {
 
 /**
  * @brief TODO
+ *
+ * @note In TAIhibaA.cpp to match a function with a PRINT statement.
  */
-struct TAIAfireAttackHibaA : public TAIAreserveMotion {
-	inline TAIAfireAttackHibaA() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	static TAIeffectAttackEventCallBackHibaA eventCallBack;
-
-	// _04     = VTBL
-	// _00-_0C = TAIAreserveMotion
-	// TODO: members
-};
+struct TAIAfireAttackHibaA;
 
 /**
  * @brief TODO
@@ -121,7 +185,10 @@ struct TAIAtimerReactionHibaA : public TAIAtimerReaction {
 	{
 	}
 
-	virtual f32 getFrameMax(Teki&); // _1C
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getParameterF(TAIhibaAFloatParams::WaitTime);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAtimerReaction?

@@ -1,9 +1,11 @@
 #include "jaudio/driverinterface.h"
 
-typedef struct jc_ jc_;
-typedef struct jcs_ jcs_;
+#include "jaudio/dspinterface.h"
+#include "jaudio/audiostruct.h"
+
 typedef struct PanMatrix_ PanMatrix_;
-typedef struct dspch_ dspch_;
+
+static jcs_ GLOBAL_CHANNEL;
 
 /*
  * --INFO--
@@ -31,14 +33,9 @@ void Channel_SetMixerLevel(f32)
  * Address:	80009440
  * Size:	00000C
  */
-JCS* Get_GlobalHandle()
+jcs_* Get_GlobalHandle()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x802F
-	  addi      r3, r3, 0x24E0
-	  blr
-	*/
+	return &GLOBAL_CHANNEL;
 }
 
 /*
@@ -46,7 +43,7 @@ JCS* Get_GlobalHandle()
  * Address:	80009460
  * Size:	000020
  */
-void List_CountChannel(jc_**)
+int List_CountChannel(jc_** jc)
 {
 	/*
 	.loc_0x0:
@@ -144,7 +141,7 @@ void List_CutChannel(jc_*)
  * Address:	80009500
  * Size:	000030
  */
-void List_GetChannel(jc_**)
+jc_* List_GetChannel(jc_** jc)
 {
 	/*
 	.loc_0x0:
@@ -221,7 +218,7 @@ void List_AddChannel(jc_**, jc_*)
  * Address:	800095C0
  * Size:	00009C
  */
-void FixAllocChannel(jcs_*, u32)
+BOOL FixAllocChannel(jcs_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -853,71 +850,22 @@ void __UpdateJcToDSPInit(jc_*)
  * Address:	80009D40
  * Size:	0000D8
  */
-void __UpdateJcToDSP(jc_*)
+static void __UpdateJcToDSP(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  li        r29, 0
-	  li        r31, 0
-	  lwz       r3, 0x20(r3)
-	  lbz       r30, 0x0(r3)
+	u8 uVar1;
 
-	.loc_0x24:
-	  lwz       r3, 0x4(r28)
-	  addi      r4, r31, 0x114
-	  addi      r0, r29, 0x5A
-	  lhax      r5, r28, r4
-	  lbzx      r6, r3, r0
-	  addi      r3, r30, 0
-	  rlwinm    r4,r29,0,24,31
-	  bl        0x18E0
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x2
-	  cmplwi    r29, 0x6
-	  blt+      .loc_0x24
-	  mr        r3, r30
-	  lhz       r4, 0xF8(r28)
-	  bl        0x1804
-	  lwz       r4, 0x4(r28)
-	  lbz       r0, 0x61(r4)
-	  rlwinm.   r0,r0,0,26,26
-	  beq-      .loc_0x7C
-	  addi      r3, r30, 0
-	  addi      r4, r4, 0x3C
-	  bl        0x1BC8
-
-	.loc_0x7C:
-	  lwz       r4, 0x4(r28)
-	  lbz       r0, 0x61(r4)
-	  rlwinm.   r0,r0,0,27,31
-	  beq-      .loc_0x98
-	  addi      r3, r30, 0
-	  addi      r4, r4, 0x2C
-	  bl        0x1BEC
-
-	.loc_0x98:
-	  lwz       r4, 0x4(r28)
-	  mr        r3, r30
-	  lbz       r4, 0x61(r4)
-	  bl        0x1C1C
-	  lwz       r4, 0x4(r28)
-	  mr        r3, r30
-	  lha       r4, 0x4C(r4)
-	  bl        0x1B2C
-	  mr        r3, r30
-	  lbz       r4, 0x2(r28)
-	  bl        0x1900
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	uVar1 = jc->_20->buffer_idx;
+	for (u32 i = 0; i < 6; ++i) {
+		DSP_SetMixerVolume(uVar1, i, jc->_114[i], jc->mMgr->_5A[i]);
+	}
+	DSP_SetPitch(uVar1, jc->_F8);
+	if ((jc->mMgr->_61 & 0x20) != 0)
+		DSP_SetIIRFilterParam(uVar1, jc->mMgr->_3C);
+	if ((jc->mMgr->_61 & 0x1f) != 0)
+		DSP_SetFIR8FilterParam(uVar1, jc->mMgr->_2C);
+	DSP_SetFilterMode(uVar1, jc->mMgr->_61);
+	DSP_SetDistFilter(uVar1, jc->mMgr->_4C);
+	DSP_SetPauseFlag(uVar1, jc->_02);
 }
 
 /*
@@ -925,25 +873,10 @@ void __UpdateJcToDSP(jc_*)
  * Address:	80009E20
  * Size:	000038
  */
-void UpdateJcToDSP(jc_*)
+void UpdateJcToDSP(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0xF4
-	  lwz       r3, 0x20(r31)
-	  lbz       r3, 0x0(r3)
-	  bl        0x1CE0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	__UpdateJcToDSP(jc);
+	DSP_FlushChannel(jc->_20->buffer_idx);
 }
 
 /*
@@ -1651,7 +1584,7 @@ void StopLogicalChannel(jc_*)
  * Address:	8000A700
  * Size:	000028
  */
-void CheckLogicalChannel(jc_*)
+BOOL CheckLogicalChannel(jc_*)
 {
 	/*
 	.loc_0x0:
@@ -1675,7 +1608,7 @@ void CheckLogicalChannel(jc_*)
  * Address:	8000A740
  * Size:	000180
  */
-void PlayLogicalChannel(jc_*)
+BOOL PlayLogicalChannel(jc_*)
 {
 	/*
 	.loc_0x0:
@@ -1852,7 +1785,7 @@ void ResetInitialVolume(jc_*)
  * Address:	8000A940
  * Size:	0000B0
  */
-void Add_WaitDSPChannel(jc_*)
+BOOL Add_WaitDSPChannel(jc_* jc)
 {
 	/*
 	.loc_0x0:

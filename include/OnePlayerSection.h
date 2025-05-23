@@ -4,41 +4,9 @@
 #include "types.h"
 #include "Section.h"
 #include "BaseInf.h"
+#include "GlobalGameOptions.h"
 
 struct CmdStream;
-
-/**
- * @brief IDs for each stage, as per stages.ini.
- *
- * @note There are also test maps and teki stages, but these don't have IDs.
- */
-enum StageID {
-	STAGE_START,
-	STAGE_Practice  = STAGE_START, // Impact Site
-	STAGE_Forest    = 1,           // Forest of Hope
-	STAGE_Cave      = 2,           // Forest Navel
-	STAGE_Yakushima = 3,           // Distant Spring
-	STAGE_Last      = 4,           // Final Trial
-	STAGE_INVALID   = 5,           // default set on load, invalid
-	STAGE_END       = STAGE_INVALID,
-	STAGE_COUNT     = STAGE_INVALID,
-	STAGE_LASTVALID = STAGE_Last, // last valid loadable stage
-};
-
-/**
- * @brief IDs for each stage, as per stages.ini.
- *
- * @note There are also test maps and teki stages, but these don't have IDs.
- */
-enum ChalStageID {
-	CHALSTAGE_Practice  = 0, // Impact Site CM
-	CHALSTAGE_Forest    = 1, // Forest of Hope CM
-	CHALSTAGE_Cave      = 2, // Forest Navel CM
-	CHALSTAGE_Yakushima = 3, // Distant Spring CM
-	CHALSTAGE_Last      = 4, // Final Trial CM
-	// ...
-	CHALSTAGE_INVALID = 7, // default set on load, invalid
-};
 
 /**
  * @brief TODO

@@ -9,13 +9,15 @@
 #include "String.h"
 #include "OnePlayerSection.h"
 #include "WorldClock.h"
+#include "GlobalGameOptions.h"
 #include "Ayu.h"
 
 struct AnimFrameCacher;
 struct BaseApp;
 struct GameQuickInfo;
 struct GameChalQuickInfo;
-struct GameMovieInterface;
+struct GameInterface;
+struct GameGenFlow;
 struct MoviePlayer;
 struct Section;
 struct Shape;
@@ -24,12 +26,21 @@ struct Texture;
 /**
  * @brief TODO
  */
+enum GamePrefsFlags {
+	GAMEPREF_Vibe   = 0x1,
+	GAMEPREF_Stereo = 0x2,
+	GAMEPREF_Child  = 0x4,
+};
+
+/**
+ * @brief TODO
+ */
 enum GameSectionID {
 	SECTION_NinLogo   = 0,
 	SECTION_Titles    = 1,
 	SECTION_MovSample = 2,
-	SECTION_OnePlayer = 3,
-	SECTION_PaniTest  = 4,
+	SECTION_PaniTest  = 3,
+	SECTION_OnePlayer = 4,
 	SECTION_OgTest    = 5,
 };
 
@@ -37,18 +48,18 @@ enum GameSectionID {
  * @brief TODO
  */
 enum OnePlayerSectionID {
-	ONEPLAYER_GameSetup       = 0,
-	ONEPLAYER_CardSelect      = 1,
-	ONEPLAYER_Unk2            = 2,
-	ONEPLAYER_Unk3            = 3,
-	ONEPLAYER_Unk4            = 4,
-	ONEPLAYER_IntroGame       = 5,
-	ONEPLAYER_MapSelect       = 6,
-	ONEPLAYER_NewPikiGame     = 7,
-	ONEPLAYER_GameCourseClear = 8,
-	ONEPLAYER_GameStageClear  = 9,
-	ONEPLAYER_GameCredits     = 10,
-	ONEPLAYER_GameExit        = 11,
+	ONEPLAYER_GameSetup               = 0,
+	ONEPLAYER_CardSelect              = 1,
+	ONEPLAYER_Demo_LoadImpactSite     = 2,
+	ONEPLAYER_Demo_LoadForestOfHope   = 3,
+	ONEPLAYER_Demo_LoadE3ForestOfHope = 4,
+	ONEPLAYER_IntroGame               = 5,
+	ONEPLAYER_MapSelect               = 6,
+	ONEPLAYER_NewPikiGame             = 7,
+	ONEPLAYER_GameCourseClear         = 8,
+	ONEPLAYER_GameStageClear          = 9,
+	ONEPLAYER_GameCredits             = 10,
+	ONEPLAYER_GameExit                = 11,
 };
 
 /**
@@ -71,11 +82,43 @@ enum LanguageFileType {
 	LANGFILE_COUNT, // 5
 };
 
+struct GameQuickInfo {
+	// This struct has no ctor or any other functions
+
+	u32 mParts;         // _00
+	u32 mDay;           // _04
+	u32 mBornPikis;     // _08
+	u32 mDeadPikis;     // _0C
+	int mPartsDaysRank; // _10
+	int mBornPikisRank; // _14
+	int mDeadPikisRank; // _18
+};
+
 struct GameChalQuickInfo {
-	int mOffset;  // _00
-	int mPikis;   // _04
-	int _08;      // _08
-	int mInfo[5]; // _0C
+	int mCourseID;                    // _00, see StageID enum
+	u32 mScore;                       // _04, score for this entry
+	int mRank;                        // _08, 0-4, 0 being the best
+	u32 mCourseScores[MAX_HI_SCORES]; // _0C, all 5 top scores for mCourseID course
+};
+
+/**
+ * @brief TODO
+ */
+struct LangMode {
+	void set(char* dir, char* arc, char* bun, char* blo, char* tex)
+	{
+		mDirPath = dir;
+		mArcPath = arc;
+		mBunPath = bun;
+		mBloPath = blo;
+		mTexPath = tex;
+	}
+
+	char* mDirPath; // _00
+	char* mArcPath; // _04
+	char* mBunPath; // _08
+	char* mBloPath; // _0C
+	char* mTexPath; // _10
 };
 
 /**
@@ -98,39 +141,14 @@ struct GameGenNode : public Node {
 /**
  * @brief TODO
  *
- * @note Size: 0x30.
- */
-struct GameGenFlow : public Node {
-	GameGenFlow()
-	    : Node("GameGenFlow")
-	{
-		_24 = 332;
-		_20 = 32;
-		_28 = 1;
-		_2C = 0;
-	}
-
-	virtual void update(); // _10
-
-	// _00     = VTBL
-	// _00-_20 = Node
-	int _20; // _20
-	int _24; // _24
-	int _28; // _28
-	u32 _2C; // _2C, unknown
-};
-
-/**
- * @brief TODO
- *
  * @note Size: 0x24.
  */
 struct PlayState : public CoreNode {
-	inline PlayState()
+	PlayState()
 	    : CoreNode("playState")
 	{
-		_23 = 0;
-		_20 = 1;
+		mSaveFlags = 0;
+		_20        = 1;
 	}
 
 	virtual void read(RandomAccessStream&);  // _0C
@@ -138,35 +156,100 @@ struct PlayState : public CoreNode {
 
 	void openStage(int);
 
-	inline void reset()
+	void Initialise()
 	{
 		_20              = 1;
 		_1C              = -1;
 		_18              = -1;
 		_14              = -1;
-		_21              = 1;
+		mSavedDay        = 1;
 		_22              = 0;
 		mCourseOpenFlags = 1;
 	}
 
-	inline bool isStageOpen(int stageIdx)
+	bool isStageOpen(int stageIdx)
 	{
-		if (stageIdx >= 0 && stageIdx <= 5) {
-			return mCourseOpenFlags & (1 << stageIdx);
+		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
+			return (mCourseOpenFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
 	}
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14;              // _14, might be u32
-	int _18;              // _18, might be u32
-	int _1C;              // _1C, might be u32
+	int _14;              // _14
+	int _18;              // _18
+	int _1C;              // _1C
 	u8 _20;               // _20
-	u8 _21;               // _21
+	u8 mSavedDay;         // _21
 	u8 _22;               // _22
-	u8 _23;               // _23
+	u8 mSaveFlags;        // _23
 	u32 mCourseOpenFlags; // _24, bitflag
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct GameRecMinDay {
+	GameRecMinDay()
+	{
+		mNumParts = 0;
+		mNumDays  = MAX_DAYS;
+	}
+
+	void Initialise()
+	{
+		mNumParts = 0;
+		mNumDays  = MAX_DAYS;
+	}
+
+	void read(RandomAccessStream& input)
+	{
+		mNumParts = input.readInt();
+		mNumDays  = input.readInt();
+	}
+	void write(RandomAccessStream& output)
+	{
+		output.writeInt(mNumParts);
+		output.writeInt(mNumDays);
+	}
+
+	int mNumParts; // _00
+	int mNumDays;  // _04
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x4.
+ */
+struct GameRecBornPikmin {
+	GameRecBornPikmin() { mNumBorn = 0; }
+
+	void Initialise() { mNumBorn = 0; }
+
+	void read(RandomAccessStream& input) { mNumBorn = input.readInt(); }
+	void write(RandomAccessStream& output) { output.writeInt(mNumBorn); }
+
+	int mNumBorn; // _00, unknown
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x4.
+ */
+struct GameRecDeadPikmin {
+	GameRecDeadPikmin() { mNumDead = 9999; }
+
+	void Initialise() { mNumDead = 9999; }
+
+	void read(RandomAccessStream& input) { mNumDead = input.readInt(); }
+	void write(RandomAccessStream& output) { output.writeInt(mNumDead); }
+
+	int mNumDead; // _00
 };
 
 /**
@@ -185,7 +268,7 @@ struct GameRecChalCourse {
 		*(u32*)(this + 1) = 0;
 	}
 
-	inline void init()
+	void Initialise()
 	{
 		*(u32*)(this + 1) = 0;
 		*(u32*)(this + 1) = 0;
@@ -194,68 +277,20 @@ struct GameRecChalCourse {
 		*(u32*)(this + 1) = 0;
 	}
 
-	u8 _00[0x14]; // _00, unknown
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x4.
- */
-struct GameRecDeadPikmin {
-	GameRecDeadPikmin() { _00 = 9999; }
-
-	inline void init() { _00 = 9999; }
-
-	int _00; // _00
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x4.
- */
-struct GameRecBornPikmin {
-	GameRecBornPikmin() { _00 = 0; }
-
-	inline void init() { _00 = 0; }
-
-	u32 _00; // _00, unknown
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x8.
- */
-struct GameRecMinDay {
-	GameRecMinDay()
+	void read(RandomAccessStream& input)
 	{
-		_00 = 0;
-		_04 = 30;
+		for (int i = 0; i < 5; i++) {
+			mScores[i] = input.readInt();
+		}
+	}
+	void write(RandomAccessStream& output)
+	{
+		for (int i = 0; i < 5; i++) {
+			output.writeInt(mScores[i]);
+		}
 	}
 
-	inline void init()
-	{
-		_00 = 0;
-		_04 = 30;
-	}
-
-	u32 _00; // _00, unknown
-	int _04; // _04
-};
-
-struct GameQuickInfo {
-	// This struct has no ctor or any other functions
-
-	int mParts;     // _00
-	int mDay;       // _04
-	int mPikis;     // _08
-	int mDeadPikis; // _0C
-	int _10;        // _10
-	int _14;        // _14
-	int _18;        // _18
-	int _1C;
+	int mScores[MAX_HI_SCORES]; // _00
 };
 
 /**
@@ -264,27 +299,49 @@ struct GameQuickInfo {
 struct GameHiscores {
 	void Initialise()
 	{
-		_00 = 0;
-		for (int i = 0; i < 5; i++) {
-			mMinDayRecords[i].init();
-			mBornPikminRecords[i].init();
-			mDeadPikminRecords[i].init();
-			mChalModeRecords[i].init();
+		mTotalPikis = 0;
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
+			mMinDayRecords[i].Initialise();
+			mBornPikminRecords[i].Initialise();
+			mDeadPikminRecords[i].Initialise();
+			mChalModeRecords[i].Initialise();
 		}
 	}
 
-	int _00;                                 // _00
-	GameRecMinDay mMinDayRecords[5];         // _04
-	GameRecBornPikmin mBornPikminRecords[5]; // _1C
-	GameRecDeadPikmin mDeadPikminRecords[5]; // _30
-	GameRecChalCourse mChalModeRecords[5];   // _44
+	void read(RandomAccessStream& input)
+	{
+		mTotalPikis = input.readInt();
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
+			mMinDayRecords[i].read(input);
+			mBornPikminRecords[i].read(input);
+			mDeadPikminRecords[i].read(input);
+			mChalModeRecords[i].read(input);
+		}
+	}
+
+	void write(RandomAccessStream& output)
+	{
+		output.writeInt(mTotalPikis);
+		for (int i = 0; i < MAX_HI_SCORES; i++) {
+			mMinDayRecords[i].write(output);
+			mBornPikminRecords[i].write(output);
+			mDeadPikminRecords[i].write(output);
+			mChalModeRecords[i].write(output);
+		}
+	}
+
+	int mTotalPikis;                                     // _00
+	GameRecMinDay mMinDayRecords[MAX_HI_SCORES];         // _04
+	GameRecBornPikmin mBornPikminRecords[MAX_HI_SCORES]; // _1C
+	GameRecDeadPikmin mDeadPikminRecords[MAX_HI_SCORES]; // _30
+	GameRecChalCourse mChalModeRecords[MAX_HI_SCORES];   // _44
 };
 
 /**
  * @brief TODO
  */
 struct GamePrefs : public CoreNode {
-	inline GamePrefs()
+	GamePrefs()
 	    : CoreNode("gamePrefs")
 	{
 		Initialise();
@@ -295,20 +352,18 @@ struct GamePrefs : public CoreNode {
 
 	void Initialise()
 	{
-		mFlags          = 3;
-		mBgmVol         = 8;
-		mSfxVol         = 8;
-		_108            = 0;
-		mHasSaveGame    = 0;
-		mSaveGameIndex  = 0;
-		mSpareSaveGames = 0;
-		_1F             = 0;
-		_22             = 0;
-		mIsChanged      = false;
+		mFlags              = 3;
+		mBgmVol             = 8;
+		mSfxVol             = 8;
+		_108                = 0;
+		mHasSaveGame        = 0;
+		mSaveGameIndex      = 0;
+		mSpareSaveGames     = 0;
+		_1F                 = 0;
+		mUnlockedStageFlags = 0;
+		mIsChanged          = false;
 		mHiscores.Initialise();
 	}
-
-	void addBornPikis(u32 count) { mHiscores._00 += count; }
 
 	void setBgmVol(u8);
 	void setSfxVol(u8);
@@ -320,28 +375,31 @@ struct GamePrefs : public CoreNode {
 	void checkIsHiscore(GameQuickInfo&);
 	void fixSoundMode();
 
+	void addBornPikis(u32 count) { mHiscores.mTotalPikis += count; }
+
 	void openStage(int stageIdx)
 	{
-		if (stageIdx >= 0 && stageIdx <= STAGE_END) {
-			_22 |= (1 << stageIdx);
+		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
+			mUnlockedStageFlags |= (1 << stageIdx);
 		}
 	}
 
 	bool isStageOpen(int stageIdx)
 	{
-		if (stageIdx >= 0 && stageIdx <= 5) {
-			return _22 & (1 << stageIdx);
+		if (stageIdx >= STAGE_START && stageIdx <= STAGE_COUNT) {
+			return (mUnlockedStageFlags & (1 << stageIdx)) != 0;
 		}
 		return false;
 	}
-	bool isChallengeOpen() { return (mFlags & 4) != 0; }
 
-	// DLL inlines to do:
-	bool getChildMode();
-	bool getStereoMode();
-	bool getVibeMode();
-	u8 getBgmVol();
-	u8 getSfxVol();
+	bool getVibeMode() { return (mFlags & 1) != 0; }
+	bool getStereoMode() { return (mFlags & 2) != 0; }
+	bool getChildMode() { return (mFlags & 4) != 0; }
+
+	u8 getBgmVol() { return mBgmVol; }
+	u8 getSfxVol() { return mSfxVol; }
+
+	bool isChallengeOpen() { return mUnlockedStageFlags != 0; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -353,10 +411,12 @@ struct GamePrefs : public CoreNode {
 	u8 _1F;                 // _1F
 	u8 mSaveGameIndex;      // _20
 	u8 mSpareSaveGames;     // _21
-	u8 _22;                 // _22
+	u8 mUnlockedStageFlags; // _22
 	u8 _23;                 // _23
 	GameHiscores mHiscores; // _24
-	u8 _DC[0x108 - 0xDC];   // _DC, unknown
+	u32 _DC;                // _DC, unknown
+	u32 _E0;                // _E0
+	u8 _E4[0x108 - 0xE4];   // _E4, unknown
 	u32 _108;               // _108, unknown
 };
 
@@ -430,68 +490,101 @@ struct GameFlow : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Parms* mParameters;                      // _20
-	MemoryCard mMemoryCard;                  // _24
-	GamePrefs mGamePrefs;                    // _94
-	u32 mSaveGameCrc;                        // _1A0
-	PlayState mPlayState;                    // _1A4
-	int _1CC;                                // _1CC
-	int mLastUnlockedStageId;                // _1D0
-	u32 _1D4;                                // _1D4, unknown
-	u32 mDemoFlags;                          // _1D8, bitflag of some description
-	MoviePlayer* mMoviePlayer;               // _1DC
-	s16 mMovieInfoNum;                       // _1E0
-	s16 mMovieType;                          // _1E2
-	s16 _1E4;                                // _1E4
-	s16 _1E6;                                // _1E6
-	GameMovieInterface* mGameInterface;      // _1E8
-	int _1EC;                                // _1EC
-	int mGameSectionID;                      // _1F0, see GameSectionID enum
-	s32 mNextOnePlayerSectionID;             // _1F4, see OnePlayerSectionID enum
-	u8 _1F8[0x4];                            // _1F8, unknown
-	int mLevelIndex;                         // _1FC
-	u32 _200;                                // _200, unknown
-	Section* mGameSection;                   // _204
-	char* mLangFilePaths[2][LANGFILE_COUNT]; // _208
-	u8 _230[0x2A8 - 0x230];                  // _230, unknown
-	int mLanguageIndex;                      // _2A8, related to language?
-	u32 _2AC;                                // _2AC, unknown
-	u32 _2B0;                                // _2B0, could be int
-	int mIsChallengeMode;                    // _2B4
-	u32 _2B8;                                // _2B8, unknown
-	u32 mUpdateTickCount;                    // _2BC, unknown
-	u32 _2C0;                                // _2C0, unknown
-	f32 _2C4;                                // _2C4
-	f32 _2C8;                                // _2C8
-	f32 _2CC;                                // _2CC
-	int mAppTickCounter;                     // _2D0
-	int _2D4;                                // _2D4
-	WorldClock mWorldClock;                  // _2D8
-	f32 mTimeMultiplier;                     // _304
-	AnimFrameCacher* mFrameCacher;           // _308
-	GameGenFlow* mGenFlow;                   // _30C
-	Texture* mLevelBannerTexture;            // _310
-	f32 mLevelBannerFadeValue;               // _314
-	Texture* mLoadBannerTexture;             // _318
-	GameLoadIdler mGameLoadIdler;            // _31C
-	u8 _330;                                 // _330
-	int _334;                                // _334
-	int _338;                                // _338
-	int _33C;                                // _33C, unknown
-	int _340;                                // _340
-	u8 _344[0x350 - 0x344];                  // _340, unknown
-	int mFilterType;                         // _350
-	u8 mFilters[8];                          // _354
-	u8 _35C;                                 // _35C, maybe Colour?
-	u8 _35D;                                 // _35D
-	u8 _35E;                                 // _35E
-	u8 _35F;                                 // _35F
-	u8 _360;                                 // _360
-	u8 _361;                                 // _361
-	u8 _362;                                 // _362
+	Parms* mParameters;            // _20
+	MemoryCard mMemoryCard;        // _24
+	GamePrefs mGamePrefs;          // _94
+	u32 mSaveGameCrc;              // _1A0
+	PlayState mPlayState;          // _1A4
+	int mCurrentStageId;           // _1CC
+	int mLastUnlockedStageId;      // _1D0
+	u32 _1D4;                      // _1D4, unknown
+	u32 mDemoFlags;                // _1D8, bitflag of some description
+	MoviePlayer* mMoviePlayer;     // _1DC
+	s16 mMovieInfoNum;             // _1E0
+	s16 mMovieType;                // _1E2
+	s16 mIsDayEndActive;           // _1E4
+	s16 mIsDayEndTriggered;        // _1E6
+	GameInterface* mGameInterface; // _1E8
+	int mNextSectionID;            // _1EC, see GameSectionID enum
+	int mGameSectionID;            // _1F0, see GameSectionID enum
+	s32 mNextOnePlayerSectionID;   // _1F4, see OnePlayerSectionID enum
+	u8 _1F8[0x4];                  // _1F8, unknown
+	int mLevelIndex;               // _1FC
+	u32 _200;                      // _200, unknown
+	Section* mGameSection;         // _204
+	LangMode mLangModes[2];        // _208
+	u8 _230[0x2A8 - 0x230];        // _230, unknown
+	int mLanguageIndex;            // _2A8
+	u32 mIntroMovieIdCycle;        // _2AC
+	u32 mIntroMovieId;             // _2B0, could be int
+	int mIsChallengeMode;          // _2B4
+	u32 _2B8;                      // _2B8, unknown
+	u32 mUpdateTickCount;          // _2BC
+	f32 mLoadTimeSeconds;          // _2C0
+	f32 mCurrentEffectAlpha;       // _2C4
+	vf32 mTargetEffectAlpha;       // _2C8
+	f32 mEffectDurationTimer;      // _2CC
+	int mAppTickCounter;           // _2D0
+	int _2D4;                      // _2D4, makes the load logo red?
+	WorldClock mWorldClock;        // _2D8
+	f32 mTimeMultiplier;           // _304
+	AnimFrameCacher* mFrameCacher; // _308
+	GameGenFlow* mGenFlow;         // _30C
+	Texture* mLevelBannerTexture;  // _310
+	f32 mLevelBannerFadeValue;     // _314
+	Texture* mLoadBannerTexture;   // _318
+	GameLoadIdler mGameLoadIdler;  // _31C
+	u8 _330;                       // _330
+	int mIsGameplayInputEnabled;   // _334
+	int mIsUiOverlayActive;        // _338
+	int mDisableController;        // _33C, if true, no controller input is accepted
+	int mIsTutorialActive;         // _340
+	u8 _344[0x4];                  // _344, unknown
+	u32 _348;                      // _348, unknown
+	u32 _34C;                      // _34C, unknown
+	int mFilterType;               // _350
+	u8 mFilters[8];                // _354
+	u8 _35C;                       // _35C, maybe Colour?
+	u8 _35D;                       // _35D
+	u8 _35E;                       // _35E
+	u8 _35F;                       // _35F
+	u8 _360;                       // _360
+	u8 _361;                       // _361
+	u8 _362;                       // _362
 };
 
 extern GameFlow gameflow;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x30.
+ */
+struct GameGenFlow : public Node {
+	GameGenFlow()
+	    : Node("GameGenFlow")
+	{
+		_24 = 332;
+		_20 = 32;
+		_28 = 1;
+		_2C = 0;
+	}
+
+	virtual void update() // _10
+	{
+		gameflow.mUpdateTickCount++;
+		gameflow.mWorldClock.mTicksPerHour = 60.0f * (gameflow.mTimeMultiplier * gameflow.mParameters->mDaySpeedFactor());
+		gameflow.mWorldClock.mTimeScale    = gameflow.mWorldClock.mTicksPerHour / gameflow.mWorldClock.mHoursInDay;
+		Node::update();
+	}
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	int _20; // _20
+	int _24; // _24
+	int _28; // _28
+	u32 _2C; // _2C, unknown
+};
 
 void preloadLanguage();
 

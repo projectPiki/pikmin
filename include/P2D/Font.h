@@ -3,17 +3,20 @@
 
 #include "types.h"
 #include "GfxObject.h"
+#include "Dolphin/gx.h"
+#include "Texture.h"
 #include "Colour.h"
-
-struct Font;
+#include <Font.h>
 
 /**
  * @brief TODO
  */
 struct FntobjInfo : public GfxobjInfo {
+	FntobjInfo() { mFont = nullptr; }
+
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	// TODO: members
+	Font* mFont; // _20
 };
 
 /**
@@ -22,37 +25,43 @@ struct FntobjInfo : public GfxobjInfo {
 struct P2DFont {
 	P2DFont(char*);
 
-	Font* loadFont(char*, int&, int&);
+	Font* loadFont(char* fileName, int&, int&);
 	void setGX();
-	void setGradColor(const Colour&, const Colour&);
-	f32 getWidth(int, int);
-	f32 drawChar(f32, f32, int, int, int);
+	void setGradColor(const Colour& topColour, const Colour& bottomColour);
+	f32 getWidth(int charCode, int drawWidth);
+	f32 drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawHeight);
 
 	// unused/inlined:
-	int charToIndex(int);
+	int charToIndex(int c);
 
-	// DLL inlines to do:
-	int getAscent();
-	int getDescent();
-	int getHeight();
-	int getNormalWidth();
-	u16 getFontType();
-	u16 getLeading();
-	u16 getWidth();
-	u8 getAlpha();
-	void loadFontTexture();
-	void makeResident();
+	int getHeight() { return mFont->mCharHeight; }
+	int getNormalWidth() { return mWidth; }
+	u16 getWidth() { return mWidth; }
+	u16 getLeading() { return mLeading; }
+	u16 getFontType() { return mFontType; }
 
-	Font* mFont; // _00
-	u16 _04;     // _04
-	u16 _06;     // _06
-	u16 _08;     // _08
-	u16 _0A;     // _0A
-	u16 _0C;     // _0C
-	Colour _10;  // _10
-	Colour _14;  // _14
-	Colour _18;  // _18
-	Colour _1C;  // _1C
+	int getAscent() { return mAscent; }
+	int getDescent() { return mDescent; }
+
+	u8 getAlpha() { return mTLColour.a; }
+
+	void makeResident() { mFont->mTexture->makeResident(); }
+	void loadFontTexture()
+	{
+		mFont->mTexture->makeResident();
+		GXLoadTexObj(mFont->mTexture->mTexObj, GX_TEXMAP0);
+	}
+
+	Font* mFont;      // _00
+	u16 mFontType;    // _04
+	u16 mWidth;       // _06
+	u16 mLeading;     // _08
+	u16 mAscent;      // _0A
+	u16 mDescent;     // _0C
+	Colour mTLColour; // _0E, top left corner colour
+	Colour mTRColour; // _12, top right corner colour
+	Colour mBLColour; // _16, bottom left corner colour
+	Colour mBRColour; // _1A, bottom right corner colour
 };
 
 #endif

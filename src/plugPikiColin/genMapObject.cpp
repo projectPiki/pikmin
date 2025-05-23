@@ -1,6 +1,7 @@
 #include "Generator.h"
 #include "DynSimulator.h"
 #include "DynObject.h"
+#include "MapMgr.h"
 #include "sysNew.h"
 #include "DebugLog.h"
 
@@ -78,16 +79,16 @@ void GenObjectMapObject::render(Graphics&, Generator*)
  */
 Creature* GenObjectMapObject::birth(BirthInfo&)
 {
-	return nullptr;
-}
-
-// I hate these, but things will NOT spawn in the correct order without them.
-static DynObjBody* fakeFunc()
-{
-	return new DynObjBody();
-}
-
-static DynObjBridge* fakeFunc2()
-{
-	return new DynObjBridge();
+	Creature* obj = nullptr;
+	if (obj) {
+		// this doesn't generate assembly but it DOES generate weak functions.
+		DynObjBridge* bridge = new DynObjBridge();
+		RigidBody* body      = new RigidBody[2];
+		bridge->readScript(mapMgr, "objects/mapobjs/faller.ini");
+		bridge->initBodyCollisions();
+		// some vector stuff here - i dont think it's enough to spawn Vector3f::set?
+		bridge->mInitPosition.set(Vector3f(5.0f, 40.0f, 4.0f));
+		mapMgr->mCollShape->add(bridge);
+	}
+	return obj;
 }

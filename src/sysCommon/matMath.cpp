@@ -52,34 +52,30 @@ void Matrix4f::makeIdentity()
  * Address:	........
  * Size:	0000D8
  */
-/*
-void Matrix4f::blend(Matrix4f &, f32)
+void Matrix4f::blend(Matrix4f&, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	0001A4
  */
-/*
 void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	0000CC
  */
-/*
 void Matrix4f::makePerspective(f32, f32, f32, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
 
 /*
  * --INFO--
@@ -134,34 +130,31 @@ void Matrix4f::makeRotate(Vector3f& axis, f32 angle)
  * Address:	........
  * Size:	000178
  */
-/*
-void Matrix4f::makeBallRotate(Vector3f &)
+void Matrix4f::makeBallRotate(Vector3f&)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000078
  */
-/*
-void Matrix4f::rotate(Vector3f &, f32)
+void Matrix4f::rotate(Vector3f&, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000138
  */
-/*
 void Matrix4f::rotate(f32, f32, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	8003DF34
@@ -338,56 +331,51 @@ void Matrix4f::inverse(Matrix4f* inv)
  * Address:	........
  * Size:	000244
  */
-/*
-void Matrix4f::makeAligned(Vector3f &, f32)
+void Matrix4f::makeAligned(Vector3f&, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000100
  */
-/*
 void Matrix4f::rotateX(f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000100
  */
-/*
 void Matrix4f::rotateY(f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000100
  */
-/*
 void Matrix4f::rotateZ(f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-/*
 void Matrix4f::translate(f32, f32, f32)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	8003E7BC
@@ -416,12 +404,11 @@ void Matrix4f::scale(Vector3f& scaleVector)
  * Address:	........
  * Size:	0003C0
  */
-/*
-void Matrix4f::makeLookfrom(Vector3f &, Vector3f &)
+void Matrix4f::makeLookfrom(Vector3f&, Vector3f&)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	8003E880
@@ -461,16 +448,16 @@ void Matrix4f::makeLookat(Vector3f& cameraPos, Vector3f& targetPos, Vector3f* op
  * Address:	8003EB80
  * Size:	000100
  */
-void Matrix4f::makeLookat(Vector3f& a, Vector3f& b, Vector3f& c, Vector3f& d)
+void Matrix4f::makeLookat(Vector3f& cameraPos, Vector3f& rightDir, Vector3f& upDir, Vector3f& backDir)
 {
-	setRow(0, b);
-	mMtx[0][3] = -a.DP(b);
+	setRow(0, rightDir);
+	mMtx[0][3] = -cameraPos.DP(rightDir);
 
-	setRow(1, c);
-	mMtx[1][3] = -a.DP(c);
+	setRow(1, upDir);
+	mMtx[1][3] = -cameraPos.DP(upDir);
 
-	setRow(2, d);
-	mMtx[2][3] = -a.DP(d);
+	setRow(2, backDir);
+	mMtx[2][3] = -cameraPos.DP(backDir);
 
 	mMtx[3][0] = 0.0f;
 	mMtx[3][1] = 0.0f;
@@ -483,23 +470,21 @@ void Matrix4f::makeLookat(Vector3f& a, Vector3f& b, Vector3f& c, Vector3f& d)
  * Address:	........
  * Size:	000164
  */
-/*
-void Matrix4f::makeProjection(Vector3f &, Plane &)
+void Matrix4f::makeProjection(Vector3f&, Plane&)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000140
  */
-/*
-void Matrix4f::makeReflection(Plane &)
+void Matrix4f::makeReflection(Plane&)
 {
-    // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
-*/
+
 /*
  * --INFO--
  * Address:	8003EC80

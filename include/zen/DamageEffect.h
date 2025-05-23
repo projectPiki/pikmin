@@ -9,6 +9,8 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x4.
  */
 struct DamageEffect {
 	DamageEffect();
@@ -16,7 +18,7 @@ struct DamageEffect {
 	bool update();
 	void draw(Graphics&);
 
-	// TODO: members
+	f32 mDamageAlpha; // _00
 };
 
 } // namespace zen

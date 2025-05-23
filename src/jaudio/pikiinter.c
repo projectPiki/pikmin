@@ -1,7 +1,28 @@
 #include "jaudio/PikiInter.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/cmdstack.h"
+#include "jaudio/interface.h"
+#include "jaudio/PikiPlayer.h"
+#include "jaudio/PikiDemo.h"
+#include "jaudio/verysimple.h"
 
-typedef struct Portargs_ Portargs_;
-typedef struct SEvent_ SEvent_;
+typedef struct SEvent_ {
+	u8 _00[0xd0];
+	int* _D0;
+	u8 _D4[0x140 - 0xD4];
+	SEvent_* _140;
+	int _144;
+	u8 _148[0x160 - 0x148];
+	f32 _160;
+	f32 _164;
+} SEvent_;
+
+typedef struct Portargs_ {
+	SEvent_* mEvent;
+} Portargs_;
+
+int CURRENT_TIME;
+SEvent_ EVENT;
 
 /*
  * --INFO--
@@ -18,29 +39,16 @@ void Jac_Debug_ActionEntry(void)
  * Address:	800175E0
  * Size:	000048
  */
-void __SetVolandPan(Portargs_*)
+void __SetVolandPan(Portargs_* arg)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r31, 0x0(r3)
-	  lwz       r3, 0xD0(r31)
-	  lfs       f1, 0x160(r31)
-	  bl        -0x6CE0
-	  lwz       r3, 0xD0(r31)
-	  li        r4, 0x8
-	  lfs       f1, 0x164(r31)
-	  bl        -0x6CF0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	SEvent_* evt;
+	int* a;
+
+	evt = arg->mEvent;
+	a   = evt->_D0;
+	Jam_SetExtParam(evt->_160, a, 1);
+	a = evt->_D0;
+	Jam_SetExtParam(evt->_164, a, 8);
 }
 
 /*
@@ -48,29 +56,11 @@ void __SetVolandPan(Portargs_*)
  * Address:	80017640
  * Size:	000048
  */
-void SendToStack(SEvent_*)
+void SendToStack(SEvent_* evt)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8001
-	  addi      r5, r31, 0x140
-	  stw       r31, 0x140(r31)
-	  addi      r4, r3, 0x75E0
-	  addi      r3, r31, 0x144
-	  bl        -0x9328
-	  addi      r3, r31, 0x144
-	  bl        -0x9370
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	evt->_140 = evt;
+	Set_Portcmd(&evt->_144, (int)__SetVolandPan, (int)&evt->_140);
+	Add_PortcmdOnce((u32*)&evt->_144);
 }
 
 /*
@@ -80,6 +70,20 @@ void SendToStack(SEvent_*)
  */
 void Jac_InitEventSystem(void)
 {
+	seqp_* handle;
+	int i;
+
+	Jac_SetProcessStatus(10);
+	CURRENT_TIME = 0;
+
+	do {
+		handle = Jam_GetTrackHandle(0x20000);
+	} while (handle == NULL);
+
+	for (i = 0; i < 16; i++) { }
+
+	Jac_SetProcessStatus(11);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -157,6 +161,7 @@ void Jac_InitEventSystem(void)
  */
 void Jac_EventFrameCheck(void)
 {
+	if (Jac_DemoCheck() == FALSE && Jac_PauseCheck() == FALSE) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -222,8 +227,16 @@ void Jac_EventFrameCheck(void)
  * Address:	80017860
  * Size:	00013C
  */
-void Jac_UpdateCamera(void)
+void Jac_UpdateCamera(struct Vector3f*, struct Vector3f*)
 {
+	int i;
+
+	CURRENT_TIME++;
+
+	for (i = 0; i < 16; i++) { }
+
+	Jac_UpdatePikiGaya();
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -327,7 +340,7 @@ void Jac_UpdateCamera(void)
  * Address:	800179A0
  * Size:	000118
  */
-void Jac_CreateEvent(void)
+int Jac_CreateEvent(int, struct SVector_*)
 {
 	/*
 	.loc_0x0:
@@ -427,7 +440,7 @@ void Jac_CreateEvent(void)
  * Address:	80017AC0
  * Size:	00005C
  */
-void Jac_UpdateEventPosition(void)
+void Jac_UpdateEventPosition(int, struct Vector3f*)
 {
 	/*
 	.loc_0x0:
@@ -466,7 +479,7 @@ void Jac_UpdateEventPosition(void)
  * Address:	80017B20
  * Size:	0002E0
  */
-void Jac_PlayEventAction(void)
+void Jac_PlayEventAction(int, int)
 {
 	/*
 	.loc_0x0:
@@ -708,7 +721,7 @@ void Jac_PlayEventAction(void)
  * Address:	80017E00
  * Size:	0000BC
  */
-void Jac_StopEventAction(void)
+void Jac_StopEventAction(int, int)
 {
 	/*
 	.loc_0x0:
@@ -860,7 +873,7 @@ void MML_StopEventAll(u8, u16)
  * Address:	80017FA0
  * Size:	000094
  */
-void Jac_DestroyEvent(void)
+void Jac_DestroyEvent(s32)
 {
 	/*
 	.loc_0x0:
@@ -986,7 +999,7 @@ int Jac_CheckFreeEvents(void)
  * Address:	800180C0
  * Size:	000050
  */
-int Jac_GetActiveEvents(void)
+int Jac_GetActiveEvents(u8*)
 {
 	/*
 	.loc_0x0:

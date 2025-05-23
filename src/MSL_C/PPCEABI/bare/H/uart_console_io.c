@@ -1,82 +1,10 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
- */
-void __init_uart_console(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8021A510
- * Size:	000008
- */
-u32 __close_console(void)
-{
-	return 0x0;
-}
-
-/*
- * --INFO--
- * Address:	8021A518
- * Size:	000098
- */
-void __write_console(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  lwz       r0, 0x3498(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x48
-	  lis       r3, 0x1
-	  subi      r3, r3, 0x1F00
-	  bl        -0x1CD88
-	  cmpwi     r3, 0
-	  bne-      .loc_0x48
-	  li        r0, 0x1
-	  stw       r0, 0x3498(r13)
-
-	.loc_0x48:
-	  cmpwi     r3, 0
-	  beq-      .loc_0x58
-	  li        r3, 0x1
-	  b         .loc_0x80
-
-	.loc_0x58:
-	  mr        r3, r30
-	  lwz       r4, 0x0(r31)
-	  bl        -0x1CD64
-	  cmpwi     r3, 0
-	  beq-      .loc_0x7C
-	  li        r0, 0
-	  stw       r0, 0x0(r31)
-	  li        r3, 0x1
-	  b         .loc_0x80
-
-	.loc_0x7C:
-	  li        r3, 0
-
-	.loc_0x80:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x28
-	  blr
-	*/
-}
+s32 InitializeUART(u32);                      /* extern */
+s32 OSGetConsoleType();                       /* extern */
+s32 WriteUARTN(s32, s32);                     /* extern */
+s32 __TRK_write_console(s32, s32, s32*, s32); /* extern */
+static BOOL initialized;
 
 /*
  * --INFO--
@@ -160,4 +88,55 @@ void __read_console(void)
 	  addi      r1, r1, 0x30
 	  blr
 	*/
+}
+
+/*
+ * --INFO--
+ * Address:	8021A518
+ * Size:	000098
+ */
+WEAKFUNC BOOL __write_console(s32 arg0, s32 arg1, s32* arg2, s32 arg3)
+{
+	int a;
+
+	// if ((OSGetConsoleType() & 0x20000000) == 0) {
+	int r3_cond = 0;
+	if (initialized == FALSE) {
+		r3_cond = InitializeUART(0xE100);
+		;
+		if (r3_cond == 0) {
+			initialized = TRUE;
+		}
+	}
+	if (r3_cond != 0) {
+		return TRUE;
+	}
+	if (WriteUARTN(arg1, *arg2) != 0) {
+		*arg2 = 0;
+		return TRUE;
+	}
+	//}
+
+	//__TRK_write_console(arg0, arg1, arg2, arg3);
+	return FALSE;
+}
+
+/*
+ * --INFO--
+ * Address:	8021A510
+ * Size:	000008
+ */
+u32 __close_console(void)
+{
+	return 0x0;
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000048
+ */
+void __init_uart_console(void)
+{
+	// UNUSED FUNCTION
 }

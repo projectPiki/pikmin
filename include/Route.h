@@ -63,15 +63,7 @@ struct RouteLink : public CoreNode {
  * @brief TODO
  */
 struct RoutePoint : public CoreNode {
-	RoutePoint()
-	    : CoreNode("rp")
-	{
-		mLink.initCore("");
-		_20     = 8.0f;
-		mIndex  = 0;
-		mState  = 1;
-		mRadius = 10.0f;
-	}
+	RoutePoint();
 
 	void loadini(CmdStream*);
 
@@ -86,7 +78,7 @@ struct RoutePoint : public CoreNode {
 	f32 _20;            // _20
 	f32 mRadius;        // _24
 	Vector3f mPosition; // _28
-	u32 mState;         // _34
+	int mState;         // _34
 	int mIndex;         // _38
 	RouteLink mLink;    // _3C
 };
@@ -127,13 +119,13 @@ struct RouteGroup : public EditNode {
 
 	// _00     = VTBL
 	// _00-_14 = EditNode?
-	Colour mColour;            // _14
-	char mRouteName[0x40];     // _18
-	u32 mIntID;                // _58, yep, this isn't an ID32...
-	char mStringID[8];         // _5C
-	BaseShape* mParentShape;   // _64
-	RoutePoint mPointListRoot; // _68
-	Texture* _BC;              // _BC
+	Colour mColour;                 // _14
+	char mRouteName[0x40];          // _18
+	u32 mIntID;                     // _58, yep, this isn't an ID32...
+	char mStringID[8];              // _5C
+	BaseShape* mParentShape;        // _64
+	RoutePoint mPointListRoot;      // _68
+	Texture* mDebugWaypointTexture; // _BC
 };
 
 /**

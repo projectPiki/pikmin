@@ -7,7 +7,7 @@
  */
 bool String::isSame(char* str)
 {
-	const char* currentChar = this->mString;
+	const char* currentChar = mString;
 
 	while (*currentChar && *str) {
 		if (*currentChar != *str) {
@@ -28,11 +28,12 @@ bool String::isSame(char* str)
  */
 int String::getLength()
 {
-	u8* str = (u8*)this->mString;
+	u8* str = reinterpret_cast<u8*>(mString);
 	int len = 0;
 	while (*(str++)) {
 		len++;
 	}
+
 	return len;
 }
 

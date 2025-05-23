@@ -38,8 +38,8 @@ struct TAIeffectAttackParam {
 		_00   = 0.0f;
 		_04   = 0.0f;
 		_0C   = 0.0f;
-		_10.set(0.0f, 0.0f, 0.0f);
-		_1C.set(0.0f, 0.0f, 0.0f);
+		mPosition.set(0.0f, 0.0f, 0.0f);
+		mVelocity.set(0.0f, 0.0f, 0.0f);
 		_28.set(0.0f, 0.0f, 0.0f);
 		_34 = 0.0f;
 		_3C = _40 = nullptr;
@@ -52,8 +52,8 @@ struct TAIeffectAttackParam {
 	f32 _04;                                     // _04
 	f32 _08;                                     // _08
 	f32 _0C;                                     // _0C
-	Vector3f _10;                                // _10
-	Vector3f _1C;                                // _1C
+	Vector3f mPosition;                          // _10
+	Vector3f mVelocity;                          // _1C
 	Vector3f _28;                                // _28
 	f32 _34;                                     // _34
 	Teki* mTeki;                                 // _38
@@ -72,6 +72,8 @@ struct TAIeffectAttackParam {
  */
 struct EventTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator*); // _08
+
+	void init(TAIeffectAttackParam* param) { mParam = param; }
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1

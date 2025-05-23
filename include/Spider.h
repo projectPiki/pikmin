@@ -199,17 +199,16 @@ struct Spider : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	bool mIsBossBgm;             // _3B8
-	u8 _3B9;                     // _3B9
-	u8 _3BA;                     // _3BA
-	u8 _3BB;                     // _3BB
-	int _3BC;                    // _3BC
-	SpiderAi* mSpiderAi;         // _3C0
-	SpiderLeg* mSpiderLeg;       // _3C4
-	bool mIsAppear;              // _3C8
-	bool mHasShadow;             // _3C9
-	ShadowCaster mShadowCaster;  // _3CC
-	SpiderDrawer* mSpiderDrawer; // _760
+	bool mIsBossBgm;            // _3B8
+	u8 _3B9;                    // _3B9
+	u8 _3BA;                    // _3BA
+	u8 _3BB;                    // _3BB
+	int _3BC;                   // _3BC
+	SpiderAi* mSpiderAi;        // _3C0
+	SpiderLeg* mSpiderLeg;      // _3C4
+	bool mIsAppear;             // _3C8
+	bool mHasShadow;            // _3C9
+	ShadowCaster mShadowCaster; // _3CC, cast mDrawer to SpiderDrawer*
 };
 
 /**

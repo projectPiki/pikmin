@@ -27,8 +27,12 @@ struct TAIAeffCloudOfDust : public TaiAction {
 		init(effID, true, soundID, RUMBLE_NONE, sinkThreshold, footNum, jointID0, jointID1, jointID2, jointID3);
 	}
 
-	// DLL inlines to do:
-	TAIAeffCloudOfDust(int p1, EffectMgr::effTypeTable p2, int p3, int p4, f32 p5, int p6, int p7, int p8, int p9, int p10);
+	TAIAeffCloudOfDust(int nextState, EffectMgr::effTypeTable effID, int soundID, int rumbleID, f32 sinkThreshold, int footNum,
+	                   int jointID0, int jointID1, int jointID2, int jointID3)
+	    : TaiAction(nextState)
+	{
+		init(effID, true, soundID, rumbleID, sinkThreshold, footNum, jointID0, jointID1, jointID2, jointID3);
+	}
 
 	virtual void start(Teki&);                 // _08
 	virtual bool act(Teki&);                   // _10

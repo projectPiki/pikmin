@@ -1,247 +1,36 @@
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
 #include "types.h"
-
-/*
- * --INFO--
- * Address:	80215648
- * Size:	0002A4
- */
-void __dec2num(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stfd      f31, 0x40(r1)
-	  stmw      r26, 0x28(r1)
-	  lbz       r0, 0x4(r3)
-	  lbz       r31, 0x0(r3)
-	  cmpwi     r0, 0x1
-	  lfd       f31, -0x3C18(r2)
-	  mr        r28, r0
-	  lha       r29, 0x2(r3)
-	  lbz       r0, 0x5(r3)
-	  extsb     r31, r31
-	  blt-      .loc_0x44
-	  extsb     r0, r0
-	  cmpwi     r0, 0x30
-	  bne-      .loc_0x4C
-
-	.loc_0x44:
-	  lfd       f1, -0x3C18(r2)
-	  b         .loc_0x28C
-
-	.loc_0x4C:
-	  cmpwi     r0, 0x49
-	  bne-      .loc_0x78
-	  cmpwi     r31, 0
-	  beq-      .loc_0x6C
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B70(r3)
-	  fneg      f1, f0
-	  b         .loc_0x28C
-
-	.loc_0x6C:
-	  lis       r3, 0x802F
-	  lfd       f1, -0x6B70(r3)
-	  b         .loc_0x28C
-
-	.loc_0x78:
-	  cmpwi     r0, 0x4E
-	  bne-      .loc_0x8C
-	  lis       r3, 0x802F
-	  lfd       f1, -0x6B68(r3)
-	  b         .loc_0x28C
-
-	.loc_0x8C:
-	  cmpwi     r28, 0x10
-	  ble-      .loc_0xA0
-	  add       r29, r28, r29
-	  li        r28, 0x10
-	  subi      r29, r29, 0x10
-
-	.loc_0xA0:
-	  srawi     r0, r28, 0x3
-	  addze     r0, r0
-	  rlwinm    r0,r0,3,0,28
-	  subc.     r0, r28, r0
-	  addi      r26, r3, 0x5
-	  mr        r27, r0
-	  bne-      .loc_0xC0
-	  li        r27, 0x8
-
-	.loc_0xC0:
-	  subi      r0, r28, 0x1
-	  lfd       f2, -0x3C00(r2)
-	  xoris     r0, r0, 0x8000
-	  lfd       f1, 0x2AC8(r13)
-	  stw       r0, 0x24(r1)
-	  lis       r30, 0x4330
-	  add       r29, r28, r29
-	  stw       r30, 0x20(r1)
-	  subi      r29, r29, 0x1
-	  lfd       f0, 0x20(r1)
-	  fsub      f2, f0, f2
-	  bl        0x5FD4
-	  lfd       f3, -0x3C10(r2)
-	  lfd       f2, -0x3C00(r2)
-	  b         .loc_0x148
-
-	.loc_0xFC:
-	  addi      r4, r27, 0x1
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0x108:
-	  mulli     r0, r3, 0xA
-	  lbz       r3, 0x0(r26)
-	  add       r3, r3, r0
-	  addi      r26, r26, 0x1
-	  subi      r3, r3, 0x30
-
-	.loc_0x11C:
-	  subic.    r4, r4, 0x1
-	  bne+      .loc_0x108
-	  xoris     r0, r3, 0x8000
-	  stw       r0, 0x24(r1)
-	  sub.      r28, r28, r27
-	  stw       r30, 0x20(r1)
-	  lfd       f0, 0x20(r1)
-	  fsub      f0, f0, f2
-	  fmadd     f31, f3, f31, f0
-	  beq-      .loc_0x150
-	  li        r27, 0x8
-
-	.loc_0x148:
-	  cmpwi     r27, 0
-	  bne+      .loc_0xFC
-
-	.loc_0x150:
-	  fdiv      f31, f31, f1
-	  srawi     r0, r29, 0x1F
-	  xor       r5, r0, r29
-	  sub       r5, r5, r0
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x2780
-	  cmpwi     r5, 0x1FF
-	  mr        r4, r0
-	  ble-      .loc_0x1A8
-	  cmpwi     r29, 0
-	  bge-      .loc_0x184
-	  lfd       f1, -0x3C18(r2)
-	  b         .loc_0x28C
-
-	.loc_0x184:
-	  cmpwi     r31, 0
-	  beq-      .loc_0x19C
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B70(r3)
-	  fneg      f1, f0
-	  b         .loc_0x28C
-
-	.loc_0x19C:
-	  lis       r3, 0x802F
-	  lfd       f1, -0x6B70(r3)
-	  b         .loc_0x28C
-
-	.loc_0x1A8:
-	  lis       r3, 0x802F
-	  lfd       f2, -0x3C08(r2)
-	  subi      r3, r3, 0x6B78
-	  b         .loc_0x204
-
-	.loc_0x1B8:
-	  rlwinm.   r0,r5,0,31,31
-	  beq-      .loc_0x1FC
-	  lfd       f0, 0x0(r3)
-	  lfd       f1, 0x0(r4)
-	  fdiv      f0, f0, f1
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x1F8
-	  cmpwi     r31, 0
-	  beq-      .loc_0x1EC
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B70(r3)
-	  fneg      f1, f0
-	  b         .loc_0x28C
-
-	.loc_0x1EC:
-	  lis       r3, 0x802F
-	  lfd       f1, -0x6B70(r3)
-	  b         .loc_0x28C
-
-	.loc_0x1F8:
-	  fmul      f2, f2, f1
-
-	.loc_0x1FC:
-	  srawi     r5, r5, 0x1
-	  addi      r4, r4, 0x8
-
-	.loc_0x204:
-	  cmpwi     r5, 0
-	  bne+      .loc_0x1B8
-	  cmpwi     r29, 0
-	  bge-      .loc_0x238
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B80(r3)
-	  fmul      f0, f0, f2
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x230
-	  lfd       f1, -0x3C18(r2)
-	  b         .loc_0x28C
-
-	.loc_0x230:
-	  fdiv      f31, f31, f2
-	  b         .loc_0x278
-
-	.loc_0x238:
-	  ble-      .loc_0x278
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B78(r3)
-	  fdiv      f0, f0, f2
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x274
-	  cmpwi     r31, 0
-	  beq-      .loc_0x268
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B70(r3)
-	  fneg      f1, f0
-	  b         .loc_0x28C
-
-	.loc_0x268:
-	  lis       r3, 0x802F
-	  lfd       f1, -0x6B70(r3)
-	  b         .loc_0x28C
-
-	.loc_0x274:
-	  fmul      f31, f31, f2
-
-	.loc_0x278:
-	  cmpwi     r31, 0
-	  beq-      .loc_0x288
-	  fneg      f1, f31
-	  b         .loc_0x28C
-
-	.loc_0x288:
-	  fmr       f1, f31
-
-	.loc_0x28C:
-	  lmw       r26, 0x28(r1)
-	  lwz       r0, 0x4C(r1)
-	  lfd       f31, 0x40(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
-}
 
 /*
  * --INFO--
  * Address:	802158EC
  * Size:	0003B4
  */
-void __num2dec(void)
+void __num2dec(const decform* form, f64 x, decimal* d)
 {
+	s16 digits = form->digits;
+	int i;
+	__num2dec_internal(d, x);
+
+	if (d->sig.text[0] > 9) {
+		return;
+	}
+
+	if (digits > SIGDIGLEN) {
+		digits = SIGDIGLEN;
+	}
+
+	__rounddec(d, digits);
+
+	while (d->sig.length < digits) {
+		d->sig.text[d->sig.length++] = 0;
+	}
+
+	d->exp -= d->sig.length - 1;
+
+	for (i = 0; i < d->sig.length; i++) {
+		d->sig.text[i] += '0';
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -570,4 +359,205 @@ void __num2dec(void)
 	  addi      r1, r1, 0x68
 	  blr
 	*/
+}
+
+/*
+ * --INFO--
+ * Address:	80215648
+ * Size:	0002A4
+ */
+f64 __dec2num(const decimal* d)
+{
+	if (d->sig.length <= 0) {
+		return copysign(0.0, d->sign == 0 ? 1.0 : -1.0);
+	}
+
+	switch (d->sig.text[0]) {
+	case '0':
+		return copysign(0.0, d->sign == 0 ? 1.0 : -1.0);
+	case 'I':
+		return copysign((f64)INFINITY, d->sign == 0 ? 1.0 : -1.0);
+	case 'N': {
+		f64 result;
+		u64* ll = (u64*)&result;
+
+		*ll = 0x7FF0000000000000;
+		if (d->sign)
+			*ll |= 0x8000000000000000;
+
+		if (d->sig.length == 1)
+			*ll |= 0x8000000000000;
+		else {
+			u8* p               = (u8*)&result + 1;
+			int placed_non_zero = 0;
+			int low             = 1;
+			int i;
+			int e = d->sig.length;
+			if (e > 14)
+				e = 14;
+
+			for (i = 1; i < e; ++i) {
+				u8 c = d->sig.text[i];
+
+				if (isdigit(c)) {
+					c -= '0';
+				} else {
+					c = (u8)(_tolower(c) - 'a' + 10);
+				}
+
+				if (c != 0) {
+					placed_non_zero = 1;
+				}
+
+				if (low) {
+					*p++ |= c;
+				} else {
+					*p = (u8)(c << 4);
+				}
+
+				low = !low;
+			}
+
+			if (!placed_non_zero) {
+				*ll |= 0x0008000000000000;
+			}
+		}
+
+		return result;
+	}
+	}
+
+	{
+		static f64 pow_10[8] = { 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8 };
+
+		decimal dec = *d;
+		u8* i       = dec.sig.text;
+		u8* e       = i + dec.sig.length;
+		f64 first_guess;
+		int exponent;
+
+		for (; i < e; ++i)
+			*i -= '0';
+		dec.exp += dec.sig.length - 1;
+		exponent = dec.exp;
+
+		i           = dec.sig.text;
+		first_guess = *i++;
+
+		while (i < e) {
+			u32 ival = 0;
+			int j;
+			f64 temp1, temp2;
+			int ndig = (int)(e - i) % 8;
+
+			if (ndig == 0)
+				ndig = 8;
+
+			for (j = 0; j < ndig; ++j, ++i) {
+				ival = ival * 10 + *i;
+			}
+
+			temp1 = first_guess * pow_10[ndig - 1];
+			temp2 = temp1 + ival;
+
+			if (ival != 0 && temp1 == temp2)
+				break;
+
+			first_guess = temp2;
+			exponent -= ndig;
+		}
+
+		if (exponent < 0) {
+			first_guess /= pow(5.0, -exponent);
+		} else {
+			first_guess *= pow(5.0, exponent);
+		}
+
+		first_guess = ldexp(first_guess, exponent);
+
+		if (isinf(first_guess)) {
+			decimal max;
+			__str2dec(&max, "179769313486231580793729011405303420", 308);
+			if (__less_dec(&max, &dec))
+				goto done;
+			first_guess = DBL_MAX;
+		}
+
+		{
+			decimal feedback1;
+
+			__num2dec_internal(&feedback1, first_guess);
+
+			if (__equals_dec(&feedback1, &dec)) {
+				goto done;
+			}
+
+			if (__less_dec(&feedback1, &dec)) {
+
+				decimal feedback2, difflow, diffhigh;
+				f64 next_guess = first_guess;
+				u64* ull       = (u64*)&next_guess;
+				++*ull;
+
+				if (isinf(next_guess)) {
+					first_guess = next_guess;
+					goto done;
+				}
+
+				__num2dec_internal(&feedback2, next_guess);
+
+				while (__less_dec(&feedback2, &dec)) {
+					feedback1   = feedback2;
+					first_guess = next_guess;
+					++*ull;
+					if (isinf(next_guess)) {
+						first_guess = next_guess;
+						goto done;
+					}
+					__num2dec_internal(&feedback2, next_guess);
+				}
+
+				__minus_dec(&difflow, &dec, &feedback1);
+				__minus_dec(&diffhigh, &feedback2, &dec);
+
+				if (__equals_dec(&difflow, &diffhigh)) {
+					if (*(u64*)&first_guess & 1) {
+						first_guess = next_guess;
+					}
+				} else if (!__less_dec(&difflow, &diffhigh)) {
+					first_guess = next_guess;
+				}
+			} else {
+				decimal feedback2, difflow, diffhigh;
+				f64 next_guess = first_guess;
+				u64* ull       = (u64*)&next_guess;
+				--*ull;
+
+				__num2dec_internal(&feedback2, next_guess);
+
+				while (__less_dec(&dec, &feedback2)) {
+					feedback1   = feedback2;
+					first_guess = next_guess;
+					--*ull;
+					__num2dec_internal(&feedback2, next_guess);
+				}
+
+				__minus_dec(&difflow, &dec, &feedback2);
+				__minus_dec(&diffhigh, &feedback1, &dec);
+
+				if (__equals_dec(&difflow, &diffhigh)) {
+					if (*(u64*)&first_guess & 1) {
+						first_guess = next_guess;
+					}
+				} else if (__less_dec(&difflow, &diffhigh)) {
+					first_guess = next_guess;
+				}
+			}
+		}
+	done:
+		if (dec.sign) {
+			first_guess = -first_guess;
+		}
+		return first_guess;
+	}
 }

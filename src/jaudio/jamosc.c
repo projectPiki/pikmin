@@ -127,7 +127,7 @@ void Osc_Setup_Tremolo(seqp_*, u8)
  * Address:	80014DC0
  * Size:	000064
  */
-void Osc_Setup_Simple(void)
+void Osc_Setup_Simple(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -223,7 +223,7 @@ void Osc_Init_Env(void)
  * Address:	80014EC0
  * Size:	000094
  */
-void Osc_Setup_SimpleEnv(void)
+void Osc_Setup_SimpleEnv(seqp_*, u8, u32)
 {
 	/*
 	.loc_0x0:
@@ -280,7 +280,7 @@ void Osc_Setup_SimpleEnv(void)
  * Address:	80014F60
  * Size:	0000B0
  */
-void Osc_Setup_ADSR(void)
+void Osc_Setup_ADSR(seqp_*, s16*)
 {
 	/*
 	.loc_0x0:
@@ -342,7 +342,7 @@ void Osc_Setup_ADSR(void)
  * Address:	80015020
  * Size:	00010C
  */
-void Osc_Setup_Full(void)
+void Osc_Setup_Full(seqp_*, u8, u32, u32)
 {
 	/*
 	.loc_0x0:

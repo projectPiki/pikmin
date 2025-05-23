@@ -1,13 +1,27 @@
 #include "zen/Graphics.h"
+#include "zen/Math.h"
+#include "nlib/Math.h"
+#include "Colour.h"
+#include "NaviMgr.h"
+#include "Dolphin/gx.h"
+
+const f32 zen::DrawLifeCircle::TRI_NUM = 128.0f;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	0000A8
  */
-void zen::zenGraphics::drawOneTri(Vector3f*, Colour&)
+void zen::zenGraphics::drawOneTri(Vector3f* vertices, Colour& color)
 {
-	// UNUSED FUNCTION
+	GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, 3);
+	u32 gxColor = *(u32*)&color;
+	for (int i = 0; i < 3; i++) {
+		Vector3f& vec = vertices[i];
+		GXPosition3f32(vec.x, vec.y, vec.z);
+		GXColor1u32(gxColor);
+	}
+	GXEnd();
 }
 
 /*
@@ -17,7 +31,17 @@ void zen::zenGraphics::drawOneTri(Vector3f*, Colour&)
  */
 void zen::zenGraphics::setTevFillPolygon()
 {
-	// UNUSED FUNCTION
+	GXSetNumTevStages(1);
+	GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
+	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
+	GXSetChanCtrl(GX_COLOR0A0, GX_FALSE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_NONE, GX_AF_NONE);
+	GXClearVtxDesc();
+	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+	GXSetVtxDesc(GX_VA_TEX0, GX_NONE);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
 }
 
 /*
@@ -25,8 +49,52 @@ void zen::zenGraphics::setTevFillPolygon()
  * Address:	801BA13C
  * Size:	000458
  */
-void zen::DrawLifeCircle::drawLifeCircle(f32)
+void zen::DrawLifeCircle::drawLifeCircle(f32 p1)
 {
+	Vector3f vecs[3];
+	Colour color;
+	zenGraphics::setTevFillPolygon();
+	int drawCount = RoundOff(TRI_NUM * p1);
+
+	if (_00 != drawCount) {
+		f32 v = (drawCount < _00) ? 0.02f : 0.05f;
+		_04 += gsys->getFrameTime();
+		if (_04 > v) {
+			int a    = RoundOff(gsys->getFrameTime() * 30.0f) * (_00 < drawCount ? 1 : -1);
+			int absA = Abs(a);
+			if (Abs(_00 - drawCount) < absA) {
+				a = Abs(_00 - drawCount) * (_00 < drawCount ? 1 : -1);
+			}
+			_00 += a;
+			_04 -= v;
+		}
+	}
+
+	if (p1 < 0.2f) {
+		color.set(255, 0, 0, 255);
+	} else if (p1 < 0.5f) {
+		color.set(255, 255, 0, 255);
+	} else {
+		color.set(0, 255, 0, 255);
+	}
+
+	vecs[0].x = _14 + 0.0f;
+	vecs[0].y = _14 + 0.0f;
+	vecs[0].z = 0.0f;
+
+	for (int i = 0; i < _00; i++) {
+		f32 angle = -HALF_PI - 1.0f / TRI_NUM * f32(i) * TAU;
+		vecs[1].x = NMathF::cos(angle) * _14 + vecs[0].x;
+		vecs[1].y = NMathF::sin(angle) * _14 + vecs[0].y;
+		vecs[1].z = 0.0f + vecs[0].z;
+
+		angle     = -HALF_PI - 1.0f / TRI_NUM * f32(i + 1) * TAU;
+		vecs[2].x = NMathF::cos(angle) * _14 + vecs[0].x;
+		vecs[2].y = NMathF::sin(angle) * _14 + vecs[0].y;
+		vecs[2].z = 0.0f + vecs[0].z;
+
+		zenGraphics::drawOneTri(vecs, color);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -361,38 +429,10 @@ void zen::DrawLifeCircle::drawLifeCircle(f32)
  */
 void zen::DrawNaviLifeCircle::drawLifeCircle()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x3120(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4C
-	  mr        r3, r0
-	  lwz       r4, 0x18(r31)
-	  bl        -0xA3184
-	  lwz       r4, 0x224(r3)
-	  mr        r5, r3
-	  lfs       f1, 0x58(r5)
-	  mr        r3, r31
-	  lfs       f0, 0x3C8(r4)
-	  fdivs     f1, f1, f0
-	  bl        -0x49C
-	  b         .loc_0x58
-
-	.loc_0x4C:
-	  mr        r3, r31
-	  lfs       f1, -0x47E0(r2)
-	  bl        -0x4AC
-
-	.loc_0x58:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (naviMgr) {
+		Navi* navi = naviMgr->getNavi(_18);
+		DrawLifeCircle::drawLifeCircle(navi->mHealth / C_NAVI_PROP(navi).mHealth());
+	} else {
+		DrawLifeCircle::drawLifeCircle(1.0f);
+	}
 }

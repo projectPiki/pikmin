@@ -1,6 +1,7 @@
 #include "types.h"
 #include "CardUtil.h"
 #include "Dolphin/card.h"
+#include "gameflow.h"
 #include "DebugLog.h"
 
 CardUtilThread CardThread;
@@ -18,7 +19,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("TODO: Replace")
+DEFINE_PRINT("CardUtil")
 
 /*
  * --INFO--
@@ -37,7 +38,7 @@ void CardUtilNumFiles()
  */
 void CardUtilLockDirectory()
 {
-	// UNUSED FUNCTION
+	OSLockMutex(&CardControl.mMutex2);
 }
 
 /*
@@ -47,7 +48,7 @@ void CardUtilLockDirectory()
  */
 void CardUtilUnlockDirectory()
 {
-	// UNUSED FUNCTION
+	OSUnlockMutex(&CardControl.mMutex2);
 }
 
 /*
@@ -55,9 +56,9 @@ void CardUtilUnlockDirectory()
  * Address:	........
  * Size:	000010
  */
-void CardUtilByteNotUsed()
+s32 CardUtilByteNotUsed()
 {
-	// UNUSED FUNCTION
+	return CardControl.mByteNotUsed;
 }
 
 /*
@@ -65,7 +66,7 @@ void CardUtilByteNotUsed()
  * Address:	........
  * Size:	000028
  */
-void CardUtilBlocksNotUsed()
+s32 CardUtilBlocksNotUsed()
 {
 	// UNUSED FUNCTION
 }
@@ -75,9 +76,9 @@ void CardUtilBlocksNotUsed()
  * Address:	........
  * Size:	000010
  */
-void CardUtilFilesNotUsed()
+s32 CardUtilFilesNotUsed()
 {
-	// UNUSED FUNCTION
+	return CardControl.mFilesNotUsed;
 }
 
 /*
@@ -85,9 +86,9 @@ void CardUtilFilesNotUsed()
  * Address:	........
  * Size:	000010
  */
-void CardUtilSectorSize()
+s32 CardUtilSectorSize()
 {
-	// UNUSED FUNCTION
+	return CardControl.mSectorSize;
 }
 
 /*
@@ -97,114 +98,37 @@ void CardUtilSectorSize()
  */
 static int DoMount(s32 channel, void* a2)
 {
-	OSLockMutex(&CardControl.mMutex);
-	CardControl.mChannel = 0;
-	OSUnlockMutex(&CardControl.mMutex);
-
-	s32 res = CARDMount(channel, (CARDMemoryCard*)a2, 0);
+	OSLockMutex(&CardControl.mMutex2);
+	CardControl._6C = 0;
+	OSUnlockMutex(&CardControl.mMutex2);
+	CardControl.mFilesNotUsed = 0;
+	CardControl.mByteNotUsed  = 0;
+	CardControl._4C           = 0xA000;
+	s32 res                   = CARDMount(channel, (CARDMemoryCard*)a2, 0);
 	switch (res) {
+	case CARD_RESULT_READY:
 	case CARD_RESULT_BROKEN:
-		res = CARDGetSectorSize(channel, 0);
-		if (res > 0) {
-			return res;
+		int res2 = CARDGetSectorSize(channel, &CardControl.mSectorSize);
+		if (res2 >= 0) {
+		} else {
+			return res2;
 		}
-		CARDCheck(channel);
+		res = CARDCheck(channel);
 		break;
+
 	case CARD_RESULT_ENCODING:
-		res = CARDGetSectorSize(channel, 0);
-		if (res >= 0) {
-			return res;
+		int res3 = CARDGetSectorSize(channel, &CardControl.mSectorSize);
+		if (res3 >= 0) {
+		} else {
+			return res3;
 		}
 		break;
 	}
 
 	if (res == CARD_RESULT_READY) {
-		CARDFreeBlocks(channel, 0, 0);
+		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 	}
 	return res;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r26, 0x10(r1)
-	  subi      r30, r5, 0x2BC8
-	  addi      r29, r30, 0x360
-	  addi      r26, r3, 0
-	  addi      r27, r4, 0
-	  addi      r3, r29, 0
-	  bl        0x1AD08C
-	  li        r31, 0
-	  stw       r31, 0x37C(r30)
-	  mr        r3, r29
-	  bl        0x1AD158
-	  addi      r29, r30, 0x350
-	  stw       r31, 0x350(r30)
-	  addi      r28, r30, 0x34C
-	  lis       r3, 0x1
-	  stw       r31, 0x34C(r30)
-	  subi      r0, r3, 0x6000
-	  addi      r3, r26, 0
-	  stw       r0, 0x35C(r30)
-	  addi      r4, r27, 0
-	  li        r5, 0
-	  bl        0x1BE76C
-	  addi      r31, r3, 0
-	  cmpwi     r31, -0x6
-	  beq-      .loc_0x90
-	  bge-      .loc_0x84
-	  cmpwi     r31, -0xD
-	  beq-      .loc_0xB8
-	  b         .loc_0xD0
-
-	.loc_0x84:
-	  cmpwi     r31, 0
-	  beq-      .loc_0x90
-	  b         .loc_0xD0
-
-	.loc_0x90:
-	  addi      r3, r26, 0
-	  addi      r4, r30, 0x354
-	  bl        0x1BC6EC
-	  cmpwi     r3, 0
-	  bge-      .loc_0xA8
-	  b         .loc_0xF0
-
-	.loc_0xA8:
-	  mr        r3, r26
-	  bl        0x1BE068
-	  mr        r31, r3
-	  b         .loc_0xD0
-
-	.loc_0xB8:
-	  addi      r3, r26, 0
-	  addi      r4, r30, 0x354
-	  bl        0x1BC6C4
-	  cmpwi     r3, 0
-	  bge-      .loc_0xD0
-	  b         .loc_0xF0
-
-	.loc_0xD0:
-	  cmpwi     r31, 0
-	  bne-      .loc_0xEC
-	  addi      r3, r26, 0
-	  addi      r4, r28, 0
-	  addi      r5, r29, 0
-	  bl        0x1BC580
-	  mr        r31, r3
-
-	.loc_0xEC:
-	  mr        r3, r31
-
-	.loc_0xF0:
-	  lmw       r26, 0x10(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -212,9 +136,12 @@ static int DoMount(s32 channel, void* a2)
  * Address:	........
  * Size:	000064
  */
-static void DoUnmount(s32)
+static int DoUnmount(s32 channel)
 {
-	// UNUSED FUNCTION
+	OSLockMutex(&CardControl.mMutex2);
+	CardControl._6C = 0;
+	OSUnlockMutex(&CardControl.mMutex2);
+	return CARDUnmount(channel);
 }
 
 /*
@@ -222,9 +149,17 @@ static void DoUnmount(s32)
  * Address:	........
  * Size:	000088
  */
-static void DoFormat(s32)
+static int DoFormat(s32 channel)
 {
-	// UNUSED FUNCTION
+	OSLockMutex(&CardControl.mMutex2);
+	CardControl._6C = 0;
+	OSUnlockMutex(&CardControl.mMutex2);
+	CardControl._4C = 0xA000;
+	int res         = CARDFormat(channel);
+	if (res == CARD_RESULT_READY) {
+		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+	}
+	return res;
 }
 
 /*
@@ -232,86 +167,33 @@ static void DoFormat(s32)
  * Address:	8004CA40
  * Size:	0000FC
  */
-static int DoErase(s32, s32)
+static int DoErase(s32 chan, s32 fileNo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x4000
-	  stwu      r1, -0x30(r1)
-	  stmw      r25, 0x14(r1)
-	  subi      r31, r5, 0x2BC8
-	  addi      r25, r3, 0
-	  mr        r26, r4
-	  stw       r0, 0x35C(r31)
-	  bl        0x1C01C8
-	  cmpwi     r3, 0
-	  bge-      .loc_0x38
-	  b         .loc_0xE8
+	CardControl._4C = 0x4000;
+	int resDel      = CARDFastDelete(chan, fileNo);
+	if (resDel >= 0) {
 
-	.loc_0x38:
-	  addi      r28, r31, 0x378
-	  lwz       r0, 0x378(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD8
-	  mr        r27, r0
-	  addi      r30, r31, 0x360
-	  addi      r29, r31, 0x37C
-	  b         .loc_0xC0
+	} else {
+		return resDel;
+	}
 
-	.loc_0x58:
-	  lwz       r0, 0x5A40(r27)
-	  cmpw      r0, r26
-	  bne-      .loc_0xBC
-	  mr        r3, r30
-	  bl        0x1ACF48
-	  lwz       r0, 0x0(r29)
-	  addi      r4, r27, 0x5B40
-	  lwz       r5, 0x0(r28)
-	  addi      r3, r27, 0
-	  mulli     r0, r0, 0x5B40
-	  add       r0, r5, r0
-	  sub       r5, r0, r4
-	  bl        0x1C9714
-	  lwz       r4, 0x0(r29)
-	  addi      r3, r27, 0
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x0(r29)
-	  lwz       r0, 0x0(r29)
-	  lwz       r4, 0x0(r28)
-	  mulli     r0, r0, 0x5B40
-	  add       r0, r4, r0
-	  sub       r4, r0, r27
-	  bl        0x1AA12C
-	  mr        r3, r30
-	  bl        0x1ACFD4
+	if (CardControl._68) {
+		u8* card = (u8*)CardControl._68;
+		for (card; card < &((u8*)CardControl._68)[CardControl._6C * 0x5B40]; card += 0x5B40) {
+			int a = *(int*)(card + 0x5A40);
+			if (a != fileNo) {
+				continue;
+			}
 
-	.loc_0xBC:
-	  addi      r27, r27, 0x5B40
+			OSLockMutex(&CardControl.mMutex2);
+			memmove(card, card + 0x5B40, &((u8*)CardControl._68)[CardControl._6C * 0x5B40] - (card + 0x5B40));
+			CardControl._6C--;
+			DCStoreRange(card, &((u8*)CardControl._68)[CardControl._6C * 0x5B40] - card);
+			OSUnlockMutex(&CardControl.mMutex2);
+		}
+	}
 
-	.loc_0xC0:
-	  lwz       r0, 0x0(r29)
-	  lwz       r3, 0x0(r28)
-	  mulli     r0, r0, 0x5B40
-	  add       r0, r3, r0
-	  cmplw     r27, r0
-	  blt+      .loc_0x58
-
-	.loc_0xD8:
-	  addi      r3, r25, 0
-	  addi      r4, r31, 0x34C
-	  addi      r5, r31, 0x350
-	  bl        0x1BC47C
-
-	.loc_0xE8:
-	  lmw       r25, 0x14(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 }
 
 /*
@@ -319,8 +201,138 @@ static int DoErase(s32, s32)
  * Address:	8004CB3C
  * Size:	0005CC
  */
-static int DoList(s32, CardUtilDirent*)
+static int DoList(s32 chan, CardUtilDirent* dirent)
 {
+
+	DVDDiskID* diskID = DVDGetCurrentDiskID();
+	int res           = CARD_RESULT_READY;
+	CardUtilLockDirectory();
+	CardControl._68 = dirent;
+	CardControl._6C = 0;
+	CardUtilUnlockDirectory();
+	if (!dirent) {
+		return CARD_RESULT_READY;
+	}
+
+	memset(dirent, 0, 127 * sizeof(CardUtilDirent));
+
+	CARDFileInfo info;
+	char buf2[36];
+	char buf[36];
+	for (int i = 0; i < 127; i++) {
+		CardUtilDirent& entry = dirent[CardControl._6C];
+		if (CARDGetStatus(chan, i, &entry.mState) < 0) {
+			continue;
+		}
+
+		if (memcmp(entry.mState.gameName, diskID->gameName, 4) != 0) {
+			continue;
+		}
+
+		if (memcmp(entry.mState.company, diskID->company, 2) != 0) {
+			continue;
+		}
+
+		if (entry.mState.fileName[0] == '~') {
+			strncpy(buf, entry.mState.fileName, CARD_FILENAME_MAX);
+			buf[CARD_FILENAME_MAX] = 0;
+			strncpy(buf2, &buf[1], CARD_FILENAME_MAX);
+			buf2[CARD_FILENAME_MAX] = 0;
+
+			if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
+				if (CARDRename(chan, buf, buf2) == 0) {
+					// renamed! redo this entry with the new name
+					i--;
+					continue;
+				}
+			}
+
+			res = CARDFastDelete(chan, i);
+			if (res >= 0) {
+				res = CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+				if (res >= 0) {
+					continue;
+				}
+			}
+			return res;
+		}
+
+		memset(&entry._00[0x5A00], 0, 0x40);
+		if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
+			res = CARDFastOpen(chan, i, &info);
+			if (res >= 0) {
+
+			} else {
+				return res;
+			}
+
+			s32 offset = TRUNC(entry.mState.commentAddr, 0x200);
+			s32 addr   = entry.mState.commentAddr + 0x40;
+			res        = CARDRead(&info, &entry, ALIGN_NEXT(addr - offset, 0x200), offset);
+			CARDClose(&info);
+			if (res < 0) {
+				return res;
+			}
+			memmove(&entry._00[0x5A00], &entry._00[OFFSET(entry.mState.commentAddr, 0x200)], 0x40);
+		}
+
+		if (entry.mState.bannerFormat || entry.mState.iconFormat) {
+			if (entry.mState.offsetData <= entry.mState.length && entry.mState.iconAddr < entry.mState.offsetData) {
+				int resOpen = CARDFastOpen(chan, i, &info);
+				if (resOpen >= 0) {
+
+				} else {
+					return resOpen;
+				}
+
+				s32 offset = TRUNC(entry.mState.iconAddr, 0x200);
+				res        = CARDRead(&info, &entry, ALIGN_NEXT(entry.mState.offsetData - offset, 0x200), offset);
+				CARDClose(&info);
+				if (res < 0) {
+					return res;
+				}
+
+				memmove(&entry, &entry._00[OFFSET(entry.mState.iconAddr, 0x200)], entry.mState.offsetData - entry.mState.iconAddr);
+
+				DCFlushRange(&entry, entry.mState.offsetData - entry.mState.iconAddr);
+
+				entry._5AB0 = 0;
+				int iconCnt;
+				int j;
+				int count;
+				for (j = 0, count = 0, iconCnt = 0; count < 8; count++, j++) {
+					int speed = CARDGetIconSpeed(&entry.mState, count);
+					if (speed == CARD_STAT_SPEED_END) {
+						break;
+					}
+
+					entry._5AB4[j] = entry._5AB0;
+					entry._5AEC[j] = iconCnt;
+					entry._5AB0 += speed << 2;
+
+					if (CARDGetIconFormat(&entry.mState, iconCnt) != CARD_STAT_ICON_NONE) {
+						iconCnt++;
+					}
+				}
+
+				if (CARDGetIconAnim(&entry.mState) == CARD_STAT_ANIM_BOUNCE && count > 2) {
+					for (int k = count - 2; k > 0; k--) {
+						int speed      = CARDGetIconSpeed(&entry.mState, k);
+						entry._5AB4[j] = entry._5AB0;
+						entry._5AEC[j] = entry._5AEC[k];
+						entry._5AB0 += speed << 2;
+						j++;
+					}
+				}
+			}
+		}
+		entry.mFileNo = i;
+		CardUtilLockDirectory();
+		CardControl._6C++;
+		CardUtilUnlockDirectory();
+	}
+
+	return res;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -750,9 +762,24 @@ static int DoList(s32, CardUtilDirent*)
  * Address:	........
  * Size:	0000A0
  */
-static void DoOpen(s32, s32, void*)
+static int DoOpen(s32 chan, s32 fileNo, void* addr)
 {
-	// UNUSED FUNCTION
+	CARDStat state;
+	CARDFileInfo info;
+	int res1 = CARDGetStatus(chan, fileNo, &state);
+	if (res1 >= 0) {
+	} else {
+		return res1;
+	}
+	int res2 = CARDFastOpen(chan, fileNo, &info);
+	if (res2 >= 0) {
+	} else {
+		return res2;
+	}
+	CardControl._4C = state.length;
+	int res3        = CARDRead(&info, addr, state.length, 0);
+	CARDClose(&info);
+	return res3;
 }
 
 /*
@@ -760,9 +787,23 @@ static void DoOpen(s32, s32, void*)
  * Address:	........
  * Size:	00008C
  */
-static void DoWrite(s32, s32, void*, u32, u32)
+static int DoWrite(s32 chan, s32 fileNo, void* addr, u32 length, u32 offset)
 {
-	// UNUSED FUNCTION
+	CARDStat state;
+	CARDFileInfo info;
+	int res1 = CARDGetStatus(chan, fileNo, &state);
+	if (res1 >= 0) {
+	} else {
+		return res1;
+	}
+	int res2 = CARDFastOpen(chan, fileNo, &info);
+	if (res2 >= 0) {
+	} else {
+		return res2;
+	}
+	int res3 = CARDWrite(&info, addr, length, offset);
+	CARDClose(&info);
+	return res3;
 }
 
 /*
@@ -770,428 +811,133 @@ static void DoWrite(s32, s32, void*, u32, u32)
  * Address:	8004D108
  * Size:	0005AC
  */
-static int DoSave(s32, CARDStat*, void*)
+static int DoSave(s32 chan, CARDStat* state, void* addr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x803A
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stmw      r24, 0x70(r1)
-	  addi      r24, r3, 0
-	  addi      r26, r5, 0
-	  addi      r25, r4, 0
-	  subi      r31, r6, 0x2BC8
-	  addi      r3, r1, 0x38
-	  li        r5, 0x20
-	  bl        0x1CC1E0
-	  li        r27, 0
-	  stb       r27, 0x58(r1)
-	  addi      r3, r1, 0x38
-	  bl        0x1CC2C8
-	  cmplwi    r3, 0x20
-	  blt-      .loc_0x50
-	  li        r3, -0xC
-	  b         .loc_0x598
+	CARDFileInfo info;
+	char buf[36];
+	strncpy(buf, state->fileName, CARD_FILENAME_MAX);
+	buf[CARD_FILENAME_MAX] = 0;
+	if (strlen(buf) >= CARD_FILENAME_MAX) {
+		return CARD_RESULT_NAMETOOLONG;
+	}
 
-	.loc_0x50:
-	  lbz       r0, 0x38(r1)
-	  cmplwi    r0, 0x7E
-	  bne-      .loc_0x64
-	  li        r3, -0x80
-	  b         .loc_0x598
+	if (buf[0] == '~') {
+		// dramatic
+		return CARD_RESULT_FATAL_ERROR;
+	}
 
-	.loc_0x64:
-	  li        r0, 0x7E
-	  stb       r0, 0x14(r1)
-	  addi      r4, r25, 0
-	  addi      r3, r1, 0x15
-	  li        r5, 0x1F
-	  bl        0x1CC194
-	  stb       r27, 0x34(r1)
-	  addi      r3, r24, 0
-	  addi      r4, r1, 0x38
-	  addi      r5, r1, 0x5C
-	  li        r28, -0x1
-	  bl        0x1BEB80
-	  cmpwi     r3, 0
-	  bne-      .loc_0xA8
-	  lwz       r28, 0x60(r1)
-	  addi      r3, r1, 0x5C
-	  bl        0x1BECE0
+	char buf2[36];
+	buf2[0] = '~';
+	strncpy(&buf2[1], state->fileName, CARD_FILENAME_MAX - 1);
+	buf2[CARD_FILENAME_MAX] = 0;
 
-	.loc_0xA8:
-	  lwz       r3, 0x20(r25)
-	  cmpwi     r28, 0
-	  addi      r4, r31, 0x35C
-	  addis     r3, r3, 0x1
-	  subi      r0, r3, 0x8000
-	  stw       r0, 0x35C(r31)
-	  blt-      .loc_0xD8
-	  cmpwi     r28, 0x7F
-	  bge-      .loc_0xD8
-	  lwz       r3, 0x0(r4)
-	  addi      r0, r3, 0x4000
-	  stw       r0, 0x0(r4)
+	int newFileNo;
+	int fileNo = -1;
+	if (CARDOpen(chan, buf, &info) == CARD_RESULT_READY) {
+		fileNo = info.fileNo;
+		CARDClose(&info);
+	}
 
-	.loc_0xD8:
-	  lwz       r5, 0x20(r25)
-	  addi      r3, r24, 0
-	  addi      r4, r1, 0x14
-	  addi      r6, r1, 0x5C
-	  bl        0x1BF040
-	  cmpwi     r3, 0
-	  bge-      .loc_0xF8
-	  b         .loc_0x598
+	CardControl._4C = state->length + 0x8000;
+	if (fileNo >= 0 && fileNo < 127) {
+		CardControl._4C += 0x4000;
+	}
 
-	.loc_0xF8:
-	  lwz       r29, 0x60(r1)
-	  mr        r4, r26
-	  lwz       r5, 0x20(r25)
-	  addi      r3, r1, 0x5C
-	  li        r6, 0
-	  bl        0x1BF808
-	  addi      r27, r3, 0
-	  addi      r3, r1, 0x5C
-	  bl        0x1BEC6C
-	  cmpwi     r27, 0
-	  blt-      .loc_0x13C
-	  addi      r3, r24, 0
-	  addi      r4, r29, 0
-	  addi      r5, r25, 0
-	  bl        0x1BFED0
-	  mr.       r27, r3
-	  bge-      .loc_0x144
+	int resCreate = CARDCreate(chan, buf2, state->length, &info);
+	if (resCreate >= 0) {
 
-	.loc_0x13C:
-	  mr        r3, r27
-	  b         .loc_0x598
+	} else {
+		return resCreate;
+	}
 
-	.loc_0x144:
-	  cmpwi     r28, 0
-	  blt-      .loc_0x16C
-	  cmpwi     r28, 0x7F
-	  bge-      .loc_0x16C
-	  addi      r3, r24, 0
-	  addi      r4, r28, 0
-	  bl        0x1BF9CC
-	  cmpwi     r3, 0
-	  bge-      .loc_0x16C
-	  b         .loc_0x598
+	newFileNo    = info.fileNo;
+	int resWrite = CARDWrite(&info, addr, state->length, 0);
+	CARDClose(&info);
+	if (resWrite < 0 || (resWrite = CARDSetStatus(chan, newFileNo, state)) < 0) {
+		return resWrite;
+	}
 
-	.loc_0x16C:
-	  addi      r3, r24, 0
-	  addi      r4, r1, 0x14
-	  addi      r5, r1, 0x38
-	  bl        0x1C00C0
-	  cmpwi     r3, 0
-	  bge-      .loc_0x188
-	  b         .loc_0x598
+	if (fileNo >= 0 && fileNo < 127) {
+		int resDel = CARDFastDelete(chan, fileNo);
+		if (resDel >= 0) {
 
-	.loc_0x188:
-	  addi      r27, r31, 0x378
-	  lwz       r0, 0x378(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1AC
-	  addi      r3, r24, 0
-	  addi      r4, r31, 0x34C
-	  addi      r5, r31, 0x350
-	  bl        0x1BBCF4
-	  b         .loc_0x598
+		} else {
+			return resDel;
+		}
+	}
+	int resRename = CARDRename(chan, buf2, buf);
+	if (resRename >= 0) {
 
-	.loc_0x1AC:
-	  addi      r30, r31, 0x360
-	  addi      r3, r30, 0
-	  bl        0x1AC734
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0x1DC
-	  lwz       r4, 0x37C(r31)
-	  lwz       r5, 0x0(r27)
-	  mulli     r3, r4, 0x5B40
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x37C(r31)
-	  add       r27, r5, r3
-	  b         .loc_0x238
+	} else {
+		return resRename;
+	}
 
-	.loc_0x1DC:
-	  addi      r5, r31, 0x37C
-	  lwz       r4, 0x0(r27)
-	  lwz       r3, 0x37C(r31)
-	  li        r0, 0x5B40
-	  addi      r27, r4, 0
-	  mulli     r3, r3, 0x5B40
-	  add       r4, r4, r3
-	  addi      r3, r4, 0x5B3F
-	  sub       r3, r3, r27
-	  divwu     r3, r3, r0
-	  cmplw     r27, r4
-	  mtctr     r3
-	  bge-      .loc_0x224
+	if (!CardControl._68) {
+		return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
+	}
 
-	.loc_0x210:
-	  lwz       r0, 0x5A40(r27)
-	  cmpw      r0, r28
-	  beq-      .loc_0x224
-	  addi      r27, r27, 0x5B40
-	  bdnz+     .loc_0x210
+	OSLockMutex(&CardControl.mMutex2);
+	CardUtilDirent* entry;
+	if (fileNo == -1) {
+		entry = &CardControl._68[CardControl._6C];
+		CardControl._6C++;
+	} else {
+		entry                    = CardControl._68;
+		CardUtilDirent* altEntry = &CardControl._68[CardControl._6C];
+		for (entry; entry < altEntry; entry++) {
+			if (entry->mFileNo == fileNo) {
+				break;
+			}
+		}
+		if (entry == altEntry) {
+			CardControl._6C++;
+		}
+	}
 
-	.loc_0x224:
-	  cmplw     r27, r4
-	  bne-      .loc_0x238
-	  lwz       r3, 0x0(r5)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x0(r5)
+	memset(&entry->_00[0x5A00], 0, 0x40);
 
-	.loc_0x238:
-	  addi      r3, r27, 0x5A00
-	  li        r4, 0
-	  li        r5, 0x40
-	  bl        -0x4A02C
-	  lwz       r3, 0x20(r25)
-	  lwz       r4, 0x38(r25)
-	  subi      r0, r3, 0x40
-	  cmplw     r4, r0
-	  bgt-      .loc_0x26C
-	  addi      r3, r27, 0x5A00
-	  add       r4, r26, r4
-	  li        r5, 0x40
-	  bl        0x1C8E6C
+	if (state->commentAddr <= state->length - 0x40) {
+		memmove(&entry->_00[0x5A00], (void*)((u32)addr + state->commentAddr), 0x40);
+	}
 
-	.loc_0x26C:
-	  li        r0, 0
-	  stw       r0, 0x5AB0(r27)
-	  lbz       r0, 0x2E(r25)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28C
-	  lhz       r0, 0x34(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x56C
+	entry->_5AB0 = 0;
+	if (state->bannerFormat || state->iconFormat) {
+		memmove(entry, (void*)((u32)addr + state->iconAddr), state->offsetData - state->iconAddr);
+		DCFlushRange(entry, state->offsetData - state->iconAddr);
 
-	.loc_0x28C:
-	  lwz       r5, 0x30(r25)
-	  mr        r3, r27
-	  lwz       r0, 0x68(r25)
-	  add       r4, r26, r5
-	  sub       r5, r0, r5
-	  bl        0x1C8E34
-	  lwz       r4, 0x30(r25)
-	  mr        r3, r27
-	  lwz       r0, 0x68(r25)
-	  sub       r4, r0, r4
-	  bl        0x1A982C
-	  li        r0, 0x2
-	  li        r4, 0
-	  mtctr     r0
-	  addi      r5, r27, 0
-	  addi      r6, r4, 0
-	  li        r8, 0
-	  li        r9, 0
-	  li        r7, 0
+		int iconCnt;
+		int i;
+		int count;
+		for (i = 0, count = 0, iconCnt = 0; count < 8; count++, i++) {
+			int speed = CARDGetIconSpeed(state, count);
+			if (speed == CARD_STAT_SPEED_END) {
+				break;
+			}
 
-	.loc_0x2D8:
-	  lhz       r0, 0x36(r25)
-	  sraw      r0, r0, r4
-	  rlwinm.   r0,r0,0,30,31
-	  beq-      .loc_0x42C
-	  lwz       r3, 0x5AB0(r27)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r3, 0x5AB4(r5)
-	  stw       r7, 0x5AEC(r5)
-	  lwz       r3, 0x5AB0(r27)
-	  add       r0, r3, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r0, 0x34(r25)
-	  sraw      r0, r0, r6
-	  rlwinm.   r0,r0,0,30,31
-	  beq-      .loc_0x31C
-	  addi      r6, r6, 0x2
-	  addi      r7, r7, 0x1
+			entry->_5AB4[i] = entry->_5AB0;
+			entry->_5AEC[i] = iconCnt;
+			entry->_5AB0 += speed << 2;
 
-	.loc_0x31C:
-	  lhz       r0, 0x36(r25)
-	  addi      r4, r4, 0x2
-	  addi      r5, r5, 0x4
-	  sraw      r0, r0, r4
-	  rlwinm.   r0,r0,0,30,31
-	  addi      r8, r8, 0x1
-	  addi      r9, r9, 0x1
-	  beq-      .loc_0x42C
-	  lwz       r3, 0x5AB0(r27)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r3, 0x5AB4(r5)
-	  stw       r7, 0x5AEC(r5)
-	  lwz       r3, 0x5AB0(r27)
-	  add       r0, r3, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r0, 0x34(r25)
-	  sraw      r0, r0, r6
-	  rlwinm.   r0,r0,0,30,31
-	  beq-      .loc_0x370
-	  addi      r6, r6, 0x2
-	  addi      r7, r7, 0x1
+			if (CARDGetIconFormat(state, iconCnt) != CARD_STAT_ICON_NONE) {
+				iconCnt++;
+			}
+		}
 
-	.loc_0x370:
-	  lhz       r0, 0x36(r25)
-	  addi      r4, r4, 0x2
-	  addi      r5, r5, 0x4
-	  sraw      r0, r0, r4
-	  rlwinm.   r0,r0,0,30,31
-	  addi      r8, r8, 0x1
-	  addi      r9, r9, 0x1
-	  beq-      .loc_0x42C
-	  lwz       r3, 0x5AB0(r27)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r3, 0x5AB4(r5)
-	  stw       r7, 0x5AEC(r5)
-	  lwz       r3, 0x5AB0(r27)
-	  add       r0, r3, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r0, 0x34(r25)
-	  sraw      r0, r0, r6
-	  rlwinm.   r0,r0,0,30,31
-	  beq-      .loc_0x3C4
-	  addi      r6, r6, 0x2
-	  addi      r7, r7, 0x1
+		if (CARDGetIconAnim(state) == CARD_STAT_ANIM_BOUNCE && count > 2) {
+			for (int j = count - 2; j > 0; j--) {
+				int speed       = CARDGetIconSpeed(state, j);
+				entry->_5AB4[i] = entry->_5AB0;
+				entry->_5AEC[i] = entry->_5AEC[j];
+				entry->_5AB0 += speed << 2;
+				i++;
+			}
+		}
+	}
 
-	.loc_0x3C4:
-	  lhz       r0, 0x36(r25)
-	  addi      r4, r4, 0x2
-	  addi      r5, r5, 0x4
-	  sraw      r0, r0, r4
-	  rlwinm.   r0,r0,0,30,31
-	  addi      r8, r8, 0x1
-	  addi      r9, r9, 0x1
-	  beq-      .loc_0x42C
-	  lwz       r3, 0x5AB0(r27)
-	  rlwinm    r0,r0,2,0,29
-	  stw       r3, 0x5AB4(r5)
-	  stw       r7, 0x5AEC(r5)
-	  lwz       r3, 0x5AB0(r27)
-	  add       r0, r3, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r0, 0x34(r25)
-	  sraw      r0, r0, r6
-	  rlwinm.   r0,r0,0,30,31
-	  beq-      .loc_0x418
-	  addi      r6, r6, 0x2
-	  addi      r7, r7, 0x1
-
-	.loc_0x418:
-	  addi      r4, r4, 0x2
-	  addi      r9, r9, 0x1
-	  addi      r5, r5, 0x4
-	  addi      r8, r8, 0x1
-	  bdnz+     .loc_0x2D8
-
-	.loc_0x42C:
-	  lbz       r0, 0x2E(r25)
-	  rlwinm    r0,r0,0,29,29
-	  cmpwi     r0, 0x4
-	  bne-      .loc_0x56C
-	  cmpwi     r9, 0x2
-	  ble-      .loc_0x56C
-	  subic.    r3, r9, 0x2
-	  rlwinm    r4,r8,2,0,29
-	  add       r6, r27, r4
-	  rlwinm    r0,r3,2,0,29
-	  rlwinm    r5,r3,1,0,30
-	  add       r7, r27, r0
-	  ble-      .loc_0x56C
-	  rlwinm.   r0,r3,30,2,31
-	  mtctr     r0
-	  beq-      .loc_0x530
-
-	.loc_0x46C:
-	  lhz       r4, 0x36(r25)
-	  lwz       r0, 0x5AB0(r27)
-	  sraw      r4, r4, r5
-	  stw       r0, 0x5AB4(r6)
-	  rlwinm    r0,r4,2,28,29
-	  subi      r5, r5, 0x2
-	  lwz       r4, 0x5AEC(r7)
-	  stw       r4, 0x5AEC(r6)
-	  lwz       r4, 0x5AB0(r27)
-	  add       r0, r4, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r4, 0x36(r25)
-	  lwz       r0, 0x5AB0(r27)
-	  sraw      r4, r4, r5
-	  stw       r0, 0x5AB8(r6)
-	  rlwinm    r0,r4,2,28,29
-	  subi      r5, r5, 0x2
-	  lwz       r4, 0x5AE8(r7)
-	  stw       r4, 0x5AF0(r6)
-	  lwz       r4, 0x5AB0(r27)
-	  add       r0, r4, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r4, 0x36(r25)
-	  lwz       r0, 0x5AB0(r27)
-	  sraw      r4, r4, r5
-	  stw       r0, 0x5ABC(r6)
-	  rlwinm    r0,r4,2,28,29
-	  subi      r5, r5, 0x2
-	  lwz       r4, 0x5AE4(r7)
-	  stw       r4, 0x5AF4(r6)
-	  lwz       r4, 0x5AB0(r27)
-	  add       r0, r4, r0
-	  stw       r0, 0x5AB0(r27)
-	  lhz       r4, 0x36(r25)
-	  lwz       r0, 0x5AB0(r27)
-	  sraw      r4, r4, r5
-	  stw       r0, 0x5AC0(r6)
-	  rlwinm    r0,r4,2,28,29
-	  subi      r5, r5, 0x2
-	  lwz       r4, 0x5AE0(r7)
-	  subi      r7, r7, 0x10
-	  stw       r4, 0x5AF8(r6)
-	  addi      r6, r6, 0x10
-	  lwz       r4, 0x5AB0(r27)
-	  add       r0, r4, r0
-	  stw       r0, 0x5AB0(r27)
-	  bdnz+     .loc_0x46C
-	  andi.     r3, r3, 0x3
-	  beq-      .loc_0x56C
-
-	.loc_0x530:
-	  mtctr     r3
-
-	.loc_0x534:
-	  lhz       r4, 0x36(r25)
-	  lwz       r0, 0x5AB0(r27)
-	  sraw      r4, r4, r5
-	  stw       r0, 0x5AB4(r6)
-	  rlwinm    r0,r4,2,28,29
-	  subi      r5, r5, 0x2
-	  lwz       r4, 0x5AEC(r7)
-	  subi      r7, r7, 0x4
-	  stw       r4, 0x5AEC(r6)
-	  addi      r6, r6, 0x4
-	  lwz       r4, 0x5AB0(r27)
-	  add       r0, r4, r0
-	  stw       r0, 0x5AB0(r27)
-	  bdnz+     .loc_0x534
-
-	.loc_0x56C:
-	  addi      r4, r25, 0
-	  addi      r3, r27, 0x5A44
-	  li        r5, 0x6C
-	  bl        -0x4A26C
-	  stw       r29, 0x5A40(r27)
-	  mr        r3, r30
-	  bl        0x1AC440
-	  addi      r3, r24, 0
-	  addi      r4, r31, 0x34C
-	  addi      r5, r31, 0x350
-	  bl        0x1BB904
-
-	.loc_0x598:
-	  lmw       r24, 0x70(r1)
-	  lwz       r0, 0x94(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	memcpy(&entry->mState, state, sizeof(CARDStat));
+	entry->mFileNo = newFileNo;
+	OSUnlockMutex(&CardControl.mMutex2);
+	return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 }
 
 /*
@@ -1199,27 +945,27 @@ static int DoSave(s32, CARDStat*, void*)
  * Address:	8004D6B4
  * Size:	0000B0
  */
-static int CardUtilCommand(s32 chan, s32 command, s32 file, void* a3, u32 a4, u32 a5)
+static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offset, u32 length)
 {
 	OSLockMutex(&CardControl.mMutex);
 	int res;
 	if (CardControl.mChannel != -1) {
-		res = CardControl.test2[2];
+		res = CardControl.mResultCode;
 	} else {
 
-		CardControl.mChannel = CardControl.mChannel;
-		CardControl.mChannel = chan;
-		CardControl.mCommand = command;
-		CardControl.test[0]  = file;
-		CardControl.test[1]  = (int)a3;
-		CardControl.test[2]  = a4;
-		CardControl.test[3]  = a5;
-		CardControl.test[4]  = -1;
+		CardControl.mChannel    = CardControl.mChannel;
+		CardControl.mChannel    = chan;
+		CardControl.mCommand    = command;
+		CardControl.mFileNo     = file;
+		CardControl.mAddr       = addr;
+		CardControl.mOffset     = offset;
+		CardControl.mLength     = length;
+		CardControl.mResultCode = CARD_RESULT_BUSY;
 
-		if (command != 4) {
-			CardControl.test2[6] = CARDGetXferredBytes(chan);
+		if (command != CARDCMD_List) {
+			CardControl._48 = CARDGetXferredBytes(chan);
 		}
-		res = 0;
+		res = CARD_RESULT_READY;
 		OSSignalCond(&CardControl.mCondition);
 	}
 	OSUnlockMutex(&CardControl.mMutex);
@@ -1233,7 +979,7 @@ static int CardUtilCommand(s32 chan, s32 command, s32 file, void* a3, u32 a4, u3
  */
 int CardUtilResultCode()
 {
-	return CardControl.test2[2];
+	return CardControl.mResultCode;
 }
 
 /*
@@ -1241,9 +987,9 @@ int CardUtilResultCode()
  * Address:	8004D774
  * Size:	000034
  */
-void CardUtilMount(s32 channel, void* a1)
+void CardUtilMount(s32 channel, void* addr)
 {
-	CardUtilCommand(channel, 1, 0, a1, 0, 0);
+	CardUtilCommand(channel, CARDCMD_Mount, 0, addr, 0, 0);
 }
 
 /*
@@ -1253,7 +999,7 @@ void CardUtilMount(s32 channel, void* a1)
  */
 void CardUtilUnmount(s32 channel)
 {
-	CardUtilCommand(channel, 2, 0, 0, 0, 0);
+	CardUtilCommand(channel, CARDCMD_Unmount, 0, nullptr, 0, 0);
 }
 
 /*
@@ -1283,17 +1029,7 @@ void CardUtilFormat(s32)
  */
 bool CardUtilIsCardBusy()
 {
-	return CardControl.mChannel == -1;
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803A
-	  subi      r3, r3, 0x28B8
-	  lwz       r0, 0x20(r3)
-	  subfic    r3, r0, -0x1
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
+	return CardControl.mChannel != -1;
 }
 
 /*
@@ -1315,7 +1051,7 @@ void CardUtilIdleWhileBusy()
  */
 void CardUtilErase(s32 channel, s32 file)
 {
-	CardUtilCommand(channel, 5, file, 0, 0, 0);
+	CardUtilCommand(channel, CARDCMD_Erase, file, nullptr, 0, 0);
 }
 
 /*
@@ -1323,9 +1059,9 @@ void CardUtilErase(s32 channel, s32 file)
  * Address:	8004D86C
  * Size:	000034
  */
-void CardUtilOpen(s32 channel, s32 file, void* a1)
+void CardUtilOpen(s32 channel, s32 file, void* addr)
 {
-	CardUtilCommand(channel, 6, file, a1, 0, 0);
+	CardUtilCommand(channel, CARDCMD_Open, file, addr, 0, 0);
 }
 
 /*
@@ -1333,9 +1069,9 @@ void CardUtilOpen(s32 channel, s32 file, void* a1)
  * Address:	8004D8A0
  * Size:	000034
  */
-void CardUtilSave(s32 channel, CARDStat* stat, void* a1)
+void CardUtilSave(s32 channel, CARDStat* stat, void* addr)
 {
-	CardUtilCommand(channel, 7, (int)stat, a1, 0, 0);
+	CardUtilCommand(channel, CARDCMD_Save, (int)stat, addr, 0, 0);
 }
 
 /*
@@ -1343,9 +1079,9 @@ void CardUtilSave(s32 channel, CARDStat* stat, void* a1)
  * Address:	8004D8D4
  * Size:	00003C
  */
-void CardUtilWrite(s32 channel, s32 a2, void* a3, u32 a4, u32 a5)
+void CardUtilWrite(s32 channel, s32 fileNo, void* data, u32 offset, u32 size)
 {
-	CardUtilCommand(channel, 9, a2, a3, a4, a5);
+	CardUtilCommand(channel, CARDCMD_Write, fileNo, data, offset, size);
 }
 
 /*
@@ -1353,76 +1089,72 @@ void CardUtilWrite(s32 channel, s32 a2, void* a3, u32 a4, u32 a5)
  * Address:	8004D910
  * Size:	00025C
  */
-static void* CardUtilMain(void* a1)
+static void* CardUtilMain(void*)
 {
-	int res;
+	s32 res;
+	s32 length;
+	s32 cmd;
+	s32 chan;
+	u32 offset;
+	s32 fileNo;
+	void* addr;
 	while (true) {
 		OSLockMutex(&CardControl.mMutex);
 		while (CardControl.mChannel == -1) {
 			OSWaitCond(&CardControl.mCondition, &CardControl.mMutex);
 		}
+
+		cmd    = CardControl.mCommand;
+		chan   = CardControl.mChannel;
+		fileNo = CardControl.mFileNo;
+		addr   = CardControl.mAddr;
+		offset = CardControl.mOffset;
+		length = CardControl.mLength;
 		OSUnlockMutex(&CardControl.mMutex);
 
-		switch (CardControl.test[10]) {
-		case 1:
-			res = DoMount(CardControl.mChannel, (void*)CardControl.test[9]);
+		switch (cmd) {
+		case CARDCMD_Mount:
+			res = DoMount(chan, (void*)addr);
 			break;
-		case 2:
-			OSLockMutex(&CardControl.mMutex2);
-			CardControl.test[8] = 0;
-			OSUnlockMutex(&CardControl.mMutex2);
-			res = CARDUnmount(CardControl.mChannel);
+
+		case CARDCMD_Unmount:
+			res = DoUnmount(chan);
 			break;
-		case 3:
-			OSLockMutex(&CardControl.mMutex2);
-			CardControl.mChannel = 0;
-			OSUnlockMutex(&CardControl.mMutex2);
-			CardControl.test[9] = 0xa000;
-			res                 = CARDFormat(CardControl.mChannel);
-			if (res == 0) {
-				res = CARDFreeBlocks(CardControl.mChannel, (s32*)CardControl.test[9], (s32*)CardControl.test[10]);
-			}
+
+		case CARDCMD_Format:
+			res = DoFormat(chan);
 			break;
-		case 4:
-			res = DoList(CardControl.mChannel, (CardUtilDirent*)CardControl.test[8]);
+
+		case CARDCMD_List:
+			res = DoList(chan, (CardUtilDirent*)addr);
 			break;
-		case 5:
-			res = DoErase(CardControl.mChannel, CardControl.mFileId);
+
+		case CARDCMD_Erase:
+			res = DoErase(chan, fileNo);
 			break;
-		case 6:
-			CARDStat stat;
-			res = CARDGetStatus(CardControl.mChannel, CardControl.mFileId, &stat);
-			if (res > 0) {
-				res = CARDFastOpen(CardControl.mChannel, CardControl.mFileId, (CARDFileInfo*)&stat);
-				if (res > 0) {
-					CardControl.test[1] = stat.iconAddr;
-					res                 = CARDRead((CARDFileInfo*)&stat, (void*)CardControl.test[7], stat.iconAddr, 0);
-				}
-			}
+
+		case CARDCMD_Open:
+			res = DoOpen(chan, fileNo, (void*)addr);
 			break;
-		case 7:
-			res = DoSave(CardControl.mChannel, (CARDStat*)CardControl.mFileId, (void*)CardControl.test[5]);
+
+		case CARDCMD_Save:
+			res = DoSave(chan, (CARDStat*)fileNo, (void*)addr);
 			break;
-		case 9:
-			CARDStat stat2;
-			res = CARDGetStatus(CardControl.mChannel, CardControl.mFileId, &stat2);
-			if (res > 0) {
-				res = CARDFastOpen(CardControl.mChannel, CardControl.mFileId, (CARDFileInfo*)&stat2);
-				if (res > 0) {
-					CardControl.test[5] = stat2.iconAddr;
-					res                 = CARDWrite((CARDFileInfo*)&stat, (void*)CardControl.test[3], stat2.iconAddr, 0);
-					CARDClose((CARDFileInfo*)&stat2);
-				}
-			}
+
+		case CARDCMD_Write:
+			u32 v = length;
+			res   = DoWrite(chan, fileNo, (void*)addr, (u32)v, offset);
 			break;
 		}
+
 		OSLockMutex(&CardControl.mMutex);
-		if (res == -5) {
-			CardControl.mFileId = 1;
+		if (res == CARD_RESULT_IOERROR) {
+			gameflow.mMemoryCard.mDidSaveFail = true;
 		}
-		CardControl.mChannel = -1;
-		CardControl.test[7]  = res;
+		CardControl.mResultCode = res;
+		CardControl.mChannel    = -1;
 		OSUnlockMutex(&CardControl.mMutex);
+		CardControl.mChannel ? "fake" : "fake";
 	}
 	/*
 	.loc_0x0:
@@ -1609,12 +1341,12 @@ static void* CardUtilMain(void* a1)
  * Address:	8004DB6C
  * Size:	000094
  */
-void CardUtilInit(void* a1, u32 a2, s32 a3)
+void CardUtilInit(void* stack, u32 stackSize, s32 prio)
 {
 	OSInitMutex(&CardControl.mMutex);
 	OSInitMutex(&CardControl.mMutex2);
 	OSInitCond(&CardControl.mCondition);
-	OSCreateThread(&CardThread.mThread, CardUtilMain, 0, a1, a2, a3, 1);
+	OSCreateThread(&CardThread.mThread, CardUtilMain, nullptr, stack, stackSize, prio, 1);
 	OSResumeThread(&CardThread.mThread);
 }
 

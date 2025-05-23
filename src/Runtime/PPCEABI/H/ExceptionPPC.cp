@@ -1,117 +1,90 @@
 #include "PowerPC_EABI_Support/Runtime/NMWException.h"
 #include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
+#include "PowerPC_EABI_Support/Runtime/Gecko_ExceptionPPC.h"
 
 typedef struct ThrowContext ThrowContext;
 typedef struct MWExceptionInfo MWExceptionInfo;
 typedef struct ex_specification ex_specification;
 typedef struct ex_deletepointercond ex_deletepointercond;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
- */
-void ExPPC_LongJump(ThrowContext *, void *, void *)
-{
-	// UNUSED FUNCTION
-}
+#define RETURN_ADDRESS 4
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
- */
-void __throw(void)
-{
-	// UNUSED FUNCTION
-}
+union MWE_GeckoVector64 {
+	f64 d;
+	f32 f[2];
+};
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
- */
-void __end__catch(void)
-{
-	// UNUSED FUNCTION
-}
+typedef union MWE_GeckoVector64 MWE_GeckoVector64;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000450
- */
-void ExPPC_ThrowHandler(ThrowContext *)
-{
-	// UNUSED FUNCTION
-}
+struct GeckoFPRContext {
+	f64 d;
+	MWE_GeckoVector64 v;
+};
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
- */
-void ExPPC_HandleUnexpected(ThrowContext *, MWExceptionInfo *, ex_specification *)
-{
-	// UNUSED FUNCTION
-}
+typedef struct GeckoFPRContext GeckoFPRContext;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001C8
- */
-void __unexpected(void)
-{
-	// UNUSED FUNCTION
-}
+typedef struct ThrowContext {
+	GeckoFPRContext FPR[32];
+	s32 GPR[32];
+	s32 CR;
+	char* SP;
+	char* FP;
+	char* throwSP;
+	char* returnaddr;
+	char* throwtype;
+	void* location;
+	void* dtor;
+	CatchInfo* catchinfo;
+} ThrowContext;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
- */
-// std::bad_exception::~bad_exception()
-// {
-// 	// UNUSED FUNCTION
-// }
+typedef ThrowContext* ThrowContextPtr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
- */
-void ExPPC_IsInSpecification(char *, ex_specification *)
-{
-	// UNUSED FUNCTION
-}
+typedef struct MWExceptionInfo {
+	ExceptionTableSmall* exception_record;
+	char* current_function;
+	char* action_pointer;
+	char* code_section;
+	char* data_section;
+	char* TOC;
+} MWExceptionInfo;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000574
- */
-void ExPPC_UnwindStack(ThrowContext *, MWExceptionInfo *, void *)
-{
-	// UNUSED FUNCTION
-}
+typedef struct FragmentInfo {
+	ExceptionTableIndex* exception_start;
+	ExceptionTableIndex* exception_end;
+	char* code_start;
+	char* code_end;
+	char* data_start;
+	char* data_end;
+	char* TOC;
+	int active;
+} FragmentInfo;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
- */
-void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
-{
-	// UNUSED FUNCTION
-}
+typedef struct ProcessInfo {
+	__eti_init_info* exception_info;
+	char* TOC;
+	int active;
+} ProcessInfo;
+
+typedef struct ActionIterator {
+	MWExceptionInfo info;
+	char* current_SP;
+	char* current_FP;
+	s32 current_R31;
+} ActionIterator;
+
+#define MAXFRAGMENTS 1
+static ProcessInfo fragmentinfo[MAXFRAGMENTS];
+
+typedef void (*DeleteFunc)(void*);
+
+#pragma peephole off
 
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	00005C
+//  * Size:	000074
 //  */
-// void ExPPC_DeletePointer(ThrowContext *, const ex_deletepointer *)
+// void ExPPC_LongJump(ThrowContext*, void*, void*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -119,9 +92,9 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	0000BC
+//  * Size:	0000B4
 //  */
-// void ExPPC_DestroyMemberArray(ThrowContext *, const ex_destroymemberarray *)
+// void __throw(void)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -129,9 +102,9 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	0000A4
+//  * Size:	000044
 //  */
-// void ExPPC_DestroyMemberCond(ThrowContext *, const ex_destroymembercond *)
+// void __end__catch(void)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -139,19 +112,9 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	000068
+//  * Size:	000450
 //  */
-// void ExPPC_DestroyBase(ThrowContext *, const ex_destroymember *)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000068
-//  */
-// void ExPPC_DestroyMember(ThrowContext *, const ex_destroymember *)
+// void ExPPC_ThrowHandler(ThrowContext*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -161,7 +124,7 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 //  * Address:	........
 //  * Size:	000090
 //  */
-// void ExPPC_DestroyLocalArray(ThrowContext *, const ex_destroylocalarray *)
+// void ExPPC_HandleUnexpected(ThrowContext*, MWExceptionInfo*, ex_specification*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -169,9 +132,9 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	000060
+//  * Size:	0001C8
 //  */
-// void ExPPC_DestroyLocalPointer(ThrowContext *, const ex_destroylocalpointer *)
+// void __unexpected(void)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -179,9 +142,19 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	00007C
+//  * Size:	000084
 //  */
-// void ExPPC_DestroyLocalCond(ThrowContext *, const ex_destroylocalcond *)
+// // std::bad_exception::~bad_exception()
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	000098
+//  */
+// void ExPPC_IsInSpecification(char*, ex_specification*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -189,9 +162,9 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	00003C
+//  * Size:	000574
 //  */
-// void ExPPC_DestroyLocal(ThrowContext *, const ex_destroylocal *)
+// void ExPPC_UnwindStack(ThrowContext*, MWExceptionInfo*, void*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -199,9 +172,139 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	0001F0
+//  * Size:	000098
 //  */
-// void ExPPC_PopStackFrame(ThrowContext *, MWExceptionInfo *)
+// void ExPPC_DeletePointerCond(ThrowContext*, const ex_deletepointercond*)
+// {
+// 	// UNUSED FUNCTION
+// }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	00005C
+// //  */
+// // void ExPPC_DeletePointer(ThrowContext *, const ex_deletepointer *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	0000BC
+// //  */
+// // void ExPPC_DestroyMemberArray(ThrowContext *, const ex_destroymemberarray *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	0000A4
+// //  */
+// // void ExPPC_DestroyMemberCond(ThrowContext *, const ex_destroymembercond *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	000068
+// //  */
+// // void ExPPC_DestroyBase(ThrowContext *, const ex_destroymember *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	000068
+// //  */
+// // void ExPPC_DestroyMember(ThrowContext *, const ex_destroymember *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	000090
+// //  */
+// // void ExPPC_DestroyLocalArray(ThrowContext *, const ex_destroylocalarray *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	000060
+// //  */
+// // void ExPPC_DestroyLocalPointer(ThrowContext *, const ex_destroylocalpointer *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	00007C
+// //  */
+// // void ExPPC_DestroyLocalCond(ThrowContext *, const ex_destroylocalcond *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	00003C
+// //  */
+// // void ExPPC_DestroyLocal(ThrowContext *, const ex_destroylocal *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	0001F0
+// //  */
+// // void ExPPC_PopStackFrame(ThrowContext *, MWExceptionInfo *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	00021C
+// //  */
+// // void ExPPC_NextAction(ActionIterator *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// // /*
+// //  * --INFO--
+// //  * Address:	........
+// //  * Size:	000020
+// //  */
+// // void ExPPC_CurrentAction(const ActionIterator *)
+// // {
+// // 	// UNUSED FUNCTION
+// // }
+
+// /*
+//  * --INFO--
+//  * Address:	........
+//  * Size:	00002C
+//  */
+// void ExPPC_PopR31(char*, MWExceptionInfo*)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -209,42 +312,12 @@ void ExPPC_DeletePointerCond(ThrowContext *, const ex_deletepointercond *)
 // /*
 //  * --INFO--
 //  * Address:	........
-//  * Size:	00021C
+//  * Size:	0001D4
 //  */
-// void ExPPC_NextAction(ActionIterator *)
+// void ExPPC_FindExceptionRecord(char*, MWExceptionInfo*)
 // {
 // 	// UNUSED FUNCTION
 // }
-
-// /*
-//  * --INFO--
-//  * Address:	........
-//  * Size:	000020
-//  */
-// void ExPPC_CurrentAction(const ActionIterator *)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
- */
-void ExPPC_PopR31(char *, MWExceptionInfo *)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0001D4
- */
-void ExPPC_FindExceptionRecord(char *, MWExceptionInfo *)
-{
-	// UNUSED FUNCTION
-}
 
 // /*
 //  * --INFO--
@@ -258,64 +331,41 @@ void ExPPC_FindExceptionRecord(char *, MWExceptionInfo *)
 
 /*
  * --INFO--
- * Address:	80214D58
- * Size:	000034
+ * Address:	80214D8C
+ * Size:	00003C
  */
-void __unregister_fragment(void)
+int __register_fragment(struct __eti_init_info* info, char* TOC)
 {
-/*
-.loc_0x0:
-  cmpwi     r3, 0
-  blt-      .loc_0x30
-  cmpwi     r3, 0x1
-  bge-      .loc_0x30
-  mulli     r4, r3, 0xC
-  lis       r3, 0x803D
-  addi      r0, r3, 0x40E0
-  add       r3, r0, r4
-  li        r0, 0
-  stw       r0, 0x0(r3)
-  stw       r0, 0x4(r3)
-  stw       r0, 0x8(r3)
+	ProcessInfo* f = fragmentinfo;
+	int i;
 
-.loc_0x30:
-  blr
-*/
+	for (i = 0; i < MAXFRAGMENTS; i++, f++) {
+		if (f->active == 0) {
+			f->exception_info = info;
+			f->TOC            = TOC;
+			f->active         = 1;
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 /*
  * --INFO--
- * Address:	80214D8C
- * Size:	00003C
+ * Address:	80214D58
+ * Size:	000034
  */
-void __register_fragment(void)
+void __unregister_fragment(int fragmentID)
 {
-/*
-.loc_0x0:
-  lis       r5, 0x803D
-  addi      r5, r5, 0x40E0
-  b         .loc_0xC
+	ProcessInfo* f;
 
-.loc_0xC:
-  b         .loc_0x10
-
-.loc_0x10:
-  lwz       r0, 0x8(r5)
-  cmpwi     r0, 0
-  bne-      .loc_0x34
-  stw       r3, 0x0(r5)
-  li        r0, 0x1
-  li        r3, 0
-  stw       r4, 0x4(r5)
-  stw       r0, 0x8(r5)
-  b         .loc_0x38
-
-.loc_0x34:
-  li        r3, -0x1
-
-.loc_0x38:
-  blr
-*/
+	if (fragmentID >= 0 && fragmentID < MAXFRAGMENTS) {
+		f                 = &fragmentinfo[fragmentID];
+		f->exception_info = 0;
+		f->TOC            = 0;
+		f->active         = 0;
+	}
 }
 
 // /*

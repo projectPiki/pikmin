@@ -177,7 +177,12 @@ struct InteractBuild : public Interaction {
  * @brief TODO
  */
 struct InteractBury : public Interaction {
-	inline InteractBury(); // TODO: probably
+	InteractBury(Creature* owner, bool makeFlower, f32 p3)
+	    : Interaction(owner)
+	{
+		mMakeFlower = makeFlower;
+		_0C         = p3;
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 	virtual bool actNavi(Navi*); // _14
@@ -218,7 +223,11 @@ struct InteractChangeHappa : public Interaction {
  * @brief TODO
  */
 struct InteractFire : public Interaction {
-	inline InteractFire(); // TODO: probably
+	InteractFire(Creature* owner, f32 damage)
+	    : Interaction(owner)
+	{
+		mDamage = damage;
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 	virtual bool actNavi(Navi*); // _14
@@ -503,7 +512,10 @@ struct InteractTalk : public Interaction {
  * @brief TODO
  */
 struct InteractThrowAway : public Interaction {
-	inline InteractThrowAway(); // TODO: probably
+	InteractThrowAway(Creature* owner)
+	    : Interaction(owner)
+	{
+	}
 
 	virtual bool actPiki(Piki*); // _0C
 
@@ -531,7 +543,13 @@ struct InteractWarn : public Interaction {
  * @brief TODO
  */
 struct InteractWind : public Interaction {
-	inline InteractWind(); // TODO: probably
+	InteractWind(Creature* owner, Vector3f vel, f32 p3, zen::particleGenerator* windPtclGen)
+	    : Interaction(owner)
+	    , _08(p3)
+	    , mVelocity(vel)
+	    , mWindParticles(windPtclGen)
+	{
+	}
 
 	virtual bool actCommon(Creature*); // _08
 	virtual bool actPiki(Piki*);       // _0C
@@ -539,7 +557,7 @@ struct InteractWind : public Interaction {
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
-	u8 _08[0x4];                            // _08, unknown
+	f32 _08;                                // _08
 	Vector3f mVelocity;                     // _0C
 	zen::particleGenerator* mWindParticles; // _18
 };

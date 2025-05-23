@@ -18,6 +18,16 @@ static inline f32 quickABS(f32 x)
 	return tmp.f;
 }
 
+static inline f32 u32ToFloat(u32 a)
+{
+	union {
+		u32 w;
+		f32 f;
+	} tmp;
+	tmp.w = a;
+	return tmp.f;
+}
+
 #define LONG_TAU   6.2831854820251465
 #define TAU        6.2831855f
 #define PI         3.1415927f
@@ -105,6 +115,11 @@ struct BoundBox;
 struct KTri;
 struct KRect;
 struct KSegment;
+
+static inline f32 fmod(f32 x, f32 m)
+{
+	return std::fmodf(x, m);
+}
 
 f32 roundAng(f32 angle);
 f32 angDist(f32 x, f32 z);

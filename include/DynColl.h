@@ -7,7 +7,9 @@
 
 struct Creature;
 struct MapAnimShapeObject;
+struct CollTriInfo;
 struct CollGroup;
+struct DynObjBody;
 struct MapMgr;
 struct Shape;
 
@@ -18,9 +20,9 @@ struct DynCollObject : public Node {
 	DynCollObject()
 	    : Node("")
 	{
-		mContactCount = 0;
-		_24           = -1;
-		mCreature     = nullptr;
+		mContactCount       = 0;
+		mLastContactFrameID = -1;
+		mCreature           = nullptr;
 	}
 
 	virtual void adjust(Creature*) { }                           // _30
@@ -30,9 +32,9 @@ struct DynCollObject : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 mContactCount;   // _20, unknown
-	u32 _24;             // _24, maybe int?
-	Creature* mCreature; // _28
+	u32 mContactCount;       // _20, unknown
+	u32 mLastContactFrameID; // _24
+	Creature* mCreature;     // _28
 };
 
 /**
@@ -71,8 +73,8 @@ struct DynCollShape : public DynCollObject {
 	// _00-_2C = DynCollObject
 	Shape* mShape;             // _2C
 	Vector3f* mVertexList;     // _30
-	u32 _34;                   // _34
-	bool* mProgressStateList;  // _38
+	CollTriInfo* mCollTriList; // _34
+	bool* mVisibleList;        // _38
 	int mColliderCount;        // _3C
 	CollGroup** mColliderList; // _40
 	BoundBox mBoundingBox;     // _44
@@ -90,9 +92,10 @@ struct DynCollShape : public DynCollObject {
  * @note Size: 0x144.
  */
 struct DynCollObjBody : public DynCollShape {
-	DynCollObjBody() // TODO: fix this, it's implicit but required/this is just a guess
-	    : DynCollShape(nullptr)
+	DynCollObjBody(Shape* shape)
+	    : DynCollShape(shape)
 	{
+		mParentRigidBody = nullptr;
 	}
 
 	virtual void update() { }                                 // _10
@@ -102,7 +105,7 @@ struct DynCollObjBody : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	u8 _140[0x4]; // _140, unknown
+	DynObjBody* mParentRigidBody; // _140
 };
 
 /**
@@ -111,7 +114,7 @@ struct DynCollObjBody : public DynCollShape {
  * @note Size: 0x140.
  */
 struct DynBuildShape : public DynCollShape {
-	DynBuildShape(Shape* s) // TODO: fix this, it's implicit but required/this is just a guess
+	DynBuildShape(Shape* s)
 	    : DynCollShape(s)
 	{
 	}

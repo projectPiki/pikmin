@@ -24,9 +24,9 @@ DEFINE_PRINT("Spider");
  */
 SpiderProp::SpiderProp()
 {
-	mCreatureProps.mFriction.setValue(1.0f);
-	mCreatureProps.mFaceDirAdjust.setValue(0.0f);
-	mCreatureProps.mAcceleration.setValue(1.0f);
+	mCreatureProps.mFriction(1.0f);
+	mCreatureProps.mFaceDirAdjust(0.0f);
+	mCreatureProps.mAcceleration(1.0f);
 }
 
 /*
@@ -42,7 +42,7 @@ Spider::Spider(CreatureProp* props)
 	mSpiderLeg = new SpiderLeg(this);
 	mShadowCaster.initCore("");
 	mShadowCaster.initShadow();
-	mSpiderDrawer = new SpiderDrawer(this);
+	mShadowCaster.mDrawer = new SpiderDrawer(this);
 }
 
 /*

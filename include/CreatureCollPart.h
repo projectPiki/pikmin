@@ -15,6 +15,15 @@ struct CreatureCollPart : public DynCollShape {
 	CreatureCollPart() // TODO: fix this, it's implicit but required/this is just a guess
 	    : DynCollShape(nullptr)
 	{
+		mAnimMatrixID = 0;
+		_140          = nullptr;
+	}
+
+	CreatureCollPart(Shape* shape)
+	    : DynCollShape(shape)
+	{
+		mAnimMatrixID = 0;
+		_140          = nullptr;
 	}
 
 	virtual void update() { }                                 // _10 (weak)
@@ -23,7 +32,7 @@ struct CreatureCollPart : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	u8 _140[0x4];      // _140, unknown
+	Creature* _140;    // _140
 	int mAnimMatrixID; // _144, anim matrix ID?
 };
 

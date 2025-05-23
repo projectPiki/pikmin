@@ -67,7 +67,7 @@ int PelletMgr::getUfoIndexFromID(u32 ufoID)
  */
 u32 PelletMgr::getUfoIDFromIndex(int idx)
 {
-	if (idx >= 30) {
+	if (idx >= MAX_UFO_PARTS) {
 		ERROR("N MECK!\n");
 	}
 	return _ufoIDTable[idx];

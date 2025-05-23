@@ -139,7 +139,7 @@ void Stream::writeFloat(f32 f)
 {
 	f32 result = f;
 #ifndef __MWERKS__
-	int c  = *(int*)&result;
+	int c  = *static_cast<int*>(&result);
 	result = ((u8)c << 24) | ((c & 0xFF00) << 8) | ((c & 0xFF0000) >> 8) | ((c & 0xFF000000) >> 24);
 #endif
 	write(&result, sizeof(f32));

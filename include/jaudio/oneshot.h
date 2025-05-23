@@ -5,23 +5,31 @@
 
 typedef struct jc_ jc_;
 typedef struct Inst_ Inst_;
+typedef struct Perc_ Perc_;
 typedef struct Pmap_ Pmap_;
 typedef struct Osc_ Osc_;
 typedef struct jcs_ jcs_;
-typedef struct CtrlWave_ CtrlWave_;
+typedef struct CtrlWave_ {
+	int _00; // _00
+	int _04; // _04
+	int _08; // _08
+	u32 _0C; // _0C
+} CtrlWave_;
+typedef struct SOUNDID_ SOUNDID_;
 
-typedef enum JCSTATUS {
-	// TODO: this
-} JCSTATUS;
-
-typedef enum SOUNDID_ {
-	// TODO: this
-} SOUNDID_;
+/**
+ * @brief This is a "boxed" integer type to be passed by value.
+ *
+ * @note Size: 4. Why wasn't this just an enum... This compiler is not smart enough to optimize this.
+ */
+struct SOUNDID_ {
+	u32 value; // _00
+};
 
 void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32);
-void PercRead(u32, u32);
-void InstRead(u32, u32);
-void VmapRead(Inst_*, u8, u8);
+Perc_* PercRead(u32, u32);
+Inst_* InstRead(u32, u32);
+int VmapRead(Inst_*, u8, u8);
 void Init_1shot(jcs_*, u32);
 void Stop_1Shot(jc_*);
 void Stop_1Shot_R(jc_*, u16);
@@ -32,7 +40,7 @@ void Gate_1Shot(jc_*, u8, u8, s32);
 void UpdatePause_1Shot(jc_*, u8 a1);
 void UpdatePanPower_1Shot(jc_*, f32, f32, f32, f32);
 void FlushRelease_1Shot(jcs_*);
-void One_CheckInstWave(SOUNDID_);
+u32 One_CheckInstWave(SOUNDID_); // Return type unsure
 void Play_1shot(jcs_*, SOUNDID_, u32);
 void Play_1shot_Perc(jcs_*, SOUNDID_, u32);
 void Play_1shot_Osc(jcs_*, SOUNDID_, u32);

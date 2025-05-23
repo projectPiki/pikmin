@@ -1,88 +1,54 @@
 #include "types.h"
+#include "PowerPC_EABI_Support/Runtime/__va_arg.h"
 
 /*
  * --INFO--
  * Address:	80214870
  * Size:	0000F4
  */
-void __va_arg(void)
+void* __va_arg(struct va_list* v_list, u8 type)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,0,24,31
-	  lbz       r6, 0x0(r3)
-	  cmplwi    r0, 0x4
-	  addi      r7, r3, 0
-	  extsb     r6, r6
-	  li        r5, 0x8
-	  li        r8, 0x4
-	  li        r9, 0x1
-	  li        r10, 0
-	  li        r11, 0
-	  li        r12, 0x4
-	  bne-      .loc_0x4C
-	  lwz       r4, 0x4(r3)
-	  addi      r0, r4, 0xF
-	  rlwinm    r4,r0,0,0,27
-	  addi      r0, r4, 0x10
-	  stw       r0, 0x4(r3)
-	  mr        r3, r4
-	  blr
+	char* addr;
+	char* reg      = &(v_list->mG_register);
+	s32 g_reg      = v_list->mG_register;
+	s32 maxsize    = 8;
+	s32 size       = 4;
+	s32 increment  = 1;
+	s32 even       = 0;
+	s32 fpr_offset = 0;
+	s32 regsize    = 4;
 
-	.loc_0x4C:
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x6C
-	  lbz       r6, 0x1(r3)
-	  addi      r7, r3, 0x1
-	  li        r8, 0x8
-	  extsb     r6, r6
-	  li        r11, 0x20
-	  li        r12, 0x8
+	if (type == 4) {
+		addr                    = (char*)(((int)v_list->mInput_arg_area + 0xf) & 0xfffffff0);
+		v_list->mInput_arg_area = addr + 0x10;
+		return addr;
+	}
+	if (type == 3) {
+		reg        = &(v_list->mFloat_register);
+		g_reg      = v_list->mFloat_register;
+		size       = 8;
+		fpr_offset = 32;
+		regsize    = 8;
+	}
+	if (type == 2) {
+		size = 8;
+		maxsize--;
+		if (g_reg & 1)
+			even = 1;
+		increment = 2;
+	}
+	if (g_reg < maxsize) {
+		g_reg += even;
+		addr = v_list->mReg_save_area + fpr_offset + (g_reg * regsize);
+		*reg = g_reg + increment;
+	} else {
+		*reg                    = 8;
+		addr                    = v_list->mInput_arg_area;
+		addr                    = (char*)(((u32)(addr) + ((size)-1)) & ~((size)-1));
+		v_list->mInput_arg_area = addr + size;
+	}
+	if (type == 0)
+		addr = *((char**)addr);
 
-	.loc_0x6C:
-	  rlwinm    r0,r4,0,24,31
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x90
-	  rlwinm.   r0,r6,0,31,31
-	  li        r8, 0x8
-	  li        r5, 0x7
-	  beq-      .loc_0x8C
-	  li        r10, 0x1
-
-	.loc_0x8C:
-	  li        r9, 0x2
-
-	.loc_0x90:
-	  cmpw      r6, r5
-	  bge-      .loc_0xB8
-	  add       r6, r6, r10
-	  lwz       r5, 0x8(r3)
-	  mullw     r3, r6, r12
-	  add       r0, r6, r9
-	  add       r6, r11, r3
-	  stb       r0, 0x0(r7)
-	  add       r6, r5, r6
-	  b         .loc_0xE0
-
-	.loc_0xB8:
-	  li        r0, 0x8
-	  stb       r0, 0x0(r7)
-	  subi      r0, r8, 0x1
-	  not       r6, r0
-	  lwz       r0, 0x4(r3)
-	  add       r5, r8, r0
-	  subi      r0, r5, 0x1
-	  and       r6, r6, r0
-	  add       r0, r6, r8
-	  stw       r0, 0x4(r3)
-
-	.loc_0xE0:
-	  rlwinm.   r0,r4,0,24,31
-	  bne-      .loc_0xEC
-	  lwz       r6, 0x0(r6)
-
-	.loc_0xEC:
-	  mr        r3, r6
-	  blr
-	*/
+	return addr;
 }

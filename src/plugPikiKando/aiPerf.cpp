@@ -11,6 +11,7 @@
 #include "Interactions.h"
 #include "PikiMgr.h"
 #include "DebugLog.h"
+#include "Controller.h"
 
 bool AIPerf::useLOD       = true;
 bool AIPerf::showColls    = true;
@@ -86,7 +87,7 @@ void AIPerf::clearCounts()
 void AIPerf::addMenu(Menu* menu)
 {
 	char* unused = new char[0x40];
-	menu->addKeyEvent(0x20, 0x2000, new Delegate1<Menu, Menu&>(menu, &Menu::menuCloseMenu));
+	menu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(menu, &Menu::menuCloseMenu));
 
 	char* bridgeText = new char[0x40];
 	sprintf(bridgeText, "%s", AIPerf::bridgeFast ? "Bridge Opt [on]" : "Bridge opt [off]");
@@ -99,8 +100,8 @@ void AIPerf::addMenu(Menu* menu)
 	char* optLevelText = new char[0x40];
 	sprintf(optLevelText, "Opt Level %d", AIPerf::optLevel);
 	menu->addOption(0, optLevelText, nullptr, true);
-	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decOptLevel));
-	menu->addKeyEvent(0x8, 0x4000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
+	menu->addKeyEvent(0x8, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decOptLevel));
+	menu->addKeyEvent(0x8, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incOptLevel));
 
 	char* collSortText = new char[0x40];
 	sprintf(collSortText, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
@@ -142,20 +143,20 @@ void AIPerf::addMenu(Menu* menu)
 	char* ufoLevelText = new char[0x40];
 	sprintf(ufoLevelText, "UFO LEVEL %d", AIPerf::ufoLevel);
 	menu->addOption(0, ufoLevelText, nullptr, true);
-	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decUfoLevel));
-	menu->addKeyEvent(0x8, 0x4000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
+	menu->addKeyEvent(0x8, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::decUfoLevel));
+	menu->addKeyEvent(0x8, KBBTN_X, new Delegate1<AIPerf, Menu&>(this, &AIPerf::incUfoLevel));
 
 	menu->addOption(0, "Flower Pikis", nullptr, true);
-	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
+	menu->addKeyEvent(0x8, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::flowerPiki));
 
 	menu->addOption(0, "Break sluice", nullptr, true);
-	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
+	menu->addKeyEvent(0x8, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::breakSluice));
 
 	menu->addOption(0, "COLLECT PIKIS", nullptr, true);
-	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
+	menu->addKeyEvent(0x8, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::collectPikis));
 
 	menu->addOption(0, "FULLFILL PIKI", nullptr, true);
-	menu->addKeyEvent(0x8, 0x8000, new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
+	menu->addKeyEvent(0x8, KBBTN_Y, new Delegate1<AIPerf, Menu&>(this, &AIPerf::fullfillPiki));
 }
 
 /*

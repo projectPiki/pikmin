@@ -2,8 +2,8 @@
 #define _MSL_C_ANSI_FP_H
 
 #include "types.h"
-#include "math.h"
-#include "f32.h"
+#include "stl/math.h"
+#include "float.h"
 #include "fdlibm.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 

@@ -5,6 +5,7 @@
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
 #include "Dolphin/gx.h"
+#include "Texture.h"
 #include "Colour.h"
 
 struct Texture;
@@ -37,33 +38,71 @@ struct P2DPicture : public P2DPane {
 	void drawOut(const PUTRect&, const PUTRect&);
 	void drawTest();
 
-	// NB: this is because of ogPause - might be wrong; if so, ogPause should use P2DTextBox inlines instead
-	void setAlpha(u8 alpha) { _F0 = alpha; }
+	u8 getAlpha() const { return mAlpha; }
+	void setAlpha(u8 alpha) { mAlpha = alpha; }
 
-	// DLL inlines:
-	char* getTexName();
-	Colour getBlack();
-	Colour getWhite();
-	Texture* getTexture(u8) const;
-	u8 getAlpha() const;
-	void initBlack();
-	void initWhite();
-	void load(Texture*, GXTexMapID);
-	void load(u8);
-	void setBinding(P2DBinding);
-	void setBlack(Colour);
-	void setMirror(P2DMirror);
-	void setTexture(Texture*, u8);
-	void setTumble(bool);
-	void setWhite(Colour);
-	void setWrapmode(P2DWrapmode, P2DWrapmode);
-	bool append(Texture*, f32);
+	void initBlack() { mBlack.set(0, 0, 0, 0); }
+	void setBlack(Colour black) { mBlack = black; }
+
+	void initWhite() { mWhite.set(255, 255, 255, 255); }
+	void setWhite(Colour white) { mWhite = white; }
+	Colour getWhite() { return mWhite; }
+	Colour getBlack() { return mBlack; }
+
+	bool append(Texture* texture, f32 p2) { return insert(texture, mTextureCount, p2); }
+
+	void setTumble(bool tumble) { mTumble = tumble; }
+	void setWrapmode(P2DWrapmode wrapS, P2DWrapmode wrapT)
+	{
+		mWrapS = wrapS;
+		mWrapT = wrapT;
+	}
+	void setBinding(P2DBinding binding) { mBinding = binding; }
+	void setMirror(P2DMirror mirror) { mMirror = mirror; }
+
+	void load(u8 idx)
+	{
+		if (idx < mTextureCount) {
+			load(mTextures[idx], (GXTexMapID)idx);
+		}
+	}
+	void load(Texture* texture, GXTexMapID texMapID)
+	{
+		texture->makeResident();
+		GXLoadTexObj(texture->mTexObj, texMapID);
+	}
+
+	void setTexture(Texture* texture, u8 idx)
+	{
+		if (idx < mTextureCount) {
+			mTextures[idx] = texture;
+		}
+	}
+
+	char* getTexName() { return mTexName; }
+
+	Texture* getTexture(u8 idx) const
+	{
+		if (idx < mTextureCount) {
+			return mTextures[idx];
+		}
+		return nullptr;
+	}
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	u8 _EC[0x4];          // _EC, unknown
-	u8 _F0;               // _F0
-	u8 _F1[0x114 - 0xF1]; // _F1, unknown
+	Texture* mTextures[1]; // _EC
+	u8 mAlpha;             // _F0
+	u8 mTextureCount;      // _F1
+	u8 _F2[1];             // _F2
+	P2DBinding mBinding;   // _F4
+	P2DMirror mMirror;     // _F8
+	bool mTumble;          // _FC
+	P2DWrapmode mWrapS;    // _100
+	P2DWrapmode mWrapT;    // _104
+	Colour mWhite;         // _108
+	Colour mBlack;         // _10C
+	char* mTexName;        // _110
 };
 
 #endif

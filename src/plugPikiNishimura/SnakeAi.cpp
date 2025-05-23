@@ -15,7 +15,7 @@
 
 static u32 snakeSE[] = {
 	SE_SNAKE_APPEAR, SE_SNAKE_DIG,    SE_SNAKE_SHOUT, SE_SNAKE_EAT,   SE_SNAKE_DRINK,
-	SE_SNAKE_TURN,   SE_SNAKE_MOGAKU, SE_SNAKE_DEAD1, SE_SNAKE_DEAD2,
+	SE_SNAKE_TURN,   SE_SNAKE_MOGAKU, SE_KING_DEAD2,  SE_SNAKE_DEAD2,
 };
 
 /*
@@ -271,7 +271,7 @@ void SnakeAi::setAppearPosition02()
 {
 	Vector3f appearPos;
 	Vector3f targetPos(mSnake->getTargetCreature()->mPosition);
-	Vector3f dir(sinf(mSnake->mFaceDirection), 0.0f, cosf(mSnake->mFaceDirection));
+	Vector3f dir(sinf(mSnake->_3C0), 0.0f, cosf(mSnake->_3C0));
 
 	Vector3f startPoint  = mSnake->mSpawnPosition + C_SNAKE_PROP(mSnake).mType2AppearFrontDist() * dir;
 	Vector3f endPoint    = mSnake->mSpawnPosition - C_SNAKE_PROP(mSnake).mType2AppearFrontDist() * dir;
@@ -679,11 +679,13 @@ bool SnakeAi::appearType01()
  */
 bool SnakeAi::appearType02()
 {
-	f32 perpAngle = mSnake->mFaceDirection + HALF_PI;
+	f32 perpAngle = mSnake->_3C0 + HALF_PI;
 	f32 radius    = C_SNAKE_PROP(mSnake).mType2AppearFrontDist() + C_SNAKE_PROP(mSnake).mType2AppearSideDist();
-	Vector3f frontDir(sinf(mSnake->mFaceDirection), 0.0f, cosf(mSnake->mFaceDirection));
+	Vector3f frontDir(sinf(mSnake->_3C0), 0.0f, cosf(mSnake->_3C0));
 	Vector3f sideDir(sinf(perpAngle), 0.0f, cosf(perpAngle));
 
+	f32 frontProj;
+	f32 sideProj;
 	// check for pikis first
 	Iterator iterPiki(pikiMgr);
 	CI_LOOP(iterPiki)
@@ -695,8 +697,8 @@ bool SnakeAi::appearType02()
 				f32 xDiff = piki->mPosition.x - mSnake->mSpawnPosition.x;
 				f32 zDiff = piki->mPosition.z - mSnake->mSpawnPosition.z;
 
-				f32 frontProj = frontDir.x * xDiff + frontDir.z * zDiff;
-				f32 sideProj  = sideDir.x * xDiff + sideDir.z * zDiff;
+				frontProj = frontDir.x * xDiff + frontDir.z * zDiff;
+				sideProj  = sideDir.x * xDiff + sideDir.z * zDiff;
 				if (NsLibMath<f32>::abs(frontProj) < C_SNAKE_PROP(mSnake).mType2AppearFrontDist()
 				    && NsLibMath<f32>::abs(sideProj) < C_SNAKE_PROP(mSnake).mType2AppearSideDist()) {
 					mSnake->setTargetCreature(piki);
@@ -717,8 +719,8 @@ bool SnakeAi::appearType02()
 				f32 xDiff = navi->mPosition.x - mSnake->mSpawnPosition.x;
 				f32 zDiff = navi->mPosition.z - mSnake->mSpawnPosition.z;
 
-				f32 frontProj = frontDir.x * xDiff + frontDir.z * zDiff;
-				f32 sideProj  = sideDir.x * xDiff + sideDir.z * zDiff;
+				frontProj = frontDir.x * xDiff + frontDir.z * zDiff;
+				sideProj  = sideDir.x * xDiff + sideDir.z * zDiff;
 				if (NsLibMath<f32>::abs(frontProj) < C_SNAKE_PROP(mSnake).mType2AppearFrontDist()
 				    && NsLibMath<f32>::abs(sideProj) < C_SNAKE_PROP(mSnake).mType2AppearSideDist()) {
 					mSnake->setTargetCreature(navi);
@@ -729,377 +731,6 @@ bool SnakeAi::appearType02()
 	}
 
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x118(r1)
-	  stfd      f31, 0x110(r1)
-	  stfd      f30, 0x108(r1)
-	  stfd      f29, 0x100(r1)
-	  stfd      f28, 0xF8(r1)
-	  stfd      f27, 0xF0(r1)
-	  stfd      f26, 0xE8(r1)
-	  stw       r31, 0xE4(r1)
-	  mr        r31, r3
-	  stw       r30, 0xE0(r1)
-	  stw       r29, 0xDC(r1)
-	  stw       r28, 0xD8(r1)
-	  lwz       r3, 0x4C(r3)
-	  lfs       f3, -0x5564(r2)
-	  lwz       r4, 0x224(r3)
-	  lfs       f1, 0x3C0(r3)
-	  lfs       f2, 0x230(r4)
-	  lfs       f0, 0x240(r4)
-	  fadds     f26, f3, f1
-	  fadds     f27, f2, f0
-	  bl        0xBE9E8
-	  lwz       r3, 0x4C(r31)
-	  fmr       f28, f1
-	  lfs       f1, 0x3C0(r3)
-	  bl        0xBEB6C
-	  fmr       f29, f1
-	  fmr       f1, f26
-	  bl        0xBE9CC
-	  fmr       f30, f1
-	  fmr       f1, f26
-	  bl        0xBEB54
-	  lwz       r29, 0x3068(r13)
-	  fmr       f31, f1
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f26, -0x5590(r2)
-	  mr        r28, r3
-	  b         .loc_0x23C
-
-	.loc_0xAC:
-	  cmpwi     r28, -0x1
-	  bne-      .loc_0xD4
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0xF0
-
-	.loc_0xD4:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0xF0:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x220
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x220
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x220
-	  lwz       r3, 0x4C(r31)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  lfs       f3, 0x3D0(r3)
-	  lfs       f4, 0x3D8(r3)
-	  bl        -0x124C44
-	  fcmpo     cr0, f1, f27
-	  bge-      .loc_0x220
-	  lwz       r4, 0x4C(r31)
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, 0x3D4(r4)
-	  lwz       r5, 0x224(r4)
-	  fsubs     f1, f1, f0
-	  addi      r3, r5, 0x250
-	  fcmpo     cr0, f1, f26
-	  ble-      .loc_0x188
-	  b         .loc_0x18C
-
-	.loc_0x188:
-	  fneg      f1, f1
-
-	.loc_0x18C:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x220
-	  lfs       f2, 0x94(r30)
-	  addi      r3, r5, 0x230
-	  lfs       f0, 0x3D0(r4)
-	  lfs       f1, 0x9C(r30)
-	  fsubs     f2, f2, f0
-	  lfs       f0, 0x3D8(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f3, f29, f2
-	  fmuls     f1, f31, f2
-	  fmuls     f2, f28, f0
-	  fmuls     f0, f30, f0
-	  fadds     f2, f3, f2
-	  fadds     f3, f1, f0
-	  fcmpo     cr0, f2, f26
-	  fmr       f0, f2
-	  ble-      .loc_0x1E0
-	  fmr       f1, f0
-	  b         .loc_0x1E4
-
-	.loc_0x1E0:
-	  fneg      f1, f0
-
-	.loc_0x1E4:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x220
-	  fcmpo     cr0, f3, f26
-	  addi      r3, r5, 0x240
-	  ble-      .loc_0x204
-	  fmr       f1, f3
-	  b         .loc_0x208
-
-	.loc_0x204:
-	  fneg      f1, f3
-
-	.loc_0x208:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x220
-	  stw       r30, 0x318(r4)
-	  li        r3, 0x1
-	  b         .loc_0x4A0
-
-	.loc_0x220:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r28, r3
-
-	.loc_0x23C:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x264
-	  li        r0, 0x1
-	  b         .loc_0x290
-
-	.loc_0x264:
-	  mr        r3, r29
-	  lwz       r12, 0x0(r29)
-	  mr        r4, r28
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x28C
-	  li        r0, 0x1
-	  b         .loc_0x290
-
-	.loc_0x28C:
-	  li        r0, 0
-
-	.loc_0x290:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0xAC
-	  lwz       r28, 0x3120(r13)
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lfs       f26, -0x5590(r2)
-	  mr        r29, r3
-	  b         .loc_0x440
-
-	.loc_0x2BC:
-	  cmpwi     r29, -0x1
-	  bne-      .loc_0x2E4
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  li        r4, 0
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-	  b         .loc_0x300
-
-	.loc_0x2E4:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r30, r3
-
-	.loc_0x300:
-	  lwz       r12, 0x0(r30)
-	  mr        r3, r30
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x424
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x424
-	  mr        r3, r30
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x80(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x424
-	  lwz       r3, 0x4C(r31)
-	  lfs       f1, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  lfs       f3, 0x3D0(r3)
-	  lfs       f4, 0x3D8(r3)
-	  bl        -0x124E54
-	  fcmpo     cr0, f1, f27
-	  bge-      .loc_0x424
-	  lwz       r4, 0x4C(r31)
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, 0x3D4(r4)
-	  lwz       r5, 0x224(r4)
-	  fsubs     f1, f1, f0
-	  addi      r3, r5, 0x250
-	  fcmpo     cr0, f1, f26
-	  ble-      .loc_0x398
-	  b         .loc_0x39C
-
-	.loc_0x398:
-	  fneg      f1, f1
-
-	.loc_0x39C:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x424
-	  lfs       f2, 0x94(r30)
-	  addi      r3, r5, 0x230
-	  lfs       f0, 0x3D0(r4)
-	  lfs       f1, 0x9C(r30)
-	  fsubs     f2, f2, f0
-	  lfs       f0, 0x3D8(r4)
-	  fsubs     f0, f1, f0
-	  fmuls     f3, f29, f2
-	  fmuls     f1, f31, f2
-	  fmuls     f2, f28, f0
-	  fmuls     f0, f30, f0
-	  fadds     f2, f3, f2
-	  fadds     f1, f1, f0
-	  fcmpo     cr0, f2, f26
-	  ble-      .loc_0x3E8
-	  b         .loc_0x3EC
-
-	.loc_0x3E8:
-	  fneg      f2, f2
-
-	.loc_0x3EC:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x424
-	  fcmpo     cr0, f1, f26
-	  addi      r3, r5, 0x240
-	  ble-      .loc_0x408
-	  b         .loc_0x40C
-
-	.loc_0x408:
-	  fneg      f1, f1
-
-	.loc_0x40C:
-	  lfs       f0, 0x0(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x424
-	  stw       r30, 0x318(r4)
-	  li        r3, 0x1
-	  b         .loc_0x4A0
-
-	.loc_0x424:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r29, r3
-
-	.loc_0x440:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x468
-	  li        r0, 0x1
-	  b         .loc_0x494
-
-	.loc_0x468:
-	  mr        r3, r28
-	  lwz       r12, 0x0(r28)
-	  mr        r4, r29
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0
-	  bne-      .loc_0x490
-	  li        r0, 0x1
-	  b         .loc_0x494
-
-	.loc_0x490:
-	  li        r0, 0
-
-	.loc_0x494:
-	  rlwinm.   r0,r0,0,24,31
-	  beq+      .loc_0x2BC
-	  li        r3, 0
-
-	.loc_0x4A0:
-	  lwz       r0, 0x11C(r1)
-	  lfd       f31, 0x110(r1)
-	  lfd       f30, 0x108(r1)
-	  lfd       f29, 0x100(r1)
-	  lfd       f28, 0xF8(r1)
-	  lfd       f27, 0xF0(r1)
-	  lfd       f26, 0xE8(r1)
-	  lwz       r31, 0xE4(r1)
-	  lwz       r30, 0xE0(r1)
-	  lwz       r29, 0xDC(r1)
-	  lwz       r28, 0xD8(r1)
-	  addi      r1, r1, 0x118
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1478,7 +1109,7 @@ void SnakeAi::initGointo(int nextState)
 	mSnake->mSnakeBody->initBlending(2.0f);
 	effectMgr->create(EffectMgr::EFF_Snake_Appear1, mSnake->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_Appear2, mSnake->mPosition, nullptr, nullptr);
-	rumbleMgr->start(6, 0, mSnake->mPosition);
+	rumbleMgr->start(RUMBLE_Unk6, 0, mSnake->mPosition);
 	cameraMgr->startVibrationEvent(4, mSnake->mPosition);
 }
 
@@ -1545,7 +1176,7 @@ void SnakeAi::initAppear(int nextState)
 
 	mSnake->mSnakeBody->setBodyOnGroundEffect();
 
-	rumbleMgr->start(11, 0, mSnake->mPosition);
+	rumbleMgr->start(RUMBLE_Unk11, 0, mSnake->mPosition);
 	cameraMgr->startVibrationEvent(4, mSnake->mPosition);
 	resultFlagOn();
 

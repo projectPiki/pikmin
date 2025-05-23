@@ -12,12 +12,26 @@ struct Quat;
 
 namespace zen {
 // global utility functions:
-f32 getDistPointAndLine(Vector3f, Vector3f, Vector3f, f32&);
+f32 getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f lineEndPt, f32& t);
 void makeRotMatrix(Vector3f&, Matrix3f&);
 
 // DLL inlines:
-inline int RoundOff(f32);
-inline f32 correctRad(f32 val);
+inline f32 correctRad(f32 val)
+{
+	if (val < 0.0f) {
+		val += TAU;
+	} else if (val > TAU) {
+		val -= TAU;
+	}
+
+	return val;
+}
+
+// this VERY delicately matches zen::BalloonPane::invoke, change at your own risk
+inline int RoundOff(f32 val)
+{
+	return int((val >= 0.0f) ? val + 0.5f : val - 0.5f);
+}
 
 inline f32 Rand(f32 max)
 {
@@ -39,6 +53,13 @@ inline int Abs(int val)
 		return -val;
 	}
 	return val;
+}
+
+// TODO: I have no idea what this actually is in the map, but it exists as a function
+// in particleGenerator at least, so who knows.
+inline f32 RandShift(f32 min)
+{
+	return Rand(2.0f * min) - min;
 }
 } // namespace zen
 

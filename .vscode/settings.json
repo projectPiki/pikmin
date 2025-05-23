@@ -36,6 +36,20 @@
         "dsp.h": "c",
         "os.h": "c",
         "math.h": "c",
-        "system.h": "c"
+        "system.h": "c",
+        "rand.h": "c",
+        "float.h": "c",
+        "stdio.h": "c",
+        "mbstring.h": "c",
+        "wchar_io.h": "c",
+        "gxmisc.h": "c",
+        "trk.h": "c",
+        "gx.h": "c",
+        "__va_arg.h": "c",
+        "ansi_fp.h": "c",
+        "ansi_files.h": "c",
+        "cmdstack.h": "c",
+        "pikiinter.h": "c",
+        "serpoll.h": "c"
     },
 }

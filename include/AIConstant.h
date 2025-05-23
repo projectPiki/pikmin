@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Node.h"
 #include "Parameters.h"
+#include "GlobalGameOptions.h"
 #include "Ayu.h"
 
 /**
@@ -35,7 +36,7 @@ struct AIConstant : public Node {
 		    , _E4(this, 1, 0, 0, "p12", nullptr)
 		    , mDoPluckWithCursor(this, 1, 0, 0, "p13", nullptr)
 		    , mDoScaleHappaMoveSpeed(this, 1, 0, 0, "p14", nullptr)
-		    , mMaxPikisOnField(this, 100, 0, 0, "p15", nullptr)
+		    , mMaxPikisOnField(this, MAX_PIKI_ON_FIELD, 0, 0, "p15", nullptr)
 		    , _124(this, 1, 0, 0, "p16", nullptr)
 		    , mWeakSlipFactor(this, 1.0f, 0.0f, 0.0f, "p17", nullptr)
 		    , mStrongSlipFactor(this, 2.5f, 0.0f, 0.0f, "p18", nullptr)

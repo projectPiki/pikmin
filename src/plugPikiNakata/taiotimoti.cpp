@@ -833,7 +833,7 @@ bool TaiOtimotiPressingAction::actByEvent(TekiEvent& event)
 		teki->flickUpper();
 		teki->mDamageCount = 0.0f;
 		cameraMgr->startVibrationEvent(3, teki->getPosition());
-		rumbleMgr->start(4, 0, teki->getPosition());
+		rumbleMgr->start(RUMBLE_Unk4, 0, teki->getPosition());
 		return true;
 	}
 

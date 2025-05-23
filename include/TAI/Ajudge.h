@@ -9,8 +9,8 @@
  * @brief TODO
  */
 struct TAIAsearchWorkObject : public TaiAction {
-	inline TAIAsearchWorkObject() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAsearchWorkObject(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -78,8 +78,8 @@ struct TAIAmoreLife : public TAIAjudgeLife {
  * @brief TODO
  */
 struct TAIAjudgeOptionalRange : public TaiAction {
-	inline TAIAjudgeOptionalRange() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAjudgeOptionalRange(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -99,7 +99,8 @@ struct TAIAjudgeOptionalRange : public TaiAction {
  * @brief TODO
  */
 struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
-	inline TAIAinsideOptionalRange() // TODO: this is a guess
+	TAIAinsideOptionalRange(int nextState) // TODO: this is a guess
+	    : TAIAjudgeOptionalRange(nextState)
 	{
 	}
 
@@ -116,7 +117,8 @@ struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
  * @brief TODO
  */
 struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
-	inline TAIAoutsideOptionalRange() // TODO: this is a guess
+	TAIAoutsideOptionalRange(int nextState)
+	    : TAIAjudgeOptionalRange(nextState)
 	{
 	}
 
@@ -154,8 +156,8 @@ struct TAIAcheckInsideRangePiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAinsideTerritoryRangeNavi : public TaiAction {
-	inline TAIAinsideTerritoryRangeNavi() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAinsideTerritoryRangeNavi(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -186,8 +188,8 @@ struct TAIAoutsideTerritoryRangeNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAvisibleNavi : public TaiAction {
-	inline TAIAvisibleNavi() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAvisibleNavi(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -218,8 +220,8 @@ struct TAIAvisiblePiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackableTarget : public TaiAction {
-	inline TAIAattackableTarget() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAattackableTarget(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -240,8 +242,8 @@ struct TAIAattackableTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAunvisibleTarget : public TaiAction {
-	inline TAIAunvisibleTarget() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAunvisibleTarget(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -256,9 +258,10 @@ struct TAIAunvisibleTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAstickingPiki : public TaiAction {
-	inline TAIAstickingPiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAstickingPiki(int nextState, int stickNum)
+	    : TaiAction(nextState)
 	{
+		mStickingPikiNum = stickNum;
 	}
 
 	virtual void start(Teki&) { }                              // _08
@@ -312,12 +315,15 @@ struct TAIAcheckTurnAngle : public TaiAction {
  * @brief TODO
  */
 struct TAIAoutsideTerritory : public TaiAction {
-	inline TAIAoutsideTerritory() // TODO: this is a guess
-	    : TaiAction(-1)
+	TAIAoutsideTerritory(int nextState)
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		return teki.getTerritoryDistance() > teki.getParameterF(TPF_DangerTerritoryRange);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -328,11 +334,15 @@ struct TAIAoutsideTerritory : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackableAngleTarget : public TAIAattackableTarget {
-	inline TAIAattackableAngleTarget() // TODO: this is a guess
+	inline TAIAattackableAngleTarget(int nextState) // TODO: this is a guess
+	    : TAIAattackableTarget(nextState)
 	{
 	}
 
-	virtual bool judge(Teki&); // _1C
+	virtual bool judge(Teki& teki) // _1C
+	{
+		return TAIAattackableTarget::checkAngle(teki);
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TAIAattackableTarget?

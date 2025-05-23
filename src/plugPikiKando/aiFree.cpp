@@ -416,7 +416,7 @@ void ActFree::procCollideMsg(Piki* piki, MsgCollide* msg)
 	Creature* collider = msg->mEvent.mCollider;
 	if (collider->mObjType == OBJTYPE_Navi && !piki->isKinoko() && !collider->mStickListHead && !mTouchedPlayer
 	    && (piki->mPlayerId == -1 || static_cast<Navi*>(collider)->mNaviID == piki->mPlayerId)) {
-		rumbleMgr->start(2, 0, nullptr);
+		rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
 		mTouchedPlayer = 1;
 		piki->mNavi    = static_cast<Navi*>(collider);
 	}

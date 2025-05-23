@@ -182,7 +182,7 @@ static void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
  * Address:	8000CA80
  * Size:	00009C
  */
-void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, int)
+void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL)
 {
 	/*
 	.loc_0x0:
@@ -239,7 +239,7 @@ void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, int)
  * Address:	8000CB20
  * Size:	00015C
  */
-void Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, int)
+BOOL Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL)
 {
 	/*
 	.loc_0x0:
@@ -486,7 +486,7 @@ void __GetSoundHandle(CtrlGroup_*, u32, u32)
  * Address:	8000CE00
  * Size:	000074
  */
-void GetSoundHandle(CtrlGroup_*, u32)
+int GetSoundHandle(CtrlGroup_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -535,7 +535,7 @@ void GetSoundHandle(CtrlGroup_*, u32)
  * Address:	8000CE80
  * Size:	000018
  */
-void Jac_WsVirtualToPhysical(u16)
+u16 Jac_WsVirtualToPhysical(u16)
 {
 	/*
 	.loc_0x0:
@@ -553,7 +553,7 @@ void Jac_WsVirtualToPhysical(u16)
  * Address:	8000CEA0
  * Size:	000018
  */
-void Jac_BnkVirtualToPhysical(u16)
+u16 Jac_BnkVirtualToPhysical(u16)
 {
 	/*
 	.loc_0x0:
@@ -571,7 +571,7 @@ void Jac_BnkVirtualToPhysical(u16)
  * Address:	........
  * Size:	000040
  */
-void Jac_BnkPhysicalToVirtual(u16)
+u16 Jac_BnkPhysicalToVirtual(u16)
 {
 	// UNUSED FUNCTION
 }
@@ -581,7 +581,7 @@ void Jac_BnkPhysicalToVirtual(u16)
  * Address:	........
  * Size:	000040
  */
-void Jac_WsPhysicalToVirtual(u16)
+u16 Jac_WsPhysicalToVirtual(u16)
 {
 	// UNUSED FUNCTION
 }

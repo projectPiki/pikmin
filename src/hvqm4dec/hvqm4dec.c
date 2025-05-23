@@ -9,16 +9,24 @@ with many thanks.
 
 */
 
-static int clipTable[0x80];
+static u8 clipTable[0x200];
 static int divTable[0x10];
 static int mcdivTable[0x200];
 
 static u32 readTree_signed;
 static u32 readTree_scale;
 
+// some things are per plane (luma, 2x chroma)
+#define PLANE_COUNT 3
+// some things are only split between luma and chroma
+#define LUMA_CHROMA 2
+#define LUMA_IDX    0
+#define CHROMA_IDX  1
+
 // forward declarations
 static s16 getByte(BitBuffer* buf);
 static u8 getBit(BitBuffer* buf);
+static u32 decodeHuff(BitBufferWithTree* buf);
 
 /*
  * --INFO--
@@ -28,284 +36,29 @@ static u8 getBit(BitBuffer* buf);
 static void init_global_constants()
 {
 	int i;
-	clipTable[0] = 0;
-	// this is wrong
-	for (i = 1; i < 0x80; i++) {
-		clipTable[i] = 0x1000 / i;
+	int j;
+	u8 clip;
+
+	for (i = 0, j = -0x80; i < 0x200; i++, j++) {
+		if (j < 0) {
+			clip = 0;
+		} else if (j > 0xff) {
+			clip = 255;
+		} else {
+			clip = j;
+		}
+		clipTable[i] = clip;
 	}
 
-	// these are right
 	divTable[0] = 0;
 	for (i = 1; i < 0x10; i++) {
 		divTable[i] = 0x1000 / (i * 16) * 16;
 	}
+
 	mcdivTable[0] = 0;
 	for (i = 1; i < 0x200; i++) {
 		mcdivTable[i] = 0x1000 / i;
 	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lis       r3, 0x8039
-	  li        r0, 0x80
-	  subi      r3, r3, 0x4300
-	  stw       r31, 0x14(r1)
-	  mtctr     r0
-	  addi      r4, r3, 0
-	  li        r5, 0
-	  li        r6, -0x80
-
-	.loc_0x24:
-	  cmpwi     r6, 0
-	  bge-      .loc_0x34
-	  li        r0, 0
-	  b         .loc_0x48
-
-	.loc_0x34:
-	  cmpwi     r6, 0xFF
-	  ble-      .loc_0x44
-	  li        r0, 0xFF
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  rlwinm    r0,r6,0,24,31
-
-	.loc_0x48:
-	  addic.    r6, r6, 0x1
-	  stb       r0, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  bge-      .loc_0x60
-	  li        r0, 0
-	  b         .loc_0x74
-
-	.loc_0x60:
-	  cmpwi     r6, 0xFF
-	  ble-      .loc_0x70
-	  li        r0, 0xFF
-	  b         .loc_0x74
-
-	.loc_0x70:
-	  rlwinm    r0,r6,0,24,31
-
-	.loc_0x74:
-	  addic.    r6, r6, 0x1
-	  stb       r0, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  addi      r5, r5, 0x1
-	  bge-      .loc_0x90
-	  li        r0, 0
-	  b         .loc_0xA4
-
-	.loc_0x90:
-	  cmpwi     r6, 0xFF
-	  ble-      .loc_0xA0
-	  li        r0, 0xFF
-	  b         .loc_0xA4
-
-	.loc_0xA0:
-	  rlwinm    r0,r6,0,24,31
-
-	.loc_0xA4:
-	  addic.    r6, r6, 0x1
-	  stb       r0, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  addi      r5, r5, 0x1
-	  bge-      .loc_0xC0
-	  li        r0, 0
-	  b         .loc_0xD4
-
-	.loc_0xC0:
-	  cmpwi     r6, 0xFF
-	  ble-      .loc_0xD0
-	  li        r0, 0xFF
-	  b         .loc_0xD4
-
-	.loc_0xD0:
-	  rlwinm    r0,r6,0,24,31
-
-	.loc_0xD4:
-	  stb       r0, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  addi      r5, r5, 0x1
-	  addi      r6, r6, 0x1
-	  bdnz+     .loc_0x24
-	  li        r4, 0x10
-	  li        r0, 0x1000
-	  divw      r11, r0, r4
-	  li        r4, 0x2
-	  rlwinm    r4,r4,4,0,27
-	  divw      r10, r0, r4
-	  li        r4, 0x3
-	  rlwinm    r4,r4,4,0,27
-	  divw      r9, r0, r4
-	  li        r4, 0x4
-	  rlwinm    r4,r4,4,0,27
-	  divw      r8, r0, r4
-	  li        r4, 0x5
-	  rlwinm    r4,r4,4,0,27
-	  divw      r7, r0, r4
-	  li        r4, 0x6
-	  rlwinm    r4,r4,4,0,27
-	  divw      r6, r0, r4
-	  li        r4, 0x7
-	  rlwinm    r4,r4,4,0,27
-	  divw      r5, r0, r4
-	  li        r4, 0x8
-	  rlwinm    r4,r4,4,0,27
-	  divw      r4, r0, r4
-	  li        r12, 0
-	  stw       r12, 0x200(r3)
-	  rlwinm    r11,r11,4,0,27
-	  rlwinm    r10,r10,4,0,27
-	  stw       r11, 0x204(r3)
-	  rlwinm    r9,r9,4,0,27
-	  rlwinm    r8,r8,4,0,27
-	  stw       r10, 0x208(r3)
-	  rlwinm    r7,r7,4,0,27
-	  rlwinm    r6,r6,4,0,27
-	  stw       r9, 0x20C(r3)
-	  rlwinm    r5,r5,4,0,27
-	  rlwinm    r4,r4,4,0,27
-	  stw       r8, 0x210(r3)
-	  li        r8, 0x9
-	  stw       r7, 0x214(r3)
-	  stw       r6, 0x218(r3)
-	  stw       r5, 0x21C(r3)
-	  stw       r4, 0x220(r3)
-	  b         .loc_0x330
-
-	.loc_0x198:
-	  subfic    r4, r8, 0x10
-	  cmpwi     r8, 0x10
-	  mtctr     r4
-	  bge-      .loc_0x1C0
-
-	.loc_0x1A8:
-	  divw      r4, r0, r5
-	  rlwinm    r4,r4,4,0,27
-	  stw       r4, 0x0(r6)
-	  addi      r5, r5, 0x10
-	  addi      r6, r6, 0x4
-	  bdnz+     .loc_0x1A8
-
-	.loc_0x1C0:
-	  li        r4, 0
-	  li        r0, 0x15
-	  stw       r4, 0x240(r3)
-	  mtctr     r0
-	  addi      r12, r3, 0x244
-	  li        r31, 0x1
-
-	.loc_0x1D8:
-	  li        r11, 0x1000
-	  divw      r10, r11, r31
-	  addi      r9, r31, 0x1
-	  stw       r10, 0x0(r12)
-	  divw      r9, r11, r9
-	  addi      r8, r31, 0x2
-	  stw       r9, 0x4(r12)
-	  divw      r8, r11, r8
-	  addi      r7, r31, 0x3
-	  stw       r8, 0x8(r12)
-	  divw      r7, r11, r7
-	  addi      r6, r31, 0x4
-	  stw       r7, 0xC(r12)
-	  divw      r6, r11, r6
-	  addi      r5, r31, 0x5
-	  stw       r6, 0x10(r12)
-	  divw      r5, r11, r5
-	  addi      r4, r31, 0x6
-	  stw       r5, 0x14(r12)
-	  divw      r4, r11, r4
-	  addi      r0, r31, 0x7
-	  stw       r4, 0x18(r12)
-	  divw      r0, r11, r0
-	  addi      r9, r31, 0x9
-	  stw       r0, 0x1C(r12)
-	  addi      r8, r31, 0xA
-	  addi      r7, r31, 0xB
-	  addi      r6, r31, 0xC
-	  addi      r5, r31, 0xD
-	  addi      r4, r31, 0xE
-	  addi      r0, r31, 0xF
-	  addi      r31, r31, 0x8
-	  divw      r10, r11, r31
-	  divw      r9, r11, r9
-	  stw       r10, 0x20(r12)
-	  stw       r9, 0x24(r12)
-	  divw      r8, r11, r8
-	  stw       r8, 0x28(r12)
-	  divw      r7, r11, r7
-	  stw       r7, 0x2C(r12)
-	  divw      r6, r11, r6
-	  stw       r6, 0x30(r12)
-	  divw      r5, r11, r5
-	  stw       r5, 0x34(r12)
-	  divw      r4, r11, r4
-	  stw       r4, 0x38(r12)
-	  divw      r0, r11, r0
-	  addi      r9, r31, 0x9
-	  stw       r0, 0x3C(r12)
-	  addi      r8, r31, 0xA
-	  addi      r7, r31, 0xB
-	  addi      r6, r31, 0xC
-	  addi      r5, r31, 0xD
-	  addi      r4, r31, 0xE
-	  addi      r0, r31, 0xF
-	  addi      r31, r31, 0x8
-	  divw      r10, r11, r31
-	  divw      r9, r11, r9
-	  stw       r10, 0x40(r12)
-	  divw      r8, r11, r8
-	  stw       r9, 0x44(r12)
-	  divw      r7, r11, r7
-	  stw       r8, 0x48(r12)
-	  divw      r6, r11, r6
-	  stw       r7, 0x4C(r12)
-	  divw      r5, r11, r5
-	  stw       r6, 0x50(r12)
-	  divw      r4, r11, r4
-	  stw       r5, 0x54(r12)
-	  divw      r0, r11, r0
-	  stw       r4, 0x58(r12)
-	  stw       r0, 0x5C(r12)
-	  addi      r12, r12, 0x60
-	  addi      r31, r31, 0x8
-	  bdnz+     .loc_0x1D8
-	  b         .loc_0x344
-
-	.loc_0x308:
-	  subfic    r0, r31, 0x200
-	  cmpwi     r31, 0x200
-	  mtctr     r0
-	  bge-      .loc_0x354
-
-	.loc_0x318:
-	  divw      r0, r11, r31
-	  stw       r0, 0x0(r3)
-	  addi      r3, r3, 0x4
-	  addi      r31, r31, 0x1
-	  bdnz+     .loc_0x318
-	  b         .loc_0x354
-
-	.loc_0x330:
-	  rlwinm    r4,r8,2,0,29
-	  add       r6, r3, r4
-	  rlwinm    r5,r8,4,0,27
-	  addi      r6, r6, 0x200
-	  b         .loc_0x198
-
-	.loc_0x344:
-	  rlwinm    r0,r31,2,0,29
-	  add       r3, r3, r0
-	  addi      r3, r3, 0x240
-	  b         .loc_0x308
-
-	.loc_0x354:
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  blr
-	*/
 }
 
 /*
@@ -358,6 +111,18 @@ static void setHVQPlaneDesc(SeqObj* seqObj, u32 planeIdx, u8 hSamp, u8 vSamp)
 	plane->pb_offset[2] = pb + 4;
 }
 
+static u32 read32(void const* buf)
+{
+	int i;
+	u32 v = 0;
+
+	for (i = 0; i < 4; i++) {
+		v <<= 8;
+		v |= ((u8 const*)buf)[i];
+	}
+	return v;
+}
+
 /*
  * --INFO--
  * Address:	........
@@ -365,6 +130,9 @@ static void setHVQPlaneDesc(SeqObj* seqObj, u32 planeIdx, u8 hSamp, u8 vSamp)
  */
 static void setCode(BitBuffer* dst, const void* src)
 {
+	dst->size = read32(src);
+	// dst->ptr  = dst->size ? src + 4 : NULL;
+	dst->bit = -1;
 	// UNUSED FUNCTION
 }
 
@@ -375,6 +143,24 @@ static void setCode(BitBuffer* dst, const void* src)
  */
 static s16 _readTree(Tree* dst, BitBuffer* src)
 {
+	if (getBit(src) == 0) {
+		// leaf node
+		u8 byte    = getByte(src);
+		u16 symbol = byte;
+		if (readTree_signed && byte > 0x7F)
+			symbol = (u8)byte;
+		symbol <<= readTree_scale;
+		dst->array[0][byte] = symbol;
+		return byte;
+	} else {
+		// recurse
+		u32 pos = dst->pos++;
+		// read the 0 side of the tree
+		dst->array[0][pos] = (u32)_readTree(dst, src);
+		// read the 1 side of the tree
+		dst->array[1][pos] = (u32)_readTree(dst, src);
+		return (u16)pos;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2446,6 +2232,15 @@ static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT]
  */
 static void _MotionComp_00(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
+	u32 i, j;
+	int k;
+
+	for (i = 0; i < 4; ++i) {
+		k = i * dstStride; // this is wrong (its not even using srcStride, but the % goes way higher like this)
+		for (j = 0; j < 4; ++j)
+			dst[k + j] = src[k + j];
+	}
+
 	/*
 	.loc_0x0:
 	  lbz       r0, 0x0(r5)
@@ -2499,6 +2294,13 @@ static void _MotionComp_00(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
  */
 static void _MotionComp_01(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
+	u32 i, j;
+
+	for (i = 0; i < 4; ++i) {
+		for (j = 0; j < 4; ++j) {
+			dst[i * dstStride + j] = (src[(i + 0) * srcStride + j] + src[(i + 1) * srcStride + j] + 1) / 2;
+		}
+	}
 	/*
 	.loc_0x0:
 	  add       r8, r5, r6
@@ -5585,6 +5387,64 @@ static void spread_PB_descMap(SeqObj* seqObj, MCPlane mcplanes[HVQM_PLANE_COUNT]
  */
 static void BpicPlaneDec(SeqObj* seqObj, void* present, void* past, void* future)
 {
+
+	MCPlane mcplanes[PLANE_COUNT];
+	int mv_h, mv_v;
+	int reference_frame;
+	u8 bits;
+	s8 new_reference_frame;
+	u32 ref_x;
+	u32 ref_y;
+	int x, y;
+	int mcb_proc;
+
+	VideoState* state = seqObj->state;
+	initMCHandler(state, mcplanes, present, past, future);
+	spread_PB_descMap(seqObj, mcplanes);
+	resetMCHandler(state, mcplanes, present);
+	reference_frame = -1;
+	// MC blocks are 8x8 pixels
+	for (y = 0; y < seqObj->height; y += 8) {
+		setMCTop(mcplanes);
+		for (x = 0; x < seqObj->width; x += 8) {
+			bits = mcplanes[0].payload_cur_blk->type;
+			// 0: intra
+			// 1: inter - past
+			// 2: inter - future
+			// see getMCBtype()
+			new_reference_frame = (bits >> 5) & 3;
+			if (new_reference_frame == 0) {
+				// intra
+				MCBlockDecDCNest(state, mcplanes);
+			} else {
+				// inter
+				--new_reference_frame;
+				// check if we need to update the reference frame pointers
+				if (new_reference_frame != reference_frame) {
+					reference_frame = new_reference_frame;
+					setMCTarget(mcplanes, reference_frame);
+					mv_h = 0;
+					mv_v = 0;
+				}
+				getMVector(&mv_h, &state->mv_h, state->mc_residual_bits_h[reference_frame]);
+				getMVector(&mv_v, &state->mv_v, state->mc_residual_bits_v[reference_frame]);
+
+				// compute half-pixel position of reference macroblock
+				ref_x = x * 2 + mv_h;
+				ref_y = y * 2 + mv_v;
+
+				// see getMCBproc()
+				mcb_proc = (bits >> 4) & 1;
+				if (mcb_proc == 0)
+					MCBlockDecMCNest(state, mcplanes, ref_x, ref_y);
+				// else
+				//	MotionComp(state, mcplanes, ref_x, ref_y);
+			}
+			setMCNextBlk(mcplanes);
+		}
+		setMCDownBlk(mcplanes);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0

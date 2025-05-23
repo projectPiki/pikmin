@@ -75,7 +75,7 @@ void GenObjectTeki::doRead(RandomAccessStream& input)
  */
 void GenObjectTeki::doWrite(RandomAccessStream& output)
 {
-	output.writeByte((char)mTekiType);
+	output.writeByte((s8)mTekiType);
 	mPersonality->write(output);
 }
 

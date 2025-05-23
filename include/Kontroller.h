@@ -24,8 +24,8 @@ struct Kontroller : public Controller {
 
 	// _00     = VTBL
 	// _00-_50 = Controller
-	int _50;                // _50
-	int _54;                // _54
+	int mState;             // _50
+	int mDuration;          // _54
 	RamStream* mDataStream; // _58
 	int _5C;                // _5C
 };

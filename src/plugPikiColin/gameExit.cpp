@@ -28,7 +28,7 @@ GameExitSection::GameExitSection()
 	gsys->resetHeap(2, 1);
 	gsys->mCurrMemInfo = nullptr;
 	PRINT("clearing aram directory!\n");
-	gsys->_214.initCore("");
+	gsys->mAramFileTreeRoot.initCore("");
 }
 
 /*
@@ -41,7 +41,7 @@ void GameExitSection::update()
 	gameflow.mNextOnePlayerSectionID = ONEPLAYER_GameSetup;
 	if (flowCont._244) {
 		gameflow.mGameSectionID = SECTION_MovSample;
-		gameflow._2B0           = flowCont._244 + 3;
+		gameflow.mIntroMovieId  = flowCont._244 + 3;
 	} else {
 		gameflow.mGameSectionID = SECTION_Titles;
 	}

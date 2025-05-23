@@ -153,10 +153,10 @@ void KoganeAi::keyAction1()
 	if (mKogane->getCurrentState() == 4) {
 		if (mInWater) {
 			effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mPosition, nullptr, nullptr);
-			rumbleMgr->start(15, 0, mKogane->mPosition);
+			rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mPosition);
 		} else {
 			effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
-			rumbleMgr->start(15, 0, mKogane->mPosition);
+			rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mPosition);
 		}
 	}
 }
@@ -712,7 +712,7 @@ void KoganeAi::initCreate(int nextState)
 		ptcl3->setEmitDir(vec3);
 	}
 
-	rumbleMgr->start(15, 0, mKogane->mPosition);
+	rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mPosition);
 	resultFlagOn();
 }
 

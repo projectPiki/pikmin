@@ -4,20 +4,60 @@
 #include "types.h"
 #include "zen/zenList.h"
 #include "zen/CallBack.h"
+#include "zen/Math.h"
 #include "zen/bBoardColourAnim.h"
 #include "Dolphin/mtx.h"
 #include "Colour.h"
 #include "sysNew.h"
+#include "Dolphin/gx.h"
 
 struct Colour;
 struct Graphics;
 struct Texture;
 struct Vector3f;
 
+/**
+ * @brief TODO
+ *
+ * @note Size 0xC. This is used by effectMgr and effectMgr2D to load in particle file addresses.
+ */
+struct PtclLoadInfo {
+	char* mPCRPath;  // _00
+	char* mTex1Path; // _04
+	char* mTex2Path; // _08
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size 0x10. This is used by effectMgr to load in geometry for EffShpInst things
+ */
+struct GeometryLoadInfo {
+	char* mMODPath;  // _00
+	char* mAnimPath; // _04
+	f32 mScale;      // _08
+	u8 mLoopMax;     // _0C
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size 0xC. This is used by effectMgr to load in simple particle info.
+ */
+struct SimplePtclLoadInfo {
+	char* mBTIPath; // _00
+	GXColor _04;    // _04
+	GXColor _08;    // _08
+};
+
 namespace zen {
 
 struct particleMdl;
 struct particleMdlManager;
+struct particleGenerator;
+
+typedef void (particleGenerator::*PtclDrawCallBack)(Graphics&);
+typedef void (particleGenerator::*RotAxisCallBack)(Mtx&, f32&, f32&);
 
 /**
  * @brief TODO
@@ -34,13 +74,30 @@ enum ParticleGeneratorControlFlags {
  * @brief TODO
  */
 enum ParticleGeneratorFlags {
-	PTCLFLAG_Unk0 = 1 << 0, // 0x1
+	PTCLFLAG_Unk0     = 1 << 0,  // 0x1
+	PTCLFLAG_Unk1     = 1 << 1,  // 0x2
+	PTCLFLAG_Unk2     = 1 << 2,  // 0x4
+	PTCLFLAG_Unk3     = 1 << 3,  // 0x8
+	PTCLFLAG_ClampVel = 1 << 4,  // 0x10
+	PTCLFLAG_Unk5     = 1 << 5,  // 0x20
+	PTCLFLAG_Unk6     = 1 << 6,  // 0x40
+	PTCLFLAG_Unk7     = 1 << 7,  // 0x80
+	PTCLFLAG_Unk8     = 1 << 8,  // 0x100
+	PTCLFLAG_Unk9     = 1 << 9,  // 0x200
+	PTCLFLAG_Unk10    = 1 << 10, // 0x400
+	PTCLFLAG_Unk11    = 1 << 11, // 0x800
+	PTCLFLAG_Unk12    = 1 << 12, // 0x1000
+	PTCLFLAG_Unk13    = 1 << 13, // 0x2000
+	PTCLFLAG_Unk14    = 1 << 14, // 0x4000
 	// ...
-	PTCLFLAG_Unk16 = 1 << 16, // 0x10000
-	PTCLFLAG_Unk17 = 1 << 17, // 0x20000
-	PTCLFLAG_Unk18 = 1 << 18, // 0x40000
-	PTCLFLAG_Unk19 = 1 << 19, // 0x80000
-	PTCLFLAG_Unk20 = 1 << 20, // 0x100000
+	PTCLFLAG_UseGravityField      = 1 << 16, // 0x10000
+	PTCLFLAG_UseAirField          = 1 << 17, // 0x20000
+	PTCLFLAG_UseVortexField       = 1 << 18, // 0x40000
+	PTCLFLAG_UseDampedNewtonField = 1 << 19, // 0x80000
+	PTCLFLAG_UseNewtonField       = 1 << 20, // 0x100000
+	PTCLFLAG_UseSolidTex          = 1 << 21, // 0x200000
+	PTCLFLAG_UseJitter            = 1 << 22, // 0x400000
+	PTCLFLAG_Unk23                = 1 << 23, // 0x800000
 };
 
 /**
@@ -59,22 +116,22 @@ struct particleMdlBase : public zenList {
 
 	~particleMdlBase() { }
 
-	Vector3f getPos() { return _0C + _18; }
+	Vector3f getPos() { return mLocalPosition + mGlobalPosition; }
 
 	void InitParam()
 	{
-		_0C.set(0.0f, 0.0f, 0.0f);
-		_18.set(0.0f, 0.0f, 0.0f);
-		_24 = 1.0f;
-		_28.set(0, 0, 0, 0);
+		mLocalPosition.set(0.0f, 0.0f, 0.0f);
+		mGlobalPosition.set(0.0f, 0.0f, 0.0f);
+		mSize = 1.0f;
+		mPrimaryColor.set(0, 0, 0, 0);
 	}
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	Vector3f _0C; // _0C
-	Vector3f _18; // _18
-	f32 _24;      // _24
-	Colour _28;   // _28
+	Vector3f mLocalPosition;  // _0C
+	Vector3f mGlobalPosition; // _18
+	f32 mSize;                // _24
+	Colour mPrimaryColor;     // _28
 };
 
 /**
@@ -85,10 +142,10 @@ struct particleMdlBase : public zenList {
 struct particleMdl : public particleMdlBase {
 	particleMdl()
 	{
-		_6C._00       = 0.0f;
-		_6C._04       = 0;
-		_6C._06       = 1;
-		_6C.mAnimData = nullptr;
+		mBBoardColourAnim.mProgress     = 0.0f;
+		mBBoardColourAnim.mCurrentFrame = 0;
+		mBBoardColourAnim.mDuration     = 1;
+		mBBoardColourAnim.mAnimData     = nullptr;
 		InitParam();
 	}
 
@@ -102,46 +159,40 @@ struct particleMdl : public particleMdlBase {
 
 	void InitParam()
 	{
-		_2E = 0;
-		_2C = 0;
-		_30 = 0.0f;
-		_34.set(0.0f, 0.0f, 0.0f);
-		_54 = 0.0f;
-		_50 = 0.0f;
-		_50 = 0.0f;
-		_5C.set(0.0f, 0.0f, 0.0f);
-		_58   = 0;
-		_5A   = 0;
-		_5C.z = 1.0f;
-		_4C   = 0;
-		_68   = 0;
-		_69   = 0;
-		_6A   = 0;
-		_6B   = 0;
-		_6C.init(nullptr, 1);
-		_78 = 0;
+		mAge      = 0;
+		mLifeTime = 0;
+		mAgeTimer = 0.0f;
+		mVelocity.set(0.0f, 0.0f, 0.0f);
+		mAlphaFactor = 0.0f;
+		mScaleFactor = 0.0f;
+		mScaleFactor = 0.0f;
+		mOrientedNormal.set(0.0f, 0.0f, 0.0f);
+		mRotAngle         = 0;
+		mRotSpeed         = 0;
+		mOrientedNormal.z = 1.0f;
+		_4C               = 0;
+		mEnvColor.set(0, 0, 0, 0);
+		mBBoardColourAnim.init(nullptr, 1);
+		mSimpleTex = 0;
 	}
 
 	// _00     = VTBL
 	// _00-_2C = particleMdlBase
-	s16 _2C;              // _2C
-	s16 _2E;              // _2E
-	f32 _30;              // _30
-	Vector3f _34;         // _34
-	Vector3f _40;         // _40
-	u8 _4C;               // _4C
-	f32 _50;              // _50
-	f32 _54;              // _54
-	s16 _58;              // _58
-	s16 _5A;              // _5A
-	Vector3f _5C;         // _5C
-	u8 _68;               // _68
-	u8 _69;               // _69
-	u8 _6A;               // _6A
-	u8 _6B;               // _6B
-	bBoardColourAnim _6C; // _6C
-	u32 _78;              // _78, unknown
-	u8 _7C[0x4];          // _7C, unknown
+	s16 mLifeTime;                          // _2C
+	s16 mAge;                               // _2E, rounded version of mAgeTimer
+	f32 mAgeTimer;                          // _30
+	Vector3f mVelocity;                     // _34
+	Vector3f mAcceleration;                 // _40
+	u8 _4C;                                 // _4C
+	f32 mScaleFactor;                       // _50
+	f32 mAlphaFactor;                       // _54
+	u16 mRotAngle;                          // _58
+	s16 mRotSpeed;                          // _5A
+	Vector3f mOrientedNormal;               // _5C
+	Colour mEnvColor;                       // _68
+	bBoardColourAnim mBBoardColourAnim;     // _6C
+	Texture* mSimpleTex;                    // _78
+	CallBack1<particleMdl*>* mPtclCallBack; // _7C
 };
 
 /**
@@ -177,7 +228,11 @@ struct particleChildMdl : public particleMdlBase {
  * @brief TODO
  */
 struct particleMdlManager {
-	// particleMdlManager();
+	particleMdlManager()
+	{
+		mPtclList      = nullptr;
+		mChildPtclList = nullptr;
+	}
 
 	void init(u32, u32);
 
@@ -191,8 +246,8 @@ struct particleMdlManager {
 	void putPtclChild(zenList* child) { mSleepPtclChildList.put(child); }
 
 	// TODO: make these
-	zenList* getPtcl();
-	zenList* getPtclChild();
+	zenList* getPtcl() { return mSleepPtclList.get(); }
+	zenList* getPtclChild() { return mSleepPtclChildList.get(); }
 
 	zenListManager mSleepPtclList;      // _00
 	zenListManager mSleepPtclChildList; // _10
@@ -215,22 +270,26 @@ struct particleGenerator : public zenList {
 		mControlFlags  = 0;
 	}
 
-	virtual void remove(); // _0C
+	virtual void remove() // _0C
+	{
+		zenList::remove();
+		ClearPtclsStatus(nullptr, nullptr);
+	}
 
 	~particleGenerator() { }
 
-	void init(u8*, Texture*, Texture*, Vector3f&, particleMdlManager*, CallBack1<particleGenerator*>*,
-	          CallBack2<particleGenerator*, particleMdl*>*);
-	bool update(f32);
-	void draw(Graphics&);
-	void pmSetDDF(u8*);
+	void init(u8* data, Texture* tex, Texture* childTex, Vector3f& pos, particleMdlManager* mdlMgr, CallBack1<particleGenerator*>* cbGen,
+	          CallBack2<particleGenerator*, particleMdl*>* cbPtcl);
+	bool update(f32 timeStep);
+	void draw(Graphics& gfx);
+	void pmSetDDF(u8* data);
 	void SetPtclsLife();
-	void PtclsGen(particleMdl*);
-	void pmCalcAccel(particleMdl*);
-	void UpdatePtclsStatus(f32);
-	void ClearPtclsStatus(Texture*, Texture*);
-	void drawPtclBillboard(Graphics&);
-	void drawPtclOriented(Graphics&);
+	void PtclsGen(particleMdl* ptcl);
+	void pmCalcAccel(particleMdl* ptcl);
+	void UpdatePtclsStatus(f32 timeStep);
+	void ClearPtclsStatus(Texture* tex, Texture* childTex);
+	void drawPtclBillboard(Graphics& gfx);
+	void drawPtclOriented(Graphics& gfx);
 	void RotAxisX(Mtx&, f32&, f32&);
 	void RotAxisY(Mtx&, f32&, f32&);
 	void RotAxisZ(Mtx&, f32&, f32&);
@@ -238,8 +297,8 @@ struct particleGenerator : public zenList {
 	void RotAxisXZ(Mtx&, f32&, f32&);
 	void RotAxisYZ(Mtx&, f32&, f32&);
 	void RotAxisXYZ(Mtx&, f32&, f32&);
-	void updatePtclChildren(f32);
-	void drawPtclChildren(Graphics&);
+	void updatePtclChildren(f32 timeStep);
+	void drawPtclChildren(Graphics& gfx);
 	void forceFinish();
 	bool finish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
 	bool forceFinish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
@@ -269,7 +328,7 @@ struct particleGenerator : public zenList {
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 	void setEmitDir(Vector3f& dir) { mEmitDir = dir; }
 	void setEmitVelocity(Vector3f& vel) { mEmitVelocity = vel; }
-	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormalVector = vec; }
+	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormal = vec; }
 	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
 		mCallBack1 = cb1;
@@ -318,110 +377,172 @@ struct particleGenerator : public zenList {
 	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
 	void pmPutParticleChild(zenList* child) { mMdlMgr->putPtclChild(child); }
 
-	// might be setGravityField
-	void setAirField(Vector3f& field, bool set)
+	void setAirField(Vector3f& vel, bool set)
 	{
-		_138.set(field);
-		pmSwitch(set, PTCLFLAG_Unk17);
+		mAirFieldVelocity.set(vel);
+		pmSwitch(set, PTCLFLAG_UseAirField);
 	}
+	Vector3f getAirField() { return mAirFieldVelocity; }
 
-	void setNewtonField(Vector3f pos, f32 a, bool set)
+	void setNewtonField(Vector3f attractorPos, f32 strength, bool set)
 	{
-		_170.set(pos - getGPos());
-		_17C = a;
-		pmSwitch(set, PTCLFLAG_Unk20);
+		mNewtonFieldDir.set(attractorPos - getGPos());
+		mNewtonFieldStrength = strength;
+		pmSwitch(set, PTCLFLAG_UseNewtonField);
 	}
 
 	void setOrientedConstZAxis(bool set) { _68.m2 = set; }
 
 	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
 	{
-		_144.set(pos);
-		_150 = a; // -0.12f;
-		_154 = b; // -0.09f;
-		_158 = c; // 0.3f;
-		_15C = d; // 400.0f;
-		pmSwitch(set, PTCLFLAG_Unk18);
+		mVortexCenter.set(pos);
+		mVortexRotationSpeed = a; // -0.12f;
+		mVortexStrength      = b; // -0.09f;
+		_158                 = c; // 0.3f;
+		_15C                 = d; // 400.0f;
+		pmSwitch(set, PTCLFLAG_UseVortexField);
 	}
 
-	// might be setAirField
-	void setGravityField(Vector3f& pos, bool set)
+	void setGravityField(Vector3f& accel, bool set)
 	{
-		_12C.set(pos);
-		pmSwitch(set, PTCLFLAG_Unk16);
+		mGravFieldAccel.set(accel);
+		pmSwitch(set, PTCLFLAG_UseGravityField);
 	}
 
-	// might be setFreqFrm
-	void setInitVel(f32 vel) { _B8 = vel; }
+	f32 getFreqFrm() { return _B8; }
+	void setFreqFrm(f32 freq) { _B8 = freq; }
 
-	// NB: might be getMaxFrame(), unsure
-	s16 getCurrentFrame() { return _90; }
+	f32 getInitVel() { return mInitVel; }
+	void setInitVel(f32 vel) { mInitVel = vel; }
+
+	s16 getCurrentFrame() { return mCurrentFrame; }
+	s16 getMaxFrame() { return mMaxFrame; }
+
+	void pmGetArbitUnitVec(Vector3f& unitVec)
+	{
+		f32 angle1 = zen::Rand(TAU);
+		f32 angle2 = zen::Rand(TAU);
+
+		f32 sin1 = sinf(angle1);
+		f32 cos1 = cosf(angle1);
+		f32 sin2 = sinf(angle2);
+		f32 cos2 = cosf(angle2);
+		unitVec.set(sin1 * cos2, sin1 * sin2, cos1);
+	}
 
 	/*
 	    These are still to be made/assigned from the DLL:
-
-	    f32 getFreqFrm();
-	    void setFreqFrm(f32);
-
-	    f32 getInitVel();
-	    void setInitVel(f32);
-
 	    f32 getNewtonFieldFrc();
-
-	    void pmGetArbitUnitVec(Vector3f&);
-
-	    s16 getCurrentFrame();
-	    s16 getMaxFrame();
 	*/
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	Vector3f mEmitPos;                  // _0C
-	Vector3f* mEmitPosPtr;              // _18
-	Vector3f mEmitVelocity;             // _1C
-	zenListManager mPtclMdlListManager; // _28
-	zenListManager _38;                 // _38
-	bBoardColourAnimData mAnimData;     // _48
-	u8 _58[0x68 - 0x58];                // _58, unknown
+	Vector3f mEmitPos;                    // _0C
+	Vector3f* mEmitPosPtr;                // _18
+	Vector3f mEmitVelocity;               // _1C
+	zenListManager mPtclMdlListManager;   // _28
+	zenListManager mPtclChildListManager; // _38
+	bBoardColourAnimData mAnimData;       // _48
+	Texture* mTexture;                    // _58
+	Texture* mChildTexture;               // _5C
+	f32 _60;                              // _60
+	f32 _64;                              // _64
 	struct {
 		u32 m0 : 1;
 		u32 m1 : 1;
 		u32 m2 : 1;
+		u32 m3 : 1;
+		u32 m4 : 1;
+		u32 m5 : 1;
+		u32 m6 : 1;
+		u32 m7 : 1;
+		u32 m8 : 1;
 	} _68;                                                   // _68
-	u8 _6C[0x80 - 0x6C];                                     // _6C, unknown
+	f32 mScaleRate1;                                         // _6C
+	f32 mScaleRate2;                                         // _70
+	f32 mAlphaRate1;                                         // _74
+	f32 mAlphaRate2;                                         // _78
+	u16* mSolidTexFieldData;                                 // _7C
 	u32 mControlFlags;                                       // _80, see ParticleGeneratorControlFlags enum
 	u32 mParticleFlags;                                      // _84, see ParticleGeneratorFlags enum
-	u8 _88[0x90 - 0x88];                                     // _88, unknown
-	s16 _90;                                                 // _90, either current frame or max frame
-	Vector3f _94;                                            // _94
+	f32 _88;                                                 // _88
+	f32 mPassTimer;                                          // _8C
+	s16 mCurrentFrame;                                       // _90
+	u8 mCurrentPass;                                         // _92
+	Vector3f mEmitPosOffset;                                 // _94
 	Vector3f mEmitDir;                                       // _A0
 	Vector3f _AC;                                            // _AC
 	f32 _B8;                                                 // _B8
-	u8 _BC[0xF0 - 0xBC];                                     // _BC, unknown
+	f32 _BC;                                                 // _BC
+	f32 _C0;                                                 // _C0
+	f32 _C4;                                                 // _C4
+	f32 _C8;                                                 // _C8
+	f32 mInitVel;                                            // _CC
+	f32 _D0;                                                 // _D0
+	f32 mDrag;                                               // _D4
+	f32 mDragJitter;                                         // _D8
+	f32 mMaxVel;                                             // _DC
+	f32 mScaleThreshold1;                                    // _E0
+	f32 mScaleThreshold2;                                    // _E4
+	f32 mMinScaleFactor1;                                    // _E8
+	f32 mMinScaleFactor2;                                    // _EC
 	f32 mScaleSize;                                          // _F0
-	u8 _F4[0x120 - 0xF4];                                    // _F4, unknown
-	Colour _120;                                             // _120
-	u8 _124[0x8];                                            // _124, unknown
-	Vector3f _12C;                                           // _12C
-	Vector3f _138;                                           // _138
-	Vector3f _144;                                           // _144
-	f32 _150;                                                // _150
-	f32 _154;                                                // _154
+	f32 _F4;                                                 // _F4
+	f32 mAlphaThreshold1;                                    // _F8
+	f32 mAlphaThreshold2;                                    // _FC
+	f32 mAlphaJitter;                                        // _100
+	s16 mRotSpeedMin;                                        // _104
+	s16 mRotSpeedJitter;                                     // _106
+	s16 mRotAngle;                                           // _108
+	f32 _10C;                                                // _10C
+	s16 _110;                                                // _110
+	u8 _112;                                                 // _112
+	f32 mChildScaleFactor;                                   // _114
+	f32 _118;                                                // _118
+	f32 mChildPosJitter;                                     // _11C
+	Colour mChildColor;                                      // _120
+	u8 _124;                                                 // _124
+	u8 mChildSpawnInterval;                                  // _125
+	u8 _126[0x6];                                            // _126, unknown
+	Vector3f mGravFieldAccel;                                // _12C
+	Vector3f mAirFieldVelocity;                              // _138
+	Vector3f mVortexCenter;                                  // _144
+	f32 mVortexRotationSpeed;                                // _150
+	f32 mVortexStrength;                                     // _154
 	f32 _158;                                                // _158
 	f32 _15C;                                                // _15C
-	Vector3f _160;                                           // _160
-	u8 _16C[0x4];                                            // _16C, unknown
-	Vector3f _170;                                           // _170
-	f32 _17C;                                                // _17C
+	Vector3f mDampedNewtonFieldDir;                          // _160
+	f32 mDampedNewtonFieldStrength;                          // _16C
+	Vector3f mNewtonFieldDir;                                // _170
+	f32 mNewtonFieldStrength;                                // _17C
 	Vector3f _180;                                           // _180
-	u8 _18C[0x8];                                            // _18C, unknown
+	u8 _18C;                                                 // _18C
+	u8 _18D;                                                 // _18D
+	u8 mSolidFieldType;                                      // _18E
+	f32 mJitterStrength;                                     // _190
 	Vector3f _194;                                           // _194
-	u8 _1A0[0x1D0 - 0x1A0];                                  // _1A0, unknown
+	f32 _1A0;                                                // _1A0
+	f32 _1A4;                                                // _1A4
+	u8 mFreePtclMotionTime;                                  // _1A8
+	f32* _1AC;                                               // _1AC
+	f32* _1B0;                                               // _1B0
+	f32* _1B4;                                               // _1B4
+	f32* _1B8;                                               // _1B8
+	f32* mInitVelIntpThresholds;                             // _1BC;
+	f32* mInitVelIntpValues;                                 // _1C0
+	u8 _1C4;                                                 // _1C4
+	u8 _1C5;                                                 // _1C5
+	u8 _1C6;                                                 // _1C6
+	s16 mMaxFrame;                                           // _1C8
+	u8 mMaxPasses;                                           // _1CA
+	u8 mBlendFactor;                                         // _1CB
+	u8 mZMode;                                               // _1CC
 	particleMdlManager* mMdlMgr;                             // _1D0
 	CallBack1<particleGenerator*>* mCallBack1;               // _1D4
 	CallBack2<particleGenerator*, particleMdl*>* mCallBack2; // _1D8
-	Vector3f mOrientedNormalVector;                          // _1DC
-	u8 _1E8[0x200 - 0x1E8];                                  // _1E8
+	Vector3f mOrientedNormal;                                // _1DC
+	PtclDrawCallBack mDrawCallBack;                          // _1E8
+	RotAxisCallBack mRotAxisCallBack;                        // _1F4
 };
 
 /**
@@ -448,8 +569,10 @@ struct PCRData : public zenList {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
-struct particleLoader {
+struct particleLoader : public zenListManager {
 	u8* load(char*, bool);
 	u8* pmFind(char*);
 
@@ -460,44 +583,57 @@ struct particleLoader {
 	PCRData* pmCreatePCRData(char* name, u32 bufSize)
 	{
 		PCRData* data = new PCRData(name, bufSize);
-		_00.put(data);
+		put(data);
 		return data;
 	}
 
-	// TODO: members
-	zenListManager _00; // _00, members are (probably) PCRData*
+	// _00-_10 = zenListManager (members are PCRData*)
 };
 
 /**
  * @brief TODO
  */
-struct simplePtclManager {
-	// simplePtclManager();
+struct simplePtclManager : public zenListManager {
+	simplePtclManager() { mMdlMgr = nullptr; }
 
 	void update(f32);
 	void draw(Graphics&);
 	void forceFinish();
 
 	// unused/inlined:
-	void create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&, const Colour&,
-	            zen::CallBack1<zen::particleMdl*>*);
+	zen::particleMdl* create(Texture* simpleTex, s16 lifeTime, const Vector3f& globalPos, const Vector3f& vel, const Vector3f& accel,
+	                         f32 size, f32 rotSpeed, const Colour& primColor, const Colour& envColor,
+	                         zen::CallBack1<zen::particleMdl*>* cbPtcl);
 	~simplePtclManager();
 
 	void init(particleMdlManager* mdlMgr) { mMdlMgr = mdlMgr; }
 
-	// remaining DLL functions:
-	// particleMdl* pmGetParticle();
-	// void pmPutParticle(zenList*);
+	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
 
-	zenListManager _00;          // _00
+	particleMdl* pmGetParticle()
+	{
+		particleMdl* ptcl = (particleMdl*)mMdlMgr->getPtcl();
+		if (ptcl) {
+			put(ptcl);
+		}
+		return ptcl;
+	}
+
+	// _00-_10 = zenListManager (type = particleMdl)
 	particleMdlManager* mMdlMgr; // _10
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x9C.
  */
 struct particleManager {
-	// particleManager();
+	particleManager()
+	{
+		mPtclGenList = nullptr;
+		_5C          = 0;
+	}
 
 	void init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4);
 	particleGenerator* createGenerator(u8*, Texture*, Texture*, Vector3f&, CallBack1<particleGenerator*>*,
@@ -519,20 +655,23 @@ struct particleManager {
 
 	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
 
-	// remaining DLL functions:
-	// particleMdl* createParticle(Texture*, s16, Vector3f&, Vector3f&, Vector3f&, f32, f32, Colour, Colour, CallBack1<particleMdl*>*);
+	particleMdl* createParticle(Texture* simpleTex, s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size,
+	                            f32 rotSpeed, Colour primColor, Colour envColor, CallBack1<particleMdl*>* cbPtcl)
+	{
+		return mSimplePtclMgr.create(simpleTex, lifeTime, globalPos, vel, accel, size, rotSpeed, primColor, envColor, cbPtcl);
+	}
 
 	static const f32 DEFAULT_FRAME_RATE;
 	static const u16 MAX_PTCLGENS_NUM;
 	static const u16 MAX_PTCLS_NUM;
 	static const u16 MAX_PTCL_CHILD_NUM;
 
-	zenListManager _00;               // _00
-	zenListManager _10;               // _10
+	zenListManager mActiveGenList;    // _00
+	zenListManager mInactiveGenList;  // _10
 	zenListManager _20;               // _20
 	particleGenerator* mPtclGenList;  // _30, array of up to 0x1000 particleGenerators
 	particleMdlManager mMdlMgr;       // _34
-	u8 _5C[4];                        // _5C, unknown, might be in particleMdlManager
+	u32 _5C;                          // _5C, unknown, might be in particleMdlManager
 	simplePtclManager mSimplePtclMgr; // _60
 	u32 mMaxPtclGens;                 // _74
 	u32 mMaxParticles;                // _78
@@ -583,6 +722,8 @@ struct PtclGenPack {
 	u32 mLimit;                         // _00
 	particleGenerator** mGeneratorList; // _04
 };
+
+extern u16* UseSolidTex[6];
 
 } // namespace zen
 

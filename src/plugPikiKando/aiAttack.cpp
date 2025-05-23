@@ -192,7 +192,7 @@ Creature* ActAttack::findTarget()
 Creature* ActAttack::decideTarget()
 {
 	f32 minDist = 12800.0f;
-	Creature* targetList[100];
+	Creature* targetList[MAX_PIKI_ON_FIELD];
 	Iterator iter(_20);
 	int count = 0;
 	CI_LOOP(iter)
@@ -728,7 +728,9 @@ int ActJumpAttack::exec()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler[3];
+	mPiki ? "fake" : "fake";
+	mPiki ? "fake" : "fake";
+	mPiki ? "fake" : "fake";
 	/*
 	.loc_0x0:
 	  mflr      r0

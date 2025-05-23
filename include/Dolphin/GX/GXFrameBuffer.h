@@ -58,7 +58,7 @@ extern void GXSetDispCopyFrame2Field(GXCopyMode mode);
 extern void GXSetCopyClamp(GXFBClamp clamp);
 extern u32 GXSetDispCopyYScale(f32 vertScale);
 extern void GXSetCopyClear(GXColor clearColor, u32 clearZ);
-extern void GXSetCopyFilter(GXBool useAA, u8 samplePattern[12][2], GXBool doVertFilt, u8 vFilt[7]);
+extern void GXSetCopyFilter(GXBool useAA, const u8 samplePattern[12][2], GXBool doVertFilt, const u8 vFilt[7]);
 extern void GXSetDispCopyGamma(GXGamma gamma);
 
 // Copy data functions.

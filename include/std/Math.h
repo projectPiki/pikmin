@@ -6,6 +6,7 @@
 /**
  * @brief TODO
  */
+#ifdef __cplusplus
 namespace std {
 
 inline f32 sqrtf(f32 x)
@@ -37,16 +38,17 @@ f32 fabsf(f32 x);
 
 inline f32 fmodf(f32 x, f32 m)
 {
-	f32 a = fabsf(m);
-	f32 b = fabsf(x);
-	if (a > b)
+	f32 b, a;
+	a = fabsf(m);
+	b = fabsf(x);
+	if (a > b) {
 		return x;
-	else {
-		long long c = (long long)(x / m);
-		return x - m * c;
 	}
-}
 
+	long long c = (long long)(x / m);
+	return x - m * c;
+}
 } // namespace std
+#endif
 
 #endif

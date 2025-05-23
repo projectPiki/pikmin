@@ -107,7 +107,7 @@ DemoFlags::DemoFlags()
 	registerDemoFlag(DEMOFLAG_Pluck15thPikmin, "15 NUKI", 12, 0, 0);
 	registerDemoFlag(DEMOFLAG_FirstNoon, "FIRST NOON", 12, 0, 0);
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < MAX_UFO_PARTS; i++) {
 		registerDemoFlag(i + DEMOFLAG_UfoPartDiscoveryOffset, "UFO PARTS", 12, i, 0);
 	}
 

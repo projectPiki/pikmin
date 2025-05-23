@@ -75,7 +75,7 @@ void BufferedInputStream::fillBuffer()
  */
 void BufferedInputStream::read(void* input, int size)
 {
-	u8* buf = (u8*)input;
+	u8* buf = static_cast<u8*>(input);
 	while (size != 0) {
 		fillBuffer();
 		int diff     = mRemainingBytes - mCurrentBufferPos;

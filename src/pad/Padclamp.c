@@ -94,17 +94,16 @@ static void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min)
  * Address:	........
  * Size:	000044
  */
-static void ClampTrigger(u8* trigger, u8 min, u8 max)
+static void ClampTrigger(u8* trigger)
 {
-	if (*trigger <= min) {
+	if (*trigger <= ClampRegion.minTrigger) {
 		*trigger = 0;
-		return;
+	} else {
+		if (ClampRegion.maxTrigger < *trigger) {
+			*trigger = ClampRegion.maxTrigger;
+		}
+		*trigger -= ClampRegion.minTrigger;
 	}
-	if (max < *trigger) {
-		*trigger = max;
-	}
-	*trigger -= min;
-	// UNUSED FUNCTION
 }
 
 /*
@@ -115,15 +114,15 @@ static void ClampTrigger(u8* trigger, u8 min, u8 max)
 void PADClamp(PADStatus* status)
 {
 	int i;
-	for (i = 0; i < PAD_CHANMAX; i++, status++) {
+	for (i = 0; i < SI_MAX_CHAN; i++, status++) {
 		if (status->err != PAD_ERR_NONE) {
 			continue;
 		}
 
 		ClampStick(&status->stickX, &status->stickY, ClampRegion.maxStick, ClampRegion.xyStick, ClampRegion.minStick);
 		ClampStick(&status->substickX, &status->substickY, ClampRegion.maxSubstick, ClampRegion.xySubstick, ClampRegion.minSubstick);
-		ClampTrigger(&status->triggerLeft, ClampRegion.minTrigger, ClampRegion.maxTrigger);
-		ClampTrigger(&status->triggerRight, ClampRegion.minTrigger, ClampRegion.maxTrigger);
+		ClampTrigger(&status->triggerLeft);
+		ClampTrigger(&status->triggerRight);
 	}
 	/*
 	.loc_0x0:

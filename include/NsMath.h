@@ -54,15 +54,14 @@ struct NsLibMath {
 
 	static T toGoal(T start, T goal, T step)
 	{
-		f32 val = start - goal;
-		if (NsLibMath::abs(val) < step) {
-			val = goal;
-		} else if (start < goal) {
-			val = start + step;
+		T res;
+		T a = NsLibMath::abs(start - goal);
+		if (a < step) {
+			res = goal;
 		} else {
-			val = start - step;
+			res = (start < goal) ? start + step : start - step;
 		}
-		return val;
+		return res;
 	}
 };
 

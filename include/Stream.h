@@ -58,6 +58,24 @@ struct RandomAccessStream : public Stream {
 		}
 	}
 
+	void padFile(u32 paddingAmount)
+	{
+		int length       = getPosition();
+		int resultAmount = (~(paddingAmount - 1) & (length + paddingAmount - 1)) - length;
+		for (int i = 0; i < resultAmount; i++) {
+			writeByte(0);
+		}
+	}
+
+	void padFileTo(u32 paddingAmount, u32 offset)
+	{
+		int pos          = getPosition();
+		int resultAmount = paddingAmount - pos - offset;
+		for (int i = 0; i < resultAmount; i++) {
+			writeByte(0);
+		}
+	}
+
 	inline BOOL checkInput()
 	{
 		if (readByte() == 0) {
@@ -79,6 +97,12 @@ struct RandomAccessStream : public Stream {
  * @note Size: 0x20.
  */
 struct BufferedInputStream : public RandomAccessStream {
+	BufferedInputStream()
+	{
+		mBuffer = nullptr;
+		mStream = nullptr;
+	}
+
 	BufferedInputStream(Stream*, u8*, int);
 
 	virtual void read(void*, int);                                         // _3C

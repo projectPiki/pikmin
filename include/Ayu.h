@@ -14,7 +14,11 @@ struct ayuID {
 	u32 mID; // _00
 };
 
-struct MemHead { };
+struct MemHead {
+	u32 mTagAndSize; // _00, stores a tag in the most significant byte and size in 16-byte units in the lower bytes
+	MemHead* mNext;  // _04
+	MemHead* mPrev;  // _08
+};
 
 /**
  * @brief TODO
@@ -33,19 +37,15 @@ struct AyuCache {
 	void deleteIdAll(u32);
 	u32 amountFree();
 
-	u32 _00;     // _00
-	u32 _04;     // _04
-	u32 _08;     // _08
-	s8 _0C;      // _0C
-	u32 _10;     // _10
-	u32 _14;     // _14
-	u32 _18;     // _18
-	u32 _1C;     // _1C
-	u32 _20;     // _20
-	u32 _24;     // _24
-	u32 _28;     // _28
-	u8 _2C[256]; // _2C
-	u32 _12C;    // _12C
+	MemHead mFreeBlockHead;      // _00
+	s8 _;                        // _0C, padding to align
+	MemHead mAllocatedBlockHead; // _10
+	u32 mBlockGuardValue;        // _1C, Magic number (e.g., 0x87654321) used as a guard/canary for memory blocks
+	u32 mCurrentAllocationTag;   // _20, tag value (0-255) applied to new allocations via mallocL, stored in the high byte of MemHead's flag
+	u32 mTotalAllocatedUnits;    // _24
+	u32 mTotalCacheSizeBytes;    // _28
+	u8 mPageIndexPool[256];      // _2C
+	u32 mNextPageSlot;           // _12C
 };
 
 /**
@@ -54,25 +54,26 @@ struct AyuCache {
 struct AyuStack {
 	AyuStack() { mIsActive = false; }
 
-	bool checkOverflow();
-	inline void checkStack();
-	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
-	inline int getFree() { return mSize - mTotalSize; }
-	int getMaxFree();
-	int getSize();
-	int getTopUsed() { return mInitialStackLimit - mStackLimit; }
-	int getUsed();
-	void inactivate();
-	void pop();
-	void* push(int);
 	void reset(int);
+	void* push(int);
+	void pop();
+
+	// unused/inlined:
+	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
 	void reset();
-	inline int setAllocType(int type)
+	void checkStack();
+
+	// DLL inlines:
+	int setAllocType(int type)
 	{
 		int old    = mAllocType;
 		mAllocType = type;
 		return old;
 	}
+	int getFree() { return mSize - mTotalSize; }
+	int getTopUsed() { return mInitialStackLimit - mStackLimit; }
+	int getMaxFree() { return (mSize - mTotalSize - 8 > 0) ? mSize - mTotalSize - 8 : 0; }
+	void inactivate() { mIsActive = false; }
 
 	s32 mAllocType;         // _00
 	int mSize;              // _04

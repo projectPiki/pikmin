@@ -1,13 +1,39 @@
-#include "types.h"
+#include "Dolphin/gx.h"
+
+static GXDrawSyncCallback TokenCB;
+static GXDrawDoneCallback DrawDoneCB;
+static u8 DrawDone;
+static OSThreadQueue FinishQueue;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000058
  */
-void GXSetMisc(void)
+void GXSetMisc(GXMiscToken token, u32 val)
 {
-	// UNUSED FUNCTION
+	switch (token) {
+	case GX_MT_XF_FLUSH:
+		gx->vNum   = val;
+		gx->vNum   = !gx->vNum;
+		gx->bpSent = GX_TRUE;
+
+		if (gx->vNum != 0) {
+			gx->dirtyState |= 8;
+		}
+		break;
+	case GX_MT_DL_SAVE_CONTEXT:
+		ASSERTMSGLINE(210, !gx->inDispList, "GXSetMisc: Cannot change DL context setting while making a display list");
+		gx->dlSaveContext = (val > 0);
+		break;
+	case GX_MT_NULL:
+		break;
+	default:
+#if DEBUG
+		OSReport("GXSetMisc: bad token %d (val %d)\n", token, val);
+#endif
+		break;
+	}
 }
 
 /*
@@ -17,39 +43,16 @@ void GXSetMisc(void)
  */
 void GXFlush(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-	  bl        0x3BC
+	u32 i;
 
-	.loc_0x20:
-	  li        r0, 0x4
-	  mtctr     r0
-	  li        r0, 0
-	  lis       r3, 0xCC01
-
-	.loc_0x30:
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  stb       r0, -0x8000(r3)
-	  bdnz+     .loc_0x30
-	  bl        -0x1AE50
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	CHECK_GXBEGIN(0xF0, "GXFlush");
+	if (gx->dirtyState) {
+		__GXSetDirtyState();
+	}
+	for (i = 32; i > 0; i--) {
+		GX_WRITE_U8(0);
+	}
+	PPCSync();
 }
 
 /*
@@ -59,7 +62,27 @@ void GXFlush(void)
  */
 void GXResetWriteGatherPipe(void)
 {
-	// UNUSED FUNCTION
+	while (PPCMfwpar() & 1) { }
+	PPCMtwpar(OSUncachedToPhysical((void*)GXFIFO_ADDR));
+}
+
+static inline void __GXAbortWait(u32 clocks)
+{
+	OSTime time0;
+	OSTime time1;
+
+	time0 = OSGetTime();
+	do {
+		time1 = OSGetTime();
+	} while (time1 - time0 <= (clocks / 4));
+}
+
+void __GXAbort(void)
+{
+	__piReg[0x18 / 4] = 1;
+	__GXAbortWait(200);
+	__piReg[0x18 / 4] = 0;
+	__GXAbortWait(20);
 }
 
 /*
@@ -69,7 +92,8 @@ void GXResetWriteGatherPipe(void)
  */
 void GXAbortFrame(void)
 {
-	// UNUSED FUNCTION
+	__GXAbort();
+	__GXCleanGPFifo();
 }
 
 /*
@@ -77,9 +101,22 @@ void GXAbortFrame(void)
  * Address:	........
  * Size:	0000C0
  */
-void GXSetDrawSync(void)
+void GXSetDrawSync(u16 token)
 {
-	// UNUSED FUNCTION
+	BOOL enabled;
+	u32 reg;
+
+	CHECK_GXBEGIN(379, "GXSetDrawSync");
+
+	enabled = OSDisableInterrupts();
+	reg     = token | 0x48000000;
+	GX_WRITE_RAS_REG(reg);
+	SET_REG_FIELD(392, reg, 16, 0, token);
+	SET_REG_FIELD(393, reg, 8, 24, 0x47);
+	GX_WRITE_RAS_REG(reg);
+	GXFlush();
+	OSRestoreInterrupts(enabled);
+	gx->bpSent = GX_FALSE;
 }
 
 /*
@@ -87,9 +124,10 @@ void GXSetDrawSync(void)
  * Address:	........
  * Size:	00000C
  */
-void GXReadDrawSync(void)
+u16 GXReadDrawSync(void)
 {
-	// UNUSED FUNCTION
+	u16 token = __peReg[7];
+	return token;
 }
 
 /*
@@ -99,7 +137,16 @@ void GXReadDrawSync(void)
  */
 void GXSetDrawDone(void)
 {
-	// UNUSED FUNCTION
+	u32 reg;
+	BOOL enabled;
+
+	CHECK_GXBEGIN(437, "GXSetDrawDone");
+	enabled = OSDisableInterrupts();
+	reg     = 0x45000002;
+	GX_WRITE_RAS_REG(reg);
+	GXFlush();
+	DrawDone = 0;
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -109,7 +156,15 @@ void GXSetDrawDone(void)
  */
 void GXWaitDrawDone(void)
 {
-	// UNUSED FUNCTION
+	BOOL enabled;
+
+	CHECK_GXBEGIN(483, "GXWaitDrawDone");
+
+	enabled = OSDisableInterrupts();
+	while (!DrawDone) {
+		OSSleepThread(&FinishQueue);
+	}
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -119,45 +174,9 @@ void GXWaitDrawDone(void)
  */
 void GXDrawDone(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bl        -0x1786C
-	  li        r0, 0x61
-	  lis       r5, 0xCC01
-	  lis       r4, 0x4500
-	  stb       r0, -0x8000(r5)
-	  addi      r0, r4, 0x2
-	  stw       r0, -0x8000(r5)
-	  mr        r31, r3
-	  bl        -0x98
-	  li        r0, 0
-	  stb       r0, 0x3458(r13)
-	  mr        r3, r31
-	  bl        -0x17874
-	  bl        -0x178A0
-	  mr        r31, r3
-	  b         .loc_0x58
-
-	.loc_0x50:
-	  addi      r3, r13, 0x345C
-	  bl        -0x13E70
-
-	.loc_0x58:
-	  lbz       r0, 0x3458(r13)
-	  cmplwi    r0, 0
-	  beq+      .loc_0x50
-	  mr        r3, r31
-	  bl        -0x1789C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	CHECK_GXBEGIN(515, "GXDrawDone");
+	GXSetDrawDone();
+	GXWaitDrawDone();
 }
 
 /*
@@ -167,18 +186,9 @@ void GXDrawDone(void)
  */
 void GXPixModeSync(void)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x61
-	  lwz       r4, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  li        r0, 0x1
-	  lwz       r3, 0x1DC(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	CHECK_GXBEGIN(550, "GXPixModeSync");
+	GX_WRITE_RAS_REG(gx->peCtrl);
+	gx->bpSent = GX_TRUE;
 }
 
 /*
@@ -188,7 +198,12 @@ void GXPixModeSync(void)
  */
 void GXTexModeSync(void)
 {
-	// UNUSED FUNCTION
+	u32 reg;
+
+	CHECK_GXBEGIN(574, "GXTexModeSync");
+	reg = 0x63000000;
+	GX_WRITE_RAS_REG(reg);
+	gx->bpSent = GX_FALSE;
 }
 
 /*
@@ -196,16 +211,13 @@ void GXTexModeSync(void)
  * Address:	8021087C
  * Size:	000014
  */
-void GXPokeAlphaMode(void)
+void GXPokeAlphaMode(GXCompare func, u8 threshold)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x3428(r13)
-	  rlwinm    r0,r4,0,24,31
-	  rlwimi    r0,r3,8,0,23
-	  sth       r0, 0x6(r5)
-	  blr
-	*/
+	u32 reg;
+
+	// CHECK_GXBEGIN(0x25F, "GXPokeAlphaMode");
+	reg        = (func << 8) | threshold;
+	__peReg[3] = reg;
 }
 
 /*
@@ -213,16 +225,15 @@ void GXPokeAlphaMode(void)
  * Address:	80210890
  * Size:	000014
  */
-void GXPokeAlphaRead(void)
+void GXPokeAlphaRead(GXAlphaReadMode mode)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,30,28
-	  lwz       r3, 0x3428(r13)
-	  ori       r0, r0, 0x4
-	  sth       r0, 0x8(r3)
-	  blr
-	*/
+	u32 reg;
+
+	// CHECK_GXBEGIN(0x26A, "GXPokeAlphaRead");
+	reg = 0;
+	SET_REG_FIELD(642, reg, 2, 0, mode);
+	SET_REG_FIELD(643, reg, 1, 2, 1);
+	__peReg[4] = reg;
 }
 
 /*
@@ -230,18 +241,14 @@ void GXPokeAlphaRead(void)
  * Address:	802108A4
  * Size:	00001C
  */
-void GXPokeAlphaUpdate(void)
+void GXPokeAlphaUpdate(GXBool update_enable)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3428(r13)
-	  rlwinm    r0,r3,4,20,27
-	  lhzu      r3, 0x2(r4)
-	  rlwinm    r3,r3,0,28,26
-	  or        r0, r3, r0
-	  sth       r0, 0x0(r4)
-	  blr
-	*/
+	u32 reg;
+
+	// CHECK_GXBEGIN(0x277, "GXPokeAlphaUpdate");
+	reg = __peReg[1];
+	SET_REG_FIELD(653, reg, 1, 4, update_enable);
+	__peReg[1] = reg;
 }
 
 /*
@@ -249,47 +256,20 @@ void GXPokeAlphaUpdate(void)
  * Address:	802108C0
  * Size:	000088
  */
-void GXPokeBlendMode(void)
+void GXPokeBlendMode(GXBlendMode type, GXBlendFactor src_factor, GXBlendFactor dst_factor, GXLogicOp op)
 {
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x3428(r13)
-	  cmpwi     r3, 0x1
-	  li        r9, 0x1
-	  addi      r10, r7, 0x2
-	  lhz       r7, 0x2(r7)
-	  beq-      .loc_0x24
-	  cmpwi     r3, 0x3
-	  beq-      .loc_0x24
-	  li        r9, 0
+	u32 reg;
 
-	.loc_0x24:
-	  rlwinm    r8,r7,0,0,30
-	  subfic    r0, r3, 0x3
-	  cntlzw    r7, r0
-	  subfic    r0, r3, 0x2
-	  or        r8, r8, r9
-	  cntlzw    r0, r0
-	  rlwinm    r8,r8,0,21,19
-	  rlwinm    r3,r7,6,0,20
-	  or        r3, r8, r3
-	  rlwinm    r3,r3,0,31,29
-	  rlwinm    r0,r0,28,4,30
-	  or        r0, r3, r0
-	  rlwinm    r3,r0,0,20,15
-	  rlwinm    r0,r6,12,0,19
-	  or        r0, r3, r0
-	  rlwinm    r3,r0,0,24,20
-	  rlwinm    r0,r4,8,0,23
-	  or        r0, r3, r0
-	  rlwinm    r3,r0,0,27,23
-	  rlwinm    r0,r5,5,0,26
-	  or        r0, r3, r0
-	  rlwinm    r0,r0,0,8,31
-	  oris      r0, r0, 0x4100
-	  sth       r0, 0x0(r10)
-	  blr
-	*/
+	// CHECK_GXBEGIN(0x284, "GXPokeBlendUpdate");
+	reg = __peReg[1];
+	SET_REG_FIELD(669, reg, 1, 0, (type == GX_BM_BLEND) || (type == GX_BM_SUBTRACT));
+	SET_REG_FIELD(670, reg, 1, 11, (type == GX_BM_SUBTRACT));
+	SET_REG_FIELD(672, reg, 1, 1, (type == GX_BM_LOGIC));
+	SET_REG_FIELD(673, reg, 4, 12, op);
+	SET_REG_FIELD(674, reg, 3, 8, src_factor);
+	SET_REG_FIELD(675, reg, 3, 5, dst_factor);
+	SET_REG_FIELD(676, reg, 8, 24, 0x41);
+	__peReg[1] = reg;
 }
 
 /*
@@ -297,18 +277,14 @@ void GXPokeBlendMode(void)
  * Address:	80210948
  * Size:	00001C
  */
-void GXPokeColorUpdate(void)
+void GXPokeColorUpdate(GXBool update_enable)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3428(r13)
-	  rlwinm    r0,r3,3,21,28
-	  lhzu      r3, 0x2(r4)
-	  rlwinm    r3,r3,0,29,27
-	  or        r0, r3, r0
-	  sth       r0, 0x0(r4)
-	  blr
-	*/
+	u32 reg;
+
+	// CHECK_GXBEGIN(0x29D, "GXPokeColorUpdate");
+	reg = __peReg[1];
+	SET_REG_FIELD(687, reg, 1, 3, update_enable);
+	__peReg[1] = reg;
 }
 
 /*
@@ -316,16 +292,14 @@ void GXPokeColorUpdate(void)
  * Address:	80210964
  * Size:	000014
  */
-void GXPokeDstAlpha(void)
+void GXPokeDstAlpha(GXBool enable, u8 alpha)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x3428(r13)
-	  rlwinm    r0,r3,8,16,23
-	  rlwimi    r0,r4,0,24,31
-	  sth       r0, 0x4(r5)
-	  blr
-	*/
+	u32 reg = 0;
+
+	// CHECK_GXBEGIN(0x2A9, "GXPokeDstAlpha");
+	SET_REG_FIELD(696, reg, 8, 0, alpha);
+	SET_REG_FIELD(697, reg, 1, 8, enable);
+	__peReg[2] = reg;
 }
 
 /*
@@ -333,18 +307,14 @@ void GXPokeDstAlpha(void)
  * Address:	80210978
  * Size:	00001C
  */
-void GXPokeDither(void)
+void GXPokeDither(GXBool dither)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x3428(r13)
-	  rlwinm    r0,r3,2,22,29
-	  lhzu      r3, 0x2(r4)
-	  rlwinm    r3,r3,0,30,28
-	  or        r0, r3, r0
-	  sth       r0, 0x0(r4)
-	  blr
-	*/
+	u32 reg;
+
+	// CHECK_GXBEGIN(0x2B5, "GXPokeDither");
+	reg = __peReg[1];
+	SET_REG_FIELD(707, reg, 1, 2, dither);
+	__peReg[1] = reg;
 }
 
 /*
@@ -352,21 +322,16 @@ void GXPokeDither(void)
  * Address:	80210994
  * Size:	000028
  */
-void GXPokeZMode(void)
+void GXPokeZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lwz       r3, 0x3428(r13)
-	  rlwinm    r6,r0,0,31,27
-	  rlwinm    r0,r4,1,0,30
-	  or        r0, r6, r0
-	  rlwinm    r4,r0,0,28,26
-	  rlwinm    r0,r5,4,20,27
-	  or        r0, r4, r0
-	  sth       r0, 0x0(r3)
-	  blr
-	*/
+	u32 reg = 0;
+
+	// CHECK_GXBEGIN(0x2C1, "GXPokeZMode");
+
+	SET_REG_FIELD(716, reg, 1, 0, compare_enable);
+	SET_REG_FIELD(717, reg, 3, 1, func);
+	SET_REG_FIELD(718, reg, 1, 4, update_enable);
+	__peReg[0] = reg;
 }
 
 /*
@@ -374,9 +339,14 @@ void GXPokeZMode(void)
  * Address:	........
  * Size:	000024
  */
-void GXPeekARGB(void)
+void GXPeekARGB(u16 x, u16 y, u32* color)
 {
-	// UNUSED FUNCTION
+	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+
+	SET_REG_FIELD(741, addr, 10, 2, x);
+	SET_REG_FIELD(742, addr, 10, 12, y);
+	SET_REG_FIELD(743, addr, 2, 22, 0);
+	*color = *(u32*)addr;
 }
 
 /*
@@ -384,9 +354,14 @@ void GXPeekARGB(void)
  * Address:	........
  * Size:	000020
  */
-void GXPokeARGB(void)
+void GXPokeARGB(u16 x, u16 y, u32 color)
 {
-	// UNUSED FUNCTION
+	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+
+	SET_REG_FIELD(751, addr, 10, 2, x);
+	SET_REG_FIELD(752, addr, 10, 12, y);
+	SET_REG_FIELD(753, addr, 2, 22, 0);
+	*(u32*)addr = color;
 }
 
 /*
@@ -394,9 +369,14 @@ void GXPokeARGB(void)
  * Address:	........
  * Size:	000028
  */
-void GXPeekZ(void)
+void GXPeekZ(u16 x, u16 y, u32* z)
 {
-	// UNUSED FUNCTION
+	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+
+	SET_REG_FIELD(761, addr, 10, 2, x);
+	SET_REG_FIELD(762, addr, 10, 12, y);
+	SET_REG_FIELD(763, addr, 2, 22, 1);
+	*z = *(u32*)addr;
 }
 
 /*
@@ -404,9 +384,14 @@ void GXPeekZ(void)
  * Address:	........
  * Size:	000024
  */
-void GXPokeZ(void)
+void GXPokeZ(u16 x, u16 y, u32 z)
 {
-	// UNUSED FUNCTION
+	u32 addr = (u32)OSPhysicalToUncached(0x08000000);
+
+	SET_REG_FIELD(771, addr, 10, 2, x);
+	SET_REG_FIELD(772, addr, 10, 12, y);
+	SET_REG_FIELD(773, addr, 2, 22, 1);
+	*(u32*)addr = z;
 }
 
 /*
@@ -414,9 +399,16 @@ void GXPokeZ(void)
  * Address:	........
  * Size:	000044
  */
-void GXSetDrawSyncCallback(void)
+GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb)
 {
-	// UNUSED FUNCTION
+	GXDrawSyncCallback oldcb;
+	BOOL enabled;
+
+	oldcb   = TokenCB;
+	enabled = OSDisableInterrupts();
+	TokenCB = cb;
+	OSRestoreInterrupts(enabled);
+	return oldcb;
 }
 
 /*
@@ -424,47 +416,23 @@ void GXSetDrawSyncCallback(void)
  * Address:	802109BC
  * Size:	000088
  */
-void GXTokenInterruptHandler(void)
+static void GXTokenInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x2E0(r1)
-	  stw       r31, 0x2DC(r1)
-	  stw       r30, 0x2D8(r1)
-	  mr        r30, r4
-	  lwz       r0, 0x3450(r13)
-	  lwz       r3, 0x3428(r13)
-	  cmplwi    r0, 0
-	  lhz       r31, 0xE(r3)
-	  beq-      .loc_0x5C
-	  addi      r3, r1, 0x10
-	  bl        -0x195B0
-	  addi      r3, r1, 0x10
-	  bl        -0x19780
-	  lwz       r12, 0x3450(r13)
-	  addi      r3, r31, 0
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x10
-	  bl        -0x195D0
-	  mr        r3, r30
-	  bl        -0x197A0
+	u16 token;
+	OSContext exceptionContext;
+	u32 reg;
 
-	.loc_0x5C:
-	  lwz       r3, 0x3428(r13)
-	  lhzu      r0, 0xA(r3)
-	  rlwinm    r0,r0,0,30,28
-	  ori       r0, r0, 0x4
-	  sth       r0, 0x0(r3)
-	  lwz       r0, 0x2E4(r1)
-	  lwz       r31, 0x2DC(r1)
-	  lwz       r30, 0x2D8(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x2E0
-	  blr
-	*/
+	token = __peReg[7];
+	if (TokenCB != NULL) {
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(&exceptionContext);
+		TokenCB(token);
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(context);
+	}
+	reg = __peReg[5];
+	SET_REG_FIELD(0, reg, 1, 2, 1);
+	__peReg[5] = reg;
 }
 
 /*
@@ -472,9 +440,16 @@ void GXTokenInterruptHandler(void)
  * Address:	........
  * Size:	000044
  */
-void GXSetDrawDoneCallback(void)
+GXDrawDoneCallback GXSetDrawDoneCallback(GXDrawDoneCallback cb)
 {
-	// UNUSED FUNCTION
+	GXDrawDoneCallback oldcb;
+	BOOL enabled;
+
+	oldcb      = DrawDoneCB;
+	enabled    = OSDisableInterrupts();
+	DrawDoneCB = cb;
+	OSRestoreInterrupts(enabled);
+	return oldcb;
 }
 
 /*
@@ -482,46 +457,23 @@ void GXSetDrawDoneCallback(void)
  * Address:	80210A44
  * Size:	000084
  */
-void GXFinishInterruptHandler(void)
+static void GXFinishInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x2E0(r1)
-	  stw       r31, 0x2DC(r1)
-	  addi      r31, r4, 0
-	  lwz       r5, 0x3428(r13)
-	  lhz       r0, 0xA(r5)
-	  rlwinm    r0,r0,0,29,27
-	  ori       r0, r0, 0x8
-	  sth       r0, 0xA(r5)
-	  lwz       r0, 0x3454(r13)
-	  stb       r3, 0x3458(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x68
-	  addi      r3, r1, 0x10
-	  bl        -0x19648
-	  addi      r3, r1, 0x10
-	  bl        -0x19818
-	  lwz       r12, 0x3454(r13)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x10
-	  bl        -0x19664
-	  mr        r3, r31
-	  bl        -0x19834
+	OSContext exceptionContext;
+	u32 reg;
 
-	.loc_0x68:
-	  addi      r3, r13, 0x345C
-	  bl        -0x14008
-	  lwz       r0, 0x2E4(r1)
-	  lwz       r31, 0x2DC(r1)
-	  addi      r1, r1, 0x2E0
-	  mtlr      r0
-	  blr
-	*/
+	reg = __peReg[5];
+	SET_REG_FIELD(0, reg, 1, 3, 1);
+	__peReg[5] = reg;
+	DrawDone   = 1;
+	if (DrawDoneCB != NULL) {
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(&exceptionContext);
+		DrawDoneCB();
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(context);
+	}
+	OSWakeupThread(&FinishQueue);
 }
 
 /*
@@ -531,41 +483,18 @@ void GXFinishInterruptHandler(void)
  */
 void __GXPEInit(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8021
-	  stw       r0, 0x4(r1)
-	  addi      r4, r3, 0x9BC
-	  li        r3, 0x12
-	  stwu      r1, -0x8(r1)
-	  bl        -0x17B18
-	  lis       r3, 0x8021
-	  addi      r4, r3, 0xA44
-	  li        r3, 0x13
-	  bl        -0x17B28
-	  addi      r3, r13, 0x345C
-	  bl        -0x15024
-	  li        r3, 0x2000
-	  bl        -0x1775C
-	  li        r3, 0x1000
-	  bl        -0x17764
-	  lwz       r3, 0x3428(r13)
-	  lhzu      r0, 0xA(r3)
-	  rlwinm    r0,r0,0,30,28
-	  ori       r0, r0, 0x4
-	  rlwinm    r0,r0,0,29,27
-	  ori       r0, r0, 0x8
-	  rlwinm    r0,r0,0,0,30
-	  ori       r0, r0, 0x1
-	  rlwinm    r0,r0,0,31,29
-	  ori       r0, r0, 0x2
-	  sth       r0, 0x0(r3)
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	u32 reg;
+	__OSSetInterruptHandler(0x12, GXTokenInterruptHandler);
+	__OSSetInterruptHandler(0x13, GXFinishInterruptHandler);
+	OSInitThreadQueue(&FinishQueue);
+	__OSUnmaskInterrupts(0x2000);
+	__OSUnmaskInterrupts(0x1000);
+	reg = __peReg[5];
+	SET_REG_FIELD(0, reg, 1, 2, 1);
+	SET_REG_FIELD(0, reg, 1, 3, 1);
+	SET_REG_FIELD(0, reg, 1, 0, 1);
+	SET_REG_FIELD(0, reg, 1, 1, 1);
+	__peReg[5] = reg;
 }
 
 /*
@@ -573,9 +502,69 @@ void __GXPEInit(void)
  * Address:	........
  * Size:	000134
  */
-void GXCompressZ16(void)
+u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 {
-	// UNUSED FUNCTION
+	u32 z16;
+	u32 z24n;
+	s32 exp;
+	s32 shift;
+#if DEBUG
+#define temp exp
+#else
+	s32 temp;
+	u8 unused[4];
+#endif
+
+	z24n = ~(z24 << 8);
+	temp = __cntlzw(z24n);
+	switch (zfmt) {
+	case GX_ZC_LINEAR:
+		z16 = (z24 >> 8) & 0xFFFF;
+		break;
+	case GX_ZC_NEAR:
+		if (temp > 3) {
+			exp = 3;
+		} else {
+			exp = temp;
+		}
+		if (exp == 3) {
+			shift = 7;
+		} else {
+			shift = 9 - exp;
+		}
+		z16 = ((z24 >> shift) & 0x3FFF & ~0xFFFFC000) | (exp << 14);
+		break;
+	case GX_ZC_MID:
+		if (temp > 7) {
+			exp = 7;
+		} else {
+			exp = temp;
+		}
+		if (exp == 7) {
+			shift = 4;
+		} else {
+			shift = 10 - exp;
+		}
+		z16 = ((z24 >> shift) & 0x1FFF & ~0xFFFFE000) | (exp << 13);
+		break;
+	case GX_ZC_FAR:
+		if (temp > 12) {
+			exp = 12;
+		} else {
+			exp = temp;
+		}
+		if (exp == 12) {
+			shift = 0;
+		} else {
+			shift = 11 - exp;
+		}
+		z16 = ((z24 >> shift) & 0xFFF & ~0xFFFFF000) | (exp << 12);
+		break;
+	default:
+		OSPanic(__FILE__, 953, "GXCompressZ16: Invalid Z format\n");
+		break;
+	}
+	return z16;
 }
 
 /*
@@ -583,7 +572,57 @@ void GXCompressZ16(void)
  * Address:	........
  * Size:	00011C
  */
-void GXDecompressZ16(void)
+u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 {
-	// UNUSED FUNCTION
+	u32 z24;
+	u32 cb1;
+	long exp;
+	long shift;
+
+	cb1;
+	cb1;
+	cb1;
+	z16;
+	z16;
+	z16; // needed to match
+
+	switch (zfmt) {
+	case GX_ZC_LINEAR:
+		z24 = (z16 << 8) & 0xFFFF00;
+		break;
+	case GX_ZC_NEAR:
+		exp = (z16 >> 14) & 3;
+		if (exp == 3) {
+			shift = 7;
+		} else {
+			shift = 9 - exp;
+		}
+		cb1 = -1 << (24 - exp);
+		z24 = (cb1 | ((z16 & 0x3FFF) << shift)) & 0xFFFFFF;
+		break;
+	case GX_ZC_MID:
+		exp = (z16 >> 13) & 7;
+		if (exp == 7) {
+			shift = 4;
+		} else {
+			shift = 10 - exp;
+		}
+		cb1 = -1 << (24 - exp);
+		z24 = (cb1 | ((z16 & 0x1FFF) << shift)) & 0xFFFFFF;
+		break;
+	case GX_ZC_FAR:
+		exp = (z16 >> 12) & 0xF;
+		if (exp == 12) {
+			shift = 0;
+		} else {
+			shift = 11 - exp;
+		}
+		cb1 = -1 << (24 - exp);
+		z24 = (cb1 | ((z16 & 0xFFF) << shift)) & 0xFFFFFF;
+		break;
+	default:
+		OSPanic(__FILE__, 1003, "GXDecompressZ16: Invalid Z format\n");
+		break;
+	}
+	return z24;
 }

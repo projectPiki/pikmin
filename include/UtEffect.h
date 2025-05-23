@@ -335,7 +335,7 @@ struct UfoSuikomiEffect : public KEffect {
 		if (mEfx) {
 			return;
 		}
-		mEfx          = effectMgr->create(EffectMgr::EFF_Rocket_Nke1, _0C, this, this);
+		mEfx          = effectMgr->create(EffectMgr::EFF_Rocket_Suck2, _0C, this, this);
 		Vector3f diff = _18 - _0C;
 		mEfx->setNewtonField(Vector3f(_18), 0.0016f, true);
 		diff.normalise();
@@ -372,11 +372,11 @@ struct WhistleTemplate : public KEffect {
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _24
 	{
 		// NON-MATCHING
-		Vector3f diff = _0C - _18;
-		f32 ratio     = f32(ptcl->_2E) / f32(ptcl->_2C);
-		f32 compRatio = 1.0f - ratio;
-		ptcl->_18     = _18;
-		ptcl->_0C     = diff * ratio;
+		Vector3f diff         = _0C - _18;
+		f32 ratio             = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
+		f32 compRatio         = 1.0f - ratio;
+		ptcl->mGlobalPosition = _18;
+		ptcl->mLocalPosition  = diff * ratio;
 
 		if (_0C.y < _18.y + 15.0f) {
 			CollTriInfo* tri = mapMgr->getCurrTri(_0C.x, _0C.z, true);
@@ -393,11 +393,11 @@ struct WhistleTemplate : public KEffect {
 			q1.fromMat3f(mtx1);
 			q2.fromMat3f(mtx2);
 			q1.slerp(q2, ratio, 0);
-			q1.genVectorY(ptcl->_5C);
-			q1.genVectorX(ptcl->_34);
-			ptcl->_34.multiply(0.01f);
+			q1.genVectorY(ptcl->mOrientedNormal);
+			q1.genVectorX(ptcl->mVelocity);
+			ptcl->mVelocity.multiply(0.01f);
 		} else {
-			ptcl->_5C.set(diff);
+			ptcl->mOrientedNormal.set(diff);
 		}
 
 		return false;
@@ -448,7 +448,7 @@ struct WhistleTemplate : public KEffect {
  */
 struct UfoSuckEffect : public WhistleTemplate {
 	UfoSuckEffect()
-	    : WhistleTemplate(EffectMgr::EFF_Rocket_Bm2, EffectMgr::EFF_Rocket_Suck2)
+	    : WhistleTemplate(EffectMgr::EFF_Rocket_Bm1, EffectMgr::EFF_Rocket_Bm2)
 	{
 	}
 

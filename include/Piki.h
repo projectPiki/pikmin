@@ -7,44 +7,17 @@
 #include "StateMachine.h"
 #include "UtEffect.h"
 #include "OdoMeter.h"
+#include "GlobalGameOptions.h"
 #include "Route.h"
 
 #define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
 #define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms
-#define MAX_PIKI_ON_FIELD (100)
 
 struct TopAction;
 struct Navi;
 struct PikiStateMachine;
 struct PikiProp;
 struct PikiState;
-
-/**
- * @brief TODO
- */
-enum PikiColor {
-	Blue   = 0,
-	Red    = 1,
-	Yellow = 2,
-	PikiColorCount, // 3
-
-	PikiMinColor = Blue,
-	PikiMaxColor = Yellow,
-	PIKI_Kinoko  = 3,
-};
-
-/**
- * @brief TODO
- */
-enum PikiHappa {
-	Leaf   = 0,
-	Bud    = 1,
-	Flower = 2,
-	PikiHappaCount, // 3
-
-	PikiMinHappa = Leaf,
-	PikiMaxHappa = Flower,
-};
 
 /**
  * @brief TODO

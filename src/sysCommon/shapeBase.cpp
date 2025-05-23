@@ -446,7 +446,7 @@ CamDataInfo::CamDataInfo()
 	mCamera.mNear        = 1.0f;
 	mCamera.mFar         = 15000.0f;
 	mCamera.mAspectRatio = 640.0f / 480.0f;
-	mUseStaticCam        = 0;
+	mUseStaticCamera     = 0;
 };
 
 /*
@@ -537,7 +537,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 		mCamera.mFocus.y += (mCameraLookAt.y - mCamera.mFocus.y) * mBlendRatio;
 		mCamera.mFocus.z += (mCameraLookAt.z - mCamera.mFocus.z) * mBlendRatio;
 
-	} else if (mUseStaticCam) {
+	} else if (mUseStaticCamera) {
 		mCamera.mFocus = mStaticLookAt;
 	}
 
@@ -605,9 +605,9 @@ void LightDataInfo::update(f32 p1)
 		}
 	}
 
-	_54 = ((f32*)&vec2)[-1] == 1.0f;
+	mIsActive = ((f32*)&vec2)[-1] == 1.0f;
 
-	if (_54) {
+	if (mIsActive) {
 		mLight.mDiffuseColour.set(vec2.x, vec2.y, vec2.z, 255);
 		mLight.mPosition.set(vec1);
 		mLight.mDistancedRange = 1000.0f;
@@ -1749,13 +1749,13 @@ void ShapeDynMaterials::animate(f32* data)
 
 			for (int j = 0; j < 3; j++) {
 				if (mat.mTevInfo->mTevColRegs[j]._08) {
-					mat.mTevInfo->mTevColRegs[j].animate(data, mat.mTevInfo->mTevColRegs[j]._00);
+					mat.mTevInfo->mTevColRegs[j].animate(data, mat.mTevInfo->mTevColRegs[j].mAnimatedColor);
 				}
 			}
 
-			for (int j = 0; j < mat.mTextureInfo.mTextureDataCount; j++) {
-				if (mat.mTextureInfo.mTextureData[j]._14 != 255) {
-					mat.mTextureInfo.mTextureData[j].animate(data, mat.mTextureInfo.mTextureData[j]._5C);
+			for (int j = 0; j < (int)mat.mTextureInfo.mTextureDataCount; j++) {
+				if (mat.mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
+					mat.mTextureInfo.mTextureData[j].animate(data, mat.mTextureInfo.mTextureData[j].mAnimatedTexMtx);
 				}
 			}
 		}
@@ -1778,13 +1778,14 @@ void ShapeDynMaterials::updateContext()
 
 			for (int j = 0; j < 3; j++) {
 				if (mat.mTevInfo->mTevColRegs[j]._08) {
-					mShape->mMaterialList[mat.mIndex].mTevInfo->mTevColRegs[j]._00 = mat.mTevInfo->mTevColRegs[j]._00;
+					mShape->mMaterialList[mat.mIndex].mTevInfo->mTevColRegs[j].mAnimatedColor = mat.mTevInfo->mTevColRegs[j].mAnimatedColor;
 				}
 			}
 
-			for (int j = 0; j < mat.mTextureInfo.mTextureDataCount; j++) {
-				if (mat.mTextureInfo.mTextureData[j]._14 != 255) {
-					mShape->mMaterialList[mat.mIndex].mTextureInfo.mTextureData[j]._5C = mat.mTextureInfo.mTextureData[j]._5C;
+			for (int j = 0; j < (int)mat.mTextureInfo.mTextureDataCount; j++) {
+				if (mat.mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
+					mShape->mMaterialList[mat.mIndex].mTextureInfo.mTextureData[j].mAnimatedTexMtx
+					    = mat.mTextureInfo.mTextureData[j].mAnimatedTexMtx;
 				}
 			}
 		}
@@ -1845,12 +1846,12 @@ BaseShape::BaseShape()
 	mTexCoordList[6] = nullptr;
 	mTexCoordList[7] = nullptr;
 
-	mNormalList       = nullptr;
-	mNBTList          = 0;
-	_29C              = 0;
-	mAttrListMatCount = 0;
-	_2A0              = nullptr;
-	_2A8              = nullptr;
+	mNormalList           = nullptr;
+	mNBTList              = 0;
+	mFallbackTexAttrCount = 0;
+	mAttrListMatCount     = 0;
+	mResolvedTextureList  = nullptr;
+	mTextureNameList      = nullptr;
 
 	mBaseRoomCount = 0;
 	mRoomInfoList  = nullptr;
@@ -1888,8 +1889,8 @@ void BaseShape::countMaterials(Joint* joint, u32 p2)
 							check2 = true;
 						}
 					}
-					for (int j = 0; j < mat->mTextureInfo.mTextureDataCount; j++) {
-						if (mat->mTextureInfo.mTextureData[j]._14 != 255) {
+					for (int j = 0; j < (int)mat->mTextureInfo.mTextureDataCount; j++) {
+						if (mat->mTextureInfo.mTextureData[j].mAnimationFactor != 255) {
 							check2 = true;
 						}
 					}
@@ -2084,12 +2085,12 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 	gsys->mTimer->start("drawShape", true);
 	u32 prevRender = gfx.mRenderState;
 	if (mMeshCount) {
-		if (!(mSystemFlags & 4) && (mSystemFlags & 2) && (gfx.mRenderState & 0x400)) {
+		if (!(mSystemFlags & ShapeFlags::AlwaysRedraw) && (mSystemFlags & ShapeFlags::AllowCaching) && (gfx.mRenderState & 0x400)) {
 			gfx.cacheShape(this, dynMats);
 			gfx.mRenderState &= ~0x400;
 		}
 
-		if ((mSystemFlags & 0x4) || (gfx.mRenderState & (0x8000 | 0x300))) {
+		if ((mSystemFlags & ShapeFlags::AlwaysRedraw) || (gfx.mRenderState & (0x8000 | 0x300))) {
 			if (dynMats) {
 				for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mParent) {
 					iMat->updateContext();
@@ -2118,31 +2119,31 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
  */
 void BaseShape::resolveTextureNames()
 {
-	if (_2A8) {
+	if (mTextureNameList) {
 		for (int i = 0; i < mAttrListMatCount; i++) {
-			char* texName = &_2A8[32 * i];
+			char* texName = &mTextureNameList[32 * i];
 			char filepath[PATH_MAX];
 			sprintf(filepath, "%s%s", gsys->mTextureBase2, texName);
-			_2A0[i] = gsys->loadTexture(filepath, true);
-			if (!_2A0[i]) {
+			mResolvedTextureList[i] = gsys->loadTexture(filepath, true);
+			if (!mResolvedTextureList[i]) {
 				sprintf(filepath, "%s%s", gsys->mTextureBase1, texName);
-				_2A0[i] = gsys->loadTexture(filepath, true);
+				mResolvedTextureList[i] = gsys->loadTexture(filepath, true);
 			}
 
-			if (!_2A0[i]) {
+			if (!mResolvedTextureList[i]) {
 				PRINT("Could not load texture %s\n", texName);
 			}
 		}
 	}
 
-	if (_29C || mAttrListMatCount) {
-		PRINT("making tmp attrlist and materials : %d : %d\n", _29C, mAttrListMatCount);
-		int count    = _29C ? _29C : mAttrListMatCount;
+	if (mFallbackTexAttrCount || mAttrListMatCount) {
+		PRINT("making tmp attrlist and materials : %d : %d\n", mFallbackTexAttrCount, mAttrListMatCount);
+		int count    = mFallbackTexAttrCount ? mFallbackTexAttrCount : mAttrListMatCount;
 		mTexAttrList = new TexAttr[count];
 		for (int i = 0; i < count; i++) {
 			mTexAttrList[i].mIndex        = i;
 			mTexAttrList[i].mTextureIndex = (i | mAttrListMatCount != 0) ? 0x8000 : 0;
-			mTexAttrList[i].mTexture      = _2A0[i];
+			mTexAttrList[i].mTexture      = mResolvedTextureList[i];
 		}
 
 		Material* matList = new Material[count];
@@ -2375,7 +2376,7 @@ void BaseShape::read(RandomAccessStream& stream)
 				for (int i = 0; i < mMaterialCount; i++) {
 					mMaterialList[i].mIndex = i;
 					mMaterialList[i].read(stream);
-					mMaterialList[i].mTevInfo = &mTevInfoList[mMaterialList[i]._8C];
+					mMaterialList[i].mTevInfo = &mTevInfoList[mMaterialList[i].mTevInfoIndex];
 
 					MatobjInfo* info = new MatobjInfo;
 					info->mTarget    = &mMaterialList[i];
@@ -2540,9 +2541,9 @@ void BaseShape::read(RandomAccessStream& stream)
 			CollGroup* tmpGroups = new CollGroup[groupCount];
 
 			for (int i = 0; i < groupCount; i++) {
-				tmpGroups[i]._06           = stream.readShort();
-				tmpGroups[i].mTriCount     = stream.readShort();
-				tmpGroups[i].mTriangleList = new CollTriInfo*[tmpGroups[i].mTriCount];
+				tmpGroups[i].mFarCulledTriCount = stream.readShort();
+				tmpGroups[i].mTriCount          = stream.readShort();
+				tmpGroups[i].mTriangleList      = new CollTriInfo*[tmpGroups[i].mTriCount];
 
 				if (tmpGroups[i].mTriCount > maxTrisPerGroup) {
 					maxTrisPerGroup = tmpGroups[i].mTriCount;
@@ -2553,10 +2554,10 @@ void BaseShape::read(RandomAccessStream& stream)
 					tmpGroups[i].mTriangleList[j] = &mTriList[idx];
 				}
 
-				if (tmpGroups[i]._06) {
-					tmpGroups[i]._0C = new u8[tmpGroups[i]._06];
-					for (int j = 0; j < tmpGroups[i]._06; j++) {
-						tmpGroups[i]._0C[j] = stream.readByte();
+				if (tmpGroups[i].mFarCulledTriCount) {
+					tmpGroups[i].mFarCulledTriDistances = new u8[tmpGroups[i].mFarCulledTriCount];
+					for (int j = 0; j < tmpGroups[i].mFarCulledTriCount; j++) {
+						tmpGroups[i].mFarCulledTriDistances[j] = stream.readByte();
 					}
 				}
 			}
@@ -2682,7 +2683,7 @@ void BaseShape::initIni(bool p1)
 		gsys->setHeap(heapIdx);
 		if (idx != -1) {
 			light->mFlareGroup->mMaterial = mat;
-			light->mFlareGroup->mTexture  = mat->_24;
+			light->mFlareGroup->mTexture  = mat->mTexture;
 		}
 	}
 
@@ -2693,7 +2694,7 @@ void BaseShape::initIni(bool p1)
 				coll->mPlatShape->createCollisions(32);
 			}
 			if (coll->mFlags) {
-				coll->mPlatShape->mSystemFlags |= 0x10;
+				coll->mPlatShape->mSystemFlags |= ShapeFlags::IsPlatform;
 			}
 		}
 		for (ObjCollInfo* childColl = (ObjCollInfo*)coll->Child(); childColl; childColl = (ObjCollInfo*)childColl->mNext) {
@@ -2703,7 +2704,7 @@ void BaseShape::initIni(bool p1)
 					childColl->mPlatShape->createCollisions(32);
 				}
 				if (childColl->mFlags) {
-					childColl->mPlatShape->mSystemFlags |= 0x10;
+					childColl->mPlatShape->mSystemFlags |= ShapeFlags::IsPlatform;
 				}
 			}
 		}
@@ -2712,7 +2713,7 @@ void BaseShape::initIni(bool p1)
 	for (RouteGroup* route = (RouteGroup*)mRouteGroup.Child(); route; route = (RouteGroup*)route->mNext) {
 		// route->_BC = gsys->loadTexture("rootRing.txe", true);
 		// route->_BC->mTexFlags = (0x100 | 0x1);
-		route->_BC = nullptr;
+		route->mDebugWaypointTexture = nullptr;
 	}
 }
 
@@ -2731,7 +2732,7 @@ void BaseShape::initialise()
 			mTexAttrList[i].initImage();
 		} else {
 			if (!mTexAttrList[i].mTexture) {
-				mTexAttrList[i].mTexture = _2A0[mTexAttrList[i].mTextureIndex & 0x7FFF];
+				mTexAttrList[i].mTexture = mResolvedTextureList[mTexAttrList[i].mTextureIndex & 0x7FFF];
 			}
 		}
 	}
@@ -2739,15 +2740,16 @@ void BaseShape::initialise()
 	for (int i = 0; i < mMaterialCount; i++) {
 		if (mMaterialList[i].mFlags & 1) {
 			for (int j = 0; j < mMaterialList[i].mTextureInfo.mTextureDataCount; j++) {
-				mMaterialList[i].mTextureInfo.mTextureData[j]._04 = &mTexAttrList[mMaterialList[i].mTextureInfo.mTextureData[j]._00];
-				mMaterialList[i].mTextureInfo.mTextureData[j]._08
-				    = mTexAttrList[mMaterialList[i].mTextureInfo.mTextureData[j]._00].mTexture;
+				mMaterialList[i].mTextureInfo.mTextureData[j].mTextureAttribute
+				    = &mTexAttrList[mMaterialList[i].mTextureInfo.mTextureData[j].mSourceAttrIndex];
+				mMaterialList[i].mTextureInfo.mTextureData[j].mTexture
+				    = mTexAttrList[mMaterialList[i].mTextureInfo.mTextureData[j].mSourceAttrIndex].mTexture;
 			}
 		} else if (mMaterialList[i].mTextureIndex != -1) {
-			mMaterialList[i]._20 = &mTexAttrList[mMaterialList[i].mTextureIndex];
-			mMaterialList[i]._24 = mTexAttrList[mMaterialList[i].mTextureIndex].mTexture;
+			mMaterialList[i].mAttribute = &mTexAttrList[mMaterialList[i].mTextureIndex];
+			mMaterialList[i].mTexture   = mTexAttrList[mMaterialList[i].mTextureIndex].mTexture;
 		} else {
-			mMaterialList[i]._24 = nullptr;
+			mMaterialList[i].mTexture = nullptr;
 		}
 	}
 

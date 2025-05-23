@@ -3675,7 +3675,7 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
-		rumbleMgr->start(0, 0, nullptr);
+		rumbleMgr->start(RUMBLE_Unk0, 0, nullptr);
 		if (piki->mGroundTriangle && MapCode::getAttribute(piki->mGroundTriangle) == ATTR_Water) {
 			effectMgr->create(EffectMgr::EFF_P_Bubbles, piki->mPosition, nullptr, nullptr);
 		} else {

@@ -14,7 +14,7 @@ void Jac_HVQM_ThreadStart(void);
 void Jac_HVQM_Update(void);
 void Jac_HVQM_ForceStop(void);
 void Jac_CountReadyPictures(void);
-int Jac_GetPicture(void); // TODO: types unsure (return can be -1 though)
+int Jac_GetPicture(void*, int*, int*); // TODO: types unsure (return can be -1 though)
 
 #ifdef __cplusplus
 };

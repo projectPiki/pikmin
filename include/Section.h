@@ -10,24 +10,26 @@ struct Menu;
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x44.
  */
 struct BaseGameSection : public Node {
 	BaseGameSection();
 
 	virtual void draw(Graphics&); // _14
-	virtual void openMenu();      // _30
+	virtual void openMenu() { }   // _30
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Menu* _20;               // _20
-	Controller* mController; // _24
-	f32 mCurrentFade;        // _28
-	f32 mTargetFade;         // _2C
-	f32 mFadeSpeed;          // _30
-	ModeState* _34;          // _34, unknown
-	ModeState* _38;          // _38, unknown
-	u32 _3C;                 // _3C, unknown
-	u32 _40;                 // _40, unknown
+	Menu* mActiveMenu;            // _20
+	Controller* mController;      // _24
+	f32 mCurrentFade;             // _28
+	f32 mTargetFade;              // _2C
+	f32 mFadeSpeed;               // _30
+	ModeState* mCurrentModeState; // _34, unknown
+	ModeState* mNextModeState;    // _38, unknown
+	u32 mUpdateFlags;             // _3C, unknown
+	int mNextSectionId;           // _40
 };
 
 /**

@@ -94,7 +94,7 @@ u32 PADRead(PADStatus* status);
 void PADSetSamplingRate(u32 msec);
 void PADClamp(PADStatus* status);
 void PADClampCircle(PADStatus* status);
-void PADControlAllMotors(u32* command);
+void PADControlAllMotors(const u32* command);
 void PADControlMotor(s32 chan, u32 command);
 BOOL PADRecalibrate(u32 mask);
 BOOL PADSync(void);

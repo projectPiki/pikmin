@@ -53,20 +53,20 @@ struct ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
-		_5C        = 0;
-		_60        = 0;
-		_64        = 0;
-		mAnim.mMgr = 0;
-		_19E       = 0;
-		_19D       = 0;
-		_19F       = 0;
-		_19C       = 0;
-		_6C        = 0;
-		_70        = 1;
-		_74        = -1;
-		_80        = 0.0f;
-		_68        = 2;
-		_78        = 0;
+		mAnimInstance  = 0;
+		mModelInstance = 0;
+		_64            = 0;
+		mAnim.mMgr     = 0;
+		_19E           = 0;
+		mMeteorFlag    = 0;
+		_19F           = 0;
+		_19C           = 0;
+		_6C            = 0;
+		mAnimationId   = 1;
+		mColourIndex   = -1;
+		mColourValue   = 0.0f;
+		mFlags         = 2;
+		mIsLeaf        = 0;
 	}
 
 	void exitInstance();
@@ -79,29 +79,29 @@ struct ActorInstance : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Animator mAnim;                     // _14
-	ShapeDynMaterials mDynMat;          // _48
-	Shape* _58;                         // _58
-	CineShapeObject* _5C;               // _5C
-	CineShapeObject* _60;               // _60
-	int _64;                            // _64
-	int _68;                            // _68
-	int _6C;                            // _6C
-	int _70;                            // _70
-	int _74;                            // _74
-	int _78;                            // _78
-	CinematicPlayer* _7C;               // _7C
-	f32 _80;                            // _80
-	Vector3f _84;                       // _84
-	Vector3f _90;                       // _90
-	Vector3f _9C[9];                    // _9C
-	Vector3f _108[4];                   // _108
-	zen::particleGenerator* _138[9];    // _138
-	zen::particleGenerator* _15C[4][4]; // _15C
-	u8 _19C;                            // _19C
-	u8 _19D;                            // _19D
-	u8 _19E;                            // _19E
-	u8 _19F;                            // _19F
+	Animator mAnim;                            // _14
+	ShapeDynMaterials mDynMat;                 // _48
+	Shape* mLeafModel;                         // _58
+	CineShapeObject* mAnimInstance;            // _5C
+	CineShapeObject* mModelInstance;           // _60
+	int _64;                                   // _64
+	int mFlags;                                // _68
+	int _6C;                                   // _6C
+	int mAnimationId;                          // _70
+	int mColourIndex;                          // _74
+	int mIsLeaf;                               // _78
+	CinematicPlayer* mParentPlayer;            // _7C
+	f32 mColourValue;                          // _80
+	Vector3f mCenterPosition;                  // _84
+	Vector3f _90;                              // _90
+	Vector3f mJointPositions[9];               // _9C
+	Vector3f _108[4];                          // _108
+	zen::particleGenerator* mEffectList[9];    // _138
+	zen::particleGenerator* mEffectGrid[4][4]; // _15C
+	u8 _19C;                                   // _19C
+	u8 mMeteorFlag;                            // _19D
+	u8 _19E;                                   // _19E
+	u8 _19F;                                   // _19F
 };
 
 /**
@@ -114,11 +114,10 @@ struct SceneCut : public CoreNode {
 		mStartFrame = 0;
 		mEndFrame   = 0;
 		mActor.initCore("");
-		mFlags     = 3;
-		_20        = 0;
-		mSceneData = 0;
-		mKey.mNext = &mKey;
-		mKey.mPrev = &mKey;
+		mFlags     = 0x1 | 0x2;
+		mSceneId   = 0;
+		mSceneData = nullptr;
+		mKey.mPrev = mKey.mNext = &mKey;
 	}
 
 	ActorInstance* addInstance(char*);
@@ -128,14 +127,14 @@ struct SceneCut : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mFlags;            // _14
-	int mStartFrame;       // _18
-	int mEndFrame;         // _1C
-	int _20;               // _20
-	SceneData* mSceneData; // _24
-	ActorInstance mActor;  // _28
-	AnimKey mKey;          // _1C8
-	CinematicPlayer* _1D8; // _1D8
+	int mFlags;                     // _14
+	int mStartFrame;                // _18
+	int mEndFrame;                  // _1C
+	int mSceneId;                   // _20
+	SceneData* mSceneData;          // _24
+	ActorInstance mActor;           // _28
+	AnimKey mKey;                   // _1C8
+	CinematicPlayer* mParentPlayer; // _1D8
 };
 
 /**
@@ -145,9 +144,8 @@ struct CineShapeObject : public CoreNode {
 	CineShapeObject()
 	    : CoreNode("")
 	{
-		_30 = 0;
-		_1C = 0;
-		_18 = 0;
+		mMgr          = nullptr;
+		mAnimFileName = mBundleFileName = nullptr;
 	}
 
 	// unused/inlined:
@@ -155,11 +153,11 @@ struct CineShapeObject : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Shape* _14;           // _14
-	char* _18;            // _18
-	char* _1C;            // _1C
-	AnimContext mContext; // _20
-	AnimMgr* _30;         // _30
+	Shape* mShape;         // _14
+	char* mAnimFileName;   // _18
+	char* mBundleFileName; // _1C
+	AnimContext mContext;  // _20
+	AnimMgr* mMgr;         // _30
 };
 
 struct CinematicPlayer {
@@ -167,7 +165,7 @@ struct CinematicPlayer {
 
 	void init(char*);
 	void loadCin(char*);
-	SceneData* addScene(SceneData*);
+	void addScene(SceneData*);
 	SceneCut* addCut(int, int, int);
 	void addActor(CineShapeObject*);
 	void addActor(char*, char*, char*);
@@ -178,12 +176,12 @@ struct CinematicPlayer {
 	void refresh(Graphics&);
 
 	// unused/inlined:
-	void addScene(char*);
+	SceneData* addScene(char*);
 
 	// DLL inlines
 	CineShapeObject* findActor(char* name)
 	{
-		for (CineShapeObject* actor = (CineShapeObject*)_80.mChild; actor; actor = (CineShapeObject*)actor->mNext) {
+		for (CineShapeObject* actor = (CineShapeObject*)mActorList.mChild; actor; actor = (CineShapeObject*)actor->mNext) {
 			if (!strcmp(actor->mName, name)) {
 				return actor;
 			}
@@ -194,9 +192,9 @@ struct CinematicPlayer {
 	SceneData* findScene(int id)
 	{
 		int i = 0;
-		for (SceneData* shape = (SceneData*)_4C.mChild; shape; shape = (SceneData*)shape->mNext) {
+		for (SceneData* scene = (SceneData*)mSceneList.mChild; scene; scene = (SceneData*)scene->mNext) {
 			if (i == id) {
-				return shape;
+				return scene;
 			}
 			i++;
 		}
@@ -214,7 +212,7 @@ struct CinematicPlayer {
 	{
 		mTotalSceneDuration = 0;
 		for (CineShapeObject* shape = (CineShapeObject*)mCutList.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
-			mTotalSceneDuration += abs(shape->_1C - shape->_18);
+			mTotalSceneDuration += abs(shape->mBundleFileName - shape->mAnimFileName);
 		}
 
 		if (mCurrentPlaybackTime >= (f32)mTotalSceneDuration) {
@@ -226,14 +224,13 @@ struct CinematicPlayer {
 	void saveCin(char*);
 	void truncateName(char*);
 
-	// TODO: members
-	u32 mFlags;                 // _00
+	u32 mFlags;                 // _00, 0x20000 = use static camera
 	int mType;                  // _04
 	Matrix4f mMtx;              // _08
-	u32 _48;                    // _48
-	SceneData _4C;              // _4C
+	Creature* mTarget;          // _48
+	SceneData mSceneList;       // _4C
 	SceneData* mCurrentScene;   // _7C
-	CineShapeObject _80;        // _80
+	CineShapeObject mActorList; // _80
 	SceneCut mCutList;          // _B4
 	SceneCut* mCurrentCut;      // _290
 	SceneCut* mPreviousCut;     // _294
@@ -247,10 +244,10 @@ struct CinematicPlayer {
 	int mCutTransitionFlag;     // _2B4
 	Vector3f mCameraPosition;   // _2B8
 	Vector3f mCameraLookAt;     // _2CC
-	Vector3f _2D0;              // _2D0
+	Vector3f mStaticLookAt;     // _2D0
 	f32 mCameraTargetFov;       // _2DC
 	f32 mCameraBlendRatio;      // _2E0
-	bool _2E4;                  // _2E4
+	bool mUseStaticCamera;      // _2E4
 	bool mIsPlaying;            // _2E5
 };
 

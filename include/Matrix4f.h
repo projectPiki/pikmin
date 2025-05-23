@@ -25,15 +25,15 @@ struct Matrix4f {
 	void makeConcatSRT(Matrix4f*, Matrix4f&, struct SRT&);
 	void inverse(Matrix4f*);
 	void scale(Vector3f&);
-	void makeLookat(Vector3f&, Vector3f&, Vector3f*);
-	void makeLookat(Vector3f&, Vector3f&, Vector3f&, Vector3f&);
+	void makeLookat(Vector3f& cameraPos, Vector3f& targetPos, Vector3f* optionalUp);
+	void makeLookat(Vector3f& cameraPos, Vector3f& rightDir, Vector3f& upDir, Vector3f& backDir);
 	void transposeTo(Matrix4f&);
 	void makeVQS(Vector3f&, struct Quat&, Vector3f&);
 
 	// unused/inlined:
 	void blend(Matrix4f&, f32);
 	void makeOrtho(f32, f32, f32, f32, f32, f32, f32);
-	void makePerspective(f32, f32, f32, f32);
+	void makePerspective(f32 fovY, f32 aspectRatio, f32 nearZ, f32 farZ);
 	void makeBallRotate(Vector3f&);
 	void rotate(Vector3f&, f32);
 	void rotate(Vector3f&);
@@ -114,5 +114,14 @@ struct Matrix4f {
 // this is a weird place to put these, but they get initialised in matMath.cpp, so?
 extern f32 sintable[0x1000];
 extern f32 costable[0x1000];
+
+static inline f32 sinShort(u16 x)
+{
+	return sintable[(x >> 4) & 0xFFF];
+}
+static inline f32 cosShort(u16 x)
+{
+	return costable[(x >> 4) & 0xFFF];
+}
 
 #endif

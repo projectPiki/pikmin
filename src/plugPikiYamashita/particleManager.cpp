@@ -46,12 +46,12 @@ void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildP
 	mMaxChildParticles = numChildParticles;
 	mPtclGenList       = new particleGenerator[numPtclGens];
 
-	_00.init();
-	_10.init();
+	mActiveGenList.init();
+	mInactiveGenList.init();
 	_20.init();
 
 	for (int i = 0; i < numPtclGens; i++) {
-		_10.put(&mPtclGenList[i]);
+		mInactiveGenList.put(&mPtclGenList[i]);
 	}
 
 	mMdlMgr.init(numParticles, numChildParticles);
@@ -66,13 +66,13 @@ void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildP
  * Address:	801A1288
  * Size:	000074
  */
-zen::particleGenerator* zen::particleManager::createGenerator(u8* p1, Texture* p2, Texture* p3, Vector3f& p4,
-                                                              zen::CallBack1<zen::particleGenerator*>* p5,
-                                                              zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* p6)
+zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture* tex, Texture* childTex, Vector3f& pos,
+                                                              zen::CallBack1<zen::particleGenerator*>* cbGen,
+                                                              zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {
 	particleGenerator* ptclGen = pmGetPtclGen();
 	if (ptclGen) {
-		ptclGen->init(p1, p2, p3, p4, &mMdlMgr, p5, p6);
+		ptclGen->init(data, tex, childTex, pos, &mMdlMgr, cbGen, cbPtcl);
 	}
 	return ptclGen;
 }
@@ -84,20 +84,20 @@ zen::particleGenerator* zen::particleManager::createGenerator(u8* p1, Texture* p
  */
 void zen::particleManager::update()
 {
-	zenList* end  = _00.getOrigin();
-	f32 updVal    = _98 * gsys->getFrameTime();
-	zenList* list = _00.getTopList();
+	zenList* end  = mActiveGenList.getOrigin();
+	f32 timeStep  = _98 * gsys->getFrameTime();
+	zenList* list = mActiveGenList.getTopList();
 	while (list != end) {
 		zenList* next          = list->mNext;
 		particleGenerator* gen = (particleGenerator*)list;
-		if (gen->update(updVal)) {
+		if (gen->update(timeStep)) {
 			pmPutPtclGen(list);
 		}
 		list = next;
 	}
 
-	mSimplePtclMgr.update(updVal);
-	_10.merge(&_20); // merges _20 into _10
+	mSimplePtclMgr.update(timeStep);
+	mInactiveGenList.merge(&_20); // merges _20 into _10
 }
 
 /*
@@ -107,7 +107,7 @@ void zen::particleManager::update()
  */
 void zen::particleManager::calcActiveList()
 {
-	mActivePtclGenCount       = _00.getListNum();
+	mActivePtclGenCount       = mActiveGenList.getListNum();
 	mActiveParticleCount      = mMaxParticles - mMdlMgr.getSleepPtclNum();
 	mActiveChildParticleCount = mMaxChildParticles - mMdlMgr.getSleepPtclChildNum();
 }
@@ -129,8 +129,8 @@ void zen::particleManager::debugUpdate()
  */
 void zen::particleManager::draw(Graphics& gfx)
 {
-	zenList* end  = _00.getOrigin();
-	zenList* list = _00.getTopList();
+	zenList* end  = mActiveGenList.getOrigin();
+	zenList* list = mActiveGenList.getTopList();
 	while (list != end) {
 		zenList* next          = list->mNext;
 		particleGenerator* gen = (particleGenerator*)list;
@@ -148,8 +148,8 @@ void zen::particleManager::draw(Graphics& gfx)
  */
 void zen::particleManager::cullingDraw(Graphics& gfx)
 {
-	zenList* end  = _00.getOrigin();
-	zenList* list = _00.getTopList();
+	zenList* end  = mActiveGenList.getOrigin();
+	zenList* list = mActiveGenList.getTopList();
 	while (list != end) {
 		zenList* next          = list->mNext;
 		particleGenerator* gen = (particleGenerator*)list;
@@ -181,15 +181,15 @@ void zen::particleManager::debugDraw(Graphics&)
 void zen::particleManager::killAllGenarator(bool doForceFinish)
 {
 	if (doForceFinish) {
-		while (_00.getOrigin() != _00.getTopList()) {
-			particleGenerator* gen = (particleGenerator*)_00.getTopList();
+		while (mActiveGenList.getOrigin() != mActiveGenList.getTopList()) {
+			particleGenerator* gen = (particleGenerator*)mActiveGenList.getTopList();
 			killGenerator(gen, true);
 		}
 		mSimplePtclMgr.forceFinish();
 
 	} else {
-		zenList* end  = _00.getOrigin();
-		zenList* list = _00.getTopList();
+		zenList* end  = mActiveGenList.getOrigin();
+		zenList* list = mActiveGenList.getTopList();
 		while (list != end) {
 			zenList* next          = list->mNext;
 			particleGenerator* gen = (particleGenerator*)list;
@@ -224,8 +224,8 @@ void zen::particleManager::killGenerator(zen::particleGenerator* gen, bool doFor
 void zen::particleManager::killGenerator(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2,
                                          bool doForceFinish)
 {
-	zenList* end  = _00.getOrigin();
-	zenList* list = _00.getTopList();
+	zenList* end  = mActiveGenList.getOrigin();
+	zenList* list = mActiveGenList.getTopList();
 	while (list != end) {
 		zenList* next          = list->mNext;
 		particleGenerator* gen = (particleGenerator*)list;
@@ -248,8 +248,8 @@ void zen::particleManager::killGenerator(CallBack1<particleGenerator*>* cb1, Cal
 bool zen::particleManager::pmCheckList(zen::particleGenerator* testGen)
 {
 	bool ret               = false;
-	particleGenerator* end = (particleGenerator*)_00.getOrigin();
-	for (particleGenerator* gen = (particleGenerator*)_00.getTopList(); gen != end; gen = (particleGenerator*)gen->mNext) {
+	particleGenerator* end = (particleGenerator*)mActiveGenList.getOrigin();
+	for (particleGenerator* gen = (particleGenerator*)mActiveGenList.getTopList(); gen != end; gen = (particleGenerator*)gen->mNext) {
 		if (gen == testGen) {
 			ret = true;
 			break;
@@ -266,9 +266,9 @@ bool zen::particleManager::pmCheckList(zen::particleGenerator* testGen)
  */
 zen::particleGenerator* zen::particleManager::pmGetPtclGen()
 {
-	particleGenerator* ptclGen = (particleGenerator*)_10.get();
+	particleGenerator* ptclGen = (particleGenerator*)mInactiveGenList.get();
 	if (ptclGen) {
-		_00.put(ptclGen);
+		mActiveGenList.put(ptclGen);
 	}
 
 	return ptclGen;

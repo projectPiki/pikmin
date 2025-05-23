@@ -1000,7 +1000,7 @@ void Jac_CountReadyPictures(void)
  * Address:	8001E860
  * Size:	000228
  */
-int Jac_GetPicture(void)
+int Jac_GetPicture(void*, int*, int*)
 {
 	/*
 	.loc_0x0:

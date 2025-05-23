@@ -1,54 +1,45 @@
-#include "types.h"
+#include "Dolphin/gx.h"
+
+#if DEBUG
+#define GX_WRITE_SOME_REG5(a, b)                  \
+	do {                                          \
+		GX_WRITE_U8(a);                           \
+		GX_WRITE_U32(b);                          \
+		__gxVerif->rasRegs[(b >> 24) & 0xFF] = b; \
+	} while (0)
+#else
+#define GX_WRITE_SOME_REG5(a, b) \
+	do {                         \
+		GX_WRITE_U8(a);          \
+		GX_WRITE_U32(b);         \
+	} while (0)
+#endif
 
 /*
  * --INFO--
  * Address:	80212BC8
  * Size:	00009C
  */
-void GXSetTevIndirect(void)
+void GXSetTevIndirect(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndTexFormat format, GXIndTexBiasSel bias_sel,
+                      GXIndTexMtxID matrix_sel, GXIndTexWrap wrap_s, GXIndTexWrap wrap_t, GXBool add_prev, GXBool utc_lod,
+                      GXIndTexAlphaSel alpha_sel)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  rlwinm    r4,r4,0,30,27
-	  rlwinm    r0,r5,2,0,29
-	  or        r0, r4, r0
-	  lwz       r11, 0x34(r1)
-	  rlwinm    r5,r0,0,28,24
-	  lbz       r12, 0x33(r1)
-	  rlwinm    r0,r6,4,0,27
-	  lwz       r4, 0x2A68(r13)
-	  or        r0, r5, r0
-	  rlwinm    r5,r0,0,25,22
-	  rlwinm    r0,r11,7,0,24
-	  or        r0, r5, r0
-	  rlwinm    r5,r0,0,23,18
-	  rlwinm    r0,r7,9,0,22
-	  or        r0, r5, r0
-	  rlwinm    r5,r0,0,19,15
-	  rlwinm    r0,r8,13,0,18
-	  or        r0, r5, r0
-	  addi      r5, r3, 0x10
-	  rlwinm    r3,r0,0,16,12
-	  rlwinm    r0,r9,16,0,15
-	  or        r0, r3, r0
-	  rlwinm    r3,r0,0,13,11
-	  rlwinm    r0,r12,19,0,12
-	  or        r0, r3, r0
-	  rlwinm    r3,r0,0,12,10
-	  rlwinm    r0,r10,20,4,11
-	  or        r6, r3, r0
-	  li        r0, 0x61
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  rlwinm    r0,r5,24,0,7
-	  rlwimi    r0,r6,0,8,31
-	  stw       r0, -0x8000(r3)
-	  li        r0, 0x1
-	  addi      r1, r1, 0x28
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	u32 reg;
+
+	CHECK_GXBEGIN(0x7F, "GXInitIndTexture");
+	reg = 0;
+	SET_REG_FIELD(0x81, reg, 2, 0, ind_stage);
+	SET_REG_FIELD(0x82, reg, 2, 2, format);
+	SET_REG_FIELD(0x83, reg, 3, 4, bias_sel);
+	SET_REG_FIELD(0x84, reg, 2, 7, alpha_sel);
+	SET_REG_FIELD(0x85, reg, 4, 9, matrix_sel);
+	SET_REG_FIELD(0x86, reg, 3, 13, wrap_s);
+	SET_REG_FIELD(0x87, reg, 3, 16, wrap_t);
+	SET_REG_FIELD(0x88, reg, 1, 19, utc_lod);
+	SET_REG_FIELD(0x89, reg, 1, 20, add_prev);
+	SET_REG_FIELD(0x8A, reg, 8, 24, tev_stage + 16);
+	GX_WRITE_SOME_REG5(0x61, reg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -56,9 +47,64 @@ void GXSetTevIndirect(void)
  * Address:	........
  * Size:	000160
  */
-void GXSetIndTexMtx(void)
+void GXSetIndTexMtx(GXIndTexMtxID mtx_id, const f32 offset[2][3], s8 scale_exp)
 {
-	// UNUSED FUNCTION
+	s32 mtx[6];
+	u32 reg;
+	u32 id;
+
+	CHECK_GXBEGIN(0xA7, "GXSetIndTexMtx");
+
+	switch (mtx_id) {
+	case GX_ITM_0:
+	case GX_ITM_1:
+	case GX_ITM_2:
+		id = mtx_id - 1;
+		break;
+	case GX_ITM_S0:
+	case GX_ITM_S1:
+	case GX_ITM_S2:
+		id = mtx_id - 5;
+		break;
+	case GX_ITM_T0:
+	case GX_ITM_T1:
+	case GX_ITM_T2:
+		id = mtx_id - 9;
+		break;
+	default:
+		id = 0;
+		break;
+	}
+
+	mtx[0] = (int)(1024.0f * offset[0][0]) & 0x7FF;
+	mtx[1] = (int)(1024.0f * offset[1][0]) & 0x7FF;
+	scale_exp += 0x11;
+	reg = 0;
+	SET_REG_FIELD(0xBD, reg, 11, 0, mtx[0]);
+	SET_REG_FIELD(0xBE, reg, 11, 11, mtx[1]);
+	SET_REG_FIELD(0xBF, reg, 2, 22, scale_exp & 3);
+	SET_REG_FIELD(0xC0, reg, 8, 24, id * 3 + 6);
+	GX_WRITE_SOME_REG5(0x61, reg);
+
+	mtx[2] = (int)(1024.0f * offset[0][1]) & 0x7FF;
+	mtx[3] = (int)(1024.0f * offset[1][1]) & 0x7FF;
+	reg    = 0;
+	SET_REG_FIELD(0xC6, reg, 11, 0, mtx[2]);
+	SET_REG_FIELD(0xC7, reg, 11, 11, mtx[3]);
+	SET_REG_FIELD(0xC8, reg, 2, 22, (scale_exp >> 2) & 3);
+	SET_REG_FIELD(0xC9, reg, 8, 24, id * 3 + 7);
+	GX_WRITE_SOME_REG5(0x61, reg);
+
+	mtx[4] = (int)(1024.0f * offset[0][2]) & 0x7FF;
+	mtx[5] = (int)(1024.0f * offset[1][2]) & 0x7FF;
+	reg    = 0;
+	SET_REG_FIELD(0xCF, reg, 11, 0, mtx[4]);
+	SET_REG_FIELD(0xD0, reg, 11, 11, mtx[5]);
+	SET_REG_FIELD(0xD1, reg, 2, 22, (scale_exp >> 4) & 3);
+	SET_REG_FIELD(0xD2, reg, 8, 24, id * 3 + 8);
+	GX_WRITE_SOME_REG5(0x61, reg);
+
+	gx->bpSent = 1;
 }
 
 /*
@@ -66,140 +112,40 @@ void GXSetIndTexMtx(void)
  * Address:	80212C64
  * Size:	0001D4
  */
-void GXSetIndTexCoordScale(void)
+void GXSetIndTexCoordScale(GXIndTexStageID ind_state, GXIndTexScale scale_s, GXIndTexScale scale_t)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x2
-	  beq-      .loc_0xF8
-	  bge-      .loc_0x1C
-	  cmpwi     r3, 0
-	  beq-      .loc_0x28
-	  bge-      .loc_0x90
-	  b         .loc_0x1C4
+	CHECK_GXBEGIN(0xE6, "GXSetIndTexScale");
 
-	.loc_0x1C:
-	  cmpwi     r3, 0x4
-	  bge-      .loc_0x1C4
-	  b         .loc_0x160
-
-	.loc_0x28:
-	  lwz       r6, 0x2A68(r13)
-	  rlwinm    r3,r5,4,0,27
-	  li        r0, 0x61
-	  addi      r7, r6, 0x128
-	  lwz       r6, 0x128(r6)
-	  lis       r5, 0xCC01
-	  rlwinm    r6,r6,0,0,27
-	  or        r4, r6, r4
-	  stw       r4, 0x0(r7)
-	  lwz       r4, 0x2A68(r13)
-	  addi      r6, r4, 0x128
-	  lwz       r4, 0x128(r4)
-	  rlwinm    r4,r4,0,28,23
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r6)
-	  lwz       r3, 0x2A68(r13)
-	  addi      r4, r3, 0x128
-	  lwz       r3, 0x128(r3)
-	  rlwinm    r3,r3,0,8,31
-	  oris      r3, r3, 0x2500
-	  stw       r3, 0x0(r4)
-	  stb       r0, -0x8000(r5)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x128(r3)
-	  stw       r0, -0x8000(r5)
-	  b         .loc_0x1C4
-
-	.loc_0x90:
-	  lwz       r7, 0x2A68(r13)
-	  rlwinm    r3,r5,12,0,19
-	  lwzu      r5, 0x128(r7)
-	  rlwinm    r6,r4,8,0,23
-	  li        r0, 0x61
-	  rlwinm    r5,r5,0,24,19
-	  or        r5, r5, r6
-	  stw       r5, 0x0(r7)
-	  lis       r4, 0xCC01
-	  lwz       r5, 0x2A68(r13)
-	  addi      r6, r5, 0x128
-	  lwz       r5, 0x128(r5)
-	  rlwinm    r5,r5,0,20,15
-	  or        r3, r5, r3
-	  stw       r3, 0x0(r6)
-	  lwz       r3, 0x2A68(r13)
-	  addi      r5, r3, 0x128
-	  lwz       r3, 0x128(r3)
-	  rlwinm    r3,r3,0,8,31
-	  oris      r3, r3, 0x2500
-	  stw       r3, 0x0(r5)
-	  stb       r0, -0x8000(r4)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x128(r3)
-	  stw       r0, -0x8000(r4)
-	  b         .loc_0x1C4
-
-	.loc_0xF8:
-	  lwz       r6, 0x2A68(r13)
-	  rlwinm    r3,r5,4,0,27
-	  li        r0, 0x61
-	  addi      r7, r6, 0x12C
-	  lwz       r6, 0x12C(r6)
-	  lis       r5, 0xCC01
-	  rlwinm    r6,r6,0,0,27
-	  or        r4, r6, r4
-	  stw       r4, 0x0(r7)
-	  lwz       r4, 0x2A68(r13)
-	  addi      r6, r4, 0x12C
-	  lwz       r4, 0x12C(r4)
-	  rlwinm    r4,r4,0,28,23
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r6)
-	  lwz       r3, 0x2A68(r13)
-	  addi      r4, r3, 0x12C
-	  lwz       r3, 0x12C(r3)
-	  rlwinm    r3,r3,0,8,31
-	  oris      r3, r3, 0x2600
-	  stw       r3, 0x0(r4)
-	  stb       r0, -0x8000(r5)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x12C(r3)
-	  stw       r0, -0x8000(r5)
-	  b         .loc_0x1C4
-
-	.loc_0x160:
-	  lwz       r7, 0x2A68(r13)
-	  rlwinm    r3,r5,12,0,19
-	  lwzu      r5, 0x12C(r7)
-	  rlwinm    r6,r4,8,0,23
-	  li        r0, 0x61
-	  rlwinm    r5,r5,0,24,19
-	  or        r5, r5, r6
-	  stw       r5, 0x0(r7)
-	  lis       r4, 0xCC01
-	  lwz       r5, 0x2A68(r13)
-	  addi      r6, r5, 0x12C
-	  lwz       r5, 0x12C(r5)
-	  rlwinm    r5,r5,0,20,15
-	  or        r3, r5, r3
-	  stw       r3, 0x0(r6)
-	  lwz       r3, 0x2A68(r13)
-	  addi      r5, r3, 0x12C
-	  lwz       r3, 0x12C(r3)
-	  rlwinm    r3,r3,0,8,31
-	  oris      r3, r3, 0x2600
-	  stw       r3, 0x0(r5)
-	  stb       r0, -0x8000(r4)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x12C(r3)
-	  stw       r0, -0x8000(r4)
-
-	.loc_0x1C4:
-	  lwz       r3, 0x2A68(r13)
-	  li        r0, 0x1
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	switch (ind_state) {
+	case GX_IND_TEX_STAGE_0:
+		SET_REG_FIELD(0xEA, gx->IndTexScale0, 4, 0, scale_s);
+		SET_REG_FIELD(0xEB, gx->IndTexScale0, 4, 4, scale_t);
+		SET_REG_FIELD(0xEC, gx->IndTexScale0, 8, 24, 0x25);
+		GX_WRITE_SOME_REG5(0x61, gx->IndTexScale0);
+		break;
+	case GX_IND_TEX_STAGE_1:
+		SET_REG_FIELD(0xF0, gx->IndTexScale0, 4, 8, scale_s);
+		SET_REG_FIELD(0xF1, gx->IndTexScale0, 4, 12, scale_t);
+		SET_REG_FIELD(0xF2, gx->IndTexScale0, 8, 24, 0x25);
+		GX_WRITE_SOME_REG5(0x61, gx->IndTexScale0);
+		break;
+	case GX_IND_TEX_STAGE_2:
+		SET_REG_FIELD(0xF6, gx->IndTexScale1, 4, 0, scale_s);
+		SET_REG_FIELD(0xF7, gx->IndTexScale1, 4, 4, scale_t);
+		SET_REG_FIELD(0xF8, gx->IndTexScale1, 8, 24, 0x26);
+		GX_WRITE_SOME_REG5(0x61, gx->IndTexScale1);
+		break;
+	case GX_IND_TEX_STAGE_3:
+		SET_REG_FIELD(0xFC, gx->IndTexScale1, 4, 8, scale_s);
+		SET_REG_FIELD(0xFD, gx->IndTexScale1, 4, 12, scale_t);
+		SET_REG_FIELD(0xFE, gx->IndTexScale1, 8, 24, 0x26);
+		GX_WRITE_SOME_REG5(0x61, gx->IndTexScale1);
+		break;
+	default:
+		ASSERTMSGLINE(0x102, 0, "GXSetIndTexCoordScale: Invalid Indirect Stage Id");
+		break;
+	}
+	gx->bpSent = 1;
 }
 
 /*
@@ -207,9 +153,37 @@ void GXSetIndTexCoordScale(void)
  * Address:	........
  * Size:	000138
  */
-void GXSetIndTexOrder(void)
+void GXSetIndTexOrder(GXIndTexStageID ind_stage, GXTexCoordID tex_coord, GXTexMapID tex_map)
 {
-	// UNUSED FUNCTION
+	CHECK_GXBEGIN(0x11B, "GXSetIndTexOrder");
+
+	ASSERTMSGLINE(0x11D, tex_map < 8, "GXSetIndTexOrder: Invalid direct texture Id");
+	ASSERTMSGLINE(0x11E, tex_coord < 8, "GXSetIndTexOrder: Invalid texture coord");
+
+	switch (ind_stage) {
+	case GX_IND_TEX_STAGE_0:
+		SET_REG_FIELD(0x122, gx->iref, 3, 0, tex_map);
+		SET_REG_FIELD(0x123, gx->iref, 3, 3, tex_coord);
+		break;
+	case GX_IND_TEX_STAGE_1:
+		SET_REG_FIELD(0x126, gx->iref, 3, 6, tex_map);
+		SET_REG_FIELD(0x127, gx->iref, 3, 9, tex_coord);
+		break;
+	case GX_IND_TEX_STAGE_2:
+		SET_REG_FIELD(0x12A, gx->iref, 3, 12, tex_map);
+		SET_REG_FIELD(0x12B, gx->iref, 3, 15, tex_coord);
+		break;
+	case GX_IND_TEX_STAGE_3:
+		SET_REG_FIELD(0x12E, gx->iref, 3, 18, tex_map);
+		SET_REG_FIELD(0x12F, gx->iref, 3, 21, tex_coord);
+		break;
+	default:
+		ASSERTMSGLINE(0x132, 0, "GXSetIndTexOrder: Invalid Indirect Stage Id");
+		break;
+	}
+	GX_WRITE_SOME_REG5(0x61, gx->iref);
+	gx->dirtyState |= 3;
+	gx->bpSent = 1;
 }
 
 /*
@@ -217,22 +191,12 @@ void GXSetIndTexOrder(void)
  * Address:	80212E38
  * Size:	00002C
  */
-void GXSetNumIndStages(void)
+void GXSetNumIndStages(u8 nIndStages)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r0,r3,16,8,15
-	  lwzu      r3, 0x204(r4)
-	  rlwinm    r3,r3,0,16,12
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x6
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x144, "GXSetNumIndStages");
+	ASSERTMSGLINE(0x146, nIndStages <= 4, "GXSetNumIndStages: Exceeds max. number of indirect texture stages");
+	SET_REG_FIELD(0x147, gx->genMode, 3, 16, nIndStages);
+	gx->dirtyState |= 6;
 }
 
 /*
@@ -240,29 +204,10 @@ void GXSetNumIndStages(void)
  * Address:	80212E64
  * Size:	000048
  */
-void GXSetTevDirect(void)
+void GXSetTevDirect(GXTevStageID tev_stage)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  li        r5, 0
-	  stwu      r1, -0x18(r1)
-	  li        r6, 0
-	  li        r7, 0
-	  stw       r0, 0x8(r1)
-	  li        r8, 0
-	  li        r9, 0
-	  stw       r0, 0xC(r1)
-	  li        r10, 0
-	  bl        -0x2D0
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	CHECK_GXBEGIN(0x158, "GXSetTevDirect");
+	GXSetTevIndirect(tev_stage, GX_IND_TEX_STAGE_0, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_OFF, GX_ITW_OFF, 0U, 0, 0);
 }
 
 /*
@@ -270,9 +215,12 @@ void GXSetTevDirect(void)
  * Address:	........
  * Size:	000064
  */
-void GXSetTevIndWarp(void)
+void GXSetTevIndWarp(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u8 signed_offset, u8 replace_mode, GXIndTexMtxID matrix_sel)
 {
-	// UNUSED FUNCTION
+	GXIndTexWrap wrap = (replace_mode != 0) ? GX_ITW_0 : GX_ITW_OFF;
+
+	CHECK_GXBEGIN(0x16E, "GXSetTevIndWarp");
+	GXSetTevIndirect(tev_stage, ind_stage, GX_ITF_8, (signed_offset != 0) ? GX_ITB_STU : GX_ITB_NONE, matrix_sel, wrap, wrap, 0U, 0, 0);
 }
 
 /*
@@ -280,9 +228,65 @@ void GXSetTevIndWarp(void)
  * Address:	........
  * Size:	0001AC
  */
-void GXSetTevIndTile(void)
+void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tilesize_s, u16 tilesize_t, u16 tilespacing_s,
+                     u16 tilespacing_t, GXIndTexFormat format, GXIndTexMtxID matrix_sel, GXIndTexBiasSel bias_sel,
+                     GXIndTexAlphaSel alpha_sel)
 {
-	// UNUSED FUNCTION
+	GXIndTexWrap wrap_s;
+	GXIndTexWrap wrap_t;
+	f32 mtx[2][3];
+
+	CHECK_GXBEGIN(0x190, "GXSetTevIndTile");
+	ASSERTMSGLINE(0x191, tev_stage < 16, "GXSetTevIndTile: Invalid tev stage id");
+	ASSERTMSGLINE(0x192, ind_stage < 4, "GXSetTevIndTile: Invalid indirect stage id");
+	switch (tilesize_s) {
+	case 256:
+		wrap_s = GX_ITW_256;
+		break;
+	case 128:
+		wrap_s = GX_ITW_128;
+		break;
+	case 64:
+		wrap_s = GX_ITW_64;
+		break;
+	case 32:
+		wrap_s = GX_ITW_32;
+		break;
+	case 16:
+		wrap_s = GX_ITW_16;
+		break;
+	default:
+		ASSERTMSGLINE(0x19B, 0, "GXSetTevIndTile: Invalid tilesize for S coordinate");
+		wrap_s = GX_ITW_OFF;
+		break;
+	}
+	switch (tilesize_t) {
+	case 256:
+		wrap_t = GX_ITW_256;
+		break;
+	case 128:
+		wrap_t = GX_ITW_128;
+		break;
+	case 64:
+		wrap_t = GX_ITW_64;
+		break;
+	case 32:
+		wrap_t = GX_ITW_32;
+		break;
+	case 16:
+		wrap_t = GX_ITW_16;
+		break;
+	default:
+		ASSERTMSGLINE(0x1A7, 0, "GXSetTevIndTile: Invalid tilesize for T coordinate");
+		wrap_t = GX_ITW_OFF;
+		break;
+	}
+	mtx[0][0] = tilespacing_s / 1024.0f;
+	mtx[0][1] = mtx[0][2] = 0.0f;
+	mtx[1][1]             = tilespacing_t / 1024.0f;
+	mtx[1][0] = mtx[1][2] = 0.0f;
+	GXSetIndTexMtx(matrix_sel, mtx, 0xA);
+	GXSetTevIndirect(tev_stage, ind_stage, format, bias_sel, matrix_sel, wrap_s, wrap_t, 0U, 1, alpha_sel);
 }
 
 /*
@@ -290,9 +294,32 @@ void GXSetTevIndTile(void)
  * Address:	........
  * Size:	00010C
  */
-void GXSetTevIndBumpST(void)
+void GXSetTevIndBumpST(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndTexMtxID matrix_sel)
 {
-	// UNUSED FUNCTION
+	GXIndTexMtxID sm;
+	GXIndTexMtxID tm;
+
+	CHECK_GXBEGIN(0x1CF, "GXSetTevIndBumpST");
+	switch (matrix_sel) {
+	case GX_ITM_0:
+		sm = GX_ITM_S0;
+		tm = GX_ITM_T0;
+		break;
+	case GX_ITM_1:
+		sm = GX_ITM_S1;
+		tm = GX_ITM_T1;
+		break;
+	case GX_ITM_2:
+		sm = GX_ITM_S2;
+		tm = GX_ITM_T2;
+		break;
+	default:
+		ASSERTMSGLINE(0x1E0, 0, "GXSetTevIndBumpST: Invalid matrix selection");
+		break;
+	}
+	GXSetTevIndirect(tev_stage, ind_stage, GX_ITF_8, GX_ITB_ST, sm, GX_ITW_0, GX_ITW_0, 0U, 0, 0);
+	GXSetTevIndirect(tev_stage + 1, ind_stage, GX_ITF_8, GX_ITB_ST, tm, GX_ITW_0, GX_ITW_0, 1U, 0, 0);
+	GXSetTevIndirect(tev_stage + 2, ind_stage, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_OFF, GX_ITW_OFF, 1U, 0, 0);
 }
 
 /*
@@ -300,9 +327,10 @@ void GXSetTevIndBumpST(void)
  * Address:	........
  * Size:	000044
  */
-void GXSetTevIndBumpXYZ(void)
+void GXSetTevIndBumpXYZ(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndTexMtxID matrix_sel)
 {
-	// UNUSED FUNCTION
+	CHECK_GXBEGIN(0x214, "GXSetTevIndBumpXYZ");
+	GXSetTevIndirect(tev_stage, ind_stage, GX_ITF_8, GX_ITB_STU, matrix_sel, GX_ITW_OFF, GX_ITW_OFF, 0U, 0, 0);
 }
 
 /*
@@ -310,9 +338,10 @@ void GXSetTevIndBumpXYZ(void)
  * Address:	........
  * Size:	000048
  */
-void GXSetTevIndRepeat(void)
+void GXSetTevIndRepeat(GXTevStageID tev_stage)
 {
-	// UNUSED FUNCTION
+	CHECK_GXBEGIN(0x231, "GXSetTevIndRepeat");
+	GXSetTevIndirect(tev_stage, GX_IND_TEX_STAGE_0, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_0, GX_ITW_0, 1U, 0, 0);
 }
 
 /*
@@ -322,78 +351,51 @@ void GXSetTevIndRepeat(void)
  */
 void __GXUpdateBPMask(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2A68(r13)
-	  li        r6, 0
-	  li        r4, 0
-	  lwz       r0, 0x204(r3)
-	  rlwinm    r0,r0,16,29,31
-	  cmplwi    r0, 0
-	  mtctr     r0
-	  ble-      .loc_0x88
+	u32 nIndStages;
+	u32 i;
+	u32 tmap;
+	u32 new_imask;
+	u32 nStages;
+	u32 new_dmask;
 
-	.loc_0x20:
-	  cmpwi     r4, 0x2
-	  beq-      .loc_0x60
-	  bge-      .loc_0x3C
-	  cmpwi     r4, 0
-	  beq-      .loc_0x48
-	  bge-      .loc_0x54
-	  b         .loc_0x74
+	new_imask  = 0;
+	new_dmask  = 0;
+	nIndStages = GET_REG_FIELD(gx->genMode, 3, 16);
+	for (i = 0; i < nIndStages; i++) {
+		switch (i) {
+		case 0:
+			tmap = GET_REG_FIELD(gx->iref, 3, 0);
+			break;
+		case 1:
+			tmap = GET_REG_FIELD(gx->iref, 3, 6);
+			break;
+		case 2:
+			tmap = GET_REG_FIELD(gx->iref, 3, 12);
+			break;
+		case 3:
+			tmap = GET_REG_FIELD(gx->iref, 3, 18);
+			break;
+		}
+		new_imask |= 1 << tmap;
+	}
 
-	.loc_0x3C:
-	  cmpwi     r4, 0x4
-	  bge-      .loc_0x74
-	  b         .loc_0x6C
+#if DEBUG
+	nStages = GET_REG_FIELD(gx->genMode, 4, 10) + 1;
+	for (i = 0; i < nStages; i++) {
+		tmap = gx->texmapId[i] & 0xFFFFFEFF;
+		if (tmap != 0xFF) {
+			new_dmask |= 1 << tmap;
+		}
+	}
+	ASSERTMSGLINE(0x269, !(new_imask & new_dmask), "GXSetTevOrder/GXSetIndTexOrder: Same texture map cannot be specified in both");
+#endif
 
-	.loc_0x48:
-	  lwz       r0, 0x120(r3)
-	  rlwinm    r5,r0,0,29,31
-	  b         .loc_0x74
-
-	.loc_0x54:
-	  lwz       r0, 0x120(r3)
-	  rlwinm    r5,r0,26,29,31
-	  b         .loc_0x74
-
-	.loc_0x60:
-	  lwz       r0, 0x120(r3)
-	  rlwinm    r5,r0,20,29,31
-	  b         .loc_0x74
-
-	.loc_0x6C:
-	  lwz       r0, 0x120(r3)
-	  rlwinm    r5,r0,14,29,31
-
-	.loc_0x74:
-	  li        r0, 0x1
-	  slw       r0, r0, r5
-	  or        r6, r6, r0
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x20
-
-	.loc_0x88:
-	  addi      r4, r3, 0x124
-	  lwz       r3, 0x124(r3)
-	  rlwinm    r0,r3,0,24,31
-	  cmplw     r0, r6
-	  beqlr-
-	  rlwinm    r0,r3,0,0,23
-	  or        r0, r0, r6
-	  stw       r0, 0x0(r4)
-	  li        r0, 0x61
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  li        r0, 0x1
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x124(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	if ((u8)gx->bpMask != new_imask) {
+		SET_REG_FIELD(0x26E, gx->bpMask, 8, 0, new_imask);
+		GX_WRITE_SOME_REG5(0x61, gx->bpMask);
+		gx->bpSent = 1;
+	}
 }
-
 /*
  * --INFO--
  * Address:	80212F78
@@ -401,16 +403,6 @@ void __GXUpdateBPMask(void)
  */
 void __GXFlushTextureState(void)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0x61
-	  lwz       r4, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  li        r0, 0x1
-	  lwz       r3, 0x124(r4)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	GX_WRITE_SOME_REG5(0x61, gx->bpMask);
+	gx->bpSent = 1;
 }

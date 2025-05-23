@@ -1,13 +1,48 @@
-#include "types.h"
+#include "Dolphin/gx.h"
+#include "Dolphin/os.h"
+
+static OSThread* __GXCurrentThread;
+static GXBool CPGPLinked;
+static BOOL GXOverflowSuspendInProgress;
+static GXBreakPtCallback BreakPointCB;
+static u32 __GXOverflowCount;
+#if DEBUG
+static int IsWGPipeRedirected;
+#endif
+
+struct __GXFifoObj* CPUFifo;
+struct __GXFifoObj* GPFifo;
+void* __GXCurrentBP;
+
+#if DEBUG
+static char __data_0[] = "[GXOverflowHandler]";
+#endif
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000050
  */
-void GXOverflowHandler(void)
+static void GXOverflowHandler(s16 interrupt, OSContext* context)
 {
-	// UNUSED FUNCTION
+#if DEBUG
+	if (__gxVerif->verifyLevel > 1) {
+		OSReport(__data_0);
+	}
+#endif
+	ASSERTLINE(0x15A, !GXOverflowSuspendInProgress);
+
+	__GXOverflowCount++;
+	__GXWriteFifoIntEnable(0, 1);
+	__GXWriteFifoIntReset(1, 0);
+	GXOverflowSuspendInProgress = TRUE;
+
+#if DEBUG
+	if (__gxVerif->verifyLevel > 1) {
+		OSReport("[GXOverflowHandler Sleeping]");
+	}
+#endif
+	OSSuspendThread(__GXCurrentThread);
 }
 
 /*
@@ -15,9 +50,19 @@ void GXOverflowHandler(void)
  * Address:	........
  * Size:	000044
  */
-void GXUnderflowHandler(void)
+static void GXUnderflowHandler(s16 interrupt, OSContext* context)
 {
-	// UNUSED FUNCTION
+#if DEBUG
+	if (__gxVerif->verifyLevel > 1) {
+		OSReport("[GXUnderflowHandler]");
+	}
+#endif
+	ASSERTLINE(0x184, GXOverflowSuspendInProgress);
+
+	OSResumeThread(__GXCurrentThread);
+	GXOverflowSuspendInProgress = FALSE;
+	__GXWriteFifoIntReset(1U, 1U);
+	__GXWriteFifoIntEnable(1U, 0U);
 }
 
 /*
@@ -25,9 +70,19 @@ void GXUnderflowHandler(void)
  * Address:	........
  * Size:	000080
  */
-void GXBreakPointHandler(void)
+static void GXBreakPointHandler(s16 interrupt, OSContext* context)
 {
-	// UNUSED FUNCTION
+	OSContext exceptionContext;
+
+	gx->cpEnable = gx->cpEnable & 0xFFFFFFDF;
+	__cpReg[1]   = gx->cpEnable;
+	if (BreakPointCB != NULL) {
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(&exceptionContext);
+		BreakPointCB();
+		OSClearContext(&exceptionContext);
+		OSSetCurrentContext(context);
+	}
 }
 
 /*
@@ -35,96 +90,18 @@ void GXBreakPointHandler(void)
  * Address:	8020EB40
  * Size:	00013C
  */
-void GXCPInterruptHandler(void)
+static void GXCPInterruptHandler(s16 interrupt, OSContext* context)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x2E0(r1)
-	  stw       r31, 0x2DC(r1)
-	  mr        r31, r4
-	  lwz       r5, 0x3424(r13)
-	  lwz       r3, 0x2A68(r13)
-	  lhz       r0, 0x0(r5)
-	  stw       r0, 0xC(r3)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,29,31,31
-	  beq-      .loc_0x68
-	  lwz       r0, 0xC(r3)
-	  rlwinm.   r0,r0,31,31,31
-	  beq-      .loc_0x68
-	  lwz       r3, 0x3430(r13)
-	  bl        -0x125C0
-	  li        r0, 0
-	  stw       r0, 0x3438(r13)
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  bl        0x670
-	  li        r3, 0x1
-	  li        r4, 0
-	  bl        0x618
-
-	.loc_0x68:
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,30,31,31
-	  beq-      .loc_0xB8
-	  lwz       r0, 0xC(r3)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0xB8
-	  lwz       r5, 0x3440(r13)
-	  li        r3, 0
-	  li        r4, 0x1
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x3440(r13)
-	  bl        0x5E4
-	  li        r3, 0x1
-	  li        r4, 0
-	  bl        0x624
-	  li        r0, 0x1
-	  lwz       r3, 0x3430(r13)
-	  stw       r0, 0x3438(r13)
-	  bl        -0x123A8
-
-	.loc_0xB8:
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r4, 0x8(r3)
-	  addi      r5, r3, 0x8
-	  rlwinm.   r0,r4,27,31,31
-	  beq-      .loc_0x128
-	  lwz       r0, 0xC(r3)
-	  rlwinm.   r0,r0,28,31,31
-	  beq-      .loc_0x128
-	  rlwinm    r0,r4,0,27,25
-	  stw       r0, 0x0(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x8(r4)
-	  sth       r0, 0x2(r3)
-	  lwz       r0, 0x343C(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x128
-	  addi      r3, r1, 0x10
-	  bl        -0x17804
-	  addi      r3, r1, 0x10
-	  bl        -0x179D4
-	  lwz       r12, 0x343C(r13)
-	  mtlr      r12
-	  blrl
-	  addi      r3, r1, 0x10
-	  bl        -0x17820
-	  mr        r3, r31
-	  bl        -0x179F0
-
-	.loc_0x128:
-	  lwz       r0, 0x2E4(r1)
-	  lwz       r31, 0x2DC(r1)
-	  addi      r1, r1, 0x2E0
-	  mtlr      r0
-	  blr
-	*/
+	gx->cpStatus = __cpReg[0];
+	if (GET_REG_FIELD(gx->cpEnable, 1, 3) && GET_REG_FIELD(gx->cpStatus, 1, 1)) {
+		GXUnderflowHandler(interrupt, context);
+	}
+	if (GET_REG_FIELD(gx->cpEnable, 1, 2) && GET_REG_FIELD(gx->cpStatus, 1, 0)) {
+		GXOverflowHandler(interrupt, context);
+	}
+	if (GET_REG_FIELD(gx->cpEnable, 1, 5) && GET_REG_FIELD(gx->cpStatus, 1, 4)) {
+		GXBreakPointHandler(interrupt, context);
+	}
 }
 
 /*
@@ -132,40 +109,23 @@ void GXCPInterruptHandler(void)
  * Address:	8020EC7C
  * Size:	00006C
  */
-void GXInitFifoBase(void)
+void GXInitFifoBase(GXFifoObj* fifo, void* base, u32 size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x4
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  add       r0, r31, r0
-	  stw       r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  subi      r4, r5, 0x4000
-	  stw       r31, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  stw       r5, 0x8(r3)
-	  rlwinm    r5,r5,31,1,26
-	  stw       r0, 0x1C(r30)
-	  bl        0x9C
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  addi      r5, r31, 0
-	  bl        .loc_0x6C
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x20
-	  blr
+	struct _GXFifoObjPriv* realFifo = (struct _GXFifoObjPriv*)fifo;
 
-	.loc_0x6C:
-	*/
+	ASSERTMSGLINE(0x1FF, realFifo != CPUFifo, "GXInitFifoBase: fifo is attached to CPU");
+	ASSERTMSGLINE(0x201, realFifo != GPFifo, "GXInitFifoBase: fifo is attached to GP");
+	ASSERTMSGLINE(0x203, ((u32)base & 0x1F) == 0, "GXInitFifoBase: base must be 32B aligned");
+	ASSERTMSGLINE(0x205, base != NULL, "GXInitFifoBase: base pointer is NULL");
+	ASSERTMSGLINE(0x207, (size & 0x1F) == 0, "GXInitFifoBase: size must be 32B aligned");
+	ASSERTMSGLINE(0x209, size >= 0x10000, "GXInitFifoBase: fifo is not large enough");
+
+	realFifo->base       = base;
+	realFifo->end        = (u8*)base + size - 4;
+	realFifo->size       = size;
+	realFifo->rwDistance = 0;
+	GXInitFifoLimits(fifo, size - 0x4000, (size >> 1) & ~0x1F);
+	GXInitFifoPtrs(fifo, base, base);
 }
 
 /*
@@ -173,41 +133,26 @@ void GXInitFifoBase(void)
  * Address:	8020ECE8
  * Size:	000070
  */
-void GXInitFifoPtrs(void)
+void GXInitFifoPtrs(GXFifoObj* fifo, void* readPtr, void* writePtr)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  bl        -0x15D90
-	  stw       r30, 0x14(r29)
-	  sub       r0, r31, r30
-	  stw       r31, 0x18(r29)
-	  stw       r0, 0x1C(r29)
-	  lwz       r4, 0x1C(r29)
-	  cmpwi     r4, 0
-	  bge-      .loc_0x50
-	  lwz       r0, 0x8(r29)
-	  add       r0, r4, r0
-	  stw       r0, 0x1C(r29)
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+	BOOL enabled;
 
-	.loc_0x50:
-	  bl        -0x15D94
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  mtlr      r0
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	ASSERTMSGLINE(0x231, realFifo != CPUFifo, "GXInitFifoPtrs: fifo is attached to CPU");
+	ASSERTMSGLINE(0x233, realFifo != GPFifo, "GXInitFifoPtrs: fifo is attached to GP");
+	ASSERTMSGLINE(0x235, ((u32)readPtr & 0x1F) == 0, "GXInitFifoPtrs: readPtr not 32B aligned");
+	ASSERTMSGLINE(0x237, ((u32)writePtr & 0x1F) == 0, "GXInitFifoPtrs: writePtr not 32B aligned");
+	ASSERTMSGLINE(0x23A, realFifo->base <= readPtr && readPtr < realFifo->top, "GXInitFifoPtrs: readPtr not in fifo range");
+	ASSERTMSGLINE(0x23D, realFifo->base <= writePtr && writePtr < realFifo->top, "GXInitFifoPtrs: writePtr not in fifo range");
+
+	enabled         = OSDisableInterrupts();
+	realFifo->rdPtr = readPtr;
+	realFifo->wrPtr = writePtr;
+	realFifo->count = (u8*)writePtr - (u8*)readPtr;
+	if (realFifo->count < 0) {
+		realFifo->count += realFifo->size;
+	}
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -215,14 +160,18 @@ void GXInitFifoPtrs(void)
  * Address:	8020ED58
  * Size:	00000C
  */
-void GXInitFifoLimits(void)
+void GXInitFifoLimits(GXFifoObj* fifo, u32 hiWatermark, u32 loWatermark)
 {
-	/*
-	.loc_0x0:
-	  stw       r4, 0xC(r3)
-	  stw       r5, 0x10(r3)
-	  blr
-	*/
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+
+	ASSERTMSGLINE(0x262, realFifo != GPFifo, "GXInitFifoLimits: fifo is attached to GP");
+	ASSERTMSGLINE(0x264, (hiWatermark & 0x1F) == 0, "GXInitFifoLimits: hiWatermark not 32B aligned");
+	ASSERTMSGLINE(0x266, (loWatermark & 0x1F) == 0, "GXInitFifoLimits: loWatermark not 32B aligned");
+	ASSERTMSGLINE(0x268, hiWatermark < realFifo->top - realFifo->base, "GXInitFifoLimits: hiWatermark too large");
+	ASSERTMSGLINE(0x26A, loWatermark < hiWatermark, "GXInitFifoLimits: hiWatermark below lo watermark");
+
+	realFifo->hiWatermark = hiWatermark;
+	realFifo->loWatermark = loWatermark;
 }
 
 /*
@@ -230,85 +179,43 @@ void GXInitFifoLimits(void)
  * Address:	8020ED64
  * Size:	000110
  */
-void GXSetCPUFifo(void)
+void GXSetCPUFifo(GXFifoObj* fifo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  bl        -0x15E00
-	  lwz       r0, 0x3444(r13)
-	  addi      r31, r3, 0
-	  stw       r30, 0x3448(r13)
-	  cmplw     r30, r0
-	  bne-      .loc_0x90
-	  lwz       r5, 0x0(r30)
-	  li        r0, 0x1
-	  lwz       r4, 0x3420(r13)
-	  li        r3, 0x1
-	  rlwinm    r5,r5,0,2,31
-	  stw       r5, 0xC(r4)
-	  li        r4, 0x1
-	  lwz       r6, 0x4(r30)
-	  lwz       r5, 0x3420(r13)
-	  rlwinm    r6,r6,0,2,31
-	  stw       r6, 0x10(r5)
-	  lwz       r6, 0x18(r30)
-	  lwz       r5, 0x3420(r13)
-	  rlwinm    r6,r6,0,2,26
-	  rlwinm    r6,r6,0,6,4
-	  stw       r6, 0x14(r5)
-	  stb       r0, 0x3434(r13)
-	  bl        0x430
-	  li        r3, 0x1
-	  li        r4, 0
-	  bl        0x3D8
-	  li        r3, 0x1
-	  bl        0x38C
-	  b         .loc_0xEC
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+	BOOL enabled                 = OSDisableInterrupts();
 
-	.loc_0x90:
-	  lbz       r0, 0x3434(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xAC
-	  li        r3, 0
-	  bl        0x374
-	  li        r0, 0
-	  stb       r0, 0x3434(r13)
+	CPUFifo = realFifo;
+	if (CPUFifo == GPFifo) {
+		u32 reg = 0;
 
-	.loc_0xAC:
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0x3A4
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x3420(r13)
-	  rlwinm    r0,r0,0,2,31
-	  stw       r0, 0xC(r3)
-	  lwz       r0, 0x4(r30)
-	  lwz       r3, 0x3420(r13)
-	  rlwinm    r0,r0,0,2,31
-	  stw       r0, 0x10(r3)
-	  lwz       r0, 0x18(r30)
-	  lwz       r3, 0x3420(r13)
-	  rlwinm    r0,r0,0,2,26
-	  rlwinm    r0,r0,0,6,4
-	  stw       r0, 0x14(r3)
+		__piReg[3] = (u32)realFifo->base & 0x3FFFFFFF;
+		__piReg[4] = (u32)realFifo->top & 0x3FFFFFFF;
+		SET_REG_FIELD(0x294, reg, 21, 5, ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 5);
+		SET_REG_FIELD(0x295, reg, 1, 26, 0);
+		__piReg[5] = reg;
+		CPGPLinked = GX_TRUE;
+		__GXWriteFifoIntReset(1, 1);
+		__GXWriteFifoIntEnable(1, 0);
+		__GXFifoLink(1);
+	} else {
+		u32 reg;
 
-	.loc_0xEC:
-	  sync
-	  mr        r3, r31
-	  bl        -0x15EB4
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+		if (CPGPLinked) {
+			__GXFifoLink(0);
+			CPGPLinked = GX_FALSE;
+		}
+		__GXWriteFifoIntEnable(0, 0);
+		reg        = 0;
+		__piReg[3] = (u32)realFifo->base & 0x3FFFFFFF;
+		__piReg[4] = (u32)realFifo->top & 0x3FFFFFFF;
+		SET_REG_FIELD(0x2B7, reg, 21, 5, ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 5);
+		SET_REG_FIELD(0x2B8, reg, 1, 26, 0);
+		__piReg[5] = reg;
+	}
+
+	__sync();
+
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -316,109 +223,44 @@ void GXSetCPUFifo(void)
  * Address:	8020EE74
  * Size:	000178
  */
-void GXSetGPFifo(void)
+void GXSetGPFifo(GXFifoObj* fifo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  bl        -0x15F10
-	  mr        r31, r3
-	  bl        0x2C0
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0x31C
-	  stw       r30, 0x3444(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x0(r30)
-	  sth       r0, 0x20(r3)
-	  lwz       r0, 0x4(r30)
-	  lwz       r3, 0x3424(r13)
-	  sth       r0, 0x24(r3)
-	  lwz       r0, 0x1C(r30)
-	  lwz       r3, 0x3424(r13)
-	  sth       r0, 0x30(r3)
-	  lwz       r0, 0x18(r30)
-	  lwz       r3, 0x3424(r13)
-	  sth       r0, 0x34(r3)
-	  lwz       r0, 0x14(r30)
-	  lwz       r3, 0x3424(r13)
-	  sth       r0, 0x38(r3)
-	  lwz       r0, 0xC(r30)
-	  lwz       r3, 0x3424(r13)
-	  sth       r0, 0x28(r3)
-	  lwz       r0, 0x10(r30)
-	  lwz       r3, 0x3424(r13)
-	  sth       r0, 0x2C(r3)
-	  lwz       r0, 0x0(r30)
-	  lwz       r3, 0x3424(r13)
-	  rlwinm    r0,r0,16,18,31
-	  sth       r0, 0x22(r3)
-	  lwz       r0, 0x4(r30)
-	  lwz       r3, 0x3424(r13)
-	  rlwinm    r0,r0,16,18,31
-	  sth       r0, 0x26(r3)
-	  lwz       r0, 0x1C(r30)
-	  lwz       r3, 0x3424(r13)
-	  srawi     r0, r0, 0x10
-	  sth       r0, 0x32(r3)
-	  lwz       r0, 0x18(r30)
-	  lwz       r3, 0x3424(r13)
-	  rlwinm    r0,r0,16,18,31
-	  sth       r0, 0x36(r3)
-	  lwz       r0, 0x14(r30)
-	  lwz       r3, 0x3424(r13)
-	  rlwinm    r0,r0,16,18,31
-	  sth       r0, 0x3A(r3)
-	  lwz       r0, 0xC(r30)
-	  lwz       r3, 0x3424(r13)
-	  rlwinm    r0,r0,16,16,31
-	  sth       r0, 0x2A(r3)
-	  lwz       r0, 0x10(r30)
-	  lwz       r3, 0x3424(r13)
-	  rlwinm    r0,r0,16,16,31
-	  sth       r0, 0x2E(r3)
-	  sync
-	  lwz       r3, 0x3448(r13)
-	  lwz       r0, 0x3444(r13)
-	  cmplw     r3, r0
-	  bne-      .loc_0x12C
-	  li        r0, 0x1
-	  stb       r0, 0x3434(r13)
-	  li        r3, 0x1
-	  li        r4, 0
-	  bl        0x22C
-	  li        r3, 0x1
-	  bl        0x1E0
-	  b         .loc_0x148
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+	BOOL enabled                 = OSDisableInterrupts();
 
-	.loc_0x12C:
-	  li        r0, 0
-	  stb       r0, 0x3434(r13)
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0x20C
-	  li        r3, 0
-	  bl        0x1C0
+	__GXFifoReadDisable();
+	__GXWriteFifoIntEnable(0, 0);
+	GPFifo = realFifo;
 
-	.loc_0x148:
-	  li        r3, 0x1
-	  li        r4, 0x1
-	  bl        0x244
-	  bl        0x164
-	  mr        r3, r31
-	  bl        -0x1602C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	__cpReg[16] = (u32)realFifo->base & 0xFFFF;
+	__cpReg[18] = (u32)realFifo->top & 0xFFFF;
+	__cpReg[24] = realFifo->count & 0xFFFF;
+	__cpReg[26] = (u32)realFifo->wrPtr & 0xFFFF;
+	__cpReg[28] = (u32)realFifo->rdPtr & 0xFFFF;
+	__cpReg[20] = (u32)realFifo->hiWatermark & 0xFFFF;
+	__cpReg[22] = (u32)realFifo->loWatermark & 0xFFFF;
+	__cpReg[17] = ((u32)realFifo->base & 0x3FFFFFFF) >> 16;
+	__cpReg[19] = ((u32)realFifo->top & 0x3FFFFFFF) >> 16;
+	__cpReg[25] = realFifo->count >> 16;
+	__cpReg[27] = ((u32)realFifo->wrPtr & 0x3FFFFFFF) >> 16;
+	__cpReg[29] = ((u32)realFifo->rdPtr & 0x3FFFFFFF) >> 16;
+	__cpReg[21] = (u32)realFifo->hiWatermark >> 16;
+	__cpReg[23] = (u32)realFifo->loWatermark >> 16;
+
+	__sync();
+
+	if (CPUFifo == GPFifo) {
+		CPGPLinked = GX_TRUE;
+		__GXWriteFifoIntEnable(1, 0);
+		__GXFifoLink(1);
+	} else {
+		CPGPLinked = GX_FALSE;
+		__GXWriteFifoIntEnable(0, 0);
+		__GXFifoLink(0);
+	}
+	__GXWriteFifoIntReset(1, 1);
+	__GXFifoReadEnable();
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -426,92 +268,49 @@ void GXSetGPFifo(void)
  * Address:	8020EFEC
  * Size:	000020
  */
-void GXSaveCPUFifo(void)
+void GXSaveCPUFifo(GXFifoObj* fifo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        .loc_0x20
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x20:
-	*/
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+	ASSERTMSGLINE(0x321, realFifo == CPUFifo, "GXSaveCPUFifo: fifo is not attached to CPU");
+	__GXSaveCPUFifoAux(realFifo);
 }
+
+#define SOME_MACRO1(fifo)                       \
+	do {                                        \
+		u32 temp = __cpReg[29] << 16;           \
+		temp |= __cpReg[28];                    \
+		fifo->rdPtr = OSPhysicalToCached(temp); \
+	} while (0)
+
+#define SOME_MACRO2(fifo)             \
+	do {                              \
+		u32 temp = __cpReg[25] << 16; \
+		temp |= __cpReg[24];          \
+		fifo->count = temp;           \
+	} while (0)
 
 /*
  * --INFO--
  * Address:	8020F00C
  * Size:	0000DC
  */
-void __GXSaveCPUFifoAux(void)
+void __GXSaveCPUFifoAux(struct __GXFifoObj* realFifo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  bl        -0x160A8
-	  mr        r31, r3
-	  bl        0x1744
-	  lwz       r3, 0x3420(r13)
-	  lwz       r3, 0xC(r3)
-	  subis     r0, r3, 0x8000
-	  stw       r0, 0x0(r30)
-	  lwz       r3, 0x3420(r13)
-	  lwz       r3, 0x10(r3)
-	  subis     r0, r3, 0x8000
-	  stw       r0, 0x4(r30)
-	  lwz       r3, 0x3420(r13)
-	  lwz       r0, 0x14(r3)
-	  rlwinm    r3,r0,0,6,4
-	  subis     r0, r3, 0x8000
-	  stw       r0, 0x18(r30)
-	  lbz       r0, 0x3434(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x94
-	  lwz       r4, 0x3424(r13)
-	  lhz       r3, 0x3A(r4)
-	  lhz       r4, 0x38(r4)
-	  rlwimi    r4,r3,16,0,15
-	  subis     r0, r4, 0x8000
-	  stw       r0, 0x14(r30)
-	  lwz       r4, 0x3424(r13)
-	  lhz       r3, 0x32(r4)
-	  lhz       r0, 0x30(r4)
-	  rlwimi    r0,r3,16,0,15
-	  stw       r0, 0x1C(r30)
-	  b         .loc_0xBC
+	BOOL enabled = OSDisableInterrupts();
 
-	.loc_0x94:
-	  lwz       r3, 0x14(r30)
-	  lwz       r0, 0x18(r30)
-	  sub       r0, r0, r3
-	  stw       r0, 0x1C(r30)
-	  lwz       r3, 0x1C(r30)
-	  cmpwi     r3, 0
-	  bge-      .loc_0xBC
-	  lwz       r0, 0x8(r30)
-	  add       r0, r3, r0
-	  stw       r0, 0x1C(r30)
-
-	.loc_0xBC:
-	  mr        r3, r31
-	  bl        -0x16128
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	GXFlush();
+	realFifo->base  = OSPhysicalToCached(__piReg[3]);
+	realFifo->top   = OSPhysicalToCached(__piReg[4]);
+	realFifo->wrPtr = OSPhysicalToCached(__piReg[5] & 0xFBFFFFFF);
+	if (CPGPLinked) {
+		SOME_MACRO1(realFifo);
+		SOME_MACRO2(realFifo);
+	} else {
+		realFifo->count = (u8*)realFifo->wrPtr - (u8*)realFifo->rdPtr;
+		if (realFifo->count < 0)
+			realFifo->count += realFifo->size;
+	}
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -519,9 +318,20 @@ void __GXSaveCPUFifoAux(void)
  * Address:	........
  * Size:	000030
  */
-void GXSaveGPFifo(void)
+void GXSaveGPFifo(GXFifoObj* fifo)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+	unsigned long cpStatus;
+	unsigned char readIdle;
+	unsigned long temp;
+
+	ASSERTMSGLINE(0x36A, realFifo == GPFifo, "GXSaveGPFifo: fifo is not attached to GP");
+	cpStatus = __cpReg[0];
+	readIdle = GET_REG_FIELD(cpStatus, 1, 2);
+	ASSERTMSGLINE(0x371, readIdle, "GXSaveGPFifo: GP is not idle");
+
+	SOME_MACRO1(realFifo);
+	SOME_MACRO2(realFifo);
 }
 
 /*
@@ -529,19 +339,41 @@ void GXSaveGPFifo(void)
  * Address:	........
  * Size:	000064
  */
-void GXGetGPStatus(void)
+void GXGetGPStatus(GXBool* overhi, GXBool* underlow, GXBool* readIdle, GXBool* cmdIdle, GXBool* brkpt)
 {
-	// UNUSED FUNCTION
+	gx->cpStatus = __cpReg[0];
+	*overhi      = GET_REG_FIELD(gx->cpStatus, 1, 0);
+	*underlow    = (int)GET_REG_FIELD(gx->cpStatus, 1, 1);
+	*readIdle    = (int)GET_REG_FIELD(gx->cpStatus, 1, 2);
+	*cmdIdle     = (int)GET_REG_FIELD(gx->cpStatus, 1, 3);
+	*brkpt       = (int)GET_REG_FIELD(gx->cpStatus, 1, 4);
 }
-
 /*
  * --INFO--
  * Address:	........
  * Size:	000110
  */
-void GXGetFifoStatus(void)
+void GXGetFifoStatus(GXFifoObj* fifo, GXBool* overhi, GXBool* underflow, u32* fifoCount, GXBool* cpuWrite, GXBool* gpRead, GXBool* fifowrap)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+
+	*underflow = GX_FALSE;
+	*overhi    = GX_FALSE;
+	*fifoCount = 0;
+	*fifowrap  = GX_FALSE;
+	if (realFifo == GPFifo) {
+		SOME_MACRO1(realFifo);
+		SOME_MACRO2(realFifo);
+	}
+	if (realFifo == CPUFifo) {
+		__GXSaveCPUFifoAux(realFifo);
+		*fifowrap = (int)GET_REG_FIELD(__piReg[5], 1, 26);
+	}
+	*overhi    = (realFifo->count > realFifo->hiWatermark);
+	*underflow = (realFifo->count < realFifo->loWatermark);
+	*fifoCount = (realFifo->count);
+	*cpuWrite  = (CPUFifo == realFifo);
+	*gpRead    = (GPFifo == realFifo);
 }
 
 /*
@@ -549,9 +381,25 @@ void GXGetFifoStatus(void)
  * Address:	........
  * Size:	000098
  */
-void GXGetFifoPtrs(void)
+void GXGetFifoPtrs(GXFifoObj* fifo, void** readPtr, void** writePtr)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+
+	ASSERTMSGLINE(0x3F2, realFifo == CPUFifo || realFifo == GPFifo, "GXGetFifoPtrs: fifo is not CPU or GP fifo");
+	if (realFifo == CPUFifo) {
+		realFifo->wrPtr = OSPhysicalToCached(__piReg[5] & 0xFBFFFFFF);
+	}
+	if (realFifo == GPFifo) {
+		SOME_MACRO1(realFifo);
+		SOME_MACRO2(realFifo);
+	} else {
+		realFifo->count = (u8*)realFifo->wrPtr - (u8*)realFifo->rdPtr;
+		if (realFifo->count < 0) {
+			realFifo->count += realFifo->size;
+		}
+	}
+	*readPtr  = realFifo->rdPtr;
+	*writePtr = realFifo->wrPtr;
 }
 
 /*
@@ -559,9 +407,11 @@ void GXGetFifoPtrs(void)
  * Address:	........
  * Size:	000008
  */
-void GXGetFifoBase(void)
+void* GXGetFifoBase(GXFifoObj* fifo)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+
+	return realFifo->base;
 }
 
 /*
@@ -569,9 +419,11 @@ void GXGetFifoBase(void)
  * Address:	........
  * Size:	000008
  */
-void GXGetFifoSize(void)
+u32 GXGetFifoSize(GXFifoObj* fifo)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+
+	return realFifo->size;
 }
 
 /*
@@ -579,9 +431,12 @@ void GXGetFifoSize(void)
  * Address:	........
  * Size:	000014
  */
-void GXGetFifoLimits(void)
+void GXGetFifoLimits(GXFifoObj* fifo, u32* hi, u32* lo)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = (struct __GXFifoObj*)fifo;
+
+	*hi = realFifo->hiWatermark;
+	*lo = realFifo->loWatermark;
 }
 
 /*
@@ -589,19 +444,38 @@ void GXGetFifoLimits(void)
  * Address:	........
  * Size:	000044
  */
-void GXSetBreakPtCallback(void)
+GXBreakPtCallback GXSetBreakPtCallback(GXBreakPtCallback cb)
 {
-	// UNUSED FUNCTION
+	GXBreakPtCallback oldcb = BreakPointCB;
+	BOOL enabled            = OSDisableInterrupts();
+
+	BreakPointCB = cb;
+	OSRestoreInterrupts(enabled);
+	return oldcb;
 }
+
+void* __GXCurrentBP;
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000098
  */
-void GXEnableBreakPt(void)
+void GXEnableBreakPt(void* break_pt)
 {
-	// UNUSED FUNCTION
+	BOOL enabled = OSDisableInterrupts();
+
+	__GXFifoReadDisable();
+	ASSERTMSGLINE(0x44A, (u8*)break_pt >= GPFifo->base && (u8*)break_pt <= GPFifo->top,
+	              "GXEnableBreakPt: Break point value not in fifo range");
+	__cpReg[30]   = (u32)break_pt;
+	__cpReg[31]   = ((u32)break_pt >> 16) & 0x3FFF;
+	gx->cpEnable  = (gx->cpEnable & 0xFFFFFFFD) | 2;
+	gx->cpEnable  = (gx->cpEnable & 0xFFFFFFDF) | 0x20;
+	__cpReg[1]    = gx->cpEnable;
+	__GXCurrentBP = break_pt;
+	__GXFifoReadEnable();
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -611,7 +485,13 @@ void GXEnableBreakPt(void)
  */
 void GXDisableBreakPt(void)
 {
-	// UNUSED FUNCTION
+	BOOL enabled = OSDisableInterrupts();
+
+	gx->cpEnable  = gx->cpEnable & 0xFFFFFFFD;
+	gx->cpEnable  = gx->cpEnable & 0xFFFFFFDF;
+	__cpReg[1]    = gx->cpEnable;
+	__GXCurrentBP = NULL;
+	OSRestoreInterrupts(enabled);
 }
 
 /*
@@ -621,26 +501,10 @@ void GXDisableBreakPt(void)
  */
 void __GXFifoInit(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8021
-	  stw       r0, 0x4(r1)
-	  subi      r4, r3, 0x14C0
-	  li        r3, 0x11
-	  stwu      r1, -0x8(r1)
-	  bl        -0x16138
-	  li        r3, 0x4000
-	  bl        -0x15D64
-	  bl        -0x13628
-	  li        r0, 0
-	  stw       r3, 0x3430(r13)
-	  stw       r0, 0x3438(r13)
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	__OSSetInterruptHandler(0x11, GXCPInterruptHandler);
+	__OSUnmaskInterrupts(0x4000);
+	__GXCurrentThread           = OSGetCurrentThread();
+	GXOverflowSuspendInProgress = FALSE;
 }
 
 /*
@@ -650,19 +514,8 @@ void __GXFifoInit(void)
  */
 void __GXFifoReadEnable(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2A68(r13)
-	  lwzu      r0, 0x8(r3)
-	  rlwinm    r0,r0,0,0,30
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x0(r3)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x8(r4)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	SET_REG_FIELD(0, gx->cpEnable, 1, 0, 1);
+	__cpReg[1] = gx->cpEnable;
 }
 
 /*
@@ -672,18 +525,8 @@ void __GXFifoReadEnable(void)
  */
 void __GXFifoReadDisable(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2A68(r13)
-	  lwzu      r0, 0x8(r3)
-	  rlwinm    r0,r0,0,0,30
-	  stw       r0, 0x0(r3)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x8(r4)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	SET_REG_FIELD(0, gx->cpEnable, 1, 0, 0);
+	__cpReg[1] = gx->cpEnable;
 }
 
 /*
@@ -691,32 +534,10 @@ void __GXFifoReadDisable(void)
  * Address:	8020F178
  * Size:	000044
  */
-void __GXFifoLink(void)
+void __GXFifoLink(u8 en)
 {
-	/*
-	.loc_0x0:
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x10
-	  li        r0, 0x1
-	  b         .loc_0x14
-
-	.loc_0x10:
-	  li        r0, 0
-
-	.loc_0x14:
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r0,r0,4,0,27
-	  addi      r4, r3, 0x8
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r3,r3,0,28,26
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x8(r4)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	SET_REG_FIELD(0x4B0, gx->cpEnable, 1, 4, (en != 0) ? 1 : 0);
+	__cpReg[1] = gx->cpEnable;
 }
 
 /*
@@ -724,30 +545,11 @@ void __GXFifoLink(void)
  * Address:	8020F1BC
  * Size:	00004C
  */
-void __GXWriteFifoIntEnable(void)
+void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r3,r3,2,22,29
-	  rlwinm    r0,r4,3,21,28
-	  addi      r6, r5, 0x8
-	  lwz       r5, 0x8(r5)
-	  rlwinm    r4,r5,0,30,28
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r6)
-	  lwz       r3, 0x2A68(r13)
-	  addi      r4, r3, 0x8
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r3,r3,0,29,27
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x8(r4)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	SET_REG_FIELD(0x4C6, gx->cpEnable, 1, 2, hiWatermarkEn);
+	SET_REG_FIELD(0x4C7, gx->cpEnable, 1, 3, loWatermarkEn);
+	__cpReg[1] = gx->cpEnable;
 }
 
 /*
@@ -755,30 +557,11 @@ void __GXWriteFifoIntEnable(void)
  * Address:	8020F208
  * Size:	00004C
  */
-void __GXWriteFifoIntReset(void)
+void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x2A68(r13)
-	  rlwinm    r3,r3,0,24,31
-	  rlwinm    r0,r4,1,23,30
-	  addi      r6, r5, 0x10
-	  lwz       r5, 0x10(r5)
-	  rlwinm    r4,r5,0,0,30
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r6)
-	  lwz       r3, 0x2A68(r13)
-	  addi      r4, r3, 0x10
-	  lwz       r3, 0x10(r3)
-	  rlwinm    r3,r3,0,31,29
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x3424(r13)
-	  lwz       r0, 0x10(r4)
-	  sth       r0, 0x4(r3)
-	  blr
-	*/
+	SET_REG_FIELD(0x4DE, gx->cpClr, 1, 0, hiWatermarkClr);
+	SET_REG_FIELD(0x4DF, gx->cpClr, 1, 1, loWatermarkClr);
+	__cpReg[2] = gx->cpClr;
 }
 
 /*
@@ -788,7 +571,11 @@ void __GXWriteFifoIntReset(void)
  */
 void __GXInsaneWatermark(void)
 {
-	// UNUSED FUNCTION
+	struct __GXFifoObj* realFifo = GPFifo;
+
+	realFifo->hiWatermark = realFifo->loWatermark + 512;
+	__cpReg[20]           = (realFifo->hiWatermark & 0x3FFFFFFF) & 0xFFFF;
+	__cpReg[21]           = (realFifo->hiWatermark & 0x3FFFFFFF) >> 16;
 }
 
 /*
@@ -798,7 +585,22 @@ void __GXInsaneWatermark(void)
  */
 void __GXCleanGPFifo(void)
 {
-	// UNUSED FUNCTION
+	GXFifoObj dummyFifo;
+	GXFifoObj* gpFifo  = GXGetGPFifo();
+	GXFifoObj* cpuFifo = GXGetCPUFifo();
+	void* base         = GXGetFifoBase(gpFifo);
+
+	dummyFifo = *gpFifo;
+	GXInitFifoPtrs(&dummyFifo, base, base);
+	GXSetGPFifo(&dummyFifo);
+	if (cpuFifo == gpFifo) {
+		GXSetCPUFifo(&dummyFifo);
+	}
+	GXInitFifoPtrs(gpFifo, base, base);
+	GXSetGPFifo(gpFifo);
+	if (cpuFifo == gpFifo) {
+		GXSetCPUFifo(cpuFifo);
+	}
 }
 
 /*
@@ -806,30 +608,17 @@ void __GXCleanGPFifo(void)
  * Address:	8020F254
  * Size:	00004C
  */
-void GXSetCurrentGXThread(void)
+OSThread* GXSetCurrentGXThread(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  stw       r30, 0x8(r1)
-	  bl        -0x162EC
-	  lwz       r30, 0x3430(r13)
-	  mr        r31, r3
-	  bl        -0x13790
-	  stw       r3, 0x3430(r13)
-	  mr        r3, r31
-	  bl        -0x162DC
-	  lwz       r0, 0x14(r1)
-	  mr        r3, r30
-	  lwz       r31, 0xC(r1)
-	  lwz       r30, 0x8(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x10
-	  blr
-	*/
+	BOOL enabled;
+	struct OSThread* prev;
+
+	enabled = OSDisableInterrupts();
+	prev    = __GXCurrentThread;
+	ASSERTMSGLINE(0x532, !GXOverflowSuspendInProgress, "GXSetCurrentGXThread: Two threads cannot generate GX commands at the same time!");
+	__GXCurrentThread = OSGetCurrentThread();
+	OSRestoreInterrupts(enabled);
+	return prev;
 }
 
 /*
@@ -837,9 +626,9 @@ void GXSetCurrentGXThread(void)
  * Address:	........
  * Size:	000008
  */
-void GXGetCurrentGXThread(void)
+OSThread* GXGetCurrentGXThread(void)
 {
-	// UNUSED FUNCTION
+	return __GXCurrentThread;
 }
 
 /*
@@ -847,13 +636,9 @@ void GXGetCurrentGXThread(void)
  * Address:	8020F2A0
  * Size:	000008
  */
-void GXGetCPUFifo(void)
+GXFifoObj* GXGetCPUFifo(void)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x3448(r13)
-	  blr
-	*/
+	return (GXFifoObj*)CPUFifo;
 }
 
 /*
@@ -861,9 +646,9 @@ void GXGetCPUFifo(void)
  * Address:	........
  * Size:	000008
  */
-void GXGetGPFifo(void)
+GXFifoObj* GXGetGPFifo(void)
 {
-	// UNUSED FUNCTION
+	return (GXFifoObj*)GPFifo;
 }
 
 /*
@@ -871,9 +656,9 @@ void GXGetGPFifo(void)
  * Address:	........
  * Size:	000008
  */
-void GXGetOverflowCount(void)
+u32 GXGetOverflowCount(void)
 {
-	// UNUSED FUNCTION
+	return __GXOverflowCount;
 }
 
 /*
@@ -881,19 +666,58 @@ void GXGetOverflowCount(void)
  * Address:	........
  * Size:	000010
  */
-void GXResetOverflowCount(void)
+u32 GXResetOverflowCount(void)
 {
-	// UNUSED FUNCTION
+	u32 oldcount;
+
+	oldcount          = __GXOverflowCount;
+	__GXOverflowCount = 0;
+	return oldcount;
 }
+
+#define SET_REG_FIELD2(line, reg, mask, val)                                                     \
+	do {                                                                                         \
+		ASSERTMSGLINE(line, ((val) & ~(mask)) == 0, "GX Internal: Register field out of range"); \
+		(reg) = ((u32)(reg) & ~(mask)) | ((u32)(val));                                           \
+	} while (0)
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000104
  */
-void GXRedirectWriteGatherPipe(void)
+volatile void* GXRedirectWriteGatherPipe(void* ptr)
 {
-	// UNUSED FUNCTION
+	u32 reg      = 0;
+	BOOL enabled = OSDisableInterrupts();
+
+	CHECK_GXBEGIN(0x5A6, "GXRedirectWriteGatherPipe");
+	ASSERTLINE(0x5A7, OFFSET(ptr, 32) == 0);
+	ASSERTLINE(0x5A9, !IsWGPipeRedirected);
+#if DEBUG
+	IsWGPipeRedirected = TRUE;
+#endif
+
+	GXFlush();
+	while (PPCMfwpar() & 1) { }
+	PPCMtwpar((u32)OSUncachedToPhysical((void*)GXFIFO_ADDR));
+	if (CPGPLinked) {
+		__GXFifoLink(0);
+		__GXWriteFifoIntEnable(0, 0);
+	}
+	CPUFifo->wrPtr = OSPhysicalToCached(__piReg[5] & 0xFBFFFFFF);
+	__piReg[3]     = 0;
+	__piReg[4]     = 0x04000000;
+	SET_REG_FIELD(0x5C8, reg, 21, 5, ((u32)ptr & 0x3FFFFFFF) >> 5);
+	/*if (((u32)ptr >> 5) & 0x1E00000)
+	    OSPanic(__FILE__, 0x5FB, "GX Internal: Register field out of range");
+	//SET_REG_FIELD(0x5C8, reg, 25, 5, ((u32)ptr & 0x3FFFFFFF) >> 5);*/
+	// reg = (reg & ~0x3FFFFE0) | ((u32)ptr & 0x3FFFFFE0);
+	reg &= 0xFBFFFFFF;
+	__piReg[5] = reg;
+	__sync();
+	OSRestoreInterrupts(enabled);
+	return (volatile void*)GXFIFO_ADDR;
 }
 
 /*
@@ -903,5 +727,35 @@ void GXRedirectWriteGatherPipe(void)
  */
 void GXRestoreWriteGatherPipe(void)
 {
-	// UNUSED FUNCTION
+	u32 reg = 0;  // r31
+	u32 i;        // r29
+	BOOL enabled; // r28
+
+	ASSERTLINE(0x5E1, IsWGPipeRedirected);
+#if DEBUG
+	IsWGPipeRedirected = FALSE;
+#endif
+	enabled = OSDisableInterrupts();
+	for (i = 0; i < 31; i++) {
+		GXWGFifo.u8 = 0;
+	}
+	PPCSync();
+	while (PPCMfwpar() & 1) { }
+	PPCMtwpar((u32)OSUncachedToPhysical((void*)GXFIFO_ADDR));
+	__piReg[3] = (u32)CPUFifo->base & 0x3FFFFFFF;
+	__piReg[4] = (u32)CPUFifo->top & 0x3FFFFFFF;
+	SET_REG_FIELD(0x5FB, reg, 21, 5, ((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5);
+	/*if ((((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5) & 0x7E00000)
+	    OSPanic(__FILE__, 0x5FB, "GX Internal: Register field out of range");
+	reg = (reg & ~0x3FFFFE0) | (((u32)CPUFifo->wrPtr & 0x3FFFFFFF) & ~0x1F);*/
+	// SET_REG_FIELD(0x5FB, reg, 25, 5, ((u32)CPUFifo->wrPtr & 0x3FFFFFFF) >> 5);
+	reg &= 0xFBFFFFFF;
+	__piReg[5] = reg;
+	if (CPGPLinked) {
+		__GXWriteFifoIntReset(1, 1);
+		__GXWriteFifoIntEnable(1, 0);
+		__GXFifoLink(1);
+	}
+	__sync();
+	OSRestoreInterrupts(enabled);
 }

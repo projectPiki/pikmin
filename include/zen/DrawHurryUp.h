@@ -2,6 +2,9 @@
 #define _ZEN_DRAWHURRYUP_H
 
 #include "types.h"
+#include "P2D/Screen.h"
+#include "P2D/Graph.h"
+#include "P2D/Picture.h"
 
 struct Graphics;
 
@@ -13,6 +16,17 @@ namespace zen {
  * @note Size: 0x154.
  */
 struct DrawHurryUp {
+
+	/**
+	 * @brief TODO
+	 */
+	enum modeFlag {
+		MODE_Start      = 0,
+		MODE_Enlarge    = 1,
+		MODE_BrightShot = 2,
+		MODE_Bright     = 3,
+		MODE_End        = 4,
+	};
 
 	/**
 	 * @brief TODO
@@ -37,7 +51,24 @@ struct DrawHurryUp {
 	void brightShotStatus();
 	void brightStatus();
 
-	u8 _00[0x154]; // _00, unknown
+	modeFlag mMode;                 // _00
+	P2DScreen mScreen;              // _04
+	P2DPerspGraph* mPerspGraph;     // _FC
+	bool mIsVisible;                // _100
+	f32 mModeTimer;                 // _104
+	f32 mModeDuration;              // _108
+	int _10C;                       // _10C
+	P2DPane* mRootPane;             // _110
+	P2DPicture* mMovingHurryUpPane; // _114
+	P2DPicture* mMovingSundownPane; // _118
+	P2DPicture* mFixedHurryUpPane;  // _11C
+	P2DPicture* mFixedSundownPane;  // _120
+	P2DPicture* mMsgHaloPane;       // _124
+	P2DPicture* mMsgFillPane;       // _128
+	f32 mRootScale;                 // _12C
+	Vector3f mHurryUpDefaultPos;    // _130
+	Vector3f mSundownDefaultPos;    // _13C
+	Vector3f mHaloDefaultPos;       // _148
 };
 
 } // namespace zen

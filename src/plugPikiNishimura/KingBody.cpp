@@ -344,7 +344,7 @@ void KingBody::emitOnGroundEffect()
 				if (mKing->mSeContext) {
 					mKing->mSeContext->playSound(SE_KING_WALK);
 				}
-				rumbleMgr->start(4, 0, mKing->mPosition);
+				rumbleMgr->start(RUMBLE_Unk4, 0, mKing->mPosition);
 				cameraMgr->startVibrationEvent(3, mKing->mPosition);
 			}
 		}

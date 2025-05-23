@@ -24,9 +24,9 @@ DEFINE_PRINT("King");
  */
 KingProp::KingProp()
 {
-	mCreatureProps.mFriction.setValue(1.0f);
-	mCreatureProps.mFaceDirAdjust.setValue(0.0f);
-	mCreatureProps.mAcceleration.setValue(1.0f);
+	mCreatureProps.mFriction(1.0f);
+	mCreatureProps.mFaceDirAdjust(0.0f);
+	mCreatureProps.mAcceleration(1.0f);
 }
 
 /*
@@ -42,7 +42,7 @@ King::King(CreatureProp* props)
 	mKingBody = new KingBody(this);
 	mShadowCaster.initCore("");
 	mShadowCaster.initShadow();
-	mKingDrawer = new KingDrawer(this);
+	mShadowCaster.mDrawer = new KingDrawer(this);
 }
 
 /*

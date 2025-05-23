@@ -1856,7 +1856,6 @@ void GenTypeInitRand::init(Generator* gen)
 				obj->mGenerator = gen;
 				gen->mAliveCount++;
 				gen->mLatestSpawnCreature = obj;
-				u32 badCompiler; // idk where this is from.
 			}
 		}
 	}
@@ -1908,10 +1907,10 @@ void GenAreaPoint::render(Graphics&, Generator*)
 Vector3f GenAreaCircle::getPos(Generator* gen)
 {
 	Vector3f pos = gen->getPos();
+	f32 radius;
 
-	f32 minRadFactor = gsys->getRand(1.0f);
-	f32 comp         = 1.0f - minRadFactor;
-	f32 radius       = gsys->getRand(1.0f) * comp + minRadFactor;
+	radius = gsys->getRand(1.0f);
+	radius = gsys->getRand(1.0f) * (1.0f - radius) + radius;
 	radius *= mRadius();
 
 	f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
@@ -2047,10 +2046,10 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 	Colour colour;
 	colour.set(255, 255, 0, 255);
 
+	u32 badCompiler[2];
 	GlobalShape::enShape->mMaterialList->mColourInfo.mColour = colour;
 	GlobalShape::enShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
-	u32 badCompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0

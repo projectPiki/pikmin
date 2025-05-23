@@ -9,7 +9,7 @@
  * @brief TODO
  */
 struct TAIAmotion : public TaiAction {
-	TAIAmotion(int, int);
+	TAIAmotion(int nextState, int motionID);
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
@@ -23,7 +23,7 @@ struct TAIAmotion : public TaiAction {
  * @brief TODO
  */
 struct TAIAreserveMotion : public TaiAction {
-	TAIAreserveMotion(int, int);
+	TAIAreserveMotion(int nextState, int motionID);
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
@@ -61,16 +61,16 @@ struct TAIAmotionLoop : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAsetMotionSpeed : public TAIAmotion {
-	inline TAIAsetMotionSpeed() // this is a guess
-	    : TAIAmotion(-1, -1)
+	TAIAsetMotionSpeed(int nextState, int motionID, f32 motionSpeed)
+	    : TAIAmotion(nextState, motionID)
 	{
+		mMotionSpeed = motionSpeed;
 	}
 
 	virtual void start(Teki& teki) // _08
 	{
-		u32 badCompiler;
 		TAIAmotion::start(teki);
-		teki.setMotionSpeed(mMotionSpeed);
+		teki.setAnimSpeed(mMotionSpeed);
 	}
 
 	// _04     = VTBL

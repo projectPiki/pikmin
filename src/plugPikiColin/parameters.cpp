@@ -29,52 +29,27 @@ DEFINE_PRINT(nullptr);
 BaseParm::BaseParm(Parameters* parm, ayuID id)
     : mID(nullptr)
 {
-	parm->addToEnd(this);
+	BaseParm* node2;
+	BaseParm* node1;
+	BaseParm* last;
+
+	node1 = node2 = parm->mHead;
+	for (node1; node1; node1 = node1->mNext) {
+		;
+	}
+	last = nullptr;
+	for (node2; node2; node2 = node2->mNext) {
+		last = node2;
+	}
+
+	if (last) {
+		last->mNext = this;
+	} else {
+		parm->mHead = this;
+	}
 
 	mID   = (char*)id.mID;
 	mNext = nullptr;
-	/*
-	.loc_0x0:
-	  lis       r6, 0x802B
-	  subi      r0, r6, 0x7964
-	  stw       r0, 0x8(r3)
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  lwz       r6, 0x0(r4)
-	  mr        r7, r6
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  lwz       r7, 0x4(r7)
-
-	.loc_0x24:
-	  cmplwi    r7, 0
-	  bne+      .loc_0x20
-	  li        r7, 0
-	  b         .loc_0x3C
-
-	.loc_0x34:
-	  mr        r7, r6
-	  lwz       r6, 0x4(r6)
-
-	.loc_0x3C:
-	  cmplwi    r6, 0
-	  bne+      .loc_0x34
-	  cmplwi    r7, 0
-	  beq-      .loc_0x54
-	  stw       r3, 0x4(r7)
-	  b         .loc_0x58
-
-	.loc_0x54:
-	  stw       r3, 0x0(r4)
-
-	.loc_0x58:
-	  lwz       r4, 0x0(r5)
-	  li        r0, 0
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  blr
-	*/
 }
 
 /*

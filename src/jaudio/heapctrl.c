@@ -1,30 +1,29 @@
-#include "types.h"
+#include "jaudio/heapctrl.h"
 
-typedef struct jaheap_ jaheap_;
+#include "jaudio/dummyrom.h"
+
+#include "Dolphin/OS/OSMessage.h"
+#include "Dolphin/ar.h"
+#include "Dolphin/OS/OSCache.h"
+
+#define DMABUFFER_SIZE (0x10000)
+static u8 dmabuffer[DMABUFFER_SIZE] ATTRIBUTE_ALIGN(32);
+
+static u32 global_id = 0;
 
 /*
  * --INFO--
  * Address:	8000E9C0
  * Size:	000034
  */
-void ARAMFinish(u32)
+static void ARAMFinish(u32 param_1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x1
-	  stw       r0, 0x4(r1)
-	  li        r5, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r3, 0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1EAE34
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler;
+	u32* REF_param_1;
+
+	REF_param_1         = &param_1;
+	ARQRequest* request = (ARQRequest*)param_1;
+	OSSendMessage((OSMessageQueue*)request->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
 }
 
 /*
@@ -32,77 +31,26 @@ void ARAMFinish(u32)
  * Address:	8000EA00
  * Size:	0000E8
  */
-void ARAM_TO_ARAM_DMA(u32, u32, u32)
+static void ARAM_TO_ARAM_DMA(u32 src, u32 dst, u32 totalSize)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stmw      r25, 0x5C(r1)
-	  addi      r25, r3, 0
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r3, r1, 0x18
-	  addi      r4, r1, 0x14
-	  li        r5, 0x1
-	  bl        0x1EAD8C
-	  lis       r4, 0x8031
-	  lis       r3, 0x8001
-	  subi      r30, r4, 0x680
-	  subi      r31, r3, 0x1640
-	  lis       r29, 0x1
-	  b         .loc_0xCC
+	ARQRequest request;
+	OSMessageQueue msgQueue;
+	OSMessage msg;
+	u32 burstSize;
 
-	.loc_0x44:
-	  cmplw     r27, r29
-	  blt-      .loc_0x54
-	  lis       r28, 0x1
-	  b         .loc_0x58
+	OSInitMessageQueue(&msgQueue, &msg, 1);
+	while (totalSize != 0) {
+		burstSize = totalSize >= DMABUFFER_SIZE ? DMABUFFER_SIZE : totalSize;
 
-	.loc_0x54:
-	  mr        r28, r27
+		ARQPostRequest(&request, (u32)&msgQueue, ARQ_TYPE_ARAM_TO_MRAM, ARQ_PRIORITY_LOW, src, (u32)dmabuffer, burstSize, &ARAMFinish);
+		OSReceiveMessage(&msgQueue, NULL, OS_MESSAGE_BLOCK);
+		ARQPostRequest(&request, (u32)&msgQueue, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_LOW, (u32)dmabuffer, dst, burstSize, &ARAMFinish);
+		OSReceiveMessage(&msgQueue, NULL, OS_MESSAGE_BLOCK);
 
-	.loc_0x58:
-	  addi      r7, r25, 0
-	  addi      r8, r30, 0
-	  addi      r9, r28, 0
-	  addi      r10, r31, 0
-	  addi      r3, r1, 0x38
-	  addi      r4, r1, 0x18
-	  li        r5, 0x1
-	  li        r6, 0
-	  bl        0x1F9240
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  li        r5, 0x1
-	  bl        0x1EAE54
-	  addi      r7, r30, 0
-	  addi      r8, r26, 0
-	  addi      r9, r28, 0
-	  addi      r10, r31, 0
-	  addi      r3, r1, 0x38
-	  addi      r4, r1, 0x18
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0x1F920C
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  li        r5, 0x1
-	  bl        0x1EAE20
-	  sub       r27, r27, r28
-	  add       r25, r25, r28
-	  add       r26, r26, r28
-
-	.loc_0xCC:
-	  cmplwi    r27, 0
-	  bne+      .loc_0x44
-	  lmw       r25, 0x5C(r1)
-	  lwz       r0, 0x7C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+		totalSize -= burstSize;
+		src += burstSize;
+		dst += burstSize;
+	}
 }
 
 /*
@@ -110,82 +58,30 @@ void ARAM_TO_ARAM_DMA(u32, u32, u32)
  * Address:	8000EB00
  * Size:	0000FC
  */
-void DRAM_TO_DRAM_DMA(u32, u32, u32)
+static void DRAM_TO_DRAM_DMA(u32 src, u32 dst, u32 totalSize)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  stmw      r25, 0x5C(r1)
-	  addi      r25, r3, 0
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r3, r1, 0x18
-	  addi      r4, r1, 0x14
-	  li        r5, 0x1
-	  lwz       r28, 0x2B30(r13)
-	  bl        0x1EAC88
-	  addi      r3, r25, 0
-	  addi      r4, r27, 0
-	  bl        0x1E80B0
-	  addi      r3, r26, 0
-	  addi      r4, r27, 0
-	  bl        0x1E8074
-	  lis       r3, 0x8001
-	  lis       r30, 0x1
-	  subi      r31, r3, 0x1640
-	  b         .loc_0xE0
+	ARQRequest request;
+	OSMessageQueue msgQueue;
+	OSMessage msg;
+	u32 dma_buffer_top;
+	u32 burstSize;
 
-	.loc_0x58:
-	  cmplw     r27, r30
-	  blt-      .loc_0x68
-	  lis       r29, 0x1
-	  b         .loc_0x6C
+	dma_buffer_top = (u32)JAC_ARAM_DMA_BUFFER_TOP;
+	OSInitMessageQueue(&msgQueue, &msg, 1);
+	DCFlushRange((void*)src, totalSize);
+	DCInvalidateRange((void*)dst, totalSize);
+	while (totalSize != 0) {
+		burstSize = totalSize >= DMABUFFER_SIZE ? DMABUFFER_SIZE : totalSize;
 
-	.loc_0x68:
-	  mr        r29, r27
+		ARQPostRequest(&request, (u32)&msgQueue, ARQ_TYPE_MRAM_TO_ARAM, ARQ_PRIORITY_LOW, src, dma_buffer_top, burstSize, &ARAMFinish);
+		OSReceiveMessage(&msgQueue, NULL, OS_MESSAGE_BLOCK);
+		ARQPostRequest(&request, (u32)&msgQueue, ARQ_TYPE_ARAM_TO_MRAM, ARQ_PRIORITY_LOW, dma_buffer_top, dst, burstSize, &ARAMFinish);
+		OSReceiveMessage(&msgQueue, NULL, OS_MESSAGE_BLOCK);
 
-	.loc_0x6C:
-	  addi      r7, r25, 0
-	  addi      r8, r28, 0
-	  addi      r9, r29, 0
-	  addi      r10, r31, 0
-	  addi      r3, r1, 0x38
-	  addi      r4, r1, 0x18
-	  li        r5, 0
-	  li        r6, 0
-	  bl        0x1F912C
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  li        r5, 0x1
-	  bl        0x1EAD40
-	  addi      r7, r28, 0
-	  addi      r8, r26, 0
-	  addi      r9, r29, 0
-	  addi      r10, r31, 0
-	  addi      r3, r1, 0x38
-	  addi      r4, r1, 0x18
-	  li        r5, 0x1
-	  li        r6, 0
-	  bl        0x1F90F8
-	  addi      r3, r1, 0x18
-	  li        r4, 0
-	  li        r5, 0x1
-	  bl        0x1EAD0C
-	  sub       r27, r27, r29
-	  add       r25, r25, r29
-	  add       r26, r26, r29
-
-	.loc_0xE0:
-	  cmplwi    r27, 0
-	  bne+      .loc_0x58
-	  lmw       r25, 0x5C(r1)
-	  lwz       r0, 0x7C(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+		totalSize -= burstSize;
+		src += burstSize;
+		dst += burstSize;
+	}
 }
 
 /*
@@ -213,28 +109,20 @@ void Jac_CheckAlloc(jaheap_*)
  * Address:	8000EC00
  * Size:	000044
  */
-void Jac_InitHeap(jaheap_*)
+void Jac_InitHeap(jaheap_* heap)
 {
-	/*
-	.loc_0x0:
-	  li        r5, 0
-	  stw       r5, 0x8(r3)
-	  stw       r5, 0xC(r3)
-	  stw       r5, 0x10(r3)
-	  lwz       r4, 0x2C20(r13)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2C20(r13)
-	  stw       r4, 0x4(r3)
-	  stb       r5, 0x0(r3)
-	  sth       r5, 0x2(r3)
-	  stw       r5, 0x14(r3)
-	  stw       r5, 0x18(r3)
-	  stw       r5, 0x1C(r3)
-	  stw       r5, 0x20(r3)
-	  stw       r5, 0x24(r3)
-	  stw       r5, 0x28(r3)
-	  blr
-	*/
+	heap->_08 = 0;
+	heap->_0C = 0;
+	heap->_10 = 0;
+	heap->_04 = global_id++;
+	heap->_00 = 0;
+	heap->_02 = 0;
+	heap->_14 = 0;
+	heap->_18 = NULL;
+	heap->_1C = 0;
+	heap->_20 = 0;
+	heap->_24 = 0;
+	heap->_28 = 0;
 }
 
 /*
@@ -242,25 +130,20 @@ void Jac_InitHeap(jaheap_*)
  * Address:	8000EC60
  * Size:	000038
  */
-void Jac_SelfInitHeap(jaheap_*, u32, u32, u32)
+void Jac_SelfInitHeap(jaheap_* heap, u32 param_2, u32 param_3, u32 param_4)
 {
-	/*
-	.loc_0x0:
-	  stw       r4, 0x8(r3)
-	  li        r0, 0
-	  stw       r5, 0x10(r3)
-	  stw       r0, 0xC(r3)
-	  stb       r0, 0x0(r3)
-	  stb       r6, 0x1(r3)
-	  sth       r0, 0x2(r3)
-	  stw       r0, 0x14(r3)
-	  stw       r0, 0x18(r3)
-	  stw       r0, 0x1C(r3)
-	  stw       r0, 0x20(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r0, 0x28(r3)
-	  blr
-	*/
+	heap->_08 = param_2;
+	heap->_10 = param_3;
+	heap->_0C = 0;
+	heap->_00 = 0;
+	heap->_01 = param_4;
+	heap->_02 = 0;
+	heap->_14 = NULL;
+	heap->_18 = NULL;
+	heap->_1C = 0;
+	heap->_20 = 0;
+	heap->_24 = 0;
+	heap->_28 = 0;
 }
 
 /*
@@ -356,29 +239,15 @@ void Jac_SelfAllocHeap(jaheap_*, jaheap_*, u32, u32)
  * Address:	8000EDA0
  * Size:	000038
  */
-void Jac_SetGroupHeap(jaheap_*, jaheap_*)
+BOOL Jac_SetGroupHeap(jaheap_* heapA, jaheap_* heapB)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x18
-	  lwz       r0, 0x28(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x20
-
-	.loc_0x18:
-	  li        r3, 0
-	  blr
-
-	.loc_0x20:
-	  stw       r4, 0x20(r3)
-	  lwz       r0, 0x24(r4)
-	  stw       r0, 0x28(r3)
-	  stw       r3, 0x24(r4)
-	  li        r3, 0x1
-	  blr
-	*/
+	if (heapA->_20 || heapA->_28) {
+		return FALSE;
+	}
+	heapA->_20 = heapB;
+	heapA->_28 = heapB->_24;
+	heapB->_24 = heapA;
+	return TRUE;
 }
 
 /*
@@ -396,34 +265,21 @@ void Jac_CutdownHeap(jaheap_*)
  * Address:	8000EDE0
  * Size:	00005C
  */
-void Jac_InitMotherHeap(jaheap_*, u32, u32, u8)
+void Jac_InitMotherHeap(jaheap_* heap, u32 param_2, u32 param_3, u8 param_4)
 {
-	/*
-	.loc_0x0:
-	  addi      r7, r4, 0x1F
-	  rlwinm    r0,r4,0,27,31
-	  rlwinm    r4,r7,0,0,26
-	  li        r7, 0
-	  stw       r4, 0x8(r3)
-	  sub       r4, r5, r0
-	  li        r0, 0x1
-	  stw       r7, 0xC(r3)
-	  stw       r4, 0x10(r3)
-	  lwz       r5, 0x2C20(r13)
-	  addi      r4, r5, 0x1
-	  stw       r4, 0x2C20(r13)
-	  stw       r5, 0x4(r3)
-	  stb       r0, 0x0(r3)
-	  stb       r6, 0x1(r3)
-	  sth       r7, 0x2(r3)
-	  stw       r7, 0x14(r3)
-	  stw       r7, 0x18(r3)
-	  stw       r7, 0x1C(r3)
-	  stw       r7, 0x20(r3)
-	  stw       r7, 0x24(r3)
-	  stw       r7, 0x28(r3)
-	  blr
-	*/
+	heap->_08 = param_2 + 0x1f & 0xffffffe0;
+	heap->_0C = 0;
+	heap->_10 = param_3 - (param_2 & 0x1f);
+	heap->_04 = global_id++;
+	heap->_00 = 1;
+	heap->_01 = param_4;
+	heap->_02 = 0;
+	heap->_14 = NULL;
+	heap->_18 = NULL;
+	heap->_1C = NULL;
+	heap->_20 = NULL;
+	heap->_24 = NULL;
+	heap->_28 = NULL;
 }
 
 /*
@@ -431,7 +287,7 @@ void Jac_InitMotherHeap(jaheap_*, u32, u32, u8)
  * Address:	8000EE40
  * Size:	0001B4
  */
-void Jac_AllocHeap(jaheap_*, jaheap_*, u32)
+BOOL Jac_AllocHeap(jaheap_*, jaheap_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -732,7 +588,7 @@ void Jac_DeleteHeap(jaheap_*)
  * Address:	8000F1C0
  * Size:	000064
  */
-void Jac_Move_Children(jaheap_*, s32)
+static void Jac_Move_Children(jaheap_*, s32)
 {
 	/*
 	.loc_0x0:
@@ -775,73 +631,36 @@ void Jac_Move_Children(jaheap_*, s32)
  * Address:	8000F240
  * Size:	0000C8
  */
-void Jac_GarbageCollection_St(jaheap_*)
+void Jac_GarbageCollection_St(jaheap_* heap)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r29, 0x14(r1)
-	  mr        r29, r3
-	  lwz       r0, 0x14(r3)
-	  lwz       r30, 0x8(r3)
-	  cmplwi    r0, 0
-	  mr        r31, r0
-	  bne-      .loc_0x34
-	  li        r0, 0
-	  stw       r0, 0xC(r29)
-	  b         .loc_0xB4
+	jaheap_* heap_00;
+	u32 src;
+	u32 dst;
 
-	.loc_0x34:
-	  lwz       r0, 0x8(r31)
-	  cmplw     r30, r0
-	  mr        r3, r0
-	  beq-      .loc_0x90
-	  lbz       r0, 0x1(r29)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x70
-	  bge-      .loc_0x7C
-	  cmpwi     r0, 0
-	  bge-      .loc_0x60
-	  b         .loc_0x7C
+	dst     = heap->_08;
+	heap_00 = heap->_14;
+	if (heap_00 == NULL) {
+		heap->_0C = 0;
+		return;
+	}
+	do {
+		src = heap_00->_08;
+		if (dst != src) {
+			switch (heap->_01) {
+			case 0:
+				ARAM_TO_ARAM_DMA(src, dst, heap_00->_10);
+				break;
+			case 1:
+				DRAM_TO_DRAM_DMA(src, dst, heap_00->_10);
+				break;
+			}
+			Jac_Move_Children(heap_00, dst - heap_00->_08);
+			heap_00->_08 = dst;
+		}
+		dst = heap_00->_08 + heap_00->_10;
+	} while (heap_00 = heap_00->_1C);
 
-	.loc_0x60:
-	  lwz       r5, 0x10(r31)
-	  mr        r4, r30
-	  bl        -0x8A8
-	  b         .loc_0x7C
-
-	.loc_0x70:
-	  lwz       r5, 0x10(r31)
-	  mr        r4, r30
-	  bl        -0x7B8
-
-	.loc_0x7C:
-	  lwz       r0, 0x8(r31)
-	  addi      r3, r31, 0
-	  sub       r4, r30, r0
-	  bl        -0x108
-	  stw       r30, 0x8(r31)
-
-	.loc_0x90:
-	  lwz       r3, 0x8(r31)
-	  lwz       r0, 0x10(r31)
-	  lwz       r31, 0x1C(r31)
-	  add       r30, r3, r0
-	  cmplwi    r31, 0
-	  bne+      .loc_0x34
-	  lwz       r0, 0x8(r29)
-	  sub       r0, r30, r0
-	  stw       r0, 0xC(r29)
-
-	.loc_0xB4:
-	  lmw       r29, 0x14(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	heap->_0C = dst - heap->_08;
 }
 
 /*

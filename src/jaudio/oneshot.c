@@ -1,34 +1,35 @@
 #include "jaudio/oneshot.h"
+#include "jaudio/bankdrv.h"
+#include "jaudio/audiostruct.h"
+#include "jaudio/driverinterface.h"
+#include "jaudio/tables.h"
+#include "jaudio/bankread.h"
+#include "jaudio/waveread.h"
+#include "jaudio/connect.h"
+#include "jaudio/dspdriver.h"
+#include "jaudio/bx.h"
+
+static int Jesus1Shot_Update(jc_*, JCSTATUS);
+
+Osc_ PERC_ENV    = { 0, 1.0f, 0, 0, 1.0f, 0 };
+Osc_ OSC_ENV     = { 0, 1.0f, 0, 0, 1.0f, 0 };
+u8 polys_table[] = { 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32 };
 
 /*
  * --INFO--
  * Address:	80015140
  * Size:	000034
  */
-static void __GetTrigger(jc_*, u8)
+static u8 __GetTrigger(jc_* jc, u8 n)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x24
-	  bge-      .loc_0x2C
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x1C
-	  b         .loc_0x2C
+	switch (n) {
+	case 1:
+		return jc->_00;
+	case 2:
+		return jc->_01;
+	}
 
-	.loc_0x1C:
-	  lbz       r3, 0x0(r3)
-	  blr
-
-	.loc_0x24:
-	  lbz       r3, 0x1(r3)
-	  blr
-
-	.loc_0x2C:
-	  li        r3, 0
-	  blr
-	*/
+	return 0;
 }
 
 /*
@@ -36,23 +37,15 @@ static void __GetTrigger(jc_*, u8)
  * Address:	80015180
  * Size:	000028
  */
-static void __Clamp01(f32)
+static f32 __Clamp01(f32 val)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7EA8(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x14
-	  fmr       f1, f0
-	  blr
-
-	.loc_0x14:
-	  lfs       f0, -0x7EA4(r2)
-	  fcmpo     cr0, f1, f0
-	  blelr-
-	  fmr       f1, f0
-	  blr
-	*/
+	if (val < 0.0f) {
+		return 0.0f;
+	}
+	if (val > 1.0f) {
+		return 1.0f;
+	}
+	return val;
 }
 
 /*
@@ -60,34 +53,11 @@ static void __Clamp01(f32)
  * Address:	800151C0
  * Size:	000054
  */
-static void __Clamp01InitPan(jc_*)
+static void __Clamp01InitPan(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  addi      r28, r3, 0
-	  li        r29, 0x1
-	  li        r31, 0xC
-
-	.loc_0x1C:
-	  addi      r30, r31, 0xBC
-	  add       r30, r28, r30
-	  lfs       f1, 0x0(r30)
-	  bl        -0x68
-	  addi      r29, r29, 0x1
-	  stfs      f1, 0x0(r30)
-	  cmplwi    r29, 0x3
-	  addi      r31, r31, 0xC
-	  blt+      .loc_0x1C
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	for (u32 i = 1; i < 3; i++) {
+		jc->_BC[i]._00 = __Clamp01(jc->_BC[i]._00);
+	}
 }
 
 /*
@@ -95,49 +65,25 @@ static void __Clamp01InitPan(jc_*)
  * Address:	80015220
  * Size:	000068
  */
-static void __DoEffect(jc_*, u8, f32)
+static void __DoEffect(jc_* jc, u8 id, f32 val)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x50
-	  bge-      .loc_0x20
-	  cmpwi     r0, 0
-	  beq-      .loc_0x40
-	  bge-      .loc_0x30
-	  blr
-
-	.loc_0x20:
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x60
-	  bgelr-
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  lfs       f0, 0xB0(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB0(r3)
-	  blr
-
-	.loc_0x40:
-	  lfs       f0, 0xB4(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB4(r3)
-	  blr
-
-	.loc_0x50:
-	  stfs      f1, 0xCC(r3)
-	  blr
-
-	.loc_0x58:
-	  stfs      f1, 0xD8(r3)
-	  blr
-
-	.loc_0x60:
-	  stfs      f1, 0xE4(r3)
-	  blr
-	*/
+	switch (id) {
+	case 1:
+		jc->_B0 *= val;
+		break;
+	case 0:
+		jc->_B4 *= val;
+		break;
+	case 2:
+		jc->_BC[1]._04 = val;
+		break;
+	case 3:
+		jc->_BC[2]._04 = val;
+		break;
+	case 4:
+		jc->_BC[3]._04 = val;
+		break;
+	}
 }
 
 /*
@@ -145,8 +91,41 @@ static void __DoEffect(jc_*, u8, f32)
  * Address:	800152A0
  * Size:	000138
  */
-static void EffecterInit(jc_*, Inst_*)
+static void EffecterInit(jc_* jc, Inst_* inst)
 {
+	jc->_E8[0]     = 1.0f;
+	jc->_E8[1]     = 1.0f;
+	jc->_BC[1]._04 = 0.5f;
+	jc->_BC[2]._04 = 0.0f;
+	jc->_BC[3]._04 = 0.0f;
+
+	for (u32 i = 0; i < 2; i++) {
+		Inst_* c = *((Inst_**)inst + i);
+
+		if (c->_20) {
+			vf32 sense = Bank_SenseToOfs(c->_20, __GetTrigger(jc, (int)c->_20 + 1));
+			__DoEffect(jc, c->_20->_00, sense);
+		}
+
+		if (c->_18) {
+			f32 r = Bank_RandToOfs(c->_18);
+			__DoEffect(jc, c->_18->_00[0], r);
+		}
+
+		if (c->_10) {
+			Oscbuf_* buf = &jc->_48[i];
+			buf->_00     = TRUE;
+			Osc_** osc   = &jc->_38[i];
+			osc[0]       = (Osc_*)&c->_10;
+			f32 offs     = Bank_OscToOfs(osc[0], buf);
+			DoEffectOsc(jc, osc[0]->_00, offs);
+		} else {
+			jc->_38[i] = 0;
+		}
+	}
+
+	__Clamp01InitPan(jc);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -245,8 +224,30 @@ static void EffecterInit(jc_*, Inst_*)
  * Address:	800153E0
  * Size:	0000D0
  */
-static void EffecterInit_Perc(jc_*, Pmap_*, u16)
+static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 {
+	jc->_E8[0]     = 1.0f;
+	jc->_E8[1]     = 1.0f;
+	jc->_BC[1]._04 = 0.5f;
+	jc->_BC[2]._04 = 0.0f;
+	jc->_BC[3]._04 = 0.0f;
+
+	// PERC instruments only have rand and not osc
+	for (u32 i = 0; i < 2; i++) {
+		Pmap_* map = (Pmap_*)((int*)pmap + i);
+		if (map->_00) {
+			f32 r      = Bank_RandToOfs(map->_00);
+			f32* REF_r = &r;
+			__DoEffect(jc, map->_00->_00[0], r);
+		}
+
+		jc->_38[i] = nullptr;
+	}
+	jc->_38[0]     = &PERC_ENV;
+	jc->_48[0]._00 = TRUE;
+	Bank_OscToOfs(jc->_38[0], &jc->_48[0]);
+	jc->_48[0]._14 = id;
+	__Clamp01InitPan(jc);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -313,44 +314,21 @@ static void EffecterInit_Perc(jc_*, Pmap_*, u16)
  * Address:	800154C0
  * Size:	00007C
  */
-static void EffecterInit_Osc(jc_*)
+static void EffecterInit_Osc(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2
-	  mr        r5, r4
-	  stwu      r1, -0x8(r1)
-	  lfs       f0, -0x7EA4(r2)
-	  stfs      f0, 0xEC(r3)
-	  stfs      f0, 0xF0(r3)
-	  lfs       f0, -0x7EA0(r2)
-	  stfs      f0, 0xCC(r3)
-	  lfs       f0, -0x7EA8(r2)
-	  stfs      f0, 0xD8(r3)
-	  stfs      f0, 0xE4(r3)
-	  mtctr     r0
+	jc->_E8[0]     = 1.0f;
+	jc->_E8[1]     = 1.0f;
+	jc->_BC[1]._04 = 0.5f;
+	jc->_BC[2]._04 = 0.0f;
+	jc->_BC[3]._04 = 0.0f;
 
-	.loc_0x3C:
-	  addi      r0, r4, 0x38
-	  addi      r4, r4, 0x4
-	  stwx      r5, r3, r0
-	  bdnz+     .loc_0x3C
-	  lis       r4, 0x8022
-	  li        r0, 0x1
-	  addi      r5, r4, 0x5928
-	  addi      r4, r3, 0x48
-	  stw       r5, 0x38(r3)
-	  stb       r0, 0x48(r3)
-	  lwz       r3, 0x38(r3)
-	  bl        -0x81E8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	for (u32 i = 0; i < 2; i++) {
+		jc->_38[i] = nullptr;
+	}
+
+	jc->_38[0]     = &OSC_ENV;
+	jc->_48[0]._00 = TRUE;
+	Bank_OscToOfs(jc->_38[0], &jc->_48[0]);
 }
 
 /*
@@ -358,40 +336,13 @@ static void EffecterInit_Osc(jc_*)
  * Address:	80015540
  * Size:	00006C
  */
-void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32)
+void Effecter_Overwrite_1ShotD(jc_* jc, Osc_* osc, u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r5, 0x4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  bge-      .loc_0x58
-	  mulli     r6, r5, 0x18
-	  rlwinm    r0,r5,2,0,29
-	  add       r31, r30, r0
-	  li        r0, 0x1
-	  add       r3, r30, r6
-	  stb       r0, 0x48(r3)
-	  stw       r4, 0x38(r31)
-	  addi      r4, r6, 0x48
-	  add       r4, r30, r4
-	  lwzu      r3, 0x38(r31)
-	  bl        -0x8244
-	  lwz       r4, 0x0(r31)
-	  mr        r3, r30
-	  lbz       r4, 0x0(r4)
-	  bl        -0xB3D4
-
-	.loc_0x58:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (id < 4) {
+		jc->_48[id]._00 = TRUE;
+		jc->_38[id]     = osc;
+		DoEffectOsc(jc, jc->_38[id]->_00, Bank_OscToOfs(jc->_38[id], &jc->_48[id]));
+	}
 }
 
 /*
@@ -399,7 +350,7 @@ void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32)
  * Address:	........
  * Size:	000060
  */
-void Effecter_Overwrite_1Shot(jc_*, Osc_*, Osc_*)
+void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
 {
 	// UNUSED FUNCTION
 }
@@ -409,92 +360,41 @@ void Effecter_Overwrite_1Shot(jc_*, Osc_*, Osc_*)
  * Address:	800155C0
  * Size:	00010C
  */
-static void __Oneshot_Play_Start(jcs_*, jc_*, u32)
+static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  bne-      .loc_0x24
-	  li        r5, -0x1
+	BOOL play;
 
-	.loc_0x24:
-	  stw       r5, 0x30(r31)
-	  lis       r3, 0x8001
-	  addi      r0, r3, 0x60A0
-	  addi      r4, r31, 0
-	  lwz       r5, 0x30(r31)
-	  li        r3, 0
-	  stw       r5, 0x34(r31)
-	  stw       r0, 0x28(r31)
-	  bl        -0xA8A4
-	  stw       r3, 0x20(r31)
-	  lwz       r0, 0x20(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x64
-	  mr        r3, r31
-	  bl        -0xAF1C
-	  b         .loc_0x6C
+	if (id == 0) {
+		id = -1;
+	}
+	jc->_30 = id;
+	jc->_34 = jc->_30;
+	jc->_28 = Jesus1Shot_Update;
+	jc->_20 = AllocDSPchannel(0, (u32)jc);
 
-	.loc_0x64:
-	  mr        r3, r31
-	  bl        -0xAEE8
+	if (jc->_20 == nullptr) {
+		play = CheckLogicalChannel(jc);
+	} else {
+		play = PlayLogicalChannel(jc);
+	}
 
-	.loc_0x6C:
-	  lwz       r0, 0x20(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB8
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0xB8
-	  mr        r3, r31
-	  bl        -0xAD04
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0xA4
-	  addi      r3, r30, 0x14
-	  addi      r4, r31, 0
-	  bl        -0xC118
-	  mr        r3, r31
-	  b         .loc_0xF8
-
-	.loc_0xA4:
-	  addi      r3, r30, 0x8
-	  addi      r4, r31, 0
-	  bl        -0xC12C
-	  li        r3, 0
-	  b         .loc_0xF8
-
-	.loc_0xB8:
-	  cmpwi     r3, 0
-	  bne-      .loc_0xE8
-	  mr        r3, r0
-	  addi      r4, r31, 0
-	  bl        -0xA808
-	  li        r0, 0
-	  addi      r4, r31, 0
-	  stw       r0, 0x20(r31)
-	  addi      r3, r30, 0x8
-	  bl        -0xC15C
-	  li        r3, 0
-	  b         .loc_0xF8
-
-	.loc_0xE8:
-	  addi      r3, r30, 0xC
-	  addi      r4, r31, 0
-	  bl        -0xC170
-	  mr        r3, r31
-
-	.loc_0xF8:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (jc->_20 == nullptr && play == TRUE) {
+		if (Add_WaitDSPChannel(jc) == TRUE) {
+			List_AddChannelTail(&jcs->_14, jc);
+			return jc;
+		} else {
+			List_AddChannelTail(&jcs->_08, jc);
+			return nullptr;
+		}
+	} else if (play == FALSE) {
+		DeAllocDSPchannel(jc->_20, (u32)jc);
+		jc->_20 = nullptr;
+		List_AddChannelTail(&jcs->_08, jc);
+		return nullptr;
+	} else {
+		List_AddChannelTail(&jcs->_0C, jc);
+	}
+	return jc;
 }
 
 /*
@@ -502,8 +402,51 @@ static void __Oneshot_Play_Start(jcs_*, jc_*, u32)
  * Address:	800156E0
  * Size:	000154
  */
-static void __Oneshot_GetLogicalChannel(jcs_*, CtrlWave_*)
+static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 {
+	if (wave && wave->_0C == nullptr) {
+		return FALSE;
+	}
+
+	jc_* chan = List_GetChannel(&jcs->_08);
+	if (chan == nullptr) {
+
+		if (FixAllocChannel(jcs, 1) == FALSE) {
+			return 0;
+		}
+		jcs->_04++;
+		chan = List_GetChannel(&jcs->_08);
+		if (chan == nullptr) {
+			return 0;
+		}
+
+		if (jcs->_70 == 1) {
+			volatile jc_* c;
+			c = List_GetChannel(&jcs->_10);
+			if (c == nullptr) {
+				c = List_GetChannel(&jcs->_0C);
+				if (c) {
+					List_CountChannel(&jcs->_14);
+				}
+			}
+
+			if (c) {
+				c->_48[0]._00 = 6;
+				List_AddChannel(&jcs->_14, c);
+				if (c->_20) {
+					ForceStopDSPchannel(c->_20);
+				}
+			}
+		}
+	}
+	Channel_Init(chan);
+	if (wave) {
+		chan->_10 = wave;
+		chan->_0C = 0;
+	}
+	chan->_18 = 0;
+	UpdatePanPower_1Shot(chan, 1.0f, 1.0f, 1.0f, 1.0f);
+	return chan;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -613,32 +556,14 @@ static void __Oneshot_GetLogicalChannel(jcs_*, CtrlWave_*)
  * Address:	80015840
  * Size:	000044
  */
-void PercRead(u32, u32)
+Perc_* PercRead(u32 a1, u32 a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        -0x9694
-	  cmplwi    r3, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x30
+	Bank_* bank = Bank_Get(a1);
+	if (bank == nullptr) {
+		return nullptr;
+	}
 
-	.loc_0x28:
-	  mr        r4, r31
-	  bl        -0x886C
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return Bank_PercChange(bank, a2);
 }
 
 /*
@@ -646,32 +571,15 @@ void PercRead(u32, u32)
  * Address:	800158A0
  * Size:	000044
  */
-void InstRead(u32, u32)
+Inst_* InstRead(u32 a1, u32 a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        -0x96F4
-	  cmplwi    r3, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x30
 
-	.loc_0x28:
-	  mr        r4, r31
-	  bl        -0x890C
+	Bank_* bank = Bank_Get(a1);
+	if (bank == nullptr) {
+		return nullptr;
+	}
 
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return Bank_InstChange(bank, a2);
 }
 
 /*
@@ -679,24 +587,13 @@ void InstRead(u32, u32)
  * Address:	80015900
  * Size:	00002C
  */
-void VmapRead(Inst_*, u8, u8)
+int VmapRead(Inst_* inst, u8 a1, u8 a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x886C
-	  cmplwi    r3, 0
-	  bne-      .loc_0x1C
-	  li        r3, 0
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	u32 a = Bank_GetInstVmap(inst, a1, a2);
+	if (a == 0) {
+		return 0;
+	}
+	return a;
 }
 
 /*
@@ -704,15 +601,10 @@ void VmapRead(Inst_*, u8, u8)
  * Address:	80015940
  * Size:	000010
  */
-static void __Oneshot_WavePause(jc_*, u8)
+static void __Oneshot_WavePause(jc_* jc, u8 a)
 {
-	/*
-	.loc_0x0:
-	  stb       r4, 0x2(r3)
-	  li        r0, 0x1
-	  stb       r0, 0x3(r3)
-	  blr
-	*/
+	jc->_02 = a;
+	jc->_03 = 1;
 }
 
 /*
@@ -720,7 +612,7 @@ static void __Oneshot_WavePause(jc_*, u8)
  * Address:	80015960
  * Size:	00014C
  */
-static void __Oneshot_StartMonoPolyCheck(jc_*, u32)
+static void __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 {
 	/*
 	.loc_0x0:
@@ -841,7 +733,7 @@ static void __Oneshot_StartMonoPolyCheck(jc_*, u32)
  * Address:	80015AC0
  * Size:	0000E8
  */
-static void __Oneshot_StopMonoPolyCheck(jc_*, u32)
+static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 {
 	/*
 	.loc_0x0:
@@ -919,45 +811,20 @@ static void __Oneshot_StopMonoPolyCheck(jc_*, u32)
  * Address:	80015BC0
  * Size:	000070
  */
-void Init_1shot(jcs_*, u32)
+void Init_1shot(jcs_* jcs, u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x2C
-	  mr        r3, r30
-	  bl        -0xC528
+	if (jcs->_00 != 0) {
+		FixReleaseChannelAll(jcs);
+	}
+	InitJcs(jcs);
+	FixAllocChannel(jcs, id);
+	if (id == 0) {
+		jcs->_70 = 0;
+	} else {
+		jcs->_70 = 1;
+	}
 
-	.loc_0x2C:
-	  mr        r3, r30
-	  bl        -0xC2B0
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0xC63C
-	  cmplwi    r31, 0
-	  bne-      .loc_0x54
-	  li        r0, 0
-	  stw       r0, 0x70(r30)
-	  b         .loc_0x5C
-
-	.loc_0x54:
-	  li        r0, 0x1
-	  stw       r0, 0x70(r30)
-
-	.loc_0x5C:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -965,30 +832,13 @@ void Init_1shot(jcs_*, u32)
  * Address:	80015C40
  * Size:	00003C
  */
-void Stop_1Shot(jc_*)
+void Stop_1Shot(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x24
-	  li        r4, 0x6
-	  bl        0x444
-	  b         .loc_0x2C
-
-	.loc_0x24:
-	  li        r4, 0
-	  bl        0x438
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (jc->_20 == 0) {
+		Jesus1Shot_Update(jc, (JCSTATUS)6);
+	} else {
+		Jesus1Shot_Update(jc, (JCSTATUS)0);
+	}
 }
 
 /*
@@ -996,31 +846,14 @@ void Stop_1Shot(jc_*)
  * Address:	80015C80
  * Size:	000040
  */
-void Stop_1Shot_R(jc_*, u16)
+void Stop_1Shot_R(jc_* jc, u16 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x24
-	  li        r4, 0x6
-	  bl        0x404
-	  b         .loc_0x30
-
-	.loc_0x24:
-	  sth       r4, 0x5C(r3)
-	  li        r4, 0
-	  bl        0x3F4
-
-	.loc_0x30:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (jc->_20 == 0) {
+		Jesus1Shot_Update(jc, (JCSTATUS)6);
+	} else {
+		jc->_48[0]._14 = id;
+		Jesus1Shot_Update(jc, (JCSTATUS)0);
+	}
 }
 
 /*
@@ -1028,8 +861,18 @@ void Stop_1Shot_R(jc_*, u16)
  * Address:	80015CC0
  * Size:	00006C
  */
-void AllStop_1Shot(jcs_*)
+void AllStop_1Shot(jcs_* jcs)
 {
+	List_CountChannel(&jcs->_08);
+	List_CountChannel(&jcs->_0C);
+	List_CountChannel(&jcs->_10);
+	List_CountChannel(&jcs->_14);
+
+	jc_* jc = jcs->_0C;
+	while (jc) {
+		jc = (jc_*)jc->mNext;
+		Stop_1Shot(jc);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1071,8 +914,17 @@ void AllStop_1Shot(jcs_*)
  * Address:	80015D40
  * Size:	00006C
  */
-static void Extra_Update(jc_*, JCSTATUS)
+static int Extra_Update(jc_* jc, JCSTATUS status)
 {
+	if (jc->_FA) {
+		jc->_B0 += (jc->_E8[2] - jc->_B0) / (f32)jc->_FA;
+		jc->_FA--;
+
+		if (jc->_FA == 0) {
+			jc->_2C = nullptr;
+		}
+	}
+	return 0;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x18(r1)
@@ -1112,25 +964,17 @@ static void Extra_Update(jc_*, JCSTATUS)
  * Address:	80015DC0
  * Size:	000030
  */
-void SetPitchTarget_1Shot(jc_*, f32, u32)
+void SetPitchTarget_1Shot(jc_* jc, f32 a1, u32 a2)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  bne-      .loc_0x18
-	  stfs      f1, 0xB0(r3)
-	  li        r0, 0
-	  stw       r0, 0x2C(r3)
-	  blr
+	if (a2 == 0) {
+		jc->_B0 = a1;
+		jc->_2C = nullptr;
+		return;
+	}
 
-	.loc_0x18:
-	  stfs      f1, 0xF4(r3)
-	  lis       r5, 0x8001
-	  addi      r0, r5, 0x5D40
-	  sth       r4, 0xFA(r3)
-	  stw       r0, 0x2C(r3)
-	  blr
-	*/
+	jc->_E8[2] = a1;
+	jc->_FA    = a2;
+	jc->_2C    = Extra_Update;
 }
 
 /*
@@ -1138,8 +982,27 @@ void SetPitchTarget_1Shot(jc_*, f32, u32)
  * Address:	80015E00
  * Size:	000090
  */
-void SetKeyTarget_1Shot(jc_*, u8, u32)
+void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
 {
+	if (jc == 0) {
+		return;
+	}
+
+	if (jc->_0C == 2 || jc->_10 == nullptr) {
+		a1 &= 0xff;
+	} else {
+		a1 = ((u8)a1 + 0x3c) - ((int)jc->_10 + 2);
+	}
+
+	if (a1 < 0) {
+		a1 = 0;
+	}
+	if (a1 >= 0x7f) {
+		a1 = 0x7f;
+	}
+
+	SetPitchTarget_1Shot(jc, jc->_A8 * C5BASE_PITCHTABLE[a1], a2);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1198,8 +1061,30 @@ void SetKeyTarget_1Shot(jc_*, u8, u32)
  * Address:	80015EA0
  * Size:	0000C8
  */
-void Gate_1Shot(jc_*, u8, u8, s32)
+void Gate_1Shot(jc_* jc, u8 a1, u8 a2, s32 a3)
 {
+	if (jc->_30 == -1) {
+		jc->_30 = a3;
+		jc->_34 = jc->_30;
+		int val;
+		if (jc->_0C == 2) {
+			val = a1;
+		} else {
+			val = a1 + 0x3c;
+		}
+		if (val < 0) {
+			val = 0;
+		}
+		if (val > 0x7f) {
+			val = 0x7f;
+		}
+
+		jc->_00 = a2;
+		jc->_01 = a1;
+		jc->_B0 = jc->_A8 * C5BASE_PITCHTABLE[val];
+		jc->_B4 = jc->_00 / 127.0f;
+		jc->_B4 *= jc->_AC * jc->_B4;
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x28(r1)
@@ -1270,10 +1155,9 @@ void Gate_1Shot(jc_*, u8, u8, s32)
  * Address:	80015F80
  * Size:	000008
  */
-void UpdatePause_1Shot(jc_*, u8 a1)
+void UpdatePause_1Shot(jc_* jc, u8 a1)
 {
-	// Generated from stb r4, 0x2(r3)
-	// _02 = a1;
+	jc->_02 = a1;
 }
 
 /*
@@ -1281,23 +1165,16 @@ void UpdatePause_1Shot(jc_*, u8 a1)
  * Address:	80015FA0
  * Size:	000030
  */
-void UpdatePanPower_1Shot(jc_*, f32, f32, f32, f32)
+void UpdatePanPower_1Shot(jc_* jc, f32 v1, f32 v2, f32 v3, f32 v4)
 {
-	/*
-	.loc_0x0:
-	  fadds     f4, f1, f2
-	  lfs       f0, -0x7EA8(r2)
-	  fadds     f4, f3, f4
-	  fcmpu     cr0, f0, f4
-	  beqlr-
-	  fdivs     f0, f1, f4
-	  fdivs     f1, f2, f4
-	  stfs      f0, 0xBC(r3)
-	  fdivs     f0, f3, f4
-	  stfs      f1, 0xC0(r3)
-	  stfs      f0, 0xC4(r3)
-	  blr
-	*/
+	f32 val = v1 + v2 + v3;
+	if (val == 0.0f) {
+		return;
+	}
+
+	jc->_BC[0]._00 = v1 / val;
+	jc->_BC[0]._04 = v2 / val;
+	jc->_BC[0]._08 = v3 / val;
 }
 
 /*
@@ -1305,7 +1182,7 @@ void UpdatePanPower_1Shot(jc_*, f32, f32, f32, f32)
  * Address:	........
  * Size:	000068
  */
-void CountChan(jc_*)
+void CountChan(jc_* jc)
 {
 	// UNUSED FUNCTION
 }
@@ -1315,7 +1192,7 @@ void CountChan(jc_*)
  * Address:	........
  * Size:	000068
  */
-void CountChanD(jc_*)
+void CountChanD(jc_* jc)
 {
 	// UNUSED FUNCTION
 }
@@ -1325,7 +1202,7 @@ void CountChanD(jc_*)
  * Address:	........
  * Size:	000080
  */
-void CheckChan(jc_*)
+void CheckChan(jc_* jc)
 {
 	// UNUSED FUNCTION
 }
@@ -1335,7 +1212,7 @@ void CheckChan(jc_*)
  * Address:	........
  * Size:	0000AC
  */
-void PrintChan(char*, jc_*, u32)
+void PrintChan(char* str, jc_* jc, u32 id)
 {
 	// UNUSED FUNCTION
 }
@@ -1345,65 +1222,26 @@ void PrintChan(char*, jc_*, u32)
  * Address:	80015FE0
  * Size:	0000B0
  */
-void FlushRelease_1Shot(jcs_*)
+void FlushRelease_1Shot(jcs_* jcs)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r29, 0x10
-	  bl        -0xCB98
-	  addi      r31, r3, 0
-	  li        r30, 0
-	  b         .loc_0x94
+	int count = List_CountChannel(&jcs->_10);
 
-	.loc_0x28:
-	  addi      r3, r29, 0x10
-	  bl        -0xCB0C
-	  mr.       r4, r3
-	  beq-      .loc_0x9C
-	  li        r0, 0x2
-	  li        r3, 0
-	  li        r5, 0
-	  li        r6, 0x6
-	  mtctr     r0
+	for (u32 i = 0; i < count; i++) {
+		jc_* chan = List_GetChannel(&jcs->_10);
+		if (chan == nullptr) {
+			break;
+		}
 
-	.loc_0x4C:
-	  addi      r0, r5, 0x38
-	  lwzx      r0, r4, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x7C
-	  addi      r7, r3, 0x48
-	  add       r7, r4, r7
-	  lbz       r0, 0x0(r7)
-	  cmplwi    r0, 0x6
-	  beq-      .loc_0x7C
-	  cmplwi    r0, 0x7
-	  beq-      .loc_0x7C
-	  stb       r6, 0x0(r7)
+		for (int j = 0; j < 2; j++) {
+			if (chan->_38[j]) {
+				if (chan->_48[j]._00 != 6 && chan->_48[j]._00 != 7) {
+					chan->_48[j]._00 = 6;
+				}
+			}
+		}
 
-	.loc_0x7C:
-	  addi      r3, r3, 0x18
-	  addi      r5, r5, 0x4
-	  bdnz+     .loc_0x4C
-	  addi      r3, r29, 0x10
-	  bl        -0xCB2C
-	  addi      r30, r30, 0x1
-
-	.loc_0x94:
-	  cmplw     r30, r31
-	  blt+      .loc_0x28
-
-	.loc_0x9C:
-	  lmw       r29, 0x14(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+		List_AddChannelTail(&jcs->_10, chan);
+	}
 }
 
 /*
@@ -1411,8 +1249,9 @@ void FlushRelease_1Shot(jcs_*)
  * Address:	800160A0
  * Size:	0001C4
  */
-static void Jesus1Shot_Update(jc_*, JCSTATUS)
+static int Jesus1Shot_Update(jc_* jc, JCSTATUS status)
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1560,59 +1399,81 @@ static void Jesus1Shot_Update(jc_*, JCSTATUS)
  * Address:	80016280
  * Size:	000098
  */
-void One_CheckInstWave(SOUNDID_)
+u32 One_CheckInstWave(SOUNDID_ sound)
 {
+	Inst_* inst = InstRead(sound.value, sound.value);
+	if (inst == nullptr) {
+		return 1;
+	}
+
+	int map = VmapRead(inst, sound.value, sound.value);
+	if (map == nullptr) {
+		return 2;
+	}
+
+	CtrlGroup_* group = WaveidToWavegroup(map, sound.value);
+	if (group == nullptr) {
+		return 3;
+	}
+
+	int handle = GetSoundHandle(group, map);
+	if (handle == 0) {
+		return 4;
+	}
+
+	return 0;
+
 	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  mr        r30, r3
-	  lbz       r3, 0x0(r3)
-	  lbz       r4, 0x1(r30)
-	  bl        -0x9FC
-	  cmplwi    r3, 0
-	  bne-      .loc_0x30
-	  li        r3, 0x1
-	  b         .loc_0x84
+.loc_0x0:
+  mflr      r0
+  stw       r0, 0x4(r1)
+  stwu      r1, -0x18(r1)
+  stmw      r30, 0x10(r1)
+  mr        r30, r3
+  lbz       r3, 0x0(r3)
+  lbz       r4, 0x1(r30)
+  bl        -0x9FC
+  cmplwi    r3, 0
+  bne-      .loc_0x30
+  li        r3, 0x1
+  b         .loc_0x84
 
-	.loc_0x30:
-	  lbz       r4, 0x2(r30)
-	  lbz       r5, 0x3(r30)
-	  bl        -0x9B8
-	  mr.       r31, r3
-	  bne-      .loc_0x4C
-	  li        r3, 0x2
-	  b         .loc_0x84
+.loc_0x30:
+  lbz       r4, 0x2(r30)
+  lbz       r5, 0x3(r30)
+  bl        -0x9B8
+  mr.       r31, r3
+  bne-      .loc_0x4C
+  li        r3, 0x2
+  b         .loc_0x84
 
-	.loc_0x4C:
-	  lwz       r3, 0x4(r31)
-	  lbz       r4, 0x0(r30)
-	  bl        -0x9D14
-	  cmplwi    r3, 0
-	  bne-      .loc_0x68
-	  li        r3, 0x3
-	  b         .loc_0x84
+.loc_0x4C:
+  lwz       r3, 0x4(r31)
+  lbz       r4, 0x0(r30)
+  bl        -0x9D14
+  cmplwi    r3, 0
+  bne-      .loc_0x68
+  li        r3, 0x3
+  b         .loc_0x84
 
-	.loc_0x68:
-	  lwz       r4, 0x4(r31)
-	  bl        -0x94EC
-	  cmplwi    r3, 0
-	  bne-      .loc_0x80
-	  li        r3, 0x4
-	  b         .loc_0x84
+.loc_0x68:
+  lwz       r4, 0x4(r31)
+  bl        -0x94EC
+  cmplwi    r3, 0
+  bne-      .loc_0x80
+  li        r3, 0x4
+  b         .loc_0x84
 
-	.loc_0x80:
-	  li        r3, 0
+.loc_0x80:
+  li        r3, 0
 
-	.loc_0x84:
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+.loc_0x84:
+  lwz       r0, 0x1C(r1)
+  lmw       r30, 0x10(r1)
+  addi      r1, r1, 0x18
+  mtlr      r0
+  blr
+*/
 }
 
 /*
@@ -1620,7 +1481,7 @@ void One_CheckInstWave(SOUNDID_)
  * Address:	........
  * Size:	000090
  */
-void Get_CtrlWave(SOUNDID_)
+void Get_CtrlWave(SOUNDID_ sound)
 {
 	// UNUSED FUNCTION
 }
@@ -1630,7 +1491,7 @@ void Get_CtrlWave(SOUNDID_)
  * Address:	80016320
  * Size:	00027C
  */
-void Play_1shot(jcs_*, SOUNDID_, u32)
+void Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	/*
 	.loc_0x0:
@@ -1833,7 +1694,7 @@ void Play_1shot(jcs_*, SOUNDID_, u32)
  * Address:	800165A0
  * Size:	00020C
  */
-void Play_1shot_Perc(jcs_*, SOUNDID_, u32)
+void Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	/*
 	.loc_0x0:
@@ -1992,7 +1853,7 @@ void Play_1shot_Perc(jcs_*, SOUNDID_, u32)
  * Address:	800167C0
  * Size:	000128
  */
-void Play_1shot_Osc(jcs_*, SOUNDID_, u32)
+void Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	/*
 	.loc_0x0:

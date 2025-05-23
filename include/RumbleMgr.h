@@ -10,6 +10,32 @@ struct Vector3f;
 /**
  * @brief TODO
  */
+enum RumbleType {
+	RUMBLE_Unk0  = 0,
+	RUMBLE_Unk1  = 1,
+	RUMBLE_Unk2  = 2,
+	RUMBLE_Unk3  = 3,
+	RUMBLE_Unk4  = 4,
+	RUMBLE_Unk5  = 5,
+	RUMBLE_Unk6  = 6,
+	RUMBLE_Unk7  = 7,
+	RUMBLE_Unk8  = 8,
+	RUMBLE_Unk9  = 9,
+	RUMBLE_Unk10 = 10,
+	RUMBLE_Unk11 = 11,
+	RUMBLE_Unk12 = 12,
+	RUMBLE_Unk13 = 13,
+	RUMBLE_Unk14 = 14,
+	RUMBLE_Unk15 = 15,
+	RUMBLE_Unk16 = 16,
+	RUMBLE_Unk17 = 17,
+	RUMBLE_Unk18 = 18,
+	RUMBLE_Unk19 = 19,
+};
+
+/**
+ * @brief TODO
+ */
 struct RumbleSample {
 	RumbleSample(int);
 
@@ -36,9 +62,9 @@ struct RumbleTable {
  * @brief TODO
  */
 struct ChannelData {
-	RumbleTable* mRumblePoint; // _00, maybe this type?
-	f32* mRumbleFrame;         // _04
-	f32* mRumblePower;         // _08
+	int* mRumblePoint; // _00
+	f32* mRumbleFrame; // _04
+	f32* mRumblePower; // _08
 };
 
 /**
@@ -142,7 +168,7 @@ struct RumbleMgr {
 };
 
 extern RumbleMgr* rumbleMgr;
-extern RumbleTable patternTable[64];
-extern ChannelData channelDataTbl[80];
+extern RumbleTable patternTable[16];
+extern ChannelData channelDataTbl[20];
 
 #endif

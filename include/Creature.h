@@ -213,6 +213,7 @@ struct Creature : public RefCountable, public EventTalker {
 	inline void unsetFlag80() { resetCreatureFlag(CF_Unk8); }
 
 	inline void setFlag400() { setCreatureFlag(CF_Unk11); }
+	inline void resetFlag400() { resetCreatureFlag(CF_Unk11); }
 
 	// these are setFlag/resetFlag/isFlag in the DLL, but this is clearer.
 	void setCreatureFlag(u32 flag) { mCreatureFlags |= flag; }
@@ -374,7 +375,7 @@ struct Creature : public RefCountable, public EventTalker {
 	Vector3f mAttachPosition;            // _194
 	int mPelletStickSlot;                // _1A0
 	u32 mHasCollChangedVelocity;         // _1A4
-	u32 _1A8;                            // _1A8, unknown
+	u32 mCollisionOccurred;              // _1A8, unknown
 	Vector3f mLastPosition;              // _1AC
 	SearchBuffer mSearchBuffer;          // _1B8
 	LifeGauge mLifeGauge;                // _1E0
@@ -385,13 +386,13 @@ struct Creature : public RefCountable, public EventTalker {
 	f32 _268;                            // _268
 	f32 mSize;                           // _26C
 	f32 mCollisionRadius;                // _270
-	Vector3f _274;                       // _274, this is actually a wrapper around a Vector3f in the DLL, but idk what yet.
+	Vector3f mPositionInShapeSpace;      // _274, this is actually a wrapper around a Vector3f in the DLL, but idk what yet.
 	DynCollObject* mCollPlatform;        // _280
 	Vector3f* mCollPlatNormal;           // _284
 	CollTriInfo* mClimbingTri;           // _288
 	CollTriInfo* mGroundTriangle;        // _28C
 	CollTriInfo* mPreviousTriangle;      // _290
-	u8 _294[0x4];                        // _294, unknown
+	Shape* mCurrCollisionModel;          // _294
 	u32 _298;                            // _298, unknown
 	Vector3f _29C;                       // _29C
 	SmartPtr<Creature> mHoldingCreature; // _2A8, what is holding this creature (e.g. what piki if this is a bomb)

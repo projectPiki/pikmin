@@ -11,7 +11,7 @@ void Jac_Pause(void);
 void Jac_StreamMovieInit(const char* filepath, u8*, int);
 void Jac_StreamMovieStop(void);
 void Jac_StreamMovieUpdate(void);
-int Jac_StreamMovieGetPicture(void); // TODO: return type unknown (same as Jac_GetPicture)
+int Jac_StreamMovieGetPicture(void*, int*, int*); // TODO: return type unknown (same as Jac_GetPicture)
 
 #ifdef __cplusplus
 };

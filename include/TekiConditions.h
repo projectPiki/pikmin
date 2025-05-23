@@ -192,26 +192,33 @@ struct TekiLowerRangeCondition : public TekiCondition {
  * @brief TODO
  */
 struct TekiNapkidShortRangeCondition : public TekiCondition {
-	TekiNapkidShortRangeCondition(Teki* teki); // DLL, to do
+	TekiNapkidShortRangeCondition(Teki* teki)
+	    : mTeki(teki)
+	{
+	}
 
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
-	// TODO: members
+	Teki* mTeki;
 };
 
 /**
  * @brief TODO
  */
 struct TekiNapkidTargetPikiCondition : public TekiCondition {
-	TekiNapkidTargetPikiCondition(Teki* teki); // DLL, to do
+	TekiNapkidTargetPikiCondition(Teki* teki)
+	    : mTeki(teki)
+	{
+	}
 
 	virtual bool satisfy(Creature*); // _08
 
 	// _00     = VTBL
 	// _00-_04 = TekiCondition
 	// TODO: members
+	Teki* mTeki;
 };
 
 /**

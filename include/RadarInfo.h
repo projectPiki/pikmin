@@ -25,6 +25,9 @@ struct RadarInfo {
 
 		Vector3f getPos();
 
+		// DLL inlines:
+		PartsInfo* getNext() { return (PartsInfo*)mNext; }
+
 		// _00     = VTBL
 		// _00-_14 = CoreNode
 		Creature* mPart; // _14
@@ -34,6 +37,9 @@ struct RadarInfo {
 
 	void attachParts(Creature*);
 	void detachParts(Creature*);
+
+	// DLL inlines:
+	PartsInfo* getFirst() { return (PartsInfo*)mAlivePartsList.mChild; }
 
 	PartsInfo mAlivePartsList; // _00
 	PartsInfo mDeadPartsList;  // _18

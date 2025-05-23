@@ -8,6 +8,7 @@ struct Graphics;
 struct P2DPane;
 struct P2DTextBox;
 struct P2DScreen;
+struct P2DPicture;
 
 namespace zen {
 
@@ -24,11 +25,11 @@ struct ogScrMapMgr {
 	 * @brief TODO
 	 */
 	enum MapStatus {
-		MAP_NULL = -1,
-		MAP_Unk0 = 0,
-		MAP_Unk1 = 1,
-		MAP_Unk2 = 2,
-		MAP_Unk4 = 4,
+		Inactive     = -1,
+		Active       = 0,
+		Initialising = 1,
+		Exiting      = 2,
+		Finished     = 4,
 	};
 
 	ogScrMapMgr();
@@ -45,11 +46,11 @@ struct ogScrMapMgr {
 	s16 mMode;                     // _14
 	f32 mFrameTimer;               // _18
 	P2DPane* mPic1;                // _1C
-	P2DPane* mCursorPane;          // _20
+	P2DPicture* mCursorPane;       // _20
 	f32 mPic1PositionX;            // _24
 	f32 mPic1PositionY;            // _28
-	s16 _2C;                       // _2C
-	s16 _2E;                       // _2E
+	s16 mScreenPosX;               // _2C
+	s16 mScreenPosY;               // _2E
 };
 
 } // namespace zen

@@ -2,6 +2,7 @@
 #define _ZEN_DRAWGAMEOVER_H
 
 #include "types.h"
+#include "zen/DrawCommon.h"
 
 struct Graphics;
 struct Controller;
@@ -11,6 +12,22 @@ namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x30. In drawGameOver.cpp for PRINT/ERROR reasons.
+ */
+struct DrawGameOverLetter;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0xC. In drawGameOver.cpp for PRINT/ERROR reasons.
+ */
+struct DrawGameOverScreen;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x1C.
  */
 struct DrawGameOver {
 
@@ -18,7 +35,8 @@ struct DrawGameOver {
 	 * @brief TODO
 	 */
 	enum modeFlag {
-		// TODO: this
+		MODE_Unk0 = 0,
+		MODE_Unk1 = 1,
 	};
 
 	DrawGameOver();
@@ -27,21 +45,13 @@ struct DrawGameOver {
 	bool update(Controller*);
 	void draw(Graphics&);
 
-	// TODO: members
-	u8 _00[0x1C];
-};
-
-/**
- * @brief TODO
- */
-struct DrawGameOverLetter {
-	DrawGameOverLetter();
-
-	void init(P2DPane*);
-	void initParams();
-	bool update();
-
-	// TODO: members
+	int _00;                 // _00
+	DrawGameOverScreen* _04; // _04
+	DrawGameOverScreen* _08; // _08
+	DrawGameOverScreen* _0C; // _0C
+	modeFlag mMode;          // _10
+	f32 _14;                 // _14
+	f32 _18;                 // _18
 };
 
 } // namespace zen

@@ -340,9 +340,6 @@ struct AnimInfo : public CoreNode {
 	// unused/inlined:
 	void initAnimData(AnimData*);
 
-	// fake inline apparently
-	inline f32 getAnimSpeed() { return mParams.mSpeed(); }
-
 	// only DLL inline:
 	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
 
@@ -359,6 +356,8 @@ struct AnimInfo : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x10.
  */
 struct AnimContext {
 	AnimContext()
@@ -380,31 +379,40 @@ struct AnimContext {
  * @brief TODO
  */
 struct Animator {
+	Animator() { }
+
 	void startAnim(int, int, int, int);
 	void updateContext();
 
-	// DLL inlines to make:
-	// (maybe) Animator();
-	// void init(AnimContext*, AnimMgr*);
+	void init(AnimContext* context, AnimMgr* mgr)
+	{
+		mContext          = context;
+		mMgr              = mgr;
+		mAnimInfo         = nullptr;
+		mAnimationCounter = 0.0f;
+	}
 
 	// _30 = VTBL
 	AnimMgr* mMgr;         // _00
 	AnimContext* mContext; // _04
-	int _08;               // _08
-	int _0C;               // _0C
-	int _10;               // _10
-	int _14;               // _14
-	int _18;               // _18
+	int mIsOneShotFinish;  // _08
+	int mAnimationId;      // _0C
+	int mFirstKeyframe;    // _10
+	int mLastKeyframe;     // _14
+	int mIsPlaying;        // _18
 	int mCurrentAnimID;    // _1C
 	int mFirstFrameIndex;  // _20
 	int mLastFrameIndex;   // _24
 	AnimInfo* mAnimInfo;   // _28
 	f32 mAnimationCounter; // _2C
 
-	virtual void changeContext(AnimContext*); // _08
-	virtual void animate(f32);                // _0C
-	virtual void finishOneShot();             // _10
-	virtual void finishLoop();                // _14
+	virtual void changeContext(AnimContext* context) // _08
+	{
+		mContext = context;
+	}
+	virtual void animate(f32);    // _0C
+	virtual void finishOneShot(); // _10
+	virtual void finishLoop();    // _14
 };
 
 /**
@@ -415,10 +423,10 @@ struct Animator {
 struct AnimMgr : public CoreNode {
 
 	/**
-	 * @brief Fabricated. Offsets relative to AnimMgr for convenience.
+	 * @brief Offsets relative to AnimMgr for convenience.
 	 */
-	struct AnimMgrParams : public Parameters {
-		inline AnimMgrParams()
+	struct Parms : public Parameters {
+		Parms()
 		    : _18(this, 2, 0, 0, "a00", nullptr)
 		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
 		{
@@ -429,11 +437,11 @@ struct AnimMgr : public CoreNode {
 		Parm<String> mBasePath; // _28
 	};
 
-	AnimMgr(Shape*, char*, int, char*);
+	AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath);
 
 	virtual void read(RandomAccessStream&); // _0C
 
-	void loadAnims(char*, char*);
+	void loadAnims(char* animPath, char* bundlePath);
 	AnimInfo* addAnimation(char*, bool);
 	int countAnims();
 
@@ -442,10 +450,10 @@ struct AnimMgr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	AnimMgrParams mParams; // _14
-	Shape* mParent;        // _3C
-	AnimInfo mAnimList;    // _40, parent of list of animations
-	u32 _B4;               // _B4
+	Parms mParams;      // _14
+	Shape* mParent;     // _3C
+	AnimInfo mAnimList; // _40, parent of list of animations
+	s32 mIsLoaded;      // _B4
 };
 
 /**

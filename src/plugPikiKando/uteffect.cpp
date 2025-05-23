@@ -82,7 +82,7 @@ bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 		Vector3f velocity = mObj->mVelocity;
 		velocity.y        = 0.0f;
 		velocity          = velocity * gsys->getFrameTime() * 0.9f;
-		mdl->_34          = velocity;
+		mdl->mVelocity    = velocity;
 	}
 	return true;
 }
@@ -130,8 +130,8 @@ UtEffectMgr::UtEffectMgr()
 	registerEffect(KandoEffect::BombLight, new BombEffectLight);
 	registerEffect(KandoEffect::UfoSuck, new UfoSuckEffect);
 	registerEffect(KandoEffect::UfoSuikomi, new UfoSuikomiEffect);
-	registerEffect(KandoEffect::WhistleTemplate0, new WhistleTemplate(EffectMgr::EFF_Rocket_Bm2o, EffectMgr::EFF_UfoPart_ASN01));
-	registerEffect(KandoEffect::WhistleTemplate1, new WhistleTemplate(EffectMgr::EFF_Rocket_Bm2o, EffectMgr::EFF_UfoPart_ASN01));
+	registerEffect(KandoEffect::WhistleTemplate0, new WhistleTemplate(EffectMgr::EFF_Rocket_Bm1o, EffectMgr::EFF_Rocket_Bm2o));
+	registerEffect(KandoEffect::WhistleTemplate1, new WhistleTemplate(EffectMgr::EFF_Rocket_Bm1o, EffectMgr::EFF_Rocket_Bm2o));
 	registerEffect(KandoEffect::IdleBluePiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleBlue));
 	registerEffect(KandoEffect::IdleRedPiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleRed));
 	registerEffect(KandoEffect::IdleYellowPiki, new SimpleEffect(EffectMgr::EFF_Piki_IdleYellow));

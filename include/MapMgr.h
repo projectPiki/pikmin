@@ -5,11 +5,16 @@
 #include "Animator.h"
 #include "Shape.h"
 #include "DynColl.h"
+#include "Graphics.h"
 #include "Material.h"
 
 struct Controller;
 struct CreatureCollPart;
 struct DayMgr;
+struct DynMapObject;
+struct DynSimulator;
+struct MapObjectPart;
+struct MapLightMgr;
 
 /**
  * @brief TODO
@@ -17,75 +22,86 @@ struct DayMgr;
 struct MoveTrace {
 	MoveTrace(Vector3f& position, Vector3f& velocity, f32 radius, bool p4)
 	{
-		_20           = p4;
-		mPosition     = position;
-		mVelocity     = velocity;
-		mRadius       = radius;
-		mObject       = nullptr;
-		mStepFraction = 1.0f;
+		mIgnoreDynamicColliders = p4;
+		mPosition               = position;
+		mVelocity               = velocity;
+		mRadius                 = radius;
+		mObject                 = nullptr;
+		mStepFraction           = 1.0f;
 	}
 
-	Vector3f mPosition; // _00
-	Vector3f mVelocity; // _0C
-	f32 mRadius;        // _18
-	f32 mStepFraction;  // _1C
-	bool _20;           // _20
-	Creature* mObject;  // _24, the thing moving
-};
-
-/**
- * @brief TODO
- */
-struct MapObjAnimator : public Animator {
-	virtual void finishOneShot(); // _10
-
-	// _30     = VTBL
-	// _00-_34 = Animator
-	// TODO: members
+	Vector3f mPosition;           // _00
+	Vector3f mVelocity;           // _0C
+	f32 mRadius;                  // _18
+	f32 mStepFraction;            // _1C
+	bool mIgnoreDynamicColliders; // _20
+	Creature* mObject;            // _24, the thing moving
 };
 
 /**
  * @brief Stripped struct used in one ctor, but needed for genning a weak ctor
  */
-struct MapAnimShapeObject : public Shape { };
-
-/**
- * @brief TODO
- */
-struct MapShadMatHandler : public MaterialHandler {
-	virtual void setMaterial(Material*); // _08
-
-	// _00     = VTBL?
-	// _00-_?? = MaterialHandler?
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct MapProjMatHandler : public MaterialHandler {
-	virtual void setMaterial(Material*); // _08
-	virtual void setTexMatrix(bool);     // _0C
-
-	// _00     = VTBL?
-	// _00-_?? = MaterialHandler?
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SoftLight {
-	void addLight(u32, LShortColour*, Shape*);
-	void subLight(LShortColour*);
-
-	// TODO: members
+struct MapAnimShapeObject {
+	Shape* mShape;            // _00
+	AnimContext mAnimContext; // _04
+	AnimMgr* mMgr;            // _14
 };
 
 /**
  * @brief TODO
  *
- * @note Size: 0x394.
+ * @note Size: 0xC.
+ */
+struct MapShadMatHandler : public MaterialHandler {
+	MapShadMatHandler()
+	{
+		mShadMat = new Material();
+		mShadMat->Colour().set(255, 255, 255, 255);
+	}
+
+	virtual void setMaterial(Material*) // _08
+	{
+		mGfx->setMaterial(mShadMat, true);
+	}
+
+	// _00     = VTBL
+	// _00-_08 = MaterialHandler
+	Material* mShadMat; // _08
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x10.
+ */
+struct MapProjMatHandler : public MaterialHandler {
+	MapProjMatHandler(Texture* tex)
+	{
+		mLightCamera       = nullptr;
+		mProjMat           = new Material();
+		mProjMat->mTexture = tex;
+		mProjMat->Colour().set(128, 128, 128, 32);
+	}
+
+	virtual void setMaterial(Material*) // _08
+	{
+		mGfx->setMaterial(mProjMat, true);
+	}
+	virtual void setTexMatrix(bool p1) // _0C
+	{
+		mGfx->initProjTex(p1, mLightCamera);
+	}
+
+	// _00     = VTBL
+	// _00-_08 = MaterialHandler
+	Material* mProjMat;        // _08
+	LightCamera* mLightCamera; // _0C
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x398.
  */
 struct ShadowCaster : public CoreNode {
 	ShadowCaster();
@@ -97,6 +113,18 @@ struct ShadowCaster : public CoreNode {
 	LightCamera mLightCamera; // _14
 	Vector3f mSourcePosition; // _37C
 	Vector3f mTargetPosition; // _388
+	Node* mDrawer;            // _394, usually cast to something else.
+};
+
+/**
+ * @brief TODO
+ */
+struct MapObjAnimator : public Animator {
+	virtual void finishOneShot(); // _10
+
+	// _30     = VTBL
+	// _00-_34 = Animator
+	DynMapObject* mMapObj; // _34
 };
 
 /**
@@ -113,26 +141,43 @@ struct DynMapObject : public DynCollShape {
 	void nextState();
 
 	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00-_140 = DynCollShape
+	MapAnimShapeObject* mShapeObject; // _140
+	MapObjAnimator mAnimator;         // _144
+	MapMgr* mMapMgr;                  // _17C
+	ShadowCaster mShadowCaster;       // _180, cast mDrawer to DynMapObject*
+	int mState;                       // _518
+	f32 mStateTransitionTimer;        // _51C
+	Vector3f mMapScale;               // _520, this is an SRT according to the DLL
+	Vector3f mMapRotation;            // _52C
+	Vector3f mMapTranslation;         // _538
+	int mObjPartCount;                // _544
+	MapObjectPart** mObjParts;        // _548
 };
 
 /**
  * @brief TODO
  */
 struct MapObjectPart : public DynCollShape {
-	MapObjectPart() // TODO: fix this, it's implicit but required/this is just a guess
-	    : DynCollShape(nullptr)
+	MapObjectPart(Shape* shape)
+	    : DynCollShape(shape)
 	{
+		mJointIndex      = 0;
+		mParentMapObject = 0;
 	}
 
-	virtual void update();                                    // _10
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
-	virtual void refresh(Graphics&);                          // _44
+	virtual void update() { }                                            // _10
+	virtual void refresh(Graphics&) { }                                  // _44
+	virtual void touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2) // _38
+	{
+		if (mParentMapObject)
+			mParentMapObject->touchCallback(plane, a1, a2);
+	}
 
 	// _00     = VTBL
-	// _00-_?? = DynCollShape
-	// TODO: members
+	// _00-_140 = DynCollShape
+	int mJointIndex;                // _140
+	DynMapObject* mParentMapObject; // _144 might be wrong
 };
 
 /**
@@ -216,11 +261,28 @@ struct MapSlider : public MapParts {
  * @note Size: 0xC.
  */
 struct MapRoom {
-	MapRoom();
+	MapRoom()
+	{
+		_08 = 0;
+		_04 = 1.0f;
+		_00 = 1.0f;
+	}
 
 	f32 _00; // _00
 	f32 _04; // _04
 	u32 _08; // _08, unknown
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Fabricated. Has to be this structure, but no idea what it was called. Has no ctor.
+ * @note Size: 0xC.
+ */
+struct MapColls {
+	CollGroup* mCollisions;    // _00
+	CollTriInfo* mTriangle;    // _04
+	int mDisplayColorCategory; // _08
 };
 
 /**
@@ -257,36 +319,45 @@ struct MapMgr {
 	// unused/inlined:
 	bool closeCollTri(CollGroup*, CollTriInfo*);
 
-	Controller* mController;               // _00
-	DayMgr* mDayMgr;                       // _04
-	Vector3f _08;                          // _08
-	MapRoom* mMapRooms;                    // _14, array of 256 MapRooms
-	u8 _18[0x60 - 0x18];                   // _18, unknown
-	Shape* mMapShape;                      // _60
-	ShapeDynMaterials mDynMaterials;       // _64
-	BaseShape* mMapPartShapes[5];          // _74
-	DynCollShape* mCollShape;              // _88
-	u8 _8C[0x4];                           // _8C, unknown
-	BoundBox _90;                          // _90
-	u8 _A8[0xB4 - 0xA8];                   // _A8, unknown
-	Vector3f _B4;                          // _B4
-	BoundBox _C0;                          // _C0
-	BoundBox _D8;                          // _D8
-	u8 _F0[0x10C - 0xF0];                  // _F0, unknown
-	int mCollisionCheckCount;              // _10C
-	u8 _110[0x4];                          // _110, unknown
-	ShadowCaster mShadowCaster;            // _114
-	u8 _4A8[0x4];                          // _4A8, unknown
-	MapShadMatHandler* mMapShadMatHandler; // _4AC
-	MapProjMatHandler* mMapProjMatHandler; // _4B0
-	Texture* _4B4;                         // _4B4
-	Texture* _4B8;                         // _4B8
-	int mBlur;                             // _4BC
-	f32 _4C0;                              // _4C0
-	f32 _4C4;                              // _4C4
-	f32 _4C8;                              // _4C8
-	f32 _4CC;                              // _4CC
-	CreatureCollPart* _4D0;                // _4D0
+	Controller* mController;                         // _00
+	DayMgr* mDayMgr;                                 // _04
+	Vector3f _08;                                    // _08
+	MapRoom* mMapRooms;                              // _14, array of 256 MapRooms
+	int mVerticalRaycastCallCount;                   // _18
+	int mGroundTriangleRaycastCallCount;             // _1C
+	u8 _20[0x60 - 0x20];                             // _20, unknown
+	Shape* mMapShape;                                // _60
+	ShapeDynMaterials mDynMaterials;                 // _64
+	BaseShape* mMapPartShapes[5];                    // _74
+	DynCollShape* mCollShape;                        // _88
+	MapLightMgr* mLightMgr;                          // _8C
+	BoundBox mCompleteMapBounds;                     // _90
+	int mCurrentDebugCollisionCount;                 // _A8
+	int mActiveTriangleDisplayCount;                 // _AC
+	int mMaxDebugDisplayCollisions;                  // _B0
+	Vector3f mDebugCollisionFocusPoint;              // _B4
+	BoundBox mDebugCollisionBroadPhaseBox;           // _C0
+	BoundBox mDebugCollisionQueryBox;                // _D8
+	MapColls* mCollisions;                           // _F0
+	f32 mLastPhysicsUpdateTimeProcessed;             // _F4
+	f32 mAccumulatedFrameTimeForPhysics;             // _F8
+	f32 mPhysicsFixedTimeStep;                       // _FC
+	f32 mPhysicsIntegrationSubStep;                  // _100
+	u8 mNeedsPhysicsWorldReset;                      // _104
+	DynSimulator* mDynSimulator;                     // _108
+	int mCollisionCheckCount;                        // _10C
+	int mShadowFullRenderCountdown;                  // _110
+	ShadowCaster mShadowCaster;                      // _114
+	MapShadMatHandler* mMapShadMatHandler;           // _4AC
+	MapProjMatHandler* mMapProjMatHandler;           // _4B0
+	Texture* mScreenCaptureTextureForBlur;           // _4B4
+	Texture* mBlurredPreviousFrameTexture;           // _4B8
+	int mBlur;                                       // _4BC
+	f32 mGreyscaleDesaturationLevel;                 // _4C0
+	f32 mFadeToBlackProgress;                        // _4C4
+	f32 mTargetGreyscaleDesaturationLevel;           // _4C8
+	f32 mTargetFadeToBlackLevel;                     // _4CC
+	CreatureCollPart* mDefaultCreatureCollisionPart; // _4D0
 };
 
 extern MapMgr* mapMgr;

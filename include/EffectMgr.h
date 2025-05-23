@@ -4,8 +4,12 @@
 #include "types.h"
 #include "Node.h"
 #include "zen/particle.h"
+#include "Shape.h"
 
 struct Texture;
+struct EffectParticleRegistration;
+struct EffectGeometryRegistration;
+struct EffectSimpleParticleRegistration;
 
 /**
  * @brief TODO
@@ -14,11 +18,35 @@ struct SmokeEmitter : public Node {
 
 	/**
 	 * @brief TODO
+	 *
+	 * @note Size: 0x38.
 	 */
 	struct Smoke {
-		Smoke(); // unused/inlined
+		Smoke() { mNext = mPrev = nullptr; }
 
-		// TODO: members
+		void insertAfter(Smoke* newSmoke)
+		{
+			newSmoke->mNext = mNext;
+			newSmoke->mPrev = this;
+			mNext->mPrev    = newSmoke;
+			mNext           = newSmoke;
+		}
+		void remove()
+		{
+			mNext->mPrev = mPrev;
+			mPrev->mNext = mNext;
+		}
+
+		Vector3f mPosition; // _00
+		f32 mSize;          // _0C
+		Smoke* mNext;       // _10
+		Smoke* mPrev;       // _14
+		f32 mLifeTimer;     // _18
+		f32 mExpandRate;    // _1C
+		f32 mAlpha;         // _20
+		f32 mAlphaIncRate;  // _24
+		f32 mMaxSize;       // _28
+		Vector3f mVelocity; // _2C
 	};
 
 	SmokeEmitter(int, Texture*); // unused/inlined
@@ -31,13 +59,31 @@ struct SmokeEmitter : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	// TODO: members
+	Smoke* mSmokes;            // _20
+	int mSmokeCount;           // _24
+	int mBlendMode;            // _28
+	Smoke* mActiveSmokeList;   // _2C
+	Smoke* mInactiveSmokeList; // _30
+	Texture* mTexture;         // _34
+	Shape* mModel;             // _38
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x28.
  */
 struct EffectShape : public CoreNode {
+	EffectShape()
+	    : CoreNode("")
+	{
+	}
+
+	EffectShape(char* modelFile)
+	    : CoreNode("")
+	{
+		initShape(modelFile);
+	}
 
 	// unused/inlined:
 	void initShape(char*);
@@ -46,13 +92,22 @@ struct EffectShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	Shape* mModel;              // _14
+	ShapeDynMaterials mDynMats; // _18
 };
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x44.
  */
 struct EffShpInst : public CoreNode {
+	EffShpInst()
+	    : CoreNode("")
+	{
+		initEffShpInst();
+		visible();
+	}
 
 	bool update();
 
@@ -60,48 +115,28 @@ struct EffShpInst : public CoreNode {
 	void initEffShpInst();
 	void draw(Graphics&);
 
+	bool isVisible() { return mIsVisible; }
+	void visible() { mIsVisible = true; }
+
+	// DLL inlines to do:
+	void setLoop(u8 loop) { mLoop = loop; }
+	void setLoopMax(u8 max) { mLoopMax = max; }
+	void invisible();
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Vector3f _14;        // _14
-	u8 _20[0x42 - 0x20]; // _20, unknown
-	u8 _42;              // _42
-	                     // TODO: members
+	SRT mSRT;                  // _14
+	EffectShape* mEffectShape; // _38
+	f32 _3C;                   // _3C
+	u8 mLoop;                  // _40
+	u8 mLoopMax;               // _41
+	bool mIsVisible;           // _42
 };
 
 /**
  * @brief TODO
- */
-struct EffectParticleRegistration {
-	EffectParticleRegistration(char*, char*, char*); // unused/inlined
-
-	virtual void create(Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
-	                    zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct EffectGeometryRegistration {
-	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
-
-	virtual EffShpInst* create(Vector3f&, Vector3f&, Vector3f&); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct EffectSimpleParticleRegistration {
-	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
+ *
+ * @note Size: 0x6B4
  */
 struct EffectMgr : public CoreNode {
 
@@ -363,104 +398,109 @@ struct EffectMgr : public CoreNode {
 		EFF_Rocket_5Meteor              = 245, // r5meteor.pcr
 		EFF_Rocket_6Meteor              = 246, // r6meteor.pcr
 		EFF_Rocket_7Meteor              = 247, // r7meteor.pcr
-		EFF_Rocket_SCT01                = 248, // sct01.pcr
-		EFF_Rocket_SCT02                = 249, // sct02.pcr
-		EFF_Rocket_SCT03                = 250, // sct03.pcr
-		EFF_Rocket_SCT01C               = 251, // sct01c.pcr
-		EFF_Rocket_SCT02C               = 252, // sct02c.pcr
+		EFF_Rocket_7Meteor2             = 248, // r7meteor.pcr
+		EFF_Rocket_SCT01                = 249, // sct01.pcr
+		EFF_Rocket_SCT02                = 250, // sct02.pcr
+		EFF_Rocket_SCT03                = 251, // sct03.pcr
+		EFF_Rocket_SCT01C               = 252, // sct01c.pcr
+		EFF_Rocket_SCT02C               = 253, // sct02c.pcr
 		EFF_Rocket_SCT01CC              = 254, // sct01cc.pcr
-		EFF_Rocket_SCT03C               = 253, // sct03c.pcr
-		EFF_Rocket_SCT02CC              = 255, // sct02cc.pcr
-		EFF_Rocket_SCT03CC              = 256, // sct03cc.pcr
-		EFF_Rocket_SCT00N               = 257, // sct00n.pcr
-		EFF_Rocket_JetG01               = 258, // jetg01.pcr
-		EFF_Rocket_JetG02               = 259, // jetg02.pcr
-		EFF_Rocket_JetG03               = 260, // jetg03.pcr
-		EFF_Rocket_Bst1da               = 261, // r_bst1da.pcr
-		EFF_Rocket_Bst1db               = 262, // r_bst1db.pcr
-		EFF_Rocket_Bstg                 = 263, // bstg.pcr
-		EFF_Rocket_MkB                  = 264, // rkt_mk_b.pcr
-		EFF_Rocket_MkS                  = 265, // rkt_mk_s.pcr
-		EFF_Rocket_Hiba                 = 266, // rkt_hiba.pcr
-		EFF_Rocket_Biri                 = 267, // rkt_biri.pcr
-		EFF_Rocket_TakeS                = 268, // take_s.pcr
-		EFF_Rocket_Tbc1                 = 269, // r_tbc1.pcr
-		EFF_Rocket_Tbf1                 = 270, // r_tbf1.pcr
-		EFF_Rocket_Tbf2                 = 271, // r_tbf2.pcr
-		EFF_Rocket_BeBomK               = 272, // be_bom_k.pcr
-		EFF_Rocket_BeBomP               = 273, // be_bom_p.pcr
-		EFF_Rocket_BeBomH               = 274, // be_bom_h.pcr
-		EFF_Rocket_BeBomW               = 275, // be_bom_w.pcr
-		EFF_Rocket_BeBomC               = 276, // be_bom_c.pcr
-		EFF_Rocket_WakeK1               = 277, // wake_k1.pcr
-		EFF_Rocket_WakeK2               = 278, // wake_k2.pcr
-		EFF_Rocket_WakeP1               = 279, // wake_p1.pcr
-		EFF_Rocket_WakeP2               = 280, // wake_p2.pcr
-		EFF_Rocket_Bst1cb               = 281, // r_bst1cb.pcr
-		EFF_Rocket_Bst1fa               = 282, // r_bst1fa.pcr
-		EFF_Rocket_Bst1fb               = 283, // r_bst1fb.pcr
-		EFF_Rocket_PCA1                 = 284, // pca1.pcr
-		EFF_Rocket_PCA2                 = 285, // pca2.pcr
-		EFF_Rocket_Gep                  = 286, // rct_gep.pcr
-		EFF_Rocket_Suck1                = 287, // ony_st1.pcr
-		EFF_Onyon_Suck2                 = 288, // ony_st2.pcr
-		EFF_Rocket_Bm1o                 = 289, // rct_bm1o.pcr
-		EFF_Rocket_Bm2o                 = 290, // rct_bm2o.pcr
-		EFF_UfoPart_ASN01               = 291, // asn01.pcr
-		EFF_UfoPart_ASN02               = 292, // asn02.pcr
-		EFF_UfoPart_KafunB              = 293, // kafun_b.pcr
-		EFF_Kafun_BS                    = 294, // kafun_bs.pcr
-		EFF_Kafun_NG                    = 295, // kafun_ng.pcr
-		EFF_Rocket_FlowLight            = 296, // f_light.pcr
-		EFF_Rocket_LandS                = 297, // land_s.pcr
-		EFF_Rocket_C                    = 298, // rkt_c.pcr
-		EFF_Rocket_NJ1CA                = 299, // r_nj1ca.pcr
-		EFF_Rocket_NJ1CB                = 300, // r_nj1cb.pcr
-		EFF_Rocket_NJ1FA                = 301, // r_nj1fa.pcr
-		EFF_Rocket_NJ1FB                = 302, // r_nj1fb.pcr
-		EFF_Rocket_NJ1CA2               = 303, // r_nj1ca2.pcr
-		EFF_Rocket_NJ1CB2               = 304, // r_nj1cb2.pcr
-		EFF_Rocket_NJ1FA2               = 305, // r_nj1fa2.pcr
-		EFF_Rocket_NJ1FB2               = 306, // r_nj1fb2.pcr
-		EFF_Rocket_NJ1CA3               = 307, // r_nj1ca3.pcr
-		EFF_Rocket_NJ1CB3               = 308, // r_nj1cb3.pcr
-		EFF_Rocket_NJ1FA3               = 309, // r_nj1fa3.pcr
-		EFF_Rocket_NJ1FB3               = 310, // r_nj1fb3.pcr
-		EFF_Rocket_NJ1CA4               = 311, // r_nj1ca4.pcr
-		EFF_Rocket_NJ1CB4               = 312, // r_nj1cb4.pcr
-		EFF_Rocket_NJ1FA4               = 313, // r_nj1fa4.pcr
-		EFF_Rocket_NJ1FB4               = 314, // r_nj1fb4.pcr
-		EFF_Rocket_NJ2CA                = 315, // r_nj2ca.pcr
-		EFF_Rocket_NJ2CB                = 316, // r_nj2cb.pcr
-		EFF_Rocket_NJ2FA                = 317, // r_nj2fa.pcr
-		EFF_Rocket_NJ2FB                = 318, // r_nj2fa.pcr
-		EFF_Rocket_NJ3CA                = 319, // r_nj3ca.pcr
-		EFF_Rocket_NJ3CB                = 320, // r_nj3ca.pcr
-		EFF_Rocket_NJ3FA                = 321, // r_nj3fa.pcr
-		EFF_Rocket_NJ3FB                = 322, // r_nj3fa.pcr
-		EFF_Rocket_NJ3FB2               = 323, // r_nj3fb2.pcr
-		EFF_Rocket_Sparkles1            = 324, // pt_kira1.pcr
-		EFF_Rocket_Bm1                  = 325, // rct_bm1.pcr
-		EFF_Rocket_Bm2                  = 326, // rct_bm2.pcr
-		EFF_Rocket_Suck2                = 327, // rct_sui.pcr
-		EFF_Rocket_Nke1                 = 328, // rct_nke1.pcr
-		EFF_Rocket_Nke2                 = 329, // rct_nke2.pcr
-		EFF_Rocket_Fkm1                 = 330, // rct_fkm1.pcr
-		EFF_331                         = 331,
+		EFF_Rocket_SCT03C               = 255, // sct03c.pcr
+		EFF_Rocket_SCT02CC              = 256, // sct02cc.pcr
+		EFF_Rocket_SCT03CC              = 257, // sct03cc.pcr
+		EFF_Rocket_SCT00N               = 258, // sct00n.pcr
+		EFF_Rocket_JetG01               = 259, // jetg01.pcr
+		EFF_Rocket_JetG02               = 260, // jetg02.pcr
+		EFF_Rocket_JetG03               = 261, // jetg03.pcr
+		EFF_Rocket_Bst1da               = 262, // r_bst1da.pcr
+		EFF_Rocket_Bst1db               = 263, // r_bst1db.pcr
+		EFF_Rocket_Bstg                 = 264, // bstg.pcr
+		EFF_Rocket_MkB                  = 265, // rkt_mk_b.pcr
+		EFF_Rocket_MkS                  = 266, // rkt_mk_s.pcr
+		EFF_Rocket_Hiba                 = 267, // rkt_hiba.pcr
+		EFF_Rocket_Biri                 = 268, // rkt_biri.pcr
+		EFF_Rocket_TakeS                = 269, // take_s.pcr
+		EFF_Rocket_Tbc1                 = 270, // r_tbc1.pcr
+		EFF_Rocket_Tbf1                 = 271, // r_tbf1.pcr
+		EFF_Rocket_Tbf2                 = 272, // r_tbf2.pcr
+		EFF_Rocket_BeBomK               = 273, // be_bom_k.pcr
+		EFF_Rocket_BeBomP               = 274, // be_bom_p.pcr
+		EFF_Rocket_BeBomH               = 275, // be_bom_h.pcr
+		EFF_Rocket_BeBomW               = 276, // be_bom_w.pcr
+		EFF_Rocket_BeBomC               = 277, // be_bom_c.pcr
+		EFF_Rocket_WakeK1               = 278, // wake_k1.pcr
+		EFF_Rocket_WakeK2               = 279, // wake_k2.pcr
+		EFF_Rocket_WakeP1               = 280, // wake_p1.pcr
+		EFF_Rocket_WakeP2               = 281, // wake_p2.pcr
+		EFF_Rocket_Bst1cb               = 282, // r_bst1cb.pcr
+		EFF_Rocket_Bst1fa               = 283, // r_bst1fa.pcr
+		EFF_Rocket_Bst1fb               = 284, // r_bst1fb.pcr
+		EFF_Rocket_PCA1                 = 285, // pca1.pcr
+		EFF_Rocket_PCA2                 = 286, // pca2.pcr
+		EFF_Rocket_Gep                  = 287, // rct_gep.pcr
+		EFF_Rocket_Suck1                = 288, // ony_st1.pcr
+		EFF_Onyon_Suck2                 = 289, // ony_st2.pcr
+		EFF_Rocket_Bm1o                 = 290, // rct_bm1o.pcr
+		EFF_Rocket_Bm2o                 = 291, // rct_bm2o.pcr
+		EFF_UfoPart_ASN01               = 292, // asn01.pcr
+		EFF_UfoPart_ASN02               = 293, // asn02.pcr
+		EFF_UfoPart_KafunB              = 294, // kafun_b.pcr
+		EFF_Kafun_BS                    = 295, // kafun_bs.pcr
+		EFF_Kafun_NG                    = 296, // kafun_ng.pcr
+		EFF_Rocket_FlowLight            = 297, // f_light.pcr
+		EFF_Rocket_LandS                = 298, // land_s.pcr
+		EFF_Rocket_C                    = 299, // rkt_c.pcr
+		EFF_Rocket_NJ1CA                = 300, // r_nj1ca.pcr
+		EFF_Rocket_NJ1CB                = 301, // r_nj1cb.pcr
+		EFF_Rocket_NJ1FA                = 302, // r_nj1fa.pcr
+		EFF_Rocket_NJ1FB                = 303, // r_nj1fb.pcr
+		EFF_Rocket_NJ1CA2               = 304, // r_nj1ca2.pcr
+		EFF_Rocket_NJ1CB2               = 305, // r_nj1cb2.pcr
+		EFF_Rocket_NJ1FA2               = 306, // r_nj1fa2.pcr
+		EFF_Rocket_NJ1FB2               = 307, // r_nj1fb2.pcr
+		EFF_Rocket_NJ1CA3               = 308, // r_nj1ca3.pcr
+		EFF_Rocket_NJ1CB3               = 309, // r_nj1cb3.pcr
+		EFF_Rocket_NJ1FA3               = 310, // r_nj1fa3.pcr
+		EFF_Rocket_NJ1FB3               = 311, // r_nj1fb3.pcr
+		EFF_Rocket_NJ1CA4               = 312, // r_nj1ca4.pcr
+		EFF_Rocket_NJ1CB4               = 313, // r_nj1cb4.pcr
+		EFF_Rocket_NJ1FA4               = 314, // r_nj1fa4.pcr
+		EFF_Rocket_NJ1FB4               = 315, // r_nj1fb4.pcr
+		EFF_Rocket_NJ2CA                = 316, // r_nj2ca.pcr
+		EFF_Rocket_NJ2CB                = 317, // r_nj2cb.pcr
+		EFF_Rocket_NJ2FA                = 318, // r_nj2fa.pcr
+		EFF_Rocket_NJ2FB                = 319, // r_nj2fa.pcr
+		EFF_Rocket_NJ3CA                = 320, // r_nj3ca.pcr
+		EFF_Rocket_NJ3CB                = 321, // r_nj3ca.pcr
+		EFF_Rocket_NJ3FA                = 322, // r_nj3fa.pcr
+		EFF_Rocket_NJ3FB                = 323, // r_nj3fa.pcr
+		EFF_Rocket_NJ3FB2               = 324, // r_nj3fb2.pcr
+		EFF_Rocket_Sparkles1            = 325, // pt_kira1.pcr
+		EFF_Rocket_Bm1                  = 326, // rct_bm1.pcr
+		EFF_Rocket_Bm2                  = 327, // rct_bm2.pcr
+		EFF_Rocket_Suck2                = 328, // rct_sui.pcr
+		EFF_Rocket_Nke1                 = 329, // rct_nke1.pcr
+		EFF_Rocket_Nke2                 = 330, // rct_nke2.pcr
+		EFF_Rocket_Fkm1                 = 331, // rct_fkm1.pcr
+		EFF_COUNT,                             // 332
 	};
 
 	/**
 	 * @brief TODO
 	 */
 	enum modelTypeTable {
-		// TODO: members
+		MOD_BlueOnyon   = 0, // b_goal.mod
+		MOD_RedOnyon    = 1, // r_goal.mod
+		MOD_YellowOnyon = 2, // y_goal.mod
+		MOD_COUNT,           // 3
 	};
 
 	/**
 	 * @brief TODO
 	 */
 	enum simpleTypeTable {
-		// TODO: members
+		SIMPLE_Horoki = 0, // hokori4.bti, dark gold + brown?
+		SIMPLE_COUNT,      // 1
 	};
 
 	EffectMgr();
@@ -477,8 +517,8 @@ struct EffectMgr : public CoreNode {
 	void killAllShapes();
 
 	// unused/inlined:
-	zen::particleGenerator* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
-	                               zen::CallBack1<zen::particleMdl*>*);
+	zen::particleMdl* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
+	                         zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
 
 	void kill(zen::CallBack1<zen::particleGenerator*>* cb1, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2,
@@ -495,17 +535,72 @@ struct EffectMgr : public CoreNode {
 		killAllShapes();
 	}
 
-	// DLL inlines to do:
-	void cullingOff();
-	void cullingOn();
+	void cullingOn() { mDoCulling = true; }
+	void cullingOff() { mDoCulling = false; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	zen::particleManager mPtclMgr; // _14
-	u8 _18[0x600];                 // _18
-	bool _6B0;                     // _6B0
+	zen::particleManager mPtclMgr;                         // _14
+	zen::particleLoader mPtclLoader;                       // _B0
+	EffectShape mEffectShapeList;                          // _C0
+	EffShpInst mInactiveGeomList;                          // _E8
+	EffShpInst mActiveGeomList;                            // _12C
+	EffectParticleRegistration* mParticles[332];           // _170
+	EffectSimpleParticleRegistration* mSimpleParticles[1]; // _6A0
+	EffectGeometryRegistration* mModels[3];                // _6A4
+	bool mDoCulling;                                       // _6B0
 };
 
 extern EffectMgr* effectMgr;
+
+/**
+ * @brief TODO
+ */
+struct EffectParticleRegistration {
+	EffectParticleRegistration(char*, char*, char*); // unused/inlined
+
+	virtual zen::particleGenerator* create(Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cbGen,
+	                                       zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl) // _08
+	{
+		return effectMgr->mPtclMgr.createGenerator(mPtclData, mPtclTex, mChildPtclTex, pos, cbGen, cbPtcl);
+	}
+
+	// _00 = VTBL
+	u8* mPtclData;          // _04
+	Texture* mPtclTex;      // _08
+	Texture* mChildPtclTex; // _0C
+};
+
+/**
+ * @brief TODO
+ */
+struct EffectGeometryRegistration {
+	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
+
+	virtual EffShpInst* create(Vector3f&, Vector3f&, Vector3f&); // _08
+
+	// _00 = VTBL
+	EffectShape* mEffectShape; // _04
+	f32 mScale;                // _08
+	u8 mLoopMax;               // _0C
+};
+
+/**
+ * @brief TODO
+ */
+struct EffectSimpleParticleRegistration {
+	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
+
+	zen::particleMdl* create(s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size, f32 rotSpeed,
+	                         zen::CallBack1<zen::particleMdl*>* cbPtcl)
+	{
+		return effectMgr->mPtclMgr.createParticle(mSimpleTex, lifeTime, globalPos, vel, accel, size, rotSpeed, mPrimColor, mEnvColor,
+		                                          cbPtcl);
+	}
+
+	Texture* mSimpleTex; // _00
+	Colour mPrimColor;   // _04
+	Colour mEnvColor;    // _08
+};
 
 #endif

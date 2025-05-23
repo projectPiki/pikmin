@@ -1,11 +1,262 @@
 #include "types.h"
 
+#define K1 0x80808080
+#define K2 0xFEFEFEFF
+
+/*
+ * --INFO--
+ * Address:	8021940C
+ * Size:	000020
+ */
+size_t strlen(const char* str)
+{
+	size_t len = -1;
+	u8* p      = (u8*)str - 1;
+
+	do
+		len++;
+	while (*++p);
+	return (len);
+}
+
+/*
+ * --INFO--
+ * Address:	80219358
+ * Size:	0000B4
+ */
+char* strcpy(char* dst, const char* src)
+{
+	register u8 *destb, *fromb;
+	register u32 w, t, align;
+
+	fromb = (u8*)src;
+	destb = (u8*)dst;
+
+	if ((align = ((int)fromb & 3)) != ((int)destb & 3)) {
+		goto bytecopy;
+	}
+
+	if (align) {
+		if ((*destb = *fromb) == 0)
+			return (dst);
+		for (align = 3 - align; align; align--) {
+			if ((*(++destb) = *(++fromb)) == 0)
+				return (dst);
+		}
+		++destb;
+		++fromb;
+	}
+
+	w = *((int*)(fromb));
+
+	t = w + K2;
+
+	t &= K1;
+	if (t)
+		goto bytecopy;
+	--((int*)(destb));
+
+	do {
+		*(++((int*)(destb))) = w;
+		w                    = *(++((int*)(fromb)));
+
+		t = w + K2;
+		t &= K1;
+		if (t)
+			goto adjust;
+	} while (1);
+
+adjust:
+	++((int*)(destb));
+bytecopy:
+	if ((*destb = *fromb) == 0)
+		return dst;
+	do {
+		if ((*(++destb) = *(++fromb)) == 0)
+			return dst;
+	} while (1);
+
+	return dst;
+}
+
+/*
+ * --INFO--
+ * Address:	80219314
+ * Size:	000044
+ */
+char* strncpy(char* dst, const char* src, size_t n)
+{
+	const u8* p = (const u8*)src - 1;
+	u8* q       = (u8*)dst - 1;
+	u8 zero     = 0;
+
+	n++;
+
+	while (--n)
+		if (!(*++q = *++p)) {
+			while (--n)
+				*++q = 0;
+			break;
+		}
+	return (dst);
+}
+
+/*
+ * --INFO--
+ * Address:	802192E8
+ * Size:	00002C
+ */
+char* strcat(char* dst, const char* src)
+{
+	const u8* p = (u8*)src - 1;
+	u8* q       = (u8*)dst - 1;
+
+	while (*++q)
+		;
+
+	q--;
+
+	while (*++q = *++p)
+		;
+
+	return (dst);
+}
+
 /*
  * --INFO--
  * Address:	........
- * Size:	0000F4
+ * Size:	00004C
  */
-void __strerror(void)
+char* strncat(char* dst, const char* src, size_t n)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	802191C4
+ * Size:	000124
+ */
+int strcmp(const char* lhs, const char* rhs)
+{
+	// bless metrowerks for this implementation
+
+	register u8* left  = (u8*)lhs;
+	register u8* right = (u8*)rhs;
+	u32 align, l1, r1, x;
+
+	l1 = *left;
+	r1 = *right;
+	if (l1 - r1) {
+		return (l1 - r1);
+	}
+
+	if ((align = ((int)left & 3)) != ((int)right & 3)) {
+		goto bytecopy;
+	}
+	if (align) {
+		if (l1 == 0) {
+			return 0;
+		}
+		for (align = 3 - align; align; align--) {
+			l1 = *(++left);
+			r1 = *(++right);
+			if (l1 - r1) {
+				return (l1 - r1);
+			}
+			if (l1 == 0) {
+				return 0;
+			}
+		}
+		left++;
+		right++;
+	}
+
+	l1 = *(int*)left;
+	r1 = *(int*)right;
+	x  = l1 + K2;
+	if (x & K1) {
+		goto adjust;
+	}
+	while (l1 == r1) {
+		l1 = *(++((int*)(left)));
+		r1 = *(++((int*)(right)));
+		x  = l1 + K2;
+		if (x & K1) {
+			goto adjust;
+		}
+	}
+	if (l1 > r1)
+		return 1;
+	return -1;
+
+adjust:
+	l1 = *left;
+	r1 = *right;
+	if (l1 - r1) {
+		return (l1 - r1);
+	}
+bytecopy:
+	if (l1 == 0) {
+		return 0;
+	}
+	do {
+		l1 = *(++left);
+		r1 = *(++right);
+		if (l1 - r1) {
+			return (l1 - r1);
+		}
+		if (l1 == 0) {
+			return 0;
+		}
+	} while (1);
+}
+
+/*
+ * --INFO--
+ * Address:	80219184
+ * Size:	000040
+ */
+int strncmp(const char* lhs, const char* rhs, size_t n)
+{
+	const u8* p1 = (u8*)lhs - 1;
+	const u8* p2 = (u8*)rhs - 1;
+	u32 c1, c2;
+
+	n++;
+
+	while (--n)
+		if ((c1 = *++p1) != (c2 = *++p2))
+			return (c1 - c2);
+		else if (!c1)
+			break;
+	return 0;
+}
+
+/*
+ * --INFO--
+ * Address:	80219154
+ * Size:	000030
+ */
+char* strchr(const char* str, int chr)
+{
+	const u8* p = (u8*)str - 1;
+	u32 c       = (chr & 0xFF);
+	u32 ch;
+
+	while (ch = *++p)
+		if (ch == c)
+			return ((char*)p);
+
+	return (c ? 0 : (char*)p);
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000020
+ */
+int strcoll(const char* lhs, const char* rhs)
 {
 	// UNUSED FUNCTION
 }
@@ -13,9 +264,59 @@ void __strerror(void)
 /*
  * --INFO--
  * Address:	........
- * Size:	0000F8
+ * Size:	00005C
  */
-void strerror(void)
+size_t strxfrm(char* dst, const char* src, size_t n)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000048
+ */
+char* strrchr(const char* str, int ch)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000C4
+ */
+char* strpbrk(const char* dst, const char* breakset)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000C0
+ */
+size_t strspn(const char* dst, const char* src)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000C0
+ */
+size_t strcspn(const char* dst, const char* src)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00013C
+ */
+char* strtok(char* str, const char* delim)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +326,7 @@ void strerror(void)
  * Address:	802190E8
  * Size:	00006C
  */
-void strstr(void)
+char* strstr(const char* str, const char* substr)
 {
 	/*
 	.loc_0x0:
@@ -70,9 +371,9 @@ void strstr(void)
 /*
  * --INFO--
  * Address:	........
- * Size:	00013C
+ * Size:	0000F8
  */
-void strtok(void)
+char* strerror(int errnum)
 {
 	// UNUSED FUNCTION
 }
@@ -80,401 +381,9 @@ void strtok(void)
 /*
  * --INFO--
  * Address:	........
- * Size:	0000C0
+ * Size:	0000F4
  */
-void strcspn(void)
+void __strerror(void)
 {
 	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
- */
-void strspn(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
- */
-void strpbrk(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
- */
-void strrchr(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
- */
-void strxfrm(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
- */
-void strcoll(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	80219154
- * Size:	000030
- */
-void strchr(void)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1
-	  rlwinm    r0,r4,0,24,31
-	  b         .loc_0x14
-
-	.loc_0xC:
-	  cmplw     r4, r0
-	  beqlr-
-
-	.loc_0x14:
-	  lbzu      r4, 0x1(r3)
-	  cmplwi    r4, 0
-	  bne+      .loc_0xC
-	  cmplwi    r0, 0
-	  beqlr-
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80219184
- * Size:	000040
- */
-void strncmp(void)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1
-	  subi      r4, r4, 0x1
-	  addi      r6, r5, 0x1
-	  b         .loc_0x30
-
-	.loc_0x10:
-	  lbzu      r0, 0x1(r3)
-	  lbzu      r5, 0x1(r4)
-	  cmplw     r0, r5
-	  beq-      .loc_0x28
-	  sub       r3, r0, r5
-	  blr
-
-	.loc_0x28:
-	  cmplwi    r0, 0
-	  beq-      .loc_0x38
-
-	.loc_0x30:
-	  subic.    r6, r6, 0x1
-	  bne+      .loc_0x10
-
-	.loc_0x38:
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	802191C4
- * Size:	000124
- */
-void strcmp(void)
-{
-	/*
-	.loc_0x0:
-	  lbz       r6, 0x0(r3)
-	  lbz       r5, 0x0(r4)
-	  sub.      r0, r6, r5
-	  beq-      .loc_0x18
-	  sub       r3, r6, r5
-	  blr
-
-	.loc_0x18:
-	  rlwinm    r0,r4,0,30,31
-	  rlwinm    r5,r3,0,30,31
-	  cmplw     r0, r5
-	  bne-      .loc_0xEC
-	  cmplwi    r5, 0
-	  beq-      .loc_0x84
-	  cmplwi    r6, 0
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  blr
-
-	.loc_0x40:
-	  subfic    r0, r5, 0x3
-	  cmplwi    r0, 0
-	  mtctr     r0
-	  beq-      .loc_0x7C
-
-	.loc_0x50:
-	  lbzu      r5, 0x1(r3)
-	  lbzu      r0, 0x1(r4)
-	  sub.      r0, r5, r0
-	  beq-      .loc_0x68
-	  mr        r3, r0
-	  blr
-
-	.loc_0x68:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x78
-	  li        r3, 0
-	  blr
-
-	.loc_0x78:
-	  bdnz+     .loc_0x50
-
-	.loc_0x7C:
-	  addi      r3, r3, 0x1
-	  addi      r4, r4, 0x1
-
-	.loc_0x84:
-	  lwz       r7, 0x0(r3)
-	  lwz       r6, 0x2AE4(r13)
-	  lwz       r5, 0x2AE0(r13)
-	  add       r0, r7, r6
-	  lwz       r8, 0x0(r4)
-	  and.      r0, r0, r5
-	  bne-      .loc_0xD4
-	  b         .loc_0xB8
-
-	.loc_0xA4:
-	  lwzu      r7, 0x4(r3)
-	  lwzu      r8, 0x4(r4)
-	  add       r0, r7, r6
-	  and.      r0, r0, r5
-	  bne-      .loc_0xD4
-
-	.loc_0xB8:
-	  cmplw     r7, r8
-	  beq+      .loc_0xA4
-	  ble-      .loc_0xCC
-	  li        r3, 0x1
-	  blr
-
-	.loc_0xCC:
-	  li        r3, -0x1
-	  blr
-
-	.loc_0xD4:
-	  lbz       r6, 0x0(r3)
-	  lbz       r5, 0x0(r4)
-	  sub.      r0, r6, r5
-	  beq-      .loc_0xEC
-	  sub       r3, r6, r5
-	  blr
-
-	.loc_0xEC:
-	  cmplwi    r6, 0
-	  bne-      .loc_0xFC
-	  li        r3, 0
-	  blr
-
-	.loc_0xFC:
-	  lbzu      r5, 0x1(r3)
-	  lbzu      r0, 0x1(r4)
-	  sub.      r0, r5, r0
-	  beq-      .loc_0x114
-	  mr        r3, r0
-	  blr
-
-	.loc_0x114:
-	  cmplwi    r5, 0
-	  bne+      .loc_0xFC
-	  li        r3, 0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
- */
-void strncat(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	802192E8
- * Size:	00002C
- */
-void strcat(void)
-{
-	/*
-	.loc_0x0:
-	  subi      r4, r4, 0x1
-	  subi      r5, r3, 0x1
-
-	.loc_0x8:
-	  lbzu      r0, 0x1(r5)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x8
-	  subi      r5, r5, 0x1
-
-	.loc_0x18:
-	  lbzu      r0, 0x1(r4)
-	  cmplwi    r0, 0
-	  stbu      r0, 0x1(r5)
-	  bne+      .loc_0x18
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80219314
- * Size:	000044
- */
-void strncpy(void)
-{
-	/*
-	.loc_0x0:
-	  subi      r4, r4, 0x1
-	  subi      r6, r3, 0x1
-	  addi      r5, r5, 0x1
-	  b         .loc_0x38
-
-	.loc_0x10:
-	  lbzu      r0, 0x1(r4)
-	  cmplwi    r0, 0
-	  stbu      r0, 0x1(r6)
-	  bne-      .loc_0x38
-	  li        r0, 0
-	  b         .loc_0x2C
-
-	.loc_0x28:
-	  stbu      r0, 0x1(r6)
-
-	.loc_0x2C:
-	  subic.    r5, r5, 0x1
-	  bne+      .loc_0x28
-	  blr
-
-	.loc_0x38:
-	  subic.    r5, r5, 0x1
-	  bne+      .loc_0x10
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80219358
- * Size:	0000B4
- */
-void strcpy(void)
-{
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,30,31
-	  rlwinm    r5,r4,0,30,31
-	  cmplw     r0, r5
-	  addi      r7, r3, 0
-	  bne-      .loc_0x90
-	  cmplwi    r5, 0
-	  beq-      .loc_0x58
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  stb       r0, 0x0(r7)
-	  beqlr-
-	  subfic    r0, r5, 0x3
-	  cmplwi    r0, 0
-	  mtctr     r0
-	  beq-      .loc_0x50
-
-	.loc_0x3C:
-	  lbzu      r0, 0x1(r4)
-	  cmplwi    r0, 0
-	  stbu      r0, 0x1(r7)
-	  beqlr-
-	  bdnz+     .loc_0x3C
-
-	.loc_0x50:
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0x1
-
-	.loc_0x58:
-	  lwz       r5, 0x0(r4)
-	  lwz       r0, 0x2AE4(r13)
-	  lwz       r6, 0x2AE0(r13)
-	  addi      r8, r5, 0
-	  add       r5, r5, r0
-	  and.      r5, r5, r6
-	  bne-      .loc_0x90
-	  subi      r7, r7, 0x4
-
-	.loc_0x78:
-	  stwu      r8, 0x4(r7)
-	  lwzu      r8, 0x4(r4)
-	  add       r5, r8, r0
-	  and.      r5, r5, r6
-	  beq+      .loc_0x78
-	  addi      r7, r7, 0x4
-
-	.loc_0x90:
-	  lbz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  stb       r0, 0x0(r7)
-	  beqlr-
-
-	.loc_0xA0:
-	  lbzu      r0, 0x1(r4)
-	  cmplwi    r0, 0
-	  stbu      r0, 0x1(r7)
-	  bne+      .loc_0xA0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8021940C
- * Size:	000020
- */
-void strlen(void)
-{
-	/*
-	.loc_0x0:
-	  li        r4, -0x1
-	  subi      r3, r3, 0x1
-
-	.loc_0x8:
-	  lbzu      r0, 0x1(r3)
-	  addi      r4, r4, 0x1
-	  cmplwi    r0, 0
-	  bne+      .loc_0x8
-	  mr        r3, r4
-	  blr
-	*/
 }

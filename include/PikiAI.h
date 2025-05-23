@@ -370,7 +370,7 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
  *
  * @note Size: 0x24.
  */
-struct ActBoMake : public Action, public PaniAnimKeyListener {
+struct ActBoMake : public Action, private PaniAnimKeyListener {
 
 	/**
 	 * @brief TODO
@@ -1304,11 +1304,11 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 
 	ActPick(Piki*);
 
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 	virtual ~ActPick() { }                               // _44 (weak)
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1418,7 +1418,7 @@ struct ActPullout : public AndAction {
  *
  * @note Size: 0x28.
  */
-struct ActPulloutCreature : public Action, public PaniAnimKeyListener {
+struct ActPulloutCreature : public Action, private PaniAnimKeyListener {
 
 	/**
 	 * @brief TODO
@@ -1805,7 +1805,7 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
  *
  * @note Size: 0x2C.
  */
-struct ActStone : public Action, public PaniAnimKeyListener {
+struct ActStone : public Action, private PaniAnimKeyListener {
 
 #define STONE_NECTAR_CHANCE (0.08f)
 
@@ -1986,7 +1986,7 @@ struct ActWatch : public Action {
  *
  * @note Size: 0x2C.
  */
-struct ActWeed : public Action, public PaniAnimKeyListener {
+struct ActWeed : public Action, private PaniAnimKeyListener {
 
 #define GRASS_NECTAR_CHANCE (0.08f)
 

@@ -1,80 +1,90 @@
 #include "types.h"
 
+static void TRK_fill_mem(void* dest, int val, size_t count);
+
+INIT void* TRK_memcpy(void* dest, const void* src, size_t count)
+{
+	u8* s = (u8*)src - 1;
+	u8* d = (u8*)dest - 1;
+
+	count++;
+
+	while (--count) {
+		*++d = *++s;
+	}
+}
+
+INIT void* TRK_memset(void* dest, int val, size_t count)
+{
+	TRK_fill_mem(dest, val, count);
+	return dest;
+}
+
 /*
  * --INFO--
  * Address:	8021E7C0
  * Size:	0000C4
  */
-void TRK_fill_mem(void)
+static void TRK_fill_mem(void* dest, int value, size_t length)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r5, 0x20
-	  subi      r6, r3, 0x1
-	  rlwinm    r0,r4,0,24,31
-	  mr        r7, r0
-	  blt-      .loc_0xA8
-	  not       r0, r6
-	  rlwinm.   r0,r0,0,30,31
-	  mr        r3, r0
-	  beq-      .loc_0x38
-	  sub       r5, r5, r3
-	  rlwinm    r0,r7,0,24,31
+#define cDest ((u8*)dest)
+#define lDest ((u32*)dest)
+	u32 val = (u8)value;
+	u32 i;
+	lDest = (u32*)dest;
+	cDest = (u8*)dest;
 
-	.loc_0x2C:
-	  subic.    r3, r3, 0x1
-	  stbu      r0, 0x1(r6)
-	  bne+      .loc_0x2C
+	cDest--;
 
-	.loc_0x38:
-	  cmplwi    r7, 0
-	  beq-      .loc_0x58
-	  rlwinm    r3,r7,24,0,7
-	  rlwinm    r0,r7,16,0,15
-	  rlwinm    r4,r7,8,0,23
-	  or        r0, r3, r0
-	  or        r0, r4, r0
-	  or        r7, r7, r0
+	if (length >= 32) {
+		i = ~(u32)dest & 3;
 
-	.loc_0x58:
-	  rlwinm.   r0,r5,27,5,31
-	  subi      r3, r6, 0x3
-	  beq-      .loc_0x8C
+		if (i) {
+			length -= i;
+			do {
+				*++cDest = val;
+			} while (--i);
+		}
 
-	.loc_0x64:
-	  stw       r7, 0x4(r3)
-	  subic.    r0, r0, 0x1
-	  stw       r7, 0x8(r3)
-	  stw       r7, 0xC(r3)
-	  stw       r7, 0x10(r3)
-	  stw       r7, 0x14(r3)
-	  stw       r7, 0x18(r3)
-	  stw       r7, 0x1C(r3)
-	  stwu      r7, 0x20(r3)
-	  bne+      .loc_0x64
+		if (val) {
+			val |= val << 24 | val << 16 | val << 8;
+		}
 
-	.loc_0x8C:
-	  rlwinm.   r0,r5,30,29,31
-	  beq-      .loc_0xA0
+		lDest = (u32*)(cDest + 1) - 1;
 
-	.loc_0x94:
-	  subic.    r0, r0, 0x1
-	  stwu      r7, 0x4(r3)
-	  bne+      .loc_0x94
+		i = length >> 5;
+		if (i) {
+			do {
+				*++lDest = val;
+				*++lDest = val;
+				*++lDest = val;
+				*++lDest = val;
+				*++lDest = val;
+				*++lDest = val;
+				*++lDest = val;
+				*++lDest = val;
+			} while (--i);
+		}
 
-	.loc_0xA0:
-	  addi      r6, r3, 0x3
-	  rlwinm    r5,r5,0,30,31
+		i = (length & 31) >> 2;
 
-	.loc_0xA8:
-	  cmplwi    r5, 0
-	  beqlr-
-	  rlwinm    r0,r7,0,24,31
+		if (i) {
+			do {
+				*++lDest = val;
+			} while (--i);
+		}
 
-	.loc_0xB4:
-	  subic.    r5, r5, 0x1
-	  stbu      r0, 0x1(r6)
-	  bne+      .loc_0xB4
-	  blr
-	*/
+		cDest = (u8*)(lDest + 1) - 1;
+
+		length &= 3;
+	}
+
+	if (length) {
+		do {
+			*++cDest = val;
+		} while (--length);
+	}
+
+#undef cDest
+#undef lDest
 }

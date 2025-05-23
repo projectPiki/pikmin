@@ -1,138 +1,48 @@
-#include "types.h"
+#include "Dolphin/gx.h"
 
 /*
  * --INFO--
  * Address:	80212F9C
  * Size:	0001A4
  */
-void GXSetTevOp(void)
+void GXSetTevOp(GXTevStageID id, GXTevMode mode)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0xA
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0x5
-	  stw       r30, 0x10(r1)
-	  mr.       r30, r3
-	  beq-      .loc_0x2C
-	  li        r6, 0
-	  li        r31, 0
+	GXTevColorArg carg = GX_CC_RASC;
+	GXTevAlphaArg aarg = GX_CA_RASA;
 
-	.loc_0x2C:
-	  cmpwi     r4, 0x2
-	  beq-      .loc_0xBC
-	  bge-      .loc_0x48
-	  cmpwi     r4, 0
-	  beq-      .loc_0x58
-	  bge-      .loc_0x88
-	  b         .loc_0x154
+	CHECK_GXBEGIN(0x72, "GXSetTevOp");
 
-	.loc_0x48:
-	  cmpwi     r4, 0x4
-	  beq-      .loc_0x124
-	  bge-      .loc_0x154
-	  b         .loc_0xF0
+	if (id != GX_TEVSTAGE0) {
+		carg = GX_CC_CPREV;
+		aarg = GX_CA_APREV;
+	}
 
-	.loc_0x58:
-	  addi      r3, r30, 0
-	  li        r4, 0xF
-	  li        r5, 0x8
-	  li        r7, 0xF
-	  bl        .loc_0x1A4
-	  addi      r3, r30, 0
-	  addi      r6, r31, 0
-	  li        r4, 0x7
-	  li        r5, 0x4
-	  li        r7, 0x7
-	  bl        0x1A4
-	  b         .loc_0x154
-
-	.loc_0x88:
-	  addi      r3, r30, 0
-	  addi      r4, r6, 0
-	  li        r5, 0x8
-	  li        r6, 0x9
-	  li        r7, 0xF
-	  bl        .loc_0x1A4
-	  addi      r3, r30, 0
-	  addi      r7, r31, 0
-	  li        r4, 0x7
-	  li        r5, 0x7
-	  li        r6, 0x7
-	  bl        0x170
-	  b         .loc_0x154
-
-	.loc_0xBC:
-	  addi      r3, r30, 0
-	  addi      r4, r6, 0
-	  li        r5, 0xC
-	  li        r6, 0x8
-	  li        r7, 0xF
-	  bl        .loc_0x1A4
-	  addi      r3, r30, 0
-	  addi      r6, r31, 0
-	  li        r4, 0x7
-	  li        r5, 0x4
-	  li        r7, 0x7
-	  bl        0x13C
-	  b         .loc_0x154
-
-	.loc_0xF0:
-	  addi      r3, r30, 0
-	  li        r4, 0xF
-	  li        r5, 0xF
-	  li        r6, 0xF
-	  li        r7, 0x8
-	  bl        .loc_0x1A4
-	  addi      r3, r30, 0
-	  li        r4, 0x7
-	  li        r5, 0x7
-	  li        r6, 0x7
-	  li        r7, 0x4
-	  bl        0x108
-	  b         .loc_0x154
-
-	.loc_0x124:
-	  addi      r3, r30, 0
-	  addi      r7, r6, 0
-	  li        r4, 0xF
-	  li        r5, 0xF
-	  li        r6, 0xF
-	  bl        .loc_0x1A4
-	  addi      r3, r30, 0
-	  addi      r7, r31, 0
-	  li        r4, 0x7
-	  li        r5, 0x7
-	  li        r6, 0x7
-	  bl        0xD4
-
-	.loc_0x154:
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x13C
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0
-	  li        r7, 0x1
-	  li        r8, 0
-	  bl        0x1E0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-
-	.loc_0x1A4:
-	*/
+	switch (mode) {
+	case GX_MODULATE:
+		GXSetTevColorIn(id, GX_CC_ZERO, GX_CC_TEXC, carg, GX_CC_ZERO);
+		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_TEXA, aarg, GX_CA_ZERO);
+		break;
+	case GX_DECAL:
+		GXSetTevColorIn(id, carg, GX_CC_TEXC, GX_CC_TEXA, GX_CC_ZERO);
+		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, aarg);
+		break;
+	case GX_BLEND:
+		GXSetTevColorIn(id, carg, GX_CC_ONE, GX_CC_TEXC, GX_CC_ZERO);
+		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_TEXA, aarg, GX_CA_ZERO);
+		break;
+	case GX_REPLACE:
+		GXSetTevColorIn(id, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, GX_CC_TEXC);
+		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_TEXA);
+		break;
+	case GX_PASSCLR:
+		GXSetTevColorIn(id, GX_CC_ZERO, GX_CC_ZERO, GX_CC_ZERO, carg);
+		GXSetTevAlphaIn(id, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, aarg);
+		break;
+	default:
+		ASSERTMSGLINE(0x8F, 0, "GXSetTevOp: Invalid Tev Mode");
+	}
+	GXSetTevColorOp(id, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GXSetTevAlphaOp(id, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 }
 
 /*
@@ -140,43 +50,25 @@ void GXSetTevOp(void)
  * Address:	80213140
  * Size:	000080
  */
-void GXSetTevColorIn(void)
+void GXSetTevColorIn(GXTevStageID stage, GXTevColorArg a, GXTevColorArg b, GXTevColorArg c, GXTevColorArg d)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r3,2,0,29
-	  lwz       r0, 0x2A68(r13)
-	  addi      r9, r3, 0x130
-	  add       r9, r0, r9
-	  lwz       r3, 0x0(r9)
-	  rlwinm    r0,r4,12,0,19
-	  rlwinm    r8,r5,8,0,23
-	  rlwinm    r3,r3,0,20,15
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r9)
-	  rlwinm    r4,r6,4,0,27
-	  li        r3, 0x61
-	  lwz       r6, 0x0(r9)
-	  lis       r5, 0xCC01
-	  li        r0, 0x1
-	  rlwinm    r6,r6,0,24,19
-	  or        r6, r6, r8
-	  stw       r6, 0x0(r9)
-	  lwz       r6, 0x0(r9)
-	  rlwinm    r6,r6,0,28,23
-	  or        r4, r6, r4
-	  stw       r4, 0x0(r9)
-	  lwz       r4, 0x0(r9)
-	  rlwinm    r4,r4,0,0,27
-	  or        r4, r4, r7
-	  stw       r4, 0x0(r9)
-	  stb       r3, -0x8000(r5)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r4, 0x0(r9)
-	  stw       r4, -0x8000(r5)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32* pTevReg;
+
+	CHECK_GXBEGIN(0xE5, "GXSetTevColorIn");
+	ASSERTMSGLINE(0xE6, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
+	ASSERTMSGLINE(0xE7, a <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	ASSERTMSGLINE(0xE8, b <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	ASSERTMSGLINE(0xE9, c <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+	ASSERTMSGLINE(0xEA, d <= 15, "GXSetTev*In: A/B/C/D argument out of range");
+
+	pTevReg = &gx->tevc[stage];
+	SET_REG_FIELD(0xED, *pTevReg, 4, 12, a);
+	SET_REG_FIELD(0xEE, *pTevReg, 4, 8, b);
+	SET_REG_FIELD(0xEF, *pTevReg, 4, 4, c);
+	SET_REG_FIELD(0xF0, *pTevReg, 4, 0, d);
+
+	GX_WRITE_RAS_REG(*pTevReg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -184,44 +76,25 @@ void GXSetTevColorIn(void)
  * Address:	802131C0
  * Size:	000084
  */
-void GXSetTevAlphaIn(void)
+void GXSetTevAlphaIn(GXTevStageID stage, GXTevAlphaArg a, GXTevAlphaArg b, GXTevAlphaArg c, GXTevAlphaArg d)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r3,2,0,29
-	  lwz       r0, 0x2A68(r13)
-	  addi      r9, r3, 0x170
-	  add       r9, r0, r9
-	  lwz       r8, 0x0(r9)
-	  rlwinm    r3,r4,13,0,18
-	  rlwinm    r0,r5,10,0,21
-	  rlwinm    r4,r8,0,19,15
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r9)
-	  rlwinm    r6,r6,7,0,24
-	  rlwinm    r4,r7,4,0,27
-	  lwz       r7, 0x0(r9)
-	  li        r3, 0x61
-	  lis       r5, 0xCC01
-	  rlwinm    r7,r7,0,22,18
-	  or        r0, r7, r0
-	  stw       r0, 0x0(r9)
-	  li        r0, 0x1
-	  lwz       r7, 0x0(r9)
-	  rlwinm    r7,r7,0,25,21
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r9)
-	  lwz       r6, 0x0(r9)
-	  rlwinm    r6,r6,0,28,24
-	  or        r4, r6, r4
-	  stw       r4, 0x0(r9)
-	  stb       r3, -0x8000(r5)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r4, 0x0(r9)
-	  stw       r4, -0x8000(r5)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32* pTevReg;
+
+	CHECK_GXBEGIN(0x108, "GXSetTevAlphaIn");
+	ASSERTMSGLINE(0x109, stage < 16, "GXSetTevAlpha: Invalid Tev Stage Index");
+	ASSERTMSGLINE(0x10A, a <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	ASSERTMSGLINE(0x10B, b <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	ASSERTMSGLINE(0x10C, c <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+	ASSERTMSGLINE(0x10D, d <= 7, "GXSetTev*In: A/B/C/D argument out of range");
+
+	pTevReg = &gx->teva[stage];
+	SET_REG_FIELD(0x110, *pTevReg, 3, 13, a);
+	SET_REG_FIELD(0x111, *pTevReg, 3, 10, b);
+	SET_REG_FIELD(0x112, *pTevReg, 3, 7, c);
+	SET_REG_FIELD(0x113, *pTevReg, 3, 4, d);
+
+	GX_WRITE_RAS_REG(*pTevReg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -229,63 +102,27 @@ void GXSetTevAlphaIn(void)
  * Address:	80213244
  * Size:	0000C0
  */
-void GXSetTevColorOp(void)
+void GXSetTevColorOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale scale, GXBool clamp, GXTevRegID out_reg)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r3,2,0,29
-	  lwz       r0, 0x2A68(r13)
-	  addi      r3, r3, 0x130
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r4, 0x1
-	  rlwinm    r0,r0,0,14,12
-	  rlwimi    r0,r4,18,13,13
-	  stw       r0, 0x0(r3)
-	  bgt-      .loc_0x54
-	  lwz       r9, 0x0(r3)
-	  rlwinm    r4,r6,20,0,11
-	  rlwinm    r0,r5,16,0,15
-	  rlwinm    r5,r9,0,12,9
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r3)
-	  lwz       r4, 0x0(r3)
-	  rlwinm    r4,r4,0,16,13
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r3)
-	  b         .loc_0x74
+	u32* pTevReg;
 
-	.loc_0x54:
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r0,r0,0,12,9
-	  rlwimi    r0,r4,19,10,11
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r0,r0,0,16,13
-	  oris      r0, r0, 0x3
-	  stw       r0, 0x0(r3)
+	CHECK_GXBEGIN(0x12E, "GXSetTevColorOp");
+	ASSERTMSGLINE(0x12F, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
 
-	.loc_0x74:
-	  lwz       r4, 0x0(r3)
-	  rlwinm    r0,r7,19,5,12
-	  rlwinm    r6,r8,22,0,9
-	  rlwinm    r4,r4,0,13,11
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r3)
-	  li        r4, 0x61
-	  lis       r5, 0xCC01
-	  lwz       r7, 0x0(r3)
-	  li        r0, 0x1
-	  rlwinm    r7,r7,0,10,7
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r3)
-	  stb       r4, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x0(r3)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	pTevReg = &gx->tevc[stage];
+	SET_REG_FIELD(0x137, *pTevReg, 1, 18, op & 1);
+	if (op <= 1) {
+		SET_REG_FIELD(0x139, *pTevReg, 2, 20, scale);
+		SET_REG_FIELD(0x13A, *pTevReg, 2, 16, bias);
+	} else {
+		SET_REG_FIELD(0x13C, *pTevReg, 2, 20, (op >> 1) & 3);
+		SET_REG_FIELD(0x13D, *pTevReg, 2, 16, 3);
+	}
+	SET_REG_FIELD(0x140, *pTevReg, 1, 19, clamp & 0xFF);
+	SET_REG_FIELD(0x141, *pTevReg, 2, 22, out_reg);
+
+	GX_WRITE_RAS_REG(*pTevReg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -293,63 +130,27 @@ void GXSetTevColorOp(void)
  * Address:	80213304
  * Size:	0000C0
  */
-void GXSetTevAlphaOp(void)
+void GXSetTevAlphaOp(GXTevStageID stage, GXTevOp op, GXTevBias bias, GXTevScale scale, GXBool clamp, GXTevRegID out_reg)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r3,2,0,29
-	  lwz       r0, 0x2A68(r13)
-	  addi      r3, r3, 0x170
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  cmpwi     r4, 0x1
-	  rlwinm    r0,r0,0,14,12
-	  rlwimi    r0,r4,18,13,13
-	  stw       r0, 0x0(r3)
-	  bgt-      .loc_0x54
-	  lwz       r9, 0x0(r3)
-	  rlwinm    r4,r6,20,0,11
-	  rlwinm    r0,r5,16,0,15
-	  rlwinm    r5,r9,0,12,9
-	  or        r4, r5, r4
-	  stw       r4, 0x0(r3)
-	  lwz       r4, 0x0(r3)
-	  rlwinm    r4,r4,0,16,13
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r3)
-	  b         .loc_0x74
+	u32* pTevReg;
 
-	.loc_0x54:
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r0,r0,0,12,9
-	  rlwimi    r0,r4,19,10,11
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r0,r0,0,16,13
-	  oris      r0, r0, 0x3
-	  stw       r0, 0x0(r3)
+	CHECK_GXBEGIN(0x15A, "GXSetTevAlphaOp");
+	ASSERTMSGLINE(0x15B, stage < 16, "GXSetTevAlpha: Invalid Tev Stage Index");
 
-	.loc_0x74:
-	  lwz       r4, 0x0(r3)
-	  rlwinm    r0,r7,19,5,12
-	  rlwinm    r6,r8,22,0,9
-	  rlwinm    r4,r4,0,13,11
-	  or        r0, r4, r0
-	  stw       r0, 0x0(r3)
-	  li        r4, 0x61
-	  lis       r5, 0xCC01
-	  lwz       r7, 0x0(r3)
-	  li        r0, 0x1
-	  rlwinm    r7,r7,0,10,7
-	  or        r6, r7, r6
-	  stw       r6, 0x0(r3)
-	  stb       r4, -0x8000(r5)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r3, 0x0(r3)
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	pTevReg = &gx->teva[stage];
+	SET_REG_FIELD(0x163, *pTevReg, 1, 18, op & 1);
+	if (op <= 1) {
+		SET_REG_FIELD(0x165, *pTevReg, 2, 20, scale);
+		SET_REG_FIELD(0x166, *pTevReg, 2, 16, bias);
+	} else {
+		SET_REG_FIELD(0x168, *pTevReg, 2, 20, (op >> 1) & 3);
+		SET_REG_FIELD(0x169, *pTevReg, 2, 16, 3);
+	}
+	SET_REG_FIELD(0x16C, *pTevReg, 1, 19, clamp & 0xFF);
+	SET_REG_FIELD(0x16D, *pTevReg, 2, 22, out_reg);
+
+	GX_WRITE_RAS_REG(*pTevReg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -357,40 +158,28 @@ void GXSetTevAlphaOp(void)
  * Address:	802133C4
  * Size:	000074
  */
-void GXSetTevColor(void)
+void GXSetTevColor(GXTevRegID id, GXColor color)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x3(r4)
-	  rlwinm    r8,r3,1,0,30
-	  lbz       r5, 0x0(r4)
-	  addi      r7, r8, 0xE0
-	  rlwinm    r9,r0,12,0,19
-	  rlwimi    r9,r5,0,24,31
-	  lbz       r10, 0x2(r4)
-	  lbz       r6, 0x1(r4)
-	  rlwinm    r7,r7,24,0,7
-	  li        r5, 0x61
-	  lwz       r3, 0x2A68(r13)
-	  lis       r4, 0xCC01
-	  stb       r5, -0x8000(r4)
-	  rlwimi    r7,r9,0,12,31
-	  addi      r0, r8, 0xE1
-	  stw       r7, -0x8000(r4)
-	  rlwinm    r7,r6,12,0,19
-	  rlwinm    r6,r0,24,0,7
-	  rlwimi    r7,r10,0,24,31
-	  stb       r5, -0x8000(r4)
-	  rlwimi    r6,r7,0,12,31
-	  stw       r6, -0x8000(r4)
-	  li        r0, 0x1
-	  stb       r5, -0x8000(r4)
-	  stw       r6, -0x8000(r4)
-	  stb       r5, -0x8000(r4)
-	  stw       r6, -0x8000(r4)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32 regRA;
+	u32 regBG;
+
+	CHECK_GXBEGIN(0x182, "GXSetTevColor");
+
+	regRA = 0;
+	SET_REG_FIELD(0x185, regRA, 11, 0, color.r);
+	SET_REG_FIELD(0x186, regRA, 11, 12, color.a);
+	SET_REG_FIELD(0x187, regRA, 8, 24, 224 + id * 2);
+
+	regBG = 0;
+	SET_REG_FIELD(0x18A, regBG, 11, 0, color.b);
+	SET_REG_FIELD(0x18B, regBG, 11, 12, color.g);
+	SET_REG_FIELD(0x18C, regBG, 8, 24, 225 + id * 2);
+
+	GX_WRITE_RAS_REG(regRA);
+	GX_WRITE_RAS_REG(regBG);
+	GX_WRITE_RAS_REG(regBG);
+	GX_WRITE_RAS_REG(regBG);
+	gx->bpSent = 1;
 }
 
 /*
@@ -398,40 +187,33 @@ void GXSetTevColor(void)
  * Address:	80213438
  * Size:	000074
  */
-void GXSetTevColorS10(void)
+void GXSetTevColorS10(GXTevRegID id, GXColorS10 color)
 {
-	/*
-	.loc_0x0:
-	  lha       r0, 0x6(r4)
-	  rlwinm    r9,r3,1,0,30
-	  lha       r5, 0x0(r4)
-	  addi      r8, r9, 0xE0
-	  rlwinm    r10,r0,12,9,19
-	  rlwimi    r10,r5,0,21,31
-	  lha       r7, 0x4(r4)
-	  lha       r6, 0x2(r4)
-	  rlwinm    r8,r8,24,0,7
-	  li        r5, 0x61
-	  lwz       r3, 0x2A68(r13)
-	  lis       r4, 0xCC01
-	  stb       r5, -0x8000(r4)
-	  rlwimi    r8,r10,0,9,31
-	  addi      r0, r9, 0xE1
-	  stw       r8, -0x8000(r4)
-	  rlwinm    r8,r6,12,9,19
-	  rlwinm    r6,r0,24,0,7
-	  rlwimi    r8,r7,0,21,31
-	  stb       r5, -0x8000(r4)
-	  rlwimi    r6,r8,0,9,31
-	  stw       r6, -0x8000(r4)
-	  li        r0, 0x1
-	  stb       r5, -0x8000(r4)
-	  stw       r6, -0x8000(r4)
-	  stb       r5, -0x8000(r4)
-	  stw       r6, -0x8000(r4)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32 regRA;
+	u32 regBG;
+
+	ASSERTMSGLINE(0x1A7, color.r >= -1024 && color.r < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	ASSERTMSGLINE(0x1A8, color.g >= -1024 && color.g < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	ASSERTMSGLINE(0x1A9, color.b >= -1024 && color.b < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+	ASSERTMSGLINE(0x1AA, color.a >= -1024 && color.a < 1024, "GXSetTevColorS10: Color not in range -1024 to +1023");
+
+	CHECK_GXBEGIN(0x1AC, "GXSetTevColorS10");
+
+	regRA = 0;
+	SET_REG_FIELD(0x1AF, regRA, 11, 0, color.r & 0x7FF);
+	SET_REG_FIELD(0x1B0, regRA, 11, 12, color.a & 0x7FF);
+	SET_REG_FIELD(0x1B1, regRA, 8, 24, 224 + id * 2);
+
+	regBG = 0;
+	SET_REG_FIELD(0x1B4, regBG, 11, 0, color.b & 0x7FF);
+	SET_REG_FIELD(0x1B5, regBG, 11, 12, color.g & 0x7FF);
+	SET_REG_FIELD(0x1B6, regBG, 8, 24, 225 + id * 2);
+
+	GX_WRITE_RAS_REG(regRA);
+	GX_WRITE_RAS_REG(regBG);
+	GX_WRITE_RAS_REG(regBG);
+	GX_WRITE_RAS_REG(regBG);
+	gx->bpSent = 1;
 }
 
 /*
@@ -439,40 +221,28 @@ void GXSetTevColorS10(void)
  * Address:	802134AC
  * Size:	000074
  */
-void GXSetTevKColor(void)
+void GXSetTevKColor(GXTevKColorID id, GXColor color)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x3(r4)
-	  rlwinm    r5,r3,1,0,30
-	  lbz       r6, 0x0(r4)
-	  addi      r7, r5, 0xE0
-	  rlwinm    r0,r0,12,0,19
-	  rlwimi    r0,r6,0,24,31
-	  lbz       r6, 0x1(r4)
-	  lbz       r9, 0x2(r4)
-	  rlwinm    r0,r0,0,12,7
-	  oris      r8, r0, 0x80
-	  lwz       r3, 0x2A68(r13)
-	  rlwinm    r7,r7,24,0,7
-	  li        r0, 0x61
-	  lis       r4, 0xCC01
-	  rlwinm    r6,r6,12,0,19
-	  stb       r0, -0x8000(r4)
-	  rlwimi    r7,r8,0,8,31
-	  stw       r7, -0x8000(r4)
-	  rlwimi    r6,r9,0,24,31
-	  addi      r5, r5, 0xE1
-	  stb       r0, -0x8000(r4)
-	  rlwinm    r0,r6,0,12,7
-	  oris      r6, r0, 0x80
-	  rlwinm    r0,r5,24,0,7
-	  rlwimi    r0,r6,0,8,31
-	  stw       r0, -0x8000(r4)
-	  li        r0, 0x1
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32 regRA;
+	u32 regBG;
+
+	CHECK_GXBEGIN(0x1DD, "GXSetTevKColor");
+
+	regRA = 0;
+	SET_REG_FIELD(0x1E0, regRA, 8, 0, color.r);
+	SET_REG_FIELD(0x1E1, regRA, 8, 12, color.a);
+	SET_REG_FIELD(0x1E2, regRA, 4, 20, 8);
+	SET_REG_FIELD(0x1E3, regRA, 8, 24, 224 + id * 2);
+
+	regBG = 0;
+	SET_REG_FIELD(0x1E6, regBG, 8, 0, color.b);
+	SET_REG_FIELD(0x1E7, regBG, 8, 12, color.g);
+	SET_REG_FIELD(0x1E8, regBG, 4, 20, 8);
+	SET_REG_FIELD(0x1E9, regBG, 8, 24, 225 + id * 2);
+
+	GX_WRITE_RAS_REG(regRA);
+	GX_WRITE_RAS_REG(regBG);
+	gx->bpSent = 1;
 }
 
 /*
@@ -480,42 +250,22 @@ void GXSetTevKColor(void)
  * Address:	80213520
  * Size:	00006C
  */
-void GXSetTevKColorSel(void)
+void GXSetTevKColorSel(GXTevStageID stage, GXTevKColorSel sel)
 {
-	/*
-	.loc_0x0:
-	  srawi     r5, r3, 0x1
-	  lwz       r6, 0x2A68(r13)
-	  rlwinm.   r0,r3,0,31,31
-	  rlwinm    r3,r5,2,0,29
-	  addi      r7, r3, 0x1B0
-	  add       r7, r6, r7
-	  beq-      .loc_0x34
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,14,0,17
-	  rlwinm    r3,r3,0,18,12
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  b         .loc_0x48
+	u32* Kreg;
 
-	.loc_0x34:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,4,0,27
-	  rlwinm    r3,r3,0,28,22
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
+	CHECK_GXBEGIN(0x204, "GXSetTevKColorSel");
+	ASSERTMSGLINE(0x205, stage < 16, "GXSetTevKColor*: Invalid Tev Stage Index");
 
-	.loc_0x48:
-	  li        r0, 0x61
-	  lwz       r3, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  li        r0, 0x1
-	  lwz       r4, 0x0(r7)
-	  stw       r4, -0x8000(r5)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	Kreg = &gx->tevKsel[stage >> 1];
+	if (stage & 1) {
+		SET_REG_FIELD(0x20A, *Kreg, 5, 14, sel);
+	} else {
+		SET_REG_FIELD(0x20C, *Kreg, 5, 4, sel);
+	}
+
+	GX_WRITE_RAS_REG(*Kreg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -523,42 +273,22 @@ void GXSetTevKColorSel(void)
  * Address:	8021358C
  * Size:	00006C
  */
-void GXSetTevKAlphaSel(void)
+void GXSetTevKAlphaSel(GXTevStageID stage, GXTevKAlphaSel sel)
 {
-	/*
-	.loc_0x0:
-	  srawi     r5, r3, 0x1
-	  lwz       r6, 0x2A68(r13)
-	  rlwinm.   r0,r3,0,31,31
-	  rlwinm    r3,r5,2,0,29
-	  addi      r7, r3, 0x1B0
-	  add       r7, r6, r7
-	  beq-      .loc_0x34
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,19,0,12
-	  rlwinm    r3,r3,0,13,7
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  b         .loc_0x48
+	u32* Kreg;
 
-	.loc_0x34:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,9,0,22
-	  rlwinm    r3,r3,0,23,17
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
+	CHECK_GXBEGIN(0x225, "GXSetTevKAlphaSel");
+	ASSERTMSGLINE(0x226, stage < 16, "GXSetTevKColor*: Invalid Tev Stage Index");
 
-	.loc_0x48:
-	  li        r0, 0x61
-	  lwz       r3, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  li        r0, 0x1
-	  lwz       r4, 0x0(r7)
-	  stw       r4, -0x8000(r5)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	Kreg = &gx->tevKsel[stage >> 1];
+	if (stage & 1) {
+		SET_REG_FIELD(0x22B, *Kreg, 5, 19, sel);
+	} else {
+		SET_REG_FIELD(0x22D, *Kreg, 5, 9, sel);
+	}
+
+	GX_WRITE_RAS_REG(*Kreg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -566,33 +296,19 @@ void GXSetTevKAlphaSel(void)
  * Address:	802135F8
  * Size:	000058
  */
-void GXSetTevSwapMode(void)
+void GXSetTevSwapMode(GXTevStageID stage, GXTevSwapSel ras_sel, GXTevSwapSel tex_sel)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r3,2,0,29
-	  lwz       r0, 0x2A68(r13)
-	  addi      r7, r3, 0x170
-	  add       r7, r0, r7
-	  lwz       r0, 0x0(r7)
-	  rlwinm    r6,r5,2,0,29
-	  li        r3, 0x61
-	  rlwinm    r0,r0,0,0,29
-	  or        r0, r0, r4
-	  stw       r0, 0x0(r7)
-	  lis       r5, 0xCC01
-	  li        r0, 0x1
-	  lwz       r4, 0x0(r7)
-	  rlwinm    r4,r4,0,30,27
-	  or        r4, r4, r6
-	  stw       r4, 0x0(r7)
-	  stb       r3, -0x8000(r5)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r4, 0x0(r7)
-	  stw       r4, -0x8000(r5)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32* pTevReg;
+
+	CHECK_GXBEGIN(0x24A, "GXSetTevSwapMode");
+	ASSERTMSGLINE(0x24B, stage < 16, "GXSetTevSwapMode: Invalid Tev Stage Index");
+
+	pTevReg = &gx->teva[stage];
+	SET_REG_FIELD(0x24E, *pTevReg, 2, 0, ras_sel);
+	SET_REG_FIELD(0x24F, *pTevReg, 2, 2, tex_sel);
+
+	GX_WRITE_RAS_REG(*pTevReg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -600,51 +316,33 @@ void GXSetTevSwapMode(void)
  * Address:	80213650
  * Size:	0000A0
  */
-void GXSetTevSwapModeTable(void)
+void GXSetTevSwapModeTable(GXTevSwapSel table, GXTevColorChan red, GXTevColorChan green, GXTevColorChan blue, GXTevColorChan alpha)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r9,r3,1,0,30
-	  lwz       r0, 0x2A68(r13)
-	  rlwinm    r3,r3,3,0,28
-	  addi      r11, r3, 0x1B0
-	  add       r11, r0, r11
-	  lwz       r8, 0x0(r11)
-	  addi      r0, r9, 0x1
-	  rlwinm    r3,r0,2,0,29
-	  rlwinm    r0,r8,0,0,29
-	  or        r0, r0, r4
-	  stw       r0, 0x0(r11)
-	  rlwinm    r0,r5,2,0,29
-	  li        r9, 0x61
-	  lwz       r4, 0x0(r11)
-	  lis       r8, 0xCC01
-	  addi      r10, r3, 0x1B0
-	  rlwinm    r3,r4,0,30,27
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r11)
-	  rlwinm    r3,r7,2,0,29
-	  li        r0, 0x1
-	  stb       r9, -0x8000(r8)
-	  lwz       r4, 0x2A68(r13)
-	  lwz       r5, 0x0(r11)
-	  add       r10, r4, r10
-	  stw       r5, -0x8000(r8)
-	  lwz       r4, 0x0(r10)
-	  rlwinm    r4,r4,0,0,29
-	  or        r4, r4, r6
-	  stw       r4, 0x0(r10)
-	  lwz       r4, 0x0(r10)
-	  rlwinm    r4,r4,0,30,27
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r10)
-	  stb       r9, -0x8000(r8)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r4, 0x0(r10)
-	  stw       r4, -0x8000(r8)
-	  sth       r0, 0x2(r3)
-	  blr
-	*/
+	u32* Kreg;
+#if !DEBUG
+	// not a real variable, but needed to match release
+	int index = table * 2;
+#endif
+
+	CHECK_GXBEGIN(0x26E, "GXSetTevSwapModeTable");
+	ASSERTMSGLINE(0x26F, table < 4, "GXSetTevSwapModeTable: Invalid Swap Selection Index");
+
+#if DEBUG
+	Kreg = &gx->tevKsel[table * 2];
+#else
+	Kreg = &gx->tevKsel[index];
+#endif
+	SET_REG_FIELD(0x272, *Kreg, 2, 0, red);
+	SET_REG_FIELD(0x273, *Kreg, 2, 2, green);
+
+	GX_WRITE_RAS_REG(*Kreg);
+
+	Kreg = &gx->tevKsel[table * 2 + 1];
+	SET_REG_FIELD(0x277, *Kreg, 2, 0, blue);
+	SET_REG_FIELD(0x278, *Kreg, 2, 2, alpha);
+
+	GX_WRITE_RAS_REG(*Kreg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -652,9 +350,9 @@ void GXSetTevSwapModeTable(void)
  * Address:	........
  * Size:	000004
  */
-void GXSetTevClampMode(void)
+void GXSetTevClampMode(GXTevStageID stage, GXTevClampMode mode)
 {
-	// UNUSED FUNCTION
+	ASSERTMSGLINE(0x290, 0, "GXSetTevClampMode: not available on this hardware");
 }
 
 /*
@@ -662,31 +360,21 @@ void GXSetTevClampMode(void)
  * Address:	802136F0
  * Size:	000050
  */
-void GXSetAlphaCompare(void)
+void GXSetAlphaCompare(GXCompare comp0, u8 ref0, GXAlphaOp op, GXCompare comp1, u8 ref1)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r7,r7,8,16,23
-	  lwz       r8, 0x2A68(r13)
-	  rlwimi    r7,r4,0,24,31
-	  rlwinm    r0,r3,16,0,15
-	  rlwimi    r0,r7,0,16,31
-	  rlwinm    r3,r0,0,13,9
-	  rlwinm    r0,r6,19,0,12
-	  or        r0, r3, r0
-	  rlwinm    r3,r0,0,10,7
-	  rlwinm    r0,r5,22,0,9
-	  or        r0, r3, r0
-	  rlwinm    r4,r0,0,8,31
-	  li        r0, 0x61
-	  lis       r3, 0xCC01
-	  stb       r0, -0x8000(r3)
-	  oris      r4, r4, 0xF300
-	  li        r0, 0x1
-	  stw       r4, -0x8000(r3)
-	  sth       r0, 0x2(r8)
-	  blr
-	*/
+	u32 reg = 0;
+
+	CHECK_GXBEGIN(0x2B2, "GXSetAlphaCompare");
+
+	SET_REG_FIELD(0x2B4, reg, 8, 0, ref0);
+	SET_REG_FIELD(0x2B5, reg, 8, 8, ref1);
+	SET_REG_FIELD(0x2B6, reg, 3, 16, comp0);
+	SET_REG_FIELD(0x2B7, reg, 3, 19, comp1);
+	SET_REG_FIELD(0x2B8, reg, 2, 22, op);
+	SET_REG_FIELD(0x2B9, reg, 8, 24, 0xF3);
+
+	GX_WRITE_RAS_REG(reg);
+	gx->bpSent = 1;
 }
 
 /*
@@ -694,56 +382,41 @@ void GXSetAlphaCompare(void)
  * Address:	80213740
  * Size:	000084
  */
-void GXSetZTexture(void)
+void GXSetZTexture(GXZTexOp op, GXTexFmt fmt, u32 bias)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0x13
-	  rlwinm    r0,r5,0,8,31
-	  oris      r7, r0, 0xF400
-	  beq-      .loc_0x34
-	  bge-      .loc_0x20
-	  cmpwi     r4, 0x11
-	  beq-      .loc_0x2C
-	  b         .loc_0x44
+	u32 zenv0;
+	u32 zenv1;
+	u32 type;
 
-	.loc_0x20:
-	  cmpwi     r4, 0x16
-	  beq-      .loc_0x3C
-	  b         .loc_0x44
+	CHECK_GXBEGIN(0x2D1, "GXSetZTexture");
 
-	.loc_0x2C:
-	  li        r6, 0
-	  b         .loc_0x48
+	zenv0 = 0;
+	SET_REG_FIELD(0x2D4, zenv0, 24, 0, bias);
+	SET_REG_FIELD(0x2D5, zenv0, 8, 24, 0xF4);
 
-	.loc_0x34:
-	  li        r6, 0x1
-	  b         .loc_0x48
+	zenv1 = 0;
+	switch (fmt) {
+	case GX_TF_Z8:
+		type = 0;
+		break;
+	case GX_TF_Z16:
+		type = 1;
+		break;
+	case GX_TF_Z24X8:
+		type = 2;
+		break;
+	default:
+		ASSERTMSGLINE(0x2DD, 0, "GXSetZTexture: Invalid z-texture format");
+		type = 2;
+		break;
+	}
+	SET_REG_FIELD(0x2E0, zenv1, 2, 0, type);
+	SET_REG_FIELD(0x2E1, zenv1, 2, 2, op);
+	SET_REG_FIELD(0x2E2, zenv1, 8, 24, 0xF5);
 
-	.loc_0x3C:
-	  li        r6, 0x2
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  li        r6, 0x2
-
-	.loc_0x48:
-	  li        r0, 0x61
-	  lwz       r4, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  rlwinm    r6,r6,0,30,27
-	  rlwinm    r3,r3,2,0,29
-	  stw       r7, -0x8000(r5)
-	  or        r3, r6, r3
-	  rlwinm    r3,r3,0,8,31
-	  stb       r0, -0x8000(r5)
-	  oris      r3, r3, 0xF500
-	  li        r0, 0x1
-	  stw       r3, -0x8000(r5)
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
+	GX_WRITE_RAS_REG(zenv0);
+	GX_WRITE_RAS_REG(zenv1);
+	gx->bpSent = 1;
 }
 
 /*
@@ -751,137 +424,38 @@ void GXSetZTexture(void)
  * Address:	802137C4
  * Size:	0001A0
  */
-void GXSetTevOrder(void)
+void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXChannelID color)
 {
-	/*
-	.loc_0x0:
-	  srawi     r7, r3, 0x1
-	  lwz       r9, 0x2A68(r13)
-	  rlwinm    r10,r5,0,24,22
-	  addze     r7, r7
-	  rlwinm    r0,r3,2,0,29
-	  add       r8, r9, r0
-	  rlwinm    r7,r7,2,0,29
-	  stw       r5, 0x49C(r8)
-	  addi      r7, r7, 0x100
-	  cmplwi    r10, 0x8
-	  addi      r0, r10, 0
-	  add       r7, r9, r7
-	  blt-      .loc_0x3C
-	  li        r9, 0
-	  b         .loc_0x40
+	u32* ptref;
+	u32 tmap;
+	u32 tcoord;
+	static int c2r[] = { 0, 1, 0, 1, 0, 1, 7, 5, 6 };
 
-	.loc_0x3C:
-	  mr        r9, r0
+	CHECK_GXBEGIN(0x307, "GXSetTevOrder");
+	ASSERTMSGLINE(0x308, stage < 16, "GXSetTevColor: Invalid Tev Stage Index");
 
-	.loc_0x40:
-	  cmpwi     r4, 0x8
-	  blt-      .loc_0x4C
-	  li        r4, 0
+	ptref               = &gx->tref[stage / 2];
+	gx->texmapId[stage] = map;
 
-	.loc_0x4C:
-	  rlwinm.   r0,r3,0,31,31
-	  beq-      .loc_0xE4
-	  lwz       r8, 0x0(r7)
-	  rlwinm    r3,r9,12,0,19
-	  rlwinm    r0,r4,15,0,16
-	  rlwinm    r4,r8,0,20,16
-	  or        r3, r4, r3
-	  stw       r3, 0x0(r7)
-	  cmpwi     r6, 0xFF
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r3,r3,0,17,13
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  bne-      .loc_0x8C
-	  li        r0, 0x7
-	  b         .loc_0xA0
+	tmap   = map & ~0x100;
+	tmap   = (tmap >= GX_MAX_TEXMAP) ? GX_TEXMAP0 : tmap;
+	tcoord = (coord >= GX_MAX_TEXCOORD) ? GX_TEXCOORD0 : coord;
 
-	.loc_0x8C:
-	  lis       r3, 0x802F
-	  rlwinm    r4,r6,2,0,29
-	  subi      r0, r3, 0x7050
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
+	if (stage & 1) {
+		SET_REG_FIELD(0x314, *ptref, 3, 12, tmap);
+		SET_REG_FIELD(0x315, *ptref, 3, 15, tcoord);
+		SET_REG_FIELD(0x317, *ptref, 3, 19, (color == GX_COLOR_NULL) ? 7 : c2r[color]);
+		SET_REG_FIELD(0x319, *ptref, 1, 18, (map != GX_TEXMAP_NULL && !(map & 0x100)));
+	} else {
+		SET_REG_FIELD(0x31C, *ptref, 3, 0, tmap);
+		SET_REG_FIELD(0x31D, *ptref, 3, 3, tcoord);
+		SET_REG_FIELD(0x31F, *ptref, 3, 7, (color == GX_COLOR_NULL) ? 7 : c2r[color]);
+		SET_REG_FIELD(0x321, *ptref, 1, 6, (map != GX_TEXMAP_NULL && !(map & 0x100)));
+	}
 
-	.loc_0xA0:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r0,19,0,12
-	  cmpwi     r5, 0xFF
-	  rlwinm    r3,r3,0,13,9
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  li        r4, 0
-	  beq-      .loc_0xCC
-	  rlwinm.   r0,r5,0,23,23
-	  bne-      .loc_0xCC
-	  li        r4, 0x1
-
-	.loc_0xCC:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,18,0,13
-	  rlwinm    r3,r3,0,14,12
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  b         .loc_0x16C
-
-	.loc_0xE4:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,3,0,28
-	  cmpwi     r6, 0xFF
-	  rlwinm    r3,r3,0,0,28
-	  or        r3, r3, r9
-	  stw       r3, 0x0(r7)
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r3,r3,0,29,25
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  bne-      .loc_0x118
-	  li        r0, 0x7
-	  b         .loc_0x12C
-
-	.loc_0x118:
-	  lis       r3, 0x802F
-	  rlwinm    r4,r6,2,0,29
-	  subi      r0, r3, 0x7050
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-
-	.loc_0x12C:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r0,7,0,24
-	  cmpwi     r5, 0xFF
-	  rlwinm    r3,r3,0,25,21
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-	  li        r4, 0
-	  beq-      .loc_0x158
-	  rlwinm.   r0,r5,0,23,23
-	  bne-      .loc_0x158
-	  li        r4, 0x1
-
-	.loc_0x158:
-	  lwz       r3, 0x0(r7)
-	  rlwinm    r0,r4,6,0,25
-	  rlwinm    r3,r3,0,26,24
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r7)
-
-	.loc_0x16C:
-	  li        r0, 0x61
-	  lwz       r3, 0x2A68(r13)
-	  lis       r5, 0xCC01
-	  stb       r0, -0x8000(r5)
-	  li        r0, 0x1
-	  lwz       r4, 0x0(r7)
-	  stw       r4, -0x8000(r5)
-	  sth       r0, 0x2(r3)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	GX_WRITE_RAS_REG(*ptref);
+	gx->bpSent = 1;
+	gx->dirtyState |= 1;
 }
 
 /*
@@ -889,22 +463,11 @@ void GXSetTevOrder(void)
  * Address:	80213964
  * Size:	000034
  */
-void GXSetNumTevStages(void)
+void GXSetNumTevStages(u8 nStages)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r3,r3,0,24,31
-	  lwz       r4, 0x2A68(r13)
-	  subi      r0, r3, 0x1
-	  lwzu      r3, 0x204(r4)
-	  rlwinm    r0,r0,10,0,21
-	  rlwinm    r3,r3,0,22,17
-	  or        r0, r3, r0
-	  stw       r0, 0x0(r4)
-	  lwz       r3, 0x2A68(r13)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x331, "GXSetNumTevStages");
+
+	ASSERTMSGLINE(0x333, nStages != 0 && nStages <= 16, "GXSetNumTevStages: Exceed max number of tex stages");
+	SET_REG_FIELD(0x334, gx->genMode, 4, 10, nStages - 1);
+	gx->dirtyState |= 4;
 }

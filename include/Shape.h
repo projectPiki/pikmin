@@ -189,6 +189,14 @@ DEFINE_ENUM_TYPE(BaseShapeChunk,
 	CollisionGrid    = 0x110,
 	EndOfFile        = 0xFFFF,
 );
+
+DEFINE_ENUM_TYPE(ShapeFlags,
+	None             = 0x00,
+	AllowCaching	 = 0x02, // Allows caching of shape geometry into a display list.
+	AlwaysRedraw     = 0x04, // Forces the shape to be redrawn every frame, bypassing any cached display list.
+	IsPlatform       = 0x10, // Indicates the shape is a platform or has platform collision.
+);
+
 // clang-format on
 
 /**
@@ -260,7 +268,7 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 mSystemFlags;                   // _14
+	u32 mSystemFlags;                   // _14, see BaseShapeFlags enum
 	AnimContext* mCurrentAnimation;     // _18
 	AnimContext** mAnimOverrides;       // _1C
 	AnimContext** mBackupAnimOverrides; // _20
@@ -277,7 +285,7 @@ struct BaseShape : public CoreNode {
 	PVWTevInfo* mTevInfoList;           // _4C
 	s32 mMeshCount;                     // _50
 	Mesh* mMeshList;                    // _54
-	s32 mJointCount;                    // _58
+	int mJointCount;                    // _58
 	Joint* mJointList;                  // _5C
 	s32 mTotalMatpolyCount;             // _60
 	Joint::MatPoly** mMatpolyList;      // _64
@@ -287,35 +295,35 @@ struct BaseShape : public CoreNode {
 	s32 mTextureCount;                  // _74
 	TexImg* mTextureList;               // _78
 	// NB: there's an extra AnimData debugData; here in the DLL, so everything is shifted by 0x44.
-	LightGroup mLightGroup;     // _7C
-	ObjCollInfo mCollisionInfo; // _E8
-	u32 _13C;                   // _13C, flag of some kind?
-	BoundBox mCourseExtents;    // _140
-	f32 mGridSize;              // _158, maybe grid scale?
-	int mGridSizeX;             // _15C
-	int mGridSizeY;             // _160
-	CollGroup** mCollGroups;    // _164
-	int mTriCount;              // _168
-	CollTriInfo* mTriList;      // _16C
-	s32 mBaseRoomCount;         // _170
-	RoomInfo* mRoomInfoList;    // _174
-	RouteGroup mRouteGroup;     // _178
-	s32 mVertexCount;           // _238
-	Vector3f* mVertexList;      // _23C
-	int mVtxColorCount;         // _240
-	Colour* mVtxColorList;      // _244
-	s32 mTotalActiveTexCoords;  // _248
-	s32 mTexCoordCounts[8];     // _24C
-	Vector2f* mTexCoordList[8]; // _250
-	s32 mNormalCount;           // _28C
-	Vector3f* mNormalList;      // _290
-	int mNBTCount;              // _294
-	NBT* mNBTList;              // _298
-	int _29C;                   // _29C
-	Texture** _2A0;             // _2A0
-	int mAttrListMatCount;      // _2A4
-	char* _2A8;                 // _2A8
-	u8 _2AC;                    // _2AC
+	LightGroup mLightGroup;         // _7C
+	ObjCollInfo mCollisionInfo;     // _E8
+	u32 _13C;                       // _13C, flag of some kind?
+	BoundBox mCourseExtents;        // _140
+	f32 mGridSize;                  // _158, maybe grid scale?
+	int mGridSizeX;                 // _15C
+	int mGridSizeY;                 // _160
+	CollGroup** mCollGroups;        // _164
+	int mTriCount;                  // _168
+	CollTriInfo* mTriList;          // _16C
+	s32 mBaseRoomCount;             // _170
+	RoomInfo* mRoomInfoList;        // _174
+	RouteGroup mRouteGroup;         // _178
+	s32 mVertexCount;               // _238
+	Vector3f* mVertexList;          // _23C
+	int mVtxColorCount;             // _240
+	Colour* mVtxColorList;          // _244
+	s32 mTotalActiveTexCoords;      // _248
+	s32 mTexCoordCounts[8];         // _24C
+	Vector2f* mTexCoordList[8];     // _26C
+	s32 mNormalCount;               // _28C
+	Vector3f* mNormalList;          // _290
+	int mNBTCount;                  // _294
+	NBT* mNBTList;                  // _298
+	int mFallbackTexAttrCount;      // _29C
+	Texture** mResolvedTextureList; // _2A0
+	int mAttrListMatCount;          // _2A4
+	char* mTextureNameList;         // _2A8
+	u8 _2AC;                        // _2AC
 };
 
 /**

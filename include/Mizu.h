@@ -89,7 +89,7 @@ struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*
 				while (list != listStart) {
 					zen::zenList* next        = list->mNext;
 					zen::particleMdlBase* mdl = (zen::particleMdlBase*)list;
-					f32 mdlY                  = mdl->_0C.y + mdl->_18.y;
+					f32 mdlY                  = mdl->mLocalPosition.y + mdl->mGlobalPosition.y;
 					if (mdlY > pos.y) {
 						pos.y = mdlY;
 					}

@@ -283,7 +283,7 @@ struct BaseCollTriInfo {
 		mVertexIndices[0]      = input.readInt();
 		mVertexIndices[1]      = input.readInt();
 		mVertexIndices[2]      = input.readInt();
-		_10                    = input.readShort();
+		mCollRoomId            = input.readShort();
 		mAdjacentTriIndices[0] = input.readShort();
 		mAdjacentTriIndices[1] = input.readShort();
 		mAdjacentTriIndices[2] = input.readShort();
@@ -292,7 +292,7 @@ struct BaseCollTriInfo {
 
 	u32 mMapCode;               // _00
 	u32 mVertexIndices[3];      // _04
-	s16 _10;                    // _10
+	s16 mCollRoomId;            // _10
 	s16 mAdjacentTriIndices[3]; // _12
 	Plane mTriangle;            // _18
 };
@@ -303,7 +303,7 @@ struct BaseCollTriInfo {
  * @note Size: 0x58.
  */
 struct CollTriInfo : public BaseCollTriInfo {
-	CollTriInfo();
+	CollTriInfo() { }
 
 	void init(RoomInfo*, Vector3f*);
 	int behindEdge(Vector3f&);
@@ -331,17 +331,17 @@ struct CollTriInfo : public BaseCollTriInfo {
 struct CollGroup {
 	CollGroup()
 	{
-		mTriangleList = nullptr;
-		mTriCount     = 0;
-		mStateIndex   = 0;
-		_0C           = nullptr;
+		mTriangleList          = nullptr;
+		mTriCount              = 0;
+		mStateIndex            = 0;
+		mFarCulledTriDistances = nullptr;
 	}
 
 	u8 _00[0x4];                   // _00, unknown
 	s16 mTriCount;                 // _04
-	s16 _06;                       // _06
+	s16 mFarCulledTriCount;        // _06
 	CollTriInfo** mTriangleList;   // _08
-	u8* _0C;                       // _0C
+	u8* mFarCulledTriDistances;    // _0C
 	Shape* mShape;                 // _10
 	Vector3f* mVertexList;         // _14
 	int mStateIndex;               // _18
@@ -352,23 +352,39 @@ struct CollGroup {
 /**
  * @brief TODO
  */
-struct CollState {
-	// unused/inlined:
-	void resetCollisions(Shape*);
-	bool add(Vector3f&, Vector3f&, RigidBody*);
+struct Collision {
+	Collision() { }
 
-	// TODO: members
+	u8 _00[0x4];            // _00, unknown
+	Vector3f mNormal;       // _04
+	Vector3f mContactPoint; // _10
+	RigidBody* mColliderRb; // _1C
+	u8 _20[0x4];            // _20, unknown
 };
 
 /**
  * @brief TODO
  */
-struct Collision {
-	Collision();
+struct CollState {
+	CollState()
+	{
+		mStatus     = 2;
+		_04         = 0.0001f;
+		_08         = 0;
+		mResetCount = 0;
+	}
 
-	u8 _00[0x4];  // _00, unknown
-	Vector3f _04; // _04
-	Vector3f _10; // _10
+	// unused/inlined:
+	void resetCollisions(Shape*);
+	bool add(Vector3f&, Vector3f&, RigidBody*);
+
+	int mStatus;               // _00
+	f32 _04;                   // _04
+	u32 _08;                   // _08, unknown
+	int mResetCount;           // _0C
+	int mCollisionCount;       // _10
+	Collision mCollisions[10]; // _14
+	Shape* mShape;             // _17C
 };
 
 #endif

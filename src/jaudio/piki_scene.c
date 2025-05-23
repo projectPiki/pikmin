@@ -1,19 +1,39 @@
 #include "jaudio/PikiScene.h"
 
 #include "jaudio/PikiBgm.h"
+#include "jaudio/PikiInter.h"
+#include "jaudio/PikiDemo.h"
+#include "jaudio/PikiPlayer.h"
 #include "jaudio/waveread.h"
+#include "jaudio/aramcall.h"
+#include "jaudio/interface.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/verysimple.h"
+#include "jaudio/dvdthread.h"
+#include "jaudio/syncstream.h"
 
 static u32 current_bgm;
 static u32 current_ready; // type
-static u32 now_loading;   // type
+static vu32 now_loading;  // type
 static u32 first_load;    // type
 static BOOL chgmode;      // type
 
-static u32 current_scene   = -1;
-static u32 current_stage   = -1;
-static u32 current_prepare = -1;
-static u16 stream_level    = 8000;
-static u16 stream_se_level = 8000;
+static u32 current_scene    = -1;
+static u32 current_stage    = -1;
+static u32 current_prepare  = -1;
+static u16 stream_level     = 8000;
+static u16 stream_se_level  = 8000;
+int tbl_scene_to_bgm[]      = { 0, 7, 18, 12, 0, 1, 0, 0, 0, 8, 19, 0, 0, 0 };
+int tbl_scene_to_fadetime[] = { 0, 60, 15, 120, 10, 25, 10, 10, 10, 10, 25, 0, 0, 0 };
+int tbl_stage_to_bgm[]      = { 4, 5, 10, 9, 17 };
+char filelist[][32]         = { "piki.stx",    "o_dead.stx",  "d_end1.stx",    "gyoku.stx",    "d_end3.stx",   "fanf5.stx",   "badend0.stx",
+	                            "badend1.stx", "opening.stx", "happyend1.stx", "compend1.stx", "compend0.stx", "badend2.stx", "onion.stx" };
+
+u8 header[] = { 0x00, 0x64, 0x0C, 0x62, 0x00, 0x58, 0xEE, 0x80, 0xBB, 0x80, 0x00, 0x04, 0x00, 0x10, 0x00, 0x1e,
+	            0x00, 0x00, 0x00, 0x00, 0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0 };
+
+volatile u32 stop_ready;
+u32 stop_flag;
 
 /*
  * --INFO--
@@ -32,8 +52,26 @@ void Jac_Delete_CurrentBgmWave()
  * Address:	800197A0
  * Size:	000094
  */
-static void __Loaded(u32)
+static void __Loaded(u32 a)
 {
+	vu32 hi, lo;
+	hi = a & 0xffff0000;
+	lo = a & 0x0000ffff;
+
+	switch (hi) {
+	case 0x20000:
+		first_load = 1;
+		break;
+	case 0:
+		now_loading = 0;
+		break;
+	case 0x10000:
+		if (current_bgm == lo) {
+			Collect_AramMotherHeap();
+			Jac_PlayBgm(0, current_bgm);
+		}
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -111,8 +149,186 @@ BOOL Jac_TellChgMode()
  * Address:	80019880
  * Size:	00045C
  */
-void Jac_SceneSetup(u32, u32)
+void Jac_SceneSetup(u32 sceneID, u32 stage)
 {
+	static int first = 1;
+	BOOL dvd, closeScene, same;
+	int bgm;
+	u32 bgm2;
+	OSTick tick;
+
+	dvd = FALSE;
+	Jac_SetProcessStatus(0);
+
+	if (first_load == 0) {
+		while (sceneID != 1) {
+			if (first_load) {
+				break;
+			}
+		}
+	}
+
+	if (sceneID == 10) {
+		chgmode = 1;
+	}
+
+	if (sceneID == 3) {
+		WaveScene_Close(13, 0);
+		Jac_DemoSceneInit();
+		chgmode = 0;
+	}
+
+	if (sceneID == 1) {
+		chgmode = 0;
+	}
+
+	if ((current_scene == 5) || (sceneID == 5)) {
+		Jac_InitAllEvent();
+		Jac_Piki_Number(0);
+		Jac_UpdatePikiGaya();
+		Jac_StopOrimaSe(8);
+		Jac_FinishPartsFindDemo();
+		Jac_FinishDemo();
+	}
+
+	Jac_PlaySystemSe(0xf);
+	Jac_PlaySystemSe(7);
+	Jac_StopSystemSe(0x10);
+	Jac_StopSystemSe(0x21);
+	Jac_StopSystemSe(0x23);
+	Jac_UnPauseOrimaSe();
+
+	if (current_scene == 6) {
+		Jac_DemoBGMForceStop();
+	}
+
+	if (current_scene == -1) {
+		bgm = 0;
+	} else {
+		bgm = tbl_scene_to_bgm[current_scene];
+	}
+
+	bgm2 = tbl_scene_to_bgm[sceneID];
+	if (sceneID == 6) {
+		if (chgmode != 0) {
+			bgm2 = 0x14;
+		}
+		if (stage == 1) {
+			bgm2 = 0x15;
+		}
+	}
+
+	current_scene = sceneID;
+	current_stage = stage;
+
+	if (current_bgm == bgm2) {
+		if (bgm2 == bgm) {
+			same = TRUE;
+		} else {
+			same = FALSE;
+		}
+	} else {
+		closeScene = TRUE;
+		Jac_StopBgm(0);
+		Jac_StopBgm(1);
+		same = FALSE;
+		if ((bgm2 == 1) && (current_bgm == tbl_stage_to_bgm[stage])) {
+			closeScene = FALSE;
+		}
+		if (current_bgm == 0) {
+			closeScene = FALSE;
+		}
+		if (bgm2 == 0) {
+			closeScene = FALSE;
+		}
+		if (closeScene) {
+			WaveScene_Close(current_bgm, 0);
+		}
+	}
+
+	closeScene = FALSE;
+
+	switch (bgm2) {
+	case 1:
+		closeScene = stage != 0;
+		bgm2       = tbl_stage_to_bgm[stage];
+		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
+		break;
+
+	case 0:
+		break;
+
+	default:
+		if (!same) {
+			Jac_ReadyBgm(bgm2);
+			Collect_AramMotherHeap();
+			WaveScene_Set(bgm2, 0);
+			current_ready = bgm2;
+			if (closeScene) {
+				dvd = TRUE;
+			} else {
+				DVDT_CheckPass(bgm2 + 0x10000, 0, __Loaded);
+			}
+		} else {
+			if (current_ready == bgm2) {
+				while (now_loading) { }
+				Collect_AramMotherHeap();
+				Jac_PlayBgm(0, bgm2);
+			}
+		}
+		break;
+	}
+
+	if (bgm2) {
+		current_bgm = bgm;
+	}
+
+	if (closeScene) {
+		if (stage == 4) {
+			WaveScene_Close(0xb, 0);
+			WaveScene_Set(0x10, 0);
+			Jac_PlayBgm(1, 0x10);
+		} else {
+			WaveScene_Close(0x10, 0);
+			WaveScene_Set(0xb, 0);
+			Jac_PlayBgm(1, 0xb);
+		}
+
+		// if (dvd != FALSE) {
+		DVDT_CheckPass(bgm2 + 0x10000, 0, __Loaded);
+		//}
+	}
+
+	if (current_scene == 1 && first == 1) {
+		first = 0;
+		WaveScene_Load(0, 1);
+		WaveScene_Load(0, 2);
+		WaveScene_Load(0, 3);
+		WaveScene_Set(0xe, 0);
+		WaveScene_Set(0xf, 0);
+		WaveScene_Set(2, 0);
+		DVDT_CheckPass(0x20000, 0, __Loaded);
+	}
+
+	if (sceneID == 0) {
+		do {
+			bgm = Jac_CheckBootOk();
+		} while (bgm == 0);
+
+		tick = OSGetTick();
+		if ((tick >> 2 & 0x1f) == 0x1f) {
+			if ((tick >> 2 & 0x3f) == 0x3f) {
+				Jac_PlayOrimaSe(0x8015);
+			} else {
+				Jac_PlayOrimaSe(0x8016);
+			}
+		} else if ((tick >> 2 & 0x7f) == 0x7e) {
+			Jac_PlayOrimaSe(0x8017);
+		} else {
+			Jac_PlayOrimaSe(0x800c);
+		}
+	}
+	Jac_SetProcessStatus(1);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -474,86 +690,43 @@ void Jac_SceneSetup(u32, u32)
  * Address:	80019CE0
  * Size:	0000FC
  */
-void Jac_SceneExit(u32, u32)
+void Jac_SceneExit(u32 scene, u32 stage)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  lis       r3, 0x8022
-	  addi      r29, r4, 0
-	  addi      r31, r3, 0x6248
-	  lwz       r0, -0x7F20(r13)
-	  cmplw     r0, r28
-	  beq-      .loc_0xE8
-	  li        r3, 0x2
-	  bl        -0x3350
-	  lwz       r0, -0x7F20(r13)
-	  li        r3, 0
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r31, r0
-	  lwz       r0, 0x38(r4)
-	  stw       r0, 0x18(r1)
-	  lwz       r30, 0x18(r1)
-	  mr        r4, r30
-	  bl        -0x11F4
-	  li        r3, 0x1
-	  addi      r4, r30, 0
-	  bl        -0x1200
-	  rlwinm    r0,r28,2,0,29
-	  lwzx      r0, r31, r0
-	  cmpwi     r0, 0x1
-	  mr        r30, r0
-	  beq-      .loc_0x88
-	  bge-      .loc_0x94
-	  cmpwi     r0, 0
-	  bge-      .loc_0xE0
-	  b         .loc_0x94
+	int fade;
+	int newScene;
 
-	.loc_0x88:
-	  rlwinm    r0,r29,2,0,29
-	  add       r3, r31, r0
-	  lwz       r30, 0x70(r3)
+	int* REF_fade;
+	u32 badCompiler;
 
-	.loc_0x94:
-	  lwz       r0, 0x2D10(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xAC
+	if (current_scene == scene) {
+		return;
+	}
 
-	.loc_0xA0:
-	  lwz       r0, 0x2D10(r13)
-	  cmplwi    r0, 0
-	  bne+      .loc_0xA0
+	Jac_SetProcessStatus(2);
+	fade     = tbl_scene_to_fadetime[current_scene];
+	REF_fade = &fade;
+	Jac_FadeOutBgm(0, fade);
+	Jac_FadeOutBgm(1, fade);
 
-	.loc_0xAC:
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        -0xD6B4
-	  mr        r3, r30
-	  bl        -0x11BC
-	  lis       r4, 0x8002
-	  addi      r3, r30, 0
-	  subi      r5, r4, 0x6860
-	  li        r4, 0
-	  bl        -0x11E30
-	  li        r0, 0x1
-	  stw       r30, 0x2D0C(r13)
-	  stw       r0, 0x2D10(r13)
+	newScene = tbl_scene_to_bgm[scene];
+	switch (newScene) {
+	case 0:
+		break;
+	case 1:
+		newScene = tbl_stage_to_bgm[stage];
+	default:
+		if (now_loading) {
+			do {
+			} while (now_loading != 0);
+		}
 
-	.loc_0xE0:
-	  li        r3, 0x3
-	  bl        -0x3404
-
-	.loc_0xE8:
-	  lmw       r28, 0x20(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+		WaveScene_Set(newScene, 0);
+		Jac_ReadyBgm(newScene);
+		DVDT_CheckPass(newScene, 0, __Loaded);
+		now_loading   = 1;
+		current_ready = newScene;
+	}
+	Jac_SetProcessStatus(3);
 }
 
 /*
@@ -574,38 +747,12 @@ void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
  */
 void Jac_UpdateStreamLevel()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0x3B50
-	  rlwinm    r0,r3,0,24,31
-	  cmplwi    r0, 0x5
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  li        r4, 0x7FFF
-	  li        r5, 0x7FFF
-	  bl        0x38D4
-	  lhz       r4, -0x7F14(r13)
-	  li        r3, 0
-	  lhz       r5, -0x7F12(r13)
-	  bl        0x3904
-	  b         .loc_0x54
-
-	.loc_0x44:
-	  lhz       r4, -0x7F14(r13)
-	  li        r3, 0
-	  addi      r5, r4, 0
-	  bl        0x38B0
-
-	.loc_0x54:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if ((u8)StreamCheckAudioFormat(0) == 5) {
+		StreamChgVolume(0, 0x7fff, 0x7fff);
+		StreamChgMixLevel(0, stream_level, stream_se_level);
+	} else {
+		StreamChgVolume(0, stream_level, stream_level);
+	}
 }
 
 /*
@@ -613,50 +760,27 @@ void Jac_UpdateStreamLevel()
  * Address:	80019E80
  * Size:	00007C
  */
-static void MovieSync(u32, s32)
+static int MovieSync(u32 a1, s32 a2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  bl        -0x94
-	  cmpwi     r31, -0x1
-	  bne-      .loc_0x38
-	  li        r3, 0x1
-	  li        r0, 0
-	  stw       r3, 0x2D28(r13)
-	  li        r3, 0
-	  stw       r0, 0x2D24(r13)
-	  b         .loc_0x68
+	int sync;
 
-	.loc_0x38:
-	  lwz       r0, 0x2D24(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x54
-	  li        r0, 0
-	  li        r3, -0x1
-	  stw       r0, 0x2D24(r13)
-	  b         .loc_0x68
+	Jac_UpdateStreamLevel();
 
-	.loc_0x54:
-	  cmpwi     r31, 0
-	  bne-      .loc_0x64
-	  li        r0, 0x1
-	  stw       r0, 0x2D28(r13)
+	if (a2 == -1) {
+		stop_ready = 1;
+		sync       = 0;
+		stop_flag  = 0;
+	} else if (stop_flag) {
+		sync      = -1;
+		stop_flag = 0;
+	} else {
+		if (a2 == 0) {
+			stop_ready = 1;
+		}
+		sync = 0;
+	}
 
-	.loc_0x64:
-	  li        r3, 0
-
-	.loc_0x68:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	return sync;
 }
 
 /*
@@ -666,19 +790,7 @@ static void MovieSync(u32, s32)
  */
 void Jac_InitStreamSystem(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8002
-	  stw       r0, 0x4(r1)
-	  subi      r3, r3, 0x6180
-	  stwu      r1, -0x8(r1)
-	  bl        0x2E0C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	RegisterStreamCallback(MovieSync);
 }
 
 /*
@@ -686,27 +798,11 @@ void Jac_InitStreamSystem(void)
  * Address:	80019F40
  * Size:	000038
  */
-void Jac_StopDemoSound(u32)
+void Jac_StopDemoSound(u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r4, r3, 0
-	  stw       r0, 0x4(r1)
-	  li        r3, 0
-	  stwu      r1, -0x8(r1)
-	  bl        0x348C
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0x28
-	  li        r0, 0x1
-	  stw       r0, 0x2D24(r13)
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (StreamSyncCheckBusy(0, id) == 1) {
+		stop_flag = 1;
+	}
 }
 
 /*
@@ -714,8 +810,21 @@ void Jac_StopDemoSound(u32)
  * Address:	80019F80
  * Size:	000098
  */
-void Jac_PrepareDemoSound(u32)
+void Jac_PrepareDemoSound(u32 id)
 {
+	char buffer[78];
+
+	if (StreamSyncCheckBusy(0, id) == 1) {
+		stop_ready = 0;
+		Jac_StopDemoSound(id);
+		do {
+		} while (stop_ready == 0);
+	}
+	DVDT_ExtendPath(buffer, filelist[id]);
+	StreamAudio_Start(0, id, buffer, 1, 0, 0);
+	Jac_UpdateStreamLevel();
+	current_prepare = id;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -768,8 +877,23 @@ void Jac_PrepareDemoSound(u32)
  * Address:	8001A020
  * Size:	0000A4
  */
-void Jac_StartDemoSound(u32)
+void Jac_StartDemoSound(u32 id)
 {
+
+	if (current_prepare != id && StreamSyncCheckBusy(0, id) == 1) {
+		stop_ready = 0;
+		Jac_StopDemoSound(id);
+		do {
+		} while (stop_ready == 0);
+	}
+	current_prepare = 0xffffffff;
+
+	if (StreamSyncCheckReadyID(0, id) == 0) {
+		Jac_PrepareDemoSound(id);
+	}
+	do {
+	} while (StreamSyncPlayAudio(1.0f, 0, stream_level, stream_level) != 1);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -827,7 +951,7 @@ void Jac_StartDemoSound(u32)
  * Address:	........
  * Size:	000024
  */
-void Jac_CheckReadyDemoSound(u32)
+void Jac_CheckReadyDemoSound(u32 a)
 {
 	// UNUSED FUNCTION
 }

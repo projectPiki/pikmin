@@ -1,22 +1,33 @@
-#include "types.h"
+#include "Dolphin/gx.h"
+#include "math.h"
+
+struct __GXLightObjInt_struct {
+	u32 reserved[3];
+	u32 Color;
+	f32 a[3];
+	f32 k[3];
+	f32 lpos[3];
+	f32 ldir[3];
+};
 
 /*
  * --INFO--
  * Address:	8021197C
  * Size:	00001C
  */
-void GXInitLightAttn(void)
+void GXInitLightAttn(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2, f32 k0, f32 k1, f32 k2)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x10(r3)
-	  stfs      f2, 0x14(r3)
-	  stfs      f3, 0x18(r3)
-	  stfs      f4, 0x1C(r3)
-	  stfs      f5, 0x20(r3)
-	  stfs      f6, 0x24(r3)
-	  blr
-	*/
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x62, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x63, "GXInitLightAttn");
+	obj->a[0] = a0;
+	obj->a[1] = a1;
+	obj->a[2] = a2;
+	obj->k[0] = k0;
+	obj->k[1] = k1;
+	obj->k[2] = k2;
 }
 
 /*
@@ -24,9 +35,16 @@ void GXInitLightAttn(void)
  * Address:	........
  * Size:	000010
  */
-void GXInitLightAttnA(void)
+void GXInitLightAttnA(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x70, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x71, "GXInitLightAttnA");
+	obj->a[0] = a0;
+	obj->a[1] = a1;
+	obj->a[2] = a2;
 }
 
 /*
@@ -34,9 +52,16 @@ void GXInitLightAttnA(void)
  * Address:	........
  * Size:	00001C
  */
-void GXGetLightAttnA(void)
+void GXGetLightAttnA(GXLightObj* lt_obj, f32* a0, f32* a1, f32* a2)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x7A, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x7B, "GXGetLightAttnA");
+	*a0 = obj->a[0];
+	*a1 = obj->a[1];
+	*a2 = obj->a[2];
 }
 
 /*
@@ -44,9 +69,16 @@ void GXGetLightAttnA(void)
  * Address:	........
  * Size:	000010
  */
-void GXInitLightAttnK(void)
+void GXInitLightAttnK(GXLightObj* lt_obj, f32 k0, f32 k1, f32 k2)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x84, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x85, "GXInitLightAttnK");
+	obj->k[0] = k0;
+	obj->k[1] = k1;
+	obj->k[2] = k2;
 }
 
 /*
@@ -54,9 +86,16 @@ void GXInitLightAttnK(void)
  * Address:	........
  * Size:	00001C
  */
-void GXGetLightAttnK(void)
+void GXGetLightAttnK(GXLightObj* lt_obj, f32* k0, f32* k1, f32* k2)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x8E, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x8F, "GXGetLightAttnK");
+	*k0 = obj->k[0];
+	*k1 = obj->k[1];
+	*k2 = obj->k[2];
 }
 
 /*
@@ -64,9 +103,67 @@ void GXGetLightAttnK(void)
  * Address:	........
  * Size:	000180
  */
-void GXInitLightSpot(void)
+void GXInitLightSpot(GXLightObj* lt_obj, f32 cutoff, GXSpotFn spot_func)
 {
-	// UNUSED FUNCTION
+	float a0, a1, a2;
+	float r;
+	float d;
+	float cr;
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0xA7, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0xA9, "GXInitLightSpot");
+
+	if (cutoff <= 0.0f || cutoff > 90.0f)
+		spot_func = GX_SP_OFF;
+
+	r  = (3.1415927f * cutoff) / 180.0f;
+	cr = cosf(r);
+	switch (spot_func) {
+	case GX_SP_FLAT:
+		a0 = -1000.0f * cr;
+		a1 = 1000.0f;
+		a2 = 0.0f;
+		break;
+	case GX_SP_COS:
+		a0 = -cr / (1.0f - cr);
+		a1 = 1.0f / (1.0f - cr);
+		a2 = 0.0f;
+		break;
+	case GX_SP_COS2:
+		a0 = 0.0f;
+		a1 = -cr / (1.0f - cr);
+		a2 = 1.0f / (1.0f - cr);
+		break;
+	case GX_SP_SHARP:
+		d  = (1.0f - cr) * (1.0f - cr);
+		a0 = (cr * (cr - 2.0f)) / d;
+		a1 = 2.0f / d;
+		a2 = -1.0f / d;
+		break;
+	case GX_SP_RING1:
+		d  = (1.0f - cr) * (1.0f - cr);
+		a0 = (-4.0f * cr) / d;
+		a1 = (4.0f * (1.0f + cr)) / d;
+		a2 = -4.0f / d;
+		break;
+	case GX_SP_RING2:
+		d  = (1.0f - cr) * (1.0f - cr);
+		a0 = 1.0f - ((2.0f * cr * cr) / d);
+		a1 = (4.0f * cr) / d;
+		a2 = -2.0f / d;
+		break;
+	case GX_SP_OFF:
+	default:
+		a0 = 1.0f;
+		a1 = 0.0f;
+		a2 = 0.0f;
+		break;
+	}
+	obj->a[0] = a0;
+	obj->a[1] = a1;
+	obj->a[2] = a2;
 }
 
 /*
@@ -74,9 +171,47 @@ void GXInitLightSpot(void)
  * Address:	........
  * Size:	0000D0
  */
-void GXInitLightDistAttn(void)
+void GXInitLightDistAttn(GXLightObj* lt_obj, f32 ref_dist, f32 ref_br, GXDistAttnFn dist_func)
 {
-	// UNUSED FUNCTION
+	f32 k0, k1, k2;
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0xF2, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0xF4, "GXInitLightDistAttn");
+
+	if (ref_dist < 0.0f)
+		dist_func = GX_DA_OFF;
+	if (ref_br <= 0.0f || ref_br >= 1.0f)
+		dist_func = GX_DA_OFF;
+
+	switch (dist_func) {
+	case GX_DA_GENTLE:
+		k0 = 1.0f;
+		k1 = (1.0f - ref_br) / (ref_br * ref_dist);
+		k2 = 0.0f;
+		break;
+	case GX_DA_MEDIUM:
+		k0 = 1.0f;
+		k1 = (0.5f * (1.0f - ref_br)) / (ref_br * ref_dist);
+		k2 = (0.5f * (1.0f - ref_br)) / (ref_br * ref_dist * ref_dist);
+		break;
+	case GX_DA_STEEP:
+		k0 = 1.0f;
+		k1 = 0.0f;
+		k2 = (1.0f - ref_br) / (ref_br * ref_dist * ref_dist);
+		break;
+	case GX_DA_OFF:
+	default:
+		k0 = 1.0f;
+		k1 = 0.0f;
+		k2 = 0.0f;
+		break;
+	}
+
+	obj->k[0] = k0;
+	obj->k[1] = k1;
+	obj->k[2] = k2;
 }
 
 /*
@@ -84,15 +219,17 @@ void GXInitLightDistAttn(void)
  * Address:	80211998
  * Size:	000010
  */
-void GXInitLightPos(void)
+void GXInitLightPos(GXLightObj* lt_obj, f32 x, f32 y, f32 z)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x28(r3)
-	  stfs      f2, 0x2C(r3)
-	  stfs      f3, 0x30(r3)
-	  blr
-	*/
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x129, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x12B, "GXInitLightPos");
+
+	obj->lpos[0] = x;
+	obj->lpos[1] = y;
+	obj->lpos[2] = z;
 }
 
 /*
@@ -100,9 +237,17 @@ void GXInitLightPos(void)
  * Address:	........
  * Size:	00001C
  */
-void GXGetLightPos(void)
+void GXGetLightPos(GXLightObj* lt_obj, f32* x, f32* y, f32* z)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x134, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x136, "GXGetLightPos");
+
+	*x = obj->lpos[0];
+	*y = obj->lpos[1];
+	*z = obj->lpos[2];
 }
 
 /*
@@ -110,18 +255,16 @@ void GXGetLightPos(void)
  * Address:	802119A8
  * Size:	00001C
  */
-void GXInitLightDir(void)
+void GXInitLightDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 {
-	/*
-	.loc_0x0:
-	  fneg      f4, f1
-	  fneg      f1, f2
-	  fneg      f0, f3
-	  stfs      f4, 0x34(r3)
-	  stfs      f1, 0x38(r3)
-	  stfs      f0, 0x3C(r3)
-	  blr
-	*/
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x149, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+
+	obj->ldir[0] = -nx;
+	obj->ldir[1] = -ny;
+	obj->ldir[2] = -nz;
 }
 
 /*
@@ -129,9 +272,16 @@ void GXInitLightDir(void)
  * Address:	........
  * Size:	000028
  */
-void GXGetLightDir(void)
+void GXGetLightDir(GXLightObj* lt_obj, f32* nx, f32* ny, f32* nz)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x155, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+
+	*nx = -obj->ldir[0];
+	*ny = -obj->ldir[1];
+	*nz = -obj->ldir[2];
 }
 
 /*
@@ -139,66 +289,28 @@ void GXGetLightDir(void)
  * Address:	802119C4
  * Size:	0000D4
  */
-void GXInitSpecularDir(void)
+void GXInitSpecularDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  fneg      f0, f1
-	  fneg      f1, f2
-	  lfs       f5, -0x3C9C(r2)
-	  fmuls     f6, f0, f0
-	  lfs       f4, -0x3CA0(r2)
-	  fsubs     f2, f5, f3
-	  fmuls     f5, f1, f1
-	  fmuls     f7, f2, f2
-	  fadds     f5, f6, f5
-	  fadds     f8, f7, f5
-	  fcmpo     cr0, f8, f4
-	  ble-      .loc_0x8C
-	  fsqrte    f5, f8
-	  lfd       f7, -0x3C98(r2)
-	  lfd       f6, -0x3C90(r2)
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f8, f4
-	  fsub      f4, f6, f4
-	  fmul      f5, f5, f4
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f8, f4
-	  fsub      f4, f6, f4
-	  fmul      f5, f5, f4
-	  fmul      f4, f5, f5
-	  fmul      f5, f7, f5
-	  fmul      f4, f8, f4
-	  fsub      f4, f6, f4
-	  fmul      f4, f5, f4
-	  fmul      f4, f8, f4
-	  frsp      f4, f4
-	  stfs      f4, 0x18(r1)
-	  lfs       f8, 0x18(r1)
+	float mag;
+	float vx;
+	float vy;
+	float vz;
+	struct __GXLightObjInt_struct* obj;
 
-	.loc_0x8C:
-	  lfs       f4, -0x3C9C(r2)
-	  fneg      f3, f3
-	  fdivs     f6, f4, f8
-	  fmuls     f5, f0, f6
-	  fmuls     f4, f1, f6
-	  fmuls     f2, f2, f6
-	  stfs      f5, 0x34(r3)
-	  stfs      f4, 0x38(r3)
-	  stfs      f2, 0x3C(r3)
-	  lfs       f4, -0x3C88(r2)
-	  fmuls     f2, f4, f0
-	  fmuls     f1, f4, f1
-	  fmuls     f0, f4, f3
-	  stfs      f2, 0x28(r3)
-	  stfs      f1, 0x2C(r3)
-	  stfs      f0, 0x30(r3)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	ASSERTMSGLINE(0x16F, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x170, "GXInitSpecularDir");
+
+	vx           = -nx;
+	vy           = -ny;
+	vz           = -nz + 1.0f;
+	mag          = 1.0f / sqrtf((vx * vx) + (vy * vy) + (vz * vz));
+	obj->ldir[0] = vx * mag;
+	obj->ldir[1] = vy * mag;
+	obj->ldir[2] = vz * mag;
+	obj->lpos[0] = -nx * (1024.0f * 1024.0f);
+	obj->lpos[1] = -ny * (1024.0f * 1024.0f);
+	obj->lpos[2] = -nz * (1024.0f * 1024.0f);
 }
 
 /*
@@ -206,9 +318,20 @@ void GXInitSpecularDir(void)
  * Address:	........
  * Size:	000038
  */
-void GXInitSpecularDirHA(void)
+void GXInitSpecularDirHA(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz, f32 hx, f32 hy, f32 hz)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x18E, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x18F, "GXInitSpecularHA");
+
+	obj->ldir[0] = hx;
+	obj->ldir[1] = hy;
+	obj->ldir[2] = hz;
+	obj->lpos[0] = -nx * (1024.0f * 1024.0f);
+	obj->lpos[1] = -ny * (1024.0f * 1024.0f);
+	obj->lpos[2] = -nz * (1024.0f * 1024.0f);
 }
 
 /*
@@ -216,21 +339,15 @@ void GXInitSpecularDirHA(void)
  * Address:	80211A98
  * Size:	000028
  */
-void GXInitLightColor(void)
+void GXInitLightColor(GXLightObj* lt_obj, GXColor color)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x1(r4)
-	  lbz       r5, 0x0(r4)
-	  lbz       r6, 0x2(r4)
-	  rlwinm    r0,r0,16,0,15
-	  rlwimi    r0,r5,24,0,7
-	  lbz       r4, 0x3(r4)
-	  rlwimi    r0,r6,8,16,23
-	  or        r0, r4, r0
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x1A8, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x1A9, "GXInitLightColor");
+
+	obj->Color = (color.r << 24) | (color.g << 16) | (color.b << 8) | color.a;
 }
 
 /*
@@ -238,128 +355,107 @@ void GXInitLightColor(void)
  * Address:	........
  * Size:	000030
  */
-void GXGetLightColor(void)
+void GXGetLightColor(GXLightObj* lt_obj, GXColor* color)
 {
-	// UNUSED FUNCTION
+	struct __GXLightObjInt_struct* obj;
+
+	ASSERTMSGLINE(0x1B2, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x1B3, "GXGetLightColor");
+
+	color->r = (obj->Color >> 24) & 0xFF;
+	color->g = (obj->Color >> 16) & 0xFF;
+	color->b = (obj->Color >> 8) & 0xFF;
+	color->a = obj->Color & 0xFF;
 }
+
+#if DEBUG
+#define WRITE_SOME_LIGHT_REG1(val, addr) \
+	do {                                 \
+		u32 xfData = val;                \
+		GX_WRITE_U32(val);               \
+		VERIF_MTXLIGHT(addr, xfData);    \
+	} while (0)
+
+#define WRITE_SOME_LIGHT_REG2(val, addr)      \
+	do {                                      \
+		f32 xfData = val;                     \
+		GX_WRITE_F32(val);                    \
+		VERIF_MTXLIGHT(addr, *(u32*)&xfData); \
+	} while (0)
+#else
+#define WRITE_SOME_LIGHT_REG1(val, addr) GX_WRITE_U32(val)
+#define WRITE_SOME_LIGHT_REG2(val, addr) GX_WRITE_F32(val)
+#endif
 
 /*
  * --INFO--
  * Address:	80211AC0
  * Size:	000144
  */
-void GXLoadLightObjImm(void)
+void GXLoadLightObjImm(GXLightObj* lt_obj, GXLightID light)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r4, 0x10
-	  beq-      .loc_0x80
-	  bge-      .loc_0x3C
-	  cmpwi     r4, 0x4
-	  beq-      .loc_0x70
-	  bge-      .loc_0x30
-	  cmpwi     r4, 0x2
-	  beq-      .loc_0x68
-	  bge-      .loc_0xA0
-	  cmpwi     r4, 0x1
-	  bge-      .loc_0x60
-	  b         .loc_0xA0
+	unsigned long addr;
+	unsigned long idx;
+	struct __GXLightObjInt_struct* obj;
 
-	.loc_0x30:
-	  cmpwi     r4, 0x8
-	  beq-      .loc_0x78
-	  b         .loc_0xA0
+	ASSERTMSGLINE(0x1C9, lt_obj != NULL, "Light Object Pointer is null");
+	obj = (struct __GXLightObjInt_struct*)lt_obj;
+	CHECK_GXBEGIN(0x1CA, "GXLoadLightObjImm");
 
-	.loc_0x3C:
-	  cmpwi     r4, 0x40
-	  beq-      .loc_0x90
-	  bge-      .loc_0x54
-	  cmpwi     r4, 0x20
-	  beq-      .loc_0x88
-	  b         .loc_0xA0
+	switch (light) {
+	case GX_LIGHT0:
+		idx = 0;
+		break;
+	case GX_LIGHT1:
+		idx = 1;
+		break;
+	case GX_LIGHT2:
+		idx = 2;
+		break;
+	case GX_LIGHT3:
+		idx = 3;
+		break;
+	case GX_LIGHT4:
+		idx = 4;
+		break;
+	case GX_LIGHT5:
+		idx = 5;
+		break;
+	case GX_LIGHT6:
+		idx = 6;
+		break;
+	case GX_LIGHT7:
+		idx = 7;
+		break;
+	default:
+		idx = 0;
+		ASSERTMSGLINE(0x1DA, 0, "GXLoadLightStateImm: Invalid Light Id");
+		break;
+	}
 
-	.loc_0x54:
-	  cmpwi     r4, 0x80
-	  beq-      .loc_0x98
-	  b         .loc_0xA0
+	addr = idx * 0x10 + 0x600;
+	GX_WRITE_U8(0x10);
+	GX_WRITE_U32(addr | 0xF0000);
 
-	.loc_0x60:
-	  li        r0, 0
-	  b         .loc_0xA4
+	WRITE_SOME_LIGHT_REG1(0, addr);
+	WRITE_SOME_LIGHT_REG1(0, addr + 1);
+	WRITE_SOME_LIGHT_REG1(0, addr + 2);
+	WRITE_SOME_LIGHT_REG1(obj->Color, addr + 3);
+	WRITE_SOME_LIGHT_REG2(obj->a[0], addr + 4);
+	WRITE_SOME_LIGHT_REG2(obj->a[1], addr + 5);
+	WRITE_SOME_LIGHT_REG2(obj->a[2], addr + 6);
+	WRITE_SOME_LIGHT_REG2(obj->k[0], addr + 7);
+	WRITE_SOME_LIGHT_REG2(obj->k[1], addr + 8);
+	WRITE_SOME_LIGHT_REG2(obj->k[2], addr + 9);
+	WRITE_SOME_LIGHT_REG2(obj->lpos[0], addr + 10);
+	WRITE_SOME_LIGHT_REG2(obj->lpos[1], addr + 11);
+	WRITE_SOME_LIGHT_REG2(obj->lpos[2], addr + 12);
+	WRITE_SOME_LIGHT_REG2(obj->ldir[0], addr + 13);
+	WRITE_SOME_LIGHT_REG2(obj->ldir[1], addr + 14);
+	WRITE_SOME_LIGHT_REG2(obj->ldir[2], addr + 15);
 
-	.loc_0x68:
-	  li        r0, 0x1
-	  b         .loc_0xA4
-
-	.loc_0x70:
-	  li        r0, 0x2
-	  b         .loc_0xA4
-
-	.loc_0x78:
-	  li        r0, 0x3
-	  b         .loc_0xA4
-
-	.loc_0x80:
-	  li        r0, 0x4
-	  b         .loc_0xA4
-
-	.loc_0x88:
-	  li        r0, 0x5
-	  b         .loc_0xA4
-
-	.loc_0x90:
-	  li        r0, 0x6
-	  b         .loc_0xA4
-
-	.loc_0x98:
-	  li        r0, 0x7
-	  b         .loc_0xA4
-
-	.loc_0xA0:
-	  li        r0, 0
-
-	.loc_0xA4:
-	  rlwinm    r5,r0,4,0,27
-	  lwz       r4, 0x2A68(r13)
-	  addi      r0, r5, 0x600
-	  li        r5, 0x10
-	  lis       r6, 0xCC01
-	  stb       r5, -0x8000(r6)
-	  oris      r0, r0, 0xF
-	  li        r5, 0
-	  stw       r0, -0x8000(r6)
-	  stw       r5, -0x8000(r6)
-	  stw       r5, -0x8000(r6)
-	  stw       r5, -0x8000(r6)
-	  lwz       r0, 0xC(r3)
-	  stw       r0, -0x8000(r6)
-	  lfs       f0, 0x10(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x14(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x18(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x1C(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x20(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x24(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x28(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x2C(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x30(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x34(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x38(r3)
-	  stfs      f0, -0x8000(r6)
-	  lfs       f0, 0x3C(r3)
-	  stfs      f0, -0x8000(r6)
-	  sth       r5, 0x2(r4)
-	  blr
-	*/
+	gx->bpSent = 0;
 }
 
 /*
@@ -367,9 +463,56 @@ void GXLoadLightObjImm(void)
  * Address:	........
  * Size:	0000DC
  */
-void GXLoadLightObjIndx(void)
+void GXLoadLightObjIndx(u32 lt_obj_indx, GXLightID light)
 {
-	// UNUSED FUNCTION
+	unsigned long reg;
+	unsigned long addr;
+	unsigned long idx;
+
+	CHECK_GXBEGIN(0x209, "GXLoadLightObjIndx");
+
+	switch (light) {
+	case GX_LIGHT0:
+		idx = 0;
+		break;
+	case GX_LIGHT1:
+		idx = 1;
+		break;
+	case GX_LIGHT2:
+		idx = 2;
+		break;
+	case GX_LIGHT3:
+		idx = 3;
+		break;
+	case GX_LIGHT4:
+		idx = 4;
+		break;
+	case GX_LIGHT5:
+		idx = 5;
+		break;
+	case GX_LIGHT6:
+		idx = 6;
+		break;
+	case GX_LIGHT7:
+		idx = 7;
+		break;
+	default:
+		idx = 0;
+		ASSERTMSGLINE(0x216, 0, "GXLoadLightObjIndx: Invalid Light Id");
+		break;
+	}
+
+	addr = idx * 0x10 + 0x600;
+	reg  = 0;
+	SET_REG_FIELD(0x21C, reg, 12, 0, addr);
+	SET_REG_FIELD(0x21D, reg, 4, 12, 0xF);
+	SET_REG_FIELD(0x21E, reg, 16, 16, lt_obj_indx);
+	GX_WRITE_U8(0x38);
+	GX_WRITE_U32(reg);
+#if DEBUG
+	__GXShadowIndexState(7, reg);
+#endif
+	gx->bpSent = 0;
 }
 
 /*
@@ -377,117 +520,63 @@ void GXLoadLightObjIndx(void)
  * Address:	80211C04
  * Size:	000168
  */
-void GXSetChanAmbColor(void)
+void GXSetChanAmbColor(GXChannelID chan, GXColor amb_color)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x3
-	  beq-      .loc_0xB4
-	  bge-      .loc_0x24
-	  cmpwi     r3, 0x1
-	  beq-      .loc_0x68
-	  bge-      .loc_0x9C
-	  cmpwi     r3, 0
-	  bge-      .loc_0x34
-	  blr
+	u32 reg = 0;
+	u32 colIdx;
+	u32 alpha;
 
-	.loc_0x24:
-	  cmpwi     r3, 0x5
-	  beq-      .loc_0xFC
-	  bgelr-
-	  b         .loc_0xCC
+	CHECK_GXBEGIN(0x239, "GXSetChanAmbColor");
 
-	.loc_0x34:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0
-	  lbz       r6, 0x2(r4)
-	  lwz       r7, 0xA8(r5)
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwinm    r7,r7,0,24,31
-	  rlwimi    r7,r6,8,16,23
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r7,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
+	switch (chan) {
+	case GX_COLOR0:
+		alpha = gx->ambColor[0] & 0xFF;
+		SET_REG_FIELD(0x23E, reg, 8, 0, alpha);
+		SET_REG_FIELD(0x23F, reg, 8, 8, amb_color.b);
+		SET_REG_FIELD(0x240, reg, 8, 16, amb_color.g);
+		SET_REG_FIELD(0x241, reg, 8, 24, amb_color.r);
+		colIdx = 0;
+		break;
+	case GX_COLOR1:
+		alpha = gx->ambColor[1] & 0xFF;
+		SET_REG_FIELD(0x247, reg, 8, 0, alpha);
+		SET_REG_FIELD(0x248, reg, 8, 8, amb_color.b);
+		SET_REG_FIELD(0x249, reg, 8, 16, amb_color.g);
+		SET_REG_FIELD(0x24A, reg, 8, 24, amb_color.r);
+		colIdx = 1;
+		break;
+	case GX_ALPHA0:
+		reg = gx->ambColor[0];
+		SET_REG_FIELD(0x250, reg, 8, 0, amb_color.a);
+		colIdx = 0;
+		break;
+	case GX_ALPHA1:
+		reg = gx->ambColor[1];
+		SET_REG_FIELD(0x256, reg, 8, 0, amb_color.a);
+		colIdx = 1;
+		break;
+	case GX_COLOR0A0:
+		SET_REG_FIELD(0x25B, reg, 8, 0, amb_color.a);
+		SET_REG_FIELD(0x25C, reg, 8, 8, amb_color.b);
+		SET_REG_FIELD(0x25D, reg, 8, 16, amb_color.g);
+		SET_REG_FIELD(0x25E, reg, 8, 24, amb_color.r);
+		colIdx = 0;
+		break;
+	case GX_COLOR1A1:
+		SET_REG_FIELD(0x263, reg, 8, 0, amb_color.a);
+		SET_REG_FIELD(0x264, reg, 8, 8, amb_color.b);
+		SET_REG_FIELD(0x265, reg, 8, 16, amb_color.g);
+		SET_REG_FIELD(0x266, reg, 8, 24, amb_color.r);
+		colIdx = 1;
+		break;
+	default:
+		ASSERTMSGLINE(0x26B, 0, "GXSetChanAmbColor: Invalid Channel Id");
+		return;
+	}
 
-	.loc_0x68:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0x1
-	  lbz       r6, 0x2(r4)
-	  lwz       r7, 0xAC(r5)
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwinm    r7,r7,0,24,31
-	  rlwimi    r7,r6,8,16,23
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r7,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
-
-	.loc_0x9C:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0
-	  lbz       r7, 0x3(r4)
-	  lwz       r0, 0xA8(r5)
-	  rlwimi    r7,r0,0,0,23
-	  b         .loc_0x130
-
-	.loc_0xB4:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0x1
-	  lbz       r7, 0x3(r4)
-	  lwz       r0, 0xAC(r5)
-	  rlwimi    r7,r0,0,0,23
-	  b         .loc_0x130
-
-	.loc_0xCC:
-	  lbz       r0, 0x2(r4)
-	  li        r3, 0
-	  lbz       r7, 0x3(r4)
-	  rlwinm    r6,r0,8,0,23
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwimi    r6,r7,0,24,31
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r6,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
-
-	.loc_0xFC:
-	  lbz       r0, 0x2(r4)
-	  li        r3, 0x1
-	  lbz       r7, 0x3(r4)
-	  rlwinm    r6,r0,8,0,23
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwimi    r6,r7,0,24,31
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r6,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
-	  blr
-
-	.loc_0x130:
-	  li        r0, 0x10
-	  lwz       r4, 0x2A68(r13)
-	  lis       r6, 0xCC01
-	  stb       r0, -0x8000(r6)
-	  addi      r0, r3, 0x100A
-	  li        r5, 0
-	  stw       r0, -0x8000(r6)
-	  rlwinm    r0,r3,2,0,29
-	  stw       r7, -0x8000(r6)
-	  sth       r5, 0x2(r4)
-	  lwz       r3, 0x2A68(r13)
-	  add       r3, r3, r0
-	  stw       r7, 0xA8(r3)
-	  blr
-	*/
+	GX_WRITE_XF_REG(colIdx + 10, reg);
+	gx->bpSent           = 0;
+	gx->ambColor[colIdx] = reg;
 }
 
 /*
@@ -495,117 +584,63 @@ void GXSetChanAmbColor(void)
  * Address:	80211D6C
  * Size:	000168
  */
-void GXSetChanMatColor(void)
+void GXSetChanMatColor(GXChannelID chan, GXColor mat_color)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x3
-	  beq-      .loc_0xB4
-	  bge-      .loc_0x24
-	  cmpwi     r3, 0x1
-	  beq-      .loc_0x68
-	  bge-      .loc_0x9C
-	  cmpwi     r3, 0
-	  bge-      .loc_0x34
-	  blr
+	u32 reg = 0;
+	u32 alpha;
+	u32 colIdx;
 
-	.loc_0x24:
-	  cmpwi     r3, 0x5
-	  beq-      .loc_0xFC
-	  bgelr-
-	  b         .loc_0xCC
+	CHECK_GXBEGIN(0x28A, "GXSetChanMatColor");
 
-	.loc_0x34:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0
-	  lbz       r6, 0x2(r4)
-	  lwz       r7, 0xB0(r5)
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwinm    r7,r7,0,24,31
-	  rlwimi    r7,r6,8,16,23
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r7,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
+	switch (chan) {
+	case GX_COLOR0:
+		alpha = gx->matColor[0] & 0xFF;
+		SET_REG_FIELD(0x28F, reg, 8, 0, alpha);
+		SET_REG_FIELD(0x290, reg, 8, 8, mat_color.b);
+		SET_REG_FIELD(0x291, reg, 8, 16, mat_color.g);
+		SET_REG_FIELD(0x292, reg, 8, 24, mat_color.r);
+		colIdx = 0;
+		break;
+	case GX_COLOR1:
+		alpha = gx->matColor[1] & 0xFF;
+		SET_REG_FIELD(0x298, reg, 8, 0, alpha);
+		SET_REG_FIELD(0x299, reg, 8, 8, mat_color.b);
+		SET_REG_FIELD(0x29A, reg, 8, 16, mat_color.g);
+		SET_REG_FIELD(0x29B, reg, 8, 24, mat_color.r);
+		colIdx = 1;
+		break;
+	case GX_ALPHA0:
+		reg = gx->matColor[0];
+		SET_REG_FIELD(0x2A1, reg, 8, 0, mat_color.a);
+		colIdx = 0;
+		break;
+	case GX_ALPHA1:
+		reg = gx->matColor[1];
+		SET_REG_FIELD(0x2A7, reg, 8, 0, mat_color.a);
+		colIdx = 1;
+		break;
+	case GX_COLOR0A0:
+		SET_REG_FIELD(0x2AC, reg, 8, 0, mat_color.a);
+		SET_REG_FIELD(0x2AD, reg, 8, 8, mat_color.b);
+		SET_REG_FIELD(0x2AE, reg, 8, 16, mat_color.g);
+		SET_REG_FIELD(0x2AF, reg, 8, 24, mat_color.r);
+		colIdx = 0;
+		break;
+	case GX_COLOR1A1:
+		SET_REG_FIELD(0x2B4, reg, 8, 0, mat_color.a);
+		SET_REG_FIELD(0x2B5, reg, 8, 8, mat_color.b);
+		SET_REG_FIELD(0x2B6, reg, 8, 16, mat_color.g);
+		SET_REG_FIELD(0x2B7, reg, 8, 24, mat_color.r);
+		colIdx = 1;
+		break;
+	default:
+		ASSERTMSGLINE(0x2BC, 0, "GXSetChanMatColor: Invalid Channel Id");
+		return;
+	}
 
-	.loc_0x68:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0x1
-	  lbz       r6, 0x2(r4)
-	  lwz       r7, 0xB4(r5)
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwinm    r7,r7,0,24,31
-	  rlwimi    r7,r6,8,16,23
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r7,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
-
-	.loc_0x9C:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0
-	  lbz       r7, 0x3(r4)
-	  lwz       r0, 0xB0(r5)
-	  rlwimi    r7,r0,0,0,23
-	  b         .loc_0x130
-
-	.loc_0xB4:
-	  lwz       r5, 0x2A68(r13)
-	  li        r3, 0x1
-	  lbz       r7, 0x3(r4)
-	  lwz       r0, 0xB4(r5)
-	  rlwimi    r7,r0,0,0,23
-	  b         .loc_0x130
-
-	.loc_0xCC:
-	  lbz       r0, 0x2(r4)
-	  li        r3, 0
-	  lbz       r7, 0x3(r4)
-	  rlwinm    r6,r0,8,0,23
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwimi    r6,r7,0,24,31
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r6,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
-
-	.loc_0xFC:
-	  lbz       r0, 0x2(r4)
-	  li        r3, 0x1
-	  lbz       r7, 0x3(r4)
-	  rlwinm    r6,r0,8,0,23
-	  lbz       r5, 0x1(r4)
-	  lbz       r0, 0x0(r4)
-	  rlwimi    r6,r7,0,24,31
-	  rlwinm    r4,r5,16,0,15
-	  rlwimi    r4,r6,0,16,31
-	  rlwinm    r7,r0,24,0,7
-	  rlwimi    r7,r4,0,8,31
-	  b         .loc_0x130
-	  blr
-
-	.loc_0x130:
-	  li        r0, 0x10
-	  lwz       r4, 0x2A68(r13)
-	  lis       r6, 0xCC01
-	  stb       r0, -0x8000(r6)
-	  addi      r0, r3, 0x100C
-	  li        r5, 0
-	  stw       r0, -0x8000(r6)
-	  rlwinm    r0,r3,2,0,29
-	  stw       r7, -0x8000(r6)
-	  sth       r5, 0x2(r4)
-	  lwz       r3, 0x2A68(r13)
-	  add       r3, r3, r0
-	  stw       r7, 0xB0(r3)
-	  blr
-	*/
+	GX_WRITE_XF_REG(colIdx + 12, reg);
+	gx->bpSent           = 0;
+	gx->matColor[colIdx] = reg;
 }
 
 /*
@@ -613,30 +648,14 @@ void GXSetChanMatColor(void)
  * Address:	80211ED4
  * Size:	00004C
  */
-void GXSetNumChans(void)
+void GXSetNumChans(u8 nChans)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2A68(r13)
-	  rlwinm    r7,r3,0,24,31
-	  rlwinm    r0,r3,4,20,27
-	  addi      r6, r4, 0x204
-	  lwz       r5, 0x204(r4)
-	  li        r3, 0x10
-	  lis       r4, 0xCC01
-	  rlwinm    r5,r5,0,28,24
-	  or        r0, r5, r0
-	  stw       r0, 0x0(r6)
-	  li        r0, 0x1009
-	  stb       r3, -0x8000(r4)
-	  lwz       r3, 0x2A68(r13)
-	  stw       r0, -0x8000(r4)
-	  stw       r7, -0x8000(r4)
-	  lwz       r0, 0x4F0(r3)
-	  ori       r0, r0, 0x4
-	  stw       r0, 0x4F0(r3)
-	  blr
-	*/
+	CHECK_GXBEGIN(0x2D5, "GXSetNumChans");
+	ASSERTMSGLINE(0x2D6, nChans <= 2, "GXSetNumChans: nChans > 2");
+
+	SET_REG_FIELD(0x2D8, gx->genMode, 3, 4, nChans);
+	GX_WRITE_XF_REG(9, nChans);
+	gx->dirtyState |= 4;
 }
 
 /*
@@ -644,142 +663,44 @@ void GXSetNumChans(void)
  * Address:	80211F20
  * Size:	0001E4
  */
-void GXSetChanCtrl(void)
+void GXSetChanCtrl(GXChannelID chan, GXBool enable, GXColorSrc amb_src, GXColorSrc mat_src, u32 light_mask, GXDiffuseFn diff_fn,
+                   GXAttnFn attn_fn)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x38(r1)
-	  cmpwi     r3, 0x4
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  stw       r28, 0x28(r1)
-	  bne-      .loc_0x24
-	  li        r11, 0
-	  b         .loc_0x38
+	u32 reg; // r31
+	u32 idx; // r26
 
-	.loc_0x24:
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x34
-	  li        r11, 0x1
-	  b         .loc_0x38
+	CHECK_GXBEGIN(0x2F8, "GXSetChanCtrl");
 
-	.loc_0x34:
-	  mr        r11, r3
+	ASSERTMSGLINE(0x2FB, chan >= 0 && chan <= 5, "GXSetChanCtrl: Invalid Channel Id");
 
-	.loc_0x38:
-	  rlwinm    r4,r4,1,23,30
-	  or        r10, r4, r6
-	  rlwinm    r0,r7,0,31,31
-	  neg       r6, r0
-	  subic     r4, r6, 0x1
-	  rlwinm    r0,r7,0,30,30
-	  neg       r12, r0
-	  subfe     r6, r4, r6
-	  subic     r4, r12, 0x1
-	  subfe     r4, r4, r12
-	  rlwinm    r0,r7,0,29,29
-	  neg       r28, r0
-	  subic     r0, r28, 0x1
-	  rlwinm    r12,r7,0,28,28
-	  subfe     r0, r0, r28
-	  neg       r29, r12
-	  subic     r28, r29, 0x1
-	  rlwinm    r12,r7,0,27,27
-	  neg       r30, r12
-	  subfe     r28, r28, r29
-	  subic     r29, r30, 0x1
-	  rlwinm    r12,r7,0,26,26
-	  neg       r31, r12
-	  subfe     r29, r29, r30
-	  subic     r30, r31, 0x1
-	  rlwinm    r12,r7,0,25,25
-	  subfe     r30, r30, r31
-	  neg       r31, r12
-	  subic     r12, r31, 0x1
-	  rlwinm    r10,r10,0,26,24
-	  rlwinm    r5,r5,6,0,25
-	  or        r5, r10, r5
-	  rlwinm    r10,r5,0,30,28
-	  rlwinm    r5,r6,2,0,29
-	  or        r5, r10, r5
-	  rlwinm    r5,r5,0,29,27
-	  rlwinm    r4,r4,3,0,28
-	  or        r4, r5, r4
-	  rlwinm    r4,r4,0,28,26
-	  rlwinm    r0,r0,4,0,27
-	  or        r0, r4, r0
-	  rlwinm    r4,r0,0,27,25
-	  rlwinm    r0,r28,5,0,26
-	  or        r0, r4, r0
-	  rlwinm    r4,r0,0,21,19
-	  rlwinm    r0,r29,11,0,20
-	  or        r0, r4, r0
-	  rlwinm    r4,r0,0,20,18
-	  rlwinm    r0,r30,12,0,19
-	  or        r0, r4, r0
-	  rlwinm    r7,r7,0,24,24
-	  subfe     r31, r12, r31
-	  neg       r12, r7
-	  subic     r7, r12, 0x1
-	  rlwinm    r4,r0,0,19,17
-	  rlwinm    r0,r31,13,0,18
-	  or        r0, r4, r0
-	  subfe     r7, r7, r12
-	  rlwinm    r4,r0,0,18,16
-	  rlwinm    r0,r7,14,0,17
-	  cmpwi     r9, 0
-	  or        r6, r4, r0
-	  bne-      .loc_0x138
-	  li        r8, 0
+	if (chan == 4)
+		idx = 0;
+	else if (chan == 5)
+		idx = 1;
+	else
+		idx = chan;
 
-	.loc_0x138:
-	  subfic    r5, r9, 0x2
-	  lwz       r4, 0x2A68(r13)
-	  subic     r0, r5, 0x1
-	  subfe     r10, r0, r5
-	  neg       r5, r9
-	  subic     r0, r5, 0x1
-	  subfe     r7, r0, r5
-	  rlwinm    r5,r6,0,25,22
-	  rlwinm    r0,r8,7,0,24
-	  or        r8, r5, r0
-	  li        r6, 0x10
-	  lis       r5, 0xCC01
-	  stb       r6, -0x8000(r5)
-	  addi      r0, r11, 0x100E
-	  rlwinm    r9,r8,0,23,21
-	  rlwinm    r8,r10,9,0,22
-	  stw       r0, -0x8000(r5)
-	  or        r0, r9, r8
-	  rlwinm    r8,r0,0,22,20
-	  rlwinm    r0,r7,10,0,21
-	  or        r7, r8, r0
-	  stw       r7, -0x8000(r5)
-	  li        r0, 0
-	  cmpwi     r3, 0x4
-	  sth       r0, 0x2(r4)
-	  bne-      .loc_0x1B4
-	  stb       r6, -0x8000(r5)
-	  li        r0, 0x1010
-	  stw       r0, -0x8000(r5)
-	  stw       r7, -0x8000(r5)
-	  b         .loc_0x1CC
+	reg = 0;
+	SET_REG_FIELD(0x302, reg, 1, 1, enable);
+	SET_REG_FIELD(0x303, reg, 1, 0, mat_src);
+	SET_REG_FIELD(0x304, reg, 1, 6, amb_src);
+	SET_REG_FIELD(0x305, reg, 1, 2, (light_mask & GX_LIGHT0) != 0);
+	SET_REG_FIELD(0x306, reg, 1, 3, (light_mask & GX_LIGHT1) != 0);
+	SET_REG_FIELD(0x307, reg, 1, 4, (light_mask & GX_LIGHT2) != 0);
+	SET_REG_FIELD(0x308, reg, 1, 5, (light_mask & GX_LIGHT3) != 0);
+	SET_REG_FIELD(0x309, reg, 1, 11, (light_mask & GX_LIGHT4) != 0);
+	SET_REG_FIELD(0x30A, reg, 1, 12, (light_mask & GX_LIGHT5) != 0);
+	SET_REG_FIELD(0x30B, reg, 1, 13, (light_mask & GX_LIGHT6) != 0);
+	SET_REG_FIELD(0x30C, reg, 1, 14, (light_mask & GX_LIGHT7) != 0);
+	SET_REG_FIELD(0x30E, reg, 2, 7, (attn_fn == 0) ? 0 : diff_fn);
+	SET_REG_FIELD(0x30F, reg, 1, 9, (attn_fn != 2));
+	SET_REG_FIELD(0x310, reg, 1, 10, (attn_fn != 0));
 
-	.loc_0x1B4:
-	  cmpwi     r3, 0x5
-	  bne-      .loc_0x1CC
-	  stb       r6, -0x8000(r5)
-	  li        r0, 0x1011
-	  stw       r0, -0x8000(r5)
-	  stw       r7, -0x8000(r5)
-
-	.loc_0x1CC:
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  lwz       r28, 0x28(r1)
-	  addi      r1, r1, 0x38
-	  blr
-	*/
+	GX_WRITE_XF_REG(idx + 14, reg);
+	gx->bpSent = 0;
+	if (chan == GX_COLOR0A0) {
+		GX_WRITE_XF_REG(16, reg);
+	} else if (chan == GX_COLOR1A1) {
+		GX_WRITE_XF_REG(17, reg);
+	}
 }

@@ -223,6 +223,7 @@ DEFINE_ENUM_TYPE(
 /**
  * @brief TODO
  * @note 1001F2A0 in plugPiki.dll might allude to some members.
+ * @note Size: 0x670.
  */
 struct LightPool : public Node {
 	LightPool();
@@ -231,19 +232,13 @@ struct LightPool : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Light mLight;      // _20
-	Camera mCamera;    // _2F4
-	u32 _63C;          // _63C
-	u32 _640;          // _640
-	u32 _644;          // _644
-	u32 _648;          // _648
-	u32 _64C;          // _64C
-	Vector3f _650;     // _650
-	f32 _65C;          // _65C
-	Colour mColour;    // _660
-	u8 _664[4];        // _664
-	Texture* mTexture; // _668
-	u8 mFlags;         // _66C, use LightPoolFlags
+	Light mLight;              // _20
+	LightCamera mCamera;       // _2F4
+	f32 mFocusRotationAngle;   // _65C
+	Colour mColour;            // _660
+	Texture* mBoxTexture;      // _664
+	Texture* mParticleTexture; // _668
+	u8 mFlags;                 // _66C, use LightPoolFlags
 };
 
 /**
@@ -257,7 +252,7 @@ struct LightDataInfo {
 	AnimParam mLightPosAnims[3];     // _00
 	AnimParam mLightColourAnims[3];  // _24
 	AnimParam mLightVisibleAnims[1]; // _48
-	int _54;                         // _54
+	int mIsActive;                   // _54
 	Light mLight;                    // _58
 	int mLightIdx;                   // _32C
 	SceneData* mSceneData;           // _330

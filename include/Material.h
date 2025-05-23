@@ -6,6 +6,8 @@
 #include "GfxObject.h"
 #include "PVW.h"
 
+struct Graphics;
+
 /**
  * @brief TODO
  * @note Size: 0x9C.
@@ -14,14 +16,14 @@ struct Material : public CoreNode {
 	Material()
 	    : CoreNode("material")
 	{
-		mIndex = 0;
-		_28    = 0;
-		_24    = 0;
-		_20    = 0;
-		_28    = 0;
-		mFlags = 0x100;
+		mIndex     = 0;
+		_28        = 0;
+		mTexture   = 0;
+		mAttribute = 0;
+		_28        = 0;
+		mFlags     = 0x100;
 		Colour().set(0xFF, 0xFF, 0xFF, 0xFF);
-		_8C             = 0;
+		mTevInfoIndex   = 0;
 		mDisplayListPtr = nullptr;
 	}
 
@@ -32,11 +34,11 @@ struct Material : public CoreNode {
 
 	void setColour(struct Colour& color)
 	{
-		if (mLightingInfo._00 & 2) {
-			mTevInfo->mTevColRegs[0]._00.r = color.r;
-			mTevInfo->mTevColRegs[0]._00.g = color.g;
-			mTevInfo->mTevColRegs[0]._00.b = color.b;
-			mTevInfo->mTevColRegs[0]._00.a = color.a;
+		if (mLightingInfo.mCtrlFlag & 2) {
+			mTevInfo->mTevColRegs[0].mAnimatedColor.r = color.r;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.g = color.g;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.b = color.b;
+			mTevInfo->mTevColRegs[0].mAnimatedColor.a = color.a;
 		} else {
 			mColourInfo.mColour = color;
 		}
@@ -47,14 +49,14 @@ struct Material : public CoreNode {
 	u32 mIndex;                       // _14
 	u32 mFlags;                       // _18 (PVW & 1, TEX & 2, XLU & 4)
 	int mTextureIndex;                // _1C
-	TexAttr* _20;                     // _20
-	Texture* _24;                     // _24
-	u32 _28;                          // _28
+	TexAttr* mAttribute;              // _20
+	Texture* mTexture;                // _24
+	Texture* _28;                     // _28
 	PVWPolygonColourInfo mColourInfo; // _2C [0x20]
 	PVWLightingInfo mLightingInfo;    // _4C [0x0C]
 	PVWPeInfo mPeInfo;                // _58 [0x10]
 	PVWTextureInfo mTextureInfo;      // _68 [0x24]
-	u32 _8C;                          // _8C
+	u32 mTevInfoIndex;                // _8C
 	PVWTevInfo* mTevInfo;             // _90
 	u32 mDisplayListSize;             // _94
 	u8* mDisplayListPtr;              // _98
@@ -83,9 +85,9 @@ struct MatobjInfo : public GfxobjInfo {
  * @brief TODO
  */
 struct MaterialHandler {
-	MaterialHandler() { _00 = 0; }
+	MaterialHandler() { mGfx = nullptr; }
 
-	u32 _00; // _00
+	Graphics* mGfx; // _00
 	// _04     = VTBL
 
 	virtual void setMaterial(Material*); // _08

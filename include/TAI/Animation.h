@@ -7,6 +7,8 @@
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
 struct TAIanimation {
 	TAIanimation(int tekiType, char* bunFile)

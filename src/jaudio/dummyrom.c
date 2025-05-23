@@ -76,12 +76,13 @@ void ARAlloc2(u32)
  * Address:	800061C0
  * Size:	000058
  */
-void ARAllocFull(u32* outSize)
+void* ARAllocFull(u32* outSize)
 {
 	u32 freeSize = aram_hp.length - ((int)aram_hp.current - (int)aram_hp.base);
 
-	Nas_HeapAlloc(&aram_hp, freeSize - 32);
-	*outSize = freeSize - 32;
+	void* alloc = Nas_HeapAlloc(&aram_hp, freeSize - 32);
+	*outSize    = freeSize - 32;
+	return alloc;
 }
 
 /*

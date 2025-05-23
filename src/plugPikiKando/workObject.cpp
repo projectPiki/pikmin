@@ -325,7 +325,7 @@ int WorkObjectMgr::getSize()
  */
 GenObjectWorkObject::GenObjectWorkObject()
     : GenObject('work', "仕事オブジェクト")
-    , mDay(this, 0, 0, 30, "p00", "day")
+    , mDay(this, 0, 0, MAX_DAYS, "p00", "day")
     , mHour(this, 0, 0, 24, "p01", "hour")
     , _38(this, 10, 0, 100, "p02", "動かすのに必要なピキ数") // "Number of pikis required to move"
     , _48(this, 30.0f, 0.0f, 400.0f, "p03", "移動速度")      // "movement speed"
@@ -524,7 +524,7 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 HinderRock::HinderRock(Shape* shape)
 {
 	mBoxShape = shape;
-	mBoxShape->mSystemFlags |= 0x10;
+	mBoxShape->mSystemFlags |= ShapeFlags::IsPlatform;
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
 	mCollInfo              = new CollInfo(20);
@@ -1627,8 +1627,8 @@ Bridge::Bridge(Shape* shape, bool a3)
 	mDoUseJointSegments = a3;
 	mBridgeShape        = shape;
 
-	mBridgeShape->mSystemFlags |= 0x10;
-	mBridgeShape->mSystemFlags |= 0x4;
+	mBridgeShape->mSystemFlags |= ShapeFlags::IsPlatform;
+	mBridgeShape->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 
 	mBuildShape            = new DynBuildShape(shape);
 	mBuildShape->mCreature = this;
@@ -1917,10 +1917,10 @@ bool Bridge::isStageFinished(int id)
 		if (id < 0 || id >= mStageCount) {
 			return true;
 		}
-		return mBuildShape->mProgressStateList[mStageJoints[id * 2 + 1]->mIndex];
+		return mBuildShape->mVisibleList[mStageJoints[id * 2 + 1]->mIndex];
 	}
 	int jointIdx = getJointIndex(id);
-	return mBuildShape->mProgressStateList[jointIdx];
+	return mBuildShape->mVisibleList[jointIdx];
 }
 
 /*
@@ -1932,7 +1932,7 @@ void Bridge::flatten()
 {
 	for (int i = 0; i < mStageCount; i++) {
 		int index = mStageJoints[i * 2]->mIndex;
-		if (mBuildShape->mProgressStateList[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mProgressStateList[index]) {
+		if (mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mVisibleList[index]) {
 			mBuildShape->jointVisible(index, false);
 			PRINT("flatten bridge");
 		}
@@ -1948,13 +1948,13 @@ void Bridge::dump()
 {
 	for (int i = 0; i < mStageCount; i++) {
 		char a, b;
-		if (mBuildShape->mProgressStateList[mStageJoints[i * 2 + 1]->mIndex]) {
+		if (mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex]) {
 			a = '|';
 		} else {
 			a = 'x';
 		}
 
-		if (mBuildShape->mProgressStateList[mStageJoints[i * 2]->mIndex]) {
+		if (mBuildShape->mVisibleList[mStageJoints[i * 2]->mIndex]) {
 			b = '|';
 		} else {
 			b = 'x';
@@ -1991,7 +1991,7 @@ void Bridge::setStageFinished(int stageIndex, bool isFinished)
 			}
 		} else {
 			if (prevID > 0) {
-				if (mBuildShape->mProgressStateList[mStageJoints[prevID]->mIndex]) {
+				if (mBuildShape->mVisibleList[mStageJoints[prevID]->mIndex]) {
 					mBuildShape->jointVisible(wIdx, 1);
 				} else {
 					mBuildShape->jointVisible(wIdx, 0);
@@ -2410,7 +2410,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 		if (_3CA != -1) {
 			PRINT("abunai!"); // 'dangerous!'
 		}
-		rumbleMgr->start(7, 0, mPosition);
+		rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
 
 		f32 z = 0.0f;
 		if (stageIndex <= 0) {

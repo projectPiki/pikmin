@@ -63,12 +63,12 @@ typedef struct _GXTexRegion {
 } GXTexRegion;
 
 typedef struct _GXTexRegionPriv {
-	u32 unk0;      // _00
-	u32 unk4;      // _04
-	u32 unk8;      // _08
-	u8 unkC;       // _0C
-	u8 unkD;       // _0D
-	u8 padding[2]; // _0E
+	u32 image1;
+	u32 image2;
+	u16 sizeEven;
+	u16 sizeOdd;
+	u8 is32bMipmap;
+	u8 isCached;
 } GXTexRegionPriv;
 
 // Generic struct for texture look-up table objects.
@@ -77,9 +77,9 @@ typedef struct _GXTlutObj {
 } GXTlutObj;
 
 typedef struct _GXTlutObjPriv {
-	u32 unk0;        // _00
-	u32 unk4;        // _04
-	u16 numEntries;  // _08
+	u32 tlut;
+	u32 loadTlut0;
+	u16 numEntries;
 	u8 padding[0x2]; // _0A
 } GXTlutObjPriv;
 
@@ -89,7 +89,7 @@ typedef struct _GXTlutRegion {
 } GXTlutRegion;
 
 typedef struct _GXTlutRegionPriv {
-	u32 unk0;              // _00
+	u32 loadTlut1;         // _00
 	GXTlutObjPriv tlutObj; // _04
 } GXTlutRegionPriv;
 

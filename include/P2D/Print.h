@@ -16,34 +16,58 @@ struct P2DPrint {
 	 * @brief TODO
 	 */
 	struct TSize {
-		// TODO: members
+		f32 mTotalWidth;      // _00
+		f32 mTotalHeight;     // _04
+		f32 mWidthFromStart;  // _08
+		f32 mHeightFromStart; // _0C
 	};
 
-	P2DPrint(P2DFont*, int, int, Colour, Colour);
+	P2DPrint(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour);
 
-	void private_initiate(P2DFont*, int, int, Colour, Colour);
-	void locate(int, int);
+	void private_initiate(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour);
+	void locate(int x, int y);
 	void setFontSize();
 	void initchar();
-	void printReturn(const char*, int, int, P2DTextBoxHBinding, P2DTextBoxVBinding, int, int);
-	void parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool);
-	void doEscapeCode(const u8**);
-	void doCtrlCode(int);
-	void getNumber(const u8**, s32, s32, int);
+	void printReturn(const char* textBuffer, int, int, P2DTextBoxHBinding, P2DTextBoxVBinding, int, int);
+	f32 parse(const u8* textBuffer, int textLen, int maxWidth, u16* outLineWidths, P2DPrint::TSize& textSize, bool doDraw);
+	u16 doEscapeCode(const u8** textPtr);
+	void doCtrlCode(int charCode);
+	s32 getNumber(const u8** textPtr, s32 defaultValue, s32 invalidValue, int base);
 
-	P2DFont* mFont;      // _00
-	int _04;             // _04
-	int _08;             // _08
-	u8 _0C;              // _0C
-	u8 _0D;              // _0D
-	u8 _0E[0x24 - 0x0E]; // _0E, unknown
-	Colour _24;          // _24
-	Colour _28;          // _28
-	Colour _2C;          // _2C
-	Colour _30;          // _30
-	int _34;             // _34
-	int _38;             // _38
-	int _3C;             // _3C
+	void u32ToColour(u32 value, Colour* outColour)
+	{
+		outColour->set(((u8*)&value)[0], ((u8*)&value)[1], ((u8*)&value)[2], ((u8*)&value)[3]);
+	}
+	u32 ColourTou32(const Colour& colour) { return colour.r << 24 | colour.g << 16 | colour.b << 8 | colour.a; }
+
+	// DLL inlines:
+	void setFontSize(int, int);
+	f32 getCursorH();
+	f32 getCursorV();
+
+	P2DFont* mFont;           // _00
+	int mFontSpacing;         // _04
+	int mFontLeading;         // _08
+	bool mFontGradientActive; // _0C
+	bool mSkipEscCtrlCodes;   // _0D
+	int mInitX;               // _10
+	int mInitY;               // _14
+	f32 mCursorX;             // _18
+	f32 mCursorY;             // _1C
+	f32 mCurrCharWidth;       // _20
+	Colour mCharTopColour;    // _24
+	Colour mFontTopColour;    // _28
+	Colour mCharBottomColour; // _2C
+	Colour mFontBottomColour; // _30
+	int mFontTabWidth;        // _34
+	int mFontWidth;           // _38
+	int mFontHeight;          // _3C
+	int mCharSpacing;         // _40
+	int mCharLeading;         // _44
+	bool mCharGradientActive; // _48
+	int mCharTabWidth;        // _4C
+	int mCharWidth;           // _50
+	int mCharHeight;          // _54
 };
 
 #endif

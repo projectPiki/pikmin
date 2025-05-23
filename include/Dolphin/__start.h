@@ -7,8 +7,6 @@ extern "C" {
 
 #define PAD3_BUTTON_ADDR        0x800030E4
 #define OS_RESET_RESTART        0
-#define FALSE                   0
-#define TRUE                    1
 #define EXCEPTIONMASK_ADDR      0x80000044
 #define BOOTINFO2_ADDR          0x800000F4
 #define OS_BI2_DEBUGFLAG_OFFSET 0xC

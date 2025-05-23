@@ -273,19 +273,19 @@ bool BTeki::arrivedAt(f32 distance, f32 speed)
 BTeki::BTeki()
     : Creature(nullptr)
 {
-	mObjType             = OBJTYPE_Teki;
-	mLifeGauge._1C       = 1;
-	mProps               = new CreatureProp();
-	mPersonality         = new TekiPersonality();
-	mTekiAnimator        = new PaniTekiAnimator();
-	mVibrationController = new NVibrationFunction();
-	mRouteWayPointMax    = 20;
-	mRouteWayPoints      = new WayPoint*[mRouteWayPointMax];
-	mRouteWayPointCount  = 0;
-	mParticleGenerators  = new zen::particleGenerator*[4];
-	mCollInfo            = new CollInfo(22);
-	mSeContext           = new SeContext(this, 1);
-	mParticleGenPack     = new zen::PtclGenPack(3);
+	mObjType                = OBJTYPE_Teki;
+	mLifeGauge.mRenderStyle = 1;
+	mProps                  = new CreatureProp();
+	mPersonality            = new TekiPersonality();
+	mTekiAnimator           = new PaniTekiAnimator();
+	mVibrationController    = new NVibrationFunction();
+	mRouteWayPointMax       = 20;
+	mRouteWayPoints         = new WayPoint*[mRouteWayPointMax];
+	mRouteWayPointCount     = 0;
+	mParticleGenerators     = new zen::particleGenerator*[4];
+	mCollInfo               = new CollInfo(22);
+	mSeContext              = new SeContext(this, 1);
+	mParticleGenPack        = new zen::PtclGenPack(3);
 }
 
 /*
@@ -1412,11 +1412,11 @@ bool BTeki::moveToward(Vector3f& target, f32 speed)
  * Address:	801475CC
  * Size:	0000C8
  */
-bool BTeki::turnToward(f32 p1, f32 p2)
+bool BTeki::turnToward(f32 targetAngle, f32 turnSpeed)
 {
 	f32 faceDir   = NMathF::roundAngle(getDirection());
-	f32 nearerDir = NMathF::calcNearerDirection(faceDir, p1);
-	f32 speed     = p2 * NSystem::getFrameTime();
+	f32 nearerDir = NMathF::calcNearerDirection(faceDir, targetAngle);
+	f32 speed     = turnSpeed * NSystem::getFrameTime();
 
 	bool res = false;
 	if (nearerDir > faceDir) {

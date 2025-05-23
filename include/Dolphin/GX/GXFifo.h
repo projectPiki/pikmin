@@ -21,6 +21,19 @@ typedef struct _GXFifoObj {
 	u8 padding[GX_FIFO_OBJ_SIZE]; // _00
 } GXFifoObj;
 
+typedef struct __GXFifoObj {
+	u8* base;
+	u8* top;
+	u32 size;
+	u32 hiWatermark;
+	u32 loWatermark;
+	void* rdPtr;
+	void* wrPtr;
+	s32 count;
+	u8 bind_cpu;
+	u8 bind_gp;
+} __GXFifoObj;
+
 // Internal struct for FIFO access.
 typedef struct _GXFifoObjPriv {
 	void* base;        // _00
@@ -61,6 +74,7 @@ volatile PPCWGPipe GXWGFifo : GXFIFO_ADDR;
 //////////// FIFO MACROS/INLINES ///////////
 #define GX_WRITE_U8(val)  (GXWGFifo.u8 = val)
 #define GX_WRITE_U16(val) (GXWGFifo.u16 = val)
+#define GX_WRITE_S16(val) (GXWGFifo.s16 = val)
 #define GX_WRITE_U32(val) (GXWGFifo.u32 = (u32)val)
 #define GX_WRITE_F32(val) (GXWGFifo.f32 = (f32)val)
 
@@ -129,6 +143,12 @@ static inline void GXPosition2u16(u16 x, u16 y)
 	GXWGFifo.u16 = y;
 }
 
+static inline void GXPosition2s16(s16 x, s16 y)
+{
+	GXWGFifo.s16 = x;
+	GXWGFifo.s16 = y;
+}
+
 static inline void GXTexCoord2s16(const s16 u, const s16 v)
 {
 	GXWGFifo.s16 = u;
@@ -187,12 +207,12 @@ extern GXBreakPtCallback GXSetBreakPtCallback(GXBreakPtCallback callback);
 ////////////////////////////////////////////
 
 /////////////// OTHER FUNCS ////////////////
-void __GXSaveCPUFifoAux(GXFifoObj* obj);
+void __GXSaveCPUFifoAux(__GXFifoObj* obj);
 void __GXFifoReadEnable();
 void __GXFifoReadDisable();
 void __GXFifoLink(u8);
-void __GXWriteFifoIntEnable(u32, u32);
-void __GXWriteFifoIntReset(u32, u32);
+void __GXWriteFifoIntEnable(u8, u8);
+void __GXWriteFifoIntReset(u8, u8);
 
 // Unused/inlined in P2.
 extern void GXSaveGPFifo(GXFifoObj* obj);

@@ -8,6 +8,85 @@
 
 /////////// Snitchbug AI Actions ///////////
 
+/**
+ * @brief TODO: name members
+ */
+BEGIN_ENUM_TYPE(TaiNapkidIntParms)
+enum {
+	StruggleLoopCount = TPI_COUNT,
+	COUNT,
+} END_ENUM_TYPE;
+
+/**
+ * @brief TODO: name members
+ */
+BEGIN_ENUM_TYPE(TaiNapkidFloatParms)
+enum {
+	CarryingVelocity = TPF_COUNT,
+	CarryFlightHeight,
+	TakingOffFlightHeight,
+	WanderingHoverPeriod,
+	WanderingHoverProbability,
+	HoveringWanderPeriod,
+	HoveringWanderProbability,
+	HoveringWashPeriod,
+	HoveringWashProbability,
+	WashingWanderPeriod,
+	WashingWanderProbability,
+	ThrowPeriod,
+	ThrowVelocity,
+	COUNT,
+} END_ENUM_TYPE;
+
+/**
+ * @brief TODO: name members
+ */
+BEGIN_ENUM_TYPE(TaiNapkidStateID)
+enum {
+	Dying          = 0,
+	Wandering      = 1,
+	IdleFlying     = 2,
+	IdleChatting   = 3,
+	Chasing        = 4,
+	Outrunning     = 5,
+	Evading        = 6,
+	AttackingSetup = 7,
+	Attacking      = 8,
+	Catching       = 9,
+	AttackDeciding = 10,
+	CarryingSetup  = 11,
+	AttackMissing  = 12,
+	Carrying       = 13,
+	Throwing       = 14,
+	ShockFalling   = 15,
+	LoopFalling    = 16,
+	Landing        = 17,
+	Struggling     = 18,
+	GettingUp      = 19,
+	HeightDeciding = 20,
+	Flicking       = 21,
+	Rising         = 22,
+	COUNT, // 23
+} END_ENUM_TYPE;
+
+/**
+ * @brief Napkid animation indices.
+ */
+BEGIN_ENUM_TYPE(TaiNapkidMotionID)
+enum {
+	Dead       = 0,  // 'dead'
+	Idle       = 2,  // 'wait1'
+	Throw      = 4,  // 'waitact1'
+	CarryFly   = 5,  // 'waitact2'
+	Fly        = 6,  // 'move1'
+	Attack     = 8,  // 'attack'
+	Flick      = 9,  // 'flick'
+	Fall       = 10, // 'type1'
+	Flail      = 11, // 'type2'
+	Ascend     = 12, // 'type3'
+	AttackMiss = 13, // 'type4'
+} END_ENUM_TYPE;
+
 /*
  * @brief TODO
  */
@@ -47,9 +126,10 @@ struct TaiNapkidStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiNapkidWanderingRouteAction : public TaiContinuousMotionAction {
-	inline TaiNapkidWanderingRouteAction() // TODO: this is a guess
-	    : TaiContinuousMotionAction(0, 0)
+	inline TaiNapkidWanderingRouteAction(int motionIdx, f32 p2) // TODO: this is a guess
+	    : TaiContinuousMotionAction(TAI_NO_TRANSIT, motionIdx)
 	{
+		_0C = p2;
 	}
 
 	virtual void start(Teki&); // _08
@@ -58,16 +138,16 @@ struct TaiNapkidWanderingRouteAction : public TaiContinuousMotionAction {
 	void makeTargetPosition(Teki&);
 
 	// _04     = VTBL
-	// _00-_08 = TaiContinuousMotionAction?
-	// TODO: members
+	// _00-_0C = TaiContinuousMotionAction
+	f32 _0C;
 };
 
 /**
  * @brief TODO
  */
 struct TaiNapkidTargetPikiAction : public TaiAction {
-	inline TaiNapkidTargetPikiAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidTargetPikiAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -82,8 +162,8 @@ struct TaiNapkidTargetPikiAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidPikiLostAction : public TaiAction {
-	inline TaiNapkidPikiLostAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidPikiLostAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -98,8 +178,8 @@ struct TaiNapkidPikiLostAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidShortRangeAction : public TaiAction {
-	inline TaiNapkidShortRangeAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidShortRangeAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -114,9 +194,10 @@ struct TaiNapkidShortRangeAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidStraightFlyingAction : public TaiAction {
-	inline TaiNapkidStraightFlyingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidStraightFlyingAction(int nextState, f32 p2) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
+		_08 = p2;
 	}
 
 	virtual void start(Teki&); // _08
@@ -125,14 +206,15 @@ struct TaiNapkidStraightFlyingAction : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
+	f32 _08;
 };
 
 /**
  * @brief TODO
  */
 struct TaiNapkidCirclingAction : public TaiAction {
-	inline TaiNapkidCirclingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidCirclingAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -149,9 +231,10 @@ struct TaiNapkidCirclingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidFlyingAction : public TaiAction {
-	inline TaiNapkidFlyingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidFlyingAction(f32 flightHeight) // TODO: this is a guess
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
+		mFlightHeight = flightHeight;
 	}
 
 	virtual bool act(Teki&); // _10
@@ -159,13 +242,14 @@ struct TaiNapkidFlyingAction : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
+	f32 mFlightHeight;
 };
 
 /**
  * @brief TODO
  */
 struct TaiNapkidAscendingAction : public TaiAction {
-	inline TaiNapkidAscendingAction() // TODO: this is a guess
+	inline TaiNapkidAscendingAction() // TODO: i believe this is unused
 	    : TaiAction(-1)
 	{
 	}
@@ -175,14 +259,15 @@ struct TaiNapkidAscendingAction : public TaiAction {
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
+	f32 _08;
 };
 
 /**
  * @brief TODO
  */
 struct TaiNapkidApproachPikiAction : public TaiAction {
-	inline TaiNapkidApproachPikiAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidApproachPikiAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -197,8 +282,8 @@ struct TaiNapkidApproachPikiAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidCatchingAction : public TaiAction {
-	inline TaiNapkidCatchingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidCatchingAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
@@ -325,8 +410,8 @@ struct TaiNapkidThrowingPikiAction : public TaiAction {
  * @brief TODO
  */
 struct TaiNapkidFlickAction : public TaiAction {
-	inline TaiNapkidFlickAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TaiNapkidFlickAction(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 

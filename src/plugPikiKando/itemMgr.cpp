@@ -2516,9 +2516,9 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
     : ItemCreature(objType, props, nullptr)
     , mBuildCollision(0)
 {
-	mItemShapeObject = itemShape;
-	mStateMachine    = ai;
-	mLifeGauge._1C   = 1;
+	mItemShapeObject        = itemShape;
+	mStateMachine           = ai;
+	mLifeGauge.mRenderStyle = 1;
 }
 
 /*
@@ -2590,14 +2590,14 @@ void BuildingItem::startAI(int)
 void BuildingItem::startBreakEffect()
 {
 	playEventSound(this, SEB_WALL_DOWN);
-	rumbleMgr->start(7, 0, mPosition);
+	rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
 	_3D8.init(mPosition, EffectMgr::EFF_Wl_Brk00);
 	_3E8.init(mPosition, EffectMgr::EFF_Wl_Brk01);
 	if (_3D8.mPtclGen) {
-		_3D8.mPtclGen->setInitVel(5.0f);
+		_3D8.mPtclGen->setFreqFrm(5.0f);
 	}
 	if (_3E8.mPtclGen) {
-		_3E8.mPtclGen->setInitVel(3.0f);
+		_3E8.mPtclGen->setFreqFrm(3.0f);
 	}
 }
 
@@ -2609,10 +2609,10 @@ void BuildingItem::startBreakEffect()
 void BuildingItem::stopBreakEffect()
 {
 	if (_3D8.mPtclGen) {
-		_3D8.mPtclGen->setInitVel(0.0f);
+		_3D8.mPtclGen->setFreqFrm(0.0f);
 	}
 	if (_3E8.mPtclGen) {
-		_3E8.mPtclGen->setInitVel(0.0f);
+		_3E8.mPtclGen->setFreqFrm(0.0f);
 	}
 
 	_3D8.kill();
@@ -2900,7 +2900,7 @@ PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 	PRINT("PIKIHEADMGR *** this = %x\n", this);
 	mPikiHeadProps = new PikiHeadItemProp();
 	mPikiHeadAI    = new PikiHeadAI();
-	create(100);
+	create(MAX_PIKI_ON_FIELD);
 	PRINT("=====================================\n");
 }
 

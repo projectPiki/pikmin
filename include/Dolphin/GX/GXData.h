@@ -10,6 +10,7 @@ extern "C" {
 #include "Dolphin/GX/GXEnum.h"
 #include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/GX/GXTexture.h"
+#include "Dolphin/os.h"
 
 /////////////// CONTROL ENUMS //////////////
 typedef enum _CPStatus {
@@ -38,134 +39,95 @@ typedef enum _CPClear {
 
 ////////////// GXDATA STRUCTS //////////////
 // size: 0x5B0
-typedef struct _GXData {
-	// Bypass and vertex info
-	u16 vNumNot;   // _000, !(# flush verts to send)
-	u16 bpSentNot; // _002, !(bypass reg sent last?)
-	u16 vNum;      // _004, # flush verts to send
-	u16 vLim;      // _006, max vert size
+struct __GXData_struct {
+	// total size: 0x4F4
+	unsigned short vNum;                                      // offset 0x0, size 0x2
+	unsigned short bpSent;                                    // offset 0x2, size 0x2
+	unsigned long vLim;                                       // offset 0x4, size 0x4
+	unsigned long cpEnable;                                   // offset 0x8, size 0x4
+	unsigned long cpStatus;                                   // offset 0xC, size 0x4
+	unsigned long cpClr;                                      // offset 0x10, size 0x4
+	unsigned long vcdLo;                                      // offset 0x14, size 0x4
+	unsigned long vcdHi;                                      // offset 0x18, size 0x4
+	unsigned long vatA[8];                                    // offset 0x1C, size 0x20
+	unsigned long vatB[8];                                    // offset 0x3C, size 0x20
+	unsigned long vatC[8];                                    // offset 0x5C, size 0x20
+	unsigned long lpSize;                                     // offset 0x7C, size 0x4
+	unsigned long matIdxA;                                    // offset 0x80, size 0x4
+	unsigned long matIdxB;                                    // offset 0x84, size 0x4
+	unsigned long indexBase[4];                               // offset 0x88, size 0x10
+	unsigned long indexStride[4];                             // offset 0x98, size 0x10
+	unsigned long ambColor[2];                                // offset 0xA8, size 0x8
+	unsigned long matColor[2];                                // offset 0xB0, size 0x8
+	unsigned long suTs0[8];                                   // offset 0xB8, size 0x20
+	unsigned long suTs1[8];                                   // offset 0xD8, size 0x20
+	unsigned long suScis0;                                    // offset 0xF8, size 0x4
+	unsigned long suScis1;                                    // offset 0xFC, size 0x4
+	unsigned long tref[8];                                    // offset 0x100, size 0x20
+	unsigned long iref;                                       // offset 0x120, size 0x4
+	unsigned long bpMask;                                     // offset 0x124, size 0x4
+	unsigned long IndTexScale0;                               // offset 0x128, size 0x4
+	unsigned long IndTexScale1;                               // offset 0x12C, size 0x4
+	unsigned long tevc[16];                                   // offset 0x130, size 0x40
+	unsigned long teva[16];                                   // offset 0x170, size 0x40
+	unsigned long tevKsel[8];                                 // offset 0x1B0, size 0x20
+	unsigned long cmode0;                                     // offset 0x1D0, size 0x4
+	unsigned long cmode1;                                     // offset 0x1D4, size 0x4
+	unsigned long zmode;                                      // offset 0x1D8, size 0x4
+	unsigned long peCtrl;                                     // offset 0x1DC, size 0x4
+	unsigned long cpDispSrc;                                  // offset 0x1E0, size 0x4
+	unsigned long cpDispSize;                                 // offset 0x1E4, size 0x4
+	unsigned long cpDispStride;                               // offset 0x1E8, size 0x4
+	unsigned long cpDisp;                                     // offset 0x1EC, size 0x4
+	unsigned long cpTexSrc;                                   // offset 0x1F0, size 0x4
+	unsigned long cpTexSize;                                  // offset 0x1F4, size 0x4
+	unsigned long cpTexStride;                                // offset 0x1F8, size 0x4
+	unsigned long cpTex;                                      // offset 0x1FC, size 0x4
+	unsigned char cpTexZ;                                     // offset 0x200, size 0x1
+	unsigned long genMode;                                    // offset 0x204, size 0x4
+	GXTexRegion TexRegions[8];                                // offset 0x208, size 0x80
+	GXTexRegion TexRegionsCI[4];                              // offset 0x288, size 0x40
+	unsigned long nextTexRgn;                                 // offset 0x2C8, size 0x4
+	unsigned long nextTexRgnCI;                               // offset 0x2CC, size 0x4
+	GXTlutRegion TlutRegions[20];                             // offset 0x2D0, size 0x140
+	GXTexRegion* (*texRegionCallback)(GXTexObj*, GXTexMapID); // offset 0x410, size 0x4
+	GXTlutRegion* (*tlutRegionCallback)(unsigned long);       // offset 0x414, size 0x4
+	GXAttrType nrmType;                                       // offset 0x418, size 0x4
+	unsigned char hasNrms;                                    // offset 0x41C, size 0x1
+	unsigned char hasBiNrms;                                  // offset 0x41D, size 0x1
+	unsigned long projType;                                   // offset 0x420, size 0x4
+	float projMtx[6];                                         // offset 0x424, size 0x18
+	float vpLeft;                                             // offset 0x43C, size 0x4
+	float vpTop;                                              // offset 0x440, size 0x4
+	float vpWd;                                               // offset 0x444, size 0x4
+	float vpHt;                                               // offset 0x448, size 0x4
+	float vpNearz;                                            // offset 0x44C, size 0x4
+	float vpFarz;                                             // offset 0x450, size 0x4
+	unsigned char fgRange;                                    // offset 0x454, size 0x1
+	float fgSideX;                                            // offset 0x458, size 0x4
+	unsigned long tImage0[8];                                 // offset 0x45C, size 0x20
+	unsigned long tMode0[8];                                  // offset 0x47C, size 0x20
+	unsigned long texmapId[16];                               // offset 0x49C, size 0x40
+	unsigned long tcsManEnab;                                 // offset 0x4DC, size 0x4
+	GXPerf0 perf0;                                            // offset 0x4E0, size 0x4
+	GXPerf1 perf1;                                            // offset 0x4E4, size 0x4
+	unsigned long perfSel;                                    // offset 0x4E8, size 0x4
+	unsigned char inDispList;                                 // offset 0x4EC, size 0x1
+	unsigned char dlSaveContext;                              // offset 0x4ED, size 0x1
+	unsigned char dirtyVAT;                                   // offset 0x4EE, size 0x1
+	unsigned long dirtyState;                                 // offset 0x4F0, size 0x4
+}; // size = 0x4F4
 
-	// Command process (CP) regs
-	u32 cpEnable; // _008
-	u32 cpStatus; // _00C
-	u32 cpClr;    // _010
-	u32 vcdLo;    // _014
-	u32 vcdHi;    // _018
-	u32 vatA[8];  // _01C
-	u32 vatB[8];  // _03C
-	u32 vatC[8];  // _05C
-	u32 lpSize;   // _07C
-	u32 matIdxA;  // _080
-	u32 matIdxB;  // _084
-
-	// Index loading base/stride regs (pos, nrm, tex, light)
-	u32 indexBase[4];   // _088
-	u32 indexStride[4]; // _098
-
-	// Transform and lighting regs
-	u32 ambColor[2]; // _0A8
-	u32 matColor[2]; // _0B0
-
-	// Setup regs
-	u32 suTs0[8]; // _0B8
-	u32 suTs1[8]; // _0D8
-	u32 suScis0;  // _0F8
-	u32 suScis1;  // _0FC
-
-	// Raster regs
-	u32 tref[8]; // _100
-	u32 iref;    // _120
-
-	// Bump/Indirect texture regs
-	u32 bpMask;       // _124
-	u32 IndTexScale0; // _128
-	u32 IndTexScale1; // _12C
-
-	// Tev regs
-	u32 tevc[16];   // _130
-	u32 teva[16];   // _170
-	u32 tevKsel[8]; // _1B0
-
-	// Performance regs
-	u32 cmode0; // _1D0
-	u32 cmode1; // _1D4
-	u32 zmode;  // _1D8
-	u32 peCtrl; // _1DC
-
-	// Display copy regs
-	u32 cpDispSrc;    // _1E0
-	u32 cpDispSize;   // _1E4
-	u32 cpDispStride; // _1E8
-	u32 cpDisp;       // _1EC
-
-	// Texture copy regs
-	u32 cpTexSrc;    // _1F0
-	u32 cpTexSize;   // _1F4
-	u32 cpTexStride; // _1F8
-	u32 cpTex;       // _1FC
-	GXBool cpTexZ;   // _200
-
-	// General raster mode
-	u32 genMode; // _204
-
-	// Texture regions
-	GXTexRegion TexRegions0[GX_MAX_TEXMAP]; // _208
-	GXTexRegion TexRegions1[GX_MAX_TEXMAP]; // _288
-	GXTexRegion TexRegions2[GX_MAX_TEXMAP]; // _308
-
-	// Texture lookup table regions
-	GXTlutRegion TlutRegions[GX_MAX_TLUT_ALL]; // _388
-	GXTexRegionCallback texRegionCallback;     // _4C8
-	GXTlutRegionCallback tlutRegionCallback;   // _4CC
-
-	// Command processor vars
-	GXAttrType nrmType; // _4D0
-	GXBool hasNrms;     // _4D4
-	GXBool hasBiNrms;   // _4D5
-	u32 projType;       // _4D8
-	f32 projMtx[6];     // _4DC
-
-	// Viewport parms
-	f32 vpLeft;  // _4F4
-	f32 vpTop;   // _4F8
-	f32 vpWd;    // _4FC
-	f32 vpHt;    // _500
-	f32 vpNearz; // _504
-	f32 vpFarz;  // _508
-	f32 zOffset; // _50C
-	f32 zScale;  // _510
-
-	// Texture regs
-	u32 tImage0[8];   // _514
-	u32 tMode0[8];    // _534
-	u32 texmapId[16]; // _554
-	u32 tcsManEnab;   // _594
-	u32 tevTcEnab;    // _598
-
-	// Performance metrics
-	GXPerf0 perf0; // _59C
-	GXPerf1 perf1; // _5A0
-	u32 perfSel;   // _5A4
-
-	// Flags
-	GXBool inDispList;    // _5A8
-	GXBool dlSaveContext; // _5A9
-	GXBool abtWaitPECopy; // _5AA
-	u8 dirtyVAT;          // _5AB
-	u32 dirtyState;       // _5AC
-} GXData;
-extern GXData* const __GXData; // NB: this is const in SMG1 decomp.
-
-#define gx __GXData
+extern struct __GXData_struct* gx;
 
 ////////////////////////////////////////////
 
 ///////////// REGISTER DEFINES /////////////
 // Declare registers.
-extern void* __cpReg;
-extern void* __piReg;
-extern void* __memReg;
-extern void* __peReg;
+extern u16* __cpReg;
+extern u32* __piReg;
+extern u16* __memReg;
+extern u16* __peReg;
 
 // Define register addresses.
 #define GX_CP_ADDR  (0x0C000000)
@@ -182,6 +144,74 @@ extern void* __peReg;
 #define GX_SET_CP_REG(offset, val)  (*(vu16*)((vu16*)(__cpReg) + (offset)) = val)
 #define GX_SET_PE_REG(offset, val)  (*(vu16*)((vu16*)(__peReg) + (offset)) = val)
 #define GX_SET_PI_REG(offset, val)  (*(vu32*)((vu32*)(__piReg) + (offset)) = val)
+#define VERIF_RAS_REG(value)        (__gxVerif->rasRegs[((value) & 0xFF000000) >> 24] = value)
+
+#define GX_WRITE_RAS_REG(value) \
+	do {                        \
+		GX_WRITE_U8(0x61);      \
+		GX_WRITE_U32(value);    \
+	} while (0)
+
+#define GX_WRITE_XF_REG(addr, value)   \
+	do {                               \
+		GX_WRITE_U8(0x10);             \
+		GX_WRITE_U32(0x1000 + (addr)); \
+		GX_WRITE_U32(value);           \
+	} while (0)
+
+#define GET_REG_FIELD(reg, size, shift) ((int)((reg) >> (shift)) & ((1 << (size)) - 1))
+
+#define SET_REG_FIELD(line, reg, size, shift, val)                                                                 \
+	do {                                                                                                           \
+		ASSERTMSGLINE(line, ((u32)(val) & ~((1 << (size)) - 1)) == 0, "GX Internal: Register field out of range"); \
+		(reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift));                        \
+	} while (0)
+
+#define CHECK_GXBEGIN(line, name) ASSERTMSGLINE(line, !__GXinBegin, "'" name "' is not allowed between GXBegin/GXEnd")
+#define VERIF_XF_REG_alt(addr, value) \
+	do {                              \
+		s32 xfAddr = (addr);          \
+	} while (0)
+#define GX_WRITE_XF_REG_2(addr, value) \
+	do {                               \
+		GX_WRITE_U32(value);           \
+	} while (0)
+#define GX_WRITE_SOME_REG2(a, b, c, addr)  \
+	do {                                   \
+		long regAddr;                      \
+		GX_WRITE_U8(a);                    \
+		GX_WRITE_U8(b);                    \
+		GX_WRITE_U32(c);                   \
+		regAddr = addr;                    \
+		if (regAddr >= 0 && regAddr < 4) { \
+			gx->indexBase[regAddr] = c;    \
+		}                                  \
+	} while (0)
+#define GX_WRITE_SOME_REG3(a, b, c, addr)  \
+	do {                                   \
+		long regAddr;                      \
+		GX_WRITE_U8(a);                    \
+		GX_WRITE_U8(b);                    \
+		GX_WRITE_U32(c);                   \
+		regAddr = addr;                    \
+		if (regAddr >= 0 && regAddr < 4) { \
+			gx->indexStride[regAddr] = c;  \
+		}                                  \
+	} while (0)
+#define GX_WRITE_SOME_REG4(a, b, c, addr) \
+	do {                                  \
+		long regAddr;                     \
+		GX_WRITE_U8(a);                   \
+		GX_WRITE_U8(b);                   \
+		GX_WRITE_U32(c);                  \
+		regAddr = addr;                   \
+	} while (0)
+#define GX_WRITE_XF_REG_F(addr, value)          \
+	do {                                        \
+		f32 xfData = (value);                   \
+		GX_WRITE_F32(value);                    \
+		VERIF_XF_REG_alt(addr, *(u32*)&xfData); \
+	} while (0)
 
 // Useful reading register inlines
 static inline u32 GXReadMEMReg(u32 addrLo, u32 addrHi)

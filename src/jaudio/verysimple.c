@@ -27,6 +27,7 @@
 static CmdQueue system_se;      // TODO: type uncertain
 static CmdQueue system_se_stop; // TODO: type undertain
 
+CmdQueue* queue_list;
 static BOOL cmdqueue_reset;
 static u32 countdown_count;  // TODO: type uncertain
 static BOOL pausemode;       // TODO: type uncertain
@@ -96,8 +97,10 @@ void Jac_UpdateRocketParam(void)
  */
 void Jac_SysSEDemoFadeCheck()
 {
-	if (sys_voldown_flag == 0)
+	if (sys_voldown_flag == 0) {
 		return;
+	}
+
 	if (sys_voldown_flag == 1) {
 		if (!StreamSyncCheckBusy(0, 5)) {
 			Jac_DemoFade(1.0f, 0, 100);
@@ -131,6 +134,7 @@ void Jac_PlaySystemSe(s32 id)
 		if (Jac_DemoCheck() == TRUE || Jac_PauseCheck() == TRUE || Jac_GetCurrentScene() != 5) {
 			return;
 		}
+
 		break;
 	case 5:
 		++countdown_count;
@@ -139,9 +143,11 @@ void Jac_PlaySystemSe(s32 id)
 			Jac_FadeOutBgm(1, 60);
 		}
 		break;
+
 	case 4:
 		Jac_SetBgmModeFlag(0, 2, 1);
 		break;
+
 	case 6:
 		Jac_SetBgmModeFlag(0, 4, 1);
 		Jac_SetBgmModeFlag(1, 4, 1);
@@ -150,25 +156,20 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_PauseOrimaSe();
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		break;
+
 	case 7:
-		if (container != TRUE) {
-			return;
+		if (container == TRUE) {
+			Jac_SetBgmModeFlag(0, 4, 0);
+			Jac_SetBgmModeFlag(1, 4, 0);
+			container = FALSE;
+			Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
+			Jac_UnPauseOrimaSe();
+			Jac_StopSystemSe(0x23);
+			Jac_StopSystemSe(0x21);
+			break;
 		}
-		Jac_SetBgmModeFlag(0, 4, 0);
-		Jac_SetBgmModeFlag(1, 4, 0);
-		container = FALSE;
-		Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
-		Jac_UnPauseOrimaSe();
-		Jac_StopSystemSe(0x23);
-		Jac_StopSystemSe(0x21);
-		break;
-	// FIXME: This is able to fakematch if `default` is replaced with any case from 3 to 40 (inclusive) that isn't
-	// already being handled. However, the jumptable will be wrong. My theory is this must be the default case, but
-	// something (that was later optimized away) was put before the return that forced this case to generate inside
-	// the body of the function. As it is, this empty case with a return is optimized to instead affect the compiler-
-	// generated bounds check before the jumptable is used.
-	default:
 		return;
+
 	case 3:
 		if (container == FALSE) {
 			Jac_SetBgmModeFlag(0, 4, 1);
@@ -179,6 +180,7 @@ void Jac_PlaySystemSe(s32 id)
 		}
 		pausemode = TRUE;
 		break;
+
 	case 15:
 		if (pausemode != FALSE) {
 			if (container == FALSE) {
@@ -194,10 +196,12 @@ void Jac_PlaySystemSe(s32 id)
 			return;
 		}
 		break;
+
 	case 18:
 		WaveScene_Set(0xd, 6);
 		Jac_PlayDemoSequenceDirect(8);
 		return;
+
 	case 32:
 		if (sys_voldown_flag == FALSE) {
 			Jac_DemoFade(0.15f, 1, 5);
@@ -205,6 +209,7 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_StartDemoSound(5);
 		sys_voldown_flag = 0x14;
 		return;
+
 	case 38:
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_PauseTrack(Jam_GetTrackHandle(0x1000f), 1);
@@ -215,6 +220,7 @@ void Jac_PlaySystemSe(s32 id)
 		StreamSetDVDPause(0, 1);
 		id = 0x1c;
 		break;
+
 	case 39:
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x1000f), 1);
@@ -223,12 +229,14 @@ void Jac_PlaySystemSe(s32 id)
 		Jac_SetBgmModeFlag(0, 4, 0);
 		Jac_SetBgmModeFlag(1, 4, 0);
 		return;
+
 	case 40:
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jac_Orima_Formation(0, 0);
 		pausemode = TRUE;
 		return;
 	}
+
 	if (cmdqueue_reset == TRUE) {
 		Jal_SendCmdQueue_Noblock(&system_se, id);
 	}
@@ -244,6 +252,7 @@ void Jac_StopSystemSe(s32 id)
 	if (cmdqueue_reset == FALSE) {
 		cmdqueue_reset = InitQueue();
 	}
+
 	switch (id) {
 	case 16:
 		Jac_StopOrimaSe(14);
@@ -294,7 +303,7 @@ static void Jac_Archiver_Init()
  * Address:	80017040
  * Size:	0000AC
  */
-static unknown32 TrackReceive(seqp_* track, u16 param_2)
+static u32 TrackReceive(seqp_* track, u16 param_2)
 {
 	u32 badCompiler;
 	u8 stupid1;  // Do it inside the if statement, idiots.
@@ -328,8 +337,9 @@ static unknown32 TrackReceive(seqp_* track, u16 param_2)
  */
 static void AuxBusInit()
 {
-	u32 badCompiler[1];
-	volatile u32 alloc2Size; // What the fuck is wrong with these programmers.
+	u32* REF_alloc2Size;
+	u32 alloc2Size;
+
 	u32 badCompiler2[2];
 
 	u32 i;
@@ -345,6 +355,7 @@ static void AuxBusInit()
 	for (i = 0; i < 4; ++i) {
 		if (i < 3) {
 			alloc2Size         = fx_config[i].circularBufferSize * 0xa0; // TODO: What is 160 bytes large?
+			REF_alloc2Size     = &alloc2Size;
 			circularBufferBase = (s16*)OSAlloc2(alloc2Size);
 		} else {
 			circularBufferBase = (s16*)NULL;
@@ -445,8 +456,8 @@ void Jac_StopSoundAll(void)
  */
 void Jac_Freeze_Precall()
 {
-	BOOL level  = OSDisableInterrupts();
-	JCS* handle = Get_GlobalHandle();
+	BOOL level   = OSDisableInterrupts();
+	jcs_* handle = Get_GlobalHandle();
 	AllStop_1Shot(handle);
 	FlushRelease_1Shot(handle);
 	OSRestoreInterrupts(level);

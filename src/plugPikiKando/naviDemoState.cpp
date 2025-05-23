@@ -226,7 +226,7 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, 
 void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state)
 {
 
-	Piki* pikiList[200];
+	Piki* pikiList[MAX_PIKI_ON_FIELD + 100];
 	Navi* navi = state->mNavi;
 	Iterator it(itemMgr);
 	GoalItem* goals[3];

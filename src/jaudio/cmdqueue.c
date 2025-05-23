@@ -20,11 +20,11 @@ static void Add_Queue(CmdQueue* cmdQueue)
 		queue_list = cmdQueue;
 		return;
 	}
-	while (curr) {
-		prev = curr;
-		curr = prev->next;
+
+	while (prev = curr->next) {
+		curr = prev;
 	}
-	prev->next = cmdQueue;
+	curr->next = cmdQueue;
 }
 
 /*
@@ -42,7 +42,7 @@ void Del_Queue(CmdQueue*)
  * Address:	8001B9A0
  * Size:	000060
  */
-void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, unknown8 param_3)
+void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
 {
 	BOOL restoreInterrupts;
 
@@ -79,9 +79,13 @@ void Jal_SendCmdQueue(void)
  * Address:	8001BA00
  * Size:	000030
  */
-void Jal_SendCmdQueue_Noblock(CmdQueue* volatile queue, volatile u16 msg)
+void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg)
 {
-	u32 badCompiler;
+	CmdQueue** REF_queue;
+	u16* REF_msg;
+
+	REF_queue = &queue;
+	REF_msg   = &msg;
 	Jac_SendMessage(&queue->msgQueue, (OSMessage)msg);
 }
 

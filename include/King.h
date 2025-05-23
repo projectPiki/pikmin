@@ -7,6 +7,7 @@
 #include "zen/Particle.h"
 #include "CreatureCollPart.h"
 #include "EffectMgr.h"
+#include "GlobalGameOptions.h"
 #include "MapMgr.h"
 
 #define KING_PROP         (static_cast<KingProp*>(mProps)->mKingProps)
@@ -94,7 +95,7 @@ struct KingProp : public BossProp, public CoreNode {
 		    , mAttackTerritoryRadius(this, 275.0f, 0.0f, 0.0f, "t10", nullptr)
 		    , mJumpAttackRangeXZ(this, 250.0f, 0.0f, 0.0f, "t11", nullptr)
 		    , mMaxJumpAttackAngle(this, 120.0f, 0.0f, 0.0f, "t12", nullptr)
-		    , mMaxEatPikiNum(this, 100, 0, 0, "i00", nullptr)
+		    , mMaxEatPikiNum(this, MAX_PIKI_ON_FIELD, 0, 0, "i00", nullptr)
 		    , mSwallowedBombsMin(this, 0, 0, 0, "i10", nullptr)
 		    , mSwallowedBombsMax(this, 10, 0, 0, "i11", nullptr)
 		    , mEatBombDamageLoopMin(this, 4, 0, 0, "i12", nullptr)
@@ -219,8 +220,7 @@ struct King : public Boss {
 	KingAi* mKingAi;            // _3BC
 	KingBody* mKingBody;        // _3C0
 	CreaturePlatMgr mPlatMgr;   // _3C4
-	ShadowCaster mShadowCaster; // _40C
-	KingDrawer* mKingDrawer;    // _7A0
+	ShadowCaster mShadowCaster; // _40C, cast mDrawer to KingDrawer*
 };
 
 /**
@@ -553,9 +553,9 @@ struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _08
 	{
-		if (ptcl->_2E == 0) {
-			ptcl->_34.x += (mKing->mKingBody->mSalivaEffectPosition.x - mKing->mKingBody->_E4.x) / 2.0f;
-			ptcl->_34.z += (mKing->mKingBody->mSalivaEffectPosition.z - mKing->mKingBody->_E4.z) / 2.0f;
+		if (ptcl->mAge == 0) {
+			ptcl->mVelocity.x += (mKing->mKingBody->mSalivaEffectPosition.x - mKing->mKingBody->_E4.x) / 2.0f;
+			ptcl->mVelocity.z += (mKing->mKingBody->mSalivaEffectPosition.z - mKing->mKingBody->_E4.z) / 2.0f;
 		}
 
 		Vector3f ptclPos = ptcl->getPos();

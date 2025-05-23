@@ -277,7 +277,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	bool attackableCreature(Creature&);
 	f32 calcTargetAngle(Vector3f&);
 	bool moveToward(Vector3f&, f32);
-	bool turnToward(f32, f32);
+	bool turnToward(f32 targetAngle, f32 turnSpeed);
 	void rotateTeki(f32);
 	Creature* getClosestNaviPiki(Condition&, f32*);
 	bool attackTarget(Creature&, f32, f32, Condition&);
@@ -336,18 +336,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	static f32 calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32);
 	static bool moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&);
 
-	inline void setMotionSpeed(f32 speed)
-	{
-		setTekiOption(TEKI_OPTION_MANUAL_ANIMATION);
-		mMotionSpeed = speed;
-	}
-
-	inline void setVisible() { setTekiOption(TEKI_OPTION_VISIBLE); }
-
-	inline int getStateID() { return mStateID; }
-
-	inline f32 getParticleFactor() { return getParameterF(TPF_RippleScale); } // rename later when we know what this is
-
 	// these are all correct name-wise according to the map or the DLL.
 	void setDirection(f32 dir) { mFaceDirection = dir; }
 	f32 getDirection() { return mFaceDirection; } // weak function
@@ -393,6 +381,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 		stopDrive();
 	}
 
+	Vector3f& getVelocity() { return mVelocity; }
 	Vector3f& getDrive() { return mTargetVelocity; }
 	f32 getDriveLength() { return mTargetVelocity.length(); }
 
@@ -422,12 +411,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	}
 
 	bool animationFinished() { return mTekiAnimator->isFinishing(); }
-
-	/*
-	    DLL inlines to make:
-	    Vector3f& getVelocity();
-
-	*/
 
 	// this is basically two static enums smh
 	static const int TEKI_OPTION_VISIBLE;
@@ -571,6 +554,7 @@ struct YTeki : public NTeki {
 	int getMapAttribute();
 
 	// DLL inlines that have been checked:
+	bool getStaySwitch() { return mTekiSwitches.mStay; }
 	void setStaySwitch(bool isAppear) { mTekiSwitches.mStay = isAppear; }
 
 	bool getFlyingSwitch() { return mTekiSwitches.mFlying; }
@@ -588,6 +572,16 @@ struct YTeki : public NTeki {
 			mTekiSwitches.mFootEffect &= ~(1 << footID);
 		}
 	}
+
+	// not sure if this is RunAway or something else yet, maybe rename later
+	bool getRunAwaySwitch() { return mTekiSwitches.m6; }
+	void setRunAwaySwitch(bool set) { mTekiSwitches.m6 = set; }
+
+	bool getBiteSwitch() { return mTekiSwitches.mBite; }
+	void setBiteSwitch(bool isBite) { mTekiSwitches.mBite = isBite; }
+
+	bool getTimerStart() { return mTekiSwitches.mTimer; }
+	void setTimerStart(bool set) { mTekiSwitches.mTimer = set; }
 
 	void setMapCode(int mapCode) { mMapCode = mapCode; }
 	int getMapCode() { return mMapCode; }
@@ -615,60 +609,71 @@ struct YTeki : public NTeki {
 	zen::particleGenerator* getPtclGenPtr(ptclIndexFlag idx) { return mPtclGenPtrs[idx]; }
 	void setPtclGenPtr(ptclIndexFlag idx, zen::particleGenerator* ptclGen) { mPtclGenPtrs[idx] = ptclGen; }
 
+	void setManualAnimation(bool doSet)
+	{
+		if (doSet) {
+			setTekiOption(TEKI_OPTION_MANUAL_ANIMATION);
+		} else {
+			clearTekiOption(TEKI_OPTION_MANUAL_ANIMATION);
+		}
+	}
+
+	f32 setAnimSpeed(f32 speed)
+	{
+		f32 oldSpeed = mMotionSpeed;
+		setManualAnimation(true);
+		mMotionSpeed = speed;
+		return oldSpeed;
+	}
+
+	int getTableIndex() { return mTableIndex; }
+	void setTableIndex(int idx) { mTableIndex = idx; }
+
+	int getStatus() { return mStatus; }
+	void setStatus(int status) { mStatus = status; }
+
+	f32 getSpeed() { return mSpeed; }
+	void setSpeed(f32 speed) { mSpeed = speed; }
+	void addSpeed(f32 amt) { mSpeed += amt; }
+
+	void initCylinderTYpePtclCallBack(Teki* p1, Vector3f& p2, Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7,
+	                                  TAIeffectAttackEventCallBack* cb)
+	{
+		mCylinderCallBack.init(&mEffectAttackParam, p1, p2, p3, p4, p5, p6, p7, cb);
+	}
+	zen::CallBack1<zen::particleGenerator*>* getCylinderTypePtclCallBack() { return &mCylinderCallBack; }
+
+	void initEventTypePtclCallBack() { mEventCallBack.init(&mEffectAttackParam); }
+	zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack() { return &mEventCallBack; }
+
+	void initConeTypePtclCallBack(Teki* p1, Vector3f& p2, Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7, TAIeffectAttackEventCallBack* cb)
+	{
+		mConeCallBack.init(&mEffectAttackParam, p1, p2, p3, p4, p5, p6, p7, cb);
+	}
+	zen::CallBack1<zen::particleGenerator*>* getConeTypePtclCallBack() { return &mConeCallBack; }
+
 	/*
 	    DLL INLINED FUNCTIONS TO MAKE:
 
-	    zen::CallBack1<zen::particleGenerator *> * getConeTypePtclCallBack();
-	    zen::CallBack1<zen::particleGenerator *> * getCylinderTypePtclCallBack();
-	    zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack();
-	    void initConeTypePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
-	    void initCylinderTYpePtclCallBack(Teki*, Vector3f&, Vector3f&, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
-	    void initEventTypePtclCallBack();
-
-	    f32 setAnimSpeed(f32);
-
-	    f32 getSpeed();
-	    void setSpeed(f32);
-	    void addSpeed(f32);
-
 	    f32 getExceptionalGravity();
 	    void setExceptionalGravity(f32);
-
-	    int getStatus();
-	    void setStatus(int);
-
-	    int getTableIndex();
-	    void setTableIndex(int);
-
-	    bool getTimerStart();
-	    void setTimerStart(bool);
-
-	    void setManualAnimation(bool);
-
-	    bool getBiteSwitch();
-	    void setBiteSwitch(bool);
 
 	    bool getChokeSwitch();
 	    void setChokeSwitch(bool);
 
 	    bool getEffectSwitch();
 	    void setEffectSwitch(bool);
-
-	    bool getRunAwaySwitch();
-	    void setRunAwaySwitch(bool);
-
-	    bool getStaySwitch();
 	*/
 
 	// _00       = VTBL
 	// _000-_46C = NTeki
-	u8 _46C[0x470 - 0x46C];                  // _46C, TODO: work out members
-	u32 _470;                                // _470, unknown
+	int mStatus;                             // _46C
+	int mTableIndex;                         // _470, this is to do with route waypoint graphs
 	int mMapCode;                            // _474
 	f32 mFrameCounter;                       // _478
 	f32 mFrameCounterMax;                    // _47C
 	f32 mFootPosY[4];                        // _480, indexed by effFootIndexFlag
-	f32 _490;                                // _490
+	f32 mSpeed;                              // _490, might just be flying speed?
 	f32 mTurnAngle;                          // _494
 	zen::particleGenerator* mPtclGenPtrs[8]; // _498, indexed by ptclIndexFlag
 	u8 _4B8[0x4];                            // _4B8, unknown
@@ -676,12 +681,13 @@ struct YTeki : public NTeki {
 	f32 mDororoGravity;                      // _4C0
 	f32 mDororoBarkDesire;                   // _4C4
 	struct {
-		u32 m0 : 1;
+		u32 mBite : 1;
 		u32 m1 : 1;
 		u32 m2 : 1;
 		u32 mStay : 1;
 		u32 mFlying : 1;
-		u32 m5 : 2;
+		u32 mTimer : 1;
+		u32 m6 : 1;
 		u32 mFootEffect : 4;
 	} mTekiSwitches;                         // _4C8
 	TAIeffectAttackParam mEffectAttackParam; // _4CC

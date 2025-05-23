@@ -21,10 +21,10 @@ struct cmdqueue_ {
 extern "C" {
 #endif // ifdef __cplusplus
 
-CmdQueue* queue_list; // Pointer to the start of a linked list
+extern CmdQueue* queue_list; // Pointer to the start of a linked list
 
-void Jal_AddCmdQueue(CmdQueue*, seqp_*, unknown8); // TODO: Types uncertain
-void Jal_SendCmdQueue_Noblock(CmdQueue* volatile queue, volatile u16 msg);
+void Jal_AddCmdQueue(CmdQueue*, seqp_*, u8); // TODO: Types uncertain
+void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg);
 void Jal_SendCmdQueue_Force(CmdQueue* queue, u16 msg);
 void Jal_CmdQueue_Init(void);
 

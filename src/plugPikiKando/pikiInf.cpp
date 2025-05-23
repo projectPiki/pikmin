@@ -570,7 +570,7 @@ void CreatureInfMgr::restoreAll()
  */
 void StageInf::init()
 {
-	mBPikiInfMgr.init(100);
+	mBPikiInfMgr.init(MAX_PIKI_ON_FIELD);
 }
 
 /*

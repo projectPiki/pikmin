@@ -147,9 +147,9 @@ void Creature::moveNew(f32 deltaTime)
 
 	if (isCreatureFlag(CF_Unk5)) {
 		mVelocity.y -= deltaTime * mAirResistance * mVelocity.y;
-		f32 scale = 0.2f;
-		mVelocity.x -= deltaTime * mAirResistance * scale * mVelocity.x;
-		mVelocity.z -= deltaTime * mAirResistance * scale * mVelocity.z;
+		f32 scale   = 0.2f;
+		mVelocity.x = mVelocity.x - (deltaTime * mAirResistance) * scale * mVelocity.x;
+		mVelocity.z = mVelocity.z - (deltaTime * mAirResistance) * scale * mVelocity.z;
 	}
 
 	mGroundTriangle = nullptr;
@@ -158,6 +158,7 @@ void Creature::moveNew(f32 deltaTime)
 		RopeCreature* rope = static_cast<RopeCreature*>(this);
 		Cylinder ropeBoundary(rope->mParentRope->mPosition, rope->mPosition, 1.0f);
 		Vector3f pushVec;
+		f32 collisionRatio;
 		RopeItem* ropeItem = static_cast<RopeItem*>(rope);
 		Iterator iter(pikiMgr);
 
@@ -175,7 +176,6 @@ void Creature::moveNew(f32 deltaTime)
 			if (canAttach && piki->isRopable() && piki->isAlive() && !piki->isBuried()) {
 				Vector3f centerPoint = piki->getCentre();
 				Sphere pikminBounds(centerPoint, piki->getCentreSize());
-				f32 collisionRatio;
 
 				if (ropeBoundary.collide(pikminBounds, pushVec, collisionRatio) && !piki->mRope) {
 					Vector3f attachPoint     = rope->getRopePos(collisionRatio);
@@ -196,11 +196,9 @@ void Creature::moveNew(f32 deltaTime)
 			}
 		}
 
-		Vector3f dir = mPosition - rope->mParentRope->mPosition;
-		f32 distance = dir.normalise();
-
-		f32 speedAlongRope            = mVelocity.DP(dir);
-		Vector3f ropeDirectedVelocity = speedAlongRope * dir;
+		Vector3f dir                  = mPosition - rope->mParentRope->mPosition;
+		f32 distance                  = dir.normalise();
+		Vector3f ropeDirectedVelocity = mVelocity.DP(dir) * dir;
 		Vector3f perpVelocity         = mVelocity - ropeDirectedVelocity;
 
 		mVelocity = perpVelocity;
@@ -315,7 +313,12 @@ void Creature::moveNew(f32 deltaTime)
 
 	mPreviousTriangle = mGroundTriangle;
 
-	u32 badCompiler2[8];
+	u32 badCompiler[2];
+	mPreviousTriangle ? "fake" : "fake";
+	mPreviousTriangle ? "fake" : "fake";
+	mPreviousTriangle ? "fake" : "fake";
+	mPreviousTriangle ? "fake" : "fake";
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1351,7 +1354,7 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		{
 			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
 				for (int i = 0; i < collShape->mColliderCount; i++) {
-					if (collShape->mProgressStateList[collShape->mColliderList[i]->mStateIndex]) {
+					if (collShape->mVisibleList[collShape->mColliderList[i]->mStateIndex]) {
 						collShape->mColliderList[i]->mShape          = collShape->mShape;
 						collShape->mColliderList[i]->mVertexList     = collShape->mVertexList;
 						collShape->mColliderList[i]->mSourceCollider = collShape;

@@ -1,3 +1,6 @@
+#ifndef _JAUDIO_FXINTERFACE_H
+#define _JAUDIO_FXINTERFACE_H
+
 #include "jaudio/dspinterface.h"
 
 typedef struct FxlineConfig_ FxlineConfig;
@@ -12,4 +15,6 @@ struct FxlineConfig_ {
 	s16 filterCoeffs[8];    // _10
 };
 
-BOOL DFX_SetFxLine(u8 idx, s16* volatile circularBufferBase, FxlineConfig* fxlineConfig);
+BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* fxlineConfig);
+
+#endif

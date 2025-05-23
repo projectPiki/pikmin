@@ -5,16 +5,19 @@
 #include "GfxObject.h"
 #include "Dolphin/gx.h"
 #include "Ayu.h"
+#include "Stream.h"
 
 struct Texture;
 struct TexImg;
 struct Colour;
 struct TexobjInfo;
+struct SystemCache;
 
 /**
  * @brief TODO
  */
 enum TexImgFormat {
+	TEX_FMT_NULL   = -1,
 	TEX_FMT_RGB565 = 0,
 	TEX_FMT_S3TC   = 1,
 	TEX_FMT_RGB5A3 = 2,
@@ -49,7 +52,7 @@ struct TexAttr : public CoreNode {
 		mImage       = nullptr;
 		mTilingType  = TILING_REPEAT;
 		_20          = 0;
-		_24          = 0.0f;
+		mLODBias     = 0.0f;
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -64,10 +67,64 @@ struct TexAttr : public CoreNode {
 	s16 mFlags;         // _1E
 	u16 _20;            // _20
 	s16 _22;            // _22
-	f32 _24;            // _24
+	f32 mLODBias;       // _24
 	char* mTextureName; // _28
 	Texture* mTexture;  // _2C
 	TexImg* mImage;     // _30
+};
+
+/**
+ * @brief TODO
+ */
+struct BtiHeader {
+	void read(RandomAccessStream& input)
+	{
+		mImageFormat       = input.readByte();
+		mIsAlphaEnabled    = input.readByte();
+		mWidth             = input.readShort();
+		mHeight            = input.readShort();
+		mWrapS             = input.readByte();
+		mWrapT             = input.readByte();
+		_08                = input.readByte();
+		_09                = input.readByte();
+		mNumPaletteEntries = input.readShort();
+		mPaletteDataOffset = input.readInt();
+		mIsMipmapEnabled   = input.readByte();
+		mIsEdgeLODEnabled  = input.readByte();
+		mDoClampLODBias    = input.readByte();
+		mMaxAnisotropy     = input.readByte();
+		mMiniFilterType    = input.readByte();
+		mMaxiFilterType    = input.readByte();
+		mMinLOD            = input.readByte();
+		mMaxLOD            = input.readByte();
+		mNumImages         = input.readByte();
+		_19                = input.readByte();
+		mLODBias           = input.readShort();
+		mImageDataOffset   = input.readInt();
+	}
+
+	u8 mImageFormat;        // _00
+	u8 mIsAlphaEnabled;     // _01
+	u16 mWidth;             // _02
+	u16 mHeight;            // _04
+	u8 mWrapS;              // _06
+	u8 mWrapT;              // _07
+	u8 _08;                 // _08
+	u8 _09;                 // _09
+	u16 mNumPaletteEntries; // _0A
+	u32 mPaletteDataOffset; // _0C
+	u8 mIsMipmapEnabled;    // _10
+	u8 mIsEdgeLODEnabled;   // _11
+	u8 mDoClampLODBias;     // _12
+	u8 mMaxAnisotropy;      // _13
+	u8 mMiniFilterType;     // _14
+	u8 mMaxiFilterType;     // _15
+	u8 mMinLOD;             // _16
+	u8 mMaxLOD;             // _17
+	u8 mNumImages;          // _18
+	u8 _19;                 // _19
+	u16 mLODBias;           // _1A
+	u32 mImageDataOffset;   // _1C
 };
 
 /**
@@ -90,7 +147,7 @@ struct TexImg : public CoreNode {
 	static char* formatName(u32 texFmt);
 
 	// unused/inlined:
-	void convFormat(u32);
+	u32 convFormat(u32);
 	void setColour(Colour&);
 	void readTexData(Texture*, RandomAccessStream&, u8*);
 	void dumpBti(Texture*, char*, RandomAccessStream&, RandomAccessStream&);
@@ -224,19 +281,19 @@ struct TexCacheInfo : public CacheInfo {
 struct CacheTexture : public Texture {
 	CacheTexture()
 	{
-		mCacheInfo = nullptr;
-		mTexImage  = 0;
-		_40        = 0;
+		mSystemCache = nullptr;
+		mTexImage    = nullptr;
+		mActiveCache = nullptr;
 	}
 
 	virtual void makeResident(); // _10
 
 	// _00     = VTBL
 	// _00-_3C = Texture
-	TexCacheInfo* mCacheInfo; // _3C
-	TexCacheInfo* _40;        // _40
-	TexImg* mTexImage;        // _44
-	u32 _48;                  // _48
+	SystemCache* mSystemCache;  // _3C
+	TexCacheInfo* mActiveCache; // _40
+	TexImg* mTexImage;          // _44
+	u32 mAramAddress;           // _48
 };
 
 /**
@@ -247,8 +304,8 @@ struct TextureCacher : public TexCacheInfo {
 	{
 		mCache = new AyuCache(size);
 		mName  = "root";
-		mNext  = this;
 		mPrev  = this;
+		mNext  = this;
 	}
 
 	void updateInfo(CacheTexture*);

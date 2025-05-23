@@ -162,11 +162,11 @@ struct Vector3f {
 
 	void bounce(Vector3f& surface, f32 elasticity)
 	{
-		f32 dp = -dot(surface) * elasticity;
+		f32 dp = -DP(surface) * elasticity;
 		if (dp > 0.0f) {
-			x = dp * surface.x + x;
-			y = dp * surface.y + y;
-			z = dp * surface.z + z;
+			x = surface.x * dp + x;
+			y = surface.y * dp + y;
+			z = surface.z * dp + z;
 		}
 	}
 
@@ -188,12 +188,13 @@ struct Vector3f {
 	// unused/inlined (ALL HAVE NOT BEEN CHECKED FOR ACCURACY):
 	void normalize() { normalise(); }
 
-	void project(Vector3f& other)
+	// NB: this gets the orthogonal component, not the projected component.
+	void project(Vector3f& dirToRemove)
 	{
-		f32 dp = DP(other);
-		x      = -(dp * other.x - x);
-		y      = -(dp * other.y - y);
-		z      = -(dp * other.z - z);
+		f32 projAmt = DP(dirToRemove);
+		x           = -(projAmt * dirToRemove.x - x);
+		y           = -(projAmt * dirToRemove.y - y);
+		z           = -(projAmt * dirToRemove.z - z);
 	}
 
 	void middle(Vector3f& a, Vector3f& b)
@@ -361,6 +362,14 @@ inline Vector3f operator-(const Vector3f& a)
 inline Vector3f operator/(const Vector3f& a, const f32& b)
 {
 	return a * (1.0f / b);
+}
+
+inline Vector3f CP(const Vector3f& a, const Vector3f& b)
+{
+	f32 x = a.y * b.z - a.z * b.y;
+	f32 y = a.z * b.x - a.x * b.z;
+	f32 z = a.x * b.y - a.y * b.x;
+	return Vector3f(x, y, z);
 }
 
 #endif

@@ -3,145 +3,150 @@
 
 #include "types.h"
 #include "P2D/Pane.h"
+#include "P2D/Screen.h"
+#include "P2D/Graph.h"
 #include "zen/Number.h"
+#include "zen/DamageEffect.h"
+#include "zen/DrawCommon.h"
+#include "system.h"
+#include "nlib/Math.h"
 
 struct Graphics;
+struct P2DPerspGraph;
 
-// these can either go here or drawGameInfo.cpp, either way
-
-namespace {
-
-/**
- * @brief TODO
- */
-struct DateCallBack : public P2DPaneCallBack, public zen::NumberTex {
-	virtual bool invoke(P2DPane*); // _08
-
-	void setTex();
-
-	// TODO: members
-};
+namespace zen {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC.
  */
-struct LifePinchCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
+struct GameInfo {
+	GameInfo()
+	{
+		mEncodedNextThrowType = 0;
+		mFormationPikiNum     = 0;
+		mMapPikiNum           = 0;
+		mTotalPikiNum         = 0;
+	}
 
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct LifeIconCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-	virtual bool draw(P2DPane*);   // _0C
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct NaviTexCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct NaviIconCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
+	int mEncodedNextThrowType; // _00
+	s16 mFormationPikiNum;     // _04
+	s16 mMapPikiNum;           // _06
+	s16 mTotalPikiNum;         // _08
 };
 
 /**
  * @brief TODO
  *
- * @note Size: 0x10.
+ * @note Size: 0x104.
  */
-struct SunMove {
-	// TODO: members
-	u8 _00[0x10]; // _00, unknown
+struct DGIScreenMgr {
+	enum modeFlag {
+		MODE_Unk0 = 0,
+		MODE_Unk1 = 1,
+		MODE_Unk2 = 2,
+		MODE_Unk3 = 3,
+	};
+
+	DGIScreenMgr(char* bloFileName)
+	{
+		_04   = 0.0f;
+		_08   = 0.5f;
+		mMode = 0;
+		mScreen.set(bloFileName, true, true, true);
+		mScreen.setOffset(mScreen.getWidth() >> 1, mScreen.getHeight() >> 1);
+	}
+
+	P2DPane* search(u32 tag, bool p2) { return mScreen.search(tag, p2); }
+
+	void update()
+	{
+		mScreen.update();
+		switch (mMode) {
+		case MODE_Unk0:
+			mScreen.hide();
+			break;
+
+		case MODE_Unk1:
+			f32 frame;
+			if (addFrame(&frame)) {
+				mMode = MODE_Unk2;
+			}
+			mScreen.setScale(2.0f - 1.0f * frame);
+			break;
+
+		case MODE_Unk2:
+			mScreen.setScale(1.0f);
+			break;
+
+		case MODE_Unk3:
+			f32 frame2;
+			if (addFrame(&frame2)) {
+				mMode = MODE_Unk0;
+			}
+			mScreen.setScale(1.0f * frame2 + 1.0f);
+			break;
+		}
+	}
+
+	bool addFrame(f32* val)
+	{
+		bool res = false;
+		_04 += gsys->getFrameTime();
+		if (_04 > _08) {
+			_04 = _08;
+			res = true;
+		}
+		*val = sinf(_04 / _08 * 90.0f * PI / 180.0f);
+		return res;
+	}
+
+	void draw(P2DPerspGraph* perspGraph) { mScreen.draw(0, 0, perspGraph); }
+
+	void makeResident() { P2DPaneLibrary::makeResident(&mScreen); }
+
+	void displayOn()
+	{
+		mMode = MODE_Unk2;
+		mScreen.show();
+		mScreen.setScale(1.0f);
+	}
+
+	void displayOff()
+	{
+		mMode = MODE_Unk0;
+		mScreen.hide();
+		mScreen.setScale(2.0f);
+	}
+
+	void frameIn(f32 p1)
+	{
+		mMode = MODE_Unk1;
+		_04   = 0.0f;
+		_08   = p1;
+		mScreen.show();
+		mScreen.setScale(2.0f);
+	}
+
+	void frameOut(f32 p1)
+	{
+		mMode = MODE_Unk3;
+		_04   = 0.0f;
+		_08   = p1;
+		mScreen.show();
+		mScreen.setScale(1.0f);
+	}
+
+	// DLL inlines to do:
+	bool isFrameIn() { return mMode == MODE_Unk2; }
+	bool isFrameOut() { return mMode == MODE_Unk0; }
+
+	int mMode;         // _00
+	f32 _04;           // _04
+	f32 _08;           // _08
+	P2DScreen mScreen; // _0C
 };
-
-/**
- * @brief TODO
- */
-struct MoonIconCallBack : public P2DPaneCallBack, public SunMove {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SunAnim {
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SunIcon2CallBack : public P2DPaneCallBack, public SunMove, public SunAnim {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SunIcon1CallBack : public P2DPaneCallBack, public SunAnim {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SunCapsuleCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct SunBaseCallBack : public SunMove, public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct MapPikminWindowCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct PikiIconCallBack : public P2DPaneCallBack {
-	virtual bool invoke(P2DPane*); // _08
-
-	// TODO: members
-};
-
-} // namespace
-
-namespace zen {
 
 /**
  * @brief TODO
@@ -177,15 +182,14 @@ struct DrawGameInfo {
 	bool isLowerFrameIn();
 	bool isLowerFrameOut();
 
-	// TODO: members
-	int mEncodedNextThrowType; // _00
-	u16 mFormationPikiNum;     // _04
-	u16 mMapPikiNum;           // _06
-	u16 mTotalPikiNum;         // _08
-	u8 _0A[0x1C - 0xC];        // _0A, unknown
+	DGIScreenMgr* mUpperScreenMgr; // _00
+	DGIScreenMgr* mLowerScreenMgr; // _04
+	DGIScreenMgr* mModeScreenMgr;  // _08
+	GameInfo mInfo;                // _0C
+	DamageEffect mDamageEffect;    // _18
 };
 
-extern DrawGameInfo* pGameInfo;
+extern GameInfo* pGameInfo;
 
 } // namespace zen
 

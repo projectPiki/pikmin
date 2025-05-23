@@ -164,73 +164,67 @@ struct PlayerState {
 	int getRestParts();
 	void lostUfoParts(u32);
 
-	// these MIGHT be hasContainer and setContainer and vice versa
-	void setBootContainer(int color) { _184 |= 1 << color + 3; }
-	bool bootContainer(int color) { return _184 & (1 << color + 3); }
+	void setContainer(int color) { mContainerFlag |= 1 << color; }
+	bool hasContainer(int color) { return mContainerFlag & (1 << color); }
+
+	void setBootContainer(int color) { mContainerFlag |= 1 << color + 3; }
+	bool bootContainer(int color) { return mContainerFlag & (1 << color + 3); }
 
 	int getLastPikmins() { return _1A8; }
-
-	void setContainer(int color) { _184 |= 1 << color; }
-	bool hasContainer(int color) { return _184 & (1 << color); }
 
 	bool inDayEnd() { return mInDayEnd; }
 	void setDayEnd(bool set) { mInDayEnd = set; }
 
 	bool isChallengeMode() { return mIsChallengeMode; }
 
-	bool hasUfoLeftControl() { return _11 & 4; }
-	bool hasUfoRightControl() { return _11 & 2; }
-	bool hasRadar() { return _11 & 1; }
+	bool hasUfoLeftControl() { return mShipEffectPartFlag & 4; }
+	bool hasUfoRightControl() { return mShipEffectPartFlag & 2; }
+	bool hasRadar() { return mShipEffectPartFlag & 1; }
 
 	void setDayCollectCount(int day, int parts) { mPartsCollectedByDay[day] = parts; }
 	void setDayPowerupCount(int day, int parts) { mPartsToNextByDay[day] = parts; }
-
-	/*
-	    All remaining DLL inlines:
-
-	    int getDayCollectCount(int);
-	    int getLastPikmins();
-	*/
+	int getDayCollectCount(int day) { return mPartsCollectedByDay[day]; }
+	int getDayPowerupCount(int day) { return mPartsToNextByDay[day]; }
 
 	static int totalUfoParts;
 
-	int mSproutedNum;             // _00
-	int mLostBattlePikis;         // _04
-	int mLeftBehindPikis;         // _08
-	int _0C;                      // _0C
-	u8 mShipUpgradeLevel;         // _10
-	u8 _11;                       // _11
-	UfoParts* _14;                // _14
-	u8 mPartsCollectedByDay[30];  // _18
-	u8 mPartsToNextByDay[30];     // _38
-	DemoFlags mDemoFlags;         // _54
-	ResultFlags mResultFlags;     // _70
-	u8 _BC;                       // _BC
-	PikiShapeObject* _C0;         // _C0
-	PaniPikiAnimMgr mPikiAnimMgr; // _C4
-	int mTotalRegisteredParts;    // _170
-	int mTotalParts;              // _174
-	UfoParts* mUfoParts;          // _178
-	int mCurrParts;               // _17C
-	int _180;                     // _180
-	u8 _184;                      // _184
-	bool _185;                    // _185
-	bool _186;                    // _186
-	u8 _187[5];                   // _187
-	TimeGraph _18C;               // _18C
-	u16 _194;                     // _194
-	TimeGraph _198;               // _198
-	int _1A0;                     // _1A0, final dead pikis count?
-	int _1A4;                     // _1A4
-	int _1A8;                     // _1A8
-	u8 mDisplayPikiFlag;          // _1AC
-	BitFlags** mCourseFlags;      // _1B0
-	u8 _1B4;                      // _1B4
-	bool mInDayEnd;               // _1B5
-	bool mIsChallengeMode;        // _1B6
-	PermanentEffect* _1B8;        // _1B8
-	PermanentEffect* _1BC;        // _1BC
-	Vector3f _1C0;                // _1C0
+	int mSproutedNum;                  // _00
+	int mLostBattlePikis;              // _04
+	int mLeftBehindPikis;              // _08
+	int _0C;                           // _0C
+	u8 mShipUpgradeLevel;              // _10
+	u8 mShipEffectPartFlag;            // _11, for radar + the ionium jets
+	UfoParts* _14;                     // _14
+	u8 mPartsCollectedByDay[MAX_DAYS]; // _18
+	u8 mPartsToNextByDay[MAX_DAYS];    // _38
+	DemoFlags mDemoFlags;              // _54
+	ResultFlags mResultFlags;          // _70
+	u8 _BC;                            // _BC
+	PikiShapeObject* _C0;              // _C0
+	PaniPikiAnimMgr mPikiAnimMgr;      // _C4
+	int mTotalRegisteredParts;         // _170
+	int mTotalParts;                   // _174
+	UfoParts* mUfoParts;               // _178
+	int mCurrParts;                    // _17C
+	int _180;                          // _180
+	u8 mContainerFlag;                 // _184
+	bool mIsTutorialMode;              // _185
+	bool _186;                         // _186
+	u8 _187[5];                        // _187
+	TimeGraph _18C;                    // _18C
+	u16 _194;                          // _194
+	TimeGraph _198;                    // _198
+	int _1A0;                          // _1A0, final dead pikis count?
+	int _1A4;                          // _1A4
+	int _1A8;                          // _1A8
+	u8 mDisplayPikiFlag;               // _1AC
+	BitFlags** mCourseFlags;           // _1B0
+	u8 _1B4;                           // _1B4
+	bool mInDayEnd;                    // _1B5
+	bool mIsChallengeMode;             // _1B6
+	PermanentEffect* _1B8;             // _1B8
+	PermanentEffect* _1BC;             // _1BC
+	Vector3f _1C0;                     // _1C0
 };
 
 extern bool preloadUFO;

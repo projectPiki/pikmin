@@ -10,7 +10,7 @@ struct Parameters;
  * @brief TODO
  */
 struct BaseParm {
-	BaseParm(Parameters*, struct ayuID);
+	BaseParm(Parameters*, ayuID);
 
 	// _08    = VTBL
 	char* mID;       // _00
@@ -25,32 +25,13 @@ struct BaseParm {
  * @brief TODO
  */
 struct Parameters {
-	inline Parameters()
+	Parameters() // this is Parameters(char*) in the DLL, but there's no char* mName in the DOL version.
 	    : mHead(nullptr)
 	{
 	}
 
 	void write(RandomAccessStream&);
 	void read(RandomAccessStream&);
-
-	inline void addToEnd(BaseParm* newNode)
-	{
-		BaseParm* node;
-		for (node = mHead; node; node = node->mNext) {
-			node->mID;
-		}
-
-		BaseParm* last = nullptr;
-		for (node = mHead; node; node = node->mNext) {
-			last = node;
-		}
-
-		if (last) {
-			last->mNext = newNode;
-		} else {
-			mHead = newNode;
-		}
-	}
 
 	// unused/inlined:
 	int sizeInFile();
@@ -75,10 +56,8 @@ struct Parm : public BaseParm {
 	virtual void write(struct RandomAccessStream&); // _0C
 	virtual void read(RandomAccessStream&);         // _10
 
-	inline T& operator()() { return mValue; }
-	inline void operator()(T val) { mValue = val; }
-
-	inline void setValue(T val) { mValue = val; }
+	T& operator()() { return mValue; }
+	void operator()(T val) { mValue = val; }
 
 	// _08     = VTBL
 	// _00-_0C = BaseParm

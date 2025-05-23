@@ -289,51 +289,10 @@ const u8 __upper_map[256] = {
 
 /*
  * --INFO--
- * Address: 80215DB4
- * Size:    000028
- */
-int toupper(int __c)
-{
-	{
-		if (__c == -1) {
-			return 0xffffffff;
-		}
-		return (unsigned int)__upper_map[__c & 0xff];
-	}
-}
-
-/*
- * --INFO--
- * Address: 80215DDC
- * Size:    000028
- */
-int tolower(int __c)
-{
-	{
-		if (__c == -1) {
-			return 0xffffffff;
-		}
-		return (unsigned int)__lower_map[__c & 0xff];
-	}
-}
-
-/*
- * --INFO--
  * Address: ........
  * Size:    00001C
  */
-BOOL isxdigit(u8 c)
-{
-	// UNUSED FUNCTION
-	return (__ctype_map[c] & CTYPE_XDIGIT) != 0;
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isupper(void)
+void isalnum(void)
 {
 	// UNUSED FUNCTION
 }
@@ -343,7 +302,7 @@ void isupper(void)
  * Address: ........
  * Size:    00001C
  */
-void isspace(void)
+void isalpha(void)
 {
 	// UNUSED FUNCTION
 }
@@ -353,37 +312,7 @@ void isspace(void)
  * Address: ........
  * Size:    00001C
  */
-void ispunct(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isprint(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void islower(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isgraph(void)
+void iscntrl(void)
 {
 	// UNUSED FUNCTION
 }
@@ -404,7 +333,7 @@ void isgraph(void)
  * Address: ........
  * Size:    00001C
  */
-void iscntrl(void)
+void isgraph(void)
 {
 	// UNUSED FUNCTION
 }
@@ -414,7 +343,7 @@ void iscntrl(void)
  * Address: ........
  * Size:    00001C
  */
-void isalpha(void)
+void islower(void)
 {
 	// UNUSED FUNCTION
 }
@@ -424,7 +353,78 @@ void isalpha(void)
  * Address: ........
  * Size:    00001C
  */
-void isalnum(void)
+void isprint(void)
 {
 	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address: ........
+ * Size:    00001C
+ */
+void ispunct(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address: ........
+ * Size:    00001C
+ */
+void isspace(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address: ........
+ * Size:    00001C
+ */
+void isupper(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address: ........
+ * Size:    00001C
+ */
+BOOL isxdigit(u8 c)
+{
+	// UNUSED FUNCTION
+	return (__ctype_map[c] & CTYPE_XDIGIT) != 0;
+}
+
+/*
+ * --INFO--
+ * Address: 80215DDC
+ * Size:    000028
+ */
+int tolower(int __c)
+{
+	{
+		if (__c == -1) {
+			return 0xffffffff;
+		}
+		return (unsigned int)__lower_map[__c & 0xff];
+	}
+}
+
+/*
+ * --INFO--
+ * Address: 80215DB4
+ * Size:    000028
+ */
+int toupper(int __c)
+{
+	{
+		if (__c == -1) {
+			return 0xffffffff;
+		}
+		return (unsigned int)__upper_map[__c & 0xff];
+	}
 }

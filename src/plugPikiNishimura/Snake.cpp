@@ -24,9 +24,9 @@ DEFINE_PRINT("Snake");
  */
 SnakeProp::SnakeProp()
 {
-	mCreatureProps.mFriction.setValue(1.0f);
-	mCreatureProps.mFaceDirAdjust.setValue(0.0f);
-	mCreatureProps.mAcceleration.setValue(1.0f);
+	mCreatureProps.mFriction(1.0f);
+	mCreatureProps.mFaceDirAdjust(0.0f);
+	mCreatureProps.mAcceleration(1.0f);
 }
 
 /*
@@ -83,7 +83,7 @@ void Snake::init(Vector3f& pos)
 	mCollisionRadius = 15.0f;
 	setShadowSize(30.0f);
 	mBossType      = true;
-	mFaceDirection = mRotation.y;
+	_3C0           = mRotation.y;
 	_3C4           = 0.0f;
 	mSpawnPosition = pos;
 	mSnakeAi->initAI(this);

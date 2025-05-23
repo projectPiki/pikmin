@@ -46,9 +46,9 @@ BossProp::BossProp()
 Boss::Boss(CreatureProp* props)
     : Creature(props)
 {
-	mSeContext        = new SeContext(this, 1);
-	mLifeGauge._1C    = 1;
-	mLifeGauge.mScale = static_cast<BossProp*>(props)->mBossProps.mLifeGaugeScale();
+	mSeContext              = new SeContext(this, 1);
+	mLifeGauge.mRenderStyle = 1;
+	mLifeGauge.mScale       = static_cast<BossProp*>(props)->mBossProps.mLifeGaugeScale();
 	mSearchBuffer.init(mSearchData, 3);
 }
 

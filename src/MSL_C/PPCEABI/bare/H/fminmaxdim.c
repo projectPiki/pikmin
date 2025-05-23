@@ -5,7 +5,17 @@
  * Address:	........
  * Size:	000074
  */
-void fdim(void)
+void fmax(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000074
+ */
+void fmin(void)
 {
 	// UNUSED FUNCTION
 }
@@ -75,17 +85,7 @@ void __fpclassifyd(f64)
  * Address:	........
  * Size:	000074
  */
-void fmin(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
- */
-void fmax(void)
+void fdim(void)
 {
 	// UNUSED FUNCTION
 }

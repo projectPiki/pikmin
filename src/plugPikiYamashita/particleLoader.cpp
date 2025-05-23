@@ -58,7 +58,7 @@ u8* zen::particleLoader::pmFind(char* fileName)
 {
 	PCRData* pcr;
 	u8* data = nullptr;
-	for (pcr = (PCRData*)_00.getTopList(); pcr != _00.getOrigin(); pcr = (PCRData*)pcr->mNext) {
+	for (pcr = (PCRData*)getTopList(); pcr != getOrigin(); pcr = (PCRData*)pcr->mNext) {
 		if (strcmp(pcr->getName(), fileName) == 0) {
 			data = pcr->getDataBuf();
 			break;

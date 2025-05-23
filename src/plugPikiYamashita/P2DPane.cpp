@@ -54,7 +54,7 @@ void P2DPane::drawSelf(int, int, Matrix4f* drawMtx)
 {
 	if (mCallBack) {
 		Matrix4f posMtx;
-		drawMtx->multiplyTo(_78, posMtx);
+		drawMtx->multiplyTo(mWorldMtx, posMtx);
 		GXLoadPosMtxImm(posMtx.mMtx, 0);
 	}
 }
@@ -89,8 +89,8 @@ void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
  */
 void P2DPane::init()
 {
-	_B8                 = 0;
-	_BA                 = 0;
+	mOffsetX            = 0;
+	mOffsetY            = 0;
 	mFlag.mRotationAxis = PANEAXIS_X;
 	mRotation           = 0.0f;
 	mScale.set(1.0f, 1.0f, 1.0f);
@@ -123,11 +123,11 @@ void P2DPane::update()
 P2DPane::P2DPane()
     : mPaneTree(this)
 {
-	mPaneType = PANETYPE_Unk16;
+	mPaneType = PANETYPE_Pane;
 
 	show();
 	mTagName = 0;
-	mRectTransform.set(0, 0, 0, 0);
+	mBounds.set(0, 0, 0, 0);
 	init();
 }
 
@@ -141,8 +141,8 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 {
 	mPaneType = paneType;
 	show();
-	mTagName       = tag;
-	mRectTransform = p5;
+	mTagName = tag;
+	mBounds  = p5;
 	if (parent) {
 		parent->mPaneTree.appendChild(&mPaneTree);
 	}
@@ -158,10 +158,10 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 P2DPane::P2DPane(u32 tag, const PUTRect& rect)
     : mPaneTree(this)
 {
-	mPaneType = PANETYPE_Unk16;
+	mPaneType = PANETYPE_Pane;
 	show();
-	mTagName       = tag;
-	mRectTransform = rect;
+	mTagName = tag;
+	mBounds  = rect;
 	init();
 }
 
@@ -175,8 +175,8 @@ P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
 {
 	mPaneType = paneType;
 	show();
-	mTagName       = tag;
-	mRectTransform = rect;
+	mTagName = tag;
+	mBounds  = rect;
 	init();
 }
 
@@ -204,10 +204,10 @@ P2DPane::P2DPane(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 
 	mTagName = *(u32*)tag;
 
-	mRectTransform.mMinX = (int)input->readShort();
-	mRectTransform.mMinY = (int)input->readShort();
-	mRectTransform.mMaxX = mRectTransform.mMinX + (int)input->readShort();
-	mRectTransform.mMaxY = mRectTransform.mMinY + (int)input->readShort();
+	mBounds.mMinX = (int)input->readShort();
+	mBounds.mMinY = (int)input->readShort();
+	mBounds.mMaxX = mBounds.mMinX + (int)input->readShort();
+	mBounds.mMaxY = mBounds.mMinY + (int)input->readShort();
 
 	if (parent) {
 		parent->mPaneTree.appendChild(&mPaneTree);
@@ -235,11 +235,11 @@ P2DPane::~P2DPane()
  * Address:	801B0EA4
  * Size:	0004A4
  */
-void P2DPane::draw(int p1, int p2, const P2DGrafContext* grafContext, bool p4)
+void P2DPane::draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor)
 {
 	P2DGrafContext context(*grafContext);
 	if (context.mGrafType != P2DGRAF_Ortho) {
-		p4 = false;
+		applyScissor = false;
 	}
 
 	PSUTree<P2DPane>* parentTree = mPaneTree.getParent();
@@ -248,43 +248,43 @@ void P2DPane::draw(int p1, int p2, const P2DGrafContext* grafContext, bool p4)
 		parentPane = parentTree->getObject();
 	}
 
-	if (IsVisible() && !mRectTransform.isEmpty()) {
-		_20 = mRectTransform;
-		_28 = mRectTransform;
-		makeMatrix(mRectTransform.mMinX + p1, mRectTransform.mMinY + p2);
+	if (IsVisible() && !mBounds.isEmpty()) {
+		mGlobalBounds = mBounds;
+		mClipBounds   = mBounds;
+		makeMatrix(mBounds.mMinX + xOffs, mBounds.mMinY + yOffs);
 
 		if (parentPane) {
-			_20.add(parentPane->_20.mMinX, parentPane->_20.mMinY);
-			parentPane->_78.multiplyTo(_38, _78);
-			_28.add(parentPane->_20.mMinX, parentPane->_20.mMinY);
-			_28.intersect(parentPane->_28);
+			mGlobalBounds.add(parentPane->mGlobalBounds.mMinX, parentPane->mGlobalBounds.mMinY);
+			parentPane->mWorldMtx.multiplyTo(mLocalMtx, mWorldMtx);
+			mClipBounds.add(parentPane->mGlobalBounds.mMinX, parentPane->mGlobalBounds.mMinY);
+			mClipBounds.intersect(parentPane->mClipBounds);
 		} else {
-			_20.add(p1, p2);
-			_78 = _38;
-			_28.add(p1, p2);
+			mGlobalBounds.add(xOffs, yOffs);
+			mWorldMtx = mLocalMtx;
+			mClipBounds.add(xOffs, yOffs);
 		}
 
-		if (p4) {
-			((P2DOrthoGraph*)grafContext)->scissorBounds(&_30, &_28);
+		if (applyScissor) {
+			((P2DOrthoGraph*)grafContext)->scissorBounds(&mScissorBounds, &mClipBounds);
 		}
 
-		if (!_28.isEmpty() || !p4) {
-			context.place(_20);
+		if (!mClipBounds.isEmpty() || !applyScissor) {
+			context.place(mGlobalBounds);
 
-			if (p4) {
-				context.scissor(_30);
+			if (applyScissor) {
+				context.scissor(mScissorBounds);
 				context.setScissor();
 			}
 
 			GXSetCullMode((GXCullMode)mCullMode);
-			drawSelf(p1, p2, &context._70);
+			drawSelf(xOffs, yOffs, &context.mViewMtx);
 			if (mCallBack) {
 				mCallBack->draw(this);
 			}
 
 			PSUTreeIterator<P2DPane> iter(mPaneTree.getFirstChild());
 			while (iter != mPaneTree.getEndChild()) {
-				iter->draw(0, 0, grafContext, p4);
+				iter->draw(0, 0, grafContext, applyScissor);
 				++iter;
 			}
 		}
@@ -299,8 +299,8 @@ void P2DPane::draw(int p1, int p2, const P2DGrafContext* grafContext, bool p4)
 void P2DPane::clip(const PUTRect& rect)
 {
 	PUTRect newRect = rect;
-	newRect.add(_20.mMinX, _20.mMinY);
-	_28.intersect(newRect);
+	newRect.add(mGlobalBounds.mMinX, mGlobalBounds.mMinY);
+	mClipBounds.intersect(newRect);
 }
 
 /*
@@ -308,7 +308,7 @@ void P2DPane::clip(const PUTRect& rect)
  * Address:	801B1394
  * Size:	0000A4
  */
-P2DPane* P2DPane::search(u32 tag, bool p2)
+P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 {
 	if (tag == mTagName) {
 		return this;
@@ -323,7 +323,7 @@ P2DPane* P2DPane::search(u32 tag, bool p2)
 		++iter;
 	}
 
-	if (p2) {
+	if (doPanicOnNull) {
 		PRINT("tag <%c%c%c%c> is not found.\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]);
 		ERROR("tag <%c%c%c%c> is not found.\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]);
 	}
@@ -350,10 +350,10 @@ void P2DPane::makeMatrix(int x, int y)
 		break;
 	}
 
-	_38.makeSRT(mScale, rotAxis, Vector3f(f32(_B8) + f32(x), f32(_BA) + f32(y), mPaneZ));
-	_38.mMtx[0][3] += _38.mMtx[0][0] * -_B8 + _38.mMtx[0][1] * -_BA;
-	_38.mMtx[1][3] += _38.mMtx[1][0] * -_B8 + _38.mMtx[1][1] * -_BA;
-	_38.mMtx[2][3] += _38.mMtx[2][0] * -_B8 + _38.mMtx[2][1] * -_BA;
+	mLocalMtx.makeSRT(mScale, rotAxis, Vector3f(f32(mOffsetX) + f32(x), f32(mOffsetY) + f32(y), mPaneZ));
+	mLocalMtx.mMtx[0][3] += mLocalMtx.mMtx[0][0] * -mOffsetX + mLocalMtx.mMtx[0][1] * -mOffsetY;
+	mLocalMtx.mMtx[1][3] += mLocalMtx.mMtx[1][0] * -mOffsetX + mLocalMtx.mMtx[1][1] * -mOffsetY;
+	mLocalMtx.mMtx[2][3] += mLocalMtx.mMtx[2][0] * -mOffsetX + mLocalMtx.mMtx[2][1] * -mOffsetY;
 }
 
 /*

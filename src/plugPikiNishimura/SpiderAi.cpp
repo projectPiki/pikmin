@@ -104,7 +104,7 @@ void SpiderAi::keyAction0()
 	}
 
 	if (currState == SPIDERAI_Appear) {
-		rumbleMgr->start(5, 0, mSpider->mPosition);
+		rumbleMgr->start(RUMBLE_Unk5, 0, mSpider->mPosition);
 		cameraMgr->startVibrationEvent(2, mSpider->mPosition);
 	}
 }

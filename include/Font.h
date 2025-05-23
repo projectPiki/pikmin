@@ -6,18 +6,25 @@
 
 struct Texture;
 
+#define ASCII_PRINTABLE_MIN (0x20) // space
+#define ASCII_PRINTABLE_MAX (0x80) // one more than last printable symbol (0x7F = delete)
+
 /**
  * @brief TODO
  */
 struct FontChar {
-	FontChar();
+	FontChar()
+	{
+		_00 = _02 = 0;
+		mWidth = mHeight = 8;
+	}
 
 	u16 _00;                 // _00
 	u16 _02;                 // _02
-	u16 mWidth;              // _04
-	u16 mHeight;             // _06
-	u16 mCharSpacing;        // _08
-	u16 mLeftOffset;         // _0A
+	s16 mWidth;              // _04
+	s16 mHeight;             // _06
+	s16 mCharSpacing;        // _08
+	s16 mLeftOffset;         // _0A
 	RectArea mTextureCoords; // _0C
 };
 
@@ -28,9 +35,12 @@ struct FontChar {
  */
 struct Font {
 	void setTexture(Texture*, int, int);
-	int charToIndex(char); // may not be int
-	void charToIndex(u16);
+	int charToIndex(char);
 	int stringWidth(char*);
+	int charToIndex(u16);
+
+	// DLL inlines:
+	int stringHeight(char* str) { return mCharHeight; }
 
 	Texture* mTexture; // _00
 	int mCharWidth;    // _04

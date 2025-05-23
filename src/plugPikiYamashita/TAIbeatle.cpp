@@ -1948,31 +1948,6 @@ void TAIAflickingBeatle::flick(Teki&)
 
 /*
  * --INFO--
- * Address:	801C743C
- * Size:	000034
- */
-void TAIAinvincibleOff::start(Teki&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r4, -0x9B4(r13)
-	  lwz       r12, 0x1D0(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	801C7470
  * Size:	000094
  */

@@ -39,15 +39,15 @@ void AnmobjInfo::detach()
  * Size:	000144
  */
 StdSystem::StdSystem()
-    : _200("CoreNode")
-    , _214("CoreNode")
+    : mDvdFileTreeRoot("CoreNode")
+    , mAramFileTreeRoot("CoreNode")
 {
 	mConsFont         = nullptr;
 	mCurrentFade      = 0.0f;
 	mFadeStart        = 0.0f;
 	mFadeEnd          = 1.0;
 	mToggleFileInfo   = 1;
-	_198              = 0;
+	mForceTogglePrint = 0;
 	mGfxobjInfo.mPrev = &mGfxobjInfo;
 	mGfxobjInfo.mNext = &mGfxobjInfo;
 	mHasGfxObjects    = true;
@@ -327,7 +327,7 @@ void StdSystem::addGfxObject(GfxobjInfo* other)
 void StdSystem::attachObjs()
 {
 	// WTF? volatile variable nonsense.
-	gsys->_26C;
+	gsys->mIsRendering;
 
 	if (mHasGfxObjects) {
 		for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
@@ -577,7 +577,7 @@ void StdSystem::loadBundle(char* path, bool p3)
 				cacheTex->mTexImage    = newTexImg;
 				newTexture             = cacheTex;
 				newTexImg->importBti(cacheTex, *fileStream, (u8*)OSRoundUp32B(mGraphics->mSystemMatrices));
-				cacheTex->_48 = copyRamToCache((u32)newTexImg->mTextureData, newTexImg->mDataSize, 0);
+				cacheTex->mAramAddress = copyRamToCache((u32)newTexImg->mTextureData, newTexImg->mDataSize, 0);
 				copyWaitUntilDone();
 				newTexImg->mTextureData = nullptr;
 			} else {
@@ -632,9 +632,9 @@ char* StdSystem::stringDup(char* str)
  */
 void TextureCacher::updateInfo(CacheTexture* cacheTex)
 {
-	if (mNext != cacheTex->_40) {
-		cacheTex->_40->remove();
-		insertAfter(cacheTex->_40);
+	if (mNext != cacheTex->mActiveCache) {
+		cacheTex->mActiveCache->remove();
+		insertAfter(cacheTex->mActiveCache);
 	}
 }
 
@@ -678,8 +678,8 @@ void TextureCacher::cacheTexture(CacheTexture* tex)
 			void* alloc                  = mCache->mallocL(texSize);
 			tex->mTexImage->mTextureData = (void*)OSRoundDown32B((u32)alloc + 0x33);
 			TexCacheInfo* info           = (TexCacheInfo*)alloc;
-			info->_0C                    = (TexobjInfo*)&tex->_40;
-			tex->_40                     = info;
+			info->_0C                    = (TexobjInfo*)&tex->mActiveCache;
+			tex->mActiveCache            = info;
 			insertAfter(info);
 			break;
 		}
