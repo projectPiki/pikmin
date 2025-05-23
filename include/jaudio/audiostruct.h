@@ -62,17 +62,21 @@ struct panData {
 };
 
 /**
- * @brief TODO.
+ * @brief TODO
+ *
+ * @note Size: 0x74.
  */
 struct jcs_ {
-	u32 _00;
-	int _04;
-	jc_* _08;
-	jc_* _0C;
-	jc_* _10;
-	jc_* _14;
-	u8 _18[0x70 - 0x18];
-	int _70;
+	u32 _00;             // _00
+	int _04;             // _04
+	jc_* _08;            // _08
+	jc_* _0C;            // _0C
+	jc_* _10;            // _10
+	jc_* _14;            // _14
+	u8 _18[0x4e - 0x18]; // _18
+	u16 _4E[1];          // _4E | Exact length unknown, but it is an array.
+	u8 _50[0x70 - 0x50]; // _50
+	int _70;             // _70
 };
 
 struct JCMgr {

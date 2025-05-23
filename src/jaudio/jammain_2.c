@@ -3539,7 +3539,7 @@ static u32 Cmd_UpdateSync()
 static u32 Cmd_BusConnect()
 {
 	if (SEQ_ARG._00[0] < 6) {
-		SEQ_P->_126[SEQ_ARG._00[0]] = SEQ_ARG._00[1];
+		SEQ_P->_D8._4E[SEQ_ARG._00[0]] = SEQ_ARG._00[1];
 	}
 	return 0;
 }
