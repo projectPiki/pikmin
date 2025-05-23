@@ -3,6 +3,16 @@
 
 /*
  * --INFO--
+ * Address:	........
+ * Size:	000378
+ */
+void fread(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
  * Address:	80215E04
  * Size:	0002DC
  */
@@ -106,14 +116,4 @@ size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 		stream->mBufferLength = 0;
 
 	return ((bytes_written + size - 1) / size);
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000378
- */
-void fread(void)
-{
-	// UNUSED FUNCTION
 }

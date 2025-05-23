@@ -1,4 +1,3 @@
-
 /*
  * --INFO--
  * Address: 8021A9B0
@@ -121,6 +120,17 @@
 #include "errno.h"
 #include "Dolphin/float.h"
 #include "fdlibm.h"
+
+/*
+ * --INFO--
+ * Address: 8021B1C8
+ * Size:    000020
+ */
+f64 scalbn(f64 p1, int p2)
+{
+	return ldexp(p1, p2);
+	FORCE_DONT_INLINE; // This shouldnt be here but this function keeps inlining no matter where I put it
+}
 
 // "$NetBSD: e_pow.c,v 1.11 1999/07/02 15:37:40 simonb Exp $"
 
@@ -417,13 +427,3 @@ f64 x, y;
 }
 
 #endif /* defined(_DOUBLE_IS_32BITS) */
-
-/*
- * --INFO--
- * Address: 8021B1C8
- * Size:    000020
- */
-f64 scalbn(f64 p1, int p2)
-{
-	return ldexp(p1, p2);
-}

@@ -18,8 +18,26 @@ typedef struct {
 	char _34;
 	char _35;
 	char _36;
+	char _37;
 } lconv;
 
-lconv __lconv = { ".", "", "", "", "", "", "", "", "", "", 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F };
+const char stringBase0[] = ".\0\0C";
 
-const char* dummy = "C";
+lconv __lconv = { stringBase0,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              stringBase0 + 2,
+	              0x7F,
+	              0x7F,
+	              0x7F,
+	              0x7F,
+	              0x7F,
+	              0x7F,
+	              0x7F,
+	              0x7F };

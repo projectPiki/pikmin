@@ -3,9 +3,19 @@
 /*
  * --INFO--
  * Address:	........
- * Size:	000060
+ * Size:	000068
  */
-void tanhf(void)
+void sinhf(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000050
+ */
+void coshf(void)
 {
 	// UNUSED FUNCTION
 }
@@ -23,19 +33,9 @@ f64 fabsf__Ff(f32 f1)
 /*
  * --INFO--
  * Address:	........
- * Size:	000050
+ * Size:	000060
  */
-void coshf(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
- */
-void sinhf(void)
+void tanhf(void)
 {
 	// UNUSED FUNCTION
 }

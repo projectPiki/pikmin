@@ -2,29 +2,10 @@
 
 /*
  * --INFO--
- * Address:	80216594
- * Size:	000004
- */
-void __stdio_atexit(void)
-{
-}
-
-/*
- * --INFO--
  * Address:	........
- * Size:	000074
+ * Size:	000010
  */
-void perror(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
- */
-void ferror(void)
+void clearerr(void)
 {
 	// UNUSED FUNCTION
 }
@@ -42,9 +23,28 @@ void feof(void)
 /*
  * --INFO--
  * Address:	........
- * Size:	000010
+ * Size:	000008
  */
-void clearerr(void)
+void ferror(void)
 {
 	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000074
+ */
+void perror(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	80216594
+ * Size:	000004
+ */
+void __stdio_atexit(void)
+{
 }

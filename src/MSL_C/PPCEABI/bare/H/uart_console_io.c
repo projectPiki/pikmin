@@ -8,57 +8,6 @@ static BOOL initialized;
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000048
- */
-void __init_uart_console(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8021A510
- * Size:	000008
- */
-u32 __close_console(void)
-{
-	return 0x0;
-}
-
-/*
- * --INFO--
- * Address:	8021A518
- * Size:	000098
- */
-WEAKFUNC BOOL __write_console(s32 arg0, s32 arg1, s32* arg2, s32 arg3)
-{
-	int a;
-
-	// if ((OSGetConsoleType() & 0x20000000) == 0) {
-	int r3_cond = 0;
-	if (initialized == FALSE) {
-		r3_cond = InitializeUART(0xE100);
-		;
-		if (r3_cond == 0) {
-			initialized = TRUE;
-		}
-	}
-	if (r3_cond != 0) {
-		return TRUE;
-	}
-	if (WriteUARTN(arg1, *arg2) != 0) {
-		*arg2 = 0;
-		return TRUE;
-	}
-	//}
-
-	//__TRK_write_console(arg0, arg1, arg2, arg3);
-	return FALSE;
-}
-
-/*
- * --INFO--
  * Address:	8021A5B0
  * Size:	0000E0
  */
@@ -139,4 +88,55 @@ void __read_console(void)
 	  addi      r1, r1, 0x30
 	  blr
 	*/
+}
+
+/*
+ * --INFO--
+ * Address:	8021A518
+ * Size:	000098
+ */
+WEAKFUNC BOOL __write_console(s32 arg0, s32 arg1, s32* arg2, s32 arg3)
+{
+	int a;
+
+	// if ((OSGetConsoleType() & 0x20000000) == 0) {
+	int r3_cond = 0;
+	if (initialized == FALSE) {
+		r3_cond = InitializeUART(0xE100);
+		;
+		if (r3_cond == 0) {
+			initialized = TRUE;
+		}
+	}
+	if (r3_cond != 0) {
+		return TRUE;
+	}
+	if (WriteUARTN(arg1, *arg2) != 0) {
+		*arg2 = 0;
+		return TRUE;
+	}
+	//}
+
+	//__TRK_write_console(arg0, arg1, arg2, arg3);
+	return FALSE;
+}
+
+/*
+ * --INFO--
+ * Address:	8021A510
+ * Size:	000008
+ */
+u32 __close_console(void)
+{
+	return 0x0;
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000048
+ */
+void __init_uart_console(void)
+{
+	// UNUSED FUNCTION
 }

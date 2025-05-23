@@ -19,9 +19,29 @@ void (*__console_exit)(void) = 0;
 /*
  * --INFO--
  * Address:	........
- * Size:	000080
+ * Size:	000034
  */
-void __exit(void)
+void abort(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000038
+ */
+void atexit(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000038
+ */
+void __atexit(void)
 {
 	// UNUSED FUNCTION
 }
@@ -70,29 +90,9 @@ void exit(int status)
 /*
  * --INFO--
  * Address:	........
- * Size:	000038
+ * Size:	000080
  */
-void __atexit(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
- */
-void atexit(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
- */
-void abort(void)
+void __exit(void)
 {
 	// UNUSED FUNCTION
 }

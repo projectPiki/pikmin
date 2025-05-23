@@ -38,69 +38,6 @@ enum hex_scan_states {
 
 /*
  * --INFO--
- * Address:	8021942C
- * Size:	00008C
- */
-f64 atof(const char*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r3, 0x28(r1)
-	  lis       r3, 0x8022
-	  subi      r4, r3, 0x7EB0
-	  lis       r3, 0x8000
-	  stw       r0, 0x2C(r1)
-	  subi      r3, r3, 0x1
-	  addi      r5, r1, 0x28
-	  addi      r6, r1, 0x20
-	  addi      r7, r1, 0x24
-	  bl        .loc_0x8C
-	  lwz       r0, 0x24(r1)
-	  fabs      f2, f1
-	  cmpwi     r0, 0
-	  bne-      .loc_0x74
-	  lfd       f0, -0x3BE0(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x7C
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B80(r3)
-	  fcmpo     cr0, f2, f0
-	  blt-      .loc_0x74
-	  lis       r3, 0x802F
-	  lfd       f0, -0x6B78(r3)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x7C
-
-	.loc_0x74:
-	  li        r0, 0x22
-	  stw       r0, 0x3490(r13)
-
-	.loc_0x7C:
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0x8C:
-	*/
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
- */
-void strtod(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
  * Address:	802194B8
  * Size:	0006E4
  */
@@ -614,4 +551,67 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 		}
 		return result;
 	}
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000BC
+ */
+void strtod(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
+ * Address:	8021942C
+ * Size:	00008C
+ */
+f64 atof(const char* c)
+{
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  li        r0, 0
+	  stwu      r1, -0x30(r1)
+	  stw       r3, 0x28(r1)
+	  lis       r3, 0x8022
+	  subi      r4, r3, 0x7EB0
+	  lis       r3, 0x8000
+	  stw       r0, 0x2C(r1)
+	  subi      r3, r3, 0x1
+	  addi      r5, r1, 0x28
+	  addi      r6, r1, 0x20
+	  addi      r7, r1, 0x24
+	  bl        .loc_0x8C
+	  lwz       r0, 0x24(r1)
+	  fabs      f2, f1
+	  cmpwi     r0, 0
+	  bne-      .loc_0x74
+	  lfd       f0, -0x3BE0(r2)
+	  fcmpu     cr0, f0, f1
+	  beq-      .loc_0x7C
+	  lis       r3, 0x802F
+	  lfd       f0, -0x6B80(r3)
+	  fcmpo     cr0, f2, f0
+	  blt-      .loc_0x74
+	  lis       r3, 0x802F
+	  lfd       f0, -0x6B78(r3)
+	  fcmpo     cr0, f2, f0
+	  ble-      .loc_0x7C
+
+	.loc_0x74:
+	  li        r0, 0x22
+	  stw       r0, 0x3490(r13)
+
+	.loc_0x7C:
+	  lwz       r0, 0x34(r1)
+	  addi      r1, r1, 0x30
+	  mtlr      r0
+	  blr
+
+	.loc_0x8C:
+	*/
 }

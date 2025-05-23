@@ -2,6 +2,187 @@
 
 /*
  * --INFO--
+ * Address:	8021B9F8
+ * Size:	0000D8
+ */
+f32 atan2f(f32 __x, f32 __y)
+{
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x10(r1)
+	  stfs      f1, 0x8(r1)
+	  stfs      f2, 0xC(r1)
+	  lwz       r0, 0x8(r1)
+	  lwz       r3, 0xC(r1)
+	  rlwinm    r4,r0,0,0,0
+	  rlwinm    r0,r3,0,0,0
+	  cmpw      r0, r4
+	  bne-      .loc_0x78
+	  cmpwi     r0, 0
+	  beq-      .loc_0x50
+	  lfs       f1, 0x8(r1)
+	  lfs       f0, 0xC(r1)
+	  fdivs     f1, f1, f0
+	  bl        -0x308
+	  lfs       f0, -0x39F4(r2)
+	  fsubs     f1, f1, f0
+	  b         .loc_0xC8
+
+	.loc_0x50:
+	  lfs       f1, 0xC(r1)
+	  lfs       f0, -0x3A00(r2)
+	  fcmpu     cr0, f1, f0
+	  beq-      .loc_0x70
+	  lfs       f0, 0x8(r1)
+	  fdivs     f1, f0, f1
+	  bl        -0x330
+	  b         .loc_0xC8
+
+	.loc_0x70:
+	  lfs       f1, -0x3A04(r2)
+	  b         .loc_0xC8
+
+	.loc_0x78:
+	  lfs       f1, 0xC(r1)
+	  lfs       f0, -0x3A00(r2)
+	  fcmpo     cr0, f1, f0
+	  bge-      .loc_0xA0
+	  lfs       f0, 0x8(r1)
+	  fdivs     f1, f0, f1
+	  bl        -0x358
+	  lfs       f0, -0x39F4(r2)
+	  fadds     f1, f0, f1
+	  b         .loc_0xC8
+
+	.loc_0xA0:
+	  fcmpu     cr0, f1, f0
+	  beq-      .loc_0xB8
+	  lfs       f0, 0x8(r1)
+	  fdivs     f1, f0, f1
+	  bl        -0x378
+	  b         .loc_0xC8
+
+	.loc_0xB8:
+	  addis     r3, r4, 0x3FC9
+	  addi      r0, r3, 0xFDB
+	  stw       r0, 0x8(r1)
+	  lfs       f1, 0x8(r1)
+
+	.loc_0xC8:
+	  lwz       r0, 0x14(r1)
+	  addi      r1, r1, 0x10
+	  mtlr      r0
+	  blr
+	*/
+}
+
+/*
+ * --INFO--
+ * Address:	8021B9B4
+ * Size:	000044
+ */
+void acosf(void)
+{
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x18(r1)
+	  stfd      f31, 0x10(r1)
+	  fmr       f31, f1
+	  lfs       f0, -0x3A0C(r2)
+	  fnmsubs   f1, f31, f31, f0
+	  bl        -0x8C
+	  fmuls     f1, f31, f1
+	  bl        -0xB4
+	  lfs       f0, -0x3A04(r2)
+	  lwz       r0, 0x1C(r1)
+	  fsubs     f1, f0, f1
+	  lfd       f31, 0x10(r1)
+	  mtlr      r0
+	  addi      r1, r1, 0x18
+	  blr
+	*/
+}
+
+/*
+ * --INFO--
+ * Address:	8021B944
+ * Size:	000070
+ */
+void _inv_sqrtf(void)
+{
+	/*
+	.loc_0x0:
+	  lfs       f0, -0x3A00(r2)
+	  fcmpo     cr0, f1, f0
+	  ble-      .loc_0x50
+	  fsqrte    f2, f1
+	  lfs       f4, -0x39FC(r2)
+	  lfs       f3, -0x39F8(r2)
+	  frsp      f2, f2
+	  fmuls     f0, f2, f2
+	  fmuls     f2, f4, f2
+	  fnmsubs   f0, f1, f0, f3
+	  fmuls     f2, f2, f0
+	  fmuls     f0, f2, f2
+	  fmuls     f2, f4, f2
+	  fnmsubs   f0, f1, f0, f3
+	  fmuls     f2, f2, f0
+	  fmuls     f0, f2, f2
+	  fmuls     f2, f4, f2
+	  fnmsubs   f0, f1, f0, f3
+	  fmuls     f1, f2, f0
+	  blr
+
+	.loc_0x50:
+	  fcmpu     cr0, f1, f0
+	  beq-      .loc_0x64
+	  lis       r3, 0x802F
+	  lfs       f1, -0x6B88(r3)
+	  blr
+
+	.loc_0x64:
+	  lis       r3, 0x802F
+	  lfs       f1, -0x6B84(r3)
+	  blr
+	*/
+}
+
+/*
+ * --INFO--
+ * Address:	8021B924
+ * Size:	000020
+ */
+void atan(f32)
+{
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x8(r1)
+	  bl        -0x200
+	  lwz       r0, 0xC(r1)
+	  addi      r1, r1, 0x8
+	  mtlr      r0
+	  blr
+	*/
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00003C
+ */
+void asinf(void)
+{
+	// UNUSED FUNCTION
+}
+
+/*
+ * --INFO--
  * Address:	8021B730
  * Size:	0001F4
  */
@@ -159,187 +340,6 @@ void atanf(void)
 
 	.loc_0x1EC:
 	  addi      r1, r1, 0x10
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
- */
-void asinf(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	8021B924
- * Size:	000020
- */
-void atan(f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x200
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8021B944
- * Size:	000070
- */
-void _inv_sqrtf(void)
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x3A00(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x50
-	  fsqrte    f2, f1
-	  lfs       f4, -0x39FC(r2)
-	  lfs       f3, -0x39F8(r2)
-	  frsp      f2, f2
-	  fmuls     f0, f2, f2
-	  fmuls     f2, f4, f2
-	  fnmsubs   f0, f1, f0, f3
-	  fmuls     f2, f2, f0
-	  fmuls     f0, f2, f2
-	  fmuls     f2, f4, f2
-	  fnmsubs   f0, f1, f0, f3
-	  fmuls     f2, f2, f0
-	  fmuls     f0, f2, f2
-	  fmuls     f2, f4, f2
-	  fnmsubs   f0, f1, f0, f3
-	  fmuls     f1, f2, f0
-	  blr
-
-	.loc_0x50:
-	  fcmpu     cr0, f1, f0
-	  beq-      .loc_0x64
-	  lis       r3, 0x802F
-	  lfs       f1, -0x6B88(r3)
-	  blr
-
-	.loc_0x64:
-	  lis       r3, 0x802F
-	  lfs       f1, -0x6B84(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8021B9B4
- * Size:	000044
- */
-void acosf(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stfd      f31, 0x10(r1)
-	  fmr       f31, f1
-	  lfs       f0, -0x3A0C(r2)
-	  fnmsubs   f1, f31, f31, f0
-	  bl        -0x8C
-	  fmuls     f1, f31, f1
-	  bl        -0xB4
-	  lfs       f0, -0x3A04(r2)
-	  lwz       r0, 0x1C(r1)
-	  fsubs     f1, f0, f1
-	  lfd       f31, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8021B9F8
- * Size:	0000D8
- */
-f32 atan2f(f32 __x, f32 __y)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stfs      f1, 0x8(r1)
-	  stfs      f2, 0xC(r1)
-	  lwz       r0, 0x8(r1)
-	  lwz       r3, 0xC(r1)
-	  rlwinm    r4,r0,0,0,0
-	  rlwinm    r0,r3,0,0,0
-	  cmpw      r0, r4
-	  bne-      .loc_0x78
-	  cmpwi     r0, 0
-	  beq-      .loc_0x50
-	  lfs       f1, 0x8(r1)
-	  lfs       f0, 0xC(r1)
-	  fdivs     f1, f1, f0
-	  bl        -0x308
-	  lfs       f0, -0x39F4(r2)
-	  fsubs     f1, f1, f0
-	  b         .loc_0xC8
-
-	.loc_0x50:
-	  lfs       f1, 0xC(r1)
-	  lfs       f0, -0x3A00(r2)
-	  fcmpu     cr0, f1, f0
-	  beq-      .loc_0x70
-	  lfs       f0, 0x8(r1)
-	  fdivs     f1, f0, f1
-	  bl        -0x330
-	  b         .loc_0xC8
-
-	.loc_0x70:
-	  lfs       f1, -0x3A04(r2)
-	  b         .loc_0xC8
-
-	.loc_0x78:
-	  lfs       f1, 0xC(r1)
-	  lfs       f0, -0x3A00(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xA0
-	  lfs       f0, 0x8(r1)
-	  fdivs     f1, f0, f1
-	  bl        -0x358
-	  lfs       f0, -0x39F4(r2)
-	  fadds     f1, f0, f1
-	  b         .loc_0xC8
-
-	.loc_0xA0:
-	  fcmpu     cr0, f1, f0
-	  beq-      .loc_0xB8
-	  lfs       f0, 0x8(r1)
-	  fdivs     f1, f0, f1
-	  bl        -0x378
-	  b         .loc_0xC8
-
-	.loc_0xB8:
-	  addis     r3, r4, 0x3FC9
-	  addi      r0, r3, 0xFDB
-	  stw       r0, 0x8(r1)
-	  lfs       f1, 0x8(r1)
-
-	.loc_0xC8:
-	  lwz       r0, 0x14(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
 	  blr
 	*/
 }
