@@ -56,9 +56,6 @@ struct seqp_ {
 	u8 _D5;                                       // _0D5
 	u8 _D6[0x0d8 - 0x0d6];                        // _0D6
 	jcs_ _D8;                                     // _0D8
-	u8 _PADDING1[0x126 - (0x0d8 + sizeof(jcs_))]; //
-	u16 _126[2];                                  // _126 | Exact length unknown, but it is an array.
-	u8 _12A[0x14c - 0x12a];                       // _12A
 	seqp__Invented2* _14C[4];                     // _14C
 	u8 _15C[0x1f2 - 0x15c];                       // _15C
 	u16 _1F2[2];                                  // _1F2 | Exact length unknown, but it is an array.
