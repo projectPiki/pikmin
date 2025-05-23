@@ -344,22 +344,22 @@ CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
  * Address:	8000C640
  * Size:	00008C
  */
-static BOOL __WaveScene_Set(volatile u32 VOLATILE_param_1, volatile u32 VOLATILE_param_2, BOOL param_3)
+static BOOL __WaveScene_Set(u32 param_1, u32 param_2, BOOL param_3)
 {
-	u32 badCompiler[4];
+	u32 badCompiler[2];
+	u32* REF_param_1;
+	u32* REF_param_2;
 
 	CtrlGroup_* group;
-	u32 param_1;
-	u32 param_2;
 
-	param_1 = VOLATILE_param_1;
+	REF_param_1 = &param_1;
 	if (param_1 >= WAVEGROUP_SIZE) {
 		return FALSE;
 	}
 	if (!(group = wavegroup[param_1])) {
 		return FALSE;
 	}
-	param_2 = VOLATILE_param_2;
+	REF_param_2 = &param_2;
 	if (param_2 >= group->_08) {
 		return FALSE;
 	}
@@ -391,22 +391,20 @@ BOOL WaveScene_Load(u32 param_1, u32 param_2)
  * Address:	8000C760
  * Size:	000074
  */
-static void __WaveScene_Close(volatile u32 VOLATILE_param_1, volatile u32 VOLATILE_param_2, BOOL param_3)
+static void __WaveScene_Close(u32 param_1, u32 param_2, BOOL param_3)
 {
-	u32 badCompiler[4];
+	u32 badCompiler[2];
+	u32* REF_param_1;
+	u32* REF_param_2;
 
 	CtrlGroup_* group;
 
-	u32 param_1;
-	u32 param_2;
-
-	param_1 = VOLATILE_param_1;
-
+	REF_param_1 = &param_1;
 	if (param_1 >= WAVEGROUP_SIZE) {
 		return;
 	}
 	if (group = wavegroup[param_1]) {
-		param_2 = VOLATILE_param_2;
+		REF_param_2 = &param_2;
 		if (param_2 < group->_08) {
 			Jac_SceneClose(wavearc[param_1], group, param_2, param_3);
 		}
