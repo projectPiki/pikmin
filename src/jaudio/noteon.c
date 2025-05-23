@@ -1,11 +1,15 @@
 #include "jaudio/noteon.h"
 
+#include "jaudio/audiostruct.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/oneshot.h"
+
 /*
  * --INFO--
  * Address:	80013840
  * Size:	000394
  */
-void NoteON(seqp_*, s32, s32, s32, s32)
+s32 NoteON(seqp_*, s32, s32, s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -290,55 +294,25 @@ void NoteON(seqp_*, s32, s32, s32, s32)
  * Address:	80013BE0
  * Size:	000090
  */
-void NoteOFF_R(seqp_*, u8, u16)
+s32 NoteOFF_R(seqp_* seq, u8 param_2, u16 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  stb       r4, 0xC(r1)
-	  lbz       r4, 0xC(r1)
-	  rlwinm    r0,r4,2,0,29
-	  add       r31, r3, r0
-	  lwzu      r6, 0x9C(r31)
-	  cmplwi    r6, 0
-	  beq-      .loc_0x78
-	  rlwinm    r0,r4,1,0,30
-	  lhz       r4, 0x126(r6)
-	  add       r30, r3, r0
-	  lhzu      r0, 0xBC(r30)
-	  cmplw     r4, r0
-	  bne-      .loc_0x64
-	  rlwinm.   r0,r5,0,16,31
-	  bne-      .loc_0x58
-	  mr        r3, r6
-	  bl        0x2010
-	  b         .loc_0x64
+	u8* REF_param_2;
+	jc_* jc;
 
-	.loc_0x58:
-	  addi      r3, r6, 0
-	  addi      r4, r5, 0
-	  bl        0x2040
-
-	.loc_0x64:
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x0(r31)
-	  sth       r0, 0x0(r30)
-	  b         .loc_0x7C
-
-	.loc_0x78:
-	  li        r3, 0
-
-	.loc_0x7C:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	REF_param_2 = &param_2;
+	if (jc = seq->_9C[param_2]) {
+		if (jc->_126 == seq->_BC[param_2]) {
+			if (param_3 == 0) {
+				Stop_1Shot(jc);
+			} else {
+				Stop_1Shot_R(jc, param_3);
+			}
+		}
+		seq->_9C[param_2] = NULL;
+		seq->_BC[param_2] = 0;
+		return 1;
+	}
+	return 0;
 }
 
 /*
@@ -346,20 +320,9 @@ void NoteOFF_R(seqp_*, u8, u16)
  * Address:	80013C80
  * Size:	000024
  */
-void NoteOFF(seqp_*, u8)
+s32 NoteOFF(seqp_* seq, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xB0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return NoteOFF_R(seq, param_2, 0);
 }
 
 /*
@@ -367,39 +330,16 @@ void NoteOFF(seqp_*, u8)
  * Address:	80013CC0
  * Size:	000058
  */
-void GateON(seqp_*, s32, s32, s32, s32)
+s32 GateON(seqp_* seq, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,2,0,29
-	  add       r3, r3, r0
-	  stwu      r1, -0x20(r1)
-	  stw       r5, 0x10(r1)
-	  lwz       r3, 0x9C(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x3C
-	  lwz       r0, 0x10(r1)
-	  rlwinm    r5,r6,0,24,31
-	  addi      r6, r7, 0
-	  rlwinm    r4,r0,0,24,31
-	  bl        0x21AC
-	  b         .loc_0x44
+	s32* REF_param_3 = &param_3;
 
-	.loc_0x3C:
-	  li        r3, -0x1
-	  b         .loc_0x48
-
-	.loc_0x44:
-	  li        r3, 0
-
-	.loc_0x48:
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (seq->_9C[param_2]) {
+		Gate_1Shot(seq->_9C[param_2], param_3, param_4, param_5);
+	} else {
+		return -1;
+	}
+	return 0;
 }
 
 /*
@@ -417,40 +357,20 @@ void ProgramChange(s32)
  * Address:	80013D20
  * Size:	000064
  */
-BOOL CheckNoteStop(seqp_*, s32)
+BOOL CheckNoteStop(seqp_* seq, s32 param_2)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,2,0,29
-	  add       r5, r3, r0
-	  lwzu      r7, 0x9C(r5)
-	  cmplwi    r7, 0
-	  beq-      .loc_0x5C
-	  rlwinm    r0,r4,1,0,30
-	  lhz       r4, 0x126(r7)
-	  add       r6, r3, r0
-	  lhzu      r0, 0xBC(r6)
-	  cmplw     r4, r0
-	  beq-      .loc_0x40
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x0(r5)
-	  sth       r0, 0x0(r6)
-	  blr
+	jc_* jc;
 
-	.loc_0x40:
-	  lbz       r0, 0x1(r7)
-	  cmplwi    r0, 0xFF
-	  bne-      .loc_0x54
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x54:
-	  li        r3, 0
-	  blr
-
-	.loc_0x5C:
-	  li        r3, 0x1
-	  blr
-	*/
+	if (jc = seq->_9C[param_2]) {
+		if (jc->_126 != seq->_BC[param_2]) {
+			seq->_9C[param_2] = NULL;
+			seq->_BC[param_2] = 0;
+			return TRUE;
+		}
+		if (jc->_01 == 0xff) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	return TRUE;
 }

@@ -1,8 +1,11 @@
 #include "jaudio/driverinterface.h"
 
 #include "jaudio/dspinterface.h"
+#include "jaudio/audiostruct.h"
 
 typedef struct PanMatrix_ PanMatrix_;
+
+static jcs_ GLOBAL_CHANNEL;
 
 /*
  * --INFO--
@@ -32,12 +35,7 @@ void Channel_SetMixerLevel(f32)
  */
 jcs_* Get_GlobalHandle()
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x802F
-	  addi      r3, r3, 0x24E0
-	  blr
-	*/
+	return &GLOBAL_CHANNEL;
 }
 
 /*
