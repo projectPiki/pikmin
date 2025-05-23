@@ -916,9 +916,20 @@ void DGXGraphics::setMatMatrices(Material* mat, int p2)
 
 	int mtxID = 30;
 	for (int i = 0, j = 0; i < mat->mTextureInfo.mTexGenDataCount; i++) {
-		GXSetTexCoordGen2(GXTexCoordID(mat->mTextureInfo.mTexGenData[i]._00), GXTexGenType(mat->mTextureInfo.mTexGenData[i]._01),
-		                  GXTexGenSrc(mat->mTextureInfo.mTexGenData[i]._02), (mat->mTextureInfo.mTexGenData[i]._03 != 10) ? mtxID : 60,
-		                  GX_FALSE, GX_PTIDENTITY);
+		
+		u32 postMtx = mat->mTextureInfo.mTexGenData[i]._03;
+		if(postMtx != 10) {
+			postMtx = mtxID;
+		} else {
+			postMtx = 60;
+		}
+		
+		GXTexGenSrc texGenSrc = GXTexGenSrc(mat->mTextureInfo.mTexGenData[i]._02);
+		GXTexGenType texGenType = GXTexGenType(mat->mTextureInfo.mTexGenData[i]._01);
+		GXTexCoordID texCoordID = GXTexCoordID(mat->mTextureInfo.mTexGenData[i]._00);
+
+		GXSetTexCoordGen2(texCoordID, texGenType, texGenSrc, postMtx, GX_FALSE, GX_PTIDENTITY);
+
 
 		if (mat->mTextureInfo.mTexGenData[i]._01 != 1) {
 			continue;
@@ -938,113 +949,6 @@ void DGXGraphics::setMatMatrices(Material* mat, int p2)
 		}
 		j++;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r25, 0x1C(r1)
-	  mr        r26, r4
-	  addi      r25, r3, 0
-	  addi      r27, r5, 0
-	  lwz       r0, 0x80(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x30
-	  li        r0, 0x1
-	  b         .loc_0x34
-
-	.loc_0x30:
-	  li        r0, 0
-
-	.loc_0x34:
-	  rlwinm    r0,r0,0,24,31
-	  stw       r0, 0x324(r25)
-	  lwz       r0, 0x78(r26)
-	  rlwinm    r3,r0,0,24,31
-	  bl        0x1C768C
-	  li        r31, 0
-	  addi      r30, r31, 0
-	  li        r29, 0x1E
-	  li        r28, 0
-	  b         .loc_0x128
-
-	.loc_0x5C:
-	  lwz       r0, 0x88(r26)
-	  add       r3, r0, r31
-	  lbz       r0, 0x3(r3)
-	  cmplwi    r0, 0xA
-	  beq-      .loc_0x78
-	  mr        r6, r29
-	  b         .loc_0x7C
-
-	.loc_0x78:
-	  li        r6, 0x3C
-
-	.loc_0x7C:
-	  lbz       r5, 0x2(r3)
-	  li        r7, 0
-	  lbz       r4, 0x1(r3)
-	  li        r8, 0x7D
-	  lbz       r3, 0x0(r3)
-	  bl        0x1C7370
-	  lwz       r3, 0x88(r26)
-	  addi      r0, r31, 0x1
-	  lbzx      r0, r3, r0
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x120
-	  lwz       r0, 0x84(r26)
-	  add       r3, r0, r30
-	  lbz       r0, 0x14(r3)
-	  cmpwi     r0, 0xFF
-	  beq-      .loc_0x11C
-	  cmpwi     r0, 0xA
-	  beq-      .loc_0xCC
-	  mr        r0, r29
-	  b         .loc_0xD0
-
-	.loc_0xCC:
-	  li        r0, 0x3C
-
-	.loc_0xD0:
-	  mr        r4, r0
-	  addi      r3, r3, 0x5C
-	  li        r5, 0x1
-	  bl        0x1CB3D8
-	  lwz       r0, 0x324(r25)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x118
-	  lwz       r3, 0x88(r26)
-	  addi      r0, r31, 0x2
-	  lbzx      r0, r3, r0
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x118
-	  stw       r29, 0x3DC(r25)
-	  lwz       r0, 0x80(r26)
-	  mullw     r0, r0, r27
-	  mulli     r0, r0, 0x3
-	  add       r29, r29, r0
-	  b         .loc_0x11C
-
-	.loc_0x118:
-	  addi      r29, r29, 0x3
-
-	.loc_0x11C:
-	  addi      r30, r30, 0x9C
-
-	.loc_0x120:
-	  addi      r31, r31, 0x4
-	  addi      r28, r28, 0x1
-
-	.loc_0x128:
-	  lwz       r0, 0x78(r26)
-	  cmplw     r28, r0
-	  blt+      .loc_0x5C
-	  lmw       r25, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
