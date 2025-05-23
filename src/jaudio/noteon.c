@@ -417,7 +417,7 @@ void ProgramChange(s32)
  * Address:	80013D20
  * Size:	000064
  */
-void CheckNoteStop(seqp_*, s32)
+BOOL CheckNoteStop(seqp_*, s32)
 {
 	/*
 	.loc_0x0:
