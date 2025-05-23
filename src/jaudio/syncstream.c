@@ -483,7 +483,7 @@ void Get_StreamAudio_Handle(void)
  * Address:	8001C140
  * Size:	000318
  */
-void StreamAudio_Start(void)
+void StreamAudio_Start(int, int, char*, int, int, int)
 {
 	/*
 	.loc_0x0:
@@ -1375,7 +1375,7 @@ static void StreamAudio_Callback(void*)
  * Address:	8001CD20
  * Size:	000008
  */
-void RegisterStreamCallback(void)
+void RegisterStreamCallback(int (*)(u32, s32))
 {
 	/*
 	.loc_0x0:
@@ -1900,7 +1900,7 @@ void StreamSyncCheckReady(void)
  * Address:	8001D380
  * Size:	00005C
  */
-void StreamSyncCheckReadyID(void)
+int StreamSyncCheckReadyID(int, int)
 {
 	/*
 	.loc_0x0:
@@ -1978,7 +1978,7 @@ BOOL StreamSyncCheckBusy(u32, u32)
  * Address:	8001D440
  * Size:	000060
  */
-void StreamSyncPlayAudio(void)
+int StreamSyncPlayAudio(f32, int, int, int)
 {
 	/*
 	.loc_0x0:
@@ -2217,7 +2217,7 @@ static void __StreamChgVolume(StreamCtrl_*)
  * Address:	8001D700
  * Size:	000034
  */
-void StreamChgVolume(void)
+void StreamChgVolume(int, int, int)
 {
 	/*
 	.loc_0x0:
@@ -2242,7 +2242,7 @@ void StreamChgVolume(void)
  * Address:	8001D740
  * Size:	000034
  */
-void StreamChgMixLevel(void)
+void StreamChgMixLevel(int, int, int)
 {
 	/*
 	.loc_0x0:
@@ -2432,7 +2432,7 @@ void StreamCheckRemainBuffers(void)
  * Address:	8001D960
  * Size:	000028
  */
-void StreamCheckAudioFormat(void)
+int StreamCheckAudioFormat(int)
 {
 	/*
 	.loc_0x0:

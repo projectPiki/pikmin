@@ -1690,8 +1690,11 @@ bool DGXGraphics::initParticle(bool a)
  * Address:	8004A9BC
  * Size:	000328
  */
-void DGXGraphics::drawRotParticle(Camera&, Vector3f&, u16, f32)
+void DGXGraphics::drawRotParticle(Camera& cam, Vector3f& p2, u16 p3, f32 p4)
 {
+	gsys->mPolygonCount += 2;
+	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1904,170 +1907,35 @@ void DGXGraphics::drawRotParticle(Camera&, Vector3f&, u16, f32)
  * Address:	8004ACE4
  * Size:	00027C
  */
-void DGXGraphics::drawParticle(Camera&, Vector3f&, f32)
+void DGXGraphics::drawParticle(Camera& cam, Vector3f& pos, f32 size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x140(r1)
-	  stfd      f31, 0x138(r1)
-	  stfd      f30, 0x130(r1)
-	  stfd      f29, 0x128(r1)
-	  stfd      f28, 0x120(r1)
-	  stfd      f27, 0x118(r1)
-	  stfd      f26, 0x110(r1)
-	  fmr       f26, f1
-	  stfd      f25, 0x108(r1)
-	  fneg      f27, f26
-	  stfd      f24, 0x100(r1)
-	  stfd      f23, 0xF8(r1)
-	  stfd      f22, 0xF0(r1)
-	  stfd      f21, 0xE8(r1)
-	  stfd      f20, 0xE0(r1)
-	  stfd      f19, 0xD8(r1)
-	  stfd      f18, 0xD0(r1)
-	  stfd      f17, 0xC8(r1)
-	  stw       r31, 0xC4(r1)
-	  stw       r30, 0xC0(r1)
-	  mr        r30, r5
-	  li        r5, 0x4
-	  stw       r29, 0xBC(r1)
-	  mr        r29, r4
-	  lwz       r6, 0x2DEC(r13)
-	  lwz       r4, 0x1A4(r6)
-	  addi      r0, r4, 0x2
-	  stw       r0, 0x1A4(r6)
-	  li        r4, 0
-	  lwz       r31, 0x318(r3)
-	  li        r3, 0x80
-	  lfs       f31, -0x773C(r13)
-	  lfs       f30, -0x7738(r13)
-	  lfs       f29, -0x7734(r13)
-	  lfs       f28, -0x7730(r13)
-	  bl        0x1C5E5C
-	  lfs       f2, 0x17C(r29)
-	  lis       r3, 0xCC01
-	  lfs       f18, 0x180(r29)
-	  lfs       f21, 0x188(r29)
-	  fmuls     f5, f27, f2
-	  lfs       f6, 0x184(r29)
-	  fmuls     f19, f26, f18
-	  lfs       f0, 0x18C(r29)
-	  lfs       f10, 0x190(r29)
-	  lfs       f17, 0x194(r29)
-	  fmuls     f9, f27, f21
-	  lfs       f24, 0x19C(r29)
-	  fmuls     f8, f26, f0
-	  lfs       f13, 0x198(r29)
-	  fmuls     f3, f31, f6
-	  fadds     f1, f5, f19
-	  lfs       f7, 0x0(r30)
-	  fmuls     f25, f27, f17
-	  lfs       f11, 0x4(r30)
-	  fmuls     f12, f26, f13
-	  fadds     f1, f3, f1
-	  lfs       f23, 0x8(r30)
-	  fmuls     f22, f26, f2
-	  lfs       f4, -0x7B58(r2)
-	  fadds     f20, f7, f1
-	  fmuls     f2, f26, f21
-	  lfs       f1, -0x7B60(r2)
-	  fmuls     f3, f26, f17
-	  fmuls     f26, f31, f10
-	  fadds     f21, f9, f8
-	  fmuls     f17, f31, f24
-	  stfs      f20, -0x8000(r3)
-	  fadds     f31, f25, f12
-	  fadds     f20, f26, f21
-	  fmuls     f21, f30, f6
-	  fmuls     f26, f27, f18
-	  fadds     f18, f17, f31
-	  fmuls     f31, f27, f0
-	  fadds     f17, f11, f20
-	  fmuls     f0, f27, f13
-	  fadds     f13, f22, f19
-	  fadds     f18, f23, f18
-	  stfs      f17, -0x8000(r3)
-	  fmuls     f20, f30, f10
-	  fadds     f27, f2, f8
-	  stfs      f18, -0x8000(r3)
-	  fadds     f8, f21, f13
-	  stw       r31, -0x8000(r3)
-	  fadds     f13, f20, f27
-	  fmuls     f20, f30, f24
-	  fadds     f12, f3, f12
-	  stfs      f4, -0x8000(r3)
-	  fadds     f8, f7, f8
-	  fadds     f17, f11, f13
-	  stfs      f4, -0x8000(r3)
-	  fadds     f13, f20, f12
-	  stfs      f8, -0x8000(r3)
-	  fmuls     f12, f29, f6
-	  fadds     f8, f22, f26
-	  fadds     f18, f23, f13
-	  stfs      f17, -0x8000(r3)
-	  fmuls     f27, f29, f10
-	  fadds     f13, f2, f31
-	  stfs      f18, -0x8000(r3)
-	  fadds     f2, f12, f8
-	  stw       r31, -0x8000(r3)
-	  fadds     f8, f27, f13
-	  fmuls     f12, f29, f24
-	  fadds     f3, f3, f0
-	  stfs      f1, -0x8000(r3)
-	  fadds     f2, f7, f2
-	  fadds     f13, f11, f8
-	  stfs      f4, -0x8000(r3)
-	  fadds     f8, f12, f3
-	  stfs      f2, -0x8000(r3)
-	  fmuls     f3, f28, f6
-	  fadds     f2, f5, f26
-	  fadds     f8, f23, f8
-	  stfs      f13, -0x8000(r3)
-	  fmuls     f6, f28, f10
-	  fadds     f5, f9, f31
-	  stfs      f8, -0x8000(r3)
-	  fadds     f2, f3, f2
-	  stw       r31, -0x8000(r3)
-	  fadds     f3, f6, f5
-	  fmuls     f6, f28, f24
-	  fadds     f5, f25, f0
-	  stfs      f1, -0x8000(r3)
-	  fadds     f0, f7, f2
-	  fadds     f3, f11, f3
-	  stfs      f1, -0x8000(r3)
-	  fadds     f2, f6, f5
-	  stfs      f0, -0x8000(r3)
-	  fadds     f0, f23, f2
-	  stfs      f3, -0x8000(r3)
-	  stfs      f0, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  stfs      f4, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  lwz       r0, 0x144(r1)
-	  lfd       f31, 0x138(r1)
-	  lfd       f30, 0x130(r1)
-	  lfd       f29, 0x128(r1)
-	  lfd       f28, 0x120(r1)
-	  lfd       f27, 0x118(r1)
-	  lfd       f26, 0x110(r1)
-	  lfd       f25, 0x108(r1)
-	  lfd       f24, 0x100(r1)
-	  lfd       f23, 0xF8(r1)
-	  lfd       f22, 0xF0(r1)
-	  lfd       f21, 0xE8(r1)
-	  lfd       f20, 0xE0(r1)
-	  lfd       f19, 0xD8(r1)
-	  lfd       f18, 0xD0(r1)
-	  lfd       f17, 0xC8(r1)
-	  lwz       r31, 0xC4(r1)
-	  lwz       r30, 0xC0(r1)
-	  lwz       r29, 0xBC(r1)
-	  addi      r1, r1, 0x140
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mPolygonCount += 2;
+	u32 primClr = *(u32*)&mPrimaryColour;
+
+	Vector3f vec1(-size, size, 0.0f);
+	Vector3f vec2(size, size, 0.0f);
+	Vector3f vec3(size, -size, 0.0f);
+	Vector3f vec4(-size, -size, 0.0f);
+
+	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
+
+	GXPosition3f32(pos.x + vec1.DP(cam.mViewXAxis), pos.y + vec1.DP(cam.mViewYAxis), pos.z + vec1.DP(cam.mViewZAxis));
+	GXColor1u32(primClr);
+	GXTexCoord2f32(0.0f, 0.0f);
+
+	GXPosition3f32(pos.x + vec2.DP(cam.mViewXAxis), pos.y + vec2.DP(cam.mViewYAxis), pos.z + vec2.DP(cam.mViewZAxis));
+	GXColor1u32(primClr);
+	GXTexCoord2f32(1.0f, 0.0f);
+
+	GXPosition3f32(pos.x + vec3.DP(cam.mViewXAxis), pos.y + vec3.DP(cam.mViewYAxis), pos.z + vec3.DP(cam.mViewZAxis));
+	GXColor1u32(primClr);
+	GXTexCoord2f32(1.0f, 1.0f);
+
+	GXPosition3f32(pos.x + vec4.DP(cam.mViewXAxis), pos.y + vec4.DP(cam.mViewYAxis), pos.z + vec4.DP(cam.mViewZAxis));
+	GXColor1u32(primClr);
+	GXTexCoord2f32(0.0f, 1.0f);
+
+	GXEnd();
 }
 
 /*
@@ -2075,85 +1943,41 @@ void DGXGraphics::drawParticle(Camera&, Vector3f&, f32)
  * Address:	8004AF60
  * Size:	000128
  */
-void DGXGraphics::drawCamParticle(Camera&, Vector3f&, Vector2f&, Vector2f&, Vector2f&)
+void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& p3, Vector2f& texCoordMin, Vector2f& texCoordMax)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x108(r1)
-	  stfd      f31, 0x100(r1)
-	  stfd      f30, 0xF8(r1)
-	  stfd      f29, 0xF0(r1)
-	  stfd      f28, 0xE8(r1)
-	  stfd      f27, 0xE0(r1)
-	  stw       r31, 0xDC(r1)
-	  stw       r30, 0xD8(r1)
-	  addi      r30, r8, 0
-	  stw       r29, 0xD4(r1)
-	  addi      r29, r7, 0
-	  lwz       r9, 0x2DEC(r13)
-	  lwz       r7, 0x1A4(r9)
-	  addi      r0, r7, 0x2
-	  stw       r0, 0x1A4(r9)
-	  lfs       f5, 0x4(r6)
-	  lfs       f3, 0x0(r6)
-	  fneg      f0, f5
-	  lfs       f4, 0x4(r5)
-	  lfs       f2, 0x0(r5)
-	  fneg      f1, f3
-	  lfs       f30, 0x8(r5)
-	  lwz       r31, 0x318(r3)
-	  fadds     f31, f5, f4
-	  fadds     f27, f1, f2
-	  li        r3, 0x80
-	  fadds     f29, f3, f2
-	  fadds     f28, f0, f4
-	  li        r5, 0x4
-	  bl        0x1C5BF4
-	  lis       r3, 0xCC01
-	  stfs      f27, -0x8000(r3)
-	  stfs      f31, -0x8000(r3)
-	  stfs      f30, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f2, 0x4(r29)
-	  lfs       f1, 0x0(r29)
-	  stfs      f1, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f29, -0x8000(r3)
-	  stfs      f31, -0x8000(r3)
-	  stfs      f30, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f0, 0x0(r30)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f29, -0x8000(r3)
-	  stfs      f28, -0x8000(r3)
-	  stfs      f30, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f2, 0x4(r30)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f27, -0x8000(r3)
-	  stfs      f28, -0x8000(r3)
-	  stfs      f30, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  lwz       r0, 0x10C(r1)
-	  lfd       f31, 0x100(r1)
-	  lfd       f30, 0xF8(r1)
-	  lfd       f29, 0xF0(r1)
-	  lfd       f28, 0xE8(r1)
-	  lfd       f27, 0xE0(r1)
-	  lwz       r31, 0xDC(r1)
-	  lwz       r30, 0xD8(r1)
-	  lwz       r29, 0xD4(r1)
-	  addi      r1, r1, 0x108
-	  mtlr      r0
-	  blr
-	*/
+	gsys->mPolygonCount += 2;
+
+	f32 y0, z, x1, y1, x0;
+
+	y0 = p3.y + pos.y;
+	x0 = -p3.x + pos.x;
+	x1 = p3.x + pos.x;
+	y1 = -p3.y + pos.y;
+	z  = pos.z;
+
+	u32 primClr = *(u32*)&mPrimaryColour;
+
+	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
+
+	GXPosition3f32(x0, y0, z);
+	GXColor1u32(primClr);
+	GXTexCoord2f32(texCoordMin.x, texCoordMin.y);
+
+	GXPosition3f32(x1, y0, z);
+	GXColor1u32(primClr);
+	GXTexCoord2f32(texCoordMax.x, texCoordMin.y);
+
+	GXPosition3f32(x1, y1, z);
+	GXColor1u32(primClr);
+	GXTexCoord2f32(texCoordMax.x, texCoordMax.y);
+
+	GXPosition3f32(x0, y1, z);
+	GXColor1u32(primClr);
+	GXTexCoord2f32(texCoordMin.x, texCoordMax.y);
+
+	GXEnd();
+
+	u32 badCompiler[40];
 }
 
 /*
@@ -2161,72 +1985,24 @@ void DGXGraphics::drawCamParticle(Camera&, Vector3f&, Vector2f&, Vector2f&, Vect
  * Address:	8004B088
  * Size:	0000F4
  */
-void DGXGraphics::drawLine(Vector3f&, Vector3f&)
+void DGXGraphics::drawLine(Vector3f& start, Vector3f& end)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  li        r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  li        r4, 0
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  bl        0x1C4B38
-	  li        r3, 0x9
-	  li        r4, 0x1
-	  bl        0x1C4330
-	  li        r3, 0xB
-	  li        r4, 0x1
-	  bl        0x1C4324
-	  li        r3, 0
-	  li        r4, 0x9
-	  li        r5, 0x1
-	  li        r6, 0x4
-	  li        r7, 0
-	  bl        0x1C4B54
-	  li        r3, 0
-	  li        r4, 0xB
-	  li        r5, 0x1
-	  li        r6, 0x5
-	  li        r7, 0
-	  bl        0x1C4B3C
-	  lwz       r31, 0x318(r31)
-	  li        r3, 0xA8
-	  li        r4, 0
-	  li        r5, 0x2
-	  bl        0x1C5AB4
-	  lfs       f2, 0x8(r29)
-	  lis       r3, 0xCC01
-	  lfs       f1, 0x4(r29)
-	  lfs       f0, 0x0(r29)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f2, 0x8(r30)
-	  lfs       f1, 0x4(r30)
-	  lfs       f0, 0x0(r30)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	useTexture(nullptr, 0);
+	GXClearVtxDesc();
+	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+
+	u32 primClr = *(u32*)&mPrimaryColour;
+
+	GXBegin(GX_LINES, GX_VTXFMT0, 2);
+
+	GXPosition3f32(start.x, start.y, start.z);
+	GXColor1u32(primClr);
+
+	GXPosition3f32(end.x, end.y, end.z);
+	GXColor1u32(primClr);
 }
 
 /*
@@ -2234,158 +2010,23 @@ void DGXGraphics::drawLine(Vector3f&, Vector3f&)
  * Address:	8004B17C
  * Size:	000224
  */
-void DGXGraphics::drawPoints(Vector3f*, int)
+void DGXGraphics::drawPoints(Vector3f* points, int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x28(r1)
-	  addi      r30, r5, 0
-	  li        r5, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r4, 0
-	  li        r4, 0
-	  lwz       r12, 0x3B4(r31)
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  bl        0x1C4A44
-	  li        r3, 0x9
-	  li        r4, 0x1
-	  bl        0x1C423C
-	  li        r3, 0xB
-	  li        r4, 0x1
-	  bl        0x1C4230
-	  li        r3, 0
-	  li        r4, 0x9
-	  li        r5, 0x1
-	  li        r6, 0x4
-	  li        r7, 0
-	  bl        0x1C4A60
-	  li        r3, 0
-	  li        r4, 0xB
-	  li        r5, 0x1
-	  li        r6, 0x5
-	  li        r7, 0
-	  bl        0x1C4A48
-	  lwz       r31, 0x318(r31)
-	  rlwinm    r5,r30,0,16,31
-	  li        r3, 0xB8
-	  li        r4, 0
-	  bl        0x1C59C0
-	  cmpwi     r30, 0
-	  li        r5, 0
-	  ble-      .loc_0x208
-	  cmpwi     r30, 0x8
-	  subi      r3, r30, 0x8
-	  ble-      .loc_0x1FC
-	  addi      r0, r3, 0x7
-	  rlwinm    r0,r0,29,3,31
-	  cmpwi     r3, 0
-	  mtctr     r0
-	  addi      r4, r29, 0
-	  lis       r3, 0xCC01
-	  ble-      .loc_0x1FC
+	useTexture(nullptr, 0);
+	GXClearVtxDesc();
+	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
-	.loc_0xD0:
-	  lfs       f2, 0x8(r4)
-	  addi      r5, r5, 0x8
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x0(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x14(r4)
-	  lfs       f2, 0x10(r4)
-	  lfs       f0, 0xC(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x20(r4)
-	  lfs       f2, 0x1C(r4)
-	  lfs       f0, 0x18(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x2C(r4)
-	  lfs       f2, 0x28(r4)
-	  lfs       f0, 0x24(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x38(r4)
-	  lfs       f2, 0x34(r4)
-	  lfs       f0, 0x30(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x44(r4)
-	  lfs       f2, 0x40(r4)
-	  lfs       f0, 0x3C(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x50(r4)
-	  lfs       f2, 0x4C(r4)
-	  lfs       f0, 0x48(r4)
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  lfs       f1, 0x5C(r4)
-	  lfs       f2, 0x58(r4)
-	  lfs       f0, 0x54(r4)
-	  addi      r4, r4, 0x60
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  bdnz+     .loc_0xD0
-	  b         .loc_0x1FC
+	u32 primClr = *(u32*)&mPrimaryColour;
 
-	.loc_0x1C0:
-	  sub       r0, r30, r5
-	  cmpw      r5, r30
-	  mtctr     r0
-	  lis       r3, 0xCC01
-	  bge-      .loc_0x208
+	GXBegin(GX_POINTS, GX_VTXFMT0, count);
 
-	.loc_0x1D4:
-	  lfs       f1, 0x8(r4)
-	  lfs       f2, 0x4(r4)
-	  lfs       f0, 0x0(r4)
-	  addi      r4, r4, 0xC
-	  stfs      f0, -0x8000(r3)
-	  stfs      f2, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stw       r31, -0x8000(r3)
-	  bdnz+     .loc_0x1D4
-	  b         .loc_0x208
-
-	.loc_0x1FC:
-	  mulli     r0, r5, 0xC
-	  add       r4, r29, r0
-	  b         .loc_0x1C0
-
-	.loc_0x208:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	for (int i = 0; i < count; i++) {
+		GXPosition3f32(points[i].x, points[i].y, points[i].z);
+		GXColor1u32(primClr);
+	}
 }
 
 /*
@@ -2393,8 +2034,44 @@ void DGXGraphics::drawPoints(Vector3f*, int)
  * Address:	8004B3A0
  * Size:	0003D8
  */
-void DGXGraphics::drawOneTri(Vector3f*, Vector3f*, Vector2f*, int)
+void DGXGraphics::drawOneTri(Vector3f* vertices, Vector3f* normals, Vector2f* texCoords, int count)
 {
+	gsys->mPolygonCount++;
+	GXClearVtxDesc();
+	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
+	if (normals) {
+		GXSetVtxDesc(GX_VA_NRM, GX_DIRECT);
+	} else {
+		GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
+	}
+
+	GXSetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
+	if (normals) {
+		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NRM, GX_NRM_XYZ, GX_F32, 0);
+	} else {
+		GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
+	}
+	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
+
+	u32 primClr = *(u32*)&mPrimaryColour;
+
+	GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, count);
+
+	if (normals) {
+		for (int i = 0; i < count; i++) {
+			GXPosition3f32(vertices[i].x, vertices[i].y, vertices[i].z);
+			GXNormal3f32(normals[i].x, normals[i].y, normals[i].z);
+			GXTexCoord2f32(texCoords[i].x, texCoords[i].y);
+		}
+		return;
+	}
+
+	for (int i = 0; i < count; i++) {
+		GXPosition3f32(vertices[i].x, vertices[i].y, vertices[i].z);
+		GXColor1u32(primClr);
+		GXTexCoord2f32(texCoords[i].x, texCoords[i].y);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
