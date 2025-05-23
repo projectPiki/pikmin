@@ -55,7 +55,11 @@ struct seqp_ {
 	u32 _84;                  // _084
 	u32 _88;                  // _088;
 	u32 _8C;                  // _08C
-	u8 _90[0x0d5 - 0x090];    // _008
+	u8 _90[0x09c - 0x090];    // _090
+	jc_* _9C[1];              // _09C | Exact length unknown, but it is an array.  Probably the same length as _BC.
+	u8 _A0[0x0bc - 0x0A0];    // _0A0 | Probably the rest of _9C. TODO: confirm.
+	u16 _BC[2];               // _0BC | Exact length unknown, but it is an array.  Probably the same length as _9C.
+	u8 _C0[0x0d5 - 0x0C0];    // _0C0
 	u8 _D5;                   // _0D5
 	u8 _D6[0x0d8 - 0x0d6];    // _0D6
 	jcs_ _D8;                 // _0D8
