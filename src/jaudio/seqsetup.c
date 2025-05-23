@@ -744,7 +744,7 @@ unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown)
  * Address:	80014680
  * Size:	00002C
  */
-void Jaq_SetBankNumber(void)
+void Jaq_SetBankNumber(int*, u8)
 {
 	/*
 	.loc_0x0:

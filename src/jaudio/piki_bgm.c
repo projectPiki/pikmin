@@ -822,7 +822,7 @@ void Jac_MoveBgmTrackVol(int seq)
  * Address:	80019200
  * Size:	00017C
  */
-void Jac_ChangeBgmTrackVol(void)
+void Jac_ChangeBgmTrackVol(int)
 {
 	/*
 	.loc_0x0:

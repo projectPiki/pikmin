@@ -227,7 +227,7 @@ void Jac_EventFrameCheck(void)
  * Address:	80017860
  * Size:	00013C
  */
-void Jac_UpdateCamera(void)
+void Jac_UpdateCamera(struct Vector3f*, struct Vector3f*)
 {
 	int i;
 
@@ -340,7 +340,7 @@ void Jac_UpdateCamera(void)
  * Address:	800179A0
  * Size:	000118
  */
-void Jac_CreateEvent(void)
+int Jac_CreateEvent(int, struct SVector_*)
 {
 	/*
 	.loc_0x0:
@@ -440,7 +440,7 @@ void Jac_CreateEvent(void)
  * Address:	80017AC0
  * Size:	00005C
  */
-void Jac_UpdateEventPosition(void)
+void Jac_UpdateEventPosition(int, struct Vector3f*)
 {
 	/*
 	.loc_0x0:
@@ -479,7 +479,7 @@ void Jac_UpdateEventPosition(void)
  * Address:	80017B20
  * Size:	0002E0
  */
-void Jac_PlayEventAction(void)
+void Jac_PlayEventAction(int, int)
 {
 	/*
 	.loc_0x0:
@@ -721,7 +721,7 @@ void Jac_PlayEventAction(void)
  * Address:	80017E00
  * Size:	0000BC
  */
-void Jac_StopEventAction(void)
+void Jac_StopEventAction(int, int)
 {
 	/*
 	.loc_0x0:
@@ -873,7 +873,7 @@ void MML_StopEventAll(u8, u16)
  * Address:	80017FA0
  * Size:	000094
  */
-void Jac_DestroyEvent(void)
+void Jac_DestroyEvent(s32)
 {
 	/*
 	.loc_0x0:
@@ -999,7 +999,7 @@ int Jac_CheckFreeEvents(void)
  * Address:	800180C0
  * Size:	000050
  */
-int Jac_GetActiveEvents(void)
+int Jac_GetActiveEvents(u8*)
 {
 	/*
 	.loc_0x0:

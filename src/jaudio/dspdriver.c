@@ -335,7 +335,7 @@ BOOL BreakLowerDSPchannel(u8 param_1)
 	dspch_* chan;
 	DSPBuffer* buf;
 
-	chan    = GetLowerDSPchannel();
+	chan        = GetLowerDSPchannel();
 	REF_param_1 = &param_1;
 	if (chan->_03 > param_1)
 		return FALSE;
