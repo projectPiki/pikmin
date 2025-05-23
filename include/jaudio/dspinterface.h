@@ -21,7 +21,7 @@ DSPBuffer* GetDspHandle(u8 idx);
 FXBuffer* GetFxHandle(u8 idx);
 void DSP_SetPitch(u8 idx, u16 pitch);
 void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax);
-void DSP_SetMixerInitVolume(volatile u8 idx, volatile u8 mixer, s16 volume, u8 param_4);
+void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 param_4);
 void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4);
 void DSP_SetOscInfo(u8 idx, u32 samplesSourceType);
 void DSP_SetPauseFlag(u8 idx, u8 pauseFlag);

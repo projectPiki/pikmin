@@ -337,8 +337,9 @@ static u32 TrackReceive(seqp_* track, u16 param_2)
  */
 static void AuxBusInit()
 {
-	u32 badCompiler[1];
-	volatile u32 alloc2Size; // What the fuck is wrong with these programmers.
+	u32* REF_alloc2Size;
+	u32 alloc2Size;
+
 	u32 badCompiler2[2];
 
 	u32 i;
@@ -354,6 +355,7 @@ static void AuxBusInit()
 	for (i = 0; i < 4; ++i) {
 		if (i < 3) {
 			alloc2Size         = fx_config[i].circularBufferSize * 0xa0; // TODO: What is 160 bytes large?
+			REF_alloc2Size     = &alloc2Size;
 			circularBufferBase = (s16*)OSAlloc2(alloc2Size);
 		} else {
 			circularBufferBase = (s16*)NULL;

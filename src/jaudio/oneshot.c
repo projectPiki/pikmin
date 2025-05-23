@@ -236,7 +236,8 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 	for (u32 i = 0; i < 2; i++) {
 		Pmap_* map = (Pmap_*)((int*)pmap + i);
 		if (map->_00) {
-			volatile f32 r = Bank_RandToOfs(map->_00);
+			f32 r      = Bank_RandToOfs(map->_00);
+			f32* REF_r = &r;
 			__DoEffect(jc, map->_00->_00[0], r);
 		}
 

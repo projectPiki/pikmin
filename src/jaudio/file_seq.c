@@ -36,22 +36,22 @@ static BOOL first = TRUE; // TODO: Type unknown
  * Address:	8001B3E0
  * Size:	0000D0
  */
-void Jaf_InitSeqArchive2(char* volatile barcFilepath, u8* barcData, u8* param_3)
+void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
 {
 	u32 badCompiler[2];
 
-	char* barcFilepathNonVolatile;
+	char** REF_barcFilepath;
 	size_t basenameIdx;
 
-	barcFilepathNonVolatile = barcFilepath;
-	for (basenameIdx = strlen(barcFilepathNonVolatile); basenameIdx != 0; --basenameIdx) {
-		if (barcFilepathNonVolatile[basenameIdx - 1] == '/') {
+	REF_barcFilepath = &barcFilepath;
+	for (basenameIdx = strlen(barcFilepath); basenameIdx != 0; --basenameIdx) {
+		if (barcFilepath[basenameIdx - 1] == '/') {
 			break;
 		}
 	}
 
-	JV_InitHeader_M(barcFilepathNonVolatile, barcData, param_3);
-	seq_archandle = JV_GetArchiveHandle(barcFilepathNonVolatile + basenameIdx);
+	JV_InitHeader_M(barcFilepath, barcData, param_3);
+	seq_archandle = JV_GetArchiveHandle(barcFilepath + basenameIdx);
 
 	for (int i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
 		seq_loadbuffer[i] = NULL;

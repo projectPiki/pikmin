@@ -692,16 +692,19 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
  */
 void Jac_SceneExit(u32 scene, u32 stage)
 {
-	int fade, newScene;
-	volatile int fades;
+	int fade;
+	int newScene;
+
+	int* REF_fade;
+	u32 badCompiler;
 
 	if (current_scene == scene) {
 		return;
 	}
 
 	Jac_SetProcessStatus(2);
-	fades = tbl_scene_to_fadetime[current_scene];
-	fade  = fades;
+	fade     = tbl_scene_to_fadetime[current_scene];
+	REF_fade = &fade;
 	Jac_FadeOutBgm(0, fade);
 	Jac_FadeOutBgm(1, fade);
 
@@ -724,8 +727,6 @@ void Jac_SceneExit(u32 scene, u32 stage)
 		current_ready = newScene;
 	}
 	Jac_SetProcessStatus(3);
-
-	f32 badcompiler[2];
 }
 
 /*

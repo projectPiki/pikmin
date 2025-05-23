@@ -145,9 +145,12 @@ void Nas_HeapFree(ALHeap*)
  * Address:	80005640
  * Size:	00006C
  */
-void* Nas_HeapAlloc(ALHeap* heap, volatile s32 size)
+void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 {
-	u32 someInliningRequired[6];
+	u32 badCompiler[4];
+	s32* REF_size;
+
+	REF_size        = &size;
 	u32 roundedSize = ALIGN_NEXT(size, 32);
 	if (!heap->base) {
 		return nullptr;
@@ -170,21 +173,25 @@ void* Nas_HeapAlloc(ALHeap* heap, volatile s32 size)
  * Address:	800056C0
  * Size:	000058
  */
-void Nas_HeapInit(ALHeap* volatile heap, u8* p2, s32 p3)
+void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
 {
-	u32 badCompiler[4];
-	ALHeap* h2 = heap;
-	h2->count  = 0;
+	u32 badCompiler[2];
+	ALHeap** REF_heap;
+
+	int length;
+
+	REF_heap    = &heap;
+	heap->count = 0;
 	if (!p2) {
-		h2->length  = 0;
-		h2->current = nullptr;
-		h2->last    = nullptr;
+		heap->length  = 0;
+		heap->current = nullptr;
+		heap->last    = nullptr;
 	} else {
-		int len     = p3 - ((u32)p2 & 0x1F);
-		h2->base    = (u8*)ALIGN_NEXT((u32)p2, 32);
-		h2->current = h2->base;
-		h2->length  = len;
-		h2->last    = nullptr;
+		length        = p3 - ((u32)p2 & 0x1F);
+		heap->base    = (u8*)ALIGN_NEXT((u32)p2, 32);
+		heap->current = heap->base;
+		heap->length  = length;
+		heap->last    = nullptr;
 	}
 }
 
