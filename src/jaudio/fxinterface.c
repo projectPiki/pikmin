@@ -12,9 +12,10 @@ static u16 SEND_TABLE[] = {
  * Address:	8000BCC0
  * Size:	000138
  */
-BOOL DFX_SetFxLine(u8 idx, s16* volatile circularBufferBase, FxlineConfig* config)
+BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* config)
 {
 	u32 badCompiler[2];
+	s16** REF_circularBufferBase;
 
 	FXBuffer* buf;
 	BOOL restoreInterrupts;
@@ -31,15 +32,15 @@ BOOL DFX_SetFxLine(u8 idx, s16* volatile circularBufferBase, FxlineConfig* confi
 		buf->circularBufferSize = config->circularBufferSize;
 		DSP_SetFilterTable(buf->filterCoeffs, config->filterCoeffs, 8);
 	}
-	s16* circularBufferBaseNonvolatile = circularBufferBase;
-	if (circularBufferBaseNonvolatile && config) {
+	REF_circularBufferBase = &circularBufferBase;
+	if (circularBufferBase && config) {
 		int size = config->circularBufferSize * 0xa0; // TODO: What is 160 bytes large?
 
-		buf->circularBufferBase = circularBufferBaseNonvolatile;
-		Jac_bzero(circularBufferBaseNonvolatile, size);
-		DCFlushRange(circularBufferBaseNonvolatile, size);
-	} else if (!config || circularBufferBaseNonvolatile) {
-		buf->circularBufferBase = circularBufferBaseNonvolatile;
+		buf->circularBufferBase = circularBufferBase;
+		Jac_bzero(circularBufferBase, size);
+		DCFlushRange(circularBufferBase, size);
+	} else if (!config || circularBufferBase) {
+		buf->circularBufferBase = circularBufferBase;
 	}
 	if (buf->circularBufferBase) {
 		buf->enabled = config->enabled;

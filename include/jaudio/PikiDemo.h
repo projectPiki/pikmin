@@ -21,7 +21,7 @@ extern "C" {
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
 void Jac_DemoSceneInit(void);                 // args
 void Jac_StartDemo(int);                      // args
-void Jac_DemoSound(volatile int);             // args
+void Jac_DemoSound(int);                      // args
 BOOL Jac_DemoFrame(int);                      // args
 void Jac_FinishDemo(void);                    // args
 void Jac_PrepareDemo(int);                    // args
@@ -29,7 +29,7 @@ void Jac_StartPartsFindDemo(vu32 p1, int p2); // unsure on first arg
 void Jac_FinishPartsFindDemo(void);           // args
 void Jac_StartTextDemo(int);                  // args
 void Jac_FinishTextDemo(void);                // args
-void Jac_SetDemoPartsID(volatile int);        // args
+void Jac_SetDemoPartsID(int);                 // args
 void Jac_SetDemoOnyons(int);                  // args
 void Jac_SetDemoPartsCount(int);              // args
 

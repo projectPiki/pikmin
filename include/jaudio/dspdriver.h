@@ -13,8 +13,8 @@ dspch_* AllocDSPchannel(u32, u32);
 void DeAllocDSPchannel(dspch_*, u32);
 dspch_* GetLowerDSPchannel();
 dspch_* GetLowerActiveDSPchannel();
-BOOL ForceStopDSPchannel(dspch_* volatile);
-BOOL BreakLowerDSPchannel(volatile u8);
+BOOL ForceStopDSPchannel(dspch_*);
+BOOL BreakLowerDSPchannel(u8);
 void BreakLowerActiveDSPchannel(u8);
 void UpdateDSPchannelAll();
 

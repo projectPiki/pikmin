@@ -305,10 +305,13 @@ dspch_* GetLowerActiveDSPchannel() // regswaps and volatile memes... argh!
  * Address:	8000B160
  * Size:	00007C
  */
-BOOL ForceStopDSPchannel(dspch_* volatile VOLATILE_chan)
+BOOL ForceStopDSPchannel(dspch_* chan)
 {
-	dspch_* chan = VOLATILE_chan;
+	dspch_** REF_chan;
+
 	DSPBuffer* buf;
+
+	REF_chan = &chan;
 	if (chan->_01 == 4)
 		return FALSE;
 	buf = GetDspHandle(chan->buffer_idx);
@@ -325,15 +328,15 @@ BOOL ForceStopDSPchannel(dspch_* volatile VOLATILE_chan)
  * Address:	8000B1E0
  * Size:	0000AC
  */
-BOOL BreakLowerDSPchannel(volatile u8 VOLATILE_param_1)
+BOOL BreakLowerDSPchannel(u8 param_1)
 {
+	u8* REF_param_1;
+
 	dspch_* chan;
 	DSPBuffer* buf;
-	u8 param_1;
-	u32 badCompiler[2];
 
 	chan    = GetLowerDSPchannel();
-	param_1 = VOLATILE_param_1;
+	REF_param_1 = &param_1;
 	if (chan->_03 > param_1)
 		return FALSE;
 	if (chan->_03 == param_1) {
@@ -346,10 +349,9 @@ BOOL BreakLowerDSPchannel(volatile u8 VOLATILE_param_1)
 			chan->_01 = 4;
 		}
 		ForceStopDSPchannel(chan);
-		goto THIS_CANT_ACTUALLY_BE;
+	} else {
+		return FALSE;
 	}
-	return FALSE;
-THIS_CANT_ACTUALLY_BE:
 	return TRUE;
 }
 

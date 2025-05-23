@@ -18,7 +18,7 @@ int now_loading;
 u8 event_pause_counter;
 u8 demo_parts_id;
 u8 demo_onyon_num;
-u8 demo_parts_count;
+u8 demo_parts_num;
 u32 demo_end_delay;
 int current_demo_no = -1;
 int demo_seq_active = -1;
@@ -968,34 +968,15 @@ void Jac_StartDemo(int id)
  * Address:	8001AA20
  * Size:	000040
  */
-void Jac_DemoSound(volatile int id)
+void Jac_DemoSound(int id)
 {
-	volatile int id2[2];
+	u32 badCompiler;
+	int* REF_id;
 
 	if (current_demo_no != -1) {
+		REF_id = &id;
 		Jal_SendCmdQueue_Noblock(&demo_q, id);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  lwz       r0, -0x7F10(r13)
-	  stw       r3, 0x8(r1)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x30
-	  lwz       r0, 0x8(r1)
-	  lis       r3, 0x8036
-	  addi      r3, r3, 0x4618
-	  rlwinm    r4,r0,0,16,31
-	  bl        0xFB4
-
-	.loc_0x30:
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1683,7 +1664,7 @@ void Jac_PrepareDemo(int id)
  */
 void Jac_StartPartsFindDemo(vu32 p1, int p2)
 {
-	volatile int badcompiler[4];
+	int badcompiler[4];
 
 	if (parts_find_demo_state == 1) {
 		if (p2) {
@@ -1841,8 +1822,11 @@ void Jac_FinishTextDemo(void)
  * Address:	8001B380
  * Size:	000018
  */
-void Jac_SetDemoPartsID(volatile int id)
+void Jac_SetDemoPartsID(int id)
 {
+	int* REF_id;
+
+	REF_id        = &id;
 	demo_parts_id = id;
 }
 
@@ -1851,8 +1835,11 @@ void Jac_SetDemoPartsID(volatile int id)
  * Address:	8001B3A0
  * Size:	000018
  */
-void Jac_SetDemoOnyons(volatile int num)
+void Jac_SetDemoOnyons(int num)
 {
+	int* REF_num;
+
+	REF_num        = &num;
 	demo_onyon_num = num;
 }
 
@@ -1861,7 +1848,10 @@ void Jac_SetDemoOnyons(volatile int num)
  * Address:	8001B3C0
  * Size:	000018
  */
-void Jac_SetDemoPartsCount(volatile int count)
+void Jac_SetDemoPartsCount(int count)
 {
-	demo_parts_count = count;
+	int* REF_count;
+
+	REF_count      = &count;
+	demo_parts_num = count;
 }

@@ -79,9 +79,13 @@ void Jal_SendCmdQueue(void)
  * Address:	8001BA00
  * Size:	000030
  */
-void Jal_SendCmdQueue_Noblock(CmdQueue* volatile queue, volatile u16 msg)
+void Jal_SendCmdQueue_Noblock(CmdQueue* queue, u16 msg)
 {
-	u32 badCompiler;
+	CmdQueue** REF_queue;
+	u16* REF_msg;
+
+	REF_queue = &queue;
+	REF_msg   = &msg;
 	Jac_SendMessage(&queue->msgQueue, (OSMessage)msg);
 }
 

@@ -56,10 +56,15 @@ void GetAudioHeapRemain(void)
  * Address:	80005780
  * Size:	000080
  */
-void* OSAlloc2(volatile u32 size)
+void* OSAlloc2(u32 size)
 {
+	u32* REF_size;
+
 	void* alloc;
-	BOOL level = OSDisableInterrupts();
+	BOOL level;
+
+	level    = OSDisableInterrupts();
+	REF_size = &size;
 	switch (audio_hp_exist) {
 	case FALSE:
 		alloc = OSAllocFromHeap(__OSCurrHeap, size);

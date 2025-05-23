@@ -16,10 +16,12 @@ static u32 global_id = 0;
  * Address:	8000E9C0
  * Size:	000034
  */
-static void ARAMFinish(volatile u32 param_1)
+static void ARAMFinish(u32 param_1)
 {
-	u32 badCompiler[2];
+	u32 badCompiler;
+	u32* REF_param_1;
 
+	REF_param_1         = &param_1;
 	ARQRequest* request = (ARQRequest*)param_1;
 	OSSendMessage((OSMessageQueue*)request->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
 }
