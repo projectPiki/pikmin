@@ -34,6 +34,16 @@
 
 #include "fdlibm.h"
 
+#ifdef __MWERKS__
+#pragma cplusplus on
+#endif
+
+f64 fabs(f64);
+
+#ifdef __MWERKS__
+#pragma cplusplus reset
+#endif
+
 #ifdef __STDC__
 static const f64 atanhi[] = {
 #else
@@ -110,7 +120,7 @@ f64 x;
 		}
 		id = -1;
 	} else {
-		x = __fabs(x);
+		x = fabs(x);
 		if (ix < 0x3ff30000) {     /* |x| < 1.1875 */
 			if (ix < 0x3fe60000) { /* 7/16 <=|x|<11/16 */
 				id = 0;

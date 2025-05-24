@@ -41,7 +41,15 @@
 
 #include "fdlibm.h"
 
+#ifdef __MWERKS__
+#pragma cplusplus on
+#endif
+
 f64 fabs(f64);
+
+#ifdef __MWERKS__
+#pragma cplusplus reset
+#endif
 
 #ifdef __STDC__
 static const f64
