@@ -916,20 +916,19 @@ void DGXGraphics::setMatMatrices(Material* mat, int p2)
 
 	int mtxID = 30;
 	for (int i = 0, j = 0; i < mat->mTextureInfo.mTexGenDataCount; i++) {
-		
+
 		u32 postMtx = mat->mTextureInfo.mTexGenData[i]._03;
-		if(postMtx != 10) {
+		if (postMtx != 10) {
 			postMtx = mtxID;
 		} else {
 			postMtx = 60;
 		}
-		
-		GXTexGenSrc texGenSrc = GXTexGenSrc(mat->mTextureInfo.mTexGenData[i]._02);
+
+		GXTexGenSrc texGenSrc   = GXTexGenSrc(mat->mTextureInfo.mTexGenData[i]._02);
 		GXTexGenType texGenType = GXTexGenType(mat->mTextureInfo.mTexGenData[i]._01);
 		GXTexCoordID texCoordID = GXTexCoordID(mat->mTextureInfo.mTexGenData[i]._00);
 
 		GXSetTexCoordGen2(texCoordID, texGenType, texGenSrc, postMtx, GX_FALSE, GX_PTIDENTITY);
-
 
 		if (mat->mTextureInfo.mTexGenData[i]._01 != 1) {
 			continue;
