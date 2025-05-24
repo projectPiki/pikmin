@@ -34,6 +34,16 @@ struct seqp__Invented2 {
 	f32 _0C; // _0C
 };
 
+// This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
+typedef struct Osc_definition {
+	u8 _00;
+	f32 _04;
+	u16* _08;
+	u16* _0C;
+	f32 _10;
+	f32 _14;
+} Osc_definition;
+
 /**
  * @brief TODO
  *
@@ -79,9 +89,14 @@ struct seqp_ {
 	u16 _338;                 // _338
 	u16 _33A;                 // _33A
 	u8 _33C;                  // _33C
-	u8 _33D[0x370 - 0x33d];   // _33D
+	u8 _33D;                  // _33D
+	f32 _340;                 // _340
+	f32 _344;                 // _344
+	void* _348;               // _348
+	void* _34C;               // _34C
+	f32 _350[8];              // _350
 	u8 _370[2];               // _370 | Exact length unknown, but it is an array.
-	u8 _372[0x396 - 0x372];   // _374
+	s16 _372[0x18];           // _374 | This is a pair of some sort of struct, _348 and _34C point to them, see Osc_Setup_ADSR
 	s8 _396;                  // _396 | Confirmed signed (Cmd_Transpose)
 	u8 _397;                  // _397
 	u8 _398[0x39d - 0x398];   // _398

@@ -1,67 +1,51 @@
 #include "jaudio/jamosc.h"
+#include "jaudio/jammain_2.h"
+
+u16 VIB_TABLE[] = { 0, 0, 0, 0, 20, 0x7fff, 0, 20, 0, 0, 0x14, 0xc000, 0, 20, 0, 13, 0, 1 };
+u16 TRE_TABLE[] = { 0, 0, 0x7fff, 0, 20, 0, 0, 20, 0x8001, 0, 0x14, 0, 0, 0x14, 0x7fff, 13, 0, 1 };
+u16 REL_TABLE[] = { 0, 10, 0, 15, 1, 0 };
+
+Osc_definition VIBRATO_DEF  = { 1, 0.8f, VIB_TABLE, VIB_TABLE, 0.0f, 1.0f };
+Osc_definition TREMOLO_DEF  = { 0, 1.0f, TRE_TABLE, TRE_TABLE, 0.0f, 1.0f };
+Osc_definition ENVELOPE_DEF = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
+
+u16 ADS_TABLE[]         = { 0, 0, 0x7fff, 0, 0, 0x7fff, 0, 0, 0, 14, 0, 0 };
+Osc_definition ADSR_DEF = { 0, 1.0f, nullptr, nullptr, 1.0f, 0.0f };
+Osc_definition OSC_DEF  = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
 
 /*
  * --INFO--
  * Address:	80014CA0
  * Size:	000090
  */
-void Osc_Update_Param(void)
+void Osc_Update_Param(seqp_* seq, u8 id, f32 val)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  stb       r4, 0xC(r1)
-	  lbz       r0, 0xC(r1)
-	  stfs      f1, 0x10(r1)
-	  cmpwi     r0, 0x9
-	  beq-      .loc_0x68
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0x7
-	  beq-      .loc_0x50
-	  bge-      .loc_0x5C
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x44
-	  b         .loc_0x88
+	// silly
+	u8* REF_param_1;
+	REF_param_1 = &id;
+	f32* REF_val;
+	REF_val = &val;
 
-	.loc_0x34:
-	  cmpwi     r0, 0xB
-	  beq-      .loc_0x80
-	  bge-      .loc_0x88
-	  b         .loc_0x74
-
-	.loc_0x44:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x350(r3)
-	  b         .loc_0x88
-
-	.loc_0x50:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x344(r3)
-	  b         .loc_0x88
-
-	.loc_0x5C:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x354(r3)
-	  b         .loc_0x88
-
-	.loc_0x68:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x368(r3)
-	  b         .loc_0x88
-
-	.loc_0x74:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x35C(r3)
-	  b         .loc_0x88
-
-	.loc_0x80:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x36C(r3)
-
-	.loc_0x88:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	switch (id) {
+	case 6:
+		seq->_350[0] = val;
+		break;
+	case 7:
+		seq->_344 = val;
+		break;
+	case 8:
+		seq->_350[1] = val;
+		break;
+	case 9:
+		seq->_350[6] = val;
+		break;
+	case 10:
+		seq->_350[3] = val;
+		break;
+	case 11:
+		seq->_350[7] = val;
+		break;
+	}
 }
 
 /*
@@ -69,8 +53,12 @@ void Osc_Update_Param(void)
  * Address:	80014D40
  * Size:	00003C
  */
-void Osc_Setup_Vibrato(seqp_*, u8)
+void Osc_Setup_Vibrato(seqp_* seq, u8 id)
 {
+	for (int i = 0; i < 3; i++) {
+		(seq[id])._33C = VIBRATO_DEF._00;
+		(seq[id])._340 = VIBRATO_DEF._04;
+	}
 	/*
 	.loc_0x0:
 	  rlwinm    r0,r4,0,24,31
@@ -98,8 +86,12 @@ void Osc_Setup_Vibrato(seqp_*, u8)
  * Address:	80014D80
  * Size:	00003C
  */
-void Osc_Setup_Tremolo(seqp_*, u8)
+void Osc_Setup_Tremolo(seqp_* seq, u8 id)
 {
+	for (int i = 0; i < 3; i++) {
+		(seq[id])._33C = TREMOLO_DEF._00;
+		(seq[id])._340 = TREMOLO_DEF._04;
+	}
 	/*
 	.loc_0x0:
 	  rlwinm    r0,r4,0,24,31
@@ -127,46 +119,19 @@ void Osc_Setup_Tremolo(seqp_*, u8)
  * Address:	80014DC0
  * Size:	000064
  */
-void Osc_Setup_Simple(seqp_*, u8)
+void Osc_Setup_Simple(seqp_* seq, u8 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x1
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x40
-	  bge-      .loc_0x28
-	  cmpwi     r0, 0
-	  bge-      .loc_0x34
-	  b         .loc_0x54
-
-	.loc_0x28:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x54
-	  b         .loc_0x4C
-
-	.loc_0x34:
-	  li        r4, 0x1
-	  bl        -0xB8
-	  b         .loc_0x54
-
-	.loc_0x40:
-	  li        r4, 0
-	  bl        -0x84
-	  b         .loc_0x54
-
-	.loc_0x4C:
-	  li        r4, 0x1
-	  bl        -0x90
-
-	.loc_0x54:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	switch (id) {
+	case 0:
+		Osc_Setup_Vibrato(seq, 1);
+		break;
+	case 1:
+		Osc_Setup_Tremolo(seq, 0);
+		break;
+	case 2:
+		Osc_Setup_Tremolo(seq, 1);
+		break;
+	}
 }
 
 /*
@@ -174,15 +139,10 @@ void Osc_Setup_Simple(seqp_*, u8)
  * Address:	80014E40
  * Size:	000010
  */
-void Osc_Clear_Overwrite(void)
+void Osc_Clear_Overwrite(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0xF
-	  stb       r0, 0x370(r3)
-	  stb       r0, 0x371(r3)
-	  blr
-	*/
+	seq->_370[0] = 15;
+	seq->_370[1] = 15;
 }
 
 /*
@@ -190,8 +150,13 @@ void Osc_Clear_Overwrite(void)
  * Address:	80014E60
  * Size:	00004C
  */
-void Osc_Init_Env(void)
+void Osc_Init_Env(seqp_* seq)
 {
+	for (int i = 0; i < 3; i++) {
+		(seq[i])._33C = ENVELOPE_DEF._00;
+	}
+
+	Osc_Clear_Overwrite(seq);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -223,8 +188,21 @@ void Osc_Init_Env(void)
  * Address:	80014EC0
  * Size:	000094
  */
-void Osc_Setup_SimpleEnv(seqp_*, u8, u32)
+void Osc_Setup_SimpleEnv(seqp_* seq, u8 id, u32 val)
 {
+	switch (id) {
+	case 0:
+		for (int i = 0; i < 3; i++) {
+			(seq[i])._33C = ENVELOPE_DEF._00;
+		}
+
+		seq->_348 = Jam_OfsToAddr(seq, val);
+		break;
+
+	case 1:
+		seq->_34C = Jam_OfsToAddr(seq, val);
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -280,8 +258,29 @@ void Osc_Setup_SimpleEnv(seqp_*, u8, u32)
  * Address:	80014F60
  * Size:	0000B0
  */
-void Osc_Setup_ADSR(seqp_*, s16*)
+void Osc_Setup_ADSR(seqp_* seq, s16* addr)
 {
+	for (int i = 0; i < 3; i++) {
+		(seq[i])._33C = ENVELOPE_DEF._00;
+	}
+
+	seq->_348 = &seq->_372[0]; // _372 seems to be a pair of a 0x18 big struct
+	seq->_34C = &seq->_372[9];
+
+	for (int i = 0; i < 3; i++) {
+		seq->_372[i] = ADS_TABLE[i];
+	}
+
+	for (int i = 0; i < 3; i++) {
+		seq->_372[9 + i] = ADS_TABLE[i];
+	}
+
+	seq->_372[1]  = addr[0];
+	seq->_372[4]  = addr[1];
+	seq->_372[7]  = addr[2];
+	seq->_372[8]  = addr[3];
+	seq->_372[13] = addr[4];
+
 	/*
 	.loc_0x0:
 	  lis       r5, 0x8022
@@ -342,8 +341,32 @@ void Osc_Setup_ADSR(seqp_*, s16*)
  * Address:	80015020
  * Size:	00010C
  */
-void Osc_Setup_Full(seqp_*, u8, u32, u32)
+void Osc_Setup_Full(seqp_* seq, u8 flag, u32 offs1, u32 offs2)
 {
+	if (flag & 0x80) {
+		for (int i = 0; i < 3; i++) {
+			(seq[i])._33C = ENVELOPE_DEF._00;
+			(seq[i])._340 = ENVELOPE_DEF._04;
+		}
+
+		if ((flag & 0x15) == TRUE) {
+			seq->_350[flag] = 1.0f;
+		}
+	}
+
+	if (flag & 0x40) {
+		if (offs1 == 0) {
+			seq->_350[0] = 0;
+		}
+		seq->_348 = Jam_OfsToAddr(seq, offs1);
+	}
+
+	if (flag & 0x20) {
+		if (offs2 == 0) {
+			seq->_350[0] = 0;
+		}
+		seq->_34C = Jam_OfsToAddr(seq, offs2);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
