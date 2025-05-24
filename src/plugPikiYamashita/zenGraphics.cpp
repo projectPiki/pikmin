@@ -49,12 +49,12 @@ void zen::zenGraphics::setTevFillPolygon()
  * Address:	801BA13C
  * Size:	000458
  */
-void zen::DrawLifeCircle::drawLifeCircle(f32 p1)
+void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 {
 	Vector3f vecs[3];
 	Colour color;
 	zenGraphics::setTevFillPolygon();
-	int drawCount = RoundOff(TRI_NUM * p1);
+	int drawCount = RoundOff(TRI_NUM * healthRatio);
 
 	if (_00 != drawCount) {
 		f32 v = (drawCount < _00) ? 0.02f : 0.05f;
@@ -70,12 +70,12 @@ void zen::DrawLifeCircle::drawLifeCircle(f32 p1)
 		}
 	}
 
-	if (p1 < 0.2f) {
-		color.set(255, 0, 0, 255);
-	} else if (p1 < 0.5f) {
-		color.set(255, 255, 0, 255);
+	if (healthRatio < 0.2f) {
+		color.set(255, 0, 0, 255); // red for low health
+	} else if (healthRatio < 0.5f) {
+		color.set(255, 255, 0, 255); // yellow for middling health
 	} else {
-		color.set(0, 255, 0, 255);
+		color.set(0, 255, 0, 255); // green for good health
 	}
 
 	vecs[0].x = _14 + 0.0f;
@@ -430,8 +430,8 @@ void zen::DrawLifeCircle::drawLifeCircle(f32 p1)
 void zen::DrawNaviLifeCircle::drawLifeCircle()
 {
 	if (naviMgr) {
-		Navi* navi = naviMgr->getNavi(_18);
-		DrawLifeCircle::drawLifeCircle(navi->mHealth / C_NAVI_PROP(navi).mHealth());
+		Navi* navi = naviMgr->getNavi(mNaviIndex);
+		DrawLifeCircle::drawLifeCircle(navi->mHealth / C_NAVI_PROP(navi).mHealth()); // ratio of current health to parameter health
 	} else {
 		DrawLifeCircle::drawLifeCircle(1.0f);
 	}
