@@ -96,7 +96,7 @@ struct seqp_ {
 	void* _34C;               // _34C
 	f32 _350[8];              // _350
 	u8 _370[2];               // _370 | Exact length unknown, but it is an array.
-	s16 _372[0x18];           // _374 | This is a pair of some sort of struct, _348 and _34C point to them, see Osc_Setup_ADSR
+	s16 _372[0x12];           // _374 | This is a pair of some sort of struct, _348 and _34C point to them, see Osc_Setup_ADSR
 	s8 _396;                  // _396 | Confirmed signed (Cmd_Transpose)
 	u8 _397;                  // _397
 	u8 _398[0x39d - 0x398];   // _398
