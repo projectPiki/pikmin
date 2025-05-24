@@ -50,6 +50,8 @@
         "ansi_files.h": "c",
         "cmdstack.h": "c",
         "pikiinter.h": "c",
-        "serpoll.h": "c"
+        "serpoll.h": "c",
+        "stdarg.h": "c",
+        "ctype.h": "c"
     },
 }

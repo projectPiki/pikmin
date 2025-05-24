@@ -9,36 +9,38 @@
 extern "C" {
 #endif
 
+#define __zero_fill(c) ((int)(u8)(c))
+
 int tolower(int __c);
 
 inline int isalpha(int c)
 {
-	return (int)(__ctype_map[(u8)c] & __letter);
+	return (int)(__ctype_map[__zero_fill(c)] & __letter);
 }
 inline int isdigit(int c)
 {
-	return (int)(__ctype_map[(u8)c] & __digit);
+	return (int)(__ctype_map[__zero_fill(c)] & __digit);
 }
 inline int isspace(int c)
 {
-	return (int)(__ctype_map[(u8)c] & __whitespace);
+	return (int)(__ctype_map[__zero_fill(c)] & __whitespace);
 }
 inline int isupper(int c)
 {
-	return (int)(__ctype_map[(u8)c] & __upper_case);
+	return (int)(__ctype_map[__zero_fill(c)] & __upper_case);
 }
 inline int isxdigit(int c)
 {
-	return (int)(__ctype_map[(u8)c] & __hex_digit);
+	return (int)(__ctype_map[__zero_fill(c)] & __hex_digit);
 }
 // added underscore to avoid naming conflicts
 inline int _tolower(int c)
 {
-	return (c == -1 ? -1 : (int)__lower_map[(u8)c]);
+	return (c == -1 ? -1 : (int)__lower_map[__zero_fill(c)]);
 }
 inline int toupper(int c)
 {
-	return (c == -1 ? -1 : (int)__upper_map[(u8)c]);
+	return (c == -1 ? -1 : (int)__upper_map[__zero_fill(c)]);
 }
 
 #ifdef __cplusplus

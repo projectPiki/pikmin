@@ -1,7 +1,7 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/file_io.h"
 
-extern files __files = {
+extern FILE __files[3] = {
 	{
 	    0,
 	    0,
@@ -21,9 +21,9 @@ extern files __files = {
 	    0,
 	    0,
 	    0,
-	    (char*)&__files._stdin.mIsDynamicallyAllocated,
+	    (char*)&(stdin)->mIsDynamicallyAllocated,
 	    1,
-	    (char*)&__files._stdin.mIsDynamicallyAllocated,
+	    (char*)&(stdin)->mIsDynamicallyAllocated,
 	    0,
 	    0,
 	    0,
@@ -53,9 +53,9 @@ extern files __files = {
 	    0,
 	    0,
 	    0,
-	    (char*)&__files._stdout.mIsDynamicallyAllocated,
+	    (char*)&(stdout)->mIsDynamicallyAllocated,
 	    1,
-	    (char*)&__files._stdout.mIsDynamicallyAllocated,
+	    (char*)&(stdout)->mIsDynamicallyAllocated,
 	    0,
 	    0,
 	    0,
@@ -85,9 +85,9 @@ extern files __files = {
 	    0,
 	    0,
 	    0,
-	    (char*)&__files._stderr.mIsDynamicallyAllocated,
+	    (char*)&(stderr)->mIsDynamicallyAllocated,
 	    1,
-	    (char*)&__files._stderr.mIsDynamicallyAllocated,
+	    (char*)&(stderr)->mIsDynamicallyAllocated,
 	    0,
 	    0,
 	    0,

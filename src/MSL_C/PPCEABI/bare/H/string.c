@@ -1,7 +1,7 @@
 #include "types.h"
 
-#define K1 0x80808080
-#define K2 0xFEFEFEFF
+static s32 K1 = 0x80808080;
+static s32 K2 = 0xFEFEFEFF;
 
 /*
  * --INFO--
@@ -26,55 +26,79 @@ size_t strlen(const char* str)
  */
 char* strcpy(char* dst, const char* src)
 {
-	register u8 *destb, *fromb;
-	register u32 w, t, align;
+	u8* p1       = (u8*)dst;
+	const u8* p2 = (u8*)src;
+	s32 w;
+	s32 t;
+	u32 align;
+	s32 k1;
+	s32 k2;
 
-	fromb = (u8*)src;
-	destb = (u8*)dst;
-
-	if ((align = ((int)fromb & 3)) != ((int)destb & 3)) {
+	if ((align = (u32)src & 3) != ((u32)dst & 3)) {
 		goto bytecopy;
 	}
 
-	if (align) {
-		if ((*destb = *fromb) == 0)
-			return (dst);
-		for (align = 3 - align; align; align--) {
-			if ((*(++destb) = *(++fromb)) == 0)
-				return (dst);
-		}
-		++destb;
-		++fromb;
-	}
-
-	w = *((int*)(fromb));
-
-	t = w + K2;
-
-	t &= K1;
-	if (t)
-		goto bytecopy;
-	--((int*)(destb));
-
-	do {
-		*(++((int*)(destb))) = w;
-		w                    = *(++((int*)(fromb)));
-
-		t = w + K2;
-		t &= K1;
-		if (t)
-			goto adjust;
-	} while (1);
-
-adjust:
-	++((int*)(destb));
-bytecopy:
-	if ((*destb = *fromb) == 0)
-		return dst;
-	do {
-		if ((*(++destb) = *(++fromb)) == 0)
+	if (align != 0) {
+		if ((*p1 = *p2) == 0) {
 			return dst;
-	} while (1);
+		}
+
+		align = 3 - align;
+		while (align != 0) {
+			if ((*++p1 = *++p2) == 0) {
+				return dst;
+			}
+			align--;
+		}
+
+		p1++;
+		p2++;
+	}
+
+	k1 = K1;
+	k2 = K2;
+
+	w = *(s32*)p2;
+	t = w + k2;
+	t &= k1;
+
+	if (t != 0) {
+		goto bytecopy;
+	}
+
+	p1 -= 4;
+
+	while (TRUE) {
+#if __MWERKS__
+		*++((s32*)p1) = w;
+		w             = *++((s32*)p2);
+#else
+		p1 += 4;
+		p2 += 4;
+		*(s32*)p1 = w;
+		w         = *(s32*)p2;
+#endif
+
+		t = w + k2;
+		t &= k1;
+		if (t != 0) {
+			break;
+		}
+	}
+
+	p1 += 4;
+
+bytecopy:
+	if ((*p1 = *p2) == 0) {
+		return dst;
+	}
+
+	align = 3 - align;
+	while (TRUE) {
+		if ((*++p1 = *++p2) == 0) {
+			return dst;
+		}
+	}
 
 	return dst;
 }
@@ -328,44 +352,29 @@ char* strtok(char* str, const char* delim)
  */
 char* strstr(const char* str, const char* substr)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r4, 0
-	  subi      r5, r3, 0x1
-	  subi      r4, r4, 0x1
-	  beqlr-
-	  lbzu      r6, 0x1(r4)
-	  cmplwi    r6, 0
-	  bne-      .loc_0x58
-	  blr
+	u8* s1 = (u8*)str - 1;
+	u8* p1 = (u8*)substr - 1;
+	u32 firstc, c1, c2;
 
-	.loc_0x20:
-	  cmplw     r0, r6
-	  bne-      .loc_0x58
-	  subi      r7, r5, 0x1
-	  subi      r8, r4, 0x1
+	if (substr == NULL || !(firstc = *++p1)) {
+		return (char*)str;
+	}
 
-	.loc_0x30:
-	  lbzu      r0, 0x1(r7)
-	  lbzu      r3, 0x1(r8)
-	  cmplw     r0, r3
-	  bne-      .loc_0x48
-	  cmplwi    r0, 0
-	  bne+      .loc_0x30
+	while ((c1 = *++s1)) {
+		if (c1 == firstc) {
+			const u8* s2 = s1 - 1;
+			const u8* p2 = p1 - 1;
 
-	.loc_0x48:
-	  cmplwi    r3, 0
-	  bne-      .loc_0x58
-	  mr        r3, r5
-	  blr
+			while ((c1 = *(++s2)) == (c2 = *(++p2)) && c1)
+				;
 
-	.loc_0x58:
-	  lbzu      r0, 0x1(r5)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x20
-	  li        r3, 0
-	  blr
-	*/
+			if (!c2) {
+				return (char*)s1;
+			}
+		}
+	}
+
+	return NULL;
 }
 
 /*

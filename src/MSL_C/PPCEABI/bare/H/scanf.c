@@ -1,426 +1,243 @@
 #include "types.h"
+#include "stdarg.h"
+#include "ctype.h"
+#include "stdio.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
+
+typedef s64 intmax_t;
+
+enum argument_options {
+	normal_argument,
+	char_argument,
+	short_argument,
+	long_argument,
+	long_long_argument,
+	double_argument,
+	long_double_argument,
+	wchar_argument
+};
+
+typedef u8 char_map[32];
+
+typedef struct {
+	u8 suppress_assignment;
+	u8 field_width_specified;
+	u8 argument_options;
+	u8 conversion_char;
+	int field_width;
+	char_map char_set;
+} scan_format;
+
+#define set_char_map(map, ch) map[(u8)ch >> 3] |= (1 << (ch & 7))
+#define tst_char_map(map, ch) (map[(u8)ch >> 3] & (1 << (ch & 7)))
 
 /*
  * --INFO--
  * Address:	80218B84
  * Size:	000564
  */
-void parse_format(void)
+static const char* parse_format(const char* format_string, scan_format* format)
 {
-	/*
-	.loc_0x0:
-	  lis       r5, 0x8022
-	  stwu      r1, -0x38(r1)
-	  addi      r6, r5, 0x2B20
-	  lwz       r5, 0x0(r6)
-	  lwz       r0, 0x4(r6)
-	  stw       r5, 0x10(r1)
-	  stw       r0, 0x14(r1)
-	  lwz       r5, 0x8(r6)
-	  lwz       r0, 0xC(r6)
-	  stw       r5, 0x18(r1)
-	  stw       r0, 0x1C(r1)
-	  lwz       r5, 0x10(r6)
-	  lwz       r0, 0x14(r6)
-	  stw       r5, 0x20(r1)
-	  stw       r0, 0x24(r1)
-	  lwz       r5, 0x18(r6)
-	  lwz       r0, 0x1C(r6)
-	  stw       r5, 0x28(r1)
-	  stw       r0, 0x2C(r1)
-	  lwz       r5, 0x20(r6)
-	  lwz       r0, 0x24(r6)
-	  stw       r5, 0x30(r1)
-	  stw       r0, 0x34(r1)
-	  lbzu      r7, 0x1(r3)
-	  extsb     r7, r7
-	  cmpwi     r7, 0x25
-	  bne-      .loc_0xC8
-	  stb       r7, 0x13(r1)
-	  addi      r3, r3, 0x1
-	  lwz       r5, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r5, 0x0(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r5, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r5, 0x8(r4)
-	  stw       r0, 0xC(r4)
-	  lwz       r5, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r5, 0x10(r4)
-	  stw       r0, 0x14(r4)
-	  lwz       r5, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r5, 0x18(r4)
-	  stw       r0, 0x1C(r4)
-	  lwz       r5, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r5, 0x20(r4)
-	  stw       r0, 0x24(r4)
-	  b         .loc_0x55C
+	const char* s = format_string;
+	int c;
+	int flag_found, invert;
+	scan_format f = { 0, 0, normal_argument, 0, 2147483647, { 0 } };
 
-	.loc_0xC8:
-	  cmpwi     r7, 0x2A
-	  bne-      .loc_0xE0
-	  li        r0, 0x1
-	  stb       r0, 0x10(r1)
-	  lbzu      r7, 0x1(r3)
-	  extsb     r7, r7
+	if (((c = *++s) == '%')) {
+		f.conversion_char = c;
+		*format           = f;
+		return ((const char*)s + 1);
+	}
 
-	.loc_0xE0:
-	  lis       r5, 0x8022
-	  rlwinm    r0,r7,0,24,31
-	  addi      r6, r5, 0x2808
-	  add       r5, r6, r0
-	  lbz       r0, 0x0(r5)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x1A8
-	  li        r0, 0
-	  stw       r0, 0x14(r1)
+	if (c == '*') {
+		f.suppress_assignment = 1;
+		c                     = *++s;
+	}
 
-	.loc_0x104:
-	  lwz       r0, 0x14(r1)
-	  mulli     r0, r0, 0xA
-	  add       r5, r7, r0
-	  subi      r0, r5, 0x30
-	  stw       r0, 0x14(r1)
-	  lbzu      r7, 0x1(r3)
-	  extsb     r7, r7
-	  rlwinm    r0,r7,0,24,31
-	  add       r5, r6, r0
-	  lbz       r0, 0x0(r5)
-	  rlwinm.   r0,r0,0,27,27
-	  bne+      .loc_0x104
-	  lwz       r0, 0x14(r1)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x1A0
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
-	  addi      r3, r3, 0x1
-	  lwz       r5, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r5, 0x0(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r5, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r5, 0x8(r4)
-	  stw       r0, 0xC(r4)
-	  lwz       r5, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r5, 0x10(r4)
-	  stw       r0, 0x14(r4)
-	  lwz       r5, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r5, 0x18(r4)
-	  stw       r0, 0x1C(r4)
-	  lwz       r5, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r5, 0x20(r4)
-	  stw       r0, 0x24(r4)
-	  b         .loc_0x55C
+	if (isdigit(c)) {
+		f.field_width = 0;
 
-	.loc_0x1A0:
-	  li        r0, 0x1
-	  stb       r0, 0x11(r1)
+		do {
+			f.field_width = (f.field_width * 10) + (c - '0');
+			c             = *++s;
+		} while (isdigit(c));
 
-	.loc_0x1A8:
-	  cmpwi     r7, 0x68
-	  li        r5, 0x1
-	  beq-      .loc_0x1D0
-	  bge-      .loc_0x1C4
-	  cmpwi     r7, 0x4C
-	  beq-      .loc_0x220
-	  b         .loc_0x22C
+		if (f.field_width == 0) {
+			f.conversion_char = 0xFF;
+			*format           = f;
+			return ((const char*)s + 1);
+		}
 
-	.loc_0x1C4:
-	  cmpwi     r7, 0x6C
-	  beq-      .loc_0x1F8
-	  b         .loc_0x22C
+		f.field_width_specified = 1;
+	}
 
-	.loc_0x1D0:
-	  li        r0, 0x2
-	  stb       r0, 0x12(r1)
-	  lbz       r0, 0x1(r3)
-	  cmpwi     r0, 0x68
-	  bne-      .loc_0x230
-	  li        r0, 0x1
-	  stb       r0, 0x12(r1)
-	  lbzu      r7, 0x1(r3)
-	  extsb     r7, r7
-	  b         .loc_0x230
+	flag_found = 1;
 
-	.loc_0x1F8:
-	  li        r0, 0x3
-	  stb       r0, 0x12(r1)
-	  lbz       r0, 0x1(r3)
-	  cmpwi     r0, 0x6C
-	  bne-      .loc_0x230
-	  li        r0, 0x4
-	  stb       r0, 0x12(r1)
-	  lbzu      r7, 0x1(r3)
-	  extsb     r7, r7
-	  b         .loc_0x230
+	switch (c) {
+	case 'h':
+		f.argument_options = short_argument;
 
-	.loc_0x220:
-	  li        r0, 0x6
-	  stb       r0, 0x12(r1)
-	  b         .loc_0x230
+		if (s[1] == 'h') {
+			f.argument_options = char_argument;
+			c                  = *++s;
+		}
 
-	.loc_0x22C:
-	  li        r5, 0
+		break;
+	case 'l':
+		f.argument_options = long_argument;
 
-	.loc_0x230:
-	  cmpwi     r5, 0
-	  beq-      .loc_0x240
-	  lbzu      r7, 0x1(r3)
-	  extsb     r7, r7
+		if (s[1] == 'l') {
+			f.argument_options = long_long_argument;
+			c                  = *++s;
+		}
+		break;
+	case 'L':
+		f.argument_options = long_double_argument;
+		break;
+	default:
+		flag_found = 0;
+	}
 
-	.loc_0x240:
-	  subi      r0, r7, 0x45
-	  stb       r7, 0x13(r1)
-	  cmplwi    r0, 0x33
-	  bgt-      .loc_0x500
-	  lis       r5, 0x802F
-	  subi      r5, r5, 0x6CE0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r5, r0
-	  mtctr     r0
-	  bctr
-	  lbz       r0, 0x12(r1)
-	  cmplwi    r0, 0x6
-	  bne-      .loc_0x508
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
-	  b         .loc_0x508
-	  lbz       r0, 0x12(r1)
-	  cmplwi    r0, 0x1
-	  beq-      .loc_0x29C
-	  cmplwi    r0, 0x2
-	  beq-      .loc_0x29C
-	  cmplwi    r0, 0x4
-	  bne-      .loc_0x2A8
+	if (flag_found) {
+		c = *++s;
+	}
 
-	.loc_0x29C:
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
-	  b         .loc_0x508
+	f.conversion_char = c;
 
-	.loc_0x2A8:
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x508
-	  li        r0, 0x5
-	  stb       r0, 0x12(r1)
-	  b         .loc_0x508
-	  li        r0, 0x3
-	  stb       r0, 0x12(r1)
-	  li        r0, 0x78
-	  stb       r0, 0x13(r1)
-	  b         .loc_0x508
-	  lbz       r0, 0x12(r1)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x2E8
-	  li        r0, 0x7
-	  stb       r0, 0x12(r1)
-	  b         .loc_0x508
+	switch (c) {
+	case 'd':
+	case 'i':
+	case 'u':
+	case 'o':
+	case 'x':
+	case 'X':
+		if (f.argument_options == long_double_argument) {
+			f.conversion_char = 0xFF;
+			break;
+		}
 
-	.loc_0x2E8:
-	  cmplwi    r0, 0
-	  beq-      .loc_0x508
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
-	  b         .loc_0x508
-	  lbz       r0, 0x12(r1)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x314
-	  li        r0, 0x7
-	  stb       r0, 0x12(r1)
-	  b         .loc_0x324
+		break;
 
-	.loc_0x314:
-	  cmplwi    r0, 0
-	  beq-      .loc_0x324
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
+	case 'a':
+	case 'f':
+	case 'e':
+	case 'E':
+	case 'g':
+	case 'G':
+		if (f.argument_options == char_argument || f.argument_options == short_argument || f.argument_options == long_long_argument) {
+			f.conversion_char = 0xFF;
+			break;
+		}
 
-	.loc_0x324:
-	  li        r0, 0x4
-	  mtctr     r0
-	  addi      r5, r1, 0x18
-	  li        r0, 0xFF
+		if (f.argument_options == long_argument) {
+			f.argument_options = double_argument;
+		}
 
-	.loc_0x334:
-	  stb       r0, 0x0(r5)
-	  stb       r0, 0x1(r5)
-	  stb       r0, 0x2(r5)
-	  stb       r0, 0x3(r5)
-	  stb       r0, 0x4(r5)
-	  stb       r0, 0x5(r5)
-	  stb       r0, 0x6(r5)
-	  stb       r0, 0x7(r5)
-	  addi      r5, r5, 0x8
-	  bdnz+     .loc_0x334
-	  li        r0, 0xC1
-	  stb       r0, 0x19(r1)
-	  li        r0, 0xFE
-	  stb       r0, 0x1C(r1)
-	  b         .loc_0x508
-	  lbz       r0, 0x12(r1)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x388
-	  li        r0, 0x7
-	  stb       r0, 0x12(r1)
-	  b         .loc_0x398
+		break;
 
-	.loc_0x388:
-	  cmplwi    r0, 0
-	  beq-      .loc_0x398
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
+	case 'p':
+		f.argument_options = long_argument;
+		f.conversion_char  = 'x';
+		break;
 
-	.loc_0x398:
-	  lbzu      r9, 0x1(r3)
-	  li        r10, 0
-	  extsb     r9, r9
-	  cmpwi     r9, 0x5E
-	  bne-      .loc_0x3B8
-	  lbzu      r9, 0x1(r3)
-	  li        r10, 0x1
-	  extsb     r9, r9
+	case 'c':
+		if (f.argument_options == long_argument) {
+			f.argument_options = wchar_argument;
+		} else {
+			if (f.argument_options != normal_argument) {
+				f.conversion_char = 0xFF;
+			}
+		}
 
-	.loc_0x3B8:
-	  cmpwi     r9, 0x5D
-	  bne-      .loc_0x3D4
-	  lbz       r0, 0x23(r1)
-	  ori       r0, r0, 0x20
-	  stb       r0, 0x23(r1)
-	  lbzu      r9, 0x1(r3)
-	  extsb     r9, r9
+		break;
 
-	.loc_0x3D4:
-	  addi      r7, r1, 0x10
-	  b         .loc_0x45C
+	case 's':
+		if (f.argument_options == long_argument) {
+			f.argument_options = wchar_argument;
+		} else {
+			if (f.argument_options != normal_argument) {
+				f.conversion_char = 0xFF;
+			}
+		}
 
-	.loc_0x3DC:
-	  rlwinm    r5,r9,29,27,31
-	  addi      r6, r5, 0x8
-	  rlwinm    r0,r9,0,29,31
-	  lbzx      r5, r7, r6
-	  li        r8, 0x1
-	  slw       r0, r8, r0
-	  or        r0, r5, r0
-	  stbx      r0, r7, r6
-	  lbz       r0, 0x1(r3)
-	  cmpwi     r0, 0x2D
-	  bne-      .loc_0x454
-	  lbz       r11, 0x2(r3)
-	  extsb.    r11, r11
-	  beq-      .loc_0x454
-	  cmpwi     r11, 0x5D
-	  beq-      .loc_0x454
-	  b         .loc_0x43C
+		{
+			int i;
+			u8* p;
 
-	.loc_0x420:
-	  rlwinm    r5,r9,29,27,31
-	  addi      r6, r5, 0x8
-	  rlwinm    r0,r9,0,29,31
-	  lbzx      r5, r7, r6
-	  slw       r0, r8, r0
-	  or        r0, r5, r0
-	  stbx      r0, r7, r6
+			for (i = sizeof(f.char_set), p = f.char_set; i; --i) {
+				*p++ = 0xFF;
+			}
 
-	.loc_0x43C:
-	  addi      r9, r9, 0x1
-	  cmpw      r9, r11
-	  ble+      .loc_0x420
-	  lbzu      r9, 0x3(r3)
-	  extsb     r9, r9
-	  b         .loc_0x45C
+			f.char_set[1] = 0xC1;
+			f.char_set[4] = 0xFE;
+		}
 
-	.loc_0x454:
-	  lbzu      r9, 0x1(r3)
-	  extsb     r9, r9
+		break;
 
-	.loc_0x45C:
-	  cmpwi     r9, 0
-	  beq-      .loc_0x46C
-	  cmpwi     r9, 0x5D
-	  bne+      .loc_0x3DC
+	case 'n':
+		break;
 
-	.loc_0x46C:
-	  cmpwi     r9, 0
-	  bne-      .loc_0x480
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
-	  b         .loc_0x508
+	case '[':
+		if (f.argument_options == long_argument) {
+			f.argument_options = wchar_argument;
+		} else {
+			if (f.argument_options != normal_argument) {
+				f.conversion_char = 0xFF;
+			}
+		}
 
-	.loc_0x480:
-	  cmpwi     r10, 0
-	  beq-      .loc_0x508
-	  li        r0, 0x4
-	  mtctr     r0
-	  addi      r5, r1, 0x18
+		c      = *++s;
+		invert = 0;
 
-	.loc_0x494:
-	  lbz       r0, 0x0(r5)
-	  not       r0, r0
-	  stb       r0, 0x0(r5)
-	  lbz       r0, 0x1(r5)
-	  not       r0, r0
-	  stb       r0, 0x1(r5)
-	  lbz       r0, 0x2(r5)
-	  not       r0, r0
-	  stb       r0, 0x2(r5)
-	  lbz       r0, 0x3(r5)
-	  not       r0, r0
-	  stb       r0, 0x3(r5)
-	  lbz       r0, 0x4(r5)
-	  not       r0, r0
-	  stb       r0, 0x4(r5)
-	  lbz       r0, 0x5(r5)
-	  not       r0, r0
-	  stb       r0, 0x5(r5)
-	  lbz       r0, 0x6(r5)
-	  not       r0, r0
-	  stb       r0, 0x6(r5)
-	  lbz       r0, 0x7(r5)
-	  not       r0, r0
-	  stb       r0, 0x7(r5)
-	  addi      r5, r5, 0x8
-	  bdnz+     .loc_0x494
-	  b         .loc_0x508
+		if (c == '^') {
+			invert = 1;
+			c      = *++s;
+		}
 
-	.loc_0x500:
-	  li        r0, 0xFF
-	  stb       r0, 0x13(r1)
+		if (c == ']') {
+			set_char_map(f.char_set, ']');
+			c = *++s;
+		}
 
-	.loc_0x508:
-	  lwz       r5, 0x10(r1)
-	  addi      r3, r3, 0x1
-	  lwz       r0, 0x14(r1)
-	  stw       r5, 0x0(r4)
-	  stw       r0, 0x4(r4)
-	  lwz       r5, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r5, 0x8(r4)
-	  stw       r0, 0xC(r4)
-	  lwz       r5, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r5, 0x10(r4)
-	  stw       r0, 0x14(r4)
-	  lwz       r5, 0x28(r1)
-	  lwz       r0, 0x2C(r1)
-	  stw       r5, 0x18(r4)
-	  stw       r0, 0x1C(r4)
-	  lwz       r5, 0x30(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r5, 0x20(r4)
-	  stw       r0, 0x24(r4)
+		while (c && c != ']') {
+			int d;
+			set_char_map(f.char_set, c);
 
-	.loc_0x55C:
-	  addi      r1, r1, 0x38
-	  blr
-	*/
+			if (*(s + 1) == '-' && (d = *(s + 2)) != 0 && d != ']') {
+				while (++c <= d) {
+					set_char_map(f.char_set, c);
+				}
+
+				c = *(s += 3);
+			} else {
+				c = *++s;
+			}
+		}
+
+		if (!c) {
+			f.conversion_char = 0xFF;
+			break;
+		}
+
+		if (invert) {
+			int i;
+			u8* p;
+
+			for (i = sizeof(f.char_set), p = f.char_set; i; --i, ++p) {
+				*p = ~*p;
+			}
+
+			break;
+		}
+
+		break;
+	default:
+		f.conversion_char = 0xFF;
+		break;
+	}
+
+	*format = f;
+	return ((const char*)s + 1);
 }
 
 /*
@@ -428,8 +245,345 @@ void parse_format(void)
  * Address:	802181E0
  * Size:	0009A4
  */
-void __sformatter(void)
+static int __sformatter(int (*ReadProc)(void*, int, int), void* ReadProcArg, const char* format_str, va_list arg)
 {
+	int num_chars, chars_read, items_assigned, conversions;
+	int base, negative, overflow;
+	const char* format_ptr;
+	char format_char;
+	char c;
+	scan_format format;
+	s32 long_num;
+	u32 u_long_num;
+	s64 long_long_num;
+	u64 u_long_long_num;
+	f128 long_double_num;
+	char* arg_ptr;
+	int terminate = 0;
+
+	format_ptr     = format_str;
+	chars_read     = 0;
+	items_assigned = 0;
+	conversions    = 0;
+
+	while (!terminate && (format_char = *format_ptr) != 0) {
+		if (isspace(format_char)) {
+			do {
+				format_char = *++format_ptr;
+			} while (isspace(format_char));
+
+			while (isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
+				++chars_read;
+
+			(*ReadProc)(ReadProcArg, c, __UngetAChar);
+
+			continue;
+		}
+
+		if (format_char != '%') {
+			if ((c = (*ReadProc)(ReadProcArg, 0, __GetAChar)) != (u8)format_char) {
+				(*ReadProc)(ReadProcArg, c, __UngetAChar);
+				goto exit;
+			}
+
+			chars_read++;
+			format_ptr++;
+
+			continue;
+		}
+
+		format_ptr = parse_format(format_ptr, &format);
+
+		if (!format.suppress_assignment && format.conversion_char != '%') {
+			arg_ptr = va_arg(arg, char*);
+		} else {
+			arg_ptr = 0;
+		}
+
+		if ((format.conversion_char != 'n') && (*ReadProc)(ReadProcArg, 0, __TestForError)) {
+			terminate = 1;
+			goto exit;
+		}
+
+		switch (format.conversion_char) {
+		case 'd':
+			base = 10;
+			goto signed_int;
+		case 'i':
+			base = 0;
+		signed_int:
+			if ((format.argument_options == long_long_argument))
+				u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
+			else
+				u_long_num = __strtoul(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
+
+			if (!num_chars) {
+				goto exit;
+			}
+
+			chars_read += num_chars;
+
+			if ((format.argument_options == long_long_argument))
+				long_long_num = (negative ? -u_long_long_num : u_long_long_num);
+			else
+				long_num = (negative ? -u_long_num : u_long_num);
+
+		signed_int_assign:
+
+			if (arg_ptr) {
+				switch (format.argument_options) {
+				case normal_argument:
+					*(int*)arg_ptr = long_num;
+					break;
+				case char_argument:
+					*(s8*)arg_ptr = long_num;
+					break;
+				case short_argument:
+					*(s16*)arg_ptr = long_num;
+					break;
+				case long_argument:
+					*(s32*)arg_ptr = long_num;
+					break;
+				case long_long_argument:
+					*(s64*)arg_ptr = long_long_num;
+					break;
+				}
+
+				items_assigned++;
+			}
+
+			conversions++;
+			break;
+		case 'o':
+			base = 8;
+			goto unsigned_int;
+		case 'u':
+			base = 10;
+			goto unsigned_int;
+		case 'x':
+		case 'X':
+			base = 16;
+		unsigned_int:
+			if ((format.argument_options == long_long_argument))
+				u_long_long_num = __strtoull(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
+			else
+				u_long_num = __strtoul(base, format.field_width, ReadProc, ReadProcArg, &num_chars, &negative, &overflow);
+
+			if (!num_chars) {
+				goto exit;
+			}
+
+			chars_read += num_chars;
+
+			if (negative) {
+				if (format.argument_options == long_long_argument)
+					u_long_long_num = -u_long_long_num;
+				else
+					u_long_num = -u_long_num;
+			}
+
+		unsigned_int_assign:
+
+			if (arg_ptr) {
+				switch (format.argument_options) {
+				case normal_argument:
+					*(uint*)arg_ptr = u_long_num;
+					break;
+				case char_argument:
+					*(u8*)arg_ptr = u_long_num;
+					break;
+				case short_argument:
+					*(u16*)arg_ptr = u_long_num;
+					break;
+				case long_argument:
+					*(u32*)arg_ptr = u_long_num;
+					break;
+				case long_long_argument:
+					*(u64*)arg_ptr = u_long_long_num;
+					break;
+				}
+
+				items_assigned++;
+			}
+
+			conversions++;
+			break;
+		case 'a':
+		case 'f':
+		case 'e':
+		case 'E':
+		case 'g':
+		case 'G':
+		flt:
+			long_double_num = __strtold(format.field_width, ReadProc, ReadProcArg, &num_chars, &overflow);
+
+			if (!num_chars) {
+				goto exit;
+			}
+
+			chars_read += num_chars;
+
+		assign_float:
+
+			if (arg_ptr) {
+				switch (format.argument_options) {
+				case normal_argument:
+					*(f32*)arg_ptr = long_double_num;
+					break;
+				case double_argument:
+					*(f64*)arg_ptr = long_double_num;
+					break;
+				case long_double_argument:
+					*(f128*)arg_ptr = long_double_num;
+					break;
+				}
+
+				items_assigned++;
+			}
+
+			conversions++;
+			break;
+
+		case 'c':
+
+			if (!format.field_width_specified)
+				format.field_width = 1;
+
+			if (arg_ptr) {
+				int rval;
+				num_chars = 0;
+
+				while (format.field_width-- && ((rval = ((*ReadProc)(ReadProcArg, 0, __GetAChar))) != -1)) {
+					c = rval;
+
+					if (format.argument_options == wchar_argument) {
+						mbtowc(((wchar_t*)arg_ptr), (char*)(&c), 1);
+						(wchar_t*)arg_ptr++;
+					} else {
+						*arg_ptr++ = c;
+					}
+					num_chars++;
+				}
+
+				if (!num_chars) {
+					goto exit;
+				}
+
+				chars_read += num_chars;
+
+				items_assigned++;
+			} else {
+				num_chars = 0;
+
+				while (format.field_width-- && ((c = ((*ReadProc)(ReadProcArg, 0, __GetAChar))) != -1)) {
+					num_chars++;
+				}
+				if (!num_chars)
+					goto exit;
+			}
+
+			conversions++;
+			break;
+		case '%':
+			while (isspace(c = (*ReadProc)(ReadProcArg, 0, __GetAChar)))
+				chars_read++;
+
+			if (c != '%') {
+				(*ReadProc)(ReadProcArg, c, __UngetAChar);
+				goto exit;
+			}
+
+			chars_read++;
+			break;
+		case 's':
+			c = (*ReadProc)(ReadProcArg, 0, __GetAChar);
+			while (isspace(c)) {
+				chars_read++;
+				c = (*ReadProc)(ReadProcArg, 0, __GetAChar);
+			}
+
+			(*ReadProc)(ReadProcArg, c, __UngetAChar);
+		case '[':
+			if (arg_ptr) {
+				num_chars = 0;
+
+				while (format.field_width-- && ((c = ((*ReadProc)(ReadProcArg, 0, __GetAChar))) != -1)
+				       && tst_char_map(format.char_set, c)) {
+					if (format.argument_options == wchar_argument) {
+						mbtowc(((wchar_t*)arg_ptr), (char*)&c, 1);
+						arg_ptr = (char*)((wchar_t*)arg_ptr + 1);
+					} else {
+						*arg_ptr++ = c;
+					}
+					num_chars++;
+				}
+
+				if (!num_chars) {
+					(*ReadProc)(ReadProcArg, c, __UngetAChar);
+					goto exit;
+				}
+
+				chars_read += num_chars;
+
+				if (format.argument_options == wchar_argument)
+					*(wchar_t*)arg_ptr = L'\0';
+				else
+					*arg_ptr = 0;
+
+				items_assigned++;
+			} else {
+				num_chars = 0;
+
+				while (format.field_width-- && ((c = ((*ReadProc)(ReadProcArg, 0, __GetAChar))) != -1)
+				       && tst_char_map(format.char_set, c)) {
+
+					num_chars++;
+				}
+
+				if (!num_chars) {
+					(*ReadProc)(ReadProcArg, c, __UngetAChar);
+					break;
+				}
+				chars_read += num_chars;
+			}
+
+			if (format.field_width >= 0)
+				(*ReadProc)(ReadProcArg, c, __UngetAChar);
+
+			conversions++;
+			break;
+		case 'n':
+			if (arg_ptr)
+				switch (format.argument_options) {
+				case normal_argument:
+					*(int*)arg_ptr = chars_read;
+					break;
+				case short_argument:
+					*(s16*)arg_ptr = chars_read;
+					break;
+				case long_argument:
+					*(s32*)arg_ptr = chars_read;
+					break;
+				case char_argument:
+					*(char*)arg_ptr = chars_read;
+					break;
+				case long_long_argument:
+					*(s64*)arg_ptr = chars_read;
+					break;
+				}
+			continue;
+		case 0xFF:
+		default:
+			goto exit;
+		}
+	}
+
+exit:
+
+	if ((*ReadProc)(ReadProcArg, 0, __TestForError) && conversions == 0)
+		return -1;
+
+	return items_assigned;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1267,63 +1421,37 @@ void __sformatter(void)
  * Address:	80218150
  * Size:	000090
  */
-void __StringRead(void)
+int __StringRead(void* pPtr, int ch, int act)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r5, 0x1
-	  beq-      .loc_0x54
-	  bge-      .loc_0x18
-	  cmpwi     r5, 0
-	  bge-      .loc_0x24
-	  b         .loc_0x88
+	char ret;
+	__InStrCtrl* Iscp = (__InStrCtrl*)pPtr;
 
-	.loc_0x18:
-	  cmpwi     r5, 0x3
-	  bge-      .loc_0x88
-	  b         .loc_0x80
+	switch (act) {
+	case __GetAChar:
+		ret = *(Iscp->NextChar);
 
-	.loc_0x24:
-	  lwz       r4, 0x0(r3)
-	  lbz       r5, 0x0(r4)
-	  extsb.    r0, r5
-	  bne-      .loc_0x44
-	  li        r0, 0x1
-	  stw       r0, 0x4(r3)
-	  li        r3, -0x1
-	  blr
+		if (ret == '\0') {
+			Iscp->NullCharDetected = 1;
+			return -1;
+		} else {
+			Iscp->NextChar++;
+			return (s8)ret;
+		}
 
-	.loc_0x44:
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x0(r3)
-	  extsb     r3, r5
-	  blr
+	case __UngetAChar:
+		if (Iscp->NullCharDetected == 0) {
+			Iscp->NextChar--;
+		} else {
+			Iscp->NullCharDetected = 0;
+		}
 
-	.loc_0x54:
-	  lwz       r0, 0x4(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x70
-	  lwz       r5, 0x0(r3)
-	  subi      r0, r5, 0x1
-	  stw       r0, 0x0(r3)
-	  b         .loc_0x78
+		return ch;
 
-	.loc_0x70:
-	  li        r0, 0
-	  stw       r0, 0x4(r3)
+	case __TestForError:
+		return Iscp->NullCharDetected;
+	}
 
-	.loc_0x78:
-	  mr        r3, r4
-	  blr
-
-	.loc_0x80:
-	  lwz       r3, 0x4(r3)
-	  blr
-
-	.loc_0x88:
-	  li        r3, 0
-	  blr
-	*/
+	return 0;
 }
 
 /*
@@ -1351,9 +1479,17 @@ void scanf(void)
  * Address:	........
  * Size:	000060
  */
-void __vsscanf(void)
+int __vsscanf(const char* s, const char* format, va_list arg)
 {
-	// UNUSED FUNCTION
+	__InStrCtrl isc;
+	isc.NextChar = (char*)s;
+
+	if ((s == 0) || (*isc.NextChar == '\0')) {
+		return -1;
+	}
+
+	isc.NullCharDetected = 0;
+	return __sformatter(&__StringRead, (void*)&isc, format, arg);
 }
 
 /*
@@ -1361,64 +1497,9 @@ void __vsscanf(void)
  * Address:	80218094
  * Size:	0000BC
  */
-void sscanf(void)
+int sscanf(const char* s, const char* pFormat, ...)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x88(r1)
-	  bne-      cr1, .loc_0x30
-	  stfd      f1, 0x28(r1)
-	  stfd      f2, 0x30(r1)
-	  stfd      f3, 0x38(r1)
-	  stfd      f4, 0x40(r1)
-	  stfd      f5, 0x48(r1)
-	  stfd      f6, 0x50(r1)
-	  stfd      f7, 0x58(r1)
-	  stfd      f8, 0x60(r1)
-
-	.loc_0x30:
-	  stw       r3, 0x8(r1)
-	  lis       r0, 0x200
-	  cmplwi    r3, 0
-	  stw       r4, 0xC(r1)
-	  stw       r5, 0x10(r1)
-	  addi      r5, r1, 0x90
-	  stw       r6, 0x14(r1)
-	  addi      r6, r1, 0x78
-	  stw       r7, 0x18(r1)
-	  stw       r8, 0x1C(r1)
-	  stw       r9, 0x20(r1)
-	  stw       r10, 0x24(r1)
-	  stw       r0, 0x78(r1)
-	  addi      r0, r1, 0x8
-	  stw       r5, 0x7C(r1)
-	  stw       r0, 0x80(r1)
-	  stw       r3, 0x70(r1)
-	  beq-      .loc_0x88
-	  lwz       r3, 0x70(r1)
-	  lbz       r0, 0x0(r3)
-	  extsb.    r0, r0
-	  bne-      .loc_0x90
-
-	.loc_0x88:
-	  li        r3, -0x1
-	  b         .loc_0xAC
-
-	.loc_0x90:
-	  li        r0, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x74(r1)
-	  addi      r5, r4, 0
-	  subi      r3, r3, 0x7EB0
-	  addi      r4, r1, 0x70
-	  bl        0xA4
-
-	.loc_0xAC:
-	  lwz       r0, 0x8C(r1)
-	  addi      r1, r1, 0x88
-	  mtlr      r0
-	  blr
-	*/
+	va_list args;
+	va_start(args, pFormat);
+	return __vsscanf(s, pFormat, args);
 }
