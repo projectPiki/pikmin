@@ -165,7 +165,7 @@ void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds,
 		flag3 = flag1 ^ 0x8000;
 		flag2 = (mWindowFlag & 0x4) ? (u16)0x8000 : (u16)0;
 		flag4 = flag2;
-		int d = y - height;
+		int d = y - height; // this variable is the problem with addi vs mr
 		mBLCornerTexture->draw(0, height, mBLCornerTexture->getWidth(), d, flag1, flag2, flag3, flag4);
 
 		flag1 = (mWindowFlag & 0x2) ? (u16)0 : (u16)0x8000;
