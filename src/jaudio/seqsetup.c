@@ -1,5 +1,22 @@
 #include "jaudio/seqsetup.h"
 
+#include "jaudio/jammain_2.h"
+#include "jaudio/noteon.h"
+#include "jaudio/fat.h"
+#include "jaudio/playercall.h"
+
+#define ROOT_OUTER_SIZE      (256)
+#define ROOTSEQ_SIZE         (16)
+#define FREE_SEQP_QUEUE_SIZE (256)
+
+static seqp_* ROOT_OUTER[ROOT_OUTER_SIZE]; // TODO: Just a guess
+static seqp_* rootseq[ROOTSEQ_SIZE];
+static seqp_* FREE_SEQP_QUEUE[FREE_SEQP_QUEUE_SIZE];
+
+static u32 BACK_P;
+static u32 GET_P;
+static u32 SEQ_REMAIN;
+
 /*
  * --INFO--
  * Address:	80013DA0
@@ -71,53 +88,27 @@ void Jaq_GetRemainFreeTracks(void)
  * Address:	80013E40
  * Size:	000088
  */
-static void BackTrack(seqp_*)
+static BOOL BackTrack(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x10(r1)
-	  li        r5, 0
-	  stw       r3, 0x8(r1)
-	  lwz       r6, 0x8(r1)
-	  stb       r5, 0x3C(r6)
-	  lbz       r0, 0x3E4(r6)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x7C
-	  lwz       r0, 0x2C40(r13)
-	  cmplwi    r0, 0x100
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x80
+	seqp_** REF_seq;
 
-	.loc_0x34:
-	  lwz       r4, 0x2C38(r13)
-	  lis       r3, 0x8036
-	  addi      r0, r3, 0x32E0
-	  rlwinm    r3,r4,2,0,29
-	  add       r3, r0, r3
-	  stw       r6, 0x0(r3)
-	  lwz       r3, 0x2C38(r13)
-	  lwz       r4, 0x2C40(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2C38(r13)
-	  addi      r3, r4, 0x1
-	  lwz       r0, 0x2C38(r13)
-	  stw       r3, 0x2C40(r13)
-	  cmplwi    r0, 0x100
-	  bne-      .loc_0x74
-	  stw       r5, 0x2C38(r13)
+	REF_seq  = &seq;
+	seq->_3C = 0;
+	if (seq->_3E4 == 1) {
+		if (SEQ_REMAIN == FREE_SEQP_QUEUE_SIZE) {
+			return FALSE;
+		}
 
-	.loc_0x74:
-	  li        r3, 0x1
-	  b         .loc_0x80
+		FREE_SEQP_QUEUE[BACK_P] = seq;
+		++SEQ_REMAIN;
+		++BACK_P;
 
-	.loc_0x7C:
-	  li        r3, 0
-
-	.loc_0x80:
-	  addi      r1, r1, 0x10
-	  blr
-	*/
+		if (BACK_P == FREE_SEQP_QUEUE_SIZE) {
+			BACK_P = 0;
+		}
+		return TRUE;
+	}
+	return FALSE;
 }
 
 /*
@@ -125,40 +116,25 @@ static void BackTrack(seqp_*)
  * Address:	80013EE0
  * Size:	000064
  */
-static void GetNewTrack()
+static seqp_* GetNewTrack()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2C40(r13)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x14
-	  li        r3, 0
-	  blr
+	seqp_* seq;
 
-	.loc_0x14:
-	  lwz       r6, 0x2C3C(r13)
-	  lis       r3, 0x8036
-	  addi      r3, r3, 0x32E0
-	  subi      r4, r4, 0x1
-	  rlwinm    r5,r6,2,0,29
-	  addi      r0, r6, 0x1
-	  add       r3, r3, r5
-	  lwz       r3, 0x0(r3)
-	  stw       r0, 0x2C3C(r13)
-	  lwz       r0, 0x2C3C(r13)
-	  stw       r4, 0x2C40(r13)
-	  cmplwi    r0, 0x100
-	  bne-      .loc_0x50
-	  li        r0, 0
-	  stw       r0, 0x2C3C(r13)
+	if (SEQ_REMAIN == 0) {
+		return NULL;
+	}
 
-	.loc_0x50:
-	  li        r4, 0x2
-	  li        r0, 0x1
-	  stb       r4, 0x3C(r3)
-	  stb       r0, 0x3E4(r3)
-	  blr
-	*/
+	seq = FREE_SEQP_QUEUE[GET_P];
+	++GET_P;
+	--SEQ_REMAIN;
+
+	if (GET_P == FREE_SEQP_QUEUE_SIZE) {
+		GET_P = 0;
+	}
+
+	seq->_3C  = 2;
+	seq->_3E4 = 1;
+	return seq;
 }
 
 /*
@@ -166,33 +142,17 @@ static void GetNewTrack()
  * Address:	80013F60
  * Size:	000048
  */
-void AllocNewRoot(seqp_*)
+int AllocNewRoot(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8036
-	  li        r0, 0x10
-	  addi      r5, r4, 0x32A0
-	  li        r7, 0
-	  li        r4, 0
-	  mtctr     r0
+	int i;
 
-	.loc_0x18:
-	  add       r6, r5, r4
-	  lwz       r0, 0x0(r6)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x34
-	  stw       r3, 0x0(r6)
-	  mr        r3, r7
-	  blr
-
-	.loc_0x34:
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x18
-	  li        r3, -0x1
-	  blr
-	*/
+	for (i = 0; i < ROOTSEQ_SIZE; ++i) {
+		if (!rootseq[i]) {
+			rootseq[i] = seq;
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -200,34 +160,17 @@ void AllocNewRoot(seqp_*)
  * Address:	80013FC0
  * Size:	00004C
  */
-void DeAllocRoot(seqp_*)
+int DeAllocRoot(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8036
-	  li        r0, 0x10
-	  addi      r5, r4, 0x32A0
-	  li        r7, 0
-	  li        r4, 0
-	  mtctr     r0
+	int i;
 
-	.loc_0x18:
-	  add       r6, r5, r4
-	  lwz       r0, 0x0(r6)
-	  cmplw     r0, r3
-	  bne-      .loc_0x38
-	  li        r0, 0
-	  addi      r3, r7, 0
-	  stw       r0, 0x0(r6)
-	  blr
-
-	.loc_0x38:
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x18
-	  li        r3, -0x1
-	  blr
-	*/
+	for (i = 0; i < ROOTSEQ_SIZE; ++i) {
+		if (rootseq[i] == seq) {
+			rootseq[i] = NULL;
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -235,17 +178,9 @@ void DeAllocRoot(seqp_*)
  * Address:	80014020
  * Size:	000018
  */
-unknown Jaq_HandleToSeq(u32 handle)
+seqp_* Jaq_HandleToSeq(u32 handle)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8036
-	  rlwinm    r3,r3,2,0,29
-	  addi      r0, r4, 0x32A0
-	  add       r3, r0, r3
-	  lwz       r3, 0x0(r3)
-	  blr
-	*/
+	return rootseq[handle];
 }
 
 /*
@@ -253,7 +188,7 @@ unknown Jaq_HandleToSeq(u32 handle)
  * Address:	80014040
  * Size:	000368
  */
-static void Init_Track(seqp_*, u32, seqp_*)
+static void Init_Track(seqp_* seq, u32 param_2, seqp_* otherSeq)
 {
 	/*
 	.loc_0x0:
@@ -575,34 +510,14 @@ BOOL Jaq_StopSeq(u32 index)
  * Address:	80014460
  * Size:	000054
  */
-static void __StopSeq(seqp_*)
+static void __StopSeq(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        -0xCF8
-	  mr        r3, r31
-	  bl        0x520
-	  mr        r3, r31
-	  bl        -0x4C8
-	  lbz       r0, 0x3D(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x40
-	  lbz       r3, 0x3E(r31)
-	  bl        -0x64BC
-
-	.loc_0x40:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	SeqUpdate(seq, 0);
+	Jaq_CloseTrack(seq);
+	DeAllocRoot(seq);
+	if (seq->_3D == 1) {
+		FAT_FreeMemory(seq->_3E);
+	}
 }
 
 /*
@@ -764,79 +679,40 @@ void Jaq_SetBankNumber(int*, u8)
 	*/
 }
 
+static s32 Jaq_RootCallback(void*);
+
 /*
  * --INFO--
  * Address:	800146C0
  * Size:	0000B4
  */
-void Jaq_StartSeq(u32)
+BOOL Jaq_StartSeq(u32 param_1)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  addis     r0, r3, 0x1
-	  cmplwi    r0, 0xFFFF
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0xA4
+	seqp_* seq;
+	u8* lbzu;
 
-	.loc_0x20:
-	  lis       r4, 0x8036
-	  rlwinm    r3,r3,2,0,29
-	  addi      r0, r4, 0x32A0
-	  add       r4, r0, r3
-	  lwz       r3, 0x0(r4)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  b         .loc_0xA4
+	if (param_1 == -1) {
+		return FALSE;
+	}
 
-	.loc_0x44:
-	  lbzu      r0, 0x3C(r3)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x88
-	  bge-      .loc_0x64
-	  cmpwi     r0, 0
-	  beq-      .loc_0x70
-	  bge-      .loc_0x78
-	  b         .loc_0x90
+	seq = rootseq[param_1];
+	if (!seq) {
+		return FALSE;
+	};
 
-	.loc_0x64:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x90
-	  b         .loc_0x80
-
-	.loc_0x70:
-	  li        r3, 0
-	  b         .loc_0xA4
-
-	.loc_0x78:
-	  li        r3, 0
-	  b         .loc_0xA4
-
-	.loc_0x80:
-	  li        r3, 0
-	  b         .loc_0xA4
-
-	.loc_0x88:
-	  li        r0, 0x1
-	  stb       r0, 0x0(r3)
-
-	.loc_0x90:
-	  lis       r3, 0x8001
-	  lwz       r4, 0x0(r4)
-	  addi      r3, r3, 0x4AC0
-	  bl        -0xD59C
-	  li        r3, 0x1
-
-	.loc_0xA4:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	// This feels like a fakematch, but oh well.
+	switch (*(lbzu = &seq->_3C)) {
+	case 0:
+		return FALSE;
+	case 1:
+		return FALSE;
+	case 3:
+		return FALSE;
+	case 2:
+		*lbzu = 1;
+	}
+	Jac_RegisterDspPlayerCallback(&Jaq_RootCallback, rootseq[param_1]);
+	return TRUE;
 }
 
 /*
@@ -953,64 +829,23 @@ void Jaq_OpenTrack(seqp_*, unknown, unknown)
  * Address:	800148E0
  * Size:	0000B4
  */
-void __AllNoteOff(seqp_*)
+void __AllNoteOff(seqp_* seq)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  mr        r27, r3
-	  lwz       r0, 0x40(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x64
-	  li        r31, 0
-	  li        r28, 0
-	  addi      r29, r31, 0
-	  li        r30, 0xFF
+	u32 i;
 
-	.loc_0x30:
-	  addi      r3, r27, 0
-	  rlwinm    r4,r28,0,24,31
-	  li        r5, 0xA
-	  bl        -0xD3C
-	  addi      r0, r28, 0x94
-	  addi      r28, r28, 0x1
-	  stbx      r30, r27, r0
-	  addi      r0, r31, 0x9C
-	  cmplwi    r28, 0x8
-	  addi      r31, r31, 0x4
-	  stwx      r29, r27, r0
-	  blt+      .loc_0x30
-	  b         .loc_0xA0
-
-	.loc_0x64:
-	  li        r28, 0
-	  li        r31, 0
-	  addi      r30, r28, 0
-	  li        r29, 0xFF
-
-	.loc_0x74:
-	  addi      r3, r27, 0
-	  rlwinm    r4,r28,0,24,31
-	  bl        -0xCDC
-	  addi      r0, r28, 0x94
-	  addi      r28, r28, 0x1
-	  stbx      r29, r27, r0
-	  addi      r0, r31, 0x9C
-	  cmplwi    r28, 0x8
-	  addi      r31, r31, 0x4
-	  stwx      r30, r27, r0
-	  blt+      .loc_0x74
-
-	.loc_0xA0:
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	if (!seq->_40) {
+		for (i = 0; i < 8; ++i) {
+			NoteOFF_R(seq, i, 10);
+			seq->_94[i] = -1;
+			seq->_9C[i] = NULL;
+		}
+	} else {
+		for (i = 0; i < 8; ++i) {
+			NoteOFF(seq, i);
+			seq->_94[i] = -1;
+			seq->_9C[i] = NULL;
+		}
+	}
 }
 
 /*
@@ -1122,7 +957,7 @@ void Jaq_CloseTrack(seqp_*)
  * Address:	80014AC0
  * Size:	0000E8
  */
-static void Jaq_RootCallback(void*)
+static s32 Jaq_RootCallback(void*)
 {
 	/*
 	.loc_0x0:
