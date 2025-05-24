@@ -873,11 +873,11 @@ config.libs = [
     ),
     {
         "lib": "mtx",
-        "mw_version": "GC/1.2.5n",
+        "mw_version": "GC/1.2.5",
         "cflags": cflags_base,
         "progress_category": "sdk",
         "objects": [
-            Object(NonMatching, "mtx/mtx.c"),
+            Object(Matching, "mtx/mtx.c"),
             Object(Matching, "mtx/mtx44.c"),
             Object(Matching, "mtx/vec.c"),
         ]
