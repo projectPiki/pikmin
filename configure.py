@@ -995,7 +995,7 @@ config.libs = [
             Object(Matching, "MSL_C/PPCEABI/bare/H/ansi_files.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/abort_exit.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/errno.c"),
-            Object(NonMatching, "MSL_C/PPCEABI/bare/H/ansi_fp.c"),
+            Object(Matching, "MSL_C/PPCEABI/bare/H/ansi_fp.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/arith.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/buffer_io.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/critical_regions.ppc_eabi.c"),
