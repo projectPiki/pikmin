@@ -140,7 +140,8 @@ inline void padStack(void)
 #define ASM
 #endif
 
-#define INIT DECL_SECT(".init")
+#define INIT  DECL_SECT(".init")
+#define CTORS DECL_SECT(".ctors")
 
 // Disable clangd warnings
 #ifdef __clang__

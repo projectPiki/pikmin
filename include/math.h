@@ -36,6 +36,13 @@ static inline f32 u32ToFloat(u32 a)
 #define QUARTER_PI 0.7853982f
 #define SIN_2_5    0.43633234f
 #define M_SQRT3    1.73205f
+#define M_PI       3.1415926535897932
+
+#define FP_NAN       1
+#define FP_INFINITE  2
+#define FP_ZERO      3
+#define FP_NORMAL    4
+#define FP_SUBNORMAL 5
 
 #ifndef DEG2RAD
 

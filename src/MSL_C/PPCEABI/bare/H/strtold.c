@@ -1,8 +1,17 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
+#include "stl/ctype.h"
 #include "stl/locale.h"
 #include "stl/limits.h"
+
+#define TARGET_FLOAT_BITS           64
+#define TARGET_FLOAT_BYTES          (TARGET_FLOAT_BITS / 8)
+#define TARGET_FLOAT_MAX_EXP        LDBL_MAX_EXP
+#define TARGET_FLOAT_MANT_DIG       LDBL_MANT_DIG
+#define TARGET_FLOAT_IMPLICIT_J_BIT 1
+#define TARGET_FLOAT_MANT_BITS      (TARGET_FLOAT_MANT_DIG - TARGET_FLOAT_IMPLICIT_J_BIT)
+#define TARGET_FLOAT_EXP_BITS       (TARGET_FLOAT_BITS - TARGET_FLOAT_MANT_BITS - 1)
 
 enum scan_states {
 	start              = 0x0001,
@@ -36,6 +45,16 @@ enum hex_scan_states {
 	hex_exp_digit_loop     = 0x0100
 };
 
+#define final_state(scan_state) (scan_state & (finished | failure))
+#define success(scan_state) \
+	(scan_state & (leading_sig_zeroes | int_digit_loop | frac_digit_loop | leading_exp_zeroes | exp_digit_loop | finished))
+#define hex_success(count, scan_state) \
+	(count - 1 > 2                     \
+	 && scan_state & (hex_leading_sig_zeroes | hex_int_digit_loop | hex_frac_digit_loop | hex_leading_exp_zeroes | hex_exp_digit_loop))
+
+#define fetch()    (count++, (*ReadProc)(ReadProcArg, 0, __GetAChar))
+#define unfetch(c) (*ReadProc)(ReadProcArg, c, __UngetAChar)
+
 /*
  * --INFO--
  * Address:	802194B8
@@ -51,13 +70,13 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 	decimal d        = { 0, 0, 0, { 0, "" } };
 	int sig_negative = 0;
 	int exp_negative = 0;
-	s32 exp_value    = 0;
+	long exp_value   = 0;
 	int exp_adjust   = 0;
-	f128 result;
+	long double result;
 	int sign_detected = 0;
 
-	u8* chptr = (u8*)&result;
-	u8 uch, uch1;
+	unsigned char* chptr = (unsigned char*)&result;
+	unsigned char uch, uch1;
 	int ui;
 	int chindex;
 	int NibbleIndex;
@@ -65,10 +84,10 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 	int exp_digits      = 0;
 	int intdigits       = 0;
 	int RadixPointFound = 0;
-	s16 exponent        = 0;
+	short exponent      = 0;
 	int dot;
 
-	dot = *(u8*)(__lconv).decimal_point;
+	dot = *(unsigned char*)(__lconv).decimal_point;
 
 	*overflow = 0;
 	c         = fetch();
@@ -474,8 +493,8 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 		}
 
 		{
-			int n = d.sig.length;
-			u8* p = &d.sig.text[n];
+			int n            = d.sig.length;
+			unsigned char* p = &d.sig.text[n];
 
 			while (n-- && *--p == '0') {
 				exp_adjust++;
@@ -519,21 +538,21 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 		return result;
 	} else {
-		u64* uptr = (u64*)&result;
+		unsigned long long* uptr = (unsigned long long*)&result;
 
 		if (result) {
 			if (expsign) {
 				exponent = -exponent;
 			}
 
-			while ((*(s16*)(&result) & 0x00f0) != 0x0010) {
+			while ((*(short*)(&result) & 0x00f0) != 0x0010) {
 				*uptr >>= 1;
 				exponent++;
 			}
 
 			exponent += 4 * (intdigits - 1);
-			*(s16*)&result &= 0x000f;
-			*(s16*)(&result) |= ((exponent + 1023) << 4);
+			*(short*)&result &= 0x000f;
+			*(short*)(&result) |= ((exponent + 1023) << 4);
 
 			*chars_scanned = spaces + sign_detected + NibbleIndex + 1 + exp_digits;
 			if (result != 0.0 && result < LDBL_MIN) {
@@ -544,7 +563,7 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 				result    = HUGE_VAL;
 			}
 			if (sig_negative) {
-				*(s16*)(&result) |= 0x8000;
+				*(short*)(&result) |= 0x8000;
 			}
 		} else {
 			result = 0.0;
