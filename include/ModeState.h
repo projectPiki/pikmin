@@ -7,7 +7,7 @@
 #include "PlayerState.h"
 #include "MoviePlayer.h"
 #include "FlowController.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "zen/DrawGameInfo.h"
 #include "types.h"
 

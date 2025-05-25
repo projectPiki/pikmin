@@ -2,7 +2,7 @@
 #include "Delegate.h"
 #include "sysNew.h"
 #include "Graphics.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "Menu.h"
 #include "Demo.h"
 #include "gameflow.h"

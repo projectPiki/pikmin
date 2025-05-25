@@ -1,7 +1,7 @@
 #include "CardSelectSection.h"
 
 #include "zen/ogFileChkSel.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "FlowController.h"
 #include "PlayerState.h"
 #include "MemoryCard.h"

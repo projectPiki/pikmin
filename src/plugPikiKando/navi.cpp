@@ -14,7 +14,7 @@
 #include "Interactions.h"
 #include "Interface.h"
 #include "ItemMgr.h"
-#include "jaudio/PikiPlayer.h"
+#include "jaudio/piki_player.h"
 #include "KIO.h"
 #include "Kontroller.h"
 #include "MapCode.h"

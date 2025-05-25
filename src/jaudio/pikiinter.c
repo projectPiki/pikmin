@@ -1,9 +1,9 @@
-#include "jaudio/PikiInter.h"
+#include "jaudio/pikiinter.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/cmdstack.h"
 #include "jaudio/interface.h"
-#include "jaudio/PikiPlayer.h"
-#include "jaudio/PikiDemo.h"
+#include "jaudio/piki_player.h"
+#include "jaudio/pikidemo.h"
 #include "jaudio/verysimple.h"
 
 typedef struct SEvent_ {

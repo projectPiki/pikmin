@@ -7,7 +7,7 @@
 #include "MapMgr.h"
 #include "gameflow.h"
 #include "Graphics.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "sysNew.h"
 #include "DebugLog.h"
 

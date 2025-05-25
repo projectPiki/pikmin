@@ -9,7 +9,7 @@
 #include "Graphics.h"
 #include "PlayerState.h"
 #include "EffectMgr.h"
-#include "jaudio/PikiDemo.h"
+#include "jaudio/pikidemo.h"
 #include "DebugLog.h"
 
 /*
