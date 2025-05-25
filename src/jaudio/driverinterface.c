@@ -4,10 +4,6 @@
 #include "jaudio/audiostruct.h"
 #include "jaudio/dspdriver.h"
 
-typedef struct PanMatrix_ {
-	f32 _00[3];
-} PanMatrix_;
-
 static jcs_ GLOBAL_CHANNEL;
 static jc_ CHANNEL[0x100];
 
@@ -1022,13 +1018,13 @@ void DoEffectOsc(jc_* jc, u8 id, f32 val)
 		jc->_E8[1] *= val;
 		break;
 	case 2:
-		jc->_BC[1]._04 = val;
+		jc->_BC[1]._00[1] = val;
 		break;
 	case 3:
-		jc->_BC[2]._04 = val;
+		jc->_BC[2]._00[1] = val;
 		break;
 	case 4:
-		jc->_BC[3]._04 = val;
+		jc->_BC[3]._00[1] = val;
 		break;
 	}
 }

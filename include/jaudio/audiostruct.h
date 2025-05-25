@@ -55,11 +55,9 @@ struct dspch_ {
 	// DSPBuffer* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
 };
 
-struct panData {
-	f32 _00; // maybe this is a vector3, I have no idea
-	f32 _04;
-	f32 _08;
-};
+typedef struct PanMatrix_ {
+	f32 _00[3];
+} PanMatrix_;
 
 /**
  * @brief TODO
@@ -131,7 +129,7 @@ struct jc_ {
 	f32 _B0;                     // _B0
 	f32 _B4;                     // _B4
 	f32 _B8;                     // _B8
-	struct panData _BC[4];       // _BC
+	PanMatrix_ _BC[4];           // _BC
 	f32 _E8[3];                  // _E8
 	u16 _F8;                     // _F8
 	u16 _FA;                     // _FA
