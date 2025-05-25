@@ -169,13 +169,13 @@ bool TaiState::eventPerformed(TekiEvent& event)
 			PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", event.mTeki, i, event.mTeki->mStateID, action->mNextState,
 			      event.mTeki->mReturnStateID, event.mTeki->mTekiType, event.mTeki->mTekiAnimator->getCurrentMotionIndex());
 
-			int startVal          = event.mTeki->mStateID;
-			volatile int& stateID = event.mTeki->mStateID;
-			int nextState         = action->mNextState;
+			Teki* volatile teki = event.mTeki;
+			int startVal        = event.mTeki->mStateID;
+			int nextState       = action->mNextState;
 			if (nextState == -2) {
-				stateID = event.mTeki->mReturnStateID;
+				event.mTeki->mStateID = event.mTeki->mReturnStateID;
 			} else {
-				stateID = nextState;
+				event.mTeki->mStateID = nextState;
 			}
 			event.mTeki->mReturnStateID = startVal;
 			return true;
