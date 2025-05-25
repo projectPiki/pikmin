@@ -478,13 +478,15 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
 		CI_LOOP(pikiIter)
 		{
 			Creature* piki = *pikiIter;
-			if (teki.visibleCreature(*piki) && piki->getStickObject() != &teki) {
-				if (teki.getPosition().distance(piki->getPosition()) > 100.0f) {
-					teki.setCreaturePointer(0, piki);
+			if (!teki.visibleCreature(*piki) || piki->getStickObject() == &teki) {
+				continue;
+			}
+			
+			if (teki.getPosition().distance(piki->getPosition()) > 100.0f) {
+				teki.setCreaturePointer(0, piki);
 
-					result = true;
-					break;
-				}
+				result = true;
+				break;
 			}
 		}
 
