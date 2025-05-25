@@ -1593,216 +1593,34 @@ bool DGXGraphics::initParticle(bool a)
  * Address:	8004A9BC
  * Size:	000328
  */
-void DGXGraphics::drawRotParticle(Camera& cam, Vector3f& p2, u16 p3, f32 p4)
+void DGXGraphics::drawRotParticle(Camera& cam, Vector3f& pos, u16 angle, f32 radius)
 {
 	gsys->mPolygonCount += 2;
+
+	// max - 0x2000
+	Vector3f vec1(radius * sinShort(angle + 0xE000), radius * cosShort(angle + 0xE000), 0.0f);
+	// min + 0x2000
+	Vector3f vec2(radius * sinShort(angle + 0x2000), radius * cosShort(angle + 0x2000), 0.0f);
+	// min + 0x6000
+	Vector3f vec3(radius * sinShort(angle + 0x6000), radius * cosShort(angle + 0x6000), 0.0f);
+	// max - 0x6000
+	Vector3f vec4(radius * sinShort(angle + 0xA000), radius * cosShort(angle + 0xA000), 0.0f);
+
 	GXBegin(GX_QUADS, GX_VTXFMT0, 4);
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm    r3,r6,0,16,31
-	  stw       r0, 0x4(r1)
-	  addis     r7, r3, 0x1
-	  addi      r6, r3, 0x2000
-	  stwu      r1, -0x158(r1)
-	  subi      r9, r7, 0x2000
-	  subi      r0, r7, 0x6000
-	  stfd      f31, 0x150(r1)
-	  addi      r3, r3, 0x6000
-	  rlwinm    r9,r9,30,18,29
-	  stfd      f30, 0x148(r1)
-	  rlwinm    r6,r6,30,18,29
-	  rlwinm    r0,r0,30,18,29
-	  stfd      f29, 0x140(r1)
-	  stfd      f28, 0x138(r1)
-	  stfd      f27, 0x130(r1)
-	  stfd      f26, 0x128(r1)
-	  stfd      f25, 0x120(r1)
-	  stfd      f24, 0x118(r1)
-	  stfd      f23, 0x110(r1)
-	  stfd      f22, 0x108(r1)
-	  stfd      f21, 0x100(r1)
-	  stfd      f20, 0xF8(r1)
-	  stfd      f19, 0xF0(r1)
-	  stfd      f18, 0xE8(r1)
-	  stfd      f17, 0xE0(r1)
-	  stfd      f16, 0xD8(r1)
-	  stw       r31, 0xD4(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0xD0(r1)
-	  addi      r30, r4, 0
-	  lwz       r10, 0x2DEC(r13)
-	  lwz       r8, 0x1A4(r10)
-	  addi      r7, r8, 0x2
-	  stw       r7, 0x1A4(r10)
-	  lis       r8, 0x8039
-	  lis       r7, 0x8039
-	  addi      r8, r8, 0x4840
-	  lfs       f23, -0x774C(r13)
-	  addi      r5, r7, 0x840
-	  lfs       f22, -0x7748(r13)
-	  rlwinm    r7,r3,30,18,29
-	  lfs       f21, -0x7744(r13)
-	  add       r4, r8, r9
-	  lfs       f20, -0x7740(r13)
-	  lfs       f8, 0x0(r4)
-	  add       r3, r5, r9
-	  lfs       f7, 0x0(r3)
-	  add       r4, r8, r6
-	  lfs       f6, 0x0(r4)
-	  add       r3, r5, r6
-	  fmuls     f30, f1, f8
-	  lfs       f5, 0x0(r3)
-	  add       r4, r8, r7
-	  lfs       f4, 0x0(r4)
-	  add       r3, r5, r7
-	  lfs       f3, 0x0(r3)
-	  add       r3, r5, r0
-	  lfs       f0, 0x0(r3)
-	  add       r4, r8, r0
-	  lfs       f2, 0x0(r4)
-	  fmuls     f31, f1, f7
-	  li        r3, 0x80
-	  fmuls     f28, f1, f6
-	  li        r4, 0
-	  fmuls     f29, f1, f5
-	  fmuls     f26, f1, f4
-	  li        r5, 0x4
-	  fmuls     f27, f1, f3
-	  fmuls     f24, f1, f2
-	  fmuls     f25, f1, f0
-	  bl        0x1C60F8
-	  lfs       f3, 0x17C(r30)
-	  lis       r3, 0xCC01
-	  lfs       f2, 0x180(r30)
-	  lfs       f8, 0x188(r30)
-	  fmuls     f5, f31, f3
-	  lfs       f6, 0x18C(r30)
-	  fmuls     f1, f30, f2
-	  lfs       f19, 0x194(r30)
-	  lfs       f12, 0x198(r30)
-	  lfs       f9, 0x190(r30)
-	  fmuls     f7, f31, f8
-	  lfs       f18, 0x19C(r30)
-	  fmuls     f0, f30, f6
-	  lfs       f4, 0x184(r30)
-	  fadds     f1, f5, f1
-	  fmuls     f17, f23, f4
-	  lfs       f5, 0x0(r31)
-	  fmuls     f13, f31, f19
-	  lfs       f10, 0x4(r31)
-	  fmuls     f11, f30, f12
-	  fadds     f31, f17, f1
-	  lfs       f30, 0x8(r31)
-	  fmuls     f16, f23, f9
-	  lfs       f1, -0x7B58(r2)
-	  fadds     f17, f7, f0
-	  fadds     f7, f5, f31
-	  lfs       f0, -0x7B60(r2)
-	  fmuls     f31, f23, f18
-	  fadds     f23, f13, f11
-	  fadds     f13, f16, f17
-	  fmuls     f11, f29, f3
-	  stfs      f7, -0x8000(r3)
-	  fadds     f16, f31, f23
-	  fmuls     f7, f28, f2
-	  fadds     f13, f10, f13
-	  fmuls     f31, f29, f8
-	  fmuls     f23, f28, f6
-	  fadds     f16, f30, f16
-	  stfs      f13, -0x8000(r3)
-	  fmuls     f13, f22, f4
-	  fadds     f7, f11, f7
-	  stfs      f16, -0x8000(r3)
-	  fmuls     f29, f29, f19
-	  fmuls     f28, f28, f12
-	  stfs      f1, -0x8000(r3)
-	  fadds     f7, f13, f7
-	  fmuls     f13, f22, f9
-	  fadds     f11, f31, f23
-	  fmuls     f23, f22, f18
-	  stfs      f1, -0x8000(r3)
-	  fadds     f22, f29, f28
-	  fadds     f11, f13, f11
-	  fadds     f7, f5, f7
-	  fadds     f23, f23, f22
-	  fmuls     f22, f27, f19
-	  fmuls     f13, f26, f12
-	  stfs      f7, -0x8000(r3)
-	  fadds     f16, f10, f11
-	  fmuls     f11, f27, f8
-	  fmuls     f7, f26, f6
-	  fadds     f17, f30, f23
-	  stfs      f16, -0x8000(r3)
-	  fmuls     f23, f21, f18
-	  fadds     f22, f22, f13
-	  stfs      f17, -0x8000(r3)
-	  fmuls     f13, f21, f9
-	  fadds     f7, f11, f7
-	  stfs      f0, -0x8000(r3)
-	  fadds     f11, f23, f22
-	  stfs      f1, -0x8000(r3)
-	  fadds     f7, f13, f7
-	  fadds     f11, f30, f11
-	  fadds     f7, f10, f7
-	  fmuls     f22, f27, f3
-	  fmuls     f13, f26, f2
-	  fmuls     f21, f21, f4
-	  fmuls     f3, f25, f3
-	  fadds     f13, f22, f13
-	  fmuls     f2, f24, f2
-	  fmuls     f8, f25, f8
-	  fadds     f13, f21, f13
-	  fmuls     f6, f24, f6
-	  fmuls     f4, f20, f4
-	  fadds     f21, f5, f13
-	  fadds     f2, f3, f2
-	  fmuls     f13, f25, f19
-	  stfs      f21, -0x8000(r3)
-	  fmuls     f12, f24, f12
-	  fadds     f2, f4, f2
-	  stfs      f7, -0x8000(r3)
-	  fmuls     f4, f20, f9
-	  fadds     f3, f8, f6
-	  stfs      f11, -0x8000(r3)
-	  fmuls     f7, f20, f18
-	  fadds     f6, f13, f12
-	  stfs      f0, -0x8000(r3)
-	  fadds     f3, f4, f3
-	  fadds     f4, f7, f6
-	  stfs      f0, -0x8000(r3)
-	  fadds     f2, f5, f2
-	  fadds     f3, f10, f3
-	  fadds     f4, f30, f4
-	  stfs      f2, -0x8000(r3)
-	  stfs      f3, -0x8000(r3)
-	  stfs      f4, -0x8000(r3)
-	  stfs      f1, -0x8000(r3)
-	  stfs      f0, -0x8000(r3)
-	  lwz       r0, 0x15C(r1)
-	  lfd       f31, 0x150(r1)
-	  lfd       f30, 0x148(r1)
-	  lfd       f29, 0x140(r1)
-	  lfd       f28, 0x138(r1)
-	  lfd       f27, 0x130(r1)
-	  lfd       f26, 0x128(r1)
-	  lfd       f25, 0x120(r1)
-	  lfd       f24, 0x118(r1)
-	  lfd       f23, 0x110(r1)
-	  lfd       f22, 0x108(r1)
-	  lfd       f21, 0x100(r1)
-	  lfd       f20, 0xF8(r1)
-	  lfd       f19, 0xF0(r1)
-	  lfd       f18, 0xE8(r1)
-	  lfd       f17, 0xE0(r1)
-	  lfd       f16, 0xD8(r1)
-	  lwz       r31, 0xD4(r1)
-	  lwz       r30, 0xD0(r1)
-	  addi      r1, r1, 0x158
-	  mtlr      r0
-	  blr
-	*/
+	GXPosition3f32(pos.x + vec1.DP(cam.mViewXAxis), pos.y + vec1.DP(cam.mViewYAxis), pos.z + vec1.DP(cam.mViewZAxis));
+	GXTexCoord2f32(0.0f, 0.0f);
+
+	GXPosition3f32(pos.x + vec2.DP(cam.mViewXAxis), pos.y + vec2.DP(cam.mViewYAxis), pos.z + vec2.DP(cam.mViewZAxis));
+	GXTexCoord2f32(1.0f, 0.0f);
+
+	GXPosition3f32(pos.x + vec3.DP(cam.mViewXAxis), pos.y + vec3.DP(cam.mViewYAxis), pos.z + vec3.DP(cam.mViewZAxis));
+	GXTexCoord2f32(1.0f, 1.0f);
+
+	GXPosition3f32(pos.x + vec4.DP(cam.mViewXAxis), pos.y + vec4.DP(cam.mViewYAxis), pos.z + vec4.DP(cam.mViewZAxis));
+	GXTexCoord2f32(0.0f, 1.0f);
+
+	GXEnd();
 }
 
 /*

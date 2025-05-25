@@ -403,8 +403,8 @@ struct TAIAturnHome : public TAIAturnOccasion {
  * @brief TODO
  */
 struct TAIAgoingHome : public TAIAreserveMotion {
-	inline TAIAgoingHome() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAgoingHome(int nextState, int motionIdx) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionIdx)
 	{
 	}
 
@@ -447,7 +447,7 @@ struct TAIAflyingBase : public TaiAction {
 	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
 	{
 		// nice illusion of choice
-		if (teki.getRunAwaySwitch()) {
+		if (teki.getChokeSwitch()) {
 			return teki.getParameterF(TPF_WalkVelocity);
 		}
 		return teki.getParameterF(TPF_WalkVelocity);

@@ -408,7 +408,7 @@ struct TAIAflyingBaseKabekuiC : public TAIAflyingBase {
 
 	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
 	{
-		if (teki.getRunAwaySwitch()) {
+		if (teki.getChokeSwitch()) {
 			return teki.getParameterF(TAIkabekuiCFloatParms::FlightYVelocity);
 		}
 

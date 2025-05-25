@@ -1,281 +1,158 @@
-#include "types.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
+#include "stl/ctype.h"
+#include "stl/errno.h"
+#include "stl/locale.h"
+#include "stl/limits.h"
+
+enum scan_states {
+	start          = 0x01,
+	check_for_zero = 0x02,
+	leading_zero   = 0x04,
+	need_digit     = 0x08,
+	digit_loop     = 0x10,
+	finished       = 0x20,
+	failure        = 0x40
+};
+
+#define final_state(scan_state) (scan_state & (finished | failure))
+#define success(scan_state)     (scan_state & (leading_zero | digit_loop | finished))
+#define fetch()                 (count++, (*ReadProc)(ReadProcArg, 0, __GetAChar))
+#define unfetch(c)              (*ReadProc)(ReadProcArg, c, __UngetAChar)
 
 /*
  * --INFO--
  * Address:	8021A1C8
  * Size:	000348
  */
-void __strtoul(void)
+u32 __strtoul(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
+              int* overflow)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x60(r1)
-	  stmw      r18, 0x28(r1)
-	  mr.       r28, r3
-	  addi      r23, r9, 0
-	  mr        r21, r8
-	  addi      r22, r4, 0
-	  addi      r29, r5, 0
-	  addi      r30, r6, 0
-	  addi      r19, r7, 0
-	  li        r24, 0x1
-	  li        r31, 0
-	  li        r27, 0
-	  li        r26, 0
-	  stw       r0, 0x0(r9)
-	  stw       r0, 0x0(r8)
-	  blt-      .loc_0x64
-	  cmpwi     r28, 0x1
-	  beq-      .loc_0x64
-	  cmpwi     r28, 0x24
-	  bgt-      .loc_0x64
-	  cmpwi     r22, 0x1
-	  bge-      .loc_0x6C
+	int scan_state          = start;
+	int count               = 0;
+	unsigned long value     = 0;
+	unsigned long value_max = 0;
+	int c;
 
-	.loc_0x64:
-	  li        r24, 0x40
-	  b         .loc_0x8C
+	*negative = *overflow = 0;
 
-	.loc_0x6C:
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  li        r31, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  blrl
-	  mr        r18, r3
+	if (base < 0 || base == 1 || base > 36 || max_width < 1) {
+		scan_state = failure;
+	} else {
+		c = fetch();
+	}
 
-	.loc_0x8C:
-	  cmpwi     r28, 0
-	  beq-      .loc_0x9C
-	  li        r0, -0x1
-	  divwu     r26, r0, r28
+	if (base != 0) {
+		value_max = ULONG_MAX / base;
+	}
 
-	.loc_0x9C:
-	  lis       r3, 0x8022
-	  lis       r4, 0x802F
-	  addi      r25, r3, 0x2808
-	  subi      r20, r4, 0x6BCC
-	  b         .loc_0x2E4
+	while (count <= max_width && c != -1 && !final_state(scan_state)) {
+		switch (scan_state) {
+		case start:
+			if (isspace(c)) {
+				c = fetch();
+				break;
+			}
 
-	.loc_0xB0:
-	  cmplwi    r24, 0x10
-	  bgt-      .loc_0x2E4
-	  rlwinm    r0,r24,2,0,29
-	  lwzx      r0, r20, r0
-	  mtctr     r0
-	  bctr
-	  rlwinm    r0,r18,0,24,31
-	  add       r3, r25, r0
-	  lbz       r0, 0x0(r3)
-	  rlwinm.   r0,r0,0,29,30
-	  beq-      .loc_0x100
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r31, r31, 0x1
-	  blrl
-	  mr        r18, r3
-	  b         .loc_0x2E4
+			if (c == '+') {
+				c = fetch();
+			} else if (c == '-') {
+				c         = fetch();
+				*negative = 1;
+			}
 
-	.loc_0x100:
-	  cmpwi     r18, 0x2B
-	  bne-      .loc_0x12C
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r31, r31, 0x1
-	  blrl
-	  mr        r18, r3
-	  b         .loc_0x15C
+			scan_state = check_for_zero;
+			break;
 
-	.loc_0x12C:
-	  cmpwi     r18, 0x2D
-	  bne-      .loc_0x15C
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r31, r31, 0x1
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x0(r21)
-	  mr        r18, r3
+		case check_for_zero:
+			if (base == 0 || base == 16) {
+				if (c == '0') {
+					scan_state = leading_zero;
+					c          = fetch();
+					break;
+				}
+			}
 
-	.loc_0x15C:
-	  li        r24, 0x2
-	  b         .loc_0x2E4
-	  cmpwi     r28, 0
-	  beq-      .loc_0x174
-	  cmpwi     r28, 0x10
-	  bne-      .loc_0x1A4
+			scan_state = need_digit;
+			break;
 
-	.loc_0x174:
-	  cmpwi     r18, 0x30
-	  bne-      .loc_0x1A4
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  li        r24, 0x4
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r31, r31, 0x1
-	  blrl
-	  mr        r18, r3
-	  b         .loc_0x2E4
+		case 4:
+			if (c == 'X' || c == 'x') {
+				base       = 16;
+				scan_state = need_digit;
+				c          = fetch();
+				break;
+			}
 
-	.loc_0x1A4:
-	  li        r24, 0x8
-	  b         .loc_0x2E4
-	  cmpwi     r18, 0x58
-	  beq-      .loc_0x1BC
-	  cmpwi     r18, 0x78
-	  bne-      .loc_0x1E8
+			if (base == 0) {
+				base = 8;
+			}
 
-	.loc_0x1BC:
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  li        r28, 0x10
-	  li        r24, 0x8
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r31, r31, 0x1
-	  blrl
-	  mr        r18, r3
-	  b         .loc_0x2E4
+			scan_state = digit_loop;
+			break;
 
-	.loc_0x1E8:
-	  cmpwi     r28, 0
-	  bne-      .loc_0x1F4
-	  li        r28, 0x8
+		case need_digit:
+		case digit_loop:
+			if (base == 0) {
+				base = 10;
+			}
 
-	.loc_0x1F4:
-	  li        r24, 0x10
-	  b         .loc_0x2E4
-	  cmpwi     r28, 0
-	  bne-      .loc_0x208
-	  li        r28, 0xA
+			if (!value_max) {
+				value_max = ULONG_MAX / base;
+			}
 
-	.loc_0x208:
-	  cmplwi    r26, 0
-	  bne-      .loc_0x218
-	  li        r0, -0x1
-	  divwu     r26, r0, r28
+			if (isdigit(c)) {
+				if ((c -= '0') >= base) {
+					if (scan_state == digit_loop) {
+						scan_state = finished;
+					} else {
+						scan_state = failure;
+					}
 
-	.loc_0x218:
-	  rlwinm    r0,r18,0,24,31
-	  add       r3, r25, r0
-	  lbz       r3, 0x0(r3)
-	  rlwinm.   r0,r3,0,27,27
-	  beq-      .loc_0x254
-	  subi      r18, r18, 0x30
-	  cmpw      r18, r28
-	  blt-      .loc_0x294
-	  cmpwi     r24, 0x10
-	  bne-      .loc_0x248
-	  li        r24, 0x20
-	  b         .loc_0x24C
+					c += '0';
+					break;
+				}
+			} else if (!isalpha(c) || (toupper(c) - 'A' + 10) >= base) {
+				if (scan_state == digit_loop) {
+					scan_state = finished;
+				} else {
+					scan_state = failure;
+				}
 
-	.loc_0x248:
-	  li        r24, 0x40
+				break;
+			} else {
+				c = toupper(c) - 'A' + 10;
+			}
 
-	.loc_0x24C:
-	  addi      r18, r18, 0x30
-	  b         .loc_0x2E4
+			if (value > value_max) {
+				*overflow = 1;
+			}
 
-	.loc_0x254:
-	  rlwinm.   r0,r3,0,24,25
-	  beq-      .loc_0x270
-	  mr        r3, r18
-	  bl        -0x4674
-	  subi      r0, r3, 0x37
-	  cmpw      r0, r28
-	  blt-      .loc_0x288
+			value *= base;
 
-	.loc_0x270:
-	  cmpwi     r24, 0x10
-	  bne-      .loc_0x280
-	  li        r24, 0x20
-	  b         .loc_0x2E4
+			if (c > (ULONG_MAX - value)) {
+				*overflow = 1;
+			}
 
-	.loc_0x280:
-	  li        r24, 0x40
-	  b         .loc_0x2E4
+			value += c;
+			scan_state = digit_loop;
+			c          = fetch();
+			break;
+		}
+	}
 
-	.loc_0x288:
-	  mr        r3, r18
-	  bl        -0x46A0
-	  subi      r18, r3, 0x37
+	if (!success(scan_state)) {
+		value = 0;
+		count = 0;
+	} else {
+		count--;
+	}
 
-	.loc_0x294:
-	  cmplw     r27, r26
-	  ble-      .loc_0x2A4
-	  li        r0, 0x1
-	  stw       r0, 0x0(r23)
+	*chars_scanned = count;
 
-	.loc_0x2A4:
-	  mullw     r27, r27, r28
-	  subfic    r0, r27, -0x1
-	  cmplw     r18, r0
-	  ble-      .loc_0x2BC
-	  li        r0, 0x1
-	  stw       r0, 0x0(r23)
-
-	.loc_0x2BC:
-	  addi      r12, r29, 0
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  add       r27, r27, r18
-	  li        r24, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r31, r31, 0x1
-	  blrl
-	  mr        r18, r3
-
-	.loc_0x2E4:
-	  cmpw      r31, r22
-	  bgt-      .loc_0x2FC
-	  cmpwi     r18, -0x1
-	  beq-      .loc_0x2FC
-	  rlwinm.   r0,r24,0,25,26
-	  beq+      .loc_0xB0
-
-	.loc_0x2FC:
-	  andi.     r0, r24, 0x34
-	  bne-      .loc_0x310
-	  li        r27, 0
-	  li        r31, 0
-	  b         .loc_0x314
-
-	.loc_0x310:
-	  subi      r31, r31, 0x1
-
-	.loc_0x314:
-	  mr        r12, r29
-	  stw       r31, 0x0(r19)
-	  mtlr      r12
-	  addi      r3, r30, 0
-	  addi      r4, r18, 0
-	  li        r5, 0x1
-	  blrl
-	  mr        r3, r27
-	  lmw       r18, 0x28(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	unfetch(c);
+	return value;
 }
 
 /*
@@ -283,310 +160,135 @@ void __strtoul(void)
  * Address:	80219DFC
  * Size:	0003CC
  */
-void __strtoull(void)
+u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* ReadProcArg, int* chars_scanned, int* negative,
+               int* overflow)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x78(r1)
-	  stmw      r15, 0x34(r1)
-	  mr.       r31, r3
-	  addi      r21, r9, 0
-	  mr        r16, r8
-	  addi      r17, r4, 0
-	  addi      r27, r5, 0
-	  addi      r26, r6, 0
-	  addi      r15, r7, 0
-	  li        r30, 0x1
-	  li        r29, 0
-	  li        r28, 0
-	  li        r25, 0
-	  li        r23, 0
-	  li        r24, 0
-	  stw       r0, 0x0(r9)
-	  stw       r0, 0x0(r8)
-	  blt-      .loc_0x6C
-	  cmpwi     r31, 0x1
-	  beq-      .loc_0x6C
-	  cmpwi     r31, 0x24
-	  bgt-      .loc_0x6C
-	  cmpwi     r17, 0x1
-	  bge-      .loc_0x74
+	int scan_state               = start;
+	int count                    = 0;
+	int spaces                   = 0;
+	unsigned long long value     = 0;
+	unsigned long long value_max = 0;
+	unsigned long long ullmax    = ULLONG_MAX;
+	int c;
 
-	.loc_0x6C:
-	  li        r30, 0x40
-	  b         .loc_0x94
+	*negative = *overflow = 0;
 
-	.loc_0x74:
-	  addi      r12, r27, 0
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  li        r29, 0x1
-	  li        r4, 0
-	  li        r5, 0
-	  blrl
-	  mr        r20, r3
+	if (base < 0 || base == 1 || base > 36 || max_width < 1) {
+		scan_state = failure;
+	} else {
+		c = fetch();
+	}
 
-	.loc_0x94:
-	  cmpwi     r31, 0
-	  beq-      .loc_0xB8
-	  srawi     r5, r31, 0x1F
-	  addi      r6, r31, 0
-	  li        r3, -0x1
-	  li        r4, -0x1
-	  bl        -0x4FEC
-	  addi      r23, r4, 0
-	  addi      r24, r3, 0
+	if (base != 0) {
+		value_max = ullmax / base;
+	}
 
-	.loc_0xB8:
-	  lis       r3, 0x8022
-	  lis       r4, 0x802F
-	  addi      r22, r3, 0x2808
-	  subi      r18, r4, 0x6C10
-	  b         .loc_0x360
+	while (count <= max_width && c != -1 && !final_state(scan_state)) {
+		switch (scan_state) {
+		case start:
+			if (isspace(c)) {
+				c = fetch();
+				spaces++;
+				break;
+			}
 
-	.loc_0xCC:
-	  cmplwi    r30, 0x10
-	  bgt-      .loc_0x360
-	  rlwinm    r0,r30,2,0,29
-	  lwzx      r0, r18, r0
-	  mtctr     r0
-	  bctr
-	  rlwinm    r0,r20,0,24,31
-	  add       r3, r22, r0
-	  lbz       r0, 0x0(r3)
-	  rlwinm.   r0,r0,0,29,30
-	  beq-      .loc_0x11C
-	  addi      r12, r27, 0
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r29, r29, 0x1
-	  blrl
-	  mr        r20, r3
-	  b         .loc_0x360
+			if (c == '+') {
+				c = fetch();
+			} else if (c == '-') {
+				c         = fetch();
+				*negative = 1;
+			}
 
-	.loc_0x11C:
-	  cmpwi     r20, 0x2B
-	  bne-      .loc_0x148
-	  addi      r12, r27, 0
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r29, r29, 0x1
-	  blrl
-	  mr        r20, r3
-	  b         .loc_0x178
+			scan_state = check_for_zero;
+			break;
 
-	.loc_0x148:
-	  cmpwi     r20, 0x2D
-	  bne-      .loc_0x178
-	  addi      r12, r27, 0
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r29, r29, 0x1
-	  blrl
-	  li        r0, 0x1
-	  stw       r0, 0x0(r16)
-	  mr        r20, r3
+		case check_for_zero:
+			if (base == 0 || base == 16) {
+				if (c == '0') {
+					scan_state = leading_zero;
+					c          = fetch();
+					break;
+				}
+			}
 
-	.loc_0x178:
-	  li        r30, 0x2
-	  b         .loc_0x360
-	  cmpwi     r31, 0
-	  beq-      .loc_0x190
-	  cmpwi     r31, 0x10
-	  bne-      .loc_0x1C0
+			scan_state = need_digit;
+			break;
 
-	.loc_0x190:
-	  cmpwi     r20, 0x30
-	  bne-      .loc_0x1C0
-	  addi      r12, r27, 0
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  li        r30, 0x4
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r29, r29, 0x1
-	  blrl
-	  mr        r20, r3
-	  b         .loc_0x360
+		case leading_zero:
+			if (c == 'X' || c == 'x') {
+				base       = 16;
+				scan_state = need_digit;
+				c          = fetch();
+				break;
+			}
 
-	.loc_0x1C0:
-	  li        r30, 0x8
-	  b         .loc_0x360
-	  cmpwi     r20, 0x58
-	  beq-      .loc_0x1D8
-	  cmpwi     r20, 0x78
-	  bne-      .loc_0x204
+			if (base == 0) {
+				base = 8;
+			}
 
-	.loc_0x1D8:
-	  addi      r12, r27, 0
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  li        r31, 0x10
-	  li        r30, 0x8
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r29, r29, 0x1
-	  blrl
-	  mr        r20, r3
-	  b         .loc_0x360
+			scan_state = digit_loop;
+			break;
 
-	.loc_0x204:
-	  cmpwi     r31, 0
-	  bne-      .loc_0x210
-	  li        r31, 0x8
+		case need_digit:
+		case digit_loop:
+			if (base == 0) {
+				base = 10;
+			}
 
-	.loc_0x210:
-	  li        r30, 0x10
-	  b         .loc_0x360
-	  cmpwi     r31, 0
-	  bne-      .loc_0x224
-	  li        r31, 0xA
+			if (!value_max) {
+				value_max = ullmax / base;
+			}
 
-	.loc_0x224:
-	  li        r0, 0
-	  xor       r3, r23, r0
-	  xor       r0, r24, r0
-	  or.       r0, r3, r0
-	  bne-      .loc_0x254
-	  srawi     r5, r31, 0x1F
-	  addi      r6, r31, 0
-	  li        r3, -0x1
-	  li        r4, -0x1
-	  bl        -0x5188
-	  addi      r23, r4, 0
-	  addi      r24, r3, 0
+			if (isdigit(c)) {
+				if ((c -= '0') >= base) {
+					if (scan_state == digit_loop) {
+						scan_state = finished;
+					} else {
+						scan_state = failure;
+					}
 
-	.loc_0x254:
-	  rlwinm    r0,r20,0,24,31
-	  add       r3, r22, r0
-	  lbz       r3, 0x0(r3)
-	  rlwinm.   r0,r3,0,27,27
-	  beq-      .loc_0x290
-	  subi      r20, r20, 0x30
-	  cmpw      r20, r31
-	  blt-      .loc_0x2D0
-	  cmpwi     r30, 0x10
-	  bne-      .loc_0x284
-	  li        r30, 0x20
-	  b         .loc_0x288
+					c += '0';
+					break;
+				}
+			} else if (!isalpha(c) || (toupper(c) - 'A' + 10) >= base) {
+				if (scan_state == digit_loop) {
+					scan_state = finished;
+				} else {
+					scan_state = failure;
+				}
 
-	.loc_0x284:
-	  li        r30, 0x40
+				break;
+			} else {
+				c = toupper(c) - 'A' + 10;
+			}
 
-	.loc_0x288:
-	  addi      r20, r20, 0x30
-	  b         .loc_0x360
+			if (value > value_max) {
+				*overflow = 1;
+			}
 
-	.loc_0x290:
-	  rlwinm.   r0,r3,0,24,25
-	  beq-      .loc_0x2AC
-	  mr        r3, r20
-	  bl        -0x42E4
-	  subi      r0, r3, 0x37
-	  cmpw      r0, r31
-	  blt-      .loc_0x2C4
+			value *= base;
 
-	.loc_0x2AC:
-	  cmpwi     r30, 0x10
-	  bne-      .loc_0x2BC
-	  li        r30, 0x20
-	  b         .loc_0x360
+			if (c > (ullmax - value)) {
+				*overflow = 1;
+			}
 
-	.loc_0x2BC:
-	  li        r30, 0x40
-	  b         .loc_0x360
+			value += c;
+			scan_state = digit_loop;
+			c          = fetch();
+			break;
+		}
+	}
 
-	.loc_0x2C4:
-	  mr        r3, r20
-	  bl        -0x4310
-	  subi      r20, r3, 0x37
+	if (!success(scan_state)) {
+		count = value = 0;
 
-	.loc_0x2D0:
-	  subc      r0, r23, r28
-	  subfe     r0, r25, r24
-	  subfe     r0, r19, r19
-	  neg.      r0, r0
-	  beq-      .loc_0x2EC
-	  li        r0, 0x1
-	  stw       r0, 0x0(r21)
+	} else {
+		count--;
+	}
+	*chars_scanned = count;
 
-	.loc_0x2EC:
-	  mullw     r4, r25, r31
-	  mulhwu    r0, r28, r31
-	  srawi     r3, r31, 0x1F
-	  add       r4, r4, r0
-	  mullw     r0, r28, r3
-	  mullw     r28, r28, r31
-	  srawi     r5, r20, 0x1F
-	  li        r3, -0x1
-	  add       r25, r4, r0
-	  subc      r0, r3, r28
-	  subfe     r3, r25, r3
-	  subc      r0, r0, r20
-	  subfe     r0, r5, r3
-	  subfe     r0, r19, r19
-	  neg.      r0, r0
-	  beq-      .loc_0x334
-	  li        r0, 0x1
-	  stw       r0, 0x0(r21)
-
-	.loc_0x334:
-	  addi      r12, r27, 0
-	  addc      r28, r28, r20
-	  mtlr      r12
-	  adde      r25, r25, r5
-	  addi      r3, r26, 0
-	  li        r30, 0x10
-	  li        r4, 0
-	  li        r5, 0
-	  addi      r29, r29, 0x1
-	  blrl
-	  mr        r20, r3
-
-	.loc_0x360:
-	  cmpw      r29, r17
-	  bgt-      .loc_0x378
-	  cmpwi     r20, -0x1
-	  beq-      .loc_0x378
-	  rlwinm.   r0,r30,0,25,26
-	  beq+      .loc_0xCC
-
-	.loc_0x378:
-	  andi.     r0, r30, 0x34
-	  bne-      .loc_0x390
-	  li        r28, 0
-	  li        r25, 0
-	  li        r29, 0
-	  b         .loc_0x394
-
-	.loc_0x390:
-	  subi      r29, r29, 0x1
-
-	.loc_0x394:
-	  mr        r12, r27
-	  stw       r29, 0x0(r15)
-	  mtlr      r12
-	  addi      r3, r26, 0
-	  addi      r4, r20, 0
-	  li        r5, 0x1
-	  blrl
-	  addi      r4, r28, 0
-	  lwz       r0, 0x7C(r1)
-	  addi      r3, r25, 0
-	  lmw       r15, 0x34(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x78
-	  blr
-	*/
+	unfetch(c);
+	return value;
 }
 
 /*
@@ -604,60 +306,29 @@ void strtoll(void)
  * Address:	80219D50
  * Size:	0000AC
  */
-void strtoul(void)
+u32 strtoul(const char* str, char** end, int base)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8000
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  subi      r4, r6, 0x1
-	  stw       r30, 0x28(r1)
-	  mr        r30, r3
-	  lis       r3, 0x8022
-	  stw       r30, 0x14(r1)
-	  addi      r6, r1, 0x14
-	  addi      r7, r1, 0x24
-	  stw       r0, 0x18(r1)
-	  subi      r0, r3, 0x7EB0
-	  addi      r3, r5, 0
-	  mr        r5, r0
-	  addi      r8, r1, 0x20
-	  addi      r9, r1, 0x1C
-	  bl        0x428
-	  cmplwi    r31, 0
-	  beq-      .loc_0x68
-	  lwz       r0, 0x24(r1)
-	  add       r0, r30, r0
-	  stw       r0, 0x0(r31)
+	unsigned long value;
+	int count, negative, overflow;
 
-	.loc_0x68:
-	  lwz       r0, 0x1C(r1)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x84
-	  li        r0, 0x22
-	  stw       r0, 0x3490(r13)
-	  li        r3, -0x1
-	  b         .loc_0x94
+	__InStrCtrl isc;
+	isc.NextChar         = (char*)str;
+	isc.NullCharDetected = 0;
 
-	.loc_0x84:
-	  lwz       r0, 0x20(r1)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x94
-	  neg       r3, r3
+	value = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
 
-	.loc_0x94:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	if (end) {
+		*end = (char*)str + count;
+	}
+
+	if (overflow) {
+		value = ULONG_MAX;
+		errno = 0x22;
+	} else if (negative) {
+		value = -value;
+	}
+
+	return value;
 }
 
 /*
@@ -675,85 +346,30 @@ void strtoull(void)
  * Address:	80219C60
  * Size:	0000F0
  */
-void strtol(void)
+s32 strtol(const char* str, char** end, int base)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8000
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  subi      r4, r6, 0x1
-	  stw       r30, 0x28(r1)
-	  mr        r30, r3
-	  lis       r3, 0x8022
-	  stw       r30, 0x14(r1)
-	  addi      r6, r1, 0x14
-	  addi      r7, r1, 0x24
-	  stw       r0, 0x18(r1)
-	  subi      r0, r3, 0x7EB0
-	  addi      r3, r5, 0
-	  mr        r5, r0
-	  addi      r8, r1, 0x20
-	  addi      r9, r1, 0x1C
-	  bl        0x518
-	  cmplwi    r31, 0
-	  beq-      .loc_0x68
-	  lwz       r0, 0x24(r1)
-	  add       r0, r30, r0
-	  stw       r0, 0x0(r31)
+	unsigned long uvalue;
+	long svalue;
+	int count, negative, overflow;
 
-	.loc_0x68:
-	  lwz       r0, 0x1C(r1)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xA4
-	  lwz       r5, 0x20(r1)
-	  cmpwi     r5, 0
-	  bne-      .loc_0x90
-	  lis       r4, 0x8000
-	  subi      r0, r4, 0x1
-	  cmplw     r3, r0
-	  bgt-      .loc_0xA4
+	__InStrCtrl isc;
+	isc.NextChar         = (char*)str;
+	isc.NullCharDetected = 0;
 
-	.loc_0x90:
-	  cmpwi     r5, 0
-	  beq-      .loc_0xCC
-	  lis       r0, 0x8000
-	  cmplw     r3, r0
-	  ble-      .loc_0xCC
+	uvalue = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
 
-	.loc_0xA4:
-	  lwz       r0, 0x20(r1)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xB8
-	  lis       r3, 0x8000
-	  b         .loc_0xC0
+	if (end) {
+		*end = (char*)str + count;
+	}
 
-	.loc_0xB8:
-	  lis       r3, 0x8000
-	  subi      r3, r3, 0x1
+	if (overflow || (!negative && uvalue > LONG_MAX) || (negative && uvalue > -LONG_MIN)) {
+		svalue = (negative ? -LONG_MIN : LONG_MAX);
+		errno  = ERANGE;
+	} else {
+		svalue = (negative ? (long)-uvalue : (long)uvalue);
+	}
 
-	.loc_0xC0:
-	  li        r0, 0x22
-	  stw       r0, 0x3490(r13)
-	  b         .loc_0xD8
-
-	.loc_0xCC:
-	  cmpwi     r5, 0
-	  beq-      .loc_0xD8
-	  neg       r3, r3
-
-	.loc_0xD8:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x30
-	  blr
-	*/
+	return svalue;
 }
 
 /*
@@ -761,72 +377,9 @@ void strtol(void)
  * Address:	80219B9C
  * Size:	0000C4
  */
-void atoi(void)
+int atoi(const char* str)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  lis       r31, 0x8000
-	  subi      r4, r31, 0x1
-	  stw       r3, 0x18(r1)
-	  lis       r3, 0x8022
-	  subi      r5, r3, 0x7EB0
-	  stw       r0, 0x1C(r1)
-	  addi      r6, r1, 0x18
-	  addi      r7, r1, 0xC
-	  addi      r8, r1, 0x10
-	  addi      r9, r1, 0x14
-	  li        r3, 0xA
-	  bl        0x5EC
-	  lwz       r0, 0x14(r1)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x7C
-	  lwz       r4, 0x10(r1)
-	  cmpwi     r4, 0
-	  bne-      .loc_0x68
-	  subi      r0, r31, 0x1
-	  cmplw     r3, r0
-	  bgt-      .loc_0x7C
-
-	.loc_0x68:
-	  cmpwi     r4, 0
-	  beq-      .loc_0xA4
-	  lis       r0, 0x8000
-	  cmplw     r3, r0
-	  ble-      .loc_0xA4
-
-	.loc_0x7C:
-	  lwz       r0, 0x10(r1)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x90
-	  lis       r3, 0x8000
-	  b         .loc_0x98
-
-	.loc_0x90:
-	  lis       r3, 0x8000
-	  subi      r3, r3, 0x1
-
-	.loc_0x98:
-	  li        r0, 0x22
-	  stw       r0, 0x3490(r13)
-	  b         .loc_0xB0
-
-	.loc_0xA4:
-	  cmpwi     r4, 0
-	  beq-      .loc_0xB0
-	  neg       r3, r3
-
-	.loc_0xB0:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	return strtol(str, NULL, 10);
 }
 
 /*

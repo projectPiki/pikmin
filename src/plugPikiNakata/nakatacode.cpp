@@ -2,7 +2,7 @@
 #include "nlib/System.h"
 #include "PaniPikiAnimator.h"
 #include "system.h"
-#include "Teki.h"
+#include "teki.h"
 #include "DebugLog.h"
 
 BOOL nakataDebugMode;

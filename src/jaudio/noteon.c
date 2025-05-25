@@ -9,8 +9,16 @@
  * Address:	80013840
  * Size:	000394
  */
-s32 NoteON(seqp_*, s32, s32, s32, s32)
+s32 NoteON(seqp_* seq, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
 {
+	if (seq->_39E && (seq->_39D & 0x40)) {
+		return -1;
+	}
+
+	if (seq->_9C[param_2]) {
+		NoteOFF(seq, param_2);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0

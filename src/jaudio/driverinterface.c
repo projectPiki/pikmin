@@ -2,30 +2,32 @@
 
 #include "jaudio/dspinterface.h"
 #include "jaudio/audiostruct.h"
-
-typedef struct PanMatrix_ PanMatrix_;
+#include "jaudio/dspdriver.h"
 
 static jcs_ GLOBAL_CHANNEL;
+static jc_ CHANNEL[0x100];
+
+static u16 MAX_MIXERLEVEL         = 12000;
+static int JAC_SYSTEM_OUTPUT_MODE = 1;
+
+static u32 cur_waits;
+static u32 cur_top;
+static u32 cur_tail;
+static jc_* waitp[0x20];
+static int waittime[0x20];
+
+static u8 calc_sw_table[]
+    = { 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 0, 0, 2, 1, 0, 2, 2, 1, 0, 0, 1, 0, 1, 1, 0, 2, 1, 1, 0, 1, 1,
+	    1, 1, 1, 2, 1, 2, 0, 1, 2, 1, 1, 2, 2, 1, 0, 0, 2, 0, 1, 2, 0, 2, 2, 1, 0, 2, 1, 1, 2, 1, 2, 2, 2, 0, 2, 2, 1, 2, 2, 2 };
 
 /*
  * --INFO--
  * Address:	80009400
  * Size:	000024
  */
-void Channel_SetMixerLevel(f32)
+void Channel_SetMixerLevel(f32 mix)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lfs       f0, -0x7FC8(r2)
-	  fmuls     f0, f0, f1
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r0, 0x14(r1)
-	  sth       r0, -0x7FE8(r13)
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	MAX_MIXERLEVEL = mix * 16384.0f;
 }
 
 /*
@@ -45,19 +47,17 @@ jcs_* Get_GlobalHandle()
  */
 int List_CountChannel(jc_** jc)
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x0(r3)
-	  li        r3, 0
+	jc_* chan = *jc;
+	int num   = 0;
 
-	.loc_0x8:
-	  cmplwi    r4, 0
-	  beqlr-
-	  lwz       r4, 0x24(r4)
-	  addi      r3, r3, 0x1
-	  b         .loc_0x8
-	  blr
-	*/
+	while (TRUE) {
+		if (chan == nullptr) {
+			break;
+		}
+		chan = (jc_*)chan->mNext;
+		num++;
+	}
+	return num;
 }
 
 /*
@@ -75,7 +75,7 @@ void Check_GlobalActiveChannel()
  * Address:	........
  * Size:	00002C
  */
-void Check_GlobalRelease(jc_**)
+void Check_GlobalRelease(jc_** jc)
 {
 	// UNUSED FUNCTION
 }
@@ -95,45 +95,34 @@ void List_GlobalChannel()
  * Address:	80009480
  * Size:	000070
  */
-void List_CutChannel(jc_*)
+int List_CutChannel(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x8(r3)
-	  li        r7, 0
-	  lwz       r0, 0x0(r5)
-	  cmplw     r0, r3
-	  mr        r6, r0
-	  bne-      .loc_0x30
-	  lwz       r4, 0x24(r3)
-	  li        r0, 0
-	  stw       r4, 0x0(r5)
-	  stw       r0, 0x8(r3)
-	  li        r3, 0
-	  blr
+	jc_* chan = (jc_*)*jc->_08;
+	int num   = 0;
 
-	.loc_0x30:
-	  cmplwi    r6, 0
-	  addi      r7, r7, 0x1
-	  bne-      .loc_0x44
-	  li        r3, -0x1
-	  blr
+	if (chan == jc) {
+		*jc->_08 = jc->mNext;
+		jc->_08  = nullptr;
+		return 0;
+	}
 
-	.loc_0x44:
-	  lwz       r0, 0x24(r6)
-	  cmplw     r0, r3
-	  beq-      .loc_0x58
-	  mr        r6, r0
-	  b         .loc_0x30
+	while (TRUE) {
+		num++;
+		if (chan == nullptr) {
+			return -1;
+		}
 
-	.loc_0x58:
-	  lwz       r4, 0x24(r3)
-	  li        r0, 0
-	  stw       r4, 0x24(r6)
-	  stw       r0, 0x8(r3)
-	  mr        r3, r7
-	  blr
-	*/
+		if (chan->mNext == jc) {
+			break;
+		}
+
+		chan = (jc_*)chan->mNext;
+	}
+
+	chan->mNext = jc->mNext;
+	jc->_08     = nullptr;
+
+	return num;
 }
 
 /*
@@ -143,23 +132,15 @@ void List_CutChannel(jc_*)
  */
 jc_* List_GetChannel(jc_** jc)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  mr        r5, r0
-	  bne-      .loc_0x18
-	  li        r3, 0
-	  blr
+	jc_* chan = *jc;
 
-	.loc_0x18:
-	  lwz       r4, 0x24(r5)
-	  li        r0, 0
-	  stw       r4, 0x0(r3)
-	  mr        r3, r5
-	  stw       r0, 0x8(r5)
-	  blr
-	*/
+	if (chan == nullptr) {
+		return nullptr;
+	}
+
+	*jc       = (jc_*)chan->mNext;
+	chan->_08 = nullptr;
+	return chan;
 }
 
 /*
@@ -167,8 +148,28 @@ jc_* List_GetChannel(jc_** jc)
  * Address:	80009540
  * Size:	000048
  */
-void List_AddChannelTail(jc_**, jc_*)
+void List_AddChannelTail(jc_** jc, jc_* in)
 {
+	jc_* chan = *jc;
+	in->_08   = jc;
+
+	if (chan == nullptr) {
+		*jc       = in;
+		in->mNext = nullptr;
+		return;
+	}
+
+	jc_* temp;
+	while (TRUE) {
+		chan = (jc_*)chan->mNext;
+		if (chan == nullptr) {
+			temp = chan;
+			break;
+		}
+	}
+	temp->mNext = in;
+	in->mNext   = nullptr;
+
 	/*
 	.loc_0x0:
 	  lwz       r5, 0x0(r3)
@@ -201,16 +202,12 @@ void List_AddChannelTail(jc_**, jc_*)
  * Address:	800095A0
  * Size:	000014
  */
-void List_AddChannel(jc_**, jc_*)
+void List_AddChannel(jc_** jc, jc_* in)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  stw       r3, 0x8(r4)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x24(r4)
-	  blr
-	*/
+	jc_* chan = *jc;
+	in->_08   = jc;
+	*jc       = in;
+	in->mNext = chan;
 }
 
 /*
@@ -218,8 +215,26 @@ void List_AddChannel(jc_**, jc_*)
  * Address:	800095C0
  * Size:	00009C
  */
-BOOL FixAllocChannel(jcs_*, u32)
+int FixAllocChannel(jcs_* sys, u32 size)
 {
+	int num = 0;
+	while (num < size) {
+		jc_* chan = List_GetChannel(&GLOBAL_CHANNEL._08);
+		if (chan == nullptr) {
+			break;
+		}
+
+		List_AddChannel(&sys->_08, chan);
+		chan->mMgr = sys;
+		Channel_Init(chan);
+		num++;
+	}
+
+	sys->_00 += num;
+	GLOBAL_CHANNEL._00 -= num;
+	return num;
+
+	f32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -275,35 +290,13 @@ BOOL FixAllocChannel(jcs_*, u32)
  * Address:	80009660
  * Size:	000060
  */
-void FixReleaseChannel(jc_*)
+int FixReleaseChannel(jc_* chan)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802F
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r31, r4, 0x24E0
-	  addi      r4, r30, 0
-	  addi      r3, r31, 0x8
-	  bl        -0xE4
-	  lwz       r5, 0x4(r30)
-	  li        r3, 0
-	  lwz       r4, 0x0(r5)
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x0(r5)
-	  lwz       r4, 0x0(r31)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x0(r31)
-	  stw       r31, 0x4(r30)
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	List_AddChannel(&GLOBAL_CHANNEL._08, chan);
+	chan->mMgr->_00--;
+	GLOBAL_CHANNEL._00++;
+	chan->mMgr = &GLOBAL_CHANNEL;
+	return 0;
 }
 
 /*
@@ -311,85 +304,50 @@ void FixReleaseChannel(jc_*)
  * Address:	800096C0
  * Size:	0000F0
  */
-void FixReleaseChannelAll(jcs_*)
+int FixReleaseChannelAll(jcs_* sys)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802F
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  addi      r30, r4, 0x24E0
-	  addi      r31, r3, 0
-	  addi      r28, r30, 0x8
+	jc_* chan;
 
-	.loc_0x20:
-	  addi      r3, r31, 0x8
-	  bl        -0x1E4
-	  mr.       r27, r3
-	  beq-      .loc_0x44
-	  addi      r3, r28, 0
-	  addi      r4, r27, 0
-	  bl        -0x158
-	  stw       r30, 0x4(r27)
-	  b         .loc_0x20
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_08);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&GLOBAL_CHANNEL._08, chan);
+		chan->mMgr = &GLOBAL_CHANNEL;
+	}
 
-	.loc_0x44:
-	  addi      r29, r30, 0xC
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_0C);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&GLOBAL_CHANNEL._0C, chan);
+		chan->mMgr = &GLOBAL_CHANNEL;
+	}
 
-	.loc_0x48:
-	  addi      r3, r31, 0xC
-	  bl        -0x20C
-	  mr.       r27, r3
-	  beq-      .loc_0x6C
-	  addi      r3, r29, 0
-	  addi      r4, r27, 0
-	  bl        -0x180
-	  stw       r30, 0x4(r27)
-	  b         .loc_0x48
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_10);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&GLOBAL_CHANNEL._10, chan);
+		chan->mMgr = &GLOBAL_CHANNEL;
+	}
 
-	.loc_0x6C:
-	  addi      r29, r30, 0x10
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_14);
+		if (chan == nullptr) {
+			break;
+		}
+		Cancel_WaitDSPChannel(chan);
+		List_AddChannel(&GLOBAL_CHANNEL._08, chan);
+		chan->mMgr = &GLOBAL_CHANNEL;
+	}
 
-	.loc_0x70:
-	  addi      r3, r31, 0x10
-	  bl        -0x234
-	  mr.       r27, r3
-	  beq-      .loc_0x94
-	  addi      r3, r29, 0
-	  addi      r4, r27, 0
-	  bl        -0x1A8
-	  stw       r30, 0x4(r27)
-	  b         .loc_0x70
-
-	.loc_0x94:
-	  addi      r3, r31, 0x14
-	  bl        -0x258
-	  mr.       r29, r3
-	  beq-      .loc_0xC0
-	  mr        r3, r29
-	  bl        0x14F8
-	  addi      r3, r28, 0
-	  addi      r4, r29, 0
-	  bl        -0x1D4
-	  stw       r30, 0x4(r29)
-	  b         .loc_0x94
-
-	.loc_0xC0:
-	  lwz       r5, 0x0(r30)
-	  li        r0, 0
-	  lwz       r4, 0x0(r31)
-	  li        r3, 0
-	  add       r4, r5, r4
-	  stw       r4, 0x0(r30)
-	  stw       r0, 0x0(r31)
-	  lwz       r0, 0x2C(r1)
-	  lmw       r27, 0x14(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	GLOBAL_CHANNEL._00 += sys->_00;
+	sys->_00 = 0;
+	return 0;
 }
 
 /*
@@ -397,80 +355,53 @@ void FixReleaseChannelAll(jcs_*)
  * Address:	800097C0
  * Size:	0000EC
  */
-void FixMoveChannelAll(jcs_*, jcs_*)
+int FixMoveChannelAll(jcs_* sys, jcs_* sys2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
+	jc_* chan;
 
-	.loc_0x18:
-	  addi      r3, r29, 0x8
-	  bl        -0x2DC
-	  mr.       r31, r3
-	  beq-      .loc_0x3C
-	  addi      r3, r30, 0x8
-	  addi      r4, r31, 0
-	  bl        -0x250
-	  stw       r30, 0x4(r31)
-	  b         .loc_0x18
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_08);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&sys2->_08, chan);
+		chan->mMgr = sys2;
+	}
 
-	.loc_0x3C:
-	  addi      r3, r29, 0xC
-	  bl        -0x300
-	  mr.       r31, r3
-	  beq-      .loc_0x60
-	  addi      r3, r30, 0xC
-	  addi      r4, r31, 0
-	  bl        -0x274
-	  stw       r30, 0x4(r31)
-	  b         .loc_0x3C
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_0C);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&sys2->_0C, chan);
+		chan->mMgr = sys2;
+	}
 
-	.loc_0x60:
-	  addi      r3, r29, 0x10
-	  bl        -0x324
-	  mr.       r31, r3
-	  beq-      .loc_0x84
-	  addi      r3, r30, 0x10
-	  addi      r4, r31, 0
-	  bl        -0x298
-	  stw       r30, 0x4(r31)
-	  b         .loc_0x60
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_10);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&sys2->_10, chan);
+		chan->mMgr = sys2;
+	}
 
-	.loc_0x84:
-	  addi      r3, r29, 0x14
-	  bl        -0x348
-	  mr.       r31, r3
-	  beq-      .loc_0xA8
-	  addi      r3, r30, 0x14
-	  addi      r4, r31, 0
-	  bl        -0x2BC
-	  stw       r30, 0x4(r31)
-	  b         .loc_0x84
+	while (TRUE) {
+		chan = List_GetChannel(&sys->_14);
+		if (chan == nullptr) {
+			break;
+		}
+		List_AddChannel(&sys2->_14, chan);
+		chan->mMgr = sys2;
+	}
 
-	.loc_0xA8:
-	  lwz       r4, 0x0(r30)
-	  li        r5, 0
-	  lwz       r0, 0x0(r29)
-	  li        r3, 0
-	  add       r0, r4, r0
-	  stw       r0, 0x0(r30)
-	  stw       r5, 0x0(r29)
-	  lwz       r4, 0x4(r30)
-	  lwz       r0, 0x4(r29)
-	  add       r0, r4, r0
-	  stw       r0, 0x4(r30)
-	  stw       r5, 0x4(r29)
-	  lwz       r0, 0x2C(r1)
-	  lmw       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	sys2->_00 += sys->_00;
+	sys->_00 = 0;
+	sys2->_04 += sys->_04;
+	sys->_04 = 0;
+	return 0;
+
+	f32 badcompiler[2];
 }
 
 /*
@@ -478,49 +409,25 @@ void FixMoveChannelAll(jcs_*, jcs_*)
  * Address:	800098C0
  * Size:	000070
  */
-void PanCalc(const PanMatrix_*, const PanMatrix_*, u8)
+f32 PanCalc(const PanMatrix_* mtx1, const PanMatrix_* mtx2, u8 a)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r5,0,24,31
-	  lis       r5, 0x8022
-	  mulli     r7, r0, 0x3
-	  addi      r6, r5, 0x48E0
-	  li        r0, 0x3
-	  lfs       f1, -0x7FC4(r2)
-	  li        r5, 0
-	  add       r6, r6, r7
-	  mtctr     r0
+	f32 calc = 0.0f;
 
-	.loc_0x24:
-	  lbz       r0, 0x0(r6)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x44
-	  bge-      .loc_0x38
-	  b         .loc_0x60
+	u8* vals = calc_sw_table + (a * 3);
 
-	.loc_0x38:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x60
-	  b         .loc_0x50
-
-	.loc_0x44:
-	  lfsx      f0, r3, r5
-	  fadds     f1, f1, f0
-	  b         .loc_0x60
-
-	.loc_0x50:
-	  lfsx      f2, r3, r5
-	  lfsx      f0, r4, r5
-	  fmuls     f0, f2, f0
-	  fadds     f1, f1, f0
-
-	.loc_0x60:
-	  addi      r5, r5, 0x4
-	  addi      r6, r6, 0x1
-	  bdnz+     .loc_0x24
-	  blr
-	*/
+	for (int i = 0; i < 3; i++) {
+		switch (vals[i]) {
+		case 0:
+			break;
+		case 1:
+			calc += mtx1->_00[i];
+			break;
+		case 2:
+			calc += (mtx1->_00[i] * mtx2->_00[i]);
+			break;
+		}
+	}
+	return calc;
 }
 
 /*
@@ -528,80 +435,49 @@ void PanCalc(const PanMatrix_*, const PanMatrix_*, u8)
  * Address:	80009940
  * Size:	000104
  */
-void InitJcs(jcs_*)
+void InitJcs(jcs_* sys)
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0
-	  li        r5, 0x1
-	  stw       r6, 0x8(r3)
-	  li        r0, 0x8
-	  addi      r4, r6, 0
-	  stw       r6, 0xC(r3)
-	  stw       r6, 0x10(r3)
-	  stw       r6, 0x14(r3)
-	  stw       r6, 0x4(r3)
-	  stw       r6, 0x0(r3)
-	  stw       r5, 0x70(r3)
-	  lfs       f0, -0x7FC0(r2)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x1C(r3)
-	  lfs       f0, -0x7FBC(r2)
-	  stfs      f0, 0x20(r3)
-	  lfs       f0, -0x7FC4(r2)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x28(r3)
-	  mtctr     r0
+	sys->_08 = nullptr;
+	sys->_0C = nullptr;
+	sys->_10 = nullptr;
+	sys->_14 = nullptr;
+	sys->_04 = 0;
+	sys->_00 = 0;
+	sys->_70 = 1;
+	sys->_18 = 1.0f;
+	sys->_1C = 1.0f;
+	sys->_20 = 0.5f;
+	sys->_24 = 0.0f;
+	sys->_28 = 0.0f;
 
-	.loc_0x50:
-	  addi      r0, r4, 0x2C
-	  addi      r4, r4, 0x2
-	  sthx      r6, r3, r0
-	  bdnz+     .loc_0x50
-	  li        r0, 0x7FFF
-	  li        r6, 0
-	  sth       r0, 0x2C(r3)
-	  li        r0, 0x4
-	  addi      r7, r6, 0
-	  li        r4, 0
-	  sth       r6, 0x4C(r3)
-	  mtctr     r0
+	int i;
 
-	.loc_0x80:
-	  addi      r5, r4, 0x3C
-	  addi      r0, r7, 0x5A
-	  sthx      r6, r3, r5
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0x2
-	  stbx      r6, r3, r0
-	  bdnz+     .loc_0x80
-	  li        r11, 0
-	  lis       r4, 0x2
-	  stb       r11, 0x60(r3)
-	  li        r0, 0x7FFF
-	  li        r10, 0x150
-	  li        r9, 0x210
-	  sth       r0, 0x3C(r3)
-	  li        r8, 0x352
-	  li        r7, 0x412
-	  addi      r6, r4, 0x103
-	  stb       r11, 0x61(r3)
-	  li        r5, 0x258
-	  li        r4, 0x1A
-	  li        r0, 0x1
-	  sth       r10, 0x4E(r3)
-	  sth       r9, 0x50(r3)
-	  sth       r8, 0x52(r3)
-	  sth       r7, 0x54(r3)
-	  sth       r11, 0x56(r3)
-	  sth       r11, 0x58(r3)
-	  stw       r6, 0x68(r3)
-	  sth       r5, 0x6C(r3)
-	  stb       r4, 0x62(r3)
-	  stb       r0, 0x63(r3)
-	  stb       r0, 0x64(r3)
-	  blr
-	*/
+	for (i = 0; i < 8; i++) {
+		sys->_2C[i] = 0;
+	}
+
+	sys->_2C[0] = 0x7fff;
+	sys->_4C    = 0;
+
+	for (i = 0; i < 4; i++) {
+		sys->_3C[i] = 0;
+		sys->_5A[i] = 0;
+	}
+
+	sys->_60    = 0;
+	sys->_3C[0] = 0x7fff;
+	sys->_61    = 0;
+	sys->_4E[0] = 0x150;
+	sys->_4E[1] = 0x210;
+	sys->_4E[2] = 0x352;
+	sys->_4E[3] = 0x412;
+	sys->_4E[4] = 0;
+	sys->_4E[5] = 0;
+	sys->_68    = 0x20103;
+	sys->_6C    = 600;
+	sys->_62[0] = 26;
+	sys->_62[1] = 1;
+	sys->_62[2] = 1;
 }
 
 /*
@@ -609,8 +485,36 @@ void InitJcs(jcs_*)
  * Address:	80009A60
  * Size:	000138
  */
-void Channel_Init(jc_*)
+void Channel_Init(jc_* jc)
 {
+	jc->_28 = nullptr;
+	jc->_2C = nullptr;
+	jc->_30 = 0;
+	jc->_34 = 0;
+	jc->_10 = nullptr;
+	jc->_0C = 0;
+	jc->_14 = 0;
+	jc->_18 = 0;
+	jc->_1C = 0;
+
+	if (jc->mMgr == nullptr) {
+		jc;
+	} else {
+		jc;
+
+		for (int i = 0; i < 3; i++) {
+			jc->_B8;
+		}
+	}
+
+	for (int i = 0; i < 4; i++) {
+		jc->_38[i] = nullptr;
+	}
+	jc->_02 = 0;
+	jc->_126++;
+	if ((int)jc->_126 == 0) {
+		jc->_126 = 1;
+	}
 	/*
 	.loc_0x0:
 	  li        r8, 0
@@ -709,23 +613,12 @@ void Channel_Init(jc_*)
  * Address:	80009BA0
  * Size:	000030
  */
-void Channel_FirstInit(jc_*)
+void Channel_FirstInit(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x20(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r0, 0x4(r3)
-	  bl        -0x15C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	jc->_20   = nullptr;
+	jc->mNext = nullptr;
+	jc->mMgr  = nullptr;
+	Channel_Init(jc);
 }
 
 /*
@@ -735,6 +628,15 @@ void Channel_FirstInit(jc_*)
  */
 void InitGlobalChannel()
 {
+	InitJcs(&GLOBAL_CHANNEL);
+
+	for (int i = 0; i < 0x100; i++) {
+		Channel_FirstInit(&CHANNEL[i]);
+		List_AddChannel(&GLOBAL_CHANNEL._08, &CHANNEL[i]);
+		CHANNEL[i].mMgr = &GLOBAL_CHANNEL;
+	}
+
+	GLOBAL_CHANNEL._00 = 0x100;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -778,71 +680,27 @@ void InitGlobalChannel()
  * Address:	80009C60
  * Size:	0000D8
  */
-void __UpdateJcToDSPInit(jc_*)
+void __UpdateJcToDSPInit(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  mr        r28, r3
-	  lwz       r4, 0x20(r3)
-	  lwz       r3, 0x4(r3)
-	  lbz       r30, 0x0(r4)
-	  lbz       r4, 0x60(r3)
-	  mr        r3, r30
-	  bl        0x1958
-	  li        r29, 0
-	  li        r31, 0
+	int buf = jc->_20->buffer_idx;
+	DSP_SetMixerInitDelayMax(buf, jc->mMgr->_60);
 
-	.loc_0x34:
-	  lwz       r3, 0x4(r28)
-	  addi      r4, r31, 0x114
-	  addi      r0, r29, 0x5A
-	  lhax      r5, r28, r4
-	  lbzx      r6, r3, r0
-	  addi      r3, r30, 0
-	  rlwinm    r4,r29,0,24,31
-	  bl        0x1950
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x2
-	  cmplwi    r29, 0x6
-	  blt+      .loc_0x34
-	  mr        r3, r30
-	  lhz       r4, 0xF8(r28)
-	  bl        0x18D4
-	  lwz       r4, 0x4(r28)
-	  lbz       r0, 0x61(r4)
-	  rlwinm.   r0,r0,0,26,26
-	  beq-      .loc_0x8C
-	  addi      r3, r30, 0
-	  addi      r4, r4, 0x3C
-	  bl        0x1C98
+	for (u32 i = 0; i < 6; i++) {
+		DSP_SetMixerInitVolume(buf, i, jc->_114[i], jc->mMgr->_5A[i]);
+	}
 
-	.loc_0x8C:
-	  lwz       r4, 0x4(r28)
-	  lbz       r0, 0x61(r4)
-	  rlwinm.   r0,r0,0,27,31
-	  beq-      .loc_0xA8
-	  addi      r3, r30, 0
-	  addi      r4, r4, 0x2C
-	  bl        0x1CBC
+	DSP_SetPitch(buf, jc->_F8);
 
-	.loc_0xA8:
-	  lwz       r4, 0x4(r28)
-	  mr        r3, r30
-	  lbz       r4, 0x61(r4)
-	  bl        0x1CEC
-	  mr        r3, r30
-	  lbz       r4, 0x2(r28)
-	  bl        0x19E0
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (jc->mMgr->_61 & 0x20) {
+		DSP_SetIIRFilterParam(buf, jc->mMgr->_3C);
+	}
+
+	if (jc->mMgr->_61 & 0x1f) {
+		DSP_SetFIR8FilterParam(buf, jc->mMgr->_2C);
+	}
+
+	DSP_SetFilterMode(buf, jc->mMgr->_61);
+	DSP_SetPauseFlag(buf, jc->_02);
 }
 
 /*
@@ -884,7 +742,7 @@ void UpdateJcToDSP(jc_* jc)
  * Address:	80009E60
  * Size:	000348
  */
-void UpdateEffecterParam(jc_*)
+void UpdateEffecterParam(jc_* jc)
 {
 	/*
 	.loc_0x0:
@@ -1150,49 +1008,25 @@ void UpdateEffecterParam(jc_*)
  * Address:	8000A1C0
  * Size:	000068
  */
-void DoEffectOsc(jc_*, u8, f32)
+void DoEffectOsc(jc_* jc, u8 id, f32 val)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x50
-	  bge-      .loc_0x20
-	  cmpwi     r0, 0
-	  beq-      .loc_0x40
-	  bge-      .loc_0x30
-	  blr
-
-	.loc_0x20:
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x60
-	  bgelr-
-	  b         .loc_0x58
-
-	.loc_0x30:
-	  lfs       f0, 0xEC(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xEC(r3)
-	  blr
-
-	.loc_0x40:
-	  lfs       f0, 0xF0(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xF0(r3)
-	  blr
-
-	.loc_0x50:
-	  stfs      f1, 0xCC(r3)
-	  blr
-
-	.loc_0x58:
-	  stfs      f1, 0xD8(r3)
-	  blr
-
-	.loc_0x60:
-	  stfs      f1, 0xE4(r3)
-	  blr
-	*/
+	switch (id) {
+	case 1:
+		jc->_E8[0] *= val;
+		break;
+	case 0:
+		jc->_E8[1] *= val;
+		break;
+	case 2:
+		jc->_BC[1]._00[1] = val;
+		break;
+	case 3:
+		jc->_BC[2]._00[1] = val;
+		break;
+	case 4:
+		jc->_BC[3]._00[1] = val;
+		break;
+	}
 }
 
 /*
@@ -1200,48 +1034,17 @@ void DoEffectOsc(jc_*, u8, f32)
  * Address:	8000A240
  * Size:	000084
  */
-void KillBrokenLogicalChannels(dspch_*)
+void KillBrokenLogicalChannels(dspch_* ch)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802F
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  addi      r27, r3, 0
-	  addi      r30, r4, 0x2560
-	  li        r29, 0
-	  li        r31, 0
-
-	.loc_0x24:
-	  add       r3, r30, r31
-	  lwz       r0, 0x20(r3)
-	  addi      r28, r3, 0
-	  cmplw     r0, r27
-	  bne-      .loc_0x60
-	  mr        r3, r28
-	  bl        0x404
-	  mr        r3, r28
-	  bl        -0xE04
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x60
-	  lwz       r3, 0x4(r28)
-	  addi      r4, r28, 0
-	  addi      r3, r3, 0x8
-	  bl        -0xCFC
-
-	.loc_0x60:
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x140
-	  cmplwi    r29, 0x100
-	  blt+      .loc_0x24
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (u32 i = 0; i < 0x100; i++) {
+		jc_* chan = &CHANNEL[i];
+		if (chan->_20 == ch) {
+			StopLogicalChannel(chan);
+			if (List_CutChannel(chan) != -1) {
+				List_AddChannel(&chan->mMgr->_08, chan);
+			}
+		}
+	}
 }
 
 /*
@@ -1249,7 +1052,7 @@ void KillBrokenLogicalChannels(dspch_*)
  * Address:	8000A2E0
  * Size:	000384
  */
-void CommonCallbackLogicalChannel(dspch_*, u32)
+void CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 {
 	/*
 	.loc_0x0:
@@ -1538,45 +1341,20 @@ void CommonCallbackLogicalChannel(dspch_*, u32)
  * Address:	8000A680
  * Size:	000078
  */
-void StopLogicalChannel(jc_*)
+BOOL StopLogicalChannel(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r3, 0x20(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x64
+	dspch_* ch = jc->_20;
+	if (ch == nullptr) {
+		return FALSE;
+	}
 
-	.loc_0x28:
-	  li        r31, 0
-	  stw       r31, 0xC(r3)
-	  lwz       r3, 0x20(r30)
-	  sth       r31, 0x6(r3)
-	  lwz       r3, 0x20(r30)
-	  lbz       r3, 0x0(r3)
-	  bl        0x1160
-	  lwz       r3, 0x20(r30)
-	  lbz       r3, 0x0(r3)
-	  bl        0x1454
-	  lwz       r3, 0x20(r30)
-	  mr        r4, r30
-	  bl        0x7A8
-	  stw       r31, 0x20(r30)
-	  li        r3, 0x1
-
-	.loc_0x64:
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	ch->_0C      = nullptr;
+	jc->_20->_06 = 0;
+	DSP_PlayStop(jc->_20->buffer_idx);
+	DSP_FlushChannel(jc->_20->buffer_idx);
+	DeAllocDSPchannel(jc->_20, (u32)jc);
+	jc->_20 = nullptr;
+	return TRUE;
 }
 
 /*
@@ -1584,23 +1362,12 @@ void StopLogicalChannel(jc_*)
  * Address:	8000A700
  * Size:	000028
  */
-BOOL CheckLogicalChannel(jc_*)
+BOOL CheckLogicalChannel(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x10(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x20
-	  lbz       r0, 0xC(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  blr
-
-	.loc_0x20:
-	  li        r3, 0x1
-	  blr
-	*/
+	if (jc->_10 == nullptr && jc->_0C == 0) {
+		return FALSE;
+	}
+	return TRUE;
 }
 
 /*
@@ -1608,7 +1375,7 @@ BOOL CheckLogicalChannel(jc_*)
  * Address:	8000A740
  * Size:	000180
  */
-BOOL PlayLogicalChannel(jc_*)
+BOOL PlayLogicalChannel(jc_* jc)
 {
 	/*
 	.loc_0x0:
@@ -1738,46 +1505,20 @@ BOOL PlayLogicalChannel(jc_*)
  * Address:	8000A8C0
  * Size:	000074
  */
-void ResetInitialVolume(jc_*)
+BOOL ResetInitialVolume(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x60
+	if (jc->_20 == nullptr) {
+		return FALSE;
+	}
 
-	.loc_0x28:
-	  mr        r3, r31
-	  bl        -0x1EC
-	  cmpwi     r3, 0
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x60
+	if (CheckLogicalChannel(jc) == FALSE) {
+		return FALSE;
+	}
 
-	.loc_0x40:
-	  mr        r3, r31
-	  bl        -0xAA4
-	  mr        r3, r31
-	  bl        -0xCAC
-	  lwz       r3, 0x20(r31)
-	  lbz       r3, 0x0(r3)
-	  bl        0x1208
-	  li        r3, 0x1
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	UpdateEffecterParam(jc);
+	__UpdateJcToDSPInit(jc);
+	DSP_FlushChannel(jc->_20->buffer_idx);
+	return TRUE;
 }
 
 /*
@@ -1787,61 +1528,25 @@ void ResetInitialVolume(jc_*)
  */
 BOOL Add_WaitDSPChannel(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  lwz       r0, 0x2BD0(r13)
-	  cmplwi    r0, 0x20
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x9C
+	if (cur_waits == 32) {
+		return FALSE;
+	}
 
-	.loc_0x28:
-	  lwz       r0, 0x120(r31)
-	  rlwinm    r3,r0,0,24,31
-	  bl        0x870
-	  cmpwi     r3, 0
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  b         .loc_0x9C
+	if (BreakLowerDSPchannel(jc->_120) == FALSE) {
+		return FALSE;
+	}
 
-	.loc_0x44:
-	  lwz       r0, 0x2BD8(r13)
-	  lis       r4, 0x8030
-	  lis       r3, 0x8030
-	  addi      r4, r4, 0x65E0
-	  rlwinm    r6,r0,2,0,29
-	  addi      r0, r3, 0x6560
-	  add       r3, r4, r6
-	  li        r5, 0
-	  stw       r5, 0x0(r3)
-	  add       r3, r0, r6
-	  stw       r31, 0x0(r3)
-	  lwz       r4, 0x2BD8(r13)
-	  lwz       r3, 0x2BD0(r13)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2BD8(r13)
-	  addi      r3, r3, 0x1
-	  lwz       r0, 0x2BD8(r13)
-	  stw       r3, 0x2BD0(r13)
-	  cmplwi    r0, 0x20
-	  bne-      .loc_0x98
-	  stw       r5, 0x2BD8(r13)
+	waittime[cur_tail] = 0;
+	waitp[cur_tail]    = jc;
+	cur_tail++;
+	cur_waits++;
 
-	.loc_0x98:
-	  li        r3, 0x1
+	if (cur_tail == 32) {
+		cur_tail = 0;
+	}
+	return TRUE;
 
-	.loc_0x9C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	f32 badcompiler[2];
 }
 
 /*
@@ -1849,8 +1554,17 @@ BOOL Add_WaitDSPChannel(jc_* jc)
  * Address:	8000AA00
  * Size:	000064
  */
-void Del_WaitDSPChannel(jc_*)
+BOOL Del_WaitDSPChannel(jc_* jc)
 {
+	for (u32 i = 0; i < cur_waits; i++) {
+		u32 a = (cur_top + i) & 0x7c;
+		if (waitp[a] == jc) {
+			waitp[a] = nullptr;
+			return TRUE;
+		}
+	}
+	return FALSE;
+
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x2BD0(r13)
@@ -1892,7 +1606,7 @@ void Del_WaitDSPChannel(jc_*)
  * Address:	8000AA80
  * Size:	0000FC
  */
-void __Entry_WaitChannel(u8)
+void __Entry_WaitChannel(u8 a)
 {
 	/*
 	.loc_0x0:
@@ -1983,6 +1697,9 @@ void __Entry_WaitChannel(u8)
  */
 void EntryCheck_WaitDSPChannel()
 {
+	__Entry_WaitChannel(0);
+
+	for (int i = 0; i < cur_waits; i++) { }
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2050,8 +1767,13 @@ void EntryCheck_WaitDSPChannel()
  * Address:	8000AC60
  * Size:	00004C
  */
-void Cancel_WaitDSPChannel(jc_*)
+void Cancel_WaitDSPChannel(jc_* jc)
 {
+	for (u32 i = 0; i < cur_waits; i++) {
+		if (waitp[(cur_top + i)] == jc) {
+			waitp[(cur_top + i)] = nullptr;
+		}
+	}
 	/*
 	.loc_0x0:
 	  lwz       r7, 0x2BD0(r13)
@@ -2085,27 +1807,12 @@ void Cancel_WaitDSPChannel(jc_*)
  * Address:	8000ACC0
  * Size:	000038
  */
-void ForceStopLogicalChannel(jc_*)
+BOOL ForceStopLogicalChannel(jc_* jc)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x28
+	if (jc->_20 == nullptr) {
+		return FALSE;
+	}
 
-	.loc_0x20:
-	  bl        0x480
-	  li        r3, 0x1
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	ForceStopDSPchannel(jc->_20);
+	return TRUE;
 }

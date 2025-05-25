@@ -1,9 +1,9 @@
-#include "types.h"
+#include "Collision.h"
+
 #include "Shape.h"
 #include "stl/string.h"
 #include "sysNew.h"
 #include "stl/stdio.h"
-#include "Collision.h"
 #include "CmdStream.h"
 #include "system.h"
 #include "DebugLog.h"

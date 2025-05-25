@@ -55,11 +55,9 @@ struct dspch_ {
 	// DSPBuffer* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
 };
 
-struct panData {
-	f32 _00; // maybe this is a vector3, I have no idea
-	f32 _04;
-	f32 _08;
-};
+typedef struct PanMatrix_ {
+	f32 _00[3];
+} PanMatrix_;
 
 /**
  * @brief TODO
@@ -67,21 +65,8 @@ struct panData {
  * @note Size: 0x74.
  */
 struct jcs_ {
-	u32 _00;             // _00
-	int _04;             // _04
-	jc_* _08;            // _08
-	jc_* _0C;            // _0C
-	jc_* _10;            // _10
-	jc_* _14;            // _14
-	u8 _18[0x4e - 0x18]; // _18
-	u16 _4E[1];          // _4E | Exact length unknown, but it is an array.
-	u8 _50[0x70 - 0x50]; // _50
-	int _70;             // _70
-};
-
-struct JCMgr {
 	u32 _00;     // _00
-	u32 _04;     // _04
+	int _04;     // _04
 	jc_* _08;    // _08
 	jc_* _0C;    // _0C
 	jc_* _10;    // _10
@@ -95,14 +80,14 @@ struct JCMgr {
 	s16 _3C[4];  // _3C
 	char _44[8]; // _44
 	s16 _4C;     // _4C
-	u16 _4E[6];  // _4E
+	u16 _4E[6];  // _4E | Exact length unknown, but it is an array.
 	u8 _5A[6];   // _5A
 	u8 _60;      // _60
 	u8 _61;      // _61
 	u8 _62[3];   // _62
 	u32 _68;     // _68
 	u16 _6C;     // _6C
-	s32 _70;     // _70
+	int _70;     // _70
 };
 
 /**
@@ -113,13 +98,13 @@ struct jc_ {
 	u8 _01;                      // _01
 	u8 _02;                      // _02
 	u8 _03;                      // _03
-	JCMgr* mMgr;                 // _04
+	jcs_* mMgr;                  // _04
 	void** _08;                  // _08
 	u8 _0C;                      // _0C
 	void* _10;                   // _10
 	u32 _14;                     // _14
 	u32 _18;                     // _18
-	char _1C[4];                 // _1C
+	u32 _1C;                     // _1C
 	dspch_* _20;                 // _20
 	void* mNext;                 // _24
 	BOOL (*_28)(jc_*, JCSTATUS); // _28
@@ -144,14 +129,21 @@ struct jc_ {
 	f32 _B0;                     // _B0
 	f32 _B4;                     // _B4
 	f32 _B8;                     // _B8
-	struct panData _BC[4];       // _BC
+	PanMatrix_ _BC[4];           // _BC
 	f32 _E8[3];                  // _E8
 	u16 _F8;                     // _F8
 	u16 _FA;                     // _FA
 	u8 _FC[0x114 - 0xFC];        // _FC
 	u16 _114[6];                 // _114
-	u8 _120[0x126 - 0x120];      // _120
+	u32 _120;                    // _120
+	u16 _124;                    // _124
 	u16 _126;                    // _126
+	int _128;                    // _128
+	int _12C;                    // _12C
+	int _130;                    // _130
+	int _134;                    // _134
+	int _138;                    // _138
+	int _13C;                    // _13C
 };
 
 /**

@@ -1,4 +1,3 @@
-#include "types.h"
 #include "RumbleMgr.h"
 
 RumbleTable patternTable[16] = {

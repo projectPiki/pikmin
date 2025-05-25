@@ -1,5 +1,4 @@
-#include "types.h"
-#include "Teki.h"
+#include "teki.h"
 
 /*
  * --INFO--

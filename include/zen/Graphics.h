@@ -19,7 +19,7 @@ struct DrawLifeCircle {
 		_04 = 0.0f;
 	}
 
-	void drawLifeCircle(f32);
+	void drawLifeCircle(f32 healthRatio);
 
 	static const f32 TRI_NUM;
 
@@ -36,13 +36,13 @@ struct DrawNaviLifeCircle : public DrawLifeCircle {
 	DrawNaviLifeCircle(int p1, Vector3f& p2, f32 p3)
 	    : DrawLifeCircle(p2, p3)
 	{
-		_18 = p1;
+		mNaviIndex = p1;
 	}
 
 	void drawLifeCircle();
 
 	// _00-_18 = DrawLifeCircle
-	int _18; // _18
+	int mNaviIndex; // _18, navi index? should be 0
 };
 namespace zenGraphics {
 extern void drawOneTri(Vector3f*, Colour&);

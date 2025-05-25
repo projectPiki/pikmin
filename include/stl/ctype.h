@@ -38,7 +38,7 @@ inline int _tolower(int c)
 {
 	return (c == -1 ? -1 : (int)__lower_map[__zero_fill(c)]);
 }
-inline int toupper(int c)
+inline int _toupper(int c)
 {
 	return (c == -1 ? -1 : (int)__upper_map[__zero_fill(c)]);
 }

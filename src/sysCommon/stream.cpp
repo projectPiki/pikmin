@@ -1,5 +1,5 @@
-#include "types.h"
 #include "Stream.h"
+
 #include "String.h"
 
 /*

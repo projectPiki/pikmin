@@ -1,4 +1,3 @@
-#include "types.h"
 #include "PikiInfo.h"
 
 PikiInfo* pikiInfo = nullptr;

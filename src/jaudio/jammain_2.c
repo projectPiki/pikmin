@@ -5220,7 +5220,7 @@ void Jam_SeqmainNote(void)
  * Address:	80013780
  * Size:	0000A8
  */
-void SeqUpdate(void)
+void SeqUpdate(seqp_*, unknown)
 {
 	/*
 	.loc_0x0:

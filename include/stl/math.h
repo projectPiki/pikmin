@@ -2,7 +2,7 @@
 #define _STL_MATH_H
 
 #include "types.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
+// #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -6,9 +6,9 @@
 #include "gameflow.h"
 #include "Graphics.h"
 #include "jaudio/verysimple.h"
-#include "jaudio/PikiInter.h"
-#include "jaudio/PikiBgm.h"
-#include "jaudio/PikiPlayer.h"
+#include "jaudio/pikiinter.h"
+#include "jaudio/piki_bgm.h"
+#include "jaudio/piki_player.h"
 #include "DebugLog.h"
 
 SeSystem* seSystem;

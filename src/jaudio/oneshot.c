@@ -56,7 +56,7 @@ static f32 __Clamp01(f32 val)
 static void __Clamp01InitPan(jc_* jc)
 {
 	for (u32 i = 1; i < 3; i++) {
-		jc->_BC[i]._00 = __Clamp01(jc->_BC[i]._00);
+		jc->_BC[i]._00[0] = __Clamp01(jc->_BC[i]._00[0]);
 	}
 }
 
@@ -75,13 +75,13 @@ static void __DoEffect(jc_* jc, u8 id, f32 val)
 		jc->_B4 *= val;
 		break;
 	case 2:
-		jc->_BC[1]._04 = val;
+		jc->_BC[1]._00[1] = val;
 		break;
 	case 3:
-		jc->_BC[2]._04 = val;
+		jc->_BC[2]._00[1] = val;
 		break;
 	case 4:
-		jc->_BC[3]._04 = val;
+		jc->_BC[3]._00[1] = val;
 		break;
 	}
 }
@@ -93,11 +93,11 @@ static void __DoEffect(jc_* jc, u8 id, f32 val)
  */
 static void EffecterInit(jc_* jc, Inst_* inst)
 {
-	jc->_E8[0]     = 1.0f;
-	jc->_E8[1]     = 1.0f;
-	jc->_BC[1]._04 = 0.5f;
-	jc->_BC[2]._04 = 0.0f;
-	jc->_BC[3]._04 = 0.0f;
+	jc->_E8[0]        = 1.0f;
+	jc->_E8[1]        = 1.0f;
+	jc->_BC[1]._00[1] = 0.5f;
+	jc->_BC[2]._00[1] = 0.0f;
+	jc->_BC[3]._00[1] = 0.0f;
 
 	for (u32 i = 0; i < 2; i++) {
 		Inst_* c = *((Inst_**)inst + i);
@@ -226,11 +226,11 @@ static void EffecterInit(jc_* jc, Inst_* inst)
  */
 static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 {
-	jc->_E8[0]     = 1.0f;
-	jc->_E8[1]     = 1.0f;
-	jc->_BC[1]._04 = 0.5f;
-	jc->_BC[2]._04 = 0.0f;
-	jc->_BC[3]._04 = 0.0f;
+	jc->_E8[0]        = 1.0f;
+	jc->_E8[1]        = 1.0f;
+	jc->_BC[1]._00[1] = 0.5f;
+	jc->_BC[2]._00[1] = 0.0f;
+	jc->_BC[3]._00[1] = 0.0f;
 
 	// PERC instruments only have rand and not osc
 	for (u32 i = 0; i < 2; i++) {
@@ -316,11 +316,11 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
  */
 static void EffecterInit_Osc(jc_* jc)
 {
-	jc->_E8[0]     = 1.0f;
-	jc->_E8[1]     = 1.0f;
-	jc->_BC[1]._04 = 0.5f;
-	jc->_BC[2]._04 = 0.0f;
-	jc->_BC[3]._04 = 0.0f;
+	jc->_E8[0]        = 1.0f;
+	jc->_E8[1]        = 1.0f;
+	jc->_BC[1]._00[1] = 0.5f;
+	jc->_BC[2]._00[1] = 0.0f;
+	jc->_BC[3]._00[1] = 0.0f;
 
 	for (u32 i = 0; i < 2; i++) {
 		jc->_38[i] = nullptr;
@@ -1172,9 +1172,9 @@ void UpdatePanPower_1Shot(jc_* jc, f32 v1, f32 v2, f32 v3, f32 v4)
 		return;
 	}
 
-	jc->_BC[0]._00 = v1 / val;
-	jc->_BC[0]._04 = v2 / val;
-	jc->_BC[0]._08 = v3 / val;
+	jc->_BC[0]._00[0] = v1 / val;
+	jc->_BC[0]._00[1] = v2 / val;
+	jc->_BC[0]._00[2] = v3 / val;
 }
 
 /*

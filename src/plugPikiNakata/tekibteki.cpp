@@ -1,4 +1,3 @@
-#include "types.h"
 #include "teki.h"
 #include "TekiConditions.h"
 #include "CreatureProp.h"

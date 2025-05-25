@@ -15,7 +15,7 @@
 #include "timers.h"
 #include "Delegate.h"
 #include "Texture.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "Graphics.h"
 #include "sysNew.h"
 #include "Dolphin/os.h"

@@ -1,5 +1,5 @@
-#include "types.h"
 #include "Texture.h"
+
 #include "Stream.h"
 #include "system.h"
 #include "sysNew.h"
@@ -58,17 +58,25 @@ void Texture::offsetGLtoGX(int, int)
 u8 Texture::getAlpha(int x, int y)
 {
 	switch (mTexFormat) {
-	case TEX_FMT_IA4:
-		// needs work
-		return ((u8*)mPixelData)[(x % mTileSizeX) * mTileSizeX + (y % mTileSizeY) * mTileSizeY] & 0xF0;
-	default:
-		// needs work
-		u16 alpha = ((u16*)mPixelData)[(x % mTileSizeX) * mTileSizeY + mWidth % mTileSizeX];
+	case TEX_FMT_IA4: {
+		// pretty sure this is "right", just needs massaging
+		int tileArea = mTileSizeX * mTileSizeY;
+		return ((u8*)mPixelData)[(x / mTileSizeX) * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY)
+		                         + (y / mTileSizeY) * ((mWidth / mTileSizeX) * tileArea)]
+		     & 0xF0;
+	}
+	default: {
+		// pretty sure this is "right", just needs massaging
+		int tileArea = mTileSizeX * mTileSizeY;
+		u16 alpha    = ((u16*)mPixelData)[(x % mTileSizeX) + (mTileSizeX * (y % mTileSizeY))
+                                       + (y / mTileSizeY) * ((mWidth / mTileSizeX) * tileArea) + (x / mTileSizeX) * tileArea];
 		if (alpha & 0x8000) {
 			return 255;
 		}
 		return (alpha >> 7) & 0xE0;
 	}
+	}
+
 	/*
 	.loc_0x0:
 	  lhz       r0, 0x4(r3)

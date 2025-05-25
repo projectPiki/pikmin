@@ -1,245 +1,154 @@
-#include "types.h"
 
-/*
- * --INFO--
- * Address:	8021A718
- * Size:	000298
+/* @(#)e_atan2.c 1.3 95/01/18 */
+/**
+ * ====================================================
+ * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+ *
+ * Developed at SunSoft, a Sun Microsystems, Inc. business.
+ * Permission to use, copy, modify, and distribute this
+ * software is freely granted, provided that this notice
+ * is preserved.
+ * ====================================================
+ *
  */
-void __ieee754_atan2(void)
+
+/* __ieee754_atan2(y,x)
+ * Method :
+ *	1. Reduce y to positive by atan2(y,x)=-atan2(-y,x).
+ *	2. Reduce x to positive by (if x and y are unexceptional):
+ *		ARG (x+iy) = arctan(y/x)   	   ... if x > 0,
+ *		ARG (x+iy) = pi - arctan[y/(-x)]   ... if x < 0,
+ *
+ * Special cases:
+ *
+ *	ATAN2((anything), NaN ) is NaN;
+ *	ATAN2(NAN , (anything) ) is NaN;
+ *	ATAN2(+-0, +(anything but NaN)) is +-0  ;
+ *	ATAN2(+-0, -(anything but NaN)) is +-pi ;
+ *	ATAN2(+-(anything but 0 and NaN), 0) is +-pi/2;
+ *	ATAN2(+-(anything but INF and NaN), +INF) is +-0 ;
+ *	ATAN2(+-(anything but INF and NaN), -INF) is +-pi;
+ *	ATAN2(+-INF,+INF ) is +-pi/4 ;
+ *	ATAN2(+-INF,-INF ) is +-3pi/4;
+ *	ATAN2(+-INF, (anything but,0,NaN, and INF)) is +-pi/2;
+ *
+ * Constants:
+ * The hexadecimal values are the intended ones for the following
+ * constants. The decimal values may be used, provided that the
+ * compiler will convert from decimal to binary accurately enough
+ * to produce the hexadecimal values shown.
+ */
+
+#include "fdlibm.h"
+
+#ifdef __MWERKS__
+#pragma cplusplus on
+#endif
+
+f64 fabs(f64);
+
+#ifdef __MWERKS__
+#pragma cplusplus reset
+#endif
+
+#ifdef __STDC__
+static const f64
+#else
+static f64
+#endif
+    tiny
+    = 1.0e-300,
+    zero = 0.0, pi_o_4 = 7.8539816339744827900E-01, /* 0x3FE921FB, 0x54442D18 */
+    pi_o_2 = 1.5707963267948965580E+00,             /* 0x3FF921FB, 0x54442D18 */
+    pi     = 3.1415926535897931160E+00,             /* 0x400921FB, 0x54442D18 */
+    pi_lo  = 1.2246467991473531772E-16;             /* 0x3CA1A626, 0x33145C07 */
+
+#ifdef __STDC__
+f64 __ieee754_atan2(f64 y, f64 x)
+#else
+f64 __ieee754_atan2(y, x)
+f64 y, x;
+#endif
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x7FF0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stfd      f2, 0x10(r1)
-	  lwz       r8, 0x14(r1)
-	  stfd      f1, 0x8(r1)
-	  neg       r0, r8
-	  lwz       r4, 0x10(r1)
-	  or        r0, r8, r0
-	  lwz       r5, 0x8(r1)
-	  rlwinm    r6,r4,0,1,31
-	  lwz       r9, 0xC(r1)
-	  rlwinm    r0,r0,1,31,31
-	  or        r0, r6, r0
-	  cmplw     r0, r3
-	  rlwinm    r7,r5,0,1,31
-	  bgt-      .loc_0x64
-	  neg       r0, r9
-	  or        r0, r9, r0
-	  rlwinm    r0,r0,1,31,31
-	  or        r0, r7, r0
-	  cmplw     r0, r3
-	  ble-      .loc_0x74
+	f64 z;
+	int k, m, hx, hy, ix, iy;
+	uint lx, ly;
 
-	.loc_0x64:
-	  lfd       f1, 0x10(r1)
-	  lfd       f0, 0x8(r1)
-	  fadd      f1, f1, f0
-	  b         .loc_0x284
+	hx = __HI(x);
+	ix = hx & 0x7fffffff;
+	lx = __LO(x);
+	hy = __HI(y);
+	iy = hy & 0x7fffffff;
+	ly = __LO(y);
+	if (((ix | ((lx | -lx) >> 31)) > 0x7ff00000) || ((iy | ((ly | -ly) >> 31)) > 0x7ff00000)) /* x or y is NaN */
+		return x + y;
+	if ((hx - 0x3ff00000 | lx) == 0)
+		return atan(y);                      /* x=1.0 */
+	m = ((hy >> 31) & 1) | ((hx >> 30) & 2); /* 2*sign(x)+sign(y) */
 
-	.loc_0x74:
-	  subis     r0, r4, 0x3FF0
-	  or.       r0, r0, r8
-	  bne-      .loc_0x8C
-	  lfd       f1, 0x8(r1)
-	  bl        0xACC
-	  b         .loc_0x284
+	/* when y = 0 */
+	if ((iy | ly) == 0) {
+		switch (m) {
+		case 0:
+		case 1:
+			return y; /* atan(+-0,+anything)=+-0 */
+		case 2:
+			return pi + tiny; /* atan(+0,-anything) = pi */
+		case 3:
+			return -pi - tiny; /* atan(-0,-anything) =-pi */
+		}
+	}
+	/* when x = 0 */
+	if ((ix | lx) == 0)
+		return (hy < 0) ? -pi_o_2 - tiny : pi_o_2 + tiny;
 
-	.loc_0x8C:
-	  or.       r0, r7, r9
-	  rlwinm    r0,r4,2,30,30
-	  mr        r31, r0
-	  rlwimi    r31,r5,1,31,31
-	  bne-      .loc_0xDC
-	  cmpwi     r31, 0x2
-	  beq-      .loc_0xCC
-	  bge-      .loc_0xB8
-	  cmpwi     r31, 0
-	  bge-      .loc_0xC4
-	  b         .loc_0xDC
+	/* when x is INF */
+	if (ix == 0x7ff00000) {
+		if (iy == 0x7ff00000) {
+			switch (m) {
+			case 0:
+				return pi_o_4 + tiny; /* atan(+INF,+INF) */
+			case 1:
+				return -pi_o_4 - tiny; /* atan(-INF,+INF) */
+			case 2:
+				return 3.0 * pi_o_4 + tiny; /*atan(+INF,-INF)*/
+			case 3:
+				return -3.0 * pi_o_4 - tiny; /*atan(-INF,-INF)*/
+			}
+		} else {
+			switch (m) {
+			case 0:
+				return zero; /* atan(+...,+INF) */
+			case 1:
+				return -zero; /* atan(-...,+INF) */
+			case 2:
+				return pi + tiny; /* atan(+...,-INF) */
+			case 3:
+				return -pi - tiny; /* atan(-...,-INF) */
+			}
+		}
+	}
+	/* when y is INF */
+	if (iy == 0x7ff00000)
+		return (hy < 0) ? -pi_o_2 - tiny : pi_o_2 + tiny;
 
-	.loc_0xB8:
-	  cmpwi     r31, 0x4
-	  bge-      .loc_0xDC
-	  b         .loc_0xD4
-
-	.loc_0xC4:
-	  lfd       f1, 0x8(r1)
-	  b         .loc_0x284
-
-	.loc_0xCC:
-	  lfd       f1, -0x3BD0(r2)
-	  b         .loc_0x284
-
-	.loc_0xD4:
-	  lfd       f1, -0x3BC8(r2)
-	  b         .loc_0x284
-
-	.loc_0xDC:
-	  or.       r0, r6, r8
-	  bne-      .loc_0xFC
-	  cmpwi     r5, 0
-	  bge-      .loc_0xF4
-	  lfd       f1, -0x3BC0(r2)
-	  b         .loc_0x284
-
-	.loc_0xF4:
-	  lfd       f1, -0x3BB8(r2)
-	  b         .loc_0x284
-
-	.loc_0xFC:
-	  subis     r0, r6, 0x7FF0
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1A4
-	  subis     r0, r7, 0x7FF0
-	  cmplwi    r0, 0
-	  bne-      .loc_0x15C
-	  cmpwi     r31, 0x2
-	  beq-      .loc_0x14C
-	  bge-      .loc_0x130
-	  cmpwi     r31, 0
-	  beq-      .loc_0x13C
-	  bge-      .loc_0x144
-	  b         .loc_0x1A4
-
-	.loc_0x130:
-	  cmpwi     r31, 0x4
-	  bge-      .loc_0x1A4
-	  b         .loc_0x154
-
-	.loc_0x13C:
-	  lfd       f1, -0x3BB0(r2)
-	  b         .loc_0x284
-
-	.loc_0x144:
-	  lfd       f1, -0x3BA8(r2)
-	  b         .loc_0x284
-
-	.loc_0x14C:
-	  lfd       f1, -0x3BA0(r2)
-	  b         .loc_0x284
-
-	.loc_0x154:
-	  lfd       f1, -0x3B98(r2)
-	  b         .loc_0x284
-
-	.loc_0x15C:
-	  cmpwi     r31, 0x2
-	  beq-      .loc_0x194
-	  bge-      .loc_0x178
-	  cmpwi     r31, 0
-	  beq-      .loc_0x184
-	  bge-      .loc_0x18C
-	  b         .loc_0x1A4
-
-	.loc_0x178:
-	  cmpwi     r31, 0x4
-	  bge-      .loc_0x1A4
-	  b         .loc_0x19C
-
-	.loc_0x184:
-	  lfd       f1, -0x3B90(r2)
-	  b         .loc_0x284
-
-	.loc_0x18C:
-	  lfd       f1, -0x3B88(r2)
-	  b         .loc_0x284
-
-	.loc_0x194:
-	  lfd       f1, -0x3BD0(r2)
-	  b         .loc_0x284
-
-	.loc_0x19C:
-	  lfd       f1, -0x3BC8(r2)
-	  b         .loc_0x284
-
-	.loc_0x1A4:
-	  subis     r0, r7, 0x7FF0
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1C8
-	  cmpwi     r5, 0
-	  bge-      .loc_0x1C0
-	  lfd       f1, -0x3BC0(r2)
-	  b         .loc_0x284
-
-	.loc_0x1C0:
-	  lfd       f1, -0x3BB8(r2)
-	  b         .loc_0x284
-
-	.loc_0x1C8:
-	  sub       r0, r7, r6
-	  srawi     r0, r0, 0x14
-	  cmpwi     r0, 0x3C
-	  ble-      .loc_0x1E4
-	  lfd       f0, -0x3BB8(r2)
-	  stfd      f0, 0x18(r1)
-	  b         .loc_0x218
-
-	.loc_0x1E4:
-	  cmpwi     r4, 0
-	  bge-      .loc_0x200
-	  cmpwi     r0, -0x3C
-	  bge-      .loc_0x200
-	  lfd       f0, -0x3B90(r2)
-	  stfd      f0, 0x18(r1)
-	  b         .loc_0x218
-
-	.loc_0x200:
-	  lfd       f1, 0x8(r1)
-	  lfd       f0, 0x10(r1)
-	  fdiv      f1, f1, f0
-	  bl        -0x214
-	  bl        0x940
-	  stfd      f1, 0x18(r1)
-
-	.loc_0x218:
-	  cmpwi     r31, 0x1
-	  beq-      .loc_0x244
-	  bge-      .loc_0x230
-	  cmpwi     r31, 0
-	  bge-      .loc_0x23C
-	  b         .loc_0x270
-
-	.loc_0x230:
-	  cmpwi     r31, 0x3
-	  bge-      .loc_0x270
-	  b         .loc_0x258
-
-	.loc_0x23C:
-	  lfd       f1, 0x18(r1)
-	  b         .loc_0x284
-
-	.loc_0x244:
-	  lwz       r0, 0x18(r1)
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x18(r1)
-	  lfd       f1, 0x18(r1)
-	  b         .loc_0x284
-
-	.loc_0x258:
-	  lfd       f1, 0x18(r1)
-	  lfd       f0, -0x3B80(r2)
-	  lfd       f2, -0x3BD0(r2)
-	  fsub      f0, f1, f0
-	  fsub      f1, f2, f0
-	  b         .loc_0x284
-
-	.loc_0x270:
-	  lfd       f2, 0x18(r1)
-	  lfd       f1, -0x3B80(r2)
-	  lfd       f0, -0x3BD0(r2)
-	  fsub      f1, f2, f1
-	  fsub      f1, f1, f0
-
-	.loc_0x284:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	/* compute y/x */
+	k = (iy - ix) >> 20;
+	if (k > 60)
+		z = pi_o_2 + 0.5 * pi_lo; /* |y/x| >  2**60 */
+	else if (hx < 0 && k < -60)
+		z = 0.0; /* |y|/x < -2**60 */
+	else
+		z = atan(fabs(y / x)); /* safe to do y/x */
+	switch (m) {
+	case 0:
+		return z; /* atan(+,+) */
+	case 1:
+		__HI(z) ^= 0x80000000;
+		return z; /* atan(-,+) */
+	case 2:
+		return pi - (z - pi_lo); /* atan(+,-) */
+	default:                     /* case 3 */
+		return (z - pi_lo) - pi; /* atan(-,-) */
+	}
 }

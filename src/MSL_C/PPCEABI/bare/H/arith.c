@@ -1,4 +1,3 @@
-#include "types.h"
 #include "Dolphin/arith.h"
 
 /*

@@ -34,6 +34,16 @@ struct seqp__Invented2 {
 	f32 _0C; // _0C
 };
 
+// This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
+typedef struct Osc_definition {
+	u8 _00;
+	f32 _04;
+	u16* _08;
+	u16* _0C;
+	f32 _10;
+	f32 _14;
+} Osc_definition;
+
 /**
  * @brief TODO
  *
@@ -46,20 +56,23 @@ struct seqp_ {
 	u32 _0C[2];               // _00C | Exact length unknown, but it is an array.
 	u8 _10[0x02c - 0x014];    // _008
 	u16 _2C[2];               // _02C | Exact length unknown, but it is an array.
-	u8 _30[0x03d - 0x030];    // _030
+	u8 _30[0x03c - 0x030];    // _030
+	u8 _3C;                   // _03C
 	u8 _3D;                   // _03D
 	u8 _3E;                   // _03E
-	u8 _3F[0x040 - 0x03f];    // _03F
+	u8 _3F;                   // _03F
 	seqp_* _40;               // _040
 	seqp_* _44[16];           // _044 | Exact length confirmed. Bounds check in `Cmd_CloseTrack`, `Jam_ReadRegDirect`.
 	u32 _84;                  // _084
 	u32 _88;                  // _088;
 	u32 _8C;                  // _08C
-	u8 _90[0x09c - 0x090];    // _090
-	jc_* _9C[1];              // _09C | Exact length unknown, but it is an array.  Probably the same length as _BC.
-	u8 _A0[0x0bc - 0x0A0];    // _0A0 | Probably the rest of _9C. TODO: confirm.
-	u16 _BC[2];               // _0BC | Exact length unknown, but it is an array.  Probably the same length as _9C.
-	u8 _C0[0x0d5 - 0x0C0];    // _0C0
+	u8 _90[0x094 - 0x090];    // _090
+	u8 _94[8];                // _094 | Exact length confirmed. For loop in `__AllNoteOff`.
+	jc_* _9C[8];              // _09C | Exact length confirmed. For loop in `__AllNoteOff`.
+	u16 _BC[8];               // _0BC | Exact length likely the same as _09C (see: `noteon.c`).
+	u8 _CC[0x0d0 - 0x0cc];    // _0CC
+	u32 _D0;                  // _0D0
+	u8 _D4[0x0d5 - 0x0d4];    // _0D4
 	u8 _D5;                   // _0D5
 	u8 _D6[0x0d8 - 0x0d6];    // _0D6
 	jcs_ _D8;                 // _0D8
@@ -79,14 +92,23 @@ struct seqp_ {
 	u16 _338;                 // _338
 	u16 _33A;                 // _33A
 	u8 _33C;                  // _33C
-	u8 _33D[0x370 - 0x33d];   // _33D
+	u8 _33D;                  // _33D
+	f32 _340;                 // _340
+	f32 _344;                 // _344
+	void* _348;               // _348
+	void* _34C;               // _34C
+	f32 _350[8];              // _350
 	u8 _370[2];               // _370 | Exact length unknown, but it is an array.
-	u8 _372[0x396 - 0x372];   // _374
+	s16 _372[0x12];           // _374 | This is a pair of some sort of struct, _348 and _34C point to them, see Osc_Setup_ADSR
 	s8 _396;                  // _396 | Confirmed signed (Cmd_Transpose)
 	u8 _397;                  // _397
-	u8 _398[0x39d - 0x398];   // _398
+	u8 _398[0x39c - 0x398];   // _398
+	u8 _39C;                  // _39C
 	u8 _39D;                  // _39D
-	u8 _39E[0x3a4 - 0x39e];   // _39E
+	u8 _39E;                  // _39E
+	u8 _39F[0x3a0 - 0x39f];   // _39F
+	u16 _3A0;                 // _3A0
+	u8 _3A2[0x3a4 - 0x3a2];   // _3A2
 	u8 _3A4;                  // _3A4
 	u8 _3A5[0x3a6 - 0x3a5];   // _3A5
 	u8 _3A6;                  // _3A6
@@ -99,7 +121,8 @@ struct seqp_ {
 	u32 _3D4;                 // _3D4
 	u8 _3D8[0x3e3 - 0x3d8];   // _3D8
 	u8 _3E3;                  // _3E3
-	u8 _3E4[0x3e8 - 0x3e4];   // _3E4
+	u8 _3E4;                  // _3E4
+	u8 _3E5[0x3e8 - 0x3e5];   // _3E5
 	u8 _3E8[2];               // _3E8 | Exact length unknown, but it is an array.
 };
 
@@ -157,7 +180,7 @@ void Jam_UnPauseTrack(seqp_*, u32);
 void Jam_SetInterrupt(void);
 void Jam_TryInterrupt(seqp_*);
 void Jam_SeqmainNote(void);
-void SeqUpdate(void);
+void SeqUpdate(seqp_*, unknown);
 
 #ifdef __cplusplus
 };

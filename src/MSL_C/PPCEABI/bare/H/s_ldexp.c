@@ -15,7 +15,17 @@
 
 #include "fdlibm.h"
 
-#define fpclassify(x) ((sizeof(x) == sizeof(f32)) ? __fpclassifyf((f32)(x)) : __fpclassifyd((f64)(x)))
+#ifdef __MWERKS__
+#pragma cplusplus on
+#endif
+
+int __fpclassifyd(f64);
+
+#ifdef __MWERKS__
+#pragma cplusplus reset
+#endif
+
+#define fpclassify(x) ((sizeof(x) == sizeof(f32)) ? __fpclassifyd((f32)(x)) : __fpclassifyd((f64)(x)))
 #define isfinite(x)   ((fpclassify(x) > 2))
 
 static const f64

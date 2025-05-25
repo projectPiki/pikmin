@@ -1,4 +1,3 @@
-#include "types.h"
 #include "PowerPC_EABI_Support/Runtime/__va_arg.h"
 
 /*

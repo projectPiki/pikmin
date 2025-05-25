@@ -1,5 +1,5 @@
 #include "DebugLog.h"
-#include "jaudio/PikiPlayer.h"
+#include "jaudio/piki_player.h"
 #include "jaudio/verysimple.h"
 #include "SoundMgr.h"
 #include "stdio.h"

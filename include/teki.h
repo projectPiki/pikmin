@@ -528,6 +528,9 @@ struct YTeki : public NTeki {
 		PTCL_Unk4 = 4,
 		PTCL_Unk5 = 5,
 		PTCL_Unk6 = 6,
+		PTCL_Unk7 = 7,
+		PTCL_Unk8 = 8,
+		PTCL_COUNT,
 	};
 
 	YTeki();
@@ -573,12 +576,14 @@ struct YTeki : public NTeki {
 		}
 	}
 
-	// not sure if this is RunAway or something else yet, maybe rename later
-	bool getRunAwaySwitch() { return mTekiSwitches.m6; }
-	void setRunAwaySwitch(bool set) { mTekiSwitches.m6 = set; }
+	bool getChokeSwitch() { return mTekiSwitches.m6; }
+	void setChokeSwitch(bool set) { mTekiSwitches.m6 = set; }
 
 	bool getBiteSwitch() { return mTekiSwitches.mBite; }
 	void setBiteSwitch(bool isBite) { mTekiSwitches.mBite = isBite; }
+
+	bool getRunAwaySwitch() { return mTekiSwitches.m1; }
+	void setRunAwaySwitch(bool set) { mTekiSwitches.m1 = set; }
 
 	bool getTimerStart() { return mTekiSwitches.mTimer; }
 	void setTimerStart(bool set) { mTekiSwitches.mTimer = set; }
@@ -657,9 +662,6 @@ struct YTeki : public NTeki {
 
 	    f32 getExceptionalGravity();
 	    void setExceptionalGravity(f32);
-
-	    bool getChokeSwitch();
-	    void setChokeSwitch(bool);
 
 	    bool getEffectSwitch();
 	    void setEffectSwitch(bool);

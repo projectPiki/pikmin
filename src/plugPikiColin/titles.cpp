@@ -2,7 +2,7 @@
 #include "Interface.h"
 #include "Delegate.h"
 #include "gameflow.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "Menu.h"
 #include "jaudio/verysimple.h"
 #include "Graphics.h"

@@ -71,7 +71,7 @@ extern "C" {
 #define FPSCR_XE     0x00000008 // Inexact exception enable
 #define FPSCR_NI     0x00000004 // Non-IEEE mode
 
-u32 PPCMfmsr();
+u32 PPCMfmsr(void);
 void PPCMtmsr(u32 newMSR);
 // u32 PPCOrMsr(u32 value);
 void PPCOrMsr();
@@ -86,7 +86,7 @@ u32 PPCMffpscr();
 void PPCMtfpscr(u32 newFPSCR);
 u32 PPCMfhid2();
 void PPCMthid2(u32 newhid2);
-u32 PPCMfwpar();
+u32 PPCMfwpar(void);
 void PPCMtwpar(u32 newwpar);
 void PPCEnableSpeculation();
 void PPCDisableSpeculation();

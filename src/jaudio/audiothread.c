@@ -13,7 +13,7 @@
 #include "jaudio/dspinterface.h"
 #include "jaudio/dvdthread.h"
 #include "jaudio/stackchecker.h"
-#include "jaudio/calc.h"
+#include "jaudio/ja_calc.h"
 #include "Dolphin/os.h"
 #include "Dolphin/ai.h"
 

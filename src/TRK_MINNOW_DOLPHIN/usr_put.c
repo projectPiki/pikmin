@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
 /*
  * --INFO--
@@ -15,7 +15,7 @@ void usr_putchar_serial(void)
  * Address:	........
  * Size:	000050
  */
-void usr_puts_serial(void)
+BOOL usr_puts_serial(const char* msg)
 {
 	// UNUSED FUNCTION
 }

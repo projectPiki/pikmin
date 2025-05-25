@@ -1,7 +1,5 @@
-#include "types.h"
-#include "stl/math.h"
-
 #include "Graphics.h"
+
 #include "Colour.h"
 #include "Material.h"
 #include "Font.h"
@@ -13,6 +11,7 @@
 #include "PVW.h"
 #include "DebugLog.h"
 #include "nlib/Math.h"
+#include "stl/math.h"
 
 /*
  * --INFO--
@@ -1950,68 +1949,21 @@ int Font::charToIndex(char c)
  */
 static s16 searchKanjiCode(u16 code)
 {
-	u8 codeByte1 = (code >> 8) & 0xFF;
-	u8 codeByte2 = code & 0xFF;
-	s16 len      = strlen(kanji_convert_table) >> 1;
-	s16 res      = -1;
+	u32 codeBytes[2];
+	codeBytes[0] = u16(code >> 8) & 0xFF;
+	codeBytes[1] = code & 0xFF;
+
+	s16 len = strlen(kanji_convert_table) >> 1;
+	s16 res = -1;
 
 	for (s16 i = 0; i < len; i++) {
-		if (kanji_convert_table[2 * i] == codeByte1 && kanji_convert_table[2 * i + 1] == codeByte2) {
+		if (kanji_convert_table[2 * i] == codeBytes[0] && kanji_convert_table[2 * i + 1] == codeBytes[1]) {
 			res = i;
 			break;
 		}
 	}
 
 	return res;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r3,0,16,31
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  rlwinm    r31,r3,24,24,31
-	  stw       r30, 0x20(r1)
-	  rlwinm    r30,r0,0,24,31
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0x7A40
-	  addi      r3, r29, 0
-	  bl        0x1F141C
-	  rlwinm    r0,r3,31,1,31
-	  extsh     r4, r0
-	  li        r3, -0x1
-	  li        r5, 0
-	  b         .loc_0x70
-
-	.loc_0x48:
-	  lbz       r0, 0x0(r29)
-	  cmplw     r31, r0
-	  bne-      .loc_0x68
-	  lbz       r0, 0x1(r29)
-	  cmplw     r30, r0
-	  bne-      .loc_0x68
-	  mr        r3, r5
-	  b         .loc_0x7C
-
-	.loc_0x68:
-	  addi      r29, r29, 0x2
-	  addi      r5, r5, 0x1
-
-	.loc_0x70:
-	  extsh     r0, r5
-	  cmpw      r0, r4
-	  blt+      .loc_0x48
-
-	.loc_0x7C:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -2025,80 +1977,8 @@ int Font::charToIndex(u16 c)
 		return sjis_convert_table[c - 0x8140];
 	}
 
-	s16 kanji = searchKanjiCode(c);
-	return (kanji != -1) ? kanji + 0x126 : '_';
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,16,31
-	  cmplwi    r0, 0x8140
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0x7540
-	  stw       r30, 0x28(r1)
-	  stw       r29, 0x24(r1)
-	  blt-      .loc_0x48
-	  cmplwi    r0, 0x8396
-	  bgt-      .loc_0x48
-	  subis     r3, r31, 0x1
-	  rlwinm    r0,r0,1,0,30
-	  add       r3, r3, r0
-	  lhz       r3, -0x24C(r3)
-	  b         .loc_0xC0
-
-	.loc_0x48:
-	  rlwinm    r30,r4,24,24,31
-	  rlwinm    r29,r4,0,24,31
-	  addi      r3, r31, 0x500
-	  bl        0x1F1360
-	  rlwinm    r0,r3,31,1,31
-	  extsh     r5, r0
-	  addi      r6, r31, 0x500
-	  li        r4, -0x1
-	  li        r3, 0
-	  b         .loc_0x98
-
-	.loc_0x70:
-	  lbz       r0, 0x0(r6)
-	  cmplw     r30, r0
-	  bne-      .loc_0x90
-	  lbz       r0, 0x1(r6)
-	  cmplw     r29, r0
-	  bne-      .loc_0x90
-	  mr        r4, r3
-	  b         .loc_0xA4
-
-	.loc_0x90:
-	  addi      r6, r6, 0x2
-	  addi      r3, r3, 0x1
-
-	.loc_0x98:
-	  extsh     r0, r3
-	  cmpw      r0, r5
-	  blt+      .loc_0x70
-
-	.loc_0xA4:
-	  extsh     r0, r4
-	  extsh     r3, r0
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0xBC
-	  addi      r3, r3, 0x126
-	  b         .loc_0xC0
-
-	.loc_0xBC:
-	  li        r3, 0x5F
-
-	.loc_0xC0:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	int kanji = searchKanjiCode(c);
+	return ((s16)kanji != -1) ? (s16)kanji + 0x126 : '_';
 }
 
 /*
@@ -2123,79 +2003,6 @@ int Font::stringWidth(char* str)
 	}
 
 	return width + 1;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  li        r31, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x24(r1)
-	  addi      r29, r3, 0
-	  stw       r28, 0x20(r1)
-	  addi      r28, r5, 0x7574
-	  b         .loc_0xB0
-
-	.loc_0x34:
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0x94
-	  lbz       r0, 0x1(r30)
-	  rlwimi    r0,r3,8,0,23
-	  rlwinm    r3,r0,0,16,31
-	  cmplwi    r3, 0x8140
-	  blt-      .loc_0x6C
-	  cmplwi    r3, 0x8396
-	  bgt-      .loc_0x6C
-	  rlwinm    r0,r3,1,0,30
-	  add       r3, r28, r0
-	  subis     r3, r3, 0x1
-	  lhz       r0, -0x280(r3)
-	  b         .loc_0x8C
-
-	.loc_0x6C:
-	  bl        -0x1E0
-	  extsh     r0, r3
-	  extsh     r3, r0
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x88
-	  addi      r0, r3, 0x126
-	  b         .loc_0x8C
-
-	.loc_0x88:
-	  li        r0, 0x5F
-
-	.loc_0x8C:
-	  addi      r30, r30, 0x2
-	  b         .loc_0x9C
-
-	.loc_0x94:
-	  subi      r0, r3, 0x20
-	  addi      r30, r30, 0x1
-
-	.loc_0x9C:
-	  mulli     r3, r0, 0x1C
-	  lwz       r4, 0xC(r29)
-	  addi      r0, r3, 0x8
-	  lhax      r0, r4, r0
-	  add       r31, r31, r0
-
-	.loc_0xB0:
-	  lbz       r3, 0x0(r30)
-	  cmplwi    r3, 0
-	  bne+      .loc_0x34
-	  addi      r3, r31, 0x1
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

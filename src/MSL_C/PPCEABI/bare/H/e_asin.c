@@ -5,13 +5,9 @@
  * Address:	8021A710
  * Size:	000008
  */
-void fabs(f64)
+f64 fabs__Fd(f64 x)
 {
-	/*
-	.loc_0x0:
-	  fabs      f1, f1
-	  blr
-	*/
+	return __fabs(x);
 }
 
 /*
