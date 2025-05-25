@@ -1,4 +1,5 @@
-#include "types.h"
+#include "jaudio/ja_calc.h"
+
 #include "std/Math.h"
 #include "jaudio/ja_calc.h"
 #include "Dolphin/math.h"

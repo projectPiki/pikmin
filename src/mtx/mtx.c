@@ -1,7 +1,7 @@
-#include "types.h"
+#include "Dolphin/mtx.h"
+
 #include "fdlibm.h"
 #include "Dolphin/os.h"
-#include "Dolphin/mtx.h"
 #include "Dolphin/math.h"
 
 static f32 Unit01[] = { 0.0f, 1.0f };

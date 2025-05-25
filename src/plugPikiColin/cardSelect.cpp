@@ -1,4 +1,5 @@
 #include "CardSelectSection.h"
+
 #include "zen/ogFileChkSel.h"
 #include "jaudio/PikiScene.h"
 #include "FlowController.h"
@@ -12,7 +13,6 @@
 #include "BaseInf.h"
 #include "Section.h"
 #include "sysNew.h"
-#include "types.h"
 
 /*
  * --INFO--

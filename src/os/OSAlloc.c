@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Dolphin/OS/OSAlloc.h"
+
 #include "Dolphin/os.h"
 
 typedef struct HeapCell {

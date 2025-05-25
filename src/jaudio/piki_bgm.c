@@ -1,5 +1,5 @@
-#include "types.h"
 #include "jaudio/PikiBgm.h"
+
 #include "jaudio/playercall.h"
 #include "jaudio/file_seq.h"
 #include "jaudio/seqsetup.h"

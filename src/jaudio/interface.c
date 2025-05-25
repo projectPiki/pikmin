@@ -1,7 +1,7 @@
-#include "types.h"
+#include "jaudio/interface.h"
+
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
-#include "jaudio/interface.h"
 #include "jaudio/PikiBgm.h"
 #include "jaudio/PikiDemo.h"
 #include "jaudio/verysimple.h"

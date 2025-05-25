@@ -1,7 +1,7 @@
+#include "Dolphin/dvd.h"
+
 #include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
-#include "types.h"
-#include "Dolphin/dvd.h"
 #include "mem.h"
 
 // forward declarations for local functions, as needed:

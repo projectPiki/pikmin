@@ -1,5 +1,5 @@
-#include "types.h"
-extern "C" {
+#include "jaudio/dummyprobe.h"
+
 /*
  * --INFO--
  * Address:	80005600
@@ -26,5 +26,4 @@ void Probe_Finish(s32 id)
 void Console_printf(char*, ...)
 {
 	// UNUSED FUNCTION
-}
 }

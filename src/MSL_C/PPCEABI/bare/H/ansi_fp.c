@@ -1,5 +1,4 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
-#include "types.h"
 
 #define isnormal(x) (fpclassify(x) == 4)
 #define isnan(x)    (fpclassify(x) == 1)
