@@ -1,5 +1,5 @@
-#ifndef _JAUDIO_CALC_H
-#define _JAUDIO_CALC_H
+#ifndef _JAUDIO_JA_CALC_H
+#define _JAUDIO_JA_CALC_H
 
 #include "types.h"
 

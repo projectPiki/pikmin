@@ -1,16 +1,18 @@
-#include "types.h"
-#include "V3D.h"
+#include "jaudio/filter3d.h"
+
+#include "jaudio/ja_calc.h"
 
 /*
  * --INFO--
  * Address:	8001BB60
  * Size:	000034
  */
-f32 V3D_GetAngle(struct Vector3D_* input_vec)
+f32 V3D_GetAngle(Vector3D_* input_vec)
 {
 	f32 retval = (atanf2(input_vec->x, input_vec->y) + 3.141592);
 	return retval;
 }
+
 /*
  * --INFO--
  * Address:	........
@@ -36,7 +38,7 @@ void V3D_Minus(Vector3D_*, Vector3D_*, Vector3D_*)
  * Address:	8001BBA0
  * Size:	000040
  */
-f64 V3D_Abs(struct Vector3D_* input_vec)
+f64 V3D_Abs(Vector3D_* input_vec)
 {
 	return (sqrtf2((input_vec->x * input_vec->x) + (input_vec->y * input_vec->y) + (input_vec->z * input_vec->z)));
 }

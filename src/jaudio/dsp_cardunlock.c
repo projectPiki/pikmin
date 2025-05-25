@@ -1,10 +1,12 @@
+#include "jaudio/dsp_cardunlock.h"
+
 #define DEBUG
+
 #include "Dolphin/os.h"
 #include "Dolphin/card.h"
 #include "Dolphin/rand.h"
 #include "jaudio/ipldec.h"
 #include "mem.h"
-#include "types.h"
 
 #define DATA_SCRAMBLE_R(data) (~(data ^ (data >> 7) ^ (data >> 15) ^ (data >> 23)))
 #define DATA_SCRAMBLE_L(data) (~(data ^ (data << 7) ^ (data << 15) ^ (data << 23)))
@@ -135,8 +137,8 @@ static u32 DummyLen()
 	return result < 4 ? 4 : result;
 }
 
+static void InitCallback(void* dspTask);
 static void DoneCallback(void* dspTask);
-extern "C" int __CARDUnlock(int chan, u8 flashID[12]); // TODO: this belongs in a header
 
 /*
  * --INFO--

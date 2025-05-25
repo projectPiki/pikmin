@@ -4,7 +4,7 @@
 #include "jaudio/PikiDemo.h"
 #include "jaudio/PikiScene.h"
 #include "jaudio/verysimple.h"
-#include "jaudio/calc.h"
+#include "jaudio/ja_calc.h"
 #include "jaudio/random.h"
 #include "jaudio/cmdqueue.h"
 
