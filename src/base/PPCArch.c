@@ -345,8 +345,7 @@ ASM u32 PPCMfhid2(void) {
  * Address: 801F5998
  * Size:    000008
  */
-ASM void PPCMthid2(register u32 newhid2)
-{
+ASM void PPCMthid2(register u32 newhid2) {
 #ifdef __MWERKS__ // clang-format off
 	nofralloc
 	mtspr 920, newhid2
