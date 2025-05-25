@@ -1,6 +1,6 @@
-#include "types.h"
-#include "bigFont.h"
 #include "system.h"
+
+#include "bigFont.h"
 #include "LoadIdler.h"
 #include "Delegate.h"
 #include "Dolphin/os.h"

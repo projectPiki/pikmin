@@ -1,8 +1,8 @@
-#include "types.h"
+#include "NsMath.h"
+
 #include "Vector.h"
 #include "Matrix3f.h"
 #include "Matrix4f.h"
-#include "NsMath.h"
 #include "DebugLog.h"
 
 /*

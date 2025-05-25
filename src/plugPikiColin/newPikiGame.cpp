@@ -1,9 +1,9 @@
-#include "types.h"
+#include "NewPikiGame.h"
+
 #include "Controller.h"
 #include "Section.h"
 #include "ModeState.h"
 #include "Interface.h"
-#include "NewPikiGame.h"
 #include "sysNew.h"
 #include "timers.h"
 #include "jaudio/PikiDemo.h"

@@ -1,7 +1,7 @@
 #include "Dolphin/dsp.h"
+
 #include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
-#include "types.h"
 
 /*
  * --INFO--

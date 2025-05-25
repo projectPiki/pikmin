@@ -1,5 +1,5 @@
-#include "types.h"
 #include "DynCreature.h"
+
 #include "DynParticle.h"
 #include "MapMgr.h"
 #include "CreatureProp.h"

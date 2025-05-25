@@ -1,5 +1,5 @@
-#include "types.h"
 #include "teki.h"
+
 #include "NaviMgr.h"
 #include "Stickers.h"
 #include "MapCode.h"

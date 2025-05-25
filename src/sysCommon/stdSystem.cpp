@@ -1,9 +1,9 @@
+#include "system.h"
+
 #include "CmdStream.h"
 #include "Animator.h"
 #include "DebugLog.h"
 #include "Texture.h"
-#include "system.h"
-#include "types.h"
 #include "Light.h"
 #include "Shape.h"
 #include "sysNew.h"

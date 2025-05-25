@@ -1,5 +1,5 @@
-#include "types.h"
 #include "Dolphin/db.h"
+
 #include "Dolphin/os.h"
 
 int DBVerbose;

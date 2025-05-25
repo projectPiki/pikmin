@@ -1,5 +1,5 @@
-#include "types.h"
 #include "MapCode.h"
+
 #include "math.h"
 #include "Collision.h"
 

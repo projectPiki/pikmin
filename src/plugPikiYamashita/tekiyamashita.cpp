@@ -1,6 +1,6 @@
-#include "types.h"
-#include "system.h"
 #include "TekiYamashita.h"
+
+#include "system.h"
 #include "TAI/Tank.h"
 #include "TAI/Mar.h"
 #include "TAI/Beatle.h"

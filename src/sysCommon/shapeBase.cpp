@@ -1,8 +1,8 @@
-#include "types.h"
+#include "Shape.h"
+
 #include "Animator.h"
 #include "Joint.h"
 #include "Mesh.h"
-#include "Shape.h"
 #include "timers.h"
 #include "Colour.h"
 #include "Material.h"
@@ -18,7 +18,7 @@
 #include "Delegate.h"
 #include "CinematicPlayer.h"
 #include "Graphics.h"
-#include "dolphin/mtx.h"
+#include "Dolphin/mtx.h"
 #include "DebugLog.h"
 
 /*

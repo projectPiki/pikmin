@@ -1,7 +1,5 @@
-#include "types.h"
-#include "stl/math.h"
-
 #include "Graphics.h"
+
 #include "Colour.h"
 #include "Material.h"
 #include "Font.h"
@@ -13,6 +11,7 @@
 #include "PVW.h"
 #include "DebugLog.h"
 #include "nlib/Math.h"
+#include "stl/math.h"
 
 /*
  * --INFO--

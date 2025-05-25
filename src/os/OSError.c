@@ -1,6 +1,6 @@
-#include "types.h"
-#include "stl/stdio.h"
 #include "Dolphin/OSError.h"
+
+#include "stl/stdio.h"
 
 static OSErrorHandler OSErrorTable[OS_ERROR_MAX];
 /*

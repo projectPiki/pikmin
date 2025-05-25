@@ -1,5 +1,5 @@
-#include "types.h"
 #include "math.h"
+
 #include "Plane.h"
 #include "Camera.h"
 #include "Matrix3f.h"

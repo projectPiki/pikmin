@@ -1,6 +1,6 @@
 #include "TekiAnimationManager.h"
 #include "Dolphin/os.h"
-#include "Teki.h"
+#include "teki.h"
 #include "DebugLog.h"
 
 /*

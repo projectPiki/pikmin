@@ -1,7 +1,7 @@
-#include "types.h"
+#include "Matrix4f.h"
+
 #include "Vector.h"
 #include "SRT.h"
-#include "Matrix4f.h"
 
 f32 sintable[0x1000];
 f32 costable[0x1000];

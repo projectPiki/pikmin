@@ -1,5 +1,5 @@
-#include "types.h"
 #include "CardUtil.h"
+
 #include "Dolphin/card.h"
 #include "gameflow.h"
 #include "DebugLog.h"

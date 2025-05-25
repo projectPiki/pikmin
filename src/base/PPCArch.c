@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Dolphin/PPCArch.h"
 
 /*
  * --INFO--
@@ -76,7 +76,7 @@ ASM u32 PPCMfhid0(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMthid0(void)
+void PPCMthid0(u32 newHID0)
 {
 	// UNUSED FUNCTION
 }
@@ -359,7 +359,7 @@ ASM void PPCMthid2(register u32 newhid2)
  * Address: ........
  * Size:    00000C
  */
-void PPCMfwpar(void)
+u32 PPCMfwpar(void)
 {
 	// UNUSED FUNCTION
 }

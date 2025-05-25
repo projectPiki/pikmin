@@ -1,5 +1,5 @@
-#include "types.h"
 #include "Texture.h"
+
 #include "Stream.h"
 #include "system.h"
 #include "sysNew.h"
