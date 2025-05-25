@@ -13,32 +13,32 @@ extern "C" {
 
 int tolower(int __c);
 
-inline int isalpha(int c)
+inline int isalpha(char c)
 {
 	return (int)(__ctype_map[__zero_fill(c)] & __letter);
 }
-inline int isdigit(int c)
+inline int isdigit(char c)
 {
 	return (int)(__ctype_map[__zero_fill(c)] & __digit);
 }
-inline int isspace(int c)
+inline int isspace(char c)
 {
 	return (int)(__ctype_map[__zero_fill(c)] & __whitespace);
 }
-inline int isupper(int c)
+inline int isupper(char c)
 {
 	return (int)(__ctype_map[__zero_fill(c)] & __upper_case);
 }
-inline int isxdigit(int c)
+inline int isxdigit(char c)
 {
 	return (int)(__ctype_map[__zero_fill(c)] & __hex_digit);
 }
 // added underscore to avoid naming conflicts
-inline int _tolower(int c)
+inline int _tolower(char c)
 {
 	return (c == -1 ? -1 : (int)__lower_map[__zero_fill(c)]);
 }
-inline int _toupper(int c)
+inline int _toupper(char c)
 {
 	return (c == -1 ? -1 : (int)__upper_map[__zero_fill(c)]);
 }
