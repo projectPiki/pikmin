@@ -9,29 +9,30 @@
 void Channel_SetMixerLevel(f32);
 jcs_* Get_GlobalHandle();
 int List_CountChannel(jc_**);
-void List_CutChannel(jc_*);
+int List_CutChannel(jc_*);
 jc_* List_GetChannel(jc_**);
 void List_AddChannelTail(jc_**, jc_*);
 void List_AddChannel(jc_**, jc_*);
-BOOL FixAllocChannel(jcs_*, u32);
-void FixReleaseChannel(jc_*);
-void FixReleaseChannelAll(jcs_*);
-void FixMoveChannelAll(jcs_*, jcs_*);
+int FixAllocChannel(jcs_*, u32);
+int FixReleaseChannel(jc_*);
+int FixReleaseChannelAll(jcs_*);
+int FixMoveChannelAll(jcs_*, jcs_*);
 void InitJcs(jcs_*);
 void Channel_Init(jc_*);
 void InitGlobalChannel();
 void UpdateJcToDSP(jc_*);
 void UpdateEffecterParam(jc_*);
 void DoEffectOsc(jc_*, u8, f32);
-void StopLogicalChannel(jc_*);
+BOOL StopLogicalChannel(jc_*);
 BOOL CheckLogicalChannel(jc_*);
 BOOL PlayLogicalChannel(jc_*);
-void ResetInitialVolume(jc_*);
+BOOL ResetInitialVolume(jc_*);
 BOOL Add_WaitDSPChannel(jc_*);
-void Del_WaitDSPChannel(jc_*);
+BOOL Del_WaitDSPChannel(jc_*);
 void __Entry_WaitChannel(u8);
 void EntryCheck_WaitDSPChannel();
-void ForceStopLogicalChannel(jc_*);
+BOOL ForceStopLogicalChannel(jc_*);
+void Cancel_WaitDSPChannel(jc_*);
 
 ///////////////////////////////////////////////////////////
 
