@@ -124,6 +124,12 @@ typedef u16 wchar_t;
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0;
 // clang-format on
 
+inline void padStack(void)
+{
+	int pad = 0;
+}
+#define PAD_STACK() padStack()
+
 #ifdef __MWERKS__
 #define WEAKFUNC        __declspec(weak)
 #define DECL_SECT(name) __declspec(section name)

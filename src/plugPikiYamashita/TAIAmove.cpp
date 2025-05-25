@@ -1374,7 +1374,7 @@ bool TAIAgoingHomePriorityFaceDir::act(Teki& teki)
 void TAIAflyingBase::start(Teki& teki)
 {
 	teki.startFlying();
-	teki.setRunAwaySwitch(false);
+	teki.setChokeSwitch(false);
 }
 
 /*
@@ -1386,7 +1386,7 @@ bool TAIAflyingBase::act(Teki& teki)
 {
 	teki.flyingStay(getFlyingStayVelocity(teki));
 	if (teki.getYFromSeaLevel() > teki.getParameterF(TPF_FlightHeight)) {
-		teki.setRunAwaySwitch(true);
+		teki.setChokeSwitch(true);
 	}
 	return false;
 }

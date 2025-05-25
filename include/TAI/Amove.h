@@ -447,7 +447,7 @@ struct TAIAflyingBase : public TaiAction {
 	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
 	{
 		// nice illusion of choice
-		if (teki.getRunAwaySwitch()) {
+		if (teki.getChokeSwitch()) {
 			return teki.getParameterF(TPF_WalkVelocity);
 		}
 		return teki.getParameterF(TPF_WalkVelocity);

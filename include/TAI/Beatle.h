@@ -152,16 +152,14 @@ struct TAIAflickingBeatle : public TAIAflicking {
 	virtual void flick(Teki& teki) // _1C
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
-			// why are the offsets wrong ;;
-			teki.flick(InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
-			                         getFlickDirection(teki)),
-			           InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-			                         getFlickDirection(teki)));
+			InteractFlick& flick1 = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
+			                                      getFlickDirection(teki));
+			InteractFlick& flick2 = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
+			                                      getFlickDirection(teki));
+			teki.flick(flick1, flick2);
 
 			effectMgr->create(EffectMgr::EFF_BigDustRing, teki.getPosition(), nullptr, nullptr);
 		}
-
-		u32 bad;
 	}
 
 	// _04     = VTBL
@@ -204,9 +202,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 	virtual bool act(Teki& teki) // _10
 	{
 		bool result = false;
-		bool doAct  = TAIAreserveMotion::act(teki);
-
-		if (doAct) {
+		if (TAIAreserveMotion::act(teki)) {
 			zen::particleGenerator* ptclGen;
 			CollPart* nozzlePart = teki.mCollInfo->getSphere('slot');
 
@@ -215,9 +211,9 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			Vector3f suckNormal;
 
 			suckPosition = teki.getPosition();
-			suckPosition.x += teki.getParameterF(TAIbeatleFloatParms::SuctionRadius) * sinf(teki.mFaceDirection);
+			suckPosition.x += NMathF::sin(teki.mFaceDirection) * teki.getParameterF(TAIbeatleFloatParms::SuctionRadius);
 			suckPosition.y += 53.0f;
-			suckPosition.z += teki.getParameterF(TAIbeatleFloatParms::SuctionRadius) * cosf(teki.mFaceDirection);
+			suckPosition.z += NMathF::cos(teki.mFaceDirection) * teki.getParameterF(TAIbeatleFloatParms::SuctionRadius);
 
 			suckPartSep.set(suckPosition - nozzlePart->mCentre);
 			if (zen::RoundOff(teki.mTekiAnimator->mAnimationCounter) == 1) {
@@ -227,16 +223,16 @@ struct TAIArockAttack : public TAIAreserveMotion {
 				ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_SuckAir2, suckPosition, nullptr, nullptr);
 				if (ptclGen != nullptr) {
 					Vector3f startPos;
-					Vector3f suckNormal;
+					Vector3f suckNormal2;
 
 					startPos.set(nozzlePart->mCentre.x, nozzlePart->mCentre.y - 15.0f, nozzlePart->mCentre.z);
 
-					suckNormal.set(suckPosition - startPos);
-					suckNormal.normalize();
-					suckNormal.multiply(-4.0f);
+					suckNormal2.set(suckPosition - startPos);
+					suckNormal2.normalize();
+					suckNormal2.multiply(-4.0f);
 
-					ptclGen->setOrientedNormalVector(suckNormal);
-					ptclGen->setAirField(suckNormal, true);
+					ptclGen->setOrientedNormalVector(suckNormal2);
+					ptclGen->setAirField(suckNormal2, true);
 
 					teki.setPtclGenPtr(YTeki::PTCL_Unk7, ptclGen);
 				}
@@ -247,7 +243,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk6);
 			if (ptclGen != nullptr) {
 				Vector3f attractorPos;
-				attractorPos.set(nozzlePart->mCentre + suckNormal * -30.0f);
+				attractorPos.set(nozzlePart->mCentre + Vector3f(suckNormal * -30.0f));
 
 				ptclGen->setNewtonField(attractorPos, ptclGen->getNewtonFieldFrc(), true);
 			}
@@ -262,6 +258,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			}
 
 			if (zen::RoundOff(teki.mTekiAnimator->mAnimationCounter) > 4 && teki.getPtclGenPtr(YTeki::PTCL_Unk6) != nullptr) {
+				u32 badcompiler[2];
 				Iterator pikiIter(pikiMgr);
 				CI_LOOP(pikiIter)
 				{
@@ -270,7 +267,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 						continue;
 					}
 
-					Vector3f pikiSlotSep(piki->getPosition() - nozzlePart->mCentre);
+					Vector3f pikiSlotSep = piki->getPosition() - nozzlePart->mCentre;
 					if (suckPartSep.DP(pikiSlotSep) > 0.0f) {
 						f32 distanceToSuckPos = suckPartSep.length();
 						f32 distanceToPiki    = pikiSlotSep.length();
@@ -283,11 +280,15 @@ struct TAIArockAttack : public TAIAreserveMotion {
 								pikiSlotSep.div(distanceToPiki);
 							}
 
-							if (suckPartSep.DP(pikiSlotSep) > cosf(teki.getParameterF(TAIbeatleFloatParms::SuctionAngle) * PI / 180.0f)) {
+							if (suckPartSep.DP(pikiSlotSep)
+							    > NMathF::cos(teki.getParameterF(TAIbeatleFloatParms::SuctionAngle) * PI / 180.0f)) {
+								f32 knockbackStrength = 300.0f;
 								Vector3f knockbackVel;
-								knockbackVel.set(-pikiSlotSep.x * 300.0f, -pikiSlotSep.y * 300.0f, -pikiSlotSep.z * 300.0f);
+								knockbackVel.set(-pikiSlotSep.x * knockbackStrength, -pikiSlotSep.y * knockbackStrength,
+								                 -pikiSlotSep.z * knockbackStrength);
 
 								InteractWind wind(&teki, knockbackVel, 0.0f, nullptr);
+								u32 badCompiler;
 								piki->stimulate(wind);
 							}
 						}
@@ -308,11 +309,11 @@ struct TAIArockAttack : public TAIAreserveMotion {
 				CI_LOOP(pikiIter)
 				{
 					Creature* piki = *pikiIter;
+					Vector3f pikiSlotSep;
 					if (piki == nullptr || !piki->isAlive()) {
 						continue;
 					}
 
-					Vector3f pikiSlotSep;
 					pikiSlotSep.set(nozzlePart->mCentre - piki->getPosition());
 					if (pikiSlotSep.length() < teki.getParameterF(TAIbeatleFloatParms::Unk2)) {
 
@@ -350,80 +351,82 @@ struct TAIArockAttack : public TAIAreserveMotion {
 						}
 
 						teki.playEventSound(&teki, SE_KABUTO_TUMARI);
-						result = true;
+						mNextState = _10;
+						result     = true;
 						break;
 					}
 				}
+			}
 
-				if (teki.mCurrentAnimEvent == KEY_Action3) {
-					teki.flick();
-				}
+			if (teki.mCurrentAnimEvent == KEY_Action3) {
+				teki.flick();
+			}
 
-				if (teki.mCurrentAnimEvent == KEY_Action2) {
-					CollPart* kutiPart = teki.mCollInfo->getSphere('kuti');
-					if (kutiPart != nullptr) {
-						Matrix4f mtx = kutiPart->getMatrix();
+			if (teki.mCurrentAnimEvent == KEY_Action2) {
+				CollPart* kutiPart = teki.mCollInfo->getSphere('kuti');
+				if (kutiPart != nullptr) {
+					Matrix4f mtx = kutiPart->getMatrix();
 
-						Vector3f vec1;
-						Vector3f vec2;
+					Vector3f vec1;
+					Vector3f vec2;
 
-						Teki* rock = teki.spawnTeki(teki.getParameterI(TPI_SpawnType));
-						if (rock != nullptr) {
-							vec2.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
-							vec1.set(kutiPart->mCentre + vec2 * 60.0f);
+					Teki* rock = teki.spawnTeki(teki.getParameterI(TPI_SpawnType));
+					if (rock != nullptr) {
+						vec2.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
+						vec1.set(kutiPart->mCentre + vec2 * 60.0f);
 
-							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockClouds, vec1, nullptr, nullptr);
-							if (ptclGen != nullptr) {
-								ptclGen->setEmitDir(vec2);
-							}
+						ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockClouds, vec1, nullptr, nullptr);
+						if (ptclGen != nullptr) {
+							ptclGen->setEmitDir(vec2);
+						}
 
-							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockSpray, vec1, nullptr, nullptr);
-							if (ptclGen != nullptr) {
-								ptclGen->setEmitDir(vec2);
-							}
+						ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockSpray, vec1, nullptr, nullptr);
+						if (ptclGen != nullptr) {
+							ptclGen->setEmitDir(vec2);
+						}
 
-							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockBlast, vec1, nullptr, nullptr);
-							if (ptclGen != nullptr) {
-								ptclGen->setEmitDir(vec2);
-							}
+						ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockBlast, vec1, nullptr, nullptr);
+						if (ptclGen != nullptr) {
+							ptclGen->setEmitDir(vec2);
+						}
 
-							rock->setPersonalityI(TekiPersonality::INT_Parameter0, 1);
+						rock->setPersonalityI(TekiPersonality::INT_Parameter0, 1);
 
-							Vector3f spawnPos;
-							teki.outputSpawnPosition(spawnPos);
-							rock->inputPosition(spawnPos);
+						Vector3f spawnPos;
+						teki.outputSpawnPosition(spawnPos);
+						rock->inputPosition(spawnPos);
 
-							Vector3f velocity;
-							teki.outputDirectionVector(velocity);
-							velocity.scale(teki.getParameterF(TPF_Scale) * teki.getParameterF(TPF_SpawnVelocity));
-							rock->inputVelocity(velocity);
-							rock->startAI(0);
+						Vector3f velocity;
+						teki.outputDirectionVector(velocity);
+						velocity.scale(teki.getParameterF(TPF_SpawnVelocity) * teki.getPersonalityF(TekiPersonality::FLT_Strength));
+						rock->inputVelocity(velocity);
+						rock->startAI(0);
 
-							teki.playEventSound(&teki, SE_KABUTO_SHOT);
-							cameraMgr->startVibrationEvent(3, teki.getPosition());
-							rumbleMgr->start(RUMBLE_Unk14, 0, teki.getPosition());
-						} else {
-							Matrix4f kutiMtx = kutiPart->getMatrix();
+						teki.playEventSound(&teki, SE_KABUTO_SHOT);
+						cameraMgr->startVibrationEvent(3, teki.getPosition());
+						rumbleMgr->start(RUMBLE_Unk14, 0, teki.getPosition());
+					} else {
+						Matrix4f kutiMtx = kutiPart->getMatrix();
 
-							Vector3f flickEmitDir;
-							flickEmitDir.set(kutiMtx.mMtx[0][0], kutiMtx.mMtx[1][0], kutiMtx.mMtx[2][0]);
+						Vector3f flickEmitDir;
+						flickEmitDir.set(kutiMtx.mMtx[0][0], kutiMtx.mMtx[1][0], kutiMtx.mMtx[2][0]);
 
-							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick1, kutiPart->mCentre, nullptr, nullptr);
-							if (ptclGen != nullptr) {
-								ptclGen->setEmitPosPtr(&kutiPart->mCentre);
-								ptclGen->setEmitDir(flickEmitDir);
-							}
+						ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick1, kutiPart->mCentre, nullptr, nullptr);
+						if (ptclGen != nullptr) {
+							ptclGen->setEmitPosPtr(&kutiPart->mCentre);
+							ptclGen->setEmitDir(flickEmitDir);
 						}
 					}
 				}
+			}
 
-				if (teki.getCreaturePointer(2) == nullptr && teki.mCurrentAnimEvent == KEY_LoopEnd) {
-					teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
-				}
+			if (teki.getCreaturePointer(2) == nullptr && teki.mCurrentAnimEvent == KEY_LoopEnd) {
+				mNextState = _0C;
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+			}
 
-				if (teki.mCurrentAnimEvent == KEY_Finished) {
-					result = true;
-				}
+			if (teki.mCurrentAnimEvent == KEY_Finished) {
+				result = true;
 			}
 		}
 
@@ -432,16 +435,17 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			teki.setPtclGenPtr(YTeki::PTCL_Unk7, nullptr);
 		}
 
+		result ? "fake" : "fake";
+		result ? "fake" : "fake";
+		result ? "fake" : "fake";
+		u32 badCompiler[6];
 		return result;
-
-		u32 bad[25];
 	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
-	// TODO: members
-	u32 _0C;
-	u32 _10;
+	int _0C; // _0C
+	int _10; // _10
 };
 
 /**
@@ -481,7 +485,7 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
 			if (!teki.visibleCreature(*piki) || piki->getStickObject() == &teki) {
 				continue;
 			}
-			
+
 			if (teki.getPosition().distance(piki->getPosition()) > 100.0f) {
 				teki.setCreaturePointer(0, piki);
 

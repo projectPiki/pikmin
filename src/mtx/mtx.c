@@ -529,9 +529,9 @@ void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f3
 	ASSERTMSGLINE(2606, (fovY > 0.0) && (fovY < 180.0), "MTXLightPerspective():  'fovY' out of range ");
 	ASSERTMSGLINE(2607, 0 != aspect, "MTXLightPerspective():  'aspect' is 0 ");
 
-	angle = 0.5f * fovY;
-	angle = MTXDegToRad(angle);
-	cot = 1.0f / tanf(angle);
+	angle   = 0.5f * fovY;
+	angle   = MTXDegToRad(angle);
+	cot     = 1.0f / tanf(angle);
 	m[0][0] = scaleS * (cot / aspect);
 	m[0][1] = 0.0f;
 	m[0][2] = -transS;

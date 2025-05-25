@@ -44,6 +44,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 
 	virtual bool act(Teki& teki) // _10
 	{
+		zen::particleGenerator* ptclGen;
 		CollPart* kutiPart = teki.mCollInfo->getSphere('kuti');
 
 		switch (teki.mCurrentAnimEvent) {
@@ -56,7 +57,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 				Vector3f emitDir;
 				emitDir.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
 
-				zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick1, kutiPart->mCentre, nullptr, nullptr);
+				ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick1, kutiPart->mCentre, nullptr, nullptr);
 				if (ptclGen != nullptr) {
 					ptclGen->setEmitPosPtr(&kutiPart->mCentre);
 					ptclGen->setEmitDir(emitDir);
@@ -67,7 +68,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 		case KEY_Action2:
 			teki.disableStick();
 
-			zen::particleGenerator* ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk2);
+			ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk2);
 			if (ptclGen != nullptr) {
 				ptclGen->finish();
 			}
@@ -88,7 +89,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 			}
 
 			teki.stopEventSound(&teki, SE_KABUTO_COOLDOWN);
-			teki.mTekiSwitches.m1 = false;
+			teki.setRunAwaySwitch(false);
 			break;
 
 		// ... why is this down here?
@@ -104,15 +105,15 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 			break;
 
 		case KEY_LoopStart:
-			teki.mTekiSwitches.m1 = true;
+			teki.setRunAwaySwitch(true);
 			break;
 		}
 
-		if (teki.mTekiSwitches.m1) {
+		if (teki.getRunAwaySwitch()) {
 			runAway(teki);
 		}
 
-		TAIAflickingAfterMotionLoop::act(teki);
+		return TAIAflickingAfterMotionLoop::act(teki);
 	}
 
 	virtual f32 getFrameMax(Teki& teki) // _1C
@@ -132,6 +133,10 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 	void createSteamEffect(Teki& teki)
 	{
 		// interesting...
+		zen::particleGenerator* ptclGen;
+		CollPart* kutiPart;
+		CollPart* steamEffectPart;
+
 		int i = 0;
 
 		int collPartIDs[6];
@@ -150,7 +155,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 
 		// frankly this is a bizarre way of doing this but whatever i guess
 		for (i = 0; i < 3; i++) {
-			CollPart* steamEffectPart;
+			steamEffectPart;
 			switch (collPartIDs[i]) {
 			case 0:
 				steamEffectPart = teki.mCollInfo->getSphere('stm0');
@@ -182,8 +187,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 			}
 
 			if (steamEffectPart != nullptr) {
-				zen::particleGenerator* ptclGen
-				    = effectMgr->create(EffectMgr::EFF_Beatle_Flick2, steamEffectPart->mCentre, nullptr, nullptr);
+				ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick2, steamEffectPart->mCentre, nullptr, nullptr);
 				if (ptclGen != nullptr) {
 					ptclGen->setEmitPosPtr(&steamEffectPart->mCentre);
 				}
@@ -191,14 +195,14 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 			}
 		}
 
-		CollPart* kutiPart = teki.mCollInfo->getSphere('kuti');
+		kutiPart = teki.mCollInfo->getSphere('kuti');
 		if (kutiPart != nullptr) {
 			Matrix4f mtx = kutiPart->getMatrix();
 
 			Vector3f emitDir;
 			emitDir.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
 
-			zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick2, kutiPart->mCentre, nullptr, nullptr);
+			ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick3, kutiPart->mCentre, nullptr, nullptr);
 			if (ptclGen != nullptr) {
 				ptclGen->setEmitPosPtr(&kutiPart->mCentre);
 				ptclGen->setEmitDir(emitDir);
@@ -411,7 +415,7 @@ TAIbeatleStrategy::TAIbeatleStrategy()
 	TAIAapproachTargetPriorityFaceDir* approachTargetAct = new TAIAapproachTargetPriorityFaceDir(TAIbeatleStateID::Unk8, 6);
 
 	TAIAinsideOptionalRangeBeatle* inOptionalRange = new TAIAinsideOptionalRangeBeatle(TAIbeatleStateID::Unk8);
-	TAIArockAttack* rockAttack                     = new TAIArockAttack(TAIbeatleStateID::Unk13, 11, 8);
+	TAIArockAttack* rockAttack                     = new TAIArockAttack(TAIbeatleStateID::Unk13, TAIbeatleStateID::Unk11, 8);
 	TAIAoutsideTerritory* outsideTerritoryAct      = new TAIAoutsideTerritory(TAIbeatleStateID::Unk9);
 
 	TAIAturnHome* turnHomeAct = new TAIAturnHome(TAIbeatleStateID::Unk10, 10, 11);
@@ -633,14 +637,13 @@ void TAIbeatleStrategy::act(Teki& teki)
 {
 	YaiStrategy::act(teki);
 
-	Matrix4f eyeMtx;
 	zen::particleGenerator* ptclGen;
+	Matrix4f eyeMtx;
+	Vector3f vec1;
+	Vector3f vec2;
+	Vector3f vec3;
 
 	CollPart* eyePart = teki.mCollInfo->getSphere('me_l');
-
-	Vector3f vec3;
-	Vector3f vec2;
-	Vector3f vec1;
 
 	if (eyePart != nullptr) {
 		eyeMtx = eyePart->getMatrix();
@@ -659,7 +662,7 @@ void TAIbeatleStrategy::act(Teki& teki)
 
 		ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk0);
 		if (ptclGen != nullptr) {
-			ptclGen->start();
+			ptclGen->startGen();
 			ptclGen->setEmitPos(eyePart->mCentre + vec1 + vec2 + vec3);
 		}
 	}
@@ -682,295 +685,10 @@ void TAIbeatleStrategy::act(Teki& teki)
 
 		ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk1);
 		if (ptclGen != nullptr) {
-			ptclGen->start();
+			ptclGen->startGen();
 			ptclGen->setEmitPos(eyePart->mCentre + vec1 + vec2 + vec3);
 		}
 	}
-
-	// u32 bad[4];
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x198(r1)
-	  stfd      f31, 0x190(r1)
-	  stfd      f30, 0x188(r1)
-	  stfd      f29, 0x180(r1)
-	  stfd      f28, 0x178(r1)
-	  stfd      f27, 0x170(r1)
-	  stfd      f26, 0x168(r1)
-	  stfd      f25, 0x160(r1)
-	  stfd      f24, 0x158(r1)
-	  stfd      f23, 0x150(r1)
-	  stw       r31, 0x14C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x148(r1)
-	  stw       r29, 0x144(r1)
-	  bl        0x22864
-	  lis       r4, 0x6D65
-	  lwz       r3, 0x220(r31)
-	  addi      r4, r4, 0x5F6C
-	  bl        -0x13D7E4
-	  mr.       r29, r3
-	  beq-      .loc_0x210
-	  addi      r3, r1, 0xFC
-	  addi      r4, r29, 0
-	  bl        -0x13EFF0
-	  lfs       f24, 0x104(r1)
-	  lfs       f25, 0x114(r1)
-	  fmuls     f1, f24, f24
-	  lfs       f26, 0x124(r1)
-	  fmuls     f0, f25, f25
-	  fmuls     f2, f26, f26
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1B92EC
-	  lfs       f0, -0x4620(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xA4
-	  fdivs     f24, f24, f1
-	  fdivs     f25, f25, f1
-	  fdivs     f26, f26, f1
-
-	.loc_0xA4:
-	  lfs       f27, 0x100(r1)
-	  lfs       f28, 0x110(r1)
-	  fmuls     f1, f27, f27
-	  lfs       f3, -0x45B0(r2)
-	  fmuls     f0, f28, f28
-	  lfs       f29, 0x120(r1)
-	  fmuls     f24, f24, f3
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fmuls     f25, f25, f3
-	  fmuls     f26, f26, f3
-	  fadds     f1, f2, f0
-	  bl        -0x1B9338
-	  lfs       f0, -0x4620(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0xF0
-	  fdivs     f27, f27, f1
-	  fdivs     f28, f28, f1
-	  fdivs     f29, f29, f1
-
-	.loc_0xF0:
-	  lfs       f30, 0xFC(r1)
-	  lfs       f31, 0x10C(r1)
-	  fmuls     f1, f30, f30
-	  lfs       f3, -0x45B0(r2)
-	  fmuls     f0, f31, f31
-	  lfs       f23, 0x11C(r1)
-	  fmuls     f27, f27, f3
-	  fmuls     f2, f23, f23
-	  fadds     f0, f1, f0
-	  fmuls     f28, f28, f3
-	  fmuls     f29, f29, f3
-	  fadds     f1, f2, f0
-	  bl        -0x1B9384
-	  lfs       f0, -0x4620(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x13C
-	  fdivs     f30, f30, f1
-	  fdivs     f31, f31, f1
-	  fdivs     f23, f23, f1
-
-	.loc_0x13C:
-	  lfs       f0, -0x45BC(r2)
-	  lwz       r30, 0x498(r31)
-	  fmuls     f30, f30, f0
-	  cmplwi    r30, 0
-	  fmuls     f31, f31, f0
-	  fmuls     f23, f23, f0
-	  beq-      .loc_0x210
-	  lwz       r0, 0x80(r30)
-	  addi      r6, r1, 0x2C
-	  addi      r5, r1, 0x28
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r30)
-	  addi      r4, r1, 0x24
-	  addi      r3, r1, 0xB4
-	  lfs       f0, 0xC(r29)
-	  fadds     f0, f0, f23
-	  stfs      f0, 0x2C(r1)
-	  lfs       f0, 0x8(r29)
-	  fadds     f0, f0, f31
-	  stfs      f0, 0x28(r1)
-	  lfs       f0, 0x4(r29)
-	  fadds     f0, f0, f30
-	  stfs      f0, 0x24(r1)
-	  bl        -0x18FF20
-	  lfs       f2, 0xBC(r1)
-	  addi      r6, r1, 0x50
-	  lfs       f1, 0xB8(r1)
-	  addi      r5, r1, 0x4C
-	  lfs       f0, 0xB4(r1)
-	  fadds     f2, f2, f29
-	  addi      r4, r1, 0x48
-	  fadds     f1, f1, f28
-	  addi      r3, r1, 0xC0
-	  fadds     f0, f0, f27
-	  stfs      f2, 0x50(r1)
-	  stfs      f1, 0x4C(r1)
-	  stfs      f0, 0x48(r1)
-	  bl        -0x18FF58
-	  lfs       f0, 0xC0(r1)
-	  lfs       f1, 0xC4(r1)
-	  fadds     f2, f0, f24
-	  lfs       f0, 0xC8(r1)
-	  fadds     f1, f1, f25
-	  fadds     f0, f0, f26
-	  stfs      f2, 0xCC(r1)
-	  stfs      f1, 0xD0(r1)
-	  stfs      f0, 0xD4(r1)
-	  lwz       r3, 0xCC(r1)
-	  lwz       r0, 0xD0(r1)
-	  stw       r3, 0xC(r30)
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0xD4(r1)
-	  stw       r0, 0x14(r30)
-
-	.loc_0x210:
-	  lis       r4, 0x6D65
-	  lwz       r3, 0x220(r31)
-	  addi      r4, r4, 0x5F72
-	  bl        -0x13D9B0
-	  mr.       r29, r3
-	  beq-      .loc_0x3DC
-	  addi      r3, r1, 0xFC
-	  addi      r4, r29, 0
-	  bl        -0x13F1BC
-	  lfs       f31, 0x104(r1)
-	  lfs       f30, 0x114(r1)
-	  fmuls     f1, f31, f31
-	  lfs       f29, 0x124(r1)
-	  fmuls     f0, f30, f30
-	  fmuls     f2, f29, f29
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x1B94B8
-	  lfs       f0, -0x4620(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x270
-	  fdivs     f31, f31, f1
-	  fdivs     f30, f30, f1
-	  fdivs     f29, f29, f1
-
-	.loc_0x270:
-	  lfs       f28, 0x100(r1)
-	  lfs       f27, 0x110(r1)
-	  fmuls     f1, f28, f28
-	  lfs       f3, -0x45AC(r2)
-	  fmuls     f0, f27, f27
-	  lfs       f26, 0x120(r1)
-	  fmuls     f31, f31, f3
-	  fmuls     f2, f26, f26
-	  fadds     f0, f1, f0
-	  fmuls     f30, f30, f3
-	  fmuls     f29, f29, f3
-	  fadds     f1, f2, f0
-	  bl        -0x1B9504
-	  lfs       f0, -0x4620(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x2BC
-	  fdivs     f28, f28, f1
-	  fdivs     f27, f27, f1
-	  fdivs     f26, f26, f1
-
-	.loc_0x2BC:
-	  lfs       f25, 0xFC(r1)
-	  lfs       f24, 0x10C(r1)
-	  fmuls     f1, f25, f25
-	  lfs       f3, -0x45B0(r2)
-	  fmuls     f0, f24, f24
-	  lfs       f23, 0x11C(r1)
-	  fmuls     f28, f28, f3
-	  fmuls     f2, f23, f23
-	  fadds     f0, f1, f0
-	  fmuls     f27, f27, f3
-	  fmuls     f26, f26, f3
-	  fadds     f1, f2, f0
-	  bl        -0x1B9550
-	  lfs       f0, -0x4620(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x308
-	  fdivs     f25, f25, f1
-	  fdivs     f24, f24, f1
-	  fdivs     f23, f23, f1
-
-	.loc_0x308:
-	  lfs       f0, -0x45BC(r2)
-	  lwz       r30, 0x49C(r31)
-	  fmuls     f25, f25, f0
-	  cmplwi    r30, 0
-	  fmuls     f24, f24, f0
-	  fmuls     f23, f23, f0
-	  beq-      .loc_0x3DC
-	  lwz       r0, 0x80(r30)
-	  addi      r6, r1, 0x20
-	  addi      r5, r1, 0x1C
-	  rlwinm    r0,r0,0,29,27
-	  stw       r0, 0x80(r30)
-	  addi      r4, r1, 0x18
-	  addi      r3, r1, 0x90
-	  lfs       f0, 0xC(r29)
-	  fadds     f0, f0, f23
-	  stfs      f0, 0x20(r1)
-	  lfs       f0, 0x8(r29)
-	  fadds     f0, f0, f24
-	  stfs      f0, 0x1C(r1)
-	  lfs       f0, 0x4(r29)
-	  fadds     f0, f0, f25
-	  stfs      f0, 0x18(r1)
-	  bl        -0x1900EC
-	  lfs       f2, 0x98(r1)
-	  addi      r6, r1, 0x38
-	  lfs       f1, 0x94(r1)
-	  addi      r5, r1, 0x34
-	  lfs       f0, 0x90(r1)
-	  fadds     f2, f2, f26
-	  addi      r4, r1, 0x30
-	  fadds     f1, f1, f27
-	  addi      r3, r1, 0x9C
-	  fadds     f0, f0, f28
-	  stfs      f2, 0x38(r1)
-	  stfs      f1, 0x34(r1)
-	  stfs      f0, 0x30(r1)
-	  bl        -0x190124
-	  lfs       f0, 0x9C(r1)
-	  lfs       f1, 0xA0(r1)
-	  fadds     f2, f0, f31
-	  lfs       f0, 0xA4(r1)
-	  fadds     f1, f1, f30
-	  fadds     f0, f0, f29
-	  stfs      f2, 0xA8(r1)
-	  stfs      f1, 0xAC(r1)
-	  stfs      f0, 0xB0(r1)
-	  lwz       r3, 0xA8(r1)
-	  lwz       r0, 0xAC(r1)
-	  stw       r3, 0xC(r30)
-	  stw       r0, 0x10(r30)
-	  lwz       r0, 0xB0(r1)
-	  stw       r0, 0x14(r30)
-
-	.loc_0x3DC:
-	  lwz       r0, 0x19C(r1)
-	  lfd       f31, 0x190(r1)
-	  lfd       f30, 0x188(r1)
-	  lfd       f29, 0x180(r1)
-	  lfd       f28, 0x178(r1)
-	  lfd       f27, 0x170(r1)
-	  lfd       f26, 0x168(r1)
-	  lfd       f25, 0x160(r1)
-	  lfd       f24, 0x158(r1)
-	  lfd       f23, 0x150(r1)
-	  lwz       r31, 0x14C(r1)
-	  lwz       r30, 0x148(r1)
-	  lwz       r29, 0x144(r1)
-	  addi      r1, r1, 0x198
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
