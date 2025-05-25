@@ -273,14 +273,14 @@ f64 x, y;
 	   implementation defined.  */
 	// take one:
 	if (((((s32)hx >> 31) + 1) | yisint) == 0) {
-		errno = 33;
+		errno = EDOM;
 		return (f64)*__float_nan;
 	};
 
 	// closer?
 	/*  n = ((s32)hx >> 31) + 1;
 	if((n|yisint)==0){
-	    errno = 33; return (f64) __float_nan;
+	    errno = EDOM; return (f64) __float_nan;
 	    };*/
 
 	/* |y| is huge */

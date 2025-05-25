@@ -18,6 +18,7 @@ extern "C" {
 #define INFINITY (*(f32*)__float_huge)
 #define NAN      (*(f32*)__float_nan)
 #define HUGE_VAL (*(f64*)__double_huge)
+#define DBL_NAN  (*(f64*)__double_nan)
 
 #define LONG_TAU   6.2831854820251465
 #define TAU        6.2831855f
@@ -38,9 +39,10 @@ extern "C" {
 
 #endif
 
-extern const f32 __float_nan[];
 extern const f32 __float_huge[];
+extern const f32 __float_nan[];
 extern const f64 __double_huge[];
+extern const f64 __double_nan[];
 
 f64 cos(f64);
 f32 cosf(f32);
