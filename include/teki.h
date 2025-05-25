@@ -528,6 +528,9 @@ struct YTeki : public NTeki {
 		PTCL_Unk4 = 4,
 		PTCL_Unk5 = 5,
 		PTCL_Unk6 = 6,
+		PTCL_Unk7 = 7,
+		PTCL_Unk8 = 8,
+		PTCL_COUNT,
 	};
 
 	YTeki();

@@ -391,6 +391,8 @@ struct particleGenerator : public zenList {
 		pmSwitch(set, PTCLFLAG_UseNewtonField);
 	}
 
+	f32 getNewtonFieldFrc() { return mNewtonFieldStrength; }
+
 	void setOrientedConstZAxis(bool set) { _68.m2 = set; }
 
 	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
@@ -429,11 +431,6 @@ struct particleGenerator : public zenList {
 		f32 cos2 = cosf(angle2);
 		unitVec.set(sin1 * cos2, sin1 * sin2, cos1);
 	}
-
-	/*
-	    These are still to be made/assigned from the DLL:
-	    f32 getNewtonFieldFrc();
-	*/
 
 	// _00     = VTBL
 	// _00-_0C = zenList

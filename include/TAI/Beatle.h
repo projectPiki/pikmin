@@ -11,9 +11,45 @@
 #include "TAI/Animation.h"
 #include "YaiStrategy.h"
 #include "zen/CallBack.h"
+#include "zen/particle.h"
 #include "PaniAnimator.h"
+#include "SoundID.h"
+#include "PlayerState.h"
+#include "iterator.h"
+#include "PikiMgr.h"
+#include "Pcam/CameraManager.h"
+#include "RumbleMgr.h"
 
 /////////// Armored Cannon Beetle AI Actions ///////////
+
+BEGIN_ENUM_TYPE(TAIbeatleFloatParms)
+enum {
+	FlickingTime = TPF_COUNT,
+	AttackRange,
+	Unk2,
+	SuctionAngle,
+	SuctionRadius,
+	COUNT,
+} END_ENUM_TYPE;
+
+BEGIN_ENUM_TYPE(TAIbeatleStateID)
+enum {
+	Dying,
+	Initializing,
+	Unk2,
+	Unk3,
+	Unk4,
+	Unk5,
+	Unk6,
+	Unk7,
+	Unk8,
+	Unk9,
+	Unk10,
+	Unk11,
+	Unk12,
+	Unk13,
+	COUNT,
+} END_ENUM_TYPE;
 
 /*
  * @brief TODO
@@ -67,20 +103,10 @@ struct TAIbeatleAnimation : public TAIanimation {
 
 /**
  * @brief TODO
+ *
+ * @note Defined in TAIbeatle.cpp
  */
-struct TAIAinitBeatle : public TaiAction {
-	inline TAIAinitBeatle() // TODO: this is a guess
-	    : TaiAction(-1)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
+struct TAIAinitBeatle;
 
 /**
  * @brief TODO
@@ -91,7 +117,7 @@ struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
 	{
 	}
 
-	virtual f32 getRange(Teki&); // _20
+	virtual f32 getRange(Teki& teki) { return teki.getParameterF(TPF_AttackRange); } // _20
 
 	// _04     = VTBL
 	// _00-_08 = TAIAcheckInsideRangePiki?
@@ -102,12 +128,12 @@ struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
  * @brief TODO
  */
 struct TAIAdisableStick : public TaiAction {
-	inline TAIAdisableStick() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAdisableStick(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual void start(Teki&); // _08
+	virtual void start(Teki& teki) { teki.disableStick(); } // _08
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -123,7 +149,20 @@ struct TAIAflickingBeatle : public TAIAflicking {
 	{
 	}
 
-	virtual void flick(Teki&); // _1C
+	virtual void flick(Teki& teki) // _1C
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			// why are the offsets wrong ;;
+			teki.flick(InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
+			                         getFlickDirection(teki)),
+			           InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
+			                         getFlickDirection(teki)));
+
+			effectMgr->create(EffectMgr::EFF_BigDustRing, teki.getPosition(), nullptr, nullptr);
+		}
+
+		u32 bad;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAflicking?
@@ -132,38 +171,277 @@ struct TAIAflickingBeatle : public TAIAflicking {
 
 /**
  * @brief TODO
+ *
+ * @note Defined in TAIbeatle.cpp
  */
-struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
-	TAIAflickingAfterMotionLoopBeatle(int nextState, int motionIdx) // TODO: check this when used
-	    : TAIAflickingAfterMotionLoop(nextState, motionIdx, 0.0f)
-	{
-	}
-
-	virtual void start(Teki&);       // _08
-	virtual bool act(Teki&);         // _10
-	virtual f32 getFrameMax(Teki&);  // _1C
-	virtual bool permitFlick(Teki&); // _20
-
-	// _04     = VTBL
-	// _00-_0C = TAIAflickingAfterMotionLoop?
-	// TODO: members
-};
+struct TAIAflickingAfterMotionLoopBeatle;
 
 /**
  * @brief TODO
  */
 struct TAIArockAttack : public TAIAreserveMotion {
-	inline TAIArockAttack() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIArockAttack(int nextState, int p2, int motionIdx) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionIdx)
 	{
+		_0C = nextState;
+		_10 = p2;
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+
+		teki.setBiteSwitch(false);
+		teki.setCreaturePointer(2, nullptr);
+		teki.setPtclGenPtr(YTeki::PTCL_Unk6, nullptr);
+		teki.setPtclGenPtr(YTeki::PTCL_Unk7, nullptr);
+
+		if (teki.isNaviWatch()) {
+			playerState->mResultFlags.setOn(RESFLAG_Beatle);
+		}
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		bool result = false;
+		bool doAct  = TAIAreserveMotion::act(teki);
+
+		if (doAct) {
+			zen::particleGenerator* ptclGen;
+			CollPart* nozzlePart = teki.mCollInfo->getSphere('slot');
+
+			Vector3f suckPosition;
+			Vector3f suckPartSep;
+			Vector3f suckNormal;
+
+			suckPosition = teki.getPosition();
+			suckPosition.x += teki.getParameterF(TAIbeatleFloatParms::SuctionRadius) * sinf(teki.mFaceDirection);
+			suckPosition.y += 53.0f;
+			suckPosition.z += teki.getParameterF(TAIbeatleFloatParms::SuctionRadius) * cosf(teki.mFaceDirection);
+
+			suckPartSep.set(suckPosition - nozzlePart->mCentre);
+			if (zen::RoundOff(teki.mTekiAnimator->mAnimationCounter) == 1) {
+				ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_SuckAir1, suckPosition, nullptr, nullptr);
+				teki.setPtclGenPtr(YTeki::PTCL_Unk6, ptclGen);
+
+				ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_SuckAir2, suckPosition, nullptr, nullptr);
+				if (ptclGen != nullptr) {
+					Vector3f startPos;
+					Vector3f suckNormal;
+
+					startPos.set(nozzlePart->mCentre.x, nozzlePart->mCentre.y - 15.0f, nozzlePart->mCentre.z);
+
+					suckNormal.set(suckPosition - startPos);
+					suckNormal.normalize();
+					suckNormal.multiply(-4.0f);
+
+					ptclGen->setOrientedNormalVector(suckNormal);
+					ptclGen->setAirField(suckNormal, true);
+
+					teki.setPtclGenPtr(YTeki::PTCL_Unk7, ptclGen);
+				}
+			}
+
+			suckNormal.set(suckPartSep);
+			suckNormal.normalize();
+			ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk6);
+			if (ptclGen != nullptr) {
+				Vector3f attractorPos;
+				attractorPos.set(nozzlePart->mCentre + suckNormal * -30.0f);
+
+				ptclGen->setNewtonField(attractorPos, ptclGen->getNewtonFieldFrc(), true);
+			}
+
+			ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk7);
+			if (ptclGen != nullptr) {
+				Vector3f particleNormal;
+				particleNormal.set(suckNormal);
+				particleNormal.multiply(-7.0f);
+				ptclGen->setOrientedNormalVector(particleNormal);
+				ptclGen->setAirField(particleNormal, true);
+			}
+
+			if (zen::RoundOff(teki.mTekiAnimator->mAnimationCounter) > 4 && teki.getPtclGenPtr(YTeki::PTCL_Unk6) != nullptr) {
+				Iterator pikiIter(pikiMgr);
+				CI_LOOP(pikiIter)
+				{
+					Creature* piki = *pikiIter;
+					if (piki == nullptr || !piki->isAlive()) {
+						continue;
+					}
+
+					Vector3f pikiSlotSep(piki->getPosition() - nozzlePart->mCentre);
+					if (suckPartSep.DP(pikiSlotSep) > 0.0f) {
+						f32 distanceToSuckPos = suckPartSep.length();
+						f32 distanceToPiki    = pikiSlotSep.length();
+						if (distanceToPiki < distanceToSuckPos) {
+							if (distanceToSuckPos != 0.0f) {
+								suckPartSep.div(distanceToSuckPos);
+							}
+
+							if (distanceToPiki != 0.0f) {
+								pikiSlotSep.div(distanceToPiki);
+							}
+
+							if (suckPartSep.DP(pikiSlotSep) > cosf(teki.getParameterF(TAIbeatleFloatParms::SuctionAngle) * PI / 180.0f)) {
+								Vector3f knockbackVel;
+								knockbackVel.set(-pikiSlotSep.x * 300.0f, -pikiSlotSep.y * 300.0f, -pikiSlotSep.z * 300.0f);
+
+								InteractWind wind(&teki, knockbackVel, 0.0f, nullptr);
+								piki->stimulate(wind);
+							}
+						}
+					}
+				}
+			}
+
+			if (teki.mCurrentAnimEvent == KEY_Action0) {
+				teki.setBiteSwitch(true);
+			}
+
+			if (teki.mCurrentAnimEvent == KEY_Action1) {
+				teki.setBiteSwitch(false);
+			}
+
+			if (teki.getBiteSwitch() != false && teki.getCreaturePointer(2) == nullptr && nozzlePart != nullptr) {
+				Iterator pikiIter(pikiMgr);
+				CI_LOOP(pikiIter)
+				{
+					Creature* piki = *pikiIter;
+					if (piki == nullptr || !piki->isAlive()) {
+						continue;
+					}
+
+					Vector3f pikiSlotSep;
+					pikiSlotSep.set(nozzlePart->mCentre - piki->getPosition());
+					if (pikiSlotSep.length() < teki.getParameterF(TAIbeatleFloatParms::Unk2)) {
+
+						Matrix4f mtx = nozzlePart->getMatrix();
+
+						Vector3f emitDir;
+						emitDir.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
+
+						teki.setCreaturePointer(2, piki);
+
+						// somehow this stuff gets created way higher up
+						InteractSwallow swallow(&teki, nozzlePart, 0);
+						piki->stimulate(swallow);
+
+						ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk6);
+						if (ptclGen != nullptr) {
+							ptclGen->forceFinish();
+						}
+
+						ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk7);
+						if (ptclGen != nullptr) {
+							ptclGen->forceFinish();
+						}
+
+						ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_ShootRockHalo, nozzlePart->mCentre, nullptr, nullptr);
+						if (ptclGen != nullptr) {
+							ptclGen->setEmitDir(emitDir);
+							ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+						}
+
+						ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_ShootRockSpecks, nozzlePart->mCentre, nullptr, nullptr);
+						if (ptclGen != nullptr) {
+							ptclGen->setEmitDir(emitDir);
+							ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+						}
+
+						teki.playEventSound(&teki, SE_KABUTO_TUMARI);
+						result = true;
+						break;
+					}
+				}
+
+				if (teki.mCurrentAnimEvent == KEY_Action3) {
+					teki.flick();
+				}
+
+				if (teki.mCurrentAnimEvent == KEY_Action2) {
+					CollPart* kutiPart = teki.mCollInfo->getSphere('kuti');
+					if (kutiPart != nullptr) {
+						Matrix4f mtx = kutiPart->getMatrix();
+
+						Vector3f vec1;
+						Vector3f vec2;
+
+						Teki* rock = teki.spawnTeki(teki.getParameterI(TPI_SpawnType));
+						if (rock != nullptr) {
+							vec2.set(mtx.mMtx[0][0], mtx.mMtx[1][0], mtx.mMtx[2][0]);
+							vec1.set(kutiPart->mCentre + vec2 * 60.0f);
+
+							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockClouds, vec1, nullptr, nullptr);
+							if (ptclGen != nullptr) {
+								ptclGen->setEmitDir(vec2);
+							}
+
+							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockSpray, vec1, nullptr, nullptr);
+							if (ptclGen != nullptr) {
+								ptclGen->setEmitDir(vec2);
+							}
+
+							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_RockBlast, vec1, nullptr, nullptr);
+							if (ptclGen != nullptr) {
+								ptclGen->setEmitDir(vec2);
+							}
+
+							rock->setPersonalityI(TekiPersonality::INT_Parameter0, 1);
+
+							Vector3f spawnPos;
+							teki.outputSpawnPosition(spawnPos);
+							rock->inputPosition(spawnPos);
+
+							Vector3f velocity;
+							teki.outputDirectionVector(velocity);
+							velocity.scale(teki.getParameterF(TPF_Scale) * teki.getParameterF(TPF_SpawnVelocity));
+							rock->inputVelocity(velocity);
+							rock->startAI(0);
+
+							teki.playEventSound(&teki, SE_KABUTO_SHOT);
+							cameraMgr->startVibrationEvent(3, teki.getPosition());
+							rumbleMgr->start(RUMBLE_Unk14, 0, teki.getPosition());
+						} else {
+							Matrix4f kutiMtx = kutiPart->getMatrix();
+
+							Vector3f flickEmitDir;
+							flickEmitDir.set(kutiMtx.mMtx[0][0], kutiMtx.mMtx[1][0], kutiMtx.mMtx[2][0]);
+
+							ptclGen = effectMgr->create(EffectMgr::EFF_Beatle_Flick1, kutiPart->mCentre, nullptr, nullptr);
+							if (ptclGen != nullptr) {
+								ptclGen->setEmitPosPtr(&kutiPart->mCentre);
+								ptclGen->setEmitDir(flickEmitDir);
+							}
+						}
+					}
+				}
+
+				if (teki.getCreaturePointer(2) == nullptr && teki.mCurrentAnimEvent == KEY_LoopEnd) {
+					teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				}
+
+				if (teki.mCurrentAnimEvent == KEY_Finished) {
+					result = true;
+				}
+			}
+		}
+
+		if (result) {
+			teki.setPtclGenPtr(YTeki::PTCL_Unk6, nullptr);
+			teki.setPtclGenPtr(YTeki::PTCL_Unk7, nullptr);
+		}
+
+		return result;
+
+		u32 bad[25];
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
+	u32 _0C;
+	u32 _10;
 };
 
 /**
@@ -175,8 +453,8 @@ struct TAIAinsideOptionalRangeBeatle : public TAIAinsideOptionalRange {
 	{
 	}
 
-	virtual bool setTargetPosition(Teki&); // _1C
-	virtual f32 getOptionalRange(Teki&);   // _20
+	virtual bool setTargetPosition(Teki& teki) { setTargetPositionCreature(teki); }                           // _1C
+	virtual f32 getOptionalRange(Teki& teki) { return teki.getParameterF(TAIbeatleFloatParms::AttackRange); } // _20
 
 	// _04     = VTBL
 	// _00-_08 = TAIAinsideOptionalRange?
@@ -187,12 +465,31 @@ struct TAIAinsideOptionalRangeBeatle : public TAIAinsideOptionalRange {
  * @brief TODO
  */
 struct TAIAvisiblePikiBeatle : public TaiAction {
-	inline TAIAvisiblePikiBeatle() // TODO: this is a guess
-	    : TaiAction(-1)
+	inline TAIAvisiblePikiBeatle(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
 	{
 	}
 
-	virtual bool act(Teki&); // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		bool result = false;
+
+		Iterator pikiIter(pikiMgr);
+		CI_LOOP(pikiIter)
+		{
+			Creature* piki = *pikiIter;
+			if (teki.visibleCreature(*piki) && piki->getStickObject() != &teki) {
+				if (teki.getPosition().distance(piki->getPosition()) > 100.0f) {
+					teki.setCreaturePointer(0, piki);
+
+					result = true;
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -203,12 +500,20 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
  * @brief TODO
  */
 struct TAIAdamageBeatle : public TAIAdamage {
-	inline TAIAdamageBeatle() // TODO: this is a guess
-	    : TAIAdamage(-1, false)
+	inline TAIAdamageBeatle(int nextState) // TODO: this is a guess
+	    : TAIAdamage(nextState, true)
 	{
 	}
 
-	virtual bool judgeDamage(Teki&); // _1C
+	virtual bool judgeDamage(Teki& teki) // _1C
+	{
+		if (teki._344 == 0) {
+			return true;
+		}
+
+		teki.mStoredDamage = 0.0f;
+		return false;
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAdying?
@@ -219,13 +524,34 @@ struct TAIAdamageBeatle : public TAIAdamage {
  * @brief TODO
  */
 struct TAIAdyingBeatle : public TAIAdying {
-	inline TAIAdyingBeatle() // TODO: this is a guess
-	    : TAIAdying(-1, -1)
+	inline TAIAdyingBeatle(int nextState, int motionIdx) // TODO: this is a guess
+	    : TAIAdying(nextState, motionIdx)
 	{
 	}
 
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAdying::start(teki);
+
+		for (int i = 0; i < YTeki::PTCL_COUNT; i++) {
+			zen::particleGenerator* ptclGen = teki.getPtclGenPtr((YTeki::ptclIndexFlag)i);
+			if (ptclGen != nullptr) {
+				ptclGen->finish();
+				teki.setPtclGenPtr((YTeki::ptclIndexFlag)i, nullptr);
+			}
+		}
+
+		playerState->mResultFlags.setSeen(RESFLAG_Beatle);
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			teki.playEventSound(&teki, SE_KABUTO_DEAD);
+		}
+
+		TAIAdying::act(teki);
+	}
 
 	// _04     = VTBL
 	// _00-_0C = TAIAdying?

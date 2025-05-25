@@ -403,8 +403,8 @@ struct TAIAturnHome : public TAIAturnOccasion {
  * @brief TODO
  */
 struct TAIAgoingHome : public TAIAreserveMotion {
-	inline TAIAgoingHome() // TODO: this is a guess
-	    : TAIAreserveMotion(-1, -1)
+	inline TAIAgoingHome(int nextState, int motionIdx) // TODO: this is a guess
+	    : TAIAreserveMotion(nextState, motionIdx)
 	{
 	}
 
