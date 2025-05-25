@@ -378,7 +378,7 @@ config.libs = [
     },
     {
         "lib": "hvqm4dec",
-        "cflags": cflags_base,
+        "cflags": [*cflags_base, "-inline deferred"],
         "mw_version": "GC/1.2.5",
         "progress_category" : "hvqm4dec",
         "objects": [
