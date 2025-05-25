@@ -1,7 +1,7 @@
 #include "MovSampleSection.h"
 #include "Dolphin/gx.h"
 #include "jaudio/app_inter.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "Graphics.h"
 #include "FlowController.h"
 #include "sysNew.h"

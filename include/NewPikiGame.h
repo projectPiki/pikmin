@@ -6,7 +6,7 @@
 #include "MemStat.h"
 #include "Section.h"
 #include "MapMgr.h"
-#include "jaudio/PikiScene.h"
+#include "jaudio/piki_scene.h"
 #include "Interface.h"
 
 /**

@@ -2,10 +2,10 @@
 
 #include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
-#include "jaudio/PikiBgm.h"
-#include "jaudio/PikiDemo.h"
+#include "jaudio/piki_bgm.h"
+#include "jaudio/pikidemo.h"
 #include "jaudio/verysimple.h"
-#include "jaudio/PikiInter.h"
+#include "jaudio/pikiinter.h"
 
 static int process_stack[4];
 

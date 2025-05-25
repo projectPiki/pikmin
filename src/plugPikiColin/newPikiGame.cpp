@@ -6,7 +6,7 @@
 #include "Interface.h"
 #include "sysNew.h"
 #include "timers.h"
-#include "jaudio/PikiDemo.h"
+#include "jaudio/pikidemo.h"
 #include "KIO.h"
 #include "DayMgr.h"
 #include "GameStat.h"

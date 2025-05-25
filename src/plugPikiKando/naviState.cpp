@@ -31,7 +31,7 @@
 #include "zen/DrawContainer.h"
 #include "GameCoreSection.h"
 
-#include "jaudio/PikiDemo.h"
+#include "jaudio/pikidemo.h"
 #include "GoalItem.h"
 #include "UtEffect.h"
 #include "CPlate.h"
