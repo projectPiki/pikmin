@@ -6,10 +6,12 @@
 #include "jaudio/playercall.h"
 #include "jaudio/jamosc.h"
 
+#define SEQ_SIZE             (256)
 #define ROOT_OUTER_SIZE      (256)
 #define ROOTSEQ_SIZE         (16)
 #define FREE_SEQP_QUEUE_SIZE (256)
 
+static seqp_ seq[SEQ_SIZE];
 static seqp_* ROOT_OUTER[ROOT_OUTER_SIZE]; // TODO: Just a guess
 static seqp_* rootseq[ROOTSEQ_SIZE];
 static seqp_* FREE_SEQP_QUEUE[FREE_SEQP_QUEUE_SIZE];
@@ -25,53 +27,24 @@ static u32 SEQ_REMAIN;
  */
 void Jaq_Reset(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x8032
-	  subi      r10, r3, 0x560
-	  li        r0, 0x100
-	  stwu      r1, -0x8(r1)
-	  addi      r9, r4, 0
-	  addi      r8, r4, 0
-	  addi      r7, r4, 0
-	  addis     r6, r10, 0x4
-	  li        r3, 0
-	  mtctr     r0
+	int i;
 
-	.loc_0x34:
-	  add       r11, r10, r4
-	  add       r5, r6, r3
-	  stb       r9, 0x3C(r11)
-	  addi      r3, r3, 0x4
-	  addi      r4, r4, 0x434
-	  sth       r8, 0x3A0(r11)
-	  stb       r7, 0x39E(r11)
-	  stw       r11, 0x3840(r5)
-	  bdnz+     .loc_0x34
-	  li        r6, 0
-	  li        r4, 0x100
-	  li        r0, 0x10
-	  stw       r6, 0x2C38(r13)
-	  addis     r5, r10, 0x4
-	  li        r3, 0
-	  stw       r6, 0x2C3C(r13)
-	  stw       r4, 0x2C40(r13)
-	  mtctr     r0
+	for (i = 0; i < SEQ_SIZE; ++i) {
+		seq[i]._3C         = 0;
+		seq[i]._3A0        = 0;
+		seq[i]._39E        = 0;
+		FREE_SEQP_QUEUE[i] = &seq[i];
+	}
 
-	.loc_0x7C:
-	  add       r4, r5, r3
-	  addi      r3, r3, 0x4
-	  stw       r6, 0x3800(r4)
-	  bdnz+     .loc_0x7C
-	  bl        -0x396C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	BACK_P     = 0;
+	GET_P      = 0;
+	SEQ_REMAIN = FREE_SEQP_QUEUE_SIZE;
+
+	for (i = 0; i < ROOTSEQ_SIZE; ++i) {
+		rootseq[i] = NULL;
+	}
+
+	Jam_InitRegistTrack();
 }
 
 /*
@@ -502,24 +475,17 @@ unknown Jaq_SetSeqData_Limit(seqp_*, u8*, u32, unknown, unknown)
  * Address:	80014680
  * Size:	00002C
  */
-void Jaq_SetBankNumber(seqp_*, u8)
+BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 {
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x278(r3)
-	  cmplwi    r3, 0
-	  rlwinm    r5,r0,0,24,31
-	  bne-      .loc_0x18
-	  li        r3, 0
-	  blr
+	u8 lo;
 
-	.loc_0x18:
-	  rlwinm    r0,r4,8,16,23
-	  or        r0, r0, r5
-	  sth       r0, 0x278(r3)
-	  li        r3, 0x1
-	  blr
-	*/
+	// Let's get ahead of ourselves here.
+	lo = track->_26C[6] & 0xFF;
+	if (!track) {
+		return FALSE;
+	}
+	track->_26C[6] = (bankNum << 8) | lo;
+	return TRUE;
 }
 
 static s32 Jaq_RootCallback(void*);
