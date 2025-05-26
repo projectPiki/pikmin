@@ -18,7 +18,7 @@ Osc_definition OSC_DEF  = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
  * Address:	80014CA0
  * Size:	000090
  */
-void Osc_Update_Param(seqp_* seq, u8 id, f32 val)
+void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 {
 	// silly
 	u8* REF_param_1;
@@ -28,22 +28,22 @@ void Osc_Update_Param(seqp_* seq, u8 id, f32 val)
 
 	switch (id) {
 	case 6:
-		seq->_350[0] = val;
+		track->_350[0] = val;
 		break;
 	case 7:
-		seq->_344 = val;
+		track->_344 = val;
 		break;
 	case 8:
-		seq->_350[1] = val;
+		track->_350[1] = val;
 		break;
 	case 9:
-		seq->_350[6] = val;
+		track->_350[6] = val;
 		break;
 	case 10:
-		seq->_350[3] = val;
+		track->_350[3] = val;
 		break;
 	case 11:
-		seq->_350[7] = val;
+		track->_350[7] = val;
 		break;
 	}
 }
@@ -53,11 +53,11 @@ void Osc_Update_Param(seqp_* seq, u8 id, f32 val)
  * Address:	80014D40
  * Size:	00003C
  */
-void Osc_Setup_Vibrato(seqp_* seq, u8 id)
+void Osc_Setup_Vibrato(seqp_* track, u8 id)
 {
 	for (int i = 0; i < 3; i++) {
-		(seq[id])._33C = VIBRATO_DEF._00;
-		(seq[id])._340 = VIBRATO_DEF._04;
+		(track[id])._33C = VIBRATO_DEF._00;
+		(track[id])._340 = VIBRATO_DEF._04;
 	}
 	/*
 	.loc_0x0:
@@ -86,11 +86,11 @@ void Osc_Setup_Vibrato(seqp_* seq, u8 id)
  * Address:	80014D80
  * Size:	00003C
  */
-void Osc_Setup_Tremolo(seqp_* seq, u8 id)
+void Osc_Setup_Tremolo(seqp_* track, u8 id)
 {
 	for (int i = 0; i < 3; i++) {
-		(seq[id])._33C = TREMOLO_DEF._00;
-		(seq[id])._340 = TREMOLO_DEF._04;
+		(track[id])._33C = TREMOLO_DEF._00;
+		(track[id])._340 = TREMOLO_DEF._04;
 	}
 	/*
 	.loc_0x0:
@@ -119,17 +119,17 @@ void Osc_Setup_Tremolo(seqp_* seq, u8 id)
  * Address:	80014DC0
  * Size:	000064
  */
-void Osc_Setup_Simple(seqp_* seq, u8 id)
+void Osc_Setup_Simple(seqp_* track, u8 id)
 {
 	switch (id) {
 	case 0:
-		Osc_Setup_Vibrato(seq, 1);
+		Osc_Setup_Vibrato(track, 1);
 		break;
 	case 1:
-		Osc_Setup_Tremolo(seq, 0);
+		Osc_Setup_Tremolo(track, 0);
 		break;
 	case 2:
-		Osc_Setup_Tremolo(seq, 1);
+		Osc_Setup_Tremolo(track, 1);
 		break;
 	}
 }
@@ -139,10 +139,10 @@ void Osc_Setup_Simple(seqp_* seq, u8 id)
  * Address:	80014E40
  * Size:	000010
  */
-void Osc_Clear_Overwrite(seqp_* seq)
+void Osc_Clear_Overwrite(seqp_* track)
 {
-	seq->_370[0] = 15;
-	seq->_370[1] = 15;
+	track->_370[0] = 15;
+	track->_370[1] = 15;
 }
 
 /*
@@ -150,13 +150,13 @@ void Osc_Clear_Overwrite(seqp_* seq)
  * Address:	80014E60
  * Size:	00004C
  */
-void Osc_Init_Env(seqp_* seq)
+void Osc_Init_Env(seqp_* track)
 {
 	for (int i = 0; i < 3; i++) {
-		(seq[i])._33C = ENVELOPE_DEF._00;
+		(track[i])._33C = ENVELOPE_DEF._00;
 	}
 
-	Osc_Clear_Overwrite(seq);
+	Osc_Clear_Overwrite(track);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -188,19 +188,19 @@ void Osc_Init_Env(seqp_* seq)
  * Address:	80014EC0
  * Size:	000094
  */
-void Osc_Setup_SimpleEnv(seqp_* seq, u8 id, u32 val)
+void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 {
 	switch (id) {
 	case 0:
 		for (int i = 0; i < 3; i++) {
-			(seq[i])._33C = ENVELOPE_DEF._00;
+			(track[i])._33C = ENVELOPE_DEF._00;
 		}
 
-		seq->_348 = Jam_OfsToAddr(seq, val);
+		track->_348 = Jam_OfsToAddr(track, val);
 		break;
 
 	case 1:
-		seq->_34C = Jam_OfsToAddr(seq, val);
+		track->_34C = Jam_OfsToAddr(track, val);
 		break;
 	}
 	/*
@@ -258,28 +258,28 @@ void Osc_Setup_SimpleEnv(seqp_* seq, u8 id, u32 val)
  * Address:	80014F60
  * Size:	0000B0
  */
-void Osc_Setup_ADSR(seqp_* seq, s16* addr)
+void Osc_Setup_ADSR(seqp_* track, s16* addr)
 {
 	for (int i = 0; i < 3; i++) {
-		(seq[i])._33C = ENVELOPE_DEF._00;
+		(track[i])._33C = ENVELOPE_DEF._00;
 	}
 
-	seq->_348 = &seq->_372[0]; // _372 seems to be a pair of a 0x18 big struct
-	seq->_34C = &seq->_372[9];
+	track->_348 = &track->_372[0]; // _372 seems to be a pair of a 0x18 big struct
+	track->_34C = &track->_372[9];
 
 	for (int i = 0; i < 3; i++) {
-		seq->_372[i] = ADS_TABLE[i];
+		track->_372[i] = ADS_TABLE[i];
 	}
 
 	for (int i = 0; i < 3; i++) {
-		seq->_372[9 + i] = ADS_TABLE[i];
+		track->_372[9 + i] = ADS_TABLE[i];
 	}
 
-	seq->_372[1]  = addr[0];
-	seq->_372[4]  = addr[1];
-	seq->_372[7]  = addr[2];
-	seq->_372[8]  = addr[3];
-	seq->_372[13] = addr[4];
+	track->_372[1]  = addr[0];
+	track->_372[4]  = addr[1];
+	track->_372[7]  = addr[2];
+	track->_372[8]  = addr[3];
+	track->_372[13] = addr[4];
 
 	/*
 	.loc_0x0:
@@ -341,31 +341,31 @@ void Osc_Setup_ADSR(seqp_* seq, s16* addr)
  * Address:	80015020
  * Size:	00010C
  */
-void Osc_Setup_Full(seqp_* seq, u8 flag, u32 offs1, u32 offs2)
+void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 {
 	if (flag & 0x80) {
 		for (int i = 0; i < 3; i++) {
-			(seq[i])._33C = ENVELOPE_DEF._00;
-			(seq[i])._340 = ENVELOPE_DEF._04;
+			(track[i])._33C = ENVELOPE_DEF._00;
+			(track[i])._340 = ENVELOPE_DEF._04;
 		}
 
 		if ((flag & 0x15) == TRUE) {
-			seq->_350[flag] = 1.0f;
+			track->_350[flag] = 1.0f;
 		}
 	}
 
 	if (flag & 0x40) {
 		if (offs1 == 0) {
-			seq->_350[0] = 0;
+			track->_350[0] = 0;
 		}
-		seq->_348 = Jam_OfsToAddr(seq, offs1);
+		track->_348 = Jam_OfsToAddr(track, offs1);
 	}
 
 	if (flag & 0x20) {
 		if (offs2 == 0) {
-			seq->_350[0] = 0;
+			track->_350[0] = 0;
 		}
-		seq->_34C = Jam_OfsToAddr(seq, offs2);
+		track->_34C = Jam_OfsToAddr(track, offs2);
 	}
 	/*
 	.loc_0x0:

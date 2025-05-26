@@ -26,15 +26,15 @@ static TrackCallback JAM_CALLBACK_FUNC = NULL;
  * Address:	8000F400
  * Size:	000054
  */
-void* Jam_OfsToAddr(seqp_* seq, u32 ofs)
+void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 {
 	// TODO: What do 0, 1, and 2 mean?
-	switch (seq->_3D) {
+	switch (track->_3D) {
 	case 0:
-		return seq->_00 + ofs;
+		return track->_00 + ofs;
 	case 1:
 	case 2:
-		return FAT_GetPointer(seq->_3E, ofs);
+		return FAT_GetPointer(track->_3E, ofs);
 	}
 	return 0;
 }
@@ -44,15 +44,15 @@ void* Jam_OfsToAddr(seqp_* seq, u32 ofs)
  * Address:	8000F460
  * Size:	000054
  */
-static u8 __ByteReadOfs(seqp_* seq, u32 ofs)
+static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 {
 	// TODO: What do 0, 1, and 2 mean?
-	switch (seq->_3D) {
+	switch (track->_3D) {
 	case 0:
-		return seq->_00[ofs];
+		return track->_00[ofs];
 	case 1:
 	case 2:
-		return FAT_ReadByte(seq->_3E, ofs);
+		return FAT_ReadByte(track->_3E, ofs);
 	}
 	return 0;
 }
@@ -62,10 +62,10 @@ static u8 __ByteReadOfs(seqp_* seq, u32 ofs)
  * Address:	8000F4C0
  * Size:	000050
  */
-static u16 __WordReadOfs(seqp_* seq, u32 ofs)
+static u16 __WordReadOfs(seqp_* track, u32 ofs)
 {
 	// TODO: FIXME
-	return __ByteReadOfs(seq, ofs + 1) | (__ByteReadOfs(seq, ofs) << 8);
+	return __ByteReadOfs(track, ofs + 1) | (__ByteReadOfs(track, ofs) << 8);
 }
 
 /*
@@ -116,15 +116,15 @@ static u32 __LongReadOfs(seqp_*, u32)
  * Address:	8000F600
  * Size:	000070
  */
-static u8 __ByteRead(seqp_* seq)
+static u8 __ByteRead(seqp_* track)
 {
 	// TODO: What do 0, 1, and 2 mean?
-	switch (seq->_3D) {
+	switch (track->_3D) {
 	case 0:
-		return seq->_00[seq->_04++];
+		return track->_00[track->_04++];
 	case 1:
 	case 2:
-		return FAT_ReadByte(seq->_3E, seq->_04++);
+		return FAT_ReadByte(track->_3E, track->_04++);
 	}
 	return 0;
 }
@@ -134,9 +134,9 @@ static u8 __ByteRead(seqp_* seq)
  * Address:	8000F680
  * Size:	000048
  */
-static u16 __WordRead(seqp_* seq)
+static u16 __WordRead(seqp_* track)
 {
-	return __ByteRead(seq) | (__ByteRead(seq) << 8);
+	return __ByteRead(track) | (__ByteRead(track) << 8);
 }
 
 /*
@@ -189,12 +189,12 @@ static void __32Read(seqp_*)
  * Address:	8000F740
  * Size:	0000D0
  */
-static BOOL __ConditionCheck(seqp_* seq, u8 param_2)
+static BOOL __ConditionCheck(seqp_* track, u8 param_2)
 {
 	BOOL result;
 	u16 uVar1;
 
-	uVar1  = Jam_ReadRegDirect(seq, 3);
+	uVar1  = Jam_ReadRegDirect(track, 3);
 	result = FALSE;
 
 	switch (param_2 & 0x0f) {
@@ -235,15 +235,15 @@ static BOOL __ConditionCheck(seqp_* seq, u8 param_2)
  * Address:	8000F820
  * Size:	000090
  */
-int Jam_SEQtimeToDSPtime(seqp_* seq, s32 param_2, u8 param_3)
+int Jam_SEQtimeToDSPtime(seqp_* track, s32 param_2, u8 param_3)
 {
 	f32 result;
 
 	result = (f32)param_2 * (f32)param_3 / 100.0f;
-	if (seq->_33C == 1) {
-		result = result / seq->_334;
+	if (track->_33C == 1) {
+		result = result / track->_334;
 	} else {
-		result = result * 120.0f / seq->_338;
+		result = result * 120.0f / track->_338;
 	}
 	return result;
 }
@@ -470,24 +470,24 @@ void Jam_WriteRegDirect(seqp_*, u8, u16)
  * Address:	8000FB60
  * Size:	000098
  */
-static u32 LoadTbl(seqp_* seq, u32 param_2, u32 param_3, u32 param_4)
+static u32 LoadTbl(seqp_* track, u32 param_2, u32 param_3, u32 param_4)
 {
 	// TODO: FIXME
 	u32 result;
 
 	switch (param_4) {
 	case 2:
-		result = __ByteReadOfs(seq, param_2 + param_3 * 1);
+		result = __ByteReadOfs(track, param_2 + param_3 * 1);
 		break;
 	case 3: // Without this case statement, the compiler-generated conditions look crazy.
 	case 4:
-		result = __WordReadOfs(seq, param_2 + param_3 * 2);
+		result = __WordReadOfs(track, param_2 + param_3 * 2);
 		break;
 	case 6:
-		result = __24ReadOfs(seq, param_2 + param_3 * 3);
+		result = __24ReadOfs(track, param_2 + param_3 * 3);
 		break;
 	case 8:
-		result = __LongReadOfs(seq, param_2 + param_3 * 4);
+		result = __LongReadOfs(track, param_2 + param_3 * 4);
 		break;
 	}
 	return result;
@@ -3880,14 +3880,14 @@ static u32 Cmd_PanPowSet()
 static u32 Cmd_IIRSet()
 {
 	int i;
-	seqp_* seq;
+	seqp_* track;
 
-	seq = SEQ_P;
+	track = SEQ_P;
 	for (i = 0; i < 4; ++i) {
-		seq->_14C[i]._04 = SEQ_ARG._00[i] / 32768.0f;
-		seq->_14C[i]._00 = seq->_14C[i]._04;
-		seq->_14C[i]._0C = 0.0f;
-		seq->_14C[i]._08 = 1.0f;
+		track->_14C[i]._04 = SEQ_ARG._00[i] / 32768.0f;
+		track->_14C[i]._00 = track->_14C[i]._04;
+		track->_14C[i]._0C = 0.0f;
+		track->_14C[i]._08 = 1.0f;
 	}
 	return 0;
 }
