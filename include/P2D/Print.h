@@ -41,9 +41,15 @@ struct P2DPrint {
 	u32 ColourTou32(const Colour& colour) { return colour.r << 24 | colour.g << 16 | colour.b << 8 | colour.a; }
 
 	// DLL inlines:
-	void setFontSize(int, int);
-	f32 getCursorH();
-	f32 getCursorV();
+	void setFontSize(int width, int height)
+	{
+		mFontWidth  = width > 0 ? width : 0;
+		mFontHeight = height > 0 ? height : 0;
+	}
+
+	f32 getCursorH() { return mCursorX; }
+
+	f32 getCursorV() { return mCursorY; }
 
 	P2DFont* mFont;           // _00
 	int mFontSpacing;         // _04

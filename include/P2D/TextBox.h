@@ -63,9 +63,10 @@ struct P2DTextBox : public P2DPane {
 	Colour mGradColor;            // _F8
 	P2DTextBoxHBinding mHBinding; // _FC
 	P2DTextBoxVBinding mVBinding; // _100
-	s16 _104;                     // _104
-	s16 _106;                     // _106
-	u8 _108[0x4];                 // _108, unknown
+	s16 mSpacing;                 // _104
+	s16 mLeading;                 // _106
+	s16 mFontWidth;			      // _108
+	s16 mFontHeight;			  // _10A
 	char* mText;                  // _10C
 	s16 _110;                     // _110
 	s16 _112;                     // _112
