@@ -42,13 +42,13 @@ void Jac_Debug_ActionEntry(void)
 void __SetVolandPan(Portargs_* arg)
 {
 	SEvent_* evt;
-	seqp_* seq;
+	seqp_* track;
 
 	evt = arg->mEvent;
-	seq = evt->_D0;
-	Jam_SetExtParam(evt->_160, seq, 1);
-	seq = evt->_D0;
-	Jam_SetExtParam(evt->_164, seq, 8);
+	track = evt->_D0;
+	Jam_SetExtParam(evt->_160, track, 1);
+	track = evt->_D0;
+	Jam_SetExtParam(evt->_164, track, 8);
 }
 
 /*

@@ -301,7 +301,7 @@ void Jac_PlayBgm(int a, int b)
 		}
 	}
 
-	seqp_* seq = Jaf_HandleToSeq(a + 3);
+	seqp_* track = Jaf_HandleToSeq(a + 3);
 
 	bgm[a]._04[0]  = 1;
 	bgm[a]._04[1]  = 1;
@@ -323,24 +323,24 @@ void Jac_PlayBgm(int a, int b)
 
 	if (a == 0) {
 		bgm[a]._45C = game_bgm_volume;
-		Jam_MuteTrack(seq, 0);
+		Jam_MuteTrack(track, 0);
 		last_crossmode = 0;
 	} else {
 		bgm[a]._45C = game_bgm_volume;
-		Jam_MuteTrack(seq, 1);
+		Jam_MuteTrack(track, 1);
 	}
 
-	Jam_SetExtParam(bgm[a]._45C, seq, 1);
-	Jam_OnExtSwitch(seq, 1);
+	Jam_SetExtParam(bgm[a]._45C, track, 1);
+	Jam_OnExtSwitch(track, 1);
 
 	// Challenge mode tempo speedup?
 	if (Jac_TellChgMode() == TRUE && Jac_GetCurrentScene() == 5) {
-		Jam_OnExtSwitch(seq, 0x40);
-		Jam_SetExtParam(1.2f, seq, 0x40);
+		Jam_OnExtSwitch(track, 0x40);
+		Jam_SetExtParam(1.2f, track, 0x40);
 	} else {
-		Jam_OffExtSwitch(seq, 0x40);
+		Jam_OffExtSwitch(track, 0x40);
 	}
-	seq->_39D = 74;
+	track->_39D = 74;
 	Jaf_PlaySeq(a + 3);
 	Jac_SetProcessStatus(9);
 
@@ -758,9 +758,8 @@ void Jac_BgmFrameWork(void)
  * Address:	80019140
  * Size:	0000BC
  */
-void Jac_MoveBgmTrackVol(int seq)
+void Jac_MoveBgmTrackVol(int)
 {
-	Jaf_HandleToSeq(seq);
 	/*
 	.loc_0x0:
 	  mflr      r0
