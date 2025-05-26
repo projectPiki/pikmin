@@ -673,11 +673,12 @@ bool MemoryCard::getCardStatus(int channel)
  */
 void MemoryCard::checkUseFile()
 {
-	OSCalendarTime calendar;
-	CARDStat stat;
-	// int unused = 0x51EB851F;
+	u32 unused = 0x51EB851F;
 	for (int i = 0; i < 127; i++) {
-		if (CARDGetStatus(mCardChannel, i, &stat) < 0) {
+		OSCalendarTime calendar;
+		CARDStat stat;
+		int bruh = mCardChannel;
+		if (CARDGetStatus(bruh, i, &stat) < 0) {
 			continue;
 		}
 		OSTime time = OSSecondsToTicks((OSTime)stat.time);
@@ -685,7 +686,7 @@ void MemoryCard::checkUseFile()
 		if (!strncmp(stat.fileName, basecardname, 15)) {
 			strcpy(mFilePath, stat.fileName);
 			mSaveFileIndex = i;
-			return;
+			break;
 		}
 
 		if (!strncmp(stat.fileName, "Pikmin", 6)) {
@@ -694,6 +695,8 @@ void MemoryCard::checkUseFile()
 			_3C = i;
 		}
 	}
+	!(unused++);
+	
 	/*
 	.loc_0x0:
 	  mflr      r0
