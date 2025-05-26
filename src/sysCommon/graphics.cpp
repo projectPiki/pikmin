@@ -138,25 +138,18 @@ void PVWPolygonColourInfo::animate(f32* data, Colour& col)
  * Address:	........
  * Size:	0000A0
  */
-f32 subExtract(f32 time, void* source, void* destination)
+f32 subExtract(f32 time, const AKeyInfo& src, const AKeyInfo& dest)
 {
-	AKeyInfo* src  = (AKeyInfo*)source;
-	AKeyInfo* dest = (AKeyInfo*)destination;
-	f32 a          = time - src->mKeyframePosition;
-	f32 b          = 1.0f / (dest->mKeyframePosition - src->mKeyframePosition);
-	f32 x          = (a * a) * b;
-	f32 c          = x;
-	f32 d          = x * b;
-	f32 y          = a * d;
-	f32 e          = y;
-	f32 f          = y * b;
+	f32 a = time - src.mKeyframePosition;
+	f32 b = 1.0f / (dest.mKeyframePosition - src.mKeyframePosition);
+	f32 c = (a * a) * b;
+	f32 d = c * b;
+	f32 y = a * d;
+	f32 e = y;
+	f32 f = y * b;
 
-	f32 g = (2.0f * f - 3.0f * d + 1.0f) * src->mValue;
-	f32 h = (-2.0f * f + 3.0f * d) * dest->mValue;
-	f32 i = (e - 2.0f * c + a) * src->mStartTangent;
-	f32 j = (e - c) * dest->mEndTangent;
-	return g + h + i + j;
-	// TODO
+	return (2.0f * f - 3.0f * d + 1.0f) * src.mValue + (-2.0f * f + 3.0f * d) * dest.mValue + (e - 2.0f * c + a) * src.mStartTangent
+	     + (e - c) * dest.mEndTangent;
 }
 
 /*
@@ -179,7 +172,7 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 	}
 
 	int idx = 0;
-	for (int i = 0; i < mAnimInfo.mSize - 1; i++) {
+	for (int i = 0; i < (int)mAnimInfo.mSize - 1; i++) {
 		if (mAnimInfo.mKeyframes[i]._00 <= value && mAnimInfo.mKeyframes[i + 1]._00 >= value) {
 			idx = i;
 			break;
@@ -187,20 +180,20 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 	}
 
 	f32 red   = subExtract(value,
-	                       &AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._04._00, mAnimInfo.mKeyframes[idx]._04._04,
-	                                 mAnimInfo.mKeyframes[idx]._04._08),
-	                       &AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._04._00,
-	                                 mAnimInfo.mKeyframes[idx + 1]._04._04, mAnimInfo.mKeyframes[idx + 1]._04._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._04._00, mAnimInfo.mKeyframes[idx]._04._04,
+	                                mAnimInfo.mKeyframes[idx]._04._08),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._04._00,
+	                                mAnimInfo.mKeyframes[idx + 1]._04._04, mAnimInfo.mKeyframes[idx + 1]._04._08));
 	f32 green = subExtract(value,
-	                       &AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._14._00, mAnimInfo.mKeyframes[idx]._14._04,
-	                                 mAnimInfo.mKeyframes[idx]._14._08),
-	                       &AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._14._00,
-	                                 mAnimInfo.mKeyframes[idx + 1]._14._04, mAnimInfo.mKeyframes[idx + 1]._14._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._14._00, mAnimInfo.mKeyframes[idx]._14._04,
+	                                mAnimInfo.mKeyframes[idx]._14._08),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._14._00,
+	                                mAnimInfo.mKeyframes[idx + 1]._14._04, mAnimInfo.mKeyframes[idx + 1]._14._08));
 	f32 blue  = subExtract(value,
-	                       &AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._24._00, mAnimInfo.mKeyframes[idx]._24._04,
-	                                 mAnimInfo.mKeyframes[idx]._24._08),
-	                       &AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._24._00,
-	                                 mAnimInfo.mKeyframes[idx + 1]._24._04, mAnimInfo.mKeyframes[idx + 1]._24._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._24._00, mAnimInfo.mKeyframes[idx]._24._04,
+	                                mAnimInfo.mKeyframes[idx]._24._08),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._24._00,
+	                                mAnimInfo.mKeyframes[idx + 1]._24._04, mAnimInfo.mKeyframes[idx + 1]._24._08));
 
 	int r;
 	if (red < 0.0f) {
@@ -586,12 +579,11 @@ void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 		}
 	}
 
-	AKeyInfo thisAlpha(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._04._00, mAnimInfo.mKeyframes[idx]._04._04,
-	                   mAnimInfo.mKeyframes[idx]._04._08);
-	AKeyInfo nextAlpha(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._04._00, mAnimInfo.mKeyframes[idx + 1]._04._04,
-	                   mAnimInfo.mKeyframes[idx + 1]._04._08);
-
-	f32 alpha = subExtract(value, &thisAlpha, &nextAlpha);
+	f32 alpha = subExtract(value,
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._04._00, mAnimInfo.mKeyframes[idx]._04._04,
+	                                mAnimInfo.mKeyframes[idx]._04._08),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._04._00,
+	                                mAnimInfo.mKeyframes[idx + 1]._04._04, mAnimInfo.mKeyframes[idx + 1]._04._08));
 
 	int a;
 	if (alpha < 0.0f) {
@@ -603,152 +595,6 @@ void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 	}
 
 	target.a = a;
-
-	/*
-	.loc_0x0:
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  stfd      f30, 0x90(r1)
-	  lwz       r5, 0x0(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x1E8
-	  cmplwi    r5, 0x1
-	  bne-      .loc_0x30
-	  lwz       r3, 0x4(r3)
-	  lbz       r0, 0x4(r3)
-	  stb       r0, 0x3(r4)
-	  b         .loc_0x1E8
-
-	.loc_0x30:
-	  subic.    r0, r5, 0x1
-	  lfd       f2, -0x7DD0(r2)
-	  li        r8, 0
-	  li        r9, 0
-	  mtctr     r0
-	  li        r6, 0
-	  lis       r5, 0x4330
-	  ble-      .loc_0xAC
-
-	.loc_0x50:
-	  lwz       r0, 0x4(r3)
-	  add       r7, r0, r6
-	  lwz       r0, 0x0(r7)
-	  stw       r0, 0x8C(r1)
-	  stw       r5, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xA0
-	  lwz       r0, 0x10(r7)
-	  stw       r0, 0x8C(r1)
-	  stw       r5, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xA0
-	  mr        r8, r9
-	  b         .loc_0xAC
-
-	.loc_0xA0:
-	  addi      r6, r6, 0x10
-	  addi      r9, r9, 0x1
-	  bdnz+     .loc_0x50
-
-	.loc_0xAC:
-	  lwz       r6, 0x4(r3)
-	  rlwinm    r5,r8,4,0,27
-	  lis       r3, 0x4330
-	  lfd       f7, -0x7DD0(r2)
-	  lwzx      r0, r6, r5
-	  add       r6, r6, r5
-	  stw       r0, 0x74(r1)
-	  lbz       r0, 0x4(r6)
-	  stw       r3, 0x70(r1)
-	  lbz       r5, 0x14(r6)
-	  stw       r0, 0x7C(r1)
-	  lfd       f0, 0x70(r1)
-	  stw       r3, 0x78(r1)
-	  lwz       r0, 0x10(r6)
-	  fsubs     f0, f0, f7
-	  lfd       f2, 0x78(r1)
-	  lfs       f10, 0x18(r6)
-	  stw       r0, 0x84(r1)
-	  fsubs     f2, f2, f7
-	  lfs       f4, 0xC(r6)
-	  lfs       f3, 0x8(r6)
-	  stw       r3, 0x80(r1)
-	  stfs      f0, 0x58(r1)
-	  lfd       f0, 0x80(r1)
-	  stfs      f2, 0x5C(r1)
-	  fsubs     f0, f0, f7
-	  stfs      f3, 0x60(r1)
-	  stfs      f4, 0x64(r1)
-	  lfs       f2, 0x58(r1)
-	  lfs       f8, -0x7DC8(r2)
-	  fsubs     f0, f0, f2
-	  stw       r5, 0x8C(r1)
-	  fsubs     f31, f1, f2
-	  lfs       f2, -0x7DC0(r2)
-	  stw       r3, 0x88(r1)
-	  fdivs     f13, f8, f0
-	  lfd       f0, 0x88(r1)
-	  lfs       f5, -0x7DC4(r2)
-	  lfs       f1, -0x7DBC(r2)
-	  lfs       f3, 0x5C(r1)
-	  fmuls     f4, f31, f31
-	  lfs       f6, 0x64(r1)
-	  fsubs     f9, f0, f7
-	  lfs       f0, -0x7DD4(r2)
-	  fmuls     f12, f13, f4
-	  fmuls     f11, f12, f13
-	  fmuls     f4, f5, f12
-	  fmuls     f7, f31, f11
-	  fmuls     f30, f2, f11
-	  fmuls     f11, f7, f13
-	  fsubs     f4, f7, f4
-	  fsubs     f7, f7, f12
-	  fmuls     f2, f5, f11
-	  fmuls     f1, f1, f11
-	  fadds     f4, f31, f4
-	  fsubs     f2, f2, f30
-	  fadds     f1, f1, f30
-	  fmuls     f4, f6, f4
-	  fadds     f2, f8, f2
-	  fmuls     f1, f9, f1
-	  fmuls     f5, f10, f7
-	  fmuls     f2, f3, f2
-	  fadds     f1, f2, f1
-	  fadds     f1, f4, f1
-	  fadds     f1, f5, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1C0
-	  li        r0, 0
-	  b         .loc_0x1E4
-
-	.loc_0x1C0:
-	  lfs       f0, -0x7DB8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x1D4
-	  li        r0, 0xFF
-	  b         .loc_0x1E4
-
-	.loc_0x1D4:
-	  fctiwz    f0, f1
-	  stfd      f0, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  rlwinm    r0,r0,0,24,31
-
-	.loc_0x1E4:
-	  stb       r0, 0x3(r4)
-
-	.loc_0x1E8:
-	  lfd       f31, 0x98(r1)
-	  lfd       f30, 0x90(r1)
-	  addi      r1, r1, 0xA0
-	  blr
-	*/
 }
 
 /*
@@ -771,7 +617,7 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 	}
 
 	int idx = 0;
-	for (int i = 0; i < mInfo.mSize - 1; i++) {
+	for (int i = 0; i < (int)mInfo.mSize - 1; i++) {
 		if (mInfo.mKeyframes[i]._00 <= value && mInfo.mKeyframes[i + 1]._00 >= value) {
 			idx = i;
 			break;
@@ -780,19 +626,19 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 
 	f32 red = subExtract(
 	    value,
-	    &AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
-	    &AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
-	              mInfo.mKeyframes[idx + 1]._04._08));
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
+	             mInfo.mKeyframes[idx + 1]._04._08));
 	f32 green = subExtract(
 	    value,
-	    &AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14._00, mInfo.mKeyframes[idx]._14._04, mInfo.mKeyframes[idx]._14._08),
-	    &AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14._00, mInfo.mKeyframes[idx + 1]._14._04,
-	              mInfo.mKeyframes[idx + 1]._14._08));
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14._00, mInfo.mKeyframes[idx]._14._04, mInfo.mKeyframes[idx]._14._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14._00, mInfo.mKeyframes[idx + 1]._14._04,
+	             mInfo.mKeyframes[idx + 1]._14._08));
 	f32 blue = subExtract(
 	    value,
-	    &AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24._00, mInfo.mKeyframes[idx]._24._04, mInfo.mKeyframes[idx]._24._08),
-	    &AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24._00, mInfo.mKeyframes[idx + 1]._24._04,
-	              mInfo.mKeyframes[idx + 1]._24._08));
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24._00, mInfo.mKeyframes[idx]._24._04, mInfo.mKeyframes[idx]._24._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24._00, mInfo.mKeyframes[idx + 1]._24._04,
+	             mInfo.mKeyframes[idx + 1]._24._08));
 
 	int r;
 	if (red < -1023.0f) {
@@ -1180,172 +1026,22 @@ void PVWAlphaShortAnimInfo::extract(f32 value, ShortColour& target)
 		}
 	}
 
-	AKeyInfo thisAlpha(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04,
-	                   mInfo.mKeyframes[idx]._04._08);
-	AKeyInfo nextAlpha(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
-	                   mInfo.mKeyframes[idx + 1]._04._08);
-
-	f32 alpha = subExtract(value, &thisAlpha, &nextAlpha);
+	f32 alpha = subExtract(
+	    value,
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
+	             mInfo.mKeyframes[idx + 1]._04._08));
 
 	int a;
-	if (alpha < -1023.0f) {
-		a = -1023;
-	} else if (alpha > 1023.0f) {
-		a = 1023;
+	if (alpha < 0.0f) {
+		a = 0;
+	} else if (alpha > 255.0f) {
+		a = 255;
 	} else {
 		a = (s16)alpha;
 	}
 
 	target.a = a;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0xA0(r1)
-	  stfd      f31, 0x98(r1)
-	  stfd      f30, 0x90(r1)
-	  lwz       r5, 0x0(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x1F8
-	  cmplwi    r5, 0x1
-	  bne-      .loc_0x30
-	  lwz       r3, 0x4(r3)
-	  lha       r0, 0x4(r3)
-	  sth       r0, 0x6(r4)
-	  b         .loc_0x1F8
-
-	.loc_0x30:
-	  subic.    r0, r5, 0x1
-	  lfd       f2, -0x7DD0(r2)
-	  li        r8, 0
-	  li        r9, 0
-	  mtctr     r0
-	  li        r6, 0
-	  lis       r5, 0x4330
-	  ble-      .loc_0xAC
-
-	.loc_0x50:
-	  lwz       r0, 0x4(r3)
-	  add       r7, r0, r6
-	  lwz       r0, 0x0(r7)
-	  stw       r0, 0x8C(r1)
-	  stw       r5, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xA0
-	  lwz       r0, 0x10(r7)
-	  stw       r0, 0x8C(r1)
-	  stw       r5, 0x88(r1)
-	  lfd       f0, 0x88(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xA0
-	  mr        r8, r9
-	  b         .loc_0xAC
-
-	.loc_0xA0:
-	  addi      r6, r6, 0x10
-	  addi      r9, r9, 0x1
-	  bdnz+     .loc_0x50
-
-	.loc_0xAC:
-	  lwz       r3, 0x4(r3)
-	  rlwinm    r0,r8,4,0,27
-	  lis       r5, 0x4330
-	  lfd       f4, -0x7DD0(r2)
-	  add       r6, r3, r0
-	  lwzx      r0, r3, r0
-	  lha       r3, 0x4(r6)
-	  stw       r0, 0x74(r1)
-	  xoris     r0, r3, 0x8000
-	  lha       r3, 0x14(r6)
-	  stw       r0, 0x7C(r1)
-	  lwz       r0, 0x10(r6)
-	  xoris     r3, r3, 0x8000
-	  stw       r5, 0x70(r1)
-	  lfd       f8, -0x7DA8(r2)
-	  stw       r5, 0x78(r1)
-	  lfd       f0, 0x70(r1)
-	  lfd       f3, 0x78(r1)
-	  fsubs     f2, f0, f4
-	  stw       r0, 0x84(r1)
-	  lfs       f0, 0x18(r6)
-	  fsubs     f5, f3, f8
-	  stw       r5, 0x80(r1)
-	  lfs       f7, 0xC(r6)
-	  lfs       f6, 0x8(r6)
-	  lfd       f3, 0x80(r1)
-	  stfs      f2, 0x58(r1)
-	  fsubs     f2, f3, f4
-	  stfs      f5, 0x5C(r1)
-	  stfs      f6, 0x60(r1)
-	  stfs      f7, 0x64(r1)
-	  lfs       f3, 0x58(r1)
-	  lfs       f9, -0x7DC8(r2)
-	  fsubs     f2, f2, f3
-	  stw       r3, 0x8C(r1)
-	  fsubs     f31, f1, f3
-	  lfs       f3, -0x7DC0(r2)
-	  stw       r5, 0x88(r1)
-	  fdivs     f13, f9, f2
-	  lfd       f1, 0x88(r1)
-	  lfs       f6, -0x7DC4(r2)
-	  lfs       f2, -0x7DBC(r2)
-	  lfs       f4, 0x5C(r1)
-	  fmuls     f5, f31, f31
-	  lfs       f7, 0x64(r1)
-	  fsubs     f10, f1, f8
-	  lfs       f1, -0x7DD4(r2)
-	  fmuls     f12, f13, f5
-	  fmuls     f11, f12, f13
-	  fmuls     f5, f6, f12
-	  fmuls     f8, f31, f11
-	  fmuls     f30, f3, f11
-	  fmuls     f11, f8, f13
-	  fsubs     f5, f8, f5
-	  fsubs     f8, f8, f12
-	  fmuls     f3, f6, f11
-	  fmuls     f2, f2, f11
-	  fadds     f5, f31, f5
-	  fsubs     f3, f3, f30
-	  fadds     f2, f2, f30
-	  fmuls     f6, f0, f8
-	  fadds     f3, f9, f3
-	  fmuls     f2, f10, f2
-	  fmuls     f5, f7, f5
-	  fmuls     f0, f4, f3
-	  fadds     f0, f0, f2
-	  fadds     f0, f5, f0
-	  fadds     f2, f6, f0
-	  fcmpo     cr0, f2, f1
-	  bge-      .loc_0x1CC
-	  li        r0, 0
-	  b         .loc_0x1F0
-
-	.loc_0x1CC:
-	  lfs       f0, -0x7DB8(r2)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x1E0
-	  li        r0, 0xFF
-	  b         .loc_0x1F0
-
-	.loc_0x1E0:
-	  fctiwz    f0, f2
-	  stfd      f0, 0x70(r1)
-	  lwz       r0, 0x74(r1)
-	  extsh     r0, r0
-
-	.loc_0x1F0:
-	  extsh     r0, r0
-	  sth       r0, 0x6(r4)
-
-	.loc_0x1F8:
-	  lfd       f31, 0x98(r1)
-	  lfd       f30, 0x90(r1)
-	  addi      r1, r1, 0xA0
-	  blr
-	*/
 }
 
 /*
@@ -1374,7 +1070,7 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 		target.z = mInfo.mKeyframes[mInfo.mSize - 1]._24._00;
 		return;
 	}
-	for (int i = 0; i < mInfo.mSize - 1; i++) {
+	for (int i = 0; i < (int)mInfo.mSize - 1; i++) {
 		if (mInfo.mKeyframes[i]._00 <= value && mInfo.mKeyframes[i + 1]._00 >= value) {
 			idx = i;
 			break;
@@ -1383,271 +1079,19 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 
 	target.x = subExtract(
 	    value,
-	    &AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
-	    &AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
-	              mInfo.mKeyframes[idx + 1]._04._08));
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
+	             mInfo.mKeyframes[idx + 1]._04._08));
 	target.y = subExtract(
 	    value,
-	    &AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14._00, mInfo.mKeyframes[idx]._14._04, mInfo.mKeyframes[idx]._14._08),
-	    &AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14._00, mInfo.mKeyframes[idx + 1]._14._04,
-	              mInfo.mKeyframes[idx + 1]._14._08));
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14._00, mInfo.mKeyframes[idx]._14._04, mInfo.mKeyframes[idx]._14._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14._00, mInfo.mKeyframes[idx + 1]._14._04,
+	             mInfo.mKeyframes[idx + 1]._14._08));
 	target.z = subExtract(
 	    value,
-	    &AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24._00, mInfo.mKeyframes[idx]._24._04, mInfo.mKeyframes[idx]._24._08),
-	    &AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24._00, mInfo.mKeyframes[idx + 1]._24._04,
-	              mInfo.mKeyframes[idx + 1]._24._08));
-
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x158(r1)
-	  stfd      f31, 0x150(r1)
-	  stfd      f30, 0x148(r1)
-	  stfd      f29, 0x140(r1)
-	  lwz       r7, 0x0(r3)
-	  cmplwi    r7, 0
-	  beq-      .loc_0x39C
-	  cmplwi    r7, 0x1
-	  bne-      .loc_0x4C
-	  lwz       r5, 0x4(r3)
-	  lfs       f0, 0x4(r5)
-	  stfs      f0, 0x0(r4)
-	  lwz       r5, 0x4(r3)
-	  lfs       f0, 0x10(r5)
-	  stfs      f0, 0x4(r4)
-	  lwz       r3, 0x4(r3)
-	  lfs       f0, 0x1C(r3)
-	  stfs      f0, 0x8(r4)
-	  b         .loc_0x39C
-
-	.loc_0x4C:
-	  mulli     r0, r7, 0x28
-	  lwz       r8, 0x4(r3)
-	  lfd       f2, -0x7DD0(r2)
-	  add       r6, r8, r0
-	  lwz       r0, -0x28(r6)
-	  lis       r5, 0x4330
-	  li        r9, 0
-	  stw       r0, 0x13C(r1)
-	  stw       r5, 0x138(r1)
-	  lfd       f0, 0x138(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xC0
-	  lfs       f0, -0x24(r6)
-	  stfs      f0, 0x0(r4)
-	  lwz       r0, 0x0(r3)
-	  lwz       r5, 0x4(r3)
-	  mulli     r0, r0, 0x28
-	  add       r5, r5, r0
-	  lfs       f0, -0x18(r5)
-	  stfs      f0, 0x4(r4)
-	  lwz       r0, 0x0(r3)
-	  lwz       r3, 0x4(r3)
-	  mulli     r0, r0, 0x28
-	  add       r3, r3, r0
-	  lfs       f0, -0xC(r3)
-	  stfs      f0, 0x8(r4)
-	  b         .loc_0x39C
-
-	.loc_0xC0:
-	  subic.    r0, r7, 0x1
-	  li        r10, 0
-	  li        r6, 0
-	  mtctr     r0
-	  ble-      .loc_0x12C
-
-	.loc_0xD4:
-	  add       r7, r8, r6
-	  lwz       r0, 0x0(r7)
-	  stw       r0, 0x13C(r1)
-	  stw       r5, 0x138(r1)
-	  lfd       f0, 0x138(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x120
-	  lwz       r0, 0x28(r7)
-	  stw       r0, 0x13C(r1)
-	  stw       r5, 0x138(r1)
-	  lfd       f0, 0x138(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x120
-	  mr        r9, r10
-	  b         .loc_0x12C
-
-	.loc_0x120:
-	  addi      r6, r6, 0x28
-	  addi      r10, r10, 0x1
-	  bdnz+     .loc_0xD4
-
-	.loc_0x12C:
-	  mulli     r9, r9, 0x28
-	  lfd       f5, -0x7DD0(r2)
-	  lwzx      r0, r8, r9
-	  add       r6, r8, r9
-	  lwz       r5, 0x28(r6)
-	  lis       r7, 0x4330
-	  stw       r0, 0x134(r1)
-	  lfs       f13, 0x30(r6)
-	  stw       r7, 0x130(r1)
-	  lfs       f12, 0x2C(r6)
-	  lfd       f0, 0x130(r1)
-	  stw       r5, 0x13C(r1)
-	  fsubs     f0, f0, f5
-	  lfs       f4, 0xC(r6)
-	  lfs       f3, 0x8(r6)
-	  lfs       f2, 0x4(r6)
-	  stw       r7, 0x138(r1)
-	  stfs      f0, 0x100(r1)
-	  lfd       f0, 0x138(r1)
-	  stfs      f2, 0x104(r1)
-	  fsubs     f0, f0, f5
-	  stfs      f3, 0x108(r1)
-	  stfs      f4, 0x10C(r1)
-	  lfs       f2, 0x100(r1)
-	  lfs       f4, -0x7DC8(r2)
-	  fsubs     f6, f0, f2
-	  lfs       f3, -0x7DC4(r2)
-	  fsubs     f30, f1, f2
-	  lfs       f2, -0x7DC0(r2)
-	  lfs       f0, -0x7DBC(r2)
-	  fdivs     f31, f4, f6
-	  lfs       f8, 0x104(r1)
-	  lfs       f10, 0x10C(r1)
-	  fmuls     f6, f30, f30
-	  fmuls     f11, f31, f6
-	  fmuls     f9, f11, f31
-	  fmuls     f6, f3, f11
-	  fmuls     f7, f30, f9
-	  fmuls     f29, f2, f9
-	  fsubs     f9, f7, f6
-	  fmuls     f31, f7, f31
-	  fsubs     f11, f7, f11
-	  fadds     f9, f30, f9
-	  fmuls     f7, f3, f31
-	  fmuls     f6, f0, f31
-	  fmuls     f9, f10, f9
-	  fsubs     f7, f7, f29
-	  fadds     f6, f6, f29
-	  fmuls     f10, f13, f11
-	  fadds     f7, f4, f7
-	  fmuls     f6, f12, f6
-	  fmuls     f7, f8, f7
-	  fadds     f6, f7, f6
-	  fadds     f6, f9, f6
-	  fadds     f6, f10, f6
-	  stfs      f6, 0x0(r4)
-	  lwz       r5, 0x4(r3)
-	  lwzx      r0, r5, r9
-	  add       r6, r5, r9
-	  lwz       r5, 0x28(r6)
-	  stw       r0, 0x124(r1)
-	  lfs       f13, 0x3C(r6)
-	  stw       r7, 0x120(r1)
-	  lfs       f12, 0x38(r6)
-	  lfd       f6, 0x120(r1)
-	  lfs       f9, 0x18(r6)
-	  stw       r5, 0x12C(r1)
-	  fsubs     f6, f6, f5
-	  lfs       f8, 0x14(r6)
-	  lfs       f7, 0x10(r6)
-	  stw       r7, 0x128(r1)
-	  stfs      f6, 0xE0(r1)
-	  lfd       f6, 0x128(r1)
-	  stfs      f7, 0xE4(r1)
-	  fsubs     f6, f6, f5
-	  stfs      f8, 0xE8(r1)
-	  stfs      f9, 0xEC(r1)
-	  lfs       f7, 0xE0(r1)
-	  fsubs     f31, f1, f7
-	  fsubs     f7, f6, f7
-	  lfs       f8, 0xE4(r1)
-	  fmuls     f6, f31, f31
-	  lfs       f10, 0xEC(r1)
-	  fdivs     f30, f4, f7
-	  fmuls     f11, f30, f6
-	  fmuls     f9, f11, f30
-	  fmuls     f6, f3, f11
-	  fmuls     f7, f31, f9
-	  fmuls     f29, f2, f9
-	  fmuls     f30, f7, f30
-	  fsubs     f9, f7, f6
-	  fsubs     f11, f7, f11
-	  fmuls     f7, f3, f30
-	  fmuls     f6, f0, f30
-	  fadds     f9, f31, f9
-	  fsubs     f7, f7, f29
-	  fadds     f6, f6, f29
-	  fmuls     f9, f10, f9
-	  fadds     f7, f4, f7
-	  fmuls     f6, f12, f6
-	  fmuls     f10, f13, f11
-	  fmuls     f7, f8, f7
-	  fadds     f6, f7, f6
-	  fadds     f6, f9, f6
-	  fadds     f6, f10, f6
-	  stfs      f6, 0x4(r4)
-	  lwz       r3, 0x4(r3)
-	  lwzx      r0, r3, r9
-	  add       r5, r3, r9
-	  lwz       r3, 0x28(r5)
-	  stw       r0, 0x114(r1)
-	  lfs       f11, 0x48(r5)
-	  stw       r7, 0x110(r1)
-	  lfs       f10, 0x44(r5)
-	  lfd       f6, 0x110(r1)
-	  stw       r3, 0x11C(r1)
-	  fsubs     f6, f6, f5
-	  lfs       f9, 0x24(r5)
-	  lfs       f8, 0x20(r5)
-	  lfs       f7, 0x1C(r5)
-	  stw       r7, 0x118(r1)
-	  stfs      f6, 0xC0(r1)
-	  lfd       f6, 0x118(r1)
-	  stfs      f7, 0xC4(r1)
-	  fsubs     f6, f6, f5
-	  stfs      f8, 0xC8(r1)
-	  stfs      f9, 0xCC(r1)
-	  lfs       f8, 0xC0(r1)
-	  lfs       f5, 0xC4(r1)
-	  fsubs     f7, f6, f8
-	  lfs       f6, 0xCC(r1)
-	  fsubs     f13, f1, f8
-	  fdivs     f12, f4, f7
-	  fmuls     f1, f13, f13
-	  fmuls     f9, f12, f1
-	  fmuls     f8, f9, f12
-	  fmuls     f1, f3, f9
-	  fmuls     f7, f13, f8
-	  fmuls     f29, f2, f8
-	  fmuls     f8, f7, f12
-	  fsubs     f2, f7, f1
-	  fsubs     f7, f7, f9
-	  fmuls     f1, f3, f8
-	  fmuls     f0, f0, f8
-	  fadds     f2, f13, f2
-	  fsubs     f1, f1, f29
-	  fadds     f0, f0, f29
-	  fmuls     f2, f6, f2
-	  fadds     f1, f4, f1
-	  fmuls     f0, f10, f0
-	  fmuls     f3, f11, f7
-	  fmuls     f1, f5, f1
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f0, f3, f0
-	  stfs      f0, 0x8(r4)
-
-	.loc_0x39C:
-	  lfd       f31, 0x150(r1)
-	  lfd       f30, 0x148(r1)
-	  lfd       f29, 0x140(r1)
-	  addi      r1, r1, 0x158
-	  blr
-	*/
+	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24._00, mInfo.mKeyframes[idx]._24._04, mInfo.mKeyframes[idx]._24._08),
+	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24._00, mInfo.mKeyframes[idx + 1]._24._04,
+	             mInfo.mKeyframes[idx + 1]._24._08));
 }
 
 /*
