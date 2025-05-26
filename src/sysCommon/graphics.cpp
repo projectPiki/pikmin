@@ -138,7 +138,7 @@ void PVWPolygonColourInfo::animate(f32* data, Colour& col)
  * Address:	........
  * Size:	0000A0
  */
-f32 subExtract(f32 time, const AKeyInfo& src, const AKeyInfo& dest)
+f32 subExtract(f32 time, AKeyInfo& src, AKeyInfo& dest)
 {
 	f32 a = time - src.mKeyframePosition;
 	f32 b = 1.0f / (dest.mKeyframePosition - src.mKeyframePosition);
