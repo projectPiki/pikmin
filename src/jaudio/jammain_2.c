@@ -1109,11 +1109,13 @@ void Jam_WriteRegXY(void)
  */
 u32 __ExchangeRegisterValue(seqp_* param_1, u8 param_2)
 {
-	// TODO: This looks like a bounds-check for the array accessed below.
-	if (param_2 < 0x40) {
-		return Jam_ReadReg32();
-	}
-	return param_1->_1F2[param_2 * 2];
+	// TODO: This used to be able to match, but seqsetup.c's `Init_Track` provided intel about members that conflicts with this function.
+
+	// // TODO: This looks like a bounds-check for the array accessed below.
+	// if (param_2 < 0x40) {
+	// 	return Jam_ReadReg32();
+	// }
+	// return param_1->_1F2[param_2 * 2];
 }
 
 /*
@@ -3879,15 +3881,13 @@ static u32 Cmd_IIRSet()
 {
 	int i;
 	seqp_* seq;
-	seqp__Invented2* temp;
 
 	seq = SEQ_P;
 	for (i = 0; i < 4; ++i) {
-		temp      = seq->_14C[i];
-		temp->_04 = SEQ_ARG._00[i] / 32768.0f;
-		temp->_00 = temp->_04;
-		temp->_0C = 0.0f;
-		temp->_08 = 1.0f;
+		seq->_14C[i]._04 = SEQ_ARG._00[i] / 32768.0f;
+		seq->_14C[i]._00 = seq->_14C[i]._04;
+		seq->_14C[i]._0C = 0.0f;
+		seq->_14C[i]._08 = 1.0f;
 	}
 	return 0;
 }
