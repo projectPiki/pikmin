@@ -78,8 +78,11 @@ void* operator new(u32, int)
  */
 void* operator new[](u32 size, int alignment)
 {
-	// this is what this SHOULD be, but it's doing the subtraction in a weird order
-	return (void*)(ALIGN_NEXT((u32)System::alloc(size + alignment), alignment));
+	// the -1 shouldnt be present, but it matches a lot less without it
+	u32 alloc = (u32)System::alloc(size + alignment);
+	return (void*)(ALIGN_NEXT(alloc, alignment - 1));
+
+	u32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
