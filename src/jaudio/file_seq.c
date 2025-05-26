@@ -1,6 +1,7 @@
 #include "jaudio/file_seq.h"
 
 #include "jaudio/virload.h"
+#include "jaudio/jammain_2.h"
 #include "jaudio/seqsetup.h"
 
 #include "stl/string.h"
@@ -20,12 +21,13 @@ struct as_struct {
 typedef struct as_struct as_struct;
 
 #define SEQ_LOADBUFFER_SIZE 0x100
+#define ROOTSEQ_SIZE        0x10
 #define ROOTSEQHANDLE_SIZE  0x10
 #define AS_SIZE             0x8
 
 static u8* seq_loadbuffer[SEQ_LOADBUFFER_SIZE]; // TODO: Type unknown
 static u32 seq_archandle;                       // TODO: Type unknown
-static u32 rootseq[0x10D0];                     // TODO: Type unknown
+static seqp_ rootseq[ROOTSEQ_SIZE];
 static u32 rootseqhandle[ROOTSEQHANDLE_SIZE];   // TODO: Type unknown
 static as_struct as[AS_SIZE];                   // TODO: Type unknown
 
@@ -126,7 +128,7 @@ unknown Jaf_ReadySeq(u32 param_1, u32 param_2)
 		u32 seqSize = Jaf_CheckSeqSize(param_2);
 		if (seqSize != 0) {
 
-			rootseqhandle[param_1] = Jaq_SetSeqData(rootseq[param_1 * 0x10d], seq_loadbuffer[param_2], seqSize, 0);
+			rootseqhandle[param_1] = Jaq_SetSeqData(&rootseq[param_1], seq_loadbuffer[param_2], seqSize, 0);
 			return rootseqhandle[param_1];
 		}
 	}
@@ -189,16 +191,9 @@ void Jaf_GetJamHandle(u32)
  * Address:	8001B780
  * Size:	000014
  */
-int* Jaf_HandleToSeq(u32)
+seqp_* Jaf_HandleToSeq(u32 index)
 {
-	/*
-	.loc_0x0:
-	  mulli     r4, r3, 0x434
-	  lis       r3, 0x8036
-	  addi      r0, r3, 0x4A88
-	  add       r3, r0, r4
-	  blr
-	*/
+	return &rootseq[index];
 }
 
 /*

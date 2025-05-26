@@ -47,7 +47,7 @@ typedef struct Osc_definition {
 /**
  * @brief TODO
  *
- * @note Size: ?.
+ * @note Size: 0x434.
  */
 struct seqp_ {
 	u8* _00;                  // _000
@@ -122,6 +122,7 @@ struct seqp_ {
 	u8 _3E4;                  // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];   // _3E5
 	u8 _3E8[2];               // _3E8 | Exact length unknown, but it is an array.
+	u8 _3EA[0x434 - 0x3ea];   // _3EA | Exact size of struct confirmed by `Jaf_HandleToSeq`.
 };
 
 void* Jam_OfsToAddr(seqp_*, u32);         // TODO: Change return type to u8* if that's more convenient.
@@ -156,9 +157,9 @@ void Jam_OnExtSwitchD(int*, int);
 void Jam_OffExtSwitchD(void);
 void Jam_SetExtSwitchDirectD(void);
 void Jam_SetExtFirFilter(void);
-void Jam_SetExtParam(f32, int*, int);
-void Jam_OnExtSwitch(int*, int);
-void Jam_OffExtSwitch(int*, int);
+void Jam_SetExtParam(f32, seqp_*, int);
+void Jam_OnExtSwitch(seqp_*, int);
+void Jam_OffExtSwitch(seqp_*, int);
 void Jam_SetExtSwitchDirect(void);
 void Jam_SetExtFirFilterP(void);
 void Jam_SetExtParamP(void);
@@ -171,7 +172,7 @@ void Jam_SetTrackExtPanPower(void);
 void Jam_UpdateTrackAll(void);
 void Jam_UpdateTrack(seqp_*, u32);
 void Jam_UpdateTempo(void);
-void Jam_MuteTrack(int*, int);
+void Jam_MuteTrack(seqp_*, int);
 void Jam_MuteChildTracks(void);
 void Jam_PauseTrack(seqp_*, u32); // TODO: types uncertain
 void Jam_UnPauseTrack(seqp_*, u32);
