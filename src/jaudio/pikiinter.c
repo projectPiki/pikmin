@@ -8,7 +8,7 @@
 
 typedef struct SEvent_ {
 	u8 _00[0xd0];
-	int* _D0;
+	seqp_* _D0;
 	u8 _D4[0x140 - 0xD4];
 	SEvent_* _140;
 	int _144;
@@ -42,13 +42,13 @@ void Jac_Debug_ActionEntry(void)
 void __SetVolandPan(Portargs_* arg)
 {
 	SEvent_* evt;
-	int* a;
+	seqp_* seq;
 
 	evt = arg->mEvent;
-	a   = evt->_D0;
-	Jam_SetExtParam(evt->_160, a, 1);
-	a = evt->_D0;
-	Jam_SetExtParam(evt->_164, a, 8);
+	seq = evt->_D0;
+	Jam_SetExtParam(evt->_160, seq, 1);
+	seq = evt->_D0;
+	Jam_SetExtParam(evt->_164, seq, 8);
 }
 
 /*

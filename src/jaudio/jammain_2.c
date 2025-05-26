@@ -1802,7 +1802,7 @@ void Jam_SetExtFirFilter(void)
  * Address:	80010920
  * Size:	00002C
  */
-void Jam_SetExtParam(f32, int*, int)
+void Jam_SetExtParam(f32, seqp_*, int)
 {
 	/*
 	.loc_0x0:
@@ -1827,7 +1827,7 @@ void Jam_SetExtParam(f32, int*, int)
  * Address:	80010960
  * Size:	00002C
  */
-void Jam_OnExtSwitch(int*, int)
+void Jam_OnExtSwitch(seqp_*, int)
 {
 	/*
 	.loc_0x0:
@@ -1852,7 +1852,7 @@ void Jam_OnExtSwitch(int*, int)
  * Address:	800109A0
  * Size:	00002C
  */
-void Jam_OffExtSwitch(int*, int)
+void Jam_OffExtSwitch(seqp_*, int)
 {
 	/*
 	.loc_0x0:
@@ -2745,7 +2745,7 @@ void Jam_UpdateTempo(void)
  * Address:	80011400
  * Size:	0000CC
  */
-void Jam_MuteTrack(int*, int)
+void Jam_MuteTrack(seqp_*, int)
 {
 	/*
 	.loc_0x0:

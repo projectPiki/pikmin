@@ -368,7 +368,7 @@ static void __StopSeq(seqp_* seq)
  * Address:	800144C0
  * Size:	000024
  */
-unknown Jaq_SetSeqData(unknown param_1, u8* param_2, u32 param_3, unknown param_4)
+unknown Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, unknown param_4)
 {
 	return Jaq_SetSeqData_Limit(param_1, param_2, param_3, param_4, 0);
 }
@@ -378,7 +378,7 @@ unknown Jaq_SetSeqData(unknown param_1, u8* param_2, u32 param_3, unknown param_
  * Address:	80014500
  * Size:	000170
  */
-unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown)
+unknown Jaq_SetSeqData_Limit(seqp_*, u8*, u32, unknown, unknown)
 {
 	/*
 	.loc_0x0:
@@ -502,7 +502,7 @@ unknown Jaq_SetSeqData_Limit(unknown, u8*, u32, unknown, unknown)
  * Address:	80014680
  * Size:	00002C
  */
-void Jaq_SetBankNumber(int*, u8)
+void Jaq_SetBankNumber(seqp_*, u8)
 {
 	/*
 	.loc_0x0:

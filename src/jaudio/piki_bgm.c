@@ -301,7 +301,7 @@ void Jac_PlayBgm(int a, int b)
 		}
 	}
 
-	int* seq = Jaf_HandleToSeq(a + 3);
+	seqp_* seq = Jaf_HandleToSeq(a + 3);
 
 	bgm[a]._04[0]  = 1;
 	bgm[a]._04[1]  = 1;
@@ -340,7 +340,7 @@ void Jac_PlayBgm(int a, int b)
 	} else {
 		Jam_OffExtSwitch(seq, 0x40);
 	}
-	seq[100] = 74; // this is some struct
+	seq->_39D = 74;
 	Jaf_PlaySeq(a + 3);
 	Jac_SetProcessStatus(9);
 
