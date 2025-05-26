@@ -78,31 +78,9 @@ void* operator new(u32, int)
  */
 void* operator new[](u32 size, int alignment)
 {
-	// the -1 shouldnt be present, but it matches a lot less without it
-	u32 alloc = (u32)System::alloc(size + alignment);
-	return (void*)(ALIGN_NEXT(alloc, alignment - 1));
-
-	u32 badcompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  add       r3, r3, r31
-	  bl        -0x17C
-	  subi      r0, r31, 0x1
-	  add       r3, r31, r3
-	  not       r4, r0
-	  subi      r0, r3, 0x1
-	  and       r3, r4, r0
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	u32 alloc  = (u32)System::alloc(size + alignment);
+	u32 result = (alloc + (alignment - 1)) & ~(alignment - 1);
+	return (void*)result;
 }
 
 /*
