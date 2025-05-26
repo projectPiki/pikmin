@@ -1674,7 +1674,7 @@ void BTeki::flickUpper(InteractFlick& flick)
  * Address:	80148000
  * Size:	000068
  */
-void BTeki::flickLower() // 50% complete
+void BTeki::flickLower()
 {
 	InteractFlick& flick
 	    = InteractFlick(this, getParameterF(TPF_LowerFlickPower), getParameterF(TPF_LowerAttackPower), FLICK_BACKWARDS_ANGLE);
@@ -1826,18 +1826,11 @@ void BTeki::collisionCallback(CollEvent& event)
  */
 bool BTeki::ignoreAtari(Creature* target)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x184(r4)
-	  cmplw     r0, r3
-	  bne-      .loc_0x14
-	  li        r3, 0x1
-	  blr
+	if (target->getStickObject() == this) {
+		return true;
+	}
 
-	.loc_0x14:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
