@@ -322,63 +322,30 @@ static void Init_Track(seqp_* seq, u32 param_2, seqp_* otherSeq)
  * Address:	800143C0
  * Size:	0000A0
  */
-BOOL Jaq_StopSeq(u32 index)
+BOOL Jaq_StopSeq(s32 index)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmpwi     r3, -0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x8C
+	seqp_* seq;
 
-	.loc_0x20:
-	  lis       r4, 0x8036
-	  rlwinm    r3,r3,2,0,29
-	  addi      r0, r4, 0x32A0
-	  add       r3, r0, r3
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  mr        r31, r0
-	  bne-      .loc_0x48
-	  li        r3, 0
-	  b         .loc_0x8C
+	if (index == -1) {
+		return FALSE;
+	}
+	seq = rootseq[index];
+	if (!seq) {
+		return FALSE;
+	}
 
-	.loc_0x48:
-	  lbz       r0, 0x3C(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x80
-	  bge-      .loc_0x64
-	  cmpwi     r0, 0
-	  bge-      .loc_0x88
-	  b         .loc_0x80
-
-	.loc_0x64:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x80
-	  mr        r3, r31
-	  bl        -0x5F0
-	  mr        r3, r31
-	  bl        -0x478
-	  b         .loc_0x88
-
-	.loc_0x80:
-	  li        r0, 0x3
-	  stb       r0, 0x3C(r31)
-
-	.loc_0x88:
-	  li        r3, 0x1
-
-	.loc_0x8C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	switch (seq->_3C) {
+	case 0:
+		break;
+	case 2:
+		BackTrack(seq);
+		DeAllocRoot(seq);
+		break;
+	default:
+		seq->_3C = 3;
+		break;
+	}
+	return TRUE;
 }
 
 /*

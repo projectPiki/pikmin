@@ -57,7 +57,7 @@ struct seqp_ {
 	u8 _10[0x02c - 0x014];    // _008
 	u16 _2C[2];               // _02C | Exact length unknown, but it is an array.
 	u8 _30[0x03c - 0x030];    // _030
-	u8 _3C;                   // _03C
+	u8 _3C;                   // _03C | Confirmed unsigned by switch cases
 	u8 _3D;                   // _03D
 	u8 _3E;                   // _03E
 	u8 _3F;                   // _03F
