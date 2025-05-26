@@ -62,32 +62,27 @@ struct seqp_ {
 	u8 _3E;                   // _03E
 	u8 _3F;                   // _03F
 	seqp_* _40;               // _040
-	seqp_* _44[16];           // _044 | Exact length confirmed. Bounds check in `Cmd_CloseTrack`, `Jam_ReadRegDirect`.
+	seqp_* _44[16];           // _044 | Exact length confirmed. Bounds check in `Cmd_CloseTrack`, `Jam_ReadRegDirect`, `Init_Track`.
 	u32 _84;                  // _084
 	u32 _88;                  // _088;
 	u32 _8C;                  // _08C
-	u8 _90[0x094 - 0x090];    // _090
-	u8 _94[8];                // _094 | Exact length confirmed. For loop in `__AllNoteOff`.
-	jc_* _9C[8];              // _09C | Exact length confirmed. For loop in `__AllNoteOff`.
-	u16 _BC[8];               // _0BC | Exact length likely the same as _09C (see: `noteon.c`).
+	u32 _90;                  // _090
+	u8 _94[8];                // _094 | Exact length confirmed. For loop in `Init_Track`, `__AllNoteOff`.
+	jc_* _9C[8];              // _09C | Exact length confirmed. For loop in `Init_Track`, `__AllNoteOff`.
+	u16 _BC[8];               // _0BC | Exact length conformed. For loop in `Init_Track`.
 	u8 _CC[0x0d0 - 0x0cc];    // _0CC
 	u32 _D0;                  // _0D0
-	u8 _D4[0x0d5 - 0x0d4];    // _0D4
+	u8 _D4;                   // _0D4
 	u8 _D5;                   // _0D5
-	u8 _D6[0x0d8 - 0x0d6];    // _0D6
+	u8 _D6;                   // _0D6
+	u8 _D7[0x0d8 - 0x0d7];    // _0D7
 	jcs_ _D8;                 // _0D8
-	seqp__Invented2* _14C[4]; // _14C
-	u8 _15C[0x1f2 - 0x15c];   // _15C
-	u16 _1F2[2];              // _1F2 | Exact length unknown, but it is an array.
-	u8 _1F6[0x26c - 0x1f6];   // _1F6
-	s16 _26C[2];              // _26C | Exact length unknown, but it is an array.
-	u8 _270[0x278 - 0x270];   // _270
-	s16 _278;                 // _278
-	u8 _27A[0x2ac - 0x27a];   // _27A
+	seqp__Invented2 _14C[18]; // _14C
+	u16 _26C[32];             // _26C | Exact length confirmed. For loop in `Init_Track`.
 	u16* _2AC;                // _2AC | Are you really?
-	u8 _2B0[0x2f0 - 0x2b0];   // _2B0
-	seqp__Invented1 _2F0[2];  // _2F0 | Exact length unknown, but it is an array.
-	u8 _2F8[0x334 - 0x2f8];   // _2F8
+	u32 _2B0[16];             // _2B0 | Exact length confirmed. For loop in `Init_Track`.
+	seqp__Invented1 _2F0[16]; // _2F0 | Exact length confirmed. For loop in `Init_Track`.
+	u8 _330[0x334 - 0x330];   // _330
 	f32 _334;                 // _334
 	u16 _338;                 // _338
 	u16 _33A;                 // _33A
@@ -102,7 +97,7 @@ struct seqp_ {
 	s16 _372[0x12];           // _374 | This is a pair of some sort of struct, _348 and _34C point to them, see Osc_Setup_ADSR
 	s8 _396;                  // _396 | Confirmed signed (Cmd_Transpose)
 	u8 _397;                  // _397
-	u8 _398[0x39c - 0x398];   // _398
+	s32 _398;                 // _398 | Might be signed (See: `Init_Track`)
 	u8 _39C;                  // _39C
 	u8 _39D;                  // _39D
 	u8 _39E;                  // _39E
@@ -119,7 +114,10 @@ struct seqp_ {
 	u32 _3CC;                 // _3CC
 	u32 _3D0;                 // _3D0
 	u32 _3D4;                 // _3D4
-	u8 _3D8[0x3e3 - 0x3d8];   // _3D8
+	u8 _3D8[0x3dc - 0x3d8];   // _3D8
+	u8 _3DC[3];               // _3DC | Exact length confirmed. For loop in `Init_Track`.
+	u8 _3DF[3];               // _3DF | Exact length confirmed. For loop in `Init_Track`.
+	u8 _3E2;                  // _3E2
 	u8 _3E3;                  // _3E3
 	u8 _3E4;                  // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];   // _3E5

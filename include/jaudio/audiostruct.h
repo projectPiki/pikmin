@@ -84,7 +84,7 @@ struct jcs_ {
 	u8 _5A[6];   // _5A
 	u8 _60;      // _60
 	u8 _61;      // _61
-	u8 _62[3];   // _62
+	u8 _62[3];   // _62 | Exact length confirmed. For loop in `Init_Track`.
 	u32 _68;     // _68
 	u16 _6C;     // _6C
 	int _70;     // _70
