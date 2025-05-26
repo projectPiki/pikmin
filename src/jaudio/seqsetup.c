@@ -6,10 +6,12 @@
 #include "jaudio/playercall.h"
 #include "jaudio/jamosc.h"
 
+#define SEQ_SIZE             (256)
 #define ROOT_OUTER_SIZE      (256)
 #define ROOTSEQ_SIZE         (16)
 #define FREE_SEQP_QUEUE_SIZE (256)
 
+static seqp_ seq[SEQ_SIZE];
 static seqp_* ROOT_OUTER[ROOT_OUTER_SIZE]; // TODO: Just a guess
 static seqp_* rootseq[ROOTSEQ_SIZE];
 static seqp_* FREE_SEQP_QUEUE[FREE_SEQP_QUEUE_SIZE];
@@ -25,53 +27,24 @@ static u32 SEQ_REMAIN;
  */
 void Jaq_Reset(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0
-	  stw       r0, 0x4(r1)
-	  lis       r3, 0x8032
-	  subi      r10, r3, 0x560
-	  li        r0, 0x100
-	  stwu      r1, -0x8(r1)
-	  addi      r9, r4, 0
-	  addi      r8, r4, 0
-	  addi      r7, r4, 0
-	  addis     r6, r10, 0x4
-	  li        r3, 0
-	  mtctr     r0
+	int i;
 
-	.loc_0x34:
-	  add       r11, r10, r4
-	  add       r5, r6, r3
-	  stb       r9, 0x3C(r11)
-	  addi      r3, r3, 0x4
-	  addi      r4, r4, 0x434
-	  sth       r8, 0x3A0(r11)
-	  stb       r7, 0x39E(r11)
-	  stw       r11, 0x3840(r5)
-	  bdnz+     .loc_0x34
-	  li        r6, 0
-	  li        r4, 0x100
-	  li        r0, 0x10
-	  stw       r6, 0x2C38(r13)
-	  addis     r5, r10, 0x4
-	  li        r3, 0
-	  stw       r6, 0x2C3C(r13)
-	  stw       r4, 0x2C40(r13)
-	  mtctr     r0
+	for (i = 0; i < SEQ_SIZE; ++i) {
+		seq[i]._3C         = 0;
+		seq[i]._3A0        = 0;
+		seq[i]._39E        = 0;
+		FREE_SEQP_QUEUE[i] = &seq[i];
+	}
 
-	.loc_0x7C:
-	  add       r4, r5, r3
-	  addi      r3, r3, 0x4
-	  stw       r6, 0x3800(r4)
-	  bdnz+     .loc_0x7C
-	  bl        -0x396C
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	BACK_P     = 0;
+	GET_P      = 0;
+	SEQ_REMAIN = FREE_SEQP_QUEUE_SIZE;
+
+	for (i = 0; i < ROOTSEQ_SIZE; ++i) {
+		rootseq[i] = NULL;
+	}
+
+	Jam_InitRegistTrack();
 }
 
 /*
@@ -89,18 +62,18 @@ void Jaq_GetRemainFreeTracks(void)
  * Address:	80013E40
  * Size:	000088
  */
-static BOOL BackTrack(seqp_* seq)
+static BOOL BackTrack(seqp_* track)
 {
-	seqp_** REF_seq;
+	seqp_** REF_track;
 
-	REF_seq  = &seq;
-	seq->_3C = 0;
-	if (seq->_3E4 == 1) {
+	REF_track  = &track;
+	track->_3C = 0;
+	if (track->_3E4 == 1) {
 		if (SEQ_REMAIN == FREE_SEQP_QUEUE_SIZE) {
 			return FALSE;
 		}
 
-		FREE_SEQP_QUEUE[BACK_P] = seq;
+		FREE_SEQP_QUEUE[BACK_P] = track;
 		++SEQ_REMAIN;
 		++BACK_P;
 
@@ -119,13 +92,13 @@ static BOOL BackTrack(seqp_* seq)
  */
 static seqp_* GetNewTrack()
 {
-	seqp_* seq;
+	seqp_* track;
 
 	if (SEQ_REMAIN == 0) {
 		return NULL;
 	}
 
-	seq = FREE_SEQP_QUEUE[GET_P];
+	track = FREE_SEQP_QUEUE[GET_P];
 	++GET_P;
 	--SEQ_REMAIN;
 
@@ -133,9 +106,9 @@ static seqp_* GetNewTrack()
 		GET_P = 0;
 	}
 
-	seq->_3C  = 2;
-	seq->_3E4 = 1;
-	return seq;
+	track->_3C  = 2;
+	track->_3E4 = 1;
+	return track;
 }
 
 /*
@@ -143,13 +116,13 @@ static seqp_* GetNewTrack()
  * Address:	80013F60
  * Size:	000048
  */
-int AllocNewRoot(seqp_* seq)
+int AllocNewRoot(seqp_* track)
 {
 	int i;
 
 	for (i = 0; i < ROOTSEQ_SIZE; ++i) {
 		if (!rootseq[i]) {
-			rootseq[i] = seq;
+			rootseq[i] = track;
 			return i;
 		}
 	}
@@ -161,12 +134,12 @@ int AllocNewRoot(seqp_* seq)
  * Address:	80013FC0
  * Size:	00004C
  */
-int DeAllocRoot(seqp_* seq)
+int DeAllocRoot(seqp_* track)
 {
 	int i;
 
 	for (i = 0; i < ROOTSEQ_SIZE; ++i) {
-		if (rootseq[i] == seq) {
+		if (rootseq[i] == track) {
 			rootseq[i] = NULL;
 			return i;
 		}
@@ -189,132 +162,132 @@ seqp_* Jaq_HandleToSeq(u32 handle)
  * Address:	80014040
  * Size:	000368
  */
-static void Init_Track(seqp_* seq, u32 param_2, seqp_* otherSeq)
+static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 {
 	int i;
 
 	if (!otherSeq) {
-		seq->_00  = (u8*)param_2;
-		seq->_04  = 0;
-		seq->_33A = 0x78;
-		seq->_338 = 0x30;
-		seq->_33C = 1;
-		seq->_39C = 0;
-		seq->_39D = 10;
-		seq->_3A0 = 0;
-		seq->_39E = 0;
+		track->_00  = (u8*)param_2;
+		track->_04  = 0;
+		track->_33A = 0x78;
+		track->_338 = 0x30;
+		track->_33C = 1;
+		track->_39C = 0;
+		track->_39D = 10;
+		track->_3A0 = 0;
+		track->_39E = 0;
 	} else {
-		seq->_00  = otherSeq->_00;
-		seq->_04  = param_2;
-		seq->_3E  = otherSeq->_3E;
-		seq->_33A = otherSeq->_33A;
-		seq->_3E3 = 0;
-		seq->_334 = otherSeq->_334;
-		seq->_338 = otherSeq->_338;
-		seq->_33C = otherSeq->_33C;
-		seq->_39C = otherSeq->_39C;
-		seq->_39D = otherSeq->_39D;
-		seq->_3A0 = 0;
+		track->_00  = otherSeq->_00;
+		track->_04  = param_2;
+		track->_3E  = otherSeq->_3E;
+		track->_33A = otherSeq->_33A;
+		track->_3E3 = 0;
+		track->_334 = otherSeq->_334;
+		track->_338 = otherSeq->_338;
+		track->_33C = otherSeq->_33C;
+		track->_39C = otherSeq->_39C;
+		track->_39D = otherSeq->_39D;
+		track->_3A0 = 0;
 	}
-	seq->_08  = 0;
-	seq->_D0  = 0;
-	seq->_8C  = 0;
-	seq->_3C  = 1;
-	seq->_40  = otherSeq;
-	seq->_3A6 = 0;
-	seq->_3A4 = 0;
-	seq->_3D0 = 0;
+	track->_08  = 0;
+	track->_D0  = 0;
+	track->_8C  = 0;
+	track->_3C  = 1;
+	track->_40  = otherSeq;
+	track->_3A6 = 0;
+	track->_3A4 = 0;
+	track->_3D0 = 0;
 
 	for (i = 0; i < 18; ++i) {
-		seq->_14C[i]._08 = 0.0f;
-		seq->_14C[i]._00 = 1.0f;
-		seq->_14C[i]._04 = 1.0f;
+		track->_14C[i]._08 = 0.0f;
+		track->_14C[i]._00 = 1.0f;
+		track->_14C[i]._04 = 1.0f;
 	}
 
-	seq->_14C[1]._00 = 0.0f;
-	seq->_14C[1]._04 = 0.0f;
-	seq->_14C[1]._00 = 0.0f; // Just to be sure.
-	seq->_14C[1]._04 = 0.0f; // Just to be sure.
-	seq->_14C[3]._00 = 0.5f;
-	seq->_14C[3]._04 = 0.5f;
+	track->_14C[1]._00 = 0.0f;
+	track->_14C[1]._04 = 0.0f;
+	track->_14C[1]._00 = 0.0f; // Just to be sure.
+	track->_14C[1]._04 = 0.0f; // Just to be sure.
+	track->_14C[3]._00 = 0.5f;
+	track->_14C[3]._04 = 0.5f;
 
-	seq->_14C[16]._00 = 0.5f;
-	seq->_14C[16]._04 = 0.5f;
-	seq->_14C[17]._00 = 0.0f;
-	seq->_14C[17]._04 = 0.0f;
+	track->_14C[16]._00 = 0.5f;
+	track->_14C[16]._04 = 0.5f;
+	track->_14C[17]._00 = 0.0f;
+	track->_14C[17]._04 = 0.0f;
 
-	seq->_14C[2]._00 = 0.0f;
-	seq->_14C[2]._04 = 0.0f;
-	seq->_14C[4]._00 = 0.0f;
-	seq->_14C[4]._04 = 0.0f;
+	track->_14C[2]._00 = 0.0f;
+	track->_14C[2]._04 = 0.0f;
+	track->_14C[4]._00 = 0.0f;
+	track->_14C[4]._04 = 0.0f;
 
 	// Initialize 13 through 15.
 	for (i = 1; i < 4; ++i) {
-		seq->_14C[i + 12]._00 = 0.0f;
-		seq->_14C[i + 12]._04 = 0.0f;
+		track->_14C[i + 12]._00 = 0.0f;
+		track->_14C[i + 12]._04 = 0.0f;
 	}
 
-	seq->_14C[5]._00 = 0.0f;
-	seq->_14C[5]._04 = 0.0f;
+	track->_14C[5]._00 = 0.0f;
+	track->_14C[5]._04 = 0.0f;
 
 	for (i = 0; i < 32; ++i) {
-		seq->_26C[i] = 0;
+		track->_26C[i] = 0;
 	}
 
-	if ((seq->_3F & 2) || !seq->_40) {
-		seq->_26C[8]  = 0;
-		seq->_26C[9]  = 1;
-		seq->_26C[10] = 1;
-		seq->_26C[11] = 0x7fff;
-		seq->_26C[12] = 0x4000;
+	if ((track->_3F & 2) || !track->_40) {
+		track->_26C[8]  = 0;
+		track->_26C[9]  = 1;
+		track->_26C[10] = 1;
+		track->_26C[11] = 0x7fff;
+		track->_26C[12] = 0x4000;
 		for (i = 0; i < 3; ++i) {
-			seq->_3DC[i]    = 2;
-			seq->_3DF[i]    = 2;
-			seq->_D8._62[i] = 26;
+			track->_3DC[i]    = 2;
+			track->_3DF[i]    = 2;
+			track->_D8._62[i] = 26;
 		}
-		seq->_26C[6]  = 0xf0;
-		seq->_26C[7]  = 0x0c;
-		seq->_26C[13] = 0x40;
+		track->_26C[6]  = 0xf0;
+		track->_26C[7]  = 0x0c;
+		track->_26C[13] = 0x40;
 	} else {
 		// Initialize 8 through 12.
 		for (i = 0; i < 5; ++i) {
-			seq->_26C[i + 8] = seq->_40->_26C[i + 8];
+			track->_26C[i + 8] = track->_40->_26C[i + 8];
 		}
-		seq->_26C[6]  = seq->_40->_26C[6];
-		seq->_26C[7]  = seq->_40->_26C[7];
-		seq->_26C[13] = seq->_40->_26C[13];
+		track->_26C[6]  = track->_40->_26C[6];
+		track->_26C[7]  = track->_40->_26C[7];
+		track->_26C[13] = track->_40->_26C[13];
 		for (i = 0; i < 3; ++i) {
-			seq->_3DC[i]    = seq->_40->_3DC[i];
-			seq->_3DF[i]    = seq->_40->_3DF[i];
-			seq->_D8._62[i] = seq->_40->_D8._62[i];
+			track->_3DC[i]    = track->_40->_3DC[i];
+			track->_3DF[i]    = track->_40->_3DF[i];
+			track->_D8._62[i] = track->_40->_D8._62[i];
 		}
 	}
 
 	for (i = 0; i < 16; ++i) {
-		seq->_2B0[i] = 0;
-		seq->_44[i]  = 0;
+		track->_2B0[i] = 0;
+		track->_44[i]  = 0;
 	}
 
 	for (i = 0; i < 8; ++i) {
-		seq->_94[i] = -1;
-		seq->_9C[i] = NULL;
-		seq->_BC[i] = 0;
+		track->_94[i] = -1;
+		track->_9C[i] = NULL;
+		track->_BC[i] = 0;
 	}
-	seq->_D4 = 0;
-	seq->_D5 = 0;
-	seq->_90 = 0;
-	seq->_D6 = 0;
-	Osc_Init_Env(seq);
-	seq->_396 = 0;
-	seq->_397 = 0;
-	seq->_398 = -1;
+	track->_D4 = 0;
+	track->_D5 = 0;
+	track->_90 = 0;
+	track->_D6 = 0;
+	Osc_Init_Env(track);
+	track->_396 = 0;
+	track->_397 = 0;
+	track->_398 = -1;
 
 	for (i = 0; i < 16; ++i) {
-		seq->_2F0[i].cmdImport = 0;
-		seq->_2F0[i].cmdExport = 0;
+		track->_2F0[i].cmdImport = 0;
+		track->_2F0[i].cmdExport = 0;
 	}
 
-	seq->_3E2 = 0;
+	track->_3E2 = 0;
 }
 
 /*
@@ -324,25 +297,25 @@ static void Init_Track(seqp_* seq, u32 param_2, seqp_* otherSeq)
  */
 BOOL Jaq_StopSeq(s32 index)
 {
-	seqp_* seq;
+	seqp_* track;
 
 	if (index == -1) {
 		return FALSE;
 	}
-	seq = rootseq[index];
-	if (!seq) {
+	track = rootseq[index];
+	if (!track) {
 		return FALSE;
 	}
 
-	switch (seq->_3C) {
+	switch (track->_3C) {
 	case 0:
 		break;
 	case 2:
-		BackTrack(seq);
-		DeAllocRoot(seq);
+		BackTrack(track);
+		DeAllocRoot(track);
 		break;
 	default:
-		seq->_3C = 3;
+		track->_3C = 3;
 		break;
 	}
 	return TRUE;
@@ -353,13 +326,13 @@ BOOL Jaq_StopSeq(s32 index)
  * Address:	80014460
  * Size:	000054
  */
-static void __StopSeq(seqp_* seq)
+static void __StopSeq(seqp_* track)
 {
-	SeqUpdate(seq, 0);
-	Jaq_CloseTrack(seq);
-	DeAllocRoot(seq);
-	if (seq->_3D == 1) {
-		FAT_FreeMemory(seq->_3E);
+	SeqUpdate(track, 0);
+	Jaq_CloseTrack(track);
+	DeAllocRoot(track);
+	if (track->_3D == 1) {
+		FAT_FreeMemory(track->_3E);
 	}
 }
 
@@ -502,24 +475,17 @@ unknown Jaq_SetSeqData_Limit(seqp_*, u8*, u32, unknown, unknown)
  * Address:	80014680
  * Size:	00002C
  */
-void Jaq_SetBankNumber(seqp_*, u8)
+BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 {
-	/*
-	.loc_0x0:
-	  lhz       r0, 0x278(r3)
-	  cmplwi    r3, 0
-	  rlwinm    r5,r0,0,24,31
-	  bne-      .loc_0x18
-	  li        r3, 0
-	  blr
+	u8 lo;
 
-	.loc_0x18:
-	  rlwinm    r0,r4,8,16,23
-	  or        r0, r0, r5
-	  sth       r0, 0x278(r3)
-	  li        r3, 0x1
-	  blr
-	*/
+	// Let's get ahead of ourselves here.
+	lo = track->_26C[6] & 0xFF;
+	if (!track) {
+		return FALSE;
+	}
+	track->_26C[6] = (bankNum << 8) | lo;
+	return TRUE;
 }
 
 static s32 Jaq_RootCallback(void*);
@@ -531,20 +497,20 @@ static s32 Jaq_RootCallback(void*);
  */
 BOOL Jaq_StartSeq(u32 param_1)
 {
-	seqp_* seq;
+	seqp_* track;
 	u8* lbzu;
 
 	if (param_1 == -1) {
 		return FALSE;
 	}
 
-	seq = rootseq[param_1];
-	if (!seq) {
+	track = rootseq[param_1];
+	if (!track) {
 		return FALSE;
 	};
 
 	// This feels like a fakematch, but oh well.
-	switch (*(lbzu = &seq->_3C)) {
+	switch (*(lbzu = &track->_3C)) {
 	case 0:
 		return FALSE;
 	case 1:
@@ -672,21 +638,21 @@ void Jaq_OpenTrack(seqp_*, unknown, unknown)
  * Address:	800148E0
  * Size:	0000B4
  */
-void __AllNoteOff(seqp_* seq)
+void __AllNoteOff(seqp_* track)
 {
 	u32 i;
 
-	if (!seq->_40) {
+	if (!track->_40) {
 		for (i = 0; i < 8; ++i) {
-			NoteOFF_R(seq, i, 10);
-			seq->_94[i] = -1;
-			seq->_9C[i] = NULL;
+			NoteOFF_R(track, i, 10);
+			track->_94[i] = -1;
+			track->_9C[i] = NULL;
 		}
 	} else {
 		for (i = 0; i < 8; ++i) {
-			NoteOFF(seq, i);
-			seq->_94[i] = -1;
-			seq->_9C[i] = NULL;
+			NoteOFF(track, i);
+			track->_94[i] = -1;
+			track->_9C[i] = NULL;
 		}
 	}
 }

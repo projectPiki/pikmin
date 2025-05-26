@@ -9,14 +9,14 @@
  * Address:	80013840
  * Size:	000394
  */
-s32 NoteON(seqp_* seq, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
+s32 NoteON(seqp_* track, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
 {
-	if (seq->_39E && (seq->_39D & 0x40)) {
+	if (track->_39E && (track->_39D & 0x40)) {
 		return -1;
 	}
 
-	if (seq->_9C[param_2]) {
-		NoteOFF(seq, param_2);
+	if (track->_9C[param_2]) {
+		NoteOFF(track, param_2);
 	}
 
 	/*
@@ -302,22 +302,22 @@ s32 NoteON(seqp_* seq, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
  * Address:	80013BE0
  * Size:	000090
  */
-s32 NoteOFF_R(seqp_* seq, u8 param_2, u16 param_3)
+s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
 {
 	u8* REF_param_2;
 	jc_* jc;
 
 	REF_param_2 = &param_2;
-	if (jc = seq->_9C[param_2]) {
-		if (jc->_126 == seq->_BC[param_2]) {
+	if (jc = track->_9C[param_2]) {
+		if (jc->_126 == track->_BC[param_2]) {
 			if (param_3 == 0) {
 				Stop_1Shot(jc);
 			} else {
 				Stop_1Shot_R(jc, param_3);
 			}
 		}
-		seq->_9C[param_2] = NULL;
-		seq->_BC[param_2] = 0;
+		track->_9C[param_2] = NULL;
+		track->_BC[param_2] = 0;
 		return 1;
 	}
 	return 0;
@@ -328,9 +328,9 @@ s32 NoteOFF_R(seqp_* seq, u8 param_2, u16 param_3)
  * Address:	80013C80
  * Size:	000024
  */
-s32 NoteOFF(seqp_* seq, u8 param_2)
+s32 NoteOFF(seqp_* track, u8 param_2)
 {
-	return NoteOFF_R(seq, param_2, 0);
+	return NoteOFF_R(track, param_2, 0);
 }
 
 /*
@@ -338,12 +338,12 @@ s32 NoteOFF(seqp_* seq, u8 param_2)
  * Address:	80013CC0
  * Size:	000058
  */
-s32 GateON(seqp_* seq, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
+s32 GateON(seqp_* track, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
 {
 	s32* REF_param_3 = &param_3;
 
-	if (seq->_9C[param_2]) {
-		Gate_1Shot(seq->_9C[param_2], param_3, param_4, param_5);
+	if (track->_9C[param_2]) {
+		Gate_1Shot(track->_9C[param_2], param_3, param_4, param_5);
 	} else {
 		return -1;
 	}
@@ -365,14 +365,14 @@ void ProgramChange(s32)
  * Address:	80013D20
  * Size:	000064
  */
-BOOL CheckNoteStop(seqp_* seq, s32 param_2)
+BOOL CheckNoteStop(seqp_* track, s32 param_2)
 {
 	jc_* jc;
 
-	if (jc = seq->_9C[param_2]) {
-		if (jc->_126 != seq->_BC[param_2]) {
-			seq->_9C[param_2] = NULL;
-			seq->_BC[param_2] = 0;
+	if (jc = track->_9C[param_2]) {
+		if (jc->_126 != track->_BC[param_2]) {
+			track->_9C[param_2] = NULL;
+			track->_BC[param_2] = 0;
 			return TRUE;
 		}
 		if (jc->_01 == 0xff) {
