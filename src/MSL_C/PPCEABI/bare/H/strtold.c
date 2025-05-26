@@ -38,15 +38,15 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 {
 	long double result;
 	int c;
-	int scan_state     = start;
-	int count          = 0;
-	int spaces         = 0;
-	int sig_negative   = 0;
-	int exp_negative   = 0;
-	long exp_value     = 0;
-	int exp_adjust     = 0;
-	int dot            = *(unsigned char*)__lconv.decimal_point;
-	decimal d          = { 0, 0, 0, { 0, "" } };
+	int scan_state   = start;
+	int count        = 0;
+	int spaces       = 0;
+	int sig_negative = 0;
+	int exp_negative = 0;
+	long exp_value   = 0;
+	int exp_adjust   = 0;
+	int dot          = *(unsigned char*)__lconv.decimal_point;
+	decimal d        = { 0, 0, 0, { 0, "" } };
 
 	*overflow = 0;
 	c         = fetch();
@@ -62,10 +62,10 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 			}
 
 			if (c == '+') {
-				c             = fetch();
+				c = fetch();
 			} else if (c == '-') {
-				c             = fetch();
-				sig_negative  = 1;
+				c            = fetch();
+				sig_negative = 1;
 			}
 			scan_state = sig_start;
 			break;
@@ -83,7 +83,7 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 
 			if (c == '0') {
 				scan_state = leading_sig_zeroes;
-				c = fetch();
+				c          = fetch();
 				break;
 			}
 
@@ -289,9 +289,9 @@ f64 atof(const char* str)
 	f128 abs_result;
 	s32 pad[5];
 
-	isc.NextChar = str;
+	isc.NextChar         = str;
 	isc.NullCharDetected = 0;
-	result = __strtold(INT_MAX, __StringRead, &isc, &chars_scanned, &overflow);
+	result               = __strtold(INT_MAX, __StringRead, &isc, &chars_scanned, &overflow);
 
 	abs_result = fabs(result);
 	if (overflow || (result != 0.0 && (abs_result < DBL_MIN || abs_result > DBL_MAX))) {

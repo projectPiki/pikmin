@@ -65,8 +65,8 @@ struct P2DTextBox : public P2DPane {
 	P2DTextBoxVBinding mVBinding; // _100
 	s16 mSpacing;                 // _104
 	s16 mLeading;                 // _106
-	s16 mFontWidth;			      // _108
-	s16 mFontHeight;			  // _10A
+	s16 mFontWidth;               // _108
+	s16 mFontHeight;              // _10A
 	char* mText;                  // _10C
 	s16 _110;                     // _110
 	s16 _112;                     // _112

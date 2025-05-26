@@ -140,10 +140,10 @@ void __num2dec(const decform* f, f64 x, decimal* d)
  */
 f64 __dec2num(const decimal* d)
 {
-	f64 num = 0.0;
-	int sign = d->sign;
-	int exp = d->exp;
-	int length = d->sig.length;
+	f64 num          = 0.0;
+	int sign         = d->sign;
+	int exp          = d->exp;
+	int length       = d->sig.length;
 	char first_digit = d->sig.text[0];
 	f64 temp_f1;
 	f64 var_f2;
@@ -164,13 +164,13 @@ f64 __dec2num(const decimal* d)
 	}
 
 	if (length > 16) {
-		exp = length + exp;
+		exp    = length + exp;
 		length = 16;
 		exp -= 16;
 	}
 
 	ndig = length % 8;
-	s = d->sig.text;
+	s    = d->sig.text;
 	if (ndig == 0) {
 		ndig = 8;
 	}
@@ -179,7 +179,7 @@ f64 __dec2num(const decimal* d)
 
 	while (ndig != 0) {
 		ival = 0;
-		i = ndig + 1;
+		i    = ndig + 1;
 		while (--i) {
 			ival = ival * 10 + (*s++ - '0');
 		}
@@ -192,9 +192,9 @@ f64 __dec2num(const decimal* d)
 		ndig = 8;
 	}
 
-	num = num / temp_f1;
+	num    = num / temp_f1;
 	var_r5 = __labs(exp);
-	p = bit_values;
+	p      = bit_values;
 	if (var_r5 > 0x1FF) {
 		if (exp < 0) {
 			return 0.0;

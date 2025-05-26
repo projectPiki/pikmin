@@ -67,9 +67,9 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 		PRINT("flag is not found.\n");
 		ERROR("blo data is old");
 	} else {
-		mSpacing = (int)ramStream->readShort();
-		mLeading = (int)ramStream->readShort();
-		mFontWidth = (int)ramStream->readShort();
+		mSpacing    = (int)ramStream->readShort();
+		mLeading    = (int)ramStream->readShort();
+		mFontWidth  = (int)ramStream->readShort();
 		mFontHeight = (int)ramStream->readShort();
 	}
 

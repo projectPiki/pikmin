@@ -42,7 +42,7 @@ f32 atan2f(f32 __y, f32 __x)
  */
 f32 acosf(f32 x)
 {
- 	return HALF_PI - atan__Ff(x * _inv_sqrtf(1.0f- x*x));
+	return HALF_PI - atan__Ff(x * _inv_sqrtf(1.0f - x * x));
 }
 
 #pragma dont_inline on
@@ -53,21 +53,20 @@ f32 acosf(f32 x)
  */
 f32 _inv_sqrtf(f32 x)
 {
-    const f32 _half = .5f;
-    const f32 _three = 3.0f;
+	const f32 _half  = .5f;
+	const f32 _three = 3.0f;
 
-    if (x > 0.0f) {
-        f32 guess = __frsqrte((f64)x); /* returns an approximation to  */
-        guess = _half * guess * (_three - guess * guess * x); /* now have 8  sig bits         */
-        guess = _half * guess * (_three - guess * guess * x); /* now have 16 sig bits         */
-        guess = _half * guess * (_three - guess * guess * x); /* now have >24 sig bits        */
-        return guess;
-    } else if (x) {
-        return NAN;
-    }
-    return INFINITY;
+	if (x > 0.0f) {
+		f32 guess = __frsqrte((f64)x);                            /* returns an approximation to  */
+		guess     = _half * guess * (_three - guess * guess * x); /* now have 8  sig bits         */
+		guess     = _half * guess * (_three - guess * guess * x); /* now have 16 sig bits         */
+		guess     = _half * guess * (_three - guess * guess * x); /* now have >24 sig bits        */
+		return guess;
+	} else if (x) {
+		return NAN;
+	}
+	return INFINITY;
 }
-#pragma dont_inline reset
 
 /*
  * --INFO--
@@ -79,6 +78,7 @@ f32 atan__Ff(f32 x)
 	return atanf(x);
 }
 
+#pragma dont_inline reset
 /*
  * --INFO--
  * Address:	8021B730
