@@ -1026,7 +1026,7 @@ config.libs = [
             Object(Matching, "MSL_C/PPCEABI/bare/H/w_atan2.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/w_pow.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/hyperbolicsf.c"),
-            Object(NonMatching, "MSL_C/PPCEABI/bare/H/inverse_trig.c"),
+            Object(Equivalent, "MSL_C/PPCEABI/bare/H/inverse_trig.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/trigf.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/math_inlines.c"),
             Object(Matching, "MSL_C/PPCEABI/bare/H/common_float_tables.c"),
