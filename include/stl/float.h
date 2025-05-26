@@ -7,6 +7,7 @@
 extern "C" {
 #endif // ifdef __cplusplus
 
+extern int __double_min[];
 extern int __double_max[];
 extern int __extended_min[];
 extern int __extended_max[];
@@ -36,8 +37,9 @@ extern int __float_epsilon[];
 
 // #define DBL_MAX 0x1.fffffffffffffP1023
 #define DBL_EPSILON 0x1.0000000000000P-52
-#define DBL_MIN     0x1.0000000000000P-1022
+// #define DBL_MIN     0x1.0000000000000P-1022
 
+#define DBL_MIN (*(f64*)__double_min)
 #define DBL_MAX (*(f64*)__double_max)
 
 #define LDBL_MANT_DIG   53

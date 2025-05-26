@@ -11,6 +11,8 @@ const f64 digit_values[] = {
 	1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8,
 };
 
+static f64 ten = 10.0;
+
 /*
  * --INFO--
  * Address:	802158EC
@@ -30,11 +32,6 @@ void __num2dec(const decform* f, f64 x, decimal* d)
 	int var_r6;
 	int var_r6_2;
 	const f64* var_r5;
-
-	// fixes float ordering issue
-	(void)0.0;
-	(void)1.0;
-	(void)4503601774854144.0;
 
 	digits = f->digits;
 	if (digits > 16) {
@@ -143,196 +140,92 @@ void __num2dec(const decform* f, f64 x, decimal* d)
  */
 f64 __dec2num(const decimal* d)
 {
-	if (d->sig.length <= 0) {
-		return copysign(0.0, d->sign == 0 ? 1.0 : -1.0);
+	f64 num = 0.0;
+	int sign = d->sign;
+	int exp = d->exp;
+	int length = d->sig.length;
+	char first_digit = d->sig.text[0];
+	f64 temp_f1;
+	f64 var_f2;
+	const f64* p;
+	int ndig;
+	int ival;
+	int i;
+	int var_r5;
+	const u8* s;
+	s32 pad[4];
+
+	if (length < 1 || first_digit == '0') {
+		return 0.0;
+	} else if (first_digit == 'I') {
+		return sign ? -HUGE_VAL : HUGE_VAL;
+	} else if (first_digit == 'N') {
+		return DBL_NAN;
 	}
 
-	switch (d->sig.text[0]) {
-	case '0':
-		return copysign(0.0, d->sign == 0 ? 1.0 : -1.0);
-	case 'I':
-		return copysign((f64)INFINITY, d->sign == 0 ? 1.0 : -1.0);
-	case 'N': {
-		f64 result;
-		u64* ll = (u64*)&result;
+	if (length > 16) {
+		exp = length + exp;
+		length = 16;
+		exp -= 16;
+	}
 
-		*ll = 0x7FF0000000000000;
-		if (d->sign)
-			*ll |= 0x8000000000000000;
+	ndig = length % 8;
+	s = d->sig.text;
+	if (ndig == 0) {
+		ndig = 8;
+	}
+	exp += length - 1;
+	temp_f1 = pow(ten, length - 1);
 
-		if (d->sig.length == 1)
-			*ll |= 0x8000000000000;
-		else {
-			u8* p               = (u8*)&result + 1;
-			int placed_non_zero = 0;
-			int low             = 1;
-			int i;
-			int e = d->sig.length;
-			if (e > 14)
-				e = 14;
-
-			for (i = 1; i < e; ++i) {
-				u8 c = d->sig.text[i];
-
-				if (isdigit(c)) {
-					c -= '0';
-				} else {
-					c = (u8)(_tolower(c) - 'a' + 10);
-				}
-
-				if (c != 0) {
-					placed_non_zero = 1;
-				}
-
-				if (low) {
-					*p++ |= c;
-				} else {
-					*p = (u8)(c << 4);
-				}
-
-				low = !low;
-			}
-
-			if (!placed_non_zero) {
-				*ll |= 0x0008000000000000;
-			}
+	while (ndig != 0) {
+		ival = 0;
+		i = ndig + 1;
+		while (--i) {
+			ival = ival * 10 + (*s++ - '0');
 		}
 
-		return result;
-	}
-	}
-
-	{
-		f64 pow_10[8] = { 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8 };
-
-		decimal dec = *d;
-		u8* i       = dec.sig.text;
-		u8* e       = i + dec.sig.length;
-		f64 first_guess;
-		int exponent;
-
-		for (; i < e; ++i)
-			*i -= '0';
-		dec.exp += dec.sig.length - 1;
-		exponent = dec.exp;
-
-		i           = dec.sig.text;
-		first_guess = *i++;
-
-		while (i < e) {
-			u32 ival = 0;
-			int j;
-			f64 temp1, temp2;
-			int ndig = (int)(e - i) % 8;
-
-			if (ndig == 0)
-				ndig = 8;
-
-			for (j = 0; j < ndig; ++j, ++i) {
-				ival = ival * 10 + *i;
-			}
-
-			temp1 = first_guess * pow_10[ndig - 1];
-			temp2 = temp1 + ival;
-
-			if (ival != 0 && temp1 == temp2)
-				break;
-
-			first_guess = temp2;
-			exponent -= ndig;
+		length -= ndig;
+		num = num * 100000000.0 + ival;
+		if (length == 0) {
+			break;
 		}
+		ndig = 8;
+	}
 
-		if (exponent < 0) {
-			first_guess /= pow(5.0, -exponent);
+	num = num / temp_f1;
+	var_r5 = __labs(exp);
+	p = bit_values;
+	if (var_r5 > 0x1FF) {
+		if (exp < 0) {
+			return 0.0;
 		} else {
-			first_guess *= pow(5.0, exponent);
+			return sign ? -HUGE_VAL : HUGE_VAL;
 		}
-
-		first_guess = ldexp(first_guess, exponent);
-
-		if (isinf(first_guess)) {
-			decimal max;
-			__str2dec(&max, "179769313486231580793729011405303420", 308);
-			if (__less_dec(&max, &dec))
-				goto done;
-			first_guess = DBL_MAX;
-		}
-
-		{
-			decimal feedback1;
-
-			__num2dec_internal(&feedback1, first_guess);
-
-			if (__equals_dec(&feedback1, &dec)) {
-				goto done;
-			}
-
-			if (__less_dec(&feedback1, &dec)) {
-
-				decimal feedback2, difflow, diffhigh;
-				f64 next_guess = first_guess;
-				u64* ull       = (u64*)&next_guess;
-				++*ull;
-
-				if (isinf(next_guess)) {
-					first_guess = next_guess;
-					goto done;
-				}
-
-				__num2dec_internal(&feedback2, next_guess);
-
-				while (__less_dec(&feedback2, &dec)) {
-					feedback1   = feedback2;
-					first_guess = next_guess;
-					++*ull;
-					if (isinf(next_guess)) {
-						first_guess = next_guess;
-						goto done;
-					}
-					__num2dec_internal(&feedback2, next_guess);
-				}
-
-				__minus_dec(&difflow, &dec, &feedback1);
-				__minus_dec(&diffhigh, &feedback2, &dec);
-
-				if (__equals_dec(&difflow, &diffhigh)) {
-					if (*(u64*)&first_guess & 1) {
-						first_guess = next_guess;
-					}
-				} else if (!__less_dec(&difflow, &diffhigh)) {
-					first_guess = next_guess;
-				}
-			} else {
-				decimal feedback2, difflow, diffhigh;
-				f64 next_guess = first_guess;
-				u64* ull       = (u64*)&next_guess;
-				--*ull;
-
-				__num2dec_internal(&feedback2, next_guess);
-
-				while (__less_dec(&dec, &feedback2)) {
-					feedback1   = feedback2;
-					first_guess = next_guess;
-					--*ull;
-					__num2dec_internal(&feedback2, next_guess);
-				}
-
-				__minus_dec(&difflow, &dec, &feedback2);
-				__minus_dec(&diffhigh, &feedback1, &dec);
-
-				if (__equals_dec(&difflow, &diffhigh)) {
-					if (*(u64*)&first_guess & 1) {
-						first_guess = next_guess;
-					}
-				} else if (__less_dec(&difflow, &diffhigh)) {
-					first_guess = next_guess;
-				}
-			}
-		}
-	done:
-		if (dec.sign) {
-			first_guess = -first_guess;
-		}
-		return first_guess;
 	}
+
+	var_f2 = 1.0;
+	while (var_r5 != 0) {
+		if (var_r5 & 1) {
+			if (var_f2 > DBL_MAX / *p) {
+				return sign ? -HUGE_VAL : HUGE_VAL;
+			}
+			var_f2 *= *p;
+		}
+		var_r5 >>= 1;
+		p++;
+	}
+
+	if (exp < 0) {
+		if (num < DBL_MIN * var_f2) {
+			return 0.0;
+		}
+		num /= var_f2;
+	} else if (exp > 0) {
+		if (num > DBL_MAX / var_f2) {
+			return sign ? -HUGE_VAL : HUGE_VAL;
+		}
+		num *= var_f2;
+	}
+
+	return sign ? -num : num;
 }
