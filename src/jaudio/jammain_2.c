@@ -1637,7 +1637,7 @@ void Jam_AssignExtBufferP(void)
  * Address:	80010780
  * Size:	000044
  */
-void Jam_SetExtFirFilterD(u16*, void*)
+void Jam_SetExtFirFilterD(seqp__Invented3*, void*)
 {
 	/*
 	.loc_0x0:
@@ -3514,10 +3514,9 @@ static u32 Cmd_CloseTrack()
  */
 static u32 Cmd_OutSwitch()
 {
-	// TODO: This seems unlikely. Does it actually point to a struct?
 	if (SEQ_P->_2AC) {
-		SEQ_P->_2AC[4] = SEQ_ARG._00[0];
-		SEQ_P->_2AC[5] = 0xffff;
+		SEQ_P->_2AC->_08 = SEQ_ARG._00[0];
+		SEQ_P->_2AC->_0A = -1;
 	}
 	return 0;
 }
@@ -4516,7 +4515,7 @@ void RegCmd_Process(seqp_*, int, u32)
  * Address:	80012EC0
  * Size:	0008C0
  */
-void Jam_SeqmainNote(void)
+s32 Jam_SeqmainNote(seqp_*, unknown)
 {
 	/*
 	.loc_0x0:
