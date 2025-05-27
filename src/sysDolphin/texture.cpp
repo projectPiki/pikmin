@@ -177,14 +177,8 @@ void Texture::read(RandomAccessStream& input)
  */
 void Texture::detach()
 {
+	BUMP_REGISTER(r0);
 	_20 = -1; // needs to use r4?
-
-	/*
-	.loc_0x0:
-	  li        r4, -0x1
-	  stw       r4, 0x20(r3)
-	  blr
-	*/
 }
 
 /*
