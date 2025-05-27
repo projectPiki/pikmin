@@ -53,7 +53,7 @@ void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
 	}
 
 	JV_InitHeader_M(barcFilepath, barcData, param_3);
-	seq_archandle = JV_GetArchiveHandle(barcFilepath + i);
+	seq_archandle = JV_GetArchiveHandle(&barcFilepath[i]);
 
 	for (i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
 		seq_loadbuffer[i] = nullptr;
