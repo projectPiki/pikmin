@@ -3,8 +3,8 @@
 
 #include "types.h"
 #include "Boss.h"
-#include "zen/Callback.h"
-#include "zen/Particle.h"
+#include "zen/CallBack.h"
+#include "zen/particle.h"
 
 struct MizuAi;
 

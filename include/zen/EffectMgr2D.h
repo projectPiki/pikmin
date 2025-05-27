@@ -2,7 +2,7 @@
 #define _ZEN_EFFECTMGR2D_H
 
 #include "types.h"
-#include "zen/Callback.h"
+#include "zen/CallBack.h"
 #include "zen/particle.h"
 #include "Camera.h"
 
