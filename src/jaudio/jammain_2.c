@@ -3180,11 +3180,10 @@ static u32 Cmd_LoopE()
  */
 static u32 Cmd_ReadPort()
 {
-	// TODO: Ghidra really hates the array of struct at _2F0.
 	u16 temp;
 
-	SEQ_P->_2F0[SEQ_ARG._00[0]].cmdImport = 0;
 	temp                                  = SEQ_P->_2F0[SEQ_ARG._00[0]]._02;
+	SEQ_P->_2F0[SEQ_ARG._00[0]].cmdImport = 0;
 	Jam_WriteRegDirect(SEQ_P, SEQ_ARG._00[1], temp);
 	return 0;
 }
