@@ -5,6 +5,7 @@
 #include "jaudio/fat.h"
 #include "jaudio/playercall.h"
 #include "jaudio/jamosc.h"
+#include "jaudio/driverinterface.h"
 
 #define SEQ_SIZE             (256)
 #define ROOT_OUTER_SIZE      (256)
@@ -264,7 +265,7 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 	}
 
 	for (i = 0; i < 16; ++i) {
-		track->_2B0[i] = 0;
+		track->_2B0[i] = NULL;
 		track->_44[i]  = 0;
 	}
 
@@ -488,7 +489,7 @@ BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 	return TRUE;
 }
 
-static s32 Jaq_RootCallback(void*);
+static s32 Jaq_RootCallback(void* track);
 
 /*
  * --INFO--
@@ -662,183 +663,84 @@ void __AllNoteOff(seqp_* track)
  * Address:	800149A0
  * Size:	000120
  */
-void Jaq_CloseTrack(seqp_*)
+unknown Jaq_CloseTrack(seqp_* track)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  mr.       r27, r3
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  b         .loc_0x10C
+	size_t i;
 
-	.loc_0x20:
-	  lbz       r0, 0x3C(r27)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x10C
+	// Specifically two separate conditional blocks, because why not.
+	if (!track) {
+		return 0;
+	}
+	if (track->_3C == 0) {
+		return 0;
+	}
 
-	.loc_0x34:
-	  mr        r3, r27
-	  bl        -0xF8
-	  mr        r3, r27
-	  bl        -0xBA0
-	  li        r31, 0
-	  li        r28, 0
-	  addi      r30, r31, 0
+	__AllNoteOff(track);
+	BackTrack(track);
 
-	.loc_0x50:
-	  addi      r29, r31, 0x44
-	  add       r29, r27, r29
-	  lwz       r3, 0x0(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x6C
-	  bl        .loc_0x0
-	  stw       r30, 0x0(r29)
+	for (i = 0; i < 16; ++i) {
+		if (track->_44[i]) {
+			Jaq_CloseTrack(track->_44[i]);
+			track->_44[i] = NULL;
+		}
+	}
 
-	.loc_0x6C:
-	  addi      r28, r28, 0x1
-	  addi      r31, r31, 0x4
-	  cmplwi    r28, 0x10
-	  blt+      .loc_0x50
-	  lwz       r4, 0x2AC(r27)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x9C
-	  lwz       r3, 0x4(r4)
-	  li        r0, 0
-	  subi      r3, r3, 0x1
-	  stw       r3, 0x4(r4)
-	  stw       r0, 0x2AC(r27)
+	if (track->_2AC) {
+		// This smells like refcounting.
+		track->_2AC->_04 -= 1;
+		track->_2AC = NULL;
+	}
 
-	.loc_0x9C:
-	  li        r0, 0x10
-	  li        r6, 0
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0xAC:
-	  addi      r5, r3, 0x2B0
-	  add       r5, r27, r5
-	  lwz       r4, 0x0(r5)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xC8
-	  stw       r6, 0x0(r4)
-	  stw       r6, 0x0(r5)
-
-	.loc_0xC8:
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0xAC
-	  li        r0, 0
-	  stb       r0, 0x39E(r27)
-	  sth       r0, 0x3A0(r27)
-	  lwz       r4, 0x40(r27)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xF8
-	  addi      r3, r27, 0xD8
-	  addi      r4, r4, 0xD8
-	  bl        -0xB2D0
-	  b         .loc_0x100
-
-	.loc_0xF8:
-	  addi      r3, r27, 0xD8
-	  bl        -0xB3DC
-
-	.loc_0x100:
-	  mr        r3, r27
-	  bl        -0x44E4
-	  li        r3, 0
-
-	.loc_0x10C:
-	  lmw       r27, 0x14(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 16; ++i) {
+		if (track->_2B0[i]) {
+			track->_2B0[i]->_00 = 0; // Probably also NULL if we're being real here.
+			track->_2B0[i]      = NULL;
+		}
+	}
+	track->_39E = 0;
+	track->_3A0 = 0;
+	if (track->_40) {
+		FixMoveChannelAll(&track->_D8, &track->_40->_D8);
+	} else {
+		FixReleaseChannelAll(&track->_D8);
+	}
+	Jam_UnRegistTrack(track);
+	return 0;
 }
 
 /*
  * --INFO--
  * Address:	80014AC0
  * Size:	0000E8
+ *
+ * Note: While this function accepts `void*`, it really expects `seqp_*`.
  */
-static s32 Jaq_RootCallback(void*)
+static s32 Jaq_RootCallback(void* VOID_track)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stfd      f31, 0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  beq-      .loc_0xC4
-	  lbz       r0, 0x3C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC4
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x44
-	  mr        r3, r31
-	  bl        -0x698
-	  li        r3, -0x1
-	  b         .loc_0xD0
+	seqp_* track;
 
-	.loc_0x44:
-	  lfs       f1, 0x330(r31)
-	  lfs       f0, 0x334(r31)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x330(r31)
-	  lfs       f0, 0x330(r31)
-	  lfs       f31, -0x7ED4(r2)
-	  fcmpo     cr0, f0, f31
-	  bge-      .loc_0xA4
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x13AC
-	  b         .loc_0xCC
+	track = (seqp_*)VOID_track;
+	if (track && track->_3C != 0) {
+		if (track->_3C == 3) {
+			__StopSeq(track);
+			return -1;
+		}
 
-	.loc_0x74:
-	  lfs       f0, 0x330(r31)
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x330(r31)
-	  bl        -0x1C88
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0xA4
-	  mr        r3, r31
-	  bl        -0x6F8
-	  li        r3, -0x1
-	  b         .loc_0xD0
-
-	.loc_0xA4:
-	  lfs       f0, 0x330(r31)
-	  fcmpo     cr0, f0, f31
-	  cror      2, 0x1, 0x2
-	  beq+      .loc_0x74
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0x13FC
-	  b         .loc_0xCC
-
-	.loc_0xC4:
-	  li        r3, -0x1
-	  b         .loc_0xD0
-
-	.loc_0xCC:
-	  li        r3, 0
-
-	.loc_0xD0:
-	  lwz       r0, 0x24(r1)
-	  lfd       f31, 0x18(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+		track->_330 += track->_334;
+		if (track->_330 < 1.0f) {
+			SeqUpdate(track, 0);
+		} else {
+			while (track->_330 >= 1.0f) {
+				track->_330 -= 1.0f;
+				if (Jam_SeqmainNote(track, 0) == -1) {
+					__StopSeq(track);
+					return -1;
+				}
+			}
+			SeqUpdate(track, 0);
+		}
+	} else {
+		return -1;
+	}
+	return 0;
 }
