@@ -701,7 +701,7 @@ config.libs = [
             Object(Matching, "plugPikiNishimura/CoreNucleusAi.cpp"),
             Object(Matching, "plugPikiNishimura/Mizu.cpp"),
             Object(Matching, "plugPikiNishimura/MizuAi.cpp"),
-            Object(Equivalent, "plugPikiNishimura/nscalculation.cpp"),
+            Object(Matching, "plugPikiNishimura/nscalculation.cpp"),
             Object(Matching, "plugPikiNishimura/RumbleData.cpp"),
             Object(Matching, "plugPikiNishimura/HmRumbleMgr.cpp"),
             Object(Matching, "plugPikiNishimura/HmRumbleSample.cpp"),
