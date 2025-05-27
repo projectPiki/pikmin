@@ -424,7 +424,7 @@ config.libs = [
             Object(Equivalent, "sysDolphin/system.cpp"),
             Object(Matching, "sysDolphin/sysNew.cpp"),
             Object(Matching, "sysDolphin/controllerMgr.cpp"),
-            Object(Equivalent, "sysDolphin/dgxGraphics.cpp"),
+            Object(Matching, "sysDolphin/dgxGraphics.cpp"),
             Object(Matching, "sysDolphin/gameApp.cpp"),
         ],
     },

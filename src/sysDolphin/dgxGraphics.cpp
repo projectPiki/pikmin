@@ -426,8 +426,8 @@ void DGXGraphics::initRender(int a1, int a2)
 	mCurrentMatrixId  = 0;
 	_3DC              = 30;
 	oldVerts          = 0;
-	oldCols           = 0;
 	oldNorms          = 0;
+	oldCols           = 0;
 	oldTexs[0]        = 0;
 	oldTexs[1]        = 0;
 	oldTexs[2]        = 0;
