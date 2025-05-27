@@ -1547,7 +1547,7 @@ seqp_* Jam_GetTrackHandle(u32)
  * Address:	800106C0
  * Size:	000018
  */
-void Jam_InitExtBuffer(int*)
+void Jam_InitExtBuffer(ExtBuffer*)
 {
 	/*
 	.loc_0x0:
@@ -1565,7 +1565,7 @@ void Jam_InitExtBuffer(int*)
  * Address:	800106E0
  * Size:	000038
  */
-BOOL Jam_AssignExtBuffer(seqp_*, int*)
+BOOL Jam_AssignExtBuffer(seqp_*, ExtBuffer*)
 {
 	/*
 	.loc_0x0:
@@ -1668,7 +1668,7 @@ void Jam_SetExtFirFilterD(seqp__Invented3*, void*)
  * Address:	800107E0
  * Size:	0000A4
  */
-void Jam_SetExtParamD(f32, int*, int)
+void Jam_SetExtParamD(f32, ExtBuffer*, int)
 {
 	/*
 	.loc_0x0:
@@ -1739,7 +1739,7 @@ void Jam_SetExtParamD(f32, int*, int)
  * Address:	800108A0
  * Size:	000024
  */
-void Jam_OnExtSwitchD(int*, int)
+void Jam_OnExtSwitchD(ExtBuffer*, int)
 {
 	/*
 	.loc_0x0:
@@ -2025,7 +2025,7 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
  * Address:	80010AE0
  * Size:	000320
  */
-void Jam_UpdateTrackAll(void)
+void Jam_UpdateTrackAll(seqp_*)
 {
 	/*
 	.loc_0x0:
@@ -3909,9 +3909,9 @@ static u32 Cmd_FIRSet()
  */
 static u32 Cmd_EXTSet()
 {
-	int* buffer; // TODO: No, no, no.  Bad.  What type is this, really?
+	ExtBuffer* buffer;
 
-	buffer = (int*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]);
+	buffer = (ExtBuffer*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]);
 	Jam_InitExtBuffer(buffer);
 	Jam_AssignExtBuffer(SEQ_P, buffer);
 	return 0;

@@ -6,14 +6,18 @@
 #include "jaudio/playercall.h"
 #include "jaudio/jamosc.h"
 #include "jaudio/driverinterface.h"
+#include "jaudio/oneshot.h"
+#include "jaudio/fat.h"
+
+#include "Dolphin/OS/OSInterrupt.h"
 
 #define SEQ_SIZE             (256)
-#define ROOT_OUTER_SIZE      (256)
+#define ROOT_OUTER_SIZE      (16)
 #define ROOTSEQ_SIZE         (16)
 #define FREE_SEQP_QUEUE_SIZE (256)
 
 static seqp_ seq[SEQ_SIZE];
-static seqp_* ROOT_OUTER[ROOT_OUTER_SIZE]; // TODO: Just a guess
+static ExtBuffer ROOT_OUTER[ROOT_OUTER_SIZE];
 static seqp_* rootseq[ROOTSEQ_SIZE];
 static seqp_* FREE_SEQP_QUEUE[FREE_SEQP_QUEUE_SIZE];
 
@@ -342,7 +346,7 @@ static void __StopSeq(seqp_* track)
  * Address:	800144C0
  * Size:	000024
  */
-unknown Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, unknown param_4)
+s32 Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, u32 param_4)
 {
 	return Jaq_SetSeqData_Limit(param_1, param_2, param_3, param_4, 0);
 }
@@ -352,123 +356,57 @@ unknown Jaq_SetSeqData(seqp_* param_1, u8* param_2, u32 param_3, unknown param_4
  * Address:	80014500
  * Size:	000170
  */
-unknown Jaq_SetSeqData_Limit(seqp_*, u8*, u32, unknown, unknown)
+s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8 param_5)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r25, 0x24(r1)
-	  mr.       r25, r3
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r28, r6, 0
-	  addi      r29, r7, 0
-	  bne-      .loc_0x54
-	  bl        0x1E4A54
-	  mr        r30, r3
-	  bl        -0x650
-	  addi      r0, r3, 0
-	  addi      r3, r30, 0
-	  mr        r25, r0
-	  bl        0x1E4A64
-	  cmplwi    r25, 0
-	  bne-      .loc_0x5C
-	  li        r3, -0x1
-	  b         .loc_0x15C
+	s32 root;
+	BOOL level;
+	u8* puVar2;
 
-	.loc_0x54:
-	  li        r0, 0
-	  stb       r0, 0x3E4(r25)
+	if (!track) {
+		level = OSDisableInterrupts();
+		track = GetNewTrack();
+		OSRestoreInterrupts(level);
+		if (!track) {
+			return -1;
+		}
+	} else {
+		track->_3E4 = 0;
+	}
 
-	.loc_0x5C:
-	  mr        r3, r25
-	  bl        -0x600
-	  addi      r30, r3, 0
-	  cmpwi     r30, -0x1
-	  bne-      .loc_0x78
-	  li        r3, -0x1
-	  b         .loc_0x15C
+	root = AllocNewRoot(track);
+	if (root == -1) {
+		return -1;
+	}
 
-	.loc_0x78:
-	  cmpwi     r28, 0x1
-	  stb       r28, 0x3D(r25)
-	  beq-      .loc_0xA8
-	  bge-      .loc_0x94
-	  cmpwi     r28, 0
-	  bge-      .loc_0xA0
-	  b         .loc_0xEC
-
-	.loc_0x94:
-	  cmpwi     r28, 0x3
-	  bge-      .loc_0xEC
-	  b         .loc_0xE4
-
-	.loc_0xA0:
-	  mr        r31, r26
-	  b         .loc_0xEC
-
-	.loc_0xA8:
-	  mr        r3, r27
-	  bl        -0x66AC
-	  stb       r3, 0x3E(r25)
-	  lbz       r4, 0x3E(r25)
-	  addis     r0, r4, 0
-	  cmplwi    r0, 0xFFFF
-	  bne-      .loc_0xCC
-	  li        r3, -0x1
-	  b         .loc_0x15C
-
-	.loc_0xCC:
-	  addi      r3, r26, 0
-	  addi      r6, r27, 0
-	  li        r5, 0
-	  bl        -0x63B8
-	  li        r31, 0
-	  b         .loc_0xEC
-
-	.loc_0xE4:
-	  li        r31, 0
-	  stb       r26, 0x3E(r25)
-
-	.loc_0xEC:
-	  stw       r30, 0x88(r25)
-	  li        r0, 0x3
-	  addi      r3, r25, 0
-	  addi      r4, r31, 0
-	  stb       r0, 0x3F(r25)
-	  li        r5, 0
-	  bl        -0x5C4
-	  lis       r3, 0x8036
-	  rlwinm    r4,r30,6,0,25
-	  addi      r0, r3, 0x2EA0
-	  add       r31, r0, r4
-	  addi      r3, r31, 0
-	  bl        -0x3F5C
-	  addi      r3, r25, 0
-	  addi      r4, r31, 0
-	  bl        -0x3F48
-	  addi      r3, r25, 0xD8
-	  rlwinm    r4,r29,0,24,31
-	  bl        0x158C
-	  lfs       f0, -0x7ED8(r2)
-	  mr        r3, r25
-	  stfs      f0, 0x330(r25)
-	  lfs       f0, -0x7ED4(r2)
-	  stfs      f0, 0x334(r25)
-	  bl        -0x3B6C
-	  li        r0, 0x2
-	  addi      r3, r30, 0
-	  stb       r0, 0x3C(r25)
-
-	.loc_0x15C:
-	  lmw       r25, 0x24(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	track->_3D = param_4;
+	switch (param_4) {
+	case 0:
+		puVar2 = param_2;
+		break;
+	case 1:
+		track->_3E = FAT_AllocateMemory(param_3);
+		if (track->_3E == 0xffff) { // Isn't this literally impossible?
+			return -1;
+		}
+		FAT_StoreBlock(param_2, track->_3E, 0, param_3);
+		puVar2 = NULL;
+		break;
+	case 2:
+		track->_3E = (u8)param_2;
+		puVar2     = NULL;
+		break;
+	}
+	track->_88 = root;
+	track->_3F = 3;
+	Init_Track(track, (u32)puVar2, NULL);
+	Jam_InitExtBuffer(&ROOT_OUTER[root]);
+	Jam_AssignExtBuffer(track, &ROOT_OUTER[root]);
+	Init_1shot(&track->_D8, param_5);
+	track->_330 = 0.0f;
+	track->_334 = 1.0f;
+	Jam_UpdateTrackAll(track);
+	track->_3C = 2;
+	return root;
 }
 
 /*
