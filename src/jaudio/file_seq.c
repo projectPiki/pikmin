@@ -43,22 +43,22 @@ void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
 	u32 badCompiler[2];
 
 	char** REF_barcFilepath;
-	size_t basenameIdx;
+	size_t i;
 
 	REF_barcFilepath = &barcFilepath;
-	for (basenameIdx = strlen(barcFilepath); basenameIdx != 0; --basenameIdx) {
-		if (barcFilepath[basenameIdx - 1] == '/') {
+	for (i = strlen(barcFilepath); i != 0; --i) {
+		if (barcFilepath[i - 1] == '/') {
 			break;
 		}
 	}
 
 	JV_InitHeader_M(barcFilepath, barcData, param_3);
-	seq_archandle = JV_GetArchiveHandle(barcFilepath + basenameIdx);
+	seq_archandle = JV_GetArchiveHandle(barcFilepath + i);
 
-	for (int i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
+	for (i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
 		seq_loadbuffer[i] = nullptr;
 	}
-	for (int i = 0; i < ROOTSEQHANDLE_SIZE; ++i) {
+	for (i = 0; i < ROOTSEQHANDLE_SIZE; ++i) {
 		rootseqhandle[i] = -1;
 	}
 }

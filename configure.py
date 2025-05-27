@@ -364,7 +364,7 @@ config.libs = [
             Object(NonMatching, "jaudio/piki_bgm.c"),
             Object(NonMatching, "jaudio/piki_scene.c"),
             Object(NonMatching, "jaudio/pikidemo.c"),
-            Object(Equivalent, "jaudio/file_seq.c"),
+            Object(Matching, "jaudio/file_seq.c"),
             Object(Matching, "jaudio/cmdqueue.c"),
             Object(Matching, "jaudio/filter3d.c"),
             Object(NonMatching, "jaudio/syncstream.c"),
