@@ -325,7 +325,8 @@ void SpiderLeg::setLegScaleParam(int jointIdx)
 	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
 	if (jointIdx < 3) {
 		for (int i = 0; i < 4; i++) {
-			_20[Kumo::leg_index[i][jointIdx]] = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
+			_20[Kumo::leg_index[i][jointIdx]]
+			    = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
 		}
 	} else {
 		for (int i = 0; i < 4; i++) {
@@ -633,8 +634,9 @@ void SpiderLeg::setLegParameter()
 	}
 
 	for (int i = 0; i < 4; i++) {
-		f32 goal                = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
-		mFootRaiseHeightList[i] = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
+		f32 goal = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
+		mFootRaiseHeightList[i]
+		    = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
 
 		if (mFootRaiseHeightList[i] < C_SPIDER_PROP(mSpider)._284()) {
 			mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._284();
