@@ -16,6 +16,7 @@ typedef struct seqp__Invented1 seqp__Invented1;
 typedef struct seqp__Invented2 seqp__Invented2;
 typedef struct seqp__Invented3 seqp__Invented3;
 typedef struct seqp__Invented4 seqp__Invented4;
+typedef struct ExtBuffer ExtBuffer;
 
 typedef u32 (*CmdFunction)();              // TODO: Confirm return type
 typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
@@ -47,6 +48,15 @@ struct seqp__Invented3 {
 
 struct seqp__Invented4 {
 	u32 _00; // _00
+};
+
+/**
+ * @brief This is an invented struct, named after functions which use it.
+ *
+ * @note Size: 0x40.
+ */
+struct ExtBuffer {
+	u8 _00[0x40 - 0x00]; // _00
 };
 
 // This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
@@ -163,12 +173,12 @@ void Jam_WritePortBros(void);
 void Jam_InitRegistTrack(void);
 void Jam_UnRegistTrack(seqp_*);
 seqp_* Jam_GetTrackHandle(u32);
-void Jam_InitExtBuffer(int*);
-BOOL Jam_AssignExtBuffer(seqp_*, int*);
+void Jam_InitExtBuffer(ExtBuffer*);
+BOOL Jam_AssignExtBuffer(seqp_*, ExtBuffer*);
 void Jam_AssignExtBufferP(void);
 void Jam_SetExtFirFilterD(seqp__Invented3*, void*);
-void Jam_SetExtParamD(f32, int*, int);
-void Jam_OnExtSwitchD(int*, int);
+void Jam_SetExtParamD(f32, ExtBuffer*, int);
+void Jam_OnExtSwitchD(ExtBuffer*, int);
 void Jam_OffExtSwitchD(void);
 void Jam_SetExtSwitchDirectD(void);
 void Jam_SetExtFirFilter(void);
@@ -184,7 +194,7 @@ void Jam_SetExtSwitchDirectP(void);
 void Jam_CheckRunningCounter(void);
 BOOL Jam_RegisterTrackCallback(TrackCallback);
 void Jam_SetTrackExtPanPower(void);
-void Jam_UpdateTrackAll(void);
+void Jam_UpdateTrackAll(seqp_*);
 void Jam_UpdateTrack(seqp_*, u32);
 void Jam_UpdateTempo(void);
 void Jam_MuteTrack(seqp_*, int);

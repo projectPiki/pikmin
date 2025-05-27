@@ -269,30 +269,30 @@ void Jac_UpdatePikiGaya()
 	static seqp_* seqp;
 	static int init   = 0;
 	static f32 volume = 0.0f;
-	static int outerparam[16]; // this type is wrong, I have no idea yet
+	static ExtBuffer outerparam;
 
 	if (Jac_GetCurrentScene() != 5) {
-		Jam_SetExtParamD(0, outerparam, 1);
+		Jam_SetExtParamD(0, &outerparam, 1);
 		return;
 	}
 
 	if (Jac_DemoCheck() == TRUE) {
-		Jam_SetExtParamD(0, outerparam, 1);
+		Jam_SetExtParamD(0, &outerparam, 1);
 		return;
 	}
 
 	if (init == FALSE) {
 		seqp = Jam_GetTrackHandle(0x10003);
-		Jam_InitExtBuffer(outerparam);
-		init = Jam_AssignExtBuffer(seqp, outerparam);
+		Jam_InitExtBuffer(&outerparam);
+		init = Jam_AssignExtBuffer(seqp, &outerparam);
 		if (init == FALSE) {
 			return;
 		}
-		Jam_OnExtSwitchD(outerparam, 1);
+		Jam_OnExtSwitchD(&outerparam, 1);
 	}
 
 	if (gaya_timer < 150 || pikis < 1) {
-		Jam_SetExtParamD(volume, outerparam, 1);
+		Jam_SetExtParamD(volume, &outerparam, 1);
 		volume -= 0.05f;
 		if (volume < 0.0f) {
 			volume = 0.0f;
@@ -306,7 +306,7 @@ void Jac_UpdatePikiGaya()
 		if (volume > 1.0f) {
 			volume = 1.0f;
 		}
-		Jam_SetExtParamD(volume, outerparam, 1);
+		Jam_SetExtParamD(volume, &outerparam, 1);
 	}
 	gaya_timer++;
 
