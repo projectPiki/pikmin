@@ -696,7 +696,7 @@ void MemoryCard::checkUseFile()
 		}
 	}
 	!(unused++);
-	
+
 	/*
 	.loc_0x0:
 	  mflr      r0

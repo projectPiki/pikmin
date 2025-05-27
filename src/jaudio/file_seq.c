@@ -28,8 +28,8 @@ typedef struct as_struct as_struct;
 static u8* seq_loadbuffer[SEQ_LOADBUFFER_SIZE]; // TODO: Type unknown
 static u32 seq_archandle;                       // TODO: Type unknown
 static seqp_ rootseq[ROOTSEQ_SIZE];
-static u32 rootseqhandle[ROOTSEQHANDLE_SIZE];   // TODO: Type unknown
-static as_struct as[AS_SIZE];                   // TODO: Type unknown
+static u32 rootseqhandle[ROOTSEQHANDLE_SIZE]; // TODO: Type unknown
+static as_struct as[AS_SIZE];                 // TODO: Type unknown
 
 static BOOL first = TRUE; // TODO: Type unknown
 

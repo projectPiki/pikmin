@@ -350,7 +350,7 @@ config.libs = [
             Object(NonMatching, "jaudio/virload.c"),
             Object(NonMatching, "jaudio/heapctrl.c"),
             Object(NonMatching, "jaudio/jammain_2.c"),
-            Object(NonMatching, "jaudio/midplay.c"),
+            Object(Matching, "jaudio/midplay.c"),
             Object(NonMatching, "jaudio/noteon.c"),
             Object(NonMatching, "jaudio/seqsetup.c"),
             Object(Matching, "jaudio/centcalc.c"),

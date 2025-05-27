@@ -137,8 +137,8 @@ void RigidBody::applyCMForce(Vector3f& force)
 	mLinearAccel.z += force.z * mMass;
 }
 
-
-int glump() {
+int glump()
+{
 	int x;
 	return x;
 }
@@ -154,7 +154,8 @@ void RigidBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 	configuration& currState = mIntegrationStates[currConfigIdx];
 
 	currState.mPosition = prevState.mPosition + timeStep * prevState.mLinearVel;
-	glump();glump();
+	glump();
+	glump();
 	currState.mOrientationMtx
 	    = prevState.mOrientationMtx + timeStep * Matrix3f(prevState.mAngularVel, Matrix3f::MODE_Unk0) * prevState.mOrientationMtx;
 	f32 v                        = timeStep * mInvMass;
@@ -168,8 +169,32 @@ void RigidBody::integrate(int prevConfigIdx, int currConfigIdx, f32 timeStep)
 	currState.mOrientationQuat.fromMat3f(currState.mOrientationMtx);
 	currState.mInertiaTensor = currState.mOrientationMtx * mInertiaTensor * Transpose(currState.mOrientationMtx);
 	currState.mAngularVel    = currState.mInertiaTensor * currState.mLocalAngularVel;
-	glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();glump();
-	
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+	glump();
+
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -44,7 +44,7 @@ void __SetVolandPan(Portargs_* arg)
 	SEvent_* evt;
 	seqp_* track;
 
-	evt = arg->mEvent;
+	evt   = arg->mEvent;
 	track = evt->_D0;
 	Jam_SetExtParam(evt->_160, track, 1);
 	track = evt->_D0;

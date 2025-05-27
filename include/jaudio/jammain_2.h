@@ -9,6 +9,8 @@
 extern "C" {
 #endif // ifdef __cplusplus
 
+extern s16 CUTOFF_TO_IIR_TABLE[128][4];
+
 typedef struct seqp_ seqp_;
 typedef struct seqp__Invented1 seqp__Invented1;
 typedef struct seqp__Invented2 seqp__Invented2;
