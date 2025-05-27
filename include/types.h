@@ -100,9 +100,9 @@ typedef u16 wchar_t;
 	}
 
 #ifdef __MWERKS__
-#define BUMP_REGISTER(reg)  \
-	{                       \
-		asm { mr reg, reg } \
+#define BUMP_REGISTER(reg) \
+	{                      \
+		asm { mr reg, reg }   \
 	}
 #else
 #define BUMP_REGISTER(reg) (void)0

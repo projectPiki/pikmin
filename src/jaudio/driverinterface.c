@@ -508,7 +508,7 @@ void Channel_Init(jc_* jc)
 	}
 
 	for (int i = 0; i < 4; i++) {
-		jc->_38[i] = nullptr;
+		jc->mOscillators[i] = nullptr;
 	}
 	jc->_02 = 0;
 	jc->_126++;

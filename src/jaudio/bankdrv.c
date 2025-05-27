@@ -20,7 +20,7 @@ Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
 	if (!bank) {
 		return NULL;
 	}
-	return bank->inst[index];
+	return bank->mInstruments[index];
 }
 
 /*
@@ -37,7 +37,7 @@ Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
 	if (!bank) {
 		return NULL;
 	}
-	return bank->voice[index];
+	return bank->mVoices[index];
 }
 
 /*
@@ -54,7 +54,7 @@ Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
 	if (!bank) {
 		return NULL;
 	}
-	return bank->perc[index];
+	return bank->mPercs[index];
 }
 
 /*
@@ -64,20 +64,16 @@ Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
  */
 int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
 {
-	int index;
-
 	if (!inst) {
 		return 0;
 	}
 
-	for (index = inst->_28;; --index) {
-		if (index == 0) {
-			return -1;
+	for (u32 i = 0; i < inst->mKeyRegionCount; i++) {
+		if (param_2 <= inst->mKeyRegions[i]->mBaseKey) {
+			return i;
 		}
-		// if (inst->_2C[index] >= param_2) {
-		// 	return index;
-		// }
 	}
+	return -1;
 }
 
 /*
@@ -85,74 +81,27 @@ int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
  * Address:	8000D0A0
  * Size:	000090
  */
-int Bank_GetInstVmap(Inst_* inst, u8 param_2, volatile u8 param_3)
+int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
 {
 	u32 badCompiler;
-	int keymap;
 
 	if (!inst) {
 		return 0;
 	}
 
-	keymap = Bank_GetInstKeymap(inst, param_2);
+	int keymap = Bank_GetInstKeymap(inst, param_2);
 	if (keymap != -1) {
-		return keymap;
-	}
-	for (int i = 0; i < inst->_2C[keymap]->_04; ++i) {
-		u8 uh = inst->_2C[keymap]->_08->_00;
-		if (param_3 <= uh) {
-			return uh;
+		u8* REF_p3       = &param_3;
+		InstKeymap_* key = inst->mKeyRegions[keymap];
+		for (u32 i = 0; i < key->mVelocityCount; i++) {
+			Vmap_* vmap = key->mVelocities[i];
+			if (param_3 <= vmap->mBaseVelocity) {
+				return (int)vmap;
+			}
 		}
+		return 0;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  stb       r5, 0xD(r1)
-	  bne-      .loc_0x24
-	  li        r3, 0
-	  b         .loc_0x7C
-
-	.loc_0x24:
-	  mr        r3, r31
-	  bl        -0x88
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x7C
-	  rlwinm    r0,r3,2,0,29
-	  lbz       r5, 0xD(r1)
-	  add       r3, r31, r0
-	  li        r4, 0
-	  lwz       r6, 0x2C(r3)
-	  lwz       r0, 0x4(r6)
-	  mtctr     r0
-	  cmplwi    r0, 0
-	  ble-      .loc_0x78
-
-	.loc_0x58:
-	  addi      r0, r4, 0x8
-	  lwzx      r3, r6, r0
-	  lbz       r0, 0x0(r3)
-	  cmplw     r5, r0
-	  bgt-      .loc_0x70
-	  b         .loc_0x7C
-
-	.loc_0x70:
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x58
-
-	.loc_0x78:
-	  li        r3, 0
-
-	.loc_0x7C:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	return keymap;
 }
 
 /*
@@ -160,45 +109,23 @@ int Bank_GetInstVmap(Inst_* inst, u8 param_2, volatile u8 param_3)
  * Address:	8000D140
  * Size:	000068
  */
-int Bank_GetPercVmap(Perc_*, u8, u8)
+int Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  bne-      .loc_0x10
-	  li        r3, 0
-	  blr
+	if (!perc) {
+		return 0;
+	}
 
-	.loc_0x10:
-	  rlwinm    r0,r4,2,22,29
-	  add       r3, r3, r0
-	  lwz       r6, 0x88(r3)
-	  cmplwi    r6, 0
-	  bne-      .loc_0x2C
-	  li        r3, 0
-	  blr
-
-	.loc_0x2C:
-	  lwz       r0, 0x10(r6)
-	  rlwinm    r5,r5,0,24,31
-	  li        r4, 0
-	  mtctr     r0
-	  cmplwi    r0, 0
-	  ble-      .loc_0x60
-
-	.loc_0x44:
-	  addi      r0, r4, 0x14
-	  lwzx      r3, r6, r0
-	  lbz       r0, 0x0(r3)
-	  cmplw     r5, r0
-	  blelr-
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x44
-
-	.loc_0x60:
-	  li        r3, 0
-	  blr
-	*/
+	PercKeymap_* keymap = perc->mKeyRegions[keyIdx];
+	if (!keymap) {
+		return 0;
+	}
+	for (u32 i = 0; i < keymap->mVelocityCount; i++) {
+		Vmap_* vmap = keymap->mVelocities[i];
+		if (vel <= vmap->mBaseVelocity) {
+			return (int)vmap;
+		}
+	}
+	return 0;
 }
 
 /*

@@ -99,124 +99,32 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 	jc->_BC[2]._00[1] = 0.0f;
 	jc->_BC[3]._00[1] = 0.0f;
 
+	u32 badCompiler[2];
 	for (u32 i = 0; i < 2; i++) {
-		Inst_* c = *((Inst_**)inst + i);
-
-		if (c->_20) {
-			vf32 sense = Bank_SenseToOfs(c->_20, __GetTrigger(jc, (int)c->_20 + 1));
-			__DoEffect(jc, c->_20->_00, sense);
+		if (inst->mSensors[i]) {
+			u8 trigger     = __GetTrigger(jc, inst->mSensors[i]->_01);
+			f32 sense      = Bank_SenseToOfs(inst->mSensors[i], trigger);
+			f32* REF_sense = &sense;
+			__DoEffect(jc, inst->mSensors[i]->_00, sense);
 		}
 
-		if (c->_18) {
-			f32 r = Bank_RandToOfs(c->_18);
-			__DoEffect(jc, c->_18->_00[0], r);
+		if (inst->mEffects[i]) {
+			f32 r = Bank_RandToOfs(inst->mEffects[i]);
+			__DoEffect(jc, inst->mEffects[i]->_00, r);
 		}
 
-		if (c->_10) {
-			Oscbuf_* buf = &jc->_48[i];
-			buf->_00     = TRUE;
-			Osc_** osc   = &jc->_38[i];
-			osc[0]       = (Osc_*)&c->_10;
-			f32 offs     = Bank_OscToOfs(osc[0], buf);
-			DoEffectOsc(jc, osc[0]->_00, offs);
+		if (inst->mOscillators[i]) {
+			jc->mOscBuffers[i]._00 = 1;
+			jc->mOscillators[i]    = inst->mOscillators[i];
+			f32 ofs                = Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]);
+			DoEffectOsc(jc, jc->mOscillators[i]->mMode, ofs);
 		} else {
-			jc->_38[i] = 0;
+			jc->mOscillators[i] = nullptr;
 		}
 	}
 
+	u32 badCompiler2[2];
 	__Clamp01InitPan(jc);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r25, 0x2C(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  li        r31, 0
-	  li        r28, 0
-	  li        r27, 0
-	  lfs       f0, -0x7EA4(r2)
-	  stfs      f0, 0xEC(r3)
-	  stfs      f0, 0xF0(r3)
-	  lfs       f0, -0x7EA0(r2)
-	  stfs      f0, 0xCC(r3)
-	  lfs       f0, -0x7EA8(r2)
-	  stfs      f0, 0xD8(r3)
-	  stfs      f0, 0xE4(r3)
-
-	.loc_0x44:
-	  add       r25, r30, r27
-	  addi      r26, r25, 0x20
-	  lwz       r4, 0x20(r25)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x8C
-	  mr        r3, r29
-	  lbz       r4, 0x1(r4)
-	  bl        -0x1C0
-	  mr        r0, r3
-	  lwz       r3, 0x0(r26)
-	  mr        r4, r0
-	  bl        -0x8150
-	  stfs      f1, 0x1C(r1)
-	  mr        r3, r29
-	  lwz       r4, 0x0(r26)
-	  lfs       f1, 0x1C(r1)
-	  lbz       r4, 0x0(r4)
-	  bl        -0x108
-
-	.loc_0x8C:
-	  addi      r26, r25, 0x18
-	  lwz       r3, 0x18(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB0
-	  bl        -0x805C
-	  lwz       r4, 0x0(r26)
-	  mr        r3, r29
-	  lbz       r4, 0x0(r4)
-	  bl        -0x12C
-
-	.loc_0xB0:
-	  addi      r3, r25, 0x10
-	  lwz       r0, 0x10(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xFC
-	  addi      r4, r28, 0x48
-	  addi      r25, r27, 0x38
-	  add       r4, r29, r4
-	  li        r0, 0x1
-	  stb       r0, 0x0(r4)
-	  add       r25, r29, r25
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x0(r25)
-	  lwz       r3, 0x0(r25)
-	  bl        -0x8044
-	  lwz       r4, 0x0(r25)
-	  mr        r3, r29
-	  lbz       r4, 0x0(r4)
-	  bl        -0xB1D4
-	  b         .loc_0x108
-
-	.loc_0xFC:
-	  addi      r0, r27, 0x38
-	  li        r3, 0
-	  stwx      r3, r29, r0
-
-	.loc_0x108:
-	  addi      r31, r31, 0x1
-	  addi      r27, r27, 0x4
-	  cmplwi    r31, 0x2
-	  addi      r28, r28, 0x18
-	  blt+      .loc_0x44
-	  mr        r3, r29
-	  bl        -0x200
-	  lmw       r25, 0x2C(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -234,79 +142,20 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 
 	// PERC instruments only have rand and not osc
 	for (u32 i = 0; i < 2; i++) {
-		Pmap_* map = (Pmap_*)((int*)pmap + i);
+		Pmap_* map = (Pmap_*)((int*)pmap + i + 2);
 		if (map->_00) {
 			f32 r      = Bank_RandToOfs(map->_00);
 			f32* REF_r = &r;
-			__DoEffect(jc, map->_00->_00[0], r);
+			__DoEffect(jc, map->_00->_00, r);
 		}
 
-		jc->_38[i] = nullptr;
+		jc->mOscillators[i] = nullptr;
 	}
-	jc->_38[0]     = &PERC_ENV;
-	jc->_48[0]._00 = TRUE;
-	Bank_OscToOfs(jc->_38[0], &jc->_48[0]);
-	jc->_48[0]._14 = id;
+	jc->mOscillators[0]    = &PERC_ENV;
+	jc->mOscBuffers[0]._00 = TRUE;
+	Bank_OscToOfs(jc->mOscillators[0], &jc->mOscBuffers[0]);
+	jc->mOscBuffers[0]._14 = id;
 	__Clamp01InitPan(jc);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r25, 0x24(r1)
-	  li        r31, 0
-	  addi      r25, r3, 0
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  addi      r30, r31, 0
-	  li        r28, 0
-	  lfs       f0, -0x7EA4(r2)
-	  stfs      f0, 0xEC(r3)
-	  stfs      f0, 0xF0(r3)
-	  lfs       f0, -0x7EA0(r2)
-	  stfs      f0, 0xCC(r3)
-	  lfs       f0, -0x7EA8(r2)
-	  stfs      f0, 0xD8(r3)
-	  stfs      f0, 0xE4(r3)
-
-	.loc_0x48:
-	  addi      r29, r31, 0x8
-	  add       r29, r26, r29
-	  lwz       r3, 0x0(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x78
-	  bl        -0x815C
-	  stfs      f1, 0x18(r1)
-	  mr        r3, r25
-	  lwz       r4, 0x0(r29)
-	  lfs       f1, 0x18(r1)
-	  lbz       r4, 0x0(r4)
-	  bl        -0x234
-
-	.loc_0x78:
-	  addi      r28, r28, 0x1
-	  addi      r0, r31, 0x38
-	  cmplwi    r28, 0x2
-	  stwx      r30, r25, r0
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x48
-	  lis       r3, 0x8022
-	  li        r0, 0x1
-	  addi      r3, r3, 0x5910
-	  addi      r4, r25, 0x48
-	  stw       r3, 0x38(r25)
-	  stb       r0, 0x48(r25)
-	  lwz       r3, 0x38(r25)
-	  bl        -0x814C
-	  sth       r27, 0x5C(r25)
-	  mr        r3, r25
-	  bl        -0x2D8
-	  lmw       r25, 0x24(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -323,12 +172,12 @@ static void EffecterInit_Osc(jc_* jc)
 	jc->_BC[3]._00[1] = 0.0f;
 
 	for (u32 i = 0; i < 2; i++) {
-		jc->_38[i] = nullptr;
+		jc->mOscillators[i] = nullptr;
 	}
 
-	jc->_38[0]     = &OSC_ENV;
-	jc->_48[0]._00 = TRUE;
-	Bank_OscToOfs(jc->_38[0], &jc->_48[0]);
+	jc->mOscillators[0]    = &OSC_ENV;
+	jc->mOscBuffers[0]._00 = TRUE;
+	Bank_OscToOfs(jc->mOscillators[0], &jc->mOscBuffers[0]);
 }
 
 /*
@@ -339,9 +188,9 @@ static void EffecterInit_Osc(jc_* jc)
 void Effecter_Overwrite_1ShotD(jc_* jc, Osc_* osc, u32 id)
 {
 	if (id < 4) {
-		jc->_48[id]._00 = TRUE;
-		jc->_38[id]     = osc;
-		DoEffectOsc(jc, jc->_38[id]->_00, Bank_OscToOfs(jc->_38[id], &jc->_48[id]));
+		jc->mOscBuffers[id]._00 = TRUE;
+		jc->mOscillators[id]    = osc;
+		DoEffectOsc(jc, jc->mOscillators[id]->mMode, Bank_OscToOfs(jc->mOscillators[id], &jc->mOscBuffers[id]));
 	}
 }
 
@@ -431,7 +280,7 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 			}
 
 			if (c) {
-				c->_48[0]._00 = 6;
+				c->mOscBuffers[0]._00 = 6;
 				List_AddChannel(&jcs->_14, c);
 				if (c->_20) {
 					ForceStopDSPchannel(c->_20);
@@ -851,7 +700,7 @@ void Stop_1Shot_R(jc_* jc, u16 id)
 	if (jc->_20 == 0) {
 		Jesus1Shot_Update(jc, (JCSTATUS)6);
 	} else {
-		jc->_48[0]._14 = id;
+		jc->mOscBuffers[0]._14 = id;
 		Jesus1Shot_Update(jc, (JCSTATUS)0);
 	}
 }
@@ -1233,9 +1082,9 @@ void FlushRelease_1Shot(jcs_* jcs)
 		}
 
 		for (int j = 0; j < 2; j++) {
-			if (chan->_38[j]) {
-				if (chan->_48[j]._00 != 6 && chan->_48[j]._00 != 7) {
-					chan->_48[j]._00 = 6;
+			if (chan->mOscillators[j]) {
+				if (chan->mOscBuffers[j]._00 != 6 && chan->mOscBuffers[j]._00 != 7) {
+					chan->mOscBuffers[j]._00 = 6;
 				}
 			}
 		}
