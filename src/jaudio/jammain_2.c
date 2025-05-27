@@ -1547,17 +1547,12 @@ seqp_* Jam_GetTrackHandle(u32)
  * Address:	800106C0
  * Size:	000018
  */
-void Jam_InitExtBuffer(ExtBuffer*)
+void Jam_InitExtBuffer(ExtBuffer* ext)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  sth       r0, 0x8(r3)
-	  sth       r0, 0xA(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x4(r3)
-	  blr
-	*/
+	ext->_08 = 0;
+	ext->_0A = 0;
+	ext->_00 = 0;
+	ext->_04 = 0;
 }
 
 /*
@@ -1565,29 +1560,18 @@ void Jam_InitExtBuffer(ExtBuffer*)
  * Address:	800106E0
  * Size:	000038
  */
-BOOL Jam_AssignExtBuffer(seqp_*, ExtBuffer*)
+BOOL Jam_AssignExtBuffer(seqp_* track, ExtBuffer* ext)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  bne-      .loc_0x10
-	  li        r3, 0
-	  blr
 
-	.loc_0x10:
-	  cmplwi    r4, 0
-	  bne-      .loc_0x20
-	  li        r3, 0
-	  blr
-
-	.loc_0x20:
-	  stw       r4, 0x2AC(r3)
-	  li        r3, 0x1
-	  lwz       r5, 0x4(r4)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x4(r4)
-	  blr
-	*/
+	if (!track) {
+		return FALSE;
+	}
+	if (!ext) {
+		return FALSE;
+	}
+	track->_2AC = ext;
+	++ext->_04;
+	return TRUE;
 }
 
 /*
@@ -1595,41 +1579,18 @@ BOOL Jam_AssignExtBuffer(seqp_*, ExtBuffer*)
  * Address:	80010720
  * Size:	000060
  */
-void Jam_AssignExtBufferP(void)
+BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, ExtBuffer* ext)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bne-      .loc_0x1C
-	  li        r3, 0
-	  b         .loc_0x50
-
-	.loc_0x1C:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x2C
-	  li        r3, 0
-	  b         .loc_0x50
-
-	.loc_0x2C:
-	  rlwinm    r6,r4,2,22,29
-	  li        r0, 0x1
-	  add       r3, r3, r6
-	  addi      r4, r5, 0
-	  stw       r5, 0x2B0(r3)
-	  stw       r0, 0x0(r5)
-	  lwz       r3, 0x44(r3)
-	  bl        -0x88
-	  li        r3, 0x1
-
-	.loc_0x50:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return FALSE;
+	}
+	if (!ext) {
+		return FALSE;
+	}
+	track->_2B0[index] = ext;
+	ext->_00           = 1;
+	Jam_AssignExtBuffer(track->_44[index], ext);
+	return TRUE;
 }
 
 /*
@@ -1637,30 +1598,18 @@ void Jam_AssignExtBufferP(void)
  * Address:	80010780
  * Size:	000044
  */
-void Jam_SetExtFirFilterD(seqp__Invented3*, void*)
+void Jam_SetExtFirFilterD(ExtBuffer* ext, s16* param_2)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  beqlr-
-	  lhz       r6, 0xA(r3)
-	  li        r0, 0x8
-	  li        r5, 0
-	  ori       r6, r6, 0x80
-	  sth       r6, 0xA(r3)
-	  lhz       r6, 0x8(r3)
-	  ori       r6, r6, 0x80
-	  sth       r6, 0x8(r3)
-	  mtctr     r0
+	int i;
 
-	.loc_0x2C:
-	  lhax      r6, r4, r5
-	  addi      r0, r5, 0x24
-	  addi      r5, r5, 0x2
-	  sthx      r6, r3, r0
-	  bdnz+     .loc_0x2C
-	  blr
-	*/
+	if (!ext) {
+		return;
+	}
+	ext->_0A |= 0x80;
+	ext->_08 |= 0x80;
+	for (i = 0; i < 8; ++i) {
+		ext->_24[i] = param_2[i];
+	}
 }
 
 /*
@@ -1668,7 +1617,7 @@ void Jam_SetExtFirFilterD(seqp__Invented3*, void*)
  * Address:	800107E0
  * Size:	0000A4
  */
-void Jam_SetExtParamD(f32, ExtBuffer*, int)
+void Jam_SetExtParamD(f32, ExtBuffer*, u8)
 {
 	/*
 	.loc_0x0:
@@ -1739,20 +1688,13 @@ void Jam_SetExtParamD(f32, ExtBuffer*, int)
  * Address:	800108A0
  * Size:	000024
  */
-void Jam_OnExtSwitchD(ExtBuffer*, int)
+void Jam_OnExtSwitchD(ExtBuffer* ext, u16 param_2)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  beqlr-
-	  lhz       r0, 0x8(r3)
-	  or        r0, r0, r4
-	  sth       r0, 0x8(r3)
-	  lhz       r0, 0xA(r3)
-	  or        r0, r0, r4
-	  sth       r0, 0xA(r3)
-	  blr
-	*/
+	if (!ext) {
+		return;
+	}
+	ext->_08 |= param_2;
+	ext->_0A |= param_2;
 }
 
 /*
@@ -1760,21 +1702,13 @@ void Jam_OnExtSwitchD(ExtBuffer*, int)
  * Address:	800108E0
  * Size:	000028
  */
-void Jam_OffExtSwitchD(void)
+void Jam_OffExtSwitchD(ExtBuffer* ext, u16 param_2)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  beqlr-
-	  lhz       r5, 0x8(r3)
-	  and       r0, r5, r4
-	  xor       r0, r5, r0
-	  sth       r0, 0x8(r3)
-	  lhz       r0, 0xA(r3)
-	  or        r0, r0, r4
-	  sth       r0, 0xA(r3)
-	  blr
-	*/
+	if (!ext) {
+		return;
+	}
+	ext->_08 ^= ext->_08 & param_2;
+	ext->_0A |= param_2;
 }
 
 /*
@@ -1802,24 +1736,12 @@ void Jam_SetExtFirFilter(void)
  * Address:	80010920
  * Size:	00002C
  */
-void Jam_SetExtParam(f32, seqp_*, int)
+void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x1C
-	  lwz       r3, 0x2AC(r3)
-	  bl        -0x158
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return;
+	}
+	Jam_SetExtParamD(param_1, track->_2AC, param_3);
 }
 
 /*
@@ -1827,24 +1749,12 @@ void Jam_SetExtParam(f32, seqp_*, int)
  * Address:	80010960
  * Size:	00002C
  */
-void Jam_OnExtSwitch(seqp_*, int)
+void Jam_OnExtSwitch(seqp_* track, u16 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x1C
-	  lwz       r3, 0x2AC(r3)
-	  bl        -0xD8
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return;
+	}
+	Jam_OnExtSwitchD(track->_2AC, param_2);
 }
 
 /*
@@ -1852,24 +1762,12 @@ void Jam_OnExtSwitch(seqp_*, int)
  * Address:	800109A0
  * Size:	00002C
  */
-void Jam_OffExtSwitch(seqp_*, int)
+void Jam_OffExtSwitch(seqp_* track, u16 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x1C
-	  lwz       r3, 0x2AC(r3)
-	  bl        -0xD8
-
-	.loc_0x1C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return;
+	}
+	Jam_OffExtSwitchD(track->_2AC, param_2);
 }
 
 /*
@@ -1897,27 +1795,12 @@ void Jam_SetExtFirFilterP(void)
  * Address:	800109E0
  * Size:	000038
  */
-void Jam_SetExtParamP(void)
+void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x28
-	  rlwinm    r0,r4,2,22,29
-	  addi      r4, r5, 0
-	  add       r3, r3, r0
-	  lwz       r3, 0x2B0(r3)
-	  bl        -0x224
-
-	.loc_0x28:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return;
+	}
+	Jam_SetExtParamD(param_1, track->_2B0[index], param_4);
 }
 
 /*
@@ -1925,28 +1808,12 @@ void Jam_SetExtParamP(void)
  * Address:	80010A20
  * Size:	00003C
  */
-void Jam_OnExtSwitchP(void)
+void Jam_OnExtSwitchP(seqp_* track, u8 index, u16 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x2C
-	  rlwinm    r0,r4,0,24,31
-	  addi      r4, r5, 0
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x2B0(r3)
-	  bl        -0x1A8
-
-	.loc_0x2C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return;
+	}
+	Jam_OnExtSwitchD(track->_2B0[index], param_3);
 }
 
 /*
@@ -1954,9 +1821,12 @@ void Jam_OnExtSwitchP(void)
  * Address:	........
  * Size:	00003C
  */
-void Jam_OffExtSwitchP(void)
+void Jam_OffExtSwitchP(seqp_* track, u8 index, u16 param_3)
 {
-	// UNUSED FUNCTION
+	if (!track) {
+		return;
+	}
+	Jam_OffExtSwitchD(track->_2B0[index], param_3);
 }
 
 /*
@@ -3898,7 +3768,7 @@ static u32 Cmd_IIRSet()
  */
 static u32 Cmd_FIRSet()
 {
-	Jam_SetExtFirFilterD(SEQ_P->_2AC, Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]));
+	Jam_SetExtFirFilterD(SEQ_P->_2AC, (s16*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]));
 	return 0;
 }
 
@@ -3909,11 +3779,11 @@ static u32 Cmd_FIRSet()
  */
 static u32 Cmd_EXTSet()
 {
-	ExtBuffer* buffer;
+	ExtBuffer* ext;
 
-	buffer = (ExtBuffer*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]);
-	Jam_InitExtBuffer(buffer);
-	Jam_AssignExtBuffer(SEQ_P, buffer);
+	ext = (ExtBuffer*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]);
+	Jam_InitExtBuffer(ext);
+	Jam_AssignExtBuffer(SEQ_P, ext);
 	return 0;
 }
 

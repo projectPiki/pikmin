@@ -14,8 +14,6 @@ extern s16 CUTOFF_TO_IIR_TABLE[128][4];
 typedef struct seqp_ seqp_;
 typedef struct seqp__Invented1 seqp__Invented1;
 typedef struct seqp__Invented2 seqp__Invented2;
-typedef struct seqp__Invented3 seqp__Invented3;
-typedef struct seqp__Invented4 seqp__Invented4;
 typedef struct ExtBuffer ExtBuffer;
 
 typedef u32 (*CmdFunction)();              // TODO: Confirm return type
@@ -39,24 +37,24 @@ struct seqp__Invented2 {
 	f32 _0C; // _0C
 };
 
-struct seqp__Invented3 {
-	u8 _00[0x04 - 0x00]; // _00
-	u32 _04;             // _04
-	u16 _08;             // _08
-	u16 _0A;             // _0A | Confirmed unsigned `Cmd_OutSwitch`
-};
-
-struct seqp__Invented4 {
-	u32 _00; // _00
-};
-
 /**
- * @brief This is an invented struct, named after functions which use it.
+ * @brief This is an invented struct, named after the functions which use it.
  *
  * @note Size: 0x40.
  */
 struct ExtBuffer {
-	u8 _00[0x40 - 0x00]; // _00
+	u32 _00;             // _00
+	u32 _04;             // _04
+	u16 _08;             // _08
+	u16 _0A;             // _0A | Confirmed unsigned `Cmd_OutSwitch`
+	f32 _0C;             // _0C
+	f32 _10;             // _10
+	f32 _14;             // _14
+	f32 _18;             // _18
+	f32 _1C;             // _1C
+	f32 _20;             // _20
+	s16 _24[8];          // _24 | Exact length and signed confirmed. For loop in `Jam_SetExtFirFilterD`.
+	u8 _34[0x40 - 0x34]; // _34
 };
 
 // This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
@@ -104,8 +102,8 @@ struct seqp_ {
 	jcs_ _D8;                  // _0D8
 	seqp__Invented2 _14C[18];  // _14C
 	u16 _26C[32];              // _26C | Exact length confirmed. For loop in `Init_Track`.
-	seqp__Invented3* _2AC;     // _2AC
-	seqp__Invented4* _2B0[16]; // _2B0 | Exact length confirmed. For loop in `Init_Track`.
+	ExtBuffer* _2AC;           // _2AC
+	ExtBuffer* _2B0[16];       // _2B0 | Exact length confirmed. For loop in `Init_Track`.
 	seqp__Invented1 _2F0[16];  // _2F0 | Exact length confirmed. For loop in `Init_Track`.
 	f32 _330;                  // _330
 	f32 _334;                  // _334
@@ -175,21 +173,21 @@ void Jam_UnRegistTrack(seqp_*);
 seqp_* Jam_GetTrackHandle(u32);
 void Jam_InitExtBuffer(ExtBuffer*);
 BOOL Jam_AssignExtBuffer(seqp_*, ExtBuffer*);
-void Jam_AssignExtBufferP(void);
-void Jam_SetExtFirFilterD(seqp__Invented3*, void*);
-void Jam_SetExtParamD(f32, ExtBuffer*, int);
-void Jam_OnExtSwitchD(ExtBuffer*, int);
-void Jam_OffExtSwitchD(void);
+BOOL Jam_AssignExtBufferP(seqp_*, u8, ExtBuffer*);
+void Jam_SetExtFirFilterD(ExtBuffer*, s16*);
+void Jam_SetExtParamD(f32, ExtBuffer*, u8);
+void Jam_OnExtSwitchD(ExtBuffer*, u16);
+void Jam_OffExtSwitchD(ExtBuffer*, u16);
 void Jam_SetExtSwitchDirectD(void);
 void Jam_SetExtFirFilter(void);
-void Jam_SetExtParam(f32, seqp_*, int);
-void Jam_OnExtSwitch(seqp_*, int);
-void Jam_OffExtSwitch(seqp_*, int);
+void Jam_SetExtParam(f32, seqp_*, u8);
+void Jam_OnExtSwitch(seqp_*, u16);
+void Jam_OffExtSwitch(seqp_*, u16);
 void Jam_SetExtSwitchDirect(void);
 void Jam_SetExtFirFilterP(void);
-void Jam_SetExtParamP(void);
-void Jam_OnExtSwitchP(void);
-void Jam_OffExtSwitchP(void);
+void Jam_SetExtParamP(f32, seqp_*, u8, u8);
+void Jam_OnExtSwitchP(seqp_*, u8, u16);
+void Jam_OffExtSwitchP(seqp_*, u8, u16);
 void Jam_SetExtSwitchDirectP(void);
 void Jam_CheckRunningCounter(void);
 BOOL Jam_RegisterTrackCallback(TrackCallback);
