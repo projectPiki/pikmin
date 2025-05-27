@@ -325,14 +325,11 @@ void SpiderLeg::setLegScaleParam(int jointIdx)
 	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
 	if (jointIdx < 3) {
 		for (int i = 0; i < 4; i++) {
-			f32 goal                          = 0.0f;
-			f32 step                          = gsys->getFrameTime() * stepTime;
-			_20[Kumo::leg_index[i][jointIdx]] = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], goal, step);
+			_20[Kumo::leg_index[i][jointIdx]] = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
 		}
 	} else {
 		for (int i = 0; i < 4; i++) {
-			f32 step = gsys->getFrameTime() * stepTime;
-			_20[i]   = NsLibMath<f32>::toGoal(_20[i], 0.0f, step);
+			_20[i] = NsLibMath<f32>::toGoal(_20[i], 0.0f, gsys->getFrameTime() * stepTime);
 		}
 	}
 	/*
@@ -622,6 +619,8 @@ void SpiderLeg::initParm(int p1)
  * Address:	80156EB8
  * Size:	000168
  */
+#pragma push
+#pragma ppc_unroll_factor_limit 1
 void SpiderLeg::setLegParameter()
 {
 	if (mSpider->getAlive()) {
@@ -635,125 +634,14 @@ void SpiderLeg::setLegParameter()
 
 	for (int i = 0; i < 4; i++) {
 		f32 goal                = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
-		f32 step                = C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime();
-		mFootRaiseHeightList[i] = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, step);
+		mFootRaiseHeightList[i] = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
 
 		if (mFootRaiseHeightList[i] < C_SPIDER_PROP(mSpider)._284()) {
 			mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._284();
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  stw       r31, 0x8C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x88(r1)
-	  lwz       r30, 0x0(r3)
-	  lfs       f0, -0x568C(r2)
-	  lfs       f1, 0x2C4(r30)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x80
-	  mr        r3, r30
-	  bl        -0x7E9C
-	  xoris     r0, r3, 0x8000
-	  lwz       r3, 0x224(r30)
-	  stw       r0, 0x84(r1)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x5668(r2)
-	  stw       r0, 0x80(r1)
-	  lfs       f0, 0x2A0(r3)
-	  lfd       f1, 0x80(r1)
-	  fsubs     f1, f1, f2
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xE0(r31)
-	  lwz       r3, 0x0(r31)
-	  lfs       f1, 0xE0(r31)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x2B0(r3)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x84
-	  stfs      f0, 0xE0(r31)
-	  b         .loc_0x84
-
-	.loc_0x80:
-	  stfs      f0, 0xE0(r31)
-
-	.loc_0x84:
-	  li        r0, 0x4
-	  lfd       f7, -0x5668(r2)
-	  mtctr     r0
-	  lfs       f4, -0x5690(r2)
-	  lwz       r4, 0x2DEC(r13)
-	  mr        r6, r31
-	  lfs       f2, -0x568C(r2)
-	  lis       r0, 0x4330
-
-	.loc_0xA4:
-	  lwz       r3, 0xE8(r6)
-	  lfs       f0, 0xE0(r31)
-	  xoris     r3, r3, 0x8000
-	  lwz       r5, 0x0(r31)
-	  stw       r3, 0x84(r1)
-	  fmuls     f3, f4, f0
-	  lwz       r5, 0x224(r5)
-	  stw       r0, 0x80(r1)
-	  lfs       f5, 0x280(r5)
-	  lfd       f0, 0x80(r1)
-	  lfs       f8, 0x270(r5)
-	  fsubs     f6, f0, f7
-	  lfs       f1, 0x4B0(r5)
-	  lfs       f0, 0x28C(r4)
-	  lfs       f9, 0xD0(r6)
-	  fmuls     f5, f6, f5
-	  fmuls     f1, f1, f0
-	  fsubs     f0, f8, f5
-	  fsubs     f3, f0, f3
-	  fsubs     f0, f9, f3
-	  fcmpo     cr0, f0, f2
-	  ble-      .loc_0x100
-	  b         .loc_0x104
-
-	.loc_0x100:
-	  fneg      f0, f0
-
-	.loc_0x104:
-	  fcmpo     cr0, f0, f1
-	  bge-      .loc_0x114
-	  fmr       f0, f3
-	  b         .loc_0x128
-
-	.loc_0x114:
-	  fcmpo     cr0, f9, f3
-	  bge-      .loc_0x124
-	  fadds     f0, f9, f1
-	  b         .loc_0x128
-
-	.loc_0x124:
-	  fsubs     f0, f9, f1
-
-	.loc_0x128:
-	  stfs      f0, 0xD0(r6)
-	  lwz       r3, 0x0(r31)
-	  lfs       f1, 0xD0(r6)
-	  lwz       r3, 0x224(r3)
-	  lfs       f0, 0x290(r3)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x148
-	  stfs      f0, 0xD0(r6)
-
-	.loc_0x148:
-	  addi      r6, r6, 0x4
-	  bdnz+     .loc_0xA4
-	  lwz       r0, 0x94(r1)
-	  lwz       r31, 0x8C(r1)
-	  lwz       r30, 0x88(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
 }
+#pragma pop
 
 /*
  * --INFO--
