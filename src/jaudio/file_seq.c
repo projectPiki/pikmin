@@ -31,7 +31,7 @@ static seqp_ rootseq[ROOTSEQ_SIZE];
 static u32 rootseqhandle[ROOTSEQHANDLE_SIZE]; // TODO: Type unknown
 static as_struct as[AS_SIZE];                 // TODO: Type unknown
 
-static BOOL first = TRUE; // TODO: Type unknown
+static u32 first = TRUE;
 
 /*
  * --INFO--
@@ -56,7 +56,7 @@ void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
 	seq_archandle = JV_GetArchiveHandle(barcFilepath + basenameIdx);
 
 	for (int i = 0; i < SEQ_LOADBUFFER_SIZE; ++i) {
-		seq_loadbuffer[i] = NULL;
+		seq_loadbuffer[i] = nullptr;
 	}
 	for (int i = 0; i < ROOTSEQHANDLE_SIZE; ++i) {
 		rootseqhandle[i] = -1;
@@ -123,16 +123,22 @@ u8* Jaf_CheckSeq(u32 index)
  */
 unknown Jaf_ReadySeq(u32 param_1, u32 param_2)
 {
-	if ((param_2 < SEQ_LOADBUFFER_SIZE) && !seq_loadbuffer[param_2]) {
-
-		u32 seqSize = Jaf_CheckSeqSize(param_2);
-		if (seqSize != 0) {
-
-			rootseqhandle[param_1] = Jaq_SetSeqData(&rootseq[param_1], seq_loadbuffer[param_2], seqSize, 0);
-			return rootseqhandle[param_1];
-		}
+	u32 badCompiler;
+	seqp_* rSeq = &rootseq[param_1];
+	if (param_2 >= SEQ_LOADBUFFER_SIZE) {
+		return 0;
 	}
-	return 0;
+	if (!seq_loadbuffer[param_2]) {
+		return 0;
+	}
+
+	u32 seqSize = Jaf_CheckSeqSize(param_2);
+	if (seqSize == 0) {
+		return 0;
+	}
+
+	rootseqhandle[param_1] = Jaq_SetSeqData(rSeq, seq_loadbuffer[param_2], seqSize, 0);
+	return rootseqhandle[param_1];
 }
 
 /*
@@ -223,11 +229,14 @@ static void Jaf_LoadFinish(u32 param_1)
  * Address:	8001B7E0
  * Size:	000124
  */
-unknown __LoadSeqA(volatile u32 param_1, volatile u32 param_2, u8* volatile param_3, void (*param_4)(u32))
+unknown __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
 {
-	// This WIP is a mess. I hate volatile memes.
+	u32* REF_param_1 = &param_1;
+	u32* REF_param_2 = &param_2;
+	u8** REF_param_3 = &param_3;
+
 	u32 index;
-	int seqSize;
+	u32 seqSize;
 	u32 seqArcHandle;
 
 	if (first) {
@@ -249,20 +258,18 @@ unknown __LoadSeqA(volatile u32 param_1, volatile u32 param_2, u8* volatile para
 		return 0;
 	}
 
-	u32 param_2_NV = param_2;
-	seqSize        = Jaf_CheckSeqSize(param_2_NV);
+	seqSize = Jaf_CheckSeqSize(param_2);
 	if (seqSize == 0) {
 		return 0;
 	}
-	seqArcHandle   = seq_archandle;
-	u8* param_3_NV = param_3;
-	as[index]._00  = 1;
-	as[index]._04  = param_2_NV;
-	as[index]._0C  = param_3_NV;
-	as[index]._08  = param_1;
+	u32 val1      = seq_archandle | param_2;
+	as[index]._00 = 1;
+	as[index]._04 = param_2;
+	as[index]._0C = param_3;
+	as[index]._08 = param_1;
 
-	seq_loadbuffer[param_2_NV] = (u8*)1;
-	return JV_LoadFile_Async2(seqArcHandle | param_2_NV, param_3_NV, 0, seqSize, param_4, as[index]._00);
+	seq_loadbuffer[param_2] = (u8*)1;
+	return JV_LoadFile_Async2(val1, param_3, 0, seqSize, param_4, (u32)&as[index]);
 }
 
 /*
