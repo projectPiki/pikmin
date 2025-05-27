@@ -26,22 +26,72 @@ static void PTconvert(void** pointer, u32 base_address)
  */
 Bank_* Bank_Test(u8* ibnk_address)
 {
-	int i, j;
-	Bank_* bank;
-
-	bank = &((Ibnk_*)ibnk_address)->bank;
-	if (bank->magic != 'BANK') {
+	Bank_* bank = &((Ibnk_*)ibnk_address)->bank;	
+   	if ( ((Ibnk_*)ibnk_address)->bank.magic != 'BANK') {
 		return NULL;
 	}
-	for (i = 0; i < BANK_ENTRY_COUNT; ++i) {
-		PTconvert(bank->entry + i, (u32)ibnk_address);
-		void* entry = bank->entry[i];
-		if (entry) {
 
-			;
+	// This entire thing needs a lot of cleanup
+	for (int i = 0; i < 128; ++i) {
+		Bank_* bank2 = (Bank_*)(&(bank->entry[i]));
+		PTconvert((void**)bank2, (u32)ibnk_address);
+	
+		void* entry = (void*)(*((void**)bank2));
+		if (!entry) continue;
+
+		// Loop over 2 subentries inside each entry
+		for (int j = 0; j < 2; j++) {
+			void* sub = (char*)entry + j * 4;
+			void** nested_ptr = (void**)((char*)sub + 16);
+
+			PTconvert(nested_ptr, (u32)ibnk_address);
+			PTconvert((void**)((char*)sub + 24), (u32)ibnk_address);
+			PTconvert((void**)((char*)sub + 32), (u32)ibnk_address);
+
+			if (*nested_ptr) {
+				PTconvert((void**)((char*)*nested_ptr + 8), (u32)ibnk_address);
+				PTconvert((void**)((char*)*nested_ptr + 12), (u32)ibnk_address);
+			}
 		}
-		// for (j = 0;)
+
+
+		for (u32 k = 0; k < ((u32*)entry)[10]; k++) {
+			u32* dogma = (u32*)entry;
+			void** dyn_ptr = (void**)&dogma[k];
+			PTconvert(dyn_ptr + 11, (u32)ibnk_address);
+
+			
+			u32** fast = (u32**)entry;
+			for (u32 m = 0; m < fast[11][1]; m++) {
+				u32*** sublock = (u32***)entry;
+				PTconvert((void**)(sublock + 2 + m), (u32)ibnk_address);
+			}
+		}
 	}
+
+
+	/*
+	for (int i = 0; i < 12; i++) {
+		Bank_* bank3 = (Bank_*)(&bank->entry[i + 0x204]);
+		PTconvert((void**)bank3, (u32)ibnk_address);
+		if (!bank3->entry) continue;
+
+		for (int j = 0; j < 128; j++) {
+			bank3 = (Bank_*)(&bank->entry[i + 136][j]);
+			PTconvert((void**)bank3, (u32)ibnk_address);
+			if (!bank3->entry) continue;
+
+			PTconvert((void**)((u8*)((void**)((u8*)bank3 + 136))[j] + 8), (u32)ibnk_address);
+			PTconvert((void**)((u8*)((void**)((u8*)bank3 + 136))[j] + 12), (u32)ibnk_address);
+
+			for (u32 k = 0; k < (u32)(((u32*)bank3)[4]); k++) {
+				PTconvert(&((void**)((u8*)((void**)((u8*)bank3 + 136))[j] + 20))[k], (u32)ibnk_address);
+			}
+		}
+	} */
+
+    return &((Ibnk_*)ibnk_address)->bank;
+}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -241,7 +291,6 @@ Bank_* Bank_Test(u8* ibnk_address)
 	  mtlr      r0
 	  blr
 	*/
-}
 
 /*
  * --INFO--
