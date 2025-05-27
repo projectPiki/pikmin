@@ -463,8 +463,8 @@ void SnakeBody::makeDeadPattern01()
 	mSnake->addWalkTimer(gsys->getFrameTime());
 
 	// take _30 to 0 with steps of size frameTime * b
-	f32 step                                   = gsys->getFrameTime() * scaleSpeed;
-	mSegmentScaleList[mDeadEffectSegmentIndex] = NsLibMath<f32>::toGoal(mSegmentScaleList[mDeadEffectSegmentIndex], 0.0f, step);
+	mSegmentScaleList[mDeadEffectSegmentIndex]
+	    = NsLibMath<f32>::toGoal(mSegmentScaleList[mDeadEffectSegmentIndex], 0.0f, gsys->getFrameTime() * scaleSpeed);
 
 	if (!prev && mIsDying) {
 		if (mDeadEffectSegmentIndex == 7) {
