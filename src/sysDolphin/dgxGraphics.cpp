@@ -2287,10 +2287,8 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 
-	int x1;
-	int x0;
-	int y1;
 	int xPos     = x;
+	int yPos     = y;
 	char* bufPtr = buf;
 	while (*bufPtr) {
 		int idx;
@@ -2304,30 +2302,32 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 
 		RectArea& texCoords = font->mChars[idx].mTextureCoords;
 
-		y1 = y + font->mChars[idx].mHeight;
-		x0 = xPos - font->mChars[idx].mLeftOffset;
-		x1 = x0 + font->mChars[idx].mWidth;
+		RectArea bounds;
+		bounds.mMinY = yPos;
+		bounds.mMaxY = yPos + font->mChars[idx].mHeight;
+		bounds.mMinX = xPos - font->mChars[idx].mLeftOffset;
+		bounds.mMaxX = xPos - font->mChars[idx].mLeftOffset + font->mChars[idx].mWidth;
 
 		u32 primClr = *(u32*)&mPrimaryColour;
 		u32 auxClr  = *(u32*)&mAuxiliaryColour;
 
 		GXBegin(GX_QUADS, GX_VTXFMT0, 4);
-		GXPosition3f32(x0, y, 0.0f);
+		GXPosition3f32(bounds.mMinX, bounds.mMinY, 0.0f);
 		GXColor1u32(primClr);
 		GXTexCoord2f32((0.5f + texCoords.mMinX) * mActiveTexture[0]->mWidthFactor,
 		               (0.5f + texCoords.mMinY) * mActiveTexture[0]->mHeightFactor);
 
-		GXPosition3f32(x1, y, 0.0f);
+		GXPosition3f32(bounds.mMaxX, bounds.mMinY, 0.0f);
 		GXColor1u32(primClr);
 		GXTexCoord2f32((0.5f + texCoords.mMaxX) * mActiveTexture[0]->mWidthFactor,
 		               (0.5f + texCoords.mMinY) * mActiveTexture[0]->mHeightFactor);
 
-		GXPosition3f32(x1, y1, 0.0f);
+		GXPosition3f32(bounds.mMaxX, bounds.mMaxY, 0.0f);
 		GXColor1u32(auxClr);
 		GXTexCoord2f32((0.5f + texCoords.mMaxX) * mActiveTexture[0]->mWidthFactor,
 		               (0.5f + texCoords.mMaxY) * mActiveTexture[0]->mHeightFactor);
 
-		GXPosition3f32(x0, y1, 0.0f);
+		GXPosition3f32(bounds.mMinX, bounds.mMaxY, 0.0f);
 		GXColor1u32(auxClr);
 		GXTexCoord2f32((0.5f + texCoords.mMinX) * mActiveTexture[0]->mWidthFactor,
 		               (0.5f + texCoords.mMaxY) * mActiveTexture[0]->mHeightFactor);
@@ -2340,287 +2340,6 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 	font ? "fake" : "fake";
 	font ? "fake" : "fake";
 	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-
-	u32 badCompiler[4];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x2B8(r1)
-	  stfd      f31, 0x2B0(r1)
-	  stfd      f30, 0x2A8(r1)
-	  stfd      f29, 0x2A0(r1)
-	  stmw      r17, 0x264(r1)
-	  bne-      cr1, .loc_0x40
-	  stfd      f1, 0x28(r1)
-	  stfd      f2, 0x30(r1)
-	  stfd      f3, 0x38(r1)
-	  stfd      f4, 0x40(r1)
-	  stfd      f5, 0x48(r1)
-	  stfd      f6, 0x50(r1)
-	  stfd      f7, 0x58(r1)
-	  stfd      f8, 0x60(r1)
-
-	.loc_0x40:
-	  stw       r3, 0x8(r1)
-	  addi      r29, r3, 0
-	  lis       r0, 0x500
-	  stw       r4, 0xC(r1)
-	  addi      r30, r4, 0
-	  addi      r17, r5, 0
-	  stw       r5, 0x10(r1)
-	  addi      r31, r6, 0
-	  addi      r4, r7, 0
-	  stw       r6, 0x14(r1)
-	  addi      r3, r1, 0xE0
-	  stw       r7, 0x18(r1)
-	  stw       r8, 0x1C(r1)
-	  stw       r9, 0x20(r1)
-	  stw       r10, 0x24(r1)
-	  stw       r0, 0xD4(r1)
-	  addi      r0, r1, 0x2C0
-	  stw       r0, 0xD8(r1)
-	  addi      r0, r1, 0x8
-	  stw       r0, 0xDC(r1)
-	  addi      r0, r1, 0xD4
-	  mr        r5, r0
-	  bl        0x1CA284
-	  li        r3, 0
-	  li        r4, 0
-	  bl        0x1C6BA8
-	  li        r3, 0x1
-	  li        r4, 0x4
-	  li        r5, 0x5
-	  li        r6, 0
-	  bl        0x1C7844
-	  mr        r3, r29
-	  lwz       r4, 0x0(r30)
-	  lwz       r12, 0x3B4(r29)
-	  li        r5, 0
-	  lwz       r12, 0xCC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x318(r29)
-	  addi      r4, r1, 0xC0
-	  li        r3, 0
-	  stw       r0, 0xC0(r1)
-	  bl        0x1C5934
-	  bl        0x1C37C0
-	  li        r3, 0x9
-	  li        r4, 0x1
-	  bl        0x1C2FB8
-	  li        r3, 0xB
-	  li        r4, 0x1
-	  bl        0x1C2FAC
-	  li        r3, 0xD
-	  li        r4, 0x1
-	  bl        0x1C2FA0
-	  li        r3, 0
-	  li        r4, 0x9
-	  li        r5, 0x1
-	  li        r6, 0x4
-	  li        r7, 0
-	  bl        0x1C37D0
-	  li        r3, 0
-	  li        r4, 0xB
-	  li        r5, 0x1
-	  li        r6, 0x5
-	  li        r7, 0
-	  bl        0x1C37B8
-	  li        r3, 0
-	  li        r4, 0xD
-	  li        r5, 0x1
-	  li        r6, 0x4
-	  li        r7, 0
-	  bl        0x1C37A0
-	  lfd       f29, -0x7B48(r2)
-	  mr        r23, r17
-	  lfs       f30, -0x7B58(r2)
-	  addi      r22, r1, 0xE0
-	  lfs       f31, -0x7B54(r2)
-	  xoris     r28, r31, 0x8000
-	  lis       r26, 0x4330
-	  lis       r27, 0xCC01
-	  b         .loc_0x3D8
-
-	.loc_0x180:
-	  rlwinm.   r0,r5,0,24,24
-	  beq-      .loc_0x1A0
-	  lbz       r4, 0x1(r22)
-	  addi      r3, r30, 0
-	  rlwimi    r4,r5,8,0,23
-	  bl        -0x2448C
-	  addi      r22, r22, 0x2
-	  b         .loc_0x1B0
-
-	.loc_0x1A0:
-	  addi      r3, r30, 0
-	  addi      r4, r5, 0
-	  bl        -0x24544
-	  addi      r22, r22, 0x1
-
-	.loc_0x1B0:
-	  mulli     r24, r3, 0x1C
-	  lwz       r0, 0xC(r30)
-	  lwz       r20, 0x318(r29)
-	  lwz       r19, 0x31C(r29)
-	  add       r6, r0, r24
-	  lha       r4, 0xA(r6)
-	  addi      r21, r6, 0xC
-	  lha       r5, 0x6(r6)
-	  li        r3, 0x80
-	  lha       r0, 0x4(r6)
-	  sub       r17, r23, r4
-	  add       r25, r31, r5
-	  add       r18, r17, r0
-	  li        r4, 0
-	  li        r5, 0x4
-	  bl        0x1C4698
-	  xoris     r7, r17, 0x8000
-	  stw       r28, 0x254(r1)
-	  xoris     r3, r18, 0x8000
-	  stw       r7, 0x25C(r1)
-	  stw       r26, 0x258(r1)
-	  stw       r26, 0x250(r1)
-	  lfd       f1, 0x258(r1)
-	  lfd       f0, 0x250(r1)
-	  fsubs     f2, f1, f29
-	  stw       r3, 0x23C(r1)
-	  fsubs     f1, f0, f29
-	  stw       r26, 0x238(r1)
-	  stfs      f2, -0x8000(r27)
-	  lfd       f0, 0x238(r1)
-	  stfs      f1, -0x8000(r27)
-	  fsubs     f4, f0, f29
-	  stfs      f30, -0x8000(r27)
-	  stw       r20, -0x8000(r27)
-	  lwz       r0, 0x0(r21)
-	  lwz       r4, 0x4(r21)
-	  xoris     r6, r0, 0x8000
-	  lwz       r5, 0x2E8(r29)
-	  xoris     r0, r4, 0x8000
-	  stw       r6, 0x244(r1)
-	  lfs       f0, 0x28(r5)
-	  stw       r0, 0x24C(r1)
-	  lfs       f1, 0x2C(r5)
-	  stw       r26, 0x240(r1)
-	  stw       r26, 0x248(r1)
-	  lfd       f2, 0x240(r1)
-	  lfd       f3, 0x248(r1)
-	  fsubs     f2, f2, f29
-	  stw       r28, 0x234(r1)
-	  fsubs     f5, f3, f29
-	  stw       r26, 0x230(r1)
-	  fadds     f3, f31, f2
-	  fadds     f6, f31, f5
-	  lfd       f2, 0x230(r1)
-	  stw       r0, 0x22C(r1)
-	  fmuls     f5, f3, f0
-	  fmuls     f6, f6, f1
-	  fsubs     f3, f2, f29
-	  stw       r26, 0x228(r1)
-	  stfs      f5, -0x8000(r27)
-	  lfd       f2, 0x228(r1)
-	  stfs      f6, -0x8000(r27)
-	  fsubs     f2, f2, f29
-	  stfs      f4, -0x8000(r27)
-	  stfs      f3, -0x8000(r27)
-	  fadds     f2, f31, f2
-	  stfs      f30, -0x8000(r27)
-	  fmuls     f4, f2, f1
-	  stw       r20, -0x8000(r27)
-	  lwz       r0, 0x8(r21)
-	  xoris     r5, r0, 0x8000
-	  stw       r5, 0x224(r1)
-	  stw       r26, 0x220(r1)
-	  lfd       f2, 0x220(r1)
-	  fsubs     f2, f2, f29
-	  fadds     f2, f31, f2
-	  fmuls     f2, f2, f0
-	  stfs      f2, -0x8000(r27)
-	  stw       r3, 0x21C(r1)
-	  xoris     r4, r25, 0x8000
-	  addi      r0, r24, 0x8
-	  stw       r26, 0x218(r1)
-	  stw       r4, 0x214(r1)
-	  lfd       f2, 0x218(r1)
-	  stw       r26, 0x210(r1)
-	  fsubs     f3, f2, f29
-	  lfd       f2, 0x210(r1)
-	  stfs      f4, -0x8000(r27)
-	  fsubs     f2, f2, f29
-	  stfs      f3, -0x8000(r27)
-	  stfs      f2, -0x8000(r27)
-	  stfs      f30, -0x8000(r27)
-	  stw       r19, -0x8000(r27)
-	  lwz       r3, 0xC(r21)
-	  stw       r5, 0x204(r1)
-	  xoris     r3, r3, 0x8000
-	  stw       r3, 0x20C(r1)
-	  stw       r26, 0x200(r1)
-	  stw       r26, 0x208(r1)
-	  lfd       f2, 0x200(r1)
-	  lfd       f3, 0x208(r1)
-	  fsubs     f2, f2, f29
-	  stw       r7, 0x1FC(r1)
-	  fsubs     f4, f3, f29
-	  stw       r26, 0x1F8(r1)
-	  fadds     f3, f31, f2
-	  fadds     f4, f31, f4
-	  stw       r4, 0x1F4(r1)
-	  lfd       f2, 0x1F8(r1)
-	  stw       r6, 0x1E4(r1)
-	  fmuls     f3, f3, f0
-	  stw       r26, 0x1F0(r1)
-	  fmuls     f6, f4, f1
-	  fsubs     f5, f2, f29
-	  stw       r3, 0x1EC(r1)
-	  lfd       f2, 0x1F0(r1)
-	  stw       r26, 0x1E0(r1)
-	  fsubs     f4, f2, f29
-	  stfs      f3, -0x8000(r27)
-	  lfd       f2, 0x1E0(r1)
-	  stw       r26, 0x1E8(r1)
-	  fsubs     f2, f2, f29
-	  stfs      f6, -0x8000(r27)
-	  lfd       f3, 0x1E8(r1)
-	  stfs      f5, -0x8000(r27)
-	  fadds     f2, f31, f2
-	  fsubs     f3, f3, f29
-	  stfs      f4, -0x8000(r27)
-	  fmuls     f0, f2, f0
-	  stfs      f30, -0x8000(r27)
-	  fadds     f2, f31, f3
-	  stw       r19, -0x8000(r27)
-	  fmuls     f1, f2, f1
-	  stfs      f0, -0x8000(r27)
-	  stfs      f1, -0x8000(r27)
-	  lwz       r3, 0xC(r30)
-	  lhax      r0, r3, r0
-	  add       r23, r23, r0
-
-	.loc_0x3D8:
-	  lbz       r5, 0x0(r22)
-	  cmplwi    r5, 0
-	  bne+      .loc_0x180
-	  lmw       r17, 0x264(r1)
-	  lwz       r0, 0x2BC(r1)
-	  lfd       f31, 0x2B0(r1)
-	  lfd       f30, 0x2A8(r1)
-	  lfd       f29, 0x2A0(r1)
-	  addi      r1, r1, 0x2B8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
