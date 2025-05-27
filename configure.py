@@ -317,7 +317,7 @@ config.libs = [
         "objects": [
             Object(Matching, "jaudio/dummyprobe.c"),
             Object(Matching, "jaudio/memory.c"),
-            Object(NonMatching, "jaudio/aictrl.c"),
+            Object(Matching, "jaudio/aictrl.c"),
             Object(Matching, "jaudio/sample.c"),
             Object(Matching, "jaudio/dummyrom.c"),
             Object(Matching, "jaudio/audiothread.c"),
