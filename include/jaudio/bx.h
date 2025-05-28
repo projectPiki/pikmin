@@ -5,7 +5,12 @@
 
 #include "types.h"
 
-#define BANK_ENTRY_COUNT (0x80)
+#define BANK_INST_COUNT        (0xF0)
+#define BANK_TEST_INST_COUNT   (0x80)
+#define BANK_TEST_VOICE_OFFSET (BANK_TEST_INST_COUNT)
+#define BANK_TEST_VOICE_COUNT  (0x64)
+#define BANK_TEST_PERC_OFFSET  (BANK_TEST_INST_COUNT + BANK_TEST_VOICE_COUNT)
+#define BANK_TEST_PERC_COUNT   (0x0C)
 
 typedef struct Bank_ Bank_;
 typedef struct Ibnk_ Ibnk_;
@@ -27,10 +32,9 @@ struct Bank_ {
 	union {     // _04 | Can point to INST, VOICE, PERC.
 		// There's no way this was actually an anonymous union, as this only became a feature
 		// of the C programming language in C11. However, it does make the code nicer to read.
-		void* mEntries[BANK_ENTRY_COUNT];
-		Inst_* mInstruments[BANK_ENTRY_COUNT];
-		Voice_* mVoices[BANK_ENTRY_COUNT];
-		Perc_* mPercs[BANK_ENTRY_COUNT];
+		Inst_* mInstruments[BANK_INST_COUNT];
+		Voice_* mVoices[BANK_INST_COUNT];
+		Perc_* mPercs[BANK_INST_COUNT];
 	};
 };
 
@@ -74,7 +78,8 @@ struct InstKeymap_ {
 struct PercKeymap_ {
 	f32 mPitch;            // _00
 	f32 mVolume;           // _04
-	u8 _08[0x8];           // _08, unknown
+	void* _08;             // _08, pointer type unknown, but gets hit by PTconvert in Bank_Test
+	void* _0C;             // _0C, pointer type unknown, but gets hit by PTconvert in Bank_Test
 	int mVelocityCount;    // _10
 	Vmap_* mVelocities[2]; // _14
 };
@@ -120,10 +125,16 @@ struct Inst_ {
 	InstKeymap_* mKeyRegions[5]; // _2C
 };
 
+struct Voice_ {
+	u8 _00[0x8];  // _00, unknown
+	int _08;      // _08, count of whatever's at 0xC
+	void* _0C[1]; // _0C, unsure of length of array or type
+};
+
 struct Perc_ {
-	int mMagic;                    // _00 | 'PER2'
+	int mMagic;                    // _00 | 'PER2' (or 'PERC'?)
 	u8 _04[0x84];                  // _04, unknown
-	PercKeymap_* mKeyRegions[100]; // _88
+	PercKeymap_* mKeyRegions[128]; // _88
 };
 
 struct Rand_ {
