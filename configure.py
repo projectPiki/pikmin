@@ -352,7 +352,7 @@ config.libs = [
             Object(NonMatching, "jaudio/jammain_2.c"),
             Object(Matching, "jaudio/midplay.c"),
             Object(NonMatching, "jaudio/noteon.c"),
-            Object(NonMatching, "jaudio/seqsetup.c"),
+            Object(Matching, "jaudio/seqsetup.c"),
             Object(Matching, "jaudio/centcalc.c"),
             Object(Matching, "jaudio/jamosc.c"),
             Object(NonMatching, "jaudio/oneshot.c"),
