@@ -125,7 +125,7 @@ struct seqp_ {
 	u16 _3A0;                 // _3A0
 	u8 _3A2[0x3a4 - 0x3a2];   // _3A2
 	u8 _3A4;                  // _3A4
-	u8 _3A5[0x3a6 - 0x3a5];   // _3A5
+	u8 _3A5;                  // _3A5
 	u8 _3A6;                  // _3A6
 	u8 _3A7;                  // _3A7
 	u32 _3A8[2];              // _3A8 | Exact length unknown, but it is an array.
@@ -134,7 +134,7 @@ struct seqp_ {
 	u32 _3CC;                 // _3CC
 	u32 _3D0;                 // _3D0
 	u32 _3D4;                 // _3D4
-	u8 _3D8[0x3dc - 0x3d8];   // _3D8
+	u32 _3D8;                 // _3D8
 	u8 _3DC[3];               // _3DC | Exact length confirmed. For loop in `Init_Track`.
 	u8 _3DF[3];               // _3DF | Exact length confirmed. For loop in `Init_Track`.
 	u8 _3E2;                  // _3E2
@@ -191,13 +191,13 @@ BOOL Jam_RegisterTrackCallback(TrackCallback);
 void Jam_SetTrackExtPanPower(void);
 void Jam_UpdateTrackAll(seqp_*);
 void Jam_UpdateTrack(seqp_*, u32);
-void Jam_UpdateTempo(void);
-void Jam_MuteTrack(seqp_*, int);
+void Jam_UpdateTempo(seqp_*);
+void Jam_MuteTrack(seqp_*, u8);
 void Jam_MuteChildTracks(void);
-void Jam_PauseTrack(seqp_*, u32); // TODO: types uncertain
-void Jam_UnPauseTrack(seqp_*, u32);
-void Jam_SetInterrupt(void);
-void Jam_TryInterrupt(seqp_*);
+void Jam_PauseTrack(seqp_*, u8);
+void Jam_UnPauseTrack(seqp_*, u8);
+void Jam_SetInterrupt(seqp_*, u16);
+BOOL Jam_TryInterrupt(seqp_*);
 s32 Jam_SeqmainNote(seqp_*, unknown);
 void SeqUpdate(seqp_*, unknown);
 

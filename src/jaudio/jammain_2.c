@@ -4,6 +4,8 @@
 #include "jaudio/jamosc.h"
 #include "jaudio/seqsetup.h"
 #include "jaudio/fat.h"
+#include "jaudio/noteon.h"
+#include "jaudio/rate.h"
 
 // TODO IN THIS FILE: What do the return values for the `Cmd_` functions signify?
 // 0 is probably success / "no error".  Return values 1 and 2 have been observed.
@@ -2528,86 +2530,27 @@ void Jam_UpdateTrack(seqp_*, u32)
  * Address:	800112E0
  * Size:	000104
  */
-void Jam_UpdateTempo(void)
+void Jam_UpdateTempo(seqp_* track)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x40(r3)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x94
-	  lfs       f1, -0x7EFC(r2)
-	  lis       r3, 0x4330
-	  lfs       f0, -0x8000(r13)
-	  lhz       r4, 0x338(r31)
-	  fmuls     f1, f1, f0
-	  lfs       f0, -0x7EF8(r2)
-	  lhz       r0, 0x33A(r31)
-	  stw       r4, 0x24(r1)
-	  fdivs     f0, f1, f0
-	  lfd       f3, -0x7F18(r2)
-	  stw       r0, 0x1C(r1)
-	  stw       r3, 0x20(r1)
-	  stw       r3, 0x18(r1)
-	  lfd       f2, 0x20(r1)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f2, f2, f3
-	  fsubs     f1, f1, f3
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x334(r31)
-	  lwz       r3, 0x2AC(r31)
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,25,25
-	  beq-      .loc_0xA8
-	  lfs       f1, 0x334(r31)
-	  lfs       f0, 0x20(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x334(r31)
-	  b         .loc_0xA8
+	size_t i;
 
-	.loc_0x94:
-	  lfs       f0, 0x334(r3)
-	  stfs      f0, 0x334(r31)
-	  lwz       r3, 0x40(r31)
-	  lhz       r0, 0x338(r3)
-	  sth       r0, 0x338(r31)
+	size_t* REF_i;
 
-	.loc_0xA8:
-	  li        r0, 0
-	  stw       r0, 0x10(r1)
-	  b         .loc_0xE4
-
-	.loc_0xB4:
-	  rlwinm    r3,r0,2,0,29
-	  addi      r0, r3, 0x44
-	  lwzx      r3, r31, r0
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD8
-	  lbz       r0, 0x3C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD8
-	  bl        .loc_0x0
-
-	.loc_0xD8:
-	  lwz       r3, 0x10(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x10(r1)
-
-	.loc_0xE4:
-	  lwz       r0, 0x10(r1)
-	  cmplwi    r0, 0x10
-	  blt+      .loc_0xB4
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	if (!track->_40) {
+		track->_334 = (float)track->_338 * (float)track->_33A / (JAC_DAC_RATE * 60.0f / 80.0f);
+		if ((track->_2AC->_08 & 0x40) != 0) {
+			track->_334 = track->_334 * track->_2AC->_20;
+		}
+	} else {
+		track->_334 = track->_40->_334;
+		track->_338 = track->_40->_338;
+	}
+	for (i = 0; i < 16; ++i) {
+		REF_i = &i;
+		if (track->_44[i] && track->_44[i]->_3C) {
+			Jam_UpdateTempo(track->_44[i]);
+		}
+	}
 }
 
 /*
@@ -2615,72 +2558,28 @@ void Jam_UpdateTempo(void)
  * Address:	80011400
  * Size:	0000CC
  */
-void Jam_MuteTrack(seqp_*, int)
+void Jam_MuteTrack(seqp_* track, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x40(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x70
-	  lbz       r5, 0x39E(r3)
-	  rlwinm.   r0,r4,0,24,31
-	  li        r3, 0x1
-	  or        r0, r5, r4
-	  stb       r0, 0x39E(r31)
-	  lwz       r0, 0x88(r31)
-	  rlwinm    r0,r0,0,28,31
-	  slw       r0, r3, r0
-	  rlwinm    r4,r0,0,16,31
-	  bne-      .loc_0x5C
-	  lwz       r3, 0x40(r31)
-	  lhz       r0, 0x3A0(r3)
-	  andc      r0, r0, r4
-	  sth       r0, 0x3A0(r3)
-	  b         .loc_0x74
+	u32 i;
+	u16 mask;
 
-	.loc_0x5C:
-	  lwz       r3, 0x40(r31)
-	  lhz       r0, 0x3A0(r3)
-	  or        r0, r0, r4
-	  sth       r0, 0x3A0(r3)
-	  b         .loc_0x74
-
-	.loc_0x70:
-	  stb       r4, 0x39E(r31)
-
-	.loc_0x74:
-	  lwz       r0, 0x3D8(r31)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x3D8(r31)
-	  lbz       r0, 0x39E(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB8
-	  lbz       r0, 0x39D(r31)
-	  rlwinm.   r0,r0,0,26,26
-	  beq-      .loc_0xB8
-	  li        r30, 0
-
-	.loc_0x9C:
-	  addi      r3, r31, 0
-	  rlwinm    r4,r30,0,24,31
-	  li        r5, 0xA
-	  bl        0x2738
-	  addi      r30, r30, 0x1
-	  cmplwi    r30, 0x8
-	  blt+      .loc_0x9C
-
-	.loc_0xB8:
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (track->_40) {
+		track->_39E = track->_40->_39E | param_2;
+		mask        = 1 << (track->_88 & 0xf);
+		if (!param_2) {
+			track->_40->_3A0 &= ~mask;
+		} else {
+			track->_40->_3A0 |= mask;
+		}
+	} else {
+		track->_39E = param_2;
+	}
+	track->_3D8 |= 1;
+	if (track->_39E && (track->_39D & 0x20)) {
+		for (i = 0; i < 8; ++i) {
+			NoteOFF_R(track, (u8)i, 10);
+		};
+	}
 }
 
 /*
@@ -2698,110 +2597,39 @@ void Jam_MuteChildTracks(void)
  * Address:	800114E0
  * Size:	00013C
  */
-void Jam_PauseTrack(seqp_*, u32) // TODO: types uncertain
+void Jam_PauseTrack(seqp_* track, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r30, r3, 0
-	  mr        r31, r4
-	  stb       r0, 0x39C(r3)
-	  lbz       r0, 0x39D(r3)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x38
-	  lwz       r0, 0x3D8(r30)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x3D8(r30)
+	size_t i;
+	jc_* pjVar1;
 
-	.loc_0x38:
-	  lbz       r0, 0x39D(r30)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x78
-	  li        r0, 0
-	  stw       r0, 0x14(r1)
-	  b         .loc_0x6C
+	size_t* REF_i;
 
-	.loc_0x50:
-	  addi      r3, r30, 0
-	  rlwinm    r4,r0,0,24,31
-	  li        r5, 0xA
-	  bl        0x26A4
-	  lwz       r3, 0x14(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x14(r1)
-
-	.loc_0x6C:
-	  lwz       r0, 0x14(r1)
-	  cmplwi    r0, 0x8
-	  blt+      .loc_0x50
-
-	.loc_0x78:
-	  lbz       r0, 0x39D(r30)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0xD4
-	  li        r27, 0
-	  li        r29, 0
-	  addi      r28, r27, 0
-
-	.loc_0x90:
-	  addi      r0, r28, 0x9C
-	  lwzx      r0, r30, r0
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0xC0
-	  addi      r4, r29, 0xBC
-	  lhz       r0, 0x126(r3)
-	  lhzx      r4, r30, r4
-	  cmplw     r4, r0
-	  bne-      .loc_0xC0
-	  li        r4, 0x1
-	  bl        0x49E4
-
-	.loc_0xC0:
-	  addi      r27, r27, 0x1
-	  addi      r28, r28, 0x4
-	  cmplwi    r27, 0x8
-	  addi      r29, r29, 0x2
-	  blt+      .loc_0x90
-
-	.loc_0xD4:
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        0x164
-	  rlwinm    r0,r31,0,24,31
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x128
-	  li        r28, 0
-	  li        r31, 0
-
-	.loc_0xF4:
-	  addi      r0, r31, 0x44
-	  lwzx      r3, r30, r0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x118
-	  lbz       r0, 0x3C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x118
-	  li        r4, 0x1
-	  bl        .loc_0x0
-
-	.loc_0x118:
-	  addi      r28, r28, 0x1
-	  addi      r31, r31, 0x4
-	  cmplwi    r28, 0x10
-	  blt+      .loc_0xF4
-
-	.loc_0x128:
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	track->_39C = 1;
+	if (track->_39D & 0x01) {
+		track->_3D8 |= 1;
+	}
+	if (track->_39D & 0x04) {
+		for (i = 0; i < 8; ++i) {
+			REF_i = &i;
+			NoteOFF_R(track, i, 10);
+		}
+	}
+	if (track->_39D & 0x08) {
+		for (i = 0; i < 8; ++i) {
+			pjVar1 = track->_9C[i];
+			if (pjVar1 && track->_BC[i] == pjVar1->_126) {
+				UpdatePause_1Shot(pjVar1, 1);
+			}
+		}
+	}
+	Jam_SetInterrupt(track, 0);
+	if (param_2 == TRUE) {
+		for (i = 0; i < 16; ++i) {
+			if (track->_44[i] && track->_44[i]->_3C) {
+				Jam_PauseTrack(track->_44[i], 1);
+			}
+		}
+	}
 }
 
 /*
@@ -2809,82 +2637,30 @@ void Jam_PauseTrack(seqp_*, u32) // TODO: types uncertain
  * Address:	80011620
  * Size:	0000EC
  */
-void Jam_UnPauseTrack(seqp_*, u32)
+void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r29, 0x1C(r1)
-	  addi      r31, r3, 0
-	  li        r3, 0
-	  mr        r29, r4
-	  stb       r3, 0x39C(r31)
-	  lwz       r0, 0x3D8(r31)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x3D8(r31)
-	  stw       r3, 0x14(r1)
-	  b         .loc_0x78
+	size_t i;
+	jc_* pjVar1;
 
-	.loc_0x34:
-	  rlwinm    r3,r4,2,0,29
-	  addi      r0, r3, 0x9C
-	  lwzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x6C
-	  rlwinm    r4,r4,1,0,30
-	  lhz       r0, 0x126(r3)
-	  addi      r4, r4, 0xBC
-	  lhzx      r4, r31, r4
-	  cmplw     r4, r0
-	  bne-      .loc_0x6C
-	  li        r4, 0
-	  bl        0x48F8
+	size_t* REF_i;
 
-	.loc_0x6C:
-	  lwz       r3, 0x14(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x14(r1)
-
-	.loc_0x78:
-	  lwz       r4, 0x14(r1)
-	  cmplwi    r4, 0x8
-	  blt+      .loc_0x34
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  bl        0x74
-	  rlwinm    r0,r29,0,24,31
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xD8
-	  li        r29, 0
-	  addi      r30, r29, 0
-
-	.loc_0xA4:
-	  addi      r0, r30, 0x44
-	  lwzx      r3, r31, r0
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC8
-	  lbz       r0, 0x3C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC8
-	  li        r4, 0x1
-	  bl        .loc_0x0
-
-	.loc_0xC8:
-	  addi      r29, r29, 0x1
-	  addi      r30, r30, 0x4
-	  cmplwi    r29, 0x10
-	  blt+      .loc_0xA4
-
-	.loc_0xD8:
-	  lmw       r29, 0x1C(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	track->_39C = 0;
+	track->_3D8 |= 1;
+	for (i = 0; i < 8; ++i) {
+		REF_i  = &i;
+		pjVar1 = track->_9C[i];
+		if (pjVar1 && track->_BC[i] == pjVar1->_126) {
+			UpdatePause_1Shot(pjVar1, 0);
+		}
+	}
+	Jam_SetInterrupt(track, 1);
+	if (param_2 == TRUE) {
+		for (i = 0; i < 16; ++i) {
+			if (track->_44[i] && track->_44[i]->_3C) {
+				Jam_UnPauseTrack(track->_44[i], 1);
+			}
+		}
+	}
 }
 
 /*
@@ -2892,21 +2668,11 @@ void Jam_UnPauseTrack(seqp_*, u32)
  * Address:	80011720
  * Size:	000028
  */
-void Jam_SetInterrupt(void)
+void Jam_SetInterrupt(seqp_* track, u16 param_2)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r4,0,16,31
-	  li        r4, 0x1
-	  lbz       r5, 0x3A6(r3)
-	  slw       r4, r4, r0
-	  and.      r0, r5, r4
-	  beqlr-
-	  lbz       r0, 0x3A5(r3)
-	  or        r0, r0, r4
-	  stb       r0, 0x3A5(r3)
-	  blr
-	*/
+	if (track->_3A6 & (1 << param_2)) {
+		track->_3A5 |= (1 << param_2);
+	}
 }
 
 /*
@@ -2914,53 +2680,27 @@ void Jam_SetInterrupt(void)
  * Address:	80011760
  * Size:	000090
  */
-void Jam_TryInterrupt(seqp_*)
+BOOL Jam_TryInterrupt(seqp_* track)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x3A4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x14
-	  li        r3, 0
-	  blr
+	int i;
+	u32 mask;
 
-	.loc_0x14:
-	  li        r0, 0x8
-	  li        r7, 0
-	  li        r4, 0x1
-	  mtctr     r0
-
-	.loc_0x24:
-	  lbz       r0, 0x3A6(r3)
-	  slw       r6, r4, r7
-	  and.      r0, r0, r6
-	  beq-      .loc_0x80
-	  lbz       r0, 0x3A5(r3)
-	  and.      r0, r0, r6
-	  beq-      .loc_0x80
-	  lwz       r5, 0x4(r3)
-	  rlwinm    r0,r7,2,0,29
-	  add       r4, r3, r0
-	  li        r0, 0
-	  stw       r5, 0x3C8(r3)
-	  lwz       r4, 0x3A8(r4)
-	  stw       r4, 0x4(r3)
-	  stb       r6, 0x3A4(r3)
-	  lwz       r4, 0x8C(r3)
-	  stw       r4, 0x3CC(r3)
-	  stw       r0, 0x8C(r3)
-	  lbz       r0, 0x3A5(r3)
-	  xor       r0, r0, r6
-	  stb       r0, 0x3A5(r3)
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x80:
-	  addi      r7, r7, 0x1
-	  bdnz+     .loc_0x24
-	  li        r3, 0
-	  blr
-	*/
+	if (track->_3A4) {
+		return FALSE;
+	}
+	for (i = 0; i < 8; ++i) {
+		mask = 1 << i;
+		if ((track->_3A6 & mask) && (track->_3A5 & mask)) {
+			track->_3C8 = track->_04;
+			track->_04  = track->_3A8[i];
+			track->_3A4 = mask;
+			track->_3CC = track->_8C;
+			track->_8C  = 0;
+			track->_3A5 ^= mask;
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 /*
@@ -3579,7 +3319,7 @@ static u32 Cmd_TimeBase()
 {
 	SEQ_P->_338 = SEQ_ARG._00[0];
 	if (!SEQ_P->_40) {
-		Jam_UpdateTempo();
+		Jam_UpdateTempo(SEQ_P);
 	}
 	return 0;
 }
@@ -3593,7 +3333,7 @@ static u32 Cmd_Tempo()
 {
 	SEQ_P->_33A = SEQ_ARG._00[0];
 	if (!SEQ_P->_40) {
-		Jam_UpdateTempo();
+		Jam_UpdateTempo(SEQ_P);
 	} else {
 		SEQ_P->_3E3 = 1;
 	}
