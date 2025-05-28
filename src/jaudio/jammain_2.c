@@ -1619,70 +1619,37 @@ void Jam_SetExtFirFilterD(ExtBuffer* ext, s16* param_2)
  * Address:	800107E0
  * Size:	0000A4
  */
-void Jam_SetExtParamD(f32, ExtBuffer*, u8)
+void Jam_SetExtParamD(f32 value, ExtBuffer* ext, u8 param_3)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  beqlr-
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x78
-	  bge-      .loc_0x40
-	  cmpwi     r0, 0x3
-	  beqlr-
-	  bge-      .loc_0x34
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x58
-	  bge-      .loc_0x60
-	  blr
+	f32* member;
 
-	.loc_0x34:
-	  cmpwi     r0, 0x5
-	  bgelr-
-	  b         .loc_0x68
-
-	.loc_0x40:
-	  cmpwi     r0, 0x40
-	  beq-      .loc_0x80
-	  bgelr-
-	  cmpwi     r0, 0x10
-	  beq-      .loc_0x70
-	  blr
-
-	.loc_0x58:
-	  addi      r5, r3, 0xC
-	  b         .loc_0x8C
-
-	.loc_0x60:
-	  addi      r5, r3, 0x18
-	  b         .loc_0x8C
-
-	.loc_0x68:
-	  addi      r5, r3, 0x10
-	  b         .loc_0x8C
-
-	.loc_0x70:
-	  addi      r5, r3, 0x14
-	  b         .loc_0x8C
-
-	.loc_0x78:
-	  addi      r5, r3, 0x1C
-	  b         .loc_0x8C
-
-	.loc_0x80:
-	  addi      r5, r3, 0x20
-	  b         .loc_0x8C
-	  blr
-
-	.loc_0x8C:
-	  stfs      f1, 0x0(r5)
-	  rlwinm    r0,r4,0,24,31
-	  lhz       r4, 0xA(r3)
-	  or        r0, r4, r0
-	  sth       r0, 0xA(r3)
-	  blr
-	*/
+	if (!ext) {
+		return;
+	}
+	switch (param_3) {
+	case 0x01:
+		member = &ext->_0C;
+		break;
+	case 0x02:
+		member = &ext->_18;
+		break;
+	case 0x04:
+		member = &ext->_10;
+		break;
+	case 0x10:
+		member = &ext->_14;
+		break;
+	case 0x08:
+		member = &ext->_1C;
+		break;
+	case 0x40:
+		member = &ext->_20;
+		break;
+	default:
+		return;
+	}
+	*member = value;
+	ext->_0A |= param_3;
 }
 
 /*
@@ -4828,59 +4795,23 @@ s32 Jam_SeqmainNote(seqp_*, unknown)
  * Address:	80013780
  * Size:	0000A8
  */
-void SeqUpdate(seqp_*, unknown)
+void SeqUpdate(seqp_* track, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  mr        r28, r3
-	  lwz       r3, 0x2AC(r3)
-	  lwz       r0, 0x3D8(r28)
-	  cmplwi    r3, 0
-	  or        r30, r4, r0
-	  beq-      .loc_0x3C
-	  addi      r4, r3, 0xA
-	  li        r0, 0
-	  lhz       r3, 0xA(r3)
-	  sth       r0, 0x0(r4)
-	  or        r30, r30, r3
+	u32 uVar5;
+	size_t i;
 
-	.loc_0x3C:
-	  li        r0, 0
-	  cmplwi    r30, 0
-	  stw       r0, 0x3D8(r28)
-	  beq-      .loc_0x58
-	  addi      r3, r28, 0
-	  addi      r4, r30, 0
-	  bl        -0x29B4
-
-	.loc_0x58:
-	  li        r29, 0
-	  li        r31, 0
-
-	.loc_0x60:
-	  addi      r0, r31, 0x44
-	  lwzx      r3, r28, r0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x84
-	  lbz       r0, 0x3C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  mr        r4, r30
-	  bl        .loc_0x0
-
-	.loc_0x84:
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x4
-	  cmplwi    r29, 0x10
-	  blt+      .loc_0x60
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	uVar5 = param_2 | track->_3D8;
+	if (track->_2AC) {
+		uVar5 |= track->_2AC->_0A;
+		track->_2AC->_0A = 0;
+	}
+	track->_3D8 = 0;
+	if (uVar5) {
+		Jam_UpdateTrack(track, uVar5);
+	}
+	for (i = 0; i < 16; ++i) {
+		if (track->_44[i] && track->_44[i]->_3C) {
+			SeqUpdate(track->_44[i], uVar5);
+		}
+	}
 }
