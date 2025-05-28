@@ -2018,7 +2018,7 @@ int StreamSyncPlayAudio(f32, int, int, int)
  * Address:	8001D4A0
  * Size:	000050
  */
-void StreamSyncStopAudio(void)
+void StreamSyncStopAudio(int)
 {
 	/*
 	.loc_0x0:

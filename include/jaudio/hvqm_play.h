@@ -20,4 +20,6 @@ int Jac_GetPicture(void*, int*, int*); // TODO: types unsure (return can be -1 t
 };
 #endif // ifdef __cplusplus
 
+static void __LoadFin(u32);
+
 #endif

@@ -21,7 +21,7 @@ void StreamSyncCheckReady(void);
 int StreamSyncCheckReadyID(int, int);
 BOOL StreamSyncCheckBusy(u32, u32);
 int StreamSyncPlayAudio(f32, int, int, int);
-void StreamSyncStopAudio(void);
+void StreamSyncStopAudio(int);
 void StreamChgPitch(void);
 void StreamChgVolume(int, int, int);
 void StreamChgMixLevel(int, int, int);

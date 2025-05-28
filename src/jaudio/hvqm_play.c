@@ -1,4 +1,53 @@
 #include "jaudio/hvqm_play.h"
+#include "Dolphin/os.h"
+#include "jaudio/sample.h"
+#include "jaudio/interleave.h"
+#include "jaudio/syncstream.h"
+#include "jaudio/dvdthread.h"
+#include "hvqm4.h"
+
+BOOL dvd_loadfinish;
+u32 dvdcount;
+int arcoffset;
+int AUDIO_FRAME;
+int PIC_FRAME;
+int drop_picture_flag;
+int PIC_BUFFERS;
+int dvdload_size;
+u32 dvdfile_size;
+u16 rec_header[4];
+int v_header;
+int gop_baseframe;
+int gop_frame;
+int vh_state;
+SeqObj* hvqm_obj;
+u32 dvd_active;
+int virtualfile_buf;
+BOOL record_ok;
+void* ref1;
+void* ref2;
+
+struct PICControl {
+	void* _00;
+	int _04;
+	u32 _08;
+	int _0C;
+} pic_ctrl[54];
+struct DVDControl {
+	int _00;
+	u8 mState;
+	int _08;
+	int _0C;
+} dvd_ctrl[3];
+static char filename[64];
+static u32 dvd_buf[3];
+int gop_subframe         = -1;
+BOOL playback_first_wait = TRUE;
+BOOL hvqm_first          = TRUE;
+static int file_header[17]; // dont know the type of these yet
+static int gop_header[5];
+static OSThread jac_hvqmThread;
+static OSThread hvqmStack; // ?? type
 
 /*
  * --INFO--
@@ -7,6 +56,28 @@
  */
 static void __ReLoad()
 {
+	int size = dvdfile_size;
+	if (dvdfile_size == 0) {
+		dvd_loadfinish = 1;
+		return;
+	}
+
+	if (dvd_ctrl[(dvdcount % 3)].mState == 3) {
+		dvd_ctrl[(dvdcount % 3)].mState = 1;
+		if (dvdfile_size < 0x80000) {
+			dvdload_size = size;
+		} else {
+			dvdload_size = 0x80000;
+		}
+		dvdfile_size -= dvdload_size;
+		int inter;
+		inter = OSDisableInterrupts();
+		dvd_active += 1;
+
+		DVDT_LoadtoDRAM(dvdcount, filename, dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, nullptr, __LoadFin);
+		OSRestoreInterrupts(inter);
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -90,40 +161,16 @@ static void __ReLoad()
  * Address:	8001DDA0
  * Size:	000074
  */
-static void __LoadFin(u32)
+static void __LoadFin(u32 a)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803E
-	  stw       r0, 0x4(r1)
-	  li        r4, 0x3
-	  subi      r5, r5, 0x3320
-	  stwu      r1, -0x8(r1)
-	  lwz       r7, 0x2D6C(r13)
-	  lwz       r6, 0x2DA8(r13)
-	  divwu     r3, r7, r4
-	  subi      r0, r6, 0x1
-	  stw       r0, 0x2DA8(r13)
-	  li        r6, 0x2
-	  rlwinm    r0,r7,19,0,12
-	  mullw     r3, r3, r4
-	  sub       r3, r7, r3
-	  rlwinm    r3,r3,4,0,27
-	  add       r3, r5, r3
-	  stb       r6, 0x4(r3)
-	  stw       r0, 0x8(r3)
-	  lwz       r0, 0x2D84(r13)
-	  stw       r0, 0xC(r3)
-	  lwz       r3, 0x2D6C(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2D6C(r13)
-	  bl        -0x180
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	dvd_active--;
+
+	dvd_ctrl[dvdcount % 3].mState = 2;
+	dvd_ctrl[dvdcount % 3]._08    = dvdcount << 0x13;
+	dvd_ctrl[dvdcount % 3]._0C    = dvdload_size;
+
+	dvdcount++;
+	__ReLoad();
 }
 
 /*
@@ -131,8 +178,38 @@ static void __LoadFin(u32)
  * Address:	8001DE20
  * Size:	000198
  */
-static void __VirtualLoad(u32, u32, u8*)
+static int __VirtualLoad(u32 a, u32 b, u8* data)
 {
+	u32 i = 0;
+	for (i = 0; i < 3; i++) {
+		if (dvd_ctrl[i].mState == 2) {
+			int size = dvd_ctrl[i]._08;
+			if (size > a) {
+				if (size > a + b) {
+					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, b);
+					break;
+				}
+
+				if (dvd_ctrl[i].mState == 2) {
+					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, b);
+					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, b);
+					dvd_ctrl[i].mState = 3;
+					break;
+				}
+				if (dvd_loadfinish) {
+					return -1;
+				}
+			} else if (a > 0x80000) {
+				dvd_ctrl[i].mState = 3;
+			}
+		}
+	}
+
+	if (i == 3) {
+		for (int i = 0; i < 3; i++) { }
+		return 0;
+	}
+	return i;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -263,31 +340,10 @@ static void __VirtualLoad(u32, u32, u8*)
  * Address:	8001DFC0
  * Size:	000050
  */
-static void InitAudio1(StreamHeader*, u8*, u32)
+static void InitAudio1(StreamHeader* header, u8* data, u32 size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  addi      r4, r5, 0
-	  bl        -0x3BC
-	  addi      r8, r31, 0
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0
-	  li        r6, 0x1
-	  li        r7, 0
-	  bl        -0x1EB8
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	Jac_InitStreamData(data, size);
+	StreamAudio_Start(0, 0, 0, 1, 0, (int)header);
 }
 
 /*
@@ -295,7 +351,7 @@ static void InitAudio1(StreamHeader*, u8*, u32)
  * Address:	8001E020
  * Size:	0003BC
  */
-void Jac_HVQM_Init(const char* filepath, u8*, int)
+void Jac_HVQM_Init(const char* filepath, u8* data, int a)
 {
 	/*
 	.loc_0x0:
@@ -580,7 +636,7 @@ void Jac_HVQM_Init(const char* filepath, u8*, int)
  * Address:	........
  * Size:	00003C
  */
-void hvqm_proc(void*)
+void hvqm_proc(void* data)
 {
 	// UNUSED FUNCTION
 }
@@ -602,31 +658,9 @@ void OSInitFastCast(void)
  */
 static void hvqm_forcestop()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  lwz       r0, -0x7EB8(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x3C
-	  lis       r3, 0x8039
-	  subi      r31, r3, 0x5618
-	  addi      r3, r31, 0
-	  bl        0x1DD6E8
-	  cmpwi     r3, 0
-	  bne-      .loc_0x3C
-	  mr        r3, r31
-	  bl        0x1DDEB0
-
-	.loc_0x3C:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	if (hvqm_first == 0 && OSIsThreadTerminated(&jac_hvqmThread) == FALSE) {
+		OSCancelThread(&jac_hvqmThread);
+	}
 }
 
 /*
@@ -945,44 +979,18 @@ void Jac_HVQM_Update(void)
  */
 void Jac_HVQM_ForceStop(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8039
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x5674
-	  li        r3, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x18(r4)
-	  stw       r0, 0x2D9C(r13)
-	  bl        -0x1360
-	  bl        0x1DA778
-	  lwz       r0, 0x2D68(r13)
-	  li        r4, 0
-	  stw       r4, 0x2D88(r13)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x5C
-	  lwz       r0, 0x2DA8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x5C
-	  bl        0x1DA77C
+	gop_frame = file_header[6];
+	StreamSyncStopAudio(0);
+	BOOL inter   = OSDisableInterrupts();
+	dvdfile_size = 0;
+	if (dvd_loadfinish != 1 && dvd_active != 0) {
+		OSRestoreInterrupts(inter);
+		while (dvd_loadfinish != 1) { }
 
-	.loc_0x4C:
-	  lwz       r0, 0x2D68(r13)
-	  cmpwi     r0, 0x1
-	  bne+      .loc_0x4C
-	  b         .loc_0x60
-
-	.loc_0x5C:
-	  bl        0x1DA768
-
-	.loc_0x60:
-	  bl        -0x460
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	} else {
+		OSRestoreInterrupts(inter);
+	}
+	hvqm_forcestop();
 }
 
 /*
@@ -1000,7 +1008,7 @@ void Jac_CountReadyPictures(void)
  * Address:	8001E860
  * Size:	000228
  */
-int Jac_GetPicture(void*, int*, int*)
+int Jac_GetPicture(void* data, int* x, int* y)
 {
 	/*
 	.loc_0x0:
@@ -1186,27 +1194,12 @@ int Jac_GetPicture(void*, int*, int*)
  */
 static void InitPic()
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x2D80(r13)
-	  li        r5, 0
-	  lis       r4, 0x803E
-	  addi      r3, r5, 0
-	  stw       r5, 0x2DB4(r13)
-	  subi      r0, r4, 0x34D0
-	  stw       r5, 0x2DB8(r13)
-	  mtctr     r6
-	  cmplwi    r6, 0
-	  blelr-
-
-	.loc_0x28:
-	  add       r4, r0, r3
-	  addi      r3, r3, 0x10
-	  stw       r5, 0x4(r4)
-	  stw       r5, 0x8(r4)
-	  bdnz+     .loc_0x28
-	  blr
-	*/
+	ref1 = nullptr;
+	ref2 = nullptr;
+	for (u32 i = 0; i < PIC_BUFFERS; i++) {
+		pic_ctrl[i]._04 = 0;
+		pic_ctrl[i]._08 = 0;
+	}
 }
 
 /*
@@ -1214,8 +1207,13 @@ static void InitPic()
  * Address:	8001EAE0
  * Size:	000044
  */
-static void CheckDraw(u32)
+static BOOL CheckDraw(u32 id)
 {
+	if (pic_ctrl[(id - pic_ctrl[0]._04) - ((id - pic_ctrl[0]._04) / PIC_BUFFERS) * PIC_BUFFERS]._08) {
+		return FALSE;
+	}
+	return TRUE;
+
 	/*
 	.loc_0x0:
 	  lis       r5, 0x803E
@@ -1245,8 +1243,35 @@ static void CheckDraw(u32)
  * Address:	8001EB40
  * Size:	0000FC
  */
-static void Decode1(u8*, u32, u8)
+static int Decode1(u8* data, u32 a1, u8 a2)
 {
+	int id                  = (a1 - pic_ctrl[0]._04) - ((id - pic_ctrl[0]._04) / PIC_BUFFERS) * PIC_BUFFERS;
+	void* ref               = pic_ctrl[id]._00;
+	struct PICControl* ctrl = &pic_ctrl[id];
+	if (ctrl->_08) {
+		return -1;
+	}
+
+	switch (a2) {
+	case 0x10:
+		HVQM4DecodeIpic(hvqm_obj, data, ref);
+		ref2 = ref1;
+		ref1 = ref;
+		break;
+	case 0x20:
+		HVQM4DecodePpic(hvqm_obj, data, ref, ref1);
+		ref2 = ref1;
+		ref1 = ref;
+		break;
+	case 0x30:
+		HVQM4DecodeBpic(hvqm_obj, data, ref, ref2, ref1);
+		break;
+	}
+
+	ctrl->_04 = a1;
+	ctrl->_08 = 1;
+	return 0;
+
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -54,6 +54,7 @@
         "stdarg.h": "c",
         "ctype.h": "c",
         "hvqm4.h": "c",
-        "piki_scene.h": "c"
+        "piki_scene.h": "c",
+        "hvqm_play.h": "c"
     },
 }
