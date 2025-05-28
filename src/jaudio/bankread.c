@@ -26,288 +26,84 @@ static void PTconvert(void** pointer, u32 base_address)
  */
 Bank_* Bank_Test(u8* ibnk_address)
 {
+	u32 i, k, j;
 	u32 base_addr    = (u32)ibnk_address;
-	Bank_* startBank = &((Ibnk_*)ibnk_address)->bank;
-	u32 i, j, k;
+	Bank_* startBank = (Bank_*)(ibnk_address + 0x20);
 	if (startBank->mMagic != 'BANK') {
 		return nullptr;
 	}
 
 	for (i = 0; i < BANK_TEST_INST_COUNT; ++i) {
-		Inst_** preInst = &startBank->mInstruments[i];
-		PTconvert((void**)preInst, (u32)ibnk_address);
+		PTconvert(&startBank->mInstruments[i], base_addr);
 
-		Inst_* inst = *preInst;
+		Inst_* inst = (Inst_*)startBank->mInstruments[i];
 		if (!inst) {
 			continue;
 		}
 
 		// each instrument has two oscillators, effects, and sensors
 		for (j = 0; j < 2; j++) {
-			PTconvert((void**)&inst->mOscillators[j], (u32)base_addr);
-			PTconvert((void**)&inst->mEffects[j], (u32)base_addr);
-			PTconvert((void**)&inst->mSensors[j], (u32)base_addr);
+			PTconvert(&inst->mOscillators[j], base_addr);
+			PTconvert(&inst->mEffects[j], base_addr);
+			PTconvert(&inst->mSensors[j], base_addr);
 
 			if (inst->mOscillators[j]) {
-				PTconvert((void**)&inst->mOscillators[j]->mAttackVecOffset, (u32)base_addr);
-				PTconvert((void**)&inst->mOscillators[j]->mReleaseVecOffset, (u32)base_addr);
+				PTconvert((void**)&inst->mOscillators[j]->mAttackVecOffset, base_addr);
+				PTconvert((void**)&inst->mOscillators[j]->mReleaseVecOffset, base_addr);
 			}
 		}
 
 		// each instrument also has a certain number of key regions
 		for (j = 0; j < inst->mKeyRegionCount; j++) {
-			PTconvert((void**)&inst->mKeyRegions[j], (u32)base_addr);
+			PTconvert(&inst->mKeyRegions[j], base_addr);
 
 			for (k = 0; k < inst->mKeyRegions[j]->mVelocityCount; k++) {
-				PTconvert((void**)&inst->mKeyRegions[j]->mVelocities[k], (u32)base_addr);
+				PTconvert(&inst->mKeyRegions[j]->mVelocities[k], base_addr);
 			}
 		}
 	}
 
 	// treat the next block of 100 as voices (for some reason)
 	for (i = 0; i < BANK_TEST_VOICE_COUNT; i++) {
-		Voice_** preVoice = &(startBank->mVoices + BANK_TEST_VOICE_OFFSET)[i];
-		PTconvert((void**)preVoice, (u32)base_addr);
+		PTconvert(&(startBank->mInstruments + BANK_TEST_VOICE_OFFSET)[i], base_addr);
 
-		Voice_* voice = *preVoice;
+		Voice_* voice = (Voice_*)(startBank->mInstruments + BANK_TEST_VOICE_OFFSET)[i];
 		if (!voice) {
 			continue;
 		}
 
 		for (j = 0; j < voice->_08; j++) {
-			PTconvert((void**)&voice->_0C[j], (u32)base_addr);
+			PTconvert(&voice->_0C[j], base_addr);
 		}
 	}
 
 	// treat the next block of 12 as percussion (for some reason)
 	for (i = 0; i < BANK_TEST_PERC_COUNT; i++) {
-		Perc_** prePerc = &(startBank->mPercs + BANK_TEST_PERC_OFFSET)[i];
-		PTconvert((void**)prePerc, (u32)base_addr);
+		PTconvert(&(startBank->mInstruments + BANK_TEST_PERC_OFFSET)[i], base_addr);
 
-		Perc_* perc = *prePerc;
+		Perc_* perc = (Perc_*)(startBank->mInstruments + BANK_TEST_PERC_OFFSET)[i];
 		if (!perc) {
 			continue;
 		}
 
 		for (j = 0; j < 128; j++) {
-			PercKeymap_** preKey = &perc->mKeyRegions[j];
-			PTconvert((void**)preKey, (u32)base_addr);
+			PTconvert(&perc->mKeyRegions[j], base_addr);
 
-			PercKeymap_* key = *preKey;
+			PercKeymap_* key = perc->mKeyRegions[j];
 			if (!key) {
 				continue;
 			}
 
-			PTconvert((void**)&key->_08, (u32)base_addr);
-			PTconvert((void**)&key->_0C, (u32)base_addr);
+			PTconvert(&key->_08, base_addr);
+			PTconvert(&key->_0C, base_addr);
 
 			for (k = 0; k < key->mVelocityCount; k++) {
-				PTconvert((void**)&key->mVelocities[k], (u32)base_addr);
+				PTconvert(&key->mVelocities[k], base_addr);
 			}
 		}
 	}
 
 	return startBank;
-
-	/*
-	.loc_0x0:
-	mflr      r0
-	stw       r0, 0x4(r1)
-	stwu      r1, -0x38(r1)
-	stmw      r22, 0x10(r1)
-	addi      r31, r3, 0
-	addi      r30, r3, 0x20
-	lwz       r4, 0x20(r3)
-	subis     r0, r4, 0x4241
-	cmplwi    r0, 0x4E4B
-	beq-      .loc_0x30
-	li        r3, 0
-	b         .loc_0x25C
-
-	.loc_0x30:
-	li        r22, 0
-	li        r27, 0
-
-	.loc_0x38:
-	addi      r28, r27, 0x4
-	addi      r4, r31, 0
-	add       r28, r30, r28
-	addi      r3, r28, 0
-	bl        -0x88
-	lwz       r26, 0x0(r28)
-	cmplwi    r26, 0
-	beq-      .loc_0x128
-	li        r23, 0
-	li        r28, 0
-
-	.loc_0x60:
-	add       r29, r26, r28
-	addi      r4, r31, 0
-	addi      r25, r29, 0x10
-	addi      r3, r25, 0
-	bl        -0xB0
-	addi      r3, r29, 0x18
-	addi      r4, r31, 0
-	bl        -0xBC
-	addi      r3, r29, 0x20
-	addi      r4, r31, 0
-	bl        -0xC8
-	lwz       r3, 0x0(r25)
-	cmplwi    r3, 0
-	beq-      .loc_0xB4
-	addi      r3, r3, 0x8
-	addi      r4, r31, 0
-	bl        -0xE0
-	lwz       r3, 0x0(r25)
-	addi      r4, r31, 0
-	addi      r3, r3, 0xC
-	bl        -0xF0
-
-	.loc_0xB4:
-	addi      r23, r23, 0x1
-	addi      r28, r28, 0x4
-	cmplwi    r23, 0x2
-	blt+      .loc_0x60
-	li        r23, 0
-	li        r28, 0
-	b         .loc_0x11C
-
-	.loc_0xD0:
-	add       r25, r26, r28
-	addi      r4, r31, 0
-	addi      r3, r25, 0x2C
-	bl        -0x11C
-	li        r24, 0
-	li        r29, 0
-	b         .loc_0x104
-
-	.loc_0xEC:
-	addi      r3, r29, 0x8
-	addi      r4, r31, 0
-	add       r3, r5, r3
-	bl        -0x138
-	addi      r24, r24, 0x1
-	addi      r29, r29, 0x4
-
-	.loc_0x104:
-	lwz       r5, 0x2C(r25)
-	lwz       r0, 0x4(r5)
-	cmplw     r24, r0
-	blt+      .loc_0xEC
-	addi      r23, r23, 0x1
-	addi      r28, r28, 0x4
-
-	.loc_0x11C:
-	lwz       r0, 0x28(r26)
-	cmplw     r23, r0
-	blt+      .loc_0xD0
-
-	.loc_0x128:
-	addi      r22, r22, 0x1
-	addi      r27, r27, 0x4
-	cmplwi    r22, 0x80
-	blt+      .loc_0x38
-	li        r24, 0
-	li        r27, 0
-
-	.loc_0x140:
-	addi      r25, r27, 0x204
-	addi      r4, r31, 0
-	add       r25, r30, r25
-	addi      r3, r25, 0
-	bl        -0x190
-	lwz       r25, 0x0(r25)
-	cmplwi    r25, 0
-	beq-      .loc_0x190
-	li        r23, 0
-	li        r28, 0
-	b         .loc_0x184
-
-	.loc_0x16C:
-	addi      r3, r28, 0xC
-	addi      r4, r31, 0
-	add       r3, r25, r3
-	bl        -0x1B8
-	addi      r23, r23, 0x1
-	addi      r28, r28, 0x4
-
-	.loc_0x184:
-	lwz       r0, 0x8(r25)
-	cmplw     r23, r0
-	blt+      .loc_0x16C
-
-	.loc_0x190:
-	addi      r24, r24, 0x1
-	addi      r27, r27, 0x4
-	cmplwi    r24, 0x64
-	blt+      .loc_0x140
-	li        r24, 0
-	li        r29, 0
-
-	.loc_0x1A8:
-	addi      r25, r29, 0x394
-	addi      r4, r31, 0
-	add       r25, r30, r25
-	addi      r3, r25, 0
-	bl        -0x1F8
-	lwz       r25, 0x0(r25)
-	cmplwi    r25, 0
-	beq-      .loc_0x248
-	li        r23, 0
-	li        r28, 0
-
-	.loc_0x1D0:
-	addi      r26, r28, 0x88
-	addi      r4, r31, 0
-	add       r26, r25, r26
-	addi      r3, r26, 0
-	bl        -0x220
-	lwz       r26, 0x0(r26)
-	cmplwi    r26, 0
-	beq-      .loc_0x238
-	addi      r3, r26, 0x8
-	addi      r4, r31, 0
-	bl        -0x238
-	addi      r3, r26, 0xC
-	addi      r4, r31, 0
-	bl        -0x244
-	li        r22, 0
-	li        r27, 0
-	b         .loc_0x22C
-
-	.loc_0x214:
-	addi      r3, r27, 0x14
-	addi      r4, r31, 0
-	add       r3, r26, r3
-	bl        -0x260
-	addi      r22, r22, 0x1
-	addi      r27, r27, 0x4
-
-	.loc_0x22C:
-	lwz       r0, 0x10(r26)
-	cmplw     r22, r0
-	blt+      .loc_0x214
-
-	.loc_0x238:
-	addi      r23, r23, 0x1
-	addi      r28, r28, 0x4
-	cmplwi    r23, 0x80
-	blt+      .loc_0x1D0
-
-	.loc_0x248:
-	addi      r24, r24, 0x1
-	addi      r29, r29, 0x4
-	cmplwi    r24, 0xC
-	blt+      .loc_0x1A8
-	mr        r3, r30
-
-	.loc_0x25C:
-	lmw       r22, 0x10(r1)
-	lwz       r0, 0x3C(r1)
-	addi      r1, r1, 0x38
-	mtlr      r0
-	blr
-	*/
 }
 
 /*

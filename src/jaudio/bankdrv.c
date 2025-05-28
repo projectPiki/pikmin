@@ -143,86 +143,24 @@ int Bank_GetVoiceMap(Voice_*, u16)
  * Address:	8000D1C0
  * Size:	000104
  */
-f32 Bank_SenseToOfs(Sense_*, u8)
+f32 Bank_SenseToOfs(Sense_* sensor, u8 p2)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  stwu      r1, -0x28(r1)
-	  bne-      .loc_0x14
-	  lfs       f1, -0x7F98(r2)
-	  b         .loc_0xFC
+	if (!sensor) {
+		return 1.0f;
+	}
 
-	.loc_0x14:
-	  lbz       r5, 0x2(r3)
-	  cmplwi    r5, 0x7F
-	  beq-      .loc_0x28
-	  cmplwi    r5, 0
-	  bne-      .loc_0x64
+	if (sensor->_02 == 127 || sensor->_02 == 0) {
+		return sensor->_04 + (f32)p2 * (sensor->_08 - sensor->_04) / 127.0f;
+	}
 
-	.loc_0x28:
-	  rlwinm    r4,r4,0,24,31
-	  lis       r0, 0x4330
-	  stw       r4, 0x24(r1)
-	  lfs       f4, 0x4(r3)
-	  stw       r0, 0x20(r1)
-	  lfs       f0, 0x8(r3)
-	  lfd       f3, -0x7F90(r2)
-	  lfd       f2, 0x20(r1)
-	  fsubs     f1, f0, f4
-	  lfs       f0, -0x7F94(r2)
-	  fsubs     f2, f2, f3
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  fadds     f1, f4, f0
-	  b         .loc_0xFC
+	if (p2 < sensor->_02) {
+		return sensor->_04 + (1.0f - sensor->_04) * ((f32)p2 / (f32)sensor->_02);
+	}
 
-	.loc_0x64:
-	  rlwinm    r0,r4,0,24,31
-	  cmplw     r0, r5
-	  bge-      .loc_0xB0
-	  stw       r0, 0x24(r1)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x7F90(r2)
-	  stw       r5, 0x1C(r1)
-	  lfs       f4, 0x4(r3)
-	  stw       r0, 0x20(r1)
-	  lfs       f0, -0x7F98(r2)
-	  stw       r0, 0x18(r1)
-	  lfd       f1, 0x20(r1)
-	  fsubs     f3, f0, f4
-	  lfd       f0, 0x18(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fdivs     f0, f1, f0
-	  fmadds    f1, f3, f0, f4
-	  b         .loc_0xFC
+	int a = p2 - sensor->_02;
+	int b = 127 - sensor->_02;
 
-	.loc_0xB0:
-	  sub       r4, r0, r5
-	  subfic    r0, r5, 0x7F
-	  xoris     r4, r4, 0x8000
-	  xoris     r0, r0, 0x8000
-	  stw       r4, 0x1C(r1)
-	  lis       r4, 0x4330
-	  lfd       f2, -0x7F88(r2)
-	  stw       r0, 0x24(r1)
-	  lfs       f0, 0x8(r3)
-	  stw       r4, 0x18(r1)
-	  lfs       f4, -0x7F98(r2)
-	  stw       r4, 0x20(r1)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f3, f0, f4
-	  lfd       f0, 0x20(r1)
-	  fsubs     f1, f1, f2
-	  fsubs     f0, f0, f2
-	  fdivs     f0, f1, f0
-	  fmadds    f1, f3, f0, f4
-
-	.loc_0xFC:
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	return 1.0f + (sensor->_08 - 1.0f) * ((f32)a / (f32)b);
 }
 
 /*
@@ -248,7 +186,7 @@ f32 Bank_RandToOfs(Rand_* rand)
  * Address:	8000D340
  * Size:	0003F8
  */
-f32 Bank_OscToOfs(Osc_*, Oscbuf_*)
+f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 {
 	/*
 	.loc_0x0:
