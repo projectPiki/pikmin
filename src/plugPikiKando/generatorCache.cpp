@@ -628,7 +628,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 
 		PelletConfig* config = pelletMgr->getConfig(id);
 		if (!config) {
-			ERROR("unknown pellet id %c%c%c%c\n", 0, 0, 0, (u32)id);
+			ERROR("unknown pellet id %c%c%c%c\n", 0, 0, 0, (u8)id);
 		}
 
 		stream.readFloat();
@@ -642,83 +642,6 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 	}
 
 	u32 badCompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  mr        r31, r4
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  li        r29, 0
-	  stw       r28, 0x38(r1)
-	  lwz       r6, 0x70(r3)
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x7398
-	  lwz       r8, 0x24(r4)
-	  lwz       r7, 0x20(r4)
-	  lwz       r5, 0x18(r4)
-	  lis       r4, 0x8022
-	  lwz       r9, 0x28(r31)
-	  lis       r3, 0x802A
-	  add       r5, r5, r7
-	  stw       r0, 0x28(r1)
-	  addi      r0, r4, 0x74C8
-	  add       r4, r5, r8
-	  stw       r0, 0x28(r1)
-	  addi      r0, r3, 0x755C
-	  add       r4, r6, r4
-	  stw       r0, 0x28(r1)
-	  li        r0, 0
-	  stw       r4, 0x2C(r1)
-	  stw       r0, 0x30(r1)
-	  stw       r9, 0x34(r1)
-	  b         .loc_0xEC
-
-	.loc_0x7C:
-	  addi      r3, r1, 0x24
-	  bl        -0xBAC70
-	  addi      r28, r3, 0
-	  addi      r4, r28, 0
-	  addi      r3, r1, 0x18
-	  bl        -0x9BE9C
-	  lwz       r3, 0x301C(r13)
-	  mr        r4, r28
-	  bl        -0x47018
-	  mr.       r30, r3
-	  addi      r3, r1, 0x24
-	  bl        -0xBABF0
-	  addi      r3, r1, 0x24
-	  bl        -0xBABF8
-	  addi      r3, r1, 0x24
-	  bl        -0xBAC00
-	  addi      r3, r1, 0x24
-	  bl        -0xBAC78
-	  addi      r3, r1, 0x24
-	  bl        -0xBAC10
-	  addi      r3, r1, 0x24
-	  bl        -0xBAC18
-	  addi      r3, r1, 0x24
-	  bl        -0xBAC20
-	  lwz       r3, 0x301C(r13)
-	  lwz       r4, 0x44(r30)
-	  bl        -0x47280
-	  addi      r29, r29, 0x1
-
-	.loc_0xEC:
-	  lwz       r0, 0x34(r31)
-	  cmplw     r29, r0
-	  blt+      .loc_0x7C
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  lwz       r28, 0x38(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
