@@ -59,12 +59,12 @@ struct ExtBuffer {
 
 // This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
 typedef struct Osc_definition {
-	u8 _00;
-	f32 _04;
-	u16* _08;
-	u16* _0C;
-	f32 _10;
-	f32 _14;
+	u8 _00;   // _00
+	f32 _04;  // _04
+	s16* _08; // _08
+	s16* _0C; // _0C
+	f32 _10;  // _10
+	f32 _14;  // _14
 } Osc_definition;
 
 /**
@@ -111,13 +111,10 @@ struct seqp_ {
 	u16 _33A;                 // _33A
 	u8 _33C;                  // _33C
 	u8 _33D;                  // _33D
-	f32 _340;                 // _340
-	f32 _344;                 // _344
-	void* _348;               // _348
-	void* _34C;               // _34C
-	f32 _350[8];              // _350
+	Osc_definition _340[2];   // _340
 	u8 _370[2];               // _370 | Exact length unknown, but it is an array.
-	s16 _372[0x12];           // _374 | This is a pair of some sort of struct, _348 and _34C point to them, see Osc_Setup_ADSR
+	s16 _372[12];             // _372 | ADS table?
+	s16 _38A[6];              // _38A | REL table?
 	s8 _396;                  // _396 | Confirmed signed (Cmd_Transpose)
 	u8 _397;                  // _397
 	s32 _398;                 // _398 | Might be signed (See: `Init_Track`)
