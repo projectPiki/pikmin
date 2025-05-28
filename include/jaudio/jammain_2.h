@@ -150,7 +150,7 @@ void Jam_WriteRegDirect(seqp_*, u8, u16); // Is param_3 is u8 or a u16?
 void Jam_WriteRegParam(void);
 u16 Jam_ReadRegDirect(seqp_*, u32);
 u32 Jam_ReadReg32(void);
-void Jam_WriteRegXY(void);
+void Jam_WriteRegXY(seqp_* track, u32 param_2);
 void Jam_WritePortApp(void);
 void Jam_ReadPortApp(void);
 void Jam_CheckExportApp(void);
