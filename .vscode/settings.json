@@ -53,6 +53,7 @@
         "serpoll.h": "c",
         "stdarg.h": "c",
         "ctype.h": "c",
-        "hvqm4.h": "c"
+        "hvqm4.h": "c",
+        "piki_scene.h": "c"
     },
 }
