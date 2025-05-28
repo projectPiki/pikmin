@@ -361,10 +361,13 @@ void GeneratorCache::load(u32 stageIdx)
 		loadUfoParts(cache);
 		PRINT("** VALID CHECK BEFORE SLIDING \n");
 		assertValid();
-		u32 size         = cache->mTotalCacheSize;
-		Cache* nextCache = cache;
-		while (nextCache = static_cast<Cache*>(nextCache->mNext)) {
-			PRINT("** n = %x n->sibling = %x\n", nextCache, nextCache->mNext);
+		u32 size       = cache->mTotalCacheSize;
+		CoreNode* node = cache;
+		while (node->mNext) {
+			Cache* nextCache = (Cache*)node->mNext;
+			node             = node->mNext;
+
+			PRINT("** n = %x n->sibling = %x\n", node, node->mNext);
 			PRINT("** start slide : length = %x size = %x\n", nextCache->mTotalCacheSize, size);
 
 			u8* srcCache = mCacheHeap + nextCache->mHeapOffset;
