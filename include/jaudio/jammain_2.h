@@ -199,7 +199,7 @@ void Jam_UnPauseTrack(seqp_*, u8);
 void Jam_SetInterrupt(seqp_*, u16);
 BOOL Jam_TryInterrupt(seqp_*);
 s32 Jam_SeqmainNote(seqp_*, unknown);
-void SeqUpdate(seqp_*, unknown);
+void SeqUpdate(seqp_*, u32);
 
 #ifdef __cplusplus
 };
