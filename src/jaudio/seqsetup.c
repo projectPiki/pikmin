@@ -468,108 +468,51 @@ BOOL Jaq_StartSeq(u32 param_1)
  * Address:	80014780
  * Size:	00014C
  */
-void Jaq_OpenTrack(seqp_*, unknown, unknown)
+s32 Jaq_OpenTrack(seqp_* track, u32 param_2, u32 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm.   r6,r4,0,26,26
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,28,31
-	  stwu      r1, -0x40(r1)
-	  stmw      r25, 0x24(r1)
-	  addi      r27, r3, 0
-	  addi      r25, r5, 0
-	  rlwinm    r28,r4,26,30,31
-	  stb       r0, 0x18(r1)
-	  beq-      .loc_0x30
-	  li        r28, 0x4
+	seqp_* psVar1;
+	seqp_* psVar2;
+	u8 index;
+	u8 bVar5;
+	// u8 bit_5;
 
-	.loc_0x30:
-	  rlwinm.   r0,r6,0,24,31
-	  beq-      .loc_0x48
-	  mr        r3, r27
-	  lbz       r4, 0x18(r1)
-	  bl        -0x4720
-	  stb       r3, 0x18(r1)
+	u8* REF_index;
 
-	.loc_0x48:
-	  lbz       r31, 0x18(r1)
-	  cmplwi    r31, 0x10
-	  blt-      .loc_0x5C
-	  li        r3, -0x1
-	  b         .loc_0x138
-
-	.loc_0x5C:
-	  rlwinm    r30,r31,2,0,29
-	  add       r26, r27, r30
-	  lwzu      r0, 0x44(r26)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x78
-	  bl        0x1AC
-
-	.loc_0x78:
-	  bl        -0x918
-	  mr.       r29, r3
-	  bne-      .loc_0x8C
-	  li        r3, -0x1
-	  b         .loc_0x138
-
-	.loc_0x8C:
-	  stw       r29, 0x0(r26)
-	  li        r0, 0
-	  addi      r3, r29, 0
-	  addi      r4, r25, 0
-	  lwz       r7, 0x88(r27)
-	  addi      r5, r27, 0
-	  rlwinm    r6,r7,4,0,27
-	  rlwinm    r7,r7,0,0,3
-	  or        r6, r6, r31
-	  addis     r7, r7, 0x1000
-	  rlwinm    r6,r6,0,4,31
-	  or        r6, r7, r6
-	  stw       r6, 0x88(r29)
-	  stw       r0, 0x84(r29)
-	  lbz       r0, 0x3D(r27)
-	  stb       r0, 0x3D(r29)
-	  stb       r28, 0x3F(r29)
-	  bl        -0x810
-	  lwz       r4, 0x40(r29)
-	  li        r0, 0x1
-	  slw       r0, r0, r31
-	  lhz       r3, 0x3A0(r4)
-	  lbz       r4, 0x39E(r4)
-	  and       r0, r3, r0
-	  sraw      r0, r0, r31
-	  or        r0, r4, r0
-	  stb       r0, 0x39E(r29)
-	  lwz       r0, 0x40(r29)
-	  add       r3, r0, r30
-	  lwz       r0, 0x2B0(r3)
-	  stw       r0, 0x2AC(r29)
-	  lwz       r4, 0x2AC(r29)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x120
-	  lwz       r3, 0x4(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x4(r4)
-
-	.loc_0x120:
-	  addi      r3, r29, 0xD8
-	  li        r4, 0
-	  bl        0x1318
-	  mr        r3, r29
-	  bl        -0x3DD0
-	  li        r3, 0
-
-	.loc_0x138:
-	  lmw       r25, 0x24(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	index = (param_2 & 0b00001111);
+	bVar5 = (param_2 & 0b11000000) >> 6;
+	if ((param_2 & 0b00100000) != 0) {
+		bVar5 = 4;
+	}
+	if ((u8)(param_2 & 0b00100000) != 0) { // But why cast it...?
+		index = Jam_ReadRegDirect(track, index);
+	}
+	REF_index = &index;
+	if (index >= 16) {
+		return -1;
+	}
+	psVar1 = track->_44[index];
+	if (psVar1) {
+		Jaq_CloseTrack(psVar1);
+	}
+	psVar2 = GetNewTrack();
+	if (!psVar2) {
+		return -1;
+	}
+	track->_44[index] = psVar2;
+	psVar2->_88       = ((track->_88 << 4 | index) & 0xFFFFFFF) | ((track->_88 & 0xF0000000) + 0x10000000);
+	psVar2->_84       = 0;
+	psVar2->_3D       = track->_3D;
+	psVar2->_3F       = bVar5;
+	Init_Track(psVar2, param_3, track);
+	// Dev rolls "worst bit extraction method", asked to leave Nintendo EAD.
+	psVar2->_39E = psVar2->_40->_39E | ((psVar2->_40->_3A0 & (1 << index)) >> (index));
+	psVar2->_2AC = psVar2->_40->_2B0[index];
+	if (psVar2->_2AC) {
+		++psVar2->_2AC->_04;
+	}
+	Init_1shot(&psVar2->_D8, 0);
+	Jam_UpdateTrackAll(psVar2);
+	return 0;
 }
 
 /*
