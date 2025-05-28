@@ -32,7 +32,7 @@ struct PICControl {
 	int _04;
 	u32 _08;
 	int _0C;
-} pic_ctrl[54];
+} pic_ctrl[24];
 struct DVDControl {
 	int _00;
 	u8 mState;
@@ -47,7 +47,7 @@ BOOL hvqm_first          = TRUE;
 static int file_header[17]; // dont know the type of these yet
 static int gop_header[5];
 static OSThread jac_hvqmThread;
-static OSThread hvqmStack; // ?? type
+static u8 hvqmStack[0x1000];
 
 /*
  * --INFO--

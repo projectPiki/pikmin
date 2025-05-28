@@ -1036,7 +1036,6 @@ int ActBridge::newExeWork()
 	}
 
 	if (absF(xDist) > 0.3f * mBridge->getStageWidth()) {
-		Vector3f dir;
 		if (xDist < 0.0f) {
 			xVec.multiply(-1.0f);
 		}
