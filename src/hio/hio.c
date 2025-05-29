@@ -84,7 +84,7 @@ BOOL HIOEnumDevices(HIOEnumCallback callback)
 					continue;
 				}
 			}
-			if (EXILock(chan, 0, nullptr) == 0) {
+			if (EXILock(chan, 0, NULL) == 0) {
 				EXIDetach(chan);
 				continue;
 			}
@@ -95,9 +95,9 @@ BOOL HIOEnumDevices(HIOEnumCallback callback)
 			}
 			cmd = 0;
 			err = 0;
-			err |= !EXIImm(chan, &cmd, 2, 1, nullptr);
+			err |= !EXIImm(chan, &cmd, 2, 1, NULL);
 			err |= !EXISync(chan);
-			err |= !EXIImm(chan, &id, 4, 0, nullptr);
+			err |= !EXIImm(chan, &id, 4, 0, NULL);
 			err |= !EXISync(chan);
 			err |= !EXIDeselect(chan);
 			EXIUnlock(chan);
@@ -139,8 +139,8 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 
 	Chan        = chan;
 	ExiCallback = callback;
-	TxCallback  = nullptr;
-	RxCallback  = nullptr;
+	TxCallback  = NULL;
+	RxCallback  = NULL;
 	if (chan < 2) {
 		while (EXIProbeEx(Chan) == 0) { }
 		if (EXIAttach(Chan, ExtHandler) == FALSE) {
@@ -148,7 +148,7 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 			return FALSE;
 		}
 	}
-	if (EXILock(Chan, 0, nullptr) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE) {
 		EXIDetach(Chan);
 		Chan = -1;
 		return FALSE;
@@ -161,9 +161,9 @@ BOOL HIOInit(s32 chan, HIOCallback callback)
 	}
 	cmd = 0;
 	err = 0;
-	err |= !EXIImm(Chan, &cmd, 2, 1, nullptr);
+	err |= !EXIImm(Chan, &cmd, 2, 1, NULL);
 	err |= !EXISync(Chan);
-	err |= !EXIImm(Chan, &id, 4, 0, nullptr);
+	err |= !EXIImm(Chan, &id, 4, 0, NULL);
 	err |= !EXISync(Chan);
 	err |= !EXIDeselect(Chan);
 	EXIUnlock(Chan);
@@ -201,7 +201,7 @@ BOOL HIOReadMailbox(u32* word)
 		return FALSE;
 	}
 
-	if (EXILock(Chan, 0, nullptr) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE) {
 		return FALSE;
 	}
 	if (EXISelect(Chan, 0, 4) == FALSE) {
@@ -210,9 +210,9 @@ BOOL HIOReadMailbox(u32* word)
 	}
 	cmd = 0x60000000;
 	err = 0;
-	err |= !EXIImm(Chan, &cmd, 2, 1, nullptr);
+	err |= !EXIImm(Chan, &cmd, 2, 1, NULL);
 	err |= !EXISync(Chan);
-	err |= !EXIImm(Chan, word, 4, 0, nullptr);
+	err |= !EXIImm(Chan, word, 4, 0, NULL);
 	err |= !EXISync(Chan);
 	err |= !EXIDeselect(Chan);
 	EXIUnlock(Chan);
@@ -232,7 +232,7 @@ BOOL HIOWriteMailbox(u32 word)
 	if (Chan == -1 || __OSGetDIConfig() == 0xFF) {
 		return FALSE;
 	}
-	if (EXILock(Chan, 0, nullptr) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE) {
 		return FALSE;
 	}
 	if (EXISelect(Chan, 0, 4) == FALSE) {
@@ -241,7 +241,7 @@ BOOL HIOWriteMailbox(u32 word)
 	}
 	cmd = (word & 0x1FFFFFFF) | 0xC0000000;
 	err = 0;
-	err |= !EXIImm(Chan, &cmd, 4, 1, nullptr);
+	err |= !EXIImm(Chan, &cmd, 4, 1, NULL);
 	err |= !EXISync(Chan);
 	err |= !EXIDeselect(Chan);
 	EXIUnlock(Chan);
@@ -272,7 +272,7 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 		return FALSE;
 	}
 
-	if (EXILock(Chan, 0, nullptr) == FALSE) {
+	if (EXILock(Chan, 0, NULL) == FALSE) {
 		return FALSE;
 	}
 	if (EXISelect(Chan, 0, 4) == FALSE) {
@@ -281,9 +281,9 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 	}
 	cmd = ((addr << 8) & 0x01FFFC00) | 0xA0000000;
 	err = 0;
-	err |= !EXIImm(Chan, &cmd, 4, 1, nullptr);
+	err |= !EXIImm(Chan, &cmd, 4, 1, NULL);
 	err |= !EXISync(Chan);
-	err |= !EXIDma(Chan, buffer, size, 1, nullptr);
+	err |= !EXIDma(Chan, buffer, size, 1, NULL);
 	err |= !EXISync(Chan);
 	err |= !EXIDeselect(Chan);
 	EXIUnlock(Chan);

@@ -103,7 +103,7 @@ s16* DspbufProcess(DSPBUF_EVENTS event)
 		return dsp_buf[read_buffer];
 	}
 
-	return nullptr;
+	return NULL;
 }
 
 /*

@@ -287,7 +287,7 @@ u8* FAT_GetPointer(u16 a, u32 b)
 u8 FAT_ReadByte(u16 a, u32 b)
 {
 	u8* ptr = FAT_GetPointer(a, b);
-	if (ptr == nullptr) {
+	if (ptr == NULL) {
 		return 0;
 	}
 	return *ptr;
@@ -303,7 +303,7 @@ u16 FAT_ReadWord(u16 a, u32 b)
 	// Guessing based on name/size
 
 	u16* ptr = (u16*)FAT_GetPointer(a, b);
-	if (ptr == nullptr) {
+	if (ptr == NULL) {
 		return 0;
 	}
 	return *ptr;

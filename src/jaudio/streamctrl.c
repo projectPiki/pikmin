@@ -89,7 +89,7 @@ void StreamMain()
 
 				AISetStreamVolLeft((s32)J_STREAM.stream_vol);
 				AISetStreamVolRight((s32)J_STREAM.stream_vol);
-				DVDPrepareStreamAsync(&finfo, 0, 0, nullptr);
+				DVDPrepareStreamAsync(&finfo, 0, 0, NULL);
 				J_STREAM.state = JSTREAM_STATE_START;
 			}
 		}

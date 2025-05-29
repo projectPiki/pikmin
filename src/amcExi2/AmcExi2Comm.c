@@ -128,10 +128,10 @@ static s32 EXI2_SendCmd(u8 bufAddrHi, u32 bufAddrLo, s32 bufAddr2, u32 p4)
 
 	EXI2_ToWriteMode();
 
-	AmcEXIImm(&buf1, 4, 1, nullptr);
+	AmcEXIImm(&buf1, 4, 1, NULL);
 	AmcEXISync();
 
-	AmcEXIImm(&buf2, 4, 1, nullptr);
+	AmcEXIImm(&buf2, 4, 1, NULL);
 	AmcEXISync();
 
 	AmcEXIDeselect();

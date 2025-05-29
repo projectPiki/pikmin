@@ -425,7 +425,7 @@ void OSClearContext(OSContext* context)
 	context->mode  = 0;
 	context->state = 0;
 	if (context == __OSFPUContext) {
-		__OSFPUContext = nullptr;
+		__OSFPUContext = NULL;
 	}
 }
 
@@ -605,7 +605,7 @@ _restoreAndExit:
 void __OSContextInit(void)
 {
 	__OSSetExceptionHandler(__OS_EXCEPTION_FLOATING_POINT, OSSwitchFPUContext);
-	__OSFPUContext = nullptr;
+	__OSFPUContext = NULL;
 	DBPrintf("FPU-unavailable handler installed\n");
 }
 

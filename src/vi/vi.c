@@ -243,7 +243,7 @@ static VITimingInfo* getTiming(VITVMode mode)
 		return &timing[6];
 	}
 
-	return nullptr;
+	return NULL;
 }
 #pragma dont_inline reset
 
@@ -428,8 +428,8 @@ void VIInit(void)
 	value                   = (((u32)(value)) & ~0x00008000) | (((0)) << 15);
 	__VIRegs[VI_DISP_INT_1] = value;
 
-	PreCB  = nullptr;
-	PostCB = nullptr;
+	PreCB  = NULL;
+	PostCB = NULL;
 
 	__OSSetInterruptHandler(24, __VIRetraceHandler);
 	__OSUnmaskInterrupts((0x80000000u >> (24)));

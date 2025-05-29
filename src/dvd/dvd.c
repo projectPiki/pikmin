@@ -720,13 +720,13 @@ void stateReady()
 	DVDCommandBlock* finished;
 
 	if (!__DVDCheckWaitingQueue()) {
-		executing = nullptr;
+		executing = NULL;
 		return;
 	}
 
 	if (PauseFlag) {
 		PausingFlag = TRUE;
-		executing   = nullptr;
+		executing   = NULL;
 		return;
 	}
 
@@ -1063,7 +1063,7 @@ static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 	block->state = 2;
 	result       = __DVDPushWaitingQueue(prio, block);
 
-	if ((executing == nullptr) && (PauseFlag == FALSE)) {
+	if ((executing == NULL) && (PauseFlag == FALSE)) {
 		stateReady();
 	}
 
@@ -1506,7 +1506,7 @@ s32 DVDGetDriveStatus()
 		if (PausingFlag != FALSE) {
 			result = DVD_STATE_PAUSING;
 		} else {
-			if (executing == nullptr) {
+			if (executing == NULL) {
 				result = DVD_STATE_END;
 			} else if (executing == &DummyCommandBlock) {
 				result = DVD_STATE_END;
@@ -1854,7 +1854,7 @@ void __DVDPrepareResetAsync(DVDCBCallback callback)
 		CancelCallback = callback;
 	} else {
 		if (executing) {
-			executing->callback = nullptr;
+			executing->callback = NULL;
 		}
 
 		DVDCancelAllAsync(callback);

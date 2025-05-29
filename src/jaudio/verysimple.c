@@ -517,5 +517,5 @@ void Jac_BackDVDBuffer()
 	if (lend_buffer) {
 		DVDT_CloseBuffer(lend_buffer);
 	}
-	lend_buffer = nullptr;
+	lend_buffer = NULL;
 }

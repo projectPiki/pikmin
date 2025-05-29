@@ -38,7 +38,7 @@ static void FormatCallback(s32 channel, s32 result)
 
 error:
 	callback          = card->apiCallback;
-	card->apiCallback = nullptr;
+	card->apiCallback = NULL;
 	__CARDPutControlBlock(card, result);
 	callback(channel, result);
 }

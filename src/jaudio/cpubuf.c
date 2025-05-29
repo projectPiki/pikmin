@@ -78,7 +78,7 @@ s16* CpubufProcess(DSPBUF_EVENTS event)
 		return dsp_buf[read_buffer];
 	}
 
-	return nullptr;
+	return NULL;
 }
 
 /*

@@ -10,7 +10,7 @@ s32 gReadCount;
 s32 gReadPos;
 s32 gWritePos;
 
-DBCommTable gDBCommTable = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+DBCommTable gDBCommTable = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 /*
  * --INFO--

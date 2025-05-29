@@ -43,7 +43,7 @@ static void SetTimer(OSAlarm* alarm)
 void OSInitAlarm(void)
 {
 	if (__OSGetExceptionHandler(8) != DecrementerExceptionHandler) {
-		AlarmQueue.head = AlarmQueue.tail = nullptr;
+		AlarmQueue.head = AlarmQueue.tail = NULL;
 		__OSSetExceptionHandler(8, DecrementerExceptionHandler);
 	}
 }
@@ -55,7 +55,7 @@ void OSInitAlarm(void)
  */
 void OSCreateAlarm(OSAlarm* alarm)
 {
-	alarm->handler = nullptr;
+	alarm->handler = NULL;
 }
 
 /*
@@ -97,7 +97,7 @@ static void InsertAlarm(OSAlarm* alarm, OSTime fire, OSAlarmHandler handler)
 		}
 		return;
 	}
-	alarm->next     = nullptr;
+	alarm->next     = NULL;
 	prev            = AlarmQueue.tail;
 	AlarmQueue.tail = alarm;
 	alarm->prev     = prev;
@@ -160,13 +160,13 @@ void OSCancelAlarm(OSAlarm* alarm)
 
 	enabled = OSDisableInterrupts();
 
-	if (alarm->handler == nullptr) {
+	if (alarm->handler == NULL) {
 		OSRestoreInterrupts(enabled);
 		return;
 	}
 
 	next = alarm->next;
-	if (next == nullptr) {
+	if (next == NULL) {
 		AlarmQueue.tail = alarm->prev;
 	} else {
 		next->prev = alarm->prev;
@@ -179,7 +179,7 @@ void OSCancelAlarm(OSAlarm* alarm)
 			SetTimer(next);
 		}
 	}
-	alarm->handler = nullptr;
+	alarm->handler = NULL;
 
 	OSRestoreInterrupts(enabled);
 }
@@ -197,7 +197,7 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 	OSTime time;
 	time  = OSGetTime();
 	alarm = AlarmQueue.head;
-	if (alarm == nullptr) {
+	if (alarm == NULL) {
 		OSLoadContext(context);
 	}
 
@@ -208,14 +208,14 @@ static void DecrementerExceptionCallback(__OSException exception, OSContext* con
 
 	next            = alarm->next;
 	AlarmQueue.head = next;
-	if (next == nullptr) {
-		AlarmQueue.tail = nullptr;
+	if (next == NULL) {
+		AlarmQueue.tail = NULL;
 	} else {
-		next->prev = nullptr;
+		next->prev = NULL;
 	}
 
 	handler        = alarm->handler;
-	alarm->handler = nullptr;
+	alarm->handler = NULL;
 	if (0 < alarm->period) {
 		InsertAlarm(alarm, 0, handler);
 	}

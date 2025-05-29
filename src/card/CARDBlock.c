@@ -40,13 +40,13 @@ void WriteCallback(s32 channel, s32 result)
 		}
 	}
 
-	if (card->apiCallback == nullptr) {
+	if (card->apiCallback == NULL) {
 		__CARDPutControlBlock(card, result);
 	}
 
 	callback = card->eraseCallback;
 	if (callback) {
-		card->eraseCallback = nullptr;
+		card->eraseCallback = NULL;
 		callback(channel, result);
 	}
 }
@@ -79,12 +79,12 @@ void EraseCallback(s32 channel, s32 result)
 	return;
 
 error:
-	if (card->apiCallback == nullptr) {
+	if (card->apiCallback == NULL) {
 		__CARDPutControlBlock(card, result);
 	}
 	callback = card->eraseCallback;
 	if (callback) {
-		card->eraseCallback = nullptr;
+		card->eraseCallback = NULL;
 		callback(channel, result);
 	}
 }

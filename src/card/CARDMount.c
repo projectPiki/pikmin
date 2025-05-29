@@ -173,7 +173,7 @@ void __CARDMountCallback(s32 channel, s32 result)
 	}
 
 	callback          = card->apiCallback;
-	card->apiCallback = nullptr;
+	card->apiCallback = NULL;
 	__CARDPutControlBlock(card, result);
 	callback(channel, result);
 }
@@ -208,7 +208,7 @@ s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCal
 	card->workArea    = workArea;
 	card->extCallback = detachCallback;
 	card->apiCallback = attachCallback ? attachCallback : __CARDDefaultApiCallback;
-	card->exiCallback = nullptr;
+	card->exiCallback = NULL;
 
 	if (!card->attached && !EXIAttach(channel, __CARDExtHandler)) {
 		card->result = CARD_RESULT_NOCARD;
@@ -230,7 +230,7 @@ s32 CARDMountAsync(s32 channel, CARDMemoryCard* workArea, CARDCallback detachCal
 	if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
 		return CARD_RESULT_READY;
 	}
-	card->unlockCallback = nullptr;
+	card->unlockCallback = NULL;
 
 	return DoMount(channel);
 }

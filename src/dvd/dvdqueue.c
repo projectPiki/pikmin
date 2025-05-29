@@ -73,13 +73,13 @@ DVDQueue* __DVDPopWaitingQueue()
 			outQueue->mHead->mTail = tempQueue;
 			OSRestoreInterrupts(intrEnabled);
 
-			outQueue->mHead = nullptr;
-			outQueue->mTail = nullptr;
+			outQueue->mHead = NULL;
+			outQueue->mTail = NULL;
 			return outQueue;
 		}
 	}
 	OSRestoreInterrupts(intrEnabled);
-	return nullptr;
+	return NULL;
 }
 
 /*
@@ -113,7 +113,7 @@ BOOL __DVDDequeueWaitingQueue(DVDQueue* queue)
 	struct DVDQueue* tail = queue->mTail;
 	struct DVDQueue* head = queue->mHead;
 
-	if (tail == nullptr || head == nullptr) {
+	if (tail == NULL || head == NULL) {
 		OSRestoreInterrupts(intrEnabled);
 		return FALSE;
 	}

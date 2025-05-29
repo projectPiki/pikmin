@@ -8,7 +8,7 @@
 void OSInitMutex(OSMutex* mutex)
 {
 	OSInitThreadQueue(&mutex->queue);
-	mutex->thread = nullptr;
+	mutex->thread = NULL;
 	mutex->count  = 0;
 }
 
@@ -37,7 +37,7 @@ void OSLockMutex(OSMutex* mutex)
 			currentThread->mutex = mutex;
 			__OSPromoteThread(mutex->thread, currentThread->priority);
 			OSSleepThread(&mutex->queue);
-			currentThread->mutex = nullptr;
+			currentThread->mutex = NULL;
 		}
 	}
 	OSRestoreInterrupts(enabled);
@@ -55,7 +55,7 @@ void OSUnlockMutex(OSMutex* mutex)
 
 	if (mutex->thread == currentThread && --mutex->count == 0) {
 		RemoveItemMutex(&currentThread->queueMutex, mutex, link);
-		mutex->thread = nullptr;
+		mutex->thread = NULL;
 		if (currentThread->priority < currentThread->base) {
 			currentThread->priority = __OSGetEffectivePriority(currentThread);
 		}
@@ -77,7 +77,7 @@ void __OSUnlockAllMutex(OSThread* thread)
 	while (thread->queueMutex.head) {
 		RemoveHeadMutex(&thread->queueMutex, mutex, link);
 		mutex->count  = 0;
-		mutex->thread = nullptr;
+		mutex->thread = NULL;
 		OSWakeupThread(&mutex->queue);
 	}
 }
@@ -117,7 +117,7 @@ void OSWaitCond(OSCond* cond, OSMutex* mutex)
 		count        = mutex->count;
 		mutex->count = 0;
 		RemoveItemMutex(&currentThread->queueMutex, mutex, link);
-		mutex->thread = nullptr;
+		mutex->thread = NULL;
 
 		if (currentThread->priority < currentThread->base) {
 			currentThread->priority = __OSGetEffectivePriority(currentThread);

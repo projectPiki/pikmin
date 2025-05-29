@@ -119,7 +119,7 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 			f32 ofs                = Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]);
 			DoEffectOsc(jc, jc->mOscillators[i]->mMode, ofs);
 		} else {
-			jc->mOscillators[i] = nullptr;
+			jc->mOscillators[i] = NULL;
 		}
 	}
 
@@ -149,7 +149,7 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 			__DoEffect(jc, map->_00->_00, r);
 		}
 
-		jc->mOscillators[i] = nullptr;
+		jc->mOscillators[i] = NULL;
 	}
 	jc->mOscillators[0]    = &PERC_ENV;
 	jc->mOscBuffers[0]._00 = TRUE;
@@ -172,7 +172,7 @@ static void EffecterInit_Osc(jc_* jc)
 	jc->_BC[3]._00[1] = 0.0f;
 
 	for (u32 i = 0; i < 2; i++) {
-		jc->mOscillators[i] = nullptr;
+		jc->mOscillators[i] = NULL;
 	}
 
 	jc->mOscillators[0]    = &OSC_ENV;
@@ -221,25 +221,25 @@ static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 id)
 	jc->_28 = Jesus1Shot_Update;
 	jc->_20 = AllocDSPchannel(0, (u32)jc);
 
-	if (jc->_20 == nullptr) {
+	if (jc->_20 == NULL) {
 		play = CheckLogicalChannel(jc);
 	} else {
 		play = PlayLogicalChannel(jc);
 	}
 
-	if (jc->_20 == nullptr && play == TRUE) {
+	if (jc->_20 == NULL && play == TRUE) {
 		if (Add_WaitDSPChannel(jc) == TRUE) {
 			List_AddChannelTail(&jcs->_14, jc);
 			return jc;
 		} else {
 			List_AddChannelTail(&jcs->_08, jc);
-			return nullptr;
+			return NULL;
 		}
 	} else if (play == FALSE) {
 		DeAllocDSPchannel(jc->_20, (u32)jc);
-		jc->_20 = nullptr;
+		jc->_20 = NULL;
 		List_AddChannelTail(&jcs->_08, jc);
-		return nullptr;
+		return NULL;
 	} else {
 		List_AddChannelTail(&jcs->_0C, jc);
 	}
@@ -253,26 +253,26 @@ static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 id)
  */
 static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 {
-	if (wave && wave->_0C == nullptr) {
+	if (wave && wave->_0C == NULL) {
 		return FALSE;
 	}
 
 	jc_* chan = List_GetChannel(&jcs->_08);
-	if (chan == nullptr) {
+	if (chan == NULL) {
 
 		if (FixAllocChannel(jcs, 1) == FALSE) {
 			return 0;
 		}
 		jcs->_04++;
 		chan = List_GetChannel(&jcs->_08);
-		if (chan == nullptr) {
+		if (chan == NULL) {
 			return 0;
 		}
 
 		if (jcs->_70 == 1) {
 			volatile jc_* c;
 			c = List_GetChannel(&jcs->_10);
-			if (c == nullptr) {
+			if (c == NULL) {
 				c = List_GetChannel(&jcs->_0C);
 				if (c) {
 					List_CountChannel(&jcs->_14);
@@ -408,8 +408,8 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 Perc_* PercRead(u32 a1, u32 a2)
 {
 	Bank_* bank = Bank_Get(a1);
-	if (bank == nullptr) {
-		return nullptr;
+	if (bank == NULL) {
+		return NULL;
 	}
 
 	return Bank_PercChange(bank, a2);
@@ -424,8 +424,8 @@ Inst_* InstRead(u32 a1, u32 a2)
 {
 
 	Bank_* bank = Bank_Get(a1);
-	if (bank == nullptr) {
-		return nullptr;
+	if (bank == NULL) {
+		return NULL;
 	}
 
 	return Bank_InstChange(bank, a2);
@@ -770,7 +770,7 @@ static int Extra_Update(jc_* jc, JCSTATUS status)
 		jc->_FA--;
 
 		if (jc->_FA == 0) {
-			jc->_2C = nullptr;
+			jc->_2C = NULL;
 		}
 	}
 	return 0;
@@ -817,7 +817,7 @@ void SetPitchTarget_1Shot(jc_* jc, f32 a1, u32 a2)
 {
 	if (a2 == 0) {
 		jc->_B0 = a1;
-		jc->_2C = nullptr;
+		jc->_2C = NULL;
 		return;
 	}
 
@@ -837,7 +837,7 @@ void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
 		return;
 	}
 
-	if (jc->_0C == 2 || jc->_10 == nullptr) {
+	if (jc->_0C == 2 || jc->_10 == NULL) {
 		a1 &= 0xff;
 	} else {
 		a1 = ((u8)a1 + 0x3c) - ((int)jc->_10 + 2);
@@ -1077,7 +1077,7 @@ void FlushRelease_1Shot(jcs_* jcs)
 
 	for (u32 i = 0; i < count; i++) {
 		jc_* chan = List_GetChannel(&jcs->_10);
-		if (chan == nullptr) {
+		if (chan == NULL) {
 			break;
 		}
 
@@ -1251,17 +1251,17 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS status)
 u32 One_CheckInstWave(SOUNDID_ sound)
 {
 	Inst_* inst = InstRead(sound.value, sound.value);
-	if (inst == nullptr) {
+	if (inst == NULL) {
 		return 1;
 	}
 
 	int map = VmapRead(inst, sound.value, sound.value);
-	if (map == nullptr) {
+	if (map == NULL) {
 		return 2;
 	}
 
 	CtrlGroup_* group = WaveidToWavegroup(map, sound.value);
-	if (group == nullptr) {
+	if (group == NULL) {
 		return 3;
 	}
 

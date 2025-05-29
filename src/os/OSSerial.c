@@ -1,7 +1,7 @@
 #include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
 
-static SIControl Si = { -1, 0, 0, nullptr, nullptr };
+static SIControl Si = { -1, 0, 0, NULL, NULL };
 static SIPacket Packet[SI_MAX_CHAN];
 static OSAlarm Alarm[SI_MAX_CHAN];
 

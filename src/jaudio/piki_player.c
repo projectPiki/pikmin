@@ -17,13 +17,13 @@ static u32 gaya_timer;
  */
 void Jac_Orima_Walk(s32 soundID, u32 p2)
 {
-	static seqp_* seqp = nullptr;
+	static seqp_* seqp = NULL;
 	static u8 status   = 0;
 	gaya_timer         = 0;
 
-	if (seqp == nullptr) {
+	if (seqp == NULL) {
 		seqp = Jam_GetTrackHandle(0x10008);
-		if (seqp == nullptr) {
+		if (seqp == NULL) {
 			return;
 		}
 	}
@@ -50,9 +50,9 @@ void Jac_Orima_Formation(s32 a1, s32 a2)
 {
 	static int flag = 0;
 
-	if (stick_seqp == nullptr) {
+	if (stick_seqp == NULL) {
 		stick_seqp = Jam_GetTrackHandle(0x10007);
-		if (stick_seqp == nullptr) {
+		if (stick_seqp == NULL) {
 			return;
 		}
 	}
@@ -118,9 +118,9 @@ void Jac_PlayOrimaSe(u32 id)
 	static int cmdqueue_reset = 0;
 	static CmdQueue player_se;
 
-	if (orima_seqp == nullptr) {
+	if (orima_seqp == NULL) {
 		orima_seqp = Jam_GetTrackHandle(0x1000a);
-		if (orima_seqp == nullptr) {
+		if (orima_seqp == NULL) {
 			return;
 		}
 	}
@@ -211,13 +211,13 @@ void Jac_UnPauseOrimaSe()
  */
 void Jac_StopOrimaSe(s32 id)
 {
-	static seqp_* seqp        = nullptr;
+	static seqp_* seqp        = NULL;
 	static int cmdqueue_reset = 0;
 	static CmdQueue player_se_stop;
 
 	if (cmdqueue_reset == 0) {
 		seqp = Jam_GetTrackHandle(0x1000a);
-		if (seqp == nullptr) {
+		if (seqp == NULL) {
 			return;
 		}
 		Jal_AddCmdQueue(&player_se_stop, seqp, 2);

@@ -93,7 +93,7 @@ static s32 VerifyDir(CARDControl* card, int* outCurrent)
 		if (check[i]->checkSum != checkSum || check[i]->checkSumInv != checkSumInv) {
 			++errors;
 			current          = i;
-			card->currentDir = nullptr;
+			card->currentDir = NULL;
 		}
 	}
 
@@ -142,7 +142,7 @@ static s32 VerifyFAT(CARDControl* card, int* outCurrent)
 		if (fatp->checkSum != checkSum || fatp->checkSumInv != checkSumInv) {
 			++errors;
 			current          = i;
-			card->currentFat = nullptr;
+			card->currentFat = NULL;
 			continue;
 		}
 
@@ -155,7 +155,7 @@ static s32 VerifyFAT(CARDControl* card, int* outCurrent)
 		if (cFree != fatp->freeBlocks) {
 			++errors;
 			current          = i;
-			card->currentFat = nullptr;
+			card->currentFat = NULL;
 			continue;
 		}
 	}
@@ -374,7 +374,7 @@ s32 CARDCheck(s32 channel)
 
 	result = CARDCheckExAsync(channel, &xferBytes, __CARDSyncCallback);
 
-	if (result < 0 || &xferBytes == nullptr) {
+	if (result < 0 || &xferBytes == NULL) {
 		return result;
 	}
 

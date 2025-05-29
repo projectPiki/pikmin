@@ -48,18 +48,18 @@ void __CARDExtHandler(s32 channel, OSContext* context)
 	if (card->attached) {
 		card->attached = FALSE;
 		card->result   = CARD_RESULT_NOCARD;
-		EXISetExiCallback(channel, nullptr);
+		EXISetExiCallback(channel, NULL);
 		OSCancelAlarm(&card->alarm);
 		callback = card->exiCallback;
 
 		if (callback) {
-			card->exiCallback = nullptr;
+			card->exiCallback = NULL;
 			callback(channel, CARD_RESULT_NOCARD);
 		}
 
 		callback = card->extCallback;
 		if (callback && CARD_MAX_MOUNT_STEP <= card->mountStep) {
-			card->extCallback = nullptr;
+			card->extCallback = NULL;
 			callback(channel, CARD_RESULT_NOCARD);
 		}
 	}
@@ -108,7 +108,7 @@ error:
 fatal:
 	callback = card->exiCallback;
 	if (callback) {
-		card->exiCallback = nullptr;
+		card->exiCallback = NULL;
 		callback(channel, result);
 	}
 }
@@ -129,7 +129,7 @@ void __CARDTxHandler(s32 channel, OSContext* context)
 	EXIUnlock(channel);
 	callback = card->txCallback;
 	if (callback) {
-		card->txCallback = nullptr;
+		card->txCallback = NULL;
 		callback(channel, (!err && EXIProbe(channel)) ? CARD_RESULT_READY : CARD_RESULT_NOCARD);
 	}
 }
@@ -147,7 +147,7 @@ void __CARDUnlockedHandler(s32 channel, OSContext* context)
 	card     = &__CARDBlock[channel];
 	callback = card->unlockCallback;
 	if (callback) {
-		card->unlockCallback = nullptr;
+		card->unlockCallback = NULL;
 		callback(channel, EXIProbe(channel) ? CARD_RESULT_UNLOCKED : CARD_RESULT_NOCARD);
 	}
 }
@@ -168,9 +168,9 @@ int __CARDReadNintendoID(s32 channel, u32* id)
 
 	cmd = 0;
 	err = 0;
-	err |= !EXIImm(channel, &cmd, 2, EXI_WRITE, nullptr);
+	err |= !EXIImm(channel, &cmd, 2, EXI_WRITE, NULL);
 	err |= !EXISync(channel);
-	err |= !EXIImm(channel, id, 4, EXI_READ, nullptr);
+	err |= !EXIImm(channel, id, 4, EXI_READ, NULL);
 	err |= !EXISync(channel);
 	err |= !EXIDeselect(channel);
 
@@ -201,7 +201,7 @@ s32 __CARDEnableInterrupt(s32 channel, BOOL enable)
 
 	cmd = enable ? 0x81010000 : 0x81000000;
 	err = FALSE;
-	err |= !EXIImm(channel, &cmd, 2, 1, nullptr);
+	err |= !EXIImm(channel, &cmd, 2, 1, NULL);
 	err |= !EXISync(channel);
 	err |= !EXIDeselect(channel);
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
@@ -223,9 +223,9 @@ s32 __CARDReadStatus(s32 channel, u8* status)
 
 	cmd = 0x83000000;
 	err = FALSE;
-	err |= !EXIImm(channel, &cmd, 2, 1, nullptr);
+	err |= !EXIImm(channel, &cmd, 2, 1, NULL);
 	err |= !EXISync(channel);
-	err |= !EXIImm(channel, status, 1, 0, nullptr);
+	err |= !EXIImm(channel, status, 1, 0, NULL);
 	err |= !EXISync(channel);
 	err |= !EXIDeselect(channel);
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
@@ -247,7 +247,7 @@ s32 __CARDClearStatus(s32 channel)
 
 	cmd = 0x89000000;
 	err = FALSE;
-	err |= !EXIImm(channel, &cmd, 1, 1, nullptr);
+	err |= !EXIImm(channel, &cmd, 1, 1, NULL);
 	err |= !EXISync(channel);
 	err |= !EXIDeselect(channel);
 
@@ -298,7 +298,7 @@ static void TimeoutHandler(OSAlarm* alarm, OSContext* context)
 	EXISetExiCallback(channel, NULL);
 	callback = card->exiCallback;
 	if (callback) {
-		card->exiCallback = nullptr;
+		card->exiCallback = NULL;
 		callback(channel, CARD_RESULT_IOERROR);
 	}
 }
@@ -384,7 +384,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
 			result = CARD_RESULT_READY;
 		} else {
-			card->unlockCallback = nullptr;
+			card->unlockCallback = NULL;
 			result               = Retry(channel);
 		}
 	}
@@ -394,7 +394,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 		case 0x52:
 			callback = card->txCallback;
 			if (callback) {
-				card->txCallback = nullptr;
+				card->txCallback = NULL;
 				callback(channel, result);
 			}
 
@@ -404,7 +404,7 @@ static void UnlockedCallback(s32 channel, s32 result)
 		case 0xF1:
 			callback = card->exiCallback;
 			if (callback) {
-				card->exiCallback = nullptr;
+				card->exiCallback = NULL;
 				callback(channel, result);
 			}
 			break;
@@ -437,7 +437,7 @@ static s32 __CARDStart(s32 channel, CARDCallback txCallback, CARDCallback exiCal
 		if (!EXILock(channel, 0, __CARDUnlockedHandler)) {
 			result = CARD_RESULT_BUSY;
 		} else {
-			card->unlockCallback = nullptr;
+			card->unlockCallback = NULL;
 
 			if (!EXISelect(channel, 0, 4)) {
 				EXIUnlock(channel);
@@ -514,7 +514,7 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 	card->mode   = 1;
 	card->retry  = 3;
 
-	result = __CARDStart(channel, nullptr, callback);
+	result = __CARDStart(channel, NULL, callback);
 	if (result == CARD_RESULT_BUSY) {
 		return CARD_RESULT_READY;
 	}
@@ -522,7 +522,7 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 		return result;
 	}
 	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1) || !EXIDma(channel, card->buffer, 128, card->mode, __CARDTxHandler)) {
-		card->exiCallback = nullptr;
+		card->exiCallback = NULL;
 		EXIDeselect(channel);
 		EXIUnlock(channel);
 		return CARD_RESULT_NOCARD;
@@ -558,7 +558,7 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 	card->mode   = -1;
 	card->retry  = 3;
 
-	result = __CARDStart(channel, nullptr, callback);
+	result = __CARDStart(channel, NULL, callback);
 
 	if (result == CARD_RESULT_BUSY) {
 		return CARD_RESULT_READY;
@@ -571,7 +571,7 @@ s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback)
 	result = CARD_RESULT_READY;
 	if (!EXIImmEx(channel, card->cmd, card->cmdlen, 1)) {
 		result            = CARD_RESULT_NOCARD;
-		card->exiCallback = nullptr;
+		card->exiCallback = NULL;
 	}
 
 	EXIDeselect(channel);
@@ -642,7 +642,7 @@ s32 __CARDGetControlBlock(s32 channel, CARDControl** card)
 	} else {
 		reqCard->result      = CARD_RESULT_BUSY;
 		result               = CARD_RESULT_READY;
-		reqCard->apiCallback = nullptr;
+		reqCard->apiCallback = NULL;
 		*card                = reqCard;
 	}
 	OSRestoreInterrupts(enabled);
@@ -704,7 +704,7 @@ s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
 
 	fat = __CARDGetFatBlock(card);
 	dir = __CARDGetDirBlock(card);
-	if (fat == nullptr || dir == nullptr) {
+	if (fat == NULL || dir == NULL) {
 		return __CARDPutControlBlock(card, CARD_RESULT_BROKEN);
 	}
 

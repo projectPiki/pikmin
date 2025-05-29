@@ -95,7 +95,7 @@ void DVDT_SetRootPath(char* path)
  */
 void DVDT_ExtendPath(char* dst, char* ext)
 {
-	if (*audio_root_path != nullptr) {
+	if (*audio_root_path != NULL) {
 		strcpy(dst, audio_root_path);
 		if (*ext == '/') {
 			strcat(dst, ext + 1);
@@ -172,7 +172,7 @@ void* jac_dvdproc(void*)
 			if (buffersize == 0) {
 				__WriteBufferSize(buf, 2, 0x8000);
 			}
-			if (callback != nullptr) {
+			if (callback != NULL) {
 				break;
 			};
 		}
@@ -187,11 +187,11 @@ void* jac_dvdproc(void*)
  */
 static void __DoError(DVDCall* call, u32)
 {
-	if (call->callbackStatus != nullptr) {
+	if (call->callbackStatus != NULL) {
 		*call->callbackStatus = -1;
 	}
 
-	if (call->callback != nullptr) {
+	if (call->callback != NULL) {
 		call->callback(-1);
 	}
 }
@@ -203,11 +203,11 @@ static void __DoError(DVDCall* call, u32)
  */
 static void __DoFinish(DVDCall* call, u32 status)
 {
-	if (call->callbackStatus != nullptr) {
+	if (call->callbackStatus != NULL) {
 		*call->callbackStatus = status;
 	}
 
-	if (call->callback != nullptr) {
+	if (call->callback != NULL) {
 		call->callback(call->owner);
 	}
 }
@@ -328,7 +328,7 @@ static void __UpdateBuffer()
 	if (next_buffers != 0) {
 		__WriteBufferSize(next_buffertop, next_buffers, next_buffersize);
 		next_buffers   = 0;
-		next_buffertop = nullptr;
+		next_buffertop = NULL;
 	}
 }
 
@@ -359,7 +359,7 @@ void DVDT_SetBuffer(u8* buf, u32 numBuffers, u32 size)
 s32 DVDT_CloseBuffer(u8* buf)
 {
 	if (mq_init == 0) {
-		__WriteBufferSize(nullptr, 0, 0);
+		__WriteBufferSize(NULL, 0, 0);
 		return 1;
 	}
 
@@ -371,7 +371,7 @@ s32 DVDT_CloseBuffer(u8* buf)
 
 	if (ADVD_BUFFER[0] == buf) {
 		if (next_buffers == 0) {
-			next_buffertop  = nullptr;
+			next_buffertop  = NULL;
 			next_buffersize = 0;
 			next_buffers    = 1;
 			OSSendMessage(&mq, 0, OS_MESSAGE_NOBLOCK);
@@ -593,7 +593,7 @@ s32 DVDT_LoadFile(char* file, u8* p2)
 	char** pFile = &file;
 	vu32 status  = 0;
 	u32 badCompiler[3];
-	DVDT_LoadtoDRAM(0, *pFile, (u32)p2, 0, 0, &status, nullptr);
+	DVDT_LoadtoDRAM(0, *pFile, (u32)p2, 0, 0, &status, NULL);
 
 	while (status == 0) { }
 
