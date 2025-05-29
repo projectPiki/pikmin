@@ -720,13 +720,13 @@ void stateReady()
 	DVDCommandBlock* finished;
 
 	if (!__DVDCheckWaitingQueue()) {
-		executing = (DVDCommandBlock*)nullptr;
+		executing = nullptr;
 		return;
 	}
 
 	if (PauseFlag) {
 		PausingFlag = TRUE;
-		executing   = (DVDCommandBlock*)nullptr;
+		executing   = nullptr;
 		return;
 	}
 
@@ -1063,7 +1063,7 @@ static BOOL issueCommand(s32 prio, DVDCommandBlock* block)
 	block->state = 2;
 	result       = __DVDPushWaitingQueue(prio, block);
 
-	if ((executing == (DVDCommandBlock*)nullptr) && (PauseFlag == FALSE)) {
+	if ((executing == nullptr) && (PauseFlag == FALSE)) {
 		stateReady();
 	}
 
@@ -1539,7 +1539,7 @@ static void DVDPause()
 	BOOL level;
 	level     = OSDisableInterrupts();
 	PauseFlag = TRUE;
-	if (executing == (DVDCommandBlock*)NULL) {
+	if (executing == NULL) {
 		PausingFlag = TRUE;
 	}
 	OSRestoreInterrupts(level);
@@ -1795,7 +1795,7 @@ BOOL DVDCheckDisk()
 	} else if (PausingFlag) {
 		state = 8;
 	} else {
-		if (executing == (DVDCommandBlock*)NULL) {
+		if (executing == NULL) {
 			state = 0;
 		} else if (executing == &DummyCommandBlock) {
 			state = 0;

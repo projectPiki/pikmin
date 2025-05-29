@@ -15,7 +15,7 @@ static void Add_Queue(CmdQueue* cmdQueue)
 	CmdQueue* prev;
 
 	curr           = queue_list;
-	cmdQueue->next = (CmdQueue*)NULL;
+	cmdQueue->next = NULL;
 	if (!queue_list) {
 		queue_list = cmdQueue;
 		return;
