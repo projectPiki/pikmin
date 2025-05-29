@@ -1,28 +1,57 @@
 #include "jaudio/pikiinter.h"
+
 #include "jaudio/jammain_2.h"
+#include "jaudio/cmdqueue.h"
 #include "jaudio/cmdstack.h"
 #include "jaudio/interface.h"
 #include "jaudio/piki_player.h"
 #include "jaudio/pikidemo.h"
 #include "jaudio/verysimple.h"
+#include "Vector.h"
 
+// rename better later
+typedef struct SEvent_UnkC {
+	u32 _00; // _00, unknown
+	u8 _04;  // _04
+	u32 _08; // _08, unknown
+} SEvent_UnkC;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x1B4.
+ */
 typedef struct SEvent_ {
-	u8 _00[0xd0];
-	seqp_* _D0;
-	u8 _D4[0x140 - 0xD4];
-	SEvent_* _140;
-	int _144;
-	u8 _148[0x160 - 0x148];
-	f32 _160;
-	f32 _164;
+	Vector3f position;      // _00
+	SEvent_UnkC _0C[16];    // _0C
+	u32 eventType;          // _CC
+	seqp_* track;           // _D0
+	CmdQueue cmdQueue;      // _D4
+	SEvent_* _140;          // _140
+	int _144;               // _144
+	u8 _148[0x160 - 0x148]; // _148, unknown
+	f32 volume;             // _160
+	f32 pan;                // _164
+	u8 _168[0x170 - 0x168]; // _168, unknown
+	int frameTimer;         // _170
+	OuterParam_ outerParam; // _174
 } SEvent_;
 
+// fabricated name, need something for the CAMERA .comm entry
+// size 0x24.
+typedef struct SCamera_ {
+	u8 pad[0x24]; // _00
+} SCamera_;
+
 typedef struct Portargs_ {
-	SEvent_* mEvent;
+	SEvent_* mEvent; // _00
 } Portargs_;
 
 int CURRENT_TIME;
-SEvent_ EVENT;
+SEvent_ EVENT[16];
+SCamera_ CAMERA;
+
+f32 EVENT_DIST_SCALE[8] = { 1.0f, 1.0f, 2.0f, 0.8f, 1.2f, 1.0f, 1.2f, 2.0f };
 
 /*
  * --INFO--
@@ -45,10 +74,10 @@ void __SetVolandPan(Portargs_* arg)
 	seqp_* track;
 
 	evt   = arg->mEvent;
-	track = evt->_D0;
-	Jam_SetExtParam(evt->_160, track, 1);
-	track = evt->_D0;
-	Jam_SetExtParam(evt->_164, track, 8);
+	track = evt->track;
+	Jam_SetExtParam(evt->volume, track, 1);
+	track = evt->track;
+	Jam_SetExtParam(evt->pan, track, 8);
 }
 
 /*
@@ -71,7 +100,8 @@ void SendToStack(SEvent_* evt)
 void Jac_InitEventSystem(void)
 {
 	seqp_* handle;
-	int i;
+	u32 i;
+	u32 j;
 
 	Jac_SetProcessStatus(10);
 	CURRENT_TIME = 0;
@@ -80,78 +110,24 @@ void Jac_InitEventSystem(void)
 		handle = Jam_GetTrackHandle(0x20000);
 	} while (handle == NULL);
 
-	for (i = 0; i < 16; i++) { }
+	for (i = 0; i < 16; i++) {
+		EVENT[i].eventType = 0;
+		EVENT[i].track     = handle->children[i];
+
+		Jam_InitExtBuffer(&EVENT[i].outerParam);
+		Jam_AssignExtBuffer(handle->children[i], &EVENT[i].outerParam);
+		Jam_OnExtSwitch(handle->children[i], 9);
+
+		Jal_AddCmdQueue(&EVENT[i].cmdQueue, EVENT[i].track, 0);
+
+		for (j = 0; j < 16; j++) {
+			EVENT[i]._0C[j]._00 = 0;
+			EVENT[i]._0C[j]._04 = 0;
+			EVENT[i]._0C[j]._08 = 0;
+		}
+	}
 
 	Jac_SetProcessStatus(11);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0xA
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r22, 0x8(r1)
-	  bl        -0xCF4
-	  li        r0, 0
-	  stw       r0, 0x2C80(r13)
-
-	.loc_0x20:
-	  lis       r3, 0x2
-	  bl        -0x7064
-	  mr.       r27, r3
-	  beq+      .loc_0x20
-	  lis       r3, 0x803E
-	  li        r22, 0
-	  subi      r29, r3, 0x5034
-	  li        r31, 0
-	  li        r30, 0
-
-	.loc_0x44:
-	  add       r26, r29, r30
-	  li        r28, 0
-	  addi      r24, r31, 0x44
-	  stw       r28, 0xCC(r26)
-	  add       r24, r27, r24
-	  addi      r25, r26, 0x174
-	  lwz       r0, 0x0(r24)
-	  addi      r23, r26, 0xD0
-	  addi      r3, r25, 0
-	  stw       r0, 0xD0(r26)
-	  bl        -0x704C
-	  lwz       r3, 0x0(r24)
-	  mr        r4, r25
-	  bl        -0x7038
-	  lwz       r3, 0x0(r24)
-	  li        r4, 0x9
-	  bl        -0x6DC4
-	  lwz       r4, 0x0(r23)
-	  addi      r3, r26, 0xD4
-	  li        r5, 0
-	  bl        0x426C
-	  li        r0, 0x10
-	  addi      r3, r28, 0
-	  mtctr     r0
-
-	.loc_0xA4:
-	  add       r4, r26, r3
-	  addi      r3, r3, 0xC
-	  stw       r28, 0xC(r4)
-	  stb       r28, 0x10(r4)
-	  stw       r28, 0x14(r4)
-	  bdnz+     .loc_0xA4
-	  addi      r22, r22, 0x1
-	  addi      r30, r30, 0x1B4
-	  cmplwi    r22, 0x10
-	  addi      r31, r31, 0x4
-	  blt+      .loc_0x44
-	  li        r3, 0xB
-	  bl        -0xDB4
-	  lmw       r22, 0x8(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -161,7 +137,31 @@ void Jac_InitEventSystem(void)
  */
 void Jac_EventFrameCheck(void)
 {
-	if (Jac_DemoCheck() == FALSE && Jac_PauseCheck() == FALSE) { }
+	u32 i, j;
+	if (Jac_DemoCheck()) {
+		return;
+	}
+	if (Jac_PauseCheck()) {
+		return;
+	}
+
+	for (i = 0; i < 16; i++) {
+		if (!EVENT[i].eventType) {
+			continue;
+		}
+		if (!EVENT[i].frameTimer) {
+			continue;
+		}
+		EVENT[i].frameTimer--;
+		if (EVENT[i].frameTimer) {
+			continue;
+		}
+		for (j = 0; j < 16; j++) {
+			EVENT[i]._0C[i]._00 = 0;
+		}
+
+		Jal_SendCmdQueue_Force(&EVENT[i].cmdQueue, 0xFFFF);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -340,8 +340,53 @@ void Jac_UpdateCamera(struct Vector3f*, struct Vector3f*)
  * Address:	800179A0
  * Size:	000118
  */
-int Jac_CreateEvent(int, struct SVector_*)
+int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 {
+	u32 i, j;
+	u32 idx;
+	u32* REF_p1 = &eventType;
+	if (!eventType) {
+		return -1;
+	}
+
+	if (!Jac_DemoCheckEvent(eventType)) {
+		return -1;
+	}
+
+	for (i = 0; i < 16; i++) {
+		if (!EVENT[i].eventType) {
+			break;
+		}
+	}
+
+	if (i == 16) {
+		return -1;
+	}
+
+	idx = i;
+
+	EVENT[idx].eventType = eventType;
+
+	EVENT[idx].position.x = p2->x;
+	EVENT[idx].position.y = p2->z;
+	EVENT[idx].position.z = p2->y;
+
+	for (i = 0; i < 16; i++) {
+		EVENT[idx]._0C[i]._00 = 0;
+		EVENT[idx]._0C[i]._04 = 0;
+		EVENT[idx]._0C[i]._08 = 0;
+	}
+
+	EVENT[idx].frameTimer = 100;
+
+	switch (eventType) {
+	case 7:
+		Jac_PlayEventAction(idx, 4);
+		break;
+	}
+
+	return idx;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -440,38 +485,19 @@ int Jac_CreateEvent(int, struct SVector_*)
  * Address:	80017AC0
  * Size:	00005C
  */
-void Jac_UpdateEventPosition(int, struct Vector3f*)
+BOOL Jac_UpdateEventPosition(int idx, struct Vector3f* p2)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x10
-	  li        r3, 0
-	  blr
+	if (idx == -1) {
+		return FALSE;
+	}
 
-	.loc_0x10:
-	  mulli     r5, r3, 0x1B4
-	  lis       r3, 0x803E
-	  subi      r0, r3, 0x5034
-	  add       r7, r0, r5
-	  lwz       r0, 0xCC(r7)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  blr
+	if (!EVENT[idx].eventType) {
+		return FALSE;
+	}
 
-	.loc_0x34:
-	  lwz       r6, 0x0(r4)
-	  li        r0, 0x64
-	  lwz       r5, 0x4(r4)
-	  li        r3, 0x1
-	  stw       r6, 0x0(r7)
-	  stw       r5, 0x4(r7)
-	  lwz       r4, 0x8(r4)
-	  stw       r4, 0x8(r7)
-	  stw       r0, 0x170(r7)
-	  blr
-	*/
+	EVENT[idx].position   = *p2;
+	EVENT[idx].frameTimer = 100;
+	return TRUE;
 }
 
 /*
@@ -834,38 +860,20 @@ void MML_StopEventAction(u8, u8, u16)
  * Address:	80017F40
  * Size:	00005C
  */
-void MML_StopEventAll(u8, u16)
+void MML_StopEventAll(u8 idx, u16 p2)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r3,0,24,31
-	  lis       r3, 0x803E
-	  mulli     r5, r0, 0x1B4
-	  subi      r0, r3, 0x5034
-	  li        r7, 0x1
-	  add       r6, r0, r5
-	  lwz       r0, 0xCC(r6)
-	  cmplwi    r0, 0
-	  beqlr-
-	  li        r3, 0
-	  li        r0, 0x10
-	  addi      r5, r3, 0
-	  rlwinm    r4,r4,0,16,31
-	  mtctr     r0
+	u32 i;
+	u16 flag = 1;
+	if (EVENT[idx].eventType == 0) {
+		return;
+	}
 
-	.loc_0x38:
-	  rlwinm    r7,r7,0,16,31
-	  and.      r0, r4, r7
-	  bne-      .loc_0x4C
-	  addi      r0, r3, 0xC
-	  stwx      r5, r6, r0
-
-	.loc_0x4C:
-	  rlwinm    r7,r7,1,16,30
-	  addi      r3, r3, 0xC
-	  bdnz+     .loc_0x38
-	  blr
-	*/
+	for (i = 0; i < 16; i++) {
+		if ((p2 & flag) == 0) {
+			EVENT[idx]._0C[i]._00 = 0;
+		}
+		flag = (flag << 1) & 0xFFFE;
+	}
 }
 
 /*
@@ -873,8 +881,25 @@ void MML_StopEventAll(u8, u16)
  * Address:	80017FA0
  * Size:	000094
  */
-void Jac_DestroyEvent(s32)
+BOOL Jac_DestroyEvent(s32 idx)
 {
+	u32 i;
+	if (idx == -1) {
+		return FALSE;
+	}
+
+	if (EVENT[idx].eventType == 0) {
+		return FALSE;
+	}
+
+	for (i = 0; i < 16; i++) {
+		EVENT[idx]._0C[i]._00 = 0;
+	}
+
+	Jal_SendCmdQueue_Force(&EVENT[idx].cmdQueue, 0xFFFF);
+	EVENT[idx].eventType = 0;
+	return TRUE;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -932,26 +957,10 @@ void Jac_DestroyEvent(s32)
  */
 void Jac_InitAllEvent(void)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  li        r31, 0
-
-	.loc_0x14:
-	  mr        r3, r31
-	  bl        -0xB8
-	  addi      r31, r31, 0x1
-	  cmplwi    r31, 0x10
-	  blt+      .loc_0x14
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
+	u32 i;
+	for (i = 0; i < 16; i++) {
+		Jac_DestroyEvent(i);
+	}
 }
 
 /*
@@ -971,27 +980,15 @@ void Jac_DestroyNotThisEvent(void)
  */
 int Jac_CheckFreeEvents(void)
 {
-	/*
-	.loc_0x0:
-	  lis       r3, 0x803E
-	  li        r0, 0x10
-	  subi      r6, r3, 0x5034
-	  li        r3, 0
-	  li        r4, 0
-	  mtctr     r0
+	u32 i;
+	int count = 0;
+	for (i = 0; i < 16; i++) {
+		if (!EVENT[i].eventType) {
+			count++;
+		}
+	}
 
-	.loc_0x18:
-	  add       r5, r6, r4
-	  lwz       r0, 0xCC(r5)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x2C
-	  addi      r3, r3, 0x1
-
-	.loc_0x2C:
-	  addi      r4, r4, 0x1B4
-	  bdnz+     .loc_0x18
-	  blr
-	*/
+	return count;
 }
 
 /*
@@ -999,33 +996,16 @@ int Jac_CheckFreeEvents(void)
  * Address:	800180C0
  * Size:	000050
  */
-int Jac_GetActiveEvents(u8*)
+int Jac_GetActiveEvents(u32* eventIDs)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x803E
-	  li        r0, 0x10
-	  subi      r7, r4, 0x5034
-	  li        r8, 0
-	  li        r4, 0
-	  li        r9, 0
-	  li        r5, 0
-	  mtctr     r0
+	u32 count = 0;
+	u32 i;
+	for (i = 0; i < 16; i++) {
+		if (EVENT[i].eventType != 0) {
+			eventIDs[count] = i;
+			count++;
+		}
+	}
 
-	.loc_0x20:
-	  add       r6, r7, r5
-	  lwz       r0, 0xCC(r6)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3C
-	  stwx      r9, r3, r4
-	  addi      r8, r8, 0x1
-	  addi      r4, r4, 0x4
-
-	.loc_0x3C:
-	  addi      r9, r9, 0x1
-	  addi      r5, r5, 0x1B4
-	  bdnz+     .loc_0x20
-	  mr        r3, r8
-	  blr
-	*/
+	return count;
 }

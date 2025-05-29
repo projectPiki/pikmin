@@ -878,16 +878,13 @@ void SeSystem::dumpEvents()
 		}
 	}
 
-	u8 test[0x80];
+	u32 test[0x20];
 	u32 max = Jac_GetActiveEvents(test);
 	Jac_CheckFreeEvents();
 
-	// this is, uh...
-	u8* ptr = test;
 	for (int i = 0; i < max; i++) {
 		// probably something like this
-		PRINT("%d", *ptr);
-		ptr++;
+		PRINT("%d", test[i]);
 	}
 }
 

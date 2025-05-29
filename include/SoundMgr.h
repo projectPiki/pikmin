@@ -7,6 +7,7 @@
 #include "Parameters.h"
 #include "SoundID.h"
 #include "types.h"
+#include "jaudio/pikiinter.h"
 #include "Win.h"
 
 struct Creature;
@@ -17,15 +18,6 @@ struct Creature;
 struct SeInfo {
 	int mSeID;     // _00
 	char* mSeName; // _04
-};
-
-/**
- * @brief TODO
- */
-struct SVector_ {
-	f32 x;
-	f32 y;
-	f32 z;
 };
 
 /**
