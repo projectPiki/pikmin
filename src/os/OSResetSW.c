@@ -25,7 +25,7 @@ void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 		__OSMaskInterrupts(OS_INTERRUPTMASK_PI_RSW);
 		if (ResetCallback) {
 			callback      = ResetCallback;
-			ResetCallback = nullptr;
+			ResetCallback = NULL;
 			callback();
 		}
 	}

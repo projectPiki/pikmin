@@ -30,12 +30,12 @@ static void BlockReadCallback(s32 channel, s32 result)
 	return;
 
 error:
-	if (card->apiCallback == nullptr) {
+	if (card->apiCallback == NULL) {
 		__CARDPutControlBlock(card, result);
 	}
 	callback = card->xferCallback;
 	if (callback) {
-		card->xferCallback = nullptr;
+		card->xferCallback = NULL;
 		callback(channel, result);
 	}
 }
@@ -91,12 +91,12 @@ static void BlockWriteCallback(s32 channel, s32 result)
 	return;
 
 error:
-	if (card->apiCallback == nullptr) {
+	if (card->apiCallback == NULL) {
 		__CARDPutControlBlock(card, result);
 	}
 	callback = card->xferCallback;
 	if (callback) {
-		card->xferCallback = nullptr;
+		card->xferCallback = NULL;
 		callback(channel, result);
 	}
 }

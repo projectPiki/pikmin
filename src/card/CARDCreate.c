@@ -14,7 +14,7 @@ static void CreateCallbackFat(s32 channel, s32 result)
 
 	card              = &__CARDBlock[channel];
 	callback          = card->apiCallback;
-	card->apiCallback = nullptr;
+	card->apiCallback = NULL;
 	if (result < 0) {
 		goto error;
 	}

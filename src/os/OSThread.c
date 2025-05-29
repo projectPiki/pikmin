@@ -33,7 +33,7 @@ void __OSThreadInit(void)
 	thread->priority = thread->base = 16;
 	thread->suspend                 = 0;
 	thread->val                     = (void*)-1;
-	thread->mutex                   = nullptr;
+	thread->mutex                   = NULL;
 	OSInitThreadQueue(&thread->queueJoin);
 	InitMutexQueue(&thread->queueMutex);
 
@@ -65,7 +65,7 @@ void __OSThreadInit(void)
  */
 void OSInitThreadQueue(OSThreadQueue* threadQueue)
 {
-	threadQueue->head = threadQueue->tail = nullptr;
+	threadQueue->head = threadQueue->tail = NULL;
 }
 
 /*
@@ -191,7 +191,7 @@ static void UnsetRun(OSThread* thread)
 	RemoveItem(queue, thread, link);
 	if (queue->head == 0)
 		RunQueueBits &= ~(1u << (OS_PRIORITY_MAX - thread->priority));
-	thread->queue = nullptr;
+	thread->queue = NULL;
 }
 #pragma dont_inline reset
 
@@ -244,7 +244,7 @@ static OSThread* SetEffectivePriority(OSThread* thread, OSPriority priority)
 		thread->priority = priority;
 		break;
 	}
-	return nullptr;
+	return NULL;
 }
 
 /*
@@ -328,7 +328,7 @@ static OSThread* SelectThread(BOOL yield)
 		}
 	}
 
-	__OSCurrentThread = nullptr;
+	__OSCurrentThread = NULL;
 	if (RunQueueBits == 0) {
 		OSSetCurrentContext(&IdleContext);
 		do {
@@ -405,7 +405,7 @@ BOOL OSCreateThread(OSThread* thread, OSThreadStartFunction func, void* param, v
 	thread->priority = priority;
 	thread->suspend  = 1;
 	thread->val      = (void*)-1;
-	thread->mutex    = nullptr;
+	thread->mutex    = NULL;
 	OSInitThreadQueue(&thread->queueJoin);
 	InitMutexQueue(&thread->queueMutex);
 	*(u32*)(stackThing - 8) = 0;

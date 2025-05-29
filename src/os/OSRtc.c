@@ -57,9 +57,9 @@ static BOOL ReadSram(void* buffer)
 
 	cmd = RTC_CMD_READ | RTC_SRAM_ADDR;
 	err = FALSE;
-	err |= !EXIImm(RTC_CHAN, &cmd, 4, 1, nullptr);
+	err |= !EXIImm(RTC_CHAN, &cmd, 4, 1, NULL);
 	err |= !EXISync(RTC_CHAN);
-	err |= !EXIDma(RTC_CHAN, buffer, RTC_SRAM_SIZE, 0, nullptr);
+	err |= !EXIDma(RTC_CHAN, buffer, RTC_SRAM_SIZE, 0, NULL);
 	err |= !EXISync(RTC_CHAN);
 	err |= !EXIDeselect(RTC_CHAN);
 	EXIUnlock(RTC_CHAN);
@@ -102,7 +102,7 @@ static BOOL WriteSram(void* buffer, u32 offset, u32 size)
 	offset <<= 6;
 	cmd = RTC_CMD_WRITE | RTC_SRAM_ADDR + offset;
 	err = FALSE;
-	err |= !EXIImm(RTC_CHAN, &cmd, 4, 1, nullptr);
+	err |= !EXIImm(RTC_CHAN, &cmd, 4, 1, NULL);
 	err |= !EXISync(RTC_CHAN);
 	err |= !EXIImmEx(RTC_CHAN, buffer, (s32)size, 1);
 	err |= !EXIDeselect(RTC_CHAN);
@@ -135,7 +135,7 @@ static void* LockSram(u32 offset)
 
 	if (Scb.locked != FALSE) {
 		OSRestoreInterrupts(enabled);
-		return nullptr;
+		return NULL;
 	}
 
 	Scb.enabled = enabled;

@@ -41,7 +41,7 @@ void __ARQPopTaskQueueHi()
  */
 void __ARQServiceQueueLo()
 {
-	if ((__ARQRequestPendingLo == nullptr) && (__ARQRequestQueueLo)) {
+	if ((__ARQRequestPendingLo == NULL) && (__ARQRequestQueueLo)) {
 		__ARQRequestPendingLo = __ARQRequestQueueLo;
 		__ARQRequestQueueLo   = __ARQRequestQueueLo->next;
 	}
@@ -90,18 +90,18 @@ void __ARQInterruptServiceRoutine(void)
 {
 	if (__ARQCallbackHi) {
 		(*__ARQCallbackHi)((u32)__ARQRequestPendingHi);
-		__ARQRequestPendingHi = nullptr;
-		__ARQCallbackHi       = nullptr;
+		__ARQRequestPendingHi = NULL;
+		__ARQCallbackHi       = NULL;
 
 	} else if (__ARQCallbackLo) {
 		(*__ARQCallbackLo)((u32)__ARQRequestPendingLo);
-		__ARQRequestPendingLo = nullptr;
-		__ARQCallbackLo       = nullptr;
+		__ARQRequestPendingLo = NULL;
+		__ARQCallbackLo       = NULL;
 	}
 
 	__ARQPopTaskQueueHi();
 
-	if (__ARQRequestPendingHi == nullptr) {
+	if (__ARQRequestPendingHi == NULL) {
 		__ARQServiceQueueLo();
 	}
 }
@@ -137,13 +137,13 @@ void ARQInit()
 		return;
 	}
 
-	__ARQRequestQueueHi = __ARQRequestQueueLo = nullptr;
+	__ARQRequestQueueHi = __ARQRequestQueueLo = NULL;
 	__ARQChunkSize                            = ARQ_CHUNK_SIZE_DEFAULT;
 	ARRegisterDMACallback(&__ARQInterruptServiceRoutine);
-	__ARQRequestPendingHi = nullptr;
-	__ARQRequestPendingLo = nullptr;
-	__ARQCallbackHi       = nullptr;
-	__ARQCallbackLo       = nullptr;
+	__ARQRequestPendingHi = NULL;
+	__ARQRequestPendingLo = NULL;
+	__ARQCallbackHi       = NULL;
+	__ARQCallbackLo       = NULL;
 
 	__ARQ_init_flag = TRUE;
 }
@@ -167,7 +167,7 @@ void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 sou
 {
 	BOOL enabled;
 
-	task->next   = nullptr;
+	task->next   = NULL;
 	task->owner  = owner;
 	task->type   = type;
 	task->source = source;
@@ -205,10 +205,10 @@ void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 sou
 		break;
 	}
 
-	if ((__ARQRequestPendingHi == nullptr) && (__ARQRequestPendingLo == nullptr)) {
+	if ((__ARQRequestPendingHi == NULL) && (__ARQRequestPendingLo == NULL)) {
 		__ARQPopTaskQueueHi();
 
-		if (__ARQRequestPendingHi == nullptr) {
+		if (__ARQRequestPendingHi == NULL) {
 			__ARQServiceQueueLo();
 		}
 	}

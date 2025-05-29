@@ -7,11 +7,11 @@ s16 REL_TABLE[] = { 0, 10, 0, 15, 1, 0 };
 
 Osc_definition VIBRATO_DEF  = { 1, 0.8f, VIB_TABLE, VIB_TABLE, 0.0f, 1.0f };
 Osc_definition TREMOLO_DEF  = { 0, 1.0f, TRE_TABLE, TRE_TABLE, 0.0f, 1.0f };
-Osc_definition ENVELOPE_DEF = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
+Osc_definition ENVELOPE_DEF = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
 
 s16 ADS_TABLE[]         = { 0, 0, 0x7fff, 0, 0, 0x7fff, 0, 0, 0, 14, 0, 0 };
-Osc_definition ADSR_DEF = { 0, 1.0f, nullptr, nullptr, 1.0f, 0.0f };
-Osc_definition OSC_DEF  = { 0, 1.0f, nullptr, REL_TABLE, 1.0f, 0.0f };
+Osc_definition ADSR_DEF = { 0, 1.0f, NULL, NULL, 1.0f, 0.0f };
+Osc_definition OSC_DEF  = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
 
 /*
  * --INFO--
@@ -180,7 +180,7 @@ void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 
 	if (b) {
 		if (offs1 == 0) {
-			track->_340[idx]._08 = nullptr;
+			track->_340[idx]._08 = NULL;
 		}
 		track->_340[idx]._08 = (s16*)Jam_OfsToAddr(track, offs1);
 	}

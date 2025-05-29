@@ -153,14 +153,14 @@ void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 	REF_size        = &size;
 	u32 roundedSize = ALIGN_NEXT(size, 32);
 	if (!heap->base) {
-		return nullptr;
+		return NULL;
 	}
 
 	u8* prev = heap->current;
 	if (prev + roundedSize <= heap->base + heap->length) {
 		heap->current = prev + roundedSize;
 	} else {
-		return nullptr;
+		return NULL;
 	}
 
 	heap->count++;
@@ -184,14 +184,14 @@ void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
 	heap->count = 0;
 	if (!p2) {
 		heap->length  = 0;
-		heap->current = nullptr;
-		heap->last    = nullptr;
+		heap->current = NULL;
+		heap->last    = NULL;
 	} else {
 		length        = p3 - ((u32)p2 & 0x1F);
 		heap->base    = (u8*)ALIGN_NEXT((u32)p2, 32);
 		heap->current = heap->base;
 		heap->length  = length;
-		heap->last    = nullptr;
+		heap->last    = NULL;
 	}
 }
 

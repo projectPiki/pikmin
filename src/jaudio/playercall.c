@@ -12,7 +12,7 @@ void ResetPlayerCallback()
 	int i;
 
 	for (i = 0; i < 16; i++) {
-		PLAYER_CALLLIST[i].callback = nullptr;
+		PLAYER_CALLLIST[i].callback = NULL;
 	}
 }
 
@@ -71,7 +71,7 @@ s32 Jac_RegisterPlayerCallback(PlayerCallBack callback, void* arg)
 	u32 i;
 
 	for (i = 0; i < 16; i++) {
-		if (PLAYER_CALLLIST[i].callback == nullptr) {
+		if (PLAYER_CALLLIST[i].callback == NULL) {
 			break;
 		}
 	}
@@ -102,9 +102,9 @@ void PlayerCallback()
 	u32 i;
 
 	for (i = 0; i < 16; i++) {
-		if (PLAYER_CALLLIST[i].callback != nullptr && PLAYER_CALLLIST[i].DSP_mode == FALSE
+		if (PLAYER_CALLLIST[i].callback != NULL && PLAYER_CALLLIST[i].DSP_mode == FALSE
 		    && PLAYER_CALLLIST[i].callback(PLAYER_CALLLIST[i].arg) == -1) {
-			PLAYER_CALLLIST[i].callback = nullptr;
+			PLAYER_CALLLIST[i].callback = NULL;
 		}
 	}
 }
@@ -119,9 +119,9 @@ void DspPlayerCallback()
 	u32 i;
 
 	for (i = 0; i < 16; i++) {
-		if (PLAYER_CALLLIST[i].callback != nullptr && PLAYER_CALLLIST[i].DSP_mode == TRUE
+		if (PLAYER_CALLLIST[i].callback != NULL && PLAYER_CALLLIST[i].DSP_mode == TRUE
 		    && PLAYER_CALLLIST[i].callback(PLAYER_CALLLIST[i].arg) == -1) {
-			PLAYER_CALLLIST[i].callback = nullptr;
+			PLAYER_CALLLIST[i].callback = NULL;
 		}
 	}
 }

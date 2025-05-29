@@ -252,7 +252,7 @@ unknown JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callb
 	strcat(name, "/");
 	strcat(name, JV_ARC[idx]->meta.arcName);
 
-	DVDT_LoadtoDRAM(owner, name, (u32)dst, src, length, nullptr, callback);
+	DVDT_LoadtoDRAM(owner, name, (u32)dst, src, length, NULL, callback);
 	return length;
 }
 

@@ -74,7 +74,7 @@ static void __ReLoad()
 		inter = OSDisableInterrupts();
 		dvd_active += 1;
 
-		DVDT_LoadtoDRAM(dvdcount, filename, dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, nullptr, __LoadFin);
+		DVDT_LoadtoDRAM(dvdcount, filename, dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
 		OSRestoreInterrupts(inter);
 	}
 
@@ -1194,8 +1194,8 @@ int Jac_GetPicture(void* data, int* x, int* y)
  */
 static void InitPic()
 {
-	ref1 = nullptr;
-	ref2 = nullptr;
+	ref1 = NULL;
+	ref2 = NULL;
 	for (u32 i = 0; i < PIC_BUFFERS; i++) {
 		pic_ctrl[i]._04 = 0;
 		pic_ctrl[i]._08 = 0;

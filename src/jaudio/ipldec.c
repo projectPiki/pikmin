@@ -16,7 +16,7 @@ static u8 TASK_REMAIN;
 static DSPTask* WriteTask(u8 target, u32 cmd, void* task, DSPCallback callback)
 {
 	if (TASK_REMAIN == 4) {
-		return nullptr;
+		return NULL;
 	}
 
 	DSPTask* dspTask  = &EX_DSPTASK[TASK_WRITEPTR];
@@ -98,7 +98,7 @@ void Jac_IPLDspSec(void)
  */
 void Jac_DSPcardDecodeAsync(void* task, void* cmd, DSPCallback callback)
 {
-	while (WriteTask(DSPTARGET_IPL, (u32)cmd, task, callback) == nullptr) {
+	while (WriteTask(DSPTARGET_IPL, (u32)cmd, task, callback) == NULL) {
 		;
 	}
 }

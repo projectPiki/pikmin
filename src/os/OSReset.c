@@ -17,15 +17,15 @@ void OSRegisterResetFunction(OSResetFunctionInfo* info)
 		;
 	}
 
-	if (iter == nullptr) {
+	if (iter == NULL) {
 		tmp = ResetFunctionQueue.tail;
-		if (tmp == nullptr) {
+		if (tmp == NULL) {
 			ResetFunctionQueue.head = info;
 		} else {
 			tmp->next = info;
 		}
 		info->prev              = tmp;
-		info->next              = nullptr;
+		info->next              = NULL;
 		ResetFunctionQueue.tail = info;
 		return;
 	}
@@ -34,7 +34,7 @@ void OSRegisterResetFunction(OSResetFunctionInfo* info)
 	tmp        = iter->prev;
 	iter->prev = info;
 	info->prev = tmp;
-	if (tmp == nullptr) {
+	if (tmp == NULL) {
 		ResetFunctionQueue.head = info;
 		return;
 	}
@@ -61,7 +61,7 @@ BOOL CallResetFunctions(BOOL final)
 	OSResetFunctionInfo* iter;
 	BOOL retCode = FALSE;
 
-	for (iter = ResetFunctionQueue.head; (iter != nullptr); iter = iter->next) {
+	for (iter = ResetFunctionQueue.head; (iter != NULL); iter = iter->next) {
 		retCode |= !iter->func(final);
 	}
 

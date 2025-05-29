@@ -33,7 +33,7 @@ static void WriteCallback(s32 channel, s32 result)
 		ent               = &dir->entries[fileInfo->fileNo];
 		ent->time         = (u32)OSTicksToSeconds(OSGetTime());
 		callback          = card->apiCallback;
-		card->apiCallback = nullptr;
+		card->apiCallback = NULL;
 		result            = __CARDUpdateDir(channel, callback);
 
 	} else {
@@ -54,7 +54,7 @@ static void WriteCallback(s32 channel, s32 result)
 
 error:
 	callback          = card->apiCallback;
-	card->apiCallback = nullptr;
+	card->apiCallback = NULL;
 	__CARDPutControlBlock(card, result);
 	callback(channel, result);
 }
@@ -84,7 +84,7 @@ void EraseCallback(s32 channel, s32 result)
 
 error:
 	callback          = card->apiCallback;
-	card->apiCallback = nullptr;
+	card->apiCallback = NULL;
 	__CARDPutControlBlock(card, result);
 	callback(channel, result);
 }

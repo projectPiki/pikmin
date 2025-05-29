@@ -293,7 +293,7 @@ void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 	if ((flags & AUDIO_THREAD_FLAG_AUDIO)) {
 		// point to top of audioStack
 		u8* stack_p = jac_audioStack;
-		OSCreateThread(&jac_audioThread.thread, &audioproc, nullptr, (void*)&stack_p[AUDIO_STACK_SIZE], AUDIO_STACK_SIZE, pri, 1);
+		OSCreateThread(&jac_audioThread.thread, &audioproc, NULL, (void*)&stack_p[AUDIO_STACK_SIZE], AUDIO_STACK_SIZE, pri, 1);
 		OSResumeThread(&jac_audioThread.thread);
 	}
 
