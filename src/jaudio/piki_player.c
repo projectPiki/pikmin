@@ -269,7 +269,7 @@ void Jac_UpdatePikiGaya()
 	static seqp_* seqp;
 	static int init   = 0;
 	static f32 volume = 0.0f;
-	static ExtBuffer outerparam;
+	static OuterParam_ outerparam;
 
 	if (Jac_GetCurrentScene() != 5) {
 		Jam_SetExtParamD(0, &outerparam, 1);

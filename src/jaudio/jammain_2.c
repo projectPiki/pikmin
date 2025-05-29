@@ -11,17 +11,38 @@
 // 0 is probably success / "no error".  Return values 1 and 2 have been observed.
 // This just breaking: Cmd_LoopE returns 0x80.
 
-typedef struct SEQ_ARG_t SEQ_ARG_t;
+#define TRACK_LIST_SIZE (32)
 
-struct SEQ_ARG_t {
-	u32 _00[5];          // _00 | Most likely unsigned.
-	u8 _14[0x20 - 0x14]; // _10 | Is this whole struct actually just a u32[8]?
+typedef struct TrackListPair TrackListPair;
+typedef struct ArgListPair ArgListPair;
+
+/**
+ * @brief This is an invented pair-like struct, needed for `TRACK_LIST`.
+ *
+ * @note Size: 8.
+ */
+struct TrackListPair {
+	seqp_* track; // _00
+	u32 _04;      // _04
 };
+
+/**
+ * @brief This is an invented pair-like struct, needed for `Arglist`.
+ *
+ * @note Size: 4.
+ */
+struct ArgListPair {
+	u16 first;
+	u16 second;
+};
+
+static size_t T_LISTS;
+static TrackListPair TRACK_LIST[TRACK_LIST_SIZE];
 
 static seqp_* SEQ_P;
 static u8 SEQ_CMD;
-static u8 TRACK_LIST[0x100]; // TODO: placeholder
-static SEQ_ARG_t SEQ_ARG;
+static u32 SEQ_ARG[8];
+
 static TrackCallback JAM_CALLBACK_FUNC = NULL;
 
 /*
@@ -378,66 +399,30 @@ void Jam_WriteTimeParam(seqp_*, u8)
  * Address:	8000FAA0
  * Size:	0000AC
  */
-void Jam_WriteRegDirect(seqp_*, u8, u16)
+void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x20
-	  stwu      r1, -0x28(r1)
-	  stmw      r29, 0x1C(r1)
-	  addi      r31, r4, 0
-	  addi      r29, r3, 0
-	  addi      r30, r5, 0
-	  bge-      .loc_0x3C
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x84
-	  cmpwi     r0, 0
-	  bge-      .loc_0x4C
-	  b         .loc_0x84
+	u8 uVar1;
+	u32 uVar2;
 
-	.loc_0x3C:
-	  cmpwi     r0, 0x22
-	  beq-      .loc_0x60
-	  bge-      .loc_0x84
-	  b         .loc_0x98
-
-	.loc_0x4C:
-	  rlwinm    r30,r30,0,24,31
-	  addi      r3, r30, 0
-	  bl        -0x234
-	  b         .loc_0x88
-	  b         .loc_0x98
-
-	.loc_0x60:
-	  rlwinm    r31,r30,0,16,31
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  rlwinm    r5,r30,24,24,31
-	  bl        .loc_0x0
-	  addi      r3, r30, 0
-	  rlwinm    r30,r31,0,24,31
-	  li        r31, 0x1
-	  b         .loc_0x88
-
-	.loc_0x84:
-	  mr        r3, r30
-
-	.loc_0x88:
-	  rlwinm    r0,r31,1,23,30
-	  add       r4, r29, r0
-	  sth       r30, 0x26C(r4)
-	  sth       r3, 0x272(r29)
-
-	.loc_0x98:
-	  lmw       r29, 0x1C(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	uVar1 = value;
+	switch (index) {
+	case 0:
+	case 1:
+	case 2:
+		uVar1 = value & 0xff;
+		value = Extend8to16(value);
+		break;
+	case 32:
+	case 33:
+		return;
+	case 34:
+		Jam_WriteRegDirect(track, 0, value >> 8);
+		index = 1;
+		uVar1 = value & 0xff;
+		break;
+	}
+	track->registers[index] = uVar1;
+	track->registers[3]     = value;
 }
 
 /*
@@ -1043,15 +1028,12 @@ void Jam_WriteRegXY(seqp_* track, u32 param_2)
  * Address:	80010340
  * Size:	00003C
  */
-u32 __ExchangeRegisterValue(seqp_* param_1, u8 param_2)
+u32 __ExchangeRegisterValue(seqp_* track, u8 param_2)
 {
-	// TODO: This used to be able to match, but seqsetup.c's `Init_Track` provided intel about members that conflicts with this function.
-
-	// // TODO: This looks like a bounds-check for the array accessed below.
-	// if (param_2 < 0x40) {
-	// 	return Jam_ReadReg32();
-	// }
-	// return param_1->_1F2[param_2 * 2];
+	if (param_2 < 64) {
+		return Jam_ReadReg32();
+	}
+	return track->trackPort[param_2 - 64].value;
 }
 
 /*
@@ -1129,49 +1111,20 @@ void Jam_CheckPortIndirect(void)
  * Address:	80010380
  * Size:	000078
  */
-s32 Jam_WritePortAppDirect(seqp_*, u8, u16)
+BOOL Jam_WritePortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  mr.       r30, r3
-	  addi      r31, r4, 0
-	  bne-      .loc_0x24
-	  li        r3, 0
-	  b         .loc_0x64
-
-	.loc_0x24:
-	  rlwinm    r0,r31,2,0,29
-	  cmplwi    r31, 0
-	  add       r3, r30, r0
-	  li        r0, 0x1
-	  sth       r5, 0x2F2(r3)
-	  stb       r0, 0x2F0(r3)
-	  bne-      .loc_0x4C
-	  addi      r3, r30, 0
-	  li        r4, 0x3
-	  bl        0x1358
-
-	.loc_0x4C:
-	  cmplwi    r31, 0x1
-	  bne-      .loc_0x60
-	  addi      r3, r30, 0
-	  li        r4, 0x4
-	  bl        0x1344
-
-	.loc_0x60:
-	  li        r3, 0x1
-
-	.loc_0x64:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	if (!track) {
+		return FALSE;
+	}
+	track->trackPort[param_2].value      = param_3;
+	track->trackPort[param_2].importFlag = 1;
+	if (param_2 == 0) {
+		Jam_SetInterrupt(track, 3);
+	}
+	if (param_2 == 1) {
+		Jam_SetInterrupt(track, 4);
+	}
+	return TRUE;
 }
 
 /*
@@ -1179,25 +1132,14 @@ s32 Jam_WritePortAppDirect(seqp_*, u8, u16)
  * Address:	80010400
  * Size:	000030
  */
-s32 Jam_ReadPortAppDirect(seqp_*, u32, u16*)
+BOOL Jam_ReadPortAppDirect(seqp_* track, u32 param_2, u16* param_3)
 {
-	/*
-	.loc_0x0:
-	  cmplwi    r3, 0
-	  bne-      .loc_0x10
-	  li        r3, 0
-	  blr
-
-	.loc_0x10:
-	  rlwinm    r4,r4,2,0,29
-	  li        r0, 0
-	  add       r6, r3, r4
-	  li        r3, 0x1
-	  lhz       r4, 0x2F2(r6)
-	  sth       r4, 0x0(r5)
-	  stb       r0, 0x2F1(r6)
-	  blr
-	*/
+	if (!track) {
+		return FALSE;
+	}
+	*param_3                             = track->trackPort[param_2].value;
+	track->trackPort[param_2].exportFlag = 0;
+	return TRUE;
 }
 
 /*
@@ -1205,48 +1147,22 @@ s32 Jam_ReadPortAppDirect(seqp_*, u32, u16*)
  * Address:	80010440
  * Size:	00006C
  */
-s32 Jam_CheckPortAppDirect(seqp_*, u32, u16)
+BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 {
-	/*
-	.loc_0x0:
-	  rlwinm    r0,r5,0,24,31
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x40
-	  bge-      .loc_0x64
-	  cmpwi     r0, 0
-	  bge-      .loc_0x1C
-	  b         .loc_0x64
-
-	.loc_0x1C:
-	  rlwinm    r0,r4,2,0,29
-	  add       r3, r3, r0
-	  lbz       r0, 0x2F1(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x38
-	  li        r3, 0
-	  blr
-
-	.loc_0x38:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x40:
-	  rlwinm    r0,r4,2,0,29
-	  add       r3, r3, r0
-	  lbz       r0, 0x2F0(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x5C
-	  li        r3, 0
-	  blr
-
-	.loc_0x5C:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x64:
-	  li        r3, 0
-	  blr
-	*/
+	// Again with the cast to u8... what is it?
+	switch ((u8)param_3) {
+	case FALSE:
+		if (track->trackPort[param_2].exportFlag == FALSE) {
+			return FALSE;
+		}
+		return TRUE;
+	case TRUE:
+		if (track->trackPort[param_2].importFlag == TRUE) {
+			return FALSE;
+		}
+		return TRUE;
+	}
+	return FALSE;
 }
 
 /*
@@ -1296,23 +1212,12 @@ void Jam_WritePortBros(void)
  */
 void Jam_InitRegistTrack(void)
 {
-	/*
-	.loc_0x0:
-	  li        r6, 0
-	  lis       r4, 0x8032
-	  li        r0, 0x20
-	  addi      r3, r6, 0
-	  stw       r6, 0x2C2C(r13)
-	  subi      r5, r4, 0x680
-	  mtctr     r0
+	int i;
 
-	.loc_0x1C:
-	  add       r4, r5, r3
-	  addi      r3, r3, 0x8
-	  stw       r6, 0x0(r4)
-	  bdnz+     .loc_0x1C
-	  blr
-	*/
+	T_LISTS = 0;
+	for (i = 0; i < TRACK_LIST_SIZE; ++i) {
+		TRACK_LIST[i].track = NULL;
+	}
 }
 
 /*
@@ -1320,67 +1225,33 @@ void Jam_InitRegistTrack(void)
  * Address:	80010500
  * Size:	0000A8
  */
-void Jam_RegistTrack(seqp_*, u32)
+void Jam_RegistTrack(seqp_* track, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  stw       r4, 0xC(r1)
-	  lis       r4, 0x8032
-	  lwz       r7, 0x2C2C(r13)
-	  subi      r5, r4, 0x680
-	  lwz       r6, 0xC(r1)
-	  li        r4, 0
-	  mtctr     r7
-	  cmplwi    r7, 0
-	  ble-      .loc_0x40
+	u32* REF_param_2;
+	size_t i;
 
-	.loc_0x28:
-	  addi      r0, r4, 0x4
-	  lwzx      r0, r5, r0
-	  cmplw     r6, r0
-	  beq-      .loc_0xA0
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x28
-
-	.loc_0x40:
-	  cmplwi    r7, 0x20
-	  bne-      .loc_0x7C
-	  li        r0, 0x20
-	  li        r7, 0
-	  li        r4, 0
-	  mtctr     r0
-
-	.loc_0x58:
-	  lwzx      r0, r5, r4
-	  cmplwi    r0, 0
-	  beq-      .loc_0x70
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x58
-
-	.loc_0x70:
-	  cmplwi    r7, 0x20
-	  bne-      .loc_0x88
-	  b         .loc_0xA0
-
-	.loc_0x7C:
-	  lwz       r4, 0x2C2C(r13)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2C2C(r13)
-
-	.loc_0x88:
-	  rlwinm    r7,r7,3,0,28
-	  li        r0, 0x1
-	  add       r4, r5, r7
-	  stw       r6, 0x4(r4)
-	  stwx      r3, r5, r7
-	  stb       r0, 0x3E2(r3)
-
-	.loc_0xA0:
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	for (i = 0; i < T_LISTS; ++i) {
+		if (param_2 == TRACK_LIST[i]._04) {
+			return;
+		}
+	}
+	if (T_LISTS == TRACK_LIST_SIZE) {
+		for (i = 0; i < TRACK_LIST_SIZE; ++i) {
+			if (!TRACK_LIST[i].track) {
+				break;
+			}
+		}
+		if (i == TRACK_LIST_SIZE) {
+			return;
+		}
+	} else {
+		i = T_LISTS;
+		++T_LISTS;
+	}
+	REF_param_2         = &param_2;
+	TRACK_LIST[i]._04   = param_2;
+	TRACK_LIST[i].track = track;
+	track->isRegistered = 1;
 }
 
 /*
@@ -1388,56 +1259,24 @@ void Jam_RegistTrack(seqp_*, u32)
  * Address:	800105C0
  * Size:	00008C
  */
-void Jam_UnRegistTrack(seqp_*)
+void Jam_UnRegistTrack(seqp_* track)
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x3E2(r3)
-	  cmplwi    r0, 0
-	  beqlr-
-	  lwz       r7, 0x2C2C(r13)
-	  li        r4, 0
-	  lis       r5, 0x8032
-	  addi      r0, r4, 0
-	  subi      r6, r5, 0x680
-	  mtctr     r7
-	  cmplwi    r7, 0
-	  ble-      .loc_0x48
+	size_t i;
 
-	.loc_0x2C:
-	  add       r7, r6, r4
-	  lwz       r5, 0x0(r7)
-	  cmplw     r3, r5
-	  bne-      .loc_0x40
-	  stw       r0, 0x0(r7)
-
-	.loc_0x40:
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x2C
-
-	.loc_0x48:
-	  li        r0, 0
-	  lis       r4, 0x8032
-	  stb       r0, 0x3E2(r3)
-	  subi      r4, r4, 0x680
-	  b         .loc_0x7C
-
-	.loc_0x5C:
-	  rlwinm    r0,r0,3,0,28
-	  add       r3, r4, r0
-	  lwz       r0, -0x8(r3)
-	  cmplwi    r0, 0
-	  bnelr-
-	  lwz       r3, 0x2C2C(r13)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x2C2C(r13)
-
-	.loc_0x7C:
-	  lwz       r0, 0x2C2C(r13)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x5C
-	  blr
-	*/
+	if (!track->isRegistered) {
+		return;
+	}
+	for (i = 0; i < T_LISTS; ++i) {
+		if (track == TRACK_LIST[i].track) {
+			TRACK_LIST[i].track = NULL;
+		}
+	}
+	track->isRegistered = FALSE;
+	for (; T_LISTS != 0; --T_LISTS) {
+		if (TRACK_LIST[T_LISTS - 1].track) {
+			break;
+		}
+	}
 }
 
 /*
@@ -1445,37 +1284,16 @@ void Jam_UnRegistTrack(seqp_*)
  * Address:	80010660
  * Size:	000050
  */
-seqp_* Jam_GetTrackHandle(u32)
+seqp_* Jam_GetTrackHandle(u32 param_1)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2C2C(r13)
-	  lis       r4, 0x8032
-	  subi      r5, r4, 0x680
-	  li        r4, 0
-	  mtctr     r0
-	  cmplwi    r0, 0
-	  ble-      .loc_0x48
+	size_t i;
 
-	.loc_0x1C:
-	  add       r6, r5, r4
-	  lwz       r0, 0x4(r6)
-	  cmplw     r3, r0
-	  bne-      .loc_0x40
-	  lwz       r0, 0x0(r6)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x40
-	  mr        r3, r0
-	  blr
-
-	.loc_0x40:
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x1C
-
-	.loc_0x48:
-	  li        r3, 0
-	  blr
-	*/
+	for (i = 0; i < T_LISTS; ++i) {
+		if (param_1 == TRACK_LIST[i]._04 && TRACK_LIST[i].track) {
+			return TRACK_LIST[i].track;
+		}
+	}
+	return NULL;
 }
 
 /*
@@ -1483,7 +1301,7 @@ seqp_* Jam_GetTrackHandle(u32)
  * Address:	800106C0
  * Size:	000018
  */
-void Jam_InitExtBuffer(ExtBuffer* ext)
+void Jam_InitExtBuffer(OuterParam_* ext)
 {
 	ext->_08 = 0;
 	ext->_0A = 0;
@@ -1496,9 +1314,8 @@ void Jam_InitExtBuffer(ExtBuffer* ext)
  * Address:	800106E0
  * Size:	000038
  */
-BOOL Jam_AssignExtBuffer(seqp_* track, ExtBuffer* ext)
+BOOL Jam_AssignExtBuffer(seqp_* track, OuterParam_* ext)
 {
-
 	if (!track) {
 		return FALSE;
 	}
@@ -1515,7 +1332,7 @@ BOOL Jam_AssignExtBuffer(seqp_* track, ExtBuffer* ext)
  * Address:	80010720
  * Size:	000060
  */
-BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, ExtBuffer* ext)
+BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 {
 	if (!track) {
 		return FALSE;
@@ -1525,7 +1342,7 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, ExtBuffer* ext)
 	}
 	track->_2B0[index] = ext;
 	ext->_00           = 1;
-	Jam_AssignExtBuffer(track->_44[index], ext);
+	Jam_AssignExtBuffer(track->children[index], ext);
 	return TRUE;
 }
 
@@ -1534,7 +1351,7 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, ExtBuffer* ext)
  * Address:	80010780
  * Size:	000044
  */
-void Jam_SetExtFirFilterD(ExtBuffer* ext, s16* param_2)
+void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 {
 	int i;
 
@@ -1553,7 +1370,7 @@ void Jam_SetExtFirFilterD(ExtBuffer* ext, s16* param_2)
  * Address:	800107E0
  * Size:	0000A4
  */
-void Jam_SetExtParamD(f32 value, ExtBuffer* ext, u8 param_3)
+void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 param_3)
 {
 	f32* member;
 
@@ -1591,7 +1408,7 @@ void Jam_SetExtParamD(f32 value, ExtBuffer* ext, u8 param_3)
  * Address:	800108A0
  * Size:	000024
  */
-void Jam_OnExtSwitchD(ExtBuffer* ext, u16 param_2)
+void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
 {
 	if (!ext) {
 		return;
@@ -1605,7 +1422,7 @@ void Jam_OnExtSwitchD(ExtBuffer* ext, u16 param_2)
  * Address:	800108E0
  * Size:	000028
  */
-void Jam_OffExtSwitchD(ExtBuffer* ext, u16 param_2)
+void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
 {
 	if (!ext) {
 		return;
@@ -1798,7 +1615,7 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
  * Address:	80010AE0
  * Size:	000320
  */
-void Jam_UpdateTrackAll(seqp_*)
+void Jam_UpdateTrackAll(seqp_* track)
 {
 	/*
 	.loc_0x0:
@@ -2437,19 +2254,19 @@ void Jam_UpdateTempo(seqp_* track)
 
 	size_t* REF_i;
 
-	if (!track->_40) {
+	if (!track->parent) {
 		track->_334 = (float)track->_338 * (float)track->_33A / (JAC_DAC_RATE * 60.0f / 80.0f);
 		if ((track->_2AC->_08 & 0x40) != 0) {
 			track->_334 = track->_334 * track->_2AC->_20;
 		}
 	} else {
-		track->_334 = track->_40->_334;
-		track->_338 = track->_40->_338;
+		track->_334 = track->parent->_334;
+		track->_338 = track->parent->_338;
 	}
 	for (i = 0; i < 16; ++i) {
 		REF_i = &i;
-		if (track->_44[i] && track->_44[i]->_3C) {
-			Jam_UpdateTempo(track->_44[i]);
+		if (track->children[i] && track->children[i]->_3C) {
+			Jam_UpdateTempo(track->children[i]);
 		}
 	}
 }
@@ -2464,13 +2281,13 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 	u32 i;
 	u16 mask;
 
-	if (track->_40) {
-		track->_39E = track->_40->_39E | param_2;
+	if (track->parent) {
+		track->_39E = track->parent->_39E | param_2;
 		mask        = 1 << (track->_88 & 0xf);
 		if (!param_2) {
-			track->_40->_3A0 &= ~mask;
+			track->parent->_3A0 &= ~mask;
 		} else {
-			track->_40->_3A0 |= mask;
+			track->parent->_3A0 |= mask;
 		}
 	} else {
 		track->_39E = param_2;
@@ -2526,8 +2343,8 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 	Jam_SetInterrupt(track, 0);
 	if (param_2 == TRUE) {
 		for (i = 0; i < 16; ++i) {
-			if (track->_44[i] && track->_44[i]->_3C) {
-				Jam_PauseTrack(track->_44[i], 1);
+			if (track->children[i] && track->children[i]->_3C) {
+				Jam_PauseTrack(track->children[i], 1);
 			}
 		}
 	}
@@ -2557,8 +2374,8 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 	Jam_SetInterrupt(track, 1);
 	if (param_2 == TRUE) {
 		for (i = 0; i < 16; ++i) {
-			if (track->_44[i] && track->_44[i]->_3C) {
-				Jam_UnPauseTrack(track->_44[i], 1);
+			if (track->children[i] && track->children[i]->_3C) {
+				Jam_UnPauseTrack(track->children[i], 1);
 			}
 		}
 	}
@@ -2611,7 +2428,7 @@ BOOL Jam_TryInterrupt(seqp_* track)
  */
 static u32 Cmd_OpenTrack()
 {
-	Jaq_OpenTrack(SEQ_P, SEQ_ARG._00[0], SEQ_ARG._00[1]);
+	Jaq_OpenTrack(SEQ_P, SEQ_ARG[0], SEQ_ARG[1]);
 	return 0;
 }
 
@@ -2622,8 +2439,8 @@ static u32 Cmd_OpenTrack()
  */
 static u32 Cmd_OpenTrackBros()
 {
-	if (SEQ_P->_40) {
-		Jaq_OpenTrack(SEQ_P->_40, SEQ_ARG._00[0], SEQ_ARG._00[1]);
+	if (SEQ_P->parent) {
+		Jaq_OpenTrack(SEQ_P->parent, SEQ_ARG[0], SEQ_ARG[1]);
 	} else {
 		return 0x40;
 	}
@@ -2638,7 +2455,7 @@ static u32 Cmd_OpenTrackBros()
 static u32 Cmd_Call()
 {
 	SEQ_P->_0C[SEQ_P->_08++] = SEQ_P->_04;
-	SEQ_P->_04               = SEQ_ARG._00[0];
+	SEQ_P->_04               = SEQ_ARG[0];
 	return 0;
 }
 
@@ -2698,7 +2515,7 @@ static u32 Cmd_Ret()
 static u32 Cmd_RetF()
 {
 	// But why cast it...?  And why check if it explicitly equals TRUE...?
-	if ((u8)__ConditionCheck(SEQ_P, SEQ_ARG._00[0] & 0x0f) == TRUE) {
+	if ((u8)__ConditionCheck(SEQ_P, SEQ_ARG[0] & 0x0f) == TRUE) {
 		SEQ_P->_04 = SEQ_P->_0C[--SEQ_P->_08];
 	}
 	return 0;
@@ -2711,7 +2528,7 @@ static u32 Cmd_RetF()
  */
 static u32 Cmd_Jmp()
 {
-	SEQ_P->_04 = SEQ_ARG._00[1];
+	SEQ_P->_04 = SEQ_ARG[1];
 	return 0;
 }
 
@@ -2733,7 +2550,7 @@ static u32 Cmd_JmpF()
 static u32 Cmd_LoopS()
 {
 	SEQ_P->_0C[SEQ_P->_08]   = SEQ_P->_04;
-	SEQ_P->_2C[SEQ_P->_08++] = SEQ_ARG._00[0];
+	SEQ_P->_2C[SEQ_P->_08++] = SEQ_ARG[0];
 	return 0;
 }
 
@@ -2773,9 +2590,9 @@ static u32 Cmd_ReadPort()
 {
 	u16 temp;
 
-	temp                                  = SEQ_P->_2F0[SEQ_ARG._00[0]]._02;
-	SEQ_P->_2F0[SEQ_ARG._00[0]].cmdImport = 0;
-	Jam_WriteRegDirect(SEQ_P, SEQ_ARG._00[1], temp);
+	temp                                    = SEQ_P->trackPort[SEQ_ARG[0]].value;
+	SEQ_P->trackPort[SEQ_ARG[0]].importFlag = 0;
+	Jam_WriteRegDirect(SEQ_P, SEQ_ARG[1], temp);
 	return 0;
 }
 
@@ -2786,8 +2603,8 @@ static u32 Cmd_ReadPort()
  */
 static u32 Cmd_WritePort()
 {
-	SEQ_P->_2F0[SEQ_ARG._00[0]]._02       = SEQ_ARG._00[1];
-	SEQ_P->_2F0[SEQ_ARG._00[0]].cmdExport = 1;
+	SEQ_P->trackPort[SEQ_ARG[0]].value      = SEQ_ARG[1];
+	SEQ_P->trackPort[SEQ_ARG[0]].exportFlag = 1;
 	return 0;
 }
 
@@ -2798,7 +2615,7 @@ static u32 Cmd_WritePort()
  */
 static u32 Cmd_CheckPortImport()
 {
-	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->_2F0[SEQ_ARG._00[0]].cmdImport);
+	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->trackPort[SEQ_ARG[0]].importFlag);
 	return 0;
 }
 
@@ -2809,7 +2626,7 @@ static u32 Cmd_CheckPortImport()
  */
 static u32 Cmd_CheckPortExport()
 {
-	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->_2F0[SEQ_ARG._00[0]].cmdExport);
+	Jam_WriteRegDirect(SEQ_P, 3, SEQ_P->trackPort[SEQ_ARG[0]].exportFlag);
 	return 0;
 }
 
@@ -2820,8 +2637,8 @@ static u32 Cmd_CheckPortExport()
  */
 static u32 Cmd_WaitReg()
 {
-	SEQ_P->_8C = SEQ_ARG._00[0];
-	return SEQ_ARG._00[0] ? 1 : 0;
+	SEQ_P->_8C = SEQ_ARG[0];
+	return SEQ_ARG[0] ? 1 : 0;
 }
 
 /*
@@ -2831,7 +2648,7 @@ static u32 Cmd_WaitReg()
  */
 static u32 Cmd_ConnectName()
 {
-	SEQ_P->_84 = SEQ_ARG._00[0] << 16 | SEQ_ARG._00[1];
+	SEQ_P->_84 = SEQ_ARG[0] << 16 | SEQ_ARG[1];
 	return 0;
 }
 
@@ -2842,7 +2659,7 @@ static u32 Cmd_ConnectName()
  */
 static u32 Cmd_ParentWritePort()
 {
-	Jam_WritePortAppDirect(SEQ_P->_40, SEQ_ARG._00[0] & 0x0f, SEQ_ARG._00[1]);
+	Jam_WritePortAppDirect(SEQ_P->parent, SEQ_ARG[0] & 0x0f, SEQ_ARG[1]);
 	return 0;
 }
 
@@ -2853,7 +2670,7 @@ static u32 Cmd_ParentWritePort()
  */
 static u32 Cmd_ChildWritePort()
 {
-	Jam_WritePortAppDirect(SEQ_P->_44[(SEQ_ARG._00[0] / 4)], SEQ_ARG._00[0] & 0xf, SEQ_ARG._00[1]);
+	Jam_WritePortAppDirect(SEQ_P->children[(SEQ_ARG[0] / 4)], SEQ_ARG[0] & 0xf, SEQ_ARG[1]);
 	return 0;
 }
 
@@ -2864,7 +2681,7 @@ static u32 Cmd_ChildWritePort()
  */
 static u32 Cmd_SetLastNote()
 {
-	SEQ_P->_D5 = SEQ_ARG._00[0];
+	SEQ_P->_D5 = SEQ_ARG[0];
 	SEQ_P->_D5 += SEQ_P->_397;
 	return 0;
 }
@@ -2876,7 +2693,7 @@ static u32 Cmd_SetLastNote()
  */
 static u32 Cmd_TimeRelate()
 {
-	SEQ_P->_33C = SEQ_ARG._00[0];
+	SEQ_P->_33C = SEQ_ARG[0];
 	return 0;
 }
 
@@ -2887,7 +2704,7 @@ static u32 Cmd_TimeRelate()
  */
 static u32 Cmd_SimpleOsc()
 {
-	Osc_Setup_Simple(SEQ_P, SEQ_ARG._00[0]);
+	Osc_Setup_Simple(SEQ_P, SEQ_ARG[0]);
 	return 0;
 }
 
@@ -2898,7 +2715,7 @@ static u32 Cmd_SimpleOsc()
  */
 static u32 Cmd_SimpleEnv()
 {
-	Osc_Setup_SimpleEnv(SEQ_P, SEQ_ARG._00[0], SEQ_ARG._00[1]);
+	Osc_Setup_SimpleEnv(SEQ_P, SEQ_ARG[0], SEQ_ARG[1]);
 	return 0;
 }
 
@@ -2913,7 +2730,7 @@ static u32 Cmd_SimpleADSR()
 	s16 local_10[5];
 
 	for (i = 0; i < 5; ++i) {
-		local_10[i] = SEQ_ARG._00[i];
+		local_10[i] = SEQ_ARG[i];
 	}
 	Osc_Setup_ADSR(SEQ_P, local_10);
 	return 0;
@@ -2926,9 +2743,9 @@ static u32 Cmd_SimpleADSR()
  */
 static u32 Cmd_Transpose()
 {
-	SEQ_P->_396 = SEQ_ARG._00[0];
-	if (SEQ_P->_40) {
-		SEQ_P->_397 = SEQ_P->_40->_396 + SEQ_P->_396;
+	SEQ_P->_396 = SEQ_ARG[0];
+	if (SEQ_P->parent) {
+		SEQ_P->_397 = SEQ_P->parent->_396 + SEQ_P->_396;
 	} else {
 		SEQ_P->_397 = SEQ_P->_396;
 	}
@@ -2942,12 +2759,12 @@ static u32 Cmd_Transpose()
  */
 static u32 Cmd_CloseTrack()
 {
-	u8 index = SEQ_ARG._00[0];
-	if (index >= ARRAY_SIZE(SEQ_P->_44)) {
+	u8 index = SEQ_ARG[0];
+	if (index >= ARRAY_SIZE(SEQ_P->children)) {
 		return 0x80;
 	}
-	Jaq_CloseTrack(SEQ_P->_44[index]);
-	SEQ_P->_44[index] = NULL;
+	Jaq_CloseTrack(SEQ_P->children[index]);
+	SEQ_P->children[index] = NULL;
 	return 0;
 }
 
@@ -2959,7 +2776,7 @@ static u32 Cmd_CloseTrack()
 static u32 Cmd_OutSwitch()
 {
 	if (SEQ_P->_2AC) {
-		SEQ_P->_2AC->_08 = SEQ_ARG._00[0];
+		SEQ_P->_2AC->_08 = SEQ_ARG[0];
 		SEQ_P->_2AC->_0A = -1;
 	}
 	return 0;
@@ -2972,7 +2789,7 @@ static u32 Cmd_OutSwitch()
  */
 static u32 Cmd_UpdateSync()
 {
-	Jam_UpdateTrack(SEQ_P, SEQ_ARG._00[0]);
+	Jam_UpdateTrack(SEQ_P, SEQ_ARG[0]);
 	return 0;
 }
 
@@ -2983,8 +2800,8 @@ static u32 Cmd_UpdateSync()
  */
 static u32 Cmd_BusConnect()
 {
-	if (SEQ_ARG._00[0] < 6) {
-		SEQ_P->_D8._4E[SEQ_ARG._00[0]] = SEQ_ARG._00[1];
+	if (SEQ_ARG[0] < 6) {
+		SEQ_P->_D8._4E[SEQ_ARG[0]] = SEQ_ARG[1];
 	}
 	return 0;
 }
@@ -2996,7 +2813,7 @@ static u32 Cmd_BusConnect()
  */
 static u32 Cmd_PauseStatus()
 {
-	SEQ_P->_39D = SEQ_ARG._00[0];
+	SEQ_P->_39D = SEQ_ARG[0];
 	return 0;
 }
 
@@ -3007,8 +2824,8 @@ static u32 Cmd_PauseStatus()
  */
 static u32 Cmd_SetInterrupt()
 {
-	SEQ_P->_3A6 |= (1 << SEQ_ARG._00[0]);
-	SEQ_P->_3A8[SEQ_ARG._00[0]] = SEQ_ARG._00[1];
+	SEQ_P->_3A6 |= (1 << SEQ_ARG[0]);
+	SEQ_P->_3A8[SEQ_ARG[0]] = SEQ_ARG[1];
 	return 0;
 }
 
@@ -3019,7 +2836,7 @@ static u32 Cmd_SetInterrupt()
  */
 static u32 Cmd_DisInterrupt()
 {
-	SEQ_P->_3A6 &= ~(u8)(1 << (u8)SEQ_ARG._00[0]);
+	SEQ_P->_3A6 &= ~(u8)(1 << (u8)SEQ_ARG[0]);
 	return 0;
 }
 
@@ -3065,9 +2882,9 @@ static u32 Cmd_RetI()
  */
 static u32 Cmd_IntTimer()
 {
-	SEQ_P->_3A7 = SEQ_ARG._00[0];
-	SEQ_P->_3D0 = SEQ_ARG._00[1];
-	SEQ_P->_3D4 = SEQ_ARG._00[1];
+	SEQ_P->_3A7 = SEQ_ARG[0];
+	SEQ_P->_3D0 = SEQ_ARG[1];
+	SEQ_P->_3D4 = SEQ_ARG[1];
 	return 0;
 }
 
@@ -3103,7 +2920,7 @@ static u32 Cmd_SyncCPU()
 	u16 param_3;
 
 	if (JAM_CALLBACK_FUNC) {
-		param_3 = JAM_CALLBACK_FUNC(SEQ_P, SEQ_ARG._00[0]);
+		param_3 = JAM_CALLBACK_FUNC(SEQ_P, SEQ_ARG[0]);
 	} else {
 		param_3 = 0xffff;
 	}
@@ -3141,8 +2958,8 @@ static u32 Cmd_FlushRelease()
  */
 static u32 Cmd_Wait3()
 {
-	SEQ_P->_8C = SEQ_ARG._00[0];
-	return SEQ_ARG._00[0] ? 1 : 0;
+	SEQ_P->_8C = SEQ_ARG[0];
+	return SEQ_ARG[0] ? 1 : 0;
 }
 
 /*
@@ -3152,8 +2969,8 @@ static u32 Cmd_Wait3()
  */
 static u32 Cmd_TimeBase()
 {
-	SEQ_P->_338 = SEQ_ARG._00[0];
-	if (!SEQ_P->_40) {
+	SEQ_P->_338 = SEQ_ARG[0];
+	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
 	}
 	return 0;
@@ -3166,8 +2983,8 @@ static u32 Cmd_TimeBase()
  */
 static u32 Cmd_Tempo()
 {
-	SEQ_P->_33A = SEQ_ARG._00[0];
-	if (!SEQ_P->_40) {
+	SEQ_P->_33A = SEQ_ARG[0];
+	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
 	} else {
 		SEQ_P->_3E3 = 1;
@@ -3184,11 +3001,11 @@ static u32 Cmd_Finish()
 {
 	size_t i;
 	u32 mask;
-	seqp__Invented2* temp;
+	MoveParam_* temp;
 
 	mask = 0;
 	for (i = 0; i < 18; ++i) {
-		temp = &SEQ_P->_14C[i];
+		temp = &SEQ_P->timedParam.move[i];
 		if (temp->_08 > 0.0f) {
 			temp->_00 += temp->_0C;
 			temp->_08 -= 1.0f;
@@ -3223,10 +3040,10 @@ static u32 Cmd_PanPowSet()
 	int i;
 
 	for (i = 0; i < 3; ++i) {
-		SEQ_P->_26C[i + 8] = SEQ_ARG._00[i];
+		SEQ_P->registers[i + 8] = SEQ_ARG[i];
 	}
 	for (i = 3; i < 5; ++i) {
-		SEQ_P->_26C[i + 8] = SEQ_ARG._00[i] * 327.67f;
+		SEQ_P->registers[i + 8] = SEQ_ARG[i] * 327.67f;
 	}
 	return 0;
 }
@@ -3239,14 +3056,14 @@ static u32 Cmd_PanPowSet()
 static u32 Cmd_IIRSet()
 {
 	int i;
-	seqp_* track;
+	MoveParam_* param;
 
-	track = SEQ_P;
 	for (i = 0; i < 4; ++i) {
-		track->_14C[i]._04 = SEQ_ARG._00[i] / 32768.0f;
-		track->_14C[i]._00 = track->_14C[i]._04;
-		track->_14C[i]._0C = 0.0f;
-		track->_14C[i]._08 = 1.0f;
+		param      = &SEQ_P->timedParam.inner.IIRs[i];
+		param->_04 = SEQ_ARG[i] / 32768.0f;
+		param->_00 = param->_04;
+		param->_0C = 0.0f;
+		param->_08 = 1.0f;
 	}
 	return 0;
 }
@@ -3258,7 +3075,7 @@ static u32 Cmd_IIRSet()
  */
 static u32 Cmd_FIRSet()
 {
-	Jam_SetExtFirFilterD(SEQ_P->_2AC, (s16*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]));
+	Jam_SetExtFirFilterD(SEQ_P->_2AC, (s16*)Jam_OfsToAddr(SEQ_P, SEQ_ARG[0]));
 	return 0;
 }
 
@@ -3269,9 +3086,9 @@ static u32 Cmd_FIRSet()
  */
 static u32 Cmd_EXTSet()
 {
-	ExtBuffer* ext;
+	OuterParam_* ext;
 
-	ext = (ExtBuffer*)Jam_OfsToAddr(SEQ_P, SEQ_ARG._00[0]);
+	ext = (OuterParam_*)Jam_OfsToAddr(SEQ_P, SEQ_ARG[0]);
 	Jam_InitExtBuffer(ext);
 	Jam_AssignExtBuffer(SEQ_P, ext);
 	return 0;
@@ -3313,7 +3130,7 @@ static u32 Cmd_PanSwSet()
 
 	for (i = 0; i < 3; ++i) {
 		// TODO: u32 members of above struct accessed like they are an array of u8s... idk man.
-		SEQ_P->_D8._62[i] = SEQ_ARG._00[i] & 0x1f;
+		SEQ_P->_D8._62[i] = SEQ_ARG[i] & 0x1f;
 		SEQ_P->_3DC[i]    = SEQ_P->_3D8 |= 8;
 	}
 	return 0;
@@ -3329,8 +3146,8 @@ static u32 Cmd_OscRoute()
 	u8 uVar1;
 	u8 uVar2;
 
-	uVar1 = SEQ_ARG._00[0] & 0xf;
-	uVar2 = SEQ_ARG._00[0] >> 4 & 0xf;
+	uVar1 = SEQ_ARG[0] & 0xf;
+	uVar2 = SEQ_ARG[0] >> 4 & 0xf;
 
 	SEQ_P->_370[uVar2] = uVar1;
 	if (uVar1 == 0xe) {
@@ -3349,12 +3166,12 @@ static u32 Cmd_IIRCutOff()
 	int i;
 	seqp_* track;
 	u8 index;
-	seqp__Invented2* test;
+	MoveParam_* test;
 
 	// track = ;
-	index = SEQ_ARG._00[0];
+	index = SEQ_ARG[0];
 	for (i = 0; i < 4; ++i) {
-		test      = &SEQ_P->_14C[i];
+		test      = &SEQ_P->timedParam.inner.IIRs[i];
 		test->_04 = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
 		test->_00 = test->_04;
 		test->_0C = 0.0f;
@@ -3370,7 +3187,7 @@ static u32 Cmd_IIRCutOff()
  */
 static u32 Cmd_OscFull()
 {
-	Osc_Setup_Full(SEQ_P, SEQ_ARG._00[0], SEQ_ARG._00[1], SEQ_ARG._00[2]);
+	Osc_Setup_Full(SEQ_P, SEQ_ARG[0], SEQ_ARG[1], SEQ_ARG[2]);
 	return 0;
 }
 
@@ -3384,7 +3201,7 @@ static u32 Cmd_CheckWave()
 	SOUNDID_ soundID;
 	u32 uVar2;
 
-	soundID.value = SEQ_ARG._00[0] | (Jam_ReadRegDirect(SEQ_P, 6) << 16);
+	soundID.value = SEQ_ARG[0] | (Jam_ReadRegDirect(SEQ_P, 6) << 16);
 	uVar2         = One_CheckInstWave(soundID);
 	Jam_WriteRegDirect(SEQ_P, 3, (u8)uVar2);
 	return 0;
@@ -3479,13 +3296,18 @@ static u32 Cmd_Printf()
 
 #define CMD_COUNT (64)
 
-static u32 Arglist[CMD_COUNT] = {
-	0x00000000, 0x00020008, 0x00020008, 0x00010002, 0x00000000, 0x00000000, 0x00010000, 0x00010002, 0x00000000, 0x00010001, 0x00000000,
-	0x00020000, 0x0002000c, 0x00010000, 0x00010000, 0x00010003, 0x00020005, 0x0002000c, 0x0002000c, 0x0002000f, 0x00010000, 0x00010000,
-	0x00010000, 0x00020008, 0x00050155, 0x00010000, 0x00010000, 0x00010000, 0x00010001, 0x00020004, 0x00010000, 0x00020008, 0x00010000,
-	0x00000000, 0x00000000, 0x00000000, 0x00020004, 0x00000000, 0x00000000, 0x00010001, 0x00000000, 0x00000000, 0x00010002, 0x00050000,
-	0x00040055, 0x00010002, 0x00010002, 0x00030000, 0x00010000, 0x00010000, 0x00030028, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-	0x00000000, 0x00000000, 0x00000000, 0x00010001, 0x00000000, 0x00000000, 0x00010001, 0x00010001, 0x00000000,
+static ArgListPair Arglist[CMD_COUNT] = {
+	{ 0x0000, 0x0000 }, { 0x0002, 0x0008 }, { 0x0002, 0x0008 }, { 0x0001, 0x0002 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
+	{ 0x0001, 0x0000 }, { 0x0001, 0x0002 }, { 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 }, { 0x0002, 0x0000 },
+	{ 0x0002, 0x000c }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0003 }, { 0x0002, 0x0005 }, { 0x0002, 0x000c },
+	{ 0x0002, 0x000c }, { 0x0002, 0x000f }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0002, 0x0008 },
+	{ 0x0005, 0x0155 }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0001 }, { 0x0002, 0x0004 },
+	{ 0x0001, 0x0000 }, { 0x0002, 0x0008 }, { 0x0001, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
+	{ 0x0002, 0x0004 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
+	{ 0x0001, 0x0002 }, { 0x0005, 0x0000 }, { 0x0004, 0x0055 }, { 0x0001, 0x0002 }, { 0x0001, 0x0002 }, { 0x0003, 0x0000 },
+	{ 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0003, 0x0028 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
+	{ 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 },
+	{ 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 },
 };
 
 static CmdFunction CMDP_LIST[CMD_COUNT] = {
@@ -4451,8 +4273,8 @@ void SeqUpdate(seqp_* track, u32 param_2)
 		Jam_UpdateTrack(track, uVar5);
 	}
 	for (i = 0; i < 16; ++i) {
-		if (track->_44[i] && track->_44[i]->_3C) {
-			SeqUpdate(track->_44[i], uVar5);
+		if (track->children[i] && track->children[i]->_3C) {
+			SeqUpdate(track->children[i], uVar5);
 		}
 	}
 }
