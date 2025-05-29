@@ -376,7 +376,7 @@ void NaviDemoSunsetState::init(Navi* navi)
 
 	setActors(navi);
 	_30 = 30.0f;
-	cameraMgr->mCamera->startMotion(*(PcamMotionInfo*)((int)cameraMgr->mCamera + 0x38)); // I really dont want to figure out this struct yet
+	cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 	mOpenedAccount = false;
 }
 

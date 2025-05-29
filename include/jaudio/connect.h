@@ -21,13 +21,14 @@ struct Ctrl_ {
 };
 
 struct CtrlGroup_ {
-	u8 _00[0x08 - 0x00]; // _00
-	u32 _08;             // _08
+	u8 _00;  // _00
+	u32 _04; // _04
+	u32 _08; // _08
 };
 
 void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL);
 BOOL Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL);
-int GetSoundHandle(CtrlGroup_*, u32);
+int* GetSoundHandle(CtrlGroup_*, u32);
 u16 Jac_WsVirtualToPhysical(u16);
 u16 Jac_BnkVirtualToPhysical(u16);
 u16 Jac_BnkPhysicalToVirtual(u16);
@@ -35,5 +36,6 @@ u16 Jac_WsPhysicalToVirtual(u16);
 void Jac_WsConnectTableSet(u32, u32);
 void Jac_BnkConnectTableSet(u32, u32);
 void Jac_ConnectTableInit();
+int* __GetSoundHandle(CtrlGroup_*, u32, u32);
 
 #endif

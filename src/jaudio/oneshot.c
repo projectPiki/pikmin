@@ -1265,7 +1265,7 @@ u32 One_CheckInstWave(SOUNDID_ sound)
 		return 3;
 	}
 
-	int handle = GetSoundHandle(group, map);
+	int* handle = GetSoundHandle(group, map);
 	if (handle == 0) {
 		return 4;
 	}

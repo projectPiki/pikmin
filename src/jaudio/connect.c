@@ -1,4 +1,8 @@
 #include "jaudio/connect.h"
+#include "jaudio/heapctrl.h"
+
+static s16 WS_V2P_TABLE[0x100];
+static s16 BNK_V2P_TABLE[0x100];
 
 /*
  * --INFO--
@@ -182,7 +186,7 @@ static void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
  * Address:	8000CA80
  * Size:	00009C
  */
-void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL)
+void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 flag, BOOL set)
 {
 	/*
 	.loc_0x0:
@@ -239,8 +243,12 @@ void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL)
  * Address:	8000CB20
  * Size:	00015C
  */
-BOOL Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL)
+BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 flag, BOOL set)
 {
+	if (set) {
+		group->_04 = flag;
+	}
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -360,7 +368,7 @@ BOOL Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, BOOL)
  * Address:	8000CC80
  * Size:	000044
  */
-static void SearchWave(Ctrl_*, u32)
+static void SearchWave(Ctrl_* ctrl, u32 flag)
 {
 	/*
 	.loc_0x0:
@@ -395,7 +403,7 @@ static void SearchWave(Ctrl_*, u32)
  * Address:	8000CCE0
  * Size:	00010C
  */
-void __GetSoundHandle(CtrlGroup_*, u32, u32)
+int* __GetSoundHandle(CtrlGroup_*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -486,8 +494,17 @@ void __GetSoundHandle(CtrlGroup_*, u32, u32)
  * Address:	8000CE00
  * Size:	000074
  */
-int GetSoundHandle(CtrlGroup_*, u32)
+int* GetSoundHandle(CtrlGroup_* group, u32 flag)
 {
+	// need to figure out this type
+	int* a = __GetSoundHandle(group, flag, group->_04);
+	if (a == NULL) {
+		return NULL;
+	}
+	if (a[13] == NULL) {
+		return NULL;
+	}
+	return a;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -535,17 +552,9 @@ int GetSoundHandle(CtrlGroup_*, u32)
  * Address:	8000CE80
  * Size:	000018
  */
-u16 Jac_WsVirtualToPhysical(u16)
+u16 Jac_WsVirtualToPhysical(u16 vID)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8031
-	  rlwinm    r3,r3,1,15,30
-	  subi      r0, r4, 0x2920
-	  add       r3, r0, r3
-	  lhz       r3, 0x0(r3)
-	  blr
-	*/
+	return WS_V2P_TABLE[vID];
 }
 
 /*
@@ -553,17 +562,9 @@ u16 Jac_WsVirtualToPhysical(u16)
  * Address:	8000CEA0
  * Size:	000018
  */
-u16 Jac_BnkVirtualToPhysical(u16)
+u16 Jac_BnkVirtualToPhysical(u16 vID)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8031
-	  rlwinm    r3,r3,1,15,30
-	  subi      r0, r4, 0x2720
-	  add       r3, r0, r3
-	  lhz       r3, 0x0(r3)
-	  blr
-	*/
+	return BNK_V2P_TABLE[vID];
 }
 
 /*
@@ -571,7 +572,7 @@ u16 Jac_BnkVirtualToPhysical(u16)
  * Address:	........
  * Size:	000040
  */
-u16 Jac_BnkPhysicalToVirtual(u16)
+u16 Jac_BnkPhysicalToVirtual(u16 bnk)
 {
 	// UNUSED FUNCTION
 }
@@ -581,7 +582,7 @@ u16 Jac_BnkPhysicalToVirtual(u16)
  * Address:	........
  * Size:	000040
  */
-u16 Jac_WsPhysicalToVirtual(u16)
+u16 Jac_WsPhysicalToVirtual(u16 ws)
 {
 	// UNUSED FUNCTION
 }
@@ -591,33 +592,16 @@ u16 Jac_WsPhysicalToVirtual(u16)
  * Address:	8000CEC0
  * Size:	000050
  */
-void Jac_WsConnectTableSet(u32, u32)
+void Jac_WsConnectTableSet(u32 id, u32 val)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r0, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0x48
-	  cmplwi    r0, 0x100
-	  bge-      .loc_0x48
-	  lis       r3, 0x8031
-	  rlwinm    r4,r0,1,0,30
-	  subi      r0, r3, 0x2920
-	  add       r3, r0, r4
-	  lha       r0, 0x0(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x48
-	  lwz       r0, 0xC(r1)
-	  extsh     r0, r0
-	  sth       r0, 0x0(r3)
+	u32* id2 = &id;
+	u32* bnk = &val;
 
-	.loc_0x48:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	if (id != 0xffff && id < 0x100 && BNK_V2P_TABLE[id] == -1) {
+		BNK_V2P_TABLE[id] = *bnk;
+	}
+
+	u32 badcompiler[2];
 }
 
 /*
@@ -625,33 +609,16 @@ void Jac_WsConnectTableSet(u32, u32)
  * Address:	8000CF20
  * Size:	000050
  */
-void Jac_BnkConnectTableSet(u32, u32)
+void Jac_BnkConnectTableSet(u32 id, u32 val)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r0, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0x48
-	  cmplwi    r0, 0x100
-	  bge-      .loc_0x48
-	  lis       r3, 0x8031
-	  rlwinm    r4,r0,1,0,30
-	  subi      r0, r3, 0x2720
-	  add       r3, r0, r4
-	  lha       r0, 0x0(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x48
-	  lwz       r0, 0xC(r1)
-	  extsh     r0, r0
-	  sth       r0, 0x0(r3)
+	u32* id2 = &id;
+	u32* bnk = &val;
 
-	.loc_0x48:
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	if (id != 0xffff && id < 0x100 && BNK_V2P_TABLE[id] == -1) {
+		BNK_V2P_TABLE[id] = *bnk;
+	}
+
+	u32 badcompiler[2];
 }
 
 /*
@@ -661,24 +628,8 @@ void Jac_BnkConnectTableSet(u32, u32)
  */
 void Jac_ConnectTableInit()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8031
-	  lis       r3, 0x8031
-	  subi      r5, r3, 0x2720
-	  li        r0, 0x100
-	  subi      r7, r4, 0x2920
-	  li        r3, 0
-	  li        r8, -0x1
-	  mtctr     r0
-
-	.loc_0x20:
-	  add       r6, r7, r3
-	  add       r4, r5, r3
-	  sth       r8, 0x0(r6)
-	  addi      r3, r3, 0x2
-	  sth       r8, 0x0(r4)
-	  bdnz+     .loc_0x20
-	  blr
-	*/
+	for (int i = 0; i < 0x100; i++) {
+		WS_V2P_TABLE[i]  = -1;
+		BNK_V2P_TABLE[i] = -1;
+	}
 }
