@@ -45,6 +45,9 @@ static u32 SEQ_ARG[8];
 
 static TrackCallback JAM_CALLBACK_FUNC = NULL;
 
+// predeclare this so Jam_UpdateTrackAll can use this stupid function.
+extern "C" static void OSf32tos8(f32* in, s8* out);
+
 /*
  * --INFO--
  * Address:	8000F400
@@ -1850,19 +1853,21 @@ void Jam_UpdateTrackAll(seqp_* track)
 	*/
 }
 
+#define OS_FASTCAST_S8 (4)
+
 /*
  * --INFO--
  * Address:	80010E00
  * Size:	00000C
  */
-extern "C" static void OSf32tos8(f32* in, s8* out)
+static void OSf32tos8(register f32* in, register s8* pOut)
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x0(r3)
-	  psq_st    f1,0x0(r4),0x1,0x4
-	  blr
-	*/
+#ifdef __MWERKS__ // clang-format off
+	asm {
+		lfs f1, 0(in)
+		psq_st f1, 0(pOut), 0x1, OS_FASTCAST_S8
+	}
+#endif // clang-format on
 }
 
 /*

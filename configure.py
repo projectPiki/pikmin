@@ -225,7 +225,8 @@ else:
 # JAudio flags
 cflags_jaudio = [
     "-nodefaults",
-    "-proc 750",
+    "-proc gekko",
+    '-pragma "scheduling 750"',
     "-align powerpc",
     "-enum int",
     "-fp hardware",

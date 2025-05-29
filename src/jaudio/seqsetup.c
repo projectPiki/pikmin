@@ -194,14 +194,14 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 		track->_39D = otherSeq->_39D;
 		track->_3A0 = 0;
 	}
-	track->_08  = 0;
-	track->_D0  = 0;
-	track->_8C  = 0;
-	track->_3C  = 1;
+	track->_08    = 0;
+	track->_D0    = 0;
+	track->_8C    = 0;
+	track->_3C    = 1;
 	track->parent = otherSeq;
-	track->_3A6 = 0;
-	track->_3A4 = 0;
-	track->_3D0 = 0;
+	track->_3A6   = 0;
+	track->_3A4   = 0;
+	track->_3D0   = 0;
 
 	// Initialize all MoveParams with default values.
 	for (i = 0; i < 18; ++i) {
@@ -270,7 +270,7 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 	}
 
 	for (i = 0; i < 16; ++i) {
-		track->_2B0[i] = NULL;
+		track->_2B0[i]     = NULL;
 		track->children[i] = 0;
 	}
 
@@ -500,10 +500,10 @@ s32 Jaq_OpenTrack(seqp_* track, u32 param_2, u32 param_3)
 		return -1;
 	}
 	track->children[index] = psVar2;
-	psVar2->_88       = ((track->_88 << 4 | index) & 0xFFFFFFF) | ((track->_88 & 0xF0000000) + 0x10000000);
-	psVar2->_84       = 0;
-	psVar2->_3D       = track->_3D;
-	psVar2->_3F       = bVar5;
+	psVar2->_88            = ((track->_88 << 4 | index) & 0xFFFFFFF) | ((track->_88 & 0xF0000000) + 0x10000000);
+	psVar2->_84            = 0;
+	psVar2->_3D            = track->_3D;
+	psVar2->_3F            = bVar5;
 	Init_Track(psVar2, param_3, track);
 	// Dev rolls "worst bit extraction method", asked to leave Nintendo EAD.
 	psVar2->_39E = psVar2->parent->_39E | ((psVar2->parent->_3A0 & (1 << index)) >> (index));
