@@ -471,7 +471,7 @@ void DSP_InitBuffer()
 {
 	u32 badCompiler;
 	for (int i = 0; i < 4; ++i)
-		DFX_SetFxLine(i, (s16*)NULL, (FxlineConfig*)NULL);
+		DFX_SetFxLine(i, NULL, NULL);
 	DSP_ClearBuffer();
 	DSP_SetupBuffer();
 	InitDSPchannel();

@@ -358,7 +358,7 @@ static void AuxBusInit()
 			REF_alloc2Size     = &alloc2Size;
 			circularBufferBase = (s16*)OSAlloc2(alloc2Size);
 		} else {
-			circularBufferBase = (s16*)NULL;
+			circularBufferBase = NULL;
 		}
 		DFX_SetFxLine(i, circularBufferBase, &fx_config[i]);
 	}
