@@ -536,7 +536,7 @@ void Jac_InitDemoSystem()
  */
 void Jac_StartDemo(int id)
 {
-	Jam_WritePortAppDirect(demo_seqp, 0, (u16)id);
+	Jam_WritePortAppDirect(demo_seqp, 0, id);
 	if (-1 < demo_mml_active) {
 		Jam_WritePortAppDirect(demo_seqp, 1, id);
 	}

@@ -17,7 +17,7 @@
 #define FREE_SEQP_QUEUE_SIZE (256)
 
 static seqp_ seq[SEQ_SIZE];
-static ExtBuffer ROOT_OUTER[ROOT_OUTER_SIZE];
+static OuterParam_ ROOT_OUTER[ROOT_OUTER_SIZE];
 static seqp_* rootseq[ROOTSEQ_SIZE];
 static seqp_* FREE_SEQP_QUEUE[FREE_SEQP_QUEUE_SIZE];
 
@@ -198,79 +198,80 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 	track->_D0  = 0;
 	track->_8C  = 0;
 	track->_3C  = 1;
-	track->_40  = otherSeq;
+	track->parent = otherSeq;
 	track->_3A6 = 0;
 	track->_3A4 = 0;
 	track->_3D0 = 0;
 
+	// Initialize all MoveParams with default values.
 	for (i = 0; i < 18; ++i) {
-		track->_14C[i]._08 = 0.0f;
-		track->_14C[i]._00 = 1.0f;
-		track->_14C[i]._04 = 1.0f;
+		track->timedParam.move[i]._08 = 0.0f;
+		track->timedParam.move[i]._00 = 1.0f;
+		track->timedParam.move[i]._04 = 1.0f;
 	}
 
-	track->_14C[1]._00 = 0.0f;
-	track->_14C[1]._04 = 0.0f;
-	track->_14C[1]._00 = 0.0f; // Just to be sure.
-	track->_14C[1]._04 = 0.0f; // Just to be sure.
-	track->_14C[3]._00 = 0.5f;
-	track->_14C[3]._04 = 0.5f;
+	track->timedParam.inner.pitch._00 = 0.0f;
+	track->timedParam.inner.pitch._04 = 0.0f;
+	track->timedParam.inner.pitch._00 = 0.0f; // Just to be sure.
+	track->timedParam.inner.pitch._04 = 0.0f; // Just to be sure.
+	track->timedParam.inner.pan._00   = 0.5f;
+	track->timedParam.inner.pan._04   = 0.5f;
 
-	track->_14C[16]._00 = 0.5f;
-	track->_14C[16]._04 = 0.5f;
-	track->_14C[17]._00 = 0.0f;
-	track->_14C[17]._04 = 0.0f;
+	track->timedParam.inner._100._00 = 0.5f;
+	track->timedParam.inner._100._04 = 0.5f;
+	track->timedParam.inner._110._00 = 0.0f;
+	track->timedParam.inner._110._04 = 0.0f;
 
-	track->_14C[2]._00 = 0.0f;
-	track->_14C[2]._04 = 0.0f;
-	track->_14C[4]._00 = 0.0f;
-	track->_14C[4]._04 = 0.0f;
+	track->timedParam.inner.fxmix._00 = 0.0f;
+	track->timedParam.inner.fxmix._04 = 0.0f;
+	track->timedParam.inner.dolby._00 = 0.0f;
+	track->timedParam.inner.dolby._04 = 0.0f;
 
-	// Initialize 13 through 15.
+	// Initialize IIRs (skipping the first one)
 	for (i = 1; i < 4; ++i) {
-		track->_14C[i + 12]._00 = 0.0f;
-		track->_14C[i + 12]._04 = 0.0f;
+		track->timedParam.inner.IIRs[i]._00 = 0.0f;
+		track->timedParam.inner.IIRs[i]._04 = 0.0f;
 	}
 
-	track->_14C[5]._00 = 0.0f;
-	track->_14C[5]._04 = 0.0f;
+	track->timedParam.inner._50._00 = 0.0f;
+	track->timedParam.inner._50._04 = 0.0f;
 
 	for (i = 0; i < 32; ++i) {
-		track->_26C[i] = 0;
+		track->registers[i] = 0;
 	}
 
-	if ((track->_3F & 2) || !track->_40) {
-		track->_26C[8]  = 0;
-		track->_26C[9]  = 1;
-		track->_26C[10] = 1;
-		track->_26C[11] = 0x7fff;
-		track->_26C[12] = 0x4000;
+	if ((track->_3F & 2) || !track->parent) {
+		track->registers[8]  = 0;
+		track->registers[9]  = 1;
+		track->registers[10] = 1;
+		track->registers[11] = 0x7fff;
+		track->registers[12] = 0x4000;
 		for (i = 0; i < 3; ++i) {
 			track->_3DC[i]    = 2;
 			track->_3DF[i]    = 2;
 			track->_D8._62[i] = 26;
 		}
-		track->_26C[6]  = 0xf0;
-		track->_26C[7]  = 0x0c;
-		track->_26C[13] = 0x40;
+		track->registers[6]  = 0xf0;
+		track->registers[7]  = 0x0c;
+		track->registers[13] = 0x40;
 	} else {
 		// Initialize 8 through 12.
 		for (i = 0; i < 5; ++i) {
-			track->_26C[i + 8] = track->_40->_26C[i + 8];
+			track->registers[i + 8] = track->parent->registers[i + 8];
 		}
-		track->_26C[6]  = track->_40->_26C[6];
-		track->_26C[7]  = track->_40->_26C[7];
-		track->_26C[13] = track->_40->_26C[13];
+		track->registers[6]  = track->parent->registers[6];
+		track->registers[7]  = track->parent->registers[7];
+		track->registers[13] = track->parent->registers[13];
 		for (i = 0; i < 3; ++i) {
-			track->_3DC[i]    = track->_40->_3DC[i];
-			track->_3DF[i]    = track->_40->_3DF[i];
-			track->_D8._62[i] = track->_40->_D8._62[i];
+			track->_3DC[i]    = track->parent->_3DC[i];
+			track->_3DF[i]    = track->parent->_3DF[i];
+			track->_D8._62[i] = track->parent->_D8._62[i];
 		}
 	}
 
 	for (i = 0; i < 16; ++i) {
 		track->_2B0[i] = NULL;
-		track->_44[i]  = 0;
+		track->children[i] = 0;
 	}
 
 	for (i = 0; i < 8; ++i) {
@@ -288,11 +289,11 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 	track->_398 = -1;
 
 	for (i = 0; i < 16; ++i) {
-		track->_2F0[i].cmdImport = 0;
-		track->_2F0[i].cmdExport = 0;
+		track->trackPort[i].importFlag = 0;
+		track->trackPort[i].exportFlag = 0;
 	}
 
-	track->_3E2 = 0;
+	track->isRegistered = 0;
 }
 
 /*
@@ -419,11 +420,11 @@ BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 	u8 lo;
 
 	// Let's get ahead of ourselves here.
-	lo = track->_26C[6] & 0xFF;
+	lo = track->registers[6] & 0xFF;
 	if (!track) {
 		return FALSE;
 	}
-	track->_26C[6] = (bankNum << 8) | lo;
+	track->registers[6] = (bankNum << 8) | lo;
 	return TRUE;
 }
 
@@ -490,7 +491,7 @@ s32 Jaq_OpenTrack(seqp_* track, u32 param_2, u32 param_3)
 	if (index >= 16) {
 		return -1;
 	}
-	psVar1 = track->_44[index];
+	psVar1 = track->children[index];
 	if (psVar1) {
 		Jaq_CloseTrack(psVar1);
 	}
@@ -498,15 +499,15 @@ s32 Jaq_OpenTrack(seqp_* track, u32 param_2, u32 param_3)
 	if (!psVar2) {
 		return -1;
 	}
-	track->_44[index] = psVar2;
+	track->children[index] = psVar2;
 	psVar2->_88       = ((track->_88 << 4 | index) & 0xFFFFFFF) | ((track->_88 & 0xF0000000) + 0x10000000);
 	psVar2->_84       = 0;
 	psVar2->_3D       = track->_3D;
 	psVar2->_3F       = bVar5;
 	Init_Track(psVar2, param_3, track);
 	// Dev rolls "worst bit extraction method", asked to leave Nintendo EAD.
-	psVar2->_39E = psVar2->_40->_39E | ((psVar2->_40->_3A0 & (1 << index)) >> (index));
-	psVar2->_2AC = psVar2->_40->_2B0[index];
+	psVar2->_39E = psVar2->parent->_39E | ((psVar2->parent->_3A0 & (1 << index)) >> (index));
+	psVar2->_2AC = psVar2->parent->_2B0[index];
 	if (psVar2->_2AC) {
 		++psVar2->_2AC->_04;
 	}
@@ -524,7 +525,7 @@ void __AllNoteOff(seqp_* track)
 {
 	u32 i;
 
-	if (!track->_40) {
+	if (!track->parent) {
 		for (i = 0; i < 8; ++i) {
 			NoteOFF_R(track, i, 10);
 			track->_94[i] = -1;
@@ -560,9 +561,9 @@ unknown Jaq_CloseTrack(seqp_* track)
 	BackTrack(track);
 
 	for (i = 0; i < 16; ++i) {
-		if (track->_44[i]) {
-			Jaq_CloseTrack(track->_44[i]);
-			track->_44[i] = NULL;
+		if (track->children[i]) {
+			Jaq_CloseTrack(track->children[i]);
+			track->children[i] = NULL;
 		}
 	}
 
@@ -580,8 +581,8 @@ unknown Jaq_CloseTrack(seqp_* track)
 	}
 	track->_39E = 0;
 	track->_3A0 = 0;
-	if (track->_40) {
-		FixMoveChannelAll(&track->_D8, &track->_40->_D8);
+	if (track->parent) {
+		FixMoveChannelAll(&track->_D8, &track->parent->_D8);
 	} else {
 		FixReleaseChannelAll(&track->_D8);
 	}

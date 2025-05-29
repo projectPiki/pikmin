@@ -12,9 +12,11 @@ extern "C" {
 extern s16 CUTOFF_TO_IIR_TABLE[128][4];
 
 typedef struct seqp_ seqp_;
-typedef struct seqp__Invented1 seqp__Invented1;
-typedef struct seqp__Invented2 seqp__Invented2;
-typedef struct ExtBuffer ExtBuffer;
+typedef struct TrackPort_ TrackPort_;
+typedef struct MoveParam_ MoveParam_;
+typedef struct AInnerParam_ AInnerParam_;
+typedef union TimedParam_ TimedParam_;
+typedef struct OuterParam_ OuterParam_;
 
 typedef u32 (*CmdFunction)();              // TODO: Confirm return type
 typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
@@ -24,13 +26,18 @@ typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
  *
  * @note Size: 4
  */
-struct seqp__Invented1 {
-	u8 cmdImport; // _00
-	u8 cmdExport; // _01
-	u16 _02;      // _02
+struct TrackPort_ {
+	u8 importFlag; // _00
+	u8 exportFlag; // _01
+	u16 value;     // _02
 };
 
-struct seqp__Invented2 {
+/**
+ * @brief Name borrowed from `JASTrack.h` from Pikmin 2.
+ *
+ * @note Size: 16
+ */
+struct MoveParam_ {
 	f32 _00; // _00
 	f32 _04; // _04
 	f32 _08; // _08
@@ -38,11 +45,39 @@ struct seqp__Invented2 {
 };
 
 /**
- * @brief This is an invented struct, named after the functions which use it.
+ * @brief Name borrowed from `JASTrack.h` from Pikmin 2.
+ *
+ * @note Size: 0x120
+ */
+struct AInnerParam_ {
+	MoveParam_ volume;     // _00
+	MoveParam_ pitch;      // _10
+	MoveParam_ fxmix;      // _20
+	MoveParam_ pan;        // _30
+	MoveParam_ dolby;      // _40
+	MoveParam_ _50;        // _50
+	MoveParam_ osc0Width;  // _60
+	MoveParam_ osc0Rate;   // _70
+	MoveParam_ osc0Vertex; // _80
+	MoveParam_ osc1Width;  // _90
+	MoveParam_ osc1Rate;   // _A0
+	MoveParam_ osc1Vertex; // _B0
+	MoveParam_ IIRs[4];    // _C0
+	MoveParam_ _100;       // _100
+	MoveParam_ _110;       // _110
+};
+
+union TimedParam_ {
+	AInnerParam_ inner;  // get individual params by member name
+	MoveParam_ move[18]; // get individual params by index
+};
+
+/**
+ * @brief Name borrowed from `JASTrack.h` from Pikmin 2.
  *
  * @note Size: 0x40.
  */
-struct ExtBuffer {
+struct OuterParam_ {
 	u32 _00;             // _00
 	u32 _04;             // _04
 	u16 _08;             // _08
@@ -84,15 +119,15 @@ struct seqp_ {
 	u8 _3D;                   // _03D
 	u8 _3E;                   // _03E
 	u8 _3F;                   // _03F
-	seqp_* _40;               // _040
-	seqp_* _44[16];           // _044 | Exact length confirmed. Bounds check in `Cmd_CloseTrack`, `Jam_ReadRegDirect`, `Init_Track`.
+	seqp_* parent;            // _040
+	seqp_* children[16];      // _044 | Exact length confirmed.
 	u32 _84;                  // _084
 	u32 _88;                  // _088;
 	u32 _8C;                  // _08C
 	u32 _90;                  // _090
-	u8 _94[8];                // _094 | Exact length confirmed. For loop in `Init_Track`, `__AllNoteOff`.
-	jc_* _9C[8];              // _09C | Exact length confirmed. For loop in `Init_Track`, `__AllNoteOff`.
-	u16 _BC[8];               // _0BC | Exact length conformed. For loop in `Init_Track`.
+	u8 _94[8];                // _094 | Exact length confirmed.
+	jc_* _9C[8];              // _09C | Exact length confirmed.
+	u16 _BC[8];               // _0BC | Exact length conformed.
 	u8 _CC[0x0d0 - 0x0cc];    // _0CC
 	u32 _D0;                  // _0D0
 	u8 _D4;                   // _0D4
@@ -100,11 +135,11 @@ struct seqp_ {
 	u8 _D6;                   // _0D6
 	u8 _D7[0x0d8 - 0x0d7];    // _0D7
 	jcs_ _D8;                 // _0D8
-	seqp__Invented2 _14C[18]; // _14C
-	u16 _26C[32];             // _26C | Exact length confirmed. For loop in `Init_Track`.
-	ExtBuffer* _2AC;          // _2AC
-	ExtBuffer* _2B0[16];      // _2B0 | Exact length confirmed. For loop in `Init_Track`.
-	seqp__Invented1 _2F0[16]; // _2F0 | Exact length confirmed. For loop in `Init_Track`.
+	TimedParam_ timedParam;   // _14C
+	u16 registers[32];        // _26C | Exact length confirmed.
+	OuterParam_* _2AC;        // _2AC
+	OuterParam_* _2B0[16];    // _2B0 | Exact length confirmed.
+	TrackPort_ trackPort[16]; // _2F0 | Exact length confirmed.
 	f32 _330;                 // _330
 	f32 _334;                 // _334
 	u16 _338;                 // _338
@@ -112,10 +147,10 @@ struct seqp_ {
 	u8 _33C;                  // _33C
 	u8 _33D;                  // _33D
 	Osc_definition _340[2];   // _340
-	u8 _370[2];               // _370 | Exact length unknown, but it is an array.
+	u8 _370[2];               // _370 | Exact length unknown.
 	s16 _372[12];             // _372 | ADS table?
 	s16 _38A[6];              // _38A | REL table?
-	s8 _396;                  // _396 | Confirmed signed (Cmd_Transpose)
+	s8 _396;                  // _396 | Confirmed signed (`Cmd_Transpose`)
 	u8 _397;                  // _397
 	s32 _398;                 // _398 | Might be signed (See: `Init_Track`)
 	u8 _39C;                  // _39C
@@ -128,16 +163,16 @@ struct seqp_ {
 	u8 _3A5;                  // _3A5
 	u8 _3A6;                  // _3A6
 	u8 _3A7;                  // _3A7
-	u32 _3A8[2];              // _3A8 | Exact length unknown, but it is an array.
+	u32 _3A8[2];              // _3A8 | Exact length unknown.
 	u8 _3B0[0x3c8 - 0x3b0];   // _3A8
 	u32 _3C8;                 // _3C8
 	u32 _3CC;                 // _3CC
 	u32 _3D0;                 // _3D0
 	u32 _3D4;                 // _3D4
 	u32 _3D8;                 // _3D8
-	u8 _3DC[3];               // _3DC | Exact length confirmed. For loop in `Init_Track`.
-	u8 _3DF[3];               // _3DF | Exact length confirmed. For loop in `Init_Track`.
-	u8 _3E2;                  // _3E2
+	u8 _3DC[3];               // _3DC | Exact length confirmed.
+	u8 _3DF[3];               // _3DF | Exact length confirmed.
+	u8 isRegistered;          // _3E2
 	u8 _3E3;                  // _3E3
 	u8 _3E4;                  // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];   // _3E5
@@ -158,9 +193,9 @@ void Jam_CheckImportApp(void);
 void Jam_WritePortIndirect(void);
 void Jam_ReadPortIndirect(void);
 void Jam_CheckPortIndirect(void);
-s32 Jam_WritePortAppDirect(seqp_*, u8, u16);
-s32 Jam_ReadPortAppDirect(seqp_*, u32, u16*);
-s32 Jam_CheckPortAppDirect(seqp_*, u32, u16);
+BOOL Jam_WritePortAppDirect(seqp_*, u32, u16);
+BOOL Jam_ReadPortAppDirect(seqp_*, u32, u16*);
+BOOL Jam_CheckPortAppDirect(seqp_*, u32, u16);
 void Jam_WritePort(void);
 void Jam_ReadPort(void);
 void Jam_WritePortChild(void);
@@ -168,13 +203,13 @@ void Jam_WritePortBros(void);
 void Jam_InitRegistTrack(void);
 void Jam_UnRegistTrack(seqp_*);
 seqp_* Jam_GetTrackHandle(u32);
-void Jam_InitExtBuffer(ExtBuffer*);
-BOOL Jam_AssignExtBuffer(seqp_*, ExtBuffer*);
-BOOL Jam_AssignExtBufferP(seqp_*, u8, ExtBuffer*);
-void Jam_SetExtFirFilterD(ExtBuffer*, s16*);
-void Jam_SetExtParamD(f32, ExtBuffer*, u8);
-void Jam_OnExtSwitchD(ExtBuffer*, u16);
-void Jam_OffExtSwitchD(ExtBuffer*, u16);
+void Jam_InitExtBuffer(OuterParam_*);
+BOOL Jam_AssignExtBuffer(seqp_*, OuterParam_*);
+BOOL Jam_AssignExtBufferP(seqp_*, u8, OuterParam_*);
+void Jam_SetExtFirFilterD(OuterParam_*, s16*);
+void Jam_SetExtParamD(f32, OuterParam_*, u8);
+void Jam_OnExtSwitchD(OuterParam_*, u16);
+void Jam_OffExtSwitchD(OuterParam_*, u16);
 void Jam_SetExtSwitchDirectD(void);
 void Jam_SetExtFirFilter(void);
 void Jam_SetExtParam(f32, seqp_*, u8);
