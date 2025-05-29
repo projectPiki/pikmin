@@ -3397,176 +3397,84 @@ static u32 Cmd_CheckWave()
  */
 static u32 Cmd_Printf()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC8(r1)
-	  stmw      r27, 0xB4(r1)
-	  addi      r29, r1, 0x28
-	  li        r31, 0
-	  li        r30, 0
-	  b         .loc_0x154
+	char buffer[0x80];
+	u8 fmtFlags[4];
+	u32 fmtParms[4];
+	size_t fmtCount;
+	size_t i;
 
-	.loc_0x20:
-	  lwz       r3, 0x2C30(r13)
-	  bl        -0x34C4
-	  addi      r28, r1, 0x2C
-	  add       r28, r28, r30
-	  stb       r3, 0x0(r28)
-	  lbz       r3, 0x0(r28)
-	  extsb.    r0, r3
-	  beq-      .loc_0x15C
-	  extsb     r0, r3
-	  cmpwi     r0, 0x5C
-	  bne-      .loc_0x80
-	  lwz       r3, 0x2C30(r13)
-	  bl        -0x34F0
-	  stb       r3, 0x0(r28)
-	  lbz       r3, 0x0(r28)
-	  extsb.    r0, r3
-	  beq-      .loc_0x15C
-	  extsb     r0, r3
-	  cmpwi     r0, 0x6E
-	  beq-      .loc_0x74
-	  b         .loc_0x150
+	u32 badCompiler[4];
 
-	.loc_0x74:
-	  li        r0, 0xD
-	  stb       r0, 0x0(r28)
-	  b         .loc_0x150
+	fmtCount = 0;
+	for (i = 0; i < ARRAY_SIZE(buffer); ++i) {
+		buffer[i] = __ByteRead(SEQ_P);
+		if (buffer[i] == '\0') {
+			// Handle end of string
+			break;
+		}
+		if (buffer[i] == '\\') {
+			// Handle escape sequences (just the one)
+			buffer[i] = __ByteRead(SEQ_P);
 
-	.loc_0x80:
-	  cmpwi     r0, 0x25
-	  bne-      .loc_0x150
-	  lwz       r3, 0x2C30(r13)
-	  addi      r30, r30, 0x1
-	  bl        -0x3530
-	  addi      r4, r1, 0x2C
-	  add       r4, r4, r30
-	  stb       r3, 0x0(r4)
-	  lbz       r3, 0x0(r4)
-	  extsb.    r0, r3
-	  beq-      .loc_0x15C
-	  extsb     r0, r3
-	  cmpwi     r0, 0x72
-	  beq-      .loc_0x114
-	  bge-      .loc_0xD4
-	  cmpwi     r0, 0x64
-	  beq-      .loc_0xF0
-	  bge-      .loc_0x14C
-	  cmpwi     r0, 0x52
-	  beq-      .loc_0x128
-	  b         .loc_0x14C
+			if (buffer[i] == '\0') {
+				// Unexpected end of string!
+				break;
+			}
+			switch (buffer[i]) {
+			case 'n':
+				// Convert newlines to... carriage returns?
+				buffer[i] = '\r';
+				break;
+			}
+			continue;
+		}
+		if (buffer[i] == '%') {
+			// Handle conversion specifiers (plus a few custom ones!)
+			++i;
+			buffer[i] = __ByteRead(SEQ_P);
 
-	.loc_0xD4:
-	  cmpwi     r0, 0x78
-	  beq-      .loc_0xFC
-	  bge-      .loc_0x14C
-	  cmpwi     r0, 0x74
-	  beq-      .loc_0x13C
-	  bge-      .loc_0x14C
-	  b         .loc_0x108
-
-	.loc_0xF0:
-	  li        r0, 0
-	  stbx      r0, r29, r31
-	  b         .loc_0x14C
-
-	.loc_0xFC:
-	  li        r0, 0x1
-	  stbx      r0, r29, r31
-	  b         .loc_0x14C
-
-	.loc_0x108:
-	  li        r0, 0x2
-	  stbx      r0, r29, r31
-	  b         .loc_0x14C
-
-	.loc_0x114:
-	  li        r3, 0x3
-	  li        r0, 0x64
-	  stbx      r3, r29, r31
-	  stb       r0, 0x0(r4)
-	  b         .loc_0x14C
-
-	.loc_0x128:
-	  li        r3, 0x4
-	  li        r0, 0x78
-	  stbx      r3, r29, r31
-	  stb       r0, 0x0(r4)
-	  b         .loc_0x14C
-
-	.loc_0x13C:
-	  li        r3, 0x5
-	  li        r0, 0x78
-	  stbx      r3, r29, r31
-	  stb       r0, 0x0(r4)
-
-	.loc_0x14C:
-	  addi      r31, r31, 0x1
-
-	.loc_0x150:
-	  addi      r30, r30, 0x1
-
-	.loc_0x154:
-	  cmplwi    r30, 0x80
-	  blt+      .loc_0x20
-
-	.loc_0x15C:
-	  li        r27, 0
-	  addi      r30, r1, 0x28
-	  addi      r29, r27, 0
-	  b         .loc_0x1E4
-
-	.loc_0x16C:
-	  lwz       r3, 0x2C30(r13)
-	  bl        -0x3610
-	  addi      r28, r1, 0x18
-	  rlwinm    r0,r3,0,24,31
-	  add       r28, r28, r29
-	  stw       r0, 0x0(r28)
-	  lbz       r0, 0x0(r30)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x1A4
-	  lwz       r3, 0x2C30(r13)
-	  lwz       r4, 0x0(r28)
-	  bl        -0x3838
-	  stw       r3, 0x0(r28)
-	  b         .loc_0x1D8
-
-	.loc_0x1A4:
-	  cmplwi    r0, 0x5
-	  bne-      .loc_0x1BC
-	  lwz       r3, 0x2C30(r13)
-	  lwz       r0, 0x88(r3)
-	  stw       r0, 0x0(r28)
-	  b         .loc_0x1D8
-
-	.loc_0x1BC:
-	  cmplwi    r0, 0x3
-	  blt-      .loc_0x1D8
-	  lwz       r0, 0x0(r28)
-	  lwz       r3, 0x2C30(r13)
-	  rlwinm    r4,r0,0,24,31
-	  bl        -0x2930
-	  stw       r3, 0x0(r28)
-
-	.loc_0x1D8:
-	  addi      r27, r27, 0x1
-	  addi      r30, r30, 0x1
-	  addi      r29, r29, 0x4
-
-	.loc_0x1E4:
-	  cmplw     r27, r31
-	  blt+      .loc_0x16C
-	  lmw       r27, 0xB4(r1)
-	  li        r3, 0
-	  lwz       r0, 0xCC(r1)
-	  addi      r1, r1, 0xC8
-	  mtlr      r0
-	  blr
-	*/
+			if (buffer[i] == '\0') {
+				// Unexpected end of string!
+				break;
+			}
+			switch (buffer[i]) {
+			case 'd': // Decimal
+				fmtFlags[fmtCount] = 0;
+				break;
+			case 'x': // Hexadecimal
+				fmtFlags[fmtCount] = 1;
+				break;
+			case 's': // String
+				fmtFlags[fmtCount] = 2;
+				break;
+			case 'r': // ?
+				fmtFlags[fmtCount] = 3;
+				buffer[i]          = 'd';
+				break;
+			case 'R': // ?
+				fmtFlags[fmtCount] = 4;
+				buffer[i]          = 'x';
+				break;
+			case 't': // ?
+				fmtFlags[fmtCount] = 5;
+				buffer[i]          = 'x';
+				break;
+			}
+			++fmtCount;
+			continue;
+		}
+	}
+	for (i = 0; i < fmtCount; ++i) {
+		fmtParms[i] = __ByteRead(SEQ_P);
+		if (fmtFlags[i] == 2) {
+			fmtParms[i] = (u32)Jam_OfsToAddr(SEQ_P, fmtParms[i]);
+		} else if (fmtFlags[i] == 5) {
+			fmtParms[i] = SEQ_P->_88;
+		} else if (fmtFlags[i] >= 3) {
+			fmtParms[i] = __ExchangeRegisterValue(SEQ_P, fmtParms[i]);
+		}
+	}
+	return 0;
 }
 
 #define CMD_COUNT (64)
