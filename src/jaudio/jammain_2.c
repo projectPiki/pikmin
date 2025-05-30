@@ -7,6 +7,8 @@
 #include "jaudio/noteon.h"
 #include "jaudio/rate.h"
 
+#include "Dolphin/OS/OSError.h"
+
 // TODO IN THIS FILE: What do the return values for the `Cmd_` functions signify?
 // 0 is probably success / "no error".  Return values 1 and 2 have been observed.
 // This just breaking: Cmd_LoopE returns 0x80.
@@ -3219,47 +3221,46 @@ static u32 Cmd_CheckWave()
  */
 static u32 Cmd_Printf()
 {
-	char buffer[0x80];
+	char fmtStr[0x80];
 	u8 fmtFlags[4];
 	u32 fmtParms[4];
+	u32 badCompiler[4]; // Maybe they intended to support floats?
 	size_t fmtCount;
 	size_t i;
 
-	u32 badCompiler[4];
-
 	fmtCount = 0;
-	for (i = 0; i < ARRAY_SIZE(buffer); ++i) {
-		buffer[i] = __ByteRead(SEQ_P);
-		if (buffer[i] == '\0') {
+	for (i = 0; i < ARRAY_SIZE(fmtStr); ++i) {
+		fmtStr[i] = __ByteRead(SEQ_P);
+		if (fmtStr[i] == '\0') {
 			// Handle end of string
 			break;
 		}
-		if (buffer[i] == '\\') {
+		if (fmtStr[i] == '\\') {
 			// Handle escape sequences (just the one)
-			buffer[i] = __ByteRead(SEQ_P);
+			fmtStr[i] = __ByteRead(SEQ_P);
 
-			if (buffer[i] == '\0') {
+			if (fmtStr[i] == '\0') {
 				// Unexpected end of string!
 				break;
 			}
-			switch (buffer[i]) {
+			switch (fmtStr[i]) {
 			case 'n':
 				// Convert newlines to... carriage returns?
-				buffer[i] = '\r';
+				fmtStr[i] = '\r';
 				break;
 			}
 			continue;
 		}
-		if (buffer[i] == '%') {
+		if (fmtStr[i] == '%') {
 			// Handle conversion specifiers (plus a few custom ones!)
 			++i;
-			buffer[i] = __ByteRead(SEQ_P);
+			fmtStr[i] = __ByteRead(SEQ_P);
 
-			if (buffer[i] == '\0') {
+			if (fmtStr[i] == '\0') {
 				// Unexpected end of string!
 				break;
 			}
-			switch (buffer[i]) {
+			switch (fmtStr[i]) {
 			case 'd': // Decimal
 				fmtFlags[fmtCount] = 0;
 				break;
@@ -3271,15 +3272,15 @@ static u32 Cmd_Printf()
 				break;
 			case 'r': // ?
 				fmtFlags[fmtCount] = 3;
-				buffer[i]          = 'd';
+				fmtStr[i]          = 'd';
 				break;
 			case 'R': // ?
 				fmtFlags[fmtCount] = 4;
-				buffer[i]          = 'x';
+				fmtStr[i]          = 'x';
 				break;
 			case 't': // ?
 				fmtFlags[fmtCount] = 5;
-				buffer[i]          = 'x';
+				fmtStr[i]          = 'x';
 				break;
 			}
 			++fmtCount;
@@ -3296,6 +3297,10 @@ static u32 Cmd_Printf()
 			fmtParms[i] = __ExchangeRegisterValue(SEQ_P, fmtParms[i]);
 		}
 	}
+	// A restoration of this command's functionality can be enabled below:
+#if 0
+	OSReport(fmtStr, fmtParms[0], fmtParms[1], fmtParms[2], fmtParms[3]);
+#endif
 	return 0;
 }
 
