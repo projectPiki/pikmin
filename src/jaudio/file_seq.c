@@ -81,7 +81,7 @@ u32 Jaf_CheckSeqSize(u32 arcHandleMask)
  * Address:	8001B500
  * Size:	000088
  */
-BOOL Jaf_LoadSeq(u32 param_1, u8* param_2)
+u32 Jaf_LoadSeq(u32 param_1, u8* param_2)
 {
 	if (seq_archandle == -1) {
 		return FALSE;

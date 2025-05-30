@@ -1,5 +1,6 @@
 #include "jaudio/piki_bgm.h"
 
+#include "jaudio/aictrl.h"
 #include "jaudio/playercall.h"
 #include "jaudio/file_seq.h"
 #include "jaudio/seqsetup.h"
@@ -8,28 +9,128 @@
 #include "jaudio/jammain_2.h"
 #include "Dolphin/os.h"
 
-// This struct might be something else entirely, not BgmControl
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x468.
+ */
 typedef struct BgmControl_ {
-	int _00; // _00, BgmControl_* ?
-	u8 _04[0x458];
-	f32 _45C; // _45C
+	int _00;                     // _00
+	int _04;                     // _04
+	int _08;                     // _08
+	u8 _0C;                      // _0C
+	s8 trackHandle;              // _0D
+	u8 _0E;                      // _0E
+	u8 _0F;                      // _0F
+	u8 _10;                      // _10
+	u8 _11;                      // _11
+	u32 _14;                     // _14
+	u32 _18;                     // _18, unknown
+	OuterParam_ trackParams[16]; // _1C
+	f32 trackVolumes[16];        // _41C
+	f32 _45C;                    // _45C, possibly gameVolume?
+	f32 _460;                    // _460, possibly bossVolume?
+	u32 _464;                    // _464, unknown
 } BgmControl_;
-BgmControl_ bgm[1]; // no idea how to handle this
 
-int call_counter;
-static int fadeouttime = 30;
-u8* buffer[2];
-int last_crossmode;
-u8 lastside;
-int bgm_semaphore;
-int buffer_mus[2]   = { -1, -1 };
-f32 game_bgm_volume = 1.0f;
-int last_bgm_level  = -1;
+static BgmControl_ bgm[3];
 
-f32 GAMEBGM_VOL_TABLE[]    = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
-u16 GAMEDEMO_VOL_TABLE[]   = { 0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 10000, 12000, 0 };
-u16 GAMESE_VOL_TABLE[]     = { 0, 1000, 2000, 4000, 7000, 10000, 13000, 16000, 20000, 25000, 0x7fff };
-u16 GAMESTREAM_VOL_TABLE[] = { 0, 600, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000, 12000 };
+static u8 lastside;
+static int last_crossmode;
+static int call_counter;
+static int bgm_semaphore;
+
+static u8* buffer[2]       = { nullptr, nullptr };
+static int buffer_mus[2]   = { -1, -1 };
+static int fadeouttime     = 30;
+static f32 game_bgm_volume = 1.0f;
+
+static u16 bgm0_set[] = {
+	0xFFFF,
+	0xFFFF,
+	0xFFFF,
+	0xFFFF,
+};
+static u16 bgm1_set[] = {
+	0x103C,
+	0x17D8,
+	0x8003,
+	0x19C3,
+};
+static u16 bgm2_set[] = {
+	0x33,
+	0xF3,
+	0x3C,
+	0xFC,
+};
+static u16 bgm3_set[] = {
+	0xC00F,
+	0xF78D,
+	0xC07C,
+	0xFE2C,
+};
+static u16 bgm4_set[] = {
+	0x47,
+	0x297,
+	0x2D,
+	0x23D,
+};
+static u16 bgm5_set[] = {
+	0x57D,
+	0x5FB,
+	0xA78,
+	0xAFA,
+};
+
+static u16* bgm_mute_set[20] = {
+	bgm0_set, bgm0_set, bgm1_set, bgm2_set, bgm0_set, bgm0_set, bgm0_set, bgm3_set, bgm4_set, bgm0_set,
+	bgm0_set, bgm0_set, bgm0_set, bgm0_set, bgm0_set, bgm5_set, bgm0_set, bgm0_set, bgm0_set, bgm0_set,
+};
+
+static f32 bgm0_volset[] = {
+	0.5f,
+	0.15f,
+};
+static f32 bgm1_volset[] = {
+	0.5f,
+	0.15f,
+};
+static f32 bgm2_volset[] = {
+	0.5f,
+	0.15f,
+};
+static f32 bgm3_volset[] = {
+	0.5f,
+	0.15f,
+};
+static f32 bgm4_volset[] = {
+	0.5f,
+	0.15f,
+};
+static f32 bgm5_volset[] = {
+	0.55f,
+	0.15f,
+};
+static f32 cresult_volset[] = {
+	0.35f,
+	0.15f,
+};
+
+static f32* bgm_volume_set[20] = {
+	bgm0_volset, bgm0_volset, bgm1_volset, bgm2_volset, bgm0_volset, bgm0_volset, bgm0_volset, bgm3_volset, bgm4_volset,    bgm0_volset,
+	bgm0_volset, bgm0_volset, bgm0_volset, bgm0_volset, bgm0_volset, bgm5_volset, bgm0_volset, bgm0_volset, cresult_volset, bgm0_volset,
+};
+
+static f32 GAMEBGM_VOL_TABLE[]    = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
+static u16 GAMEDEMO_VOL_TABLE[]   = { 0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 10000, 12000 };
+static u16 GAMESE_VOL_TABLE[]     = { 0, 1000, 2000, 4000, 7000, 10000, 13000, 16000, 20000, 25000, 0x7fff };
+static u16 GAMESTREAM_VOL_TABLE[] = { 0, 600, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000, 12000 };
+
+static u8 last_bgm_level = 0xFF;
+
+// forward declarations
+static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control);
+
 /*
  * --INFO--
  * Address:	80018980
@@ -51,12 +152,38 @@ s32 Jac_BgmFrameCallback(void* a1)
  */
 void Jac_InitBgm(void)
 {
-	for (int i = 0; i < 3; i++) {
-		bgm[i]._00 = 0;
+	u32 i;
+	for (i = 0; i < 3; i++) {
+		bgm[i]._00         = 0;
+		bgm[i]._0E         = 0;
+		bgm[i]._0F         = 0;
+		bgm[i]._10         = 0;
+		bgm[i]._11         = 0;
+		bgm[i].trackHandle = -1;
 	}
 
-	buffer[0] = (u8*)OSAlloc(0x8000);
-	buffer[1] = (u8*)OSAlloc(0x8000);
+	u32* REF_i = &i;
+
+	if (!buffer[0]) {
+		int vals1[5] = { 0, 1, 11, 13, 16 };
+		int vals2[5] = { 0, 1, -1, 2, -1 };
+
+		for (i = 0; i < 5; i++) {
+			u32 size;
+			u8* seqbuf;
+			size            = Jaf_CheckSeqSize(vals1[i]);
+			u32* REF_size   = &size;
+			seqbuf          = (u8*)OSAlloc2(size);
+			u8** REF_seqbuf = &seqbuf;
+			u32 badCompiler;
+			if ((u32)Jaf_LoadSeq(vals1[i], seqbuf) && vals2[i] != -1) {
+				Jaf_StartSeq(vals2[i], vals1[i]);
+			}
+		}
+
+		buffer[0] = (u8*)OSAlloc2(0x8000);
+		buffer[1] = (u8*)OSAlloc2(0x8000);
+	}
 	Jac_RegisterPlayerCallback(Jac_BgmFrameCallback, 0);
 	/*
 	.loc_0x0:
@@ -192,7 +319,7 @@ void Jac_FadeOutBgm(u32 flag, u32 fade)
 void Jac_StopBgm(u32 id)
 {
 	if (bgm[id]._00) {
-		Jaf_StopSeq((s8)bgm[id]._04[9]);
+		Jaf_StopSeq(bgm[id].trackHandle);
 		bgm[id]._00 = 0;
 	}
 }
@@ -202,19 +329,19 @@ void Jac_StopBgm(u32 id)
  * Address:	80018BE0
  * Size:	0000A0
  */
-void Jac_ReadyBgm(int id)
+void Jac_ReadyBgm(u32 id)
 {
-	u32 bgm = id;
+	u32* REF_id = &id;
 	if (id < 2) {
-		bgm = 2;
+		id = 2;
 	}
-	if (Jaf_CheckSeq(bgm) == 0) {
+	if (Jaf_CheckSeq(id) == 0) {
 		if (buffer_mus[lastside] != -1) {
 			Jaf_ClearSeq(buffer_mus[lastside]);
 		}
-		Jaf_LoadSeqA(bgm, buffer[lastside]);
+		Jaf_LoadSeqA(id, buffer[lastside]);
 
-		buffer_mus[lastside] = bgm;
+		buffer_mus[lastside] = id;
 		lastside             = 1 - lastside;
 	}
 	/*
@@ -273,19 +400,19 @@ void Jac_ReadyBgm(int id)
  * Address:	80018C80
  * Size:	000244
  */
-void Jac_PlayBgm(int a, int b)
+void Jac_PlayBgm(u32 a, u32 id)
 {
+	u32* REF_b = &id;
 	Jac_SetProcessStatus(8);
 	if (bgm[a]._00) {
 		Jac_StopBgm(a);
 	}
 
 	// this is nearly just Jac_ReadyBgm again
-	u32 id = b;
-	if (b < 2) {
+	if (id < 2) {
 		id = 2;
 	}
-	int check = (int)Jaf_CheckSeq(id);
+	u32 check = (u32)Jaf_CheckSeq(id);
 	if (check == 0) {
 		if (buffer_mus[lastside] != -1) {
 			Jaf_ClearSeq(buffer_mus[lastside]);
@@ -295,22 +422,21 @@ void Jac_PlayBgm(int a, int b)
 		buffer_mus[lastside] = id;
 		lastside             = 1 - lastside;
 	} else if (check == 1) {
-		int stop = 1;
-		while (stop == 1) {
-			stop = (int)Jaf_CheckSeq(id);
+		while (check == 1) {
+			check = (u32)Jaf_CheckSeq(id);
 		}
 	}
 
 	seqp_* track = Jaf_HandleToSeq(a + 3);
 
-	bgm[a]._04[0]  = 1;
-	bgm[a]._04[1]  = 1;
-	int id2        = a + 3;
-	bgm[a]._04[2]  = 0;
-	bgm[a]._04[6]  = 0;
-	bgm[a]._04[3]  = 0;
-	bgm[a]._04[5]  = id - 2;
-	bgm[a]._04[13] = id2;
+	bgm[a]._00         = 1;
+	bgm[a]._04         = 1;
+	int id2            = a + 3;
+	bgm[a]._08         = 0;
+	bgm[a]._18         = 0;
+	bgm[a]._0C         = 0;
+	bgm[a]._14         = id - 2;
+	bgm[a].trackHandle = a + 3;
 
 	Jac_SetBgmModeFlag(a, 2, 0);
 	Jac_SetBgmModeFlag(a, 1, 0);
@@ -319,14 +445,14 @@ void Jac_PlayBgm(int a, int b)
 	Jaf_ReadySeq(id2, id);
 	Jac_BgmFrameWork();
 	Jaq_SetBankNumber(Jaf_HandleToSeq(id2), id);
-	bgm[a]._00 = 0;
+	bgm[a]._464 = 0;
 
 	if (a == 0) {
 		bgm[a]._45C = game_bgm_volume;
 		Jam_MuteTrack(track, 0);
 		last_crossmode = 0;
 	} else {
-		bgm[a]._45C = game_bgm_volume;
+		bgm[a]._45C = 0.0f;
 		Jam_MuteTrack(track, 1);
 	}
 
@@ -521,50 +647,20 @@ void Jac_PlayBgm(int a, int b)
  * Address:	80018EE0
  * Size:	000058
  */
-BOOL Jac_ChangeBgmMode(int id, int type)
+BOOL Jac_ChangeBgmMode(u32 id, u8 type)
 {
-	if (type == bgm[id]._04[0]) {
-		return;
+	if (type == bgm[id]._0C) {
+		return FALSE;
 	}
 
 	if (bgm[id]._00) {
-		bgm[id]._04[3] = type;
-		bgm[id]._04[2] = 1;
+		bgm[id]._0C = type;
+		bgm[id]._08 = 1;
+	} else {
 		return FALSE;
 	}
 
 	return TRUE;
-	/*
-	.loc_0x0:
-	  mulli     r6, r3, 0x468
-	  lis       r3, 0x8036
-	  addi      r5, r3, 0x38E0
-	  rlwinm    r3,r4,0,24,31
-	  add       r7, r5, r6
-	  lbzu      r0, 0xC(r7)
-	  cmplw     r3, r0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  blr
-
-	.loc_0x28:
-	  lwzx      r0, r5, r6
-	  cmpwi     r0, 0
-	  beq-      .loc_0x48
-	  stb       r4, 0x0(r7)
-	  add       r3, r5, r6
-	  li        r0, 0x1
-	  stw       r0, 0x8(r3)
-	  b         .loc_0x50
-
-	.loc_0x48:
-	  li        r3, 0
-	  blr
-
-	.loc_0x50:
-	  li        r3, 0x1
-	  blr
-	*/
 }
 
 /*
@@ -572,8 +668,24 @@ BOOL Jac_ChangeBgmMode(int id, int type)
  * Address:	80018F40
  * Size:	0000A8
  */
-void Jac_SetBgmModeFlag(u32 a, u32 b, u32 c)
+void Jac_SetBgmModeFlag(u32 a, u8 b, u8 c)
 {
+	BgmControl_* thisBgm = &bgm[a];
+	switch (b) {
+	case 2:
+		thisBgm->_0E = c;
+		break;
+	case 1:
+		thisBgm->_0F = c;
+		break;
+	case 4:
+		thisBgm->_10 = c;
+		break;
+	case 8:
+		thisBgm->_11 = c;
+		break;
+	}
+	Jac_ChangeBgmMode(a, thisBgm->_0F + (thisBgm->_0E << 1) + (thisBgm->_10 << 2) + (thisBgm->_11 << 3));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -643,114 +755,37 @@ void Jac_BgmFrameWork(void)
 	if (bgm_semaphore == 0) {
 		bgm_semaphore = TRUE;
 
-		for (int i = 0; i < 3; i++) {
-			if (bgm[i]._00) {
-				if (bgm[i]._04[0]) {
-					Jac_ChangeBgmTrackVol(bgm[i]._00);
+		for (u32 i = 0; i < 3; i++) {
+			if (!bgm[i]._00) {
+				continue;
+			}
+			if (bgm[i]._04) {
+				Jac_ChangeBgmTrackVol(&bgm[i]);
+				continue;
+			}
+			if (bgm[i]._08) {
+				Jac_ChangeBgmTrackVol(&bgm[i]);
+				bgm[i]._08 = 0;
+			}
+			if (bgm[i]._18) {
+				Jac_MoveBgmTrackVol(&bgm[i]);
+			}
+
+			if (bgm[i]._464) {
+				if (!Jac_UpdateBgmCrossVol(&bgm[i])) {
+					bgm[i]._464 = 0;
 					continue;
 				}
-				if (bgm[i]._04[1]) {
-					Jac_ChangeBgmTrackVol(bgm[i]._00);
-					bgm[i]._04[1] = 0;
-				}
-				if (bgm[i]._04[12]) {
-					Jac_MoveBgmTrackVol(bgm[i]._00);
+				bgm[i]._464--;
+
+				if (bgm[i]._464 == 0 && 1 - last_crossmode == i) {
+					Jam_MuteTrack(Jaf_HandleToSeq(bgm[i].trackHandle), 1);
 				}
 			}
 		}
 
 		bgm_semaphore = FALSE;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r27, 0xC(r1)
-	  lwz       r0, 0x2D04(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x110
-	  li        r0, 0x1
-	  lis       r3, 0x8036
-	  stw       r0, 0x2D04(r13)
-	  addi      r29, r3, 0x38E0
-	  li        r31, 0
-	  li        r30, 0
-
-	.loc_0x34:
-	  add       r28, r29, r30
-	  lwz       r0, 0x0(r28)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xF8
-	  lwz       r0, 0x4(r28)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x5C
-	  mr        r3, r28
-	  bl        0x1AC
-	  b         .loc_0xF8
-
-	.loc_0x5C:
-	  addi      r27, r28, 0x8
-	  lwz       r0, 0x8(r28)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x7C
-	  mr        r3, r28
-	  bl        0x190
-	  li        r0, 0
-	  stw       r0, 0x0(r27)
-
-	.loc_0x7C:
-	  lwz       r0, 0x18(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x90
-	  mr        r3, r28
-	  bl        0xB4
-
-	.loc_0x90:
-	  addi      r27, r28, 0x464
-	  lwz       r0, 0x464(r28)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xF8
-	  mr        r3, r28
-	  bl        0x2DC
-	  cmpwi     r3, 0
-	  bne-      .loc_0xBC
-	  li        r0, 0
-	  stw       r0, 0x0(r27)
-	  b         .loc_0xF8
-
-	.loc_0xBC:
-	  lwz       r3, 0x0(r27)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x0(r27)
-	  lwz       r0, 0x0(r27)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xF8
-	  lwz       r0, 0x2CFC(r13)
-	  subfic    r0, r0, 0x1
-	  cmplw     r0, r31
-	  bne-      .loc_0xF8
-	  lbz       r3, 0xD(r28)
-	  extsb     r3, r3
-	  bl        0x2694
-	  li        r4, 0x1
-	  bl        -0x7CF4
-
-	.loc_0xF8:
-	  addi      r31, r31, 0x1
-	  addi      r30, r30, 0x468
-	  cmplwi    r31, 0x3
-	  blt+      .loc_0x34
-	  li        r0, 0
-	  stw       r0, 0x2D04(r13)
-
-	.loc_0x110:
-	  lmw       r27, 0xC(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -758,62 +793,23 @@ void Jac_BgmFrameWork(void)
  * Address:	80019140
  * Size:	0000BC
  */
-void Jac_MoveBgmTrackVol(int)
+void Jac_MoveBgmTrackVol(BgmControl_* control)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  lis       r0, 0x4330
-	  stwu      r1, -0x38(r1)
-	  stfd      f31, 0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r3, 0
-	  lwz       r4, 0x18(r3)
-	  lbz       r3, 0xD(r3)
-	  stw       r4, 0x14(r1)
-	  lfd       f1, -0x7E28(r2)
-	  extsb     r3, r3
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f31, f0, f1
-	  bl        0x2604
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA4
-	  lwz       r4, 0x18(r27)
-	  addi      r29, r3, 0
-	  li        r28, 0
-	  li        r31, 0
-	  subi      r0, r4, 0x1
-	  li        r30, 0
-	  stw       r0, 0x18(r27)
+	seqp_* track2;
+	seqp_* track;
+	u32 i;
+	f32 a  = control->_18;
+	track2 = Jaf_HandleToSeq(control->trackHandle);
+	if (!track2) {
+		return;
+	}
+	track = track2;
+	control->_18--;
 
-	.loc_0x64:
-	  addi      r3, r30, 0x41C
-	  addi      r0, r31, 0x28
-	  lfsx      f0, r27, r3
-	  mr        r3, r29
-	  lfsx      f1, r27, r0
-	  rlwinm    r4,r28,0,24,31
-	  li        r5, 0x1
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f0, f31
-	  fadds     f1, f1, f0
-	  bl        -0x87EC
-	  addi      r28, r28, 0x1
-	  addi      r30, r30, 0x4
-	  cmplwi    r28, 0x10
-	  addi      r31, r31, 0x40
-	  blt+      .loc_0x64
-
-	.loc_0xA4:
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  lfd       f31, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	for (i = 0; i < 16; i++) {
+		f32 b = control->trackVolumes[i];
+		Jam_SetExtParamP(control->trackParams[i]._0C + (b - control->trackParams[i]._0C) / a, track, i, 1);
+	}
 }
 
 /*
@@ -821,124 +817,48 @@ void Jac_MoveBgmTrackVol(int)
  * Address:	80019200
  * Size:	00017C
  */
-void Jac_ChangeBgmTrackVol(int)
+void Jac_ChangeBgmTrackVol(BgmControl_* control)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  mr        r31, r3
-	  lbz       r3, 0xD(r3)
-	  extsb     r3, r3
-	  bl        0x2564
-	  cmplwi    r3, 0
-	  beq-      .loc_0x168
-	  lwz       r0, 0x14(r31)
-	  lis       r5, 0x8022
-	  lis       r4, 0x8022
-	  addi      r5, r5, 0x6130
-	  rlwinm    r6,r0,2,0,29
-	  addi      r0, r4, 0x6180
-	  add       r5, r5, r6
-	  lbz       r8, 0xC(r31)
-	  add       r4, r0, r6
-	  lwz       r7, 0x0(r5)
-	  lwz       r5, 0x0(r4)
-	  rlwinm    r6,r8,1,29,30
-	  rlwinm    r4,r8,0,29,29
-	  rlwinm.   r0,r8,0,28,28
-	  lhzx      r6, r7, r6
-	  lfsx      f1, r5, r4
-	  beq-      .loc_0x70
-	  lfs       f1, -0x7E30(r2)
+	u32 badCompiler[4];
+	u32 i;
+	seqp_* track2 = Jaf_HandleToSeq(control->trackHandle);
+	if (!track2) {
+		return;
+	}
 
-	.loc_0x70:
-	  li        r0, 0x10
-	  addi      r26, r3, 0
-	  lfs       f0, -0x7E30(r2)
-	  li        r4, 0
-	  li        r3, 0
-	  mtctr     r0
+	u16 mute = bgm_mute_set[control->_14][control->_0C & 0x3];
+	f32 vol  = bgm_volume_set[control->_14][(control->_0C >> 2) & 0x1];
 
-	.loc_0x88:
-	  sraw      r0, r6, r4
-	  rlwinm    r0,r0,0,31,31
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xB4
-	  bge-      .loc_0xBC
-	  cmpwi     r0, 0
-	  bge-      .loc_0xA8
-	  b         .loc_0xBC
+	if (control->_0C & 0x8) {
+		vol = 0.0f;
+	}
+	seqp_* track = track2;
 
-	.loc_0xA8:
-	  addi      r0, r3, 0x41C
-	  stfsx     f0, r31, r0
-	  b         .loc_0xBC
+	for (i = 0; i < 16; i++) {
+		switch ((mute >> i) & 0x1) {
+		case 0:
+			control->trackVolumes[i] = 0.0f;
+			break;
 
-	.loc_0xB4:
-	  addi      r0, r3, 0x41C
-	  stfsx     f1, r31, r0
+		case 1:
+			control->trackVolumes[i] = vol;
+			break;
+		}
+	}
 
-	.loc_0xBC:
-	  addi      r4, r4, 0x1
-	  addi      r3, r3, 0x4
-	  bdnz+     .loc_0x88
-	  lwz       r0, 0x4(r31)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x148
-	  li        r27, 0
-	  li        r30, 0
-	  li        r29, 0
-
-	.loc_0xE0:
-	  addi      r28, r29, 0x1C
-	  add       r28, r31, r28
-	  addi      r3, r28, 0
-	  bl        -0x8C2C
-	  addi      r3, r26, 0
-	  addi      r5, r28, 0
-	  rlwinm    r4,r27,0,24,31
-	  bl        -0x8BDC
-	  addi      r0, r30, 0x41C
-	  addi      r3, r26, 0
-	  lfsx      f1, r31, r0
-	  rlwinm    r4,r27,0,24,31
-	  li        r5, 0x1
-	  bl        -0x8934
-	  addi      r3, r26, 0
-	  rlwinm    r4,r27,0,24,31
-	  li        r5, 0x1
-	  bl        -0x8904
-	  addi      r27, r27, 0x1
-	  addi      r29, r29, 0x40
-	  cmplwi    r27, 0x10
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0xE0
-	  li        r0, 0
-	  stw       r0, 0x4(r31)
-	  b         .loc_0x168
-
-	.loc_0x148:
-	  lbz       r0, 0xC(r31)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0x160
-	  lwz       r0, -0x7F98(r13)
-	  stw       r0, 0x18(r31)
-	  b         .loc_0x168
-
-	.loc_0x160:
-	  li        r0, 0x3C
-	  stw       r0, 0x18(r31)
-
-	.loc_0x168:
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	if (control->_04) {
+		for (i = 0; i < 16; i++) {
+			Jam_InitExtBuffer(&control->trackParams[i]);
+			Jam_AssignExtBufferP(track, i, &control->trackParams[i]);
+			Jam_SetExtParamP(control->trackVolumes[i], track, i, 1);
+			Jam_OnExtSwitchP(track, i, 1);
+		}
+		control->_04 = 0;
+	} else if (control->_0C & 0x8) {
+		control->_18 = fadeouttime;
+	} else {
+		control->_18 = 60;
+	}
 }
 
 /*
@@ -946,50 +866,17 @@ void Jac_ChangeBgmTrackVol(int)
  * Address:	80019380
  * Size:	00008C
  */
-void Jac_UpdateBgmCrossVol(BgmControl_* control)
+static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  lis       r0, 0x4330
-	  stwu      r1, -0x28(r1)
-	  stfd      f31, 0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  lwz       r4, 0x464(r3)
-	  lbz       r3, 0xD(r3)
-	  stw       r4, 0x14(r1)
-	  lfd       f1, -0x7E28(r2)
-	  extsb     r3, r3
-	  stw       r0, 0x10(r1)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f31, f0, f1
-	  bl        0x23C4
-	  lwz       r4, 0x2AC(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x54
-	  li        r3, 0
-	  b         .loc_0x74
+	f32 a        = control->_464;
+	seqp_* track = Jaf_HandleToSeq(control->trackHandle);
 
-	.loc_0x54:
-	  lfs       f1, 0xC(r4)
-	  li        r4, 0x1
-	  lfs       f0, 0x45C(r31)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f0, f31
-	  fadds     f1, f1, f0
-	  bl        -0x8ACC
-	  li        r3, 0x1
+	if (!track->_2AC) {
+		return FALSE;
+	}
 
-	.loc_0x74:
-	  lwz       r0, 0x2C(r1)
-	  lfd       f31, 0x20(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	Jam_SetExtParam(track->_2AC->_0C + (control->_45C - track->_2AC->_0C) / a, track, 1);
+	return TRUE;
 }
 
 /*
@@ -999,70 +886,20 @@ void Jac_UpdateBgmCrossVol(BgmControl_* control)
  */
 void Jac_GameVolume(u8 bgmVol, u8 seVol)
 {
+	u16 tmpSeVol;
+	u16 tmpDemoVol;
 	game_bgm_volume = GAMEBGM_VOL_TABLE[bgmVol];
 	if (last_bgm_level != bgmVol) {
 		Jac_EasyCrossFade(2, 10);
 	}
 
 	last_bgm_level = bgmVol;
-	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x30000), 2, GAMEDEMO_VOL_TABLE[bgmVol]);
-	Jac_SetStreamLevel(GAMESTREAM_VOL_TABLE[bgmVol], GAMESTREAM_VOL_TABLE[bgmVol]);
-	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x10000), 0, GAMESE_VOL_TABLE[seVol]);
-	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x20000), 0, GAMESE_VOL_TABLE[seVol]);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  addi      r29, r3, 0
-	  lis       r3, 0x8022
-	  rlwinm    r31,r29,0,24,31
-	  addi      r30, r3, 0x6130
-	  rlwinm    r3,r29,2,22,29
-	  add       r3, r30, r3
-	  mr        r28, r4
-	  lbz       r0, -0x7F28(r13)
-	  lfs       f0, 0xA0(r3)
-	  cmplw     r0, r31
-	  stfs      f0, -0x7F94(r13)
-	  beq-      .loc_0x4C
-	  li        r3, 0x2
-	  li        r4, 0xA
-	  bl        0x98
-
-	.loc_0x4C:
-	  rlwinm    r0,r31,1,0,30
-	  stb       r29, -0x7F28(r13)
-	  add       r31, r30, r0
-	  lis       r3, 0x3
-	  lhz       r29, 0xCC(r31)
-	  bl        -0x8E20
-	  addi      r5, r29, 0
-	  li        r4, 0x2
-	  bl        -0x910C
-	  rlwinm    r0,r28,1,23,30
-	  lhz       r3, 0xFC(r31)
-	  add       r31, r30, r0
-	  lhz       r4, 0xFC(r31)
-	  bl        0x940
-	  lhz       r30, 0xE4(r31)
-	  lis       r3, 0x1
-	  bl        -0x8E4C
-	  addi      r5, r30, 0
-	  li        r4, 0
-	  bl        -0x9138
-	  lis       r3, 0x2
-	  bl        -0x8E60
-	  addi      r5, r30, 0
-	  li        r4, 0
-	  bl        -0x914C
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	tmpDemoVol     = GAMEDEMO_VOL_TABLE[bgmVol];
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x30000), 2, tmpDemoVol);
+	Jac_SetStreamLevel(GAMESTREAM_VOL_TABLE[bgmVol], GAMESTREAM_VOL_TABLE[seVol]);
+	tmpSeVol = GAMESE_VOL_TABLE[seVol];
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x10000), 0, tmpSeVol);
+	Jam_WritePortAppDirect(Jam_GetTrackHandle(0x20000), 0, tmpSeVol);
 }
 
 /*
@@ -1070,91 +907,34 @@ void Jac_GameVolume(u8 bgmVol, u8 seVol)
  * Address:	80019500
  * Size:	0000E4
  */
-void Jac_EasyCrossFade(u32 type, u32 val)
+void Jac_EasyCrossFade(u8 type, u32 val)
 {
+	u8* REF_type = &type;
+	u32* REF_val = &val;
 	switch (type) {
 	case 0:
-		/* code */
+		bgm[0]._45C = game_bgm_volume;
+		bgm[1]._45C = 0.0f;
+		Jam_MuteTrack(Jaf_HandleToSeq(bgm[0].trackHandle), 0);
+		last_crossmode = 0;
 		break;
+
 	case 1:
+		bgm[1]._45C = game_bgm_volume;
+		bgm[0]._45C = 0.0f;
+		Jam_MuteTrack(Jaf_HandleToSeq(bgm[1].trackHandle), 0);
 		break;
+
 	case 2:
-		break;
+		bgm[last_crossmode]._45C = game_bgm_volume;
+		bgm[last_crossmode]._464 = val;
+		return;
 	}
 
+	bgm[0]._464 = val;
+	bgm[1]._464 = val;
+
 	last_crossmode = type;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r30, 0x18(r1)
-	  stb       r3, 0x8(r1)
-	  lis       r3, 0x8036
-	  addi      r31, r3, 0x38E0
-	  lbz       r30, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  cmpwi     r30, 0x1
-	  beq-      .loc_0x78
-	  bge-      .loc_0x3C
-	  cmpwi     r30, 0
-	  bge-      .loc_0x48
-	  b         .loc_0xC0
-
-	.loc_0x3C:
-	  cmpwi     r30, 0x3
-	  bge-      .loc_0xC0
-	  b         .loc_0xA0
-
-	.loc_0x48:
-	  lfs       f0, -0x7F94(r13)
-	  stfs      f0, 0x45C(r31)
-	  lfs       f0, -0x7E30(r2)
-	  stfs      f0, 0x8C4(r31)
-	  lbz       r3, 0xD(r31)
-	  extsb     r3, r3
-	  bl        0x2220
-	  li        r4, 0
-	  bl        -0x8168
-	  li        r0, 0
-	  stw       r0, 0x2CFC(r13)
-	  b         .loc_0xC0
-
-	.loc_0x78:
-	  lfs       f0, -0x7F94(r13)
-	  stfs      f0, 0x8C4(r31)
-	  lfs       f0, -0x7E30(r2)
-	  stfs      f0, 0x45C(r31)
-	  lbz       r3, 0x475(r31)
-	  extsb     r3, r3
-	  bl        0x21F0
-	  li        r4, 0
-	  bl        -0x8198
-	  b         .loc_0xC0
-
-	.loc_0xA0:
-	  lwz       r0, 0x2CFC(r13)
-	  lfs       f0, -0x7F94(r13)
-	  mulli     r0, r0, 0x468
-	  add       r3, r31, r0
-	  stfs      f0, 0x45C(r3)
-	  lwz       r0, 0xC(r1)
-	  stw       r0, 0x464(r3)
-	  b         .loc_0xD0
-
-	.loc_0xC0:
-	  lwz       r0, 0xC(r1)
-	  stw       r0, 0x464(r31)
-	  stw       r0, 0x8CC(r31)
-	  stw       r30, 0x2CFC(r13)
-
-	.loc_0xD0:
-	  lwz       r0, 0x24(r1)
-	  lmw       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1162,8 +942,38 @@ void Jac_EasyCrossFade(u32 type, u32 val)
  * Address:	80019600
  * Size:	0000C8
  */
-void Jac_DemoFade(f32, int, int)
+void Jac_DemoFade(f32 multiplier, u8 type, u32 val)
 {
+	u8* REF_type  = &type;
+	u32* REF_val  = &val;
+	f32* REF_mult = &multiplier;
+
+	switch (type) {
+	case 0:
+		bgm[0]._45C = bgm[0]._460;
+		bgm[1]._45C = bgm[1]._460;
+		break;
+
+	case 1:
+		bgm[0]._460 = bgm[0]._45C;
+		bgm[1]._460 = bgm[1]._45C;
+		bgm[0]._45C = multiplier * bgm[0]._45C;
+		bgm[1]._45C = multiplier * bgm[1]._45C;
+		break;
+
+	case 2:
+		bgm[0]._45C = multiplier * bgm[0]._460;
+		bgm[1]._45C = multiplier * bgm[1]._460;
+		break;
+
+	case 3:
+		bgm[0]._45C = multiplier;
+		bgm[1]._45C = multiplier;
+		break;
+	}
+
+	bgm[0]._464 = val;
+	bgm[1]._464 = val;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x20(r1)
