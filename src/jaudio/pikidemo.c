@@ -35,12 +35,12 @@ int current_seq_bgm;
 static u8 parts_bright_table[MAX_UFO_PARTS] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 typedef struct DemoStatus {
-	u8 _00;
-	u8 _01;
-	u8 _02;
-	u8 _03;
-	u32 _04;
-	u8* _08;
+	u8 _00;  // _00
+	u8 _01;  // _01
+	u8 _02;  // _02
+	u8 _03;  // _03
+	u32 _04; // _04
+	u8* _08; // _08
 } DemoStatus;
 
 // I gave up on about half of these
@@ -91,7 +91,7 @@ static u8 demo102[] = { 0, 160, 0, 1, 2, 88, 255, 255 };
 static u8 demo113[] = { 0, 4, 255, 250, 0, 145, 0, 0, 0, 225, 0, 1, 1, 24, 0, 3, 4, 76, 255, 255 };
 static u8 demo114[] = { 0, 3, 0, 0, 0, 4, 255, 250, 4, 76, 255, 255 };
 
-DemoStatus DEMO_STATUS[] = {
+static DemoStatus DEMO_STATUS[] = {
 	{ 0, 2, 1, 131, 0, NULL },   { 0, 2, 1, 168, 0, demo1 },   { 0, 2, 1, 192, 0, demo2 },   { 0, 5, 1, 0, 0, demo3 },
 	{ 1, 2, 1, 141, 0, demo4 },  { 1, 2, 1, 141, 0, demo5 },   { 1, 2, 1, 141, 0, demo5 },   { 2, 5, 0, 0, 0, NULL },
 	{ 1, 1, 1, 0, 0, NULL },     { 3, 2, 1, 2, 0, demo9 },     { 3, 2, 1, 2, 0, demo9 },     { 3, 2, 1, 2, 0, demo9 },
@@ -141,18 +141,10 @@ void Jac_DemoSceneInit(void)
  */
 static void Jac_DemoCheckFrameCall()
 {
+	BUMP_REGISTER(r3);
 	if (demo_end_delay != 0) {
 		demo_end_delay--;
 	}
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x2D50(r13)
-	  cmplwi    r4, 0
-	  beqlr-
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x2D50(r13)
-	  blr
-	*/
 }
 
 /*
@@ -209,6 +201,10 @@ BOOL Jac_DemoWalkCheck()
 	switch (current_demo_no) {
 	case 0x59:
 	case 0x64:
+	case 0x28:
+	case 0x29:
+	case 0x2A:
+	case 0x2B:
 		return TRUE;
 	}
 	return FALSE;
@@ -267,7 +263,12 @@ BOOL Jac_DemoWalkCheck()
 BOOL Jac_DemoCheckEvent(u8 evt)
 {
 	if (Jac_DemoCheck()) {
-		if (current_demo_no == 0x57 || (current_demo_no < 0x20 && 0x1c > current_demo_no)) {
+		switch (current_demo_no) {
+		case 0x57:
+		case 0x1C:
+		case 0x1D:
+		case 0x1E:
+		case 0x1F:
 			return FALSE;
 		}
 
@@ -276,48 +277,6 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 		}
 	}
 	return TRUE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0xEC
-	  cmpwi     r3, 0
-	  beq-      .loc_0x68
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, 0x57
-	  beq-      .loc_0x3C
-	  bge-      .loc_0x44
-	  cmpwi     r0, 0x20
-	  bge-      .loc_0x44
-	  cmpwi     r0, 0x1C
-	  bge-      .loc_0x3C
-	  b         .loc_0x44
-
-	.loc_0x3C:
-	  li        r3, 0
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  mulli     r0, r0, 0xC
-	  lis       r3, 0x8022
-	  addi      r3, r3, 0x69B0
-	  add       r3, r3, r0
-	  lbz       r0, 0x2(r3)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x68
-	  li        r3, 0
-	  b         .loc_0x6C
-
-	.loc_0x68:
-	  li        r3, 0x1
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -327,25 +286,33 @@ BOOL Jac_DemoCheckEvent(u8 evt)
  */
 static void DoSequence(u32 id, u32 a2)
 {
-	u8* data = DEMO_STATUS[id]._08;
+	u32 flag;
+	u16* REF_flag;
+	u32* REF_a2 = &a2;
+	u32* data   = (u32*)DEMO_STATUS[id]._08;
+	u32 badCompiler[2];
 	if (data == NULL) {
 		demo_seq_active = -1;
 		return;
 	}
 
 	while (1) {
-		u16 flag = data[demo_seq_active];
-		if (flag > a2) {
+		flag     = data[demo_seq_active];
+		REF_flag = (u16*)&flag;
+		if (REF_flag[0] > a2) {
 			break;
 		}
 
-		if (flag == 0xfff9) {
-			if (id == 0x14) {
+		if (REF_flag[1] == 0xfff9) {
+			switch (id) {
+			case 0x14:
 				__Prepare_BGM(0x11);
-			} else if (id == 0x18) {
+				break;
+			case 0x18:
 				__Prepare_BGM(0x1a);
+				break;
 			}
-		} else if (flag == 0xfffa) {
+		} else if (REF_flag[1] == 0xfffa) {
 			if (DEMO_STATUS[id]._03 & 0x80) {
 				Jac_StartDemoSound(DEMO_STATUS[id]._03 & 0xf);
 			} else {
@@ -354,154 +321,30 @@ static void DoSequence(u32 id, u32 a2)
 				current_seq_bgm = DEMO_STATUS[id]._03 & 0xf;
 			}
 		} else {
-			if (flag == 0xffff) {
+			if (REF_flag[1] == 0xffff) {
 				Jac_FinishDemo();
 				return;
 			}
-			if (flag == 0xfffe) {
+			if (REF_flag[1] == 0xfffe) {
 				demo_seq_active = -1;
 				return;
 			}
-			if (flag == 0xfffd) {
+			if (REF_flag[1] == 0xfffd) {
 				demo_seq_active = -1;
 				return;
 			}
-			if (flag == 0xfffc) {
+			if (REF_flag[1] == 0xfffc) {
 				Jac_BgmAnimEndStop();
-				continue;
-			}
-			if (flag == 0xfffb) {
-				Jac_BgmAnimEndRecover();
-				continue;
-			}
 
-			Jac_DemoSound(flag);
+			} else if (REF_flag[1] == 0xfffb) {
+				Jac_BgmAnimEndRecover();
+			} else {
+				Jac_DemoSound(REF_flag[1]);
+			}
 		}
 
 		demo_seq_active++;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r28, 0x20(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  mulli     r5, r31, 0xC
-	  addi      r0, r3, 0x69B0
-	  add       r30, r0, r5
-	  stw       r4, 0xC(r1)
-	  lwz       r28, 0x8(r30)
-	  cmplwi    r28, 0
-	  bne-      .loc_0x40
-	  li        r0, -0x1
-	  stw       r0, -0x7F0C(r13)
-	  b         .loc_0x158
-
-	.loc_0x40:
-	  lwz       r29, 0xC(r1)
-
-	.loc_0x44:
-	  lwz       r0, -0x7F0C(r13)
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r28, r0
-	  stw       r0, 0x1C(r1)
-	  lhz       r0, 0x1C(r1)
-	  cmplw     r0, r29
-	  bgt-      .loc_0x158
-	  lhz       r3, 0x1E(r1)
-	  cmplwi    r3, 0xFFF9
-	  bne-      .loc_0x9C
-	  cmpwi     r31, 0x18
-	  beq-      .loc_0x90
-	  bge-      .loc_0x148
-	  cmpwi     r31, 0x14
-	  beq-      .loc_0x84
-	  b         .loc_0x148
-
-	.loc_0x84:
-	  li        r3, 0x11
-	  bl        0xB38
-	  b         .loc_0x148
-
-	.loc_0x90:
-	  li        r3, 0x1A
-	  bl        0xB2C
-	  b         .loc_0x148
-
-	.loc_0x9C:
-	  cmplwi    r3, 0xFFFA
-	  bne-      .loc_0xEC
-	  lbz       r3, 0x3(r30)
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0xBC
-	  rlwinm    r3,r3,0,28,31
-	  bl        -0x374
-	  b         .loc_0x148
-
-	.loc_0xBC:
-	  lis       r3, 0x3
-	  bl        -0x9D40
-	  stw       r3, 0x2D34(r13)
-	  li        r4, 0
-	  lbz       r0, 0x3(r30)
-	  lwz       r3, 0x2D34(r13)
-	  rlwinm    r5,r0,0,28,31
-	  bl        -0xA038
-	  lbz       r0, 0x3(r30)
-	  rlwinm    r0,r0,0,28,31
-	  stw       r0, 0x2D38(r13)
-	  b         .loc_0x148
-
-	.loc_0xEC:
-	  cmplwi    r3, 0xFFFF
-	  bne-      .loc_0xFC
-	  bl        0x9CC
-	  b         .loc_0x158
-
-	.loc_0xFC:
-	  cmplwi    r3, 0xFFFE
-	  bne-      .loc_0x110
-	  li        r0, -0x1
-	  stw       r0, -0x7F0C(r13)
-	  b         .loc_0x158
-
-	.loc_0x110:
-	  cmplwi    r3, 0xFFFD
-	  bne-      .loc_0x124
-	  li        r0, -0x1
-	  stw       r0, -0x7F0C(r13)
-	  b         .loc_0x158
-
-	.loc_0x124:
-	  cmplwi    r3, 0xFFFC
-	  bne-      .loc_0x134
-	  bl        0x734
-	  b         .loc_0x148
-
-	.loc_0x134:
-	  cmplwi    r3, 0xFFFB
-	  bne-      .loc_0x144
-	  bl        0x6A4
-	  b         .loc_0x148
-
-	.loc_0x144:
-	  bl        0x5FC
-
-	.loc_0x148:
-	  lwz       r3, -0x7F0C(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, -0x7F0C(r13)
-	  b         .loc_0x44
-
-	.loc_0x158:
-	  lmw       r28, 0x20(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1008,11 +851,12 @@ void Jac_BgmAnimEndRecover()
 	case 0:
 	case 1:
 		break;
+	case 2:
 	case 5:
-		Jac_DemoFade(0.5, 2, 70);
+		Jac_DemoFade(2, 70, 0.5);
 		break;
 	case 3:
-		Jac_DemoFade(0.5, 2, 70);
+		Jac_DemoFade(2, 70, 0.5);
 		break;
 	}
 	/*
@@ -1150,36 +994,39 @@ void Jac_DemoBGMForceStop()
  */
 void __Jac_FinishDemo()
 {
-	int demo = current_demo_no;
-
+	u32 badCompiler[2];
 	if (current_demo_no == -1) {
 		return;
 	}
 
-	switch (DEMO_STATUS[demo]._01) {
+	DemoStatus* state = &DEMO_STATUS[current_demo_no];
+	switch (state->_01) {
 	case 0:
 	case 1:
 		break;
+	case 2:
 	case 5:
-		Jac_DemoFade(1.0f, 2, 70);
+		Jac_DemoFade(0, 70, 1.0f);
 		break;
 	case 3:
-		Jac_DemoFade(1.0f, 2, 70);
+		Jac_DemoFade(0, 70, 1.0f);
 		break;
 	}
 
-	switch (DEMO_STATUS[demo]._02) {
+	switch (state->_02) {
 	case 2:
 		Jac_Orima_Formation(0, 0);
 		break;
 	case 1:
 		event_pause_counter = 6;
 		break;
+	case 0:
+		break;
 	}
 
 	int flag;
 
-	flag = DEMO_STATUS[demo]._03;
+	flag = state->_03;
 	if (flag && !(flag & 0x20)) {
 		if (flag & 0x80) {
 			Jac_StopDemoSound(flag & 0xf);
@@ -1191,96 +1038,6 @@ void __Jac_FinishDemo()
 	Jam_WritePortAppDirect(demo_seqp, 0, 0);
 	demo_seq_active = -1;
 	current_demo_no = -1;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0xF4
-	  mulli     r4, r0, 0xC
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x69B0
-	  add       r31, r0, r4
-	  lbz       r0, 0x1(r31)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x68
-	  bge-      .loc_0x48
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x54
-	  b         .loc_0x78
-
-	.loc_0x48:
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0x54
-	  b         .loc_0x78
-
-	.loc_0x54:
-	  lfs       f1, -0x7E0C(r2)
-	  li        r3, 0
-	  li        r4, 0x46
-	  bl        -0x16E0
-	  b         .loc_0x78
-
-	.loc_0x68:
-	  lfs       f1, -0x7E0C(r2)
-	  li        r3, 0
-	  li        r4, 0x46
-	  bl        -0x16F4
-
-	.loc_0x78:
-	  lbz       r0, 0x2(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xA4
-	  bge-      .loc_0x8C
-	  b         .loc_0xAC
-
-	.loc_0x8C:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0xAC
-	  li        r3, 0
-	  li        r4, 0
-	  bl        -0x2B1C
-	  b         .loc_0xAC
-
-	.loc_0xA4:
-	  li        r0, 0x6
-	  stb       r0, 0x2D4F(r13)
-
-	.loc_0xAC:
-	  lbz       r3, 0x3(r31)
-	  cmpwi     r3, 0
-	  beq-      .loc_0xD8
-	  rlwinm.   r0,r3,0,26,26
-	  bne-      .loc_0xD8
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0xD4
-	  rlwinm    r3,r3,0,28,31
-	  bl        -0xE0C
-	  b         .loc_0xD8
-
-	.loc_0xD4:
-	  bl        -0x1B4
-
-	.loc_0xD8:
-	  lwz       r3, 0x2D30(r13)
-	  li        r4, 0
-	  li        r5, 0
-	  bl        -0xA9E4
-	  li        r0, -0x1
-	  stw       r0, -0x7F10(r13)
-	  stw       r0, -0x7F0C(r13)
-
-	.loc_0xF4:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1290,74 +1047,34 @@ void __Jac_FinishDemo()
  */
 void Jac_FinishDemo(void)
 {
+	int demo      = current_demo_no;
+	int* REF_demo = &demo;
+	u32 badCompiler;
 	Jac_SetProcessStatus(6);
 	__Jac_FinishDemo();
 
-	switch (current_demo_no) {
-	case 0: // a whole mess
-		demo_end_delay = 100;
-		break;
-	default:
-		now_loading = 0;
-	case 0x14:
-		Jac_SetProcessStatus(7);
-		break;
+	if (demo >= 0) {
+		switch (demo) {
+		case 0x18:
+		case 0x11:
+		case 0x1:
+		case 0x14:
+			break;
+
+		case 0x57:
+		case 0x1C:
+		case 0x1D:
+		case 0x1E:
+		case 0x1F:
+			demo_end_delay = 100;
+			break;
+		default:
+			now_loading = 0;
+			break;
+		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x6
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  lwz       r0, -0x7F10(r13)
-	  stw       r0, 0x10(r1)
-	  bl        -0x43F8
-	  bl        -0x13C
-	  lwz       r0, 0x10(r1)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x90
-	  cmpwi     r0, 0x18
-	  beq-      .loc_0x90
-	  bge-      .loc_0x5C
-	  cmpwi     r0, 0x11
-	  beq-      .loc_0x90
-	  bge-      .loc_0x50
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x90
-	  b         .loc_0x88
 
-	.loc_0x50:
-	  cmpwi     r0, 0x14
-	  beq-      .loc_0x90
-	  b         .loc_0x88
-
-	.loc_0x5C:
-	  cmpwi     r0, 0x57
-	  beq-      .loc_0x7C
-	  bge-      .loc_0x88
-	  cmpwi     r0, 0x20
-	  bge-      .loc_0x88
-	  cmpwi     r0, 0x1C
-	  bge-      .loc_0x7C
-	  b         .loc_0x88
-
-	.loc_0x7C:
-	  li        r0, 0x64
-	  stw       r0, 0x2D50(r13)
-	  b         .loc_0x90
-
-	.loc_0x88:
-	  li        r0, 0
-	  stw       r0, 0x2D40(r13)
-
-	.loc_0x90:
-	  li        r3, 0x7
-	  bl        -0x4474
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	Jac_SetProcessStatus(7);
 }
 
 /*
@@ -1377,20 +1094,9 @@ void Jac_FinishDemo_NoErase()
  */
 void __Loaded(u32 a)
 {
-	if ((u16)a < -0x7fffffff) {
+	if ((int)(a & 0xFFFF0000) < -0x7fffffff) {
 		now_loading = 3;
 	}
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8000
-	  rlwinm    r3,r3,0,0,15
-	  addi      r0, r4, 0x1
-	  cmpw      r3, r0
-	  bgelr-
-	  li        r0, 0x3
-	  stw       r0, 0x2D40(r13)
-	  blr
-	*/
 }
 
 /*
@@ -1402,8 +1108,9 @@ void __Prepare_BGM(u32 a)
 {
 	int set;
 	u8 flag;
+	DemoStatus* state = &DEMO_STATUS[a];
 
-	flag = DEMO_STATUS[a]._03;
+	flag = state->_03;
 
 	if (flag & 0x80) {
 		Jac_PrepareDemoSound(flag & 0xf);
@@ -1680,7 +1387,7 @@ void Jac_StartPartsFindDemo(u32 p1, int p2)
 	Jac_PauseOrimaSe();
 
 	if (p2) {
-		Jac_DemoFade(0.1, 1, 0xf);
+		Jac_DemoFade(1, 15, 0.1f);
 
 		REF_p1 = &p1;
 		if (p1 == 0) {
@@ -1689,7 +1396,7 @@ void Jac_StartPartsFindDemo(u32 p1, int p2)
 			Jac_PlaySystemSe(0x1e);
 		}
 	} else {
-		Jac_DemoFade(0.5, 1, 0x1e);
+		Jac_DemoFade(1, 0x1e, 0.5f);
 		Jac_PlaySystemSe(0x1f);
 	}
 	parts_find_demo_state = 1;
@@ -1704,7 +1411,7 @@ void Jac_FinishPartsFindDemo(void)
 {
 	if (parts_find_demo_state) {
 		event_pause_counter = 3;
-		Jac_DemoFade(1.0, 0, 0x46);
+		Jac_DemoFade(0, 0x46, 1.0f);
 		Jac_UnPauseOrimaSe();
 		parts_find_demo_state = 0;
 	}
@@ -1718,57 +1425,17 @@ void Jac_FinishPartsFindDemo(void)
 void Jac_StartTextDemo(int a)
 {
 	if (text_demo_state != 1 && current_demo_no == -1) {
-		if (parts_find_demo_state != 0) {
-			return;
+		switch (parts_find_demo_state) {
+		case 0:
+			event_pause_counter = 0;
+			Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
+			Jac_Orima_Formation(0, 0);
+			Jac_PauseOrimaSe();
+			Jac_DemoFade(1, 0x1e, 0.5f);
+			text_demo_state = 1;
+			break;
 		}
-		event_pause_counter = 0;
-		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
-		Jac_Orima_Formation(0, 0);
-		Jac_PauseOrimaSe();
-		Jac_DemoFade(0.5, 1, 0x1e);
-		text_demo_state = 1;
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x2D48(r13)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x74
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x74
-	  lwz       r0, 0x2D44(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x34
-	  b         .loc_0x74
-
-	.loc_0x34:
-	  li        r0, 0
-	  lis       r3, 0x2
-	  stb       r0, 0x2D4F(r13)
-	  bl        -0xAC40
-	  li        r4, 0x1
-	  bl        -0x9DC8
-	  li        r3, 0
-	  li        r4, 0
-	  bl        -0x30B4
-	  bl        -0x2CB8
-	  lfs       f1, -0x7E14(r2)
-	  li        r3, 0x1
-	  li        r4, 0x1E
-	  bl        -0x1CC8
-	  li        r0, 0x1
-	  stw       r0, 0x2D48(r13)
-
-	.loc_0x74:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1778,45 +1445,16 @@ void Jac_StartTextDemo(int a)
  */
 void Jac_FinishTextDemo(void)
 {
-	if (text_demo_state && current_demo_no == -1 && parts_find_demo_state == 0) {
-		event_pause_counter = 3;
-		Jac_UnPauseOrimaSe();
-		Jac_DemoFade(1.0, 0, 0x46);
-		text_demo_state = 0;
+	if (text_demo_state && current_demo_no == -1) {
+		switch (parts_find_demo_state) {
+		case 0:
+			event_pause_counter = 3;
+			Jac_UnPauseOrimaSe();
+			Jac_DemoFade(0, 0x46, 1.0f);
+			text_demo_state = 0;
+			break;
+		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x2D48(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x58
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x58
-	  lwz       r0, 0x2D44(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x34
-	  b         .loc_0x58
-
-	.loc_0x34:
-	  li        r0, 0x3
-	  stb       r0, 0x2D4F(r13)
-	  bl        -0x2CFC
-	  lfs       f1, -0x7E0C(r2)
-	  li        r3, 0
-	  li        r4, 0x46
-	  bl        -0x1D4C
-	  li        r0, 0
-	  stw       r0, 0x2D48(r13)
-
-	.loc_0x58:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

@@ -22,7 +22,7 @@ void Jac_MoveBgmTrackVol(BgmControl_*);
 void Jac_ChangeBgmTrackVol(BgmControl_*);
 void Jac_GameVolume(u8 bgmVol, u8 seVol);
 void Jac_EasyCrossFade(u8, u32);
-void Jac_DemoFade(f32, u8, u32);
+void Jac_DemoFade(u8, u32, f32);
 void Jac_EnterBossMode(void);
 void Jac_ExitBossMode(void);
 

@@ -103,7 +103,7 @@ void Jac_SysSEDemoFadeCheck()
 
 	if (sys_voldown_flag == 1) {
 		if (!StreamSyncCheckBusy(0, 5)) {
-			Jac_DemoFade(1.0f, 0, 100);
+			Jac_DemoFade(0, 100, 1.0f);
 			sys_voldown_flag = 0;
 		}
 	} else {
@@ -204,7 +204,7 @@ void Jac_PlaySystemSe(s32 id)
 
 	case 32:
 		if (sys_voldown_flag == FALSE) {
-			Jac_DemoFade(0.15f, 1, 5);
+			Jac_DemoFade(1, 5, 0.15f);
 		}
 		Jac_StartDemoSound(5);
 		sys_voldown_flag = 0x14;

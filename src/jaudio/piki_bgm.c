@@ -167,17 +167,21 @@ void Jac_InitBgm(void)
 	if (!buffer[0]) {
 		int vals1[5] = { 0, 1, 11, 13, 16 };
 		int vals2[5] = { 0, 1, -1, 2, -1 };
+		u32 badCompiler;
 
 		for (i = 0; i < 5; i++) {
 			u32 size;
 			u8* seqbuf;
+			u32 badCompiler2;
 			size            = Jaf_CheckSeqSize(vals1[i]);
 			u32* REF_size   = &size;
 			seqbuf          = (u8*)OSAlloc2(size);
 			u8** REF_seqbuf = &seqbuf;
-			u32 badCompiler;
-			if ((u32)Jaf_LoadSeq(vals1[i], seqbuf) && vals2[i] != -1) {
-				Jaf_StartSeq(vals2[i], vals1[i]);
+			if ((u32)Jaf_LoadSeq(vals1[i], seqbuf)) {
+				int* pVals = &vals2[i];
+				if (*pVals != -1) {
+					Jaf_StartSeq(*pVals, vals1[i]);
+				}
 			}
 		}
 
@@ -185,119 +189,6 @@ void Jac_InitBgm(void)
 		buffer[1] = (u8*)OSAlloc2(0x8000);
 	}
 	Jac_RegisterPlayerCallback(Jac_BgmFrameCallback, 0);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8036
-	  stw       r0, 0x4(r1)
-	  li        r6, 0
-	  addi      r5, r3, 0x38E0
-	  li        r4, -0x1
-	  stwu      r1, -0x60(r1)
-	  stmw      r28, 0x50(r1)
-	  stw       r6, 0x4C(r1)
-	  b         .loc_0x54
-
-	.loc_0x28:
-	  mulli     r0, r0, 0x468
-	  add       r3, r5, r0
-	  stw       r6, 0x0(r3)
-	  stb       r6, 0xE(r3)
-	  stb       r6, 0xF(r3)
-	  stb       r6, 0x10(r3)
-	  stb       r6, 0x11(r3)
-	  stb       r4, 0xD(r3)
-	  lwz       r3, 0x4C(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x4C(r1)
-
-	.loc_0x54:
-	  lwz       r0, 0x4C(r1)
-	  cmplwi    r0, 0x3
-	  blt+      .loc_0x28
-	  lwz       r0, -0x7FA8(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x15C
-	  lis       r3, 0x8022
-	  li        r0, 0x2
-	  addi      r3, r3, 0x2278
-	  addi      r5, r1, 0x2C
-	  subi      r4, r3, 0x8
-	  mtctr     r0
-
-	.loc_0x84:
-	  lwzu      r3, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  stwu      r3, 0x8(r5)
-	  stw       r0, 0x4(r5)
-	  bdnz+     .loc_0x84
-	  lwz       r4, 0x8(r4)
-	  lis       r3, 0x8022
-	  addi      r3, r3, 0x228C
-	  li        r0, 0x2
-	  stw       r4, 0x8(r5)
-	  addi      r5, r1, 0x18
-	  subi      r4, r3, 0x8
-	  mtctr     r0
-
-	.loc_0xB8:
-	  lwzu      r3, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  stwu      r3, 0x8(r5)
-	  stw       r0, 0x4(r5)
-	  bdnz+     .loc_0xB8
-	  lwz       r0, 0x8(r4)
-	  li        r28, 0
-	  addi      r31, r28, 0
-	  addi      r30, r1, 0x34
-	  stw       r0, 0x8(r5)
-
-	.loc_0xE0:
-	  lwzx      r29, r30, r31
-	  mr        r3, r29
-	  bl        0x2A18
-	  stw       r3, 0x18(r1)
-	  lwz       r3, 0x18(r1)
-	  bl        -0x13334
-	  stw       r3, 0x14(r1)
-	  mr        r3, r29
-	  lwz       r4, 0x14(r1)
-	  bl        0x2A3C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  addi      r3, r1, 0x20
-	  add       r3, r3, r31
-	  lwz       r3, 0x0(r3)
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x12C
-	  mr        r4, r29
-	  bl        0x2BD8
-
-	.loc_0x12C:
-	  addi      r28, r28, 0x1
-	  addi      r31, r31, 0x4
-	  cmplwi    r28, 0x5
-	  blt+      .loc_0xE0
-	  lis       r31, 0x1
-	  subi      r3, r31, 0x8000
-	  bl        -0x13384
-	  stw       r3, -0x7FA8(r13)
-	  subi      r3, r31, 0x8000
-	  bl        -0x13390
-	  subi      r4, r13, 0x7FA8
-	  stw       r3, 0x4(r4)
-
-	.loc_0x15C:
-	  lis       r3, 0x8002
-	  li        r4, 0
-	  subi      r3, r3, 0x7680
-	  bl        -0x11908
-	  lmw       r28, 0x50(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -336,63 +227,15 @@ void Jac_ReadyBgm(u32 id)
 		id = 2;
 	}
 	if (Jaf_CheckSeq(id) == 0) {
-		if (buffer_mus[lastside] != -1) {
-			Jaf_ClearSeq(buffer_mus[lastside]);
+		int* idx = &buffer_mus[lastside];
+		if (*idx != -1) {
+			Jaf_ClearSeq(*idx);
 		}
 		Jaf_LoadSeqA(id, buffer[lastside]);
 
 		buffer_mus[lastside] = id;
 		lastside             = 1 - lastside;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r0, 0x8(r1)
-	  cmplwi    r0, 0x2
-	  bge-      .loc_0x28
-	  li        r0, 0x2
-	  stw       r0, 0x8(r1)
-
-	.loc_0x28:
-	  lwz       r31, 0x8(r1)
-	  mr        r3, r31
-	  bl        0x29B0
-	  cmplwi    r3, 0
-	  bne-      .loc_0x8C
-	  lbz       r0, 0x2CF8(r13)
-	  subi      r3, r13, 0x7FA0
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x0(r3)
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x5C
-	  bl        0x2968
-
-	.loc_0x5C:
-	  lbz       r0, 0x2CF8(r13)
-	  subi      r4, r13, 0x7FA8
-	  addi      r3, r31, 0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r4, r0
-	  bl        0x2CD0
-	  lbz       r0, 0x2CF8(r13)
-	  subi      r3, r13, 0x7FA0
-	  rlwinm    r4,r0,2,0,29
-	  subfic    r0, r0, 0x1
-	  stwx      r31, r3, r4
-	  stb       r0, 0x2CF8(r13)
-
-	.loc_0x8C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -402,7 +245,10 @@ void Jac_ReadyBgm(u32 id)
  */
 void Jac_PlayBgm(u32 a, u32 id)
 {
+	u32 badCompiler[4];
 	u32* REF_b = &id;
+	u32 check;
+	seqp_* track;
 	Jac_SetProcessStatus(8);
 	if (bgm[a]._00) {
 		Jac_StopBgm(a);
@@ -412,10 +258,11 @@ void Jac_PlayBgm(u32 a, u32 id)
 	if (id < 2) {
 		id = 2;
 	}
-	u32 check = (u32)Jaf_CheckSeq(id);
+	check = (u32)Jaf_CheckSeq(id);
 	if (check == 0) {
-		if (buffer_mus[lastside] != -1) {
-			Jaf_ClearSeq(buffer_mus[lastside]);
+		int* idx = &buffer_mus[lastside];
+		if (*idx != -1) {
+			Jaf_ClearSeq(*idx);
 		}
 		Jaf_LoadSeq(id, buffer[lastside]);
 
@@ -427,11 +274,10 @@ void Jac_PlayBgm(u32 a, u32 id)
 		}
 	}
 
-	seqp_* track = Jaf_HandleToSeq(a + 3);
+	track = Jaf_HandleToSeq(a + 3);
 
 	bgm[a]._00         = 1;
 	bgm[a]._04         = 1;
-	int id2            = a + 3;
 	bgm[a]._08         = 0;
 	bgm[a]._18         = 0;
 	bgm[a]._0C         = 0;
@@ -442,9 +288,9 @@ void Jac_PlayBgm(u32 a, u32 id)
 	Jac_SetBgmModeFlag(a, 1, 0);
 	Jac_SetBgmModeFlag(a, 4, 0);
 	Jac_SetBgmModeFlag(a, 8, 0);
-	Jaf_ReadySeq(id2, id);
+	Jaf_ReadySeq(a + 3, id);
 	Jac_BgmFrameWork();
-	Jaq_SetBankNumber(Jaf_HandleToSeq(id2), id);
+	Jaq_SetBankNumber(Jaf_HandleToSeq(a + 3), id);
 	bgm[a]._464 = 0;
 
 	if (a == 0) {
@@ -469,177 +315,6 @@ void Jac_PlayBgm(u32 a, u32 id)
 	track->_39D = 74;
 	Jaf_PlaySeq(a + 3);
 	Jac_SetProcessStatus(9);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8036
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r24, 0x28(r1)
-	  addi      r27, r3, 0
-	  addi      r31, r5, 0x38E0
-	  li        r3, 0x8
-	  stw       r4, 0xC(r1)
-	  bl        -0x22E4
-	  mulli     r28, r27, 0x468
-	  add       r29, r31, r28
-	  lwz       r0, 0x0(r29)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x44
-	  mr        r3, r27
-	  bl        -0x140
-
-	.loc_0x44:
-	  lwz       r0, 0xC(r1)
-	  cmplwi    r0, 0x2
-	  bge-      .loc_0x58
-	  li        r0, 0x2
-	  stw       r0, 0xC(r1)
-
-	.loc_0x58:
-	  lwz       r30, 0xC(r1)
-	  mr        r3, r30
-	  bl        0x28E0
-	  cmplwi    r3, 0
-	  bne-      .loc_0xC0
-	  lbz       r0, 0x2CF8(r13)
-	  subi      r3, r13, 0x7FA0
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x0(r3)
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x8C
-	  bl        0x2898
-
-	.loc_0x8C:
-	  lbz       r0, 0x2CF8(r13)
-	  subi      r4, r13, 0x7FA8
-	  addi      r3, r30, 0
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r4, r4, r0
-	  bl        0x27E0
-	  lbz       r0, 0x2CF8(r13)
-	  subi      r3, r13, 0x7FA0
-	  rlwinm    r4,r0,2,0,29
-	  subfic    r0, r0, 0x1
-	  stwx      r30, r3, r4
-	  stb       r0, 0x2CF8(r13)
-	  b         .loc_0xDC
-
-	.loc_0xC0:
-	  cmplwi    r3, 0x1
-	  bne-      .loc_0xDC
-	  b         .loc_0xD4
-
-	.loc_0xCC:
-	  mr        r3, r30
-	  bl        0x2870
-
-	.loc_0xD4:
-	  cmplwi    r3, 0x1
-	  beq+      .loc_0xCC
-
-	.loc_0xDC:
-	  addi      r3, r27, 0x3
-	  bl        0x2A20
-	  li        r4, 0x1
-	  addi      r24, r3, 0
-	  stw       r4, 0x0(r29)
-	  add       r25, r31, r28
-	  li        r26, 0
-	  subi      r0, r30, 0x2
-	  stw       r4, 0x4(r25)
-	  addi      r29, r27, 0x3
-	  addi      r3, r27, 0
-	  li        r4, 0x2
-	  stw       r26, 0x8(r25)
-	  li        r5, 0
-	  stw       r26, 0x18(r25)
-	  stb       r26, 0xC(r25)
-	  stw       r0, 0x14(r25)
-	  stb       r29, 0xD(r25)
-	  bl        0x19C
-	  addi      r3, r27, 0
-	  li        r4, 0x1
-	  li        r5, 0
-	  bl        0x18C
-	  addi      r3, r27, 0
-	  li        r4, 0x4
-	  li        r5, 0
-	  bl        0x17C
-	  addi      r3, r27, 0
-	  li        r4, 0x8
-	  li        r5, 0
-	  bl        0x16C
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        0x2800
-	  bl        0x21C
-	  mr        r3, r29
-	  bl        0x2994
-	  rlwinm    r4,r30,0,24,31
-	  bl        -0x4774
-	  cmplwi    r27, 0
-	  stw       r26, 0x464(r25)
-	  bne-      .loc_0x1A0
-	  lfs       f0, -0x7F94(r13)
-	  addi      r3, r24, 0
-	  li        r4, 0
-	  stfs      f0, 0x45C(r25)
-	  bl        -0x7A14
-	  stw       r26, 0x2CFC(r13)
-	  b         .loc_0x1B4
-
-	.loc_0x1A0:
-	  lfs       f0, -0x7E30(r2)
-	  addi      r3, r24, 0
-	  li        r4, 0x1
-	  stfs      f0, 0x45C(r25)
-	  bl        -0x7A30
-
-	.loc_0x1B4:
-	  add       r4, r31, r28
-	  addi      r3, r24, 0
-	  lfs       f1, 0x45C(r4)
-	  li        r4, 0x1
-	  bl        -0x8524
-	  addi      r3, r24, 0
-	  li        r4, 0x1
-	  bl        -0x84F0
-	  bl        0xA0C
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0x20C
-	  bl        0x9E0
-	  cmplwi    r3, 0x5
-	  bne-      .loc_0x20C
-	  addi      r3, r24, 0
-	  li        r4, 0x40
-	  bl        -0x8514
-	  lfs       f1, -0x7E2C(r2)
-	  addi      r3, r24, 0
-	  li        r4, 0x40
-	  bl        -0x8564
-	  b         .loc_0x218
-
-	.loc_0x20C:
-	  addi      r3, r24, 0
-	  li        r4, 0x40
-	  bl        -0x84F4
-
-	.loc_0x218:
-	  li        r0, 0x4A
-	  addi      r3, r27, 0x3
-	  stb       r0, 0x39D(r24)
-	  bl        0x27DC
-	  li        r3, 0x9
-	  bl        -0x24EC
-	  lmw       r24, 0x28(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -942,7 +617,7 @@ void Jac_EasyCrossFade(u8 type, u32 val)
  * Address:	80019600
  * Size:	0000C8
  */
-void Jac_DemoFade(f32 multiplier, u8 type, u32 val)
+void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
 {
 	u8* REF_type  = &type;
 	u32* REF_val  = &val;
@@ -974,71 +649,6 @@ void Jac_DemoFade(f32 multiplier, u8 type, u32 val)
 
 	bgm[0]._464 = val;
 	bgm[1]._464 = val;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  stb       r3, 0x8(r1)
-	  lis       r3, 0x8036
-	  addi      r3, r3, 0x38E0
-	  lbz       r0, 0x8(r1)
-	  stw       r4, 0xC(r1)
-	  cmpwi     r0, 0x2
-	  stfs      f1, 0x10(r1)
-	  beq-      .loc_0x88
-	  bge-      .loc_0x38
-	  cmpwi     r0, 0
-	  beq-      .loc_0x44
-	  bge-      .loc_0x58
-	  b         .loc_0xB4
-
-	.loc_0x38:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0xB4
-	  b         .loc_0xA8
-
-	.loc_0x44:
-	  lfs       f0, 0x460(r3)
-	  stfs      f0, 0x45C(r3)
-	  lfs       f0, 0x8C8(r3)
-	  stfs      f0, 0x8C4(r3)
-	  b         .loc_0xB4
-
-	.loc_0x58:
-	  lfs       f0, 0x45C(r3)
-	  stfs      f0, 0x460(r3)
-	  lfs       f0, 0x8C4(r3)
-	  stfs      f0, 0x8C8(r3)
-	  lfs       f1, 0x10(r1)
-	  lfs       f0, 0x45C(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x45C(r3)
-	  lfs       f0, 0x8C4(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x8C4(r3)
-	  b         .loc_0xB4
-
-	.loc_0x88:
-	  lfs       f1, 0x10(r1)
-	  lfs       f0, 0x460(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x45C(r3)
-	  lfs       f0, 0x8C8(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x8C4(r3)
-	  b         .loc_0xB4
-
-	.loc_0xA8:
-	  lfs       f0, 0x10(r1)
-	  stfs      f0, 0x45C(r3)
-	  stfs      f0, 0x8C4(r3)
-
-	.loc_0xB4:
-	  lwz       r0, 0xC(r1)
-	  stw       r0, 0x464(r3)
-	  stw       r0, 0x8CC(r3)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
 }
 
 /*
