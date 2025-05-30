@@ -32,7 +32,6 @@ BOOL Del_WaitDSPChannel(jc_*);
 void __Entry_WaitChannel(u8);
 void EntryCheck_WaitDSPChannel();
 BOOL ForceStopLogicalChannel(jc_*);
-void Cancel_WaitDSPChannel(jc_*);
 
 ///////////////////////////////////////////////////////////
 
