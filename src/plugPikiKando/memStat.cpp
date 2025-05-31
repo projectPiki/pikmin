@@ -84,8 +84,7 @@ void MemStat::start(char* name)
  */
 void MemStat::end(char* name)
 {
-	BUMP_REGISTER(r31);
-
+	int unused;
 	if (!memStat) {
 		return;
 	}
@@ -93,12 +92,15 @@ void MemStat::end(char* name)
 	MemInfo* info = getInfo(name);
 	if (info) {
 		// Remove the current info from the stack
+		//mStatCount;
 		mStatCount--;
+		unused = mStatCount;
 		mCurrentInfo       = mPrevInfoStack[mStatCount];
 		gsys->mCurrMemInfo = mCurrentInfo;
 	} else {
 		PRINT("no INFOOO\n", name);
 	}
+	!(unused++);
 	/*
 	.loc_0x0:
 	  mflr      r0
