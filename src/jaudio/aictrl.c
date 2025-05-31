@@ -114,9 +114,9 @@ void Jac_Init()
  * Address:	........
  * Size:	000008
  */
-void Jac_GetCurrentVCounter(void)
+u32 Jac_GetCurrentVCounter(void)
 {
-	// UNUSED FUNCTION
+	return JAC_VFRAME_COUNTER;
 }
 
 /*
@@ -341,7 +341,8 @@ static void MixInterleaveTrack(s16* track, s32 nSamples, MixCallback callback)
  */
 MixCallback Jac_GetMixcallback(u8* mixmode)
 {
-	// UNUSED FUNCTION
+	*mixmode = ext_mixmode;
+	return ext_mixcallback;
 }
 
 /*
@@ -351,7 +352,8 @@ MixCallback Jac_GetMixcallback(u8* mixmode)
  */
 void Jac_RegisterMixcallback(MixCallback callback, u8 mixmode)
 {
-	// UNUSED FUNCTION
+	ext_mixcallback = callback;
+	ext_mixmode     = mixmode;
 }
 
 /*
@@ -433,9 +435,9 @@ void Jac_UpdateDAC()
  * Address:	........
  * Size:	000008
  */
-void Jac_RegisterDacCallback(void)
+void Jac_RegisterDacCallback(DACCallback callback)
 {
-	// UNUSED FUNCTION
+	DAC_CALLBACK_FUNC = callback;
 }
 
 /*
