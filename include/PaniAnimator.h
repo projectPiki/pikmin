@@ -7,20 +7,6 @@
 struct PaniMotion;
 struct PaniMotionTable;
 
-enum KeyEventTypes {
-	KEY_NULL       = -1,
-	KEY_Finished   = 0,
-	KEY_Action0    = 1,
-	KEY_Action1    = 2,
-	KEY_Action2    = 3,
-	KEY_Action3    = 4,
-	KEY_LoopStart  = 5,
-	KEY_LoopEnd    = 6,
-	KEY_PlaySound  = 7,
-	KEY_PlayEffect = 8,
-	KEY_Reserved   = 9,
-};
-
 /**
  * @brief TODO
  */
@@ -106,8 +92,8 @@ struct PaniAnimator : public Animator {
 
 	// TODO: either match these inlines to DLL ones in the list below, or remove.
 	inline int getCurrentKeyIndex() { return mCurrentKeyIndex; }
-	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mKeyframeIndex; }
-	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mKeyframeIndex; }
+	inline int getInfoKeyValue(int idx) { return mAnimInfo->getInfoKey(idx)->mFrameIndex; }
+	inline int getEventKeyValue(int idx) { return mAnimInfo->getEventKey(idx)->mFrameIndex; }
 
 	// these are all DLL inlines
 	bool isFinished() { return mIsFinished; }

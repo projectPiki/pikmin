@@ -76,13 +76,13 @@ void DVDStream::init()
  * Address:	800447DC
  * Size:	000254
  */
-RandomAccessStream* System::openFile(char* path, bool a1, bool a2)
+RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 {
 	char strPath[PATH_MAX];
-	sprintf(strPath, "%s", a1 ? mCurrentDirectory : "");
-	sprintf(strPath, "%s%s%s", strPath, a1 ? mDataRoot : "", path);
+	sprintf(strPath, "%s", isRelativePath ? mCurrentDirectory : "");
+	sprintf(strPath, "%s%s%s", strPath, isRelativePath ? mDataRoot : "", path);
 
-	if (a1 && (mDvdFileTreeRoot.getChildCount() || mAramFileTreeRoot.getChildCount())) {
+	if (isRelativePath && (mDvdFileTreeRoot.getChildCount() || mAramFileTreeRoot.getChildCount())) {
 
 		FOREACH_NODE(DirEntry, mDvdFileTreeRoot.mChild, node)
 		{

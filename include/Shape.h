@@ -233,7 +233,7 @@ struct BaseShape : public CoreNode {
 	AnimData* loadDck(char*, RandomAccessStream&);
 	AnimData* importDck(char*, CmdStream*);
 	AnimData* loadDca(char*, RandomAccessStream&);
-	AnimData* loadAnimation(char*, bool);
+	AnimData* loadAnimation(char* path, bool isRelativePath);
 	struct Matrix4f& getAnimMatrix(int);
 	void backupAnimOverrides(AnimContext**);
 	void restoreAnimOverrides();

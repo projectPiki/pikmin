@@ -20,12 +20,48 @@ struct CmdStream;
 struct Shape;
 
 /**
- * @brief TODO
+ * @brief Enum for AnimInfo flags.
  */
 enum AnimInfoFlags {
-	ANIMFLAG_Unk1 = 1 << 0, // 0x1
-	ANIMFLAG_Unk2 = 1 << 1, // 0x2
-	ANIMFLAG_Unk3 = 1 << 2, // 0x4
+	ANIMFLAG_Unk1            = 1 << 0, ///< 0x1, unknown/unused.
+	ANIMFLAG_UseDynamicSpeed = 1 << 1, ///< 0x2, use variable/stored speed (rather than from param file).
+	ANIMFLAG_UseCache        = 1 << 2, ///< 0x4, cache anim info (?).
+};
+
+/**
+ * @brief Enum for AnimKey event types.
+ */
+enum AnimKeyEvents {
+	ANIMEVENT_Notify = 0, ///< 0, play sound effect or send message.
+	ANIMEVENT_Action = 1, ///< 1, play cutscene or particle effect.
+	ANIMEVENT_None   = 2, ///< 2, do nothing (default).
+	ANIMEVENT_COUNT,      ///< 3 (max).
+};
+
+/**
+ * @brief Enum for Animator states.
+ */
+enum AnimPlayState {
+	ANIMSTATE_Inactive = 0, ///< 0, not animating.
+	ANIMSTATE_Loop     = 1, ///< 1, loop animation.
+	ANIMSTATE_OneShot  = 2, ///< 2, play animation once, then stop.
+};
+
+/**
+ * @brief Enum for key frame event types.
+ */
+enum KeyEventTypes {
+	KEY_NULL       = -1,
+	KEY_Finished   = 0,
+	KEY_Action0    = 1,
+	KEY_Action1    = 2,
+	KEY_Action2    = 3,
+	KEY_Action3    = 4,
+	KEY_LoopStart  = 5,
+	KEY_LoopEnd    = 6,
+	KEY_PlaySound  = 7,
+	KEY_PlayEffect = 8,
+	KEY_Reserved   = 9,
 };
 
 /**
@@ -252,26 +288,34 @@ struct AnmobjInfo : public GfxobjInfo {
 };
 
 /**
- * @brief TODO
+ * @brief Animation key frame object.
+ *
+ * Stores information for each "key" (event) frame for an animation.
+ *
+ * @note Size: 0x10.
  */
 struct AnimKey {
+
+	// Default constructor.
 	AnimKey()
 	{
-		mKeyframeIndex = 0;
-		mEventKeyType  = 0;
-		mValue         = 0;
-		mEventId       = 0;
+		mFrameIndex = 0;
+		mEventType  = 0;
+		mKeyType    = 0;
+		mEventCmdID = 0;
 		mPrev = mNext = nullptr;
 	}
 
+	/// Constructor for given keyframe index and value.
 	AnimKey(int index, int value)
 	{
-		mKeyframeIndex = index;
-		mValue         = value;
-		mPrev          = nullptr;
-		mNext          = nullptr;
+		mFrameIndex = index;
+		mKeyType    = value;
+		mPrev       = nullptr;
+		mNext       = nullptr;
 	}
 
+	/// Inserts given key after this key in its parent list.
 	void insertAfter(AnimKey* key)
 	{
 		key->mNext   = mNext;
@@ -280,30 +324,34 @@ struct AnimKey {
 		mNext        = key;
 	}
 
-	// these are both fake according to the DLL - may be inlines for AnimInfo?
-	inline void add(AnimKey* key) { mPrev->insertAfter(key); }
-	inline f32 getKeyValue() { return mKeyframeIndex; }
-
-	// DLL inlines to do:
+	/// Unused DLL inline.
 	void remove();
 
-	int mKeyframeIndex; // _00, unknown
-	s16 mEventKeyType;  // _04
-	u8 mValue;          // _06
-	u8 mEventId;        // _07
-	AnimKey* mPrev;     // _08
-	AnimKey* mNext;     // _0C
+	int mFrameIndex; ///< _00, frame number this key is attached to.
+	s16 mEventType;  ///< _04, event type - see AnimKeyEvents enum.
+	u8 mKeyType;     ///< _06, key type - see KeyEventTypes enum.
+	u8 mEventCmdID;  ///< _07, command ID to execute on event.
+	AnimKey* mPrev;  ///< _08, previous key in list.
+	AnimKey* mNext;  ///< _0C, next key in list.
 };
 
 /**
- * @brief TODO
+ * @brief Basic animation object.
+ *
+ * Stores all active information for a given animation.
+ *
+ * @note Size: 0x74.
  */
 struct AnimInfo : public CoreNode {
 
 	/**
-	 * @brief Fabricated. Offsets relative to AnimInfo for convenience.
+	 * @brief AnimInfo parameters.
+	 *
+	 * Offsets relative to AnimInfo for convenience.
 	 */
 	struct Parms : public Parameters {
+
+		/// Constructor.
 		Parms()
 		    : mFlags(this, 2, 0, 0, "p00", nullptr)
 		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", nullptr)
@@ -311,10 +359,11 @@ struct AnimInfo : public CoreNode {
 		}
 
 		// _14-_18 = Parameters
-		Parm<int> mFlags; // _18, p00
-		Parm<f32> mSpeed; // _28, spd
+		Parm<int> mFlags; ///< _18, 'p00'
+		Parm<f32> mSpeed; ///< _28, 'spd'
 	};
 
+	/// Default constructor.
 	AnimInfo()
 	    : CoreNode("")
 	{
@@ -322,36 +371,60 @@ struct AnimInfo : public CoreNode {
 		mMgr  = nullptr;
 	}
 
-	AnimInfo(AnimMgr*, AnimData*);
+	/// Constructor that also sets connections and checks data.
+	AnimInfo(AnimMgr* mgr, AnimData* data);
 
+	/// Checks all Anim, Info and Event key indices are correctly bounded.
 	void checkAnimData();
+
+	/// Sets index to first available with stored manager and data filenames.
 	void setIndex();
-	void setAnimFlags(u32);
+
+	/// Sets and updates animation flags.
+	void setAnimFlags(u32 flags);
+
+	/// Counts elements in Anim key list.
 	int countAKeys();
+
+	/// Counts elements in Info key list.
 	int countIKeys();
+
+	/// Counts elements in Events key list.
 	int countEKeys();
-	AnimKey* getInfoKey(int);
-	AnimKey* getEventKey(int);
-	int getKeyValue(int);
-	void doread(RandomAccessStream&, int);
+
+	/// Gets Info key list element at index `idx`.
+	AnimKey* getInfoKey(int idx);
+
+	/// Gets Event key list element at index `idx`.
+	AnimKey* getEventKey(int idx);
+
+	/// Gets keyframe index of Anim key list element at index `idx`.
+	int getKeyValue(int idx);
+
+	/// Reads in parameters and keyframe indices from (streamed) file.
+	void doread(RandomAccessStream& input, int version);
+
+	/// Updates data flags to align with info flags.
 	void updateAnimFlags();
+
+	/// Adds new Anim key to end of list, with keyframe index at end of anim.
 	AnimKey* addKeyFrame();
 
-	// unused/inlined:
+	/// Unused.
 	void initAnimData(AnimData*);
 
-	// only DLL inline:
+	/// Adds new info key to end of list.
 	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Parms mParams;      // _14
-	AnimKey mAnimKeys;  // _38
-	AnimKey mEventKeys; // _48
-	AnimKey mInfoKeys;  // _58
-	AnimData* mData;    // _68
-	int mIndex;         // _6C
-	AnimMgr* mMgr;      // _70
+	Parms mParams;      ///< _14, parameters read from file (and actively updated).
+	AnimKey mAnimKeys;  ///< _38, list of animation keys.
+	AnimKey mEventKeys; ///< _48, list of event keys.
+	AnimKey mInfoKeys;  ///< _58, list of info keys.
+	AnimData* mData;    ///< _68, animation data.
+	int mIndex;         ///< _6C, index in system-wide GfxobjInfo list.
+	AnimMgr* mMgr;      ///< _70, animation manager.
 };
 
 /**
@@ -360,30 +433,43 @@ struct AnimInfo : public CoreNode {
  * @note Size: 0x10.
  */
 struct AnimContext {
+
+	/// Default constructor.
 	AnimContext()
-	    : mData(0)
+	    : mData(nullptr)
 	    , mCurrentFrame(0.0f)
-	    , mFrameRate(30.0f)
+	    , mAnimSpeed(30.0f)
 	{
 	}
 
 	// _0C = VTBL
-	AnimData* mData;   // _00
-	f32 mCurrentFrame; // _04
-	f32 mFrameRate;    // _08
+	AnimData* mData;   ///< _00, animation data.
+	f32 mCurrentFrame; ///< _04, current animation frame.
+	f32 mAnimSpeed;    ///< _08, current animation speed (fps).
 
-	virtual void animate(f32 time); // _08
+	/// Advances animation one (game) frame.
+	virtual void animate(f32 animSpeed); // _08
 };
 
 /**
- * @brief TODO
+ * @brief Animator object.
+ *
+ * Coordinates information on current animation for a given game object.
+ *
+ * @note Size: 0x30.
  */
 struct Animator {
+
+	/// Default constructor.
 	Animator() { }
 
-	void startAnim(int, int, int, int);
+	/// Starts a new animation with index `animIdx`.
+	void startAnim(int playState, int animIdx, int firstKeyFrameIdx, int lastKeyFrameIdx);
+
+	/// Updates data and frame counter of stored context to align with the animator.
 	void updateContext();
 
+	/// Initialises animator with given context and manager.
 	void init(AnimContext* context, AnimMgr* mgr)
 	{
 		mContext          = context;
@@ -393,39 +479,52 @@ struct Animator {
 	}
 
 	// _30 = VTBL
-	AnimMgr* mMgr;         // _00
-	AnimContext* mContext; // _04
-	int mIsOneShotFinish;  // _08
-	int mAnimationId;      // _0C
-	int mFirstKeyframe;    // _10
-	int mLastKeyframe;     // _14
-	int mIsPlaying;        // _18
-	int mCurrentAnimID;    // _1C
-	int mFirstFrameIndex;  // _20
-	int mLastFrameIndex;   // _24
-	AnimInfo* mAnimInfo;   // _28
-	f32 mAnimationCounter; // _2C
+	AnimMgr* mMgr;                 ///< _00, manager object.
+	AnimContext* mContext;         ///< _04, animation context.
+	int mPostOneShotPlayState;     ///< _08, state to restore to after oneshot (never set).
+	int mPostOneShotAnimID;        ///< _0C, anim index to restore to after oneshot (never set).
+	int mPostOneShotStartKeyIndex; ///< _10, start key index to restore to after oneshot (never set).
+	int mPostOneShotEndKeyIndex;   ///< _14, end key index to restore to after oneshot (never set).
+	int mPlayState;                ///< _18, current play state - see AnimPlayState enum.
+	int mCurrentAnimID;            ///< _1C, current animation index, relative to mMgr anim list.
+	int mStartKeyIndex;            ///< _20, index for first AnimKey keyframe.
+	int mEndKeyIndex;              ///< _24, index for last AnimKey keyframe.
+	AnimInfo* mAnimInfo;           ///< _28, current animation.
+	f32 mAnimationCounter;         ///< _2C, animation frame counter.
 
+	/// Sets animation context.
 	virtual void changeContext(AnimContext* context) // _08
 	{
 		mContext = context;
 	}
-	virtual void animate(f32);    // _0C
+
+	/// Advances animation one (game) frame at given speed.
+	virtual void animate(f32 animSpeed); // _0C
+
+	/// Starts post-oneshot stored animation (unused).
 	virtual void finishOneShot(); // _10
-	virtual void finishLoop();    // _14
+
+	/// Post-loop actions (trivial in base class).
+	virtual void finishLoop(); // _14
 };
 
 /**
- * @brief TODO
+ * @brief Animation managing object.
+ *
+ * Manager for a given list of animations, for a given model.
  *
  * @note Size: 0xB8.
  */
 struct AnimMgr : public CoreNode {
 
 	/**
-	 * @brief Offsets relative to AnimMgr for convenience.
+	 * @brief AnimMgr parameters.
+	 *
+	 * Offsets relative to AnimMgr for convenience.
 	 */
 	struct Parms : public Parameters {
+
+		/// Constructor.
 		Parms()
 		    : _18(this, 2, 0, 0, "a00", nullptr)
 		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
@@ -433,27 +532,34 @@ struct AnimMgr : public CoreNode {
 		}
 
 		// _14-_18 = Parameters
-		Parm<int> _18;          // _18
-		Parm<String> mBasePath; // _28
+		Parm<int> _18;          ///< _18, 'a00', unknown and unused.
+		Parm<String> mBasePath; ///< _28, 'base dir', path to data dir containing AnimInfo data files.
 	};
 
+	/// Constructor, also loads animations and bundle file info.
 	AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath);
 
-	virtual void read(RandomAccessStream&); // _0C
+	/// Reads information for manager parameters and all managed animations.
+	virtual void read(RandomAccessStream& input); // _0C
 
+	/// Loads all parameter and animation information, including bundle.
 	void loadAnims(char* animPath, char* bundlePath);
-	AnimInfo* addAnimation(char*, bool);
+
+	/// Adds and loads new animation into list from specified file.
+	AnimInfo* addAnimation(char* animPath, bool isRelativePath);
+
+	/// Gets number of managed animations in list.
 	int countAnims();
 
-	// unused/inlined:
-	AnimInfo* findAnim(int);
+	/// STRIPPED - gets animation from list at index `idx` and if not loaded, loads it.
+	AnimInfo* findAnim(int idx);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Parms mParams;      // _14
-	Shape* mParent;     // _3C
-	AnimInfo mAnimList; // _40, parent of list of animations
-	s32 mIsLoaded;      // _B4
+	Parms mParams;      ///< _14, parameters from file.
+	Shape* mModel;      ///< _3C, model the animations are attached to.
+	AnimInfo mAnimList; ///< _40, list of managed animations.
+	BOOL mSkipLoading;  ///< _B4, if non-zero, skips all animation and bundle loading.
 };
 
 /**

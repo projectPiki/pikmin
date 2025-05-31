@@ -279,14 +279,14 @@ int StdSystem::findAnyIndex(char* prefix, char* fullStr)
  * Address:	8003F4F0
  * Size:	0000BC
  */
-AnimData* StdSystem::loadAnimation(Shape* shape, char* path, bool unk)
+AnimData* StdSystem::loadAnimation(Shape* model, char* path, bool isRelativePath)
 {
 	GfxobjInfo* found = findGfxObject(path, '_anm');
 	if (found) {
 		return ((AnmobjInfo*)found)->mAnimation;
 	}
 
-	AnimData* data = shape->loadAnimation(path, unk);
+	AnimData* data = model->loadAnimation(path, isRelativePath);
 	if (data) {
 		addAnimation(data, path);
 	}

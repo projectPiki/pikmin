@@ -91,7 +91,7 @@ struct CoreNode : public ANode {
 	 */
 	void setName(char* name) { mName = name; }
 
-	void load(char*, char*, u32);
+	void load(char* dirPath, char* fileName, u32);
 
 	// _00 = VTBL
 	char* mName;       // _04

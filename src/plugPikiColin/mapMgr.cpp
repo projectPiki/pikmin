@@ -343,7 +343,7 @@ void DynCollShape::refresh(Graphics& gfx)
  */
 void MapObjAnimator::finishOneShot()
 {
-	mIsPlaying = 0;
+	mPlayState = 0;
 
 	if (mMapObj) {
 		mMapObj->nextState();
@@ -364,7 +364,7 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
 	mShape            = mShapeObject->mShape;
 	mAnimator.mMapObj = this;
 	mAnimator.init(&mShapeObject->mAnimContext, mShapeObject->mMgr);
-	mAnimator.startAnim(0, 0, 0, 8);
+	mAnimator.startAnim(ANIMSTATE_Inactive, 0, 0, 8);
 	mState  = 0;
 	mMapMgr = map;
 	mShadowCaster.initCore("");
@@ -437,7 +437,7 @@ void DynMapObject::update()
 		mStateTransitionTimer -= gsys->getFrameTime();
 		if (mStateTransitionTimer < 0.0f) {
 			mStateTransitionTimer = 2.0f;
-			mAnimator.startAnim(2, 0, 0, 8);
+			mAnimator.startAnim(ANIMSTATE_OneShot, 0, 0, 8);
 			mState++;
 		}
 		break;
@@ -452,7 +452,7 @@ void DynMapObject::update()
 		mStateTransitionTimer -= gsys->getFrameTime();
 		if (mStateTransitionTimer < 0.0f) {
 			mStateTransitionTimer = 0.0f;
-			mAnimator.startAnim(2, 1, 0, 8);
+			mAnimator.startAnim(ANIMSTATE_OneShot, 1, 0, 8);
 			mState++;
 		}
 		break;

@@ -9,21 +9,26 @@
 #include "Dolphin/os.h"
 #include "DebugLog.h"
 
-/*
+/**
+ * @brief Error function for animMgr.cpp, stripped in retail.
+ *
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
 DEFINE_ERROR()
 
-/*
+/**
+ * @brief Print function for animMgr.cpp, stripped in retail.
+ *
+ *
  * --INFO--
  * Address:	........
  * Size:	0000F0
  */
 DEFINE_PRINT("AnimMgr");
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000084
@@ -33,36 +38,36 @@ void AnimInfo::initAnimData(AnimData*)
 	// UNUSED FUNCTION
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050024
  * Size:	0000DC
  */
 void AnimInfo::checkAnimData()
 {
-	AnimKey* key1 = mAnimKeys.mNext;
-	for (key1; key1 != &mAnimKeys; key1 = key1->mNext) {
-		if (key1->mKeyframeIndex > mData->mTotalFrameCount - 1) {
-			key1->mKeyframeIndex = mData->mTotalFrameCount - 1;
+	AnimKey* animKey = mAnimKeys.mNext;
+	for (animKey; animKey != &mAnimKeys; animKey = animKey->mNext) {
+		if (animKey->mFrameIndex > mData->mTotalFrameCount - 1) {
+			animKey->mFrameIndex = mData->mTotalFrameCount - 1;
 		}
 	}
 
 	AnimKey* infoKey = mInfoKeys.mNext;
 	for (infoKey; infoKey != &mInfoKeys; infoKey = infoKey->mNext) {
-		if (infoKey->mKeyframeIndex >= countAKeys()) {
-			infoKey->mKeyframeIndex = countAKeys() - 1;
+		if (infoKey->mFrameIndex >= countAKeys()) {
+			infoKey->mFrameIndex = countAKeys() - 1;
 		}
 	}
 
 	AnimKey* eventKey = mEventKeys.mNext;
 	for (eventKey; eventKey != &mEventKeys; eventKey = eventKey->mNext) {
-		if (eventKey->mKeyframeIndex > mData->mTotalFrameCount - 1) {
-			eventKey->mKeyframeIndex = mData->mTotalFrameCount - 1;
+		if (eventKey->mFrameIndex > mData->mTotalFrameCount - 1) {
+			eventKey->mFrameIndex = mData->mTotalFrameCount - 1;
 		}
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050100
  * Size:	00027C
@@ -78,7 +83,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 
 	int pos = strlen(data->mName) - 1;
 	for (pos; pos >= 0; pos--) {
-		if ((u8)data->mName[pos] == (u8)'/' || (u8)data->mName[pos] == (u8)'\\') {
+		if (data->mName[pos] == '/' || data->mName[pos] == '\\') {
 			break;
 		}
 	}
@@ -86,23 +91,23 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 	mName = StdSystem::stringDup(&data->mName[pos + 1]);
 	mData = data;
 
-	AnimKey* key1        = new AnimKey();
-	key1->mKeyframeIndex = 0;
-	mAnimKeys.add(key1);
+	AnimKey* firstKey     = new AnimKey();
+	firstKey->mFrameIndex = 0;
+	mAnimKeys.mPrev->insertAfter(firstKey);
 
-	AnimKey* key2        = new AnimKey();
-	key2->mKeyframeIndex = mData->mTotalFrameCount - 1;
-	mAnimKeys.add(key2);
+	AnimKey* lastKey     = new AnimKey();
+	lastKey->mFrameIndex = mData->mTotalFrameCount - 1;
+	mAnimKeys.mPrev->insertAfter(lastKey);
 
 	checkAnimData();
 
-	mParams.mFlags.mValue = 5;
+	mParams.mFlags(ANIMFLAG_Unk1 | ANIMFLAG_UseCache);
 
 	updateAnimFlags();
 	setIndex();
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005037C
  * Size:	000048
@@ -112,7 +117,7 @@ void AnimInfo::setIndex()
 	mIndex = gsys->findAnyIndex(mMgr->mParams.mBasePath().mString, mData->mName);
 }
 
-/*
+/**
  * --INFO--
  * Address:	800503C4
  * Size:	000024
@@ -123,7 +128,7 @@ void AnimInfo::setAnimFlags(u32 flags)
 	updateAnimFlags();
 }
 
-/*
+/**
  * --INFO--
  * Address:	800503E8
  * Size:	000024
@@ -139,7 +144,7 @@ int AnimInfo::countAKeys()
 	return count;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005040C
  * Size:	000024
@@ -155,7 +160,7 @@ int AnimInfo::countIKeys()
 	return count;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050430
  * Size:	000024
@@ -171,7 +176,7 @@ int AnimInfo::countEKeys()
 	return count;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050454
  * Size:	000038
@@ -189,7 +194,7 @@ AnimKey* AnimInfo::getInfoKey(int idx)
 	return nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005048C
  * Size:	000038
@@ -207,7 +212,7 @@ AnimKey* AnimInfo::getEventKey(int idx)
 	return nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	800504C4
  * Size:	000038
@@ -218,69 +223,77 @@ int AnimInfo::getKeyValue(int idx)
 	AnimKey* key = mAnimKeys.mNext;
 	for (key; key != &mAnimKeys; key = key->mNext, i++) {
 		if (i == idx) {
-			return key->mKeyframeIndex;
+			return key->mFrameIndex;
 		}
 	}
 
 	return nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	800504FC
  * Size:	0002F8
  */
-void AnimInfo::doread(RandomAccessStream& input, int p2)
+void AnimInfo::doread(RandomAccessStream& input, int version)
 {
 	String str(nullptr, 0);
 	input.readString(str);
 	mName = StdSystem::stringDup(str.mString);
+
+	// read in parameters (flags and anim speed)
 	mParams.read(input);
 
+	// reset Anim, Info and Event key lists.
 	mAnimKeys.mPrev = mAnimKeys.mNext = &mAnimKeys;
 	mInfoKeys.mPrev = mInfoKeys.mNext = &mInfoKeys;
 	mEventKeys.mPrev = mEventKeys.mNext = &mEventKeys;
 
-	int numKeys = input.readInt();
-	if (numKeys) {
-		AnimKey* keys = new AnimKey[numKeys];
-		for (int i = 0; i < numKeys; i++) {
-			keys[i].mKeyframeIndex = input.readInt();
-			mAnimKeys.add(&keys[i]);
+	// read in keyframe indices for anim keys (if there are any)
+	int animKeyNum = input.readInt();
+	if (animKeyNum) {
+		AnimKey* keys = new AnimKey[animKeyNum];
+		for (int i = 0; i < animKeyNum; i++) {
+			keys[i].mFrameIndex = input.readInt();
+			mAnimKeys.mPrev->insertAfter(&keys[i]);
 		}
 	}
 
-	if (p2 >= 1) {
-		int numKeys2 = input.readInt();
-		if (numKeys2) {
-			AnimKey* keys = new AnimKey[numKeys2];
-			for (int i = 0; i < numKeys2; i++) {
-				keys[i].mKeyframeIndex = input.readInt();
-				keys[i].mEventKeyType  = input.readShort();
-				keys[i].mEventId       = input.readByte();
-				keys[i].mValue         = input.readByte();
-				mInfoKeys.add(&keys[i]);
+	// version 1 or later has Info key count (this is a guess)
+	if (version >= 1) {
+		int infoKeyNum = input.readInt();
+		if (infoKeyNum) {
+			AnimKey* keys = new AnimKey[infoKeyNum];
+			for (int i = 0; i < infoKeyNum; i++) {
+				keys[i].mFrameIndex = input.readInt();
+				keys[i].mEventType  = input.readShort();
+				keys[i].mEventCmdID = input.readByte();
+				keys[i].mKeyType    = input.readByte();
+				mInfoKeys.mPrev->insertAfter(&keys[i]);
 			}
 		}
 	}
 
-	int numKeys3 = input.readInt();
-	if (numKeys3) {
-		AnimKey* keys = new AnimKey[numKeys3];
-		for (int i = 0; i < numKeys3; i++) {
-			keys[i].mKeyframeIndex = input.readInt();
-			keys[i].mEventKeyType  = input.readShort();
-			keys[i].mEventId       = input.readByte();
-			keys[i].mValue         = input.readByte();
-			if (keys[i].mEventKeyType >= 3) {
-				keys[i].mEventKeyType = 0;
+	// read in keyframe indices for event keys (if there are any)
+	int eventKeyNum = input.readInt();
+	if (eventKeyNum) {
+		AnimKey* keys = new AnimKey[eventKeyNum];
+		for (int i = 0; i < eventKeyNum; i++) {
+			keys[i].mFrameIndex = input.readInt();
+			keys[i].mEventType  = input.readShort();
+			keys[i].mEventCmdID = input.readByte();
+			keys[i].mKeyType    = input.readByte();
+
+			// lock down any invalid event types
+			if (keys[i].mEventType >= ANIMEVENT_COUNT) {
+				keys[i].mEventType = ANIMEVENT_Notify;
 			}
-			mEventKeys.add(&keys[i]);
+			mEventKeys.mPrev->insertAfter(&keys[i]);
 		}
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050814
  * Size:	000010
@@ -290,47 +303,49 @@ void AnimInfo::updateAnimFlags()
 	mData->mAnimFlags = mParams.mFlags();
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050824
  * Size:	000080
  */
 AnimKey* AnimInfo::addKeyFrame()
 {
-	AnimKey* keyFrame        = new AnimKey();
-	keyFrame->mKeyframeIndex = mData->mTotalFrameCount - 1;
+	AnimKey* keyFrame     = new AnimKey();
+	keyFrame->mFrameIndex = mData->mTotalFrameCount - 1;
 	mAnimKeys.mPrev->insertAfter(keyFrame);
 	return keyFrame;
 }
 
-/*
+/**
  * --INFO--
  * Address:	800508A4
  * Size:	000234
  */
-AnimMgr::AnimMgr(Shape* shape, char* animPath, int flags, char* bundlePath)
+AnimMgr::AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath)
 {
 	setName("AnimMgr");
-	mParent   = shape;
-	mIsLoaded = flags & 0x7FFF;
+	mModel       = model;
+	mSkipLoading = flags & 0x7FFF;
 	mAnimList.initCore("anims");
 	loadAnims(animPath, bundlePath);
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050B04
  * Size:	0001E8
  */
 void AnimMgr::loadAnims(char* animPath, char* bundlePath)
 {
-
 	if (!animPath) {
 		return;
 	}
 
+	// load file and read in all parameters and managed animation information.
 	load("", animPath, 1);
-	if (!mIsLoaded) {
+
+	// if not loaded, load all animations and bundles.
+	if (!mSkipLoading) {
 		int free = gsys->getHeap(SYSHEAP_App)->getFree();
 
 		int needBundleCount = (mAnimList.mChild) ? 0 : 1;
@@ -346,8 +361,8 @@ void AnimMgr::loadAnims(char* animPath, char* bundlePath)
 		}
 
 		if (needBundleCount) {
-			gsys->mCurrentShape = mParent;
-			sprintf(finalBundlePath, bundlePath ? bundlePath : mParent->mName);
+			gsys->mCurrentShape = mModel;
+			sprintf(finalBundlePath, bundlePath ? bundlePath : mModel->mName);
 
 			if (!bundlePath) {
 				sprintf(&finalAnimPath[strlen(finalBundlePath) + 253], "anm");
@@ -358,33 +373,33 @@ void AnimMgr::loadAnims(char* animPath, char* bundlePath)
 
 		for (info = (AnimInfo*)mAnimList.mChild; info; info = (AnimInfo*)info->mNext) {
 			sprintf(finalAnimPath, "%s/%s", mParams.mBasePath().mString, info->mName);
-			info->mData = gsys->loadAnimation(mParent, finalAnimPath, true);
+			info->mData = gsys->loadAnimation(mModel, finalAnimPath, true);
 			if (info->mData) {
 				info->setIndex();
 				info->mData->mAnimFlags = info->mParams.mFlags();
 				info->checkAnimData();
 			} else {
 				PRINT("COULD NOT FIND ANIM (%s) CREATING DUMMY\n", info->mName);
-				info->mData = new AnimDck(mParent, mParent->mJointCount);
+				info->mData = new AnimDck(mModel, mModel->mJointCount);
 				info->mData->setName("Null Anim");
 			}
 		}
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050CEC
  * Size:	00008C
  */
-AnimInfo* AnimMgr::addAnimation(char* p1, bool p2)
+AnimInfo* AnimMgr::addAnimation(char* animPath, bool isRelativePath)
 {
-	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mParent, p1, p2));
+	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mModel, animPath, isRelativePath));
 	mAnimList.add(info);
 	return info;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	0000A4
@@ -398,17 +413,16 @@ AnimInfo* AnimMgr::findAnim(int idx)
 			if (!info->mData) {
 				char buf[PATH_MAX];
 				sprintf(buf, "%s/%s", mParams.mBasePath().mString, info->mName);
-				info->mData = mParent->loadAnimation(buf, true);
+				info->mData = mModel->loadAnimation(buf, true);
 				info->updateAnimFlags();
 			}
 			return info;
 		}
 	}
 	return nullptr;
-	// UNUSED FUNCTION
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050D78
  * Size:	000020
@@ -424,14 +438,14 @@ int AnimMgr::countAnims()
 	return count;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050D98
  * Size:	0001D8
  */
 void AnimMgr::read(RandomAccessStream& input)
 {
-	int val       = input.readInt();
+	int version   = input.readInt();
 	int infoCount = input.readInt();
 
 	mParams.read(input);
@@ -440,21 +454,21 @@ void AnimMgr::read(RandomAccessStream& input)
 	for (int i = 0; i < infoCount; i++) {
 		AnimInfo* info = new AnimInfo();
 		info->mMgr     = this;
-		info->doread(input, val);
+		info->doread(input, version);
 		mAnimList.add(info);
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80050F70
  * Size:	00021C
  */
-void Animator::startAnim(int isPlaying, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
+void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
 {
 	mAnimInfo = mMgr->findAnim(animID);
 	if (firstKeyFrameIdx == -1 && mCurrentAnimID == animID) {
-		firstKeyFrameIdx = mFirstFrameIndex;
+		firstKeyFrameIdx = mStartKeyIndex;
 	} else {
 		mAnimationCounter = mAnimInfo->getKeyValue(firstKeyFrameIdx);
 	}
@@ -472,13 +486,13 @@ void Animator::startAnim(int isPlaying, int animID, int firstKeyFrameIdx, int la
 		firstKeyFrameIdx = mAnimInfo->countAKeys() - 1;
 	}
 
-	mCurrentAnimID   = animID;
-	mIsPlaying       = isPlaying;
-	mFirstFrameIndex = firstKeyFrameIdx;
-	mLastFrameIndex  = lastKeyFrameIdx;
+	mCurrentAnimID = animID;
+	mPlayState     = playState;
+	mStartKeyIndex = firstKeyFrameIdx;
+	mEndKeyIndex   = lastKeyFrameIdx;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005118C
  * Size:	000004
@@ -487,17 +501,17 @@ void Animator::finishLoop()
 {
 }
 
-/*
+/**
  * --INFO--
  * Address:	80051190
  * Size:	000030
  */
 void Animator::finishOneShot()
 {
-	startAnim(mIsOneShotFinish, mAnimationId, mFirstKeyframe, mLastKeyframe);
+	startAnim(mPostOneShotPlayState, mPostOneShotAnimID, mPostOneShotStartKeyIndex, mPostOneShotEndKeyIndex);
 }
 
-/*
+/**
  * --INFO--
  * Address:	800511C0
  * Size:	00005C
@@ -511,22 +525,25 @@ void Animator::updateContext()
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005121C
  * Size:	00023C
  */
-void Animator::animate(f32 speed)
+void Animator::animate(f32 animSpeed)
 {
-	speed = (mAnimInfo->mParams.mFlags() & ANIMFLAG_Unk2) ? speed : mAnimInfo->mParams.mSpeed();
+	animSpeed = (mAnimInfo->mParams.mFlags() & ANIMFLAG_UseDynamicSpeed) ? animSpeed : mAnimInfo->mParams.mSpeed();
 
-	f32 firstFrame = mAnimInfo->getKeyValue(mFirstFrameIndex);
-	f32 lastFrame  = mAnimInfo->getKeyValue(mLastFrameIndex);
-	if (mIsPlaying) {
+	f32 firstFrame = mAnimInfo->getKeyValue(mStartKeyIndex);
+	f32 lastFrame  = mAnimInfo->getKeyValue(mEndKeyIndex);
+	if (mPlayState != ANIMSTATE_Inactive) {
 		if (lastFrame > firstFrame) {
-			mAnimationCounter += gsys->getFrameTime() * speed;
+			// playing normally
+			mAnimationCounter += gsys->getFrameTime() * animSpeed;
+
+			// we've hit the end of the animation
 			if (mAnimationCounter >= lastFrame) {
-				if (mIsPlaying == 1) {
+				if (mPlayState == ANIMSTATE_Loop) { // loop
 					mAnimationCounter -= (lastFrame - firstFrame);
 					if (mAnimationCounter >= lastFrame) {
 						mAnimationCounter = firstFrame;
@@ -539,9 +556,10 @@ void Animator::animate(f32 speed)
 				mAnimationCounter = firstFrame;
 			}
 		} else {
-			mAnimationCounter -= gsys->getFrameTime() * speed;
+			// playing in reverse
+			mAnimationCounter -= gsys->getFrameTime() * animSpeed;
 			if (mAnimationCounter < lastFrame) {
-				if (mIsPlaying == 1) {
+				if (mPlayState == ANIMSTATE_Loop) {
 					mAnimationCounter += (firstFrame - lastFrame);
 					if (mAnimationCounter < lastFrame) {
 						mAnimationCounter = lastFrame;
@@ -556,6 +574,7 @@ void Animator::animate(f32 speed)
 		}
 	}
 
+	// make sure frame counter has a valid value.
 	int currFrame = mAnimationCounter;
 	if (currFrame < 0 || currFrame >= mAnimInfo->mData->mTotalFrameCount) {
 		ERROR("Illegal counter value!! : %d, %f\n", currFrame, mAnimationCounter);

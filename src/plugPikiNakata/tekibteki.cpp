@@ -502,7 +502,7 @@ void BTeki::doAnimation()
 	}
 	if (getTekiOption(TEKIOPT_ManualAnimation)) {
 		mAnimationSpeed = mMotionSpeed;
-	} else if (!mTekiAnimator->getCurrentOption(ANIMFLAG_Unk2)) {
+	} else if (!mTekiAnimator->getCurrentOption(ANIMFLAG_UseDynamicSpeed)) {
 		mAnimationSpeed = mTekiAnimator->getAnimationSpeed();
 	} else if (getTekiOption(TEKIOPT_StoppingMove)) {
 		mAnimationSpeed = mPreStopAnimationSpeed;

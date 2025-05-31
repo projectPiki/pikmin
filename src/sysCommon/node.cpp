@@ -102,11 +102,11 @@ int CoreNode::getChildCount()
  * Address:	800406A0
  * Size:	00009C
  */
-void CoreNode::load(char* p1, char* p2, u32 p3)
+void CoreNode::load(char* dirPath, char* fileName, u32)
 {
-	char buf[256];
-	sprintf(buf, "%s%s", p1, p2);
-	RandomAccessStream* stream = gsys->openFile(buf, true, true);
+	char filePath[PATH_MAX];
+	sprintf(filePath, "%s%s", dirPath, fileName);
+	RandomAccessStream* stream = gsys->openFile(filePath, true, true);
 	if (stream) {
 		read(*stream);
 		stream->close();

@@ -225,9 +225,9 @@ void Joint::render(Graphics& gfx)
  * Address:	8002A70C
  * Size:	00004C
  */
-void AnimContext::animate(f32 time)
+void AnimContext::animate(f32 animSpeed)
 {
-	mCurrentFrame += gsys->getFrameTime() * time;
+	mCurrentFrame += gsys->getFrameTime() * animSpeed;
 
 	int frame = static_cast<int>(mCurrentFrame);
 	if (frame >= mData->mTotalFrameCount) {
@@ -3205,9 +3205,9 @@ void BaseShape::importDca(char* name, CmdStream* cmds)
  * Address:	80034DF4
  * Size:	0001C4
  */
-AnimData* BaseShape::loadAnimation(char* name, bool p2)
+AnimData* BaseShape::loadAnimation(char* name, bool isRelativePath)
 {
-	RandomAccessStream* stream = gsys->openFile(name, p2, true);
+	RandomAccessStream* stream = gsys->openFile(name, isRelativePath, true);
 	if (stream) {
 
 		CmdStream* cmds = new CmdStream(stream);
@@ -3372,7 +3372,7 @@ void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
 
 	if (mCurrentAnimation->mData) {
 		if (!p3) {
-			mCurrentAnimation->animate(mCurrentAnimation->mFrameRate);
+			mCurrentAnimation->animate(mCurrentAnimation->mAnimSpeed);
 		}
 
 		for (int i = 0; i < mJointCount; i++) {
@@ -3382,7 +3382,7 @@ void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
 			}
 			f32* frame = (p3) ? p3 : &mAnimOverrides[i]->mCurrentFrame;
 
-			if (mFrameCacher && data->mAnimFlags & ANIMFLAG_Unk3) {
+			if (mFrameCacher && data->mAnimFlags & ANIMFLAG_UseCache) {
 				int frameNum = int(*frame);
 				if (frameNum >= data->mTotalFrameCount) {
 					ERROR("updateAnim: too large a frame number : %d / %d, %f\n", frameNum, data->mTotalFrameCount, *frame);

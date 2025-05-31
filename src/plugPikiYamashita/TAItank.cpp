@@ -349,28 +349,28 @@ void TAItankAnimation::makeDefaultAnimations()
 	addInfoKey(1, 1);
 
 	addAnimation("tekis/tank/motion/waitact1.dck");
-	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	setAnimFlags(ANIMFLAG_UseDynamicSpeed | ANIMFLAG_UseCache);
 	addKeyFrame(7);
 	addKeyFrame(27);
 	addInfoKey(1, 0);
 	addInfoKey(2, 1);
 
 	addAnimation("tekis/tank/motion/waitact2.dca");
-	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	setAnimFlags(ANIMFLAG_UseDynamicSpeed | ANIMFLAG_UseCache);
 	addKeyFrame(7);
 	addKeyFrame(27);
 	addInfoKey(1, 0);
 	addInfoKey(2, 1);
 
 	addAnimation("tekis/tank/motion/move1.dck");
-	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	setAnimFlags(ANIMFLAG_UseDynamicSpeed | ANIMFLAG_UseCache);
 	addKeyFrame(10);
 	addKeyFrame(40);
 	addInfoKey(1, 0);
 	addInfoKey(2, 1);
 
 	addAnimation("tekis/tank/motion/move2.dck");
-	setAnimFlags(ANIMFLAG_Unk2 | ANIMFLAG_Unk3);
+	setAnimFlags(ANIMFLAG_UseDynamicSpeed | ANIMFLAG_UseCache);
 	addKeyFrame(10);
 	addKeyFrame(40);
 	addInfoKey(1, 0);

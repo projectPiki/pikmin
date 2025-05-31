@@ -143,7 +143,7 @@ void PaniAnimator::init(AnimContext* context, AnimMgr* mgr, PaniMotionTable* tab
 	mAnimationCounter = 0.0f;
 	mMotionTable      = table;
 	if (mgr->countAnims()) {
-		startAnim(2, 0, 0, 8);
+		startAnim(ANIMSTATE_OneShot, 0, 0, 8);
 	}
 }
 
@@ -183,7 +183,7 @@ void PaniAnimator::startMotion(PaniMotionInfo& info)
 		mCurrentKeyIndex  = 0;
 		mPreviousKeyIndex = 0;
 		mIsFinished       = false;
-		startAnim(2, getMotion(mMotionIdx)->mAnimID, 0, 8);
+		startAnim(ANIMSTATE_OneShot, getMotion(mMotionIdx)->mAnimID, 0, 8);
 	}
 }
 
@@ -207,7 +207,7 @@ void PaniAnimator::finishMotion(PaniMotionInfo& info)
 		mAnimationCounter = maxFrame;
 		finishAnimation();
 	} else {
-		startAnim(2, mCurrentAnimID, -1, 8);
+		startAnim(ANIMSTATE_OneShot, mCurrentAnimID, -1, 8);
 	}
 }
 
@@ -231,8 +231,8 @@ void PaniAnimator::animate(f32 speed)
 		return;
 	}
 
-	f32 startValue = (f32)mAnimInfo->getKeyValue(mFirstFrameIndex);
-	f32 endValue   = (f32)mAnimInfo->getKeyValue(mLastFrameIndex);
+	f32 startValue = (f32)mAnimInfo->getKeyValue(mStartKeyIndex);
+	f32 endValue   = (f32)mAnimInfo->getKeyValue(mEndKeyIndex);
 	if (startValue > endValue) {
 		mAnimationCounter;
 		PRINT("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mAnimationCounter);
@@ -258,11 +258,11 @@ void PaniAnimator::animate(f32 speed)
 void PaniAnimator::checkConstantKeys()
 {
 	if (mCurrentKeyIndex < 0) {
-		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mLastFrameIndex, mAnimInfo->countIKeys());
+		ERROR("checkConstantKeys:nextKeyInfoIndex:%d,%d\n", mEndKeyIndex, mAnimInfo->countIKeys());
 	}
 
 	if (mAnimInfo->countIKeys() > 16) {
-		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mLastFrameIndex, mAnimInfo->countIKeys());
+		ERROR("checkConstantKeys:getKeyInfoCount():%d,%d\n", mEndKeyIndex, mAnimInfo->countIKeys());
 	}
 
 	for (; mCurrentKeyIndex < mAnimInfo->countIKeys(); mCurrentKeyIndex++) {
@@ -284,7 +284,7 @@ void PaniAnimator::checkConstantKeys()
  */
 void PaniAnimator::checkConstantKey(int idx)
 {
-	int type = mAnimInfo->getInfoKey(idx)->mValue;
+	int type = mAnimInfo->getInfoKey(idx)->mKeyType;
 
 	if (!mIsFinished) {
 		if (type == 0) {
@@ -333,21 +333,23 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 	for (int i = 0; i < mAnimInfo->countEKeys(); i++) {
 		AnimKey* eventKey = mAnimInfo->getEventKey(i);
 
-		f32 val2 = eventKey->getKeyValue();
-		f32 val1 = eventKey->getKeyValue();
-		if (startKeyframe <= val1 && val2 < endKeyframe) {
+		// f32 val2 = eventKey->mKeyframeIndex;
+		f32 frame = eventKey->mFrameIndex;
+		u32 badCompiler;
+		if (startKeyframe <= frame && frame < endKeyframe) {
 			int type = KEY_Finished;
-			if (eventKey->mEventKeyType == 0) {
+			if (eventKey->mEventType == ANIMEVENT_Notify) {
 				type = KEY_PlaySound;
-			} else if (eventKey->mEventKeyType == 1) {
+			} else if (eventKey->mEventType == ANIMEVENT_Action) {
 				type = KEY_PlayEffect;
 			} else {
-				PRINT("!checkEventKeys:%08x:not supported event type:%d\n", this, eventKey->mEventKeyType);
+				PRINT("!checkEventKeys:%08x:not supported event type:%d\n", this, eventKey->mEventType);
 			}
 
-			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->mValue));
+			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->mKeyType));
 		}
 	}
+	startKeyframe ? "fake" : "fake";
 }
 
 /*
@@ -372,8 +374,8 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
 {
 	u32 badCompiler;
 	for (int i = 0; i < mAnimInfo->countIKeys(); i++) {
-		if (type == mAnimInfo->getInfoKey(i)->mValue) {
-			int keyIdx = mAnimInfo->getInfoKey(i)->mKeyframeIndex;
+		if (type == mAnimInfo->getInfoKey(i)->mKeyType) {
+			int keyIdx = mAnimInfo->getInfoKey(i)->mFrameIndex;
 			return getKeyValue(keyIdx);
 		}
 	}

@@ -29,7 +29,7 @@ struct TAIanimation {
 	// DLL inlines to do:
 	void addKeyFrame(int index)
 	{
-		mAnimInfo->mAnimKeys.mPrev->mKeyframeIndex = index;
+		mAnimInfo->mAnimKeys.mPrev->mFrameIndex = index;
 		mAnimInfo->addKeyFrame();
 	}
 	void setAnimFlags(u32 flags) { mAnimInfo->setAnimFlags(flags); }

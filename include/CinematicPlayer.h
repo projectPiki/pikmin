@@ -53,20 +53,20 @@ struct ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
-		mAnimInstance  = 0;
-		mModelInstance = 0;
-		_64            = 0;
-		mAnim.mMgr     = 0;
-		_19E           = 0;
-		mMeteorFlag    = 0;
-		_19F           = 0;
-		_19C           = 0;
-		_6C            = 0;
-		mAnimationId   = 1;
-		mColourIndex   = -1;
-		mColourValue   = 0.0f;
-		mFlags         = 2;
-		mIsLeaf        = 0;
+		mAnimInstance    = 0;
+		mModelInstance   = 0;
+		_64              = 0;
+		mAnim.mMgr       = 0;
+		_19E             = 0;
+		mMeteorFlag      = 0;
+		_19F             = 0;
+		_19C             = 0;
+		_6C              = 0;
+		mAnimPlayState   = 1;
+		mColourAnimIndex = -1;
+		mColourValue     = 0.0f;
+		mFlags           = 2;
+		mIsLeaf          = 0;
 	}
 
 	void exitInstance();
@@ -87,8 +87,8 @@ struct ActorInstance : public CoreNode {
 	int _64;                                   // _64
 	int mFlags;                                // _68
 	int _6C;                                   // _6C
-	int mAnimationId;                          // _70
-	int mColourIndex;                          // _74
+	int mAnimPlayState;                        // _70
+	int mColourAnimIndex;                      // _74
 	int mIsLeaf;                               // _78
 	CinematicPlayer* mParentPlayer;            // _7C
 	f32 mColourValue;                          // _80

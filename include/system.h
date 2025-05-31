@@ -146,7 +146,7 @@ struct StdSystem {
 	Shape* loadShape(char*, bool);
 	AnimData* findAnimation(char*);
 	int findAnyIndex(char*, char*);
-	AnimData* loadAnimation(Shape*, char*, bool);
+	AnimData* loadAnimation(Shape* model, char* path, bool isRelativePath);
 	void addAnimation(AnimData*, char*);
 	void addGfxObject(GfxobjInfo*);
 	void attachObjs();
@@ -224,17 +224,17 @@ struct StdSystem {
 	MemInfo* mCurrMemInfo;          // _19C
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
-	virtual void initSoftReset();                                               // _08
-	virtual RandomAccessStream* openFile(char*, bool, bool) { return nullptr; } // _0C
-	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                     // _10
-	virtual void copyCacheToRam(u32, u32, u32) { }                              // _14
-	virtual void copyWaitUntilDone() { }                                        // _18
-	virtual void copyCacheToTexture(struct CacheTexture*) { }                   // _1C
-	virtual void Activate(bool) { }                                             // _20
-	virtual void parseArchiveDirectory(char*, char*) { }                        // _24
-	virtual void sndPlaySe(u32) = 0;                                            // _28
-	virtual void startLoading(struct LoadIdler*, bool, u32) { }                 // _2C
-	virtual void endLoading() { }                                               // _30
+	virtual void initSoftReset();                                                                   // _08
+	virtual RandomAccessStream* openFile(char* path, bool isRelativePath, bool) { return nullptr; } // _0C
+	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                                         // _10
+	virtual void copyCacheToRam(u32, u32, u32) { }                                                  // _14
+	virtual void copyWaitUntilDone() { }                                                            // _18
+	virtual void copyCacheToTexture(struct CacheTexture*) { }                                       // _1C
+	virtual void Activate(bool) { }                                                                 // _20
+	virtual void parseArchiveDirectory(char*, char*) { }                                            // _24
+	virtual void sndPlaySe(u32) = 0;                                                                // _28
+	virtual void startLoading(struct LoadIdler*, bool, u32) { }                                     // _2C
+	virtual void endLoading() { }                                                                   // _30
 
 	int mPolygonCount;            // _1A4
 	u32 mMaterialCount;           // _1A8

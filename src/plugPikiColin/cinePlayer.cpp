@@ -197,8 +197,8 @@ void CinematicPlayer::loadCin(char* demoName)
 					}
 
 					if (cmd->isToken("anim")) {
-						sscanf(cmd->getToken(true), "%d", &actor->mAnimationId);
-						sscanf(cmd->getToken(true), "%d", &actor->mColourIndex);
+						sscanf(cmd->getToken(true), "%d", &actor->mAnimPlayState);
+						sscanf(cmd->getToken(true), "%d", &actor->mColourAnimIndex);
 						continue;
 					}
 
@@ -217,10 +217,10 @@ void CinematicPlayer::loadCin(char* demoName)
 							int frameIdx;
 							sscanf(cmd->getToken(true), "%d", &frameIdx);
 
-							keys[i].mEventKeyType  = eventType;
-							keys[i].mEventId       = eventID;
-							keys[i].mValue         = value;
-							keys[i].mKeyframeIndex = frameIdx;
+							keys[i].mEventType  = eventType;
+							keys[i].mEventCmdID = eventID;
+							keys[i].mKeyType    = value;
+							keys[i].mFrameIndex = frameIdx;
 							cut->mKey.mPrev->insertAfter(&keys[i]);
 						}
 						cmd->getToken(true);
@@ -407,14 +407,14 @@ int CinematicPlayer::update()
 	if (mCurrentCut) {
 		for (AnimKey* key = mCurrentCut->mKey.mNext; key != &mCurrentCut->mKey; key = key->mNext) {
 			// if we've just passed a key frame, trigger event
-			if ((f32)key->mKeyframeIndex >= mPreviousFramePosition && (f32)key->mKeyframeIndex < mCurrentFramePosition) {
-				PRINT("(%.3f : %.3f) got event at frame %d : %d, %d, %d\n", mPreviousFramePosition, mCurrentFramePosition,
-				      key->mKeyframeIndex, key->mEventKeyType, key->mEventId, key->mValue);
-				if (mIsPlaying && gameflow.mGameInterface && key->mEventKeyType == 0) {
-					gameflow.mGameInterface->message(key->mEventId, key->mValue);
+			if ((f32)key->mFrameIndex >= mPreviousFramePosition && (f32)key->mFrameIndex < mCurrentFramePosition) {
+				PRINT("(%.3f : %.3f) got event at frame %d : %d, %d, %d\n", mPreviousFramePosition, mCurrentFramePosition, key->mFrameIndex,
+				      key->mEventType, key->mEventCmdID, key->mKeyType);
+				if (mIsPlaying && gameflow.mGameInterface && key->mEventType == ANIMEVENT_Notify) {
+					gameflow.mGameInterface->message(key->mEventCmdID, key->mKeyType);
 
-				} else if (key->mEventKeyType == 1 && demoEventMgr) {
-					demoEventMgr->act(key->mEventId, key->mValue);
+				} else if (key->mEventType == ANIMEVENT_Action && demoEventMgr) {
+					demoEventMgr->act(key->mEventCmdID, key->mKeyType);
 				}
 			}
 		}
@@ -583,9 +583,9 @@ void ActorInstance::initInstance()
 
 	if (mFlags & 0x200) {
 		if (mFlags & 0x40000) {
-			PRINT("setting onion with multi colour %d\n", mColourIndex);
+			PRINT("setting onion with multi colour %d\n", mColourAnimIndex);
 			static f32 onionColours[] = { 10.0f, 9.0f, 8.0, 13.0, 11.0, 12.0, 7.0, 10.0, 9.0, 8.0, 11.0, 8.0, 9.0, 10.0 };
-			mColourValue              = onionColours[mColourIndex - 1];
+			mColourValue              = onionColours[mColourAnimIndex - 1];
 		}
 		if (effectMgr) {
 			PRINT("init effect instance!\n");
@@ -603,9 +603,9 @@ void ActorInstance::initInstance()
 		onceInit();
 	}
 
-	if (mAnimInstance->mMgr && mColourIndex >= 0) {
+	if (mAnimInstance->mMgr && mColourAnimIndex >= 0) {
 		mAnim.init(&mAnimInstance->mContext, mAnimInstance->mMgr);
-		mAnim.startAnim(mAnimationId, mColourIndex, 0, 8);
+		mAnim.startAnim(mAnimPlayState, mColourAnimIndex, 0, 8);
 	}
 }
 
@@ -618,14 +618,14 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 {
 	for (int i = 0; i < mAnim.mAnimInfo->countEKeys(); i++) {
 		AnimKey* key = mAnim.mAnimInfo->getEventKey(i);
-		f32 keyFrame = key->mKeyframeIndex;
+		f32 keyFrame = key->mFrameIndex;
 
 		if (curTime <= keyFrame && keyFrame < prevTime) {
-			if (key->mEventKeyType == 0) {
+			if (key->mEventType == ANIMEVENT_Notify) {
 				continue;
 			}
-			if (key->mEventKeyType == 1) {
-				u8 id = key->mValue;
+			if (key->mEventType == ANIMEVENT_Action) {
+				u8 id = key->mKeyType;
 				switch (id) {
 				case 0:
 					if (mapMgr) {
