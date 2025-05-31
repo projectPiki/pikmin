@@ -17,6 +17,8 @@ typedef struct MoveParam_ MoveParam_;
 typedef struct AInnerParam_ AInnerParam_;
 typedef union TimedParam_ TimedParam_;
 typedef struct OuterParam_ OuterParam_;
+typedef struct RegisterParam_ RegisterParam_;
+typedef union URegisterParam_ URegisterParam_;
 
 typedef u32 (*CmdFunction)();              // TODO: Confirm return type
 typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
@@ -68,8 +70,8 @@ struct AInnerParam_ {
 };
 
 union TimedParam_ {
-	AInnerParam_ inner;  // get individual params by member name
-	MoveParam_ move[18]; // get individual params by index
+	AInnerParam_ inner;  // Get individual params by member name
+	MoveParam_ move[18]; // Get individual params by index
 };
 
 /**
@@ -90,6 +92,34 @@ struct OuterParam_ {
 	f32 _20;             // _20
 	s16 _24[8];          // _24 | Exact length and signed confirmed. For loop in `Jam_SetExtFirFilterD`.
 	u8 _34[0x40 - 0x34]; // _34
+};
+
+/**
+ * @brief Name borrowed from `JASRegisterParam.h` from Pikmin 2.
+ *
+ * @note Size: 0x40.
+ */
+struct RegisterParam_ {
+	u8 _00[0x06 - 0x00]; // _00 | 00 - 02
+	u16 _06;             // _06 | 03
+	u8 _08[0x0C - 0x08]; // _08 | 04 - 05
+	u16 _0C;             // _0C | 06
+	u16 _0E;             // _0E | 07
+	u16 _10[5];          // _10 | 08 - 12 | Exact length confirmed: `Cmd_PanPowSet`.
+	u16 _1A;             // _1A | 13
+	u8 _1C[0x20 - 0x1C]; // _1C | 14
+	u32 _20[4];          // _20 | 15 - 22 | Exact length semi-confirmed; Pikmin 2 also says 4.
+	u8 _30[0x40 - 0x30]; // _1C | 23 - 31
+};
+
+/**
+ * @brief Invented struct necessitated by behavior in `seqsetup.c`.
+ *
+ * @note Size: 0x40.
+ */
+union URegisterParam_ {
+	RegisterParam_ param;
+	u16 reg[32];
 };
 
 // This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
@@ -136,7 +166,7 @@ struct seqp_ {
 	u8 _D7[0x0d8 - 0x0d7];    // _0D7
 	jcs_ _D8;                 // _0D8
 	TimedParam_ timedParam;   // _14C
-	u16 registers[32];        // _26C | Exact length confirmed.
+	URegisterParam_ regParam; // _26C
 	OuterParam_* _2AC;        // _2AC
 	OuterParam_* _2B0[16];    // _2B0 | Exact length confirmed.
 	TrackPort_ trackPort[16]; // _2F0 | Exact length confirmed.
@@ -183,8 +213,8 @@ struct seqp_ {
 void* Jam_OfsToAddr(seqp_*, u32);         // TODO: Change return type to u8* if that's more convenient.
 void Jam_WriteRegDirect(seqp_*, u8, u16); // Is param_3 is u8 or a u16?
 void Jam_WriteRegParam(void);
-u16 Jam_ReadRegDirect(seqp_*, u32);
-u32 Jam_ReadReg32(void);
+u16 Jam_ReadRegDirect(seqp_*, u8);
+u32 Jam_ReadReg32(seqp_* track, u8 index);
 void Jam_WriteRegXY(seqp_* track, u32 param_2);
 void Jam_WritePortApp(void);
 void Jam_ReadPortApp(void);
