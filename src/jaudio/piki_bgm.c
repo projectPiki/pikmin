@@ -360,7 +360,7 @@ void Jac_SetBgmModeFlag(u32 a, u8 b, u8 c)
 		thisBgm->_11 = c;
 		break;
 	}
-	Jac_ChangeBgmMode(a, thisBgm->_0F + (thisBgm->_0E << 1) + (thisBgm->_10 << 2) + (thisBgm->_11 << 3));
+	Jac_ChangeBgmMode(a, thisBgm->_0F + (thisBgm->_10 << 2) + (thisBgm->_0E << 1) + (thisBgm->_11 << 3));
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -84,6 +84,8 @@ void MemStat::start(char* name)
  */
 void MemStat::end(char* name)
 {
+	BUMP_REGISTER(r31);
+
 	if (!memStat) {
 		return;
 	}
