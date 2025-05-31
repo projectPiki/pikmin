@@ -237,31 +237,30 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 	track->timedParam.inner._50._04 = 0.0f;
 
 	for (i = 0; i < 32; ++i) {
-		track->registers[i] = 0;
+		track->regParam.reg[i] = 0;
 	}
 
 	if ((track->_3F & 2) || !track->parent) {
-		track->registers[8]  = 0;
-		track->registers[9]  = 1;
-		track->registers[10] = 1;
-		track->registers[11] = 0x7fff;
-		track->registers[12] = 0x4000;
+		track->regParam.param._10[0] = 0;
+		track->regParam.param._10[1] = 1;
+		track->regParam.param._10[2] = 1;
+		track->regParam.param._10[3] = 0x7fff;
+		track->regParam.param._10[4] = 0x4000;
 		for (i = 0; i < 3; ++i) {
 			track->_3DC[i]    = 2;
 			track->_3DF[i]    = 2;
 			track->_D8._62[i] = 26;
 		}
-		track->registers[6]  = 0xf0;
-		track->registers[7]  = 0x0c;
-		track->registers[13] = 0x40;
+		track->regParam.param._0C = 0xf0;
+		track->regParam.param._0E = 0x0c;
+		track->regParam.param._1A = 0x40;
 	} else {
-		// Initialize 8 through 12.
 		for (i = 0; i < 5; ++i) {
-			track->registers[i + 8] = track->parent->registers[i + 8];
+			track->regParam.param._10[i] = track->parent->regParam.param._10[i];
 		}
-		track->registers[6]  = track->parent->registers[6];
-		track->registers[7]  = track->parent->registers[7];
-		track->registers[13] = track->parent->registers[13];
+		track->regParam.param._0C = track->parent->regParam.param._0C;
+		track->regParam.param._0E = track->parent->regParam.param._0E;
+		track->regParam.param._1A = track->parent->regParam.param._1A;
 		for (i = 0; i < 3; ++i) {
 			track->_3DC[i]    = track->parent->_3DC[i];
 			track->_3DF[i]    = track->parent->_3DF[i];
@@ -420,11 +419,11 @@ BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 	u8 lo;
 
 	// Let's get ahead of ourselves here.
-	lo = track->registers[6] & 0xFF;
+	lo = track->regParam.param._0C & 0xFF;
 	if (!track) {
 		return FALSE;
 	}
-	track->registers[6] = (bankNum << 8) | lo;
+	track->regParam.param._0C = (bankNum << 8) | lo;
 	return TRUE;
 }
 

@@ -426,8 +426,8 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 		uVar1 = value & 0xff;
 		break;
 	}
-	track->registers[index] = uVar1;
-	track->registers[3]     = value;
+	track->regParam.reg[index] = uVar1;
+	track->regParam.param._06  = value;
 }
 
 /*
@@ -846,122 +846,62 @@ void Jam_WriteRegParam(void)
  * Address:	800100A0
  * Size:	00016C
  */
-u16 Jam_ReadRegDirect(seqp_*, u32)
+u16 Jam_ReadRegDirect(seqp_* track, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r28, 0x10(r1)
-	  rlwinm    r31,r4,0,24,31
-	  subi      r0, r31, 0x20
-	  addi      r30, r3, 0
-	  cmplwi    r0, 0x10
-	  bgt-      .loc_0x10C
-	  lis       r3, 0x8022
-	  rlwinm    r0,r0,2,0,29
-	  addi      r3, r3, 0x50E0
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  lha       r28, 0x278(r30)
-	  b         .loc_0x118
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        .loc_0x0
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  bl        .loc_0x0
-	  rlwinm    r0,r3,8,8,23
-	  or        r28, r0, r29
-	  b         .loc_0x118
-	  li        r0, 0x10
-	  li        r28, 0
-	  li        r3, 0x3C
-	  mtctr     r0
+	s16 result;
+	u16 regDirectLo;
+	u16 regDirectHi;
+	int i;
 
-	.loc_0x7C:
-	  addi      r0, r3, 0x44
-	  extsh     r4, r28
-	  lwzx      r5, r30, r0
-	  rlwinm    r0,r4,1,0,30
-	  extsh     r28, r0
-	  cmplwi    r5, 0
-	  beq-      .loc_0xA8
-	  lbz       r0, 0x3C(r5)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA8
-	  ori       r28, r28, 0x1
-
-	.loc_0xA8:
-	  subi      r3, r3, 0x4
-	  bdnz+     .loc_0x7C
-	  b         .loc_0x118
-	  li        r28, 0
-	  li        r29, 0x7
-
-	.loc_0xBC:
-	  extsh     r0, r28
-	  addi      r3, r30, 0
-	  rlwinm    r0,r0,1,0,30
-	  addi      r4, r29, 0
-	  extsh     r28, r0
-	  bl        0x3BB0
-	  subic.    r29, r29, 0x1
-	  rlwinm    r0,r3,0,24,31
-	  or        r28, r28, r0
-	  bge+      .loc_0xBC
-	  b         .loc_0x118
-	  lwz       r0, 0x8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xFC
-	  li        r28, 0
-	  b         .loc_0x118
-
-	.loc_0xFC:
-	  rlwinm    r0,r0,1,0,30
-	  add       r3, r30, r0
-	  lha       r28, 0x2A(r3)
-	  b         .loc_0x118
-
-	.loc_0x10C:
-	  rlwinm    r0,r4,1,23,30
-	  add       r3, r30, r0
-	  lha       r28, 0x26C(r3)
-
-	.loc_0x118:
-	  cmpwi     r31, 0x20
-	  beq-      .loc_0x148
-	  bge-      .loc_0x138
-	  cmpwi     r31, 0x3
-	  bge-      .loc_0x154
-	  cmpwi     r31, 0
-	  bge-      .loc_0x140
-	  b         .loc_0x154
-
-	.loc_0x138:
-	  cmpwi     r31, 0x22
-	  bge-      .loc_0x154
-
-	.loc_0x140:
-	  rlwinm    r28,r28,0,24,31
-	  b         .loc_0x154
-
-	.loc_0x148:
-	  extsh     r0, r28
-	  srawi     r0, r0, 0x8
-	  extsh     r28, r0
-
-	.loc_0x154:
-	  mr        r3, r28
-	  lmw       r28, 0x10(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	switch (param_2) {
+	case 0x20:
+	case 0x21:
+		result = track->regParam.param._0C;
+		break;
+	case 0x22:
+		regDirectLo = Jam_ReadRegDirect(track, 1);
+		regDirectHi = Jam_ReadRegDirect(track, 0);
+		result      = regDirectHi << 8 | regDirectLo;
+		break;
+	case 0x2C:
+		result = 0;
+		for (i = 15; i >= 0; --i) {
+			result = result << 1; // For some reason, `<<=` prevents `srawi`.
+			if (track->children[i] && track->children[i]->_3C) {
+				result |= 1;
+			}
+		}
+		break;
+	case 0x2D:
+		result = 0;
+		for (i = 7; i >= 0; --i) {
+			result = result << 1; // For some reason, `<<=` prevents `srawi`.
+			result |= (u8)CheckNoteStop(track, i);
+		}
+		break;
+	case 0x30:
+		if (track->_08 == 0) {
+			result = 0;
+		} else {
+			result = track->_2C[track->_08 - 1];
+		}
+		break;
+	default:
+		result = track->regParam.reg[param_2];
+		break;
+	}
+	switch (param_2) {
+	case 0x00:
+	case 0x01:
+	case 0x02:
+	case 0x21:
+		result = result & 0xff;
+		break;
+	case 0x20:
+		result = result >> 8;
+		break;
+	}
+	return result;
 }
 
 /*
@@ -979,42 +919,18 @@ u32 Jam_ReadRegXY(seqp_* track)
  * Address:	80010280
  * Size:	00005C
  */
-u32 Jam_ReadReg32(void)
+u32 Jam_ReadReg32(seqp_* track, u8 index)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,24,31
-	  cmpwi     r0, 0x28
-	  stwu      r1, -0x8(r1)
-	  bge-      .loc_0x24
-	  cmpwi     r0, 0x23
-	  beq-      .loc_0x3C
-	  b         .loc_0x44
-
-	.loc_0x24:
-	  cmpwi     r0, 0x2C
-	  bge-      .loc_0x44
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r3, 0x1EC(r3)
-	  b         .loc_0x4C
-
-	.loc_0x3C:
-	  bl        -0x9C
-	  b         .loc_0x4C
-
-	.loc_0x44:
-	  bl        -0x224
-	  rlwinm    r3,r3,0,16,31
-
-	.loc_0x4C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	switch (index) {
+	case 40:
+	case 41:
+	case 42:
+	case 43:
+		return track->regParam.param._20[index - 40];
+	case 35:
+		return Jam_ReadRegXY(track);
+	}
+	return Jam_ReadRegDirect(track, index);
 }
 
 /*
@@ -1036,7 +952,7 @@ void Jam_WriteRegXY(seqp_* track, u32 param_2)
 u32 __ExchangeRegisterValue(seqp_* track, u8 param_2)
 {
 	if (param_2 < 64) {
-		return Jam_ReadReg32();
+		return Jam_ReadReg32(track, param_2);
 	}
 	return track->trackPort[param_2 - 64].value;
 }
@@ -2476,7 +2392,7 @@ static u32 Cmd_CallF()
 	u8 bVar1;
 	u32 uVar2;
 	u32 uVar3;
-	u32 uVar4;
+	u8 uVar4;
 
 	bVar1 = __ByteRead(SEQ_P);
 	if (bVar1 & 0x80) {
@@ -3047,10 +2963,10 @@ static u32 Cmd_PanPowSet()
 	int i;
 
 	for (i = 0; i < 3; ++i) {
-		SEQ_P->registers[i + 8] = SEQ_ARG[i];
+		SEQ_P->regParam.param._10[i] = SEQ_ARG[i];
 	}
 	for (i = 3; i < 5; ++i) {
-		SEQ_P->registers[i + 8] = SEQ_ARG[i] * 327.67f;
+		SEQ_P->regParam.param._10[i] = SEQ_ARG[i] * 327.67f;
 	}
 	return 0;
 }
