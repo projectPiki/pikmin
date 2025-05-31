@@ -49,7 +49,6 @@ struct BufControl_ {
 
 enum AudioFormat { AUDIOFRMT_ADPCM = 4, AUDIOFRMT_ADPCM4X = 5 };
 
-
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
 	u32 _00; // _00
@@ -74,14 +73,13 @@ struct StreamCtrl_ {
 	u16 _21990;      // _21990
 	u16 audioFormat; // _21992
 	artificial_padding(0x219A8, 0x21994);
-	u32 _219A8;    // _219A8
-	u32 _219AC;    // _219AC
-	BOOL isPaused; // _219B0
-	u32 _219B4;    // _219B4
-	DVDFileInfo* _219B8;
-	artificial_padding(0x219F4, 0x219B8);
-	dspch_* dspch[2]; // _219F4
-	artificial_padding(0x21A0C, 0x21A00);
+	u32 _219A8;         // _219A8
+	u32 _219AC;         // _219AC
+	BOOL isPaused;      // _219B0
+	u32 _219B4;         // _219B4
+	DVDFileInfo _219B8; // _219B8, I think this should be DVDFileInfo not DVDFileInfo*
+	dspch_* dspch[2];   // _219F4
+	artificial_padding(0x21A0C, 0x219FC);
 	u32 _21A0C;
 	u32 _21A10;
 	artificial_padding(0x21A28, 0x21A14);

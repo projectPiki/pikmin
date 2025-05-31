@@ -5,22 +5,23 @@
 #include "jaudio/aictrl.h"
 #include "jaudio/rate.h"
 
-// fabricated
+// fabricated, size 0x14.
 struct UNK_STRUCT {
-	DVDFileInfo* fileinfo;
-	void* addr;
-	s32 length;
-	s32 offset;
-	DVDCallback callback;
+	DVDFileInfo* fileinfo; // _00
+	void* addr;            // _04
+	s32 length;            // _08
+	s32 offset;            // _0C
+	DVDCallback callback;  // _10
 };
 
 typedef struct UNK_STRUCT UNK_STRUCT;
 
 static StreamCtrl_ SC[1];
+static UNK_STRUCT copyinfo;
 
 static StreamCallback default_streamsync_call;
 
-static UNK_STRUCT* copy;
+static UNK_STRUCT* copy = &copyinfo;
 
 /*
  * --INFO--
@@ -131,48 +132,48 @@ static void LoadADPCM(StreamCtrl_*, int);
  */
 static void __LoadFin(s32 ctrlID, DVDFileInfo* fileinfo)
 {
+	int id = 0;
+	StreamCtrl_* ctrl;
 
-	StreamCtrl_* ctrl = &SC[ctrlID];
+	for (int i = 0; i < 1; i++) {
+		if (fileinfo == &SC[i]._219B8) {
+			ctrl = &SC[i];
+		}
 
-	DVDFileInfo* info = ctrl->_219B8;
+		ctrl->_21A48 = 0;
 
-	if (info == fileinfo) {
-		ctrl = &SC[0];
-	}
+		u32 idx = ctrl->_21942;
 
-	ctrl->_21A48 = 0;
+		// TODO: find the max value for ctrl->_21942 to resolve _218C0 size, and determine if really BufControl_
+		BufControl_* buff = &ctrl->buffCtrl[idx];
 
-	u32 idx = ctrl->_21942;
+		if (ctrl->_21A34 == 1) {
+			u8* data = (u8*)buff->_0C;
+			DCInvalidateRange(data, 0x20);
 
-	// TODO: find the max value for ctrl->_21942 to resolve _218C0 size, and determine if really BufControl_
-	BufControl_* buff = &ctrl->buffCtrl[idx];
+			// what in tarnation
+			if (data[0] == 0xff && data[1] == 0xad && data[2] == 0xbe && data[3] == 0xef && data[4] == 0xde && data[5] == 0xad
+			    && data[6] == 0xbe && data[7] == 0xef) {
+				__DVDReadAsyncRetry();
+				return;
+			}
+		}
 
-	if (ctrl->_21A34 == 1) {
-		u8* data = (u8*)buff->_0C;
-		DCInvalidateRange(data, 0x20);
+		buff->_00 = 2;
 
-		// what in tarnation
-		if (data[0] == 0xff && data[1] == 0xad && data[2] == 0xbe && data[3] == 0xef && data[4] == 0xde && data[5] == 0xad
-		    && data[6] == 0xbe && data[7] == 0xef) {
-			__DVDReadAsyncRetry();
+		ctrl->_21942 = (idx + 1) % ctrl->_21941;
+
+		if (ctrl->_21970 == 0) {
+			ctrl->_21A44 = 1;
 			return;
 		}
+
+		if (ctrl->_21A34 == 0) {
+			return;
+		}
+
+		LoadADPCM(ctrl, 0);
 	}
-
-	buff->_00 = 2;
-
-	ctrl->_21942 = (idx + 1) % ctrl->_21941;
-
-	if (ctrl->_21970 == 0) {
-		ctrl->_21A44 = 1;
-		return;
-	}
-
-	if (ctrl->_21A34 == 0) {
-		return;
-	}
-
-	LoadADPCM(ctrl, 0);
 }
 
 /*
@@ -315,8 +316,6 @@ static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f,
 	ctrl->_0C = g;
 }
 
-
-
 /*
  * --INFO--
  * Address:	8001C100
@@ -324,10 +323,10 @@ static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f,
  */
 void Init_StreamAudio(void)
 {
-	StreamCtrl_* ctrl = &SC[0];
-	
-	ctrl->_21984 = 4;
-	ctrl->_21A0C = 0;
+	for (int i = 0; i < 1; i++) {
+		SC[i]._21984 = 4;
+		SC[i]._21A0C = i;
+	}
 }
 
 /*
