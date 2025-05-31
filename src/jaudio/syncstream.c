@@ -1,31 +1,36 @@
 #include "jaudio/syncstream.h"
-
+#include "jaudio/audiostruct.h"
+#include "jaudio/dspinterface.h"
 #include "Dolphin/dvd.h"
+#include "jaudio/aictrl.h"
+#include "jaudio/rate.h"
+
+// fabricated
+struct UNK_STRUCT {
+	DVDFileInfo* fileinfo;
+	void* addr;
+	s32 length;
+	s32 offset;
+	DVDCallback callback;
+};
+
+typedef struct UNK_STRUCT UNK_STRUCT;
+
+static StreamCtrl_ SC[1];
+
+static StreamCallback default_streamsync_call;
+
+static UNK_STRUCT* copy;
 
 /*
  * --INFO--
  * Address:	8001BBE0
  * Size:	000038
  */
-void Stop_DirectPCM(dspch_*)
+void Stop_DirectPCM(dspch_* dispatcher)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lbz       r3, 0x0(r3)
-	  bl        -0x103D8
-	  lbz       r3, 0x0(r31)
-	  bl        -0x100E0
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	DSP_PlayStop(dispatcher->buffer_idx);
+	DSP_FlushChannel(dispatcher->buffer_idx);
 }
 
 /*
@@ -33,72 +38,33 @@ void Stop_DirectPCM(dspch_*)
  * Address:	8001BC20
  * Size:	0000DC
  */
-void Play_DirectPCM(dspch_*, s16*, u16, u32)
+void Play_DirectPCM(dspch_* dispatcher, s16* baseAddr, u16 loopStart, u32 length)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  addi      r29, r4, 0
-	  addi      r30, r5, 0
-	  addi      r31, r6, 0
-	  lbz       r3, 0x0(r3)
-	  bl        -0x106E4
-	  stw       r29, 0x118(r3)
-	  li        r0, 0
-	  li        r5, 0x21
-	  li        r4, 0
-	  sth       r0, 0x102(r3)
-	  rlwinm    r0,r30,16,0,15
-	  sth       r5, 0x100(r3)
-	  stw       r31, 0x74(r3)
-	  stw       r29, 0x110(r3)
-	  stw       r0, 0x114(r3)
-	  lbz       r3, 0x0(r28)
-	  bl        -0x10694
-	  li        r31, 0
+	DSPBuffer* buff = GetDspHandle(dispatcher->buffer_idx); // r3
 
-	.loc_0x5C:
-	  cmplwi    r31, 0x2
-	  bge-      .loc_0x7C
-	  lbz       r3, 0x0(r28)
-	  rlwinm    r4,r31,0,24,31
-	  li        r5, 0x7FFF
-	  li        r6, 0
-	  bl        -0x10694
-	  b         .loc_0x90
+	buff->baseAddress       = (u32)baseAddr;
+	buff->isLooping         = FALSE;
+	buff->samplesSourceType = 0x21; // todo: find out what this is
+	buff->remainingLength   = length;
+	buff->loopAddress       = (u32)baseAddr;
+	buff->loopStartPosition = loopStart << 16;
 
-	.loc_0x7C:
-	  lbz       r3, 0x0(r28)
-	  rlwinm    r4,r31,0,24,31
-	  li        r5, 0
-	  li        r6, 0
-	  bl        -0x106AC
+	DSP_SetMixerInitDelayMax(dispatcher->buffer_idx, 0);
 
-	.loc_0x90:
-	  lbz       r3, 0x0(r28)
-	  rlwinm    r4,r31,0,24,31
-	  addi      r5, r31, 0x1
-	  bl        -0x104DC
-	  addi      r31, r31, 0x1
-	  cmplwi    r31, 0x6
-	  blt+      .loc_0x5C
-	  lbz       r3, 0x0(r28)
-	  li        r4, 0x800
-	  bl        -0x10734
-	  lbz       r3, 0x0(r28)
-	  bl        -0x1043C
-	  lbz       r3, 0x0(r28)
-	  bl        -0x101C4
-	  lmw       r28, 0x18(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	for (u32 i = 0; i < 6; i++) {
+
+		if (i < 2) {
+			DSP_SetMixerInitVolume(dispatcher->buffer_idx, i, 0x7fff, 0);
+		} else {
+			DSP_SetMixerInitVolume(dispatcher->buffer_idx, i, 0, 0);
+		}
+
+		DSP_SetBusConnect(dispatcher->buffer_idx, i, i + 1);
+	}
+
+	DSP_SetPitch(dispatcher->buffer_idx, 0x800);
+	DSP_PlayStart(dispatcher->buffer_idx);
+	DSP_FlushChannel(dispatcher->buffer_idx);
 }
 
 /*
@@ -106,7 +72,7 @@ void Play_DirectPCM(dspch_*, s16*, u16, u32)
  * Address:	........
  * Size:	000018
  */
-void Get_DirectPCM_LoopRemain(DSPchannel_*)
+void Get_DirectPCM_LoopRemain(DSPchannel_* channel)
 {
 	// UNUSED FUNCTION
 }
@@ -116,14 +82,9 @@ void Get_DirectPCM_LoopRemain(DSPchannel_*)
  * Address:	8001BD00
  * Size:	00000C
  */
-void Get_DirectPCM_Counter(DSPchannel_*)
+u16 Get_DirectPCM_Counter(DSPchannel_* channel)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x68(r3)
-	  rlwinm    r3,r0,16,16,31
-	  blr
-	*/
+	return channel->counter >> 16;
 }
 
 /*
@@ -131,13 +92,9 @@ void Get_DirectPCM_Counter(DSPchannel_*)
  * Address:	8001BD20
  * Size:	000008
  */
-void Get_DirectPCM_Remain(DSPchannel_*)
+u32 Get_DirectPCM_Remain(DSPchannel_* channel)
 {
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x74(r3)
-	  blr
-	*/
+	return channel->remain;
 }
 
 /*
@@ -147,24 +104,7 @@ void Get_DirectPCM_Remain(DSPchannel_*)
  */
 static void __DVDReadAsyncRetry()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r8, 0x1
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r7, -0x7ED0(r13)
-	  lwz       r3, 0x0(r7)
-	  lwz       r4, 0x4(r7)
-	  lwz       r5, 0x8(r7)
-	  lwz       r6, 0xC(r7)
-	  lwz       r7, 0x10(r7)
-	  bl        0x1E38B4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	DVDReadAsyncPrio(copy->fileinfo, copy->addr, copy->length, copy->offset, copy->callback, 1);
 }
 
 /*
@@ -172,132 +112,67 @@ static void __DVDReadAsyncRetry()
  * Address:	8001BD80
  * Size:	000048
  */
-static void DVDReadAsyncPrio2(DVDFileInfo*, void*, s32, s32, void (*)(s32, DVDFileInfo*), s32)
+static void DVDReadAsyncPrio2(DVDFileInfo* info, void* addr, s32 length, s32 offs, DVDCallback callback, s32 prio)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r8, -0x7ED0(r13)
-	  stw       r3, 0x0(r8)
-	  lwz       r3, -0x7ED0(r13)
-	  stw       r4, 0x4(r3)
-	  lwz       r3, -0x7ED0(r13)
-	  stw       r5, 0x8(r3)
-	  lwz       r3, -0x7ED0(r13)
-	  stw       r6, 0xC(r3)
-	  lwz       r3, -0x7ED0(r13)
-	  stw       r7, 0x10(r3)
-	  bl        -0x74
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	copy->fileinfo = info;
+	copy->addr     = addr;
+	copy->length   = length;
+	copy->offset   = offs;
+	copy->callback = callback;
+	__DVDReadAsyncRetry();
 }
+
+static void LoadADPCM(StreamCtrl_*, int);
 
 /*
  * --INFO--
  * Address:	8001BDE0
  * Size:	00014C
  */
-static void __LoadFin(s32, DVDFileInfo*)
+static void __LoadFin(s32 ctrlID, DVDFileInfo* fileinfo)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x2
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x1A50
-	  li        r5, 0
-	  lis       r3, 0x8037
-	  mullw     r5, r5, r0
-	  stwu      r1, -0x28(r1)
-	  subi      r0, r3, 0x7160
-	  stmw      r28, 0x18(r1)
-	  add       r5, r0, r5
-	  addis     r3, r5, 0x2
-	  addi      r0, r3, 0x19B8
-	  cmplw     r4, r0
-	  bne-      .loc_0x40
-	  mr        r31, r5
 
-	.loc_0x40:
-	  addis     r3, r31, 0x2
-	  li        r0, 0
-	  stw       r0, 0x1A48(r3)
-	  lbz       r30, 0x1942(r3)
-	  lbz       r0, 0x1A34(r3)
-	  rlwinm    r3,r30,4,0,27
-	  addis     r29, r3, 0x2
-	  cmplwi    r0, 0x1
-	  addi      r29, r29, 0x18C0
-	  add       r29, r31, r29
-	  bne-      .loc_0xE4
-	  lwz       r28, 0xC(r29)
-	  li        r4, 0x20
-	  addi      r3, r28, 0
-	  bl        0x1DAD60
-	  lbz       r0, 0x0(r28)
-	  cmplwi    r0, 0xFF
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x1(r28)
-	  cmplwi    r0, 0xAD
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x2(r28)
-	  cmplwi    r0, 0xBE
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x3(r28)
-	  cmplwi    r0, 0xEF
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x4(r28)
-	  cmplwi    r0, 0xDE
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x5(r28)
-	  cmplwi    r0, 0xAD
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x6(r28)
-	  cmplwi    r0, 0xBE
-	  bne-      .loc_0xE4
-	  lbz       r0, 0x7(r28)
-	  cmplwi    r0, 0xEF
-	  bne-      .loc_0xE4
-	  bl        -0x17C
-	  b         .loc_0x138
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0xE4:
-	  li        r0, 0x2
-	  addis     r4, r31, 0x2
-	  stb       r0, 0x0(r29)
-	  addi      r5, r30, 0x1
-	  lbz       r3, 0x1941(r4)
-	  divwu     r0, r5, r3
-	  mullw     r0, r0, r3
-	  sub       r0, r5, r0
-	  stb       r0, 0x1942(r4)
-	  lwz       r0, 0x1970(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x120
-	  li        r0, 0x1
-	  stw       r0, 0x1A44(r4)
-	  b         .loc_0x138
+	DVDFileInfo* info = ctrl->_219B8;
 
-	.loc_0x120:
-	  lbz       r0, 0x1A34(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x138
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0x2C
+	if (info == fileinfo) {
+		ctrl = &SC[0];
+	}
 
-	.loc_0x138:
-	  lmw       r28, 0x18(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	ctrl->_21A48 = 0;
+
+	u32 idx = ctrl->_21942;
+
+	// TODO: find the max value for ctrl->_21942 to resolve _218C0 size, and determine if really BufControl_
+	BufControl_* buff = &ctrl->buffCtrl[idx];
+
+	if (ctrl->_21A34 == 1) {
+		u8* data = (u8*)buff->_0C;
+		DCInvalidateRange(data, 0x20);
+
+		// what in tarnation
+		if (data[0] == 0xff && data[1] == 0xad && data[2] == 0xbe && data[3] == 0xef && data[4] == 0xde && data[5] == 0xad
+		    && data[6] == 0xbe && data[7] == 0xef) {
+			__DVDReadAsyncRetry();
+			return;
+		}
+	}
+
+	buff->_00 = 2;
+
+	ctrl->_21942 = (idx + 1) % ctrl->_21941;
+
+	if (ctrl->_21970 == 0) {
+		ctrl->_21A44 = 1;
+		return;
+	}
+
+	if (ctrl->_21A34 == 0) {
+		return;
+	}
+
+	LoadADPCM(ctrl, 0);
 }
 
 /*
@@ -429,20 +304,18 @@ static void LoadADPCM(StreamCtrl_*, int)
  * Address:	8001C0E0
  * Size:	000020
  */
-static void BufContInit(BufControl_*, u8, u8, u8, u8, u32, u32, u32)
+static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f, u32 g)
 {
-	/*
-	.loc_0x0:
-	  stb       r4, 0x0(r3)
-	  stb       r5, 0x1(r3)
-	  stb       r6, 0x2(r3)
-	  stb       r7, 0x3(r3)
-	  stw       r8, 0x4(r3)
-	  stw       r9, 0x8(r3)
-	  stw       r10, 0xC(r3)
-	  blr
-	*/
+	ctrl->_00 = a;
+	ctrl->_01 = b;
+	ctrl->_02 = c;
+	ctrl->_03 = d;
+	ctrl->_04 = e;
+	ctrl->_08 = f;
+	ctrl->_0C = g;
 }
+
+
 
 /*
  * --INFO--
@@ -451,21 +324,10 @@ static void BufContInit(BufControl_*, u8, u8, u8, u8, u32, u32, u32)
  */
 void Init_StreamAudio(void)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x2
-	  lis       r3, 0x8037
-	  addi      r0, r4, 0x1A50
-	  li        r6, 0
-	  mullw     r4, r6, r0
-	  subi      r0, r3, 0x7160
-	  li        r5, 0x4
-	  add       r3, r0, r4
-	  addis     r3, r3, 0x2
-	  stw       r5, 0x1984(r3)
-	  stw       r6, 0x1A0C(r3)
-	  blr
-	*/
+	StreamCtrl_* ctrl = &SC[0];
+	
+	ctrl->_21984 = 4;
+	ctrl->_21A0C = 0;
 }
 
 /*
@@ -1375,13 +1237,9 @@ static void StreamAudio_Callback(void*)
  * Address:	8001CD20
  * Size:	000008
  */
-void RegisterStreamCallback(int (*)(u32, s32))
+void RegisterStreamCallback(StreamCallback callback)
 {
-	/*
-	.loc_0x0:
-	  stw       r3, 0x2D60(r13)
-	  blr
-	*/
+	default_streamsync_call = callback;
 }
 
 /*
@@ -1512,7 +1370,7 @@ void Jac_Decode_ADPCM(void)
  * Address:	8001CEE0
  * Size:	0000D0
  */
-static void __DecodeADPCM(StreamCtrl_*)
+static void* __DecodeADPCM(StreamCtrl_*)
 {
 	/*
 	.loc_0x0:
@@ -1580,24 +1438,14 @@ static void __DecodeADPCM(StreamCtrl_*)
  * Address:	8001CFC0
  * Size:	000024
  */
-static void Clamp16(s32)
+static s16 Clamp16(s32 a)
 {
-	/*
-	.loc_0x0:
-	  cmpwi     r3, 0x7FFF
-	  blt-      .loc_0x10
-	  li        r3, 0x7FFF
-	  b         .loc_0x1C
-
-	.loc_0x10:
-	  cmpwi     r3, -0x8000
-	  bge-      .loc_0x1C
-	  li        r3, -0x8000
-
-	.loc_0x1C:
-	  extsh     r3, r3
-	  blr
-	*/
+	if (a >= 0x7fff) {
+		a = 0x7fff;
+	} else if (a < -0x8000) {
+		a = -0x8000;
+	}
+	return a;
 }
 
 /*
@@ -1605,124 +1453,8 @@ static void Clamp16(s32)
  * Address:	8001D000
  * Size:	00019C
  */
-static void __DecodeADPCM4X(StreamCtrl_*)
+static void* __DecodeADPCM4X(StreamCtrl_* ctrl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE8(r1)
-	  stmw      r17, 0xAC(r1)
-	  addi      r19, r3, 0
-	  addis     r3, r19, 0x2
-	  li        r18, 0
-	  lwz       r0, 0x1A08(r3)
-	  lbz       r6, 0x1952(r3)
-	  cmplwi    r0, 0
-	  lbz       r8, 0x1943(r3)
-	  bne-      .loc_0x5C
-	  cmplwi    r8, 0
-	  bne-      .loc_0x5C
-	  li        r3, 0
-	  li        r0, 0x4
-	  addi      r5, r3, 0
-	  mtctr     r0
-
-	.loc_0x48:
-	  addis     r4, r3, 0x2
-	  addi      r3, r3, 0x2
-	  addi      r4, r4, 0x1A18
-	  sthx      r5, r19, r4
-	  bdnz+     .loc_0x48
-
-	.loc_0x5C:
-	  addis     r4, r19, 0x2
-	  rlwinm    r0,r8,4,0,27
-	  add       r3, r4, r0
-	  rlwinm    r0,r6,14,0,17
-	  lwz       r7, 0x18C4(r3)
-	  add       r6, r19, r0
-	  lwz       r3, 0x18C8(r3)
-	  mulli     r5, r8, 0x2420
-	  li        r0, 0x24
-	  lhz       r21, 0x1A2C(r4)
-	  sub       r3, r3, r7
-	  lhz       r20, 0x1A2E(r4)
-	  divwu     r27, r3, r0
-	  addis     r25, r6, 0x1
-	  addis     r24, r6, 0x1
-	  add       r23, r19, r5
-	  add       r23, r23, r7
-	  addi      r28, r1, 0x6C
-	  addi      r29, r1, 0x2C
-	  addi      r30, r1, 0x4C
-	  addi      r31, r1, 0xC
-	  li        r26, 0
-	  subi      r25, r25, 0x2740
-	  addi      r24, r24, 0x58C0
-	  b         .loc_0x16C
-
-	.loc_0xC0:
-	  addis     r8, r19, 0x2
-	  addi      r3, r23, 0
-	  addi      r4, r1, 0x6C
-	  addi      r5, r1, 0x4C
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  addi      r8, r8, 0x1A18
-	  bl        -0x39C
-	  addis     r8, r19, 0x2
-	  addi      r3, r23, 0x12
-	  addi      r4, r1, 0x2C
-	  addi      r5, r1, 0xC
-	  li        r6, 0x1
-	  li        r7, 0x1
-	  addi      r8, r8, 0x1A20
-	  bl        -0x3BC
-	  li        r22, 0
-	  li        r17, 0
-	  addi      r23, r23, 0x24
-
-	.loc_0x10C:
-	  lhax      r3, r28, r17
-	  lhax      r0, r29, r17
-	  mullw     r3, r21, r3
-	  mullw     r0, r20, r0
-	  srawi     r3, r3, 0xF
-	  srawi     r0, r0, 0xF
-	  add       r3, r3, r0
-	  bl        -0x168
-	  sthx      r3, r25, r18
-	  lhax      r3, r30, r17
-	  lhax      r0, r31, r17
-	  mullw     r3, r21, r3
-	  mullw     r0, r20, r0
-	  srawi     r3, r3, 0xF
-	  srawi     r0, r0, 0xF
-	  add       r3, r3, r0
-	  bl        -0x18C
-	  addi      r22, r22, 0x1
-	  sthx      r3, r24, r18
-	  cmplwi    r22, 0x10
-	  addi      r18, r18, 0x2
-	  addi      r17, r17, 0x2
-	  blt+      .loc_0x10C
-	  addi      r26, r26, 0x1
-
-	.loc_0x16C:
-	  cmplw     r26, r27
-	  blt+      .loc_0xC0
-	  addis     r4, r19, 0x2
-	  rlwinm    r3,r27,4,1,27
-	  lwz       r0, 0x1980(r4)
-	  add       r0, r0, r3
-	  stw       r0, 0x1980(r4)
-	  lmw       r17, 0xAC(r1)
-	  lwz       r0, 0xEC(r1)
-	  addi      r1, r1, 0xE8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1730,38 +1462,18 @@ static void __DecodeADPCM4X(StreamCtrl_*)
  * Address:	8001D1A0
  * Size:	000054
  */
-static void __Decode(StreamCtrl_*)
+static void* __Decode(StreamCtrl_* ctrl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addis     r4, r3, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lhz       r0, 0x1992(r4)
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0x38
-	  bge-      .loc_0x40
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x2C
-	  b         .loc_0x40
-
-	.loc_0x2C:
-	  bl        -0x2EC
-	  mr        r5, r3
-	  b         .loc_0x40
-
-	.loc_0x38:
-	  bl        -0x1D8
-	  mr        r5, r3
-
-	.loc_0x40:
-	  mr        r3, r5
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	void* data;
+	switch (ctrl->audioFormat) {
+	case AUDIOFRMT_ADPCM:
+		data = __DecodeADPCM(ctrl);
+		break;
+	case AUDIOFRMT_ADPCM4X:
+		data = __DecodeADPCM4X(ctrl);
+		break;
+	}
+	return data;
 }
 
 /*
@@ -1872,27 +1584,14 @@ static void __PcmToLoop(StreamCtrl_*)
  * Address:	8001D340
  * Size:	000038
  */
-void StreamSyncCheckReady(void)
+BOOL StreamSyncCheckReady(u32 ctrlID)
 {
-	/*
-	.loc_0x0:
-	  lis       r5, 0x2
-	  lis       r4, 0x8037
-	  addi      r5, r5, 0x1A50
-	  subi      r0, r4, 0x7160
-	  mullw     r3, r3, r5
-	  add       r3, r0, r3
-	  addis     r3, r3, 0x2
-	  lwz       r0, 0x1984(r3)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x30
-	  li        r3, 0x1
-	  blr
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x30:
-	  li        r3, 0
-	  blr
-	*/
+	if (ctrl->_21984 == 2) {
+		return TRUE;
+	}
+	return FALSE;
 }
 
 /*
@@ -1900,40 +1599,19 @@ void StreamSyncCheckReady(void)
  * Address:	8001D380
  * Size:	00005C
  */
-int StreamSyncCheckReadyID(int, int)
+BOOL StreamSyncCheckReadyID(u32 ctrlID, u32 r4)
 {
-	/*
-	.loc_0x0:
-	  lis       r6, 0x2
-	  lis       r5, 0x8037
-	  addi      r6, r6, 0x1A50
-	  subi      r0, r5, 0x7160
-	  mullw     r3, r3, r6
-	  add       r3, r0, r3
-	  addis     r3, r3, 0x2
-	  lwz       r0, 0x1A10(r3)
-	  cmplw     r0, r4
-	  bne-      .loc_0x54
-	  lwz       r0, 0x1984(r3)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x54
-	  bge-      .loc_0x44
-	  cmpwi     r0, 0
-	  bge-      .loc_0x4C
-	  b         .loc_0x54
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x44:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x54
-
-	.loc_0x4C:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x54:
-	  li        r3, 0
-	  blr
-	*/
+	if (ctrl->_21A10 == r4) {
+		// why
+		switch (ctrl->_21984) {
+		case 0:
+		case 2:
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 /*
@@ -1941,36 +1619,19 @@ int StreamSyncCheckReadyID(int, int)
  * Address:	8001D3E0
  * Size:	000054
  */
-BOOL StreamSyncCheckBusy(u32, u32)
+BOOL StreamSyncCheckBusy(u32 ctrlID, u32 unk)
 {
-	/*
-	.loc_0x0:
-	  lis       r6, 0x2
-	  lis       r5, 0x8037
-	  addi      r6, r6, 0x1A50
-	  subi      r0, r5, 0x7160
-	  mullw     r3, r3, r6
-	  add       r3, r0, r3
-	  addis     r5, r3, 0x2
-	  lwz       r3, 0x1984(r5)
-	  cmplwi    r3, 0x4
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  blr
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x30:
-	  lwz       r0, 0x1A10(r5)
-	  cmplw     r0, r4
-	  bne-      .loc_0x4C
-	  cmplwi    r3, 0x2
-	  bne-      .loc_0x4C
-	  li        r3, 0
-	  blr
-
-	.loc_0x4C:
-	  li        r3, 0x1
-	  blr
-	*/
+	if (ctrl->_21984 == 4) {
+		return FALSE;
+	}
+	if (ctrl->_21A10 == unk) {
+		if (ctrl->_21984 == 2) {
+			return FALSE;
+		}
+	}
+	return TRUE;
 }
 
 /*
@@ -1978,39 +1639,23 @@ BOOL StreamSyncCheckBusy(u32, u32)
  * Address:	8001D440
  * Size:	000060
  */
-int StreamSyncPlayAudio(f32, int, int, int)
+int StreamSyncPlayAudio(f32 f1, u32 ctrlID, int mixerID, int targetVolume)
 {
-	/*
-	.loc_0x0:
-	  lis       r7, 0x2
-	  lis       r6, 0x8037
-	  addi      r7, r7, 0x1A50
-	  subi      r0, r6, 0x7160
-	  mullw     r3, r3, r7
-	  add       r3, r0, r3
-	  addis     r6, r3, 0x2
-	  lwz       r0, 0x1984(r6)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x58
-	  lwz       r0, 0x19F4(r6)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  blr
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x3C:
-	  stfs      f1, 0x1A30(r6)
-	  li        r0, 0
-	  li        r3, 0x1
-	  sth       r4, 0x1A28(r6)
-	  sth       r5, 0x1A2A(r6)
-	  stw       r0, 0x19A8(r6)
-	  blr
+	if (ctrl->_21984 == 2) {
+		if (!ctrl->dspch[0]) {
+			return FALSE;
+		}
 
-	.loc_0x58:
-	  li        r3, 0
-	  blr
-	*/
+		ctrl->_21A30             = f1;
+		ctrl->mixer.id           = mixerID;
+		ctrl->mixer.targetVolume = targetVolume;
+		ctrl->_219A8             = 0;
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 /*
@@ -2018,35 +1663,21 @@ int StreamSyncPlayAudio(f32, int, int, int)
  * Address:	8001D4A0
  * Size:	000050
  */
-void StreamSyncStopAudio(int)
+BOOL StreamSyncStopAudio(u32 ctrlID)
 {
-	/*
-	.loc_0x0:
-	  lis       r5, 0x2
-	  lis       r4, 0x8037
-	  addi      r5, r5, 0x1A50
-	  subi      r0, r4, 0x7160
-	  mullw     r3, r3, r5
-	  add       r3, r0, r3
-	  addis     r4, r3, 0x2
-	  lwz       r0, 0x1984(r4)
-	  cmplwi    r0, 0x4
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  blr
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x30:
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  blr
+	// perhaps some state?
+	if (ctrl->_21984 == 4) {
+		return FALSE;
+	} else if (ctrl->_21984 == 3) {
+		return FALSE;
+	}
 
-	.loc_0x40:
-	  li        r0, 0x1
-	  li        r3, 0x1
-	  stw       r0, 0x19AC(r4)
-	  blr
-	*/
+	// isStopped?
+	ctrl->_219AC = 1;
+
+	return TRUE;
 }
 
 /*
@@ -2054,57 +1685,16 @@ void StreamSyncStopAudio(int)
  * Address:	8001D500
  * Size:	0000A8
  */
-static void __StreamChgPitch(StreamCtrl_*)
+static void __StreamChgPitch(StreamCtrl_* ctrl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r28, 0x20(r1)
-	  addi      r28, r3, 0
-	  addis     r4, r28, 0x2
-	  lwz       r0, 0x19F4(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x94
-	  lhz       r3, 0x1990(r4)
-	  lis       r0, 0x4330
-	  lfd       f3, -0x7DF0(r2)
-	  li        r29, 0
-	  stw       r3, 0x1C(r1)
-	  li        r31, 0
-	  lfs       f4, -0x7DF4(r2)
-	  stw       r0, 0x18(r1)
-	  lfs       f1, 0x1A30(r4)
-	  lfd       f2, 0x18(r1)
-	  lfs       f0, -0x8000(r13)
-	  fsubs     f2, f2, f3
-	  fmuls     f2, f4, f2
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x10(r1)
-	  lwz       r30, 0x14(r1)
+	if (ctrl->dspch[0]) {
 
-	.loc_0x6C:
-	  addis     r3, r31, 0x2
-	  addi      r4, r30, 0
-	  addi      r3, r3, 0x19F4
-	  lwzx      r3, r28, r3
-	  lbz       r3, 0x0(r3)
-	  bl        -0x11FE0
-	  addi      r29, r29, 0x1
-	  addi      r31, r31, 0x4
-	  cmplwi    r29, 0x2
-	  blt+      .loc_0x6C
+		u16 pitch = ctrl->_21990 * 4096.0f * ctrl->_21A30 / JAC_DAC_RATE;
 
-	.loc_0x94:
-	  lmw       r28, 0x20(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+		for (u32 i = 0; i < 2; i++) {
+			DSP_SetPitch(ctrl->dspch[i]->buffer_idx, pitch);
+		}
+	}
 }
 
 /*
@@ -2122,94 +1712,29 @@ void StreamChgPitch(void)
  * Address:	8001D5C0
  * Size:	000124
  */
-static void __StreamChgVolume(StreamCtrl_*)
+static void __StreamChgVolume(StreamCtrl_* ctrl)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r24, 0x10(r1)
-	  addi      r29, r3, 0
-	  addis     r3, r29, 0x2
-	  lwz       r0, 0x19F4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x110
-	  bl        -0x17744
-	  lis       r4, 0x1
-	  rlwinm    r30,r3,0,24,31
-	  subi      r26, r4, 0x4003
-	  li        r31, 0
-	  li        r28, 0
-	  li        r27, 0
+	if (ctrl->dspch[0]) {
+		int mode = Jac_GetOutputMode();
 
-	.loc_0x40:
-	  cmpwi     r30, 0
-	  beq-      .loc_0x4C
-	  b         .loc_0xB8
+		for (u32 i = 0; i < 2; i++) {
+			// r26 offs = 0xBFFD
+			switch (mode) {
+			case 0:
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
 
-	.loc_0x4C:
-	  addis     r25, r28, 0x2
-	  addis     r24, r27, 0x2
-	  addi      r25, r25, 0x1A28
-	  addi      r24, r24, 0x19F4
-	  add       r25, r29, r25
-	  add       r24, r29, r24
-	  lhz       r0, 0x0(r25)
-	  rlwinm    r4,r31,0,24,31
-	  lwz       r3, 0x0(r24)
-	  li        r6, 0
-	  mullw     r0, r0, r26
-	  lbz       r3, 0x0(r3)
-	  srawi     r0, r0, 0x10
-	  addze     r0, r0
-	  extsh     r5, r0
-	  bl        -0x11FE8
-	  lhz       r0, 0x0(r25)
-	  subfic    r4, r31, 0x1
-	  lwz       r3, 0x0(r24)
-	  li        r6, 0
-	  mullw     r0, r0, r26
-	  lbz       r3, 0x0(r3)
-	  srawi     r0, r0, 0x10
-	  addze     r0, r0
-	  extsh     r5, r0
-	  bl        -0x12010
-	  b         .loc_0xFC
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
 
-	.loc_0xB8:
-	  addis     r24, r27, 0x2
-	  addis     r3, r28, 0x2
-	  addi      r24, r24, 0x19F4
-	  addi      r3, r3, 0x1A28
-	  add       r24, r29, r24
-	  lhax      r5, r29, r3
-	  lwz       r3, 0x0(r24)
-	  rlwinm    r4,r31,0,24,31
-	  li        r6, 0
-	  lbz       r3, 0x0(r3)
-	  bl        -0x12040
-	  lwz       r3, 0x0(r24)
-	  subfic    r4, r31, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  lbz       r3, 0x0(r3)
-	  bl        -0x12058
+				break;
 
-	.loc_0xFC:
-	  addi      r31, r31, 0x1
-	  addi      r27, r27, 0x4
-	  cmplwi    r31, 0x2
-	  addi      r28, r28, 0x2
-	  blt+      .loc_0x40
+			default:
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
 
-	.loc_0x110:
-	  lmw       r24, 0x10(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
+				break;
+			}
+		}
+	}
 }
 
 /*
@@ -2217,24 +1742,14 @@ static void __StreamChgVolume(StreamCtrl_*)
  * Address:	8001D700
  * Size:	000034
  */
-void StreamChgVolume(int, int, int)
+void StreamChgVolume(u32 ctrlID, int mixID, int vol)
 {
-	/*
-	.loc_0x0:
-	  lis       r7, 0x2
-	  lis       r6, 0x8037
-	  addi      r7, r7, 0x1A50
-	  subi      r0, r6, 0x7160
-	  mullw     r3, r3, r7
-	  add       r3, r0, r3
-	  addis     r3, r3, 0x2
-	  sth       r4, 0x1A28(r3)
-	  sth       r5, 0x1A2A(r3)
-	  lwz       r0, 0x1A38(r3)
-	  ori       r0, r0, 0x1
-	  stw       r0, 0x1A38(r3)
-	  blr
-	*/
+	StreamCtrl_* ctrl = &SC[ctrlID];
+
+	ctrl->mixer.id           = mixID;
+	ctrl->mixer.targetVolume = vol;
+
+	ctrl->_21A38 |= 1;
 }
 
 /*
@@ -2242,24 +1757,13 @@ void StreamChgVolume(int, int, int)
  * Address:	8001D740
  * Size:	000034
  */
-void StreamChgMixLevel(int, int, int)
+void StreamChgMixLevel(u32 ctrlID, int vol, int lvl)
 {
-	/*
-	.loc_0x0:
-	  lis       r7, 0x2
-	  lis       r6, 0x8037
-	  addi      r7, r7, 0x1A50
-	  subi      r0, r6, 0x7160
-	  mullw     r3, r3, r7
-	  add       r3, r0, r3
-	  addis     r3, r3, 0x2
-	  lwz       r0, 0x19F4(r3)
-	  cmplwi    r0, 0
-	  beqlr-
-	  sth       r4, 0x1A2C(r3)
-	  sth       r5, 0x1A2E(r3)
-	  blr
-	*/
+	StreamCtrl_* ctrl = &SC[ctrlID];
+	if (ctrl->dspch[0]) {
+		ctrl->mixer.currentVolume = vol;
+		ctrl->mixer._06           = lvl;
+	}
 }
 
 /*
@@ -2393,28 +1897,19 @@ void StreamGetCurrentFrame(void)
  * Address:	8001D920
  * Size:	00003C
  */
-void StreamSetDVDPause(u32, u32)
+BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
 {
-	/*
-	.loc_0x0:
-	  lis       r6, 0x2
-	  lis       r5, 0x8037
-	  addi      r6, r6, 0x1A50
-	  subi      r0, r5, 0x7160
-	  mullw     r3, r3, r6
-	  add       r3, r0, r3
-	  addis     r5, r3, 0x2
-	  lwz       r0, 0x19F4(r5)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  blr
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x30:
-	  lwz       r3, 0x19B0(r5)
-	  stw       r4, 0x19B0(r5)
-	  blr
-	*/
+	if (!ctrl->dspch[0]) {
+		return FALSE;
+	}
+
+	BOOL tmp = ctrl->isPaused;
+
+	ctrl->isPaused = isPaused;
+
+	return tmp;
 }
 
 /*
@@ -2432,21 +1927,10 @@ void StreamCheckRemainBuffers(void)
  * Address:	8001D960
  * Size:	000028
  */
-int StreamCheckAudioFormat(int)
+u8 StreamCheckAudioFormat(u32 ctrlID)
 {
-	/*
-	.loc_0x0:
-	  lis       r5, 0x2
-	  lis       r4, 0x8037
-	  addi      r5, r5, 0x1A50
-	  subi      r0, r4, 0x7160
-	  mullw     r3, r3, r5
-	  add       r3, r0, r3
-	  addis     r3, r3, 0x2
-	  lhz       r0, 0x1992(r3)
-	  rlwinm    r3,r0,0,24,31
-	  blr
-	*/
+	StreamCtrl_* ctrl = &SC[ctrlID];
+	return ctrl->audioFormat;
 }
 
 /*

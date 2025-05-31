@@ -51,8 +51,8 @@ void DSP_InitBuffer();
  */
 struct DSPMixerChannel {
 	u16 id;            // _00
-	s16 targetVolume;  // _02
-	s16 currentVolume; // _04
+	u16 targetVolume;  // _02
+	u16 currentVolume; // _04
 	u16 _06;           // _06
 };
 
@@ -108,6 +108,13 @@ struct DSPBuffer {
 	s16 biquadFilterCoeffs[4];      // _148 - DSP_InitFilter, DSP_SetIIRFilterParam
 	s16 lowPassCoeff;               // _150 - DSP_InitFilter, DSP_SetDistFilter
 	u8 padding[0x180 - 0x152];      // _152
+};
+
+struct DSPchannel_ {
+	u8 padding[0x68];
+	u32 counter; // _68
+	u8 padding2[0x74 - 0x6C];
+	u32 remain; // _74
 };
 
 ///////////////////////////////////////////////////////////////////////////////

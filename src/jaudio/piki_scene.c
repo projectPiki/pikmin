@@ -344,7 +344,7 @@ void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
  */
 void Jac_UpdateStreamLevel()
 {
-	if ((u8)StreamCheckAudioFormat(0) == 5) {
+	if (StreamCheckAudioFormat(0) == 5) {
 		StreamChgVolume(0, 0x7fff, 0x7fff);
 		StreamChgMixLevel(0, stream_level, stream_se_level);
 	} else {
