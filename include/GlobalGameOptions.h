@@ -6,10 +6,11 @@
 // NB: raising parts or days over 99 (or field pikis over 999) will cause number display errors
 // you'll have to more seriously edit some of the ogawa and yamashita screens if you wanna do that
 
-#define MAX_UFO_PARTS     (30)
-#define MAX_PIKI_ON_FIELD (100)
-#define MAX_DAYS          (30)
-#define MAX_HI_SCORES     (5)
+#define MAX_UFO_PARTS       (30)
+#define MAX_PIKI_ON_FIELD   (100)
+#define MAX_DAYS            (30)
+#define MAX_HI_SCORES       (5)
+#define MIN_HAPPY_END_PARTS (25) // NB: also need to edit the hard-coded IDs in PlayerState::getUfoParts
 
 /**
  * @brief IDs for each stage, as per stages.ini.

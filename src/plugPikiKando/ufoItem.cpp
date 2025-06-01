@@ -579,7 +579,7 @@ void UfoItem::finishSuck(Pellet* pelt)
 	}
 	mShipUpgradeLevel    = playerState->mShipUpgradeLevel;
 	PelletConfig* config = pelt->mConfig;
-	if (config->mUfoPartIndex != -1) {
+	if (config->mRepairAnimJointIndex != -1) {
 		playerState->getUfoParts(config->mModelId.mId, false);
 	} else {
 		playerState->getUfoParts(config->mModelId.mId, true);

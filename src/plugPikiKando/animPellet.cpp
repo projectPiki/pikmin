@@ -189,10 +189,10 @@ void PelletAnimator::finishMotion(PaniAnimKeyListener*)
  * Address:	80099AE8
  * Size:	00005C
  */
-void PelletAnimator::updateAnimation(f32 p1, f32 p2)
+void PelletAnimator::updateAnimation(f32 lowerAnimSpeed, f32 upperAnimSpeed)
 {
-	mLowerAnimator.animate(p1);
-	mUpperAnimator.animate(p2);
+	mLowerAnimator.animate(lowerAnimSpeed);
+	mUpperAnimator.animate(upperAnimSpeed);
 }
 
 /*

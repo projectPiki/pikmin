@@ -108,6 +108,85 @@ enum PelletBounceSoundID {
 };
 
 /**
+ * @brief Index for UFO (ship) parts, usually referred to as UfoIndex.
+ *
+ * @note To convert to ID (e.g. 'uf01'), use PelletMgr::getUfoIDFromIndex.
+ */
+enum UfoPartIndex {
+	UFO_Bowsprit          = 0,  // 'ust1'
+	UFO_GluonDrive        = 1,  // 'ust2'
+	UFO_AntiDioxinFilter  = 2,  // 'ust3'
+	UFO_EternalFuelDynamo = 3,  // 'ust4'
+	UFO_MainEngine        = 4,  // 'ust5'
+	UFO_WhimsicalRadar    = 5,  // 'uf01'
+	UFO_InterstellarRadio = 6,  // 'uf02'
+	UFO_GuardSatellite    = 7,  // 'uf03'
+	UFO_ChronosReactor    = 8,  // 'uf04'
+	UFO_RadiationCanopy   = 9,  // 'uf05'
+	UFO_GeigerCounter     = 10, // 'uf06'
+	UFO_Sagittarius       = 11, // 'uf07'
+	UFO_Libra             = 12, // 'uf08'
+	UFO_OmegaStabilizer   = 13, // 'uf09'
+	UFO_IoniumJet1        = 14, // 'uf10'
+	UFO_IoniumJet2        = 15, // 'uf11'
+	UFO_ShockAbsorber     = 16, // 'un01'
+	UFO_GravityJumper     = 17, // 'un02'
+	UFO_PilotSeat         = 18, // 'un03'
+	UFO_NovaBlaster       = 19, // 'un04'
+	UFO_AutomaticGear     = 20, // 'un05'
+	UFO_ZirconiumRotor    = 21, // 'un06'
+	UFO_ExtraordinaryBolt = 22, // 'un07'
+	UFO_RepairTypeBolt    = 23, // 'un08'
+	UFO_SpaceFloat        = 24, // 'un09'
+	UFO_MassageMachine    = 25, // 'un10'
+	UFO_SecretSafe        = 26, // 'un11'
+	UFO_PositronGenerator = 27, // 'un12'
+	UFO_AnalogComputer    = 28, // 'un13'
+	UFO_UVLamp            = 29, // 'un14'
+	UFO_COUNT,                  // 30
+	UFO_UNDEF = UFO_COUNT,      // 30, bad index
+};
+
+/**
+ * @brief Part IDs for UFO (ship) parts, usually referred to as UfoID.
+ *
+ * @note To convert to index (e.g. 1, 5, 7), use PelletMgr::getUfoIndexFromID.
+ */
+enum UfoPartID {
+	UFOID_Bowsprit          = 'ust1',
+	UFOID_GluonDrive        = 'ust2',
+	UFOID_AntiDioxinFilter  = 'ust3',
+	UFOID_EternalFuelDynamo = 'ust4',
+	UFOID_MainEngine        = 'ust5',
+	UFOID_WhimsicalRadar    = 'uf01',
+	UFOID_InterstellarRadio = 'uf02',
+	UFOID_GuardSatellite    = 'uf03',
+	UFOID_ChronosReactor    = 'uf04',
+	UFOID_RadiationCanopy   = 'uf05',
+	UFOID_GeigerCounter     = 'uf06',
+	UFOID_Sagittarius       = 'uf07',
+	UFOID_Libra             = 'uf08',
+	UFOID_OmegaStabilizer   = 'uf09',
+	UFOID_IoniumJet1        = 'uf10',
+	UFOID_IoniumJet2        = 'uf11',
+	UFOID_ShockAbsorber     = 'un01',
+	UFOID_GravityJumper     = 'un02',
+	UFOID_PilotSeat         = 'un03',
+	UFOID_NovaBlaster       = 'un04',
+	UFOID_AutomaticGear     = 'un05',
+	UFOID_ZirconiumRotor    = 'un06',
+	UFOID_ExtraordinaryBolt = 'un07',
+	UFOID_RepairTypeBolt    = 'un08',
+	UFOID_SpaceFloat        = 'un09',
+	UFOID_MassageMachine    = 'un10',
+	UFOID_SecretSafe        = 'un11',
+	UFOID_PositronGenerator = 'un12',
+	UFOID_AnalogComputer    = 'un13',
+	UFOID_UVLamp            = 'un14',
+	UFOID_UNDEF             = 'udef',
+};
+
+/**
  * @brief TODO
  */
 enum PelletMgrMovieFlags {
@@ -158,7 +237,7 @@ struct PelletConfig : public Parameters, public CoreNode {
 	// _04-_18 = CoreNode
 	Parm<String> mPelletName;         // _18, x99
 	ID32 mModelId;                    // _2C
-	ID32 _38;                         // _38
+	ID32 mUnusedId;                   // _38
 	ID32 mPelletId;                   // _44
 	Parm<int> mPelletType;            // _50, p00
 	Parm<int> mPelletColor;           // _60, p09
@@ -174,7 +253,7 @@ struct PelletConfig : public Parameters, public CoreNode {
 	Parm<f32> mCarryInfoHeight;       // _100, p11
 	Parm<int> mAnimSoundID;           // _110, p12 - see PelletAnimSoundID enum
 	Parm<int> mBounceSoundID;         // _120, p13
-	int mUfoPartIndex;                // _130
+	int mRepairAnimJointIndex;        // _130
 
 	// this has to be down here or the second VTBL spawns at 0x18 (should spawn at 0x134)
 

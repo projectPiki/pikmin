@@ -1167,16 +1167,16 @@ void GameCoreSection::finalSetup()
 	PRINT("********* BONUS PIKI CHECK\n");
 	GameStat::dump();
 
-	if (playerState->_BC == 0 && !playerState->isTutorial()
+	if (playerState->mHasExtinctionDemoPlayed == false && !playerState->isTutorial()
 	    && ((GameStat::allPikis[Blue] == 0 && playerState->hasContainer(Blue))
 	        || (GameStat::allPikis[Red] == 0 && playerState->hasContainer(Red))
 	        || (GameStat::allPikis[Yellow] == 0 && playerState->hasContainer(Yellow)))) {
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_PostExtinctionSeed)) {
 			playerState->mDemoFlags.setFlag(DEMOFLAG_PostExtinctionSeed, nullptr);
-			playerState->_BC = 1;
+			playerState->mHasExtinctionDemoPlayed = true;
 		} else {
 			gameflow.mGameInterface->movie(64, 0, nullptr, nullptr, nullptr, -1, true);
-			playerState->_BC = 1;
+			playerState->mHasExtinctionDemoPlayed = true;
 		}
 	}
 

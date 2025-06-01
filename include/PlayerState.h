@@ -19,9 +19,18 @@ struct Shape;
 /**
  * @brief TODO
  */
+enum UfoPartVisType {
+	PARTVIS_Uncollected = 0, // have not collected part yet
+	PARTVIS_Visible     = 1, // have collected part, displays on ship
+	PARTVIS_Invisible   = 2, // have collected part, does not display on ship
+};
+
+/**
+ * @brief TODO
+ */
 struct UfoPartsInfo {
-	u32 _00; // _00
-	u8 _04;  // _04
+	u32 mPartID;      // _00
+	bool mUnusedFlag; // _04
 };
 
 /**
@@ -63,14 +72,14 @@ struct TimeGraph {
 	TimeGraph(); // unused/inlined
 
 	// unused/inlined:
-	void create(u16, u16);
+	void create(u16 startTime, u16 endTime);
 	void init();
-	void set(u16, int, int);
-	int get(u16, int);
+	void set(u16 time, int color, int num);
+	int get(u16 time, int color);
 
-	u16 _00;      // _00
-	u16 _02;      // _02
-	PikiNum* _04; // _04
+	u16 mStartTime;    // _00
+	u16 mEndTime;      // _02
+	PikiNum* mEntries; // _04
 };
 
 /**
@@ -96,18 +105,18 @@ struct PlayerState {
 		void stopMotion();
 
 		// DLL inlines:
-		void setMotionSpeed(f32 speed) { _D8 = speed; }
+		void setMotionSpeed(f32 speed) { mMotionSpeed = speed; }
 
 		// _00 = VTBL
-		int mPartIndex;                       // _04
+		int mRepairAnimJointIndex;            // _04
 		u32 mModelID;                         // _08
-		u32 mPelletId;                        // _0C
+		u32 mPelletID;                        // _0C
 		PelletAnimator mAnimator;             // _10
-		Vector3f _B8;                         // _B8
+		Vector3f mRepairEffectPosition;       // _B8
 		ShapeDynMaterials mAnimatedMaterials; // _C4
 		PelletShapeObject* mPelletShape;      // _D4
-		f32 _D8;                              // _D8
-		u8 _DC;                               // _DC
+		f32 mMotionSpeed;                     // _D8, specifically 'lower' anim speed (upper always 30.0f)
+		u8 mPartVisType;                      // _DC, see UfoPartVisType enum
 	};
 
 	PlayerState();
@@ -129,7 +138,7 @@ struct PlayerState {
 	void setLimitGenFlag(int);
 	bool displayPikiCount(int);
 	void setDisplayPikiCount(int);
-	bool hasUfoParts(u32);
+	bool hasUfoParts(u32 ufoIndex);
 	void update();
 	void initCourse();
 	void exitCourse();
@@ -144,7 +153,7 @@ struct PlayerState {
 	int getTotalParts();
 	int getCurrParts();
 	bool isUfoBroken();
-	void registerUfoParts(int, u32, u32);
+	void registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pelletID);
 	void ufoAssignStart();
 	void startSpecialMotions();
 	void startAfterMotions();
@@ -170,7 +179,7 @@ struct PlayerState {
 	void setBootContainer(int color) { mContainerFlag |= 1 << color + 3; }
 	bool bootContainer(int color) { return mContainerFlag & (1 << color + 3); }
 
-	int getLastPikmins() { return _1A8; }
+	int getLastPikmins() { return mLivingPikiNum; }
 
 	bool inDayEnd() { return mInDayEnd; }
 	void setDayEnd(bool set) { mInDayEnd = set; }
@@ -188,43 +197,43 @@ struct PlayerState {
 
 	static int totalUfoParts;
 
-	int mSproutedNum;                  // _00
-	int mLostBattlePikis;              // _04
-	int mLeftBehindPikis;              // _08
-	int _0C;                           // _0C
-	u8 mShipUpgradeLevel;              // _10
-	u8 mShipEffectPartFlag;            // _11, for radar + the ionium jets
-	UfoParts* _14;                     // _14
-	u8 mPartsCollectedByDay[MAX_DAYS]; // _18
-	u8 mPartsToNextByDay[MAX_DAYS];    // _38
-	DemoFlags mDemoFlags;              // _54
-	ResultFlags mResultFlags;          // _70
-	u8 _BC;                            // _BC
-	PikiShapeObject* _C0;              // _C0
-	PaniPikiAnimMgr mPikiAnimMgr;      // _C4
-	int mTotalRegisteredParts;         // _170
-	int mTotalParts;                   // _174
-	UfoParts* mUfoParts;               // _178
-	int mCurrParts;                    // _17C
-	int _180;                          // _180
-	u8 mContainerFlag;                 // _184
-	bool mIsTutorialMode;              // _185
-	bool _186;                         // _186
-	u8 _187[5];                        // _187
-	TimeGraph _18C;                    // _18C
-	u16 _194;                          // _194
-	TimeGraph _198;                    // _198
-	int _1A0;                          // _1A0, final dead pikis count?
-	int _1A4;                          // _1A4
-	int _1A8;                          // _1A8
-	u8 mDisplayPikiFlag;               // _1AC
-	BitFlags** mCourseFlags;           // _1B0
-	u8 _1B4;                           // _1B4
-	bool mInDayEnd;                    // _1B5
-	bool mIsChallengeMode;             // _1B6
-	PermanentEffect* _1B8;             // _1B8
-	PermanentEffect* _1BC;             // _1BC
-	Vector3f _1C0;                     // _1C0
+	int mSproutedNum;                     // _00
+	int mLostBattlePikis;                 // _04
+	int mLeftBehindPikis;                 // _08
+	int mTotalPluckedPikiCount;           // _0C, tracker for attention camera (stops zooming when >= 100)
+	u8 mShipUpgradeLevel;                 // _10
+	u8 mShipEffectPartFlag;               // _11, for radar + the ionium jets
+	UfoParts* mCurrentRepairingPart;      // _14
+	u8 mPartsCollectedByDay[MAX_DAYS];    // _18
+	u8 mPartsToNextByDay[MAX_DAYS];       // _38
+	DemoFlags mDemoFlags;                 // _54
+	ResultFlags mResultFlags;             // _70
+	bool mHasExtinctionDemoPlayed;        // _BC, only one extinction cutscene per day/course load
+	PikiShapeObject* mOlimarShapeObj;     // _C0
+	PaniPikiAnimMgr mOlimarAnimMgr;       // _C4
+	int mTotalRegisteredParts;            // _170
+	int mTotalParts;                      // _174
+	UfoParts* mUfoParts;                  // _178, indexed by UfoPartIndex enum
+	int mCurrParts;                       // _17C
+	int mRequiredUfoPartCount;            // _180
+	u8 mContainerFlag;                    // _184
+	bool mIsTutorialMode;                 // _185
+	bool _186;                            // _186, saved and reloaded, but never used
+	u8 mStagePartsCollected[STAGE_COUNT]; // _187
+	TimeGraph mPerHourGraph;              // _18C
+	u16 mLastUpdatedTime;                 // _194
+	TimeGraph mPerDayGraph;               // _198, initialised but never updated/used
+	int mTotalDeadPikiNum;                // _1A0
+	int mTotalBornPikiNum;                // _1A4
+	int mLivingPikiNum;                   // _1A8
+	u8 mDisplayPikiFlag;                  // _1AC
+	BitFlags** mCourseFlags;              // _1B0
+	bool mIsNaviPilot;                    // _1B4
+	bool mInDayEnd;                       // _1B5
+	bool mIsChallengeMode;                // _1B6
+	PermanentEffect* mNaviLightEfx;       // _1B8
+	PermanentEffect* mNaviLightGlowEfx;   // _1BC
+	Vector3f mNaviLightEfxPos;            // _1C0
 };
 
 extern bool preloadUFO;

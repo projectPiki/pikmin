@@ -3968,7 +3968,7 @@ void NaviNukuState::init(Navi* navi)
 
 	navi->_814 = 0.0f;
 	_10        = C_NAVI_PROP(navi)._1CC();
-	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->_0C < 100) {
+	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->mTotalPluckedPikiCount < 100) {
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 		PRINT("> camera START MOTION | NUKU");
 		navi->mIsPlucking       = true;
@@ -4024,8 +4024,8 @@ void NaviNukuState::cleanup(Navi* navi)
 		navi->mIsFastPluckEnabled = 0;
 		navi->mNoPluckTimer       = 0;
 	}
-	playerState->_0C++;
-	PRINT("** player pulled out %d pikmins so far\n", playerState->_0C);
+	playerState->mTotalPluckedPikiCount++;
+	PRINT("** player pulled out %d pikmins so far\n", playerState->mTotalPluckedPikiCount);
 }
 
 /*

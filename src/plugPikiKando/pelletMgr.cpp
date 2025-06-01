@@ -35,8 +35,37 @@ DEFINE_PRINT(nullptr);
 bool SmartTurnOver;
 
 static u32 _ufoIDTable[] = {
-	'ust1', 'ust2', 'ust3', 'ust4', 'ust5', 'uf01', 'uf02', 'uf03', 'uf04', 'uf05', 'uf06', 'uf07', 'uf08', 'uf09', 'uf10', 'uf11',
-	'un01', 'un02', 'un03', 'un04', 'un05', 'un06', 'un07', 'un08', 'un09', 'un10', 'un11', 'un12', 'un13', 'un14', 'udef',
+	'ust1', // 0, bowsprit
+	'ust2', // 1, gluon drive
+	'ust3', // 2, anti-dioxin filter
+	'ust4', // 3, eternal fuel dynamo
+	'ust5', // 4, main engine
+	'uf01', // 5, whimsical radar
+	'uf02', // 6, interstellar radio
+	'uf03', // 7, guard satellite
+	'uf04', // 8, chronos reactor
+	'uf05', // 9, radiation canopy
+	'uf06', // 10, geiger counter
+	'uf07', // 11, sagittarius
+	'uf08', // 12, libra
+	'uf09', // 13, omega stabilizer
+	'uf10', // 14, ionium jet #1
+	'uf11', // 15, ionium jet #2
+	'un01', // 16, shock absorber
+	'un02', // 17, gravity jumper
+	'un03', // 18, pilot seat
+	'un04', // 19, nova blaster
+	'un05', // 20, automatic gear
+	'un06', // 21, zirconium rotor
+	'un07', // 22, extraordinary bolt
+	'un08', // 23, repair-type bolt
+	'un09', // 24, space float
+	'un10', // 25, massage machine
+	'un11', // 26, secret safe
+	'un12', // 27, positron generator
+	'un13', // 28, analog computer
+	'un14', // 29, UV lamp
+	'udef', // 30, undefined/invalid
 };
 
 /*
@@ -96,10 +125,10 @@ PelletConfig::PelletConfig()
     , mBounceSoundID(this, 0xFFFFFFFF, 0, 0, "p13", nullptr)
 {
 	mModelId.setID('none');
-	_38.setID('none');
+	mUnusedId.setID('none');
 	mPelletId.setID('none');
 	initCore("pelletConfig");
-	mUfoPartIndex = -1;
+	mRepairAnimJointIndex = -1;
 }
 
 /*
@@ -112,8 +141,8 @@ void PelletConfig::read(RandomAccessStream& input)
 	Parameters::read(input);
 	mModelId.read(input);
 	mPelletId.read(input);
-	_38.read(input);
-	mUfoPartIndex = input.readInt();
+	mUnusedId.read(input);
+	mRepairAnimJointIndex = input.readInt();
 }
 
 // see PelletBounceSoundID in Pellet.h
@@ -1520,7 +1549,7 @@ void PelletMgr::registerUfoParts()
 	{
 		PelletConfig* config = static_cast<PelletConfig*>(node);
 		if (config->mPelletType() == PELTYPE_UfoPart) {
-			playerState->registerUfoParts(config->mUfoPartIndex, config->mModelId.mId, config->mPelletId.mId);
+			playerState->registerUfoParts(config->mRepairAnimJointIndex, config->mModelId.mId, config->mPelletId.mId);
 		}
 	}
 }
