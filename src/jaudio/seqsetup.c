@@ -205,36 +205,36 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 
 	// Initialize all MoveParams with default values.
 	for (i = 0; i < 18; ++i) {
-		track->timedParam.move[i]._08 = 0.0f;
-		track->timedParam.move[i]._00 = 1.0f;
-		track->timedParam.move[i]._04 = 1.0f;
+		track->timedParam.move[i].moveTime  = 0.0f;
+		track->timedParam.move[i].currValue = 1.0f;
+		track->timedParam.move[i].targValue = 1.0f;
 	}
 
-	track->timedParam.inner.pitch._00 = 0.0f;
-	track->timedParam.inner.pitch._04 = 0.0f;
-	track->timedParam.inner.pitch._00 = 0.0f; // Just to be sure.
-	track->timedParam.inner.pitch._04 = 0.0f; // Just to be sure.
-	track->timedParam.inner.pan._00   = 0.5f;
-	track->timedParam.inner.pan._04   = 0.5f;
+	track->timedParam.inner.pitch.currValue = 0.0f;
+	track->timedParam.inner.pitch.targValue = 0.0f;
+	track->timedParam.inner.pitch.currValue = 0.0f; // Just to be sure.
+	track->timedParam.inner.pitch.targValue = 0.0f; // Just to be sure.
+	track->timedParam.inner.pan.currValue   = 0.5f;
+	track->timedParam.inner.pan.targValue   = 0.5f;
 
-	track->timedParam.inner._100._00 = 0.5f;
-	track->timedParam.inner._100._04 = 0.5f;
-	track->timedParam.inner._110._00 = 0.0f;
-	track->timedParam.inner._110._04 = 0.0f;
+	track->timedParam.inner._100.currValue = 0.5f;
+	track->timedParam.inner._100.targValue = 0.5f;
+	track->timedParam.inner._110.currValue = 0.0f;
+	track->timedParam.inner._110.targValue = 0.0f;
 
-	track->timedParam.inner.fxmix._00 = 0.0f;
-	track->timedParam.inner.fxmix._04 = 0.0f;
-	track->timedParam.inner.dolby._00 = 0.0f;
-	track->timedParam.inner.dolby._04 = 0.0f;
+	track->timedParam.inner.fxmix.currValue = 0.0f;
+	track->timedParam.inner.fxmix.targValue = 0.0f;
+	track->timedParam.inner.dolby.currValue = 0.0f;
+	track->timedParam.inner.dolby.targValue = 0.0f;
 
 	// Initialize IIRs (skipping the first one)
 	for (i = 1; i < 4; ++i) {
-		track->timedParam.inner.IIRs[i]._00 = 0.0f;
-		track->timedParam.inner.IIRs[i]._04 = 0.0f;
+		track->timedParam.inner.IIRs[i].currValue = 0.0f;
+		track->timedParam.inner.IIRs[i].targValue = 0.0f;
 	}
 
-	track->timedParam.inner._50._00 = 0.0f;
-	track->timedParam.inner._50._04 = 0.0f;
+	track->timedParam.inner._50.currValue = 0.0f;
+	track->timedParam.inner._50.targValue = 0.0f;
 
 	for (i = 0; i < 32; ++i) {
 		track->regParam.reg[i] = 0;

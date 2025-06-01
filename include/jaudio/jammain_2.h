@@ -40,10 +40,10 @@ struct TrackPort_ {
  * @note Size: 16
  */
 struct MoveParam_ {
-	f32 _00; // _00
-	f32 _04; // _04
-	f32 _08; // _08
-	f32 _0C; // _0C
+	f32 currValue;  // _00
+	f32 targValue;  // _04
+	f32 moveTime;   // _08
+	f32 moveAmount; // _0C
 };
 
 /**

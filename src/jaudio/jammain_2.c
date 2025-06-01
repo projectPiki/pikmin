@@ -34,8 +34,8 @@ struct TrackListPair {
  * @note Size: 4.
  */
 struct ArgListPair {
-	u16 first;
-	u16 second;
+	u16 argCount;
+	u16 argTypes; // This is a bitfield array of eight 2-bit values
 };
 
 static size_t T_LISTS;
@@ -266,137 +266,58 @@ u16 Extend8to16(u8 value)
  * Address:	8000F8E0
  * Size:	0001A8
  */
-void Jam_WriteTimeParam(seqp_*, u8)
+void Jam_WriteTimeParam(seqp_* track, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r26, r4, 0
-	  li        r31, 0
-	  bl        -0x2FC
-	  rlwinm    r28,r26,0,24,31
-	  addi      r29, r3, 0
-	  rlwinm    r0,r26,0,28,29
-	  cmplwi    r0, 0xC
-	  bgt-      .loc_0x94
-	  lis       r3, 0x8022
-	  rlwinm    r0,r0,2,0,29
-	  addi      r3, r3, 0x5068
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  mr        r3, r30
-	  bl        -0x330
-	  rlwinm    r0,r3,1,23,30
-	  add       r3, r30, r0
-	  lha       r27, 0x26C(r3)
-	  b         .loc_0x94
-	  mr        r3, r30
-	  bl        -0x348
-	  rlwinm    r27,r3,0,24,31
-	  b         .loc_0x94
-	  mr        r3, r30
-	  bl        -0x358
-	  rlwinm    r0,r3,8,16,23
-	  extsh     r27, r0
-	  b         .loc_0x94
-	  mr        r3, r30
-	  bl        -0x2EC
-	  mr        r27, r3
+	u32 badCompiler;
 
-	.loc_0x94:
-	  rlwinm    r0,r28,0,30,31
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0xE0
-	  bge-      .loc_0xB4
-	  cmpwi     r0, 0
-	  beq-      .loc_0xC0
-	  bge-      .loc_0xC8
-	  b         .loc_0xFC
+	s32 moveTime;
+	u8 moveParamIdx;
+	s16 targetValue;
+	MoveParam_* moveParam;
 
-	.loc_0xB4:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0xFC
-	  b         .loc_0xF0
+	moveTime     = 0;
+	moveParamIdx = __ByteRead(track);
+	switch (param_2 & 0x0C) {
+	case 0x00:
+		targetValue = track->regParam.reg[__ByteRead(track)];
+		break;
+	case 0x04:
+		targetValue = __ByteRead(track);
+		break;
+	case 0x08:
+		targetValue = __ByteRead(track) << 8;
+		break;
+	case 0x0C:
+		targetValue = __WordRead(track);
+		break;
+	}
+	switch (param_2 & 0x03) {
+	case 0:
+		moveTime = -1;
+		break;
+	case 1:
+		moveTime = track->regParam.reg[__ByteRead(track)];
+		break;
+	case 2:
+		moveTime = __ByteRead(track);
+		break;
+	case 3:
+		moveTime = __WordRead(track);
+		break;
+	}
 
-	.loc_0xC0:
-	  li        r31, -0x1
-	  b         .loc_0xFC
-
-	.loc_0xC8:
-	  mr        r3, r30
-	  bl        -0x3AC
-	  rlwinm    r0,r3,1,23,30
-	  add       r3, r30, r0
-	  lhz       r31, 0x26C(r3)
-	  b         .loc_0xFC
-
-	.loc_0xE0:
-	  mr        r3, r30
-	  bl        -0x3C4
-	  rlwinm    r31,r3,0,24,31
-	  b         .loc_0xFC
-
-	.loc_0xF0:
-	  mr        r3, r30
-	  bl        -0x354
-	  rlwinm    r31,r3,0,16,31
-
-	.loc_0xFC:
-	  extsh     r0, r27
-	  rlwinm    r4,r29,4,20,27
-	  xoris     r0, r0, 0x8000
-	  addi      r4, r4, 0x14C
-	  stw       r0, 0x1C(r1)
-	  lis       r3, 0x4330
-	  lfd       f2, -0x7F20(r2)
-	  cmpwi     r31, 0
-	  stw       r3, 0x18(r1)
-	  add       r4, r30, r4
-	  lfs       f0, -0x7F10(r2)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0x4(r4)
-	  blt-      .loc_0x154
-	  xoris     r0, r31, 0x8000
-	  stw       r0, 0x1C(r1)
-	  stw       r3, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f0, f0, f2
-	  stfs      f0, 0x8(r4)
-
-	.loc_0x154:
-	  lfs       f2, 0x8(r4)
-	  lfs       f1, -0x7F0C(r2)
-	  fcmpo     cr0, f2, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x180
-	  lfs       f0, 0x4(r4)
-	  stfs      f0, 0x0(r4)
-	  stfs      f1, 0xC(r4)
-	  lfs       f0, -0x7F08(r2)
-	  stfs      f0, 0x8(r4)
-	  b         .loc_0x194
-
-	.loc_0x180:
-	  lfs       f1, 0x4(r4)
-	  lfs       f0, 0x0(r4)
-	  fsubs     f0, f1, f0
-	  fdivs     f0, f0, f2
-	  stfs      f0, 0xC(r4)
-
-	.loc_0x194:
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	moveParam            = &track->timedParam.move[moveParamIdx];
+	moveParam->targValue = targetValue / 32768.0f;
+	if (moveTime >= 0) {
+		moveParam->moveTime = moveTime;
+	}
+	if (moveParam->moveTime <= 0.0f) {
+		moveParam->currValue  = moveParam->targValue;
+		moveParam->moveAmount = 0.0f;
+		moveParam->moveTime   = 1.0f;
+	} else {
+		moveParam->moveAmount = (moveParam->targValue - moveParam->currValue) / moveParam->moveTime;
+	}
 }
 
 /*
@@ -2593,7 +2514,7 @@ static u32 Cmd_ParentWritePort()
  */
 static u32 Cmd_ChildWritePort()
 {
-	Jam_WritePortAppDirect(SEQ_P->children[(SEQ_ARG[0] / 4)], SEQ_ARG[0] & 0xf, SEQ_ARG[1]);
+	Jam_WritePortAppDirect(SEQ_P->children[(SEQ_ARG[0] >> 4)], SEQ_ARG[0] & 0x0f, SEQ_ARG[1]);
 	return 0;
 }
 
@@ -2929,13 +2850,13 @@ static u32 Cmd_Finish()
 	mask = 0;
 	for (i = 0; i < 18; ++i) {
 		temp = &SEQ_P->timedParam.move[i];
-		if (temp->_08 > 0.0f) {
-			temp->_00 += temp->_0C;
-			temp->_08 -= 1.0f;
+		if (temp->moveTime > 0.0f) {
+			temp->currValue += temp->moveAmount;
+			temp->moveTime -= 1.0f;
 			if (i <= 5 || i >= 11) {
 				mask |= 1 << i;
 			} else {
-				Osc_Update_Param(SEQ_P, i, temp->_00);
+				Osc_Update_Param(SEQ_P, i, temp->currValue);
 			}
 		}
 	}
@@ -2982,11 +2903,11 @@ static u32 Cmd_IIRSet()
 	MoveParam_* param;
 
 	for (i = 0; i < 4; ++i) {
-		param      = &SEQ_P->timedParam.inner.IIRs[i];
-		param->_04 = SEQ_ARG[i] / 32768.0f;
-		param->_00 = param->_04;
-		param->_0C = 0.0f;
-		param->_08 = 1.0f;
+		param             = &SEQ_P->timedParam.inner.IIRs[i];
+		param->targValue  = SEQ_ARG[i] / 32768.0f;
+		param->currValue  = param->targValue;
+		param->moveAmount = 0.0f;
+		param->moveTime   = 1.0f;
 	}
 	return 0;
 }
@@ -3094,11 +3015,11 @@ static u32 Cmd_IIRCutOff()
 	// track = ;
 	index = SEQ_ARG[0];
 	for (i = 0; i < 4; ++i) {
-		test      = &SEQ_P->timedParam.inner.IIRs[i];
-		test->_04 = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
-		test->_00 = test->_04;
-		test->_0C = 0.0f;
-		test->_08 = 1.0f;
+		test             = &SEQ_P->timedParam.inner.IIRs[i];
+		test->targValue  = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
+		test->currValue  = test->targValue;
+		test->moveAmount = 0.0f;
+		test->moveTime   = 1.0f;
 	}
 	return 0;
 }
@@ -3223,17 +3144,71 @@ static u32 Cmd_Printf()
 #define CMD_COUNT (64)
 
 static ArgListPair Arglist[CMD_COUNT] = {
-	{ 0x0000, 0x0000 }, { 0x0002, 0x0008 }, { 0x0002, 0x0008 }, { 0x0001, 0x0002 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
-	{ 0x0001, 0x0000 }, { 0x0001, 0x0002 }, { 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 }, { 0x0002, 0x0000 },
-	{ 0x0002, 0x000c }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0003 }, { 0x0002, 0x0005 }, { 0x0002, 0x000c },
-	{ 0x0002, 0x000c }, { 0x0002, 0x000f }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0002, 0x0008 },
-	{ 0x0005, 0x0155 }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0001, 0x0001 }, { 0x0002, 0x0004 },
-	{ 0x0001, 0x0000 }, { 0x0002, 0x0008 }, { 0x0001, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
-	{ 0x0002, 0x0004 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
-	{ 0x0001, 0x0002 }, { 0x0005, 0x0000 }, { 0x0004, 0x0055 }, { 0x0001, 0x0002 }, { 0x0001, 0x0002 }, { 0x0003, 0x0000 },
-	{ 0x0001, 0x0000 }, { 0x0001, 0x0000 }, { 0x0003, 0x0028 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 },
-	{ 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 },
-	{ 0x0000, 0x0000 }, { 0x0001, 0x0001 }, { 0x0001, 0x0001 }, { 0x0000, 0x0000 },
+	{ 0, 0x0000 }, //
+	{ 2, 0x0008 }, // OpenTrack
+	{ 2, 0x0008 }, // OpenTrackBros
+	{ 1, 0x0002 }, // Call
+	{ 0, 0x0000 }, // CallF
+	{ 0, 0x0000 }, // Ret
+	{ 1, 0x0000 }, // RetF
+	{ 1, 0x0002 }, // Jmp
+	{ 0, 0x0000 }, // JmpF
+	{ 1, 0x0001 }, // LoopS
+	{ 0, 0x0000 }, // LoopE
+	{ 2, 0x0000 }, // ReadPort
+	{ 2, 0x000c }, // WritePort
+	{ 1, 0x0000 }, // CheckPortImport
+	{ 1, 0x0000 }, // CheckPortExport
+	{ 1, 0x0003 }, // WaitReg
+	{ 2, 0x0005 }, // ConnectName
+	{ 2, 0x000c }, // ParentWritePort
+	{ 2, 0x000c }, // ChildWritePort
+	{ 2, 0x000f }, //
+	{ 1, 0x0000 }, // SetLastNote
+	{ 1, 0x0000 }, // TimeRelate
+	{ 1, 0x0000 }, // SimpleOsc
+	{ 2, 0x0008 }, // SimpleEnv
+	{ 5, 0x0155 }, // SimpleADSR
+	{ 1, 0x0000 }, // Transpose
+	{ 1, 0x0000 }, // CloseTrack
+	{ 1, 0x0000 }, // OutSwitch
+	{ 1, 0x0001 }, // UpdateSync
+	{ 2, 0x0004 }, // BusConnect
+	{ 1, 0x0000 }, // PauseStatus
+	{ 2, 0x0008 }, // SetInterrupt
+	{ 1, 0x0000 }, // DisInterrupt
+	{ 0, 0x0000 }, // ClrI
+	{ 0, 0x0000 }, // SetI
+	{ 0, 0x0000 }, // RetI
+	{ 2, 0x0004 }, // IntTimer
+	{ 0, 0x0000 }, // ConnectOpen
+	{ 0, 0x0000 }, // ConnectClose
+	{ 1, 0x0001 }, // SyncCPU
+	{ 0, 0x0000 }, // FlushAll
+	{ 0, 0x0000 }, // FlushRelease
+	{ 1, 0x0002 }, // Wait3
+	{ 5, 0x0000 }, // PanPowSet
+	{ 4, 0x0055 }, // IIRSet
+	{ 1, 0x0002 }, // FIRSet
+	{ 1, 0x0002 }, // EXTSet
+	{ 3, 0x0000 }, // PanSwSet
+	{ 1, 0x0000 }, // OscRoute
+	{ 1, 0x0000 }, // IIRCutOff
+	{ 3, 0x0028 }, // OscFull
+	{ 0, 0x0000 }, //
+	{ 0, 0x0000 }, //
+	{ 0, 0x0000 }, //
+	{ 0, 0x0000 }, //
+	{ 0, 0x0000 }, //
+	{ 0, 0x0000 }, //
+	{ 0, 0x0000 }, //
+	{ 1, 0x0001 }, // CheckWave
+	{ 0, 0x0000 }, // Printf
+	{ 0, 0x0000 }, // Nop
+	{ 1, 0x0001 }, // Tempo
+	{ 1, 0x0001 }, // TimeBase
+	{ 0, 0x0000 }, // Finish
+
 };
 
 static CmdFunction CMDP_LIST[CMD_COUNT] = {
@@ -3308,107 +3283,48 @@ static CmdFunction CMDP_LIST[CMD_COUNT] = {
  * Address:	80012CC0
  * Size:	000130
  */
-u32 Cmd_Process(seqp_*, u8, u16)
+u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r6, 0x5124
-	  stwu      r1, -0x40(r1)
-	  stmw      r24, 0x20(r1)
-	  li        r28, 0
-	  li        r27, 0
-	  stb       r4, 0xC(r1)
-	  lis       r4, 0x8032
-	  subi      r26, r4, 0x580
-	  lbz       r31, 0xC(r1)
-	  stw       r3, 0x8(r1)
-	  rlwinm    r29,r31,2,0,29
-	  add       r4, r0, r29
-	  lwz       r30, 0x8(r1)
-	  lwz       r0, -0x300(r4)
-	  stw       r0, 0x1C(r1)
-	  lhz       r0, 0x1E(r1)
-	  lhz       r25, 0x1C(r1)
-	  or        r0, r0, r5
-	  b         .loc_0xE0
+	ArgListPair argpair;
+	u16 argTypes;
+	size_t i;
+	u32 arg;
+	CmdFunction function;
 
-	.loc_0x58:
-	  rlwinm    r24,r0,0,16,31
-	  rlwinm    r0,r0,0,30,31
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0xA8
-	  bge-      .loc_0x7C
-	  cmpwi     r0, 0
-	  beq-      .loc_0x88
-	  bge-      .loc_0x98
-	  b         .loc_0xC8
+	u32 badCompiler;
+	seqp_** REF_track;
+	u8* REF_cmd;
 
-	.loc_0x7C:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0xC8
-	  b         .loc_0xB4
+	REF_track = &track;
+	REF_cmd   = &cmd;
 
-	.loc_0x88:
-	  mr        r3, r30
-	  bl        -0x374C
-	  rlwinm    r3,r3,0,24,31
-	  b         .loc_0xC8
-
-	.loc_0x98:
-	  mr        r3, r30
-	  bl        -0x36DC
-	  rlwinm    r3,r3,0,16,31
-	  b         .loc_0xC8
-
-	.loc_0xA8:
-	  mr        r3, r30
-	  bl        -0x368C
-	  b         .loc_0xC8
-
-	.loc_0xB4:
-	  mr        r3, r30
-	  bl        -0x3778
-	  addi      r4, r3, 0
-	  addi      r3, r30, 0
-	  bl        -0x2A44
-
-	.loc_0xC8:
-	  add       r4, r26, r27
-	  srawi     r0, r24, 0x2
-	  stw       r3, 0x0(r4)
-	  rlwinm    r0,r0,0,16,31
-	  addi      r28, r28, 0x1
-	  addi      r27, r27, 0x4
-
-	.loc_0xE0:
-	  cmplw     r28, r25
-	  blt+      .loc_0x58
-	  lis       r3, 0x8022
-	  stb       r31, 0x2C34(r13)
-	  addi      r0, r3, 0x5224
-	  stw       r30, 0x2C30(r13)
-	  add       r3, r0, r29
-	  lwz       r0, -0x300(r3)
-	  cmplwi    r0, 0
-	  mr        r12, r0
-	  bne-      .loc_0x114
-	  li        r3, 0
-	  b         .loc_0x11C
-
-	.loc_0x114:
-	  mtlr      r12
-	  blrl
-
-	.loc_0x11C:
-	  lmw       r24, 0x20(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	argpair  = Arglist[cmd - 0xC0];
+	argTypes = argpair.argTypes | param_3;
+	for (i = 0; i < argpair.argCount; ++i) {
+		switch (argTypes & 0x03) {
+		case 0:
+			arg = __ByteRead(track);
+			break;
+		case 1:
+			arg = __WordRead(track);
+			break;
+		case 2:
+			arg = __24Read(track);
+			break;
+		case 3:
+			arg = __ExchangeRegisterValue(track, __ByteRead(track));
+			break;
+		}
+		argTypes   = argTypes >> 2;
+		SEQ_ARG[i] = arg;
+	}
+	SEQ_CMD  = cmd;
+	SEQ_P    = track;
+	function = CMDP_LIST[cmd - 0xC0];
+	if (!function) {
+		return 0;
+	}
+	return function();
 }
 
 /*
@@ -3416,63 +3332,31 @@ u32 Cmd_Process(seqp_*, u8, u16)
  * Address:	80012E00
  * Size:	0000A8
  */
-void RegCmd_Process(seqp_*, int, u32)
+void RegCmd_Process(seqp_* track, BOOL param_2, u32 param_3)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  bl        -0x381C
-	  cmpwi     r28, 0x1
-	  addi      r31, r3, 0
-	  bne-      .loc_0x3C
-	  addi      r3, r27, 0
-	  addi      r4, r31, 0
-	  bl        -0x2AF4
-	  rlwinm    r31,r3,0,24,31
+	size_t i;
+	u8 uVar4;
+	u8 uVar3;
+	u16 uVar5;
+	u16 uVar6; // Uninitialized!  Naughty!
 
-	.loc_0x3C:
-	  cmpwi     r28, 0x1
-	  bne-      .loc_0x4C
-	  cmplwi    r29, 0
-	  beq-      .loc_0x84
-
-	.loc_0x4C:
-	  mr        r3, r27
-	  bl        -0x3850
-	  addi      r0, r29, 0x1
-	  li        r5, 0x3
-	  mtctr     r0
-	  cmplwi    r0, 0
-	  ble-      .loc_0x84
-
-	.loc_0x68:
-	  rlwinm.   r0,r3,0,24,24
-	  rlwinm    r4,r3,0,24,31
-	  beq-      .loc_0x78
-	  or        r30, r30, r5
-
-	.loc_0x78:
-	  rlwinm    r3,r4,1,24,30
-	  rlwinm    r5,r5,2,16,29
-	  bdnz+     .loc_0x68
-
-	.loc_0x84:
-	  addi      r3, r27, 0
-	  addi      r4, r31, 0
-	  addi      r5, r30, 0
-	  bl        -0x1D0
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	uVar4 = __ByteRead(track);
+	if (param_2 == TRUE) {
+		uVar4 = __ExchangeRegisterValue(track, uVar4);
+	}
+	if (param_2 != TRUE || param_3 != 0) {
+		uVar3 = __ByteRead(track);
+		uVar5 = 0b11;
+		for (i = 0; i < param_3 + 1; ++i) {
+			if (uVar3 & 0b10000000) {
+				uVar6 |= uVar5;
+			}
+			uVar3 = uVar3 << 1;
+			uVar5 = uVar5 << 2;
+		}
+	}
+	Cmd_Process(track, uVar4, uVar6);
+	return;
 }
 
 /*
