@@ -777,7 +777,7 @@ config.libs = [
             Object(Matching, "plugPikiYamashita/P2DStream.cpp"),
             Object(Matching, "plugPikiYamashita/PSUList.cpp"),
             Object(Matching, "plugPikiYamashita/PUTRect.cpp"),
-            Object(Equivalent, "plugPikiYamashita/P2DWindow.cpp"),
+            Object(Matching, "plugPikiYamashita/P2DWindow.cpp"),
             Object(Matching, "plugPikiYamashita/P2DTextBox.cpp"),
             Object(Matching, "plugPikiYamashita/P2DPrint.cpp"),
             Object(Equivalent, "plugPikiYamashita/P2DFont.cpp"),
