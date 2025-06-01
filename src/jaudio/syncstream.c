@@ -567,15 +567,13 @@ static s32 StreamAudio_Callback(void* data)
 							DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
 							ctrl->_21984 = 1;
-						}
-						else {
+						} else {
 							DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
 							DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
 
 							DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
 							DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 						}
-
 
 						if (ctrl->buffCtrl[ctrl->buffCtrlMain2._02]._00 == 2) {
 							void* data = __Decode(ctrl);
@@ -596,7 +594,6 @@ static s32 StreamAudio_Callback(void* data)
 							ctrl->buffCtrlMain2._0C += (u32)data; // ?????? kms
 
 							// guys im taking a break please clean ts up I cant
-
 						}
 					}
 				}

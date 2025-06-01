@@ -220,7 +220,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	mPaneFileNum2->hide();
 	mPaneFileNum3->hide();
 
-	switch (gameflow.mGamePrefs._108) {
+	switch (gameflow.mGamePrefs.mFileNum) {
 	case 0:
 		mPaneFileNum1->show();
 		break;

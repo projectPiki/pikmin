@@ -355,10 +355,10 @@ struct GamePrefs : public CoreNode {
 		mFlags              = 3;
 		mBgmVol             = 8;
 		mSfxVol             = 8;
-		_108                = 0;
+		mFileNum            = 0;
 		mHasSaveGame        = 0;
 		mSaveGameIndex      = 0;
-		mSpareSaveGames     = 0;
+		mSpareSaveGameIndex = 0;
 		_1F                 = 0;
 		mUnlockedStageFlags = 0;
 		mIsChanged          = false;
@@ -410,14 +410,14 @@ struct GamePrefs : public CoreNode {
 	u8 mHasSaveGame;        // _1E
 	u8 _1F;                 // _1F
 	u8 mSaveGameIndex;      // _20
-	u8 mSpareSaveGames;     // _21
+	u8 mSpareSaveGameIndex; // _21
 	u8 mUnlockedStageFlags; // _22
 	u8 _23;                 // _23
 	GameHiscores mHiscores; // _24
 	u32 _DC;                // _DC, unknown
 	u32 _E0;                // _E0
 	u8 _E4[0x108 - 0xE4];   // _E4, unknown
-	u32 _108;               // _108, unknown
+	u32 mFileNum;           // _108, unknown
 };
 
 /**

@@ -346,7 +346,7 @@ struct System : public StdSystem {
 	int mDvdErrorCode;                               // _258
 	u32 mDvdBufferSize;                              // _25C
 	u32 mIsLoadingThreadActive;                      // _260
-	u32 _264;                                        // _264
+	u32 mLoadTimeBeforeIdling;                       // _264
 	u32 mIsLoadingScreenActive;                      // _268
 	vu32 mIsRendering;                               // _26C
 	u32 mIsMemoryCardSaving;                         // _270

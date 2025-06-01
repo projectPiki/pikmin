@@ -169,11 +169,11 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	ogScrFileChkSelMgr::returnStatusFlag fileChkSelRes = _84->update(input, _88);
 	if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_SelectionA || fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_SelectionB
 	    || fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_SelectionC) {
-		gameflow.mPlayState.mSaveFlags      = _88._04;
-		gameflow.mGamePrefs.mSpareSaveGames = _88.mIndex + 1;
-		mStatus                             = Status_3;
-		_10                                 = 0.0f;
-		_30                                 = 0;
+		gameflow.mPlayState.mSaveFlags          = _88._04;
+		gameflow.mGamePrefs.mSpareSaveGameIndex = _88.mIndex + 1;
+		mStatus                                 = Status_3;
+		_10                                     = 0.0f;
+		_30                                     = 0;
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
 		mStatus = Status_13;

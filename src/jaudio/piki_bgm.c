@@ -306,7 +306,7 @@ void Jac_PlayBgm(u32 a, u32 id)
 	Jam_OnExtSwitch(track, 1);
 
 	// Challenge mode tempo speedup?
-	if (Jac_TellChgMode() == TRUE && Jac_GetCurrentScene() == 5) {
+	if (Jac_TellChgMode() == TRUE && Jac_GetCurrentScene() == SCENE_Unk5) {
 		Jam_OnExtSwitch(track, 0x40);
 		Jam_SetExtParam(1.2f, track, 0x40);
 	} else {

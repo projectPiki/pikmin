@@ -1052,23 +1052,23 @@ void MemoryCard::saveCurrentGame()
 	gameflow.mPlayState._20       = 2;
 	gameflow.mPlayState.mSavedDay = gameflow.mWorldClock.mCurrentDay;
 
-	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGames - 1);
+	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 
 	writeCurrentGame(stream, gameflow.mPlayState);
 	stream->padFileTo(0x8000, 8);
 
-	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGames - 1), 0x7FF8);
+	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
 
-	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGames - 1);
+	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	waitPolling();
 	saveOptions();
 
-	u8 idx                              = gameflow.mGamePrefs.mSaveGameIndex;
-	gameflow.mGamePrefs.mSaveGameIndex  = gameflow.mGamePrefs.mSpareSaveGames;
-	gameflow.mGamePrefs.mSpareSaveGames = idx;
-	gameflow.mSaveGameCrc               = sum;
+	u8 idx                                  = gameflow.mGamePrefs.mSaveGameIndex;
+	gameflow.mGamePrefs.mSaveGameIndex      = gameflow.mGamePrefs.mSpareSaveGameIndex;
+	gameflow.mGamePrefs.mSpareSaveGameIndex = idx;
+	gameflow.mSaveGameCrc                   = sum;
 	gameflow.mGamePrefs._DC++;
 	gameflow.mGamePrefs.mHasSaveGame = true;
 	gsys->mIsMemoryCardSaving        = FALSE;
@@ -1543,17 +1543,17 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 {
 	mDidSaveFail              = false;
 	gsys->mIsMemoryCardSaving = TRUE;
-	memcpy(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGames - 1), getGameFilePtr(p1.mIndex), 0x8000);
+	memcpy(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), getGameFilePtr(p1.mIndex), 0x8000);
 
-	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGames - 1);
+	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	stream->writeByte(2);
 	stream->writeByte(p2._04);
 	stream->setPosition(0x7FF8);
 
-	u32 sum = calcChecksum(&cardData[getGameFileOffset(gameflow.mGamePrefs.mSpareSaveGames - 1)], 0x7FF8);
+	u32 sum = calcChecksum(&cardData[getGameFileOffset(gameflow.mGamePrefs.mSpareSaveGameIndex - 1)], 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
-	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGames - 1);
+	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	gsys->mIsMemoryCardSaving = FALSE;
 
 	u32 badCompiler[12];
@@ -1776,13 +1776,13 @@ void MemoryCard::delFile(CardQuickInfo& p1)
 	PlayState state;
 	state.Initialise();
 	state.mSaveFlags  = p1._04;
-	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGames - 1);
+	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	writeCurrentGame(stream, state);
 	stream->padFileTo(0x8000, 8);
-	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGames - 1), 0x7FF8);
+	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
-	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGames - 1);
+	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	gsys->mIsMemoryCardSaving = FALSE;
 
 	u32 badCompiler[7];
@@ -2788,7 +2788,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 		int a = stream->readInt();
 		int b = stream->readInt();
 		if (b != sum) {
-			gameflow.mGamePrefs.mSpareSaveGames = i + 1;
+			gameflow.mGamePrefs.mSpareSaveGameIndex = i + 1;
 		} else {
 			if (a > c) {
 				c = a;
@@ -2798,7 +2798,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 			state.read(*stream);
 			if (a > infos[state.mSaveFlags]._20) {
 				if (infos[state.mSaveFlags].mIndex != -1) {
-					gameflow.mGamePrefs.mSpareSaveGames = infos[state.mSaveFlags].mIndex + 1;
+					gameflow.mGamePrefs.mSpareSaveGameIndex = infos[state.mSaveFlags].mIndex + 1;
 				}
 				if (state._20) {
 					u8 s                    = state.mSaveFlags;
@@ -2815,7 +2815,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 					info.mBluePikiCount     = state._1C;
 				}
 			} else {
-				gameflow.mGamePrefs.mSpareSaveGames = i + 1;
+				gameflow.mGamePrefs.mSpareSaveGameIndex = i + 1;
 			}
 		}
 	}

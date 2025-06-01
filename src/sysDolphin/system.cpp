@@ -1323,8 +1323,8 @@ void* loadFunc(void* idler)
 		loadIdler->init();
 	}
 
-	int a = 0; // r23
-	int b = 2; // r22
+	int frameCount = 0; // r23
+	int b          = 2; // r22
 	GXSetCurrentGXThread();
 	OSGetTick();
 
@@ -1340,12 +1340,12 @@ void* loadFunc(void* idler)
 			continue;
 		}
 		OSGetTick();
-		a++;
+		frameCount++;
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		if (!gsys->mIsLoadingScreenActive) {
 			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, GX_FALSE);
 		} else {
-			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, (a >= gsys->_264) ? GX_TRUE : GX_FALSE);
+			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, (frameCount >= gsys->mLoadTimeBeforeIdling) ? GX_TRUE : GX_FALSE);
 		}
 
 		gsys->beginRender();
@@ -1360,7 +1360,7 @@ void* loadFunc(void* idler)
 			gfx->fillRectangle(RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
 		}
 
-		if (loadIdler && a >= gsys->_264) {
+		if (loadIdler && frameCount >= gsys->mLoadTimeBeforeIdling) {
 			loadIdler->draw(*gfx);
 		}
 
@@ -1376,10 +1376,10 @@ void* loadFunc(void* idler)
 		}
 	}
 
-	a ? "fake" : "fake";
-	a ? "fake" : "fake";
-	a ? "fake" : "fake";
-	a ? "fake" : "fake";
+	frameCount ? "fake" : "fake";
+	frameCount ? "fake" : "fake";
+	frameCount ? "fake" : "fake";
+	frameCount ? "fake" : "fake";
 	return nullptr;
 }
 
@@ -1393,12 +1393,12 @@ u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
  * Address:	80046554
  * Size:	000094
  */
-void System::startLoading(LoadIdler* idler, bool a1, u32 a2)
+void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 {
 	gsys->mPrevHeapAllocType = 0;
 	if (mIsLoadingThreadActive == 0) {
-		_264                   = a2;
-		mIsLoadingScreenActive = a1;
+		mLoadTimeBeforeIdling  = loadDelay;
+		mIsLoadingScreenActive = useLoadScreen;
 		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, 0);
 		mIsLoadingThreadActive = 1;
 		OSResumeThread(&Thread);
@@ -1684,10 +1684,10 @@ void* dvdFunc(void*)
 		}
 
 		if (gsys->mDvdErrorCode >= 0 && !playedSe) {
-			Jac_PlaySystemSe(0x26); // no idea what sound these are
+			Jac_PlaySystemSe(JACSYS_Unk38); // no idea what sound these are
 			playedSe = true;
 		} else if (gsys->mDvdErrorCode < 0 && playedSe) {
-			Jac_PlaySystemSe(0x27);
+			Jac_PlaySystemSe(JACSYS_Unk39);
 			playedSe = false;
 		}
 	}

@@ -1258,7 +1258,7 @@ void Jac_StartPartsFindDemo(u32 p1, int p2)
 
 	if (parts_find_demo_state == 1) {
 		if (p2) {
-			Jac_PlaySystemSe(0x1e);
+			Jac_PlaySystemSe(JACSYS_Unk30);
 		}
 		return;
 	}
@@ -1273,13 +1273,13 @@ void Jac_StartPartsFindDemo(u32 p1, int p2)
 
 		REF_p1 = &p1;
 		if (p1 == 0) {
-			Jac_PlaySystemSe(0x24);
+			Jac_PlaySystemSe(JACSYS_Unk36);
 		} else {
-			Jac_PlaySystemSe(0x1e);
+			Jac_PlaySystemSe(JACSYS_Unk30);
 		}
 	} else {
 		Jac_DemoFade(1, 0x1e, 0.5f);
-		Jac_PlaySystemSe(0x1f);
+		Jac_PlaySystemSe(JACSYS_Unk31);
 	}
 	parts_find_demo_state = 1;
 }

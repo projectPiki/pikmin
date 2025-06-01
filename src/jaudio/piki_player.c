@@ -130,20 +130,20 @@ void Jac_PlayOrimaSe(u32 id)
 		cmdqueue_reset = 1;
 	}
 
-	if (id & 0x8000) {
+	if (id & JACORIMA_PIKISOUND) {
 		static int flyready = FALSE;
-		if (Jac_DemoCheck() != TRUE && (flyready == FALSE || id != 0x8004)) {
+		if (Jac_DemoCheck() != TRUE && (flyready == FALSE || id != JACORIMA_PikiFlyReady)) {
 			Jam_WritePortAppDirect(orima_seqp, 1, id & 0x7fff);
-			if (id == 0x8002) {
+			if (id == JACORIMA_PikiFly) {
 				flyready = FALSE;
 			}
-			if (id == 0x8004) {
+			if (id == JACORIMA_PikiFlyReady) {
 				flyready = TRUE;
 			}
 		}
 	} else {
 		Jal_SendCmdQueue_Noblock(&player_se, (u16)id);
-		if (id == 4) {
+		if (id == JACORIMA_PikiPulled2) {
 			u32 a           = (u16)GetRandom_ulimit(4);
 			u32 id2         = 0x800b;
 			static u16 old1 = 4;
@@ -172,10 +172,10 @@ void Jac_PlayOrimaSe(u32 id)
 			}
 			Jam_WritePortAppDirect(orima_seqp, 1, id2 & 0x7fff);
 		}
-		if (id == 12) {
+		if (id == JACORIMA_PlayerDown) {
 			Jac_FadeOutBgm(0, 100);
 			Jac_FadeOutBgm(1, 100);
-			Jac_PlaySystemSe(0x28);
+			Jac_PlaySystemSe(JACSYS_Unk40);
 		}
 	}
 }
@@ -224,7 +224,7 @@ void Jac_StopOrimaSe(s32 id)
 		cmdqueue_reset = 1;
 	}
 
-	if (!(id & 0x8000)) {
+	if (!(id & JACORIMA_PIKISOUND)) {
 		Jal_SendCmdQueue_Noblock(&player_se_stop, id);
 	}
 }
@@ -271,7 +271,7 @@ void Jac_UpdatePikiGaya()
 	static f32 volume = 0.0f;
 	static OuterParam_ outerparam;
 
-	if (Jac_GetCurrentScene() != 5) {
+	if (Jac_GetCurrentScene() != SCENE_Unk5) {
 		Jam_SetExtParamD(0, &outerparam, 1);
 		return;
 	}

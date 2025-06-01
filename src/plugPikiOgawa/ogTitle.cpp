@@ -281,7 +281,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (!mStereoMode) {
 					mStereoMode = true;
 					setGamePrefs();
-					Jac_PlaySystemSe(Sound_Config);
+					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
 				}
 				break;
 
@@ -289,7 +289,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
-					Jac_PlaySystemSe(Sound_Config);
+					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
 				}
 				break;
 
@@ -297,7 +297,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
-					Jac_PlaySystemSe(Sound_Config);
+					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
 				}
 				break;
 			}
@@ -308,7 +308,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
-					Jac_PlaySystemSe(Sound_Config);
+					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
 				}
 				break;
 
@@ -316,7 +316,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
-					Jac_PlaySystemSe(Sound_Config);
+					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
 				}
 				break;
 
@@ -324,7 +324,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
-					Jac_PlaySystemSe(Sound_Config);
+					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
 				}
 				break;
 			}

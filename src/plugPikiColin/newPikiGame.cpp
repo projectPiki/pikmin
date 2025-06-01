@@ -734,10 +734,10 @@ ModeState* DayOverModeState::update(u32& a)
 		if (state >= 1) {
 			memcardWindow = nullptr;
 			if (state != 1 && state != 5) {
-				gameflow.mPlayState.mSaveFlags      = info._04;
-				gameflow.mGamePrefs.mSpareSaveGames = info.mIndex + 1;
+				gameflow.mPlayState.mSaveFlags          = info._04;
+				gameflow.mGamePrefs.mSpareSaveGameIndex = info.mIndex + 1;
 				PRINT("using save game file %d with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
-				      gameflow.mGamePrefs.mSpareSaveGames);
+				      gameflow.mGamePrefs.mSpareSaveGameIndex);
 
 				bool sysbackup     = gsys->mTogglePrint != 0;
 				gsys->mTogglePrint = 1;

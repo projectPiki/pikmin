@@ -18,7 +18,7 @@ static vu32 now_loading;  // type
 static volatile BOOL first_load;
 static BOOL chgmode;
 
-static u32 current_scene           = -1;
+static u32 current_scene           = SCENE_NULL;
 static u32 current_stage           = -1;
 static u32 current_prepare         = -1;
 static u16 stream_level            = 8000;
@@ -113,30 +113,30 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 
 	if (first_load == FALSE) {
 		while (first_load == FALSE) {
-			if (sceneID == 1) {
+			if (sceneID == SCENE_Unk1) {
 				break;
 			}
-			if (sceneID == 0) {
+			if (sceneID == SCENE_Unk0) {
 				break;
 			}
 		}
 	}
 
-	if (sceneID == 10) {
+	if (sceneID == SCENE_Unk10) {
 		chgmode = 1;
 	}
 
-	if (sceneID == 3) {
+	if (sceneID == SCENE_Unk3) {
 		WaveScene_Close(13, 0);
 		Jac_DemoSceneInit();
 		chgmode = 0;
 	}
 
-	if (sceneID == 1) {
+	if (sceneID == SCENE_Unk1) {
 		chgmode = 0;
 	}
 
-	if ((current_scene == 5) || (sceneID == 5)) {
+	if ((current_scene == SCENE_Unk5) || (sceneID == SCENE_Unk5)) {
 		Jac_InitAllEvent();
 		Jac_Piki_Number(0);
 		Jac_UpdatePikiGaya();
@@ -145,18 +145,18 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		Jac_FinishDemo();
 	}
 
-	Jac_PlaySystemSe(0xf);
-	Jac_PlaySystemSe(7);
-	Jac_StopSystemSe(0x10);
-	Jac_StopSystemSe(0x21);
-	Jac_StopSystemSe(0x23);
+	Jac_PlaySystemSe(JACSYS_Unpause);
+	Jac_PlaySystemSe(JACSYS_MenuOff);
+	Jac_StopSystemSe(JACSYS_ContainerOK);
+	Jac_StopSystemSe(JACSYS_MenuZoomIn);
+	Jac_StopSystemSe(JACSYS_MenuScroll);
 	Jac_UnPauseOrimaSe();
 
-	if (current_scene == 6) {
+	if (current_scene == SCENE_Unk6) {
 		Jac_DemoBGMForceStop();
 	}
 
-	if (current_scene == -1) {
+	if (current_scene == SCENE_NULL) {
 		bgm = 0;
 	} else {
 		bgm = tbl_scene_to_bgm[current_scene];
@@ -165,7 +165,7 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 	current_scene = sceneID;
 	current_stage = stage;
 	bgm2          = tbl_scene_to_bgm[sceneID];
-	if (sceneID == 6) {
+	if (sceneID == SCENE_Unk6) {
 		if (chgmode != 0) {
 			bgm2 = 0x14;
 		}
@@ -250,7 +250,7 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		}
 	}
 
-	if (current_scene == 1 && first == 1) {
+	if (current_scene == SCENE_Unk1 && first == 1) {
 		first = 0;
 		WaveScene_Load(0, 1);
 		WaveScene_Load(0, 2);
@@ -261,7 +261,7 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		DVDT_CheckPass(0x20000, 0, __Loaded);
 	}
 
-	if (sceneID == 0) {
+	if (sceneID == SCENE_Unk0) {
 		do {
 			bgm = Jac_CheckBootOk();
 		} while (bgm == 0);
@@ -269,14 +269,14 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
 		tick = OSGetTick();
 		if ((tick >> 2 & 0x1f) == 0x1f) {
 			if ((tick >> 2 & 0x3f) == 0x3f) {
-				Jac_PlayOrimaSe(0x8015);
+				Jac_PlayOrimaSe(JACORIMA_Unk8015);
 			} else {
-				Jac_PlayOrimaSe(0x8016);
+				Jac_PlayOrimaSe(JACORIMA_Unk8016);
 			}
 		} else if ((tick >> 2 & 0x7f) == 0x7e) {
-			Jac_PlayOrimaSe(0x8017);
+			Jac_PlayOrimaSe(JACORIMA_Unk8017);
 		} else {
-			Jac_PlayOrimaSe(0x800c);
+			Jac_PlayOrimaSe(JACORIMA_Unk800C);
 		}
 	}
 	Jac_SetProcessStatus(1);
@@ -287,15 +287,15 @@ void Jac_SceneSetup(u32 sceneID, u32 stage)
  * Address:	80019CE0
  * Size:	0000FC
  */
-void Jac_SceneExit(u32 scene, u32 stage)
+void Jac_SceneExit(u32 nextSceneID, u32 stage)
 {
 	int fade;
-	int newScene;
+	int newBgm;
 
 	int* REF_fade;
 	u32 badCompiler;
 
-	if (current_scene == scene) {
+	if (current_scene == nextSceneID) {
 		return;
 	}
 
@@ -305,23 +305,23 @@ void Jac_SceneExit(u32 scene, u32 stage)
 	Jac_FadeOutBgm(0, fade);
 	Jac_FadeOutBgm(1, fade);
 
-	newScene = tbl_scene_to_bgm[scene];
-	switch (newScene) {
+	newBgm = tbl_scene_to_bgm[nextSceneID];
+	switch (newBgm) {
 	case 0:
 		break;
 	case 1:
-		newScene = tbl_stage_to_bgm[stage];
+		newBgm = tbl_stage_to_bgm[stage];
 	default:
 		if (now_loading) {
 			do {
 			} while (now_loading != 0);
 		}
 
-		WaveScene_Set(newScene, 0);
-		Jac_ReadyBgm(newScene);
-		DVDT_CheckPass(newScene, 0, __Loaded);
+		WaveScene_Set(newBgm, 0);
+		Jac_ReadyBgm(newBgm);
+		DVDT_CheckPass(newBgm, 0, __Loaded);
 		now_loading   = 1;
-		current_ready = newScene;
+		current_ready = newBgm;
 	}
 	Jac_SetProcessStatus(3);
 }

@@ -23,7 +23,7 @@ void Jac_Pause(void)
  */
 void Jac_StreamMovieInit(const char* filepath, u8* param_2, int param_3)
 {
-	if (Jac_GetCurrentScene() == 1 && !demo_fade_flag) {
+	if (Jac_GetCurrentScene() == SCENE_Unk1 && !demo_fade_flag) {
 		Jac_EasyCrossFade(1, 50);
 		demo_fade_flag = TRUE;
 	}
@@ -39,7 +39,7 @@ void Jac_StreamMovieInit(const char* filepath, u8* param_2, int param_3)
 void Jac_StreamMovieStop(void)
 {
 	Jac_HVQM_ForceStop();
-	if (Jac_GetCurrentScene() == 1 && demo_fade_flag) {
+	if (Jac_GetCurrentScene() == SCENE_Unk1 && demo_fade_flag) {
 		Jac_EasyCrossFade(0, 100);
 		demo_fade_flag = FALSE;
 	}
@@ -66,7 +66,7 @@ int Jac_StreamMovieGetPicture(void* p1, int* p2, int* p3)
 
 	picture = Jac_GetPicture(p1, p2, p3);
 	if (picture == -1) {
-		if (Jac_GetCurrentScene() == 1 && demo_fade_flag) {
+		if (Jac_GetCurrentScene() == SCENE_Unk1 && demo_fade_flag) {
 			Jac_EasyCrossFade(0, 100);
 			demo_fade_flag = FALSE;
 		}
