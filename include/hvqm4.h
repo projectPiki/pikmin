@@ -72,9 +72,9 @@ typedef struct Tree {
  */
 typedef struct BitBuffer {
 	const u32* ptr; // _00
-	u32 size;      // _04
-	u32 value;     // _08
-	int bit;       // _0C
+	u32 size;       // _04
+	u32 value;      // _08
+	int bit;        // _0C
 } BitBuffer;
 
 /**

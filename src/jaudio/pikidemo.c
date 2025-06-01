@@ -14,7 +14,7 @@ void __Prepare_BGM(u32);
 void Jac_BgmAnimEndStop();
 void Jac_BgmAnimEndRecover();
 
-int now_loading;
+u32 now_loading;
 u8 event_pause_counter;
 u8 demo_parts_id;
 u8 demo_onyon_num;
@@ -1110,184 +1110,89 @@ void __Prepare_BGM(u32 a)
 	u8 flag;
 	DemoStatus* state = &DEMO_STATUS[a];
 
+	if (a >= 0x50) {
+		switch (a) {
+		case 0x50:
+		case 0x57:
+		case 0x58:
+		case 0x59:
+		case 0x5A:
+		case 0x5B:
+		case 0x5C:
+		case 0x5D:
+		case 0x5E:
+		case 0x64:
+		case 0x65:
+		case 0x66:
+		case 0x71:
+		case 0x72:
+			break;
+
+		default:
+			return;
+		}
+	}
+
+	switch (a) {
+	case 0x38:
+	case 0x39:
+	case 0x3A:
+	case 0x3B:
+		return;
+	}
+
 	flag = state->_03;
+	switch (flag & 0x7F) {
+	case 0x40:
+	case 0x0:
+		break;
 
-	if (flag & 0x80) {
-		Jac_PrepareDemoSound(flag & 0xf);
-		now_loading = 3;
-		return;
-	}
+	default:
+		if (flag & 0x80) {
+			Jac_PrepareDemoSound(flag & 0xf);
+			now_loading = 3;
+			return;
+		}
 
-	if (flag & 0x40) {
-		now_loading = 3;
-		return;
-	}
+		if (flag & 0x40) {
+			now_loading = 3;
+			return;
+		}
 
-	switch (flag & 0xf) {
-	case 1:
-		set = WaveScene_Set(0xd, 7);
-		break;
-	case 5:
-		set = WaveScene_Set(0xd, 3);
-		break;
-	case 6:
-		set = WaveScene_Set(0xd, 4);
-		break;
-	case 7:
-		set = WaveScene_Set(0xd, 5);
-		break;
-	case 8:
-		set = WaveScene_Set(0xd, 6);
-		break;
-	case 9:
-		set = WaveScene_Set(0xd, 1);
-		break;
-	case 10:
-		set = WaveScene_Set(0xd, 8);
-		break;
-	case 0:
-		now_loading = 3;
-		return;
-	}
+		switch (flag & 0xf) {
+		case 1:
+			set = WaveScene_Set(0xd, 7);
+			break;
+		case 5:
+			set = WaveScene_Set(0xd, 3);
+			break;
+		case 6:
+			set = WaveScene_Set(0xd, 4);
+			break;
+		case 7:
+			set = WaveScene_Set(0xd, 5);
+			break;
+		case 8:
+			set = WaveScene_Set(0xd, 6);
+			break;
+		case 9:
+			set = WaveScene_Set(0xd, 1);
+			break;
+		case 10:
+			set = WaveScene_Set(0xd, 8);
+			break;
+		case 0:
+			now_loading = 3;
+			return;
+		}
 
-	if (set == FALSE) {
-		now_loading = 0;
-		return;
+		if (set == FALSE) {
+			now_loading = 0;
+			return;
+		}
 	}
 
 	DVDT_CheckPass(0x80000000, 0, __Loaded);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mulli     r5, r3, 0xC
-	  stw       r0, 0x4(r1)
-	  lis       r4, 0x8022
-	  cmplwi    r3, 0x50
-	  addi      r0, r4, 0x69B0
-	  stwu      r1, -0x8(r1)
-	  add       r4, r0, r5
-	  blt-      .loc_0x70
-	  cmpwi     r3, 0x64
-	  bge-      .loc_0x4C
-	  cmpwi     r3, 0x57
-	  bge-      .loc_0x40
-	  cmpwi     r3, 0x50
-	  beq-      .loc_0x70
-	  b         .loc_0x19C
-
-	.loc_0x40:
-	  cmpwi     r3, 0x5F
-	  bge-      .loc_0x19C
-	  b         .loc_0x70
-
-	.loc_0x4C:
-	  cmpwi     r3, 0x71
-	  bge-      .loc_0x60
-	  cmpwi     r3, 0x67
-	  bge-      .loc_0x19C
-	  b         .loc_0x70
-
-	.loc_0x60:
-	  cmpwi     r3, 0x73
-	  bge-      .loc_0x19C
-	  b         .loc_0x70
-	  b         .loc_0x19C
-
-	.loc_0x70:
-	  cmpwi     r3, 0x3C
-	  bge-      .loc_0x88
-	  cmpwi     r3, 0x38
-	  bge-      .loc_0x19C
-	  b         .loc_0x88
-	  b         .loc_0x19C
-
-	.loc_0x88:
-	  lbz       r4, 0x3(r4)
-	  rlwinm    r0,r4,0,25,31
-	  cmpwi     r0, 0x40
-	  beq-      .loc_0x188
-	  bge-      .loc_0xA4
-	  cmpwi     r0, 0
-	  beq-      .loc_0x188
-
-	.loc_0xA4:
-	  rlwinm.   r0,r4,0,24,24
-	  beq-      .loc_0xC0
-	  rlwinm    r3,r4,0,28,31
-	  bl        -0xFD0
-	  li        r0, 0x3
-	  stw       r0, 0x2D40(r13)
-	  b         .loc_0x19C
-
-	.loc_0xC0:
-	  rlwinm.   r0,r4,0,25,25
-	  beq-      .loc_0xD4
-	  li        r0, 0x3
-	  stw       r0, 0x2D40(r13)
-	  b         .loc_0x19C
-
-	.loc_0xD4:
-	  rlwinm    r0,r4,0,28,31
-	  cmplwi    r0, 0xA
-	  bgt-      .loc_0x174
-	  lis       r4, 0x8022
-	  rlwinm    r0,r0,2,0,29
-	  addi      r4, r4, 0x6F40
-	  lwzx      r0, r4, r0
-	  mtctr     r0
-	  bctr
-	  li        r3, 0xD
-	  li        r4, 0x7
-	  bl        -0xE8C0
-	  b         .loc_0x174
-	  li        r3, 0xD
-	  li        r4, 0x3
-	  bl        -0xE8D0
-	  b         .loc_0x174
-	  li        r3, 0xD
-	  li        r4, 0x4
-	  bl        -0xE8E0
-	  b         .loc_0x174
-	  li        r3, 0xD
-	  li        r4, 0x5
-	  bl        -0xE8F0
-	  b         .loc_0x174
-	  li        r3, 0xD
-	  li        r4, 0x6
-	  bl        -0xE900
-	  b         .loc_0x174
-	  li        r3, 0xD
-	  li        r4, 0x1
-	  bl        -0xE910
-	  b         .loc_0x174
-	  li        r3, 0xD
-	  li        r4, 0x8
-	  bl        -0xE920
-	  b         .loc_0x174
-	  li        r0, 0x3
-	  stw       r0, 0x2D40(r13)
-	  b         .loc_0x19C
-
-	.loc_0x174:
-	  cmpwi     r3, 0
-	  bne-      .loc_0x188
-	  li        r0, 0
-	  stw       r0, 0x2D40(r13)
-	  b         .loc_0x19C
-
-	.loc_0x188:
-	  lis       r4, 0x8002
-	  lis       r3, 0x8000
-	  subi      r5, r4, 0x5180
-	  li        r4, 0
-	  bl        -0x130B8
-
-	.loc_0x19C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1295,73 +1200,45 @@ void __Prepare_BGM(u32 a)
  * Address:	8001B060
  * Size:	0000A8
  */
-void Jac_PrepareDemo(int id)
+void Jac_PrepareDemo(u32 id)
 {
-	if (0x3b < id || id < 0x38) {
-		if (now_loading == 0) {
-			now_loading = 1;
+	u32 badCompiler;
+	u32* REF_id = &id;
+	if (id >= 0x50) {
+		switch (id) {
+		case 0x50:
+		case 0x57:
+		case 0x58:
+		case 0x59:
+		case 0x5A:
+		case 0x5B:
+		case 0x5C:
+		case 0x5D:
+		case 0x5E:
+		case 0x64:
+		case 0x65:
+		case 0x66:
+		case 0x71:
+		case 0x72:
+			break;
+
+		default:
+			return;
 		}
-		__Prepare_BGM(id);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r3, 0x8(r1)
-	  cmplwi    r3, 0x50
-	  blt-      .loc_0x68
-	  cmpwi     r3, 0x64
-	  bge-      .loc_0x44
-	  cmpwi     r3, 0x57
-	  bge-      .loc_0x38
-	  cmpwi     r3, 0x50
-	  beq-      .loc_0x68
-	  b         .loc_0x98
 
-	.loc_0x38:
-	  cmpwi     r3, 0x5F
-	  bge-      .loc_0x98
-	  b         .loc_0x68
+	switch (id) {
+	case 0x38:
+	case 0x39:
+	case 0x3A:
+	case 0x3B:
+		return;
+	}
 
-	.loc_0x44:
-	  cmpwi     r3, 0x71
-	  bge-      .loc_0x58
-	  cmpwi     r3, 0x67
-	  bge-      .loc_0x98
-	  b         .loc_0x68
-
-	.loc_0x58:
-	  cmpwi     r3, 0x73
-	  bge-      .loc_0x98
-	  b         .loc_0x68
-	  b         .loc_0x98
-
-	.loc_0x68:
-	  cmpwi     r3, 0x3C
-	  bge-      .loc_0x80
-	  cmpwi     r3, 0x38
-	  bge-      .loc_0x98
-	  b         .loc_0x80
-	  b         .loc_0x98
-
-	.loc_0x80:
-	  lwz       r0, 0x2D40(r13)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x94
-	  li        r0, 0x1
-	  stw       r0, 0x2D40(r13)
-
-	.loc_0x94:
-	  bl        -0x254
-
-	.loc_0x98:
-	  lwz       r0, 0x1C(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (now_loading == 0) {
+		now_loading = 1;
+	}
+	__Prepare_BGM(id);
 }
 
 /*

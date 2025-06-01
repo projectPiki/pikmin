@@ -165,12 +165,11 @@ void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds,
 		flag3 = flag1 ^ 0x8000;
 		flag2 = (mWindowFlag & 0x4) ? (u16)0x8000 : (u16)0;
 		flag4 = flag2;
-		
-		
-		/* In the code below there is no discernible reason for why the developers would 
+
+		/* In the code below there is no discernible reason for why the developers would
 		have passed the variables around like this, therefore it is simply structured this
 		way for the sake of matching. */
-		
+
 		int make_it_match_1 = 0;
 		int make_it_match_2 = height;
 		int make_it_match_3 = mBLCornerTexture->getWidth();
@@ -181,7 +180,7 @@ void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds,
 		flag3 = flag1 ^ 0x8000;
 		flag2 = (mWindowFlag & 0x1) ? (u16)0x8000 : (u16)0;
 		flag4 = flag2;
-		
+
 		make_it_match_1 = x;
 		mBRCornerTexture->draw(make_it_match_1, height, mBRCornerTexture->getWidth(), y - height, flag1, flag2, flag3, flag4);
 
