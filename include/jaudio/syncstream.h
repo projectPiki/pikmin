@@ -17,7 +17,7 @@ typedef int (*StreamCallback)(u32, s32);
 
 void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(int);
-void StreamAudio_Start(int, int, char*, int, int, int);
+BOOL StreamAudio_Start(u32, int, char*, int, int, u32);
 void RegisterStreamCallback(StreamCallback);
 void Jac_Decode_ADPCM(void);
 BOOL StreamSyncCheckReady(u32);
@@ -49,49 +49,60 @@ struct BufControl_ {
 
 enum AudioFormat { AUDIOFRMT_ADPCM = 4, AUDIOFRMT_ADPCM4X = 5 };
 
+// size 0x2420
+struct STRUCT_0x2420
+{
+	u32 _00;
+	artificial_padding(0x241C, 0x00);
+};
+
+
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
-	u32 _00; // _00
-	u32 _04; // _04
-	u32 _08; // _08
-	u8* _0C; // _0C
-	artificial_padding(0x218C0, 0x10);
-	BufControl_ buffCtrl[8]; // _218C0
-	u8 _21940;               // _21940
-	u8 _21941;               // _21941
-	u8 _21942;               // _21942
-	u8 _21943;               // _21943
-	artificial_padding(0x21970, 0x21944);
-	u32 _21970;
-	u32 _21974;
-	u32 _21978;
-	u32 _2197C;
-	u32 _21980;
+	struct STRUCT_0x2420 _00[6];
+	artificial_padding(0x218C0, 0xD8C0);
+	BufControl_ buffCtrl[6];      // _218C0
+	BufControl_ buffCtrlExtra[2]; // _21920
+	BufControl_ buffCtrlMain;     // _21940
+	BufControl_ buffCtrlMain2;    // _21950
+	BufControl_ buffCtrlMain3;    // _21960
+	u32 _21970;      // _21970
+	u32 _21974;      // _21974
+	u32 _21978;      // _21978
+	u32 _2197C;      // _2197C
+	u32 _21980;      // _21980
 	u32 _21984;      // _21984
 	u32 _21988;      // _21988
 	u32 _2198C;      // _2198C
 	u16 _21990;      // _21990
 	u16 audioFormat; // _21992
-	artificial_padding(0x219A8, 0x21994);
-	u32 _219A8;         // _219A8
-	u32 _219AC;         // _219AC
-	BOOL isPaused;      // _219B0
-	u32 _219B4;         // _219B4
-	DVDFileInfo _219B8; // _219B8, I think this should be DVDFileInfo not DVDFileInfo*
-	dspch_* dspch[2];   // _219F4
-	artificial_padding(0x21A0C, 0x219FC);
-	u32 _21A0C;
-	u32 _21A10;
-	artificial_padding(0x21A28, 0x21A14);
+	u16 _21994;      // _21994
+	u16 _21996;
+	u16 _21998;
+	artificial_padding(0x219A8, 0x2199C);
+	u32 _219A8;           // _219A8
+	u32 _219AC;           // _219AC
+	BOOL isPaused;        // _219B0
+	u32 _219B4;           // _219B4
+	DVDFileInfo fileinfo; // _219B8
+	dspch_* dspch[2];     // _219F4
+	u32 _219FC;           // _219FC
+	u32 _21A00;           // _21A00
+	u32 _21A04;           // _21A04
+	u32 _21A08;           // _21A08
+	u32 _21A0C;           // _21A0C
+	u32 _21A10;           // _21A10
+	StreamCallback _21A14; // _21A14
+	artificial_padding(0x21A28, 0x21A18);
 	DSPMixerChannel mixer; // _21A28
 	f32 _21A30;            // _21A30
 	u8 _21A34;             // _21A34
 	u32 _21A38;            // _21A38
 	u32 _21A3C;            // _21A3C
 	u32 _21A40;            // _21A40
-	u32 _21A44;            // _21A44
-	u32 _21A48;            // _21A48
-	u32 _21A4C;            // _21A4C
+	s32 _21A44;            // _21A44
+	s32 _21A48;            // _21A48
+	s32 _21A4C;            // _21A4C
 };
 
 #ifdef __cplusplus

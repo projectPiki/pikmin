@@ -4,6 +4,10 @@
 #include "Dolphin/dvd.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/rate.h"
+#include "jaudio/interleave.h"
+#include "jaudio/dvdthread.h"
+#include "jaudio/dspdriver.h"
+#include "jaudio/playercall.h"
 
 // fabricated, size 0x14.
 struct UNK_STRUCT {
@@ -28,10 +32,10 @@ static UNK_STRUCT* copy = &copyinfo;
  * Address:	8001BBE0
  * Size:	000038
  */
-void Stop_DirectPCM(dspch_* dispatcher)
+void Stop_DirectPCM(dspch_* dspch)
 {
-	DSP_PlayStop(dispatcher->buffer_idx);
-	DSP_FlushChannel(dispatcher->buffer_idx);
+	DSP_PlayStop(dspch->buffer_idx);
+	DSP_FlushChannel(dspch->buffer_idx);
 }
 
 /*
@@ -39,9 +43,9 @@ void Stop_DirectPCM(dspch_* dispatcher)
  * Address:	8001BC20
  * Size:	0000DC
  */
-void Play_DirectPCM(dspch_* dispatcher, s16* baseAddr, u16 loopStart, u32 length)
+void Play_DirectPCM(dspch_* dspch, s16* baseAddr, u16 loopStart, u32 length)
 {
-	DSPBuffer* buff = GetDspHandle(dispatcher->buffer_idx); // r3
+	DSPBuffer* buff = GetDspHandle(dspch->buffer_idx); // r3
 
 	buff->baseAddress       = (u32)baseAddr;
 	buff->isLooping         = FALSE;
@@ -50,22 +54,22 @@ void Play_DirectPCM(dspch_* dispatcher, s16* baseAddr, u16 loopStart, u32 length
 	buff->loopAddress       = (u32)baseAddr;
 	buff->loopStartPosition = loopStart << 16;
 
-	DSP_SetMixerInitDelayMax(dispatcher->buffer_idx, 0);
+	DSP_SetMixerInitDelayMax(dspch->buffer_idx, 0);
 
 	for (u32 i = 0; i < 6; i++) {
 
 		if (i < 2) {
-			DSP_SetMixerInitVolume(dispatcher->buffer_idx, i, 0x7fff, 0);
+			DSP_SetMixerInitVolume(dspch->buffer_idx, i, 0x7fff, 0);
 		} else {
-			DSP_SetMixerInitVolume(dispatcher->buffer_idx, i, 0, 0);
+			DSP_SetMixerInitVolume(dspch->buffer_idx, i, 0, 0);
 		}
 
-		DSP_SetBusConnect(dispatcher->buffer_idx, i, i + 1);
+		DSP_SetBusConnect(dspch->buffer_idx, i, i + 1);
 	}
 
-	DSP_SetPitch(dispatcher->buffer_idx, 0x800);
-	DSP_PlayStart(dispatcher->buffer_idx);
-	DSP_FlushChannel(dispatcher->buffer_idx);
+	DSP_SetPitch(dspch->buffer_idx, 0x800);
+	DSP_PlayStart(dspch->buffer_idx);
+	DSP_FlushChannel(dspch->buffer_idx);
 }
 
 /*
@@ -130,50 +134,52 @@ static void LoadADPCM(StreamCtrl_*, int);
  * Address:	8001BDE0
  * Size:	00014C
  */
-static void __LoadFin(s32 ctrlID, DVDFileInfo* fileinfo)
+static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 {
-	int id = 0;
+
 	StreamCtrl_* ctrl;
 
-	for (int i = 0; i < 1; i++) {
-		if (fileinfo == &SC[i]._219B8) {
+	for (int i = 0; i < ARRAY_SIZE(SC); i++) {
+		DVDFileInfo* info = &SC[i].fileinfo;
+
+		if (fileinfo == info) {
 			ctrl = &SC[i];
 		}
-
-		ctrl->_21A48 = 0;
-
-		u32 idx = ctrl->_21942;
-
-		// TODO: find the max value for ctrl->_21942 to resolve _218C0 size, and determine if really BufControl_
-		BufControl_* buff = &ctrl->buffCtrl[idx];
-
-		if (ctrl->_21A34 == 1) {
-			u8* data = (u8*)buff->_0C;
-			DCInvalidateRange(data, 0x20);
-
-			// what in tarnation
-			if (data[0] == 0xff && data[1] == 0xad && data[2] == 0xbe && data[3] == 0xef && data[4] == 0xde && data[5] == 0xad
-			    && data[6] == 0xbe && data[7] == 0xef) {
-				__DVDReadAsyncRetry();
-				return;
-			}
-		}
-
-		buff->_00 = 2;
-
-		ctrl->_21942 = (idx + 1) % ctrl->_21941;
-
-		if (ctrl->_21970 == 0) {
-			ctrl->_21A44 = 1;
-			return;
-		}
-
-		if (ctrl->_21A34 == 0) {
-			return;
-		}
-
-		LoadADPCM(ctrl, 0);
 	}
+
+	ctrl->_21A48 = 0;
+
+	u32 idx = ctrl->buffCtrlMain._02;
+
+	// TODO: find the max value for ctrl->_21942 to resolve _218C0 size, and determine if really BufControl_
+	BufControl_* buff = &ctrl->buffCtrl[idx];
+
+	if (ctrl->_21A34 == 1) {
+		u8* data = (u8*)buff->_0C;
+		DCInvalidateRange(data, 0x20);
+
+		// what in tarnation
+		if (data[0] == 0xff && data[1] == 0xad && data[2] == 0xbe && data[3] == 0xef && data[4] == 0xde && data[5] == 0xad
+		    && data[6] == 0xbe && data[7] == 0xef) {
+			__DVDReadAsyncRetry();
+			return;
+		}
+	}
+
+	buff->_00 = 2;
+
+	ctrl->buffCtrlMain._02 = (idx + 1) % ctrl->buffCtrlMain._01;
+
+	if (ctrl->_21970 == 0) {
+		ctrl->_21A44 = 1;
+		return;
+	}
+
+	if (ctrl->_21A34 == 0) {
+		return;
+	}
+
+	LoadADPCM(ctrl, 0);
 }
 
 /*
@@ -181,123 +187,79 @@ static void __LoadFin(s32 ctrlID, DVDFileInfo* fileinfo)
  * Address:	8001BF40
  * Size:	000190
  */
-static void LoadADPCM(StreamCtrl_*, int)
+static void LoadADPCM(StreamCtrl_* ctrl /* r29 */, int r28)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r28, 0x20(r1)
-	  addi      r29, r3, 0
-	  addi      r28, r4, 0
-	  addis     r4, r29, 0x2
-	  lbz       r3, 0x1942(r4)
-	  lwz       r0, 0x1A48(r4)
-	  rlwinm    r3,r3,4,0,27
-	  addis     r30, r3, 0x2
-	  cmpwi     r0, 0
-	  addi      r30, r30, 0x18C0
-	  add       r30, r29, r30
-	  bne-      .loc_0x17C
-	  lbz       r0, 0x0(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x17C
-	  lwz       r3, 0x1970(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x17C
-	  lwz       r0, 0x1978(r4)
-	  cmplw     r3, r0
-	  mr        r31, r0
-	  bge-      .loc_0x68
-	  mr        r31, r3
+	u32 idx = ctrl->buffCtrlMain._02;
 
-	.loc_0x68:
-	  addis     r3, r29, 0x2
-	  lbz       r0, 0x1A34(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x88
-	  mr        r3, r31
-	  bl        0x1B84
-	  cmpwi     r3, 0
-	  beq-      .loc_0x17C
+	BufControl_* buff = &ctrl->buffCtrl[idx]; // r30
 
-	.loc_0x88:
-	  li        r4, 0
-	  cmpwi     r28, 0
-	  stw       r4, 0x4(r30)
-	  li        r0, 0x1
-	  stw       r31, 0x8(r30)
-	  stb       r0, 0x0(r30)
-	  beq-      .loc_0xB0
-	  addis     r3, r29, 0x2
-	  stw       r31, 0x194C(r3)
-	  stw       r4, 0x1948(r3)
+	if (ctrl->_21A48) {
+		return;
+	}
 
-	.loc_0xB0:
-	  addis     r29, r29, 0x2
-	  lwz       r28, 0x1974(r29)
-	  add       r0, r28, r31
-	  stw       r0, 0x1974(r29)
-	  lwz       r0, 0x1970(r29)
-	  sub       r0, r0, r31
-	  stw       r0, 0x1970(r29)
-	  stw       r31, 0x197C(r29)
-	  lbz       r0, 0x1A34(r29)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x10C
-	  bge-      .loc_0x17C
-	  cmpwi     r0, 0
-	  bge-      .loc_0xEC
-	  b         .loc_0x17C
+	if (buff->_00) {
+		return;
+	}
 
-	.loc_0xEC:
-	  lwz       r3, 0xC(r30)
-	  mr        r4, r31
-	  bl        0x1B2C
-	  addi      r4, r29, 0
-	  addi      r3, r31, 0
-	  addi      r4, r4, 0x19B8
-	  bl        -0x264
-	  b         .loc_0x17C
+	u32 oldsize;
+	// fuck this (probably fake)
+	if ((oldsize = ctrl->_21970) == 0) {
+		return;
+	}
 
-	.loc_0x10C:
-	  lwz       r7, 0xC(r30)
-	  li        r0, 0xFF
-	  li        r6, 0xAD
-	  li        r5, 0xBE
-	  stb       r0, 0x0(r7)
-	  li        r3, 0xEF
-	  li        r0, 0xDE
-	  addi      r4, r31, 0
-	  stb       r6, 0x1(r7)
-	  stb       r5, 0x2(r7)
-	  stb       r3, 0x3(r7)
-	  stb       r0, 0x4(r7)
-	  stb       r6, 0x5(r7)
-	  stb       r5, 0x6(r7)
-	  stb       r3, 0x7(r7)
-	  lwz       r3, 0xC(r30)
-	  bl        0x1DAB90
-	  li        r0, 0x1
-	  lis       r4, 0x8002
-	  stw       r0, 0x1A48(r29)
-	  addi      r3, r29, 0
-	  subi      r7, r4, 0x4220
-	  addi      r5, r31, 0
-	  lwz       r4, 0xC(r30)
-	  addi      r6, r28, 0
-	  li        r8, 0x1
-	  addi      r3, r3, 0x19B8
-	  bl        -0x338
+	u32 size = ctrl->_21978; // r31
 
-	.loc_0x17C:
-	  lmw       r28, 0x20(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	if (size < oldsize) {
+		size = oldsize;
+	}
+
+	if (ctrl->_21A34) {
+		return;
+	}
+
+	if (!Jac_CheckStreamRemain(size)) {
+		return;
+	}
+
+	buff->_04 = 0;
+	buff->_08 = size;
+	buff->_00 = 1;
+
+	if (r28) {
+		ctrl->buffCtrlMain._0C = size;
+		ctrl->buffCtrlMain._08 = 0;
+	}
+
+	u32 oldSize = ctrl->_21974;
+
+	ctrl->_21974 += size;
+	ctrl->_21970 -= size;
+	ctrl->_2197C = size;
+
+	switch (ctrl->_21A34) {
+	case 0:
+		Jac_GetStreamData((u8*)buff->_0C, size);
+		__LoadFin(size, &ctrl->fileinfo);
+		break;
+	case 1:
+		u8* data = (u8*)buff->_0C;
+		data[0]  = 0xff;
+		data[1]  = 0xad;
+		data[2]  = 0xbe;
+		data[3]  = 0xef;
+		data[4]  = 0xde;
+		data[5]  = 0xad;
+		data[6]  = 0xbe;
+		data[7]  = 0xef;
+
+		DCStoreRange((void*)buff->_0C, size);
+
+		ctrl->_21A48 = 1;
+
+		DVDReadAsyncPrio2(&ctrl->fileinfo, (void*)buff->_0C, size, oldSize, __LoadFin, 1);
+
+		break;
+	}
 }
 
 /*
@@ -323,7 +285,7 @@ static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f,
  */
 void Init_StreamAudio(void)
 {
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < ARRAY_SIZE(SC); i++) {
 		SC[i]._21984 = 4;
 		SC[i]._21A0C = i;
 	}
@@ -339,896 +301,308 @@ void Get_StreamAudio_Handle(void)
 	// UNUSED FUNCTION
 }
 
+static s32 StreamAudio_Callback(void*);
+
 /*
  * --INFO--
  * Address:	8001C140
  * Size:	000318
  */
-void StreamAudio_Start(int, int, char*, int, int, int)
+BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, u32 r8)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x8037
-	  stw       r0, 0x4(r1)
-	  lis       r9, 0x2
-	  addi      r0, r9, 0x1A50
-	  subi      r7, r7, 0x7160
-	  stwu      r1, -0x40(r1)
-	  mullw     r9, r3, r0
-	  li        r0, 0
-	  stmw      r27, 0x2C(r1)
-	  cmplwi    r5, 0
-	  addi      r30, r6, 0
-	  addi      r27, r8, 0
-	  add       r31, r7, r9
-	  addis     r29, r31, 0x2
-	  stw       r3, 0x1A0C(r29)
-	  stw       r4, 0x1A10(r29)
-	  stw       r0, 0x19AC(r29)
-	  stw       r0, 0x19B4(r29)
-	  stw       r0, 0x19B0(r29)
-	  beq-      .loc_0x70
-	  addi      r4, r29, 0
-	  addi      r3, r5, 0
-	  addi      r4, r4, 0x19B8
-	  bl        -0x140A0
-	  li        r0, 0x1
-	  stb       r0, 0x1A34(r29)
-	  b         .loc_0x74
+	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	.loc_0x70:
-	  stb       r0, 0x1A34(r29)
+	ctrl->_21A0C   = ctrlID;
+	ctrl->_21A10   = r4;
+	ctrl->_219AC   = 0;
+	ctrl->_219B4   = 0;
+	ctrl->isPaused = FALSE;
 
-	.loc_0x74:
-	  cmplwi    r27, 0
-	  bne-      .loc_0xE4
-	  addis     r29, r31, 0x2
-	  lbz       r0, 0x1A34(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x94
-	  li        r3, 0
-	  b         .loc_0x304
+	if (name) {
+		Jac_DVDOpen(name, &ctrl->fileinfo);
+		ctrl->_21A34 = 1;
+	} else {
+		ctrl->_21A34 = 0;
+	}
 
-	.loc_0x94:
-	  addi      r3, r29, 0
-	  addi      r4, r31, 0
-	  li        r5, 0x20
-	  li        r6, 0
-	  li        r7, 0x1
-	  addi      r3, r3, 0x19B8
-	  bl        0x1E3520
-	  li        r0, 0x4
-	  addi      r5, r29, 0x1980
-	  subi      r4, r31, 0x8
-	  mtctr     r0
+	if (!r8) {
 
-	.loc_0xC0:
-	  lwzu      r3, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  stwu      r3, 0x8(r5)
-	  stw       r0, 0x4(r5)
-	  bdnz+     .loc_0xC0
-	  addis     r3, r31, 0x2
-	  li        r0, 0x20
-	  stw       r0, 0x1974(r3)
-	  b         .loc_0x118
+		if (!ctrl->_21A34) {
+			return FALSE;
+		}
 
-	.loc_0xE4:
-	  addis     r3, r31, 0x2
-	  li        r0, 0x4
-	  addi      r5, r3, 0x1980
-	  subi      r4, r27, 0x8
-	  mtctr     r0
+		for (int i = 0; i < ARRAY_SIZE(SC); i++) {
 
-	.loc_0xF8:
-	  lwzu      r3, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  stwu      r3, 0x8(r5)
-	  stw       r0, 0x4(r5)
-	  bdnz+     .loc_0xF8
-	  addis     r3, r31, 0x2
-	  li        r0, 0
-	  stw       r0, 0x1974(r3)
+			DVDReadPrio(&SC[i].fileinfo, (void*)&SC[i], 0x20, 0, 1);
 
-	.loc_0x118:
-	  addis     r7, r31, 0x2
-	  li        r6, 0
-	  lwz       r3, 0x1988(r7)
-	  li        r0, 0x6
-	  addi      r4, r6, 0
-	  stw       r3, 0x1970(r7)
-	  li        r3, 0
-	  lwz       r5, 0x198C(r7)
-	  stw       r5, 0x19FC(r7)
-	  stw       r6, 0x1980(r7)
-	  stw       r6, 0x1A40(r7)
-	  stw       r6, 0x1A44(r7)
-	  stw       r6, 0x1A08(r7)
-	  stw       r6, 0x1984(r7)
-	  mtctr     r0
+			// something goes here
+			for (int j = 0; j < 4; j++) { }
+		}
 
-	.loc_0x154:
-	  add       r5, r31, r4
-	  add       r0, r31, r3
-	  addis     r5, r5, 0x2
-	  addi      r3, r3, 0x2420
-	  stb       r6, 0x18C0(r5)
-	  addi      r4, r4, 0x10
-	  stw       r0, 0x18CC(r5)
-	  bdnz+     .loc_0x154
-	  li        r0, 0x2
-	  li        r5, 0
-	  li        r3, 0
-	  mtctr     r0
+		ctrl->_21974 = 0x20;
+	} else {
+		for (int i = 0; i < ARRAY_SIZE(SC); i++) {
 
-	.loc_0x184:
-	  addis     r4, r3, 0x2
-	  addi      r3, r3, 0x10
-	  addi      r4, r4, 0x1920
-	  stbx      r5, r31, r4
-	  bdnz+     .loc_0x184
-	  addis     r29, r31, 0x2
-	  li        r0, 0x1000
-	  addi      r3, r29, 0
-	  stw       r0, 0x1A00(r29)
-	  li        r4, 0x1
-	  li        r5, 0x6
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0x2400
-	  li        r9, 0
-	  li        r10, 0
-	  addi      r3, r3, 0x1940
-	  bl        -0x228
-	  addi      r3, r29, 0
-	  li        r4, 0x2
-	  li        r5, 0x2
-	  li        r6, 0
-	  li        r7, 0
-	  li        r8, 0x2000
-	  li        r9, 0
-	  li        r10, 0
-	  addi      r3, r3, 0x1950
-	  bl        -0x250
-	  addi      r3, r29, 0
-	  li        r4, 0x2
-	  li        r5, 0x4
-	  li        r6, 0
-	  li        r7, 0x3
-	  li        r8, 0x400
-	  li        r9, 0
-	  li        r10, 0
-	  addi      r3, r3, 0x1960
-	  bl        -0x278
-	  lhz       r0, 0x1992(r29)
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x260
-	  bge-      .loc_0x23C
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x248
-	  bge-      .loc_0x254
-	  b         .loc_0x274
+			// exact copy of the other one
+			for (int j = 0; j < 4; j++) { }
+		}
 
-	.loc_0x23C:
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x274
-	  b         .loc_0x26C
+		ctrl->_21974 = 0;
+	}
 
-	.loc_0x248:
-	  li        r0, 0x2400
-	  stw       r0, 0x1978(r29)
-	  b         .loc_0x274
+	ctrl->_21970 = ctrl->_21988;
 
-	.loc_0x254:
-	  li        r0, 0x1200
-	  stw       r0, 0x1978(r29)
-	  b         .loc_0x274
+	for (int i = 0; i < ARRAY_SIZE(SC); i++) {
+		SC[i]._219FC = SC[i]._2198C;
+		SC[i]._21980 = i;
+		SC[i]._21A40 = i;
+		SC[i]._21A44 = i;
+		SC[i]._21A08 = i;
+		SC[i]._21984 = i;
 
-	.loc_0x260:
-	  li        r0, 0x2400
-	  stw       r0, 0x1978(r29)
-	  b         .loc_0x274
+		for (int j = 0; j < 6; j++) {
+			SC[i].buffCtrl[j]._00 = i;
+			SC[i].buffCtrl[j]._0C = (u32)&SC[i]._00[j]._00; // wtf
+		}
 
-	.loc_0x26C:
-	  li        r0, 0x2400
-	  stw       r0, 0x1978(r29)
+		for (int j = 0; j < 2; j++) {
+			SC[i].buffCtrlExtra[j]._00 = i;
+		}
+	}
 
-	.loc_0x274:
-	  addis     r5, r31, 0x2
-	  li        r29, 0
-	  stw       r30, 0x19A8(r5)
-	  addi      r3, r31, 0
-	  li        r4, 0x1
-	  stw       r29, 0x1A48(r5)
-	  bl        -0x48C
-	  li        r27, 0
-	  li        r30, 0
+	ctrl->_21A00 = 0x1000;
 
-	.loc_0x298:
-	  addis     r28, r30, 0x2
-	  addi      r28, r28, 0x19F4
-	  add       r28, r31, r28
-	  lwz       r3, 0x0(r28)
-	  mr        r4, r28
-	  bl        -0x1156C
-	  addi      r27, r27, 0x1
-	  stw       r29, 0x0(r28)
-	  cmplwi    r27, 0x2
-	  addi      r30, r30, 0x4
-	  blt+      .loc_0x298
-	  lfs       f0, -0x7DF8(r2)
-	  addis     r6, r31, 0x2
-	  lis       r3, 0x8002
-	  li        r5, 0x3FFF
-	  stfs      f0, 0x1A30(r6)
-	  li        r0, 0x5FFF
-	  subi      r3, r3, 0x3BA0
-	  mr        r4, r31
-	  sth       r5, 0x1A28(r6)
-	  sth       r5, 0x1A2A(r6)
-	  sth       r0, 0x1A2C(r6)
-	  sth       r0, 0x1A2E(r6)
-	  lwz       r0, 0x2D60(r13)
-	  stw       r0, 0x1A14(r6)
-	  bl        -0x1527C
-	  li        r3, 0x1
+	BufContInit(&ctrl->buffCtrlMain, 1, 6, 0, 0, 0x2400, 0, 0);
 
-	.loc_0x304:
-	  lmw       r27, 0x2C(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	BufContInit(&ctrl->buffCtrlMain2, 2, 2, 0, 0, 0x2000, 0, 0);
+
+	BufContInit(&ctrl->buffCtrlMain3, 2, 4, 0, 3, 0x400, 0, 0);
+
+	switch (ctrl->audioFormat) {
+	case 2:
+		ctrl->_21978 = 0x2400;
+		break;
+
+	case 3:
+		ctrl->_21978 = 0x1200;
+		break;
+	case AUDIOFRMT_ADPCM:
+		ctrl->_21978 = 0x2400;
+		break;
+
+	case AUDIOFRMT_ADPCM4X:
+		ctrl->_21978 = 0x2400;
+		break;
+	}
+
+	ctrl->_219A8 = r6;
+	ctrl->_21A48 = 0;
+	LoadADPCM(ctrl, 1);
+
+	for (u32 i = 0; i < 2; i++) {
+		DeAllocDSPchannel(ctrl->dspch[i], (u32)(&ctrl->dspch[i]));
+
+		ctrl->dspch[i] = 0;
+	}
+
+	ctrl->_21A30 = 1.0f;
+
+	ctrl->mixer.id           = 0x3fff;
+	ctrl->mixer.targetVolume = 0x3fff;
+
+	ctrl->mixer.currentVolume = 0x5fff;
+	ctrl->mixer._06           = 0x5fff;
+
+	ctrl->_21A14 = default_streamsync_call;
+
+	Jac_RegisterDspPlayerCallback(StreamAudio_Callback, (void*)&SC[0]);
+
+	return TRUE;
 }
 
+static void __StreamChgVolume(StreamCtrl_* ctrl);
+static void __StreamChgPitch(StreamCtrl_* ctrl);
+static void* __Decode(StreamCtrl_* ctrl);
 /*
  * --INFO--
  * Address:	8001C460
  * Size:	0008A8
  */
-static void StreamAudio_Callback(void*)
+static s32 StreamAudio_Callback(void* data)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  addi      r11, r1, 0x68
-	  bl        0x1F89F4
-	  stmw      r20, 0x28(r1)
-	  addis     r4, r3, 0x2
-	  li        r25, 0
-	  lwz       r0, 0x19F4(r4)
-	  addi      r31, r3, 0
-	  cmplwi    r0, 0
-	  bne-      .loc_0x70
-	  li        r20, 0
-	  li        r21, 0
-	  li        r22, 0x7F
+	int r25 = 0; // WHYYYY
 
-	.loc_0x3C:
-	  addis     r23, r21, 0x2
-	  li        r3, 0
-	  addi      r23, r23, 0x19F4
-	  add       r23, r31, r23
-	  addi      r4, r23, 0
-	  bl        -0x11750
-	  stw       r3, 0x0(r23)
-	  addi      r20, r20, 0x1
-	  cmplwi    r20, 0x2
-	  addi      r21, r21, 0x4
-	  lwz       r3, 0x0(r23)
-	  stb       r22, 0x3(r3)
-	  blt+      .loc_0x3C
+	StreamCtrl_* ctrl = (StreamCtrl_*)data;
 
-	.loc_0x70:
-	  addis     r21, r31, 0x2
-	  lwz       r0, 0x1A08(r21)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x200
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10F88
-	  lhz       r0, 0x2(r3)
-	  mr        r20, r3
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA4
-	  li        r0, 0x1
-	  stw       r0, 0x19B4(r21)
+	if (!ctrl->dspch[0]) {
+		for (int i = 0; i < 2; i++) {
+			ctrl->dspch[i] = AllocDSPchannel(i, (u32)ctrl);
 
-	.loc_0xA4:
-	  addis     r21, r31, 0x2
-	  lwz       r0, 0x19B4(r21)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x164
-	  lbz       r0, 0x1942(r21)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r21, r0
-	  lbz       r0, 0x18C0(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xD4
-	  li        r3, 0
-	  b         .loc_0x88C
+			ctrl->dspch[i]->buffer_idx = i;
+		}
+	}
 
-	.loc_0xD4:
-	  li        r20, 0
-	  li        r21, 0
-	  addi      r22, r20, 0
+	// dark green arrow | 200:
+	if (ctrl->_21A08) {
+		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx); // r20
+		if (buff->done) {
+			ctrl->_219B4 = 1;
+		}
 
-	.loc_0xE0:
-	  addis     r23, r21, 0x2
-	  addi      r23, r23, 0x19F4
-	  add       r23, r31, r23
-	  lwz       r3, 0x0(r23)
-	  bl        -0x970
-	  lwz       r3, 0x0(r23)
-	  mr        r4, r23
-	  bl        -0x116DC
-	  addi      r20, r20, 0x1
-	  stw       r22, 0x0(r23)
-	  cmplwi    r20, 0x2
-	  addi      r21, r21, 0x4
-	  blt+      .loc_0xE0
-	  addis     r3, r31, 0x2
-	  lwz       r12, 0x1A14(r3)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x134
-	  lwz       r3, 0x1A0C(r3)
-	  li        r4, -0x1
-	  mtlr      r12
-	  blrl
+		// yellow arrow
+		if (ctrl->_219B4) {
+			u32 idx = ctrl->buffCtrlMain._02;
 
-	.loc_0x134:
-	  addis     r3, r31, 0x2
-	  li        r0, 0x4
-	  stw       r0, 0x1984(r3)
-	  li        r0, -0x1
-	  stw       r0, 0x1A10(r3)
-	  lbz       r0, 0x1A34(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x15C
-	  addi      r3, r3, 0x19B8
-	  bl        0x1E2E1C
+			BufControl_* buff = &ctrl->buffCtrl[idx];
 
-	.loc_0x15C:
-	  li        r3, -0x1
-	  b         .loc_0x88C
+			if (buff->_00 == 1) {
+				return 0;
+			}
 
-	.loc_0x164:
-	  lwz       r3, 0x1980(r21)
-	  lhz       r0, 0x1996(r21)
-	  lwz       r12, 0x1A14(r21)
-	  mullw     r3, r3, r0
-	  lhz       r0, 0x1990(r21)
-	  cmplwi    r12, 0
-	  divwu     r4, r3, r0
-	  beq-      .loc_0x1A0
-	  lwz       r3, 0x1A0C(r21)
-	  mtlr      r12
-	  blrl
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x1A0
-	  li        r0, 0x1
-	  stw       r0, 0x19AC(r21)
+			for (u32 i = 0; i < 2; i++) {
+				Stop_DirectPCM(ctrl->dspch[i]);
+				DeAllocDSPchannel(ctrl->dspch[i], (u32)ctrl);
 
-	.loc_0x1A0:
-	  addis     r21, r31, 0x2
-	  addi      r3, r20, 0
-	  lwz       r4, 0x1A08(r21)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x1A08(r21)
-	  bl        -0x914
-	  lwz       r4, 0x1A00(r21)
-	  rlwinm    r0,r3,0,16,31
-	  sub       r3, r4, r0
-	  rlwinm.   r0,r3,0,16,31
-	  bne-      .loc_0x1D0
-	  rlwinm    r3,r4,0,16,31
+				ctrl->_00[0]._00 = 0;
+			}
 
-	.loc_0x1D0:
-	  rlwinm    r0,r3,0,16,31
-	  addis     r3, r31, 0x2
-	  sub       r0, r4, r0
-	  rlwinm    r4,r0,22,10,31
-	  rlwinm    r0,r0,22,24,31
-	  stb       r0, 0x1963(r3)
-	  lbz       r0, 0x1962(r3)
-	  cmplw     r0, r4
-	  beq-      .loc_0x1FC
-	  li        r25, 0x1
-	  b         .loc_0x200
+			if (ctrl->_21A14) {
+				ctrl->_21A14(ctrl->_21A0C, -1);
+			}
 
-	.loc_0x1FC:
-	  li        r25, 0
+			ctrl->_21984 = 4;
+			ctrl->_21A10 = -1;
 
-	.loc_0x200:
-	  addis     r3, r31, 0x2
-	  lwz       r0, 0x1A38(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x25C
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x220
-	  mr        r3, r31
-	  bl        0xF44
+			if (ctrl->_21A34) {
+				DVDClose(&ctrl->fileinfo);
+			}
+			return -1;
+		}
 
-	.loc_0x220:
-	  addis     r3, r31, 0x2
-	  lwz       r0, 0x1A38(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x238
-	  mr        r3, r31
-	  bl        0xE6C
+		int r4 = ctrl->_21980 * ctrl->_21996 / ctrl->_21990;
 
-	.loc_0x238:
-	  addis     r21, r31, 0x2
-	  li        r0, 0
-	  stw       r0, 0x1A38(r21)
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10B8C
-	  lwz       r3, 0x19F8(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10B98
+		if (ctrl->_21A14) {
+			int callbackResult = ctrl->_21A14(ctrl->_21A0C, r4);
+			// TODO: Figure out what this -1 means
+			if (callbackResult == -1) {
+				ctrl->_219AC = 1;
+			}
+		}
 
-	.loc_0x25C:
-	  addis     r21, r31, 0x2
-	  lwz       r3, 0x19B0(r21)
-	  cmpwi     r3, 0
-	  beq-      .loc_0x2B4
-	  lwz       r3, 0x19F4(r21)
-	  li        r4, 0x1
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10FD8
-	  lwz       r3, 0x19F8(r21)
-	  li        r4, 0x1
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10FE8
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10BD4
-	  lwz       r3, 0x19F8(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10BE0
-	  li        r0, 0x6
-	  li        r3, 0
-	  stw       r0, 0x1984(r21)
-	  b         .loc_0x88C
+		ctrl->_21A08++;
 
-	.loc_0x2B4:
-	  lwz       r0, 0x1984(r21)
-	  cmplwi    r0, 0x6
-	  bne-      .loc_0x314
-	  cmpwi     r3, 0
-	  bne-      .loc_0x30C
-	  li        r0, 0x1
-	  li        r4, 0
-	  stw       r0, 0x1984(r21)
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x1103C
-	  lwz       r3, 0x19F8(r21)
-	  li        r4, 0
-	  lbz       r3, 0x0(r3)
-	  bl        -0x1104C
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10C38
-	  lwz       r3, 0x19F8(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10C44
-	  b         .loc_0x314
+		Get_DirectPCM_Counter((DSPchannel_*)buff); // this can't be real...
 
-	.loc_0x30C:
-	  li        r3, 0
-	  b         .loc_0x88C
+		ctrl->buffCtrlMain3._03 = ctrl->_21A00;
+		// I don't know what the clrlwi spam is for
 
-	.loc_0x314:
-	  addis     r27, r31, 0x2
-	  lwz       r0, 0x1A44(r27)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x3AC
-	  lwz       r0, 0x1984(r27)
-	  cmplwi    r0, 0x5
-	  beq-      .loc_0x3AC
-	  lwz       r0, 0x1A08(r27)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3AC
-	  lwz       r3, 0x19F4(r27)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x11244
-	  bl        -0xA88
-	  lwz       r4, 0x19FC(r27)
-	  lwz       r0, 0x1A40(r27)
-	  sub       r3, r4, r3
-	  sub       r0, r0, r3
-	  stw       r0, 0x1A4C(r27)
-	  lwz       r0, 0x1A4C(r27)
-	  cmpwi     r0, 0x400
-	  bge-      .loc_0x3AC
-	  lwz       r3, 0x19F4(r27)
-	  li        r4, 0x1
-	  lbz       r3, 0x0(r3)
-	  bl        -0x110D8
-	  lwz       r3, 0x19F8(r27)
-	  li        r4, 0x1
-	  lbz       r3, 0x0(r3)
-	  bl        -0x110E8
-	  lwz       r3, 0x19F4(r27)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10CD4
-	  lwz       r3, 0x19F8(r27)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10CE0
-	  li        r0, 0x5
-	  stw       r0, 0x1984(r27)
+		return 0;
+	}
 
-	.loc_0x3AC:
-	  addis     r21, r31, 0x2
-	  lwz       r0, 0x1984(r21)
-	  cmplwi    r0, 0x5
-	  bne-      .loc_0x470
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x112C4
-	  bl        -0xB08
-	  lwz       r4, 0x19FC(r21)
-	  lwz       r0, 0x1A40(r21)
-	  sub       r3, r4, r3
-	  sub       r0, r0, r3
-	  cmplwi    r0, 0xC00
-	  bgt-      .loc_0x3F0
-	  lwz       r0, 0x1A44(r21)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x438
+	if (ctrl->_21A38) {
 
-	.loc_0x3F0:
-	  addis     r21, r31, 0x2
-	  li        r4, 0
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x11160
-	  lwz       r3, 0x19F8(r21)
-	  li        r4, 0
-	  lbz       r3, 0x0(r3)
-	  bl        -0x11170
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10D5C
-	  lwz       r3, 0x19F8(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10D68
-	  li        r0, 0x1
-	  stw       r0, 0x1984(r21)
-	  b         .loc_0x470
+		__StreamChgVolume(ctrl);
 
-	.loc_0x438:
-	  lwz       r3, 0x19F4(r21)
-	  li        r4, 0x1
-	  lbz       r3, 0x0(r3)
-	  bl        -0x111A4
-	  lwz       r3, 0x19F8(r21)
-	  li        r4, 0x1
-	  lbz       r3, 0x0(r3)
-	  bl        -0x111B4
-	  lwz       r3, 0x19F4(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10DA0
-	  lwz       r3, 0x19F8(r21)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x10DAC
+		if (ctrl->_21A38 & 2) {
+			__StreamChgPitch(ctrl);
+		}
 
-	.loc_0x470:
-	  addis     r27, r31, 0x2
-	  lbz       r0, 0x1943(r27)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r27, r0
-	  lbz       r0, 0x18C0(r3)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x538
-	  lbz       r0, 0x1952(r27)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r27, r0
-	  lbz       r0, 0x1920(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x538
-	  mr        r3, r31
-	  bl        0x898
-	  lbz       r0, 0x1943(r27)
-	  li        r7, 0
-	  li        r6, 0x2
-	  li        r4, 0x6
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r27, r0
-	  stb       r7, 0x18C0(r5)
-	  lbz       r0, 0x1952(r27)
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r27, r0
-	  stb       r6, 0x1920(r5)
-	  lbz       r0, 0x1952(r27)
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r27, r0
-	  stw       r7, 0x1924(r5)
-	  lbz       r0, 0x1952(r27)
-	  rlwinm    r0,r0,4,0,27
-	  add       r5, r27, r0
-	  stw       r3, 0x1928(r5)
-	  lbz       r5, 0x1943(r27)
-	  addi      r5, r5, 0x1
-	  divw      r0, r5, r4
-	  mullw     r0, r0, r4
-	  sub       r0, r5, r0
-	  stb       r0, 0x1943(r27)
-	  lbz       r4, 0x1952(r27)
-	  addi      r4, r4, 0x1
-	  srawi     r0, r4, 0x1
-	  addze     r0, r0
-	  rlwinm    r0,r0,1,0,30
-	  subc      r0, r4, r0
-	  stb       r0, 0x1952(r27)
-	  lwz       r0, 0x195C(r27)
-	  add       r0, r0, r3
-	  stw       r0, 0x195C(r27)
+		ctrl->_21A38 = 0;
 
-	.loc_0x538:
-	  cmpwi     r25, 0x1
-	  beq-      .loc_0x550
-	  addis     r3, r31, 0x2
-	  lwz       r0, 0x1A08(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7B4
+		DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+		DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
-	.loc_0x550:
-	  addis     r27, r31, 0x2
-	  lbz       r3, 0x1962(r27)
-	  lbz       r0, 0x1963(r27)
-	  cmplw     r3, r0
-	  beq-      .loc_0x5C4
-	  lbz       r0, 0x1953(r27)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r27, r0
-	  lbz       r0, 0x1920(r3)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x7B4
-	  lwz       r3, 0x195C(r27)
-	  lwz       r0, 0x1964(r27)
-	  cmplw     r3, r0
-	  blt-      .loc_0x7B4
-	  mr        r3, r31
-	  bl        0x810
-	  lbz       r3, 0x1962(r27)
-	  addi      r3, r3, 0x1
-	  srawi     r0, r3, 0x2
-	  addze     r0, r0
-	  rlwinm    r0,r0,2,0,29
-	  subc      r0, r3, r0
-	  stb       r0, 0x1962(r27)
-	  lwz       r3, 0x1964(r27)
-	  lwz       r0, 0x195C(r27)
-	  sub       r0, r0, r3
-	  stw       r0, 0x195C(r27)
-	  b         .loc_0x7B4
+		if (ctrl->isPaused) {
+			DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
+			DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
 
-	.loc_0x5C4:
-	  lwz       r0, 0x1A08(r27)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x7B4
-	  lwz       r0, 0x19A8(r27)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0x63C
-	  lwz       r12, 0x1A14(r27)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x61C
-	  lwz       r3, 0x1A0C(r27)
-	  li        r4, 0
-	  mtlr      r12
-	  blrl
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x608
-	  li        r0, 0x1
-	  stw       r0, 0x19AC(r27)
+			DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+			DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
-	.loc_0x608:
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0x61C
-	  addis     r3, r31, 0x2
-	  li        r0, 0
-	  stw       r0, 0x19A8(r3)
+			ctrl->_21984 = 6;
 
-	.loc_0x61C:
-	  addis     r3, r31, 0x2
-	  li        r0, 0x2
-	  stw       r0, 0x1984(r3)
-	  lwz       r0, 0x19AC(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x7B4
-	  li        r3, 0
-	  b         .loc_0x88C
+			return 0;
+		}
 
-	.loc_0x63C:
-	  li        r0, 0x1
-	  stw       r0, 0x1984(r27)
-	  lwz       r3, 0x1A08(r27)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x1A08(r27)
-	  bl        -0x16C10
-	  lis       r4, 0x1
-	  lfs       f30, -0x7DF4(r2)
-	  lfd       f31, -0x7DF0(r2)
-	  addi      r28, r3, 0
-	  subi      r30, r4, 0x4003
-	  li        r25, 0
-	  li        r23, 0
-	  li        r22, 0
-	  li        r21, 0
-	  lis       r29, 0x4330
+		if (ctrl->_21984 == 6) {
+			if (!ctrl->isPaused) {
 
-	.loc_0x67C:
-	  lhz       r0, 0x1990(r27)
-	  addis     r26, r21, 0x2
-	  addi      r26, r26, 0x19F4
-	  addis     r4, r22, 0x2
-	  stw       r0, 0x24(r1)
-	  add       r26, r31, r26
-	  lwz       r0, 0x1A00(r27)
-	  subi      r4, r4, 0x2740
-	  stw       r29, 0x20(r1)
-	  add       r4, r31, r4
-	  lfs       f1, 0x1A30(r27)
-	  rlwinm    r5,r0,0,16,31
-	  lfd       f2, 0x20(r1)
-	  lfs       f0, -0x8000(r13)
-	  fsubs     f2, f2, f31
-	  lwz       r3, 0x0(r26)
-	  lwz       r6, 0x19FC(r27)
-	  fmuls     f2, f30, f2
-	  fmuls     f1, f2, f1
-	  fdivs     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r24, 0x1C(r1)
-	  bl        -0xF18
-	  cmpwi     r28, 0
-	  beq-      .loc_0x6E8
-	  b         .loc_0x748
+				ctrl->_21984 = 1;
+				DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
+				DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 0);
 
-	.loc_0x6E8:
-	  addis     r20, r23, 0x2
-	  lwz       r3, 0x0(r26)
-	  addi      r20, r20, 0x1A28
-	  rlwinm    r4,r25,0,24,31
-	  add       r20, r31, r20
-	  lbz       r3, 0x0(r3)
-	  lhz       r0, 0x0(r20)
-	  li        r6, 0
-	  mullw     r0, r0, r30
-	  srawi     r0, r0, 0x10
-	  addze     r0, r0
-	  extsh     r5, r0
-	  bl        -0x11578
-	  lhz       r0, 0x0(r20)
-	  subfic    r4, r25, 0x1
-	  lwz       r3, 0x0(r26)
-	  li        r6, 0
-	  mullw     r0, r0, r30
-	  lbz       r3, 0x0(r3)
-	  srawi     r0, r0, 0x10
-	  addze     r0, r0
-	  extsh     r5, r0
-	  bl        -0x115A0
-	  b         .loc_0x780
+				DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+				DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+			} else {
+				return 0;
+			}
 
-	.loc_0x748:
-	  addis     r5, r23, 0x2
-	  lwz       r3, 0x0(r26)
-	  addi      r5, r5, 0x1A28
-	  rlwinm    r4,r25,0,24,31
-	  lbz       r3, 0x0(r3)
-	  li        r6, 0
-	  lhax      r5, r31, r5
-	  bl        -0x115C4
-	  lwz       r3, 0x0(r26)
-	  subfic    r4, r25, 0x1
-	  li        r5, 0
-	  li        r6, 0
-	  lbz       r3, 0x0(r3)
-	  bl        -0x115DC
+			if (ctrl->_21A44 == 0) {
+				if (ctrl->_21984 != 5 && ctrl->_21A08 != 0) {
+					DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+					u32 remain      = Get_DirectPCM_Remain((DSPchannel_*)buff);
 
-	.loc_0x780:
-	  lwz       r3, 0x0(r26)
-	  mr        r4, r24
-	  lbz       r3, 0x0(r3)
-	  bl        -0x1164C
-	  lwz       r3, 0x0(r26)
-	  lbz       r3, 0x0(r3)
-	  bl        -0x110D8
-	  addi      r25, r25, 0x1
-	  addi      r22, r22, 0x2000
-	  cmplwi    r25, 0x2
-	  addi      r21, r21, 0x4
-	  addi      r23, r23, 0x2
-	  blt+      .loc_0x67C
+					ctrl->_21A4C = remain - ctrl->_219FC - ctrl->_21A40;
 
-	.loc_0x7B4:
-	  addis     r4, r31, 0x2
-	  lwz       r0, 0x1984(r4)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x7CC
-	  li        r3, 0
-	  b         .loc_0x88C
+					if (ctrl->_21A4C < 0x400) {
+						DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
+						DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
 
-	.loc_0x7CC:
-	  lwz       r0, 0x19AC(r4)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x87C
-	  lwz       r0, 0x1A08(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x844
-	  lbz       r0, 0x1942(r4)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r4, r0
-	  lbz       r0, 0x18C0(r3)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x804
-	  li        r3, 0
-	  b         .loc_0x88C
+						DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+						DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
-	.loc_0x804:
-	  li        r0, 0
-	  stw       r0, 0x19AC(r4)
-	  lwz       r12, 0x1A14(r4)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x828
-	  lwz       r3, 0x1A0C(r4)
-	  li        r4, -0x1
-	  mtlr      r12
-	  blrl
+						ctrl->_21984 = 5;
+					}
+				}
+				if (ctrl->_21984 == 5) {
+					DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+					u32 remain      = Get_DirectPCM_Remain((DSPchannel_*)buff);
 
-	.loc_0x828:
-	  addis     r4, r31, 0x2
-	  li        r0, 0x4
-	  stw       r0, 0x1984(r4)
-	  li        r0, -0x1
-	  li        r3, -0x1
-	  stw       r0, 0x1A10(r4)
-	  b         .loc_0x88C
+					if (remain - ctrl->_219FC + ctrl->_21A40 <= 0xc00) {
+						if (ctrl->_21A44) {
+							DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
+							DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 0);
 
-	.loc_0x844:
-	  li        r20, 0
-	  li        r0, 0x3
-	  stw       r20, 0x19AC(r4)
-	  li        r24, 0
-	  stw       r0, 0x1984(r4)
+							DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+							DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
-	.loc_0x858:
-	  addis     r3, r24, 0x2
-	  addi      r3, r3, 0x19F4
-	  lwzx      r3, r31, r3
-	  bl        -0x11B64
-	  addi      r20, r20, 0x1
-	  addi      r24, r24, 0x4
-	  cmplwi    r20, 0x2
-	  blt+      .loc_0x858
-	  b         .loc_0x888
+							ctrl->_21984 = 1;
+						}
+						else {
+							DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
+							DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
 
-	.loc_0x87C:
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        -0xDA4
+							DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+							DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+						}
 
-	.loc_0x888:
-	  li        r3, 0
 
-	.loc_0x88C:
-	  lwz       r0, 0x6C(r1)
-	  addi      r11, r1, 0x68
-	  bl        0x1F81BC
-	  lmw       r20, 0x28(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+						if (ctrl->buffCtrl[ctrl->buffCtrlMain2._02]._00 == 2) {
+							void* data = __Decode(ctrl);
+
+							// I wanna go home...
+
+							ctrl->buffCtrl[ctrl->buffCtrlMain2._02]._00 = 0;
+
+							ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._00 = 2;
+							ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._04 = 6;
+
+							ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._08 = (u32)data;
+
+							ctrl->buffCtrlMain._03 = (ctrl->buffCtrlMain._03 + 1) % 6;
+
+							ctrl->buffCtrlMain2._02 = (ctrl->buffCtrlMain2._02 + 1) % 2;
+
+							ctrl->buffCtrlMain2._0C += (u32)data; // ?????? kms
+
+							// guys im taking a break please clean ts up I cant
+
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 /*
