@@ -9,6 +9,7 @@
 #include "jaudio/verysimple.h"
 #include "jaudio/dvdthread.h"
 #include "GlobalGameOptions.h"
+#include "MoviePlayer.h"
 
 void __Prepare_BGM(u32);
 void Jac_BgmAnimEndStop();
@@ -20,7 +21,7 @@ u8 demo_parts_id;
 u8 demo_onyon_num;
 u8 demo_parts_num;
 u32 demo_end_delay;
-int current_demo_no = -1;
+int current_demo_no = DEMOID_FINISHED; // uses CinDemoIDs enum
 int demo_seq_active = -1;
 int demo_mml_active = -1;
 int parts_find_demo_state;
@@ -91,7 +92,8 @@ static u8 demo102[] = { 0, 160, 0, 1, 2, 88, 255, 255 };
 static u8 demo113[] = { 0, 4, 255, 250, 0, 145, 0, 0, 0, 225, 0, 1, 1, 24, 0, 3, 4, 76, 255, 255 };
 static u8 demo114[] = { 0, 3, 0, 0, 0, 4, 255, 250, 4, 76, 255, 255 };
 
-static DemoStatus DEMO_STATUS[] = {
+// indexed by CinDemoIDs in MoviePlayer.h
+static DemoStatus DEMO_STATUS[DEMOID_COUNT] = {
 	{ 0, 2, 1, 131, 0, NULL },   { 0, 2, 1, 168, 0, demo1 },   { 0, 2, 1, 192, 0, demo2 },   { 0, 5, 1, 0, 0, demo3 },
 	{ 1, 2, 1, 141, 0, demo4 },  { 1, 2, 1, 141, 0, demo5 },   { 1, 2, 1, 141, 0, demo5 },   { 2, 5, 0, 0, 0, NULL },
 	{ 1, 1, 1, 0, 0, NULL },     { 3, 2, 1, 2, 0, demo9 },     { 3, 2, 1, 2, 0, demo9 },     { 3, 2, 1, 2, 0, demo9 },
@@ -176,7 +178,7 @@ BOOL Jac_DemoCheck()
 		return TRUE;
 	}
 
-	if (current_demo_no == -1 && parts_find_demo_state == 0 && text_demo_state == 0) {
+	if (current_demo_no == DEMOID_FINISHED && parts_find_demo_state == 0 && text_demo_state == 0) {
 		return FALSE;
 	}
 
@@ -194,17 +196,17 @@ BOOL Jac_DemoWalkCheck()
 		return FALSE;
 	}
 
-	if (current_demo_no == -1 && parts_find_demo_state == 0 && text_demo_state == 0) {
+	if (current_demo_no == DEMOID_FINISHED && parts_find_demo_state == 0 && text_demo_state == 0) {
 		return TRUE;
 	}
 
 	switch (current_demo_no) {
-	case 0x59:
-	case 0x64:
-	case 0x28:
-	case 0x29:
-	case 0x2A:
-	case 0x2B:
+	case DEMOID_Unk89:
+	case DEMOID_Unk100:
+	case DEMOID_LandingTutorial:
+	case DEMOID_LandingForest:
+	case DEMOID_LandingCaveLast:
+	case DEMOID_LandingYakushima:
 		return TRUE;
 	}
 	return FALSE;
@@ -264,11 +266,11 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 {
 	if (Jac_DemoCheck()) {
 		switch (current_demo_no) {
-		case 0x57:
-		case 0x1C:
-		case 0x1D:
-		case 0x1E:
-		case 0x1F:
+		case DEMOID_Unk87:
+		case DEMOID_DayEndTutorial:
+		case DEMOID_DayEndForest:
+		case DEMOID_DayEndCaveLast:
+		case DEMOID_DayEndYakushima:
 			return FALSE;
 		}
 
@@ -284,12 +286,12 @@ BOOL Jac_DemoCheckEvent(u8 evt)
  * Address:	8001A2E0
  * Size:	00016C
  */
-static void DoSequence(u32 id, u32 a2)
+static void DoSequence(u32 cinID, u32 a2)
 {
 	u32 flag;
 	u16* REF_flag;
 	u32* REF_a2 = &a2;
-	u32* data   = (u32*)DEMO_STATUS[id]._08;
+	u32* data   = (u32*)DEMO_STATUS[cinID]._08;
 	u32 badCompiler[2];
 	if (data == NULL) {
 		demo_seq_active = -1;
@@ -304,21 +306,21 @@ static void DoSequence(u32 id, u32 a2)
 		}
 
 		if (REF_flag[1] == 0xfff9) {
-			switch (id) {
-			case 0x14:
-				__Prepare_BGM(0x11);
+			switch (cinID) {
+			case DEMOID_CollectFirstPartTutorial:
+				__Prepare_BGM(DEMOID_ShipUpgradeTutorial);
 				break;
-			case 0x18:
-				__Prepare_BGM(0x1a);
+			case DEMOID_Unk24:
+				__Prepare_BGM(DEMOID_ShipUpgradeLast);
 				break;
 			}
 		} else if (REF_flag[1] == 0xfffa) {
-			if (DEMO_STATUS[id]._03 & 0x80) {
-				Jac_StartDemoSound(DEMO_STATUS[id]._03 & 0xf);
+			if (DEMO_STATUS[cinID]._03 & 0x80) {
+				Jac_StartDemoSound(DEMO_STATUS[cinID]._03 & 0xf);
 			} else {
 				demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
-				Jam_WritePortAppDirect(demo_bgm_seqp, 0, DEMO_STATUS[id]._03 & 0xf);
-				current_seq_bgm = DEMO_STATUS[id]._03 & 0xf;
+				Jam_WritePortAppDirect(demo_bgm_seqp, 0, DEMO_STATUS[cinID]._03 & 0xf);
+				current_seq_bgm = DEMO_STATUS[cinID]._03 & 0xf;
 			}
 		} else {
 			if (REF_flag[1] == 0xffff) {
@@ -377,11 +379,11 @@ void Jac_InitDemoSystem()
  * Address:	8001A520
  * Size:	0004F0
  */
-void Jac_StartDemo(int id)
+void Jac_StartDemo(u32 cinID)
 {
-	Jam_WritePortAppDirect(demo_seqp, 0, id);
+	Jam_WritePortAppDirect(demo_seqp, 0, cinID);
 	if (-1 < demo_mml_active) {
-		Jam_WritePortAppDirect(demo_seqp, 1, id);
+		Jam_WritePortAppDirect(demo_seqp, 1, cinID);
 	}
 	Jac_Orima_Formation(0, 0);
 	Jac_SetProcessStatus(5);
@@ -816,7 +818,7 @@ void Jac_DemoSound(int id)
 	u32 badCompiler;
 	int* REF_id;
 
-	if (current_demo_no != -1) {
+	if (current_demo_no != DEMOID_FINISHED) {
 		REF_id = &id;
 		Jal_SendCmdQueue_Noblock(&demo_q, id);
 	}
@@ -829,7 +831,7 @@ void Jac_DemoSound(int id)
  */
 BOOL Jac_DemoFrame(int id)
 {
-	if (current_demo_no == -1) {
+	if (current_demo_no == DEMOID_FINISHED) {
 		return FALSE;
 	}
 
@@ -995,7 +997,7 @@ void Jac_DemoBGMForceStop()
 void __Jac_FinishDemo()
 {
 	u32 badCompiler[2];
-	if (current_demo_no == -1) {
+	if (current_demo_no == DEMOID_FINISHED) {
 		return;
 	}
 
@@ -1037,7 +1039,7 @@ void __Jac_FinishDemo()
 
 	Jam_WritePortAppDirect(demo_seqp, 0, 0);
 	demo_seq_active = -1;
-	current_demo_no = -1;
+	current_demo_no = DEMOID_FINISHED;
 }
 
 /*
@@ -1047,27 +1049,29 @@ void __Jac_FinishDemo()
  */
 void Jac_FinishDemo(void)
 {
-	int demo      = current_demo_no;
-	int* REF_demo = &demo;
+	int cinID     = current_demo_no;
+	int* REF_demo = &cinID;
 	u32 badCompiler;
 	Jac_SetProcessStatus(6);
 	__Jac_FinishDemo();
 
-	if (demo >= 0) {
-		switch (demo) {
-		case 0x18:
-		case 0x11:
-		case 0x1:
-		case 0x14:
+	if (cinID >= 0) {
+		switch (cinID) {
+		// these all require a demo to be loaded after them
+		case DEMOID_OpeningIntroPt1:
+		case DEMOID_ShipUpgradeTutorial:
+		case DEMOID_CollectFirstPartTutorial:
+		case DEMOID_Unk24: // collect final ship part?
 			break;
 
-		case 0x57:
-		case 0x1C:
-		case 0x1D:
-		case 0x1E:
-		case 0x1F:
+		case DEMOID_Unk87:
+		case DEMOID_DayEndTutorial:
+		case DEMOID_DayEndForest:
+		case DEMOID_DayEndCaveLast:
+		case DEMOID_DayEndYakushima:
 			demo_end_delay = 100;
 			break;
+
 		default:
 			now_loading = 0;
 			break;
@@ -1104,28 +1108,28 @@ void __Loaded(u32 a)
  * Address:	8001AEA0
  * Size:	0001AC
  */
-void __Prepare_BGM(u32 a)
+void __Prepare_BGM(u32 cinID)
 {
 	int set;
 	u8 flag;
-	DemoStatus* state = &DEMO_STATUS[a];
+	DemoStatus* state = &DEMO_STATUS[cinID];
 
-	if (a >= 0x50) {
-		switch (a) {
-		case 0x50:
-		case 0x57:
-		case 0x58:
-		case 0x59:
-		case 0x5A:
-		case 0x5B:
-		case 0x5C:
-		case 0x5D:
-		case 0x5E:
-		case 0x64:
-		case 0x65:
-		case 0x66:
-		case 0x71:
-		case 0x72:
+	if (cinID >= DEMOID_CHECK_BGM_CAT) {
+		switch (cinID) {
+		case DEMOID_Unk80:
+		case DEMOID_Unk87:
+		case DEMOID_ChalDayEndLast:
+		case DEMOID_Unk89:
+		case DEMOID_Unk90:
+		case DEMOID_Unk91:
+		case DEMOID_Unk92:
+		case DEMOID_Unk93:
+		case DEMOID_Unk94:
+		case DEMOID_Unk100:
+		case DEMOID_Unk101:
+		case DEMOID_Unk102:
+		case DEMOID_GoodEndingTakeOff:
+		case DEMOID_NeutralEndingLeaveOK:
 			break;
 
 		default:
@@ -1133,11 +1137,12 @@ void __Prepare_BGM(u32 a)
 		}
 	}
 
-	switch (a) {
-	case 0x38:
-	case 0x39:
-	case 0x3A:
-	case 0x3B:
+	switch (cinID) {
+	// no BGM for take off cutscenes
+	case DEMOID_TakeOffTutorial:
+	case DEMOID_TakeOffForest:
+	case DEMOID_TakeOffCaveLast:
+	case DEMOID_TakeOffYakushima:
 		return;
 	}
 
@@ -1200,26 +1205,26 @@ void __Prepare_BGM(u32 a)
  * Address:	8001B060
  * Size:	0000A8
  */
-void Jac_PrepareDemo(u32 id)
+void Jac_PrepareDemo(u32 cinID)
 {
 	u32 badCompiler;
-	u32* REF_id = &id;
-	if (id >= 0x50) {
-		switch (id) {
-		case 0x50:
-		case 0x57:
-		case 0x58:
-		case 0x59:
-		case 0x5A:
-		case 0x5B:
-		case 0x5C:
-		case 0x5D:
-		case 0x5E:
-		case 0x64:
-		case 0x65:
-		case 0x66:
-		case 0x71:
-		case 0x72:
+	u32* REF_id = &cinID;
+	if (cinID >= DEMOID_CHECK_BGM_CAT) {
+		switch (cinID) {
+		case DEMOID_Unk80:
+		case DEMOID_Unk87:
+		case DEMOID_ChalDayEndLast:
+		case DEMOID_Unk89:
+		case DEMOID_Unk90:
+		case DEMOID_Unk91:
+		case DEMOID_Unk92:
+		case DEMOID_Unk93:
+		case DEMOID_Unk94:
+		case DEMOID_Unk100:
+		case DEMOID_Unk101:
+		case DEMOID_Unk102:
+		case DEMOID_GoodEndingTakeOff:
+		case DEMOID_NeutralEndingLeaveOK:
 			break;
 
 		default:
@@ -1227,18 +1232,18 @@ void Jac_PrepareDemo(u32 id)
 		}
 	}
 
-	switch (id) {
-	case 0x38:
-	case 0x39:
-	case 0x3A:
-	case 0x3B:
+	switch (cinID) {
+	case DEMOID_TakeOffTutorial:
+	case DEMOID_TakeOffForest:
+	case DEMOID_TakeOffCaveLast:
+	case DEMOID_TakeOffYakushima:
 		return;
 	}
 
 	if (now_loading == 0) {
 		now_loading = 1;
 	}
-	__Prepare_BGM(id);
+	__Prepare_BGM(cinID);
 }
 
 /*
@@ -1301,7 +1306,7 @@ void Jac_FinishPartsFindDemo(void)
  */
 void Jac_StartTextDemo(int a)
 {
-	if (text_demo_state != 1 && current_demo_no == -1) {
+	if (text_demo_state != 1 && current_demo_no == DEMOID_FINISHED) {
 		switch (parts_find_demo_state) {
 		case 0:
 			event_pause_counter = 0;
@@ -1322,7 +1327,7 @@ void Jac_StartTextDemo(int a)
  */
 void Jac_FinishTextDemo(void)
 {
-	if (text_demo_state && current_demo_no == -1) {
+	if (text_demo_state && current_demo_no == DEMOID_FINISHED) {
 		switch (parts_find_demo_state) {
 		case 0:
 			event_pause_counter = 3;

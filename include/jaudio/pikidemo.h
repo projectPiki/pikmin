@@ -20,7 +20,7 @@ extern "C" {
 
 //////////// JAUDIO PIKMIN DEMO FUNCTIONS (C) ////////////
 void Jac_DemoSceneInit(void);                // args
-void Jac_StartDemo(int);                     // args
+void Jac_StartDemo(u32);                     // args
 void Jac_DemoSound(int);                     // args
 BOOL Jac_DemoFrame(int);                     // args
 void Jac_FinishDemo(void);                   // args

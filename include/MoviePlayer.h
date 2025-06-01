@@ -112,6 +112,7 @@ struct MoviePlayer {
  * @note I have these down here because it's a stupid big enum
  */
 enum CinDemoIDs {
+	DEMOID_FINISHED        = -1,
 	DEMOID_NULL            = 0,
 	DEMOID_OpeningIntroPt1 = 1,
 	DEMOID_OpeningIntroPt2 = 2,
@@ -222,15 +223,30 @@ enum CinDemoIDs {
 	DEMOID_EndingSpace         = 77, // flying through space (good and neutral)
 	DEMOID_CollectRadar        = 78,
 	DEMOID_CollectPartTutorial = 79,
+
+	DEMOID_CHECK_BGM_CAT       = 80, // used by pikidemo functions to double check for bgm music
 	DEMOID_Unk80               = 80,
 	DEMOID_EndOfDayRedOnyon    = 84,
 	DEMOID_EndOfDayYellowOnyon = 85,
 	DEMOID_EndOfDayBlueOnyon   = 86,
+	DEMOID_Unk87               = 87, // unknown, used in pikidemo
+	DEMOID_ChalDayEndLast      = 88, // day end at final trial
+	DEMOID_Unk89               = 89, // unknown, used in pikidemo
+	DEMOID_Unk90               = 90, // unknown, used in pikidemo
+	DEMOID_Unk91               = 91, // unknown, used in pikidemo
+	DEMOID_Unk92               = 92, // unknown, used in pikidemo
+	DEMOID_Unk93               = 93, // unknown, used in pikidemo
+	DEMOID_Unk94               = 94, // unknown, used in pikidemo
 	// ...
-	DEMOID_ChalDayEndLast       = 88,  // day end at final trial
-	DEMOID_DayEndTakeOffLast    = 109, // day end take off at final trial
+	DEMOID_Unk100 = 100, // unknown, used in pikidemo
+	DEMOID_Unk101 = 101, // unknown, used in pikidemo
+	DEMOID_Unk102 = 102, // unknown, used in pikidemo
+	// ...
+	DEMOID_DayEndTakeOffLast = 109, // day end take off at final trial
+	// ...
 	DEMOID_GoodEndingTakeOff    = 113, // ship takes off
 	DEMOID_NeutralEndingLeaveOK = 114, // olimar leaves successfully
+	DEMOID_COUNT,                      // 115
 };
 
 #endif
