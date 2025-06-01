@@ -71,10 +71,10 @@ typedef struct Tree {
  * @note Size: 0x10.
  */
 typedef struct BitBuffer {
-	const void* ptr; // _00
-	u32 size;        // _04
-	u32 value;       // _08
-	int bit;         // _0C
+	const u32* ptr; // _00
+	u32 size;      // _04
+	u32 value;     // _08
+	int bit;       // _0C
 } BitBuffer;
 
 /**
@@ -167,11 +167,11 @@ typedef struct MCPlane {
 	u32 pb_dc;                  // _04
 	BlockData* payload_cur_blk; // _08
 	BlockData* payload_cur_row; // _0C
-	void* present;              // _10
-	void* top;                  // _14
-	void* target;               // _18
-	void* past;                 // _1C
-	void* future;               // _20
+	u8* present;                // _10
+	u8* top;                    // _14
+	u8* target;                 // _18
+	u8* past;                   // _1C
+	u8* future;                 // _20
 	u16 h_mcb_stride;           // _24
 	u32 v_mcb_stride;           // _28
 	u32 pb_per_mcb_x;           // _2C
@@ -192,9 +192,9 @@ void HVQM4InitDecoder();
 void HVQM4InitSeqObj(SeqObj* seqObj, VideoInfo* videoInfo);
 u32 HVQM4BuffSize(SeqObj* seqObj);
 void HVQM4SetBuffer(SeqObj* seqObj, void* workBuffer);
-void HVQM4DecodeIpic(SeqObj* seqObj, u8 const* frame, void* present);
-void HVQM4DecodePpic(SeqObj* seqObj, u8 const* frame, void* present, void* past);
-void HVQM4DecodeBpic(SeqObj* seqObj, u8 const* frame, void* present, void* past, void* future);
+void HVQM4DecodeIpic(SeqObj* seqObj, u8 const* frame, u8* present);
+void HVQM4DecodePpic(SeqObj* seqObj, u8 const* frame, u8* present, u8* past);
+void HVQM4DecodeBpic(SeqObj* seqObj, u8 const* frame, u8* present, u8* past, u8* future);
 
 /////////////////////////////////////////////////////////
 

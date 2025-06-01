@@ -1254,17 +1254,17 @@ static int Decode1(u8* data, u32 a1, u8 a2)
 
 	switch (a2) {
 	case 0x10:
-		HVQM4DecodeIpic(hvqm_obj, data, ref);
+		HVQM4DecodeIpic(hvqm_obj, data, (u8*)ref);
 		ref2 = ref1;
 		ref1 = ref;
 		break;
 	case 0x20:
-		HVQM4DecodePpic(hvqm_obj, data, ref, ref1);
+		HVQM4DecodePpic(hvqm_obj, data, (u8*)ref, (u8*)ref1);
 		ref2 = ref1;
 		ref1 = ref;
 		break;
 	case 0x30:
-		HVQM4DecodeBpic(hvqm_obj, data, ref, ref2, ref1);
+		HVQM4DecodeBpic(hvqm_obj, data, (u8*)ref, (u8*)ref2, (u8*)ref1);
 		break;
 	}
 
