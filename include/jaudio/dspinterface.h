@@ -99,7 +99,7 @@ struct DSPBuffer {
 	s16 loopYN2;                    // _106 - DSP_SetWaveInfo
 	s16 filterMode;                 // _108 - DSP_SetFilterMode
 	DSPBOOL endRequested;           // _10A - DSP_AllocInit, DSP_SetMixerVolume
-	volatile u32 _10C;              // _10C - DSP_PlayStart
+	u32 _10C;                       // _10C - DSP_PlayStart
 	u32 loopAddress;                // _110 - DSP_SetWaveInfo
 	u32 loopStartPosition;          // _114 - DSP_SetWaveInfo
 	u32 baseAddress;                // _118 - DSP_SetOscInfo, DSP_SetWaveInfo

@@ -53,10 +53,10 @@ void InitDSPchannel()
 dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 {
 
+	s32 i;
+	u32 badCompiler;
 	u32* p2 = &param_2;
-
-	int i;
-	int* ip = &i;
+	s32* ip = &i;
 	if (param_1 == 0) {
 
 		for (i = 0; i < DSPCH_LENGTH; ++i) {
@@ -68,20 +68,21 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 				return &DSPCH[i];
 			}
 		}
-	} else {
-		for (i = 0; i < DSPCH_LENGTH / 2; ++i) {
+		return NULL;
+	}
 
-			if (DSPCH[i]._01 || DSPCH[i - 1]._01)
-				continue;
+	for (i = 1; i < DSPCH_LENGTH; i += 2) {
 
-			DSPCH[i]._01     = 3;
-			DSPCH[i - 1]._01 = 2;
-			DSPCH[i]._08     = param_2;
-			DSPCH[i - 1]._08 = param_2;
-			DSP_AllocInit(i);
-			DSP_AllocInit(i - 1);
-			return &DSPCH[i - 1];
-		}
+		if (DSPCH[i]._01 || DSPCH[i - 1]._01)
+			continue;
+
+		DSPCH[i]._01     = 3;
+		DSPCH[i - 1]._01 = 2;
+		DSPCH[i]._08     = param_2;
+		DSPCH[i - 1]._08 = param_2;
+		DSP_AllocInit(i);
+		DSP_AllocInit(i - 1);
+		return &DSPCH[i - 1];
 	}
 	return NULL;
 }
@@ -129,29 +130,33 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
  */
 dspch_* GetLowerDSPchannel()
 {
-	volatile u8 max = 255;
-	dspch_* chan    = NULL;
-	volatile u32 id = 0;
-	volatile u32 x  = 0;
-	volatile u32 i  = 0;
+	u8 max      = 255;
+	u32 id      = 0;
+	u32 x       = 0;
+	u32 i       = 0;
+	u8* REF_max = &max;
+	u32* REF_id = &id;
+	u32* REF_x  = &x;
+	u32* REF_i  = &i;
+
+	u32 badCompiler[2];
 
 	for (i; i < DSPCH_LENGTH; i++) {
-		chan = &DSPCH[i];
-		if (chan->_01 != 4) {
-			if (chan->_01 == 0) {
-				chan->_03 = 0;
-				id        = i;
+		if (DSPCH[i]._01 != 4) {
+			if (DSPCH[i]._01 == 0) {
+				DSPCH[i]._03 = 0;
+				id           = i;
 				break;
 			}
 
-			if (chan->_0C) {
-				GetDspHandle(chan->buffer_idx);
-				if (chan->_03 <= max) {
-					DSPBuffer* buf = GetDspHandle(chan->buffer_idx);
-					if (chan->_03 != max || (x && (x >= buf->_10C || buf->_10C == 0))) {
+			if (DSPCH[i]._0C) {
+				GetDspHandle(DSPCH[i].buffer_idx);
+				if (DSPCH[i]._03 <= max) {
+					DSPBuffer* buf = GetDspHandle(DSPCH[i].buffer_idx);
+					if (max != DSPCH[i]._03 || (x && (buf->_10C >= x || buf->_10C == 0))) {
 						x   = buf->_10C;
 						id  = i;
-						max = chan->_03;
+						max = DSPCH[i]._03;
 					}
 				}
 			}
@@ -159,88 +164,6 @@ dspch_* GetLowerDSPchannel()
 	}
 
 	return &DSPCH[id];
-
-	u32 badcompiler[10];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0xFF
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  lis       r4, 0x8030
-	  stwu      r1, -0x48(r1)
-	  stmw      r27, 0x34(r1)
-	  addi      r31, r4, 0x6660
-	  stb       r3, 0x2C(r1)
-	  stw       r0, 0x28(r1)
-	  stw       r0, 0x24(r1)
-	  stw       r0, 0x20(r1)
-	  b         .loc_0xD8
-
-	.loc_0x34:
-	  rlwinm    r0,r30,4,0,27
-	  add       r29, r31, r0
-	  lbz       r0, 0x1(r29)
-	  cmplwi    r0, 0x4
-	  beq-      .loc_0xCC
-	  cmplwi    r0, 0
-	  bne-      .loc_0x60
-	  li        r0, 0
-	  stb       r0, 0x3(r29)
-	  stw       r30, 0x28(r1)
-	  b         .loc_0xE4
-
-	.loc_0x60:
-	  lwz       r0, 0xC(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xCC
-	  lbz       r3, 0x0(r29)
-	  bl        0x590
-	  addi      r28, r29, 0x3
-	  lbz       r27, 0x2C(r1)
-	  lbz       r0, 0x3(r29)
-	  cmplw     r0, r27
-	  bgt-      .loc_0xCC
-	  lbz       r3, 0x0(r29)
-	  bl        0x574
-	  lbz       r5, 0x0(r28)
-	  cmplw     r27, r5
-	  bne-      .loc_0xBC
-	  lwz       r0, 0x24(r1)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xCC
-	  lwz       r4, 0x10C(r3)
-	  cmplw     r4, r0
-	  bge-      .loc_0xBC
-	  cmplwi    r4, 0
-	  bne-      .loc_0xCC
-
-	.loc_0xBC:
-	  lwz       r0, 0x10C(r3)
-	  stw       r0, 0x24(r1)
-	  stw       r30, 0x28(r1)
-	  stb       r5, 0x2C(r1)
-
-	.loc_0xCC:
-	  lwz       r3, 0x20(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x20(r1)
-
-	.loc_0xD8:
-	  lwz       r30, 0x20(r1)
-	  cmplwi    r30, 0x40
-	  blt+      .loc_0x34
-
-	.loc_0xE4:
-	  lwz       r0, 0x28(r1)
-	  rlwinm    r0,r0,4,0,27
-	  add       r3, r31, r0
-	  lwz       r0, 0x4C(r1)
-	  lmw       r27, 0x34(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -248,49 +171,39 @@ dspch_* GetLowerDSPchannel()
  * Address:	8000B080
  * Size:	0000D8
  */
-dspch_* GetLowerActiveDSPchannel() // regswaps and volatile memes... argh!
+dspch_* GetLowerActiveDSPchannel()
 {
-	volatile u8 local_1c;
-	volatile u32 local_20;
-	volatile u32 local_24;
-
-	u8 local_1c_nonv;
-	u32 local_24_nonv;
-	u32 member_10c_nonv;
-
+	u8 a      = 0xFF;
+	u32 index = 0;
+	u32 c     = 0;
 	u32 i;
 	DSPBuffer* buf;
-	dspch_* chan;
 
-	u32 badCompiler[3];
+	u8* REF_a      = &a;
+	u32* REF_index = &index;
+	u32* REF_c     = &c;
 
-	local_1c = 0xff;
-	local_20 = 0;
-	local_24 = 0;
 	for (i = 0; i < DSPCH_LENGTH; ++i) {
-		chan = &DSPCH[i];
-		if (chan->_01 == 4 || chan->_01 == 0)
+		if (DSPCH[i]._01 == 4 || DSPCH[i]._01 == 0)
 			continue;
 
-		local_1c_nonv = local_1c;
-		if (DSPCH[i]._03 > local_1c_nonv)
+		if (DSPCH[i]._03 > a)
 			continue;
 
 		buf = GetDspHandle(DSPCH[i].buffer_idx);
-		if (local_1c_nonv == DSPCH[i]._03) {
-			local_24_nonv = local_24;
-			if (local_24_nonv == 0)
+		if (a == DSPCH[i]._03) {
+
+			if (c == 0)
 				continue;
-			member_10c_nonv = buf->_10C;
-			if (member_10c_nonv < local_24_nonv && member_10c_nonv != 0)
+			if (buf->_10C < c && buf->_10C != 0)
 				continue;
 		}
-		local_24 = buf->_10C;
-		local_20 = i;
-		local_1c = DSPCH[i]._03;
+		c     = buf->_10C;
+		index = i;
+		a     = DSPCH[i]._03;
 	}
 
-	return &DSPCH[local_20];
+	return &DSPCH[index];
 }
 
 /*
@@ -405,7 +318,7 @@ void UpdateDSPchannelAll()
 	int id      = JAC_SUBFRAMES - DspSyncCountCheck();
 	history[id] = old;
 
-	if (id != 0 && (f32)history[id] / (f32)old < 1.1f) {
+	if (id != 0 && (f32)history[0] / (f32)old < 1.1f) {
 		BreakLowerActiveDSPchannel(0x7e);
 	}
 
@@ -457,146 +370,4 @@ void UpdateDSPchannelAll()
 	PPCSync();
 
 	u32 badcompiler[9];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stmw      r26, 0x48(r1)
-	  bl        0x1F2048
-	  lwz       r0, 0x2BE0(r13)
-	  stw       r3, 0x2BE0(r13)
-	  sub       r26, r3, r0
-	  bl        -0x50A0
-	  lwz       r0, -0x7FFC(r13)
-	  lis       r4, 0x8022
-	  addi      r4, r4, 0x4978
-	  sub.      r3, r0, r3
-	  rlwinm    r0,r3,2,0,29
-	  add       r3, r4, r0
-	  stw       r26, 0x0(r3)
-	  beq-      .loc_0x88
-	  lwz       r3, 0x0(r4)
-	  lis       r0, 0x4330
-	  stw       r26, 0x3C(r1)
-	  lfd       f3, -0x7FA0(r2)
-	  stw       r3, 0x44(r1)
-	  lfs       f0, -0x7FA8(r2)
-	  stw       r0, 0x40(r1)
-	  stw       r0, 0x38(r1)
-	  lfd       f2, 0x40(r1)
-	  lfd       f1, 0x38(r1)
-	  fsubs     f2, f2, f3
-	  fsubs     f1, f1, f3
-	  fdivs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x88
-	  li        r3, 0x7E
-	  bl        -0x144
-
-	.loc_0x88:
-	  lis       r3, 0x8030
-	  li        r28, 0
-	  addi      r30, r3, 0x6660
-	  li        r27, 0
-
-	.loc_0x98:
-	  add       r0, r30, r27
-	  stw       r0, 0x30(r1)
-	  lwz       r29, 0x30(r1)
-	  addi      r26, r29, 0x1
-	  lbz       r0, 0x1(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C8
-	  lbz       r3, 0x0(r29)
-	  bl        0x148
-	  mr        r31, r3
-	  lhz       r0, 0x2(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x10C
-	  lwz       r12, 0xC(r29)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xEC
-	  addi      r3, r29, 0
-	  li        r4, 0x2
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x6(r29)
-
-	.loc_0xEC:
-	  li        r0, 0
-	  sth       r0, 0x2(r31)
-	  sth       r0, 0x0(r31)
-	  lbz       r3, 0x0(r29)
-	  bl        0x6C4
-	  lbz       r0, 0x0(r26)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C8
-
-	.loc_0x10C:
-	  lhz       r0, 0x10A(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x154
-	  lwz       r3, 0x10C(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x10C(r31)
-	  lwz       r3, 0x10C(r31)
-	  lhz       r0, 0x4(r29)
-	  cmplw     r3, r0
-	  bne-      .loc_0x154
-	  lwz       r12, 0xC(r29)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x154
-	  addi      r3, r29, 0
-	  li        r4, 0x4
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x6(r29)
-
-	.loc_0x154:
-	  addi      r4, r29, 0xC
-	  lwz       r0, 0xC(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C8
-	  addi      r26, r29, 0x6
-	  lhz       r3, 0x6(r29)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x17C
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x0(r26)
-
-	.loc_0x17C:
-	  lhz       r0, 0x0(r26)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1C8
-	  lwz       r12, 0x0(r4)
-	  addi      r3, r29, 0
-	  li        r4, 0
-	  mtlr      r12
-	  blrl
-	  sth       r3, 0x0(r26)
-	  lhz       r0, 0x0(r26)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x1C8
-	  li        r0, 0
-	  li        r3, 0x1
-	  sth       r0, 0x2(r31)
-	  sth       r0, 0x0(r31)
-	  bl        -0xA9C
-	  lbz       r3, 0x0(r29)
-	  bl        0x5FC
-
-	.loc_0x1C8:
-	  addi      r28, r28, 0x1
-	  addi      r27, r27, 0x10
-	  cmplwi    r28, 0x40
-	  blt+      .loc_0x98
-	  bl        -0x9B8
-	  bl        0x1EA438
-	  lmw       r26, 0x48(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
 }
