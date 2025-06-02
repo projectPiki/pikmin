@@ -46,8 +46,8 @@ typedef enum JacSystemSoundID {
 	JACSYS_MenuScroll       = 35,
 	JACSYS_Unk36            = 36,
 	JACSYS_SoundConfig      = 37,
-	JACSYS_Unk38            = 38,
-	JACSYS_Unk39            = 39,
+	JACSYS_DVDPause         = 38,
+	JACSYS_DVDUnpause       = 39,
 	JACSYS_Unk40            = 40,
 } JacSystemSoundID;
 

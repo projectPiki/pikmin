@@ -1684,10 +1684,10 @@ void* dvdFunc(void*)
 		}
 
 		if (gsys->mDvdErrorCode >= 0 && !playedSe) {
-			Jac_PlaySystemSe(JACSYS_Unk38); // no idea what sound these are
+			Jac_PlaySystemSe(JACSYS_DVDPause);
 			playedSe = true;
 		} else if (gsys->mDvdErrorCode < 0 && playedSe) {
-			Jac_PlaySystemSe(JACSYS_Unk39);
+			Jac_PlaySystemSe(JACSYS_DVDUnpause);
 			playedSe = false;
 		}
 	}

@@ -211,7 +211,7 @@ void Jac_PlaySystemSe(s32 id)
 		sys_voldown_flag = 0x14;
 		return;
 
-	case JACSYS_Unk38:
+	case JACSYS_DVDPause:
 		Jam_PauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_PauseTrack(Jam_GetTrackHandle(0x1000f), 1);
 		Jac_PauseOrimaSe();
@@ -222,7 +222,7 @@ void Jac_PlaySystemSe(s32 id)
 		id = JACSYS_CardError;
 		break;
 
-	case JACSYS_Unk39:
+	case JACSYS_DVDUnpause:
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x20000), 1);
 		Jam_UnPauseTrack(Jam_GetTrackHandle(0x1000f), 1);
 		Jac_UnPauseOrimaSe();

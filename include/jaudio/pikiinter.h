@@ -10,11 +10,27 @@ extern "C" {
 /**
  * @brief TODO
  */
-struct SVector_ {
+typedef struct SVector_ {
 	f32 x; // _00
 	f32 y; // _04
 	f32 z; // _08
-};
+} SVector_;
+
+/**
+ * @brief TODO
+ */
+typedef enum JacEventType {
+	JACEVENT_System    = -2, ///< -2, system sound effects.
+	JACEVENT_Player    = -1, ///< -1, captain or captain-pikmin interaction sound effects.
+	JACEVENT_NULL      = 0,  ///< 0, no event.
+	JACEVENT_Battle    = 1,  ///< 1, teki and boss sound effects.
+	JACEVENT_Pellet    = 2,  ///< 2, ufo part and other pellet sound effects.
+	JACEVENT_Onyon     = 3,  ///< 3, onyon and pikmin sprout sound effects.
+	JACEVENT_Build     = 4,  ///< 4, work object (wall, bridge, box, grass, stone) sound effects.
+	JACEVENT_PikiWater = 5,  ///< 5, water-related pikmin sound effects.
+	JACEVENT_Piki      = 6,  ///< 6, all other pikmin sound effects.
+	JACEVENT_Ufo       = 7,  ///< 7, ufo (ship) related sound effects.
+} JacEventType;
 
 //////////// JAUDIO PIKMIN INTERFACE FUNCTIONS ////////////
 void Jac_InitEventSystem(void);                            // args

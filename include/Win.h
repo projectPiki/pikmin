@@ -11,6 +11,16 @@ struct Texture;
 struct Vector2i;
 
 /**
+ * @brief Status enum for GmWin and associated classes.
+ */
+enum GmWinState {
+	GMWIN_Opening  = 0x1000,
+	GMWIN_Active   = 0x1001,
+	GMWIN_Closing  = 0x1002,
+	GMWIN_Inactive = 0x1003,
+};
+
+/**
  * @brief Seemingly deprecated window drawing base class.
  */
 struct GmWin : public CoreNode {

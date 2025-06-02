@@ -4,9 +4,10 @@
 #include "types.h"
 
 typedef enum JacOrimaSoundID {
-	JACORIMA_Unk0             = 0,
+	JACORIMA_PikiHit          = 0,
 	JACORIMA_Unk1             = 1,
 	JACORIMA_OrimaTouchPlants = 2,
+	JACORIMA_PikiLift         = 2, // idk why these are the same number
 	JACORIMA_PikiPulling      = 3,
 	JACORIMA_PikiPulled2      = 4,
 	JACORIMA_PlayerPunch      = 5,

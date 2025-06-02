@@ -341,7 +341,8 @@ enum PikiSoundID {
 	SE_PIKI_PULLED          = 0x147,
 	SE_PIKI_WATERDROP       = 0x148,
 	SE_PIKI_ATTACHENEMY     = 0x149,
-	SE_KINOKOPIKI_ATTACK    = 0x14A
+	SE_KINOKOPIKI_ATTACK    = 0x14A,
+	SE_COUNT, // 0x14B (331).
 };
 
 #endif

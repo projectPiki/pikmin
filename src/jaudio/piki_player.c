@@ -39,6 +39,7 @@ void Jac_Orima_Walk(s32 soundID, u32 p2)
 	}
 }
 
+/// Music manager for c-sticking/'formation' track.
 static seqp_* stick_seqp;
 
 /*
@@ -46,7 +47,7 @@ static seqp_* stick_seqp;
  * Address:	80018200
  * Size:	000190
  */
-void Jac_Orima_Formation(s32 a1, s32 a2)
+void Jac_Orima_Formation(s32 stickX, s32 stickY)
 {
 	static int flag = 0;
 
@@ -57,45 +58,50 @@ void Jac_Orima_Formation(s32 a1, s32 a2)
 		}
 	}
 
+	// don't make c-stick sound when in a cutscene
 	if (Jac_DemoCheck() == TRUE) {
-		a1 = 0;
-		a2 = 0;
+		stickX = 0;
+		stickY = 0;
 	}
 
+	// don't make c-stick sound when paused
 	if (Jac_PauseCheck() == TRUE) {
-		a1 = 0;
-		a2 = 0;
+		stickX = 0;
+		stickY = 0;
 	}
 
-	if (a1 < -0x7f) {
-		a1 = -0x7f;
+	// bound stick values
+	if (stickX < -127) {
+		stickX = -127;
 	}
-	if (a1 > 0x7f) {
-		a1 = 0x7f;
-	}
-
-	if (a2 < -0x7f) {
-		a2 = -0x7f;
-	}
-	if (a2 > 0x7f) {
-		a2 = 0x7f;
+	if (stickX > 127) {
+		stickX = 127;
 	}
 
-	if (a2 < 0) {
-		a2 = -a2;
+	if (stickY < -127) {
+		stickY = -127;
+	}
+	if (stickY > 127) {
+		stickY = 127;
 	}
 
-	int s = sqrtf2(a1 * a1 + a2 * a2);
-	Jam_WritePortAppDirect(stick_seqp, 2, a1);
-	Jam_WritePortAppDirect(stick_seqp, 3, s);
+	if (stickY < 0) {
+		stickY = -stickY;
+	}
 
-	if (a1 == 0 && s == 0) {
+	int stickMag = sqrtf2(stickX * stickX + stickY * stickY);
+	Jam_WritePortAppDirect(stick_seqp, 2, stickX);
+	Jam_WritePortAppDirect(stick_seqp, 3, stickMag);
+
+	if (stickX == 0 && stickMag == 0) {
 		if (flag) {
+			// we were c-sticking, now we're not - switch it off
 			Jam_WritePortAppDirect(stick_seqp, 0, 0);
 			flag = FALSE;
 		}
 	} else {
 		if (flag == FALSE) {
+			// we've started c-sticking again, switch it on
 			Jam_WritePortAppDirect(stick_seqp, 0, 1);
 			flag = TRUE;
 		}
@@ -234,29 +240,29 @@ static u32 pikis;
  * Address:	80018740
  * Size:	000078
  */
-void Jac_Piki_Number(u32 id)
+void Jac_Piki_Number(u32 pikiNum)
 {
-	if (id >= 100) {
+	if (pikiNum >= 100) {
 		pikis = 29;
 		return;
 	}
 
-	if (id >= 50) {
-		pikis = (id - 50) / 10 + 25;
+	if (pikiNum >= 50) {
+		pikis = (pikiNum - 50) / 10 + 25;
 		return;
 	}
 
-	if (id >= 25) {
-		pikis = (id - 25) / 5 + 20;
+	if (pikiNum >= 25) {
+		pikis = (pikiNum - 25) / 5 + 20;
 		return;
 	}
 
-	if (id >= 15) {
-		pikis = (id - 15) / 2 + 15;
+	if (pikiNum >= 15) {
+		pikis = (pikiNum - 15) / 2 + 15;
 		return;
 	}
 
-	pikis = id;
+	pikis = pikiNum;
 }
 
 /*
