@@ -10,20 +10,23 @@ typedef struct Pmap_ Pmap_;
 typedef struct Osc_ Osc_;
 typedef struct jcs_ jcs_;
 typedef struct CtrlWave_ {
-	int _00; // _00
-	int _04; // _04
-	int _08; // _08
-	u32 _0C; // _0C
+	int _00;             // _00
+	int _04;             // _04
+	int _08;             // _08
+	u32 _0C;             // _0C
+	u8 _10[0x34 - 0x10]; // _10, unknown
+	u32 _34;             // _34, unknown
 } CtrlWave_;
-typedef struct SOUNDID_ SOUNDID_;
+typedef union SOUNDID_ SOUNDID_;
 
 /**
  * @brief This is a "boxed" integer type to be passed by value.
  *
  * @note Size: 4. Why wasn't this just an enum... This compiler is not smart enough to optimize this.
  */
-struct SOUNDID_ {
+union SOUNDID_ {
 	u32 value; // _00
+	u8 bytes[4];
 };
 
 void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32);

@@ -35,12 +35,12 @@ struct SeConstant : public Node {
 	/**
 	 * @brief Parameters loaded from file.
 	 *
-	 * @note Fabricated. Offsets are relative to SeConstant for convenience.
+	 * @note Offsets are relative to SeConstant for convenience.
 	 */
-	struct SeParms : public Parameters {
+	struct Parms : public Parameters {
 
 		/// Constructor with default values (overwritten by file load).
-		SeParms()
+		Parms()
 		    : mSECutoffDist(this, 700.0f, 0.0f, 0.0f, "p00", nullptr)
 		    , mBossBGMStartDist(this, 400.0f, 0.0f, 0.0f, "p01", nullptr)
 		    , mBossBGMEndDist(this, 800.0f, 0.0f, 0.0f, "p02", nullptr)
@@ -64,7 +64,7 @@ struct SeConstant : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	SeParms mParms; ///< _20, sound effect parameters.
+	Parms mParms; ///< _20, sound effect parameters.
 };
 
 /**

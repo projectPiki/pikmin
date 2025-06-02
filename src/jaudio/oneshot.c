@@ -258,6 +258,9 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 	}
 
 	jc_* chan = List_GetChannel(&jcs->_08);
+	jc_* chan2;
+	jc_** REF_chan2 = &chan2;
+	u32 badCompiler[6];
 	if (chan == NULL) {
 
 		if (FixAllocChannel(jcs, 1) == FALSE) {
@@ -270,134 +273,32 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 		}
 
 		if (jcs->_70 == 1) {
-			volatile jc_* c;
-			c = List_GetChannel(&jcs->_10);
-			if (c == NULL) {
-				c = List_GetChannel(&jcs->_0C);
-				if (c) {
+			chan2 = List_GetChannel(&jcs->_10);
+			if (chan2 == NULL) {
+				chan2 = List_GetChannel(&jcs->_0C);
+				if (chan2) {
 					List_CountChannel(&jcs->_14);
 				}
 			}
 
-			if (c) {
-				c->mOscBuffers[0]._00 = 6;
-				List_AddChannel(&jcs->_14, c);
-				if (c->_20) {
-					ForceStopDSPchannel(c->_20);
+			if (chan2) {
+				chan2->mOscBuffers[0]._00 = 6;
+				List_AddChannel(&jcs->_14, chan2);
+				if (chan2->_20) {
+					ForceStopDSPchannel(chan2->_20);
 				}
 			}
 		}
 	}
 	Channel_Init(chan);
 	if (wave) {
-		chan->_10 = wave;
+		chan->_10 = (void*)wave->_34;
+		chan->_14 = wave->_0C;
 		chan->_0C = 0;
 	}
 	chan->_18 = 0;
 	UpdatePanPower_1Shot(chan, 1.0f, 1.0f, 1.0f, 1.0f);
 	return chan;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x40(r1)
-	  stmw      r28, 0x30(r1)
-	  mr.       r29, r4
-	  addi      r28, r3, 0
-	  beq-      .loc_0x30
-	  lwz       r0, 0xC(r29)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0x140
-
-	.loc_0x30:
-	  addi      r3, r28, 0x8
-	  bl        -0xC214
-	  mr.       r30, r3
-	  bne-      .loc_0xF4
-	  addi      r3, r28, 0
-	  li        r4, 0x1
-	  bl        -0xC168
-	  cmpwi     r3, 0
-	  bne-      .loc_0x5C
-	  li        r3, 0
-	  b         .loc_0x140
-
-	.loc_0x5C:
-	  lwz       r4, 0x4(r28)
-	  addi      r3, r28, 0x8
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x4(r28)
-	  bl        -0xC24C
-	  mr.       r30, r3
-	  bne-      .loc_0x80
-	  li        r3, 0
-	  b         .loc_0x140
-
-	.loc_0x80:
-	  lwz       r0, 0x70(r28)
-	  cmpwi     r0, 0x1
-	  bne-      .loc_0xF4
-	  addi      r3, r28, 0x10
-	  bl        -0xC270
-	  stw       r3, 0x2C(r1)
-	  lwz       r0, 0x2C(r1)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xC4
-	  addi      r3, r28, 0xC
-	  bl        -0xC288
-	  stw       r3, 0x2C(r1)
-	  lwz       r0, 0x2C(r1)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xC4
-	  addi      r3, r28, 0x14
-	  bl        -0xC340
-
-	.loc_0xC4:
-	  lwz       r31, 0x2C(r1)
-	  cmplwi    r31, 0
-	  beq-      .loc_0xF4
-	  li        r0, 0x6
-	  addi      r4, r31, 0
-	  stb       r0, 0x48(r31)
-	  addi      r3, r28, 0x14
-	  bl        -0xC220
-	  lwz       r3, 0x20(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF4
-	  bl        -0xA670
-
-	.loc_0xF4:
-	  mr        r3, r30
-	  bl        -0xBD78
-	  cmplwi    r29, 0
-	  beq-      .loc_0x11C
-	  lwz       r3, 0x34(r29)
-	  li        r0, 0
-	  stw       r3, 0x10(r30)
-	  lwz       r3, 0xC(r29)
-	  stw       r3, 0x14(r30)
-	  stb       r0, 0xC(r30)
-
-	.loc_0x11C:
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r0, 0x18(r30)
-	  lfs       f1, -0x7EA4(r2)
-	  fmr       f2, f1
-	  fmr       f3, f1
-	  fmr       f4, f1
-	  bl        0x788
-	  mr        r3, r30
-
-	.loc_0x140:
-	  lmw       r28, 0x30(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -718,44 +619,14 @@ void AllStop_1Shot(jcs_* jcs)
 	List_CountChannel(&jcs->_14);
 
 	jc_* jc = jcs->_0C;
+	jc_* next;
+	jc_** REF_jc = &jc;
+	u32 badCompiler[4];
 	while (jc) {
-		jc = (jc_*)jc->mNext;
+		next = (jc_*)jc->mNext;
 		Stop_1Shot(jc);
+		jc = next;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0x8
-	  bl        -0xC878
-	  addi      r3, r31, 0xC
-	  bl        -0xC880
-	  addi      r3, r31, 0x10
-	  bl        -0xC888
-	  addi      r3, r31, 0x14
-	  bl        -0xC890
-	  lwz       r0, 0xC(r31)
-	  stw       r0, 0x20(r1)
-	  b         .loc_0x4C
-
-	.loc_0x40:
-	  lwz       r31, 0x24(r3)
-	  bl        -0xC4
-	  stw       r31, 0x20(r1)
-
-	.loc_0x4C:
-	  lwz       r3, 0x20(r1)
-	  cmplwi    r3, 0
-	  bne+      .loc_0x40
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -766,7 +637,9 @@ void AllStop_1Shot(jcs_* jcs)
 static int Extra_Update(jc_* jc, JCSTATUS status)
 {
 	if (jc->_FA) {
-		jc->_B0 += (jc->_E8[2] - jc->_B0) / (f32)jc->_FA;
+		f32 a = jc->_E8[2] - jc->_B0;
+		a /= jc->_FA;
+		jc->_B0 += a;
 		jc->_FA--;
 
 		if (jc->_FA == 0) {
@@ -774,38 +647,6 @@ static int Extra_Update(jc_* jc, JCSTATUS status)
 		}
 	}
 	return 0;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  lhz       r0, 0xFA(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x60
-	  stw       r0, 0x14(r1)
-	  lis       r0, 0x4330
-	  lfs       f3, 0xF4(r3)
-	  stw       r0, 0x10(r1)
-	  lfs       f2, 0xB0(r3)
-	  lfd       f1, -0x7E98(r2)
-	  lfd       f0, 0x10(r1)
-	  fsubs     f3, f3, f2
-	  fsubs     f0, f0, f1
-	  fdivs     f3, f3, f0
-	  fadds     f0, f2, f3
-	  stfs      f0, 0xB0(r3)
-	  lhz       r4, 0xFA(r3)
-	  subi      r0, r4, 0x1
-	  sth       r0, 0xFA(r3)
-	  lhz       r0, 0xFA(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x60
-	  li        r0, 0
-	  stw       r0, 0x2C(r3)
-
-	.loc_0x60:
-	  li        r3, 0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
 }
 
 /*
@@ -833,76 +674,26 @@ void SetPitchTarget_1Shot(jc_* jc, f32 a1, u32 a2)
  */
 void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
 {
+	int id;
 	if (jc == 0) {
 		return;
 	}
 
 	if (jc->_0C == 2 || jc->_10 == NULL) {
-		a1 &= 0xff;
+		id = a1;
 	} else {
-		a1 = ((u8)a1 + 0x3c) - ((int)jc->_10 + 2);
+		id = (a1 + 60) - (((u8*)jc->_10)[2]);
 	}
 
-	if (a1 < 0) {
-		a1 = 0;
+	if (id < 0) {
+		id = 0;
 	}
-	if (a1 >= 0x7f) {
-		a1 = 0x7f;
+	if (id > 0x7f) {
+		id = 0x7f;
 	}
 
-	SetPitchTarget_1Shot(jc, jc->_A8 * C5BASE_PITCHTABLE[a1], a2);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  cmplwi    r3, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  beq-      .loc_0x80
-	  lbz       r0, 0xC(r3)
-	  cmplwi    r0, 0x2
-	  beq-      .loc_0x2C
-	  lwz       r6, 0x10(r3)
-	  cmplwi    r6, 0
-	  bne-      .loc_0x34
-
-	.loc_0x2C:
-	  rlwinm    r0,r4,0,24,31
-	  b         .loc_0x44
-
-	.loc_0x34:
-	  rlwinm    r4,r4,0,24,31
-	  lbz       r6, 0x2(r6)
-	  addi      r0, r4, 0x3C
-	  sub       r0, r0, r6
-
-	.loc_0x44:
-	  cmpwi     r0, 0
-	  bge-      .loc_0x50
-	  li        r0, 0
-
-	.loc_0x50:
-	  cmpwi     r0, 0x7F
-	  ble-      .loc_0x5C
-	  li        r0, 0x7F
-
-	.loc_0x5C:
-	  lis       r4, 0x8022
-	  rlwinm    r6,r0,2,0,29
-	  addi      r0, r4, 0x4E18
-	  lfs       f0, 0xA8(r3)
-	  add       r4, r0, r6
-	  lfs       f1, 0x0(r4)
-	  mr        r4, r5
-	  fmuls     f1, f0, f1
-	  bl        -0xBC
-
-	.loc_0x80:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	f32 pitch = C5BASE_PITCHTABLE[id];
+	SetPitchTarget_1Shot(jc, jc->_A8 * pitch, a2);
 }
 
 /*
@@ -912,91 +703,30 @@ void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
  */
 void Gate_1Shot(jc_* jc, u8 a1, u8 a2, s32 a3)
 {
+	u32 badCompiler[2];
 	if (jc->_30 == -1) {
 		jc->_30 = a3;
 		jc->_34 = jc->_30;
-		int val;
+		int idx;
 		if (jc->_0C == 2) {
-			val = a1;
+			idx = a1;
 		} else {
-			val = a1 + 0x3c;
+			idx = (a1 + 60) - (((u8*)jc->_10)[2]);
 		}
-		if (val < 0) {
-			val = 0;
+		if (idx < 0) {
+			idx = 0;
 		}
-		if (val > 0x7f) {
-			val = 0x7f;
+		if (idx > 0x7f) {
+			idx = 0x7f;
 		}
 
-		jc->_00 = a2;
-		jc->_01 = a1;
-		jc->_B0 = jc->_A8 * C5BASE_PITCHTABLE[val];
-		jc->_B4 = jc->_00 / 127.0f;
-		jc->_B4 *= jc->_AC * jc->_B4;
+		f32 pitch = C5BASE_PITCHTABLE[idx];
+		jc->_00   = a2;
+		jc->_01   = a1;
+		jc->_B0   = jc->_A8 * pitch;
+		jc->_B4   = jc->_00 / 127.0f;
+		jc->_B4   = jc->_B4 * jc->_B4 * jc->_AC;
 	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  lwz       r0, 0x30(r3)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xC0
-	  stw       r6, 0x30(r3)
-	  lwz       r0, 0x30(r3)
-	  stw       r0, 0x34(r3)
-	  lbz       r0, 0xC(r3)
-	  cmplwi    r0, 0x2
-	  bne-      .loc_0x30
-	  rlwinm    r0,r4,0,24,31
-	  b         .loc_0x44
-
-	.loc_0x30:
-	  lwz       r7, 0x10(r3)
-	  rlwinm    r6,r4,0,24,31
-	  addi      r0, r6, 0x3C
-	  lbz       r6, 0x2(r7)
-	  sub       r0, r0, r6
-
-	.loc_0x44:
-	  cmpwi     r0, 0
-	  bge-      .loc_0x50
-	  li        r0, 0
-
-	.loc_0x50:
-	  cmpwi     r0, 0x7F
-	  ble-      .loc_0x5C
-	  li        r0, 0x7F
-
-	.loc_0x5C:
-	  lis       r6, 0x8022
-	  rlwinm    r7,r0,2,0,29
-	  addi      r6, r6, 0x4E18
-	  lis       r0, 0x4330
-	  add       r6, r6, r7
-	  lfs       f1, 0x0(r6)
-	  stb       r5, 0x0(r3)
-	  stb       r4, 0x1(r3)
-	  lfs       f0, 0xA8(r3)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB0(r3)
-	  lbz       r4, 0x0(r3)
-	  lfd       f2, -0x7E98(r2)
-	  stw       r4, 0x24(r1)
-	  lfs       f0, -0x7E90(r2)
-	  stw       r0, 0x20(r1)
-	  lfd       f1, 0x20(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xB4(r3)
-	  lfs       f0, 0xB4(r3)
-	  lfs       f1, 0xAC(r3)
-	  fmuls     f0, f0, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xB4(r3)
-
-	.loc_0xC0:
-	  addi      r1, r1, 0x28
-	  blr
-	*/
 }
 
 /*
@@ -1250,79 +980,29 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS status)
  */
 u32 One_CheckInstWave(SOUNDID_ sound)
 {
-	Inst_* inst = InstRead(sound.value, sound.value);
+	Inst_* inst = InstRead(sound.bytes[0], sound.bytes[1]);
 	if (inst == NULL) {
 		return 1;
 	}
 
-	int map = VmapRead(inst, sound.value, sound.value);
+	// TODO: fix this conversion to something wave-related once we've sorted that out
+	int* map = (int*)VmapRead(inst, sound.bytes[2], sound.bytes[3]);
 	if (map == NULL) {
 		return 2;
 	}
 
-	CtrlGroup_* group = WaveidToWavegroup(map, sound.value);
+	// clearly need something better than map[1]
+	CtrlGroup_* group = WaveidToWavegroup(map[1], sound.bytes[0]);
 	if (group == NULL) {
 		return 3;
 	}
 
-	int* handle = GetSoundHandle(group, map);
+	int* handle = GetSoundHandle(group, map[1]);
 	if (handle == 0) {
 		return 4;
 	}
 
 	return 0;
-
-	/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x18(r1)
-  stmw      r30, 0x10(r1)
-  mr        r30, r3
-  lbz       r3, 0x0(r3)
-  lbz       r4, 0x1(r30)
-  bl        -0x9FC
-  cmplwi    r3, 0
-  bne-      .loc_0x30
-  li        r3, 0x1
-  b         .loc_0x84
-
-.loc_0x30:
-  lbz       r4, 0x2(r30)
-  lbz       r5, 0x3(r30)
-  bl        -0x9B8
-  mr.       r31, r3
-  bne-      .loc_0x4C
-  li        r3, 0x2
-  b         .loc_0x84
-
-.loc_0x4C:
-  lwz       r3, 0x4(r31)
-  lbz       r4, 0x0(r30)
-  bl        -0x9D14
-  cmplwi    r3, 0
-  bne-      .loc_0x68
-  li        r3, 0x3
-  b         .loc_0x84
-
-.loc_0x68:
-  lwz       r4, 0x4(r31)
-  bl        -0x94EC
-  cmplwi    r3, 0
-  bne-      .loc_0x80
-  li        r3, 0x4
-  b         .loc_0x84
-
-.loc_0x80:
-  li        r3, 0
-
-.loc_0x84:
-  lwz       r0, 0x1C(r1)
-  lmw       r30, 0x10(r1)
-  addi      r1, r1, 0x18
-  mtlr      r0
-  blr
-*/
 }
 
 /*
