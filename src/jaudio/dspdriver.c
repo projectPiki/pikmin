@@ -1,9 +1,15 @@
 #include "jaudio/dspdriver.h"
 
 #include "jaudio/dspinterface.h"
+#include "jaudio/audiothread.h"
+#include "jaudio/driverinterface.h"
+#include "jaudio/rate.h"
 
 #define DSPCH_LENGTH (64)
 static dspch_ DSPCH[DSPCH_LENGTH] ATTRIBUTE_ALIGN(32);
+
+static int old_time;
+static u32 history[10] = { 0xF4240 };
 
 /*
  * --INFO--
@@ -47,32 +53,34 @@ void InitDSPchannel()
 dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 {
 
-	int i;
-	dspch_* chan;
-	if (param_1)
-		return NULL;
+	u32* p2 = &param_2;
 
-	if (!param_1) {
+	int i;
+	int* ip = &i;
+	if (param_1 == 0) {
+
 		for (i = 0; i < DSPCH_LENGTH; ++i) {
-			chan = &DSPCH[i];
-			if (chan->_01 != 1)
-				continue;
-			chan->_01 = TRUE;
-			chan->_08 = param_2;
-			chan->_03 = 1;
-			DSP_AllocInit(i);
-			return chan;
+			if (DSPCH[i]._01 == 0) {
+				DSPCH[i]._01 = TRUE;
+				DSPCH[i]._08 = param_2;
+				DSPCH[i]._03 = 1;
+				DSP_AllocInit(i);
+				return &DSPCH[i];
+			}
 		}
 	} else {
 		for (i = 0; i < DSPCH_LENGTH / 2; ++i) {
-			chan = &DSPCH[i];
 
-			if (chan->_01)
+			if (DSPCH[i]._01 || DSPCH[i - 1]._01)
 				continue;
 
+			DSPCH[i]._01     = 3;
+			DSPCH[i - 1]._01 = 2;
+			DSPCH[i]._08     = param_2;
+			DSPCH[i - 1]._08 = param_2;
 			DSP_AllocInit(i);
 			DSP_AllocInit(i - 1);
-			return chan - 1;
+			return &DSPCH[i - 1];
 		}
 	}
 	return NULL;
@@ -83,82 +91,35 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
  * Address:	8000AE80
  * Size:	0000DC
  */
-void DeAllocDSPchannel(dspch_*, u32)
+int DeAllocDSPchannel(dspch_* chan, u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr.       r31, r3
-	  bne-      .loc_0x20
-	  li        r3, -0x1
-	  b         .loc_0xC8
+	if (chan == NULL) {
+		return -1;
+	}
+	if (chan->_08 != id) {
+		return -2;
+	}
 
-	.loc_0x20:
-	  lwz       r0, 0x8(r31)
-	  cmplw     r0, r4
-	  beq-      .loc_0x34
-	  li        r3, -0x2
-	  b         .loc_0xC8
+	switch (chan->_01) {
+	case 1:
+	case 4:
+		chan->_01 = 0;
+		break;
+	case 2:
+		chan->_01 = 0;
+		DeAllocDSPchannel(&DSPCH[chan->buffer_idx + 1], id);
+		break;
+	case 3:
+		chan->_01 = 0;
+		DeAllocDSPchannel(&DSPCH[chan->buffer_idx - 1], id);
+		break;
+	}
+	chan->_03 = 0;
+	chan->_0C = nullptr;
+	chan->_08 = 0;
+	return 0;
 
-	.loc_0x34:
-	  lbz       r0, 0x1(r31)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x90
-	  bge-      .loc_0x54
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x68
-	  b         .loc_0xB4
-
-	.loc_0x54:
-	  cmpwi     r0, 0x5
-	  bge-      .loc_0xB4
-
-	.loc_0x5C:
-	  li        r0, 0
-	  stb       r0, 0x1(r31)
-	  b         .loc_0xB4
-
-	.loc_0x68:
-	  li        r0, 0
-	  lis       r3, 0x8030
-	  stb       r0, 0x1(r31)
-	  addi      r0, r3, 0x6660
-	  lbz       r3, 0x0(r31)
-	  addi      r3, r3, 0x1
-	  rlwinm    r3,r3,4,0,27
-	  add       r3, r0, r3
-	  bl        .loc_0x0
-	  b         .loc_0xB4
-
-	.loc_0x90:
-	  li        r0, 0
-	  lis       r3, 0x8030
-	  stb       r0, 0x1(r31)
-	  addi      r0, r3, 0x6660
-	  lbz       r3, 0x0(r31)
-	  subi      r3, r3, 0x1
-	  rlwinm    r3,r3,4,0,27
-	  add       r3, r0, r3
-	  bl        .loc_0x0
-
-	.loc_0xB4:
-	  li        r0, 0
-	  li        r3, 0
-	  stb       r0, 0x3(r31)
-	  stw       r0, 0xC(r31)
-	  stw       r0, 0x8(r31)
-
-	.loc_0xC8:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	u32 badcompiler[2];
 }
 
 /*
@@ -168,6 +129,38 @@ void DeAllocDSPchannel(dspch_*, u32)
  */
 dspch_* GetLowerDSPchannel()
 {
+	volatile u8 max = 255;
+	dspch_* chan    = NULL;
+	volatile u32 id = 0;
+	volatile u32 x  = 0;
+	volatile u32 i  = 0;
+
+	for (i; i < DSPCH_LENGTH; i++) {
+		chan = &DSPCH[i];
+		if (chan->_01 != 4) {
+			if (chan->_01 == 0) {
+				chan->_03 = 0;
+				id        = i;
+				break;
+			}
+
+			if (chan->_0C) {
+				GetDspHandle(chan->buffer_idx);
+				if (chan->_03 <= max) {
+					DSPBuffer* buf = GetDspHandle(chan->buffer_idx);
+					if (chan->_03 != max || (x && (x >= buf->_10C || buf->_10C == 0))) {
+						x   = buf->_10C;
+						id  = i;
+						max = chan->_03;
+					}
+				}
+			}
+		}
+	}
+
+	return &DSPCH[id];
+
+	u32 badcompiler[10];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -360,66 +353,33 @@ BOOL BreakLowerDSPchannel(u8 param_1)
  * Address:	8000B2A0
  * Size:	0000AC
  */
-void BreakLowerActiveDSPchannel(u8)
+BOOL BreakLowerActiveDSPchannel(u8 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stb       r3, 0x8(r1)
-	  bl        -0x234
-	  mr        r31, r3
-	  lbz       r0, 0x8(r1)
-	  lbz       r3, 0x3(r3)
-	  cmplw     r3, r0
-	  ble-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x98
+	u8* id_ptr   = &id;
+	dspch_* chan = GetLowerActiveDSPchannel();
 
-	.loc_0x34:
-	  bne-      .loc_0x40
-	  lbz       r3, 0x0(r31)
-	  bl        0x284
+	if (chan->_03 > id) {
+		return FALSE;
+	}
 
-	.loc_0x40:
-	  lbz       r0, 0x1(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x8C
-	  lwz       r12, 0xC(r31)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x80
-	  addi      r3, r31, 0
-	  li        r4, 0x3
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,16,31
-	  addi      r3, r31, 0
-	  sth       r0, 0x6(r31)
-	  bl        -0x1B4
-	  li        r0, 0x4
-	  stb       r0, 0x1(r31)
+	if (chan->_03 == id) {
+		GetDspHandle(chan->buffer_idx);
+	}
 
-	.loc_0x80:
-	  mr        r3, r31
-	  bl        -0x1C4
-	  b         .loc_0x94
+	if (chan->_01) {
+		if (chan->_0C) {
+			chan->_06 = chan->_0C(chan, 3);
+			ForceStopDSPchannel(chan);
+			chan->_01 = 4;
+		}
+		ForceStopDSPchannel(chan);
+	} else {
+		return FALSE;
+	}
 
-	.loc_0x8C:
-	  li        r3, 0
-	  b         .loc_0x98
+	return TRUE;
 
-	.loc_0x94:
-	  li        r3, 0x1
-
-	.loc_0x98:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	u32 badcompiler[2];
 }
 
 /*
@@ -427,7 +387,7 @@ void BreakLowerActiveDSPchannel(u8)
  * Address:	........
  * Size:	000008
  */
-void UpdateDSPchannel(dspch_*)
+void UpdateDSPchannel(dspch_* chan)
 {
 	// UNUSED FUNCTION
 }
@@ -439,6 +399,64 @@ void UpdateDSPchannel(dspch_*)
  */
 void UpdateDSPchannelAll()
 {
+	int tick    = OSGetTick();
+	u32 old     = tick - old_time;
+	old_time    = tick;
+	int id      = JAC_SUBFRAMES - DspSyncCountCheck();
+	history[id] = old;
+
+	if (id != 0 && (f32)history[id] / (f32)old < 1.1f) {
+		BreakLowerActiveDSPchannel(0x7e);
+	}
+
+	for (u32 i = 0; i < DSPCH_LENGTH; i++) {
+		dspch_* chan     = &DSPCH[i];
+		dspch_** chanptr = &chan;
+
+		if (chan->_01 == FALSE) {
+			continue;
+		}
+		DSPBuffer* buf = GetDspHandle(chan->buffer_idx);
+		if (buf->done) {
+			if (chan->_0C) {
+				chan->_06 = chan->_0C(chan, 2);
+			}
+			buf->done    = FALSE;
+			buf->enabled = FALSE;
+			DSP_FlushChannel(chan->buffer_idx);
+			if (chan->_01 == FALSE) {
+				continue;
+			}
+		}
+
+		if (!buf->endRequested) {
+			buf->_10C++;
+			if (buf->_10C == chan->_04 && chan->_0C) {
+				chan->_06 = chan->_0C(chan, 4);
+			}
+		}
+
+		if (chan->_0C) {
+			u16* ptr = &chan->_06;
+			u16 a    = *ptr;
+			if (a) {
+				*ptr = a - 1;
+			}
+			if (*ptr == 0) {
+				*ptr = chan->_0C(chan, 0);
+				if (*ptr == 0) {
+					buf->done    = FALSE;
+					buf->enabled = FALSE;
+					__Entry_WaitChannel(1);
+					DSP_FlushChannel(chan->buffer_idx);
+				}
+			}
+		}
+	}
+	EntryCheck_WaitDSPChannel();
+	PPCSync();
+
+	u32 badcompiler[9];
 	/*
 	.loc_0x0:
 	  mflr      r0

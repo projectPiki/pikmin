@@ -10,12 +10,12 @@
 dspch_* GetDSPchannelHandle(u32 idx);
 void InitDSPchannel();
 dspch_* AllocDSPchannel(u32, u32);
-void DeAllocDSPchannel(dspch_*, u32);
+int DeAllocDSPchannel(dspch_*, u32);
 dspch_* GetLowerDSPchannel();
 dspch_* GetLowerActiveDSPchannel();
 BOOL ForceStopDSPchannel(dspch_*);
 BOOL BreakLowerDSPchannel(u8);
-void BreakLowerActiveDSPchannel(u8);
+BOOL BreakLowerActiveDSPchannel(u8);
 void UpdateDSPchannelAll();
 
 /////////////////////////////////////////////////////
