@@ -308,7 +308,7 @@ BOOL Wavegroup_Regist(void* param_1, u32 id)
 {
 	Ibnk_* bank = (Ibnk_*)param_1;
 	Jac_WsConnectTableSet(bank->_08, id);
-	wavegroup[id] = Wave_Test((u8*)param_1);
+	wavegroup[id] = Wave_Test((u8*)bank);
 	wavearc[id]   = bank->_10;
 
 	if (wavegroup[id] == NULL) {
@@ -316,46 +316,6 @@ BOOL Wavegroup_Regist(void* param_1, u32 id)
 	}
 	wavegroup[id]->_04 = 0;
 	return TRUE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  addi      r31, r3, 0
-	  addi      r30, r4, 0
-	  lwz       r3, 0x8(r3)
-	  bl        0x9C4
-	  mr        r3, r31
-	  bl        -0x2C4
-	  lis       r5, 0x8031
-	  lis       r4, 0x8031
-	  rlwinm    r6,r30,2,0,29
-	  subi      r0, r5, 0x2D20
-	  add       r5, r0, r6
-	  subi      r0, r4, 0x3120
-	  stw       r3, 0x0(r5)
-	  add       r3, r0, r6
-	  lwz       r0, 0x10(r31)
-	  stw       r0, 0x0(r3)
-	  lwz       r4, 0x0(r5)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x64
-	  li        r3, 0
-	  b         .loc_0x70
-
-	.loc_0x64:
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x4(r4)
-
-	.loc_0x70:
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -377,14 +337,14 @@ void Wavegroup_Init()
  */
 CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 {
-	u16 a = param_1;
+	u16 a = param_1 >> 16;
 	u16 index;
-	u32* VOLATILE_param_1 = &param_1;
+	u16* REF_a = &a;
 
-	u32 badCompiler[2];
+	u32 badCompiler;
 
-	if (param_1 == 0xFFFF) {
-		index = a;
+	if (a == 0xFFFF) {
+		index = param_2;
 	} else {
 		index = Jac_WsVirtualToPhysical(a);
 	}
