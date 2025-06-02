@@ -21,7 +21,7 @@ typedef struct RegisterParam_ RegisterParam_;
 typedef union URegisterParam_ URegisterParam_;
 
 typedef u32 (*CmdFunction)();              // TODO: Confirm return type
-typedef u32 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
+typedef u16 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
 
 /**
  * @brief This is an invented type of an unknown name.
@@ -196,13 +196,13 @@ struct seqp_ {
 	u8 _3E3;                  // _3E3
 	u8 _3E4;                  // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];   // _3E5
-	u8 _3E8[2];               // _3E8 | Exact length unknown, but it is an array.
-	u8 _3EA[0x434 - 0x3ea];   // _3EA | Exact size of struct confirmed by `Jaf_HandleToSeq`.
+	Oscbuf_ _3E8[1];          // _3E8 | Exact length unknown, but it is an array. Member type is a guess.
+	u8 _400[0x434 - 0x400];   // _400 | Exact size of struct confirmed by `Jaf_HandleToSeq`.
 };
 
 void* Jam_OfsToAddr(seqp_*, u32);         // TODO: Change return type to u8* if that's more convenient.
 void Jam_WriteRegDirect(seqp_*, u8, u16); // Is param_3 is u8 or a u16?
-void Jam_WriteRegParam(void);
+void Jam_WriteRegParam(seqp_*, u8);
 u16 Jam_ReadRegDirect(seqp_*, u8);
 u32 Jam_ReadReg32(seqp_* track, u8 index);
 void Jam_WriteRegXY(seqp_* track, u32 param_2);

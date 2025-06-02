@@ -305,7 +305,7 @@ static void Jac_Archiver_Init()
  * Address:	80017040
  * Size:	0000AC
  */
-static u32 TrackReceive(seqp_* track, u16 param_2)
+static u16 TrackReceive(seqp_* track, u16 param_2)
 {
 	u32 badCompiler;
 	u8 stupid1;  // Do it inside the if statement, idiots.

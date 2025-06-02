@@ -6,6 +6,7 @@
 #include "jaudio/fat.h"
 #include "jaudio/noteon.h"
 #include "jaudio/rate.h"
+#include "jaudio/random.h"
 
 #include "Dolphin/OS/OSError.h"
 
@@ -327,28 +328,32 @@ void Jam_WriteTimeParam(seqp_* track, u8 param_2)
  */
 void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
-	u8 uVar1;
-	u32 uVar2;
+	u32 badCompiler;
 
-	uVar1 = value;
+	u16 uVar1;
+
 	switch (index) {
 	case 0:
 	case 1:
 	case 2:
-		uVar1 = value & 0xff;
-		value = Extend8to16(value);
+		value = value & 0xff;
+		uVar1 = Extend8to16(value);
 		break;
 	case 32:
 	case 33:
 		return;
 	case 34:
 		Jam_WriteRegDirect(track, 0, value >> 8);
+		uVar1 = value;
+		value = value & 0xff;
 		index = 1;
-		uVar1 = value & 0xff;
+		break;
+	default:
+		uVar1 = value;
 		break;
 	}
-	track->regParam.reg[index] = uVar1;
-	track->regParam.param._06  = value;
+	track->regParam.reg[index] = value;
+	track->regParam.param._06  = uVar1;
 }
 
 /*
@@ -356,24 +361,26 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
  * Address:	8000FB60
  * Size:	000098
  */
-static u32 LoadTbl(seqp_* track, u32 param_2, u32 param_3, u32 param_4)
+static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
 {
-	// TODO: FIXME
 	u32 result;
 
 	switch (param_4) {
-	case 2:
-		result = __ByteReadOfs(track, param_2 + param_3 * 1);
-		break;
-	case 3: // Without this case statement, the compiler-generated conditions look crazy.
 	case 4:
-		result = __WordReadOfs(track, param_2 + param_3 * 2);
+		result = __ByteReadOfs(track, ofs + idx);
+		break;
+	case 5:
+		idx    = idx * 2;
+		result = __WordReadOfs(track, ofs + idx);
 		break;
 	case 6:
-		result = __24ReadOfs(track, param_2 + param_3 * 3);
+		idx    = idx * 2 + idx; // Roundabout way to multiply by 3.
+		result = __24ReadOfs(track, ofs + idx);
 		break;
+	case 7:
+		idx = idx * 4;
 	case 8:
-		result = __LongReadOfs(track, param_2 + param_3 * 4);
+		result = __LongReadOfs(track, ofs + idx);
 		break;
 	}
 	return result;
@@ -384,382 +391,174 @@ static u32 LoadTbl(seqp_* track, u32 param_2, u32 param_3, u32 param_4)
  * Address:	8000FC00
  * Size:	000484
  */
-void Jam_WriteRegParam(void)
+void Jam_WriteRegParam(seqp_* track, u8 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,28,31
-	  cmpwi     r0, 0xB
-	  stwu      r1, -0x40(r1)
-	  stmw      r23, 0x1C(r1)
-	  addi      r31, r3, 0
-	  rlwinm    r26,r4,0,28,29
-	  rlwinm    r25,r4,0,30,31
-	  bne-      .loc_0x30
-	  li        r26, 0
-	  li        r25, 0xB
+	u8 reg;
+	s16 regValue;
+	u16 uVar5;
+	u32 unaff_r24;
+	u32 uVar8;
+	u32 uVar9;
+	u32 unaff_r27;
+	s16 uVar10;
 
-	.loc_0x30:
-	  cmpwi     r0, 0xA
-	  bne-      .loc_0x54
-	  mr        r3, r31
-	  bl        -0x63C
-	  addi      r4, r3, 0
-	  rlwinm    r26,r3,0,28,29
-	  rlwinm    r3,r3,28,28,31
-	  li        r25, 0xA
-	  addi      r24, r3, 0x4
+	uVar9 = param_2 & 0xc;
+	uVar8 = param_2 & 3;
+	if ((param_2 & 0x0F) == 0xb) {
+		uVar9 = 0;
+		uVar8 = 0xb;
+	}
+	if ((param_2 & 0x0F) == 0xa) {
+		param_2   = __ByteRead(track);
+		uVar9     = param_2 & 0x0C;
+		uVar8     = 0xa;
+		unaff_r24 = (param_2 >> 4) + 4;
+	}
+	if ((param_2 & 0x0F) == 9) {
+		uVar8 = __ByteRead(track);
+		uVar9 = uVar8 & 0x0c;
+		uVar8 = uVar8 & 0xf0;
+		if (uVar9 == 8) {
+			uVar9 = 0x10;
+		}
+	}
+	reg = __ByteRead(track);
+	if (uVar8 == 10) {
+		unaff_r27 = Jam_ReadReg32(track, __ByteRead(track));
+	}
+	switch (uVar9) {
+	case 0:
+		uVar10 = Jam_ReadRegDirect(track, __ByteRead(track));
+		break;
+	case 4:
+		uVar10 = __ByteRead(track);
+		break;
+	case 8:
+		uVar10 = __ByteRead(track) << 8;
+		break;
+	case 12:
+		uVar10 = __WordRead(track);
+		break;
+	case 16:
+		uVar10 = -1;
+	}
 
-	.loc_0x54:
-	  rlwinm    r0,r4,0,28,31
-	  cmpwi     r0, 0x9
-	  bne-      .loc_0x80
-	  mr        r3, r31
-	  bl        -0x664
-	  rlwinm    r0,r3,0,28,29
-	  rlwinm    r25,r3,0,24,27
-	  cmplwi    r0, 0x8
-	  mr        r26, r0
-	  bne-      .loc_0x80
-	  li        r26, 0x10
+	regValue = Jam_ReadRegDirect(track, reg);
+	switch (uVar8) {
+	case 0x00:
+		break;
+	case 0x01:
+		if (uVar9 == 4) {
+			uVar10 = Extend8to16(uVar10);
+		}
+		uVar10 = regValue + uVar10;
+		break;
+	case 0x02:
+		Jam_WriteRegXY(track, regValue * uVar10);
+		return;
+	case 0x03:
+		track->regParam.param._06 = regValue - uVar10;
+		return;
+		break;
+	case 0x0B:
+		uVar10 = regValue - uVar10;
+		break;
+	case 0x10:
+		if (uVar9 == 4) {
+			uVar10 = Extend8to16(uVar10);
+		}
+		if (uVar10 < 0) {
+			uVar10 = (u16)regValue >> -uVar10;
+		} else {
+			uVar10 = (u16)regValue << uVar10;
+		}
+		break;
+	case 0x20:
+		if (uVar9 == 4) {
+			uVar10 = Extend8to16(uVar10);
+		}
+		if (uVar10 < 0) {
+			uVar10 = regValue >> -uVar10;
+		} else {
+			uVar10 = regValue << uVar10;
+		}
+		break;
+	case 0x30:
+		uVar10 = regValue & uVar10;
+		break;
+	case 0x40:
+		uVar10 = regValue | uVar10;
+		break;
+	case 0x50:
+		uVar10 = regValue ^ uVar10;
+		break;
+	case 0x60:
+		uVar10 = -regValue;
+		break;
+	case 0x90:
+		unaff_r27 = GetRandom_s32();
+		uVar10    = unaff_r27 - (unaff_r27 / uVar10) * uVar10;
+		break;
+	case 0xA:
+		unaff_r27 = LoadTbl(track, unaff_r27, uVar10, unaff_r24);
+		uVar10    = (u16)unaff_r27;
+		break;
+	}
 
-	.loc_0x80:
-	  mr        r3, r31
-	  bl        -0x684
-	  cmplwi    r25, 0xA
-	  addi      r29, r3, 0
-	  bne-      .loc_0xAC
-	  mr        r3, r31
-	  bl        -0x698
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  bl        0x5DC
-	  mr        r27, r3
+	switch (reg) {
+	case 0:
+	case 1:
+	case 2:
+		uVar5  = Extend8to16(uVar10);
+		uVar10 = uVar10 & 0xff;
+		break;
+	case 0x21:
+		reg    = 6;
+		uVar10 = track->regParam.param._0C & 0xff00 | uVar10 & 0xff;
+		break;
+	case 0x20:
+		reg    = 6;
+		uVar10 = (uVar10 << 8) | track->regParam.param._0C & 0xff;
+		break;
+	case 0x2E:
+		reg    = 0xd;
+		uVar10 = track->regParam.param._1A & 0xff00 | uVar10 & 0xff;
+		break;
+	case 0x2F:
+		reg    = 0xd;
+		uVar10 = (uVar10 << 8) | track->regParam.param._1A & 0xff;
+		break;
+	case 0x22:
+		Jam_WriteRegDirect(track, 0, uVar10 >> 8);
+		uVar5  = uVar10;
+		uVar10 = uVar10 & 0xff;
+		reg    = 1;
+		break;
+	case 0x28:
+	case 0x29:
+	case 0x2A:
+	case 0x2B:
+		uVar5                                 = uVar10;
+		track->regParam.param._20[reg - 0x28] = unaff_r27;
+		break;
+	default:
+		uVar5 = uVar10;
+		break;
+	}
 
-	.loc_0xAC:
-	  cmplwi    r26, 0x10
-	  bgt-      .loc_0x120
-	  lis       r3, 0x8022
-	  rlwinm    r0,r26,2,0,29
-	  addi      r3, r3, 0x509C
-	  lwzx      r0, r3, r0
-	  mtctr     r0
-	  bctr
-	  mr        r3, r31
-	  bl        -0x6D0
-	  addi      r4, r3, 0
-	  addi      r3, r31, 0
-	  bl        0x3C4
-	  mr        r30, r3
-	  b         .loc_0x120
-	  mr        r3, r31
-	  bl        -0x6EC
-	  rlwinm    r30,r3,0,24,31
-	  b         .loc_0x120
-	  mr        r3, r31
-	  bl        -0x6FC
-	  rlwinm    r0,r3,8,16,23
-	  extsh     r30, r0
-	  b         .loc_0x120
-	  mr        r3, r31
-	  bl        -0x690
-	  mr        r30, r3
-	  b         .loc_0x120
-	  li        r30, -0x1
+	track->regParam.reg[reg]  = uVar10;
+	track->regParam.param._06 = uVar5;
 
-	.loc_0x120:
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0
-	  bl        0x378
-	  cmpwi     r25, 0x20
-	  addi      r23, r3, 0
-	  beq-      .loc_0x258
-	  bge-      .loc_0x188
-	  cmpwi     r25, 0xA
-	  beq-      .loc_0x2E0
-	  bge-      .loc_0x170
-	  cmpwi     r25, 0x2
-	  beq-      .loc_0x1E0
-	  bge-      .loc_0x164
-	  cmpwi     r25, 0
-	  beq-      .loc_0x2FC
-	  bge-      .loc_0x1C4
-	  b         .loc_0x2FC
-
-	.loc_0x164:
-	  cmpwi     r25, 0x4
-	  bge-      .loc_0x2FC
-	  b         .loc_0x1FC
-
-	.loc_0x170:
-	  cmpwi     r25, 0x10
-	  beq-      .loc_0x210
-	  bge-      .loc_0x2FC
-	  cmpwi     r25, 0xC
-	  bge-      .loc_0x2FC
-	  b         .loc_0x208
-
-	.loc_0x188:
-	  cmpwi     r25, 0x50
-	  beq-      .loc_0x2B0
-	  bge-      .loc_0x1AC
-	  cmpwi     r25, 0x40
-	  beq-      .loc_0x2A8
-	  bge-      .loc_0x2FC
-	  cmpwi     r25, 0x30
-	  beq-      .loc_0x2A0
-	  b         .loc_0x2FC
-
-	.loc_0x1AC:
-	  cmpwi     r25, 0x90
-	  beq-      .loc_0x2C0
-	  bge-      .loc_0x2FC
-	  cmpwi     r25, 0x60
-	  beq-      .loc_0x2B8
-	  b         .loc_0x2FC
-
-	.loc_0x1C4:
-	  cmplwi    r26, 0x4
-	  bne-      .loc_0x1D8
-	  rlwinm    r3,r30,0,24,31
-	  bl        -0x510
-	  mr        r30, r3
-
-	.loc_0x1D8:
-	  add       r30, r23, r30
-	  b         .loc_0x2FC
-
-	.loc_0x1E0:
-	  extsh     r3, r23
-	  extsh     r0, r30
-	  mullw     r27, r3, r0
-	  addi      r3, r31, 0
-	  addi      r4, r27, 0
-	  bl        0x4EC
-	  b         .loc_0x470
-
-	.loc_0x1FC:
-	  sub       r0, r23, r30
-	  sth       r0, 0x272(r31)
-	  b         .loc_0x470
-
-	.loc_0x208:
-	  sub       r30, r23, r30
-	  b         .loc_0x2FC
-
-	.loc_0x210:
-	  cmplwi    r26, 0x4
-	  bne-      .loc_0x224
-	  rlwinm    r3,r30,0,24,31
-	  bl        -0x55C
-	  mr        r30, r3
-
-	.loc_0x224:
-	  extsh.    r0, r30
-	  bge-      .loc_0x244
-	  extsh     r0, r30
-	  rlwinm    r3,r23,0,16,31
-	  neg       r0, r0
-	  sraw      r0, r3, r0
-	  extsh     r30, r0
-	  b         .loc_0x2FC
-
-	.loc_0x244:
-	  rlwinm    r3,r23,0,16,31
-	  extsh     r0, r30
-	  slw       r0, r3, r0
-	  extsh     r30, r0
-	  b         .loc_0x2FC
-
-	.loc_0x258:
-	  cmplwi    r26, 0x4
-	  bne-      .loc_0x26C
-	  rlwinm    r3,r30,0,24,31
-	  bl        -0x5A4
-	  mr        r30, r3
-
-	.loc_0x26C:
-	  extsh.    r0, r30
-	  bge-      .loc_0x28C
-	  extsh     r0, r30
-	  extsh     r3, r23
-	  neg       r0, r0
-	  sraw      r0, r3, r0
-	  extsh     r30, r0
-	  b         .loc_0x2FC
-
-	.loc_0x28C:
-	  extsh     r3, r23
-	  extsh     r0, r30
-	  slw       r0, r3, r0
-	  extsh     r30, r0
-	  b         .loc_0x2FC
-
-	.loc_0x2A0:
-	  and       r30, r23, r30
-	  b         .loc_0x2FC
-
-	.loc_0x2A8:
-	  or        r30, r23, r30
-	  b         .loc_0x2FC
-
-	.loc_0x2B0:
-	  xor       r30, r23, r30
-	  b         .loc_0x2FC
-
-	.loc_0x2B8:
-	  neg       r30, r23
-	  b         .loc_0x2FC
-
-	.loc_0x2C0:
-	  bl        -0x2780
-	  rlwinm    r4,r30,0,16,31
-	  addi      r27, r3, 0
-	  divwu     r0, r27, r4
-	  mullw     r0, r0, r4
-	  sub       r0, r27, r0
-	  extsh     r30, r0
-	  b         .loc_0x2FC
-
-	.loc_0x2E0:
-	  addi      r3, r31, 0
-	  addi      r4, r27, 0
-	  addi      r6, r24, 0
-	  extsh     r5, r30
-	  bl        -0x390
-	  addi      r27, r3, 0
-	  rlwinm    r30,r3,0,16,31
-
-	.loc_0x2FC:
-	  rlwinm    r0,r29,0,24,31
-	  cmpwi     r0, 0x22
-	  beq-      .loc_0x3D4
-	  bge-      .loc_0x32C
-	  cmpwi     r0, 0x20
-	  beq-      .loc_0x384
-	  bge-      .loc_0x36C
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x410
-	  cmpwi     r0, 0
-	  bge-      .loc_0x358
-	  b         .loc_0x410
-
-	.loc_0x32C:
-	  cmpwi     r0, 0x2E
-	  beq-      .loc_0x3A0
-	  bge-      .loc_0x34C
-	  cmpwi     r0, 0x2C
-	  bge-      .loc_0x410
-	  cmpwi     r0, 0x28
-	  bge-      .loc_0x400
-	  b         .loc_0x410
-
-	.loc_0x34C:
-	  cmpwi     r0, 0x30
-	  bge-      .loc_0x410
-	  b         .loc_0x3B8
-
-	.loc_0x358:
-	  rlwinm    r30,r30,0,24,31
-	  addi      r3, r30, 0
-	  bl        -0x6A0
-	  mr        r28, r3
-	  b         .loc_0x414
-
-	.loc_0x36C:
-	  lhz       r3, 0x278(r31)
-	  rlwinm    r0,r30,0,24,31
-	  mr        r30, r0
-	  li        r29, 0x6
-	  rlwimi    r30,r3,0,16,23
-	  b         .loc_0x414
-
-	.loc_0x384:
-	  lhz       r3, 0x278(r31)
-	  extsh     r0, r30
-	  li        r29, 0x6
-	  rlwinm    r3,r3,0,24,31
-	  addi      r30, r3, 0
-	  rlwimi    r30,r0,8,0,23
-	  b         .loc_0x414
-
-	.loc_0x3A0:
-	  lhz       r3, 0x286(r31)
-	  rlwinm    r0,r30,0,24,31
-	  mr        r30, r0
-	  li        r29, 0xD
-	  rlwimi    r30,r3,0,16,23
-	  b         .loc_0x414
-
-	.loc_0x3B8:
-	  lhz       r3, 0x286(r31)
-	  extsh     r0, r30
-	  li        r29, 0xD
-	  rlwinm    r3,r3,0,24,31
-	  addi      r30, r3, 0
-	  rlwimi    r30,r0,8,0,23
-	  b         .loc_0x414
-
-	.loc_0x3D4:
-	  extsh     r23, r30
-	  addi      r3, r31, 0
-	  srawi     r0, r23, 0x8
-	  li        r4, 0
-	  rlwinm    r5,r0,0,16,31
-	  bl        -0x548
-	  rlwinm    r0,r23,0,24,31
-	  li        r29, 0x1
-	  extsh     r30, r0
-	  addi      r28, r30, 0
-	  b         .loc_0x414
-
-	.loc_0x400:
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r31, r0
-	  stw       r27, 0x1EC(r3)
-	  b         .loc_0x470
-
-	.loc_0x410:
-	  mr        r28, r30
-
-	.loc_0x414:
-	  rlwinm    r3,r29,0,24,31
-	  rlwinm    r0,r29,1,23,30
-	  cmplwi    r3, 0x6
-	  add       r3, r31, r0
-	  sth       r30, 0x26C(r3)
-	  sth       r28, 0x272(r31)
-	  bne-      .loc_0x438
-	  mr        r3, r31
-	  bl        0x4E0C
-
-	.loc_0x438:
-	  rlwinm    r0,r29,0,24,31
-	  cmplwi    r0, 0x7
-	  bne-      .loc_0x450
-	  lwz       r0, 0x3D8(r31)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0x3D8(r31)
-
-	.loc_0x450:
-	  rlwinm    r0,r29,0,24,31
-	  cmplwi    r0, 0xD
-	  bne-      .loc_0x470
-	  lhz       r3, 0x286(r31)
-	  li        r0, 0
-	  oris      r3, r3, 0x1
-	  stw       r3, 0x140(r31)
-	  sth       r0, 0x144(r31)
-
-	.loc_0x470:
-	  lmw       r23, 0x1C(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	if (reg == 6) {
+		Osc_Clear_Overwrite(track);
+	}
+	if (reg == 7) {
+		track->_3D8 |= 2;
+	}
+	if (reg == 0xd) {
+		track->_D8._68 = track->regParam.param._1A | 0x10000;
+		track->_D8._6C = 0;
+	}
 }
 
 /*
@@ -2761,10 +2560,12 @@ static u32 Cmd_ConnectClose()
  */
 static u32 Cmd_SyncCPU()
 {
+	u16 seq_arg;
 	u16 param_3;
 
+	seq_arg = SEQ_ARG[0];
 	if (JAM_CALLBACK_FUNC) {
-		param_3 = JAM_CALLBACK_FUNC(SEQ_P, SEQ_ARG[0]);
+		param_3 = JAM_CALLBACK_FUNC(SEQ_P, seq_arg);
 	} else {
 		param_3 = 0xffff;
 	}
@@ -2881,7 +2682,7 @@ static u32 Cmd_Nop()
  */
 static u32 Cmd_PanPowSet()
 {
-	int i;
+	size_t i;
 
 	for (i = 0; i < 3; ++i) {
 		SEQ_P->regParam.param._10[i] = SEQ_ARG[i];
@@ -2899,15 +2700,17 @@ static u32 Cmd_PanPowSet()
  */
 static u32 Cmd_IIRSet()
 {
-	int i;
-	MoveParam_* param;
+	u32 badCompiler[2];
+
+	size_t i;
+	MoveParam_* iir;
 
 	for (i = 0; i < 4; ++i) {
-		param             = &SEQ_P->timedParam.inner.IIRs[i];
-		param->targValue  = SEQ_ARG[i] / 32768.0f;
-		param->currValue  = param->targValue;
-		param->moveAmount = 0.0f;
-		param->moveTime   = 1.0f;
+		iir             = &SEQ_P->timedParam.move[i + 12]; // fake?
+		iir->targValue  = (s16)SEQ_ARG[i] / 32768.0f;
+		iir->currValue  = iir->targValue;
+		iir->moveAmount = 0.0f;
+		iir->moveTime   = 1.0f;
 	}
 	return 0;
 }
@@ -2995,7 +2798,7 @@ static u32 Cmd_OscRoute()
 
 	SEQ_P->_370[uVar2] = uVar1;
 	if (uVar1 == 0xe) {
-		SEQ_P->_3E8[uVar2 * 0x18] = 1;
+		SEQ_P->_3E8[uVar2]._00 = 1;
 	}
 	return 0;
 }
@@ -3007,19 +2810,17 @@ static u32 Cmd_OscRoute()
  */
 static u32 Cmd_IIRCutOff()
 {
-	int i;
-	seqp_* track;
 	u8 index;
-	MoveParam_* test;
+	size_t i;
+	MoveParam_* iir;
 
-	// track = ;
 	index = SEQ_ARG[0];
 	for (i = 0; i < 4; ++i) {
-		test             = &SEQ_P->timedParam.inner.IIRs[i];
-		test->targValue  = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
-		test->currValue  = test->targValue;
-		test->moveAmount = 0.0f;
-		test->moveTime   = 1.0f;
+		iir             = &SEQ_P->timedParam.move[i + 12]; // fake?
+		iir->targValue  = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
+		iir->currValue  = iir->targValue;
+		iir->moveAmount = 0.0f;
+		iir->moveTime   = 1.0f;
 	}
 	return 0;
 }
@@ -3318,6 +3119,7 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 		argTypes   = argTypes >> 2;
 		SEQ_ARG[i] = arg;
 	}
+	// Me when I have to introduce global state because I'm bored.
 	SEQ_CMD  = cmd;
 	SEQ_P    = track;
 	function = CMDP_LIST[cmd - 0xC0];
