@@ -1,6 +1,7 @@
 #include "jaudio/waveread.h"
 
 #include "jaudio/connect.h"
+#include "jaudio/heapctrl.h"
 #include "jaudio/bx.h"
 
 #define WAVEARC_SIZE   (0x100)
@@ -8,6 +9,14 @@
 
 static WaveArchiveBank_* wavearc[WAVEARC_SIZE];
 static CtrlGroup_* wavegroup[WAVEGROUP_SIZE];
+CtrlGroup_* CGRP_ARRAY[16];
+
+// completely fabricated and probably supposed to be something else
+typedef struct WaveInfo {
+	int mMagic;         // _00
+	int _04;            // _04
+	WaveArchive_** _08; // _08
+} WaveInfo;
 
 /*
  * --INFO--
@@ -32,8 +41,45 @@ static void PTconvert(void** pointer, u32 base_address)
  * Address:	8000C240
  * Size:	0002A0
  */
-void Wave_Test(u8*)
+CtrlGroup_* Wave_Test(u8* data)
 {
+	PTconvert((void**)&data[0x10], (u32)data);
+	PTconvert((void**)&data[0x14], (u32)data);
+	WaveInfo* info    = (WaveInfo*)&data[0x10];
+	CtrlGroup_* group = (CtrlGroup_*)&data[0x14];
+	CGRP_ARRAY[0]     = group;
+
+	if (info->mMagic != 'WINF') {
+		return NULL;
+	}
+	if (group->_00 != 'WBCT') {
+		return NULL;
+	}
+
+	for (int i = 0; i < info->_04; i++) {
+		WaveArchive_** arc = &info->_08[i];
+		PTconvert((void**)*arc, (u32)data);
+		WaveArchiveBank_* bnk = (*arc)->_00;
+		Jac_InitHeap(bnk->_40);
+		for (int j = 0; j < bnk->_70; j++) {
+			PTconvert(&bnk->_74[j], (u32)data);
+		}
+	}
+
+	for (int i = 0; i < group->_08; i++) {
+		WaveArchive_** arc = &group->_0C[i];
+		PTconvert((void**)*arc, (u32)data);
+		PTconvert((void**)*arc, (u32)data);
+		PTconvert((void**)*arc, (u32)data);
+		PTconvert((void**)*arc, (u32)data);
+		WaveArchiveBank_* bnk = (*arc)->_00;
+		Jac_InitHeap(bnk->_40);
+		for (int j = 0; j < bnk->_70; j++) {
+			PTconvert(&bnk->_74[j], (u32)data);
+		}
+	}
+	return CGRP_ARRAY[0];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -248,7 +294,7 @@ void Wave_Test(u8*)
  * Address:	........
  * Size:	000030
  */
-void GetSound_Test(u32)
+void GetSound_Test(u32 id)
 {
 	// UNUSED FUNCTION
 }
@@ -258,10 +304,18 @@ void GetSound_Test(u32)
  * Address:	8000C4E0
  * Size:	000084
  */
-BOOL Wavegroup_Regist(void* param_1, u32 param_2)
+BOOL Wavegroup_Regist(void* param_1, u32 id)
 {
-	// Jac_WsConnectTableSet();
-	Wave_Test((u8*)param_1);
+	Ibnk_* bank = (Ibnk_*)param_1;
+	Jac_WsConnectTableSet(bank->_08, id);
+	wavegroup[id] = Wave_Test((u8*)param_1);
+	wavearc[id]   = bank->_10;
+
+	if (wavegroup[id] == NULL) {
+		return FALSE;
+	}
+	wavegroup[id]->_04 = 0;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -323,17 +377,16 @@ void Wavegroup_Init()
  */
 CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 {
-	u32 index;
-	volatile u16 VOLATILE_param_1;
+	u16 a = param_1;
+	u16 index;
+	u32* VOLATILE_param_1 = &param_1;
 
 	u32 badCompiler[2];
 
-	VOLATILE_param_1 = param_1 >> 16;
-
-	if (VOLATILE_param_1 == 0xFFFF) {
-		index = param_1;
+	if (param_1 == 0xFFFF) {
+		index = a;
 	} else {
-		index = Jac_WsVirtualToPhysical(VOLATILE_param_1);
+		index = Jac_WsVirtualToPhysical(a);
 	}
 
 	return index >= WAVEGROUP_SIZE ? NULL : wavegroup[index];

@@ -39,11 +39,13 @@ struct Bank_ {
 };
 
 struct Ibnk_ {
-	int magic;           // _00 | 'IBNK'
-	u32 _04;             // _04
-	u32 _08;             // _08
-	u8 _0C[0x20 - 0x0C]; // _0C
-	Bank_ bank;          // _20
+	int magic;                    // _00 | 'IBNK'
+	u32 _04;                      // _04
+	u32 _08;                      // _08
+	int _0C;                      // _0C
+	struct WaveArchiveBank_* _10; // _10
+	u8 _14[0x20 - 0x14];          // _14
+	Bank_ bank;                   // _20
 };
 
 /**

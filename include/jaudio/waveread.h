@@ -5,7 +5,7 @@
 
 typedef struct CtrlGroup_ CtrlGroup_;
 
-void Wave_Test(u8*);
+CtrlGroup_* Wave_Test(u8*);
 void GetSound_Test(u32);
 BOOL Wavegroup_Regist(void*, u32);
 void Wavegroup_Init();
