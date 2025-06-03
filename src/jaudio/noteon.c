@@ -3,22 +3,117 @@
 #include "jaudio/audiostruct.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/oneshot.h"
+#include "jaudio/connect.h"
+#include "jaudio/driverinterface.h"
 
 /*
  * --INFO--
  * Address:	80013840
  * Size:	000394
  */
-s32 NoteON(seqp_* track, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
+s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 {
 	if (track->_39E && (track->_39D & 0x40)) {
 		return -1;
 	}
 
-	if (track->_9C[param_2]) {
-		NoteOFF(track, param_2);
+	jc_** chan1 = &track->_9C[channel];
+	if (*chan1) {
+		NoteOFF(track, channel);
 	}
 
+	seqp_* parent = track->parent;
+	jcs_* jcs     = &track->_D8;
+
+	seqp_* temp = parent;
+	while (jcs->_00 == 0 || jcs->_08 == 0) {
+		if (temp == NULL) {
+			jcs = &track->_D8;
+			break;
+		}
+		jcs  = &temp->_D8;
+		temp = temp->parent;
+	}
+
+	if (track->_3F == 4) {
+		if (parent == NULL) {
+			return -1;
+		}
+		if (jcs != &parent->_D8) {
+			jc_* chan = List_GetChannel(&jcs->_08);
+			if (chan) {
+				jcs->_00--;
+				List_AddChannel(&track->_D8._08, chan);
+				parent->_D8._00++;
+				chan->mMgr = &parent->_D8;
+			}
+			jcs = &parent->_D8;
+		}
+	} else if (jcs != &track->_D8) {
+		jc_* chan = List_GetChannel(&jcs->_08);
+		if (chan) {
+			jcs->_00--;
+			List_AddChannel(&track->_D8._08, chan);
+			track->_D8._00++;
+			chan->mMgr = &track->_D8;
+		}
+		jcs = &track->_D8;
+	}
+
+	u16 reg  = Jam_ReadRegDirect(track, 6);
+	u16 phys = Jac_BnkVirtualToPhysical(reg >> 8);
+	u32 a    = flag2 | (reg & 0xff | (phys & 0xff) << 8) << 0x10 | flag1 << 8;
+	u32* ptr = &a;
+
+	jc_* sound;
+	if (a >= 0xf0) {
+		SOUNDID_ id;
+		id.value = a;
+		sound    = Play_1shot_Osc(jcs, id, playFlag);
+	} else if (a >= 0xe4) {
+		SOUNDID_ id;
+		id.value = a;
+		sound    = Play_1shot_Perc(jcs, id, playFlag);
+	} else {
+		SOUNDID_ id;
+		id.value = a;
+		sound    = Play_1shot(jcs, id, playFlag);
+	}
+	*chan1 = sound;
+	if (sound == NULL) {
+		return -1;
+	}
+	track->_BC[channel] = sound->_126;
+	UpdatePanPower_1Shot(sound, track->regParam.param._10[0], track->regParam.param._10[1], track->regParam.param._10[2],
+	                     track->regParam.param._10[3]);
+
+	for (u32 i = 0; i < 2; i++) {
+		u32 flag = track->_370[i];
+		if (flag == 15 || flag == 14) {
+			continue;
+		}
+
+		if (flag >= 8) {
+			flag -= 8;
+			if (sound->mOscillators[flag]) {
+				track->oscillators[i] = *sound->mOscillators[flag];
+			}
+		} else if (flag >= 3) {
+			flag -= 4;
+			s16* prev = track->oscillators[0].mReleaseVecOffset;
+			if (sound->mOscillators[flag]) {
+				track->oscillators[i]                   = *sound->mOscillators[flag];
+				track->oscillators[0].mReleaseVecOffset = prev;
+			}
+		}
+		Effecter_Overwrite_1ShotD(sound, &track->oscillators[i], flag);
+	}
+
+	Jam_UpdateTrack(track, 3);
+	ResetInitialVolume(sound);
+	return 0;
+
+	u32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -355,7 +450,7 @@ s32 GateON(seqp_* track, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
  * Address:	........
  * Size:	000008
  */
-void ProgramChange(s32)
+void ProgramChange(s32 chan)
 {
 	// UNUSED FUNCTION
 }

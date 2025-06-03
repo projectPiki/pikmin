@@ -1020,7 +1020,7 @@ void Get_CtrlWave(SOUNDID_ sound)
  * Address:	80016320
  * Size:	00027C
  */
-void Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
+jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	/*
 	.loc_0x0:
@@ -1223,7 +1223,7 @@ void Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
  * Address:	800165A0
  * Size:	00020C
  */
-void Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
+jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	/*
 	.loc_0x0:
@@ -1382,7 +1382,7 @@ void Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
  * Address:	800167C0
  * Size:	000128
  */
-void Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
+jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
 	/*
 	.loc_0x0:

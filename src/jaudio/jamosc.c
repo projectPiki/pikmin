@@ -5,13 +5,13 @@ s16 VIB_TABLE[] = { 0, 0, 0, 0, 20, 0x7fff, 0, 20, 0, 0, 0x14, 0xc000, 0, 20, 0,
 s16 TRE_TABLE[] = { 0, 0, 0x7fff, 0, 20, 0, 0, 20, 0x8001, 0, 0x14, 0, 0, 0x14, 0x7fff, 13, 0, 1 };
 s16 REL_TABLE[] = { 0, 10, 0, 15, 1, 0 };
 
-Osc_definition VIBRATO_DEF  = { 1, 0.8f, VIB_TABLE, VIB_TABLE, 0.0f, 1.0f };
-Osc_definition TREMOLO_DEF  = { 0, 1.0f, TRE_TABLE, TRE_TABLE, 0.0f, 1.0f };
-Osc_definition ENVELOPE_DEF = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
+Osc_ VIBRATO_DEF  = { 1, 0.8f, VIB_TABLE, VIB_TABLE, 0.0f, 1.0f };
+Osc_ TREMOLO_DEF  = { 0, 1.0f, TRE_TABLE, TRE_TABLE, 0.0f, 1.0f };
+Osc_ ENVELOPE_DEF = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
 
-s16 ADS_TABLE[]         = { 0, 0, 0x7fff, 0, 0, 0x7fff, 0, 0, 0, 14, 0, 0 };
-Osc_definition ADSR_DEF = { 0, 1.0f, NULL, NULL, 1.0f, 0.0f };
-Osc_definition OSC_DEF  = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
+s16 ADS_TABLE[] = { 0, 0, 0x7fff, 0, 0, 0x7fff, 0, 0, 0, 14, 0, 0 };
+Osc_ ADSR_DEF   = { 0, 1.0f, NULL, NULL, 1.0f, 0.0f };
+Osc_ OSC_DEF    = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
 
 /*
  * --INFO--
@@ -25,22 +25,22 @@ void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 
 	switch (id) {
 	case 6:
-		track->_340[0]._10 = val;
+		track->oscillators[0].mWidth = val;
 		break;
 	case 7:
-		track->_340[0]._04 = val;
+		track->oscillators[0].mRate = val;
 		break;
 	case 8:
-		track->_340[0]._14 = val;
+		track->oscillators[0].mVertex = val;
 		break;
 	case 9:
-		track->_340[1]._10 = val;
+		track->oscillators[1].mWidth = val;
 		break;
 	case 10:
-		track->_340[1]._04 = val;
+		track->oscillators[1].mRate = val;
 		break;
 	case 11:
-		track->_340[1]._14 = val;
+		track->oscillators[1].mVertex = val;
 		break;
 	}
 }
@@ -52,7 +52,7 @@ void Osc_Update_Param(seqp_* track, u8 id, f32 val)
  */
 void Osc_Setup_Vibrato(seqp_* track, u8 id)
 {
-	track->_340[id] = VIBRATO_DEF;
+	track->oscillators[id] = VIBRATO_DEF;
 }
 
 /*
@@ -62,7 +62,7 @@ void Osc_Setup_Vibrato(seqp_* track, u8 id)
  */
 void Osc_Setup_Tremolo(seqp_* track, u8 id)
 {
-	track->_340[id] = TREMOLO_DEF;
+	track->oscillators[id] = TREMOLO_DEF;
 }
 
 /*
@@ -103,7 +103,7 @@ void Osc_Clear_Overwrite(seqp_* track)
  */
 void Osc_Init_Env(seqp_* track)
 {
-	track->_340[0] = ENVELOPE_DEF;
+	track->oscillators[0] = ENVELOPE_DEF;
 
 	Osc_Clear_Overwrite(track);
 }
@@ -118,12 +118,12 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 	u32 badCompiler[2];
 	switch (id) {
 	case 0:
-		track->_340[0]     = ENVELOPE_DEF;
-		track->_340[0]._08 = (s16*)Jam_OfsToAddr(track, val);
+		track->oscillators[0]                  = ENVELOPE_DEF;
+		track->oscillators[0].mAttackVecOffset = (s16*)Jam_OfsToAddr(track, val);
 		break;
 
 	case 1:
-		track->_340[0]._0C = (s16*)Jam_OfsToAddr(track, val);
+		track->oscillators[0].mReleaseVecOffset = (s16*)Jam_OfsToAddr(track, val);
 		break;
 	}
 }
@@ -135,10 +135,10 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
  */
 void Osc_Setup_ADSR(seqp_* track, s16* addr)
 {
-	track->_340[0] = ADSR_DEF;
+	track->oscillators[0] = ADSR_DEF;
 
-	track->_340[0]._08 = track->_372;
-	track->_340[0]._0C = track->_38A;
+	track->oscillators[0].mAttackVecOffset  = track->_372;
+	track->oscillators[0].mReleaseVecOffset = track->_38A;
 
 	for (int i = 0; i < 12; i++) {
 		track->_372[i] = ADS_TABLE[i];
@@ -168,27 +168,27 @@ void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 	u32 c   = flag & 0x20;
 	u32 d   = flag & 0x80;
 	if (d) {
-		track->_340[idx] = ENVELOPE_DEF;
+		track->oscillators[idx] = ENVELOPE_DEF;
 
-		track->_340[idx]._00 = a;
+		track->oscillators[idx].mMode = a;
 		switch (a) {
 		case 1:
-			track->_340[idx]._14 = 1.0f;
+			track->oscillators[idx].mVertex = 1.0f;
 			break;
 		}
 	}
 
 	if (b) {
 		if (offs1 == 0) {
-			track->_340[idx]._08 = NULL;
+			track->oscillators[idx].mAttackVecOffset = NULL;
 		}
-		track->_340[idx]._08 = (s16*)Jam_OfsToAddr(track, offs1);
+		track->oscillators[idx].mAttackVecOffset = (s16*)Jam_OfsToAddr(track, offs1);
 	}
 
 	if (c) {
 		if (offs2 == 0) {
-			track->_340[idx]._0C = REL_TABLE;
+			track->oscillators[idx].mReleaseVecOffset = REL_TABLE;
 		}
-		track->_340[idx]._0C = (s16*)Jam_OfsToAddr(track, offs2);
+		track->oscillators[idx].mReleaseVecOffset = (s16*)Jam_OfsToAddr(track, offs2);
 	}
 }

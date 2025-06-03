@@ -44,8 +44,8 @@ void UpdatePause_1Shot(jc_*, u8 a1);
 void UpdatePanPower_1Shot(jc_*, f32, f32, f32, f32);
 void FlushRelease_1Shot(jcs_*);
 u32 One_CheckInstWave(SOUNDID_); // Return type unsure
-void Play_1shot(jcs_*, SOUNDID_, u32);
-void Play_1shot_Perc(jcs_*, SOUNDID_, u32);
-void Play_1shot_Osc(jcs_*, SOUNDID_, u32);
+jc_* Play_1shot(jcs_*, SOUNDID_, u32);
+jc_* Play_1shot_Perc(jcs_*, SOUNDID_, u32);
+jc_* Play_1shot_Osc(jcs_*, SOUNDID_, u32);
 
 #endif

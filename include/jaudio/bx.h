@@ -95,12 +95,12 @@ struct Sense_ {
 };
 
 struct Osc_ {
-	u8 mMode;              // _00
-	f32 mRate;             // _04
-	int mAttackVecOffset;  // _08
-	int mReleaseVecOffset; // _0C
-	f32 mWidth;            // _10
-	f32 mVertex;           // _14
+	u8 mMode;               // _00
+	f32 mRate;              // _04
+	s16* mAttackVecOffset;  // _08
+	s16* mReleaseVecOffset; // _0C
+	f32 mWidth;             // _10
+	f32 mVertex;            // _14
 };
 
 struct Oscbuf_ {

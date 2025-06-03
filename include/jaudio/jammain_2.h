@@ -122,16 +122,6 @@ union URegisterParam_ {
 	u16 reg[32];
 };
 
-// This is used heavily for jamosc.c, it might be embedded into seqp somewhere...?
-typedef struct Osc_definition {
-	u8 _00;   // _00
-	f32 _04;  // _04
-	s16* _08; // _08
-	s16* _0C; // _0C
-	f32 _10;  // _10
-	f32 _14;  // _14
-} Osc_definition;
-
 /**
  * @brief TODO
  *
@@ -176,7 +166,7 @@ struct seqp_ {
 	u16 _33A;                 // _33A
 	u8 _33C;                  // _33C
 	u8 _33D;                  // _33D
-	Osc_definition _340[2];   // _340
+	Osc_ oscillators[2];      // _340
 	u8 _370[2];               // _370 | Exact length unknown.
 	s16 _372[12];             // _372 | ADS table?
 	s16 _38A[6];              // _38A | REL table?
