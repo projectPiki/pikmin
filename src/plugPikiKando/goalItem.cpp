@@ -17,12 +17,18 @@
 #include "NaviMgr.h"
 #include "CreatureCollPart.h"
 
-static f32 velX = 1.0f;
-static f32 velY = 1.0f;
-static f32 velZ = 1.0f;
-static f32 accelX[1] = { 0.0f };
-static f32 accelY[1] = { 0.0f };
-static f32 accelZ[1] = { 0.0f };
+// this nonsense is specifically to get the sdata ordered correctly
+// GoalItem::startAI needs to generate these Vector3f floats before earlier functions in the file
+// however, this hackiness below resolves the mismatch.
+// the 0.0f generate in sbss if not in an array. best solution we have found.
+// feel free to find a more elegant solution. inlines mess up the stack order. good luck
+
+static f32 posX = 1.0f;
+static f32 posY = 1.0f;
+static f32 posZ = 1.0f;
+static f32 rotateX[1] = { 0.0f };
+static f32 rotateY[1] = { 0.0f };
+static f32 rotateZ[1] = { 0.0f };
 
 /*
  * --INFO--
@@ -608,7 +614,7 @@ void GoalItem::startAI(int)
 	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
 	mWaypointIdx = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
 
-    mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(velX, velY, velZ), Vector3f(accelX[0], accelY[0], accelZ[0]));
+    mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(posX, posY, posZ), Vector3f(rotateX[0], rotateY[0], rotateZ[0]));
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
 	mCurrAnimId = 0;
