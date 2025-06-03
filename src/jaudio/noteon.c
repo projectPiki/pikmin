@@ -13,17 +13,22 @@
  */
 s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 {
+	(void)&channel;
+
 	if (track->_39E && (track->_39D & 0x40)) {
 		return -1;
 	}
 
-	jc_** chan1 = &track->_9C[channel];
+	s32 channel2 = channel;
+
+	jc_** chan1 = &track->_9C[channel2];
 	if (*chan1) {
-		NoteOFF(track, channel);
+		NoteOFF(track, channel2);
 	}
 
 	seqp_* parent = track->parent;
 	jcs_* jcs     = &track->_D8;
+	u32 reg;
 
 	seqp_* temp = parent;
 	while (jcs->_00 == 0 || jcs->_08 == 0) {
@@ -60,30 +65,26 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 		jcs = &track->_D8;
 	}
 
-	u16 reg  = Jam_ReadRegDirect(track, 6);
+	reg      = Jam_ReadRegDirect(track, 6);
 	u16 phys = Jac_BnkVirtualToPhysical(reg >> 8);
-	u32 a    = flag2 | (reg & 0xff | (phys & 0xff) << 8) << 0x10 | flag1 << 8;
-	u32* ptr = &a;
+	u32 b    = (phys & 0xff) << 8 | reg & 0xff;
+	u32 a    = b << 16 | flag1 << 8 | flag2;
 
 	jc_* sound;
-	if (a >= 0xf0) {
-		SOUNDID_ id;
-		id.value = a;
-		sound    = Play_1shot_Osc(jcs, id, playFlag);
-	} else if (a >= 0xe4) {
-		SOUNDID_ id;
-		id.value = a;
-		sound    = Play_1shot_Perc(jcs, id, playFlag);
+	SOUNDID_ id;
+	id.value = a;
+	if ((u8)reg >= 0xf0) {
+		sound = Play_1shot_Osc(jcs, id, playFlag);
+	} else if ((u8)reg >= 0xe4) {
+		sound = Play_1shot_Perc(jcs, id, playFlag);
 	} else {
-		SOUNDID_ id;
-		id.value = a;
-		sound    = Play_1shot(jcs, id, playFlag);
+		sound = Play_1shot(jcs, id, playFlag);
 	}
 	*chan1 = sound;
 	if (sound == NULL) {
 		return -1;
 	}
-	track->_BC[channel] = sound->_126;
+	track->_BC[channel2] = sound->_126;
 	UpdatePanPower_1Shot(sound, track->regParam.param._10[0], track->regParam.param._10[1], track->regParam.param._10[2],
 	                     track->regParam.param._10[3]);
 
@@ -98,12 +99,12 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 			if (sound->mOscillators[flag]) {
 				track->oscillators[i] = *sound->mOscillators[flag];
 			}
-		} else if (flag >= 3) {
+		} else if (flag >= 4) {
 			flag -= 4;
-			s16* prev = track->oscillators[0].mReleaseVecOffset;
+			s16* prev = track->oscillators[i].mReleaseVecOffset;
 			if (sound->mOscillators[flag]) {
 				track->oscillators[i]                   = *sound->mOscillators[flag];
-				track->oscillators[0].mReleaseVecOffset = prev;
+				track->oscillators[i].mReleaseVecOffset = prev;
 			}
 		}
 		Effecter_Overwrite_1ShotD(sound, &track->oscillators[i], flag);
