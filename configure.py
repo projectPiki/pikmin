@@ -339,7 +339,7 @@ config.libs = [
             Object(Matching, "jaudio/dspinterface.c"),
             Object(Matching, "jaudio/fxinterface.c"),
             Object(Matching, "jaudio/bankread.c"),
-            Object(NonMatching, "jaudio/waveread.c"),
+            Object(Matching, "jaudio/waveread.c"),
             Object(NonMatching, "jaudio/connect.c"),
             Object(Matching, "jaudio/tables.c"),
             Object(NonMatching, "jaudio/bankdrv.c"),

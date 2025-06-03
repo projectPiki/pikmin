@@ -1,5 +1,6 @@
 #include "jaudio/connect.h"
 #include "jaudio/heapctrl.h"
+#include "jaudio/bx.h"
 
 static s16 WS_V2P_TABLE[0x100];
 static s16 BNK_V2P_TABLE[0x100];

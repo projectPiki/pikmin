@@ -4,6 +4,7 @@
 // This is an invented header containing several structs related to the file structure of pikibank.bx
 
 #include "types.h"
+#include "jaudio/heapctrl.h"
 
 #define BANK_INST_COUNT        (0xF0)
 #define BANK_TEST_INST_COUNT   (0x80)
@@ -21,11 +22,25 @@ typedef struct Sense_ Sense_;
 typedef struct Rand_ Rand_;
 typedef struct Osc_ Osc_;
 typedef struct Oscbuf_ Oscbuf_;
-typedef struct Wave_ Wave_;
 
 typedef struct Vmap_ Vmap_;
 typedef struct InstKeymap_ InstKeymap_;
 typedef struct PercKeymap_ PercKeymap_;
+
+// these type names are confirmed:
+typedef struct WaveArchiveBank_ WaveArchiveBank_;
+typedef struct CtrlGroup_ CtrlGroup_;
+typedef struct Ctrl_ Ctrl_;
+typedef struct WaveArchive_ WaveArchive_;
+typedef struct Wave_ Wave_;
+
+// these type names are fabricated, feel free to rename if found:
+typedef struct Wsys_ Wsys_;
+typedef struct SCNE_ SCNE_;
+typedef struct WaveID_ WaveID_;
+
+//////////////////////////////////////////////////////////
+////////////////////// BANK STRUCTS //////////////////////
 
 struct Bank_ {
 	int mMagic; // _00 | 'BANK'
@@ -149,6 +164,78 @@ struct Rand_ {
 struct Pmap_ {
 	Rand_* _00; // _00
 	int _04;    // _04
+};
+
+//////////////////////////////////////////////////////////
+////////////////////// WAVE STRUCTS //////////////////////
+
+// Name fabricated, but makes sense in line with Ibnk_
+struct Wsys_ {
+	int magic;                     // _00, 'WSYS'
+	int size;                      // _04
+	int globalID;                  // _08
+	int _0C;                       // _0C, unused?
+	WaveArchiveBank_* waveArcBank; // _10
+	CtrlGroup_* ctrlGroup;         // _14
+};
+
+struct WaveArchiveBank_ {
+	int magic;                   // _00, 'WINF'
+	int count;                   // _04, same count as CtrlGroup_
+	WaveArchive_* waveGroups[1]; // _08, array size variable
+};
+
+struct CtrlGroup_ {
+	int magic;        // _00, 'WBCT'
+	u32 _04;          // _04, unknown
+	int count;        // _08, same count as WaveArchiveBank_
+	SCNE_* scenes[1]; // _0C, array size variable
+};
+
+// Name fabricated based on magic ID.
+struct SCNE_ {
+	int magic;   // _00, 'SCNE'
+	u8 _04[0x8]; // _04, unknown
+	Ctrl_* cdf;  // _0C
+	Ctrl_* cex;  // _10
+	Ctrl_* cst;  // _14
+};
+
+struct Ctrl_ {
+	int magic;           // _00, 'C-DF', 'C-EX' or 'C-ST'
+	int count;           // _04
+	WaveID_* waveIDs[1]; // _08, array size variable
+};
+
+// Name fabricated from Xayr's tools.
+struct WaveID_ {
+	s16 awID;     // _00
+	s16 waveID;   // _02
+	jaheap_ heap; // _04
+};
+
+struct WaveArchive_ {
+	char arcName[0x40]; // _00, might be smaller, unsure
+	jaheap_ heap;       // _40
+	u32 _6C;            // _6C
+	int waveCount;      // _70
+	Wave_* waves[1];    // _74, array size variable
+};
+
+/**
+ * @brief TODO. Bigger than this size for sure.
+ */
+struct Wave_ {
+	u8 _00;                // _00
+	u8 compBlockIdx;       // _01
+	u8 _02;                // _02
+	s8 _04[12];            // _04
+	s32 isLooping;         // _10
+	s32 loopAddress;       // _14
+	s32 loopStartPosition; // _18
+	s32 _1C;               // _1C
+	s16 loopYN1;           // _20
+	s16 loopYN2;           // _22
 };
 
 #endif
