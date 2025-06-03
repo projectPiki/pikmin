@@ -3,6 +3,7 @@
 #include "jaudio/random.h"
 #include "jaudio/rate.h"
 #include "jaudio/bx.h"
+#include "jaudio/ja_calc.h"
 
 static u32 FORCE_RELEASE_TABLE[3] = { 5, 15, 0 };
 
@@ -133,7 +134,7 @@ int Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
  * Address:	........
  * Size:	000010
  */
-int Bank_GetVoiceMap(Voice_*, u16)
+int Bank_GetVoiceMap(Voice_* voice, u16 id)
 {
 	// UNUSED FUNCTION
 }
@@ -188,6 +189,140 @@ f32 Bank_RandToOfs(Rand_* rand)
  */
 f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 {
+	s16* table;
+	f32 sub;
+	int offset;
+	s16* ptr;
+	s16 val0, val1, val2;
+	f32 calc;
+
+	if (osc == NULL) {
+		buf->_08 = 1.0f;
+		return 1.0f;
+	}
+
+	if (buf->_00 == 4) {
+		if (osc->mAttackVecOffset != osc->mReleaseVecOffset) {
+			buf->_02 = 0;
+			buf->_04 = 0.0f;
+			buf->_0C = buf->_08;
+		}
+		if (osc->mReleaseVecOffset == 0 && buf->_14 == 0) {
+			buf->_14 = 0x10;
+		}
+
+		if (buf->_14) {
+			buf->_00 = 8;
+			buf->_01 = buf->_14 >> 14;
+			buf->_04 = (JAC_DAC_RATE / 80.0f) / 600.0f * (buf->_14 & 0x3fff);
+			if (buf->_04 < 1.0f) {
+				buf->_04 = 1.0f;
+			}
+			buf->_0C = 0.0f;
+			buf->_10 = (buf->_0C - buf->_08) / buf->_04;
+		} else {
+			buf->_00 = 5;
+		}
+	}
+	if (buf->_00 == 6) {
+		buf->_02 = 0;
+		buf->_04 = 0.0f;
+		buf->_0C = buf->_08;
+		buf->_00 = 7;
+	}
+
+	if (buf->_00 == 5) {
+		table = osc->mReleaseVecOffset;
+	} else if (buf->_00 == 7) {
+		table = (s16*)FORCE_RELEASE_TABLE;
+	} else {
+		table = osc->mAttackVecOffset;
+	}
+
+	if (table == NULL && buf->_00 != 8) {
+		buf->_08 = 1.0f;
+		return 1.0f;
+	}
+	if (buf->_00 == 0) {
+		return 1.0f;
+	}
+	if (buf->_00 == 3) {
+		return buf->_08 * osc->mWidth + osc->mVertex;
+	}
+
+	if (buf->_00 == 1) {
+		buf->_00 = 2;
+		buf->_02 = 0;
+		buf->_04 = 0.0f;
+		buf->_0C = 0.0f;
+		buf->_14 = 0;
+		sub      = osc->mRate;
+	} else {
+		sub = osc->mRate;
+	}
+	if (buf->_00 == 7) {
+		sub = 1.0f;
+	}
+	buf->_04 -= sub;
+
+	while (buf->_04 <= 0.0f) {
+		offset   = (buf->_02 * 3);
+		buf->_08 = buf->_0C;
+		if (buf->_00 == 8) {
+			buf->_00 = 0;
+			break;
+		}
+		ptr  = table + offset;
+		val0 = ptr[0];
+		val1 = ptr[1];
+		val2 = ptr[2];
+
+		if (val0 == 0xd) {
+			buf->_02 = val2;
+			continue;
+		} else if (val0 == 0xf) {
+			buf->_00 = 0;
+			break;
+		} else if (val0 == 0xe) {
+			buf->_00 = 3;
+			return buf->_08 * osc->mWidth + osc->mVertex;
+		}
+		buf->_01 = val0;
+
+		if (val1 == 0) {
+			buf->_0C = val2 / 32768.0f;
+			buf->_02++;
+		} else {
+			buf->_04 = (JAC_DAC_RATE / 80.0f) / 600.0f * (u16)val1;
+			buf->_0C = val2 / 32768.0f;
+			buf->_10 = (buf->_0C - buf->_08) / buf->_04;
+			buf->_02++;
+		}
+	}
+
+	calc     = -(buf->_10 * buf->_04 - buf->_0C);
+	buf->_08 = calc;
+
+	switch (buf->_01) {
+	case 0:
+		break;
+	case 1:
+		if (calc > 0.0f) {
+			calc = calc * calc;
+		} else {
+			calc = -calc * calc;
+		}
+		break;
+
+	case 2:
+		if (calc > 0.0f) {
+			calc = sqrtf2(calc);
+		} else {
+			calc = -sqrtf2(-calc);
+		}
+		break;
+	}
+	return calc * osc->mWidth + osc->mVertex;
 	/*
 	.loc_0x0:
 	  mflr      r0
