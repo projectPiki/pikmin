@@ -189,12 +189,11 @@ f32 Bank_RandToOfs(Rand_* rand)
  */
 f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 {
-	s16* table;
 	f32 sub;
 	int offset;
-	s16* ptr;
 	s16 val0, val1, val2;
 	f32 calc;
+	s16* table;
 
 	if (osc == NULL) {
 		buf->_08 = 1.0f;
@@ -213,8 +212,10 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 
 		if (buf->_14) {
 			buf->_00 = 8;
-			buf->_01 = buf->_14 >> 14;
-			buf->_04 = (JAC_DAC_RATE / 80.0f) / 600.0f * (buf->_14 & 0x3fff);
+			buf->_01 = buf->_14 >> 14 & 3;
+			f32 x    = buf->_14 & 0x3fff;
+			x *= (JAC_DAC_RATE / 80.0f) / 600.0f;
+			buf->_04 = x;
 			if (buf->_04 < 1.0f) {
 				buf->_04 = 1.0f;
 			}
@@ -272,10 +273,9 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 			buf->_00 = 0;
 			break;
 		}
-		ptr  = table + offset;
-		val0 = ptr[0];
-		val1 = ptr[1];
-		val2 = ptr[2];
+		val0 = table[offset + 0];
+		val1 = table[offset + 1];
+		val2 = table[offset + 2];
 
 		if (val0 == 0xd) {
 			buf->_02 = val2;
@@ -293,7 +293,9 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 			buf->_0C = val2 / 32768.0f;
 			buf->_02++;
 		} else {
-			buf->_04 = (JAC_DAC_RATE / 80.0f) / 600.0f * (u16)val1;
+			f32 x = (u16)val1;
+			x *= (JAC_DAC_RATE / 80.0f) / 600.0f;
+			buf->_04 = x;
 			buf->_0C = val2 / 32768.0f;
 			buf->_10 = (buf->_0C - buf->_08) / buf->_04;
 			buf->_02++;
