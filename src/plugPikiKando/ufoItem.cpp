@@ -144,7 +144,7 @@ void UfoItem::setSpotActive(bool set)
 	mIsLightActive       = set;
 
 	Vector3f goal = Vector3f(getGoalPos());
-	f32 paddig[2]; // needed for stack to work
+	f32 padding[2]; // needed for stack to work
 	CollPart* part = mCollInfo->getSphere('gol1');
 
 	if (mIsLightActive) {

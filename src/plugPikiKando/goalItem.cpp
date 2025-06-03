@@ -17,6 +17,13 @@
 #include "NaviMgr.h"
 #include "CreatureCollPart.h"
 
+static f32 velX = 1.0f;
+static f32 velY = 1.0f;
+static f32 velZ = 1.0f;
+static f32 accelX[1] = { 0.0f };
+static f32 accelY[1] = { 0.0f };
+static f32 accelZ[1] = { 0.0f };
+
 /*
  * --INFO--
  * Address:	........
@@ -601,8 +608,7 @@ void GoalItem::startAI(int)
 	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
 	mWaypointIdx = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
 
-	mSpotModelEff
-	    = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+    mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(velX, velY, velZ), Vector3f(accelX[0], accelY[0], accelZ[0]));
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
 	mCurrAnimId = 0;
@@ -766,11 +772,11 @@ void GoalItem::refresh(Graphics& gfx)
 	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
 		enableAICulling();
 		if (!gameflow.mMoviePlayer->mIsActive) {
-			mSpotModelEff->mIsVisible = 0;
+			mSpotModelEff->mIsVisible = false;
 		}
 	} else {
 		disableAICulling();
-		mSpotModelEff->mIsVisible = 1;
+		mSpotModelEff->mIsVisible = true;
 	}
 
 	gfx.setLighting(true, nullptr);
