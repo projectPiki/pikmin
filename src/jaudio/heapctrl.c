@@ -166,28 +166,32 @@ BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
 	parent->_14 = nullptr;
 	parent->_18 = heap;
 
-	if (heap->_14 == NULL) {
+	jaheap_* temp = heap->_14;
+	if (temp == NULL) {
 		heap->_14   = parent;
 		parent->_1C = nullptr;
 		heap->_0C   = parent->_08 - heap->_08 + parent->_10;
-	} else if (parent->_08 < heap->_14->_08) {
-		parent->_1C = heap->_14;
-		heap->_14   = parent;
 	} else {
-		jaheap_* temp;
-		jaheap_* temp2 = heap->_14;
-		while (parent->_08 >= temp->_08) {
-			temp  = temp2;
-			temp2 = temp->_1C;
-			if (temp2 == NULL) {
-				parent->_1C = NULL;
-				temp->_1C   = parent;
-				heap->_0C   = parent->_08 - heap->_08 + parent->_10;
-				break;
+		jaheap_* temp2 = temp;
+		if (parent->_08 < heap->_14->_08) {
+			parent->_1C = heap->_14;
+			heap->_14   = parent;
+		} else {
+			while (TRUE) {
+				if (!(temp = temp2->_1C)) {
+					parent->_1C = NULL;
+					temp2->_1C  = parent;
+					heap->_0C   = parent->_08 - heap->_08 + parent->_10;
+					break;
+				}
+				if (parent->_08 < temp->_08) {
+					parent->_1C = temp;
+					temp2->_1C  = parent;
+					break;
+				}
+				temp2 = temp;
 			}
 		}
-		parent->_1C = temp;
-		temp2->_1C  = parent;
 	}
 
 	heap->_02++;
@@ -701,9 +705,6 @@ void Jac_CheckFreeHeap_Linear(jaheap_*)
 	// UNUSED FUNCTION
 }
 
-// Jac_ShowHeap is doing some nonsense with this
-const static char* what = "        ";
-
 /*
  * --INFO--
  * Address:	8000F320
@@ -711,79 +712,31 @@ const static char* what = "        ";
  */
 void Jac_ShowHeap(jaheap_* heap, u32 flag)
 {
-	for (jaheap_* c = heap->_14; c; c = c->_1C) {
-		if (c->_14) {
-			Jac_ShowHeap(c, flag + 1);
-		}
+	jaheap_** REF_heap = &heap;
+	jaheap_* c;
+	jaheap_** REF_c;
+	u32 badCompiler[3];
+	char unused[] = "        ";
+	(void*)unused[0];
+	c     = heap->_14;
+	REF_c = &c;
+	u32 badCompiler2[15];
+	if (c) {
+		do {
+			if (c->_14) {
+				Jac_ShowHeap(c, flag + 1);
+			}
+			c = c->_1C;
+		} while (c);
 	}
 
-	for (jaheap_* c = heap->_24; c; c = c->_28) {
-		if (c->_24) {
-			Jac_ShowHeap(c, flag + 1);
-		}
+	jaheap_* c2;
+	if (c2 = heap->_24) {
+		do {
+			if (c2->_24) {
+				Jac_ShowHeap(c2, flag + 1);
+			}
+			c2 = c2->_28;
+		} while (c2);
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x80(r1)
-	  stmw      r29, 0x74(r1)
-	  addi      r29, r4, 0
-	  stw       r3, 0x8(r1)
-	  lis       r3, 0x8022
-	  addi      r5, r3, 0x2108
-	  lwz       r3, 0x0(r5)
-	  lwz       r0, 0x4(r5)
-	  lwz       r30, 0x8(r1)
-	  stw       r3, 0x4C(r1)
-	  stw       r0, 0x50(r1)
-	  lbz       r0, 0x8(r5)
-	  stb       r0, 0x54(r1)
-	  lwz       r0, 0x14(r30)
-	  stw       r0, 0x68(r1)
-	  lwz       r0, 0x68(r1)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x80
-
-	.loc_0x50:
-	  lwz       r31, 0x68(r1)
-	  lwz       r0, 0x14(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x6C
-	  addi      r3, r31, 0
-	  addi      r4, r29, 0x1
-	  bl        .loc_0x0
-
-	.loc_0x6C:
-	  lwz       r0, 0x1C(r31)
-	  stw       r0, 0x68(r1)
-	  lwz       r0, 0x68(r1)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x50
-
-	.loc_0x80:
-	  lwz       r30, 0x24(r30)
-	  cmplwi    r30, 0
-	  beq-      .loc_0xB0
-
-	.loc_0x8C:
-	  lwz       r0, 0x24(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xA4
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0x1
-	  bl        .loc_0x0
-
-	.loc_0xA4:
-	  lwz       r30, 0x28(r30)
-	  cmplwi    r30, 0
-	  bne+      .loc_0x8C
-
-	.loc_0xB0:
-	  lmw       r29, 0x74(r1)
-	  lwz       r0, 0x84(r1)
-	  addi      r1, r1, 0x80
-	  mtlr      r0
-	  blr
-	*/
 }
