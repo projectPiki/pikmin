@@ -2479,7 +2479,10 @@ static u32 Cmd_SetInterrupt()
  */
 static u32 Cmd_DisInterrupt()
 {
-	SEQ_P->_3A6 &= ~(u8)(1 << (u8)SEQ_ARG[0]);
+	u8 arg;
+	arg = SEQ_ARG[0];
+	arg = 1 << arg;
+	SEQ_P->_3A6 &= ~arg;
 	return 0;
 }
 
