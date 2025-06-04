@@ -151,8 +151,47 @@ void Jac_SelfInitHeap(jaheap_* heap, u32 param_2, u32 param_3, u32 param_4)
  * Address:	8000ECA0
  * Size:	000100
  */
-void Jac_SelfAllocHeap(jaheap_*, jaheap_*, u32, u32)
+BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
 {
+	if (parent->_08 && parent->_08 != -1) {
+		return FALSE;
+	}
+
+	parent->_08 = a2;
+	parent->_10 = a1;
+	parent->_0C = 0;
+	parent->_00 = 0;
+	parent->_01 = heap->_01;
+	parent->_02 = 0;
+	parent->_14 = nullptr;
+	parent->_18 = heap;
+
+	if (heap->_14 == NULL) {
+		heap->_14   = parent;
+		parent->_1C = nullptr;
+		heap->_0C   = parent->_08 - heap->_08 + parent->_10;
+	} else if (parent->_08 < heap->_14->_08) {
+		parent->_1C = heap->_14;
+		heap->_14   = parent;
+	} else {
+		jaheap_* temp;
+		jaheap_* temp2 = heap->_14;
+		while (parent->_08 >= temp->_08) {
+			temp  = temp2;
+			temp2 = temp->_1C;
+			if (temp2 == NULL) {
+				parent->_1C = NULL;
+				temp->_1C   = parent;
+				heap->_0C   = parent->_08 - heap->_08 + parent->_10;
+				break;
+			}
+		}
+		parent->_1C = temp;
+		temp2->_1C  = parent;
+	}
+
+	heap->_02++;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  lwz       r7, 0x8(r3)
@@ -588,42 +627,21 @@ void Jac_DeleteHeap(jaheap_*)
  * Address:	8000F1C0
  * Size:	000064
  */
-static void Jac_Move_Children(jaheap_*, s32)
+static void Jac_Move_Children(jaheap_* heap, s32 flag)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  mr.       r30, r4
-	  beq-      .loc_0x50
-	  lwz       r31, 0x14(r3)
+	if (flag == 0) {
+		return;
+	}
 
-	.loc_0x1C:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x50
-	  lwz       r0, 0x8(r31)
-	  add       r0, r0, r30
-	  stw       r0, 0x8(r31)
-	  lwz       r0, 0x14(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x48
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0x0
-
-	.loc_0x48:
-	  lwz       r31, 0x1C(r31)
-	  b         .loc_0x1C
-
-	.loc_0x50:
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	for (jaheap_* c = heap->_14;; c = c->_1C) {
+		if (c == NULL) {
+			break;
+		}
+		c->_08 += flag;
+		if (c->_14) {
+			Jac_Move_Children(c, flag);
+		}
+	}
 }
 
 /*
@@ -683,13 +701,27 @@ void Jac_CheckFreeHeap_Linear(jaheap_*)
 	// UNUSED FUNCTION
 }
 
+// Jac_ShowHeap is doing some nonsense with this
+const static char* what = "        ";
+
 /*
  * --INFO--
  * Address:	8000F320
  * Size:	0000C4
  */
-void Jac_ShowHeap(jaheap_*, u32)
+void Jac_ShowHeap(jaheap_* heap, u32 flag)
 {
+	for (jaheap_* c = heap->_14; c; c = c->_1C) {
+		if (c->_14) {
+			Jac_ShowHeap(c, flag + 1);
+		}
+	}
+
+	for (jaheap_* c = heap->_24; c; c = c->_28) {
+		if (c->_24) {
+			Jac_ShowHeap(c, flag + 1);
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

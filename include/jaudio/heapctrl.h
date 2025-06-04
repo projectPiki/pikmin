@@ -25,7 +25,7 @@ void Jac_GetUnlockHeap(jaheap_*);
 void Jac_CheckAlloc(jaheap_*);
 void Jac_InitHeap(jaheap_*);
 void Jac_SelfInitHeap(jaheap_*, u32, u32, u32);
-void Jac_SelfAllocHeap(jaheap_*, jaheap_*, u32, u32);
+BOOL Jac_SelfAllocHeap(jaheap_*, jaheap_*, u32, u32);
 BOOL Jac_SetGroupHeap(jaheap_*, jaheap_*);
 void Jac_CutdownHeap(jaheap_*);
 void Jac_InitMotherHeap(jaheap_*, u32, u32, u8);
