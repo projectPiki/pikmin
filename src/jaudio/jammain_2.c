@@ -393,169 +393,170 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
  */
 void Jam_WriteRegParam(seqp_* track, u8 param_2)
 {
-	u8 reg;
-	s16 regValue;
-	u16 uVar5;
-	u32 unaff_r24;
-	u32 uVar8;
-	u32 uVar9;
-	u32 unaff_r27;
-	s16 uVar10;
+	u32 badCompiler;
 
-	uVar9 = param_2 & 0xc;
-	uVar8 = param_2 & 3;
-	if ((param_2 & 0x0F) == 0xb) {
-		uVar9 = 0;
-		uVar8 = 0xb;
+	s16 r30_newRegValue; // r30
+	u8 r29_regIdx;       // r29
+	u16 r28;             // r28
+	u32 unaff_r27;       // r27
+	u32 r26;             // r26
+	u32 r25;             // r25
+	u32 unaff_r24;       // r24
+	s16 r23_oldRegValue; // r23
+
+	r26 = param_2 & 0xc;
+	r25 = param_2 & 3;
+	if ((param_2 & 0x0F) == 0x0B) {
+		r26 = 0;
+		r25 = 0xb;
 	}
-	if ((param_2 & 0x0F) == 0xa) {
+	if ((param_2 & 0x0F) == 0x0A) {
 		param_2   = __ByteRead(track);
-		uVar9     = param_2 & 0x0C;
-		uVar8     = 0xa;
-		unaff_r24 = (param_2 >> 4) + 4;
+		r26       = param_2 & 0x0C;
+		r25       = 0xa;
+		unaff_r24 = (u8)(param_2 >> 4) + 4;
 	}
-	if ((param_2 & 0x0F) == 9) {
-		uVar8 = __ByteRead(track);
-		uVar9 = uVar8 & 0x0c;
-		uVar8 = uVar8 & 0xf0;
-		if (uVar9 == 8) {
-			uVar9 = 0x10;
+	if ((param_2 & 0x0F) == 0x09) {
+		param_2 = __ByteRead(track);
+		r26     = param_2 & 0x0c;
+		r25     = param_2 & 0xf0;
+		if (r26 == 8) {
+			r26 = 0x10;
 		}
 	}
-	reg = __ByteRead(track);
-	if (uVar8 == 10) {
+	r29_regIdx = __ByteRead(track);
+	if (r25 == 0x0A) {
 		unaff_r27 = Jam_ReadReg32(track, __ByteRead(track));
 	}
-	switch (uVar9) {
+	switch (r26) {
 	case 0:
-		uVar10 = Jam_ReadRegDirect(track, __ByteRead(track));
+		r30_newRegValue = Jam_ReadRegDirect(track, __ByteRead(track));
 		break;
 	case 4:
-		uVar10 = __ByteRead(track);
+		r30_newRegValue = __ByteRead(track);
 		break;
 	case 8:
-		uVar10 = __ByteRead(track) << 8;
+		r30_newRegValue = __ByteRead(track) << 8;
 		break;
 	case 12:
-		uVar10 = __WordRead(track);
+		r30_newRegValue = __WordRead(track);
 		break;
 	case 16:
-		uVar10 = -1;
+		r30_newRegValue = -1;
 	}
 
-	regValue = Jam_ReadRegDirect(track, reg);
-	switch (uVar8) {
+	r23_oldRegValue = Jam_ReadRegDirect(track, r29_regIdx);
+	switch (r25) {
 	case 0x00:
 		break;
 	case 0x01:
-		if (uVar9 == 4) {
-			uVar10 = Extend8to16(uVar10);
+		if (r26 == 4) {
+			r30_newRegValue = Extend8to16(r30_newRegValue);
 		}
-		uVar10 = regValue + uVar10;
+		r30_newRegValue = r23_oldRegValue + r30_newRegValue;
 		break;
 	case 0x02:
-		Jam_WriteRegXY(track, regValue * uVar10);
+		unaff_r27 = r23_oldRegValue * r30_newRegValue;
+		Jam_WriteRegXY(track, unaff_r27);
 		return;
 	case 0x03:
-		track->regParam.param._06 = regValue - uVar10;
+		track->regParam.param._06 = r23_oldRegValue - r30_newRegValue;
 		return;
-		break;
 	case 0x0B:
-		uVar10 = regValue - uVar10;
+		r30_newRegValue = r23_oldRegValue - r30_newRegValue;
 		break;
 	case 0x10:
-		if (uVar9 == 4) {
-			uVar10 = Extend8to16(uVar10);
+		if (r26 == 4) {
+			r30_newRegValue = Extend8to16(r30_newRegValue);
 		}
-		if (uVar10 < 0) {
-			uVar10 = (u16)regValue >> -uVar10;
+		if (r30_newRegValue < 0) {
+			r30_newRegValue = (u16)r23_oldRegValue >> -r30_newRegValue;
 		} else {
-			uVar10 = (u16)regValue << uVar10;
+			r30_newRegValue = (u16)r23_oldRegValue << r30_newRegValue;
 		}
 		break;
 	case 0x20:
-		if (uVar9 == 4) {
-			uVar10 = Extend8to16(uVar10);
+		if (r26 == 4) {
+			r30_newRegValue = Extend8to16(r30_newRegValue);
 		}
-		if (uVar10 < 0) {
-			uVar10 = regValue >> -uVar10;
+		if (r30_newRegValue < 0) {
+			r30_newRegValue = r23_oldRegValue >> -r30_newRegValue;
 		} else {
-			uVar10 = regValue << uVar10;
+			r30_newRegValue = r23_oldRegValue << r30_newRegValue;
 		}
 		break;
 	case 0x30:
-		uVar10 = regValue & uVar10;
+		r30_newRegValue = r23_oldRegValue & r30_newRegValue;
 		break;
 	case 0x40:
-		uVar10 = regValue | uVar10;
+		r30_newRegValue = r23_oldRegValue | r30_newRegValue;
 		break;
 	case 0x50:
-		uVar10 = regValue ^ uVar10;
+		r30_newRegValue = r23_oldRegValue ^ r30_newRegValue;
 		break;
 	case 0x60:
-		uVar10 = -regValue;
+		r30_newRegValue = -r23_oldRegValue;
 		break;
 	case 0x90:
 		unaff_r27 = GetRandom_s32();
-		uVar10    = unaff_r27 - (unaff_r27 / uVar10) * uVar10;
+		r30_newRegValue = unaff_r27 % (u16)r30_newRegValue;
 		break;
 	case 0xA:
-		unaff_r27 = LoadTbl(track, unaff_r27, uVar10, unaff_r24);
-		uVar10    = (u16)unaff_r27;
+		unaff_r27       = LoadTbl(track, unaff_r27, r30_newRegValue, unaff_r24);
+		r30_newRegValue = (u16)unaff_r27;
 		break;
 	}
 
-	switch (reg) {
+	switch (r29_regIdx) {
 	case 0:
 	case 1:
 	case 2:
-		uVar5  = Extend8to16(uVar10);
-		uVar10 = uVar10 & 0xff;
+		r30_newRegValue = r30_newRegValue & 0xff;
+		r28             = Extend8to16(r30_newRegValue);
 		break;
 	case 0x21:
-		reg    = 6;
-		uVar10 = track->regParam.param._0C & 0xff00 | uVar10 & 0xff;
+		r29_regIdx      = 6;
+		r30_newRegValue = track->regParam.param._0C & 0xff00 | r30_newRegValue & 0x00ff;
 		break;
 	case 0x20:
-		reg    = 6;
-		uVar10 = (uVar10 << 8) | track->regParam.param._0C & 0xff;
+		r29_regIdx      = 6;
+		r30_newRegValue = track->regParam.param._0C & 0x00ff | r30_newRegValue << 8;
 		break;
 	case 0x2E:
-		reg    = 0xd;
-		uVar10 = track->regParam.param._1A & 0xff00 | uVar10 & 0xff;
+		r29_regIdx      = 0xd;
+		r30_newRegValue = track->regParam.param._1A & 0xff00 | r30_newRegValue & 0x00ff;
 		break;
 	case 0x2F:
-		reg    = 0xd;
-		uVar10 = (uVar10 << 8) | track->regParam.param._1A & 0xff;
+		r29_regIdx      = 0xd;
+		r30_newRegValue = track->regParam.param._1A & 0x00ff | r30_newRegValue << 8;
 		break;
 	case 0x22:
-		Jam_WriteRegDirect(track, 0, uVar10 >> 8);
-		uVar5  = uVar10;
-		uVar10 = uVar10 & 0xff;
-		reg    = 1;
+		Jam_WriteRegDirect(track, 0, r30_newRegValue >> 8);
+		r30_newRegValue = r30_newRegValue & 0xff;
+		r28             = r30_newRegValue;
+		r29_regIdx      = 1;
 		break;
 	case 0x28:
 	case 0x29:
 	case 0x2A:
 	case 0x2B:
-		uVar5                                 = uVar10;
-		track->regParam.param._20[reg - 0x28] = unaff_r27;
-		break;
+		track->regParam.param._20[r29_regIdx - 0x28] = unaff_r27;
+		return;
 	default:
-		uVar5 = uVar10;
+		r28 = r30_newRegValue;
 		break;
 	}
 
-	track->regParam.reg[reg]  = uVar10;
-	track->regParam.param._06 = uVar5;
+	track->regParam.reg[r29_regIdx] = r30_newRegValue;
+	track->regParam.param._06       = r28;
 
-	if (reg == 6) {
+	if (r29_regIdx == 6) {
 		Osc_Clear_Overwrite(track);
 	}
-	if (reg == 7) {
+	if (r29_regIdx == 7) {
 		track->_3D8 |= 2;
 	}
-	if (reg == 0xd) {
+	if (r29_regIdx == 0xd) {
 		track->_D8._68 = track->regParam.param._1A | 0x10000;
 		track->_D8._6C = 0;
 	}
@@ -566,14 +567,14 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
  * Address:	800100A0
  * Size:	00016C
  */
-u16 Jam_ReadRegDirect(seqp_* track, u8 param_2)
+u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 {
 	s16 result;
 	u16 regDirectLo;
 	u16 regDirectHi;
 	int i;
 
-	switch (param_2) {
+	switch (regIdx) {
 	case 0x20:
 	case 0x21:
 		result = track->regParam.param._0C;
@@ -607,10 +608,10 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 param_2)
 		}
 		break;
 	default:
-		result = track->regParam.reg[param_2];
+		result = track->regParam.reg[regIdx];
 		break;
 	}
-	switch (param_2) {
+	switch (regIdx) {
 	case 0x00:
 	case 0x01:
 	case 0x02:
