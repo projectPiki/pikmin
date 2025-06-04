@@ -149,12 +149,12 @@ typedef struct VideoState {
 	u16 v_nest_size;                                   // _625E
 	u8 is_landscape;                                   // _6260
 	u8 nest_data[70 * 38];                             // _6261
-	u16 dc_max;                                        // _6CC6
-	u16 dc_min;                                        // _6CC8
-	u8 unk_shift;                                      // _6CCA
-	u8 dc_shift;                                       // _6CCB
-	u8 mc_residual_bits_h[2];                          // _6CCC, num res bits to read from mv_h, past + future
-	u8 mc_residual_bits_v[2];                          // _6CCE, num res bits to read from mv_v, past + future
+	u32 dc_max;                                        // _6CC8
+	u32 dc_min;                                        // _6CCC
+	u8 unk_shift;                                      // _6CD0
+	u8 dc_shift;                                       // _6CD1
+	u8 mc_residual_bits_h[2];                          // _6CD2, num res bits to read from mv_h, past + future
+	u8 mc_residual_bits_v[2];                          // _6CD4, num res bits to read from mv_v, past + future
 } VideoState;
 
 /**

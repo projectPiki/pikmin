@@ -33,7 +33,6 @@ void HVQM4DecodeIpic(SeqObj* seqObj, const u8* frame, u8* present);
 static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u8* present);
 static void initMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u8* present, u8* past, u8* future);
 static void IpicPlaneDec(VideoState* state, int planeIdx, u8* dst);
-static u32 read32(void const* buf);
 static void init_global_constants();
 static u32 decodeSOvfSym(BitBufferWithTree* buf, u32 min, u32 max);
 static void IpicDcvDec(VideoState* state);
@@ -79,6 +78,45 @@ static void dcBlock(u8* dst, u32 stride, u8 value);
 static u8 saturate(u32 x);
 static u8 sat_mean8(u32 u);
 
+#define read16(buf) (*(u16*)(buf))
+#define read32(buf) (*(u32*)(buf))
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000030
+ */
+static void setCode(BitBuffer* dst, const u8* src)
+{
+	u32 size  = read32(src);
+	dst->size = size;
+	if (size == 0) {
+		dst->ptr = NULL;
+	} else {
+		dst->ptr = (u32*)(src + 4);
+	}
+	dst->bit = -1;
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000140
+ */
+static void readTree(BitBufferWithTree* buf_with_tree, u32 is_signed, u32 scale)
+{
+	Tree* tree     = buf_with_tree->tree;
+	BitBuffer* buf = &buf_with_tree->buf;
+
+	readTree_signed = is_signed;
+	readTree_scale  = scale;
+	tree->pos       = 0x100;
+	if (buf->size != 0)
+		tree->root = _readTree(tree, buf);
+	else
+		tree->root = 0;
+}
+
 /*
  * --INFO--
  * Address:	8002413C
@@ -86,41 +124,38 @@ static u8 sat_mean8(u32 u);
  */
 void HVQM4DecodeBpic(SeqObj* seqObj, const u8* frame, u8* present, u8* past, u8* future)
 {
-	u8* data;
-	int i;
+	VideoState* state;
+	u8* data = &frame[0x4C];
 
-	VideoState* state            = seqObj->state;
-	state->dc_shift              = frame[0];
+	state                        = seqObj->state;
 	state->unk_shift             = frame[1];
+	state->dc_shift              = frame[0];
 	state->mc_residual_bits_h[0] = frame[2];
 	state->mc_residual_bits_v[0] = frame[3];
 	state->mc_residual_bits_h[1] = frame[4];
 	state->mc_residual_bits_v[1] = frame[5];
 	// frame[6] and frame[7] are unused
-	frame += 8;
-	data = frame + 0x44;
-	for (i = 0; i < 2; ++i) {
-		setCode(&state->basis_num[i].buf, data + read32(frame));
-		frame += 4;
-		setCode(&state->basis_num_run[i].buf, data + read32(frame));
-		frame += 4;
-	}
-	for (i = 0; i < PLANE_COUNT; ++i) {
-		setCode(&state->dc_values[i].buf, data + read32(frame));
-		frame += 4;
-		setCode(&state->bufTree0[i].buf, data + read32(frame));
-		frame += 4;
-		setCode(&state->fixvl[i], data + read32(frame));
-		frame += 4;
-	}
-	setCode(&state->mv_h.buf, data + read32(frame));
-	frame += 4;
-	setCode(&state->mv_v.buf, data + read32(frame));
-	frame += 4;
-	setCode(&state->mcb_type.buf, data + read32(frame));
-	frame += 4;
-	setCode(&state->mcb_proc.buf, data + read32(frame));
-	frame += 4;
+
+	data = &frame[0x4C];
+
+	setCode(&state->basis_num[0].buf, data + read32(frame + 0x08));
+	setCode(&state->basis_num_run[0].buf, data + read32(frame + 0x0C));
+	setCode(&state->basis_num[1].buf, data + read32(frame + 0x10));
+	setCode(&state->basis_num_run[1].buf, data + read32(frame + 0x14));
+	setCode(&state->dc_values[0].buf, data + read32(frame + 0x18));
+	setCode(&state->bufTree0[0].buf, data + read32(frame + 0x1C));
+	setCode(&state->fixvl[0], data + read32(frame + 0x20));
+	setCode(&state->dc_values[1].buf, data + read32(frame + 0x24));
+	setCode(&state->bufTree0[1].buf, data + read32(frame + 0x28));
+	setCode(&state->fixvl[1], data + read32(frame + 0x2C));
+	setCode(&state->dc_values[2].buf, data + read32(frame + 0x30));
+	setCode(&state->bufTree0[2].buf, data + read32(frame + 0x34));
+	setCode(&state->fixvl[2], data + read32(frame + 0x38));
+	setCode(&state->mv_h.buf, data + read32(frame + 0x3C));
+	setCode(&state->mv_v.buf, data + read32(frame + 0x40));
+	setCode(&state->mcb_type.buf, data + read32(frame + 0x44));
+	setCode(&state->mcb_proc.buf, data + read32(frame + 0x48));
+
 	readTree(&state->basis_num[0], 0, 0);
 	readTree(&state->basis_num_run[0], 0, 0);
 	readTree(&state->dc_values[0], 1, state->dc_shift);
@@ -128,8 +163,8 @@ void HVQM4DecodeBpic(SeqObj* seqObj, const u8* frame, u8* present, u8* past, u8*
 	readTree(&state->mv_h, 1, 0);
 	readTree(&state->mcb_type, 0, 0);
 
-	state->dc_max = +0x7F << state->dc_shift;
-	state->dc_min = -0x80 << state->dc_shift;
+	state->dc_max = +0x7F << frame[0];
+	state->dc_min = -0x80 << frame[0];
 
 	BpicPlaneDec(seqObj, present, past, future);
 	/*
@@ -609,54 +644,47 @@ void HVQM4DecodePpic(SeqObj* seqObj, const u8* frame, u8* present, u8* past)
 void HVQM4DecodeIpic(SeqObj* seqObj, const u8* frame, u8* present)
 {
 	VideoState* state;
-	u8 dc_shift;
-	u16 nest_x, nest_y;
 	u8 const* data;
+	u8 const* frame2;
 	int i;
 
 	state            = seqObj->state;
-	dc_shift         = *frame++;
-	state->unk_shift = *frame++;
-	frame += 2; // unused, seems to be always zero
-	nest_x = read16(frame);
-	frame += 2;
-	nest_y = read16(frame);
-	frame += 2;
-	data = frame + 0x40;
-	for (i = 0; i < 2; ++i) {
-		setCode(&state->basis_num[i].buf, data + read32(frame));
-		frame += 4;
-		setCode(&state->basis_num_run[i].buf, data + read32(frame));
-		frame += 4;
-	}
-	for (i = 0; i < PLANE_COUNT; ++i) {
-		setCode(&state->dc_values[i].buf, data + read32(frame));
-		frame += 4;
-		setCode(&state->bufTree0[i].buf, data + read32(frame));
-		frame += 4;
-		setCode(&state->fixvl[i], data + read32(frame));
-		frame += 4;
-	}
-	for (i = 0; i < PLANE_COUNT; ++i) {
-		setCode(&state->dc_rle[i].buf, data + read32(frame));
-		frame += 4;
-	}
+	state->unk_shift = frame[1];
+	data             = frame + 0x48;
+
+	setCode(&state->basis_num[0].buf, data + read32(frame + 0x8));
+	setCode(&state->basis_num_run[0].buf, data + read32(frame + 0xC));
+	setCode(&state->basis_num[1].buf, data + read32(frame + 0x10));
+	setCode(&state->basis_num_run[1].buf, data + read32(frame + 0x14));
+	setCode(&state->dc_values[0].buf, data + read32(frame + 0x18));
+	setCode(&state->bufTree0[0].buf, data + read32(frame + 0x1C));
+	setCode(&state->fixvl[0], data + read32(frame + 0x20));
+	setCode(&state->dc_values[1].buf, data + read32(frame + 0x24));
+	setCode(&state->bufTree0[1].buf, data + read32(frame + 0x28));
+	setCode(&state->fixvl[1], data + read32(frame + 0x2C));
+	setCode(&state->dc_values[2].buf, data + read32(frame + 0x30));
+	setCode(&state->bufTree0[2].buf, data + read32(frame + 0x34));
+	setCode(&state->fixvl[2], data + read32(frame + 0x38));
+	setCode(&state->dc_rle[0].buf, data + read32(frame + 0x3C));
+	setCode(&state->dc_rle[1].buf, data + read32(frame + 0x40));
+	setCode(&state->dc_rle[2].buf, data + read32(frame + 0x44));
+
 	// multiple BitBufferWithTree instances share the same Tree,
 	// the first BitBuffer of each group contains the Tree itself
 	readTree(&state->basis_num[0], 0, 0);
 	readTree(&state->basis_num_run[0], 0, 0);
-	readTree(&state->dc_values[0], 1, dc_shift);
+	readTree(&state->dc_values[0], 1, frame[0]);
 	readTree(&state->bufTree0[0], 0, 2);
 
-	state->dc_max = +0x7F << dc_shift;
-	state->dc_min = -0x80 << dc_shift;
+	state->dc_max = +0x7F << frame[0];
+	state->dc_min = -0x80 << frame[0];
 
 	// 4x4 block types
 	Ipic_BasisNumDec(state);
 	// 4x4 block DC values
 	IpicDcvDec(state);
 	// 70x38 nest copied from upper 4 bits of DC values somewhere in the luma plane
-	MakeNest(state, nest_x, nest_y);
+	MakeNest(state, read16(frame + 4), read16(frame + 6));
 
 	for (i = 0; i < PLANE_COUNT; ++i) {
 		IpicPlaneDec(state, i, present);
@@ -1501,8 +1529,7 @@ u32 HVQM4BuffSize(SeqObj* seqObj)
 
 	const int y_blocks  = (h_blocks + 2) * (v_blocks + 2);
 	const int uv_blocks = (uv_h_blocks + 2) * (uv_v_blocks + 2);
-	// TODO: What is this constant '8' doing here?
-	return sizeof(VideoState) + 8 + (y_blocks + uv_blocks * 2) * sizeof(u16);
+	return sizeof(VideoState) + (y_blocks + uv_blocks * 2) * sizeof(u16);
 }
 
 /*
@@ -7346,25 +7373,6 @@ static int decodeUOvfSym(BitBufferWithTree* buf, int max)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000140
- */
-static void readTree(BitBufferWithTree* buf, u32 is_signed, u32 scale)
-{
-	Tree* tree;
-
-	readTree_signed = is_signed;
-	readTree_scale  = scale;
-	tree            = buf->tree;
-	tree->pos       = 0x100;
-	if (buf->buf.size == 0)
-		tree->root = 0;
-	else
-		tree->root = _readTree(tree, &buf->buf);
-}
-
-/*
- * --INFO--
  * Address:	8001F384
  * Size:	000064
  */
@@ -7414,30 +7422,6 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
 		dst->array[0][byte] = symbol;
 		return byte;
 	}
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
- */
-static void setCode(BitBuffer* dst, const u8* src)
-{
-	dst->size = read32(src);
-	dst->ptr  = dst->size ? (u32*)src + 4 : NULL;
-	dst->bit  = -1;
-}
-
-static u32 read32(void const* buf)
-{
-	int i;
-	u32 v = 0;
-
-	for (i = 0; i < 4; i++) {
-		v <<= 8;
-		v |= ((u8 const*)buf)[i];
-	}
-	return v;
 }
 
 /*
@@ -7521,18 +7505,6 @@ static void init_global_constants()
 	for (i = 1; i < 0x200; i++) {
 		mcdivTable[i] = 0x1000 / i;
 	}
-}
-
-static u16 read16(void const* buf)
-{
-	int i;
-	u32 v = 0;
-
-	for (i = 0; i < 2; i++) {
-		v <<= 8;
-		v |= ((u8 const*)buf)[i];
-	}
-	return v;
 }
 
 static void setMCTop(MCPlane mcplanes[PLANE_COUNT])
