@@ -4,8 +4,10 @@
 #include "jaudio/audiostruct.h"
 #include "jaudio/dspdriver.h"
 
+#define CHANNEL_SIZE (0x100)
+
 static jcs_ GLOBAL_CHANNEL;
-static jc_ CHANNEL[0x100];
+static jc_ CHANNEL[CHANNEL_SIZE];
 
 static u16 MAX_MIXERLEVEL         = 12000;
 static int JAC_SYSTEM_OUTPUT_MODE = 1;
@@ -481,52 +483,19 @@ static void Channel_FirstInit(jc_* jc)
  */
 void InitGlobalChannel()
 {
+	jcs_* global_channel;
 	int i;
-	InitJcs(&GLOBAL_CHANNEL);
 
-	for (i = 0; i < 0x100; i++) {
+	global_channel = &GLOBAL_CHANNEL;
+	InitJcs(global_channel);
+
+	for (i = 0; i < CHANNEL_SIZE; i++) {
 		Channel_FirstInit(&CHANNEL[i]);
-		List_AddChannel(&GLOBAL_CHANNEL._08, &CHANNEL[i]);
-		CHANNEL[i].mMgr = &GLOBAL_CHANNEL;
+		List_AddChannel(&global_channel->_08, &CHANNEL[i]);
+		CHANNEL[i].mMgr = global_channel;
 	}
 
-	GLOBAL_CHANNEL._00 = 0x100;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x802F
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0x24E0
-	  stwu      r1, -0x20(r1)
-	  stmw      r27, 0xC(r1)
-	  mr        r28, r0
-	  addi      r3, r28, 0
-	  bl        -0x2C0
-	  lis       r3, 0x802F
-	  li        r27, 0
-	  addi      r30, r3, 0x2560
-	  li        r31, 0
-
-	.loc_0x34:
-	  add       r29, r30, r31
-	  addi      r3, r29, 0
-	  bl        -0x7C
-	  addi      r3, r28, 0x8
-	  addi      r4, r29, 0
-	  bl        -0x688
-	  addi      r27, r27, 0x1
-	  stw       r28, 0x4(r29)
-	  cmpwi     r27, 0x100
-	  addi      r31, r31, 0x140
-	  blt+      .loc_0x34
-	  li        r0, 0x100
-	  stw       r0, 0x0(r28)
-	  lmw       r27, 0xC(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	global_channel->_00 = CHANNEL_SIZE;
 }
 
 /*
@@ -890,8 +859,11 @@ void DoEffectOsc(jc_* jc, u8 id, f32 val)
  */
 static void KillBrokenLogicalChannels(dspch_* ch)
 {
-	for (u32 i = 0; i < 0x100; i++) {
-		jc_* chan = &CHANNEL[i];
+	size_t i;
+	jc_* chan;
+
+	for (i = 0; i < CHANNEL_SIZE; i++) {
+		chan = &CHANNEL[i];
 		if (chan->_20 == ch) {
 			StopLogicalChannel(chan);
 			if (List_CutChannel(chan) != -1) {
