@@ -1815,11 +1815,17 @@ static void IntraAotBlock(VideoState* state, u8* dst, u32 stride, u8 targetAvera
 // 4x4 block of single value
 static void dcBlock(u8* dst, u32 stride, u8 value)
 {
-	int x, y;
+	dst[0] = dst[1] = dst[2] = dst[3] = value;
+	dst += stride;
 
-	for (y = 0; y < 4; ++y)
-		for (x = 0; x < 4; ++x)
-			dst[y * stride + x] = value;
+	dst[0] = dst[1] = dst[2] = dst[3] = value;
+	dst += stride;
+
+	dst[0] = dst[1] = dst[2] = dst[3] = value;
+	dst += stride;
+
+	dst[0] = dst[1] = dst[2] = dst[3] = value;
+	dst += stride;
 }
 
 /*
@@ -1829,19 +1835,21 @@ static void dcBlock(u8* dst, u32 stride, u8 value)
  */
 static void IpicBlockDec(VideoState* state, u8* dst, u32 stride, StackState* stackState)
 {
-	u8 top, bottom, right, left;
+	u8 top, bottom, right;
+	u8 value;
 
 	if (stackState->curr.type == 0) {
-		top    = stackState->line_prev->type & 0x77 ? stackState->curr.value : stackState->line_prev->value;
-		bottom = stackState->line_next->type & 0x77 ? stackState->curr.value : stackState->line_next->value;
-		right  = stackState->next.type & 0x77 ? stackState->curr.value : stackState->next.value;
+		value  = stackState->curr.value;
+		top    = stackState->line_prev->type & 0x77 ? value : stackState->line_prev->value;
+		bottom = stackState->line_next->type & 0x77 ? value : stackState->line_next->value;
+		right  = stackState->next.type & 0x77 ? value : stackState->next.value;
 		// the left value is tracked manually, the logic is equivalent with the other surrounding values
-		left = stackState->value_prev;
-		WeightImBlock(dst, stride, stackState->curr.value, top, bottom, left, right);
-		stackState->value_prev = stackState->curr.value;
+		WeightImBlock(dst, stride, value, top, bottom, stackState->value_prev, right);
+		stackState->value_prev = value;
 	} else if (stackState->curr.type == 8) {
-		// dcBlock(dst, stride, stackState->curr.value);
-		stackState->value_prev = stackState->curr.value;
+		value = stackState->curr.value;
+		dcBlock(dst, stride, value);
+		stackState->value_prev = value;
 	} else {
 		IntraAotBlock(state, dst, stride, stackState->curr.value, stackState->curr.type, stackState->plane_idx);
 		// don't use the current DC value to predict the next one
@@ -1850,109 +1858,6 @@ static void IpicBlockDec(VideoState* state, u8* dst, u32 stride, StackState* sta
 	// next block
 	++stackState->line_prev;
 	++stackState->line_next;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r6
-	  stw       r30, 0x18(r1)
-	  lbz       r7, 0x13(r6)
-	  cmplwi    r7, 0
-	  bne-      .loc_0xA0
-	  lwz       r3, 0x4(r31)
-	  lbz       r30, 0x12(r31)
-	  lbz       r0, 0x1(r3)
-	  andi.     r0, r0, 0x77
-	  beq-      .loc_0x40
-	  mr        r0, r30
-	  b         .loc_0x44
-
-	.loc_0x40:
-	  lbz       r0, 0x0(r3)
-
-	.loc_0x44:
-	  lwz       r3, 0xC(r31)
-	  mr        r6, r0
-	  lbz       r0, 0x1(r3)
-	  andi.     r0, r0, 0x77
-	  beq-      .loc_0x60
-	  mr        r3, r30
-	  b         .loc_0x64
-
-	.loc_0x60:
-	  lbz       r3, 0x0(r3)
-
-	.loc_0x64:
-	  lbz       r0, 0x11(r31)
-	  addi      r7, r3, 0
-	  andi.     r0, r0, 0x77
-	  beq-      .loc_0x7C
-	  mr        r0, r30
-	  b         .loc_0x80
-
-	.loc_0x7C:
-	  lbz       r0, 0x10(r31)
-
-	.loc_0x80:
-	  lbz       r8, 0x14(r31)
-	  addi      r3, r4, 0
-	  addi      r4, r5, 0
-	  mr        r9, r0
-	  addi      r5, r30, 0
-	  bl        -0xAC0
-	  stb       r30, 0x14(r31)
-	  b         .loc_0x114
-
-	.loc_0xA0:
-	  cmplwi    r7, 0x8
-	  bne-      .loc_0x100
-	  lbz       r0, 0x12(r31)
-	  add       r3, r4, r5
-	  stb       r0, 0x3(r4)
-	  stb       r0, 0x2(r4)
-	  stb       r0, 0x1(r4)
-	  stb       r0, 0x0(r4)
-	  stb       r0, 0x3(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x0(r3)
-	  add       r3, r3, r5
-	  stb       r0, 0x3(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x0(r3)
-	  add       r3, r3, r5
-	  stb       r0, 0x3(r3)
-	  stb       r0, 0x2(r3)
-	  stb       r0, 0x1(r3)
-	  stb       r0, 0x0(r3)
-	  stb       r0, 0x14(r31)
-	  b         .loc_0x114
-
-	.loc_0x100:
-	  lbz       r6, 0x12(r31)
-	  lwz       r8, 0x0(r31)
-	  bl        -0x954
-	  lbz       r0, 0x10(r31)
-	  stb       r0, 0x14(r31)
-
-	.loc_0x114:
-	  lwz       r3, 0x4(r31)
-	  addi      r0, r3, 0x2
-	  stw       r0, 0x4(r31)
-	  lwz       r3, 0xC(r31)
-	  addi      r0, r3, 0x2
-	  stw       r0, 0xC(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1960,69 +1865,25 @@ static void IpicBlockDec(VideoState* state, u8* dst, u32 stride, StackState* sta
  * Address:	800207AC
  * Size:	0000D4
  */
-static void IpicLineDec(VideoState* state, u8* dst, u32 stride, StackState* stackState, u16 hBlocks)
+static void IpicLineDec(VideoState* state, u8* dst, u32 stride, StackState* stackState, u32 hBlocks)
 {
-	FORCE_DONT_INLINE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  mr        r30, r6
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  subi      r31, r7, 0x1
-	  lwz       r6, 0x8(r6)
-	  lhz       r0, 0x0(r6)
-	  sth       r0, 0x10(r30)
-	  lwz       r3, 0x8(r30)
-	  lbz       r0, 0x0(r3)
-	  stb       r0, 0x14(r30)
-	  b         .loc_0x78
+	int i;
 
-	.loc_0x40:
-	  lhz       r0, 0x10(r30)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0
-	  sth       r0, 0x12(r30)
-	  addi      r5, r29, 0
-	  addi      r6, r30, 0
-	  lwz       r7, 0x8(r30)
-	  addi      r7, r7, 0x2
-	  stw       r7, 0x8(r30)
-	  lhz       r0, 0x0(r7)
-	  sth       r0, 0x10(r30)
-	  bl        -0x1B0
-	  addi      r28, r28, 0x4
-	  subi      r31, r31, 0x1
+	stackState->next       = *stackState->line_curr;
+	stackState->value_prev = stackState->line_curr->value;
 
-	.loc_0x78:
-	  cmpwi     r31, 0
-	  bgt+      .loc_0x40
-	  lhz       r0, 0x10(r30)
-	  addi      r3, r27, 0
-	  addi      r4, r28, 0
-	  sth       r0, 0x12(r30)
-	  addi      r5, r29, 0
-	  addi      r6, r30, 0
-	  lwz       r7, 0x8(r30)
-	  addi      r0, r7, 0x6
-	  stw       r0, 0x8(r30)
-	  bl        -0x1E8
-	  lwz       r3, 0x4(r30)
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x4(r30)
-	  lwz       r3, 0xC(r30)
-	  addi      r0, r3, 0x4
-	  stw       r0, 0xC(r30)
-	  lwz       r0, 0x3C(r1)
-	  lmw       r27, 0x24(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	for (i = hBlocks - 1; i > 0; i--) {
+		stackState->curr = stackState->next;
+		stackState->next = *++stackState->line_curr;
+		IpicBlockDec(state, dst, stride, stackState);
+		dst += 4;
+	}
+
+	stackState->curr = stackState->next;
+	stackState->line_curr += 3;
+	IpicBlockDec(state, dst, stride, stackState);
+	stackState->line_prev += 2;
+	stackState->line_next += 2;
 }
 
 /*
