@@ -8,7 +8,7 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 //////////// HVQM4 DECODER FUNCTIONS AND STRUCTS (C) ////////////
-// Names from Tilka/hvqm4, presumably from Disney PK debug originally.
+// Names from Tilka/hvqm4 (presumably from Disney PK debug originally) and Bakuten Shoot Beyblade 2002.
 // Versioning is a bit weird, so take with a grain of salt. Should be close to correct though.
 
 #define HVQM_PLANE_COUNT 3 // apparently
@@ -22,11 +22,11 @@ extern "C" {
  * @note Size: 0xA.
  */
 typedef struct SeqObj {
-	struct VideoState* state; // _00
-	u16 width;                // _04
-	u16 height;               // _06
-	u8 h_samp;                // _08
-	u8 v_samp;                // _09
+	void* ws;         // _00
+	u16 frame_width;  // _04
+	u16 frame_height; // _06
+	u8 h_samp;        // _08
+	u8 v_samp;        // _09
 } SeqObj;
 
 /**
@@ -189,12 +189,12 @@ typedef struct RLDecoder {
 } RLDecoder;
 
 void HVQM4InitDecoder();
-void HVQM4InitSeqObj(SeqObj* seqObj, VideoInfo* videoInfo);
-u32 HVQM4BuffSize(SeqObj* seqObj);
-void HVQM4SetBuffer(SeqObj* seqObj, void* workBuffer);
-void HVQM4DecodeIpic(SeqObj* seqObj, u8 const* frame, u8* present);
-void HVQM4DecodePpic(SeqObj* seqObj, u8 const* frame, u8* present, u8* past);
-void HVQM4DecodeBpic(SeqObj* seqObj, u8 const* frame, u8* present, u8* past, u8* future);
+void HVQM4InitSeqObj(SeqObj* obj, VideoInfo* header);
+u32 HVQM4BuffSize(SeqObj* obj);
+void HVQM4SetBuffer(SeqObj* obj, void* buf);
+void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf);
+void HVQM4DecodePpic(SeqObj* obj, void* code, void* outbuf, void* ref1);
+void HVQM4DecodeBpic(SeqObj* obj, void* code, void* outbuf, void* ref2, void* ref1);
 
 /////////////////////////////////////////////////////////
 
