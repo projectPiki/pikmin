@@ -131,14 +131,14 @@ static void set_border(BlockData* dst)
  * Address:	8001EF9C
  * Size:	00011C
  */
-static void setHVQPlaneDesc(SeqObj* seqObj, u32 planeIdx, u8 hSamp, u8 vSamp)
+static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
 {
 	u32 mcb, pb;
-	HVQPlaneDesc* plane      = &((VideoState*)seqObj->ws)->planes[planeIdx];
-	plane->width_shift       = (hSamp == 2) ? 1 : 0;
-	plane->width_in_samples  = seqObj->frame_width >> plane->width_shift;
-	plane->height_shift      = (vSamp == 2) ? 1 : 0;
-	plane->height_in_samples = seqObj->frame_height >> plane->height_shift;
+	HVQPlaneDesc* plane      = &((VideoState*)obj->ws)->planes[id];
+	plane->width_shift       = (h_samp == 2) ? 1 : 0;
+	plane->width_in_samples  = obj->frame_width >> plane->width_shift;
+	plane->height_shift      = (v_samp == 2) ? 1 : 0;
+	plane->height_in_samples = obj->frame_height >> plane->height_shift;
 	plane->size_in_samples   = plane->width_in_samples * plane->height_in_samples;
 
 	// pixels per 2x2 block
@@ -146,8 +146,8 @@ static void setHVQPlaneDesc(SeqObj* seqObj, u32 planeIdx, u8 hSamp, u8 vSamp)
 	plane->pb_per_mcb_y   = 2 >> plane->height_shift;                  // 1..2
 	plane->blocks_per_mcb = plane->pb_per_mcb_x * plane->pb_per_mcb_y; // 1..4
 	// number of 4x4 blocks
-	plane->h_blocks = seqObj->frame_width / (hSamp * 4);
-	plane->v_blocks = seqObj->frame_height / (vSamp * 4);
+	plane->h_blocks = obj->frame_width / (h_samp * 4);
+	plane->v_blocks = obj->frame_height / (v_samp * 4);
 	// number of 4x4 blocks + border
 	plane->h_blocks_safe = plane->h_blocks + 2;
 	plane->v_blocks_safe = plane->v_blocks + 2;
@@ -272,7 +272,7 @@ static inline int decodeUOvfSym(BitBufferWithTree* buf, int max)
 	return sum;
 }
 
-static int getDeltaDC(VideoState* state, int plane_idx, int* rle)
+static inline int getDeltaDC(VideoState* state, int plane_idx, int* rle)
 {
 	int delta;
 
@@ -1536,6 +1536,439 @@ static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, co
 	*/
 }
 
+/*
+ * --INFO--
+ * Address:	80022700
+ * Size:	0004C4
+ */
+static inline u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
+{
+	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
+	BitBuffer* buf;
+
+	u32 bits;
+	u32 step, stride, big, small;
+	u8 min, max;
+	int i, j;
+	u8 nest_value;
+	u32 inverse, foo;
+
+	buf  = &state->fixvl[planeIdx];
+	bits = read16(buf->ptr, 0);
+	buf->ptr += 2;
+	big   = bits & 0x3F;
+	small = (bits >> 6) & 0x1F;
+
+	if (state->is_landscape) {
+		nestData += nestStride * small + big;
+		step   = 1 << ((bits >> 11) & 1);
+		stride = nestStride << ((bits >> 12) & 1);
+	} else {
+		nestData += nestStride * big + small;
+		step   = 1 << ((bits >> 12) & 1);
+		stride = nestStride << ((bits >> 11) & 1);
+	}
+	min = max = (nestData[0] >> 4) & 0xF; // !
+	for (i = 0; i < 4; ++i) {
+		for (j = 0; j < 4; ++j) {
+			nest_value     = (nestData[i * stride + j * step] >> 4) & 0xF; // !
+			basisOut[i][j] = nest_value;
+			min            = nest_value < min ? nest_value : min;
+			max            = nest_value > max ? nest_value : max;
+		}
+	}
+	*sum += decodeHuff(&state->bufTree0[planeIdx]);
+	inverse = divTable[max - min];
+	if (bits & 0x8000)
+		inverse = -inverse;
+	foo = (bits >> 13) & 3;
+	return (*sum + foo) * inverse;
+	/*
+	.loc_0x0:
+	  stwu      r1, -0x40(r1)
+	  rlwinm    r0,r8,4,0,27
+	  add       r11, r3, r0
+	  stw       r31, 0x3C(r1)
+	  stw       r30, 0x38(r1)
+	  stw       r29, 0x34(r1)
+	  lwz       r10, 0x61DC(r11)
+	  addi      r0, r10, 0x1
+	  stw       r0, 0x61DC(r11)
+	  lwz       r9, 0x61DC(r11)
+	  lbz       r10, 0x0(r10)
+	  addi      r0, r9, 0x1
+	  stw       r0, 0x61DC(r11)
+	  lbz       r0, 0x6260(r3)
+	  lbz       r9, 0x0(r9)
+	  cmplwi    r0, 0
+	  addi      r0, r9, 0
+	  rlwimi    r0,r10,8,16,23
+	  beq-      .loc_0x78
+	  rlwinm    r9,r0,26,27,31
+	  mullw     r10, r9, r7
+	  add       r11, r10, r6
+	  rlwinm    r9,r0,20,31,31
+	  rlwinm    r12,r0,0,26,31
+	  rlwinm    r6,r0,21,31,31
+	  li        r10, 0x1
+	  add       r11, r12, r11
+	  slw       r6, r10, r6
+	  slw       r7, r7, r9
+	  b         .loc_0xA0
+
+	.loc_0x78:
+	  rlwinm    r9,r0,0,26,31
+	  mullw     r10, r9, r7
+	  add       r11, r10, r6
+	  rlwinm    r9,r0,21,31,31
+	  rlwinm    r12,r0,26,27,31
+	  rlwinm    r6,r0,20,31,31
+	  li        r10, 0x1
+	  add       r11, r12, r11
+	  slw       r6, r10, r6
+	  slw       r7, r7, r9
+
+	.loc_0xA0:
+	  lbz       r9, 0x0(r11)
+	  add       r29, r11, r6
+	  rlwinm    r9,r9,28,28,31
+	  stb       r9, 0x0(r4)
+	  rlwinm    r12,r9,0,24,31
+	  addi      r10, r9, 0
+	  lbz       r31, 0x0(r29)
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0x1(r4)
+	  ble-      .loc_0xD4
+	  mr        r10, r30
+	  b         .loc_0xDC
+
+	.loc_0xD4:
+	  bge-      .loc_0xDC
+	  mr        r9, r30
+
+	.loc_0xDC:
+	  add       r29, r29, r6
+	  lbz       r31, 0x0(r29)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0x2(r4)
+	  ble-      .loc_0x100
+	  mr        r10, r30
+	  b         .loc_0x110
+
+	.loc_0x100:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r30, r12
+	  bge-      .loc_0x110
+	  mr        r9, r30
+
+	.loc_0x110:
+	  add       r29, r29, r6
+	  lbz       r31, 0x0(r29)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0x3(r4)
+	  ble-      .loc_0x134
+	  mr        r10, r30
+	  b         .loc_0x144
+
+	.loc_0x134:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r30, r12
+	  bge-      .loc_0x144
+	  mr        r9, r30
+
+	.loc_0x144:
+	  add       r11, r11, r7
+	  lbz       r31, 0x0(r11)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0x4(r4)
+	  ble-      .loc_0x168
+	  mr        r10, r30
+	  b         .loc_0x178
+
+	.loc_0x168:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r30, r12
+	  bge-      .loc_0x178
+	  mr        r9, r30
+
+	.loc_0x178:
+	  add       r30, r11, r6
+	  lbz       r31, 0x0(r30)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r31,r31,28,28,31
+	  cmplw     r31, r12
+	  stb       r31, 0x5(r4)
+	  ble-      .loc_0x19C
+	  mr        r10, r31
+	  b         .loc_0x1AC
+
+	.loc_0x19C:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r31, r12
+	  bge-      .loc_0x1AC
+	  mr        r9, r31
+
+	.loc_0x1AC:
+	  add       r30, r30, r6
+	  lbz       r31, 0x0(r30)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r31,r31,28,28,31
+	  cmplw     r31, r12
+	  stb       r31, 0x6(r4)
+	  ble-      .loc_0x1D0
+	  mr        r10, r31
+	  b         .loc_0x1E0
+
+	.loc_0x1D0:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r31, r12
+	  bge-      .loc_0x1E0
+	  mr        r9, r31
+
+	.loc_0x1E0:
+	  add       r30, r30, r6
+	  lbz       r31, 0x0(r30)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0x7(r4)
+	  ble-      .loc_0x204
+	  mr        r10, r30
+	  b         .loc_0x214
+
+	.loc_0x204:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r30, r12
+	  bge-      .loc_0x214
+	  mr        r9, r30
+
+	.loc_0x214:
+	  add       r11, r11, r7
+	  lbz       r31, 0x0(r11)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0x8(r4)
+	  ble-      .loc_0x238
+	  mr        r10, r30
+	  b         .loc_0x248
+
+	.loc_0x238:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r30, r12
+	  bge-      .loc_0x248
+	  mr        r9, r30
+
+	.loc_0x248:
+	  add       r30, r11, r6
+	  lbz       r31, 0x0(r30)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r31,r31,28,28,31
+	  cmplw     r31, r12
+	  stb       r31, 0x9(r4)
+	  ble-      .loc_0x26C
+	  mr        r10, r31
+	  b         .loc_0x27C
+
+	.loc_0x26C:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r31, r12
+	  bge-      .loc_0x27C
+	  mr        r9, r31
+
+	.loc_0x27C:
+	  add       r30, r30, r6
+	  lbz       r31, 0x0(r30)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r31,r31,28,28,31
+	  cmplw     r31, r12
+	  stb       r31, 0xA(r4)
+	  ble-      .loc_0x2A0
+	  mr        r10, r31
+	  b         .loc_0x2B0
+
+	.loc_0x2A0:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r31, r12
+	  bge-      .loc_0x2B0
+	  mr        r9, r31
+
+	.loc_0x2B0:
+	  add       r30, r30, r6
+	  lbz       r31, 0x0(r30)
+	  rlwinm    r12,r10,0,24,31
+	  rlwinm    r30,r31,28,28,31
+	  cmplw     r30, r12
+	  stb       r30, 0xB(r4)
+	  ble-      .loc_0x2D4
+	  mr        r10, r30
+	  b         .loc_0x2E4
+
+	.loc_0x2D4:
+	  rlwinm    r12,r9,0,24,31
+	  cmplw     r30, r12
+	  bge-      .loc_0x2E4
+	  mr        r9, r30
+
+	.loc_0x2E4:
+	  add       r11, r11, r7
+	  lbz       r12, 0x0(r11)
+	  rlwinm    r7,r10,0,24,31
+	  rlwinm    r12,r12,28,28,31
+	  cmplw     r12, r7
+	  stb       r12, 0xC(r4)
+	  ble-      .loc_0x308
+	  mr        r10, r12
+	  b         .loc_0x318
+
+	.loc_0x308:
+	  rlwinm    r7,r9,0,24,31
+	  cmplw     r12, r7
+	  bge-      .loc_0x318
+	  mr        r9, r12
+
+	.loc_0x318:
+	  add       r12, r11, r6
+	  lbz       r11, 0x0(r12)
+	  rlwinm    r7,r10,0,24,31
+	  rlwinm    r11,r11,28,28,31
+	  cmplw     r11, r7
+	  stb       r11, 0xD(r4)
+	  ble-      .loc_0x33C
+	  mr        r10, r11
+	  b         .loc_0x34C
+
+	.loc_0x33C:
+	  rlwinm    r7,r9,0,24,31
+	  cmplw     r11, r7
+	  bge-      .loc_0x34C
+	  mr        r9, r11
+
+	.loc_0x34C:
+	  add       r12, r12, r6
+	  lbz       r11, 0x0(r12)
+	  rlwinm    r7,r10,0,24,31
+	  rlwinm    r11,r11,28,28,31
+	  cmplw     r11, r7
+	  stb       r11, 0xE(r4)
+	  ble-      .loc_0x370
+	  mr        r10, r11
+	  b         .loc_0x380
+
+	.loc_0x370:
+	  rlwinm    r7,r9,0,24,31
+	  cmplw     r11, r7
+	  bge-      .loc_0x380
+	  mr        r9, r11
+
+	.loc_0x380:
+	  add       r12, r12, r6
+	  lbz       r7, 0x0(r12)
+	  rlwinm    r6,r10,0,24,31
+	  rlwinm    r7,r7,28,28,31
+	  cmplw     r7, r6
+	  stb       r7, 0xF(r4)
+	  ble-      .loc_0x3A4
+	  mr        r10, r7
+	  b         .loc_0x3B4
+
+	.loc_0x3A4:
+	  rlwinm    r4,r9,0,24,31
+	  cmplw     r7, r4
+	  bge-      .loc_0x3B4
+	  mr        r9, r7
+
+	.loc_0x3B4:
+	  mulli     r6, r8, 0x14
+	  add       r4, r3, r6
+	  lwz       r11, 0x6160(r4)
+	  addi      r7, r6, 0x6150
+	  add       r7, r3, r7
+	  lwz       r6, 0x4(r11)
+	  b         .loc_0x41C
+
+	.loc_0x3D0:
+	  lwz       r8, 0xC(r7)
+	  cmpwi     r8, 0
+	  bge-      .loc_0x3F8
+	  lwz       r4, 0x0(r7)
+	  li        r8, 0x1F
+	  addi      r3, r4, 0x4
+	  stw       r3, 0x0(r7)
+	  lwz       r3, 0x0(r4)
+	  stw       r3, 0x8(r7)
+	  b         .loc_0x3FC
+
+	.loc_0x3F8:
+	  lwz       r3, 0x8(r7)
+
+	.loc_0x3FC:
+	  srw       r4, r3, r8
+	  subi      r3, r8, 0x1
+	  stw       r3, 0xC(r7)
+	  rlwinm    r4,r4,11,20,20
+	  rlwinm    r3,r6,2,0,29
+	  add       r3, r4, r3
+	  addi      r3, r3, 0x8
+	  lwzx      r6, r11, r3
+
+	.loc_0x41C:
+	  cmpwi     r6, 0x100
+	  bge+      .loc_0x3D0
+	  rlwinm    r3,r6,2,0,29
+	  lwz       r4, 0x0(r5)
+	  add       r3, r11, r3
+	  lwz       r3, 0x8(r3)
+	  rlwinm    r7,r0,0,16,31
+	  rlwinm.   r0,r0,0,16,16
+	  add       r3, r4, r3
+	  stw       r3, 0x0(r5)
+	  beq-      .loc_0x480
+	  rlwinm    r3,r9,0,24,31
+	  lwz       r5, 0x0(r5)
+	  rlwinm    r0,r10,0,24,31
+	  sub       r0, r0, r3
+	  lis       r3, 0x8039
+	  rlwinm    r4,r0,2,0,29
+	  subi      r0, r3, 0x4100
+	  add       r3, r0, r4
+	  lwz       r0, 0x0(r3)
+	  rlwinm    r3,r7,19,30,31
+	  add       r3, r5, r3
+	  neg       r0, r0
+	  mullw     r3, r3, r0
+	  b         .loc_0x4B0
+
+	.loc_0x480:
+	  rlwinm    r3,r9,0,24,31
+	  lwz       r6, 0x0(r5)
+	  rlwinm    r0,r10,0,24,31
+	  sub       r0, r0, r3
+	  lis       r3, 0x8039
+	  rlwinm    r5,r7,19,30,31
+	  rlwinm    r4,r0,2,0,29
+	  subi      r0, r3, 0x4100
+	  add       r3, r0, r4
+	  lwz       r0, 0x0(r3)
+	  add       r3, r6, r5
+	  mullw     r3, r3, r0
+
+	.loc_0x4B0:
+	  lwz       r31, 0x3C(r1)
+	  lwz       r30, 0x38(r1)
+	  lwz       r29, 0x34(r1)
+	  addi      r1, r1, 0x40
+	  blr
+	*/
+}
+
 static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nest_data, u32 nest_stride, u32 plane_idx)
 {
 	int x, y, k;
@@ -1559,6 +1992,34 @@ static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u
 	for (y = 0; y < 4; ++y)
 		for (x = 0; x < 4; ++x)
 			sum += result[y][x];
+	mean = sum >> 4;
+	return mean;
+}
+
+static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nest_data, u32 nest_stride, u32 plane_idx)
+{
+	int i, j, k;
+	int temp;
+	u8 byte_result[4][4];
+	u32 factor;
+	int sum;
+	int mean;
+
+	for (i = 0; i < 4; ++i)
+		for (j = 0; j < 4; ++j)
+			result[i][j] = 0;
+
+	temp = 0;
+	for (k = 0; k < num_bases; ++k) {
+		factor = GetMCAotBasis(state, byte_result, &temp, nest_data, nest_stride, plane_idx);
+		for (i = 0; i < 4; ++i)
+			for (j = 0; j < 4; ++j)
+				result[i][j] += factor * byte_result[i][j];
+	}
+	sum = 0;
+	for (i = 0; i < 4; ++i)
+		for (j = 0; j < 4; ++j)
+			sum += result[i][j];
 	mean = sum >> 4;
 	return mean;
 }
@@ -3414,467 +3875,6 @@ static void decode_PB_cc(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], 
 	  addi      r1, r1, 0x60
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	80022700
- * Size:	0004C4
- */
-static inline u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
-{
-	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
-	BitBuffer* buf;
-
-	u32 bits;
-	u32 step, stride, big, small;
-	u8 min, max;
-	int i, j;
-	u8 nest_value;
-	u32 inverse, foo;
-
-	buf  = &state->fixvl[planeIdx];
-	bits = read16(buf->ptr, 0);
-	buf->ptr += 2;
-	big   = bits & 0x3F;
-	small = (bits >> 6) & 0x1F;
-
-	if (state->is_landscape) {
-		nestData += nestStride * small + big;
-		step   = 1 << ((bits >> 11) & 1);
-		stride = nestStride << ((bits >> 12) & 1);
-	} else {
-		nestData += nestStride * big + small;
-		step   = 1 << ((bits >> 12) & 1);
-		stride = nestStride << ((bits >> 11) & 1);
-	}
-	min = max = (nestData[0] >> 4) & 0xF; // !
-	for (i = 0; i < 4; ++i) {
-		for (j = 0; j < 4; ++j) {
-			nest_value     = (nestData[i * stride + j * step] >> 4) & 0xF; // !
-			basisOut[i][j] = nest_value;
-			min            = nest_value < min ? nest_value : min;
-			max            = nest_value > max ? nest_value : max;
-		}
-	}
-	*sum += decodeHuff(&state->bufTree0[planeIdx]);
-	inverse = divTable[max - min];
-	if (bits & 0x8000)
-		inverse = -inverse;
-	foo = (bits >> 13) & 3;
-	return (*sum + foo) * inverse;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x40(r1)
-	  rlwinm    r0,r8,4,0,27
-	  add       r11, r3, r0
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  lwz       r10, 0x61DC(r11)
-	  addi      r0, r10, 0x1
-	  stw       r0, 0x61DC(r11)
-	  lwz       r9, 0x61DC(r11)
-	  lbz       r10, 0x0(r10)
-	  addi      r0, r9, 0x1
-	  stw       r0, 0x61DC(r11)
-	  lbz       r0, 0x6260(r3)
-	  lbz       r9, 0x0(r9)
-	  cmplwi    r0, 0
-	  addi      r0, r9, 0
-	  rlwimi    r0,r10,8,16,23
-	  beq-      .loc_0x78
-	  rlwinm    r9,r0,26,27,31
-	  mullw     r10, r9, r7
-	  add       r11, r10, r6
-	  rlwinm    r9,r0,20,31,31
-	  rlwinm    r12,r0,0,26,31
-	  rlwinm    r6,r0,21,31,31
-	  li        r10, 0x1
-	  add       r11, r12, r11
-	  slw       r6, r10, r6
-	  slw       r7, r7, r9
-	  b         .loc_0xA0
-
-	.loc_0x78:
-	  rlwinm    r9,r0,0,26,31
-	  mullw     r10, r9, r7
-	  add       r11, r10, r6
-	  rlwinm    r9,r0,21,31,31
-	  rlwinm    r12,r0,26,27,31
-	  rlwinm    r6,r0,20,31,31
-	  li        r10, 0x1
-	  add       r11, r12, r11
-	  slw       r6, r10, r6
-	  slw       r7, r7, r9
-
-	.loc_0xA0:
-	  lbz       r9, 0x0(r11)
-	  add       r29, r11, r6
-	  rlwinm    r9,r9,28,28,31
-	  stb       r9, 0x0(r4)
-	  rlwinm    r12,r9,0,24,31
-	  addi      r10, r9, 0
-	  lbz       r31, 0x0(r29)
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x1(r4)
-	  ble-      .loc_0xD4
-	  mr        r10, r30
-	  b         .loc_0xDC
-
-	.loc_0xD4:
-	  bge-      .loc_0xDC
-	  mr        r9, r30
-
-	.loc_0xDC:
-	  add       r29, r29, r6
-	  lbz       r31, 0x0(r29)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x2(r4)
-	  ble-      .loc_0x100
-	  mr        r10, r30
-	  b         .loc_0x110
-
-	.loc_0x100:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x110
-	  mr        r9, r30
-
-	.loc_0x110:
-	  add       r29, r29, r6
-	  lbz       r31, 0x0(r29)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x3(r4)
-	  ble-      .loc_0x134
-	  mr        r10, r30
-	  b         .loc_0x144
-
-	.loc_0x134:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x144
-	  mr        r9, r30
-
-	.loc_0x144:
-	  add       r11, r11, r7
-	  lbz       r31, 0x0(r11)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x4(r4)
-	  ble-      .loc_0x168
-	  mr        r10, r30
-	  b         .loc_0x178
-
-	.loc_0x168:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x178
-	  mr        r9, r30
-
-	.loc_0x178:
-	  add       r30, r11, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0x5(r4)
-	  ble-      .loc_0x19C
-	  mr        r10, r31
-	  b         .loc_0x1AC
-
-	.loc_0x19C:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x1AC
-	  mr        r9, r31
-
-	.loc_0x1AC:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0x6(r4)
-	  ble-      .loc_0x1D0
-	  mr        r10, r31
-	  b         .loc_0x1E0
-
-	.loc_0x1D0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x1E0
-	  mr        r9, r31
-
-	.loc_0x1E0:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x7(r4)
-	  ble-      .loc_0x204
-	  mr        r10, r30
-	  b         .loc_0x214
-
-	.loc_0x204:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x214
-	  mr        r9, r30
-
-	.loc_0x214:
-	  add       r11, r11, r7
-	  lbz       r31, 0x0(r11)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x8(r4)
-	  ble-      .loc_0x238
-	  mr        r10, r30
-	  b         .loc_0x248
-
-	.loc_0x238:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x248
-	  mr        r9, r30
-
-	.loc_0x248:
-	  add       r30, r11, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0x9(r4)
-	  ble-      .loc_0x26C
-	  mr        r10, r31
-	  b         .loc_0x27C
-
-	.loc_0x26C:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x27C
-	  mr        r9, r31
-
-	.loc_0x27C:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0xA(r4)
-	  ble-      .loc_0x2A0
-	  mr        r10, r31
-	  b         .loc_0x2B0
-
-	.loc_0x2A0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x2B0
-	  mr        r9, r31
-
-	.loc_0x2B0:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0xB(r4)
-	  ble-      .loc_0x2D4
-	  mr        r10, r30
-	  b         .loc_0x2E4
-
-	.loc_0x2D4:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x2E4
-	  mr        r9, r30
-
-	.loc_0x2E4:
-	  add       r11, r11, r7
-	  lbz       r12, 0x0(r11)
-	  rlwinm    r7,r10,0,24,31
-	  rlwinm    r12,r12,28,28,31
-	  cmplw     r12, r7
-	  stb       r12, 0xC(r4)
-	  ble-      .loc_0x308
-	  mr        r10, r12
-	  b         .loc_0x318
-
-	.loc_0x308:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r12, r7
-	  bge-      .loc_0x318
-	  mr        r9, r12
-
-	.loc_0x318:
-	  add       r12, r11, r6
-	  lbz       r11, 0x0(r12)
-	  rlwinm    r7,r10,0,24,31
-	  rlwinm    r11,r11,28,28,31
-	  cmplw     r11, r7
-	  stb       r11, 0xD(r4)
-	  ble-      .loc_0x33C
-	  mr        r10, r11
-	  b         .loc_0x34C
-
-	.loc_0x33C:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r11, r7
-	  bge-      .loc_0x34C
-	  mr        r9, r11
-
-	.loc_0x34C:
-	  add       r12, r12, r6
-	  lbz       r11, 0x0(r12)
-	  rlwinm    r7,r10,0,24,31
-	  rlwinm    r11,r11,28,28,31
-	  cmplw     r11, r7
-	  stb       r11, 0xE(r4)
-	  ble-      .loc_0x370
-	  mr        r10, r11
-	  b         .loc_0x380
-
-	.loc_0x370:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r11, r7
-	  bge-      .loc_0x380
-	  mr        r9, r11
-
-	.loc_0x380:
-	  add       r12, r12, r6
-	  lbz       r7, 0x0(r12)
-	  rlwinm    r6,r10,0,24,31
-	  rlwinm    r7,r7,28,28,31
-	  cmplw     r7, r6
-	  stb       r7, 0xF(r4)
-	  ble-      .loc_0x3A4
-	  mr        r10, r7
-	  b         .loc_0x3B4
-
-	.loc_0x3A4:
-	  rlwinm    r4,r9,0,24,31
-	  cmplw     r7, r4
-	  bge-      .loc_0x3B4
-	  mr        r9, r7
-
-	.loc_0x3B4:
-	  mulli     r6, r8, 0x14
-	  add       r4, r3, r6
-	  lwz       r11, 0x6160(r4)
-	  addi      r7, r6, 0x6150
-	  add       r7, r3, r7
-	  lwz       r6, 0x4(r11)
-	  b         .loc_0x41C
-
-	.loc_0x3D0:
-	  lwz       r8, 0xC(r7)
-	  cmpwi     r8, 0
-	  bge-      .loc_0x3F8
-	  lwz       r4, 0x0(r7)
-	  li        r8, 0x1F
-	  addi      r3, r4, 0x4
-	  stw       r3, 0x0(r7)
-	  lwz       r3, 0x0(r4)
-	  stw       r3, 0x8(r7)
-	  b         .loc_0x3FC
-
-	.loc_0x3F8:
-	  lwz       r3, 0x8(r7)
-
-	.loc_0x3FC:
-	  srw       r4, r3, r8
-	  subi      r3, r8, 0x1
-	  stw       r3, 0xC(r7)
-	  rlwinm    r4,r4,11,20,20
-	  rlwinm    r3,r6,2,0,29
-	  add       r3, r4, r3
-	  addi      r3, r3, 0x8
-	  lwzx      r6, r11, r3
-
-	.loc_0x41C:
-	  cmpwi     r6, 0x100
-	  bge+      .loc_0x3D0
-	  rlwinm    r3,r6,2,0,29
-	  lwz       r4, 0x0(r5)
-	  add       r3, r11, r3
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r7,r0,0,16,31
-	  rlwinm.   r0,r0,0,16,16
-	  add       r3, r4, r3
-	  stw       r3, 0x0(r5)
-	  beq-      .loc_0x480
-	  rlwinm    r3,r9,0,24,31
-	  lwz       r5, 0x0(r5)
-	  rlwinm    r0,r10,0,24,31
-	  sub       r0, r0, r3
-	  lis       r3, 0x8039
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x4100
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r3,r7,19,30,31
-	  add       r3, r5, r3
-	  neg       r0, r0
-	  mullw     r3, r3, r0
-	  b         .loc_0x4B0
-
-	.loc_0x480:
-	  rlwinm    r3,r9,0,24,31
-	  lwz       r6, 0x0(r5)
-	  rlwinm    r0,r10,0,24,31
-	  sub       r0, r0, r3
-	  lis       r3, 0x8039
-	  rlwinm    r5,r7,19,30,31
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x4100
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  add       r3, r6, r5
-	  mullw     r3, r3, r0
-
-	.loc_0x4B0:
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  blr
-	*/
-}
-
-static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nest_data, u32 nest_stride, u32 plane_idx)
-{
-	int i, j, k;
-	int temp;
-	u8 byte_result[4][4];
-	u32 factor;
-	int sum;
-	int mean;
-
-	for (i = 0; i < 4; ++i)
-		for (j = 0; j < 4; ++j)
-			result[i][j] = 0;
-
-	temp = 0;
-	for (k = 0; k < num_bases; ++k) {
-		factor = GetMCAotBasis(state, byte_result, &temp, nest_data, nest_stride, plane_idx);
-		for (i = 0; i < 4; ++i)
-			for (j = 0; j < 4; ++j)
-				result[i][j] += factor * byte_result[i][j];
-	}
-	sum = 0;
-	for (i = 0; i < 4; ++i)
-		for (j = 0; j < 4; ++j)
-			sum += result[i][j];
-	mean = sum >> 4;
-	return mean;
 }
 
 /*
