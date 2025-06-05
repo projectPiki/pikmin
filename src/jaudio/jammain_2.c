@@ -7,6 +7,7 @@
 #include "jaudio/noteon.h"
 #include "jaudio/rate.h"
 #include "jaudio/random.h"
+#include "jaudio/centcalc.h"
 
 #include "Dolphin/OS/OSError.h"
 
@@ -1259,237 +1260,86 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
  */
 void Jam_UpdateTrackAll(seqp_* track)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  addi      r11, r1, 0x60
-	  bl        0x204364
-	  stmw      r29, 0x24(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x4330
-	  lhz       r4, 0x282(r31)
-	  lbz       r0, 0x3F(r31)
-	  stw       r4, 0x1C(r1)
-	  lfd       f2, -0x7F18(r2)
-	  cmplwi    r0, 0x4
-	  stw       r3, 0x18(r1)
-	  lfs       f0, -0x7F04(r2)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f26, f1, f0
-	  beq-      .loc_0x304
-	  lhz       r0, 0x286(r31)
-	  li        r30, 0
-	  addi      r3, r1, 0x10
-	  addi      r4, r1, 0xC
-	  oris      r0, r0, 0x1
-	  li        r29, 0
-	  stw       r0, 0x140(r31)
-	  sth       r30, 0x144(r31)
-	  lfs       f1, -0x7F00(r2)
-	  lfs       f0, 0x25C(r31)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x10(r1)
-	  bl        .loc_0x320
-	  lbz       r3, 0xC(r1)
-	  extsb.    r0, r3
-	  bge-      .loc_0x94
-	  neg       r29, r3
-	  stb       r30, 0xC(r1)
+	f32 f31;   // f31
+	f32 f30;   // f30
+	f32 r29;   // f29
+	f32 f28;   // f28
+	f32 f27;   // f27
+	f32 f26_1; // f26
+	f32 f26_2; // f26
 
-	.loc_0x94:
-	  li        r0, 0x10
-	  stb       r0, 0x138(r31)
-	  stb       r29, 0x132(r31)
-	  lbz       r0, 0xC(r1)
-	  stb       r0, 0x133(r31)
-	  lbz       r0, 0x39E(r31)
-	  lfs       f30, 0x14C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xBC
-	  lfs       f30, -0x7F0C(r2)
+	// Used for `OSf32tos8`
+	f32 local_50;
+	s8 local_54;
+	u8 uVar7;
 
-	.loc_0xBC:
-	  lhz       r3, 0x27A(r31)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x7F18(r2)
-	  stw       r3, 0x1C(r1)
-	  lfs       f1, 0x15C(r31)
-	  stw       r0, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f2, f0, f2
-	  bl        0x4004
-	  lwz       r3, 0x2AC(r31)
-	  fmr       f31, f1
-	  lfs       f29, 0x17C(r31)
-	  cmplwi    r3, 0
-	  lfs       f28, 0x16C(r31)
-	  lfs       f27, 0x18C(r31)
-	  beq-      .loc_0x190
-	  lhz       r4, 0x8(r3)
-	  rlwinm.   r0,r4,0,31,31
-	  beq-      .loc_0x110
-	  lfs       f0, 0xC(r3)
-	  fmuls     f30, f30, f0
+	size_t i;
 
-	.loc_0x110:
-	  rlwinm.   r0,r4,0,30,30
-	  beq-      .loc_0x120
-	  lfs       f0, 0x18(r3)
-	  fmuls     f31, f31, f0
-
-	.loc_0x120:
-	  rlwinm.   r0,r4,0,29,29
-	  beq-      .loc_0x140
-	  fmr       f1, f28
-	  lfs       f2, 0x10(r3)
-	  fmr       f3, f26
-	  lbz       r3, 0x3DD(r31)
-	  bl        -0x198
-	  fmr       f28, f1
-
-	.loc_0x140:
-	  lwz       r3, 0x2AC(r31)
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x168
-	  fmr       f1, f27
-	  lfs       f2, 0x14(r3)
-	  fmr       f3, f26
-	  lbz       r3, 0x3DE(r31)
-	  bl        -0x1C0
-	  fmr       f27, f1
-
-	.loc_0x168:
-	  lwz       r3, 0x2AC(r31)
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0x190
-	  fmr       f1, f29
-	  lfs       f2, 0x1C(r3)
-	  fmr       f3, f26
-	  lbz       r3, 0x3DC(r31)
-	  bl        -0x1E8
-	  fmr       f29, f1
-
-	.loc_0x190:
-	  lwz       r4, 0x40(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x1A8
-	  lbz       r0, 0x3F(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x1C0
-
-	.loc_0x1A8:
-	  stfs      f30, 0xF0(r31)
-	  stfs      f31, 0xF4(r31)
-	  stfs      f29, 0xF8(r31)
-	  stfs      f28, 0xFC(r31)
-	  stfs      f27, 0x100(r31)
-	  b         .loc_0x304
-
-	.loc_0x1C0:
-	  lhz       r3, 0x284(r31)
-	  lis       r0, 0x4330
-	  lfs       f0, 0xF0(r4)
-	  fmr       f1, f29
-	  stw       r3, 0x1C(r1)
-	  lfd       f4, -0x7F18(r2)
-	  fmuls     f0, f0, f30
-	  stw       r0, 0x18(r1)
-	  lfs       f2, -0x7F04(r2)
-	  lfd       f3, 0x18(r1)
-	  stfs      f0, 0xF0(r31)
-	  fsubs     f0, f3, f4
-	  lwz       r3, 0x40(r31)
-	  fdivs     f26, f0, f2
-	  lfs       f0, 0xF4(r3)
-	  fmuls     f0, f0, f31
-	  fmr       f3, f26
-	  stfs      f0, 0xF4(r31)
-	  lwz       r4, 0x40(r31)
-	  lbz       r3, 0x3DF(r31)
-	  lfs       f2, 0xF8(r4)
-	  bl        -0x274
-	  stfs      f1, 0xF8(r31)
-	  fmr       f1, f28
-	  fmr       f3, f26
-	  lwz       r4, 0x40(r31)
-	  lbz       r3, 0x3E0(r31)
-	  lfs       f2, 0xFC(r4)
-	  bl        -0x290
-	  stfs      f1, 0xFC(r31)
-	  fmr       f1, f27
-	  fmr       f3, f26
-	  lwz       r4, 0x40(r31)
-	  lbz       r3, 0x3E1(r31)
-	  lfs       f2, 0x100(r4)
-	  bl        -0x2AC
-	  stfs      f1, 0x100(r31)
-	  lwz       r3, 0x2AC(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x29C
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,24,24
-	  beq-      .loc_0x29C
-	  li        r0, 0x8
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0x278:
-	  lwz       r5, 0x2AC(r31)
-	  addi      r4, r3, 0x24
-	  addi      r0, r3, 0x104
-	  addi      r3, r3, 0x2
-	  lhax      r4, r5, r4
-	  sthx      r4, r31, r0
-	  bdnz+     .loc_0x278
-	  li        r0, 0x8
-	  stb       r0, 0x139(r31)
-
-	.loc_0x29C:
-	  li        r0, 0x4
-	  lfs       f1, -0x7F04(r2)
-	  li        r3, 0
-	  li        r4, 0
-	  mtctr     r0
-
-	.loc_0x2B0:
-	  addi      r5, r4, 0x20C
-	  addi      r0, r3, 0x114
-	  lfsx      f0, r31, r5
-	  addi      r3, r3, 0x2
-	  addi      r4, r4, 0x10
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r5, 0x1C(r1)
-	  sthx      r5, r31, r0
-	  bdnz+     .loc_0x2B0
-	  lbz       r0, 0x139(r31)
-	  ori       r0, r0, 0x20
-	  stb       r0, 0x139(r31)
-	  lfs       f1, -0x7F04(r2)
-	  lfs       f0, 0x19C(r31)
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  sth       r0, 0x124(r31)
-
-	.loc_0x304:
-	  lwz       r0, 0x64(r1)
-	  addi      r11, r1, 0x60
-	  bl        0x2040B4
-	  lmw       r29, 0x24(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-
-	.loc_0x320:
-	*/
+	f26_1 = track->regParam.param._10[3] / 32767.0f;
+	if (track->_3F != 4) {
+		track->_D8._68 = track->regParam.param._1A | 0x10000;
+		track->_D8._6C = 0;
+		uVar7          = 0;
+		local_50       = track->timedParam.inner._110.currValue * 128.0f;
+		OSf32tos8(&local_50, &local_54);
+		if (local_54 < 0) {
+			uVar7    = -local_54;
+			local_54 = 0;
+		}
+		track->_D8._60    = 0x10;
+		track->_D8._5A[0] = uVar7;
+		track->_D8._5A[1] = local_54;
+		f30               = track->timedParam.inner.volume.currValue;
+		if (track->_39E > 0) {
+			f30 = 0.0f;
+		}
+		f31 = Jam_PitchToCent(track->timedParam.inner.pitch.currValue, track->regParam.param._0E);
+		r29 = track->timedParam.inner.pan.currValue;
+		f28 = track->timedParam.inner.fxmix.currValue;
+		f27 = track->timedParam.inner.dolby.currValue;
+		if (track->_2AC) {
+			if (track->_2AC->_08 & 0x01) {
+				f30 = f30 * track->_2AC->_0C;
+			}
+			if (track->_2AC->_08 & 0x02) {
+				f31 = f31 * track->_2AC->_18;
+			}
+			if (track->_2AC->_08 & 0x04) {
+				f28 = __PanCalc(f28, track->_2AC->_10, f26_1, track->_3DC[1]);
+			}
+			if (track->_2AC->_08 & 0x10) {
+				f27 = __PanCalc(f27, track->_2AC->_14, f26_1, track->_3DC[2]);
+			}
+			if (track->_2AC->_08 & 0x08) {
+				r29 = __PanCalc(r29, track->_2AC->_1C, f26_1, track->_3DC[0]);
+			}
+		}
+		if (!track->parent || (track->_3F & 1)) {
+			track->_D8._18 = f30;
+			track->_D8._1C = f31;
+			track->_D8._20 = r29;
+			track->_D8._24 = f28;
+			track->_D8._28 = f27;
+		} else {
+			f26_2          = track->regParam.param._10[4] / 32767.0f;
+			track->_D8._18 = track->parent->_D8._18 * f30;
+			track->_D8._1C = track->parent->_D8._1C * f31;
+			track->_D8._20 = __PanCalc(r29, track->parent->_D8._20, f26_2, track->_3DF[0]);
+			track->_D8._24 = __PanCalc(f28, track->parent->_D8._24, f26_2, track->_3DF[1]);
+			track->_D8._28 = __PanCalc(f27, track->parent->_D8._28, f26_2, track->_3DF[2]);
+			if (track->_2AC && (track->_2AC->_08 & 0x80)) {
+				for (i = 0; i < 8; ++i) {
+					track->_D8._2C[i] = track->_2AC->_24[i];
+				}
+				track->_D8._61 = 8;
+			}
+			for (i = 0; i < 4; ++i) {
+				track->_D8._3C[i] = track->timedParam.inner.IIRs[i].currValue * 32767.0f;
+			}
+			track->_D8._61 |= 0x20;
+			track->_D8._4C = track->timedParam.inner._50.currValue * 32767.0f;
+		}
+	}
 }
 
 #define OS_FASTCAST_S8 (4)
