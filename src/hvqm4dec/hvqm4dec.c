@@ -5030,57 +5030,15 @@ static void _MotionComp_01(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
  */
 static void _MotionComp_00(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
 {
-	u32 i, j;
-	int k;
+	int i, j;
 
 	for (i = 0; i < 4; ++i) {
-		k = i * dstStride; // this is wrong (its not even using srcStride, but the % goes way higher like this)
-		for (j = 0; j < 4; ++j)
-			dst[k + j] = src[k + j];
+		for (j = 0; j < 4; ++j) {
+			dst[j] = src[j];
+		}
+		src += srcStride;
+		dst += dstStride;
 	}
-
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x0(r5)
-	  add       r7, r5, r6
-	  add       r8, r3, r4
-	  stb       r0, 0x0(r3)
-	  lbz       r0, 0x1(r5)
-	  stb       r0, 0x1(r3)
-	  lbz       r0, 0x2(r5)
-	  stb       r0, 0x2(r3)
-	  lbz       r0, 0x3(r5)
-	  stb       r0, 0x3(r3)
-	  lbz       r0, 0x0(r7)
-	  stb       r0, 0x0(r8)
-	  lbz       r0, 0x1(r7)
-	  stb       r0, 0x1(r8)
-	  lbz       r0, 0x2(r7)
-	  stb       r0, 0x2(r8)
-	  lbz       r0, 0x3(r7)
-	  add       r7, r7, r6
-	  stb       r0, 0x3(r8)
-	  add       r8, r8, r4
-	  lbz       r0, 0x0(r7)
-	  stb       r0, 0x0(r8)
-	  lbz       r0, 0x1(r7)
-	  stb       r0, 0x1(r8)
-	  lbz       r0, 0x2(r7)
-	  stb       r0, 0x2(r8)
-	  lbz       r0, 0x3(r7)
-	  add       r7, r7, r6
-	  stb       r0, 0x3(r8)
-	  add       r8, r8, r4
-	  lbz       r0, 0x0(r7)
-	  stb       r0, 0x0(r8)
-	  lbz       r0, 0x1(r7)
-	  stb       r0, 0x1(r8)
-	  lbz       r0, 0x2(r7)
-	  stb       r0, 0x2(r8)
-	  lbz       r0, 0x3(r7)
-	  stb       r0, 0x3(r8)
-	  blr
-	*/
 }
 
 /*
