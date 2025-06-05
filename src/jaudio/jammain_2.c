@@ -2752,37 +2752,17 @@ static u32 Cmd_EXTSet()
  */
 static u32 Cmd_PanSwSet()
 {
-	/**
-	 * @brief This is maybe an invented struct found in the stack of this function.
-	 *
-	 * @note Size: 0x17? Maybe 0x18?
-	 */
-	struct Cmd_PanSwSet_Invented1 {
-		u32 _00;             // _00
-		u8 _04[0x08 - 0x04]; // _04
-		u32 _08;             // _08
-		u16 _0C;             // _0C
-		u8 _0E;              // _0E
-		u8 _0F[0x10 - 0x0f]; // _0F
-		u32 _10;             // _10
-		u16 _14;             // _14
-		u8 _16;              // _16
-	};
+	size_t i;
 
-	int i;
-	struct Cmd_PanSwSet_Invented1 local_18;
-
-	local_18._10 = 0x00000001;
-	local_18._08 = 0x00010200;
-	local_18._14 = 0x00000102;
-	local_18._0C = 0x200;
-	local_18._16 = 2;
-	local_18._0E = 2;
+	// Ah yes, let's just construct this on the stack real quick.
+	u8 calcTypes[]       = { 0, 0, 0, 1, 1, 2, 2 };
+	u8 parentCalcTypes[] = { 0, 1, 2, 0, 2, 0, 2 };
 
 	for (i = 0; i < 3; ++i) {
-		// TODO: u32 members of above struct accessed like they are an array of u8s... idk man.
+		SEQ_P->_3DC[i]    = calcTypes[SEQ_ARG[i] >> 5];
+		SEQ_P->_3DF[i]    = parentCalcTypes[SEQ_ARG[i] >> 5];
 		SEQ_P->_D8._62[i] = SEQ_ARG[i] & 0x1f;
-		SEQ_P->_3DC[i]    = SEQ_P->_3D8 |= 8;
+		SEQ_P->_3D8 |= 8;
 	}
 	return 0;
 }
