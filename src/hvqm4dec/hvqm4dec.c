@@ -243,9 +243,9 @@ static int decodeUOvfSym(BitBufferWithTree* buf, int max)
 	return sum;
 }
 
-static inline u32 getDeltaDC(VideoState* state, u32 plane_idx, u32* rle)
+static int getDeltaDC(VideoState* state, int plane_idx, int* rle)
 {
-	u32 delta;
+	int delta;
 
 	if (*rle == 0) {
 		delta = decodeSOvfSym(&state->dc_values[plane_idx], state->dc_min, state->dc_max);
@@ -339,35 +339,41 @@ static void IpicDcvDec(VideoState* state)
 {
 	int plane_idx;
 	HVQPlaneDesc* plane;
-	u32 rle;
-	u32 v_blocks;
+	int rle;
+	int v_blocks;
+	int h_blocks;
+	int h_blocks_safe;
+	int value;
+	int prev_value;
 	BlockData* curr;
-	u32 x, y;
-	BlockData const* prev;
-	u8 value;
+	BlockData* prev;
+	int x, y;
 
 	for (plane_idx = 0; plane_idx < PLANE_COUNT; ++plane_idx) {
-		plane    = &state->planes[plane_idx];
-		rle      = 0;
-		v_blocks = plane->v_blocks;
-		curr     = plane->payload;
-		for (y = 0; y < v_blocks; ++y) {
+		plane         = &state->planes[plane_idx];
+		h_blocks      = plane->h_blocks;
+		v_blocks      = plane->v_blocks;
+		h_blocks_safe = plane->h_blocks_safe;
+		curr          = plane->payload;
+		rle           = 0;
+		for (y = v_blocks; y > 0; --y) {
 			// pointer to previous line
-			prev = curr - plane->h_blocks_safe;
+			prev = curr - h_blocks_safe;
 			// first prediction on a line is only the previous line's value
 			value = prev->value;
-			for (x = 0; x < plane->h_blocks; ++x) {
-				value += getDeltaDC(state, plane_idx, &rle);
-				curr->value = value;
-				++curr;
+			for (x = h_blocks; x > 0; --x) {
+				value = (value + getDeltaDC(state, plane_idx, &rle)) & 0xFF;
 				++prev;
+				prev_value = prev->value;
+
 				// next prediction on this line is the mean of left (current) and top values
 				// +---+---+
 				// |   | T |
 				// +---+---+
 				// | L | P |
 				// +---+---+
-				value = (value + prev->value + 1) / 2;
+				curr++->value = value;
+				value         = (value + prev_value + 1) >> 1;
 			}
 			// skip right border of this line and left border of next line
 			curr += 2;
