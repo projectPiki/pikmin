@@ -207,10 +207,11 @@ static void readTree(BitBufferWithTree* buf_with_tree, u32 is_signed, u32 scale)
  */
 static inline u32 decodeHuff(BitBufferWithTree* buf)
 {
-	Tree* tree = buf->tree;
-	s32 pos    = tree->root;
+	Tree* tree        = buf->tree;
+	BitBuffer* buffer = &buf->buf;
+	s32 pos           = tree->root;
 	while (pos >= 0x100)
-		pos = tree->array[getBit(&buf->buf)][pos];
+		pos = tree->array[getBit(buffer)][pos];
 	return tree->array[0][pos];
 }
 
@@ -2044,8 +2045,7 @@ static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT]
 
 	for (i = 0; i < PLANE_COUNT; ++i) {
 		mcplanes[i].present         = present;
-		mcplanes[i].payload_cur_blk = state->planes[i].payload;
-		mcplanes[i].payload_cur_row = state->planes[i].payload;
+		mcplanes[i].payload_cur_row = mcplanes[i].payload_cur_blk = state->planes[i].payload;
 		present += state->planes[i].size_in_samples;
 	}
 	// UNUSED FUNCTION
@@ -2058,7 +2058,7 @@ static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT]
  *
  * @note Copy 4x4 samples without interpolation.
  */
-static void _MotionComp_00(void* dst, u32 dstStride, const void* src, u32 srcStride)
+inline void _MotionComp_00(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
 	u8* s = (u8*)src;
 	u8* d = (u8*)dst;
@@ -2099,7 +2099,7 @@ static void _MotionComp_00(void* dst, u32 dstStride, const void* src, u32 srcStr
  *
  * @note Offset vertically by half a sample
  */
-static void _MotionComp_01(void* dst, u32 dstStride, const void* src, u32 srcStride)
+inline void _MotionComp_01(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
 	u8* s = (u8*)src;
 	u8* n = (u8*)src + srcStride;
@@ -2145,7 +2145,7 @@ static void _MotionComp_01(void* dst, u32 dstStride, const void* src, u32 srcStr
  *
  * @note Offset vertically by half a sample
  */
-static void _MotionComp_10(void* dst, u32 dstStride, const void* src, u32 srcStride)
+inline void _MotionComp_10(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
 	u8* s = (u8*)src;
 	u8* d = (u8*)dst;
@@ -2186,7 +2186,7 @@ static void _MotionComp_10(void* dst, u32 dstStride, const void* src, u32 srcStr
  *
  * @note Offset by half a sample in both directions
  */
-static void _MotionComp_11(void* dst, u32 dstStride, const void* src, u32 srcStride)
+inline void _MotionComp_11(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
 	u8* s = (u8*)src;
 	u8* n = (u8*)src + srcStride;
@@ -2229,13 +2229,71 @@ static void _MotionComp_11(void* dst, u32 dstStride, const void* src, u32 srcStr
  *
  * @note hpel = half-pixel offset. DX = horizontal, DY = vertical.
  */
-static void MotionComp(void* dst, u32 dstStride, const void* src, u32 srcStride, u32 hpeldx, u32 hpeldy)
+static void MotionComp(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], int arg2, int arg3)
 {
-	FORCE_DONT_INLINE // TODO
-	    if (hpeldy == 0) if (hpeldx == 0) _MotionComp_00(dst, dstStride, src, srcStride);
-	else _MotionComp_10(dst, dstStride, src, srcStride);
-	else if (hpeldx == 0) _MotionComp_01(dst, dstStride, src, srcStride);
-	else _MotionComp_11(dst, dstStride, src, srcStride);
+	int i, j;
+	u32* pb_offset;
+	u8* src;
+	int num_blocks;
+	int offset;
+
+	if (!(arg2 & 1)) {
+		if (!(arg3 & 1)) {
+			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
+				src = mcplanes[i].target
+				    + ((arg2 >> state->planes[i].width_shift + 1)
+				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
+				pb_offset  = state->planes[i].pb_offset;
+				num_blocks = state->planes[i].blocks_per_mcb;
+				for (j = 0; j < num_blocks; j++) {
+					offset = *pb_offset++;
+					_MotionComp_00(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
+					               state->planes[i].width_in_samples);
+				}
+			}
+		} else {
+			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
+				src = mcplanes[i].target
+				    + ((arg2 >> state->planes[i].width_shift + 1)
+				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
+				pb_offset  = state->planes[i].pb_offset;
+				num_blocks = state->planes[i].blocks_per_mcb;
+				for (j = 0; j < num_blocks; j++) {
+					offset = *pb_offset++;
+					_MotionComp_01(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
+					               state->planes[i].width_in_samples);
+				}
+			}
+		}
+	} else {
+		if (!(arg3 & 1)) {
+			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
+				src = mcplanes[i].target
+				    + ((arg2 >> state->planes[i].width_shift + 1)
+				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
+				pb_offset  = state->planes[i].pb_offset;
+				num_blocks = state->planes[i].blocks_per_mcb;
+				for (j = 0; j < num_blocks; j++) {
+					offset = *pb_offset++;
+					_MotionComp_10(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
+					               state->planes[i].width_in_samples);
+				}
+			}
+		} else {
+			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
+				src = mcplanes[i].target
+				    + ((arg2 >> state->planes[i].width_shift + 1)
+				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
+				pb_offset  = state->planes[i].pb_offset;
+				num_blocks = state->planes[i].blocks_per_mcb;
+				for (j = 0; j < num_blocks; j++) {
+					offset = *pb_offset++;
+					_MotionComp_11(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
+					               state->planes[i].width_in_samples);
+				}
+			}
+		}
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x48(r1)
@@ -3802,7 +3860,7 @@ static void PrediAotBlock(VideoState* state, u8* dst, const u8* src, u32 stride,
 
 	aot_sum = GetMCAotSum(state, result, blockType - 1, (const u8*)nestData, hNestSize, planeIdx);
 
-	MotionComp((u8*)mdst, dst_stride, src, stride, hpeldx, hpeldy);
+	// MotionComp((u8*)mdst, dst_stride, src, stride, hpeldx, hpeldy);
 	mean = 8;
 	for (y = 0; y < 4; ++y)
 		for (x = 0; x < 4; ++x)
@@ -4499,7 +4557,7 @@ static void MCBlockDecMCNest(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUN
 				plane_dy = y >> plane->height_shift;
 				src      = mcplane->target + (plane_dy >> 1) * plane->width_in_samples + (plane_dx >> 1) + plane->pb_offset[i];
 				if (block_type == 0) {
-					MotionComp(dst, stride, src, stride, hpel_dx, hpel_dy);
+					// MotionComp(dst, stride, src, stride, hpel_dx, hpel_dy);
 				} else {
 					strideY = state->planes[0].width_in_samples;
 					PrediAotBlock(state, dst, src, stride, block_type, nest_data, strideY, plane_idx, hpel_dx, hpel_dy);
@@ -4855,13 +4913,13 @@ static u32 getMCBtype(BitBufferWithTree* buftree, RLDecoder* type)
 	// UNUSED FUNCTION
 }
 
-static void getMVector(u32* result, BitBufferWithTree* buf, u32 residual_bits)
+static void getMVector(int* result, BitBufferWithTree* buf, u32 residual_bits)
 {
 	int i;
 
-	u32 max_val_plus_1 = 1 << (residual_bits + 5);
+	int max_val_plus_1 = 1 << (residual_bits + 5);
 	// quantized value
-	u32 value = decodeHuff(buf) << residual_bits;
+	int value = decodeHuff(buf) << residual_bits;
 	// residual bits
 	for (i = residual_bits - 1; i >= 0; --i)
 		value += getBit(&buf->buf) << i;
@@ -4910,8 +4968,8 @@ static void setMCDownBlk(MCPlane mcplanes[PLANE_COUNT])
 		mcplane = &mcplanes[i];
 		mcplane->present += mcplane->v_mcb_stride;
 		first_block_on_next_row  = mcplane->payload_cur_row + mcplane->stride;
-		mcplane->payload_cur_blk = first_block_on_next_row;
 		mcplane->payload_cur_row = first_block_on_next_row;
+		mcplane->payload_cur_blk = first_block_on_next_row;
 	}
 }
 
@@ -5317,17 +5375,17 @@ static void spread_PB_descMap(SeqObj* seqObj, MCPlane mcplanes[HVQM_PLANE_COUNT]
 static void BpicPlaneDec(SeqObj* seqObj, u8* present, u8* past, u8* future)
 {
 
-	MCPlane mcplanes[PLANE_COUNT];
-	u32 mv_h, mv_v;
+	VideoState* state;
+	int mv_h, mv_v;
 	int reference_frame;
 	u8 bits;
-	s8 new_reference_frame;
-	u32 ref_x;
-	u32 ref_y;
+	int new_reference_frame;
 	int x, y;
 	int mcb_proc;
+	MCPlane mcplanes[PLANE_COUNT];
+	u32 badCompiler[4];
 
-	VideoState* state = seqObj->state;
+	state = seqObj->state;
 	initMCHandler(state, mcplanes, present, past, future);
 	spread_PB_descMap(seqObj, mcplanes);
 	resetMCHandler(state, mcplanes, present);
@@ -5359,15 +5417,12 @@ static void BpicPlaneDec(SeqObj* seqObj, u8* present, u8* past, u8* future)
 				getMVector(&mv_v, &state->mv_v, state->mc_residual_bits_v[reference_frame]);
 
 				// compute half-pixel position of reference macroblock
-				ref_x = x * 2 + mv_h;
-				ref_y = y * 2 + mv_v;
-
 				// see getMCBproc()
 				mcb_proc = (bits >> 4) & 1;
 				if (mcb_proc == 0)
-					MCBlockDecMCNest(state, mcplanes, ref_x, ref_y);
-				// else
-				//	MotionComp(state, mcplanes, ref_x, ref_y);
+					MCBlockDecMCNest(state, mcplanes, (x << 1) + mv_h, (y << 1) + mv_v);
+				else
+					MotionComp(state, mcplanes, (x << 1) + mv_h, (y << 1) + mv_v);
 			}
 			setMCNextBlk(mcplanes);
 		}
