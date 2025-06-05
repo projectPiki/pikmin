@@ -37,11 +37,11 @@ static void init_global_constants();
 static u32 decodeSOvfSym(BitBufferWithTree* buf, u32 min, u32 max);
 static void IpicDcvDec(VideoState* state);
 static void Ipic_BasisNumDec(VideoState* state);
-static void MotionComp(u8* dst, u32 dstStride, const u8* src, u32 srcStride, u32 hpeldx, u32 hpeldy);
-static void _MotionComp_10(u8* dst, u32 dstStride, const u8* src, u32 srcStride);
-static void _MotionComp_11(u8* dst, u32 dstStride, const u8* src, u32 srcStride);
-static void _MotionComp_01(u8* dst, u32 dstStride, const u8* src, u32 srcStride);
-static void _MotionComp_00(u8* dst, u32 dstStride, const u8* src, u32 srcStride);
+static void MotionComp(void* dst, u32 dstStride, const void* src, u32 srcStride, u32 hpeldx, u32 hpeldy);
+static void _MotionComp_10(void* dst, u32 dstStride, const void* src, u32 srcStride);
+static void _MotionComp_11(void* dst, u32 dstStride, const void* src, u32 srcStride);
+static void _MotionComp_01(void* dst, u32 dstStride, const void* src, u32 srcStride);
+static void _MotionComp_00(void* dst, u32 dstStride, const void* src, u32 srcStride);
 static void decode_PB_dc(VideoState* state, MCPlane mcplanes[PLANE_COUNT]);
 static void spread_PB_descMap(SeqObj* seqObj, MCPlane mcplanes[HVQM_PLANE_COUNT]);
 static void BpicPlaneDec(SeqObj* seqObj, u8* present, u8* past, u8* future);
@@ -3885,7 +3885,7 @@ static void decode_PB_cc(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], 
  *
  * @note hpel = half-pixel offset. DX = horizontal, DY = vertical.
  */
-static void MotionComp(u8* dst, u32 dstStride, const u8* src, u32 srcStride, u32 hpeldx, u32 hpeldy)
+static void MotionComp(void* dst, u32 dstStride, const void* src, u32 srcStride, u32 hpeldx, u32 hpeldy)
 {
 	if (hpeldy == 0)
 		if (hpeldx == 0)
@@ -4584,190 +4584,40 @@ static void MotionComp(u8* dst, u32 dstStride, const u8* src, u32 srcStride, u32
  *
  * @note Offset by half a sample in both directions
  */
-static void _MotionComp_11(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
+static void _MotionComp_11(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
-	int i, j;
+	u8* s = (u8*)src;
+	u8* n = (u8*)src + srcStride;
+	u8* d = (u8*)dst;
 
-	for (i = 0; i < 4; ++i)
-		for (j = 0; j < 4; ++j)
-			dst[i * dstStride + j] = (src[(i + 0) * srcStride + j + 0] + src[(i + 0) * srcStride + j + 1] + src[(i + 1) * srcStride + j + 0]
-			                          + src[(i + 1) * srcStride + j + 1] + 2)
-			                      >> 2;
-
-	/*
-	.loc_0x0:
-	  add       r8, r5, r6
-	  lbz       r0, 0x1(r5)
-	  lbz       r10, 0x0(r8)
-	  mr        r7, r8
-	  lbz       r11, 0x1(r8)
-	  add       r9, r3, r4
-	  add       r0, r0, r10
-	  add       r10, r0, r11
-	  lbz       r11, 0x0(r5)
-	  addi      r0, r10, 0x2
-	  add       r0, r11, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x0(r3)
-	  lbz       r10, 0x1(r8)
-	  lbz       r0, 0x2(r5)
-	  lbz       r12, 0x2(r8)
-	  add       r0, r0, r10
-	  lbz       r11, 0x1(r5)
-	  add       r10, r0, r12
-	  addi      r0, r10, 0x2
-	  add       r0, r11, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x1(r3)
-	  lbz       r10, 0x2(r8)
-	  lbz       r0, 0x3(r5)
-	  lbz       r12, 0x3(r8)
-	  add       r0, r0, r10
-	  lbz       r11, 0x2(r5)
-	  add       r10, r0, r12
-	  addi      r0, r10, 0x2
-	  add       r0, r11, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x2(r3)
-	  lbz       r10, 0x3(r8)
-	  lbz       r0, 0x4(r5)
-	  lbz       r11, 0x4(r8)
-	  add       r8, r8, r6
-	  add       r0, r0, r10
-	  lbz       r10, 0x3(r5)
-	  add       r5, r0, r11
-	  addi      r0, r5, 0x2
-	  add       r0, r10, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x3(r3)
-	  lbz       r3, 0x0(r8)
-	  lbz       r0, 0x1(r7)
-	  lbz       r10, 0x1(r8)
-	  add       r0, r0, r3
-	  lbz       r5, 0x0(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x0(r9)
-	  lbz       r3, 0x1(r8)
-	  lbz       r0, 0x2(r7)
-	  lbz       r10, 0x2(r8)
-	  add       r0, r0, r3
-	  lbz       r5, 0x1(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x1(r9)
-	  lbz       r3, 0x2(r8)
-	  lbz       r0, 0x3(r7)
-	  lbz       r10, 0x3(r8)
-	  add       r0, r0, r3
-	  lbz       r5, 0x2(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x2(r9)
-	  lbz       r3, 0x3(r8)
-	  lbz       r0, 0x4(r7)
-	  lbz       r10, 0x4(r8)
-	  add       r8, r8, r6
-	  add       r0, r0, r3
-	  lbz       r5, 0x3(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x3(r9)
-	  add       r7, r7, r6
-	  add       r9, r9, r4
-	  lbz       r3, 0x0(r8)
-	  lbz       r0, 0x1(r7)
-	  lbz       r10, 0x1(r8)
-	  add       r0, r0, r3
-	  lbz       r5, 0x0(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x0(r9)
-	  lbz       r3, 0x1(r8)
-	  lbz       r0, 0x2(r7)
-	  lbz       r10, 0x2(r8)
-	  add       r0, r0, r3
-	  lbz       r5, 0x1(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x1(r9)
-	  lbz       r3, 0x2(r8)
-	  lbz       r0, 0x3(r7)
-	  lbz       r10, 0x3(r8)
-	  add       r0, r0, r3
-	  lbz       r5, 0x2(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x2(r9)
-	  lbz       r3, 0x3(r8)
-	  lbz       r0, 0x4(r7)
-	  lbz       r10, 0x4(r8)
-	  add       r8, r8, r6
-	  add       r0, r0, r3
-	  lbz       r5, 0x3(r7)
-	  add       r3, r0, r10
-	  addi      r0, r3, 0x2
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x3(r9)
-	  add       r7, r7, r6
-	  add       r9, r9, r4
-	  lbz       r3, 0x0(r8)
-	  lbz       r0, 0x1(r7)
-	  lbz       r5, 0x1(r8)
-	  add       r0, r0, r3
-	  lbz       r4, 0x0(r7)
-	  add       r3, r0, r5
-	  addi      r0, r3, 0x2
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x0(r9)
-	  lbz       r3, 0x1(r8)
-	  lbz       r0, 0x2(r7)
-	  lbz       r5, 0x2(r8)
-	  add       r0, r0, r3
-	  lbz       r4, 0x1(r7)
-	  add       r3, r0, r5
-	  addi      r0, r3, 0x2
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x1(r9)
-	  lbz       r3, 0x2(r8)
-	  lbz       r0, 0x3(r7)
-	  lbz       r5, 0x3(r8)
-	  add       r0, r0, r3
-	  lbz       r4, 0x2(r7)
-	  add       r3, r0, r5
-	  addi      r0, r3, 0x2
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x2(r9)
-	  lbz       r3, 0x3(r8)
-	  lbz       r0, 0x4(r7)
-	  lbz       r5, 0x4(r8)
-	  add       r0, r0, r3
-	  lbz       r4, 0x3(r7)
-	  add       r3, r0, r5
-	  addi      r0, r3, 0x2
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x3(r9)
-	  blr
-	*/
+	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
+	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
+	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
+	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
+	s += srcStride;
+	d += dstStride;
+	n += srcStride;
+	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
+	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
+	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
+	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
+	s += srcStride;
+	d += dstStride;
+	n += srcStride;
+	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
+	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
+	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
+	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
+	s += srcStride;
+	d += dstStride;
+	n += srcStride;
+	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
+	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
+	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
+	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
+	s += srcStride;
+	d += dstStride;
+	n += srcStride;
 }
 
 /*
@@ -4777,120 +4627,38 @@ static void _MotionComp_11(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
  *
  * @note Offset vertically by half a sample
  */
-static void _MotionComp_10(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
+static void _MotionComp_10(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
-	int i, j;
+	u8* s = (u8*)src;
+	u8* d = (u8*)dst;
 
-	for (i = 0; i < 4; ++i)
-		for (j = 0; j < 4; ++j)
-			dst[i * dstStride + j] = (src[i * srcStride + j + 0] + src[i * srcStride + j + 1] + 1) / 2;
+	d[0] = (s[0] + s[1] + 1) >> 1;
+	d[1] = (s[1] + s[2] + 1) >> 1;
+	d[2] = (s[2] + s[3] + 1) >> 1;
+	d[3] = (s[3] + s[4] + 1) >> 1;
+	s += srcStride;
+	d += dstStride;
 
-	/*
-	.loc_0x0:
-	  lbz       r9, 0x1(r5)
-	  add       r7, r5, r6
-	  lbz       r10, 0x0(r5)
-	  add       r8, r3, r4
-	  addi      r0, r9, 0x1
-	  add       r0, r10, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r3)
-	  lbz       r9, 0x2(r5)
-	  lbz       r10, 0x1(r5)
-	  addi      r0, r9, 0x1
-	  add       r0, r10, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r3)
-	  lbz       r9, 0x3(r5)
-	  lbz       r10, 0x2(r5)
-	  addi      r0, r9, 0x1
-	  add       r0, r10, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r3)
-	  lbz       r9, 0x4(r5)
-	  lbz       r5, 0x3(r5)
-	  addi      r0, r9, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r3)
-	  lbz       r3, 0x1(r7)
-	  lbz       r5, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r8)
-	  lbz       r3, 0x2(r7)
-	  lbz       r5, 0x1(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r8)
-	  lbz       r3, 0x3(r7)
-	  lbz       r5, 0x2(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r8)
-	  lbz       r3, 0x4(r7)
-	  lbz       r5, 0x3(r7)
-	  add       r7, r7, r6
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r8)
-	  add       r8, r8, r4
-	  lbz       r3, 0x1(r7)
-	  lbz       r5, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r8)
-	  lbz       r3, 0x2(r7)
-	  lbz       r5, 0x1(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r8)
-	  lbz       r3, 0x3(r7)
-	  lbz       r5, 0x2(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r8)
-	  lbz       r3, 0x4(r7)
-	  lbz       r5, 0x3(r7)
-	  add       r7, r7, r6
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r8)
-	  add       r8, r8, r4
-	  lbz       r3, 0x1(r7)
-	  lbz       r4, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r8)
-	  lbz       r3, 0x2(r7)
-	  lbz       r4, 0x1(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r8)
-	  lbz       r3, 0x3(r7)
-	  lbz       r4, 0x2(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r8)
-	  lbz       r3, 0x4(r7)
-	  lbz       r4, 0x3(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r8)
-	  blr
-	*/
+	d[0] = (s[0] + s[1] + 1) >> 1;
+	d[1] = (s[1] + s[2] + 1) >> 1;
+	d[2] = (s[2] + s[3] + 1) >> 1;
+	d[3] = (s[3] + s[4] + 1) >> 1;
+	s += srcStride;
+	d += dstStride;
+
+	d[0] = (s[0] + s[1] + 1) >> 1;
+	d[1] = (s[1] + s[2] + 1) >> 1;
+	d[2] = (s[2] + s[3] + 1) >> 1;
+	d[3] = (s[3] + s[4] + 1) >> 1;
+	s += srcStride;
+	d += dstStride;
+
+	d[0] = (s[0] + s[1] + 1) >> 1;
+	d[1] = (s[1] + s[2] + 1) >> 1;
+	d[2] = (s[2] + s[3] + 1) >> 1;
+	d[3] = (s[3] + s[4] + 1) >> 1;
+	s += srcStride;
+	d += dstStride;
 }
 
 /*
@@ -4900,125 +4668,43 @@ static void _MotionComp_10(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
  *
  * @note Offset vertically by half a sample
  */
-static void _MotionComp_01(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
+static void _MotionComp_01(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
-	u32 i, j;
+	u8* s = (u8*)src;
+	u8* n = (u8*)src + srcStride;
+	u8* d = (u8*)dst;
 
-	for (i = 0; i < 4; ++i) {
-		for (j = 0; j < 4; ++j) {
-			dst[i * dstStride + j] = (src[(i + 0) * srcStride + j] + src[(i + 1) * srcStride + j] + 1) / 2;
-		}
-	}
-	/*
-	.loc_0x0:
-	  add       r8, r5, r6
-	  lbz       r11, 0x0(r5)
-	  lbz       r10, 0x0(r8)
-	  addi      r7, r8, 0
-	  add       r9, r3, r4
-	  addi      r0, r10, 0x1
-	  add       r0, r11, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r3)
-	  lbz       r10, 0x1(r8)
-	  lbz       r11, 0x1(r5)
-	  addi      r0, r10, 0x1
-	  add       r0, r11, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r3)
-	  lbz       r10, 0x2(r8)
-	  lbz       r11, 0x2(r5)
-	  addi      r0, r10, 0x1
-	  add       r0, r11, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r3)
-	  lbz       r10, 0x3(r8)
-	  add       r8, r8, r6
-	  lbz       r5, 0x3(r5)
-	  addi      r0, r10, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r3)
-	  lbz       r3, 0x0(r8)
-	  lbz       r5, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r9)
-	  lbz       r3, 0x1(r8)
-	  lbz       r5, 0x1(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r9)
-	  lbz       r3, 0x2(r8)
-	  lbz       r5, 0x2(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r9)
-	  lbz       r3, 0x3(r8)
-	  add       r8, r8, r6
-	  lbz       r5, 0x3(r7)
-	  add       r7, r7, r6
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r9)
-	  add       r9, r9, r4
-	  lbz       r3, 0x0(r8)
-	  lbz       r5, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r9)
-	  lbz       r3, 0x1(r8)
-	  lbz       r5, 0x1(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r9)
-	  lbz       r3, 0x2(r8)
-	  lbz       r5, 0x2(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r9)
-	  lbz       r3, 0x3(r8)
-	  add       r8, r8, r6
-	  lbz       r5, 0x3(r7)
-	  add       r7, r7, r6
-	  addi      r0, r3, 0x1
-	  add       r0, r5, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r9)
-	  add       r9, r9, r4
-	  lbz       r3, 0x0(r8)
-	  lbz       r4, 0x0(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r9)
-	  lbz       r3, 0x1(r8)
-	  lbz       r4, 0x1(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r9)
-	  lbz       r3, 0x2(r8)
-	  lbz       r4, 0x2(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r9)
-	  lbz       r3, 0x3(r8)
-	  lbz       r4, 0x3(r7)
-	  addi      r0, r3, 0x1
-	  add       r0, r4, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r9)
-	  blr
-	*/
+	d[0] = (s[0] + n[0] + 1) >> 1;
+	d[1] = (s[1] + n[1] + 1) >> 1;
+	d[2] = (s[2] + n[2] + 1) >> 1;
+	d[3] = (s[3] + n[3] + 1) >> 1;
+	s += srcStride;
+	n += srcStride;
+	d += dstStride;
+
+	d[0] = (s[0] + n[0] + 1) >> 1;
+	d[1] = (s[1] + n[1] + 1) >> 1;
+	d[2] = (s[2] + n[2] + 1) >> 1;
+	d[3] = (s[3] + n[3] + 1) >> 1;
+	s += srcStride;
+	n += srcStride;
+	d += dstStride;
+
+	d[0] = (s[0] + n[0] + 1) >> 1;
+	d[1] = (s[1] + n[1] + 1) >> 1;
+	d[2] = (s[2] + n[2] + 1) >> 1;
+	d[3] = (s[3] + n[3] + 1) >> 1;
+	s += srcStride;
+	n += srcStride;
+	d += dstStride;
+
+	d[0] = (s[0] + n[0] + 1) >> 1;
+	d[1] = (s[1] + n[1] + 1) >> 1;
+	d[2] = (s[2] + n[2] + 1) >> 1;
+	d[3] = (s[3] + n[3] + 1) >> 1;
+	s += srcStride;
+	n += srcStride;
+	d += dstStride;
 }
 
 /*
@@ -5028,17 +4714,38 @@ static void _MotionComp_01(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
  *
  * @note Copy 4x4 samples without interpolation.
  */
-static void _MotionComp_00(u8* dst, u32 dstStride, const u8* src, u32 srcStride)
+static void _MotionComp_00(void* dst, u32 dstStride, const void* src, u32 srcStride)
 {
-	int i, j;
+	u8* s = (u8*)src;
+	u8* d = (u8*)dst;
 
-	for (i = 0; i < 4; ++i) {
-		for (j = 0; j < 4; ++j) {
-			dst[j] = src[j];
-		}
-		src += srcStride;
-		dst += dstStride;
-	}
+	d[0] = s[0];
+	d[1] = s[1];
+	d[2] = s[2];
+	d[3] = s[3];
+	s += srcStride;
+	d += dstStride;
+
+	d[0] = s[0];
+	d[1] = s[1];
+	d[2] = s[2];
+	d[3] = s[3];
+	s += srcStride;
+	d += dstStride;
+
+	d[0] = s[0];
+	d[1] = s[1];
+	d[2] = s[2];
+	d[3] = s[3];
+	s += srcStride;
+	d += dstStride;
+
+	d[0] = s[0];
+	d[1] = s[1];
+	d[2] = s[2];
+	d[3] = s[3];
+	s += srcStride;
+	d += dstStride;
 }
 
 /*
