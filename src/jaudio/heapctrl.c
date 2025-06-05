@@ -167,12 +167,12 @@ BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
 	parent->_18 = heap;
 
 	jaheap_* temp = heap->_14;
-	if (heap->_14 == NULL) {
+	if (temp == NULL) {
 		heap->_14   = parent;
 		parent->_1C = nullptr;
 		heap->_0C   = parent->_08 - heap->_08 + parent->_10;
 	} else {
-		jaheap_* temp2 = temp;
+		jaheap_* temp2 = heap->_14;
 		if (parent->_08 < heap->_14->_08) {
 			parent->_1C = heap->_14;
 			heap->_14   = parent;
