@@ -997,7 +997,7 @@ u32 One_CheckInstWave(SOUNDID_ sound)
 		return 3;
 	}
 
-	int* handle = GetSoundHandle(group, map[1]);
+	WaveID_* handle = GetSoundHandle(group, map[1]);
 	if (handle == 0) {
 		return 4;
 	}

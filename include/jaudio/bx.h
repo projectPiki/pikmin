@@ -196,11 +196,13 @@ struct CtrlGroup_ {
 
 // Name fabricated based on magic ID.
 struct SCNE_ {
-	int magic;   // _00, 'SCNE'
-	u8 _04[0x8]; // _04, unknown
-	Ctrl_* cdf;  // _0C
-	Ctrl_* cex;  // _10
-	Ctrl_* cst;  // _14
+	int magic;  // _00, 'SCNE'
+	u32 _04;    // _04
+	u32 _08;    // _08
+	Ctrl_* cdf; // _0C
+	Ctrl_* cex; // _10
+	Ctrl_* cst; // _14
+	int _18[1]; // _18, variable size?
 };
 
 struct Ctrl_ {
@@ -211,9 +213,10 @@ struct Ctrl_ {
 
 // Name fabricated from Xayr's tools.
 struct WaveID_ {
-	s16 awID;     // _00
-	s16 waveID;   // _02
+	u32 id;       // _00, split into sound id and ws id
 	jaheap_ heap; // _04
+	u32 _30;      // _30
+	Wave_* wave;  // _34
 };
 
 struct WaveArchive_ {
@@ -231,13 +234,16 @@ struct Wave_ {
 	u8 _00;                // _00
 	u8 compBlockIdx;       // _01
 	u8 _02;                // _02
-	s8 _04[12];            // _04
+	s8 _04[4];             // _04
+	int _08;               // _08
+	int _0C;               // _0C
 	s32 isLooping;         // _10
 	s32 loopAddress;       // _14
 	s32 loopStartPosition; // _18
 	s32 _1C;               // _1C
 	s16 loopYN1;           // _20
 	s16 loopYN2;           // _22
+	u32* _24;              // _24
 };
 
 #endif

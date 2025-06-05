@@ -1,6 +1,7 @@
 #include "jaudio/connect.h"
 #include "jaudio/heapctrl.h"
 #include "jaudio/bx.h"
+#include "jaudio/aramcall.h"
 
 static s16 WS_V2P_TABLE[0x100];
 static s16 BNK_V2P_TABLE[0x100];
@@ -10,57 +11,17 @@ static s16 BNK_V2P_TABLE[0x100];
  * Address:	8000C860
  * Size:	0000A0
  */
-static void UpdateWave(WaveArchive_*, Ctrl_*, u32)
+static int UpdateWave(WaveArchive_* arc, Ctrl_* ctrl, u32 base)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0
-	  addi      r29, r5, 0
-	  li        r30, 0
-	  li        r31, 0
-	  b         .loc_0x7C
-
-	.loc_0x28:
-	  add       r0, r30, r29
-	  addi      r4, r31, 0x8
-	  rlwinm    r3,r0,2,0,29
-	  lwzx      r4, r28, r4
-	  addi      r0, r3, 0x74
-	  lwzx      r0, r27, r0
-	  stw       r0, 0x34(r4)
-	  lwz       r6, 0x48(r27)
-	  cmplwi    r6, 0
-	  beq-      .loc_0x74
-	  lwz       r7, 0x34(r4)
-	  addi      r3, r4, 0x4
-	  addi      r4, r27, 0x40
-	  lwz       r5, 0xC(r7)
-	  lwz       r0, 0x8(r7)
-	  addi      r5, r5, 0x1F
-	  rlwinm    r5,r5,0,0,26
-	  add       r6, r6, r0
-	  bl        0x23D0
-
-	.loc_0x74:
-	  addi      r30, r30, 0x1
-	  addi      r31, r31, 0x4
-
-	.loc_0x7C:
-	  lwz       r0, 0x4(r28)
-	  cmplw     r30, r0
-	  blt+      .loc_0x28
-	  add       r3, r30, r29
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	u32 i = 0;
+	for (; i < ctrl->count; i++) {
+		WaveID_* wave = ctrl->waveIDs[i];
+		wave->wave    = arc->waves[i + base];
+		if (arc->heap._08) {
+			Jac_SelfAllocHeap(&wave->heap, &arc->heap, wave->wave->_0C + 0x1f & 0xffffffe0, arc->heap._08 + wave->wave->_08);
+		}
+	}
+	return i + base;
 }
 
 /*
@@ -68,8 +29,40 @@ static void UpdateWave(WaveArchive_*, Ctrl_*, u32)
  * Address:	8000C900
  * Size:	000174
  */
-static void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
+static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* ctrl)
 {
+	u32 i = 0;
+	for (; i < ctrl->count; i++) {
+		WaveID_* wave = ctrl->waveIDs[i];
+		u32 a         = wave->id >> 0x10;
+		u32* ptr      = &a;
+		if (wave->heap._08) {
+			continue;
+		}
+		Ctrl_* cdf = group->scenes[a]->cdf;
+		u16 index  = 0;
+		u16* ptr2  = &index;
+		while (index < cdf->count && (u16)cdf->waveIDs[index]->heap._04 < wave->id) {
+			index++;
+		}
+
+		if (index != cdf->count) {
+			WaveID_** wave2 = &cdf->waveIDs[index];
+			if ((*wave2)->heap._08) {
+				wave->wave = (*wave2)->wave;
+				Jac_SelfInitHeap(&wave->heap, wave->heap._08, 0, (*wave2)->heap._01);
+				Jac_SetGroupHeap(&wave->heap, &(*wave2)->heap);
+			} else {
+				WaveArchive_* wave3 = bank->waveGroups[a];
+				wave->wave          = wave3->waves[index];
+				wave->_30           = 0;
+				wave->wave->_24     = &wave->heap._08;
+				LoadAram_One(wave3->arcName, wave->wave->_08, wave->wave->_0C, &wave->heap._08, &wave->heap);
+				Jac_SetGroupHeap(&wave->heap, &wave3->heap);
+			}
+		}
+	}
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -187,56 +180,23 @@ static void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
  * Address:	8000CA80
  * Size:	00009C
  */
-void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 flag, BOOL set)
+void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r5,2,0,29
-	  stwu      r1, -0x38(r1)
-	  stmw      r26, 0x20(r1)
-	  addi      r26, r3, 0
-	  addi      r27, r4, 0
-	  add       r3, r26, r0
-	  add       r4, r27, r0
-	  addi      r28, r6, 0
-	  lwz       r30, 0x8(r3)
-	  lwz       r29, 0xC(r4)
-	  addi      r3, r30, 0x40
-	  bl        0x254C
-	  li        r31, 0
-	  cmpwi     r28, 0
-	  stw       r31, 0x6C(r30)
-	  beq-      .loc_0x88
-	  lwz       r0, 0x8(r29)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x88
-	  li        r30, 0
-	  b         .loc_0x7C
+	WaveArchive_* arc;
+	SCNE_* scene;
 
-	.loc_0x5C:
-	  addi      r0, r31, 0x18
-	  addi      r3, r26, 0
-	  lwzx      r5, r29, r0
-	  addi      r4, r27, 0
-	  li        r6, 0x1
-	  bl        .loc_0x0
-	  addi      r30, r30, 0x1
-	  addi      r31, r31, 0x4
+	scene = group->scenes[id];
+	arc   = bank->waveGroups[id];
+	Jac_DeleteHeap(&arc->heap);
+	arc->_6C = 0;
 
-	.loc_0x7C:
-	  lwz       r0, 0x8(r29)
-	  cmplw     r30, r0
-	  blt+      .loc_0x5C
+	if (set && scene->_08) {
+		for (u32 i = 0; i < scene->_08; i++) {
+			Jac_SceneClose(bank, group, scene->_18[i], TRUE);
+		}
+	}
 
-	.loc_0x88:
-	  lmw       r26, 0x20(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	u32 badcompiler[2];
 }
 
 /*
@@ -244,12 +204,47 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 flag, BOOL se
  * Address:	8000CB20
  * Size:	00015C
  */
-BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 flag, BOOL set)
+BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 {
+	u32* idp = &id;
+	int stat = 0;
+	WaveArchive_* arc;
+	SCNE_* scene;
+
+	arc = bank->waveGroups[id];
+	if (arc->heap._08 && arc->_6C) {
+		for (u32 i = 0; i < arc->waveCount; i++) {
+			arc->waves[i]->_24 = &arc->_6C;
+		}
+	} else {
+		arc->_6C = 0;
+		for (u32 i = 0; i < arc->waveCount; i++) {
+			arc->waves[i]->_24 = &arc->_6C;
+		}
+
+		if (LoadAram_All(arc->arcName, &arc->_6C, &arc->heap) == 0) {
+			return FALSE;
+		}
+	}
+
+	scene = group->scenes[id];
+	if (scene->cdf) {
+		stat = UpdateWave(arc, scene->cdf, 0);
+	}
+	if (scene->cex) {
+		if (scene->_04 == 0) {
+			UpdateWave(arc, scene->cex, stat);
+		} else {
+			UpdateWave_Extern(bank, group, scene->cex);
+		}
+	}
+
 	if (set) {
-		group->_04 = flag;
+		group->_04 = id;
 	}
 	return TRUE;
+
+	u32 badcompiler[6];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -369,34 +364,15 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 flag, BOOL set)
  * Address:	8000CC80
  * Size:	000044
  */
-static void SearchWave(Ctrl_* ctrl, u32 flag)
+static WaveID_* SearchWave(Ctrl_* ctrl, u32 flag)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x4(r3)
-	  li        r5, 0
-	  mtctr     r0
-	  cmplwi    r0, 0
-	  ble-      .loc_0x3C
-
-	.loc_0x14:
-	  addi      r0, r5, 0x8
-	  lwzx      r6, r3, r0
-	  lwz       r0, 0x0(r6)
-	  rlwinm    r0,r0,0,16,31
-	  cmplw     r0, r4
-	  bne-      .loc_0x34
-	  mr        r3, r6
-	  blr
-
-	.loc_0x34:
-	  addi      r5, r5, 0x4
-	  bdnz+     .loc_0x14
-
-	.loc_0x3C:
-	  li        r3, 0
-	  blr
-	*/
+	for (u32 i = 0; i < ctrl->count; i++) {
+		WaveID_* wave = ctrl->waveIDs[i];
+		if ((u16)wave->id == flag) {
+			return wave;
+		}
+	}
+	return NULL;
 }
 
 /*
@@ -404,90 +380,35 @@ static void SearchWave(Ctrl_* ctrl, u32 flag)
  * Address:	8000CCE0
  * Size:	00010C
  */
-int* __GetSoundHandle(CtrlGroup_*, u32, u32)
+WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r5,2,0,29
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r30, r3, 0
-	  add       r3, r30, r0
-	  addi      r31, r4, 0
-	  rlwinm    r29,r4,0,16,31
-	  lwz       r28, 0xC(r3)
-	  lwz       r0, 0xC(r28)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0x64
-	  mr        r4, r29
-	  bl        -0x9C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x64
-	  lwz       r4, 0x34(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x64
-	  addis     r0, r4, 0x1
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0x64
-	  b         .loc_0xF8
+	u16 wId      = id;
+	SCNE_* scene = group->scenes[id2];
+	Ctrl_* ctrl;
 
-	.loc_0x64:
-	  lwz       r3, 0x10(r28)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x9C
-	  mr        r4, r29
-	  bl        -0xD4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x9C
-	  lwz       r4, 0x34(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x9C
-	  addis     r0, r4, 0x1
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0x9C
-	  b         .loc_0xF8
+	ctrl = scene->cdf;
+	if (ctrl) {
+		WaveID_* wave = SearchWave(ctrl, wId);
+		if (wave && wave->wave && (int)wave->wave != 0xffffffff) {
+			return wave;
+		}
+	}
 
-	.loc_0x9C:
-	  li        r27, 0
-	  li        r29, 0
-	  b         .loc_0xE8
+	ctrl = scene->cex;
+	if (ctrl) {
+		WaveID_* wave = SearchWave(ctrl, wId);
+		if (wave && wave->wave && (int)wave->wave != 0xffffffff) {
+			return wave;
+		}
+	}
 
-	.loc_0xA8:
-	  addi      r0, r29, 0x18
-	  addi      r3, r30, 0
-	  lwzx      r5, r28, r0
-	  mr        r4, r31
-	  bl        .loc_0x0
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE0
-	  lwz       r4, 0x34(r3)
-	  cmplwi    r4, 0
-	  beq-      .loc_0xE0
-	  addis     r0, r4, 0x1
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0xE0
-	  b         .loc_0xF8
-
-	.loc_0xE0:
-	  addi      r27, r27, 0x1
-	  addi      r29, r29, 0x4
-
-	.loc_0xE8:
-	  lwz       r0, 0x8(r28)
-	  cmplw     r27, r0
-	  blt+      .loc_0xA8
-	  li        r3, 0
-
-	.loc_0xF8:
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	for (u32 i = 0; i < scene->_08; i++) {
+		WaveID_* wave = __GetSoundHandle(group, id, scene->_18[i]);
+		if (wave && wave->wave && (int)wave->wave != 0xffffffff) {
+			return wave;
+		}
+	}
+	return NULL;
 }
 
 /*
@@ -495,57 +416,26 @@ int* __GetSoundHandle(CtrlGroup_*, u32, u32)
  * Address:	8000CE00
  * Size:	000074
  */
-int* GetSoundHandle(CtrlGroup_* group, u32 flag)
+WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 {
-	// need to figure out this type
-	int* a = __GetSoundHandle(group, flag, group->_04);
-	if (a == NULL) {
+	u32* flagptr  = &flag;
+	WaveID_* wave = __GetSoundHandle(group, flag, group->_04);
+	if (wave == NULL) {
 		return NULL;
 	}
-	if (a[13] == NULL) {
+	if (wave->wave == NULL) {
 		return NULL;
 	}
-	return a;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r4, 0xC(r1)
-	  lwz       r4, 0xC(r1)
-	  lwz       r5, 0x4(r3)
-	  bl        -0x138
-	  cmplwi    r3, 0
-	  bne-      .loc_0x2C
-	  li        r3, 0
-	  b         .loc_0x64
+	u32* ptr = wave->wave->_24;
+	if (ptr == NULL) {
+		return NULL;
+	}
+	if (*ptr == 0) {
+		return NULL;
+	}
+	return wave;
 
-	.loc_0x2C:
-	  lwz       r4, 0x34(r3)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x64
-
-	.loc_0x40:
-	  lwz       r4, 0x24(r4)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x54
-	  li        r3, 0
-	  b         .loc_0x64
-
-	.loc_0x54:
-	  lwz       r0, 0x0(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x64
-	  li        r3, 0
-
-	.loc_0x64:
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	u32 badcompiler[4];
 }
 
 /*
