@@ -123,7 +123,7 @@ union URegisterParam_ {
 };
 
 /**
- * @brief TODO
+ * @brief This struct is analogous to `JASTrack` of later JAudio.
  *
  * @note Size: 0x434.
  */
