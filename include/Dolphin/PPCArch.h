@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#define HID0              0x3f0
+// #define HID0              0x3f0
 #define HID0_ICE          0x8000
 #define HID0_ICFI         0x800
 #define HID0_DCE          0x4000
@@ -18,8 +18,8 @@ extern "C" {
 #define LC_BASE           (LC_BASE_PREFIX << 16)
 #define DBAT3L            3
 #define DBAT3U            3
-#define DMA_U             0x39a
-#define DMA_L             0x39b
+// #define DMA_U             0x39a
+// #define DMA_L             0x39b
 #define DMA_L_STORE       0
 #define DMA_L_TRIGGER     2
 #define LC_MAX_DMA_BLOCKS 128
@@ -71,27 +71,45 @@ extern "C" {
 #define FPSCR_XE     0x00000008 // Inexact exception enable
 #define FPSCR_NI     0x00000004 // Non-IEEE mode
 
-u32 PPCMfmsr(void);
-void PPCMtmsr(u32 newMSR);
-// u32 PPCOrMsr(u32 value);
-void PPCOrMsr();
-u32 PPCMfhid0();
-void PPCMthid0(u32 newHID0);
-u32 PPCMfl2cr();
-void PPCMtl2cr(u32 newL2cr);
-void PPCMtdec(u32 newDec);
-void PPCSync();
-void PPCHalt();
-u32 PPCMffpscr();
-void PPCMtfpscr(u32 newFPSCR);
-u32 PPCMfhid2();
-void PPCMthid2(u32 newhid2);
-u32 PPCMfwpar(void);
-void PPCMtwpar(u32 newwpar);
-void PPCEnableSpeculation();
-void PPCDisableSpeculation();
-void PPCSetFpIEEEMode();
-void PPCSetFpNonIEEEMode();
+void PPCSync(void);  // Executes a system call to sync data
+void PPCEieio(void); // TODO
+void PPCHalt(void);  // Spins infinitely
+
+u32 PPCMfmsr(void);         // Get Machine State Register (MSR)
+void PPCMtmsr(u32 value);   // Set Machine State Register (MSR)
+void PPCOrMsr(void);        // TODO
+void PPCAndMsr(void);       // TODO
+void PPCAndCMsr(void);      // TODO
+u32 PPCMfhid0(void);        // Get Hardware Implementation-Dependent Register 0 (HID0)
+void PPCMthid0(u32 value);  // Set Hardware Implementation-Dependent Register 0 (HID0)
+u32 PPCMfhid1(void);        // Get Hardware Implementation-Dependent Register 1 (HID1)
+u32 PPCMfhid2(void);        // Get Hardware Implementation-Dependent Register 2 (HID2)
+void PPCMthid2(u32 value);  // Set Hardware Implementation-Dependent Register 2 (HID2)
+u32 PPCMfl2cr(void);        // Get L2 Cache Control Register (L2CR)
+void PPCMtl2cr(u32 value);  // Set L2 Cache Control Register (L2CR)
+u32 PPCMfdec(void);         // Get Decrementer Register (DEC)
+void PPCMtdec(u32 value);   // Set Decrementer Register (DEC)
+u32 PPCMfmmcr0(void);       // Get Monitor Mode Control Register 0 (MMCR0)
+void PPCMtmmcr0(u32 value); // Set Monitor Mode Control Register 0 (MMCR0)
+u32 PPCMfmmcr1(void);       // Get Monitor Mode Control Register 1 (MMCR1)
+void PPCMtmmcr1(u32 value); // Set Monitor Mode Control Register 1 (MMCR1)
+u32 PPCMfpmc1(void);        // Get Performance Monitor Control Register 1 (PMC1)
+void PPCMtpmc1(u32 value);  // Set Performance Monitor Control Register 1 (PMC1)
+u32 PPCMfpmc2(void);        // Get Performance Monitor Control Register 2 (PMC2)
+void PPCMtpmc2(u32 value);  // Set Performance Monitor Control Register 2 (PMC2)
+u32 PPCMfpmc3(void);        // Get Performance Monitor Control Register 3 (PMC3)
+void PPCMtpmc3(u32 value);  // Set Performance Monitor Control Register 3 (PMC3)
+u32 PPCMfpmc4(void);        // Get Performance Monitor Control Register 4 (PMC4)
+void PPCMtpmc4(u32 value);  // Set Performance Monitor Control Register 4 (PMC4)
+u32 PPCMfsia(void);         // Get Sampled Instruction Address Register (SIA)
+void PPCMtsia(u32 value);   // Set Sampled Instruction Address Register (SIA)
+u32 PPCMfwpar(void);        // Get Write Pipe Address Register (WPAR)
+void PPCMtwpar(u32 value);  // Set Write Pipe Address Register (WPAR)
+u32 PPCMfdmaU(void);        // Get Direct Memory Access Upper Register (DMAU)
+void PPCMtdmaU(u32 value);  // Set Direct Memory Access Upper Register (DMAU)
+u32 PPCMfdmaL(void);        // Get Direct Memory Access Lower Register (DMAL)
+void PPCMtdmaL(u32 value);  // Set Direct Memory Access Lower Register (DMAL)
+u32 PPCMfpvr(void);         // TODO
 
 #ifdef __cplusplus
 }

@@ -231,22 +231,22 @@ static void* audioproc(void*)
  */
 static void OSInitFastCast(void)
 {
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
-		li r3, OS_GQR_U8
-		oris r3, r3, OS_GQR_U8
-		mtspr 0x392, r3
-		li r3, OS_GQR_U16
-		oris r3, r3, OS_GQR_U16
-		mtspr 0x393, r3
-		li r3, OS_GQR_S8
-		oris r3, r3, OS_GQR_S8
-		mtspr 0x394, r3
-		li r3, OS_GQR_S16
-		oris r3, r3, OS_GQR_S16
-		mtspr 0x395, r3
+		li        r3,     OS_GQR_U8
+		oris      r3, r3, OS_GQR_U8
+		mtspr     GQR2, r3
+		li        r3,     OS_GQR_U16
+		oris      r3, r3, OS_GQR_U16
+		mtspr     GQR3, r3
+		li        r3,     OS_GQR_S8
+		oris      r3, r3, OS_GQR_S8
+		mtspr     GQR4, r3
+		li        r3,     OS_GQR_S16
+		oris      r3, r3, OS_GQR_S16
+		mtspr     GQR5, r3
 	}
-#endif // clang-format on
+#endif
 }
 
 static BOOL priority_set        = FALSE;

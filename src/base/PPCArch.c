@@ -1,16 +1,27 @@
 #include "Dolphin/PPCArch.h"
 
+#ifdef __MWERKS__
+#define MOVE_FROM_SPR(name, rD) asm { mfspr rD, name }
+#define MOVE_TO_SPR(name, rS)   asm { mtspr name, rS }
+#define MOVE_FROM_MSR(rD)       asm { mfmsr rD }
+#define MOVE_TO_MSR(rS)         asm { mtmsr rS }
+#else
+#define MOVE_FROM_SPR(name, rD) (void)0
+#define MOVE_TO_SPR(name, rS)   (void)0
+#define MOVE_FROM_MSR(rD)       (void)0
+#define MOVE_TO_MSR(rS)         (void)0
+#endif
+
 /*
  * --INFO--
  * Address: 801F5944
  * Size:    000008
  */
-ASM u32 PPCMfmsr(void) {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mfmsr r3
-	blr
-#endif // clang-format on
+u32 PPCMfmsr(void)
+{
+	register u32 result;
+	MOVE_FROM_MSR(result);
+	return result;
 }
 
 /*
@@ -18,13 +29,9 @@ ASM u32 PPCMfmsr(void) {
  * Address: 801F594C
  * Size:    000008
  */
-ASM void PPCMtmsr(register u32 newMSR)
+void PPCMtmsr(register u32 value)
 {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mtmsr newMSR
-	blr
-#endif // clang-format on
+	MOVE_TO_MSR(value);
 }
 
 /*
@@ -62,13 +69,11 @@ void PPCAndCMsr(void)
  * Address: 801F5954
  * Size:    000008
  */
-ASM u32 PPCMfhid0(void)
+u32 PPCMfhid0(void)
 {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mfspr r3, HID0
-	blr
-#endif // clang-format on
+	register u32 result;
+	MOVE_FROM_SPR(HID0, result);
+	return result;
 }
 
 /*
@@ -76,9 +81,9 @@ ASM u32 PPCMfhid0(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMthid0(u32 newHID0)
+void PPCMthid0(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(HID0, value);
 }
 
 /*
@@ -86,9 +91,11 @@ void PPCMthid0(u32 newHID0)
  * Address: ........
  * Size:    000008
  */
-void PPCMfhid1(void)
+u32 PPCMfhid1(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(HID1, result);
+	return result;
 }
 
 /*
@@ -96,12 +103,11 @@ void PPCMfhid1(void)
  * Address: 801F595C
  * Size:    000008
  */
-ASM u32 PPCMfl2cr(void) {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mfspr r3, L2CR
-	blr
-#endif // clang-format on
+u32 PPCMfl2cr(void)
+{
+	register u32 result;
+	MOVE_FROM_SPR(L2CR, result);
+	return result;
 }
 
 /*
@@ -109,12 +115,9 @@ ASM u32 PPCMfl2cr(void) {
  * Address: 801F5964
  * Size:    000008
  */
-ASM void PPCMtl2cr(register u32 newL2cr) {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mtspr L2CR, newL2cr
-	blr
-#endif // clang-format on
+void PPCMtl2cr(register u32 value)
+{
+	MOVE_TO_SPR(L2CR, value);
 }
 
 /*
@@ -122,13 +125,9 @@ ASM void PPCMtl2cr(register u32 newL2cr) {
  * Address: 801F596C
  * Size:    000008
  */
-WEAKFUNC ASM void PPCMtdec(register u32 newDec)
+void PPCMtdec(register u32 value)
 {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mtdec newDec
-	blr
-#endif // clang-format on
+	MOVE_TO_SPR(dec, value);
 }
 
 /*
@@ -136,9 +135,11 @@ WEAKFUNC ASM void PPCMtdec(register u32 newDec)
  * Address: ........
  * Size:    000008
  */
-void PPCMfdec(void)
+u32 PPCMfdec(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(dec, result);
+	return result;
 }
 
 /*
@@ -146,13 +147,11 @@ void PPCMfdec(void)
  * Address: 801F5974
  * Size:    000008
  */
-ASM void PPCSync(void)
+void PPCSync(void)
 {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	sc
-	blr
-#endif // clang-format on
+#ifdef __MWERKS__
+	asm { sc }
+#endif
 }
 
 /*
@@ -170,21 +169,18 @@ void PPCEieio(void)
  * Address: 801F597C
  * Size:    000014
  */
-WEAKFUNC ASM void PPCHalt(void) // spins infinitely
+void PPCHalt(void)
 {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-
-	sync
-
-_spin:
-	nop
-	li r3, 0
-	nop
-	b _spin
-
-	// NEVER REACHED
-#endif // clang-format on
+	__sync();
+	for (;;) {
+#ifdef __MWERKS__
+		asm {
+			nop
+			li r3, 0
+			nop
+		}
+#endif
+	}
 }
 
 /*
@@ -192,9 +188,11 @@ _spin:
  * Address: ........
  * Size:    000008
  */
-void PPCMfmmcr0(void)
+u32 PPCMfmmcr0(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(MMCR0, result);
+	return result;
 }
 
 /*
@@ -202,9 +200,9 @@ void PPCMfmmcr0(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtmmcr0(void)
+void PPCMtmmcr0(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(MMCR0, value);
 }
 
 /*
@@ -212,9 +210,11 @@ void PPCMtmmcr0(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfmmcr1(void)
+u32 PPCMfmmcr1(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(MMCR1, result);
+	return result;
 }
 
 /*
@@ -222,9 +222,9 @@ void PPCMfmmcr1(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtmmcr1(void)
+void PPCMtmmcr1(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(MMCR1, value);
 }
 
 /*
@@ -232,9 +232,11 @@ void PPCMtmmcr1(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfpmc1(void)
+u32 PPCMfpmc1(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(PMC1, result);
+	return result;
 }
 
 /*
@@ -242,9 +244,9 @@ void PPCMfpmc1(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtpmc1(void)
+void PPCMtpmc1(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(PMC1, value);
 }
 
 /*
@@ -252,9 +254,11 @@ void PPCMtpmc1(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfpmc2(void)
+u32 PPCMfpmc2(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(PMC2, result);
+	return result;
 }
 
 /*
@@ -262,9 +266,9 @@ void PPCMfpmc2(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtpmc2(void)
+void PPCMtpmc2(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(PMC2, value);
 }
 
 /*
@@ -272,9 +276,11 @@ void PPCMtpmc2(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfpmc3(void)
+u32 PPCMfpmc3(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(PMC3, result);
+	return result;
 }
 
 /*
@@ -282,9 +288,9 @@ void PPCMfpmc3(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtpmc3(void)
+void PPCMtpmc3(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(PMC3, value);
 }
 
 /*
@@ -292,9 +298,11 @@ void PPCMtpmc3(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfpmc4(void)
+u32 PPCMfpmc4(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(PMC4, result);
+	return result;
 }
 
 /*
@@ -302,9 +310,9 @@ void PPCMfpmc4(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtpmc4(void)
+void PPCMtpmc4(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(PMC4, value);
 }
 
 /*
@@ -312,9 +320,11 @@ void PPCMtpmc4(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfsia(void)
+u32 PPCMfsia(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(SIA, result);
+	return result;
 }
 
 /*
@@ -322,9 +332,9 @@ void PPCMfsia(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtsia(void)
+void PPCMtsia(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(SIA, value);
 }
 
 /*
@@ -332,12 +342,11 @@ void PPCMtsia(void)
  * Address: 801F5990
  * Size:    000008
  */
-ASM u32 PPCMfhid2(void) {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mfspr r3, 920
-	blr
-#endif // clang-format on
+u32 PPCMfhid2(void)
+{
+	register u32 result;
+	MOVE_FROM_SPR(HID2, result);
+	return result;
 }
 
 /*
@@ -345,12 +354,9 @@ ASM u32 PPCMfhid2(void) {
  * Address: 801F5998
  * Size:    000008
  */
-ASM void PPCMthid2(register u32 newhid2) {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mtspr 920, newhid2
-	blr
-#endif // clang-format on
+void PPCMthid2(register u32 value)
+{
+	MOVE_TO_SPR(HID2, value);
 }
 
 /*
@@ -360,7 +366,9 @@ ASM void PPCMthid2(register u32 newhid2) {
  */
 u32 PPCMfwpar(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(WPAR, result);
+	return result;
 }
 
 /*
@@ -368,13 +376,9 @@ u32 PPCMfwpar(void)
  * Address: 801F59A0
  * Size:    000008
  */
-ASM void PPCMtwpar(register u32 newwpar)
+void PPCMtwpar(register u32 value)
 {
-#ifdef __MWERKS__ // clang-format off
-	nofralloc
-	mtspr WPAR, newwpar
-	blr
-#endif // clang-format on
+	MOVE_TO_SPR(WPAR, value);
 }
 
 /*
@@ -382,9 +386,11 @@ ASM void PPCMtwpar(register u32 newwpar)
  * Address: ........
  * Size:    000008
  */
-void PPCMfdmaU(void)
+u32 PPCMfdmaU(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(DMA_U, result);
+	return result;
 }
 
 /*
@@ -392,9 +398,11 @@ void PPCMfdmaU(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfdmaL(void)
+u32 PPCMfdmaL(void)
 {
-	// UNUSED FUNCTION
+	register u32 result;
+	MOVE_FROM_SPR(DMA_L, result);
+	return result;
 }
 
 /*
@@ -402,9 +410,9 @@ void PPCMfdmaL(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtdmaU(void)
+void PPCMtdmaU(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(DMA_U, value);
 }
 
 /*
@@ -412,9 +420,9 @@ void PPCMtdmaU(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMtdmaL(void)
+void PPCMtdmaL(register u32 value)
 {
-	// UNUSED FUNCTION
+	MOVE_TO_SPR(DMA_L, value);
 }
 
 /*
@@ -422,7 +430,7 @@ void PPCMtdmaL(void)
  * Address: ........
  * Size:    000008
  */
-void PPCMfpvr(void)
+u32 PPCMfpvr(void)
 {
 	// UNUSED FUNCTION
 }
