@@ -27,22 +27,22 @@ extern "C" {
 // Initialise fast casting.
 static inline void OSInitFastCast()
 {
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
-		li r3, OS_GQR_U8
-		oris r3, r3, OS_GQR_U8
-		mtspr 0x392, r3
-		li r3, OS_GQR_U16
-		oris r3, r3, OS_GQR_U16
-		mtspr 0x393, r3
-		li r3, OS_GQR_S8
-		oris r3, r3, OS_GQR_S8
-		mtspr 0x394, r3
-		li r3, OS_GQR_S16
-		oris r3, r3, OS_GQR_S16
-		mtspr 0x395, r3
+		li        r3,     OS_GQR_U8
+		oris      r3, r3, OS_GQR_U8
+		mtspr     GQR2, r3
+		li        r3,     OS_GQR_U16
+		oris      r3, r3, OS_GQR_U16
+		mtspr     GQR3, r3
+		li        r3,     OS_GQR_S8
+		oris      r3, r3, OS_GQR_S8
+		mtspr     GQR4, r3
+		li        r3,     OS_GQR_S16
+		oris      r3, r3, OS_GQR_S16
+		mtspr     GQR5, r3
 	}
-#endif // clang-format on
+#endif
 }
 
 // f32 to int.
@@ -52,13 +52,12 @@ static inline s16 __OSf32tos16(register f32 inF)
 	register s16 out;
 	u32 tmp;
 	register u32* tmpPtr = &tmp;
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
-		psq_st inF, 0(tmpPtr), 0x1, OS_FASTCAST_S16
-		lha out, 0(tmpPtr)
+		psq_st    inF, 0 (tmpPtr), 0x1, OS_FASTCAST_S16
+		lha       out, 0 (tmpPtr)
 	}
-#endif // clang-format on
-
+#endif
 	return out;
 }
 
@@ -72,13 +71,12 @@ static inline u8 __OSf32tou8(register f32 inF)
 	register u8 out;
 	u32 tmp;
 	register u32* tmpPtr = &tmp;
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
-		psq_st inF, 0(tmpPtr), 0x1, OS_FASTCAST_U8
-		lbz out, 0(tmpPtr)
+		psq_st    inF, 0 (tmpPtr), 0x1, OS_FASTCAST_U8
+		lbz       out, 0 (tmpPtr)
 	}
-#endif // clang-format on
-
+#endif
 	return out;
 }
 
@@ -92,14 +90,13 @@ static inline s8 __OSf32tos8(register f32 inF)
 	register s8 out;
 	u32 tmp;
 	register u32* tmpPtr = &tmp;
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
-		psq_st inF, 0(tmpPtr), 0x1, OS_FASTCAST_S8
-		lbz out, 0(tmpPtr)
-		extsb out, out
+		psq_st    inF, 0(tmpPtr), 0x1, OS_FASTCAST_S8
+		lbz       out, 0(tmpPtr)
+		extsb     out, out
 	}
-#endif // clang-format on
-
+#endif
 	return out;
 }
 

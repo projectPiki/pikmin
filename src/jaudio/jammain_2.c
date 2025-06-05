@@ -1349,14 +1349,14 @@ void Jam_UpdateTrackAll(seqp_* track)
  * Address:	80010E00
  * Size:	00000C
  */
-static void OSf32tos8(register f32* in, register s8* pOut)
+static void OSf32tos8(register f32* in, register s8* out)
 {
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
-		lfs f1, 0(in)
-		psq_st f1, 0(pOut), 0x1, OS_FASTCAST_S8
+		lfs       f1, 0 (in)
+		psq_st    f1, 0 (out), 0x1, OS_FASTCAST_S8
 	}
-#endif // clang-format on
+#endif
 }
 
 /*

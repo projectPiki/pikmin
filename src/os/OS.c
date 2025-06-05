@@ -30,12 +30,6 @@ void EnableMetroTRKInterrupts();
 int OSEnableInterrupts();
 void OSExceptionInit();
 void OSRegisterVersion(const char*);
-void PPCMtmmcr0(int);
-void PPCMtmmcr1(int);
-void PPCMtpmc1(int);
-void PPCMtpmc2(int);
-void PPCMtpmc3(int);
-void PPCMtpmc4(int);
 void SIInit();
 void __OSContextInit();
 void __OSInitAudioSystem();
@@ -574,12 +568,12 @@ void __OSPSInit(void)
 	PPCMthid2(PPCMfhid2() | 0xA0000000);
 	ICFlashInvalidate();
 	__sync();
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
 		li      r3, 0
 		mtspr   GQR0, r3
 	}
-#endif // clang-format on
+#endif
 }
 
 #define DI_CONFIG_IDX         0x9

@@ -39,7 +39,7 @@ void PSMTXIdentity(register Mtx m)
 	register f32 c_01;
 	register f32 c_10;
 
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
 		psq_st      zero_c, 8(m),   0, 0
 		ps_merge01  c_01, zero_c, one_c
@@ -50,7 +50,7 @@ void PSMTXIdentity(register Mtx m)
 		psq_st      c_10,   0(m),   0, 0
 		psq_st      c_10,   40(m),  0, 0
 	}
-#endif // clang-format on
+#endif
 }
 /*
  * --INFO--
@@ -221,15 +221,13 @@ void C_MTXTranspose(void)
  * Address: 801FDC8C
  * Size:    000050
  */
-#pragma push
-#pragma scheduling off
 void PSMTXTranspose(const register Mtx src, register Mtx xPose)
 {
 	register f32 c_zero = 0.0f;
 	register f32 row0a, row1a, row0b, row1b;
 	register f32 trns0, trns1, trns2;
 
-#ifdef __MWERKS__ // clang-format off
+#ifdef __MWERKS__
 	asm {
 		psq_l       row0a, 0(src),  0, 0
 		stfs        c_zero, 44(xPose)
@@ -250,9 +248,8 @@ void PSMTXTranspose(const register Mtx src, register Mtx xPose)
 		psq_st      trns1, 24(xPose), 0, 0
 		stfs        row0b, 40(xPose)
 	}
-#endif // clang-format on
+#endif
 }
-#pragma pop
 
 /*
  * --INFO--

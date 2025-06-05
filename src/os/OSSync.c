@@ -35,8 +35,6 @@ void __OSInitSystemCall(void)
 	memcpy(handler, __OSSystemCallVectorStart, (u32)__OSSystemCallVectorEnd - (u32)__OSSystemCallVectorStart);
 
 	DCFlushRangeNoSync(handler, OS_HANDLER_SLOT_SIZE);
-#ifdef __MWERKS__ // clang-format off
-	asm { sync }
-#endif // clang-format on
+	__sync();
 	ICInvalidateRange(handler, OS_HANDLER_SLOT_SIZE);
 }
