@@ -8,6 +8,7 @@
 #include "jaudio/rate.h"
 #include "jaudio/random.h"
 #include "jaudio/centcalc.h"
+#include "jaudio/bankdrv.h"
 
 #include "Dolphin/OS/OSError.h"
 
@@ -499,7 +500,7 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 		r30_newRegValue = -r23_oldRegValue;
 		break;
 	case 0x90:
-		unaff_r27 = GetRandom_s32();
+		unaff_r27       = GetRandom_s32();
 		r30_newRegValue = unaff_r27 % (u16)r30_newRegValue;
 		break;
 	case 0xA:
@@ -1364,377 +1365,150 @@ static void OSf32tos8(register f32* in, register s8* out)
  * Address:	80010E20
  * Size:	0004A8
  */
-void Jam_UpdateTrack(seqp_*, u32)
+void Jam_UpdateTrack(seqp_* track, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x78(r1)
-	  addi      r11, r1, 0x78
-	  bl        0x204024
-	  stmw      r23, 0x24(r1)
-	  addi      r25, r3, 0
-	  lis       r3, 0x4330
-	  lhz       r5, 0x282(r25)
-	  mr        r26, r4
-	  lbz       r0, 0x3F(r25)
-	  stw       r5, 0x1C(r1)
-	  lfd       f2, -0x7F18(r2)
-	  cmplwi    r0, 0x4
-	  stw       r3, 0x18(r1)
-	  lfs       f0, -0x7F04(r2)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f26, f1, f0
-	  beq-      .loc_0x48C
-	  rlwinm.   r0,r26,0,14,14
-	  beq-      .loc_0x9C
-	  lfs       f1, -0x7F00(r2)
-	  addi      r3, r1, 0x14
-	  lfs       f0, 0x25C(r25)
-	  addi      r4, r1, 0x10
-	  li        r23, 0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0x14(r1)
-	  bl        -0x94
-	  lbz       r3, 0x10(r1)
-	  extsb.    r0, r3
-	  bge-      .loc_0x90
-	  li        r0, 0
-	  neg       r23, r3
-	  stb       r0, 0x10(r1)
+	u32 badCompiler[3];
 
-	.loc_0x90:
-	  stb       r23, 0x132(r25)
-	  lbz       r0, 0x10(r1)
-	  stb       r0, 0x133(r25)
+	f32 unaff_f31; // f31
+	f32 unaff_f30; // f30
+	f32 unaff_f29; // f29
+	f32 unaff_f28; // f28
+	f32 unaff_f27; // f27
+	f32 dVar15;
 
-	.loc_0x9C:
-	  rlwinm.   r0,r26,0,25,25
-	  beq-      .loc_0xB8
-	  lwz       r0, 0x40(r25)
-	  cmplwi    r0, 0
-	  bne-      .loc_0xB8
-	  mr        r3, r25
-	  bl        0x40C
+	size_t i;
 
-	.loc_0xB8:
-	  rlwinm.   r31,r26,0,31,31
-	  beq-      .loc_0x114
-	  lbz       r0, 0x39E(r25)
-	  lfs       f31, 0x14C(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xD4
-	  lfs       f31, -0x7F0C(r2)
+	// Used for `OSf32tos8`
+	f32 local_64;
+	s8 local_68;
+	u8 uVar11;
 
-	.loc_0xD4:
-	  lwz       r3, 0x2AC(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xF4
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0xF4
-	  lfs       f0, 0xC(r3)
-	  fmuls     f31, f31, f0
-
-	.loc_0xF4:
-	  lbz       r0, 0x39C(r25)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x114
-	  lbz       r0, 0x39D(r25)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x114
-	  lfs       f0, 0x24C(r25)
-	  fmuls     f31, f31, f0
-
-	.loc_0x114:
-	  rlwinm.   r30,r26,0,30,30
-	  beq-      .loc_0x164
-	  lhz       r3, 0x27A(r25)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x7F18(r2)
-	  stw       r3, 0x1C(r1)
-	  lfs       f1, 0x15C(r25)
-	  stw       r0, 0x18(r1)
-	  lfd       f0, 0x18(r1)
-	  fsubs     f2, f0, f2
-	  bl        0x3C64
-	  lwz       r3, 0x2AC(r25)
-	  fmr       f30, f1
-	  cmplwi    r3, 0
-	  beq-      .loc_0x164
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x164
-	  lfs       f0, 0x18(r3)
-	  fmuls     f30, f30, f0
-
-	.loc_0x164:
-	  rlwinm.   r29,r26,0,28,28
-	  beq-      .loc_0x1A0
-	  lwz       r3, 0x2AC(r25)
-	  lfs       f29, 0x17C(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1A0
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,28,28
-	  beq-      .loc_0x1A0
-	  fmr       f1, f29
-	  lfs       f2, 0x1C(r3)
-	  fmr       f3, f26
-	  lbz       r3, 0x3DC(r25)
-	  bl        -0x538
-	  fmr       f29, f1
-
-	.loc_0x1A0:
-	  rlwinm.   r28,r26,0,29,29
-	  beq-      .loc_0x1DC
-	  lwz       r3, 0x2AC(r25)
-	  lfs       f28, 0x16C(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1DC
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,29,29
-	  beq-      .loc_0x1DC
-	  fmr       f1, f28
-	  lfs       f2, 0x10(r3)
-	  fmr       f3, f26
-	  lbz       r3, 0x3DD(r25)
-	  bl        -0x574
-	  fmr       f28, f1
-
-	.loc_0x1DC:
-	  rlwinm.   r27,r26,0,27,27
-	  beq-      .loc_0x218
-	  lwz       r3, 0x2AC(r25)
-	  lfs       f27, 0x18C(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x218
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x218
-	  fmr       f1, f27
-	  lfs       f2, 0x14(r3)
-	  fmr       f3, f26
-	  lbz       r3, 0x3DE(r25)
-	  bl        -0x5B0
-	  fmr       f27, f1
-
-	.loc_0x218:
-	  rlwinm.   r0,r26,0,16,19
-	  beq-      .loc_0x26C
-	  li        r0, 0x4
-	  lfs       f1, -0x7F04(r2)
-	  li        r3, 0
-	  li        r4, 0
-	  mtctr     r0
-
-	.loc_0x234:
-	  addi      r5, r4, 0x20C
-	  addi      r0, r3, 0x114
-	  lfsx      f0, r25, r5
-	  addi      r3, r3, 0x2
-	  addi      r4, r4, 0x10
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r5, 0x1C(r1)
-	  sthx      r5, r25, r0
-	  bdnz+     .loc_0x234
-	  lbz       r0, 0x139(r25)
-	  ori       r0, r0, 0x20
-	  stb       r0, 0x139(r25)
-
-	.loc_0x26C:
-	  lwz       r3, 0x2AC(r25)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x2C4
-	  rlwinm.   r0,r26,0,24,24
-	  beq-      .loc_0x2C4
-	  lhz       r0, 0x8(r3)
-	  rlwinm.   r0,r0,0,24,24
-	  beq-      .loc_0x2C4
-	  li        r0, 0x8
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0x298:
-	  lwz       r5, 0x2AC(r25)
-	  addi      r4, r3, 0x24
-	  addi      r0, r3, 0x104
-	  addi      r3, r3, 0x2
-	  lhax      r4, r5, r4
-	  sthx      r4, r25, r0
-	  bdnz+     .loc_0x298
-	  lbz       r0, 0x139(r25)
-	  rlwinm    r3,r0,0,26,26
-	  addi      r0, r3, 0x8
-	  stb       r0, 0x139(r25)
-
-	.loc_0x2C4:
-	  rlwinm.   r0,r26,0,26,26
-	  beq-      .loc_0x2E8
-	  lfs       f1, -0x7F04(r2)
-	  lfs       f0, 0x19C(r25)
-	  fmuls     f0, f1, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  sth       r0, 0x124(r25)
-
-	.loc_0x2E8:
-	  li        r23, 0
-	  li        r26, 0
-
-	.loc_0x2F0:
-	  addi      r0, r23, 0x370
-	  lbzx      r0, r25, r0
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x368
-	  add       r3, r25, r26
-	  addi      r24, r3, 0x340
-	  addi      r4, r3, 0x3E8
-	  addi      r3, r24, 0
-	  bl        -0x3DF0
-	  lbz       r0, 0x0(r24)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x354
-	  bge-      .loc_0x334
-	  cmpwi     r0, 0
-	  beq-      .loc_0x34C
-	  bge-      .loc_0x344
-	  b         .loc_0x368
-
-	.loc_0x334:
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x364
-	  bge-      .loc_0x368
-	  b         .loc_0x35C
-
-	.loc_0x344:
-	  fmuls     f30, f30, f1
-	  b         .loc_0x368
-
-	.loc_0x34C:
-	  fmuls     f31, f31, f1
-	  b         .loc_0x368
-
-	.loc_0x354:
-	  fmuls     f29, f29, f1
-	  b         .loc_0x368
-
-	.loc_0x35C:
-	  fmuls     f28, f28, f1
-	  b         .loc_0x368
-
-	.loc_0x364:
-	  fmuls     f27, f27, f1
-
-	.loc_0x368:
-	  addi      r23, r23, 0x1
-	  addi      r26, r26, 0x18
-	  cmplwi    r23, 0x2
-	  blt+      .loc_0x2F0
-	  lwz       r4, 0x40(r25)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x390
-	  lbz       r0, 0x3F(r25)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x3D0
-
-	.loc_0x390:
-	  cmplwi    r31, 0
-	  beq-      .loc_0x39C
-	  stfs      f31, 0xF0(r25)
-
-	.loc_0x39C:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x3A8
-	  stfs      f30, 0xF4(r25)
-
-	.loc_0x3A8:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x3B4
-	  stfs      f29, 0xF8(r25)
-
-	.loc_0x3B4:
-	  cmplwi    r28, 0
-	  beq-      .loc_0x3C0
-	  stfs      f28, 0xFC(r25)
-
-	.loc_0x3C0:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x48C
-	  stfs      f27, 0x100(r25)
-	  b         .loc_0x48C
-
-	.loc_0x3D0:
-	  lhz       r3, 0x284(r25)
-	  lis       r0, 0x4330
-	  lfd       f2, -0x7F18(r2)
-	  cmplwi    r31, 0
-	  stw       r3, 0x1C(r1)
-	  lfs       f0, -0x7F04(r2)
-	  stw       r0, 0x18(r1)
-	  lfd       f1, 0x18(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f26, f1, f0
-	  beq-      .loc_0x408
-	  lfs       f0, 0xF0(r4)
-	  fmuls     f0, f0, f31
-	  stfs      f0, 0xF0(r25)
-
-	.loc_0x408:
-	  cmplwi    r30, 0
-	  beq-      .loc_0x420
-	  lwz       r3, 0x40(r25)
-	  lfs       f0, 0xF4(r3)
-	  fmuls     f0, f0, f30
-	  stfs      f0, 0xF4(r25)
-
-	.loc_0x420:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x444
-	  lwz       r4, 0x40(r25)
-	  fmr       f1, f29
-	  fmr       f3, f26
-	  lbz       r3, 0x3DF(r25)
-	  lfs       f2, 0xF8(r4)
-	  bl        -0x7DC
-	  stfs      f1, 0xF8(r25)
-
-	.loc_0x444:
-	  cmplwi    r28, 0
-	  beq-      .loc_0x468
-	  lwz       r4, 0x40(r25)
-	  fmr       f1, f28
-	  fmr       f3, f26
-	  lbz       r3, 0x3E0(r25)
-	  lfs       f2, 0xFC(r4)
-	  bl        -0x800
-	  stfs      f1, 0xFC(r25)
-
-	.loc_0x468:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x48C
-	  lwz       r4, 0x40(r25)
-	  fmr       f1, f27
-	  fmr       f3, f26
-	  lbz       r3, 0x3E1(r25)
-	  lfs       f2, 0x100(r4)
-	  bl        -0x824
-	  stfs      f1, 0x100(r25)
-
-	.loc_0x48C:
-	  lwz       r0, 0x7C(r1)
-	  addi      r11, r1, 0x78
-	  bl        0x203BEC
-	  lmw       r23, 0x24(r1)
-	  addi      r1, r1, 0x78
-	  mtlr      r0
-	  blr
-	*/
+	dVar15 = track->regParam.param._10[3] / 32767.0f;
+	if (track->_3F != 0x04) {
+		if ((param_2 & 0x20000) != 0) {
+			uVar11   = 0;
+			local_64 = (track->timedParam).inner._110.currValue * 128.0f;
+			OSf32tos8(&local_64, &local_68);
+			if (local_68 < 0) {
+				uVar11   = -local_68;
+				local_68 = 0;
+			}
+			track->_D8._5A[0] = uVar11;
+			track->_D8._5A[1] = local_68;
+		}
+		if (((param_2 & 0x40) != 0) && !track->parent) {
+			Jam_UpdateTempo(track);
+		}
+		if (param_2 & 1) {
+			unaff_f31 = track->timedParam.inner.volume.currValue;
+			if (track->_39E != 0) {
+				unaff_f31 = 0.0f;
+			}
+			if (track->_2AC && ((track->_2AC->_08 & 1) != 0)) {
+				unaff_f31 = (unaff_f31 * track->_2AC->_0C);
+			}
+			if ((track->_39C != 0) && ((track->_39D & 1) != 0)) {
+				unaff_f31 = (unaff_f31 * (track->timedParam).inner._100.currValue);
+			}
+		}
+		if (param_2 & 2) {
+			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.currValue, track->regParam.param._0E);
+			if (track->_2AC && ((track->_2AC->_08 & 2) != 0)) {
+				unaff_f30 = (unaff_f30 * track->_2AC->_18);
+			}
+		}
+		if (param_2 & 8) {
+			unaff_f29 = (track->timedParam).inner.pan.currValue;
+			if (track->_2AC && ((track->_2AC->_08 & 8) != 0)) {
+				unaff_f29 = __PanCalc(unaff_f29, track->_2AC->_1C, dVar15, track->_3DC[0]);
+			}
+		}
+		if (param_2 & 4) {
+			unaff_f28 = (track->timedParam).inner.fxmix.currValue;
+			if (track->_2AC && ((track->_2AC->_08 & 4) != 0)) {
+				unaff_f28 = __PanCalc(unaff_f28, track->_2AC->_10, dVar15, track->_3DC[1]);
+			}
+		}
+		if (param_2 & 0x10) {
+			unaff_f27 = (track->timedParam).inner.dolby.currValue;
+			if (track->_2AC && ((track->_2AC->_08 & 0x10) != 0)) {
+				unaff_f27 = __PanCalc(unaff_f27, track->_2AC->_14, dVar15, track->_3DC[2]);
+			}
+		}
+		if (param_2 & 0xf000) {
+			for (i = 0; i < 4; ++i) {
+				track->_D8._3C[i] = track->timedParam.inner.IIRs[i].currValue * 32767.0f;
+			}
+			track->_D8._61 |= 0x20;
+		}
+		if (track->_2AC) {
+			if ((param_2 & 0x80) && (track->_2AC->_08 & 0x80)) {
+				for (i = 0; i < 8; ++i) {
+					track->_D8._2C[i] = track->_2AC->_24[i];
+				}
+				track->_D8._61 = (track->_D8._61 & 0x20) + 8;
+			}
+		}
+		if ((param_2 & 0x20) != 0) {
+			track->_D8._4C = track->timedParam.inner._50.currValue * 32767.0f;
+		}
+		for (i = 0; i < 2; ++i) {
+			if (track->_370[i] == 0x0E) {
+				dVar15 = Bank_OscToOfs(&track->oscillators[i], &track->_3E8[i]);
+				switch (track->oscillators[i].mMode) {
+				case 1:
+					unaff_f30 = unaff_f30 * dVar15;
+					break;
+				case 0:
+					unaff_f31 = unaff_f31 * dVar15;
+					break;
+				case 2:
+					unaff_f29 = unaff_f29 * dVar15;
+					break;
+				case 3:
+					unaff_f28 = unaff_f28 * dVar15;
+					break;
+				case 4:
+					unaff_f27 = unaff_f27 * dVar15;
+					break;
+				}
+			}
+		}
+		if (!track->parent || ((track->_3F & 1) != 0)) {
+			if (param_2 & 1 != 0) {
+				track->_D8._18 = unaff_f31;
+			}
+			if (param_2 & 2 != 0) {
+				track->_D8._1C = unaff_f30;
+			}
+			if (param_2 & 8 != 0) {
+				track->_D8._20 = unaff_f29;
+			}
+			if (param_2 & 4 != 0) {
+				track->_D8._24 = unaff_f28;
+			}
+			if (param_2 & 0x10 != 0) {
+				track->_D8._28 = unaff_f27;
+			}
+		} else {
+			dVar15 = track->regParam.param._10[4] / 32767.0f;
+			if (param_2 & 1 != 0) {
+				track->_D8._18 = track->parent->_D8._18 * unaff_f31;
+			}
+			if (param_2 & 2 != 0) {
+				track->_D8._1C = track->parent->_D8._1C * unaff_f30;
+			}
+			if (param_2 & 8 != 0) {
+				track->_D8._20 = __PanCalc(unaff_f29, track->parent->_D8._20, dVar15, track->_3DF[0]);
+			}
+			if (param_2 & 4 != 0) {
+				track->_D8._24 = __PanCalc(unaff_f28, track->parent->_D8._24, dVar15, track->_3DF[1]);
+			}
+			if (param_2 & 0x10 != 0) {
+				track->_D8._28 = __PanCalc(unaff_f27, track->parent->_D8._28, dVar15, track->_3DF[2]);
+			}
+		}
+	}
 }
 
 /*

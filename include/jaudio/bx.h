@@ -118,6 +118,9 @@ struct Osc_ {
 	f32 mVertex;            // _14
 };
 
+/**
+ * @note Size: 0x18.
+ */
 struct Oscbuf_ {
 	u8 _00;  // _00
 	u8 _01;  // _01

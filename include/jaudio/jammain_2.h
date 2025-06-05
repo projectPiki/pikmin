@@ -196,8 +196,8 @@ struct seqp_ {
 	u8 _3E3;                  // _3E3
 	u8 _3E4;                  // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];   // _3E5
-	Oscbuf_ _3E8[1];          // _3E8 | Exact length unknown, but it is an array. Member type is a guess.
-	u8 _400[0x434 - 0x400];   // _400 | Exact size of struct confirmed by `Jaf_HandleToSeq`.
+	Oscbuf_ _3E8[2];          // _3E8 | Exact length confirmed.
+	u8 _418[0x434 - 0x418];   // _400 | Exact size of `seqp_` is confirmed by `Jaf_HandleToSeq`.
 };
 
 void* Jam_OfsToAddr(seqp_*, u32);         // TODO: Change return type to u8* if that's more convenient.
