@@ -1111,9 +1111,8 @@ void HVQM4SetBuffer(SeqObj* seqObj, void* workbuff)
 {
 	VideoState* state;
 	BlockData* plane_data;
-	u32 i;
+	int i, j;
 	HVQPlaneDesc* plane;
-	u32 stride;
 	BlockData* ptr;
 
 	state         = (VideoState*)workbuff;
@@ -1122,8 +1121,7 @@ void HVQM4SetBuffer(SeqObj* seqObj, void* workbuff)
 	setHVQPlaneDesc(seqObj, 1, seqObj->h_samp, seqObj->v_samp);
 	setHVQPlaneDesc(seqObj, 2, seqObj->h_samp, seqObj->v_samp);
 
-	state->is_landscape = seqObj->width >= seqObj->height;
-	if (state->is_landscape) {
+	if ((state->is_landscape = seqObj->width >= seqObj->height) != 0) {
 		state->h_nest_size = 70;
 		state->v_nest_size = 38;
 	} else {
@@ -1131,388 +1129,49 @@ void HVQM4SetBuffer(SeqObj* seqObj, void* workbuff)
 		state->v_nest_size = 70;
 	}
 
-	state->basis_num[0].tree = &state->trees[3];
-	state->basis_num[1].tree = &state->trees[3];
+	state->basis_num[0].tree = state->basis_num[1].tree = &state->trees[3];
+	state->basis_num_run[0].tree = state->basis_num_run[1].tree = &state->trees[1];
 
-	state->basis_num_run[0].tree = &state->trees[1];
-	state->basis_num_run[1].tree = &state->trees[1];
+	state->dc_values[0].tree = state->dc_values[1].tree = state->dc_values[2].tree = &state->trees[0];
+	state->dc_rle[0].tree = state->dc_rle[1].tree = state->dc_rle[2].tree = &state->trees[1]; // reuse!
+	state->bufTree0[0].tree = state->bufTree0[1].tree = state->bufTree0[2].tree = &state->trees[2];
+	state->mv_h.tree = state->mv_v.tree = &state->trees[4];
+	state->mcb_proc.tree = state->mcb_type.tree = &state->trees[5];
 
-	state->dc_values[0].tree = &state->trees[0];
-	state->dc_values[1].tree = &state->trees[0];
-	state->dc_values[2].tree = &state->trees[0];
-
-	state->dc_rle[0].tree = &state->trees[1]; // reuse!
-	state->dc_rle[1].tree = &state->trees[1]; //
-	state->dc_rle[2].tree = &state->trees[1]; //
-
-	state->bufTree0[0].tree = &state->trees[2];
-	state->bufTree0[1].tree = &state->trees[2];
-	state->bufTree0[2].tree = &state->trees[2];
-
-	state->mv_h.tree = &state->trees[4];
-	state->mv_v.tree = &state->trees[4];
-
-	state->mcb_proc.tree = &state->trees[5];
-	state->mcb_type.tree = &state->trees[5];
-
-	plane_data = (BlockData*)workbuff + sizeof(VideoState);
+	plane_data = (BlockData*)((u8*)workbuff + sizeof(VideoState));
 	for (i = 0; i < PLANE_COUNT; ++i) {
 		plane         = &state->planes[i];
 		plane->border = plane_data;
-		stride        = plane->h_blocks_safe;
 		// skip top border (stride) and left border (1)
-		plane->payload = plane_data + stride + 1;
+		plane->payload = plane_data + plane->h_blocks_safe + 1;
 		plane_data += plane->h_blocks_safe * plane->v_blocks_safe;
 
 		// set horizontal borders
 		ptr = plane->border;
-		for (i = plane->h_blocks_safe; i; --i) {
+		for (j = plane->h_blocks_safe; j > 0; --j) {
 			set_border(ptr);
 			++ptr;
 		}
 
 		ptr = plane_data;
-		for (i = plane->h_blocks_safe; i; --i) {
+		for (j = plane->h_blocks_safe; j > 0; --j) {
 			--ptr;
 			set_border(ptr);
 		}
 
 		// set vertical borders
-		ptr = plane->border + stride;
-		for (i = plane->v_blocks_safe - 2; i; --i) {
+		ptr = plane->border + plane->h_blocks_safe;
+		for (j = plane->v_blocks_safe - 2; j > 0; --j) {
 			set_border(ptr);
-			ptr += stride;
+			ptr += plane->h_blocks_safe;
 		}
 
-		ptr = plane->border + stride * 2 - 1;
-		for (i = plane->v_blocks_safe - 2; i; --i) {
+		ptr = plane->border + plane->h_blocks_safe * 2 - 1;
+		for (j = plane->v_blocks_safe - 2; j > 0; --j) {
 			set_border(ptr);
-			ptr += stride;
+			ptr += plane->h_blocks_safe;
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r5, 0x1
-	  stw       r0, 0x4(r1)
-	  li        r6, 0x1
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  li        r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x0(r3)
-	  bl        -0x4834
-	  lbz       r5, 0x8(r30)
-	  mr        r3, r30
-	  lbz       r6, 0x9(r30)
-	  li        r4, 0x1
-	  bl        -0x4848
-	  lbz       r5, 0x8(r30)
-	  mr        r3, r30
-	  lbz       r6, 0x9(r30)
-	  li        r4, 0x2
-	  bl        -0x485C
-	  lhz       r4, 0x4(r30)
-	  li        r3, -0x1
-	  lhz       r0, 0x6(r30)
-	  subc      r0, r4, r0
-	  subfze    r3, r3
-	  rlwinm.   r0,r3,0,24,31
-	  stb       r3, 0x6260(r31)
-	  beq-      .loc_0x8C
-	  li        r0, 0x46
-	  sth       r0, 0x625C(r31)
-	  li        r0, 0x26
-	  sth       r0, 0x625E(r31)
-	  b         .loc_0x9C
-
-	.loc_0x8C:
-	  li        r0, 0x26
-	  sth       r0, 0x625C(r31)
-	  li        r0, 0x46
-	  sth       r0, 0x625E(r31)
-
-	.loc_0x9C:
-	  addi      r0, r31, 0x30C0
-	  stw       r0, 0x61B0(r31)
-	  addi      r9, r31, 0x10B0
-	  addi      r8, r31, 0xA8
-	  stw       r0, 0x619C(r31)
-	  addi      r7, r31, 0x20B8
-	  addi      r6, r31, 0x40C8
-	  stw       r9, 0x61D8(r31)
-	  addi      r5, r31, 0x50D0
-	  addi      r3, r31, 0
-	  stw       r9, 0x61C4(r31)
-	  addi      r0, r31, 0x6CD8
-	  li        r4, 0
-	  stw       r8, 0x6110(r31)
-	  stw       r8, 0x60FC(r31)
-	  stw       r8, 0x60E8(r31)
-	  stw       r9, 0x614C(r31)
-	  stw       r9, 0x6138(r31)
-	  stw       r9, 0x6124(r31)
-	  stw       r7, 0x6188(r31)
-	  stw       r7, 0x6174(r31)
-	  stw       r7, 0x6160(r31)
-	  stw       r6, 0x6230(r31)
-	  stw       r6, 0x621C(r31)
-	  stw       r5, 0x6258(r31)
-	  stw       r5, 0x6244(r31)
-
-	.loc_0x104:
-	  stw       r0, 0x0(r3)
-	  li        r8, 0x7F
-	  li        r7, 0xFF
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  addi      r5, r5, 0x2
-	  add       r5, r0, r5
-	  stw       r5, 0x4(r3)
-	  lhz       r6, 0xC(r3)
-	  lhz       r5, 0xE(r3)
-	  cmpwi     r6, 0
-	  lwz       r9, 0x0(r3)
-	  mullw     r5, r6, r5
-	  rlwinm    r5,r5,1,0,30
-	  add       r0, r0, r5
-	  ble-      .loc_0x1B4
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x1A0
-
-	.loc_0x150:
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  stb       r8, 0x2(r9)
-	  stb       r7, 0x3(r9)
-	  stb       r8, 0x4(r9)
-	  stb       r7, 0x5(r9)
-	  stb       r8, 0x6(r9)
-	  stb       r7, 0x7(r9)
-	  stb       r8, 0x8(r9)
-	  stb       r7, 0x9(r9)
-	  stb       r8, 0xA(r9)
-	  stb       r7, 0xB(r9)
-	  stb       r8, 0xC(r9)
-	  stb       r7, 0xD(r9)
-	  stb       r8, 0xE(r9)
-	  stb       r7, 0xF(r9)
-	  addi      r9, r9, 0x10
-	  bdnz+     .loc_0x150
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x1B4
-
-	.loc_0x1A0:
-	  mtctr     r6
-
-	.loc_0x1A4:
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  addi      r9, r9, 0x2
-	  bdnz+     .loc_0x1A4
-
-	.loc_0x1B4:
-	  lhz       r5, 0xC(r3)
-	  mr        r9, r0
-	  li        r8, 0x7F
-	  cmpwi     r5, 0
-	  addi      r6, r5, 0
-	  li        r7, 0xFF
-	  ble-      .loc_0x240
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x22C
-
-	.loc_0x1DC:
-	  stb       r8, -0x2(r9)
-	  stb       r7, -0x1(r9)
-	  stb       r8, -0x4(r9)
-	  stb       r7, -0x3(r9)
-	  stb       r8, -0x6(r9)
-	  stb       r7, -0x5(r9)
-	  stb       r8, -0x8(r9)
-	  stb       r7, -0x7(r9)
-	  stb       r8, -0xA(r9)
-	  stb       r7, -0x9(r9)
-	  stb       r8, -0xC(r9)
-	  stb       r7, -0xB(r9)
-	  stb       r8, -0xE(r9)
-	  stb       r7, -0xD(r9)
-	  stb       r8, -0x10(r9)
-	  stb       r7, -0xF(r9)
-	  subi      r9, r9, 0x10
-	  bdnz+     .loc_0x1DC
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x240
-
-	.loc_0x22C:
-	  mtctr     r6
-
-	.loc_0x230:
-	  stb       r8, -0x2(r9)
-	  stb       r7, -0x1(r9)
-	  subi      r9, r9, 0x2
-	  bdnz+     .loc_0x230
-
-	.loc_0x240:
-	  lhz       r5, 0xE(r3)
-	  li        r8, 0x7F
-	  lhz       r6, 0xC(r3)
-	  li        r7, 0xFF
-	  subic.    r10, r5, 0x2
-	  lwz       r9, 0x0(r3)
-	  rlwinm    r5,r6,1,0,30
-	  addi      r6, r10, 0
-	  add       r9, r9, r5
-	  ble-      .loc_0x33C
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x320
-
-	.loc_0x274:
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  bdnz+     .loc_0x274
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x33C
-
-	.loc_0x320:
-	  mtctr     r6
-
-	.loc_0x324:
-	  stb       r8, 0x0(r9)
-	  stb       r7, 0x1(r9)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r9, r9, r5
-	  bdnz+     .loc_0x324
-
-	.loc_0x33C:
-	  lhz       r5, 0xE(r3)
-	  li        r8, 0x7F
-	  lhz       r6, 0xC(r3)
-	  li        r7, 0xFF
-	  subic.    r11, r5, 0x2
-	  rlwinm    r5,r6,2,0,29
-	  lwz       r9, 0x0(r3)
-	  subi      r10, r5, 0x2
-	  addi      r6, r11, 0
-	  add       r10, r9, r10
-	  ble-      .loc_0x43C
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x420
-
-	.loc_0x374:
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  bdnz+     .loc_0x374
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x43C
-
-	.loc_0x420:
-	  mtctr     r6
-
-	.loc_0x424:
-	  stb       r8, 0x0(r10)
-	  stb       r7, 0x1(r10)
-	  lhz       r5, 0xC(r3)
-	  rlwinm    r5,r5,1,0,30
-	  add       r10, r10, r5
-	  bdnz+     .loc_0x424
-
-	.loc_0x43C:
-	  addi      r4, r4, 0x1
-	  cmpwi     r4, 0x3
-	  addi      r3, r3, 0x38
-	  blt+      .loc_0x104
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  mtlr      r0
-	  addi      r1, r1, 0x18
-	  blr
-	*/
 }
 
 /*
