@@ -1894,34 +1894,44 @@ static void IpicLineDec(VideoState* state, u8* dst, u32 stride, StackState* stac
 static void IpicPlaneDec(VideoState* state, int plane_idx, u8* dst)
 {
 	HVQPlaneDesc* plane;
-	s16 v_blocks;
+	BlockData** payload_ptr;
+	u32 width_in_samples;
+	u32 stride;
+	u32 dst_stride;
+	u32 h_blocks;
+	u32 h_blocks_safe;
+	BlockData* payload;
+	int i;
 	StackState stack_state;
 
-	plane                 = &state->planes[plane_idx];
+	plane            = &state->planes[plane_idx];
+	width_in_samples = plane->width_in_samples;
+	h_blocks         = plane->h_blocks;
+	h_blocks_safe    = plane->h_blocks_safe;
+	payload_ptr      = &plane->payload;
+
 	stack_state.plane_idx = plane_idx;
-	stack_state.line_prev = plane->payload;
-	stack_state.line_curr = plane->payload;
-	stack_state.line_next = plane->payload + plane->h_blocks_safe;
-	v_blocks              = plane->v_blocks;
+	payload               = *payload_ptr;
+	stack_state.line_prev = payload;
+	stack_state.line_curr = payload;
+	stack_state.line_next = payload + h_blocks_safe;
+
+	// blocks are 4x4 so advance dst by 4 lines
+	dst_stride = width_in_samples * 4;
+	stride     = width_in_samples;
+
 	// first line
-	if (v_blocks > 0) {
-		IpicLineDec(state, dst, plane->width_in_samples, &stack_state, plane->h_blocks);
-		// blocks are 4x4 so advance dst by 4 lines
-		dst += plane->width_in_samples * 4;
-		--v_blocks;
-	}
+	IpicLineDec(state, dst, stride, &stack_state, h_blocks);
+	dst += dst_stride;
 	// middle lines
-	stack_state.line_prev = plane->payload;
-	while (v_blocks > 1) {
-		IpicLineDec(state, dst, plane->width_in_samples, &stack_state, plane->h_blocks);
-		dst += plane->width_in_samples * 4;
-		--v_blocks;
+	stack_state.line_prev = *payload_ptr;
+	for (i = plane->v_blocks - 2; i > 0; i--) {
+		IpicLineDec(state, dst, stride, &stack_state, h_blocks);
+		dst += dst_stride;
 	}
 	// last line
-	if (v_blocks > 0) {
-		stack_state.line_next = stack_state.line_curr;
-		IpicLineDec(state, dst, plane->width_in_samples, &stack_state, plane->h_blocks);
-	}
+	stack_state.line_next = stack_state.line_curr;
+	IpicLineDec(state, dst, stride, &stack_state, h_blocks);
 
 	/*
 	.loc_0x0:
