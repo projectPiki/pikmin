@@ -47,51 +47,6 @@ static inline u8 sat_mean8(int u)
 
 /*
  * --INFO--
- * Address:	8001F7E8
- * Size:	000040
- */
-static inline int getBit(BitBuffer* buf)
-{
-	u32 value;
-	int bit;
-	if ((bit = buf->bit) < 0) {
-		value = buf->value = *buf->ptr++;
-		bit                = 31;
-	} else {
-		value = buf->value;
-	}
-	value    = value >> bit & 1;
-	buf->bit = bit - 1;
-	return value;
-}
-
-/*
- * --INFO--
- * Address:	8001F384
- * Size:	000064
- */
-static inline s16 getByte(BitBuffer* buf)
-{
-	u32 value;
-	int bit;
-	if ((bit = buf->bit) >= 7) {
-		value = buf->value;
-		value >>= bit - 7;
-		bit -= 8;
-	} else {
-		value = buf->value;
-		value <<= 7 - bit;
-		buf->value = *buf->ptr++;
-		value |= buf->value >> (bit + 25);
-		bit += 24;
-	}
-	buf->bit = bit;
-	value &= 0xFF;
-	return value;
-}
-
-/*
- * --INFO--
  * Address:	8001EC3C
  * Size:	000360
  */
@@ -120,10 +75,10 @@ static void init_global_constants()
  * Address:	........
  * Size:	000014
  */
-static void set_border(BlockData* dst)
+static void set_border(BlockData* p)
 {
-	dst->dcv = 0x7F;
-	dst->bnm = 0xFF;
+	p->dcv = 0x7F;
+	p->bnm = 0xFF;
 }
 
 /*
@@ -184,6 +139,50 @@ static void setCode(BitBuffer* dst, void* src)
 
 /*
  * --INFO--
+ * Address:	8001F7E8
+ * Size:	000040
+ */
+static inline int getBit(BitBuffer* buf)
+{
+	u32 value;
+	int bit;
+	if ((bit = buf->bit) < 0) {
+		value = buf->value = *buf->ptr++;
+		bit                = 31;
+	} else {
+		value = buf->value;
+	}
+	value    = value >> bit & 1;
+	buf->bit = bit - 1;
+	return value;
+}
+
+/*
+ * --INFO--
+ * Address:	8001F384
+ * Size:	000064
+ */
+static inline s16 getByte(BitBuffer* buf)
+{
+	u32 value;
+	int bit;
+	if ((bit = buf->bit) >= 7) {
+		value = buf->value;
+		value >>= bit - 7;
+		bit -= 8;
+	} else {
+		value = buf->value;
+		value <<= 7 - bit;
+		buf->value = *buf->ptr++;
+		value |= buf->value >> (bit + 25);
+		bit += 24;
+	}
+	buf->bit = bit;
+	value &= 0xFF;
+	return value;
+}
+/*
+ * --INFO--
  * Address:	8001F0B8
  * Size:	0002CC
  */
@@ -215,7 +214,7 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
  * Address:	........
  * Size:	000140
  */
-static void readTree(BitBufferWithTree* buf_with_tree, u32 is_signed, u32 scale)
+static void readTree(BitBufferWithTree* buf_with_tree, int is_signed, int scale)
 {
 	Tree* tree     = buf_with_tree->tree;
 	BitBuffer* buf = &buf_with_tree->buf;
@@ -247,15 +246,15 @@ static inline int decodeHuff(BitBufferWithTree* buf)
 }
 
 // used for DC values
-static inline int decodeSOvfSym(BitBufferWithTree* buf, int min, int max)
+static inline int decodeSOvfSym(BitBufferWithTree* buf, int range_min, int range_max)
 {
-	int sum = 0;
-	int value;
+	int ret = 0;
+	int num;
 	do {
-		value = decodeHuff(buf);
-		sum += value;
-	} while (value <= min || value >= max);
-	return sum;
+		num = decodeHuff(buf);
+		ret += num;
+	} while (!(range_min < num && num < range_max));
+	return ret;
 }
 
 /*
@@ -263,31 +262,15 @@ static inline int decodeSOvfSym(BitBufferWithTree* buf, int min, int max)
  * Address:	........
  * Size:	000084
  */
-static inline int decodeUOvfSym(BitBufferWithTree* buf, int max)
+static inline int decodeUOvfSym(BitBufferWithTree* buf, int range_max)
 {
-	int sum = 0;
-	int value;
+	int ret = 0;
+	int num;
 	do {
-		value = decodeHuff(buf);
-		sum += value;
-	} while (value >= max);
-	return sum;
-}
-
-static inline int getDeltaDC(VideoState* state, int plane_idx, int* rle)
-{
-	int delta;
-
-	if (*rle == 0) {
-		delta = decodeSOvfSym(&state->dcval[plane_idx], state->dc_min, state->dc_max);
-		// successive zeroes are run-length encoded
-		if (delta == 0)
-			*rle = decodeHuff(&state->dcrun[plane_idx]);
-		return delta;
-	} else {
-		*rle--;
-		return 0;
-	}
+		num = decodeHuff(buf);
+		ret += num;
+	} while (num >= range_max);
+	return ret;
 }
 
 /*
@@ -295,68 +278,79 @@ static inline int getDeltaDC(VideoState* state, int plane_idx, int* rle)
  * Address:	8001F3E8
  * Size:	0002C4
  */
-static void Ipic_BasisNumDec(VideoState* state)
+static void Ipic_BasisNumDec(VideoState* ws)
 {
-	s16 num;
-	int rle;
-	BlockData* luma_dst;
-	BlockData* u_dst;
-	BlockData* v_dst;
-	int nblocks_h;
-	int nblocks_v;
-	BitBufferWithTree* bsnum;
-	BitBufferWithTree* bsrun;
+	s16 sym;
+	int runln;
+	BlockData* y_dat;
+	BlockData* u_dat;
+	BlockData* v_dat;
+	int i, j;
+	int h_block, v_block;
+	BitBufferWithTree* symcode;
+	BitBufferWithTree* runcode;
 
-	rle       = 0;
-	luma_dst  = state->pln[LUMA_IDX].blockInfoTop;
-	bsnum     = &state->bsnum[LUMA_IDX];
-	bsrun     = &state->bsrun[LUMA_IDX];
-	nblocks_h = state->pln[LUMA_IDX].nblocks_h;
-	nblocks_v = state->pln[LUMA_IDX].nblocks_v;
-
-	while (nblocks_v > 0) {
-		while (nblocks_h > 0) {
-			if (rle == 0) {
-				num = decodeHuff(bsnum);
-				if (num == 0)
-					rle = decodeHuff(bsrun);
-				luma_dst++->bnm = num & 0xFF;
+	runln   = 0;
+	y_dat   = ws->pln[LUMA_IDX].blockInfoTop;
+	symcode = &ws->bsnum[LUMA_IDX];
+	runcode = &ws->bsrun[LUMA_IDX];
+	h_block = ws->pln[LUMA_IDX].nblocks_h;
+	v_block = ws->pln[LUMA_IDX].nblocks_v;
+	for (j = v_block; j > 0; j--) {
+		for (i = h_block; i > 0; i--) {
+			if (runln == 0) {
+				sym = decodeHuff(symcode);
+				if (sym == 0)
+					runln = decodeHuff(runcode);
+				y_dat++->bnm = sym & 0xFF;
 			} else {
-				luma_dst++->bnm = 0;
-				rle--;
+				y_dat++->bnm = 0;
+				runln--;
 			}
-			nblocks_h--;
 		}
 		// skip borders
-		luma_dst += 2;
-		nblocks_v--;
+		y_dat += 2;
 	}
 
-	rle       = 0;
-	bsnum     = &state->bsnum[CHROMA_IDX];
-	bsrun     = &state->bsrun[CHROMA_IDX];
-	u_dst     = state->pln[1].blockInfoTop;
-	v_dst     = state->pln[2].blockInfoTop;
-	nblocks_h = state->pln[CHROMA_IDX].nblocks_h;
-	nblocks_v = state->pln[CHROMA_IDX].nblocks_v;
-	while (nblocks_v > 0) {
-		while (nblocks_h > 0) {
-			if (rle == 0) {
-				num = decodeHuff(bsnum);
-				if (num == 0)
-					rle = decodeHuff(bsrun);
-				u_dst++->bnm = (num >> 0) & 0xF;
-				v_dst++->bnm = (num >> 4) & 0xF;
+	runln   = 0;
+	symcode = &ws->bsnum[CHROMA_IDX];
+	runcode = &ws->bsrun[CHROMA_IDX];
+	u_dat   = ws->pln[1].blockInfoTop;
+	v_dat   = ws->pln[2].blockInfoTop;
+	h_block = ws->pln[CHROMA_IDX].nblocks_h;
+	v_block = ws->pln[CHROMA_IDX].nblocks_v;
+	for (i = v_block; i > 0; i--) {
+		for (j = h_block; j > 0; j--) {
+			if (runln == 0) {
+				sym = decodeHuff(symcode);
+				if (sym == 0)
+					runln = decodeHuff(runcode);
+				u_dat++->bnm = (sym >> 0) & 0xF;
+				v_dat++->bnm = (sym >> 4) & 0xF;
 			} else {
-				u_dst++->bnm = 0;
-				v_dst++->bnm = 0;
-				rle--;
+				u_dat++->bnm = 0;
+				v_dat++->bnm = 0;
+				runln--;
 			}
-			nblocks_h--;
 		}
-		u_dst += 2;
-		v_dst += 2;
-		nblocks_v--;
+		u_dat += 2;
+		v_dat += 2;
+	}
+}
+
+static inline int getDeltaDC(VideoState* ws, int c, int* runln)
+{
+	int d;
+
+	if (*runln == 0) {
+		d = decodeSOvfSym(&ws->dcval[c], ws->dc_min, ws->dc_max);
+		// successive zeroes are run-length encoded
+		if (d == 0)
+			*runln = decodeHuff(&ws->dcrun[c]);
+		return d;
+	} else {
+		(*runln)--;
+		return 0;
 	}
 }
 
@@ -365,155 +359,48 @@ static void Ipic_BasisNumDec(VideoState* state)
  * Address:	8001F6AC
  * Size:	00013C
  */
-static void IpicDcvDec(VideoState* state)
+static void IpicDcvDec(VideoState* ws)
 {
-	int plane_idx;
-	HVQPlaneDesc* plane;
-	int rle;
-	int nblocks_v;
-	int nblocks_h;
-	int nblocks_hb;
-	int value;
-	int prev_value;
+	int c;
 	BlockData* curr;
 	BlockData* prev;
-	int x, y;
+	int run;
+	int pred;
+	int h_block, v_block, hb_block;
+	int i, j;
 
-	for (plane_idx = 0; plane_idx < PLANE_COUNT; ++plane_idx) {
-		plane      = &state->pln[plane_idx];
-		nblocks_h  = plane->nblocks_h;
-		nblocks_v  = plane->nblocks_v;
-		nblocks_hb = plane->nblocks_hb;
-		curr       = plane->blockInfoTop;
-		rle        = 0;
-		for (y = nblocks_v; y > 0; --y) {
+	for (c = 0; c < PLANE_COUNT; c++) {
+		h_block  = ws->pln[c].nblocks_h;
+		v_block  = ws->pln[c].nblocks_v;
+		hb_block = ws->pln[c].nblocks_hb;
+		curr     = ws->pln[c].blockInfoTop;
+		run      = 0;
+		for (j = v_block; j > 0; j--) {
 			// pointer to previous line
-			prev = curr - nblocks_hb;
+			prev = curr - hb_block;
+			!prev;
 			// first prediction on a line is only the previous line's value
-			value = prev->dcv;
-			for (x = nblocks_h; x > 0; --x) {
-				value = (value + getDeltaDC(state, plane_idx, &rle)) & 0xFF;
-				++prev;
-				prev_value = prev->dcv;
+			pred = prev->dcv;
+			for (i = h_block; i > 0; i--) {
+				u8 curr_dcv;
+				u8 prev_dcv;
 
+				curr_dcv = pred + getDeltaDC(ws, c, &run);
+				prev++;
+				prev_dcv    = prev->dcv;
+				curr++->dcv = curr_dcv;
 				// next prediction on this line is the mean of left (current) and top values
 				// +---+---+
 				// |   | T |
 				// +---+---+
 				// | L | P |
 				// +---+---+
-				curr++->dcv = value;
-				value       = (value + prev_value + 1) >> 1;
+				pred = (prev_dcv + curr_dcv + 1) >> 1;
 			}
 			// skip right border of this line and left border of next line
 			curr += 2;
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stmw      r15, 0x24(r1)
-	  li        r15, 0
-	  addi      r19, r3, 0
-	  mulli     r0, r15, 0x14
-	  addi      r28, r19, 0
-	  add       r27, r19, r0
-
-	.loc_0x24:
-	  lhz       r0, 0xC(r28)
-	  addi      r30, r27, 0x60D8
-	  lhz       r22, 0x8(r28)
-	  addi      r29, r27, 0x6114
-	  lwz       r26, 0x4(r28)
-	  lhz       r20, 0xA(r28)
-	  rlwinm    r31,r0,1,0,30
-	  li        r24, 0
-	  b         .loc_0x10C
-
-	.loc_0x48:
-	  sub       r25, r26, r31
-	  lbz       r23, 0x0(r25)
-	  mr        r21, r22
-	  b         .loc_0xFC
-
-	.loc_0x58:
-	  cmpwi     r24, 0
-	  bne-      .loc_0xD0
-	  lwz       r16, 0x6CC8(r19)
-	  li        r18, 0
-	  lwz       r17, 0x6CCC(r19)
-
-	.loc_0x6C:
-	  mr        r3, r30
-	  bl        0x10C
-	  cmpw      r17, r3
-	  add       r18, r18, r3
-	  bge+      .loc_0x6C
-	  cmpw      r3, r16
-	  bge+      .loc_0x6C
-	  cmpwi     r18, 0
-	  bne-      .loc_0xD8
-	  lwz       r17, 0x6124(r27)
-	  lwz       r16, 0x4(r17)
-	  b         .loc_0xB8
-
-	.loc_0x9C:
-	  mr        r3, r29
-	  bl        .loc_0x13C
-	  rlwinm    r3,r3,11,0,20
-	  rlwinm    r0,r16,2,0,29
-	  add       r3, r3, r0
-	  addi      r0, r3, 0x8
-	  lwzx      r16, r17, r0
-
-	.loc_0xB8:
-	  cmpwi     r16, 0x100
-	  bge+      .loc_0x9C
-	  rlwinm    r3,r16,2,0,29
-	  addi      r0, r3, 0x8
-	  lwzx      r24, r17, r0
-	  b         .loc_0xD8
-
-	.loc_0xD0:
-	  li        r18, 0
-	  subi      r24, r24, 0x1
-
-	.loc_0xD8:
-	  add       r4, r23, r18
-	  lbzu      r5, 0x2(r25)
-	  rlwinm    r3,r4,0,24,31
-	  addi      r0, r3, 0x1
-	  stb       r4, 0x0(r26)
-	  add       r0, r5, r0
-	  srawi     r23, r0, 0x1
-	  subi      r21, r21, 0x1
-	  addi      r26, r26, 0x2
-
-	.loc_0xFC:
-	  cmpwi     r21, 0
-	  bgt+      .loc_0x58
-	  addi      r26, r26, 0x4
-	  subi      r20, r20, 0x1
-
-	.loc_0x10C:
-	  cmpwi     r20, 0
-	  bgt+      .loc_0x48
-	  addi      r15, r15, 0x1
-	  cmpwi     r15, 0x3
-	  addi      r28, r28, 0x38
-	  addi      r27, r27, 0x14
-	  blt+      .loc_0x24
-	  lmw       r15, 0x24(r1)
-	  lwz       r0, 0x6C(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-
-	.loc_0x13C:
-	*/
 }
 
 /*
