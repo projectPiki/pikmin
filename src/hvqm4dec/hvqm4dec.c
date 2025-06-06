@@ -366,18 +366,19 @@ static void IpicDcvDec(VideoState* ws)
 	BlockData* prev;
 	int run;
 	int pred;
-	int h_block, v_block, hb_block;
+	int nblocks_hb;
+	int h_block, v_block;
 	int i, j;
 
 	for (c = 0; c < PLANE_COUNT; c++) {
-		h_block  = ws->pln[c].nblocks_h;
-		v_block  = ws->pln[c].nblocks_v;
-		hb_block = ws->pln[c].nblocks_hb;
-		curr     = ws->pln[c].blockInfoTop;
-		run      = 0;
+		h_block    = ws->pln[c].nblocks_h;
+		v_block    = ws->pln[c].nblocks_v;
+		nblocks_hb = ws->pln[c].nblocks_hb;
+		curr       = ws->pln[c].blockInfoTop;
+		run        = 0;
 		for (j = v_block; j > 0; j--) {
 			// pointer to previous line
-			prev = curr - hb_block;
+			prev = curr - nblocks_hb;
 			!prev;
 			// first prediction on a line is only the previous line's value
 			pred = prev->dcv;
@@ -408,372 +409,80 @@ static void IpicDcvDec(VideoState* ws)
  * Address:	8001F898
  * Size:	0003A4
  */
-static void MakeNest(VideoState* state, u16 nestX, u16 nestY)
+static void MakeNest(VideoState* ws, int x, int y)
 {
-	HVQPlaneDesc* y_plane = &state->pln[0];
-	BlockData const* ptr  = y_plane->blockInfoTop + y_plane->nblocks_hb * nestY + nestX;
-	u32 v_empty, h_empty, v_nest_blocks, h_nest_blocks, v_mirror, h_mirror;
-	u8* nest;
+	int h_block, nblocks_hb, v_block;
+	BlockData* src;
+	int h_dc_orderly, v_dc_orderly;
+	int h_dc_reverse, v_dc_reverse;
+	int h_nest_blank, v_nest_blank;
 	int i, j;
-	BlockData const* p;
-	u8 const* nest2;
+	u8* nestP;
+	u8* backP;
+	BlockData* dP;
+	u8* nP;
 
-	if (y_plane->nblocks_h < state->nestsize_h) {
+	h_block    = ws->pln[0].nblocks_h;
+	nblocks_hb = ws->pln[0].nblocks_hb;
+	v_block    = ws->pln[0].nblocks_v;
+	src        = ws->pln[0].blockInfoTop + (y * nblocks_hb + x);
+
+	if (h_block < ws->nestsize_h) {
 		// special case if the video is less than 280 pixels wide (assuming landscape mode)
-		h_nest_blocks = y_plane->nblocks_h;
-		h_mirror      = state->nestsize_h - y_plane->nblocks_h;
-		if (h_mirror > y_plane->nblocks_h)
-			h_mirror = y_plane->nblocks_h;
-		h_empty = state->nestsize_h - (h_nest_blocks + h_mirror);
+		h_dc_orderly = h_block;
+		if ((h_dc_reverse = ws->nestsize_h - h_block) > h_block)
+			h_dc_reverse = h_block;
+		h_nest_blank = ws->nestsize_h - (h_dc_orderly + h_dc_reverse);
 	} else {
-		h_nest_blocks = state->nestsize_h;
-		h_empty       = 0;
-		h_mirror      = 0;
+		h_dc_orderly = ws->nestsize_h;
+		h_dc_reverse = h_nest_blank = 0;
 	}
 
-	if (y_plane->nblocks_v < state->nestsize_v) {
+	if (v_block < ws->nestsize_v) {
 		// special case if the video is less than 152 pixels high
-		v_nest_blocks = y_plane->nblocks_v;
-		v_mirror      = state->nestsize_v - y_plane->nblocks_v;
-		if (v_mirror > y_plane->nblocks_v)
-			v_mirror = y_plane->nblocks_v;
-		v_empty = state->nestsize_v - (v_nest_blocks + v_mirror);
+		v_dc_orderly = v_block;
+		if ((v_dc_reverse = ws->nestsize_v - v_block) > v_block)
+			v_dc_reverse = v_block;
+		v_nest_blank = ws->nestsize_v - (v_dc_orderly + v_dc_reverse);
 	} else {
-		v_nest_blocks = state->nestsize_v;
-		v_empty       = 0;
-		v_mirror      = 0;
+		v_dc_orderly = ws->nestsize_v;
+		v_dc_reverse = v_nest_blank = 0;
 	}
 
-	nest = state->nestBuf;
-	for (i = 0; i < v_nest_blocks; ++i) {
-		p = ptr;
-		for (j = 0; j < h_nest_blocks; ++j) {
-			*nest++ = (p->dcv >> 4) & 0xF;
-			++p;
+	nP = ws->nestBuf;
+	for (j = v_dc_orderly; j > 0; j--) {
+		dP = src;
+		for (i = h_dc_orderly; i > 0; i--) {
+			*nP++ = (dP->dcv >> 4) & 0xF;
+			dP++;
 		}
 		// if the video is too small, mirror it
-		for (j = 0; j < h_mirror; ++j) {
-			--p;
-			*nest++ = (p->dcv >> 4) & 0xF;
+		for (i = h_dc_reverse; i > 0; i--) {
+			dP--;
+			*nP++ = (dP->dcv >> 4) & 0xF;
 		}
 		// if it is still too small, null out the rest
-		for (j = 0; j < h_empty; ++j)
-			*nest++ = 0;
-		ptr += y_plane->nblocks_hb;
+		for (i = h_nest_blank; i > 0; i--)
+			*nP++ = 0;
+		src += nblocks_hb;
 	}
 
 	// handle vertical mirroring
-	nest2 = nest - state->nestsize_h;
-	for (i = 0; i < v_mirror; ++i) {
-		for (j = 0; j < state->nestsize_h; ++j)
-			*nest++ = nest2[j];
-		nest2 -= state->nestsize_h;
+	nestP = nP - ws->nestsize_h;
+	for (j = v_dc_reverse; j > 0; j--) {
+		backP = nestP;
+		for (i = ws->nestsize_h; i > 0; i--) {
+			*nP++ = *backP++;
+		}
+		nestP -= ws->nestsize_h;
 	}
 
 	// and vertical nulling
-	for (i = 0; i < v_empty; ++i)
-		for (j = 0; j < state->nestsize_h; ++j)
-			*nest++ = 0;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  lhz       r6, 0xC(r3)
-	  lhz       r7, 0x8(r3)
-	  mullw     r0, r5, r6
-	  lhz       r8, 0x625C(r3)
-	  lwz       r5, 0x4(r3)
-	  lhz       r9, 0xA(r3)
-	  add       r0, r4, r0
-	  rlwinm    r0,r0,1,0,30
-	  cmpw      r7, r8
-	  addi      r4, r7, 0
-	  add       r11, r5, r0
-	  bge-      .loc_0x5C
-	  sub       r10, r8, r4
-	  cmpw      r10, r4
-	  addi      r5, r4, 0
-	  ble-      .loc_0x50
-	  mr        r10, r4
-
-	.loc_0x50:
-	  add       r0, r4, r10
-	  sub       r8, r8, r0
-	  b         .loc_0x68
-
-	.loc_0x5C:
-	  addi      r5, r8, 0
-	  li        r8, 0
-	  li        r10, 0
-
-	.loc_0x68:
-	  lhz       r4, 0x625E(r3)
-	  cmpw      r9, r4
-	  bge-      .loc_0x94
-	  sub       r12, r4, r9
-	  cmpw      r12, r9
-	  addi      r7, r9, 0
-	  ble-      .loc_0x88
-	  mr        r12, r9
-
-	.loc_0x88:
-	  add       r0, r9, r12
-	  sub       r0, r4, r0
-	  b         .loc_0xA0
-
-	.loc_0x94:
-	  addi      r7, r4, 0
-	  li        r0, 0
-	  li        r12, 0
-
-	.loc_0xA0:
-	  addi      r9, r8, 0
-	  addi      r30, r7, 0
-	  addi      r31, r5, 0
-	  addi      r4, r3, 0x6261
-	  rlwinm    r8,r6,1,0,30
-	  b         .loc_0x268
-
-	.loc_0xB8:
-	  cmpwi     r31, 0
-	  addi      r7, r11, 0
-	  addi      r6, r31, 0
-	  ble-      .loc_0x164
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x148
-
-	.loc_0xD4:
-	  lbz       r5, 0x0(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x0(r4)
-	  lbz       r5, 0x2(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x1(r4)
-	  lbz       r5, 0x4(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x2(r4)
-	  lbz       r5, 0x6(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x3(r4)
-	  lbz       r5, 0x8(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x4(r4)
-	  lbz       r5, 0xA(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x5(r4)
-	  lbz       r5, 0xC(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x6(r4)
-	  lbz       r5, 0xE(r7)
-	  addi      r7, r7, 0x10
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x7(r4)
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0xD4
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x164
-
-	.loc_0x148:
-	  mtctr     r6
-
-	.loc_0x14C:
-	  lbz       r5, 0x0(r7)
-	  addi      r7, r7, 0x2
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x14C
-
-	.loc_0x164:
-	  cmpwi     r10, 0
-	  addi      r6, r10, 0
-	  ble-      .loc_0x204
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x1EC
-
-	.loc_0x17C:
-	  lbz       r5, -0x2(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x0(r4)
-	  lbz       r5, -0x4(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x1(r4)
-	  lbz       r5, -0x6(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x2(r4)
-	  lbz       r5, -0x8(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x3(r4)
-	  lbz       r5, -0xA(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x4(r4)
-	  lbz       r5, -0xC(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x5(r4)
-	  lbz       r5, -0xE(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x6(r4)
-	  lbzu      r5, -0x10(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x7(r4)
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x17C
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x204
-
-	.loc_0x1EC:
-	  mtctr     r6
-
-	.loc_0x1F0:
-	  lbzu      r5, -0x2(r7)
-	  rlwinm    r5,r5,28,28,31
-	  stb       r5, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x1F0
-
-	.loc_0x204:
-	  cmpwi     r9, 0
-	  addi      r6, r9, 0
-	  li        r7, 0
-	  ble-      .loc_0x260
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x250
-
-	.loc_0x220:
-	  stb       r7, 0x0(r4)
-	  stb       r7, 0x1(r4)
-	  stb       r7, 0x2(r4)
-	  stb       r7, 0x3(r4)
-	  stb       r7, 0x4(r4)
-	  stb       r7, 0x5(r4)
-	  stb       r7, 0x6(r4)
-	  stb       r7, 0x7(r4)
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x220
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x260
-
-	.loc_0x250:
-	  mtctr     r6
-
-	.loc_0x254:
-	  stb       r7, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x254
-
-	.loc_0x260:
-	  add       r11, r11, r8
-	  subi      r30, r30, 0x1
-
-	.loc_0x268:
-	  cmpwi     r30, 0
-	  bgt+      .loc_0xB8
-	  lhz       r5, 0x625C(r3)
-	  addi      r7, r12, 0
-	  sub       r8, r4, r5
-	  b         .loc_0x318
-
-	.loc_0x280:
-	  lhz       r5, 0x625C(r3)
-	  addi      r9, r8, 0
-	  cmpwi     r5, 0
-	  addi      r6, r5, 0
-	  ble-      .loc_0x30C
-	  rlwinm.   r5,r6,29,3,31
-	  mtctr     r5
-	  beq-      .loc_0x2F4
-
-	.loc_0x2A0:
-	  lbz       r5, 0x0(r9)
-	  stb       r5, 0x0(r4)
-	  lbz       r5, 0x1(r9)
-	  stb       r5, 0x1(r4)
-	  lbz       r5, 0x2(r9)
-	  stb       r5, 0x2(r4)
-	  lbz       r5, 0x3(r9)
-	  stb       r5, 0x3(r4)
-	  lbz       r5, 0x4(r9)
-	  stb       r5, 0x4(r4)
-	  lbz       r5, 0x5(r9)
-	  stb       r5, 0x5(r4)
-	  lbz       r5, 0x6(r9)
-	  stb       r5, 0x6(r4)
-	  lbz       r5, 0x7(r9)
-	  addi      r9, r9, 0x8
-	  stb       r5, 0x7(r4)
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x2A0
-	  andi.     r6, r6, 0x7
-	  beq-      .loc_0x30C
-
-	.loc_0x2F4:
-	  mtctr     r6
-
-	.loc_0x2F8:
-	  lbz       r5, 0x0(r9)
-	  addi      r9, r9, 0x1
-	  stb       r5, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x2F8
-
-	.loc_0x30C:
-	  lhz       r5, 0x625C(r3)
-	  subi      r7, r7, 0x1
-	  sub       r8, r8, r5
-
-	.loc_0x318:
-	  cmpwi     r7, 0
-	  bgt+      .loc_0x280
-	  mr        r7, r0
-	  li        r6, 0
-	  b         .loc_0x38C
-
-	.loc_0x32C:
-	  lhz       r0, 0x625C(r3)
-	  cmpwi     r0, 0
-	  mr        r5, r0
-	  ble-      .loc_0x388
-	  rlwinm.   r0,r5,29,3,31
-	  mtctr     r0
-	  beq-      .loc_0x378
-
-	.loc_0x348:
-	  stb       r6, 0x0(r4)
-	  stb       r6, 0x1(r4)
-	  stb       r6, 0x2(r4)
-	  stb       r6, 0x3(r4)
-	  stb       r6, 0x4(r4)
-	  stb       r6, 0x5(r4)
-	  stb       r6, 0x6(r4)
-	  stb       r6, 0x7(r4)
-	  addi      r4, r4, 0x8
-	  bdnz+     .loc_0x348
-	  andi.     r5, r5, 0x7
-	  beq-      .loc_0x388
-
-	.loc_0x378:
-	  mtctr     r5
-
-	.loc_0x37C:
-	  stb       r6, 0x0(r4)
-	  addi      r4, r4, 0x1
-	  bdnz+     .loc_0x37C
-
-	.loc_0x388:
-	  subi      r7, r7, 0x1
-
-	.loc_0x38C:
-	  cmpwi     r7, 0
-	  bgt+      .loc_0x32C
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  blr
-	*/
+	for (j = v_nest_blank; j > 0; j--) {
+		for (i = ws->nestsize_h; i > 0; i--) {
+			*nP++ = 0;
+		}
+	}
 }
 
 /*
