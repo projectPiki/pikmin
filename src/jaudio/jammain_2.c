@@ -2457,7 +2457,6 @@ static u32 Cmd_PanSwSet()
 {
 	size_t i;
 
-	// Ah yes, let's just construct this on the stack real quick.
 	u8 calcTypes[]       = { 0, 0, 0, 1, 1, 2, 2 };
 	u8 parentCalcTypes[] = { 0, 1, 2, 0, 2, 0, 2 };
 
