@@ -35,11 +35,11 @@ typedef struct SeqObj {
  * @note Size: 0x7.
  */
 typedef struct VideoInfo {
-	u16 hres;      // _00
-	u16 vres;      // _02
-	u8 h_samp;     // _04
-	u8 v_samp;     // _05
-	u8 video_mode; // _06
+	u16 width;          // _00
+	u16 height;         // _02
+	u8 h_sampling_rate; // _04
+	u8 v_sampling_rate; // _05
+	u8 pad[2];          // _06
 } VideoInfo;
 
 // Private structs? Maybe move these to a priv header/the .c file itself
@@ -48,10 +48,11 @@ typedef struct VideoInfo {
  * @brief TODO
  *
  * @note Size: 0x2.
+ * @note Originaln name: _tagHVQData
  */
 typedef struct BlockData {
-	u8 value; // _00
-	u8 type;  // _01
+	u8 dcv; // _00, DC value
+	u8 bnm; // _01, block number
 } BlockData;
 
 /**
@@ -60,9 +61,9 @@ typedef struct BlockData {
  * @note Size: 0x1008.
  */
 typedef struct Tree {
-	u32 pos;             // _00
-	int root;            // _04
-	u32 array[2][0x200]; // _08
+	int node_number;    // _00
+	int tree_root;      // _04
+	int leaf[2][0x200]; // _08
 } Tree;
 
 /**
@@ -93,23 +94,22 @@ typedef struct BitBufferWithTree {
  * @note Size: 0x38.
  */
 typedef struct HVQPlaneDesc {
-	BlockData* border;     // _00, beginning of plane incl. border
-	BlockData* payload;    // _04, beginning of non-border plane data
-	u16 h_blocks;          // _08
-	u16 v_blocks;          // _0A
-	u16 h_blocks_safe;     // _0C
-	u16 v_blocks_safe;     // _0E
-	u16 mcb_offset[4];     // _10
-	u32 pb_offset[4];      // _18
-	u16 width_in_samples;  // _28
-	u16 height_in_samples; // _2A
-	u32 size_in_samples;   // _2C
-	u8 width_shift;        // _30
-	u8 height_shift;       // _31
-	u8 pb_per_mcb_x;       // _32
-	u8 pb_per_mcb_y;       // _33
-	u8 blocks_per_mcb;     // _34
-	u8 padding[3];         // _35
+	BlockData* blockInfoBuf; // _00, beginning of plane incl. border
+	BlockData* blockInfoTop; // _04, beginning of non-border plane data
+	u16 nblocks_h;           // _08, not including border
+	u16 nblocks_v;           // _0A, not including border
+	u16 nblocks_hb;          // _0C, including border
+	u16 nblocks_vb;          // _0E, including border
+	u16 bibUscan[4];         // _10
+	u32 imgUscan[4];         // _18
+	u16 plane_width;         // _28, in samples
+	u16 plane_height;        // _2A, in samples
+	u32 plane_size;          // _2C, in samples
+	u8 h_shift;              // _30
+	u8 v_shift;              // _31
+	u8 hvqblk_h;             // _32
+	u8 hvqblk_v;             // _33
+	u8 nblocks_mcb;          // _34
 } HVQPlaneDesc;
 
 /**
@@ -118,13 +118,13 @@ typedef struct HVQPlaneDesc {
  * @note Size: 0x15.
  */
 typedef struct StackState {
-	u32 plane_idx;              // _00
-	const BlockData* line_prev; // _04
-	const BlockData* line_curr; // _08
-	const BlockData* line_next; // _0C
-	BlockData next;             // _10
-	BlockData curr;             // _12
-	u8 value_prev;              // _14
+	int id;               // _00, plane index
+	const BlockData* upp; // _04, previous line
+	const BlockData* mid; // _08, current line
+	const BlockData* low; // _0C, next line
+	BlockData right;      // _10
+	BlockData curr;       // _12
+	u8 l_dcv;             // _14
 } StackState;
 
 /**
@@ -133,50 +133,65 @@ typedef struct StackState {
  * @note Size: 0x3CD0.
  */
 typedef struct VideoState {
-	HVQPlaneDesc planes[HVQM_PLANE_COUNT];             // _00
-	Tree trees[6];                                     // _A8
-	BitBufferWithTree dc_values[HVQM_PLANE_COUNT];     // _60D8, DC values
-	BitBufferWithTree dc_rle[HVQM_PLANE_COUNT];        // _6114, DC run lengths
-	BitBufferWithTree bufTree0[HVQM_PLANE_COUNT];      // _6150
-	BitBufferWithTree basis_num[HVQM_LUMA_CHROMA];     // _618C
-	BitBufferWithTree basis_num_run[HVQM_LUMA_CHROMA]; // _61B4
-	BitBuffer fixvl[HVQM_PLANE_COUNT];                 // _61DC, uncompressed high-entropy data
-	BitBufferWithTree mv_h;                            // _620C, horizontal motion vectors
-	BitBufferWithTree mv_v;                            // _6220, vertical motion vectors
-	BitBufferWithTree mcb_proc;                        // _6234, macroblock proc
-	BitBufferWithTree mcb_type;                        // _6248, macroblock type
-	u16 h_nest_size;                                   // _625C
-	u16 v_nest_size;                                   // _625E
-	u8 is_landscape;                                   // _6260
-	u8 nest_data[70 * 38];                             // _6261
-	u32 dc_max;                                        // _6CC8
-	u32 dc_min;                                        // _6CCC
-	u8 unk_shift;                                      // _6CD0
-	u8 dc_shift;                                       // _6CD1
-	u8 mc_residual_bits_h[2];                          // _6CD2, num res bits to read from mv_h, past + future
-	u8 mc_residual_bits_v[2];                          // _6CD4, num res bits to read from mv_v, past + future
+	HVQPlaneDesc pln[HVQM_PLANE_COUNT];        // _0000
+	Tree dcv_tree;                             // _00A8
+	Tree zrn_tree;                             // _10B0
+	Tree scl_tree;                             // _20B8
+	Tree num_tree;                             // _30C0
+	Tree vec_tree;                             // _40C8
+	Tree mrn_tree;                             // _50D0
+	BitBufferWithTree dcval[HVQM_PLANE_COUNT]; // _60D8, DC values
+	BitBufferWithTree dcrun[HVQM_PLANE_COUNT]; // _6114, DC run lengths
+	BitBufferWithTree scale[HVQM_PLANE_COUNT]; // _6150
+	BitBufferWithTree bsnum[HVQM_LUMA_CHROMA]; // _618C
+	BitBufferWithTree bsrun[HVQM_LUMA_CHROMA]; // _61B4
+	BitBuffer aotcd[HVQM_PLANE_COUNT];         // _61DC, uncompressed high-entropy data
+	BitBufferWithTree mvecx;                   // _620C, horizontal motion vectors
+	BitBufferWithTree mvecy;                   // _6220, vertical motion vectors
+	BitBufferWithTree mcaot;                   // _6234, macroblock proc
+	BitBufferWithTree mstat;                   // _6248, macroblock type
+	u16 nestsize_h;                            // _625C
+	u16 nestsize_v;                            // _625E
+	u8 landscape;                              // _6260
+	u8 nestBuf[70 * 38];                       // _6261
+	int dc_max;                                // _6CC8
+	int dc_min;                                // _6CCC
+	u8 aotscale_q;                             // _6CD0
+	u8 dc_scale_q;                             // _6CD1
+	u8 fcode[2][2];                            // _6CD2, num res bits to read from mvecx/mvecy, past/future
 } VideoState;
 
 /**
  * @brief TODO
  *
  * @note Size: 0x34.
+ * @note Original name: _tagPlnMCHandler
  */
 typedef struct MCPlane {
-	u32 rle;                    // _00
-	u32 pb_dc;                  // _04
-	BlockData* payload_cur_blk; // _08
-	BlockData* payload_cur_row; // _0C
-	u8* present;                // _10
-	u8* top;                    // _14
-	u8* target;                 // _18
-	u8* past;                   // _1C
-	u8* future;                 // _20
-	u16 h_mcb_stride;           // _24
-	u32 v_mcb_stride;           // _28
-	u32 pb_per_mcb_x;           // _2C
-	u32 stride;                 // _30
+	int bsrunleng;       // _00
+	int prev_dcv;        // _04
+	BlockData* data;     // _08
+	BlockData* data_top; // _0C
+	u8* lin_top;         // _10
+	u8* blk_top;         // _14
+	u8* targ;            // _18
+	u8* forw;            // _1C
+	u8* back;            // _20
+	u16 next_macro_pix;  // _24
+	u32 down_macro_pix;  // _28
+	int hvqblk_h;        // _2C
+	int hvqblk_v;        // _30
 } MCPlane;
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x9C.
+ * @note Original name: _tagMCHander
+ */
+typedef struct MCHandler {
+	MCPlane pln[HVQM_PLANE_COUNT]; // _00
+} MCHandler;
 
 /**
  * @brief TODO

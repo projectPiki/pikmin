@@ -122,8 +122,8 @@ static void init_global_constants()
  */
 static void set_border(BlockData* dst)
 {
-	dst->value = 0x7F;
-	dst->type  = 0xFF;
+	dst->dcv = 0x7F;
+	dst->bnm = 0xFF;
 }
 
 /*
@@ -134,35 +134,35 @@ static void set_border(BlockData* dst)
 static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
 {
 	u32 mcb, pb;
-	HVQPlaneDesc* plane      = &((VideoState*)obj->ws)->planes[id];
-	plane->width_shift       = (h_samp == 2) ? 1 : 0;
-	plane->width_in_samples  = obj->frame_width >> plane->width_shift;
-	plane->height_shift      = (v_samp == 2) ? 1 : 0;
-	plane->height_in_samples = obj->frame_height >> plane->height_shift;
-	plane->size_in_samples   = plane->width_in_samples * plane->height_in_samples;
+	HVQPlaneDesc* plane = &((VideoState*)obj->ws)->pln[id];
+	plane->h_shift      = (h_samp == 2) ? 1 : 0;
+	plane->plane_width  = obj->frame_width >> plane->h_shift;
+	plane->v_shift      = (v_samp == 2) ? 1 : 0;
+	plane->plane_height = obj->frame_height >> plane->v_shift;
+	plane->plane_size   = plane->plane_width * plane->plane_height;
 
 	// pixels per 2x2 block
-	plane->pb_per_mcb_x   = 2 >> plane->width_shift;                   // 1..2
-	plane->pb_per_mcb_y   = 2 >> plane->height_shift;                  // 1..2
-	plane->blocks_per_mcb = plane->pb_per_mcb_x * plane->pb_per_mcb_y; // 1..4
+	plane->hvqblk_h    = 2 >> plane->h_shift;               // 1..2
+	plane->hvqblk_v    = 2 >> plane->v_shift;               // 1..2
+	plane->nblocks_mcb = plane->hvqblk_h * plane->hvqblk_v; // 1..4
 	// number of 4x4 blocks
-	plane->h_blocks = obj->frame_width / (h_samp * 4);
-	plane->v_blocks = obj->frame_height / (v_samp * 4);
+	plane->nblocks_h = obj->frame_width / (h_samp * 4);
+	plane->nblocks_v = obj->frame_height / (v_samp * 4);
 	// number of 4x4 blocks + border
-	plane->h_blocks_safe = plane->h_blocks + 2;
-	plane->v_blocks_safe = plane->v_blocks + 2;
+	plane->nblocks_hb = plane->nblocks_h + 2;
+	plane->nblocks_vb = plane->nblocks_v + 2;
 	// offset of blocks in MCB
-	plane->mcb_offset[0] = 0;
-	plane->mcb_offset[3] = 1;
-	mcb                  = plane->h_blocks_safe;
-	plane->mcb_offset[1] = mcb;
-	plane->mcb_offset[2] = mcb + 1;
+	plane->bibUscan[0] = 0;
+	plane->bibUscan[3] = 1;
+	mcb                = plane->nblocks_hb;
+	plane->bibUscan[1] = mcb;
+	plane->bibUscan[2] = mcb + 1;
 
-	plane->pb_offset[0] = 0;
-	plane->pb_offset[3] = 4;
-	pb                  = plane->width_in_samples << 2;
-	plane->pb_offset[1] = pb;
-	plane->pb_offset[2] = pb + 4;
+	plane->imgUscan[0] = 0;
+	plane->imgUscan[3] = 4;
+	pb                 = plane->plane_width << 2;
+	plane->imgUscan[1] = pb;
+	plane->imgUscan[2] = pb + 4;
 }
 
 /*
@@ -192,12 +192,12 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
 	int badCompiler[2];
 	if (getBit(src)) {
 		// recurse
-		u32 pos = dst->pos++;
+		int node_number = dst->node_number++;
 		// read the 0 side of the tree
-		dst->array[0][pos] = (u32)_readTree(dst, src);
+		dst->leaf[0][node_number] = _readTree(dst, src);
 		// read the 1 side of the tree
-		dst->array[1][pos] = (u32)_readTree(dst, src);
-		return pos;
+		dst->leaf[1][node_number] = _readTree(dst, src);
+		return node_number;
 	} else {
 		// leaf node
 		s16 byte   = getByte(src);
@@ -205,7 +205,7 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
 		if (readTree_signed && byte > 0x7F)
 			symbol -= 0x100;
 		symbol <<= readTree_scale;
-		dst->array[0][byte] = symbol;
+		dst->leaf[0][byte] = symbol;
 		return byte;
 	}
 }
@@ -220,13 +220,14 @@ static void readTree(BitBufferWithTree* buf_with_tree, u32 is_signed, u32 scale)
 	Tree* tree     = buf_with_tree->tree;
 	BitBuffer* buf = &buf_with_tree->buf;
 
-	readTree_signed = is_signed;
-	readTree_scale  = scale;
-	tree->pos       = 0x100;
-	if (buf->size != 0)
-		tree->root = _readTree(tree, buf);
-	else
-		tree->root = 0;
+	readTree_signed   = is_signed;
+	readTree_scale    = scale;
+	tree->node_number = 0x100;
+	if (buf->size != 0) {
+		tree->tree_root = _readTree(tree, buf);
+	} else {
+		tree->tree_root = 0;
+	}
 }
 
 /*
@@ -234,21 +235,22 @@ static void readTree(BitBufferWithTree* buf_with_tree, u32 is_signed, u32 scale)
  * Address:	8001F828
  * Size:	000070
  */
-static inline u32 decodeHuff(BitBufferWithTree* buf)
+static inline int decodeHuff(BitBufferWithTree* buf)
 {
 	Tree* tree        = buf->tree;
 	BitBuffer* buffer = &buf->buf;
-	s32 pos           = tree->root;
-	while (pos >= 0x100)
-		pos = tree->array[getBit(buffer)][pos];
-	return tree->array[0][pos];
+	int pos           = tree->tree_root;
+	while (pos >= 0x100) {
+		pos = tree->leaf[getBit(buffer)][pos];
+	}
+	return tree->leaf[0][pos];
 }
 
 // used for DC values
-static inline u32 decodeSOvfSym(BitBufferWithTree* buf, u32 min, u32 max)
+static inline int decodeSOvfSym(BitBufferWithTree* buf, int min, int max)
 {
-	u32 sum = 0;
-	u32 value;
+	int sum = 0;
+	int value;
 	do {
 		value = decodeHuff(buf);
 		sum += value;
@@ -263,8 +265,8 @@ static inline u32 decodeSOvfSym(BitBufferWithTree* buf, u32 min, u32 max)
  */
 static inline int decodeUOvfSym(BitBufferWithTree* buf, int max)
 {
-	u32 sum = 0;
-	u32 value;
+	int sum = 0;
+	int value;
 	do {
 		value = decodeHuff(buf);
 		sum += value;
@@ -277,13 +279,13 @@ static inline int getDeltaDC(VideoState* state, int plane_idx, int* rle)
 	int delta;
 
 	if (*rle == 0) {
-		delta = decodeSOvfSym(&state->dc_values[plane_idx], state->dc_min, state->dc_max);
+		delta = decodeSOvfSym(&state->dcval[plane_idx], state->dc_min, state->dc_max);
 		// successive zeroes are run-length encoded
 		if (delta == 0)
-			*rle = decodeHuff(&state->dc_rle[plane_idx]);
+			*rle = decodeHuff(&state->dcrun[plane_idx]);
 		return delta;
 	} else {
-		--*rle;
+		*rle--;
 		return 0;
 	}
 }
@@ -300,62 +302,61 @@ static void Ipic_BasisNumDec(VideoState* state)
 	BlockData* luma_dst;
 	BlockData* u_dst;
 	BlockData* v_dst;
-	int h_blocks;
-	int v_blocks;
-	BitBufferWithTree* basis_num;
-	BitBufferWithTree* basis_num_run;
-	int badCompiler[4];
+	int nblocks_h;
+	int nblocks_v;
+	BitBufferWithTree* bsnum;
+	BitBufferWithTree* bsrun;
 
-	rle           = 0;
-	luma_dst      = state->planes[LUMA_IDX].payload;
-	basis_num     = &state->basis_num[LUMA_IDX];
-	basis_num_run = &state->basis_num_run[LUMA_IDX];
-	h_blocks      = state->planes[LUMA_IDX].h_blocks;
-	v_blocks      = state->planes[LUMA_IDX].v_blocks;
+	rle       = 0;
+	luma_dst  = state->pln[LUMA_IDX].blockInfoTop;
+	bsnum     = &state->bsnum[LUMA_IDX];
+	bsrun     = &state->bsrun[LUMA_IDX];
+	nblocks_h = state->pln[LUMA_IDX].nblocks_h;
+	nblocks_v = state->pln[LUMA_IDX].nblocks_v;
 
-	while (v_blocks > 0) {
-		while (h_blocks > 0) {
+	while (nblocks_v > 0) {
+		while (nblocks_h > 0) {
 			if (rle == 0) {
-				num = decodeHuff(basis_num);
+				num = decodeHuff(bsnum);
 				if (num == 0)
-					rle = decodeHuff(basis_num_run);
-				luma_dst++->type = num & 0xFF;
+					rle = decodeHuff(bsrun);
+				luma_dst++->bnm = num & 0xFF;
 			} else {
-				luma_dst++->type = 0;
+				luma_dst++->bnm = 0;
 				rle--;
 			}
-			h_blocks--;
+			nblocks_h--;
 		}
 		// skip borders
 		luma_dst += 2;
-		v_blocks--;
+		nblocks_v--;
 	}
 
-	rle           = 0;
-	basis_num     = &state->basis_num[CHROMA_IDX];
-	basis_num_run = &state->basis_num_run[CHROMA_IDX];
-	u_dst         = state->planes[1].payload;
-	v_dst         = state->planes[2].payload;
-	h_blocks      = state->planes[CHROMA_IDX].h_blocks;
-	v_blocks      = state->planes[CHROMA_IDX].v_blocks;
-	while (v_blocks > 0) {
-		while (h_blocks > 0) {
+	rle       = 0;
+	bsnum     = &state->bsnum[CHROMA_IDX];
+	bsrun     = &state->bsrun[CHROMA_IDX];
+	u_dst     = state->pln[1].blockInfoTop;
+	v_dst     = state->pln[2].blockInfoTop;
+	nblocks_h = state->pln[CHROMA_IDX].nblocks_h;
+	nblocks_v = state->pln[CHROMA_IDX].nblocks_v;
+	while (nblocks_v > 0) {
+		while (nblocks_h > 0) {
 			if (rle == 0) {
-				num = decodeHuff(basis_num);
+				num = decodeHuff(bsnum);
 				if (num == 0)
-					rle = decodeHuff(basis_num_run);
-				u_dst++->type = (num >> 0) & 0xF;
-				v_dst++->type = (num >> 4) & 0xF;
+					rle = decodeHuff(bsrun);
+				u_dst++->bnm = (num >> 0) & 0xF;
+				v_dst++->bnm = (num >> 4) & 0xF;
 			} else {
-				u_dst++->type = 0;
-				v_dst++->type = 0;
+				u_dst++->bnm = 0;
+				v_dst++->bnm = 0;
 				rle--;
 			}
-			h_blocks--;
+			nblocks_h--;
 		}
 		u_dst += 2;
 		v_dst += 2;
-		v_blocks--;
+		nblocks_v--;
 	}
 }
 
@@ -369,9 +370,9 @@ static void IpicDcvDec(VideoState* state)
 	int plane_idx;
 	HVQPlaneDesc* plane;
 	int rle;
-	int v_blocks;
-	int h_blocks;
-	int h_blocks_safe;
+	int nblocks_v;
+	int nblocks_h;
+	int nblocks_hb;
 	int value;
 	int prev_value;
 	BlockData* curr;
@@ -379,21 +380,21 @@ static void IpicDcvDec(VideoState* state)
 	int x, y;
 
 	for (plane_idx = 0; plane_idx < PLANE_COUNT; ++plane_idx) {
-		plane         = &state->planes[plane_idx];
-		h_blocks      = plane->h_blocks;
-		v_blocks      = plane->v_blocks;
-		h_blocks_safe = plane->h_blocks_safe;
-		curr          = plane->payload;
-		rle           = 0;
-		for (y = v_blocks; y > 0; --y) {
+		plane      = &state->pln[plane_idx];
+		nblocks_h  = plane->nblocks_h;
+		nblocks_v  = plane->nblocks_v;
+		nblocks_hb = plane->nblocks_hb;
+		curr       = plane->blockInfoTop;
+		rle        = 0;
+		for (y = nblocks_v; y > 0; --y) {
 			// pointer to previous line
-			prev = curr - h_blocks_safe;
+			prev = curr - nblocks_hb;
 			// first prediction on a line is only the previous line's value
-			value = prev->value;
-			for (x = h_blocks; x > 0; --x) {
+			value = prev->dcv;
+			for (x = nblocks_h; x > 0; --x) {
 				value = (value + getDeltaDC(state, plane_idx, &rle)) & 0xFF;
 				++prev;
-				prev_value = prev->value;
+				prev_value = prev->dcv;
 
 				// next prediction on this line is the mean of left (current) and top values
 				// +---+---+
@@ -401,8 +402,8 @@ static void IpicDcvDec(VideoState* state)
 				// +---+---+
 				// | L | P |
 				// +---+---+
-				curr++->value = value;
-				value         = (value + prev_value + 1) >> 1;
+				curr++->dcv = value;
+				value       = (value + prev_value + 1) >> 1;
 			}
 			// skip right border of this line and left border of next line
 			curr += 2;
@@ -522,69 +523,69 @@ static void IpicDcvDec(VideoState* state)
  */
 static void MakeNest(VideoState* state, u16 nestX, u16 nestY)
 {
-	HVQPlaneDesc* y_plane = &state->planes[0];
-	BlockData const* ptr  = y_plane->payload + y_plane->h_blocks_safe * nestY + nestX;
+	HVQPlaneDesc* y_plane = &state->pln[0];
+	BlockData const* ptr  = y_plane->blockInfoTop + y_plane->nblocks_hb * nestY + nestX;
 	u32 v_empty, h_empty, v_nest_blocks, h_nest_blocks, v_mirror, h_mirror;
 	u8* nest;
 	int i, j;
 	BlockData const* p;
 	u8 const* nest2;
 
-	if (y_plane->h_blocks < state->h_nest_size) {
+	if (y_plane->nblocks_h < state->nestsize_h) {
 		// special case if the video is less than 280 pixels wide (assuming landscape mode)
-		h_nest_blocks = y_plane->h_blocks;
-		h_mirror      = state->h_nest_size - y_plane->h_blocks;
-		if (h_mirror > y_plane->h_blocks)
-			h_mirror = y_plane->h_blocks;
-		h_empty = state->h_nest_size - (h_nest_blocks + h_mirror);
+		h_nest_blocks = y_plane->nblocks_h;
+		h_mirror      = state->nestsize_h - y_plane->nblocks_h;
+		if (h_mirror > y_plane->nblocks_h)
+			h_mirror = y_plane->nblocks_h;
+		h_empty = state->nestsize_h - (h_nest_blocks + h_mirror);
 	} else {
-		h_nest_blocks = state->h_nest_size;
+		h_nest_blocks = state->nestsize_h;
 		h_empty       = 0;
 		h_mirror      = 0;
 	}
 
-	if (y_plane->v_blocks < state->v_nest_size) {
+	if (y_plane->nblocks_v < state->nestsize_v) {
 		// special case if the video is less than 152 pixels high
-		v_nest_blocks = y_plane->v_blocks;
-		v_mirror      = state->v_nest_size - y_plane->v_blocks;
-		if (v_mirror > y_plane->v_blocks)
-			v_mirror = y_plane->v_blocks;
-		v_empty = state->v_nest_size - (v_nest_blocks + v_mirror);
+		v_nest_blocks = y_plane->nblocks_v;
+		v_mirror      = state->nestsize_v - y_plane->nblocks_v;
+		if (v_mirror > y_plane->nblocks_v)
+			v_mirror = y_plane->nblocks_v;
+		v_empty = state->nestsize_v - (v_nest_blocks + v_mirror);
 	} else {
-		v_nest_blocks = state->v_nest_size;
+		v_nest_blocks = state->nestsize_v;
 		v_empty       = 0;
 		v_mirror      = 0;
 	}
 
-	nest = state->nest_data;
+	nest = state->nestBuf;
 	for (i = 0; i < v_nest_blocks; ++i) {
 		p = ptr;
 		for (j = 0; j < h_nest_blocks; ++j) {
-			*nest++ = (p->value >> 4) & 0xF;
+			*nest++ = (p->dcv >> 4) & 0xF;
 			++p;
 		}
 		// if the video is too small, mirror it
 		for (j = 0; j < h_mirror; ++j) {
 			--p;
-			*nest++ = (p->value >> 4) & 0xF;
+			*nest++ = (p->dcv >> 4) & 0xF;
 		}
 		// if it is still too small, null out the rest
 		for (j = 0; j < h_empty; ++j)
 			*nest++ = 0;
-		ptr += y_plane->h_blocks_safe;
+		ptr += y_plane->nblocks_hb;
 	}
 
 	// handle vertical mirroring
-	nest2 = nest - state->h_nest_size;
+	nest2 = nest - state->nestsize_h;
 	for (i = 0; i < v_mirror; ++i) {
-		for (j = 0; j < state->h_nest_size; ++j)
+		for (j = 0; j < state->nestsize_h; ++j)
 			*nest++ = nest2[j];
-		nest2 -= state->h_nest_size;
+		nest2 -= state->nestsize_h;
 	}
 
 	// and vertical nulling
 	for (i = 0; i < v_empty; ++i)
-		for (j = 0; j < state->h_nest_size; ++j)
+		for (j = 0; j < state->nestsize_h; ++j)
 			*nest++ = 0;
 	/*
 	.loc_0x0:
@@ -1098,7 +1099,7 @@ static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
 	u32 temp2;
 	u32 temp3;
 
-	buf                       = &state->fixvl[planeIdx];
+	buf                       = &state->aotcd[planeIdx];
 	ptr                       = (u32*)buf->ptr;
 	temp1                     = ptr[1];
 	temp2                     = ptr[2];
@@ -1117,7 +1118,7 @@ static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
  */
 static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
 {
-	BitBuffer* buf = &state->fixvl[planeIdx];
+	BitBuffer* buf = &state->aotcd[planeIdx];
 	u16 bits;
 	u32 x_stride, y_stride, offset70, offset38, stride70, stride38;
 	u8 min, max;
@@ -1140,7 +1141,7 @@ static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, co
 	offset38 = (bits >> 6) & 0x1F;
 	stride70 = (bits >> 11) & 1;
 	stride38 = (bits >> 12) & 1;
-	if (state->is_landscape) {
+	if (state->landscape) {
 		nestData += nestStride * offset38 + offset70;
 		x_stride = 1 << stride70;
 		y_stride = nestStride << stride38;
@@ -1161,7 +1162,7 @@ static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, co
 			max            = nest_value > max ? nest_value : max;
 		}
 	}
-	*sum += decodeHuff(&state->bufTree0[planeIdx]);
+	*sum += decodeHuff(&state->scale[planeIdx]);
 	inverse = divTable[max - min];
 	if (bits & 0x8000)
 		inverse = -inverse;
@@ -1553,13 +1554,13 @@ static inline u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, 
 	u8 nest_value;
 	u32 inverse, foo;
 
-	buf  = &state->fixvl[planeIdx];
+	buf  = &state->aotcd[planeIdx];
 	bits = read16(buf->ptr, 0);
 	buf->ptr += 2;
 	big   = bits & 0x3F;
 	small = (bits >> 6) & 0x1F;
 
-	if (state->is_landscape) {
+	if (state->landscape) {
 		nestData += nestStride * small + big;
 		step   = 1 << ((bits >> 11) & 1);
 		stride = nestStride << ((bits >> 12) & 1);
@@ -1577,7 +1578,7 @@ static inline u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, 
 			max            = nest_value > max ? nest_value : max;
 		}
 	}
-	*sum += decodeHuff(&state->bufTree0[planeIdx]);
+	*sum += decodeHuff(&state->scale[planeIdx]);
 	inverse = divTable[max - min];
 	if (bits & 0x8000)
 		inverse = -inverse;
@@ -1969,7 +1970,7 @@ static inline u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, 
 	*/
 }
 
-static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nest_data, u32 nest_stride, u32 plane_idx)
+static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
 {
 	int x, y, k;
 	u8 basis[4][4];
@@ -1983,7 +1984,7 @@ static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u
 			result[y][x] = 0;
 	temp = 0;
 	for (k = 0; k < num_bases; ++k) {
-		factor = GetAotBasis(state, basis, &temp, nest_data, nest_stride, plane_idx);
+		factor = GetAotBasis(state, basis, &temp, nestBuf, nest_stride, plane_idx);
 		for (y = 0; y < 4; ++y)
 			for (x = 0; x < 4; ++x)
 				result[y][x] += factor * basis[y][x];
@@ -1996,7 +1997,7 @@ static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u
 	return mean;
 }
 
-static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nest_data, u32 nest_stride, u32 plane_idx)
+static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
 {
 	int i, j, k;
 	int temp;
@@ -2011,7 +2012,7 @@ static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases,
 
 	temp = 0;
 	for (k = 0; k < num_bases; ++k) {
-		factor = GetMCAotBasis(state, byte_result, &temp, nest_data, nest_stride, plane_idx);
+		factor = GetMCAotBasis(state, byte_result, &temp, nestBuf, nest_stride, plane_idx);
 		for (i = 0; i < 4; ++i)
 			for (j = 0; j < 4; ++j)
 				result[i][j] += factor * byte_result[i][j];
@@ -2042,11 +2043,11 @@ static void IntraAotBlock(VideoState* state, u8* dst, u32 stride, u8 targetAvera
 		return;
 	}
 	// block types 1..5 serve as number of bases to use, 9..15 are unused
-	aotAverage = GetAotSum(state, result, blockType, state->nest_data, state->h_nest_size, planeIdx);
-	delta      = (targetAverage << state->unk_shift) - aotAverage;
+	aotAverage = GetAotSum(state, result, blockType, state->nestBuf, state->nestsize_h, planeIdx);
+	delta      = (targetAverage << state->aotscale_q) - aotAverage;
 	for (y = 0; y < 4; ++y) {
 		for (x = 0; x < 4; ++x) {
-			value               = ((result[y][x] + delta) >> state->unk_shift);
+			value               = ((result[y][x] + delta) >> state->aotscale_q);
 			dst[y * stride + x] = saturate(value);
 		}
 	}
@@ -2335,26 +2336,26 @@ static void IpicBlockDec(VideoState* state, u8* dst, u32 stride, StackState* sta
 	u8 top, bottom, right;
 	u8 value;
 
-	if (stackState->curr.type == 0) {
-		value  = stackState->curr.value;
-		top    = stackState->line_prev->type & 0x77 ? value : stackState->line_prev->value;
-		bottom = stackState->line_next->type & 0x77 ? value : stackState->line_next->value;
-		right  = stackState->next.type & 0x77 ? value : stackState->next.value;
+	if (stackState->curr.bnm == 0) {
+		value  = stackState->curr.dcv;
+		top    = stackState->upp->bnm & 0x77 ? value : stackState->upp->dcv;
+		bottom = stackState->low->bnm & 0x77 ? value : stackState->low->dcv;
+		right  = stackState->right.bnm & 0x77 ? value : stackState->right.dcv;
 		// the left value is tracked manually, the logic is equivalent with the other surrounding values
-		WeightImBlock(dst, stride, value, top, bottom, stackState->value_prev, right);
-		stackState->value_prev = value;
-	} else if (stackState->curr.type == 8) {
-		value = stackState->curr.value;
+		WeightImBlock(dst, stride, value, top, bottom, stackState->l_dcv, right);
+		stackState->l_dcv = value;
+	} else if (stackState->curr.bnm == 8) {
+		value = stackState->curr.dcv;
 		dcBlock(dst, stride, value);
-		stackState->value_prev = value;
+		stackState->l_dcv = value;
 	} else {
-		IntraAotBlock(state, dst, stride, stackState->curr.value, stackState->curr.type, stackState->plane_idx);
+		IntraAotBlock(state, dst, stride, stackState->curr.dcv, stackState->curr.bnm, stackState->id);
 		// don't use the current DC value to predict the next one
-		stackState->value_prev = stackState->next.value;
+		stackState->l_dcv = stackState->right.dcv;
 	}
 	// next block
-	++stackState->line_prev;
-	++stackState->line_next;
+	++stackState->upp;
+	++stackState->low;
 }
 
 /*
@@ -2366,21 +2367,21 @@ static void IpicLineDec(VideoState* state, u8* dst, u32 stride, StackState* stac
 {
 	int i;
 
-	stackState->next       = *stackState->line_curr;
-	stackState->value_prev = stackState->line_curr->value;
+	stackState->right = *stackState->mid;
+	stackState->l_dcv = stackState->mid->dcv;
 
 	for (i = hBlocks - 1; i > 0; i--) {
-		stackState->curr = stackState->next;
-		stackState->next = *++stackState->line_curr;
+		stackState->curr  = stackState->right;
+		stackState->right = *++stackState->mid;
 		IpicBlockDec(state, dst, stride, stackState);
 		dst += 4;
 	}
 
-	stackState->curr = stackState->next;
-	stackState->line_curr += 3;
+	stackState->curr = stackState->right;
+	stackState->mid += 3;
 	IpicBlockDec(state, dst, stride, stackState);
-	stackState->line_prev += 2;
-	stackState->line_next += 2;
+	stackState->upp += 2;
+	stackState->low += 2;
 }
 
 /*
@@ -2392,43 +2393,43 @@ static void IpicPlaneDec(VideoState* state, int plane_idx, u8* dst)
 {
 	HVQPlaneDesc* plane;
 	BlockData** payload_ptr;
-	u32 width_in_samples;
+	u32 plane_width;
 	u32 stride;
 	u32 dst_stride;
-	u32 h_blocks;
-	u32 h_blocks_safe;
-	BlockData* payload;
+	u32 nblocks_h;
+	u32 nblocks_hb;
+	BlockData* blockInfoTop;
 	int i;
 	StackState stack_state;
 
-	plane            = &state->planes[plane_idx];
-	width_in_samples = plane->width_in_samples;
-	h_blocks         = plane->h_blocks;
-	h_blocks_safe    = plane->h_blocks_safe;
-	payload_ptr      = &plane->payload;
+	plane       = &state->pln[plane_idx];
+	plane_width = plane->plane_width;
+	nblocks_h   = plane->nblocks_h;
+	nblocks_hb  = plane->nblocks_hb;
+	payload_ptr = &plane->blockInfoTop;
 
-	stack_state.plane_idx = plane_idx;
-	payload               = *payload_ptr;
-	stack_state.line_prev = payload;
-	stack_state.line_curr = payload;
-	stack_state.line_next = payload + h_blocks_safe;
+	stack_state.id  = plane_idx;
+	blockInfoTop    = *payload_ptr;
+	stack_state.upp = blockInfoTop;
+	stack_state.mid = blockInfoTop;
+	stack_state.low = blockInfoTop + nblocks_hb;
 
 	// blocks are 4x4 so advance dst by 4 lines
-	dst_stride = width_in_samples * 4;
-	stride     = width_in_samples;
+	dst_stride = plane_width * 4;
+	stride     = plane_width;
 
 	// first line
-	IpicLineDec(state, dst, stride, &stack_state, h_blocks);
+	IpicLineDec(state, dst, stride, &stack_state, nblocks_h);
 	dst += dst_stride;
 	// middle lines
-	stack_state.line_prev = *payload_ptr;
-	for (i = plane->v_blocks - 2; i > 0; i--) {
-		IpicLineDec(state, dst, stride, &stack_state, h_blocks);
+	stack_state.upp = *payload_ptr;
+	for (i = plane->nblocks_v - 2; i > 0; i--) {
+		IpicLineDec(state, dst, stride, &stack_state, nblocks_h);
 		dst += dst_stride;
 	}
 	// last line
-	stack_state.line_next = stack_state.line_curr;
-	IpicLineDec(state, dst, stride, &stack_state, h_blocks);
+	stack_state.low = stack_state.mid;
+	IpicLineDec(state, dst, stride, &stack_state, nblocks_h);
 
 	/*
 	.loc_0x0:
@@ -2499,7 +2500,7 @@ static void IpicPlaneDec(VideoState* state, int plane_idx, u8* dst)
  * Address:	8002095C
  * Size:	00008C
  */
-static void initMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u8* present, u8* past, u8* future)
+static void initMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u8* lin_top, u8* forw, u8* back)
 {
 	int i;
 	MCPlane* mcplane;
@@ -2507,26 +2508,26 @@ static void initMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT],
 	BlockData* block;
 
 	for (i = 0; i < PLANE_COUNT; i++) {
-		mcplane          = &mcplanes[i];
-		plane            = &state->planes[i];
-		mcplane->rle     = 0;
-		mcplane->pb_dc   = 0x7F;
-		mcplane->present = present;
-		mcplane->past    = past;
-		mcplane->future  = future;
+		mcplane            = &mcplanes[i];
+		plane              = &state->pln[i];
+		mcplane->bsrunleng = 0;
+		mcplane->prev_dcv  = 0x7F;
+		mcplane->lin_top   = lin_top;
+		mcplane->forw      = forw;
+		mcplane->back      = back;
 
-		block                    = plane->payload;
-		mcplane->payload_cur_blk = block;
-		mcplane->payload_cur_row = block;
+		block             = plane->blockInfoTop;
+		mcplane->data     = block;
+		mcplane->data_top = block;
 
-		mcplane->h_mcb_stride = 8 >> plane->width_shift;
-		mcplane->v_mcb_stride = (8 >> plane->height_shift) * plane->width_in_samples;
-		mcplane->pb_per_mcb_x = plane->pb_per_mcb_x;
-		mcplane->stride       = plane->h_blocks_safe * plane->pb_per_mcb_y;
+		mcplane->next_macro_pix = 8 >> plane->h_shift;
+		mcplane->down_macro_pix = (8 >> plane->v_shift) * plane->plane_width;
+		mcplane->hvqblk_h       = plane->hvqblk_h;
+		mcplane->hvqblk_v       = plane->nblocks_hb * plane->hvqblk_v;
 
-		present += plane->size_in_samples;
-		past += plane->size_in_samples;
-		future += plane->size_in_samples;
+		lin_top += plane->plane_size;
+		forw += plane->plane_size;
+		back += plane->plane_size;
 	}
 }
 
@@ -2535,14 +2536,14 @@ static void initMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT],
  * Address:	........
  * Size:	00004C
  */
-static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u8* present)
+static void resetMCHandler(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], u8* lin_top)
 {
 	int i;
 
 	for (i = 0; i < PLANE_COUNT; ++i) {
-		mcplanes[i].present         = present;
-		mcplanes[i].payload_cur_row = mcplanes[i].payload_cur_blk = state->planes[i].payload;
-		present += state->planes[i].size_in_samples;
+		mcplanes[i].lin_top  = lin_top;
+		mcplanes[i].data_top = mcplanes[i].data = state->pln[i].blockInfoTop;
+		lin_top += state->pln[i].plane_size;
 	}
 	// UNUSED FUNCTION
 }
@@ -2728,7 +2729,7 @@ inline void _MotionComp_11(void* dst, u32 dstStride, const void* src, u32 srcStr
 static void MotionComp(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], int arg2, int arg3)
 {
 	int i, j;
-	u32* pb_offset;
+	u32* imgUscan;
 	u8* src;
 	int num_blocks;
 	int offset;
@@ -2736,56 +2737,48 @@ static void MotionComp(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], in
 	if (!(arg2 & 1)) {
 		if (!(arg3 & 1)) {
 			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mcplanes[i].target
-				    + ((arg2 >> state->planes[i].width_shift + 1)
-				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
-				pb_offset  = state->planes[i].pb_offset;
-				num_blocks = state->planes[i].blocks_per_mcb;
+				src = mcplanes[i].targ
+				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
+				imgUscan   = state->pln[i].imgUscan;
+				num_blocks = state->pln[i].nblocks_mcb;
 				for (j = 0; j < num_blocks; j++) {
-					offset = *pb_offset++;
-					_MotionComp_00(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
-					               state->planes[i].width_in_samples);
+					offset = *imgUscan++;
+					_MotionComp_00(mcplanes[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
 				}
 			}
 		} else {
 			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mcplanes[i].target
-				    + ((arg2 >> state->planes[i].width_shift + 1)
-				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
-				pb_offset  = state->planes[i].pb_offset;
-				num_blocks = state->planes[i].blocks_per_mcb;
+				src = mcplanes[i].targ
+				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
+				imgUscan   = state->pln[i].imgUscan;
+				num_blocks = state->pln[i].nblocks_mcb;
 				for (j = 0; j < num_blocks; j++) {
-					offset = *pb_offset++;
-					_MotionComp_01(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
-					               state->planes[i].width_in_samples);
+					offset = *imgUscan++;
+					_MotionComp_01(mcplanes[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
 				}
 			}
 		}
 	} else {
 		if (!(arg3 & 1)) {
 			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mcplanes[i].target
-				    + ((arg2 >> state->planes[i].width_shift + 1)
-				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
-				pb_offset  = state->planes[i].pb_offset;
-				num_blocks = state->planes[i].blocks_per_mcb;
+				src = mcplanes[i].targ
+				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
+				imgUscan   = state->pln[i].imgUscan;
+				num_blocks = state->pln[i].nblocks_mcb;
 				for (j = 0; j < num_blocks; j++) {
-					offset = *pb_offset++;
-					_MotionComp_10(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
-					               state->planes[i].width_in_samples);
+					offset = *imgUscan++;
+					_MotionComp_10(mcplanes[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
 				}
 			}
 		} else {
 			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mcplanes[i].target
-				    + ((arg2 >> state->planes[i].width_shift + 1)
-				       + (arg3 >> state->planes[i].height_shift + 1) * state->planes[i].width_in_samples);
-				pb_offset  = state->planes[i].pb_offset;
-				num_blocks = state->planes[i].blocks_per_mcb;
+				src = mcplanes[i].targ
+				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
+				imgUscan   = state->pln[i].imgUscan;
+				num_blocks = state->pln[i].nblocks_mcb;
 				for (j = 0; j < num_blocks; j++) {
-					offset = *pb_offset++;
-					_MotionComp_11(mcplanes[i].top + offset, state->planes[i].width_in_samples, src + offset,
-					               state->planes[i].width_in_samples);
+					offset = *imgUscan++;
+					_MotionComp_11(mcplanes[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
 				}
 			}
 		}
@@ -3480,7 +3473,7 @@ static void decode_PB_cc(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], 
 {
 	u32 block_type;
 	int i, j;
-	BlockData* payload;
+	BlockData* blockInfoTop;
 	HVQPlaneDesc* plane;
 	HVQPlaneDesc* planeY;
 	MCPlane* mcplaneY;
@@ -3495,51 +3488,51 @@ static void decode_PB_cc(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUNT], 
 	block_type = (type << 5) | (proc << 4);
 	if (proc == 1) {
 		for (i = 0; i < PLANE_COUNT; ++i) {
-			payload = mcplanes[i].payload_cur_blk;
-			plane   = &state->planes[i];
-			for (j = 0; j < plane->blocks_per_mcb; ++j)
-				payload[plane->mcb_offset[j]].type = block_type;
+			blockInfoTop = mcplanes[i].data;
+			plane        = &state->pln[i];
+			for (j = 0; j < plane->nblocks_mcb; ++j)
+				blockInfoTop[plane->bibUscan[j]].bnm = block_type;
 		}
 		return;
 	} else {
 		// luma
-		planeY   = &state->planes[0];
+		planeY   = &state->pln[0];
 		mcplaneY = &mcplanes[0];
-		for (i = 0; i < planeY->blocks_per_mcb; ++i) {
-			ptr = mcplaneY->payload_cur_blk;
-			if (mcplaneY->rle) {
-				ptr[planeY->mcb_offset[i]].type = block_type;
-				--mcplaneY->rle;
+		for (i = 0; i < planeY->nblocks_mcb; ++i) {
+			ptr = mcplaneY->data;
+			if (mcplaneY->bsrunleng) {
+				ptr[planeY->bibUscan[i]].bnm = block_type;
+				--mcplaneY->bsrunleng;
 			} else {
-				huff = decodeHuff(&state->basis_num[LUMA_IDX]);
+				huff = decodeHuff(&state->bsnum[LUMA_IDX]);
 				if (huff)
-					ptr[planeY->mcb_offset[i]].type = block_type | huff;
+					ptr[planeY->bibUscan[i]].bnm = block_type | huff;
 				else {
-					ptr[planeY->mcb_offset[i]].type = block_type;
-					mcplaneY->rle                   = decodeHuff(&state->basis_num_run[0]);
+					ptr[planeY->bibUscan[i]].bnm = block_type;
+					mcplaneY->bsrunleng          = decodeHuff(&state->bsrun[0]);
 				}
 			}
 		}
 		// chroma
-		planeU   = &state->planes[1];
+		planeU   = &state->pln[1];
 		mcplaneU = &mcplanes[1];
 		mcplaneV = &mcplanes[2];
-		for (i = 0; i < planeU->blocks_per_mcb; ++i) {
-			ptrU = mcplaneU->payload_cur_blk;
-			ptrV = mcplaneV->payload_cur_blk;
-			if (mcplaneU->rle) {
-				ptrU[planeU->mcb_offset[i]].type = block_type;
-				ptrV[planeU->mcb_offset[i]].type = block_type;
-				--mcplaneU->rle;
+		for (i = 0; i < planeU->nblocks_mcb; ++i) {
+			ptrU = mcplaneU->data;
+			ptrV = mcplaneV->data;
+			if (mcplaneU->bsrunleng) {
+				ptrU[planeU->bibUscan[i]].bnm = block_type;
+				ptrV[planeU->bibUscan[i]].bnm = block_type;
+				--mcplaneU->bsrunleng;
 			} else {
-				huff = decodeHuff(&state->basis_num[CHROMA_IDX]);
+				huff = decodeHuff(&state->bsnum[CHROMA_IDX]);
 				if (huff) {
-					ptrU[planeU->mcb_offset[i]].type = block_type | ((huff >> 0) & 0xF);
-					ptrV[planeU->mcb_offset[i]].type = block_type | ((huff >> 4) & 0xF);
+					ptrU[planeU->bibUscan[i]].bnm = block_type | ((huff >> 0) & 0xF);
+					ptrV[planeU->bibUscan[i]].bnm = block_type | ((huff >> 4) & 0xF);
 				} else {
-					ptrU[planeU->mcb_offset[i]].type = block_type;
-					ptrV[planeU->mcb_offset[i]].type = block_type;
-					mcplaneU->rle                    = decodeHuff(&state->basis_num_run[1]);
+					ptrU[planeU->bibUscan[i]].bnm = block_type;
+					ptrV[planeU->bibUscan[i]].bnm = block_type;
+					mcplaneU->bsrunleng           = decodeHuff(&state->bsrun[1]);
 				}
 			}
 		}
@@ -3909,8 +3902,8 @@ static void PrediAotBlock(VideoState* state, u8* dst, const u8* src, u32 stride,
 			max                = value > max ? value : max;
 		}
 	}
-	addend = (decodeSOvfSym(&state->dc_values[planeIdx], state->dc_min, state->dc_max) >> state->dc_shift << state->unk_shift) - aot_sum;
-	factor = (decodeSOvfSym(&state->dc_values[planeIdx], state->dc_min, state->dc_max) >> state->dc_shift);
+	addend = (decodeSOvfSym(&state->dcval[planeIdx], state->dc_min, state->dc_max) >> state->dc_scale_q << state->aotscale_q) - aot_sum;
+	factor = (decodeSOvfSym(&state->dcval[planeIdx], state->dc_min, state->dc_max) >> state->dc_scale_q);
 	factor *= mcdivTable[max - min];
 	for (i = 0; i < 4; ++i)
 		for (j = 0; j < 4; ++j)
@@ -3918,7 +3911,7 @@ static void PrediAotBlock(VideoState* state, u8* dst, const u8* src, u32 stride,
 
 	for (i = 0; i < 4; ++i) {
 		for (j = 0; j < 4; ++j) {
-			value               = (result[i][j] >> state->unk_shift) + mdst[i][j];
+			value               = (result[i][j] >> state->aotscale_q) + mdst[i][j];
 			dst[i * stride + j] = saturate(value);
 		}
 	}
@@ -4565,37 +4558,37 @@ static void MCBlockDecMCNest(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUN
 	u8 block_type;
 	u8* dst;
 	u32 stride;
-	u8* nest_data;
+	u8* nestBuf;
 	u32 plane_dx, plane_dy;
 	const u8* src;
 	u32 strideY;
 
-	if (state->is_landscape)
-		nest_data = mcplanes[0].target + x / 2 + (y / 2 - 16) * state->planes[0].width_in_samples - 32;
+	if (state->landscape)
+		nestBuf = mcplanes[0].targ + x / 2 + (y / 2 - 16) * state->pln[0].plane_width - 32;
 	else
-		nest_data = mcplanes[0].target + x / 2 + (y / 2 - 32) * state->planes[0].width_in_samples - 16;
+		nestBuf = mcplanes[0].targ + x / 2 + (y / 2 - 32) * state->pln[0].plane_width - 16;
 	hpel_dx = x & 1;
 	hpel_dy = y & 1;
 	for (plane_idx = 0; plane_idx < PLANE_COUNT; ++plane_idx) {
 		mcplane = &mcplanes[plane_idx];
-		plane   = &state->planes[plane_idx];
-		for (i = 0; i < plane->blocks_per_mcb; ++i) {
-			ptr        = mcplane->payload_cur_blk;
-			block_type = ptr[plane->mcb_offset[i]].type & 0xF;
+		plane   = &state->pln[plane_idx];
+		for (i = 0; i < plane->nblocks_mcb; ++i) {
+			ptr        = mcplane->data;
+			block_type = ptr[plane->bibUscan[i]].bnm & 0xF;
 			// dst is a 4x4 region
-			dst    = mcplane->top + plane->pb_offset[i];
-			stride = plane->width_in_samples;
+			dst    = mcplane->blk_top + plane->imgUscan[i];
+			stride = plane->plane_width;
 			if (block_type == 6) {
 				OrgBlock(state, dst, stride, plane_idx);
 			} else {
-				plane_dx = x >> plane->width_shift;
-				plane_dy = y >> plane->height_shift;
-				src      = mcplane->target + (plane_dy >> 1) * plane->width_in_samples + (plane_dx >> 1) + plane->pb_offset[i];
+				plane_dx = x >> plane->h_shift;
+				plane_dy = y >> plane->v_shift;
+				src      = mcplane->targ + (plane_dy >> 1) * plane->plane_width + (plane_dx >> 1) + plane->imgUscan[i];
 				if (block_type == 0) {
 					// MotionComp(dst, stride, src, stride, hpel_dx, hpel_dy);
 				} else {
-					strideY = state->planes[0].width_in_samples;
-					PrediAotBlock(state, dst, src, stride, block_type, nest_data, strideY, plane_idx, hpel_dx, hpel_dy);
+					strideY = state->pln[0].plane_width;
+					PrediAotBlock(state, dst, src, stride, block_type, nestBuf, strideY, plane_idx, hpel_dx, hpel_dy);
 				}
 			}
 		}
@@ -4724,26 +4717,26 @@ static void MCBlockDecDCNest(VideoState* state, MCPlane mcplanes[HVQM_PLANE_COUN
 	u8 top, left, right, bottom;
 
 	for (plane_idx = 0; plane_idx < PLANE_COUNT; ++plane_idx) {
-		ptr    = mcplanes[plane_idx].payload_cur_blk;
-		plane  = &state->planes[plane_idx];
-		stride = plane->width_in_samples;
-		line   = plane->h_blocks_safe;
-		for (j = 0; j < plane->blocks_per_mcb; ++j) {
+		ptr    = mcplanes[plane_idx].data;
+		plane  = &state->pln[plane_idx];
+		stride = plane->plane_width;
+		line   = plane->nblocks_hb;
+		for (j = 0; j < plane->nblocks_mcb; ++j) {
 			// dst is a 4x4 region
-			dst       = mcplanes[plane_idx].top + plane->pb_offset[j];
-			block_idx = plane->mcb_offset[j];
-			value     = ptr[block_idx].value;
+			dst       = mcplanes[plane_idx].blk_top + plane->imgUscan[j];
+			block_idx = plane->bibUscan[j];
+			value     = ptr[block_idx].dcv;
 			// block type:
 			// 0: weighted
 			// 6: literal block
 			// 8: single value
-			type = ptr[block_idx].type & 0xF;
+			type = ptr[block_idx].bnm & 0xF;
 			// see also IpicBlockDec
 			if (type == 0) {
-				top    = ptr[block_idx - line].type & 0x77 ? value : ptr[block_idx - line].value;
-				left   = ptr[block_idx - 1].type & 0x77 ? value : ptr[block_idx - 1].value;
-				right  = ptr[block_idx + 1].type & 0x77 ? value : ptr[block_idx + 1].value;
-				bottom = ptr[block_idx + line].type & 0x77 ? value : ptr[block_idx + line].value;
+				top    = ptr[block_idx - line].bnm & 0x77 ? value : ptr[block_idx - line].dcv;
+				left   = ptr[block_idx - 1].bnm & 0x77 ? value : ptr[block_idx - 1].dcv;
+				right  = ptr[block_idx + 1].bnm & 0x77 ? value : ptr[block_idx + 1].dcv;
+				bottom = ptr[block_idx + line].bnm & 0x77 ? value : ptr[block_idx + line].dcv;
 				WeightImBlock(dst, stride, value, top, bottom, left, right);
 			} else if (type == 8) {
 				//	dcBlock(dst, stride, value);
@@ -4970,13 +4963,13 @@ static void getMVector(int* result, BitBufferWithTree* buf, u32 residual_bits)
 static void setMCTarget(MCPlane mcplanes[PLANE_COUNT], u32 reference_frame)
 {
 	if (reference_frame == 0) {
-		mcplanes[0].target = mcplanes[0].past;
-		mcplanes[1].target = mcplanes[1].past;
-		mcplanes[2].target = mcplanes[2].past;
+		mcplanes[0].targ = mcplanes[0].forw;
+		mcplanes[1].targ = mcplanes[1].forw;
+		mcplanes[2].targ = mcplanes[2].forw;
 	} else {
-		mcplanes[0].target = mcplanes[0].future;
-		mcplanes[1].target = mcplanes[1].future;
-		mcplanes[2].target = mcplanes[2].future;
+		mcplanes[0].targ = mcplanes[0].back;
+		mcplanes[1].targ = mcplanes[1].back;
+		mcplanes[2].targ = mcplanes[2].back;
 	}
 }
 
@@ -4986,8 +4979,8 @@ static void setMCNextBlk(MCPlane mcplanes[PLANE_COUNT])
 {
 	int i;
 	for (i = 0; i < PLANE_COUNT; ++i) {
-		mcplanes[i].top += mcplanes[i].h_mcb_stride;
-		mcplanes[i].payload_cur_blk += mcplanes[i].pb_per_mcb_x;
+		mcplanes[i].blk_top += mcplanes[i].next_macro_pix;
+		mcplanes[i].data += mcplanes[i].hvqblk_h;
 	}
 }
 
@@ -5001,10 +4994,10 @@ static void setMCDownBlk(MCPlane mcplanes[PLANE_COUNT])
 
 	for (i = 0; i < PLANE_COUNT; ++i) {
 		mcplane = &mcplanes[i];
-		mcplane->present += mcplane->v_mcb_stride;
-		first_block_on_next_row  = mcplane->payload_cur_row + mcplane->stride;
-		mcplane->payload_cur_row = first_block_on_next_row;
-		mcplane->payload_cur_blk = first_block_on_next_row;
+		mcplane->lin_top += mcplane->down_macro_pix;
+		first_block_on_next_row = mcplane->data_top + mcplane->hvqblk_v;
+		mcplane->data_top       = first_block_on_next_row;
+		mcplane->data           = first_block_on_next_row;
 	}
 }
 
@@ -5013,30 +5006,30 @@ static void setMCTop(MCPlane mcplanes[PLANE_COUNT])
 	int i;
 
 	for (i = 0; i < PLANE_COUNT; ++i)
-		mcplanes[i].top = mcplanes[i].present;
+		mcplanes[i].blk_top = mcplanes[i].lin_top;
 }
 
-static void reset_PB_dc(MCPlane mcplanes[PLANE_COUNT])
+static void reset_prev_dcv(MCPlane mcplanes[PLANE_COUNT])
 {
 	int i;
 	for (i = 0; i < PLANE_COUNT; ++i)
-		mcplanes[i].pb_dc = 0x7F;
+		mcplanes[i].prev_dcv = 0x7F;
 }
 
-static void decode_PB_dc(VideoState* state, MCPlane mcplanes[PLANE_COUNT])
+static void decode_prev_dcv(VideoState* state, MCPlane mcplanes[PLANE_COUNT])
 {
 	int i, j;
 	HVQPlaneDesc* plane;
 	MCPlane* mcplane;
-	BlockData* payload;
+	BlockData* blockInfoTop;
 
 	for (i = 0; i < PLANE_COUNT; ++i) {
-		plane   = &state->planes[i];
+		plane   = &state->pln[i];
 		mcplane = &mcplanes[i];
-		for (j = 0; j < plane->blocks_per_mcb; ++j) {
-			mcplane->pb_dc += decodeSOvfSym(&state->dc_values[i], state->dc_min, state->dc_max);
-			payload                             = mcplane->payload_cur_blk;
-			payload[plane->mcb_offset[j]].value = mcplane->pb_dc;
+		for (j = 0; j < plane->nblocks_mcb; ++j) {
+			mcplane->prev_dcv += decodeSOvfSym(&state->dcval[i], state->dc_min, state->dc_max);
+			blockInfoTop                         = mcplane->data;
+			blockInfoTop[plane->bibUscan[j]].dcv = mcplane->prev_dcv;
 		}
 	}
 }
@@ -5052,29 +5045,29 @@ static void spread_PB_descMap(SeqObj* seqObj, MCPlane mcplanes[HVQM_PLANE_COUNT]
 	struct RLDecoder proc;
 	struct RLDecoder type;
 	VideoState* state = (VideoState*)seqObj->ws;
-	initMCBproc(&state->mcb_proc, &proc);
-	initMCBtype(&state->mcb_type, &type);
+	initMCBproc(&state->mcaot, &proc);
+	initMCBtype(&state->mstat, &type);
 	for (i = 0; i < seqObj->frame_height; i += 8) {
 		setMCTop(mcplanes);
 		for (j = 0; j < seqObj->frame_width; j += 8) {
-			getMCBtype(&state->mcb_type, &type);
+			getMCBtype(&state->mstat, &type);
 			if (type.value == 0) {
-				decode_PB_dc(state, mcplanes);
+				decode_prev_dcv(state, mcplanes);
 				decode_PB_cc(state, mcplanes, 0, type.value);
 			} else {
-				reset_PB_dc(mcplanes);
-				decode_PB_cc(state, mcplanes, getMCBproc(&state->mcb_proc, &proc), type.value);
+				reset_prev_dcv(mcplanes);
+				decode_PB_cc(state, mcplanes, getMCBproc(&state->mcaot, &proc), type.value);
 			}
 			setMCNextBlk(mcplanes);
-			// for all planes
-			//     top             += h_mcb_stride
-			//     payload_cur_blk += pb_per_mcb_x
+			// for all pln
+			//     top             += next_macro_pix
+			//     data += hvqblk_h
 		}
 		setMCDownBlk(mcplanes);
-		// for all planes
-		//     present += v_mcb_stride
-		//     payload_cur_row += stride;
-		//     payload_cur_blk = payload_cur_row
+		// for all pln
+		//     lin_top += down_macro_pix
+		//     data_top += stride;
+		//     data = data_top
 	}
 
 	/*
@@ -5407,29 +5400,29 @@ static void spread_PB_descMap(SeqObj* seqObj, MCPlane mcplanes[HVQM_PLANE_COUNT]
  * Address:	800232B0
  * Size:	00043C
  */
-static void BpicPlaneDec(SeqObj* seqObj, u8* present, u8* past, u8* future)
+static void BpicPlaneDec(SeqObj* seqObj, u8* lin_top, u8* forw, u8* back)
 {
 
 	VideoState* state;
-	int mv_h, mv_v;
+	int mvecx, mvecy;
 	int reference_frame;
 	u8 bits;
 	int new_reference_frame;
 	int x, y;
-	int mcb_proc;
+	int mcaot;
 	MCPlane mcplanes[PLANE_COUNT];
 	u32 badCompiler[4];
 
 	state = (VideoState*)seqObj->ws;
-	initMCHandler(state, mcplanes, present, past, future);
+	initMCHandler(state, mcplanes, lin_top, forw, back);
 	spread_PB_descMap(seqObj, mcplanes);
-	resetMCHandler(state, mcplanes, present);
+	resetMCHandler(state, mcplanes, lin_top);
 	reference_frame = -1;
 	// MC blocks are 8x8 pixels
 	for (y = 0; y < seqObj->frame_height; y += 8) {
 		setMCTop(mcplanes);
 		for (x = 0; x < seqObj->frame_width; x += 8) {
-			bits = mcplanes[0].payload_cur_blk->type;
+			bits = mcplanes[0].data->bnm;
 			// 0: intra
 			// 1: inter - past
 			// 2: inter - future
@@ -5445,19 +5438,19 @@ static void BpicPlaneDec(SeqObj* seqObj, u8* present, u8* past, u8* future)
 				if (new_reference_frame != reference_frame) {
 					reference_frame = new_reference_frame;
 					setMCTarget(mcplanes, reference_frame);
-					mv_h = 0;
-					mv_v = 0;
+					mvecx = 0;
+					mvecy = 0;
 				}
-				getMVector(&mv_h, &state->mv_h, state->mc_residual_bits_h[reference_frame]);
-				getMVector(&mv_v, &state->mv_v, state->mc_residual_bits_v[reference_frame]);
+				getMVector(&mvecx, &state->mvecx, state->fcode[0][reference_frame]);
+				getMVector(&mvecy, &state->mvecy, state->fcode[1][reference_frame]);
 
 				// compute half-pixel position of reference macroblock
 				// see getMCBproc()
-				mcb_proc = (bits >> 4) & 1;
-				if (mcb_proc == 0)
-					MCBlockDecMCNest(state, mcplanes, (x << 1) + mv_h, (y << 1) + mv_v);
+				mcaot = (bits >> 4) & 1;
+				if (mcaot == 0)
+					MCBlockDecMCNest(state, mcplanes, (x << 1) + mvecx, (y << 1) + mvecy);
 				else
-					MotionComp(state, mcplanes, (x << 1) + mv_h, (y << 1) + mv_v);
+					MotionComp(state, mcplanes, (x << 1) + mvecx, (y << 1) + mvecy);
 			}
 			setMCNextBlk(mcplanes);
 		}
@@ -5809,10 +5802,10 @@ void HVQM4InitDecoder()
  */
 void HVQM4InitSeqObj(SeqObj* obj, VideoInfo* header)
 {
-	obj->frame_width  = header->hres;
-	obj->frame_height = header->vres;
-	obj->h_samp       = header->h_samp;
-	obj->v_samp       = header->v_samp;
+	obj->frame_width  = header->width;
+	obj->frame_height = header->height;
+	obj->h_samp       = header->h_sampling_rate;
+	obj->v_samp       = header->v_sampling_rate;
 }
 
 /*
@@ -5822,14 +5815,14 @@ void HVQM4InitSeqObj(SeqObj* obj, VideoInfo* header)
  */
 u32 HVQM4BuffSize(SeqObj* obj)
 {
-	const int h_blocks    = obj->frame_width / 4;
-	const int uv_h_blocks = obj->h_samp == 2 ? h_blocks >> 1 : h_blocks;
-	const int v_blocks    = obj->frame_height / 4;
-	const int uv_v_blocks = obj->v_samp == 2 ? v_blocks >> 1 : v_blocks;
+	const int nblocks_h    = obj->frame_width / 4;
+	const int uv_nblocks_h = obj->h_samp == 2 ? nblocks_h >> 1 : nblocks_h;
+	const int nblocks_v    = obj->frame_height / 4;
+	const int uv_nblocks_v = obj->v_samp == 2 ? nblocks_v >> 1 : nblocks_v;
 
-	const int y_blocks  = (h_blocks + 2) * (v_blocks + 2);
-	const int uv_blocks = (uv_h_blocks + 2) * (uv_v_blocks + 2);
-	return sizeof(VideoState) + (y_blocks + uv_blocks * 2) * sizeof(u16);
+	const int y_blocks   = (nblocks_h + 2) * (nblocks_v + 2);
+	const int unblocks_v = (uv_nblocks_h + 2) * (uv_nblocks_v + 2);
+	return sizeof(VideoState) + (y_blocks + unblocks_v * 2) * sizeof(u16);
 }
 
 /*
@@ -5851,54 +5844,54 @@ void HVQM4SetBuffer(SeqObj* obj, void* buf)
 	setHVQPlaneDesc(obj, 1, obj->h_samp, obj->v_samp);
 	setHVQPlaneDesc(obj, 2, obj->h_samp, obj->v_samp);
 
-	if ((ws->is_landscape = obj->frame_width >= obj->frame_height) != 0) {
-		ws->h_nest_size = 70;
-		ws->v_nest_size = 38;
+	if ((ws->landscape = obj->frame_width >= obj->frame_height) != 0) {
+		ws->nestsize_h = 70;
+		ws->nestsize_v = 38;
 	} else {
-		ws->h_nest_size = 38;
-		ws->v_nest_size = 70;
+		ws->nestsize_h = 38;
+		ws->nestsize_v = 70;
 	}
 
-	ws->basis_num[0].tree = ws->basis_num[1].tree = &ws->trees[3];
-	ws->basis_num_run[0].tree = ws->basis_num_run[1].tree = &ws->trees[1];
+	ws->bsnum[0].tree = ws->bsnum[1].tree = &ws->num_tree;
+	ws->bsrun[0].tree = ws->bsrun[1].tree = &ws->zrn_tree;
 
-	ws->dc_values[0].tree = ws->dc_values[1].tree = ws->dc_values[2].tree = &ws->trees[0];
-	ws->dc_rle[0].tree = ws->dc_rle[1].tree = ws->dc_rle[2].tree = &ws->trees[1]; // reuse!
-	ws->bufTree0[0].tree = ws->bufTree0[1].tree = ws->bufTree0[2].tree = &ws->trees[2];
-	ws->mv_h.tree = ws->mv_v.tree = &ws->trees[4];
-	ws->mcb_proc.tree = ws->mcb_type.tree = &ws->trees[5];
+	ws->dcval[0].tree = ws->dcval[1].tree = ws->dcval[2].tree = &ws->dcv_tree;
+	ws->dcrun[0].tree = ws->dcrun[1].tree = ws->dcrun[2].tree = &ws->zrn_tree; // reuse!
+	ws->scale[0].tree = ws->scale[1].tree = ws->scale[2].tree = &ws->scl_tree;
+	ws->mvecx.tree = ws->mvecy.tree = &ws->vec_tree;
+	ws->mcaot.tree = ws->mstat.tree = &ws->mrn_tree;
 
 	bp = (BlockData*)((u8*)buf + sizeof(VideoState));
 	for (c = 0; c < PLANE_COUNT; c++) {
-		ws->planes[c].border = bp;
+		ws->pln[c].blockInfoBuf = bp;
 		// skip top border (stride) and left border (1)
-		ws->planes[c].payload = bp + ws->planes[c].h_blocks_safe + 1;
-		bp += ws->planes[c].h_blocks_safe * ws->planes[c].v_blocks_safe;
+		ws->pln[c].blockInfoTop = bp + ws->pln[c].nblocks_hb + 1;
+		bp += ws->pln[c].nblocks_hb * ws->pln[c].nblocks_vb;
 
 		// set horizontal borders
-		p = ws->planes[c].border;
-		for (i = ws->planes[c].h_blocks_safe; i > 0; i--) {
+		p = ws->pln[c].blockInfoBuf;
+		for (i = ws->pln[c].nblocks_hb; i > 0; i--) {
 			set_border(p);
 			p++;
 		}
 
 		p = bp;
-		for (i = ws->planes[c].h_blocks_safe; i > 0; i--) {
+		for (i = ws->pln[c].nblocks_hb; i > 0; i--) {
 			p--;
 			set_border(p);
 		}
 
 		// set vertical borders
-		p = ws->planes[c].border + ws->planes[c].h_blocks_safe;
-		for (i = ws->planes[c].v_blocks_safe - 2; i > 0; i--) {
+		p = ws->pln[c].blockInfoBuf + ws->pln[c].nblocks_hb;
+		for (i = ws->pln[c].nblocks_vb - 2; i > 0; i--) {
 			set_border(p);
-			p += ws->planes[c].h_blocks_safe;
+			p += ws->pln[c].nblocks_hb;
 		}
 
-		p = ws->planes[c].border + ws->planes[c].h_blocks_safe * 2 - 1;
-		for (i = ws->planes[c].v_blocks_safe - 2; i > 0; i--) {
+		p = ws->pln[c].blockInfoBuf + ws->pln[c].nblocks_hb * 2 - 1;
+		for (i = ws->pln[c].nblocks_vb - 2; i > 0; i--) {
 			set_border(p);
-			p += ws->planes[c].h_blocks_safe;
+			p += ws->pln[c].nblocks_hb;
 		}
 	}
 }
@@ -5914,33 +5907,33 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 	u8* body;
 	int i;
 
-	ws            = (VideoState*)obj->ws;
-	ws->unk_shift = read8(code, 1);
-	body          = (u8*)code + 0x48;
+	ws             = (VideoState*)obj->ws;
+	ws->aotscale_q = read8(code, 1);
+	body           = (u8*)code + 0x48;
 
-	setCode(&ws->basis_num[0].buf, body + read32(code, 0x8));
-	setCode(&ws->basis_num_run[0].buf, body + read32(code, 0xC));
-	setCode(&ws->basis_num[1].buf, body + read32(code, 0x10));
-	setCode(&ws->basis_num_run[1].buf, body + read32(code, 0x14));
-	setCode(&ws->dc_values[0].buf, body + read32(code, 0x18));
-	setCode(&ws->bufTree0[0].buf, body + read32(code, 0x1C));
-	setCode(&ws->fixvl[0], body + read32(code, 0x20));
-	setCode(&ws->dc_values[1].buf, body + read32(code, 0x24));
-	setCode(&ws->bufTree0[1].buf, body + read32(code, 0x28));
-	setCode(&ws->fixvl[1], body + read32(code, 0x2C));
-	setCode(&ws->dc_values[2].buf, body + read32(code, 0x30));
-	setCode(&ws->bufTree0[2].buf, body + read32(code, 0x34));
-	setCode(&ws->fixvl[2], body + read32(code, 0x38));
-	setCode(&ws->dc_rle[0].buf, body + read32(code, 0x3C));
-	setCode(&ws->dc_rle[1].buf, body + read32(code, 0x40));
-	setCode(&ws->dc_rle[2].buf, body + read32(code, 0x44));
+	setCode(&ws->bsnum[0].buf, body + read32(code, 0x8));
+	setCode(&ws->bsrun[0].buf, body + read32(code, 0xC));
+	setCode(&ws->bsnum[1].buf, body + read32(code, 0x10));
+	setCode(&ws->bsrun[1].buf, body + read32(code, 0x14));
+	setCode(&ws->dcval[0].buf, body + read32(code, 0x18));
+	setCode(&ws->scale[0].buf, body + read32(code, 0x1C));
+	setCode(&ws->aotcd[0], body + read32(code, 0x20));
+	setCode(&ws->dcval[1].buf, body + read32(code, 0x24));
+	setCode(&ws->scale[1].buf, body + read32(code, 0x28));
+	setCode(&ws->aotcd[1], body + read32(code, 0x2C));
+	setCode(&ws->dcval[2].buf, body + read32(code, 0x30));
+	setCode(&ws->scale[2].buf, body + read32(code, 0x34));
+	setCode(&ws->aotcd[2], body + read32(code, 0x38));
+	setCode(&ws->dcrun[0].buf, body + read32(code, 0x3C));
+	setCode(&ws->dcrun[1].buf, body + read32(code, 0x40));
+	setCode(&ws->dcrun[2].buf, body + read32(code, 0x44));
 
 	// multiple BitBufferWithTree instances share the same Tree,
 	// the first BitBuffer of each group contains the Tree itself
-	readTree(&ws->basis_num[0], 0, 0);
-	readTree(&ws->basis_num_run[0], 0, 0);
-	readTree(&ws->dc_values[0], 1, read8(code, 0));
-	readTree(&ws->bufTree0[0], 0, 2);
+	readTree(&ws->bsnum[0], 0, 0);
+	readTree(&ws->bsrun[0], 0, 0);
+	readTree(&ws->dcval[0], 1, read8(code, 0));
+	readTree(&ws->scale[0], 0, 2);
 
 	ws->dc_max = +0x7F << read8(code, 0);
 	ws->dc_min = -0x80 << read8(code, 0);
@@ -5954,7 +5947,7 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 
 	for (i = 0; i < PLANE_COUNT; ++i) {
 		IpicPlaneDec(ws, i, outbuf);
-		outbuf = (u8*)outbuf + ws->planes[i].size_in_samples;
+		outbuf = (u8*)outbuf + ws->pln[i].plane_size;
 	}
 }
 
@@ -5978,41 +5971,41 @@ void HVQM4DecodeBpic(SeqObj* obj, void* code, void* outbuf, void* ref2, void* re
 	VideoState* ws;
 	u8* body;
 
-	ws                        = (VideoState*)obj->ws;
-	ws->unk_shift             = read8(code, 1);
-	ws->dc_shift              = read8(code, 0);
-	ws->mc_residual_bits_h[0] = read8(code, 2);
-	ws->mc_residual_bits_v[0] = read8(code, 3);
-	ws->mc_residual_bits_h[1] = read8(code, 4);
-	ws->mc_residual_bits_v[1] = read8(code, 5);
+	ws              = (VideoState*)obj->ws;
+	ws->aotscale_q  = read8(code, 1);
+	ws->dc_scale_q  = read8(code, 0);
+	ws->fcode[0][0] = read8(code, 2);
+	ws->fcode[1][0] = read8(code, 3);
+	ws->fcode[0][1] = read8(code, 4);
+	ws->fcode[1][1] = read8(code, 5);
 	// offsets 6 and 7 are unused
 
 	body = (u8*)code + 0x4C;
 
-	setCode(&ws->basis_num[0].buf, body + read32(code, 0x08));
-	setCode(&ws->basis_num_run[0].buf, body + read32(code, 0x0C));
-	setCode(&ws->basis_num[1].buf, body + read32(code, 0x10));
-	setCode(&ws->basis_num_run[1].buf, body + read32(code, 0x14));
-	setCode(&ws->dc_values[0].buf, body + read32(code, 0x18));
-	setCode(&ws->bufTree0[0].buf, body + read32(code, 0x1C));
-	setCode(&ws->fixvl[0], body + read32(code, 0x20));
-	setCode(&ws->dc_values[1].buf, body + read32(code, 0x24));
-	setCode(&ws->bufTree0[1].buf, body + read32(code, 0x28));
-	setCode(&ws->fixvl[1], body + read32(code, 0x2C));
-	setCode(&ws->dc_values[2].buf, body + read32(code, 0x30));
-	setCode(&ws->bufTree0[2].buf, body + read32(code, 0x34));
-	setCode(&ws->fixvl[2], body + read32(code, 0x38));
-	setCode(&ws->mv_h.buf, body + read32(code, 0x3C));
-	setCode(&ws->mv_v.buf, body + read32(code, 0x40));
-	setCode(&ws->mcb_type.buf, body + read32(code, 0x44));
-	setCode(&ws->mcb_proc.buf, body + read32(code, 0x48));
+	setCode(&ws->bsnum[0].buf, body + read32(code, 0x08));
+	setCode(&ws->bsrun[0].buf, body + read32(code, 0x0C));
+	setCode(&ws->bsnum[1].buf, body + read32(code, 0x10));
+	setCode(&ws->bsrun[1].buf, body + read32(code, 0x14));
+	setCode(&ws->dcval[0].buf, body + read32(code, 0x18));
+	setCode(&ws->scale[0].buf, body + read32(code, 0x1C));
+	setCode(&ws->aotcd[0], body + read32(code, 0x20));
+	setCode(&ws->dcval[1].buf, body + read32(code, 0x24));
+	setCode(&ws->scale[1].buf, body + read32(code, 0x28));
+	setCode(&ws->aotcd[1], body + read32(code, 0x2C));
+	setCode(&ws->dcval[2].buf, body + read32(code, 0x30));
+	setCode(&ws->scale[2].buf, body + read32(code, 0x34));
+	setCode(&ws->aotcd[2], body + read32(code, 0x38));
+	setCode(&ws->mvecx.buf, body + read32(code, 0x3C));
+	setCode(&ws->mvecy.buf, body + read32(code, 0x40));
+	setCode(&ws->mstat.buf, body + read32(code, 0x44));
+	setCode(&ws->mcaot.buf, body + read32(code, 0x48));
 
-	readTree(&ws->basis_num[0], 0, 0);
-	readTree(&ws->basis_num_run[0], 0, 0);
-	readTree(&ws->dc_values[0], 1, read8(code, 0));
-	readTree(&ws->bufTree0[0], 0, 2);
-	readTree(&ws->mv_h, 1, 0);
-	readTree(&ws->mcb_type, 0, 0);
+	readTree(&ws->bsnum[0], 0, 0);
+	readTree(&ws->bsrun[0], 0, 0);
+	readTree(&ws->dcval[0], 1, read8(code, 0));
+	readTree(&ws->scale[0], 0, 2);
+	readTree(&ws->mvecx, 1, 0);
+	readTree(&ws->mstat, 0, 0);
 
 	ws->dc_max = +0x7F << read8(code, 0);
 	ws->dc_min = -0x80 << read8(code, 0);
