@@ -63,7 +63,7 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 	u8 vBinding = ramStream->readByte();
 	mVBinding   = (P2DTextBoxVBinding)(vBinding & ~0x0);
 
-	if (!IS_FLAG(hBinding, 0x80)) {
+	if (!(hBinding & 0x80)) {
 		PRINT("flag is not found.\n");
 		ERROR("blo data is old");
 	} else {

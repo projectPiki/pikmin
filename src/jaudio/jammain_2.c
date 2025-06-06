@@ -28,7 +28,7 @@ typedef struct ArgListPair ArgListPair;
  */
 struct TrackListPair {
 	seqp_* track; // _00
-	u32 _04;      // _04
+	u32 id;       // _04
 };
 
 /**
@@ -61,12 +61,12 @@ extern "C" static void OSf32tos8(f32* in, s8* out);
 void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 {
 	// TODO: What do 0, 1, and 2 mean?
-	switch (track->_3D) {
+	switch (track->dataSourceMode) {
 	case 0:
-		return track->_00 + ofs;
+		return track->baseData + ofs;
 	case 1:
 	case 2:
-		return FAT_GetPointer(track->_3E, ofs);
+		return FAT_GetPointer(track->fileHandle, ofs);
 	}
 	return 0;
 }
@@ -79,12 +79,12 @@ void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 {
 	// TODO: What do 0, 1, and 2 mean?
-	switch (track->_3D) {
+	switch (track->dataSourceMode) {
 	case 0:
-		return track->_00[ofs];
+		return track->baseData[ofs];
 	case 1:
 	case 2:
-		return FAT_ReadByte(track->_3E, ofs);
+		return FAT_ReadByte(track->fileHandle, ofs);
 	}
 	return 0;
 }
@@ -137,12 +137,12 @@ static u32 __LongReadOfs(seqp_* track, u32 ofs)
 static u8 __ByteRead(seqp_* track)
 {
 	// TODO: What do 0, 1, and 2 mean?
-	switch (track->_3D) {
+	switch (track->dataSourceMode) {
 	case 0:
-		return track->_00[track->_04++];
+		return track->baseData[track->programCounter++];
 	case 1:
 	case 2:
-		return FAT_ReadByte(track->_3E, track->_04++);
+		return FAT_ReadByte(track->fileHandle, track->programCounter++);
 	}
 	return 0;
 }
@@ -241,15 +241,17 @@ static BOOL __ConditionCheck(seqp_* track, u8 param_2)
  */
 int Jam_SEQtimeToDSPtime(seqp_* track, s32 param_2, u8 param_3)
 {
-	f32 result;
+	f32 dspTime;
 
-	result = (f32)param_2 * (f32)param_3 / 100.0f;
-	if (track->_33C == 1) {
-		result = result / track->_334;
+	dspTime = (f32)param_2 * (f32)param_3 / 100.0f;
+
+	if (track->timeRelationMode == 1) {
+		dspTime = dspTime / track->tempoFactor;
 	} else {
-		result = result * 120.0f / track->_338;
+		dspTime = dspTime * 120.0f / track->timeBase;
 	}
-	return result;
+
+	return dspTime;
 }
 
 /*
@@ -259,8 +261,10 @@ int Jam_SEQtimeToDSPtime(seqp_* track, s32 param_2, u8 param_3)
  */
 u16 Extend8to16(u8 value)
 {
-	if (value & 0x80)
+	if (value & 0x80) {
 		return value + 0xFF00;
+	}
+
 	return value;
 }
 
@@ -269,57 +273,63 @@ u16 Extend8to16(u8 value)
  * Address:	8000F8E0
  * Size:	0001A8
  */
-void Jam_WriteTimeParam(seqp_* track, u8 param_2)
+void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 {
 	u32 badCompiler;
 
-	s32 moveTime;
-	u8 moveParamIdx;
+	s32 duration;
+	u8 paramIndex;
 	s16 targetValue;
-	MoveParam_* moveParam;
+	MoveParam_* param;
 
-	moveTime     = 0;
-	moveParamIdx = __ByteRead(track);
-	switch (param_2 & 0x0C) {
-	case 0x00:
+	duration   = 0;
+	paramIndex = __ByteRead(track);
+
+	// Extract target value based on controlByte[3:2]
+	switch (controlByte & 0x0C) {
+	case 0x00: // Use register value
 		targetValue = track->regParam.reg[__ByteRead(track)];
 		break;
-	case 0x04:
+	case 0x04: // 8-bit immediate value
 		targetValue = __ByteRead(track);
 		break;
-	case 0x08:
+	case 0x08: // 8-bit value shifted to high byte
 		targetValue = __ByteRead(track) << 8;
 		break;
-	case 0x0C:
+	case 0x0C: // 16-bit immediate value
 		targetValue = __WordRead(track);
 		break;
 	}
-	switch (param_2 & 0x03) {
-	case 0:
-		moveTime = -1;
+
+	// Determine time over which to interpolate the parameter
+	switch (controlByte & 0x03) {
+	case 0: // Immediate (no interpolation)
+		duration = -1;
 		break;
-	case 1:
-		moveTime = track->regParam.reg[__ByteRead(track)];
+	case 1: // Time from register
+		duration = track->regParam.reg[__ByteRead(track)];
 		break;
-	case 2:
-		moveTime = __ByteRead(track);
+	case 2: // 8-bit immediate duration
+		duration = __ByteRead(track);
 		break;
-	case 3:
-		moveTime = __WordRead(track);
+	case 3: // 16-bit immediate duration
+		duration = __WordRead(track);
 		break;
 	}
 
-	moveParam            = &track->timedParam.move[moveParamIdx];
-	moveParam->targValue = targetValue / 32768.0f;
-	if (moveTime >= 0) {
-		moveParam->moveTime = moveTime;
+	param         = &track->timedParam.move[paramIndex];
+	param->target = targetValue / 32768.0f;
+
+	if (duration >= 0) {
+		param->duration = duration;
 	}
-	if (moveParam->moveTime <= 0.0f) {
-		moveParam->currValue  = moveParam->targValue;
-		moveParam->moveAmount = 0.0f;
-		moveParam->moveTime   = 1.0f;
+
+	if (param->duration <= 0.0f) {
+		param->value    = param->target;
+		param->stepSize = 0.0f;
+		param->duration = 1.0f;
 	} else {
-		moveParam->moveAmount = (moveParam->targValue - moveParam->currValue) / moveParam->moveTime;
+		param->stepSize = (param->target - param->value) / param->duration;
 	}
 }
 
@@ -354,8 +364,9 @@ void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 		uVar1 = value;
 		break;
 	}
-	track->regParam.reg[index] = value;
-	track->regParam.param._06  = uVar1;
+
+	track->regParam.reg[index]  = value;
+	track->regParam.param.value = uVar1;
 }
 
 /*
@@ -462,7 +473,7 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 		Jam_WriteRegXY(track, unaff_r27);
 		return;
 	case 0x03:
-		track->regParam.param._06 = r23_oldRegValue - r30_newRegValue;
+		track->regParam.param.value = r23_oldRegValue - r30_newRegValue;
 		return;
 	case 0x0B:
 		r30_newRegValue = r23_oldRegValue - r30_newRegValue;
@@ -526,11 +537,11 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 		break;
 	case 0x2E:
 		r29_regIdx      = 0xd;
-		r30_newRegValue = track->regParam.param._1A & 0xff00 | r30_newRegValue & 0x00ff;
+		r30_newRegValue = track->regParam.param.basePriority & 0xff00 | r30_newRegValue & 0x00ff;
 		break;
 	case 0x2F:
 		r29_regIdx      = 0xd;
-		r30_newRegValue = track->regParam.param._1A & 0x00ff | r30_newRegValue << 8;
+		r30_newRegValue = track->regParam.param.basePriority & 0x00ff | r30_newRegValue << 8;
 		break;
 	case 0x22:
 		Jam_WriteRegDirect(track, 0, r30_newRegValue >> 8);
@@ -550,17 +561,17 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 	}
 
 	track->regParam.reg[r29_regIdx] = r30_newRegValue;
-	track->regParam.param._06       = r28;
+	track->regParam.param.value     = r28;
 
 	if (r29_regIdx == 6) {
 		Osc_Clear_Overwrite(track);
 	}
 	if (r29_regIdx == 7) {
-		track->_3D8 |= 2;
+		track->updateFlags |= SEQTRACK_FLAG_PITCH;
 	}
 	if (r29_regIdx == 0xd) {
-		track->_D8._68 = track->regParam.param._1A | 0x10000;
-		track->_D8._6C = 0;
+		track->parentController.channelPriority = track->regParam.param.basePriority | 0x10000;
+		track->parentController.releaseTime     = 0;
 	}
 }
 
@@ -590,7 +601,7 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 		result = 0;
 		for (i = 15; i >= 0; --i) {
 			result = result << 1; // For some reason, `<<=` prevents `srawi`.
-			if (track->children[i] && track->children[i]->_3C) {
+			if (track->children[i] && track->children[i]->trackState) {
 				result |= 1;
 			}
 		}
@@ -603,10 +614,10 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 		}
 		break;
 	case 0x30:
-		if (track->_08 == 0) {
+		if (track->callStackPointer == 0) {
 			result = 0;
 		} else {
-			result = track->_2C[track->_08 - 1];
+			result = track->loopCounters[track->callStackPointer - 1];
 		}
 		break;
 	default:
@@ -875,7 +886,7 @@ void Jam_RegistTrack(seqp_* track, u32 param_2)
 	size_t i;
 
 	for (i = 0; i < T_LISTS; ++i) {
-		if (param_2 == TRACK_LIST[i]._04) {
+		if (param_2 == TRACK_LIST[i].id) {
 			return;
 		}
 	}
@@ -893,7 +904,7 @@ void Jam_RegistTrack(seqp_* track, u32 param_2)
 		++T_LISTS;
 	}
 	REF_param_2         = &param_2;
-	TRACK_LIST[i]._04   = param_2;
+	TRACK_LIST[i].id    = param_2;
 	TRACK_LIST[i].track = track;
 	track->isRegistered = 1;
 }
@@ -933,7 +944,7 @@ seqp_* Jam_GetTrackHandle(u32 param_1)
 	size_t i;
 
 	for (i = 0; i < T_LISTS; ++i) {
-		if (param_1 == TRACK_LIST[i]._04 && TRACK_LIST[i].track) {
+		if (param_1 == TRACK_LIST[i].id && TRACK_LIST[i].track) {
 			return TRACK_LIST[i].track;
 		}
 	}
@@ -947,10 +958,10 @@ seqp_* Jam_GetTrackHandle(u32 param_1)
  */
 void Jam_InitExtBuffer(OuterParam_* ext)
 {
-	ext->_08 = 0;
-	ext->_0A = 0;
-	ext->_00 = 0;
-	ext->_04 = 0;
+	ext->flags       = 0;
+	ext->updateFlags = 0;
+	ext->isAssigned  = 0;
+	ext->refCount    = 0;
 }
 
 /*
@@ -966,8 +977,8 @@ BOOL Jam_AssignExtBuffer(seqp_* track, OuterParam_* ext)
 	if (!ext) {
 		return FALSE;
 	}
-	track->_2AC = ext;
-	++ext->_04;
+	track->outerParams = ext;
+	++ext->refCount;
 	return TRUE;
 }
 
@@ -984,8 +995,8 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 	if (!ext) {
 		return FALSE;
 	}
-	track->_2B0[index] = ext;
-	ext->_00           = 1;
+	track->childOuterParams[index] = ext;
+	ext->isAssigned                = 1;
 	Jam_AssignExtBuffer(track->children[index], ext);
 	return TRUE;
 }
@@ -1002,10 +1013,10 @@ void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 	if (!ext) {
 		return;
 	}
-	ext->_0A |= 0x80;
-	ext->_08 |= 0x80;
+	ext->updateFlags |= SEQTRACK_FLAG_FIR;
+	ext->flags |= SEQTRACK_FLAG_FIR;
 	for (i = 0; i < 8; ++i) {
-		ext->_24[i] = param_2[i];
+		ext->firCoefficients[i] = param_2[i];
 	}
 }
 
@@ -1014,37 +1025,39 @@ void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
  * Address:	800107E0
  * Size:	0000A4
  */
-void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 param_3)
+void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 {
 	f32* member;
 
 	if (!ext) {
 		return;
 	}
-	switch (param_3) {
-	case 0x01:
-		member = &ext->_0C;
+
+	switch (updateFlags) {
+	case SEQTRACK_FLAG_VOLUME:
+		member = &ext->volume;
 		break;
-	case 0x02:
-		member = &ext->_18;
+	case SEQTRACK_FLAG_PITCH:
+		member = &ext->pitch;
 		break;
-	case 0x04:
-		member = &ext->_10;
+	case SEQTRACK_FLAG_FXMIX:
+		member = &ext->fxMix;
 		break;
-	case 0x10:
-		member = &ext->_14;
+	case SEQTRACK_FLAG_DOLBY:
+		member = &ext->dolby;
 		break;
-	case 0x08:
-		member = &ext->_1C;
+	case SEQTRACK_FLAG_PAN:
+		member = &ext->pan;
 		break;
-	case 0x40:
-		member = &ext->_20;
+	case SEQTRACK_FLAG_TEMPO:
+		member = &ext->tempo;
 		break;
 	default:
 		return;
 	}
+
 	*member = value;
-	ext->_0A |= param_3;
+	ext->updateFlags |= updateFlags;
 }
 
 /*
@@ -1057,8 +1070,8 @@ void Jam_OnExtSwitchD(OuterParam_* ext, u16 param_2)
 	if (!ext) {
 		return;
 	}
-	ext->_08 |= param_2;
-	ext->_0A |= param_2;
+	ext->flags |= param_2;
+	ext->updateFlags |= param_2;
 }
 
 /*
@@ -1071,8 +1084,8 @@ void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
 	if (!ext) {
 		return;
 	}
-	ext->_08 ^= ext->_08 & param_2;
-	ext->_0A |= param_2;
+	ext->flags ^= ext->flags & param_2;
+	ext->updateFlags |= param_2;
 }
 
 /*
@@ -1105,7 +1118,7 @@ void Jam_SetExtParam(f32 param_1, seqp_* track, u8 param_3)
 	if (!track) {
 		return;
 	}
-	Jam_SetExtParamD(param_1, track->_2AC, param_3);
+	Jam_SetExtParamD(param_1, track->outerParams, param_3);
 }
 
 /*
@@ -1118,7 +1131,7 @@ void Jam_OnExtSwitch(seqp_* track, u16 param_2)
 	if (!track) {
 		return;
 	}
-	Jam_OnExtSwitchD(track->_2AC, param_2);
+	Jam_OnExtSwitchD(track->outerParams, param_2);
 }
 
 /*
@@ -1131,7 +1144,7 @@ void Jam_OffExtSwitch(seqp_* track, u16 param_2)
 	if (!track) {
 		return;
 	}
-	Jam_OffExtSwitchD(track->_2AC, param_2);
+	Jam_OffExtSwitchD(track->outerParams, param_2);
 }
 
 /*
@@ -1164,7 +1177,7 @@ void Jam_SetExtParamP(f32 param_1, seqp_* track, u8 index, u8 param_4)
 	if (!track) {
 		return;
 	}
-	Jam_SetExtParamD(param_1, track->_2B0[index], param_4);
+	Jam_SetExtParamD(param_1, track->childOuterParams[index], param_4);
 }
 
 /*
@@ -1177,7 +1190,7 @@ void Jam_OnExtSwitchP(seqp_* track, u8 index, u16 param_3)
 	if (!track) {
 		return;
 	}
-	Jam_OnExtSwitchD(track->_2B0[index], param_3);
+	Jam_OnExtSwitchD(track->childOuterParams[index], param_3);
 }
 
 /*
@@ -1190,7 +1203,7 @@ void Jam_OffExtSwitchP(seqp_* track, u8 index, u16 param_3)
 	if (!track) {
 		return;
 	}
-	Jam_OffExtSwitchD(track->_2B0[index], param_3);
+	Jam_OffExtSwitchD(track->childOuterParams[index], param_3);
 }
 
 /*
@@ -1261,84 +1274,109 @@ static f32 __PanCalc(f32 param_1, f32 param_2, f32 param_3, u8 param_4)
  */
 void Jam_UpdateTrackAll(seqp_* track)
 {
-	f32 f31;   // f31
-	f32 f30;   // f30
-	f32 r29;   // f29
-	f32 f28;   // f28
-	f32 f27;   // f27
-	f32 f26_1; // f26
-	f32 f26_2; // f26
+	f32 pitchCents;
+	f32 volumeValue;
+	f32 panValue;
+	f32 fxMixValue;
+	f32 dolbyValue;
+	f32 distance;
+	f32 parentDistance;
 
-	// Used for `OSf32tos8`
-	f32 local_50;
-	s8 local_54;
-	u8 uVar7;
+	f32 panScaled;
+	s8 pan8bit;
+	u8 panDelayLeft;
 
 	size_t i;
 
-	f26_1 = track->regParam.param._10[3] / 32767.0f;
-	if (track->_3F != 4) {
-		track->_D8._68 = track->regParam.param._1A | 0x10000;
-		track->_D8._6C = 0;
-		uVar7          = 0;
-		local_50       = track->timedParam.inner._110.currValue * 128.0f;
-		OSf32tos8(&local_50, &local_54);
-		if (local_54 < 0) {
-			uVar7    = -local_54;
-			local_54 = 0;
+	distance = track->regParam.param.arguments[3] / 32767.0f;
+	if (track->flags != 4) {
+		track->parentController.channelPriority = track->regParam.param.basePriority | 0x10000;
+		track->parentController.releaseTime     = 0;
+
+		panDelayLeft = 0;
+		panScaled    = track->timedParam.inner._110.value * 128.0f;
+
+		OSf32tos8(&panScaled, &pan8bit);
+		if (pan8bit < 0) {
+			panDelayLeft = -pan8bit;
+			pan8bit      = 0;
 		}
-		track->_D8._60    = 0x10;
-		track->_D8._5A[0] = uVar7;
-		track->_D8._5A[1] = local_54;
-		f30               = track->timedParam.inner.volume.currValue;
-		if (track->_39E > 0) {
-			f30 = 0.0f;
+
+		track->parentController.maxDelay        = 0x10;
+		track->parentController.masterLevels[0] = panDelayLeft;
+		track->parentController.masterLevels[1] = pan8bit;
+
+		// Read base volume; if muted, force to zero
+		volumeValue = track->timedParam.inner.volume.value;
+		if (track->muteFlag > 0) {
+			volumeValue = 0.0f;
 		}
-		f31 = Jam_PitchToCent(track->timedParam.inner.pitch.currValue, track->regParam.param._0E);
-		r29 = track->timedParam.inner.pan.currValue;
-		f28 = track->timedParam.inner.fxmix.currValue;
-		f27 = track->timedParam.inner.dolby.currValue;
-		if (track->_2AC) {
-			if (track->_2AC->_08 & 0x01) {
-				f30 = f30 * track->_2AC->_0C;
+
+		// Convert pitch to cents, read pan/fxmix/dolby from timed parameters
+		pitchCents = Jam_PitchToCent(track->timedParam.inner.pitch.value, track->regParam.param.pitchScale);
+		panValue   = track->timedParam.inner.pan.value;
+		fxMixValue = track->timedParam.inner.fxmix.value;
+		dolbyValue = track->timedParam.inner.dolby.value;
+
+		if (track->outerParams) {
+			if (track->outerParams->flags & SEQTRACK_FLAG_VOLUME) {
+				volumeValue = volumeValue * track->outerParams->volume;
 			}
-			if (track->_2AC->_08 & 0x02) {
-				f31 = f31 * track->_2AC->_18;
+
+			if (track->outerParams->flags & SEQTRACK_FLAG_PITCH) {
+				pitchCents = pitchCents * track->outerParams->pitch;
 			}
-			if (track->_2AC->_08 & 0x04) {
-				f28 = __PanCalc(f28, track->_2AC->_10, f26_1, track->_3DC[1]);
+
+			if (track->outerParams->flags & SEQTRACK_FLAG_FXMIX) {
+				fxMixValue = __PanCalc(fxMixValue, track->outerParams->fxMix, distance, track->panCalcTypes[1]);
 			}
-			if (track->_2AC->_08 & 0x10) {
-				f27 = __PanCalc(f27, track->_2AC->_14, f26_1, track->_3DC[2]);
+
+			if (track->outerParams->flags & SEQTRACK_FLAG_DOLBY) {
+				dolbyValue = __PanCalc(dolbyValue, track->outerParams->dolby, distance, track->panCalcTypes[2]);
 			}
-			if (track->_2AC->_08 & 0x08) {
-				r29 = __PanCalc(r29, track->_2AC->_1C, f26_1, track->_3DC[0]);
+
+			if (track->outerParams->flags & SEQTRACK_FLAG_PAN) {
+				panValue = __PanCalc(panValue, track->outerParams->pan, distance, track->panCalcTypes[0]);
 			}
 		}
-		if (!track->parent || (track->_3F & 1)) {
-			track->_D8._18 = f30;
-			track->_D8._1C = f31;
-			track->_D8._20 = r29;
-			track->_D8._24 = f28;
-			track->_D8._28 = f27;
+
+		// If there is no parent or this track overrides its parent (trackFlags & 1),
+		// write the final values directly into the channel state
+		if (!track->parent || (track->flags & 1)) {
+			track->parentController.volume = volumeValue;
+			track->parentController.pitch  = pitchCents;
+			track->parentController.pan    = panValue;
+			track->parentController.fxmix  = fxMixValue;
+			track->parentController.dolby  = dolbyValue;
 		} else {
-			f26_2          = track->regParam.param._10[4] / 32767.0f;
-			track->_D8._18 = track->parent->_D8._18 * f30;
-			track->_D8._1C = track->parent->_D8._1C * f31;
-			track->_D8._20 = __PanCalc(r29, track->parent->_D8._20, f26_2, track->_3DF[0]);
-			track->_D8._24 = __PanCalc(f28, track->parent->_D8._24, f26_2, track->_3DF[1]);
-			track->_D8._28 = __PanCalc(f27, track->parent->_D8._28, f26_2, track->_3DF[2]);
-			if (track->_2AC && (track->_2AC->_08 & 0x80)) {
+			// Otherwise, combine with parent’s values using a second attenuation factor
+			parentDistance = track->regParam.param.arguments[4] / 32767.0f;
+
+			track->parentController.volume = track->parent->parentController.volume * volumeValue;
+			track->parentController.pitch  = track->parent->parentController.pitch * pitchCents;
+			track->parentController.pan
+			    = __PanCalc(panValue, track->parent->parentController.pan, parentDistance, track->parentPanCalcTypes[0]);
+			track->parentController.fxmix
+			    = __PanCalc(fxMixValue, track->parent->parentController.fxmix, parentDistance, track->parentPanCalcTypes[1]);
+			track->parentController.dolby
+			    = __PanCalc(dolbyValue, track->parent->parentController.dolby, parentDistance, track->parentPanCalcTypes[2]);
+
+			// If outerParams specify a custom FIR filter, copy those coefficients
+			if (track->outerParams && (track->outerParams->flags & SEQTRACK_FLAG_FIR)) {
 				for (i = 0; i < 8; ++i) {
-					track->_D8._2C[i] = track->_2AC->_24[i];
+					track->parentController.firCoefficients[i] = track->outerParams->firCoefficients[i];
 				}
-				track->_D8._61 = 8;
+
+				track->parentController.filterMode = 8;
 			}
+
+			// Read inner IIR coefficients (normalized floats) and convert to 16-bit
 			for (i = 0; i < 4; ++i) {
-				track->_D8._3C[i] = track->timedParam.inner.IIRs[i].currValue * 32767.0f;
+				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].value * 32767.0f;
 			}
-			track->_D8._61 |= 0x20;
-			track->_D8._4C = track->timedParam.inner._50.currValue * 32767.0f;
+
+			track->parentController.filterMode |= 0x20;
+			track->parentController.distFilter = track->timedParam.inner.distFilter.value * 32767.0f;
 		}
 	}
 }
@@ -1365,162 +1403,182 @@ static void OSf32tos8(register f32* in, register s8* out)
  * Address:	80010E20
  * Size:	0004A8
  */
-void Jam_UpdateTrack(seqp_* track, u32 param_2)
+void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 {
 	// A bizarre way the devs attempted to re-use some repeated AND operations in this function,
 	// which the compiler can already see and optimize in its own way, causes regalloc inflation.
-	u32 param_2_and_01;
-	u32 param_2_and_02;
-	u32 param_2_and_08;
-	u32 param_2_and_04;
-	u32 param_2_and_10;
+	u32 updateVolumeFlag;
+	u32 updatePitchFlag;
+	u32 updatePanFlag;
+	u32 updateFxMixFlag;
+	u32 updateDolbyFlag;
 
-	f32 unaff_f31; // f31
-	f32 unaff_f30; // f30
-	f32 unaff_f29; // f29
-	f32 unaff_f28; // f28
-	f32 unaff_f27; // f27
-	f32 dVar15_1;
-	f32 dVar15_2;
+	f32 computedVolume; // f31
+	f32 unaff_f30;      // f30
+	f32 unaff_f29;      // f29
+	f32 unaff_f28;      // f28
+	f32 unaff_f27;      // f27
+	f32 regionAttenuation;
+	f32 offset;
 	f32 dVar15_3;
 
 	size_t i;
 
 	// Used for `OSf32tos8`
-	f32 local_64;
-	s8 local_68;
-	u8 uVar11;
+	f32 masterLevelF32;
+	s8 masterRight;
+	u8 masterLeft;
 
-	dVar15_1 = track->regParam.param._10[3] / 32767.0f;
-	if (track->_3F != 0x04) {
-		if (param_2 & 0x20000) {
-			uVar11   = 0;
-			local_64 = track->timedParam.inner._110.currValue * 128.0f;
-			OSf32tos8(&local_64, &local_68);
-			if (local_68 < 0) {
-				uVar11   = -local_68;
-				local_68 = 0;
+	regionAttenuation = track->regParam.param.arguments[3] / 32767.0f;
+
+	if (track->flags != 0x04) {
+
+		// Update master pan delay levels if requested
+		if (updateFlags & SEQTRACK_FLAG_MASTER_LEVEL) {
+			masterLeft     = 0;
+			masterLevelF32 = track->timedParam.inner._110.value * 128.0f;
+			OSf32tos8(&masterLevelF32, &masterRight);
+			if (masterRight < 0) {
+				masterLeft  = -masterRight;
+				masterRight = 0;
 			}
-			track->_D8._5A[0] = uVar11;
-			track->_D8._5A[1] = local_68;
+			track->parentController.masterLevels[0] = masterLeft;
+			track->parentController.masterLevels[1] = masterRight;
 		}
-		if (param_2 & 0x40) {
-			if (!track->parent) {
-				Jam_UpdateTempo(track);
-			}
+
+		// Tempo update (only if top-level track)
+		if (updateFlags & SEQTRACK_FLAG_TEMPO && !track->parent) {
+			Jam_UpdateTempo(track);
 		}
-		param_2_and_01 = param_2 & 0x01;
-		if (param_2_and_01) {
-			unaff_f31 = track->timedParam.inner.volume.currValue;
-			if (track->_39E != 0) {
-				unaff_f31 = 0.0f;
+
+		updateVolumeFlag = updateFlags & SEQTRACK_FLAG_VOLUME;
+		if (updateVolumeFlag) {
+			computedVolume = track->timedParam.inner.volume.value;
+			if (track->muteFlag != 0) {
+				computedVolume = 0.0f;
 			}
-			if (track->_2AC && ((track->_2AC->_08 & 1) != 0)) {
-				unaff_f31 = (unaff_f31 * track->_2AC->_0C);
+
+			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_VOLUME) != 0)) {
+				computedVolume = (computedVolume * track->outerParams->volume);
 			}
-			if ((track->_39C != 0) && ((track->_39D & 1) != 0)) {
-				unaff_f31 = (unaff_f31 * (track->timedParam).inner._100.currValue);
-			}
-		}
-		param_2_and_02 = param_2 & 0x02;
-		if (param_2_and_02) {
-			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.currValue, track->regParam.param._0E);
-			if (track->_2AC && ((track->_2AC->_08 & 2) != 0)) {
-				unaff_f30 = (unaff_f30 * track->_2AC->_18);
-			}
-		}
-		param_2_and_08 = param_2 & 0x08;
-		if (param_2_and_08) {
-			unaff_f29 = (track->timedParam).inner.pan.currValue;
-			if (track->_2AC && ((track->_2AC->_08 & 8) != 0)) {
-				unaff_f29 = __PanCalc(unaff_f29, track->_2AC->_1C, dVar15_1, track->_3DC[0]);
+
+			if ((track->pauseFlag != 0) && ((track->pauseStatus & 1) != 0)) {
+				computedVolume = (computedVolume * (track->timedParam).inner._100.value);
 			}
 		}
-		param_2_and_04 = param_2 & 0x04;
-		if (param_2_and_04) {
-			unaff_f28 = (track->timedParam).inner.fxmix.currValue;
-			if (track->_2AC && ((track->_2AC->_08 & 4) != 0)) {
-				unaff_f28 = __PanCalc(unaff_f28, track->_2AC->_10, dVar15_1, track->_3DC[1]);
+
+		updatePitchFlag = updateFlags & SEQTRACK_FLAG_PITCH;
+		if (updatePitchFlag) {
+			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.value, track->regParam.param.pitchScale);
+			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_PITCH) != 0)) {
+				unaff_f30 = (unaff_f30 * track->outerParams->pitch);
 			}
 		}
-		param_2_and_10 = param_2 & 0x10;
-		if (param_2_and_10) {
-			unaff_f27 = (track->timedParam).inner.dolby.currValue;
-			if (track->_2AC && ((track->_2AC->_08 & 0x10) != 0)) {
-				unaff_f27 = __PanCalc(unaff_f27, track->_2AC->_14, dVar15_1, track->_3DC[2]);
+
+		updatePanFlag = updateFlags & SEQTRACK_FLAG_PAN;
+		if (updatePanFlag) {
+			unaff_f29 = (track->timedParam).inner.pan.value;
+			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_PAN) != 0)) {
+				unaff_f29 = __PanCalc(unaff_f29, track->outerParams->pan, regionAttenuation, track->panCalcTypes[0]);
 			}
 		}
-		if (param_2 & 0xf000) {
+
+		updateFxMixFlag = updateFlags & SEQTRACK_FLAG_FXMIX;
+		if (updateFxMixFlag) {
+			unaff_f28 = (track->timedParam).inner.fxmix.value;
+			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_FXMIX) != 0)) {
+				unaff_f28 = __PanCalc(unaff_f28, track->outerParams->fxMix, regionAttenuation, track->panCalcTypes[1]);
+			}
+		}
+
+		updateDolbyFlag = updateFlags & SEQTRACK_FLAG_DOLBY;
+		if (updateDolbyFlag) {
+			unaff_f27 = (track->timedParam).inner.dolby.value;
+			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_DOLBY) != 0)) {
+				unaff_f27 = __PanCalc(unaff_f27, track->outerParams->dolby, regionAttenuation, track->panCalcTypes[2]);
+			}
+		}
+
+		// IIR flag is set
+		if (updateFlags & SEQTRACK_FLAG_IIR) {
 			for (i = 0; i < 4; ++i) {
-				track->_D8._3C[i] = track->timedParam.inner.IIRs[i].currValue * 32767.0f;
+				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].value * 32767.0f;
 			}
-			track->_D8._61 |= 0x20;
+
+			track->parentController.filterMode |= 0x20;
 		}
-		if (track->_2AC) {
-			if (param_2 & 0x80 && (track->_2AC->_08 & 0x80)) {
+
+		if (track->outerParams) {
+			if (updateFlags & SEQTRACK_FLAG_FIR && (track->outerParams->flags & SEQTRACK_FLAG_FIR)) {
 				for (i = 0; i < 8; ++i) {
-					track->_D8._2C[i] = track->_2AC->_24[i];
+					track->parentController.firCoefficients[i] = track->outerParams->firCoefficients[i];
 				}
-				track->_D8._61 = (track->_D8._61 & 0x20) + 8;
+
+				track->parentController.filterMode = (track->parentController.filterMode & 0x20) + 8;
 			}
 		}
-		if (param_2 & 0x20) {
-			track->_D8._4C = track->timedParam.inner._50.currValue * 32767.0f;
+
+		if (updateFlags & SEQTRACK_FLAG_DISTFILT) {
+			track->parentController.distFilter = track->timedParam.inner.distFilter.value * 32767.0f;
 		}
+
 		for (i = 0; i < 2; ++i) {
-			if (track->_370[i] == 0x0E) {
-				dVar15_2 = Bank_OscToOfs(&track->oscillators[i], &track->_3E8[i]);
+			if (track->oscillatorRouting[i] == 0x0E) {
+				offset = Bank_OscToOfs(&track->oscillators[i], &track->oscillatorParams[i]);
 				switch (track->oscillators[i].mMode) {
 				case 1:
-					unaff_f30 = unaff_f30 * dVar15_2;
+					unaff_f30 = unaff_f30 * offset;
 					break;
 				case 0:
-					unaff_f31 = unaff_f31 * dVar15_2;
+					computedVolume = computedVolume * offset;
 					break;
 				case 2:
-					unaff_f29 = unaff_f29 * dVar15_2;
+					unaff_f29 = unaff_f29 * offset;
 					break;
 				case 3:
-					unaff_f28 = unaff_f28 * dVar15_2;
+					unaff_f28 = unaff_f28 * offset;
 					break;
 				case 4:
-					unaff_f27 = unaff_f27 * dVar15_2;
+					unaff_f27 = unaff_f27 * offset;
 					break;
 				}
 			}
 		}
-		if (!track->parent || ((track->_3F & 1) != 0)) {
-			if (param_2_and_01) {
-				track->_D8._18 = unaff_f31;
+		if (!track->parent || ((track->flags & 1) != 0)) {
+			if (updateVolumeFlag) {
+				track->parentController.volume = computedVolume;
 			}
-			if (param_2_and_02) {
-				track->_D8._1C = unaff_f30;
+			if (updatePitchFlag) {
+				track->parentController.pitch = unaff_f30;
 			}
-			if (param_2_and_08) {
-				track->_D8._20 = unaff_f29;
+			if (updatePanFlag) {
+				track->parentController.pan = unaff_f29;
 			}
-			if (param_2_and_04) {
-				track->_D8._24 = unaff_f28;
+			if (updateFxMixFlag) {
+				track->parentController.fxmix = unaff_f28;
 			}
-			if (param_2_and_10 != 0) {
-				track->_D8._28 = unaff_f27;
+			if (updateDolbyFlag != 0) {
+				track->parentController.dolby = unaff_f27;
 			}
 		} else {
-			dVar15_3 = track->regParam.param._10[4] / 32767.0f;
-			if (param_2_and_01) {
-				track->_D8._18 = track->parent->_D8._18 * unaff_f31;
+			dVar15_3 = track->regParam.param.arguments[4] / 32767.0f;
+			if (updateVolumeFlag) {
+				track->parentController.volume = track->parent->parentController.volume * computedVolume;
 			}
-			if (param_2_and_02) {
-				track->_D8._1C = track->parent->_D8._1C * unaff_f30;
+			if (updatePitchFlag) {
+				track->parentController.pitch = track->parent->parentController.pitch * unaff_f30;
 			}
-			if (param_2_and_08) {
-				track->_D8._20 = __PanCalc(unaff_f29, track->parent->_D8._20, dVar15_3, track->_3DF[0]);
+			if (updatePanFlag) {
+				track->parentController.pan
+				    = __PanCalc(unaff_f29, track->parent->parentController.pan, dVar15_3, track->parentPanCalcTypes[0]);
 			}
-			if (param_2_and_04) {
-				track->_D8._24 = __PanCalc(unaff_f28, track->parent->_D8._24, dVar15_3, track->_3DF[1]);
+			if (updateFxMixFlag) {
+				track->parentController.fxmix
+				    = __PanCalc(unaff_f28, track->parent->parentController.fxmix, dVar15_3, track->parentPanCalcTypes[1]);
 			}
-			if (param_2_and_10) {
-				track->_D8._28 = __PanCalc(unaff_f27, track->parent->_D8._28, dVar15_3, track->_3DF[2]);
+			if (updateDolbyFlag) {
+				track->parentController.dolby
+				    = __PanCalc(unaff_f27, track->parent->parentController.dolby, dVar15_3, track->parentPanCalcTypes[2]);
 			}
 		}
 	}
@@ -1538,17 +1596,17 @@ void Jam_UpdateTempo(seqp_* track)
 	size_t* REF_i;
 
 	if (!track->parent) {
-		track->_334 = (float)track->_338 * (float)track->_33A / (JAC_DAC_RATE * 60.0f / 80.0f);
-		if ((track->_2AC->_08 & 0x40) != 0) {
-			track->_334 = track->_334 * track->_2AC->_20;
+		track->tempoFactor = (float)track->timeBase * (float)track->tempo / (JAC_DAC_RATE * 60.0f / 80.0f);
+		if ((track->outerParams->flags & SEQTRACK_FLAG_TEMPO) != 0) {
+			track->tempoFactor = track->tempoFactor * track->outerParams->tempo;
 		}
 	} else {
-		track->_334 = track->parent->_334;
-		track->_338 = track->parent->_338;
+		track->tempoFactor = track->parent->tempoFactor;
+		track->timeBase    = track->parent->timeBase;
 	}
 	for (i = 0; i < 16; ++i) {
 		REF_i = &i;
-		if (track->children[i] && track->children[i]->_3C) {
+		if (track->children[i] && track->children[i]->trackState) {
 			Jam_UpdateTempo(track->children[i]);
 		}
 	}
@@ -1565,18 +1623,18 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 	u16 mask;
 
 	if (track->parent) {
-		track->_39E = track->parent->_39E | param_2;
-		mask        = 1 << (track->_88 & 0xf);
+		track->muteFlag = track->parent->muteFlag | param_2;
+		mask            = 1 << (track->trackId & 0xf);
 		if (!param_2) {
-			track->parent->_3A0 &= ~mask;
+			track->parent->childMuteMask &= ~mask;
 		} else {
-			track->parent->_3A0 |= mask;
+			track->parent->childMuteMask |= mask;
 		}
 	} else {
-		track->_39E = param_2;
+		track->muteFlag = param_2;
 	}
-	track->_3D8 |= 1;
-	if (track->_39E && (track->_39D & 0x20)) {
+	track->updateFlags |= SEQTRACK_FLAG_VOLUME;
+	if (track->muteFlag && (track->pauseStatus & 0x20)) {
 		for (i = 0; i < 8; ++i) {
 			NoteOFF_R(track, (u8)i, 10);
 		};
@@ -1605,20 +1663,20 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 
 	size_t* REF_i;
 
-	track->_39C = 1;
-	if (track->_39D & 0x01) {
-		track->_3D8 |= 1;
+	track->pauseFlag = 1;
+	if (track->pauseStatus & 0x01) {
+		track->updateFlags |= SEQTRACK_FLAG_VOLUME;
 	}
-	if (track->_39D & 0x04) {
+	if (track->pauseStatus & 0x04) {
 		for (i = 0; i < 8; ++i) {
 			REF_i = &i;
 			NoteOFF_R(track, i, 10);
 		}
 	}
-	if (track->_39D & 0x08) {
+	if (track->pauseStatus & 0x08) {
 		for (i = 0; i < 8; ++i) {
-			pjVar1 = track->_9C[i];
-			if (pjVar1 && track->_BC[i] == pjVar1->_126) {
+			pjVar1 = track->channels[i];
+			if (pjVar1 && track->activeSoundIds[i] == pjVar1->channelId) {
 				UpdatePause_1Shot(pjVar1, 1);
 			}
 		}
@@ -1626,7 +1684,7 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 	Jam_SetInterrupt(track, 0);
 	if (param_2 == TRUE) {
 		for (i = 0; i < 16; ++i) {
-			if (track->children[i] && track->children[i]->_3C) {
+			if (track->children[i] && track->children[i]->trackState) {
 				Jam_PauseTrack(track->children[i], 1);
 			}
 		}
@@ -1645,19 +1703,19 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 
 	size_t* REF_i;
 
-	track->_39C = 0;
-	track->_3D8 |= 1;
+	track->pauseFlag = 0;
+	track->updateFlags |= SEQTRACK_FLAG_VOLUME;
 	for (i = 0; i < 8; ++i) {
 		REF_i  = &i;
-		pjVar1 = track->_9C[i];
-		if (pjVar1 && track->_BC[i] == pjVar1->_126) {
+		pjVar1 = track->channels[i];
+		if (pjVar1 && track->activeSoundIds[i] == pjVar1->channelId) {
 			UpdatePause_1Shot(pjVar1, 0);
 		}
 	}
 	Jam_SetInterrupt(track, 1);
 	if (param_2 == TRUE) {
 		for (i = 0; i < 16; ++i) {
-			if (track->children[i] && track->children[i]->_3C) {
+			if (track->children[i] && track->children[i]->trackState) {
 				Jam_UnPauseTrack(track->children[i], 1);
 			}
 		}
@@ -1671,8 +1729,8 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
  */
 void Jam_SetInterrupt(seqp_* track, u16 param_2)
 {
-	if (track->_3A6 & (1 << param_2)) {
-		track->_3A5 |= (1 << param_2);
+	if (track->interruptEnable & (1 << param_2)) {
+		track->interruptPending |= (1 << param_2);
 	}
 }
 
@@ -1686,18 +1744,18 @@ BOOL Jam_TryInterrupt(seqp_* track)
 	int i;
 	u32 mask;
 
-	if (track->_3A4) {
+	if (track->interruptActive) {
 		return FALSE;
 	}
 	for (i = 0; i < 8; ++i) {
 		mask = 1 << i;
-		if ((track->_3A6 & mask) && (track->_3A5 & mask)) {
-			track->_3C8 = track->_04;
-			track->_04  = track->_3A8[i];
-			track->_3A4 = mask;
-			track->_3CC = track->_8C;
-			track->_8C  = 0;
-			track->_3A5 ^= mask;
+		if ((track->interruptEnable & mask) && (track->interruptPending & mask)) {
+			track->savedProgramCounter = track->programCounter;
+			track->programCounter      = track->interruptAddresses[i];
+			track->interruptActive     = mask;
+			track->_3CC                = track->_8C;
+			track->_8C                 = 0;
+			track->interruptPending ^= mask;
 			return TRUE;
 		}
 	}
@@ -1737,8 +1795,8 @@ static u32 Cmd_OpenTrackBros()
  */
 static u32 Cmd_Call()
 {
-	SEQ_P->_0C[SEQ_P->_08++] = SEQ_P->_04;
-	SEQ_P->_04               = SEQ_ARG[0];
+	SEQ_P->callStack[SEQ_P->callStackPointer++] = SEQ_P->programCounter;
+	SEQ_P->programCounter                       = SEQ_ARG[0];
 	return 0;
 }
 
@@ -1771,10 +1829,11 @@ static u32 Cmd_CallF()
 		uVar2 = __24Read(SEQ_P);
 	}
 	if ((u8)__ConditionCheck(SEQ_P, bVar1 & 0x0f) == TRUE) {
-		if (SEQ_CMD == 0xC4) {
-			SEQ_P->_0C[SEQ_P->_08++] = SEQ_P->_04;
+		if (SEQ_CMD == (0xC0 + CMD_CALL_F)) {
+			SEQ_P->callStack[SEQ_P->callStackPointer++] = SEQ_P->programCounter;
 		}
-		SEQ_P->_04 = uVar2;
+
+		SEQ_P->programCounter = uVar2;
 	}
 	return 0;
 }
@@ -1786,7 +1845,7 @@ static u32 Cmd_CallF()
  */
 static u32 Cmd_Ret()
 {
-	SEQ_P->_04 = SEQ_P->_0C[--SEQ_P->_08];
+	SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackPointer];
 	return 0;
 }
 
@@ -1799,7 +1858,7 @@ static u32 Cmd_RetF()
 {
 	// But why cast it...?  And why check if it explicitly equals TRUE...?
 	if ((u8)__ConditionCheck(SEQ_P, SEQ_ARG[0] & 0x0f) == TRUE) {
-		SEQ_P->_04 = SEQ_P->_0C[--SEQ_P->_08];
+		SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackPointer];
 	}
 	return 0;
 }
@@ -1811,7 +1870,7 @@ static u32 Cmd_RetF()
  */
 static u32 Cmd_Jmp()
 {
-	SEQ_P->_04 = SEQ_ARG[1];
+	SEQ_P->programCounter = SEQ_ARG[1];
 	return 0;
 }
 
@@ -1832,8 +1891,8 @@ static u32 Cmd_JmpF()
  */
 static u32 Cmd_LoopS()
 {
-	SEQ_P->_0C[SEQ_P->_08]   = SEQ_P->_04;
-	SEQ_P->_2C[SEQ_P->_08++] = SEQ_ARG[0];
+	SEQ_P->callStack[SEQ_P->callStackPointer]      = SEQ_P->programCounter;
+	SEQ_P->loopCounters[SEQ_P->callStackPointer++] = SEQ_ARG[0];
 	return 0;
 }
 
@@ -1846,21 +1905,21 @@ static u32 Cmd_LoopE()
 {
 	u16 uVar1;
 
-	if (SEQ_P->_08 == 0) {
+	if (SEQ_P->callStackPointer == 0) {
 		return 0x80;
 	}
 
-	uVar1 = SEQ_P->_2C[SEQ_P->_08 - 1];
+	uVar1 = SEQ_P->loopCounters[SEQ_P->callStackPointer - 1];
 	if (uVar1 != 0) {
 		uVar1 -= 1;
 	}
 	if (uVar1 == 0) {
-		SEQ_P->_08 -= 1;
+		SEQ_P->callStackPointer -= 1;
 		return 0;
 	}
 
-	SEQ_P->_2C[SEQ_P->_08 - 1] = uVar1;
-	SEQ_P->_04                 = SEQ_P->_0C[SEQ_P->_08 - 1];
+	SEQ_P->loopCounters[SEQ_P->callStackPointer - 1] = uVar1;
+	SEQ_P->programCounter                            = SEQ_P->callStack[SEQ_P->callStackPointer - 1];
 	return 0;
 }
 
@@ -1931,7 +1990,7 @@ static u32 Cmd_WaitReg()
  */
 static u32 Cmd_ConnectName()
 {
-	SEQ_P->_84 = SEQ_ARG[0] << 16 | SEQ_ARG[1];
+	SEQ_P->connectionId = SEQ_ARG[0] << 16 | SEQ_ARG[1];
 	return 0;
 }
 
@@ -1965,7 +2024,7 @@ static u32 Cmd_ChildWritePort()
 static u32 Cmd_SetLastNote()
 {
 	SEQ_P->_D5 = SEQ_ARG[0];
-	SEQ_P->_D5 += SEQ_P->_397;
+	SEQ_P->_D5 += SEQ_P->finalTranspose;
 	return 0;
 }
 
@@ -1976,7 +2035,7 @@ static u32 Cmd_SetLastNote()
  */
 static u32 Cmd_TimeRelate()
 {
-	SEQ_P->_33C = SEQ_ARG[0];
+	SEQ_P->timeRelationMode = SEQ_ARG[0];
 	return 0;
 }
 
@@ -2026,11 +2085,11 @@ static u32 Cmd_SimpleADSR()
  */
 static u32 Cmd_Transpose()
 {
-	SEQ_P->_396 = SEQ_ARG[0];
+	SEQ_P->transpose = SEQ_ARG[0];
 	if (SEQ_P->parent) {
-		SEQ_P->_397 = SEQ_P->parent->_396 + SEQ_P->_396;
+		SEQ_P->finalTranspose = SEQ_P->parent->transpose + SEQ_P->transpose;
 	} else {
-		SEQ_P->_397 = SEQ_P->_396;
+		SEQ_P->finalTranspose = SEQ_P->transpose;
 	}
 	return 0;
 }
@@ -2058,10 +2117,11 @@ static u32 Cmd_CloseTrack()
  */
 static u32 Cmd_OutSwitch()
 {
-	if (SEQ_P->_2AC) {
-		SEQ_P->_2AC->_08 = SEQ_ARG[0];
-		SEQ_P->_2AC->_0A = -1;
+	if (SEQ_P->outerParams) {
+		SEQ_P->outerParams->flags       = SEQ_ARG[0];
+		SEQ_P->outerParams->updateFlags = -1;
 	}
+
 	return 0;
 }
 
@@ -2084,7 +2144,7 @@ static u32 Cmd_UpdateSync()
 static u32 Cmd_BusConnect()
 {
 	if (SEQ_ARG[0] < 6) {
-		SEQ_P->_D8._4E[SEQ_ARG[0]] = SEQ_ARG[1];
+		SEQ_P->parentController.busConnect[SEQ_ARG[0]] = SEQ_ARG[1];
 	}
 	return 0;
 }
@@ -2096,7 +2156,7 @@ static u32 Cmd_BusConnect()
  */
 static u32 Cmd_PauseStatus()
 {
-	SEQ_P->_39D = SEQ_ARG[0];
+	SEQ_P->pauseStatus = SEQ_ARG[0];
 	return 0;
 }
 
@@ -2107,8 +2167,8 @@ static u32 Cmd_PauseStatus()
  */
 static u32 Cmd_SetInterrupt()
 {
-	SEQ_P->_3A6 |= (1 << SEQ_ARG[0]);
-	SEQ_P->_3A8[SEQ_ARG[0]] = SEQ_ARG[1];
+	SEQ_P->interruptEnable |= (1 << SEQ_ARG[0]);
+	SEQ_P->interruptAddresses[SEQ_ARG[0]] = SEQ_ARG[1];
 	return 0;
 }
 
@@ -2122,7 +2182,7 @@ static u32 Cmd_DisInterrupt()
 	u8 arg;
 	arg = SEQ_ARG[0];
 	arg = 1 << arg;
-	SEQ_P->_3A6 &= ~arg;
+	SEQ_P->interruptEnable &= ~arg;
 	return 0;
 }
 
@@ -2133,7 +2193,7 @@ static u32 Cmd_DisInterrupt()
  */
 static u32 Cmd_ClrI()
 {
-	SEQ_P->_3A4 = 0;
+	SEQ_P->interruptActive = 0;
 	return 0;
 }
 
@@ -2144,7 +2204,7 @@ static u32 Cmd_ClrI()
  */
 static u32 Cmd_SetI()
 {
-	SEQ_P->_3A4 = 1;
+	SEQ_P->interruptActive = 1;
 	return 0;
 }
 
@@ -2155,9 +2215,9 @@ static u32 Cmd_SetI()
  */
 static u32 Cmd_RetI()
 {
-	SEQ_P->_8C  = SEQ_P->_3CC;
-	SEQ_P->_3A4 = 0;
-	SEQ_P->_04  = SEQ_P->_3C8;
+	SEQ_P->_8C             = SEQ_P->_3CC;
+	SEQ_P->interruptActive = 0;
+	SEQ_P->programCounter  = SEQ_P->savedProgramCounter;
 	return 2;
 }
 
@@ -2181,7 +2241,7 @@ static u32 Cmd_IntTimer()
  */
 static u32 Cmd_ConnectOpen()
 {
-	Jam_RegistTrack(SEQ_P, SEQ_P->_84);
+	Jam_RegistTrack(SEQ_P, SEQ_P->connectionId);
 	return 0;
 }
 
@@ -2223,8 +2283,8 @@ static u32 Cmd_SyncCPU()
  */
 static u32 Cmd_FlushAll()
 {
-	AllStop_1Shot(&SEQ_P->_D8);
-	FlushRelease_1Shot(&SEQ_P->_D8);
+	AllStop_1Shot(&SEQ_P->parentController);
+	FlushRelease_1Shot(&SEQ_P->parentController);
 	return 0;
 }
 
@@ -2235,7 +2295,7 @@ static u32 Cmd_FlushAll()
  */
 static u32 Cmd_FlushRelease()
 {
-	FlushRelease_1Shot(&SEQ_P->_D8);
+	FlushRelease_1Shot(&SEQ_P->parentController);
 	return 0;
 }
 
@@ -2257,7 +2317,7 @@ static u32 Cmd_Wait3()
  */
 static u32 Cmd_TimeBase()
 {
-	SEQ_P->_338 = SEQ_ARG[0];
+	SEQ_P->timeBase = SEQ_ARG[0];
 	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
 	}
@@ -2271,11 +2331,11 @@ static u32 Cmd_TimeBase()
  */
 static u32 Cmd_Tempo()
 {
-	SEQ_P->_33A = SEQ_ARG[0];
+	SEQ_P->tempo = SEQ_ARG[0];
 	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
 	} else {
-		SEQ_P->_3E3 = 1;
+		SEQ_P->changeTempoFlag = 1;
 	}
 	return 0;
 }
@@ -2288,23 +2348,24 @@ static u32 Cmd_Tempo()
 static u32 Cmd_Finish()
 {
 	size_t i;
-	u32 mask;
+	u32 updateFlags;
 	MoveParam_* temp;
 
-	mask = 0;
+	updateFlags = 0;
 	for (i = 0; i < 18; ++i) {
 		temp = &SEQ_P->timedParam.move[i];
-		if (temp->moveTime > 0.0f) {
-			temp->currValue += temp->moveAmount;
-			temp->moveTime -= 1.0f;
+		if (temp->duration > 0.0f) {
+			temp->value += temp->stepSize;
+			temp->duration -= 1.0f;
 			if (i <= 5 || i >= 11) {
-				mask |= 1 << i;
+				updateFlags |= 1 << i;
 			} else {
-				Osc_Update_Param(SEQ_P, i, temp->currValue);
+				Osc_Update_Param(SEQ_P, i, temp->value);
 			}
 		}
 	}
-	SeqUpdate(SEQ_P, mask);
+
+	SeqUpdate(SEQ_P, updateFlags);
 	return 3;
 }
 
@@ -2328,11 +2389,13 @@ static u32 Cmd_PanPowSet()
 	size_t i;
 
 	for (i = 0; i < 3; ++i) {
-		SEQ_P->regParam.param._10[i] = SEQ_ARG[i];
+		SEQ_P->regParam.param.arguments[i] = SEQ_ARG[i];
 	}
+
 	for (i = 3; i < 5; ++i) {
-		SEQ_P->regParam.param._10[i] = SEQ_ARG[i] * 327.67f;
+		SEQ_P->regParam.param.arguments[i] = SEQ_ARG[i] * 327.67f;
 	}
+
 	return 0;
 }
 
@@ -2349,12 +2412,13 @@ static u32 Cmd_IIRSet()
 	MoveParam_* iir;
 
 	for (i = 0; i < 4; ++i) {
-		iir             = &SEQ_P->timedParam.move[i + 12]; // fake?
-		iir->targValue  = (s16)SEQ_ARG[i] / 32768.0f;
-		iir->currValue  = iir->targValue;
-		iir->moveAmount = 0.0f;
-		iir->moveTime   = 1.0f;
+		iir           = &SEQ_P->timedParam.move[i + 12]; // IIRs 0 - 4 are at 12-15
+		iir->target   = (s16)SEQ_ARG[i] / 32768.0f;
+		iir->value    = iir->target;
+		iir->stepSize = 0.0f;
+		iir->duration = 1.0f;
 	}
+
 	return 0;
 }
 
@@ -2365,7 +2429,7 @@ static u32 Cmd_IIRSet()
  */
 static u32 Cmd_FIRSet()
 {
-	Jam_SetExtFirFilterD(SEQ_P->_2AC, (s16*)Jam_OfsToAddr(SEQ_P, SEQ_ARG[0]));
+	Jam_SetExtFirFilterD(SEQ_P->outerParams, (s16*)Jam_OfsToAddr(SEQ_P, SEQ_ARG[0]));
 	return 0;
 }
 
@@ -2398,11 +2462,12 @@ static u32 Cmd_PanSwSet()
 	u8 parentCalcTypes[] = { 0, 1, 2, 0, 2, 0, 2 };
 
 	for (i = 0; i < 3; ++i) {
-		SEQ_P->_3DC[i]    = calcTypes[SEQ_ARG[i] >> 5];
-		SEQ_P->_3DF[i]    = parentCalcTypes[SEQ_ARG[i] >> 5];
-		SEQ_P->_D8._62[i] = SEQ_ARG[i] & 0x1f;
-		SEQ_P->_3D8 |= 8;
+		SEQ_P->panCalcTypes[i]                  = calcTypes[SEQ_ARG[i] >> 5];
+		SEQ_P->parentPanCalcTypes[i]            = parentCalcTypes[SEQ_ARG[i] >> 5];
+		SEQ_P->parentController.panCalcTypes[i] = SEQ_ARG[i] & 0x1f;
+		SEQ_P->updateFlags |= SEQTRACK_FLAG_PAN;
 	}
+
 	return 0;
 }
 
@@ -2413,16 +2478,17 @@ static u32 Cmd_PanSwSet()
  */
 static u32 Cmd_OscRoute()
 {
-	u8 uVar1;
+	u8 oscRoute;
 	u8 uVar2;
 
-	uVar1 = SEQ_ARG[0] & 0xf;
-	uVar2 = SEQ_ARG[0] >> 4 & 0xf;
+	oscRoute = SEQ_ARG[0] & 0xf;
+	uVar2    = SEQ_ARG[0] >> 4 & 0xf;
 
-	SEQ_P->_370[uVar2] = uVar1;
-	if (uVar1 == 0xe) {
-		SEQ_P->_3E8[uVar2]._00 = 1;
+	SEQ_P->oscillatorRouting[uVar2] = oscRoute;
+	if (oscRoute == 14) {
+		SEQ_P->oscillatorParams[uVar2]._00 = 1;
 	}
+
 	return 0;
 }
 
@@ -2439,12 +2505,13 @@ static u32 Cmd_IIRCutOff()
 
 	index = SEQ_ARG[0];
 	for (i = 0; i < 4; ++i) {
-		iir             = &SEQ_P->timedParam.move[i + 12]; // fake?
-		iir->targValue  = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
-		iir->currValue  = iir->targValue;
-		iir->moveAmount = 0.0f;
-		iir->moveTime   = 1.0f;
+		iir           = &SEQ_P->timedParam.move[i + 12]; // IIRs 0 - 4 are at 12-15
+		iir->target   = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
+		iir->value    = iir->target;
+		iir->stepSize = 0.0f;
+		iir->duration = 1.0f;
 	}
+
 	return 0;
 }
 
@@ -2553,7 +2620,7 @@ static u32 Cmd_Printf()
 		if (fmtFlags[i] == 2) {
 			fmtParms[i] = (u32)Jam_OfsToAddr(SEQ_P, fmtParms[i]);
 		} else if (fmtFlags[i] == 5) {
-			fmtParms[i] = SEQ_P->_88;
+			fmtParms[i] = SEQ_P->trackId;
 		} else if (fmtFlags[i] >= 3) {
 			fmtParms[i] = __ExchangeRegisterValue(SEQ_P, fmtParms[i]);
 		}
@@ -2564,8 +2631,6 @@ static u32 Cmd_Printf()
 #endif
 	return 0;
 }
-
-#define CMD_COUNT (64)
 
 static ArgListPair Arglist[CMD_COUNT] = {
 	{ 0, 0x0000 }, //
@@ -2726,29 +2791,32 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	argTypes = argpair.argTypes | param_3;
 	for (i = 0; i < argpair.argCount; ++i) {
 		switch (argTypes & 0x03) {
-		case 0:
+		case 0: // 8-bit immediate value
 			arg = __ByteRead(track);
 			break;
-		case 1:
+		case 1: // 16-bit immediate value
 			arg = __WordRead(track);
 			break;
-		case 2:
+		case 2: // 24-bit immediate value
 			arg = __24Read(track);
 			break;
-		case 3:
+		case 3: // Register value
 			arg = __ExchangeRegisterValue(track, __ByteRead(track));
 			break;
 		}
+
 		argTypes   = argTypes >> 2;
 		SEQ_ARG[i] = arg;
 	}
-	// Me when I have to introduce global state because I'm bored.
-	SEQ_CMD  = cmd;
-	SEQ_P    = track;
+
+	SEQ_CMD = cmd;
+	SEQ_P   = track;
+
 	function = CMDP_LIST[cmd - 0xC0];
 	if (!function) {
 		return 0;
 	}
+
 	return function();
 }
 
@@ -2789,7 +2857,7 @@ void RegCmd_Process(seqp_* track, BOOL param_2, u32 param_3)
  * Address:	80012EC0
  * Size:	0008C0
  */
-s32 Jam_SeqmainNote(seqp_*, unknown)
+s32 Jam_SeqmainNote(seqp_* a, u32 b)
 {
 	/*
 	.loc_0x0:
@@ -3493,23 +3561,25 @@ s32 Jam_SeqmainNote(seqp_*, unknown)
  * Address:	80013780
  * Size:	0000A8
  */
-void SeqUpdate(seqp_* track, u32 param_2)
+void SeqUpdate(seqp_* track, u32 updateFlags)
 {
-	u32 uVar5;
+	u32 finalFlags;
 	size_t i;
 
-	uVar5 = param_2 | track->_3D8;
-	if (track->_2AC) {
-		uVar5 |= track->_2AC->_0A;
-		track->_2AC->_0A = 0;
+	finalFlags = updateFlags | track->updateFlags;
+	if (track->outerParams) {
+		finalFlags |= track->outerParams->updateFlags;
+		track->outerParams->updateFlags = 0;
 	}
-	track->_3D8 = 0;
-	if (uVar5) {
-		Jam_UpdateTrack(track, uVar5);
+
+	track->updateFlags = SEQTRACK_FLAG_NONE;
+	if (finalFlags) {
+		Jam_UpdateTrack(track, finalFlags);
 	}
+
 	for (i = 0; i < 16; ++i) {
-		if (track->children[i] && track->children[i]->_3C) {
-			SeqUpdate(track->children[i], uVar5);
+		if (track->children[i] && track->children[i]->trackState) {
+			SeqUpdate(track->children[i], finalFlags);
 		}
 	}
 }

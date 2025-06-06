@@ -53,7 +53,7 @@ struct DSPMixerChannel {
 	u16 id;            // _00
 	u16 targetVolume;  // _02
 	u16 currentVolume; // _04
-	u16 _06;           // _06
+	u16 level;         // _06
 };
 
 /**

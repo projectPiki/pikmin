@@ -62,7 +62,7 @@ void AIInitDMA(u32 address, u32 length)
  */
 void AIStartDMA(void)
 {
-	SET_FLAG(__DSPRegs[DSP_DMA_CONTROL_LEN], DSP_DMA_START_FLAG);
+	__DSPRegs[DSP_DMA_CONTROL_LEN] |= DSP_DMA_START_FLAG;
 }
 
 /*

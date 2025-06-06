@@ -9,6 +9,8 @@ typedef struct Perc_ Perc_;
 typedef struct Pmap_ Pmap_;
 typedef struct Osc_ Osc_;
 typedef struct jcs_ jcs_;
+typedef struct Vmap_ Vmap_;
+
 typedef struct CtrlWave_ {
 	int _00;             // _00
 	int _04;             // _04
@@ -32,7 +34,7 @@ union SOUNDID_ {
 void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32);
 Perc_* PercRead(u32, u32);
 Inst_* InstRead(u32, u32);
-int VmapRead(Inst_*, u8, u8);
+Vmap_* VmapRead(Inst_*, u8, u8);
 void Init_1shot(jcs_*, u32);
 void Stop_1Shot(jc_*);
 void Stop_1Shot_R(jc_*, u16);

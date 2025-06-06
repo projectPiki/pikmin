@@ -64,6 +64,7 @@ int List_CountChannel(jc_** jc)
 		chan = (jc_*)chan->mNext;
 		num++;
 	}
+
 	return num;
 }
 
@@ -104,12 +105,12 @@ void List_GlobalChannel()
  */
 int List_CutChannel(jc_* jc)
 {
-	jc_* chan = (jc_*)*jc->_08;
+	jc_* chan = (jc_*)*jc->chanListHead;
 	int num   = 0;
 
 	if (chan == jc) {
-		*jc->_08 = jc->mNext;
-		jc->_08  = NULL;
+		*jc->chanListHead = jc->mNext;
+		jc->chanListHead  = NULL;
 		return 0;
 	}
 
@@ -126,8 +127,8 @@ int List_CutChannel(jc_* jc)
 		chan = (jc_*)chan->mNext;
 	}
 
-	chan->mNext = jc->mNext;
-	jc->_08     = NULL;
+	chan->mNext      = jc->mNext;
+	jc->chanListHead = NULL;
 
 	return num;
 }
@@ -145,8 +146,8 @@ jc_* List_GetChannel(jc_** jc)
 		return NULL;
 	}
 
-	*jc       = (jc_*)chan->mNext;
-	chan->_08 = NULL;
+	*jc                = (jc_*)chan->mNext;
+	chan->chanListHead = NULL;
 	return chan;
 }
 
@@ -157,8 +158,8 @@ jc_* List_GetChannel(jc_** jc)
  */
 void List_AddChannelTail(jc_** jc, jc_* in)
 {
-	jc_* chan = *jc;
-	in->_08   = jc;
+	jc_* chan        = *jc;
+	in->chanListHead = jc;
 
 	if (chan == NULL) {
 		*jc       = in;
@@ -185,10 +186,10 @@ void List_AddChannelTail(jc_** jc, jc_* in)
  */
 void List_AddChannel(jc_** jc, jc_* in)
 {
-	jc_* chan = *jc;
-	in->_08   = jc;
-	*jc       = in;
-	in->mNext = chan;
+	jc_* chan        = *jc;
+	in->chanListHead = jc;
+	*jc              = in;
+	in->mNext        = chan;
 }
 
 /*
@@ -202,19 +203,19 @@ int FixAllocChannel(jcs_* sys, u32 size)
 	u32* REF_size  = &size;
 	int num        = 0;
 	while (num < size) {
-		jc_* chan = List_GetChannel(&GLOBAL_CHANNEL._08);
+		jc_* chan = List_GetChannel(&GLOBAL_CHANNEL.freeChannels);
 		if (chan == NULL) {
 			break;
 		}
 
-		List_AddChannel(&sys->_08, chan);
+		List_AddChannel(&sys->freeChannels, chan);
 		chan->mMgr = sys;
 		Channel_Init(chan);
 		num++;
 	}
 
-	sys->_00 += num;
-	GLOBAL_CHANNEL._00 -= num;
+	sys->chanCount += num;
+	GLOBAL_CHANNEL.chanCount -= num;
 	return num;
 }
 
@@ -225,9 +226,9 @@ int FixAllocChannel(jcs_* sys, u32 size)
  */
 int FixReleaseChannel(jc_* chan)
 {
-	List_AddChannel(&GLOBAL_CHANNEL._08, chan);
-	chan->mMgr->_00--;
-	GLOBAL_CHANNEL._00++;
+	List_AddChannel(&GLOBAL_CHANNEL.freeChannels, chan);
+	chan->mMgr->chanCount--;
+	GLOBAL_CHANNEL.chanCount++;
 	chan->mMgr = &GLOBAL_CHANNEL;
 	return 0;
 }
@@ -242,44 +243,44 @@ int FixReleaseChannelAll(jcs_* sys)
 	jc_* chan;
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_08);
+		chan = List_GetChannel(&sys->freeChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&GLOBAL_CHANNEL._08, chan);
+		List_AddChannel(&GLOBAL_CHANNEL.freeChannels, chan);
 		chan->mMgr = &GLOBAL_CHANNEL;
 	}
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_0C);
+		chan = List_GetChannel(&sys->activeChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&GLOBAL_CHANNEL._0C, chan);
+		List_AddChannel(&GLOBAL_CHANNEL.activeChannels, chan);
 		chan->mMgr = &GLOBAL_CHANNEL;
 	}
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_10);
+		chan = List_GetChannel(&sys->releasingChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&GLOBAL_CHANNEL._10, chan);
+		List_AddChannel(&GLOBAL_CHANNEL.releasingChannels, chan);
 		chan->mMgr = &GLOBAL_CHANNEL;
 	}
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_14);
+		chan = List_GetChannel(&sys->waitingChannels);
 		if (chan == NULL) {
 			break;
 		}
 		Cancel_WaitDSPChannel(chan);
-		List_AddChannel(&GLOBAL_CHANNEL._08, chan);
+		List_AddChannel(&GLOBAL_CHANNEL.freeChannels, chan);
 		chan->mMgr = &GLOBAL_CHANNEL;
 	}
 
-	GLOBAL_CHANNEL._00 += sys->_00;
-	sys->_00 = 0;
+	GLOBAL_CHANNEL.chanCount += sys->chanCount;
+	sys->chanCount = 0;
 	return 0;
 }
 
@@ -293,45 +294,45 @@ int FixMoveChannelAll(jcs_* sys, jcs_* sys2)
 	jc_* chan;
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_08);
+		chan = List_GetChannel(&sys->freeChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&sys2->_08, chan);
+		List_AddChannel(&sys2->freeChannels, chan);
 		chan->mMgr = sys2;
 	}
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_0C);
+		chan = List_GetChannel(&sys->activeChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&sys2->_0C, chan);
+		List_AddChannel(&sys2->activeChannels, chan);
 		chan->mMgr = sys2;
 	}
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_10);
+		chan = List_GetChannel(&sys->releasingChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&sys2->_10, chan);
+		List_AddChannel(&sys2->releasingChannels, chan);
 		chan->mMgr = sys2;
 	}
 
 	while (TRUE) {
-		chan = List_GetChannel(&sys->_14);
+		chan = List_GetChannel(&sys->waitingChannels);
 		if (chan == NULL) {
 			break;
 		}
-		List_AddChannel(&sys2->_14, chan);
+		List_AddChannel(&sys2->waitingChannels, chan);
 		chan->mMgr = sys2;
 	}
 
-	sys2->_00 += sys->_00;
-	sys->_00 = 0;
-	sys2->_04 += sys->_04;
-	sys->_04 = 0;
+	sys2->chanCount += sys->chanCount;
+	sys->chanCount = 0;
+	sys2->chanAllocCount += sys->chanAllocCount;
+	sys->chanAllocCount = 0;
 	return 0;
 
 	f32 badcompiler[2];
@@ -353,10 +354,10 @@ static f32 PanCalc(const PanMatrix_* mtx1, const PanMatrix_* mtx2, u8 a)
 		case 0:
 			break;
 		case 1:
-			calc += mtx1->_00[i];
+			calc += mtx1->values[i];
 			break;
 		case 2:
-			calc += (mtx1->_00[i] * mtx2->_00[i]);
+			calc += (mtx1->values[i] * mtx2->values[i]);
 			break;
 		}
 	}
@@ -370,47 +371,47 @@ static f32 PanCalc(const PanMatrix_* mtx1, const PanMatrix_* mtx2, u8 a)
  */
 void InitJcs(jcs_* sys)
 {
-	sys->_08 = NULL;
-	sys->_0C = NULL;
-	sys->_10 = NULL;
-	sys->_14 = NULL;
-	sys->_04 = 0;
-	sys->_00 = 0;
-	sys->_70 = 1;
-	sys->_18 = 1.0f;
-	sys->_1C = 1.0f;
-	sys->_20 = 0.5f;
-	sys->_24 = 0.0f;
-	sys->_28 = 0.0f;
+	sys->freeChannels      = NULL;
+	sys->activeChannels    = NULL;
+	sys->releasingChannels = NULL;
+	sys->waitingChannels   = NULL;
+	sys->chanAllocCount    = 0;
+	sys->chanCount         = 0;
+	sys->voiceStealingMode = 1;
+	sys->volume            = 1.0f;
+	sys->pitch             = 1.0f;
+	sys->pan               = 0.5f;
+	sys->fxmix             = 0.0f;
+	sys->dolby             = 0.0f;
 
 	int i;
 
 	for (i = 0; i < 8; i++) {
-		sys->_2C[i] = 0;
+		sys->firCoefficients[i] = 0;
 	}
 
-	sys->_2C[0] = 0x7fff;
-	sys->_4C    = 0;
+	sys->firCoefficients[0] = 0x7fff;
+	sys->distFilter         = 0;
 
 	for (i = 0; i < 4; i++) {
-		sys->_3C[i] = 0;
-		sys->_5A[i] = 0;
+		sys->iirCoefficients[i] = 0;
+		sys->masterLevels[i]    = 0;
 	}
 
-	sys->_60    = 0;
-	sys->_3C[0] = 0x7fff;
-	sys->_61    = 0;
-	sys->_4E[0] = 0x150;
-	sys->_4E[1] = 0x210;
-	sys->_4E[2] = 0x352;
-	sys->_4E[3] = 0x412;
-	sys->_4E[4] = 0;
-	sys->_4E[5] = 0;
-	sys->_68    = 0x20103;
-	sys->_6C    = 600;
-	sys->_62[0] = 26;
-	sys->_62[1] = 1;
-	sys->_62[2] = 1;
+	sys->maxDelay           = 0;
+	sys->iirCoefficients[0] = 0x7fff;
+	sys->filterMode         = 0;
+	sys->busConnect[0]      = 0x150;
+	sys->busConnect[1]      = 0x210;
+	sys->busConnect[2]      = 0x352;
+	sys->busConnect[3]      = 0x412;
+	sys->busConnect[4]      = 0;
+	sys->busConnect[5]      = 0;
+	sys->channelPriority    = 0x20103;
+	sys->releaseTime        = 600;
+	sys->panCalcTypes[0]    = 26;
+	sys->panCalcTypes[1]    = 1;
+	sys->panCalcTypes[2]    = 1;
 }
 
 /*
@@ -420,48 +421,49 @@ void InitJcs(jcs_* sys)
  */
 void Channel_Init(jc_* jc)
 {
-	jc->_28 = NULL;
-	jc->_2C = NULL;
-	jc->_30 = 0;
-	jc->_34 = 0;
-	jc->_10 = NULL;
-	jc->_0C = 0;
-	jc->_14 = 0;
-	jc->_18 = 0;
-	jc->_1C = 0;
+	jc->updateCallback      = NULL;
+	jc->extraUpdateCallback = NULL;
+	jc->playId              = 0;
+	jc->savedPlayId         = 0;
+	jc->waveData            = NULL;
+	jc->logicalChanType     = 0;
+	jc->_14                 = 0;
+	jc->_18                 = 0;
+	jc->_1C                 = 0;
 
 	if (jc->mMgr == NULL) {
-		jc->_108[0] = 0x150;
-		jc->_108[1] = 0x210;
-		jc->_108[2] = 0x352;
-		jc->_108[3] = 0x412;
-		jc->_108[4] = 0;
-		jc->_108[5] = 0;
-		jc->_120    = 0x10101;
-		jc->_124    = 0x258;
-		jc->_B8[0]  = 0x1A;
-		jc->_B8[1]  = 1;
-		jc->_B8[2]  = 1;
+		jc->busRouting[0]   = 0x150;
+		jc->busRouting[1]   = 0x210;
+		jc->busRouting[2]   = 0x352;
+		jc->busRouting[3]   = 0x412;
+		jc->busRouting[4]   = 0;
+		jc->busRouting[5]   = 0;
+		jc->channelPriority = 0x10101;
+		jc->releaseTime     = 0x258;
+		jc->panCalcTypes[0] = 0x1A;
+		jc->panCalcTypes[1] = 1;
+		jc->panCalcTypes[2] = 1;
 	} else {
 		for (int i = 0; i < 6; i++) {
-			jc->_108[i] = jc->mMgr->_4E[i];
+			jc->busRouting[i] = jc->mMgr->busConnect[i];
 		}
 
-		jc->_120 = jc->mMgr->_68;
-		jc->_124 = jc->mMgr->_6C;
+		jc->channelPriority = jc->mMgr->channelPriority;
+		jc->releaseTime     = jc->mMgr->releaseTime;
 
 		for (int i = 0; i < 3; i++) {
-			jc->_B8[i] = jc->mMgr->_62[i];
+			jc->panCalcTypes[i] = jc->mMgr->panCalcTypes[i];
 		}
 	}
 
 	for (int i = 0; i < 4; i++) {
 		jc->mOscillators[i] = NULL;
 	}
-	jc->_02 = 0;
-	jc->_126++;
-	if ((int)jc->_126 == 0) {
-		jc->_126 = 1;
+
+	jc->pauseFlag = 0;
+	jc->channelId++;
+	if ((int)jc->channelId == 0) {
+		jc->channelId = 1;
 	}
 }
 
@@ -472,9 +474,9 @@ void Channel_Init(jc_* jc)
  */
 static void Channel_FirstInit(jc_* jc)
 {
-	jc->_20   = NULL;
-	jc->mNext = NULL;
-	jc->mMgr  = NULL;
+	jc->dspChannel = NULL;
+	jc->mNext      = NULL;
+	jc->mMgr       = NULL;
 	Channel_Init(jc);
 }
 
@@ -493,11 +495,11 @@ void InitGlobalChannel()
 
 	for (i = 0; i < CHANNEL_SIZE; i++) {
 		Channel_FirstInit(&CHANNEL[i]);
-		List_AddChannel(&global_channel->_08, &CHANNEL[i]);
+		List_AddChannel(&global_channel->freeChannels, &CHANNEL[i]);
 		CHANNEL[i].mMgr = global_channel;
 	}
 
-	global_channel->_00 = CHANNEL_SIZE;
+	global_channel->chanCount = CHANNEL_SIZE;
 }
 
 /*
@@ -507,25 +509,25 @@ void InitGlobalChannel()
  */
 static void __UpdateJcToDSPInit(jc_* jc)
 {
-	int buf = jc->_20->buffer_idx;
-	DSP_SetMixerInitDelayMax(buf, jc->mMgr->_60);
+	int buf = jc->dspChannel->buffer_idx;
+	DSP_SetMixerInitDelayMax(buf, jc->mMgr->maxDelay);
 
 	for (u32 i = 0; i < 6; i++) {
-		DSP_SetMixerInitVolume(buf, i, jc->_114[i], jc->mMgr->_5A[i]);
+		DSP_SetMixerInitVolume(buf, i, jc->mixerLevels[i], jc->mMgr->masterLevels[i]);
 	}
 
-	DSP_SetPitch(buf, jc->_F8);
+	DSP_SetPitch(buf, jc->finalPitch);
 
-	if (jc->mMgr->_61 & 0x20) {
-		DSP_SetIIRFilterParam(buf, jc->mMgr->_3C);
+	if (jc->mMgr->filterMode & 0x20) {
+		DSP_SetIIRFilterParam(buf, jc->mMgr->iirCoefficients);
 	}
 
-	if (jc->mMgr->_61 & 0x1f) {
-		DSP_SetFIR8FilterParam(buf, jc->mMgr->_2C);
+	if (jc->mMgr->filterMode & 0x1f) {
+		DSP_SetFIR8FilterParam(buf, jc->mMgr->firCoefficients);
 	}
 
-	DSP_SetFilterMode(buf, jc->mMgr->_61);
-	DSP_SetPauseFlag(buf, jc->_02);
+	DSP_SetFilterMode(buf, jc->mMgr->filterMode);
+	DSP_SetPauseFlag(buf, jc->pauseFlag);
 }
 
 /*
@@ -537,18 +539,24 @@ static void __UpdateJcToDSP(jc_* jc)
 {
 	u8 uVar1;
 
-	uVar1 = jc->_20->buffer_idx;
+	uVar1 = jc->dspChannel->buffer_idx;
 	for (u32 i = 0; i < 6; ++i) {
-		DSP_SetMixerVolume(uVar1, i, jc->_114[i], jc->mMgr->_5A[i]);
+		DSP_SetMixerVolume(uVar1, i, jc->mixerLevels[i], jc->mMgr->masterLevels[i]);
 	}
-	DSP_SetPitch(uVar1, jc->_F8);
-	if ((jc->mMgr->_61 & 0x20) != 0)
-		DSP_SetIIRFilterParam(uVar1, jc->mMgr->_3C);
-	if ((jc->mMgr->_61 & 0x1f) != 0)
-		DSP_SetFIR8FilterParam(uVar1, jc->mMgr->_2C);
-	DSP_SetFilterMode(uVar1, jc->mMgr->_61);
-	DSP_SetDistFilter(uVar1, jc->mMgr->_4C);
-	DSP_SetPauseFlag(uVar1, jc->_02);
+
+	DSP_SetPitch(uVar1, jc->finalPitch);
+
+	if ((jc->mMgr->filterMode & 0x20) != 0) {
+		DSP_SetIIRFilterParam(uVar1, jc->mMgr->iirCoefficients);
+	}
+
+	if ((jc->mMgr->filterMode & 0x1f) != 0) {
+		DSP_SetFIR8FilterParam(uVar1, jc->mMgr->firCoefficients);
+	}
+
+	DSP_SetFilterMode(uVar1, jc->mMgr->filterMode);
+	DSP_SetDistFilter(uVar1, jc->mMgr->distFilter);
+	DSP_SetPauseFlag(uVar1, jc->pauseFlag);
 }
 
 /*
@@ -559,7 +567,7 @@ static void __UpdateJcToDSP(jc_* jc)
 void UpdateJcToDSP(jc_* jc)
 {
 	__UpdateJcToDSP(jc);
-	DSP_FlushChannel(jc->_20->buffer_idx);
+	DSP_FlushChannel(jc->dspChannel->buffer_idx);
 }
 
 /*
@@ -571,15 +579,15 @@ void UpdateEffecterParam(jc_* jc)
 {
 	f32 mod1, mod2;
 	f32 mod3 = 0.0f;
-	if (jc->_FC == jc->mMgr) {
-		jc->_100          = jc->mMgr->_1C;
-		jc->_104          = jc->mMgr->_18;
-		jc->_BC[1]._00[2] = jc->mMgr->_20;
-		jc->_BC[2]._00[2] = jc->mMgr->_24;
-		jc->_BC[3]._00[2] = jc->mMgr->_28;
+	if (jc->lastManager == jc->mMgr) {
+		jc->managerPitch             = jc->mMgr->pitch;
+		jc->managerVolume            = jc->mMgr->volume;
+		jc->panMatrices[1].values[2] = jc->mMgr->pan;
+		jc->panMatrices[2].values[2] = jc->mMgr->fxmix;
+		jc->panMatrices[3].values[2] = jc->mMgr->dolby;
 
 		for (int i = 0; i < 3; i++) {
-			jc->_B8[i] = jc->mMgr->_62[i];
+			jc->panCalcTypes[i] = jc->mMgr->panCalcTypes[i];
 		}
 	}
 
@@ -587,17 +595,17 @@ void UpdateEffecterParam(jc_* jc)
 	case 0:
 		mod1 = 0.5f;
 		mod3 = 0.0f;
-		mod2 = PanCalc(&jc->_BC[2], &jc->_BC[0], jc->_B8[1]);
+		mod2 = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
 		break;
 
 	case 1:
-		if (jc->_B8[0] == 0) {
+		if (jc->panCalcTypes[0] == 0) {
 			mod1 = 0.5f;
 		} else {
-			mod1 = PanCalc(&jc->_BC[1], &jc->_BC[0], jc->_B8[0]);
+			mod1 = PanCalc(&jc->panMatrices[1], &jc->panMatrices[0], jc->panCalcTypes[0]);
 		}
-		mod2 = PanCalc(&jc->_BC[2], &jc->_BC[0], jc->_B8[1]);
-		mod3 = PanCalc(&jc->_BC[3], &jc->_BC[0], jc->_B8[2]);
+		mod2 = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
+		mod3 = PanCalc(&jc->panMatrices[3], &jc->panMatrices[0], jc->panCalcTypes[2]);
 		break;
 	}
 
@@ -605,17 +613,17 @@ void UpdateEffecterParam(jc_* jc)
 	mod2 = mod2 > 0.0f ? (mod2 < 1.0f) ? mod2 : 1.0f : 0.0f;
 	mod3 = mod3 > 0.0f ? (mod3 < 1.0f) ? mod3 : 1.0f : 0.0f;
 
-	jc->_F8 = jc->_B0 * jc->_EC * jc->_100 * 4096.0f;
+	jc->finalPitch = jc->currentPitch * jc->pitchModifier * jc->managerPitch * 4096.0f;
 
-	f32 calc = jc->_104 * jc->_B4 * jc->_F0;
+	f32 calc = jc->managerVolume * jc->currentVolume * jc->volumeModifier;
 	f32 calc2, calc3;
 	for (u32 i = 0; i < 6; i++) {
 
-		u16 flag = jc->_108[i];
+		u16 flag = jc->busRouting[i];
 		u16* ptr = &flag;
 
 		if ((u8)flag == 0) {
-			jc->_114[i] = 0;
+			jc->mixerLevels[i] = 0;
 			continue;
 		}
 
@@ -667,8 +675,8 @@ void UpdateEffecterParam(jc_* jc)
 			calc *= sinf3(calc2);
 		}
 
-		calc3       = calc3 > 0.0f ? (calc3 < 1.0f) ? calc3 : 1.0f : calc;
-		jc->_114[i] = calc3 * (f32)MAX_MIXERLEVEL;
+		calc3              = calc3 > 0.0f ? (calc3 < 1.0f) ? calc3 : 1.0f : calc;
+		jc->mixerLevels[i] = calc3 * (f32)MAX_MIXERLEVEL;
 	}
 	/*
 	.loc_0x0:
@@ -938,19 +946,19 @@ void DoEffectOsc(jc_* jc, u8 id, f32 val)
 {
 	switch (id) {
 	case 1:
-		jc->_EC *= val;
+		jc->pitchModifier *= val;
 		break;
 	case 0:
-		jc->_F0 *= val;
+		jc->volumeModifier *= val;
 		break;
 	case 2:
-		jc->_BC[1]._00[1] = val;
+		jc->panMatrices[1].values[1] = val;
 		break;
 	case 3:
-		jc->_BC[2]._00[1] = val;
+		jc->panMatrices[2].values[1] = val;
 		break;
 	case 4:
-		jc->_BC[3]._00[1] = val;
+		jc->panMatrices[3].values[1] = val;
 		break;
 	}
 }
@@ -967,10 +975,10 @@ static void KillBrokenLogicalChannels(dspch_* ch)
 
 	for (i = 0; i < CHANNEL_SIZE; i++) {
 		chan = &CHANNEL[i];
-		if (chan->_20 == ch) {
+		if (chan->dspChannel == ch) {
 			StopLogicalChannel(chan);
 			if (List_CutChannel(chan) != -1) {
-				List_AddChannel(&chan->mMgr->_08, chan);
+				List_AddChannel(&chan->mMgr->freeChannels, chan);
 			}
 		}
 	}
@@ -993,14 +1001,14 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		return FALSE;
 	}
 
-	dspch_* ch2 = jc->_20;
+	dspch_* ch2 = jc->dspChannel;
 	if (ch != ch2) {
 		if (ch2 && ch2->_08 == jc) {
 			KillBrokenLogicalChannels(ch);
 		} else {
 			StopLogicalChannel(jc);
 			if (List_CutChannel(jc) != -1) {
-				List_AddChannel(&jc->mMgr->_08, jc);
+				List_AddChannel(&jc->mMgr->freeChannels, jc);
 			}
 		}
 		ch->_08 = 0;
@@ -1010,25 +1018,25 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 	}
 
 	if (a == 2) {
-		if (jc->_28) {
-			jc->_28(jc, (JCSTATUS)1);
+		if (jc->updateCallback) {
+			jc->updateCallback(jc, (JCSTATUS)1);
 		} else {
 			StopLogicalChannel(jc);
 			if (List_CutChannel(jc) != -1) {
-				List_AddChannel(&jc->mMgr->_08, jc);
+				List_AddChannel(&jc->mMgr->freeChannels, jc);
 			}
 		}
 		return FALSE;
 	}
 
-	if (jc->_10 && jc->_10->_0C) {
+	if (jc->waveData && jc->waveData->_0C) {
 		ForceStopDSPchannel(ch2);
 		return -1;
 	}
 
 	if (a == 4) {
-		if (ch2 && (u8)(jc->_120 >> 0x10) < ch2->_03) {
-			ch2->_03 = jc->_120 >> 0x10;
+		if (ch2 && (u8)(jc->channelPriority >> 0x10) < ch2->_03) {
+			ch2->_03 = jc->channelPriority >> 0x10;
 		}
 		return FALSE;
 	}
@@ -1038,16 +1046,16 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		if (List_CutChannel(jc) != -1) {
 			return TRUE;
 		}
-		List_AddChannel(&jc->mMgr->_14, jc);
+		List_AddChannel(&jc->mMgr->waitingChannels, jc);
 		a = 0;
 	}
 
 	if (a == 0) {
-		jc->_EC           = 1.0f;
-		jc->_F0           = 1.0f;
-		jc->_BC[1]._00[1] = 0.5f;
-		jc->_BC[2]._00[1] = 0.0f;
-		jc->_BC[3]._00[1] = 0.0f;
+		jc->pitchModifier            = 1.0f;
+		jc->volumeModifier           = 1.0f;
+		jc->panMatrices[1].values[1] = 0.5f;
+		jc->panMatrices[2].values[1] = 0.0f;
+		jc->panMatrices[3].values[1] = 0.0f;
 
 		for (u32 i = 0; i < 4; i++) {
 			Osc_* osc = jc->mOscillators[i];
@@ -1055,17 +1063,17 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 				Oscbuf_* buf = &jc->mOscBuffers[i];
 				DoEffectOsc(jc, osc->mMode, Bank_OscToOfs(osc, buf));
 				if (buf->_00 == 0) {
-					if (jc->_28 == NULL) {
+					if (jc->updateCallback == NULL) {
 						if (StopLogicalChannel(jc) == FALSE) {
 							DSP_PlayStop(ch->buffer_idx);
 							DSP_FlushChannel(ch->buffer_idx);
 						}
 						if (List_CutChannel(jc) != -1) {
-							List_AddChannel(&jc->mMgr->_08, jc);
+							List_AddChannel(&jc->mMgr->freeChannels, jc);
 						}
 						return FALSE;
 					} else {
-						jc->_28(jc, (JCSTATUS)1);
+						jc->updateCallback(jc, (JCSTATUS)1);
 						return FALSE;
 					}
 				}
@@ -1075,30 +1083,31 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 
 		if (b) {
 			UpdateEffecterParam(jc);
-			jc->_03 = 1;
+			jc->toFlush = 1;
 		}
 
-		if (jc->_2C && jc->_2C(jc, (JCSTATUS)0) == TRUE) {
-			jc->_03++;
+		if (jc->extraUpdateCallback && jc->extraUpdateCallback(jc, (JCSTATUS)0) == TRUE) {
+			jc->toFlush++;
 		}
 
-		if (jc->_28 == NULL) {
+		if (jc->updateCallback == NULL) {
 			return TRUE;
 		}
 
-		if (jc->_34 > 0) {
-			jc->_34--;
+		if (jc->savedPlayId > 0) {
+			jc->savedPlayId--;
 		}
 
-		if (jc->_34 == 0) {
-			jc->_28(jc, (JCSTATUS)0);
-			jc->_34 = jc->_30;
+		if (jc->savedPlayId == 0) {
+			jc->updateCallback(jc, (JCSTATUS)0);
+			jc->savedPlayId = jc->playId;
 		}
 
-		if (jc->_03) {
+		if (jc->toFlush) {
 			UpdateJcToDSP(jc);
-			jc->_03 = 0;
+			jc->toFlush = 0;
 		}
+
 		return TRUE;
 	}
 	/*
@@ -1390,17 +1399,17 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
  */
 BOOL StopLogicalChannel(jc_* jc)
 {
-	dspch_* ch = jc->_20;
+	dspch_* ch = jc->dspChannel;
 	if (ch == NULL) {
 		return FALSE;
 	}
 
-	ch->_0C      = NULL;
-	jc->_20->_06 = 0;
-	DSP_PlayStop(jc->_20->buffer_idx);
-	DSP_FlushChannel(jc->_20->buffer_idx);
-	DeAllocDSPchannel(jc->_20, (u32)jc);
-	jc->_20 = NULL;
+	ch->_0C             = NULL;
+	jc->dspChannel->_06 = 0;
+	DSP_PlayStop(jc->dspChannel->buffer_idx);
+	DSP_FlushChannel(jc->dspChannel->buffer_idx);
+	DeAllocDSPchannel(jc->dspChannel, (u32)jc);
+	jc->dspChannel = NULL;
 	return TRUE;
 }
 
@@ -1411,7 +1420,7 @@ BOOL StopLogicalChannel(jc_* jc)
  */
 BOOL CheckLogicalChannel(jc_* jc)
 {
-	if (jc->_10 == NULL && jc->_0C == 0) {
+	if (jc->waveData == NULL && jc->logicalChanType == 0) {
 		return FALSE;
 	}
 	return TRUE;
@@ -1424,29 +1433,29 @@ BOOL CheckLogicalChannel(jc_* jc)
  */
 BOOL PlayLogicalChannel(jc_* jc)
 {
-	if (jc->_20 == NULL) {
+	if (jc->dspChannel == NULL) {
 		return FALSE;
 	}
 	if (CheckLogicalChannel(jc) == FALSE) {
 		return FALSE;
 	}
 
-	jc->_20->_0C = CommonCallbackLogicalChannel;
-	jc->_20->_06 = 1;
+	jc->dspChannel->_0C = CommonCallbackLogicalChannel;
+	jc->dspChannel->_06 = 1;
 
-	switch (jc->_0C) {
+	switch (jc->logicalChanType) {
 	case 0:
-		DSP_SetWaveInfo(jc->_20->buffer_idx, jc->_10, jc->_14);
+		DSP_SetWaveInfo(jc->dspChannel->buffer_idx, jc->waveData, jc->_14);
 		break;
 	case 1:
 		break;
 	case 2:
-		DSP_SetOscInfo(jc->_20->buffer_idx, jc->_14);
+		DSP_SetOscInfo(jc->dspChannel->buffer_idx, jc->_14);
 		break;
 	}
 
 	for (u32 i = 0; i < 6; i++) {
-		u16 bus0 = jc->_108[i];
+		u16 bus0 = jc->busRouting[i];
 		u8 bus   = bus0;
 		u8* busp = &bus;
 		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
@@ -1459,16 +1468,16 @@ BOOL PlayLogicalChannel(jc_* jc)
 				break;
 			}
 		}
-		DSP_SetBusConnect(jc->_20->buffer_idx, i, bus);
+		DSP_SetBusConnect(jc->dspChannel->buffer_idx, i, bus);
 	}
 
-	jc->_FC = jc->mMgr;
+	jc->lastManager = jc->mMgr;
 	UpdateEffecterParam(jc);
 	__UpdateJcToDSP(jc);
-	jc->_20->_03 = jc->_120;
-	jc->_20->_04 = jc->_124;
-	DSP_PlayStart(jc->_20->buffer_idx);
-	DSP_FlushChannel(jc->_20->buffer_idx);
+	jc->dspChannel->_03 = jc->channelPriority;
+	jc->dspChannel->_04 = jc->releaseTime;
+	DSP_PlayStart(jc->dspChannel->buffer_idx);
+	DSP_FlushChannel(jc->dspChannel->buffer_idx);
 	return TRUE;
 	/*
 	.loc_0x0:
@@ -1600,7 +1609,7 @@ BOOL PlayLogicalChannel(jc_* jc)
  */
 BOOL ResetInitialVolume(jc_* jc)
 {
-	if (jc->_20 == NULL) {
+	if (jc->dspChannel == NULL) {
 		return FALSE;
 	}
 
@@ -1610,7 +1619,7 @@ BOOL ResetInitialVolume(jc_* jc)
 
 	UpdateEffecterParam(jc);
 	__UpdateJcToDSPInit(jc);
-	DSP_FlushChannel(jc->_20->buffer_idx);
+	DSP_FlushChannel(jc->dspChannel->buffer_idx);
 	return TRUE;
 }
 
@@ -1625,7 +1634,7 @@ BOOL Add_WaitDSPChannel(jc_* jc)
 		return FALSE;
 	}
 
-	if (BreakLowerDSPchannel(jc->_120) == FALSE) {
+	if (BreakLowerDSPchannel(jc->channelPriority) == FALSE) {
 		return FALSE;
 	}
 
@@ -1682,10 +1691,10 @@ void __Entry_WaitChannel(u8 a)
 		if (ch == NULL) {
 			break;
 		}
-		jc->_20 = ch;
+		jc->dspChannel = ch;
 		PlayLogicalChannel(jc);
 		if (List_CutChannel(jc) != -1) {
-			List_AddChannel(&jc->mMgr->_0C, jc);
+			List_AddChannel(&jc->mMgr->activeChannels, jc);
 		}
 		cur_top++;
 		if (cur_top == 0x20) {
@@ -1797,11 +1806,11 @@ void EntryCheck_WaitDSPChannel()
 		jc_* jc = waitp[(cur_top + i) & 0x1f];
 		if (jc) {
 			waittime[(cur_top + i) & 0x1f]++;
-			if (jc->_30 > 0) {
-				jc->_30--;
+			if (jc->playId > 0) {
+				jc->playId--;
 			}
-			if (jc->_30 == 0) {
-				jc->_28(jc, (JCSTATUS)6);
+			if (jc->playId == 0) {
+				jc->updateCallback(jc, (JCSTATUS)6);
 				waitp[(cur_top + i) & 0x1f] = NULL;
 			}
 		}
@@ -1891,10 +1900,10 @@ static void Cancel_WaitDSPChannel(jc_* jc)
  */
 BOOL ForceStopLogicalChannel(jc_* jc)
 {
-	if (jc->_20 == NULL) {
+	if (jc->dspChannel == NULL) {
 		return FALSE;
 	}
 
-	ForceStopDSPchannel(jc->_20);
+	ForceStopDSPchannel(jc->dspChannel);
 	return TRUE;
 }

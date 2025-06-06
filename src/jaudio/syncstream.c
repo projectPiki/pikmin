@@ -411,7 +411,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, u32 r8)
 	ctrl->mixer.targetVolume = 0x3fff;
 
 	ctrl->mixer.currentVolume = 0x5fff;
-	ctrl->mixer._06           = 0x5fff;
+	ctrl->mixer.level         = 0x5fff;
 
 	ctrl->_21A14 = default_streamsync_call;
 
@@ -1132,7 +1132,7 @@ void StreamChgMixLevel(u32 ctrlID, int vol, int lvl)
 	StreamCtrl_* ctrl = &SC[ctrlID];
 	if (ctrl->dspch[0]) {
 		ctrl->mixer.currentVolume = vol;
-		ctrl->mixer._06           = lvl;
+		ctrl->mixer.level         = lvl;
 	}
 }
 

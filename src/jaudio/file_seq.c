@@ -13,10 +13,10 @@
  * @note TODO: Is this invented struct namedropped somewhere?
  */
 struct as_struct {
-	unknown8 _00; // _00
-	u32 _04;      // _04
-	u32 _08;      // _08
-	u8* _0C;      // _0C
+	u8 _00;  // _00
+	u32 _04; // _04
+	u32 _08; // _08
+	u8* _0C; // _0C
 };
 typedef struct as_struct as_struct;
 
@@ -121,7 +121,7 @@ u8* Jaf_CheckSeq(u32 index)
  * Address:	8001B5E0
  * Size:	0000A0
  */
-unknown Jaf_ReadySeq(u32 param_1, u32 param_2)
+u32 Jaf_ReadySeq(u32 param_1, u32 param_2)
 {
 	u32 badCompiler;
 	seqp_* rSeq = &rootseq[param_1];
@@ -221,7 +221,7 @@ static void Jaf_LoadFinish(u32 param_1)
 {
 	// Why is a (known) u32 parameter suddenly a pointer?
 	seq_loadbuffer[*(int*)(param_1 + 4)] = *(u8**)(param_1 + 12);
-	*(unknown8*)param_1                  = 0;
+	*(u8*)param_1                        = 0;
 }
 
 /*
@@ -229,7 +229,7 @@ static void Jaf_LoadFinish(u32 param_1)
  * Address:	8001B7E0
  * Size:	000124
  */
-unknown __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
+u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
 {
 	u32* REF_param_1 = &param_1;
 	u32* REF_param_2 = &param_2;

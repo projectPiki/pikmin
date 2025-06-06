@@ -71,9 +71,10 @@ int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
 
 	for (u32 i = 0; i < inst->mKeyRegionCount; i++) {
 		if (param_2 <= inst->mKeyRegions[i]->mBaseKey) {
-			return i;
+			return i; // Return the index of the keymap
 		}
 	}
+
 	return -1;
 }
 
@@ -90,19 +91,21 @@ int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
 		return 0;
 	}
 
-	int keymap = Bank_GetInstKeymap(inst, param_2);
-	if (keymap != -1) {
+	int instIndex = Bank_GetInstKeymap(inst, param_2);
+	if (instIndex != -1) {
 		u8* REF_p3       = &param_3;
-		InstKeymap_* key = inst->mKeyRegions[keymap];
+		InstKeymap_* key = inst->mKeyRegions[instIndex];
 		for (u32 i = 0; i < key->mVelocityCount; i++) {
 			Vmap_* vmap = key->mVelocities[i];
 			if (param_3 <= vmap->mBaseVelocity) {
 				return (int)vmap;
 			}
 		}
+		
 		return 0;
 	}
-	return keymap;
+
+	return instIndex;
 }
 
 /*

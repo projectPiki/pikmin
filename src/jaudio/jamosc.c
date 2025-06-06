@@ -92,8 +92,8 @@ void Osc_Setup_Simple(seqp_* track, u8 id)
  */
 void Osc_Clear_Overwrite(seqp_* track)
 {
-	track->_370[0] = 15;
-	track->_370[1] = 15;
+	track->oscillatorRouting[0] = 15;
+	track->oscillatorRouting[1] = 15;
 }
 
 /*
@@ -137,22 +137,22 @@ void Osc_Setup_ADSR(seqp_* track, s16* addr)
 {
 	track->oscillators[0] = ADSR_DEF;
 
-	track->oscillators[0].mAttackVecOffset  = track->_372;
-	track->oscillators[0].mReleaseVecOffset = track->_38A;
+	track->oscillators[0].mAttackVecOffset  = track->adsTable;
+	track->oscillators[0].mReleaseVecOffset = track->relTable;
 
 	for (int i = 0; i < 12; i++) {
-		track->_372[i] = ADS_TABLE[i];
+		track->adsTable[i] = ADS_TABLE[i];
 	}
 
 	for (int i = 0; i < 6; i++) {
-		track->_38A[i] = REL_TABLE[i];
+		track->relTable[i] = REL_TABLE[i];
 	}
 
-	track->_372[1] = addr[0];
-	track->_372[4] = addr[1];
-	track->_372[7] = addr[2];
-	track->_372[8] = addr[3];
-	track->_38A[1] = addr[4];
+	track->adsTable[1] = addr[0];
+	track->adsTable[4] = addr[1];
+	track->adsTable[7] = addr[2];
+	track->adsTable[8] = addr[3];
+	track->relTable[1] = addr[4];
 }
 
 /*

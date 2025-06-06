@@ -36,12 +36,6 @@ typedef volatile f32 vf32;
 typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
-typedef u32 unknown;
-typedef u8 unknown8;
-typedef u16 unknown16;
-typedef u32 unknown32;
-typedef u64 unknown64;
-
 #ifndef __cplusplus
 typedef u16 wchar_t;
 #endif
@@ -84,20 +78,11 @@ typedef u16 wchar_t;
 #define MIN(a, b) (((a) < (b)) ? (a) : (b)) // Returns the minimum of a and b
 
 // Flag manipulation macros
-#define SET_FLAG(x, val)                (x |= (val))                     // Sets specific flag to 1
-#define RESET_FLAG(x, val)              (x &= ~(val))                    // Resets specific flag from (val) back to 0
-#define IS_FLAG(x, val)                 (x & val)                        // Return 1 if flag is set, 0 if flag is not set
-#define ARRAY_SIZE(o)                   (sizeof((o)) / sizeof(*(o)))     // Array size define
-#define ALIGN_PREV(X, N)                ((X) & ~((N) - 1))               // Align X to the previous N bytes (N must be power of two)
-#define ALIGN_NEXT(X, N)                ALIGN_PREV(((X) + (N) - 1), N)   // Align X to the next N bytes (N must be power of two)
-#define IS_ALIGNED(X, N)                ((X & ((N) - 1)) == 0)           // True if X is aligned to N bytes, else false
-#define IS_NOT_ALIGNED(X, N)            (((X) & ((N) - 1)) != 0)         // True if X is not aligned to N bytes, else false
-#define ATTRIBUTE_ALIGN(num)            __attribute__((aligned(num)))    // Align object to num bytes (num should be power of two)
-#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB) & 1)) // Checks if a flag is set in a bitfield
-#define ASSERT_HANG(cond) \
-	if (!(cond)) {        \
-		while (true) { }  \
-	}
+#define ARRAY_SIZE(o)        (sizeof((o)) / sizeof(*(o)))   // Array size define
+#define ALIGN_PREV(X, N)     ((X) & ~((N) - 1))             // Align X to the previous N bytes (N must be power of two)
+#define ALIGN_NEXT(X, N)     ALIGN_PREV(((X) + (N) - 1), N) // Align X to the next N bytes (N must be power of two)
+#define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)       // True if X is not aligned to N bytes, else false
+#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))  // Align object to num bytes (num should be power of two)
 
 #ifdef __MWERKS__
 #define BUMP_REGISTER(reg) \
@@ -127,12 +112,6 @@ typedef u16 wchar_t;
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0;
 // clang-format on
-
-inline void padStack(void)
-{
-	int pad = 0;
-}
-#define PAD_STACK() padStack()
 
 #ifdef __MWERKS__
 #define WEAKFUNC        __declspec(weak)

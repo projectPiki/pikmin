@@ -8,16 +8,16 @@ extern "C" {
 #endif
 
 // #define HID0              0x3f0
-#define HID0_ICE          0x8000
-#define HID0_ICFI         0x800
-#define HID0_DCE          0x4000
-#define HID2              0x398
-#define HID2_LCE_BIT      3
-#define MSR_ME            0x1000
-#define LC_BASE_PREFIX    (0xE000)
-#define LC_BASE           (LC_BASE_PREFIX << 16)
-#define DBAT3L            3
-#define DBAT3U            3
+#define HID0_ICE       0x8000
+#define HID0_ICFI      0x800
+#define HID0_DCE       0x4000
+#define HID2           0x398
+#define HID2_LCE_BIT   3
+#define MSR_ME         0x1000
+#define LC_BASE_PREFIX (0xE000)
+#define LC_BASE        (LC_BASE_PREFIX << 16)
+#define DBAT3L         3
+#define DBAT3U         3
 // #define DMA_U             0x39a
 // #define DMA_L             0x39b
 #define DMA_L_STORE       0

@@ -94,7 +94,7 @@ void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax)
  * Address:	8000B600
  * Size:	00004C
  */
-void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
+void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 level)
 {
 	u8* REF_idx;
 	u8* REF_mixer;
@@ -110,7 +110,7 @@ void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
 
 	mixChan->currentVolume = volume;
 	mixChan->targetVolume  = volume;
-	mixChan->_06           = (param_4 << 8) | (param_4);
+	mixChan->level         = (level << 8) | (level);
 }
 
 /*
@@ -125,7 +125,7 @@ void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
 	if (buf->endRequested)
 		return;
 	mixChan->targetVolume = volume;
-	mixChan->_06          = (param_4 << 8) | (mixChan->_06 & 0xff);
+	mixChan->level        = (param_4 << 8) | (mixChan->level & 0xff);
 }
 
 /*

@@ -318,16 +318,16 @@ static u16 TrackReceive(seqp_* track, u16 param_2)
 		WaveScene_Close(13, 6);
 	}
 	if ((param_2 & 0x8000) == 0x8000) {
-		stupid1 = (track->_88 & 0x00f0) >> 4;
-		stupid2 = (track->_88 & 0x000f) >> 0;
+		stupid1 = (track->trackId & 0x00f0) >> 4;
+		stupid2 = (track->trackId & 0x000f) >> 0;
 		stupid3 = (param_2 & 0x0fff);
-		if ((track->_88 & 0x0f00) >> 8 == 1) {
+		if ((track->trackId & 0x0f00) >> 8 == 1) {
 			MML_StopEventAction(stupid1, stupid2, stupid3);
 		}
 	}
 	if ((param_2 & 0x9000) == 0x9000) {
 		Jam_ReadPortAppDirect(track, 2, &portReadOut);
-		MML_StopEventAll(track->_88 & 0xf, portReadOut);
+		MML_StopEventAll(track->trackId & 0xf, portReadOut);
 	}
 	return 0;
 }

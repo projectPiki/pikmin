@@ -15,54 +15,55 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 {
 	(void)&channel;
 
-	if (track->_39E && (track->_39D & 0x40)) {
+	if (track->muteFlag && (track->pauseStatus & 0x40)) {
 		return -1;
 	}
 
 	s32 channel2 = channel;
 
-	jc_** chan1 = &track->_9C[channel2];
+	jc_** chan1 = &track->channels[channel2];
 	if (*chan1) {
 		NoteOFF(track, channel2);
 	}
 
 	seqp_* parent = track->parent;
-	jcs_* jcs     = &track->_D8;
+	jcs_* jcs     = &track->parentController;
 	u32 reg;
 
 	seqp_* temp = parent;
-	while (jcs->_00 == 0 || jcs->_08 == 0) {
+	while (jcs->chanCount == 0 || jcs->freeChannels == 0) {
 		if (temp == NULL) {
-			jcs = &track->_D8;
+			jcs = &track->parentController;
 			break;
 		}
-		jcs  = &temp->_D8;
+		jcs  = &temp->parentController;
 		temp = temp->parent;
 	}
 
-	if (track->_3F == 4) {
+	if (track->flags == 4) {
 		if (parent == NULL) {
 			return -1;
 		}
-		if (jcs != &parent->_D8) {
-			jc_* chan = List_GetChannel(&jcs->_08);
+
+		if (jcs != &parent->parentController) {
+			jc_* chan = List_GetChannel(&jcs->freeChannels);
 			if (chan) {
-				jcs->_00--;
-				List_AddChannel(&track->_D8._08, chan);
-				parent->_D8._00++;
-				chan->mMgr = &parent->_D8;
+				jcs->chanCount--;
+				List_AddChannel(&track->parentController.freeChannels, chan);
+				parent->parentController.chanCount++;
+				chan->mMgr = &parent->parentController;
 			}
-			jcs = &parent->_D8;
+			jcs = &parent->parentController;
 		}
-	} else if (jcs != &track->_D8) {
-		jc_* chan = List_GetChannel(&jcs->_08);
+	} else if (jcs != &track->parentController) {
+		jc_* chan = List_GetChannel(&jcs->freeChannels);
 		if (chan) {
-			jcs->_00--;
-			List_AddChannel(&track->_D8._08, chan);
-			track->_D8._00++;
-			chan->mMgr = &track->_D8;
+			jcs->chanCount--;
+			List_AddChannel(&track->parentController.freeChannels, chan);
+			track->parentController.chanCount++;
+			chan->mMgr = &track->parentController;
 		}
-		jcs = &track->_D8;
+		jcs = &track->parentController;
 	}
 
 	reg      = Jam_ReadRegDirect(track, 6);
@@ -84,12 +85,12 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	if (sound == NULL) {
 		return -1;
 	}
-	track->_BC[channel2] = sound->_126;
-	UpdatePanPower_1Shot(sound, track->regParam.param._10[0], track->regParam.param._10[1], track->regParam.param._10[2],
-	                     track->regParam.param._10[3]);
+	track->activeSoundIds[channel2] = sound->channelId;
+	UpdatePanPower_1Shot(sound, track->regParam.param.arguments[0], track->regParam.param.arguments[1], track->regParam.param.arguments[2],
+	                     track->regParam.param.arguments[3]);
 
 	for (u32 i = 0; i < 2; i++) {
-		u32 flag = track->_370[i];
+		u32 flag = track->oscillatorRouting[i];
 		if (flag == 15 || flag == 14) {
 			continue;
 		}
@@ -107,6 +108,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 				track->oscillators[i].mReleaseVecOffset = prev;
 			}
 		}
+
 		Effecter_Overwrite_1ShotD(sound, &track->oscillators[i], flag);
 	}
 
@@ -404,16 +406,16 @@ s32 NoteOFF_R(seqp_* track, u8 param_2, u16 param_3)
 	jc_* jc;
 
 	REF_param_2 = &param_2;
-	if (jc = track->_9C[param_2]) {
-		if (jc->_126 == track->_BC[param_2]) {
+	if (jc = track->channels[param_2]) {
+		if (jc->channelId == track->activeSoundIds[param_2]) {
 			if (param_3 == 0) {
 				Stop_1Shot(jc);
 			} else {
 				Stop_1Shot_R(jc, param_3);
 			}
 		}
-		track->_9C[param_2] = NULL;
-		track->_BC[param_2] = 0;
+		track->channels[param_2]       = NULL;
+		track->activeSoundIds[param_2] = 0;
 		return 1;
 	}
 	return 0;
@@ -438,8 +440,8 @@ s32 GateON(seqp_* track, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
 {
 	s32* REF_param_3 = &param_3;
 
-	if (track->_9C[param_2]) {
-		Gate_1Shot(track->_9C[param_2], param_3, param_4, param_5);
+	if (track->channels[param_2]) {
+		Gate_1Shot(track->channels[param_2], param_3, param_4, param_5);
 	} else {
 		return -1;
 	}
@@ -465,13 +467,13 @@ BOOL CheckNoteStop(seqp_* track, s32 param_2)
 {
 	jc_* jc;
 
-	if (jc = track->_9C[param_2]) {
-		if (jc->_126 != track->_BC[param_2]) {
-			track->_9C[param_2] = NULL;
-			track->_BC[param_2] = 0;
+	if (jc = track->channels[param_2]) {
+		if (jc->channelId != track->activeSoundIds[param_2]) {
+			track->channels[param_2]       = NULL;
+			track->activeSoundIds[param_2] = 0;
 			return TRUE;
 		}
-		if (jc->_01 == 0xff) {
+		if (jc->note == 0xff) {
 			return TRUE;
 		}
 		return FALSE;

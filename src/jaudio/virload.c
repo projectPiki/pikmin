@@ -231,7 +231,7 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
  * Address:	8000E8E0
  * Size:	0000E0
  */
-unknown JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)(u32), u32 owner)
+u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)(u32), u32 owner)
 {
 	static u32 first = TRUE;
 	u32 badCompiler;

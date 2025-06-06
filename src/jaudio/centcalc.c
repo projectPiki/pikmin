@@ -1,10 +1,9 @@
 #include "jaudio/centcalc.h"
-
 #include "jaudio/tables.h"
 
-// TODO: This is probably some curve that can be expressed in better terms than a bunch of constant values copied from the DOL.
-#define KEY_TABLE_LENGTH (64)
-static f32 KEY_TABLE[KEY_TABLE_LENGTH] = {
+// Calculated via powf(2.0f, x / 12.0f)
+#define KEY_CURVE_RESOLUTION (64)
+static f32 KEY_TABLE[KEY_CURVE_RESOLUTION] = {
 	1.0000000, 1.0009100, 1.0018210, 1.0027330, 1.0036449, 1.0045590, 1.0054730, 1.0063879, 1.0073040, 1.0082200, 1.0091380,
 	1.0100560, 1.0109750, 1.0118960, 1.0128160, 1.0137380, 1.0146610, 1.0155840, 1.0165080, 1.0174330, 1.0183589, 1.0192860,
 	1.0202140, 1.0211420, 1.0220710, 1.0230020, 1.0239330, 1.0248640, 1.0257970, 1.0267310, 1.0276650, 1.0286000, 1.0295360,
@@ -18,23 +17,28 @@ static f32 KEY_TABLE[KEY_TABLE_LENGTH] = {
  * Address:	80014BC0
  * Size:	0000CC
  */
-f32 Jam_PitchToCent(f32 param_1, f32 param_2)
+f32 Jam_PitchToCent(f32 basePitch, f32 scaleFactor)
 {
 	u32 badCompiler;
-	f32 fVar1;
-	f32 fVar2;
-	s16 sVar3;
 
-	fVar1 = 4.0f * param_1 * param_2;
-	sVar3 = fVar1;
-	fVar2 = fVar1 - sVar3;
-	if (fVar1 < 0.0f && fVar2 != 0.0f) {
-		fVar2 += 1.0f;
-		sVar3 -= 1;
+	f32 scaledPitch;
+	f32 fractionalPart;
+	s16 tableIndex;
+
+	scaledPitch    = 4.0f * basePitch * scaleFactor;
+	tableIndex     = scaledPitch;
+	fractionalPart = scaledPitch - tableIndex;
+
+	// Handle negative input rounding
+	if (scaledPitch < 0.0f && fractionalPart != 0.0f) {
+		fractionalPart += 1.0f;
+		tableIndex -= 1;
 	}
-	if (fVar2 >= 1.0f) {
-		fVar2 -= 1.0f;
-		sVar3 += 1;
+
+	if (fractionalPart >= 1.0f) {
+		fractionalPart -= 1.0f;
+		tableIndex += 1;
 	}
-	return C5BASE_PITCHTABLE[sVar3 + 60] * (KEY_TABLE)[(u16)(fVar2 * 64.0f)];
+
+	return C5BASE_PITCHTABLE[tableIndex + 60] * (KEY_TABLE)[(u16)(fractionalPart * KEY_CURVE_RESOLUTION)];
 }

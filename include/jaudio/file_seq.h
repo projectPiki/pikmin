@@ -10,7 +10,7 @@ u32 Jaf_CheckSeqSize(u32 arcHandleMask);
 u32 Jaf_LoadSeq(u32, u8*);
 void Jaf_ClearSeq(u32);
 u8* Jaf_CheckSeq(u32);
-unknown Jaf_ReadySeq(u32, u32);
+u32 Jaf_ReadySeq(u32, u32);
 BOOL Jaf_PlaySeq(u32);
 BOOL Jaf_StartSeq(u32, u32);
 BOOL Jaf_StopSeq(u32);

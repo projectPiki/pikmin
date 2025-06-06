@@ -312,7 +312,7 @@ void Jac_PlayBgm(u32 a, u32 id)
 	} else {
 		Jam_OffExtSwitch(track, 0x40);
 	}
-	track->_39D = 74;
+	track->pauseStatus = 74;
 	Jaf_PlaySeq(a + 3);
 	Jac_SetProcessStatus(9);
 }
@@ -483,7 +483,7 @@ void Jac_MoveBgmTrackVol(BgmControl_* control)
 
 	for (i = 0; i < 16; i++) {
 		f32 b = control->trackVolumes[i];
-		Jam_SetExtParamP(control->trackParams[i]._0C + (b - control->trackParams[i]._0C) / a, track, i, 1);
+		Jam_SetExtParamP(control->trackParams[i].volume + (b - control->trackParams[i].volume) / a, track, i, 1);
 	}
 }
 
@@ -546,11 +546,11 @@ static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control)
 	f32 a        = control->_464;
 	seqp_* track = Jaf_HandleToSeq(control->trackHandle);
 
-	if (!track->_2AC) {
+	if (!track->outerParams) {
 		return FALSE;
 	}
 
-	Jam_SetExtParam(track->_2AC->_0C + (control->_45C - track->_2AC->_0C) / a, track, 1);
+	Jam_SetExtParam(track->outerParams->volume + (control->_45C - track->outerParams->volume) / a, track, 1);
 	return TRUE;
 }
 
