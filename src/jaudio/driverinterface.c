@@ -3,6 +3,8 @@
 #include "jaudio/dspinterface.h"
 #include "jaudio/audiostruct.h"
 #include "jaudio/dspdriver.h"
+#include "jaudio/ja_calc.h"
+#include "jaudio/bankdrv.h"
 
 #define CHANNEL_SIZE (0x100)
 
@@ -10,7 +12,7 @@ static jcs_ GLOBAL_CHANNEL;
 static jc_ CHANNEL[CHANNEL_SIZE];
 
 static u16 MAX_MIXERLEVEL         = 12000;
-static int JAC_SYSTEM_OUTPUT_MODE = 1;
+static u32 JAC_SYSTEM_OUTPUT_MODE = 1;
 
 static u32 cur_waits;
 static u32 cur_top;
@@ -567,6 +569,107 @@ void UpdateJcToDSP(jc_* jc)
  */
 void UpdateEffecterParam(jc_* jc)
 {
+	f32 mod1, mod2;
+	f32 mod3 = 0.0f;
+	if (jc->_FC == jc->mMgr) {
+		jc->_100          = jc->mMgr->_1C;
+		jc->_104          = jc->mMgr->_18;
+		jc->_BC[1]._00[2] = jc->mMgr->_20;
+		jc->_BC[2]._00[2] = jc->mMgr->_24;
+		jc->_BC[3]._00[2] = jc->mMgr->_28;
+
+		for (int i = 0; i < 3; i++) {
+			jc->_B8[i] = jc->mMgr->_62[i];
+		}
+	}
+
+	switch (JAC_SYSTEM_OUTPUT_MODE) {
+	case 0:
+		mod1 = 0.5f;
+		mod3 = 0.0f;
+		mod2 = PanCalc(&jc->_BC[2], &jc->_BC[0], jc->_B8[1]);
+		break;
+
+	case 1:
+		if (jc->_B8[0] == 0) {
+			mod1 = 0.5f;
+		} else {
+			mod1 = PanCalc(&jc->_BC[1], &jc->_BC[0], jc->_B8[0]);
+		}
+		mod2 = PanCalc(&jc->_BC[2], &jc->_BC[0], jc->_B8[1]);
+		mod3 = PanCalc(&jc->_BC[3], &jc->_BC[0], jc->_B8[2]);
+		break;
+	}
+
+	mod1 = mod1 > 0.0f ? (mod1 < 1.0f) ? mod1 : 1.0f : 0.0f;
+	mod2 = mod2 > 0.0f ? (mod2 < 1.0f) ? mod2 : 1.0f : 0.0f;
+	mod3 = mod3 > 0.0f ? (mod3 < 1.0f) ? mod3 : 1.0f : 0.0f;
+
+	jc->_F8 = jc->_B0 * jc->_EC * jc->_100 * 4096.0f;
+
+	f32 calc = jc->_104 * jc->_B4 * jc->_F0;
+	f32 calc2, calc3;
+	for (u32 i = 0; i < 6; i++) {
+
+		u16 flag = jc->_108[i];
+		u16* ptr = &flag;
+
+		if ((u8)flag == 0) {
+			jc->_114[i] = 0;
+			continue;
+		}
+
+		if (flag >> 4) {
+			switch (flag >> 4) {
+			case 1:
+				calc2 = mod1;
+				break;
+			case 2:
+				calc2 = mod2;
+				break;
+			case 3:
+				calc2 = mod3;
+				break;
+			case 5:
+				calc2 = 1.0f - mod1;
+				break;
+			case 6:
+				calc2 = 1.0f - mod2;
+				break;
+			case 7:
+				calc2 = 1.0f - mod3;
+				break;
+			}
+			calc *= sinf3(calc2);
+		}
+
+		if (flag & 0xf) {
+			switch (flag & 0xf) {
+			case 1:
+				calc2 = mod1;
+				break;
+			case 2:
+				calc2 = mod2;
+				break;
+			case 3:
+				calc2 = mod3;
+				break;
+			case 5:
+				calc2 = 1.0f - mod1;
+				break;
+			case 6:
+				calc2 = 1.0f - mod2;
+				break;
+			case 7:
+				calc2 = 1.0f - mod3;
+				break;
+			}
+			calc *= sinf3(calc2);
+		}
+
+		calc3       = calc3 > 0.0f ? (calc3 < 1.0f) ? calc3 : 1.0f : calc;
+		jc->_114[i] = calc3 * (f32)MAX_MIXERLEVEL;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -835,10 +938,10 @@ void DoEffectOsc(jc_* jc, u8 id, f32 val)
 {
 	switch (id) {
 	case 1:
-		jc->_E8[0] *= val;
+		jc->_EC *= val;
 		break;
 	case 0:
-		jc->_E8[1] *= val;
+		jc->_F0 *= val;
 		break;
 	case 2:
 		jc->_BC[1]._00[1] = val;
@@ -878,8 +981,126 @@ static void KillBrokenLogicalChannels(dspch_* ch)
  * Address:	8000A2E0
  * Size:	000384
  */
-static void CommonCallbackLogicalChannel(dspch_* ch, u32 a)
+static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 {
+	u32 b    = 0;
+	u32* ptr = &a;
+	jc_* jc  = ch->_08;
+	if (jc == NULL) {
+		ch->_0C = nullptr;
+		ch->_03 = 0;
+		KillBrokenLogicalChannels(ch);
+		return FALSE;
+	}
+
+	dspch_* ch2 = jc->_20;
+	if (ch != ch2) {
+		if (ch2 && ch2->_08 == jc) {
+			KillBrokenLogicalChannels(ch);
+		} else {
+			StopLogicalChannel(jc);
+			if (List_CutChannel(jc) != -1) {
+				List_AddChannel(&jc->mMgr->_08, jc);
+			}
+		}
+		ch->_08 = 0;
+		ch->_03 = 0;
+		ch->_0C = nullptr;
+		return FALSE;
+	}
+
+	if (a == 2) {
+		if (jc->_28) {
+			jc->_28(jc, (JCSTATUS)1);
+		} else {
+			StopLogicalChannel(jc);
+			if (List_CutChannel(jc) != -1) {
+				List_AddChannel(&jc->mMgr->_08, jc);
+			}
+		}
+		return FALSE;
+	}
+
+	if (jc->_10 && jc->_10->_0C) {
+		ForceStopDSPchannel(ch2);
+		return -1;
+	}
+
+	if (a == 4) {
+		if (ch2 && (u8)(jc->_120 >> 0x10) < ch2->_03) {
+			ch2->_03 = jc->_120 >> 0x10;
+		}
+		return FALSE;
+	}
+
+	if (a == 3) {
+		jc->mOscillators[0]->mMode = 0;
+		if (List_CutChannel(jc) != -1) {
+			return TRUE;
+		}
+		List_AddChannel(&jc->mMgr->_14, jc);
+		a = 0;
+	}
+
+	if (a == 0) {
+		jc->_EC           = 1.0f;
+		jc->_F0           = 1.0f;
+		jc->_BC[1]._00[1] = 0.5f;
+		jc->_BC[2]._00[1] = 0.0f;
+		jc->_BC[3]._00[1] = 0.0f;
+
+		for (u32 i = 0; i < 4; i++) {
+			Osc_* osc = jc->mOscillators[i];
+			if (osc->mMode) {
+				Oscbuf_* buf = &jc->mOscBuffers[i];
+				DoEffectOsc(jc, osc->mMode, Bank_OscToOfs(osc, buf));
+				if (buf->_00 == 0) {
+					if (jc->_28 == NULL) {
+						if (StopLogicalChannel(jc) == FALSE) {
+							DSP_PlayStop(ch->buffer_idx);
+							DSP_FlushChannel(ch->buffer_idx);
+						}
+						if (List_CutChannel(jc) != -1) {
+							List_AddChannel(&jc->mMgr->_08, jc);
+						}
+						return FALSE;
+					} else {
+						jc->_28(jc, (JCSTATUS)1);
+						return FALSE;
+					}
+				}
+				b++;
+			}
+		}
+
+		if (b) {
+			UpdateEffecterParam(jc);
+			jc->_03 = 1;
+		}
+
+		if (jc->_2C && jc->_2C(jc, (JCSTATUS)0) == TRUE) {
+			jc->_03++;
+		}
+
+		if (jc->_28 == NULL) {
+			return TRUE;
+		}
+
+		if (jc->_34 > 0) {
+			jc->_34--;
+		}
+
+		if (jc->_34 == 0) {
+			jc->_28(jc, (JCSTATUS)0);
+			jc->_34 = jc->_30;
+		}
+
+		if (jc->_03) {
+			UpdateJcToDSP(jc);
+			jc->_03 = 0;
+		}
+		return TRUE;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1203,6 +1424,52 @@ BOOL CheckLogicalChannel(jc_* jc)
  */
 BOOL PlayLogicalChannel(jc_* jc)
 {
+	if (jc->_20 == NULL) {
+		return FALSE;
+	}
+	if (CheckLogicalChannel(jc) == FALSE) {
+		return FALSE;
+	}
+
+	jc->_20->_0C = CommonCallbackLogicalChannel;
+	jc->_20->_06 = 1;
+
+	switch (jc->_0C) {
+	case 0:
+		DSP_SetWaveInfo(jc->_20->buffer_idx, jc->_10, jc->_14);
+		break;
+	case 1:
+		break;
+	case 2:
+		DSP_SetOscInfo(jc->_20->buffer_idx, jc->_14);
+		break;
+	}
+
+	for (u32 i = 0; i < 6; i++) {
+		u16 bus0 = jc->_108[i];
+		u8 bus   = bus0;
+		u8* busp = &bus;
+		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
+			switch (bus) {
+			case 8:
+				bus = 11;
+				break;
+			case 9:
+				bus = 2;
+				break;
+			}
+		}
+		DSP_SetBusConnect(jc->_20->buffer_idx, i, bus);
+	}
+
+	jc->_FC = jc->mMgr;
+	UpdateEffecterParam(jc);
+	__UpdateJcToDSP(jc);
+	jc->_20->_03 = jc->_120;
+	jc->_20->_04 = jc->_124;
+	DSP_PlayStart(jc->_20->buffer_idx);
+	DSP_FlushChannel(jc->_20->buffer_idx);
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1399,6 +1666,42 @@ BOOL Del_WaitDSPChannel(jc_* jc)
  */
 void __Entry_WaitChannel(u8 a)
 {
+	jc_* jc;
+	dspch_* ch;
+
+	while (cur_waits != 0) {
+		while (TRUE) {
+			jc_* temp = waitp[cur_top];
+			if (temp) {
+				jc = temp;
+				break;
+			}
+		}
+
+		ch = AllocDSPchannel(0, (u32)jc);
+		if (ch == NULL) {
+			break;
+		}
+		jc->_20 = ch;
+		PlayLogicalChannel(jc);
+		if (List_CutChannel(jc) != -1) {
+			List_AddChannel(&jc->mMgr->_0C, jc);
+		}
+		cur_top++;
+		if (cur_top == 0x20) {
+			cur_top = 0;
+		}
+		cur_waits--;
+		if (a == 1) {
+			return;
+		}
+
+		cur_top++;
+		if (cur_top == 0x20) {
+			cur_top = 0;
+		}
+		cur_waits--;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1490,7 +1793,21 @@ void EntryCheck_WaitDSPChannel()
 {
 	__Entry_WaitChannel(0);
 
-	for (int i = 0; i < cur_waits; i++) { }
+	for (u32 i = 0; i < cur_waits; i++) {
+		jc_* jc = waitp[(cur_top + i) & 0x1f];
+		if (jc) {
+			waittime[(cur_top + i) & 0x1f]++;
+			if (jc->_30 > 0) {
+				jc->_30--;
+			}
+			if (jc->_30 == 0) {
+				jc->_28(jc, (JCSTATUS)6);
+				waitp[(cur_top + i) & 0x1f] = NULL;
+			}
+		}
+	}
+
+	u32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -62,7 +62,7 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 		for (i = 0; i < DSPCH_LENGTH; ++i) {
 			if (DSPCH[i]._01 == 0) {
 				DSPCH[i]._01 = TRUE;
-				DSPCH[i]._08 = param_2;
+				DSPCH[i]._08 = (jc_*)param_2;
 				DSPCH[i]._03 = 1;
 				DSP_AllocInit(i);
 				return &DSPCH[i];
@@ -78,8 +78,8 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 
 		DSPCH[i]._01     = 3;
 		DSPCH[i - 1]._01 = 2;
-		DSPCH[i]._08     = param_2;
-		DSPCH[i - 1]._08 = param_2;
+		DSPCH[i]._08     = (jc_*)param_2;
+		DSPCH[i - 1]._08 = (jc_*)param_2;
 		DSP_AllocInit(i);
 		DSP_AllocInit(i - 1);
 		return &DSPCH[i - 1];
@@ -97,7 +97,7 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 	if (chan == NULL) {
 		return -1;
 	}
-	if (chan->_08 != id) {
+	if (chan->_08 != (jc_*)id) {
 		return -2;
 	}
 

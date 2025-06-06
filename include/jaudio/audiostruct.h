@@ -49,7 +49,7 @@ struct dspch_ {
 	u8 _03;                 // _00
 	u16 _04;                // _04
 	u16 _06;                // _06
-	u32 _08;                // _08
+	jc_* _08;               // _08
 	DSPChannelCallback _0C; // _0C
 
 	// DSPBuffer* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
@@ -101,7 +101,7 @@ struct jc_ {
 	jcs_* mMgr;                    // _04
 	void** _08;                    // _08
 	u8 _0C;                        // _0C
-	void* _10;                     // _10
+	Wave_* _10;                    // _10
 	u32 _14;                       // _14
 	u32 _18;                       // _18
 	u32 _1C;                       // _1C
@@ -130,10 +130,14 @@ struct jc_ {
 	f32 _B4;                       // _B4
 	u8 _B8[3];                     // _B8
 	PanMatrix_ _BC[4];             // _BC
-	f32 _E8[3];                    // _E8
+	f32 _EC;                       // _EC
+	f32 _F0;                       // _F0
+	f32 _F4;                       // _F4
 	u16 _F8;                       // _F8
 	u16 _FA;                       // _FA
-	u8 _FC[0x108 - 0xFC];          // _FC
+	jcs_* _FC;                     // _FC
+	f32 _100;                      // _100
+	f32 _104;                      // _104
 	u16 _108[6];                   // _108
 	u16 _114[6];                   // _114
 	u32 _120;                      // _120

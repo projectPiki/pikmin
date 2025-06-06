@@ -93,8 +93,8 @@ static void __DoEffect(jc_* jc, u8 id, f32 val)
  */
 static void EffecterInit(jc_* jc, Inst_* inst)
 {
-	jc->_E8[0]        = 1.0f;
-	jc->_E8[1]        = 1.0f;
+	jc->_EC           = 1.0f;
+	jc->_F0           = 1.0f;
 	jc->_BC[1]._00[1] = 0.5f;
 	jc->_BC[2]._00[1] = 0.0f;
 	jc->_BC[3]._00[1] = 0.0f;
@@ -134,8 +134,8 @@ static void EffecterInit(jc_* jc, Inst_* inst)
  */
 static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 {
-	jc->_E8[0]        = 1.0f;
-	jc->_E8[1]        = 1.0f;
+	jc->_EC           = 1.0f;
+	jc->_F0           = 1.0f;
 	jc->_BC[1]._00[1] = 0.5f;
 	jc->_BC[2]._00[1] = 0.0f;
 	jc->_BC[3]._00[1] = 0.0f;
@@ -165,8 +165,8 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
  */
 static void EffecterInit_Osc(jc_* jc)
 {
-	jc->_E8[0]        = 1.0f;
-	jc->_E8[1]        = 1.0f;
+	jc->_EC        = 1.0f;
+	jc->_F0        = 1.0f;
 	jc->_BC[1]._00[1] = 0.5f;
 	jc->_BC[2]._00[1] = 0.0f;
 	jc->_BC[3]._00[1] = 0.0f;
@@ -292,7 +292,7 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 	}
 	Channel_Init(chan);
 	if (wave) {
-		chan->_10 = (void*)wave->_34;
+		chan->_10 = (Wave_*)wave->_34;
 		chan->_14 = wave->_0C;
 		chan->_0C = 0;
 	}
@@ -637,7 +637,7 @@ void AllStop_1Shot(jcs_* jcs)
 static int Extra_Update(jc_* jc, JCSTATUS status)
 {
 	if (jc->_FA) {
-		f32 a = jc->_E8[2] - jc->_B0;
+		f32 a = jc->_F4 - jc->_B0;
 		a /= jc->_FA;
 		jc->_B0 += a;
 		jc->_FA--;
@@ -662,7 +662,7 @@ void SetPitchTarget_1Shot(jc_* jc, f32 a1, u32 a2)
 		return;
 	}
 
-	jc->_E8[2] = a1;
+	jc->_F4 = a1;
 	jc->_FA    = a2;
 	jc->_2C    = Extra_Update;
 }
@@ -682,7 +682,7 @@ void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
 	if (jc->_0C == 2 || jc->_10 == NULL) {
 		id = a1;
 	} else {
-		id = (a1 + 60) - (((u8*)jc->_10)[2]);
+		id = (a1 + 60) - jc->_10->_02;
 	}
 
 	if (id < 0) {
@@ -711,7 +711,7 @@ void Gate_1Shot(jc_* jc, u8 a1, u8 a2, s32 a3)
 		if (jc->_0C == 2) {
 			idx = a1;
 		} else {
-			idx = (a1 + 60) - (((u8*)jc->_10)[2]);
+			idx = (a1 + 60) - jc->_10->_02;
 		}
 		if (idx < 0) {
 			idx = 0;
