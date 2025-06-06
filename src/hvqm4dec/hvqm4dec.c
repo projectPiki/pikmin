@@ -125,14 +125,14 @@ static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
  * Address:	........
  * Size:	000030
  */
-static void setCode(BitBuffer* dst, void* src)
+static void setCode(BitBuffer* dst, u8* top)
 {
-	u32 size  = read32(src, 0);
+	u32 size  = read32(top, 0);
 	dst->size = size;
 	if (size == 0) {
 		dst->ptr = NULL;
 	} else {
-		dst->ptr = (u32*)src + 1;
+		dst->ptr = top + 4;
 	}
 	dst->bit = -1;
 }
@@ -147,7 +147,7 @@ static inline int getBit(BitBuffer* buf)
 	u32 value;
 	int bit;
 	if ((bit = buf->bit) < 0) {
-		value = buf->value = *buf->ptr++;
+		value = buf->value = *((u32*)buf->ptr)++;
 		bit                = 31;
 	} else {
 		value = buf->value;
@@ -173,7 +173,7 @@ static inline s16 getByte(BitBuffer* buf)
 	} else {
 		value = buf->value;
 		value <<= 7 - bit;
-		buf->value = *buf->ptr++;
+		buf->value = *((u32*)buf->ptr)++;
 		value |= buf->value >> (bit + 25);
 		bit += 24;
 	}
@@ -490,7 +490,7 @@ static void MakeNest(VideoState* ws, int x, int y)
  * Address:	8001FC3C
  * Size:	000198
  */
-static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 left, u8 right)
+static void WeightImBlock(u8* block, int blockWidth, u8 c, u8 u, u8 d, u8 l, u8 r)
 {
 	/*
 
@@ -503,23 +503,38 @@ static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 l
 +---+---+---+
 
  */
-	int tmb = top - bottom;
-	int lmr = left - right;
+	// int u_d; // r6
+	// int l_r; // r8
+	// int v1; // r9
+	// int v2; // r11
+	// int c2; // r28
+	// int c3; // r12
+	// int t1; // r31
+	// int t2; // r30
+	// int t3; // r29
+	// int t4; // r28
+	// int t5; // r27
+	// int t6; // r26
+	// int t7; // r23
+	// int t8; // r11
+
+	int tmb = u - d;
+	int lmr = l - r;
 	int vph = tmb + lmr;
 	int vmh = tmb - lmr;
 
-	int v2 = value * 2;
-	int v8 = value * 8;
+	int v2 = c * 2;
+	int v8 = c * 8;
 
-	int tpl = (top + left) - v2;
-	int tpr = (top + right) - v2;
-	int bpr = (bottom + right) - v2;
-	int bpl = (bottom + left) - v2;
+	int tpl = (u + l) - v2;
+	int tpr = (u + r) - v2;
+	int bpr = (d + r) - v2;
+	int bpl = (d + l) - v2;
 
-	int tml = top - left;
-	int tmr = top - right;
-	int bmr = bottom - right;
-	int bml = bottom - left;
+	int tml = u - l;
+	int tmr = u - r;
+	int bmr = d - r;
+	int bml = d - l;
 
 	// V:
 	// 6  8  8 6
@@ -540,40 +555,40 @@ static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 l
 	// (8*V + 2*T - B -   L       + 4) / 8
 	// (6*V + 2*T - B -   L + 2*R + 4) / 8
 
-	dst[0] = clipTable[v8 + vph + tpl];
-	dst[1] = clipTable[v8 + vph + tml];
-	dst[2] = clipTable[v8 + vmh + tmr];
-	dst[3] = clipTable[v8 + vmh + tpr];
+	block[0] = clipTable[v8 + vph + tpl];
+	block[1] = clipTable[v8 + vph + tml];
+	block[2] = clipTable[v8 + vmh + tmr];
+	block[3] = clipTable[v8 + vmh + tpr];
 
-	dst += stride;
+	block += blockWidth;
 
 	// ( 8*V - B + 2*L -   R + 4) / 8
 	// (10*V - B       -   R + 4) / 8
 	// (10*V - B -   L       + 4) / 8
 	// ( 8*V - B -   L + 2*R + 4) / 8
 
-	dst[0] = clipTable[v8 + vph - tml];
-	dst[1] = clipTable[v8 - bpr];
-	dst[2] = clipTable[v8 - bpl];
-	dst[3] = clipTable[v8 + vmh - tmr];
+	block[0] = clipTable[v8 + vph - tml];
+	block[1] = clipTable[v8 - bpr];
+	block[2] = clipTable[v8 - bpl];
+	block[3] = clipTable[v8 + vmh - tmr];
 
-	dst += stride;
+	block += blockWidth;
 
 	// ( 8*V - T + 2*L - R + 4) / 8
 	// (10*V - T       - R + 4) / 8
 	// (10*V - T - L
 
-	dst[0] = clipTable[v8 - vmh - bml];
-	dst[1] = clipTable[v8 - tpr];
-	dst[2] = clipTable[v8 - tpl];
-	dst[3] = clipTable[v8 - vph - bmr];
+	block[0] = clipTable[v8 - vmh - bml];
+	block[1] = clipTable[v8 - tpr];
+	block[2] = clipTable[v8 - tpl];
+	block[3] = clipTable[v8 - vph - bmr];
 
-	dst += stride;
+	block += blockWidth;
 
-	dst[0] = clipTable[v8 - vmh + bpl];
-	dst[1] = clipTable[v8 - vmh + bml];
-	dst[2] = clipTable[v8 - vph + bmr];
-	dst[3] = clipTable[v8 - vph + bpr];
+	block[0] = clipTable[v8 - vmh + bpl];
+	block[1] = clipTable[v8 - vmh + bml];
+	block[2] = clipTable[v8 - vph + bmr];
+	block[3] = clipTable[v8 - vph + bpr];
 
 	/*
 	.loc_0x0:
@@ -682,29 +697,42 @@ static void WeightImBlock(u8* dst, u32 stride, u8 value, u8 top, u8 bottom, u8 l
 	*/
 }
 
+// 4x4 block of single value
+static void dcBlock(u8* block, int blockWidth, u8 dc)
+{
+	int i;
+
+	for (i = 0; i < 4; i++) {
+		block[0] = block[1] = block[2] = block[3] = dc;
+		block += blockWidth;
+	}
+}
+
 /*
  * --INFO--
  * Address:	8001FDD4
  * Size:	000048
  */
-static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
+static void OrgBlock(VideoState* ws, u8* block, int blockWidth, int p)
 {
+	// TODO: unrolled loop?
+	// int i;
 	BitBuffer* buf;
 	u32* ptr;
 	u32 temp1;
 	u32 temp2;
 	u32 temp3;
 
-	buf                       = &state->aotcd[planeIdx];
-	ptr                       = (u32*)buf->ptr;
-	temp1                     = ptr[1];
-	temp2                     = ptr[2];
-	temp3                     = ptr[3];
-	*(u32*)(dst)              = ptr[0];
-	*(u32*)(dst += dstStride) = temp1;
-	*(u32*)(dst += dstStride) = temp2;
-	*(u32*)(dst += dstStride) = temp3;
-	buf->ptr                  = ptr + 4;
+	buf                          = &ws->aotcd[p];
+	ptr                          = (u32*)buf->ptr;
+	temp1                        = ptr[1];
+	temp2                        = ptr[2];
+	temp3                        = ptr[3];
+	*(u32*)(block)               = ptr[0];
+	*(u32*)(block += blockWidth) = temp1;
+	*(u32*)(block += blockWidth) = temp2;
+	*(u32*)(block += blockWidth) = temp3;
+	buf->ptr                     = (u8*)ptr + 16;
 }
 
 /*
@@ -712,14 +740,16 @@ static void OrgBlock(VideoState* state, u8* dst, u32 dstStride, u32 planeIdx)
  * Address:	800201EC
  * Size:	00047C
  */
-static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
+static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* nestTop, int nestWidth, int p)
 {
-	BitBuffer* buf = &state->aotcd[planeIdx];
-	u16 bits;
-	u32 x_stride, y_stride, offset70, offset38, stride70, stride38;
+	u16 code;
+	int step_x, step_y;
 	u8 min, max;
-	int x, y, inverse, offset;
-	u8 nest_value;
+	u8* nP;
+	u8 value;
+
+	code = *ws->aotcd[p].ptr++ << 8;
+	code |= *ws->aotcd[p].ptr++;
 
 	// the nest size 70x38 is chosen to allow for
 	// 6/5-bit coordinates (0..63 x 0..31) + largest sampling pattern (6x6) = 0..69 x 0..37
@@ -729,408 +759,187 @@ static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, co
 	// 0x1000: stride38 : 1
 	// 0x6000: offset   : 2
 	// 0x8000: negated  : 1
-	bits = read16(buf->ptr, 0);
-	buf->ptr += 2;
 
 	// compute the offset inside the nest
-	offset70 = bits & 0x3F;
-	offset38 = (bits >> 6) & 0x1F;
-	stride70 = (bits >> 11) & 1;
-	stride38 = (bits >> 12) & 1;
-	if (state->landscape) {
-		nestData += nestStride * offset38 + offset70;
-		x_stride = 1 << stride70;
-		y_stride = nestStride << stride38;
+	// offset70 = code & 0x3F;
+	// offset38 = (code >> 6) & 0x1F;
+	// stride70 = (code >> 11) & 1;
+	// stride38 = (code >> 12) & 1;
+	if (ws->landscape) {
+		nestTop += ((code >> 6) & 0x1F) * nestWidth + (code & 0x3F);
+		step_x = 1 << ((code >> 11) & 1);
+		step_y = nestWidth << ((code >> 12) & 1);
 	} else {
-		nestData += nestStride * offset70 + offset38;
-		x_stride = 1 << stride38;
-		y_stride = nestStride << stride70;
+		nestTop += (code & 0x3F) * nestWidth + ((code >> 6) & 0x1F);
+		step_x = 1 << ((code >> 12) & 1);
+		step_y = nestWidth << ((code >> 11) & 1);
 	}
 
-	// copy basis vector from the nest
-	min = nestData[0];
-	max = nestData[0];
-	for (y = 0; y < 4; ++y) {
-		for (x = 0; x < 4; ++x) {
-			nest_value     = nestData[y * y_stride + x * x_stride];
-			basisOut[y][x] = nest_value;
-			min            = nest_value < min ? nest_value : min;
-			max            = nest_value > max ? nest_value : max;
-		}
+	nP = nestTop;
+
+	value          = *nP;
+	basisOut[0][0] = value;
+	min = max = value;
+
+	nP += step_x;
+
+	value          = *nP;
+	basisOut[0][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
 	}
-	*sum += decodeHuff(&state->scale[planeIdx]);
-	inverse = divTable[max - min];
-	if (bits & 0x8000)
-		inverse = -inverse;
-	offset = (bits >> 13) & 3;
-	return (*sum + offset) * inverse;
 
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x38(r1)
-	  rlwinm    r0,r8,4,0,27
-	  add       r11, r3, r0
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  lwz       r10, 0x61DC(r11)
-	  addi      r0, r10, 0x1
-	  stw       r0, 0x61DC(r11)
-	  lwz       r9, 0x61DC(r11)
-	  lbz       r10, 0x0(r10)
-	  addi      r0, r9, 0x1
-	  stw       r0, 0x61DC(r11)
-	  lbz       r0, 0x6260(r3)
-	  lbz       r9, 0x0(r9)
-	  cmplwi    r0, 0
-	  addi      r0, r9, 0
-	  rlwimi    r0,r10,8,16,23
-	  beq-      .loc_0x74
-	  rlwinm    r9,r0,26,27,31
-	  mullw     r10, r9, r7
-	  add       r11, r10, r6
-	  rlwinm    r9,r0,20,31,31
-	  rlwinm    r12,r0,0,26,31
-	  rlwinm    r6,r0,21,31,31
-	  li        r10, 0x1
-	  add       r11, r12, r11
-	  slw       r6, r10, r6
-	  slw       r7, r7, r9
-	  b         .loc_0x9C
+	nP += step_x;
 
-	.loc_0x74:
-	  rlwinm    r9,r0,0,26,31
-	  mullw     r10, r9, r7
-	  add       r11, r10, r6
-	  rlwinm    r9,r0,21,31,31
-	  rlwinm    r12,r0,26,27,31
-	  rlwinm    r6,r0,20,31,31
-	  li        r10, 0x1
-	  add       r11, r12, r11
-	  slw       r6, r10, r6
-	  slw       r7, r7, r9
+	value          = *nP;
+	basisOut[0][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x9C:
-	  lbz       r9, 0x0(r11)
-	  add       r31, r11, r6
-	  stb       r9, 0x0(r4)
-	  rlwinm    r12,r9,0,24,31
-	  addi      r10, r9, 0
-	  lbz       r30, 0x0(r31)
-	  cmplw     r30, r12
-	  stb       r30, 0x1(r4)
-	  ble-      .loc_0xC8
-	  mr        r10, r30
-	  b         .loc_0xD0
+	nP += step_x;
 
-	.loc_0xC8:
-	  bge-      .loc_0xD0
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[0][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0xD0:
-	  add       r31, r31, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x2(r4)
-	  ble-      .loc_0xF0
-	  mr        r10, r30
-	  b         .loc_0x100
+	nestTop += step_y;
+	nP = nestTop;
 
-	.loc_0xF0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x100
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[1][0] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x100:
-	  add       r31, r31, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x3(r4)
-	  ble-      .loc_0x120
-	  mr        r10, r30
-	  b         .loc_0x130
+	nP += step_x;
 
-	.loc_0x120:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x130
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[1][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x130:
-	  add       r11, r11, r7
-	  lbz       r30, 0x0(r11)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x4(r4)
-	  ble-      .loc_0x150
-	  mr        r10, r30
-	  b         .loc_0x160
+	nP += step_x;
 
-	.loc_0x150:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x160
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[1][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x160:
-	  add       r31, r11, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x5(r4)
-	  ble-      .loc_0x180
-	  mr        r10, r30
-	  b         .loc_0x190
+	nP += step_x;
 
-	.loc_0x180:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x190
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[1][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x190:
-	  add       r31, r31, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x6(r4)
-	  ble-      .loc_0x1B0
-	  mr        r10, r30
-	  b         .loc_0x1C0
+	nestTop += step_y;
+	nP = nestTop;
 
-	.loc_0x1B0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x1C0
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[2][0] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x1C0:
-	  add       r31, r31, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x7(r4)
-	  ble-      .loc_0x1E0
-	  mr        r10, r30
-	  b         .loc_0x1F0
+	nP += step_x;
 
-	.loc_0x1E0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x1F0
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[2][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x1F0:
-	  add       r11, r11, r7
-	  lbz       r30, 0x0(r11)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x8(r4)
-	  ble-      .loc_0x210
-	  mr        r10, r30
-	  b         .loc_0x220
+	nP += step_x;
 
-	.loc_0x210:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x220
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[2][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x220:
-	  add       r31, r11, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0x9(r4)
-	  ble-      .loc_0x240
-	  mr        r10, r30
-	  b         .loc_0x250
+	nP += step_x;
 
-	.loc_0x240:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x250
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[2][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x250:
-	  add       r31, r31, r6
-	  lbz       r30, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r30, r12
-	  stb       r30, 0xA(r4)
-	  ble-      .loc_0x270
-	  mr        r10, r30
-	  b         .loc_0x280
+	nestTop += step_y;
+	nP = nestTop;
 
-	.loc_0x270:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x280
-	  mr        r9, r30
+	value          = *nP;
+	basisOut[3][0] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x280:
-	  add       r31, r31, r6
-	  lbz       r31, 0x0(r31)
-	  rlwinm    r12,r10,0,24,31
-	  cmplw     r31, r12
-	  stb       r31, 0xB(r4)
-	  ble-      .loc_0x2A0
-	  mr        r10, r31
-	  b         .loc_0x2B0
+	nP += step_x;
 
-	.loc_0x2A0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x2B0
-	  mr        r9, r31
+	value          = *nP;
+	basisOut[3][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x2B0:
-	  add       r11, r11, r7
-	  lbz       r12, 0x0(r11)
-	  rlwinm    r7,r10,0,24,31
-	  cmplw     r12, r7
-	  stb       r12, 0xC(r4)
-	  ble-      .loc_0x2D0
-	  mr        r10, r12
-	  b         .loc_0x2E0
+	nP += step_x;
 
-	.loc_0x2D0:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r12, r7
-	  bge-      .loc_0x2E0
-	  mr        r9, r12
+	value          = *nP;
+	basisOut[3][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x2E0:
-	  add       r11, r11, r6
-	  lbz       r12, 0x0(r11)
-	  rlwinm    r7,r10,0,24,31
-	  cmplw     r12, r7
-	  stb       r12, 0xD(r4)
-	  ble-      .loc_0x300
-	  mr        r10, r12
-	  b         .loc_0x310
+	nP += step_x;
 
-	.loc_0x300:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r12, r7
-	  bge-      .loc_0x310
-	  mr        r9, r12
+	value          = *nP;
+	basisOut[3][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x310:
-	  add       r11, r11, r6
-	  lbz       r12, 0x0(r11)
-	  rlwinm    r7,r10,0,24,31
-	  cmplw     r12, r7
-	  stb       r12, 0xE(r4)
-	  ble-      .loc_0x330
-	  mr        r10, r12
-	  b         .loc_0x340
-
-	.loc_0x330:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r12, r7
-	  bge-      .loc_0x340
-	  mr        r9, r12
-
-	.loc_0x340:
-	  add       r11, r11, r6
-	  lbz       r7, 0x0(r11)
-	  rlwinm    r6,r10,0,24,31
-	  cmplw     r7, r6
-	  stb       r7, 0xF(r4)
-	  ble-      .loc_0x360
-	  mr        r10, r7
-	  b         .loc_0x370
-
-	.loc_0x360:
-	  rlwinm    r4,r9,0,24,31
-	  cmplw     r7, r4
-	  bge-      .loc_0x370
-	  mr        r9, r7
-
-	.loc_0x370:
-	  mulli     r6, r8, 0x14
-	  add       r4, r3, r6
-	  lwz       r11, 0x6160(r4)
-	  addi      r7, r6, 0x6150
-	  add       r7, r3, r7
-	  lwz       r6, 0x4(r11)
-	  b         .loc_0x3D8
-
-	.loc_0x38C:
-	  lwz       r8, 0xC(r7)
-	  cmpwi     r8, 0
-	  bge-      .loc_0x3B4
-	  lwz       r4, 0x0(r7)
-	  li        r8, 0x1F
-	  addi      r3, r4, 0x4
-	  stw       r3, 0x0(r7)
-	  lwz       r3, 0x0(r4)
-	  stw       r3, 0x8(r7)
-	  b         .loc_0x3B8
-
-	.loc_0x3B4:
-	  lwz       r3, 0x8(r7)
-
-	.loc_0x3B8:
-	  srw       r4, r3, r8
-	  subi      r3, r8, 0x1
-	  stw       r3, 0xC(r7)
-	  rlwinm    r4,r4,11,20,20
-	  rlwinm    r3,r6,2,0,29
-	  add       r3, r4, r3
-	  addi      r3, r3, 0x8
-	  lwzx      r6, r11, r3
-
-	.loc_0x3D8:
-	  cmpwi     r6, 0x100
-	  bge+      .loc_0x38C
-	  rlwinm    r3,r6,2,0,29
-	  lwz       r4, 0x0(r5)
-	  add       r3, r11, r3
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r7,r0,0,16,31
-	  rlwinm.   r0,r0,0,16,16
-	  add       r3, r4, r3
-	  stw       r3, 0x0(r5)
-	  beq-      .loc_0x43C
-	  rlwinm    r3,r9,0,24,31
-	  lwz       r5, 0x0(r5)
-	  rlwinm    r0,r10,0,24,31
-	  sub       r0, r0, r3
-	  lis       r3, 0x8039
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x4100
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r3,r7,19,30,31
-	  add       r3, r5, r3
-	  neg       r0, r0
-	  mullw     r3, r3, r0
-	  b         .loc_0x46C
-
-	.loc_0x43C:
-	  rlwinm    r3,r9,0,24,31
-	  lwz       r6, 0x0(r5)
-	  rlwinm    r0,r10,0,24,31
-	  sub       r0, r0, r3
-	  lis       r3, 0x8039
-	  rlwinm    r5,r7,19,30,31
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x4100
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  add       r3, r6, r5
-	  mullw     r3, r3, r0
-
-	.loc_0x46C:
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  addi      r1, r1, 0x38
-	  blr
-	*/
+	*pscl += decodeHuff(&ws->scale[p]);
+	if (code & 0x8000) {
+		return -divTable[max - min] * (*pscl + ((code >> 13) & 3));
+	} else {
+		return divTable[max - min] * (*pscl + ((code >> 13) & 3));
+	}
 }
 
 /*
@@ -1138,439 +947,201 @@ static inline u32 GetAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, co
  * Address:	80022700
  * Size:	0004C4
  */
-static inline u32 GetMCAotBasis(VideoState* state, u8 basisOut[4][4], int* sum, const u8* nestData, u32 nestStride, u32 planeIdx)
+static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
-	BitBuffer* buf;
 
-	u32 bits;
-	u32 step, stride, big, small;
+	u16 code;
+	int step_x, step_y;
 	u8 min, max;
-	int i, j;
-	u8 nest_value;
-	u32 inverse, foo;
+	u8* nP;
+	u8 value;
 
-	buf  = &state->aotcd[planeIdx];
-	bits = read16(buf->ptr, 0);
-	buf->ptr += 2;
-	big   = bits & 0x3F;
-	small = (bits >> 6) & 0x1F;
+	code = *ws->aotcd[p].ptr++ << 8;
+	code |= *ws->aotcd[p].ptr++;
 
-	if (state->landscape) {
-		nestData += nestStride * small + big;
-		step   = 1 << ((bits >> 11) & 1);
-		stride = nestStride << ((bits >> 12) & 1);
+	if (ws->landscape) {
+		nestTop += ((code >> 6) & 0x1F) * nestWidth + (code & 0x3F);
+		step_x = 1 << ((code >> 11) & 1);
+		step_y = nestWidth << ((code >> 12) & 1);
 	} else {
-		nestData += nestStride * big + small;
-		step   = 1 << ((bits >> 12) & 1);
-		stride = nestStride << ((bits >> 11) & 1);
+		nestTop += (code & 0x3F) * nestWidth + ((code >> 6) & 0x1F);
+		step_x = 1 << ((code >> 12) & 1);
+		step_y = nestWidth << ((code >> 11) & 1);
 	}
-	min = max = (nestData[0] >> 4) & 0xF; // !
-	for (i = 0; i < 4; ++i) {
-		for (j = 0; j < 4; ++j) {
-			nest_value     = (nestData[i * stride + j * step] >> 4) & 0xF; // !
-			basisOut[i][j] = nest_value;
-			min            = nest_value < min ? nest_value : min;
-			max            = nest_value > max ? nest_value : max;
-		}
+
+	nP = nestTop;
+
+	value          = (*nP >> 4) & 0xF;
+	basisOut[0][0] = value;
+	min = max = value;
+
+	nP += step_x;
+
+	value          = (*nP >> 4) & 0xF;
+	basisOut[0][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
 	}
-	*sum += decodeHuff(&state->scale[planeIdx]);
-	inverse = divTable[max - min];
-	if (bits & 0x8000)
-		inverse = -inverse;
-	foo = (bits >> 13) & 3;
-	return (*sum + foo) * inverse;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x40(r1)
-	  rlwinm    r0,r8,4,0,27
-	  add       r11, r3, r0
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  stw       r29, 0x34(r1)
-	  lwz       r10, 0x61DC(r11)
-	  addi      r0, r10, 0x1
-	  stw       r0, 0x61DC(r11)
-	  lwz       r9, 0x61DC(r11)
-	  lbz       r10, 0x0(r10)
-	  addi      r0, r9, 0x1
-	  stw       r0, 0x61DC(r11)
-	  lbz       r0, 0x6260(r3)
-	  lbz       r9, 0x0(r9)
-	  cmplwi    r0, 0
-	  addi      r0, r9, 0
-	  rlwimi    r0,r10,8,16,23
-	  beq-      .loc_0x78
-	  rlwinm    r9,r0,26,27,31
-	  mullw     r10, r9, r7
-	  add       r11, r10, r6
-	  rlwinm    r9,r0,20,31,31
-	  rlwinm    r12,r0,0,26,31
-	  rlwinm    r6,r0,21,31,31
-	  li        r10, 0x1
-	  add       r11, r12, r11
-	  slw       r6, r10, r6
-	  slw       r7, r7, r9
-	  b         .loc_0xA0
 
-	.loc_0x78:
-	  rlwinm    r9,r0,0,26,31
-	  mullw     r10, r9, r7
-	  add       r11, r10, r6
-	  rlwinm    r9,r0,21,31,31
-	  rlwinm    r12,r0,26,27,31
-	  rlwinm    r6,r0,20,31,31
-	  li        r10, 0x1
-	  add       r11, r12, r11
-	  slw       r6, r10, r6
-	  slw       r7, r7, r9
+	nP += step_x;
 
-	.loc_0xA0:
-	  lbz       r9, 0x0(r11)
-	  add       r29, r11, r6
-	  rlwinm    r9,r9,28,28,31
-	  stb       r9, 0x0(r4)
-	  rlwinm    r12,r9,0,24,31
-	  addi      r10, r9, 0
-	  lbz       r31, 0x0(r29)
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x1(r4)
-	  ble-      .loc_0xD4
-	  mr        r10, r30
-	  b         .loc_0xDC
+	value          = (*nP >> 4) & 0xF;
+	basisOut[0][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0xD4:
-	  bge-      .loc_0xDC
-	  mr        r9, r30
+	nP += step_x;
 
-	.loc_0xDC:
-	  add       r29, r29, r6
-	  lbz       r31, 0x0(r29)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x2(r4)
-	  ble-      .loc_0x100
-	  mr        r10, r30
-	  b         .loc_0x110
+	value          = (*nP >> 4) & 0xF;
+	basisOut[0][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x100:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x110
-	  mr        r9, r30
+	nestTop += step_y;
+	nP = nestTop;
 
-	.loc_0x110:
-	  add       r29, r29, r6
-	  lbz       r31, 0x0(r29)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x3(r4)
-	  ble-      .loc_0x134
-	  mr        r10, r30
-	  b         .loc_0x144
+	value          = (*nP >> 4) & 0xF;
+	basisOut[1][0] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x134:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x144
-	  mr        r9, r30
+	nP += step_x;
 
-	.loc_0x144:
-	  add       r11, r11, r7
-	  lbz       r31, 0x0(r11)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x4(r4)
-	  ble-      .loc_0x168
-	  mr        r10, r30
-	  b         .loc_0x178
+	value          = (*nP >> 4) & 0xF;
+	basisOut[1][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x168:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x178
-	  mr        r9, r30
+	nP += step_x;
 
-	.loc_0x178:
-	  add       r30, r11, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0x5(r4)
-	  ble-      .loc_0x19C
-	  mr        r10, r31
-	  b         .loc_0x1AC
+	value          = (*nP >> 4) & 0xF;
+	basisOut[1][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x19C:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x1AC
-	  mr        r9, r31
+	nP += step_x;
 
-	.loc_0x1AC:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0x6(r4)
-	  ble-      .loc_0x1D0
-	  mr        r10, r31
-	  b         .loc_0x1E0
+	value          = (*nP >> 4) & 0xF;
+	basisOut[1][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x1D0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x1E0
-	  mr        r9, r31
+	nestTop += step_y;
+	nP = nestTop;
 
-	.loc_0x1E0:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x7(r4)
-	  ble-      .loc_0x204
-	  mr        r10, r30
-	  b         .loc_0x214
+	value          = (*nP >> 4) & 0xF;
+	basisOut[2][0] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x204:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x214
-	  mr        r9, r30
+	nP += step_x;
 
-	.loc_0x214:
-	  add       r11, r11, r7
-	  lbz       r31, 0x0(r11)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0x8(r4)
-	  ble-      .loc_0x238
-	  mr        r10, r30
-	  b         .loc_0x248
+	value          = (*nP >> 4) & 0xF;
+	basisOut[2][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x238:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x248
-	  mr        r9, r30
+	nP += step_x;
 
-	.loc_0x248:
-	  add       r30, r11, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0x9(r4)
-	  ble-      .loc_0x26C
-	  mr        r10, r31
-	  b         .loc_0x27C
+	value          = (*nP >> 4) & 0xF;
+	basisOut[2][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x26C:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x27C
-	  mr        r9, r31
+	nP += step_x;
 
-	.loc_0x27C:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r31,r31,28,28,31
-	  cmplw     r31, r12
-	  stb       r31, 0xA(r4)
-	  ble-      .loc_0x2A0
-	  mr        r10, r31
-	  b         .loc_0x2B0
+	value          = (*nP >> 4) & 0xF;
+	basisOut[2][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x2A0:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r31, r12
-	  bge-      .loc_0x2B0
-	  mr        r9, r31
+	nestTop += step_y;
+	nP = nestTop;
 
-	.loc_0x2B0:
-	  add       r30, r30, r6
-	  lbz       r31, 0x0(r30)
-	  rlwinm    r12,r10,0,24,31
-	  rlwinm    r30,r31,28,28,31
-	  cmplw     r30, r12
-	  stb       r30, 0xB(r4)
-	  ble-      .loc_0x2D4
-	  mr        r10, r30
-	  b         .loc_0x2E4
+	value          = (*nP >> 4) & 0xF;
+	basisOut[3][0] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x2D4:
-	  rlwinm    r12,r9,0,24,31
-	  cmplw     r30, r12
-	  bge-      .loc_0x2E4
-	  mr        r9, r30
+	nP += step_x;
 
-	.loc_0x2E4:
-	  add       r11, r11, r7
-	  lbz       r12, 0x0(r11)
-	  rlwinm    r7,r10,0,24,31
-	  rlwinm    r12,r12,28,28,31
-	  cmplw     r12, r7
-	  stb       r12, 0xC(r4)
-	  ble-      .loc_0x308
-	  mr        r10, r12
-	  b         .loc_0x318
+	value          = (*nP >> 4) & 0xF;
+	basisOut[3][1] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x308:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r12, r7
-	  bge-      .loc_0x318
-	  mr        r9, r12
+	nP += step_x;
 
-	.loc_0x318:
-	  add       r12, r11, r6
-	  lbz       r11, 0x0(r12)
-	  rlwinm    r7,r10,0,24,31
-	  rlwinm    r11,r11,28,28,31
-	  cmplw     r11, r7
-	  stb       r11, 0xD(r4)
-	  ble-      .loc_0x33C
-	  mr        r10, r11
-	  b         .loc_0x34C
+	value          = (*nP >> 4) & 0xF;
+	basisOut[3][2] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x33C:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r11, r7
-	  bge-      .loc_0x34C
-	  mr        r9, r11
+	nP += step_x;
 
-	.loc_0x34C:
-	  add       r12, r12, r6
-	  lbz       r11, 0x0(r12)
-	  rlwinm    r7,r10,0,24,31
-	  rlwinm    r11,r11,28,28,31
-	  cmplw     r11, r7
-	  stb       r11, 0xE(r4)
-	  ble-      .loc_0x370
-	  mr        r10, r11
-	  b         .loc_0x380
+	value          = (*nP >> 4) & 0xF;
+	basisOut[3][3] = value;
+	if (value > max) {
+		max = value;
+	} else if (value < min) {
+		min = value;
+	}
 
-	.loc_0x370:
-	  rlwinm    r7,r9,0,24,31
-	  cmplw     r11, r7
-	  bge-      .loc_0x380
-	  mr        r9, r11
-
-	.loc_0x380:
-	  add       r12, r12, r6
-	  lbz       r7, 0x0(r12)
-	  rlwinm    r6,r10,0,24,31
-	  rlwinm    r7,r7,28,28,31
-	  cmplw     r7, r6
-	  stb       r7, 0xF(r4)
-	  ble-      .loc_0x3A4
-	  mr        r10, r7
-	  b         .loc_0x3B4
-
-	.loc_0x3A4:
-	  rlwinm    r4,r9,0,24,31
-	  cmplw     r7, r4
-	  bge-      .loc_0x3B4
-	  mr        r9, r7
-
-	.loc_0x3B4:
-	  mulli     r6, r8, 0x14
-	  add       r4, r3, r6
-	  lwz       r11, 0x6160(r4)
-	  addi      r7, r6, 0x6150
-	  add       r7, r3, r7
-	  lwz       r6, 0x4(r11)
-	  b         .loc_0x41C
-
-	.loc_0x3D0:
-	  lwz       r8, 0xC(r7)
-	  cmpwi     r8, 0
-	  bge-      .loc_0x3F8
-	  lwz       r4, 0x0(r7)
-	  li        r8, 0x1F
-	  addi      r3, r4, 0x4
-	  stw       r3, 0x0(r7)
-	  lwz       r3, 0x0(r4)
-	  stw       r3, 0x8(r7)
-	  b         .loc_0x3FC
-
-	.loc_0x3F8:
-	  lwz       r3, 0x8(r7)
-
-	.loc_0x3FC:
-	  srw       r4, r3, r8
-	  subi      r3, r8, 0x1
-	  stw       r3, 0xC(r7)
-	  rlwinm    r4,r4,11,20,20
-	  rlwinm    r3,r6,2,0,29
-	  add       r3, r4, r3
-	  addi      r3, r3, 0x8
-	  lwzx      r6, r11, r3
-
-	.loc_0x41C:
-	  cmpwi     r6, 0x100
-	  bge+      .loc_0x3D0
-	  rlwinm    r3,r6,2,0,29
-	  lwz       r4, 0x0(r5)
-	  add       r3, r11, r3
-	  lwz       r3, 0x8(r3)
-	  rlwinm    r7,r0,0,16,31
-	  rlwinm.   r0,r0,0,16,16
-	  add       r3, r4, r3
-	  stw       r3, 0x0(r5)
-	  beq-      .loc_0x480
-	  rlwinm    r3,r9,0,24,31
-	  lwz       r5, 0x0(r5)
-	  rlwinm    r0,r10,0,24,31
-	  sub       r0, r0, r3
-	  lis       r3, 0x8039
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x4100
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r3,r7,19,30,31
-	  add       r3, r5, r3
-	  neg       r0, r0
-	  mullw     r3, r3, r0
-	  b         .loc_0x4B0
-
-	.loc_0x480:
-	  rlwinm    r3,r9,0,24,31
-	  lwz       r6, 0x0(r5)
-	  rlwinm    r0,r10,0,24,31
-	  sub       r0, r0, r3
-	  lis       r3, 0x8039
-	  rlwinm    r5,r7,19,30,31
-	  rlwinm    r4,r0,2,0,29
-	  subi      r0, r3, 0x4100
-	  add       r3, r0, r4
-	  lwz       r0, 0x0(r3)
-	  add       r3, r6, r5
-	  mullw     r3, r3, r0
-
-	.loc_0x4B0:
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  blr
-	*/
+	*pscl += decodeHuff(&ws->scale[p]);
+	if (code & 0x8000) {
+		return -divTable[max - min] * (*pscl + ((code >> 13) & 3));
+	} else {
+		return divTable[max - min] * (*pscl + ((code >> 13) & 3));
+	}
 }
 
 static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
 {
 	int x, y, k;
 	u8 basis[4][4];
-	int temp;
+	s32 temp;
 	u32 factor;
 	int sum;
 	int mean;
@@ -1596,7 +1167,7 @@ static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u
 static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
 {
 	int i, j, k;
-	int temp;
+	s32 temp;
 	u8 byte_result[4][4];
 	u32 factor;
 	int sum;
@@ -1904,22 +1475,6 @@ static void IntraAotBlock(VideoState* state, u8* dst, u32 stride, u8 targetAvera
 
 	.loc_0x3D0:
 	*/
-}
-
-// 4x4 block of single value
-static void dcBlock(u8* dst, u32 stride, u8 value)
-{
-	dst[0] = dst[1] = dst[2] = dst[3] = value;
-	dst += stride;
-
-	dst[0] = dst[1] = dst[2] = dst[3] = value;
-	dst += stride;
-
-	dst[0] = dst[1] = dst[2] = dst[3] = value;
-	dst += stride;
-
-	dst[0] = dst[1] = dst[2] = dst[3] = value;
-	dst += stride;
 }
 
 /*
