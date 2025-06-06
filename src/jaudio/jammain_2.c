@@ -1367,14 +1367,22 @@ static void OSf32tos8(register f32* in, register s8* out)
  */
 void Jam_UpdateTrack(seqp_* track, u32 param_2)
 {
-	u32 badCompiler[3];
+	// A bizarre way the devs attempted to re-use some repeated AND operations in this function,
+	// which the compiler can already see and optimize in its own way, causes regalloc inflation.
+	u32 param_2_and_01;
+	u32 param_2_and_02;
+	u32 param_2_and_08;
+	u32 param_2_and_04;
+	u32 param_2_and_10;
 
 	f32 unaff_f31; // f31
 	f32 unaff_f30; // f30
 	f32 unaff_f29; // f29
 	f32 unaff_f28; // f28
 	f32 unaff_f27; // f27
-	f32 dVar15;
+	f32 dVar15_1;
+	f32 dVar15_2;
+	f32 dVar15_3;
 
 	size_t i;
 
@@ -1383,11 +1391,11 @@ void Jam_UpdateTrack(seqp_* track, u32 param_2)
 	s8 local_68;
 	u8 uVar11;
 
-	dVar15 = track->regParam.param._10[3] / 32767.0f;
+	dVar15_1 = track->regParam.param._10[3] / 32767.0f;
 	if (track->_3F != 0x04) {
-		if ((param_2 & 0x20000) != 0) {
+		if (param_2 & 0x20000) {
 			uVar11   = 0;
-			local_64 = (track->timedParam).inner._110.currValue * 128.0f;
+			local_64 = track->timedParam.inner._110.currValue * 128.0f;
 			OSf32tos8(&local_64, &local_68);
 			if (local_68 < 0) {
 				uVar11   = -local_68;
@@ -1396,10 +1404,13 @@ void Jam_UpdateTrack(seqp_* track, u32 param_2)
 			track->_D8._5A[0] = uVar11;
 			track->_D8._5A[1] = local_68;
 		}
-		if (((param_2 & 0x40) != 0) && !track->parent) {
-			Jam_UpdateTempo(track);
+		if (param_2 & 0x40) {
+			if (!track->parent) {
+				Jam_UpdateTempo(track);
+			}
 		}
-		if (param_2 & 1) {
+		param_2_and_01 = param_2 & 0x01;
+		if (param_2_and_01) {
 			unaff_f31 = track->timedParam.inner.volume.currValue;
 			if (track->_39E != 0) {
 				unaff_f31 = 0.0f;
@@ -1411,28 +1422,32 @@ void Jam_UpdateTrack(seqp_* track, u32 param_2)
 				unaff_f31 = (unaff_f31 * (track->timedParam).inner._100.currValue);
 			}
 		}
-		if (param_2 & 2) {
+		param_2_and_02 = param_2 & 0x02;
+		if (param_2_and_02) {
 			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.currValue, track->regParam.param._0E);
 			if (track->_2AC && ((track->_2AC->_08 & 2) != 0)) {
 				unaff_f30 = (unaff_f30 * track->_2AC->_18);
 			}
 		}
-		if (param_2 & 8) {
+		param_2_and_08 = param_2 & 0x08;
+		if (param_2_and_08) {
 			unaff_f29 = (track->timedParam).inner.pan.currValue;
 			if (track->_2AC && ((track->_2AC->_08 & 8) != 0)) {
-				unaff_f29 = __PanCalc(unaff_f29, track->_2AC->_1C, dVar15, track->_3DC[0]);
+				unaff_f29 = __PanCalc(unaff_f29, track->_2AC->_1C, dVar15_1, track->_3DC[0]);
 			}
 		}
-		if (param_2 & 4) {
+		param_2_and_04 = param_2 & 0x04;
+		if (param_2_and_04) {
 			unaff_f28 = (track->timedParam).inner.fxmix.currValue;
 			if (track->_2AC && ((track->_2AC->_08 & 4) != 0)) {
-				unaff_f28 = __PanCalc(unaff_f28, track->_2AC->_10, dVar15, track->_3DC[1]);
+				unaff_f28 = __PanCalc(unaff_f28, track->_2AC->_10, dVar15_1, track->_3DC[1]);
 			}
 		}
-		if (param_2 & 0x10) {
+		param_2_and_10 = param_2 & 0x10;
+		if (param_2_and_10) {
 			unaff_f27 = (track->timedParam).inner.dolby.currValue;
 			if (track->_2AC && ((track->_2AC->_08 & 0x10) != 0)) {
-				unaff_f27 = __PanCalc(unaff_f27, track->_2AC->_14, dVar15, track->_3DC[2]);
+				unaff_f27 = __PanCalc(unaff_f27, track->_2AC->_14, dVar15_1, track->_3DC[2]);
 			}
 		}
 		if (param_2 & 0xf000) {
@@ -1442,70 +1457,70 @@ void Jam_UpdateTrack(seqp_* track, u32 param_2)
 			track->_D8._61 |= 0x20;
 		}
 		if (track->_2AC) {
-			if ((param_2 & 0x80) && (track->_2AC->_08 & 0x80)) {
+			if (param_2 & 0x80 && (track->_2AC->_08 & 0x80)) {
 				for (i = 0; i < 8; ++i) {
 					track->_D8._2C[i] = track->_2AC->_24[i];
 				}
 				track->_D8._61 = (track->_D8._61 & 0x20) + 8;
 			}
 		}
-		if ((param_2 & 0x20) != 0) {
+		if (param_2 & 0x20) {
 			track->_D8._4C = track->timedParam.inner._50.currValue * 32767.0f;
 		}
 		for (i = 0; i < 2; ++i) {
 			if (track->_370[i] == 0x0E) {
-				dVar15 = Bank_OscToOfs(&track->oscillators[i], &track->_3E8[i]);
+				dVar15_2 = Bank_OscToOfs(&track->oscillators[i], &track->_3E8[i]);
 				switch (track->oscillators[i].mMode) {
 				case 1:
-					unaff_f30 = unaff_f30 * dVar15;
+					unaff_f30 = unaff_f30 * dVar15_2;
 					break;
 				case 0:
-					unaff_f31 = unaff_f31 * dVar15;
+					unaff_f31 = unaff_f31 * dVar15_2;
 					break;
 				case 2:
-					unaff_f29 = unaff_f29 * dVar15;
+					unaff_f29 = unaff_f29 * dVar15_2;
 					break;
 				case 3:
-					unaff_f28 = unaff_f28 * dVar15;
+					unaff_f28 = unaff_f28 * dVar15_2;
 					break;
 				case 4:
-					unaff_f27 = unaff_f27 * dVar15;
+					unaff_f27 = unaff_f27 * dVar15_2;
 					break;
 				}
 			}
 		}
 		if (!track->parent || ((track->_3F & 1) != 0)) {
-			if (param_2 & 1 != 0) {
+			if (param_2_and_01) {
 				track->_D8._18 = unaff_f31;
 			}
-			if (param_2 & 2 != 0) {
+			if (param_2_and_02) {
 				track->_D8._1C = unaff_f30;
 			}
-			if (param_2 & 8 != 0) {
+			if (param_2_and_08) {
 				track->_D8._20 = unaff_f29;
 			}
-			if (param_2 & 4 != 0) {
+			if (param_2_and_04) {
 				track->_D8._24 = unaff_f28;
 			}
-			if (param_2 & 0x10 != 0) {
+			if (param_2_and_10 != 0) {
 				track->_D8._28 = unaff_f27;
 			}
 		} else {
-			dVar15 = track->regParam.param._10[4] / 32767.0f;
-			if (param_2 & 1 != 0) {
+			dVar15_3 = track->regParam.param._10[4] / 32767.0f;
+			if (param_2_and_01) {
 				track->_D8._18 = track->parent->_D8._18 * unaff_f31;
 			}
-			if (param_2 & 2 != 0) {
+			if (param_2_and_02) {
 				track->_D8._1C = track->parent->_D8._1C * unaff_f30;
 			}
-			if (param_2 & 8 != 0) {
-				track->_D8._20 = __PanCalc(unaff_f29, track->parent->_D8._20, dVar15, track->_3DF[0]);
+			if (param_2_and_08) {
+				track->_D8._20 = __PanCalc(unaff_f29, track->parent->_D8._20, dVar15_3, track->_3DF[0]);
 			}
-			if (param_2 & 4 != 0) {
-				track->_D8._24 = __PanCalc(unaff_f28, track->parent->_D8._24, dVar15, track->_3DF[1]);
+			if (param_2_and_04) {
+				track->_D8._24 = __PanCalc(unaff_f28, track->parent->_D8._24, dVar15_3, track->_3DF[1]);
 			}
-			if (param_2 & 0x10 != 0) {
-				track->_D8._28 = __PanCalc(unaff_f27, track->parent->_D8._28, dVar15, track->_3DF[2]);
+			if (param_2_and_10) {
+				track->_D8._28 = __PanCalc(unaff_f27, track->parent->_D8._28, dVar15_3, track->_3DF[2]);
 			}
 		}
 	}
