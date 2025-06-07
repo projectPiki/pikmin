@@ -749,7 +749,7 @@ static void OrgBlock(VideoState* ws, u8* block, int blockWidth, int p)
  * Address:	800201EC
  * Size:	00047C
  */
-static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* nestTop, int nestWidth, int p)
+static inline u32 GetAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	u16 code;
 	int step_x, step_y;
@@ -786,14 +786,14 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP = nestTop;
 
-	value          = *nP;
-	basisOut[0][0] = value;
+	value       = *nP;
+	basisOut[0] = value;
 	min = max = value;
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[0][1] = value;
+	value       = *nP;
+	basisOut[1] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -802,8 +802,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[0][2] = value;
+	value       = *nP;
+	basisOut[2] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -812,8 +812,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[0][3] = value;
+	value       = *nP;
+	basisOut[3] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -823,8 +823,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 	nestTop += step_y;
 	nP = nestTop;
 
-	value          = *nP;
-	basisOut[1][0] = value;
+	value       = *nP;
+	basisOut[4] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -833,8 +833,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[1][1] = value;
+	value       = *nP;
+	basisOut[5] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -843,8 +843,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[1][2] = value;
+	value       = *nP;
+	basisOut[6] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -853,8 +853,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[1][3] = value;
+	value       = *nP;
+	basisOut[7] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -864,8 +864,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 	nestTop += step_y;
 	nP = nestTop;
 
-	value          = *nP;
-	basisOut[2][0] = value;
+	value       = *nP;
+	basisOut[8] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -874,8 +874,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[2][1] = value;
+	value       = *nP;
+	basisOut[9] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -884,8 +884,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[2][2] = value;
+	value        = *nP;
+	basisOut[10] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -894,8 +894,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[2][3] = value;
+	value        = *nP;
+	basisOut[11] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -905,8 +905,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 	nestTop += step_y;
 	nP = nestTop;
 
-	value          = *nP;
-	basisOut[3][0] = value;
+	value        = *nP;
+	basisOut[12] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -915,8 +915,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[3][1] = value;
+	value        = *nP;
+	basisOut[13] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -925,8 +925,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[3][2] = value;
+	value        = *nP;
+	basisOut[14] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -935,8 +935,8 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
 
 	nP += step_x;
 
-	value          = *nP;
-	basisOut[3][3] = value;
+	value        = *nP;
+	basisOut[15] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -956,7 +956,7 @@ static inline u32 GetAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* 
  * Address:	80022700
  * Size:	0004C4
  */
-static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8* nestTop, int nestWidth, int p)
+static inline u32 GetMCAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
 
@@ -981,14 +981,14 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP = nestTop;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[0][0] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[0] = value;
 	min = max = value;
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[0][1] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[1] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -997,8 +997,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[0][2] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[2] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1007,8 +1007,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[0][3] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[3] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1018,8 +1018,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 	nestTop += step_y;
 	nP = nestTop;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[1][0] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[4] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1028,8 +1028,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[1][1] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[5] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1038,8 +1038,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[1][2] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[6] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1048,8 +1048,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[1][3] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[7] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1059,8 +1059,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 	nestTop += step_y;
 	nP = nestTop;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[2][0] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[8] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1069,8 +1069,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[2][1] = value;
+	value       = (*nP >> 4) & 0xF;
+	basisOut[9] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1079,8 +1079,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[2][2] = value;
+	value        = (*nP >> 4) & 0xF;
+	basisOut[10] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1089,8 +1089,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[2][3] = value;
+	value        = (*nP >> 4) & 0xF;
+	basisOut[11] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1100,8 +1100,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 	nestTop += step_y;
 	nP = nestTop;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[3][0] = value;
+	value        = (*nP >> 4) & 0xF;
+	basisOut[12] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1110,8 +1110,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[3][1] = value;
+	value        = (*nP >> 4) & 0xF;
+	basisOut[13] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1120,8 +1120,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[3][2] = value;
+	value        = (*nP >> 4) & 0xF;
+	basisOut[14] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1130,8 +1130,8 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 
 	nP += step_x;
 
-	value          = (*nP >> 4) & 0xF;
-	basisOut[3][3] = value;
+	value        = (*nP >> 4) & 0xF;
+	basisOut[15] = value;
 	if (value > max) {
 		max = value;
 	} else if (value < min) {
@@ -1146,31 +1146,37 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8 basisOut[4][4], s32* pscl, u8
 	}
 }
 
-static inline int GetAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
+static inline int GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, int nestWidth, int p)
 {
-	int x, y, k;
-	u8 basis[4][4];
-	s32 temp;
-	u32 factor;
-	int sum;
-	int mean;
+	s32 prev_scl;
+	s32 scl;
+	u8 bas[16];
 
-	for (y = 0; y < 4; ++y)
-		for (x = 0; x < 4; ++x)
-			result[y][x] = 0;
-	temp = 0;
-	for (k = 0; k < num_bases; ++k) {
-		factor = GetAotBasis(state, basis, &temp, nestBuf, nest_stride, plane_idx);
-		for (y = 0; y < 4; ++y)
-			for (x = 0; x < 4; ++x)
-				result[y][x] += factor * basis[y][x];
+	sum[0] = sum[1] = sum[2] = sum[3] = sum[4] = sum[5] = sum[6] = sum[7] = sum[8] = sum[9] = sum[10] = sum[11] = sum[12] = sum[13]
+	    = sum[14] = sum[15] = prev_scl = 0;
+
+	while (nbasis--) {
+		scl = GetAotBasis(ws, bas, &prev_scl, nestTop, nestWidth, p);
+		sum[0] += scl * bas[0];
+		sum[1] += scl * bas[1];
+		sum[2] += scl * bas[2];
+		sum[3] += scl * bas[3];
+		sum[4] += scl * bas[4];
+		sum[5] += scl * bas[5];
+		sum[6] += scl * bas[6];
+		sum[7] += scl * bas[7];
+		sum[8] += scl * bas[8];
+		sum[9] += scl * bas[9];
+		sum[10] += scl * bas[10];
+		sum[11] += scl * bas[11];
+		sum[12] += scl * bas[12];
+		sum[13] += scl * bas[13];
+		sum[14] += scl * bas[14];
+		sum[15] += scl * bas[15];
 	}
-	sum = 0;
-	for (y = 0; y < 4; ++y)
-		for (x = 0; x < 4; ++x)
-			sum += result[y][x];
-	mean = sum >> 4;
-	return mean;
+	return (sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] + sum[7] + sum[8] + sum[9] + sum[10] + sum[11] + sum[12] + sum[13]
+	        + sum[14] + sum[15])
+	    >> 4;
 }
 
 static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
@@ -1188,7 +1194,7 @@ static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases,
 
 	temp = 0;
 	for (k = 0; k < num_bases; ++k) {
-		factor = GetMCAotBasis(state, byte_result, &temp, nestBuf, nest_stride, plane_idx);
+		factor = GetMCAotBasis(state, (u8*)byte_result, &temp, nestBuf, nest_stride, plane_idx);
 		for (i = 0; i < 4; i++)
 			for (j = 0; j < 4; ++j)
 				result[i][j] += factor * byte_result[i][j];
@@ -1208,282 +1214,43 @@ static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases,
  *
  * @note: AOT = Adaptive Orthogonal Transform, apparently
  */
-static void IntraAotBlock(VideoState* state, u8* dst, u32 stride, u8 targetAverage, u8 blockType, u32 planeIdx)
+static void IntraAotBlock(VideoState* ws, u8* blk, int blkWidth, u8 dcv, u8 nbasis, int p)
 {
-	int result[4][4];
-	int aotAverage, delta;
-	int x, y, value;
+	s32 sum[16];
+	s32 mns;
+	int avr;
 
-	if (blockType == 6) {
-		OrgBlock(state, dst, stride, planeIdx);
-		return;
+	if (nbasis == 6) {
+		OrgBlock(ws, blk, blkWidth, p);
+	} else {
+		mns = ws->aotscale_q;
+		// block types 1..5 serve as number of bases to use, 9..15 are unused
+		avr = (dcv << mns) - GetAotSum(ws, sum, nbasis, ws->nestBuf, ws->nestsize_h, p);
+
+		blk[0] = clipTable[((sum[0] + avr) >> mns) + 0x80];
+		blk[1] = clipTable[((sum[1] + avr) >> mns) + 0x80];
+		blk[2] = clipTable[((sum[2] + avr) >> mns) + 0x80];
+		blk[3] = clipTable[((sum[3] + avr) >> mns) + 0x80];
+		blk += blkWidth;
+
+		blk[0] = clipTable[((sum[4] + avr) >> mns) + 0x80];
+		blk[1] = clipTable[((sum[5] + avr) >> mns) + 0x80];
+		blk[2] = clipTable[((sum[6] + avr) >> mns) + 0x80];
+		blk[3] = clipTable[((sum[7] + avr) >> mns) + 0x80];
+		blk += blkWidth;
+
+		blk[0] = clipTable[((sum[8] + avr) >> mns) + 0x80];
+		blk[1] = clipTable[((sum[9] + avr) >> mns) + 0x80];
+		blk[2] = clipTable[((sum[10] + avr) >> mns) + 0x80];
+		blk[3] = clipTable[((sum[11] + avr) >> mns) + 0x80];
+		blk += blkWidth;
+
+		blk[0] = clipTable[((sum[12] + avr) >> mns) + 0x80];
+		blk[1] = clipTable[((sum[13] + avr) >> mns) + 0x80];
+		blk[2] = clipTable[((sum[14] + avr) >> mns) + 0x80];
+		blk[3] = clipTable[((sum[15] + avr) >> mns) + 0x80];
+		blk += blkWidth;
 	}
-	// block types 1..5 serve as number of bases to use, 9..15 are unused
-	aotAverage = GetAotSum(state, result, blockType, state->nestBuf, state->nestsize_h, planeIdx);
-	delta      = (targetAverage << state->aotscale_q) - aotAverage;
-	for (y = 0; y < 4; ++y) {
-		for (x = 0; x < 4; ++x) {
-			value               = ((result[y][x] + delta) >> state->aotscale_q);
-			dst[y * stride + x] = saturate(value);
-		}
-	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r7,0,24,31
-	  cmplwi    r0, 0x6
-	  stwu      r1, -0x100(r1)
-	  stmw      r15, 0xBC(r1)
-	  addi      r21, r3, 0
-	  addi      r30, r4, 0
-	  stw       r5, 0x74(r1)
-	  stb       r6, 0x78(r1)
-	  stw       r8, 0x7C(r1)
-	  bne-      .loc_0x48
-	  lwz       r5, 0x74(r1)
-	  addi      r3, r21, 0
-	  lwz       r6, 0x7C(r1)
-	  addi      r4, r30, 0
-	  bl        -0x88
-	  b         .loc_0x3BC
-
-	.loc_0x48:
-	  lhz       r0, 0x625C(r21)
-	  li        r31, 0
-	  lbz       r19, 0x6CD0(r21)
-	  addi      r29, r7, 0
-	  stw       r0, 0x98(r1)
-	  li        r0, 0
-	  stw       r0, 0x1C(r1)
-	  addi      r15, r31, 0
-	  addi      r16, r31, 0
-	  stw       r31, 0x94(r1)
-	  addi      r17, r31, 0
-	  addi      r18, r31, 0
-	  stw       r31, 0x90(r1)
-	  stw       r31, 0x8C(r1)
-	  stw       r31, 0x88(r1)
-	  stw       r31, 0x84(r1)
-	  stw       r31, 0x80(r1)
-	  stw       r31, 0xB4(r1)
-	  stw       r31, 0xB0(r1)
-	  stw       r31, 0xAC(r1)
-	  stw       r31, 0xA8(r1)
-	  stw       r31, 0xA4(r1)
-	  b         .loc_0x1E8
-
-	.loc_0xA4:
-	  lwz       r7, 0x98(r1)
-	  mr        r3, r21
-	  lwz       r8, 0x7C(r1)
-	  addi      r4, r1, 0x20
-	  addi      r5, r1, 0x1C
-	  addi      r6, r21, 0x6261
-	  bl        .loc_0x3D0
-	  lbz       r5, 0x20(r1)
-	  lbz       r4, 0x21(r1)
-	  mullw     r5, r3, r5
-	  lbz       r8, 0x25(r1)
-	  lbz       r9, 0x24(r1)
-	  lbz       r7, 0x26(r1)
-	  lbz       r26, 0x27(r1)
-	  mullw     r4, r3, r4
-	  stw       r5, 0x9C(r1)
-	  lbz       r6, 0x28(r1)
-	  lbz       r5, 0x29(r1)
-	  lbz       r0, 0x22(r1)
-	  stw       r4, 0xA0(r1)
-	  mullw     r25, r3, r8
-	  lwz       r8, 0x9C(r1)
-	  lbz       r4, 0x2D(r1)
-	  lbz       r10, 0x23(r1)
-	  lbz       r12, 0x2A(r1)
-	  add       r18, r18, r8
-	  lwz       r8, 0xA0(r1)
-	  mullw     r9, r3, r9
-	  lbz       r28, 0x2B(r1)
-	  lbz       r27, 0x2C(r1)
-	  lbz       r11, 0x2F(r1)
-	  add       r17, r17, r8
-	  lwz       r8, 0xA4(r1)
-	  mullw     r24, r3, r7
-	  add       r8, r8, r9
-	  stw       r8, 0xA4(r1)
-	  mullw     r23, r3, r6
-	  lwz       r8, 0xA8(r1)
-	  mullw     r20, r3, r0
-	  lbz       r0, 0x2E(r1)
-	  add       r8, r8, r25
-	  stw       r8, 0xA8(r1)
-	  mullw     r22, r3, r5
-	  lwz       r8, 0xAC(r1)
-	  add       r8, r8, r24
-	  stw       r8, 0xAC(r1)
-	  mullw     r10, r3, r10
-	  lwz       r8, 0xB0(r1)
-	  mullw     r26, r3, r26
-	  add       r8, r8, r26
-	  stw       r8, 0xB0(r1)
-	  mullw     r5, r3, r12
-	  lwz       r8, 0xB4(r1)
-	  add       r8, r8, r23
-	  stw       r8, 0xB4(r1)
-	  mullw     r6, r3, r28
-	  lwz       r8, 0x80(r1)
-	  add       r8, r8, r22
-	  stw       r8, 0x80(r1)
-	  mullw     r7, r3, r27
-	  lwz       r8, 0x84(r1)
-	  add       r8, r8, r5
-	  lwz       r5, 0x88(r1)
-	  mullw     r4, r3, r4
-	  stw       r8, 0x84(r1)
-	  add       r5, r5, r6
-	  stw       r5, 0x88(r1)
-	  mullw     r0, r3, r0
-	  lwz       r5, 0x8C(r1)
-	  add       r5, r5, r7
-	  stw       r5, 0x8C(r1)
-	  mullw     r3, r3, r11
-	  lwz       r5, 0x90(r1)
-	  add       r5, r5, r4
-	  lwz       r4, 0x94(r1)
-	  stw       r5, 0x90(r1)
-	  add       r16, r16, r20
-	  add       r4, r4, r0
-	  stw       r4, 0x94(r1)
-	  add       r15, r15, r10
-	  add       r31, r31, r3
-
-	.loc_0x1E8:
-	  rlwinm.   r0,r29,0,24,31
-	  subi      r29, r29, 0x1
-	  bne+      .loc_0xA4
-	  add       r0, r17, r16
-	  lwz       r8, 0xB0(r1)
-	  add       r3, r0, r15
-	  lwz       r0, 0xA4(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0xA8(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0xAC(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0xB0(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0xB4(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0x80(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0x84(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0x88(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0x8C(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0x90(r1)
-	  add       r3, r3, r0
-	  lwz       r0, 0x94(r1)
-	  add       r0, r3, r0
-	  add       r0, r0, r31
-	  add       r4, r18, r0
-	  lbz       r0, 0x78(r1)
-	  lis       r3, 0x8039
-	  srawi     r4, r4, 0x4
-	  slw       r0, r0, r19
-	  sub       r0, r0, r4
-	  subi      r3, r3, 0x4300
-	  add       r4, r18, r0
-	  addi      r3, r3, 0x80
-	  sraw      r4, r4, r19
-	  lbzx      r4, r3, r4
-	  add       r5, r17, r0
-	  sraw      r5, r5, r19
-	  stb       r4, 0x0(r30)
-	  add       r4, r16, r0
-	  sraw      r4, r4, r19
-	  lbzx      r6, r3, r5
-	  add       r5, r15, r0
-	  sraw      r7, r5, r19
-	  lwz       r5, 0xA4(r1)
-	  stb       r6, 0x1(r30)
-	  add       r5, r5, r0
-	  lbzx      r4, r3, r4
-	  sraw      r6, r5, r19
-	  lwz       r5, 0xA8(r1)
-	  add       r8, r8, r0
-	  stb       r4, 0x2(r30)
-	  add       r5, r5, r0
-	  lwz       r4, 0xAC(r1)
-	  lbzx      r7, r3, r7
-	  sraw      r5, r5, r19
-	  add       r4, r4, r0
-	  stb       r7, 0x3(r30)
-	  sraw      r4, r4, r19
-	  lwz       r7, 0x74(r1)
-	  sraw      r8, r8, r19
-	  lbzx      r6, r3, r6
-	  add       r30, r30, r7
-	  lwz       r7, 0xB4(r1)
-	  stb       r6, 0x0(r30)
-	  add       r7, r7, r0
-	  lwz       r6, 0x84(r1)
-	  lbzx      r5, r3, r5
-	  sraw      r11, r7, r19
-	  lwz       r7, 0x80(r1)
-	  add       r6, r6, r0
-	  stb       r5, 0x1(r30)
-	  add       r7, r7, r0
-	  lwz       r5, 0x8C(r1)
-	  lbzx      r4, r3, r4
-	  sraw      r7, r7, r19
-	  sraw      r10, r6, r19
-	  lwz       r6, 0x88(r1)
-	  stb       r4, 0x2(r30)
-	  add       r6, r6, r0
-	  lwz       r4, 0x94(r1)
-	  lbzx      r8, r3, r8
-	  sraw      r6, r6, r19
-	  add       r5, r5, r0
-	  stb       r8, 0x3(r30)
-	  sraw      r9, r5, r19
-	  lwz       r8, 0x74(r1)
-	  add       r4, r4, r0
-	  lwz       r5, 0x90(r1)
-	  add       r30, r30, r8
-	  lbzx      r8, r3, r11
-	  add       r5, r5, r0
-	  stb       r8, 0x0(r30)
-	  sraw      r5, r5, r19
-	  sraw      r4, r4, r19
-	  lbzx      r7, r3, r7
-	  add       r0, r31, r0
-	  sraw      r0, r0, r19
-	  stb       r7, 0x1(r30)
-	  lbzx      r7, r3, r10
-	  stb       r7, 0x2(r30)
-	  lbzx      r6, r3, r6
-	  stb       r6, 0x3(r30)
-	  lwz       r6, 0x74(r1)
-	  add       r30, r30, r6
-	  lbzx      r6, r3, r9
-	  stb       r6, 0x0(r30)
-	  lbzx      r5, r3, r5
-	  stb       r5, 0x1(r30)
-	  lbzx      r4, r3, r4
-	  stb       r4, 0x2(r30)
-	  lbzx      r0, r3, r0
-	  stb       r0, 0x3(r30)
-
-	.loc_0x3BC:
-	  lmw       r15, 0xBC(r1)
-	  lwz       r0, 0x104(r1)
-	  addi      r1, r1, 0x100
-	  mtlr      r0
-	  blr
-
-	.loc_0x3D0:
-	*/
 }
 
 /*
