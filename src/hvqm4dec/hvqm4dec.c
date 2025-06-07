@@ -1546,110 +1546,35 @@ static void IpicLineDec(VideoState* ws, u8* block, int blockWidth, StackState* i
  * Address:	80020880
  * Size:	0000DC
  */
-static void IpicPlaneDec(VideoState* state, int plane_idx, u8* dst)
+static void IpicPlaneDec(VideoState* ws, int p, u8* outbuf)
 {
-	HVQPlaneDesc* plane;
-	BlockData** payload_ptr;
-	u32 plane_width;
-	u32 stride;
-	u32 dst_stride;
-	u32 nblocks_h;
-	u32 nblocks_hb;
-	BlockData* blockInfoTop;
-	int i;
-	StackState stack_state;
+	StackState inter;
+	int imgWidth;
+	int downblock;
+	int h_block;
+	int nblocks_hb;
+	int j;
 
-	plane       = &state->pln[plane_idx];
-	plane_width = plane->plane_width;
-	nblocks_h   = plane->nblocks_h;
-	nblocks_hb  = plane->nblocks_hb;
-	payload_ptr = &plane->blockInfoTop;
+	imgWidth   = ws->pln[p].plane_width;
+	downblock  = ws->pln[p].plane_width * 4; // blocks are 4x4 so advance outbuf by 4 lines
+	h_block    = ws->pln[p].nblocks_h;
+	nblocks_hb = ws->pln[p].nblocks_hb;
 
-	stack_state.id  = plane_idx;
-	blockInfoTop    = *payload_ptr;
-	stack_state.upp = blockInfoTop;
-	stack_state.mid = blockInfoTop;
-	stack_state.low = blockInfoTop + nblocks_hb;
-
-	// blocks are 4x4 so advance dst by 4 lines
-	dst_stride = plane_width * 4;
-	stride     = plane_width;
+	inter.id  = p;
+	inter.low = (inter.mid = inter.upp = ws->pln[p].blockInfoTop) + nblocks_hb;
 
 	// first line
-	IpicLineDec(state, dst, stride, &stack_state, nblocks_h);
-	dst += dst_stride;
+	IpicLineDec(ws, outbuf, imgWidth, &inter, h_block);
+	outbuf += downblock;
 	// middle lines
-	stack_state.upp = *payload_ptr;
-	for (i = plane->nblocks_v - 2; i > 0; i--) {
-		IpicLineDec(state, dst, stride, &stack_state, nblocks_h);
-		dst += dst_stride;
+	inter.upp = ws->pln[p].blockInfoTop;
+	for (j = ws->pln[p].nblocks_v - 2; j > 0; j--) {
+		IpicLineDec(ws, outbuf, imgWidth, &inter, h_block);
+		outbuf += downblock;
 	}
 	// last line
-	stack_state.low = stack_state.mid;
-	IpicLineDec(state, dst, stride, &stack_state, nblocks_h);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  mulli     r0, r4, 0x38
-	  stwu      r1, -0x50(r1)
-	  stmw      r25, 0x34(r1)
-	  addi      r25, r3, 0
-	  add       r31, r25, r0
-	  mr        r26, r5
-	  addi      r30, r31, 0x4
-	  lhz       r8, 0x28(r31)
-	  lhz       r27, 0x8(r31)
-	  lhz       r0, 0xC(r31)
-	  mr        r28, r8
-	  addi      r5, r28, 0
-	  stw       r4, 0x14(r1)
-	  rlwinm    r0,r0,1,0,30
-	  addi      r4, r26, 0
-	  lwz       r6, 0x4(r31)
-	  addi      r7, r27, 0
-	  rlwinm    r29,r8,2,0,29
-	  stw       r6, 0x18(r1)
-	  add       r0, r6, r0
-	  stw       r6, 0x1C(r1)
-	  addi      r6, r1, 0x14
-	  stw       r0, 0x20(r1)
-	  bl        -0x138
-	  lwz       r0, 0x0(r30)
-	  add       r26, r26, r29
-	  stw       r0, 0x18(r1)
-	  lhz       r3, 0xA(r31)
-	  subi      r30, r3, 0x2
-	  b         .loc_0xA0
-
-	.loc_0x80:
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  addi      r5, r28, 0
-	  addi      r7, r27, 0
-	  addi      r6, r1, 0x14
-	  bl        -0x168
-	  add       r26, r26, r29
-	  subi      r30, r30, 0x1
-
-	.loc_0xA0:
-	  cmpwi     r30, 0
-	  bgt+      .loc_0x80
-	  lwz       r0, 0x1C(r1)
-	  addi      r3, r25, 0
-	  addi      r4, r26, 0
-	  stw       r0, 0x20(r1)
-	  addi      r5, r28, 0
-	  addi      r7, r27, 0
-	  addi      r6, r1, 0x14
-	  bl        -0x198
-	  lmw       r25, 0x34(r1)
-	  lwz       r0, 0x54(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
+	inter.low = inter.mid;
+	IpicLineDec(ws, outbuf, imgWidth, &inter, h_block);
 }
 
 /*
