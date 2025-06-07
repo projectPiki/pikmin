@@ -1930,6 +1930,12 @@ void _MotionComp_11(u8* dst, int dstStride, u8* src, int srcStride)
 	n += srcStride;
 }
 
+static inline void _MotionComp(u8* cP, int cWidth, u8* tP, int tWidth, int selector)
+{
+	static MotionCompFunc func[] = { _MotionComp_00, _MotionComp_01, _MotionComp_10, _MotionComp_11 };
+	func[selector](cP, cWidth, tP, tWidth);
+}
+
 /*
  * --INFO--
  * Address:	80021078
@@ -2791,7 +2797,7 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
  * Address:	80021E94
  * Size:	00086C
  */
-static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nbasis, u8* nestPtr, int nestWidth, int p, int arg9)
+static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nbasis, u8* nestPtr, int nestWidth, int p, int selector)
 {
 	int result[4][4];
 	u32 aot_sum;
@@ -2803,7 +2809,7 @@ static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nb
 
 	aot_sum = GetMCAotSum(ws, result, nbasis - 1, nestPtr, nestWidth, p);
 
-	// MotionComp((u8*)mdst, dst_stride, src, stride, hpeldx, hpeldy);
+	_MotionComp((u8*)mdst, dst_stride, mblk, blkWidth, selector);
 	mean = 8;
 	for (y = 0; y < 4; ++y)
 		for (x = 0; x < 4; ++x)
@@ -3465,139 +3471,35 @@ static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nb
 static void MCBlockDecMCNest(VideoState* ws, MCHandler* mch, int tx, int ty)
 {
 	int c, i;
-	u8* nestP = mch->pln[0].targ + (((tx >> 1) - 32) + ((ty >> 1) - 16) * ws->pln[0].plane_width);
+	u8* nestP = mch->pln[0].targ + ((tx >> 1) - 32) + ((ty >> 1) - 16) * ws->pln[0].plane_width;
 	for (c = 0; c < PLANE_COUNT; c++) {
 		MCPlane* pmc      = &mch->pln[c];
 		HVQPlaneDesc* sip = &ws->pln[c];
-		u8* t_top         = pmc->targ + ((tx >> sip->h_shift + 1) + (ty >> sip->v_shift + 1) * sip->plane_width);
+		int plane_dx      = (tx >> sip->h_shift + 1);
+		int plane_dy      = (ty >> sip->v_shift + 1);
+		u8* t_top         = pmc->targ + (plane_dx + plane_dy * sip->plane_width);
 		u16* bofsP        = sip->bibUscan;
 		u32* iofsP        = sip->imgUscan;
 		int blocks        = sip->nblocks_mcb;
 		for (i = 0; i < blocks; i++) {
-			int bofs  = *bofsP++;
-			int iofs  = *iofsP++;
-			u8 nbasis = pmc->data[bofs].bnm & 0xF;
+			int offset = *iofsP++;
+			int j      = *bofsP++;
+			u8 nbasis  = pmc->data[j].bnm & 0xF;
 			// cP is a 4x4 region
-			u8* cP = pmc->blk_top + iofs;
+			u8* cP = pmc->blk_top + offset;
 			!nbasis;
 			if (nbasis == 6) {
 				OrgBlock(ws, cP, sip->plane_width, c);
 			} else {
-				u8* tP = t_top + iofs;
+				u8* tP = t_top + offset;
 				if (nbasis == 0) {
-					static MotionCompFunc func[] = { _MotionComp_00, _MotionComp_01, _MotionComp_10, _MotionComp_11 };
-					func[(tx & 1) << 1 | (ty & 1)](cP, sip->plane_width, tP, sip->plane_width);
+					_MotionComp(cP, sip->plane_width, tP, sip->plane_width, (tx & 1) << 1 | (ty & 1));
 				} else {
 					PrediAotBlock(ws, cP, tP, sip->plane_width, nbasis, nestP, ws->pln[0].plane_width, c, (tx & 1) << 1 | (ty & 1));
 				}
 			}
 		}
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stmw      r18, 0x28(r1)
-	  addi      r18, r6, 0
-	  addi      r19, r5, 0
-	  addi      r31, r3, 0
-	  rlwinm    r27,r18,0,31,31
-	  srawi     r6, r19, 0x1
-	  rlwimi    r27,r19,1,30,30
-	  addi      r30, r4, 0
-	  addi      r29, r31, 0
-	  li        r26, 0
-	  lhz       r0, 0x28(r3)
-	  srawi     r3, r18, 0x1
-	  subi      r5, r3, 0x10
-	  lwz       r7, 0x18(r4)
-	  mullw     r0, r5, r0
-	  add       r5, r6, r7
-	  add       r20, r5, r0
-	  lis       r3, 0x8022
-	  rlwinm    r5,r27,2,0,29
-	  addi      r0, r3, 0x72C0
-	  add       r28, r0, r5
-	  subi      r20, r20, 0x20
-
-	.loc_0x64:
-	  lbz       r4, 0x30(r29)
-	  addi      r23, r29, 0x10
-	  lbz       r3, 0x31(r29)
-	  addi      r22, r29, 0x18
-	  addi      r0, r4, 0x1
-	  sraw      r4, r19, r0
-	  lhz       r0, 0x28(r29)
-	  addi      r3, r3, 0x1
-	  lwz       r5, 0x18(r30)
-	  sraw      r3, r18, r3
-	  lbz       r21, 0x34(r29)
-	  mullw     r0, r3, r0
-	  add       r24, r0, r5
-	  add       r24, r4, r24
-	  li        r25, 0
-	  b         .loc_0x134
-
-	.loc_0xA4:
-	  lhz       r0, 0x0(r23)
-	  addi      r23, r23, 0x2
-	  lwz       r5, 0x0(r22)
-	  addi      r22, r22, 0x4
-	  rlwinm    r3,r0,1,0,30
-	  lwz       r4, 0x8(r30)
-	  addi      r3, r3, 0x1
-	  lwz       r0, 0x14(r30)
-	  lbzx      r3, r4, r3
-	  add       r4, r0, r5
-	  rlwinm    r7,r3,0,28,31
-	  cmplwi    r7, 0x6
-	  bne-      .loc_0xEC
-	  lhz       r5, 0x28(r29)
-	  addi      r3, r31, 0
-	  addi      r6, r26, 0
-	  bl        -0x2ED4
-	  b         .loc_0x130
-
-	.loc_0xEC:
-	  cmplwi    r7, 0
-	  add       r5, r24, r5
-	  bne-      .loc_0x114
-	  lwz       r12, 0x0(r28)
-	  mr        r3, r4
-	  lhz       r6, 0x28(r29)
-	  mtlr      r12
-	  addi      r4, r6, 0
-	  blrl
-	  b         .loc_0x130
-
-	.loc_0x114:
-	  stw       r27, 0x8(r1)
-	  mr        r3, r31
-	  addi      r8, r20, 0
-	  lhz       r6, 0x28(r29)
-	  addi      r10, r26, 0
-	  lhz       r9, 0x28(r31)
-	  bl        -0xE5C
-
-	.loc_0x130:
-	  addi      r25, r25, 0x1
-
-	.loc_0x134:
-	  cmpw      r25, r21
-	  blt+      .loc_0xA4
-	  addi      r26, r26, 0x1
-	  cmpwi     r26, 0x3
-	  addi      r30, r30, 0x34
-	  addi      r29, r29, 0x38
-	  blt+      .loc_0x64
-	  lmw       r18, 0x28(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
