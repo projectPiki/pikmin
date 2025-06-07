@@ -383,7 +383,7 @@ config.libs = [
         "mw_version": "GC/1.2.5",
         "progress_category" : "hvqm4dec",
         "objects": [
-            Object(NonMatching, "hvqm4dec/hvqm4dec.c"),
+            Object(Matching, "hvqm4dec/hvqm4dec.c"),
         ],
     },
     {

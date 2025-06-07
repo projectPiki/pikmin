@@ -168,7 +168,7 @@ typedef struct VideoState {
  * @note Original name: _tagPlnMCHandler
  */
 typedef struct MCPlane {
-	int bsrunleng;       // _00
+	int bsrunleng;       // _00, only for Y and U (the V plane shares the U plane's value)
 	int prev_dcv;        // _04
 	BlockData* data;     // _08
 	BlockData* data_top; // _0C

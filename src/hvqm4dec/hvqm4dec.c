@@ -20,10 +20,11 @@ static int mcdivTable[0x200];
 static int readTree_signed;
 static u32 readTree_scale;
 
-// some things are per plane (luma, 2x chroma)
-#define PLANE_COUNT 3
+// some things are per plane (YUV, luma + 2x chroma)
+#define Y_IDX   0
+#define U_IDX   1
+#define V_IDX   2
 // some things are only split between luma and chroma
-#define LUMA_CHROMA 2
 #define LUMA_IDX    0
 #define CHROMA_IDX  1
 
@@ -40,11 +41,6 @@ static inline u8 saturate(int x)
 	} else {
 		return x;
 	}
-}
-
-static inline u8 sat_mean8(int u)
-{
-	return saturate((u + 4) / 8);
 }
 
 /*
@@ -216,10 +212,10 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
  * Address:	........
  * Size:	000140
  */
-static void readTree(BitBufferWithTree* buf_with_tree, int is_signed, int scale)
+static void readTree(BitBufferWithTree* code, int is_signed, int scale)
 {
-	Tree* tree     = buf_with_tree->tree;
-	BitBuffer* buf = &buf_with_tree->buf;
+	Tree* tree     = code->tree;
+	BitBuffer* buf = &code->buf;
 
 	readTree_signed   = is_signed;
 	readTree_scale    = scale;
@@ -293,7 +289,7 @@ static void Ipic_BasisNumDec(VideoState* ws)
 	BitBufferWithTree* runcode;
 
 	runln   = 0;
-	y_dat   = ws->pln[LUMA_IDX].blockInfoTop;
+	y_dat   = ws->pln[Y_IDX].blockInfoTop;
 	symcode = &ws->bsnum[LUMA_IDX];
 	runcode = &ws->bsrun[LUMA_IDX];
 	h_block = ws->pln[LUMA_IDX].nblocks_h;
@@ -315,10 +311,10 @@ static void Ipic_BasisNumDec(VideoState* ws)
 	}
 
 	runln   = 0;
+	u_dat   = ws->pln[U_IDX].blockInfoTop;
+	v_dat   = ws->pln[V_IDX].blockInfoTop;
 	symcode = &ws->bsnum[CHROMA_IDX];
 	runcode = &ws->bsrun[CHROMA_IDX];
-	u_dat   = ws->pln[1].blockInfoTop;
-	v_dat   = ws->pln[2].blockInfoTop;
 	h_block = ws->pln[CHROMA_IDX].nblocks_h;
 	v_block = ws->pln[CHROMA_IDX].nblocks_v;
 	for (i = v_block; i > 0; i--) {
@@ -372,7 +368,7 @@ static void IpicDcvDec(VideoState* ws)
 	int h_block, v_block;
 	int i, j;
 
-	for (c = 0; c < PLANE_COUNT; c++) {
+	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
 		h_block    = ws->pln[c].nblocks_h;
 		v_block    = ws->pln[c].nblocks_v;
 		nblocks_hb = ws->pln[c].nblocks_hb;
@@ -424,10 +420,10 @@ static void MakeNest(VideoState* ws, int x, int y)
 	BlockData* dP;
 	u8* nP;
 
-	h_block    = ws->pln[0].nblocks_h;
-	nblocks_hb = ws->pln[0].nblocks_hb;
-	v_block    = ws->pln[0].nblocks_v;
-	src        = ws->pln[0].blockInfoTop + (y * nblocks_hb + x);
+	h_block    = ws->pln[Y_IDX].nblocks_h;
+	nblocks_hb = ws->pln[Y_IDX].nblocks_hb;
+	v_block    = ws->pln[Y_IDX].nblocks_v;
+	src        = ws->pln[Y_IDX].blockInfoTop + (y * nblocks_hb + x);
 
 	if (h_block < ws->nestsize_h) {
 		// special case if the video is less than 280 pixels wide (assuming landscape mode)
@@ -627,7 +623,7 @@ static void OrgBlock(VideoState* ws, u8* block, int blockWidth, int p)
  * Address:	800201EC
  * Size:	00047C
  */
-static inline s32 GetAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
+static inline s32 GetAotBasis(VideoState* ws, u8 basisOut[16], s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	u16 code;
 	int step_x, step_y;
@@ -834,7 +830,7 @@ static inline s32 GetAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestT
  * Address:	80022700
  * Size:	0004C4
  */
-static inline s32 GetMCAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
+static inline s32 GetMCAotBasis(VideoState* ws, u8 basisOut[16], s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
 
@@ -1024,7 +1020,7 @@ static inline s32 GetMCAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nes
 	}
 }
 
-static inline s32 GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, int nestWidth, int p)
+static inline s32 GetAotSum(VideoState* ws, s32 sum[16], u8 nbasis, u8* nestTop, int nestWidth, int p)
 {
 	s32 prev_scl;
 	s32 scl;
@@ -1034,7 +1030,7 @@ static inline s32 GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, in
 	    = sum[14] = sum[15] = prev_scl = 0;
 
 	while (nbasis--) {
-		scl = GetMCAotBasis(ws, bas, &prev_scl, nestTop, nestWidth, p);
+		scl = GetAotBasis(ws, bas, &prev_scl, nestTop, nestWidth, p);
 		sum[0] += scl * bas[0];
 		sum[1] += scl * bas[1];
 		sum[2] += scl * bas[2];
@@ -1057,7 +1053,7 @@ static inline s32 GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, in
 	    >> 4;
 }
 
-static inline s32 GetMCAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, int nestWidth, int p)
+static inline s32 GetMCAotSum(VideoState* ws, s32 sum[16], u8 nbasis, u8* nestTop, int nestWidth, int p)
 {
 	s32 prev_scl;
 	s32 scl;
@@ -1239,7 +1235,7 @@ static void initMCHandler(VideoState* ws, MCHandler* mch, u8* lin_top, u8* forw,
 	HVQPlaneDesc* plane;
 	BlockData* block;
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		mcplane            = &mch->pln[i];
 		plane              = &ws->pln[i];
 		mcplane->bsrunleng = 0;
@@ -1273,7 +1269,7 @@ static void resetMCHandler(VideoState* state, MCHandler* mch, u8* lin_top)
 	int i;
 	MCPlane* pmc;
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		pmc           = &mch->pln[i];
 		pmc->lin_top  = lin_top;
 		pmc->data_top = pmc->data = state->pln[i].blockInfoTop;
@@ -1286,7 +1282,7 @@ static void setMCTop(MCHandler* mch)
 	int i;
 	MCPlane* pmc;
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		pmc          = &mch->pln[i];
 		pmc->blk_top = pmc->lin_top;
 	}
@@ -1299,7 +1295,7 @@ static void setMCNextBlk(MCHandler* mch)
 	int i;
 	MCPlane* pmc;
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		pmc = &mch->pln[i];
 		pmc->blk_top += pmc->next_macro_pix;
 		pmc->data += pmc->hvqblk_h;
@@ -1313,7 +1309,7 @@ static void setMCDownBlk(MCHandler* mch)
 	int i;
 	MCPlane* pmc;
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		pmc = &mch->pln[i];
 		pmc->lin_top += pmc->down_macro_pix;
 		pmc->data = pmc->data_top = pmc->data_top + pmc->hvqblk_v;
@@ -1324,13 +1320,13 @@ static void setMCDownBlk(MCHandler* mch)
 static void setMCTarget(MCHandler* mch, int direct)
 {
 	if (direct == 0) {
-		mch->pln[0].targ = mch->pln[0].forw;
-		mch->pln[1].targ = mch->pln[1].forw;
-		mch->pln[2].targ = mch->pln[2].forw;
+		mch->pln[Y_IDX].targ = mch->pln[Y_IDX].forw;
+		mch->pln[U_IDX].targ = mch->pln[U_IDX].forw;
+		mch->pln[V_IDX].targ = mch->pln[V_IDX].forw;
 	} else {
-		mch->pln[0].targ = mch->pln[0].back;
-		mch->pln[1].targ = mch->pln[1].back;
-		mch->pln[2].targ = mch->pln[2].back;
+		mch->pln[Y_IDX].targ = mch->pln[Y_IDX].back;
+		mch->pln[U_IDX].targ = mch->pln[U_IDX].back;
+		mch->pln[V_IDX].targ = mch->pln[V_IDX].back;
 	}
 }
 
@@ -1592,7 +1588,7 @@ static void decode_PB_dc(VideoState* ws, MCHandler* mch)
 	MCPlane* pmc;
 	u16* bofsP;
 
-	for (c = 0; c < PLANE_COUNT; c++) {
+	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
 		pmc    = &mch->pln[c];
 		bofsP  = ws->pln[c].bibUscan;
 		blocks = ws->pln[c].nblocks_mcb;
@@ -1608,7 +1604,7 @@ static void reset_PB_dc(VideoState* ws, MCHandler* mch)
 	int i;
 	MCPlane* pmc;
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		pmc           = &mch->pln[i];
 		pmc->prev_dcv = 0x7F;
 	}
@@ -1636,7 +1632,7 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 
 	cc = (mcbtype << 5) | (proctype << 4);
 	if (proctype == 1) {
-		for (p = 0; p < PLANE_COUNT; p++) {
+		for (p = 0; p < HVQM_PLANE_COUNT; p++) {
 			dataP  = mc->pln[p].data;
 			bofsP  = ws->pln[p].bibUscan;
 			blocks = ws->pln[p].nblocks_mcb;
@@ -1646,7 +1642,7 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 		}
 	} else {
 		// luma
-		ydat    = mc->pln[0].data;
+		ydat    = mc->pln[Y_IDX].data;
 		sip     = &ws->pln[LUMA_IDX];
 		symcode = &ws->bsnum[LUMA_IDX];
 		runcode = &ws->bsrun[LUMA_IDX];
@@ -1654,22 +1650,22 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 		blocks  = sip->nblocks_mcb;
 		for (i = 0; i < blocks; i++) {
 			j = *bofsP++;
-			if (mc->pln[0].bsrunleng == 0) {
+			if (mc->pln[Y_IDX].bsrunleng == 0) {
 				sym = decodeHuff(symcode);
 				if (sym == 0) {
 					ydat[j].bnm          = cc;
-					mc->pln[0].bsrunleng = decodeHuff(runcode);
+					mc->pln[Y_IDX].bsrunleng = decodeHuff(runcode);
 				} else {
 					ydat[j].bnm = cc | sym;
 				}
 			} else {
 				ydat[j].bnm = cc;
-				mc->pln[0].bsrunleng--;
+				mc->pln[Y_IDX].bsrunleng--;
 			}
 		}
 		// chroma
-		udat    = mc->pln[1].data;
-		vdat    = mc->pln[2].data;
+		udat    = mc->pln[U_IDX].data;
+		vdat    = mc->pln[V_IDX].data;
 		sip     = &ws->pln[CHROMA_IDX];
 		symcode = &ws->bsnum[CHROMA_IDX];
 		runcode = &ws->bsrun[CHROMA_IDX];
@@ -1677,12 +1673,12 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 		blocks  = sip->nblocks_mcb;
 		for (i = 0; i < blocks; i++) {
 			j = *bofsP++;
-			if (mc->pln[1].bsrunleng == 0) {
+			if (mc->pln[U_IDX].bsrunleng == 0) {
 				sym = decodeHuff(symcode);
 				if (sym == 0) {
 					udat[j].bnm          = cc;
 					vdat[j].bnm          = cc;
-					mc->pln[1].bsrunleng = decodeHuff(runcode);
+					mc->pln[U_IDX].bsrunleng = decodeHuff(runcode);
 				} else {
 					udat[j].bnm = cc | ((sym >> 0) & 0xF);
 					vdat[j].bnm = cc | ((sym >> 4) & 0xF);
@@ -1690,7 +1686,7 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 			} else {
 				udat[j].bnm = cc;
 				vdat[j].bnm = cc;
-				mc->pln[1].bsrunleng--;
+				mc->pln[U_IDX].bsrunleng--;
 			}
 		}
 	}
@@ -1883,8 +1879,8 @@ static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nb
 static void MCBlockDecMCNest(VideoState* ws, MCHandler* mch, int tx, int ty)
 {
 	int c, i;
-	u8* nestP = mch->pln[0].targ + ((tx >> 1) - 32) + ((ty >> 1) - 16) * ws->pln[0].plane_width;
-	for (c = 0; c < PLANE_COUNT; c++) {
+	u8* nestP = mch->pln[Y_IDX].targ + ((tx >> 1) - 32) + ((ty >> 1) - 16) * ws->pln[Y_IDX].plane_width;
+	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
 		MCPlane* pmc      = &mch->pln[c];
 		HVQPlaneDesc* sip = &ws->pln[c];
 		int plane_dx      = (tx >> sip->h_shift + 1);
@@ -1907,7 +1903,7 @@ static void MCBlockDecMCNest(VideoState* ws, MCHandler* mch, int tx, int ty)
 				if (nbasis == 0) {
 					_MotionComp(cP, sip->plane_width, tP, sip->plane_width, (tx & 1) << 1 | (ty & 1));
 				} else {
-					PrediAotBlock(ws, cP, tP, sip->plane_width, nbasis, nestP, ws->pln[0].plane_width, c, (tx & 1) << 1 | (ty & 1));
+					PrediAotBlock(ws, cP, tP, sip->plane_width, nbasis, nestP, ws->pln[Y_IDX].plane_width, c, (tx & 1) << 1 | (ty & 1));
 				}
 			}
 		}
@@ -1922,7 +1918,7 @@ static void MCBlockDecMCNest(VideoState* ws, MCHandler* mch, int tx, int ty)
 static void MCBlockDecDCNest(VideoState* ws, MCHandler* mch)
 {
 	int c;
-	for (c = 0; c < PLANE_COUNT; c++) {
+	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
 		MCPlane* pmc     = &mch->pln[c];
 		BlockData* dataP = pmc->data;
 		int plane_width  = ws->pln[c].plane_width;
@@ -2102,7 +2098,7 @@ static void BpicPlaneDec(SeqObj* seqObj, u8* lin_top, u8* forw, u8* back)
 	for (j = 0; j < seqObj->frame_height; j += 8) {
 		setMCTop(&mch);
 		for (i = 0; i < seqObj->frame_width; i += 8) {
-			cc = mch.pln[0].data->bnm;
+			cc = mch.pln[Y_IDX].data->bnm;
 			// 0: intra
 			// 1: inter - past
 			// 2: inter - future
@@ -2202,17 +2198,17 @@ void HVQM4SetBuffer(SeqObj* obj, void* buf)
 		ws->nestsize_v = 70;
 	}
 
-	ws->bsnum[0].tree = ws->bsnum[1].tree = &ws->num_tree;
-	ws->bsrun[0].tree = ws->bsrun[1].tree = &ws->zrn_tree;
+	ws->bsnum[LUMA_IDX].tree = ws->bsnum[CHROMA_IDX].tree = &ws->num_tree;
+	ws->bsrun[LUMA_IDX].tree = ws->bsrun[CHROMA_IDX].tree = &ws->zrn_tree;
 
-	ws->dcval[0].tree = ws->dcval[1].tree = ws->dcval[2].tree = &ws->dcv_tree;
-	ws->dcrun[0].tree = ws->dcrun[1].tree = ws->dcrun[2].tree = &ws->zrn_tree; // reuse!
-	ws->scale[0].tree = ws->scale[1].tree = ws->scale[2].tree = &ws->scl_tree;
+	ws->dcval[Y_IDX].tree = ws->dcval[U_IDX].tree = ws->dcval[V_IDX].tree = &ws->dcv_tree;
+	ws->dcrun[Y_IDX].tree = ws->dcrun[U_IDX].tree = ws->dcrun[V_IDX].tree = &ws->zrn_tree; // same as bsrun
+	ws->scale[Y_IDX].tree = ws->scale[U_IDX].tree = ws->scale[V_IDX].tree = &ws->scl_tree;
 	ws->mvecx.tree = ws->mvecy.tree = &ws->vec_tree;
 	ws->mcaot.tree = ws->mstat.tree = &ws->mrn_tree;
 
 	bp = (BlockData*)((u8*)buf + sizeof(VideoState));
-	for (c = 0; c < PLANE_COUNT; c++) {
+	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
 		ws->pln[c].blockInfoBuf = bp;
 		// skip top border (stride) and left border (1)
 		ws->pln[c].blockInfoTop = bp + ws->pln[c].nblocks_hb + 1;
@@ -2261,29 +2257,29 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 	ws->aotscale_q = read8(code, 1);
 	body           = (u8*)code + 0x48;
 
-	setCode(&ws->bsnum[0].buf, body + read32(code, 0x8));
-	setCode(&ws->bsrun[0].buf, body + read32(code, 0xC));
-	setCode(&ws->bsnum[1].buf, body + read32(code, 0x10));
-	setCode(&ws->bsrun[1].buf, body + read32(code, 0x14));
-	setCode(&ws->dcval[0].buf, body + read32(code, 0x18));
-	setCode(&ws->scale[0].buf, body + read32(code, 0x1C));
-	setCode(&ws->aotcd[0], body + read32(code, 0x20));
-	setCode(&ws->dcval[1].buf, body + read32(code, 0x24));
-	setCode(&ws->scale[1].buf, body + read32(code, 0x28));
-	setCode(&ws->aotcd[1], body + read32(code, 0x2C));
-	setCode(&ws->dcval[2].buf, body + read32(code, 0x30));
-	setCode(&ws->scale[2].buf, body + read32(code, 0x34));
-	setCode(&ws->aotcd[2], body + read32(code, 0x38));
-	setCode(&ws->dcrun[0].buf, body + read32(code, 0x3C));
-	setCode(&ws->dcrun[1].buf, body + read32(code, 0x40));
-	setCode(&ws->dcrun[2].buf, body + read32(code, 0x44));
+	setCode(&ws->bsnum[LUMA_IDX].buf, body + read32(code, 0x8));
+	setCode(&ws->bsrun[LUMA_IDX].buf, body + read32(code, 0xC));
+	setCode(&ws->bsnum[CHROMA_IDX].buf, body + read32(code, 0x10));
+	setCode(&ws->bsrun[CHROMA_IDX].buf, body + read32(code, 0x14));
+	setCode(&ws->dcval[Y_IDX].buf, body + read32(code, 0x18));
+	setCode(&ws->scale[Y_IDX].buf, body + read32(code, 0x1C));
+	setCode(&ws->aotcd[Y_IDX], body + read32(code, 0x20));
+	setCode(&ws->dcval[U_IDX].buf, body + read32(code, 0x24));
+	setCode(&ws->scale[U_IDX].buf, body + read32(code, 0x28));
+	setCode(&ws->aotcd[U_IDX], body + read32(code, 0x2C));
+	setCode(&ws->dcval[V_IDX].buf, body + read32(code, 0x30));
+	setCode(&ws->scale[V_IDX].buf, body + read32(code, 0x34));
+	setCode(&ws->aotcd[V_IDX], body + read32(code, 0x38));
+	setCode(&ws->dcrun[Y_IDX].buf, body + read32(code, 0x3C));
+	setCode(&ws->dcrun[U_IDX].buf, body + read32(code, 0x40));
+	setCode(&ws->dcrun[V_IDX].buf, body + read32(code, 0x44));
 
 	// multiple BitBufferWithTree instances share the same Tree,
 	// the first BitBuffer of each group contains the Tree itself
-	readTree(&ws->bsnum[0], 0, 0);
-	readTree(&ws->bsrun[0], 0, 0);
-	readTree(&ws->dcval[0], 1, read8(code, 0));
-	readTree(&ws->scale[0], 0, 2);
+	readTree(&ws->bsnum[LUMA_IDX], 0, 0);
+	readTree(&ws->bsrun[LUMA_IDX], 0, 0);
+	readTree(&ws->dcval[Y_IDX], 1, read8(code, 0));
+	readTree(&ws->scale[Y_IDX], 0, 2);
 
 	ws->dc_max = +0x7F << read8(code, 0);
 	ws->dc_min = -0x80 << read8(code, 0);
@@ -2295,7 +2291,7 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 	// 70x38 nest copied from upper 4 bits of DC values somewhere in the luma plane
 	MakeNest(ws, read16(code, 4), read16(code, 6));
 
-	for (i = 0; i < PLANE_COUNT; i++) {
+	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		IpicPlaneDec(ws, i, outbuf);
 		outbuf = (u8*)outbuf + ws->pln[i].plane_size;
 	}
@@ -2332,28 +2328,28 @@ void HVQM4DecodeBpic(SeqObj* obj, void* code, void* outbuf, void* ref2, void* re
 
 	body = (u8*)code + 0x4C;
 
-	setCode(&ws->bsnum[0].buf, body + read32(code, 0x08));
-	setCode(&ws->bsrun[0].buf, body + read32(code, 0x0C));
-	setCode(&ws->bsnum[1].buf, body + read32(code, 0x10));
-	setCode(&ws->bsrun[1].buf, body + read32(code, 0x14));
-	setCode(&ws->dcval[0].buf, body + read32(code, 0x18));
-	setCode(&ws->scale[0].buf, body + read32(code, 0x1C));
-	setCode(&ws->aotcd[0], body + read32(code, 0x20));
-	setCode(&ws->dcval[1].buf, body + read32(code, 0x24));
-	setCode(&ws->scale[1].buf, body + read32(code, 0x28));
-	setCode(&ws->aotcd[1], body + read32(code, 0x2C));
-	setCode(&ws->dcval[2].buf, body + read32(code, 0x30));
-	setCode(&ws->scale[2].buf, body + read32(code, 0x34));
-	setCode(&ws->aotcd[2], body + read32(code, 0x38));
+	setCode(&ws->bsnum[LUMA_IDX].buf, body + read32(code, 0x08));
+	setCode(&ws->bsrun[LUMA_IDX].buf, body + read32(code, 0x0C));
+	setCode(&ws->bsnum[CHROMA_IDX].buf, body + read32(code, 0x10));
+	setCode(&ws->bsrun[CHROMA_IDX].buf, body + read32(code, 0x14));
+	setCode(&ws->dcval[Y_IDX].buf, body + read32(code, 0x18));
+	setCode(&ws->scale[Y_IDX].buf, body + read32(code, 0x1C));
+	setCode(&ws->aotcd[Y_IDX], body + read32(code, 0x20));
+	setCode(&ws->dcval[U_IDX].buf, body + read32(code, 0x24));
+	setCode(&ws->scale[U_IDX].buf, body + read32(code, 0x28));
+	setCode(&ws->aotcd[U_IDX], body + read32(code, 0x2C));
+	setCode(&ws->dcval[V_IDX].buf, body + read32(code, 0x30));
+	setCode(&ws->scale[V_IDX].buf, body + read32(code, 0x34));
+	setCode(&ws->aotcd[V_IDX], body + read32(code, 0x38));
 	setCode(&ws->mvecx.buf, body + read32(code, 0x3C));
 	setCode(&ws->mvecy.buf, body + read32(code, 0x40));
 	setCode(&ws->mstat.buf, body + read32(code, 0x44));
 	setCode(&ws->mcaot.buf, body + read32(code, 0x48));
 
-	readTree(&ws->bsnum[0], 0, 0);
-	readTree(&ws->bsrun[0], 0, 0);
-	readTree(&ws->dcval[0], 1, read8(code, 0));
-	readTree(&ws->scale[0], 0, 2);
+	readTree(&ws->bsnum[LUMA_IDX], 0, 0);
+	readTree(&ws->bsrun[LUMA_IDX], 0, 0);
+	readTree(&ws->dcval[Y_IDX], 1, read8(code, 0));
+	readTree(&ws->scale[Y_IDX], 0, 2);
 	readTree(&ws->mvecx, 1, 0);
 	readTree(&ws->mstat, 0, 0);
 
