@@ -101,7 +101,7 @@ int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
 				return (int)vmap;
 			}
 		}
-		
+
 		return 0;
 	}
 
@@ -113,7 +113,7 @@ int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
  * Address:	8000D140
  * Size:	000068
  */
-int Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
+Vmap_* Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
 {
 	if (!perc) {
 		return 0;
@@ -126,7 +126,7 @@ int Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
 	for (u32 i = 0; i < keymap->mVelocityCount; i++) {
 		Vmap_* vmap = keymap->mVelocities[i];
 		if (vel <= vmap->mBaseVelocity) {
-			return (int)vmap;
+			return vmap;
 		}
 	}
 	return 0;

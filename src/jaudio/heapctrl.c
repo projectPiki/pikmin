@@ -196,85 +196,6 @@ BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
 
 	heap->_02++;
 	return TRUE;
-	/*
-	.loc_0x0:
-	  lwz       r7, 0x8(r3)
-	  cmplwi    r7, 0
-	  beq-      .loc_0x20
-	  addis     r0, r7, 0x1
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0x20
-	  li        r3, 0
-	  blr
-
-	.loc_0x20:
-	  stw       r6, 0x8(r3)
-	  li        r6, 0
-	  stw       r5, 0x10(r3)
-	  stw       r6, 0xC(r3)
-	  stb       r6, 0x0(r3)
-	  lbz       r0, 0x1(r4)
-	  stb       r0, 0x1(r3)
-	  sth       r6, 0x2(r3)
-	  stw       r6, 0x14(r3)
-	  stw       r4, 0x18(r3)
-	  lwz       r5, 0x14(r4)
-	  cmplwi    r5, 0
-	  bne-      .loc_0x78
-	  stw       r3, 0x14(r4)
-	  stw       r6, 0x1C(r3)
-	  lwz       r5, 0x8(r4)
-	  lwz       r0, 0x8(r3)
-	  lwz       r3, 0x10(r3)
-	  sub       r0, r0, r5
-	  add       r0, r3, r0
-	  stw       r0, 0xC(r4)
-	  b         .loc_0xEC
-
-	.loc_0x78:
-	  lwz       r6, 0x8(r3)
-	  mr        r7, r5
-	  lwz       r0, 0x8(r5)
-	  cmplw     r6, r0
-	  bge-      .loc_0x98
-	  stw       r5, 0x1C(r3)
-	  stw       r3, 0x14(r4)
-	  b         .loc_0xEC
-
-	.loc_0x98:
-	  lwz       r5, 0x1C(r7)
-	  cmplwi    r5, 0
-	  bne-      .loc_0xCC
-	  li        r0, 0
-	  stw       r0, 0x1C(r3)
-	  stw       r3, 0x1C(r7)
-	  lwz       r5, 0x8(r4)
-	  lwz       r0, 0x8(r3)
-	  lwz       r3, 0x10(r3)
-	  sub       r0, r0, r5
-	  add       r0, r3, r0
-	  stw       r0, 0xC(r4)
-	  b         .loc_0xEC
-
-	.loc_0xCC:
-	  lwz       r0, 0x8(r5)
-	  cmplw     r6, r0
-	  bge-      .loc_0xE4
-	  stw       r5, 0x1C(r3)
-	  stw       r3, 0x1C(r7)
-	  b         .loc_0xEC
-
-	.loc_0xE4:
-	  mr        r7, r5
-	  b         .loc_0x98
-
-	.loc_0xEC:
-	  lhz       r5, 0x2(r4)
-	  li        r3, 0x1
-	  addi      r0, r5, 0x1
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
 }
 
 /*
@@ -330,8 +251,83 @@ void Jac_InitMotherHeap(jaheap_* heap, u32 param_2, u32 param_3, u8 param_4)
  * Address:	8000EE40
  * Size:	0001B4
  */
-BOOL Jac_AllocHeap(jaheap_*, jaheap_*, u32)
+BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 {
+	u32 fixedSize = OSRoundUp32B(size);
+	u32 y         = parent->_08;
+	if (y == 0) {
+		return FALSE;
+	}
+	if (heap->_08 && heap->_08 != -1) {
+		return FALSE;
+	}
+
+	if (fixedSize < parent->_10 - parent->_0C) {
+		jaheap_* result = 0;
+		u32 max         = 0xfffffff;
+		int t;
+		jaheap_* start = parent->_14;
+		for (jaheap_* temp = parent->_14; temp; temp = temp->_1C) {
+			int x = temp->_08 - y;
+			if (fixedSize >= x) {
+				x -= fixedSize;
+				if (x < max) {
+					result = temp;
+					t      = y;
+					max    = x;
+				}
+			}
+			y = temp->_08 + temp->_10;
+		}
+
+		if (result == 0) {
+			return FALSE;
+		}
+
+		if (result == start) {
+			heap->_1C   = start;
+			parent->_14 = heap;
+		} else {
+			while (start->_1C != result) {
+				start = start->_1C;
+			}
+			heap->_1C  = start;
+			start->_1C = heap;
+		}
+		heap->_08 = t;
+		heap->_10 = fixedSize;
+		heap->_0C = 0;
+		heap->_00 = 0;
+		heap->_01 = parent->_01;
+		heap->_02 = 0;
+		heap->_14 = NULL;
+		heap->_18 = parent;
+		parent->_02++;
+		return TRUE;
+	}
+
+	heap->_08     = fixedSize + heap->_0C;
+	heap->_10     = fixedSize;
+	heap->_0C     = 0;
+	heap->_00     = 0;
+	heap->_01     = parent->_01;
+	heap->_02     = 0;
+	heap->_14     = NULL;
+	heap->_18     = parent;
+	jaheap_* temp = parent->_14;
+	if (parent->_14 == NULL) {
+		parent->_14 = heap;
+		parent->_1C = NULL;
+	} else {
+		while (temp->_1C) {
+			temp = temp->_1C;
+		}
+		temp->_1C = heap;
+	}
+	heap->_1C = NULL;
+	parent->_0C += fixedSize;
+	parent->_02++;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  lwz       r6, 0x8(r4)
@@ -479,8 +475,74 @@ BOOL Jac_AllocHeap(jaheap_*, jaheap_*, u32)
  * Address:	8000F000
  * Size:	0001B0
  */
-void Jac_DeleteHeap(jaheap_*)
+BOOL Jac_DeleteHeap(jaheap_* heap)
 {
+	u32 badcompiler[4];
+	jaheap_** pt = &heap;
+
+	if (heap->_08 == 0) {
+		return FALSE;
+	}
+
+	jaheap_* heap2 = heap->_14;
+	while (heap2->_1C) {
+		heap2 = heap2->_1C;
+		Jac_DeleteHeap(heap2->_1C);
+	}
+
+	heap->_14 = NULL;
+
+	heap2 = heap->_24;
+	while (heap2->_1C) {
+		heap2 = heap2->_1C;
+		Jac_DeleteHeap(heap2->_1C);
+	}
+
+	jaheap_** ptr = &heap->_18;
+	heap->_24     = NULL;
+
+	if (heap->_18) {
+		heap2 = (*ptr)->_14;
+		if (heap2 == heap) {
+			*ptr = heap->_1C;
+			if (heap->_1C == NULL) {
+				(*ptr)->_0C = NULL;
+			}
+		} else {
+			while (heap2->_1C != heap) {
+				if (heap2 == NULL) {
+					heap->_08 = 0;
+					return FALSE;
+				}
+				heap2 = heap2->_1C;
+			}
+			heap2->_1C = heap->_1C;
+			if (heap->_1C == NULL) {
+				(*ptr)->_0C = heap2->_0C + heap2->_10 - heap2->_08;
+			}
+		}
+		(*ptr)->_02--;
+	}
+
+	if (heap->_20) {
+		ptr   = &heap->_20->_24;
+		heap2 = *ptr;
+		if (heap2 == heap) {
+			*ptr = heap->_28;
+		} else {
+			while (heap2->_28 != heap) {
+				if (heap2 == NULL) {
+					return FALSE;
+				}
+				heap2 = heap2->_28;
+			}
+			heap2->_28 = heap->_28;
+		}
+		heap->_20 = NULL;
+		heap->_28 = NULL;
+	}
+	heap->_08 = 0;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -7,6 +7,7 @@
 #include "jaudio/waveread.h"
 #include "jaudio/connect.h"
 #include "jaudio/dspdriver.h"
+#include "jaudio/rate.h"
 #include "jaudio/bx.h"
 
 static int Jesus1Shot_Update(jc_*, JCSTATUS);
@@ -359,8 +360,74 @@ static void __Oneshot_WavePause(jc_* jc, u8 a)
  * Address:	80015960
  * Size:	00014C
  */
-static void __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
+static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 {
+	u32 index = 0;
+	jcs_* mgr;
+	jc_* chan;
+	u8 poly;
+	int flag1, flag2;
+
+	mgr  = jc->mMgr;
+	chan = mgr->activeChannels;
+	poly = polys_table[id >> 0x18 & 0xf];
+
+	if (poly == 0) {
+		return TRUE;
+	}
+
+	flag1 = id >> 0x18 & 0x20;
+	flag2 = id >> 0x18 & 0x10;
+
+	while (TRUE) {
+		if (chan == NULL) {
+			break;
+		}
+
+		if (chan->soundId != id) {
+			index++;
+		} else {
+			chan->polyphonyCounter++;
+			if (chan->polyphonyCounter == poly) {
+				if (flag2) {
+					ForceStopLogicalChannel(chan);
+				} else {
+					__Oneshot_WavePause(chan, 1);
+				}
+			}
+		}
+		chan = (jc_*)chan->mNext;
+	}
+
+	chan = mgr->releasingChannels;
+	while (TRUE) {
+		if (chan == NULL) {
+			break;
+		}
+
+		if (chan->soundId != id) {
+			index++;
+		} else {
+			if (flag1 == 0) {
+				chan->polyphonyCounter++;
+				if (chan->polyphonyCounter == poly) {
+					ForceStopLogicalChannel(chan);
+				}
+			}
+		}
+		chan = (jc_*)chan->mNext;
+	}
+
+	if (flag1) {
+		jc->polyphonyCounter = index;
+		if (index < poly) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	jc->polyphonyCounter = 0;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -482,75 +549,43 @@ static void __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
  */
 static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  rlwinm    r6,r4,8,24,31
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r26, 0x18(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x8022
-	  mr.       r31, r4
-	  rlwinm    r4,r4,8,28,31
-	  addi      r0, r3, 0x5940
-	  add       r3, r0, r4
-	  lwz       r5, 0x4(r30)
-	  lbz       r26, 0x0(r3)
-	  lwz       r27, 0xC(r5)
-	  beq-      .loc_0xD4
-	  cmplwi    r26, 0
-	  beq-      .loc_0xD4
-	  rlwinm    r29,r6,0,26,26
-	  subi      r28, r26, 0x1
+	jc_* chan;
+	u8 poly;
 
-	.loc_0x4C:
-	  cmplwi    r27, 0
-	  beq-      .loc_0xD4
-	  lwz       r0, 0x128(r27)
-	  cmplw     r0, r31
-	  bne-      .loc_0xCC
-	  cmpwi     r29, 0
-	  beq-      .loc_0x9C
-	  lbz       r3, 0x12C(r27)
-	  lbz       r0, 0x12C(r30)
-	  cmplw     r3, r0
-	  ble-      .loc_0xCC
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x12C(r27)
-	  lbz       r0, 0x12C(r27)
-	  cmpw      r0, r28
-	  bne-      .loc_0xCC
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  bl        -0x214
-	  b         .loc_0xCC
+	chan = jc->mMgr->activeChannels;
+	poly = polys_table[id >> 0x18 & 0xf];
 
-	.loc_0x9C:
-	  lbz       r3, 0x12C(r27)
-	  lbz       r0, 0x12C(r30)
-	  cmplw     r3, r0
-	  ble-      .loc_0xCC
-	  subi      r0, r3, 0x1
-	  stb       r0, 0x12C(r27)
-	  lbz       r0, 0x12C(r27)
-	  cmplw     r0, r26
-	  bge-      .loc_0xCC
-	  addi      r3, r27, 0
-	  li        r4, 0
-	  bl        -0x248
+	if (id && poly) {
 
-	.loc_0xCC:
-	  lwz       r27, 0x24(r27)
-	  b         .loc_0x4C
+		while (TRUE) {
+			if (chan == NULL) {
+				break;
+			}
 
-	.loc_0xD4:
-	  lmw       r26, 0x18(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+			int flag = id >> 0x18 & 0x20;
+			if (chan->soundId == id) {
+				if (flag) {
+					if (chan->polyphonyCounter > jc->polyphonyCounter) {
+						chan->polyphonyCounter--;
+						if (chan->polyphonyCounter == poly - 1) {
+							__Oneshot_WavePause(chan, 0);
+						}
+					}
+				} else {
+					if (chan->polyphonyCounter > jc->polyphonyCounter) {
+						chan->polyphonyCounter--;
+						if (chan->polyphonyCounter < poly) {
+							__Oneshot_WavePause(chan, 0);
+						}
+					}
+				}
+			}
+
+			chan = (jc_*)chan->mNext;
+		}
+	}
+
+	u32 badcompiler[2];
 }
 
 /*
@@ -825,8 +860,63 @@ void FlushRelease_1Shot(jcs_* jcs)
  * Address:	800160A0
  * Size:	0001C4
  */
-static int Jesus1Shot_Update(jc_* jc, JCSTATUS status)
+static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 {
+	u32 test = FALSE;
+	// jc_** jcptr = &jc;
+	jcs_** chan = &jc->mMgr;
+	s32 status  = jstatus;
+
+	if (status == 0) {
+		for (u32 i = 0; i < 2; i++) {
+			if (jc->mOscillators[i]) {
+				Oscbuf_* buf = &jc->mOscBuffers[i];
+				if (buf->_00 != 6 && buf->_00 != 7) {
+					buf->_00 = 4;
+					test     = TRUE;
+				}
+			}
+		}
+
+		if (test && List_CutChannel(jc) != -1) {
+			List_AddChannelTail(&jc->mMgr->releasingChannels, jc);
+			if (jc->dspChannel) {
+				u32 test2 = jc->channelPriority >> 8;
+				u8 a      = test2;
+				if (a == 0) {
+					test2 = TRUE;
+				}
+				jc->dspChannel->_03 = test2;
+			}
+		}
+		jc->playId = -1;
+		return FALSE;
+	} else if (status == 1 || status == 2 || status == 6) {
+		if (jc->mMgr->chanAllocCount) {
+			if (List_CutChannel(jc) != -1) {
+				(*chan)->chanAllocCount--;
+				int id      = jc->soundId;
+				jc->soundId = 0;
+				__Oneshot_StopMonoPolyCheck(jc, id);
+				FixReleaseChannel(jc);
+			}
+		} else {
+			if (List_CutChannel(jc) != -1) {
+				int id      = jc->soundId;
+				jc->soundId = 0;
+				__Oneshot_StopMonoPolyCheck(jc, id);
+				List_AddChannel(&(*chan)->freeChannels, jc);
+			}
+		}
+		if (status != 6) {
+			StopLogicalChannel(jc);
+		} else {
+			Del_WaitDSPChannel(jc);
+		}
+		jc->note           = -1;
+		jc->playId         = -1;
+		jc->updateCallback = NULL;
+	}
 	return 0;
 	/*
 	.loc_0x0:
@@ -1019,6 +1109,84 @@ void Get_CtrlWave(SOUNDID_ sound)
  */
 jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
+	BOOL test = FALSE;
+
+	Inst_* inst = InstRead(sound.bytes[0], sound.bytes[1]);
+	if (inst == NULL) {
+		return NULL;
+	}
+
+	Vmap_* map = VmapRead(inst, sound.bytes[2], sound.bytes[3]);
+	if (map == NULL) {
+		return NULL;
+	}
+
+	CtrlGroup_* group = WaveidToWavegroup(map->mWsysID, sound.bytes[2]);
+	if (group == NULL) {
+		return NULL;
+	}
+
+	WaveID_* wave = GetSoundHandle(group, map->mWsysID);
+	if (wave == NULL) {
+		return NULL;
+	}
+
+	jc_* chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
+	if (chan == NULL) {
+		return NULL;
+	}
+
+	int val = sound.bytes[2] + 60 - wave->wave->_02;
+	if (val < 0) {
+		val = 0;
+	}
+	if (val > 127) {
+		val = 127;
+	}
+	f32 pitch                      = C5BASE_PITCHTABLE[val];
+	chan->velocity                 = sound.bytes[3];
+	chan->note                     = sound.bytes[2];
+	chan->basePitch                = inst->mGainMultiplier * map->mPitch * wave->wave->_04 / JAC_DAC_RATE;
+	chan->currentPitch             = chan->basePitch * pitch;
+	chan->baseVolume               = map->mVolume * inst->mFreqMultiplier;
+	chan->currentVolume            = chan->velocity / 127.0f;
+	chan->currentVolume            = chan->baseVolume * chan->currentVolume * chan->currentVolume;
+	chan->panMatrices[1].values[0] = 0.5f;
+	chan->panMatrices[2].values[0] = 0.0f;
+	chan->panMatrices[3].values[0] = 0.0f;
+	EffecterInit(chan, inst);
+
+	int f    = sound.bytes[0] >> 0x10;
+	int flag = inst->mFlag << 0x18 | f;
+	switch (inst->mFlag & 0xc0) {
+	case 0xc0:
+		flag |= 0xffffff;
+		break;
+	case 0x80:
+		flag |= 0xff;
+		break;
+	case 0x40:
+		flag |= Bank_GetInstKeymap(inst, sound.bytes[2]) << 0x10;
+		break;
+	}
+
+	chan->soundId = 0;
+	if (__Oneshot_StartMonoPolyCheck(chan, flag) == FALSE) {
+		if (inst->mFlag & 0x10) {
+			List_AddChannelTail(&jcs->freeChannels, chan);
+			return FALSE;
+		}
+		test = TRUE;
+	}
+	chan->soundId = flag;
+
+	jc_* newjc = __Oneshot_Play_Start(jcs, chan, id);
+	if (test) {
+		__Oneshot_WavePause(newjc, 1);
+	}
+	return newjc;
+
+	u32 badcompiler[2];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1222,6 +1390,57 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
  */
 jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
+	Perc_* perc = PercRead(sound.bytes[0], sound.bytes[1]);
+	if (perc == NULL) {
+		return NULL;
+	}
+
+	Vmap_* map = Bank_GetPercVmap(perc, sound.bytes[2], sound.bytes[3]);
+	if (map == NULL) {
+		return NULL;
+	}
+
+	CtrlGroup_* group = WaveidToWavegroup(map->mWsysID, sound.bytes[2]);
+	if (group == NULL) {
+		return NULL;
+	}
+
+	WaveID_* wave = GetSoundHandle(group, map->mWsysID);
+	if (wave == NULL) {
+		return NULL;
+	}
+
+	jc_* chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
+	if (chan == NULL) {
+		return NULL;
+	}
+
+	chan->velocity                 = sound.bytes[3];
+	chan->note                     = sound.bytes[2];
+	chan->basePitch                = perc->mKeyRegions[sound.bytes[2]]->mPitch * map->mPitch * wave->wave->_04 / JAC_DAC_RATE;
+	chan->currentPitch             = chan->basePitch;
+	chan->baseVolume               = map->mVolume * perc->mKeyRegions[sound.bytes[2]]->mVolume;
+	chan->currentVolume            = chan->velocity / 127.0f;
+	chan->currentVolume            = chan->baseVolume * chan->currentVolume * chan->currentVolume;
+	chan->panMatrices[1].values[0] = 0.5f;
+	chan->panMatrices[2].values[0] = 0.0f;
+	chan->panMatrices[3].values[0] = 0.0f;
+
+	u16 flag;
+	if (perc->mMagic == 'PER2') {
+		chan->panMatrices[0].values[0] = perc->mKeyRegions[sound.bytes[2]]->mPitch / 127.0f;
+		flag                           = perc->mKeyRegions[sound.bytes[2]]->mVelocityCount;
+	} else {
+		flag                           = 1000;
+		chan->panMatrices[0].values[0] = 0.5f;
+	}
+	chan->panMatrices[2].values[0] = 0.0f;
+	chan->panMatrices[3].values[0] = 0.0f;
+	EffecterInit_Perc(chan, (Pmap_*)perc->mKeyRegions[sound.bytes[2]], flag);
+	chan->soundId = 0;
+
+	return __Oneshot_Play_Start(jcs, chan, id);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1381,6 +1600,40 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
  */
 jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
+	int pit;
+	jc_* chan;
+
+	chan = __Oneshot_GetLogicalChannel(jcs, NULL);
+	if (chan == NULL) {
+		return NULL;
+	}
+
+	chan->_14             = sound.bytes[1] - 0xf0;
+	chan->logicalChanType = 2;
+
+	pit = sound.bytes[2];
+	if (pit < 0) {
+		pit = 0;
+	}
+	if (pit > 127) {
+		pit = 127;
+	}
+	f32 pitch                      = C5BASE_PITCHTABLE[pit];
+	chan->velocity                 = sound.bytes[3];
+	chan->note                     = sound.bytes[2];
+	chan->basePitch                = 16736.016f / JAC_DAC_RATE;
+	chan->currentPitch             = chan->basePitch * pitch;
+	chan->baseVolume               = 1.0f;
+	chan->currentVolume            = chan->velocity / 127.0f;
+	chan->currentVolume            = chan->currentVolume * chan->currentVolume;
+	chan->panMatrices[1].values[0] = 0.5f;
+	chan->panMatrices[2].values[0] = 0.0f;
+	chan->panMatrices[3].values[0] = 0.0f;
+	EffecterInit_Osc(chan);
+	chan->soundId = 0;
+	return __Oneshot_Play_Start(jcs, chan, id);
+
+	u32 badcompiler[6];
 	/*
 	.loc_0x0:
 	  mflr      r0

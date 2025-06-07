@@ -30,7 +30,7 @@ BOOL Jac_SetGroupHeap(jaheap_*, jaheap_*);
 void Jac_CutdownHeap(jaheap_*);
 void Jac_InitMotherHeap(jaheap_*, u32, u32, u8);
 BOOL Jac_AllocHeap(jaheap_*, jaheap_*, u32);
-void Jac_DeleteHeap(jaheap_*);
+BOOL Jac_DeleteHeap(jaheap_*);
 void Jac_GarbageCollection_St(jaheap_*);
 void Jac_CheckFreeHeap_Total(jaheap_*);
 void Jac_CheckFreeHeap_Linear(jaheap_*);

@@ -137,7 +137,7 @@ struct Oscbuf_ {
  */
 struct Inst_ {
 	int mMagic;                  // _00 | 'INST'
-	u8 _04[4];                   // _04, unused?
+	u32 mFlag;                   // _04
 	f32 mFreqMultiplier;         // _08
 	f32 mGainMultiplier;         // _0C
 	Osc_* mOscillators[2];       // _10
@@ -237,7 +237,7 @@ struct Wave_ {
 	u8 _00;                // _00
 	u8 compBlockIdx;       // _01
 	u8 _02;                // _02
-	s8 _04[4];             // _04
+	f32 _04;               // _04
 	int _08;               // _08
 	int _0C;               // _0C
 	s32 isLooping;         // _10

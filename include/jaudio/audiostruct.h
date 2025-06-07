@@ -66,7 +66,7 @@ typedef struct PanMatrix_ {
  */
 struct jcs_ {
 	u32 chanCount;          // _00, Number of channels in this system
-	int chanAllocCount;     // _04, Total channel allocation counter
+	u32 chanAllocCount;     // _04, Total channel allocation counter
 	jc_* freeChannels;      // _08, Linked list of free channels
 	jc_* activeChannels;    // _0C, Linked list of active channels
 	jc_* releasingChannels; // _10, Linked list of releasing channels
