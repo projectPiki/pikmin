@@ -529,11 +529,11 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 		break;
 	case 0x21:
 		r29_regIdx      = 6;
-		r30_newRegValue = track->regParam.param._0C & 0xff00 | r30_newRegValue & 0x00ff;
+		r30_newRegValue = track->regParam.param.bankNumber & 0xff00 | r30_newRegValue & 0x00ff;
 		break;
 	case 0x20:
 		r29_regIdx      = 6;
-		r30_newRegValue = track->regParam.param._0C & 0x00ff | r30_newRegValue << 8;
+		r30_newRegValue = track->regParam.param.bankNumber & 0x00ff | r30_newRegValue << 8;
 		break;
 	case 0x2E:
 		r29_regIdx      = 0xd;
@@ -590,7 +590,7 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 	switch (regIdx) {
 	case 0x20:
 	case 0x21:
-		result = track->regParam.param._0C;
+		result = track->regParam.param.bankNumber;
 		break;
 	case 0x22:
 		regDirectLo = Jam_ReadRegDirect(track, 1);

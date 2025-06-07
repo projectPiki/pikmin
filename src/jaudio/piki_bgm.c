@@ -15,22 +15,25 @@
  * @note Size: 0x468.
  */
 typedef struct BgmControl_ {
-	int _00;                     // _00
-	int _04;                     // _04
-	int _08;                     // _08
-	u8 _0C;                      // _0C
-	s8 trackHandle;              // _0D
-	u8 _0E;                      // _0E
-	u8 _0F;                      // _0F
-	u8 _10;                      // _10
-	u8 _11;                      // _11
-	u32 _14;                     // _14
-	u32 _18;                     // _18, unknown
+	int isActive;    // _00
+	int needsInit;   // _04
+	int modeChanged; // _08
+	u8 currentMode;  // _0C
+	s8 trackHandle;  // _0D
+
+	// Something here is the battle mix / other stuff
+	u8 _0E;            // _0E
+	u8 _0F;            // _0F
+	u8 trackIntensity; // _10
+	u8 _11;            // _11
+
+	u32 songId;                  // _14
+	u32 transitionTimer;         // _18, unknown
 	OuterParam_ trackParams[16]; // _1C
 	f32 trackVolumes[16];        // _41C
-	f32 _45C;                    // _45C, possibly gameVolume?
-	f32 _460;                    // _460, possibly bossVolume?
-	u32 _464;                    // _464, unknown
+	f32 gameVolume;              // _45C
+	f32 prevVolume;              // _460
+	u32 crossfade;               // _464, unknown
 } BgmControl_;
 
 static BgmControl_ bgm[3];
@@ -154,12 +157,12 @@ void Jac_InitBgm(void)
 {
 	u32 i;
 	for (i = 0; i < 3; i++) {
-		bgm[i]._00         = 0;
-		bgm[i]._0E         = 0;
-		bgm[i]._0F         = 0;
-		bgm[i]._10         = 0;
-		bgm[i]._11         = 0;
-		bgm[i].trackHandle = -1;
+		bgm[i].isActive       = 0;
+		bgm[i]._0E            = 0;
+		bgm[i]._0F            = 0;
+		bgm[i].trackIntensity = 0;
+		bgm[i]._11            = 0;
+		bgm[i].trackHandle    = -1;
 	}
 
 	u32* REF_i = &i;
@@ -209,9 +212,9 @@ void Jac_FadeOutBgm(u32 flag, u32 fade)
  */
 void Jac_StopBgm(u32 id)
 {
-	if (bgm[id]._00) {
+	if (bgm[id].isActive) {
 		Jaf_StopSeq(bgm[id].trackHandle);
-		bgm[id]._00 = 0;
+		bgm[id].isActive = 0;
 	}
 }
 
@@ -250,7 +253,7 @@ void Jac_PlayBgm(u32 a, u32 id)
 	u32 check;
 	seqp_* track;
 	Jac_SetProcessStatus(8);
-	if (bgm[a]._00) {
+	if (bgm[a].isActive) {
 		Jac_StopBgm(a);
 	}
 
@@ -276,13 +279,13 @@ void Jac_PlayBgm(u32 a, u32 id)
 
 	track = Jaf_HandleToSeq(a + 3);
 
-	bgm[a]._00         = 1;
-	bgm[a]._04         = 1;
-	bgm[a]._08         = 0;
-	bgm[a]._18         = 0;
-	bgm[a]._0C         = 0;
-	bgm[a]._14         = id - 2;
-	bgm[a].trackHandle = a + 3;
+	bgm[a].isActive        = 1;
+	bgm[a].needsInit       = 1;
+	bgm[a].modeChanged     = 0;
+	bgm[a].transitionTimer = 0;
+	bgm[a].currentMode     = 0;
+	bgm[a].songId          = id - 2;
+	bgm[a].trackHandle     = a + 3;
 
 	Jac_SetBgmModeFlag(a, 2, 0);
 	Jac_SetBgmModeFlag(a, 1, 0);
@@ -291,18 +294,18 @@ void Jac_PlayBgm(u32 a, u32 id)
 	Jaf_ReadySeq(a + 3, id);
 	Jac_BgmFrameWork();
 	Jaq_SetBankNumber(Jaf_HandleToSeq(a + 3), id);
-	bgm[a]._464 = 0;
+	bgm[a].crossfade = 0;
 
 	if (a == 0) {
-		bgm[a]._45C = game_bgm_volume;
+		bgm[a].gameVolume = game_bgm_volume;
 		Jam_MuteTrack(track, 0);
 		last_crossmode = 0;
 	} else {
-		bgm[a]._45C = 0.0f;
+		bgm[a].gameVolume = 0.0f;
 		Jam_MuteTrack(track, 1);
 	}
 
-	Jam_SetExtParam(bgm[a]._45C, track, 1);
+	Jam_SetExtParam(bgm[a].gameVolume, track, 1);
 	Jam_OnExtSwitch(track, 1);
 
 	// Challenge mode tempo speedup?
@@ -324,13 +327,13 @@ void Jac_PlayBgm(u32 a, u32 id)
  */
 BOOL Jac_ChangeBgmMode(u32 id, u8 type)
 {
-	if (type == bgm[id]._0C) {
+	if (type == bgm[id].currentMode) {
 		return FALSE;
 	}
 
-	if (bgm[id]._00) {
-		bgm[id]._0C = type;
-		bgm[id]._08 = 1;
+	if (bgm[id].isActive) {
+		bgm[id].currentMode = type;
+		bgm[id].modeChanged = 1;
 	} else {
 		return FALSE;
 	}
@@ -354,13 +357,13 @@ void Jac_SetBgmModeFlag(u32 a, u8 b, u8 c)
 		thisBgm->_0F = c;
 		break;
 	case 4:
-		thisBgm->_10 = c;
+		thisBgm->trackIntensity = c;
 		break;
 	case 8:
 		thisBgm->_11 = c;
 		break;
 	}
-	Jac_ChangeBgmMode(a, thisBgm->_0F + (thisBgm->_10 << 2) + (thisBgm->_0E << 1) + (thisBgm->_11 << 3));
+	Jac_ChangeBgmMode(a, thisBgm->_0F + (thisBgm->trackIntensity << 2) + (thisBgm->_0E << 1) + (thisBgm->_11 << 3));
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -431,29 +434,29 @@ void Jac_BgmFrameWork(void)
 		bgm_semaphore = TRUE;
 
 		for (u32 i = 0; i < 3; i++) {
-			if (!bgm[i]._00) {
+			if (!bgm[i].isActive) {
 				continue;
 			}
-			if (bgm[i]._04) {
+			if (bgm[i].needsInit) {
 				Jac_ChangeBgmTrackVol(&bgm[i]);
 				continue;
 			}
-			if (bgm[i]._08) {
+			if (bgm[i].modeChanged) {
 				Jac_ChangeBgmTrackVol(&bgm[i]);
-				bgm[i]._08 = 0;
+				bgm[i].modeChanged = 0;
 			}
-			if (bgm[i]._18) {
+			if (bgm[i].transitionTimer) {
 				Jac_MoveBgmTrackVol(&bgm[i]);
 			}
 
-			if (bgm[i]._464) {
+			if (bgm[i].crossfade) {
 				if (!Jac_UpdateBgmCrossVol(&bgm[i])) {
-					bgm[i]._464 = 0;
+					bgm[i].crossfade = 0;
 					continue;
 				}
-				bgm[i]._464--;
 
-				if (bgm[i]._464 == 0 && 1 - last_crossmode == i) {
+				bgm[i].crossfade--;
+				if (bgm[i].crossfade == 0 && 1 - last_crossmode == i) {
 					Jam_MuteTrack(Jaf_HandleToSeq(bgm[i].trackHandle), 1);
 				}
 			}
@@ -473,13 +476,13 @@ void Jac_MoveBgmTrackVol(BgmControl_* control)
 	seqp_* track2;
 	seqp_* track;
 	u32 i;
-	f32 a  = control->_18;
+	f32 a  = control->transitionTimer;
 	track2 = Jaf_HandleToSeq(control->trackHandle);
 	if (!track2) {
 		return;
 	}
 	track = track2;
-	control->_18--;
+	control->transitionTimer--;
 
 	for (i = 0; i < 16; i++) {
 		f32 b = control->trackVolumes[i];
@@ -501,10 +504,10 @@ void Jac_ChangeBgmTrackVol(BgmControl_* control)
 		return;
 	}
 
-	u16 mute = bgm_mute_set[control->_14][control->_0C & 0x3];
-	f32 vol  = bgm_volume_set[control->_14][(control->_0C >> 2) & 0x1];
+	u16 mute = bgm_mute_set[control->songId][control->currentMode & 0x3];
+	f32 vol  = bgm_volume_set[control->songId][(control->currentMode >> 2) & 0x1];
 
-	if (control->_0C & 0x8) {
+	if (control->currentMode & 0x8) {
 		vol = 0.0f;
 	}
 	seqp_* track = track2;
@@ -521,18 +524,18 @@ void Jac_ChangeBgmTrackVol(BgmControl_* control)
 		}
 	}
 
-	if (control->_04) {
+	if (control->needsInit) {
 		for (i = 0; i < 16; i++) {
 			Jam_InitExtBuffer(&control->trackParams[i]);
 			Jam_AssignExtBufferP(track, i, &control->trackParams[i]);
 			Jam_SetExtParamP(control->trackVolumes[i], track, i, 1);
 			Jam_OnExtSwitchP(track, i, 1);
 		}
-		control->_04 = 0;
-	} else if (control->_0C & 0x8) {
-		control->_18 = fadeouttime;
+		control->needsInit = 0;
+	} else if (control->currentMode & 0x8) {
+		control->transitionTimer = fadeouttime;
 	} else {
-		control->_18 = 60;
+		control->transitionTimer = 60;
 	}
 }
 
@@ -543,14 +546,14 @@ void Jac_ChangeBgmTrackVol(BgmControl_* control)
  */
 static BOOL Jac_UpdateBgmCrossVol(BgmControl_* control)
 {
-	f32 a        = control->_464;
+	f32 a        = control->crossfade;
 	seqp_* track = Jaf_HandleToSeq(control->trackHandle);
 
 	if (!track->outerParams) {
 		return FALSE;
 	}
 
-	Jam_SetExtParam(track->outerParams->volume + (control->_45C - track->outerParams->volume) / a, track, 1);
+	Jam_SetExtParam(track->outerParams->volume + (control->gameVolume - track->outerParams->volume) / a, track, 1);
 	return TRUE;
 }
 
@@ -588,26 +591,26 @@ void Jac_EasyCrossFade(u8 type, u32 val)
 	u32* REF_val = &val;
 	switch (type) {
 	case 0:
-		bgm[0]._45C = game_bgm_volume;
-		bgm[1]._45C = 0.0f;
+		bgm[0].gameVolume = game_bgm_volume;
+		bgm[1].gameVolume = 0.0f;
 		Jam_MuteTrack(Jaf_HandleToSeq(bgm[0].trackHandle), 0);
 		last_crossmode = 0;
 		break;
 
 	case 1:
-		bgm[1]._45C = game_bgm_volume;
-		bgm[0]._45C = 0.0f;
+		bgm[1].gameVolume = game_bgm_volume;
+		bgm[0].gameVolume = 0.0f;
 		Jam_MuteTrack(Jaf_HandleToSeq(bgm[1].trackHandle), 0);
 		break;
 
 	case 2:
-		bgm[last_crossmode]._45C = game_bgm_volume;
-		bgm[last_crossmode]._464 = val;
+		bgm[last_crossmode].gameVolume = game_bgm_volume;
+		bgm[last_crossmode].crossfade  = val;
 		return;
 	}
 
-	bgm[0]._464 = val;
-	bgm[1]._464 = val;
+	bgm[0].crossfade = val;
+	bgm[1].crossfade = val;
 
 	last_crossmode = type;
 }
@@ -625,30 +628,30 @@ void Jac_DemoFade(u8 type, u32 val, f32 multiplier)
 
 	switch (type) {
 	case 0:
-		bgm[0]._45C = bgm[0]._460;
-		bgm[1]._45C = bgm[1]._460;
+		bgm[0].gameVolume = bgm[0].prevVolume;
+		bgm[1].gameVolume = bgm[1].prevVolume;
 		break;
 
 	case 1:
-		bgm[0]._460 = bgm[0]._45C;
-		bgm[1]._460 = bgm[1]._45C;
-		bgm[0]._45C = multiplier * bgm[0]._45C;
-		bgm[1]._45C = multiplier * bgm[1]._45C;
+		bgm[0].prevVolume = bgm[0].gameVolume;
+		bgm[1].prevVolume = bgm[1].gameVolume;
+		bgm[0].gameVolume = multiplier * bgm[0].gameVolume;
+		bgm[1].gameVolume = multiplier * bgm[1].gameVolume;
 		break;
 
 	case 2:
-		bgm[0]._45C = multiplier * bgm[0]._460;
-		bgm[1]._45C = multiplier * bgm[1]._460;
+		bgm[0].gameVolume = multiplier * bgm[0].prevVolume;
+		bgm[1].gameVolume = multiplier * bgm[1].prevVolume;
 		break;
 
 	case 3:
-		bgm[0]._45C = multiplier;
-		bgm[1]._45C = multiplier;
+		bgm[0].gameVolume = multiplier;
+		bgm[1].gameVolume = multiplier;
 		break;
 	}
 
-	bgm[0]._464 = val;
-	bgm[1]._464 = val;
+	bgm[0].crossfade = val;
+	bgm[1].crossfade = val;
 }
 
 /*

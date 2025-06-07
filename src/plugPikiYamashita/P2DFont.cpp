@@ -22,7 +22,7 @@ DEFINE_PRINT(nullptr)
  * Address:	801B5C64
  * Size:	000150
  */
-Font* P2DFont::loadFont(char* name, int& p2, int& p3)
+Font* P2DFont::loadFont(char* name, int& rows, int& columns)
 {
 	Font* font       = nullptr;
 	FntobjInfo* info = (FntobjInfo*)gsys->findGfxObject(name, 'font');
@@ -42,13 +42,13 @@ Font* P2DFont::loadFont(char* name, int& p2, int& p3)
 		sprintf(unused, "%s", name); // why.
 
 		Texture* fontTex = gsys->loadTexture("bigFont.bti", true);
-		p2               = 21;
-		p3               = 42;
-		font->setTexture(fontTex, p2, p3);
+		rows             = 21;
+		columns          = 42;
+		font->setTexture(fontTex, rows, columns);
 
 	} else {
-		p2 = 21;
-		p3 = 42;
+		rows    = 21;
+		columns = 42;
 	}
 
 	return font;
@@ -61,13 +61,13 @@ Font* P2DFont::loadFont(char* name, int& p2, int& p3)
  */
 P2DFont::P2DFont(char* fileName)
 {
-	int a, b;
-	mFont     = loadFont(fileName, a, b);
+	int rows, columns;
+	mFont     = loadFont(fileName, rows, columns);
 	mFontType = 2;
-	mWidth    = (mFont->mTexture->mWidth / a);
+	mWidth    = (mFont->mTexture->mWidth / rows);
 	mLeading  = 5;
-	mDescent  = (mFont->mTexture->mHeight / b) * 0.0f;
-	mAscent   = (mFont->mTexture->mHeight / b) - mDescent;
+	mDescent  = (mFont->mTexture->mHeight / columns) * 0.0f;
+	mAscent   = (mFont->mTexture->mHeight / columns) - mDescent;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -166,8 +166,8 @@ int P2DFont::charToIndex(int c)
 	if (c & ~0xFF) {
 		return mFont->charToIndex(u16(c));
 	}
+
 	return mFont->charToIndex(char(c));
-	// UNUSED FUNCTION
 }
 
 /*

@@ -31,14 +31,14 @@ DEFINE_PRINT("GameCourseClearSection")
 struct GameModeBase {
 	GameModeBase(char* name)
 	{
-		mName = name;
-		_04   = KBBTN_Z;
+		mName         = name;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
 	{
 		bool res = false;
-		if (controller->keyUnClick(_04)) {
+		if (controller->keyUnClick(mCancelButton)) {
 			SeSystem::playSysSe(SYSSE_CANCEL);
 			res = true;
 		}
@@ -49,8 +49,8 @@ struct GameModeBase {
 	char* getModeName() { return mName; }
 
 	// _00 = VTBL
-	int _04;     // _04
-	char* mName; // _08
+	int mCancelButton; // _04
+	char* mName;       // _08
 };
 
 /**
@@ -168,7 +168,7 @@ struct CMcourseSelectMode : public GameModeBase {
 	CMcourseSelectMode()
 	    : GameModeBase("チャレンジモード・コースセレクト") // 'challenge mode course select'
 	{
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -196,7 +196,7 @@ struct CMresultMode : public GameModeBase {
 	CMresultMode()
 	    : GameModeBase("チャレンジモード・リザルト") // 'challenge mode results'
 	{
-		_04                    = KBBTN_Z;
+		mCancelButton          = KBBTN_Z;
 		mInfo.mCourseID        = STAGE_Yakushima;
 		mInfo.mScore           = 0;
 		mInfo.mRank            = 2;
@@ -235,7 +235,7 @@ struct ContainerMode : public GameModeBase {
 	{
 		mContainerColor = zen::DrawContainer::COLOR_Blue;
 		mContainerMenu.start(zen::DrawContainer::COLOR_Blue, 0, 0, 0, 0, 0, 0);
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -280,7 +280,7 @@ struct CountDownMode : public GameModeBase {
 	{
 		mDummyTimeOfDay = 0.0f;
 		mCountDownScreen.init(0.0f, 1.0f, &mDummyTimeOfDay);
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -321,7 +321,7 @@ struct FinalResultMode : public GameModeBase {
 	{
 		mFinalResultScreen = new zen::DrawFinalResult();
 		mFinalResultScreen->start();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -352,7 +352,7 @@ struct GameInfoMode : public GameModeBase {
 	{
 		mGameInfoScreen.upperFrameIn(0.5f, true);
 		mGameInfoScreen.lowerFrameIn(0.5f, true);
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -385,7 +385,7 @@ struct GameOverMode : public GameModeBase {
 	{
 		_0C = 0;
 		mGameOverScreen.start(zen::DrawGameOver::MODE_Unk1, 40.0f);
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -423,7 +423,7 @@ struct HiScoreMode : public GameModeBase {
 	    : GameModeBase("ハイスコア") // 'high score'
 	{
 		mHiScoreScreen.start();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -450,7 +450,7 @@ struct HurryUpMode : public GameModeBase {
 	    : GameModeBase("Hurry Up!")
 	{
 		mHurryUpScreen.start(zen::DrawHurryUp::MesgType1);
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -477,7 +477,7 @@ struct ProgressiveMode : public GameModeBase {
 	    : GameModeBase("プログレッシブモード") // 'progressive mode'
 	{
 		mProgressiveScreen.start();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -504,7 +504,7 @@ struct SaveFailureMode : public GameModeBase {
 	    : GameModeBase("オプションセーブ") // 'options save'
 	{
 		mSaveScreen.start();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -531,7 +531,7 @@ struct SaveMesMode : public GameModeBase {
 	    : GameModeBase("セーブメッセージ") // 'save message'
 	{
 		mSaveMesScreen.mesAppear();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -569,7 +569,7 @@ struct UfoPartsMode : public GameModeBase {
 	    : GameModeBase("ＵＦＯパーツ") // 'UFO parts'
 	{
 		mUfoPartsScreen.start();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -596,7 +596,7 @@ struct WMPauseMode : public GameModeBase {
 	    : GameModeBase("ワールドマップポーズメニュー") // 'world map pause menu'
 	{
 		mWMPauseScreen.start();
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08
@@ -623,7 +623,7 @@ struct WorldMapMode : public GameModeBase {
 	    : GameModeBase("ワールドマップ") // 'world map'
 	{
 		mWorldMapScreen.start(zen::DrawWorldMap::START_Unk0, zen::DrawWorldMap::PLACE_Unk0);
-		_04 = KBBTN_Z;
+		mCancelButton = KBBTN_Z;
 	}
 
 	virtual bool update(Controller* controller) // _08

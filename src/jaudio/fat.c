@@ -9,16 +9,16 @@ static u8* fatheapptr;
 typedef struct FATEntry FATEntry;
 
 struct FATEntry {
-	u16 _00;  // _00
-	u16 _02;  // _02
-	u8* addr; // _04
+	u16 ownerHandle; // _00
+	u16 blockSize;   // _02
+	u8* addr;        // _04
 };
 
 #define FAT_SIZE (256)
 
 static struct FAT_info2 {
-	u16 _00;
-	u16 _02;
+	u16 startBlock;
+	u16 blockCount;
 } FH_TO_FAT[FAT_SIZE];
 
 static FATEntry FAT[FAT_SIZE];
@@ -60,21 +60,21 @@ void FAT_InitSystem(u8* heap, u32 size)
 		fats++;
 		heap += 0x1000;
 
-		FAT[i]._02 = 0x1000;
-		FAT[i]._00 = 0xffff;
+		FAT[i].blockSize   = 0x1000;
+		FAT[i].ownerHandle = 0xffff;
 	}
 
 	ACTIVE_FATS = fats;
 	USEFAT_TAIL = 0;
 
 	for (i = ACTIVE_FATS; i < FAT_SIZE; i++) {
-		FAT[i]._00 = 0xffff;
-		FAT[i]._02 = 0;
+		FAT[i].ownerHandle = 0xffff;
+		FAT[i].blockSize   = 0;
 	}
 
 	for (i = 0; i < FAT_SIZE; i++) {
-		FH_TO_FAT[i]._00 = -1;
-		FH_TO_FAT[i]._02 = 0;
+		FH_TO_FAT[i].startBlock = -1;
+		FH_TO_FAT[i].blockCount = 0;
 	}
 }
 
@@ -88,7 +88,7 @@ int FAT_AllocateMemory(u32 size)
 	u32 a = 0;
 
 	for (int i = 0; i < FAT_SIZE; i++) {
-		if (FH_TO_FAT[i]._02 == 0) {
+		if (FH_TO_FAT[i].blockCount == 0) {
 			break;
 		}
 		a++;
@@ -109,11 +109,11 @@ int FAT_AllocateMemory(u32 size)
 	}
 
 	for (u32 i = USEFAT_TAIL; i < USEFAT_TAIL + b; i++) {
-		FAT[i]._00 = res;
+		FAT[i].ownerHandle = res;
 	}
 
-	FH_TO_FAT[res]._00 = USEFAT_TAIL;
-	FH_TO_FAT[res]._02 = b;
+	FH_TO_FAT[res].startBlock = USEFAT_TAIL;
+	FH_TO_FAT[res].blockCount = b;
 
 	USEFAT_TAIL += b;
 	return res;
@@ -127,14 +127,14 @@ int FAT_AllocateMemory(u32 size)
 int FAT_FreeMemory(u16 size)
 {
 	int total = 0;
-	int old0  = FAT[size]._00;
-	int old1  = FAT[size]._02;
+	int old0  = FAT[size].ownerHandle;
+	int old1  = FAT[size].blockSize;
 	u16 size2 = old0 + old1;
 	u16 tail  = USEFAT_TAIL - size2;
 	if (tail == 0) {
 		USEFAT_TAIL = USEFAT_TAIL - old1;
 	}
-	FAT[size]._02 = 0;
+	FAT[size].blockSize = 0;
 	return 0;
 	/*
 	.loc_0x0:
@@ -271,12 +271,12 @@ int FAT_FreeMemory(u16 size)
 u8* FAT_GetPointer(u16 a, u32 b)
 {
 	u32 c = b >> 12;
-	if (FH_TO_FAT[a]._02 <= c) {
+	if (FH_TO_FAT[a].blockCount <= c) {
 		return 0;
 	}
 
 	b &= 0xFFF;
-	return FAT[c + FH_TO_FAT[a]._00].addr + b;
+	return FAT[c + FH_TO_FAT[a].startBlock].addr + b;
 }
 
 /*

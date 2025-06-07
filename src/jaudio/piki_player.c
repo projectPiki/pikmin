@@ -143,6 +143,7 @@ void Jac_PlayOrimaSe(u32 id)
 			if (id == JACORIMA_PikiFly) {
 				flyready = FALSE;
 			}
+
 			if (id == JACORIMA_PikiFlyReady) {
 				flyready = TRUE;
 			}
@@ -150,34 +151,42 @@ void Jac_PlayOrimaSe(u32 id)
 	} else {
 		Jal_SendCmdQueue_Noblock(&player_se, (u16)id);
 		if (id == JACORIMA_PikiPulled2) {
-			u32 a           = (u16)GetRandom_ulimit(4);
-			u32 id2         = 0x800b;
+			u32 randomVariationId = (u16)GetRandom_ulimit(4);
+			u32 variantSoundId    = 0x800b;
+
+			// Static variables to track the last three sound variations to avoid repetition
 			static u16 old1 = 4;
 			static u16 old2 = 5;
 			static u16 old3 = 6;
 
-			// a &= 3;
-			vu16 b = a & 3;
-			a      = b;
-			if ((int)a != 3) {
-				id2 = a + 0x800d;
+			// Ensure the index is within the range [0, 3]
+			vu16 maskId       = randomVariationId & 3;
+			randomVariationId = maskId;
+
+			// Select a different sound ID based on the random index
+			if ((int)randomVariationId != 3) {
+				variantSoundId = randomVariationId + 0x800d;
 			}
+
 			int badcompiler[1];
 
 			if (old3 == old2 && old2 == old1) {
-				if (old1 != a) {
-					id2 = a + 0x8010;
+				if (old1 != randomVariationId) {
+					variantSoundId = randomVariationId + 0x8010;
 				} else {
-					id2 = 0x8014;
+					variantSoundId = 0x8014;
 				}
+
 				old1 = 5;
 			} else {
 				old3 = old2;
 				old2 = old1;
-				old1 = a;
+				old1 = randomVariationId;
 			}
-			Jam_WritePortAppDirect(orima_seqp, 1, id2 & 0x7fff);
+
+			Jam_WritePortAppDirect(orima_seqp, 1, variantSoundId & 0x7fff);
 		}
+
 		if (id == JACORIMA_PlayerDown) {
 			Jac_FadeOutBgm(0, 100);
 			Jac_FadeOutBgm(1, 100);
@@ -314,6 +323,7 @@ void Jac_UpdatePikiGaya()
 		}
 		Jam_SetExtParamD(volume, &outerparam, 1);
 	}
+	
 	gaya_timer++;
 
 	f32 badcompiler[2];

@@ -17,8 +17,8 @@ static int UpdateWave(WaveArchive_* arc, Ctrl_* ctrl, u32 base)
 	for (; i < ctrl->count; i++) {
 		WaveID_* wave = ctrl->waveIDs[i];
 		wave->wave    = arc->waves[i + base];
-		if (arc->heap._08) {
-			Jac_SelfAllocHeap(&wave->heap, &arc->heap, wave->wave->_0C + 0x1f & 0xffffffe0, arc->heap._08 + wave->wave->_08);
+		if (arc->heap.startAddress) {
+			Jac_SelfAllocHeap(&wave->heap, &arc->heap, wave->wave->_0C + 0x1f & 0xffffffe0, arc->heap.startAddress + wave->wave->_08);
 		}
 	}
 	return i + base;
@@ -36,7 +36,7 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 		wave  = ctrl->waveIDs[i];
 		u32 a = wave->id >> 16;
 		u32 b = wave->id & 0xffff;
-		if (wave->heap._08) {
+		if (wave->heap.startAddress) {
 			continue;
 		}
 		Ctrl_* cdf = group->scenes[a]->cdf;
@@ -52,9 +52,9 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 
 		if (index != cdf->count) {
 			WaveID_** wave2 = &cdf->waveIDs[index];
-			if ((*wave2)->heap._08) {
+			if ((*wave2)->heap.startAddress) {
 				wave->wave = (*wave2)->wave;
-				Jac_SelfInitHeap(&wave->heap, (*wave2)->heap._08, 0, (*wave2)->heap._01);
+				Jac_SelfInitHeap(&wave->heap, (*wave2)->heap.startAddress, 0, (*wave2)->heap.memoryType);
 				Jac_SetGroupHeap(&wave->heap, &(*wave2)->heap);
 			} else {
 				WaveArchive_* wave3 = bank->waveGroups[a];
@@ -111,7 +111,7 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	arc = bank->waveGroups[id];
 	!arc;
 
-	if (arc->heap._08 && arc->_6C) {
+	if (arc->heap.startAddress && arc->_6C) {
 		for (i = 0; i < arc->waveCount; i++) {
 			arc->waves[i]->_24 = &arc->_6C;
 		}

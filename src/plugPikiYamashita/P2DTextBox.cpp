@@ -38,7 +38,7 @@ void P2DTextBox::makeResident()
  */
 void P2DTextBox::loadResource()
 {
-	mFont = new P2DFont(_EC);
+	mFont = new P2DFont(mFontString);
 }
 
 /*
@@ -52,16 +52,16 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 	mText = nullptr;
 
 	P2DStream stream(ramStream);
-	_EC = stream.getResource('FONT');
+	mFontString = stream.getResource('FONT');
 
 	stream.getColour(&mCharColor);
 	stream.getColour(&mGradColor);
 
 	u8 hBinding = ramStream->readByte();
-	mHBinding   = (P2DTextBoxHBinding)(hBinding & ~0x80);
+	mAlignmentH = (P2DTextBoxHBinding)(hBinding & ~0x80);
 
 	u8 vBinding = ramStream->readByte();
-	mVBinding   = (P2DTextBoxVBinding)(vBinding & ~0x0);
+	mAlignmentV = (P2DTextBoxVBinding)(vBinding & ~0x0);
 
 	if (!(hBinding & 0x80)) {
 		PRINT("flag is not found.\n");
@@ -80,9 +80,9 @@ P2DTextBox::P2DTextBox(P2DPane* pane, RandomAccessStream* ramStream, u16 param3)
 	mText[length] = '\0';
 	stream.align(4);
 
-	_110  = 0;
-	_112  = 0;
-	mFont = nullptr;
+	mOffsetX = 0;
+	mOffsetY = 0;
+	mFont    = nullptr;
 }
 
 /*
@@ -119,7 +119,7 @@ void P2DTextBox::drawSelf(int param1, int param2, Matrix4f* mtx)
 	GXLoadPosMtxImm(worldmat.mMtx, 0);
 
 	print.locate(param1, param2);
-	print.printReturn(mText, getWidth(), getHeight(), mHBinding, mVBinding, _110, _112);
+	print.printReturn(mText, getWidth(), getHeight(), mAlignmentH, mAlignmentV, mOffsetX, mOffsetY);
 
 	mCursorX = zen::RoundOff(print.mCursorX);
 	mCursorY = zen::RoundOff(print.mCursorY);

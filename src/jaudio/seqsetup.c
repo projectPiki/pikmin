@@ -251,14 +251,14 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 			track->parentPanCalcTypes[i]            = 2;
 			track->parentController.panCalcTypes[i] = 26;
 		}
-		track->regParam.param._0C          = 0xf0;
+		track->regParam.param.bankNumber   = 0xf0;
 		track->regParam.param.pitchScale   = 0x0c;
 		track->regParam.param.basePriority = 0x40;
 	} else {
 		for (i = 0; i < 5; ++i) {
 			track->regParam.param.arguments[i] = track->parent->regParam.param.arguments[i];
 		}
-		track->regParam.param._0C          = track->parent->regParam.param._0C;
+		track->regParam.param.bankNumber   = track->parent->regParam.param.bankNumber;
 		track->regParam.param.pitchScale   = track->parent->regParam.param.pitchScale;
 		track->regParam.param.basePriority = track->parent->regParam.param.basePriority;
 		for (i = 0; i < 3; ++i) {
@@ -419,11 +419,12 @@ BOOL Jaq_SetBankNumber(seqp_* track, u8 bankNum)
 	u8 lo;
 
 	// Let's get ahead of ourselves here.
-	lo = track->regParam.param._0C & 0xFF;
+	lo = track->regParam.param.bankNumber & 0xFF;
 	if (!track) {
 		return FALSE;
 	}
-	track->regParam.param._0C = (bankNum << 8) | lo;
+
+	track->regParam.param.bankNumber = (bankNum << 8) | lo;
 	return TRUE;
 }
 

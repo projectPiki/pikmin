@@ -6,19 +6,19 @@
 typedef struct jaheap_ jaheap_;
 
 struct jaheap_ {
-	u8 _00;       // _00
-	u8 _01;       // _01
-	u16 _02;      // _02
-	u32 _04;      // _04
-	u32 _08;      // _08 (sign confirmed)
-	u32 _0C;      // _0C
-	u32 _10;      // _10 (related to totalSize?)
-	jaheap_* _14; // _14
-	jaheap_* _18; // _18
-	jaheap_* _1C; // _1C
-	jaheap_* _20; // _20 (100% sure Jac_SetGroupHeap)
-	jaheap_* _24; // _24 (100% sure Jac_SetGroupHeap)
-	jaheap_* _28; // _28 (100% sure Jac_SetGroupHeap)
+	u8 isRootHeap;             // _00, is this a 'mother' heap?
+	u8 memoryType;             // _01, 0 = ARAM, 1 = DRAM
+	u16 childCount;            // _02
+	u32 heapId;                // _04
+	u32 startAddress;          // _08
+	u32 usedSize;              // _0C
+	u32 size;                  // _10
+	jaheap_* firstChild;       // _14
+	jaheap_* parent;           // _18
+	jaheap_* nextSibling;      // _1C
+	jaheap_* groupOwner;       // _20
+	jaheap_* firstGroupedHeap; // _24
+	jaheap_* nextGroupedHeap;  // _28
 };
 
 void Jac_GetUnlockHeap(jaheap_*);

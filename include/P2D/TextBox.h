@@ -57,21 +57,21 @@ struct P2DTextBox : public P2DPane {
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	char* _EC;                    // _EC
-	P2DFont* mFont;               // _F0
-	Colour mCharColor;            // _F4
-	Colour mGradColor;            // _F8
-	P2DTextBoxHBinding mHBinding; // _FC
-	P2DTextBoxVBinding mVBinding; // _100
-	s16 mSpacing;                 // _104
-	s16 mLeading;                 // _106
-	s16 mFontWidth;               // _108
-	s16 mFontHeight;              // _10A
-	char* mText;                  // _10C
-	s16 _110;                     // _110
-	s16 _112;                     // _112
-	s16 mCursorX;                 // _114
-	s16 mCursorY;                 // _116
+	char* mFontString;              // _EC
+	P2DFont* mFont;                 // _F0
+	Colour mCharColor;              // _F4
+	Colour mGradColor;              // _F8
+	P2DTextBoxHBinding mAlignmentH; // _FC
+	P2DTextBoxVBinding mAlignmentV; // _100
+	s16 mSpacing;                   // _104
+	s16 mLeading;                   // _106
+	s16 mFontWidth;                 // _108
+	s16 mFontHeight;                // _10A
+	char* mText;                    // _10C
+	s16 mOffsetX;                   // _110
+	s16 mOffsetY;                   // _112
+	s16 mCursorX;                   // _114
+	s16 mCursorY;                   // _116
 };
 
 #endif

@@ -148,12 +148,12 @@ u32 LoadAram_Default(char* filename, u32 src, u32 length, u32* status, jaheap_* 
 		if (!Jac_AllocHeap(heap, &aram_mother, DVDT_CheckFile(filepath))) {
 			return 0;
 		}
-		return LoadAram(filepath, status, heap->_08);
+		return LoadAram(filepath, status, heap->startAddress);
 	} else {
 		if (!Jac_AllocHeap(heap, &aram_mother, length)) {
 			return 0;
 		}
-		return LoadAramSingle(filepath, src, length, status, heap->_08);
+		return LoadAramSingle(filepath, src, length, status, heap->startAddress);
 	}
 }
 

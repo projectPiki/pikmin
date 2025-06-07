@@ -16,14 +16,14 @@ static u32 global_id = 0;
  * Address:	8000E9C0
  * Size:	000034
  */
-static void ARAMFinish(u32 param_1)
+static void ARAMFinish(u32 msg)
 {
 	u32 badCompiler;
 	u32* REF_param_1;
 
-	REF_param_1         = &param_1;
-	ARQRequest* request = (ARQRequest*)param_1;
-	OSSendMessage((OSMessageQueue*)request->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
+	REF_param_1         = &msg;
+	ARQRequest* request = (ARQRequest*)msg;
+	OSSendMessage((OSMessageQueue*)msg->owner, (OSMessage)1, OS_MESSAGE_BLOCK);
 }
 
 /*
@@ -111,18 +111,18 @@ void Jac_CheckAlloc(jaheap_*)
  */
 void Jac_InitHeap(jaheap_* heap)
 {
-	heap->_08 = 0;
-	heap->_0C = 0;
-	heap->_10 = 0;
-	heap->_04 = global_id++;
-	heap->_00 = 0;
-	heap->_02 = 0;
-	heap->_14 = 0;
-	heap->_18 = NULL;
-	heap->_1C = 0;
-	heap->_20 = 0;
-	heap->_24 = 0;
-	heap->_28 = 0;
+	heap->startAddress     = 0;
+	heap->usedSize         = 0;
+	heap->size             = 0;
+	heap->heapId           = global_id++;
+	heap->isRootHeap       = 0;
+	heap->childCount       = 0;
+	heap->firstChild       = 0;
+	heap->parent           = NULL;
+	heap->nextSibling      = 0;
+	heap->groupOwner       = 0;
+	heap->firstGroupedHeap = 0;
+	heap->nextGroupedHeap  = 0;
 }
 
 /*
@@ -130,20 +130,20 @@ void Jac_InitHeap(jaheap_* heap)
  * Address:	8000EC60
  * Size:	000038
  */
-void Jac_SelfInitHeap(jaheap_* heap, u32 param_2, u32 param_3, u32 param_4)
+void Jac_SelfInitHeap(jaheap_* heap, u32 startAddr, u32 size, u32 memType)
 {
-	heap->_08 = param_2;
-	heap->_10 = param_3;
-	heap->_0C = 0;
-	heap->_00 = 0;
-	heap->_01 = param_4;
-	heap->_02 = 0;
-	heap->_14 = NULL;
-	heap->_18 = NULL;
-	heap->_1C = 0;
-	heap->_20 = 0;
-	heap->_24 = 0;
-	heap->_28 = 0;
+	heap->startAddress     = startAddr;
+	heap->size             = size;
+	heap->usedSize         = 0;
+	heap->isRootHeap       = 0;
+	heap->memoryType       = memType;
+	heap->childCount       = 0;
+	heap->firstChild       = NULL;
+	heap->parent           = NULL;
+	heap->nextSibling      = 0;
+	heap->groupOwner       = 0;
+	heap->firstGroupedHeap = 0;
+	heap->nextGroupedHeap  = 0;
 }
 
 /*
@@ -151,42 +151,42 @@ void Jac_SelfInitHeap(jaheap_* heap, u32 param_2, u32 param_3, u32 param_4)
  * Address:	8000ECA0
  * Size:	000100
  */
-BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
+BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 size, u32 startAddr)
 {
-	if (parent->_08 && parent->_08 != -1) {
+	if (parent->startAddress && parent->startAddress != -1) {
 		return FALSE;
 	}
 
-	parent->_08 = a2;
-	parent->_10 = a1;
-	parent->_0C = 0;
-	parent->_00 = 0;
-	parent->_01 = heap->_01;
-	parent->_02 = 0;
-	parent->_14 = nullptr;
-	parent->_18 = heap;
+	parent->startAddress = startAddr;
+	parent->size         = size;
+	parent->usedSize     = 0;
+	parent->isRootHeap   = 0;
+	parent->memoryType   = heap->memoryType;
+	parent->childCount   = 0;
+	parent->firstChild   = nullptr;
+	parent->parent       = heap;
 
-	jaheap_* temp = heap->_14;
+	jaheap_* temp = heap->firstChild;
 	if (temp == NULL) {
-		heap->_14   = parent;
-		parent->_1C = nullptr;
-		heap->_0C   = parent->_08 - heap->_08 + parent->_10;
+		heap->firstChild    = parent;
+		parent->nextSibling = nullptr;
+		heap->usedSize      = parent->startAddress - heap->startAddress + parent->size;
 	} else {
-		jaheap_* temp2 = heap->_14;
-		if (parent->_08 < heap->_14->_08) {
-			parent->_1C = heap->_14;
-			heap->_14   = parent;
+		jaheap_* temp2 = heap->firstChild;
+		if (parent->startAddress < heap->firstChild->startAddress) {
+			parent->nextSibling = heap->firstChild;
+			heap->firstChild    = parent;
 		} else {
 			while (TRUE) {
-				if (!(temp = temp2->_1C)) {
-					parent->_1C = NULL;
-					temp2->_1C  = parent;
-					heap->_0C   = parent->_08 - heap->_08 + parent->_10;
+				if (!(temp = temp2->nextSibling)) {
+					parent->nextSibling = NULL;
+					temp2->nextSibling  = parent;
+					heap->usedSize      = parent->startAddress - heap->startAddress + parent->size;
 					break;
 				}
-				if (parent->_08 < temp->_08) {
-					parent->_1C = temp;
-					temp2->_1C  = parent;
+				if (parent->startAddress < temp->startAddress) {
+					parent->nextSibling = temp;
+					temp2->nextSibling  = parent;
 					break;
 				}
 				temp2 = temp;
@@ -194,7 +194,7 @@ BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
 		}
 	}
 
-	heap->_02++;
+	heap->childCount++;
 	return TRUE;
 }
 
@@ -205,12 +205,13 @@ BOOL Jac_SelfAllocHeap(jaheap_* parent, jaheap_* heap, u32 a1, u32 a2)
  */
 BOOL Jac_SetGroupHeap(jaheap_* heapA, jaheap_* heapB)
 {
-	if (heapA->_20 || heapA->_28) {
+	if (heapA->groupOwner || heapA->nextGroupedHeap) {
 		return FALSE;
 	}
-	heapA->_20 = heapB;
-	heapA->_28 = heapB->_24;
-	heapB->_24 = heapA;
+
+	heapA->groupOwner       = heapB;
+	heapA->nextGroupedHeap  = heapB->firstGroupedHeap;
+	heapB->firstGroupedHeap = heapA;
 	return TRUE;
 }
 
@@ -229,21 +230,21 @@ void Jac_CutdownHeap(jaheap_*)
  * Address:	8000EDE0
  * Size:	00005C
  */
-void Jac_InitMotherHeap(jaheap_* heap, u32 param_2, u32 param_3, u8 param_4)
+void Jac_InitMotherHeap(jaheap_* heap, u32 startAddr, u32 size, u8 memType)
 {
-	heap->_08 = param_2 + 0x1f & 0xffffffe0;
-	heap->_0C = 0;
-	heap->_10 = param_3 - (param_2 & 0x1f);
-	heap->_04 = global_id++;
-	heap->_00 = 1;
-	heap->_01 = param_4;
-	heap->_02 = 0;
-	heap->_14 = NULL;
-	heap->_18 = NULL;
-	heap->_1C = NULL;
-	heap->_20 = NULL;
-	heap->_24 = NULL;
-	heap->_28 = NULL;
+	heap->startAddress     = startAddr + 0x1f & 0xffffffe0;
+	heap->usedSize         = 0;
+	heap->size             = size - (startAddr & 0x1f);
+	heap->heapId           = global_id++;
+	heap->isRootHeap       = 1;
+	heap->memoryType       = memType;
+	heap->childCount       = 0;
+	heap->firstChild       = NULL;
+	heap->parent           = NULL;
+	heap->nextSibling      = NULL;
+	heap->groupOwner       = NULL;
+	heap->firstGroupedHeap = NULL;
+	heap->nextGroupedHeap  = NULL;
 }
 
 /*
@@ -254,30 +255,34 @@ void Jac_InitMotherHeap(jaheap_* heap, u32 param_2, u32 param_3, u8 param_4)
 BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 {
 	u32 fixedSize = OSRoundUp32B(size);
-	u32 y         = parent->_08;
+
+	u32 y = parent->startAddress;
 	if (y == 0) {
 		return FALSE;
 	}
-	if (heap->_08 && heap->_08 != -1) {
+
+	if (heap->startAddress && heap->startAddress != -1) {
 		return FALSE;
 	}
 
-	if (fixedSize < parent->_10 - parent->_0C) {
+	if (fixedSize < parent->size - parent->usedSize) {
 		jaheap_* result = 0;
 		u32 max         = 0xfffffff;
 		int t;
-		jaheap_* start = parent->_14;
-		for (jaheap_* temp = parent->_14; temp; temp = temp->_1C) {
-			int x = temp->_08 - y;
+		jaheap_* start = parent->firstChild;
+		for (jaheap_* temp = parent->firstChild; temp; temp = temp->nextSibling) {
+			int x = temp->startAddress - y;
 			if (fixedSize >= x) {
 				x -= fixedSize;
+
 				if (x < max) {
 					result = temp;
 					t      = y;
 					max    = x;
 				}
 			}
-			y = temp->_08 + temp->_10;
+
+			y = temp->startAddress + temp->size;
 		}
 
 		if (result == 0) {
@@ -285,48 +290,52 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 		}
 
 		if (result == start) {
-			heap->_1C   = start;
-			parent->_14 = heap;
+			heap->nextSibling  = start;
+			parent->firstChild = heap;
 		} else {
-			while (start->_1C != result) {
-				start = start->_1C;
+			while (start->nextSibling != result) {
+				start = start->nextSibling;
 			}
-			heap->_1C  = start;
-			start->_1C = heap;
+
+			heap->nextSibling  = start;
+			start->nextSibling = heap;
 		}
-		heap->_08 = t;
-		heap->_10 = fixedSize;
-		heap->_0C = 0;
-		heap->_00 = 0;
-		heap->_01 = parent->_01;
-		heap->_02 = 0;
-		heap->_14 = NULL;
-		heap->_18 = parent;
-		parent->_02++;
+
+		heap->startAddress = t;
+		heap->size         = fixedSize;
+		heap->usedSize     = 0;
+		heap->isRootHeap   = 0;
+		heap->memoryType   = parent->memoryType;
+		heap->childCount   = 0;
+		heap->firstChild   = NULL;
+		heap->parent       = parent;
+		parent->childCount++;
 		return TRUE;
 	}
 
-	heap->_08     = fixedSize + heap->_0C;
-	heap->_10     = fixedSize;
-	heap->_0C     = 0;
-	heap->_00     = 0;
-	heap->_01     = parent->_01;
-	heap->_02     = 0;
-	heap->_14     = NULL;
-	heap->_18     = parent;
-	jaheap_* temp = parent->_14;
-	if (parent->_14 == NULL) {
-		parent->_14 = heap;
-		parent->_1C = NULL;
+	heap->startAddress = fixedSize + heap->usedSize;
+	heap->size         = fixedSize;
+	heap->usedSize     = 0;
+	heap->isRootHeap   = 0;
+	heap->memoryType   = parent->memoryType;
+	heap->childCount   = 0;
+	heap->firstChild   = NULL;
+	heap->parent       = parent;
+
+	jaheap_* temp = parent->firstChild;
+	if (parent->firstChild == NULL) {
+		parent->firstChild  = heap;
+		parent->nextSibling = NULL;
 	} else {
-		while (temp->_1C) {
-			temp = temp->_1C;
+		while (temp->nextSibling) {
+			temp = temp->nextSibling;
 		}
-		temp->_1C = heap;
+		temp->nextSibling = heap;
 	}
-	heap->_1C = NULL;
-	parent->_0C += fixedSize;
-	parent->_02++;
+
+	heap->nextSibling = NULL;
+	parent->usedSize += fixedSize;
+	parent->childCount++;
 	return TRUE;
 	/*
 	.loc_0x0:
@@ -480,69 +489,79 @@ BOOL Jac_DeleteHeap(jaheap_* heap)
 	u32 badcompiler[4];
 	jaheap_** pt = &heap;
 
-	if (heap->_08 == 0) {
+	if (heap->startAddress == 0) {
 		return FALSE;
 	}
 
-	jaheap_* heap2 = heap->_14;
-	while (heap2->_1C) {
-		heap2 = heap2->_1C;
-		Jac_DeleteHeap(heap2->_1C);
+	jaheap_* heap2 = heap->firstChild;
+	while (heap2->nextSibling) {
+		heap2 = heap2->nextSibling;
+		Jac_DeleteHeap(heap2->nextSibling);
 	}
 
-	heap->_14 = NULL;
+	heap->firstChild = NULL;
 
-	heap2 = heap->_24;
-	while (heap2->_1C) {
-		heap2 = heap2->_1C;
-		Jac_DeleteHeap(heap2->_1C);
+	heap2 = heap->firstGroupedHeap;
+	while (heap2->nextSibling) {
+		heap2 = heap2->nextSibling;
+		Jac_DeleteHeap(heap2->nextSibling);
 	}
 
-	jaheap_** ptr = &heap->_18;
-	heap->_24     = NULL;
+	jaheap_** ptr          = &heap->parent;
+	heap->firstGroupedHeap = NULL;
 
-	if (heap->_18) {
-		heap2 = (*ptr)->_14;
+	if (heap->parent) {
+		heap2 = (*ptr)->firstChild;
 		if (heap2 == heap) {
-			*ptr = heap->_1C;
-			if (heap->_1C == NULL) {
-				(*ptr)->_0C = NULL;
+			*ptr = heap->nextSibling;
+			if (heap->nextSibling == NULL) {
+				(*ptr)->usedSize = NULL;
 			}
+
 		} else {
-			while (heap2->_1C != heap) {
+			while (heap2->nextSibling != heap) {
 				if (heap2 == NULL) {
-					heap->_08 = 0;
+					heap->startAddress = 0;
 					return FALSE;
 				}
-				heap2 = heap2->_1C;
+
+				heap2 = heap2->nextSibling;
 			}
-			heap2->_1C = heap->_1C;
-			if (heap->_1C == NULL) {
-				(*ptr)->_0C = heap2->_0C + heap2->_10 - heap2->_08;
+
+			heap2->nextSibling = heap->nextSibling;
+			if (heap->nextSibling == NULL) {
+				(*ptr)->usedSize = heap2->usedSize + heap2->size - heap2->startAddress;
 			}
 		}
-		(*ptr)->_02--;
+
+		(*ptr)->childCount--;
 	}
 
-	if (heap->_20) {
-		ptr   = &heap->_20->_24;
+	if (heap->groupOwner) {
+		ptr   = &heap->groupOwner->firstGroupedHeap;
 		heap2 = *ptr;
+
 		if (heap2 == heap) {
-			*ptr = heap->_28;
+			*ptr = heap->nextGroupedHeap;
 		} else {
-			while (heap2->_28 != heap) {
+			while (heap2->nextGroupedHeap != heap) {
 				if (heap2 == NULL) {
 					return FALSE;
 				}
-				heap2 = heap2->_28;
+
+				heap2 = heap2->nextGroupedHeap;
 			}
-			heap2->_28 = heap->_28;
+
+			heap2->nextGroupedHeap = heap->nextGroupedHeap;
 		}
-		heap->_20 = NULL;
-		heap->_28 = NULL;
+
+		heap->groupOwner      = NULL;
+		heap->nextGroupedHeap = NULL;
 	}
-	heap->_08 = 0;
+
+	heap->startAddress = 0;
 	return TRUE;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -699,12 +718,13 @@ static void Jac_Move_Children(jaheap_* heap, s32 flag)
 		return;
 	}
 
-	for (jaheap_* c = heap->_14;; c = c->_1C) {
+	for (jaheap_* c = heap->firstChild;; c = c->nextSibling) {
 		if (c == NULL) {
 			break;
 		}
-		c->_08 += flag;
-		if (c->_14) {
+
+		c->startAddress += flag;
+		if (c->firstChild) {
 			Jac_Move_Children(c, flag);
 		}
 	}
@@ -721,30 +741,32 @@ void Jac_GarbageCollection_St(jaheap_* heap)
 	u32 src;
 	u32 dst;
 
-	dst     = heap->_08;
-	heap_00 = heap->_14;
+	dst     = heap->startAddress;
+	heap_00 = heap->firstChild;
+
 	if (heap_00 == NULL) {
-		heap->_0C = 0;
+		heap->usedSize = 0;
 		return;
 	}
+
 	do {
-		src = heap_00->_08;
+		src = heap_00->startAddress;
 		if (dst != src) {
-			switch (heap->_01) {
+			switch (heap->memoryType) {
 			case 0:
-				ARAM_TO_ARAM_DMA(src, dst, heap_00->_10);
+				ARAM_TO_ARAM_DMA(src, dst, heap_00->size);
 				break;
 			case 1:
-				DRAM_TO_DRAM_DMA(src, dst, heap_00->_10);
+				DRAM_TO_DRAM_DMA(src, dst, heap_00->size);
 				break;
 			}
-			Jac_Move_Children(heap_00, dst - heap_00->_08);
-			heap_00->_08 = dst;
+			Jac_Move_Children(heap_00, dst - heap_00->startAddress);
+			heap_00->startAddress = dst;
 		}
-		dst = heap_00->_08 + heap_00->_10;
-	} while (heap_00 = heap_00->_1C);
+		dst = heap_00->startAddress + heap_00->size;
+	} while (heap_00 = heap_00->nextSibling);
 
-	heap->_0C = dst - heap->_08;
+	heap->usedSize = dst - heap->startAddress;
 }
 
 /*
@@ -777,28 +799,30 @@ void Jac_ShowHeap(jaheap_* heap, u32 flag)
 	jaheap_** REF_heap = &heap;
 	jaheap_* c;
 	jaheap_** REF_c;
+
 	u32 badCompiler[3];
 	char unused[] = "        ";
 	(void*)unused[0];
-	c     = heap->_14;
+
+	c     = heap->firstChild;
 	REF_c = &c;
 	u32 badCompiler2[15];
 	if (c) {
 		do {
-			if (c->_14) {
+			if (c->firstChild) {
 				Jac_ShowHeap(c, flag + 1);
 			}
-			c = c->_1C;
+			c = c->nextSibling;
 		} while (c);
 	}
 
 	jaheap_* c2;
-	if (c2 = heap->_24) {
+	if (c2 = heap->firstGroupedHeap) {
 		do {
-			if (c2->_24) {
+			if (c2->firstGroupedHeap) {
 				Jac_ShowHeap(c2, flag + 1);
 			}
-			c2 = c2->_28;
+			c2 = c2->nextGroupedHeap;
 		} while (c2);
 	}
 }

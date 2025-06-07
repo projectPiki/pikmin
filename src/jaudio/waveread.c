@@ -67,7 +67,7 @@ CtrlGroup_* Wave_Test(u8* data)
 		arc     = arcBank->waveGroups[i];
 		REF_arc = &arc;
 		Jac_InitHeap(&arc->heap);
-		arc->heap._08 = 0;
+		arc->heap.startAddress = 0;
 
 		for (j = 0; j < arc->waveCount; j++) {
 			PTconvert(&arc->waves[j], base_addr);
@@ -86,7 +86,7 @@ CtrlGroup_* Wave_Test(u8* data)
 			for (j = 0; j < cdf->count; j++) {
 				PTconvert(&cdf->waveIDs[j], base_addr);
 				Jac_InitHeap(&cdf->waveIDs[j]->heap);
-				cdf->waveIDs[j]->heap._08 = 0;
+				cdf->waveIDs[j]->heap.startAddress = 0;
 			}
 		}
 
@@ -95,7 +95,7 @@ CtrlGroup_* Wave_Test(u8* data)
 			for (j = 0; j < cex->count; j++) {
 				PTconvert(&cex->waveIDs[j], base_addr);
 				Jac_InitHeap(&cex->waveIDs[j]->heap);
-				cex->waveIDs[j]->heap._08 = 0;
+				cex->waveIDs[j]->heap.startAddress = 0;
 			}
 		}
 
@@ -104,7 +104,7 @@ CtrlGroup_* Wave_Test(u8* data)
 			for (j = 0; j < cst->count; j++) {
 				PTconvert(&cst->waveIDs[j], base_addr);
 				Jac_InitHeap(&cst->waveIDs[j]->heap);
-				cst->waveIDs[j]->heap._08 = 0;
+				cst->waveIDs[j]->heap.startAddress = 0;
 			}
 		}
 	}

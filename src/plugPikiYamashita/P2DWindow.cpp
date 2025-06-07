@@ -39,6 +39,7 @@ void P2DWindow::makeResident()
 Texture* P2DWindow::loadResource(char* name)
 {
 	Texture* tex = nullptr;
+
 	if (name) {
 		tex = zen::loadTexExp(name, true, true);
 		if (!tex) {
@@ -47,6 +48,7 @@ Texture* P2DWindow::loadResource(char* name)
 	} else {
 		PRINT("No texName.\n");
 	}
+
 	return tex;
 }
 

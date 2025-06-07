@@ -197,7 +197,7 @@ struct RegisterParam_ {
 	u8 _00[0x06 - 0x00]; // _00, 00 - 02
 	u16 value;           // _06, 03
 	u8 _08[0x0C - 0x08]; // _08, 04 - 05
-	u16 _0C;             // _0C, 06
+	u16 bankNumber;      // _0C, 06
 	u16 pitchScale;      // _0E, 07
 	u16 arguments[5];    // _10, 08 - 12, Exact length confirmed: `Cmd_PanPowSet`.
 	u16 basePriority;    // _1A, 13
