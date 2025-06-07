@@ -1691,38 +1691,35 @@ static void setMCTarget(MCHandler* mch, int direct)
  *
  * @note Copy 4x4 samples without interpolation.
  */
-void _MotionComp_00(u8* dst, int dstStride, u8* src, int srcStride)
+inline void _MotionComp_00(u8* cP, int cWidth, u8* tP, int tWidth)
 {
-	u8* s = (u8*)src;
-	u8* d = (u8*)dst;
+	cP[0] = tP[0];
+	cP[1] = tP[1];
+	cP[2] = tP[2];
+	cP[3] = tP[3];
+	tP += tWidth;
+	cP += cWidth;
 
-	d[0] = s[0];
-	d[1] = s[1];
-	d[2] = s[2];
-	d[3] = s[3];
-	s += srcStride;
-	d += dstStride;
+	cP[0] = tP[0];
+	cP[1] = tP[1];
+	cP[2] = tP[2];
+	cP[3] = tP[3];
+	tP += tWidth;
+	cP += cWidth;
 
-	d[0] = s[0];
-	d[1] = s[1];
-	d[2] = s[2];
-	d[3] = s[3];
-	s += srcStride;
-	d += dstStride;
+	cP[0] = tP[0];
+	cP[1] = tP[1];
+	cP[2] = tP[2];
+	cP[3] = tP[3];
+	tP += tWidth;
+	cP += cWidth;
 
-	d[0] = s[0];
-	d[1] = s[1];
-	d[2] = s[2];
-	d[3] = s[3];
-	s += srcStride;
-	d += dstStride;
-
-	d[0] = s[0];
-	d[1] = s[1];
-	d[2] = s[2];
-	d[3] = s[3];
-	s += srcStride;
-	d += dstStride;
+	cP[0] = tP[0];
+	cP[1] = tP[1];
+	cP[2] = tP[2];
+	cP[3] = tP[3];
+	tP += tWidth;
+	cP += cWidth;
 }
 
 /*
@@ -1732,43 +1729,42 @@ void _MotionComp_00(u8* dst, int dstStride, u8* src, int srcStride)
  *
  * @note Offset vertically by half a sample
  */
-void _MotionComp_01(u8* dst, int dstStride, u8* src, int srcStride)
+inline void _MotionComp_01(u8* cP, int cWidth, u8* tP, int tWidth)
 {
-	u8* s = (u8*)src;
-	u8* n = (u8*)src + srcStride;
-	u8* d = (u8*)dst;
+	u8* up = (u8*)tP;
+	u8* dn = (u8*)tP + tWidth;
 
-	d[0] = (s[0] + n[0] + 1) >> 1;
-	d[1] = (s[1] + n[1] + 1) >> 1;
-	d[2] = (s[2] + n[2] + 1) >> 1;
-	d[3] = (s[3] + n[3] + 1) >> 1;
-	s += srcStride;
-	n += srcStride;
-	d += dstStride;
+	cP[0] = (up[0] + dn[0] + 1) >> 1;
+	cP[1] = (up[1] + dn[1] + 1) >> 1;
+	cP[2] = (up[2] + dn[2] + 1) >> 1;
+	cP[3] = (up[3] + dn[3] + 1) >> 1;
+	up += tWidth;
+	dn += tWidth;
+	cP += cWidth;
 
-	d[0] = (s[0] + n[0] + 1) >> 1;
-	d[1] = (s[1] + n[1] + 1) >> 1;
-	d[2] = (s[2] + n[2] + 1) >> 1;
-	d[3] = (s[3] + n[3] + 1) >> 1;
-	s += srcStride;
-	n += srcStride;
-	d += dstStride;
+	cP[0] = (up[0] + dn[0] + 1) >> 1;
+	cP[1] = (up[1] + dn[1] + 1) >> 1;
+	cP[2] = (up[2] + dn[2] + 1) >> 1;
+	cP[3] = (up[3] + dn[3] + 1) >> 1;
+	up += tWidth;
+	dn += tWidth;
+	cP += cWidth;
 
-	d[0] = (s[0] + n[0] + 1) >> 1;
-	d[1] = (s[1] + n[1] + 1) >> 1;
-	d[2] = (s[2] + n[2] + 1) >> 1;
-	d[3] = (s[3] + n[3] + 1) >> 1;
-	s += srcStride;
-	n += srcStride;
-	d += dstStride;
+	cP[0] = (up[0] + dn[0] + 1) >> 1;
+	cP[1] = (up[1] + dn[1] + 1) >> 1;
+	cP[2] = (up[2] + dn[2] + 1) >> 1;
+	cP[3] = (up[3] + dn[3] + 1) >> 1;
+	up += tWidth;
+	dn += tWidth;
+	cP += cWidth;
 
-	d[0] = (s[0] + n[0] + 1) >> 1;
-	d[1] = (s[1] + n[1] + 1) >> 1;
-	d[2] = (s[2] + n[2] + 1) >> 1;
-	d[3] = (s[3] + n[3] + 1) >> 1;
-	s += srcStride;
-	n += srcStride;
-	d += dstStride;
+	cP[0] = (up[0] + dn[0] + 1) >> 1;
+	cP[1] = (up[1] + dn[1] + 1) >> 1;
+	cP[2] = (up[2] + dn[2] + 1) >> 1;
+	cP[3] = (up[3] + dn[3] + 1) >> 1;
+	up += tWidth;
+	dn += tWidth;
+	cP += cWidth;
 }
 
 /*
@@ -1778,38 +1774,35 @@ void _MotionComp_01(u8* dst, int dstStride, u8* src, int srcStride)
  *
  * @note Offset vertically by half a sample
  */
-void _MotionComp_10(u8* dst, int dstStride, u8* src, int srcStride)
+inline void _MotionComp_10(u8* cP, int cWidth, u8* tP, int tWidth)
 {
-	u8* s = (u8*)src;
-	u8* d = (u8*)dst;
+	cP[0] = (tP[0] + tP[1] + 1) >> 1;
+	cP[1] = (tP[1] + tP[2] + 1) >> 1;
+	cP[2] = (tP[2] + tP[3] + 1) >> 1;
+	cP[3] = (tP[3] + tP[4] + 1) >> 1;
+	tP += tWidth;
+	cP += cWidth;
 
-	d[0] = (s[0] + s[1] + 1) >> 1;
-	d[1] = (s[1] + s[2] + 1) >> 1;
-	d[2] = (s[2] + s[3] + 1) >> 1;
-	d[3] = (s[3] + s[4] + 1) >> 1;
-	s += srcStride;
-	d += dstStride;
+	cP[0] = (tP[0] + tP[1] + 1) >> 1;
+	cP[1] = (tP[1] + tP[2] + 1) >> 1;
+	cP[2] = (tP[2] + tP[3] + 1) >> 1;
+	cP[3] = (tP[3] + tP[4] + 1) >> 1;
+	tP += tWidth;
+	cP += cWidth;
 
-	d[0] = (s[0] + s[1] + 1) >> 1;
-	d[1] = (s[1] + s[2] + 1) >> 1;
-	d[2] = (s[2] + s[3] + 1) >> 1;
-	d[3] = (s[3] + s[4] + 1) >> 1;
-	s += srcStride;
-	d += dstStride;
+	cP[0] = (tP[0] + tP[1] + 1) >> 1;
+	cP[1] = (tP[1] + tP[2] + 1) >> 1;
+	cP[2] = (tP[2] + tP[3] + 1) >> 1;
+	cP[3] = (tP[3] + tP[4] + 1) >> 1;
+	tP += tWidth;
+	cP += cWidth;
 
-	d[0] = (s[0] + s[1] + 1) >> 1;
-	d[1] = (s[1] + s[2] + 1) >> 1;
-	d[2] = (s[2] + s[3] + 1) >> 1;
-	d[3] = (s[3] + s[4] + 1) >> 1;
-	s += srcStride;
-	d += dstStride;
-
-	d[0] = (s[0] + s[1] + 1) >> 1;
-	d[1] = (s[1] + s[2] + 1) >> 1;
-	d[2] = (s[2] + s[3] + 1) >> 1;
-	d[3] = (s[3] + s[4] + 1) >> 1;
-	s += srcStride;
-	d += dstStride;
+	cP[0] = (tP[0] + tP[1] + 1) >> 1;
+	cP[1] = (tP[1] + tP[2] + 1) >> 1;
+	cP[2] = (tP[2] + tP[3] + 1) >> 1;
+	cP[3] = (tP[3] + tP[4] + 1) >> 1;
+	tP += tWidth;
+	cP += cWidth;
 }
 
 /*
@@ -1819,43 +1812,45 @@ void _MotionComp_10(u8* dst, int dstStride, u8* src, int srcStride)
  *
  * @note Offset by half a sample in both directions
  */
-void _MotionComp_11(u8* dst, int dstStride, u8* src, int srcStride)
+inline void _MotionComp_11(u8* cP, int cWidth, u8* tP, int tWidth)
 {
-	u8* s = (u8*)src;
-	u8* n = (u8*)src + srcStride;
-	u8* d = (u8*)dst;
+	u8* up = (u8*)tP;
+	u8* dn = (u8*)tP + tWidth;
 
-	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
-	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
-	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
-	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
-	s += srcStride;
-	d += dstStride;
-	n += srcStride;
-	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
-	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
-	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
-	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
-	s += srcStride;
-	d += dstStride;
-	n += srcStride;
-	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
-	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
-	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
-	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
-	s += srcStride;
-	d += dstStride;
-	n += srcStride;
-	d[0] = (s[0] + s[1] + n[0] + n[1] + 2) >> 2;
-	d[1] = (s[1] + s[2] + n[1] + n[2] + 2) >> 2;
-	d[2] = (s[2] + s[3] + n[2] + n[3] + 2) >> 2;
-	d[3] = (s[3] + s[4] + n[3] + n[4] + 2) >> 2;
-	s += srcStride;
-	d += dstStride;
-	n += srcStride;
+	cP[0] = (up[0] + up[1] + dn[0] + dn[1] + 2) >> 2;
+	cP[1] = (up[1] + up[2] + dn[1] + dn[2] + 2) >> 2;
+	cP[2] = (up[2] + up[3] + dn[2] + dn[3] + 2) >> 2;
+	cP[3] = (up[3] + up[4] + dn[3] + dn[4] + 2) >> 2;
+	up += tWidth;
+	cP += cWidth;
+	dn += tWidth;
+
+	cP[0] = (up[0] + up[1] + dn[0] + dn[1] + 2) >> 2;
+	cP[1] = (up[1] + up[2] + dn[1] + dn[2] + 2) >> 2;
+	cP[2] = (up[2] + up[3] + dn[2] + dn[3] + 2) >> 2;
+	cP[3] = (up[3] + up[4] + dn[3] + dn[4] + 2) >> 2;
+	up += tWidth;
+	cP += cWidth;
+	dn += tWidth;
+
+	cP[0] = (up[0] + up[1] + dn[0] + dn[1] + 2) >> 2;
+	cP[1] = (up[1] + up[2] + dn[1] + dn[2] + 2) >> 2;
+	cP[2] = (up[2] + up[3] + dn[2] + dn[3] + 2) >> 2;
+	cP[3] = (up[3] + up[4] + dn[3] + dn[4] + 2) >> 2;
+	up += tWidth;
+	cP += cWidth;
+	dn += tWidth;
+
+	cP[0] = (up[0] + up[1] + dn[0] + dn[1] + 2) >> 2;
+	cP[1] = (up[1] + up[2] + dn[1] + dn[2] + 2) >> 2;
+	cP[2] = (up[2] + up[3] + dn[2] + dn[3] + 2) >> 2;
+	cP[3] = (up[3] + up[4] + dn[3] + dn[4] + 2) >> 2;
+	up += tWidth;
+	cP += cWidth;
+	dn += tWidth;
 }
 
-static inline void _MotionComp(u8* cP, int cWidth, u8* tP, int tWidth, int selector)
+static void _MotionComp(u8* cP, int cWidth, u8* tP, int tWidth, int selector)
 {
 	static MotionCompFunc func[] = { _MotionComp_00, _MotionComp_01, _MotionComp_10, _MotionComp_11 };
 	func[selector](cP, cWidth, tP, tWidth);
@@ -1868,742 +1863,76 @@ static inline void _MotionComp(u8* cP, int cWidth, u8* tP, int tWidth, int selec
  *
  * @note hpel = half-pixel offset. DX = horizontal, DY = vertical.
  */
-static void MotionComp(VideoState* state, MCHandler* mch, int arg2, int arg3)
+
+static void MotionComp(VideoState* state, MCHandler* mch, int tx, int ty)
 {
-	int i, j;
-	u32* imgUscan;
-	u8* src;
-	int num_blocks;
+	int c, i;
+	MCPlane* pmc;
+	HVQPlaneDesc* sip;
+	u8* t_top;
+	u32* iofsP;
+	int blocks;
+	u8* cP;
+	u8* tP;
 	int offset;
 
-	if (!(arg2 & 1)) {
-		if (!(arg3 & 1)) {
-			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mch->pln[i].targ
-				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
-				imgUscan   = state->pln[i].imgUscan;
-				num_blocks = state->pln[i].nblocks_mcb;
-				for (j = 0; j < num_blocks; j++) {
-					offset = *imgUscan++;
-					_MotionComp_00(mch->pln[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
+	if (!(tx & 1)) {
+		if (!(ty & 1)) {
+			for (c = 0; c < HVQM_PLANE_COUNT; c++) {
+				pmc    = &mch->pln[c];
+				t_top  = pmc->targ + ((tx >> state->pln[c].h_shift + 1) + (ty >> state->pln[c].v_shift + 1) * state->pln[c].plane_width);
+				iofsP  = state->pln[c].imgUscan;
+				blocks = state->pln[c].nblocks_mcb;
+				for (i = 0; i < blocks; i++) {
+					offset = *iofsP++;
+					cP     = pmc->blk_top + offset;
+					tP     = t_top + offset;
+					_MotionComp_00(cP, state->pln[c].plane_width, tP, state->pln[c].plane_width);
 				}
 			}
 		} else {
-			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mch->pln[i].targ
-				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
-				imgUscan   = state->pln[i].imgUscan;
-				num_blocks = state->pln[i].nblocks_mcb;
-				for (j = 0; j < num_blocks; j++) {
-					offset = *imgUscan++;
-					_MotionComp_01(mch->pln[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
+			for (c = 0; c < HVQM_PLANE_COUNT; c++) {
+				pmc    = &mch->pln[c];
+				t_top  = pmc->targ + ((tx >> state->pln[c].h_shift + 1) + (ty >> state->pln[c].v_shift + 1) * state->pln[c].plane_width);
+				iofsP  = state->pln[c].imgUscan;
+				blocks = state->pln[c].nblocks_mcb;
+				for (i = 0; i < blocks; i++) {
+					offset = *iofsP++;
+					cP     = pmc->blk_top + offset;
+					tP     = t_top + offset;
+					_MotionComp_01(cP, state->pln[c].plane_width, tP, state->pln[c].plane_width);
 				}
 			}
 		}
 	} else {
-		if (!(arg3 & 1)) {
-			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mch->pln[i].targ
-				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
-				imgUscan   = state->pln[i].imgUscan;
-				num_blocks = state->pln[i].nblocks_mcb;
-				for (j = 0; j < num_blocks; j++) {
-					offset = *imgUscan++;
-					_MotionComp_10(mch->pln[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
+		if (!(ty & 1)) {
+			for (c = 0; c < HVQM_PLANE_COUNT; c++) {
+				pmc    = &mch->pln[c];
+				t_top  = pmc->targ + ((tx >> state->pln[c].h_shift + 1) + (ty >> state->pln[c].v_shift + 1) * state->pln[c].plane_width);
+				iofsP  = state->pln[c].imgUscan;
+				blocks = state->pln[c].nblocks_mcb;
+				for (i = 0; i < blocks; i++) {
+					offset = *iofsP++;
+					cP     = pmc->blk_top + offset;
+					tP     = t_top + offset;
+					_MotionComp_10(cP, state->pln[c].plane_width, tP, state->pln[c].plane_width);
 				}
 			}
 		} else {
-			for (i = 0; i < HVQM_PLANE_COUNT; i++) {
-				src = mch->pln[i].targ
-				    + ((arg2 >> state->pln[i].h_shift + 1) + (arg3 >> state->pln[i].v_shift + 1) * state->pln[i].plane_width);
-				imgUscan   = state->pln[i].imgUscan;
-				num_blocks = state->pln[i].nblocks_mcb;
-				for (j = 0; j < num_blocks; j++) {
-					offset = *imgUscan++;
-					_MotionComp_11(mch->pln[i].blk_top + offset, state->pln[i].plane_width, src + offset, state->pln[i].plane_width);
+			for (c = 0; c < HVQM_PLANE_COUNT; c++) {
+				pmc    = &mch->pln[c];
+				t_top  = pmc->targ + ((tx >> state->pln[c].h_shift + 1) + (ty >> state->pln[c].v_shift + 1) * state->pln[c].plane_width);
+				iofsP  = state->pln[c].imgUscan;
+				blocks = state->pln[c].nblocks_mcb;
+				for (i = 0; i < blocks; i++) {
+					offset = *iofsP++;
+					cP     = pmc->blk_top + offset;
+					tP     = t_top + offset;
+					_MotionComp_11(cP, state->pln[c].plane_width, tP, state->pln[c].plane_width);
 				}
 			}
 		}
 	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x48(r1)
-	  rlwinm.   r0,r5,0,31,31
-	  stmw      r27, 0x34(r1)
-	  bne-      .loc_0x4C0
-	  rlwinm.   r0,r6,0,31,31
-	  bne-      .loc_0x2A0
-	  li        r7, 0
-
-	.loc_0x1C:
-	  lbz       r10, 0x30(r3)
-	  addi      r8, r3, 0x18
-	  lbz       r9, 0x31(r3)
-	  addi      r0, r10, 0x1
-	  lbz       r12, 0x34(r3)
-	  sraw      r11, r5, r0
-	  lhz       r0, 0x28(r3)
-	  addi      r9, r9, 0x1
-	  lwz       r10, 0x18(r4)
-	  sraw      r9, r6, r9
-	  mullw     r0, r9, r0
-	  add       r0, r0, r10
-	  cmpwi     r12, 0
-	  addi      r10, r12, 0
-	  add       r0, r11, r0
-	  ble-      .loc_0x288
-	  rlwinm.   r9,r10,31,1,31
-	  mtctr     r9
-	  beq-      .loc_0x1D0
-
-	.loc_0x68:
-	  lwz       r12, 0x0(r8)
-	  lwz       r11, 0x14(r4)
-	  add       r29, r0, r12
-	  lhz       r27, 0x28(r3)
-	  lbz       r9, 0x0(r29)
-	  add       r28, r11, r12
-	  add       r12, r29, r27
-	  stb       r9, 0x0(r28)
-	  add       r11, r28, r27
-	  lbz       r9, 0x1(r29)
-	  stb       r9, 0x1(r28)
-	  lbz       r9, 0x2(r29)
-	  stb       r9, 0x2(r28)
-	  lbz       r9, 0x3(r29)
-	  stb       r9, 0x3(r28)
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  add       r12, r12, r27
-	  stb       r9, 0x3(r11)
-	  add       r11, r11, r27
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  add       r12, r12, r27
-	  stb       r9, 0x3(r11)
-	  add       r11, r11, r27
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  stb       r9, 0x3(r11)
-	  lwz       r12, 0x4(r8)
-	  addi      r8, r8, 0x8
-	  lwz       r11, 0x14(r4)
-	  add       r29, r0, r12
-	  lhz       r27, 0x28(r3)
-	  lbz       r9, 0x0(r29)
-	  add       r28, r11, r12
-	  add       r12, r29, r27
-	  stb       r9, 0x0(r28)
-	  add       r11, r28, r27
-	  lbz       r9, 0x1(r29)
-	  stb       r9, 0x1(r28)
-	  lbz       r9, 0x2(r29)
-	  stb       r9, 0x2(r28)
-	  lbz       r9, 0x3(r29)
-	  stb       r9, 0x3(r28)
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  add       r12, r12, r27
-	  stb       r9, 0x3(r11)
-	  add       r11, r11, r27
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  add       r12, r12, r27
-	  stb       r9, 0x3(r11)
-	  add       r11, r11, r27
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  stb       r9, 0x3(r11)
-	  bdnz+     .loc_0x68
-	  andi.     r10, r10, 0x1
-	  beq-      .loc_0x288
-
-	.loc_0x1D0:
-	  mtctr     r10
-
-	.loc_0x1D4:
-	  lwz       r12, 0x0(r8)
-	  addi      r8, r8, 0x4
-	  lwz       r11, 0x14(r4)
-	  add       r29, r0, r12
-	  lhz       r27, 0x28(r3)
-	  lbz       r9, 0x0(r29)
-	  add       r28, r11, r12
-	  add       r12, r29, r27
-	  stb       r9, 0x0(r28)
-	  add       r11, r28, r27
-	  lbz       r9, 0x1(r29)
-	  stb       r9, 0x1(r28)
-	  lbz       r9, 0x2(r29)
-	  stb       r9, 0x2(r28)
-	  lbz       r9, 0x3(r29)
-	  stb       r9, 0x3(r28)
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  add       r12, r12, r27
-	  stb       r9, 0x3(r11)
-	  add       r11, r11, r27
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  add       r12, r12, r27
-	  stb       r9, 0x3(r11)
-	  add       r11, r11, r27
-	  lbz       r9, 0x0(r12)
-	  stb       r9, 0x0(r11)
-	  lbz       r9, 0x1(r12)
-	  stb       r9, 0x1(r11)
-	  lbz       r9, 0x2(r12)
-	  stb       r9, 0x2(r11)
-	  lbz       r9, 0x3(r12)
-	  stb       r9, 0x3(r11)
-	  bdnz+     .loc_0x1D4
-
-	.loc_0x288:
-	  addi      r7, r7, 0x1
-	  cmpwi     r7, 0x3
-	  addi      r4, r4, 0x34
-	  addi      r3, r3, 0x38
-	  blt+      .loc_0x1C
-	  b         .loc_0x9F4
-
-	.loc_0x2A0:
-	  li        r10, 0
-
-	.loc_0x2A4:
-	  lbz       r8, 0x30(r3)
-	  addi      r12, r3, 0x18
-	  lbz       r7, 0x31(r3)
-	  addi      r0, r8, 0x1
-	  lbz       r27, 0x34(r3)
-	  sraw      r8, r5, r0
-	  lhz       r0, 0x28(r3)
-	  addi      r7, r7, 0x1
-	  lwz       r9, 0x18(r4)
-	  sraw      r7, r6, r7
-	  mtctr     r27
-	  mullw     r0, r7, r0
-	  add       r11, r0, r9
-	  cmpwi     r27, 0
-	  add       r11, r8, r11
-	  ble-      .loc_0x4A8
-
-	.loc_0x2E4:
-	  lwz       r28, 0x0(r12)
-	  addi      r12, r12, 0x4
-	  lhz       r0, 0x28(r3)
-	  add       r30, r11, r28
-	  lwz       r8, 0x14(r4)
-	  add       r7, r30, r0
-	  lbz       r27, 0x0(r30)
-	  lbz       r9, 0x0(r7)
-	  add       r31, r8, r28
-	  addi      r8, r7, 0
-	  addi      r9, r9, 0x1
-	  add       r9, r27, r9
-	  srawi     r9, r9, 0x1
-	  stb       r9, 0x0(r31)
-	  add       r9, r31, r0
-	  lbz       r27, 0x1(r7)
-	  lbz       r28, 0x1(r30)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x1(r31)
-	  lbz       r27, 0x2(r7)
-	  lbz       r28, 0x2(r30)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x2(r31)
-	  lbz       r27, 0x3(r7)
-	  add       r7, r7, r0
-	  lbz       r28, 0x3(r30)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x3(r31)
-	  lbz       r27, 0x0(r7)
-	  lbz       r28, 0x0(r8)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x0(r9)
-	  lbz       r27, 0x1(r7)
-	  lbz       r28, 0x1(r8)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x1(r9)
-	  lbz       r27, 0x2(r7)
-	  lbz       r28, 0x2(r8)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x2(r9)
-	  lbz       r27, 0x3(r7)
-	  add       r7, r7, r0
-	  lbz       r28, 0x3(r8)
-	  add       r8, r8, r0
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x3(r9)
-	  add       r9, r9, r0
-	  lbz       r27, 0x0(r7)
-	  lbz       r28, 0x0(r8)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x0(r9)
-	  lbz       r27, 0x1(r7)
-	  lbz       r28, 0x1(r8)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x1(r9)
-	  lbz       r27, 0x2(r7)
-	  lbz       r28, 0x2(r8)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x2(r9)
-	  lbz       r27, 0x3(r7)
-	  lbz       r28, 0x3(r8)
-	  add       r8, r8, r0
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x3(r9)
-	  add       r7, r7, r0
-	  lbz       r28, 0x0(r8)
-	  lbz       r27, 0x0(r7)
-	  add       r9, r9, r0
-	  addi      r0, r27, 0x1
-	  add       r0, r28, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r9)
-	  lbz       r27, 0x1(r7)
-	  lbz       r28, 0x1(r8)
-	  addi      r0, r27, 0x1
-	  add       r0, r28, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r9)
-	  lbz       r27, 0x2(r7)
-	  lbz       r28, 0x2(r8)
-	  addi      r0, r27, 0x1
-	  add       r0, r28, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r9)
-	  lbz       r7, 0x3(r7)
-	  lbz       r8, 0x3(r8)
-	  addi      r0, r7, 0x1
-	  add       r0, r8, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r9)
-	  bdnz+     .loc_0x2E4
-
-	.loc_0x4A8:
-	  addi      r10, r10, 0x1
-	  cmpwi     r10, 0x3
-	  addi      r4, r4, 0x34
-	  addi      r3, r3, 0x38
-	  blt+      .loc_0x2A4
-	  b         .loc_0x9F4
-
-	.loc_0x4C0:
-	  rlwinm.   r0,r6,0,31,31
-	  bne-      .loc_0x6D8
-	  li        r9, 0
-
-	.loc_0x4CC:
-	  lbz       r8, 0x30(r3)
-	  addi      r11, r3, 0x18
-	  lbz       r7, 0x31(r3)
-	  addi      r0, r8, 0x1
-	  lbz       r12, 0x34(r3)
-	  sraw      r8, r5, r0
-	  lhz       r0, 0x28(r3)
-	  addi      r7, r7, 0x1
-	  lwz       r10, 0x18(r4)
-	  sraw      r7, r6, r7
-	  mtctr     r12
-	  mullw     r0, r7, r0
-	  add       r10, r0, r10
-	  cmpwi     r12, 0
-	  add       r10, r8, r10
-	  ble-      .loc_0x6C0
-
-	.loc_0x50C:
-	  lwz       r12, 0x0(r11)
-	  addi      r11, r11, 0x4
-	  lwz       r8, 0x14(r4)
-	  add       r30, r10, r12
-	  lhz       r0, 0x28(r3)
-	  lbz       r7, 0x1(r30)
-	  add       r12, r8, r12
-	  lbz       r27, 0x0(r30)
-	  add       r8, r30, r0
-	  addi      r7, r7, 0x1
-	  add       r7, r27, r7
-	  srawi     r7, r7, 0x1
-	  stb       r7, 0x0(r12)
-	  add       r7, r12, r0
-	  lbz       r27, 0x2(r30)
-	  lbz       r28, 0x1(r30)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x1(r12)
-	  lbz       r27, 0x3(r30)
-	  lbz       r28, 0x2(r30)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x2(r12)
-	  lbz       r27, 0x4(r30)
-	  lbz       r28, 0x3(r30)
-	  addi      r27, r27, 0x1
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x1
-	  stb       r27, 0x3(r12)
-	  lbz       r12, 0x1(r8)
-	  lbz       r27, 0x0(r8)
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x0(r7)
-	  lbz       r12, 0x2(r8)
-	  lbz       r27, 0x1(r8)
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x1(r7)
-	  lbz       r12, 0x3(r8)
-	  lbz       r27, 0x2(r8)
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x2(r7)
-	  lbz       r12, 0x4(r8)
-	  lbz       r27, 0x3(r8)
-	  add       r8, r8, r0
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x3(r7)
-	  add       r7, r7, r0
-	  lbz       r12, 0x1(r8)
-	  lbz       r27, 0x0(r8)
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x0(r7)
-	  lbz       r12, 0x2(r8)
-	  lbz       r27, 0x1(r8)
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x1(r7)
-	  lbz       r12, 0x3(r8)
-	  lbz       r27, 0x2(r8)
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x2(r7)
-	  lbz       r12, 0x4(r8)
-	  lbz       r27, 0x3(r8)
-	  add       r8, r8, r0
-	  addi      r12, r12, 0x1
-	  add       r12, r27, r12
-	  srawi     r12, r12, 0x1
-	  stb       r12, 0x3(r7)
-	  add       r7, r7, r0
-	  lbz       r12, 0x1(r8)
-	  lbz       r27, 0x0(r8)
-	  addi      r0, r12, 0x1
-	  add       r0, r27, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x0(r7)
-	  lbz       r12, 0x2(r8)
-	  lbz       r27, 0x1(r8)
-	  addi      r0, r12, 0x1
-	  add       r0, r27, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x1(r7)
-	  lbz       r12, 0x3(r8)
-	  lbz       r27, 0x2(r8)
-	  addi      r0, r12, 0x1
-	  add       r0, r27, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x2(r7)
-	  lbz       r12, 0x4(r8)
-	  lbz       r8, 0x3(r8)
-	  addi      r0, r12, 0x1
-	  add       r0, r8, r0
-	  srawi     r0, r0, 0x1
-	  stb       r0, 0x3(r7)
-	  bdnz+     .loc_0x50C
-
-	.loc_0x6C0:
-	  addi      r9, r9, 0x1
-	  cmpwi     r9, 0x3
-	  addi      r4, r4, 0x34
-	  addi      r3, r3, 0x38
-	  blt+      .loc_0x4CC
-	  b         .loc_0x9F4
-
-	.loc_0x6D8:
-	  li        r10, 0
-
-	.loc_0x6DC:
-	  lbz       r8, 0x30(r3)
-	  addi      r12, r3, 0x18
-	  lbz       r7, 0x31(r3)
-	  addi      r0, r8, 0x1
-	  lbz       r27, 0x34(r3)
-	  sraw      r8, r5, r0
-	  lhz       r0, 0x28(r3)
-	  addi      r7, r7, 0x1
-	  lwz       r9, 0x18(r4)
-	  sraw      r7, r6, r7
-	  mtctr     r27
-	  mullw     r0, r7, r0
-	  add       r11, r0, r9
-	  cmpwi     r27, 0
-	  add       r11, r8, r11
-	  ble-      .loc_0x9E0
-
-	.loc_0x71C:
-	  lwz       r28, 0x0(r12)
-	  addi      r12, r12, 0x4
-	  lhz       r0, 0x28(r3)
-	  add       r30, r11, r28
-	  lwz       r8, 0x14(r4)
-	  add       r7, r30, r0
-	  lbz       r9, 0x1(r30)
-	  lbz       r27, 0x0(r7)
-	  add       r31, r8, r28
-	  lbz       r28, 0x1(r7)
-	  addi      r8, r7, 0
-	  add       r9, r9, r27
-	  add       r9, r9, r28
-	  lbz       r27, 0x0(r30)
-	  addi      r9, r9, 0x2
-	  add       r9, r27, r9
-	  srawi     r9, r9, 0x2
-	  stb       r9, 0x0(r31)
-	  add       r9, r31, r0
-	  lbz       r28, 0x1(r7)
-	  lbz       r27, 0x2(r30)
-	  lbz       r29, 0x2(r7)
-	  add       r27, r27, r28
-	  lbz       r28, 0x1(r30)
-	  add       r27, r27, r29
-	  addi      r27, r27, 0x2
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x2
-	  stb       r27, 0x1(r31)
-	  lbz       r28, 0x2(r7)
-	  lbz       r27, 0x3(r30)
-	  lbz       r29, 0x3(r7)
-	  add       r27, r27, r28
-	  lbz       r28, 0x2(r30)
-	  add       r27, r27, r29
-	  addi      r27, r27, 0x2
-	  add       r27, r28, r27
-	  srawi     r27, r27, 0x2
-	  stb       r27, 0x2(r31)
-	  lbz       r29, 0x4(r30)
-	  lbz       r28, 0x3(r7)
-	  lbz       r27, 0x4(r7)
-	  add       r7, r7, r0
-	  add       r29, r29, r28
-	  lbz       r30, 0x3(r30)
-	  add       r29, r29, r27
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x3(r31)
-	  lbz       r30, 0x0(r7)
-	  lbz       r29, 0x1(r8)
-	  lbz       r31, 0x1(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x0(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x0(r9)
-	  lbz       r30, 0x1(r7)
-	  lbz       r29, 0x2(r8)
-	  lbz       r31, 0x2(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x1(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x1(r9)
-	  lbz       r30, 0x2(r7)
-	  lbz       r29, 0x3(r8)
-	  lbz       r31, 0x3(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x2(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x2(r9)
-	  lbz       r30, 0x3(r7)
-	  lbz       r29, 0x4(r8)
-	  lbz       r31, 0x4(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x3(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x3(r9)
-	  add       r7, r7, r0
-	  add       r8, r8, r0
-	  lbz       r30, 0x0(r7)
-	  lbz       r29, 0x1(r8)
-	  add       r9, r9, r0
-	  lbz       r31, 0x1(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x0(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x0(r9)
-	  lbz       r30, 0x1(r7)
-	  lbz       r29, 0x2(r8)
-	  lbz       r31, 0x2(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x1(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x1(r9)
-	  lbz       r30, 0x2(r7)
-	  lbz       r29, 0x3(r8)
-	  lbz       r31, 0x3(r7)
-	  add       r29, r29, r30
-	  lbz       r30, 0x2(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x2(r9)
-	  lbz       r30, 0x3(r7)
-	  lbz       r29, 0x4(r8)
-	  lbz       r31, 0x4(r7)
-	  add       r7, r7, r0
-	  add       r29, r29, r30
-	  lbz       r30, 0x3(r8)
-	  add       r29, r29, r31
-	  addi      r29, r29, 0x2
-	  add       r29, r30, r29
-	  srawi     r29, r29, 0x2
-	  stb       r29, 0x3(r9)
-	  add       r8, r8, r0
-	  add       r9, r9, r0
-	  lbz       r29, 0x0(r7)
-	  lbz       r0, 0x1(r8)
-	  lbz       r31, 0x1(r7)
-	  add       r0, r0, r29
-	  lbz       r30, 0x0(r8)
-	  add       r29, r0, r31
-	  addi      r0, r29, 0x2
-	  add       r0, r30, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x0(r9)
-	  lbz       r29, 0x1(r7)
-	  lbz       r0, 0x2(r8)
-	  lbz       r31, 0x2(r7)
-	  add       r0, r0, r29
-	  lbz       r30, 0x1(r8)
-	  add       r29, r0, r31
-	  addi      r0, r29, 0x2
-	  add       r0, r30, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x1(r9)
-	  lbz       r30, 0x2(r7)
-	  lbz       r0, 0x3(r8)
-	  lbz       r29, 0x3(r7)
-	  add       r0, r0, r30
-	  lbz       r31, 0x2(r8)
-	  add       r30, r0, r29
-	  addi      r0, r30, 0x2
-	  add       r0, r31, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x2(r9)
-	  lbz       r30, 0x3(r7)
-	  lbz       r0, 0x4(r8)
-	  lbz       r7, 0x4(r7)
-	  add       r0, r0, r30
-	  lbz       r8, 0x3(r8)
-	  add       r7, r0, r7
-	  addi      r0, r7, 0x2
-	  add       r0, r8, r0
-	  srawi     r0, r0, 0x2
-	  stb       r0, 0x3(r9)
-	  bdnz+     .loc_0x71C
-
-	.loc_0x9E0:
-	  addi      r10, r10, 0x1
-	  cmpwi     r10, 0x3
-	  addi      r4, r4, 0x34
-	  addi      r3, r3, 0x38
-	  blt+      .loc_0x6DC
-
-	.loc_0x9F4:
-	  lmw       r27, 0x34(r1)
-	  addi      r1, r1, 0x48
-	  blr
-	*/
 }
 
 static void decode_PB_dc(VideoState* ws, MCHandler* mch)
