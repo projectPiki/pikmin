@@ -1182,19 +1182,19 @@ static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases,
 	int sum;
 	int mean;
 
-	for (i = 0; i < 4; ++i)
+	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; ++j)
 			result[i][j] = 0;
 
 	temp = 0;
 	for (k = 0; k < num_bases; ++k) {
 		factor = GetMCAotBasis(state, byte_result, &temp, nestBuf, nest_stride, plane_idx);
-		for (i = 0; i < 4; ++i)
+		for (i = 0; i < 4; i++)
 			for (j = 0; j < 4; ++j)
 				result[i][j] += factor * byte_result[i][j];
 	}
 	sum = 0;
-	for (i = 0; i < 4; ++i)
+	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; ++j)
 			sum += result[i][j];
 	mean = sum >> 4;
@@ -1697,12 +1697,64 @@ static void resetMCHandler(VideoState* state, MCHandler* mch, u8* lin_top)
 {
 	int i;
 
-	for (i = 0; i < PLANE_COUNT; ++i) {
+	for (i = 0; i < PLANE_COUNT; i++) {
 		mch->pln[i].lin_top  = lin_top;
 		mch->pln[i].data_top = mch->pln[i].data = state->pln[i].blockInfoTop;
 		lin_top += state->pln[i].plane_size;
 	}
-	// UNUSED FUNCTION
+}
+
+static void setMCTop(MCHandler* mch)
+{
+	int i;
+	MCPlane* pmc;
+
+	for (i = 0; i < PLANE_COUNT; i++) {
+		pmc          = &mch->pln[i];
+		pmc->blk_top = pmc->lin_top;
+	}
+}
+
+// advance one 8x8 block to the right
+// (8x8 in seqobj size units, which are presumably pixels)
+static void setMCNextBlk(MCHandler* mch)
+{
+	int i;
+	MCPlane* pmc;
+
+	for (i = 0; i < PLANE_COUNT; i++) {
+		pmc = &mch->pln[i];
+		pmc->blk_top += pmc->next_macro_pix;
+		pmc->data += pmc->hvqblk_h;
+	}
+}
+
+// move to the next row of 8x8 blocks
+// (8x8 in seqobj size units, which are presumably pixels)
+static void setMCDownBlk(MCHandler* mch)
+{
+	int i;
+	MCPlane* pmc;
+
+	for (i = 0; i < PLANE_COUNT; i++) {
+		pmc = &mch->pln[i];
+		pmc->lin_top += pmc->down_macro_pix;
+		pmc->data = pmc->data_top = pmc->data_top + pmc->hvqblk_v;
+	}
+}
+
+// select which frame to use as an MC reference
+static void setMCTarget(MCHandler* mch, int direct)
+{
+	if (direct == 0) {
+		mch->pln[0].targ = mch->pln[0].forw;
+		mch->pln[1].targ = mch->pln[1].forw;
+		mch->pln[2].targ = mch->pln[2].forw;
+	} else {
+		mch->pln[0].targ = mch->pln[0].back;
+		mch->pln[1].targ = mch->pln[1].back;
+		mch->pln[2].targ = mch->pln[2].back;
+	}
 }
 
 /*
@@ -2621,6 +2673,35 @@ static void MotionComp(VideoState* state, MCHandler* mch, int arg2, int arg3)
 	*/
 }
 
+static void decode_PB_dc(VideoState* ws, MCHandler* mch)
+{
+	int c, i, j;
+	int blocks;
+	MCPlane* pmc;
+	u16* bofsP;
+
+	for (c = 0; c < PLANE_COUNT; c++) {
+		pmc    = &mch->pln[c];
+		bofsP  = ws->pln[c].bibUscan;
+		blocks = ws->pln[c].nblocks_mcb;
+		for (i = 0; i < blocks; i++) {
+			j                = *bofsP++;
+			pmc->data[j].dcv = pmc->prev_dcv = pmc->prev_dcv + decodeSOvfSym(&ws->dcval[c], ws->dc_min, ws->dc_max);
+		}
+	}
+}
+
+static void reset_PB_dc(VideoState* ws, MCHandler* mch)
+{
+	int i;
+	MCPlane* pmc;
+
+	for (i = 0; i < PLANE_COUNT; i++) {
+		pmc           = &mch->pln[i];
+		pmc->prev_dcv = 0x7F;
+	}
+}
+
 /*
  * --INFO--
  * Address:	80021A78
@@ -2727,7 +2808,7 @@ static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nb
 			mean += mdst[y][x];
 	mean /= 16;
 	min = max = mdst[0][0] - mean;
-	for (i = 0; i < 4; ++i) {
+	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; ++j) {
 			value = diff[i][j] = mdst[i][j] - mean;
 			min                = value < min ? value : min;
@@ -2737,11 +2818,11 @@ static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nb
 	addend = (decodeSOvfSym(&ws->dcval[p], ws->dc_min, ws->dc_max) >> ws->dc_scale_q << ws->aotscale_q) - aot_sum;
 	factor = (decodeSOvfSym(&ws->dcval[p], ws->dc_min, ws->dc_max) >> ws->dc_scale_q);
 	factor *= mcdivTable[max - min];
-	for (i = 0; i < 4; ++i)
+	for (i = 0; i < 4; i++)
 		for (j = 0; j < 4; ++j)
 			result[i][j] += addend + diff[i][j] * factor;
 
-	for (i = 0; i < 4; ++i) {
+	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; ++j) {
 			value                 = (result[i][j] >> ws->aotscale_q) + mdst[i][j];
 			blk[i * blkWidth + j] = saturate(value);
@@ -3559,84 +3640,6 @@ static void MCBlockDecDCNest(VideoState* ws, MCHandler* mch)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
- */
-static void initMCBproc(BitBufferWithTree* buftree, RLDecoder* proc)
-{
-	if (buftree->buf.ptr) {
-		proc->value = getBit(&buftree->buf);
-		proc->count = decodeUOvfSym(buftree, 0xFF);
-	}
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
- */
-static u32 getMCBproc(BitBufferWithTree* buftree, RLDecoder* proc)
-{
-	if (proc->count == 0) {
-		proc->value ^= 1;
-		proc->count = decodeUOvfSym(buftree, 0xFF);
-	}
-	--proc->count;
-	return proc->value;
-
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
- */
-static void initMCBtype(BitBufferWithTree* buftree, RLDecoder* type)
-{
-	u32 value;
-	if (buftree->buf.ptr) {
-		value       = getBit(&buftree->buf) << 1;
-		type->value = value | getBit(&buftree->buf);
-		type->count = decodeUOvfSym(buftree, 0xFF);
-	}
-
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
- */
-static u32 getMCBtype(BitBufferWithTree* buftree, RLDecoder* type)
-{
-	const static u32 mcbtypetrans[2][3] = {
-		{ 1, 2, 0 },
-		{ 2, 0, 1 },
-	};
-
-	u32 bit;
-
-	if (type->count == 0) {
-		// only three possible values, so when the value changes,
-		// a single bit decides which other value to select
-		// bit == 0 -> increment
-		// bit == 1 -> decrement
-		// then wrap to range 0..2
-		bit         = getBit(&buftree->buf);
-		type->value = mcbtypetrans[bit][type->value];
-		type->count = decodeUOvfSym(buftree, 0xFF);
-	}
-	--type->count;
-	return type->value;
-
-	// UNUSED FUNCTION
-}
-
 static void getMVector(int* result, BitBufferWithTree* buf, u32 residual_bits)
 {
 	int i;
@@ -3655,79 +3658,72 @@ static void getMVector(int* result, BitBufferWithTree* buf, u32 residual_bits)
 		*result += max_val_plus_1 << 1;
 }
 
-// select which frame to use as an MC reference
-static void setMCTarget(MCHandler* mch, u32 reference_frame)
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000C8
+ */
+static void initMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 {
-	if (reference_frame == 0) {
-		mch->pln[0].targ = mch->pln[0].forw;
-		mch->pln[1].targ = mch->pln[1].forw;
-		mch->pln[2].targ = mch->pln[2].forw;
-	} else {
-		mch->pln[0].targ = mch->pln[0].back;
-		mch->pln[1].targ = mch->pln[1].back;
-		mch->pln[2].targ = mch->pln[2].back;
+	if (code->buf.ptr) {
+		flag->status = getBit(&code->buf);
+		flag->runlng = decodeUOvfSym(code, 0xFF);
 	}
 }
 
-// advance one 8x8 block to the right
-// (8x8 in seqobj size units, which are presumably pixels)
-static void setMCNextBlk(MCHandler* mch)
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000A4
+ */
+static int getMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 {
-	int i;
-	for (i = 0; i < PLANE_COUNT; ++i) {
-		mch->pln[i].blk_top += mch->pln[i].next_macro_pix;
-		mch->pln[i].data += mch->pln[i].hvqblk_h;
+	if (flag->runlng == 0) {
+		flag->status ^= 1;
+		flag->runlng = decodeUOvfSym(code, 0xFF);
+	}
+	flag->runlng--;
+	return flag->status;
+}
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	000110
+ */
+static void initMCBtype(BitBufferWithTree* code, RLDecoder* flag)
+{
+	int value;
+	if (code->buf.ptr) {
+		flag->status = getBit(&code->buf) << 1;
+		flag->status |= getBit(&code->buf);
+		flag->runlng = decodeUOvfSym(code, 0xFF);
 	}
 }
 
-// move to the next row of 8x8 blocks
-// (8x8 in seqobj size units, which are presumably pixels)
-static void setMCDownBlk(MCHandler* mch)
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000F8
+ */
+static int getMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 {
-	int i;
-	MCPlane* mcplane;
-	BlockData* first_block_on_next_row;
+	const static u32 mcbtypetrans[2][3] = {
+		{ 1, 2, 0 },
+		{ 2, 0, 1 },
+	};
 
-	for (i = 0; i < PLANE_COUNT; ++i) {
-		mcplane = &mch->pln[i];
-		mcplane->lin_top += mcplane->down_macro_pix;
-		first_block_on_next_row = mcplane->data_top + mcplane->hvqblk_v;
-		mcplane->data_top       = first_block_on_next_row;
-		mcplane->data           = first_block_on_next_row;
+	if (flag->runlng == 0) {
+		// only three possible values, so when the value changes,
+		// a single bit decides which other value to select
+		// bit == 0 -> increment
+		// bit == 1 -> decrement
+		// then wrap to range 0..2
+		flag->status = mcbtypetrans[getBit(&code->buf)][flag->status];
+		flag->runlng = decodeUOvfSym(code, 0xFF);
 	}
-}
-
-static void setMCTop(MCHandler* mch)
-{
-	int i;
-
-	for (i = 0; i < PLANE_COUNT; ++i)
-		mch->pln[i].blk_top = mch->pln[i].lin_top;
-}
-
-static void reset_prev_dcv(MCHandler* mch)
-{
-	int i;
-	for (i = 0; i < PLANE_COUNT; ++i)
-		mch->pln[i].prev_dcv = 0x7F;
-}
-
-static void decode_prev_dcv(VideoState* state, MCHandler* mch)
-{
-	int i, j;
-	HVQPlaneDesc* plane;
-	MCPlane* mcplane;
-	BlockData* blockInfoTop;
-
-	for (i = 0; i < PLANE_COUNT; ++i) {
-		plane   = &state->pln[i];
-		mcplane = &mch->pln[i];
-		for (j = 0; j < plane->nblocks_mcb; ++j) {
-			mcplane->prev_dcv += decodeSOvfSym(&state->dcval[i], state->dc_min, state->dc_max);
-			blockInfoTop                         = mcplane->data;
-			blockInfoTop[plane->bibUscan[j]].dcv = mcplane->prev_dcv;
-		}
-	}
+	flag->runlng--;
+	return flag->status;
 }
 
 /*
@@ -3735,360 +3731,30 @@ static void decode_prev_dcv(VideoState* state, MCHandler* mch)
  * Address:	80022E80
  * Size:	000430
  */
-static void spread_PB_descMap(SeqObj* seqObj, MCHandler* mch)
+static void spread_PB_descMap(SeqObj* obj, MCHandler* mch)
 {
-	int i, j;
+	VideoState* state = (VideoState*)obj->ws;
 	struct RLDecoder proc;
 	struct RLDecoder type;
-	VideoState* state = (VideoState*)seqObj->ws;
+	int i, j;
+
 	initMCBproc(&state->mcaot, &proc);
 	initMCBtype(&state->mstat, &type);
-	for (i = 0; i < seqObj->frame_height; i += 8) {
+	for (j = 0; j < obj->frame_height; j += 8) {
 		setMCTop(mch);
-		for (j = 0; j < seqObj->frame_width; j += 8) {
+		for (i = 0; i < obj->frame_width; i += 8) {
 			getMCBtype(&state->mstat, &type);
-			if (type.value == 0) {
-				decode_prev_dcv(state, mch);
-				decode_PB_cc(state, mch, 0, type.value);
+			if (type.status == 0) {
+				decode_PB_dc(state, mch);
+				decode_PB_cc(state, mch, 0, type.status);
 			} else {
-				reset_prev_dcv(mch);
-				decode_PB_cc(state, mch, getMCBproc(&state->mcaot, &proc), type.value);
+				reset_PB_dc(state, mch);
+				decode_PB_cc(state, mch, getMCBproc(&state->mcaot, &proc), type.status);
 			}
 			setMCNextBlk(mch);
-			// for all pln
-			//     top             += next_macro_pix
-			//     data += hvqblk_h
 		}
 		setMCDownBlk(mch);
-		// for all pln
-		//     lin_top += down_macro_pix
-		//     data_top += stride;
-		//     data = data_top
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xD8(r1)
-	  stmw      r14, 0x90(r1)
-	  mr        r16, r4
-	  stw       r3, 0x78(r1)
-	  lwz       r3, 0x78(r1)
-	  lwz       r5, 0x0(r3)
-	  lwz       r3, 0x6234(r5)
-	  addi      r27, r5, 0
-	  cmplwi    r3, 0
-	  beq-      .loc_0x84
-	  lwz       r4, 0x6240(r27)
-	  cmpwi     r4, 0
-	  bge-      .loc_0x54
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x6234(r27)
-	  li        r4, 0x1F
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x623C(r27)
-	  b         .loc_0x58
-
-	.loc_0x54:
-	  lwz       r0, 0x623C(r27)
-
-	.loc_0x58:
-	  srw       r0, r0, r4
-	  subi      r3, r4, 0x1
-	  rlwinm    r0,r0,0,31,31
-	  stw       r3, 0x6240(r27)
-	  li        r17, 0
-	  stw       r0, 0x84(r1)
-
-	.loc_0x70:
-	  addi      r3, r27, 0x6234
-	  bl        -0x36CC
-	  cmpwi     r3, 0xFF
-	  add       r17, r17, r3
-	  bge+      .loc_0x70
-
-	.loc_0x84:
-	  lwz       r3, 0x6248(r27)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  lwz       r4, 0x6254(r27)
-	  cmpwi     r4, 0
-	  bge-      .loc_0xB4
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x6248(r27)
-	  li        r4, 0x1F
-	  lwz       r3, 0x0(r3)
-	  stw       r3, 0x6250(r27)
-	  b         .loc_0xB8
-
-	.loc_0xB4:
-	  lwz       r3, 0x6250(r27)
-
-	.loc_0xB8:
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x6254(r27)
-	  srw       r0, r3, r4
-	  rlwinm    r0,r0,1,30,30
-	  lwz       r4, 0x6254(r27)
-	  stw       r0, 0x88(r1)
-	  cmpwi     r4, 0
-	  bge-      .loc_0xF4
-	  lwz       r3, 0x6248(r27)
-	  li        r4, 0x1F
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x6248(r27)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x6250(r27)
-	  b         .loc_0xF8
-
-	.loc_0xF4:
-	  lwz       r0, 0x6250(r27)
-
-	.loc_0xF8:
-	  srw       r3, r0, r4
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x6254(r27)
-	  rlwinm    r3,r3,0,31,31
-	  lwz       r0, 0x88(r1)
-	  li        r18, 0
-	  or        r0, r0, r3
-	  stw       r0, 0x88(r1)
-
-	.loc_0x118:
-	  addi      r3, r27, 0x6248
-	  bl        -0x3774
-	  cmpwi     r3, 0xFF
-	  add       r18, r18, r3
-	  bge+      .loc_0x118
-
-	.loc_0x12C:
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x22A0
-	  stw       r0, 0x8C(r1)
-	  li        r0, 0
-	  addi      r15, r16, 0x34
-	  stw       r0, 0x7C(r1)
-	  addi      r14, r16, 0x68
-	  b         .loc_0x408
-
-	.loc_0x14C:
-	  lwz       r3, 0x10(r16)
-	  li        r0, 0
-	  stw       r0, 0x80(r1)
-	  stw       r3, 0x14(r16)
-	  lwz       r0, 0x10(r15)
-	  stw       r0, 0x14(r15)
-	  lwz       r0, 0x10(r14)
-	  stw       r0, 0x14(r14)
-	  b         .loc_0x370
-
-	.loc_0x170:
-	  cmpwi     r18, 0
-	  bne-      .loc_0x1EC
-	  lwz       r3, 0x6254(r27)
-	  cmpwi     r3, 0
-	  bge-      .loc_0x1A0
-	  lwz       r4, 0x6248(r27)
-	  li        r3, 0x1F
-	  addi      r0, r4, 0x4
-	  stw       r0, 0x6248(r27)
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x6250(r27)
-	  b         .loc_0x1A4
-
-	.loc_0x1A0:
-	  lwz       r0, 0x6250(r27)
-
-	.loc_0x1A4:
-	  srw       r0, r0, r3
-	  rlwinm    r0,r0,0,31,31
-	  mulli     r4, r0, 0xC
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x6254(r27)
-	  li        r18, 0
-	  lwz       r0, 0x8C(r1)
-	  add       r3, r0, r4
-	  lwz       r0, 0x88(r1)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r3, r0
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x88(r1)
-
-	.loc_0x1D8:
-	  addi      r3, r27, 0x6248
-	  bl        -0x3834
-	  cmpwi     r3, 0xFF
-	  add       r18, r18, r3
-	  bge+      .loc_0x1D8
-
-	.loc_0x1EC:
-	  lwz       r0, 0x88(r1)
-	  subi      r18, r18, 0x1
-	  cmpwi     r0, 0
-	  bne-      .loc_0x2A4
-	  addi      r31, r16, 0
-	  addi      r21, r27, 0
-	  addi      r20, r27, 0
-	  li        r19, 0
-
-	.loc_0x20C:
-	  lbz       r22, 0x34(r21)
-	  addi      r23, r20, 0x60D8
-	  addi      r28, r21, 0x10
-	  li        r29, 0
-	  b         .loc_0x26C
-
-	.loc_0x220:
-	  lhz       r24, 0x0(r28)
-	  li        r30, 0
-	  lwz       r26, 0x6CC8(r27)
-	  addi      r28, r28, 0x2
-	  lwz       r25, 0x6CCC(r27)
-
-	.loc_0x234:
-	  mr        r3, r23
-	  bl        -0x3890
-	  cmpw      r25, r3
-	  add       r30, r30, r3
-	  bge+      .loc_0x234
-	  cmpw      r3, r26
-	  bge+      .loc_0x234
-	  lwz       r0, 0x4(r31)
-	  rlwinm    r3,r24,1,0,30
-	  addi      r29, r29, 0x1
-	  add       r0, r0, r30
-	  stw       r0, 0x4(r31)
-	  lwz       r4, 0x8(r31)
-	  stbx      r0, r4, r3
-
-	.loc_0x26C:
-	  cmpw      r29, r22
-	  blt+      .loc_0x220
-	  addi      r19, r19, 0x1
-	  cmpwi     r19, 0x3
-	  addi      r31, r31, 0x34
-	  addi      r21, r21, 0x38
-	  addi      r20, r20, 0x14
-	  blt+      .loc_0x20C
-	  lwz       r6, 0x88(r1)
-	  addi      r3, r27, 0
-	  addi      r4, r16, 0
-	  li        r5, 0
-	  bl        -0x16A4
-	  b         .loc_0x2F8
-
-	.loc_0x2A4:
-	  li        r0, 0x7F
-	  stw       r0, 0x4(r16)
-	  cmpwi     r17, 0
-	  stw       r0, 0x38(r16)
-	  stw       r0, 0x6C(r16)
-	  bne-      .loc_0x2E0
-	  lwz       r0, 0x84(r1)
-	  li        r17, 0
-	  xori      r0, r0, 0x1
-	  stw       r0, 0x84(r1)
-
-	.loc_0x2CC:
-	  addi      r3, r27, 0x6234
-	  bl        -0x3928
-	  cmpwi     r3, 0xFF
-	  add       r17, r17, r3
-	  bge+      .loc_0x2CC
-
-	.loc_0x2E0:
-	  lwz       r5, 0x84(r1)
-	  addi      r3, r27, 0
-	  lwz       r6, 0x88(r1)
-	  addi      r4, r16, 0
-	  subi      r17, r17, 0x1
-	  bl        -0x16FC
-
-	.loc_0x2F8:
-	  lwz       r3, 0x14(r16)
-	  lhz       r0, 0x24(r16)
-	  add       r0, r3, r0
-	  stw       r0, 0x14(r16)
-	  lwz       r0, 0x2C(r16)
-	  lwz       r3, 0x8(r16)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0x8(r16)
-	  lwz       r3, 0x14(r15)
-	  lhz       r0, 0x24(r15)
-	  add       r0, r3, r0
-	  stw       r0, 0x14(r15)
-	  lwz       r0, 0x2C(r15)
-	  lwz       r3, 0x8(r15)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0x8(r15)
-	  lwz       r3, 0x14(r14)
-	  lhz       r0, 0x24(r14)
-	  add       r0, r3, r0
-	  stw       r0, 0x14(r14)
-	  lwz       r0, 0x2C(r14)
-	  lwz       r3, 0x8(r14)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  lwz       r3, 0x80(r1)
-	  stw       r0, 0x8(r14)
-	  addi      r3, r3, 0x8
-	  stw       r3, 0x80(r1)
-
-	.loc_0x370:
-	  lwz       r3, 0x78(r1)
-	  lwz       r0, 0x80(r1)
-	  lhz       r3, 0x4(r3)
-	  cmpw      r0, r3
-	  blt+      .loc_0x170
-	  lwz       r3, 0x10(r16)
-	  lwz       r0, 0x28(r16)
-	  add       r0, r3, r0
-	  stw       r0, 0x10(r16)
-	  lwz       r0, 0x30(r16)
-	  lwz       r3, 0xC(r16)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0xC(r16)
-	  stw       r0, 0x8(r16)
-	  lwz       r3, 0x10(r15)
-	  lwz       r0, 0x28(r15)
-	  add       r0, r3, r0
-	  stw       r0, 0x10(r15)
-	  lwz       r0, 0x30(r15)
-	  lwz       r3, 0xC(r15)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0xC(r15)
-	  stw       r0, 0x8(r15)
-	  lwz       r3, 0x10(r14)
-	  lwz       r0, 0x28(r14)
-	  add       r0, r3, r0
-	  stw       r0, 0x10(r14)
-	  lwz       r0, 0x30(r14)
-	  lwz       r3, 0xC(r14)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  lwz       r3, 0x7C(r1)
-	  stw       r0, 0xC(r14)
-	  addi      r3, r3, 0x8
-	  stw       r0, 0x8(r14)
-	  stw       r3, 0x7C(r1)
-
-	.loc_0x408:
-	  lwz       r3, 0x78(r1)
-	  lwz       r0, 0x7C(r1)
-	  lhz       r3, 0x6(r3)
-	  cmpw      r0, r3
-	  blt+      .loc_0x14C
-	  lmw       r14, 0x90(r1)
-	  lwz       r0, 0xDC(r1)
-	  addi      r1, r1, 0xD8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -4641,7 +4307,7 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 	// 70x38 nest copied from upper 4 bits of DC values somewhere in the luma plane
 	MakeNest(ws, read16(code, 4), read16(code, 6));
 
-	for (i = 0; i < PLANE_COUNT; ++i) {
+	for (i = 0; i < PLANE_COUNT; i++) {
 		IpicPlaneDec(ws, i, outbuf);
 		outbuf = (u8*)outbuf + ws->pln[i].plane_size;
 	}

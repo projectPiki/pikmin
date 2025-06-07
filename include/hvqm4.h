@@ -197,10 +197,11 @@ typedef struct MCHandler {
  * @brief TODO
  *
  * @note Size: 0x8.
+ * @note Original name: _tagMcbMCDirFlag
  */
 typedef struct RLDecoder {
-	u32 value; // _00
-	u32 count; // _04
+	int status; // _00
+	int runlng; // _04
 } RLDecoder;
 
 void HVQM4InitDecoder();
