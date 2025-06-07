@@ -21,7 +21,10 @@ typedef struct jcs_ jcs_;
 typedef struct Wave_ Wave_;
 
 typedef enum JCSTATUS {
-	// TODO: This is probably also a struct and not an enum.  Confirm.
+	JCSTAT_Unk0 = 0,
+	JCSTAT_Unk1 = 1,
+	JCSTAT_Unk2 = 2,
+	JCSTAT_Unk6 = 6,
 } JCSTATUS;
 
 /**

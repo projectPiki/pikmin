@@ -17,7 +17,7 @@ static u32 JAC_SYSTEM_OUTPUT_MODE = 1;
 static u32 cur_waits;
 static u32 cur_top;
 static u32 cur_tail;
-static jc_* waitp[0x20];
+static jc_* waitp[0x20] ATTRIBUTE_ALIGN(32);
 static int waittime[0x20];
 
 static u8 calc_sw_table[]
@@ -577,8 +577,16 @@ void UpdateJcToDSP(jc_* jc)
  */
 void UpdateEffecterParam(jc_* jc)
 {
-	f32 mod1, mod2;
+	f32 mod1;
+	f32 calc;
+	f32 mod2;
 	f32 mod3 = 0.0f;
+	f32 angle;
+	u32 i, j;
+	u32 badCompiler;
+	u16 flag;
+	u8* ptr;
+	f32 tmp;
 	if (jc->lastManager == jc->mMgr) {
 		jc->managerPitch             = jc->mMgr->pitch;
 		jc->managerVolume            = jc->mMgr->volume;
@@ -586,7 +594,7 @@ void UpdateEffecterParam(jc_* jc)
 		jc->panMatrices[2].values[2] = jc->mMgr->fxmix;
 		jc->panMatrices[3].values[2] = jc->mMgr->dolby;
 
-		for (int i = 0; i < 3; i++) {
+		for (i = 0; i < 3; i++) {
 			jc->panCalcTypes[i] = jc->mMgr->panCalcTypes[i];
 		}
 	}
@@ -609,74 +617,92 @@ void UpdateEffecterParam(jc_* jc)
 		break;
 	}
 
-	mod1 = mod1 > 0.0f ? (mod1 < 1.0f) ? mod1 : 1.0f : 0.0f;
-	mod2 = mod2 > 0.0f ? (mod2 < 1.0f) ? mod2 : 1.0f : 0.0f;
-	mod3 = mod3 > 0.0f ? (mod3 < 1.0f) ? mod3 : 1.0f : 0.0f;
+	calc = jc->currentVolume * jc->volumeModifier * jc->managerVolume;
+
+	if (mod1 < 0.0f) {
+		mod1 = 0.0f;
+	} else if (mod1 > 1.0f) {
+		mod1 = 1.0f;
+	}
+
+	if (mod2 < 0.0f) {
+		mod2 = 0.0f;
+	} else if (mod2 > 1.0f) {
+		mod2 = 1.0f;
+	}
+
+	if (mod3 < 0.0f) {
+		mod3 = 0.0f;
+	} else if (mod3 > 1.0f) {
+		mod3 = 1.0f;
+	}
 
 	jc->finalPitch = jc->currentPitch * jc->pitchModifier * jc->managerPitch * 4096.0f;
 
-	f32 calc = jc->managerVolume * jc->currentVolume * jc->volumeModifier;
-	f32 calc2, calc3;
-	for (u32 i = 0; i < 6; i++) {
+	for (j = 0; j < 6; j++) {
+		tmp  = calc;
+		flag = jc->busRouting[j];
+		ptr  = (u8*)&flag;
 
-		u16 flag = jc->busRouting[i];
-		u16* ptr = &flag;
-
-		if ((u8)flag == 0) {
-			jc->mixerLevels[i] = 0;
+		if (ptr[0] == 0) {
+			jc->mixerLevels[j] = 0;
 			continue;
 		}
 
-		if (flag >> 4) {
-			switch (flag >> 4) {
+		if ((ptr[1] >> 4) & 0xF) {
+			switch ((ptr[1] >> 4) & 0xF) {
 			case 1:
-				calc2 = mod1;
+				angle = mod1;
 				break;
 			case 2:
-				calc2 = mod2;
+				angle = mod2;
 				break;
 			case 3:
-				calc2 = mod3;
+				angle = mod3;
 				break;
 			case 5:
-				calc2 = 1.0f - mod1;
+				angle = 1.0f - mod1;
 				break;
 			case 6:
-				calc2 = 1.0f - mod2;
+				angle = 1.0f - mod2;
 				break;
 			case 7:
-				calc2 = 1.0f - mod3;
+				angle = 1.0f - mod3;
 				break;
 			}
-			calc *= sinf3(calc2);
+			tmp *= sinf3(angle);
 		}
 
-		if (flag & 0xf) {
-			switch (flag & 0xf) {
+		if (ptr[1] & 0xf) {
+			switch (ptr[1] & 0xf) {
 			case 1:
-				calc2 = mod1;
+				angle = mod1;
 				break;
 			case 2:
-				calc2 = mod2;
+				angle = mod2;
 				break;
 			case 3:
-				calc2 = mod3;
+				angle = mod3;
 				break;
 			case 5:
-				calc2 = 1.0f - mod1;
+				angle = 1.0f - mod1;
 				break;
 			case 6:
-				calc2 = 1.0f - mod2;
+				angle = 1.0f - mod2;
 				break;
 			case 7:
-				calc2 = 1.0f - mod3;
+				angle = 1.0f - mod3;
 				break;
 			}
-			calc *= sinf3(calc2);
+			tmp *= sinf3(angle);
 		}
 
-		calc3              = calc3 > 0.0f ? (calc3 < 1.0f) ? calc3 : 1.0f : calc;
-		jc->mixerLevels[i] = calc3 * (f32)MAX_MIXERLEVEL;
+		if (tmp < 0.0f) {
+			tmp = 0.0f;
+		} else if (tmp > 1.0f) {
+			tmp = 1.0f;
+		}
+		jc->mixerLevels[j] = tmp * (f32)MAX_MIXERLEVEL;
 	}
 	/*
 	.loc_0x0:
@@ -991,19 +1017,21 @@ static void KillBrokenLogicalChannels(dspch_* ch)
  */
 static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 {
-	u32 b    = 0;
-	u32* ptr = &a;
-	jc_* jc  = ch->_08;
+	u32 b   = 0;
+	jc_* jc = ch->_08;
+	u32 i;
+	dspch_** REF_ch = &ch;
+	jc_** REF_jc    = &jc;
+	u32 badCompiler[10];
 	if (jc == NULL) {
-		ch->_0C = nullptr;
+		ch->_0C = NULL;
 		ch->_03 = 0;
 		KillBrokenLogicalChannels(ch);
 		return FALSE;
 	}
 
-	dspch_* ch2 = jc->dspChannel;
-	if (ch != ch2) {
-		if (ch2 && ch2->_08 == jc) {
+	if (jc->dspChannel != ch) {
+		if (jc->dspChannel && jc->dspChannel->_08 == jc) {
 			KillBrokenLogicalChannels(ch);
 		} else {
 			StopLogicalChannel(jc);
@@ -1019,7 +1047,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 
 	if (a == 2) {
 		if (jc->updateCallback) {
-			jc->updateCallback(jc, (JCSTATUS)1);
+			jc->updateCallback(jc, JCSTAT_Unk1);
 		} else {
 			StopLogicalChannel(jc);
 			if (List_CutChannel(jc) != -1) {
@@ -1029,21 +1057,22 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		return FALSE;
 	}
 
-	if (jc->waveData && jc->waveData->_0C) {
-		ForceStopDSPchannel(ch2);
+	if (jc->waveData && !jc->waveData->_24[0]) {
+		ForceStopDSPchannel(jc->dspChannel);
 		return -1;
 	}
 
 	if (a == 4) {
-		if (ch2 && (u8)(jc->channelPriority >> 0x10) < ch2->_03) {
-			ch2->_03 = jc->channelPriority >> 0x10;
+		u8 prio = jc->channelPriority >> 16;
+		if (jc->dspChannel && prio < jc->dspChannel->_03) {
+			jc->dspChannel->_03 = prio;
 		}
 		return FALSE;
 	}
 
 	if (a == 3) {
-		jc->mOscillators[0]->mMode = 0;
-		if (List_CutChannel(jc) != -1) {
+		jc->mOscBuffers[0]._00 = 6;
+		if (List_CutChannel(jc) == -1) {
 			return TRUE;
 		}
 		List_AddChannel(&jc->mMgr->waitingChannels, jc);
@@ -1057,12 +1086,11 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		jc->panMatrices[2].values[1] = 0.0f;
 		jc->panMatrices[3].values[1] = 0.0f;
 
-		for (u32 i = 0; i < 4; i++) {
-			Osc_* osc = jc->mOscillators[i];
-			if (osc->mMode) {
-				Oscbuf_* buf = &jc->mOscBuffers[i];
-				DoEffectOsc(jc, osc->mMode, Bank_OscToOfs(osc, buf));
-				if (buf->_00 == 0) {
+		for (i = 0; i < 4; i++) {
+			u32* REF_i = &i;
+			if (jc->mOscillators[i]) {
+				DoEffectOsc(jc, jc->mOscillators[i]->mMode, Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]));
+				if (jc->mOscBuffers[i]._00 == 0) {
 					if (jc->updateCallback == NULL) {
 						if (StopLogicalChannel(jc) == FALSE) {
 							DSP_PlayStop(ch->buffer_idx);
@@ -1073,7 +1101,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 						}
 						return FALSE;
 					} else {
-						jc->updateCallback(jc, (JCSTATUS)1);
+						jc->updateCallback(jc, JCSTAT_Unk2);
 						return FALSE;
 					}
 				}
@@ -1086,7 +1114,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 			jc->toFlush = 1;
 		}
 
-		if (jc->extraUpdateCallback && jc->extraUpdateCallback(jc, (JCSTATUS)0) == TRUE) {
+		if (jc->extraUpdateCallback && (u32)jc->extraUpdateCallback(jc, JCSTAT_Unk0) == TRUE) {
 			jc->toFlush++;
 		}
 
@@ -1097,299 +1125,19 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		if (jc->savedPlayId > 0) {
 			jc->savedPlayId--;
 		}
-
-		if (jc->savedPlayId == 0) {
-			jc->updateCallback(jc, (JCSTATUS)0);
-			jc->savedPlayId = jc->playId;
-		}
-
-		if (jc->toFlush) {
-			UpdateJcToDSP(jc);
-			jc->toFlush = 0;
-		}
-
-		return TRUE;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stmw      r27, 0x54(r1)
-	  li        r29, 0
-	  stw       r3, 0x8(r1)
-	  lwz       r31, 0x8(r1)
-	  lwz       r0, 0x8(r31)
-	  addi      r28, r31, 0x8
-	  stw       r0, 0x48(r1)
-	  lwz       r30, 0x48(r1)
-	  cmplwi    r30, 0
-	  bne-      .loc_0x50
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0xC(r31)
-	  stb       r0, 0x3(r31)
-	  bl        -0xE4
-	  li        r3, 0
-	  b         .loc_0x370
 
-	.loc_0x50:
-	  lwz       r3, 0x20(r30)
-	  cmplw     r3, r31
-	  beq-      .loc_0xBC
-	  cmplwi    r3, 0
-	  beq-      .loc_0x7C
-	  lwz       r0, 0x8(r3)
-	  cmplw     r0, r30
-	  bne-      .loc_0x7C
-	  mr        r3, r31
-	  bl        -0x114
-	  b         .loc_0xA4
+	if (jc->savedPlayId == 0) {
+		jc->updateCallback(jc, JCSTAT_Unk0);
+		jc->savedPlayId = jc->playId;
+	}
 
-	.loc_0x7C:
-	  mr        r3, r30
-	  bl        0x320
-	  mr        r3, r30
-	  bl        -0xEE8
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0xA4
-	  lwz       r3, 0x4(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r3, 0x8
-	  bl        -0xDE0
+	if (jc->toFlush) {
+		UpdateJcToDSP(jc);
+		jc->toFlush = 0;
+	}
 
-	.loc_0xA4:
-	  li        r0, 0
-	  li        r3, 0
-	  stw       r0, 0x0(r28)
-	  stb       r0, 0x3(r31)
-	  stw       r0, 0xC(r31)
-	  b         .loc_0x370
-
-	.loc_0xBC:
-	  cmplwi    r4, 0x2
-	  bne-      .loc_0x114
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0xE4
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x10C
-
-	.loc_0xE4:
-	  mr        r3, r30
-	  bl        0x2B8
-	  mr        r3, r30
-	  bl        -0xF50
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x10C
-	  lwz       r3, 0x4(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r3, 0x8
-	  bl        -0xE48
-
-	.loc_0x10C:
-	  li        r3, 0
-	  b         .loc_0x370
-
-	.loc_0x114:
-	  lwz       r5, 0x10(r30)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x13C
-	  lwz       r5, 0x24(r5)
-	  lwz       r0, 0x0(r5)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x13C
-	  bl        0xD50
-	  li        r3, -0x1
-	  b         .loc_0x370
-
-	.loc_0x13C:
-	  cmplwi    r4, 0x4
-	  bne-      .loc_0x16C
-	  lwz       r0, 0x120(r30)
-	  cmplwi    r3, 0
-	  rlwinm    r4,r0,16,24,31
-	  beq-      .loc_0x164
-	  lbzu      r0, 0x3(r3)
-	  cmplw     r4, r0
-	  bge-      .loc_0x164
-	  stb       r4, 0x0(r3)
-
-	.loc_0x164:
-	  li        r3, 0
-	  b         .loc_0x370
-
-	.loc_0x16C:
-	  cmplwi    r4, 0x3
-	  bne-      .loc_0x1A8
-	  li        r0, 0x6
-	  addi      r3, r30, 0
-	  stb       r0, 0x48(r30)
-	  bl        -0xFE0
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x194
-	  li        r3, 0x1
-	  b         .loc_0x370
-
-	.loc_0x194:
-	  lwz       r3, 0x4(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r3, 0x14
-	  bl        -0xEE0
-	  li        r4, 0
-
-	.loc_0x1A8:
-	  cmplwi    r4, 0
-	  bne-      .loc_0x320
-	  lfs       f0, -0x7FC0(r2)
-	  li        r0, 0
-	  stfs      f0, 0xEC(r30)
-	  stfs      f0, 0xF0(r30)
-	  lfs       f0, -0x7FBC(r2)
-	  stfs      f0, 0xCC(r30)
-	  lfs       f0, -0x7FC4(r2)
-	  stfs      f0, 0xD8(r30)
-	  stfs      f0, 0xE4(r30)
-	  stw       r0, 0x44(r1)
-	  b         .loc_0x2A0
-
-	.loc_0x1DC:
-	  rlwinm    r3,r0,2,0,29
-	  addi      r28, r3, 0x38
-	  add       r28, r30, r28
-	  lwz       r3, 0x0(r28)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x294
-	  mulli     r4, r0, 0x18
-	  addi      r27, r4, 0x48
-	  add       r27, r30, r27
-	  addi      r4, r27, 0
-	  bl        0x2E5C
-	  lwz       r4, 0x0(r28)
-	  mr        r3, r30
-	  lbz       r4, 0x0(r4)
-	  bl        -0x334
-	  lbz       r0, 0x0(r27)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x290
-	  lwz       r12, 0x28(r30)
-	  cmplwi    r12, 0
-	  bne-      .loc_0x278
-	  mr        r3, r30
-	  bl        0x16C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x250
-	  lbz       r3, 0x0(r31)
-	  bl        0x12FC
-	  lbz       r3, 0x0(r31)
-	  bl        0x15F4
-
-	.loc_0x250:
-	  mr        r3, r30
-	  bl        -0x10B4
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x270
-	  lwz       r3, 0x4(r30)
-	  addi      r4, r30, 0
-	  addi      r3, r3, 0x8
-	  bl        -0xFAC
-
-	.loc_0x270:
-	  li        r3, 0
-	  b         .loc_0x370
-
-	.loc_0x278:
-	  addi      r3, r30, 0
-	  li        r4, 0x2
-	  mtlr      r12
-	  blrl
-	  li        r3, 0
-	  b         .loc_0x370
-
-	.loc_0x290:
-	  addi      r29, r29, 0x1
-
-	.loc_0x294:
-	  lwz       r3, 0x44(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x44(r1)
-
-	.loc_0x2A0:
-	  lwz       r0, 0x44(r1)
-	  cmplwi    r0, 0x4
-	  blt+      .loc_0x1DC
-	  cmplwi    r29, 0
-	  beq-      .loc_0x2C4
-	  mr        r3, r30
-	  bl        -0x738
-	  li        r0, 0x1
-	  stb       r0, 0x3(r30)
-
-	.loc_0x2C4:
-	  lwz       r12, 0x2C(r30)
-	  cmplwi    r12, 0
-	  beq-      .loc_0x2F4
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  mtlr      r12
-	  blrl
-	  cmplwi    r3, 0x1
-	  bne-      .loc_0x2F4
-	  lbz       r3, 0x3(r30)
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x3(r30)
-
-	.loc_0x2F4:
-	  lwz       r0, 0x28(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x308
-	  li        r3, 0x1
-	  b         .loc_0x370
-
-	.loc_0x308:
-	  addi      r4, r30, 0x34
-	  lwz       r3, 0x34(r30)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x320
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x0(r4)
-
-	.loc_0x320:
-	  addi      r27, r30, 0x34
-	  lwz       r0, 0x34(r30)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x34C
-	  lwz       r12, 0x28(r30)
-	  addi      r3, r30, 0
-	  li        r4, 0
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x30(r30)
-	  stw       r0, 0x0(r27)
-
-	.loc_0x34C:
-	  addi      r27, r30, 0x3
-	  lbz       r0, 0x3(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x36C
-	  mr        r3, r30
-	  bl        -0x820
-	  li        r0, 0
-	  stb       r0, 0x0(r27)
-
-	.loc_0x36C:
-	  li        r3, 0x1
-
-	.loc_0x370:
-	  lmw       r27, 0x54(r1)
-	  lwz       r0, 0x6C(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
+	return TRUE;
 }
 
 /*
@@ -1455,20 +1203,19 @@ BOOL PlayLogicalChannel(jc_* jc)
 	}
 
 	for (u32 i = 0; i < 6; i++) {
-		u16 bus0 = jc->busRouting[i];
-		u8 bus   = bus0;
-		u8* busp = &bus;
+		u16 bus  = jc->busRouting[i];
+		u8* busp = (u8*)&bus;
 		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
-			switch (bus) {
+			switch (busp[0]) {
 			case 8:
-				bus = 11;
+				busp[0] = 11;
 				break;
 			case 9:
-				bus = 2;
+				busp[0] = 2;
 				break;
 			}
 		}
-		DSP_SetBusConnect(jc->dspChannel->buffer_idx, i, bus);
+		DSP_SetBusConnect(jc->dspChannel->buffer_idx, i, busp[0]);
 	}
 
 	jc->lastManager = jc->mMgr;
@@ -1479,127 +1226,6 @@ BOOL PlayLogicalChannel(jc_* jc)
 	DSP_PlayStart(jc->dspChannel->buffer_idx);
 	DSP_FlushChannel(jc->dspChannel->buffer_idx);
 	return TRUE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stmw      r29, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r0, 0x20(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x16C
-
-	.loc_0x28:
-	  mr        r3, r31
-	  bl        -0x6C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x16C
-
-	.loc_0x40:
-	  lis       r4, 0x8001
-	  lwz       r3, 0x20(r31)
-	  subi      r4, r4, 0x5D20
-	  li        r0, 0x1
-	  stw       r4, 0xC(r3)
-	  lwz       r3, 0x20(r31)
-	  sth       r0, 0x6(r3)
-	  lbz       r0, 0xC(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0xAC
-	  bge-      .loc_0x78
-	  cmpwi     r0, 0
-	  bge-      .loc_0x84
-	  b         .loc_0xAC
-
-	.loc_0x78:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0xAC
-	  b         .loc_0x9C
-
-	.loc_0x84:
-	  lwz       r3, 0x20(r31)
-	  lwz       r4, 0x10(r31)
-	  lbz       r3, 0x0(r3)
-	  lwz       r5, 0x14(r31)
-	  bl        0xF4C
-	  b         .loc_0xAC
-
-	.loc_0x9C:
-	  lwz       r3, 0x20(r31)
-	  lwz       r4, 0x14(r31)
-	  lbz       r3, 0x0(r3)
-	  bl        0xED8
-
-	.loc_0xAC:
-	  li        r29, 0
-	  li        r30, 0
-
-	.loc_0xB4:
-	  addi      r3, r30, 0x108
-	  lwz       r0, -0x7FE4(r13)
-	  lhzx      r3, r31, r3
-	  cmplwi    r0, 0
-	  sth       r3, 0xC(r1)
-	  bne-      .loc_0xFC
-	  lbz       r0, 0xC(r1)
-	  cmpwi     r0, 0x9
-	  beq-      .loc_0xF4
-	  bge-      .loc_0xFC
-	  cmpwi     r0, 0x8
-	  bge-      .loc_0xE8
-	  b         .loc_0xFC
-
-	.loc_0xE8:
-	  li        r0, 0xB
-	  stb       r0, 0xC(r1)
-	  b         .loc_0xFC
-
-	.loc_0xF4:
-	  li        r0, 0x2
-	  stb       r0, 0xC(r1)
-
-	.loc_0xFC:
-	  lwz       r3, 0x20(r31)
-	  rlwinm    r4,r29,0,24,31
-	  lbz       r5, 0xC(r1)
-	  lbz       r3, 0x0(r3)
-	  bl        0xF94
-	  addi      r29, r29, 0x1
-	  addi      r30, r30, 0x2
-	  cmplwi    r29, 0x6
-	  blt+      .loc_0xB4
-	  lwz       r0, 0x4(r31)
-	  mr        r3, r31
-	  stw       r0, 0xFC(r31)
-	  bl        -0xA0C
-	  mr        r3, r31
-	  bl        -0xC14
-	  lwz       r0, 0x120(r31)
-	  lwz       r3, 0x20(r31)
-	  stb       r0, 0x3(r3)
-	  lhz       r0, 0x124(r31)
-	  lwz       r3, 0x20(r31)
-	  sth       r0, 0x4(r3)
-	  lwz       r3, 0x20(r31)
-	  lbz       r3, 0x0(r3)
-	  bl        0x1008
-	  lwz       r3, 0x20(r31)
-	  lbz       r3, 0x0(r3)
-	  bl        0x127C
-	  li        r3, 0x1
-
-	.loc_0x16C:
-	  lmw       r29, 0x14(r1)
-	  lwz       r0, 0x24(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1677,120 +1303,36 @@ void __Entry_WaitChannel(u8 a)
 {
 	jc_* jc;
 	dspch_* ch;
+	u32 badCompiler[2];
 
 	while (cur_waits != 0) {
-		while (TRUE) {
-			jc_* temp = waitp[cur_top];
-			if (temp) {
-				jc = temp;
+		jc = waitp[cur_top];
+		if (jc) {
+			ch = AllocDSPchannel(0, (u32)jc);
+			if (ch == NULL) {
 				break;
 			}
+			jc->dspChannel = ch;
+			PlayLogicalChannel(jc);
+			if (List_CutChannel(jc) != -1) {
+				List_AddChannel(&jc->mMgr->activeChannels, jc);
+			}
+			cur_top++;
+			if (cur_top == 0x20) {
+				cur_top = 0;
+			}
+			cur_waits--;
+			if (a == 1) {
+				break;
+			}
+		} else {
+			cur_top++;
+			if (cur_top == 0x20) {
+				cur_top = 0;
+			}
+			cur_waits--;
 		}
-
-		ch = AllocDSPchannel(0, (u32)jc);
-		if (ch == NULL) {
-			break;
-		}
-		jc->dspChannel = ch;
-		PlayLogicalChannel(jc);
-		if (List_CutChannel(jc) != -1) {
-			List_AddChannel(&jc->mMgr->activeChannels, jc);
-		}
-		cur_top++;
-		if (cur_top == 0x20) {
-			cur_top = 0;
-		}
-		cur_waits--;
-		if (a == 1) {
-			return;
-		}
-
-		cur_top++;
-		if (cur_top == 0x20) {
-			cur_top = 0;
-		}
-		cur_waits--;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8030
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r29, 0x1C(r1)
-	  rlwinm    r31,r3,0,24,31
-	  addi      r30, r4, 0x6560
-	  b         .loc_0xDC
-
-	.loc_0x20:
-	  lwz       r4, 0x2BD4(r13)
-	  rlwinm    r0,r4,2,0,29
-	  add       r3, r30, r0
-	  lwz       r0, 0x0(r3)
-	  cmplwi    r0, 0
-	  mr        r29, r0
-	  beq-      .loc_0xB4
-	  li        r3, 0
-	  addi      r4, r29, 0
-	  bl        0x29C
-	  cmplwi    r3, 0
-	  beq-      .loc_0xE8
-	  stw       r3, 0x20(r29)
-	  mr        r3, r29
-	  bl        -0x398
-	  mr        r3, r29
-	  bl        -0x1660
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x7C
-	  lwz       r3, 0x4(r29)
-	  addi      r4, r29, 0
-	  addi      r3, r3, 0xC
-	  bl        -0x15B8
-
-	.loc_0x7C:
-	  lwz       r3, 0x2BD4(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2BD4(r13)
-	  lwz       r0, 0x2BD4(r13)
-	  cmplwi    r0, 0x20
-	  bne-      .loc_0x9C
-	  li        r0, 0
-	  stw       r0, 0x2BD4(r13)
-
-	.loc_0x9C:
-	  lwz       r3, 0x2BD0(r13)
-	  cmplwi    r31, 0x1
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x2BD0(r13)
-	  beq-      .loc_0xE8
-	  b         .loc_0xDC
-
-	.loc_0xB4:
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2BD4(r13)
-	  lwz       r0, 0x2BD4(r13)
-	  cmplwi    r0, 0x20
-	  bne-      .loc_0xD0
-	  li        r0, 0
-	  stw       r0, 0x2BD4(r13)
-
-	.loc_0xD0:
-	  lwz       r3, 0x2BD0(r13)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x2BD0(r13)
-
-	.loc_0xDC:
-	  lwz       r0, 0x2BD0(r13)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x20
-
-	.loc_0xE8:
-	  lmw       r29, 0x1C(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1810,73 +1352,13 @@ void EntryCheck_WaitDSPChannel()
 				jc->playId--;
 			}
 			if (jc->playId == 0) {
-				jc->updateCallback(jc, (JCSTATUS)6);
+				jc->updateCallback(jc, JCSTAT_Unk6);
 				waitp[(cur_top + i) & 0x1f] = NULL;
 			}
 		}
 	}
 
 	u32 badcompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802F
-	  stw       r0, 0x4(r1)
-	  li        r3, 0
-	  stwu      r1, -0x18(r1)
-	  stmw      r30, 0x10(r1)
-	  addi      r30, r4, 0x24E0
-	  bl        -0x11C
-	  addis     r30, r30, 0x1
-	  li        r31, 0
-	  b         .loc_0xA4
-
-	.loc_0x2C:
-	  lwz       r0, 0x2BD4(r13)
-	  add       r0, r0, r31
-	  rlwinm    r0,r0,2,25,29
-	  add       r5, r30, r0
-	  lwz       r0, 0x4080(r5)
-	  cmplwi    r0, 0
-	  mr        r3, r0
-	  beq-      .loc_0xA0
-	  lwz       r4, 0x4100(r5)
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x4100(r5)
-	  lwz       r4, 0x30(r3)
-	  cmpwi     r4, 0
-	  ble-      .loc_0x6C
-	  subi      r0, r4, 0x1
-	  stw       r0, 0x30(r3)
-
-	.loc_0x6C:
-	  lwz       r0, 0x30(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xA0
-	  lwz       r12, 0x28(r3)
-	  li        r4, 0x6
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2BD4(r13)
-	  li        r4, 0
-	  add       r0, r0, r31
-	  rlwinm    r0,r0,2,25,29
-	  add       r3, r30, r0
-	  stw       r4, 0x4080(r3)
-
-	.loc_0xA0:
-	  addi      r31, r31, 0x1
-
-	.loc_0xA4:
-	  lwz       r0, 0x2BD0(r13)
-	  cmplw     r31, r0
-	  blt+      .loc_0x2C
-	  lwz       r0, 0x1C(r1)
-	  lmw       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
