@@ -1657,7 +1657,7 @@ static void IpicPlaneDec(VideoState* state, int plane_idx, u8* dst)
  * Address:	8002095C
  * Size:	00008C
  */
-static void initMCHandler(VideoState* state, MCHandler* mch, u8* lin_top, u8* forw, u8* back)
+static void initMCHandler(VideoState* ws, MCHandler* mch, u8* lin_top, u8* forw, u8* back)
 {
 	int i;
 	MCPlane* mcplane;
@@ -1666,7 +1666,7 @@ static void initMCHandler(VideoState* state, MCHandler* mch, u8* lin_top, u8* fo
 
 	for (i = 0; i < PLANE_COUNT; i++) {
 		mcplane            = &mch->pln[i];
-		plane              = &state->pln[i];
+		plane              = &ws->pln[i];
 		mcplane->bsrunleng = 0;
 		mcplane->prev_dcv  = 0x7F;
 		mcplane->lin_top   = lin_top;
@@ -1696,10 +1696,12 @@ static void initMCHandler(VideoState* state, MCHandler* mch, u8* lin_top, u8* fo
 static void resetMCHandler(VideoState* state, MCHandler* mch, u8* lin_top)
 {
 	int i;
+	MCPlane* pmc;
 
 	for (i = 0; i < PLANE_COUNT; i++) {
-		mch->pln[i].lin_top  = lin_top;
-		mch->pln[i].data_top = mch->pln[i].data = state->pln[i].blockInfoTop;
+		pmc           = &mch->pln[i];
+		pmc->lin_top  = lin_top;
+		pmc->data_top = pmc->data = state->pln[i].blockInfoTop;
 		lin_top += state->pln[i].plane_size;
 	}
 }
@@ -3640,22 +3642,26 @@ static void MCBlockDecDCNest(VideoState* ws, MCHandler* mch)
 	}
 }
 
-static void getMVector(int* result, BitBufferWithTree* buf, u32 residual_bits)
+static void getMVector(int* vec, BitBufferWithTree* code, int fcode)
 {
+	int range;
+	int v;
 	int i;
 
-	int max_val_plus_1 = 1 << (residual_bits + 5);
+	range = 1 << (fcode + 5);
 	// quantized value
-	int value = decodeHuff(buf) << residual_bits;
+	v = decodeHuff(code) << fcode;
 	// residual bits
-	for (i = residual_bits - 1; i >= 0; --i)
-		value += getBit(&buf->buf) << i;
-	*result += value;
-	// signed wrap to -max_val_plus_1 .. max_val_plus_1-1
-	if (*result >= max_val_plus_1)
-		*result -= max_val_plus_1 << 1;
-	else if (*result < -max_val_plus_1)
-		*result += max_val_plus_1 << 1;
+	for (i = fcode - 1; i >= 0; i--) {
+		v += getBit(&code->buf) << i;
+	}
+	*vec += v;
+	// signed wrap to -range .. range-1
+	if (*vec >= range) {
+		*vec -= range << 1;
+	} else if (*vec < -range) {
+		*vec += range << 1;
+	}
 }
 
 /*
@@ -3733,23 +3739,23 @@ static int getMCBtype(BitBufferWithTree* code, RLDecoder* flag)
  */
 static void spread_PB_descMap(SeqObj* obj, MCHandler* mch)
 {
-	VideoState* state = (VideoState*)obj->ws;
+	VideoState* ws = (VideoState*)obj->ws;
 	struct RLDecoder proc;
 	struct RLDecoder type;
 	int i, j;
 
-	initMCBproc(&state->mcaot, &proc);
-	initMCBtype(&state->mstat, &type);
+	initMCBproc(&ws->mcaot, &proc);
+	initMCBtype(&ws->mstat, &type);
 	for (j = 0; j < obj->frame_height; j += 8) {
 		setMCTop(mch);
 		for (i = 0; i < obj->frame_width; i += 8) {
-			getMCBtype(&state->mstat, &type);
+			getMCBtype(&ws->mstat, &type);
 			if (type.status == 0) {
-				decode_PB_dc(state, mch);
-				decode_PB_cc(state, mch, 0, type.status);
+				decode_PB_dc(ws, mch);
+				decode_PB_cc(ws, mch, 0, type.status);
 			} else {
-				reset_PB_dc(state, mch);
-				decode_PB_cc(state, mch, getMCBproc(&state->mcaot, &proc), type.status);
+				reset_PB_dc(ws, mch);
+				decode_PB_cc(ws, mch, getMCBproc(&ws->mcaot, &proc), type.status);
 			}
 			setMCNextBlk(mch);
 		}
@@ -3764,387 +3770,55 @@ static void spread_PB_descMap(SeqObj* obj, MCHandler* mch)
  */
 static void BpicPlaneDec(SeqObj* seqObj, u8* lin_top, u8* forw, u8* back)
 {
-
-	VideoState* state;
-	int mvecx, mvecy;
-	int reference_frame;
-	u8 bits;
-	int new_reference_frame;
-	int x, y;
-	int mcaot;
+	VideoState* ws;
 	MCHandler mch;
-	u32 badCompiler[4];
+	int vx, vy;
+	int dir;
+	int i, j;
+	u8 cc;
+	u8 mtype;
+	int d;
 
-	state = (VideoState*)seqObj->ws;
-	initMCHandler(state, &mch, lin_top, forw, back);
+	ws = (VideoState*)seqObj->ws;
+	initMCHandler(ws, &mch, lin_top, forw, back);
 	spread_PB_descMap(seqObj, &mch);
-	resetMCHandler(state, &mch, lin_top);
-	reference_frame = -1;
+	resetMCHandler(ws, &mch, lin_top);
+	dir = -1;
 	// MC blocks are 8x8 pixels
-	for (y = 0; y < seqObj->frame_height; y += 8) {
+	for (j = 0; j < seqObj->frame_height; j += 8) {
 		setMCTop(&mch);
-		for (x = 0; x < seqObj->frame_width; x += 8) {
-			bits = mch.pln[0].data->bnm;
+		for (i = 0; i < seqObj->frame_width; i += 8) {
+			cc = mch.pln[0].data->bnm;
 			// 0: intra
 			// 1: inter - past
 			// 2: inter - future
 			// see getMCBtype()
-			new_reference_frame = (bits >> 5) & 3;
-			if (new_reference_frame == 0) {
+			d = (cc >> 5) & 3;
+			if (d == 0) {
 				// intra
-				MCBlockDecDCNest(state, &mch);
+				MCBlockDecDCNest(ws, &mch);
 			} else {
-				// inter
-				--new_reference_frame;
 				// check if we need to update the reference frame pointers
-				if (new_reference_frame != reference_frame) {
-					reference_frame = new_reference_frame;
-					setMCTarget(&mch, reference_frame);
-					mvecx = 0;
-					mvecy = 0;
+				if (--d != dir) {
+					dir = d;
+					setMCTarget(&mch, dir);
+					vx = vy = 0;
 				}
-				getMVector(&mvecx, &state->mvecx, state->fcode[0][reference_frame]);
-				getMVector(&mvecy, &state->mvecy, state->fcode[1][reference_frame]);
+				getMVector(&vx, &ws->mvecx, ws->fcode[0][dir]);
+				getMVector(&vy, &ws->mvecy, ws->fcode[1][dir]);
 
 				// compute half-pixel position of reference macroblock
 				// see getMCBproc()
-				mcaot = (bits >> 4) & 1;
-				if (mcaot == 0)
-					MCBlockDecMCNest(state, &mch, (x << 1) + mvecx, (y << 1) + mvecy);
+				mtype = (cc >> 4) & 1;
+				if (mtype == 0)
+					MCBlockDecMCNest(ws, &mch, (i << 1) + vx, (j << 1) + vy);
 				else
-					MotionComp(state, &mch, (x << 1) + mvecx, (y << 1) + mvecy);
+					MotionComp(ws, &mch, (i << 1) + vx, (j << 1) + vy);
 			}
 			setMCNextBlk(&mch);
 		}
 		setMCDownBlk(&mch);
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r7, r6, 0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0
-	  mr        r6, r0
-	  stwu      r1, -0x150(r1)
-	  stmw      r15, 0x10C(r1)
-	  addi      r15, r4, 0
-	  mr        r19, r3
-	  addi      r5, r15, 0
-	  addi      r4, r1, 0x68
-	  lwz       r25, 0x0(r3)
-	  addi      r3, r25, 0
-	  bl        -0x2988
-	  addi      r3, r19, 0
-	  addi      r4, r1, 0x68
-	  bl        -0x470
-	  stw       r15, 0x78(r1)
-	  li        r20, 0
-	  rlwinm    r28,r20,1,0,30
-	  lwz       r0, 0x4(r25)
-	  addi      r31, r25, 0x620C
-	  addi      r30, r25, 0x6220
-	  stw       r0, 0x70(r1)
-	  li        r22, -0x1
-	  stw       r0, 0x74(r1)
-	  lwz       r0, 0x2C(r25)
-	  add       r3, r15, r0
-	  stw       r3, 0xAC(r1)
-	  lwz       r0, 0x3C(r25)
-	  stw       r0, 0xA4(r1)
-	  stw       r0, 0xA8(r1)
-	  lwz       r0, 0x64(r25)
-	  add       r3, r3, r0
-	  stw       r3, 0xE0(r1)
-	  lwz       r0, 0x74(r25)
-	  stw       r0, 0xD8(r1)
-	  stw       r0, 0xDC(r1)
-	  b         .loc_0x41C
-
-	.loc_0x9C:
-	  lwz       r0, 0x78(r1)
-	  li        r21, 0
-	  rlwinm    r29,r21,1,0,30
-	  stw       r0, 0x7C(r1)
-	  lwz       r0, 0xAC(r1)
-	  stw       r0, 0xB0(r1)
-	  lwz       r0, 0xE0(r1)
-	  stw       r0, 0xE4(r1)
-	  b         .loc_0x390
-
-	.loc_0xC0:
-	  lwz       r3, 0x70(r1)
-	  lbz       r27, 0x1(r3)
-	  rlwinm.   r3,r27,27,30,31
-	  bne-      .loc_0xE0
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0x68
-	  bl        -0x660
-	  b         .loc_0x31C
-
-	.loc_0xE0:
-	  subi      r0, r3, 0x1
-	  cmpw      r0, r22
-	  beq-      .loc_0x134
-	  cmpwi     r0, 0
-	  mr        r22, r0
-	  bne-      .loc_0x114
-	  lwz       r0, 0x84(r1)
-	  stw       r0, 0x80(r1)
-	  lwz       r0, 0xB8(r1)
-	  stw       r0, 0xB4(r1)
-	  lwz       r0, 0xEC(r1)
-	  stw       r0, 0xE8(r1)
-	  b         .loc_0x12C
-
-	.loc_0x114:
-	  lwz       r0, 0x88(r1)
-	  stw       r0, 0x80(r1)
-	  lwz       r0, 0xBC(r1)
-	  stw       r0, 0xB4(r1)
-	  lwz       r0, 0xF0(r1)
-	  stw       r0, 0xE8(r1)
-
-	.loc_0x12C:
-	  li        r23, 0
-	  li        r24, 0
-
-	.loc_0x134:
-	  add       r26, r25, r22
-	  lwz       r15, 0x621C(r25)
-	  lbz       r16, 0x6CD2(r26)
-	  li        r3, 0x1
-	  lwz       r17, 0x4(r15)
-	  addi      r0, r16, 0x5
-	  slw       r18, r3, r0
-	  b         .loc_0x170
-
-	.loc_0x154:
-	  mr        r3, r31
-	  bl        -0x3C20
-	  rlwinm    r3,r3,11,0,20
-	  rlwinm    r0,r17,2,0,29
-	  add       r3, r3, r0
-	  addi      r0, r3, 0x8
-	  lwzx      r17, r15, r0
-
-	.loc_0x170:
-	  cmpwi     r17, 0x100
-	  bge+      .loc_0x154
-	  subic.    r4, r16, 0x1
-	  rlwinm    r3,r17,2,0,29
-	  addi      r3, r3, 0x8
-	  addi      r0, r4, 0x1
-	  lwzx      r3, r15, r3
-	  mtctr     r0
-	  slw       r5, r3, r16
-	  blt-      .loc_0x1E4
-
-	.loc_0x198:
-	  lwz       r6, 0x6218(r25)
-	  cmpwi     r6, 0
-	  bge-      .loc_0x1C0
-	  lwz       r3, 0x620C(r25)
-	  li        r6, 0x1F
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x620C(r25)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x6214(r25)
-	  b         .loc_0x1C4
-
-	.loc_0x1C0:
-	  lwz       r0, 0x6214(r25)
-
-	.loc_0x1C4:
-	  srw       r0, r0, r6
-	  rlwinm    r0,r0,0,31,31
-	  slw       r0, r0, r4
-	  subi      r3, r6, 0x1
-	  stw       r3, 0x6218(r25)
-	  add       r5, r5, r0
-	  subi      r4, r4, 0x1
-	  bdnz+     .loc_0x198
-
-	.loc_0x1E4:
-	  add       r24, r24, r5
-	  cmpw      r24, r18
-	  blt-      .loc_0x1FC
-	  rlwinm    r0,r18,1,0,30
-	  sub       r24, r24, r0
-	  b         .loc_0x210
-
-	.loc_0x1FC:
-	  neg       r0, r18
-	  cmpw      r24, r0
-	  bge-      .loc_0x210
-	  rlwinm    r0,r18,1,0,30
-	  add       r24, r24, r0
-
-	.loc_0x210:
-	  lbz       r15, 0x6CD4(r26)
-	  li        r3, 0x1
-	  lwz       r16, 0x6230(r25)
-	  addi      r0, r15, 0x5
-	  lwz       r17, 0x4(r16)
-	  slw       r18, r3, r0
-	  b         .loc_0x248
-
-	.loc_0x22C:
-	  mr        r3, r30
-	  bl        -0x3CF8
-	  rlwinm    r3,r3,11,0,20
-	  rlwinm    r0,r17,2,0,29
-	  add       r3, r3, r0
-	  addi      r0, r3, 0x8
-	  lwzx      r17, r16, r0
-
-	.loc_0x248:
-	  cmpwi     r17, 0x100
-	  bge+      .loc_0x22C
-	  subic.    r4, r15, 0x1
-	  rlwinm    r3,r17,2,0,29
-	  addi      r3, r3, 0x8
-	  addi      r0, r4, 0x1
-	  lwzx      r3, r16, r3
-	  mtctr     r0
-	  slw       r5, r3, r15
-	  blt-      .loc_0x2BC
-
-	.loc_0x270:
-	  lwz       r6, 0x622C(r25)
-	  cmpwi     r6, 0
-	  bge-      .loc_0x298
-	  lwz       r3, 0x6220(r25)
-	  li        r6, 0x1F
-	  addi      r0, r3, 0x4
-	  stw       r0, 0x6220(r25)
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x6228(r25)
-	  b         .loc_0x29C
-
-	.loc_0x298:
-	  lwz       r0, 0x6228(r25)
-
-	.loc_0x29C:
-	  srw       r0, r0, r6
-	  rlwinm    r0,r0,0,31,31
-	  slw       r0, r0, r4
-	  subi      r3, r6, 0x1
-	  stw       r3, 0x622C(r25)
-	  add       r5, r5, r0
-	  subi      r4, r4, 0x1
-	  bdnz+     .loc_0x270
-
-	.loc_0x2BC:
-	  add       r23, r23, r5
-	  cmpw      r23, r18
-	  blt-      .loc_0x2D4
-	  rlwinm    r0,r18,1,0,30
-	  sub       r23, r23, r0
-	  b         .loc_0x2E8
-
-	.loc_0x2D4:
-	  neg       r0, r18
-	  cmpw      r23, r0
-	  bge-      .loc_0x2E8
-	  rlwinm    r0,r18,1,0,30
-	  add       r23, r23, r0
-
-	.loc_0x2E8:
-	  rlwinm.   r0,r27,28,31,31
-	  bne-      .loc_0x308
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0x68
-	  add       r5, r29, r24
-	  add       r6, r28, r23
-	  bl        -0x9EC
-	  b         .loc_0x31C
-
-	.loc_0x308:
-	  addi      r3, r25, 0
-	  addi      r4, r1, 0x68
-	  add       r5, r29, r24
-	  add       r6, r28, r23
-	  bl        -0x2550
-
-	.loc_0x31C:
-	  lwz       r3, 0x7C(r1)
-	  addi      r29, r29, 0x10
-	  lhz       r0, 0x8C(r1)
-	  addi      r21, r21, 0x8
-	  add       r0, r3, r0
-	  stw       r0, 0x7C(r1)
-	  lwz       r0, 0x94(r1)
-	  lwz       r3, 0x70(r1)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0x70(r1)
-	  lwz       r3, 0xB0(r1)
-	  lhz       r0, 0xC0(r1)
-	  add       r0, r3, r0
-	  stw       r0, 0xB0(r1)
-	  lwz       r0, 0xC8(r1)
-	  lwz       r3, 0xA4(r1)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0xA4(r1)
-	  lwz       r3, 0xE4(r1)
-	  lhz       r0, 0xF4(r1)
-	  add       r0, r3, r0
-	  stw       r0, 0xE4(r1)
-	  lwz       r0, 0xFC(r1)
-	  lwz       r3, 0xD8(r1)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0xD8(r1)
-
-	.loc_0x390:
-	  lhz       r0, 0x4(r19)
-	  cmpw      r21, r0
-	  blt+      .loc_0xC0
-	  lwz       r3, 0x78(r1)
-	  addi      r28, r28, 0x10
-	  lwz       r0, 0x90(r1)
-	  addi      r20, r20, 0x8
-	  add       r0, r3, r0
-	  stw       r0, 0x78(r1)
-	  lwz       r0, 0x98(r1)
-	  lwz       r3, 0x74(r1)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0x74(r1)
-	  stw       r0, 0x70(r1)
-	  lwz       r3, 0xAC(r1)
-	  lwz       r0, 0xC4(r1)
-	  add       r0, r3, r0
-	  stw       r0, 0xAC(r1)
-	  lwz       r0, 0xCC(r1)
-	  lwz       r3, 0xA8(r1)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0xA8(r1)
-	  stw       r0, 0xA4(r1)
-	  lwz       r3, 0xE0(r1)
-	  lwz       r0, 0xF8(r1)
-	  add       r0, r3, r0
-	  stw       r0, 0xE0(r1)
-	  lwz       r0, 0x100(r1)
-	  lwz       r3, 0xDC(r1)
-	  rlwinm    r0,r0,1,0,30
-	  add       r0, r3, r0
-	  stw       r0, 0xDC(r1)
-	  stw       r0, 0xD8(r1)
-
-	.loc_0x41C:
-	  lhz       r0, 0x6(r19)
-	  cmpw      r20, r0
-	  blt+      .loc_0x9C
-	  lmw       r15, 0x10C(r1)
-	  lwz       r0, 0x154(r1)
-	  addi      r1, r1, 0x150
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
