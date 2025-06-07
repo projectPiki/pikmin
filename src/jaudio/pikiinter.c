@@ -338,9 +338,7 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 	event->position.z = p2->y;
 
 	for (i = 0; i < 16; i++) {
-		event->_0C[i]._00 = 0;
-		event->_0C[i]._04 = 0;
-		event->_0C[i]._08 = 0;
+		event->_0C[i]._08 = event->_0C[i]._04 = event->_0C[i]._00 = 0;
 	}
 
 	event->frameTimer = 100;
@@ -352,98 +350,6 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 	}
 
 	return idx;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r29, 0x1C(r1)
-	  mr        r29, r4
-	  stw       r3, 0x8(r1)
-	  lwz       r31, 0x8(r1)
-	  cmplwi    r31, 0
-	  bne-      .loc_0x2C
-	  li        r3, -0x1
-	  b         .loc_0x104
-
-	.loc_0x2C:
-	  rlwinm    r3,r31,0,24,31
-	  bl        0x2890
-	  cmpwi     r3, 0
-	  bne-      .loc_0x44
-	  li        r3, -0x1
-	  b         .loc_0x104
-
-	.loc_0x44:
-	  lis       r3, 0x803E
-	  li        r0, 0x10
-	  subi      r5, r3, 0x5034
-	  li        r6, 0
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0x5C:
-	  add       r4, r5, r3
-	  lwz       r0, 0xCC(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x78
-	  addi      r6, r6, 0x1
-	  addi      r3, r3, 0x1B4
-	  bdnz+     .loc_0x5C
-
-	.loc_0x78:
-	  cmplwi    r6, 0x10
-	  bne-      .loc_0x88
-	  li        r3, -0x1
-	  b         .loc_0x104
-
-	.loc_0x88:
-	  mulli     r4, r6, 0x1B4
-	  lis       r3, 0x803E
-	  subi      r3, r3, 0x5034
-	  li        r0, 0x10
-	  add       r7, r3, r4
-	  addi      r30, r6, 0
-	  stw       r31, 0xCC(r7)
-	  li        r3, 0
-	  li        r4, 0
-	  lfs       f0, 0x0(r29)
-	  stfs      f0, 0x0(r7)
-	  lfs       f0, 0x8(r29)
-	  stfs      f0, 0x4(r7)
-	  lfs       f0, 0x4(r29)
-	  stfs      f0, 0x8(r7)
-	  mtctr     r0
-
-	.loc_0xC8:
-	  add       r5, r7, r3
-	  addi      r3, r3, 0xC
-	  stw       r4, 0xC(r5)
-	  stb       r4, 0x10(r5)
-	  stw       r4, 0x14(r5)
-	  bdnz+     .loc_0xC8
-	  li        r0, 0x64
-	  cmpwi     r31, 0x7
-	  stw       r0, 0x170(r7)
-	  beq-      .loc_0xF4
-	  b         .loc_0x100
-
-	.loc_0xF4:
-	  addi      r3, r30, 0
-	  li        r4, 0x4
-	  bl        0x84
-
-	.loc_0x100:
-	  mr        r3, r30
-
-	.loc_0x104:
-	  lmw       r29, 0x1C(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

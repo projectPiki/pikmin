@@ -323,7 +323,7 @@ void Jac_UpdatePikiGaya()
 		}
 		Jam_SetExtParamD(volume, &outerparam, 1);
 	}
-	
+
 	gaya_timer++;
 
 	f32 badcompiler[2];
