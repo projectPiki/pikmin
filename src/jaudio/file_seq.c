@@ -287,7 +287,7 @@ void Jaf_LoadStartSeqA(u32, u32, u8*)
  * Address:	8001B920
  * Size:	000034
  */
-void Jaf_LoadSeqA(u32 param_1, u8* param_2)
+u32 Jaf_LoadSeqA(u32 param_1, u8* param_2)
 {
-	__LoadSeqA(0, param_1, param_2, Jaf_LoadFinish);
+	return __LoadSeqA(0, param_1, param_2, Jaf_LoadFinish);
 }

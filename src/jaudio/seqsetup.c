@@ -37,7 +37,7 @@ void Jaq_Reset(void)
 	for (i = 0; i < SEQ_SIZE; ++i) {
 		seq[i].trackState    = 0;
 		seq[i].childMuteMask = 0;
-		seq[i].muteFlag      = 0;
+		seq[i].isMuted       = 0;
 		FREE_SEQP_QUEUE[i]   = &seq[i];
 	}
 
@@ -167,74 +167,74 @@ seqp_* Jaq_HandleToSeq(u32 handle)
  * Address:	80014040
  * Size:	000368
  */
-static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
+static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 {
 	int i;
 
-	if (!otherSeq) {
-		track->baseData         = (u8*)param_2;
+	if (!parent) {
+		track->baseData         = (u8*)dataAddress;
 		track->programCounter   = 0;
 		track->tempo            = 120;
 		track->timeBase         = 48;
 		track->timeRelationMode = 1;
-		track->pauseFlag        = 0;
+		track->isPaused         = FALSE;
 		track->pauseStatus      = 10;
 		track->childMuteMask    = 0;
-		track->muteFlag         = 0;
+		track->isMuted          = 0;
 	} else {
-		track->baseData         = otherSeq->baseData;
-		track->programCounter   = param_2;
-		track->fileHandle       = otherSeq->fileHandle;
-		track->tempo            = otherSeq->tempo;
-		track->changeTempoFlag  = 0;
-		track->tempoFactor      = otherSeq->tempoFactor;
-		track->timeBase         = otherSeq->timeBase;
-		track->timeRelationMode = otherSeq->timeRelationMode;
-		track->pauseFlag        = otherSeq->pauseFlag;
-		track->pauseStatus      = otherSeq->pauseStatus;
+		track->baseData         = parent->baseData;
+		track->programCounter   = dataAddress;
+		track->fileHandle       = parent->fileHandle;
+		track->tempo            = parent->tempo;
+		track->doChangeTempo    = FALSE;
+		track->tempoFactor      = parent->tempoFactor;
+		track->timeBase         = parent->timeBase;
+		track->timeRelationMode = parent->timeRelationMode;
+		track->isPaused         = parent->isPaused;
+		track->pauseStatus      = parent->pauseStatus;
 		track->childMuteMask    = 0;
 	}
-	track->callStackPointer = 0;
-	track->_D0              = 0;
-	track->_8C              = 0;
-	track->trackState       = 1;
-	track->parent           = otherSeq;
-	track->interruptEnable  = 0;
-	track->interruptActive  = 0;
-	track->_3D0             = 0;
+	track->callStackDepth  = 0;
+	track->_D0             = 0;
+	track->_8C             = 0;
+	track->trackState      = 1;
+	track->parent          = parent;
+	track->interruptEnable = 0;
+	track->interruptActive = 0;
+	track->_3D0            = 0;
 
 	// Initialize all MoveParams with default values.
 	for (i = 0; i < 18; ++i) {
-		track->timedParam.move[i].duration = 0.0f;
-		track->timedParam.move[i].value    = 1.0f;
-		track->timedParam.move[i].target   = 1.0f;
+		track->timedParam.move[i].duration     = 0.0f;
+		track->timedParam.move[i].currentValue = 1.0f;
+		track->timedParam.move[i].targetValue  = 1.0f;
 	}
 
-	track->timedParam.inner.pitch.value  = 0.0f;
-	track->timedParam.inner.pitch.target = 0.0f;
-	track->timedParam.inner.pitch.value  = 0.0f; // Just to be sure.
-	track->timedParam.inner.pitch.target = 0.0f; // Just to be sure.
-	track->timedParam.inner.pan.value    = 0.5f;
-	track->timedParam.inner.pan.target   = 0.5f;
+	track->timedParam.inner.pitch.currentValue = 0.0f;
+	track->timedParam.inner.pitch.targetValue  = 0.0f;
+	track->timedParam.inner.pitch.currentValue = 0.0f; // Just to be sure.
+	track->timedParam.inner.pitch.targetValue  = 0.0f; // Just to be sure.
+	track->timedParam.inner.pan.currentValue   = 0.5f;
+	track->timedParam.inner.pan.targetValue    = 0.5f;
 
-	track->timedParam.inner._100.value  = 0.5f;
-	track->timedParam.inner._100.target = 0.5f;
-	track->timedParam.inner._110.value  = 0.0f;
-	track->timedParam.inner._110.target = 0.0f;
+	track->timedParam.inner._100.currentValue = 0.5f;
+	track->timedParam.inner._100.targetValue  = 0.5f;
+	track->timedParam.inner._110.currentValue = 0.0f;
+	track->timedParam.inner._110.targetValue  = 0.0f;
 
-	track->timedParam.inner.fxmix.value  = 0.0f;
-	track->timedParam.inner.fxmix.target = 0.0f;
-	track->timedParam.inner.dolby.value  = 0.0f;
-	track->timedParam.inner.dolby.target = 0.0f;
+	track->timedParam.inner.fxmix.currentValue = 0.0f;
+	track->timedParam.inner.fxmix.targetValue  = 0.0f;
+	track->timedParam.inner.dolby.currentValue = 0.0f;
+	track->timedParam.inner.dolby.targetValue  = 0.0f;
 
 	// Initialize IIRs (skipping the first one)
 	for (i = 1; i < 4; ++i) {
-		track->timedParam.inner.IIRs[i].value  = 0.0f;
-		track->timedParam.inner.IIRs[i].target = 0.0f;
+		track->timedParam.inner.IIRs[i].currentValue = 0.0f;
+		track->timedParam.inner.IIRs[i].targetValue  = 0.0f;
 	}
 
-	track->timedParam.inner.distFilter.value  = 0.0f;
-	track->timedParam.inner.distFilter.target = 0.0f;
+	track->timedParam.inner.distFilter.currentValue = 0.0f;
+	track->timedParam.inner.distFilter.targetValue  = 0.0f;
 
 	for (i = 0; i < 32; ++i) {
 		track->regParam.reg[i] = 0;
@@ -281,7 +281,7 @@ static void Init_Track(seqp_* track, u32 param_2, seqp_* otherSeq)
 	track->_D4 = 0;
 	track->_D5 = 0;
 	track->_90 = 0;
-	track->_D6 = 0;
+	track->_D6 = FALSE;
 	Osc_Init_Env(track);
 	track->transpose      = 0;
 	track->finalTranspose = 0;
@@ -488,13 +488,13 @@ s32 Jaq_OpenTrack(seqp_* track, u32 flags, u32 source)
 
 	u8* REF_index;
 
-	childIndex = (flags & 0x0F);      // bits 0-3
-	trackFlags = (flags & 0xC0) >> 6; // bits 6-7
-	if ((flags & 0x20) != 0) {        // bit 5
+	childIndex = (flags & 0b00001111);
+	trackFlags = (flags & 0b11000000) >> 6;
+	if ((flags & 0b00100000)) {
 		trackFlags = 4;
 	}
 
-	if ((u8)(flags & 0x20) != 0) { // bit 5
+	if ((u8)(flags & 0b00100000)) { // This u8 cast is a repeating pattern across JAudio... Mysterious.
 		childIndex = Jam_ReadRegDirect(track, childIndex);
 	}
 
@@ -523,8 +523,7 @@ s32 Jaq_OpenTrack(seqp_* track, u32 flags, u32 source)
 	Init_Track(newChildTrack, source, track);
 
 	// Dev rolls "worst bit extraction method", asked to leave Nintendo EAD.
-	newChildTrack->muteFlag
-	    = newChildTrack->parent->muteFlag | ((newChildTrack->parent->childMuteMask & (1 << childIndex)) >> (childIndex));
+	newChildTrack->isMuted = newChildTrack->parent->isMuted | ((newChildTrack->parent->childMuteMask & (1 << childIndex)) >> childIndex);
 	newChildTrack->outerParams = newChildTrack->parent->childOuterParams[childIndex];
 	if (newChildTrack->outerParams) {
 		++newChildTrack->outerParams->refCount;
@@ -594,11 +593,11 @@ u32 Jaq_CloseTrack(seqp_* track)
 
 	for (i = 0; i < 16; ++i) {
 		if (track->childOuterParams[i]) {
-			track->childOuterParams[i]->isAssigned = 0; // Probably also NULL if we're being real here.
+			track->childOuterParams[i]->isAssigned = FALSE;
 			track->childOuterParams[i]             = NULL;
 		}
 	}
-	track->muteFlag      = 0;
+	track->isMuted       = 0;
 	track->childMuteMask = 0;
 	if (track->parent) {
 		FixMoveChannelAll(&track->parentController, &track->parent->parentController);

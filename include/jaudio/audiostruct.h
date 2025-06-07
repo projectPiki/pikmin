@@ -105,6 +105,8 @@ typedef union MixConfig {
 	} parts;
 } MixConfig;
 
+typedef BOOL (*JCUpdateCallback)(jc_*, JCSTATUS);
+
 /**
  * @brief TODO.
  */
@@ -122,8 +124,8 @@ struct jc_ {
 	u32 _1C;                                     // _1C
 	dspch_* dspChannel;                          // _20
 	void* mNext;                                 // _24
-	BOOL (*updateCallback)(jc_*, JCSTATUS);      // _28
-	BOOL (*extraUpdateCallback)(jc_*, JCSTATUS); // _2C
+	JCUpdateCallback updateCallback;             // _28
+	JCUpdateCallback extraUpdateCallback;        // _2C
 	s32 playId;                                  // _30
 	s32 savedPlayId;                             // _34
 	struct Osc_* mOscillators[4];                // _38

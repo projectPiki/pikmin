@@ -134,10 +134,10 @@ struct TrackPort_ {
  * @note Size: 16
  */
 struct MoveParam_ {
-	f32 value;    // _00
-	f32 target;   // _04
-	f32 duration; // _08
-	f32 stepSize; // _0C
+	f32 currentValue; // _00
+	f32 targetValue;  // _04
+	f32 duration;     // _08
+	f32 stepSize;     // _0C
 };
 
 /**
@@ -174,7 +174,7 @@ union TimedParam_ {
  * @note Size: 0x40.
  */
 struct OuterParam_ {
-	u32 isAssigned;         // _00
+	BOOL isAssigned;        // _00
 	u32 refCount;           // _04
 	u16 flags;              // _08
 	u16 updateFlags;        // _0A
@@ -219,12 +219,12 @@ union URegisterParam_ {
 /**
  * @brief This struct is analogous to `JASTrack` of later JAudio.
  *
- * @note Size: 0x434.
+ * @note Size: 0x434 (Confirmed by `Jaf_HandleToSeq`).
  */
 struct seqp_ {
 	u8* baseData;                      // _000
 	u32 programCounter;                // _004
-	u32 callStackPointer;              // _008
+	u32 callStackDepth;                // _008
 	u32 callStack[2];                  // _00C, Exact length unknown, but it is an array.
 	u8 _10[0x02c - 0x014];             // _008
 	u16 loopCounters[2];               // _02C, Exact length unknown, but it is an array.
@@ -237,16 +237,18 @@ struct seqp_ {
 	seqp_* children[16];               // _044
 	u32 connectionId;                  // _084
 	u32 trackId;                       // _088
-	u32 _8C;                           // _08C
+	s32 _8C;                           // _08C
 	u32 _90;                           // _090
 	u8 _94[8];                         // _094
 	jc_* channels[8];                  // _09C
 	u16 activeSoundIds[8];             // _0BC
-	u8 _CC[0x0d0 - 0x0cc];             // _0CC
+	u8 _CC;                            // _0CC
+	u8 _CD;                            // _0CD
+	u8 _CE[0x0d0 - 0x0ce];             // _0CE
 	u32 _D0;                           // _0D0
 	u8 _D4;                            // _0D4
 	u8 _D5;                            // _0D5
-	u8 _D6;                            // _0D6
+	u8 _D6;                            // _0D6, boolean-like
 	u8 _D7[0x0d8 - 0x0d7];             // _0D7
 	jcs_ parentController;             // _0D8
 	TimedParam_ timedParam;            // _14C
@@ -267,9 +269,9 @@ struct seqp_ {
 	s8 transpose;                      // _396
 	u8 finalTranspose;                 // _397
 	s32 tickCounter;                   // _398
-	u8 pauseFlag;                      // _39C
+	u8 isPaused;                       // _39C, boolean-like
 	u8 pauseStatus;                    // _39D
-	u8 muteFlag;                       // _39E
+	u8 isMuted;                        // _39E, boolean-like
 	u8 _39F[0x3a0 - 0x39f];            // _39F
 	u16 childMuteMask;                 // _3A0
 	u8 _3A2[0x3a4 - 0x3a2];            // _3A2
@@ -277,8 +279,7 @@ struct seqp_ {
 	u8 interruptPending;               // _3A5
 	u8 interruptEnable;                // _3A6
 	u8 _3A7;                           // _3A7
-	u32 interruptAddresses[2];         // _3A8
-	u8 _3B0[0x3c8 - 0x3b0];            // _3A8
+	u32 interruptAddresses[8];         // _3A8
 	u32 savedProgramCounter;           // _3C8
 	u32 _3CC;                          // _3CC, to do with timers (CMD_IntTimer)
 	u32 _3D0;                          // _3D0, to do with timers (CMD_IntTimer)
@@ -287,15 +288,15 @@ struct seqp_ {
 	u8 panCalcTypes[3];                // _3DC
 	u8 parentPanCalcTypes[3];          // _3DF
 	u8 isRegistered;                   // _3E2
-	u8 changeTempoFlag;                // _3E3
+	u8 doChangeTempo;                  // _3E3, boolean-like
 	u8 _3E4;                           // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];            // _3E5
 	Oscbuf_ oscillatorParams[2];       // _3E8
-	u8 _418[0x434 - 0x418];            // _400, size can be found in Jaf_HandleToSeq
+	u8 _418[0x434 - 0x418];            // _400
 };
 
 void* Jam_OfsToAddr(seqp_*, u32);
-void Jam_WriteRegDirect(seqp_*, u8, u16); // TODO: Is param_3 is u8 or a u16?
+void Jam_WriteRegDirect(seqp_*, u8, u16);
 void Jam_WriteRegParam(seqp_*, u8);
 u16 Jam_ReadRegDirect(seqp_*, u8);
 u32 Jam_ReadReg32(seqp_* track, u8 index);
@@ -347,7 +348,7 @@ void Jam_PauseTrack(seqp_*, u8);
 void Jam_UnPauseTrack(seqp_*, u8);
 void Jam_SetInterrupt(seqp_*, u16);
 BOOL Jam_TryInterrupt(seqp_*);
-s32 Jam_SeqmainNote(seqp_*, u32);
+s32 Jam_SeqmainNote(seqp_*, u8);
 void SeqUpdate(seqp_*, u32);
 
 #ifdef __cplusplus
