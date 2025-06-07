@@ -15,7 +15,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 {
 	(void)&channel;
 
-	if (track->muteFlag && (track->pauseStatus & 0x40)) {
+	if (track->isMuted && (track->pauseStatus & 0x40)) {
 		return -1;
 	}
 

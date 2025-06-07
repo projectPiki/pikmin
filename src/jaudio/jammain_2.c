@@ -9,6 +9,7 @@
 #include "jaudio/random.h"
 #include "jaudio/centcalc.h"
 #include "jaudio/bankdrv.h"
+#include "jaudio/driverinterface.h"
 
 #include "Dolphin/OS/OSError.h"
 
@@ -264,7 +265,6 @@ u16 Extend8to16(u8 value)
 	if (value & 0x80) {
 		return value + 0xFF00;
 	}
-
 	return value;
 }
 
@@ -317,19 +317,19 @@ void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 		break;
 	}
 
-	param         = &track->timedParam.move[paramIndex];
-	param->target = targetValue / 32768.0f;
+	param              = &track->timedParam.move[paramIndex];
+	param->targetValue = targetValue / 32768.0f;
 
 	if (duration >= 0) {
 		param->duration = duration;
 	}
 
 	if (param->duration <= 0.0f) {
-		param->value    = param->target;
-		param->stepSize = 0.0f;
-		param->duration = 1.0f;
+		param->currentValue = param->targetValue;
+		param->stepSize     = 0.0f;
+		param->duration     = 1.0f;
 	} else {
-		param->stepSize = (param->target - param->value) / param->duration;
+		param->stepSize = (param->targetValue - param->currentValue) / param->duration;
 	}
 }
 
@@ -614,10 +614,10 @@ u16 Jam_ReadRegDirect(seqp_* track, u8 regIdx)
 		}
 		break;
 	case 0x30:
-		if (track->callStackPointer == 0) {
+		if (track->callStackDepth == 0) {
 			result = 0;
 		} else {
-			result = track->loopCounters[track->callStackPointer - 1];
+			result = track->loopCounters[track->callStackDepth - 1];
 		}
 		break;
 	default:
@@ -960,7 +960,7 @@ void Jam_InitExtBuffer(OuterParam_* ext)
 {
 	ext->flags       = 0;
 	ext->updateFlags = 0;
-	ext->isAssigned  = 0;
+	ext->isAssigned  = FALSE;
 	ext->refCount    = 0;
 }
 
@@ -996,7 +996,7 @@ BOOL Jam_AssignExtBufferP(seqp_* track, u8 index, OuterParam_* ext)
 		return FALSE;
 	}
 	track->childOuterParams[index] = ext;
-	ext->isAssigned                = 1;
+	ext->isAssigned                = TRUE;
 	Jam_AssignExtBuffer(track->children[index], ext);
 	return TRUE;
 }
@@ -1294,7 +1294,7 @@ void Jam_UpdateTrackAll(seqp_* track)
 		track->parentController.releaseTime     = 0;
 
 		panDelayLeft = 0;
-		panScaled    = track->timedParam.inner._110.value * 128.0f;
+		panScaled    = track->timedParam.inner._110.currentValue * 128.0f;
 
 		OSf32tos8(&panScaled, &pan8bit);
 		if (pan8bit < 0) {
@@ -1307,16 +1307,16 @@ void Jam_UpdateTrackAll(seqp_* track)
 		track->parentController.masterLevels[1] = pan8bit;
 
 		// Read base volume; if muted, force to zero
-		volumeValue = track->timedParam.inner.volume.value;
-		if (track->muteFlag > 0) {
+		volumeValue = track->timedParam.inner.volume.currentValue;
+		if (track->isMuted > 0) {
 			volumeValue = 0.0f;
 		}
 
 		// Convert pitch to cents, read pan/fxmix/dolby from timed parameters
-		pitchCents = Jam_PitchToCent(track->timedParam.inner.pitch.value, track->regParam.param.pitchScale);
-		panValue   = track->timedParam.inner.pan.value;
-		fxMixValue = track->timedParam.inner.fxmix.value;
-		dolbyValue = track->timedParam.inner.dolby.value;
+		pitchCents = Jam_PitchToCent(track->timedParam.inner.pitch.currentValue, track->regParam.param.pitchScale);
+		panValue   = track->timedParam.inner.pan.currentValue;
+		fxMixValue = track->timedParam.inner.fxmix.currentValue;
+		dolbyValue = track->timedParam.inner.dolby.currentValue;
 
 		if (track->outerParams) {
 			if (track->outerParams->flags & SEQTRACK_FLAG_VOLUME) {
@@ -1372,11 +1372,11 @@ void Jam_UpdateTrackAll(seqp_* track)
 
 			// Read inner IIR coefficients (normalized floats) and convert to 16-bit
 			for (i = 0; i < 4; ++i) {
-				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].value * 32767.0f;
+				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].currentValue * 32767.0f;
 			}
 
 			track->parentController.filterMode |= 0x20;
-			track->parentController.distFilter = track->timedParam.inner.distFilter.value * 32767.0f;
+			track->parentController.distFilter = track->timedParam.inner.distFilter.currentValue * 32767.0f;
 		}
 	}
 }
@@ -1436,7 +1436,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		// Update master pan delay levels if requested
 		if (updateFlags & SEQTRACK_FLAG_MASTER_LEVEL) {
 			masterLeft     = 0;
-			masterLevelF32 = track->timedParam.inner._110.value * 128.0f;
+			masterLevelF32 = track->timedParam.inner._110.currentValue * 128.0f;
 			OSf32tos8(&masterLevelF32, &masterRight);
 			if (masterRight < 0) {
 				masterLeft  = -masterRight;
@@ -1453,23 +1453,23 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 
 		updateVolumeFlag = updateFlags & SEQTRACK_FLAG_VOLUME;
 		if (updateVolumeFlag) {
-			computedVolume = track->timedParam.inner.volume.value;
-			if (track->muteFlag != 0) {
+			computedVolume = track->timedParam.inner.volume.currentValue;
+			if (track->isMuted != 0) {
 				computedVolume = 0.0f;
 			}
 
-			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_VOLUME) != 0)) {
-				computedVolume = (computedVolume * track->outerParams->volume);
+			if (track->outerParams && (track->outerParams->flags & SEQTRACK_FLAG_VOLUME)) {
+				computedVolume *= track->outerParams->volume;
 			}
 
-			if ((track->pauseFlag != 0) && ((track->pauseStatus & 1) != 0)) {
-				computedVolume = (computedVolume * (track->timedParam).inner._100.value);
+			if (track->isPaused && (track->pauseStatus & 1)) {
+				computedVolume *= track->timedParam.inner._100.currentValue;
 			}
 		}
 
 		updatePitchFlag = updateFlags & SEQTRACK_FLAG_PITCH;
 		if (updatePitchFlag) {
-			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.value, track->regParam.param.pitchScale);
+			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.currentValue, track->regParam.param.pitchScale);
 			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_PITCH) != 0)) {
 				unaff_f30 = (unaff_f30 * track->outerParams->pitch);
 			}
@@ -1477,7 +1477,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 
 		updatePanFlag = updateFlags & SEQTRACK_FLAG_PAN;
 		if (updatePanFlag) {
-			unaff_f29 = (track->timedParam).inner.pan.value;
+			unaff_f29 = (track->timedParam).inner.pan.currentValue;
 			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_PAN) != 0)) {
 				unaff_f29 = __PanCalc(unaff_f29, track->outerParams->pan, regionAttenuation, track->panCalcTypes[0]);
 			}
@@ -1485,7 +1485,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 
 		updateFxMixFlag = updateFlags & SEQTRACK_FLAG_FXMIX;
 		if (updateFxMixFlag) {
-			unaff_f28 = (track->timedParam).inner.fxmix.value;
+			unaff_f28 = (track->timedParam).inner.fxmix.currentValue;
 			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_FXMIX) != 0)) {
 				unaff_f28 = __PanCalc(unaff_f28, track->outerParams->fxMix, regionAttenuation, track->panCalcTypes[1]);
 			}
@@ -1493,7 +1493,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 
 		updateDolbyFlag = updateFlags & SEQTRACK_FLAG_DOLBY;
 		if (updateDolbyFlag) {
-			unaff_f27 = (track->timedParam).inner.dolby.value;
+			unaff_f27 = (track->timedParam).inner.dolby.currentValue;
 			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_DOLBY) != 0)) {
 				unaff_f27 = __PanCalc(unaff_f27, track->outerParams->dolby, regionAttenuation, track->panCalcTypes[2]);
 			}
@@ -1502,7 +1502,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		// IIR flag is set
 		if (updateFlags & SEQTRACK_FLAG_IIR) {
 			for (i = 0; i < 4; ++i) {
-				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].value * 32767.0f;
+				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].currentValue * 32767.0f;
 			}
 
 			track->parentController.filterMode |= 0x20;
@@ -1519,7 +1519,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		}
 
 		if (updateFlags & SEQTRACK_FLAG_DISTFILT) {
-			track->parentController.distFilter = track->timedParam.inner.distFilter.value * 32767.0f;
+			track->parentController.distFilter = track->timedParam.inner.distFilter.currentValue * 32767.0f;
 		}
 
 		for (i = 0; i < 2; ++i) {
@@ -1623,7 +1623,7 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 	u16 mask;
 
 	if (track->parent) {
-		track->muteFlag = track->parent->muteFlag | param_2;
+		track->isMuted  = track->parent->isMuted | param_2;
 		mask            = 1 << (track->trackId & 0xf);
 		if (!param_2) {
 			track->parent->childMuteMask &= ~mask;
@@ -1631,10 +1631,10 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 			track->parent->childMuteMask |= mask;
 		}
 	} else {
-		track->muteFlag = param_2;
+		track->isMuted = param_2;
 	}
 	track->updateFlags |= SEQTRACK_FLAG_VOLUME;
-	if (track->muteFlag && (track->pauseStatus & 0x20)) {
+	if (track->isMuted && (track->pauseStatus & 0x20)) {
 		for (i = 0; i < 8; ++i) {
 			NoteOFF_R(track, (u8)i, 10);
 		};
@@ -1663,7 +1663,7 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 
 	size_t* REF_i;
 
-	track->pauseFlag = 1;
+	track->isPaused = TRUE;
 	if (track->pauseStatus & 0x01) {
 		track->updateFlags |= SEQTRACK_FLAG_VOLUME;
 	}
@@ -1703,7 +1703,7 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 
 	size_t* REF_i;
 
-	track->pauseFlag = 0;
+	track->isPaused = FALSE;
 	track->updateFlags |= SEQTRACK_FLAG_VOLUME;
 	for (i = 0; i < 8; ++i) {
 		REF_i  = &i;
@@ -1795,8 +1795,8 @@ static u32 Cmd_OpenTrackBros()
  */
 static u32 Cmd_Call()
 {
-	SEQ_P->callStack[SEQ_P->callStackPointer++] = SEQ_P->programCounter;
-	SEQ_P->programCounter                       = SEQ_ARG[0];
+	SEQ_P->callStack[SEQ_P->callStackDepth++] = SEQ_P->programCounter;
+	SEQ_P->programCounter                     = SEQ_ARG[0];
 	return 0;
 }
 
@@ -1830,9 +1830,8 @@ static u32 Cmd_CallF()
 	}
 	if ((u8)__ConditionCheck(SEQ_P, bVar1 & 0x0f) == TRUE) {
 		if (SEQ_CMD == (0xC0 + CMD_CALL_F)) {
-			SEQ_P->callStack[SEQ_P->callStackPointer++] = SEQ_P->programCounter;
+			SEQ_P->callStack[SEQ_P->callStackDepth++] = SEQ_P->programCounter;
 		}
-
 		SEQ_P->programCounter = uVar2;
 	}
 	return 0;
@@ -1845,7 +1844,7 @@ static u32 Cmd_CallF()
  */
 static u32 Cmd_Ret()
 {
-	SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackPointer];
+	SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackDepth];
 	return 0;
 }
 
@@ -1858,7 +1857,7 @@ static u32 Cmd_RetF()
 {
 	// But why cast it...?  And why check if it explicitly equals TRUE...?
 	if ((u8)__ConditionCheck(SEQ_P, SEQ_ARG[0] & 0x0f) == TRUE) {
-		SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackPointer];
+		SEQ_P->programCounter = SEQ_P->callStack[--SEQ_P->callStackDepth];
 	}
 	return 0;
 }
@@ -1891,8 +1890,8 @@ static u32 Cmd_JmpF()
  */
 static u32 Cmd_LoopS()
 {
-	SEQ_P->callStack[SEQ_P->callStackPointer]      = SEQ_P->programCounter;
-	SEQ_P->loopCounters[SEQ_P->callStackPointer++] = SEQ_ARG[0];
+	SEQ_P->callStack[SEQ_P->callStackDepth]      = SEQ_P->programCounter;
+	SEQ_P->loopCounters[SEQ_P->callStackDepth++] = SEQ_ARG[0];
 	return 0;
 }
 
@@ -1905,21 +1904,21 @@ static u32 Cmd_LoopE()
 {
 	u16 uVar1;
 
-	if (SEQ_P->callStackPointer == 0) {
+	if (SEQ_P->callStackDepth == 0) {
 		return 0x80;
 	}
 
-	uVar1 = SEQ_P->loopCounters[SEQ_P->callStackPointer - 1];
+	uVar1 = SEQ_P->loopCounters[SEQ_P->callStackDepth - 1];
 	if (uVar1 != 0) {
 		uVar1 -= 1;
 	}
 	if (uVar1 == 0) {
-		SEQ_P->callStackPointer -= 1;
+		SEQ_P->callStackDepth -= 1;
 		return 0;
 	}
 
-	SEQ_P->loopCounters[SEQ_P->callStackPointer - 1] = uVar1;
-	SEQ_P->programCounter                            = SEQ_P->callStack[SEQ_P->callStackPointer - 1];
+	SEQ_P->loopCounters[SEQ_P->callStackDepth - 1] = uVar1;
+	SEQ_P->programCounter                          = SEQ_P->callStack[SEQ_P->callStackDepth - 1];
 	return 0;
 }
 
@@ -2335,7 +2334,7 @@ static u32 Cmd_Tempo()
 	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
 	} else {
-		SEQ_P->changeTempoFlag = 1;
+		SEQ_P->doChangeTempo = TRUE;
 	}
 	return 0;
 }
@@ -2355,17 +2354,17 @@ static u32 Cmd_Finish()
 	for (i = 0; i < 18; ++i) {
 		temp = &SEQ_P->timedParam.move[i];
 		if (temp->duration > 0.0f) {
-			temp->value += temp->stepSize;
+			temp->currentValue += temp->stepSize;
 			temp->duration -= 1.0f;
 			if (i <= 5 || i >= 11) {
 				updateFlags |= 1 << i;
 			} else {
-				Osc_Update_Param(SEQ_P, i, temp->value);
+				Osc_Update_Param(SEQ_P, i, temp->currentValue);
 			}
 		}
 	}
-
 	SeqUpdate(SEQ_P, updateFlags);
+
 	return 3;
 }
 
@@ -2391,7 +2390,6 @@ static u32 Cmd_PanPowSet()
 	for (i = 0; i < 3; ++i) {
 		SEQ_P->regParam.param.arguments[i] = SEQ_ARG[i];
 	}
-
 	for (i = 3; i < 5; ++i) {
 		SEQ_P->regParam.param.arguments[i] = SEQ_ARG[i] * 327.67f;
 	}
@@ -2412,11 +2410,11 @@ static u32 Cmd_IIRSet()
 	MoveParam_* iir;
 
 	for (i = 0; i < 4; ++i) {
-		iir           = &SEQ_P->timedParam.move[i + 12]; // IIRs 0 - 4 are at 12-15
-		iir->target   = (s16)SEQ_ARG[i] / 32768.0f;
-		iir->value    = iir->target;
-		iir->stepSize = 0.0f;
-		iir->duration = 1.0f;
+		iir               = &SEQ_P->timedParam.move[i + 12]; // IIRs 0 - 4 are at 12-15
+		iir->targetValue  = (s16)SEQ_ARG[i] / 32768.0f;
+		iir->currentValue = iir->targetValue;
+		iir->stepSize     = 0.0f;
+		iir->duration     = 1.0f;
 	}
 
 	return 0;
@@ -2457,6 +2455,7 @@ static u32 Cmd_PanSwSet()
 {
 	size_t i;
 
+	// Ah yes, let's just construct this on the stack real quick.
 	u8 calcTypes[]       = { 0, 0, 0, 1, 1, 2, 2 };
 	u8 parentCalcTypes[] = { 0, 1, 2, 0, 2, 0, 2 };
 
@@ -2504,11 +2503,11 @@ static u32 Cmd_IIRCutOff()
 
 	index = SEQ_ARG[0];
 	for (i = 0; i < 4; ++i) {
-		iir           = &SEQ_P->timedParam.move[i + 12]; // IIRs 0 - 4 are at 12-15
-		iir->target   = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
-		iir->value    = iir->target;
-		iir->stepSize = 0.0f;
-		iir->duration = 1.0f;
+		iir               = &SEQ_P->timedParam.move[i + 12]; // IIRs 0 - 4 are at 12-15
+		iir->targetValue  = CUTOFF_TO_IIR_TABLE[index][i] / 32767.0f;
+		iir->currentValue = iir->targetValue;
+		iir->stepSize     = 0.0f;
+		iir->duration     = 1.0f;
 	}
 
 	return 0;
@@ -2808,6 +2807,7 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 		SEQ_ARG[i] = arg;
 	}
 
+	// Me when I have to introduce global state because I'm bored.
 	SEQ_CMD = cmd;
 	SEQ_P   = track;
 
@@ -2815,7 +2815,6 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	if (!function) {
 		return 0;
 	}
-
 	return function();
 }
 
@@ -2824,7 +2823,7 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
  * Address:	80012E00
  * Size:	0000A8
  */
-void RegCmd_Process(seqp_* track, BOOL param_2, u32 param_3)
+u32 RegCmd_Process(seqp_* track, BOOL param_2, u32 param_3)
 {
 	size_t i;
 	u8 uVar4;
@@ -2847,712 +2846,312 @@ void RegCmd_Process(seqp_* track, BOOL param_2, u32 param_3)
 			uVar5 = uVar5 << 2;
 		}
 	}
-	Cmd_Process(track, uVar4, uVar6);
-	return;
+	return Cmd_Process(track, uVar4, uVar6);
 }
+
+// TODO: These five values appear all over this file. They mean something.
+static u8 osc_table[] = { 0x01, 0x02, 0x08, 0x04, 0x10 };
 
 /*
  * --INFO--
  * Address:	80012EC0
  * Size:	0008C0
  */
-s32 Jam_SeqmainNote(seqp_* a, u32 b)
+s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x90(r1)
-	  addi      r11, r1, 0x90
-	  bl        0x201F94
-	  stmw      r21, 0x54(r1)
-	  addi      r31, r3, 0
-	  li        r30, 0
-	  lwz       r6, 0x40(r3)
-	  cmplwi    r6, 0
-	  beq-      .loc_0xA8
-	  lbz       r0, 0x3E3(r31)
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0xA8
-	  lhz       r5, 0x33A(r31)
-	  lis       r3, 0x4330
-	  lhz       r0, 0x33A(r6)
-	  stw       r5, 0x4C(r1)
-	  lfd       f3, -0x7F18(r2)
-	  stw       r0, 0x44(r1)
-	  lfs       f0, -0x7F08(r2)
-	  stw       r3, 0x48(r1)
-	  stw       r3, 0x40(r1)
-	  lfd       f2, 0x48(r1)
-	  lfd       f1, 0x40(r1)
-	  fsubs     f2, f2, f3
-	  fsubs     f1, f1, f3
-	  fdivs     f1, f2, f1
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x7C
-	  fmr       f1, f0
-
-	.loc_0x7C:
-	  lfs       f0, 0x330(r31)
-	  fadds     f0, f0, f1
-	  stfs      f0, 0x330(r31)
-	  lfs       f1, 0x330(r31)
-	  lfs       f0, -0x7F08(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xA0
-	  li        r3, 0
-	  b         .loc_0x8A4
-
-	.loc_0xA0:
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x330(r31)
-
-	.loc_0xA8:
-	  lwz       r0, 0x40(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0xB8
-	  stb       r4, 0x39E(r31)
-
-	.loc_0xB8:
-	  lwz       r0, 0x40(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x118
-	  lwz       r0, 0xD8(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x118
-	  addi      r3, r31, 0xE0
-	  bl        -0x9A94
-	  mr.       r21, r3
-	  beq-      .loc_0x118
-	  lwz       r3, 0x40(r31)
-	  addi      r4, r21, 0
-	  addi      r3, r3, 0xE0
-	  bl        -0x9A0C
-	  lwz       r3, 0x40(r31)
-	  addi      r0, r3, 0xD8
-	  stw       r0, 0x4(r21)
-	  lwz       r3, 0xD8(r31)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0xD8(r31)
-	  lwz       r4, 0x40(r31)
-	  lwz       r3, 0xD8(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0xD8(r4)
-
-	.loc_0x118:
-	  lwz       r4, 0x40(r31)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x138
-	  lbz       r3, 0x396(r31)
-	  lbz       r0, 0x397(r4)
-	  add       r0, r3, r0
-	  stb       r0, 0x397(r31)
-	  b         .loc_0x140
-
-	.loc_0x138:
-	  lbz       r0, 0x396(r31)
-	  stb       r0, 0x397(r31)
-
-	.loc_0x140:
-	  addi      r3, r31, 0
-	  li        r4, 0x7
-	  bl        -0x18E8
-	  lwz       r3, 0x3D0(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1A0
-	  subic.    r0, r3, 0x1
-	  stw       r0, 0x3D0(r31)
-	  bne-      .loc_0x1A0
-	  addi      r3, r31, 0
-	  li        r4, 0x6
-	  bl        -0x190C
-	  lbz       r3, 0x3A7(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x198
-	  subi      r3, r3, 0x1
-	  rlwinm.   r0,r3,0,24,31
-	  stb       r3, 0x3A7(r31)
-	  beq-      .loc_0x1A0
-	  lwz       r0, 0x3D4(r31)
-	  stw       r0, 0x3D0(r31)
-	  b         .loc_0x1A0
-
-	.loc_0x198:
-	  lwz       r0, 0x3D4(r31)
-	  stw       r0, 0x3D0(r31)
-
-	.loc_0x1A0:
-	  mr        r3, r31
-	  bl        -0x1904
-	  lbz       r0, 0x39C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1C0
-	  lbz       r0, 0x39D(r31)
-	  rlwinm.   r0,r0,0,30,30
-	  bne-      .loc_0x820
-
-	.loc_0x1C0:
-	  lwz       r3, 0x398(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x398(r31)
-	  lwz       r0, 0x8C(r31)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x1F4
-	  addi      r3, r31, 0
-	  li        r4, 0
-	  bl        0xC80
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x768
-	  li        r0, 0
-	  stw       r0, 0x8C(r31)
-
-	.loc_0x1F4:
-	  lwz       r3, 0x8C(r31)
-	  cmpwi     r3, 0
-	  ble-      .loc_0x270
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x8C(r31)
-	  lwz       r0, 0x8C(r31)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x768
-	  lwz       r3, 0xD0(r31)
-	  addis     r0, r3, 0x1
-	  cmplwi    r0, 0xFFFF
-	  beq-      .loc_0x270
-	  lbz       r0, 0xD4(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x270
-	  li        r5, 0
-	  li        r4, 0xFF
-	  stw       r5, 0x2C(r1)
-	  b         .loc_0x260
-
-	.loc_0x240:
-	  addi      r0, r3, 0x94
-	  rlwinm    r3,r3,2,0,29
-	  stbx      r4, r31, r0
-	  addi      r0, r3, 0x9C
-	  stwx      r5, r31, r0
-	  lwz       r3, 0x2C(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2C(r1)
-
-	.loc_0x260:
-	  lwz       r3, 0x2C(r1)
-	  lwz       r0, 0x90(r31)
-	  cmpw      r3, r0
-	  blt+      .loc_0x240
-
-	.loc_0x270:
-	  mr        r3, r31
-	  bl        -0x3B34
-	  rlwinm.   r0,r3,0,24,24
-	  addi      r4, r3, 0
-	  rlwinm    r5,r3,0,24,31
-	  bne-      .loc_0x598
-	  stb       r4, 0x3C(r1)
-	  mr        r3, r31
-	  lbz       r4, 0x3C(r1)
-	  lbz       r0, 0x397(r31)
-	  add       r0, r4, r0
-	  stb       r0, 0x3C(r1)
-	  bl        -0x3B60
-	  rlwinm.   r0,r3,0,24,24
-	  stb       r3, 0x34(r1)
-	  beq-      .loc_0x2D0
-	  mr        r3, r31
-	  lbz       r4, 0x3C(r1)
-	  bl        -0x2E38
-	  stb       r3, 0x3C(r1)
-	  lbz       r3, 0x3C(r1)
-	  lbz       r0, 0x397(r31)
-	  add       r0, r3, r0
-	  stb       r0, 0x3C(r1)
-
-	.loc_0x2D0:
-	  lbz       r0, 0x34(r1)
-	  lbz       r3, 0x3C(r1)
-	  rlwinm.   r0,r0,27,30,30
-	  beq-      .loc_0x2EC
-	  stb       r3, 0x3D(r1)
-	  lbz       r0, 0xD5(r31)
-	  stb       r0, 0x3C(r1)
-
-	.loc_0x2EC:
-	  mr        r3, r31
-	  bl        -0x3BB0
-	  rlwinm    r0,r3,0,24,31
-	  addi      r24, r3, 0
-	  cmplwi    r0, 0x80
-	  blt-      .loc_0x314
-	  addi      r3, r31, 0
-	  subi      r4, r24, 0x80
-	  bl        -0x2E8C
-	  rlwinm    r24,r3,0,24,31
-
-	.loc_0x314:
-	  lbz       r3, 0x34(r1)
-	  rlwinm.   r3,r3,0,29,31
-	  bne-      .loc_0x3A4
-	  li        r22, 0
-	  addi      r3, r31, 0
-	  bl        -0x3BE8
-	  rlwinm    r0,r3,0,24,31
-	  addi      r25, r3, 0
-	  cmplwi    r0, 0x80
-	  blt-      .loc_0x34C
-	  addi      r3, r31, 0
-	  subi      r4, r25, 0x80
-	  bl        -0x2EC4
-	  rlwinm    r25,r3,0,24,31
-
-	.loc_0x34C:
-	  li        r23, 0
-	  li        r21, 0
-	  b         .loc_0x370
-
-	.loc_0x358:
-	  mr        r3, r31
-	  bl        -0x3C1C
-	  rlwinm    r0,r23,8,0,23
-	  addi      r21, r21, 0x1
-	  mr        r23, r0
-	  rlwimi    r23,r3,0,24,31
-
-	.loc_0x370:
-	  lbz       r0, 0x34(r1)
-	  rlwinm    r0,r0,29,30,31
-	  cmpw      r21, r0
-	  blt+      .loc_0x358
-	  cmplwi    r0, 0x1
-	  bne-      .loc_0x3D4
-	  cmplwi    r23, 0x80
-	  blt-      .loc_0x3D4
-	  addi      r3, r31, 0
-	  subi      r4, r23, 0x80
-	  bl        -0x2F18
-	  mr        r23, r3
-	  b         .loc_0x3D4
-
-	.loc_0x3A4:
-	  lbz       r0, 0x34(r1)
-	  addi      r22, r3, 0
-	  rlwinm.   r0,r0,29,30,31
-	  beq-      .loc_0x3CC
-	  addi      r3, r31, 0
-	  subi      r4, r22, 0x1
-	  bl        -0x2F3C
-	  rlwinm    r22,r3,0,24,31
-	  cmplwi    r22, 0x8
-	  bge-      .loc_0x768
-
-	.loc_0x3CC:
-	  li        r23, -0x1
-	  li        r25, 0x64
-
-	.loc_0x3D4:
-	  lbz       r0, 0x34(r1)
-	  rlwinm    r0,r0,27,30,31
-	  stb       r0, 0xD4(r31)
-	  lbz       r0, 0xD6(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3F4
-	  li        r0, 0x1
-	  b         .loc_0x3F8
-
-	.loc_0x3F4:
-	  li        r0, 0
-
-	.loc_0x3F8:
-	  cmpwi     r0, 0
-	  rlwinm    r27,r22,0,24,31
-	  rlwinm    r29,r24,0,24,31
-	  add       r28, r31, r27
-	  li        r26, 0
-	  beq-      .loc_0x47C
-	  lbz       r0, 0xD4(r31)
-	  addi      r22, r23, 0
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x424
-	  li        r22, -0x1
-
-	.loc_0x424:
-	  cmpwi     r22, -0x1
-	  beq-      .loc_0x440
-	  addi      r3, r31, 0
-	  addi      r4, r22, 0
-	  addi      r5, r25, 0
-	  bl        -0x3AD8
-	  mr        r22, r3
-
-	.loc_0x440:
-	  lbz       r0, 0x39C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x460
-	  lbz       r0, 0x39D(r31)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x460
-	  li        r3, -0x1
-	  b         .loc_0x4E4
-
-	.loc_0x460:
-	  lbz       r5, 0x3C(r1)
-	  addi      r3, r31, 0
-	  addi      r4, r27, 0
-	  addi      r6, r29, 0
-	  addi      r7, r22, 0
-	  bl        0x98C
-	  b         .loc_0x4E4
-
-	.loc_0x47C:
-	  addi      r22, r23, 0
-	  cmpwi     r22, -0x1
-	  beq-      .loc_0x49C
-	  addi      r3, r31, 0
-	  addi      r4, r22, 0
-	  addi      r5, r25, 0
-	  bl        -0x3B34
-	  mr        r22, r3
-
-	.loc_0x49C:
-	  lbz       r0, 0xD4(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x4AC
-	  li        r22, -0x1
-
-	.loc_0x4AC:
-	  lbz       r0, 0x39C(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x4CC
-	  lbz       r0, 0x39D(r31)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x4CC
-	  li        r3, -0x1
-	  b         .loc_0x4E4
-
-	.loc_0x4CC:
-	  lbz       r5, 0x3C(r1)
-	  addi      r3, r31, 0
-	  addi      r4, r27, 0
-	  addi      r6, r29, 0
-	  addi      r7, r22, 0
-	  bl        0x4A0
-
-	.loc_0x4E4:
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x4F8
-	  lbz       r0, 0x3C(r1)
-	  li        r26, 0x1
-	  stb       r0, 0x94(r28)
-
-	.loc_0x4F8:
-	  stw       r26, 0x90(r31)
-	  stb       r25, 0xCC(r31)
-	  stb       r24, 0xCD(r31)
-	  stw       r23, 0xD0(r31)
-	  lbz       r0, 0xD4(r31)
-	  rlwinm.   r0,r0,0,31,31
-	  beq-      .loc_0x520
-	  li        r0, 0x1
-	  stb       r0, 0xD6(r31)
-	  b         .loc_0x528
-
-	.loc_0x520:
-	  li        r0, 0
-	  stb       r0, 0xD6(r31)
-
-	.loc_0x528:
-	  lbz       r0, 0xD4(r31)
-	  rlwinm.   r0,r0,0,30,30
-	  beq-      .loc_0x56C
-	  addi      r3, r22, 0
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x550
-	  lbz       r5, 0xCC(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r23, 0
-	  bl        -0x3BEC
-
-	.loc_0x550:
-	  lbz       r21, 0x3D(r1)
-	  mr        r5, r3
-	  lbz       r0, 0x397(r31)
-	  lwz       r3, 0x9C(r31)
-	  add       r4, r21, r0
-	  bl        0x29DC
-	  stb       r21, 0x3C(r1)
-
-	.loc_0x56C:
-	  addis     r0, r23, 0x1
-	  lbz       r3, 0x3C(r1)
-	  cmplwi    r0, 0xFFFF
-	  stb       r3, 0xD5(r31)
-	  beq+      .loc_0x270
-	  cmplwi    r23, 0
-	  stw       r23, 0x8C(r31)
-	  bne-      .loc_0x768
-	  li        r0, -0x1
-	  stw       r0, 0x8C(r31)
-	  b         .loc_0x768
-
-	.loc_0x598:
-	  rlwinm    r0,r5,0,24,27
-	  cmpwi     r0, 0x80
-	  beq-      .loc_0x5AC
-	  cmplwi    r5, 0xF9
-	  bne-      .loc_0x6CC
-
-	.loc_0x5AC:
-	  rlwinm    r0,r4,0,24,31
-	  li        r22, 0x1
-	  cmplwi    r0, 0xF9
-	  li        r23, 0
-	  bne-      .loc_0x614
-	  mr        r3, r31
-	  bl        -0x3E84
-	  addi      r0, r3, 0
-	  addi      r3, r31, 0
-	  rlwinm    r21,r0,0,24,31
-	  rlwinm    r4,r0,0,29,31
-	  bl        -0x3158
-	  rlwinm    r3,r3,0,24,31
-	  cmplwi    r3, 0x7
-	  bgt-      .loc_0x5F0
-	  cmplwi    r3, 0
-	  bne-      .loc_0x604
-
-	.loc_0x5F0:
-	  rlwinm.   r0,r21,0,24,24
-	  beq+      .loc_0x270
-	  mr        r3, r31
-	  bl        -0x3EBC
-	  b         .loc_0x270
-
-	.loc_0x604:
-	  rlwinm.   r0,r21,0,24,24
-	  addi      r4, r3, 0x80
-	  beq-      .loc_0x614
-	  addi      r4, r4, 0x8
-
-	.loc_0x614:
-	  rlwinm    r0,r4,0,28,31
-	  rlwinm    r21,r4,0,28,31
-	  cmplwi    r0, 0x8
-	  bne-      .loc_0x62C
-	  li        r22, 0x2
-	  subi      r21, r21, 0x8
-
-	.loc_0x62C:
-	  rlwinm    r0,r21,0,24,31
-	  cmplwi    r0, 0x8
-	  ble-      .loc_0x658
-	  addi      r3, r31, 0
-	  subi      r21, r21, 0x8
-	  bl        -0x3F00
-	  rlwinm    r23,r3,0,24,31
-	  cmpwi     r23, 0x64
-	  ble-      .loc_0x658
-	  subi      r0, r23, 0x62
-	  mulli     r23, r0, 0x14
-
-	.loc_0x658:
-	  rlwinm.   r0,r21,0,24,31
-	  bne-      .loc_0x6A0
-	  li        r21, 0
-	  stw       r21, 0x8C(r31)
-	  b         .loc_0x688
-
-	.loc_0x66C:
-	  mr        r3, r31
-	  bl        -0x3F30
-	  lwz       r0, 0x8C(r31)
-	  addi      r21, r21, 0x1
-	  rlwinm    r0,r0,8,0,23
-	  rlwimi    r0,r3,0,24,31
-	  stw       r0, 0x8C(r31)
-
-	.loc_0x688:
-	  cmpw      r21, r22
-	  blt+      .loc_0x66C
-	  lwz       r0, 0x8C(r31)
-	  cmpwi     r0, 0
-	  beq+      .loc_0x270
-	  b         .loc_0x768
-
-	.loc_0x6A0:
-	  cmpwi     r23, 0
-	  bne-      .loc_0x6B8
-	  addi      r3, r31, 0
-	  addi      r4, r21, 0
-	  bl        0x710
-	  b         .loc_0x270
-
-	.loc_0x6B8:
-	  addi      r3, r31, 0
-	  addi      r4, r21, 0
-	  rlwinm    r5,r23,0,16,31
-	  bl        0x65C
-	  b         .loc_0x270
-
-	.loc_0x6CC:
-	  cmpwi     r0, 0x90
-	  li        r21, 0
-	  bne-      .loc_0x6E8
-	  addi      r3, r31, 0
-	  rlwinm    r4,r5,0,28,31
-	  bl        -0x3CC0
-	  b         .loc_0x740
-
-	.loc_0x6E8:
-	  cmpwi     r0, 0xA0
-	  bne-      .loc_0x700
-	  addi      r3, r31, 0
-	  rlwinm    r4,r5,0,28,31
-	  bl        -0x39B8
-	  b         .loc_0x740
-
-	.loc_0x700:
-	  cmpwi     r0, 0xB0
-	  bne-      .loc_0x730
-	  rlwinm.   r0,r5,0,28,28
-	  rlwinm    r5,r5,0,29,31
-	  beq-      .loc_0x71C
-	  li        r4, 0x1
-	  b         .loc_0x720
-
-	.loc_0x71C:
-	  li        r4, 0
-
-	.loc_0x720:
-	  mr        r3, r31
-	  bl        -0x7E4
-	  mr        r21, r3
-	  b         .loc_0x740
-
-	.loc_0x730:
-	  addi      r3, r31, 0
-	  li        r5, 0
-	  bl        -0x938
-	  mr        r21, r3
-
-	.loc_0x740:
-	  cmplwi    r21, 0
-	  beq+      .loc_0x270
-	  cmplwi    r21, 0x1
-	  beq-      .loc_0x768
-	  cmplwi    r21, 0x2
-	  beq+      .loc_0x1A0
-	  cmplwi    r21, 0x3
-	  bne+      .loc_0x270
-	  li        r3, -0x1
-	  b         .loc_0x8A4
-
-	.loc_0x768:
-	  lfs       f31, -0x7F08(r2)
-	  li        r21, 0
-	  lfs       f30, -0x7F0C(r2)
-	  li        r22, 0
-
-	.loc_0x778:
-	  add       r3, r31, r22
-	  lfs       f0, 0x154(r3)
-	  addi      r3, r3, 0x14C
-	  fcmpo     cr0, f0, f30
-	  ble-      .loc_0x7D8
-	  lfs       f1, 0x0(r3)
-	  cmpwi     r21, 0x5
-	  lfs       f0, 0xC(r3)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x0(r3)
-	  lfs       f0, 0x8(r3)
-	  fsubs     f0, f0, f31
-	  stfs      f0, 0x8(r3)
-	  ble-      .loc_0x7B8
-	  cmpwi     r21, 0xB
-	  blt-      .loc_0x7C8
-
-	.loc_0x7B8:
-	  li        r0, 0x1
-	  slw       r0, r0, r21
-	  or        r30, r30, r0
-	  b         .loc_0x7D8
-
-	.loc_0x7C8:
-	  lfs       f1, 0x0(r3)
-	  addi      r3, r31, 0
-	  rlwinm    r4,r21,0,24,31
-	  bl        0x160C
-
-	.loc_0x7D8:
-	  addi      r21, r21, 0x1
-	  addi      r22, r22, 0x10
-	  cmpwi     r21, 0x12
-	  blt+      .loc_0x778
-	  lbz       r0, 0x370(r31)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x804
-	  lbz       r0, 0x340(r31)
-	  subi      r3, r13, 0x7FC0
-	  lbzx      r0, r3, r0
-	  or        r30, r30, r0
-
-	.loc_0x804:
-	  lbz       r0, 0x371(r31)
-	  cmplwi    r0, 0xE
-	  bne-      .loc_0x820
-	  lbz       r0, 0x358(r31)
-	  subi      r3, r13, 0x7FC0
-	  lbzx      r0, r3, r0
-	  or        r30, r30, r0
-
-	.loc_0x820:
-	  lwz       r0, 0x3D8(r31)
-	  li        r23, 0
-	  li        r22, 0
-	  or        r0, r0, r30
-	  stw       r0, 0x3D8(r31)
-
-	.loc_0x834:
-	  addi      r21, r22, 0x44
-	  add       r21, r31, r21
-	  lwz       r3, 0x0(r21)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x890
-	  lbz       r0, 0x3C(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x890
-	  li        r0, 0x1
-	  lhz       r4, 0x3A0(r31)
-	  slw       r0, r0, r23
-	  lbz       r5, 0x39E(r31)
-	  and       r0, r4, r0
-	  sraw      r0, r0, r23
-	  or        r0, r5, r0
-	  rlwinm    r4,r0,0,24,31
-	  bl        .loc_0x0
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x890
-	  lwz       r3, 0x0(r21)
-	  bl        0x125C
-	  li        r0, 0
-	  stw       r0, 0x0(r21)
-
-	.loc_0x890:
-	  addi      r23, r23, 0x1
-	  addi      r22, r22, 0x4
-	  cmpwi     r23, 0x10
-	  blt+      .loc_0x834
-	  li        r3, 0
-
-	.loc_0x8A4:
-	  lwz       r0, 0x94(r1)
-	  addi      r11, r1, 0x90
-	  bl        0x201744
-	  lmw       r21, 0x54(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	f32 tempoProportion;
+	u32 uVar2;
+	jc_* pjVar3;
+	u8 uVar8;
+	u8 uVar4;
+	u8 uVar5;
+	u8 uVar6;
+	u8 bVar9;
+	volatile u8 bVar10;
+	f32* pfVar7;
+	seqp_* track_00;
+	int iVar11;
+	int iVar12;
+	seqp_* puVar12;
+	s32 uVar13;
+	uint uVar14;
+	int local_64;
+	int* REF_local_64;
+	u8 local_54;
+	u8* REF_local_54;
+	u8 local_53;
+	u8* REF_local_53;
+
+	uVar14 = 0;
+	if (track->parent && track->doChangeTempo == TRUE) {
+		tempoProportion = (float)track->tempo / (float)track->parent->tempo;
+		if (tempoProportion > 1.0f) {
+			tempoProportion = 1.0f;
+		}
+		track->tempoAccumulator += tempoProportion;
+		if (track->tempoAccumulator < 1.0f) {
+			return 0;
+		}
+		track->tempoAccumulator -= 1.0f;
+	}
+	if (track->parent) {
+		track->isMuted = isMuted;
+	}
+	if (track->parent && track->parentController.chanCount != 0) {
+		pjVar3 = List_GetChannel(&track->parentController.freeChannels);
+		if (pjVar3) {
+			List_AddChannel(&track->parent->parentController.freeChannels, pjVar3);
+			pjVar3->mMgr = &track->parent->parentController;
+			--track->parentController.chanCount;
+			++track->parent->parentController.chanCount;
+		}
+	}
+	if (track->parent) {
+		track->finalTranspose = track->transpose + track->parent->finalTranspose;
+	} else {
+		track->finalTranspose = track->transpose;
+	}
+	Jam_SetInterrupt(track, 7);
+	if (track->_3D0 != 0) {
+		if (--track->_3D0 == 0) {
+			Jam_SetInterrupt(track, 6);
+			if (track->_3A7 != 0) {
+				if (--track->_3A7 != 0) {
+					track->_3D0 = track->_3D4;
+				}
+			} else {
+				track->_3D0 = track->_3D4;
+			}
+		}
+	}
+	for (;;) {
+		Jam_TryInterrupt(track);
+		if (track->isPaused && (track->pauseStatus & 2)) {
+			goto LAB_800136e0;
+		}
+		++track->tickCounter;
+		if (track->_8C == -1) {
+			if ((u8)CheckNoteStop(track, 0)) { // Mysterious u8 cast again
+				track->_8C = 0;
+			} else {
+				goto LAB_80013628;
+			}
+		}
+		if (track->_8C > 0) {
+			--track->_8C;
+			if (track->_8C != 0) {
+				goto LAB_80013628;
+			}
+			if (track->_D0 != -1 && track->_D4 == 0) {
+				for (local_64 = 0; local_64 < (int)track->_90; ++local_64) {
+					REF_local_64              = &local_64;
+					track->_94[local_64]      = -1;
+					track->channels[local_64] = NULL;
+				}
+			}
+		}
+		while (1) {
+			local_54 = __ByteRead(track);
+			if (local_54 & 0x80)
+				break;
+			local_54 += track->finalTranspose;
+			uVar4  = __ByteRead(track);
+			bVar10 = (u8)uVar4;
+			if (uVar4 & 0x80) {
+				local_54 = __ExchangeRegisterValue(track, local_54) + track->finalTranspose;
+			}
+			if ((bVar10 >> 5 & 2) != 0) {
+				local_53 = local_54;
+				local_54 = track->_D5;
+			}
+			uVar5 = __ByteRead(track);
+			if (uVar5 >= 0x80) {
+				uVar5 = __ExchangeRegisterValue(track, uVar5 - 0x80) & 0xff;
+			}
+			uVar6 = uVar4 & 7;
+			if (!(uVar4 & 7)) {
+				uVar6 = 0;
+				bVar9 = __ByteRead(track);
+				if (bVar9 >= 0x80) {
+					bVar9 = (u8)__ExchangeRegisterValue(track, bVar9 - 0x80);
+				}
+				uVar2 = 0;
+				for (iVar11 = 0; iVar11 < (bVar10 >> 3 & 3); ++iVar11) {
+					uVar4 = __ByteRead(track);
+					uVar2 = uVar4 & 0xff | uVar2 << 8;
+				}
+				if ((uVar4 == 1) && (uVar2 >= 0x80)) {
+					uVar2 = __ExchangeRegisterValue(track, uVar2 - 0x80);
+				}
+			} else {
+				if ((bVar10 >> 3 & 3) != 0) {
+					uVar6 = __ExchangeRegisterValue(track, uVar6 - 1);
+					if (uVar6 > 7) {
+						goto LAB_80013628;
+					}
+				}
+				uVar2 = -1;
+				bVar9 = 100;
+			}
+			track->_D4 = bVar10 >> 5 & 3;
+			uVar13     = uVar2;
+			if (track->_D6 ? TRUE : FALSE) {
+				if ((track->_D4 & 1)) {
+					uVar13 = -1;
+				}
+				if (uVar13 != -1) {
+					uVar13 = Jam_SEQtimeToDSPtime(track, uVar13, bVar9);
+				}
+				if (!track->isPaused || !(track->pauseStatus & 0x10)) {
+					iVar11 = GateON(track, uVar6, local_54, uVar5, uVar13);
+				} else {
+					iVar11 = -1;
+				}
+			} else {
+				if (uVar2 != -1) {
+					uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, bVar9);
+				}
+				if ((track->_D4 & 1) != 0) {
+					uVar13 = -1;
+				}
+				if (!track->isPaused || !(track->pauseStatus & 0x10)) {
+					iVar11 = NoteON(track, uVar6, local_54, uVar5, uVar13);
+				} else {
+					iVar11 = -1;
+				}
+			}
+			if (iVar11 != -1) {
+				track->_94[uVar6] = local_54;
+			}
+			track->_90 = (uint)(iVar11 != -1);
+			track->_CC = bVar9;
+			track->_CD = (u8)uVar5;
+			track->_D0 = uVar2;
+			track->_D6 = (track->_D4 & 1) ? TRUE : FALSE;
+			if ((track->_D4 & 2) != 0) {
+				if (uVar13 == -1) {
+					uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
+				}
+				SetKeyTarget_1Shot(track->channels[0], (uint)local_53 + (uint)(u8)track->finalTranspose, uVar13);
+				local_54 = local_53;
+			}
+			track->_D5 = local_54;
+			if (uVar2 != -1) {
+				track->_8C = uVar2;
+				if (uVar2 == 0) {
+					track->_8C = -1;
+				}
+				goto LAB_80013628;
+			}
+		}
+		uVar5 = uVar4 & 0xf0;
+		if ((uVar5 == 0x80) || ((uVar4 & 0xff) == 0xf9)) {
+			iVar11 = 1;
+			uVar5  = 0;
+			if ((uVar4 & 0xff) == 0xf9) {
+				bVar10 = __ByteRead(track);
+				uVar2  = __ExchangeRegisterValue(track, bVar10 & 7);
+				uVar6  = uVar2 & 0xff;
+				if ((uVar6 > 7) || (uVar6 == 0)) {
+					if ((bVar10 & 0x80) != 0) {
+						__ByteRead(track);
+					}
+					continue;
+				}
+				uVar4 = uVar6 + 0x80;
+				if ((bVar10 & 0x80) != 0) {
+					uVar4 = uVar6 + 0x88;
+				}
+			}
+			uVar6 = uVar4 & 0xf;
+			if ((uVar4 & 0xf) == 8) {
+				iVar11 = 2;
+				uVar6 -= 8;
+			}
+			if ((uVar6 & 0xff) > 8) {
+				uVar6 -= 8;
+				uVar5 = __ByteRead(track);
+				if (uVar5 > 100) {
+					uVar5 = (uVar5 - 98) * 20;
+				}
+			}
+			if ((uVar6 & 0xff) == 0) {
+				// This for loop init feels fake... but idk.  Check this again later.
+				for (track->_8C = iVar12 = 0; iVar12 < iVar11; ++iVar12) {
+					track->_8C = __ByteRead(track) | track->_8C << 8;
+				}
+				if (track->_8C != 0) {
+					goto LAB_80013628;
+				}
+			} else if (uVar5 == 0) {
+				NoteOFF(track, uVar6);
+			} else {
+				NoteOFF_R(track, uVar6, uVar5);
+			}
+			continue;
+		}
+		/* `JASSeqParser::parseSeq`? */ {
+			u32 iVar11_2 = 0;
+			if (uVar5 == 0x90) {
+				Jam_WriteTimeParam(track, local_54 & 0x0f);
+			} else if (uVar5 == 0xa0) {
+				Jam_WriteRegParam(track, local_54 & 0x0f);
+			} else if (uVar5 == 0xb0) {
+				u32 test = uVar4 & 7;
+				iVar11_2 = RegCmd_Process(track, (uVar4 & 8) ? TRUE : FALSE, test);
+			} else {
+				iVar11_2 = Cmd_Process(track, local_54, 0);
+			}
+
+			// Definitely all four cases exist. What they do is yet to be confirmed.
+			if (iVar11_2 == 0) {
+				continue;
+			}
+			if (iVar11_2 == 1) {
+				break;
+			}
+			if (iVar11_2 == 2) {
+				break;
+			}
+			if (iVar11_2 == 3) {
+				return -1;
+			}
+		}
+	}
+
+LAB_80013628:
+	for (int i2 = 0; i2 < 18; ++i2) {
+		MoveParam_* move = &track->timedParam.move[i2];
+		if (move->duration > 0.0f) {
+			move->currentValue += move->stepSize;
+			move->duration -= 1.0f;
+			if (i2 <= 5 || i2 >= 11) {
+				uVar14 |= (1 << i2);
+			} else {
+				Osc_Update_Param(track, (u8)i2, move->currentValue);
+			}
+		}
+	}
+	if (track->oscillatorRouting[0] == 0x0E) {
+		uVar14 |= osc_table[track->oscillators[0].mode];
+	}
+	if (track->oscillatorRouting[1] == 0x0E) {
+		uVar14 |= osc_table[track->oscillators[1].mode];
+	}
+LAB_800136e0:
+	track->updateFlags |= uVar14;
+	for (size_t i = 0; i < 16; ++i) {
+		puVar12  = track->children[i];
+		track_00 = (seqp_*)puVar12->baseData;
+		if (track_00 && track_00->trackState != 0) {
+			// Return of the worst bit extract extraction method known to man.
+			if (Jam_SeqmainNote(track_00, track->isMuted | ((track->childMuteMask & (1 << uVar4)) >> uVar4)) == -1) {
+				Jaq_CloseTrack((seqp_*)puVar12->baseData);
+				puVar12->baseData = NULL;
+			}
+		}
+	}
+	return 0;
 }
 
 /*

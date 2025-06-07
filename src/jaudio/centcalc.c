@@ -1,4 +1,5 @@
 #include "jaudio/centcalc.h"
+
 #include "jaudio/tables.h"
 
 // Calculated via powf(2.0f, x / 12.0f)

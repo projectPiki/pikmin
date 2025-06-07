@@ -553,7 +553,7 @@ void AllStop_1Shot(jcs_* jcs)
  * Address:	80015D40
  * Size:	00006C
  */
-static int Extra_Update(jc_* jc, JCSTATUS status)
+static BOOL Extra_Update(jc_* jc, JCSTATUS status)
 {
 	if (jc->pitchSlideCounter) {
 		f32 a = jc->targetPitch - jc->currentPitch;
@@ -565,7 +565,7 @@ static int Extra_Update(jc_* jc, JCSTATUS status)
 			jc->extraUpdateCallback = NULL;
 		}
 	}
-	return 0;
+	return FALSE;
 }
 
 /*
@@ -747,7 +747,7 @@ void FlushRelease_1Shot(jcs_* jcs)
  * Address:	800160A0
  * Size:	0001C4
  */
-static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
+static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 {
 	u32 test    = FALSE;
 	jc_** jcptr = &jc;
@@ -803,7 +803,7 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		jc->playId         = -1;
 		jc->updateCallback = NULL;
 	}
-	return 0;
+	return FALSE;
 
 	u32 badcompiler[4];
 }

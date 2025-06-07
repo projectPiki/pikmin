@@ -18,6 +18,6 @@ void Jaf_GetJamHandle(u32);
 seqp_* Jaf_HandleToSeq(u32);
 void Jaf_LoadStartFinish(u32);
 void Jaf_LoadStartSeqA(u32, u32, u8*);
-void Jaf_LoadSeqA(u32, u8*);
+u32 Jaf_LoadSeqA(u32, u8*);
 
 #endif
