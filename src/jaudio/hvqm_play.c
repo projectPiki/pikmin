@@ -20,7 +20,7 @@ int v_header;
 int gop_baseframe;
 int gop_frame;
 int vh_state;
-SeqObj* hvqm_obj;
+HVQM4Decoder* hvqm_obj;
 u32 dvd_active;
 int virtualfile_buf;
 BOOL record_ok;
