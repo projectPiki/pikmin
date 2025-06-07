@@ -505,38 +505,24 @@ static void WeightImBlock(u8* block, int blockWidth, u8 c, u8 u, u8 d, u8 l, u8 
 +---+---+---+
 
  */
-	// int u_d; // r6
-	// int l_r; // r8
-	// int v1; // r9
-	// int v2; // r11
-	// int c2; // r28
-	// int c3; // r12
-	// int t1; // r31
-	// int t2; // r30
-	// int t3; // r29
-	// int t4; // r28
-	// int t5; // r27
-	// int t6; // r26
-	// int t7; // r23
-	// int t8; // r11
+	int u_d = u - d;
+	int l_r = l - r;
 
-	int tmb = u - d;
-	int lmr = l - r;
-	int vph = tmb + lmr;
-	int vmh = tmb - lmr;
+	int v1 = u_d + l_r;
+	int v2 = u_d - l_r;
 
-	int v2 = c * 2;
-	int v8 = c * 8;
+	int c2 = c * 2;
+	int c3 = c * 8 + 4;
 
-	int tpl = (u + l) - v2;
-	int tpr = (u + r) - v2;
-	int bpr = (d + r) - v2;
-	int bpl = (d + l) - v2;
+	int t1 = u + l - c2;
+	int t2 = u + r - c2;
+	int t3 = d + r - c2;
+	int t4 = l + d - c2;
 
-	int tml = u - l;
-	int tmr = u - r;
-	int bmr = d - r;
-	int bml = d - l;
+	int t5 = u - l;
+	int t6 = u - r;
+	int t7 = d - r;
+	int t8 = d - l;
 
 	// V:
 	// 6  8  8 6
@@ -557,11 +543,10 @@ static void WeightImBlock(u8* block, int blockWidth, u8 c, u8 u, u8 d, u8 l, u8 
 	// (8*V + 2*T - B -   L       + 4) / 8
 	// (6*V + 2*T - B -   L + 2*R + 4) / 8
 
-	block[0] = clipTable[v8 + vph + tpl];
-	block[1] = clipTable[v8 + vph + tml];
-	block[2] = clipTable[v8 + vmh + tmr];
-	block[3] = clipTable[v8 + vmh + tpr];
-
+	block[0] = clipTable[(c3 + v1 + t1 >> 3) + 0x80];
+	block[1] = clipTable[(c3 + v1 + t5 >> 3) + 0x80];
+	block[2] = clipTable[(c3 + v2 + t6 >> 3) + 0x80];
+	block[3] = clipTable[(c3 + v2 + t2 >> 3) + 0x80];
 	block += blockWidth;
 
 	// ( 8*V - B + 2*L -   R + 4) / 8
@@ -569,134 +554,27 @@ static void WeightImBlock(u8* block, int blockWidth, u8 c, u8 u, u8 d, u8 l, u8 
 	// (10*V - B -   L       + 4) / 8
 	// ( 8*V - B -   L + 2*R + 4) / 8
 
-	block[0] = clipTable[v8 + vph - tml];
-	block[1] = clipTable[v8 - bpr];
-	block[2] = clipTable[v8 - bpl];
-	block[3] = clipTable[v8 + vmh - tmr];
-
+	block[0] = clipTable[(c3 + v1 - t5 >> 3) + 0x80];
+	block[1] = clipTable[(c3 - t3 >> 3) + 0x80];
+	block[2] = clipTable[(c3 - t4 >> 3) + 0x80];
+	block[3] = clipTable[(c3 + v2 - t6 >> 3) + 0x80];
 	block += blockWidth;
 
 	// ( 8*V - T + 2*L - R + 4) / 8
 	// (10*V - T       - R + 4) / 8
 	// (10*V - T - L
 
-	block[0] = clipTable[v8 - vmh - bml];
-	block[1] = clipTable[v8 - tpr];
-	block[2] = clipTable[v8 - tpl];
-	block[3] = clipTable[v8 - vph - bmr];
-
+	block[0] = clipTable[(c3 - v2 - t8 >> 3) + 0x80];
+	block[1] = clipTable[(c3 - t2 >> 3) + 0x80];
+	block[2] = clipTable[(c3 - t1 >> 3) + 0x80];
+	block[3] = clipTable[(c3 - v1 - t7 >> 3) + 0x80];
 	block += blockWidth;
 
-	block[0] = clipTable[v8 - vmh + bpl];
-	block[1] = clipTable[v8 - vmh + bml];
-	block[2] = clipTable[v8 - vph + bmr];
-	block[3] = clipTable[v8 - vph + bpr];
-
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x40(r1)
-	  rlwinm    r10,r7,0,24,31
-	  rlwinm    r11,r5,3,21,28
-	  stmw      r23, 0x1C(r1)
-	  rlwinm    r24,r6,0,24,31
-	  rlwinm    r0,r8,0,24,31
-	  rlwinm    r7,r9,0,24,31
-	  rlwinm    r28,r5,1,23,30
-	  add       r5, r24, r0
-	  lis       r6, 0x8039
-	  sub       r8, r24, r10
-	  sub       r23, r0, r7
-	  addi      r12, r11, 0x4
-	  subi      r6, r6, 0x4300
-	  add       r9, r8, r23
-	  sub       r31, r5, r28
-	  sub       r11, r8, r23
-	  add       r5, r12, r9
-	  add       r23, r31, r5
-	  add       r8, r24, r7
-	  sub       r30, r8, r28
-	  sub       r27, r24, r0
-	  sub       r26, r24, r7
-	  add       r24, r10, r7
-	  addi      r6, r6, 0x80
-	  srawi     r23, r23, 0x3
-	  sub       r29, r24, r28
-	  lbzx      r24, r6, r23
-	  add       r23, r27, r5
-	  add       r25, r0, r10
-	  stb       r24, 0x0(r3)
-	  srawi     r23, r23, 0x3
-	  lbzx      r24, r6, r23
-	  add       r8, r12, r11
-	  add       r23, r26, r8
-	  stb       r24, 0x1(r3)
-	  srawi     r23, r23, 0x3
-	  add       r24, r30, r8
-	  lbzx      r23, r6, r23
-	  sub       r28, r25, r28
-	  srawi     r25, r24, 0x3
-	  sub       r24, r5, r27
-	  stb       r23, 0x2(r3)
-	  sub       r5, r12, r11
-	  lbzx      r25, r6, r25
-	  sub       r11, r10, r0
-	  srawi     r24, r24, 0x3
-	  stb       r25, 0x3(r3)
-	  add       r27, r3, r4
-	  sub       r0, r12, r29
-	  lbzx      r25, r6, r24
-	  srawi     r3, r0, 0x3
-	  sub       r0, r12, r28
-	  srawi     r24, r0, 0x3
-	  stb       r25, 0x0(r27)
-	  sub       r0, r8, r26
-	  lbzx      r26, r6, r3
-	  srawi     r25, r0, 0x3
-	  sub       r3, r10, r7
-	  stb       r26, 0x1(r27)
-	  sub       r8, r5, r11
-	  srawi     r26, r8, 0x3
-	  lbzx      r8, r6, r24
-	  sub       r7, r12, r30
-	  srawi     r10, r7, 0x3
-	  stb       r8, 0x2(r27)
-	  sub       r0, r12, r9
-	  sub       r7, r12, r31
-	  lbzx      r12, r6, r25
-	  srawi     r9, r7, 0x3
-	  sub       r7, r0, r3
-	  stb       r12, 0x3(r27)
-	  add       r27, r27, r4
-	  srawi     r8, r7, 0x3
-	  lbzx      r12, r6, r26
-	  add       r7, r28, r5
-	  add       r3, r3, r0
-	  stb       r12, 0x0(r27)
-	  srawi     r7, r7, 0x3
-	  add       r5, r11, r5
-	  lbzx      r10, r6, r10
-	  srawi     r5, r5, 0x3
-	  srawi     r3, r3, 0x3
-	  stb       r10, 0x1(r27)
-	  add       r0, r29, r0
-	  srawi     r0, r0, 0x3
-	  lbzx      r9, r6, r9
-	  stb       r9, 0x2(r27)
-	  lbzx      r8, r6, r8
-	  stb       r8, 0x3(r27)
-	  add       r27, r27, r4
-	  lbzx      r4, r6, r7
-	  stb       r4, 0x0(r27)
-	  lbzx      r4, r6, r5
-	  stb       r4, 0x1(r27)
-	  lbzx      r3, r6, r3
-	  stb       r3, 0x2(r27)
-	  lbzx      r0, r6, r0
-	  stb       r0, 0x3(r27)
-	  lmw       r23, 0x1C(r1)
-	  addi      r1, r1, 0x40
-	  blr
-	*/
+	block[0] = clipTable[(c3 - v2 + t4 >> 3) + 0x80];
+	block[1] = clipTable[(c3 - v2 + t8 >> 3) + 0x80];
+	block[2] = clipTable[(c3 - v1 + t7 >> 3) + 0x80];
+	block[3] = clipTable[(c3 - v1 + t3 >> 3) + 0x80];
+	block += blockWidth;
 }
 
 // 4x4 block of single value
