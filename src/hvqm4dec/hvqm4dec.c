@@ -749,7 +749,7 @@ static void OrgBlock(VideoState* ws, u8* block, int blockWidth, int p)
  * Address:	800201EC
  * Size:	00047C
  */
-static inline u32 GetAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
+static inline s32 GetAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	u16 code;
 	int step_x, step_y;
@@ -956,7 +956,7 @@ static inline u32 GetAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestT
  * Address:	80022700
  * Size:	0004C4
  */
-static inline u32 GetMCAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
+static inline s32 GetMCAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nestTop, int nestWidth, int p)
 {
 	// the only difference to GetAotBasis() seems to be the ">> 4 & 0xF"
 
@@ -1146,7 +1146,7 @@ static inline u32 GetMCAotBasis(VideoState* ws, u8* basisOut, s32* pscl, u8* nes
 	}
 }
 
-static inline int GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, int nestWidth, int p)
+static inline s32 GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, int nestWidth, int p)
 {
 	s32 prev_scl;
 	s32 scl;
@@ -1156,7 +1156,7 @@ static inline int GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, in
 	    = sum[14] = sum[15] = prev_scl = 0;
 
 	while (nbasis--) {
-		scl = GetAotBasis(ws, bas, &prev_scl, nestTop, nestWidth, p);
+		scl = GetMCAotBasis(ws, bas, &prev_scl, nestTop, nestWidth, p);
 		sum[0] += scl * bas[0];
 		sum[1] += scl * bas[1];
 		sum[2] += scl * bas[2];
@@ -1179,32 +1179,37 @@ static inline int GetAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, in
 	    >> 4;
 }
 
-static inline int GetMCAotSum(VideoState* state, int result[4][4], u8 num_bases, u8 const* nestBuf, u32 nest_stride, u32 plane_idx)
+static inline s32 GetMCAotSum(VideoState* ws, s32* sum, u8 nbasis, u8* nestTop, int nestWidth, int p)
 {
-	int i, j, k;
-	s32 temp;
-	u8 byte_result[4][4];
-	u32 factor;
-	int sum;
-	int mean;
+	s32 prev_scl;
+	s32 scl;
+	u8 bas[16];
 
-	for (i = 0; i < 4; i++)
-		for (j = 0; j < 4; ++j)
-			result[i][j] = 0;
+	sum[0] = sum[1] = sum[2] = sum[3] = sum[4] = sum[5] = sum[6] = sum[7] = sum[8] = sum[9] = sum[10] = sum[11] = sum[12] = sum[13]
+	    = sum[14] = sum[15] = prev_scl = 0;
 
-	temp = 0;
-	for (k = 0; k < num_bases; ++k) {
-		factor = GetMCAotBasis(state, (u8*)byte_result, &temp, nestBuf, nest_stride, plane_idx);
-		for (i = 0; i < 4; i++)
-			for (j = 0; j < 4; ++j)
-				result[i][j] += factor * byte_result[i][j];
+	while (nbasis--) {
+		scl = GetMCAotBasis(ws, bas, &prev_scl, nestTop, nestWidth, p);
+		sum[0] += scl * bas[0];
+		sum[1] += scl * bas[1];
+		sum[2] += scl * bas[2];
+		sum[3] += scl * bas[3];
+		sum[4] += scl * bas[4];
+		sum[5] += scl * bas[5];
+		sum[6] += scl * bas[6];
+		sum[7] += scl * bas[7];
+		sum[8] += scl * bas[8];
+		sum[9] += scl * bas[9];
+		sum[10] += scl * bas[10];
+		sum[11] += scl * bas[11];
+		sum[12] += scl * bas[12];
+		sum[13] += scl * bas[13];
+		sum[14] += scl * bas[14];
+		sum[15] += scl * bas[15];
 	}
-	sum = 0;
-	for (i = 0; i < 4; i++)
-		for (j = 0; j < 4; ++j)
-			sum += result[i][j];
-	mean = sum >> 4;
-	return mean;
+	return (sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] + sum[7] + sum[8] + sum[9] + sum[10] + sum[11] + sum[12] + sum[13]
+	        + sum[14] + sum[15])
+	    >> 4;
 }
 
 /*
@@ -1820,668 +1825,176 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
  */
 static void PrediAotBlock(VideoState* ws, u8* blk, u8* mblk, int blkWidth, u8 nbasis, u8* nestPtr, int nestWidth, int p, int selector)
 {
-	int result[4][4];
-	u32 aot_sum;
-	u8 mdst[4][4];
-	int i, j, y, x;
-	u32 diff[4][4];
-	u32 min, max, value, mean, addend, factor;
-	u32 const dst_stride = 4;
+	s32 sum[16];
+	u8 mvc[16];
+	int mov[16];
+	s32 avr;
+	s32 scl;
+	s32 dcv;
+	s32 value;
+	s32 mean;
+	int max, min;
+	int i, j;
+	int mns;
 
-	aot_sum = GetMCAotSum(ws, result, nbasis - 1, nestPtr, nestWidth, p);
+	avr = GetMCAotSum(ws, sum, nbasis - 1, nestPtr, nestWidth, p);
+	_MotionComp(mvc, 4, mblk, blkWidth, selector);
 
-	_MotionComp((u8*)mdst, dst_stride, mblk, blkWidth, selector);
-	mean = 8;
-	for (y = 0; y < 4; ++y)
-		for (x = 0; x < 4; ++x)
-			mean += mdst[y][x];
-	mean /= 16;
-	min = max = mdst[0][0] - mean;
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 4; ++j) {
-			value = diff[i][j] = mdst[i][j] - mean;
-			min                = value < min ? value : min;
-			max                = value > max ? value : max;
-		}
-	}
-	addend = (decodeSOvfSym(&ws->dcval[p], ws->dc_min, ws->dc_max) >> ws->dc_scale_q << ws->aotscale_q) - aot_sum;
-	factor = (decodeSOvfSym(&ws->dcval[p], ws->dc_min, ws->dc_max) >> ws->dc_scale_q);
-	factor *= mcdivTable[max - min];
-	for (i = 0; i < 4; i++)
-		for (j = 0; j < 4; ++j)
-			result[i][j] += addend + diff[i][j] * factor;
+	mean = (mvc[0] + mvc[1] + mvc[2] + mvc[3] + mvc[4] + mvc[5] + mvc[6] + mvc[7] + mvc[8] + mvc[9] + mvc[10] + mvc[11] + mvc[12] + mvc[13]
+	        + mvc[14] + mvc[15] + 8)
+	    >> 4;
 
-	for (i = 0; i < 4; i++) {
-		for (j = 0; j < 4; ++j) {
-			value                 = (result[i][j] >> ws->aotscale_q) + mdst[i][j];
-			blk[i * blkWidth + j] = saturate(value);
-		}
+	max = min = mvc[0] - mean;
+	mov[0]    = min;
+
+	value  = mvc[1] - mean;
+	mov[1] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
 	}
 
-	/*
-	.loc_0x0:
-	mflr      r0
-	lis       r11, 0x8039
-	stw       r0, 0x4(r1)
-	li        r0, 0
-	stwu      r1, -0x120(r1)
-	stmw      r16, 0xE0(r1)
-	addi      r23, r3, 0
-	lwz       r17, 0x128(r1)
-	addi      r24, r4, 0
-	addi      r20, r5, 0
-	addi      r25, r6, 0
-	addi      r19, r8, 0
-	addi      r18, r9, 0
-	addi      r26, r10, 0
-	subi      r22, r11, 0x4300
-	subi      r27, r7, 0x1
-	stw       r0, 0x38(r1)
-	stw       r0, 0xDC(r1)
-	stw       r0, 0xD8(r1)
-	stw       r0, 0xD4(r1)
-	stw       r0, 0xD0(r1)
-	stw       r0, 0xCC(r1)
-	stw       r0, 0xC8(r1)
-	stw       r0, 0xC4(r1)
-	stw       r0, 0xC0(r1)
-	stw       r0, 0xBC(r1)
-	stw       r0, 0xB8(r1)
-	stw       r0, 0xB4(r1)
-	stw       r0, 0xB0(r1)
-	stw       r0, 0xAC(r1)
-	stw       r0, 0xA8(r1)
-	stw       r0, 0xA4(r1)
-	stw       r0, 0xA0(r1)
-	b         .loc_0x1E4
+	value  = mvc[2] - mean;
+	mov[2] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x88:
-	addi      r3, r23, 0
-	addi      r6, r19, 0
-	addi      r7, r18, 0
-	addi      r8, r26, 0
-	addi      r4, r1, 0x3C
-	addi      r5, r1, 0x38
-	bl        .loc_0x86C
-	lbz       r4, 0x3C(r1)
-	lbz       r0, 0x3D(r1)
-	mullw     r4, r3, r4
-	lwz       r5, 0xA0(r1)
-	add       r4, r5, r4
-	stw       r4, 0xA0(r1)
-	mullw     r0, r3, r0
-	lwz       r4, 0xA4(r1)
-	add       r0, r4, r0
-	stw       r0, 0xA4(r1)
-	lbz       r0, 0x3E(r1)
-	lwz       r4, 0xA8(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xA8(r1)
-	lbz       r0, 0x3F(r1)
-	lwz       r4, 0xAC(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xAC(r1)
-	lbz       r0, 0x40(r1)
-	lwz       r4, 0xB0(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xB0(r1)
-	lbz       r0, 0x41(r1)
-	lwz       r4, 0xB4(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xB4(r1)
-	lbz       r0, 0x42(r1)
-	lwz       r4, 0xB8(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xB8(r1)
-	lbz       r0, 0x43(r1)
-	lwz       r4, 0xBC(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xBC(r1)
-	lbz       r0, 0x44(r1)
-	lwz       r4, 0xC0(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xC0(r1)
-	lbz       r0, 0x45(r1)
-	lwz       r4, 0xC4(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xC4(r1)
-	lbz       r0, 0x46(r1)
-	lwz       r4, 0xC8(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xC8(r1)
-	lbz       r0, 0x47(r1)
-	lwz       r4, 0xCC(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xCC(r1)
-	lbz       r0, 0x48(r1)
-	lwz       r4, 0xD0(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xD0(r1)
-	lbz       r0, 0x49(r1)
-	lwz       r4, 0xD4(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xD4(r1)
-	lbz       r0, 0x4A(r1)
-	lwz       r4, 0xD8(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xD8(r1)
-	lbz       r0, 0x4B(r1)
-	lwz       r4, 0xDC(r1)
-	mullw     r0, r3, r0
-	add       r0, r4, r0
-	stw       r0, 0xDC(r1)
+	value  = mvc[3] - mean;
+	mov[3] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x1E4:
-	rlwinm.   r0,r27,0,24,31
-	subi      r27, r27, 0x1
-	bne+      .loc_0x88
-	lwz       r5, 0xA8(r1)
-	lis       r3, 0x8022
-	lwz       r0, 0xA4(r1)
-	rlwinm    r4,r17,2,0,29
-	lwz       r6, 0xAC(r1)
-	add       r0, r0, r5
-	lwz       r5, 0xB0(r1)
-	add       r0, r0, r6
-	lwz       r6, 0xB4(r1)
-	add       r0, r0, r5
-	lwz       r5, 0xB8(r1)
-	add       r0, r0, r6
-	lwz       r6, 0xBC(r1)
-	add       r0, r0, r5
-	lwz       r5, 0xC0(r1)
-	add       r0, r0, r6
-	lwz       r6, 0xC4(r1)
-	add       r0, r0, r5
-	lwz       r5, 0xC8(r1)
-	add       r0, r0, r6
-	lwz       r6, 0xCC(r1)
-	add       r0, r0, r5
-	lwz       r5, 0xD0(r1)
-	add       r0, r0, r6
-	lwz       r6, 0xD4(r1)
-	add       r5, r0, r5
-	lwz       r7, 0xD8(r1)
-	addi      r0, r3, 0x72C0
-	lwz       r8, 0xDC(r1)
-	add       r5, r5, r6
-	lwz       r6, 0xA0(r1)
-	add       r3, r0, r4
-	add       r0, r5, r7
-	lwz       r12, 0x0(r3)
-	add       r0, r0, r8
-	add       r0, r6, r0
-	mtlr      r12
-	addi      r5, r20, 0
-	addi      r6, r25, 0
-	srawi     r29, r0, 0x4
-	addi      r3, r1, 0x90
-	li        r4, 0x4
-	blrl
-	lbz       r3, 0x92(r1)
-	lbz       r0, 0x91(r1)
-	lbz       r4, 0x93(r1)
-	add       r6, r0, r3
-	lbz       r5, 0x94(r1)
-	add       r7, r6, r4
-	lbz       r6, 0x95(r1)
-	add       r8, r7, r5
-	lbz       r7, 0x96(r1)
-	add       r9, r8, r6
-	lbz       r8, 0x97(r1)
-	add       r10, r9, r7
-	lbz       r9, 0x98(r1)
-	add       r11, r10, r8
-	lbz       r10, 0x99(r1)
-	add       r12, r11, r9
-	lbz       r11, 0x9A(r1)
-	add       r17, r12, r10
-	lbz       r12, 0x9B(r1)
-	add       r17, r17, r11
-	lbz       r18, 0x9C(r1)
-	add       r17, r17, r12
-	lbz       r19, 0x9D(r1)
-	add       r17, r17, r18
-	lbz       r20, 0x9E(r1)
-	add       r17, r17, r19
-	lbz       r21, 0x9F(r1)
-	add       r17, r17, r20
-	lbz       r16, 0x90(r1)
-	add       r17, r17, r21
-	addi      r17, r17, 0x8
-	add       r17, r16, r17
-	srawi     r17, r17, 0x4
-	sub       r27, r16, r17
-	sub       r0, r0, r17
-	stw       r27, 0x50(r1)
-	cmpw      r0, r27
-	stw       r0, 0x54(r1)
-	mr        r28, r27
-	bge-      .loc_0x344
-	mr        r27, r0
-	b         .loc_0x34C
+	value  = mvc[4] - mean;
+	mov[4] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x344:
-	ble-      .loc_0x34C
-	mr        r28, r0
+	value  = mvc[5] - mean;
+	mov[5] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x34C:
-	sub       r0, r3, r17
-	cmpw      r0, r27
-	stw       r0, 0x58(r1)
-	bge-      .loc_0x364
-	mr        r27, r0
-	b         .loc_0x370
+	value  = mvc[6] - mean;
+	mov[6] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x364:
-	cmpw      r0, r28
-	ble-      .loc_0x370
-	mr        r28, r0
+	value  = mvc[7] - mean;
+	mov[7] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x370:
-	sub       r0, r4, r17
-	cmpw      r0, r27
-	stw       r0, 0x5C(r1)
-	bge-      .loc_0x388
-	mr        r27, r0
-	b         .loc_0x394
+	value  = mvc[8] - mean;
+	mov[8] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x388:
-	cmpw      r0, r28
-	ble-      .loc_0x394
-	mr        r28, r0
+	value  = mvc[9] - mean;
+	mov[9] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x394:
-	sub       r0, r5, r17
-	cmpw      r0, r27
-	stw       r0, 0x60(r1)
-	bge-      .loc_0x3AC
-	mr        r27, r0
-	b         .loc_0x3B8
+	value   = mvc[10] - mean;
+	mov[10] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x3AC:
-	cmpw      r0, r28
-	ble-      .loc_0x3B8
-	mr        r28, r0
+	value   = mvc[11] - mean;
+	mov[11] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x3B8:
-	sub       r0, r6, r17
-	cmpw      r0, r27
-	stw       r0, 0x64(r1)
-	bge-      .loc_0x3D0
-	mr        r27, r0
-	b         .loc_0x3DC
+	value   = mvc[12] - mean;
+	mov[12] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x3D0:
-	cmpw      r0, r28
-	ble-      .loc_0x3DC
-	mr        r28, r0
+	value   = mvc[13] - mean;
+	mov[13] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x3DC:
-	sub       r0, r7, r17
-	cmpw      r0, r27
-	stw       r0, 0x68(r1)
-	bge-      .loc_0x3F4
-	mr        r27, r0
-	b         .loc_0x400
+	value   = mvc[14] - mean;
+	mov[14] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x3F4:
-	cmpw      r0, r28
-	ble-      .loc_0x400
-	mr        r28, r0
+	value   = mvc[15] - mean;
+	mov[15] = value;
+	if (value < min) {
+		min = value;
+	} else if (value > max) {
+		max = value;
+	}
 
-	.loc_0x400:
-	sub       r0, r8, r17
-	cmpw      r0, r27
-	stw       r0, 0x6C(r1)
-	bge-      .loc_0x418
-	mr        r27, r0
-	b         .loc_0x424
+	mns = ws->aotscale_q;
+	avr = (decodeSOvfSym(&ws->dcval[p], ws->dc_min, ws->dc_max) >> ws->dc_scale_q << mns) - avr;
+	scl = (decodeSOvfSym(&ws->dcval[p], ws->dc_min, ws->dc_max) >> ws->dc_scale_q) * mcdivTable[max - min];
 
-	.loc_0x418:
-	cmpw      r0, r28
-	ble-      .loc_0x424
-	mr        r28, r0
+	// This loop is probably not manually unrolled, but it helps fake-match the stack size
+	for (i = 0; i < 16; i += 8) {
+		sum[i + 0] += avr + mov[i + 0] * scl;
+		sum[i + 1] += avr + mov[i + 1] * scl;
+		sum[i + 2] += avr + mov[i + 2] * scl;
+		sum[i + 3] += avr + mov[i + 3] * scl;
+		sum[i + 4] += avr + mov[i + 4] * scl;
+		sum[i + 5] += avr + mov[i + 5] * scl;
+		sum[i + 6] += avr + mov[i + 6] * scl;
+		sum[i + 7] += avr + mov[i + 7] * scl;
+	}
 
-	.loc_0x424:
-	sub       r0, r9, r17
-	cmpw      r0, r27
-	stw       r0, 0x70(r1)
-	bge-      .loc_0x43C
-	mr        r27, r0
-	b         .loc_0x448
-
-	.loc_0x43C:
-	cmpw      r0, r28
-	ble-      .loc_0x448
-	mr        r28, r0
-
-	.loc_0x448:
-	sub       r0, r10, r17
-	cmpw      r0, r27
-	stw       r0, 0x74(r1)
-	bge-      .loc_0x460
-	mr        r27, r0
-	b         .loc_0x46C
-
-	.loc_0x460:
-	cmpw      r0, r28
-	ble-      .loc_0x46C
-	mr        r28, r0
-
-	.loc_0x46C:
-	sub       r0, r11, r17
-	cmpw      r0, r27
-	stw       r0, 0x78(r1)
-	bge-      .loc_0x484
-	mr        r27, r0
-	b         .loc_0x490
-
-	.loc_0x484:
-	cmpw      r0, r28
-	ble-      .loc_0x490
-	mr        r28, r0
-
-	.loc_0x490:
-	sub       r0, r12, r17
-	cmpw      r0, r27
-	stw       r0, 0x7C(r1)
-	bge-      .loc_0x4A8
-	mr        r27, r0
-	b         .loc_0x4B4
-
-	.loc_0x4A8:
-	cmpw      r0, r28
-	ble-      .loc_0x4B4
-	mr        r28, r0
-
-	.loc_0x4B4:
-	sub       r0, r18, r17
-	cmpw      r0, r27
-	stw       r0, 0x80(r1)
-	bge-      .loc_0x4CC
-	mr        r27, r0
-	b         .loc_0x4D8
-
-	.loc_0x4CC:
-	cmpw      r0, r28
-	ble-      .loc_0x4D8
-	mr        r28, r0
-
-	.loc_0x4D8:
-	sub       r0, r19, r17
-	cmpw      r0, r27
-	stw       r0, 0x84(r1)
-	bge-      .loc_0x4F0
-	mr        r27, r0
-	b         .loc_0x4FC
-
-	.loc_0x4F0:
-	cmpw      r0, r28
-	ble-      .loc_0x4FC
-	mr        r28, r0
-
-	.loc_0x4FC:
-	sub       r0, r20, r17
-	cmpw      r0, r27
-	stw       r0, 0x88(r1)
-	bge-      .loc_0x514
-	mr        r27, r0
-	b         .loc_0x520
-
-	.loc_0x514:
-	cmpw      r0, r28
-	ble-      .loc_0x520
-	mr        r28, r0
-
-	.loc_0x520:
-	sub       r0, r21, r17
-	cmpw      r0, r27
-	stw       r0, 0x8C(r1)
-	bge-      .loc_0x538
-	mr        r27, r0
-	b         .loc_0x544
-
-	.loc_0x538:
-	cmpw      r0, r28
-	ble-      .loc_0x544
-	mr        r28, r0
-
-	.loc_0x544:
-	mulli     r0, r26, 0x14
-	lbz       r26, 0x6CD0(r23)
-	lwz       r19, 0x6CC8(r23)
-	lwz       r20, 0x6CCC(r23)
-	add       r31, r23, r0
-	addi      r30, r31, 0x60D8
-	addi      r18, r30, 0
-	li        r21, 0
-
-	.loc_0x564:
-	lwz       r17, 0x60E8(r31)
-	lwz       r16, 0x4(r17)
-	b         .loc_0x58C
-
-	.loc_0x570:
-	mr        r3, r18
-	bl        -0x2C20
-	rlwinm    r3,r3,11,0,20
-	rlwinm    r0,r16,2,0,29
-	add       r3, r3, r0
-	addi      r0, r3, 0x8
-	lwzx      r16, r17, r0
-
-	.loc_0x58C:
-	cmpwi     r16, 0x100
-	bge+      .loc_0x570
-	rlwinm    r3,r16,2,0,29
-	addi      r0, r3, 0x8
-	lwzx      r0, r17, r0
-	cmpw      r20, r0
-	add       r21, r21, r0
-	bge+      .loc_0x564
-	cmpw      r0, r19
-	bge+      .loc_0x564
-	lbz       r0, 0x6CD1(r23)
-	li        r19, 0
-	lwz       r18, 0x6CC8(r23)
-	sraw      r0, r21, r0
-	lwz       r20, 0x6CCC(r23)
-	slw       r0, r0, r26
-	sub       r29, r0, r29
-
-	.loc_0x5D0:
-	lwz       r17, 0x60E8(r31)
-	lwz       r16, 0x4(r17)
-	b         .loc_0x5F8
-
-	.loc_0x5DC:
-	mr        r3, r30
-	bl        -0x2C8C
-	rlwinm    r3,r3,11,0,20
-	rlwinm    r0,r16,2,0,29
-	add       r3, r3, r0
-	addi      r0, r3, 0x8
-	lwzx      r16, r17, r0
-
-	.loc_0x5F8:
-	cmpwi     r16, 0x100
-	bge+      .loc_0x5DC
-	rlwinm    r3,r16,2,0,29
-	addi      r0, r3, 0x8
-	lwzx      r0, r17, r0
-	cmpw      r20, r0
-	add       r19, r19, r0
-	bge+      .loc_0x5D0
-	cmpw      r0, r18
-	bge+      .loc_0x5D0
-	sub       r3, r28, r27
-	lbz       r0, 0x6CD1(r23)
-	rlwinm    r3,r3,2,0,29
-	add       r3, r22, r3
-	lwz       r4, 0x240(r3)
-	sraw      r0, r19, r0
-	li        r3, 0x2
-	mullw     r0, r4, r0
-	mtctr     r3
-	addi      r5, r1, 0xA0
-	addi      r4, r5, 0
-	addi      r3, r1, 0x50
-
-	.loc_0x650:
-	lwz       r6, 0x0(r3)
-	lwz       r7, 0x0(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x0(r4)
-	lwz       r6, 0x4(r3)
-	lwz       r7, 0x4(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x4(r4)
-	lwz       r6, 0x8(r3)
-	lwz       r7, 0x8(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x8(r4)
-	lwz       r6, 0xC(r3)
-	lwz       r7, 0xC(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0xC(r4)
-	lwz       r6, 0x10(r3)
-	lwz       r7, 0x10(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x10(r4)
-	lwz       r6, 0x14(r3)
-	lwz       r7, 0x14(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x14(r4)
-	lwz       r6, 0x18(r3)
-	lwz       r7, 0x18(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x18(r4)
-	lwz       r6, 0x1C(r3)
-	addi      r3, r3, 0x20
-	lwz       r7, 0x1C(r4)
-	mullw     r6, r0, r6
-	add       r6, r6, r7
-	add       r6, r29, r6
-	stw       r6, 0x1C(r4)
-	addi      r4, r4, 0x20
-	bdnz+     .loc_0x650
-	li        r0, 0x2
-	mtctr     r0
-	addi      r4, r1, 0x90
-	addi      r3, r1, 0xA0
-	li        r6, 0
-
-	.loc_0x730:
-	lwz       r0, 0x0(r5)
-	addi      r11, r6, 0x1
-	lbz       r7, 0x0(r4)
-	addi      r9, r6, 0x2
-	sraw      r0, r0, r26
-	add       r7, r7, r0
-	addi      r0, r7, 0x80
-	lbzx      r0, r22, r0
-	addi      r7, r6, 0x3
-	rlwinm    r10,r9,2,0,29
-	stb       r0, 0x0(r24)
-	rlwinm    r11,r11,2,0,29
-	rlwinm    r8,r7,2,0,29
-	lwzx      r0, r3, r11
-	addi      r11, r6, 0x5
-	lbz       r7, 0x1(r4)
-	addi      r9, r6, 0x6
-	sraw      r0, r0, r26
-	add       r7, r7, r0
-	addi      r0, r7, 0x80
-	lbzx      r0, r22, r0
-	addi      r7, r6, 0x7
-	rlwinm    r11,r11,2,0,29
-	stb       r0, 0x1(r24)
-	addi      r6, r6, 0x8
-	lwzx      r0, r3, r10
-	rlwinm    r10,r9,2,0,29
-	lbz       r9, 0x2(r4)
-	sraw      r0, r0, r26
-	add       r9, r9, r0
-	addi      r0, r9, 0x80
-	lbzx      r0, r22, r0
-	stb       r0, 0x2(r24)
-	lwzx      r0, r3, r8
-	rlwinm    r8,r7,2,0,29
-	lbz       r7, 0x3(r4)
-	sraw      r0, r0, r26
-	add       r7, r7, r0
-	addi      r0, r7, 0x80
-	lbzx      r0, r22, r0
-	stb       r0, 0x3(r24)
-	add       r24, r24, r25
-	lwz       r0, 0x10(r5)
-	addi      r5, r5, 0x20
-	lbz       r7, 0x4(r4)
-	sraw      r0, r0, r26
-	add       r7, r7, r0
-	addi      r0, r7, 0x80
-	lbzx      r0, r22, r0
-	stb       r0, 0x0(r24)
-	lwzx      r0, r3, r11
-	lbz       r7, 0x5(r4)
-	sraw      r0, r0, r26
-	add       r7, r7, r0
-	addi      r0, r7, 0x80
-	lbzx      r0, r22, r0
-	stb       r0, 0x1(r24)
-	lwzx      r0, r3, r10
-	lbz       r9, 0x6(r4)
-	sraw      r0, r0, r26
-	add       r9, r9, r0
-	addi      r0, r9, 0x80
-	lbzx      r0, r22, r0
-	stb       r0, 0x2(r24)
-	lwzx      r0, r3, r8
-	lbz       r7, 0x7(r4)
-	addi      r4, r4, 0x8
-	sraw      r0, r0, r26
-	add       r7, r7, r0
-	addi      r0, r7, 0x80
-	lbzx      r0, r22, r0
-	stb       r0, 0x3(r24)
-	add       r24, r24, r25
-	bdnz+     .loc_0x730
-	lmw       r16, 0xE0(r1)
-	lwz       r0, 0x124(r1)
-	addi      r1, r1, 0x120
-	mtlr      r0
-	blr
-
-	.loc_0x86C:
-	*/
+	j = 0;
+	for (i = 0; i < 4; i++) {
+		blk[0] = clipTable[mvc[j] + (sum[j] >> mns) + 0x80];
+		j++;
+		blk[1] = clipTable[mvc[j] + (sum[j] >> mns) + 0x80];
+		j++;
+		blk[2] = clipTable[mvc[j] + (sum[j] >> mns) + 0x80];
+		j++;
+		blk[3] = clipTable[mvc[j] + (sum[j] >> mns) + 0x80];
+		j++;
+		blk += blkWidth;
+	}
 }
 
 /*
