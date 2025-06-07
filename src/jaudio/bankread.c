@@ -48,8 +48,8 @@ Bank_* Bank_Test(u8* ibnk_address)
 			PTconvert(&inst->mSensors[j], base_addr);
 
 			if (inst->mOscillators[j]) {
-				PTconvert((void**)&inst->mOscillators[j]->mAttackVecOffset, base_addr);
-				PTconvert((void**)&inst->mOscillators[j]->mReleaseVecOffset, base_addr);
+				PTconvert((void**)&inst->mOscillators[j]->attackVecOffset, base_addr);
+				PTconvert((void**)&inst->mOscillators[j]->releaseVecOffset, base_addr);
 			}
 		}
 
@@ -72,7 +72,7 @@ Bank_* Bank_Test(u8* ibnk_address)
 			continue;
 		}
 
-		for (j = 0; j < voice->_08; j++) {
+		for (j = 0; j < voice->size; j++) {
 			PTconvert(&voice->_0C[j], base_addr);
 		}
 	}

@@ -103,22 +103,22 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 	u32 badCompiler[2];
 	for (u32 i = 0; i < 2; i++) {
 		if (inst->mSensors[i]) {
-			u8 trigger     = __GetTrigger(jc, inst->mSensors[i]->_01);
+			u8 trigger     = __GetTrigger(jc, inst->mSensors[i]->type);
 			f32 sense      = Bank_SenseToOfs(inst->mSensors[i], trigger);
 			f32* REF_sense = &sense;
-			__DoEffect(jc, inst->mSensors[i]->_00, sense);
+			__DoEffect(jc, inst->mSensors[i]->id, sense);
 		}
 
 		if (inst->mEffects[i]) {
 			f32 r = Bank_RandToOfs(inst->mEffects[i]);
-			__DoEffect(jc, inst->mEffects[i]->_00, r);
+			__DoEffect(jc, inst->mEffects[i]->id, r);
 		}
 
 		if (inst->mOscillators[i]) {
-			jc->mOscBuffers[i]._00 = 1;
-			jc->mOscillators[i]    = inst->mOscillators[i];
-			f32 ofs                = Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]);
-			DoEffectOsc(jc, jc->mOscillators[i]->mMode, ofs);
+			jc->mOscBuffers[i].state = 1;
+			jc->mOscillators[i]      = inst->mOscillators[i];
+			f32 ofs                  = Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]);
+			DoEffectOsc(jc, jc->mOscillators[i]->mode, ofs);
 		} else {
 			jc->mOscillators[i] = NULL;
 		}
@@ -147,15 +147,15 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 		if (map->_00) {
 			f32 r      = Bank_RandToOfs(map->_00);
 			f32* REF_r = &r;
-			__DoEffect(jc, map->_00->_00, r);
+			__DoEffect(jc, map->_00->id, r);
 		}
 
 		jc->mOscillators[i] = NULL;
 	}
-	jc->mOscillators[0]    = &PERC_ENV;
-	jc->mOscBuffers[0]._00 = TRUE;
+	jc->mOscillators[0]      = &PERC_ENV;
+	jc->mOscBuffers[0].state = TRUE;
 	Bank_OscToOfs(jc->mOscillators[0], &jc->mOscBuffers[0]);
-	jc->mOscBuffers[0]._14 = id;
+	jc->mOscBuffers[0].releaseParam = id;
 	__Clamp01InitPan(jc);
 }
 
@@ -176,8 +176,8 @@ static void EffecterInit_Osc(jc_* jc)
 		jc->mOscillators[i] = NULL;
 	}
 
-	jc->mOscillators[0]    = &OSC_ENV;
-	jc->mOscBuffers[0]._00 = TRUE;
+	jc->mOscillators[0]      = &OSC_ENV;
+	jc->mOscBuffers[0].state = TRUE;
 	Bank_OscToOfs(jc->mOscillators[0], &jc->mOscBuffers[0]);
 }
 
@@ -189,9 +189,9 @@ static void EffecterInit_Osc(jc_* jc)
 void Effecter_Overwrite_1ShotD(jc_* jc, Osc_* osc, u32 id)
 {
 	if (id < 4) {
-		jc->mOscBuffers[id]._00 = TRUE;
-		jc->mOscillators[id]    = osc;
-		DoEffectOsc(jc, jc->mOscillators[id]->mMode, Bank_OscToOfs(jc->mOscillators[id], &jc->mOscBuffers[id]));
+		jc->mOscBuffers[id].state = TRUE;
+		jc->mOscillators[id]      = osc;
+		DoEffectOsc(jc, jc->mOscillators[id]->mode, Bank_OscToOfs(jc->mOscillators[id], &jc->mOscBuffers[id]));
 	}
 }
 
@@ -283,7 +283,7 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 			}
 
 			if (chan2) {
-				chan2->mOscBuffers[0]._00 = 6;
+				chan2->mOscBuffers[0].state = 6;
 				List_AddChannel(&jcs->waitingChannels, chan2);
 				if (chan2->dspChannel) {
 					ForceStopDSPchannel(chan2->dspChannel);
@@ -633,7 +633,7 @@ void Stop_1Shot_R(jc_* jc, u16 id)
 	if (jc->dspChannel == 0) {
 		Jesus1Shot_Update(jc, (JCSTATUS)6);
 	} else {
-		jc->mOscBuffers[0]._14 = id;
+		jc->mOscBuffers[0].releaseParam = id;
 		Jesus1Shot_Update(jc, (JCSTATUS)0);
 	}
 }
@@ -845,8 +845,8 @@ void FlushRelease_1Shot(jcs_* jcs)
 
 		for (int j = 0; j < 2; j++) {
 			if (chan->mOscillators[j]) {
-				if (chan->mOscBuffers[j]._00 != 6 && chan->mOscBuffers[j]._00 != 7) {
-					chan->mOscBuffers[j]._00 = 6;
+				if (chan->mOscBuffers[j].state != 6 && chan->mOscBuffers[j].state != 7) {
+					chan->mOscBuffers[j].state = 6;
 				}
 			}
 		}
@@ -871,9 +871,9 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		for (u32 i = 0; i < 2; i++) {
 			if (jc->mOscillators[i]) {
 				Oscbuf_* buf = &jc->mOscBuffers[i];
-				if (buf->_00 != 6 && buf->_00 != 7) {
-					buf->_00 = 4;
-					test     = TRUE;
+				if (buf->state != 6 && buf->state != 7) {
+					buf->state = 4;
+					test       = TRUE;
 				}
 			}
 		}
@@ -1136,7 +1136,7 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 		return NULL;
 	}
 
-	int val = sound.bytes[2] + 60 - wave->wave->_02;
+	int val = sound.bytes[2] + 60 - wave->data->_02;
 	if (val < 0) {
 		val = 0;
 	}
@@ -1146,7 +1146,7 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	f32 pitch                      = C5BASE_PITCHTABLE[val];
 	chan->velocity                 = sound.bytes[3];
 	chan->note                     = sound.bytes[2];
-	chan->basePitch                = inst->mGainMultiplier * map->mPitch * wave->wave->_04 / JAC_DAC_RATE;
+	chan->basePitch                = inst->mGainMultiplier * map->mPitch * wave->data->_04 / JAC_DAC_RATE;
 	chan->currentPitch             = chan->basePitch * pitch;
 	chan->baseVolume               = map->mVolume * inst->mFreqMultiplier;
 	chan->currentVolume            = chan->velocity / 127.0f;
@@ -1417,7 +1417,7 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 
 	chan->velocity                 = sound.bytes[3];
 	chan->note                     = sound.bytes[2];
-	chan->basePitch                = perc->mKeyRegions[sound.bytes[2]]->mPitch * map->mPitch * wave->wave->_04 / JAC_DAC_RATE;
+	chan->basePitch                = perc->mKeyRegions[sound.bytes[2]]->mPitch * map->mPitch * wave->data->_04 / JAC_DAC_RATE;
 	chan->currentPitch             = chan->basePitch;
 	chan->baseVolume               = map->mVolume * perc->mKeyRegions[sound.bytes[2]]->mVolume;
 	chan->currentVolume            = chan->velocity / 127.0f;

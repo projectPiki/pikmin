@@ -16,9 +16,10 @@ static int UpdateWave(WaveArchive_* arc, Ctrl_* ctrl, u32 base)
 	u32 i = 0;
 	for (; i < ctrl->count; i++) {
 		WaveID_* wave = ctrl->waveIDs[i];
-		wave->wave    = arc->waves[i + base];
+		wave->data    = arc->waves[i + base];
 		if (arc->heap.startAddress) {
-			Jac_SelfAllocHeap(&wave->heap, &arc->heap, wave->wave->_0C + 0x1f & 0xffffffe0, arc->heap.startAddress + wave->wave->_08);
+			Jac_SelfAllocHeap(&wave->heap, &arc->heap, wave->data->length + 0x1f & 0xffffffe0,
+			                  arc->heap.startAddress + wave->data->srcAddress);
 		}
 	}
 	return i + base;
@@ -53,15 +54,15 @@ static BOOL UpdateWave_Extern(WaveArchiveBank_* bank, CtrlGroup_* group, Ctrl_* 
 		if (index != cdf->count) {
 			WaveID_** wave2 = &cdf->waveIDs[index];
 			if ((*wave2)->heap.startAddress) {
-				wave->wave = (*wave2)->wave;
+				wave->data = (*wave2)->data;
 				Jac_SelfInitHeap(&wave->heap, (*wave2)->heap.startAddress, 0, (*wave2)->heap.memoryType);
 				Jac_SetGroupHeap(&wave->heap, &(*wave2)->heap);
 			} else {
-				WaveArchive_* wave3 = bank->waveGroups[a];
-				wave->wave          = wave3->waves[index];
-				wave->_30           = 0;
-				wave->wave->_24     = &wave->_30;
-				LoadAram_One(wave3->arcName, wave->wave->_08, wave->wave->_0C, &wave->_30, &wave->heap);
+				WaveArchive_* wave3        = bank->waveGroups[a];
+				wave->data                 = wave3->waves[index];
+				wave->loadStatus           = 0;
+				wave->data->fileLoadStatus = &wave->loadStatus;
+				LoadAram_One(wave3->filePath, wave->data->srcAddress, wave->data->length, &wave->loadStatus, &wave->heap);
 				Jac_SetGroupHeap(&wave->heap, &wave3->heap);
 			}
 		}
@@ -82,7 +83,7 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	scene = group->scenes[id];
 	arc   = bank->waveGroups[id];
 	Jac_DeleteHeap(&arc->heap);
-	arc->_6C = 0;
+	arc->fileLoadStatus = 0;
 
 	if (set && scene->_08) {
 		for (u32 i = 0; i < scene->_08; i++) {
@@ -111,17 +112,17 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	arc = bank->waveGroups[id];
 	!arc;
 
-	if (arc->heap.startAddress && arc->_6C) {
+	if (arc->heap.startAddress && arc->fileLoadStatus) {
 		for (i = 0; i < arc->waveCount; i++) {
-			arc->waves[i]->_24 = &arc->_6C;
+			arc->waves[i]->fileLoadStatus = &arc->fileLoadStatus;
 		}
 	} else {
-		arc->_6C = 0;
+		arc->fileLoadStatus = 0;
 		for (i = 0; i < arc->waveCount; i++) {
-			arc->waves[i]->_24 = &arc->_6C;
+			arc->waves[i]->fileLoadStatus = &arc->fileLoadStatus;
 		}
 
-		if (LoadAram_All(arc->arcName, &arc->_6C, &arc->heap) == 0) {
+		if (LoadAram_All(arc->filePath, &arc->fileLoadStatus, &arc->heap) == 0) {
 			return FALSE;
 		}
 	}
@@ -177,7 +178,7 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 	ctrl = scene->cdf;
 	if (ctrl) {
 		WaveID_* wave = SearchWave(ctrl, wId);
-		if (wave && wave->wave && (int)wave->wave != 0xffffffff) {
+		if (wave && wave->data && (int)wave->data != 0xffffffff) {
 			return wave;
 		}
 	}
@@ -185,14 +186,14 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 	ctrl = scene->cex;
 	if (ctrl) {
 		WaveID_* wave = SearchWave(ctrl, wId);
-		if (wave && wave->wave && (int)wave->wave != 0xffffffff) {
+		if (wave && wave->data && (int)wave->data != 0xffffffff) {
 			return wave;
 		}
 	}
 
 	for (u32 i = 0; i < scene->_08; i++) {
 		WaveID_* wave = __GetSoundHandle(group, id, scene->_18[i]);
-		if (wave && wave->wave && (int)wave->wave != 0xffffffff) {
+		if (wave && wave->data && (int)wave->data != 0xffffffff) {
 			return wave;
 		}
 	}
@@ -211,16 +212,19 @@ WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 	if (wave == NULL) {
 		return NULL;
 	}
-	if (wave->wave == NULL) {
+	if (wave->data == NULL) {
 		return NULL;
 	}
-	u32* ptr = wave->wave->_24;
+
+	u32* ptr = wave->data->fileLoadStatus;
 	if (ptr == NULL) {
 		return NULL;
 	}
+
 	if (*ptr == 0) {
 		return NULL;
 	}
+
 	return wave;
 
 	u32 badcompiler[4];

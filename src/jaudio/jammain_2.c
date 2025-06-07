@@ -1525,7 +1525,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		for (i = 0; i < 2; ++i) {
 			if (track->oscillatorRouting[i] == 0x0E) {
 				offset = Bank_OscToOfs(&track->oscillators[i], &track->oscillatorParams[i]);
-				switch (track->oscillators[i].mMode) {
+				switch (track->oscillators[i].mode) {
 				case 1:
 					unaff_f30 = unaff_f30 * offset;
 					break;
@@ -2485,7 +2485,7 @@ static u32 Cmd_OscRoute()
 
 	SEQ_P->oscillatorRouting[uVar2] = oscRoute;
 	if (oscRoute == 14) {
-		SEQ_P->oscillatorParams[uVar2]._00 = 1;
+		SEQ_P->oscillatorParams[uVar2].state = 1;
 	}
 
 	return 0;

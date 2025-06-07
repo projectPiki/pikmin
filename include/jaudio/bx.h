@@ -54,13 +54,13 @@ struct Bank_ {
 };
 
 struct Ibnk_ {
-	int magic;                    // _00 | 'IBNK'
-	u32 _04;                      // _04
-	u32 _08;                      // _08
-	int _0C;                      // _0C
-	struct WaveArchiveBank_* _10; // _10
-	u8 _14[0x20 - 0x14];          // _14
-	Bank_ bank;                   // _20
+	int magic;                            // _00 | 'IBNK'
+	u32 _04;                              // _04
+	u32 _08;                              // _08
+	int _0C;                              // _0C
+	struct WaveArchiveBank_* waveArcBank; // _10
+	u8 _14[0x20 - 0x14];                  // _14
+	Bank_ bank;                           // _20
 };
 
 /**
@@ -102,34 +102,34 @@ struct PercKeymap_ {
 };
 
 struct Sense_ {
-	u8 _00;  // _00
-	u8 _01;  // _01
-	u8 _02;  // _02
-	f32 _04; // _04
-	f32 _08; // _08
+	u8 id;        // _00
+	u8 type;      // _01
+	u8 threshold; // _02
+	f32 min;      // _04
+	f32 max;      // _08
 };
 
 struct Osc_ {
-	u8 mMode;               // _00
-	f32 mRate;              // _04
-	s16* mAttackVecOffset;  // _08
-	s16* mReleaseVecOffset; // _0C
-	f32 mWidth;             // _10
-	f32 mVertex;            // _14
+	u8 mode;               // _00
+	f32 rate;              // _04
+	s16* attackVecOffset;  // _08
+	s16* releaseVecOffset; // _0C
+	f32 width;             // _10
+	f32 vertex;            // _14
 };
 
 /**
  * @note Size: 0x18.
  */
 struct Oscbuf_ {
-	u8 _00;  // _00
-	u8 _01;  // _01
-	u16 _02; // _02
-	f32 _04; // _04
-	f32 _08; // _08
-	f32 _0C; // _0C
-	f32 _10; // _10
-	u16 _14; // _14
+	u8 state;         // _00
+	u8 curveType;     // _01
+	u16 tableIndex;   // _02
+	f32 timeCounter;  // _04
+	f32 value;        // _08
+	f32 targetValue;  // _0C
+	f32 deltaRate;    // _10
+	u16 releaseParam; // _14
 };
 
 /**
@@ -149,7 +149,7 @@ struct Inst_ {
 
 struct Voice_ {
 	u8 _00[0x8];  // _00, unknown
-	int _08;      // _08, count of whatever's at 0xC
+	int size;     // _08, count of whatever's at 0xC
 	void* _0C[1]; // _0C, unsure of length of array or type
 };
 
@@ -160,9 +160,9 @@ struct Perc_ {
 };
 
 struct Rand_ {
-	u8 _00;              // _00
-	f32 _04;             // _04
-	f32 _08;             // _08
+	u8 id;               // _00
+	f32 value;           // _04
+	f32 range;           // _08
 	u8 _0C[0x10 - 0x0C]; // _0C
 };
 
@@ -216,37 +216,37 @@ struct Ctrl_ {
 
 // Name fabricated from Xayr's tools.
 struct WaveID_ {
-	u32 id;       // _00, split into sound id and ws id
-	jaheap_ heap; // _04
-	u32 _30;      // _30
-	Wave_* wave;  // _34
+	u32 id;         // _00, split into sound id and ws id
+	jaheap_ heap;   // _04
+	u32 loadStatus; // _30
+	Wave_* data;    // _34
 };
 
 struct WaveArchive_ {
-	char arcName[0x40]; // _00, might be smaller, unsure
-	jaheap_ heap;       // _40
-	u32 _6C;            // _6C
-	int waveCount;      // _70
-	Wave_* waves[1];    // _74, array size variable
+	char filePath[0x40]; // _00, might be smaller, unsure
+	jaheap_ heap;        // _40
+	u32 fileLoadStatus;  // _6C
+	int waveCount;       // _70
+	Wave_* waves[1];     // _74, array size variable
 };
 
 /**
- * @brief TODO. Bigger than this size for sure.
+ * @brief File data, size unknown
  */
 struct Wave_ {
 	u8 _00;                // _00
 	u8 compBlockIdx;       // _01
 	u8 _02;                // _02
 	f32 _04;               // _04
-	int _08;               // _08
-	int _0C;               // _0C
+	int srcAddress;        // _08
+	int length;            // _0C
 	s32 isLooping;         // _10
 	s32 loopAddress;       // _14
 	s32 loopStartPosition; // _18
 	s32 _1C;               // _1C
 	s16 loopYN1;           // _20
 	s16 loopYN2;           // _22
-	u32* _24;              // _24
+	u32* fileLoadStatus;   // _24, set to dolphin/dvd.h 'DVD_RESULT_*' defines
 };
 
 #endif

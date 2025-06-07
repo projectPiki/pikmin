@@ -1057,7 +1057,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		return FALSE;
 	}
 
-	if (jc->waveData && !jc->waveData->_24[0]) {
+	if (jc->waveData && !*jc->waveData->fileLoadStatus) {
 		ForceStopDSPchannel(jc->dspChannel);
 		return -1;
 	}
@@ -1071,7 +1071,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 	}
 
 	if (a == 3) {
-		jc->mOscBuffers[0]._00 = 6;
+		jc->mOscBuffers[0].state = 6;
 		if (List_CutChannel(jc) == -1) {
 			return TRUE;
 		}
@@ -1089,8 +1089,8 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 		for (i = 0; i < 4; i++) {
 			u32* REF_i = &i;
 			if (jc->mOscillators[i]) {
-				DoEffectOsc(jc, jc->mOscillators[i]->mMode, Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]));
-				if (jc->mOscBuffers[i]._00 == 0) {
+				DoEffectOsc(jc, jc->mOscillators[i]->mode, Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]));
+				if (jc->mOscBuffers[i].state == 0) {
 					if (jc->updateCallback == NULL) {
 						if (StopLogicalChannel(jc) == FALSE) {
 							DSP_PlayStop(ch->buffer_idx);

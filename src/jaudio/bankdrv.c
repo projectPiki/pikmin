@@ -153,18 +153,18 @@ f32 Bank_SenseToOfs(Sense_* sensor, u8 p2)
 		return 1.0f;
 	}
 
-	if (sensor->_02 == 127 || sensor->_02 == 0) {
-		return sensor->_04 + (f32)p2 * (sensor->_08 - sensor->_04) / 127.0f;
+	if (sensor->threshold == 127 || sensor->threshold == 0) {
+		return sensor->min + (f32)p2 * (sensor->max - sensor->min) / 127.0f;
 	}
 
-	if (p2 < sensor->_02) {
-		return sensor->_04 + (1.0f - sensor->_04) * ((f32)p2 / (f32)sensor->_02);
+	if (p2 < sensor->threshold) {
+		return sensor->min + (1.0f - sensor->min) * ((f32)p2 / (f32)sensor->threshold);
 	}
 
-	int a = p2 - sensor->_02;
-	int b = 127 - sensor->_02;
+	int a = p2 - sensor->threshold;
+	int b = 127 - sensor->threshold;
 
-	return 1.0f + (sensor->_08 - 1.0f) * ((f32)a / (f32)b);
+	return 1.0f + (sensor->max - 1.0f) * ((f32)a / (f32)b);
 }
 
 /*
@@ -180,8 +180,8 @@ f32 Bank_RandToOfs(Rand_* rand)
 		return 1.0f;
 	}
 	value = GetRandom_sf32();
-	value *= rand->_08;
-	value += rand->_04;
+	value *= rand->range;
+	value += rand->value;
 	return value;
 }
 
@@ -199,81 +199,81 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 	s16* table;
 
 	if (osc == NULL) {
-		buf->_08 = 1.0f;
+		buf->value = 1.0f;
 		return 1.0f;
 	}
 
-	if (buf->_00 == 4) {
-		if (osc->mAttackVecOffset != osc->mReleaseVecOffset) {
-			buf->_02 = 0;
-			buf->_04 = 0.0f;
-			buf->_0C = buf->_08;
+	if (buf->state == 4) {
+		if (osc->attackVecOffset != osc->releaseVecOffset) {
+			buf->tableIndex  = 0;
+			buf->timeCounter = 0.0f;
+			buf->targetValue = buf->value;
 		}
-		if (osc->mReleaseVecOffset == 0 && buf->_14 == 0) {
-			buf->_14 = 0x10;
+		if (osc->releaseVecOffset == 0 && buf->releaseParam == 0) {
+			buf->releaseParam = 0x10;
 		}
 
-		if (buf->_14) {
-			buf->_00 = 8;
-			buf->_01 = buf->_14 >> 14 & 3;
-			f32 x    = buf->_14 & 0x3fff;
+		if (buf->releaseParam) {
+			buf->state     = 8;
+			buf->curveType = buf->releaseParam >> 14 & 3;
+			f32 x          = buf->releaseParam & 0x3fff;
 			x *= (JAC_DAC_RATE / 80.0f) / 600.0f;
-			buf->_04 = x;
-			if (buf->_04 < 1.0f) {
-				buf->_04 = 1.0f;
+			buf->timeCounter = x;
+			if (buf->timeCounter < 1.0f) {
+				buf->timeCounter = 1.0f;
 			}
-			buf->_0C = 0.0f;
-			buf->_10 = (buf->_0C - buf->_08) / buf->_04;
+			buf->targetValue = 0.0f;
+			buf->deltaRate   = (buf->targetValue - buf->value) / buf->timeCounter;
 		} else {
-			buf->_00 = 5;
+			buf->state = 5;
 		}
 	}
-	if (buf->_00 == 6) {
-		buf->_02 = 0;
-		buf->_04 = 0.0f;
-		buf->_0C = buf->_08;
-		buf->_00 = 7;
+	if (buf->state == 6) {
+		buf->tableIndex  = 0;
+		buf->timeCounter = 0.0f;
+		buf->targetValue = buf->value;
+		buf->state       = 7;
 	}
 
-	if (buf->_00 == 5) {
-		table = osc->mReleaseVecOffset;
-	} else if (buf->_00 == 7) {
+	if (buf->state == 5) {
+		table = osc->releaseVecOffset;
+	} else if (buf->state == 7) {
 		table = (s16*)FORCE_RELEASE_TABLE;
 	} else {
-		table = osc->mAttackVecOffset;
+		table = osc->attackVecOffset;
 	}
 
-	if (table == NULL && buf->_00 != 8) {
-		buf->_08 = 1.0f;
+	if (table == NULL && buf->state != 8) {
+		buf->value = 1.0f;
 		return 1.0f;
 	}
-	if (buf->_00 == 0) {
+	if (buf->state == 0) {
 		return 1.0f;
 	}
-	if (buf->_00 == 3) {
-		return buf->_08 * osc->mWidth + osc->mVertex;
+	if (buf->state == 3) {
+		return buf->value * osc->width + osc->vertex;
 	}
 
-	if (buf->_00 == 1) {
-		buf->_00 = 2;
-		buf->_02 = 0;
-		buf->_04 = 0.0f;
-		buf->_0C = 0.0f;
-		buf->_14 = 0;
-		sub      = osc->mRate;
+	if (buf->state == 1) {
+		buf->state        = 2;
+		buf->tableIndex   = 0;
+		buf->timeCounter  = 0.0f;
+		buf->targetValue  = 0.0f;
+		buf->releaseParam = 0;
+		sub               = osc->rate;
 	} else {
-		sub = osc->mRate;
+		sub = osc->rate;
 	}
-	if (buf->_00 == 7) {
+	if (buf->state == 7) {
 		sub = 1.0f;
 	}
-	buf->_04 -= sub;
+	buf->timeCounter -= sub;
 
-	while (buf->_04 <= 0.0f) {
-		offset   = (buf->_02 * 3);
-		buf->_08 = buf->_0C;
-		if (buf->_00 == 8) {
-			buf->_00 = 0;
+	while (buf->timeCounter <= 0.0f) {
+		offset     = (buf->tableIndex * 3);
+		buf->value = buf->targetValue;
+		if (buf->state == 8) {
+			buf->state = 0;
 			break;
 		}
 		val0 = table[offset + 0];
@@ -281,34 +281,34 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 		val2 = table[offset + 2];
 
 		if (val0 == 0xd) {
-			buf->_02 = val2;
+			buf->tableIndex = val2;
 			continue;
 		} else if (val0 == 0xf) {
-			buf->_00 = 0;
+			buf->state = 0;
 			break;
 		} else if (val0 == 0xe) {
-			buf->_00 = 3;
-			return buf->_08 * osc->mWidth + osc->mVertex;
+			buf->state = 3;
+			return buf->value * osc->width + osc->vertex;
 		}
-		buf->_01 = val0;
+		buf->curveType = val0;
 
 		if (val1 == 0) {
-			buf->_0C = val2 / 32768.0f;
-			buf->_02++;
+			buf->targetValue = val2 / 32768.0f;
+			buf->tableIndex++;
 		} else {
 			f32 x = (u16)val1;
 			x *= (JAC_DAC_RATE / 80.0f) / 600.0f;
-			buf->_04 = x;
-			buf->_0C = val2 / 32768.0f;
-			buf->_10 = (buf->_0C - buf->_08) / buf->_04;
-			buf->_02++;
+			buf->timeCounter = x;
+			buf->targetValue = val2 / 32768.0f;
+			buf->deltaRate   = (buf->targetValue - buf->value) / buf->timeCounter;
+			buf->tableIndex++;
 		}
 	}
 
-	calc     = -(buf->_10 * buf->_04 - buf->_0C);
-	buf->_08 = calc;
+	calc       = -(buf->deltaRate * buf->timeCounter - buf->targetValue);
+	buf->value = calc;
 
-	switch (buf->_01) {
+	switch (buf->curveType) {
 	case 0:
 		break;
 	case 1:
@@ -327,7 +327,7 @@ f32 Bank_OscToOfs(Osc_* osc, Oscbuf_* buf)
 		}
 		break;
 	}
-	return calc * osc->mWidth + osc->mVertex;
+	return calc * osc->width + osc->vertex;
 	/*
 	.loc_0x0:
 	  mflr      r0

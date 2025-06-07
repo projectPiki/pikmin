@@ -102,10 +102,10 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 			}
 		} else if (flag >= 4) {
 			flag -= 4;
-			s16* prev = track->oscillators[i].mReleaseVecOffset;
+			s16* prev = track->oscillators[i].releaseVecOffset;
 			if (sound->mOscillators[flag]) {
-				track->oscillators[i]                   = *sound->mOscillators[flag];
-				track->oscillators[i].mReleaseVecOffset = prev;
+				track->oscillators[i]                  = *sound->mOscillators[flag];
+				track->oscillators[i].releaseVecOffset = prev;
 			}
 		}
 

@@ -69,6 +69,7 @@ static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, ch
 			error_callback(errorArg, (u8*)addr);
 			continue;
 		}
+
 		return readPrioStatus;
 	}
 }
@@ -480,13 +481,13 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
  * Address:	80007DE0
  * Size:	000084
  */
-s32 DVDT_LoadtoARAM(u32 owner, char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
+s32 DVDT_LoadtoARAM(u32 owner, char* path, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
 {
 	DVDCall call;
 	DVDCall* pCall = &call;
 
 	pCall->owner = owner;
-	DVDT_ExtendPath(pCall->fileName, name);
+	DVDT_ExtendPath(pCall->fileName, path);
 
 	pCall->dst            = dst;
 	pCall->callbackStatus = status;

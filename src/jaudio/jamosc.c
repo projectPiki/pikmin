@@ -25,22 +25,22 @@ void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 
 	switch (id) {
 	case 6:
-		track->oscillators[0].mWidth = val;
+		track->oscillators[0].width = val;
 		break;
 	case 7:
-		track->oscillators[0].mRate = val;
+		track->oscillators[0].rate = val;
 		break;
 	case 8:
-		track->oscillators[0].mVertex = val;
+		track->oscillators[0].vertex = val;
 		break;
 	case 9:
-		track->oscillators[1].mWidth = val;
+		track->oscillators[1].width = val;
 		break;
 	case 10:
-		track->oscillators[1].mRate = val;
+		track->oscillators[1].rate = val;
 		break;
 	case 11:
-		track->oscillators[1].mVertex = val;
+		track->oscillators[1].vertex = val;
 		break;
 	}
 }
@@ -118,12 +118,12 @@ void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 	u32 badCompiler[2];
 	switch (id) {
 	case 0:
-		track->oscillators[0]                  = ENVELOPE_DEF;
-		track->oscillators[0].mAttackVecOffset = (s16*)Jam_OfsToAddr(track, val);
+		track->oscillators[0]                 = ENVELOPE_DEF;
+		track->oscillators[0].attackVecOffset = (s16*)Jam_OfsToAddr(track, val);
 		break;
 
 	case 1:
-		track->oscillators[0].mReleaseVecOffset = (s16*)Jam_OfsToAddr(track, val);
+		track->oscillators[0].releaseVecOffset = (s16*)Jam_OfsToAddr(track, val);
 		break;
 	}
 }
@@ -137,8 +137,8 @@ void Osc_Setup_ADSR(seqp_* track, s16* addr)
 {
 	track->oscillators[0] = ADSR_DEF;
 
-	track->oscillators[0].mAttackVecOffset  = track->adsTable;
-	track->oscillators[0].mReleaseVecOffset = track->relTable;
+	track->oscillators[0].attackVecOffset  = track->adsTable;
+	track->oscillators[0].releaseVecOffset = track->relTable;
 
 	for (int i = 0; i < 12; i++) {
 		track->adsTable[i] = ADS_TABLE[i];
@@ -170,25 +170,25 @@ void Osc_Setup_Full(seqp_* track, u8 flag, u32 offs1, u32 offs2)
 	if (d) {
 		track->oscillators[idx] = ENVELOPE_DEF;
 
-		track->oscillators[idx].mMode = a;
+		track->oscillators[idx].mode = a;
 		switch (a) {
 		case 1:
-			track->oscillators[idx].mVertex = 1.0f;
+			track->oscillators[idx].vertex = 1.0f;
 			break;
 		}
 	}
 
 	if (b) {
 		if (offs1 == 0) {
-			track->oscillators[idx].mAttackVecOffset = NULL;
+			track->oscillators[idx].attackVecOffset = NULL;
 		}
-		track->oscillators[idx].mAttackVecOffset = (s16*)Jam_OfsToAddr(track, offs1);
+		track->oscillators[idx].attackVecOffset = (s16*)Jam_OfsToAddr(track, offs1);
 	}
 
 	if (c) {
 		if (offs2 == 0) {
-			track->oscillators[idx].mReleaseVecOffset = REL_TABLE;
+			track->oscillators[idx].releaseVecOffset = REL_TABLE;
 		}
-		track->oscillators[idx].mReleaseVecOffset = (s16*)Jam_OfsToAddr(track, offs2);
+		track->oscillators[idx].releaseVecOffset = (s16*)Jam_OfsToAddr(track, offs2);
 	}
 }
