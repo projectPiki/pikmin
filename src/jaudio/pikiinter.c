@@ -7,7 +7,8 @@
 #include "jaudio/piki_player.h"
 #include "jaudio/pikidemo.h"
 #include "jaudio/verysimple.h"
-#include "Vector.h"
+#include "jaudio/piki_bgm.h"
+#include "jaudio/filter3d.h"
 
 // rename better later
 typedef struct SEvent_UnkC {
@@ -22,7 +23,7 @@ typedef struct SEvent_UnkC {
  * @note Size: 0x1B4.
  */
 typedef struct SEvent_ {
-	Vector3f position;      // _00
+	SVector_ position;      // _00
 	SEvent_UnkC _0C[16];    // _0C
 	u32 eventType;          // _CC
 	seqp_* track;           // _D0
@@ -51,7 +52,14 @@ int CURRENT_TIME;
 SEvent_ EVENT[16];
 SCamera_ CAMERA;
 
-f32 EVENT_DIST_SCALE[8] = { 1.0f, 1.0f, 2.0f, 0.8f, 1.2f, 1.0f, 1.2f, 2.0f };
+static int EVENT_OFFSET[] = { 0, 1, 0xad, 0xbe, 0xcd, 0xd7, 0xdb, 0x105 };
+static struct ActionStatus {
+	u8 _00;
+	u8 _01;
+	u16 _02;
+	u16 _04;
+} ACTION_STATUS[]              = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
+static f32 EVENT_DIST_SCALE[8] = { 1.0f, 1.0f, 2.0f, 0.8f, 1.2f, 1.0f, 1.2f, 2.0f };
 
 /*
  * --INFO--
@@ -227,14 +235,42 @@ void Jac_EventFrameCheck(void)
  * Address:	80017860
  * Size:	00013C
  */
-void Jac_UpdateCamera(struct Vector3f*, struct Vector3f*)
+void Jac_UpdateCamera(struct SVector_* p1, struct SVector_* p2)
 {
-	int i;
+	u8 set = FALSE;
+	u32 i;
 
 	CURRENT_TIME++;
 
-	for (i = 0; i < 16; i++) { }
+	for (i = 0; i < 16; i++) {
+		if (EVENT[i].eventType) {
+			f32 dist  = EVENT_DIST_SCALE[EVENT[i].eventType];
+			f32 dist2 = dist * V3D_Abs((Vector3D_*)&EVENT[i].position);
+			if (dist2 > 1.0f) {
+				dist2 = 1.0f;
+			}
+			dist  = 1.0f - dist2;
+			dist2 = V3D_GetAngle((Vector3D_*)&EVENT[i].position);
+			if (dist2 >= 3.1416f) {
+				dist2 += -6.2832f;
+			}
+			dist2 = 0.5f + (-dist2 / 3.1416f);
+			if (dist2 > 1.0f) {
+				dist2 -= 2.0f;
+			}
+			if (dist2 < 0.0f) {
+				dist2 = -dist2;
+			}
+			EVENT[i].volume = dist;
+			EVENT[i].pan    = dist2;
+			if (dist >= 0.8f && EVENT[i].eventType == 1) {
+				set = TRUE;
+			}
+			SendToStack(&EVENT[i]);
+		}
+	}
 
+	Jac_SetBgmModeFlag(0, 1, set);
 	Jac_UpdatePikiGaya();
 
 	/*
@@ -485,7 +521,7 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
  * Address:	80017AC0
  * Size:	00005C
  */
-BOOL Jac_UpdateEventPosition(int idx, struct Vector3f* p2)
+BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
 {
 	if (idx == -1) {
 		return FALSE;
@@ -505,8 +541,15 @@ BOOL Jac_UpdateEventPosition(int idx, struct Vector3f* p2)
  * Address:	80017B20
  * Size:	0002E0
  */
-void Jac_PlayEventAction(int, int)
+BOOL Jac_PlayEventAction(int a1, int a2)
 {
+	if (a1 == -1) {
+		return FALSE;
+	}
+	if (EVENT[a1].eventType == 0) {
+		return FALSE;
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -747,8 +790,26 @@ void Jac_PlayEventAction(int, int)
  * Address:	80017E00
  * Size:	0000BC
  */
-void Jac_StopEventAction(int, int)
+BOOL Jac_StopEventAction(int a1, int a2)
 {
+	if (a1 == -1) {
+		return FALSE;
+	}
+	if (EVENT[a1].eventType == 0) {
+		return FALSE;
+	}
+
+	int msg    = 0;
+	int offset = a2 + EVENT_OFFSET[EVENT[a1].eventType];
+	for (u32 i = 0; i < 0x10; i++) {
+		SEvent_UnkC* c = &EVENT[a1]._0C[i];
+		if (c->_00 == offset) {
+			Jal_SendCmdQueue_Force(&EVENT[a1].cmdQueue, msg);
+			c->_00 = 0;
+		}
+		msg += 0x1000;
+	}
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -816,8 +877,16 @@ void Jac_StopEventAction(int, int)
  * Address:	80017EC0
  * Size:	000070
  */
-void MML_StopEventAction(u8, u8, u16)
+BOOL MML_StopEventAction(u8 idx, u8 a2, u16 a3)
 {
+	if (EVENT[idx].eventType == 0) {
+		return FALSE;
+	}
+	if (ACTION_STATUS[EVENT[idx]._0C[a2]._00]._04 != a3) {
+		return FALSE;
+	}
+	EVENT[idx].eventType = 0;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  rlwinm    r0,r3,0,24,31

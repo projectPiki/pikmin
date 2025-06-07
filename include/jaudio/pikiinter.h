@@ -35,12 +35,12 @@ typedef enum JacEventType {
 //////////// JAUDIO PIKMIN INTERFACE FUNCTIONS ////////////
 void Jac_InitEventSystem(void);                            // args
 void Jac_EventFrameCheck(void);                            // args
-void Jac_UpdateCamera(struct Vector3f*, struct Vector3f*); // args
+void Jac_UpdateCamera(struct SVector_*, struct SVector_*); // args
 int Jac_CreateEvent(u32, struct SVector_*);                // args
-BOOL Jac_UpdateEventPosition(int, struct Vector3f*);       // args
-void Jac_PlayEventAction(int, int);                        // args
-void Jac_StopEventAction(int, int);                        // args
-void MML_StopEventAction(u8, u8, u16);                     // args
+BOOL Jac_UpdateEventPosition(int, struct SVector_*);       // args
+BOOL Jac_PlayEventAction(int, int);                        // args
+BOOL Jac_StopEventAction(int, int);                        // args
+BOOL MML_StopEventAction(u8, u8, u16);                     // args
 void MML_StopEventAll(u8, u16);                            // args
 BOOL Jac_DestroyEvent(s32);                                // args
 void Jac_InitAllEvent(void);                               // args

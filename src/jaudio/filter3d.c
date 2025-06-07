@@ -38,7 +38,7 @@ void V3D_Minus(Vector3D_*, Vector3D_*, Vector3D_*)
  * Address:	8001BBA0
  * Size:	000040
  */
-f64 V3D_Abs(Vector3D_* input_vec)
+f32 V3D_Abs(Vector3D_* input_vec)
 {
 	return (sqrtf2((input_vec->x * input_vec->x) + (input_vec->y * input_vec->y) + (input_vec->z * input_vec->z)));
 }

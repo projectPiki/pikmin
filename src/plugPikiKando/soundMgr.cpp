@@ -531,7 +531,7 @@ void SeContext::update()
 		return;
 	}
 	seSystem->calcCameraPos(getPos(), mSourceListenerOffset);
-	Jac_UpdateEventPosition(mEventHandle, &mSourceListenerOffset);
+	Jac_UpdateEventPosition(mEventHandle, (SVector_*)&mSourceListenerOffset);
 }
 
 /**
@@ -931,7 +931,7 @@ void SeSystem::update(Graphics& gfx, Vector3f& listenerPos)
 	mCameraMtx        = gfx.mCamera->mLookAtMtx;
 
 	Vector3f vec1, vec2;
-	Jac_UpdateCamera(&vec1, &vec2);
+	Jac_UpdateCamera((SVector_*)&vec1, (SVector_*)&vec2);
 	for (int i = 0; i < mMaxContextCount; i++) {
 		mContexts[i].update();
 	}

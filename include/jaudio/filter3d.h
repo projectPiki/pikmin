@@ -13,6 +13,6 @@ struct Vector3D_ {
 };
 
 f32 V3D_GetAngle(Vector3D_* input_vec);
-f64 V3D_Abs(Vector3D_* input_vec);
+f32 V3D_Abs(Vector3D_* input_vec);
 
 #endif
