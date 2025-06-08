@@ -15,11 +15,12 @@ static int mcdivTable[0x200];
 static int readTree_signed;
 static u32 readTree_scale;
 
-// some things are per plane (YUV, luma + 2x chroma)
+// Color plane indices for YUV color space
 #define Y_IDX 0
 #define U_IDX 1
 #define V_IDX 2
-// some things are only split between luma and chroma
+
+// Simplified indices for luma vs chroma operations
 #define LUMA_IDX   0
 #define CHROMA_IDX 1
 
@@ -68,7 +69,7 @@ static void init_global_constants()
  * Address:	........
  * Size:	000014
  */
-static void set_border(BlockData* p)
+static void set_border(_tagHVQData* p)
 {
 	p->dcv = 0x7F;
 	p->bnm = 0xFF;
@@ -81,36 +82,34 @@ static void set_border(BlockData* p)
  */
 static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
 {
-	u32 mcb, pb;
-	HVQPlaneDesc* plane = &((VideoState*)obj->ws)->pln[id];
-	plane->h_shift      = (h_samp == 2) ? 1 : 0;
-	plane->plane_width  = obj->frame_width >> plane->h_shift;
-	plane->v_shift      = (v_samp == 2) ? 1 : 0;
-	plane->plane_height = obj->frame_height >> plane->v_shift;
-	plane->plane_size   = plane->plane_width * plane->plane_height;
+	HVQPlaneDesc* p = &((VideoState*)obj->ws)->pln[id];
+	p->h_shift      = (h_samp == 2) ? 1 : 0;
+	p->plane_width  = obj->frame_width >> p->h_shift;
+	p->v_shift      = (v_samp == 2) ? 1 : 0;
+	p->plane_height = obj->frame_height >> p->v_shift;
+	p->plane_size   = p->plane_width * p->plane_height;
 
 	// pixels per 2x2 block
-	plane->hvqblk_h    = 2 >> plane->h_shift;               // 1..2
-	plane->hvqblk_v    = 2 >> plane->v_shift;               // 1..2
-	plane->nblocks_mcb = plane->hvqblk_h * plane->hvqblk_v; // 1..4
-	// number of 4x4 blocks
-	plane->nblocks_h = obj->frame_width / (h_samp * 4);
-	plane->nblocks_v = obj->frame_height / (v_samp * 4);
-	// number of 4x4 blocks + border
-	plane->nblocks_hb = plane->nblocks_h + 2;
-	plane->nblocks_vb = plane->nblocks_v + 2;
-	// offset of blocks in MCB
-	plane->bibUscan[0] = 0;
-	plane->bibUscan[3] = 1;
-	mcb                = plane->nblocks_hb;
-	plane->bibUscan[1] = mcb;
-	plane->bibUscan[2] = mcb + 1;
+	p->hvqblk_h    = 2 >> p->h_shift;           // 1..2
+	p->hvqblk_v    = 2 >> p->v_shift;           // 1..2
+	p->nblocks_mcb = p->hvqblk_h * p->hvqblk_v; // 1..4
 
-	plane->imgUscan[0] = 0;
-	plane->imgUscan[3] = 4;
-	pb                 = plane->plane_width << 2;
-	plane->imgUscan[1] = pb;
-	plane->imgUscan[2] = pb + 4;
+	// number of 4x4 blocks
+	p->nblocks_h = obj->frame_width / (h_samp * 4);
+	p->nblocks_v = obj->frame_height / (v_samp * 4);
+
+	// number of 4x4 blocks + border
+	p->nblocks_hb = p->nblocks_h + 2;
+	p->nblocks_vb = p->nblocks_v + 2;
+
+	// offset of blocks in MCB
+	p->bibUscan[0] = 0;
+	p->bibUscan[3] = 1;
+	p->bibUscan[2] = (p->bibUscan[1] = p->nblocks_hb) + 1;
+
+	p->imgUscan[0] = 0;
+	p->imgUscan[3] = 4;
+	p->imgUscan[2] = (p->imgUscan[1] = p->plane_width << 2) + 4;
 }
 
 /*
@@ -118,16 +117,18 @@ static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
  * Address:	........
  * Size:	000030
  */
-static void setCode(BitBuffer* dst, u8* top)
+static void setCode(BitBuffer* const str, u8* top)
 {
-	u32 size  = read32(top, 0);
-	dst->size = size;
+	u32 size = read32(top, 0);
+
+	str->size = size;
 	if (size == 0) {
-		dst->ptr = NULL;
+		str->ptr = NULL;
 	} else {
-		dst->ptr = top + 4;
+		str->ptr = top + 4;
 	}
-	dst->bit = -1;
+
+	str->shift = -1;
 }
 
 /*
@@ -135,18 +136,20 @@ static void setCode(BitBuffer* dst, u8* top)
  * Address:	8001F7E8
  * Size:	000040
  */
-static inline int getBit(BitBuffer* buf)
+static inline int getBit(BitBuffer* str)
 {
 	u32 value;
 	int bit;
-	if ((bit = buf->bit) < 0) {
-		value = buf->value = *((u32*)buf->ptr)++;
-		bit                = 31;
+
+	if ((bit = str->shift) < 0) {
+		value = str->word = *((u32*)str->ptr)++;
+		bit               = 31;
 	} else {
-		value = buf->value;
+		value = str->word;
 	}
-	value    = value >> bit & 1;
-	buf->bit = bit - 1;
+
+	value      = value >> bit & 1;
+	str->shift = bit - 1;
 	return value;
 }
 
@@ -155,22 +158,22 @@ static inline int getBit(BitBuffer* buf)
  * Address:	8001F384
  * Size:	000064
  */
-static inline s16 getByte(BitBuffer* buf)
+static inline s16 getByte(BitBuffer* str)
 {
 	u32 value;
 	int bit;
-	if ((bit = buf->bit) >= 7) {
-		value = buf->value;
+	if ((bit = str->shift) >= 7) {
+		value = str->word;
 		value >>= bit - 7;
 		bit -= 8;
 	} else {
-		value = buf->value;
+		value = str->word;
 		value <<= 7 - bit;
-		buf->value = *((u32*)buf->ptr)++;
-		value |= buf->value >> (bit + 25);
+		str->word = *((u32*)str->ptr)++;
+		value |= str->word >> (bit + 25);
 		bit += 24;
 	}
-	buf->bit = bit;
+	str->shift = bit;
 	value &= 0xFF;
 	return value;
 }
@@ -179,26 +182,31 @@ static inline s16 getByte(BitBuffer* buf)
  * Address:	8001F0B8
  * Size:	0002CC
  */
-static s16 _readTree(Tree* dst, BitBuffer* src)
+static s16 _readTree(Tree* const dst, BitBuffer* const str)
 {
-	int badCompiler[2];
-	if (getBit(src)) {
-		// recurse
-		int node_number = dst->node_number++;
-		// read the 0 side of the tree
-		dst->leaf[0][node_number] = _readTree(dst, src);
-		// read the 1 side of the tree
-		dst->leaf[1][node_number] = _readTree(dst, src);
-		return node_number;
+	int _FAKE[2]; // Doesn't exist, but used to match stack alignment
+	int node;
+	s16 no;
+	s16 val;
+
+	if (getBit(str)) {
+		// Branch node (0/1)
+		node               = dst->node_number++;
+		dst->leaf[0][node] = _readTree(dst, str);
+		dst->leaf[1][node] = _readTree(dst, str);
+		return node;
 	} else {
-		// leaf node
-		s16 byte   = getByte(src);
-		s16 symbol = byte;
-		if (readTree_signed && byte > 0x7F)
-			symbol -= 0x100;
-		symbol <<= readTree_scale;
-		dst->leaf[0][byte] = symbol;
-		return byte;
+		// Leaf node (0-255)
+		no  = getByte(str);
+		val = no;
+
+		if (readTree_signed && no > 0x7F) {
+			val -= 0x100;
+		}
+
+		val <<= readTree_scale;
+		dst->leaf[0][no] = val;
+		return no;
 	}
 }
 
@@ -207,16 +215,16 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
  * Address:	........
  * Size:	000140
  */
-static void readTree(BitBufferWithTree* code, int is_signed, int scale)
+static void readTree(BitBufferWithTree* const code, int is_signed, int scale)
 {
+	BitBuffer* str = &code->str;
 	Tree* tree     = code->tree;
-	BitBuffer* buf = &code->str;
 
 	readTree_signed   = is_signed;
 	readTree_scale    = scale;
 	tree->node_number = 0x100;
-	if (buf->size != 0) {
-		tree->tree_root = _readTree(tree, buf);
+	if (str->size != 0) {
+		tree->tree_root = _readTree(tree, str);
 	} else {
 		tree->tree_root = 0;
 	}
@@ -227,15 +235,18 @@ static void readTree(BitBufferWithTree* code, int is_signed, int scale)
  * Address:	8001F828
  * Size:	000070
  */
-static inline int decodeHuff(BitBufferWithTree* buf)
+static inline int decodeHuff(BitBufferWithTree* code)
 {
-	Tree* tree        = buf->tree;
-	BitBuffer* buffer = &buf->str;
-	int pos           = tree->tree_root;
-	while (pos >= 0x100) {
-		pos = tree->leaf[getBit(buffer)][pos];
+	BitBuffer* _FAKE = &code->str; // Not used, but needed to match stack alignment
+
+	Tree* tree = code->tree;
+	int point  = tree->tree_root;
+
+	while (point >= 0x100) {
+		point = tree->leaf[getBit(&code->str)][point];
 	}
-	return tree->leaf[0][pos];
+
+	return tree->leaf[0][point];
 }
 
 // used for DC values
@@ -255,14 +266,16 @@ static inline int decodeSOvfSym(BitBufferWithTree* buf, int range_min, int range
  * Address:	........
  * Size:	000084
  */
-static inline int decodeUOvfSym(BitBufferWithTree* buf, int range_max)
+static inline int decodeUOvfSym(BitBufferWithTree* code, int range_max)
 {
 	int ret = 0;
 	int num;
+
 	do {
-		num = decodeHuff(buf);
+		num = decodeHuff(code);
 		ret += num;
 	} while (num >= range_max);
+
 	return ret;
 }
 
@@ -273,41 +286,42 @@ static inline int decodeUOvfSym(BitBufferWithTree* buf, int range_max)
  */
 static void Ipic_BasisNumDec(VideoState* ws)
 {
-	s16 sym;
+	s16 label;
 	int runln;
-	BlockData* y_dat;
-	BlockData* u_dat;
-	BlockData* v_dat;
+	_tagHVQData* ydat;
+	_tagHVQData* udat;
+	_tagHVQData* vdat;
 	int i, j;
 	int h_block, v_block;
 	BitBufferWithTree* symcode;
 	BitBufferWithTree* runcode;
 
 	runln   = 0;
-	y_dat   = ws->pln[Y_IDX].blockInfoTop;
+	ydat    = ws->pln[Y_IDX].blockInfoTop;
 	symcode = &ws->bsnum[LUMA_IDX];
 	runcode = &ws->bsrun[LUMA_IDX];
 	h_block = ws->pln[LUMA_IDX].nblocks_h;
 	v_block = ws->pln[LUMA_IDX].nblocks_v;
+
 	for (j = v_block; j > 0; j--) {
 		for (i = h_block; i > 0; i--) {
 			if (runln == 0) {
-				sym = decodeHuff(symcode);
-				if (sym == 0)
+				label = decodeHuff(symcode);
+				if (label == 0)
 					runln = decodeHuff(runcode);
-				y_dat++->bnm = sym & 0xFF;
+				ydat++->bnm = label & 0xFF;
 			} else {
-				y_dat++->bnm = 0;
+				ydat++->bnm = 0;
 				runln--;
 			}
 		}
 		// skip borders
-		y_dat += 2;
+		ydat += 2;
 	}
 
 	runln   = 0;
-	u_dat   = ws->pln[U_IDX].blockInfoTop;
-	v_dat   = ws->pln[V_IDX].blockInfoTop;
+	udat    = ws->pln[U_IDX].blockInfoTop;
+	vdat    = ws->pln[V_IDX].blockInfoTop;
 	symcode = &ws->bsnum[CHROMA_IDX];
 	runcode = &ws->bsrun[CHROMA_IDX];
 	h_block = ws->pln[CHROMA_IDX].nblocks_h;
@@ -315,19 +329,20 @@ static void Ipic_BasisNumDec(VideoState* ws)
 	for (i = v_block; i > 0; i--) {
 		for (j = h_block; j > 0; j--) {
 			if (runln == 0) {
-				sym = decodeHuff(symcode);
-				if (sym == 0)
+				label = decodeHuff(symcode);
+				if (label == 0)
 					runln = decodeHuff(runcode);
-				u_dat++->bnm = (sym >> 0) & 0xF;
-				v_dat++->bnm = (sym >> 4) & 0xF;
+				udat++->bnm = (label >> 0) & 0xF;
+				vdat++->bnm = (label >> 4) & 0xF;
 			} else {
-				u_dat++->bnm = 0;
-				v_dat++->bnm = 0;
+				udat++->bnm = 0;
+				vdat++->bnm = 0;
 				runln--;
 			}
 		}
-		u_dat += 2;
-		v_dat += 2;
+
+		udat += 2;
+		vdat += 2;
 	}
 }
 
@@ -355,12 +370,12 @@ static inline int getDeltaDC(VideoState* ws, int c, int* runln)
 static void IpicDcvDec(VideoState* ws)
 {
 	int c;
-	BlockData* curr;
-	BlockData* prev;
+	_tagHVQData* curr;
+	_tagHVQData* prev;
 	int run;
 	int pred;
-	int nblocks_hb;
 	int h_block, v_block;
+	int nblocks_hb;
 	int i, j;
 
 	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
@@ -405,14 +420,14 @@ static void IpicDcvDec(VideoState* ws)
 static void MakeNest(VideoState* ws, int x, int y)
 {
 	int h_block, nblocks_hb, v_block;
-	BlockData* src;
+	_tagHVQData* src;
 	int h_dc_orderly, v_dc_orderly;
 	int h_dc_reverse, v_dc_reverse;
 	int h_nest_blank, v_nest_blank;
 	int i, j;
 	u8* nestP;
 	u8* backP;
-	BlockData* dP;
+	_tagHVQData* dP;
 	u8* nP;
 
 	h_block    = ws->pln[Y_IDX].nblocks_h;
@@ -1015,10 +1030,10 @@ static inline s32 GetMCAotBasis(VideoState* ws, u8 basisOut[16], s32* pscl, u8* 
 	}
 }
 
-static inline s32 GetAotSum(VideoState* ws, s32 sum[16], u8 nbasis, u8* nestTop, int nestWidth, int p)
+static inline s32 GetAotSum(VideoState* ws, long sum[16], u8 nbasis, u8* nestTop, int nestWidth, int p)
 {
-	s32 prev_scl;
-	s32 scl;
+	long prev_scl;
+	long scl;
 	u8 bas[16];
 
 	sum[0] = sum[1] = sum[2] = sum[3] = sum[4] = sum[5] = sum[6] = sum[7] = sum[8] = sum[9] = sum[10] = sum[11] = sum[12] = sum[13]
@@ -1090,9 +1105,9 @@ static inline s32 GetMCAotSum(VideoState* ws, s32 sum[16], u8 nbasis, u8* nestTo
  */
 static void IntraAotBlock(VideoState* ws, u8* blk, int blkWidth, u8 dcv, u8 nbasis, int p)
 {
-	s32 sum[16];
-	s32 mns;
+	long sum[16];
 	int avr;
+	long mns;
 
 	if (nbasis == 6) {
 		OrgBlock(ws, blk, blkWidth, p);
@@ -1228,7 +1243,7 @@ static void initMCHandler(VideoState* ws, MCHandler* mch, u8* lin_top, u8* forw,
 	int i;
 	MCPlane* mcplane;
 	HVQPlaneDesc* plane;
-	BlockData* block;
+	_tagHVQData* block;
 
 	for (i = 0; i < HVQM_PLANE_COUNT; i++) {
 		mcplane            = &mch->pln[i];
@@ -1613,10 +1628,10 @@ static void reset_PB_dc(VideoState* ws, MCHandler* mch)
 static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtype)
 {
 	u8 cc;
-	BlockData* dataP;
-	BlockData* ydat;
-	BlockData* udat;
-	BlockData* vdat;
+	_tagHVQData* dataP;
+	_tagHVQData* ydat;
+	_tagHVQData* udat;
+	_tagHVQData* vdat;
 	HVQPlaneDesc* sip;
 	u16* bofsP;
 	int p, i, j;
@@ -1914,13 +1929,13 @@ static void MCBlockDecDCNest(VideoState* ws, MCHandler* mch)
 {
 	int c;
 	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
-		MCPlane* pmc     = &mch->pln[c];
-		BlockData* dataP = pmc->data;
-		int plane_width  = ws->pln[c].plane_width;
-		int w            = ws->pln[c].nblocks_hb;
-		u16* bofsP       = ws->pln[c].bibUscan;
-		u32* iofsP       = ws->pln[c].imgUscan;
-		int blocks       = ws->pln[c].nblocks_mcb;
+		MCPlane* pmc       = &mch->pln[c];
+		_tagHVQData* dataP = pmc->data;
+		int plane_width    = ws->pln[c].plane_width;
+		int w              = ws->pln[c].nblocks_hb;
+		u16* bofsP         = ws->pln[c].bibUscan;
+		u32* iofsP         = ws->pln[c].imgUscan;
+		int blocks         = ws->pln[c].nblocks_mcb;
 		int i;
 		for (i = 0; i < blocks; i++) {
 			// dst is a 4x4 region
@@ -2174,9 +2189,9 @@ u32 HVQM4BuffSize(SeqObj* obj)
 void HVQM4SetBuffer(SeqObj* obj, void* buf)
 {
 	VideoState* ws;
-	BlockData* bp;
+	_tagHVQData* bp;
 	int c, i;
-	BlockData* p;
+	_tagHVQData* p;
 
 	ws      = (VideoState*)buf;
 	obj->ws = buf;
@@ -2202,7 +2217,7 @@ void HVQM4SetBuffer(SeqObj* obj, void* buf)
 	ws->mvecx.tree = ws->mvecy.tree = &ws->vec_tree;
 	ws->mcaot.tree = ws->mstat.tree = &ws->mrn_tree;
 
-	bp = (BlockData*)((u8*)buf + sizeof(VideoState));
+	bp = (_tagHVQData*)((u8*)buf + sizeof(VideoState));
 	for (c = 0; c < HVQM_PLANE_COUNT; c++) {
 		ws->pln[c].blockInfoBuf = bp;
 		// skip top border (stride) and left border (1)

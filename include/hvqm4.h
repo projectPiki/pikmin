@@ -86,16 +86,16 @@ typedef struct VideoInfo {
 typedef struct _tagHVQData {
 	u8 dcv; // _00, DC coefficient value
 	u8 bnm; // _01, basis function index / block type
-} BlockData;
+} _tagHVQData;
 
 /**
  * @brief Huffman decoding tree
  * @note Size: 0x1008
  */
 typedef struct Tree {
-	int node_number;    // _00, the current total allocation count
-	int tree_root;      // _04, tree root node index
-	int leaf[2][0x200]; // _08, binary tree nodes [0/1 branch][node index]
+	int node_number;  // _00, the current total allocation count
+	int tree_root;    // _04, tree root node index
+	int leaf[2][512]; // _08, binary tree nodes [0/1 branch][node index]
 } Tree;
 
 /**
@@ -105,8 +105,8 @@ typedef struct Tree {
 typedef struct BitBuffer {
 	u8* ptr;   // _00, current read position
 	u32 size;  // _04, remaining data size
-	u32 value; // _08, cached bit value
-	int bit;   // _0C, current bit position in cache
+	u32 word;  // _08, cached bit value
+	int shift; // _0C, current bit position in cache
 } BitBuffer;
 
 /**
@@ -123,22 +123,22 @@ typedef struct BitBufferWithTree {
  * @note Size: 0x35 (unaligned), 0x38 (aligned)
  */
 typedef struct HVQPlaneDesc {
-	BlockData* blockInfoBuf; // _00, beginning of plane incl. border
-	BlockData* blockInfoTop; // _04, beginning of non-border plane data
-	u16 nblocks_h;           // _08, not including border
-	u16 nblocks_v;           // _0A, not including border
-	u16 nblocks_hb;          // _0C, including border
-	u16 nblocks_vb;          // _0E, including border
-	u16 bibUscan[4];         // _10, block-in-block scanning offsets for 2x2
-	u32 imgUscan[4];         // _18, pixel offset pattern for 4x4 blocks
-	u16 plane_width;         // _28, in samples
-	u16 plane_height;        // _2A, in samples
-	u32 plane_size;          // _2C, in samples
-	u8 h_shift;              // _30
-	u8 v_shift;              // _31
-	u8 hvqblk_h;             // _32, Macroblock width
-	u8 hvqblk_v;             // _33, Macroblock height
-	u8 nblocks_mcb;          // _34, blocks per macroblock
+	_tagHVQData* blockInfoBuf; // _00, beginning of plane incl. border
+	_tagHVQData* blockInfoTop; // _04, beginning of non-border plane data
+	u16 nblocks_h;             // _08, not including border
+	u16 nblocks_v;             // _0A, not including border
+	u16 nblocks_hb;            // _0C, including border
+	u16 nblocks_vb;            // _0E, including border
+	u16 bibUscan[4];           // _10, block-in-block scanning offsets for 2x2
+	u32 imgUscan[4];           // _18, pixel offset pattern for 4x4 blocks
+	u16 plane_width;           // _28, in samples
+	u16 plane_height;          // _2A, in samples
+	u32 plane_size;            // _2C, in samples
+	u8 h_shift;                // _30
+	u8 v_shift;                // _31
+	u8 hvqblk_h;               // _32, Macroblock width
+	u8 hvqblk_v;               // _33, Macroblock height
+	u8 nblocks_mcb;            // _34, blocks per macroblock
 } HVQPlaneDesc;
 
 /**
@@ -146,13 +146,13 @@ typedef struct HVQPlaneDesc {
  * @note Size: 0x15 (unaligned), 0x18 (aligned)
  */
 typedef struct StackState {
-	int id;               // _00, current colour plane index
-	const BlockData* upp; // _04, previous line
-	const BlockData* mid; // _08, current line
-	const BlockData* low; // _0C, next line
-	BlockData right;      // _10
-	BlockData curr;       // _12
-	u8 l_dcv;             // _14, left neighbor DC value, used for prediction
+	int id;                 // _00, current colour plane index
+	const _tagHVQData* upp; // _04, previous line
+	const _tagHVQData* mid; // _08, current line
+	const _tagHVQData* low; // _0C, next line
+	_tagHVQData right;      // _10
+	_tagHVQData curr;       // _12
+	u8 l_dcv;               // _14, left neighbor DC value, used for prediction
 } StackState;
 
 /**
@@ -193,19 +193,19 @@ typedef struct VideoState {
  * @note Size: 0x34
  */
 typedef struct _tagPlnMCHandler {
-	int bsrunleng;       // _00, basis run-length (V plane uses U plane's value)
-	int prev_dcv;        // _04
-	BlockData* data;     // _08, block data start address
-	BlockData* data_top; // _0C, row start address
-	u8* lin_top;         // _10, frame line start address
-	u8* blk_top;         // _14, block row start address
-	u8* targ;            // _18, target frame pointer (selected from forw/back)
-	u8* forw;            // _1C, forward reference frame
-	u8* back;            // _20, backward reference frame
-	u16 next_macro_pix;  // _24, horizontal macroblock step size
-	u32 down_macro_pix;  // _28, vertical macroblock step size
-	int hvqblk_h;        // _2C, horizontal macroblock size
-	int hvqblk_v;        // _30, vertical macroblock size
+	int bsrunleng;         // _00, basis run-length (V plane uses U plane's value)
+	int prev_dcv;          // _04
+	_tagHVQData* data;     // _08, block data start address
+	_tagHVQData* data_top; // _0C, row start address
+	u8* lin_top;           // _10, frame line start address
+	u8* blk_top;           // _14, block row start address
+	u8* targ;              // _18, target frame pointer (selected from forw/back)
+	u8* forw;              // _1C, forward reference frame
+	u8* back;              // _20, backward reference frame
+	u16 next_macro_pix;    // _24, horizontal macroblock step size
+	u32 down_macro_pix;    // _28, vertical macroblock step size
+	int hvqblk_h;          // _2C, horizontal macroblock size
+	int hvqblk_v;          // _30, vertical macroblock size
 } MCPlane;
 
 /**
