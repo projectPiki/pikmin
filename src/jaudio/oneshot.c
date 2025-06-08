@@ -866,7 +866,6 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 {
 	u32 test    = FALSE;
 	jc_** jcptr = &jc;
-	jcs_** chan = &jc->mMgr;
 	s32 status  = jstatus;
 
 	if (status == 0) {
@@ -883,10 +882,10 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		if (test && List_CutChannel(jc) != -1) {
 			List_AddChannelTail(&jc->mMgr->releasingChannels, jc);
 			if (jc->dspChannel) {
-				u32 flag  = jc->channelPriority >> 8;
+				u8 flag   = jc->channelPriority >> 8;
 				u32 test2 = flag;
-				if ((u8)test2 == 0) {
-					test2 = TRUE;
+				if ((flag & 0xff) == 0) {
+					test2 = 1;
 				}
 				jc->dspChannel->_03 = test2;
 			}
@@ -896,7 +895,7 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 	} else if (status == 1 || status == 2 || status == 6) {
 		if (jc->mMgr->chanAllocCount) {
 			if (List_CutChannel(jc) != -1) {
-				(*chan)->chanAllocCount--;
+				jc->mMgr->chanAllocCount--;
 				int id      = jc->soundId;
 				jc->soundId = 0;
 				__Oneshot_StopMonoPolyCheck(jc, id);
@@ -907,7 +906,7 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 				int id      = jc->soundId;
 				jc->soundId = 0;
 				__Oneshot_StopMonoPolyCheck(jc, id);
-				List_AddChannel(&(*chan)->freeChannels, jc);
+				List_AddChannel(&jc->mMgr->freeChannels, jc);
 			}
 		}
 		if (status != 6) {
@@ -922,146 +921,6 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 	return 0;
 
 	u32 badcompiler[4];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r7, 0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r29, 0x2C(r1)
-	  mr.       r29, r4
-	  stw       r3, 0x8(r1)
-	  bne-      .loc_0xD8
-	  li        r0, 0x2
-	  lwz       r31, 0x8(r1)
-	  li        r3, 0
-	  li        r4, 0
-	  li        r5, 0x4
-	  mtctr     r0
-
-	.loc_0x38:
-	  addi      r0, r4, 0x38
-	  lwzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x6C
-	  addi      r6, r3, 0x48
-	  add       r6, r31, r6
-	  lbz       r0, 0x0(r6)
-	  cmplwi    r0, 0x6
-	  beq-      .loc_0x6C
-	  cmplwi    r0, 0x7
-	  beq-      .loc_0x6C
-	  stb       r5, 0x0(r6)
-	  li        r7, 0x1
-
-	.loc_0x6C:
-	  addi      r3, r3, 0x18
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x38
-	  cmplwi    r7, 0
-	  beq-      .loc_0xC8
-	  mr        r3, r31
-	  bl        -0xCCA4
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0xC8
-	  lwz       r3, 0x4(r31)
-	  addi      r4, r31, 0
-	  addi      r3, r3, 0x10
-	  bl        -0xCBFC
-	  lwz       r3, 0x20(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xC8
-	  lwz       r0, 0x120(r31)
-	  rlwinm    r0,r0,24,24,31
-	  mr        r4, r0
-	  rlwinm.   r0,r0,0,24,31
-	  bne-      .loc_0xC4
-	  li        r4, 0x1
-
-	.loc_0xC4:
-	  stb       r4, 0x3(r3)
-
-	.loc_0xC8:
-	  li        r0, -0x1
-	  li        r3, 0
-	  stw       r0, 0x30(r31)
-	  b         .loc_0x1B0
-
-	.loc_0xD8:
-	  subi      r0, r29, 0x1
-	  cmplwi    r0, 0x1
-	  ble-      .loc_0xEC
-	  cmpwi     r29, 0x6
-	  bne-      .loc_0x1AC
-
-	.loc_0xEC:
-	  lwz       r31, 0x8(r1)
-	  addi      r30, r31, 0x4
-	  lwz       r3, 0x4(r31)
-	  lwz       r0, 0x4(r3)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x144
-	  mr        r3, r31
-	  bl        -0xCD28
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x178
-	  lwz       r5, 0x0(r30)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  lwz       r4, 0x4(r5)
-	  subi      r4, r4, 0x1
-	  stw       r4, 0x4(r5)
-	  lwz       r4, 0x128(r31)
-	  stw       r0, 0x128(r31)
-	  bl        -0x714
-	  mr        r3, r31
-	  bl        -0xCB7C
-	  b         .loc_0x178
-
-	.loc_0x144:
-	  mr        r3, r31
-	  bl        -0xCD68
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0x178
-	  lwz       r4, 0x128(r31)
-	  li        r0, 0
-	  mr        r3, r31
-	  stw       r0, 0x128(r31)
-	  bl        -0x744
-	  lwz       r3, 0x0(r30)
-	  addi      r4, r31, 0
-	  addi      r3, r3, 0x8
-	  bl        -0xCC74
-
-	.loc_0x178:
-	  cmpwi     r29, 0x6
-	  beq-      .loc_0x18C
-	  mr        r3, r31
-	  bl        -0xBBA4
-	  b         .loc_0x194
-
-	.loc_0x18C:
-	  mr        r3, r31
-	  bl        -0xB830
-
-	.loc_0x194:
-	  li        r0, 0xFF
-	  li        r3, -0x1
-	  stb       r0, 0x1(r31)
-	  li        r0, 0
-	  stw       r3, 0x30(r31)
-	  stw       r0, 0x28(r31)
-
-	.loc_0x1AC:
-	  li        r3, 0
-
-	.loc_0x1B0:
-	  lmw       r29, 0x2C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
