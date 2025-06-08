@@ -157,6 +157,8 @@ struct Perc_ {
 	int mMagic;                    // _00 | 'PER2' (or 'PERC'?)
 	u8 _04[0x84];                  // _04, unknown
 	PercKeymap_* mKeyRegions[128]; // _88
+	s8 _288[128];                  // _288
+	u16 _308[128];                 // _308
 };
 
 struct Rand_ {

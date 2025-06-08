@@ -363,12 +363,11 @@ static void __Oneshot_WavePause(jc_* jc, u8 a)
 static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 {
 	u32 index = 0;
-	jcs_* mgr;
+	jcs_* mgr = jc->mMgr;
 	jc_* chan;
-	u8 poly;
 	int flag1, flag2;
+	u8 poly;
 
-	mgr  = jc->mMgr;
 	chan = mgr->activeChannels;
 	poly = polys_table[id >> 0x18 & 0xf];
 
@@ -384,15 +383,17 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 			break;
 		}
 
-		if (chan->soundId != id) {
-			index++;
-		} else {
-			chan->polyphonyCounter++;
-			if (chan->polyphonyCounter == poly) {
-				if (flag2) {
-					ForceStopLogicalChannel(chan);
-				} else {
-					__Oneshot_WavePause(chan, 1);
+		if (chan->soundId == id) {
+			if (flag2 != 0) {
+				index++;
+			} else {
+				chan->polyphonyCounter++;
+				if (chan->polyphonyCounter == poly) {
+					if (flag2) {
+						ForceStopLogicalChannel(chan);
+					} else {
+						__Oneshot_WavePause(chan, 1);
+					}
 				}
 			}
 		}
@@ -405,16 +406,17 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 			break;
 		}
 
-		if (chan->soundId != id) {
-			index++;
-		} else {
-			if (flag1 == 0) {
+		if (chan->soundId == id) {
+			if (flag1 != 0) {
+				index++;
+			} else {
 				chan->polyphonyCounter++;
 				if (chan->polyphonyCounter == poly) {
 					ForceStopLogicalChannel(chan);
 				}
 			}
 		}
+
 		chan = (jc_*)chan->mNext;
 	}
 
@@ -862,8 +864,8 @@ void FlushRelease_1Shot(jcs_* jcs)
  */
 static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 {
-	u32 test = FALSE;
-	// jc_** jcptr = &jc;
+	u32 test    = FALSE;
+	jc_** jcptr = &jc;
 	jcs_** chan = &jc->mMgr;
 	s32 status  = jstatus;
 
@@ -881,9 +883,9 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		if (test && List_CutChannel(jc) != -1) {
 			List_AddChannelTail(&jc->mMgr->releasingChannels, jc);
 			if (jc->dspChannel) {
-				u32 test2 = jc->channelPriority >> 8;
-				u8 a      = test2;
-				if (a == 0) {
+				u32 flag  = jc->channelPriority >> 8;
+				u32 test2 = flag;
+				if ((u8)test2 == 0) {
 					test2 = TRUE;
 				}
 				jc->dspChannel->_03 = test2;
@@ -918,6 +920,8 @@ static int Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		jc->updateCallback = NULL;
 	}
 	return 0;
+
+	u32 badcompiler[4];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1102,6 +1106,13 @@ void Get_CtrlWave(SOUNDID_ sound)
 	// UNUSED FUNCTION
 }
 
+typedef struct testPercMap {
+	int _00; // this clearly should one of the existing structs, but Vmap doesnt work so I have no idea
+	int _04;
+	f32 _08;
+	f32 _0C;
+} testPercMap;
+
 /*
  * --INFO--
  * Address:	80016320
@@ -1109,29 +1120,32 @@ void Get_CtrlWave(SOUNDID_ sound)
  */
 jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
+	jc_* chan;
+	Inst_* inst;
+	WaveID_* wave;
 	BOOL test = FALSE;
 
-	Inst_* inst = InstRead(sound.bytes[0], sound.bytes[1]);
+	inst = InstRead(sound.bytes[0], sound.bytes[1]);
 	if (inst == NULL) {
 		return NULL;
 	}
 
-	Vmap_* map = VmapRead(inst, sound.bytes[2], sound.bytes[3]);
+	testPercMap* map = (testPercMap*)VmapRead(inst, sound.bytes[2], sound.bytes[3]);
 	if (map == NULL) {
 		return NULL;
 	}
 
-	CtrlGroup_* group = WaveidToWavegroup(map->mWsysID, sound.bytes[2]);
+	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
 	if (group == NULL) {
 		return NULL;
 	}
 
-	WaveID_* wave = GetSoundHandle(group, map->mWsysID);
+	wave = GetSoundHandle(group, map->_04);
 	if (wave == NULL) {
 		return NULL;
 	}
 
-	jc_* chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
+	chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
 	if (chan == NULL) {
 		return NULL;
 	}
@@ -1146,18 +1160,17 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	f32 pitch                      = C5BASE_PITCHTABLE[val];
 	chan->velocity                 = sound.bytes[3];
 	chan->note                     = sound.bytes[2];
-	chan->basePitch                = inst->mGainMultiplier * map->mPitch * wave->data->_04 / JAC_DAC_RATE;
+	chan->basePitch                = map->_0C * (wave->data->_04 / JAC_DAC_RATE) * inst->mGainMultiplier;
 	chan->currentPitch             = chan->basePitch * pitch;
-	chan->baseVolume               = map->mVolume * inst->mFreqMultiplier;
+	chan->baseVolume               = map->_08 * inst->mFreqMultiplier;
 	chan->currentVolume            = chan->velocity / 127.0f;
-	chan->currentVolume            = chan->baseVolume * chan->currentVolume * chan->currentVolume;
+	chan->currentVolume            = chan->currentVolume * chan->currentVolume * chan->baseVolume;
 	chan->panMatrices[1].values[0] = 0.5f;
 	chan->panMatrices[2].values[0] = 0.0f;
 	chan->panMatrices[3].values[0] = 0.0f;
 	EffecterInit(chan, inst);
 
-	int f    = sound.bytes[0] >> 0x10;
-	int flag = inst->mFlag << 0x18 | f;
+	int flag = sound.value >> 0x10 | inst->mFlag << 0x18;
 	switch (inst->mFlag & 0xc0) {
 	case 0xc0:
 		flag |= 0xffffff;
@@ -1187,200 +1200,6 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	return newjc;
 
 	u32 badcompiler[2];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r24, 0x28(r1)
-	  addi      r24, r3, 0
-	  addi      r25, r4, 0
-	  mr        r26, r5
-	  li        r27, 0
-	  lbz       r3, 0x0(r4)
-	  lbz       r4, 0x1(r4)
-	  bl        -0xAA8
-	  mr.       r29, r3
-	  bne-      .loc_0x3C
-	  li        r3, 0
-	  b         .loc_0x268
-
-	.loc_0x3C:
-	  lbz       r4, 0x2(r25)
-	  mr        r3, r29
-	  lbz       r5, 0x3(r25)
-	  bl        -0xA68
-	  mr.       r31, r3
-	  bne-      .loc_0x5C
-	  li        r3, 0
-	  b         .loc_0x268
-
-	.loc_0x5C:
-	  lwz       r3, 0x4(r31)
-	  lbz       r4, 0x0(r25)
-	  bl        -0x9DC4
-	  cmplwi    r3, 0
-	  bne-      .loc_0x78
-	  li        r3, 0
-	  b         .loc_0x268
-
-	.loc_0x78:
-	  lwz       r4, 0x4(r31)
-	  bl        -0x959C
-	  mr.       r28, r3
-	  bne-      .loc_0x90
-	  li        r3, 0
-	  b         .loc_0x268
-
-	.loc_0x90:
-	  addi      r3, r24, 0
-	  addi      r4, r28, 0
-	  bl        -0xCD8
-	  mr.       r30, r3
-	  bne-      .loc_0xAC
-	  li        r3, 0
-	  b         .loc_0x268
-
-	.loc_0xAC:
-	  lwz       r4, 0x34(r28)
-	  lbz       r3, 0x2(r25)
-	  lbz       r4, 0x2(r4)
-	  addi      r0, r3, 0x3C
-	  sub.      r0, r0, r4
-	  bge-      .loc_0xC8
-	  li        r0, 0
-
-	.loc_0xC8:
-	  cmpwi     r0, 0x7F
-	  ble-      .loc_0xD4
-	  li        r0, 0x7F
-
-	.loc_0xD4:
-	  lis       r3, 0x8022
-	  rlwinm    r4,r0,2,0,29
-	  addi      r0, r3, 0x4E18
-	  lbz       r5, 0x3(r25)
-	  add       r3, r0, r4
-	  lis       r0, 0x4330
-	  lfs       f3, 0x0(r3)
-	  addi      r3, r30, 0
-	  addi      r4, r29, 0
-	  stb       r5, 0x0(r30)
-	  lbz       r5, 0x2(r25)
-	  stb       r5, 0x1(r30)
-	  lwz       r5, 0x34(r28)
-	  lfs       f0, -0x8000(r13)
-	  lfs       f1, 0x4(r5)
-	  lfs       f2, 0xC(r31)
-	  fdivs     f0, f1, f0
-	  lfs       f1, 0xC(r29)
-	  fmuls     f0, f2, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xA8(r30)
-	  lfs       f0, 0xA8(r30)
-	  fmuls     f0, f0, f3
-	  stfs      f0, 0xB0(r30)
-	  lfs       f1, 0x8(r31)
-	  lfs       f0, 0x8(r29)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xAC(r30)
-	  lbz       r5, 0x0(r30)
-	  lfd       f2, -0x7E98(r2)
-	  stw       r5, 0x24(r1)
-	  lfs       f0, -0x7E90(r2)
-	  stw       r0, 0x20(r1)
-	  lfd       f1, 0x20(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xB4(r30)
-	  lfs       f0, 0xB4(r30)
-	  lfs       f1, 0xAC(r30)
-	  fmuls     f0, f0, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xB4(r30)
-	  lfs       f0, -0x7EA0(r2)
-	  stfs      f0, 0xC8(r30)
-	  lfs       f0, -0x7EA8(r2)
-	  stfs      f0, 0xD4(r30)
-	  stfs      f0, 0xE0(r30)
-	  bl        -0x1210
-	  lwz       r4, 0x4(r29)
-	  lwz       r3, 0x0(r25)
-	  rlwinm    r0,r4,0,24,25
-	  cmpwi     r0, 0x80
-	  rlwinm    r3,r3,16,16,31
-	  addi      r28, r3, 0
-	  rlwimi    r28,r4,24,0,7
-	  beq-      .loc_0x1DC
-	  bge-      .loc_0x1C4
-	  cmpwi     r0, 0x40
-	  beq-      .loc_0x1E4
-	  b         .loc_0x1F8
-
-	.loc_0x1C4:
-	  cmpwi     r0, 0xC0
-	  beq-      .loc_0x1D0
-	  b         .loc_0x1F8
-
-	.loc_0x1D0:
-	  oris      r28, r28, 0xFF
-	  ori       r28, r28, 0xFFFF
-	  b         .loc_0x1F8
-
-	.loc_0x1DC:
-	  ori       r28, r28, 0xFF
-	  b         .loc_0x1F8
-
-	.loc_0x1E4:
-	  mr        r3, r29
-	  lbz       r4, 0x2(r25)
-	  bl        -0x94CC
-	  rlwinm    r0,r3,16,0,15
-	  or        r28, r28, r0
-
-	.loc_0x1F8:
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r0, 0x128(r30)
-	  mr        r4, r28
-	  bl        -0xBC8
-	  cmpwi     r3, 0
-	  bne-      .loc_0x238
-	  lwz       r0, 0x4(r29)
-	  rlwinm.   r0,r0,0,27,27
-	  beq-      .loc_0x234
-	  addi      r3, r24, 0x8
-	  addi      r4, r30, 0
-	  bl        -0xD008
-	  li        r3, 0
-	  b         .loc_0x268
-
-	.loc_0x234:
-	  li        r27, 0x1
-
-	.loc_0x238:
-	  stw       r28, 0x128(r30)
-	  addi      r3, r24, 0
-	  addi      r4, r30, 0
-	  addi      r5, r26, 0
-	  bl        -0xFA8
-	  cmpwi     r27, 0
-	  addi      r24, r3, 0
-	  beq-      .loc_0x264
-	  addi      r3, r24, 0
-	  li        r4, 0x1
-	  bl        -0xC40
-
-	.loc_0x264:
-	  mr        r3, r24
-
-	.loc_0x268:
-	  lmw       r24, 0x28(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1390,49 +1209,55 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
  */
 jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
-	Perc_* perc = PercRead(sound.bytes[0], sound.bytes[1]);
+	jc_* chan;
+	Perc_* perc;
+	u32* idp = &id;
+
+	perc = PercRead(sound.bytes[0], sound.bytes[1]);
 	if (perc == NULL) {
 		return NULL;
 	}
 
-	Vmap_* map = Bank_GetPercVmap(perc, sound.bytes[2], sound.bytes[3]);
+	testPercMap* map   = (testPercMap*)Bank_GetPercVmap(perc, sound.bytes[2], sound.bytes[3]);
+	testPercMap** mapp = &map;
 	if (map == NULL) {
 		return NULL;
 	}
 
-	CtrlGroup_* group = WaveidToWavegroup(map->mWsysID, sound.bytes[2]);
+	u32 x;
+
+	CtrlGroup_* group = WaveidToWavegroup(map->_04, sound.bytes[0]);
 	if (group == NULL) {
 		return NULL;
 	}
 
-	WaveID_* wave = GetSoundHandle(group, map->mWsysID);
+	WaveID_* wave = GetSoundHandle(group, map->_04);
 	if (wave == NULL) {
 		return NULL;
 	}
 
-	jc_* chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
+	chan = __Oneshot_GetLogicalChannel(jcs, (CtrlWave_*)wave);
 	if (chan == NULL) {
 		return NULL;
 	}
 
-	chan->velocity                 = sound.bytes[3];
-	chan->note                     = sound.bytes[2];
-	chan->basePitch                = perc->mKeyRegions[sound.bytes[2]]->mPitch * map->mPitch * wave->data->_04 / JAC_DAC_RATE;
-	chan->currentPitch             = chan->basePitch;
-	chan->baseVolume               = map->mVolume * perc->mKeyRegions[sound.bytes[2]]->mVolume;
-	chan->currentVolume            = chan->velocity / 127.0f;
-	chan->currentVolume            = chan->baseVolume * chan->currentVolume * chan->currentVolume;
-	chan->panMatrices[1].values[0] = 0.5f;
-	chan->panMatrices[2].values[0] = 0.0f;
-	chan->panMatrices[3].values[0] = 0.0f;
+	chan->velocity = sound.bytes[3];
+	chan->note     = sound.bytes[2];
+
+	chan->basePitch    = (wave->data->_04 / JAC_DAC_RATE) * map->_0C * perc->mKeyRegions[sound.bytes[2]]->mVolume;
+	chan->currentPitch = chan->basePitch;
+
+	chan->baseVolume    = map->_08 * perc->mKeyRegions[sound.bytes[2]]->mPitch;
+	chan->currentVolume = chan->velocity / 127.0f;
+	chan->currentVolume = chan->currentVolume * chan->currentVolume * chan->baseVolume;
 
 	u16 flag;
 	if (perc->mMagic == 'PER2') {
-		chan->panMatrices[0].values[0] = perc->mKeyRegions[sound.bytes[2]]->mPitch / 127.0f;
-		flag                           = perc->mKeyRegions[sound.bytes[2]]->mVelocityCount;
+		chan->panMatrices[1].values[0] = perc->_288[sound.bytes[2]] / 127.0f;
+		flag                           = perc->_308[sound.bytes[2]];
 	} else {
 		flag                           = 1000;
-		chan->panMatrices[0].values[0] = 0.5f;
+		chan->panMatrices[1].values[0] = 0.5f;
 	}
 	chan->panMatrices[2].values[0] = 0.0f;
 	chan->panMatrices[3].values[0] = 0.0f;
@@ -1441,156 +1266,7 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 
 	return __Oneshot_Play_Start(jcs, chan, id);
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x70(r1)
-	  stmw      r26, 0x58(r1)
-	  addi      r28, r4, 0
-	  addi      r27, r3, 0
-	  stw       r5, 0x10(r1)
-	  lbz       r3, 0x0(r4)
-	  lbz       r4, 0x1(r4)
-	  bl        -0xD84
-	  mr.       r29, r3
-	  bne-      .loc_0x38
-	  li        r3, 0
-	  b         .loc_0x1F8
-
-	.loc_0x38:
-	  lbz       r4, 0x2(r28)
-	  mr        r3, r29
-	  lbz       r5, 0x3(r28)
-	  bl        -0x94A4
-	  stw       r3, 0x44(r1)
-	  lwz       r31, 0x44(r1)
-	  cmplwi    r31, 0
-	  bne-      .loc_0x60
-	  li        r3, 0
-	  b         .loc_0x1F8
-
-	.loc_0x60:
-	  addi      r30, r31, 0x4
-	  lbz       r4, 0x0(r28)
-	  lwz       r3, 0x4(r31)
-	  bl        -0xA04C
-	  cmplwi    r3, 0
-	  bne-      .loc_0x80
-	  li        r3, 0
-	  b         .loc_0x1F8
-
-	.loc_0x80:
-	  lwz       r4, 0x0(r30)
-	  bl        -0x9824
-	  mr.       r26, r3
-	  bne-      .loc_0x98
-	  li        r3, 0
-	  b         .loc_0x1F8
-
-	.loc_0x98:
-	  addi      r3, r27, 0
-	  addi      r4, r26, 0
-	  bl        -0xF60
-	  mr.       r30, r3
-	  bne-      .loc_0xB4
-	  li        r3, 0
-	  b         .loc_0x1F8
-
-	.loc_0xB4:
-	  lbz       r0, 0x3(r28)
-	  lis       r4, 0x4330
-	  stb       r0, 0x0(r30)
-	  lbz       r0, 0x2(r28)
-	  stb       r0, 0x1(r30)
-	  lwz       r3, 0x34(r26)
-	  lbz       r0, 0x2(r28)
-	  lfs       f1, 0x4(r3)
-	  lfs       f0, -0x8000(r13)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r29, r0
-	  lfs       f2, 0xC(r31)
-	  fdivs     f0, f1, f0
-	  lwz       r3, 0x88(r3)
-	  lfs       f1, 0x4(r3)
-	  fmuls     f0, f2, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xA8(r30)
-	  lfs       f0, 0xA8(r30)
-	  stfs      f0, 0xB0(r30)
-	  lbz       r0, 0x2(r28)
-	  lfs       f1, 0x8(r31)
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r29, r0
-	  lwz       r3, 0x88(r3)
-	  lfs       f0, 0x0(r3)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xAC(r30)
-	  lbz       r0, 0x0(r30)
-	  lfd       f1, -0x7E98(r2)
-	  stw       r0, 0x54(r1)
-	  lfs       f2, -0x7E90(r2)
-	  stw       r4, 0x50(r1)
-	  lfd       f0, 0x50(r1)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f0, f2
-	  stfs      f0, 0xB4(r30)
-	  lfs       f0, 0xB4(r30)
-	  lfs       f1, 0xAC(r30)
-	  fmuls     f0, f0, f0
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xB4(r30)
-	  lwz       r3, 0x0(r29)
-	  subis     r0, r3, 0x5045
-	  cmplwi    r0, 0x5232
-	  bne-      .loc_0x1B0
-	  lbz       r0, 0x2(r28)
-	  lfd       f1, -0x7E88(r2)
-	  add       r3, r29, r0
-	  lbz       r0, 0x288(r3)
-	  extsb     r0, r0
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x54(r1)
-	  stw       r4, 0x50(r1)
-	  lfd       f0, 0x50(r1)
-	  fsubs     f0, f0, f1
-	  fdivs     f0, f0, f2
-	  stfs      f0, 0xC8(r30)
-	  lbz       r0, 0x2(r28)
-	  rlwinm    r0,r0,1,0,30
-	  add       r3, r29, r0
-	  lhz       r5, 0x308(r3)
-	  b         .loc_0x1BC
-
-	.loc_0x1B0:
-	  lfs       f0, -0x7EA0(r2)
-	  li        r5, 0x3E8
-	  stfs      f0, 0xC8(r30)
-
-	.loc_0x1BC:
-	  lfs       f0, -0x7EA8(r2)
-	  mr        r3, r30
-	  stfs      f0, 0xD4(r30)
-	  stfs      f0, 0xE0(r30)
-	  lbz       r0, 0x2(r28)
-	  rlwinm    r0,r0,2,0,29
-	  add       r4, r29, r0
-	  lwz       r4, 0x88(r4)
-	  bl        -0x139C
-	  li        r0, 0
-	  addi      r3, r27, 0
-	  stw       r0, 0x128(r30)
-	  mr        r4, r30
-	  lwz       r5, 0x10(r1)
-	  bl        -0x11D4
-
-	.loc_0x1F8:
-	  lmw       r26, 0x58(r1)
-	  lwz       r0, 0x74(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	u32 badcompiler[10];
 }
 
 /*
@@ -1600,10 +1276,12 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
  */
 jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 {
-	int pit;
 	jc_* chan;
+	u32 ids = id;
+	int pit;
+	jcs_* mgr = jcs;
 
-	chan = __Oneshot_GetLogicalChannel(jcs, NULL);
+	chan = __Oneshot_GetLogicalChannel(mgr, NULL);
 	if (chan == NULL) {
 		return NULL;
 	}
@@ -1631,92 +1309,7 @@ jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	chan->panMatrices[3].values[0] = 0.0f;
 	EffecterInit_Osc(chan);
 	chan->soundId = 0;
-	return __Oneshot_Play_Start(jcs, chan, id);
+	return __Oneshot_Play_Start(mgr, chan, ids);
 
 	u32 badcompiler[6];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stmw      r28, 0x38(r1)
-	  addi      r28, r4, 0
-	  addi      r31, r3, 0
-	  addi      r29, r5, 0
-	  li        r4, 0
-	  bl        -0x1100
-	  mr.       r30, r3
-	  bne-      .loc_0x34
-	  li        r3, 0
-	  b         .loc_0x114
-
-	.loc_0x34:
-	  lbz       r3, 0x1(r28)
-	  li        r0, 0x2
-	  subi      r3, r3, 0xF0
-	  stw       r3, 0x14(r30)
-	  stb       r0, 0xC(r30)
-	  lbz       r0, 0x2(r28)
-	  cmpwi     r0, 0
-	  bge-      .loc_0x58
-	  li        r0, 0
-
-	.loc_0x58:
-	  cmpwi     r0, 0x7F
-	  ble-      .loc_0x64
-	  li        r0, 0x7F
-
-	.loc_0x64:
-	  lis       r3, 0x8022
-	  rlwinm    r5,r0,2,0,29
-	  addi      r0, r3, 0x4E18
-	  lbz       r4, 0x3(r28)
-	  add       r3, r0, r5
-	  lis       r0, 0x4330
-	  lfs       f2, 0x0(r3)
-	  mr        r3, r30
-	  stb       r4, 0x0(r30)
-	  lbz       r4, 0x2(r28)
-	  stb       r4, 0x1(r30)
-	  lfs       f1, -0x7E80(r2)
-	  lfs       f0, -0x8000(r13)
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xA8(r30)
-	  lfs       f0, 0xA8(r30)
-	  fmuls     f0, f0, f2
-	  stfs      f0, 0xB0(r30)
-	  lfs       f0, -0x7EA4(r2)
-	  stfs      f0, 0xAC(r30)
-	  lbz       r4, 0x0(r30)
-	  lfd       f2, -0x7E98(r2)
-	  stw       r4, 0x34(r1)
-	  lfs       f0, -0x7E90(r2)
-	  stw       r0, 0x30(r1)
-	  lfd       f1, 0x30(r1)
-	  fsubs     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  stfs      f0, 0xB4(r30)
-	  lfs       f0, 0xB4(r30)
-	  fmuls     f0, f0, f0
-	  stfs      f0, 0xB4(r30)
-	  lfs       f0, -0x7EA0(r2)
-	  stfs      f0, 0xC8(r30)
-	  lfs       f0, -0x7EA8(r2)
-	  stfs      f0, 0xD4(r30)
-	  stfs      f0, 0xE0(r30)
-	  bl        -0x13F8
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stw       r0, 0x128(r30)
-	  addi      r4, r30, 0
-	  addi      r5, r29, 0
-	  bl        -0x1310
-
-	.loc_0x114:
-	  lmw       r28, 0x38(r1)
-	  lwz       r0, 0x4C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
 }
