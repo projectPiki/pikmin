@@ -1337,7 +1337,7 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		PRINT("Too many iterations [cr %08x : rad = %f : spd = %f]!!\n", target, trace.mRadius, trace.mVelocity.length() * p3);
 	}
 
-	mapMgr->mCollisionCheckCount++;
+	mapMgr->mCollCheckCount++;
 
 	trace.mStepFraction = 1.0f / stepMultiplier;
 
@@ -1354,7 +1354,7 @@ void traceMove2(Creature* target, MoveTrace& trace, f32 p3)
 		{
 			if ((!collShape->mCreature || collShape->mCreature != target) && box.intersects(collShape->mBoundingBox)) {
 				for (int i = 0; i < collShape->mColliderCount; i++) {
-					if (collShape->mVisibleList[collShape->mColliderList[i]->mStateIndex]) {
+					if (collShape->mVisibleList[collShape->mColliderList[i]->mRoomIndex]) {
 						collShape->mColliderList[i]->mShape          = collShape->mShape;
 						collShape->mColliderList[i]->mVertexList     = collShape->mVertexList;
 						collShape->mColliderList[i]->mSourceCollider = collShape;

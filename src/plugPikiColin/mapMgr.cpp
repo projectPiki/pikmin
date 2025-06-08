@@ -72,6 +72,7 @@ struct SoftLight {
 				mSublightList[i]->mAccumulatedIntensity -= (mIntensityScales[i] * mEffectiveColour.r) >> 8;
 			}
 		}
+
 		FORCE_DONT_INLINE;
 	}
 
@@ -82,7 +83,7 @@ struct SoftLight {
 	f32 mTargetPhaseAngle;          // _18
 	f32 mCurrentPhaseAngle;         // _1C
 	int mGroupId;                   // _20
-	int mAnimationFlag;             // _24
+	int mIsAnimFast;                // _24
 	int mLightListSize;             // _28
 	u8 _2C;                         // _2C
 	SoftLightLight** mSublightList; // _30
@@ -106,7 +107,7 @@ struct MapLightMgr {
 
 			bool check = false;
 			if (mLights[i]->mCurrentPhaseAngle != mLights[i]->mTargetPhaseAngle) {
-				f32 a = (mLights[i]->mAnimationFlag) ? 2.0f : 0.5f;
+				f32 a = (mLights[i]->mIsAnimFast) ? 2.0f : 0.5f;
 				mLights[i]->mCurrentPhaseAngle
 				    += gsys->getFrameTime() * a * (mLights[i]->mTargetPhaseAngle - mLights[i]->mCurrentPhaseAngle);
 				check = true;
@@ -114,7 +115,7 @@ struct MapLightMgr {
 
 			if (check) {
 				if (!mLights[i]->_2C) {
-					mLights[i]->subLight(mGlobalAmbientColorRef);
+					mLights[i]->subLight(mAmbientColor);
 				}
 				mLights[i]->_2C = 0;
 				f32 a           = sinf(mLights[i]->mCurrentPhaseAngle);
@@ -124,7 +125,7 @@ struct MapLightMgr {
 
 				mLights[i]->mEffectiveColour.set(mLights[i]->mBaseColour.r * a, mLights[i]->mBaseColour.g * a,
 				                                 mLights[i]->mBaseColour.b * a, 255);
-				mLights[i]->addLight(mCurrentUpdateTick, mGlobalAmbientColorRef, mDefaultShape);
+				mLights[i]->addLight(mCurrentUpdateTick, mAmbientColor, mDefaultShape);
 			}
 		}
 
@@ -143,12 +144,12 @@ struct MapLightMgr {
 	{
 		for (int i = 0; i < mLightCount; i++) {
 			if (mLights[i]->mTargetPhaseAngle != HALF_PI) {
-				f32 a = (mLights[i]->mAnimationFlag) ? mLights[i]->mInteractionRadius * 0.5f : mLights[i]->mInteractionRadius * 1.5f;
+				f32 a = (mLights[i]->mIsAnimFast) ? mLights[i]->mInteractionRadius * 0.5f : mLights[i]->mInteractionRadius * 1.5f;
 				if (mLights[i]->mPosition.distance(pos) < a) {
 					mLights[i]->mTargetPhaseAngle = HALF_PI;
 				}
 
-				if (mLights[i]->mAnimationFlag) {
+				if (mLights[i]->mIsAnimFast) {
 					for (int j = 0; j < mLightCount; j++) {
 						if (i != j && mLights[j]->mGroupId == mLights[i]->mGroupId && mLights[j]->mCurrentPhaseAngle > 0.4f) {
 							f32 d = mLights[i]->mPosition.distance(mLights[j]->mPosition);
@@ -162,12 +163,12 @@ struct MapLightMgr {
 		}
 	}
 
-	Shape* mDefaultShape;                 // _00
-	SoftLight** mLights;                  // _04
-	u8 padding[0x4];                      // _08, unknown
-	int mLightCount;                      // _0C
-	LShortColour* mGlobalAmbientColorRef; // _10
-	u32 mCurrentUpdateTick;               // _14
+	Shape* mDefaultShape;        // _00
+	SoftLight** mLights;         // _04
+	u8 padding[0x4];             // _08, unknown
+	int mLightCount;             // _0C
+	LShortColour* mAmbientColor; // _10
+	u32 mCurrentUpdateTick;      // _14
 };
 
 /*
@@ -203,7 +204,7 @@ void DynCollShape::createDupCollData()
 		}
 
 		mColliderList[i]                = new CollGroup;
-		mColliderList[i]->mStateIndex   = mShape->mRoomInfoList[i]._00;
+		mColliderList[i]->mRoomIndex    = mShape->mRoomInfoList[i].mIndex;
 		mColliderList[i]->mTriCount     = tris;
 		mColliderList[i]->mTriangleList = new CollTriInfo*[mColliderList[i]->mTriCount];
 
@@ -370,25 +371,25 @@ DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
 	mShadowCaster.initCore("");
 	mShadowCaster.mDrawer           = this;
 	mShadowCaster.mLightCamera.mFov = 20.0f;
-	mMapScale.set(1.0f, 1.0f, 1.0f);
-	mMapRotation.set(0.0f, 0.0f, 0.0f);
-	mMapTranslation.set(0.0f, 0.0f, 0.0f);
-	mObjPartCount = 0;
+	mScale.set(1.0f, 1.0f, 1.0f);
+	mRotation.set(0.0f, 0.0f, 0.0f);
+	mPosition.set(0.0f, 0.0f, 0.0f);
+	mObjCount = 0;
 	for (ObjCollInfo* info = (ObjCollInfo*)mShape->mCollisionInfo.mParentShape->Child(); info; info = (ObjCollInfo*)info->mNext) {
 		if (info->mPlatShape) {
-			mObjPartCount++;
+			mObjCount++;
 		}
 	}
 
-	mObjParts = new MapObjectPart*[mObjPartCount];
-	int i     = 0;
+	mObjects = new MapObjectPart*[mObjCount];
+	int i    = 0;
 	for (ObjCollInfo* info = (ObjCollInfo*)mShape->mCollisionInfo.mParentShape->Child(); info; info = (ObjCollInfo*)info->mNext) {
 		if (info->mPlatShape) {
-			MapObjectPart* part    = new MapObjectPart(info->mPlatShape);
-			part->mParentMapObject = this;
-			part->mJointIndex      = info->mJointIndex;
+			MapObjectPart* part = new MapObjectPart(info->mPlatShape);
+			part->mMapParent    = this;
+			part->mJointIndex   = info->mJointIndex;
 			mMapMgr->mCollShape->add(part);
-			mObjParts[i] = part;
+			mObjects[i] = part;
 			i++;
 		}
 	}
@@ -416,11 +417,11 @@ void DynMapObject::touchCallback(Plane&, Vector3f&, Vector3f&)
 {
 	switch (mState) {
 	case 0:
-		mStateTransitionTimer = 2.0f;
+		mTransitionTimer = 2.0f;
 		mState++;
 		break;
 	case 4:
-		mStateTransitionTimer = 2.0f;
+		mTransitionTimer = 2.0f;
 		break;
 	}
 }
@@ -434,24 +435,24 @@ void DynMapObject::update()
 {
 	switch (mState) {
 	case 1:
-		mStateTransitionTimer -= gsys->getFrameTime();
-		if (mStateTransitionTimer < 0.0f) {
-			mStateTransitionTimer = 2.0f;
+		mTransitionTimer -= gsys->getFrameTime();
+		if (mTransitionTimer < 0.0f) {
+			mTransitionTimer = 2.0f;
 			mAnimator.startAnim(ANIMSTATE_OneShot, 0, 0, 8);
 			mState++;
 		}
 		break;
 	case 3:
-		mStateTransitionTimer -= gsys->getFrameTime();
-		if (mStateTransitionTimer < 0.0f) {
-			mStateTransitionTimer = 0.0f;
+		mTransitionTimer -= gsys->getFrameTime();
+		if (mTransitionTimer < 0.0f) {
+			mTransitionTimer = 0.0f;
 			mState++;
 		}
 		break;
 	case 4:
-		mStateTransitionTimer -= gsys->getFrameTime();
-		if (mStateTransitionTimer < 0.0f) {
-			mStateTransitionTimer = 0.0f;
+		mTransitionTimer -= gsys->getFrameTime();
+		if (mTransitionTimer < 0.0f) {
+			mTransitionTimer = 0.0f;
 			mAnimator.startAnim(ANIMSTATE_OneShot, 1, 0, 8);
 			mState++;
 		}
@@ -461,8 +462,8 @@ void DynMapObject::update()
 		break;
 	}
 
-	mShadowCaster.mSourcePosition.set(mMapTranslation.x + 100.0f, mMapTranslation.y + 300.0f, mMapTranslation.z + 300.0f);
-	mShadowCaster.mTargetPosition.set(mMapTranslation.x, mMapTranslation.y + 100.0f, mMapTranslation.z);
+	mShadowCaster.mSourcePosition.set(mPosition.x + 100.0f, mPosition.y + 300.0f, mPosition.z + 300.0f);
+	mShadowCaster.mTargetPosition.set(mPosition.x, mPosition.y + 100.0f, mPosition.z);
 	mAnimator.animate(30.0f);
 	DynCollShape::update();
 }
@@ -486,15 +487,15 @@ void DynMapObject::refresh(Graphics& gfx)
 {
 	Matrix4f mtx1;
 	Matrix4f mtx2;
-	mtx1.makeSRT(mMapScale, mMapRotation, mMapTranslation);
+	mtx1.makeSRT(mScale, mRotation, mPosition);
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gsys->mTimer->start("animation", true);
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, mtx2, nullptr);
 	gsys->mTimer->stop("animation");
 
-	for (int i = 0; i < mObjPartCount; i++) {
-		MapObjectPart* part = mObjParts[i];
+	for (int i = 0; i < mObjCount; i++) {
+		MapObjectPart* part = mObjects[i];
 		part->mTransformMtx.inverse(&part->mInverseMatrix);
 		Matrix4f animMtx = mShape->getAnimMatrix(part->mJointIndex);
 		gfx.mCamera->mInverseLookAtMtx.multiplyTo(animMtx, part->mTransformMtx);
@@ -841,35 +842,35 @@ void DynObjPushable::render(Graphics& gfx)
  */
 MapMgr::MapMgr(Controller* controller)
 {
-	mController                       = controller;
-	mFadeToBlackProgress              = 0.0f;
-	mGreyscaleDesaturationLevel       = 0.0f;
-	mTargetFadeToBlackLevel           = 0.0f;
-	mTargetGreyscaleDesaturationLevel = 0.0f;
-	effectMgr                         = nullptr;
-	mBlur                             = 145;
+	mController         = controller;
+	mFadeProgress       = 0.0f;
+	mDesaturationLevel  = 0.0f;
+	mTargetFadeLevel    = 0.0f;
+	mTargetDesaturation = 0.0f;
+	effectMgr           = nullptr;
+	mBlur               = 145;
 
 	memStat->start("dayMgr");
 	mDayMgr = new DayMgr(this, mController);
 	memStat->end("dayMgr");
 
-	mCollisionCheckCount = 0;
-	mMapShape            = nullptr;
+	mCollCheckCount = 0;
+	mMapShape       = nullptr;
 
-	mCurrentDebugCollisionCount = 0;
-	mMaxDebugDisplayCollisions  = 300;
+	mDebugCollCount = 0;
+	mMaxDebugColls  = 300;
 
-	if (mMaxDebugDisplayCollisions) {
+	if (mMaxDebugColls) {
 		memStat->start("collisions");
-		mCollisions = new MapColls[mMaxDebugDisplayCollisions];
+		mCollisions = new MapColls[mMaxDebugColls];
 		memStat->end("collisions");
 	}
 
 	memStat->start("collparts");
-	mDefaultCreatureCollisionPart = new CreatureCollPart();
-	mDefaultCreatureCollisionPart->initCore("");
+	mDefaultCollPart = new CreatureCollPart();
+	mDefaultCollPart->initCore("");
 	memStat->end("collparts");
-	mCompleteMapBounds.resetBound();
+	mMapBounds.resetBound();
 
 	memStat->start("rooms");
 	mMapRooms = new MapRoom[256];
@@ -880,30 +881,30 @@ MapMgr::MapMgr(Controller* controller)
 	memStat->end("dyncolshape");
 
 	memStat->start("shadMats");
-	mShadowFullRenderCountdown = 3;
+	mShadowCountdown = 3;
 	mShadowCaster.initCore("");
-	mMapShadMatHandler                   = new MapShadMatHandler();
-	mMapShadMatHandler->mShadMat->mFlags = 0x100;
+	mShadowHandler                   = new MapShadMatHandler();
+	mShadowHandler->mShadMat->mFlags = 0x100;
 
-	mMapProjMatHandler                   = new MapProjMatHandler(nullptr);
-	mMapProjMatHandler->mProjMat->mFlags = 0x8100;
+	mProjHandler                   = new MapProjMatHandler(nullptr);
+	mProjHandler->mProjMat->mFlags = 0x8100;
 
-	mMapProjMatHandler->mProjMat->Colour().set(255, 255, 255, 255);
+	mProjHandler->mProjMat->Colour().set(255, 255, 255, 255);
 	memStat->end("shadMats");
 
 	memStat->start("blurTextures");
-	mScreenCaptureTextureForBlur                = new Texture();
-	mScreenCaptureTextureForBlur->mWidthFactor  = 0.003125f;
-	mScreenCaptureTextureForBlur->mHeightFactor = 0.004166667f;
-	mScreenCaptureTextureForBlur->mTexFlags     = 0x105;
-	mScreenCaptureTextureForBlur->createBuffer(320, 240, 8, nullptr);
-	gsys->addTexture(mScreenCaptureTextureForBlur, "internalLightmap");
-	mBlurredPreviousFrameTexture                = new Texture();
-	mBlurredPreviousFrameTexture->mWidthFactor  = 0.003125f;
-	mBlurredPreviousFrameTexture->mHeightFactor = 0.004166667f;
-	mBlurredPreviousFrameTexture->mTexFlags     = 0x105;
-	mBlurredPreviousFrameTexture->createBuffer(320, 240, 0, nullptr);
-	gsys->addTexture(mBlurredPreviousFrameTexture, "internalLightmap");
+	mCaptureTexture                = new Texture();
+	mCaptureTexture->mWidthFactor  = 0.003125f;
+	mCaptureTexture->mHeightFactor = 0.004166667f;
+	mCaptureTexture->mTexFlags     = 0x105;
+	mCaptureTexture->createBuffer(320, 240, 8, nullptr);
+	gsys->addTexture(mCaptureTexture, "internalLightmap");
+	mBlurredTexture                = new Texture();
+	mBlurredTexture->mWidthFactor  = 0.003125f;
+	mBlurredTexture->mHeightFactor = 0.004166667f;
+	mBlurredTexture->mTexFlags     = 0x105;
+	mBlurredTexture->createBuffer(320, 240, 0, nullptr);
+	gsys->addTexture(mBlurredTexture, "internalLightmap");
 	memStat->end("blurTextures");
 }
 
@@ -937,13 +938,13 @@ void MapMgr::initShape()
 	}
 
 	mMapShape->createCollisions(64);
-	mCompleteMapBounds.expandBound(mMapShape->mCourseExtents);
+	mMapBounds.expandBound(mMapShape->mCourseExtents);
 	mDynSimulator = new DynSimulator();
 
-	mPhysicsFixedTimeStep           = 0.016666668f;
-	mPhysicsIntegrationSubStep      = 0.0125f;
-	mLastPhysicsUpdateTimeProcessed = 0.0f;
-	mAccumulatedFrameTimeForPhysics = 0.0f;
+	mFixedTimeStep    = 0.016666668f;
+	mIntegrationStep  = 0.0125f;
+	mLastPhysicsTime  = 0.0f;
+	mAccumPhysicsTime = 0.0f;
 
 	// sigh. this is really there.
 	// similar code exists in GenObjectMapObject::birth, but the assembly is actually stripped there.
@@ -960,7 +961,7 @@ void MapMgr::initShape()
 		mCollShape->add(body->mCollObj);
 	}
 
-	mNeedsPhysicsWorldReset = 1;
+	mResetPending = 1;
 }
 
 /*
@@ -979,25 +980,25 @@ void MapMgr::createLights()
  */
 void MapMgr::updateSimulation()
 {
-	if (mNeedsPhysicsWorldReset) {
+	if (mResetPending) {
 		mDynSimulator->resetWorld();
-		mNeedsPhysicsWorldReset = 0;
-		mDynSimulator->_20      = 0;
+		mResetPending            = 0;
+		mDynSimulator->mIsPaused = 0;
 	}
 
 	f32 time = gsys->getFrameTime();
 	if (!mDynSimulator->isPaused()) {
-		mAccumulatedFrameTimeForPhysics += time * 1.0f;
-		while (mAccumulatedFrameTimeForPhysics - mLastPhysicsUpdateTimeProcessed > mPhysicsFixedTimeStep) {
+		mAccumPhysicsTime += time * 1.0f;
+		while (mAccumPhysicsTime - mLastPhysicsTime > mFixedTimeStep) {
 			if (!mDynSimulator->isPaused()) {
 				mDynSimulator->updateConts();
-				mDynSimulator->doSimulation(mPhysicsFixedTimeStep, mPhysicsIntegrationSubStep, mMapShape);
+				mDynSimulator->doSimulation(mFixedTimeStep, mIntegrationStep, mMapShape);
 			}
 
-			mLastPhysicsUpdateTimeProcessed += mPhysicsFixedTimeStep;
+			mLastPhysicsTime += mFixedTimeStep;
 		}
 
-		f32 a = (mAccumulatedFrameTimeForPhysics - mLastPhysicsUpdateTimeProcessed) / mPhysicsFixedTimeStep;
+		f32 a = (mAccumPhysicsTime - mLastPhysicsTime) / mFixedTimeStep;
 		mDynSimulator->updateVecQuats(a);
 	}
 }
@@ -1054,23 +1055,23 @@ void MapMgr::update()
  */
 void MapMgr::preRender(Graphics& gfx)
 {
-	mVerticalRaycastCallCount       = 0;
-	mGroundTriangleRaycastCallCount = 0;
-	gfx.setMatHandler(mMapShadMatHandler);
+	mVertRayCount      = 0;
+	mGroundTriRayCount = 0;
+	gfx.setMatHandler(mShadowHandler);
 	gfx.mRenderState = 0x300;
 
 	FOREACH_NODE(ShadowCaster, mShadowCaster.mChild, shadow)
 	{
 		LightCamera& cam = shadow->mLightCamera;
 		cam.calcVectors(shadow->mSourcePosition, shadow->mTargetPosition);
-		cam.calcProjection(gfx, false, mShadowFullRenderCountdown > 0 ? nullptr : shadow->mDrawer);
+		cam.calcProjection(gfx, false, mShadowCountdown > 0 ? nullptr : shadow->mDrawer);
 	}
 
 	gfx.mRenderState = 0x700;
 	gfx.setMatHandler(nullptr);
 
-	if (mShadowFullRenderCountdown) {
-		mShadowFullRenderCountdown--;
+	if (mShadowCountdown) {
+		mShadowCountdown--;
 	}
 }
 
@@ -1088,9 +1089,9 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
 	{
 		LightCamera* cam = &shadow->mLightCamera;
 		gfx.initProjTex(true, cam);
-		mMapProjMatHandler->mProjMat->mTexture = cam->mLightMap;
-		mMapProjMatHandler->mLightCamera       = cam;
-		gfx.setMatHandler(mMapProjMatHandler);
+		mProjHandler->mProjMat->mTexture = cam->mLightMap;
+		mProjHandler->mLightCamera       = cam;
+		gfx.setMatHandler(mProjHandler);
 		gfx.mRenderState = 0x8700;
 		gfx.mLightCam    = cam;
 		gfx.useMatrix(Matrix4f::ident, 0);
@@ -1157,24 +1158,24 @@ void MapMgr::refresh(Graphics& gfx)
  */
 void MapMgr::showCollisions(Vector3f& pos)
 {
-	mDebugCollisionFocusPoint = pos;
-	f32 a                     = 64.0f;
-	int b                     = (mCompleteMapBounds.mMax.x - mCompleteMapBounds.mMin.x + a) / a;
-	int c                     = (mCompleteMapBounds.mMax.z - mCompleteMapBounds.mMin.z + a) / a;
-	int d                     = (mDebugCollisionFocusPoint.x - mCompleteMapBounds.mMin.x) / a;
-	int e                     = (mDebugCollisionFocusPoint.z - mCompleteMapBounds.mMin.z) / a;
-	f32 f                     = mCompleteMapBounds.mMin.x + d * a;
-	f32 g                     = mCompleteMapBounds.mMin.z + e * a;
-	f32 h                     = a * 1.0f;
+	mDebugFocusPoint = pos;
+	f32 a            = 64.0f;
+	int b            = (mMapBounds.mMax.x - mMapBounds.mMin.x + a) / a;
+	int c            = (mMapBounds.mMax.z - mMapBounds.mMin.z + a) / a;
+	int d            = (mDebugFocusPoint.x - mMapBounds.mMin.x) / a;
+	int e            = (mDebugFocusPoint.z - mMapBounds.mMin.z) / a;
+	f32 f            = mMapBounds.mMin.x + d * a;
+	f32 g            = mMapBounds.mMin.z + e * a;
+	f32 h            = a * 1.0f;
 
-	mDebugCollisionBroadPhaseBox.resetBound();
-	mDebugCollisionBroadPhaseBox.expandBound(Vector3f(f - h, mCompleteMapBounds.mMin.y - h, g - h));
-	mDebugCollisionBroadPhaseBox.expandBound(Vector3f(f + a + h, mCompleteMapBounds.mMax.y + h, g + a + h));
+	mBroadPhaseBox.resetBound();
+	mBroadPhaseBox.expandBound(Vector3f(f - h, mMapBounds.mMin.y - h, g - h));
+	mBroadPhaseBox.expandBound(Vector3f(f + a + h, mMapBounds.mMax.y + h, g + a + h));
 
-	mDebugCollisionQueryBox.resetBound();
-	mDebugCollisionQueryBox.expandBound(Vector3f(f, mCompleteMapBounds.mMin.y - h, g));
-	mDebugCollisionQueryBox.expandBound(Vector3f(f + a, mCompleteMapBounds.mMax.y + h, g + a));
-	collExtents = mDebugCollisionQueryBox;
+	mQueryBox.resetBound();
+	mQueryBox.expandBound(Vector3f(f, mMapBounds.mMin.y - h, g));
+	mQueryBox.expandBound(Vector3f(f + a, mMapBounds.mMax.y + h, g + a));
+	collExtents = mQueryBox;
 
 	BoundBox box;
 	box.expandBound(pos);
@@ -1185,7 +1186,7 @@ void MapMgr::showCollisions(Vector3f& pos)
 	{
 		if (box.intersects(coll->mBoundingBox)) {
 			for (int i = 0; i < coll->mColliderCount; i++) {
-				if (coll->mVisibleList[coll->mColliderList[i]->mStateIndex]) {
+				if (coll->mVisibleList[coll->mColliderList[i]->mRoomIndex]) {
 					coll->mColliderList[i]->mShape          = coll->mShape;
 					coll->mColliderList[i]->mVertexList     = coll->mVertexList;
 					coll->mColliderList[i]->mSourceCollider = coll;
@@ -1213,7 +1214,7 @@ void MapMgr::showCollisions(Vector3f& pos)
 			continue;
 		}
 
-		mActiveTriangleDisplayCount += coll->mTriCount - coll->mFarCulledTriCount;
+		mActiveTriCount += coll->mTriCount - coll->mFarCulledTriCount;
 		int count = coll->mTriCount - coll->mFarCulledTriCount;
 		if (coll->mTriCount == coll->mFarCulledTriCount) {
 			PRINT("grid(%d,%d) collGroup : total %d far %d tris\n", d, e, coll->mTriCount, coll->mFarCulledTriCount);
@@ -1223,24 +1224,24 @@ void MapMgr::showCollisions(Vector3f& pos)
 		}
 
 		for (int i = 0; i < coll->mTriCount; i++) {
-			if (mCurrentDebugCollisionCount < mMaxDebugDisplayCollisions) {
+			if (mDebugCollCount < mMaxDebugColls) {
 				if (AIPerf::showColls) {
 					if (i < count) {
-						mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 0;
+						mCollisions[mDebugCollCount].mColorCategory = 0;
 					} else {
 						if (coll->mFarCulledTriDistances[i - count] < 16) {
-							mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 2;
+							mCollisions[mDebugCollCount].mColorCategory = 2;
 						} else {
-							mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 1;
+							mCollisions[mDebugCollCount].mColorCategory = 1;
 						}
 					}
 				} else {
-					mCollisions[mCurrentDebugCollisionCount].mDisplayColorCategory = 0;
+					mCollisions[mDebugCollCount].mColorCategory = 0;
 				}
 
-				mCollisions[mCurrentDebugCollisionCount].mCollisions = coll;
-				mCollisions[mCurrentDebugCollisionCount].mTriangle   = coll->mTriangleList[i];
-				mCurrentDebugCollisionCount++;
+				mCollisions[mDebugCollCount].mCollisions = coll;
+				mCollisions[mDebugCollCount].mTriangle   = coll->mTriangleList[i];
+				mDebugCollCount++;
 			}
 		}
 	}
@@ -1318,10 +1319,9 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setFog(false);
 			gfx.setColour(Colour(255, 255, 255, 255), true);
 			gfx.setAuxColour(Colour(255, 255, 255, 255));
-			mScreenCaptureTextureForBlur->grabBuffer(mScreenCaptureTextureForBlur->mWidth, mScreenCaptureTextureForBlur->mHeight, false,
-			                                         true);
-			gfx.useTexture(mBlurredPreviousFrameTexture, 0);
-			gfx.useTexture(mScreenCaptureTextureForBlur, 1);
+			mCaptureTexture->grabBuffer(mCaptureTexture->mWidth, mCaptureTexture->mHeight, false, true);
+			gfx.useTexture(mBlurredTexture, 0);
+			gfx.useTexture(mCaptureTexture, 1);
 			if (gameflow.mMoviePlayer->mIsActive) {
 				gfx.mCamera->mBlur = 0.0f;
 			}
@@ -1330,8 +1330,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlur), nullptr);
 			gfx.blatRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			gfx.setCBlending(blend);
-			mBlurredPreviousFrameTexture->grabBuffer(mBlurredPreviousFrameTexture->mWidth, mBlurredPreviousFrameTexture->mHeight, false,
-			                                         true);
+			mBlurredTexture->grabBuffer(mBlurredTexture->mWidth, mBlurredTexture->mHeight, false, true);
 			gfx.resetCopyFilter();
 			gfx.setFog(true);
 			gfx.setLighting(lighting, nullptr);
@@ -1339,45 +1338,45 @@ void MapMgr::postrefresh(Graphics& gfx)
 			                   gfx.mCamera->mFar, 1.0f);
 		}
 
-		if (mFadeToBlackProgress < mTargetFadeToBlackLevel) {
-			mFadeToBlackProgress += 2.0f * gsys->getFrameTime();
-			if (mFadeToBlackProgress > mTargetFadeToBlackLevel) {
-				mFadeToBlackProgress = mTargetFadeToBlackLevel;
+		if (mFadeProgress < mTargetFadeLevel) {
+			mFadeProgress += 2.0f * gsys->getFrameTime();
+			if (mFadeProgress > mTargetFadeLevel) {
+				mFadeProgress = mTargetFadeLevel;
 			}
-		} else if (mFadeToBlackProgress > mTargetFadeToBlackLevel) {
-			mFadeToBlackProgress -= 2.0f * gsys->getFrameTime();
-			if (mFadeToBlackProgress < mTargetFadeToBlackLevel) {
-				mFadeToBlackProgress = mTargetFadeToBlackLevel;
-			}
-		}
-
-		if (mGreyscaleDesaturationLevel < mTargetGreyscaleDesaturationLevel) {
-			mGreyscaleDesaturationLevel += 2.0f * gsys->getFrameTime();
-			if (mGreyscaleDesaturationLevel > mTargetGreyscaleDesaturationLevel) {
-				mGreyscaleDesaturationLevel = mTargetGreyscaleDesaturationLevel;
-			}
-		} else if (mGreyscaleDesaturationLevel > mTargetGreyscaleDesaturationLevel) {
-			mGreyscaleDesaturationLevel -= 2.0f * gsys->getFrameTime();
-			if (mGreyscaleDesaturationLevel < mTargetGreyscaleDesaturationLevel) {
-				mGreyscaleDesaturationLevel = mTargetGreyscaleDesaturationLevel;
+		} else if (mFadeProgress > mTargetFadeLevel) {
+			mFadeProgress -= 2.0f * gsys->getFrameTime();
+			if (mFadeProgress < mTargetFadeLevel) {
+				mFadeProgress = mTargetFadeLevel;
 			}
 		}
 
-		if (mGreyscaleDesaturationLevel > 0.0f || mFadeToBlackProgress > 0.0f) {
+		if (mDesaturationLevel < mTargetDesaturation) {
+			mDesaturationLevel += 2.0f * gsys->getFrameTime();
+			if (mDesaturationLevel > mTargetDesaturation) {
+				mDesaturationLevel = mTargetDesaturation;
+			}
+		} else if (mDesaturationLevel > mTargetDesaturation) {
+			mDesaturationLevel -= 2.0f * gsys->getFrameTime();
+			if (mDesaturationLevel < mTargetDesaturation) {
+				mDesaturationLevel = mTargetDesaturation;
+			}
+		}
+
+		if (mDesaturationLevel > 0.0f || mFadeProgress > 0.0f) {
 			Matrix4f mtx;
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
-			gfx.setColour(Colour(160, 160, 160, (int)(mGreyscaleDesaturationLevel * 255.0f)), true);
-			gfx.useTexture(mBlurredPreviousFrameTexture, 0);
+			gfx.setColour(Colour(160, 160, 160, (int)(mDesaturationLevel * 255.0f)), true);
+			gfx.useTexture(mBlurredTexture, 0);
 			gfx.drawRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight),
-			                  RectArea(0, 0, mBlurredPreviousFrameTexture->mWidth, mBlurredPreviousFrameTexture->mHeight), nullptr);
+			                  RectArea(0, 0, mBlurredTexture->mWidth, mBlurredTexture->mHeight), nullptr);
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
-			gfx.setColour(Colour(0, 0, 0, int(mFadeToBlackProgress * 255.0f)), true);
+			gfx.setColour(Colour(0, 0, 0, int(mFadeProgress * 255.0f)), true);
 			gfx.useTexture(nullptr, 0);
 			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		}
 
-		if (mCurrentDebugCollisionCount) {
+		if (mDebugCollCount) {
 			int blend     = gfx.setCBlending(0);
 			bool lighting = gfx.setLighting(false, nullptr);
 			gfx.setFog(false);
@@ -1391,7 +1390,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			Vector3f vecs[3];
 
-			for (int i = 0; i < mCurrentDebugCollisionCount; i++) {
+			for (int i = 0; i < mDebugCollCount; i++) {
 				vecs[0] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
 				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[0]];
 				vecs[1] = mCollisions[i].mTriangle->mTriangle.mNormal * 0.1f
@@ -1400,27 +1399,27 @@ void MapMgr::postrefresh(Graphics& gfx)
 				        + mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[2]];
 
 				for (int j = 0; j < 3; j++) {
-					gfx.setColour(colours[mCollisions[i].mDisplayColorCategory], true);
+					gfx.setColour(colours[mCollisions[i].mColorCategory], true);
 					gfx.drawLine(vecs[j % 3], vecs[(j + 1) % 3]);
 					gfx.drawPoints(&vecs[j % 3], 1);
 				}
 			}
 
 			gfx.setColour(Colour(255, 255, 255, 255), true);
-			Vector3f pos(mDebugCollisionFocusPoint.x, mDebugCollisionFocusPoint.y + 50.0f, mDebugCollisionFocusPoint.z);
+			Vector3f pos(mDebugFocusPoint.x, mDebugFocusPoint.y + 50.0f, mDebugFocusPoint.z);
 			pos.multMatrix(gfx.mCamera->mLookAtMtx);
 
 			char buffer[PATH_MAX];
 			if (AIPerf::showColls) {
-				sprintf(buffer, "%d / %d", mActiveTriangleDisplayCount, mCurrentDebugCollisionCount);
+				sprintf(buffer, "%d / %d", mActiveTriCount, mDebugCollCount);
 			} else {
-				sprintf(buffer, "%d", mCurrentDebugCollisionCount);
+				sprintf(buffer, "%d", mDebugCollCount);
 			}
 
 			gfx.useMatrix(Matrix4f::ident, 0);
 			gfx.perspPrintf(gsys->mConsFont, pos, -(gsys->mConsFont->stringWidth(buffer) / 2), 0, buffer);
 
-			for (int i = 0; i < mCurrentDebugCollisionCount; i++) {
+			for (int i = 0; i < mDebugCollCount; i++) {
 				Vector3f vert1(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[0]]);
 				Vector3f vert2(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[1]]);
 				Vector3f vert3(mCollisions[i].mCollisions->mVertexList[mCollisions[i].mTriangle->mVertexIndices[2]]);
@@ -1446,18 +1445,18 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 			if (AIPerf::showColls) {
 				gfx.setColour(Colour(255, 128, 255, 255), true);
-				mDebugCollisionQueryBox.draw(gfx);
+				mQueryBox.draw(gfx);
 			}
 
 			gfx.setColour(Colour(64, 255, 255, 255), true);
-			mDebugCollisionBroadPhaseBox.draw(gfx);
+			mBroadPhaseBox.draw(gfx);
 			gfx.setFog(true);
 			gfx.setLighting(lighting, nullptr);
 			gfx.setCBlending(blend);
 		}
 
-		mCurrentDebugCollisionCount = 0;
-		mActiveTriangleDisplayCount = 0;
+		mDebugCollCount = 0;
+		mActiveTriCount = 0;
 		// gsys->mTimer->stop("mapPost");
 		gfx._324 = 0;
 	}
@@ -1502,7 +1501,7 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
 			if (x >= coll->mBoundingBox.mMin.x && x < coll->mBoundingBox.mMax.x && z >= coll->mBoundingBox.mMin.z
 			    && z < coll->mBoundingBox.mMax.z && coll->mShape->mSystemFlags & ShapeFlags::IsPlatform) {
 				for (int i = 0; i < coll->mColliderCount; i++) {
-					if (coll->mVisibleList[coll->mColliderList[i]->mStateIndex]) {
+					if (coll->mVisibleList[coll->mColliderList[i]->mRoomIndex]) {
 						coll->mColliderList[i]->mNextCollider = collList;
 						collList                              = coll->mColliderList[i];
 					}
@@ -1527,7 +1526,7 @@ CollGroup* MapMgr::getCollGroupList(f32 x, f32 z, bool doCheckDynColl)
  */
 f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
 {
-	mVerticalRaycastCallCount++;
+	mVertRayCount++;
 	f32 minY = -32768.0f;
 	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
 		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
@@ -1558,7 +1557,7 @@ f32 MapMgr::getMinY(f32 x, f32 z, bool doCheckDynColl)
  */
 f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
 {
-	mVerticalRaycastCallCount++;
+	mVertRayCount++;
 	f32 minY = 32768.0f;
 	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
 		int count = (AIPerf::showColls) ? colls->mTriCount - colls->mFarCulledTriCount : colls->mTriCount;
@@ -1589,7 +1588,7 @@ f32 MapMgr::getMaxY(f32 x, f32 z, bool doCheckDynColl)
  */
 CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
 {
-	mGroundTriangleRaycastCallCount++;
+	mGroundTriRayCount++;
 	CollTriInfo* tri = nullptr;
 	f32 minY         = -32768.0f;
 	for (CollGroup* colls = getCollGroupList(x, z, doCheckDynColl); colls; colls = colls->mNextCollider) {
@@ -1766,9 +1765,9 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 				}
 
 				if (currColls->mSourceCollider) {
-					if (a == 1 && currColls->mSourceCollider->mLastContactFrameID != mCollisionCheckCount) {
+					if (a == 1 && currColls->mSourceCollider->mLastContactFrameID != mCollCheckCount) {
 						currColls->mSourceCollider->mContactCount++;
-						currColls->mSourceCollider->mLastContactFrameID = mCollisionCheckCount;
+						currColls->mSourceCollider->mLastContactFrameID = mCollCheckCount;
 					}
 					currColls->mSourceCollider->touchCallback(tri->mTriangle, nextPos, trace.mVelocity);
 				}
@@ -1799,7 +1798,7 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 	if (b > 50) {
 		PRINT("Too many iterations [cr %08x : rad = %f : spd = %f]!!\n", creature, trace.mRadius, trace.mVelocity.length() * timeStep);
 	}
-	mCollisionCheckCount++;
+	mCollCheckCount++;
 	trace.mStepFraction = 1.0f / a;
 
 	for (int i = 0; i < a; i++) {
@@ -1810,12 +1809,12 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
 		trace.mObject        = creature;
 		CollGroup* collGroup = nullptr;
 
-		if (!trace.mIgnoreDynamicColliders) {
+		if (!trace.mIgnoreDynamic) {
 			FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
 			{
 				if ((!coll->mCreature || coll->mCreature != creature) && box.intersects(coll->mBoundingBox)) {
 					for (int j = 0; j < coll->mColliderCount; j++) {
-						if (coll->mVisibleList[coll->mColliderList[j]->mStateIndex]) {
+						if (coll->mVisibleList[coll->mColliderList[j]->mRoomIndex]) {
 							coll->mColliderList[j]->mShape          = coll->mShape;
 							coll->mColliderList[j]->mVertexList     = coll->mVertexList;
 							coll->mColliderList[j]->mSourceCollider = coll;
@@ -1875,7 +1874,7 @@ CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 {
 	CreatureCollPart* part = new CreatureCollPart(info->mPlatShape);
 	part->mCreature        = obj;
-	part->_140             = obj;
+	part->mOwner           = obj;
 	part->mAnimMatrixID    = info->mJointIndex;
 	mCollShape->add(part);
 	return part;

@@ -284,7 +284,7 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_NewPikiGame:
-			if (!gsys->mIsLoadingThreadActive) {
+			if (!gsys->mIsLoadingActive) {
 				gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			}
 

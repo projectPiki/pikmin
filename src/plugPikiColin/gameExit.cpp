@@ -28,7 +28,7 @@ GameExitSection::GameExitSection()
 	gsys->resetHeap(2, 1);
 	gsys->mCurrMemInfo = nullptr;
 	PRINT("clearing aram directory!\n");
-	gsys->mAramFileTreeRoot.initCore("");
+	gsys->mAramRoot.initCore("");
 }
 
 /*

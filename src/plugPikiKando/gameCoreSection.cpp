@@ -1801,7 +1801,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	}
 
 	if (AIPerf::moveType) {
-		gfx.useTexture(mMapMgr->mBlurredPreviousFrameTexture, 0);
+		gfx.useTexture(mMapMgr->mBlurredTexture, 0);
 		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);

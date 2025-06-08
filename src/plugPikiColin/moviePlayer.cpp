@@ -225,9 +225,9 @@ MovieListInfo* MoviePlayer::findMovie(int id)
  */
 void MoviePlayer::initMovie(MovieInfo* info, int)
 {
-	int old                  = !!gsys->mPrevHeapAllocType; // required for regalloc lol.
-	gsys->mPrevHeapAllocType = 0;
-	int heapid               = gsys->getHeapNum();
+	int old              = !!gsys->mPrevAllocType; // required for regalloc lol.
+	gsys->mPrevAllocType = 0;
+	int heapid           = gsys->getHeapNum();
 	int type;
 	if (heapid == SYSHEAP_App) {
 		PRINT("using movie heap!\n");
@@ -244,8 +244,8 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		gsys->getHeap(SYSHEAP_Movie)->setAllocType(type);
 		gsys->setHeap(heapid);
 	}
-	gsys->mRetraceCount      = 0;
-	gsys->mPrevHeapAllocType = old;
+	gsys->mRetraceCount  = 0;
+	gsys->mPrevAllocType = old;
 }
 
 int movie04table[STAGE_COUNT]
@@ -515,10 +515,10 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	Jac_SetDemoOnyons(onyons);
 	effectMgr->cullingOff();
 	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
-	u32 old                  = gsys->mPrevHeapAllocType != 0;
-	gsys->mPrevHeapAllocType = 0;
+	u32 old              = gsys->mPrevAllocType != 0;
+	gsys->mPrevAllocType = 0;
 	Jac_StartDemo(info->mMovieIndex);
-	gsys->mPrevHeapAllocType = old;
+	gsys->mPrevAllocType = old;
 }
 
 /*

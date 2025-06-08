@@ -25,8 +25,8 @@ struct LFInfo {
 	Colour mColour;     // _00
 	Vector3f mFlarePos; // _04
 	Vector2f mSize;     // _10
-	Vector2f _18;       // _18
-	Vector2f _20;       // _20
+	Vector2f mUvMin;    // _18
+	Vector2f mUvMax;    // _20
 	LFInfo* mPrevInfo;  // _28
 };
 
@@ -76,11 +76,11 @@ struct LFlareGroup : public CoreNode {
 		info->mSize     = size;
 
 		if (a5 && a6) {
-			info->_18 = *a5;
-			info->_20 = *a6;
+			info->mUvMin = *a5;
+			info->mUvMax = *a6;
 		} else {
-			info->_18.set(0.0f, 0.0f);
-			info->_20.set(1.0f, 1.0f);
+			info->mUvMin.set(0.0f, 0.0f);
+			info->mUvMax.set(1.0f, 1.0f);
 		}
 
 		info->mPrevInfo = mLFInfo;

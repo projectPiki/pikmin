@@ -392,9 +392,9 @@ void preloadLanguage()
 	gsys->getHeap(gsys->getHeapNum());
 	FakeSystemList* fake = &gsys->_31C;
 	fake->_04            = fake->_00;
-	gsys->mDvdFileTreeRoot.initCore("");
-	gsys->mFileTreeList = (DirEntry*)&gsys->mDvdFileTreeRoot;
-	gsys->_328          = &gsys->_31C;
+	gsys->mDvdRoot.initCore("");
+	gsys->mFileList = (DirEntry*)&gsys->mDvdRoot;
+	gsys->_328      = &gsys->_31C;
 	gsys->parseArchiveDirectory(gameflow.mLangModes[gameflow.mLanguageIndex].mDirPath,
 	                            gameflow.mLangModes[gameflow.mLanguageIndex].mArcPath);
 	gsys->loadBundle(gameflow.mLangModes[gameflow.mLanguageIndex].mBunPath, true);
@@ -640,9 +640,9 @@ void GameFlow::softReset()
 	gsys->mFlareGroupList = new LFlareGroup();
 	gsys->initLFlares(256);
 	mMoviePlayer->resetMovieList();
-	f32 time                  = gsys->getTime();
-	gsys->mDvdOpenFileCounter = 0;
-	gsys->mDvdReadBytesCount  = 0;
+	f32 time            = gsys->getTime();
+	gsys->mDvdOpenFiles = 0;
+	gsys->mDvdBytesRead = 0;
 
 	if (mGameSectionID != SECTION_OnePlayer && mGameSectionID != SECTION_Titles && mGameSectionID != SECTION_NinLogo) {
 		PRINT("doing start load!\n");
@@ -668,8 +668,8 @@ void GameFlow::softReset()
 	mAppTickCounter      = 0;
 	gsys->mTogglePrint   = 1;
 	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n",
-	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFileCounter, gsys->mDvdReadBytesCount / 1024.0f,
-	      mLoadTimeSeconds, gsys->mDvdReadBytesCount / (1024.0f * 1024.0f) / mLoadTimeSeconds);
+	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFiles, gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds,
+	      gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
 	mDisableController      = 0;

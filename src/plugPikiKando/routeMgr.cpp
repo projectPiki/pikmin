@@ -913,8 +913,8 @@ void RouteMgr::construct(MapMgr* map)
 void RouteMgr::initLinks()
 {
 	// this gsys stuff isn't in the DLL
-	bool check               = gsys->mPrevHeapAllocType;
-	gsys->mPrevHeapAllocType = 0;
+	bool check           = gsys->mPrevAllocType;
+	gsys->mPrevAllocType = 0;
 
 	int numWPs = getNumWayPoints('test');
 	PRINT("total %d links\n", numWPs);
@@ -930,8 +930,8 @@ void RouteMgr::initLinks()
 	}
 
 	// same with this stuff
-	gsys->mPrevHeapAllocType = check;
-	gsys->mRetraceCount      = 0;
+	gsys->mPrevAllocType = check;
+	gsys->mRetraceCount  = 0;
 }
 
 /*

@@ -216,6 +216,6 @@ void P2DScreen::loadResource()
  */
 void P2DScreen::makeResName(const char* fileName, char* outPath)
 {
-	zen::makePathName(gsys->mBloDirectory, fileName, outPath);
+	zen::makePathName(gsys->mBloDir, fileName, outPath);
 	PRINT("makeResName:[%s] \n", outPath);
 }

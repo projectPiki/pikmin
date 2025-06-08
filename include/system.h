@@ -181,8 +181,8 @@ struct StdSystem {
 	}
 	void set2DRoot(char* bloDir, char* texDir)
 	{
-		mBloDirectory = bloDir;
-		mTexDirectory = texDir;
+		mBloDir = bloDir;
+		mTexDir = texDir;
 	}
 	inline void setTextureBase(char* base1, char* base2)
 	{
@@ -190,38 +190,38 @@ struct StdSystem {
 		mTextureBase2 = base2;
 	}
 	inline void setDataRoot(char* dir) { mDataRoot = dir; }
-	inline void softReset() { mIsSystemOperationPending = true; }
-	inline void clearPending() { mIsSystemOperationPending = false; } // no idea what this should be called
+	inline void softReset() { mSysOpPending = true; }
+	inline void clearPending() { mSysOpPending = false; } // no idea what this should be called
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
-	inline bool resetPending() { return mIsSystemOperationPending; }
+	inline bool resetPending() { return mSysOpPending; }
 	inline void setFrameClamp(s32 frameRate) { mFrameRate = frameRate; }
 	inline int getHeapNum() { return mActiveHeapIdx; }
 
-	bool mIsSystemOperationPending; // _00
-	f32 mCurrentFade;               // _04
-	f32 mFadeStart;                 // _08
-	f32 mFadeEnd;                   // _0C
-	Font* mConsFont;                // _10
-	s32 mFrameRate;                 // _14
-	u32 mTimerState;                // _18, see TimerState enum
-	u32 mTogglePrint;               // _1C
-	u32 mToggleDebugInfo;           // _20
-	u32 mToggleDebugExtra;          // _24
-	u32 mToggleBlur;                // _28
-	u32 mToggleFileInfo;            // _2C
-	u32 mToggleColls;               // _30
-	Timers* mTimer;                 // _34
-	TextureCacher* mCacher;         // _38
-	u32 mMatrixCount;               // _3C
-	Matrix4f* mMatrices;            // _40
-	char* mBloDirectory;            // _44
-	char* mTexDirectory;            // _48
-	char* mCurrentDirectory;        // _4C
-	char* mDataRoot;                // _50
-	AyuHeap mHeaps[SYSHEAP_COUNT];  // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
-	int mActiveHeapIdx;             // _194
-	int mForceTogglePrint;          // _198
-	MemInfo* mCurrMemInfo;          // _19C
+	bool mSysOpPending;            // _00
+	f32 mCurrentFade;              // _04
+	f32 mFadeStart;                // _08
+	f32 mFadeEnd;                  // _0C
+	Font* mConsFont;               // _10
+	s32 mFrameRate;                // _14
+	u32 mTimerState;               // _18, see TimerState enum
+	u32 mTogglePrint;              // _1C
+	u32 mToggleDebugInfo;          // _20
+	u32 mToggleDebugExtra;         // _24
+	u32 mToggleBlur;               // _28
+	u32 mToggleFileInfo;           // _2C
+	u32 mToggleColls;              // _30
+	Timers* mTimer;                // _34
+	TextureCacher* mCacher;        // _38
+	u32 mMatrixCount;              // _3C
+	Matrix4f* mMatrices;           // _40
+	char* mBloDir;                 // _44
+	char* mTexDir;                 // _48
+	char* mActiveDir;              // _4C
+	char* mDataRoot;               // _50
+	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
+	int mActiveHeapIdx;            // _194
+	int mForcePrint;               // _198
+	MemInfo* mCurrMemInfo;         // _19C
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
 	virtual void initSoftReset();                                                                   // _08
@@ -252,15 +252,15 @@ struct StdSystem {
 	char* mTextureBase1;          // _1F4
 	char* mTextureBase2;          // _1F8
 	Shape* mCurrentShape;         // _1FC
-	CoreNode mDvdFileTreeRoot;    // _200
-	CoreNode mAramFileTreeRoot;   // _214
-	DirEntry* mFileTreeList;      // _228
+	CoreNode mDvdRoot;            // _200
+	CoreNode mAramRoot;           // _214
+	DirEntry* mFileList;          // _228
 	int mFlareCount;              // _22C
 	int mLfInfoCount;             // _230
 	LFInfo* mFlareInfoList;       // _234
 	LFlareGroup* mFlareGroupList; // _238
-	int mDvdOpenFileCounter;      // _23C
-	u32 mDvdReadBytesCount;       // _240
+	int mDvdOpenFiles;            // _23C
+	u32 mDvdBytesRead;            // _240
 };
 
 /**
@@ -324,7 +324,7 @@ struct System : public StdSystem {
 	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
 	f32 getFrameTime() { return mDeltaTime; }
-	f32 getFrameRate() { return mFramesPerSecond; }
+	f32 getFrameRate() { return mFPS; }
 
 	inline void initFakeThing1(FakeSystemList* p1, FakeSystemList* p2, u32 p3, u32 p4)
 	{
@@ -338,31 +338,31 @@ struct System : public StdSystem {
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
-	u32 mSystemHeapStart;                            // _244
-	u32 mSystemHeapEnd;                              // _248
+	u32 mHeapStart;                                  // _244
+	u32 mHeapEnd;                                    // _248
 	DGXGraphics* mDGXGfx;                            // _24C
 	u32 _250;                                        // _250, unknown
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258
 	u32 mDvdBufferSize;                              // _25C
-	u32 mIsLoadingThreadActive;                      // _260
+	u32 mIsLoadingActive;                            // _260
 	u32 mLoadTimeBeforeIdling;                       // _264
-	u32 mIsLoadingScreenActive;                      // _268
+	u32 mIsLoadScreenActive;                         // _268
 	vu32 mIsRendering;                               // _26C
-	u32 mIsMemoryCardSaving;                         // _270
+	u32 mIsCardSaving;                               // _270
 	OSThread* mCurrentThread;                        // _274
 	AtxRouter* mAtxRouter;                           // _278
 	ControllerMgr mControllerMgr;                    // _27C
-	u32 mPreviousTickTime;                           // _280
-	u32 mFpsSamplePeriodStartTick;                   // _284
-	int mFrameDurationTicks;                         // _288
+	u32 mPrevTick;                                   // _280
+	u32 mFpsSampleStart;                             // _284
+	int mFrameTicks;                                 // _288
 	f32 mDeltaTime;                                  // _28C
-	f32 mFramesPerSecond;                            // _290
-	u32 mEngineRunningFrameCount;                    // _294
-	u32 mFrameCountAtSamplePeriodStart;              // _298
-	u32 mEngineTotalFrames;                          // _29C
+	f32 mFPS;                                        // _290
+	u32 mEngineFrames;                               // _294
+	u32 mFramesAtSampleStart;                        // _298
+	u32 mTotalFrames;                                // _29C
 	u32 mRetraceCount;                               // _2A0
-	u32 mPrevHeapAllocType;                          // _2A4
+	u32 mPrevAllocType;                              // _2A4
 	AddressNode _2A8;                                // _2A8
 	u32 mBuildMapFuncList;                           // _2BC, structure is nextItemPtr, virtAddr, char buf w/ demangled name/filename
 	SystemCache _2C0;                                // _2C0
@@ -370,8 +370,8 @@ struct System : public StdSystem {
 	FakeSystemList _310;                             // _310, fake
 	FakeSystemList _31C;                             // _31C, fake
 	FakeSystemList* _328;                            // _328, unknown
-	vu32 mDmaTransferComplete;                       // _32C
-	vu32 mTextureTransferComplete;                   // _330
+	vu32 mDmaComplete;                               // _32C
+	vu32 mTexComplete;                               // _330
 };
 
 extern System* gsys;
@@ -473,7 +473,7 @@ struct DVDStream : public RandomAccessStream {
 	{
 		int roundedSize = ALIGN_NEXT(size, 32);
 		s32 result      = -1;
-		gsys->mDvdReadBytesCount += roundedSize;
+		gsys->mDvdBytesRead += roundedSize;
 		while (result == -1) {
 			result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
 		}
@@ -484,7 +484,7 @@ struct DVDStream : public RandomAccessStream {
 	virtual void close()                          // _4C (weak)
 	{
 		numOpen--;
-		if (mIsFileOpen) {
+		if (mIsOpen) {
 			DVDClose(&mFileInfo);
 		}
 	}
@@ -499,7 +499,7 @@ struct DVDStream : public RandomAccessStream {
 	DVDFileInfo mFileInfo; // _08
 	u32 mOffset;           // _44
 	int mPending;          // _48
-	bool mIsFileOpen;      // _4C, trigger to do DVDClose on close()
+	bool mIsOpen;          // _4C, trigger to do DVDClose on close()
 	int mSize;             // _50
 };
 

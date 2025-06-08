@@ -55,9 +55,9 @@ enum CollPartType {
  * @brief TODO
  */
 struct BaseRoomInfo {
-	void read(RandomAccessStream& input) { _00 = input.readInt(); }
+	void read(RandomAccessStream& input) { mIndex = input.readInt(); }
 
-	int _00; // _00
+	int mIndex; // _00
 };
 
 /**
@@ -333,7 +333,7 @@ struct CollGroup {
 	{
 		mTriangleList          = nullptr;
 		mTriCount              = 0;
-		mStateIndex            = 0;
+		mRoomIndex             = 0;
 		mFarCulledTriDistances = nullptr;
 	}
 
@@ -344,7 +344,7 @@ struct CollGroup {
 	u8* mFarCulledTriDistances;    // _0C
 	Shape* mShape;                 // _10
 	Vector3f* mVertexList;         // _14
-	int mStateIndex;               // _18
+	int mRoomIndex;                // _18
 	DynCollShape* mSourceCollider; // _1C
 	CollGroup* mNextCollider;      // _20
 };

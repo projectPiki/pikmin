@@ -93,7 +93,7 @@ void MapSlider::init()
 {
 	if (mCurrentPart) {
 		mPosition      = mCurrentPart->mStartPosition;
-		mCurrentTimer  = mHoldTime1;
+		mTimer         = mHoldTime1;
 		mStateMode     = 2;
 		mDirectionMode = 1;
 	}
@@ -130,21 +130,21 @@ void MapSlider::update()
 		case 0:
 		case 1:
 			if (distance < 1.0f) {
-				mStateMode    = 3;
-				mCurrentTimer = holdTime;
+				mStateMode = 3;
+				mTimer     = holdTime;
 			}
 			break;
 		case 2:
-			mCurrentTimer -= gsys->getFrameTime();
+			mTimer -= gsys->getFrameTime();
 			mVelocity.set(0.0f, 0.0f, 0.0f);
 			if (mMoveMode == 1 || mDirectionMode == 1) {
-				if (mCurrentTimer < 0.0f && activationReached) {
+				if (mTimer < 0.0f && activationReached) {
 					mDirectionMode = (mDirectionMode == 1) ? 0 : 1;
 					mStateMode     = mDirectionMode;
 				} else if (mActivationCount >= 1 && !activationReached) {
-					mCurrentTimer = holdTime;
+					mTimer = holdTime;
 				}
-			} else if (mCurrentTimer < 0.0f) {
+			} else if (mTimer < 0.0f) {
 				mDirectionMode = (mDirectionMode == 1) ? 0 : 1;
 				mStateMode     = mDirectionMode;
 			}
@@ -152,8 +152,8 @@ void MapSlider::update()
 		case 3:
 			mVelocity.set(0.0f, 0.0f, 0.0f);
 			if (!mContactCount) {
-				mStateMode    = 2;
-				mCurrentTimer = holdTime;
+				mStateMode = 2;
+				mTimer     = holdTime;
 			}
 			break;
 		}

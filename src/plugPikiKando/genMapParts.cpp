@@ -82,7 +82,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	// int id = _70;
 	BaseShape* shape;
 	if (mShapeIndex < numShapes) {
-		shape = mapMgr->mMapPartShapes[mShapeIndex];
+		shape = mapMgr->mPartShapes[mShapeIndex];
 	} else {
 		shape = mapMgr->loadPlatshape(MapParts::getShapeFile(mShapeIndex - numShapes));
 	}
@@ -150,7 +150,7 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 	PRINT("kind is %d\n", mPartKind);
 	BaseShape* shape;
 	if (mShapeIndex < numShapes) {
-		shape = mapMgr->mMapPartShapes[mShapeIndex];
+		shape = mapMgr->mPartShapes[mShapeIndex];
 	} else {
 		shape = mapMgr->loadPlatshape(MapParts::getShapeFile(mShapeIndex - numShapes));
 		if (!shape) {

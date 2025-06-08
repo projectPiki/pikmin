@@ -501,10 +501,10 @@ void MemoryCard::waitPolling()
  */
 void MemoryCard::createFile(CARDStat& state)
 {
-	mDidSaveFail              = false;
-	gameflow.mGamePrefs._E0   = 0;
-	gameflow.mGamePrefs._DC   = 0;
-	gsys->mIsMemoryCardSaving = TRUE;
+	mDidSaveFail            = false;
+	gameflow.mGamePrefs._E0 = 0;
+	gameflow.mGamePrefs._DC = 0;
+	gsys->mIsCardSaving     = TRUE;
 	memset(&state, 0, sizeof(CARDStat));
 	// UNUSED FUNCTION
 }
@@ -1012,8 +1012,8 @@ void MemoryCard::loadOptions()
  */
 void MemoryCard::saveOptions()
 {
-	gsys->mIsMemoryCardSaving = 1;
-	mDidSaveFail              = false;
+	gsys->mIsCardSaving = 1;
+	mDidSaveFail        = false;
 	if (getMemoryCardState(true) == 0 && mSaveFileIndex >= 0) {
 		int idx = getNewestOptionsIndex();
 		if (idx != -1) {
@@ -1022,7 +1022,7 @@ void MemoryCard::saveOptions()
 			writeOneOption(idx);
 		}
 	}
-	gsys->mIsMemoryCardSaving = false;
+	gsys->mIsCardSaving = false;
 	u32 badCompiler[2];
 }
 
@@ -1048,7 +1048,7 @@ void MemoryCard::loadCurrentGame()
 void MemoryCard::saveCurrentGame()
 {
 	mDidSaveFail                  = false;
-	gsys->mIsMemoryCardSaving     = TRUE;
+	gsys->mIsCardSaving           = TRUE;
 	gameflow.mPlayState._20       = 2;
 	gameflow.mPlayState.mSavedDay = gameflow.mWorldClock.mCurrentDay;
 
@@ -1071,7 +1071,7 @@ void MemoryCard::saveCurrentGame()
 	gameflow.mSaveGameCrc                   = sum;
 	gameflow.mGamePrefs._DC++;
 	gameflow.mGamePrefs.mHasSaveGame = true;
-	gsys->mIsMemoryCardSaving        = FALSE;
+	gsys->mIsCardSaving              = FALSE;
 
 	u32 badCompiler[10];
 }
@@ -1239,8 +1239,8 @@ s32 MemoryCard::makeDefaultFile()
 	CardUtilMount(0, &CardWorkArea);
 	CardUtilIdleWhileBusy();
 	CardUtilSave(0, &cst, cardData);
-	gsys->mIsMemoryCardSaving = FALSE;
-	mErrorCode                = 0;
+	gsys->mIsCardSaving = FALSE;
+	mErrorCode          = 0;
 
 	u32 badCompiler2;
 	mRequiredFreeSpace ? "fake" : "fake";
@@ -1541,8 +1541,8 @@ s32 MemoryCard::makeDefaultFile()
  */
 void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 {
-	mDidSaveFail              = false;
-	gsys->mIsMemoryCardSaving = TRUE;
+	mDidSaveFail        = false;
+	gsys->mIsCardSaving = TRUE;
 	memcpy(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), getGameFilePtr(p1.mIndex), 0x8000);
 
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
@@ -1554,7 +1554,7 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
 	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
-	gsys->mIsMemoryCardSaving = FALSE;
+	gsys->mIsCardSaving = FALSE;
 
 	u32 badCompiler[12];
 
@@ -1771,8 +1771,8 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
  */
 void MemoryCard::delFile(CardQuickInfo& p1)
 {
-	mDidSaveFail              = false;
-	gsys->mIsMemoryCardSaving = TRUE;
+	mDidSaveFail        = false;
+	gsys->mIsCardSaving = TRUE;
 	PlayState state;
 	state.Initialise();
 	state.mSaveFlags  = p1._04;
@@ -1783,7 +1783,7 @@ void MemoryCard::delFile(CardQuickInfo& p1)
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
 	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
-	gsys->mIsMemoryCardSaving = FALSE;
+	gsys->mIsCardSaving = FALSE;
 
 	u32 badCompiler[7];
 }
@@ -1797,11 +1797,11 @@ int MemoryCard::doFormatCard()
 {
 	PRINT("*-----------------------------------------------------------*\n");
 	PRINT("Formatting memory card ....\n");
-	mDidSaveFail              = false;
-	gsys->mIsMemoryCardSaving = true;
+	mDidSaveFail        = false;
+	gsys->mIsCardSaving = true;
 	attemptFormatCard(false);
-	gsys->mIsMemoryCardSaving = false;
-	int state                 = gameflow.mMemoryCard.getMemoryCardState(false);
+	gsys->mIsCardSaving = false;
+	int state           = gameflow.mMemoryCard.getMemoryCardState(false);
 	u32 badCompiler;
 	return mErrorCode;
 }

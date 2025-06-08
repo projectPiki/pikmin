@@ -16,14 +16,14 @@ struct CreatureCollPart : public DynCollShape {
 	    : DynCollShape(nullptr)
 	{
 		mAnimMatrixID = 0;
-		_140          = nullptr;
+		mOwner        = nullptr;
 	}
 
 	CreatureCollPart(Shape* shape)
 	    : DynCollShape(shape)
 	{
 		mAnimMatrixID = 0;
-		_140          = nullptr;
+		mOwner        = nullptr;
 	}
 
 	virtual void update() { }                                 // _10 (weak)
@@ -32,7 +32,7 @@ struct CreatureCollPart : public DynCollShape {
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
-	Creature* _140;    // _140
+	Creature* mOwner;  // _140
 	int mAnimMatrixID; // _144, anim matrix ID?
 };
 

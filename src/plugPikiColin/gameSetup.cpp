@@ -98,8 +98,8 @@ void GameSetupSection::preCacheShapes()
 	gsys->initFakeThing1(list1, list2, gsys->_31C._04, gsys->_31C._04);
 	gsys->initFakeThing2();
 
-	gsys->mAramFileTreeRoot.initCore("");
-	gsys->mFileTreeList = (DirEntry*)&gsys->mAramFileTreeRoot;
+	gsys->mAramRoot.initCore("");
+	gsys->mFileList = (DirEntry*)&gsys->mAramRoot;
 
 	char** bundlePair;
 	for (bundlePair = arambundleList[0]; bundlePair[0]; bundlePair += 2) {

@@ -2114,7 +2114,7 @@ int Graphics::calcBoxLighting(BoundBox&)
  */
 void CacheTexture::makeResident()
 {
-	if (gsys->mCacher && !gsys->mIsLoadingThreadActive) {
+	if (gsys->mCacher && !gsys->mIsLoadingActive) {
 		if (!mActiveCache) {
 			gsys->mCacher->cacheTexture(this);
 			gsys->copyCacheToTexture(this);

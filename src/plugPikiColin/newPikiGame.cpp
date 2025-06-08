@@ -89,7 +89,7 @@ struct QuittingGameModeState : public ModeState {
 	}
 	virtual void postUpdate() // _10
 	{
-		if (!gsys->mIsSystemOperationPending) {
+		if (!gsys->mSysOpPending) {
 			PRINT("sending softreset!\n");
 			gamecore->exitStage();
 			gameflow.mNextOnePlayerSectionID = mSection->mNextSectionId;
@@ -217,9 +217,9 @@ static void showFrame(bool set, f32 time)
 static void createMenuWindow()
 {
 	gsys->startLoading(nullptr, false, 0);
-	int heapold              = !!gsys->mPrevHeapAllocType;
-	gsys->mPrevHeapAllocType = 0;
-	int heapid               = gsys->getHeapNum();
+	int heapold          = !!gsys->mPrevAllocType;
+	gsys->mPrevAllocType = 0;
+	int heapid           = gsys->getHeapNum();
 	PRINT("using movie heap!\n");
 
 	gsys->setHeap(SYSHEAP_Movie);
@@ -230,8 +230,8 @@ static void createMenuWindow()
 
 	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
-	gsys->mRetraceCount      = 0;
-	gsys->mPrevHeapAllocType = heapold;
+	gsys->mRetraceCount  = 0;
+	gsys->mPrevAllocType = heapold;
 	gsys->endLoading();
 	PRINT("menu window attach\n");
 	gsys->attachObjs();
@@ -257,9 +257,9 @@ static void deleteMenuWindow()
 static void createTutorialWindow(int a1, int a2, bool flag)
 {
 	gsys->startLoading(nullptr, false, 0);
-	int heapold              = gsys->mPrevHeapAllocType != 0;
-	gsys->mPrevHeapAllocType = 0;
-	int heapid               = gsys->getHeapNum();
+	int heapold          = gsys->mPrevAllocType != 0;
+	gsys->mPrevAllocType = 0;
+	int heapid           = gsys->getHeapNum();
 	PRINT("using movie heap!\n");
 
 	hasDemoSound = (a2 >= 0 && flag);
@@ -280,7 +280,7 @@ static void createTutorialWindow(int a1, int a2, bool flag)
 	showFrame(false, 0.5f);
 	gameflow.mIsTutorialActive = 1;
 	gsys->mRetraceCount        = 0;
-	gsys->mPrevHeapAllocType   = heapold;
+	gsys->mPrevAllocType       = heapold;
 	gsys->endLoading();
 	PRINT("tutorial window attach\n");
 	gsys->attachObjs();
@@ -589,8 +589,8 @@ ModeState* MessageModeState::update(u32& a)
 		case 0:
 			mMessageTimer -= gsys->getFrameTime();
 			if (mMessageTimer < 0.0f) {
-				mMessageTimer                             = 2.0f;
-				mapMgr->mTargetGreyscaleDesaturationLevel = 1.0f;
+				mMessageTimer               = 2.0f;
+				mapMgr->mTargetDesaturation = 1.0f;
 				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) && gameoverWindow) {
 					gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
 				}
@@ -600,9 +600,9 @@ ModeState* MessageModeState::update(u32& a)
 		case 1:
 			mMessageTimer -= gsys->getFrameTime();
 			if (mMessageTimer < 0.0f) {
-				mMessageTimer                   = 3.0f;
-				mapMgr->mTargetFadeToBlackLevel = 1.0f;
-				mMessagePhase                   = 2;
+				mMessageTimer            = 3.0f;
+				mapMgr->mTargetFadeLevel = 1.0f;
+				mMessagePhase            = 2;
 			}
 			break;
 		case 2:
@@ -613,8 +613,8 @@ ModeState* MessageModeState::update(u32& a)
 			}
 			break;
 		case 3:
-			mapMgr->mTargetFadeToBlackLevel           = 0.0f;
-			mapMgr->mTargetGreyscaleDesaturationLevel = 0.0f;
+			mapMgr->mTargetFadeLevel    = 0.0f;
+			mapMgr->mTargetDesaturation = 0.0f;
 			PRINT("DOING FORCE RESULTS SCREEN !!!\n");
 			DayOverModeState* state  = new DayOverModeState(mSection, 1);
 			state->mState            = 0;
@@ -1476,7 +1476,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::modeFlag(1), 40.0f);
 					}
-					mapMgr->mTargetFadeToBlackLevel = 0.0f;
+					mapMgr->mTargetFadeLevel = 0.0f;
 				} else {
 					flowCont.mGameEndCondition = 0;
 				}

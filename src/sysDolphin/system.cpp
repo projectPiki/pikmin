@@ -79,12 +79,12 @@ void DVDStream::init()
 RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 {
 	char strPath[PATH_MAX];
-	sprintf(strPath, "%s", isRelativePath ? mCurrentDirectory : "");
+	sprintf(strPath, "%s", isRelativePath ? mActiveDir : "");
 	sprintf(strPath, "%s%s%s", strPath, isRelativePath ? mDataRoot : "", path);
 
-	if (isRelativePath && (mDvdFileTreeRoot.getChildCount() || mAramFileTreeRoot.getChildCount())) {
+	if (isRelativePath && (mDvdRoot.getChildCount() || mAramRoot.getChildCount())) {
 
-		FOREACH_NODE(DirEntry, mDvdFileTreeRoot.mChild, node)
+		FOREACH_NODE(DirEntry, mDvdRoot.mChild, node)
 		{
 			if (strcmp(node->mName, path) == 0) {
 				aramStream.init(path, node->mAddress, node->mPending);
@@ -92,7 +92,7 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 			}
 		}
 
-		FOREACH_NODE(DirEntry, mAramFileTreeRoot.mChild, node)
+		FOREACH_NODE(DirEntry, mAramRoot.mChild, node)
 		{
 			if (!strcmp(node->mName, path)) {
 				aramStream.init(path, node->mAddress, node->mPending);
@@ -101,13 +101,13 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 		}
 	}
 
-	mDvdOpenFileCounter++;
-	dvdStream.mPath       = strPath;
-	dvdStream.mIsFileOpen = DVDOpen(strPath, &dvdStream.mFileInfo);
+	mDvdOpenFiles++;
+	dvdStream.mPath   = strPath;
+	dvdStream.mIsOpen = DVDOpen(strPath, &dvdStream.mFileInfo);
 	dvdStream.init();
 	DVDStream::numOpen++;
 
-	if (!dvdStream.mIsFileOpen) {
+	if (!dvdStream.mIsOpen) {
 		dvdStream.close();
 		return nullptr;
 	}
@@ -130,7 +130,7 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
  */
 void System::initSoftReset()
 {
-	gsys->mPrevHeapAllocType = 0;
+	gsys->mPrevAllocType = 0;
 	StdSystem::initSoftReset();
 	if (mDGXGfx) {
 		static_cast<DGXGraphics*>(mDGXGfx)->setupRender();
@@ -214,10 +214,10 @@ f32 System::getTime()
 void System::updateSysClock()
 {
 	OSTick tick = OSGetTick();
-	mEngineRunningFrameCount++;
-	mFrameDurationTicks = tick - mPreviousTickTime;
-	mDeltaTime          = mFrameDurationTicks / (f64)OS_TIMER_CLOCK;
-	mEngineTotalFrames++;
+	mEngineFrames++;
+	mFrameTicks = tick - mPrevTick;
+	mDeltaTime  = mFrameTicks / (f64)OS_TIMER_CLOCK;
+	mTotalFrames++;
 	if (mDeltaTime > f32(1.0f / 30.0f)) {
 		mDeltaTime = f32(1.0f / 30.0f);
 	}
@@ -225,13 +225,13 @@ void System::updateSysClock()
 		mDeltaTime = 0.0f;
 	}
 
-	int time = tick - mFpsSamplePeriodStartTick;
+	int time = tick - mFpsSampleStart;
 	if (time > OS_TIMER_CLOCK) {
-		mFramesPerSecond               = (f64)(OS_TIMER_CLOCK * (mEngineRunningFrameCount - mFrameCountAtSamplePeriodStart)) / time;
-		mFpsSamplePeriodStartTick      = tick;
-		mFrameCountAtSamplePeriodStart = mEngineRunningFrameCount;
+		mFPS                 = (f64)(OS_TIMER_CLOCK * (mEngineFrames - mFramesAtSampleStart)) / time;
+		mFpsSampleStart      = tick;
+		mFramesAtSampleStart = mEngineFrames;
 	}
-	mPreviousTickTime = tick;
+	mPrevTick = tick;
 }
 
 /*
@@ -246,10 +246,10 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 	DVDStream stream;
 	stream.mPath = path2;
 	PRINT("fake start time?", time / 1000.0f);
-	stream.mIsFileOpen = DVDOpen(path2, &stream.mFileInfo) != 0;
+	stream.mIsOpen = DVDOpen(path2, &stream.mFileInfo) != 0;
 	stream.init();
 	DVDStream::numOpen++;
-	if (!stream.mIsFileOpen) {
+	if (!stream.mIsOpen) {
 		stream.close();
 	}
 
@@ -294,7 +294,7 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 			entry->mName    = str.mString;
 			entry->mPending = c;
 			entry->mAddress = a + b;
-			mFileTreeList->add(entry);
+			mFileList->add(entry);
 		}
 		file->close();
 	}
@@ -742,8 +742,8 @@ void System::findAddress(u32)
  */
 void System::hardReset()
 {
-	int old           = !!mForceTogglePrint;
-	mForceTogglePrint = 0;
+	int old     = !!mForcePrint;
+	mForcePrint = 0;
 	if (useSymbols) {
 		int a = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 		int c = OSTicksToMilliseconds(OSGetTick());
@@ -751,14 +751,14 @@ void System::hardReset()
 		int d = OSTicksToMilliseconds(OSGetTick());
 		int b = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 	}
-	mForceTogglePrint = old;
+	mForcePrint = old;
 
 	mCacher  = new TextureCacher(0x96000);
 	int size = 0x20000;
 	gsys->mHeaps[SYSHEAP_Lang].init("language", 2, alloc(size), size);
 	preloadLanguage();
 
-	mEngineTotalFrames = 0;
+	mTotalFrames = 0;
 
 	u32 badcompiler[4];
 }
@@ -770,25 +770,25 @@ void System::hardReset()
  */
 System::System()
 {
-	mTimerState              = TS_Off;
-	mTogglePrint             = 0;
-	mToggleDebugInfo         = 0;
-	mToggleDebugExtra        = 0;
-	mToggleBlur              = 1;
-	mToggleColls             = 0;
-	mDvdBufferSize           = 0x40000;
-	mCurrentThread           = OSGetCurrentThread();
-	mDvdErrorCallback        = 0;
-	mDvdErrorCode            = -1;
-	mPrevHeapAllocType       = 0;
-	mDmaTransferComplete     = 1;
-	mTextureTransferComplete = 1;
-	mCurrentDirectory        = "";
-	mAtxRouter               = nullptr;
-	mActiveHeapIdx           = -1;
-	gsys                     = this;
-	mBuildMapFuncList        = 0;
-	mTimer                   = nullptr;
+	mTimerState       = TS_Off;
+	mTogglePrint      = 0;
+	mToggleDebugInfo  = 0;
+	mToggleDebugExtra = 0;
+	mToggleBlur       = 1;
+	mToggleColls      = 0;
+	mDvdBufferSize    = 0x40000;
+	mCurrentThread    = OSGetCurrentThread();
+	mDvdErrorCallback = 0;
+	mDvdErrorCode     = -1;
+	mPrevAllocType    = 0;
+	mDmaComplete      = 1;
+	mTexComplete      = 1;
+	mActiveDir        = "";
+	mAtxRouter        = nullptr;
+	mActiveHeapIdx    = -1;
+	gsys              = this;
+	mBuildMapFuncList = 0;
+	mTimer            = nullptr;
 }
 
 /*
@@ -892,15 +892,15 @@ void System::Initialise()
 {
 	OSInit();
 	CARDInit();
-	void* lo         = OSGetArenaLo();
-	void* hi         = OSGetArenaHi();
-	mSystemHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
-	hi               = (void*)OSRoundDown32B(hi);
-	mSystemHeapEnd   = (u32)hi - mSystemHeapStart;
-	if (mSystemHeapEnd < 0x1800000) {
+	void* lo   = OSGetArenaLo();
+	void* hi   = OSGetArenaHi();
+	mHeapStart = OSRoundUp32B(OSInitAlloc(lo, hi, 1));
+	hi         = (void*)OSRoundDown32B(hi);
+	mHeapEnd   = (u32)hi - mHeapStart;
+	if (mHeapEnd < 0x1800000) {
 		useSymbols = false;
 	}
-	mHeaps[0].init("sys", 1, (void*)mSystemHeapStart, mSystemHeapEnd);
+	mHeaps[0].init("sys", 1, (void*)mHeapStart, mHeapEnd);
 	setHeap(0);
 	sysCon = new LogStream;
 	errCon = sysCon;
@@ -923,10 +923,10 @@ void System::Initialise()
 
 	onceInit();
 
-	mDGXGfx                = new DGXGraphics(false);
-	mGraphics              = mDGXGfx;
-	mIsRendering           = 0;
-	mIsLoadingThreadActive = 0;
+	mDGXGfx          = new DGXGraphics(false);
+	mGraphics        = mDGXGfx;
+	mIsRendering     = 0;
+	mIsLoadingActive = 0;
 
 	OSInitMessageQueue(&dvdMesgQueue, dvdMesgBuffer, 1);
 	OSInitMessageQueue(&loadMesgQueue, loadMesgBuffer, 1);
@@ -946,9 +946,9 @@ void System::Initialise()
 	_31C._08 = 0x800000;
 	_31C._04 = _31C._00;
 	_328     = &_31C;
-	mDvdFileTreeRoot.initCore("");
-	mAramFileTreeRoot.initCore("");
-	mFileTreeList = (DirEntry*)&mDvdFileTreeRoot;
+	mDvdRoot.initCore("");
+	mAramRoot.initCore("");
+	mFileList = (DirEntry*)&mDvdRoot;
 
 	mControllerMgr.init();
 	mTimer = new Timers();
@@ -1342,7 +1342,7 @@ void* loadFunc(void* idler)
 		OSGetTick();
 		frameCount++;
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-		if (!gsys->mIsLoadingScreenActive) {
+		if (!gsys->mIsLoadScreenActive) {
 			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, GX_FALSE);
 		} else {
 			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, (frameCount >= gsys->mLoadTimeBeforeIdling) ? GX_TRUE : GX_FALSE);
@@ -1354,7 +1354,7 @@ void* loadFunc(void* idler)
 		DGXGraphics* gfx = gsys->mDGXGfx;
 		gfx->setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
 
-		if (gsys->mIsLoadingScreenActive) {
+		if (gsys->mIsLoadScreenActive) {
 			gfx->setColour(Colour(0, 0, 0, 32), true);
 			gfx->setAuxColour(Colour(0, 0, 0, 32));
 			gfx->fillRectangle(RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
@@ -1395,12 +1395,12 @@ u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
  */
 void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 {
-	gsys->mPrevHeapAllocType = 0;
-	if (mIsLoadingThreadActive == 0) {
-		mLoadTimeBeforeIdling  = loadDelay;
-		mIsLoadingScreenActive = useLoadScreen;
+	gsys->mPrevAllocType = 0;
+	if (mIsLoadingActive == 0) {
+		mLoadTimeBeforeIdling = loadDelay;
+		mIsLoadScreenActive   = useLoadScreen;
 		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, 0);
-		mIsLoadingThreadActive = 1;
+		mIsLoadingActive = 1;
 		OSResumeThread(&Thread);
 	}
 }
@@ -1422,13 +1422,13 @@ void System::nudgeLoading()
  */
 void System::endLoading()
 {
-	gsys->mPrevHeapAllocType = 1;
-	if (mIsLoadingThreadActive) {
+	gsys->mPrevAllocType = 1;
+	if (mIsLoadingActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', 1);
 		OSJoinThread(&Thread, nullptr);
 		GXSetCurrentGXThread();
-		mIsLoadingThreadActive = 0;
-		mIsLoadingScreenActive = 0;
+		mIsLoadingActive    = 0;
+		mIsLoadScreenActive = 0;
 	}
 }
 
@@ -1442,7 +1442,7 @@ void doneDMA(u32 cache)
 	SystemCache* sysCache = (SystemCache*)((SystemCache*)cache)->owner;
 	sysCache->remove();
 	gsys->_2E8.insertAfter(sysCache);
-	gsys->mDmaTransferComplete = TRUE;
+	gsys->mDmaComplete = TRUE;
 }
 
 /*
@@ -1452,7 +1452,7 @@ void doneDMA(u32 cache)
  */
 void System::copyWaitUntilDone()
 {
-	while (mDmaTransferComplete == 0) { }
+	while (mDmaComplete == 0) { }
 }
 
 /*
@@ -1480,7 +1480,7 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	_2C0.insertAfter(cache);
 	OSRestoreInterrupts(inter);
 
-	gsys->mDmaTransferComplete = 0;
+	gsys->mDmaComplete = 0;
 	DCStoreRange((void*)src, size);
 	ARQPostRequest(cache, (u32)cache, 0, 1, src, a, size, doneDMA);
 	return dest;
@@ -1572,7 +1572,7 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 	cache->remove();
 	_2C0.insertAfter(cache);
 	OSRestoreInterrupts(inter);
-	gsys->mDmaTransferComplete = 0;
+	gsys->mDmaComplete = 0;
 	DCInvalidateRange((void*)dst, size);
 	ARQPostRequest(cache, (u32)cache, 1, 1, src, dst, size, doneDMA);
 }
@@ -1593,7 +1593,7 @@ void freeBuffer(u32 cache)
 	texCache->mSystemCache = nullptr;
 	texCache->detach();
 	texCache->attach();
-	gsys->mTextureTransferComplete = TRUE;
+	gsys->mTexComplete = TRUE;
 
 	u32 badCompiler[2];
 }
@@ -1616,11 +1616,11 @@ void System::copyCacheToTexture(CacheTexture* tex)
 	u32 size     = tex->mTexImage->mDataSize;
 
 	OSRestoreInterrupts(inter);
-	gsys->mTextureTransferComplete = 0;
+	gsys->mTexComplete = 0;
 	DCInvalidateRange((void*)data, size);
 	ARQPostRequest(cache, (u32)tex, 1, 1, aramAddr, (u32)data, size, freeBuffer);
 
-	while (mTextureTransferComplete == 0) { }
+	while (mTexComplete == 0) { }
 }
 
 /*
@@ -1652,7 +1652,7 @@ void* dvdFunc(void*)
 				stopped = true;
 			}
 		} else {
-			if (OSGetResetSwitchState() == 0 && gsys->mIsRendering == 0 && gsys->mIsMemoryCardSaving == 0) {
+			if (OSGetResetSwitchState() == 0 && gsys->mIsRendering == 0 && gsys->mIsCardSaving == 0) {
 				PADRecalibrate(0xf0000000);
 				Jac_Freeze();
 				VISetBlack(1);

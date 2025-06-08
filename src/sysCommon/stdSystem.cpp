@@ -39,15 +39,15 @@ void AnmobjInfo::detach()
  * Size:	000144
  */
 StdSystem::StdSystem()
-    : mDvdFileTreeRoot("CoreNode")
-    , mAramFileTreeRoot("CoreNode")
+    : mDvdRoot("CoreNode")
+    , mAramRoot("CoreNode")
 {
 	mConsFont         = nullptr;
 	mCurrentFade      = 0.0f;
 	mFadeStart        = 0.0f;
 	mFadeEnd          = 1.0;
 	mToggleFileInfo   = 1;
-	mForceTogglePrint = 0;
+	mForcePrint       = 0;
 	mGfxobjInfo.mPrev = &mGfxobjInfo;
 	mGfxobjInfo.mNext = &mGfxobjInfo;
 	mHasGfxObjects    = true;
@@ -480,10 +480,9 @@ LFInfo* StdSystem::getLFlareInfo()
  */
 LFlareGroup* StdSystem::registerLFlare(Texture* tex)
 {
-	for (LFlareGroup* activeFlareGroup = (LFlareGroup*)mFlareGroupList->mChild; activeFlareGroup;
-	     activeFlareGroup              = (LFlareGroup*)activeFlareGroup->mNext) {
-		if (activeFlareGroup->mTexture == tex) {
-			return activeFlareGroup;
+	for (LFlareGroup* fg = (LFlareGroup*)mFlareGroupList->mChild; fg; fg = (LFlareGroup*)fg->mNext) {
+		if (fg->mTexture == tex) {
+			return fg;
 		}
 	}
 
@@ -525,7 +524,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
 					gfx.setColour(info->mColour, true);
 				}
 
-				gfx.drawCamParticle(*gfx.mCamera, info->mFlarePos, info->mSize, info->_18, info->_20);
+				gfx.drawCamParticle(*gfx.mCamera, info->mFlarePos, info->mSize, info->mUvMin, info->mUvMax);
 			}
 
 			flareGroup->mLFInfo = nullptr;
@@ -542,74 +541,74 @@ void StdSystem::flushLFlares(Graphics& gfx)
  * Address:	8003FDD4
  * Size:	000560
  */
-void StdSystem::loadBundle(char* path, bool p3)
+void StdSystem::loadBundle(char* pPath, bool loadWithCache)
 {
-	RandomAccessStream* fileStream = openFile(path, true, true);
-	if (!fileStream) {
+	RandomAccessStream* fs = openFile(pPath, true, true);
+	if (!fs) {
 		return;
 	}
 
-	int fileCount = fileStream->readInt();
+	int fileCount = fs->readInt();
 	for (int i = 0; i < fileCount; i++) {
-		int chunkType = fileStream->readInt();
-		int chunkSize = fileStream->readInt();
+		int type = fs->readInt();
+		int size = fs->readInt();
 
-		String fileName(0);
-		fileStream->readString(fileName);
+		String path(0);
+		fs->readString(path);
 
-		switch (chunkType) {
+		switch (type) {
 		case 2: { // DCA Animation
-			AnimData* dcaAnim = mCurrentShape->loadDca(fileName.mString, *fileStream);
-			addAnimation(dcaAnim, fileName.mString);
+			AnimData* dca = mCurrentShape->loadDca(path.mString, *fs);
+			addAnimation(dca, path.mString);
 			break;
 		}
 		case 3: { // DCK Animation
-			AnimData* dckAnim = mCurrentShape->loadDck(fileName.mString, *fileStream);
-			addAnimation(dckAnim, fileName.mString);
+			AnimData* dck = mCurrentShape->loadDck(path.mString, *fs);
+			addAnimation(dck, path.mString);
 			break;
 		}
 		case 1: { // Texture
-			TexImg* newTexImg = new TexImg();
-			Texture* newTexture;
+			TexImg* texImg = new TexImg();
+			Texture* newTex;
 
-			if (p3) {
+			if (loadWithCache) {
 				CacheTexture* cacheTex = new CacheTexture();
-				cacheTex->mTexImage    = newTexImg;
-				newTexture             = cacheTex;
-				newTexImg->importBti(cacheTex, *fileStream, (u8*)OSRoundUp32B(mGraphics->mSystemMatrices));
-				cacheTex->mAramAddress = copyRamToCache((u32)newTexImg->mTextureData, newTexImg->mDataSize, 0);
+				cacheTex->mTexImage    = texImg;
+				newTex                 = cacheTex;
+				texImg->importBti(cacheTex, *fs, (u8*)OSRoundUp32B(mGraphics->mSystemMatrices));
+				cacheTex->mAramAddress = copyRamToCache((u32)texImg->mTextureData, texImg->mDataSize, 0);
 				copyWaitUntilDone();
-				newTexImg->mTextureData = nullptr;
+				texImg->mTextureData = nullptr;
 			} else {
-				Texture* newTex = new Texture();
-				newTexture      = newTex;
-				newTexImg->importBti(newTex, *fileStream, nullptr);
+				Texture* tex = new Texture();
+				newTex       = tex;
+				texImg->importBti(tex, *fs, nullptr);
 			}
 
-			gsys->addTexture(newTexture, fileName.mString);
+			gsys->addTexture(newTex, path.mString);
 			break;
 		}
 		case 0: // Binary Data
 		{
-			char* data = new char[chunkSize];
-			fileStream->read(data, chunkSize);
+			char* data = new char[size];
+			fs->read(data, size);
 
 			BinobjInfo* newInfo = new BinobjInfo();
-			newInfo->mString    = StdSystem::stringDup(fileName.mString);
+			newInfo->mString    = StdSystem::stringDup(path.mString);
 			newInfo->mId.setID('_bin');
 			newInfo->mData = data;
 			gsys->addGfxObject(newInfo);
 			break;
 		}
 		default: {
-			int pos = fileStream->getPosition();
-			fileStream->setPosition(pos + chunkSize);
+			int pos = fs->getPosition();
+			fs->setPosition(pos + size);
 			break;
 		}
 		}
 	}
 
-	fileStream->close();
+	fs->close();
 }
 
 /*

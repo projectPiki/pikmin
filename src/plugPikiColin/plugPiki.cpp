@@ -158,10 +158,10 @@ int PlugPikiApp::idle()
 	gsys->mTimer->_start("all", false);
 
 	gsys->mIsRendering; // lol
-	if (gsys->mIsSystemOperationPending) {
+	if (gsys->mSysOpPending) {
 		gsys->detachObjs();
 		gsys->mTimer->reset();
-		gsys->mIsSystemOperationPending = false;
+		gsys->mSysOpPending = false;
 		softReset();
 		PRINT("idle attach\n");
 		gsys->attachObjs();
@@ -206,6 +206,6 @@ PlugPikiApp::PlugPikiApp()
 	gsys->hardReset();
 	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,
 	      gsys->getHeap(gsys->mActiveHeapIdx)->getFree() / 1024.0f);
-	gsys->mForceTogglePrint = 0;
+	gsys->mForcePrint = 0;
 	gsys->setHeap(-1);
 }

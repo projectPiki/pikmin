@@ -175,8 +175,8 @@ struct DynSimulator : public Node {
 	DynSimulator()
 	    : Node("simulator")
 	{
-		_2C                           = 0;
-		_20                           = 0;
+		_unused2C                     = 0;
+		mIsPaused                     = 0;
 		mWriteTargetRenderBufferIndex = 0;
 	}
 
@@ -191,7 +191,7 @@ struct DynSimulator : public Node {
 	int CheckForCollisions(int, Shape*);
 	void ResolveCollisions(int);
 
-	bool isPaused() { return _20 != 0; }
+	bool isPaused() { return mIsPaused != 0; }
 	void updateConts()
 	{
 		for (RigidBody* body = (RigidBody*)Child(); body; body = (RigidBody*)body->Next()) {
@@ -213,10 +213,10 @@ struct DynSimulator : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	int _20;                           // _20
+	int mIsPaused;                     // _20
 	int mWriteTargetRenderBufferIndex; // _24
 	int mCurrentConfigIdx;             // _28
-	u32 _2C;                           // _2C, unknown
+	u32 _unused2C;                     // _2C, unknown
 	CollState mWorldState;             // _30
 };
 

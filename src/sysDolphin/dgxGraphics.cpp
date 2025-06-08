@@ -501,7 +501,7 @@ void DGXGraphics::waitRetrace()
 	VIWaitForRetrace();
 	GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 
-	bool set = (gsys->mIsLoadingScreenActive || gsys->mIsSystemOperationPending) ? false : true;
+	bool set = (gsys->mIsLoadScreenActive || gsys->mSysOpPending) ? false : true;
 	GXCopyDisp(mDisplayBuffer, set);
 
 	mRetraceCount    = VIGetRetraceCount();
@@ -534,7 +534,7 @@ void DGXGraphics::waitPostRetrace()
 void DGXGraphics::retraceProc(u32)
 {
 	gsys->nudgeDvdThread();
-	if (gsys->mIsLoadingThreadActive) {
+	if (gsys->mIsLoadingActive) {
 		gsys->nudgeLoading();
 		return;
 	}
@@ -1664,16 +1664,16 @@ void DGXGraphics::drawParticle(Camera& cam, Vector3f& pos, f32 size)
  * Address:	8004AF60
  * Size:	000128
  */
-void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& p3, Vector2f& texCoordMin, Vector2f& texCoordMax)
+void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& extents, Vector2f& uvMin, Vector2f& uvMax)
 {
 	gsys->mPolygonCount += 2;
 
 	f32 y0, z, x1, y1, x0;
 
-	y0 = p3.y + pos.y;
-	x0 = -p3.x + pos.x;
-	x1 = p3.x + pos.x;
-	y1 = -p3.y + pos.y;
+	y0 = extents.y + pos.y;
+	x0 = -extents.x + pos.x;
+	x1 = extents.x + pos.x;
+	y1 = -extents.y + pos.y;
 	z  = pos.z;
 
 	u32 primClr = *(u32*)&mPrimaryColour;
@@ -1682,19 +1682,19 @@ void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& p3, Vect
 
 	GXPosition3f32(x0, y0, z);
 	GXColor1u32(primClr);
-	GXTexCoord2f32(texCoordMin.x, texCoordMin.y);
+	GXTexCoord2f32(uvMin.x, uvMin.y);
 
 	GXPosition3f32(x1, y0, z);
 	GXColor1u32(primClr);
-	GXTexCoord2f32(texCoordMax.x, texCoordMin.y);
+	GXTexCoord2f32(uvMax.x, uvMin.y);
 
 	GXPosition3f32(x1, y1, z);
 	GXColor1u32(primClr);
-	GXTexCoord2f32(texCoordMax.x, texCoordMax.y);
+	GXTexCoord2f32(uvMax.x, uvMax.y);
 
 	GXPosition3f32(x0, y1, z);
 	GXColor1u32(primClr);
-	GXTexCoord2f32(texCoordMin.x, texCoordMax.y);
+	GXTexCoord2f32(uvMin.x, uvMax.y);
 
 	GXEnd();
 
