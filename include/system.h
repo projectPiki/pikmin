@@ -384,18 +384,18 @@ extern System* gsys;
 struct LogStream : public Stream {
 	LogStream()
 	{
-		_08 = 0;
-		_0C = 0;
+		mBufPosition = 0;
+		_0C          = 0;
 	}
 
 	virtual void flush() // _54 (weak)
 	{
-		mBuffer[_08] = 0;
+		mBuffer[mBufPosition] = 0;
 		if (gsys->mTogglePrint) {
 			OSReport("%s\n", mBuffer);
 		}
 
-		_08 = 0;
+		mBufPosition = 0;
 	}
 	virtual void write(void* data, int size) // _40 (weak)
 	{
@@ -407,27 +407,30 @@ struct LogStream : public Stream {
 			}
 
 			if (c == 0x9) { // horizontal tab
-				if (_08 >= 255) {
+				if (mBufPosition >= 255) {
 					flush();
 				}
-				mBuffer[_08++] = ' ';
-				if (_08 >= 255) {
+
+				mBuffer[mBufPosition++] = ' ';
+				if (mBufPosition >= 255) {
 					flush();
 				}
-				mBuffer[_08++] = ' ';
+
+				mBuffer[mBufPosition++] = ' ';
 				continue;
 			}
 
-			if (_08 >= 255) {
+			if (mBufPosition >= 255) {
 				flush();
 			}
-			mBuffer[_08++] = c;
+
+			mBuffer[mBufPosition++] = c;
 		}
 	}
 
 	// _04     = VTBL
 	// _00-_08 = Stream
-	int _08;             // _08
+	int mBufPosition;    // _08
 	u32 _0C;             // _0C, unknown
 	char mBuffer[0x100]; // _10
 };

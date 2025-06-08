@@ -1,15 +1,10 @@
-#include "types.h"
 #include "hvqm4.h"
 
 /*
-
-Initial code attempts + comments + function arguments/naming guides taken from
-http://github.com/Tilka/hvqm4
-with many thanks.
-
-Variable names are mostly from Bakuten Shoot Beyblade 2002.
-
-*/
+ * Initial code attempts + comments + function arguments/naming guides taken from
+ * Bakuten Shoot Beyblade 2002 and http://github.com/Tilka/hvqm4
+ * with very many thanks from all of the projectPiki decompilation team.
+ */
 
 typedef void (*MotionCompFunc)(u8* cP, int cWidth, u8* tP, int tWidth);
 
@@ -21,12 +16,12 @@ static int readTree_signed;
 static u32 readTree_scale;
 
 // some things are per plane (YUV, luma + 2x chroma)
-#define Y_IDX   0
-#define U_IDX   1
-#define V_IDX   2
+#define Y_IDX 0
+#define U_IDX 1
+#define V_IDX 2
 // some things are only split between luma and chroma
-#define LUMA_IDX    0
-#define CHROMA_IDX  1
+#define LUMA_IDX   0
+#define CHROMA_IDX 1
 
 #define read8(buf, offset)  (*(u8*)((u8*)(buf) + (offset)))
 #define read16(buf, offset) (*(u16*)((u8*)(buf) + (offset)))
@@ -215,7 +210,7 @@ static s16 _readTree(Tree* dst, BitBuffer* src)
 static void readTree(BitBufferWithTree* code, int is_signed, int scale)
 {
 	Tree* tree     = code->tree;
-	BitBuffer* buf = &code->buf;
+	BitBuffer* buf = &code->str;
 
 	readTree_signed   = is_signed;
 	readTree_scale    = scale;
@@ -235,7 +230,7 @@ static void readTree(BitBufferWithTree* code, int is_signed, int scale)
 static inline int decodeHuff(BitBufferWithTree* buf)
 {
 	Tree* tree        = buf->tree;
-	BitBuffer* buffer = &buf->buf;
+	BitBuffer* buffer = &buf->str;
 	int pos           = tree->tree_root;
 	while (pos >= 0x100) {
 		pos = tree->leaf[getBit(buffer)][pos];
@@ -1653,7 +1648,7 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 			if (mc->pln[Y_IDX].bsrunleng == 0) {
 				sym = decodeHuff(symcode);
 				if (sym == 0) {
-					ydat[j].bnm          = cc;
+					ydat[j].bnm              = cc;
 					mc->pln[Y_IDX].bsrunleng = decodeHuff(runcode);
 				} else {
 					ydat[j].bnm = cc | sym;
@@ -1676,8 +1671,8 @@ static void decode_PB_cc(VideoState* ws, MCHandler* mc, int proctype, int mcbtyp
 			if (mc->pln[U_IDX].bsrunleng == 0) {
 				sym = decodeHuff(symcode);
 				if (sym == 0) {
-					udat[j].bnm          = cc;
-					vdat[j].bnm          = cc;
+					udat[j].bnm              = cc;
+					vdat[j].bnm              = cc;
 					mc->pln[U_IDX].bsrunleng = decodeHuff(runcode);
 				} else {
 					udat[j].bnm = cc | ((sym >> 0) & 0xF);
@@ -1963,7 +1958,7 @@ static void getMVector(int* vec, BitBufferWithTree* code, int fcode)
 	v = decodeHuff(code) << fcode;
 	// residual bits
 	for (i = fcode - 1; i >= 0; i--) {
-		v += getBit(&code->buf) << i;
+		v += getBit(&code->str) << i;
 	}
 	*vec += v;
 	// signed wrap to -range .. range-1
@@ -1981,8 +1976,8 @@ static void getMVector(int* vec, BitBufferWithTree* code, int fcode)
  */
 static void initMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 {
-	if (code->buf.ptr) {
-		flag->status = getBit(&code->buf);
+	if (code->str.ptr) {
+		flag->status = getBit(&code->str);
 		flag->runlng = decodeUOvfSym(code, 0xFF);
 	}
 }
@@ -2010,9 +2005,9 @@ static int getMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 static void initMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 {
 	int value;
-	if (code->buf.ptr) {
-		flag->status = getBit(&code->buf) << 1;
-		flag->status |= getBit(&code->buf);
+	if (code->str.ptr) {
+		flag->status = getBit(&code->str) << 1;
+		flag->status |= getBit(&code->str);
 		flag->runlng = decodeUOvfSym(code, 0xFF);
 	}
 }
@@ -2035,7 +2030,7 @@ static int getMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 		// bit == 0 -> increment
 		// bit == 1 -> decrement
 		// then wrap to range 0..2
-		flag->status = mcbtypetrans[getBit(&code->buf)][flag->status];
+		flag->status = mcbtypetrans[getBit(&code->str)][flag->status];
 		flag->runlng = decodeUOvfSym(code, 0xFF);
 	}
 	flag->runlng--;
@@ -2257,22 +2252,22 @@ void HVQM4DecodeIpic(SeqObj* obj, void* code, void* outbuf)
 	ws->aotscale_q = read8(code, 1);
 	body           = (u8*)code + 0x48;
 
-	setCode(&ws->bsnum[LUMA_IDX].buf, body + read32(code, 0x8));
-	setCode(&ws->bsrun[LUMA_IDX].buf, body + read32(code, 0xC));
-	setCode(&ws->bsnum[CHROMA_IDX].buf, body + read32(code, 0x10));
-	setCode(&ws->bsrun[CHROMA_IDX].buf, body + read32(code, 0x14));
-	setCode(&ws->dcval[Y_IDX].buf, body + read32(code, 0x18));
-	setCode(&ws->scale[Y_IDX].buf, body + read32(code, 0x1C));
+	setCode(&ws->bsnum[LUMA_IDX].str, body + read32(code, 0x8));
+	setCode(&ws->bsrun[LUMA_IDX].str, body + read32(code, 0xC));
+	setCode(&ws->bsnum[CHROMA_IDX].str, body + read32(code, 0x10));
+	setCode(&ws->bsrun[CHROMA_IDX].str, body + read32(code, 0x14));
+	setCode(&ws->dcval[Y_IDX].str, body + read32(code, 0x18));
+	setCode(&ws->scale[Y_IDX].str, body + read32(code, 0x1C));
 	setCode(&ws->aotcd[Y_IDX], body + read32(code, 0x20));
-	setCode(&ws->dcval[U_IDX].buf, body + read32(code, 0x24));
-	setCode(&ws->scale[U_IDX].buf, body + read32(code, 0x28));
+	setCode(&ws->dcval[U_IDX].str, body + read32(code, 0x24));
+	setCode(&ws->scale[U_IDX].str, body + read32(code, 0x28));
 	setCode(&ws->aotcd[U_IDX], body + read32(code, 0x2C));
-	setCode(&ws->dcval[V_IDX].buf, body + read32(code, 0x30));
-	setCode(&ws->scale[V_IDX].buf, body + read32(code, 0x34));
+	setCode(&ws->dcval[V_IDX].str, body + read32(code, 0x30));
+	setCode(&ws->scale[V_IDX].str, body + read32(code, 0x34));
 	setCode(&ws->aotcd[V_IDX], body + read32(code, 0x38));
-	setCode(&ws->dcrun[Y_IDX].buf, body + read32(code, 0x3C));
-	setCode(&ws->dcrun[U_IDX].buf, body + read32(code, 0x40));
-	setCode(&ws->dcrun[V_IDX].buf, body + read32(code, 0x44));
+	setCode(&ws->dcrun[Y_IDX].str, body + read32(code, 0x3C));
+	setCode(&ws->dcrun[U_IDX].str, body + read32(code, 0x40));
+	setCode(&ws->dcrun[V_IDX].str, body + read32(code, 0x44));
 
 	// multiple BitBufferWithTree instances share the same Tree,
 	// the first BitBuffer of each group contains the Tree itself
@@ -2328,23 +2323,23 @@ void HVQM4DecodeBpic(SeqObj* obj, void* code, void* outbuf, void* ref2, void* re
 
 	body = (u8*)code + 0x4C;
 
-	setCode(&ws->bsnum[LUMA_IDX].buf, body + read32(code, 0x08));
-	setCode(&ws->bsrun[LUMA_IDX].buf, body + read32(code, 0x0C));
-	setCode(&ws->bsnum[CHROMA_IDX].buf, body + read32(code, 0x10));
-	setCode(&ws->bsrun[CHROMA_IDX].buf, body + read32(code, 0x14));
-	setCode(&ws->dcval[Y_IDX].buf, body + read32(code, 0x18));
-	setCode(&ws->scale[Y_IDX].buf, body + read32(code, 0x1C));
+	setCode(&ws->bsnum[LUMA_IDX].str, body + read32(code, 0x08));
+	setCode(&ws->bsrun[LUMA_IDX].str, body + read32(code, 0x0C));
+	setCode(&ws->bsnum[CHROMA_IDX].str, body + read32(code, 0x10));
+	setCode(&ws->bsrun[CHROMA_IDX].str, body + read32(code, 0x14));
+	setCode(&ws->dcval[Y_IDX].str, body + read32(code, 0x18));
+	setCode(&ws->scale[Y_IDX].str, body + read32(code, 0x1C));
 	setCode(&ws->aotcd[Y_IDX], body + read32(code, 0x20));
-	setCode(&ws->dcval[U_IDX].buf, body + read32(code, 0x24));
-	setCode(&ws->scale[U_IDX].buf, body + read32(code, 0x28));
+	setCode(&ws->dcval[U_IDX].str, body + read32(code, 0x24));
+	setCode(&ws->scale[U_IDX].str, body + read32(code, 0x28));
 	setCode(&ws->aotcd[U_IDX], body + read32(code, 0x2C));
-	setCode(&ws->dcval[V_IDX].buf, body + read32(code, 0x30));
-	setCode(&ws->scale[V_IDX].buf, body + read32(code, 0x34));
+	setCode(&ws->dcval[V_IDX].str, body + read32(code, 0x30));
+	setCode(&ws->scale[V_IDX].str, body + read32(code, 0x34));
 	setCode(&ws->aotcd[V_IDX], body + read32(code, 0x38));
-	setCode(&ws->mvecx.buf, body + read32(code, 0x3C));
-	setCode(&ws->mvecy.buf, body + read32(code, 0x40));
-	setCode(&ws->mstat.buf, body + read32(code, 0x44));
-	setCode(&ws->mcaot.buf, body + read32(code, 0x48));
+	setCode(&ws->mvecx.str, body + read32(code, 0x3C));
+	setCode(&ws->mvecy.str, body + read32(code, 0x40));
+	setCode(&ws->mstat.str, body + read32(code, 0x44));
+	setCode(&ws->mcaot.str, body + read32(code, 0x48));
 
 	readTree(&ws->bsnum[LUMA_IDX], 0, 0);
 	readTree(&ws->bsrun[LUMA_IDX], 0, 0);
