@@ -1,6 +1,7 @@
 #include "jaudio/pikidemo.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/cmdqueue.h"
+#include "jaudio/pikiinter.h"
 #include "jaudio/piki_scene.h"
 #include "jaudio/piki_player.h"
 #include "jaudio/piki_bgm.h"
@@ -17,13 +18,13 @@ void Jac_BgmAnimEndStop();
 void Jac_BgmAnimEndRecover();
 void Jac_FinishDemo_NoErase();
 
-u32 now_loading;
+vu32 now_loading;
 u8 event_pause_counter;
 u8 demo_parts_id;
 u8 demo_onyon_num;
 u8 demo_parts_num;
 u32 demo_end_delay;
-int current_demo_no = DEMOID_FINISHED; // uses CinDemoIDs enum
+s32 current_demo_no = DEMOID_FINISHED; // uses CinDemoIDs enum
 int demo_seq_active = -1;
 int demo_mml_active = -1;
 int parts_find_demo_state;
@@ -212,51 +213,6 @@ BOOL Jac_DemoWalkCheck()
 		return TRUE;
 	}
 	return FALSE;
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x2D50(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x14
-	  li        r3, 0
-	  blr
-
-	.loc_0x14:
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x40
-	  lwz       r0, 0x2D44(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x40
-	  lwz       r0, 0x2D48(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x40
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x40:
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, 0x59
-	  beq-      .loc_0x70
-	  bge-      .loc_0x64
-	  cmpwi     r0, 0x2C
-	  bge-      .loc_0x78
-	  cmpwi     r0, 0x28
-	  bge-      .loc_0x70
-	  b         .loc_0x78
-
-	.loc_0x64:
-	  cmpwi     r0, 0x64
-	  beq-      .loc_0x70
-	  b         .loc_0x78
-
-	.loc_0x70:
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x78:
-	  li        r3, 0
-	  blr
-	*/
 }
 
 /*
@@ -396,9 +352,6 @@ void Jac_StartDemo(u32 cinID)
 		case DEMOID_Unk92:
 		case DEMOID_Unk93:
 		case DEMOID_Unk94:
-		case DEMOID_Unk100:
-		case DEMOID_Unk101:
-		case DEMOID_Unk102:
 		case DEMOID_GoodEndingTakeOff:
 		case DEMOID_NeutralEndingLeaveOK:
 			break;
@@ -408,14 +361,24 @@ void Jac_StartDemo(u32 cinID)
 		}
 	}
 
-	if (current_demo_no != -1 && current_demo_no == cinID) {
+	switch (cinID) {
+	case DEMOID_TakeOffTutorial:
+	case DEMOID_TakeOffForest:
+	case DEMOID_TakeOffCaveLast:
+	case DEMOID_TakeOffYakushima:
+		return;
+	}
+
+	if (current_demo_no != -1 && cinID == current_demo_no) {
 		return;
 	}
 
 	if (Jac_TellChgMode() == TRUE) {
 		switch (cinID) {
 		case DEMOID_EndOfDayResults:
-		case DEMOID_Landing:
+		case DEMOID_Unk37:
+		case DEMOID_Unk38:
+		case DEMOID_Unk39:
 			return;
 		}
 	}
@@ -428,60 +391,63 @@ void Jac_StartDemo(u32 cinID)
 	}
 
 	Jac_SetProcessStatus(4);
-	u32 id    = cinID;
-	u32* p_id = &id;
 
 	switch (cinID) {
+	case DEMOID_ShipUpgradeForest:
+	case DEMOID_ShipUpgradeCave:
+	case DEMOID_ShipUpgradeYakushima:
 	case DEMOID_Unk80:
-	case DEMOID_Unk87:
-	case DEMOID_ChalDayEndLast:
-	case DEMOID_Unk89:
-	case DEMOID_Unk90:
-	case DEMOID_Unk91:
-	case DEMOID_Unk92:
-	case DEMOID_Unk93:
-	case DEMOID_Unk94:
 		switch (demo_parts_num) {
 		case 4:
-			id = DEMOID_ShipUpgradeForest;
+			cinID = DEMOID_ShipUpgradeForest;
 			break;
 		case 7:
-			id = DEMOID_ShipUpgradeCave;
+			cinID = DEMOID_ShipUpgradeCave;
 			break;
 		case 29:
-			id = DEMOID_ShipUpgradeYakushima;
+			cinID = DEMOID_ShipUpgradeYakushima;
 			break;
 		}
 		break;
-	case DEMOID_Unk100:
-	case DEMOID_Unk101:
-	case DEMOID_Unk102:
-	case DEMOID_GoodEndingTakeOff:
-	case DEMOID_NeutralEndingLeaveOK:
-		break;
 
+	case DEMOID_CollectPartForest:
+	case DEMOID_CollectPartCaveLast:
+	case DEMOID_CollectPartYakushima:
+	case DEMOID_Unk24:
 	case DEMOID_CollectPartTutorial:
 		if (parts_bright_table[demo_parts_id] == 0) {
 			status = &DEMO_STATUS[DEMOID_Unk101];
-			id     = DEMOID_Unk101;
+			cinID  = DEMOID_Unk101;
 		}
 		break;
 
-	case DEMOID_EndOfDayRedOnyon:
+	case DEMOID_ChalDayEndTutorial:
+	case DEMOID_ChalDayEndForest:
+	case DEMOID_ChalDayEndCave:
+	case DEMOID_ChalDayEndYakushima:
+	case DEMOID_ChalDayEndLast:
 		if (Jac_TellChgMode()) {
 			status = &DEMO_STATUS[DEMOID_Unk102];
-			id     = DEMOID_Unk102;
+			cinID  = DEMOID_Unk102;
 		}
 		break;
 
-	default:
+	case DEMOID_LandingTutorial:
+	case DEMOID_LandingForest:
+	case DEMOID_LandingCaveLast:
+	case DEMOID_LandingYakushima:
+	case DEMOID_Unk89:
 		if (demo_onyon_num == 3) {
 			status = &DEMO_STATUS[DEMOID_Unk100];
-			id     = DEMOID_Unk100;
+			cinID  = DEMOID_Unk100;
 		}
 		break;
 
-	case DEMOID_Unk37:
+	case DEMOID_DayEndTutorial:
+	case DEMOID_DayEndForest:
+	case DEMOID_DayEndCaveLast:
+	case DEMOID_DayEndYakushima:
+	case DEMOID_Unk87:
 		Jac_PlayOrimaSe(JACORIMA_PikiHit);
 		Jac_Delete_CurrentBgmWave();
 		break;
@@ -493,13 +459,13 @@ void Jac_StartDemo(u32 cinID)
 
 	if (current_demo_no != -1) {
 		Jac_FinishDemo_NoErase();
-		__Prepare_BGM(id);
+		__Prepare_BGM(cinID);
 	}
 
-	current_demo_no = id;
+	current_demo_no = cinID;
 
 	if (now_loading == 0) {
-		Jac_PrepareDemo(id);
+		Jac_PrepareDemo(cinID);
 	}
 
 	switch (status->_01) {
@@ -539,14 +505,19 @@ void Jac_StartDemo(u32 cinID)
 		break;
 	}
 
-	if (id >= 2 || id <= 0) {
+	switch (cinID) {
+	case 0:
+	case 1:
+		break;
+
+	default:
 		while (now_loading < 3)
 			;
 	}
 
 	now_loading = 0;
 
-	if (id == DEMOID_CollectFirstPartTutorial) {
+	if (cinID == DEMOID_CollectFirstPartTutorial) {
 		now_loading = 1;
 		__Prepare_BGM(DEMOID_ShipUpgradeTutorial);
 		if (now_loading) {
@@ -555,7 +526,7 @@ void Jac_StartDemo(u32 cinID)
 		}
 	}
 
-	if (id == DEMOID_Unk24) {
+	if (cinID == DEMOID_Unk24) {
 		now_loading = 1;
 		__Prepare_BGM(DEMOID_ShipUpgradeLast);
 		if (now_loading) {
@@ -564,10 +535,10 @@ void Jac_StartDemo(u32 cinID)
 		}
 	}
 
-	u8 flag = status->_03 & 0x7f;
-	if (flag != 0x40 && (flag > 0x3f || flag != 0)) {
+	s32 flag = status->_03 & 0x7f;
+	if (flag != 0x40 && (flag >= 0x40 || flag != 0)) {
 		if (status->_03 & 0x80) {
-			if (status->_08) {
+			if (status->_08 == NULL) {
 				Jac_StartDemoSound(status->_03 & 0xf);
 			}
 		} else {
@@ -599,425 +570,8 @@ void Jac_StartDemo(u32 cinID)
 	}
 	Jac_Orima_Formation(0, 0);
 	Jac_SetProcessStatus(5);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x60(r1)
-	  stmw      r29, 0x54(r1)
-	  stw       r3, 0x8(r1)
-	  lis       r3, 0x8022
-	  addi      r31, r3, 0x64B0
-	  lwz       r29, 0x8(r1)
-	  mulli     r0, r29, 0xC
-	  cmplwi    r29, 0x50
-	  add       r30, r31, r0
-	  addi      r30, r30, 0x500
-	  blt-      .loc_0x68
-	  cmpwi     r29, 0x5F
-	  bge-      .loc_0x54
-	  cmpwi     r29, 0x50
-	  beq-      .loc_0x68
-	  blt-      .loc_0x4DC
-	  cmpwi     r29, 0x57
-	  bge-      .loc_0x68
-	  b         .loc_0x4DC
 
-	.loc_0x54:
-	  cmpwi     r29, 0x73
-	  bge-      .loc_0x4DC
-	  cmpwi     r29, 0x71
-	  bge-      .loc_0x68
-	  b         .loc_0x4DC
-
-	.loc_0x68:
-	  cmpwi     r29, 0x3C
-	  bge-      .loc_0x80
-	  cmpwi     r29, 0x38
-	  bge-      .loc_0x4DC
-	  b         .loc_0x80
-	  b         .loc_0x4DC
-
-	.loc_0x80:
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x94
-	  cmplw     r29, r0
-	  beq-      .loc_0x4DC
-
-	.loc_0x94:
-	  bl        -0xD54
-	  cmpwi     r3, 0x1
-	  bne-      .loc_0xB8
-	  cmpwi     r29, 0x28
-	  bge-      .loc_0xB8
-	  cmpwi     r29, 0x24
-	  bge-      .loc_0x4DC
-	  b         .loc_0xB8
-	  b         .loc_0x4DC
-
-	.loc_0xB8:
-	  lwz       r0, 0x2D3C(r13)
-	  cmpwi     r0, 0
-	  bne-      .loc_0xD4
-	  bl        -0x124
-	  lwz       r0, 0x2D3C(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x4DC
-
-	.loc_0xD4:
-	  li        r3, 0x4
-	  bl        -0x3C38
-	  cmpwi     r29, 0x28
-	  bge-      .loc_0x128
-	  cmpwi     r29, 0x19
-	  beq-      .loc_0x168
-	  bge-      .loc_0x108
-	  cmpwi     r29, 0x14
-	  beq-      .loc_0x218
-	  bge-      .loc_0x1B4
-	  cmpwi     r29, 0x12
-	  bge-      .loc_0x168
-	  b         .loc_0x218
-
-	.loc_0x108:
-	  cmpwi     r29, 0x20
-	  bge-      .loc_0x11C
-	  cmpwi     r29, 0x1C
-	  bge-      .loc_0x20C
-	  b         .loc_0x218
-
-	.loc_0x11C:
-	  cmpwi     r29, 0x24
-	  bge-      .loc_0x218
-	  b         .loc_0x1D4
-
-	.loc_0x128:
-	  cmpwi     r29, 0x57
-	  beq-      .loc_0x20C
-	  bge-      .loc_0x158
-	  cmpwi     r29, 0x4F
-	  beq-      .loc_0x1B4
-	  bge-      .loc_0x14C
-	  cmpwi     r29, 0x2C
-	  bge-      .loc_0x218
-	  b         .loc_0x1F0
-
-	.loc_0x14C:
-	  cmpwi     r29, 0x51
-	  bge-      .loc_0x218
-	  b         .loc_0x168
-
-	.loc_0x158:
-	  cmpwi     r29, 0x59
-	  beq-      .loc_0x1F0
-	  bge-      .loc_0x218
-	  b         .loc_0x1D4
-
-	.loc_0x168:
-	  lbz       r0, 0x2D4E(r13)
-	  cmpwi     r0, 0x7
-	  beq-      .loc_0x19C
-	  bge-      .loc_0x184
-	  cmpwi     r0, 0x4
-	  beq-      .loc_0x190
-	  b         .loc_0x218
-
-	.loc_0x184:
-	  cmpwi     r0, 0x1D
-	  beq-      .loc_0x1A8
-	  b         .loc_0x218
-
-	.loc_0x190:
-	  li        r0, 0x12
-	  stw       r0, 0x8(r1)
-	  b         .loc_0x218
-
-	.loc_0x19C:
-	  li        r0, 0x13
-	  stw       r0, 0x8(r1)
-	  b         .loc_0x218
-
-	.loc_0x1A8:
-	  li        r0, 0x19
-	  stw       r0, 0x8(r1)
-	  b         .loc_0x218
-
-	.loc_0x1B4:
-	  lbz       r0, 0x2D4C(r13)
-	  lbzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  bne-      .loc_0x218
-	  li        r0, 0x65
-	  addi      r30, r31, 0x9BC
-	  stw       r0, 0x8(r1)
-	  b         .loc_0x218
-
-	.loc_0x1D4:
-	  bl        -0xE94
-	  cmpwi     r3, 0
-	  beq-      .loc_0x218
-	  li        r0, 0x66
-	  addi      r30, r31, 0x9C8
-	  stw       r0, 0x8(r1)
-	  b         .loc_0x218
-
-	.loc_0x1F0:
-	  lbz       r0, 0x2D4D(r13)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x218
-	  li        r0, 0x64
-	  addi      r30, r31, 0x9B0
-	  stw       r0, 0x8(r1)
-	  b         .loc_0x218
-
-	.loc_0x20C:
-	  li        r3, 0
-	  bl        -0x2390
-	  bl        -0xFD4
-
-	.loc_0x218:
-	  lbz       r0, 0x0(r30)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x22C
-	  li        r3, 0x19
-	  bl        -0x3BA8
-
-	.loc_0x22C:
-	  lwz       r0, -0x7F10(r13)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x244
-	  bl        0x708
-	  lwz       r3, 0x8(r1)
-	  bl        0x740
-
-	.loc_0x244:
-	  lwz       r0, 0x2D40(r13)
-	  lwz       r31, 0x8(r1)
-	  cmplwi    r0, 0
-	  stw       r31, -0x7F10(r13)
-	  bne-      .loc_0x260
-	  mr        r3, r31
-	  bl        0x8E4
-
-	.loc_0x260:
-	  lbz       r0, 0x1(r30)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x2F0
-	  bge-      .loc_0x288
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x300
-	  bge-      .loc_0x2AC
-	  cmpwi     r0, 0
-	  bge-      .loc_0x298
-	  b         .loc_0x300
-
-	.loc_0x288:
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0x2DC
-	  bge-      .loc_0x300
-	  b         .loc_0x2C0
-
-	.loc_0x298:
-	  li        r3, 0
-	  bl        -0x1C3C
-	  li        r3, 0x1
-	  bl        -0x1C44
-	  b         .loc_0x300
-
-	.loc_0x2AC:
-	  lfs       f1, -0x7E18(r2)
-	  li        r3, 0x1
-	  li        r4, 0xF
-	  bl        -0x11D8
-	  b         .loc_0x300
-
-	.loc_0x2C0:
-	  li        r3, 0
-	  li        r4, 0xF
-	  bl        -0x1CA8
-	  li        r3, 0x1
-	  li        r4, 0xF
-	  bl        -0x1CB4
-	  b         .loc_0x300
-
-	.loc_0x2DC:
-	  lfs       f1, -0x7E14(r2)
-	  li        r3, 0x1
-	  li        r4, 0x1E
-	  bl        -0x1208
-	  b         .loc_0x300
-
-	.loc_0x2F0:
-	  lfs       f1, -0x7E10(r2)
-	  li        r3, 0x1
-	  li        r4, 0x8
-	  bl        -0x121C
-
-	.loc_0x300:
-	  lbz       r0, 0x2(r30)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x320
-	  bge-      .loc_0x314
-	  b         .loc_0x354
-
-	.loc_0x314:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x354
-	  b         .loc_0x344
-
-	.loc_0x320:
-	  li        r0, 0
-	  lis       r3, 0x2
-	  stb       r0, 0x2D4F(r13)
-	  bl        -0xA1EC
-	  stw       r3, 0x48(r1)
-	  li        r4, 0x1
-	  lwz       r3, 0x48(r1)
-	  bl        -0x937C
-	  b         .loc_0x354
-
-	.loc_0x344:
-	  bl        -0x2824
-	  li        r3, 0
-	  li        r4, 0
-	  bl        -0x2670
-
-	.loc_0x354:
-	  cmpwi     r31, 0x2
-	  bge-      .loc_0x364
-	  cmpwi     r31, 0
-	  bge-      .loc_0x370
-
-	.loc_0x364:
-	  lwz       r0, 0x2D40(r13)
-	  cmplwi    r0, 0x3
-	  blt+      .loc_0x364
-
-	.loc_0x370:
-	  li        r0, 0
-	  cmplwi    r31, 0x14
-	  stw       r0, 0x2D40(r13)
-	  bne-      .loc_0x3A8
-	  li        r0, 0x1
-	  li        r3, 0x11
-	  stw       r0, 0x2D40(r13)
-	  bl        0x5F4
-	  lwz       r0, 0x2D40(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3A8
-
-	.loc_0x39C:
-	  lwz       r0, 0x2D40(r13)
-	  cmplwi    r0, 0x3
-	  blt+      .loc_0x39C
-
-	.loc_0x3A8:
-	  cmplwi    r31, 0x18
-	  bne-      .loc_0x3D8
-	  li        r0, 0x1
-	  li        r3, 0x1A
-	  stw       r0, 0x2D40(r13)
-	  bl        0x5C4
-	  lwz       r0, 0x2D40(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x3D8
-
-	.loc_0x3CC:
-	  lwz       r0, 0x2D40(r13)
-	  cmplwi    r0, 0x3
-	  blt+      .loc_0x3CC
-
-	.loc_0x3D8:
-	  lbz       r3, 0x3(r30)
-	  rlwinm    r0,r3,0,25,31
-	  cmpwi     r0, 0x40
-	  beq-      .loc_0x454
-	  bge-      .loc_0x3F4
-	  cmpwi     r0, 0
-	  beq-      .loc_0x454
-
-	.loc_0x3F4:
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0x414
-	  lwz       r0, 0x8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x454
-	  rlwinm    r3,r3,0,28,31
-	  bl        -0x90C
-	  b         .loc_0x454
-
-	.loc_0x414:
-	  rlwinm.   r0,r3,0,28,31
-	  beq-      .loc_0x454
-	  lwz       r0, 0x8(r30)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x454
-	  lis       r3, 0x3
-	  bl        -0xA2EC
-	  stw       r3, 0x2D34(r13)
-	  li        r4, 0
-	  lbz       r0, 0x3(r30)
-	  lwz       r3, 0x2D34(r13)
-	  rlwinm    r5,r0,0,28,31
-	  bl        -0xA5E4
-	  lbz       r0, 0x3(r30)
-	  rlwinm    r0,r0,0,28,31
-	  stw       r0, 0x2D38(r13)
-
-	.loc_0x454:
-	  li        r0, -0x1
-	  li        r3, 0
-	  stw       r0, -0x7F08(r13)
-	  stw       r3, -0x7F0C(r13)
-	  lbz       r0, 0x4(r30)
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x49C
-	  bge-      .loc_0x484
-	  cmpwi     r0, 0
-	  beq-      .loc_0x49C
-	  bge-      .loc_0x490
-	  b         .loc_0x49C
-
-	.loc_0x484:
-	  cmpwi     r0, 0x4
-	  bge-      .loc_0x49C
-	  b         .loc_0x498
-
-	.loc_0x490:
-	  stw       r3, -0x7F08(r13)
-	  b         .loc_0x49C
-
-	.loc_0x498:
-	  stw       r3, -0x7F08(r13)
-
-	.loc_0x49C:
-	  lwz       r3, 0x2D30(r13)
-	  rlwinm    r5,r31,0,16,31
-	  li        r4, 0
-	  bl        -0xA648
-	  lwz       r0, -0x7F08(r13)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x4C8
-	  lwz       r3, 0x2D30(r13)
-	  rlwinm    r5,r31,0,16,31
-	  li        r4, 0x1
-	  bl        -0xA664
-
-	.loc_0x4C8:
-	  li        r3, 0
-	  li        r4, 0
-	  bl        -0x27F0
-	  li        r3, 0x5
-	  bl        -0x4038
-
-	.loc_0x4DC:
-	  lmw       r29, 0x54(r1)
-	  lwz       r0, 0x64(r1)
-	  addi      r1, r1, 0x60
-	  mtlr      r0
-	  blr
-	*/
+	u32 badCompiler[14];
 }
 
 /*
@@ -1061,7 +615,8 @@ BOOL Jac_DemoFrame(int id)
  */
 void Jac_BgmAnimEndRecover()
 {
-	switch (DEMO_STATUS[current_demo_no]._01) {
+	DemoStatus* status = &DEMO_STATUS[current_demo_no];
+	switch (status->_01) {
 	case 0:
 	case 1:
 		break;
@@ -1073,48 +628,6 @@ void Jac_BgmAnimEndRecover()
 		Jac_DemoFade(2, 70, 0.5);
 		break;
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0x69B0
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, -0x7F10(r13)
-	  mulli     r3, r4, 0xC
-	  add       r3, r0, r3
-	  lbz       r0, 0x1(r3)
-	  cmpwi     r0, 0x3
-	  beq-      .loc_0x5C
-	  bge-      .loc_0x3C
-	  cmpwi     r0, 0x2
-	  bge-      .loc_0x48
-	  b         .loc_0x6C
-
-	.loc_0x3C:
-	  cmpwi     r0, 0x5
-	  beq-      .loc_0x48
-	  b         .loc_0x6C
-
-	.loc_0x48:
-	  lfs       f1, -0x7E14(r2)
-	  li        r3, 0x2
-	  li        r4, 0x46
-	  bl        -0x1514
-	  b         .loc_0x6C
-
-	.loc_0x5C:
-	  lfs       f1, -0x7E14(r2)
-	  li        r3, 0x2
-	  li        r4, 0x46
-	  bl        -0x1528
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1124,9 +637,8 @@ void Jac_BgmAnimEndRecover()
  */
 void Jac_BgmAnimEndStop()
 {
-	int flag;
-
-	flag = DEMO_STATUS[current_demo_no]._03;
+	DemoStatus* status = &DEMO_STATUS[current_demo_no];
+	int flag           = status->_03;
 	if (flag && !(flag & 0x20)) {
 		if (flag & 0x80) {
 			Jac_StopDemoSound(flag & 0xf);
@@ -1134,36 +646,6 @@ void Jac_BgmAnimEndStop()
 			Jac_DemoBGMForceStop();
 		}
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0x69B0
-	  stwu      r1, -0x8(r1)
-	  lwz       r4, -0x7F10(r13)
-	  mulli     r3, r4, 0xC
-	  add       r3, r0, r3
-	  lbz       r3, 0x3(r3)
-	  cmpwi     r3, 0
-	  beq-      .loc_0x4C
-	  rlwinm.   r0,r3,0,26,26
-	  bne-      .loc_0x4C
-	  rlwinm.   r0,r3,0,24,24
-	  beq-      .loc_0x48
-	  rlwinm    r3,r3,0,28,31
-	  bl        -0xC40
-	  b         .loc_0x4C
-
-	.loc_0x48:
-	  bl        0x18
-
-	.loc_0x4C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1213,8 +695,8 @@ void __Jac_FinishDemo()
 		return;
 	}
 
-	DemoStatus* state = &DEMO_STATUS[current_demo_no];
-	switch (state->_01) {
+	DemoStatus* status = &DEMO_STATUS[current_demo_no];
+	switch (status->_01) {
 	case 0:
 	case 1:
 		break;
@@ -1227,7 +709,7 @@ void __Jac_FinishDemo()
 		break;
 	}
 
-	switch (state->_02) {
+	switch (status->_02) {
 	case 2:
 		Jac_Orima_Formation(0, 0);
 		break;
@@ -1238,9 +720,7 @@ void __Jac_FinishDemo()
 		break;
 	}
 
-	int flag;
-
-	flag = state->_03;
+	int flag = status->_03;
 	if (flag && !(flag & 0x20)) {
 		if (flag & 0x80) {
 			Jac_StopDemoSound(flag & 0xf);
@@ -1250,8 +730,8 @@ void __Jac_FinishDemo()
 	}
 
 	Jam_WritePortAppDirect(demo_seqp, 0, 0);
-	demo_seq_active = -1;
 	current_demo_no = DEMOID_FINISHED;
+	demo_seq_active = -1;
 }
 
 /*
@@ -1324,7 +804,7 @@ void __Prepare_BGM(u32 cinID)
 {
 	int set;
 	u8 flag;
-	DemoStatus* state = &DEMO_STATUS[cinID];
+	DemoStatus* status = &DEMO_STATUS[cinID];
 
 	if (cinID >= DEMOID_CHECK_BGM_CAT) {
 		switch (cinID) {
@@ -1358,7 +838,7 @@ void __Prepare_BGM(u32 cinID)
 		return;
 	}
 
-	flag = state->_03;
+	flag = status->_03;
 	switch (flag & 0x7F) {
 	case 0x40:
 	case 0x0:
@@ -1539,7 +1019,7 @@ void Jac_StartTextDemo(int a)
  */
 void Jac_FinishTextDemo(void)
 {
-	if (text_demo_state && current_demo_no == DEMOID_FINISHED) {
+	if (text_demo_state != 0 && current_demo_no == DEMOID_FINISHED) {
 		switch (parts_find_demo_state) {
 		case 0:
 			event_pause_counter = 3;
