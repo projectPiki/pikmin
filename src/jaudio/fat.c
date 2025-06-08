@@ -17,8 +17,8 @@ struct FATEntry {
 #define FAT_SIZE (256)
 
 static struct FAT_info2 {
-	u16 startBlock;
-	u16 blockCount;
+	u16 startBlock; // _00
+	u16 blockCount; // _02
 } FH_TO_FAT[FAT_SIZE];
 
 static FATEntry FAT[FAT_SIZE];
@@ -126,15 +126,11 @@ int FAT_AllocateMemory(u32 size)
  */
 int FAT_FreeMemory(u16 size)
 {
-	int total = 0;
-	int old0  = FAT[size].ownerHandle;
-	int old1  = FAT[size].blockSize;
-	u16 size2 = old0 + old1;
-	u16 tail  = USEFAT_TAIL - size2;
-	if (tail == 0) {
-		USEFAT_TAIL = USEFAT_TAIL - old1;
+	u16 tail                   = USEFAT_TAIL - FH_TO_FAT[size].startBlock + FH_TO_FAT[size].blockCount;
+	FH_TO_FAT[size].blockCount = 0;
+	if (tail) {
+
 	}
-	FAT[size].blockSize = 0;
 	return 0;
 	/*
 	.loc_0x0:
@@ -338,7 +334,7 @@ u32 FAT_ReadLong(u16 a, u32 b)
  * Address:	........
  * Size:	000080
  */
-void FAT_ReadLongD(u16, u32)
+void FAT_ReadLongD(u16 a1, u32 a2)
 {
 	// UNUSED FUNCTION
 }

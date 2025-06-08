@@ -576,11 +576,11 @@ void zen::particleGenerator::SetPtclsLife()
 		a = _B8;
 	}
 
-	_88 += a + RandShift(a * _BC);
-	int max = _88;
+	int i   = 0;
+	int max = _88 += a + RandShift(a * _BC);
 	_88     = _88 - max;
 
-	for (int i = 0; i < max; i++) {
+	for (i = 0; i < max; i++) {
 		particleMdl* ptcl = pmGetParticle();
 		if (ptcl) {
 			ptcl->mLifeTime = _110 * (1.0f - Rand(_10C));

@@ -8,12 +8,14 @@
 #include "jaudio/interface.h"
 #include "jaudio/verysimple.h"
 #include "jaudio/dvdthread.h"
+#include "jaudio/pikiinter.h"
 #include "GlobalGameOptions.h"
 #include "MoviePlayer.h"
 
 void __Prepare_BGM(u32);
 void Jac_BgmAnimEndStop();
 void Jac_BgmAnimEndRecover();
+void Jac_FinishDemo_NoErase();
 
 u32 now_loading;
 u8 event_pause_counter;
@@ -40,7 +42,7 @@ typedef struct DemoStatus {
 	u8 _01;  // _01
 	u8 _02;  // _02
 	u8 _03;  // _03
-	u32 _04; // _04
+	u8 _04;  // _04
 	u8* _08; // _08
 } DemoStatus;
 
@@ -381,8 +383,218 @@ void Jac_InitDemoSystem()
  */
 void Jac_StartDemo(u32 cinID)
 {
+	u32* REF_id        = &cinID;
+	DemoStatus* status = &DEMO_STATUS[cinID];
+	if (cinID >= DEMOID_CHECK_BGM_CAT) {
+		switch (cinID) {
+		case DEMOID_Unk80:
+		case DEMOID_Unk87:
+		case DEMOID_ChalDayEndLast:
+		case DEMOID_Unk89:
+		case DEMOID_Unk90:
+		case DEMOID_Unk91:
+		case DEMOID_Unk92:
+		case DEMOID_Unk93:
+		case DEMOID_Unk94:
+		case DEMOID_Unk100:
+		case DEMOID_Unk101:
+		case DEMOID_Unk102:
+		case DEMOID_GoodEndingTakeOff:
+		case DEMOID_NeutralEndingLeaveOK:
+			break;
+
+		default:
+			return;
+		}
+	}
+
+	if (current_demo_no != -1 && current_demo_no == cinID) {
+		return;
+	}
+
+	if (Jac_TellChgMode() == TRUE) {
+		switch (cinID) {
+		case DEMOID_EndOfDayResults:
+		case DEMOID_Landing:
+			return;
+		}
+	}
+
+	if (demo_inited == FALSE) {
+		Jac_InitDemoSystem();
+		if (demo_inited == FALSE) {
+			return;
+		}
+	}
+
+	Jac_SetProcessStatus(4);
+	u32 id    = cinID;
+	u32* p_id = &id;
+
+	switch (cinID) {
+	case DEMOID_Unk80:
+	case DEMOID_Unk87:
+	case DEMOID_ChalDayEndLast:
+	case DEMOID_Unk89:
+	case DEMOID_Unk90:
+	case DEMOID_Unk91:
+	case DEMOID_Unk92:
+	case DEMOID_Unk93:
+	case DEMOID_Unk94:
+		switch (demo_parts_num) {
+		case 4:
+			id = DEMOID_ShipUpgradeForest;
+			break;
+		case 7:
+			id = DEMOID_ShipUpgradeCave;
+			break;
+		case 29:
+			id = DEMOID_ShipUpgradeYakushima;
+			break;
+		}
+		break;
+	case DEMOID_Unk100:
+	case DEMOID_Unk101:
+	case DEMOID_Unk102:
+	case DEMOID_GoodEndingTakeOff:
+	case DEMOID_NeutralEndingLeaveOK:
+		break;
+
+	case DEMOID_CollectPartTutorial:
+		if (parts_bright_table[demo_parts_id] == 0) {
+			status = &DEMO_STATUS[DEMOID_Unk101];
+			id     = DEMOID_Unk101;
+		}
+		break;
+
+	case DEMOID_EndOfDayRedOnyon:
+		if (Jac_TellChgMode()) {
+			status = &DEMO_STATUS[DEMOID_Unk102];
+			id     = DEMOID_Unk102;
+		}
+		break;
+
+	default:
+		if (demo_onyon_num == 3) {
+			status = &DEMO_STATUS[DEMOID_Unk100];
+			id     = DEMOID_Unk100;
+		}
+		break;
+
+	case DEMOID_Unk37:
+		Jac_PlayOrimaSe(JACORIMA_PikiHit);
+		Jac_Delete_CurrentBgmWave();
+		break;
+	}
+
+	if (status->_00) {
+		Jac_PlaySystemSe(JACSYS_Unk25);
+	}
+
+	if (current_demo_no != -1) {
+		Jac_FinishDemo_NoErase();
+		__Prepare_BGM(id);
+	}
+
+	current_demo_no = id;
+
+	if (now_loading == 0) {
+		Jac_PrepareDemo(id);
+	}
+
+	switch (status->_01) {
+	case 0:
+		Jac_StopBgm(0);
+		Jac_StopBgm(1);
+		break;
+	case 1:
+		break;
+	case 2:
+		Jac_DemoFade(1, 15, 0.01f);
+		break;
+	case 4:
+		Jac_FadeOutBgm(0, 15);
+		Jac_FadeOutBgm(1, 15);
+		break;
+	case 5:
+		Jac_DemoFade(1, 30, 0.5f);
+		break;
+	case 3:
+		Jac_DemoFade(1, 8, 0.0f);
+		break;
+	}
+
+	switch (status->_02) {
+	case 0:
+		break;
+	case 1:
+		event_pause_counter = 0;
+		seqp_* track        = Jam_GetTrackHandle(0x20000);
+		seqp_** tp          = &track;
+		Jam_PauseTrack(track, 1);
+		break;
+	case 2:
+		Jac_InitAllEvent();
+		Jac_Orima_Formation(0, 0);
+		break;
+	}
+
+	if (id >= 2 || id <= 0) {
+		while (now_loading < 3)
+			;
+	}
+
+	now_loading = 0;
+
+	if (id == DEMOID_CollectFirstPartTutorial) {
+		now_loading = 1;
+		__Prepare_BGM(DEMOID_ShipUpgradeTutorial);
+		if (now_loading) {
+			while (now_loading < 3)
+				;
+		}
+	}
+
+	if (id == DEMOID_Unk24) {
+		now_loading = 1;
+		__Prepare_BGM(DEMOID_ShipUpgradeLast);
+		if (now_loading) {
+			while (now_loading < 3)
+				;
+		}
+	}
+
+	u8 flag = status->_03 & 0x7f;
+	if (flag != 0x40 && (flag > 0x3f || flag != 0)) {
+		if (status->_03 & 0x80) {
+			if (status->_08) {
+				Jac_StartDemoSound(status->_03 & 0xf);
+			}
+		} else {
+			if (status->_03 & 0xf && status->_08 == NULL) {
+				demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
+				Jam_WritePortAppDirect(demo_bgm_seqp, 0, status->_03 & 0xf);
+				current_seq_bgm = status->_03 & 0xf;
+			}
+		}
+	}
+
+	demo_mml_active = -1;
+	demo_seq_active = 0;
+
+	switch (status->_04) {
+	case 0:
+		break;
+	case 1:
+		demo_mml_active = 0;
+		break;
+	case 3:
+		demo_mml_active = 0;
+		break;
+	}
+
 	Jam_WritePortAppDirect(demo_seqp, 0, cinID);
-	if (-1 < demo_mml_active) {
+	if (0 <= demo_mml_active) {
 		Jam_WritePortAppDirect(demo_seqp, 1, cinID);
 	}
 	Jac_Orima_Formation(0, 0);
