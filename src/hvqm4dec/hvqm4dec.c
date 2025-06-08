@@ -237,13 +237,12 @@ static void readTree(BitBufferWithTree* const code, int is_signed, int scale)
  */
 static inline int decodeHuff(BitBufferWithTree* code)
 {
-	BitBuffer* _FAKE = &code->str; // Not used, but needed to match stack alignment
-
-	Tree* tree = code->tree;
-	int point  = tree->tree_root;
+	Tree* tree     = code->tree;
+	BitBuffer* str = &code->str;
+	int point      = tree->tree_root;
 
 	while (point >= 0x100) {
-		point = tree->leaf[getBit(&code->str)][point];
+		point = tree->leaf[getBit(str)][point];
 	}
 
 	return tree->leaf[0][point];
