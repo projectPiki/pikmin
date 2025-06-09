@@ -383,7 +383,7 @@ BOOL Jac_PlayEventAction(int a1, int a2)
 	u32 index;
 	u8 status;
 	u8 status2;
-	int offset;
+	u32 offset;
 	SEvent_* event;
 	u32 i;
 
@@ -416,25 +416,25 @@ BOOL Jac_PlayEventAction(int a1, int a2)
 		if (index2 == 0) {
 			index2 = 0x10;
 		}
-		u32 status3 = ACTION_STATUS[offset]._01;
 
-		u32 time   = 0;
-		u32 index4 = 0;
-		u32 index3 = 0;
+		u32 index3  = 0;
+		u32 time    = 0;
+		u32 index4  = 0;
+		u32 status3 = ACTION_STATUS[offset]._01;
 		for (i = 0; i < 16; i++) {
-			u32 u = event->_0C[i]._00;
-			if (u) {
+			if (event->_0C[i]._00) {
 				if (event->_0C[i]._04 == status2) {
 					index3++;
 				}
 
-				if (ACTION_STATUS[u]._01 > status3) {
+				u32 status4 = ACTION_STATUS[event->_0C[i]._00]._01;
+				if (status3 > status4) {
 					time    = CURRENT_TIME - event->_0C[i]._08;
 					index4  = i;
-					status3 = ACTION_STATUS[u]._01;
+					status3 = status4;
 				}
 
-				if (status3 == ACTION_STATUS[u]._01) {
+				if (status3 == status4) {
 					u32 time2 = CURRENT_TIME - event->_0C[i]._08;
 					if (time2 > time) {
 						time   = time2;
@@ -485,8 +485,9 @@ BOOL Jac_PlayEventAction(int a1, int a2)
 	if (index == 16) {
 		status = ACTION_STATUS[offset]._01 + 1;
 		for (i = 0; i < 16; i++) {
+			u8 status3 = ACTION_STATUS[event->_0C[i]._00]._01;
 			if (ACTION_STATUS[event->_0C[i]._00]._01 < status) {
-				status = ACTION_STATUS[event->_0C[i]._00]._01;
+				status = status3;
 				index  = i;
 			}
 		}
@@ -502,239 +503,6 @@ BOOL Jac_PlayEventAction(int a1, int a2)
 	event->_0C[index]._04 = status2;
 	event->_0C[index]._08 = CURRENT_TIME;
 	return TRUE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  cmpwi     r3, -0x1
-	  addi      r5, r5, 0x5A68
-	  stwu      r1, -0x38(r1)
-	  stmw      r25, 0x1C(r1)
-	  bne-      .loc_0x28
-	  li        r3, 0
-	  b         .loc_0x2CC
-
-	.loc_0x28:
-	  mulli     r6, r3, 0x1B4
-	  lis       r3, 0x803E
-	  subi      r0, r3, 0x5034
-	  add       r31, r0, r6
-	  lwz       r0, 0xCC(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x4C
-	  li        r3, 0
-	  b         .loc_0x2CC
-
-	.loc_0x4C:
-	  rlwinm    r3,r0,2,0,29
-	  li        r0, 0x10
-	  lwzx      r6, r5, r3
-	  li        r7, 0
-	  li        r3, 0
-	  add       r28, r4, r6
-	  mtctr     r0
-
-	.loc_0x68:
-	  addi      r0, r3, 0xC
-	  lwzx      r0, r31, r0
-	  cmplwi    r0, 0
-	  beq-      .loc_0x84
-	  addi      r7, r7, 0x1
-	  addi      r3, r3, 0xC
-	  bdnz+     .loc_0x68
-
-	.loc_0x84:
-	  mulli     r0, r28, 0x6
-	  addi      r30, r7, 0
-	  add       r3, r5, r0
-	  lbz       r7, 0x20(r3)
-	  lbz       r29, 0x22(r3)
-	  rlwinm.   r3,r7,0,27,27
-	  beq-      .loc_0x180
-	  rlwinm.   r3,r7,0,28,31
-	  addi      r11, r3, 0
-	  bne-      .loc_0xB0
-	  li        r11, 0x10
-
-	.loc_0xB0:
-	  add       r4, r5, r0
-	  li        r3, 0x10
-	  lbz       r25, 0x21(r4)
-	  li        r12, 0
-	  lwz       r6, 0x2C80(r13)
-	  li        r27, 0
-	  li        r26, 0
-	  li        r10, 0
-	  li        r4, 0
-	  mtctr     r3
-
-	.loc_0xD8:
-	  add       r8, r31, r4
-	  lwz       r9, 0xC(r8)
-	  cmplwi    r9, 0
-	  beq-      .loc_0x140
-	  lbz       r3, 0x10(r8)
-	  cmplw     r3, r29
-	  bne-      .loc_0xF8
-	  addi      r12, r12, 0x1
-
-	.loc_0xF8:
-	  mulli     r3, r9, 0x6
-	  add       r3, r5, r3
-	  lbz       r3, 0x21(r3)
-	  cmplw     r25, r3
-	  addi      r9, r3, 0
-	  ble-      .loc_0x120
-	  lwz       r3, 0x14(r8)
-	  addi      r26, r10, 0
-	  addi      r25, r9, 0
-	  sub       r27, r6, r3
-
-	.loc_0x120:
-	  cmplw     r25, r9
-	  bne-      .loc_0x140
-	  lwz       r3, 0x14(r8)
-	  sub       r3, r6, r3
-	  cmplw     r3, r27
-	  ble-      .loc_0x140
-	  addi      r27, r3, 0
-	  addi      r26, r10, 0
-
-	.loc_0x140:
-	  addi      r10, r10, 0x1
-	  addi      r4, r4, 0xC
-	  bdnz+     .loc_0xD8
-	  cmplw     r12, r11
-	  bge-      .loc_0x15C
-	  cmplwi    r30, 0x10
-	  bne-      .loc_0x214
-
-	.loc_0x15C:
-	  rlwinm.   r3,r7,0,26,26
-	  beq-      .loc_0x178
-	  lwz       r4, 0x2C88(r13)
-	  li        r3, 0
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2C88(r13)
-	  b         .loc_0x2CC
-
-	.loc_0x178:
-	  mr        r30, r26
-	  b         .loc_0x214
-
-	.loc_0x180:
-	  li        r3, 0x10
-	  li        r9, 0x10
-	  li        r8, 0
-	  li        r4, 0
-	  mtctr     r3
-
-	.loc_0x194:
-	  add       r3, r31, r4
-	  lwz       r6, 0xC(r3)
-	  cmplwi    r6, 0
-	  bne-      .loc_0x1AC
-	  mr        r9, r8
-	  b         .loc_0x1FC
-
-	.loc_0x1AC:
-	  lbz       r3, 0x10(r3)
-	  cmplw     r3, r29
-	  bne-      .loc_0x1FC
-	  rlwinm.   r3,r7,0,26,26
-	  beq-      .loc_0x1F4
-	  mulli     r3, r6, 0x6
-	  addi      r6, r5, 0x21
-	  lbzx      r4, r6, r0
-	  lbzx      r3, r6, r3
-	  cmplw     r4, r3
-	  ble-      .loc_0x1E0
-	  mr        r30, r8
-	  b         .loc_0x208
-
-	.loc_0x1E0:
-	  lwz       r4, 0x2C88(r13)
-	  li        r3, 0
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2C88(r13)
-	  b         .loc_0x2CC
-
-	.loc_0x1F4:
-	  mr        r30, r8
-	  b         .loc_0x208
-
-	.loc_0x1FC:
-	  addi      r8, r8, 0x1
-	  addi      r4, r4, 0xC
-	  bdnz+     .loc_0x194
-
-	.loc_0x208:
-	  cmplwi    r8, 0x10
-	  bne-      .loc_0x214
-	  mr        r30, r9
-
-	.loc_0x214:
-	  cmplwi    r30, 0x10
-	  bne-      .loc_0x28C
-	  add       r4, r5, r0
-	  li        r3, 0x10
-	  lbz       r6, 0x21(r4)
-	  li        r7, 0
-	  li        r4, 0
-	  addi      r8, r6, 0x1
-	  mtctr     r3
-
-	.loc_0x238:
-	  addi      r6, r4, 0xC
-	  rlwinm    r3,r8,0,24,31
-	  lwzx      r6, r31, r6
-	  mulli     r6, r6, 0x6
-	  add       r6, r5, r6
-	  lbz       r6, 0x21(r6)
-	  cmplw     r6, r3
-	  addi      r3, r6, 0
-	  bge-      .loc_0x264
-	  addi      r8, r3, 0
-	  addi      r30, r7, 0
-
-	.loc_0x264:
-	  addi      r7, r7, 0x1
-	  addi      r4, r4, 0xC
-	  bdnz+     .loc_0x238
-	  cmplwi    r30, 0x10
-	  bne-      .loc_0x28C
-	  lwz       r4, 0x2C88(r13)
-	  li        r3, 0
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x2C88(r13)
-	  b         .loc_0x2CC
-
-	.loc_0x28C:
-	  lwz       r6, 0x2C84(r13)
-	  add       r4, r5, r0
-	  rlwinm    r5,r30,12,0,19
-	  addi      r3, r31, 0xD4
-	  addi      r0, r6, 0x1
-	  stw       r0, 0x2C84(r13)
-	  lhz       r0, 0x24(r4)
-	  or        r4, r5, r0
-	  bl        0x3C74
-	  mulli     r0, r30, 0xC
-	  li        r3, 0x1
-	  add       r4, r31, r0
-	  stw       r28, 0xC(r4)
-	  stb       r29, 0x10(r4)
-	  lwz       r0, 0x2C80(r13)
-	  stw       r0, 0x14(r4)
-
-	.loc_0x2CC:
-	  lmw       r25, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
