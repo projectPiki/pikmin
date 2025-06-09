@@ -24,7 +24,7 @@ static struct FAT_info2 {
 static FATEntry FAT[FAT_SIZE];
 
 // havent figured this out yet
-static struct FAT_info2 fattmp[FAT_SIZE * 2];
+static struct FATEntry fattmp[FAT_SIZE];
 
 /*
  * --INFO--
@@ -126,9 +126,46 @@ int FAT_AllocateMemory(u32 size)
  */
 int FAT_FreeMemory(u16 size)
 {
-	u16 tail                   = USEFAT_TAIL - FH_TO_FAT[size].startBlock + FH_TO_FAT[size].blockCount;
+	u32 badcompiler[2];
+	u32 i;
+	u32 start;
+	u32 count;
+	u16 size2;
+	u16 tail;
+
+	count                      = FH_TO_FAT[size].blockCount;
+	start                      = FH_TO_FAT[size].startBlock;
 	FH_TO_FAT[size].blockCount = 0;
-	if (tail) { }
+	size2                      = start + count;
+	tail                       = USEFAT_TAIL - size2;
+
+	if (tail == 0) {
+		USEFAT_TAIL -= count;
+		for (i = 0; i < count; i++) {
+			FAT[USEFAT_TAIL + i].ownerHandle = 0xffff;
+		}
+		return 0;
+	}
+
+	for (i = 0; i < count; i++) {
+		fattmp[i] = FAT[start + i];
+
+		fattmp[i].ownerHandle = 0xffff;
+	}
+
+	u16 temp = 0xffff; // r31
+	for (i = 0; i < tail; i++) {
+		FAT[start + i] = FAT[size2 + i];
+		if (FAT[size2 + i].ownerHandle != temp) {
+			FH_TO_FAT[FAT[size2 + i].ownerHandle].startBlock = start + i;
+			temp                                             = FAT[size2 + i].ownerHandle;
+		}
+	}
+
+	USEFAT_TAIL -= count;
+	for (i = 0; i < count; i++) {
+		FAT[USEFAT_TAIL + i] = fattmp[i];
+	}
 	return 0;
 	/*
 	.loc_0x0:
