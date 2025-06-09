@@ -127,10 +127,11 @@ int FAT_AllocateMemory(u32 size)
 int FAT_FreeMemory(u16 size)
 {
 	u32 badcompiler[2];
+	u16 temp;
 	u32 i;
 	u32 start;
-	u32 count;
 	u16 size2;
+	u32 count;
 	u16 tail;
 
 	count                      = FH_TO_FAT[size].blockCount;
@@ -153,7 +154,7 @@ int FAT_FreeMemory(u16 size)
 		fattmp[i].ownerHandle = 0xffff;
 	}
 
-	u16 temp = 0xffff; // r31
+	temp = 0xffff;
 	for (i = 0; i < tail; i++) {
 		FAT[start + i] = FAT[size2 + i];
 		if (FAT[size2 + i].ownerHandle != temp) {
