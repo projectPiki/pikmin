@@ -54,6 +54,7 @@ static int jac_debug_multi_cancel;
 SEvent_ EVENT[16];
 SCamera_ CAMERA;
 
+typedef struct ActionStatus ActionStatus;
 static int EVENT_OFFSET[] = { 0, 1, 0xad, 0xbe, 0xcd, 0xd7, 0xdb, 0x105 };
 static struct ActionStatus {
 	u8 _00;  // _00
@@ -379,13 +380,126 @@ BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
  */
 BOOL Jac_PlayEventAction(int a1, int a2)
 {
+	u32 index;
+	u8 status;
+	u8 status2;
+	int offset;
+	SEvent_* event;
+	u32 i;
+
 	if (a1 == -1) {
 		return FALSE;
 	}
-	if (EVENT[a1].eventType == 0) {
+
+	event = &EVENT[a1];
+	if (event->eventType == 0) {
 		return FALSE;
 	}
 
+	offset = a2 + EVENT_OFFSET[event->eventType];
+
+	int index2 = 0;
+	for (i = 0; i < 16; i++) {
+		SEvent_UnkC* u = &event->_0C[i];
+		if (u->_00 == 0) {
+			break;
+		}
+		index2++;
+	}
+	index = index2;
+
+	status  = ACTION_STATUS[offset]._00;
+	status2 = ACTION_STATUS[offset]._02;
+
+	if (status & 0x10) {
+		u32 index2 = status & 0xf;
+		if (index2 == 0) {
+			index2 = 0x10;
+		}
+		u32 status3 = ACTION_STATUS[offset]._01;
+
+		u32 time   = 0;
+		u32 index4 = 0;
+		u32 index3 = 0;
+		for (i = 0; i < 16; i++) {
+			u32 u = event->_0C[i]._00;
+			if (u) {
+				if (event->_0C[i]._04 == status2) {
+					index3++;
+				}
+
+				if (ACTION_STATUS[u]._01 > status3) {
+					time    = CURRENT_TIME - event->_0C[i]._08;
+					index4  = i;
+					status3 = ACTION_STATUS[u]._01;
+				}
+
+				if (status3 == ACTION_STATUS[u]._01) {
+					u32 time2 = CURRENT_TIME - event->_0C[i]._08;
+					if (time2 > time) {
+						time   = time2;
+						index4 = i;
+					}
+				}
+			}
+		}
+
+		if (index3 >= index2 || index == 0x10) {
+			if (status & 0x20) {
+				jac_debug_multi_cancel++;
+				return 0;
+			}
+			index = index4;
+		}
+	} else {
+		int temp2 = 16;
+		for (i = 0; i < 16; i++) {
+			u32 u = event->_0C[i]._00;
+			if (u == 0) {
+				temp2 = i;
+				continue;
+			}
+
+			if (event->_0C[i]._04 == status2) {
+				if (!(status & 0x20)) {
+					break;
+				}
+				if (ACTION_STATUS[offset]._01 > ACTION_STATUS[u]._01) {
+					index = i;
+					break;
+				} else {
+					jac_debug_multi_cancel++;
+					return 0;
+				}
+			}
+			index = i;
+		}
+
+		if (i == 16) {
+			index = temp2;
+		}
+	}
+
+	if (index == 16) {
+		status = ACTION_STATUS[offset]._01 + 1;
+		for (i = 0; i < 16; i++) {
+			if (ACTION_STATUS[event->_0C[i]._00]._01 < status) {
+				status = ACTION_STATUS[event->_0C[i]._00]._01;
+				index  = i;
+			}
+		}
+
+		if (index == 16) {
+			jac_debug_multi_cancel++;
+			return FALSE;
+		}
+	}
+	jac_debug_multi_entry++;
+	Jal_SendCmdQueue_Force(&event->cmdQueue, index << 0xc | ACTION_STATUS[offset]._04);
+	event->_0C[index]._00 = offset;
+	event->_0C[index]._04 = status2;
+	event->_0C[index]._08 = CURRENT_TIME;
+	return TRUE;
 	/*
 	.loc_0x0:
 	  mflr      r0
