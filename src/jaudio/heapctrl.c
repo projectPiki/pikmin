@@ -254,10 +254,18 @@ void Jac_InitMotherHeap(jaheap_* heap, u32 startAddr, u32 size, u8 memType)
  */
 BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 {
+	u32 y;
+	jaheap_* temp;
+	jaheap_* temp2;
+	jaheap_* temp3;
+	jaheap_* result;
+	u32 t;
+	u32 max;
+	u32 x;
+
 	u32 fixedSize = OSRoundUp32B(size);
 
-	u32 y = parent->startAddress;
-	if (y == 0) {
+	if (parent->startAddress == 0) {
 		return FALSE;
 	}
 
@@ -265,14 +273,17 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 		return FALSE;
 	}
 
-	if (fixedSize < parent->size - parent->usedSize) {
-		jaheap_* result = 0;
-		u32 max         = 0xfffffff;
-		int t;
-		jaheap_* start = parent->firstChild;
-		for (jaheap_* temp = parent->firstChild; temp; temp = temp->nextSibling) {
-			int x = temp->startAddress - y;
-			if (fixedSize >= x) {
+	if (parent->size - parent->usedSize < fixedSize) {
+		temp   = parent->firstChild;
+		y      = parent->startAddress;
+		result = NULL;
+		max    = 0xfffffff;
+		while (TRUE) {
+			if (temp == NULL) {
+				break;
+			}
+			x = temp->startAddress - y;
+			if (x >= fixedSize) {
 				x -= fixedSize;
 
 				if (x < max) {
@@ -282,23 +293,27 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 				}
 			}
 
-			y = temp->startAddress + temp->size;
+			y    = temp->startAddress + temp->size;
+			temp = temp->nextSibling;
 		}
 
 		if (result == 0) {
 			return FALSE;
 		}
 
-		if (result == start) {
-			heap->nextSibling  = start;
+		if (result == parent->firstChild) {
+			heap->nextSibling  = parent->firstChild;
 			parent->firstChild = heap;
 		} else {
-			while (start->nextSibling != result) {
-				start = start->nextSibling;
+			temp3 = parent->firstChild;
+			while (TRUE) {
+				if (temp3->nextSibling == result) {
+					heap->nextSibling  = temp3->nextSibling;
+					temp3->nextSibling = heap;
+					break;
+				}
+				temp3 = temp3->nextSibling;
 			}
-
-			heap->nextSibling  = start;
-			start->nextSibling = heap;
 		}
 
 		heap->startAddress = t;
@@ -313,7 +328,7 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 		return TRUE;
 	}
 
-	heap->startAddress = fixedSize + heap->usedSize;
+	heap->startAddress = parent->startAddress + parent->usedSize;
 	heap->size         = fixedSize;
 	heap->usedSize     = 0;
 	heap->isRootHeap   = 0;
@@ -322,161 +337,25 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
 	heap->firstChild   = NULL;
 	heap->parent       = parent;
 
-	jaheap_* temp = parent->firstChild;
-	if (parent->firstChild == NULL) {
-		parent->firstChild  = heap;
-		parent->nextSibling = NULL;
+	temp2 = parent->firstChild;
+	!temp2;
+	if (temp2 == NULL) {
+		parent->firstChild = heap;
+		heap->nextSibling  = NULL;
 	} else {
-		while (temp->nextSibling) {
-			temp = temp->nextSibling;
+		while (TRUE) {
+			if (temp2->nextSibling == NULL) {
+				temp2->nextSibling = heap;
+				break;
+			}
+			temp2 = temp2->nextSibling;
 		}
-		temp->nextSibling = heap;
 	}
 
 	heap->nextSibling = NULL;
 	parent->usedSize += fixedSize;
 	parent->childCount++;
 	return TRUE;
-	/*
-	.loc_0x0:
-	  lwz       r6, 0x8(r4)
-	  addi      r0, r5, 0x1F
-	  rlwinm    r0,r0,0,0,26
-	  cmplwi    r6, 0
-	  bne-      .loc_0x1C
-	  li        r3, 0
-	  blr
-
-	.loc_0x1C:
-	  lwz       r5, 0x8(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x3C
-	  addis     r5, r5, 0x1
-	  cmplwi    r5, 0xFFFF
-	  beq-      .loc_0x3C
-	  li        r3, 0
-	  blr
-
-	.loc_0x3C:
-	  lwz       r7, 0xC(r4)
-	  lwz       r5, 0x10(r4)
-	  sub       r5, r5, r7
-	  cmplw     r5, r0
-	  bge-      .loc_0x12C
-	  lwz       r7, 0x14(r4)
-	  lis       r5, 0x1000
-	  addi      r8, r6, 0
-	  subi      r12, r5, 0x1
-	  addi      r9, r7, 0
-	  li        r10, 0
-
-	.loc_0x68:
-	  cmplwi    r9, 0
-	  beq-      .loc_0xA8
-	  lwz       r6, 0x8(r9)
-	  sub       r5, r6, r8
-	  cmplw     r5, r0
-	  blt-      .loc_0x98
-	  sub       r5, r5, r0
-	  cmplw     r5, r12
-	  bge-      .loc_0x98
-	  addi      r10, r9, 0
-	  addi      r11, r8, 0
-	  addi      r12, r5, 0
-
-	.loc_0x98:
-	  lwz       r5, 0x10(r9)
-	  lwz       r9, 0x1C(r9)
-	  add       r8, r6, r5
-	  b         .loc_0x68
-
-	.loc_0xA8:
-	  cmplwi    r10, 0
-	  bne-      .loc_0xB8
-	  li        r3, 0
-	  blr
-
-	.loc_0xB8:
-	  cmplw     r10, r7
-	  bne-      .loc_0xCC
-	  stw       r7, 0x1C(r3)
-	  stw       r3, 0x14(r4)
-	  b         .loc_0xF0
-
-	.loc_0xCC:
-	  mr        r6, r7
-
-	.loc_0xD0:
-	  lwz       r5, 0x1C(r6)
-	  cmplw     r5, r10
-	  bne-      .loc_0xE8
-	  stw       r5, 0x1C(r3)
-	  stw       r3, 0x1C(r6)
-	  b         .loc_0xF0
-
-	.loc_0xE8:
-	  mr        r6, r5
-	  b         .loc_0xD0
-
-	.loc_0xF0:
-	  stw       r11, 0x8(r3)
-	  li        r5, 0
-	  stw       r0, 0x10(r3)
-	  stw       r5, 0xC(r3)
-	  stb       r5, 0x0(r3)
-	  lbz       r0, 0x1(r4)
-	  stb       r0, 0x1(r3)
-	  sth       r5, 0x2(r3)
-	  stw       r5, 0x14(r3)
-	  stw       r4, 0x18(r3)
-	  li        r3, 0x1
-	  lhz       r5, 0x2(r4)
-	  addi      r0, r5, 0x1
-	  sth       r0, 0x2(r4)
-	  blr
-
-	.loc_0x12C:
-	  add       r5, r6, r7
-	  li        r6, 0
-	  stw       r5, 0x8(r3)
-	  stw       r0, 0x10(r3)
-	  stw       r6, 0xC(r3)
-	  stb       r6, 0x0(r3)
-	  lbz       r5, 0x1(r4)
-	  stb       r5, 0x1(r3)
-	  sth       r6, 0x2(r3)
-	  stw       r6, 0x14(r3)
-	  stw       r4, 0x18(r3)
-	  lwz       r7, 0x14(r4)
-	  cmplwi    r7, 0
-	  bne-      .loc_0x170
-	  stw       r3, 0x14(r4)
-	  stw       r6, 0x1C(r3)
-	  b         .loc_0x18C
-
-	.loc_0x170:
-	  lwz       r5, 0x1C(r7)
-	  cmplwi    r5, 0
-	  bne-      .loc_0x184
-	  stw       r3, 0x1C(r7)
-	  b         .loc_0x18C
-
-	.loc_0x184:
-	  mr        r7, r5
-	  b         .loc_0x170
-
-	.loc_0x18C:
-	  li        r5, 0
-	  stw       r5, 0x1C(r3)
-	  li        r3, 0x1
-	  lwz       r5, 0xC(r4)
-	  add       r0, r5, r0
-	  stw       r0, 0xC(r4)
-	  lhz       r5, 0x2(r4)
-	  addi      r0, r5, 0x1
-	  sth       r0, 0x2(r4)
-	  blr
-	*/
 }
 
 /*
@@ -494,65 +373,70 @@ BOOL Jac_DeleteHeap(jaheap_* heap)
 	}
 
 	jaheap_* heap2 = heap->firstChild;
-	while (heap2->nextSibling) {
-		heap2 = heap2->nextSibling;
-		Jac_DeleteHeap(heap2->nextSibling);
+	while (heap2) {
+		jaheap_* next = heap2->nextSibling;
+		Jac_DeleteHeap(heap2);
+		heap2 = next;
 	}
 
 	heap->firstChild = NULL;
 
 	heap2 = heap->firstGroupedHeap;
-	while (heap2->nextSibling) {
-		heap2 = heap2->nextSibling;
-		Jac_DeleteHeap(heap2->nextSibling);
+	while (heap2) {
+		jaheap_* next = heap2->nextGroupedHeap;
+		Jac_DeleteHeap(heap2);
+		heap2 = next;
 	}
 
-	jaheap_** ptr          = &heap->parent;
 	heap->firstGroupedHeap = NULL;
 
 	if (heap->parent) {
-		heap2 = (*ptr)->firstChild;
+		heap2 = heap->parent->firstChild;
 		if (heap2 == heap) {
-			*ptr = heap->nextSibling;
+			heap->parent->firstChild = heap->nextSibling;
 			if (heap->nextSibling == NULL) {
-				(*ptr)->usedSize = NULL;
+				heap->parent->usedSize = NULL;
 			}
-
 		} else {
-			while (heap2->nextSibling != heap) {
+			while (TRUE) {
 				if (heap2 == NULL) {
 					heap->startAddress = 0;
 					return FALSE;
 				}
 
-				heap2 = heap2->nextSibling;
-			}
+				if (heap2->nextSibling == heap) {
+					heap2->nextSibling = heap->nextSibling;
+					if (heap->nextSibling == NULL) {
+						heap->parent->usedSize = heap2->startAddress + heap2->size - heap->parent->startAddress;
+					}
+					break;
+				}
 
-			heap2->nextSibling = heap->nextSibling;
-			if (heap->nextSibling == NULL) {
-				(*ptr)->usedSize = heap2->usedSize + heap2->size - heap2->startAddress;
+				heap2 = heap2->nextSibling;
 			}
 		}
 
-		(*ptr)->childCount--;
+		heap->parent->childCount--;
 	}
 
 	if (heap->groupOwner) {
-		ptr   = &heap->groupOwner->firstGroupedHeap;
-		heap2 = *ptr;
+		heap2 = heap->groupOwner->firstGroupedHeap;
 
 		if (heap2 == heap) {
-			*ptr = heap->nextGroupedHeap;
+			heap->groupOwner->firstGroupedHeap = heap->nextGroupedHeap;
 		} else {
-			while (heap2->nextGroupedHeap != heap) {
+			while (TRUE) {
 				if (heap2 == NULL) {
 					return FALSE;
 				}
 
+				if (heap2->nextGroupedHeap == heap) {
+					heap2->nextGroupedHeap = heap->nextGroupedHeap;
+					break;
+				}
+
 				heap2 = heap2->nextGroupedHeap;
 			}
-
-			heap2->nextGroupedHeap = heap->nextGroupedHeap;
 		}
 
 		heap->groupOwner      = NULL;
@@ -561,150 +445,6 @@ BOOL Jac_DeleteHeap(jaheap_* heap)
 
 	heap->startAddress = 0;
 	return TRUE;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r28, 0x20(r1)
-	  stw       r3, 0x8(r1)
-	  lwz       r31, 0x8(r1)
-	  lwz       r0, 0x8(r31)
-	  addi      r30, r31, 0x8
-	  cmplwi    r0, 0
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0x19C
-
-	.loc_0x30:
-	  addi      r29, r31, 0x14
-	  lwz       r3, 0x14(r31)
-	  b         .loc_0x48
-
-	.loc_0x3C:
-	  lwz       r28, 0x1C(r3)
-	  bl        .loc_0x0
-	  mr        r3, r28
-
-	.loc_0x48:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x3C
-	  li        r0, 0
-	  addi      r28, r31, 0x24
-	  stw       r0, 0x0(r29)
-	  lwz       r3, 0x24(r31)
-	  b         .loc_0x70
-
-	.loc_0x64:
-	  lwz       r29, 0x28(r3)
-	  bl        .loc_0x0
-	  mr        r3, r29
-
-	.loc_0x70:
-	  cmplwi    r3, 0
-	  bne+      .loc_0x64
-	  li        r4, 0
-	  addi      r6, r31, 0x18
-	  stw       r4, 0x0(r28)
-	  lwz       r3, 0x18(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x12C
-	  lwzu      r7, 0x14(r3)
-	  cmplw     r7, r31
-	  bne-      .loc_0xBC
-	  lwz       r0, 0x1C(r31)
-	  stw       r0, 0x0(r3)
-	  lwz       r0, 0x1C(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x11C
-	  lwz       r3, 0x0(r6)
-	  stw       r4, 0xC(r3)
-	  b         .loc_0x11C
-
-	.loc_0xBC:
-	  cmplwi    r7, 0
-	  bne-      .loc_0xD4
-	  li        r0, 0
-	  li        r3, 0
-	  stw       r0, 0x0(r30)
-	  b         .loc_0x19C
-
-	.loc_0xD4:
-	  lwz       r0, 0x1C(r7)
-	  cmplw     r0, r31
-	  bne-      .loc_0x114
-	  lwz       r0, 0x1C(r31)
-	  stw       r0, 0x1C(r7)
-	  lwz       r0, 0x1C(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x11C
-	  lwz       r5, 0x0(r6)
-	  lwz       r3, 0x8(r7)
-	  lwz       r0, 0x10(r7)
-	  lwz       r4, 0x8(r5)
-	  add       r0, r3, r0
-	  sub       r0, r0, r4
-	  stw       r0, 0xC(r5)
-	  b         .loc_0x11C
-
-	.loc_0x114:
-	  mr        r7, r0
-	  b         .loc_0xBC
-
-	.loc_0x11C:
-	  lwz       r4, 0x0(r6)
-	  lhz       r3, 0x2(r4)
-	  subi      r0, r3, 0x1
-	  sth       r0, 0x2(r4)
-
-	.loc_0x12C:
-	  addi      r4, r31, 0x20
-	  lwz       r3, 0x20(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x190
-	  lwzu      r5, 0x24(r3)
-	  cmplw     r5, r31
-	  bne-      .loc_0x154
-	  lwz       r0, 0x28(r31)
-	  stw       r0, 0x0(r3)
-	  b         .loc_0x184
-
-	.loc_0x154:
-	  cmplwi    r5, 0
-	  bne-      .loc_0x164
-	  li        r3, 0
-	  b         .loc_0x19C
-
-	.loc_0x164:
-	  lwz       r0, 0x28(r5)
-	  cmplw     r0, r31
-	  bne-      .loc_0x17C
-	  lwz       r0, 0x28(r31)
-	  stw       r0, 0x28(r5)
-	  b         .loc_0x184
-
-	.loc_0x17C:
-	  mr        r5, r0
-	  b         .loc_0x154
-
-	.loc_0x184:
-	  li        r0, 0
-	  stw       r0, 0x0(r4)
-	  stw       r0, 0x28(r31)
-
-	.loc_0x190:
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x0(r30)
-
-	.loc_0x19C:
-	  lmw       r28, 0x20(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

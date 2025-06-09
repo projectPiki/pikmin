@@ -349,7 +349,7 @@ config.libs = [
             Object(NonMatching, "jaudio/fat.c"),
             Object(Matching, "jaudio/cmdstack.c"),
             Object(Matching, "jaudio/virload.c"),
-            Object(NonMatching, "jaudio/heapctrl.c"),
+            Object(Matching, "jaudio/heapctrl.c"),
             Object(NonMatching, "jaudio/jammain_2.c"),
             Object(Matching, "jaudio/midplay.c"),
             Object(NonMatching, "jaudio/noteon.c"),
