@@ -460,19 +460,21 @@ BOOL Jac_PlayEventAction(int a1, int a2)
 				continue;
 			}
 
-			if (event->_0C[i]._04 == status2) {
-				if (!(status & 0x20)) {
-					break;
-				}
+			if (event->_0C[i]._04 != status2) {
+				continue;
+			}
+
+			if (status & 0x20) {
 				if (ACTION_STATUS[offset]._01 > ACTION_STATUS[u]._01) {
 					index = i;
-					break;
 				} else {
 					jac_debug_multi_cancel++;
 					return 0;
 				}
+			} else {
+				index = i;
 			}
-			index = i;
+			break;
 		}
 
 		if (i == 16) {
