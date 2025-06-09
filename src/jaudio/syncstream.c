@@ -187,11 +187,13 @@ static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
  * Address:	8001BF40
  * Size:	000190
  */
-static void LoadADPCM(StreamCtrl_* ctrl /* r29 */, int r28)
+static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 {
-	u32 idx = ctrl->buffCtrlMain._02;
-
-	BufControl_* buff = &ctrl->buffCtrl[idx]; // r30
+	u32 size;
+	u32 idx           = ctrl->buffCtrlMain._02;
+	BufControl_* buff = &ctrl->buffCtrl[idx];
+	u32 oldsize;
+	u32 badCompiler[2];
 
 	if (ctrl->_21A48) {
 		return;
@@ -201,24 +203,22 @@ static void LoadADPCM(StreamCtrl_* ctrl /* r29 */, int r28)
 		return;
 	}
 
-	u32 oldsize;
-	// fuck this (probably fake)
-	if ((oldsize = ctrl->_21970) == 0) {
+	oldsize = ctrl->_21970;
+	!oldsize;
+	if (oldsize == 0) {
 		return;
 	}
 
-	u32 size = ctrl->_21978; // r31
+	size = ctrl->_21978;
 
-	if (size < oldsize) {
+	if (oldsize < size) {
 		size = oldsize;
 	}
 
-	if (ctrl->_21A34) {
-		return;
-	}
-
-	if (!Jac_CheckStreamRemain(size)) {
-		return;
+	if (!ctrl->_21A34) {
+		if (!Jac_CheckStreamRemain(size)) {
+			return;
+		}
 	}
 
 	buff->_04 = 0;
