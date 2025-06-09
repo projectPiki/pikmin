@@ -27,7 +27,7 @@ typedef enum _MixMode {
 // Global counters.
 extern u32 UNIVERSAL_DACCOUNTER;
 extern u32 JAC_VFRAME_COUNTER;
-extern int JAC_SYSTEM_OUTPUT_MODE;
+extern u32 JAC_SYSTEM_OUTPUT_MODE;
 
 /////////////////////////////////////////////////////
 

@@ -5,14 +5,15 @@
 #include "jaudio/dspdriver.h"
 #include "jaudio/ja_calc.h"
 #include "jaudio/bankdrv.h"
+#include "jaudio/aictrl.h"
 
 #define CHANNEL_SIZE (0x100)
 
 static jcs_ GLOBAL_CHANNEL;
 static jc_ CHANNEL[CHANNEL_SIZE];
 
-static u16 MAX_MIXERLEVEL         = 12000;
-static u32 JAC_SYSTEM_OUTPUT_MODE = 1;
+static u16 MAX_MIXERLEVEL  = 12000;
+u32 JAC_SYSTEM_OUTPUT_MODE = 1;
 
 static u32 cur_waits;
 static u32 cur_top;
@@ -432,20 +433,20 @@ void Channel_Init(jc_* jc)
 	jc->_1C                 = 0;
 
 	if (jc->mMgr == NULL) {
-		jc->busRouting[0]   = 0x150;
-		jc->busRouting[1]   = 0x210;
-		jc->busRouting[2]   = 0x352;
-		jc->busRouting[3]   = 0x412;
-		jc->busRouting[4]   = 0;
-		jc->busRouting[5]   = 0;
-		jc->channelPriority = 0x10101;
-		jc->releaseTime     = 0x258;
-		jc->panCalcTypes[0] = 0x1A;
-		jc->panCalcTypes[1] = 1;
-		jc->panCalcTypes[2] = 1;
+		jc->busRouting[0].whole = 0x150;
+		jc->busRouting[1].whole = 0x210;
+		jc->busRouting[2].whole = 0x352;
+		jc->busRouting[3].whole = 0x412;
+		jc->busRouting[4].whole = 0;
+		jc->busRouting[5].whole = 0;
+		jc->channelPriority     = 0x10101;
+		jc->releaseTime         = 0x258;
+		jc->panCalcTypes[0]     = 0x1A;
+		jc->panCalcTypes[1]     = 1;
+		jc->panCalcTypes[2]     = 1;
 	} else {
 		for (int i = 0; i < 6; i++) {
-			jc->busRouting[i] = jc->mMgr->busConnect[i];
+			jc->busRouting[i].whole = jc->mMgr->busConnect[i];
 		}
 
 		jc->channelPriority = jc->mMgr->channelPriority;
@@ -577,15 +578,12 @@ void UpdateJcToDSP(jc_* jc)
  */
 void UpdateEffecterParam(jc_* jc)
 {
-	f32 mod1;
-	f32 calc;
-	f32 mod2;
-	f32 mod3 = 0.0f;
+	f32 pan;
+	f32 volume;
+	f32 fxmix;
+	f32 dolby = 0.0f;
 	f32 angle;
-	u32 i, j;
-	u32 badCompiler;
-	u16 flag;
-	u8* ptr;
+
 	f32 tmp;
 	if (jc->lastManager == jc->mMgr) {
 		jc->managerPitch             = jc->mMgr->pitch;
@@ -594,104 +592,104 @@ void UpdateEffecterParam(jc_* jc)
 		jc->panMatrices[2].values[2] = jc->mMgr->fxmix;
 		jc->panMatrices[3].values[2] = jc->mMgr->dolby;
 
-		for (i = 0; i < 3; i++) {
+		for (u32 i = 0; i < 3; i++) {
 			jc->panCalcTypes[i] = jc->mMgr->panCalcTypes[i];
 		}
 	}
 
 	switch (JAC_SYSTEM_OUTPUT_MODE) {
 	case 0:
-		mod1 = 0.5f;
-		mod3 = 0.0f;
-		mod2 = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
+		pan   = 0.5f;
+		dolby = 0.0f;
+		fxmix = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
 		break;
 
 	case 1:
 		if (jc->panCalcTypes[0] == 0) {
-			mod1 = 0.5f;
+			pan = 0.5f;
 		} else {
-			mod1 = PanCalc(&jc->panMatrices[1], &jc->panMatrices[0], jc->panCalcTypes[0]);
+			pan = PanCalc(&jc->panMatrices[1], &jc->panMatrices[0], jc->panCalcTypes[0]);
 		}
-		mod2 = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
-		mod3 = PanCalc(&jc->panMatrices[3], &jc->panMatrices[0], jc->panCalcTypes[2]);
+		fxmix = PanCalc(&jc->panMatrices[2], &jc->panMatrices[0], jc->panCalcTypes[1]);
+		dolby = PanCalc(&jc->panMatrices[3], &jc->panMatrices[0], jc->panCalcTypes[2]);
 		break;
 	}
 
-	calc = jc->currentVolume * jc->volumeModifier * jc->managerVolume;
+	volume = jc->currentVolume * jc->volumeModifier * jc->managerVolume;
 
-	if (mod1 < 0.0f) {
-		mod1 = 0.0f;
-	} else if (mod1 > 1.0f) {
-		mod1 = 1.0f;
+	if (pan < 0.0f) {
+		pan = 0.0f;
+	} else if (pan > 1.0f) {
+		pan = 1.0f;
 	}
 
-	if (mod2 < 0.0f) {
-		mod2 = 0.0f;
-	} else if (mod2 > 1.0f) {
-		mod2 = 1.0f;
+	if (fxmix < 0.0f) {
+		fxmix = 0.0f;
+	} else if (fxmix > 1.0f) {
+		fxmix = 1.0f;
 	}
 
-	if (mod3 < 0.0f) {
-		mod3 = 0.0f;
-	} else if (mod3 > 1.0f) {
-		mod3 = 1.0f;
+	if (dolby < 0.0f) {
+		dolby = 0.0f;
+	} else if (dolby > 1.0f) {
+		dolby = 1.0f;
 	}
 
 	jc->finalPitch = jc->currentPitch * jc->pitchModifier * jc->managerPitch * 4096.0f;
 
-	for (j = 0; j < 6; j++) {
-		tmp  = calc;
-		flag = jc->busRouting[j];
-		ptr  = (u8*)&flag;
+	for (u32 i = 0; i < 6; i++) {
+		f32 tmp          = volume;
+		MixConfig config = jc->busRouting[i];
 
-		if (ptr[0] == 0) {
-			jc->mixerLevels[j] = 0;
+		if (config.parts.upper == 0) {
+			jc->mixerLevels[i] = 0;
 			continue;
 		}
 
-		if ((ptr[1] >> 4) & 0xF) {
-			switch ((ptr[1] >> 4) & 0xF) {
+		f32 angle;
+		if (config.parts.lower0) {
+			switch (config.parts.lower0) {
 			case 1:
-				angle = mod1;
+				angle = pan;
 				break;
 			case 2:
-				angle = mod2;
+				angle = fxmix;
 				break;
 			case 3:
-				angle = mod3;
+				angle = dolby;
 				break;
 			case 5:
-				angle = 1.0f - mod1;
+				angle = 1.0f - pan;
 				break;
 			case 6:
-				angle = 1.0f - mod2;
+				angle = 1.0f - fxmix;
 				break;
 			case 7:
-				angle = 1.0f - mod3;
+				angle = 1.0f - dolby;
 				break;
 			}
 			tmp *= sinf3(angle);
 		}
 
-		if (ptr[1] & 0xf) {
-			switch (ptr[1] & 0xf) {
+		if (config.parts.lower1) {
+			switch (config.parts.lower1) {
 			case 1:
-				angle = mod1;
+				angle = pan;
 				break;
 			case 2:
-				angle = mod2;
+				angle = fxmix;
 				break;
 			case 3:
-				angle = mod3;
+				angle = dolby;
 				break;
 			case 5:
-				angle = 1.0f - mod1;
+				angle = 1.0f - pan;
 				break;
 			case 6:
-				angle = 1.0f - mod2;
+				angle = 1.0f - fxmix;
 				break;
 			case 7:
-				angle = 1.0f - mod3;
+				angle = 1.0f - dolby;
 				break;
 			}
 			tmp *= sinf3(angle);
@@ -702,8 +700,9 @@ void UpdateEffecterParam(jc_* jc)
 		} else if (tmp > 1.0f) {
 			tmp = 1.0f;
 		}
-		jc->mixerLevels[j] = tmp * (f32)MAX_MIXERLEVEL;
+		jc->mixerLevels[i] = tmp * (f32)MAX_MIXERLEVEL;
 	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1203,19 +1202,18 @@ BOOL PlayLogicalChannel(jc_* jc)
 	}
 
 	for (u32 i = 0; i < 6; i++) {
-		u16 bus  = jc->busRouting[i];
-		u8* busp = (u8*)&bus;
+		MixConfig bus = jc->busRouting[i];
 		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
-			switch (busp[0]) {
+			switch (bus.parts.upper) {
 			case 8:
-				busp[0] = 11;
+				bus.parts.upper = 11;
 				break;
 			case 9:
-				busp[0] = 2;
+				bus.parts.upper = 2;
 				break;
 			}
 		}
-		DSP_SetBusConnect(jc->dspChannel->buffer_idx, i, busp[0]);
+		DSP_SetBusConnect(jc->dspChannel->buffer_idx, i, bus.parts.upper);
 	}
 
 	jc->lastManager = jc->mMgr;

@@ -95,6 +95,16 @@ struct jcs_ {
 	int voiceStealingMode; // _70, Voice stealing enabled (0=off, 1=on)
 };
 
+// needed to match UpdateEffecterParam
+typedef union MixConfig {
+	u16 whole;
+	struct {
+		u8 upper;
+		u8 lower0 : 4;
+		u8 lower1 : 4;
+	} parts;
+} MixConfig;
+
 /**
  * @brief TODO.
  */
@@ -143,7 +153,7 @@ struct jc_ {
 	jcs_* lastManager;                           // _FC
 	f32 managerPitch;                            // _100
 	f32 managerVolume;                           // _104
-	u16 busRouting[6];                           // _108
+	MixConfig busRouting[6];                     // _108
 	u16 mixerLevels[6];                          // _114
 	u32 channelPriority;                         // _120
 	u16 releaseTime;                             // _124
