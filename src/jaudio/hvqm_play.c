@@ -1223,8 +1223,8 @@ static BOOL CheckDraw(u32 id)
  */
 static int Decode1(u8* data, u32 a1, u8 a2)
 {
-	u32 id                  = (a1 - pic_ctrl[0]._04) % PIC_BUFFERS;
-	void* ref               = pic_ctrl[id]._00;
+	u32 id    = (a1 - pic_ctrl[0]._04) % PIC_BUFFERS;
+	void* ref = pic_ctrl[id]._00;
 	if (pic_ctrl[id]._08) {
 		return -1;
 	}

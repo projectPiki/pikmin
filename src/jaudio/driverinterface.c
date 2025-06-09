@@ -10,7 +10,7 @@
 #define CHANNEL_SIZE (0x100)
 
 static jcs_ GLOBAL_CHANNEL;
-static jc_ CHANNEL[CHANNEL_SIZE];
+static jc_ CHANNEL[CHANNEL_SIZE] ATTRIBUTE_ALIGN(32);
 
 static u16 MAX_MIXERLEVEL  = 12000;
 u32 JAC_SYSTEM_OUTPUT_MODE = 1;
@@ -1218,7 +1218,7 @@ BOOL PlayLogicalChannel(jc_* jc)
 
 	jc->lastManager = jc->mMgr;
 	UpdateEffecterParam(jc);
-	__UpdateJcToDSP(jc);
+	__UpdateJcToDSPInit(jc);
 	jc->dspChannel->_03 = jc->channelPriority;
 	jc->dspChannel->_04 = jc->releaseTime;
 	DSP_PlayStart(jc->dspChannel->buffer_idx);
@@ -1313,7 +1313,7 @@ void __Entry_WaitChannel(u8 a)
 			jc->dspChannel = ch;
 			PlayLogicalChannel(jc);
 			if (List_CutChannel(jc) != -1) {
-				List_AddChannel(&jc->mMgr->activeChannels, jc);
+				List_AddChannelTail(&jc->mMgr->activeChannels, jc);
 			}
 			cur_top++;
 			if (cur_top == 0x20) {

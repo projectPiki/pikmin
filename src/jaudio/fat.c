@@ -128,9 +128,7 @@ int FAT_FreeMemory(u16 size)
 {
 	u16 tail                   = USEFAT_TAIL - FH_TO_FAT[size].startBlock + FH_TO_FAT[size].blockCount;
 	FH_TO_FAT[size].blockCount = 0;
-	if (tail) {
-
-	}
+	if (tail) { }
 	return 0;
 	/*
 	.loc_0x0:
