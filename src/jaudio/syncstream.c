@@ -407,11 +407,11 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, u32 r8)
 
 	ctrl->_21A30 = 1.0f;
 
-	ctrl->mixer.id           = 0x3fff;
-	ctrl->mixer.targetVolume = 0x3fff;
+	ctrl->volume[0] = 0x3fff;
+	ctrl->volume[1] = 0x3fff;
 
-	ctrl->mixer.currentVolume = 0x5fff;
-	ctrl->mixer.level         = 0x5fff;
+	ctrl->mixLevel[0] = 0x5fff;
+	ctrl->mixLevel[1] = 0x5fff;
 
 	ctrl->_21A14 = default_streamsync_call;
 
@@ -1009,7 +1009,7 @@ BOOL StreamSyncCheckBusy(u32 ctrlID, u32 unk)
  * Address:	8001D440
  * Size:	000060
  */
-int StreamSyncPlayAudio(f32 f1, u32 ctrlID, int mixerID, int targetVolume)
+int StreamSyncPlayAudio(f32 f1, u32 ctrlID, int volumeL, int volumeR)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
 
@@ -1018,10 +1018,10 @@ int StreamSyncPlayAudio(f32 f1, u32 ctrlID, int mixerID, int targetVolume)
 			return FALSE;
 		}
 
-		ctrl->_21A30             = f1;
-		ctrl->mixer.id           = mixerID;
-		ctrl->mixer.targetVolume = targetVolume;
-		ctrl->_219A8             = 0;
+		ctrl->_21A30    = f1;
+		ctrl->volume[0] = volumeL;
+		ctrl->volume[1] = volumeR;
+		ctrl->_219A8    = 0;
 		return TRUE;
 	}
 
@@ -1085,22 +1085,19 @@ void StreamChgPitch(void)
 static void __StreamChgVolume(StreamCtrl_* ctrl)
 {
 	if (ctrl->dspch[0]) {
-		int mode = Jac_GetOutputMode();
+		u32 i;
+		u8 mode = Jac_GetOutputMode();
 
-		for (u32 i = 0; i < 2; i++) {
-			// r26 offs = 0xBFFD
+		for (i = 0; i < 2; i++) {
 			switch (mode) {
 			case 0:
-				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
-
-				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
-
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, 1 - i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
 				break;
 
 			default:
-				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
-
-				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, ctrl->mixer.id, 0, 0);
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i], 0);
+				DSP_SetMixerVolume(ctrl->dspch[i]->buffer_idx, 1 - i, 0, 0);
 				break;
 			}
 		}
@@ -1112,12 +1109,12 @@ static void __StreamChgVolume(StreamCtrl_* ctrl)
  * Address:	8001D700
  * Size:	000034
  */
-void StreamChgVolume(u32 ctrlID, int mixID, int vol)
+void StreamChgVolume(u32 ctrlID, int volumeL, int volumeR)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
 
-	ctrl->mixer.id           = mixID;
-	ctrl->mixer.targetVolume = vol;
+	ctrl->volume[0] = volumeL;
+	ctrl->volume[1] = volumeR;
 
 	ctrl->_21A38 |= 1;
 }
@@ -1127,12 +1124,12 @@ void StreamChgVolume(u32 ctrlID, int mixID, int vol)
  * Address:	8001D740
  * Size:	000034
  */
-void StreamChgMixLevel(u32 ctrlID, int vol, int lvl)
+void StreamChgMixLevel(u32 ctrlID, int mixLevelL, int mixLevelR)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
 	if (ctrl->dspch[0]) {
-		ctrl->mixer.currentVolume = vol;
-		ctrl->mixer.level         = lvl;
+		ctrl->mixLevel[0] = mixLevelL;
+		ctrl->mixLevel[1] = mixLevelR;
 	}
 }
 

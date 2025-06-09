@@ -92,15 +92,16 @@ struct StreamCtrl_ {
 	u32 _21A10;            // _21A10
 	StreamCallback _21A14; // _21A14
 	artificial_padding(0x21A28, 0x21A18);
-	DSPMixerChannel mixer; // _21A28
-	f32 _21A30;            // _21A30
-	u8 _21A34;             // _21A34
-	u32 _21A38;            // _21A38
-	u32 _21A3C;            // _21A3C
-	u32 _21A40;            // _21A40
-	s32 _21A44;            // _21A44
-	s32 _21A48;            // _21A48
-	s32 _21A4C;            // _21A4C
+	u16 volume[2];   // _21A28
+	u16 mixLevel[2]; // _21A28
+	f32 _21A30;      // _21A30
+	u8 _21A34;       // _21A34
+	u32 _21A38;      // _21A38
+	u32 _21A3C;      // _21A3C
+	u32 _21A40;      // _21A40
+	s32 _21A44;      // _21A44
+	s32 _21A48;      // _21A48
+	s32 _21A4C;      // _21A4C
 };
 
 #ifdef __cplusplus
