@@ -12,8 +12,10 @@
 
 static int Jesus1Shot_Update(jc_*, JCSTATUS);
 
+static s16 OSC_REL[] = { 1, 10, 0, 15 };
+
 Osc_ PERC_ENV    = { 0, 1.0f, 0, 0, 1.0f, 0 };
-Osc_ OSC_ENV     = { 0, 1.0f, 0, 0, 1.0f, 0 };
+Osc_ OSC_ENV     = { 0, 1.0f, 0, OSC_REL, 1.0f, 0 };
 u8 polys_table[] = { 0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32 };
 
 /*
@@ -362,21 +364,16 @@ static void __Oneshot_WavePause(jc_* jc, u8 a)
  */
 static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 {
-	u32 index = 0;
 	jcs_* mgr = jc->mMgr;
-	jc_* chan;
-	int flag1, flag2;
-	u8 poly;
+	jc_* chan = mgr->activeChannels;
+	u8 flag   = id >> 0x18;
+	u8 poly   = polys_table[flag & 0xf];
 
-	chan = mgr->activeChannels;
-	poly = polys_table[id >> 0x18 & 0xf];
+	u32 index = 0;
 
 	if (poly == 0) {
 		return TRUE;
 	}
-
-	flag1 = id >> 0x18 & 0x20;
-	flag2 = id >> 0x18 & 0x10;
 
 	while (TRUE) {
 		if (chan == NULL) {
@@ -384,12 +381,12 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 		}
 
 		if (chan->soundId == id) {
-			if (flag2 != 0) {
+			if (flag & 0x20) {
 				index++;
 			} else {
 				chan->polyphonyCounter++;
 				if (chan->polyphonyCounter == poly) {
-					if (flag2) {
+					if (flag & 0x10) {
 						ForceStopLogicalChannel(chan);
 					} else {
 						__Oneshot_WavePause(chan, 1);
@@ -407,7 +404,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 		}
 
 		if (chan->soundId == id) {
-			if (flag1 != 0) {
+			if (flag & 0x20) {
 				index++;
 			} else {
 				chan->polyphonyCounter++;
@@ -420,7 +417,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 		chan = (jc_*)chan->mNext;
 	}
 
-	if (flag1) {
+	if (flag & 0x20) {
 		jc->polyphonyCounter = index;
 		if (index < poly) {
 			return TRUE;
@@ -430,118 +427,6 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 
 	jc->polyphonyCounter = 0;
 	return TRUE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r24, 0x10(r1)
-	  addi      r30, r4, 0
-	  lis       r4, 0x8022
-	  addi      r29, r3, 0
-	  addi      r0, r4, 0x5940
-	  rlwinm    r5,r30,8,24,31
-	  li        r31, 0
-	  lwz       r27, 0x4(r3)
-	  rlwinm    r3,r30,8,28,31
-	  add       r3, r0, r3
-	  lbz       r26, 0x0(r3)
-	  lwz       r24, 0xC(r27)
-	  cmplwi    r26, 0
-	  bne-      .loc_0x4C
-	  li        r3, 0x1
-	  b         .loc_0x138
-
-	.loc_0x4C:
-	  rlwinm    r25,r5,0,26,26
-	  rlwinm    r28,r5,0,27,27
-
-	.loc_0x54:
-	  cmplwi    r24, 0
-	  beq-      .loc_0xB8
-	  lwz       r0, 0x128(r24)
-	  cmplw     r0, r30
-	  bne-      .loc_0xB0
-	  cmpwi     r25, 0
-	  beq-      .loc_0x78
-	  addi      r31, r31, 0x1
-	  b         .loc_0xB0
-
-	.loc_0x78:
-	  lbz       r3, 0x12C(r24)
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x12C(r24)
-	  lbz       r0, 0x12C(r24)
-	  cmplw     r0, r26
-	  bne-      .loc_0xB0
-	  cmpwi     r28, 0
-	  beq-      .loc_0xA4
-	  mr        r3, r24
-	  bl        -0xAD3C
-	  b         .loc_0xB0
-
-	.loc_0xA4:
-	  addi      r3, r24, 0
-	  li        r4, 0x1
-	  bl        -0xCC
-
-	.loc_0xB0:
-	  lwz       r24, 0x24(r24)
-	  b         .loc_0x54
-
-	.loc_0xB8:
-	  lwz       r27, 0x10(r27)
-
-	.loc_0xBC:
-	  cmplwi    r27, 0
-	  beq-      .loc_0x108
-	  lwz       r0, 0x128(r27)
-	  cmplw     r0, r30
-	  bne-      .loc_0x100
-	  cmpwi     r25, 0
-	  beq-      .loc_0xE0
-	  addi      r31, r31, 0x1
-	  b         .loc_0x100
-
-	.loc_0xE0:
-	  lbz       r3, 0x12C(r27)
-	  addi      r0, r3, 0x1
-	  stb       r0, 0x12C(r27)
-	  lbz       r0, 0x12C(r27)
-	  cmplw     r0, r26
-	  bne-      .loc_0x100
-	  mr        r3, r27
-	  bl        -0xAD9C
-
-	.loc_0x100:
-	  lwz       r27, 0x24(r27)
-	  b         .loc_0xBC
-
-	.loc_0x108:
-	  cmpwi     r25, 0
-	  beq-      .loc_0x12C
-	  cmplw     r31, r26
-	  stb       r31, 0x12C(r29)
-	  bge-      .loc_0x124
-	  li        r3, 0x1
-	  b         .loc_0x138
-
-	.loc_0x124:
-	  li        r3, 0
-	  b         .loc_0x138
-
-	.loc_0x12C:
-	  li        r0, 0
-	  li        r3, 0x1
-	  stb       r0, 0x12C(r29)
-
-	.loc_0x138:
-	  lmw       r24, 0x10(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

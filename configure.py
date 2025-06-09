@@ -356,7 +356,7 @@ config.libs = [
             Object(Matching, "jaudio/seqsetup.c"),
             Object(Matching, "jaudio/centcalc.c"),
             Object(Matching, "jaudio/jamosc.c"),
-            Object(NonMatching, "jaudio/oneshot.c"),
+            Object(Matching, "jaudio/oneshot.c"),
             Object(Matching, "jaudio/interface.c"),
             Object(Matching, "jaudio/verysimple.c"),
             Object(Matching, "jaudio/app_inter.c"),
