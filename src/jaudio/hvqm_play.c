@@ -341,10 +341,10 @@ static int __VirtualLoad(u32 a, u32 b, u8* data)
  * Address:	8001DFC0
  * Size:	000050
  */
-static void InitAudio1(StreamHeader* header, u8* data, u32 size)
+static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 {
 	Jac_InitStreamData(data, size);
-	StreamAudio_Start(0, 0, 0, 1, 0, (int)header);
+	StreamAudio_Start(0, 0, 0, 1, 0, header);
 }
 
 /*

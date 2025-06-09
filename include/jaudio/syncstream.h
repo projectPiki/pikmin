@@ -7,6 +7,7 @@
 typedef struct dspch_ dspch_;
 typedef struct DSPchannel_ DSPchannel_; // TODO: WHAT ARE YOU?
 typedef struct StreamCtrl_ StreamCtrl_;
+typedef struct StreamHeader_ StreamHeader_;
 typedef struct BufControl_ BufControl_;
 
 #ifdef __cplusplus
@@ -17,7 +18,7 @@ typedef int (*StreamCallback)(u32, s32);
 
 void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(int);
-BOOL StreamAudio_Start(u32, int, char*, int, int, u32);
+BOOL StreamAudio_Start(u32, int, char*, int, int, StreamHeader_*);
 void RegisterStreamCallback(StreamCallback);
 void Jac_Decode_ADPCM(void);
 BOOL StreamSyncCheckReady(u32);
@@ -49,15 +50,26 @@ struct BufControl_ {
 
 enum AudioFormat { AUDIOFRMT_ADPCM = 4, AUDIOFRMT_ADPCM4X = 5 };
 
+// size 0x20
+struct StreamHeader_ {
+	u32 _00;         // _00
+	u32 _04;         // _04
+	u16 _08;         // _08
+	u16 audioFormat; // _0A
+	u16 _0C;         // _0C
+	u16 _0E;         // _0E
+	artificial_padding(0x20, 0x10);
+};
+
 // size 0x2420
 struct STRUCT_0x2420 {
-	u32 _00;
-	artificial_padding(0x241C, 0x00);
+	StreamHeader_ header; // _00
+	u8 data[0x2400];      // _20
 };
 
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
-	struct STRUCT_0x2420 _00[6];
+	struct STRUCT_0x2420 _00[6]; // _00
 	artificial_padding(0x218C0, 0xD8C0);
 	BufControl_ buffCtrl[6];      // _218C0
 	BufControl_ buffCtrlExtra[2]; // _21920
@@ -70,27 +82,20 @@ struct StreamCtrl_ {
 	u32 _2197C;                   // _2197C
 	u32 _21980;                   // _21980
 	u32 _21984;                   // _21984
-	u32 _21988;                   // _21988
-	u32 _2198C;                   // _2198C
-	u16 _21990;                   // _21990
-	u16 audioFormat;              // _21992
-	u16 _21994;                   // _21994
-	u16 _21996;
-	u16 _21998;
-	artificial_padding(0x219A8, 0x2199C);
-	u32 _219A8;            // _219A8
-	u32 _219AC;            // _219AC
-	BOOL isPaused;         // _219B0
-	u32 _219B4;            // _219B4
-	DVDFileInfo fileinfo;  // _219B8
-	dspch_* dspch[2];      // _219F4
-	u32 _219FC;            // _219FC
-	u32 _21A00;            // _21A00
-	u32 _21A04;            // _21A04
-	u32 _21A08;            // _21A08
-	u32 _21A0C;            // _21A0C
-	u32 _21A10;            // _21A10
-	StreamCallback _21A14; // _21A14
+	StreamHeader_ header;         // _21988
+	u32 _219A8;                   // _219A8
+	u32 _219AC;                   // _219AC
+	BOOL isPaused;                // _219B0
+	u32 _219B4;                   // _219B4
+	DVDFileInfo fileinfo;         // _219B8
+	dspch_* dspch[2];             // _219F4
+	u32 _219FC;                   // _219FC
+	u32 _21A00;                   // _21A00
+	u32 _21A04;                   // _21A04
+	u32 _21A08;                   // _21A08
+	u32 _21A0C;                   // _21A0C
+	u32 _21A10;                   // _21A10
+	StreamCallback _21A14;        // _21A14
 	artificial_padding(0x21A28, 0x21A18);
 	u16 volume[2];   // _21A28
 	u16 mixLevel[2]; // _21A28

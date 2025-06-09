@@ -3,8 +3,6 @@
 
 #include "types.h"
 
-typedef struct StreamHeader_ StreamHeader;
-
 #ifdef __cplusplus
 extern "C" {
 #endif // ifdef __cplusplus

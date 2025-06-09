@@ -308,9 +308,11 @@ static s32 StreamAudio_Callback(void*);
  * Address:	8001C140
  * Size:	000318
  */
-BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, u32 r8)
+BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, StreamHeader_* header)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
+	int i;
+	u32 badCompiler[2];
 
 	ctrl->_21A0C   = ctrlID;
 	ctrl->_21A10   = r4;
@@ -325,60 +327,43 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, u32 r8)
 		ctrl->_21A34 = 0;
 	}
 
-	if (!r8) {
-
+	if (!header) {
 		if (!ctrl->_21A34) {
 			return FALSE;
 		}
 
-		for (int i = 0; i < ARRAY_SIZE(SC); i++) {
-
-			DVDReadPrio(&SC[i].fileinfo, (void*)&SC[i], 0x20, 0, 1);
-
-			// something goes here
-			for (int j = 0; j < 4; j++) { }
-		}
-
+		DVDReadPrio(&ctrl->fileinfo, &ctrl->_00[0].header, 0x20, 0, 1);
+		ctrl->header = ctrl->_00[0].header;
 		ctrl->_21974 = 0x20;
 	} else {
-		for (int i = 0; i < ARRAY_SIZE(SC); i++) {
-
-			// exact copy of the other one
-			for (int j = 0; j < 4; j++) { }
-		}
-
+		ctrl->header = *header;
 		ctrl->_21974 = 0;
 	}
 
-	ctrl->_21970 = ctrl->_21988;
+	ctrl->_21970 = ctrl->header._00;
+	ctrl->_219FC = ctrl->header._04;
+	ctrl->_21980 = 0;
+	ctrl->_21A40 = 0;
+	ctrl->_21A44 = 0;
+	ctrl->_21A08 = 0;
+	ctrl->_21984 = 0;
 
-	for (int i = 0; i < ARRAY_SIZE(SC); i++) {
-		SC[i]._219FC = SC[i]._2198C;
-		SC[i]._21980 = i;
-		SC[i]._21A40 = i;
-		SC[i]._21A44 = i;
-		SC[i]._21A08 = i;
-		SC[i]._21984 = i;
+	for (i = 0; i < 6; i++) {
+		ctrl->buffCtrl[i]._00 = 0;
+		ctrl->buffCtrl[i]._0C = (u32)&ctrl->_00[i]; // TODO: should be a pointer?
+	}
 
-		for (int j = 0; j < 6; j++) {
-			SC[i].buffCtrl[j]._00 = i;
-			SC[i].buffCtrl[j]._0C = (u32)&SC[i]._00[j]._00; // wtf
-		}
-
-		for (int j = 0; j < 2; j++) {
-			SC[i].buffCtrlExtra[j]._00 = i;
-		}
+	for (i = 0; i < 2; i++) {
+		ctrl->buffCtrlExtra[i]._00 = 0;
 	}
 
 	ctrl->_21A00 = 0x1000;
 
 	BufContInit(&ctrl->buffCtrlMain, 1, 6, 0, 0, 0x2400, 0, 0);
-
 	BufContInit(&ctrl->buffCtrlMain2, 2, 2, 0, 0, 0x2000, 0, 0);
-
 	BufContInit(&ctrl->buffCtrlMain3, 2, 4, 0, 3, 0x400, 0, 0);
 
-	switch (ctrl->audioFormat) {
+	switch (ctrl->header.audioFormat) {
 	case 2:
 		ctrl->_21978 = 0x2400;
 		break;
@@ -415,7 +400,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, u32 r8)
 
 	ctrl->_21A14 = default_streamsync_call;
 
-	Jac_RegisterDspPlayerCallback(StreamAudio_Callback, (void*)&SC[0]);
+	Jac_RegisterDspPlayerCallback(StreamAudio_Callback, ctrl);
 
 	return TRUE;
 }
@@ -463,7 +448,7 @@ static s32 StreamAudio_Callback(void* data)
 				Stop_DirectPCM(ctrl->dspch[i]);
 				DeAllocDSPchannel(ctrl->dspch[i], (u32)ctrl);
 
-				ctrl->_00[0]._00 = 0;
+				ctrl->_00[0].header._00 = 0;
 			}
 
 			if (ctrl->_21A14) {
@@ -479,7 +464,7 @@ static s32 StreamAudio_Callback(void* data)
 			return -1;
 		}
 
-		int r4 = ctrl->_21980 * ctrl->_21996 / ctrl->_21990;
+		int r4 = ctrl->_21980 * ctrl->header._0E / ctrl->header._08;
 
 		if (ctrl->_21A14) {
 			int callbackResult = ctrl->_21A14(ctrl->_21A0C, r4);
@@ -835,7 +820,7 @@ static void* __DecodeADPCM4X(StreamCtrl_* ctrl)
 static void* __Decode(StreamCtrl_* ctrl)
 {
 	void* data;
-	switch (ctrl->audioFormat) {
+	switch (ctrl->header.audioFormat) {
 	case AUDIOFRMT_ADPCM:
 		data = __DecodeADPCM(ctrl);
 		break;
@@ -1059,7 +1044,7 @@ static void __StreamChgPitch(StreamCtrl_* ctrl)
 {
 	if (ctrl->dspch[0]) {
 
-		u16 pitch = ctrl->_21990 * 4096.0f * ctrl->_21A30 / JAC_DAC_RATE;
+		u16 pitch = ctrl->header._08 * 4096.0f * ctrl->_21A30 / JAC_DAC_RATE;
 
 		for (u32 i = 0; i < 2; i++) {
 			DSP_SetPitch(ctrl->dspch[i]->buffer_idx, pitch);
@@ -1297,7 +1282,7 @@ void StreamCheckRemainBuffers(void)
 u8 StreamCheckAudioFormat(u32 ctrlID)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
-	return ctrl->audioFormat;
+	return ctrl->header.audioFormat;
 }
 
 /*
