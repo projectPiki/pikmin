@@ -70,7 +70,8 @@ struct STRUCT_0x2420 {
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
 	struct STRUCT_0x2420 _00[6]; // _00
-	artificial_padding(0x218C0, 0xD8C0);
+	artificial_padding(0x1D8C0, 0xD8C0);
+	s16 _1D8C0[2][0x1000];        // _1D8C0, PCM data
 	BufControl_ buffCtrl[6];      // _218C0
 	BufControl_ buffCtrlExtra[2]; // _21920
 	BufControl_ buffCtrlMain;     // _21940
@@ -83,10 +84,10 @@ struct StreamCtrl_ {
 	u32 _21980;                   // _21980
 	u32 _21984;                   // _21984
 	StreamHeader_ header;         // _21988
-	u32 _219A8;                   // _219A8
-	u32 _219AC;                   // _219AC
+	s32 _219A8;                   // _219A8
+	s32 _219AC;                   // _219AC
 	BOOL isPaused;                // _219B0
-	u32 _219B4;                   // _219B4
+	s32 _219B4;                   // _219B4
 	DVDFileInfo fileinfo;         // _219B8
 	dspch_* dspch[2];             // _219F4
 	u32 _219FC;                   // _219FC

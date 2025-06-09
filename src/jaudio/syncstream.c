@@ -405,6 +405,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, StreamHea
 	return TRUE;
 }
 
+static void __PcmToLoop(StreamCtrl_*);
 static void __StreamChgVolume(StreamCtrl_* ctrl);
 static void __StreamChgPitch(StreamCtrl_* ctrl);
 static void* __Decode(StreamCtrl_* ctrl);
@@ -415,40 +416,33 @@ static void* __Decode(StreamCtrl_* ctrl);
  */
 static s32 StreamAudio_Callback(void* data)
 {
-	int r25 = 0; // WHYYYY
-
 	StreamCtrl_* ctrl = (StreamCtrl_*)data;
+	int r25           = 0;
+	u32 i;
+	u32 badCompiler[2];
 
 	if (!ctrl->dspch[0]) {
-		for (int i = 0; i < 2; i++) {
-			ctrl->dspch[i] = AllocDSPchannel(i, (u32)ctrl);
-
-			ctrl->dspch[i]->buffer_idx = i;
+		for (i = 0; i < 2; i++) {
+			ctrl->dspch[i]      = AllocDSPchannel(0, (u32)&ctrl->dspch[i]); // TODO: suspicious cast
+			ctrl->dspch[i]->_03 = 0x7f;
 		}
 	}
 
-	// dark green arrow | 200:
 	if (ctrl->_21A08) {
-		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx); // r20
+		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
 		if (buff->done) {
 			ctrl->_219B4 = 1;
 		}
 
-		// yellow arrow
 		if (ctrl->_219B4) {
-			u32 idx = ctrl->buffCtrlMain._02;
-
-			BufControl_* buff = &ctrl->buffCtrl[idx];
-
-			if (buff->_00 == 1) {
+			if (ctrl->buffCtrl[ctrl->buffCtrlMain._02]._00 == 1) {
 				return 0;
 			}
 
-			for (u32 i = 0; i < 2; i++) {
+			for (i = 0; i < 2; i++) {
 				Stop_DirectPCM(ctrl->dspch[i]);
-				DeAllocDSPchannel(ctrl->dspch[i], (u32)ctrl);
-
-				ctrl->_00[0].header._00 = 0;
+				DeAllocDSPchannel(ctrl->dspch[i], (u32)&ctrl->dspch[i]); // TODO: suspicious cast
+				ctrl->dspch[i] = NULL;
 			}
 
 			if (ctrl->_21A14) {
@@ -476,17 +470,23 @@ static s32 StreamAudio_Callback(void* data)
 
 		ctrl->_21A08++;
 
-		Get_DirectPCM_Counter((DSPchannel_*)buff); // this can't be real...
-
-		ctrl->buffCtrlMain3._03 = ctrl->_21A00;
-		// I don't know what the clrlwi spam is for
-
-		return 0;
+		u16 var_r3 = ctrl->_21A00 - Get_DirectPCM_Counter((DSPchannel_*)buff); // TODO: suspicious cast
+		if (var_r3 == 0) {
+			var_r3 = ctrl->_21A00;
+		}
+		u32 var_r4              = (ctrl->_21A00 - var_r3) >> 10;
+		ctrl->buffCtrlMain3._03 = var_r4;
+		if (ctrl->buffCtrlMain3._02 != var_r4) {
+			r25 = 1;
+		} else {
+			r25 = 0;
+		}
 	}
 
 	if (ctrl->_21A38) {
-
-		__StreamChgVolume(ctrl);
+		if (ctrl->_21A38 & 1) {
+			__StreamChgVolume(ctrl);
+		}
 
 		if (ctrl->_21A38 & 2) {
 			__StreamChgPitch(ctrl);
@@ -496,95 +496,157 @@ static s32 StreamAudio_Callback(void* data)
 
 		DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
 		DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+	}
 
-		if (ctrl->isPaused) {
+	if (ctrl->isPaused) {
+		DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
+		DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
+
+		DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+		DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+
+		ctrl->_21984 = 6;
+		return 0;
+	}
+
+	if (ctrl->_21984 == 6) {
+		if (!ctrl->isPaused) {
+			ctrl->_21984 = 1;
+			DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
+			DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 0);
+
+			DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+			DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+		} else {
+			return 0;
+		}
+	}
+
+	if (ctrl->_21A44 == 0 && ctrl->_21984 != 5 && ctrl->_21A08 != 0) {
+		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+		u32 size        = ctrl->_219FC - Get_DirectPCM_Remain((DSPchannel_*)buff); // TODO: suspicious cast
+
+		ctrl->_21A4C = ctrl->_21A40 - size;
+		if (ctrl->_21A4C < 0x400) {
 			DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
 			DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
 
 			DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
 			DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
 
-			ctrl->_21984 = 6;
-
-			return 0;
+			ctrl->_21984 = 5;
 		}
+	}
 
-		if (ctrl->_21984 == 6) {
-			if (!ctrl->isPaused) {
+	if (ctrl->_21984 == 5) {
+		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+		u32 size        = ctrl->_219FC - Get_DirectPCM_Remain((DSPchannel_*)buff); // TODO: suspicious cast
 
-				ctrl->_21984 = 1;
-				DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
-				DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 0);
+		if (ctrl->_21A40 - size > 0xc00 || ctrl->_21A44 == 1) {
+			DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
+			DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 0);
 
-				DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
-				DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
-			} else {
-				return 0;
+			DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+			DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+
+			ctrl->_21984 = 1;
+		} else {
+			DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
+			DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
+
+			DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
+			DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
+		}
+	}
+
+	if (ctrl->buffCtrl[ctrl->buffCtrlMain._03]._00 == 2 && ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._00 == 0) {
+		void* data = __Decode(ctrl);
+
+		ctrl->buffCtrl[ctrl->buffCtrlMain._03]._00 = 0;
+
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._00 = 2;
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._04 = 0;
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._08 = (u32)data; // TODO: suspicious cast
+
+		ctrl->buffCtrlMain._03 = (ctrl->buffCtrlMain._03 + 1) % 6;
+
+		ctrl->buffCtrlMain2._02 = (ctrl->buffCtrlMain2._02 + 1) % 2;
+		ctrl->buffCtrlMain2._0C += (u32)data; // TODO: suspicious cast
+	}
+
+	if (r25 == 1 || ctrl->_21A08 == 0) {
+		if (ctrl->buffCtrlMain3._02 != ctrl->buffCtrlMain3._03) {
+			if (ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._03]._00 == 2 && ctrl->buffCtrlMain2._0C >= ctrl->buffCtrlMain3._04) {
+				__PcmToLoop(ctrl);
+				ctrl->buffCtrlMain3._02 = (ctrl->buffCtrlMain3._02 + 1) % 4;
+				ctrl->buffCtrlMain2._0C -= ctrl->buffCtrlMain3._04;
 			}
-
-			if (ctrl->_21A44 == 0) {
-				if (ctrl->_21984 != 5 && ctrl->_21A08 != 0) {
-					DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
-					u32 remain      = Get_DirectPCM_Remain((DSPchannel_*)buff);
-
-					ctrl->_21A4C = remain - ctrl->_219FC - ctrl->_21A40;
-
-					if (ctrl->_21A4C < 0x400) {
-						DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
-						DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
-
-						DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
-						DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
-
-						ctrl->_21984 = 5;
+		} else if (ctrl->_21A08 == 0) {
+			if (ctrl->_219A8 == 1) {
+				if (ctrl->_21A14 != NULL) {
+					int callbackResult = ctrl->_21A14(ctrl->_21A0C, 0);
+					if (callbackResult == -1) {
+						ctrl->_219AC = 1;
+					}
+					if (callbackResult == 1) {
+						ctrl->_219A8 = 0;
 					}
 				}
-				if (ctrl->_21984 == 5) {
-					DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
-					u32 remain      = Get_DirectPCM_Remain((DSPchannel_*)buff);
+				ctrl->_21984 = 2;
+				if (ctrl->_219AC == 0) {
+					return 0;
+				}
+			} else {
+				ctrl->_21984 = 1;
+				ctrl->_21A08++;
+				u32 mode = Jac_GetOutputMode();
+				for (i = 0; i < 2; i++) {
+					u16 pitch = (4096.0f * ctrl->header._08 * ctrl->_21A30) / JAC_DAC_RATE;
+					Play_DirectPCM(ctrl->dspch[i], ctrl->_1D8C0[i], ctrl->_21A00, ctrl->_219FC);
+					switch (mode) {
+					case 0:
+						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
+						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, 1 - i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
+						break;
 
-					if (remain - ctrl->_219FC + ctrl->_21A40 <= 0xc00) {
-						if (ctrl->_21A44) {
-							DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
-							DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 0);
-
-							DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
-							DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
-
-							ctrl->_21984 = 1;
-						} else {
-							DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 1);
-							DSP_SetPauseFlag(ctrl->dspch[1]->buffer_idx, 1);
-
-							DSP_FlushChannel(ctrl->dspch[0]->buffer_idx);
-							DSP_FlushChannel(ctrl->dspch[1]->buffer_idx);
-						}
-
-						if (ctrl->buffCtrl[ctrl->buffCtrlMain2._02]._00 == 2) {
-							void* data = __Decode(ctrl);
-
-							// I wanna go home...
-
-							ctrl->buffCtrl[ctrl->buffCtrlMain2._02]._00 = 0;
-
-							ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._00 = 2;
-							ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._04 = 6;
-
-							ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._08 = (u32)data;
-
-							ctrl->buffCtrlMain._03 = (ctrl->buffCtrlMain._03 + 1) % 6;
-
-							ctrl->buffCtrlMain2._02 = (ctrl->buffCtrlMain2._02 + 1) % 2;
-
-							ctrl->buffCtrlMain2._0C += (u32)data; // ?????? kms
-
-							// guys im taking a break please clean ts up I cant
-						}
+					default:
+						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i], 0);
+						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, 1 - i, 0, 0);
+						break;
 					}
+					DSP_SetPitch(ctrl->dspch[i]->buffer_idx, pitch);
+					DSP_FlushChannel(ctrl->dspch[i]->buffer_idx);
 				}
 			}
 		}
 	}
+
+	if (ctrl->_21984 == 3) {
+		return 0;
+	}
+
+	if (ctrl->_219AC != 0) {
+		if (ctrl->_21A08 == 0) {
+			if (ctrl->buffCtrl[ctrl->buffCtrlMain._02]._00 == 1) {
+				return 0;
+			}
+			ctrl->_219AC = 0;
+			if (ctrl->_21A14 != NULL) {
+				ctrl->_21A14(ctrl->_21A0C, -1);
+			}
+			ctrl->_21984 = 4;
+			ctrl->_21A10 = -1;
+			return -1;
+		}
+		ctrl->_219AC = 0;
+		ctrl->_21984 = 3;
+		for (i = 0; i < 2; i++) {
+			ForceStopDSPchannel(ctrl->dspch[i]);
+		}
+	} else {
+		LoadADPCM(ctrl, 0);
+	}
+	return 0;
 }
 
 /*
