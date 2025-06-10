@@ -5,7 +5,7 @@
 #include "jaudio/audiostruct.h"
 
 typedef struct DSPMixerChannel DSPMixerChannel;
-typedef struct DSPBuffer DSPBuffer;
+typedef struct DSPchannel_ DSPchannel_;
 typedef struct FXDestination FXDestination;
 typedef struct FXBuffer FXBuffer;
 
@@ -17,7 +17,7 @@ typedef u16 DSPBOOL;
 /////////// JAUDIO DSP INTERFACE DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).
 
-DSPBuffer* GetDspHandle(u8 idx);
+DSPchannel_* GetDspHandle(u8 idx);
 FXBuffer* GetFxHandle(u8 idx);
 void DSP_SetPitch(u8 idx, u16 pitch);
 void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax);
@@ -59,7 +59,7 @@ struct DSPMixerChannel {
 /**
  * @brief TODO.
  */
-struct DSPBuffer {
+struct DSPchannel_ {
 	DSPBOOL enabled;                // _00 - DSP_AllocInit, DSP_PlayStop, DSP_PlayStart
 	DSPBOOL done;                   // _02 - DSP_AllocInit
 	u16 resamplingRatio;            // _04 - DSP_SetPitch
@@ -108,13 +108,6 @@ struct DSPBuffer {
 	s16 biquadFilterCoeffs[4];      // _148 - DSP_InitFilter, DSP_SetIIRFilterParam
 	s16 lowPassCoeff;               // _150 - DSP_InitFilter, DSP_SetDistFilter
 	u8 padding[0x180 - 0x152];      // _152
-};
-
-struct DSPchannel_ {
-	u8 padding[0x68];
-	u32 counter; // _68
-	u8 padding2[0x74 - 0x6C];
-	u32 remain; // _74
 };
 
 ///////////////////////////////////////////////////////////////////////////////

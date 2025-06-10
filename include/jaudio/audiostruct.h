@@ -55,7 +55,7 @@ struct dspch_ {
 	jc_* _08;               // _08
 	DSPChannelCallback _0C; // _0C
 
-	// DSPBuffer* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
+	// DSPchannel_* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
 };
 
 typedef struct PanMatrix_ {

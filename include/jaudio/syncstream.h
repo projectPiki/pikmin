@@ -5,7 +5,7 @@
 #include "jaudio/dspinterface.h"
 
 typedef struct dspch_ dspch_;
-typedef struct DSPchannel_ DSPchannel_; // TODO: WHAT ARE YOU?
+typedef struct DSPchannel_ DSPchannel_;
 typedef struct StreamCtrl_ StreamCtrl_;
 typedef struct StreamHeader_ StreamHeader_;
 typedef struct BufControl_ BufControl_;

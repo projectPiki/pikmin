@@ -45,7 +45,7 @@ void Stop_DirectPCM(dspch_* dspch)
  */
 void Play_DirectPCM(dspch_* dspch, s16* baseAddr, u16 loopStart, u32 length)
 {
-	DSPBuffer* buff = GetDspHandle(dspch->buffer_idx); // r3
+	DSPchannel_* buff = GetDspHandle(dspch->buffer_idx); // r3
 
 	buff->baseAddress       = (u32)baseAddr;
 	buff->isLooping         = FALSE;
@@ -89,7 +89,7 @@ void Get_DirectPCM_LoopRemain(DSPchannel_* channel)
  */
 u16 Get_DirectPCM_Counter(DSPchannel_* channel)
 {
-	return channel->counter >> 16;
+	return channel->currentPosition >> 16;
 }
 
 /*
@@ -99,7 +99,7 @@ u16 Get_DirectPCM_Counter(DSPchannel_* channel)
  */
 u32 Get_DirectPCM_Remain(DSPchannel_* channel)
 {
-	return channel->remain;
+	return channel->remainingLength;
 }
 
 /*
@@ -429,7 +429,7 @@ static s32 StreamAudio_Callback(void* data)
 	}
 
 	if (ctrl->_21A08) {
-		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+		DSPchannel_* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
 		if (buff->done) {
 			ctrl->_219B4 = 1;
 		}
@@ -470,7 +470,7 @@ static s32 StreamAudio_Callback(void* data)
 
 		ctrl->_21A08++;
 
-		u16 var_r3 = ctrl->_21A00 - Get_DirectPCM_Counter((DSPchannel_*)buff); // TODO: suspicious cast
+		u16 var_r3 = ctrl->_21A00 - Get_DirectPCM_Counter(buff);
 		if (var_r3 == 0) {
 			var_r3 = ctrl->_21A00;
 		}
@@ -523,8 +523,8 @@ static s32 StreamAudio_Callback(void* data)
 	}
 
 	if (ctrl->_21A44 == 0 && ctrl->_21984 != 5 && ctrl->_21A08 != 0) {
-		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
-		u32 size        = ctrl->_219FC - Get_DirectPCM_Remain((DSPchannel_*)buff); // TODO: suspicious cast
+		DSPchannel_* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+		u32 size          = ctrl->_219FC - Get_DirectPCM_Remain(buff);
 
 		ctrl->_21A4C = ctrl->_21A40 - size;
 		if (ctrl->_21A4C < 0x400) {
@@ -539,8 +539,8 @@ static s32 StreamAudio_Callback(void* data)
 	}
 
 	if (ctrl->_21984 == 5) {
-		DSPBuffer* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
-		u32 size        = ctrl->_219FC - Get_DirectPCM_Remain((DSPchannel_*)buff); // TODO: suspicious cast
+		DSPchannel_* buff = GetDspHandle(ctrl->dspch[0]->buffer_idx);
+		u32 size          = ctrl->_219FC - Get_DirectPCM_Remain(buff);
 
 		if (ctrl->_21A40 - size > 0xc00 || ctrl->_21A44 == 1) {
 			DSP_SetPauseFlag(ctrl->dspch[0]->buffer_idx, 0);
@@ -1241,8 +1241,7 @@ int StreamGetCurrentFrame(u32 id1, u32 id2)
 		if (ctrl->_21A08 == 0) {
 			return 0;
 		}
-		return (ctrl->_219FC - Get_DirectPCM_Remain((DSPchannel_*)GetDspHandle(ch->buffer_idx))) * (f32)ctrl->header._0E / ctrl->header._08
-		     + 0.499f;
+		return (ctrl->_219FC - Get_DirectPCM_Remain(GetDspHandle(ch->buffer_idx))) * (f32)ctrl->header._0E / ctrl->header._08 + 0.499f;
 	}
 
 	u32 badcompiler[3];

@@ -12,7 +12,7 @@
 #define CH_BUF_LENGTH (64)
 #define FX_BUF_LENGTH (4)
 
-static DSPBuffer CH_BUF[CH_BUF_LENGTH];
+static DSPchannel_ CH_BUF[CH_BUF_LENGTH];
 static FXBuffer FX_BUF[FX_BUF_LENGTH];
 
 /*
@@ -20,7 +20,7 @@ static FXBuffer FX_BUF[FX_BUF_LENGTH];
  * Address:	8000B560
  * Size:	000018
  */
-DSPBuffer* GetDspHandle(u8 idx)
+DSPchannel_* GetDspHandle(u8 idx)
 {
 	return &CH_BUF[idx];
 }
@@ -30,7 +30,7 @@ DSPBuffer* GetDspHandle(u8 idx)
  * Address:	........
  * Size:	000034
  */
-DSPBuffer* GetDspHandleNc(u8)
+DSPchannel_* GetDspHandleNc(u8)
 {
 	// UNUSED FUNCTION
 }
@@ -62,7 +62,7 @@ FXBuffer* GetFxHandleNc(u8 idx)
  */
 void DSP_SetPitch(u8 idx, u16 pitch)
 {
-	DSPBuffer* buf = &CH_BUF[idx];
+	DSPchannel_* buf = &CH_BUF[idx];
 	if (pitch >= SHRT_MAX)
 		pitch = SHRT_MAX;
 	buf->resamplingRatio = pitch;
@@ -85,7 +85,7 @@ void DSP_SetPitch_Indirect(u8 idx, f32, f32)
  */
 void DSP_SetMixerInitDelayMax(u8 idx, u8 initDelayMax)
 {
-	DSPBuffer* buf          = &CH_BUF[idx];
+	DSPchannel_* buf        = &CH_BUF[idx];
 	buf->samplesToKeepCount = initDelayMax;
 }
 
@@ -99,7 +99,7 @@ void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 level)
 	u8* REF_idx;
 	u8* REF_mixer;
 
-	DSPBuffer* buf;
+	DSPchannel_* buf;
 	DSPMixerChannel* mixChan;
 
 	REF_idx   = &idx;
@@ -120,7 +120,7 @@ void DSP_SetMixerInitVolume(u8 idx, u8 mixer, s16 volume, u8 level)
  */
 void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
 {
-	DSPBuffer* buf           = &CH_BUF[idx];
+	DSPchannel_* buf         = &CH_BUF[idx];
 	DSPMixerChannel* mixChan = &buf->mixChannels[mixer];
 	if (buf->endRequested)
 		return;
@@ -135,7 +135,7 @@ void DSP_SetMixerVolume(u8 idx, u8 mixer, s16 volume, u8 param_4)
  */
 void DSP_SetOscInfo(u8 idx, u32 samplesSourceType)
 {
-	DSPBuffer* buf                  = &CH_BUF[idx];
+	DSPchannel_* buf                = &CH_BUF[idx];
 	buf->baseAddress                = 0;
 	buf->afcRemainingDecodedSamples = 16;
 	buf->samplesSourceType          = samplesSourceType;
@@ -148,7 +148,7 @@ void DSP_SetOscInfo(u8 idx, u32 samplesSourceType)
  */
 void DSP_SetPauseFlag(u8 idx, u8 pauseFlag)
 {
-	DSPBuffer* buf         = &CH_BUF[idx];
+	DSPchannel_* buf       = &CH_BUF[idx];
 	buf->useConstantSample = pauseFlag;
 }
 
@@ -166,7 +166,7 @@ void DSP_SetWaveInfo(u8 idx, Wave_* wave, u32 baseAddress)
 		0x09, 0x05, 0x08, 0x10, 0x01, 0x01, 0x01, 0x01,
 	};
 
-	DSPBuffer* buf = &CH_BUF[idx];
+	DSPchannel_* buf = &CH_BUF[idx];
 
 	buf->baseAddress                = baseAddress;
 	buf->afcRemainingDecodedSamples = COMP_BLOCKSAMPLES[wave->compBlockIdx];
@@ -199,7 +199,7 @@ void DSP_SetBusConnect(u8 idx, u8 mixer, u8 busConnect)
 		0x0000, 0x0D00, 0x0D60, 0x0DC0, 0x0E20, 0x0E80, 0x0EE0, 0x0CA0, 0x0F40, 0x0FA0, 0x0B00, 0x09A0,
 	};
 
-	DSPBuffer* buf           = &CH_BUF[idx];
+	DSPchannel_* buf         = &CH_BUF[idx];
 	DSPMixerChannel* mixChan = &buf->mixChannels[mixer];
 	mixChan->id              = connect_table[busConnect];
 }
@@ -211,8 +211,8 @@ void DSP_SetBusConnect(u8 idx, u8 mixer, u8 busConnect)
  */
 void DSP_PlayStop(u8 idx)
 {
-	DSPBuffer* buf = &CH_BUF[idx];
-	buf->enabled   = DSP_FALSE;
+	DSPchannel_* buf = &CH_BUF[idx];
+	buf->enabled     = DSP_FALSE;
 }
 
 /*
@@ -222,7 +222,7 @@ void DSP_PlayStop(u8 idx)
  */
 void DSP_AllocInit(u8 idx)
 {
-	DSPBuffer* buf         = &CH_BUF[idx];
+	DSPchannel_* buf       = &CH_BUF[idx];
 	buf->useConstantSample = DSP_FALSE;
 	buf->done              = DSP_FALSE;
 	buf->endRequested      = DSP_FALSE;
@@ -240,7 +240,7 @@ void DSP_PlayStart(u8 idx)
 {
 	u32 i;
 
-	DSPBuffer* buf       = &CH_BUF[idx];
+	DSPchannel_* buf     = &CH_BUF[idx];
 	buf->_10C            = 0;
 	buf->currentPosition = 0;
 	buf->currentPosFrac  = 0;
@@ -263,7 +263,7 @@ void DSP_PlayStart(u8 idx)
  */
 void DSP_SetDistFilter(u8 idx, s16 distFilter)
 {
-	DSPBuffer* buf    = &CH_BUF[idx];
+	DSPchannel_* buf  = &CH_BUF[idx];
 	buf->lowPassCoeff = distFilter;
 }
 
@@ -286,7 +286,7 @@ void DSP_SetFilterTable(s16* dst, s16* src, u32 len)
  */
 void DSP_SetIIRFilterParam(u8 idx, s16* param_2)
 {
-	DSPBuffer* buf = &CH_BUF[idx];
+	DSPchannel_* buf = &CH_BUF[idx];
 	DSP_SetFilterTable(buf->biquadFilterCoeffs, param_2, 4);
 }
 
@@ -297,7 +297,7 @@ void DSP_SetIIRFilterParam(u8 idx, s16* param_2)
  */
 void DSP_SetFIR8FilterParam(u8 idx, s16* param_2)
 {
-	DSPBuffer* buf = &CH_BUF[idx];
+	DSPchannel_* buf = &CH_BUF[idx];
 	DSP_SetFilterTable(buf->variableFirCoeffs, param_2, 8);
 }
 
@@ -308,7 +308,7 @@ void DSP_SetFIR8FilterParam(u8 idx, s16* param_2)
  */
 void DSP_SetFilterMode(u8 idx, u16 filterMode)
 {
-	DSPBuffer* buf = &CH_BUF[idx];
+	DSPchannel_* buf = &CH_BUF[idx];
 
 	u8 enableBiquadFilter    = filterMode & 0b100000;
 	u8 variableFirFilterSize = filterMode & 0b011111;
@@ -332,7 +332,7 @@ void DSP_SetFilterMode(u8 idx, u16 filterMode)
 void DSP_InitFilter(u8 idx)
 {
 	int i;
-	DSPBuffer* buf = &CH_BUF[idx];
+	DSPchannel_* buf = &CH_BUF[idx];
 
 	for (i = 0; i < 8; ++i) {
 		buf->variableFirCoeffs[i] = 0;
@@ -365,7 +365,7 @@ void DSP_FlushBuffer()
  */
 void DSP_FlushChannel(u8 idx)
 {
-	DCFlushRangeNoSync(&CH_BUF[idx], sizeof(DSPBuffer));
+	DCFlushRangeNoSync(&CH_BUF[idx], sizeof(DSPchannel_));
 }
 
 /*
@@ -416,7 +416,7 @@ void DSP_InvalChannelAll()
 void DSP_ClearBuffer()
 {
 	for (int i = 0; i < CH_BUF_LENGTH; ++i) {
-		Jac_bzero(&CH_BUF[i], sizeof(DSPBuffer));
+		Jac_bzero(&CH_BUF[i], sizeof(DSPchannel_));
 	}
 }
 

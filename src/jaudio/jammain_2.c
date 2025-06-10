@@ -1623,8 +1623,8 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 	u16 mask;
 
 	if (track->parent) {
-		track->isMuted  = track->parent->isMuted | param_2;
-		mask            = 1 << (track->trackId & 0xf);
+		track->isMuted = track->parent->isMuted | param_2;
+		mask           = 1 << (track->trackId & 0xf);
 		if (!param_2) {
 			track->parent->childMuteMask &= ~mask;
 		} else {

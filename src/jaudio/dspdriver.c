@@ -152,7 +152,7 @@ dspch_* GetLowerDSPchannel()
 			if (DSPCH[i]._0C) {
 				GetDspHandle(DSPCH[i].buffer_idx);
 				if (DSPCH[i]._03 <= max) {
-					DSPBuffer* buf = GetDspHandle(DSPCH[i].buffer_idx);
+					DSPchannel_* buf = GetDspHandle(DSPCH[i].buffer_idx);
 					if (max != DSPCH[i]._03 || (x && (buf->_10C >= x || buf->_10C == 0))) {
 						x   = buf->_10C;
 						id  = i;
@@ -177,7 +177,7 @@ dspch_* GetLowerActiveDSPchannel()
 	u32 index = 0;
 	u32 c     = 0;
 	u32 i;
-	DSPBuffer* buf;
+	DSPchannel_* buf;
 
 	u8* REF_a      = &a;
 	u32* REF_index = &index;
@@ -215,7 +215,7 @@ BOOL ForceStopDSPchannel(dspch_* chan)
 {
 	dspch_** REF_chan;
 
-	DSPBuffer* buf;
+	DSPchannel_* buf;
 
 	REF_chan = &chan;
 	if (chan->_01 == 4)
@@ -239,7 +239,7 @@ BOOL BreakLowerDSPchannel(u8 param_1)
 	u8* REF_param_1;
 
 	dspch_* chan;
-	DSPBuffer* buf;
+	DSPchannel_* buf;
 
 	chan        = GetLowerDSPchannel();
 	REF_param_1 = &param_1;
@@ -329,7 +329,7 @@ void UpdateDSPchannelAll()
 		if (chan->_01 == FALSE) {
 			continue;
 		}
-		DSPBuffer* buf = GetDspHandle(chan->buffer_idx);
+		DSPchannel_* buf = GetDspHandle(chan->buffer_idx);
 		if (buf->done) {
 			if (chan->_0C) {
 				chan->_06 = chan->_0C(chan, 2);
