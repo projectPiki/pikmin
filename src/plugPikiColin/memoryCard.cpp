@@ -545,7 +545,8 @@ void MemoryCard::writeOneGameFile(int idx)
 {
 	CardUtilMount(0, &CardWorkArea);
 	CardUtilIdleWhileBusy();
-	CardUtilWrite(0, mSaveFileIndex, &cardData[idx * 0x8000 + 0x6000], idx * 0x8000 + 0x6000, 0x8000);
+
+	CardUtilWrite(0, mSaveFileIndex, &cardData[getGameFileOffset(idx)], getGameFileOffset(idx), 0x8000);
 }
 
 /*
@@ -782,11 +783,14 @@ void MemoryCard::checkUseFile()
  */
 s32 MemoryCard::getMemoryCardState(bool flag)
 {
+	CARDMemoryCard* mem = &CardWorkArea;
+	u32 v               = flag;
+
 	mCardChannel   = -1;
 	mErrorCode     = CARD_RESULT_READY;
 	mSaveFileIndex = -1;
 	_3C            = -1;
-	u32 v          = flag;
+
 	if (getCardStatus(0)) {
 		mCardChannel = 0;
 		checkUseFile();
@@ -818,7 +822,7 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 		loadCurrentFile();
 		mErrorCode = CARD_RESULT_READY;
 	} else if (_3C != -1) {
-		CardUtilMount(0, &CardWorkArea);
+		CardUtilMount(0, mem);
 		CardUtilIdleWhileBusy();
 		CardUtilErase(0, _3C);
 		CardUtilIdleWhileBusy();
@@ -1550,7 +1554,7 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 	stream->writeByte(p2._04);
 	stream->setPosition(0x7FF8);
 
-	u32 sum = calcChecksum(&cardData[getGameFileOffset(gameflow.mGamePrefs.mSpareSaveGameIndex - 1)], 0x7FF8);
+	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
 	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
@@ -2376,6 +2380,8 @@ void MemoryCard::repairFile()
 			}
 		}
 	}
+
+	u32 badc[12];
 	/*
 	.loc_0x0:
 	  mflr      r0
