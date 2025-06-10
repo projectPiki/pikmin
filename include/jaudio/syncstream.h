@@ -20,7 +20,7 @@ void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(int);
 BOOL StreamAudio_Start(u32, int, char*, int, int, StreamHeader_*);
 void RegisterStreamCallback(StreamCallback);
-void Jac_Decode_ADPCM(void);
+void Jac_Decode_ADPCM(u8*, u16*, u16*, int, int, u16*);
 BOOL StreamSyncCheckReady(u32);
 BOOL StreamSyncCheckReadyID(u32, u32);
 BOOL StreamSyncCheckBusy(u32, u32);
@@ -29,7 +29,7 @@ BOOL StreamSyncStopAudio(u32);
 void StreamChgPitch(void);
 void StreamChgVolume(u32, int, int);
 void StreamChgMixLevel(u32, int, int);
-void StreamGetCurrentFrame(void);
+int StreamGetCurrentFrame(u32, u32);
 BOOL StreamSetDVDPause(u32, BOOL);
 void StreamCheckRemainBuffers(void);
 u8 StreamCheckAudioFormat(u32);
@@ -97,17 +97,17 @@ struct StreamCtrl_ {
 	u32 _21A0C;                   // _21A0C
 	u32 _21A10;                   // _21A10
 	StreamCallback _21A14;        // _21A14
-	artificial_padding(0x21A28, 0x21A18);
-	u16 volume[2];   // _21A28
-	u16 mixLevel[2]; // _21A28
-	f32 _21A30;      // _21A30
-	u8 _21A34;       // _21A34
-	u32 _21A38;      // _21A38
-	u32 _21A3C;      // _21A3C
-	u32 _21A40;      // _21A40
-	s32 _21A44;      // _21A44
-	s32 _21A48;      // _21A48
-	s32 _21A4C;      // _21A4C
+	u16 _21A18[8];                // _21A18
+	u16 volume[2];                // _21A28
+	u16 mixLevel[2];              // _21A28
+	f32 _21A30;                   // _21A30
+	u8 _21A34;                    // _21A34
+	u32 _21A38;                   // _21A38
+	u32 _21A3C;                   // _21A3C
+	u32 _21A40;                   // _21A40
+	s32 _21A44;                   // _21A44
+	s32 _21A48;                   // _21A48
+	s32 _21A4C;                   // _21A4C
 };
 
 #ifdef __cplusplus

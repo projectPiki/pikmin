@@ -664,7 +664,7 @@ void RegisterStreamCallback(StreamCallback callback)
  * Address:	8001CD40
  * Size:	000194
  */
-void Jac_Decode_ADPCM(void)
+void Jac_Decode_ADPCM(u8*, u16*, u16*, int, int, u16*)
 {
 	/*
 	.loc_0x0:
@@ -787,8 +787,16 @@ void Jac_Decode_ADPCM(void)
  * Address:	8001CEE0
  * Size:	0000D0
  */
-static void* __DecodeADPCM(StreamCtrl_*)
+static void* __DecodeADPCM(StreamCtrl_* ctrl)
 {
+	u32 a = ctrl->buffCtrlMain2._02;
+	u32 b = ctrl->buffCtrlMain._03;
+	if (ctrl->_21A08 == 0 && b == 0) {
+		for (int i = 0; i < 4; i++) {
+			ctrl->_21A18[i] = 0;
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -898,8 +906,38 @@ static void* __Decode(StreamCtrl_* ctrl)
  * Address:	8001D200
  * Size:	00013C
  */
-static void __PcmToLoop(StreamCtrl_*)
+static void __PcmToLoop(StreamCtrl_* ctrl)
 {
+	int count        = ctrl->buffCtrlMain3._04;
+	StreamCtrl_* ctr = &ctrl[ctrl->buffCtrlMain3._02 * 0x800];
+	s16* data1       = (s16*)&ctr->_1D8C0[0];
+	s16* data2       = (s16*)&ctr->_1D8C0[1];
+
+	for (int i = 0; i < count; i) {
+		int x             = ctrl->buffCtrlMain2._03;
+		StreamCtrl_* ctr2 = &ctrl[x];
+		int v1            = ctr2->buffCtrlExtra[0]._08;
+		u32* v3           = (u32*)ctr2->buffCtrlExtra[0]._04;
+		int v2            = ctrl->buffCtrlMain2._08 + *v3;
+		for (u32 j = 0; j < count, v1 < v2; j++) {
+			count--;
+			StreamCtrl_* ctr3 = &ctrl[x * 0x4000 + j];
+			data1[j]          = ctr3->_1D8C0[0][j];
+			data2[j]          = ctr3->_1D8C0[1][j];
+		}
+
+		if (v1 == v2) {
+			ctr2->buffCtrlExtra[0]._00 = 0;
+			ctrl->buffCtrlMain2._03    = (x + 1) & 1;
+			ctrl->buffCtrlMain2._08    = 0;
+		} else {
+			ctrl->buffCtrlMain2._08 = v2 - *v3;
+		}
+	}
+
+	DCStoreRangeNoSync(data1, ctrl->buffCtrlMain3._04 << 1);
+	DCStoreRangeNoSync(data2, ctrl->buffCtrlMain3._04 << 1);
+	ctrl->_21A40 += ctrl->buffCtrlMain3._04;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1185,8 +1223,29 @@ void StreamChgMixLevel(u32 ctrlID, int mixLevelL, int mixLevelR)
  * Address:	8001D780
  * Size:	000190
  */
-void StreamGetCurrentFrame(void)
+int StreamGetCurrentFrame(u32 id1, u32 id2)
 {
+	StreamCtrl_* ctrl = &SC[id1];
+	dspch_* ch        = ctrl->dspch[0];
+
+	if (ch == NULL) {
+		return -1;
+	}
+
+	switch (id2) {
+	case 0:
+		return ctrl->_21980 * ctrl->header._0E / ctrl->header._08;
+	case 1:
+		return JAC_SUBFRAMES / (f32)JAC_FRAMESAMPLES * ctrl->header._0E / JAC_DAC_RATE * ctrl->_21A08;
+	case 2:
+		if (ctrl->_21A08 == 0) {
+			return 0;
+		}
+		return (ctrl->_219FC - Get_DirectPCM_Remain((DSPchannel_*)GetDspHandle(ch->buffer_idx))) * (f32)ctrl->header._0E / ctrl->header._08
+		     + 0.499f;
+	}
+
+	u32 badcompiler[3];
 	/*
 	.loc_0x0:
 	  mflr      r0
