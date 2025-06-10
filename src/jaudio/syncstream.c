@@ -27,6 +27,14 @@ static StreamCallback default_streamsync_call;
 
 static UNK_STRUCT* copy = &copyinfo;
 
+s16 filter_table[16][2] = {
+	{ 1, 1 }, // TODO
+};
+
+s16 table4[16] = {
+	0, 1, 2, 3, 4, 5, 6, 7, -8, -7, -6, -5, -4, -3, -2, -1,
+};
+
 /*
  * --INFO--
  * Address:	8001BBE0
@@ -664,8 +672,67 @@ void RegisterStreamCallback(StreamCallback callback)
  * Address:	8001CD40
  * Size:	000194
  */
-void Jac_Decode_ADPCM(u8*, u16*, u16*, int, int, u16*)
+void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* state)
 {
+	s16 var_r31, var_r30, var_r29, var_r28;
+	u32 i, j;
+	u8 header, scale_factor, predictor;
+	s16 coef1, coef2;
+	u8 byte, samp1, samp2;
+	int output;
+
+	var_r31 = state[0];
+	var_r30 = state[1];
+	var_r29 = state[2];
+	var_r28 = state[3];
+	for (i = 0; i < count; i++) {
+		header       = *src++;
+		scale_factor = (header >> 4) & 0xF;
+		predictor    = header & 0xF;
+		coef1        = filter_table[predictor][0];
+		coef2        = filter_table[predictor][1];
+		for (j = 0; j < 8; j++) {
+			byte  = *src++;
+			samp1 = byte >> 4;
+			samp2 = byte & 0xF;
+
+			output  = (table4[samp1] << scale_factor) + ((coef1 * var_r30 + coef2 * var_r31) >> 11);
+			*dst1++ = output;
+			var_r30 = var_r31;
+			var_r31 = output;
+
+			output  = (table4[samp2] << scale_factor) + ((coef1 * var_r30 + coef2 * var_r31) >> 11);
+			*dst1++ = output;
+			var_r30 = var_r31;
+			var_r31 = output;
+		}
+		if (arg4) {
+			header       = *src++;
+			scale_factor = (header >> 4) & 0xF;
+			predictor    = header & 0xF;
+			coef1        = filter_table[predictor][0];
+			coef2        = filter_table[predictor][1];
+			for (j = 0; j < 8; j++) {
+				byte  = *src++;
+				samp1 = byte >> 4;
+				samp2 = byte & 0xF;
+
+				output  = (table4[samp1] << scale_factor) + ((coef1 * var_r28 + coef2 * var_r29) >> 11);
+				*dst2++ = output;
+				var_r28 = var_r29;
+				var_r29 = output;
+
+				output  = (table4[samp2] << scale_factor) + ((coef1 * var_r28 + coef2 * var_r29) >> 11);
+				*dst2++ = output;
+				var_r28 = var_r29;
+				var_r29 = output;
+			}
+		}
+	}
+	state[0] = var_r31;
+	state[1] = var_r30;
+	state[2] = var_r29;
+	state[3] = var_r28;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x48(r1)
@@ -797,6 +864,14 @@ static void* __DecodeADPCM(StreamCtrl_* ctrl)
 		}
 	}
 
+	u32 temp_r7  = ctrl->buffCtrl[b]._04;
+	s16* db      = ctrl->_0D8C0[a];
+	s16* dc      = ctrl->_158C0[a];
+	u8* da       = ctrl->_00[b].data;
+	u32 temp_r30 = (ctrl->buffCtrl[b]._08 - temp_r7) / 18;
+	Jac_Decode_ADPCM(&da[temp_r7], db, dc, temp_r30, 1, ctrl->_21A18);
+	ctrl->_21980 += (temp_r30 << 4) & 0x7FFFFFFF;
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -880,6 +955,42 @@ static s16 Clamp16(s32 a)
  */
 static void* __DecodeADPCM4X(StreamCtrl_* ctrl)
 {
+	u32 a = ctrl->buffCtrlMain2._02;
+	u32 b = ctrl->buffCtrlMain._03;
+	int k = 0;
+	if (ctrl->_21A08 == 0 && b == 0) {
+		for (int i = 0; i < 4; i++) {
+			ctrl->_21A18[i] = 0;
+		}
+	}
+
+	u32 temp_r7  = ctrl->buffCtrl[b]._04;
+	s16* db      = ctrl->_0D8C0[a];
+	s16* dc      = ctrl->_158C0[a];
+	u32 temp_r30 = (ctrl->buffCtrl[b]._08 - temp_r7) / 36;
+	u8* da       = ctrl->_00[b].data + temp_r7;
+	int temp_r21 = ctrl->mixLevel[0];
+	int temp_r20 = ctrl->mixLevel[1];
+
+	s16* dst1 = ctrl->_0D8C0[a];
+	s16* dst2 = ctrl->_158C0[a];
+
+	s16 sp6C[16];
+	s16 sp4C[16];
+	s16 sp2C[16];
+	s16 sp0C[16];
+
+	for (int i = 0; i < temp_r30; i++) {
+		Jac_Decode_ADPCM(da + 0, sp6C, sp4C, 1, 1, ctrl->_21A18 + 0);
+		Jac_Decode_ADPCM(da + 18, sp2C, sp0C, 1, 1, ctrl->_21A18 + 4);
+		da += 36;
+		for (u32 j = 0; j < 16; j++) {
+			dst1[k] = Clamp16((sp6C[j] * temp_r21 >> 15) + (sp2C[j] * temp_r20 >> 15));
+			dst2[k] = Clamp16((sp4C[j] * temp_r21 >> 15) + (sp0C[j] * temp_r20 >> 15));
+			k++;
+		}
+	}
+	ctrl->_21980 += (temp_r30 << 4) & 0x7FFFFFFF;
 }
 
 /*

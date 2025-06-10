@@ -20,7 +20,7 @@ void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(int);
 BOOL StreamAudio_Start(u32, int, char*, int, int, StreamHeader_*);
 void RegisterStreamCallback(StreamCallback);
-void Jac_Decode_ADPCM(u8*, u16*, u16*, int, int, u16*);
+void Jac_Decode_ADPCM(u8*, s16*, s16*, u32, u8, s16*);
 BOOL StreamSyncCheckReady(u32);
 BOOL StreamSyncCheckReadyID(u32, u32);
 BOOL StreamSyncCheckBusy(u32, u32);
@@ -96,7 +96,7 @@ struct StreamCtrl_ {
 	u32 _21A0C;                   // _21A0C
 	u32 _21A10;                   // _21A10
 	StreamCallback _21A14;        // _21A14
-	u16 _21A18[8];                // _21A18
+	s16 _21A18[8];                // _21A18
 	u16 volume[2];                // _21A28
 	u16 mixLevel[2];              // _21A28
 	f32 _21A30;                   // _21A30
