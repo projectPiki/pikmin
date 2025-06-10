@@ -416,7 +416,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, StreamHea
 static void __PcmToLoop(StreamCtrl_*);
 static void __StreamChgVolume(StreamCtrl_* ctrl);
 static void __StreamChgPitch(StreamCtrl_* ctrl);
-static void* __Decode(StreamCtrl_* ctrl);
+static u32 __Decode(StreamCtrl_* ctrl);
 /*
  * --INFO--
  * Address:	8001C460
@@ -431,7 +431,7 @@ static s32 StreamAudio_Callback(void* data)
 
 	if (!ctrl->dspch[0]) {
 		for (i = 0; i < 2; i++) {
-			ctrl->dspch[i]      = AllocDSPchannel(0, (u32)&ctrl->dspch[i]); // TODO: suspicious cast
+			ctrl->dspch[i]      = AllocDSPchannel(0, (u32)&ctrl->dspch[i]);
 			ctrl->dspch[i]->_03 = 0x7f;
 		}
 	}
@@ -449,7 +449,7 @@ static s32 StreamAudio_Callback(void* data)
 
 			for (i = 0; i < 2; i++) {
 				Stop_DirectPCM(ctrl->dspch[i]);
-				DeAllocDSPchannel(ctrl->dspch[i], (u32)&ctrl->dspch[i]); // TODO: suspicious cast
+				DeAllocDSPchannel(ctrl->dspch[i], (u32)&ctrl->dspch[i]);
 				ctrl->dspch[i] = NULL;
 			}
 
@@ -568,18 +568,18 @@ static s32 StreamAudio_Callback(void* data)
 	}
 
 	if (ctrl->buffCtrl[ctrl->buffCtrlMain._03]._00 == 2 && ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._00 == 0) {
-		void* data = __Decode(ctrl);
+		u32 size = __Decode(ctrl);
 
 		ctrl->buffCtrl[ctrl->buffCtrlMain._03]._00 = 0;
 
 		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._00 = 2;
 		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._04 = 0;
-		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._08 = (u32)data; // TODO: suspicious cast
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2._02]._08 = size;
 
 		ctrl->buffCtrlMain._03 = (ctrl->buffCtrlMain._03 + 1) % 6;
 
 		ctrl->buffCtrlMain2._02 = (ctrl->buffCtrlMain2._02 + 1) % 2;
-		ctrl->buffCtrlMain2._0C += (u32)data; // TODO: suspicious cast
+		ctrl->buffCtrlMain2._0C += size;
 	}
 
 	if (r25 == 1 || ctrl->_21A08 == 0) {
@@ -854,83 +854,31 @@ void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* st
  * Address:	8001CEE0
  * Size:	0000D0
  */
-static void* __DecodeADPCM(StreamCtrl_* ctrl)
+static u32 __DecodeADPCM(StreamCtrl_* ctrl)
 {
+	u8 badCompiler[16];
 	u32 a = ctrl->buffCtrlMain2._02;
 	u32 b = ctrl->buffCtrlMain._03;
+
 	if (ctrl->_21A08 == 0 && b == 0) {
 		for (int i = 0; i < 4; i++) {
 			ctrl->_21A18[i] = 0;
 		}
 	}
 
-	u32 temp_r7  = ctrl->buffCtrl[b]._04;
-	s16* db      = ctrl->_0D8C0[a];
-	s16* dc      = ctrl->_158C0[a];
-	u8* da       = ctrl->_00[b].data;
-	u32 temp_r30 = (ctrl->buffCtrl[b]._08 - temp_r7) / 18;
-	Jac_Decode_ADPCM(&da[temp_r7], db, dc, temp_r30, 1, ctrl->_21A18);
-	ctrl->_21980 += (temp_r30 << 4) & 0x7FFFFFFF;
+	s16* dst1 = ctrl->_0D8C0[a];
+	s16* dst2 = ctrl->_158C0[a];
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addis     r4, r3, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r30, 0x20(r1)
-	  lwz       r0, 0x1A08(r4)
-	  lbz       r7, 0x1952(r4)
-	  cmplwi    r0, 0
-	  lbz       r8, 0x1943(r4)
-	  bne-      .loc_0x54
-	  cmplwi    r8, 0
-	  bne-      .loc_0x54
-	  li        r4, 0
-	  li        r0, 0x4
-	  addi      r6, r4, 0
-	  mtctr     r0
+	u8* src = ctrl->_00[b].data;
+	src += ctrl->buffCtrl[b]._04;
 
-	.loc_0x40:
-	  addis     r5, r4, 0x2
-	  addi      r4, r4, 0x2
-	  addi      r5, r5, 0x1A18
-	  sthx      r6, r3, r5
-	  bdnz+     .loc_0x40
+	u32 count = (ctrl->buffCtrl[b]._08 - ctrl->buffCtrl[b]._04) / 18;
 
-	.loc_0x54:
-	  addis     r31, r3, 0x2
-	  rlwinm    r0,r8,4,0,27
-	  add       r4, r31, r0
-	  rlwinm    r0,r7,14,0,17
-	  lwz       r7, 0x18C4(r4)
-	  add       r5, r3, r0
-	  lwz       r4, 0x18C8(r4)
-	  mulli     r6, r8, 0x2420
-	  li        r0, 0x12
-	  sub       r4, r4, r7
-	  divwu     r30, r4, r0
-	  addis     r4, r5, 0x1
-	  add       r3, r3, r6
-	  addis     r5, r5, 0x1
-	  addi      r8, r31, 0
-	  add       r3, r3, r7
-	  subi      r4, r4, 0x2740
-	  addi      r5, r5, 0x58C0
-	  addi      r6, r30, 0
-	  li        r7, 0x1
-	  addi      r8, r8, 0x1A18
-	  bl        -0x248
-	  lwz       r0, 0x1980(r31)
-	  rlwinm    r3,r30,4,1,27
-	  add       r0, r0, r3
-	  stw       r0, 0x1980(r31)
-	  lmw       r30, 0x20(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	Jac_Decode_ADPCM(src, dst1, dst2, count, 1, ctrl->_21A18);
+
+	u32 size = (count * 16) & 0x7FFFFFFF;
+	ctrl->_21980 += size;
+	return size;
 }
 
 /*
@@ -953,44 +901,56 @@ static s16 Clamp16(s32 a)
  * Address:	8001D000
  * Size:	00019C
  */
-static void* __DecodeADPCM4X(StreamCtrl_* ctrl)
+
+static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
 {
+	u32 badCompiler[6];
 	u32 a = ctrl->buffCtrlMain2._02;
 	u32 b = ctrl->buffCtrlMain._03;
-	int k = 0;
+	u32 count;
+	u32 i;
+	u32 outpos = 0;
+
 	if (ctrl->_21A08 == 0 && b == 0) {
-		for (int i = 0; i < 4; i++) {
+		for (u32 i = 0; i < 4; i++) {
 			ctrl->_21A18[i] = 0;
 		}
+		// Not clearing ctrl->_21A20 too?
 	}
-
-	u32 temp_r7  = ctrl->buffCtrl[b]._04;
-	s16* db      = ctrl->_0D8C0[a];
-	s16* dc      = ctrl->_158C0[a];
-	u32 temp_r30 = (ctrl->buffCtrl[b]._08 - temp_r7) / 36;
-	u8* da       = ctrl->_00[b].data + temp_r7;
-	int temp_r21 = ctrl->mixLevel[0];
-	int temp_r20 = ctrl->mixLevel[1];
 
 	s16* dst1 = ctrl->_0D8C0[a];
 	s16* dst2 = ctrl->_158C0[a];
+
+	u8* src = ctrl->_00[b].data;
+	src += ctrl->buffCtrl[b]._04;
+
+	u32 j;
+
+	u16 mixLevel0 = ctrl->mixLevel[0];
+	u16 mixLevel1 = ctrl->mixLevel[1];
+
+	count = (ctrl->buffCtrl[b]._08 - ctrl->buffCtrl[b]._04) / 36;
 
 	s16 sp6C[16];
 	s16 sp4C[16];
 	s16 sp2C[16];
 	s16 sp0C[16];
 
-	for (int i = 0; i < temp_r30; i++) {
-		Jac_Decode_ADPCM(da + 0, sp6C, sp4C, 1, 1, ctrl->_21A18 + 0);
-		Jac_Decode_ADPCM(da + 18, sp2C, sp0C, 1, 1, ctrl->_21A18 + 4);
-		da += 36;
-		for (u32 j = 0; j < 16; j++) {
-			dst1[k] = Clamp16((sp6C[j] * temp_r21 >> 15) + (sp2C[j] * temp_r20 >> 15));
-			dst2[k] = Clamp16((sp4C[j] * temp_r21 >> 15) + (sp0C[j] * temp_r20 >> 15));
-			k++;
+	for (i = 0; i < count; i++) {
+		Jac_Decode_ADPCM(src, sp6C, sp4C, 1, 1, ctrl->_21A18);
+		src += 18;
+		Jac_Decode_ADPCM(src, sp2C, sp0C, 1, 1, ctrl->_21A20);
+		src += 18;
+		for (j = 0; j < 16; j++) {
+			dst1[outpos] = Clamp16((sp6C[j] * mixLevel0 >> 15) + (sp2C[j] * mixLevel1 >> 15));
+			dst2[outpos] = Clamp16((sp4C[j] * mixLevel0 >> 15) + (sp0C[j] * mixLevel1 >> 15));
+			outpos++;
 		}
 	}
-	ctrl->_21980 += (temp_r30 << 4) & 0x7FFFFFFF;
+
+	u32 size = (count << 4) & 0x7FFFFFFF;
+	ctrl->_21980 += size;
+	return size;
 }
 
 /*
@@ -998,18 +958,18 @@ static void* __DecodeADPCM4X(StreamCtrl_* ctrl)
  * Address:	8001D1A0
  * Size:	000054
  */
-static void* __Decode(StreamCtrl_* ctrl)
+static u32 __Decode(StreamCtrl_* ctrl)
 {
-	void* data;
+	u32 size;
 	switch (ctrl->header.audioFormat) {
 	case AUDIOFRMT_ADPCM:
-		data = __DecodeADPCM(ctrl);
+		size = __DecodeADPCM(ctrl);
 		break;
 	case AUDIOFRMT_ADPCM4X:
-		data = __DecodeADPCM4X(ctrl);
+		size = __DecodeADPCM4X(ctrl);
 		break;
 	}
-	return data;
+	return size;
 }
 
 /*

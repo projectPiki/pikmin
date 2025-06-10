@@ -60,14 +60,14 @@ struct StreamHeader_ {
 };
 
 // size 0x2420
-struct STRUCT_0x2420 {
+union UNION_0x2420 {
 	StreamHeader_ header; // _00
-	u8 data[0x2400];      // _20
+	u8 data[0x2420];      // _20
 };
 
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
-	struct STRUCT_0x2420 _00[6];  // _00
+	union UNION_0x2420 _00[6];    // _00
 	s16 _0D8C0[2][0x2000];        // _0D8C0
 	s16 _158C0[2][0x2000];        // _158C0
 	s16 _1D8C0[2][0x1000];        // _1D8C0, PCM data?
@@ -96,7 +96,8 @@ struct StreamCtrl_ {
 	u32 _21A0C;                   // _21A0C
 	u32 _21A10;                   // _21A10
 	StreamCallback _21A14;        // _21A14
-	s16 _21A18[8];                // _21A18
+	s16 _21A18[4];                // _21A18
+	s16 _21A20[4];                // _21A20
 	u16 volume[2];                // _21A28
 	u16 mixLevel[2];              // _21A28
 	f32 _21A30;                   // _21A30
