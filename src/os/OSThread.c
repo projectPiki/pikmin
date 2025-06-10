@@ -41,8 +41,8 @@ void __OSThreadInit(void)
 
 	OSClearContext(&thread->context);
 	OSSetCurrentContext(&thread->context);
-	thread->stackBase   = (void*)0x803FC840;
-	thread->stackEnd    = (void*)0x803EC840;
+	thread->stackBase   = (void*)_stack_addr;
+	thread->stackEnd    = (void*)_stack_end;
 	*(thread->stackEnd) = OS_THREAD_STACK_MAGIC;
 
 	RunQueueBits      = 0;

@@ -185,12 +185,12 @@ void OSInit(void)
 		// HEAP //
 		// set up bottom of heap (ArenaLo)
 		// grab address from BootInfo if it exists, otherwise use default __ArenaLo
-		OSSetArenaLo((BootInfo->arenaLo == NULL) ? (void*)(0x803FE840) : BootInfo->arenaLo);
+		OSSetArenaLo((BootInfo->arenaLo == NULL) ? (void*)(__ArenaLo) : BootInfo->arenaLo);
 
 		// if the input arenaLo is null, and debug flag location exists (and flag is < 2),
 		//     set arenaLo to just past the end of the db stack
 		if ((BootInfo->arenaLo == NULL) && (BI2DebugFlag != 0) && (*BI2DebugFlag < 2)) {
-			debugArenaLo = (void*)0x803FC840;
+			debugArenaLo = (void*)_stack_addr;
 			OSSetArenaLo((void*)ALIGN_NEXT((u32)debugArenaLo, 32));
 		}
 
