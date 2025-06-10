@@ -1236,132 +1236,17 @@ int StreamGetCurrentFrame(u32 id1, u32 id2)
 	case 0:
 		return ctrl->_21980 * ctrl->header._0E / ctrl->header._08;
 	case 1:
-		return JAC_SUBFRAMES / (f32)JAC_FRAMESAMPLES * ctrl->header._0E / JAC_DAC_RATE * ctrl->_21A08;
+		f32 subframeRate = JAC_DAC_RATE * JAC_SUBFRAMES / JAC_FRAMESAMPLES;
+		return ctrl->header._0E / subframeRate * ctrl->_21A08;
 	case 2:
 		if (ctrl->_21A08 == 0) {
 			return 0;
 		}
-		return (ctrl->_219FC - Get_DirectPCM_Remain(GetDspHandle(ch->buffer_idx))) * (f32)ctrl->header._0E / ctrl->header._08 + 0.499f;
+		u32 size = ctrl->_219FC - Get_DirectPCM_Remain(GetDspHandle(ch->buffer_idx));
+		return size * (f32)ctrl->header._0E / ctrl->header._08 + 0.499f;
 	}
 
 	u32 badcompiler[3];
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x2
-	  lis       r5, 0x8037
-	  addi      r6, r6, 0x1A50
-	  stw       r0, 0x4(r1)
-	  subi      r0, r5, 0x7160
-	  mullw     r5, r3, r6
-	  stwu      r1, -0x50(r1)
-	  stw       r31, 0x4C(r1)
-	  add       r5, r0, r5
-	  addis     r31, r5, 0x2
-	  lwz       r5, 0x19F4(r31)
-	  cmplwi    r5, 0
-	  bne-      .loc_0x40
-	  li        r3, -0x1
-	  b         .loc_0x17C
-
-	.loc_0x40:
-	  cmpwi     r4, 0x1
-	  beq-      .loc_0x7C
-	  bge-      .loc_0x58
-	  cmpwi     r4, 0
-	  bge-      .loc_0x64
-	  b         .loc_0x17C
-
-	.loc_0x58:
-	  cmpwi     r4, 0x3
-	  bge-      .loc_0x17C
-	  b         .loc_0xF8
-
-	.loc_0x64:
-	  lwz       r4, 0x1980(r31)
-	  lhz       r3, 0x1996(r31)
-	  lhz       r0, 0x1990(r31)
-	  mullw     r3, r4, r3
-	  divwu     r3, r3, r0
-	  b         .loc_0x17C
-
-	.loc_0x7C:
-	  lwz       r3, -0x7FFC(r13)
-	  lis       r4, 0x4330
-	  lwz       r0, -0x7FF8(r13)
-	  stw       r3, 0x34(r1)
-	  lhz       r3, 0x1996(r31)
-	  stw       r4, 0x30(r1)
-	  lwz       r5, 0x1A08(r31)
-	  stw       r0, 0x2C(r1)
-	  lfd       f4, -0x7DF0(r2)
-	  lfd       f0, 0x30(r1)
-	  stw       r4, 0x28(r1)
-	  fsubs     f1, f0, f4
-	  lfs       f2, -0x8000(r13)
-	  lfd       f0, 0x28(r1)
-	  stw       r3, 0x3C(r1)
-	  fmuls     f1, f2, f1
-	  fsubs     f0, f0, f4
-	  stw       r4, 0x38(r1)
-	  lfd       f2, 0x38(r1)
-	  fdivs     f0, f1, f0
-	  stw       r5, 0x44(r1)
-	  stw       r4, 0x40(r1)
-	  lfd       f3, 0x40(r1)
-	  fsubs     f1, f2, f4
-	  fsubs     f2, f3, f4
-	  fdivs     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x20(r1)
-	  lwz       r3, 0x24(r1)
-	  b         .loc_0x17C
-
-	.loc_0xF8:
-	  lwz       r0, 0x1A08(r31)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x10C
-	  li        r3, 0
-	  b         .loc_0x17C
-
-	.loc_0x10C:
-	  lbz       r3, 0x0(r5)
-	  bl        -0x12330
-	  bl        -0x1B74
-	  lwz       r0, 0x19FC(r31)
-	  lis       r5, 0x4330
-	  lhz       r4, 0x1996(r31)
-	  sub       r3, r0, r3
-	  lhz       r0, 0x1990(r31)
-	  stw       r3, 0x24(r1)
-	  lfd       f3, -0x7DF0(r2)
-	  stw       r4, 0x2C(r1)
-	  lfs       f4, -0x7DE8(r2)
-	  stw       r5, 0x20(r1)
-	  stw       r5, 0x28(r1)
-	  lfd       f1, 0x20(r1)
-	  stw       r0, 0x34(r1)
-	  lfd       f0, 0x28(r1)
-	  fsubs     f2, f1, f3
-	  stw       r5, 0x30(r1)
-	  fsubs     f1, f0, f3
-	  lfd       f0, 0x30(r1)
-	  fmuls     f1, f2, f1
-	  fsubs     f0, f0, f3
-	  fdivs     f0, f1, f0
-	  fadds     f0, f4, f0
-	  fctiwz    f0, f0
-	  stfd      f0, 0x38(r1)
-	  lwz       r3, 0x3C(r1)
-
-	.loc_0x17C:
-	  lwz       r0, 0x54(r1)
-	  lwz       r31, 0x4C(r1)
-	  addi      r1, r1, 0x50
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
