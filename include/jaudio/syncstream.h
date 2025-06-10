@@ -46,8 +46,6 @@ struct BufControl_ {
 	u32 _0C; // _0C
 };
 
-#define artificial_padding(currentOffset, lastOffset) u8 __##lastOffset##padding[currentOffset - lastOffset]
-
 enum AudioFormat { AUDIOFRMT_ADPCM = 4, AUDIOFRMT_ADPCM4X = 5 };
 
 // size 0x20
@@ -58,7 +56,7 @@ struct StreamHeader_ {
 	u16 audioFormat; // _0A
 	u16 _0C;         // _0C
 	u16 _0E;         // _0E
-	artificial_padding(0x20, 0x10);
+	u8 _10[0x10];    // _10, unknown data
 };
 
 // size 0x2420
@@ -69,9 +67,10 @@ struct STRUCT_0x2420 {
 
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
-	struct STRUCT_0x2420 _00[6]; // _00
-	artificial_padding(0x1D8C0, 0xD8C0);
-	s16 _1D8C0[2][0x1000];        // _1D8C0, PCM data
+	struct STRUCT_0x2420 _00[6];  // _00
+	s16 _0D8C0[2][0x2000];        // _0D8C0
+	s16 _158C0[2][0x2000];        // _158C0
+	s16 _1D8C0[2][0x1000];        // _1D8C0, PCM data?
 	BufControl_ buffCtrl[6];      // _218C0
 	BufControl_ buffCtrlExtra[2]; // _21920
 	BufControl_ buffCtrlMain;     // _21940

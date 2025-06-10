@@ -908,130 +908,35 @@ static void* __Decode(StreamCtrl_* ctrl)
  */
 static void __PcmToLoop(StreamCtrl_* ctrl)
 {
-	int count        = ctrl->buffCtrlMain3._04;
-	StreamCtrl_* ctr = &ctrl[ctrl->buffCtrlMain3._02 * 0x800];
-	s16* data1       = (s16*)&ctr->_1D8C0[0];
-	s16* data2       = (s16*)&ctr->_1D8C0[1];
+	int count  = ctrl->buffCtrlMain3._04;
+	s16* dst1  = &ctrl->_1D8C0[0][ctrl->buffCtrlMain3._02 * 0x400];
+	s16* dst2  = &ctrl->_1D8C0[1][ctrl->buffCtrlMain3._02 * 0x400];
+	s16* data1 = dst1;
+	s16* data2 = dst2;
 
-	for (int i = 0; i < count; i) {
-		int x             = ctrl->buffCtrlMain2._03;
-		StreamCtrl_* ctr2 = &ctrl[x];
-		int v1            = ctr2->buffCtrlExtra[0]._08;
-		u32* v3           = (u32*)ctr2->buffCtrlExtra[0]._04;
-		int v2            = ctrl->buffCtrlMain2._08 + *v3;
-		for (u32 j = 0; j < count, v1 < v2; j++) {
+	while (count > 0) {
+		int x   = ctrl->buffCtrlMain2._03;
+		u32 pos = ctrl->buffCtrlMain2._08 + ctrl->buffCtrlExtra[x]._04;
+		u32 end = ctrl->buffCtrlExtra[x]._08;
+		while (pos < end && count > 0) {
+			*dst1++ = ctrl->_0D8C0[x][pos];
+			*dst2++ = ctrl->_158C0[x][pos];
+			pos++;
 			count--;
-			StreamCtrl_* ctr3 = &ctrl[x * 0x4000 + j];
-			data1[j]          = ctr3->_1D8C0[0][j];
-			data2[j]          = ctr3->_1D8C0[1][j];
 		}
 
-		if (v1 == v2) {
-			ctr2->buffCtrlExtra[0]._00 = 0;
+		if (pos == end) {
+			ctrl->buffCtrlExtra[x]._00 = 0;
 			ctrl->buffCtrlMain2._03    = (x + 1) & 1;
 			ctrl->buffCtrlMain2._08    = 0;
 		} else {
-			ctrl->buffCtrlMain2._08 = v2 - *v3;
+			ctrl->buffCtrlMain2._08 = pos - ctrl->buffCtrlExtra[x]._04;
 		}
 	}
 
 	DCStoreRangeNoSync(data1, ctrl->buffCtrlMain3._04 << 1);
 	DCStoreRangeNoSync(data2, ctrl->buffCtrlMain3._04 << 1);
 	ctrl->_21A40 += ctrl->buffCtrlMain3._04;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addis     r7, r3, 0x2
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r27, 0x14(r1)
-	  lbz       r0, 0x1962(r7)
-	  lwz       r4, 0x1964(r7)
-	  rlwinm    r0,r0,11,0,20
-	  add       r5, r3, r0
-	  addis     r6, r5, 0x2
-	  addis     r5, r5, 0x2
-	  subi      r6, r6, 0x2740
-	  subi      r5, r5, 0x740
-	  addi      r11, r6, 0
-	  addi      r12, r5, 0
-	  addi      r29, r6, 0
-	  addi      r31, r5, 0
-	  b         .loc_0xEC
-
-	.loc_0x48:
-	  lbz       r30, 0x1953(r7)
-	  lwz       r6, 0x1958(r7)
-	  rlwinm    r5,r30,4,0,27
-	  rlwinm    r0,r30,14,0,17
-	  add       r9, r3, r5
-	  add       r8, r3, r0
-	  addis     r10, r9, 0x2
-	  lwzu      r0, 0x1924(r10)
-	  addis     r5, r9, 0x2
-	  lwz       r27, 0x1928(r5)
-	  add       r28, r6, r0
-	  rlwinm    r5,r28,1,0,30
-	  b         .loc_0xA8
-
-	.loc_0x7C:
-	  add       r6, r8, r5
-	  addi      r28, r28, 0x1
-	  addis     r6, r6, 0x1
-	  addi      r5, r5, 0x2
-	  lha       r0, -0x2740(r6)
-	  subi      r4, r4, 0x1
-	  sth       r0, 0x0(r11)
-	  addi      r11, r11, 0x2
-	  lha       r0, 0x58C0(r6)
-	  sth       r0, 0x0(r12)
-	  addi      r12, r12, 0x2
-
-	.loc_0xA8:
-	  cmplw     r28, r27
-	  bge-      .loc_0xB8
-	  cmpwi     r4, 0
-	  bgt+      .loc_0x7C
-
-	.loc_0xB8:
-	  cmplw     r28, r27
-	  bne-      .loc_0xE0
-	  addis     r5, r9, 0x2
-	  li        r6, 0
-	  addi      r0, r30, 0x1
-	  stb       r6, 0x1920(r5)
-	  rlwinm    r0,r0,0,31,31
-	  stb       r0, 0x1953(r7)
-	  stw       r6, 0x1958(r7)
-	  b         .loc_0xEC
-
-	.loc_0xE0:
-	  lwz       r0, 0x0(r10)
-	  sub       r0, r28, r0
-	  stw       r0, 0x1958(r7)
-
-	.loc_0xEC:
-	  cmpwi     r4, 0
-	  bgt+      .loc_0x48
-	  addis     r30, r3, 0x2
-	  addi      r3, r29, 0
-	  lwz       r0, 0x1964(r30)
-	  rlwinm    r4,r0,1,0,30
-	  bl        0x1D997C
-	  lwz       r0, 0x1964(r30)
-	  addi      r3, r31, 0
-	  rlwinm    r4,r0,1,0,30
-	  bl        0x1D996C
-	  lwz       r3, 0x1A40(r30)
-	  lwz       r0, 0x1964(r30)
-	  add       r0, r3, r0
-	  stw       r0, 0x1A40(r30)
-	  lwz       r0, 0x2C(r1)
-	  lmw       r27, 0x14(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
