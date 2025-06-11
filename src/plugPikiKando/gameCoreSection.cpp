@@ -898,7 +898,8 @@ void GameCoreSection::initStage()
 	pikiMgr->mMapMgr    = mMapMgr;
 
 	memStat->start("pikiCreate");
-	pikiMgr->create(102);
+	// This has a capacity of 102 in the vanilla game for some reason.
+	pikiMgr->create(MAX_PIKI_ON_FIELD == 100 ? 102 : MAX_PIKI_ON_FIELD);
 	memStat->end("pikiCreate");
 
 	memStat->end("piki");
