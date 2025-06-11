@@ -217,7 +217,77 @@ void Joint::read(RandomAccessStream& stream)
  */
 void Joint::render(Graphics& gfx)
 {
-	// Only in the DLL.
+#if 0 // This is a messy DLL-exclusive function that somebody left really unfinished.  It would be nice to see it restored.
+	if (!mFlags)
+		return;
+
+	for (Joint::MatPoly* matPoly = (MatPoly*)mMatPoly.mChild; matPoly; matPoly = (MatPoly*)matPoly->mNext) {
+		Mesh* mesh = matPoly->mMesh;
+		if ((gfx.m_dword8 & matPoly->mMaterial->mFlags) == 0) {
+			continue;
+		}
+
+		gfx.useMaterial(matPoly->mMaterial);
+		for (int j = 0; j < mesh->mMtxGroupCount; ++j) {
+			MtxGroup* mtxGroup        = &mesh->mMtxGroupList[j];
+			Matrix4f* matrixArray[10] = { &Matrix4f::ident };
+			for (int k = 0; k < mtxGroup->mDependencyLength; ++k) {
+				int depIndex = mtxGroup->mDependencyList[k];
+				if (depIndex == -1)
+					continue;
+
+				VtxMatrix* vtxMatrix = &mParentShape->mVtxMatrixList[depIndex];
+				// A lot wrong here.
+				Matrix4f* matrix
+				    = mParentShape->mCurrentAnimation->m_state
+				        ? BaseShape::getAnimMatrix(mParentShape,
+				                                   vtxMatrix->mIndex + (vtxMatrix->mHasPartialWeights ? 0 : mParentShape->mJointCount))
+				        : &mParentShape->mJointList[vtxMatrix->mIndex].mAnimMatrix;
+				matrixArray[k] = matrix;
+			}
+			Vector3f* vertices  = mParentShape->mVertexList;
+			Vector2f* texCoords = mParentShape->mTexCoordList[0];
+			Vector3f* normal    = (mesh->m_vcd & 0x10000) ? mParentShape->mNBTList : mParentShape->mNormalList;
+			int normalStride    = (mesh->m_vcd & 0x10000) ? 3 : 1;
+			DispList* dispList  = mtxGroup->mDispList;
+			for (int l = 0; l < mtxGroup->mDispListLength; ++l, dispList++) {
+				gfx.setCullFront(gfx.m_dword338 ^ dispList->mFlags & 3);
+
+				for (FaceNode* faceNode = (FaceNode*)dispList->mFaceNode.mChild; faceNode; faceNode = (FaceNode*)faceNode->mNext) {
+					int* vertexIndex   = faceNode->mVtxIdx;
+					int* matrixIndex   = faceNode->mMtxIdx;
+					int* normalIndex   = faceNode->mNrmIdx;
+					int* texCoordIndex = faceNode->mTexCoords[0];
+					for (int n = 0; n < faceNode->mFaceCount; ++n) {
+						Matrix4f* matrix            = matrixIndex ? matrixArray[*matrixIndex++] : matrixArray[0];
+						Vector3f* vertex            = &vertices[*vertexIndex++];
+						Vector3f* transformedVertex = &unk_101C8B68++;
+						vertex->multMatrixTo(*matrix, *transformedVertex);
+						if (normalIndex) {
+							Vector3f* normalPtr         = &normal[normalStride * *normalIndex++];
+							Vector3f* transformedNormal = &unk_101C7368++;
+							normalPtr->rotateTo(*matrix, *transformedNormal);
+						}
+						if (texCoordIndex) {
+							// Assuming unk_101C6368 is a pointer to a Vector3f or similar structure for texture coordinates.
+							Vector3f* texCoord = &unk_101C6368++;
+							texCoord->x        = texCoords[*texCoordIndex].x;
+							texCoord->y        = texCoords[*texCoordIndex++].y;
+						}
+					}
+					if (dispList->mFlags & 0x1000000) {
+						gfx.drawOneStrip(&unk_101C8B68, normalIndex ? &unk_101C7368 : 0, texCoordIndex ? &unk_101C6368 : 0,
+						                 faceNode->mFaceCount);
+					} else {
+						gfx.drawOneTri(&unk_101C8B68, normalIndex ? &unk_101C7368 : 0, texCoordIndex ? &unk_101C6368 : 0,
+						               faceNode->mFaceCount);
+					}
+				}
+			}
+		}
+		gfx.useMaterial(nullptr);
+	}
+#endif
 }
 
 /*

@@ -90,15 +90,17 @@ void Piki::doKill()
 	}
 
 	if (!mEraseOnKill) {
-		// the DLL seems to do more here
 		f32 max = mapMgr->getMaxY(mShadowPos.x, mShadowPos.z, true);
-		// f32 y   = mShadowPos.y;
-		// if (max > mShadowPos.y) {
-		//	y = max;
-		// }
-		// Vector3f pos(mShadowPos.x, y, mShadowPos.z);
-		// effectMgr->create(EffectMgr::EFF_Piki_DeadSoul, pos, nullptr, nullptr);
+#if 0 // the DLL seems to do more here
+		f32 y   = mShadowPos.y;
+		if (max > mShadowPos.y) {
+			y = max;
+		}
+		Vector3f pos(mShadowPos.x, y, mShadowPos.z);
+		effectMgr->create(EffectMgr::EFF_Piki_DeadSoul, pos, nullptr, nullptr);
+#else
 		effectMgr->create(EffectMgr::EFF_Piki_DeadSoul, mShadowPos, nullptr, nullptr);
+#endif
 		seSystem->playSoundDirect(1, SE_PIKI_DEAD, mPosition);
 		GameStat::deadPikis.inc(mColor);
 	}
