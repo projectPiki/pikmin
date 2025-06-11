@@ -54,7 +54,7 @@ struct DVDControl {
 } dvd_ctrl[3];
 
 static char filename[64];
-static u32 dvd_buf[3];
+static u8* dvd_buf[3];
 static int gop_subframe         = -1;
 static BOOL playback_first_wait = TRUE;
 static BOOL hvqm_first          = TRUE;
@@ -68,10 +68,12 @@ static struct HVQM_FileHeader {
 	u8 _14[4];           // _14
 	u32 _18;             // _18
 	int _1C;             // _1C
-	u8 _20[0x34 - 0x20]; // _20, unknown
-	u16 _34;             // _34
-	u16 _36;             // _36
-	u8 _38[0x44 - 0x38]; // _38, unknown
+	u8 _20[0x30 - 0x20]; // _20, unknown
+	u32 _30;             // _30
+	VideoInfo _34;       // _34
+	u8 _3A[2];           // _3A, unknown
+	u8 _3C;              // _3C
+	u32 _40;             // _40
 } file_header;
 
 static u32 gop_header[5]; // TODO: struct?
@@ -103,7 +105,7 @@ static void __ReLoad()
 		inter = OSDisableInterrupts();
 		dvd_active += 1;
 
-		DVDT_LoadtoDRAM(dvdcount, filename, dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
+		DVDT_LoadtoDRAM(dvdcount, filename, (u32)dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
 		OSRestoreInterrupts(inter);
 	}
 
@@ -259,10 +261,13 @@ static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
  * Address:	8001E020
  * Size:	0003BC
  */
-void Jac_HVQM_Init(const char* filepath, u8* data, int a)
+void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 {
+	(void)&filepath;
+	u32 var_r29         = 0x40000;
 	playback_first_wait = TRUE;
 	for (u32 i = 0; i < a; i++) {
+		(void)&i;
 		data[i] = 0;
 	}
 	dvdcount          = 0;
@@ -273,20 +278,26 @@ void Jac_HVQM_Init(const char* filepath, u8* data, int a)
 	PIC_FRAME         = 0;
 	AUDIO_FRAME       = 0;
 
-	if (0x40000 >= a || (0x60000 >= a - 0x40000)) {
+	if (a < 0x40000) {
+		return;
+	}
+
+	u8* var_r28 = data;
+
+	if (a - 0x40000 < 0x60000) {
 		return;
 	}
 
 	virtualfile_buf = data + 0x40000;
 
-	u32 ptr = (u32)data + 0xa0000;
-	int min = a - 0xa0000;
+	data += 0xa0000;
+	u32 min = a - 0xa0000;
 	for (u32 i = 0; i < 3; i++) {
 		if (min < 0x80000) {
 			return;
 		}
-		dvd_buf[i] = ptr;
-		ptr += 0x80000;
+		dvd_buf[i] = data;
+		data += 0x80000;
 		min -= 0x80000;
 	}
 
@@ -295,77 +306,94 @@ void Jac_HVQM_Init(const char* filepath, u8* data, int a)
 	}
 	arcoffset      = 0;
 	dvd_loadfinish = 0;
-	dvdfile_size   = DVDT_CheckFile(filepath) - 0x80000;
-	u32 status;
-	DVDT_LoadtoDRAM(dvdcount, filepath, dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
+	dvdfile_size   = DVDT_CheckFile(filepath);
+	dvdfile_size -= 0x80000;
+	volatile u32 status;
+	DVDT_LoadtoDRAM(dvdcount, filepath, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
 	while (status == 0) { }
 
 	dvd_ctrl[0]._08    = 0;
-	dvd_ctrl[0].mState = 1;
+	dvd_ctrl[0].mState = 2;
 	dvd_ctrl[0]._0C    = 0x80000;
 	dvdcount++;
 	strcpy(filename, filepath);
 	__ReLoad();
 
-	for (int i = 0; i < 8; i++) {
-		dvd_buf[i] = dvd_buf[i + 1];
-	}
+	file_header = *(struct HVQM_FileHeader*)dvd_buf[0];
 
-	int filed     = file_header._10;
+	u32* var_r3   = &file_header._30;
 	gop_baseframe = 0;
 	arcoffset += 0x44;
 	gop_frame    = 0;
 	gop_subframe = -1;
 
-	int test;
-	switch (file_header._18) {
+	struct {
+		volatile u32 _00; // TODO: volatile hack
+		u32 _04;
+		u32 _08;
+		u32 _0C;
+	} sp30;
+
+	sp30._08   = file_header._3C;
+	u32 var_r0 = sp30._08;
+
+	sp30._0C = file_header._40;
+	sp30._04 = file_header._30;
+	switch (var_r0) {
 	case 4:
-		test = (file_header._10 << 4) / 0x12;
+		sp30._00 = (sp30._04 << 4) / 0x12;
 		break;
 	case 2:
-		test = file_header._10 >> 1;
+		sp30._00 = sp30._04 >> 1;
 		break;
 	case 3:
-		test = file_header._10;
+		sp30._00 = sp30._04;
 		break;
 	case 5:
-		test = (file_header._10 << 4) / 0x24;
+		sp30._00 = (sp30._04 << 4) / 0x24;
 		break;
 	}
-	file_header._10 = 0;
+	*var_r3 = 0;
 
 	StreamHeader_ header;
-	header._00         = test;
-	header._08         = file_header._1C;
-	header.audioFormat = file_header._18;
+	header._00         = sp30._04;
+	header._04         = var_r0;
+	header._08         = sp30._0C;
+	header.audioFormat = sp30._08;
 	header._0C         = 0x10;
 	header._0E         = 0x1e;
 
 	for (int i = 0; i < 4; i++) {
-		//	header._10[i] = 0;
+		header._10[i] = 0;
 	}
-	InitAudio1(&header, data, 0x40000);
-	hvqm_obj = (SeqObj*)(ptr + 0x80000);
+	InitAudio1(&header, var_r28, var_r29);
+
+	hvqm_obj = (SeqObj*)data;
+	data += 0x20;
+	min -= 0x20;
+
 	HVQM4InitDecoder();
-	HVQM4InitSeqObj(hvqm_obj, (VideoInfo*)file_header._00);
+	HVQM4InitSeqObj(hvqm_obj, &file_header._34);
 
-	int size = OSRoundDown32B(HVQM4BuffSize(hvqm_obj));
-	if (size < min - 0x80020) {
-		ptr = ptr + 0x80020 + min;
-		size -= (min - 0x80020);
-		HVQM4SetBuffer(hvqm_obj, (void*)(ptr + 0x80020));
-		PIC_BUFFERS = 0;
+	u32 size = OSRoundUp32B(HVQM4BuffSize(hvqm_obj));
+	if (min >= size) {
+		void* buffer = data;
+		data += size;
+		min -= size;
+		HVQM4SetBuffer(hvqm_obj, buffer);
 
-		for (int i = 0; i < 0x18; i++) {
+		int i;
+		for (i = 0; i < 0x18; i++) {
 			if (min < 0x70800) {
 				break;
 			}
-			pic_ctrl[i]._00 = (void*)ptr;
-			PIC_BUFFERS++;
+			pic_ctrl[i]._00 = data;
 			pic_ctrl[i]._0C = 0x12345678;
-			ptr += 0x70800;
+			data += 0x70800;
 			min -= 0x70800;
 		}
+		PIC_BUFFERS = i;
+
 		InitPic();
 		int start = Jac_GetCurrentSCounter();
 		while (start == Jac_GetCurrentSCounter()) { }
@@ -853,8 +881,8 @@ int Jac_GetPicture(void* data, int* x, int* y)
 {
 	int offset = 0;
 	int index  = -1;
-	*x         = file_header._34;
-	*y         = file_header._36;
+	*x         = file_header._34.width;
+	*y         = file_header._34.height;
 
 	if (playback_first_wait) {
 		*(int*)data = 0;

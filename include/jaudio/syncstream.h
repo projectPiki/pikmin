@@ -56,7 +56,7 @@ struct StreamHeader_ {
 	u16 audioFormat; // _0A
 	u16 _0C;         // _0C
 	u16 _0E;         // _0E
-	u8 _10[0x10];    // _10, unknown data
+	u32 _10[4];      // _10
 };
 
 // size 0x2420
