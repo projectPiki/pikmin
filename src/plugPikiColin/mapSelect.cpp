@@ -136,6 +136,23 @@ struct MapSelectSetupSection : public Node {
 	{
 		mController->update();
 
+		// This code snippet is imitating a development feature that exists in the DLLs, but this
+		// might not be where the equivalent code from the DLL exists.  TODO: Figure that out.
+#ifdef DEVELOP
+		if (mController->keyClick(KBBTN_Z)) {
+			// The gist of this code is copied from `NewPikiGameSetupSection::openMenu`.
+			mActiveOverlayMenu = mMapListMenu;
+			mActiveOverlayMenu->open(false);
+			mActiveOverlayMenu->mIsMenuChanging = true;
+		}
+		if (mController->keyClick(KBBTN_L) && gameflow.mWorldClock.mCurrentDay > 1) {
+			--gameflow.mWorldClock.mCurrentDay;
+		}
+		if (mController->keyClick(KBBTN_R) && gameflow.mWorldClock.mCurrentDay < MAX_DAYS) {
+			++gameflow.mWorldClock.mCurrentDay;
+		}
+#endif
+
 		if (mActiveOverlayMenu) {
 			mActiveOverlayMenu = mActiveOverlayMenu->doUpdate(false);
 		} else if (!mSectionState) {

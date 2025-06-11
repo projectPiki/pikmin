@@ -1134,6 +1134,17 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 			mCurrentModeState = mCurrentModeState->update(mUpdateFlags);
 		}
 
+		// Three things.  1: This code snippet is imitating a development feature that exists in the DLLs, but this might not be where the
+		// equivalent code from the DLL exists.  TODO: Figure that out.  2: The original code used D-Pad Down, but that's really obnoxious
+		// so I chose D-Pad Up instead.  3: mSectionMenu was actually a top-level menu which could access many other menus, but that code
+		// was stripped from the retail game.  TODO: Completely restore that functionality from the DLL.  For now, it's better than nothing.
+#ifdef DEVELOP
+		if (mController->keyClick(KBBTN_DPAD_UP)) {
+			mSectionMenu = gamecore->mAiPerfDebugMenu;
+			openMenu();
+		}
+#endif
+
 		if (mActiveMenu) {
 			mActiveMenu = mActiveMenu->doUpdate(false);
 		}

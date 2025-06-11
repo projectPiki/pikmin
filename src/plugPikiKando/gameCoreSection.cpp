@@ -1698,6 +1698,19 @@ void GameCoreSection::draw(Graphics& gfx)
 		}
 	}
 
+	// This code snippet is imitating a development feature that exists in the DLLs, but this
+	// might not be where the equivalent code from the DLL exists.  TODO: Figure that out.
+#ifdef DEVELOP
+	generatorMgr->render(gfx);
+	plantGeneratorMgr->render(gfx);
+	dailyGeneratorMgr->render(gfx);
+	onceGeneratorMgr->render(gfx);
+	for (GeneratorMgr* limitGenChild = (GeneratorMgr*)limitGeneratorMgr->Child(); limitGenChild;
+	     limitGenChild               = (GeneratorMgr*)limitGenChild->Child()) {
+		limitGenChild->render(gfx);
+	}
+#endif
+
 	naviMgr->renderCircle(gfx);
 	mMapMgr->drawXLU(gfx);
 	mMapMgr->mDayMgr->setFog(gfx, &Colour(0, 0, 0, 0));
