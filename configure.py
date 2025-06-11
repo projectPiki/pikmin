@@ -143,9 +143,6 @@ config.generate_compile_commands = False
 config.progress = args.progress
 if not is_windows():
     config.wrapper = args.wrapper
-# Don't build asm unless we're --non-matching
-if not config.non_matching:
-    config.asm_dir = None
 
 # Tool versions
 config.binutils_tag = "2.42-1"
