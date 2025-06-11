@@ -264,6 +264,7 @@ static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
 void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 {
 	(void)&filepath;
+	const char* filepath2;
 	u32 var_r29         = 0x40000;
 	playback_first_wait = TRUE;
 	for (u32 i = 0; i < a; i++) {
@@ -290,8 +291,8 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 
 	virtualfile_buf = data + 0x40000;
 
-	data += 0xa0000;
 	u32 min = a - 0xa0000;
+	data += 0xa0000;
 	for (u32 i = 0; i < 3; i++) {
 		if (min < 0x80000) {
 			return;
@@ -304,35 +305,38 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 	for (u32 i = 0; i < 3; i++) {
 		dvd_ctrl[i].mState = 3;
 	}
+	filepath2      = filepath;
 	arcoffset      = 0;
 	dvd_loadfinish = 0;
-	dvdfile_size   = DVDT_CheckFile(filepath);
+	dvdfile_size   = DVDT_CheckFile(filepath2);
 	dvdfile_size -= 0x80000;
 	volatile u32 status;
-	DVDT_LoadtoDRAM(dvdcount, filepath, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
+	DVDT_LoadtoDRAM(dvdcount, filepath2, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
 	while (status == 0) { }
 
 	dvd_ctrl[0]._08    = 0;
 	dvd_ctrl[0].mState = 2;
 	dvd_ctrl[0]._0C    = 0x80000;
 	dvdcount++;
-	strcpy(filename, filepath);
+	strcpy(filename, filepath2);
 	__ReLoad();
 
-	file_header = *(struct HVQM_FileHeader*)dvd_buf[0];
+	file_header = *(HVQM_FileHeader*)dvd_buf[0];
 
-	u32* var_r3   = &file_header._30;
 	gop_baseframe = 0;
 	arcoffset += 0x44;
 	gop_frame    = 0;
 	gop_subframe = -1;
 
+	StreamHeader_ header;
 	struct {
-		volatile u32 _00; // TODO: volatile hack
+		u32 _00; // TODO: volatile hack
 		u32 _04;
 		u32 _08;
 		u32 _0C;
 	} sp30;
+	u32 badCompiler[7];
+	(void)&sp30;
 
 	sp30._08   = file_header._3C;
 	u32 var_r0 = sp30._08;
@@ -353,9 +357,8 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 		sp30._00 = (sp30._04 << 4) / 0x24;
 		break;
 	}
-	*var_r3 = 0;
+	file_header._30 = 0;
 
-	StreamHeader_ header;
 	header._00         = sp30._04;
 	header._04         = var_r0;
 	header._08         = sp30._0C;
