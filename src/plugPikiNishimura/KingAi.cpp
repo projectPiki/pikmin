@@ -1506,6 +1506,11 @@ void KingAi::initAppear(int nextState)
 	mKing->mIsBossBgm = true;
 	mKing->setInvincible(false);
 	mKing->setIsOrganic(true);
+	// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
+	// Maybe it's a Mandela Effect. This bug fix is inspired by code found in USA Demo, which means... TODO: Make sure this is right.
+#ifdef BUGFIX
+	mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
+#endif
 	dispelNaviPiki();
 	mKing->mAnimator.startMotion(PaniMotionInfo(12, this));
 	mKing->mKingBody->initBlending(10.0f);

@@ -204,8 +204,13 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 	    , ArrowBasicCallBack(pane, container, p3)
 	{
 		P2DPicture* pic = (P2DPicture*)pane;
-		pUpTex          = loadTexExp("ys_u.bti", true, true);
-		pDownTex        = loadTexExp("ya_l.bti", true, true);
+		// There is no file named "ys_u.bti" on the disc, but there is one named "ya_u.bti".
+#ifdef BUGFIX
+		pUpTex = loadTexExp("ya_u.bti", true, true);
+#else
+		pUpTex = loadTexExp("ys_u.bti", true, true);
+#endif
+		pDownTex = loadTexExp("ya_l.bti", true, true);
 		judgeArrowType();
 		setTexture(pic);
 
