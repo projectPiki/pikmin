@@ -1466,14 +1466,7 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	u32 adjustedDest = dest;
 
 	if (!adjustedDest) {
-		FakeSystemList* list = _328;      // r6
-		u32 addr             = list->_04; // r7
-		u32 b                = 0;         // r5
-		if (addr + size <= list->_00 + list->_08) {
-			b         = addr;
-			list->_04 = addr + size;
-		}
-		adjustedDest = b;
+		adjustedDest = _328->getDest(size);
 	}
 
 	BOOL inter         = OSDisableInterrupts();
@@ -1488,78 +1481,6 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	return adjustedDest;
 
 	u32 badcompiler;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r27, 0x24(r1)
-	  mr        r29, r3
-	  addi      r30, r4, 0
-	  addi      r31, r5, 0
-	  addi      r27, r6, 0
-	  lwz       r12, 0x1A0(r29)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  cmplwi    r27, 0
-	  addi      r28, r27, 0
-	  bne-      .loc_0x6C
-	  lwz       r6, 0x328(r29)
-	  li        r5, 0
-	  lwz       r7, 0x4(r6)
-	  lwz       r3, 0x0(r6)
-	  lwz       r0, 0x8(r6)
-	  add       r4, r7, r31
-	  add       r0, r3, r0
-	  cmplw     r4, r0
-	  bgt-      .loc_0x68
-	  mr        r5, r7
-	  stw       r4, 0x4(r6)
-
-	.loc_0x68:
-	  mr        r28, r5
-
-	.loc_0x6C:
-	  bl        0x1B2820
-	  lwz       r27, 0x308(r29)
-	  addi      r0, r29, 0x2C0
-	  lwz       r5, 0x24(r27)
-	  lwz       r4, 0x20(r27)
-	  stw       r5, 0x24(r4)
-	  lwz       r5, 0x20(r27)
-	  lwz       r4, 0x24(r27)
-	  stw       r5, 0x20(r4)
-	  lwz       r4, 0x2E0(r29)
-	  stw       r4, 0x20(r27)
-	  stw       r0, 0x24(r27)
-	  lwz       r4, 0x2E0(r29)
-	  stw       r27, 0x24(r4)
-	  stw       r27, 0x2E0(r29)
-	  bl        0x1B280C
-	  lwz       r4, 0x2DEC(r13)
-	  li        r0, 0
-	  addi      r3, r30, 0
-	  stw       r0, 0x32C(r4)
-	  mr        r4, r31
-	  bl        0x1B046C
-	  lis       r3, 0x8004
-	  addi      r10, r3, 0x6694
-	  addi      r3, r27, 0
-	  addi      r4, r27, 0
-	  addi      r7, r30, 0
-	  addi      r8, r28, 0
-	  addi      r9, r31, 0
-	  li        r5, 0
-	  li        r6, 0x1
-	  bl        0x1C14E0
-	  mr        r3, r28
-	  lmw       r27, 0x24(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

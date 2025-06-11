@@ -267,6 +267,17 @@ struct StdSystem {
  * @brief Fabricated - some structure needs to live at 0x310 in System.
  */
 struct FakeSystemList {
+	inline u32 getDest(u32 size)
+	{
+		u32 b = 0;
+		u32 a = _04;
+		if (a + size <= _00 + _08) {
+			b   = a;
+			_04 = a + size;
+		}
+		return b;
+	}
+
 	u32 _00; // _00, unknown
 	u32 _04; // _04, unknown
 	u32 _08; // _08, unknown
