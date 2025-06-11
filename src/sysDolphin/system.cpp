@@ -1463,17 +1463,19 @@ void System::copyWaitUntilDone()
 u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 {
 	copyWaitUntilDone();
-	u32 a = dest;
-	if (!dest) {
-		u32 b                = 0;
-		FakeSystemList* list = _328;
-		u32 addr             = list->_04 + size;
-		if (addr <= list->_00 + list->_08) {
-			b         = list->_04;
-			list->_04 = addr;
+	u32 adjustedDest = dest;
+
+	if (!adjustedDest) {
+		FakeSystemList* list = _328;      // r6
+		u32 addr             = list->_04; // r7
+		u32 b                = 0;         // r5
+		if (addr + size <= list->_00 + list->_08) {
+			b         = addr;
+			list->_04 = addr + size;
 		}
-		a = b;
+		adjustedDest = b;
 	}
+
 	BOOL inter         = OSDisableInterrupts();
 	SystemCache* cache = _2E8.mNext;
 	cache->remove();
@@ -1482,8 +1484,10 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 
 	gsys->mDmaComplete = 0;
 	DCStoreRange((void*)src, size);
-	ARQPostRequest(cache, (u32)cache, 0, 1, src, a, size, doneDMA);
-	return dest;
+	ARQPostRequest(cache, (u32)cache, 0, 1, src, adjustedDest, size, doneDMA);
+	return adjustedDest;
+
+	u32 badcompiler;
 	/*
 	.loc_0x0:
 	  mflr      r0
