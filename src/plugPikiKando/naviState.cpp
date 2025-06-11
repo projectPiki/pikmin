@@ -2094,7 +2094,8 @@ void NaviContainerState::exec(Navi* navi)
 void NaviContainerState::enterPikis(Navi* navi, int max)
 {
 	PRINT("goal color = %d\n", navi->mGoalItem->mOnionColour);
-	Piki* buffer[MAX_PIKI_ON_FIELD + 100];
+	// This has a capacity of 200 in the vanilla game for some reason.
+	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
 	int numPikis = 0;
 	Iterator it(navi->mPlateMgr);
 
@@ -2107,7 +2108,7 @@ void NaviContainerState::enterPikis(Navi* navi, int max)
 			continue;
 		}
 		if (piki->mColor == navi->mGoalItem->mOnionColour) {
-			buffer[numPikis++] = piki;
+			pikiList[numPikis++] = piki;
 			if (numPikis == max) {
 				break;
 			}
@@ -2117,12 +2118,12 @@ void NaviContainerState::enterPikis(Navi* navi, int max)
 	PRINT("#### numPikis = %d : max = %d \n", numPikis, max);
 	for (int i = 0; i < numPikis; i++) {
 		PRINT("enter : %d\n", i);
-		int state = buffer[i]->getState();
+		int state = pikiList[i]->getState();
 		if (state == PIKISTATE_LookAt || state == PIKISTATE_Nukare) {
-			buffer[i]->mFSM->transit(buffer[i], 0);
+			pikiList[i]->mFSM->transit(pikiList[i], 0);
 		}
-		buffer[i]->mFSM->transit(buffer[i], 0);
-		buffer[i]->changeMode(11, nullptr);
+		pikiList[i]->mFSM->transit(pikiList[i], 0);
+		pikiList[i]->changeMode(11, nullptr);
 	}
 }
 

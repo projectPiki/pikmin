@@ -279,7 +279,8 @@ void Navi::updateDayEnd(Vector3f& pos)
  */
 void Navi::enterAllPikis()
 {
-	Piki* pikiList[MAX_PIKI_ON_FIELD + 100];
+	// This has a capacity of 200 in the vanilla game for some reason.
+	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
 	GoalItem* onyons[PikiColorCount];
 	int i;
 	for (i = 0; i < PikiColorCount; i++) {
@@ -1201,7 +1202,8 @@ void Navi::callDebugs(f32 radius)
 void Navi::releasePikis()
 {
 	Iterator iter(mPlateMgr);
-	Piki* pikiList[MAX_PIKI_ON_FIELD + 100];
+	// This has a capacity of 200 in the vanilla game for some reason.
+	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
 	int pikiCount = 0;
 	CI_LOOP(iter)
 	{

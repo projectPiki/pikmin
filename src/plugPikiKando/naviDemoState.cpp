@@ -225,8 +225,8 @@ void NaviDemoSunsetState::WhistleState::procAnimMsg(NaviDemoSunsetState* state, 
  */
 void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state)
 {
-
-	Piki* pikiList[MAX_PIKI_ON_FIELD + 100];
+	// This has a capacity of 200 in the vanilla game for some reason.
+	Piki* pikiList[MAX_PIKI_ON_FIELD == 100 ? 200 : MAX_PIKI_ON_FIELD];
 	Navi* navi = state->mNavi;
 	Iterator it(itemMgr);
 	GoalItem* goals[3];
