@@ -152,7 +152,7 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
  * Address:	........
  * Size:	000028
  */
-void sprintID(char*, u32)
+static void sprintID(char*, u32)
 {
 	// UNUSED FUNCTION
 }
