@@ -38,9 +38,9 @@ static bool useSymbols = false;
 System* gsys           = nullptr;
 Stream* sysCon;
 Stream* errCon;
-static OSMessage* dvdMesgBuffer;
-static OSMessage* loadMesgBuffer;
-static OSMessage* sysMesgBuffer;
+static OSMessage dvdMesgBuffer;
+static OSMessage loadMesgBuffer;
+static OSMessage sysMesgBuffer;
 
 int glnWidth  = 640;
 int glnHeight = 480;
@@ -928,9 +928,9 @@ void System::Initialise()
 	mIsRendering     = 0;
 	mIsLoadingActive = 0;
 
-	OSInitMessageQueue(&dvdMesgQueue, dvdMesgBuffer, 1);
-	OSInitMessageQueue(&loadMesgQueue, loadMesgBuffer, 1);
-	OSInitMessageQueue(&sysMesgQueue, sysMesgBuffer, 1);
+	OSInitMessageQueue(&dvdMesgQueue, &dvdMesgBuffer, 1);
+	OSInitMessageQueue(&loadMesgQueue, &loadMesgBuffer, 1);
+	OSInitMessageQueue(&sysMesgQueue, &sysMesgBuffer, 1);
 	initBigFont();
 	startDvdThread();
 
