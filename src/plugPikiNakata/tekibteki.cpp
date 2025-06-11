@@ -1950,11 +1950,11 @@ f32 BTeki::getYFromSeaLevel()
  * Address:	801489D8
  * Size:	000074
  */
-void BTeki::makePositionRoute(Vector3f& pos1, Vector3f& pos2, bool p3)
+void BTeki::makePositionRoute(Vector3f& pos1, Vector3f& pos2, bool includeBlockedPaths)
 {
 	int idx2 = getTargetNearestWayPoint(pos2)->mIndex;
 	int idx1 = getTargetNearestWayPoint(pos1)->mIndex;
-	makeWayPointRoute(idx1, idx2, p3);
+	makeWayPointRoute(idx1, idx2, includeBlockedPaths);
 }
 
 /*
@@ -1962,13 +1962,13 @@ void BTeki::makePositionRoute(Vector3f& pos1, Vector3f& pos2, bool p3)
  * Address:	80148A4C
  * Size:	000098
  */
-void BTeki::makeWayPointRoute(int p1, int p2, bool p3)
+void BTeki::makeWayPointRoute(int p1, int p2, bool includeBlockedPaths)
 {
 	for (int i = 0; i < mRouteWayPointMax; i++) {
 		mRouteWayPoints[i] = nullptr;
 	}
 
-	mRouteWayPointCount = routeMgr->getPathFinder(mPathHandle)->findSync(mRouteWayPoints, mRouteWayPointMax, p1, p2, p3);
+	mRouteWayPointCount = routeMgr->getPathFinder(mPathHandle)->findSync(mRouteWayPoints, mRouteWayPointMax, p1, p2, includeBlockedPaths);
 
 	if (mRouteWayPointCount > mRouteWayPointMax) {
 		PRINT("!makeWayPointRoute:routeWayPointCount>routeWayPointMax:%08x:%d,%d\n", this, mRouteWayPointCount, mTekiType);

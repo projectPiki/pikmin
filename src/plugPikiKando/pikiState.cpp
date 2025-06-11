@@ -2030,9 +2030,9 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 	}
 
 	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mPosition) && !MapCode::isBald(piki->mGroundTriangle) && attr != ATTR_Water) {
-		PikiHeadMgr::buryMode = 1;
+		PikiHeadMgr::buryMode = true;
 		PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
-		PikiHeadMgr::buryMode = 0;
+		PikiHeadMgr::buryMode = false;
 
 		if (sprout) {
 			Vector3f pos(piki->mPosition);
@@ -3496,9 +3496,9 @@ void PikiBuryState::init(Piki* piki)
  */
 void PikiBuryState::exec(Piki* piki)
 {
-	PikiHeadMgr::buryMode = 1;
+	PikiHeadMgr::buryMode = true;
 	PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
-	PikiHeadMgr::buryMode = 0;
+	PikiHeadMgr::buryMode = false;
 	int attr              = ATTR_NULL;
 	if (piki->mGroundTriangle) {
 		attr = MapCode::getAttribute(piki->mGroundTriangle);

@@ -45,7 +45,7 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("itemMgr")
 
-u8 PikiHeadMgr::buryMode;
+bool PikiHeadMgr::buryMode;
 ItemMgr* itemMgr;
 
 /*
@@ -340,7 +340,7 @@ void ItemMgr::addUseList(int type)
 ItemMgr::ItemMgr()
     : PolyObjectMgr(30)
 {
-	PikiHeadMgr::buryMode = 0;
+	PikiHeadMgr::buryMode = false;
 	gameflow.addGenNode("itemMgr", this);
 	mItemMotionTable = PaniItemAnimator::createMotionTable();
 	mItemShapes      = new ItemShapeObject*[11];

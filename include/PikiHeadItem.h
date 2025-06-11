@@ -314,7 +314,7 @@ struct PikiHeadMgr : public MonoObjectMgr {
 	virtual Creature* birth();        // _78
 	virtual Creature* createObject(); // _80
 
-	static u8 buryMode;
+	static bool buryMode;
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
