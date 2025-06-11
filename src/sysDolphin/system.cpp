@@ -49,8 +49,8 @@ static OSMessageQueue dvdMesgQueue;
 static OSMessageQueue loadMesgQueue;
 static OSMessageQueue sysMesgQueue;
 
-u32 DVDStream::numOpen    = 0;
 u8* DVDStream::readBuffer = 0;
+u32 DVDStream::numOpen    = 0;
 static Font* bigFont;
 
 static AramStream aramStream;

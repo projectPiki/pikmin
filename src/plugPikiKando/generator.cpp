@@ -40,7 +40,7 @@ GeneratorList* generatorList;
  * Address:	........
  * Size:	000088
  */
-void writeID(RandomAccessStream& output, u32 id)
+static void writeID(RandomAccessStream& output, u32 id)
 {
 	u8* outID = reinterpret_cast<u8*>(&id);
 
@@ -55,7 +55,7 @@ void writeID(RandomAccessStream& output, u32 id)
  * Address:	........
  * Size:	000088
  */
-u32 readID(RandomAccessStream& input)
+static u32 readID(RandomAccessStream& input)
 {
 	// the stack is wrong here somehow.
 	u32 outID;
@@ -72,7 +72,7 @@ u32 readID(RandomAccessStream& input)
  * Address:	........
  * Size:	000004
  */
-void printID(u32)
+static void printID(u32)
 {
 }
 
@@ -81,7 +81,7 @@ void printID(u32)
  * Address:	........
  * Size:	000028
  */
-void sprintID(char*, u32)
+static void sprintID(char*, u32)
 {
 	// UNUSED FUNCTION
 }
