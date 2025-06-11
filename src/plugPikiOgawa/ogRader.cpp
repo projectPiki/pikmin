@@ -299,8 +299,16 @@ void zen::ogRaderMgr::getContainerPos()
  */
 void zen::ogRaderMgr::getRocketPos()
 {
-	// hmm what a rather unfortunate lack of a null check here
 	UfoItem* ufo = itemMgr->getUfo();
+	// Hmm, what a rather unfortunate lack of a nullptr check here.  If you wanted to use the radar in a test
+	// map lacking the SS Dolphin, or wanted to re-enable the radar in Challenge Mode, this would be a problem.
+	// Hiding the `P2DPicture` in this case aligns with what is seen in `getContainerPos`.
+#ifdef BUGFIX
+	if (!ufo) {
+		_7C->hide();
+		return;
+	}
+#endif
 	Vector3f pos = ufo->getPosition();
 
 	Vector3f disp = ogCalcDispXZ(pos);
