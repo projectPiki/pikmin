@@ -278,6 +278,8 @@ struct FakeSystemList {
 		return b;
 	}
 
+	inline void init() { _04 = _00; }
+
 	u32 _00; // _00, unknown
 	u32 _04; // _04, unknown
 	u32 _08; // _08, unknown

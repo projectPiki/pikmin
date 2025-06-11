@@ -385,13 +385,16 @@ void GameFlow::read(RandomAccessStream& input)
  */
 void preloadLanguage()
 {
+	int unused; // for r30
+	int heapIdx;
+	int lang;
+
 	gsys->mCacher->purgeAll();
-	int heapIdx = gsys->mActiveHeapIdx;
+	heapIdx = gsys->getHeapNum();
 	gsys->setHeap(SYSHEAP_Lang);
 	gsys->resetHeap(SYSHEAP_Lang, 2);
 	gsys->getHeap(gsys->getHeapNum());
-	FakeSystemList* fake = &gsys->_31C;
-	fake->_04            = fake->_00;
+	gsys->_31C.init();
 	gsys->mDvdRoot.initCore("");
 	gsys->mFileList = (DirEntry*)&gsys->mDvdRoot;
 	gsys->_328      = &gsys->_31C;
@@ -401,6 +404,9 @@ void preloadLanguage()
 	gsys->set2DRoot(gameflow.mLangModes[gameflow.mLanguageIndex].mBloPath, gameflow.mLangModes[gameflow.mLanguageIndex].mTexPath);
 	gsys->getHeap(gsys->getHeapNum());
 	gsys->setHeap(heapIdx);
+
+	!(unused++);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
