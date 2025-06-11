@@ -20,7 +20,7 @@ u32 dvdfile_size;
 u16 rec_header[4];
 int v_header;
 int gop_baseframe;
-int gop_frame;
+u32 gop_frame;
 int vh_state;
 SeqObj* hvqm_obj;
 u32 dvd_active;
@@ -1245,6 +1245,75 @@ void Jac_CountReadyPictures(void)
  */
 int Jac_GetPicture(void* data, int* x, int* y)
 {
+	int offset = 0;
+	int index  = -1;
+	*x         = file_header._08;
+	*y         = file_header._0C;
+
+	if (playback_first_wait) {
+		*(int*)data = 0;
+		return TRUE;
+	}
+
+	int frame = StreamGetCurrentFrame(0, 2);
+	if (frame == -1) {
+		hvqm_forcestop();
+		*(int*)data = 0;
+		return -1;
+	}
+
+	AUDIO_FRAME = frame;
+
+	for (int i = 0; i < PIC_BUFFERS; i++) {
+		u32* data = &pic_ctrl[i]._08;
+		if (pic_ctrl[i]._08) {
+			if (frame < pic_ctrl[i]._04) {
+				if (offset < pic_ctrl[i]._04) {
+					index  = i;
+					offset = pic_ctrl[i]._04;
+				}
+			} else {
+				if (pic_ctrl[i]._08 == 2) {
+					*data = 0;
+				}
+			}
+		}
+	}
+
+	if (index != -1) {
+		pic_ctrl[index]._08 = 2;
+	}
+
+	for (int i = 0; i < PIC_BUFFERS; i++) {
+		if (pic_ctrl[i]._08 && frame == pic_ctrl[i]._04) {
+			pic_ctrl[i]._08   = 2;
+			*(void**)data     = pic_ctrl[i]._00;
+			drop_picture_flag = 0;
+			if (index != -1 && index != i) {
+				pic_ctrl[i]._08 = 0;
+			}
+			if (frame < 3) {
+				*(int*)data = NULL;
+			}
+			return frame + 1;
+		}
+	}
+
+	drop_picture_flag = 1;
+
+	if (index != -1) {
+		*(void**)data = pic_ctrl[index]._00;
+		if (frame < 3) {
+			*(int*)data = NULL;
+		}
+		return offset + 1;
+	}
+
+	if (gop_frame == file_header._10) {
+		StreamSyncStopAudio(0);
+	}
+	*(int*)data = NULL;
+	return FALSE;
 	/*
 	.loc_0x0:
 	  mflr      r0
