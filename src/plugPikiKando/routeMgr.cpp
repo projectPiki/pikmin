@@ -241,9 +241,9 @@ void PathFinder::updateClient(Client& client, int loops)
  * Address:	8009FB4C
  * Size:	000084
  */
-int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWPIdx, int destWPIdx, bool flag)
+int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
-	int res = findSync(mBuffer, startWPIdx, destWPIdx, flag);
+	int res = findSync(mBuffer, startWPIdx, destWPIdx, includeBlockedPaths);
 	if (res > 0) {
 		for (int i = 0; i < numWPsToFind; i++) {
 			pathWayPoints[i] = getWayPoint(mBuffer[i].mWayPointIdx);
@@ -257,7 +257,7 @@ int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWP
  * Address:	8009FBD0
  * Size:	000230
  */
-int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int destWPIdx, bool flag)
+int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
 	if (checkMode(PFMODE_AvoidWater)) {
 		PRINT("*** AVOID_WATER ROUTE FINDING START (%d - %d)\n", destWPIdx, startWPIdx);
@@ -288,7 +288,7 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 				}
 			}
 		}
-		int way = selectWay(*buf, destWPIdx, bufferList, wpCount, flag);
+		int way = selectWay(*buf, destWPIdx, bufferList, wpCount, includeBlockedPaths);
 		if (way != -1) {
 			int linkWPIdx = wp->mLinkIndices[way];
 			if (linkWPIdx == destWPIdx) {
