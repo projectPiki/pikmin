@@ -8,63 +8,72 @@
 #include "stl/string.h"
 #include "hvqm4.h"
 
-volatile BOOL dvd_loadfinish;
-u32 dvdcount;
-int arcoffset;
-int AUDIO_FRAME;
-u32 PIC_FRAME;
-int drop_picture_flag;
-u32 PIC_BUFFERS;
-int dvdload_size;
-u32 dvdfile_size;
+static volatile BOOL dvd_loadfinish;
+static u32 dvdcount;
+static int arcoffset;
+static int AUDIO_FRAME;
+static u32 PIC_FRAME;
+static int drop_picture_flag;
+static u32 PIC_BUFFERS;
+static int dvdload_size;
+static u32 dvdfile_size;
+
 static struct RecHeader {
-	u16 _00;
-	u16 _02;
-	u32 _04;
+	u16 _00; // _00
+	u16 _02; // _02
+	u32 _04; // _04
 } rec_header;
-int v_header;
-int gop_baseframe;
-u32 gop_frame;
-int vh_state;
-SeqObj* hvqm_obj;
-u32 dvd_active;
-u8* virtualfile_buf;
-BOOL record_ok;
-void* ref1;
-void* ref2;
+
+static int v_header;
+static int gop_baseframe;
+static u32 gop_frame;
+static int vh_state;
+static SeqObj* hvqm_obj;
+static u32 dvd_active;
+static u8* virtualfile_buf;
+static BOOL record_ok;
+static void* ref1;
+static void* ref2;
 
 static void InitPic();
 static BOOL CheckDraw(u32 id);
 static int Decode1(u8* data, u32 a1, u8 a2);
 
 struct PICControl {
-	void* _00;
-	int _04;
-	u32 _08;
-	int _0C;
+	void* _00; // _00
+	u32 _04;   // _04
+	u32 _08;   // _08
+	int _0C;   // _0C
 } pic_ctrl[24];
+
 struct DVDControl {
-	int _00;
-	u8 mState;
-	int _08;
-	int _0C;
+	int _00;   // _00
+	u8 mState; // _04
+	int _08;   // _08
+	int _0C;   // _0C
 } dvd_ctrl[3];
+
 static char filename[64];
 static u32 dvd_buf[3];
-int gop_subframe         = -1;
-BOOL playback_first_wait = TRUE;
-BOOL hvqm_first          = TRUE;
+static int gop_subframe         = -1;
+static BOOL playback_first_wait = TRUE;
+static BOOL hvqm_first          = TRUE;
+
 static struct HVQM_FileHeader {
-	int _00;
-	int _04;
-	int _08;
-	int _0C;
-	int _10;
-	u8 _14[4];
-	u32 _18;
-	int _1C;
-	u8 _20[0x24]; // TODO: unknown fields
+	int _00;             // _00
+	int _04;             // _04
+	int _08;             // _08
+	int _0C;             // _0C
+	int _10;             // _10
+	u8 _14[4];           // _14
+	u32 _18;             // _18
+	int _1C;             // _1C
+	u8 _20[0x34 - 0x20]; // _20, unknown
+	u16 _34;             // _34
+	u16 _36;             // _36
+	u8 _38[0x44 - 0x38]; // _38, unknown
 } file_header;
+
 static u32 gop_header[5]; // TODO: struct?
 static OSThread jac_hvqmThread;
 static u8 hvqmStack[0x1000];
@@ -844,8 +853,8 @@ int Jac_GetPicture(void* data, int* x, int* y)
 {
 	int offset = 0;
 	int index  = -1;
-	*x         = file_header._08;
-	*y         = file_header._0C;
+	*x         = file_header._34;
+	*y         = file_header._36;
 
 	if (playback_first_wait) {
 		*(int*)data = 0;
@@ -861,17 +870,17 @@ int Jac_GetPicture(void* data, int* x, int* y)
 
 	AUDIO_FRAME = frame;
 
-	for (int i = 0; i < PIC_BUFFERS; i++) {
-		u32* data = &pic_ctrl[i]._08;
+	for (u32 i = 0; i < PIC_BUFFERS; i++) {
 		if (pic_ctrl[i]._08) {
-			if (frame < pic_ctrl[i]._04) {
+			if (pic_ctrl[i]._04 <= frame) {
 				if (offset < pic_ctrl[i]._04) {
-					index  = i;
 					offset = pic_ctrl[i]._04;
+					index  = i;
 				}
+				pic_ctrl[i]._08 = 0;
 			} else {
 				if (pic_ctrl[i]._08 == 2) {
-					*data = 0;
+					pic_ctrl[i]._08 = 0;
 				}
 			}
 		}
@@ -881,13 +890,13 @@ int Jac_GetPicture(void* data, int* x, int* y)
 		pic_ctrl[index]._08 = 2;
 	}
 
-	for (int i = 0; i < PIC_BUFFERS; i++) {
+	for (u32 i = 0; i < PIC_BUFFERS; i++) {
 		if (pic_ctrl[i]._08 && frame == pic_ctrl[i]._04) {
 			pic_ctrl[i]._08   = 2;
 			*(void**)data     = pic_ctrl[i]._00;
 			drop_picture_flag = 0;
 			if (index != -1 && index != i) {
-				pic_ctrl[i]._08 = 0;
+				pic_ctrl[index]._08 = 0;
 			}
 			if (frame < 3) {
 				*(int*)data = NULL;
@@ -906,186 +915,11 @@ int Jac_GetPicture(void* data, int* x, int* y)
 		return offset + 1;
 	}
 
-	if (gop_frame == file_header._10) {
+	if (gop_frame == file_header._18) {
 		StreamSyncStopAudio(0);
 	}
 	*(int*)data = NULL;
 	return FALSE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x8039
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stmw      r28, 0x18(r1)
-	  subi      r31, r6, 0x56C0
-	  addi      r28, r3, 0
-	  li        r30, 0
-	  li        r29, -0x1
-	  lhz       r0, 0x80(r31)
-	  stw       r0, 0x0(r4)
-	  lhz       r0, 0x82(r31)
-	  stw       r0, 0x0(r5)
-	  lwz       r0, -0x7EBC(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x50
-	  li        r0, 0
-	  li        r3, 0x1
-	  stw       r0, 0x0(r28)
-	  b         .loc_0x214
-
-	.loc_0x50:
-	  li        r3, 0
-	  li        r4, 0x2
-	  bl        -0x1138
-	  cmpwi     r3, -0x1
-	  bne-      .loc_0x78
-	  bl        -0x4E4
-	  li        r0, 0
-	  li        r3, -0x1
-	  stw       r0, 0x0(r28)
-	  b         .loc_0x214
-
-	.loc_0x78:
-	  lwz       r10, 0x2D80(r13)
-	  li        r4, 0
-	  lis       r6, 0x803E
-	  addi      r5, r4, 0
-	  addi      r0, r4, 0
-	  stw       r3, 0x2D74(r13)
-	  subi      r6, r6, 0x34D0
-	  li        r11, 0
-	  mtctr     r10
-	  cmplwi    r10, 0
-	  ble-      .loc_0xF4
-
-	.loc_0xA4:
-	  add       r7, r6, r4
-	  addi      r8, r7, 0x8
-	  lwz       r9, 0x8(r7)
-	  cmplwi    r9, 0
-	  beq-      .loc_0xE8
-	  lwz       r7, 0x4(r7)
-	  cmplw     r7, r3
-	  bgt-      .loc_0xDC
-	  cmplw     r30, r7
-	  bge-      .loc_0xD4
-	  addi      r30, r7, 0
-	  addi      r29, r11, 0
-
-	.loc_0xD4:
-	  stw       r5, 0x0(r8)
-	  b         .loc_0xE8
-
-	.loc_0xDC:
-	  cmplwi    r9, 0x2
-	  bne-      .loc_0xE8
-	  stw       r0, 0x0(r8)
-
-	.loc_0xE8:
-	  addi      r11, r11, 0x1
-	  addi      r4, r4, 0x10
-	  bdnz+     .loc_0xA4
-
-	.loc_0xF4:
-	  cmpwi     r29, -0x1
-	  beq-      .loc_0x114
-	  lis       r4, 0x803E
-	  rlwinm    r0,r29,4,0,27
-	  subi      r4, r4, 0x34D0
-	  li        r5, 0x2
-	  add       r4, r4, r0
-	  stw       r5, 0x8(r4)
-
-	.loc_0x114:
-	  lis       r4, 0x803E
-	  li        r8, 0
-	  subi      r5, r4, 0x34D0
-	  li        r4, 0
-	  mtctr     r10
-	  cmplwi    r10, 0
-	  ble-      .loc_0x1B0
-
-	.loc_0x130:
-	  add       r7, r5, r4
-	  lwz       r0, 0x8(r7)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x1A4
-	  lwz       r0, 0x4(r7)
-	  cmplw     r3, r0
-	  bne-      .loc_0x1A4
-	  lis       r5, 0x803E
-	  li        r0, 0x2
-	  subi      r6, r5, 0x34D0
-	  cmpwi     r29, -0x1
-	  add       r4, r6, r4
-	  li        r5, 0
-	  stw       r0, 0x8(r4)
-	  lwz       r0, 0x0(r7)
-	  stw       r0, 0x0(r28)
-	  stw       r5, 0x2D7C(r13)
-	  beq-      .loc_0x18C
-	  cmplw     r29, r8
-	  beq-      .loc_0x18C
-	  rlwinm    r0,r29,4,0,27
-	  add       r4, r6, r0
-	  stw       r5, 0x8(r4)
-
-	.loc_0x18C:
-	  cmpwi     r3, 0x3
-	  bge-      .loc_0x19C
-	  li        r0, 0
-	  stw       r0, 0x0(r28)
-
-	.loc_0x19C:
-	  addi      r3, r3, 0x1
-	  b         .loc_0x214
-
-	.loc_0x1A4:
-	  addi      r8, r8, 0x1
-	  addi      r4, r4, 0x10
-	  bdnz+     .loc_0x130
-
-	.loc_0x1B0:
-	  li        r0, 0x1
-	  cmpwi     r29, -0x1
-	  stw       r0, 0x2D7C(r13)
-	  beq-      .loc_0x1F0
-	  lis       r4, 0x803E
-	  rlwinm    r5,r29,4,0,27
-	  subi      r0, r4, 0x34D0
-	  cmpwi     r3, 0x3
-	  add       r3, r0, r5
-	  lwz       r0, 0x0(r3)
-	  stw       r0, 0x0(r28)
-	  bge-      .loc_0x1E8
-	  li        r0, 0
-	  stw       r0, 0x0(r28)
-
-	.loc_0x1E8:
-	  addi      r3, r30, 0x1
-	  b         .loc_0x214
-
-	.loc_0x1F0:
-	  lwz       r3, 0x2D9C(r13)
-	  lwz       r0, 0x64(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x208
-	  li        r3, 0
-	  bl        -0x15C4
-
-	.loc_0x208:
-	  li        r0, 0
-	  li        r3, 0
-	  stw       r0, 0x0(r28)
-
-	.loc_0x214:
-	  lmw       r28, 0x18(r1)
-	  lwz       r0, 0x2C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
