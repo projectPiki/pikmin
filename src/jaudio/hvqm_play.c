@@ -12,12 +12,16 @@ volatile BOOL dvd_loadfinish;
 u32 dvdcount;
 int arcoffset;
 int AUDIO_FRAME;
-int PIC_FRAME;
+u32 PIC_FRAME;
 int drop_picture_flag;
-int PIC_BUFFERS;
+u32 PIC_BUFFERS;
 int dvdload_size;
 u32 dvdfile_size;
-u16 rec_header[4];
+static struct RecHeader {
+	u16 _00;
+	u16 _02;
+	u32 _04;
+} rec_header;
 int v_header;
 int gop_baseframe;
 u32 gop_frame;
@@ -57,10 +61,11 @@ static struct HVQM_FileHeader {
 	int _0C;
 	int _10;
 	u8 _14[4];
-	int _18;
+	u32 _18;
 	int _1C;
+	u8 _20[0x24]; // TODO: unknown fields
 } file_header;
-static int gop_header[5];
+static u32 gop_header[5]; // TODO: struct?
 static OSThread jac_hvqmThread;
 static u8 hvqmStack[0x1000];
 
@@ -805,15 +810,17 @@ void Jac_HVQM_ThreadStart(void)
  */
 BOOL Jac_HVQM_Update(void)
 {
+	u32 badCompiler[2];
 	u8* data = virtualfile_buf;
-	if (gop_header[0] == file_header._18) {
+	if (gop_frame == file_header._18) {
 		return TRUE;
 	}
 
-	int test;
-	for (u32 i = 0;;) {
+	u32 i = 0;
+	int time_delta;
+	while (TRUE) {
 		if (gop_subframe == -1) {
-			if (__VirtualLoad(arcoffset, 0x14, (u8*)gop_header) == 0) {
+			if (__VirtualLoad(arcoffset, sizeof(gop_header), (u8*)gop_header) == 0) {
 				return FALSE;
 			}
 			arcoffset += 0x14;
@@ -821,26 +828,26 @@ BOOL Jac_HVQM_Update(void)
 		}
 
 		if (record_ok != 0) {
-			if (__VirtualLoad(arcoffset, 8, (u8*)rec_header) == 0) {
+			if (__VirtualLoad(arcoffset, sizeof(rec_header), (u8*)&rec_header) == 0) {
 				return 0;
 			}
 			arcoffset += 8;
 		}
 
-		switch (rec_header[0]) {
+		switch (rec_header._00) {
 		default:
 			return -1;
 		case 0:
-			if (Jac_CheckStreamFree(rec_header[2]) == 0) {
+			if (Jac_CheckStreamFree(rec_header._04) == 0) {
 				record_ok = 0;
 			} else {
-				if (__VirtualLoad(arcoffset, rec_header[2], data) == 0) {
+				if (__VirtualLoad(arcoffset, rec_header._04, data) == 0) {
 					record_ok = 0;
 					return FALSE;
 				}
-				Jac_SendStreamData(data, rec_header[2]);
+				Jac_SendStreamData(data, rec_header._04);
 				record_ok = 1;
-				arcoffset += rec_header[2];
+				arcoffset += rec_header._04;
 			}
 			break;
 		case 1:
@@ -848,41 +855,42 @@ BOOL Jac_HVQM_Update(void)
 				if (StreamSyncCheckReady(0)) {
 					StreamSyncPlayAudio(1.0f, 0, 0x3fff, 0x3fff);
 					playback_first_wait = 0;
-					break;
+				} else {
+					record_ok = 0;
+					return FALSE;
 				}
-				record_ok = 0;
-				return FALSE;
 			}
 
 			switch (vh_state) {
 			case 0:
 				if (__VirtualLoad(arcoffset, 4, (u8*)&v_header) == 0) {
 					record_ok = 0;
-					return 0;
+					goto end;
 				}
 				vh_state += 1;
-				// break;
+				// fallthrough
 			case 1:
-				if (__VirtualLoad(arcoffset + 4, rec_header[2] - 4, data) == 0) {
+				if (__VirtualLoad(arcoffset + 4, rec_header._04 - 4, data) == 0) {
 					record_ok = 0;
-					return 0;
+					goto end;
 				}
 				vh_state += 1;
+				// fallthrough
 			case 2:
 				if (CheckDraw(v_header + gop_baseframe) == 0) {
 					record_ok = 0;
-					return 0;
+					goto end;
 				}
 				vh_state = 0;
 				break;
 			}
 
 			record_ok = 1;
-			arcoffset += rec_header[2];
-			OSGetTime();
-			int dec = Decode1(data, v_header + gop_baseframe, rec_header[1] & 0xff);
-			test    = OSGetTime();
-			if (dec < 1) {
+			arcoffset += rec_header._04;
+			int start_time = OSGetTime();
+			u32 dec        = Decode1(data, v_header + gop_baseframe, rec_header._02 & 0xff);
+			time_delta     = OSGetTime() - start_time;
+			if (dec <= 1) {
 				PIC_FRAME++;
 				gop_subframe++;
 				if (gop_subframe == gop_header[2]) {
@@ -905,7 +913,7 @@ BOOL Jac_HVQM_Update(void)
 			}
 		}
 
-		if (i == 0 && 500000 >= test && drop_picture_flag == 0) {
+		if (i == 0 && time_delta >= 500000 && drop_picture_flag == 0) {
 			break;
 		}
 
@@ -914,297 +922,8 @@ BOOL Jac_HVQM_Update(void)
 			break;
 		}
 	}
+end:
 	return FALSE;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8039
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r24, 0x10(r1)
-	  subi      r31, r4, 0x56C0
-	  addi      r30, r31, 0x64
-	  lwz       r3, 0x2D9C(r13)
-	  lwz       r0, 0x64(r31)
-	  lwz       r29, 0x2DAC(r13)
-	  cmplw     r3, r0
-	  bne-      .loc_0x38
-	  li        r3, 0x1
-	  b         .loc_0x380
-
-	.loc_0x38:
-	  lis       r4, 0x803E
-	  lis       r3, 0x8
-	  subi      r25, r4, 0x3320
-	  subi      r26, r3, 0x5EE0
-	  li        r28, 0
-
-	.loc_0x4C:
-	  lwz       r0, -0x7EC0(r13)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0x90
-	  lwz       r3, 0x2D70(r13)
-	  addi      r5, r31, 0x90
-	  li        r4, 0x14
-	  bl        -0x684
-	  cmpwi     r3, 0
-	  bne-      .loc_0x78
-	  li        r3, 0
-	  b         .loc_0x380
-
-	.loc_0x78:
-	  lwz       r4, 0x2D70(r13)
-	  lwz       r3, -0x7EC0(r13)
-	  addi      r4, r4, 0x14
-	  addi      r0, r3, 0x1
-	  stw       r4, 0x2D70(r13)
-	  stw       r0, -0x7EC0(r13)
-
-	.loc_0x90:
-	  lwz       r0, 0x2DB0(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0xC8
-	  lwz       r3, 0x2D70(r13)
-	  li        r4, 0x8
-	  addi      r5, r13, 0x2D8C
-	  bl        -0x6C8
-	  cmpwi     r3, 0
-	  bne-      .loc_0xBC
-	  li        r3, 0
-	  b         .loc_0x380
-
-	.loc_0xBC:
-	  lwz       r3, 0x2D70(r13)
-	  addi      r0, r3, 0x8
-	  stw       r0, 0x2D70(r13)
-
-	.loc_0xC8:
-	  lhz       r0, 0x2D8C(r13)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x158
-	  bge-      .loc_0xE0
-	  cmpwi     r0, 0
-	  bge-      .loc_0xE8
-
-	.loc_0xE0:
-	  li        r3, -0x1
-	  b         .loc_0x380
-
-	.loc_0xE8:
-	  addi      r24, r13, 0x2D8C
-	  lwzu      r3, 0x4(r24)
-	  bl        -0xA10
-	  cmpwi     r3, 0
-	  bne-      .loc_0x108
-	  li        r0, 0
-	  stw       r0, 0x2DB0(r13)
-	  b         .loc_0x310
-
-	.loc_0x108:
-	  lwz       r3, 0x2D70(r13)
-	  mr        r5, r29
-	  lwz       r4, 0x0(r24)
-	  bl        -0x734
-	  cmpwi     r3, 0
-	  bne-      .loc_0x130
-	  li        r0, 0
-	  li        r3, 0
-	  stw       r0, 0x2DB0(r13)
-	  b         .loc_0x380
-
-	.loc_0x130:
-	  mr        r3, r29
-	  lwz       r4, 0x0(r24)
-	  bl        -0xAF8
-	  li        r0, 0x1
-	  lwz       r3, 0x2D70(r13)
-	  stw       r0, 0x2DB0(r13)
-	  lwz       r0, 0x0(r24)
-	  add       r0, r3, r0
-	  stw       r0, 0x2D70(r13)
-	  b         .loc_0x310
-
-	.loc_0x158:
-	  lwz       r0, -0x7EBC(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x1B4
-	  lwz       r3, 0x2D78(r13)
-	  lwz       r0, 0x2D80(r13)
-	  cmplw     r3, r0
-	  bne-      .loc_0x1B4
-	  li        r3, 0
-	  bl        -0x1278
-	  cmpwi     r3, 0
-	  beq-      .loc_0x1A4
-	  lfs       f1, -0x7DE0(r2)
-	  li        r3, 0
-	  li        r4, 0x3FFF
-	  li        r5, 0x3FFF
-	  bl        -0x1194
-	  li        r0, 0
-	  stw       r0, -0x7EBC(r13)
-	  b         .loc_0x1B4
-
-	.loc_0x1A4:
-	  li        r0, 0
-	  li        r3, 0
-	  stw       r0, 0x2DB0(r13)
-	  b         .loc_0x380
-
-	.loc_0x1B4:
-	  lwz       r0, 0x2DA0(r13)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x20C
-	  bge-      .loc_0x1D0
-	  cmpwi     r0, 0
-	  bge-      .loc_0x1DC
-	  b         .loc_0x274
-
-	.loc_0x1D0:
-	  cmpwi     r0, 0x3
-	  bge-      .loc_0x274
-	  b         .loc_0x248
-
-	.loc_0x1DC:
-	  lwz       r3, 0x2D70(r13)
-	  li        r4, 0x4
-	  addi      r5, r13, 0x2D94
-	  bl        -0x808
-	  cmpwi     r3, 0
-	  bne-      .loc_0x200
-	  li        r0, 0
-	  stw       r0, 0x2DB0(r13)
-	  b         .loc_0x37C
-
-	.loc_0x200:
-	  lwz       r3, 0x2DA0(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2DA0(r13)
-
-	.loc_0x20C:
-	  addi      r3, r13, 0x2D8C
-	  lwz       r6, 0x2D70(r13)
-	  lwz       r4, 0x4(r3)
-	  addi      r5, r29, 0
-	  addi      r3, r6, 0x4
-	  subi      r4, r4, 0x4
-	  bl        -0x844
-	  cmpwi     r3, 0
-	  bne-      .loc_0x23C
-	  li        r0, 0
-	  stw       r0, 0x2DB0(r13)
-	  b         .loc_0x37C
-
-	.loc_0x23C:
-	  lwz       r3, 0x2DA0(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2DA0(r13)
-
-	.loc_0x248:
-	  lwz       r3, 0x2D94(r13)
-	  lwz       r0, 0x2D98(r13)
-	  add       r3, r3, r0
-	  bl        0x44C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x26C
-	  li        r0, 0
-	  stw       r0, 0x2DB0(r13)
-	  b         .loc_0x37C
-
-	.loc_0x26C:
-	  li        r0, 0
-	  stw       r0, 0x2DA0(r13)
-
-	.loc_0x274:
-	  li        r0, 0x1
-	  addi      r24, r13, 0x2D8C
-	  stw       r0, 0x2DB0(r13)
-	  lwz       r3, 0x2D70(r13)
-	  lwz       r0, 0x4(r24)
-	  add       r0, r3, r0
-	  stw       r0, 0x2D70(r13)
-	  bl        0x1DECD0
-	  lhz       r0, 0x2(r24)
-	  mr        r24, r4
-	  lwz       r6, 0x2D94(r13)
-	  mr        r3, r29
-	  lwz       r4, 0x2D98(r13)
-	  rlwinm    r5,r0,0,24,31
-	  add       r4, r6, r4
-	  bl        0x450
-	  mr        r27, r3
-	  bl        0x1DECA8
-	  cmplwi    r27, 0x1
-	  subc      r27, r4, r24
-	  bgt-      .loc_0x310
-	  lwz       r4, 0x2D78(r13)
-	  lwz       r3, -0x7EC0(r13)
-	  addi      r4, r4, 0x1
-	  addi      r0, r3, 0x1
-	  stw       r4, 0x2D78(r13)
-	  stw       r0, -0x7EC0(r13)
-	  lwz       r5, -0x7EC0(r13)
-	  lwz       r0, 0x98(r31)
-	  cmplw     r5, r0
-	  bne-      .loc_0x310
-	  lwz       r4, 0x2D98(r13)
-	  li        r0, -0x1
-	  lwz       r3, 0x2D9C(r13)
-	  add       r4, r4, r5
-	  stw       r0, -0x7EC0(r13)
-	  addi      r0, r3, 0x1
-	  stw       r4, 0x2D98(r13)
-	  stw       r0, 0x2D9C(r13)
-
-	.loc_0x310:
-	  lwz       r3, 0x2D9C(r13)
-	  lwz       r0, 0x0(r30)
-	  cmplw     r3, r0
-	  bne-      .loc_0x328
-	  li        r3, 0x1
-	  b         .loc_0x380
-
-	.loc_0x328:
-	  li        r0, 0x3
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0x334:
-	  add       r4, r25, r3
-	  lbz       r0, 0x4(r4)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0x34C
-	  bl        -0xB04
-	  b         .loc_0x354
-
-	.loc_0x34C:
-	  addi      r3, r3, 0x10
-	  bdnz+     .loc_0x334
-
-	.loc_0x354:
-	  cmplwi    r28, 0
-	  bne-      .loc_0x370
-	  cmpw      r27, r26
-	  blt-      .loc_0x370
-	  lwz       r0, 0x2D7C(r13)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x37C
-
-	.loc_0x370:
-	  addi      r28, r28, 0x1
-	  cmplwi    r28, 0x2
-	  blt+      .loc_0x4C
-
-	.loc_0x37C:
-	  li        r3, 0
-
-	.loc_0x380:
-	  lmw       r24, 0x10(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
