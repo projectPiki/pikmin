@@ -68,9 +68,12 @@ struct TitleSetupSection : public Node {
 		mCameraDistanceScale = 0.45f;
 		_39C                 = 1.0f;
 
-		// PRINT("big font!\n");
-		// mFont = new Font();
-		// mFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 42); // DLL exclusive
+#if 0 // DLL exclusive
+		PRINT("big font!\n");
+		mFont = new Font();
+		mFont->setTexture(gsys->loadTexture("bigFont.bti", true), 21, 42);
+#endif
+
 		mEnableLightPool = 0;
 		mLightPool.initCore("lightPools");
 

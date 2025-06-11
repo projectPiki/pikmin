@@ -441,12 +441,13 @@ void TopAction::abandon(zen::particleGenerator* particle)
 			PRINT("kinoko %d exit", mCurrActionIdx);
 		}
 
-		// DLL code, but not present in GC:
-		// if (particle && !particle->checkEmit()) {
-		// 	PRINT("curr = %d\n", mCurrActionIdx);
-		// 	mChildActions[mCurrActionIdx].mAction->dump();
-		// 	PRINT("mck\n");
-		// }
+#if 0 // DLL code, but not present in GC:
+		if (particle && !particle->checkEmit()) {
+			PRINT("curr = %d\n", mCurrActionIdx);
+			mChildActions[mCurrActionIdx].mAction->dump();
+			PRINT("mck\n");
+		}
+#endif
 	}
 
 	mCurrActionIdx = -1;

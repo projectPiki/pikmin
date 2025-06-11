@@ -51,11 +51,12 @@ void Creature::moveRotation(f32 p1)
 		if (SQUARE(mTargetVelocity.x) + SQUARE(mTargetVelocity.z) > 1.0f) {
 			f32 angle = atan2f(mTargetVelocity.x, mTargetVelocity.z);
 
-			// DLL only:
-			// if (isNan(angle)) {
-			// 	dump();
-			// 	ERROR("meck is eating B-teishoku!");
-			// }
+#if 0 // DLL only:
+			if (isNan(angle)) {
+				dump();
+				ERROR("meck is eating B-teishoku!");
+			}
+#endif
 
 			mFaceDirection += angDist(angle, mFaceDirection) * mProps->mCreatureProps.mFaceDirAdjust() * p1 * 10.0f;
 			mFaceDirection = roundAng(mFaceDirection);

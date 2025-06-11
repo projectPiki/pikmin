@@ -455,17 +455,23 @@ void ItemMgr::initialise()
 	registerClass(OBJTYPE_FallWater, new MizuItem(OBJTYPE_FallWater, mizuProp, mItemShapes[1], fwAI), sizeof(MizuItem));
 
 	// seems like these got initialised, but then their definitions got commented out? they're still used
-	Shape* doorShape2; // DLL: = loadShape("objects/door.mod", true);
-	Shape* doorShape1; // DLL: = loadShape("objects/door.mod", true);
-	Shape* keyShape;   // DLL: = loadShape("objects/key.mod", true);
+	Shape* gateShape;
+	Shape* doorShape;
+	Shape* keyShape;
+#if 0
+	gateShape = loadShape("objects/door.mod", true);
+	doorShape = loadShape("objects/door.mod", true);
+	keyShape  = loadShape("objects/key.mod", true);
+#endif
 
 	Shape* seedShapes[2];
 	seedShapes[0] = gameflow.loadShape("pikis/happas/leaf.mod", true);
 	seedShapes[1] = gameflow.loadShape("pikis/happas/leaf.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
-	// DLL only:
-	// gameflow.loadShape("shapes/arrow.mod", true);
-	// gameflow.loadShape("shapes/oldMarkr.mod", true);
+#if 0 // DLL only:
+	gameflow.loadShape("shapes/arrow.mod", true);
+	gameflow.loadShape("shapes/oldMarkr.mod", true);
+#endif
 
 	registerClass(OBJTYPE_Rope, new RopeItem(new RopeProp(), nullptr), sizeof(RopeItem));
 
@@ -475,8 +481,8 @@ void ItemMgr::initialise()
 
 	registerClass(OBJTYPE_Key, new KeyItem(new KeyProp(), keyShape), sizeof(KeyItem));
 
-	registerClass(OBJTYPE_Door, new DoorItem(OBJTYPE_Door, new DoorProp(), doorShape1), sizeof(DoorItem));
-	registerClass(OBJTYPE_Gate, new DoorItem(OBJTYPE_Gate, new DoorProp(), doorShape2), sizeof(DoorItem));
+	registerClass(OBJTYPE_Door, new DoorItem(OBJTYPE_Door, new DoorProp(), doorShape), sizeof(DoorItem));
+	registerClass(OBJTYPE_Gate, new DoorItem(OBJTYPE_Gate, new DoorProp(), gateShape), sizeof(DoorItem));
 	registerClass(OBJTYPE_BombGen, new BombGenItem(nullptr), sizeof(BombGenItem));
 
 	if (useObjType(OBJTYPE_Kusa)) {
