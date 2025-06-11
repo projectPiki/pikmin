@@ -735,16 +735,15 @@ void TAIApatrol::start(Teki& teki)
 	teki.setTableIndex(0);
 	for (int i = 0; i < _1C; i++) {
 		setTargetPosition(teki);
-		// how fix
-		f32 v = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x) + zen::Abs(teki.getPosition().y - teki.mTargetPosition.y)
-		      + zen::Abs(teki.getPosition().z - teki.mTargetPosition.z);
+		f32 y = zen::Abs(teki.getPosition().y - teki.mTargetPosition.y);
+		f32 x = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x);
+		f32 z = zen::Abs(teki.getPosition().z - teki.mTargetPosition.z);
+		f32 v = x + y + z;
 		f32 minDist;
 		if (i == 0) {
 			minDist = v;
-		} else {
-			if (v > minDist) {
-				teki.setTableIndex(i);
-			}
+		} else if (v > minDist) {
+			teki.setTableIndex(i);
 		}
 	}
 
