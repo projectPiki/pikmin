@@ -212,6 +212,7 @@ cflags_base = [
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
     # "-DBUGFIX",
+    # "-DDEVELOP",
 ]
 
 # Debug flags
