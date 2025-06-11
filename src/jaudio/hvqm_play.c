@@ -4,6 +4,8 @@
 #include "jaudio/interleave.h"
 #include "jaudio/syncstream.h"
 #include "jaudio/dvdthread.h"
+#include "jaudio/dspbuf.h"
+#include "stl/string.h"
 #include "hvqm4.h"
 
 volatile BOOL dvd_loadfinish;
@@ -22,10 +24,14 @@ int gop_frame;
 int vh_state;
 SeqObj* hvqm_obj;
 u32 dvd_active;
-int virtualfile_buf;
+u8* virtualfile_buf;
 BOOL record_ok;
 void* ref1;
 void* ref2;
+
+static void InitPic();
+static BOOL CheckDraw(u32 id);
+static int Decode1(u8* data, u32 a1, u8 a2);
 
 struct PICControl {
 	void* _00;
@@ -44,7 +50,16 @@ static u32 dvd_buf[3];
 int gop_subframe         = -1;
 BOOL playback_first_wait = TRUE;
 BOOL hvqm_first          = TRUE;
-static int file_header[17]; // dont know the type of these yet
+static struct HVQM_FileHeader {
+	int _00;
+	int _04;
+	int _08;
+	int _0C;
+	int _10;
+	u8 _14[4];
+	int _18;
+	int _1C;
+} file_header;
 static int gop_header[5];
 static OSThread jac_hvqmThread;
 static u8 hvqmStack[0x1000];
@@ -354,6 +369,115 @@ static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
  */
 void Jac_HVQM_Init(const char* filepath, u8* data, int a)
 {
+	playback_first_wait = TRUE;
+	for (u32 i = 0; i < a; i++) {
+		data[i] = 0;
+	}
+	dvdcount          = 0;
+	dvd_active        = 0;
+	vh_state          = 0;
+	drop_picture_flag = 1;
+	record_ok         = TRUE;
+	PIC_FRAME         = 0;
+	AUDIO_FRAME       = 0;
+
+	if (0x40000 >= a || (0x60000 >= a - 0x40000)) {
+		return;
+	}
+
+	virtualfile_buf = data + 0x40000;
+
+	u32 ptr = (u32)data + 0xa0000;
+	int min = a - 0xa0000;
+	for (u32 i = 0; i < 3; i++) {
+		if (min < 0x80000) {
+			return;
+		}
+		dvd_buf[i] = ptr;
+		ptr += 0x80000;
+		min -= 0x80000;
+	}
+
+	for (u32 i = 0; i < 3; i++) {
+		dvd_ctrl[i].mState = 3;
+	}
+	arcoffset      = 0;
+	dvd_loadfinish = 0;
+	dvdfile_size   = DVDT_CheckFile(filepath) - 0x80000;
+	u32 status;
+	DVDT_LoadtoDRAM(dvdcount, filepath, dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
+	while (status == 0) { }
+
+	dvd_ctrl[0]._08    = 0;
+	dvd_ctrl[0].mState = 1;
+	dvd_ctrl[0]._0C    = 0x80000;
+	dvdcount++;
+	strcpy(filename, filepath);
+	__ReLoad();
+
+	for (int i = 0; i < 8; i++) {
+		dvd_buf[i] = dvd_buf[i + 1];
+	}
+
+	int filed     = file_header._10;
+	gop_baseframe = 0;
+	arcoffset += 0x44;
+	gop_frame    = 0;
+	gop_subframe = -1;
+
+	int test;
+	switch (file_header._18) {
+	case 4:
+		test = (file_header._10 << 4) / 0x12;
+		break;
+	case 2:
+		test = file_header._10 >> 1;
+		break;
+	case 3:
+		test = file_header._10;
+		break;
+	case 5:
+		test = (file_header._10 << 4) / 0x24;
+		break;
+	}
+	file_header._10 = 0;
+
+	StreamHeader_ header;
+	header._00         = test;
+	header._08         = file_header._1C;
+	header.audioFormat = file_header._18;
+	header._0C         = 0x10;
+	header._0E         = 0x1e;
+
+	for (int i = 0; i < 4; i++) {
+		//	header._10[i] = 0;
+	}
+	InitAudio1(&header, data, 0x40000);
+	hvqm_obj = (SeqObj*)(ptr + 0x80000);
+	HVQM4InitDecoder();
+	HVQM4InitSeqObj(hvqm_obj, (VideoInfo*)file_header._00);
+
+	int size = OSRoundDown32B(HVQM4BuffSize(hvqm_obj));
+	if (size < min - 0x80020) {
+		ptr = ptr + 0x80020 + min;
+		size -= (min - 0x80020);
+		HVQM4SetBuffer(hvqm_obj, (void*)(ptr + 0x80020));
+		PIC_BUFFERS = 0;
+
+		for (int i = 0; i < 0x18; i++) {
+			if (min < 0x70800) {
+				break;
+			}
+			pic_ctrl[i]._00 = (void*)ptr;
+			PIC_BUFFERS++;
+			pic_ctrl[i]._0C = 0x12345678;
+			ptr += 0x70800;
+			min -= 0x70800;
+		}
+		InitPic();
+		int start = Jac_GetCurrentSCounter();
+		while (start == Jac_GetCurrentSCounter()) { }
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -679,8 +803,118 @@ void Jac_HVQM_ThreadStart(void)
  * Address:	8001E440
  * Size:	000394
  */
-void Jac_HVQM_Update(void)
+BOOL Jac_HVQM_Update(void)
 {
+	u8* data = virtualfile_buf;
+	if (gop_header[0] == file_header._18) {
+		return TRUE;
+	}
+
+	int test;
+	for (u32 i = 0;;) {
+		if (gop_subframe == -1) {
+			if (__VirtualLoad(arcoffset, 0x14, (u8*)gop_header) == 0) {
+				return FALSE;
+			}
+			arcoffset += 0x14;
+			gop_subframe++;
+		}
+
+		if (record_ok != 0) {
+			if (__VirtualLoad(arcoffset, 8, (u8*)rec_header) == 0) {
+				return 0;
+			}
+			arcoffset += 8;
+		}
+
+		switch (rec_header[0]) {
+		default:
+			return -1;
+		case 0:
+			if (Jac_CheckStreamFree(rec_header[2]) == 0) {
+				record_ok = 0;
+			} else {
+				if (__VirtualLoad(arcoffset, rec_header[2], data) == 0) {
+					record_ok = 0;
+					return FALSE;
+				}
+				Jac_SendStreamData(data, rec_header[2]);
+				record_ok = 1;
+				arcoffset += rec_header[2];
+			}
+			break;
+		case 1:
+			if (playback_first_wait && PIC_FRAME == PIC_BUFFERS) {
+				if (StreamSyncCheckReady(0)) {
+					StreamSyncPlayAudio(1.0f, 0, 0x3fff, 0x3fff);
+					playback_first_wait = 0;
+					break;
+				}
+				record_ok = 0;
+				return FALSE;
+			}
+
+			switch (vh_state) {
+			case 0:
+				if (__VirtualLoad(arcoffset, 4, (u8*)&v_header) == 0) {
+					record_ok = 0;
+					return 0;
+				}
+				vh_state += 1;
+				// break;
+			case 1:
+				if (__VirtualLoad(arcoffset + 4, rec_header[2] - 4, data) == 0) {
+					record_ok = 0;
+					return 0;
+				}
+				vh_state += 1;
+			case 2:
+				if (CheckDraw(v_header + gop_baseframe) == 0) {
+					record_ok = 0;
+					return 0;
+				}
+				vh_state = 0;
+				break;
+			}
+
+			record_ok = 1;
+			arcoffset += rec_header[2];
+			OSGetTime();
+			int dec = Decode1(data, v_header + gop_baseframe, rec_header[1] & 0xff);
+			test    = OSGetTime();
+			if (dec < 1) {
+				PIC_FRAME++;
+				gop_subframe++;
+				if (gop_subframe == gop_header[2]) {
+					gop_baseframe += gop_subframe;
+					gop_subframe = -1;
+					gop_frame++;
+				}
+			}
+			break;
+		}
+
+		if (gop_frame == file_header._18) {
+			return TRUE;
+		}
+
+		for (int k = 0; k < 3; k++) {
+			if (dvd_ctrl[k].mState == 3) {
+				__ReLoad();
+				break;
+			}
+		}
+
+		if (i == 0 && 500000 >= test && drop_picture_flag == 0) {
+			break;
+		}
+
+		i++;
+		if (i >= 2) {
+			break;
+		}
+	}
+	return FALSE;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -980,7 +1214,7 @@ void Jac_HVQM_Update(void)
  */
 void Jac_HVQM_ForceStop(void)
 {
-	gop_frame = file_header[6];
+	gop_frame = file_header._18;
 	StreamSyncStopAudio(0);
 	BOOL inter   = OSDisableInterrupts();
 	dvdfile_size = 0;

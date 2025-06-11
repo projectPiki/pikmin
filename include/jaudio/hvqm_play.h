@@ -9,7 +9,7 @@ extern "C" {
 
 void Jac_HVQM_Init(const char* filepath, u8*, int);
 void Jac_HVQM_ThreadStart(void);
-void Jac_HVQM_Update(void);
+BOOL Jac_HVQM_Update(void);
 void Jac_HVQM_ForceStop(void);
 void Jac_CountReadyPictures(void);
 int Jac_GetPicture(void*, int*, int*); // TODO: types unsure (return can be -1 though)
