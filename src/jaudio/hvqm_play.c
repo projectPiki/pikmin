@@ -94,8 +94,7 @@ static void __ReLoad()
 		inter = OSDisableInterrupts();
 		dvd_active += 1;
 
-		int count = dvdcount % 3;
-		DVDT_LoadtoDRAM(dvdcount, filename, dvd_buf[count], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
+		DVDT_LoadtoDRAM(dvdcount, filename, dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
 		OSRestoreInterrupts(inter);
 	}
 
@@ -205,22 +204,24 @@ static int __VirtualLoad(u32 a, u32 b, u8* data)
 	for (i = 0; i < 3; i++) {
 		if (dvd_ctrl[i].mState == 2) {
 			int size = dvd_ctrl[i]._08;
-			if (size > a) {
-				if (size > a + b) {
+			if (size <= a && size + dvd_ctrl[i]._0C > a) {
+				if (size + dvd_ctrl[i]._0C > a + b) {
 					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, b);
 					break;
 				}
 
-				if (dvd_ctrl[i].mState == 2) {
-					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, b);
-					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, b);
+				if (dvd_ctrl[(i + 1) % 3].mState == 2) {
+					int c = (a + b) - (dvd_ctrl[i]._08 + dvd_ctrl[i]._0C);
+					int d = b - c;
+					Jac_bcopy((void*)(dvd_buf[i] + (a - dvd_ctrl[i]._08)), data, d);
+					Jac_bcopy((void*)(dvd_buf[(i + 1) % 3]), data + d, c);
 					dvd_ctrl[i].mState = 3;
 					break;
 				}
 				if (dvd_loadfinish) {
 					return -1;
 				}
-			} else if (a > 0x80000) {
+			} else if (size + 0x80000 <= a) {
 				dvd_ctrl[i].mState = 3;
 			}
 		}
@@ -230,130 +231,7 @@ static int __VirtualLoad(u32 a, u32 b, u8* data)
 		for (int i = 0; i < 3; i++) { }
 		return 0;
 	}
-	return i;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x803E
-	  stw       r0, 0x4(r1)
-	  lis       r7, 0x8039
-	  subi      r6, r6, 0x3320
-	  stwu      r1, -0x40(r1)
-	  stmw      r23, 0x1C(r1)
-	  addi      r26, r4, 0
-	  addi      r27, r5, 0
-	  li        r4, 0x3
-	  subi      r30, r7, 0x56C0
-	  add       r0, r3, r26
-	  li        r28, 0
-	  li        r5, 0
-	  mtctr     r4
-
-	.loc_0x3C:
-	  add       r7, r6, r5
-	  addi      r9, r7, 0x4
-	  lbz       r4, 0x4(r7)
-	  cmplwi    r4, 0x2
-	  bne-      .loc_0x158
-	  lwz       r8, 0x8(r7)
-	  cmplw     r8, r3
-	  bgt-      .loc_0x144
-	  lwz       r4, 0xC(r7)
-	  add       r4, r8, r4
-	  cmplw     r4, r3
-	  ble-      .loc_0x144
-	  cmplw     r4, r0
-	  ble-      .loc_0xA8
-	  lis       r4, 0x803E
-	  rlwinm    r6,r28,2,0,29
-	  subi      r0, r4, 0x3320
-	  add       r6, r30, r6
-	  add       r4, r0, r5
-	  lwz       r6, 0x40(r6)
-	  lwz       r0, 0x8(r4)
-	  addi      r4, r27, 0
-	  addi      r5, r26, 0
-	  sub       r0, r3, r0
-	  add       r3, r6, r0
-	  bl        -0x17F40
-	  b         .loc_0x164
-
-	.loc_0xA8:
-	  addi      r7, r28, 0x1
-	  li        r31, 0x3
-	  divwu     r4, r7, r31
-	  mullw     r4, r4, r31
-	  sub       r29, r7, r4
-	  rlwinm    r4,r29,4,0,27
-	  add       r4, r6, r4
-	  lbz       r4, 0x4(r4)
-	  cmplwi    r4, 0x2
-	  bne-      .loc_0x130
-	  lis       r6, 0x803E
-	  rlwinm    r4,r28,2,0,29
-	  subi      r6, r6, 0x3320
-	  add       r4, r30, r4
-	  add       r25, r6, r5
-	  lwz       r5, 0x40(r4)
-	  lwz       r7, 0x8(r25)
-	  mr        r4, r27
-	  lwz       r6, 0xC(r25)
-	  sub       r3, r3, r7
-	  add       r6, r7, r6
-	  add       r3, r5, r3
-	  sub       r24, r0, r6
-	  sub       r23, r26, r24
-	  addi      r5, r23, 0
-	  bl        -0x17FAC
-	  rlwinm    r0,r29,2,0,29
-	  addi      r5, r24, 0
-	  add       r3, r30, r0
-	  add       r4, r27, r23
-	  lwz       r3, 0x40(r3)
-	  bl        -0x17FC4
-	  stb       r31, 0x4(r25)
-	  b         .loc_0x164
-
-	.loc_0x130:
-	  lwz       r4, 0x2D68(r13)
-	  cmpwi     r4, 0
-	  beq-      .loc_0x158
-	  li        r3, -0x1
-	  b         .loc_0x184
-
-	.loc_0x144:
-	  addis     r4, r8, 0x8
-	  cmplw     r4, r3
-	  bgt-      .loc_0x158
-	  li        r4, 0x3
-	  stb       r4, 0x0(r9)
-
-	.loc_0x158:
-	  addi      r28, r28, 0x1
-	  addi      r5, r5, 0x10
-	  bdnz+     .loc_0x3C
-
-	.loc_0x164:
-	  cmplwi    r28, 0x3
-	  bne-      .loc_0x180
-	  li        r0, 0x3
-	  mtctr     r0
-
-	.loc_0x174:
-	  bdnz-     .loc_0x174
-	  li        r3, 0
-	  b         .loc_0x184
-
-	.loc_0x180:
-	  mr        r3, r26
-
-	.loc_0x184:
-	  lmw       r23, 0x1C(r1)
-	  lwz       r0, 0x44(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+	return b;
 }
 
 /*

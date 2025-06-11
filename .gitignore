@@ -45,3 +45,4 @@ tools/powerpc
 *.nam
 *.idb
 *.til
+mwcc_debugger.py
