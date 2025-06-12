@@ -524,7 +524,7 @@ config.libs = [
             Object(Equivalent, "plugPikiKando/aiTransport.cpp"),
             Object(Matching, "plugPikiKando/aiKinoko.cpp"),
             Object(Matching, "plugPikiKando/aiChase.cpp"),
-            Object(Equivalent, "plugPikiKando/aiCrowd.cpp"),
+            Object(Matching, "plugPikiKando/aiCrowd.cpp"),
             Object(Equivalent, "plugPikiKando/aiDecoy.cpp"),
             Object(Matching, "plugPikiKando/aiEnter.cpp"),
             Object(Matching, "plugPikiKando/aiEscape.cpp"),
