@@ -371,7 +371,6 @@ struct WhistleTemplate : public KEffect {
 
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _24
 	{
-		// NON-MATCHING
 		Vector3f diff         = _0C - _18;
 		f32 ratio             = f32(ptcl->mAge) / f32(ptcl->mLifeTime);
 		f32 compRatio         = 1.0f - ratio;
@@ -385,9 +384,8 @@ struct WhistleTemplate : public KEffect {
 			Quat q1;
 			Quat q2;
 
-			diff.normalise();
+			diff.normalize();
 			zen::makeRotMatrix(diff, mtx1);
-			// some really subtle stack issue here
 			zen::makeRotMatrix(Vector3f(tri->mTriangle.mNormal * -1.0f), mtx2);
 
 			q1.fromMat3f(mtx1);
