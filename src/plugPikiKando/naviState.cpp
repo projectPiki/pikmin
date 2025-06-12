@@ -681,14 +681,16 @@ void NaviWalkState::exec(Navi* navi)
 			}
 		}
 
-		// this needs to adjusted somehow to not show up AS MUCH in the assembly smh
-		f32 dist = navi->mGroundTriangle->mEdgePlanes[index].dist(navi->mPosition) - navi->mCollisionRadius;
+		// problem in this area
 		if (quickABS(navi->_AD0->mTriangle.mNormal.y) <= 0.01f) {
-			PRINT(" cliff dist = %.1f\n", dist);
-			navi->_AD8 = navi->mGroundTriangle->mEdgePlanes[index].dist(navi->mPosition);
+			Plane* plane = &navi->mGroundTriangle->mEdgePlanes[index];
+			PRINT(" cliff dist = %.1f\n", plane->dist(navi->mPosition) - navi->mCollisionRadius);
+			navi->_AD8 = plane->dist(navi->mPosition);
 		} else {
 			navi->_AD8 = 0.0f;
 		}
+
+		navi->mGroundTriangle ? "fake" : "fake";
 
 		if (quickABS(y) > cosf(THIRD_PI) && nrm1 >= cosf(QUARTER_PI) && nrm3 < sinf(THIRD_PI)) {
 			vel             = vel * 100.0f;
@@ -791,6 +793,8 @@ void NaviWalkState::exec(Navi* navi)
 	if (navi->mNeutralTime > 10.0f) {
 		transit(navi, NAVISTATE_Idle);
 	}
+
+	u32 badcompiler[4];
 
 	/*
 	.loc_0x0:
