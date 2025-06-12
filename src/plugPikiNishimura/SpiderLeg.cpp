@@ -799,7 +799,7 @@ void SpiderLeg::setNextDirAndCent()
 		_24C.y = mapMgr->getMinY(_24C.x, _24C.z, true);
 	}
 
-	f32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -908,7 +908,7 @@ void SpiderLeg::checkMotionRatio()
 	}
 
 	// again? all the inlines seem good? idk man.
-	f32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

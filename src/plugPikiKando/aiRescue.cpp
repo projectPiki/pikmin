@@ -238,7 +238,7 @@ void ActRescue::initThrow()
  */
 int ActRescue::exeThrow()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	int state = mDrowningPiki->getState();
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (mThrowReady) {

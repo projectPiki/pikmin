@@ -749,7 +749,7 @@ void zen::DrawGameInfo::update()
 	mModeScreenMgr->update();
 	mDamageEffect.update();
 
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 }
 
 /*

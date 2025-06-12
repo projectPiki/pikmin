@@ -410,7 +410,7 @@ static void ARAM_DMAfinish(u32)
  */
 s32 DVDT_LoadtoARAM_Main(void* dvdCall)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	DVDCall* call        = (DVDCall*)dvdCall;
 	static int arq_index = 0;
@@ -593,7 +593,7 @@ s32 DVDT_LoadFile(char* file, u8* p2)
 {
 	char** pFile = &file;
 	vu32 status  = 0;
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 	DVDT_LoadtoDRAM(0, *pFile, (u32)p2, 0, 0, &status, NULL);
 
 	while (status == 0) { }
@@ -700,7 +700,7 @@ s32 Jac_RegisterFastOpen(char* file)
 	volatile int num;
 	char** pFile = &file;
 	char* f      = *pFile;
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 	if (strlen(f) > 63) {
 		return -1;
 	}

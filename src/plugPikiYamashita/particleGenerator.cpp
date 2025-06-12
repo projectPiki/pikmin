@@ -95,7 +95,7 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector
 			mAnimData.set(&data[8]);
 			mDrawCallBack = &drawPtclBillboard;
 		} else {
-			u32 badCompiler;
+			STACK_PAD_VAR(1);
 			_60 = u32ToFloat(((u32*)data)[2]);
 			_64 = u32ToFloat(((u32*)data)[3]);
 			mAnimData.set(&data[16]);
@@ -521,7 +521,7 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 	mAlphaRate1 = (mAlphaThreshold1 == 0.0f) ? 1.0f : 1.0f / mAlphaThreshold1;
 	mAlphaRate2 = (mAlphaThreshold2 == 1.0f) ? 1.0f : 1.0f / (1.0f - mAlphaThreshold2);
 
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 }
 
 /*
@@ -1151,12 +1151,12 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 	GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR_NULL);
 	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
 	Vector3f vec1;
-	u32 badCompiler1[3];
+	STACK_PAD_VAR(3);
 	Matrix4f mtx1; // 0x104
 	Mtx mtx2;      // 0xD4
 	Mtx mtx3;      // 0xA4
 	Vector3f vec2;
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 	Vector3f vec3;
 	mtx3[2][3]      = 0.0f;
 	mtx3[0][3]      = 0.0f;

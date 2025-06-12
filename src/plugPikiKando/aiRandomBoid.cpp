@@ -162,7 +162,7 @@ int ActRandomBoid::exec()
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
-	u32 badCompiler[15];
+	STACK_PAD_VAR(15);
 	Vector3f avoidVec;
 	if (mPiki->getAvoid(mPiki->mTargetVelocity, avoidVec)) {
 		mPiki->mTargetVelocity = mPiki->mTargetVelocity + mPiki->getSpeed(0.5f) * avoidVec;
@@ -170,7 +170,7 @@ int ActRandomBoid::exec()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler2[58];
+	STACK_PAD_VAR(58);
 	/*
 	.loc_0x0:
 	  mflr      r0

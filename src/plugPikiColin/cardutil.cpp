@@ -1154,7 +1154,7 @@ static void* CardUtilMain(void*)
 		CardControl.mResultCode = res;
 		CardControl.mChannel    = -1;
 		OSUnlockMutex(&CardControl.mMutex);
-		CardControl.mChannel ? "fake" : "fake";
+		STACK_PAD_TERNARY(CardControl.mChannel, 1);
 	}
 	/*
 	.loc_0x0:

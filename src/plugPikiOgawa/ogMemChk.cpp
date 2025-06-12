@@ -778,16 +778,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	mActiveTextMgr->transCursor(mCursorPane);
 	mBlackScreen->update();
 
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
+	STACK_PAD_TERNARY(mStatus, 10);
 	return mStatus;
 }
 

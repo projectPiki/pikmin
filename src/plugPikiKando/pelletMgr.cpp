@@ -1322,7 +1322,7 @@ void Pellet::update()
 		if (mPikiCarrier->isPiki()) {
 			Stickers stuckList3(this);
 			Iterator iter3(&stuckList3);
-			u32 badCompiler;
+			STACK_PAD_VAR(1);
 			bool isOnlyPiki = true;
 			CI_LOOP(iter3)
 			{
@@ -1461,7 +1461,7 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
  */
 void Pellet::doCreateColls(Graphics& gfx)
 {
-	u32 badCompiler[2]; // this is ACTUALLY from unused temps according to the DLL
+	STACK_PAD_VAR(2); // this is ACTUALLY from unused temps according to the DLL
 
 	mMass              = 0.0f;
 	f32 rad            = getBottomRadius();

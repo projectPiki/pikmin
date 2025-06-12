@@ -309,7 +309,7 @@ void SlimeAi::setLeaderNearerTarget()
 		}
 	}
 
-	u32 badCompiler[2]; // this whole function is questionable.
+	STACK_PAD_VAR(2); // this whole function is questionable.
 }
 
 /*
@@ -1183,7 +1183,7 @@ void SlimeAi::stayState()
  */
 void SlimeAi::appearState()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	f32 slimeScalePts[3];
 	slimeScalePts[0] = 0.0f;
 	slimeScalePts[1] = C_SLIME_PROP(mSlime).mRadiusContractionScore();

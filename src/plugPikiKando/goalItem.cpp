@@ -204,7 +204,7 @@ void GoalItem::playEffect(int id)
 		break;
 	}
 
-	PRINT("Fake", id ? "fake" : "fake");
+	STACK_PAD_TERNARY(id, 1);
 }
 
 /*
@@ -822,7 +822,6 @@ void GoalItem::refresh(Graphics& gfx)
 		}
 	}
 
-	mCollInfo ? "fake" : "fake";
-	mCollInfo ? "fake" : "fake";
-	u32 badCompiler[5];
+	STACK_PAD_TERNARY(mCollInfo, 2);
+	STACK_PAD_VAR(5);
 }

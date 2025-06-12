@@ -94,6 +94,7 @@ typedef u16 wchar_t;
 #endif
 
 // clang-format off
+
 #define FORCE_DONT_INLINE \
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
@@ -111,6 +112,35 @@ typedef u16 wchar_t;
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
 	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0;
+
+#define REPEAT1(x)  x
+#define REPEAT2(x)  REPEAT1(x); x
+#define REPEAT3(x)  REPEAT2(x); x
+#define REPEAT4(x)  REPEAT3(x); x
+#define REPEAT5(x)  REPEAT4(x); x
+#define REPEAT6(x)  REPEAT5(x); x
+#define REPEAT7(x)  REPEAT6(x); x
+#define REPEAT8(x)  REPEAT7(x); x
+#define REPEAT9(x)  REPEAT8(x); x
+#define REPEAT10(x) REPEAT9(x); x
+#define REPEAT11(x) REPEAT10(x); x
+#define REPEAT12(x) REPEAT11(x); x
+
+#define REPEAT(x, n) REPEAT##n(x)
+
+// Add an unused local variable to pad the stack by some number of words
+#define STACK_PAD_VAR(n) do { int pad[n]; } while (0)
+
+// Create a temporary struct to pad the stack by some number of words
+#define STACK_PAD_STRUCT(n) if (0) (struct { int pad[n]; }){}
+
+// Add an unused variable in an inline function to pad the stack by some number of words
+inline void padStack(void) { int pad; }
+#define STACK_PAD_INLINE(n) REPEAT(padStack(), n)
+
+// Uses a ternary to pad the stack by some number of words
+#define STACK_PAD_TERNARY(expr, n) REPEAT((expr) ? "fake" : "fake", n)
+
 // clang-format on
 
 #ifdef __MWERKS__

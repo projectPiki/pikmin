@@ -77,7 +77,7 @@ bool zen::DrawSaveFailure::update(Controller* controller)
 		break;
 	}
 
-	PRINT("fake", controller ? "fake" : "fake");
+	STACK_PAD_TERNARY(controller, 1);
 	mSaveFailScreen->update();
 	return res;
 }

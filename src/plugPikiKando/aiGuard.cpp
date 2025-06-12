@@ -74,7 +74,7 @@ void ActGuard::cleanup()
 
 	// this isn't elaborated on in the DLL either.
 	rand();
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*

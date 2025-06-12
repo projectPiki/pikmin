@@ -102,7 +102,7 @@ TAIotamaParameters::TAIotamaParameters()
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 	multiP->setF(TPF_RippleScale, 1.0f);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

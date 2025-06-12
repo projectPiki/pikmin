@@ -209,7 +209,7 @@ static void* audioproc(void*)
 		}
 	}
 
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 // GQR formats.
@@ -306,5 +306,5 @@ void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 		OSResumeThread(&jac_dvdThread);
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }

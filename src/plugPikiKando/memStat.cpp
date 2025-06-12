@@ -187,7 +187,7 @@ MemInfo* MemStat::getInfo(char* name)
  */
 void MemStat::printInfoRec(MemInfo* baseInfo, int idx)
 {
-	u32 badCompiler[191]; // this is a LOT of stack inflation, gotta be from some debug stuff.
+	STACK_PAD_VAR(191); // this is a LOT of stack inflation, gotta be from some debug stuff.
 
 	for (int i = 0; i < idx; i++) {
 		;

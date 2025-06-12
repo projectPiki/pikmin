@@ -51,7 +51,7 @@ void Jac_Delete_CurrentBgmWave()
  */
 static void __Loaded(u32 a)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32* REF_a = &a;
 	u32 hi     = a & 0xffff0000;
 	a          = a & 0x0000ffff;
@@ -99,7 +99,7 @@ BOOL Jac_TellChgMode()
  */
 void Jac_SceneSetup(u32 sceneID, u32 stage)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	u32* REF_sceneID = &sceneID;
 	u32* REF_stage   = &stage;
 	static int first = 1;
@@ -293,7 +293,7 @@ void Jac_SceneExit(u32 nextSceneID, u32 stage)
 	int newBgm;
 
 	int* REF_fade;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	if (current_scene == nextSceneID) {
 		return;
@@ -413,7 +413,7 @@ void Jac_StopDemoSound(u32 id)
 void Jac_PrepareDemoSound(u32 id)
 {
 	char buffer[64];
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 	u32* REF_id = &id;
 
 	if (StreamSyncCheckBusy(0, id) == 1) {

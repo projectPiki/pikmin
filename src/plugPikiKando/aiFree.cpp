@@ -130,8 +130,6 @@ void ActFree::init(Creature*)
 	mPiki->enableFixPos();
 	mFixedPositionTimer = 3.0f;
 
-	// u32 badCompiler[2];
-
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -373,7 +371,7 @@ void ActFree::animationKeyUpdated(PaniAnimKeyEvent&)
 int ActFree::exec()
 {
 	Creature* target;
-	u32 badCompiler[23]; // huh.
+	STACK_PAD_VAR(23); // huh.
 
 	if (mCollisionCooldownTimer > 0.0f) {
 		mCollisionCooldownTimer -= gsys->getFrameTime();

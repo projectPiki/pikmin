@@ -349,7 +349,7 @@ bool Piki::initRouteTraceDynamic(Creature* target)
  */
 int Piki::moveRouteTraceDynamic(f32 p1)
 {
-	u32 badCompiler; // some other temp, whatever.
+	STACK_PAD_VAR(1); // some other temp, whatever.
 
 	int traceRes = moveRouteTrace(p1);
 	if (traceRes != 2) {
@@ -1075,7 +1075,7 @@ int Piki::graspSituation(Creature** outTarget)
 
 				// we have 5 seconds to solve this or we error.
 				LoopChecker checker("sit:sluice", 5.0f);
-				u32 badCompiler;
+				STACK_PAD_VAR(1);
 				for (int i = 0; i < flagPart->getChildCount(); i++) {
 					checker.update();
 					CollPart* childPart = flagPart->getChildAt(i);
@@ -2001,7 +2001,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 		return;
 	}
 
-	u32 badCompiler[2]; // idk what this is from
+	STACK_PAD_VAR(2); // idk what this is from
 }
 
 /*
@@ -2899,7 +2899,7 @@ void Piki::doAI()
  */
 void Piki::changeMode(int newMode, Navi* navi)
 {
-	u32 badCompiler[6]; // idk
+	STACK_PAD_VAR(6); // idk
 	mActiveAction->abandon(nullptr);
 	switch (newMode) {
 	case PikiMode::FreeMode:
@@ -2989,7 +2989,7 @@ static char* _colorNames[] = { "blue", "red", "yellow" };
 void Piki::dump()
 {
 	// they probably used a lot more temps and a lot less ternaries, whatever.
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 
 	rumbleMgr->stop();
 	if (directDumpMode) {

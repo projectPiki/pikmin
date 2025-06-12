@@ -158,7 +158,7 @@ void ViewPiki::changeShape(int index)
 	mScale.set(scale, scale, scale);
 	setLeaves(index + 1);
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -188,7 +188,7 @@ void ViewPiki::initBirth()
 	mScale.set(scale, scale, scale);
 	setFlower(0);
 
-	f32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -222,7 +222,7 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	mLastPosition       = mPosition;
 	mLastEffectPosition = mPosition;
 
-	PRINT("fake", _268 ? "fake" : "fake");
+	STACK_PAD_TERNARY(_268, 1);
 }
 
 /*
@@ -276,7 +276,7 @@ void ViewPiki::postUpdate(int _, f32 __)
 	// Params are unused through all function calls
 	Creature::postUpdate(_, __);
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -474,7 +474,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 		mCatchPos = pos;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (mHappa == Bud) {
 		pos.set(4.0f, 0.0f, 0.0f);
 	} else if (mHappa == Flower) {
@@ -558,7 +558,7 @@ static void printMatrix(char*, Matrix4f&)
  */
 void ViewPiki::refresh(Graphics& gfx)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	u32 color = mColor;
 	if (color == Blue && gameflow.mDemoFlags & 8) {
 		return;

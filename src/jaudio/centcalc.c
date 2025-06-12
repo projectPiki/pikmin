@@ -20,7 +20,7 @@ static f32 KEY_TABLE[KEY_CURVE_RESOLUTION] = {
  */
 f32 Jam_PitchToCent(f32 basePitch, f32 scaleFactor)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	f32 scaledPitch;
 	f32 fractionalPart;

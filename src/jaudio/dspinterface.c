@@ -469,7 +469,7 @@ void DSP_SetupBuffer()
  */
 void DSP_InitBuffer()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	for (int i = 0; i < 4; ++i)
 		DFX_SetFxLine(i, NULL, NULL);
 	DSP_ClearBuffer();

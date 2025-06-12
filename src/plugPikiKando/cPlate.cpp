@@ -94,7 +94,7 @@ void CPlate::setPos(Vector3f& position, f32 angle, Vector3f& velocity)
 	mPlateOffset     = position + Vector3f(mInnerRadius * sinf(angle), 0.0f, mInnerRadius * cosf(angle));
 	mIsNeutral       = 0;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -116,7 +116,7 @@ void CPlate::setPosGray(Vector3f& position, f32 angle, Vector3f& velocity)
 	mPlateOffset     = position + Vector3f(mInnerRadius * sinf(angle), 0.0f, mInnerRadius * cosf(angle));
 	mIsNeutral       = 0;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -404,7 +404,7 @@ void CPlate::update()
 		val = 0.0f;
 	}
 
-	u32 badCompiler[12];
+	STACK_PAD_VAR(12);
 }
 
 /*

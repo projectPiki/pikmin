@@ -464,7 +464,7 @@ bool TAIAlookAround::act(Teki& teki)
 		break;
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return false;
 }
 
@@ -572,7 +572,7 @@ bool TAIArandomWalk::act(Teki& teki)
 		}
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return res;
 }
 
@@ -751,11 +751,7 @@ void TAIApatrol::start(Teki& teki)
 	TAIAturnToTarget::start(teki);
 	changeStatus(1, teki);
 
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
+	STACK_PAD_TERNARY(&teki, 5);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1591,8 +1587,7 @@ bool TAIAflyingDistanceInTerritory::goal(Teki& teki)
 	ERROR("HEAVEN !!!\n"); // lol
 	teki.mTargetPosition.set(teki.mPersonality->mNestPosition);
 
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
+	STACK_PAD_TERNARY(&teki, 2);
 	return true;
 }
 
@@ -1665,15 +1660,7 @@ bool TAIAflyingDistance::act(Teki& teki)
 		return res;
 	}
 
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
-	PRINT("fake", &teki ? "fake" : "fake");
+	STACK_PAD_TERNARY(&teki, 9);
 	return true;
 	/*
 	.loc_0x0:

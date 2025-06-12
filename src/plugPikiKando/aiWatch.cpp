@@ -110,5 +110,5 @@ int ActWatch::exec()
 	mPiki->mRotation.set(0.0f, mPiki->mFaceDirection, 0.0f);
 	return ACTOUT_Continue;
 
-	u32 badCompiler[7];
+	STACK_PAD_VAR(7);
 }

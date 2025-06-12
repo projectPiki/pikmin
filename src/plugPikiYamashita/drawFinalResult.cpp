@@ -135,7 +135,7 @@ zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord* record)
 	mBest.sleep();
 	setMode(MODE_Sleep);
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*

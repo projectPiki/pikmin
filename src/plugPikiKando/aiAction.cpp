@@ -35,7 +35,7 @@ char* info[9] = {
  */
 void Action::procMsg(Msg* msg)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (mPiki->isCreatureFlag(CF_IsAiDisabled)) {
 		return;
 	}

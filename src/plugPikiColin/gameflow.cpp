@@ -98,7 +98,7 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 
 	gfx.drawRectangle(RectArea(width, height, width + p3->mWidth, height + p3->mHeight), RectArea(0, 0, p3->mWidth, p3->mHeight), nullptr);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -685,7 +685,7 @@ void GameFlow::softReset()
 	mIsGameplayInputEnabled = 1;
 	mNextSectionID          = mGameSectionID;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

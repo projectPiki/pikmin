@@ -142,11 +142,11 @@ bool ActTransport::isStickLeader()
  */
 f32 ActTransport::getCarriers()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	Pellet* pel = mPellet.getPtr();
 	if (pel) {
 		Stickers stuckList(pel);
-		u32 badCompiler2[3];
+		STACK_PAD_VAR(3);
 		Iterator iter(&stuckList);
 		f32 carriers = 0.0f;
 		CI_LOOP(iter)
@@ -1606,7 +1606,7 @@ int ActTransport::moveGuruGuru()
 
 		f32 rad          = wp->mRadius;
 		Vector3f pathDir = wpPos - wp->mPosition;
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		f32 dist = pathDir.normalise();
 		dist -= 160.0f;
 		if (dist < 0.0f) {
@@ -1645,7 +1645,7 @@ int ActTransport::moveGuruGuru()
 		}
 
 		Vector3f vel(sinf(mWaitTimer), 0.0f, cosf(mWaitTimer));
-		u32 badCompiler2;
+		STACK_PAD_VAR(1);
 		vel.multiply(rad);
 		vel.add(pathDir);
 		vel = vel - pel->getCentre();
@@ -1749,7 +1749,7 @@ void ActTransport::decideGoal(Creature* cargo)
 		PRINT("SORRY *** goal(color%d) is required !!\n", onyonColor);
 		ERROR("zannnen\n"); // 'too bad'
 	}
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -1921,7 +1921,7 @@ void ActTransport::crInit()
 	}
 	mOdometer.start(4.0f, 10.0f);
 
-	mPiki ? "fake" : "fake";
+	STACK_PAD_TERNARY(mPiki, 1);
 }
 
 /*
@@ -1963,8 +1963,7 @@ void ActTransport::findObstacle()
 		}
 	}
 
-	mPiki ? "fake" : "fake";
-	mPiki ? "fake" : "fake";
+	STACK_PAD_TERNARY(mPiki, 2);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2508,5 +2507,5 @@ int ActTransport::moveToWayPoint()
 
 	return ACTOUT_Continue;
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }

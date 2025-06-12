@@ -122,7 +122,7 @@ void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
  */
 void PaniPikiAnimMgr::updateAnimation(f32 speed)
 {
-	u32 badCompiler; // i tried really hard to get the inlines to work, i promise
+	STACK_PAD_VAR(1); // i tried really hard to get the inlines to work, i promise
 
 	if (isFinished()) {
 		if (mAnimSpeed < mUpperAnimator.mAnimInfo->mParams.mSpeed()) {

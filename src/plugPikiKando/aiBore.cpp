@@ -212,7 +212,7 @@ void ActFreeSelect::determine()
 
 	mChildActions[mCurrActionIdx].initialise(target);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -420,7 +420,7 @@ void ActBoreSelect::determine()
 
 	mChildActions[mCurrActionIdx].initialise(target);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -448,7 +448,7 @@ void ActBoreTalk::init(Creature* creature)
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Asibumi, this), PaniMotionInfo(PIKIANIM_Asibumi));
 	mPiki->enableMotionBlend();
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

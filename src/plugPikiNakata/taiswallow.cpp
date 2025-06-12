@@ -511,7 +511,7 @@ void TaiSwallowStrategy::draw(Teki& teki, Graphics& gfx)
 		NVector3f ptclPos;
 		teki.outputSpawnPosition(ptclPos);
 		teki.setParticleGeneratorPosition(0, ptclPos);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 	}
 }
 
@@ -546,7 +546,7 @@ bool TaiSwallowStrategy::interact(Teki& teki, TekiInteractionKey& key)
 	}
 
 	return TekiStrategy::interact(teki, key);
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -623,11 +623,7 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 	return teki.turnToward(teki.mTargetAngle, speed);
 
 	// hate it hate it hate it hate it hate it
-	PRINT("fake", speed ? "fake" : "fake");
-	PRINT("fake", speed ? "fake" : "fake");
-	PRINT("fake", speed ? "fake" : "fake");
-	PRINT("fake", speed ? "fake" : "fake");
-	PRINT("fake", speed ? "fake" : "fake");
+	STACK_PAD_TERNARY(speed, 5);
 }
 
 /*

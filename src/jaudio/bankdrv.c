@@ -14,7 +14,7 @@ static u32 FORCE_RELEASE_TABLE[3] = { 5, 15, 0 };
  */
 Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32 index;
 
 	index = VOLATILE_index;
@@ -31,7 +31,7 @@ Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
  */
 Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32 index;
 
 	index = VOLATILE_index;
@@ -48,7 +48,7 @@ Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
  */
 Perc_* Bank_PercChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32 index;
 
 	index = VOLATILE_index;
@@ -85,7 +85,7 @@ int Bank_GetInstKeymap(Inst_* inst, u8 param_2)
  */
 int Bank_GetInstVmap(Inst_* inst, u8 param_2, u8 param_3)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	if (!inst) {
 		return 0;

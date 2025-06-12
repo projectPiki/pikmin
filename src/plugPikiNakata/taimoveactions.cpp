@@ -248,7 +248,7 @@ bool TaiImpassableAction::act(Teki& teki)
 	PRINT("TaiImpassableAction::act:%08x:%f,%f,%f\n", &teki, distXZ, mMaxDistance, mTimerLength);
 	return true;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

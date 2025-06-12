@@ -495,7 +495,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	PRINT("*--------------- %.2fk free\n", gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f);
 	gsys->mTogglePrint = printToggle;
 
-	printToggle ? "fake" : "fake";
+	STACK_PAD_TERNARY(printToggle, 1);
 }
 
 /*

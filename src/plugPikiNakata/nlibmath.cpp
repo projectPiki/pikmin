@@ -167,7 +167,7 @@ u16 atan(f32 x, f32 y)
 		}
 	}
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	return res;
 }
 

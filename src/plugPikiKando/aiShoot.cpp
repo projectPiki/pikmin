@@ -58,7 +58,7 @@ void ActShoot::init(Creature* target)
 		AndAction::init(newTarget);
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

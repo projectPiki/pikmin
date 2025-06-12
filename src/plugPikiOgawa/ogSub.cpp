@@ -50,7 +50,7 @@ bool ogCheckInsCard()
  */
 f32 calcPuruPuruScale(f32 p1)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	f32 val = (p1 / 0.5f);
 	if (val > 1.0f) {
@@ -852,7 +852,7 @@ TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
  */
 void TypingTextMgr::start()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	_00  = 1;
 	_410 = 0.0f;
@@ -888,7 +888,7 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  */
 bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	int a         = *p2;
 	char* tmpStr1 = &p1[*p2];
 	char b        = *tmpStr1;
@@ -1035,7 +1035,7 @@ void cnvSpecialNumberHyphen(char* str)
 							sprintf(numStrBuf, formatStr, num2);
 						} else {
 							char buf[PATH_MAX];
-							u32 badCompiler;
+							STACK_PAD_VAR(1);
 							for (int i = 0; i < num; i++) {
 								buf[i] = '*';
 							}

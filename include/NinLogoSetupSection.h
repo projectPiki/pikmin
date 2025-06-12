@@ -87,7 +87,7 @@ struct NinLogoSetupSection : public Node {
 		gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
 
 		// either this is a lot of inlines or there's a lot of debug stuff here.
-		u32 badCompiler[64];
+		STACK_PAD_VAR(64);
 	}
 
 	void drawMenu(Graphics& gfx, Menu* menu, f32 p3)

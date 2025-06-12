@@ -81,7 +81,7 @@ TAIusubaParameters::TAIusubaParameters()
 	multiP->setF(TPF_SpawnHeight, 20.0f);
 	multiP->setF(TPF_SpawnVelocity, 0.0f);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

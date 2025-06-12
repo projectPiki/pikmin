@@ -107,7 +107,7 @@ int ActExit::exec()
 	mPiki->mVelocity = ropeDir * -baseVelocity + sideDir * sideVelocity;
 	return ACTOUT_Continue;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

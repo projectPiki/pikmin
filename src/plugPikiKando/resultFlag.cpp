@@ -311,7 +311,7 @@ int ResultFlags::getDocument(int& out)
 		return -1;
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

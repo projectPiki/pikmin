@@ -454,7 +454,7 @@ void Quat::slerp(Quat& other, f32 t, int)
  */
 void Quat::fromEuler(Vector3f& angles)
 {
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 
 	Quat psiQ;
 	Quat thetaQ;

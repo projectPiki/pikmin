@@ -112,5 +112,5 @@ void Jac_InitARAM(u32 loadAudiorom)
 
 	/* Probably leftovers from some debug print statement */
 	(void)audiorom_size;
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 }

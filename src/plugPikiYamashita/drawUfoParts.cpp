@@ -21,7 +21,7 @@ zen::DrawUfoParts::DrawUfoParts()
 	mAlphaWipe.setColour(Colour(0, 0, 0, 0), Colour(0, 0, 0, 0));
 
 	// just for stack
-	mScreen ? "fake" : "fake";
+	STACK_PAD_TERNARY(mScreen, 1);
 }
 
 /*

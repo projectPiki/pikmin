@@ -222,7 +222,7 @@ void PcamCamera::parameterUpdated()
  */
 void PcamCamera::control(Controller& controller)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	bool doRotate = controller.mTriggerL / 170.0f >= getParameterF(PCAMF_RotationButtonThreshold);
 	bool isZClick = false;
@@ -246,7 +246,7 @@ void PcamCamera::control(Controller& controller)
  */
 void PcamCamera::control(PcamControlInfo& info)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (!_20) {
 		return;
 	}
@@ -398,8 +398,8 @@ void PcamCamera::makePosture()
 	setFov(fov);
 	setBlur(getCurrentBlur());
 
-	u32 badCompiler;
-	PRINT("FAKE", fov > 0.0f ? "FAKE" : "FAKE");
+	STACK_PAD_VAR(1);
+	STACK_PAD_TERNARY(fov > 0.0f, 1);
 }
 
 /*
@@ -442,7 +442,7 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f& p1, NVector3f& p2)
 
 			f32 vertProj = 0.0f;
 			f32 dist     = line.calcDistance(vec4, &vertProj);
-			u32 badCompiler;
+			STACK_PAD_VAR(1);
 			f32 b = vertProj - (dist * ratio);
 			NVector3f vec5;
 			plane2.outputVerticalPosition(vec3, vec5);
@@ -460,7 +460,7 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f& p1, NVector3f& p2)
 		}
 	}
 
-	u32 badCompiler2;
+	STACK_PAD_VAR(1);
 }
 
 /*

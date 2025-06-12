@@ -290,7 +290,7 @@ void ActBridge::doWork(int mins)
  */
 void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	switch (event.mEventType) {
 	case KEY_LoopEnd:
 		mIsAttackReady = 1;
@@ -355,7 +355,7 @@ int ActBridge::newExeApproach()
 	if (direction.normalise() < 300.0f) {
 		f32 bridgePosY;
 		f32 bridgePosX;
-		u32 badCompiler[4];
+		STACK_PAD_VAR(4);
 		mBridge->getBridgePos(mPiki->mPosition, bridgePosX, bridgePosY);
 		int currStage = mBridge->getFirstUnfinishedStage();
 		if (currStage == -1) {
@@ -399,7 +399,7 @@ int ActBridge::newExeApproach()
 
 	return ACTOUT_Continue;
 
-	PRINT("fake", mBridge ? "fake" : "fake");
+	STACK_PAD_TERNARY(mBridge, 1);
 
 	/*
 	.loc_0x0:
@@ -713,7 +713,7 @@ int ActBridge::newExeGo()
 	mPiki->setSpeed(0.70f, direction);
 	return ACTOUT_Continue;
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	/*
 	.loc_0x0:
 	  mflr      r0

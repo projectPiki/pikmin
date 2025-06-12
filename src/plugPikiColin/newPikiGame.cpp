@@ -653,7 +653,7 @@ ModeState* MessageModeState::update(u32& a)
  */
 ModeState* DayOverModeState::update(u32& a)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	a = 1;
 
 	handleTutorialWindow(a, mSection->mController);
@@ -747,7 +747,7 @@ ModeState* DayOverModeState::update(u32& a)
 					kio->startWrite(0, (u8*)cardData, 0x26000);
 				}
 				gsys->mTogglePrint = sysbackup;
-				u32 badCompiler2;
+				STACK_PAD_VAR(1);
 			}
 			gsys->setFade(0.0f, 3.0f);
 			return new QuittingGameModeState(mSection);
@@ -1329,7 +1329,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		}
 		map->initShape();
 
-		f32 badcompiler[6];
+		STACK_PAD_VAR(6);
 	}
 
 	void preRender(Graphics& gfx) { gamecore->mMapMgr->preRender(gfx); }
@@ -1600,6 +1600,5 @@ NewPikiGameSection::NewPikiGameSection()
 
 	PRINT("FINISHED INIT!\n");
 
-	print ? "fake" : "fake";
-	print ? "fake" : "fake";
+	STACK_PAD_TERNARY(print, 2);
 }

@@ -98,7 +98,7 @@ struct MovSampleSetupSection : public Node {
 			gsys->softReset();
 		}
 
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 	}
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{
@@ -108,7 +108,7 @@ struct MovSampleSetupSection : public Node {
 		gfx.setClearColour(Colour(0, 0, 0, 0));
 		gfx.clearBuffer(3, false);
 		Matrix4f mtx;
-		u32 badCompiler[64];
+		STACK_PAD_VAR(64);
 		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 
 		GXSetNumTexGens(2);

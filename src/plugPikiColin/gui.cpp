@@ -385,7 +385,7 @@ bool Menu::checkCancelKey()
  */
 Menu* Menu::doUpdate(bool selectItem)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	Menu* resultMenu = this;
 	mPreviousMenu    = this;

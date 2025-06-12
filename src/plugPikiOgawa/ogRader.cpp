@@ -191,11 +191,7 @@ zen::ogRaderMgr::ogRaderMgr()
 	setRaderAngle(_454);
 	mStatus = STATE_NULL;
 
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
+	STACK_PAD_TERNARY(mStatus, 5);
 }
 
 /*
@@ -469,7 +465,7 @@ void zen::ogRaderMgr::startMenu(P2DPane* pane)
 		setRaderScale(2.0f);
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

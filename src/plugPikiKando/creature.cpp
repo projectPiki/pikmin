@@ -1047,7 +1047,7 @@ void Creature::collisionCheck(f32 _unused)
 				}
 				continue;
 			}
-			u32 badCompiler; // there's an extra variable *somewhere* but idk where.
+			STACK_PAD_VAR(1); // there's an extra variable *somewhere* but idk where.
 
 			// we have info for both of us, so pass it off to CollInfo to do the work
 			CollPart* ourPart;
@@ -1250,7 +1250,7 @@ void Creature::drawShadow(Graphics& gfx)
 		tmpV3[5] = pos + (-vec3 + vec1);
 
 		gfx.drawOneTri(tmpV3, nullptr, tmpV2, 6);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		return;
 	}
 

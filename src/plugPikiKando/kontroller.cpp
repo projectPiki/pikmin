@@ -113,7 +113,7 @@ void Kontroller::update()
 		break;
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

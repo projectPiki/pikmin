@@ -623,7 +623,7 @@ void PlayerState::setLimitGenFlag(int id)
 		mCourseFlags[course]->dump();
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -685,7 +685,7 @@ bool PlayerState::hasUfoParts(u32 idx)
 void PlayerState::update()
 {
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	bool isCM = isChallengeMode();
 	if (!isCM) {
@@ -1061,7 +1061,7 @@ void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1151,7 +1151,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	UfoParts* parts = findUfoParts(partID);
 	if (!parts && !isInvisiblePart) {
 		ID32 id(partID);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		PRINT("parts %s is not registered !\n", id.mStringID);
 		ERROR("sorry\n");
 	}
@@ -1270,7 +1270,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
 	}
 
-	PRINT("fake", mCurrParts ? "fake" : "fake");
+	STACK_PAD_TERNARY(mCurrParts, 1);
 }
 
 /*
@@ -1367,11 +1367,11 @@ void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 
 			if (AIPerf::kandoOnly) {
 				char* names[] = { "carry", "assign", "after", "piston", "special", "6" };
-				u32 badCompiler;
+				STACK_PAD_VAR(1);
 				ID32 id(parts->mModelID);
 				PRINT("* parts(%s) : motion(%s) : (%.1f|%.1f) frame\n", names[parts->mPartVisType], id.mStringID);
 			}
-			u32 badCompiler;
+			STACK_PAD_VAR(1);
 			parts->mAnimator.updateAnimation(parts->mMotionSpeed, 30.0f);
 			parts->mAnimator.updateContext();
 			Matrix4f& temp = shape->getAnimMatrix(parts->mRepairAnimJointIndex);
@@ -1400,7 +1400,5 @@ void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 		mNaviLightGlowEfx->updatePos(mNaviLightEfxPos);
 	}
 
-	PRINT("fake", mIsNaviPilot ? "fake" : "fake");
-	PRINT("fake", mIsNaviPilot ? "fake" : "fake");
-	PRINT("fake", mIsNaviPilot ? "fake" : "fake");
+	STACK_PAD_TERNARY(mIsNaviPilot, 3);
 }

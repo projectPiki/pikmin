@@ -922,7 +922,7 @@ void Navi::update()
 	_79C = mPosition;
 	mNaviAnimMgr.updateAnimation(mMotionSpeed);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	/*
 	// game freeze keybind?
 	// this has to have been commented out from release or it inflates the stack a LOT
@@ -1020,7 +1020,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 void Navi::callPikis(f32 radius)
 {
 	Vector3f unused = mCursorWorldPos - mPosition;
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 
 	Iterator iterPiki(pikiMgr);
 	CI_LOOP(iterPiki)
@@ -1299,7 +1299,7 @@ void Navi::releasePikis()
 		}
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1373,7 +1373,7 @@ bool Navi::insideOnyon()
 bool Navi::procActionButton()
 {
 	// can't fix this with stack alone - needs 0x8 more stack from inlines :(
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	// ACCESS UFO PART INFO - see if there's a ufo part for us to interact with
 	// int naviState = getCurrState()->getID();
@@ -1743,7 +1743,7 @@ void Navi::reviseController(Vector3f& stickPos)
 
 	stickPos.set(newMag * sinf(binnedAngle), 0.0f, newMag * cosf(binnedAngle));
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1875,7 +1875,7 @@ void Navi::makeVelocity(bool p1)
 	makeCStick(false);
 
 	// this hides many developer sins i am sure.
-	u32 badCompiler[5];
+	STACK_PAD_VAR(5);
 	return;
 	Vector2f();
 }
@@ -2021,7 +2021,7 @@ void Navi::makeCStick(bool p1)
 
 	_758 = subStick;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -2043,7 +2043,7 @@ void Navi::refresh(Graphics& gfx)
 		// these aren't used for anything in the DLL either, lol.
 		f32 unusedVal  = sinf(mFaceDirection);
 		f32 unusedVal2 = cosf(mFaceDirection);
-		f32 badCompiler;
+		STACK_PAD_VAR(1);
 
 		mCursorWorldPos   = mCursorPosition + mPosition;
 		mCursorWorldPos.y = mapMgr->getMinY(mCursorWorldPos.x, mCursorWorldPos.z, true) + 1.0f;
@@ -2152,7 +2152,7 @@ void Navi::draw(Graphics& gfx)
 
 	gfx.useMatrix(Matrix4f::ident, 0);
 
-	u32 badCompiler2;
+	STACK_PAD_VAR(1);
 	Matrix4f viewMtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, viewMtx);
 
@@ -2181,7 +2181,7 @@ void Navi::draw(Graphics& gfx)
 		demoDraw(gfx, nullptr);
 	}
 
-	u32 badCompiler[7];
+	STACK_PAD_VAR(7);
 }
 
 /*
@@ -2490,7 +2490,7 @@ bool InteractBomb::actNavi(Navi* navi)
 	}
 	navi->mStateMachine->transit(navi, NAVISTATE_Flick);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return true;
 }
 
@@ -2538,7 +2538,7 @@ bool InteractFlick::actNavi(Navi* navi)
 
 	navi->mStateMachine->transit(navi, NAVISTATE_Flick);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return true;
 }
 
@@ -2665,7 +2665,7 @@ void Navi::throwLocus(Vector3f&)
  */
 void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 
 	f32* frame1 = &mNaviAnimMgr.mUpperAnimator.mAnimationCounter;
 	f32* frame2 = &mNaviAnimMgr.mLowerAnimator.mAnimationCounter;

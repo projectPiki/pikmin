@@ -50,7 +50,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 	mCopyLeftCursor.scale(1.0f, 0.25f);
 	mCopyRightCursor.scale(1.0f, 0.25f);
 
-	f32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -210,5 +210,5 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		setOperateMode(Normal);
 	}
 
-	f32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }

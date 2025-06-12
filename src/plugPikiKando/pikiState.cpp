@@ -483,7 +483,7 @@ void PikiDrownState::init(Piki* piki)
 	}
 
 	_28 = false;
-	PRINT("fake", _28 ? "fake" : "fake");
+	STACK_PAD_TERNARY(_28, 1);
 }
 
 /*
@@ -2048,7 +2048,7 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Unk5);
 			piki->setEraseKill();
 			piki->kill(true);
-			u32 badCompiler;
+			STACK_PAD_VAR(1);
 			return;
 		}
 	}
@@ -2724,7 +2724,7 @@ void PikiFlyingState::exec(Piki* piki)
 
 	piki->mVelocity.y += ((AIConstant::_instance->mConstants.mGravity() - val) * (rval + 1.0f)) * gsys->getFrameTime();
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -3426,7 +3426,7 @@ void PikiPushPikiState::restart(Piki* piki)
  */
 void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	Creature* collider = msg->mEvent.mCollider;
 	switch (collider->mObjType) {
 	case OBJTYPE_Piki:
@@ -3532,7 +3532,7 @@ void PikiBuryState::exec(Piki* piki)
 		C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Unk5);
 		piki->setEraseKill();
 		piki->kill(true);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		return;
 	}
 

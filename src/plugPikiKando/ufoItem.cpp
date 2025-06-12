@@ -1017,7 +1017,7 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 	}
 
 	Vector3f pos;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	pos.set(0.0f, 14.0f, 0.0f);
 	mShipModel->mShape->calcJointWorldPos(gfx, 48, pos);
 	mPca2FxPosition = pos;

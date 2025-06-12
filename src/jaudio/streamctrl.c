@@ -166,7 +166,7 @@ void StreamMain()
 		break;
 	}
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -536,7 +536,7 @@ void zen::ogScrResultMgr::start()
 	check1000(mYellowsPikis, _CC, _DC, 12);
 	mCMBestData->sleep();
 
-	f32 badcompiler[18];
+	STACK_PAD_VAR(18);
 }
 
 /*
@@ -657,7 +657,7 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 	mBlackScreen->update();
 	return mStatus;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

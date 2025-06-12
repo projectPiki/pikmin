@@ -110,7 +110,7 @@ void YTeki::moveTowardPriorityFaceDir(Vector3f& p1, f32 p2)
  */
 void YTeki::moveTowardPriorityFaceDir(Vector3f& p1, f32 p2, f32 turnSpeed)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 
 	f32 ySpeed   = mTargetVelocity.y;
 	mTargetAngle = NMathF::atan2(p1.x - getPosition().x, p1.z - getPosition().z);

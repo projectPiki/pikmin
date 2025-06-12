@@ -41,7 +41,7 @@ bool TaiAttackableNaviPikiAction::act(Teki& teki)
 	teki.setCreaturePointer(0, naviPiki);
 
 	// .
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	return true;
 }
@@ -76,7 +76,7 @@ bool TaiAttackablePikiAction::act(Teki& teki)
 
 	teki.setCreaturePointer(0, nearest);
 	// sigh
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return true;
 }
 
@@ -322,6 +322,6 @@ bool TaiFlickingUpperAction::act(Teki& teki)
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
 		teki.flickUpper();
 	}
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return TaiMotionAction::act(teki);
 }

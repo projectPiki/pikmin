@@ -404,8 +404,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		break;
 	}
 
-	mStatus ? "fake" : "fake";
-	mStatus ? "fake" : "fake";
+	STACK_PAD_TERNARY(mStatus, 2);
 
 	return mStatus;
 }

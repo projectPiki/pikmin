@@ -212,7 +212,7 @@ void ActAdjust::init(Creature* target)
 		mTargetPosition = target->mPosition;
 		Vector3f dir    = mTargetPosition - mPiki->mPosition;
 		f32 adjPerFrame = mAdjustTimeLimit * (1.0f / 30.0f);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		mTurnSpeed = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection) / adjPerFrame;
 		f32 dist   = dir.length();
 

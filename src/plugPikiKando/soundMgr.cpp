@@ -684,7 +684,7 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
 		}
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return newHandle;
 }
 
@@ -789,7 +789,7 @@ bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 	PRINT("---- destroy FAILED no handle\n");
 	return false;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /**

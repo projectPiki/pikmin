@@ -476,7 +476,7 @@ void zen::ogScrFileSelectMgr::OnOffKetaNissuu(int fileNum)
 		mDayCount1DigitPic[fileNum]->hide();
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -1300,7 +1300,7 @@ zen::ogScrFileSelectMgr::FileSelectUpdateResult zen::ogScrFileSelectMgr::update(
 			v = 200.0f;
 		}
 
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		Vector3f scale = mIconOnyonPanes[mCurrSlotIdx]->getScale();
 		scale.x        = 1.0f - v / 200.0f;
 		scale.y        = 1.0f - v / 200.0f;
@@ -1336,14 +1336,7 @@ zen::ogScrFileSelectMgr::FileSelectUpdateResult zen::ogScrFileSelectMgr::update(
 		}
 	}
 
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
-	mSelectState ? "fake" : "fake";
+	STACK_PAD_TERNARY(mSelectState, 8);
 
 	return mSelectState;
 }

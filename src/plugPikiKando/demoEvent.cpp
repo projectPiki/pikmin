@@ -196,5 +196,5 @@ void DemoEventMgr::act(int id, int id2)
 		break;
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }

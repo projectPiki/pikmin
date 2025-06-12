@@ -472,7 +472,7 @@ bool TAImarStrategy::interact(Teki& teki, TekiInteractionKey& key)
 		return true;
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return true;
 }
 

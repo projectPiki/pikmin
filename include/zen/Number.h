@@ -111,7 +111,7 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 		}
 
 		mCurrentValue = *mNumberPtr;
-		u32 badCompiler[2];
+		STACK_PAD_VAR(2);
 		return true;
 	}
 

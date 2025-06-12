@@ -65,7 +65,7 @@ void ActChase::cleanup()
  */
 int ActChase::exec()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	Creature* target = mTarget.getPtr();
 	if (!target->isVisible()) {
 		return ACTOUT_Fail;

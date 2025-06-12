@@ -556,7 +556,7 @@ void ItemMgr::initialise()
 	mPikiHeadMgr = new PikiHeadMgr(this);
 
 	// need 0x4 more stack from inlines >:(
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 
 	/*
 	.loc_0x0:

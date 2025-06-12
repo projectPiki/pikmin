@@ -41,7 +41,7 @@ struct MapSelectSetupSection : public Node {
 		makeMapsMenu();
 
 		parent.mPreviousMenu = mMapListMenu;
-		parent.mPreviousMenu ? "fake" : "fake";
+		STACK_PAD_TERNARY(parent.mPreviousMenu, 1);
 	}
 	void openAllChMaps(Menu& parent)
 	{
@@ -53,7 +53,7 @@ struct MapSelectSetupSection : public Node {
 		makeMapsMenu();
 
 		parent.mPreviousMenu = mMapListMenu;
-		parent.mPreviousMenu ? "fake" : "fake";
+		STACK_PAD_TERNARY(parent.mPreviousMenu, 1);
 	}
 
 	void makeMapsMenu()
@@ -79,7 +79,7 @@ struct MapSelectSetupSection : public Node {
 			}
 		}
 
-		f32 badcompiler[2];
+		STACK_PAD_VAR(2);
 	}
 	void menuSelectOption(Menu& parent)
 	{
@@ -217,7 +217,7 @@ struct MapSelectSetupSection : public Node {
 			gsys->softReset();
 		}
 
-		f32 badcompiler[2];
+		STACK_PAD_VAR(2);
 	}
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{

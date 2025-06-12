@@ -715,7 +715,7 @@ void KingAi::setAttackPriority()
 			endFallSaliva();
 		}
 	}
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -901,7 +901,7 @@ bool KingAi::inTurnAngleTransit()
 	}
 
 	return false;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

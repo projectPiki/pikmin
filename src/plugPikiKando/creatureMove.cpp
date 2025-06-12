@@ -314,11 +314,8 @@ void Creature::moveNew(f32 deltaTime)
 
 	mPreviousTriangle = mGroundTriangle;
 
-	u32 badCompiler[2];
-	mPreviousTriangle ? "fake" : "fake";
-	mPreviousTriangle ? "fake" : "fake";
-	mPreviousTriangle ? "fake" : "fake";
-	mPreviousTriangle ? "fake" : "fake";
+	STACK_PAD_VAR(2);
+	STACK_PAD_TERNARY(mPreviousTriangle, 4);
 
 	/*
 	.loc_0x0:

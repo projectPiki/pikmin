@@ -233,7 +233,7 @@ void NVibrationFunction::makeVibrationFunction(f32 phase, f32 period, f32 amp)
  */
 f32 NVibrationFunction::getValue(f32 p1)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return mAmplitude * sinf(mPhase + mAngularFreq * p1);
 }
 

@@ -591,7 +591,7 @@ TAIbeatleStrategy::TAIbeatleStrategy()
  */
 bool TAIbeatleStrategy::interact(Teki& teki, TekiInteractionKey& key)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	switch (key.mInteractionType) {
 	case TekiInteractType::Attack: {

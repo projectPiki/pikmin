@@ -109,7 +109,7 @@ TAItankParameters::TAItankParameters()
 
 	multiP->setI(TPI_CullingType, CULLAI_CullAIOffCamera);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -320,7 +320,7 @@ bool TAItankStrategy::interact(Teki& teki, TekiInteractionKey& key)
 		return true;
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return true;
 }
 

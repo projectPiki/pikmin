@@ -417,7 +417,7 @@ void KoganeAi::birthItemPellet(int size)
  */
 void KoganeAi::birthItemWater(int numDrops, f32 p2)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	f32 initAngle;
 	f32 angleOffset;

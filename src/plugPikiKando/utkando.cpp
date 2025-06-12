@@ -263,7 +263,7 @@ void CRSplineDraw(Graphics& gfx, int numSides, Vector3f* origin)
 	gfx.setColour(Colour(255, 10, 100, 255), true);
 	f32 calc = 1.0f / (f32)numSides;
 	f32 b    = 0.0f;
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 	for (int i = 0; i < numSides; i++) {
 		Vector3f pos1, pos2;
 		pos1 = CRSpline(b, origin);

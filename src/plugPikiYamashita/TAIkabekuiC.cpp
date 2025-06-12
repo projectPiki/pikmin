@@ -72,8 +72,7 @@ struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
 			return false;
 		}
 
-		PRINT("fake", &teki ? "fake" : "fake");
-		PRINT("fake", &teki ? "fake" : "fake");
+		STACK_PAD_TERNARY(&teki, 2);
 		return false;
 	}
 

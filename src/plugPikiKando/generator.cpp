@@ -2046,7 +2046,7 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 	Colour colour;
 	colour.set(255, 255, 0, 255);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	GlobalShape::enShape->mMaterialList->mColourInfo.mColour = colour;
 	GlobalShape::enShape->drawshape(gfx, *gfx.mCamera, nullptr);
 

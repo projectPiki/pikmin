@@ -187,7 +187,7 @@ void SimpleAI::addState(int stateID, int motionID, SAIAction* initAction, SAIAct
  */
 SAIArrow* SimpleAI::addArrow(int p1, SAIEvent* event, int p3)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	SAIArrow* arrow = new SAIArrow(event, p3);
 	int stateIdx    = mStateIndexes[p1];

@@ -116,7 +116,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	ResetInitialVolume(sound);
 	return 0;
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 	/*
 	.loc_0x0:
 	  mflr      r0

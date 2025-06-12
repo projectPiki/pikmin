@@ -128,7 +128,7 @@ void TAIAdyingKabekui::start(Teki& teki)
  */
 bool TAIAdyingKabekui::act(Teki& teki)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	Vector3f pos(teki.getPosition());
 	if (zen::Abs(mapMgr->getMinY(pos.x, pos.z, true) - pos.y) < 1.0f) {

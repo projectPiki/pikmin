@@ -280,7 +280,7 @@ f32 P2DFont::drawChar(f32 xPos, f32 yPos, int charCode, int drawWidth, int drawH
 	GXEnd();
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_S16, 0);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	return x1 - x0;
 }

@@ -126,7 +126,7 @@ int FAT_AllocateMemory(u32 size)
  */
 int FAT_FreeMemory(u16 size)
 {
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 	u16 temp;
 	u32 i;
 	u32 start;
@@ -382,7 +382,7 @@ void FAT_ReadLongD(u16 a1, u32 a2)
  */
 int FAT_StoreBlock(u8* ptr, u16 a, u32 b, u32 c)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	u8* ptr2 = FAT_GetPointer(a, b);
 
 	int size = b;

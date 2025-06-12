@@ -200,7 +200,7 @@ void SeMgr::setPikiNum(int pikiNum)
 void SeWin::doRender(Graphics& gfx)
 {
 	char buffer[60];
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	printStart(gfx);
 	printcentre(gfx, 32, "SE テスト"); // "SE Test"
 	sprintf(buffer, "SE %d", mCurrSeIndex);
@@ -216,7 +216,7 @@ void SeWin::doRender(Graphics& gfx)
  */
 void SeWin::update()
 {
-	u32 badCompiler[2]; // sigh
+	STACK_PAD_VAR(2); // sigh
 
 	switch (mStatus) {
 	case GMWIN_Opening: {

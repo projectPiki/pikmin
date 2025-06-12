@@ -88,7 +88,7 @@ void ogGraphMgr::SetDummyLineData()
  */
 void ogGraphMgr::MakeData()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	s16* line;
 	if (!playerState) {

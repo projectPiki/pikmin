@@ -324,10 +324,8 @@ bool zen::DrawContainer::operationStatus()
 		SeSystem::playSysSe(SYSSE_CMENU_OFF);
 	}
 
-	u32 badCompiler[2];
-	mController ? "fake" : "fake";
-	mController ? "fake" : "fake";
-	mController ? "fake" : "fake";
+	STACK_PAD_VAR(2);
+	STACK_PAD_TERNARY(mController, 3);
 	return false;
 }
 

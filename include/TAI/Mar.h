@@ -443,8 +443,7 @@ struct TAIAflickCheckTimerMar : public TaiAction {
 			teki.setFrameCounter(0.0f);
 		}
 
-		pikis ? "fake" : "fake";
-		pikis ? "fake" : "fake";
+		STACK_PAD_TERNARY(pikis, 2);
 	}
 
 	// _04     = VTBL

@@ -40,7 +40,7 @@ static u32 first = TRUE;
  */
 void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	char** REF_barcFilepath;
 	size_t i;
@@ -123,7 +123,7 @@ u8* Jaf_CheckSeq(u32 index)
  */
 u32 Jaf_ReadySeq(u32 param_1, u32 param_2)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	seqp_* rSeq = &rootseq[param_1];
 	if (param_2 >= SEQ_LOADBUFFER_SIZE) {
 		return 0;
@@ -171,7 +171,7 @@ BOOL Jaf_StartSeq(u32 param_1, u32 param_2)
  */
 BOOL Jaf_StopSeq(u32 index)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	if (rootseqhandle[index] == -1) {
 		return FALSE;

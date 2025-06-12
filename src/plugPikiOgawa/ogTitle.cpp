@@ -150,7 +150,7 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
  */
 zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 {
-	u32 badCompiler[8];
+	STACK_PAD_VAR(8);
 	if (mStatus == -1) {
 		return mStatus;
 	}

@@ -37,7 +37,7 @@ static void PTconvert(void** pointer, u32 base_address)
 CtrlGroup_* Wave_Test(u8* data)
 {
 	u32 i, j;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32 base_addr = (u32)data;
 	WaveArchiveBank_* arcBank;
 	CtrlGroup_* group;
@@ -47,7 +47,7 @@ CtrlGroup_* Wave_Test(u8* data)
 	Ctrl_* cdf;
 	Ctrl_* cex;
 	Ctrl_* cst;
-	u32 badCompiler2[3];
+	STACK_PAD_VAR(3);
 
 	PTconvert(&((Wsys_*)data)->waveArcBank, base_addr);
 	PTconvert(&((Wsys_*)data)->ctrlGroup, base_addr);
@@ -163,7 +163,7 @@ CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
 	u16 index;
 	u16* REF_virtID = &virtID;
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	if (virtID == 0xFFFF) {
 		index = param_2;
@@ -181,7 +181,7 @@ CtrlGroup_* WaveidToWavegroup(u32 param_1, u32 param_2)
  */
 static BOOL __WaveScene_Set(u32 waveIndex, u32 ctrlIndex, BOOL doSet)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	u32* REF_param_1;
 	u32* REF_param_2;
 
@@ -228,7 +228,7 @@ BOOL WaveScene_Load(u32 waveIndex, u32 ctrlIndex)
  */
 static void __WaveScene_Close(u32 waveIndex, u32 ctrlIndex, BOOL param_3)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	u32* REF_param_1;
 	u32* REF_param_2;
 

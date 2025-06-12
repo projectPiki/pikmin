@@ -743,7 +743,7 @@ EffectMgr::EffectMgr()
 	initEffectGeometry(16);
 	cullingOn();
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

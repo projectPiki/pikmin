@@ -649,7 +649,7 @@ bool TekiNapkidShortRangeCondition::satisfy(Creature* target)
 	}
 
 	u32 bad[2];
-	PRINT("fake", target ? "fake" : "fake");
+	STACK_PAD_TERNARY(target, 1);
 	return false;
 	TekiDistanceCondition(nullptr, 0.0f);
 }
@@ -762,7 +762,7 @@ bool TaiNapkidPikiLostAction::act(Teki& teki)
 		return true;
 	}
 
-	PRINT("fake", targetCreature ? "fake" : "fake");
+	STACK_PAD_TERNARY(targetCreature, 1);
 	return false;
 
 	TekiNapkidTargetPikiCondition(nullptr);
@@ -786,7 +786,7 @@ bool TaiNapkidShortRangeAction::act(Teki& teki)
 		return true;
 	}
 
-	PRINT("fake", targetCreature ? "fake" : "fake");
+	STACK_PAD_TERNARY(targetCreature, 1);
 	return false;
 
 	TekiNapkidShortRangeCondition(nullptr);
@@ -824,7 +824,7 @@ bool TaiNapkidStraightFlyingAction::act(Teki& teki)
 		return true;
 	}
 
-	u32 badCompiler[5];
+	STACK_PAD_VAR(5);
 	return false;
 }
 
@@ -870,7 +870,7 @@ void TaiNapkidCirclingAction::start(Teki& teki)
 		angleInc = -angleInc;
 	}
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	NVector3f targetVelocity;
 	targetVelocity.add2(teki.getPosition(), normalized);
 	teki.mVelocityIO.input(targetVelocity);
@@ -922,7 +922,7 @@ bool TaiNapkidCirclingAction::act(Teki& teki)
 
 	return false;
 
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 /*
@@ -1235,7 +1235,7 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 	}
 	PRINT("!TaiNapkidThrowingPikiAction::act:%08x\n", &teki);
 
-	PRINT("fake", &teki ? "fake" : "fake");
+	STACK_PAD_TERNARY(&teki, 1);
 	return false;
 }
 

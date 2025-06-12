@@ -24,7 +24,7 @@ DEFINE_PRINT("tekiconditions")
  */
 bool TekiPikiStateCondition::satisfy(Creature* target)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (target->mObjType != OBJTYPE_Piki) {
 		return false;
 	}
@@ -182,7 +182,7 @@ bool TekiDistanceCondition::satisfy(Creature* target)
  */
 bool TekiSphereDistanceCondition::satisfy(Creature* target)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (mTeki->cullableSphere(*target, mDistance)) {
 		return false;
 	}

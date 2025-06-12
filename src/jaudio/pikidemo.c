@@ -244,7 +244,7 @@ static void DoSequence(u32 cinID, u32 a2)
 	u16* REF_flag;
 	u32* REF_a2 = &a2;
 	u32* data   = (u32*)DEMO_STATUS[cinID]._08;
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (data == NULL) {
 		demo_seq_active = -1;
 		return;
@@ -565,7 +565,7 @@ void Jac_StartDemo(u32 cinID)
 	Jac_Orima_Formation(0, 0);
 	Jac_SetProcessStatus(5);
 
-	u32 badCompiler[14];
+	STACK_PAD_VAR(14);
 }
 
 /*
@@ -575,7 +575,7 @@ void Jac_StartDemo(u32 cinID)
  */
 void Jac_DemoSound(int id)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	int* REF_id;
 
 	if (current_demo_no != DEMOID_FINISHED) {
@@ -684,7 +684,7 @@ void Jac_DemoBGMForceStop()
  */
 void __Jac_FinishDemo()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (current_demo_no == DEMOID_FINISHED) {
 		return;
 	}
@@ -737,7 +737,7 @@ void Jac_FinishDemo(void)
 {
 	int cinID     = current_demo_no;
 	int* REF_demo = &cinID;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	Jac_SetProcessStatus(6);
 	__Jac_FinishDemo();
 
@@ -893,7 +893,7 @@ void __Prepare_BGM(u32 cinID)
  */
 void Jac_PrepareDemo(u32 cinID)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32* REF_id = &cinID;
 	if (cinID >= DEMOID_CHECK_BGM_CAT) {
 		switch (cinID) {
@@ -939,7 +939,7 @@ void Jac_PrepareDemo(u32 cinID)
  */
 void Jac_StartPartsFindDemo(u32 p1, int p2)
 {
-	int badcompiler[2];
+	STACK_PAD_VAR(2);
 	u32* REF_p1;
 
 	if (parts_find_demo_state == 1) {

@@ -73,7 +73,7 @@ TaiShellParameters::TaiShellParameters()
 	multiP->setI(SHELLPI_ClosingLoopCount, 5);
 	multiP->setF(SHELLPF_OpeningPeriod, 4.0f);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -228,7 +228,7 @@ void TaiShellStrategy::draw(Teki& teki, Graphics& gfx)
 		}
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -265,7 +265,7 @@ void TaiShellSetPositionAction::setPosition(Teki& teki, Creature* pearl)
  */
 bool TaiShellSaveItemPositionAction::act(Teki& teki)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	if (teki.mTekiAnimator->getCounter() > teki.mTekiAnimator->getKeyValueByKeyType(2)) {
 		return false;
 	}
@@ -289,7 +289,7 @@ bool TaiShellSaveItemPositionAction::act(Teki& teki)
 	setPosition(teki, item);
 	return false;
 
-	u32 badCompiler2[6];
+	STACK_PAD_VAR(6);
 }
 
 /*
@@ -383,7 +383,7 @@ TaiPearlParameters::TaiPearlParameters()
 	multiP->setF(TPF_BombDamageRate, 1.0f);
 	multiP->setF(TPF_CollisionRadius, 16.0f);
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -414,7 +414,7 @@ TaiRocpearlParameters::TaiRocpearlParameters()
 	multiP->setF(TPF_BombDamageRate, 1.0f);
 	multiP->setF(TPF_CollisionRadius, 16.0f);
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -489,5 +489,5 @@ void TaiPearlTresureSoundAction::start(Teki& teki)
 		PRINT("TaiPearlTresureSoundAction::start:creature==null:%08x\n", teki);
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }

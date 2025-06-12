@@ -18,7 +18,7 @@ static u32 global_id = 0;
  */
 static void ARAMFinish(u32 msg)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32* REF_param_1;
 
 	REF_param_1         = &msg;
@@ -365,7 +365,7 @@ BOOL Jac_AllocHeap(jaheap_* heap, jaheap_* parent, u32 size)
  */
 BOOL Jac_DeleteHeap(jaheap_* heap)
 {
-	u32 badcompiler[4];
+	STACK_PAD_VAR(4);
 	jaheap_** pt = &heap;
 
 	if (heap->startAddress == 0) {
@@ -540,13 +540,13 @@ void Jac_ShowHeap(jaheap_* heap, u32 flag)
 	jaheap_* c;
 	jaheap_** REF_c;
 
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 	char unused[] = "        ";
 	(void*)unused[0];
 
 	c     = heap->firstChild;
 	REF_c = &c;
-	u32 badCompiler2[15];
+	STACK_PAD_VAR(15);
 	if (c) {
 		do {
 			if (c->firstChild) {

@@ -387,7 +387,7 @@ void TaiKinokoStrategy::draw(Teki& teki, Graphics& gfx)
 	ptclPos.add(dir);
 	teki.setParticleGeneratorPosition(1, ptclPos);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -445,7 +445,7 @@ bool TaiKinokoChargingSporesAction::act(Teki& teki)
 		PRINT("TaiKinokoChargingSporesAction:act:%08x:ACTION_1:\n", &teki);
 		NVector3f effectPos(teki.getPosition());
 		effectMgr->create(EffectMgr::EFF_Kinoko_ChargeSpores, effectPos, nullptr, nullptr);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 	}
 	return false;
 }

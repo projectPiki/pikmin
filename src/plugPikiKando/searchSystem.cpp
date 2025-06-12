@@ -392,7 +392,7 @@ void SearchBuffer::insertQuick(Creature* obj, f32 dist)
 		mCurrentEntries++;
 	}
 
-	f32 badcompiler[8];
+	STACK_PAD_VAR(8);
 }
 
 /*

@@ -301,7 +301,7 @@ void GameCoreSection::endMovie(int movieIdx)
 		cameraMgr->update();
 	}
 
-	f32 badcompiler[6];
+	STACK_PAD_VAR(6);
 }
 
 /*
@@ -825,7 +825,7 @@ ASM void asmTest(f32, f32)
  */
 void GameCoreSection::initStage()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	playerState->setDayEnd(false);
 	if (playerState->isChallengeMode()) {
 		pikiInfMgr.initGame();
@@ -1413,7 +1413,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
  */
 void GameCoreSection::update()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (!gameflow.mMoviePlayer->mIsActive && mDoneSundownWarn == false
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
 	    && (flowCont.mGameEndCondition != 1 || flowCont.mGameEndCondition != 2)) {
@@ -1516,7 +1516,7 @@ void GameCoreSection::startSundownWarn()
  */
 void GameCoreSection::updateAI()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	int pikis = GameStat::mapPikis;
 	if (pikis > 50) {
 		if (AIPerf::optLevel != 2)
@@ -1881,7 +1881,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	// this function requires an UNGODLY amount of stack from inlines, plus some from temps.
 	// ternaries in the stripped out PRINT function generate inline stack.
 	// forgive my sins please, this combo lets it match.
-	u32 badCompiler[48];
+	STACK_PAD_VAR(48);
 	PRINT("FAKE FAKE FAKE FAKE FAKE", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
 	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
 	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",

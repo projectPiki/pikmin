@@ -110,9 +110,7 @@ void GenObjectTeki::updateUseList(Generator*, int)
 Creature* GenObjectTeki::birth(BirthInfo& info)
 {
 	// TODO: work out the right inlines for this
-	u32 badCompiler;
-	u32 badCompiler2;
-	u32 badCompiler3;
+	STACK_PAD_VAR(3);
 
 	Teki* teki = tekiMgr->newTeki(mTekiType);
 	if (!teki) {

@@ -336,7 +336,7 @@ int FixMoveChannelAll(jcs_* sys, jcs_* sys2)
 	sys->chanAllocCount = 0;
 	return 0;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -763,7 +763,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 	u32 i;
 	dspch_** REF_ch = &ch;
 	jc_** REF_jc    = &jc;
-	u32 badCompiler[10];
+	STACK_PAD_VAR(10);
 	if (jc == NULL) {
 		ch->_0C = NULL;
 		ch->_03 = 0;
@@ -1014,7 +1014,7 @@ BOOL Add_WaitDSPChannel(jc_* jc)
 	}
 	return TRUE;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1043,7 +1043,7 @@ void __Entry_WaitChannel(u8 a)
 {
 	jc_* jc;
 	dspch_* ch;
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	while (cur_waits != 0) {
 		jc = waitp[cur_top];
@@ -1098,7 +1098,7 @@ void EntryCheck_WaitDSPChannel()
 		}
 	}
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

@@ -57,7 +57,7 @@ void TekiYamashita::makeTekiParameters(TekiMgr* mgr)
  */
 void TekiYamashita::makeTekis(TekiMgr* mgr)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	mgr->mStrategyTable->setStrategy(TEKI_Tank, new TAItankStrategy());
 	mgr->mTekiSoundTables[TEKI_Tank] = new TAItankSoundTable();

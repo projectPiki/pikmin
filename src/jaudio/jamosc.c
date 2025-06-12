@@ -115,7 +115,7 @@ void Osc_Init_Env(seqp_* track)
  */
 void Osc_Setup_SimpleEnv(seqp_* track, u8 id, u32 val)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	switch (id) {
 	case 0:
 		track->oscillators[0]                 = ENVELOPE_DEF;

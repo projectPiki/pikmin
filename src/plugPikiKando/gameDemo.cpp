@@ -276,7 +276,7 @@ void DemoFlags::setFlag(int index, Creature* obj)
 		return;
 	}
 
-	f32 badcompiler[3];
+	STACK_PAD_VAR(3);
 
 	if (index == 4) {
 		Vector3f objPosition = obj->mPosition;
@@ -294,7 +294,7 @@ void DemoFlags::setFlag(int index, Creature* obj)
 		}
 	}
 
-	f32 badcompiler2[1];
+	STACK_PAD_VAR(1);
 }
 
 /*

@@ -14,7 +14,7 @@ static u16 SEND_TABLE[] = {
  */
 BOOL DFX_SetFxLine(u8 idx, s16* circularBufferBase, FxlineConfig* config)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	s16** REF_circularBufferBase;
 
 	FXBuffer* buf;

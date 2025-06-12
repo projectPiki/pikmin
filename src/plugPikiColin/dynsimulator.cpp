@@ -1135,7 +1135,7 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 				f32 ratio = triPtDist / (triPtDist - triCoMDist);
 				Vector3f intersectPt((posCoM.x - bodyPt.x) * ratio + bodyPt.x, (posCoM.y - bodyPt.y) * ratio + bodyPt.y,
 				                     (posCoM.z - bodyPt.z) * ratio + bodyPt.z);
-				u32 badCompiler;
+				STACK_PAD_VAR(1);
 				bool insideTri = true;
 				for (int k = 0; insideTri && k < 3; k++) {
 					if (triangle->mEdgePlanes[k].dist(intersectPt) < 0.0f) {

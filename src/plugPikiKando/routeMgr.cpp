@@ -331,7 +331,7 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 	}
 	return 0;
 
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 }
 
 /*
@@ -426,7 +426,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buffer, int destWPIdx, PathFinder:
 
 	return res;
 
-	f32 badcompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 /*
@@ -1414,7 +1414,7 @@ int PathFinder::selectWayOnyon(int p1, int goalType, PathFinder::Buffer& buf, in
 		PRINT("\t way %d: next %d: sum is %d\n", wayIdx, linkWP->mIndex, iDist, iDist ? "yes" : "no", linkWP ? "yes" : "no");
 	}
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 
 	return wayIdx;
 }
@@ -1429,7 +1429,7 @@ int PathFinder::selectSecondBestWayOnyon(Vector3f& p1, int& p2, int goalType, Pa
 {
 	int vals2[8];
 	int vals1[8];
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	int bestWayIdx   = -1;
 	int valCount     = 0;
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
@@ -1530,7 +1530,7 @@ int PathFinder::selectSecondBestWayOnyon(Vector3f& p1, int& p2, int goalType, Pa
 		}
 	}
 
-	u32 badCompiler2[6];
+	STACK_PAD_VAR(6);
 
 	PRINT("BEST IS %d : SECOND BEST IS %d\n", bestWayIdx, secondBestWayIdx);
 	return secondBestWayIdx;

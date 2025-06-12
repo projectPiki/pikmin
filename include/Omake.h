@@ -102,7 +102,7 @@ struct ClothFader : public AttentionCamera::Fader {
 		reset();
 		gsys->mToggleBlur = 0;
 
-		f32 badcompiler[2];
+		STACK_PAD_VAR(2);
 	}
 	virtual void initFadeOut() // _14
 	{
@@ -111,7 +111,7 @@ struct ClothFader : public AttentionCamera::Fader {
 		reset();
 		gsys->mToggleBlur = 0;
 
-		f32 badcompiler[2];
+		STACK_PAD_VAR(2);
 	}
 	virtual bool updateFadeIn() // _0C
 	{
@@ -350,7 +350,7 @@ struct SimpleFader : public AttentionCamera::Fader {
 	{
 		int alpha = (1.0f - _08 / _0C) * 255.0f;
 		gfx.setColour(Colour(255, 255, 255, alpha), true);
-		u32 badCompiler[4];
+		STACK_PAD_VAR(4);
 
 		gfx.setAuxColour(Colour(255, 255, 255, alpha));
 		gfx.useTexture(mapMgr->mBlurredTexture, 0);
@@ -366,7 +366,7 @@ struct SimpleFader : public AttentionCamera::Fader {
 	{
 		int alpha = (_08 / _0C) * 255.0f;
 		gfx.setColour(Colour(255, 255, 255, alpha), true);
-		u32 badCompiler[4];
+		STACK_PAD_VAR(4);
 
 		gfx.setAuxColour(Colour(255, 255, 255, alpha));
 		gfx.useTexture(mapMgr->mBlurredTexture, 0);

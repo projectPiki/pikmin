@@ -63,7 +63,7 @@ bool MizuItem::needFlick(Creature*)
  */
 void MizuItem::startAI(int)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	mScale.x = 1.0f;
 	mScale.y = 1.0f;
 	mScale.z = 1.0f;

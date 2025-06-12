@@ -208,7 +208,7 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 		break;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return mState;
 }
 

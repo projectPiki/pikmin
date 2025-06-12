@@ -262,7 +262,7 @@ void PaniTestNode::update()
 		}
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

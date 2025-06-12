@@ -156,7 +156,7 @@ bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
 	Vector3f pushDir;
 	pushDir = tmpDepth * axisVec + mStartPoint - sphere.mCentre;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	f32 pushStrength = (1.0f - tmpDepth) * mStartRadius + mEndRadius * tmpDepth + sphere.mRadius - pushDir.length();
 

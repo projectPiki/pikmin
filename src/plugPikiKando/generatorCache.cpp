@@ -295,7 +295,7 @@ void GeneratorCache::preload(u32 stageIdx)
 		PRINT("**************-----------************\n"); // lol
 	}
 
-	u32 badCompiler[2]; // idk, this has all the inlines in the map - probably some extra temp variable usage.
+	STACK_PAD_VAR(2); // idk, this has all the inlines in the map - probably some extra temp variable usage.
 }
 
 /*
@@ -326,7 +326,7 @@ bool GeneratorCache::hasUfoParts(u32 stageIdx, u32 ufoPartIdx)
 	}
 	return false;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -392,7 +392,7 @@ void GeneratorCache::load(u32 stageIdx)
 		dump();
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -644,7 +644,7 @@ void GeneratorCache::prepareUfoParts(GeneratorCache::Cache* cache)
 		pelletMgr->addUseList(config->mPelletId.mId);
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -672,7 +672,7 @@ void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 		part->mStateMachine->transit(part, 5);
 		PRINT("CREATE PELLET !!!!!!!!\n");
 	}
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

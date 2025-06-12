@@ -362,6 +362,6 @@ bool zen::DrawCMcourseSelect::modeOperation(Controller* controller)
 		P2DPaneLibrary::setFamilyAlpha(_8C, _90);
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return res;
 }

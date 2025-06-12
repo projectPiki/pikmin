@@ -495,7 +495,7 @@ void NaviBuryState::exec(Navi* navi)
  */
 void NaviBuryState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
 	case KEY_LoopEnd:
@@ -794,7 +794,7 @@ void NaviWalkState::exec(Navi* navi)
 		transit(navi, NAVISTATE_Idle);
 	}
 
-	u32 badcompiler[4];
+	STACK_PAD_VAR(4);
 
 	/*
 	.loc_0x0:
@@ -2286,7 +2286,7 @@ NaviRopeExitState::NaviRopeExitState()
  */
 void NaviRopeExitState::init(Navi* navi)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	navi->endRope();
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Jump, navi), PaniMotionInfo(PIKIANIM_Jump));
 	f32 angle = navi->mFaceDirection;
@@ -2867,7 +2867,7 @@ void NaviGatherState::exec(Navi* navi)
 		transit(navi, NAVISTATE_Walk);
 	}
 
-	u32 badCompiler[14];
+	STACK_PAD_VAR(14);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3616,7 +3616,7 @@ void NaviThrowWaitState::exec(Navi* navi)
 		}
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -3641,7 +3641,7 @@ void NaviThrowWaitState::sortPikis(Navi* navi)
 		}
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

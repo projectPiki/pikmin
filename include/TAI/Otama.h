@@ -237,7 +237,7 @@ struct TAIAwaitOtama : public TAIAreserveMotion {
 			res = true;
 		}
 
-		u32 badCompiler[3];
+		STACK_PAD_VAR(3);
 		return res;
 	}
 

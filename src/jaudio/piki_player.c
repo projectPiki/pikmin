@@ -108,7 +108,7 @@ void Jac_Orima_Formation(s32 stickX, s32 stickY)
 		gaya_timer = 0;
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 static seqp_* orima_seqp;
@@ -168,7 +168,7 @@ void Jac_PlayOrimaSe(u32 id)
 				variantSoundId = randomVariationId + 0x800d;
 			}
 
-			int badcompiler[1];
+			STACK_PAD_VAR(1);
 
 			if (old3 == old2 && old2 == old1) {
 				if (old1 != randomVariationId) {
@@ -326,5 +326,5 @@ void Jac_UpdatePikiGaya()
 
 	gaya_timer++;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }

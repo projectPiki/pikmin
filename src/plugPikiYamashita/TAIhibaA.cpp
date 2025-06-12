@@ -78,7 +78,7 @@ struct TAIAfireAttackHibaA : public TAIAreserveMotion {
 			}
 		}
 
-		PRINT("fake", res ? "fake" : "fake");
+		STACK_PAD_TERNARY(res, 1);
 		return res;
 	}
 

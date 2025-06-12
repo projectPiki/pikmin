@@ -120,7 +120,7 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
 	return &dvdBufferedStream;
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -193,7 +193,7 @@ void System::run(BaseApp* app)
 		app->idle();
 	}
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -261,7 +261,7 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 		list->_04 = addr;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	// this is necessary to get it to call the vtable ptr not just inline it.
 	((DVDStream*)&stream)->getPending();
 	u32 pos  = 0;
@@ -721,7 +721,7 @@ void ParseMapFile()
 		cmds->getToken(true);
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	file->close();
 }
 
@@ -760,7 +760,7 @@ void System::hardReset()
 
 	mTotalFrames = 0;
 
-	u32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -1349,7 +1349,7 @@ void* loadFunc(void* idler)
 		}
 
 		gsys->beginRender();
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		Matrix4f mtx;
 		DGXGraphics* gfx = gsys->mDGXGfx;
 		gfx->setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
@@ -1376,10 +1376,7 @@ void* loadFunc(void* idler)
 		}
 	}
 
-	frameCount ? "fake" : "fake";
-	frameCount ? "fake" : "fake";
-	frameCount ? "fake" : "fake";
-	frameCount ? "fake" : "fake";
+	STACK_PAD_TERNARY(frameCount, 4);
 	return nullptr;
 }
 
@@ -1480,7 +1477,7 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	ARQPostRequest(cache, (u32)cache, 0, 1, src, adjustedDest, size, doneDMA);
 	return adjustedDest;
 
-	u32 badcompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -1520,7 +1517,7 @@ void freeBuffer(u32 cache)
 	texCache->attach();
 	gsys->mTexComplete = TRUE;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

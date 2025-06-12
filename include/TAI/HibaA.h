@@ -138,7 +138,7 @@ struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
 			res = true;
 		}
 
-		u32 badCompiler[3];
+		STACK_PAD_VAR(3);
 		return res;
 	}
 

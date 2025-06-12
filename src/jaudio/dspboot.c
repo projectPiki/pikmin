@@ -251,7 +251,7 @@ void DSPCall()
  */
 s32 __DSPCheckMXICBoot2(DSPTaskInfo2* task)
 {
-	u32 badCompiler[8];
+	STACK_PAD_VAR(8);
 	u32 mail;
 
 	while (DSPCheckMailFromDSP() == 0)
@@ -406,12 +406,12 @@ void DSPInit2(DSPTaskInfo2* task)
 void DspBoot()
 {
 	// this is dumb
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	DSPTaskInfo2 task;
 
 	// this is also dumb
-	u32 badCompiler2[2];
+	STACK_PAD_VAR(2);
 
 	task.iram_mmem_addr = jdsp;
 	task.iram_length    = sizeof(jdsp);
@@ -433,5 +433,5 @@ void DspBoot()
 	DwaitFrame();
 
 	// this? definitely also dumb.
-	u32 badCompiler3[3];
+	STACK_PAD_VAR(3);
 }

@@ -139,7 +139,7 @@ void GaugeInfo::refresh(Graphics& gfx)
 	colour.set(32, 32, 255, (int)mTextAlpha);
 	showDigits(pos, colour, mSecondaryValue, mDigitBaseWidth * b, mDigitBaseHeight * b);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	FORCE_DONT_INLINE;
 }
 
@@ -349,7 +349,7 @@ void LifeGauge::refresh(Graphics& gfx)
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (proj1 > 0.0f && proj2 > 0.0f) {
 		if (mRenderStyle == 0) {
 			gfx.setColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * mFadeTransitionValue)), true);
@@ -435,7 +435,7 @@ void LifeGauge::countOn(Vector3f& p1, int p2, int p3)
 		mActiveGauge->mOwnerCachedPosition = mPosition;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

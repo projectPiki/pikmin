@@ -502,7 +502,7 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 	mAttackState       = 0;
 	piki->mWantToStick = 0;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -728,9 +728,7 @@ int ActJumpAttack::exec()
 
 	return ACTOUT_Continue;
 
-	mPiki ? "fake" : "fake";
-	mPiki ? "fake" : "fake";
-	mPiki ? "fake" : "fake";
+	STACK_PAD_TERNARY(mPiki, 3);
 	/*
 	.loc_0x0:
 	  mflr      r0

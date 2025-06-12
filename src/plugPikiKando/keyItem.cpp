@@ -115,7 +115,7 @@ void KeyItem::update()
 	mGrid.updateGrid(mPosition);
 	updateAI();
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

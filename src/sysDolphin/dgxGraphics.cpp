@@ -183,7 +183,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	mRetraceCallback      = VISetPostRetraceCallback(retraceProc);
 	OSInitMessageQueue(&mPostRetraceMsgQueue, &mPostRetraceMsgBuffer, 1);
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -800,7 +800,7 @@ void DGXGraphics::initReflectTex(bool)
  */
 void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 {
-	f32 badcompiler[0x40];
+	STACK_PAD_VAR(0x40);
 	Mtx mtx;
 	if (set) {
 		MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y, 0.5f,
@@ -863,7 +863,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 		GXLoadTexMtxImm(texMtx, _3DC + gxID, GX_MTX2x4);
 	}
 
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 /*
@@ -1128,13 +1128,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 	oldCull = FALSE;
 	GXSetCullMode(GX_CULL_BACK);
 
-	_380 ? "fake" : "fake";
-	_380 ? "fake" : "fake";
-	_380 ? "fake" : "fake";
-	_380 ? "fake" : "fake";
-	_380 ? "fake" : "fake";
-	_380 ? "fake" : "fake";
-	_380 ? "fake" : "fake";
+	STACK_PAD_TERNARY(_380, 7);
 }
 
 /*
@@ -1698,7 +1692,7 @@ void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& extents,
 
 	GXEnd();
 
-	u32 badCompiler[40];
+	STACK_PAD_VAR(40);
 }
 
 /*
@@ -1833,7 +1827,7 @@ void DGXGraphics::blatRectangle(RectArea& rect)
 
 	GXEnd();
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -1872,7 +1866,7 @@ void DGXGraphics::testRectangle(RectArea& rect)
 
 	GXEnd();
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -2058,10 +2052,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 		xPos += font->mChars[idx].mCharSpacing;
 	}
 
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
-	font ? "fake" : "fake";
+	STACK_PAD_TERNARY(font, 4);
 }
 
 /*

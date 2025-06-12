@@ -102,7 +102,7 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 	jc->panMatrices[2].values[1] = 0.0f;
 	jc->panMatrices[3].values[1] = 0.0f;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	for (u32 i = 0; i < 2; i++) {
 		if (inst->mSensors[i]) {
 			u8 trigger     = __GetTrigger(jc, inst->mSensors[i]->type);
@@ -126,7 +126,7 @@ static void EffecterInit(jc_* jc, Inst_* inst)
 		}
 	}
 
-	u32 badCompiler2[2];
+	STACK_PAD_VAR(2);
 	__Clamp01InitPan(jc);
 }
 
@@ -263,7 +263,7 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 	jc_* chan = List_GetChannel(&jcs->freeChannels);
 	jc_* chan2;
 	jc_** REF_chan2 = &chan2;
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 	if (chan == NULL) {
 
 		if (FixAllocChannel(jcs, 1) == FALSE) {
@@ -472,7 +472,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 		}
 	}
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -493,7 +493,7 @@ void Init_1shot(jcs_* jcs, u32 id)
 		jcs->voiceStealingMode = 1;
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -540,7 +540,7 @@ void AllStop_1Shot(jcs_* jcs)
 	jc_* jc = jcs->activeChannels;
 	jc_* next;
 	jc_** REF_jc = &jc;
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	while (jc) {
 		next = (jc_*)jc->mNext;
 		Stop_1Shot(jc);
@@ -622,7 +622,7 @@ void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
  */
 void Gate_1Shot(jc_* jc, u8 a1, u8 a2, s32 a3)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (jc->playId == -1) {
 		jc->playId      = a3;
 		jc->savedPlayId = jc->playId;
@@ -805,7 +805,7 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 	}
 	return FALSE;
 
-	u32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -943,7 +943,7 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	}
 	return newjc;
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1010,7 +1010,7 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 
 	return __Oneshot_Play_Start(jcs, chan, id);
 
-	u32 badcompiler[10];
+	STACK_PAD_VAR(10);
 }
 
 /*
@@ -1055,5 +1055,5 @@ jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	chan->soundId = 0;
 	return __Oneshot_Play_Start(mgr, chan, ids);
 
-	u32 badcompiler[6];
+	STACK_PAD_VAR(6);
 }

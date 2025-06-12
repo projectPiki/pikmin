@@ -109,7 +109,7 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

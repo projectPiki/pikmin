@@ -44,7 +44,7 @@ TaiPalmSoundTable::TaiPalmSoundTable()
 TaiPalmParameters::TaiPalmParameters()
     : TekiParameters(TPI_COUNT, PALMPF_COUNT)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	int j                           = TPF_COUNT;
 	ParaParameterInfo<f32>* fParams = mParameters->mFloatParams->mParaInfo;
@@ -359,7 +359,7 @@ void TaiPalmGrowingAction::start(Teki& teki)
  */
 bool TaiPalmGrowAction::act(Teki& teki)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	int size = teki.getPersonalityF(TekiPersonality::FLT_Strength);
 	if (size >= 2) {
 		return false;

@@ -112,7 +112,7 @@ static s32 Jal_FrameWork(void*)
 {
 	CmdQueue* curr;
 	OSMessage message;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	for (curr = queue_list; curr; curr = curr->next) {
 		if (Jam_CheckPortAppDirect(curr->track, curr->_64, 1) == 1) {

@@ -335,7 +335,7 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 		u32 _08;
 		u32 _0C;
 	} sp30;
-	u32 badCompiler[7];
+	STACK_PAD_VAR(7);
 	(void)&sp30;
 
 	sp30._08   = file_header._3C;
@@ -728,7 +728,7 @@ void Jac_HVQM_ThreadStart(void)
  */
 BOOL Jac_HVQM_Update(void)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	u8* data = virtualfile_buf;
 	if (gop_frame == file_header._18) {
 		return TRUE;

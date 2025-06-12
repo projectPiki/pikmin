@@ -545,11 +545,9 @@ struct WorldMapCursorMgr {
 
 		rotateUfo(zen::correctRad(_30 + mRocketIcon->getRotate()));
 
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
+		STACK_PAD_TERNARY(mRocketIcon, 3);
 	}
 
 	bool moveUfo()
@@ -632,11 +630,8 @@ struct WorldMapCursorMgr {
 
 		mRocketIcon->setScale(scale);
 
-		u32 badCompiler[2];
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
-		PRINT("fake", mRocketIcon ? "fake" : "fake");
+		STACK_PAD_VAR(2);
+		STACK_PAD_TERNARY(mRocketIcon, 4);
 		return res;
 	}
 	void forceMove()
@@ -1235,7 +1230,7 @@ struct WorldMapCoursePointMgr {
 		for (int i = 0; i < 5; i++) {
 			point->update(point == mSelectedPoint);
 			point++;
-			u32 badCompiler;
+			STACK_PAD_VAR(1);
 		}
 		if (controller) {
 			if (p2) {
@@ -2918,7 +2913,7 @@ bool zen::DrawWorldMap::modeStart(Controller* controller)
 	}
 
 	updateScreens();
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return res;
 }
 
@@ -3022,7 +3017,7 @@ bool zen::DrawWorldMap::modeConfirm(Controller* controller)
 	mCursorMgr->update();
 	updateScreens();
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return res;
 }
 

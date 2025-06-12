@@ -47,7 +47,7 @@ static void __ResetCounter();
  */
 static BOOL InitQueue()
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	seqp_* handle;
 
 	handle = Jam_GetTrackHandle(0x10009);
@@ -307,7 +307,7 @@ static void Jac_Archiver_Init()
  */
 static u16 TrackReceive(seqp_* track, u16 param_2)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u8 stupid1;  // Do it inside the if statement, idiots.
 	u8 stupid2;  // Do it inside the if statement, idiots.
 	u16 stupid3; // Do it inside the if statement, idiots.
@@ -342,7 +342,7 @@ static void AuxBusInit()
 	u32* REF_alloc2Size;
 	u32 alloc2Size;
 
-	u32 badCompiler2[2];
+	STACK_PAD_VAR(2);
 
 	u32 i;
 	s16* circularBufferBase;
@@ -403,7 +403,7 @@ BOOL Jac_CheckBootOk()
  */
 void Jac_Start(void* heap, u32 heapSize, u32 aramSize, char* rootPath)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	if (rootPath) {
 		DVDT_SetRootPath(rootPath);

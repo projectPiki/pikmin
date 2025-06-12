@@ -496,7 +496,7 @@ void BTeki::update()
  */
 void BTeki::doAnimation()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (!mTekiShape) {
 		return;
 	}
@@ -595,7 +595,7 @@ void BTeki::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void BTeki::doAI()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (!mDeadState && (AIPerf::optLevel < 3 || mOptUpdateContext.updatable())) {
 		TekiStrategy* strat = getStrategy();
 		strat->act(*static_cast<Teki*>(this));
@@ -1389,7 +1389,7 @@ bool BTeki::attackableCreature(Creature& target)
  */
 f32 BTeki::calcTargetAngle(Vector3f& targetPos)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	f32 targetDir = calcTargetDirection(targetPos);
 	f32 faceDir   = NMathF::roundAngle(getDirection());
@@ -1871,7 +1871,7 @@ bool BTeki::interact(TekiInteractionKey& key)
  */
 bool BTeki::interactDefault(TekiInteractionKey& key)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (key.mInteractionType == TekiInteractType::Attack) {
 		InteractAttack* attack = (InteractAttack*)key.mInteraction;
 		if (getTekiOption(TEKIOPT_Invincible)) {

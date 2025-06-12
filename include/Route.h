@@ -36,8 +36,8 @@ struct EditNode : public CoreNode {
 	{
 	}
 
-	virtual void msgCommand(DataMsg&) { }      // _10 (weak)
-	virtual void render2d(Graphics&, int&) {}; // _14 (weak)
+	virtual void msgCommand(DataMsg&) { }       // _10 (weak)
+	virtual void render2d(Graphics&, int&) { }; // _14 (weak)
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

@@ -116,5 +116,5 @@ void Piki::doKill()
 	pikiMgr->mDeadPikis++;
 	pikiMgr->kill(this);
 
-	f32 badcompiler[10];
+	STACK_PAD_VAR(10);
 }

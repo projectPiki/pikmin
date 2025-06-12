@@ -618,7 +618,7 @@ void DynObjBody::initRender(int)
  */
 void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, Vector3f& p3)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	configuration& config = mIntegrationStates[configIdx];
 	Vector3f attachPt(config.mBodyPoints[attachPointIdx]);
 	Vector3f vec2 = attachPt - config.mPosition;
@@ -1776,8 +1776,7 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 	}
 	trace.mPosition = nextPos;
 
-	check1 ? "fake" : "fake";
-	check1 ? "fake" : "fake";
+	STACK_PAD_TERNARY(check1, 2);
 }
 
 /*

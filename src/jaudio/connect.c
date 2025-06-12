@@ -91,7 +91,7 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 		}
 	}
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -145,7 +145,7 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	}
 	return TRUE;
 
-	u32 badcompiler[6];
+	STACK_PAD_VAR(6);
 }
 
 /*
@@ -227,7 +227,7 @@ WaveID_* GetSoundHandle(CtrlGroup_* group, u32 flag)
 
 	return wave;
 
-	u32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -284,7 +284,7 @@ void Jac_WsConnectTableSet(u32 id, u32 val)
 		WS_V2P_TABLE[id] = *bnk;
 	}
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -301,7 +301,7 @@ void Jac_BnkConnectTableSet(u32 id, u32 val)
 		BNK_V2P_TABLE[id] = *bnk;
 	}
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

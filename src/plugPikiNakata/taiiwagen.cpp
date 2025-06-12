@@ -204,7 +204,7 @@ TaiIwagenParameters::TaiIwagenParameters()
 	multiP->setF(TPF_SpawnVelocity, 100.0f);
 	multiP->setF(TPF_BombDamageRate, 1.0f);
 	multiP->setF(IWAGENPF_IwagonScale, 0.5f);
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -297,7 +297,7 @@ bool TaiIwagenShootingAction::act(Teki& teki)
 		Vector3f spawnPos;
 		teki.outputSpawnPosition(spawnPos);
 		iwagon->inputPosition(spawnPos);
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		Vector3f spawnVel;
 		teki.outputDirectionVector(spawnVel);
 		spawnVel.scale(teki.getParameterF(TPF_SpawnVelocity) * teki.getPersonalityF(TekiPersonality::FLT_Strength));

@@ -201,7 +201,7 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 	u32 idx           = ctrl->buffCtrlMain._02;
 	BufControl_* buff = &ctrl->buffCtrl[idx];
 	u32 oldsize;
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	if (ctrl->_21A48) {
 		return;
@@ -320,7 +320,7 @@ BOOL StreamAudio_Start(u32 ctrlID, int r4, char* name, int r6, int r7, StreamHea
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
 	int i;
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	ctrl->_21A0C   = ctrlID;
 	ctrl->_21A10   = r4;
@@ -427,7 +427,7 @@ static s32 StreamAudio_Callback(void* data)
 	StreamCtrl_* ctrl = (StreamCtrl_*)data;
 	int r25           = 0;
 	u32 i;
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	if (!ctrl->dspch[0]) {
 		for (i = 0; i < 2; i++) {
@@ -856,7 +856,7 @@ void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* st
  */
 static u32 __DecodeADPCM(StreamCtrl_* ctrl)
 {
-	u8 badCompiler[16];
+	STACK_PAD_VAR(4);
 	u32 a = ctrl->buffCtrlMain2._02;
 	u32 b = ctrl->buffCtrlMain._03;
 
@@ -904,7 +904,7 @@ static s16 Clamp16(s32 a)
 
 static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
 {
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 	u32 a = ctrl->buffCtrlMain2._02;
 	u32 b = ctrl->buffCtrlMain._03;
 	u32 count;
@@ -1222,7 +1222,7 @@ int StreamGetCurrentFrame(u32 id1, u32 id2)
 		return size * (f32)ctrl->header._0E / ctrl->header._08 + 0.499f;
 	}
 
-	u32 badcompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 /*

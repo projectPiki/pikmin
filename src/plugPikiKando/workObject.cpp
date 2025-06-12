@@ -513,7 +513,7 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 	}
 	return obj;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -959,7 +959,7 @@ void HinderRock::update()
 	// these are just to try and fix stack, both are fake
 	PRINT("thing", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no", mState ? "yes" : "no",
 	      mState ? "yes" : "no");
-	f32 badcompiler[8];
+	STACK_PAD_VAR(8);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -1963,7 +1963,7 @@ void Bridge::dump()
 		PRINT("brd %d : %d%%(w%s:p%s)\n", i, (int)test, &a, &b);
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -2512,7 +2512,7 @@ bool InteractBreak::actBridge(Bridge* bridge)
 		}
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return true;
 	/*
 	.loc_0x0:

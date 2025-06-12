@@ -275,7 +275,7 @@ u16 Extend8to16(u8 value)
  */
 void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	s32 duration;
 	u8 paramIndex;
@@ -340,7 +340,7 @@ void Jam_WriteTimeParam(seqp_* track, u8 controlByte)
  */
 void Jam_WriteRegDirect(seqp_* track, u8 index, u16 value)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	u16 uVar1;
 
@@ -406,7 +406,7 @@ static u32 LoadTbl(seqp_* track, u32 ofs, u32 idx, u32 param_4)
  */
 void Jam_WriteRegParam(seqp_* track, u8 param_2)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	s16 r30_newRegValue; // r30
 	u8 r29_regIdx;       // r29
@@ -2404,7 +2404,7 @@ static u32 Cmd_PanPowSet()
  */
 static u32 Cmd_IIRSet()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	size_t i;
 	MoveParam_* iir;
@@ -2550,7 +2550,7 @@ static u32 Cmd_Printf()
 	char fmtStr[0x80];
 	u8 fmtFlags[4];
 	u32 fmtParms[4];
-	u32 badCompiler[4]; // Maybe they intended to support floats?
+	STACK_PAD_VAR(4); // Maybe they intended to support floats?
 	size_t fmtCount;
 	size_t i;
 
@@ -2778,7 +2778,7 @@ u32 Cmd_Process(seqp_* track, u8 cmd, u16 param_3)
 	u32 arg;
 	CmdFunction function;
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	seqp_** REF_track;
 	u8* REF_cmd;
 

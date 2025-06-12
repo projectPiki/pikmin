@@ -284,7 +284,7 @@ void MonoObjectMgr::drawShadow(Graphics& gfx, Texture*)
 		}
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -609,7 +609,7 @@ void MonoObjectMgr::searchSelf()
 		}
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1031,7 +1031,7 @@ void PolyObjectMgr::searchSelf()
 		}
 	}
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

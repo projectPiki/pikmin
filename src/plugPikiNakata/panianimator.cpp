@@ -335,7 +335,7 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 
 		// f32 val2 = eventKey->mKeyframeIndex;
 		f32 frame = eventKey->mFrameIndex;
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 		if (startKeyframe <= frame && frame < endKeyframe) {
 			int type = KEY_Finished;
 			if (eventKey->mEventType == ANIMEVENT_Notify) {
@@ -349,7 +349,7 @@ void PaniAnimator::checkEventKeys(f32 startKeyframe, f32 endKeyframe)
 			mListener->animationKeyUpdated(PaniAnimKeyEvent(type, eventKey->mKeyType));
 		}
 	}
-	startKeyframe ? "fake" : "fake";
+	STACK_PAD_TERNARY(startKeyframe, 1);
 }
 
 /*
@@ -372,7 +372,7 @@ void PaniAnimator::finishAnimation()
  */
 f32 PaniAnimator::getKeyValueByKeyType(int type)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	for (int i = 0; i < mAnimInfo->countIKeys(); i++) {
 		if (type == mAnimInfo->getInfoKey(i)->mKeyType) {
 			int keyIdx = mAnimInfo->getInfoKey(i)->mFrameIndex;

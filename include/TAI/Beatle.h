@@ -244,11 +244,10 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			if (ptclGen != nullptr) {
 				Vector3f attractorPos;
 				attractorPos.set(nozzlePart->mCentre + Vector3f(suckNormal * -30.0f));
-				if (false) {
-					Vector3f();
-				}
 				ptclGen->setNewtonField(attractorPos, ptclGen->getNewtonFieldFrc(), true);
 			}
+
+			STACK_PAD_STRUCT(3);
 
 			ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk7);
 			if (ptclGen != nullptr) {
@@ -260,7 +259,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			}
 
 			if (zen::RoundOff(teki.mTekiAnimator->mAnimationCounter) > 4 && teki.getPtclGenPtr(YTeki::PTCL_Unk6) != nullptr) {
-				u32 badcompiler[2];
+				STACK_PAD_VAR(2);
 				Iterator pikiIter(pikiMgr);
 				CI_LOOP(pikiIter)
 				{
@@ -290,7 +289,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 								                 -pikiSlotSep.z * knockbackStrength);
 
 								InteractWind wind(&teki, knockbackVel, 0.0f, nullptr);
-								u32 badCompiler;
+								STACK_PAD_VAR(1);
 								piki->stimulate(wind);
 							}
 						}
@@ -437,10 +436,8 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			teki.setPtclGenPtr(YTeki::PTCL_Unk7, nullptr);
 		}
 
-		result ? "fake" : "fake";
-		result ? "fake" : "fake";
-		result ? "fake" : "fake";
-		u32 badCompiler[3];
+		STACK_PAD_TERNARY(result, 3);
+		STACK_PAD_VAR(3);
 		return result;
 	}
 

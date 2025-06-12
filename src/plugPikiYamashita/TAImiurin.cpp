@@ -64,7 +64,7 @@ struct TAIAangryMiurin : public TAIAmotion {
 			res = true;
 		}
 
-		PRINT("fake", navi ? "fake" : "fake");
+		STACK_PAD_TERNARY(navi, 1);
 		return res;
 	}
 	virtual f32 getFlickDirection(Teki& teki) // _1C
@@ -182,7 +182,7 @@ struct TAIAattackMiurin : public TAIAreserveMotion {
 
 		TAIAreserveMotion::start(teki);
 
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 	}
 	virtual bool act(Teki& teki) // _10
 	{
@@ -803,7 +803,7 @@ TAImiurinStrategy::TAImiurinStrategy()
 	state->setAction(j++, stop);
 	setState(TAImiurinStateID::Groggy, state);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -827,7 +827,7 @@ bool TAImiurinStrategy::interact(Teki& teki, TekiInteractionKey& interaction)
 		return true;
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return true;
 }
 

@@ -147,7 +147,7 @@ void Nas_HeapFree(ALHeap*)
  */
 void* Nas_HeapAlloc(ALHeap* heap, s32 size)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	s32* REF_size;
 
 	REF_size        = &size;
@@ -175,7 +175,7 @@ void* Nas_HeapAlloc(ALHeap* heap, s32 size)
  */
 void Nas_HeapInit(ALHeap* heap, u8* p2, s32 p3)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	ALHeap** REF_heap;
 
 	int length;

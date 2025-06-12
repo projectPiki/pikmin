@@ -372,7 +372,7 @@ void TaiMizinkoStrategy::draw(Teki& teki, Graphics& gfx)
 	teki.outputWorldAnimationPosition(worldPos, 13, invCamMtx);
 	teki.setParticleGeneratorPosition(0, worldPos);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

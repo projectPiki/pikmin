@@ -92,7 +92,7 @@ struct WorldMapTitleObj {
 			}
 			break;
 		}
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 	}
 
 	// DLL requires these inlines, they aren't in the list though, so fabricated name

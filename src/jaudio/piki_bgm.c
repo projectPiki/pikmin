@@ -170,12 +170,12 @@ void Jac_InitBgm(void)
 	if (!buffer[0]) {
 		int vals1[5] = { 0, 1, 11, 13, 16 };
 		int vals2[5] = { 0, 1, -1, 2, -1 };
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 
 		for (i = 0; i < 5; i++) {
 			u32 size;
 			u8* seqbuf;
-			u32 badCompiler2;
+			STACK_PAD_VAR(1);
 			size            = Jaf_CheckSeqSize(vals1[i]);
 			u32* REF_size   = &size;
 			seqbuf          = (u8*)OSAlloc2(size);
@@ -248,7 +248,7 @@ void Jac_ReadyBgm(u32 id)
  */
 void Jac_PlayBgm(u32 a, u32 id)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	u32* REF_b = &id;
 	u32 check;
 	seqp_* track;
@@ -497,7 +497,7 @@ void Jac_MoveBgmTrackVol(BgmControl_* control)
  */
 void Jac_ChangeBgmTrackVol(BgmControl_* control)
 {
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 	u32 i;
 	seqp_* track2 = Jaf_HandleToSeq(control->trackHandle);
 	if (!track2) {

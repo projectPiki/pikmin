@@ -147,7 +147,7 @@ zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* inpu
 	}
 	mScreen->update();
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return mUpdateResultStatus;
 }
 
@@ -510,7 +510,7 @@ zen::ogScrMenuMgr::ogScrMenuMgr()
 	mCurrentScreenIndex = 0;
 	mRadarScaleVector.set(1.0f, 0.0f, 1.0f);
 	mStatus = STATE_Inactive;
-	mStatus ? "fake" : "fake";
+	STACK_PAD_TERNARY(mStatus, 1);
 }
 
 /*
@@ -699,7 +699,7 @@ bool zen::ogScrMenuMgr::draw(Graphics& gfx)
 		mLeftRightIndicator->draw();
 	}
 
-	mStatus ? "fake" : "fake";
+	STACK_PAD_TERNARY(mStatus, 1);
 
 	return true;
 }

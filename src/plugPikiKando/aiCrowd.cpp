@@ -544,7 +544,7 @@ int ActCrowd::exec()
 	}
 
 	// some of this needs to be from inlines still (like 0x30 worth lol)
-	u32 badCompiler[20];
+	STACK_PAD_VAR(20);
 
 	return ACTOUT_Continue;
 	/*

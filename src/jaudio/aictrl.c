@@ -106,7 +106,7 @@ void Jac_Init()
 
 	AIInit(NULL);
 	AIInitDMA((u32)dac[2], DAC_SIZE * 2);
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -166,7 +166,7 @@ void CheckHaltDSP(void)
  */
 static void MixMonoTrack(s16* track, s32 nSamples, MixCallback callback)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	Probe_Start(5, "MONO-MIX");
 
 	s16* monoTrack = (*callback)(nSamples);
@@ -213,7 +213,7 @@ static void MixMonoTrack(s16* track, s32 nSamples, MixCallback callback)
  */
 static void MixMonoTrackWide(s16* track, s32 nSamples, MixCallback callback)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	Probe_Start(5, "MONO(W)-MIX");
 
 	s16* monoTrack = (*callback)(nSamples);
@@ -259,7 +259,7 @@ static void MixMonoTrackWide(s16* track, s32 nSamples, MixCallback callback)
  */
 static void MixExtraTrack(s16* track, s32 nSamples, MixCallback callback)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	Probe_Start(5, "DSPMIX");
 
 	s16* extraTrack = (*callback)(nSamples);
@@ -310,7 +310,7 @@ static void MixExtraTrack(s16* track, s32 nSamples, MixCallback callback)
  */
 static void MixInterleaveTrack(s16* track, s32 nSamples, MixCallback callback)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	s16* interleaveTrack = (*callback)(nSamples);
 	int mix;
 

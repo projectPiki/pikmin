@@ -293,7 +293,7 @@ void PikiHeadAI::BuryInit::act(AICreature* item)
 	obj->mFlowerStage       = Leaf;
 	obj->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._38C() + gsys->getRand(1.0f) * 2.0f;
 
-	f32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -893,7 +893,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 	}
 
 	act(item);
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 /*
@@ -926,7 +926,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		item->mCounter--;
 	}
 
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 
 	if (item->mCurrAnimId > 0) {
 		if (item->mObjType != OBJTYPE_Goal) {
@@ -966,7 +966,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		obj->finishMotion();
 	}
 
-	f32 badcompiler2[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -1090,7 +1090,7 @@ void GemAI::Die::act(AICreature* item)
 	}
 	obj->_3E4 = 0;
 	item->kill(false);
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

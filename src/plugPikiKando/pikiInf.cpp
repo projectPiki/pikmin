@@ -506,8 +506,7 @@ BaseInf* CreatureInfMgr::newInf()
 void CreatureInf::doStore(Creature* owner)
 {
 	// probably inlines but honestly whatever.
-	u32 badCompiler;
-	u32 badCompiler2;
+	STACK_PAD_VAR(2);
 
 	mObjType             = owner->mObjType;
 	mRebirthDay          = 0;

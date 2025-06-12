@@ -336,7 +336,7 @@ struct TitleSetupSection : public Node {
 		gfx.calcViewMatrix(Matrix4f::ident, mtx3);
 		gfx.useMatrix(Matrix4f::ident, 0);
 
-		u32 badCompiler;
+		STACK_PAD_VAR(1);
 
 		if (!(gameflow.mDemoFlags & 0x80)) {
 			mDayMgr->refresh(gfx, 25.0f, 8);
@@ -406,8 +406,7 @@ struct TitleSetupSection : public Node {
 
 		gfx.setCBlending(0);
 
-		mCurrentMenu ? "fake" : "fake";
-		mCurrentMenu ? "fake" : "fake";
+		STACK_PAD_TERNARY(mCurrentMenu, 2);
 		if (mCurrentMenu) {
 			drawMenu(gfx, mCurrentMenu, 1.0f);
 		} else {

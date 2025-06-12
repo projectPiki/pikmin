@@ -467,8 +467,7 @@ bool TAIAbiteForKabekui::hitCheck(Teki& teki)
 		}
 	}
 
-	res ? "fake" : "fake";
-	res ? "fake" : "fake";
+	STACK_PAD_TERNARY(res, 2);
 	return res;
 }
 

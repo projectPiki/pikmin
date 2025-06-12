@@ -72,7 +72,7 @@ zen::DrawProgre::returnStatusFlag zen::DrawProgre::update(Controller* controller
 		break;
 	}
 
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 	return mReturnState;
 }
 

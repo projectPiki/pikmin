@@ -242,7 +242,7 @@ void CinematicPlayer::loadCin(char* demoName)
 		addActor(shape);
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -476,7 +476,7 @@ void CinematicPlayer::addLights(Graphics& gfx)
 void CinematicPlayer::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
-	f32 badcompiler;
+	STACK_PAD_VAR(1);
 	gfx.calcViewMatrix(mMtx, mtx);
 	gfx.mRenderState = 0x700;
 
@@ -856,7 +856,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 		}
 	}
 
-	f32 badcompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*

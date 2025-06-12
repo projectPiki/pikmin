@@ -33,7 +33,7 @@ void JV_InitHeader(char*)
  */
 BOOL JV_InitHeader_M(char* fileName, u8* barcData, u8* p3)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	char** REF_p1 = &fileName;
 	if (!barcData) {
 		// if no barc data, read from disk
@@ -222,7 +222,7 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
 		;
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	return status;
 }
 
@@ -234,7 +234,7 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
 u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)(u32), u32 owner)
 {
 	static u32 first = TRUE;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32 idx;
 	u32 src;
 	char name[128];

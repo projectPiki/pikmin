@@ -35,9 +35,7 @@ void CreatureCollPart::touchCallback(Plane&, Vector3f&, Vector3f&)
  */
 void CreaturePlatMgr::init(Creature* creature, MapMgr* map, Shape* shape)
 {
-	u32 badCompiler;
-	u32 badCompiler2;
-	u32 badCompiler3;
+	STACK_PAD_VAR(3);
 
 	mPartCount = 0;
 	mPlatShape = shape;

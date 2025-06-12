@@ -54,7 +54,7 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 {
 
 	s32 i;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	u32* p2 = &param_2;
 	s32* ip = &i;
 	if (param_1 == 0) {
@@ -120,7 +120,7 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 	chan->_08 = 0;
 	return 0;
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -139,7 +139,7 @@ dspch_* GetLowerDSPchannel()
 	u32* REF_x  = &x;
 	u32* REF_i  = &i;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	for (i; i < DSPCH_LENGTH; i++) {
 		if (DSPCH[i]._01 != 4) {
@@ -292,7 +292,7 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
 
 	return TRUE;
 
-	u32 badcompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -369,5 +369,5 @@ void UpdateDSPchannelAll()
 	EntryCheck_WaitDSPChannel();
 	PPCSync();
 
-	u32 badcompiler[9];
+	STACK_PAD_VAR(9);
 }

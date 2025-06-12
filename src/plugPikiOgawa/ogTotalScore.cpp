@@ -145,9 +145,7 @@ zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType* scores)
 	mFrameTimer = 0.0f;
 	mState      = TOTALSCORE_Sleep;
 
-	mDeadRecordTexts ? "fake" : "fake";
-	mDeadRecordTexts ? "fake" : "fake";
-	mDeadRecordTexts ? "fake" : "fake";
+	STACK_PAD_TERNARY(mDeadRecordTexts, 3);
 }
 
 /*

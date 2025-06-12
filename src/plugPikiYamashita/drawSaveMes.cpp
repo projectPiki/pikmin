@@ -264,7 +264,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 		break;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	_08->update();
 	_0C->update();

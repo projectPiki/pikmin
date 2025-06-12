@@ -203,7 +203,7 @@ bool PlantAI::OpponentMove::satisfy(AICreature* plant)
  */
 void PlantAI::WaitInit::act(AICreature* plant)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	if (static_cast<Plant*>(plant)->mPlantType == PLANT_Mizukusa) {
 		plant->startMotion(0);
@@ -221,7 +221,7 @@ void PlantAI::WaitInit::act(AICreature* plant)
  */
 void PlantAI::TouchInit::act(AICreature* plant)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (static_cast<Plant*>(plant)->mPlantType != PLANT_Mizukusa) {
 		if (plant->mCollidingCreature->mObjType == OBJTYPE_Navi) {
 			SeSystem::playPlayerSe(SE_ORIMA_TOUCHPLANTS);

@@ -313,7 +313,7 @@ void zen::ogScrMessageMgr::cnvSingleMulti(char* str)
 	}
 
 	cnvSingleMulti(strAfterEsc);
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -402,7 +402,7 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 	mActivePaneCount = 0;
 
 	char name[8];
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	for (int i = 0; i < 20; i++) {
 		sprintf(name, "tx%02d", i);
 

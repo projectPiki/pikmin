@@ -74,7 +74,7 @@ void Envelope::read(RandomAccessStream& stream)
 void DispList::read(RandomAccessStream& stream)
 {
 	// Match stack size with the original function
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	mFlags      = stream.readInt();
 	mFaceCount  = stream.readInt();
@@ -184,7 +184,7 @@ void Joint::recOverrideAnim(AnimContext* anim)
 void Joint::read(RandomAccessStream& stream)
 {
 	// Match stack size with the original function
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	mParentIndex = stream.readInt();
 
@@ -368,7 +368,7 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * endValue
 	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * startTangent + (tCube * deltaSqr - tSqr * frameDelta) * endTangent;
 
-	u8 badCompiler[0x24];
+	STACK_PAD_VAR(9);
 
 	/*
 	.loc_0x0:
@@ -613,7 +613,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 
 	mCamera.calcLookAt(mCamera.mPosition, mCamera.mFocus, nullptr);
 
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -684,7 +684,7 @@ void LightDataInfo::update(f32 p1)
 		mLight.update();
 	}
 
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 }
 
 /*
@@ -1624,7 +1624,7 @@ void AnimDck::getAnimInfo(CmdStream* stream)
  */
 void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	if (anim->mFlags & 0x8000) {
 		return;
 	}
@@ -2282,7 +2282,7 @@ void BaseShape::read(RandomAccessStream& stream)
 	u32 chunkType;
 	u32 before;
 	u32 after;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	do {
 		u32 pos = stream.getPosition();
 
@@ -2695,17 +2695,7 @@ void BaseShape::read(RandomAccessStream& stream)
 	mAnimMatrixId = mJointCount + mEnvelopeCount;
 
 	// i don't even care anymore. i am numb to this.
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
-	PRINT("fake", chunkType ? "fake" : "fake");
+	STACK_PAD_TERNARY(chunkType, 11);
 }
 
 /*
@@ -2794,7 +2784,7 @@ void BaseShape::initIni(bool p1)
  */
 void BaseShape::initialise()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	for (int i = 0; i < mTexAttrCount; i++) {
 		if (!(mTexAttrList[i].mTextureIndex & 0x8000)) {
 			mTexAttrList[i].mImage         = &mTextureList[mTexAttrList[i].mTextureIndex];
@@ -3030,7 +3020,7 @@ void BaseShape::createCollisions(int gridSize)
 {
 	// the DLL version has a whole section at the top doing vector nonsense which sort of got stripped?
 	// clearly still has some stack things remaining
-	u32 badCompiler[768];
+	STACK_PAD_VAR(768);
 
 	u32 heapStart = gsys->getHeap(SYSHEAP_App)->getFree();
 

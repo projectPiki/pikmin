@@ -471,7 +471,7 @@ bool TekiCollecTargetPelletCondition::satisfy(Creature* target)
 		return false;
 	}
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	Stickers stuckList(pellet);
 	Iterator iter(&stuckList);
@@ -496,7 +496,7 @@ bool TekiCollecTargetPelletCondition::satisfy(Creature* target)
 	}
 	return true;
 
-	u32 badCompiler2[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -533,7 +533,7 @@ bool TaiCollecImpassableAction::act(Teki& teki)
 	PRINT("TaiCollecImpassableAction::act:%08x:%f,%f,%f\n", &teki, dist, mMaxDistance, mTimerLength);
 	return true;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -844,7 +844,7 @@ bool TaiCollecWinCarryingAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("FAKE", target ? "fake" : "fake");
+	STACK_PAD_TERNARY(target, 1);
 	return true;
 }
 
@@ -866,7 +866,7 @@ bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("FAKE", target ? "fake" : "fake");
+	STACK_PAD_TERNARY(target, 1);
 	return true;
 }
 
@@ -890,9 +890,7 @@ bool TaiCollecPutAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("fake", dist ? "fake" : "fake");
-	PRINT("fake", dist ? "fake" : "fake");
-	PRINT("fake", dist ? "fake" : "fake");
+	STACK_PAD_TERNARY(dist, 3);
 	return true;
 }
 
@@ -1034,7 +1032,7 @@ void TaiCollecCarryingToNestAction::makePositionRoute(Teki& teki)
 	teki.makePositionRoute(pellet->getPosition(), teki.getNestPosition(), false);
 	teki.mCurrRouteWayPointID = 0;
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -1137,7 +1135,7 @@ bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 	}
 	return false;
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1176,7 +1174,7 @@ bool TaiCollecFallingAction::act(Teki& teki)
  */
 bool TaiCollecGetOutAction::act(Teki& teki)
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
 		effectMgr->create(EffectMgr::EFF_Collec_StA, teki.getPosition(), nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Collec_StB, teki.getPosition(), nullptr, nullptr);

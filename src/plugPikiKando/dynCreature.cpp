@@ -293,7 +293,7 @@ void DynCreature::simulate(f32 timeStep)
 	}
 
 	f32 maxPenetration = 0.0f;
-	u32 badCompiler3;
+	STACK_PAD_VAR(1);
 	Vector3f maxNormal(0.0f, 1.0f, 0.0f);
 
 	DynParticle* ptcl      = mParticleList;
@@ -339,7 +339,7 @@ void DynCreature::simulate(f32 timeStep)
 
 			// Calculate collision normal from terrain or cylinder collision
 			Vector3f collisionNormal;
-			u32 badCompiler2;
+			STACK_PAD_VAR(1);
 			CollTriInfo* groundTriangle = mapMgr->getCurrTri(ptcl->mWorldPosition.x, ptcl->mWorldPosition.z, true);
 			if (groundTriangle) {
 				collisionNormal = groundTriangle->mTriangle.mNormal;
@@ -429,7 +429,7 @@ void DynCreature::simulate(f32 timeStep)
 
 	mAngularMomentum = mAngularMomentum - dampingFactor * mAngularMomentum;
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

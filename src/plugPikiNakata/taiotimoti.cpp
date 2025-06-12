@@ -727,7 +727,7 @@ bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 			}
 		}
 	}
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	if (check) {
 		teki.stopMove();
@@ -744,8 +744,7 @@ bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 	}
 	return false;
 
-	PRINT("fake", check ? "fake" : "fake");
-	PRINT("fake", check ? "fake" : "fake");
+	STACK_PAD_TERNARY(check, 2);
 }
 
 /*

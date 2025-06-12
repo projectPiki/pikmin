@@ -301,7 +301,7 @@ void DwaitFrame()
 void DiplSec(u32 cmd)
 {
 	u32 commands[2];
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	commands[0] = 0x8B000008;
 	commands[1] = cmd;
@@ -317,7 +317,7 @@ void DiplSec(u32 cmd)
 void DagbSec(u32 cmd)
 {
 	u32 commands[2];
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 
 	commands[0] = 0x8C000008;
 	commands[1] = cmd;

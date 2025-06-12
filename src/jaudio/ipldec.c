@@ -41,7 +41,7 @@ static DSPTask* WriteTask(u8 target, u32 cmd, void* task, DSPCallback callback)
  */
 static void DoTask()
 {
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 
 	while (TASK_REMAIN != 0) {
 		DSPTask* dspTask = &EX_DSPTASK[TASK_READPTR];

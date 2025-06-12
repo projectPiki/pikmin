@@ -958,7 +958,7 @@ void MemoryCard::loadCurrentFile()
 	CardUtilIdleWhileBusy();
 
 	OSCalendarTime calendar;
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	OSTime time = OSSecondsToTicks((OSTime)cst.time);
 	OSTicksToCalendarTime(time, &calendar);
 }
@@ -990,7 +990,7 @@ s32 MemoryCard::getNewestOptionsIndex()
 	}
 	return b;
 
-	u32 badCompiler[8];
+	STACK_PAD_VAR(8);
 }
 
 /*
@@ -1006,7 +1006,7 @@ void MemoryCard::loadOptions()
 		gameflow.mGamePrefs.read(*data);
 	}
 
-	u32 badCompiler[6];
+	STACK_PAD_VAR(6);
 }
 
 /*
@@ -1027,7 +1027,7 @@ void MemoryCard::saveOptions()
 		}
 	}
 	gsys->mIsCardSaving = false;
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1041,7 +1041,7 @@ void MemoryCard::loadCurrentGame()
 	RamStream* data = getGameFileStream(val);
 	readCurrentGame(data);
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
@@ -1077,7 +1077,7 @@ void MemoryCard::saveCurrentGame()
 	gameflow.mGamePrefs.mHasSaveGame = true;
 	gsys->mIsCardSaving              = FALSE;
 
-	u32 badCompiler[10];
+	STACK_PAD_VAR(10);
 }
 
 /*
@@ -1160,7 +1160,7 @@ void MemoryCard::initBannerArea(CARDStat& state, char* p2)
 	u32 sum = calcChecksum(cardData, 0x1FFC);
 	stream.writeInt(sum);
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 static char* errCodes[] = {
@@ -1205,7 +1205,7 @@ void MemoryCard::initOptionsArea(int idx)
 	u32 sum = calcChecksum(getOptionsPtr(idx), 0x1FF8);
 	stream->writeInt(gameflow.mGamePrefs._E0);
 	stream->writeInt(sum);
-	u32 badCompiler[4];
+	STACK_PAD_VAR(4);
 }
 
 /*
@@ -1218,7 +1218,7 @@ s32 MemoryCard::makeDefaultFile()
 	createFile(cst);
 	cst.length = ((mRequiredFreeSpace + mSectorSize - 1) / (mSectorSize)) * mSectorSize;
 	memset(cardData, 0, cst.length);
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	OSCalendarTime calendar;
 	OSTicksToCalendarTime(OSGetTime(), &calendar);
 
@@ -1246,11 +1246,8 @@ s32 MemoryCard::makeDefaultFile()
 	gsys->mIsCardSaving = FALSE;
 	mErrorCode          = 0;
 
-	u32 badCompiler2;
-	mRequiredFreeSpace ? "fake" : "fake";
-	mRequiredFreeSpace ? "fake" : "fake";
-	mRequiredFreeSpace ? "fake" : "fake";
-	mRequiredFreeSpace ? "fake" : "fake";
+	STACK_PAD_VAR(1);
+	STACK_PAD_TERNARY(mRequiredFreeSpace, 4);
 	return mErrorCode;
 	/*
 	.loc_0x0:
@@ -1560,7 +1557,7 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	gsys->mIsCardSaving = FALSE;
 
-	u32 badCompiler[12];
+	STACK_PAD_VAR(12);
 
 	/*
 	.loc_0x0:
@@ -1789,7 +1786,7 @@ void MemoryCard::delFile(CardQuickInfo& p1)
 	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	gsys->mIsCardSaving = FALSE;
 
-	u32 badCompiler[7];
+	STACK_PAD_VAR(7);
 }
 
 /*
@@ -1806,7 +1803,7 @@ int MemoryCard::doFormatCard()
 	attemptFormatCard(false);
 	gsys->mIsCardSaving = false;
 	int state           = gameflow.mMemoryCard.getMemoryCardState(false);
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 	return mErrorCode;
 }
 
@@ -1845,7 +1842,7 @@ bool MemoryCard::hasCardChanged()
 		return true;
 	}
 
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 
 	return false;
 }
@@ -1857,7 +1854,7 @@ bool MemoryCard::hasCardChanged()
  */
 u32 MemoryCard::getOkSections()
 {
-	u32 badCompiler[2];
+	STACK_PAD_VAR(2);
 	u32 flag          = (0x1 | 0x2 | 0x4 | 0x8 | 0x10 | 0x20 | 0x40);
 	u32 sum           = calcChecksum(getBannerPtr(), 0x1FFC);
 	RamStream* stream = getBannerStream();
@@ -1906,7 +1903,7 @@ u32 MemoryCard::getOkSections()
 		j++;
 	}
 
-	u32 badCompiler2[16];
+	STACK_PAD_VAR(16);
 	return flag;
 
 	/*
@@ -2828,7 +2825,7 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 
 	gameflow.mGamePrefs._DC = c + 1;
 
-	u32 badCompiler[9];
+	STACK_PAD_VAR(9);
 	/*
 	.loc_0x0:
 	  mflr      r0

@@ -713,7 +713,7 @@ void Creature::updateStickPellet()
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mLastPosition = mPosition;
 
-	u32 badCompiler;
+	STACK_PAD_VAR(1);
 }
 
 /*

@@ -90,7 +90,7 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 		state->mNavi->mTargetVelocity = diff;
 	}
 
-	u32 badCompiler[1];
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -230,7 +230,7 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state
 	Navi* navi = state->mNavi;
 	Iterator it(itemMgr);
 	GoalItem* goals[3];
-	u32 badCompiler[3];
+	STACK_PAD_VAR(3);
 	char goalBuf[256];
 	CI_LOOP(it)
 	{
