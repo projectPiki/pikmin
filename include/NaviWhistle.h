@@ -39,7 +39,6 @@ struct NaviWhistle : public KEffect {
 
 			diff.normalise();
 			zen::makeRotMatrix(diff, mtx1);
-			// some really subtle stack issue here
 			zen::makeRotMatrix(Vector3f(tri->mTriangle.mNormal * -1.0f), mtx2);
 
 			q1.fromMat3f(mtx1);
