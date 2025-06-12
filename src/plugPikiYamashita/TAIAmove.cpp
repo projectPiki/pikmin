@@ -717,8 +717,8 @@ TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionI
  */
 void TAIApatrol::setTargetPosition(Teki& teki)
 {
-	int idx       = teki.getTableIndex();
-	Vector3f& vec = _18[idx];
+	// int idx       = ;
+	Vector3f& vec = _18[teki.getTableIndex()];
 	f32 rad       = teki.getParameterF(TPF_DangerTerritoryRange);
 	teki.mTargetPosition.set(vec.x * rad + teki.mPersonality->mNestPosition.x, vec.y * rad + teki.mPersonality->mNestPosition.y,
 	                         vec.z * rad + teki.mPersonality->mNestPosition.z);
@@ -735,10 +735,8 @@ void TAIApatrol::start(Teki& teki)
 	teki.setTableIndex(0);
 	for (int i = 0; i < _1C; i++) {
 		setTargetPosition(teki);
-		f32 y = zen::Abs(teki.getPosition().y - teki.mTargetPosition.y);
-		f32 x = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x);
-		f32 z = zen::Abs(teki.getPosition().z - teki.mTargetPosition.z);
-		f32 v = x + y + z;
+		f32 v = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x) + zen::Abs(teki.getPosition().z - teki.mTargetPosition.z)
+		      + zen::Abs(teki.getPosition().y - teki.mTargetPosition.y);
 		f32 minDist;
 		if (i == 0) {
 			minDist = v;
@@ -751,7 +749,7 @@ void TAIApatrol::start(Teki& teki)
 	TAIAturnToTarget::start(teki);
 	changeStatus(1, teki);
 
-	STACK_PAD_TERNARY(&teki, 5);
+	STACK_PAD_TERNARY(&teki, 6);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -995,255 +993,8 @@ bool TAIApatrol::act(Teki& teki)
 		break;
 	}
 
+	STACK_PAD_TERNARY(&teki, 1);
 	return false;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x108(r1)
-	  stfd      f31, 0x100(r1)
-	  stw       r31, 0xFC(r1)
-	  mr        r31, r4
-	  stw       r30, 0xF8(r1)
-	  addi      r30, r3, 0
-	  lwz       r0, 0x46C(r4)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x3C
-	  bge-      .loc_0x334
-	  cmpwi     r0, 0
-	  bge-      .loc_0xAC
-	  b         .loc_0x334
-
-	.loc_0x3C:
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        -0xB9C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x334
-	  li        r0, 0
-	  stw       r0, 0x46C(r31)
-	  lwz       r0, 0x46C(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x74
-	  bge-      .loc_0x334
-	  cmpwi     r0, 0
-	  bge-      .loc_0x9C
-	  b         .loc_0x334
-
-	.loc_0x74:
-	  lfs       f0, 0x1594(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x1598(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x159C(r13)
-	  stfs      f0, 0xAC(r31)
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x400
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x334
-
-	.loc_0x9C:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,22,20
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x334
-
-	.loc_0xAC:
-	  lwz       r4, 0x2CC(r31)
-	  lwz       r0, 0x20(r30)
-	  lwz       r3, 0x44(r4)
-	  cmpw      r0, r3
-	  bne-      .loc_0xCC
-	  lbz       r0, 0x48(r4)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x13C
-
-	.loc_0xCC:
-	  lbz       r0, 0x48(r4)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x100
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0xE8
-	  lwz       r5, 0x2C0(r31)
-
-	.loc_0xE8:
-	  addi      r3, r1, 0xEC
-	  li        r4, -0x1
-	  bl        -0x8BB5C
-	  mr        r4, r3
-	  lwz       r3, 0x2CC(r31)
-	  bl        -0x8B8C4
-
-	.loc_0x100:
-	  lwz       r3, 0x2CC(r31)
-	  lwz       r0, 0x38(r3)
-	  cmpwi     r0, 0
-	  bge-      .loc_0x334
-	  cmplwi    r31, 0
-	  addi      r5, r31, 0
-	  beq-      .loc_0x120
-	  lwz       r5, 0x2C0(r31)
-
-	.loc_0x120:
-	  lwz       r4, 0x20(r30)
-	  addi      r3, r1, 0xE4
-	  bl        -0x8BB94
-	  mr        r4, r3
-	  lwz       r3, 0x2CC(r31)
-	  bl        -0x8B96C
-	  b         .loc_0x334
-
-	.loc_0x13C:
-	  lfs       f0, -0x4A68(r2)
-	  stfs      f0, 0xC8(r1)
-	  stfs      f0, 0xC4(r1)
-	  stfs      f0, 0xC0(r1)
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x388(r31)
-	  lfs       f4, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x390(r31)
-	  lfs       f2, 0x98(r31)
-	  lfs       f1, 0x38C(r31)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0xA8(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0xA8(r1)
-	  stfs      f0, 0xC0(r1)
-	  stfs      f1, 0xC4(r1)
-	  stfs      f3, 0xC8(r1)
-	  lfs       f1, 0xC0(r1)
-	  lfs       f0, 0xC4(r1)
-	  lfs       f2, 0xC8(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x19CF5C
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f2, 0x478(r31)
-	  lfs       f0, 0x28C(r3)
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x478(r31)
-	  lwz       r3, 0x2C4(r31)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f0, 0xC(r3)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  beq-      .loc_0x200
-	  mr        r3, r30
-	  lfs       f31, 0x478(r31)
-	  lwz       r12, 0x4(r30)
-	  mr        r4, r31
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  fcmpo     cr0, f31, f1
-	  ble-      .loc_0x314
-
-	.loc_0x200:
-	  lwz       r3, 0x470(r31)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x470(r31)
-	  lwz       r3, 0x470(r31)
-	  lwz       r0, 0x1C(r30)
-	  cmpw      r3, r0
-	  blt-      .loc_0x224
-	  li        r0, 0
-	  stw       r0, 0x470(r31)
-
-	.loc_0x224:
-	  lwz       r0, 0x470(r31)
-	  li        r4, 0xF
-	  lwz       r3, 0x2C4(r31)
-	  mulli     r0, r0, 0xC
-	  lwz       r5, 0x18(r30)
-	  lwz       r3, 0x84(r3)
-	  lwz       r3, 0x4(r3)
-	  add       r30, r5, r0
-	  bl        -0x88768
-	  lfs       f0, 0x0(r30)
-	  cmplwi    r31, 0
-	  lwz       r3, 0x2C8(r31)
-	  mr        r5, r31
-	  lfs       f3, 0x4(r30)
-	  fmuls     f0, f0, f1
-	  lfs       f2, 0x10(r3)
-	  lfs       f5, 0x8(r30)
-	  fmuls     f3, f3, f1
-	  lfs       f4, 0x14(r3)
-	  fadds     f0, f2, f0
-	  lfs       f2, 0x18(r3)
-	  fmuls     f1, f5, f1
-	  fadds     f3, f4, f3
-	  stfs      f0, 0x388(r31)
-	  fadds     f0, f2, f1
-	  stfs      f3, 0x38C(r31)
-	  stfs      f0, 0x390(r31)
-	  lfs       f0, -0x4A68(r2)
-	  stfs      f0, 0x478(r31)
-	  beq-      .loc_0x2A0
-	  lwz       r5, 0x2C0(r31)
-
-	.loc_0x2A0:
-	  addi      r3, r1, 0xDC
-	  li        r4, -0x1
-	  bl        -0x8BD14
-	  mr        r4, r3
-	  lwz       r3, 0x2CC(r31)
-	  bl        -0x8BA7C
-	  li        r0, 0x1
-	  stw       r0, 0x46C(r31)
-	  lwz       r0, 0x46C(r31)
-	  cmpwi     r0, 0x1
-	  beq-      .loc_0x2DC
-	  bge-      .loc_0x334
-	  cmpwi     r0, 0
-	  bge-      .loc_0x304
-	  b         .loc_0x334
-
-	.loc_0x2DC:
-	  lfs       f0, 0x1594(r13)
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x1598(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x159C(r13)
-	  stfs      f0, 0xAC(r31)
-	  lwz       r0, 0xC8(r31)
-	  ori       r0, r0, 0x400
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x334
-
-	.loc_0x304:
-	  lwz       r0, 0xC8(r31)
-	  rlwinm    r0,r0,0,22,20
-	  stw       r0, 0xC8(r31)
-	  b         .loc_0x334
-
-	.loc_0x314:
-	  lwz       r5, 0x2C4(r31)
-	  addi      r3, r31, 0
-	  addi      r4, r31, 0x388
-	  lwz       r5, 0x84(r5)
-	  lwz       r5, 0x4(r5)
-	  lwz       r5, 0x0(r5)
-	  lfs       f1, 0xC(r5)
-	  bl        -0x63938
-
-	.loc_0x334:
-	  lwz       r0, 0x10C(r1)
-	  li        r3, 0
-	  lfd       f31, 0x100(r1)
-	  lwz       r31, 0xFC(r1)
-	  lwz       r30, 0xF8(r1)
-	  addi      r1, r1, 0x108
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

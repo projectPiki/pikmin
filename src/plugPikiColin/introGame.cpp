@@ -103,7 +103,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		mgr->cullingOff();
 		mDayManager = new DayMgr(nullptr, mController);
 
-		int size        = 0x500000;
+		int size = 0x500000;
 		gsys->mHeaps[SYSHEAP_Movie].init("movie", 2, new u8[size], size);
 		gameflow.mMoviePlayer->startMovie(1, 0, nullptr, nullptr, nullptr, -1, true);
 		gameflow.mMoviePlayer->startMovie(2, 0, nullptr, nullptr, nullptr, -1, true);
