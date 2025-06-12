@@ -506,7 +506,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/animPellet.cpp"),
             Object(Matching, "plugPikiKando/genPellet.cpp"),
             Object(Matching, "plugPikiKando/pelletState.cpp"),
-            Object(Equivalent, "plugPikiKando/workObject.cpp"),
+            Object(Matching, "plugPikiKando/workObject.cpp"),
             Object(Matching, "plugPikiKando/routeMgr.cpp"),
             Object(Matching, "plugPikiKando/seMgr.cpp"),
             Object(Matching, "plugPikiKando/seConstants.cpp"),
