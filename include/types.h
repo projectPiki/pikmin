@@ -135,7 +135,7 @@ typedef u16 wchar_t;
 #define STACK_PAD_STRUCT(n) if (0) (struct { int pad[n]; }){}
 
 // Add an unused variable in an inline function to pad the stack by some number of words
-inline void padStack(void) { int pad; }
+inline void padStack(void) { int pad = 0; }
 #define STACK_PAD_INLINE(n) REPEAT(padStack(), n)
 
 // Uses a ternary to pad the stack by some number of words
