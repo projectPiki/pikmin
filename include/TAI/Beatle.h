@@ -244,7 +244,9 @@ struct TAIArockAttack : public TAIAreserveMotion {
 			if (ptclGen != nullptr) {
 				Vector3f attractorPos;
 				attractorPos.set(nozzlePart->mCentre + Vector3f(suckNormal * -30.0f));
-
+				if (false) {
+					Vector3f();
+				}
 				ptclGen->setNewtonField(attractorPos, ptclGen->getNewtonFieldFrc(), true);
 			}
 
@@ -438,7 +440,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 		result ? "fake" : "fake";
 		result ? "fake" : "fake";
 		result ? "fake" : "fake";
-		u32 badCompiler[6];
+		u32 badCompiler[3];
 		return result;
 	}
 
