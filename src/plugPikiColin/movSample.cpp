@@ -217,30 +217,31 @@ struct MovSampleSetupSection : public Node {
  */
 void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 {
+	u32* out;
 	int i, j;
-	// Part 1: Y plane processing
-	u32* y0 = (u32*)src;         // r11
-	u32* y1 = y0 + (stride / 4); // r0
-	u32* y2 = y1 + (stride / 4); // r7
-	u32* y3 = y2 + (stride / 4); // r26
-	u32* dy = (u32*)dst;         // r9
 
-	for (i = height; i > 0; i -= 4) {
-		for (j = 0; j < stride; j += 8) {
-			dy[0] = y0[0];
-			dy[1] = y0[1];
-			dy[2] = y1[0];
-			dy[3] = y1[1];
-			dy[4] = y2[0];
-			dy[5] = y2[1];
-			dy[6] = y3[0];
-			dy[7] = y3[1];
+	// Part 1: Y plane processing
+	u32* y0 = (u32*)src;
+	u32* y1 = y0 + (stride / 4);
+	u32* y2 = y1 + (stride / 4);
+	u32* y3 = y2 + (stride / 4);
+
+	for (i = height, out = (u32*)dst; i > 0; i -= 4) {
+		for (j = stride; j > 0; j -= 8) {
+			out[0] = y0[0];
+			out[1] = y0[1];
+			out[2] = y1[0];
+			out[3] = y1[1];
+			out[4] = y2[0];
+			out[5] = y2[1];
+			out[6] = y3[0];
+			out[7] = y3[1];
 
 			y0 += 2;
 			y1 += 2;
 			y2 += 2;
 			y3 += 2;
-			dy += 8;
+			out += 8;
 		}
 
 		// advance to next 4 lines
@@ -251,47 +252,49 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 	}
 
 	// Part 2: UV plane processing
+	u8* srcuv = src + (stride * height);
+
 	// base pointers for four lines of U and V
-	u8* u0 = src + (stride * height); // r4
+	u8* u0 = srcuv;
 	u8* u1 = u0 + (stride / 2);
 	u8* u2 = u1 + (stride / 2);
 	u8* u3 = u2 + (stride / 2);
 
-	u8* v0 = src + (stride * height) + ((stride / 2) * (height / 2)); // r8/r9
+	u8* v0 = srcuv + ((stride / 2) * (height / 2));
 	u8* v1 = v0 + (stride / 2);
 	u8* v2 = v1 + (stride / 2);
 	u8* v3 = v2 + (stride / 2);
 
-	u32* duv = (u32*)(dst + (stride * height));
+	out = (u32*)(dst + (stride * height));
 
 	for (i = height / 2; i > 0; i -= 4) {
-		for (j = 0; j < (stride / 2); j += 4) {
+		for (j = stride / 2; j > 0; j -= 4) {
 			// two packed pixels per line per iteration
 			// Line 0
-			duv[0] = ((u32)u0[0] << 24) | ((u32)v0[0] << 16) | ((u32)u0[1] << 8) | ((u32)v0[1]);
-			duv[1] = ((u32)u0[2] << 24) | ((u32)v0[2] << 16) | ((u32)u0[3] << 8) | ((u32)v0[3]);
+			out[0] = ((u32)u0[0] << 24) | ((u32)v0[0] << 16) | ((u32)u0[1] << 8) | ((u32)v0[1]);
+			out[1] = ((u32)u0[2] << 24) | ((u32)v0[2] << 16) | ((u32)u0[3] << 8) | ((u32)v0[3]);
 			u0 += 4;
 			v0 += 4;
 
 			// Line 1
-			duv[2] = ((u32)u1[0] << 24) | ((u32)v1[0] << 16) | ((u32)u1[1] << 8) | ((u32)v1[1]);
-			duv[3] = ((u32)u1[2] << 24) | ((u32)v1[2] << 16) | ((u32)u1[3] << 8) | ((u32)v1[3]);
+			out[2] = ((u32)u1[0] << 24) | ((u32)v1[0] << 16) | ((u32)u1[1] << 8) | ((u32)v1[1]);
+			out[3] = ((u32)u1[2] << 24) | ((u32)v1[2] << 16) | ((u32)u1[3] << 8) | ((u32)v1[3]);
 			u1 += 4;
 			v1 += 4;
 
 			// Line 2
-			duv[4] = ((u32)u2[0] << 24) | ((u32)v2[0] << 16) | ((u32)u2[1] << 8) | ((u32)v2[1]);
-			duv[5] = ((u32)u2[2] << 24) | ((u32)v2[2] << 16) | ((u32)u2[3] << 8) | ((u32)v2[3]);
+			out[4] = ((u32)u2[0] << 24) | ((u32)v2[0] << 16) | ((u32)u2[1] << 8) | ((u32)v2[1]);
+			out[5] = ((u32)u2[2] << 24) | ((u32)v2[2] << 16) | ((u32)u2[3] << 8) | ((u32)v2[3]);
 			u2 += 4;
 			v2 += 4;
 
 			// Line 3
-			duv[6] = ((u32)u3[0] << 24) | ((u32)v3[0] << 16) | ((u32)u3[1] << 8) | ((u32)v3[1]);
-			duv[7] = ((u32)u3[2] << 24) | ((u32)v3[2] << 16) | ((u32)u3[3] << 8) | ((u32)v3[3]);
+			out[6] = ((u32)u3[0] << 24) | ((u32)v3[0] << 16) | ((u32)u3[1] << 8) | ((u32)v3[1]);
+			out[7] = ((u32)u3[2] << 24) | ((u32)v3[2] << 16) | ((u32)u3[3] << 8) | ((u32)v3[3]);
 			u3 += 4;
 			v3 += 4;
 
-			duv += 8;
+			out += 8;
 		}
 
 		// advance to next block of 4 UV lines
@@ -307,282 +310,6 @@ void convHVQM4TexY8UV8(int stride, int height, u8* src, u8* dst)
 	}
 
 	DCStoreRange(dst, (stride * height) + ((stride / 2) * (height / 2)) * 2);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r11, r5, 0
-	  stw       r0, 0x4(r1)
-	  srawi     r0, r3, 0x2
-	  addze     r0, r0
-	  stwu      r1, -0x38(r1)
-	  rlwinm    r8,r0,2,0,29
-	  add       r0, r5, r8
-	  stmw      r25, 0x1C(r1)
-	  add       r7, r0, r8
-	  mr        r12, r0
-	  addi      r25, r7, 0
-	  addi      r10, r4, 0
-	  addi      r9, r6, 0
-	  add       r26, r7, r8
-	  b         .loc_0x1F4
-
-	.loc_0x40:
-	  cmpwi     r3, 0
-	  addi      r7, r3, 0x7
-	  rlwinm    r7,r7,29,3,31
-	  ble-      .loc_0x1D8
-	  rlwinm.   r0,r7,30,2,31
-	  mtctr     r0
-	  beq-      .loc_0x17C
-
-	.loc_0x5C:
-	  lwz       r0, 0x0(r11)
-	  stw       r0, 0x0(r9)
-	  lwz       r0, 0x4(r11)
-	  stw       r0, 0x4(r9)
-	  lwz       r0, 0x0(r12)
-	  stw       r0, 0x8(r9)
-	  lwz       r0, 0x4(r12)
-	  stw       r0, 0xC(r9)
-	  lwz       r0, 0x0(r25)
-	  stw       r0, 0x10(r9)
-	  lwz       r0, 0x4(r25)
-	  stw       r0, 0x14(r9)
-	  lwz       r0, 0x0(r26)
-	  stw       r0, 0x18(r9)
-	  lwz       r0, 0x4(r26)
-	  stw       r0, 0x1C(r9)
-	  lwz       r0, 0x8(r11)
-	  stw       r0, 0x20(r9)
-	  lwz       r0, 0xC(r11)
-	  stw       r0, 0x24(r9)
-	  lwz       r0, 0x8(r12)
-	  stw       r0, 0x28(r9)
-	  lwz       r0, 0xC(r12)
-	  stw       r0, 0x2C(r9)
-	  lwz       r0, 0x8(r25)
-	  stw       r0, 0x30(r9)
-	  lwz       r0, 0xC(r25)
-	  stw       r0, 0x34(r9)
-	  lwz       r0, 0x8(r26)
-	  stw       r0, 0x38(r9)
-	  lwz       r0, 0xC(r26)
-	  stw       r0, 0x3C(r9)
-	  lwz       r0, 0x10(r11)
-	  stw       r0, 0x40(r9)
-	  lwz       r0, 0x14(r11)
-	  stw       r0, 0x44(r9)
-	  lwz       r0, 0x10(r12)
-	  stw       r0, 0x48(r9)
-	  lwz       r0, 0x14(r12)
-	  stw       r0, 0x4C(r9)
-	  lwz       r0, 0x10(r25)
-	  stw       r0, 0x50(r9)
-	  lwz       r0, 0x14(r25)
-	  stw       r0, 0x54(r9)
-	  lwz       r0, 0x10(r26)
-	  stw       r0, 0x58(r9)
-	  lwz       r0, 0x14(r26)
-	  stw       r0, 0x5C(r9)
-	  lwz       r0, 0x18(r11)
-	  stw       r0, 0x60(r9)
-	  lwz       r0, 0x1C(r11)
-	  addi      r11, r11, 0x20
-	  stw       r0, 0x64(r9)
-	  lwz       r0, 0x18(r12)
-	  stw       r0, 0x68(r9)
-	  lwz       r0, 0x1C(r12)
-	  addi      r12, r12, 0x20
-	  stw       r0, 0x6C(r9)
-	  lwz       r0, 0x18(r25)
-	  stw       r0, 0x70(r9)
-	  lwz       r0, 0x1C(r25)
-	  addi      r25, r25, 0x20
-	  stw       r0, 0x74(r9)
-	  lwz       r0, 0x18(r26)
-	  stw       r0, 0x78(r9)
-	  lwz       r0, 0x1C(r26)
-	  addi      r26, r26, 0x20
-	  stw       r0, 0x7C(r9)
-	  addi      r9, r9, 0x80
-	  bdnz+     .loc_0x5C
-	  andi.     r7, r7, 0x3
-	  beq-      .loc_0x1D8
-
-	.loc_0x17C:
-	  mtctr     r7
-
-	.loc_0x180:
-	  lwz       r0, 0x0(r11)
-	  stw       r0, 0x0(r9)
-	  lwz       r0, 0x4(r11)
-	  addi      r11, r11, 0x8
-	  stw       r0, 0x4(r9)
-	  lwz       r0, 0x0(r12)
-	  stw       r0, 0x8(r9)
-	  lwz       r0, 0x4(r12)
-	  addi      r12, r12, 0x8
-	  stw       r0, 0xC(r9)
-	  lwz       r0, 0x0(r25)
-	  stw       r0, 0x10(r9)
-	  lwz       r0, 0x4(r25)
-	  addi      r25, r25, 0x8
-	  stw       r0, 0x14(r9)
-	  lwz       r0, 0x0(r26)
-	  stw       r0, 0x18(r9)
-	  lwz       r0, 0x4(r26)
-	  addi      r26, r26, 0x8
-	  stw       r0, 0x1C(r9)
-	  addi      r9, r9, 0x20
-	  bdnz+     .loc_0x180
-
-	.loc_0x1D8:
-	  add       r0, r26, r8
-	  add       r7, r0, r8
-	  addi      r11, r26, 0
-	  mr        r12, r0
-	  addi      r25, r7, 0
-	  add       r26, r7, r8
-	  subi      r10, r10, 0x4
-
-	.loc_0x1F4:
-	  cmpwi     r10, 0
-	  bgt+      .loc_0x40
-	  srawi     r31, r3, 0x1
-	  addze     r31, r31
-	  srawi     r30, r4, 0x1
-	  mullw     r0, r3, r4
-	  addze     r30, r30
-	  add       r4, r5, r0
-	  add       r3, r4, r31
-	  mullw     r29, r31, r30
-	  add       r8, r4, r29
-	  add       r10, r8, r31
-	  add       r11, r10, r31
-	  add       r7, r3, r31
-	  addi      r5, r3, 0
-	  addi      r9, r8, 0
-	  add       r8, r7, r31
-	  add       r12, r11, r31
-	  add       r3, r6, r0
-	  b         .loc_0x3C4
-
-	.loc_0x244:
-	  addi      r28, r31, 0x3
-	  rlwinm    r28,r28,30,2,31
-	  cmpwi     r31, 0
-	  mtctr     r28
-	  ble-      .loc_0x3A0
-
-	.loc_0x258:
-	  lbz       r25, 0x0(r9)
-	  lbz       r26, 0x0(r4)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x1(r4)
-	  rlwimi    r25,r26,24,0,7
-	  lbz       r28, 0x1(r9)
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0x0(r3)
-	  lbz       r25, 0x2(r9)
-	  lbz       r28, 0x3(r9)
-	  addi      r9, r9, 0x4
-	  lbz       r26, 0x2(r4)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x3(r4)
-	  rlwimi    r25,r26,24,0,7
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0x4(r3)
-	  addi      r4, r4, 0x4
-	  lbz       r25, 0x0(r10)
-	  lbz       r26, 0x0(r5)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x1(r5)
-	  rlwimi    r25,r26,24,0,7
-	  lbz       r28, 0x1(r10)
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0x8(r3)
-	  lbz       r25, 0x2(r10)
-	  lbz       r28, 0x3(r10)
-	  addi      r10, r10, 0x4
-	  lbz       r26, 0x2(r5)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x3(r5)
-	  rlwimi    r25,r26,24,0,7
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0xC(r3)
-	  addi      r5, r5, 0x4
-	  lbz       r25, 0x0(r11)
-	  lbz       r26, 0x0(r7)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x1(r7)
-	  rlwimi    r25,r26,24,0,7
-	  lbz       r28, 0x1(r11)
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0x10(r3)
-	  lbz       r25, 0x2(r11)
-	  lbz       r28, 0x3(r11)
-	  addi      r11, r11, 0x4
-	  lbz       r26, 0x2(r7)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x3(r7)
-	  rlwimi    r25,r26,24,0,7
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0x14(r3)
-	  addi      r7, r7, 0x4
-	  lbz       r25, 0x0(r12)
-	  lbz       r26, 0x0(r8)
-	  rlwinm    r25,r25,16,0,15
-	  lbz       r27, 0x1(r8)
-	  rlwimi    r25,r26,24,0,7
-	  lbz       r28, 0x1(r12)
-	  rlwimi    r25,r27,8,16,23
-	  or        r25, r28, r25
-	  stw       r25, 0x18(r3)
-	  lbz       r28, 0x2(r12)
-	  lbz       r25, 0x3(r12)
-	  addi      r12, r12, 0x4
-	  lbz       r27, 0x2(r8)
-	  rlwinm    r28,r28,16,0,15
-	  lbz       r26, 0x3(r8)
-	  rlwimi    r28,r27,24,0,7
-	  rlwimi    r28,r26,8,16,23
-	  or        r28, r25, r28
-	  stw       r28, 0x1C(r3)
-	  addi      r3, r3, 0x20
-	  addi      r8, r8, 0x4
-	  bdnz+     .loc_0x258
-
-	.loc_0x3A0:
-	  add       r5, r8, r31
-	  add       r10, r12, r31
-	  add       r7, r5, r31
-	  addi      r4, r8, 0
-	  add       r11, r10, r31
-	  addi      r9, r12, 0
-	  add       r8, r7, r31
-	  add       r12, r11, r31
-	  subi      r30, r30, 0x4
-
-	.loc_0x3C4:
-	  cmpwi     r30, 0
-	  bgt+      .loc_0x244
-	  rlwinm    r4,r29,1,0,30
-	  addi      r3, r6, 0
-	  add       r4, r0, r4
-	  bl        0x17E954
-	  lmw       r25, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
