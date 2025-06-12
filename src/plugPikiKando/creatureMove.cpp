@@ -315,7 +315,8 @@ void Creature::moveNew(f32 deltaTime)
 	mPreviousTriangle = mGroundTriangle;
 
 	STACK_PAD_VAR(2);
-	STACK_PAD_TERNARY(mPreviousTriangle, 4);
+	STACK_PAD_INLINE(1);
+	STACK_PAD_TERNARY(mPreviousTriangle, 3);
 
 	/*
 	.loc_0x0:
