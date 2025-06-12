@@ -436,7 +436,7 @@ int ActCrowd::exec()
 		}
 
 		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-		    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+		    && mPiki->mNavi->mNeutralTime - (5.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 			mIsWaiting = true;
 			startZawatuki();
 		}
@@ -459,7 +459,7 @@ int ActCrowd::exec()
 		if (plateDist2D < val2) {
 			mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 			if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
-			    && mPiki->mNavi->mNeutralTime - (2.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
+			    && mPiki->mNavi->mNeutralTime - (5.0f * gsys->getRand(1.0f)) >= C_NAVI_PROP(mPiki->mNavi)._34C()) {
 				mIsWaiting = true;
 				startZawatuki();
 			}
@@ -538,13 +538,14 @@ int ActCrowd::exec()
 		return ACTOUT_Fail;
 	}
 
+	STACK_PAD_STRUCT(3);
+	STACK_PAD_VAR(4);
+	STACK_PAD_TERNARY(mPiki, 11);
+
 	if (_7E && !mIsWaiting) {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 		finishZawatuki();
 	}
-
-	// some of this needs to be from inlines still (like 0x30 worth lol)
-	STACK_PAD_VAR(20);
 
 	return ACTOUT_Continue;
 	/*
