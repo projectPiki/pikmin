@@ -101,11 +101,11 @@ static void __ReLoad()
 			dvdload_size = 0x80000;
 		}
 		dvdfile_size -= dvdload_size;
-		int inter;
-		inter = OSDisableInterrupts();
+		int inter = OSDisableInterrupts();
 		dvd_active += 1;
 
-		DVDT_LoadtoDRAM(dvdcount, filename, (u32)dvd_buf[dvdcount % 3], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
+		int num_bufs = 3;
+		DVDT_LoadtoDRAM(dvdcount, filename, (u32)dvd_buf[dvdcount % num_bufs], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
 		OSRestoreInterrupts(inter);
 	}
 
