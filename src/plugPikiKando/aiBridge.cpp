@@ -353,10 +353,10 @@ int ActBridge::newExeApproach()
 
 	Vector3f direction = mBridge->getStartPos() - mPiki->getPosition();
 	if (direction.normalise() < 300.0f) {
-		f32 bridgePosY;
 		f32 bridgePosX;
-		STACK_PAD_VAR(4);
+		f32 bridgePosY;
 		mBridge->getBridgePos(mPiki->mPosition, bridgePosX, bridgePosY);
+		STACK_PAD_VAR(4);
 		int currStage = mBridge->getFirstUnfinishedStage();
 		if (currStage == -1) {
 			PRINT("** newExeApp: SUCCESS * fstStage = -1!\n");
@@ -380,7 +380,8 @@ int ActBridge::newExeApproach()
 				return ACTOUT_Fail;
 			}
 		} else {
-			u32 badCommpiler;
+			STACK_PAD_VAR(1);
+
 			Vector3f newDir;
 			if (bridgePosY > -10.0f) {
 				newDir = mBridge->getBridgeZVec();
@@ -675,6 +676,8 @@ void ActBridge::newInitGo()
  */
 int ActBridge::newExeGo()
 {
+	STACK_PAD_STRUCT(2);
+
 	if (mStageIdx == -1) {
 		PRINT("stage = -1\n");
 		PRINT("go : stage=-1 suc");
@@ -699,6 +702,8 @@ int ActBridge::newExeGo()
 
 	bool c = collideBridgeSurface();
 
+	STACK_PAD_STRUCT(2);
+
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
 	Vector3f xVec     = mBridge->getBridgeXVec();
 	xVec.multiply(mRandomBridgeWidth * mBridge->getStageWidth());
@@ -713,7 +718,6 @@ int ActBridge::newExeGo()
 	mPiki->setSpeed(0.70f, direction);
 	return ACTOUT_Continue;
 
-	STACK_PAD_VAR(4);
 	/*
 	.loc_0x0:
 	  mflr      r0

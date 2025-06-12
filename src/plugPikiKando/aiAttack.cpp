@@ -527,6 +527,8 @@ int ActJumpAttack::exec()
 		}
 	}
 
+	STACK_PAD_TERNARY(mPiki, 1);
+
 	if (mPiki->isStickTo() && mPiki->getStickObject() && !mPiki->getStickObject()->isAlive()) {
 		return ACTOUT_Success;
 	}
@@ -728,7 +730,7 @@ int ActJumpAttack::exec()
 
 	return ACTOUT_Continue;
 
-	STACK_PAD_TERNARY(mPiki, 3);
+	STACK_PAD_VAR(2);
 	/*
 	.loc_0x0:
 	  mflr      r0
