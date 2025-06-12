@@ -59,7 +59,7 @@ static int gop_subframe         = -1;
 static BOOL playback_first_wait = TRUE;
 static BOOL hvqm_first          = TRUE;
 
-static struct HVQM_FileHeader {
+typedef struct HVQM_FileHeader {
 	int _00;             // _00
 	int _04;             // _04
 	int _08;             // _08
@@ -71,11 +71,11 @@ static struct HVQM_FileHeader {
 	u8 _20[0x30 - 0x20]; // _20, unknown
 	u32 _30;             // _30
 	VideoInfo _34;       // _34
-	u8 _3A[2];           // _3A, unknown
 	u8 _3C;              // _3C
 	u32 _40;             // _40
-} file_header;
+} HVQM_FileHeader;
 
+static HVQM_FileHeader file_header;
 static u32 gop_header[5]; // TODO: struct?
 static OSThread jac_hvqmThread;
 static u8 hvqmStack[0x1000];
@@ -271,6 +271,8 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 		(void)&i;
 		data[i] = 0;
 	}
+	STACK_PAD_VAR(1);
+
 	dvdcount          = 0;
 	dvd_active        = 0;
 	vh_state          = 0;
@@ -323,46 +325,51 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 
 	file_header = *(HVQM_FileHeader*)dvd_buf[0];
 
-	gop_baseframe = 0;
 	arcoffset += 0x44;
-	gop_frame    = 0;
-	gop_subframe = -1;
+	gop_baseframe = 0;
+	gop_frame     = 0;
+	gop_subframe  = -1;
 
+	STACK_PAD_VAR(2);
 	StreamHeader_ header;
-	struct {
-		u32 _00; // TODO: volatile hack
-		u32 _04;
-		u32 _08;
-		u32 _0C;
-	} sp30;
+	u32 sp3C;
+	u32 sp38;
+	u32 sp34;
+	u32 sp30;
 	STACK_PAD_VAR(7);
+
+	(void)&sp3C;
+	(void)&sp38;
+	(void)&sp34;
 	(void)&sp30;
 
-	sp30._08   = file_header._3C;
-	u32 var_r0 = sp30._08;
-
-	sp30._0C = file_header._40;
-	sp30._04 = file_header._30;
-	switch (var_r0) {
-	case 4:
-		sp30._00 = (sp30._04 << 4) / 0x12;
+	sp38 = file_header._3C;
+	sp3C = file_header._40;
+	sp34 = file_header._30;
+	switch (sp38) {
+	case AUDIOFRMT_ADPCM:
+		// 16 samples in 18 bytes
+		sp30 = sp34 * 16 / 18;
 		break;
 	case 2:
-		sp30._00 = sp30._04 >> 1;
+		// 2 bytes per sample
+		sp30 = sp34 / 2;
 		break;
 	case 3:
-		sp30._00 = sp30._04;
+		// 1 byte per sample
+		sp30 = sp34;
 		break;
-	case 5:
-		sp30._00 = (sp30._04 << 4) / 0x24;
+	case AUDIOFRMT_ADPCM4X:
+		// 16 samples in 36 bytes
+		sp30 = sp34 * 16 / 36;
 		break;
 	}
 	file_header._30 = 0;
 
-	header._00         = sp30._04;
-	header._04         = var_r0;
-	header._08         = sp30._0C;
-	header.audioFormat = sp30._08;
+	header._00         = sp34;
+	header._04         = sp30;
+	header._08         = sp3C;
+	header.audioFormat = sp38;
 	header._0C         = 0x10;
 	header._0E         = 0x1e;
 

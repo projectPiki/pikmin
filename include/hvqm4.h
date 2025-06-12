@@ -70,13 +70,14 @@ typedef struct SeqObj {
 
 /**
  * @brief Video stream metadata
- * @note Size: 0x6 (unaligned), 0x8 (aligned)
+ * @note Size: 0x8
  */
 typedef struct VideoInfo {
 	u16 width;          // _00
 	u16 height;         // _02
 	u8 h_sampling_rate; // _04, horizontal chroma subsampling rate
 	u8 v_sampling_rate; // _05, vertical chroma subsampling rate
+	u8 pad[2];          // _06, padding for alignment
 } VideoInfo;
 
 /**
