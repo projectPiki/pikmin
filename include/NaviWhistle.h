@@ -27,7 +27,7 @@ struct NaviWhistle : public KEffect {
 		ptcl->mGlobalPosition = mNavi->mNaviLightPosition;
 		ptcl->mLocalPosition  = diff * ratio;
 
-		if (mNavi->mCursorWorldPos.y < mNavi->getPosition().y + 15.0f) {
+		if (mNavi->mCursorWorldPos.y < mNavi->mPosition.y + 15.0f) {
 			CollTriInfo* tri = mapMgr->getCurrTri(mNavi->mCursorWorldPos.x, mNavi->mCursorWorldPos.z, true);
 			if (!tri) {
 				return false;
@@ -52,6 +52,7 @@ struct NaviWhistle : public KEffect {
 			ptcl->mOrientedNormal.set(diff);
 		}
 
+		STACK_PAD_INLINE(2);
 		return false;
 	}
 	virtual void emit(EffectParm&) // _2C
