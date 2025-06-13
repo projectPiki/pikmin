@@ -674,16 +674,17 @@ bool MemoryCard::getCardStatus(int channel)
  */
 void MemoryCard::checkUseFile()
 {
-	u32 unused = 0x51EB851F;
 	for (int i = 0; i < 127; i++) {
 		OSCalendarTime calendar;
 		CARDStat stat;
-		int bruh = mCardChannel;
-		if (CARDGetStatus(bruh, i, &stat) < 0) {
+		if (CARDGetStatus(mCardChannel, i, &stat) < 0) {
 			continue;
 		}
 		OSTime time = OSSecondsToTicks((OSTime)stat.time);
 		OSTicksToCalendarTime(time, &calendar);
+
+		(void)((u32)i / 100);
+
 		if (!strncmp(stat.fileName, basecardname, 15)) {
 			strcpy(mFilePath, stat.fileName);
 			mSaveFileIndex = i;
@@ -696,84 +697,6 @@ void MemoryCard::checkUseFile()
 			_3C = i;
 		}
 	}
-	!(unused++);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8000
-	  stw       r0, 0x4(r1)
-	  lis       r5, 0x51EC
-	  stwu      r1, -0xB8(r1)
-	  stmw      r27, 0xA4(r1)
-	  addi      r27, r3, 0
-	  subi      r30, r5, 0x7AE1
-	  li        r28, 0
-	  lwz       r0, 0xF8(r4)
-	  lis       r4, 0x802B
-	  subi      r31, r4, 0x5FC4
-	  rlwinm    r29,r0,30,2,31
-
-	.loc_0x34:
-	  lwz       r3, 0x34(r27)
-	  addi      r4, r28, 0
-	  addi      r5, r1, 0xC
-	  bl        0x19903C
-	  cmpwi     r3, 0
-	  blt-      .loc_0xDC
-	  lwz       r5, 0x30(r1)
-	  li        r4, 0
-	  mullw     r3, r4, r29
-	  mulhwu    r0, r5, r29
-	  add       r3, r3, r0
-	  mullw     r0, r5, r4
-	  mullw     r4, r5, r29
-	  add       r3, r3, r0
-	  addi      r5, r1, 0x78
-	  bl        0x18975C
-	  addi      r4, r31, 0
-	  addi      r3, r1, 0xC
-	  li        r5, 0xF
-	  bl        0x1A5310
-	  cmpwi     r3, 0
-	  bne-      .loc_0xA0
-	  addi      r3, r27, 0x14
-	  addi      r4, r1, 0xC
-	  bl        0x1A54D0
-	  stw       r28, 0x38(r27)
-	  b         .loc_0xE8
-
-	.loc_0xA0:
-	  addi      r3, r1, 0xC
-	  subi      r4, r13, 0x654C
-	  li        r5, 0x6
-	  bl        0x1A52E4
-	  cmpwi     r3, 0
-	  bne-      .loc_0xC0
-	  stw       r28, 0x3C(r27)
-	  b         .loc_0xDC
-
-	.loc_0xC0:
-	  addi      r3, r1, 0xC
-	  subi      r4, r13, 0x6544
-	  li        r5, 0x7
-	  bl        0x1A52C4
-	  cmpwi     r3, 0
-	  bne-      .loc_0xDC
-	  stw       r28, 0x3C(r27)
-
-	.loc_0xDC:
-	  addi      r28, r28, 0x1
-	  cmpwi     r28, 0x7F
-	  blt+      .loc_0x34
-
-	.loc_0xE8:
-	  lmw       r27, 0xA4(r1)
-	  lwz       r0, 0xBC(r1)
-	  addi      r1, r1, 0xB8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
