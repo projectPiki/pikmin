@@ -17,6 +17,7 @@ Osc_ OSC_DEF    = { 0, 1.0f, NULL, REL_TABLE, 1.0f, 0.0f };
  * --INFO--
  * Address:	80014CA0
  * Size:	000090
+ * Note: Equivalent to `JASTrack::updateOscParam` in later JAudio.
  */
 void Osc_Update_Param(seqp_* track, u8 id, f32 val)
 {
@@ -69,6 +70,7 @@ void Osc_Setup_Tremolo(seqp_* track, u8 id)
  * --INFO--
  * Address:	80014DC0
  * Size:	000064
+ * Note: Equivalent to `JASTrack::oscSetupSimple` in later JAudio.
  */
 void Osc_Setup_Simple(seqp_* track, u8 id)
 {
