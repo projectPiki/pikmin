@@ -515,7 +515,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/cPlate.cpp"),
             Object(Matching, "plugPikiKando/aiStone.cpp"),
             Object(Matching, "plugPikiKando/aiActions.cpp"),
-            Object(Equivalent, "plugPikiKando/aiAttack.cpp"),
+            Object(Matching, "plugPikiKando/aiAttack.cpp"),
             Object(Matching, "plugPikiKando/aiBore.cpp"),
             Object(Matching, "plugPikiKando/aiBoMake.cpp"),
             Object(Matching, "plugPikiKando/aiBou.cpp"),
