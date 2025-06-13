@@ -717,7 +717,6 @@ TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionI
  */
 void TAIApatrol::setTargetPosition(Teki& teki)
 {
-	// int idx       = ;
 	Vector3f& vec = _18[teki.getTableIndex()];
 	f32 rad       = teki.getParameterF(TPF_DangerTerritoryRange);
 	teki.mTargetPosition.set(vec.x * rad + teki.mPersonality->mNestPosition.x, vec.y * rad + teki.mPersonality->mNestPosition.y,
@@ -735,12 +734,16 @@ void TAIApatrol::start(Teki& teki)
 	teki.setTableIndex(0);
 	for (int i = 0; i < _1C; i++) {
 		setTargetPosition(teki);
-		f32 v = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x) + zen::Abs(teki.getPosition().z - teki.mTargetPosition.z)
-		      + zen::Abs(teki.getPosition().y - teki.mTargetPosition.y);
+
+		f32 x, y;
+		y = zen::Abs(teki.getPosition().y - teki.mTargetPosition.y);
+		x = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x);
+		x = x + y + zen::Abs(teki.getPosition().z - teki.mTargetPosition.z);
+
 		f32 minDist;
 		if (i == 0) {
-			minDist = v;
-		} else if (v > minDist) {
+			minDist = x;
+		} else if (x > minDist) {
 			teki.setTableIndex(i);
 		}
 	}
@@ -749,7 +752,8 @@ void TAIApatrol::start(Teki& teki)
 	TAIAturnToTarget::start(teki);
 	changeStatus(1, teki);
 
-	STACK_PAD_TERNARY(&teki, 6);
+	STACK_PAD_TERNARY(this, 6);
+
 	/*
 	.loc_0x0:
 	  mflr      r0
