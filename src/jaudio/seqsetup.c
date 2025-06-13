@@ -201,7 +201,7 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 	track->parent          = parent;
 	track->interruptEnable = 0;
 	track->interruptActive = 0;
-	track->_3D0            = 0;
+	track->timer           = 0;
 
 	// Initialize all MoveParams with default values.
 	for (i = 0; i < 18; ++i) {

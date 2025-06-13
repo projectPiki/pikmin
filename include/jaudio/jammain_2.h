@@ -278,12 +278,12 @@ struct seqp_ {
 	u8 interruptActive;                // _3A4
 	u8 interruptPending;               // _3A5
 	u8 interruptEnable;                // _3A6
-	u8 _3A7;                           // _3A7
+	u8 timerCount;                     // _3A7
 	u32 interruptAddresses[8];         // _3A8
 	u32 savedProgramCounter;           // _3C8
 	u32 _3CC;                          // _3CC, to do with timers (CMD_IntTimer)
-	u32 _3D0;                          // _3D0, to do with timers (CMD_IntTimer)
-	u32 _3D4;                          // _3D4, to do with timers (CMD_IntTimer)
+	u32 timer;                         // _3D0, to do with timers (CMD_IntTimer)
+	u32 maxTime;                       // _3D4, to do with timers (CMD_IntTimer)
 	u32 updateFlags;                   // _3D8, see `SEQTRACK_FLAG_*` defines
 	u8 panCalcTypes[3];                // _3DC
 	u8 parentPanCalcTypes[3];          // _3DF

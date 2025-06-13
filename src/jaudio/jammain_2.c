@@ -1726,11 +1726,12 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
  * --INFO--
  * Address:	80011720
  * Size:	000028
+ * Note: Equivalent to `JASIntrMgr::request` in later JAudio.
  */
-void Jam_SetInterrupt(seqp_* track, u16 param_2)
+void Jam_SetInterrupt(seqp_* track, u16 interrupt)
 {
-	if (track->interruptEnable & (1 << param_2)) {
-		track->interruptPending |= (1 << param_2);
+	if (track->interruptEnable & (1 << interrupt)) {
+		track->interruptPending |= (1 << interrupt);
 	}
 }
 
@@ -2227,9 +2228,9 @@ static u32 Cmd_RetI()
  */
 static u32 Cmd_IntTimer()
 {
-	SEQ_P->_3A7 = SEQ_ARG[0];
-	SEQ_P->_3D0 = SEQ_ARG[1];
-	SEQ_P->_3D4 = SEQ_ARG[1];
+	SEQ_P->timerCount = SEQ_ARG[0];
+	SEQ_P->timer      = SEQ_ARG[1];
+	SEQ_P->maxTime    = SEQ_ARG[1];
 	return 0;
 }
 
@@ -2856,33 +2857,41 @@ static u8 osc_table[] = { 0x01, 0x02, 0x08, 0x04, 0x10 };
  * --INFO--
  * Address:	80012EC0
  * Size:	0008C0
+ * Note: (Roughly) Equivalent to `JASTrack::mainProc` in later JAudio.
  */
 s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 {
 	f32 tempoProportion;
 	u32 uVar2;
-	jc_* pjVar3;
-	u8 uVar8;
 	u8 uVar4;
-	u8 uVar5;
+	s32 uVar5; // Should be signed
+
 	u8 uVar6;
 	u8 bVar9;
-	volatile u8 bVar10;
-	f32* pfVar7;
+	u8 bVar10;
+
+	u8 local_54; // STACK 0x3C
+	u8* REF_local_54;
+
 	seqp_* track_00;
 	int iVar11;
 	int iVar12;
 	seqp_* puVar12;
 	s32 uVar13;
-	uint uVar14;
-	int local_64;
+	u32 seqRes;  // r30
+	jc_* pjVar3; // r21
+
+	int local_64; // STACK 0x2C
 	int* REF_local_64;
-	u8 local_54;
-	u8* REF_local_54;
+
+	u8* ref_bVar10;
+
 	u8 local_53;
 	u8* REF_local_53;
 
-	uVar14 = 0;
+	u32 badCompiler[4];
+
+	seqRes = 0;
 	if (track->parent && track->doChangeTempo == TRUE) {
 		tempoProportion = (float)track->tempo / (float)track->parent->tempo;
 		if (tempoProportion > 1.0f) {
@@ -2894,33 +2903,40 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 		}
 		track->tempoAccumulator -= 1.0f;
 	}
-	if (track->parent) {
-		track->isMuted = isMuted;
-	}
-	if (track->parent && track->parentController.chanCount != 0) {
-		pjVar3 = List_GetChannel(&track->parentController.freeChannels);
-		if (pjVar3) {
-			List_AddChannel(&track->parent->parentController.freeChannels, pjVar3);
-			pjVar3->mMgr = &track->parent->parentController;
-			--track->parentController.chanCount;
-			++track->parent->parentController.chanCount;
+
+	{ // This whole part is not present(?) in later JAudio.
+		if (track->parent) {
+			track->isMuted = isMuted;
+		}
+		if (track->parent && track->parentController.chanCount != 0) {
+			pjVar3 = List_GetChannel(&track->parentController.freeChannels);
+			if (pjVar3) {
+				List_AddChannel(&track->parent->parentController.freeChannels, pjVar3);
+				pjVar3->mMgr = &track->parent->parentController;
+				--track->parentController.chanCount;
+				++track->parent->parentController.chanCount;
+			}
+		}
+		// This resembles `JASTrack::getTranspose` of later JAudio.
+		if (track->parent) {
+			track->finalTranspose = track->transpose + track->parent->finalTranspose;
+		} else {
+			track->finalTranspose = track->transpose;
 		}
 	}
-	if (track->parent) {
-		track->finalTranspose = track->transpose + track->parent->finalTranspose;
-	} else {
-		track->finalTranspose = track->transpose;
-	}
+
 	Jam_SetInterrupt(track, 7);
-	if (track->_3D0 != 0) {
-		if (--track->_3D0 == 0) {
-			Jam_SetInterrupt(track, 6);
-			if (track->_3A7 != 0) {
-				if (--track->_3A7 != 0) {
-					track->_3D0 = track->_3D4;
+	{ // This resembles `JASIntrMgr::timerProcess` of later JAudio.
+		if (track->timer != 0) {
+			if (--track->timer == 0) {
+				Jam_SetInterrupt(track, 6);
+				if (track->timerCount != 0) {
+					if (--track->timerCount != 0) {
+						track->timer = track->maxTime;
+					}
+				} else {
+					track->timer = track->maxTime;
 				}
-			} else {
-				track->_3D0 = track->_3D4;
 			}
 		}
 	}
@@ -2934,13 +2950,13 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 			if ((u8)CheckNoteStop(track, 0)) { // Mysterious u8 cast again
 				track->_8C = 0;
 			} else {
-				goto LAB_80013628;
+				goto timed;
 			}
 		}
 		if (track->_8C > 0) {
 			--track->_8C;
 			if (track->_8C != 0) {
-				goto LAB_80013628;
+				goto timed;
 			}
 			if (track->_D0 != -1 && track->_D4 == 0) {
 				for (local_64 = 0; local_64 < (int)track->_90; ++local_64) {
@@ -2951,16 +2967,20 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 			}
 		}
 		while (1) {
-			local_54 = __ByteRead(track);
-			if (local_54 & 0x80)
+			u8 test1;
+			test1 = __ByteRead(track);
+			if (test1 & 0x80)
 				break;
-			local_54 += track->finalTranspose;
-			uVar4  = __ByteRead(track);
-			bVar10 = (u8)uVar4;
+			test1 += track->finalTranspose;
+			uVar4 = bVar10 = __ByteRead(track);
+			ref_bVar10     = &bVar10;
+
 			if (uVar4 & 0x80) {
-				local_54 = __ExchangeRegisterValue(track, local_54) + track->finalTranspose;
+				local_54 = __ExchangeRegisterValue(track, test1 & 0x7f);
+				local_54 = local_54 + track->finalTranspose;
 			}
-			if ((bVar10 >> 5 & 2) != 0) {
+			REF_local_54 = &local_54;
+			if (bVar10 >> 5 & 2) {
 				local_53 = local_54;
 				local_54 = track->_D5;
 			}
@@ -2987,7 +3007,7 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 				if ((bVar10 >> 3 & 3) != 0) {
 					uVar6 = __ExchangeRegisterValue(track, uVar6 - 1);
 					if (uVar6 > 7) {
-						goto LAB_80013628;
+						goto timed;
 					}
 				}
 				uVar2 = -1;
@@ -3008,7 +3028,7 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 					iVar11 = -1;
 				}
 			} else {
-				if (uVar2 != -1) {
+				if ((s32)uVar2 != -1) {
 					uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, bVar9);
 				}
 				if ((track->_D4 & 1) != 0) {
@@ -3023,12 +3043,12 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 			if (iVar11 != -1) {
 				track->_94[uVar6] = local_54;
 			}
-			track->_90 = (uint)(iVar11 != -1);
+			track->_90 = (iVar11 != -1);
 			track->_CC = bVar9;
-			track->_CD = (u8)uVar5;
+			track->_CD = uVar5;
 			track->_D0 = uVar2;
 			track->_D6 = (track->_D4 & 1) ? TRUE : FALSE;
-			if ((track->_D4 & 2) != 0) {
+			if ((track->_D4 & 2)) {
 				if (uVar13 == -1) {
 					uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
 				}
@@ -3041,17 +3061,17 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 				if (uVar2 == 0) {
 					track->_8C = -1;
 				}
-				goto LAB_80013628;
+				goto timed;
 			}
 		}
 		uVar5 = uVar4 & 0xf0;
-		if ((uVar5 == 0x80) || ((uVar4 & 0xff) == 0xf9)) {
+		if ((uVar5 == 0x80) || (uVar4 == 0xf9)) {
 			iVar11 = 1;
 			uVar5  = 0;
-			if ((uVar4 & 0xff) == 0xf9) {
+			if (uVar4 == 0xf9) {
 				bVar10 = __ByteRead(track);
 				uVar2  = __ExchangeRegisterValue(track, bVar10 & 7);
-				uVar6  = uVar2 & 0xff;
+				uVar6  = uVar2;
 				if ((uVar6 > 7) || (uVar6 == 0)) {
 					if ((bVar10 & 0x80) != 0) {
 						__ByteRead(track);
@@ -3063,25 +3083,25 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 					uVar4 = uVar6 + 0x88;
 				}
 			}
-			uVar6 = uVar4 & 0xf;
-			if ((uVar4 & 0xf) == 8) {
+			uVar6 = uVar4 & 0x0f;
+			if (uVar6 == 8) {
 				iVar11 = 2;
 				uVar6 -= 8;
 			}
-			if ((uVar6 & 0xff) > 8) {
+			if (uVar6 > 8) {
 				uVar6 -= 8;
 				uVar5 = __ByteRead(track);
 				if (uVar5 > 100) {
 					uVar5 = (uVar5 - 98) * 20;
 				}
 			}
-			if ((uVar6 & 0xff) == 0) {
+			if (uVar6 == 0) {
 				// This for loop init feels fake... but idk.  Check this again later.
 				for (track->_8C = iVar12 = 0; iVar12 < iVar11; ++iVar12) {
 					track->_8C = __ByteRead(track) | track->_8C << 8;
 				}
 				if (track->_8C != 0) {
-					goto LAB_80013628;
+					goto timed;
 				}
 			} else if (uVar5 == 0) {
 				NoteOFF(track, uVar6);
@@ -3090,64 +3110,69 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 			}
 			continue;
 		}
-		/* `JASSeqParser::parseSeq`? */ {
-			u32 iVar11_2 = 0;
-			if (uVar5 == 0x90) {
-				Jam_WriteTimeParam(track, local_54 & 0x0f);
-			} else if (uVar5 == 0xa0) {
-				Jam_WriteRegParam(track, local_54 & 0x0f);
-			} else if (uVar5 == 0xb0) {
-				u32 test = uVar4 & 7;
-				iVar11_2 = RegCmd_Process(track, (uVar4 & 8) ? TRUE : FALSE, test);
-			} else {
-				iVar11_2 = Cmd_Process(track, local_54, 0);
-			}
 
-			// Definitely all four cases exist. What they do is yet to be confirmed.
-			if (iVar11_2 == 0) {
-				continue;
-			}
-			if (iVar11_2 == 1) {
-				break;
-			}
-			if (iVar11_2 == 2) {
-				break;
-			}
-			if (iVar11_2 == 3) {
-				return -1;
-			}
+		// This portion is equivalent to `JASSeqParser::parseSeq` in later JAudio.
+		u32 iVar11_2 = 0;
+		if (uVar5 == 0x90) {
+			Jam_WriteTimeParam(track, local_54 & 0x0f);
+		} else if (uVar5 == 0xa0) {
+			Jam_WriteRegParam(track, local_54 & 0x0f);
+		} else if (uVar5 == 0xb0) {
+			u32 test = uVar4 & 7;
+			iVar11_2 = RegCmd_Process(track, (uVar4 & 8) ? TRUE : FALSE, test);
+		} else {
+			iVar11_2 = Cmd_Process(track, local_54, 0);
+		}
+
+		// Definitely all four cases exist. What they do is yet to be confirmed.
+		if (iVar11_2 == 0) {
+			continue;
+		}
+		if (iVar11_2 == 1) {
+			break;
+		}
+		if (iVar11_2 == 2) {
+			break;
+		}
+		if (iVar11_2 == 3) {
+			return -1;
 		}
 	}
 
-LAB_80013628:
-	for (int i2 = 0; i2 < 18; ++i2) {
-		MoveParam_* move = &track->timedParam.move[i2];
-		if (move->duration > 0.0f) {
-			move->currentValue += move->stepSize;
-			move->duration -= 1.0f;
-			if (i2 <= 5 || i2 >= 11) {
-				uVar14 |= (1 << i2);
-			} else {
-				Osc_Update_Param(track, (u8)i2, move->currentValue);
+timed:
+	//
+	{           // This portion is equivalent to `JASTrack::updateTimedParam` in later JAudio.
+		int i2; // r21
+		for (i2 = 0; i2 < 18; ++i2) {
+			MoveParam_* move = &track->timedParam.move[i2];
+			if (move->duration > 0.0f) {
+				move->currentValue += move->stepSize;
+				move->duration -= 1.0f;
+				if (i2 <= 5 || i2 >= 11) {
+					seqRes |= (1 << i2);
+				} else {
+					Osc_Update_Param(track, (u8)i2, move->currentValue);
+				}
 			}
 		}
+		// Except this stuff doesn't exist in later JAudio...
+		if (track->oscillatorRouting[0] == 0x0E) {
+			seqRes |= osc_table[track->oscillators[0].mode];
+		}
+		if (track->oscillatorRouting[1] == 0x0E) {
+			seqRes |= osc_table[track->oscillators[1].mode];
+		}
+	LAB_800136e0: // And this is strange as well...
+		track->updateFlags |= seqRes;
 	}
-	if (track->oscillatorRouting[0] == 0x0E) {
-		uVar14 |= osc_table[track->oscillators[0].mode];
-	}
-	if (track->oscillatorRouting[1] == 0x0E) {
-		uVar14 |= osc_table[track->oscillators[1].mode];
-	}
-LAB_800136e0:
-	track->updateFlags |= uVar14;
-	for (size_t i = 0; i < 16; ++i) {
-		puVar12  = track->children[i];
-		track_00 = (seqp_*)puVar12->baseData;
-		if (track_00 && track_00->trackState != 0) {
+
+	for (int i = 0; i < 16; ++i) {
+		if (track->children[i] && track->children[i]->trackState != 0) {
 			// Return of the worst bit extract extraction method known to man.
-			if (Jam_SeqmainNote(track_00, track->isMuted | ((track->childMuteMask & (1 << uVar4)) >> uVar4)) == -1) {
-				Jaq_CloseTrack((seqp_*)puVar12->baseData);
-				puVar12->baseData = NULL;
+			BOOL childIsMuted = track->isMuted | ((track->childMuteMask & (1 << i)) >> i);
+			if (Jam_SeqmainNote(track->children[i], childIsMuted) == -1) {
+				Jaq_CloseTrack(track->children[i]);
+				track->children[i] = NULL;
 			}
 		}
 	}
