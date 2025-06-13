@@ -1113,7 +1113,7 @@ void MemoryCard::initFileArea(int idx, int p2)
 	writeCurrentGame(stream, state);
 	stream->padFileTo(0x8000, 8);
 
-	u32 sum = calcChecksum(getGameFilePtr(idx), 0x7FF8);
+	u32 sum = calcChecksum(getGameFilePtr(p2), 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
 	// UNUSED FUNCTION
