@@ -797,22 +797,22 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 		if (mSaveFileIndex == -1) {
 			s32 temp, temp2;
 			if (CARDFreeBlocks(mCardChannel, &temp, &temp2) < 0) {
-				int state    = CARDUnmount(mCardChannel);
+				CARDUnmount(mCardChannel);
 				mCardChannel = -1;
 				mErrorCode   = CARD_RESULT_NOFILE;
-				return state;
+				goto err;
 			}
 			if (temp2 < 1) {
-				int state      = CARDUnmount(mCardChannel);
+				CARDUnmount(mCardChannel);
 				mSaveFileIndex = -2;
 				mErrorCode     = CARD_RESULT_NOENT;
-				return state;
+				goto err;
 			}
 			if (temp < mRequiredFreeSpace) {
-				int state      = CARDUnmount(mCardChannel);
+				CARDUnmount(mCardChannel);
 				mSaveFileIndex = -2;
 				mErrorCode     = CARD_RESULT_NOCARD;
-				return state;
+				goto err;
 			}
 			CARDUnmount(mCardChannel);
 		}
@@ -821,7 +821,9 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 	if (v && mCardChannel >= 0 && mSaveFileIndex != -2) {
 		loadCurrentFile();
 		mErrorCode = CARD_RESULT_READY;
-	} else if (_3C != -1) {
+		goto err;
+	}
+	if (_3C != -1) {
 		CardUtilMount(0, mem);
 		CardUtilIdleWhileBusy();
 		CardUtilErase(0, _3C);
@@ -829,6 +831,8 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 		CardUtilUnmount(0);
 		CardUtilIdleWhileBusy();
 	}
+
+err:
 	return mErrorCode;
 	/*
 	.loc_0x0:
