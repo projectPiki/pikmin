@@ -27,8 +27,10 @@ static StreamCallback default_streamsync_call;
 
 static UNK_STRUCT* copy = &copyinfo;
 
-s16 filter_table[16][2] = {
-	{ 1, 1 }, // TODO
+static s16 filter_table[16][2] = {
+	{ 0, 0 },          { 0x800, 0 },       { 0, 0x800 },       { 0x400, 0x400 },   { 0x1000, 0xF800 }, { 0xE00, 0xFA00 },
+	{ 0xC00, 0xFC00 }, { 0x1200, 0xF600 }, { 0x1068, 0xF738 }, { 0x12C0, 0xF704 }, { 0x1400, 0xF400 }, { 0x800, 0xF800 },
+	{ 0x400, 0xFC00 }, { 0xFC00, 0x400 },  { 0xFC00, 0 },      { 0xF800, 0 },
 };
 
 s16 table4[16] = {
@@ -674,65 +676,58 @@ void RegisterStreamCallback(StreamCallback callback)
  */
 void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* state)
 {
-	s16 var_r31, var_r30, var_r29, var_r28;
-	u32 i, j;
-	u8 header, scale_factor, predictor;
-	s16 coef1, coef2;
-	u8 byte, samp1, samp2;
+	s16 sa = state[0];
+	s16 sb = state[1];
+	s16 sc = state[2];
+	s16 sd = state[3];
 	int output;
-
-	var_r31 = state[0];
-	var_r30 = state[1];
-	var_r29 = state[2];
-	var_r28 = state[3];
+	s16 coef1, coef2;
+	u8 header;
+	u8 scale_factor;
+	int i, j;
+	u8 byte, samp1, samp2;
 	for (i = 0; i < count; i++) {
 		header       = *src++;
 		scale_factor = (header >> 4) & 0xF;
-		predictor    = header & 0xF;
-		coef1        = filter_table[predictor][0];
-		coef2        = filter_table[predictor][1];
+		coef1        = filter_table[header & 0xF][0];
+		coef2        = filter_table[header & 0xF][1];
 		for (j = 0; j < 8; j++) {
 			byte  = *src++;
 			samp1 = byte >> 4;
 			samp2 = byte & 0xF;
 
-			output  = (table4[samp1] << scale_factor) + ((coef1 * var_r30 + coef2 * var_r31) >> 11);
+			output  = (table4[samp1] << scale_factor) + ((coef1 * sa + coef2 * sb) >> 11);
 			*dst1++ = output;
-			var_r30 = var_r31;
-			var_r31 = output;
+			sb      = output;
 
-			output  = (table4[samp2] << scale_factor) + ((coef1 * var_r30 + coef2 * var_r31) >> 11);
+			output  = (table4[samp2] << scale_factor) + ((coef1 * sb + coef2 * sa) >> 11);
 			*dst1++ = output;
-			var_r30 = var_r31;
-			var_r31 = output;
+			sa      = output;
 		}
 		if (arg4) {
 			header       = *src++;
 			scale_factor = (header >> 4) & 0xF;
-			predictor    = header & 0xF;
-			coef1        = filter_table[predictor][0];
-			coef2        = filter_table[predictor][1];
+			coef1        = filter_table[header & 0xF][0];
+			coef2        = filter_table[header & 0xF][1];
 			for (j = 0; j < 8; j++) {
 				byte  = *src++;
 				samp1 = byte >> 4;
 				samp2 = byte & 0xF;
 
-				output  = (table4[samp1] << scale_factor) + ((coef1 * var_r28 + coef2 * var_r29) >> 11);
+				output  = (table4[samp1] << scale_factor) + ((coef1 * sc + coef2 * sd) >> 11);
 				*dst2++ = output;
-				var_r28 = var_r29;
-				var_r29 = output;
+				sd      = output;
 
-				output  = (table4[samp2] << scale_factor) + ((coef1 * var_r28 + coef2 * var_r29) >> 11);
+				output  = (table4[samp2] << scale_factor) + ((coef1 * sd + coef2 * sc) >> 11);
 				*dst2++ = output;
-				var_r28 = var_r29;
-				var_r29 = output;
+				sc      = output;
 			}
 		}
 	}
-	state[0] = var_r31;
-	state[1] = var_r30;
-	state[2] = var_r29;
-	state[3] = var_r28;
+	state[0] = sa;
+	state[1] = sb;
+	state[2] = sc;
+	state[3] = sd;
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x48(r1)
