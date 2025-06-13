@@ -87,6 +87,7 @@ bool ActBridge::collideBridgeSurface()
 			return true;
 		}
 	}
+	STACK_PAD_TERNARY(platform, 2);
 	return false;
 }
 
@@ -100,8 +101,7 @@ bool ActBridge::collideBridgeBlocker()
 	Creature* platform = mPiki->getCollidePlatformCreature();
 	if (platform && platform == mBridge) {
 		Vector3f normal = mPiki->getCollidePlatformNormal();
-		Vector3f zVec   = mBridge->getBridgeZVec();
-		if (normal.dot(zVec) < -0.8f) {
+		if (normal.dot(mBridge->getBridgeZVec()) < -0.8f) {
 			return true;
 		}
 	}
@@ -352,11 +352,12 @@ int ActBridge::newExeApproach()
 	}
 
 	Vector3f direction = mBridge->getStartPos() - mPiki->getPosition();
+	STACK_PAD_VAR(1);
 	if (direction.normalise() < 300.0f) {
-		f32 bridgePosX;
 		f32 bridgePosY;
+		f32 bridgePosX;
 		mBridge->getBridgePos(mPiki->mPosition, bridgePosX, bridgePosY);
-		STACK_PAD_VAR(4);
+		STACK_PAD_VAR(3);
 		int currStage = mBridge->getFirstUnfinishedStage();
 		if (currStage == -1) {
 			PRINT("** newExeApp: SUCCESS * fstStage = -1!\n");
@@ -400,255 +401,7 @@ int ActBridge::newExeApproach()
 
 	return ACTOUT_Continue;
 
-	STACK_PAD_TERNARY(mBridge, 1);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x110(r1)
-	  stfd      f31, 0x108(r1)
-	  stfd      f30, 0x100(r1)
-	  stfd      f29, 0xF8(r1)
-	  stw       r31, 0xF4(r1)
-	  stw       r30, 0xF0(r1)
-	  mr        r30, r3
-	  lwz       r0, 0x18(r3)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x44
-	  lwz       r4, 0xC(r30)
-	  li        r0, 0x1
-	  li        r3, 0x1
-	  stb       r0, 0x400(r4)
-	  b         .loc_0x33C
-
-	.loc_0x44:
-	  lwz       r3, 0xC(r30)
-	  bl        -0x23024
-	  cmplwi    r3, 0
-	  beq-      .loc_0xB8
-	  lwz       r0, 0x18(r30)
-	  cmplw     r3, r0
-	  bne-      .loc_0xB8
-	  addi      r3, r1, 0x64
-	  lwz       r4, 0xC(r30)
-	  bl        -0x23028
-	  lfs       f31, 0x64(r1)
-	  addi      r3, r1, 0x70
-	  lfs       f30, 0x68(r1)
-	  lfs       f29, 0x6C(r1)
-	  lwz       r4, 0x18(r30)
-	  bl        -0xE748
-	  lfs       f1, 0x70(r1)
-	  lfs       f0, 0x74(r1)
-	  fmuls     f2, f31, f1
-	  lfs       f3, 0x78(r1)
-	  fmuls     f1, f30, f0
-	  lfs       f0, -0x707C(r2)
-	  fmuls     f3, f29, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0xB8
-	  li        r0, 0x1
-	  b         .loc_0xBC
-
-	.loc_0xB8:
-	  li        r0, 0
-
-	.loc_0xBC:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0xD4
-	  mr        r3, r30
-	  bl        .loc_0x360
-	  li        r3, 0
-	  b         .loc_0x33C
-
-	.loc_0xD4:
-	  lwz       r5, 0xC(r30)
-	  addi      r3, r1, 0x94
-	  lwz       r4, 0x18(r30)
-	  addi      r31, r5, 0x94
-	  bl        -0xE6EC
-	  lfs       f1, 0x94(r1)
-	  lfs       f0, 0x0(r31)
-	  lfs       f3, 0x98(r1)
-	  lfs       f2, 0x4(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f1, 0x8(r31)
-	  lfs       f4, 0x9C(r1)
-	  fsubs     f2, f3, f2
-	  stfs      f0, 0xE0(r1)
-	  fsubs     f0, f4, f1
-	  stfs      f2, 0xE4(r1)
-	  stfs      f0, 0xE8(r1)
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0xE4(r1)
-	  lfs       f2, 0xE8(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x9F71C
-	  lfs       f0, -0x7098(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x16C
-	  lfs       f0, 0xE0(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0xE4(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xE4(r1)
-	  lfs       f0, 0xE8(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xE8(r1)
-
-	.loc_0x16C:
-	  lfs       f0, -0x706C(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x328
-	  lwz       r4, 0xC(r30)
-	  addi      r5, r1, 0xD4
-	  lwz       r3, 0x18(r30)
-	  addi      r6, r1, 0xD8
-	  addi      r4, r4, 0x94
-	  bl        -0xE93C
-	  lwz       r3, 0x18(r30)
-	  bl        -0xF17C
-	  addi      r4, r3, 0
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x1AC
-	  li        r3, 0x2
-	  b         .loc_0x33C
-
-	.loc_0x1AC:
-	  lwz       r3, 0x18(r30)
-	  bl        -0xE9C4
-	  lfs       f0, -0x7060(r2)
-	  lfs       f2, 0xD4(r1)
-	  fadds     f0, f0, f1
-	  lfs       f1, 0xD8(r1)
-	  fabs      f31, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0xD8(r1)
-	  lwz       r3, 0x18(r30)
-	  bl        -0xE6D8
-	  lfs       f2, -0x7078(r2)
-	  lfs       f0, -0x7080(r2)
-	  fmuls     f1, f2, f1
-	  fmuls     f0, f0, f1
-	  fcmpo     cr0, f31, f0
-	  bge-      .loc_0x278
-	  lfs       f1, 0xD8(r1)
-	  lfs       f0, -0x7098(r2)
-	  fcmpo     cr0, f1, f0
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x264
-	  lwz       r4, 0x18(r30)
-	  addi      r3, r1, 0x88
-	  lha       r5, 0x30(r30)
-	  bl        -0xEAEC
-	  addi      r3, r1, 0x7C
-	  lwz       r4, 0x18(r30)
-	  bl        -0xE8E4
-	  lfs       f0, 0x7C(r1)
-	  addi      r4, r1, 0xE0
-	  lfs       f1, 0x80(r1)
-	  stfs      f0, 0xBC(r1)
-	  lfs       f0, 0x84(r1)
-	  stfs      f1, 0xC0(r1)
-	  lfs       f1, -0x7070(r2)
-	  stfs      f0, 0xC4(r1)
-	  lwz       r0, 0xBC(r1)
-	  lwz       r3, 0xC0(r1)
-	  stw       r0, 0xE0(r1)
-	  lwz       r0, 0xC4(r1)
-	  stw       r3, 0xE4(r1)
-	  stw       r0, 0xE8(r1)
-	  lwz       r3, 0xC(r30)
-	  bl        0x1E958
-	  b         .loc_0x338
-
-	.loc_0x264:
-	  lwz       r4, 0xC(r30)
-	  li        r0, 0x1
-	  li        r3, 0x1
-	  stb       r0, 0x400(r4)
-	  b         .loc_0x33C
-
-	.loc_0x278:
-	  lfs       f2, -0x7098(r2)
-	  stfs      f2, 0xB4(r1)
-	  stfs      f2, 0xB0(r1)
-	  lfs       f1, 0xD8(r1)
-	  lfs       f0, -0x7068(r2)
-	  stfs      f2, 0xAC(r1)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x2D0
-	  addi      r3, r1, 0xAC
-	  lwz       r4, 0x18(r30)
-	  bl        -0xE968
-	  lfs       f0, 0xAC(r1)
-	  lfs       f1, -0x7074(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, 0xB0(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, 0xB4(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB4(r1)
-	  b         .loc_0x314
-
-	.loc_0x2D0:
-	  addi      r3, r1, 0xAC
-	  lwz       r4, 0x18(r30)
-	  bl        -0xE940
-	  lfs       f1, 0xD4(r1)
-	  lfs       f0, -0x7098(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x314
-	  lfs       f0, 0xAC(r1)
-	  lfs       f1, -0x7074(r2)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xAC(r1)
-	  lfs       f0, 0xB0(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB0(r1)
-	  lfs       f0, 0xB4(r1)
-	  fmuls     f0, f0, f1
-	  stfs      f0, 0xB4(r1)
-
-	.loc_0x314:
-	  lwz       r3, 0xC(r30)
-	  addi      r4, r1, 0xAC
-	  lfs       f1, -0x7070(r2)
-	  bl        0x1E894
-	  b         .loc_0x338
-
-	.loc_0x328:
-	  lwz       r3, 0xC(r30)
-	  addi      r4, r1, 0xE0
-	  lfs       f1, -0x7070(r2)
-	  bl        0x1E880
-
-	.loc_0x338:
-	  li        r3, 0
-
-	.loc_0x33C:
-	  lwz       r0, 0x114(r1)
-	  lfd       f31, 0x108(r1)
-	  lfd       f30, 0x100(r1)
-	  lfd       f29, 0xF8(r1)
-	  lwz       r31, 0xF4(r1)
-	  lwz       r30, 0xF0(r1)
-	  addi      r1, r1, 0x110
-	  mtlr      r0
-	  blr
-
-	.loc_0x360:
-	*/
+	STACK_PAD_TERNARY(mBridge, 6);
 }
 
 /*
@@ -676,7 +429,6 @@ void ActBridge::newInitGo()
  */
 int ActBridge::newExeGo()
 {
-	STACK_PAD_STRUCT(2);
 
 	if (mStageIdx == -1) {
 		PRINT("stage = -1\n");
@@ -689,6 +441,7 @@ int ActBridge::newExeGo()
 		return ACTOUT_Fail;
 	}
 
+	STACK_PAD_STRUCT(4);
 	if (mBridge->isStageFinished(mStageIdx)) {
 		PRINT("stage %d is finished\n", mStageIdx);
 		newInitGo();
@@ -701,8 +454,7 @@ int ActBridge::newExeGo()
 	}
 
 	bool c = collideBridgeSurface();
-
-	STACK_PAD_STRUCT(2);
+	STACK_PAD_TERNARY(c, 2);
 
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
 	Vector3f xVec     = mBridge->getBridgeXVec();
@@ -711,11 +463,11 @@ int ActBridge::newExeGo()
 
 	Vector3f direction = stagePos - mPiki->mPosition;
 	mBridge->getBridgeZVec();
-	// direction.DP(zVec);
 
 	direction.normalise();
 
 	mPiki->setSpeed(0.70f, direction);
+	STACK_PAD_STRUCT(1);
 	return ACTOUT_Continue;
 
 	/*
@@ -1048,6 +800,7 @@ int ActBridge::newExeWork()
 	}
 	mBridge->getStageDepth();
 	mPiki->setSpeed(0.5f, zVec);
+	STACK_PAD_VAR(2);
 	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
