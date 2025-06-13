@@ -539,7 +539,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/aiPullout.cpp"),
             Object(Matching, "plugPikiKando/aiPush.cpp"),
             Object(Matching, "plugPikiKando/aiPut.cpp"),
-            Object(Equivalent, "plugPikiKando/aiRandomBoid.cpp"),
+            Object(Matching, "plugPikiKando/aiRandomBoid.cpp"),
             Object(Matching, "plugPikiKando/aiRescue.cpp"),
             Object(Matching, "plugPikiKando/aiRope.cpp"),
             Object(Matching, "plugPikiKando/aiShoot.cpp"),
