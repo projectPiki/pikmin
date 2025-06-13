@@ -2263,6 +2263,7 @@ void MemoryCard::repairFile()
 		OSCalendarTime calendar;
 		OSTicksToCalendarTime(OSGetTime(), &calendar);
 		char buf[36];
+		STACK_PAD_VAR(1);
 		sprintf(buf, "%02d/%02d %02d:%02d", calendar.mon + 1, calendar.mday, calendar.hour, calendar.min);
 		memset(&cst, 0, sizeof(CARDStat));
 		cst.length = ((mRequiredFreeSpace + mSectorSize - 1) / (mSectorSize)) * mSectorSize;
@@ -2305,7 +2306,7 @@ void MemoryCard::repairFile()
 		}
 	}
 
-	u32 badc[12];
+	STACK_PAD_INLINE(12);
 	/*
 	.loc_0x0:
 	  mflr      r0
