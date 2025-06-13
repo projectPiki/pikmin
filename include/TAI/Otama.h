@@ -236,8 +236,6 @@ struct TAIAwaitOtama : public TAIAreserveMotion {
 		    && zen::Abs(teki.mTargetVelocity.z) < 0.1f) {
 			res = true;
 		}
-
-		STACK_PAD_VAR(3);
 		return res;
 	}
 

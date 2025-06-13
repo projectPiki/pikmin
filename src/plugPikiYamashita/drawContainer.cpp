@@ -325,7 +325,6 @@ bool zen::DrawContainer::operationStatus()
 	}
 
 	STACK_PAD_VAR(2);
-	STACK_PAD_TERNARY(mController, 3);
 	return false;
 }
 

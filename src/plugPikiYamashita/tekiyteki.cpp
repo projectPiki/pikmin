@@ -173,9 +173,7 @@ void YTeki::flyingStay(f32 speed)
 		height = ((height > 0.0f) ? 1.0f : -1.0f) * limit;
 	}
 
-	f32 val   = height * 900.0f;
-	f32 fTime = gsys->getFrameTime();
-	mTargetVelocity.y += val * fTime * gsys->getFrameTime();
+	mTargetVelocity.y += (height * 900.0f) * gsys->getFrameTime() * gsys->getFrameTime();
 
 	if (zen::Abs(mTargetVelocity.y) > speed) {
 		mTargetVelocity.y = ((mTargetVelocity.y > 0.0f) ? 1.0f : -1.0f) * speed;

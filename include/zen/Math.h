@@ -40,19 +40,13 @@ inline f32 Rand(f32 max)
 
 inline f32 Abs(f32 val)
 {
-	if (val < 0.0f) {
-		return -val;
-	}
-	return val;
+	return (val < 0.0f) ? -val : val;
 }
 
 // TODO: check this/check it didn't break anything else
 inline int Abs(int val)
 {
-	if (val < 0) {
-		return -val;
-	}
-	return val;
+	return (val < 0) ? -val : val;
 }
 
 // TODO: I have no idea what this actually is in the map, but it exists as a function

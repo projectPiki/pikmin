@@ -546,8 +546,6 @@ struct WorldMapCursorMgr {
 		rotateUfo(zen::correctRad(_30 + mRocketIcon->getRotate()));
 
 		STACK_PAD_VAR(1);
-
-		STACK_PAD_TERNARY(mRocketIcon, 3);
 	}
 
 	bool moveUfo()
@@ -631,7 +629,6 @@ struct WorldMapCursorMgr {
 		mRocketIcon->setScale(scale);
 
 		STACK_PAD_VAR(2);
-		STACK_PAD_TERNARY(mRocketIcon, 4);
 		return res;
 	}
 	void forceMove()

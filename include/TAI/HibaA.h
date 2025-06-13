@@ -137,8 +137,6 @@ struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
 		    && zen::Abs(target->getPosition().z - ptclGen->getEmitPos().z) < limit) {
 			res = true;
 		}
-
-		STACK_PAD_VAR(3);
 		return res;
 	}
 

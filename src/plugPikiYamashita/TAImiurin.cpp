@@ -181,8 +181,6 @@ struct TAIAattackMiurin : public TAIAreserveMotion {
 		}
 
 		TAIAreserveMotion::start(teki);
-
-		STACK_PAD_VAR(1);
 	}
 	virtual bool act(Teki& teki) // _10
 	{

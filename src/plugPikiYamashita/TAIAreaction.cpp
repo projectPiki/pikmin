@@ -128,8 +128,6 @@ void TAIAdyingKabekui::start(Teki& teki)
  */
 bool TAIAdyingKabekui::act(Teki& teki)
 {
-	STACK_PAD_VAR(2);
-
 	Vector3f pos(teki.getPosition());
 	if (zen::Abs(mapMgr->getMinY(pos.x, pos.z, true) - pos.y) < 1.0f) {
 		if (teki.mVelocity.y < -2.0f * teki.getGravity() * gsys->getFrameTime() || teki.mCurrentAnimEvent == KEY_Action0) {

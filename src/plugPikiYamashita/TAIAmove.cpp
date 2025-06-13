@@ -735,15 +735,12 @@ void TAIApatrol::start(Teki& teki)
 	for (int i = 0; i < _1C; i++) {
 		setTargetPosition(teki);
 
-		f32 x, y;
-		y = zen::Abs(teki.getPosition().y - teki.mTargetPosition.y);
-		x = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x);
-		x = x + y + zen::Abs(teki.getPosition().z - teki.mTargetPosition.z);
-
+		f32 sum = zen::Abs(teki.getPosition().x - teki.mTargetPosition.x) + zen::Abs(teki.getPosition().y - teki.mTargetPosition.y)
+		        + zen::Abs(teki.getPosition().z - teki.mTargetPosition.z);
 		f32 minDist;
 		if (i == 0) {
-			minDist = x;
-		} else if (x > minDist) {
+			minDist = sum;
+		} else if (sum > minDist) {
 			teki.setTableIndex(i);
 		}
 	}
@@ -751,8 +748,6 @@ void TAIApatrol::start(Teki& teki)
 	setTargetPosition(teki);
 	TAIAturnToTarget::start(teki);
 	changeStatus(1, teki);
-
-	STACK_PAD_TERNARY(this, 6);
 
 	/*
 	.loc_0x0:
@@ -1341,8 +1336,6 @@ bool TAIAflyingDistanceInTerritory::goal(Teki& teki)
 
 	ERROR("HEAVEN !!!\n"); // lol
 	teki.mTargetPosition.set(teki.mPersonality->mNestPosition);
-
-	STACK_PAD_TERNARY(&teki, 2);
 	return true;
 }
 
@@ -1415,287 +1408,7 @@ bool TAIAflyingDistance::act(Teki& teki)
 		return res;
 	}
 
-	STACK_PAD_TERNARY(&teki, 9);
 	return true;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x158(r1)
-	  stfd      f31, 0x150(r1)
-	  stfd      f30, 0x148(r1)
-	  stfd      f29, 0x140(r1)
-	  stw       r31, 0x13C(r1)
-	  mr        r31, r4
-	  stw       r30, 0x138(r1)
-	  stw       r29, 0x134(r1)
-	  stw       r28, 0x130(r1)
-	  mr        r28, r3
-	  lwz       r4, 0x2C4(r4)
-	  lwz       r30, 0x418(r31)
-	  lwz       r3, 0x84(r4)
-	  cmplwi    r30, 0
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f31, 0x10(r3)
-	  beq-      .loc_0x370
-	  lfs       f2, 0x98(r31)
-	  li        r29, 0
-	  lfs       f1, 0x98(r30)
-	  lfs       f0, -0x4A68(r2)
-	  fsubs     f29, f2, f1
-	  fcmpo     cr0, f29, f0
-	  bge-      .loc_0x70
-	  fneg      f29, f29
-
-	.loc_0x70:
-	  lfs       f1, 0x8(r28)
-	  bl        0x6F884
-	  addi      r3, r28, 0x8
-	  fmr       f30, f1
-	  lwz       r12, 0x14(r28)
-	  mr        r4, r31
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  fdivs     f2, f29, f30
-	  lfs       f0, -0x4A68(r2)
-	  stfs      f0, 0x118(r1)
-	  stfs      f0, 0x114(r1)
-	  stfs      f0, 0x110(r1)
-	  fadds     f30, f2, f1
-	  lfs       f1, 0x94(r31)
-	  lfs       f0, 0x94(r30)
-	  lfs       f4, 0x9C(r31)
-	  fsubs     f0, f1, f0
-	  lfs       f3, 0x9C(r30)
-	  lfs       f2, 0x98(r31)
-	  lfs       f1, 0x98(r30)
-	  fsubs     f3, f4, f3
-	  stfs      f0, 0xE4(r1)
-	  fsubs     f1, f2, f1
-	  lfs       f0, 0xE4(r1)
-	  stfs      f0, 0x110(r1)
-	  stfs      f1, 0x114(r1)
-	  stfs      f3, 0x118(r1)
-	  lfs       f1, 0x110(r1)
-	  lfs       f0, 0x114(r1)
-	  lfs       f2, 0x118(r1)
-	  fmuls     f1, f1, f1
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x19E69C
-	  fsubs     f1, f1, f30
-	  lfs       f0, -0x4A68(r2)
-	  fcmpo     cr0, f1, f0
-	  fmr       f29, f1
-	  bge-      .loc_0x124
-	  fneg      f30, f29
-	  b         .loc_0x128
-
-	.loc_0x124:
-	  fmr       f30, f29
-
-	.loc_0x128:
-	  mr        r3, r28
-	  lwz       r12, 0x4(r28)
-	  mr        r4, r31
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  fcmpo     cr0, f30, f1
-	  bge-      .loc_0x16C
-	  lwz       r3, 0x2DEC(r13)
-	  li        r29, 0x1
-	  lfs       f1, -0x4A08(r2)
-	  lfs       f0, 0x28C(r3)
-	  lfs       f2, 0x490(r31)
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f2, f0
-	  stfs      f0, 0x490(r31)
-	  b         .loc_0x1D4
-
-	.loc_0x16C:
-	  lfs       f0, -0x4A68(r2)
-	  lfs       f1, -0x4A04(r2)
-	  fcmpo     cr0, f29, f0
-	  fmuls     f1, f1, f31
-	  bge-      .loc_0x188
-	  fneg      f0, f29
-	  b         .loc_0x18C
-
-	.loc_0x188:
-	  fmr       f0, f29
-
-	.loc_0x18C:
-	  fcmpo     cr0, f0, f1
-	  ble-      .loc_0x1B0
-	  lfs       f0, -0x4A68(r2)
-	  fcmpo     cr0, f29, f0
-	  ble-      .loc_0x1A8
-	  lfs       f0, -0x4A60(r2)
-	  b         .loc_0x1AC
-
-	.loc_0x1A8:
-	  lfs       f0, -0x4A24(r2)
-
-	.loc_0x1AC:
-	  fmuls     f29, f1, f0
-
-	.loc_0x1B0:
-	  lfs       f0, -0x4A0C(r2)
-	  lwz       r3, 0x2DEC(r13)
-	  fmuls     f0, f0, f29
-	  lfs       f1, 0x490(r31)
-	  lfs       f2, 0x28C(r3)
-	  fmuls     f0, f0, f2
-	  fmuls     f0, f0, f2
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x490(r31)
-
-	.loc_0x1D4:
-	  lfs       f1, 0x490(r31)
-	  lfs       f0, -0x4A68(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1EC
-	  fneg      f0, f1
-	  b         .loc_0x1F0
-
-	.loc_0x1EC:
-	  fmr       f0, f1
-
-	.loc_0x1F0:
-	  fcmpo     cr0, f0, f31
-	  ble-      .loc_0x218
-	  lfs       f0, -0x4A68(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x20C
-	  lfs       f0, -0x4A60(r2)
-	  b         .loc_0x210
-
-	.loc_0x20C:
-	  lfs       f0, -0x4A24(r2)
-
-	.loc_0x210:
-	  fmuls     f0, f31, f0
-	  stfs      f0, 0x490(r31)
-
-	.loc_0x218:
-	  lfs       f1, 0x94(r31)
-	  lfs       f3, 0x94(r30)
-	  lfs       f2, 0x9C(r30)
-	  lfs       f0, 0x9C(r31)
-	  fsubs     f1, f3, f1
-	  fsubs     f2, f2, f0
-	  bl        -0x8E600
-	  stfs      f1, 0x394(r31)
-	  lfs       f1, 0x394(r31)
-	  lfs       f2, 0xA0(r31)
-	  bl        -0x173E64
-	  lwz       r4, 0x224(r31)
-	  fmr       f30, f1
-	  lwz       r3, 0x2DEC(r13)
-	  lfs       f2, 0x30(r4)
-	  lfs       f0, 0x28C(r3)
-	  fmuls     f1, f30, f2
-	  lfs       f3, -0x4A2C(r2)
-	  lfs       f2, 0xA0(r31)
-	  fmuls     f0, f1, f0
-	  fmuls     f0, f3, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0xA0(r31)
-	  lfs       f1, 0xA0(r31)
-	  bl        -0x173EC8
-	  stfs      f1, 0xA0(r31)
-	  lfs       f0, 0x15C8(r13)
-	  stfs      f0, 0x88(r31)
-	  lfs       f0, 0xA0(r31)
-	  stfs      f0, 0x8C(r31)
-	  lfs       f0, 0x15CC(r13)
-	  stfs      f0, 0x90(r31)
-	  lfs       f1, 0xA0(r31)
-	  bl        0x6F6E0
-	  lfs       f0, 0x490(r31)
-	  lfs       f2, 0xA0(r31)
-	  fmuls     f31, f1, f0
-	  fmr       f1, f2
-	  bl        0x6F860
-	  lfs       f0, 0x490(r31)
-	  fmuls     f0, f1, f0
-	  stfs      f0, 0xA4(r31)
-	  stfs      f31, 0xAC(r31)
-	  lwz       r3, 0x2C4(r31)
-	  lfs       f0, -0x4A68(r2)
-	  lwz       r3, 0x84(r3)
-	  fcmpo     cr0, f30, f0
-	  lwz       r3, 0x4(r3)
-	  lwz       r3, 0x0(r3)
-	  lfs       f2, 0x24(r3)
-	  bge-      .loc_0x2EC
-	  fneg      f3, f30
-	  b         .loc_0x2F0
-
-	.loc_0x2EC:
-	  fmr       f3, f30
-
-	.loc_0x2F0:
-	  lfs       f1, -0x4A00(r2)
-	  lfs       f0, -0x49FC(r2)
-	  fmuls     f1, f1, f2
-	  fdivs     f0, f1, f0
-	  fcmpo     cr0, f3, f0
-	  bge-      .loc_0x350
-	  rlwinm.   r0,r29,0,24,31
-	  beq-      .loc_0x350
-	  lfs       f1, 0x490(r31)
-	  lfs       f0, -0x4A68(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x324
-	  fneg      f1, f1
-
-	.loc_0x324:
-	  lfs       f0, -0x4A60(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x350
-	  lfs       f0, 0x15D0(r13)
-	  li        r3, 0x1
-	  stfs      f0, 0xA4(r31)
-	  lfs       f0, 0x15D4(r13)
-	  stfs      f0, 0xA8(r31)
-	  lfs       f0, 0x15D8(r13)
-	  stfs      f0, 0xAC(r31)
-	  b         .loc_0x354
-
-	.loc_0x350:
-	  li        r3, 0
-
-	.loc_0x354:
-	  lwz       r4, 0xA4(r31)
-	  lwz       r0, 0xA8(r31)
-	  stw       r4, 0x70(r31)
-	  stw       r0, 0x74(r31)
-	  lwz       r0, 0xAC(r31)
-	  stw       r0, 0x78(r31)
-	  b         .loc_0x374
-
-	.loc_0x370:
-	  li        r3, 0x1
-
-	.loc_0x374:
-	  lwz       r0, 0x15C(r1)
-	  lfd       f31, 0x150(r1)
-	  lfd       f30, 0x148(r1)
-	  lfd       f29, 0x140(r1)
-	  lwz       r31, 0x13C(r1)
-	  lwz       r30, 0x138(r1)
-	  lwz       r29, 0x134(r1)
-	  lwz       r28, 0x130(r1)
-	  addi      r1, r1, 0x158
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
