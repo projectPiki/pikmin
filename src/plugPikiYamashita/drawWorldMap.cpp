@@ -169,7 +169,7 @@ struct WorldMapWipeMgr {
 				alpha       = zen::RoundOff(255.0f * blendFactor);
 			}
 
-			for (int i = 0; i < 4; i++) {
+			for (i = 0; i < 4; i++) {
 				mWipes[i].update(blendFactor, alpha);
 			}
 

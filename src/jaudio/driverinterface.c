@@ -422,15 +422,15 @@ void InitJcs(jcs_* sys)
  */
 void Channel_Init(jc_* jc)
 {
-	jc->updateCallback      = NULL;
-	jc->pitchSweepUpdater   = NULL;
-	jc->playId              = 0;
-	jc->savedPlayId         = 0;
-	jc->waveData            = NULL;
-	jc->logicalChanType     = 0;
-	jc->_14                 = 0;
-	jc->_18                 = 0;
-	jc->_1C                 = 0;
+	jc->updateCallback    = NULL;
+	jc->pitchSweepUpdater = NULL;
+	jc->playId            = 0;
+	jc->savedPlayId       = 0;
+	jc->waveData          = NULL;
+	jc->logicalChanType   = 0;
+	jc->_14               = 0;
+	jc->_18               = 0;
+	jc->_1C               = 0;
 
 	if (jc->mMgr == NULL) {
 		jc->busRouting[0].whole = 0x150;
