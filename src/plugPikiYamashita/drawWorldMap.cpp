@@ -146,20 +146,21 @@ struct WorldMapWipeMgr {
 
 	bool update()
 	{
+		int i;
+		f32 blendFactor;
+		u8 alpha;
+
 		mIsActive = false;
-		switch (_00) {
+		switch (int state = _00) {
 		case 0:
 			break;
 		case 1:
 		case 2:
-			int state = _00;
 			_04 += gsys->getFrameTime();
 			if (_04 > _08) {
 				_04   = _08;
 				state = 0;
 			}
-			f32 blendFactor;
-			u8 alpha;
 			if (_00 == 2) {
 				blendFactor = (1.0f - NMathF::cos(_04 / _08 * PI)) * 0.5f;
 				alpha       = zen::RoundOff(255.0f * (1.0f - blendFactor));
