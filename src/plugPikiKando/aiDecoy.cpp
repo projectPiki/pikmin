@@ -111,6 +111,8 @@ void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&)
  */
 int ActDecoy::exec()
 {
+	f32 proj;
+
 	Creature* teki = update();
 	switch (mState) {
 	case 3:
@@ -138,7 +140,7 @@ int ActDecoy::exec()
 		Vector3f tekiDir = mPiki->mPosition - teki->mPosition;
 		dist             = tekiDir.length();
 		tekiDir          = tekiDir * (1.0f / dist);
-		f32 proj         = tekiDir.DP(naviDir);
+		proj             = tekiDir.DP(naviDir);
 		tekiDir          = tekiDir + quickABS(proj) * naviDir * 1.3f;
 		tekiDir.normalise();
 		mPiki->setSpeed(1.0f, tekiDir);
