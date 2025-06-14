@@ -353,7 +353,7 @@ struct System : public StdSystem {
 	// _00-_248 = StdSystem
 	u32 mHeapStart;                                  // _244
 	u32 mHeapEnd;                                    // _248
-	DGXGraphics* mDGXGfx;                            // _24C
+	Graphics* mDGXGfx;                               // _24C, cast to DGXGraphics in DOL
 	u32 _250;                                        // _250, unknown
 	Delegate1<System, Graphics&>* mDvdErrorCallback; // _254
 	int mDvdErrorCode;                               // _258

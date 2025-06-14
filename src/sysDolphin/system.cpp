@@ -1343,15 +1343,16 @@ void* loadFunc(void* idler)
 		frameCount++;
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		if (!gsys->mIsLoadScreenActive) {
-			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, GX_FALSE);
+			GXCopyDisp(static_cast<DGXGraphics*>(gsys->mDGXGfx)->mDisplayBuffer, GX_FALSE);
 		} else {
-			GXCopyDisp(gsys->mDGXGfx->mDisplayBuffer, (frameCount >= gsys->mLoadTimeBeforeIdling) ? GX_TRUE : GX_FALSE);
+			GXCopyDisp(static_cast<DGXGraphics*>(gsys->mDGXGfx)->mDisplayBuffer,
+			           (frameCount >= gsys->mLoadTimeBeforeIdling) ? GX_TRUE : GX_FALSE);
 		}
 
 		gsys->beginRender();
 		STACK_PAD_VAR(1);
 		Matrix4f mtx;
-		DGXGraphics* gfx = gsys->mDGXGfx;
+		DGXGraphics* gfx = static_cast<DGXGraphics*>(gsys->mDGXGfx);
 		gfx->setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx->mScreenWidth, gfx->mScreenHeight));
 
 		if (gsys->mIsLoadScreenActive) {
@@ -1369,7 +1370,7 @@ void* loadFunc(void* idler)
 			static_cast<IDelegate1<Graphics&>*>(gsys->mDvdErrorCallback)->invoke(*gsys->mDGXGfx);
 		}
 
-		gsys->mDGXGfx->doneRender();
+		static_cast<DGXGraphics*>(gsys->mDGXGfx)->doneRender();
 		if (b && --b == 0) {
 			VISetBlack(FALSE);
 			VIFlush();

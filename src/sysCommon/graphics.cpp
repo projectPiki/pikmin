@@ -27,59 +27,6 @@ DEFINE_ERROR()
  */
 DEFINE_PRINT("Graphics");
 
-// this needs to be in a function, but it straight up never gets used, so.
-static void unusedStatic()
-{
-	static char* mappingTypes[3] = { "Normal", "Projection", "Environ" };
-}
-
-static u16 sjis_convert_table[0x258] = {
-	0,     0x118, 0x119, 0xC,   0xE,   0x60,  0x1A,  0x1B,  0x1F,  0x1,   0x2,   0,     0,     0,     0,     0x3E,  0,     0,     0,
-	0,     0,     0,     0,     0,     0x123, 0,     0,     0xD,   0xD,   0xD,   0xF,   0x3C,  0x11A, 0,     0,     0x117, 0,     0x7,
-	0x7,   0x2,   0x2,   0x8,   0x9,   0x0,   0,     0x3B,  0x3D,  0,     0,     0,     0,     0,     0,     0x11F, 0x120, 0,     0,
-	0,     0,     0xB,   0xD,   0,     0,     0,     0,     0x1D,  0,     0x1C,  0x1E,  0,     0,     0,     0,     0,     0,     0,
-	0x7,   0x2,   0,     0,     0x4,   0,     0,     0x5,   0x3,   6,     0xA,   0x20,  0,     0,     0x122, 0,     0x121, 0,     0,
-	0,     0,     0x5C,  0,     0,     0,     0,     0,     0,     0x11C, 0x11B, 0x11E, 0x11D, 0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     3,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0x10,  0x11,  0x12,  0x13,  0x14,  0x15,  0x16,  0x17,  0x18,  0x19,  0,     0,     0,     0,
-	0,     0,     0,     0x21,  0x22,  0x23,  0x24,  0x25,  0x26,  0x27,  0x28,  0x29,  0x2A,  0x2B,  0x2C,  0x2D,  0x2E,  0x2F,  0x30,
-	0x31,  0x32,  0x33,  0x34,  0x35,  0x36,  0x37,  0x38,  0x39,  0x3A,  0,     0,     0,     0,     0,     0,     0,     0x41,  0x42,
-	0x43,  0x44,  0x45,  0x46,  0x47,  0x48,  0x49,  0x4A,  0x4B,  0x4C,  0x4D,  0x4E,  0x4F,  0x50,  0x51,  0x52,  0x53,  0x54,  0x55,
-	0x56,  0x57,  0x58,  0x59,  0x5A,  0,     0,     0,     0,     0x61,  0x62,  0x63,  0x64,  0x65,  0x66,  0x67,  0x68,  0x69,  0x6A,
-	0x6B,  0x6C,  0x6D,  0x6E,  0x6F,  0x70,  0x71,  0x72,  0x73,  0x74,  0x75,  0x76,  0x77,  0x78,  0x79,  0x7A,  0x7B,  0x7C,  0x7D,
-	0x7E,  0x7F,  0x80,  0x81,  0x82,  0x83,  0x84,  0x85,  0x86,  0x87,  0x88,  0x89,  0x8A,  0x8B,  0x8C,  0x8D,  0x8E,  0x8F,  0x90,
-	0x91,  0x92,  0x93,  0x94,  0x95,  0x96,  0x97,  0x98,  0x99,  0x9A,  0x9B,  0x9C,  0x9D,  0x9E,  0x9F,  0xA0,  0xA1,  0xA2,  0xA3,
-	0xA4,  0xA5,  0xA6,  0xA7,  0xA8,  0xA9,  0xAA,  0xAB,  0xAC,  0xAD,  0xAE,  0xAF,  0xB0,  0xB1,  0xB2,  0xB3,  0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0xC1,
-	0xC2,  0xC3,  0xC4,  0xC5,  0xC6,  0xC7,  0xC8,  0xC9,  0xCA,  0xCB,  0xCC,  0xCD,  0xCE,  0xCF,  0xD0,  0xD1,  0xD2,  0xD3,  0xD4,
-	0xD5,  0xD6,  0xD7,  0xD8,  0xD9,  0xDA,  0xDB,  0xDC,  0xDD,  0xDE,  0xDF,  0xE0,  0xE1,  0xE2,  0xE3,  0xE4,  0xE5,  0xE6,  0xE7,
-	0xE8,  0xE9,  0xEA,  0xEB,  0xEC,  0xED,  0xEE,  0xEF,  0xF0,  0xF1,  0xF2,  0xF3,  0xF4,  0xF5,  0xF6,  0xF7,  0xF8,  0xF9,  0xFA,
-	0xFB,  0xFC,  0xFD,  0xFE,  0xFF,  0,     0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107, 0x108, 0x109, 0x10A, 0x10B, 0x10C,
-	0x10D, 0x10E, 0x10F, 0x110, 0x111, 0x112, 0x113, 0x114, 0x115, 0x116, 0x0,
-};
-
-static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
-	"日目時私未知星大地横名前宇宙旅途中流墜落愛機号多失無残姿動一重迎教気猛毒酸素含生命維持装置限度修復考船探検奇妙物体待立上何械観察芽光放"
-	"思試引抜植見害好野菜呼投反応操作回転今来倒取増殖母彼態不議少能力調必要興味集団合行習性利用繰希望灯近押解散隊列記録画面安心幸運事離陸可"
-	"飛明捜索後入森昨出下全滅種掴切色同赤注意深口部分他違黄帰特穴掘石割内高収個範囲没太陽仕暗去食発荷伝質超科学結晶除汚移永久燃料電済位確認"
-	"間叩当最激本妻子供顔浮射線遠外音鳴役息座娘元空欠嵐強噴脱速加費良家計衝撃吸亜複通雑場所父親人美咲別感続金属品買理遊泳腰晩庫以状実組異常"
-	"聞快配乗約束尾現念故終巻頭土製値打夜楽身向算果焼便成功驚緒暮付借戻昇窓広満帯始惑遭難協者郷長眠油断服界達非送闘左表示族存在徴耳奥開洞窟"
-	"青会視手足小水自助消原周辺映十字効率眼定降樹海備早就湿源朝進完練寝指正直勇初恐景員険話情報数変化与方整奮新道恵単判葉花仲然獲冒破壊敵圏"
-	"平歩炎天卵軟接触至死攻駆繁栄巨丸呑弾半折胞吐連錯乱振払堅夢追昼怖揺丈先止胴弱点簡甲羅岩量込捕透核法怒奴等構厄介橋苦労系貝真珠価罠禁巣風"
-	"造勢戦襲言遮和厳密頂着休年昔想像響返白敏再還我懸草誰工月司髪毛細番予殊影過関係誇育腹次矢窒寸覚覗屋忘血航誌亡泉夕使期敗容制挿読扱説書閉"
-	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
-};
-
 /*
  * --INFO--
  * Address:	........
@@ -227,331 +174,6 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 	}
 
 	target.b = b;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x1F8(r1)
-	  stfd      f31, 0x1F0(r1)
-	  stfd      f30, 0x1E8(r1)
-	  stfd      f29, 0x1E0(r1)
-	  stfd      f28, 0x1D8(r1)
-	  stfd      f27, 0x1D0(r1)
-	  stfd      f26, 0x1C8(r1)
-	  stfd      f25, 0x1C0(r1)
-	  stfd      f24, 0x1B8(r1)
-	  stfd      f23, 0x1B0(r1)
-	  stfd      f22, 0x1A8(r1)
-	  stfd      f21, 0x1A0(r1)
-	  stfd      f20, 0x198(r1)
-	  stfd      f19, 0x190(r1)
-	  stfd      f18, 0x188(r1)
-	  stfd      f17, 0x180(r1)
-	  lwz       r5, 0x0(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x454
-	  cmplwi    r5, 0x1
-	  bne-      .loc_0x7C
-	  lwz       r5, 0x4(r3)
-	  lbz       r0, 0x4(r5)
-	  stb       r0, 0x0(r4)
-	  lwz       r5, 0x4(r3)
-	  lbz       r0, 0x10(r5)
-	  stb       r0, 0x1(r4)
-	  lwz       r3, 0x4(r3)
-	  lbz       r0, 0x1C(r3)
-	  stb       r0, 0x2(r4)
-	  b         .loc_0x454
-
-	.loc_0x7C:
-	  subic.    r0, r5, 0x1
-	  lfd       f2, -0x7DD0(r2)
-	  li        r8, 0
-	  li        r9, 0
-	  mtctr     r0
-	  li        r6, 0
-	  lis       r5, 0x4330
-	  ble-      .loc_0xF8
-
-	.loc_0x9C:
-	  lwz       r0, 0x4(r3)
-	  add       r7, r0, r6
-	  lwz       r0, 0x0(r7)
-	  stw       r0, 0x17C(r1)
-	  stw       r5, 0x178(r1)
-	  lfd       f0, 0x178(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xEC
-	  lwz       r0, 0x28(r7)
-	  stw       r0, 0x17C(r1)
-	  stw       r5, 0x178(r1)
-	  lfd       f0, 0x178(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xEC
-	  mr        r8, r9
-	  b         .loc_0xF8
-
-	.loc_0xEC:
-	  addi      r6, r6, 0x28
-	  addi      r9, r9, 0x1
-	  bdnz+     .loc_0x9C
-
-	.loc_0xF8:
-	  mulli     r0, r8, 0x28
-	  lwz       r3, 0x4(r3)
-	  lfd       f13, -0x7DD0(r2)
-	  lwzx      r8, r3, r0
-	  add       r6, r3, r0
-	  lbz       r0, 0x4(r6)
-	  lis       r5, 0x4330
-	  stw       r8, 0x164(r1)
-	  lbz       r3, 0x2C(r6)
-	  stw       r0, 0x16C(r1)
-	  lwz       r7, 0x28(r6)
-	  stw       r5, 0x160(r1)
-	  lfs       f0, 0x30(r6)
-	  stw       r5, 0x168(r1)
-	  lfd       f2, 0x160(r1)
-	  lfd       f3, 0x168(r1)
-	  fsubs     f2, f2, f13
-	  lfs       f5, 0xC(r6)
-	  lfs       f4, 0x8(r6)
-	  fsubs     f3, f3, f13
-	  stw       r7, 0x174(r1)
-	  stfs      f2, 0x104(r1)
-	  stfs      f3, 0x108(r1)
-	  stw       r5, 0x170(r1)
-	  stfs      f4, 0x10C(r1)
-	  lfd       f2, 0x170(r1)
-	  stfs      f5, 0x110(r1)
-	  fsubs     f2, f2, f13
-	  lfs       f3, 0x104(r1)
-	  lfs       f12, -0x7DC8(r2)
-	  fsubs     f2, f2, f3
-	  stw       r3, 0x17C(r1)
-	  lbz       r3, 0x38(r6)
-	  fsubs     f20, f1, f3
-	  stw       r5, 0x178(r1)
-	  fdivs     f8, f12, f2
-	  stw       r3, 0x15C(r1)
-	  lfd       f3, 0x178(r1)
-	  lbz       r0, 0x10(r6)
-	  stw       r5, 0x158(r1)
-	  fmuls     f2, f20, f20
-	  lfs       f10, -0x7DC0(r2)
-	  fsubs     f19, f3, f13
-	  lfd       f3, 0x158(r1)
-	  lfs       f11, -0x7DC4(r2)
-	  fmuls     f6, f8, f2
-	  stw       r0, 0x154(r1)
-	  fsubs     f30, f3, f13
-	  lfs       f9, -0x7DBC(r2)
-	  stw       r5, 0x150(r1)
-	  fmuls     f5, f6, f8
-	  lfd       f2, 0x150(r1)
-	  fmuls     f4, f11, f6
-	  lfs       f7, 0x108(r1)
-	  lfs       f17, 0x110(r1)
-	  fmuls     f3, f20, f5
-	  lfs       f29, 0x3C(r6)
-	  fmuls     f21, f10, f5
-	  fsubs     f2, f2, f13
-	  fmuls     f5, f3, f8
-	  fsubs     f8, f3, f4
-	  lfs       f4, 0x18(r6)
-	  fsubs     f18, f3, f6
-	  fmuls     f6, f11, f5
-	  fmuls     f5, f9, f5
-	  fadds     f8, f20, f8
-	  lfs       f3, 0x14(r6)
-	  fsubs     f6, f6, f21
-	  fadds     f5, f5, f21
-	  fmuls     f8, f17, f8
-	  fadds     f6, f12, f6
-	  fmuls     f17, f0, f18
-	  fmuls     f5, f19, f5
-	  fmuls     f0, f7, f6
-	  fadds     f0, f0, f5
-	  fadds     f0, f8, f0
-	  fadds     f31, f17, f0
-	  stw       r8, 0x14C(r1)
-	  stw       r5, 0x148(r1)
-	  lfd       f0, 0x148(r1)
-	  stw       r8, 0x12C(r1)
-	  fsubs     f0, f0, f13
-	  stw       r7, 0x144(r1)
-	  stfs      f0, 0xE4(r1)
-	  stfs      f2, 0xE8(r1)
-	  stfs      f3, 0xEC(r1)
-	  stfs      f4, 0xF0(r1)
-	  lbz       r0, 0x1C(r6)
-	  stw       r5, 0x128(r1)
-	  lbz       r3, 0x44(r6)
-	  stw       r0, 0x134(r1)
-	  lfd       f0, 0x128(r1)
-	  stw       r5, 0x130(r1)
-	  fsubs     f0, f0, f13
-	  lfs       f8, 0xE4(r1)
-	  lfd       f2, 0x130(r1)
-	  lfs       f7, 0xF0(r1)
-	  fsubs     f27, f1, f8
-	  fsubs     f3, f2, f13
-	  stw       r7, 0x124(r1)
-	  lfs       f5, 0xE8(r1)
-	  fmuls     f2, f27, f27
-	  lfs       f26, 0x48(r6)
-	  lfs       f6, 0x24(r6)
-	  lfs       f4, 0x20(r6)
-	  stw       r5, 0x140(r1)
-	  stfs      f0, 0xC4(r1)
-	  stfs      f3, 0xC8(r1)
-	  lfd       f3, 0x140(r1)
-	  stw       r5, 0x120(r1)
-	  fsubs     f3, f3, f13
-	  stfs      f4, 0xCC(r1)
-	  lfd       f0, 0x120(r1)
-	  stfs      f6, 0xD0(r1)
-	  fsubs     f3, f3, f8
-	  fsubs     f0, f0, f13
-	  lfs       f6, 0xC4(r1)
-	  fdivs     f18, f12, f3
-	  stw       r3, 0x13C(r1)
-	  lfs       f19, -0x7DD4(r2)
-	  stw       r5, 0x138(r1)
-	  lfd       f3, 0x138(r1)
-	  fmuls     f28, f18, f2
-	  lfs       f2, 0xD0(r1)
-	  fsubs     f4, f0, f6
-	  lfs       f0, 0xC8(r1)
-	  fsubs     f21, f1, f6
-	  fmuls     f17, f28, f18
-	  fdivs     f1, f12, f4
-	  fmuls     f4, f21, f21
-	  fmuls     f8, f27, f17
-	  fmuls     f20, f10, f17
-	  fmuls     f22, f1, f4
-	  fmuls     f17, f8, f18
-	  fmuls     f6, f11, f28
-	  fmuls     f23, f22, f1
-	  fmuls     f4, f11, f17
-	  fsubs     f6, f8, f6
-	  fmuls     f24, f21, f23
-	  fsubs     f4, f4, f20
-	  fmuls     f17, f9, f17
-	  fmuls     f25, f24, f1
-	  fmuls     f18, f11, f22
-	  fadds     f1, f17, f20
-	  fmuls     f17, f10, f23
-	  fmuls     f10, f11, f25
-	  fsubs     f20, f24, f18
-	  fadds     f4, f12, f4
-	  fmuls     f9, f9, f25
-	  fsubs     f11, f3, f13
-	  fadds     f20, f21, f20
-	  fadds     f3, f9, f17
-	  fmuls     f9, f5, f4
-	  fsubs     f10, f10, f17
-	  fmuls     f5, f30, f1
-	  fmuls     f1, f11, f3
-	  fadds     f4, f12, f10
-	  fadds     f6, f27, f6
-	  fsubs     f8, f8, f28
-	  fmuls     f0, f0, f4
-	  fadds     f3, f9, f5
-	  fmuls     f4, f7, f6
-	  fsubs     f18, f24, f22
-	  fadds     f0, f0, f1
-	  fmuls     f2, f2, f20
-	  fmuls     f5, f29, f8
-	  fadds     f3, f4, f3
-	  fadds     f0, f2, f0
-	  fmuls     f1, f26, f18
-	  fcmpo     cr0, f31, f19
-	  fadds     f2, f5, f3
-	  fadds     f1, f1, f0
-	  bge-      .loc_0x3B4
-	  li        r0, 0
-	  b         .loc_0x3D8
-
-	.loc_0x3B4:
-	  lfs       f0, -0x7DB8(r2)
-	  fcmpo     cr0, f31, f0
-	  ble-      .loc_0x3C8
-	  li        r0, 0xFF
-	  b         .loc_0x3D8
-
-	.loc_0x3C8:
-	  fctiwz    f0, f31
-	  stfd      f0, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  rlwinm    r0,r0,0,24,31
-
-	.loc_0x3D8:
-	  stb       r0, 0x0(r4)
-	  lfs       f0, -0x7DD4(r2)
-	  fcmpo     cr0, f2, f0
-	  bge-      .loc_0x3F0
-	  li        r0, 0
-	  b         .loc_0x414
-
-	.loc_0x3F0:
-	  lfs       f0, -0x7DB8(r2)
-	  fcmpo     cr0, f2, f0
-	  ble-      .loc_0x404
-	  li        r0, 0xFF
-	  b         .loc_0x414
-
-	.loc_0x404:
-	  fctiwz    f0, f2
-	  stfd      f0, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  rlwinm    r0,r0,0,24,31
-
-	.loc_0x414:
-	  stb       r0, 0x1(r4)
-	  lfs       f0, -0x7DD4(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x42C
-	  li        r0, 0
-	  b         .loc_0x450
-
-	.loc_0x42C:
-	  lfs       f0, -0x7DB8(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x440
-	  li        r0, 0xFF
-	  b         .loc_0x450
-
-	.loc_0x440:
-	  fctiwz    f0, f1
-	  stfd      f0, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  rlwinm    r0,r0,0,24,31
-
-	.loc_0x450:
-	  stb       r0, 0x2(r4)
-
-	.loc_0x454:
-	  lfd       f31, 0x1F0(r1)
-	  lfd       f30, 0x1E8(r1)
-	  lfd       f29, 0x1E0(r1)
-	  lfd       f28, 0x1D8(r1)
-	  lfd       f27, 0x1D0(r1)
-	  lfd       f26, 0x1C8(r1)
-	  lfd       f25, 0x1C0(r1)
-	  lfd       f24, 0x1B8(r1)
-	  lfd       f23, 0x1B0(r1)
-	  lfd       f22, 0x1A8(r1)
-	  lfd       f21, 0x1A0(r1)
-	  lfd       f20, 0x198(r1)
-	  lfd       f19, 0x190(r1)
-	  lfd       f18, 0x188(r1)
-	  lfd       f17, 0x180(r1)
-	  addi      r1, r1, 0x1F8
-	  blr
-	*/
 }
 
 /*
@@ -672,333 +294,6 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 	}
 
 	target.b = b;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x1D8(r1)
-	  stfd      f31, 0x1D0(r1)
-	  stfd      f30, 0x1C8(r1)
-	  stfd      f29, 0x1C0(r1)
-	  stfd      f28, 0x1B8(r1)
-	  stfd      f27, 0x1B0(r1)
-	  stfd      f26, 0x1A8(r1)
-	  stfd      f25, 0x1A0(r1)
-	  stfd      f24, 0x198(r1)
-	  stfd      f23, 0x190(r1)
-	  stfd      f22, 0x188(r1)
-	  stfd      f21, 0x180(r1)
-	  lwz       r5, 0x0(r3)
-	  cmplwi    r5, 0
-	  beq-      .loc_0x46C
-	  cmplwi    r5, 0x1
-	  bne-      .loc_0x6C
-	  lwz       r5, 0x4(r3)
-	  lha       r0, 0x4(r5)
-	  sth       r0, 0x0(r4)
-	  lwz       r5, 0x4(r3)
-	  lha       r0, 0x10(r5)
-	  sth       r0, 0x2(r4)
-	  lwz       r3, 0x4(r3)
-	  lha       r0, 0x1C(r3)
-	  sth       r0, 0x4(r4)
-	  b         .loc_0x46C
-
-	.loc_0x6C:
-	  subic.    r0, r5, 0x1
-	  lfd       f2, -0x7DD0(r2)
-	  li        r8, 0
-	  li        r9, 0
-	  mtctr     r0
-	  li        r6, 0
-	  lis       r5, 0x4330
-	  ble-      .loc_0xE8
-
-	.loc_0x8C:
-	  lwz       r0, 0x4(r3)
-	  add       r7, r0, r6
-	  lwz       r0, 0x0(r7)
-	  stw       r0, 0x17C(r1)
-	  stw       r5, 0x178(r1)
-	  lfd       f0, 0x178(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0xDC
-	  lwz       r0, 0x28(r7)
-	  stw       r0, 0x17C(r1)
-	  stw       r5, 0x178(r1)
-	  lfd       f0, 0x178(r1)
-	  fsubs     f0, f0, f2
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0xDC
-	  mr        r8, r9
-	  b         .loc_0xE8
-
-	.loc_0xDC:
-	  addi      r6, r6, 0x28
-	  addi      r9, r9, 0x1
-	  bdnz+     .loc_0x8C
-
-	.loc_0xE8:
-	  mulli     r0, r8, 0x28
-	  lwz       r3, 0x4(r3)
-	  lfd       f5, -0x7DD0(r2)
-	  lfd       f6, -0x7DA8(r2)
-	  add       r6, r3, r0
-	  lwzx      r8, r3, r0
-	  lis       r5, 0x4330
-	  lha       r0, 0x4(r6)
-	  stw       r8, 0x164(r1)
-	  xoris     r0, r0, 0x8000
-	  lwz       r7, 0x28(r6)
-	  stw       r0, 0x16C(r1)
-	  lha       r3, 0x2C(r6)
-	  stw       r5, 0x160(r1)
-	  xoris     r0, r3, 0x8000
-	  lfs       f7, 0x30(r6)
-	  stw       r5, 0x168(r1)
-	  lfd       f0, 0x160(r1)
-	  lfd       f2, 0x168(r1)
-	  stw       r7, 0x174(r1)
-	  fsubs     f0, f0, f5
-	  lfs       f4, 0xC(r6)
-	  fsubs     f2, f2, f6
-	  lfs       f3, 0x8(r6)
-	  stw       r5, 0x170(r1)
-	  stfs      f0, 0x104(r1)
-	  lfd       f0, 0x170(r1)
-	  stfs      f2, 0x108(r1)
-	  fsubs     f0, f0, f5
-	  stfs      f3, 0x10C(r1)
-	  stfs      f4, 0x110(r1)
-	  lfs       f2, 0x104(r1)
-	  lfs       f4, -0x7DC8(r2)
-	  fsubs     f0, f0, f2
-	  stw       r0, 0x17C(r1)
-	  lha       r3, 0x38(r6)
-	  fsubs     f31, f1, f2
-	  stw       r5, 0x178(r1)
-	  fdivs     f12, f4, f0
-	  lfd       f2, 0x178(r1)
-	  lha       r0, 0x10(r6)
-	  xoris     r3, r3, 0x8000
-	  stw       r3, 0x15C(r1)
-	  fmuls     f0, f31, f31
-	  lfs       f3, -0x7DC4(r2)
-	  fsubs     f30, f2, f6
-	  xoris     r0, r0, 0x8000
-	  lfs       f2, -0x7DC0(r2)
-	  fmuls     f27, f12, f0
-	  stw       r0, 0x154(r1)
-	  lfs       f0, -0x7DBC(r2)
-	  stw       r5, 0x158(r1)
-	  fmuls     f10, f27, f12
-	  fmuls     f9, f3, f27
-	  lfd       f8, 0x158(r1)
-	  lfs       f13, 0x108(r1)
-	  fmuls     f11, f31, f10
-	  fmuls     f22, f2, f10
-	  lfs       f28, 0x110(r1)
-	  fsubs     f8, f8, f6
-	  fmuls     f12, f11, f12
-	  fsubs     f10, f11, f9
-	  fsubs     f29, f11, f27
-	  stw       r5, 0x150(r1)
-	  fmuls     f11, f3, f12
-	  fadds     f27, f31, f10
-	  fmuls     f9, f0, f12
-	  fsubs     f12, f11, f22
-	  lfd       f10, 0x150(r1)
-	  fmuls     f27, f28, f27
-	  fadds     f11, f9, f22
-	  fmuls     f28, f7, f29
-	  fadds     f12, f4, f12
-	  lfs       f9, 0x3C(r6)
-	  fmuls     f11, f30, f11
-	  lfs       f29, 0x18(r6)
-	  fmuls     f7, f13, f12
-	  fsubs     f12, f10, f6
-	  lfs       f13, 0x14(r6)
-	  fadds     f7, f7, f11
-	  fadds     f7, f27, f7
-	  fadds     f7, f28, f7
-	  stw       r8, 0x14C(r1)
-	  stw       r5, 0x148(r1)
-	  lfd       f10, 0x148(r1)
-	  stw       r7, 0x144(r1)
-	  fsubs     f10, f10, f5
-	  stw       r8, 0x12C(r1)
-	  stfs      f10, 0xE4(r1)
-	  stfs      f12, 0xE8(r1)
-	  stw       r5, 0x140(r1)
-	  stfs      f13, 0xEC(r1)
-	  lfd       f10, 0x140(r1)
-	  stfs      f29, 0xF0(r1)
-	  fsubs     f10, f10, f5
-	  lfs       f11, 0xE4(r1)
-	  lha       r0, 0x1C(r6)
-	  fsubs     f10, f10, f11
-	  stw       r7, 0x124(r1)
-	  fsubs     f25, f1, f11
-	  xoris     r0, r0, 0x8000
-	  stw       r0, 0x134(r1)
-	  fdivs     f26, f4, f10
-	  stw       r5, 0x128(r1)
-	  lha       r0, 0x44(r6)
-	  stw       r5, 0x130(r1)
-	  lfd       f10, 0x128(r1)
-	  fmuls     f13, f25, f25
-	  lfd       f11, 0x130(r1)
-	  fsubs     f12, f10, f5
-	  lfs       f28, 0xF0(r1)
-	  lfs       f30, 0xE8(r1)
-	  fmuls     f31, f26, f13
-	  lfs       f10, 0x48(r6)
-	  lfs       f22, 0x24(r6)
-	  fsubs     f24, f11, f6
-	  lfs       f23, 0x20(r6)
-	  fmuls     f29, f31, f26
-	  stw       r5, 0x120(r1)
-	  fmuls     f13, f3, f31
-	  xoris     r0, r0, 0x8000
-	  stfs      f12, 0xC4(r1)
-	  fmuls     f27, f25, f29
-	  lfd       f11, 0x120(r1)
-	  stfs      f24, 0xC8(r1)
-	  fmuls     f21, f2, f29
-	  fsubs     f5, f11, f5
-	  fmuls     f11, f27, f26
-	  stfs      f23, 0xCC(r1)
-	  fsubs     f13, f27, f13
-	  stfs      f22, 0xD0(r1)
-	  fsubs     f27, f27, f31
-	  fmuls     f12, f3, f11
-	  lfs       f22, 0xC4(r1)
-	  fmuls     f11, f0, f11
-	  stw       r0, 0x13C(r1)
-	  fadds     f29, f25, f13
-	  fadds     f13, f11, f21
-	  stw       r5, 0x138(r1)
-	  fsubs     f11, f5, f22
-	  fsubs     f5, f1, f22
-	  fsubs     f12, f12, f21
-	  fdivs     f1, f4, f11
-	  fadds     f31, f4, f12
-	  lfd       f12, 0x138(r1)
-	  fmuls     f11, f5, f5
-	  fmuls     f8, f8, f13
-	  fmuls     f31, f30, f31
-	  fmuls     f24, f1, f11
-	  lfs       f11, 0xD0(r1)
-	  fmuls     f13, f28, f29
-	  fadds     f8, f31, f8
-	  fsubs     f22, f12, f6
-	  fmuls     f9, f9, f27
-	  fadds     f6, f13, f8
-	  lfs       f8, 0xC8(r1)
-	  fmuls     f13, f24, f1
-	  fadds     f12, f9, f6
-	  lfs       f6, -0x7DB4(r2)
-	  fmuls     f23, f5, f13
-	  fmuls     f21, f2, f13
-	  fmuls     f9, f3, f24
-	  fmuls     f13, f23, f1
-	  fcmpo     cr0, f7, f6
-	  fsubs     f2, f23, f9
-	  fmuls     f1, f3, f13
-	  fmuls     f0, f0, f13
-	  fadds     f2, f5, f2
-	  fsubs     f1, f1, f21
-	  fadds     f0, f0, f21
-	  fsubs     f6, f23, f24
-	  fadds     f1, f4, f1
-	  fmuls     f0, f22, f0
-	  fmuls     f2, f11, f2
-	  fmuls     f1, f8, f1
-	  fmuls     f3, f10, f6
-	  fadds     f0, f1, f0
-	  fadds     f0, f2, f0
-	  fadds     f1, f3, f0
-	  bge-      .loc_0x3C0
-	  li        r0, -0x3FF
-	  b         .loc_0x3E4
-
-	.loc_0x3C0:
-	  lfs       f0, -0x7DB0(r2)
-	  fcmpo     cr0, f7, f0
-	  ble-      .loc_0x3D4
-	  li        r0, 0x3FF
-	  b         .loc_0x3E4
-
-	.loc_0x3D4:
-	  fctiwz    f0, f7
-	  stfd      f0, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  extsh     r0, r0
-
-	.loc_0x3E4:
-	  extsh     r0, r0
-	  sth       r0, 0x0(r4)
-	  lfs       f0, -0x7DB4(r2)
-	  fcmpo     cr0, f12, f0
-	  bge-      .loc_0x400
-	  li        r0, -0x3FF
-	  b         .loc_0x424
-
-	.loc_0x400:
-	  lfs       f0, -0x7DB0(r2)
-	  fcmpo     cr0, f12, f0
-	  ble-      .loc_0x414
-	  li        r0, 0x3FF
-	  b         .loc_0x424
-
-	.loc_0x414:
-	  fctiwz    f0, f12
-	  stfd      f0, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  extsh     r0, r0
-
-	.loc_0x424:
-	  extsh     r0, r0
-	  sth       r0, 0x2(r4)
-	  lfs       f0, -0x7DB4(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x440
-	  li        r0, -0x3FF
-	  b         .loc_0x464
-
-	.loc_0x440:
-	  lfs       f0, -0x7DB0(r2)
-	  fcmpo     cr0, f1, f0
-	  ble-      .loc_0x454
-	  li        r0, 0x3FF
-	  b         .loc_0x464
-
-	.loc_0x454:
-	  fctiwz    f0, f1
-	  stfd      f0, 0x120(r1)
-	  lwz       r0, 0x124(r1)
-	  extsh     r0, r0
-
-	.loc_0x464:
-	  extsh     r0, r0
-	  sth       r0, 0x4(r4)
-
-	.loc_0x46C:
-	  lfd       f31, 0x1D0(r1)
-	  lfd       f30, 0x1C8(r1)
-	  lfd       f29, 0x1C0(r1)
-	  lfd       f28, 0x1B8(r1)
-	  lfd       f27, 0x1B0(r1)
-	  lfd       f26, 0x1A8(r1)
-	  lfd       f25, 0x1A0(r1)
-	  lfd       f24, 0x198(r1)
-	  lfd       f23, 0x190(r1)
-	  lfd       f22, 0x188(r1)
-	  lfd       f21, 0x180(r1)
-	  addi      r1, r1, 0x1D8
-	  blr
-	*/
 }
 
 /*
@@ -1376,6 +671,59 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 	}
 }
 
+// this needs to be in a function, but it straight up never gets used, so.
+static void unusedStatic()
+{
+	static char* mappingTypes[3] = { "Normal", "Projection", "Environ" };
+}
+
+static u16 sjis_convert_table[0x258] = {
+	0,     0x118, 0x119, 0xC,   0xE,   0x60,  0x1A,  0x1B,  0x1F,  0x1,   0x2,   0,     0,     0,     0,     0x3E,  0,     0,     0,
+	0,     0,     0,     0,     0,     0x123, 0,     0,     0xD,   0xD,   0xD,   0xF,   0x3C,  0x11A, 0,     0,     0x117, 0,     0x7,
+	0x7,   0x2,   0x2,   0x8,   0x9,   0x0,   0,     0x3B,  0x3D,  0,     0,     0,     0,     0,     0,     0x11F, 0x120, 0,     0,
+	0,     0,     0xB,   0xD,   0,     0,     0,     0,     0x1D,  0,     0x1C,  0x1E,  0,     0,     0,     0,     0,     0,     0,
+	0x7,   0x2,   0,     0,     0x4,   0,     0,     0x5,   0x3,   6,     0xA,   0x20,  0,     0,     0x122, 0,     0x121, 0,     0,
+	0,     0,     0x5C,  0,     0,     0,     0,     0,     0,     0x11C, 0x11B, 0x11E, 0x11D, 0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     3,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0x10,  0x11,  0x12,  0x13,  0x14,  0x15,  0x16,  0x17,  0x18,  0x19,  0,     0,     0,     0,
+	0,     0,     0,     0x21,  0x22,  0x23,  0x24,  0x25,  0x26,  0x27,  0x28,  0x29,  0x2A,  0x2B,  0x2C,  0x2D,  0x2E,  0x2F,  0x30,
+	0x31,  0x32,  0x33,  0x34,  0x35,  0x36,  0x37,  0x38,  0x39,  0x3A,  0,     0,     0,     0,     0,     0,     0,     0x41,  0x42,
+	0x43,  0x44,  0x45,  0x46,  0x47,  0x48,  0x49,  0x4A,  0x4B,  0x4C,  0x4D,  0x4E,  0x4F,  0x50,  0x51,  0x52,  0x53,  0x54,  0x55,
+	0x56,  0x57,  0x58,  0x59,  0x5A,  0,     0,     0,     0,     0x61,  0x62,  0x63,  0x64,  0x65,  0x66,  0x67,  0x68,  0x69,  0x6A,
+	0x6B,  0x6C,  0x6D,  0x6E,  0x6F,  0x70,  0x71,  0x72,  0x73,  0x74,  0x75,  0x76,  0x77,  0x78,  0x79,  0x7A,  0x7B,  0x7C,  0x7D,
+	0x7E,  0x7F,  0x80,  0x81,  0x82,  0x83,  0x84,  0x85,  0x86,  0x87,  0x88,  0x89,  0x8A,  0x8B,  0x8C,  0x8D,  0x8E,  0x8F,  0x90,
+	0x91,  0x92,  0x93,  0x94,  0x95,  0x96,  0x97,  0x98,  0x99,  0x9A,  0x9B,  0x9C,  0x9D,  0x9E,  0x9F,  0xA0,  0xA1,  0xA2,  0xA3,
+	0xA4,  0xA5,  0xA6,  0xA7,  0xA8,  0xA9,  0xAA,  0xAB,  0xAC,  0xAD,  0xAE,  0xAF,  0xB0,  0xB1,  0xB2,  0xB3,  0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+	0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0xC1,
+	0xC2,  0xC3,  0xC4,  0xC5,  0xC6,  0xC7,  0xC8,  0xC9,  0xCA,  0xCB,  0xCC,  0xCD,  0xCE,  0xCF,  0xD0,  0xD1,  0xD2,  0xD3,  0xD4,
+	0xD5,  0xD6,  0xD7,  0xD8,  0xD9,  0xDA,  0xDB,  0xDC,  0xDD,  0xDE,  0xDF,  0xE0,  0xE1,  0xE2,  0xE3,  0xE4,  0xE5,  0xE6,  0xE7,
+	0xE8,  0xE9,  0xEA,  0xEB,  0xEC,  0xED,  0xEE,  0xEF,  0xF0,  0xF1,  0xF2,  0xF3,  0xF4,  0xF5,  0xF6,  0xF7,  0xF8,  0xF9,  0xFA,
+	0xFB,  0xFC,  0xFD,  0xFE,  0xFF,  0,     0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107, 0x108, 0x109, 0x10A, 0x10B, 0x10C,
+	0x10D, 0x10E, 0x10F, 0x110, 0x111, 0x112, 0x113, 0x114, 0x115, 0x116, 0x0,
+};
+
+static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
+	"日目時私未知星大地横名前宇宙旅途中流墜落愛機号多失無残姿動一重迎教気猛毒酸素含生命維持装置限度修復考船探検奇妙物体待立上何械観察芽光放"
+	"思試引抜植見害好野菜呼投反応操作回転今来倒取増殖母彼態不議少能力調必要興味集団合行習性利用繰希望灯近押解散隊列記録画面安心幸運事離陸可"
+	"飛明捜索後入森昨出下全滅種掴切色同赤注意深口部分他違黄帰特穴掘石割内高収個範囲没太陽仕暗去食発荷伝質超科学結晶除汚移永久燃料電済位確認"
+	"間叩当最激本妻子供顔浮射線遠外音鳴役息座娘元空欠嵐強噴脱速加費良家計衝撃吸亜複通雑場所父親人美咲別感続金属品買理遊泳腰晩庫以状実組異常"
+	"聞快配乗約束尾現念故終巻頭土製値打夜楽身向算果焼便成功驚緒暮付借戻昇窓広満帯始惑遭難協者郷長眠油断服界達非送闘左表示族存在徴耳奥開洞窟"
+	"青会視手足小水自助消原周辺映十字効率眼定降樹海備早就湿源朝進完練寝指正直勇初恐景員険話情報数変化与方整奮新道恵単判葉花仲然獲冒破壊敵圏"
+	"平歩炎天卵軟接触至死攻駆繁栄巨丸呑弾半折胞吐連錯乱振払堅夢追昼怖揺丈先止胴弱点簡甲羅岩量込捕透核法怒奴等構厄介橋苦労系貝真珠価罠禁巣風"
+	"造勢戦襲言遮和厳密頂着休年昔想像響返白敏再還我懸草誰工月司髪毛細番予殊影過関係誇育腹次矢窒寸覚覗屋忘血航誌亡泉夕使期敗容制挿読扱説書閉"
+	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
+};
+
 /*
  * --INFO--
  * Address:	80027FB4
@@ -1454,11 +802,12 @@ int Font::stringWidth(char* str)
  * Address:	........
  * Size:	0003A0
  */
-void GfxInfo::createCollData(Vector3f*, f32)
+void GfxInfo::createCollData(Vector3f* pos, f32)
 {
 	mTriangles = new CollTriInfo[_1C[0]];
 	mBox.resetBound();
-	// more here, but this is enough to get the weak ctors to spawn
+	pos->length(); // this is load-bearing for sdata2 ordering
+	               // more here, but this is enough to get the weak ctors to spawn
 }
 
 /*
@@ -1493,8 +842,8 @@ Graphics::Graphics()
 	mRenderMode = 0;
 
 	for (int i = 0; i < 0x1000; i++) {
-		sintable[i] = NMathF::sin(i / 4096.0f * TAU);
-		costable[i] = NMathF::cos(i / 4096.0f * TAU);
+		sintable[i] = NMathF::sin(TAU * (i / 4096.0f));
+		costable[i] = NMathF::cos(TAU * (i / 4096.0f));
 	}
 
 	mActiveTexture[0] = nullptr;
@@ -1525,21 +874,6 @@ Graphics::Graphics()
 	mAmbientFogColour.set(0, 0, 0x30, 0xFF);
 	mLightIntensity = 1.0f;
 }
-
-/*
-//  * --INFO--
-//  * Address:	800284AC
-//  * Size:	00000C
-//  */
-// CachedShape::CachedShape()
-// {
-// 	/*
-// 	.loc_0x0:
-// 	  stw       r3, 0x4(r3)
-// 	  stw       r3, 0x0(r3)
-// 	  blr
-// 	*/
-// }
 
 /*
  * --INFO--
@@ -1691,10 +1025,10 @@ int TexImg::calcDataSize(int format, int width, int height)
 	case 1:
 		size = (width * height / 8) * 4;
 		break;
-	case 0:
+	case 2:
 		size = width * height * 2;
 		break;
-	case 2:
+	case 0:
 		size = width * height * 2;
 		break;
 	case 3:
