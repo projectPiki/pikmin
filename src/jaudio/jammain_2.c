@@ -239,6 +239,7 @@ static BOOL __ConditionCheck(seqp_* track, u8 param_2)
  * --INFO--
  * Address:	8000F820
  * Size:	000090
+ * Note: Equivalent to `JASTrack::seqTimeToDspTime` in later JAudio
  */
 int Jam_SEQtimeToDSPtime(seqp_* track, s32 param_2, u8 param_3)
 {
@@ -567,7 +568,7 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 		Osc_Clear_Overwrite(track);
 	}
 	if (r29_regIdx == 7) {
-		track->updateFlags |= SEQTRACK_FLAG_PITCH;
+		track->updateFlags |= OuterParamFlag_Pitch;
 	}
 	if (r29_regIdx == 0xd) {
 		track->parentController.channelPriority = track->regParam.param.basePriority | 0x10000;
@@ -682,6 +683,7 @@ void Jam_WriteRegXY(seqp_* track, u32 param_2)
  * --INFO--
  * Address:	80010340
  * Size:	00003C
+ * Note: Equivalent to `JASTrack::exchangeRegisterValue` in later JAudio.
  */
 u32 __ExchangeRegisterValue(seqp_* track, u8 param_2)
 {
@@ -1013,8 +1015,8 @@ void Jam_SetExtFirFilterD(OuterParam_* ext, s16* param_2)
 	if (!ext) {
 		return;
 	}
-	ext->updateFlags |= SEQTRACK_FLAG_FIR;
-	ext->flags |= SEQTRACK_FLAG_FIR;
+	ext->updateFlags |= OuterParamFlag_FIR8Filter;
+	ext->flags |= OuterParamFlag_FIR8Filter;
 	for (i = 0; i < 8; ++i) {
 		ext->firCoefficients[i] = param_2[i];
 	}
@@ -1034,22 +1036,22 @@ void Jam_SetExtParamD(f32 value, OuterParam_* ext, u8 updateFlags)
 	}
 
 	switch (updateFlags) {
-	case SEQTRACK_FLAG_VOLUME:
+	case OuterParamFlag_Volume:
 		member = &ext->volume;
 		break;
-	case SEQTRACK_FLAG_PITCH:
+	case OuterParamFlag_Pitch:
 		member = &ext->pitch;
 		break;
-	case SEQTRACK_FLAG_FXMIX:
+	case OuterParamFlag_Fxmix:
 		member = &ext->fxMix;
 		break;
-	case SEQTRACK_FLAG_DOLBY:
+	case OuterParamFlag_Dolby:
 		member = &ext->dolby;
 		break;
-	case SEQTRACK_FLAG_PAN:
+	case OuterParamFlag_Pan:
 		member = &ext->pan;
 		break;
-	case SEQTRACK_FLAG_TEMPO:
+	case OuterParamFlag_Tempo:
 		member = &ext->tempo;
 		break;
 	default:
@@ -1319,23 +1321,23 @@ void Jam_UpdateTrackAll(seqp_* track)
 		dolbyValue = track->timedParam.inner.dolby.currentValue;
 
 		if (track->outerParams) {
-			if (track->outerParams->flags & SEQTRACK_FLAG_VOLUME) {
+			if (track->outerParams->flags & OuterParamFlag_Volume) {
 				volumeValue = volumeValue * track->outerParams->volume;
 			}
 
-			if (track->outerParams->flags & SEQTRACK_FLAG_PITCH) {
+			if (track->outerParams->flags & OuterParamFlag_Pitch) {
 				pitchCents = pitchCents * track->outerParams->pitch;
 			}
 
-			if (track->outerParams->flags & SEQTRACK_FLAG_FXMIX) {
+			if (track->outerParams->flags & OuterParamFlag_Fxmix) {
 				fxMixValue = __PanCalc(fxMixValue, track->outerParams->fxMix, distance, track->panCalcTypes[1]);
 			}
 
-			if (track->outerParams->flags & SEQTRACK_FLAG_DOLBY) {
+			if (track->outerParams->flags & OuterParamFlag_Dolby) {
 				dolbyValue = __PanCalc(dolbyValue, track->outerParams->dolby, distance, track->panCalcTypes[2]);
 			}
 
-			if (track->outerParams->flags & SEQTRACK_FLAG_PAN) {
+			if (track->outerParams->flags & OuterParamFlag_Pan) {
 				panValue = __PanCalc(panValue, track->outerParams->pan, distance, track->panCalcTypes[0]);
 			}
 		}
@@ -1362,7 +1364,7 @@ void Jam_UpdateTrackAll(seqp_* track)
 			    = __PanCalc(dolbyValue, track->parent->parentController.dolby, parentDistance, track->parentPanCalcTypes[2]);
 
 			// If outerParams specify a custom FIR filter, copy those coefficients
-			if (track->outerParams && (track->outerParams->flags & SEQTRACK_FLAG_FIR)) {
+			if (track->outerParams && (track->outerParams->flags & OuterParamFlag_FIR8Filter)) {
 				for (i = 0; i < 8; ++i) {
 					track->parentController.firCoefficients[i] = track->outerParams->firCoefficients[i];
 				}
@@ -1447,18 +1449,18 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		}
 
 		// Tempo update (only if top-level track)
-		if (updateFlags & SEQTRACK_FLAG_TEMPO && !track->parent) {
+		if (updateFlags & OuterParamFlag_Tempo && !track->parent) {
 			Jam_UpdateTempo(track);
 		}
 
-		updateVolumeFlag = updateFlags & SEQTRACK_FLAG_VOLUME;
+		updateVolumeFlag = updateFlags & OuterParamFlag_Volume;
 		if (updateVolumeFlag) {
 			computedVolume = track->timedParam.inner.volume.currentValue;
 			if (track->isMuted != 0) {
 				computedVolume = 0.0f;
 			}
 
-			if (track->outerParams && (track->outerParams->flags & SEQTRACK_FLAG_VOLUME)) {
+			if (track->outerParams && (track->outerParams->flags & OuterParamFlag_Volume)) {
 				computedVolume *= track->outerParams->volume;
 			}
 
@@ -1467,40 +1469,40 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 			}
 		}
 
-		updatePitchFlag = updateFlags & SEQTRACK_FLAG_PITCH;
+		updatePitchFlag = updateFlags & OuterParamFlag_Pitch;
 		if (updatePitchFlag) {
 			unaff_f30 = Jam_PitchToCent((track->timedParam).inner.pitch.currentValue, track->regParam.param.pitchScale);
-			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_PITCH) != 0)) {
+			if (track->outerParams && ((track->outerParams->flags & OuterParamFlag_Pitch) != 0)) {
 				unaff_f30 = (unaff_f30 * track->outerParams->pitch);
 			}
 		}
 
-		updatePanFlag = updateFlags & SEQTRACK_FLAG_PAN;
+		updatePanFlag = updateFlags & OuterParamFlag_Pan;
 		if (updatePanFlag) {
 			unaff_f29 = (track->timedParam).inner.pan.currentValue;
-			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_PAN) != 0)) {
+			if (track->outerParams && ((track->outerParams->flags & OuterParamFlag_Pan) != 0)) {
 				unaff_f29 = __PanCalc(unaff_f29, track->outerParams->pan, regionAttenuation, track->panCalcTypes[0]);
 			}
 		}
 
-		updateFxMixFlag = updateFlags & SEQTRACK_FLAG_FXMIX;
+		updateFxMixFlag = updateFlags & OuterParamFlag_Fxmix;
 		if (updateFxMixFlag) {
 			unaff_f28 = (track->timedParam).inner.fxmix.currentValue;
-			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_FXMIX) != 0)) {
+			if (track->outerParams && ((track->outerParams->flags & OuterParamFlag_Fxmix) != 0)) {
 				unaff_f28 = __PanCalc(unaff_f28, track->outerParams->fxMix, regionAttenuation, track->panCalcTypes[1]);
 			}
 		}
 
-		updateDolbyFlag = updateFlags & SEQTRACK_FLAG_DOLBY;
+		updateDolbyFlag = updateFlags & OuterParamFlag_Dolby;
 		if (updateDolbyFlag) {
 			unaff_f27 = (track->timedParam).inner.dolby.currentValue;
-			if (track->outerParams && ((track->outerParams->flags & SEQTRACK_FLAG_DOLBY) != 0)) {
+			if (track->outerParams && ((track->outerParams->flags & OuterParamFlag_Dolby) != 0)) {
 				unaff_f27 = __PanCalc(unaff_f27, track->outerParams->dolby, regionAttenuation, track->panCalcTypes[2]);
 			}
 		}
 
 		// IIR flag is set
-		if (updateFlags & SEQTRACK_FLAG_IIR) {
+		if (updateFlags & OuterParamFlag_IIRFilter) {
 			for (i = 0; i < 4; ++i) {
 				track->parentController.iirCoefficients[i] = track->timedParam.inner.IIRs[i].currentValue * 32767.0f;
 			}
@@ -1509,7 +1511,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		}
 
 		if (track->outerParams) {
-			if (updateFlags & SEQTRACK_FLAG_FIR && (track->outerParams->flags & SEQTRACK_FLAG_FIR)) {
+			if (updateFlags & OuterParamFlag_FIR8Filter && (track->outerParams->flags & OuterParamFlag_FIR8Filter)) {
 				for (i = 0; i < 8; ++i) {
 					track->parentController.firCoefficients[i] = track->outerParams->firCoefficients[i];
 				}
@@ -1518,7 +1520,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 			}
 		}
 
-		if (updateFlags & SEQTRACK_FLAG_DISTFILT) {
+		if (updateFlags & OuterParamFlag_DistFilt) {
 			track->parentController.distFilter = track->timedParam.inner.distFilter.currentValue * 32767.0f;
 		}
 
@@ -1597,7 +1599,7 @@ void Jam_UpdateTempo(seqp_* track)
 
 	if (!track->parent) {
 		track->tempoFactor = (float)track->timeBase * (float)track->tempo / (JAC_DAC_RATE * 60.0f / 80.0f);
-		if ((track->outerParams->flags & SEQTRACK_FLAG_TEMPO) != 0) {
+		if ((track->outerParams->flags & OuterParamFlag_Tempo) != 0) {
 			track->tempoFactor = track->tempoFactor * track->outerParams->tempo;
 		}
 	} else {
@@ -1633,7 +1635,7 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 	} else {
 		track->isMuted = param_2;
 	}
-	track->updateFlags |= SEQTRACK_FLAG_VOLUME;
+	track->updateFlags |= OuterParamFlag_Volume;
 	if (track->isMuted && (track->pauseStatus & 0x20)) {
 		for (i = 0; i < 8; ++i) {
 			NoteOFF_R(track, (u8)i, 10);
@@ -1665,7 +1667,7 @@ void Jam_PauseTrack(seqp_* track, u8 param_2)
 
 	track->isPaused = TRUE;
 	if (track->pauseStatus & 0x01) {
-		track->updateFlags |= SEQTRACK_FLAG_VOLUME;
+		track->updateFlags |= OuterParamFlag_Volume;
 	}
 	if (track->pauseStatus & 0x04) {
 		for (i = 0; i < 8; ++i) {
@@ -1704,7 +1706,7 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 	size_t* REF_i;
 
 	track->isPaused = FALSE;
-	track->updateFlags |= SEQTRACK_FLAG_VOLUME;
+	track->updateFlags |= OuterParamFlag_Volume;
 	for (i = 0; i < 8; ++i) {
 		REF_i  = &i;
 		pjVar1 = track->channels[i];
@@ -1754,8 +1756,8 @@ BOOL Jam_TryInterrupt(seqp_* track)
 			track->savedProgramCounter = track->programCounter;
 			track->programCounter      = track->interruptAddresses[i];
 			track->interruptActive     = mask;
-			track->_3CC                = track->_8C;
-			track->_8C                 = 0;
+			track->_3CC                = track->waitTimer;
+			track->waitTimer           = 0;
 			track->interruptPending ^= mask;
 			return TRUE;
 		}
@@ -1979,7 +1981,7 @@ static u32 Cmd_CheckPortExport()
  */
 static u32 Cmd_WaitReg()
 {
-	SEQ_P->_8C = SEQ_ARG[0];
+	SEQ_P->waitTimer = SEQ_ARG[0];
 	return SEQ_ARG[0] ? 1 : 0;
 }
 
@@ -2215,7 +2217,7 @@ static u32 Cmd_SetI()
  */
 static u32 Cmd_RetI()
 {
-	SEQ_P->_8C             = SEQ_P->_3CC;
+	SEQ_P->waitTimer       = SEQ_P->_3CC;
 	SEQ_P->interruptActive = 0;
 	SEQ_P->programCounter  = SEQ_P->savedProgramCounter;
 	return 2;
@@ -2306,7 +2308,7 @@ static u32 Cmd_FlushRelease()
  */
 static u32 Cmd_Wait3()
 {
-	SEQ_P->_8C = SEQ_ARG[0];
+	SEQ_P->waitTimer = SEQ_ARG[0];
 	return SEQ_ARG[0] ? 1 : 0;
 }
 
@@ -2464,7 +2466,7 @@ static u32 Cmd_PanSwSet()
 		SEQ_P->panCalcTypes[i]                  = calcTypes[SEQ_ARG[i] >> 5];
 		SEQ_P->parentPanCalcTypes[i]            = parentCalcTypes[SEQ_ARG[i] >> 5];
 		SEQ_P->parentController.panCalcTypes[i] = SEQ_ARG[i] & 0x1f;
-		SEQ_P->updateFlags |= SEQTRACK_FLAG_PAN;
+		SEQ_P->updateFlags |= OuterParamFlag_Pan;
 	}
 
 	return 0;
@@ -2865,31 +2867,35 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 	u32 uVar2;
 	u8 uVar4;
 	s32 uVar5; // Should be signed
+	u8 uVar5_2;
+
+	BOOL var_r26;
 
 	u8 uVar6;
-	u8 bVar9;
-	u8 bVar10;
+	s32 uVar6_2;
+	u8 bVar9; // r25
+	u32 test1;
 
+	u8 local_53; // STACK 0x3D
 	u8 local_54; // STACK 0x3C
-	u8* REF_local_54;
 
 	seqp_* track_00;
+	u8 bVar10; // STACK 0x34
 	int iVar11;
 	int iVar12;
 	seqp_* puVar12;
-	s32 uVar13;
 	u32 seqRes;  // r30
 	jc_* pjVar3; // r21
+	int uVar13;  // r22
 
 	int local_64; // STACK 0x2C
+
+	u8* REF_local_54;
+	u8* REF_bVar10;
 	int* REF_local_64;
-
-	u8* ref_bVar10;
-
-	u8 local_53;
 	u8* REF_local_53;
 
-	u32 badCompiler[4];
+	u32 badCompiler[2];
 
 	seqRes = 0;
 	if (track->parent && track->doChangeTempo == TRUE) {
@@ -2940,204 +2946,218 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 			}
 		}
 	}
-	for (;;) {
-		Jam_TryInterrupt(track);
-		if (track->isPaused && (track->pauseStatus & 2)) {
-			goto LAB_800136e0;
-		}
-		++track->tickCounter;
-		if (track->_8C == -1) {
-			if ((u8)CheckNoteStop(track, 0)) { // Mysterious u8 cast again
-				track->_8C = 0;
-			} else {
-				goto timed;
-			}
-		}
-		if (track->_8C > 0) {
-			--track->_8C;
-			if (track->_8C != 0) {
-				goto timed;
-			}
-			if (track->_D0 != -1 && track->_D4 == 0) {
-				for (local_64 = 0; local_64 < (int)track->_90; ++local_64) {
-					REF_local_64              = &local_64;
-					track->_94[local_64]      = -1;
-					track->channels[local_64] = NULL;
-				}
-			}
-		}
-		while (1) {
-			u8 test1;
-			test1 = __ByteRead(track);
-			if (test1 & 0x80)
-				break;
-			test1 += track->finalTranspose;
-			uVar4 = bVar10 = __ByteRead(track);
-			ref_bVar10     = &bVar10;
 
-			if (uVar4 & 0x80) {
-				local_54 = __ExchangeRegisterValue(track, test1 & 0x7f);
-				local_54 = local_54 + track->finalTranspose;
-			}
-			REF_local_54 = &local_54;
-			if (bVar10 >> 5 & 2) {
-				local_53 = local_54;
-				local_54 = track->_D5;
-			}
-			uVar5 = __ByteRead(track);
-			if (uVar5 >= 0x80) {
-				uVar5 = __ExchangeRegisterValue(track, uVar5 - 0x80) & 0xff;
-			}
-			uVar6 = uVar4 & 7;
-			if (!(uVar4 & 7)) {
-				uVar6 = 0;
-				bVar9 = __ByteRead(track);
-				if (bVar9 >= 0x80) {
-					bVar9 = (u8)__ExchangeRegisterValue(track, bVar9 - 0x80);
-				}
-				uVar2 = 0;
-				for (iVar11 = 0; iVar11 < (bVar10 >> 3 & 3); ++iVar11) {
-					uVar4 = __ByteRead(track);
-					uVar2 = uVar4 & 0xff | uVar2 << 8;
-				}
-				if ((uVar4 == 1) && (uVar2 >= 0x80)) {
-					uVar2 = __ExchangeRegisterValue(track, uVar2 - 0x80);
-				}
-			} else {
-				if ((bVar10 >> 3 & 3) != 0) {
-					uVar6 = __ExchangeRegisterValue(track, uVar6 - 1);
-					if (uVar6 > 7) {
-						goto timed;
-					}
-				}
-				uVar2 = -1;
-				bVar9 = 100;
-			}
-			track->_D4 = bVar10 >> 5 & 3;
-			uVar13     = uVar2;
-			if (track->_D6 ? TRUE : FALSE) {
-				if ((track->_D4 & 1)) {
-					uVar13 = -1;
-				}
-				if (uVar13 != -1) {
-					uVar13 = Jam_SEQtimeToDSPtime(track, uVar13, bVar9);
-				}
-				if (!track->isPaused || !(track->pauseStatus & 0x10)) {
-					iVar11 = GateON(track, uVar6, local_54, uVar5, uVar13);
-				} else {
-					iVar11 = -1;
-				}
-			} else {
-				if ((s32)uVar2 != -1) {
-					uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, bVar9);
-				}
-				if ((track->_D4 & 1) != 0) {
-					uVar13 = -1;
-				}
-				if (!track->isPaused || !(track->pauseStatus & 0x10)) {
-					iVar11 = NoteON(track, uVar6, local_54, uVar5, uVar13);
-				} else {
-					iVar11 = -1;
-				}
-			}
-			if (iVar11 != -1) {
-				track->_94[uVar6] = local_54;
-			}
-			track->_90 = (iVar11 != -1);
-			track->_CC = bVar9;
-			track->_CD = uVar5;
-			track->_D0 = uVar2;
-			track->_D6 = (track->_D4 & 1) ? TRUE : FALSE;
-			if ((track->_D4 & 2)) {
-				if (uVar13 == -1) {
-					uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
-				}
-				SetKeyTarget_1Shot(track->channels[0], (uint)local_53 + (uint)(u8)track->finalTranspose, uVar13);
-				local_54 = local_53;
-			}
-			track->_D5 = local_54;
-			if (uVar2 != -1) {
-				track->_8C = uVar2;
-				if (uVar2 == 0) {
-					track->_8C = -1;
-				}
-				goto timed;
-			}
-		}
-		uVar5 = uVar4 & 0xf0;
-		if ((uVar5 == 0x80) || (uVar4 == 0xf9)) {
-			iVar11 = 1;
-			uVar5  = 0;
-			if (uVar4 == 0xf9) {
-				bVar10 = __ByteRead(track);
-				uVar2  = __ExchangeRegisterValue(track, bVar10 & 7);
-				uVar6  = uVar2;
-				if ((uVar6 > 7) || (uVar6 == 0)) {
-					if ((bVar10 & 0x80) != 0) {
-						__ByteRead(track);
-					}
-					continue;
-				}
-				uVar4 = uVar6 + 0x80;
-				if ((bVar10 & 0x80) != 0) {
-					uVar4 = uVar6 + 0x88;
-				}
-			}
-			uVar6 = uVar4 & 0x0f;
-			if (uVar6 == 8) {
-				iVar11 = 2;
-				uVar6 -= 8;
-			}
-			if (uVar6 > 8) {
-				uVar6 -= 8;
-				uVar5 = __ByteRead(track);
-				if (uVar5 > 100) {
-					uVar5 = (uVar5 - 98) * 20;
-				}
-			}
-			if (uVar6 == 0) {
-				// This for loop init feels fake... but idk.  Check this again later.
-				for (track->_8C = iVar12 = 0; iVar12 < iVar11; ++iVar12) {
-					track->_8C = __ByteRead(track) | track->_8C << 8;
-				}
-				if (track->_8C != 0) {
-					goto timed;
-				}
-			} else if (uVar5 == 0) {
-				NoteOFF(track, uVar6);
-			} else {
-				NoteOFF_R(track, uVar6, uVar5);
-			}
-			continue;
-		}
-
-		// This portion is equivalent to `JASSeqParser::parseSeq` in later JAudio.
-		u32 iVar11_2 = 0;
-		if (uVar5 == 0x90) {
-			Jam_WriteTimeParam(track, local_54 & 0x0f);
-		} else if (uVar5 == 0xa0) {
-			Jam_WriteRegParam(track, local_54 & 0x0f);
-		} else if (uVar5 == 0xb0) {
-			u32 test = uVar4 & 7;
-			iVar11_2 = RegCmd_Process(track, (uVar4 & 8) ? TRUE : FALSE, test);
+try_interrupt:
+	Jam_TryInterrupt(track);
+	if (track->isPaused && (track->pauseStatus & 2)) {
+		goto LAB_800136e0;
+	}
+	++track->tickCounter;
+	if (track->waitTimer == -1) {
+		if ((u8)CheckNoteStop(track, 0)) { // Mysterious u8 cast again
+			track->waitTimer = 0;
 		} else {
-			iVar11_2 = Cmd_Process(track, local_54, 0);
-		}
-
-		// Definitely all four cases exist. What they do is yet to be confirmed.
-		if (iVar11_2 == 0) {
-			continue;
-		}
-		if (iVar11_2 == 1) {
-			break;
-		}
-		if (iVar11_2 == 2) {
-			break;
-		}
-		if (iVar11_2 == 3) {
-			return -1;
+			goto timed;
 		}
 	}
+
+	if (track->waitTimer > 0) {
+		--track->waitTimer;
+		if (track->waitTimer != 0) {
+			goto timed;
+		}
+		if (track->_D0 != -1 && track->_D4 == 0) {
+			for (local_64 = 0; local_64 < (int)track->_90; ++local_64) {
+				REF_local_64              = &local_64;
+				track->_94[local_64]      = -1;
+				track->channels[local_64] = NULL;
+			}
+		}
+	}
+	s32 test2;
+loop_start:
+	while (1) {
+		// test1 = __ByteRead(track);
+		if ((test1 = test2 = __ByteRead(track)) & 0x80)
+			break;
+		local_54 = test1;
+		local_54 += track->finalTranspose;
+
+		if ((bVar10 = __ByteRead(track)) & 0x80) {
+			local_54 = __ExchangeRegisterValue(track, local_54);
+			local_54 = local_54 + track->finalTranspose;
+		}
+		REF_bVar10   = &bVar10;
+		REF_local_53 = &local_53;
+		REF_local_54 = &local_54;
+		if (bVar10 >> 5 & 2) {
+			local_53 = local_54;
+			local_54 = track->_D5;
+		}
+		if ((uVar5_2 = uVar5 = __ByteRead(track)) >= 0x80) {
+			uVar5 = __ExchangeRegisterValue(track, uVar5_2 - 0x80) & 0xff;
+		}
+		uVar6_2 = bVar10 & 7;
+		if (!(bVar10 & 7)) {
+			uVar6_2 = 0;
+			;
+			if ((bVar9 = __ByteRead(track)) >= 0x80) {
+				bVar9 = __ExchangeRegisterValue(track, bVar9 - 0x80);
+			}
+			uVar2 = 0;
+			for (iVar11 = 0; iVar11 < (bVar10 >> 3 & 3); ++iVar11) {
+				uVar4 = __ByteRead(track);
+				uVar2 = uVar4 & 0xff | uVar2 << 8;
+			}
+			if ((uVar4 == 1) && (uVar2 >= 0x80)) {
+				uVar2 = __ExchangeRegisterValue(track, uVar2 - 0x80);
+			}
+		} else {
+			if (bVar10 >> 3 & 3) {
+				uVar6_2 = __ExchangeRegisterValue(track, uVar6_2 - 1);
+				if (uVar6_2 >= 8) {
+					goto timed;
+				}
+			}
+			uVar2 = -1;
+			bVar9 = 100;
+		}
+		track->_D4 = bVar10 >> 5 & 3;
+		uVar13     = uVar2;
+		BOOL cond  = track->_D6 ? TRUE : FALSE;
+		var_r26    = FALSE;
+		if (cond) {
+			var_r26 = FALSE;
+			if ((track->_D4 & 1)) {
+				uVar13 = -1;
+			}
+			if (uVar13 != -1) {
+				uVar13 = Jam_SEQtimeToDSPtime(track, uVar13, bVar9);
+			}
+			if (track->isPaused && (track->pauseStatus & 0x10)) {
+				iVar11 = -1;
+			} else {
+				iVar11 = GateON(track, uVar6_2, local_54, uVar5, uVar13);
+			}
+		} else {
+			if ((s32)uVar2 != -1) {
+				uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, bVar9);
+			}
+			if ((track->_D4 & 1) != 0) {
+				uVar13 = -1;
+			}
+			if (track->isPaused && (track->pauseStatus & 0x10)) {
+				iVar11 = -1;
+			} else {
+				iVar11 = NoteON(track, uVar6_2, local_54, uVar5, uVar13);
+			}
+		}
+		if (iVar11 != -1) {
+			track->_94[uVar6_2] = local_54;
+			var_r26             = TRUE;
+		}
+		track->_90 = var_r26;
+		track->_CC = bVar9;
+		track->_CD = uVar5;
+		track->_D0 = uVar2;
+		if (track->_D4 & 1) {
+			track->_D6 = TRUE;
+		} else {
+			track->_D6 = FALSE;
+		}
+		if ((track->_D4 & 2)) {
+			s32 steps = uVar13;
+			if (steps == -1) {
+				steps = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
+			}
+			SetKeyTarget_1Shot(track->channels[0], local_53 + track->finalTranspose, steps);
+			local_54 = local_53;
+		}
+		track->_D5 = local_54;
+		if (uVar2 != -1) {
+			track->waitTimer = uVar2;
+			if (uVar2 == 0) {
+				track->waitTimer = -1;
+			}
+			goto timed;
+		}
+	}
+
+	// s32 uVar5_3;
+	uVar5 = test2 & 0xf0;
+	if ((uVar5 == 0x80) || (test1 == 0xf9)) {
+		iVar11 = 1;
+		uVar5  = 0;
+		if (uVar4 == 0xf9) {
+			bVar10 = __ByteRead(track);
+			uVar2  = __ExchangeRegisterValue(track, bVar10 & 7);
+			uVar6  = uVar2;
+			if ((uVar6 > 7) || (uVar6 == 0)) {
+				if ((bVar10 & 0x80) != 0) {
+					__ByteRead(track);
+				}
+				goto loop_start;
+			}
+			test2 = uVar6 + 0x80;
+			if (bVar10 & 0x80) {
+				test2 += 8;
+			}
+		}
+		uVar6 = test2 & 0x0f;
+		if (uVar6 == 8) {
+			iVar11 = 2;
+			uVar6 -= 8;
+		}
+		if (uVar6 > 8) {
+			uVar6 -= 8;
+			uVar5 = __ByteRead(track);
+			if (uVar5 > 100) {
+				uVar5 = (uVar5 - 98) * 20;
+			}
+		}
+		if (uVar6 == 0) {
+			// This for loop init feels fake... but idk.  Check this again later.
+			for (track->waitTimer = iVar12 = 0; iVar12 < iVar11; ++iVar12) {
+				track->waitTimer = __ByteRead(track) | track->waitTimer << 8;
+			}
+			if (track->waitTimer == 0) {
+				goto loop_start;
+			}
+			goto timed;
+		} else if (uVar5 == 0) {
+			NoteOFF(track, uVar6);
+		} else {
+			NoteOFF_R(track, uVar6, uVar5);
+		}
+		goto loop_start;
+	}
+
+	// This portion is equivalent to `JASSeqParser::parseSeq` in later JAudio.
+	u32 iVar11_2 = 0;
+	if (uVar5 == 0x90) {
+		Jam_WriteTimeParam(track, test1 & 0x0f);
+	} else if (uVar5 == 0xa0) {
+		Jam_WriteRegParam(track, test1 & 0x0f);
+	} else if (uVar5 == 0xb0) {
+		u32 test = test1 & 7;
+		iVar11_2 = RegCmd_Process(track, (test1 & 8) ? TRUE : FALSE, test);
+	} else {
+		iVar11_2 = Cmd_Process(track, test1, 0);
+	}
+
+	if (iVar11_2 == 0) {
+		goto loop_start;
+	}
+	if (iVar11_2 == 1) {
+		goto timed;
+	}
+	if (iVar11_2 == 2) {
+		goto try_interrupt;
+	}
+	if (iVar11_2 == 3) {
+		return -1;
+	}
+	goto loop_start;
 
 timed:
 	//
@@ -3195,7 +3215,7 @@ void SeqUpdate(seqp_* track, u32 updateFlags)
 		track->outerParams->updateFlags = 0;
 	}
 
-	track->updateFlags = SEQTRACK_FLAG_NONE;
+	track->updateFlags = OuterParamFlag_None;
 	if (finalFlags) {
 		Jam_UpdateTrack(track, finalFlags);
 	}

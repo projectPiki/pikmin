@@ -196,7 +196,7 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 	}
 	track->callStackDepth  = 0;
 	track->_D0             = 0;
-	track->_8C             = 0;
+	track->waitTimer       = 0;
 	track->trackState      = 1;
 	track->parent          = parent;
 	track->interruptEnable = 0;

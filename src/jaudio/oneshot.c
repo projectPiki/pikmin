@@ -504,9 +504,9 @@ void Init_1shot(jcs_* jcs, u32 id)
 void Stop_1Shot(jc_* jc)
 {
 	if (jc->dspChannel == 0) {
-		Jesus1Shot_Update(jc, (JCSTATUS)6);
+		Jesus1Shot_Update(jc, JCSTAT_Unk6);
 	} else {
-		Jesus1Shot_Update(jc, (JCSTATUS)0);
+		Jesus1Shot_Update(jc, JCSTAT_Unk0);
 	}
 }
 
@@ -518,10 +518,10 @@ void Stop_1Shot(jc_* jc)
 void Stop_1Shot_R(jc_* jc, u16 id)
 {
 	if (jc->dspChannel == 0) {
-		Jesus1Shot_Update(jc, (JCSTATUS)6);
+		Jesus1Shot_Update(jc, JCSTAT_Unk6);
 	} else {
 		jc->mOscBuffers[0].releaseParam = id;
-		Jesus1Shot_Update(jc, (JCSTATUS)0);
+		Jesus1Shot_Update(jc, JCSTAT_Unk0);
 	}
 }
 
@@ -552,17 +552,19 @@ void AllStop_1Shot(jcs_* jcs)
  * --INFO--
  * Address:	80015D40
  * Size:	00006C
+ * Note: Equivalent to `JASChannel::sweepProc` in later JAudio.
  */
 static BOOL Extra_Update(jc_* jc, JCSTATUS status)
 {
-	if (jc->pitchSlideCounter) {
-		f32 a = jc->targetPitch - jc->currentPitch;
-		a /= jc->pitchSlideCounter;
-		jc->currentPitch += a;
-		jc->pitchSlideCounter--;
+	if (jc->pitchSweepSteps != 0) {
+		f32 pitch = jc->targetPitch;
+		pitch -= jc->currentPitch;
+		pitch /= jc->pitchSweepSteps;
+		jc->currentPitch += pitch;
+		jc->pitchSweepSteps--;
 
-		if (jc->pitchSlideCounter == 0) {
-			jc->extraUpdateCallback = NULL;
+		if (jc->pitchSweepSteps == 0) {
+			jc->pitchSweepUpdater = NULL;
 		}
 	}
 	return FALSE;
@@ -573,46 +575,47 @@ static BOOL Extra_Update(jc_* jc, JCSTATUS status)
  * Address:	80015DC0
  * Size:	000030
  */
-void SetPitchTarget_1Shot(jc_* jc, f32 a1, u32 a2)
+void SetPitchTarget_1Shot(jc_* jc, f32 pitch, u32 steps)
 {
-	if (a2 == 0) {
-		jc->currentPitch        = a1;
-		jc->extraUpdateCallback = NULL;
+	if (steps == 0) {
+		jc->currentPitch      = pitch;
+		jc->pitchSweepUpdater = NULL;
 		return;
 	}
 
-	jc->targetPitch         = a1;
-	jc->pitchSlideCounter   = a2;
-	jc->extraUpdateCallback = Extra_Update;
+	jc->targetPitch       = pitch;
+	jc->pitchSweepSteps   = steps;
+	jc->pitchSweepUpdater = Extra_Update;
 }
 
 /*
  * --INFO--
  * Address:	80015E00
  * Size:	000090
+ * Note: (Roughly) Equivalent to `JASChannel::setKeySweepTarget` in later JAudio.
  */
-void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
+void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)
 {
-	int id;
+	int pitchKey;
 	if (jc == 0) {
 		return;
 	}
 
 	if (jc->logicalChanType == 2 || jc->waveData == NULL) {
-		id = a1;
+		pitchKey = key;
 	} else {
-		id = (a1 + 60) - jc->waveData->_02;
+		pitchKey = key + 60 - jc->waveData->key;
 	}
 
-	if (id < 0) {
-		id = 0;
+	if (pitchKey < 0) {
+		pitchKey = 0;
 	}
-	if (id > 0x7f) {
-		id = 0x7f;
+	if (pitchKey > 0x7f) {
+		pitchKey = 0x7f;
 	}
 
-	f32 pitch = C5BASE_PITCHTABLE[id];
-	SetPitchTarget_1Shot(jc, jc->basePitch * pitch, a2);
+	f32 pitch = C5BASE_PITCHTABLE[pitchKey];
+	SetPitchTarget_1Shot(jc, jc->basePitch * pitch, steps);
 }
 
 /*
@@ -620,28 +623,28 @@ void SetKeyTarget_1Shot(jc_* jc, u8 a1, u32 a2)
  * Address:	80015EA0
  * Size:	0000C8
  */
-void Gate_1Shot(jc_* jc, u8 a1, u8 a2, s32 a3)
+void Gate_1Shot(jc_* jc, u8 key, u8 a2, s32 a3)
 {
 	STACK_PAD_VAR(2);
 	if (jc->playId == -1) {
 		jc->playId      = a3;
 		jc->savedPlayId = jc->playId;
-		int idx;
+		int pitchKey;
 		if (jc->logicalChanType == 2) {
-			idx = a1;
+			pitchKey = key;
 		} else {
-			idx = (a1 + 60) - jc->waveData->_02;
+			pitchKey = key + 60 - jc->waveData->key;
 		}
-		if (idx < 0) {
-			idx = 0;
+		if (pitchKey < 0) {
+			pitchKey = 0;
 		}
-		if (idx > 0x7f) {
-			idx = 0x7f;
+		if (pitchKey > 0x7f) {
+			pitchKey = 0x7f;
 		}
 
-		f32 pitch         = C5BASE_PITCHTABLE[idx];
+		f32 pitch         = C5BASE_PITCHTABLE[pitchKey];
 		jc->velocity      = a2;
-		jc->note          = a1;
+		jc->note          = key;
 		jc->currentPitch  = jc->basePitch * pitch;
 		jc->currentVolume = jc->velocity / 127.0f;
 		jc->currentVolume = jc->currentVolume * jc->currentVolume * jc->baseVolume;
@@ -894,7 +897,7 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 		return NULL;
 	}
 
-	int val = sound.bytes[2] + 60 - wave->data->_02;
+	int val = sound.bytes[2] + 60 - wave->data->key;
 	if (val < 0) {
 		val = 0;
 	}

@@ -15,25 +15,37 @@ extern "C" {
 //! It appears to do with command id(s) for some reason
 //! It's everywhere, but why? Why, J(esus)System?
 
+typedef struct seqp_ seqp_;
+typedef struct TrackPort_ TrackPort_;
+typedef struct MoveParam_ MoveParam_;
+typedef struct AInnerParam_ AInnerParam_;
+typedef union TimedParam_ TimedParam_;
+typedef struct OuterParam_ OuterParam_;
+typedef struct RegisterParam_ RegisterParam_;
+typedef union URegisterParam_ URegisterParam_;
+
+typedef u32 (*CmdFunction)();              // TODO: Confirm return type
+typedef u16 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
+
 typedef enum {
-	SEQTRACK_FLAG_NONE     = 0x00000,
-	SEQTRACK_FLAG_VOLUME   = 0x00001,
-	SEQTRACK_FLAG_PITCH    = 0x00002,
-	SEQTRACK_FLAG_FXMIX    = 0x00004,
-	SEQTRACK_FLAG_PAN      = 0x00008,
-	SEQTRACK_FLAG_DOLBY    = 0x00010,
-	SEQTRACK_FLAG_DISTFILT = 0x00020,
-	SEQTRACK_FLAG_TEMPO    = 0x00040,
-	SEQTRACK_FLAG_FIR      = 0x00080, // Probably related to FIR filter
+	OuterParamFlag_None       = 0,
+	OuterParamFlag_Volume     = 1 << 0,
+	OuterParamFlag_Pitch      = 1 << 1,
+	OuterParamFlag_Fxmix      = 1 << 2,
+	OuterParamFlag_Pan        = 1 << 3,
+	OuterParamFlag_Dolby      = 1 << 4,
+	OuterParamFlag_DistFilt   = 1 << 5,
+	OuterParamFlag_Tempo      = 1 << 6,
+	OuterParamFlag_FIR8Filter = 1 << 7, // Probably related to FIR filter
 
-	SEQTRACK_FLAG_IIR0 = 0x01000, // IIR0 filter
-	SEQTRACK_FLAG_IIR1 = 0x02000, // IIR1 filter
-	SEQTRACK_FLAG_IIR2 = 0x04000, // IIR2 filter
-	SEQTRACK_FLAG_IIR3 = 0x08000, // IIR3 filter
-	SEQTRACK_FLAG_IIR  = (SEQTRACK_FLAG_IIR0 | SEQTRACK_FLAG_IIR1 | SEQTRACK_FLAG_IIR2 | SEQTRACK_FLAG_IIR3),
+	OuterParamFlag_IIR0      = 1 << 12, // IIR0 filter
+	OuterParamFlag_IIR1      = 1 << 13, // IIR1 filter
+	OuterParamFlag_IIR2      = 1 << 14, // IIR2 filter
+	OuterParamFlag_IIR3      = 1 << 15, // IIR3 filter
+	OuterParamFlag_IIRFilter = (OuterParamFlag_IIR0 | OuterParamFlag_IIR1 | OuterParamFlag_IIR2 | OuterParamFlag_IIR3),
 
-	SEQTRACK_FLAG_MASTER_LEVEL = 0x20000 // TODO: suspicious, unknown use
-} SeqTrackFlag;
+	SEQTRACK_FLAG_MASTER_LEVEL = 1 << 17 // TODO: suspicious, unknown use
+} OuterParamFlag;
 
 typedef enum {
 	CMD_NONE_0 = 0,        // 0
@@ -102,20 +114,6 @@ typedef enum {
 	CMD_FINISH,            // 63
 	CMD_COUNT              // 64
 } CommandID;
-
-extern s16 CUTOFF_TO_IIR_TABLE[128][4];
-
-typedef struct seqp_ seqp_;
-typedef struct TrackPort_ TrackPort_;
-typedef struct MoveParam_ MoveParam_;
-typedef struct AInnerParam_ AInnerParam_;
-typedef union TimedParam_ TimedParam_;
-typedef struct OuterParam_ OuterParam_;
-typedef struct RegisterParam_ RegisterParam_;
-typedef union URegisterParam_ URegisterParam_;
-
-typedef u32 (*CmdFunction)();              // TODO: Confirm return type
-typedef u16 (*TrackCallback)(seqp_*, u16); // TODO: Confirm return type
 
 /**
  * @brief This is an invented type of an unknown name.
@@ -237,7 +235,7 @@ struct seqp_ {
 	seqp_* children[16];               // _044
 	u32 connectionId;                  // _084
 	u32 trackId;                       // _088
-	s32 _8C;                           // _08C
+	s32 waitTimer;                     // _08C
 	u32 _90;                           // _090
 	u8 _94[8];                         // _094
 	jc_* channels[8];                  // _09C
@@ -294,6 +292,8 @@ struct seqp_ {
 	Oscbuf_ oscillatorParams[2];       // _3E8
 	u8 _418[0x434 - 0x418];            // _400
 };
+
+extern s16 CUTOFF_TO_IIR_TABLE[128][4];
 
 void* Jam_OfsToAddr(seqp_*, u32);
 void Jam_WriteRegDirect(seqp_*, u8, u16);

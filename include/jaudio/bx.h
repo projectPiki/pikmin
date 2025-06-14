@@ -238,7 +238,7 @@ struct WaveArchive_ {
 struct Wave_ {
 	u8 _00;                // _00
 	u8 compBlockIdx;       // _01
-	u8 _02;                // _02
+	u8 key;                // _02
 	f32 _04;               // _04
 	int srcAddress;        // _08
 	int length;            // _0C
