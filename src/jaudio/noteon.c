@@ -71,9 +71,11 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	u32 b    = (phys & 0xff) << 8 | reg & 0xff;
 	u32 a    = b << 16 | flag1 << 8 | flag2;
 
+	STACK_PAD_TERNARY(reg, 4);
 	jc_* sound;
 	SOUNDID_ id;
 	id.value = a;
+	STACK_PAD_VAR(1);
 	if ((u8)reg >= 0xf0) {
 		sound = Play_1shot_Osc(jcs, id, playFlag);
 	} else if ((u8)reg >= 0xe4) {
@@ -116,7 +118,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 	ResetInitialVolume(sound);
 	return 0;
 
-	STACK_PAD_VAR(2);
+	STACK_PAD_VAR(1);
 	/*
 	.loc_0x0:
 	  mflr      r0
