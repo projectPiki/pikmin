@@ -144,12 +144,12 @@ f32 subExtract(f32 time, AKeyInfo& src, AKeyInfo& dest)
 	f32 b = 1.0f / (dest.mKeyframePosition - src.mKeyframePosition);
 	f32 c = (a * a) * b;
 	f32 d = c * b;
-	f32 y = a * d;
-	f32 e = y;
-	f32 f = y * b;
+	f32 e = a * d;
+	f32 f = e * b;
 
-	return (2.0f * f - 3.0f * d + 1.0f) * src.mValue + (-2.0f * f + 3.0f * d) * dest.mValue + (e - 2.0f * c + a) * src.mStartTangent
-	     + (e - c) * dest.mEndTangent;
+	f32 result = (2.0f * f - 3.0f * d + 1.0f) * src.mValue + (-2.0f * f + 3.0f * d) * dest.mValue + (e - 2.0f * c + a) * src.mStartTangent
+	           + (e - c) * dest.mEndTangent;
+	return result;
 }
 
 /*
