@@ -92,8 +92,8 @@ void MemStat::end(char* name)
 	MemInfo* info = getInfo(name);
 	if (info) {
 		// Remove the current info from the stack
-		// mStatCount;
 		mStatCount--;
+		!!mStatCount;
 		unused             = mStatCount;
 		mCurrentInfo       = mPrevInfoStack[mStatCount];
 		gsys->mCurrMemInfo = mCurrentInfo;
@@ -101,41 +101,6 @@ void MemStat::end(char* name)
 		PRINT("no INFOOO\n", name);
 	}
 	!(unused++);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lwz       r0, 0x2FE8(r13)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x60
-	  mr        r3, r30
-	  bl        0x84
-	  cmplwi    r3, 0
-	  beq-      .loc_0x60
-	  lwz       r3, 0x9C(r30)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x9C(r30)
-	  lwz       r5, 0x9C(r30)
-	  rlwinm    r0,r5,2,0,29
-	  add       r3, r30, r0
-	  lwz       r0, 0x1C(r3)
-	  stw       r0, 0x18(r30)
-	  lwz       r0, 0x18(r30)
-	  lwz       r3, 0x2DEC(r13)
-	  stw       r0, 0x19C(r3)
-
-	.loc_0x60:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
