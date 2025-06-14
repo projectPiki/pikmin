@@ -423,7 +423,7 @@ void InitJcs(jcs_* sys)
 void Channel_Init(jc_* jc)
 {
 	jc->updateCallback      = NULL;
-	jc->extraUpdateCallback = NULL;
+	jc->pitchSweepUpdater   = NULL;
 	jc->playId              = 0;
 	jc->savedPlayId         = 0;
 	jc->waveData            = NULL;
@@ -855,7 +855,7 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 			jc->toFlush = 1;
 		}
 
-		if (jc->extraUpdateCallback && (u32)jc->extraUpdateCallback(jc, JCSTAT_Unk0) == TRUE) {
+		if (jc->pitchSweepUpdater && (u32)jc->pitchSweepUpdater(jc, JCSTAT_Unk0) == TRUE) {
 			jc->toFlush++;
 		}
 

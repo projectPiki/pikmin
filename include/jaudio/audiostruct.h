@@ -125,7 +125,7 @@ struct jc_ {
 	dspch_* dspChannel;                   // _20
 	void* mNext;                          // _24
 	JCUpdateCallback updateCallback;      // _28
-	JCUpdateCallback extraUpdateCallback; // _2C
+	JCUpdateCallback pitchSweepUpdater;   // _2C
 	s32 playId;                           // _30
 	s32 savedPlayId;                      // _34
 	struct Osc_* mOscillators[4];         // _38
@@ -151,7 +151,7 @@ struct jc_ {
 	f32 volumeModifier;                   // _F0
 	f32 targetPitch;                      // _F4
 	u16 finalPitch;                       // _F8
-	u16 pitchSlideCounter;                // _FA
+	u16 pitchSweepSteps;                  // _FA
 	jcs_* lastManager;                    // _FC
 	f32 managerPitch;                     // _100
 	f32 managerVolume;                    // _104
