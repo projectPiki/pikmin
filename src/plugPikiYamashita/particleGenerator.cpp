@@ -100,6 +100,8 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector
 			_64 = u32ToFloat(((u32*)data)[3]);
 			mAnimData.set(&data[16]);
 
+			!!data;
+
 			u32 rotType = (mAnimData.mFlags.bits._m1) & 0x7;
 			_68.m0      = (mAnimData.mFlags.bits._m5);
 			_68.m1      = mAnimData.mFlags.bits._m6;
