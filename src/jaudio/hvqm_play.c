@@ -53,7 +53,7 @@ struct DVDControl {
 	int _0C;   // _0C
 } dvd_ctrl[3];
 
-static char filename[64];
+static char filename[64] ATTRIBUTE_ALIGN(32);
 static u8* dvd_buf[3];
 static int gop_subframe         = -1;
 static BOOL playback_first_wait = TRUE;
@@ -78,7 +78,7 @@ typedef struct HVQM_FileHeader {
 static HVQM_FileHeader file_header;
 static u32 gop_header[5]; // TODO: struct?
 static OSThread jac_hvqmThread;
-static u8 hvqmStack[0x1000];
+static u8 hvqmStack[0x1000] ATTRIBUTE_ALIGN(32);
 
 /*
  * --INFO--
@@ -108,83 +108,6 @@ static void __ReLoad()
 		DVDT_LoadtoDRAM(dvdcount, filename, (u32)dvd_buf[dvdcount % num_bufs], dvdcount << 0x13, dvdload_size, NULL, __LoadFin);
 		OSRestoreInterrupts(inter);
 	}
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x10(r1)
-	  stw       r31, 0xC(r1)
-	  lwz       r6, 0x2D88(r13)
-	  cmplwi    r6, 0
-	  bne-      .loc_0x28
-	  li        r0, 0x1
-	  stw       r0, 0x2D68(r13)
-	  b         .loc_0xF0
-
-	.loc_0x28:
-	  lwz       r4, 0x2D6C(r13)
-	  li        r3, 0x3
-	  lis       r5, 0x803E
-	  divwu     r0, r4, r3
-	  subi      r5, r5, 0x3320
-	  mullw     r0, r0, r3
-	  sub       r0, r4, r0
-	  rlwinm    r0,r0,4,0,27
-	  add       r4, r5, r0
-	  lbzu      r0, 0x4(r4)
-	  cmplwi    r0, 0x3
-	  bne-      .loc_0xF0
-	  lis       r0, 0x8
-	  li        r3, 0x1
-	  cmplw     r6, r0
-	  stb       r3, 0x0(r4)
-	  bge-      .loc_0x74
-	  stw       r6, 0x2D84(r13)
-	  b         .loc_0x78
-
-	.loc_0x74:
-	  stw       r0, 0x2D84(r13)
-
-	.loc_0x78:
-	  lwz       r3, 0x2D84(r13)
-	  lwz       r0, 0x2D88(r13)
-	  sub       r0, r0, r3
-	  stw       r0, 0x2D88(r13)
-	  bl        0x1DB274
-	  lwz       r10, 0x2D6C(r13)
-	  li        r8, 0x3
-	  lwz       r4, 0x2DA8(r13)
-	  addi      r31, r3, 0
-	  divwu     r0, r10, r8
-	  lis       r6, 0x8039
-	  addi      r5, r4, 0x1
-	  lwz       r7, 0x2D84(r13)
-	  stw       r5, 0x2DA8(r13)
-	  lis       r5, 0x8002
-	  lis       r4, 0x8039
-	  subi      r9, r5, 0x2260
-	  mullw     r8, r0, r8
-	  subi      r0, r6, 0x5680
-	  subi      r4, r4, 0x56C0
-	  addi      r3, r10, 0
-	  rlwinm    r6,r10,19,0,12
-	  sub       r5, r10, r8
-	  li        r8, 0
-	  rlwinm    r5,r5,2,0,29
-	  add       r5, r0, r5
-	  lwz       r5, 0x0(r5)
-	  bl        -0x16464
-	  mr        r3, r31
-	  bl        0x1DB238
-
-	.loc_0xF0:
-	  lwz       r0, 0x14(r1)
-	  lwz       r31, 0xC(r1)
-	  addi      r1, r1, 0x10
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -263,8 +186,7 @@ static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
  */
 void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 {
-	(void)&filepath;
-	const char* filepath2;
+	// TODO: Use this in more places below instead of hardcoding 0x40000
 	u32 var_r29         = 0x40000;
 	playback_first_wait = TRUE;
 	for (u32 i = 0; i < a; i++) {
@@ -307,20 +229,19 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 	for (u32 i = 0; i < 3; i++) {
 		dvd_ctrl[i].mState = 3;
 	}
-	filepath2      = filepath;
 	arcoffset      = 0;
 	dvd_loadfinish = 0;
-	dvdfile_size   = DVDT_CheckFile(filepath2);
+	dvdfile_size   = DVDT_CheckFile(filepath);
 	dvdfile_size -= 0x80000;
 	volatile u32 status;
-	DVDT_LoadtoDRAM(dvdcount, filepath2, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
+	DVDT_LoadtoDRAM(dvdcount, filepath, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
 	while (status == 0) { }
 
 	dvd_ctrl[0]._08    = 0;
 	dvd_ctrl[0].mState = 2;
 	dvd_ctrl[0]._0C    = 0x80000;
 	dvdcount++;
-	strcpy(filename, filepath2);
+	strcpy(filename, filepath);
 	__ReLoad();
 
 	file_header = *(HVQM_FileHeader*)dvd_buf[0];
@@ -366,9 +287,13 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 	}
 	file_header._30 = 0;
 
-	header._00         = sp34;
-	header._04         = sp30;
-	header._08         = sp3C;
+	header._00 = sp34;
+	header._04 = sp30;
+
+	u16 sp3C_2 = (u16)sp3C;
+	!sp3C_2;
+	header._08 = sp3C_2;
+
 	header.audioFormat = sp38;
 	header._0C         = 0x10;
 	header._0E         = 0x1e;
@@ -408,282 +333,10 @@ void Jac_HVQM_Init(const char* filepath, u8* data, u32 a)
 		int start = Jac_GetCurrentSCounter();
 		while (start == Jac_GetCurrentSCounter()) { }
 	}
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r6, 0
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  lis       r7, 0x8039
-	  stwu      r1, -0x90(r1)
-	  stmw      r26, 0x78(r1)
-	  subi      r31, r7, 0x56C0
-	  addi      r26, r4, 0
-	  lis       r29, 0x4
-	  stw       r3, 0x8(r1)
-	  stw       r0, -0x7EBC(r13)
-	  stw       r6, 0x70(r1)
-	  b         .loc_0x48
 
-	.loc_0x38:
-	  stbx      r6, r26, r0
-	  lwz       r3, 0x70(r1)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x70(r1)
+	return;
 
-	.loc_0x48:
-	  lwz       r0, 0x70(r1)
-	  cmplw     r0, r5
-	  blt+      .loc_0x38
-	  lis       r0, 0x4
-	  li        r6, 0
-	  li        r3, 0x1
-	  cmplw     r5, r0
-	  stw       r6, 0x2D6C(r13)
-	  stw       r6, 0x2DA8(r13)
-	  stw       r6, 0x2DA0(r13)
-	  stw       r3, 0x2D7C(r13)
-	  stw       r3, 0x2DB0(r13)
-	  stw       r6, 0x2D78(r13)
-	  stw       r6, 0x2D74(r13)
-	  blt-      .loc_0x3A8
-	  subis     r3, r5, 0x4
-	  lis       r0, 0x6
-	  cmplw     r3, r0
-	  addi      r28, r26, 0
-	  blt-      .loc_0x3A8
-	  addis     r3, r26, 0x4
-	  li        r0, 0x3
-	  stw       r3, 0x2DAC(r13)
-	  subis     r27, r5, 0xA
-	  addis     r26, r26, 0xA
-	  lis       r4, 0x8
-	  mtctr     r0
-
-	.loc_0xB4:
-	  cmplw     r27, r4
-	  blt-      .loc_0x3A8
-	  add       r3, r31, r6
-	  subis     r27, r27, 0x8
-	  stw       r26, 0x40(r3)
-	  addis     r26, r26, 0x8
-	  addi      r6, r6, 0x4
-	  bdnz+     .loc_0xB4
-	  lis       r3, 0x803E
-	  li        r0, 0x3
-	  subi      r5, r3, 0x3320
-	  li        r3, 0
-	  li        r6, 0x3
-	  mtctr     r0
-
-	.loc_0xEC:
-	  add       r4, r5, r3
-	  addi      r3, r3, 0x10
-	  stb       r6, 0x4(r4)
-	  bdnz+     .loc_0xEC
-	  li        r0, 0
-	  lwz       r30, 0x8(r1)
-	  stw       r0, 0x2D70(r13)
-	  mr        r3, r30
-	  stw       r0, 0x2D68(r13)
-	  bl        -0x162B0
-	  lwz       r10, 0x2D6C(r13)
-	  li        r5, 0x3
-	  stw       r3, 0x2D88(r13)
-	  addi      r4, r30, 0
-	  divwu     r0, r10, r5
-	  addi      r3, r10, 0
-	  lwz       r7, 0x2D88(r13)
-	  addi      r8, r1, 0x68
-	  li        r6, 0
-	  subis     r7, r7, 0x8
-	  stw       r7, 0x2D88(r13)
-	  lis       r7, 0x8
-	  mullw     r0, r0, r5
-	  li        r9, 0
-	  sub       r0, r10, r0
-	  rlwinm    r0,r0,2,0,29
-	  add       r5, r31, r0
-	  lwz       r5, 0x40(r5)
-	  bl        -0x1687C
-
-	.loc_0x160:
-	  lwz       r0, 0x68(r1)
-	  cmplwi    r0, 0
-	  beq+      .loc_0x160
-	  lis       r3, 0x803E
-	  li        r0, 0
-	  subi      r6, r3, 0x3320
-	  li        r5, 0x2
-	  stw       r0, 0x8(r6)
-	  lis       r0, 0x8
-	  addi      r3, r31, 0
-	  addi      r4, r30, 0
-	  stb       r5, 0x4(r6)
-	  stw       r0, 0xC(r6)
-	  lwz       r5, 0x2D6C(r13)
-	  addi      r0, r5, 0x1
-	  stw       r0, 0x2D6C(r13)
-	  bl        0x1FB198
-	  bl        -0x544
-	  lwz       r3, 0x40(r31)
-	  li        r0, 0x8
-	  addi      r6, r31, 0x44
-	  subi      r4, r3, 0x8
-	  mtctr     r0
-
-	.loc_0x1BC:
-	  lwzu      r3, 0x8(r4)
-	  lwz       r0, 0x4(r4)
-	  stwu      r3, 0x8(r6)
-	  stw       r0, 0x4(r6)
-	  bdnz+     .loc_0x1BC
-	  lwz       r5, 0x8(r4)
-	  li        r4, 0
-	  li        r0, -0x1
-	  addi      r3, r31, 0x7C
-	  stw       r5, 0x8(r6)
-	  lwz       r5, 0x2D70(r13)
-	  stw       r4, 0x2D98(r13)
-	  addi      r5, r5, 0x44
-	  stw       r5, 0x2D70(r13)
-	  stw       r4, 0x2D9C(r13)
-	  stw       r0, -0x7EC0(r13)
-	  lbz       r0, 0x88(r31)
-	  stw       r0, 0x38(r1)
-	  lwz       r4, 0x8C(r31)
-	  lwz       r0, 0x38(r1)
-	  stw       r4, 0x3C(r1)
-	  cmpwi     r0, 0x4
-	  lwz       r4, 0x7C(r31)
-	  stw       r4, 0x34(r1)
-	  beq-      .loc_0x240
-	  bge-      .loc_0x234
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x258
-	  bge-      .loc_0x268
-	  b         .loc_0x288
-
-	.loc_0x234:
-	  cmpwi     r0, 0x6
-	  bge-      .loc_0x288
-	  b         .loc_0x274
-
-	.loc_0x240:
-	  lwz       r5, 0x34(r1)
-	  li        r4, 0x12
-	  rlwinm    r5,r5,4,0,27
-	  divwu     r4, r5, r4
-	  stw       r4, 0x30(r1)
-	  b         .loc_0x288
-
-	.loc_0x258:
-	  lwz       r4, 0x34(r1)
-	  rlwinm    r4,r4,31,1,31
-	  stw       r4, 0x30(r1)
-	  b         .loc_0x288
-
-	.loc_0x268:
-	  lwz       r4, 0x34(r1)
-	  stw       r4, 0x30(r1)
-	  b         .loc_0x288
-
-	.loc_0x274:
-	  lwz       r5, 0x34(r1)
-	  li        r4, 0x24
-	  rlwinm    r5,r5,4,0,27
-	  divwu     r4, r5, r4
-	  stw       r4, 0x30(r1)
-
-	.loc_0x288:
-	  li        r10, 0
-	  li        r7, 0x10
-	  stw       r10, 0x0(r3)
-	  li        r6, 0x1E
-	  li        r3, 0x4
-	  addi      r5, r1, 0x40
-	  lwz       r9, 0x34(r1)
-	  li        r4, 0
-	  lwz       r8, 0x3C(r1)
-	  stw       r9, 0x40(r1)
-	  lwz       r9, 0x30(r1)
-	  stw       r9, 0x44(r1)
-	  sth       r8, 0x48(r1)
-	  sth       r0, 0x4A(r1)
-	  sth       r7, 0x4C(r1)
-	  sth       r6, 0x4E(r1)
-	  mtctr     r3
-
-	.loc_0x2CC:
-	  addi      r0, r4, 0x10
-	  addi      r4, r4, 0x4
-	  stwx      r10, r5, r0
-	  bdnz+     .loc_0x2CC
-	  addi      r4, r28, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x40
-	  bl        -0x348
-	  stw       r26, 0x2DA4(r13)
-	  addi      r26, r26, 0x20
-	  subi      r27, r27, 0x20
-	  bl        0x53D4
-	  lwz       r3, 0x2DA4(r13)
-	  addi      r4, r31, 0x80
-	  bl        0x53E8
-	  lwz       r3, 0x2DA4(r13)
-	  bl        0x5404
-	  addi      r0, r3, 0x1F
-	  rlwinm    r0,r0,0,0,26
-	  cmplw     r27, r0
-	  blt-      .loc_0x3A8
-	  lwz       r3, 0x2DA4(r13)
-	  mr        r4, r26
-	  add       r26, r26, r0
-	  sub       r27, r27, r0
-	  bl        0x5454
-	  lis       r5, 0x7
-	  lis       r4, 0x803E
-	  lis       r3, 0x1234
-	  li        r0, 0x18
-	  addi      r6, r5, 0x800
-	  subi      r5, r4, 0x34D0
-	  addi      r4, r3, 0x5678
-	  li        r8, 0
-	  li        r3, 0
-	  mtctr     r0
-
-	.loc_0x35C:
-	  cmplw     r27, r6
-	  blt-      .loc_0x38C
-	  add       r7, r5, r3
-	  subis     r27, r27, 0x7
-	  stw       r26, 0x0(r7)
-	  addis     r26, r26, 0x7
-	  addi      r8, r8, 0x1
-	  addi      r3, r3, 0x10
-	  stw       r4, 0xC(r7)
-	  addi      r26, r26, 0x800
-	  subi      r27, r27, 0x800
-	  bdnz+     .loc_0x35C
-
-	.loc_0x38C:
-	  stw       r8, 0x2D80(r13)
-	  bl        0x6F0
-	  bl        -0x17834
-	  mr        r26, r3
-
-	.loc_0x39C:
-	  bl        -0x1783C
-	  cmplw     r26, r3
-	  beq+      .loc_0x39C
-
-	.loc_0x3A8:
-	  lmw       r26, 0x78(r1)
-	  lwz       r0, 0x94(r1)
-	  addi      r1, r1, 0x90
-	  mtlr      r0
-	  blr
-	*/
+	(void)&filepath;
 }
 
 /*

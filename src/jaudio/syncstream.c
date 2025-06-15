@@ -20,7 +20,7 @@ struct UNK_STRUCT {
 
 typedef struct UNK_STRUCT UNK_STRUCT;
 
-static StreamCtrl_ SC[1];
+static StreamCtrl_ SC[1] ATTRIBUTE_ALIGN(32);
 static UNK_STRUCT copyinfo;
 
 static StreamCallback default_streamsync_call;
@@ -728,120 +728,6 @@ void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* st
 	state[1] = sb;
 	state[2] = sc;
 	state[3] = sd;
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x48(r1)
-	  lis       r9, 0x8022
-	  addi      r9, r9, 0x6F70
-	  rlwinm    r0,r7,0,24,31
-	  stmw      r24, 0x28(r1)
-	  li        r27, 0
-	  lha       r31, 0x0(r8)
-	  lha       r30, 0x2(r8)
-	  lha       r29, 0x4(r8)
-	  lha       r28, 0x6(r8)
-	  b         .loc_0x170
-
-	.loc_0x2C:
-	  lbz       r7, 0x0(r3)
-	  li        r10, 0x8
-	  rlwinm    r12,r7,28,28,31
-	  rlwinm    r7,r7,2,26,29
-	  add       r7, r9, r7
-	  lha       r11, 0x0(r7)
-	  lha       r7, 0x2(r7)
-	  mtctr     r10
-	  addi      r3, r3, 0x1
-
-	.loc_0x50:
-	  lbz       r25, 0x0(r3)
-	  extsh     r10, r31
-	  mullw     r31, r11, r10
-	  extsh     r30, r30
-	  srawi     r24, r25, 0x4
-	  rlwinm    r25,r25,1,27,30
-	  add       r26, r9, r25
-	  rlwinm    r24,r24,1,23,30
-	  mullw     r25, r7, r30
-	  add       r24, r9, r24
-	  lha       r24, 0x40(r24)
-	  addi      r3, r3, 0x1
-	  slw       r24, r24, r12
-	  add       r25, r31, r25
-	  srawi     r25, r25, 0xB
-	  add       r24, r24, r25
-	  extsh     r30, r24
-	  sth       r30, 0x0(r4)
-	  mullw     r25, r11, r30
-	  lha       r26, 0x40(r26)
-	  slw       r26, r26, r12
-	  mullw     r10, r7, r10
-	  add       r10, r25, r10
-	  srawi     r10, r10, 0xB
-	  add       r10, r26, r10
-	  extsh     r10, r10
-	  sth       r10, 0x2(r4)
-	  addi      r31, r10, 0
-	  addi      r4, r4, 0x4
-	  bdnz+     .loc_0x50
-	  cmplwi    r0, 0
-	  beq-      .loc_0x16C
-	  lbz       r7, 0x0(r3)
-	  li        r10, 0x8
-	  rlwinm    r11,r7,28,28,31
-	  rlwinm    r7,r7,2,26,29
-	  add       r7, r9, r7
-	  lha       r12, 0x0(r7)
-	  lha       r7, 0x2(r7)
-	  mtctr     r10
-	  addi      r3, r3, 0x1
-
-	.loc_0xF4:
-	  lbz       r24, 0x0(r3)
-	  extsh     r10, r29
-	  extsh     r28, r28
-	  addi      r3, r3, 0x1
-	  mullw     r29, r12, r10
-	  srawi     r25, r24, 0x4
-	  rlwinm    r25,r25,1,23,30
-	  add       r25, r9, r25
-	  lha       r25, 0x40(r25)
-	  rlwinm    r26,r24,1,27,30
-	  add       r26, r9, r26
-	  mullw     r28, r7, r28
-	  slw       r25, r25, r11
-	  add       r28, r29, r28
-	  srawi     r28, r28, 0xB
-	  add       r24, r25, r28
-	  extsh     r28, r24
-	  sth       r28, 0x0(r5)
-	  mullw     r29, r12, r28
-	  lha       r26, 0x40(r26)
-	  slw       r26, r26, r11
-	  mullw     r10, r7, r10
-	  add       r10, r29, r10
-	  srawi     r10, r10, 0xB
-	  add       r10, r26, r10
-	  extsh     r10, r10
-	  sth       r10, 0x2(r5)
-	  addi      r29, r10, 0
-	  addi      r5, r5, 0x4
-	  bdnz+     .loc_0xF4
-
-	.loc_0x16C:
-	  addi      r27, r27, 0x1
-
-	.loc_0x170:
-	  cmplw     r27, r6
-	  blt+      .loc_0x2C
-	  sth       r31, 0x0(r8)
-	  sth       r30, 0x2(r8)
-	  sth       r29, 0x4(r8)
-	  sth       r28, 0x6(r8)
-	  lmw       r24, 0x28(r1)
-	  addi      r1, r1, 0x48
-	  blr
-	*/
 }
 
 /*
