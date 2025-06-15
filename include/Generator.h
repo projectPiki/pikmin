@@ -782,6 +782,8 @@ struct Generator : public Node {
 	~Generator();
 	void updateUseList();
 
+	void removeSelf(AgeServer&);
+
 	static bool ramMode;
 
 	void setDayLimit(int limit) { mDayLimit = limit; }
@@ -794,8 +796,8 @@ struct Generator : public Node {
 	bool doAdjustFaceDir() { return mGenType->mAdjustFaceDirection(); }
 
 	// DLL inlines to make:
-	// void changeNaviPos();
-	// void setNaviPos();
+	void changeNaviPos();
+	void setNaviPos();
 	void setOffset(Vector3f& ofs) { mGenOffset = ofs; }
 	void setPos(Vector3f& pos) { mGenPosition = pos; }
 	// int isCarryOver();
@@ -862,6 +864,7 @@ struct GeneratorMgr : public Node {
 
 	void genWrite(AgeServer&);
 	void addGenerator(AgeServer&);
+	void removeGenerator(AgeServer&, Generator*);
 
 	// _00     = VTBL
 	// _00-_20 = Node

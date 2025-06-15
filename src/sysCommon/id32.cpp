@@ -1,6 +1,8 @@
 #include "ID32.h"
 
 #include "Stream.h"
+#include "Age.h"
+#include "sysNew.h"
 #include "DebugLog.h"
 
 /*
@@ -215,3 +217,16 @@ void ID32::sprint(char* buffer)
 	buffer[3] = (u8)(this->mId & 0xFF);
 	buffer[4] = 0;
 }
+
+#ifdef DEVELOP
+
+// .dll exclusive function
+
+void ID32::genAge(AgeServer& server, char* name)
+{
+	server.setOnChange(new Delegate<ID32>(this, ageChangeID));
+	server.NewEditor(name, mStringID, 5);
+	server.setOnChange((Delegate<ID32>*)nullptr);
+}
+
+#endif

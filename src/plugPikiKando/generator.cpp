@@ -1732,7 +1732,7 @@ void GeneratorMgr::genAge(AgeServer& server)
 			char str[256];
 			sprintf(str, "Generator%d <%s>", index, gen->mMemo);
 			server.StartSection(str, true);
-			server.setSectionRefresh(new Delegate1<Generator, AgeServer&>(gen, Generator::genAge)); // this might be CoreNode::genAge idk
+			server.setSectionRefresh(new Delegate1<CoreNode, AgeServer&>(gen, CoreNode::genAge));
 			server.EndSection();
 		}
 	}
@@ -1785,10 +1785,189 @@ void GeneratorMgr::addGenerator(AgeServer& server)
 	server.RefreshNode();
 }
 
+void GeneratorMgr::removeGenerator(AgeServer& server, Generator* gen)
+{
+	Generator* root = mGenListHead;
+	while (true) {
+		if (root == nullptr) {
+			server.RefreshNode();
+			return;
+		}
+		if (root == gen) {
+			break;
+		}
+		root = root->mNextGenerator;
+	}
+
+	if (root->mPrevGenerator) {
+		root->mPrevGenerator->mNextGenerator = root->mNextGenerator;
+		if (root == mGenListHead) {
+			mGenListHead = root->mPrevGenerator;
+		}
+	}
+
+	if (root->mNextGenerator) {
+		root->mNextGenerator->mPrevGenerator = root->mPrevGenerator;
+		if (root == mGenListHead) {
+			mGenListHead = root->mNextGenerator;
+		}
+	}
+
+	if (root) {
+		delete root;
+	}
+	mGenCount--;
+	if (mGenCount == 0) {
+		mGenListHead = nullptr;
+	}
+	server.RefreshNode();
+}
+
+void Generator::changeNaviPos()
+{
+	Navi* navi = naviMgr->getNavi();
+	if (navi) {
+		navi->mPosition     = mGenPosition;
+		navi->mLastPosition = mGenPosition;
+	}
+}
+
+void Generator::setNaviPos()
+{
+	Navi* navi = naviMgr->getNavi();
+	if (navi) {
+		mGenPosition = navi->mPosition;
+	}
+}
+
 void Generator::genAge(AgeServer& server)
 {
-	// idk if this is right
-	CoreNode::genAge(server);
+	server.StartGroup("info");
+	char version[8];
+	mGeneratorVersion.sprint(version);
+	char buf[128];
+	sprintf("version [%s]", version);
+	server.NewLabel(buf);
+	server.EndGroup();
+
+	server.StartGroup("id");
+	mGeneratorName.genAge(server, "id");
+	server.NewEditor("memo", mMemo, sizeof(mMemo) + 1);
+	server.EndGroup();
+
+	server.StartGroup("Carry Over");
+	server.StartBitGroup("flags", &mCarryOverFlags, 200);
+	server.NewBit("ジェネレータを残す", GENCARRY_Unk1, 0);         // Leave Generator
+	server.NewBit("生んだやつを残す", GENCARRY_Unk2, 0);           // Leave the one you gave birth to
+	server.NewBit("数を残す", GENCARRY_Unk3, 0);                   // Leave a number
+	server.NewBit("ジェネレータを残す", GENCARRY_SavePosition, 0); // Leave a place
+	server.EndBitGroup();
+	server.EndGroup();
+
+	server.StartGroup("Controll");
+	server.NewButton("init", new Delegate<Generator>(this, init), 221);
+	server.NewButton("delete", new Delegate1<Generator, AgeServer&>(this, removeSelf), 221);
+	server.EndGroup();
+
+	server.StartGroup("Position");
+	server.NewButton("move to navi pos", new Delegate<Generator>(this, setNaviPos), 221);
+	server.NewButton("move navi to this pos", new Delegate<Generator>(this, changeNaviPos), 221);
+	server.NewEditor("pos x", &mGenPosition.x, -8000.0f, 8000.0f, 0x140);
+	server.NewEditor("pos y", &mGenPosition.y, -8000.0f, 8000.0f, 0x140);
+	server.NewEditor("pos z", &mGenPosition.z, -8000.0f, 8000.0f, 0x140);
+	server.NewEditor("offset x", &mGenOffset.x, -1000.0f, 1000.0f, 0x140);
+	server.NewEditor("offset y", &mGenOffset.y, -1000.0f, 1000.0f, 0x140);
+	server.NewEditor("offset z", &mGenOffset.z, -1000.0f, 1000.0f, 0x140);
+	server.EndGroup();
+
+	u32 id = '    ';
+	if (mGenObject) {
+		id = mGenObject->mID;
+	} else {
+		id = '    ';
+	}
+	// some inline idk
+	char buf2[256];
+	sprintf(buf2, "Object : version(%s)", &id);
+	server.StartGroup(buf2);
+	server.setOnChange(new Delegate1<Generator, AgeServer&>(this, changeObject));
+	server.StartOptionBox("change", (int*)&mGenObjectID, 0x110);
+	// some jank here
+	server.EndOptionBox();
+	server.setOnChange((Delegate<Generator>*)nullptr);
+	if (mGenObject) {
+		mGenObject;
+	} else {
+		server.NewLabel("unset");
+	}
+	server.EndGroup();
+
+	server.StartGroup("Area");
+	server.setOnChange(new Delegate1<Generator, AgeServer&>(this, changeArea));
+	server.StartOptionBox("change", (int*)&mGenAreaID, 0x110);
+	// some jank here
+	server.EndOptionBox();
+	server.setOnChange((Delegate<Generator>*)nullptr);
+	if (mGenArea) {
+		mGenArea;
+	} else {
+		server.NewLabel("unset");
+	}
+	server.EndGroup();
+
+	server.StartGroup("Number");
+	server.setOnChange(new Delegate1<Generator, AgeServer&>(this, changeType));
+	server.StartOptionBox("change", (int*)&mGenTypeID, 0x110);
+	// some jank here
+	server.EndOptionBox();
+	server.setOnChange((Delegate<Generator>*)nullptr);
+	if (mGenArea) {
+		mGenArea;
+	} else {
+		server.NewLabel("unset");
+	}
+	server.EndGroup();
+}
+
+void Generator::changeArea(AgeServer& server)
+{
+	if (mGenArea) {
+		if (mGenArea->mVersion == mGenAreaID) {
+			return;
+		}
+		delete mGenArea;
+	}
+	mGenArea = GenAreaFactory::getProduct(mGenAreaID);
+	server.RefreshSection();
+}
+
+void Generator::changeObject(AgeServer& server)
+{
+	if (mGenObject) {
+		if (mGenObject->mVersion == mGenObjectID) {
+			return;
+		}
+		delete mGenObject;
+	}
+	mGenObject = GenObjectFactory::getProduct(mGenObjectID);
+	server.RefreshSection();
+}
+
+void Generator::changeType(AgeServer& server)
+{
+	if (mGenType) {
+		if (mGenType->mVersion == mGenTypeID) {
+			return;
+		}
+		delete mGenType;
+	}
+	mGenType = GenTypeFactory::getProduct(mGenTypeID);
+	server.RefreshSection();
+}
+
+void Generator::removeSelf(AgeServer& server)
+{
+	mMgr->removeGenerator(server, this);
 }
 
 #endif

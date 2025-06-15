@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+struct AgeServer;
+
 /**
  * @brief Represents a 32-bit identifier with associated string ID.
  *
@@ -86,6 +88,9 @@ struct ID32 {
 	 * @param stream The random access stream to write to.
 	 */
 	void write(RandomAccessStream& stream);
+
+	void genAge(AgeServer&, char*);
+	void ageChangeID() { updateID(); }
 
 	u32 mId;           // _00
 	char mStringID[5]; // _04
