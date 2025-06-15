@@ -95,10 +95,10 @@ struct CoreNode : public ANode {
 
 	void load(char* dirPath, char* fileName, u32);
 
+	void genRead(AgeServer&) { }
+	void genWrite(AgeServer&) { }
 #ifdef DEVELOP
-	void genRead(AgeServer&);
-	void genWrite(AgeServer&);
-	void genAge(AgeServer&);
+	virtual void genAge(AgeServer&) { }
 #endif
 
 	// _00 = VTBL

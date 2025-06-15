@@ -23,62 +23,64 @@ struct Colour;
 struct AgeServer : public AtxStream {
 	AgeServer() { }
 
+// TODO: All of this should be moved to a dedicated ageServer.cpp, I just don't want to yet because of the hacky way you have to add it in
+// configure.py
 #ifdef DEVELOP
-	void Done();
-	void EndBitGroup();
-	void EndGroup();
-	void EndNode();
-	void EndOptionBox();
-	void EndSection();
+	void Done() { }
+	void EndBitGroup() { }
+	void EndGroup() { }
+	void EndNode() { }
+	void EndOptionBox() { }
+	void EndSection() { }
 
 	// NEW SECTION
-	void NewBit(char*, u32, u32);
+	void NewBit(char*, u32, u32) { }
 
-	void NewButton(char*, IDelegate*, int);
-	void NewButton(char*, IDelegate1<AgeServer&>*, int);
+	void NewButton(char*, IDelegate*, int) { }
+	void NewButton(char*, IDelegate1<AgeServer&>*, int) { }
 
-	void NewEditor(char*, class AyuImage*, bool);
-	void NewEditor(char*, Colour*);
-	void NewEditor(char*, char*, int);
-	void NewEditor(char*, char*, int, int, int);
-	void NewEditor(char*, f32*, f32, f32, int);
-	void NewEditor(char*, int*, int, int, int);
-	void NewEditor(char*, short*, int, int, int);
-	void NewLabel(char*);
-	void NewNode(char*, ANode*);
-	void NewNodeWindow(char*);
-	void NewOption(char*, int);
-	void NewPropWindow(char*, u32);
-	void NewViewer(char*, f32*);
-	void NewViewer(char*, int*);
+	void NewEditor(char*, class AyuImage*, bool) { }
+	void NewEditor(char*, Colour*) { }
+	void NewEditor(char*, char*, int) { }
+	void NewEditor(char*, char*, int, int, int) { }
+	void NewEditor(char*, f32*, f32, f32, int) { }
+	void NewEditor(char*, int*, int, int, int) { }
+	void NewEditor(char*, short*, int, int, int) { }
+	void NewLabel(char*) { }
+	void NewNode(char*, ANode*) { }
+	void NewNodeWindow(char*) { }
+	void NewOption(char*, int) { }
+	void NewPropWindow(char*, u32) { }
+	void NewViewer(char*, f32*) { }
+	void NewViewer(char*, int*) { }
 
-	bool Open();
-	void RefreshNode();
-	void RefreshSection();
+	bool Open() { }
+	void RefreshNode() { }
+	void RefreshSection() { }
 
-	void StartBitGroup(char*, u32*, int);
-	void StartBitGroup(char*, u8*, int);
-	void StartGroup(char* name);
-	void StartOptionBox(char* name, int*, int);
-	void StartOptionBox(char* name, u16*, int);
-	void StartOptionBox(char* name, u8*, int);
-	void StartSection(char* name, bool unk);
+	void StartBitGroup(char*, u32*, int) { }
+	void StartBitGroup(char*, u8*, int) { }
+	void StartGroup(char* name) { }
+	void StartOptionBox(char* name, int*, int) { }
+	void StartOptionBox(char* name, u16*, int) { }
+	void StartOptionBox(char* name, u8*, int) { }
+	void StartSection(char* name, bool unk) { }
 
-	virtual void close();
+	virtual void close() { }
 
-	bool getOpenFilename(String&, char*);
-	bool getSaveFilename(String&, char*);
+	bool getOpenFilename(String&, char*) { }
+	bool getSaveFilename(String&, char*) { }
 
-	void readPropValue(PROP_TYPE, void*);
+	void readPropValue(PROP_TYPE, void*) { }
 
-	void setOnChange(IDelegate*);
-	void setOnChange(IDelegate1<AgeServer&>*);
-	void setSectionRefresh(IDelegate1<AgeServer&>*);
+	void setOnChange(IDelegate*) { }
+	void setOnChange(IDelegate1<AgeServer&>*) { }
+	void setSectionRefresh(IDelegate1<AgeServer&>*) { }
 
-	bool update();
+	bool update() { }
 
-	void writeProp(PROP_TYPE, void*);
-	void writePropValue(PROP_TYPE, void*);
+	void writeProp(PROP_TYPE, void*) { }
+	void writePropValue(PROP_TYPE, void*) { }
 #endif
 
 	bool mIsActive; // _10
