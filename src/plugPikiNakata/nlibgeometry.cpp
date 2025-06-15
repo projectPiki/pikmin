@@ -1379,6 +1379,7 @@ void NTransform3D::rotate(Vector3f& point)
 	NTransform3D& rotation = NTransform3D();
 	outputRotation(rotation);
 	rotation.rotate(point);
+	STACK_PAD_STRUCT(3);
 	/*
 	.loc_0x0:
 	  mflr      r0

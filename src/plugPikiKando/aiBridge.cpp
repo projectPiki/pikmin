@@ -87,7 +87,7 @@ bool ActBridge::collideBridgeSurface()
 			return true;
 		}
 	}
-	STACK_PAD_TERNARY(platform, 2);
+	STACK_PAD_TERNARY(platform, 1);
 	return false;
 }
 
@@ -336,8 +336,6 @@ void ActBridge::newInitApproach()
  */
 int ActBridge::newExeApproach()
 {
-	// sigh
-
 	if (!mBridge) {
 		PRINT("app bri fail");
 		mPiki->mEmotion = PikiEmotion::Unk1;
@@ -429,7 +427,6 @@ void ActBridge::newInitGo()
  */
 int ActBridge::newExeGo()
 {
-
 	if (mStageIdx == -1) {
 		PRINT("stage = -1\n");
 		PRINT("go : stage=-1 suc");
@@ -441,7 +438,8 @@ int ActBridge::newExeGo()
 		return ACTOUT_Fail;
 	}
 
-	STACK_PAD_STRUCT(4);
+	STACK_PAD_STRUCT(3);
+	STACK_PAD_TERNARY(this, 1);
 	if (mBridge->isStageFinished(mStageIdx)) {
 		PRINT("stage %d is finished\n", mStageIdx);
 		newInitGo();
@@ -453,6 +451,7 @@ int ActBridge::newExeGo()
 		return ACTOUT_Continue;
 	}
 
+	STACK_PAD_INLINE(1);
 	bool c = collideBridgeSurface();
 	STACK_PAD_TERNARY(c, 2);
 
@@ -467,233 +466,8 @@ int ActBridge::newExeGo()
 	direction.normalise();
 
 	mPiki->setSpeed(0.70f, direction);
-	STACK_PAD_STRUCT(1);
+	STACK_PAD_VAR(1);
 	return ACTOUT_Continue;
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x150(r1)
-	  stfd      f31, 0x148(r1)
-	  stfd      f30, 0x140(r1)
-	  stfd      f29, 0x138(r1)
-	  stfd      f28, 0x130(r1)
-	  stfd      f27, 0x128(r1)
-	  stfd      f26, 0x120(r1)
-	  stw       r31, 0x11C(r1)
-	  mr        r31, r3
-	  stw       r30, 0x118(r1)
-	  stw       r29, 0x114(r1)
-	  lha       r4, 0x30(r3)
-	  cmpwi     r4, -0x1
-	  bne-      .loc_0x48
-	  li        r3, 0x2
-	  b         .loc_0x2D8
-
-	.loc_0x48:
-	  lwz       r3, 0x18(r31)
-	  cmplwi    r3, 0
-	  bne-      .loc_0x68
-	  lwz       r4, 0xC(r31)
-	  li        r0, 0x1
-	  li        r3, 0x1
-	  stb       r0, 0x400(r4)
-	  b         .loc_0x2D8
-
-	.loc_0x68:
-	  bl        -0xF380
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0x124
-	  li        r0, 0x2
-	  sth       r0, 0x1C(r31)
-	  lwz       r3, 0x18(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD4
-	  bl        -0xF4B0
-	  extsh     r0, r3
-	  sth       r0, 0x30(r31)
-	  bl        0x16A978
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x7088(r2)
-	  stw       r0, 0x10C(r1)
-	  lis       r0, 0x4330
-	  lfs       f2, -0x7090(r2)
-	  stw       r0, 0x108(r1)
-	  lfs       f1, -0x7094(r2)
-	  lfd       f3, 0x108(r1)
-	  lfs       f0, -0x7078(r2)
-	  fsubs     f3, f3, f4
-	  fdivs     f2, f3, f2
-	  fmuls     f1, f1, f2
-	  fsubs     f0, f1, f0
-	  stfs      f0, 0x2C(r31)
-	  b         .loc_0xDC
-
-	.loc_0xD4:
-	  li        r0, -0x1
-	  sth       r0, 0x30(r31)
-
-	.loc_0xDC:
-	  cmplwi    r31, 0
-	  addi      r29, r31, 0
-	  beq-      .loc_0xEC
-	  lwz       r29, 0x14(r31)
-
-	.loc_0xEC:
-	  addi      r3, r1, 0x98
-	  li        r4, 0x2
-	  bl        0x71800
-	  addi      r30, r3, 0
-	  addi      r5, r29, 0
-	  addi      r3, r1, 0x90
-	  li        r4, 0x2
-	  bl        0x71820
-	  mr        r4, r3
-	  lwz       r3, 0xC(r31)
-	  mr        r5, r30
-	  bl        0x1D25C
-	  li        r3, 0
-	  b         .loc_0x2D8
-
-	.loc_0x124:
-	  lwz       r3, 0xC(r31)
-	  bl        -0x23544
-	  cmplwi    r3, 0
-	  beq-      .loc_0x198
-	  lwz       r0, 0x18(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x198
-	  addi      r3, r1, 0x78
-	  lwz       r4, 0xC(r31)
-	  bl        -0x23548
-	  lfs       f31, 0x78(r1)
-	  addi      r3, r1, 0x84
-	  lfs       f30, 0x7C(r1)
-	  lfs       f29, 0x80(r1)
-	  lwz       r4, 0x18(r31)
-	  bl        -0xEC68
-	  lfs       f1, 0x84(r1)
-	  lfs       f0, 0x88(r1)
-	  fmuls     f2, f31, f1
-	  lfs       f3, 0x8C(r1)
-	  fmuls     f1, f30, f0
-	  lfs       f0, -0x707C(r2)
-	  fmuls     f3, f29, f3
-	  fadds     f1, f2, f1
-	  fadds     f1, f3, f1
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x198
-	  li        r0, 0x1
-	  b         .loc_0x19C
-
-	.loc_0x198:
-	  li        r0, 0
-
-	.loc_0x19C:
-	  rlwinm.   r0,r0,0,24,31
-	  beq-      .loc_0x1B4
-	  mr        r3, r31
-	  bl        .loc_0x30C
-	  li        r3, 0
-	  b         .loc_0x2D8
-
-	.loc_0x1B4:
-	  lwz       r3, 0xC(r31)
-	  bl        -0x235D4
-	  cmplwi    r3, 0
-	  beq-      .loc_0x1DC
-	  lwz       r0, 0x18(r31)
-	  cmplw     r3, r0
-	  bne-      .loc_0x1DC
-	  addi      r3, r1, 0x58
-	  lwz       r4, 0xC(r31)
-	  bl        -0x235D8
-
-	.loc_0x1DC:
-	  lwz       r4, 0x18(r31)
-	  addi      r3, r1, 0xC4
-	  lha       r5, 0x30(r31)
-	  bl        -0xEF04
-	  lfs       f29, 0xC4(r1)
-	  addi      r3, r1, 0xB8
-	  lfs       f30, 0xC8(r1)
-	  lfs       f31, 0xCC(r1)
-	  lwz       r4, 0x18(r31)
-	  bl        -0xECA8
-	  lfs       f28, 0xB8(r1)
-	  lfs       f27, 0xBC(r1)
-	  lfs       f26, 0xC0(r1)
-	  lwz       r3, 0x18(r31)
-	  bl        -0xEB58
-	  lfs       f0, 0x2C(r31)
-	  lwz       r3, 0xC(r31)
-	  fmuls     f2, f0, f1
-	  addi      r4, r3, 0x94
-	  lfs       f0, 0x94(r3)
-	  lfs       f1, 0x4(r4)
-	  addi      r3, r1, 0xA0
-	  fmuls     f28, f28, f2
-	  fmuls     f27, f27, f2
-	  fmuls     f26, f26, f2
-	  lfs       f2, 0x8(r4)
-	  fadds     f29, f29, f28
-	  fadds     f30, f30, f27
-	  fadds     f31, f31, f26
-	  fsubs     f0, f29, f0
-	  fsubs     f3, f30, f1
-	  fsubs     f1, f31, f2
-	  stfs      f0, 0xE0(r1)
-	  stfs      f3, 0xE4(r1)
-	  stfs      f1, 0xE8(r1)
-	  lwz       r4, 0x18(r31)
-	  bl        -0xED74
-	  lfs       f1, 0xE0(r1)
-	  lfs       f0, 0xE4(r1)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0xE8(r1)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0x9FCB4
-	  lfs       f0, -0x7098(r2)
-	  fcmpu     cr0, f0, f1
-	  beq-      .loc_0x2C4
-	  lfs       f0, 0xE0(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xE0(r1)
-	  lfs       f0, 0xE4(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xE4(r1)
-	  lfs       f0, 0xE8(r1)
-	  fdivs     f0, f0, f1
-	  stfs      f0, 0xE8(r1)
-
-	.loc_0x2C4:
-	  lwz       r3, 0xC(r31)
-	  addi      r4, r1, 0xE0
-	  lfs       f1, -0x7070(r2)
-	  bl        0x1E4A4
-	  li        r3, 0
-
-	.loc_0x2D8:
-	  lwz       r0, 0x154(r1)
-	  lfd       f31, 0x148(r1)
-	  lfd       f30, 0x140(r1)
-	  lfd       f29, 0x138(r1)
-	  lfd       f28, 0x130(r1)
-	  lfd       f27, 0x128(r1)
-	  lfd       f26, 0x120(r1)
-	  lwz       r31, 0x11C(r1)
-	  lwz       r30, 0x118(r1)
-	  lwz       r29, 0x114(r1)
-	  addi      r1, r1, 0x150
-	  mtlr      r0
-	  blr
-
-	.loc_0x30C:
-	*/
 }
 
 /*
@@ -791,6 +565,8 @@ int ActBridge::newExeWork()
 		return ACTOUT_Continue;
 	}
 
+	STACK_PAD_TERNARY(this, 3);
+
 	if (absF(xDist) > 0.3f * mBridge->getStageWidth()) {
 		if (xDist < 0.0f) {
 			xVec.multiply(-1.0f);
@@ -800,7 +576,6 @@ int ActBridge::newExeWork()
 	}
 	mBridge->getStageDepth();
 	mPiki->setSpeed(0.5f, zVec);
-	STACK_PAD_VAR(2);
 	return ACTOUT_Continue;
 	/*
 	.loc_0x0:
