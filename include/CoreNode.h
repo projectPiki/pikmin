@@ -4,6 +4,8 @@
 #include "types.h"
 #include "ANode.h"
 
+struct AgeServer;
+
 /**
  * @brief The CoreNode struct represents a node in a core data structure.
  *
@@ -92,6 +94,12 @@ struct CoreNode : public ANode {
 	void setName(char* name) { mName = name; }
 
 	void load(char* dirPath, char* fileName, u32);
+
+#ifdef DEVELOP
+	void genRead(AgeServer&);
+	void genWrite(AgeServer&);
+	void genAge(AgeServer&);
+#endif
 
 	// _00 = VTBL
 	char* mName;       // _04

@@ -74,6 +74,10 @@ struct AtxFileStream : public RandomAccessStream {
 	virtual int getLength();        // _60 (weak)
 	virtual void setLength(int);    // _64 (weak)
 
+#ifdef DEVELOP
+	bool open(char*, u32);
+#endif
+
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream
 	int mPosition;        // _08

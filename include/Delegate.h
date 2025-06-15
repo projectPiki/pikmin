@@ -3,6 +3,15 @@
 
 #include "types.h"
 
+// #ifdef DEVELOP
+/**
+ * @brief Parent class for no argument delegates.  NOTE this is only used in the .dll, not the final game
+ */
+struct IDelegate {
+	virtual void invoke() = 0; // _08
+};
+// #endif
+
 /**
  * @brief Parent class for single argument delegates.
  */
@@ -18,6 +27,31 @@ template <typename A, typename B>
 struct IDelegate2 {
 	virtual void invoke(A, B) = 0; // _08
 };
+
+// #ifdef DEVELOP
+/**
+ * @brief No argument delegates. NOTE this is only used in the .dll, not the final game
+ *
+ * @tparam T The type of the target object executing the member function.
+ */
+template <typename T>
+struct Delegate : public IDelegate {
+	typedef void (T::*CallbackFunc)();
+
+	inline Delegate(T* target, CallbackFunc func)
+	{
+		mTarget   = target;
+		mCallback = func;
+	}
+
+	virtual void invoke() { (mTarget->*mCallback)(); } // _08
+
+	// _00     = VTBL
+	// _00-_04 = IDelegate1
+	T* mTarget;             // _04
+	CallbackFunc mCallback; // _08
+};
+// #endif
 
 /**
  * @brief Single argument delegates.

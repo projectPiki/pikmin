@@ -249,3 +249,29 @@ void AtxFileStream::setLength(int length)
 {
 	mLength = length;
 }
+
+#ifdef DEVELOP
+
+// This a .dll exclusive function, equivalence is not guaranteed!
+
+bool AtxFileStream::open(char* path, u32 a)
+{
+	if (!mAtxStream.open("fil", 3)) {
+		PRINT("Could not open file service!!\n");
+		return false;
+	}
+
+	mAtxStream.writeString(path);
+	mAtxStream.writeInt(a);
+	mLength   = getLength();
+	mPosition = 0;
+
+	if (mLength < 0) {
+		mAtxStream.close();
+		return false;
+	}
+
+	mPath = path;
+	return true;
+}
+#endif

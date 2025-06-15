@@ -8,6 +8,7 @@
 #include "PikiHeadItem.h"
 #include "GameStat.h"
 #include "DebugLog.h"
+#include "Age.h"
 #include "sysNew.h"
 
 /*
@@ -1690,3 +1691,104 @@ void GeneratorList::updateUseList()
 		}
 	}
 }
+
+// The functions following this point are exclusively found in the windows .dll build
+// None of this is confirmed to be equivalent for obvious reasons
+
+#ifdef DEVELOP
+void GeneratorMgr::genAge(AgeServer& server)
+{
+	server.StartSection(mName, true);
+	server.StartGroup("info");
+
+	char version[8];
+	mGeneratorVersionId.sprint(version);
+	char latest[8];
+	_24.sprint(latest);
+	char buf[128];
+	sprintf(buf, "version [%s] latest=[%s]", version, latest);
+	server.NewLabel(buf);
+	server.EndGroup();
+
+	server.StartGroup("ファイル");
+	server.NewButton("Load", new Delegate1<CoreNode, AgeServer&>(this, CoreNode::genRead), 221);
+	server.NewButton("Save", new Delegate1<GeneratorMgr, AgeServer&>(this, genWrite), 221);
+	server.EndGroup();
+
+	server.StartGroup("operation");
+	server.NewButton("new generator", new Delegate1<GeneratorMgr, AgeServer&>(this, addGenerator), 221);
+	server.EndGroup();
+
+	server.StartGroup("navi start position");
+	server.NewButton("move to navi pos", new Delegate<GeneratorMgr>(this, setNaviPos), 221);
+	server.NewButton("move navi to curr pos", new Delegate<GeneratorMgr>(this, changeNaviPos), 221);
+	server.NewEditor("navi face", &mNaviDirection, 0.0f, 360.0f, 320);
+	server.EndGroup();
+
+	if (mGenListHead) {
+		int index = 0;
+		for (Generator* gen = mGenListHead; gen; gen = gen->mNextGenerator) {
+			index++;
+			char str[256];
+			sprintf(str, "Generator%d <%s>", index, gen->mMemo);
+			server.StartSection(str, true);
+			server.setSectionRefresh(new Delegate1<Generator, AgeServer&>(gen, Generator::genAge)); // this might be CoreNode::genAge idk
+			server.EndSection();
+		}
+	}
+
+	server.EndSection();
+}
+
+void GeneratorMgr::genWrite(AgeServer& server)
+{
+	PRINT("GeneratorMgr::genWrite>\n");
+	String string;
+	if (server.getSaveFilename(string, "All Files (*.gen)|*.gen")) {
+		AtxFileStream stream;
+		if (stream.open(string.mString, 2)) {
+			PRINT("saving as \'%s\'\n", string.mString);
+			write(stream);
+			stream.close();
+			PRINT("closed file\n");
+		} else {
+			PRINT("cant save file \'%s\'\n");
+		}
+	}
+	PRINT("GeneratorMgr::genWrite<\n");
+}
+
+void GeneratorMgr::addGenerator(AgeServer& server)
+{
+	Navi* navi = naviMgr->getNavi();
+
+	if (mGenListHead == nullptr) {
+		mGenListHead = new Generator;
+		mGenListHead->setPos(navi->mPosition);
+		mGenListHead->setOffset(Vector3f(0.0f, 0.0f, 0.0f));
+		mGenListHead->mMgr = this;
+		mGenCount++;
+	} else {
+		Generator* lastGen = mGenListHead;
+		while (lastGen->mNextGenerator) {
+			lastGen = lastGen->mNextGenerator;
+		}
+		Generator* gen          = new Generator;
+		lastGen->mNextGenerator = gen;
+		gen->mPrevGenerator     = lastGen;
+		gen->setPos(navi->mPosition);
+		gen->setOffset(Vector3f(0.0f, 0.0f, 0.0f));
+		mGenListHead->mMgr = this;
+		mGenCount++;
+	}
+
+	server.RefreshNode();
+}
+
+void Generator::genAge(AgeServer& server)
+{
+	// idk if this is right
+	CoreNode::genAge(server);
+}
+
+#endif

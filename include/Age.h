@@ -2,6 +2,8 @@
 #define _AGE_H
 
 #include "types.h"
+#include "AtxStream.h"
+#include "Delegate.h"
 
 enum PROP_TYPE {
 	CHAR_PROP = 0,
@@ -18,15 +20,10 @@ enum PROP_TYPE {
 
 struct Colour;
 
-struct IDelegate;
-template <typename T>
-struct IDelegate1;
-struct AgeServer;
-
 struct AgeServer : public AtxStream {
 	AgeServer() { }
 
-#ifndef __MWERKS__
+#ifdef DEVELOP
 	void Done();
 	void EndBitGroup();
 	void EndGroup();

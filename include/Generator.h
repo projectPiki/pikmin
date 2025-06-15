@@ -19,6 +19,7 @@ struct GenType;
 struct GenArea;
 struct GenObject;
 struct GeneratorMgr;
+struct AgeServer;
 struct TekiPersonality;
 
 /**
@@ -795,9 +796,16 @@ struct Generator : public Node {
 	// DLL inlines to make:
 	// void changeNaviPos();
 	// void setNaviPos();
-	// void setOffset(Vector3f&);
-	// void setPos(Vector3f&);
+	void setOffset(Vector3f& ofs) { mGenOffset = ofs; }
+	void setPos(Vector3f& pos) { mGenPosition = pos; }
 	// int isCarryOver();
+
+#ifdef DEVELOP
+	void genAge(AgeServer&);
+	void changeArea(AgeServer&);
+	void changeObject(AgeServer&);
+	void changeType(AgeServer&);
+#endif
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -849,6 +857,12 @@ struct GeneratorMgr : public Node {
 
 	// DLL inlines:
 	void setLimitGenerator(bool val) { mIsLimitGenerator = val; }
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+	void genWrite(AgeServer&);
+	void addGenerator(AgeServer&);
+#endif
 
 	// _00     = VTBL
 	// _00-_20 = Node
