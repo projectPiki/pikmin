@@ -241,11 +241,10 @@ void System::updateSysClock()
  */
 void System::parseArchiveDirectory(char* path1, char* path2)
 {
-	int free = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
-	u32 time = OSTicksToMilliseconds(OSGetTick());
+	int free      = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
+	f32 startTime = getTime();
 	DVDStream stream;
-	stream.mPath = path2;
-	PRINT("fake start time?", time / 1000.0f);
+	stream.mPath   = path2;
 	stream.mIsOpen = DVDOpen(path2, &stream.mFileInfo) != 0;
 	stream.init();
 	DVDStream::numOpen++;
@@ -253,21 +252,26 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 		stream.close();
 	}
 
+	// inline?
 	u32 a                = 0;
 	FakeSystemList* list = _328;
 	u32 addr             = list->_04 + ALIGN_NEXT(stream.mPending, 0x20);
-	if (addr <= list->_00 + list->_08) {
-		a         = list->_04;
+	if (addr <= _328->_00 + _328->_08) {
+		a         = _328->_04;
 		list->_04 = addr;
 	}
 
+	u32 unused;
+	f32 unused2;
 	STACK_PAD_VAR(1);
+
 	// this is necessary to get it to call the vtable ptr not just inline it.
 	((DVDStream*)&stream)->getPending();
-	u32 pos  = 0;
-	u32 pend = ((DVDStream*)&stream)->getPending();
+	u32 size, pend, pos;
+	pos  = 0;
+	pend = ((DVDStream*)&stream)->getPending();
 	while (pend != 0) {
-		u32 size = pend;
+		size = pend;
 		if (pend > stream.mSize) {
 			size = stream.mSize;
 		}
@@ -298,263 +302,9 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 		}
 		file->close();
 	}
-	PRINT("fake end time?", OSTicksToMilliseconds(OSGetTick()) / 1000.0f);
+	!unused;
+	PRINT("fake duration?", getTime() - startTime - unused2);
 	int freeEnd = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE8(r1)
-	  stfd      f31, 0xE0(r1)
-	  stfd      f30, 0xD8(r1)
-	  stmw      r20, 0xA8(r1)
-	  addi      r23, r4, 0
-	  addi      r31, r3, 0
-	  addi      r22, r5, 0
-	  lwz       r6, 0x2DEC(r13)
-	  lwz       r4, 0x194(r6)
-	  addi      r3, r6, 0
-	  bl        -0x5DB8
-	  bl        0x1B85DC
-	  lis       r4, 0x8000
-	  lwz       r0, 0xF8(r4)
-	  lis       r5, 0x1062
-	  addi      r5, r5, 0x4DD3
-	  rlwinm    r0,r0,30,2,31
-	  mulhwu    r0, r5, r0
-	  rlwinm    r0,r0,26,6,31
-	  divwu     r3, r3, r0
-	  lis       r4, 0x8022
-	  stw       r3, 0xA4(r1)
-	  addi      r0, r4, 0x7398
-	  lis       r3, 0x8022
-	  stw       r0, 0x48(r1)
-	  addi      r0, r3, 0x74C8
-	  lis       r3, 0x802A
-	  stw       r0, 0x48(r1)
-	  addi      r3, r3, 0x5510
-	  stw       r3, 0x48(r1)
-	  lis       r0, 0x4
-	  lis       r4, 0x4330
-	  stw       r0, 0x94(r1)
-	  addi      r26, r1, 0x4C
-	  mr        r3, r22
-	  stw       r4, 0xA0(r1)
-	  mr        r4, r26
-	  stw       r22, 0x44(r1)
-	  bl        0x1BA4C4
-	  neg       r3, r3
-	  crclr     6, 0x6
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0x90(r1)
-	  li        r0, 0
-	  lis       r3, 0x803A
-	  stw       r0, 0x88(r1)
-	  subi      r3, r3, 0x73CC
-	  lwz       r0, 0x80(r1)
-	  stw       r0, 0x8C(r1)
-	  lwz       r4, 0x44(r1)
-	  bl        0x1D171C
-	  lwz       r3, 0x2E08(r13)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2E08(r13)
-	  lbz       r0, 0x90(r1)
-	  cmplwi    r0, 0
-	  bne-      .loc_0x108
-	  lwz       r3, 0x2E08(r13)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x2E08(r13)
-	  beq-      .loc_0x108
-	  mr        r3, r26
-	  bl        0x1BA528
-
-	.loc_0x108:
-	  lwz       r5, 0x328(r31)
-	  li        r25, 0
-	  lwz       r3, 0x8C(r1)
-	  lwz       r6, 0x4(r5)
-	  addi      r4, r3, 0x1F
-	  lwz       r3, 0x0(r5)
-	  lwz       r0, 0x8(r5)
-	  rlwinm    r4,r4,0,0,26
-	  add       r4, r6, r4
-	  add       r0, r3, r0
-	  cmplw     r4, r0
-	  bgt-      .loc_0x140
-	  mr        r25, r6
-	  stw       r4, 0x4(r5)
-
-	.loc_0x140:
-	  lwz       r12, 0x48(r1)
-	  addi      r3, r1, 0x44
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x48(r1)
-	  addi      r3, r1, 0x44
-	  li        r22, 0
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r21, r3
-	  b         .loc_0x1E0
-
-	.loc_0x174:
-	  lwz       r0, 0x94(r1)
-	  addi      r20, r21, 0
-	  cmplw     r21, r0
-	  ble-      .loc_0x188
-	  mr        r20, r0
-
-	.loc_0x188:
-	  lwz       r12, 0x48(r1)
-	  mr        r5, r20
-	  lwz       r4, 0x2E04(r13)
-	  addi      r3, r1, 0x44
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r5, r20
-	  lwz       r4, 0x2E04(r13)
-	  add       r6, r25, r22
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  add       r22, r22, r20
-	  sub       r21, r21, r20
-
-	.loc_0x1E0:
-	  cmplwi    r21, 0
-	  bne+      .loc_0x174
-	  lwz       r3, 0x2E08(r13)
-	  subi      r0, r3, 0x1
-	  stw       r0, 0x2E08(r13)
-	  lbz       r0, 0x90(r1)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x208
-	  mr        r3, r26
-	  bl        0x1BA428
-
-	.loc_0x208:
-	  lwz       r3, 0x2DEC(r13)
-	  addi      r4, r23, 0
-	  li        r5, 0x1
-	  lwz       r12, 0x1A0(r3)
-	  li        r6, 0x1
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r23, r3
-	  beq-      .loc_0x340
-	  mr        r3, r23
-	  lwz       r12, 0x4(r23)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r23
-	  lwz       r12, 0x4(r23)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lis       r6, 0x8022
-	  lis       r5, 0x8022
-	  lis       r4, 0x802A
-	  addi      r26, r3, 0
-	  addi      r29, r6, 0x738C
-	  addi      r30, r5, 0x737C
-	  addi      r21, r4, 0x54A4
-	  li        r22, 0
-	  b         .loc_0x324
-
-	.loc_0x27C:
-	  mr        r3, r23
-	  lwz       r12, 0x4(r23)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r27, r3, 0
-	  addi      r3, r23, 0
-	  lwz       r12, 0x4(r23)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  li        r20, 0
-	  stw       r20, 0x3C(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r23, 0
-	  stw       r20, 0x38(r1)
-	  addi      r4, r1, 0x38
-	  lwz       r12, 0x4(r23)
-	  lwz       r12, 0x1C(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1C
-	  bl        0x1F88
-	  cmplwi    r3, 0
-	  beq-      .loc_0x300
-	  stw       r29, 0x0(r3)
-	  subi      r0, r13, 0x7840
-	  stw       r30, 0x0(r3)
-	  stw       r20, 0x10(r3)
-	  stw       r20, 0xC(r3)
-	  stw       r20, 0x8(r3)
-	  stw       r0, 0x4(r3)
-	  stw       r21, 0x0(r3)
-
-	.loc_0x300:
-	  lwz       r4, 0x3C(r1)
-	  add       r0, r25, r27
-	  stw       r4, 0x4(r3)
-	  mr        r4, r3
-	  stw       r28, 0x14(r3)
-	  stw       r0, 0x18(r3)
-	  lwz       r3, 0x228(r31)
-	  bl        -0x4AEC
-	  addi      r22, r22, 0x1
-
-	.loc_0x324:
-	  cmplw     r22, r26
-	  blt+      .loc_0x27C
-	  mr        r3, r23
-	  lwz       r12, 0x4(r23)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x340:
-	  bl        0x1B82D0
-	  lis       r4, 0x8000
-	  lwz       r5, 0x2DEC(r13)
-	  lwz       r0, 0xF8(r4)
-	  lis       r4, 0x1062
-	  addi      r4, r4, 0x4DD3
-	  rlwinm    r0,r0,30,2,31
-	  mulhwu    r0, r4, r0
-	  lwz       r4, 0x194(r5)
-	  rlwinm    r0,r0,26,6,31
-	  divwu     r0, r3, r0
-	  stw       r0, 0xA4(r1)
-	  lis       r0, 0x4330
-	  addi      r3, r5, 0
-	  stw       r0, 0xA0(r1)
-	  bl        -0x6104
-	  lmw       r20, 0xA8(r1)
-	  lwz       r0, 0xEC(r1)
-	  lfd       f31, 0xE0(r1)
-	  lfd       f30, 0xD8(r1)
-	  addi      r1, r1, 0xE8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*

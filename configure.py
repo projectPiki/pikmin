@@ -419,7 +419,7 @@ config.libs = [
         "progress_category" : "game",
         "objects": [
             Object(Equivalent, "sysDolphin/texture.cpp"),
-            Object(Equivalent, "sysDolphin/system.cpp"),
+            Object(Matching, "sysDolphin/system.cpp"),
             Object(Matching, "sysDolphin/sysNew.cpp"),
             Object(Matching, "sysDolphin/controllerMgr.cpp"),
             Object(Matching, "sysDolphin/dgxGraphics.cpp"),
