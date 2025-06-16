@@ -329,181 +329,49 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 		return data.mData[dataSize * (param.mEntryNum - 1) + param.mDataOffset + 1];
 	}
 
-	f32 time1;
-	f32 startTangent;
-	f32 startValue;
-	f32 time2;
-	f32 endValue;
-	f32 endTangent;
-	if (dataSize == 3) {
-		startTangent = data.mData[offset + 2];
-		time1        = data.mData[offset];
-		startValue   = data.mData[offset + 1];
-		offset += dataSize;
-		endTangent = data.mData[offset + 2];
-		time2      = data.mData[offset];
-		endValue   = data.mData[offset + 1];
+	// maybe AKeyInfo
+	struct interpolationPoint {
+		f32 time;
+		f32 value;
+		f32 tangent;
+	};
 
-	} else {
-		time1        = data.mData[offset];
-		startTangent = data.mData[offset + 3];
-		startValue   = data.mData[offset + 1];
+	interpolationPoint start, end, unused;
+
+	if (dataSize == 3) {
+		start.time    = data.mData[offset];
+		start.value   = data.mData[offset + 1];
+		start.tangent = data.mData[offset + 2];
 		offset += dataSize;
-		time2      = data.mData[offset];
-		endValue   = data.mData[offset + 1];
-		endTangent = data.mData[offset + 2];
+		end.time    = data.mData[offset];
+		end.value   = data.mData[offset + 1];
+		end.tangent = data.mData[offset + 2];
+		(void)(start.tangent - end.tangent);
+	} else {
+		start.time    = data.mData[offset];
+		start.value   = data.mData[offset + 1];
+		start.tangent = data.mData[offset + 3];
+		offset += dataSize;
+		end.time    = data.mData[offset];
+		end.value   = data.mData[offset + 1];
+		end.tangent = data.mData[offset + 2];
 	}
 
 	// Interpolation calculations
 	// Chat-GPT says Hermite Interpolation
 	const f32 fps /*maybe*/ = 30.f;
-	f32 t                   = (currTime - time1) * (1.0f / fps);
-	f32 frameDelta          = fps / (time2 - time1);
+	f32 t                   = (currTime - start.time) * (1.0f / fps);
+	f32 frameDelta          = fps / (end.time - start.time);
 	f32 tSqr                = t * t;
 	f32 deltaSqr            = frameDelta * frameDelta;
 	f32 tCube               = tSqr * t;
 	f32 deltaCube           = deltaSqr * frameDelta;
 
-	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * startValue
-	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * endValue
-	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * startTangent + (tCube * deltaSqr - tSqr * frameDelta) * endTangent;
+	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * start.value
+	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * end.value
+	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * start.tangent + (tCube * deltaSqr - tSqr * frameDelta) * end.tangent;
 
 	STACK_PAD_VAR(9);
-
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x50(r1)
-	  stfd      f31, 0x48(r1)
-	  stfd      f30, 0x40(r1)
-	  lwz       r0, 0x8(r3)
-	  cmpwi     r0, 0
-	  bne-      .loc_0x20
-	  li        r6, 0x3
-	  b         .loc_0x24
-
-	.loc_0x20:
-	  li        r6, 0x4
-
-	.loc_0x24:
-	  lwz       r5, 0x0(r3)
-	  rlwinm    r7,r6,2,0,29
-	  lwz       r0, 0x4(r3)
-	  li        r10, 0
-	  subic.    r9, r5, 0x1
-	  mr        r11, r0
-	  rlwinm    r5,r0,2,0,29
-	  mtctr     r9
-	  ble-      .loc_0x88
-
-	.loc_0x48:
-	  lwz       r8, 0x8(r4)
-	  lfsx      f0, r8, r5
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0, 0x2
-	  bne-      .loc_0x7C
-	  add       r0, r11, r6
-	  rlwinm    r0,r0,2,0,29
-	  lfsx      f0, r8, r0
-	  fcmpo     cr0, f0, f1
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x7C
-	  li        r10, 0x1
-	  b         .loc_0x88
-
-	.loc_0x7C:
-	  add       r5, r5, r7
-	  add       r11, r11, r6
-	  bdnz+     .loc_0x48
-
-	.loc_0x88:
-	  rlwinm.   r0,r10,0,24,31
-	  bne-      .loc_0xB0
-	  mullw     r0, r6, r9
-	  lwz       r3, 0x4(r3)
-	  lwz       r4, 0x8(r4)
-	  add       r0, r3, r0
-	  rlwinm    r0,r0,2,0,29
-	  add       r3, r4, r0
-	  lfs       f1, 0x4(r3)
-	  b         .loc_0x1B4
-
-	.loc_0xB0:
-	  cmpwi     r6, 0x3
-	  bne-      .loc_0xEC
-	  lwz       r3, 0x8(r4)
-	  rlwinm    r0,r11,2,0,29
-	  add       r11, r11, r6
-	  addi      r5, r3, 0x8
-	  lfsx      f4, r3, r0
-	  rlwinm    r4,r11,2,0,29
-	  lfsx      f8, r5, r0
-	  lfsx      f0, r5, r4
-	  addi      r5, r3, 0x4
-	  lfsx      f7, r5, r0
-	  lfsx      f2, r3, r4
-	  lfsx      f9, r5, r4
-	  b         .loc_0x120
-
-	.loc_0xEC:
-	  rlwinm    r0,r11,2,0,29
-	  lwz       r3, 0x8(r4)
-	  add       r11, r11, r6
-	  rlwinm    r5,r11,2,0,29
-	  lfsx      f4, r3, r0
-	  addi      r6, r3, 0x4
-	  lfsx      f2, r3, r5
-	  add       r4, r3, r0
-	  lfsx      f7, r6, r0
-	  add       r3, r3, r5
-	  lfs       f8, 0xC(r4)
-	  lfsx      f9, r6, r5
-	  lfs       f0, 0x8(r3)
-
-	.loc_0x120:
-	  fsubs     f2, f2, f4
-	  lfs       f3, -0x7D18(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f5, -0x7D1C(r2)
-	  lfs       f6, -0x7D14(r2)
-	  fdivs     f12, f3, f2
-	  lfs       f2, -0x7D10(r2)
-	  lfs       f1, -0x7D08(r2)
-	  lfs       f3, -0x7D0C(r2)
-	  fmuls     f11, f5, f4
-	  fmuls     f10, f12, f12
-	  fmuls     f13, f11, f11
-	  fmuls     f30, f10, f12
-	  fmuls     f31, f13, f11
-	  fmuls     f4, f2, f13
-	  fmuls     f5, f6, f13
-	  fmuls     f2, f6, f31
-	  fmuls     f1, f1, f31
-	  fmuls     f6, f4, f10
-	  fmuls     f2, f2, f30
-	  fmuls     f1, f1, f30
-	  fmuls     f10, f31, f10
-	  fmuls     f4, f5, f12
-	  fsubs     f2, f2, f6
-	  fadds     f1, f1, f6
-	  fsubs     f4, f10, f4
-	  fadds     f2, f3, f2
-	  fmuls     f5, f13, f12
-	  fadds     f3, f11, f4
-	  fmuls     f2, f7, f2
-	  fmuls     f1, f9, f1
-	  fsubs     f4, f10, f5
-	  fmuls     f3, f8, f3
-	  fadds     f1, f2, f1
-	  fmuls     f2, f0, f4
-	  fadds     f0, f3, f1
-	  fadds     f1, f2, f0
-
-	.loc_0x1B4:
-	  lfd       f31, 0x48(r1)
-	  lfd       f30, 0x40(r1)
-	  addi      r1, r1, 0x50
-	  blr
-	*/
 }
 
 /*
