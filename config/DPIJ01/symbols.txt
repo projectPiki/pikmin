@@ -10,7 +10,6 @@ memcpy = .init:0x80003478; // type:function size:0x50 scope:global align:4
 TRK_memcpy = .init:0x800034C8; // type:function size:0x24 scope:global align:4
 TRK_memset = .init:0x800034EC; // type:function size:0x30 scope:global align:4
 gTRKInterruptVectorTable = .init:0x8000351C; // type:label scope:global
-lbl_800040F0 = .init:0x800040F0; // type:label
 gTRKInterruptVectorTableEnd = .init:0x80005450; // type:label scope:global
 __TRK_reset = .init:0x80005450; // type:function size:0x20 scope:global align:4
 _rom_copy_info = .init:0x80005470; // type:object size:0x84 scope:global data:4byte
