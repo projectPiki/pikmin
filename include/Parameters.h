@@ -5,6 +5,7 @@
 #include "Ayu.h"
 
 struct Parameters;
+struct AgeServer;
 
 /**
  * @brief TODO
@@ -15,6 +16,10 @@ struct BaseParm {
 	// _08    = VTBL
 	char* mID;       // _00
 	BaseParm* mNext; // _04
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+#endif
 
 	virtual int size() = 0;                            // _08
 	virtual void write(struct RandomAccessStream&) { } // _0C
@@ -32,6 +37,10 @@ struct Parameters {
 
 	void write(RandomAccessStream&);
 	void read(RandomAccessStream&);
+
+	// .dll exclusive functions
+	void genAge(AgeServer&, int);
+	void genAgeParms(AgeServer&, int);
 
 	// unused/inlined:
 	int sizeInFile();

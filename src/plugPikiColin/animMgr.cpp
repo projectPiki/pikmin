@@ -6,6 +6,7 @@
 #include "Shape.h"
 #include "system.h"
 #include "sysNew.h"
+#include "Age.h"
 #include "Dolphin/os.h"
 #include "DebugLog.h"
 
@@ -33,9 +34,17 @@ DEFINE_PRINT("AnimMgr");
  * Address:	........
  * Size:	000084
  */
-void AnimInfo::initAnimData(AnimData*)
+void AnimInfo::initAnimData(AnimData* data)
 {
-	// UNUSED FUNCTION
+	int pos = strlen(data->mName) - 1;
+	for (pos; pos >= 0; pos--) {
+		if (data->mName[pos] == '/' || data->mName[pos] == '\\') {
+			break;
+		}
+	}
+
+	mName = StdSystem::stringDup(&data->mName[pos + 1]);
+	mData = data;
 }
 
 /**
@@ -81,15 +90,7 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 	mInfoKeys.mPrev = mInfoKeys.mNext = &mInfoKeys;
 	mEventKeys.mPrev = mEventKeys.mNext = &mEventKeys;
 
-	int pos = strlen(data->mName) - 1;
-	for (pos; pos >= 0; pos--) {
-		if (data->mName[pos] == '/' || data->mName[pos] == '\\') {
-			break;
-		}
-	}
-
-	mName = StdSystem::stringDup(&data->mName[pos + 1]);
-	mData = data;
+	initAnimData(data);
 
 	AnimKey* firstKey     = new AnimKey();
 	firstKey->mFrameIndex = 0;
@@ -581,3 +582,234 @@ void Animator::animate(f32 animSpeed)
 		mAnimationCounter = 0.0f;
 	}
 }
+
+// The functions following this point are exclusively found in the windows .dll build
+// None of this is confirmed to be equivalent for obvious reasons
+
+#ifdef DEVELOP
+
+void AnimMgr::genAge(AgeServer& server)
+{
+	server.StartSection(mName, true);
+
+	server.StartGroup("commands");
+	server.NewButton("Add Animation", new Delegate1<AnimMgr, AgeServer&>(this, importAnimationButton), 444);
+	server.NewButton("Load", new Delegate1<AnimMgr, AgeServer&>(this, genRead), 444);
+	server.NewButton("Save", new Delegate1<AnimMgr, AgeServer&>(this, genWrite), 444);
+	server.EndGroup();
+
+	mParams.genAgeParms(server, 10);
+	int index = 0;
+	FOREACH_NODE(AnimInfo, mAnimList.mChild, anim)
+	{
+		char buf[256];
+		sprintf(buf, "%d : %s", index, anim->mName);
+		server.StartSection(buf, true);
+		server.setSectionRefresh(new Delegate1<AnimInfo, AgeServer&>(anim, CoreNode::genAge));
+		server.EndSection();
+	}
+
+	server.EndSection();
+}
+
+void AnimMgr::write(RandomAccessStream& stream)
+{
+	stream.writeInt(1);
+	stream.writeInt(countAnims());
+	mParams.write(stream);
+
+	FOREACH_NODE(AnimInfo, mAnimList.mChild, anim)
+	{
+		anim->write(stream);
+	}
+}
+
+void AnimMgr::importAnimationButton(AgeServer& server)
+{
+	AnimData* data = gsys->findAnyAnimation(mParams.mBasePath().mString);
+	if (data) {
+		addAnimation(data->mName, false);
+		server.RefreshSection();
+	} else {
+		PRINT("COULD NOT FIND ANY ANIMATIONS in (%s)!!\n", mParams.mBasePath().mString);
+	}
+}
+
+void AnimInfo::write(RandomAccessStream& stream)
+{
+	stream.writeString(mName);
+	mParams.write(stream);
+
+	stream.writeInt(countAKeys());
+	AnimKey* animKey = mAnimKeys.mNext;
+	for (animKey; animKey != &mAnimKeys; animKey = animKey->mNext) {
+		stream.writeInt(animKey->mFrameIndex);
+	}
+
+	stream.writeInt(countIKeys());
+	if (countIKeys()) {
+		animKey = mInfoKeys.mNext;
+		for (animKey; animKey != &mInfoKeys; animKey = animKey->mNext) {
+			stream.writeInt(animKey->mFrameIndex);
+			stream.writeShort(animKey->mEventType);
+			stream.writeByte(animKey->mKeyType);
+			stream.writeByte(animKey->mEventCmdID);
+		}
+	}
+
+	stream.writeInt(countEKeys());
+	animKey = mEventKeys.mNext;
+	for (animKey; animKey != &mEventKeys; animKey = animKey->mNext) {
+		stream.writeInt(animKey->mFrameIndex);
+		stream.writeShort(animKey->mEventType);
+		stream.writeByte(animKey->mKeyType);
+		stream.writeByte(animKey->mEventCmdID);
+	}
+}
+
+void AnimInfo::genAge(AgeServer& server)
+{
+	if (mData == nullptr) {
+		return;
+	}
+
+	server.StartGroup("info");
+	server.setOnChange(new Delegate1<AnimInfo, AgeServer&>(this, ageChangeAnim));
+	server.StartOptionBox("select anim", &mIndex, 380);
+	gsys->ageAnyAnimations(server, mMgr->mParams.mBasePath().mString);
+	server.EndOptionBox();
+	server.setOnChange((Delegate1<AnimInfo, AgeServer&>*)(nullptr));
+	server.NewButton("Delete", new Delegate1<AnimInfo, AgeServer&>(this, ageDelAnim), 52);
+	server.setOnChange(new Delegate<AnimInfo>(this, updateAnimFlags));
+	server.StartBitGroup("flags", (u32*)&mParams.mFlags(), 120);
+	server.NewBit("Constant", ANIMFLAG_Unk1, 1);
+	server.NewBit("Velocity", ANIMFLAG_UseDynamicSpeed, 1);
+	server.NewBit("Cachable", ANIMFLAG_UseCache, 0);
+	server.EndBitGroup();
+	server.setOnChange((Delegate<AnimInfo>*)(nullptr));
+	server.NewEditor("Speed", &mParams.mSpeed(), 0.0f, 60.0f, 320);
+	server.EndGroup();
+
+	char buf[64];
+	server.StartGroup("Anim keys");
+	server.NewButton("add Key", new Delegate1<AnimInfo, AgeServer&>(this, ageAddKey), 508);
+	AnimKey* animKey = mAnimKeys.mNext;
+	int index        = 0;
+	for (animKey; animKey != &mAnimKeys; animKey = animKey->mNext) {
+		if (animKey == mAnimKeys.mNext) {
+			sprintf(buf, "start key");
+		} else if (animKey == &mAnimKeys) {
+			sprintf(buf, "end key");
+		} else {
+			sprintf(buf, "key %d", index);
+		}
+		server.NewButton("delete", new Delegate1<AnimKey, AgeServer&>(animKey, AnimKey::ageDelLastKey), 120);
+		server.NewEditor(buf, &animKey->mFrameIndex, 0, mData->mTotalFrameCount - 1, 320);
+		index++;
+	}
+	server.EndGroup();
+
+	server.StartGroup("Info keys");
+	server.NewButton("add Info Key", new Delegate1<AnimInfo, AgeServer&>(this, ageAddInfoKey), 508);
+	AnimKey* infoKey = mInfoKeys.mNext;
+	index            = 0;
+	for (infoKey; infoKey != &mInfoKeys; infoKey = infoKey->mNext) {
+		sprintf(buf, "key %d", index);
+
+		server.NewButton("delete", new Delegate1<AnimKey, AgeServer&>(infoKey, AnimKey::ageDelLastKey), 120);
+		server.StartOptionBox("key no.", &infoKey->mFrameIndex, 170);
+		int index2 = 0;
+		for (animKey = mAnimKeys.mNext; animKey != &mAnimKeys; animKey = animKey->mNext) {
+			if (animKey == mAnimKeys.mNext) {
+				sprintf(buf, "start key");
+			} else if (animKey->mNext == &mAnimKeys) {
+				sprintf(buf, "end key");
+			} else {
+				sprintf(buf, "key %d", index2);
+			}
+			server.NewOption(buf, index2);
+			index2++;
+		}
+		server.EndOptionBox();
+		server.StartOptionBox("key type", &infoKey->mKeyType, 170);
+		genAgeKeyTypes(server);
+		server.EndOptionBox();
+		index++;
+	}
+	server.EndGroup();
+
+	server.StartGroup("Effect keys");
+	server.NewButton("add Effect Key", new Delegate1<AnimInfo, AgeServer&>(this, ageAddEffectKey), 508);
+	AnimKey* effectKey = mEventKeys.mNext;
+	index              = 0;
+	for (effectKey; effectKey != &mEventKeys; effectKey = effectKey->mNext) {
+		sprintf(buf, "key %d", index);
+
+		server.NewButton("DEL", new Delegate1<AnimKey, AgeServer&>(infoKey, AnimKey::ageDelLastKey), 120);
+		server.StartOptionBox("type", (u16*)&effectKey->mEventType, 120);
+		server.NewOption("SND", ANIMEVENT_Notify);
+		server.NewOption("GFX", ANIMEVENT_Action);
+		server.NewOption("EFF", ANIMEVENT_None);
+		server.EndOptionBox();
+
+		server.NewEditor("", (char*)&effectKey->mKeyType, 0, 0, 320);
+		server.NewEditor("", &effectKey->mFrameIndex, 0, mData->mTotalFrameCount - 1, 230);
+		index++;
+	}
+	server.EndGroup();
+}
+
+void AnimInfo::ageAddEffectKey(AgeServer& server)
+{
+	AnimKey* key     = new AnimKey;
+	key->mFrameIndex = mData->mTotalFrameCount - 1;
+	mEventKeys.insertAfter(key);
+	server.RefreshSection();
+}
+
+void AnimInfo::ageAddInfoKey(AgeServer& server)
+{
+	AnimKey* key     = new AnimKey;
+	key->mFrameIndex = countAKeys() - 1;
+	mInfoKeys.insertAfter(key);
+	server.RefreshSection();
+}
+
+void AnimInfo::ageAddKey(AgeServer& server)
+{
+	addKeyFrame();
+	server.RefreshSection();
+}
+
+void AnimInfo::ageChangeAnim(AgeServer& server)
+{
+	AnimData* data;
+	data = gsys->findIndexAnimation(mMgr->mParams.mBasePath().mString, mIndex);
+	data = gsys->loadAnimation(mMgr->mModel, mName, true);
+	initAnimData(data);
+	checkAnimData();
+
+	server.RefreshNode();
+}
+
+void AnimInfo::ageDelAnim(AgeServer& server)
+{
+	del();
+	server.RefreshSection();
+}
+
+void AnimInfo::genAgeKeyTypes(AgeServer& server)
+{
+	static char* key_types[6] = { "loop_start", "loop_end", "action 0", "action 1", "action 2", "action 3" };
+	for (int i = 0; i < 6; i++) {
+		server.NewOption(key_types[i], i);
+	}
+}
+
+void AnimKey::ageDelLastKey(AgeServer& server)
+{
+	remove();
+	server.RefreshSection();
+}
+
+#endif

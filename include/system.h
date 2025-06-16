@@ -162,7 +162,7 @@ struct StdSystem {
 	void loadBundle(char*, bool);
 
 	void getAppMemory(char*);
-	void findAnyGfxObject(char*, u32);
+	GfxobjInfo* findAnyGfxObject(char*, u32);
 	GfxobjInfo* findTexture(Texture*);
 	AnimData* findAnyAnimation(char*);
 	AnimData* findIndexAnimation(char*, int);
@@ -261,6 +261,9 @@ struct StdSystem {
 	LFlareGroup* mFlareGroupList; // _238
 	int mDvdOpenFiles;            // _23C
 	u32 mDvdBytesRead;            // _240
+
+	// .dll only functions
+	void ageAnyAnimations(AgeServer&, char*);
 };
 
 /**

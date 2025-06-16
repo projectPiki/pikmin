@@ -5,6 +5,7 @@
 
 struct Texture;
 struct TexImg;
+struct AnimData;
 
 /**
  * @brief TODO

@@ -5,6 +5,7 @@
 #include "DebugLog.h"
 #include "Texture.h"
 #include "Light.h"
+#include "Age.h"
 #include "Shape.h"
 #include "sysNew.h"
 #include "Graphics.h"
@@ -133,9 +134,16 @@ GfxobjInfo* StdSystem::findGfxObject(char* str, u32 id)
  * Address:	........
  * Size:	00009C
  */
-void StdSystem::findAnyGfxObject(char* str, u32 id)
+GfxobjInfo* StdSystem::findAnyGfxObject(char* str, u32 id)
 {
-	// UNUSED FUNCTION
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (info->mId == id) {
+			if (!strncmp(info->mId.mStringID, str, strlen(str))) {
+				return info;
+			}
+		}
+	}
+	return nullptr;
 }
 
 /*
@@ -236,8 +244,13 @@ AnimData* StdSystem::findAnimation(char* path)
  * Address:	........
  * Size:	0000AC
  */
-AnimData* StdSystem::findAnyAnimation(char*)
+AnimData* StdSystem::findAnyAnimation(char* path)
 {
+	GfxobjInfo* info = findAnyGfxObject(path, '_anm');
+	if (info) {
+		return nullptr; // figure this out eventually
+	}
+	return nullptr;
 	// UNUSED FUNCTION
 }
 
@@ -686,3 +699,20 @@ void TextureCacher::cacheTexture(CacheTexture* tex)
 		removeOldest();
 	}
 }
+
+#ifdef DEVELOP
+
+void StdSystem::ageAnyAnimations(AgeServer& server, char* path)
+{
+	int i = 0;
+	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
+		if (info->mId == '_anm') {
+			if (!strncmp(info->mId.mStringID, path, strlen(path))) {
+				server.NewOption(info->mString, i);
+				i++;
+			}
+		}
+	}
+}
+
+#endif

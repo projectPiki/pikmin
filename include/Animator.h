@@ -18,6 +18,7 @@ struct AnimMgr;
 struct BaseShape;
 struct CmdStream;
 struct Shape;
+struct AgeServer;
 
 /**
  * @brief Enum for AnimInfo flags.
@@ -324,8 +325,15 @@ struct AnimKey {
 		mNext        = key;
 	}
 
+	// Remove this key from the overall list, only used in .dll code
+	void remove()
+	{
+		mNext->mPrev = mPrev;
+		mPrev->mNext = mNext;
+	}
+
 	/// Unused DLL inline.
-	void remove();
+	void ageDelLastKey(AgeServer&);
 
 	int mFrameIndex; ///< _00, frame number this key is attached to.
 	s16 mEventType;  ///< _04, event type - see AnimKeyEvents enum.
@@ -343,6 +351,10 @@ struct AnimKey {
  * @note Size: 0x74.
  */
 struct AnimInfo : public CoreNode {
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer& server);
+#endif
 
 	/**
 	 * @brief AnimInfo parameters.
@@ -410,11 +422,22 @@ struct AnimInfo : public CoreNode {
 	/// Adds new Anim key to end of list, with keyframe index at end of anim.
 	AnimKey* addKeyFrame();
 
-	/// Unused.
-	void initAnimData(AnimData*);
+	/// Initializes the file name and data for an animation.
+	void initAnimData(AnimData* data);
 
 	/// Adds new info key to end of list.
 	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
+
+// .dll exclusive function for writing animation data to file.
+#ifdef DEVELOP
+	virtual void write(RandomAccessStream&);
+#endif
+	void ageAddEffectKey(AgeServer&);
+	void ageAddInfoKey(AgeServer&);
+	void ageAddKey(AgeServer&);
+	void ageChangeAnim(AgeServer&);
+	void ageDelAnim(AgeServer&);
+	void genAgeKeyTypes(AgeServer&);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -553,6 +576,13 @@ struct AnimMgr : public CoreNode {
 
 	/// STRIPPED - gets animation from list at index `idx` and if not loaded, loads it.
 	AnimInfo* findAnim(int idx);
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+	virtual void write(RandomAccessStream&);
+#endif
+
+	void importAnimationButton(AgeServer&);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

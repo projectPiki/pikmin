@@ -5,6 +5,7 @@
 #include "Stream.h"
 #include "String.h"
 #include "Vector.h"
+#include "Age.h"
 #include "DebugLog.h"
 
 /*
@@ -212,3 +213,33 @@ void Parm<String>::write(RandomAccessStream& output)
 {
 	output.writeString(mValue);
 }
+
+#ifdef DEVELOP
+
+void BaseParm::genAge(AgeServer& server)
+{
+	// todo, find this, if it even does anything
+}
+
+void Parameters::genAge(AgeServer& server, int)
+{
+	FOREACH_NODE(BaseParm, mHead, node)
+	{
+		node->genAge(server);
+	}
+}
+
+void Parameters::genAgeParms(AgeServer& server, int a)
+{
+	char path[PATH_MAX];
+	if (a) {
+		sprintf(path, "%s1", mHead);
+	} else {
+		sprintf(path, "%s", mHead);
+	}
+	server.StartGroup(path);
+	genAge(server, a);
+	server.EndGroup();
+}
+
+#endif
