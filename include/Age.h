@@ -189,13 +189,13 @@ struct AgeServer : public AtxStream {
 
 	bool Open()
 	{
-		//PRINT("!!!!! Opening Age server\n");
+		// PRINT("!!!!! Opening Age server\n");
 		if (AtxStream::open("age", 3)) {
 			mIsActive = false;
 			return true;
 		}
 
-		//ERROR("cant open AgeServer\n");
+		// ERROR("cant open AgeServer\n");
 		return false;
 	}
 
@@ -231,7 +231,7 @@ struct AgeServer : public AtxStream {
 	{
 		writeInt(102);
 		writeString(name);
-		//PRINT("new optionbox : %08x\n", val);
+		// PRINT("new optionbox : %08x\n", val);
 		writeProp(UNK9, nullptr);
 		writeProp(INT_PROP, val);
 		writeInt(a);
@@ -268,7 +268,7 @@ struct AgeServer : public AtxStream {
 	{
 		writeInt(404);
 		if (option) {
-			//PRINT("filter length = %d\n", strlen(option));
+			// PRINT("filter length = %d\n", strlen(option));
 			writeString(option);
 		} else {
 			writeString("All (*.*)|*.*");
@@ -314,7 +314,7 @@ struct AgeServer : public AtxStream {
 			readString((char*)val, 10000);
 			break;
 		default:
-			//ERROR("Unsupported PropType");
+			// ERROR("Unsupported PropType");
 			break;
 		}
 	}
@@ -347,7 +347,7 @@ struct AgeServer : public AtxStream {
 			while (true) {
 				if (getPending() == 0) {
 					if (getPending()) {
-						//PRINT("still data on stream !!\n");
+						// PRINT("still data on stream !!\n");
 					}
 					return stop;
 				}
@@ -359,18 +359,18 @@ struct AgeServer : public AtxStream {
 			}
 
 			if (cmd == 500) {
-				//PRINT("wants to close age\n");
+				// PRINT("wants to close age\n");
 				writeInt(0xffff);
 				return -1;
 			}
 
 			switch (cmd) {
 			default:
-				//ERROR("Age cmd unknown %d", cmd);
+				// ERROR("Age cmd unknown %d", cmd);
 				break;
 			case 0xca: {
 				u32 win = readInt();
-				//PRINT("got genage command : %08x\n", win);
+				// PRINT("got genage command : %08x\n", win);
 				NewPropWindow("Props", win);
 				writeInt(win);
 				Done();
@@ -400,7 +400,7 @@ struct AgeServer : public AtxStream {
 				Done();
 			} break;
 			case 0xd2: {
-				//PRINT("got update genage command\n");
+				// PRINT("got update genage command\n");
 				u32 win = readInt();
 				writeInt(win);
 				Done();
@@ -445,7 +445,7 @@ struct AgeServer : public AtxStream {
 			writeString((char*)data);
 			break;
 		default:
-			//ERROR("Unsupported PropType");
+			// ERROR("Unsupported PropType");
 			break;
 		}
 	}

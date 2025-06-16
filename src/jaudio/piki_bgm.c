@@ -18,15 +18,14 @@ typedef struct BgmControl_ {
 	int isActive;    // _00
 	int needsInit;   // _04
 	int modeChanged; // _08
-	u8 currentMode;  // _0C
+	u8 currentMode;  // _0C, flag with 0x1/2/4/8 corresponding to _0F/_0E/_10/_11 below
 	s8 trackHandle;  // _0D
 
 	// Something here is the battle mix / other stuff
-	u8 _0E;            // _0E
-	u8 _0F;            // _0F
-	u8 trackIntensity; // _10
-	u8 _11;            // _11
-
+	u8 _0E;                      // _0E, bool, this and _0F control the mute set
+	u8 _0F;                      // _0F, bool
+	u8 trackIntensity;           // _10, bool, controls volume set
+	u8 isFadeOut;                // _11, bool
 	u32 songId;                  // _14
 	u32 transitionTimer;         // _18, unknown
 	OuterParam_ trackParams[16]; // _1C
@@ -36,7 +35,7 @@ typedef struct BgmControl_ {
 	u32 crossfade;               // _464, unknown
 } BgmControl_;
 
-static BgmControl_ bgm[3];
+static BgmControl_ bgm[3]; // 0 = normal, 1 = boss, 2 = unused?
 
 static u8 lastside;
 static int last_crossmode;
@@ -161,7 +160,7 @@ void Jac_InitBgm(void)
 		bgm[i]._0E            = 0;
 		bgm[i]._0F            = 0;
 		bgm[i].trackIntensity = 0;
-		bgm[i]._11            = 0;
+		bgm[i].isFadeOut      = 0;
 		bgm[i].trackHandle    = -1;
 	}
 
@@ -199,10 +198,10 @@ void Jac_InitBgm(void)
  * Address:	80018B40
  * Size:	00002C
  */
-void Jac_FadeOutBgm(u32 flag, u32 fade)
+void Jac_FadeOutBgm(u32 trackNo, u32 fade)
 {
 	fadeouttime = fade;
-	Jac_SetBgmModeFlag(flag, 8, 1);
+	Jac_SetBgmModeFlag(trackNo, 8, 1);
 }
 
 /*
@@ -246,15 +245,15 @@ void Jac_ReadyBgm(u32 id)
  * Address:	80018C80
  * Size:	000244
  */
-void Jac_PlayBgm(u32 a, u32 id)
+void Jac_PlayBgm(u32 trackNo, u32 id)
 {
 	STACK_PAD_VAR(4);
 	u32* REF_b = &id;
 	u32 check;
 	seqp_* track;
 	Jac_SetProcessStatus(8);
-	if (bgm[a].isActive) {
-		Jac_StopBgm(a);
+	if (bgm[trackNo].isActive) {
+		Jac_StopBgm(trackNo);
 	}
 
 	// this is nearly just Jac_ReadyBgm again
@@ -277,35 +276,35 @@ void Jac_PlayBgm(u32 a, u32 id)
 		}
 	}
 
-	track = Jaf_HandleToSeq(a + 3);
+	track = Jaf_HandleToSeq(trackNo + 3);
 
-	bgm[a].isActive        = 1;
-	bgm[a].needsInit       = 1;
-	bgm[a].modeChanged     = 0;
-	bgm[a].transitionTimer = 0;
-	bgm[a].currentMode     = 0;
-	bgm[a].songId          = id - 2;
-	bgm[a].trackHandle     = a + 3;
+	bgm[trackNo].isActive        = 1;
+	bgm[trackNo].needsInit       = 1;
+	bgm[trackNo].modeChanged     = 0;
+	bgm[trackNo].transitionTimer = 0;
+	bgm[trackNo].currentMode     = 0;
+	bgm[trackNo].songId          = id - 2;
+	bgm[trackNo].trackHandle     = trackNo + 3;
 
-	Jac_SetBgmModeFlag(a, 2, 0);
-	Jac_SetBgmModeFlag(a, 1, 0);
-	Jac_SetBgmModeFlag(a, 4, 0);
-	Jac_SetBgmModeFlag(a, 8, 0);
-	Jaf_ReadySeq(a + 3, id);
+	Jac_SetBgmModeFlag(trackNo, 2, 0);
+	Jac_SetBgmModeFlag(trackNo, 1, 0);
+	Jac_SetBgmModeFlag(trackNo, 4, 0);
+	Jac_SetBgmModeFlag(trackNo, 8, 0);
+	Jaf_ReadySeq(trackNo + 3, id);
 	Jac_BgmFrameWork();
-	Jaq_SetBankNumber(Jaf_HandleToSeq(a + 3), id);
-	bgm[a].crossfade = 0;
+	Jaq_SetBankNumber(Jaf_HandleToSeq(trackNo + 3), id);
+	bgm[trackNo].crossfade = 0;
 
-	if (a == 0) {
-		bgm[a].gameVolume = game_bgm_volume;
+	if (trackNo == 0) {
+		bgm[trackNo].gameVolume = game_bgm_volume;
 		Jam_MuteTrack(track, 0);
 		last_crossmode = 0;
 	} else {
-		bgm[a].gameVolume = 0.0f;
+		bgm[trackNo].gameVolume = 0.0f;
 		Jam_MuteTrack(track, 1);
 	}
 
-	Jam_SetExtParam(bgm[a].gameVolume, track, 1);
+	Jam_SetExtParam(bgm[trackNo].gameVolume, track, 1);
 	Jam_OnExtSwitch(track, 1);
 
 	// Challenge mode tempo speedup?
@@ -316,7 +315,7 @@ void Jac_PlayBgm(u32 a, u32 id)
 		Jam_OffExtSwitch(track, 0x40);
 	}
 	track->pauseStatus = 74;
-	Jaf_PlaySeq(a + 3);
+	Jaf_PlaySeq(trackNo + 3);
 	Jac_SetProcessStatus(9);
 }
 
@@ -325,15 +324,15 @@ void Jac_PlayBgm(u32 a, u32 id)
  * Address:	80018EE0
  * Size:	000058
  */
-BOOL Jac_ChangeBgmMode(u32 id, u8 type)
+BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
 {
-	if (type == bgm[id].currentMode) {
+	if (mode == bgm[trackNo].currentMode) {
 		return FALSE;
 	}
 
-	if (bgm[id].isActive) {
-		bgm[id].currentMode = type;
-		bgm[id].modeChanged = 1;
+	if (bgm[trackNo].isActive) {
+		bgm[trackNo].currentMode = mode;
+		bgm[trackNo].modeChanged = 1;
 	} else {
 		return FALSE;
 	}
@@ -346,81 +345,28 @@ BOOL Jac_ChangeBgmMode(u32 id, u8 type)
  * Address:	80018F40
  * Size:	0000A8
  */
-void Jac_SetBgmModeFlag(u32 a, u8 b, u8 c)
+void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 {
-	BgmControl_* thisBgm = &bgm[a];
-	switch (b) {
+	u32 x, y, z;
+	BgmControl_* thisBgm = &bgm[trackNo];
+	switch (flag) {
 	case 2:
-		thisBgm->_0E = c;
+		thisBgm->_0E = doSet;
 		break;
 	case 1:
-		thisBgm->_0F = c;
+		thisBgm->_0F = doSet;
 		break;
 	case 4:
-		thisBgm->trackIntensity = c;
+		thisBgm->trackIntensity = doSet;
 		break;
 	case 8:
-		thisBgm->_11 = c;
+		thisBgm->isFadeOut = doSet;
 		break;
 	}
-	Jac_ChangeBgmMode(a, thisBgm->_0F + (thisBgm->trackIntensity << 2) + (thisBgm->_0E << 1) + (thisBgm->_11 << 3));
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mulli     r6, r3, 0x468
-	  stw       r0, 0x4(r1)
-	  rlwinm    r0,r4,0,24,31
-	  lis       r4, 0x8036
-	  addi      r4, r4, 0x38E0
-	  cmpwi     r0, 0x4
-	  stwu      r1, -0x8(r1)
-	  add       r7, r4, r6
-	  beq-      .loc_0x60
-	  bge-      .loc_0x44
-	  cmpwi     r0, 0x2
-	  beq-      .loc_0x50
-	  bge-      .loc_0x6C
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0x58
-	  b         .loc_0x6C
-
-	.loc_0x44:
-	  cmpwi     r0, 0x8
-	  beq-      .loc_0x68
-	  b         .loc_0x6C
-
-	.loc_0x50:
-	  stb       r5, 0xE(r7)
-	  b         .loc_0x6C
-
-	.loc_0x58:
-	  stb       r5, 0xF(r7)
-	  b         .loc_0x6C
-
-	.loc_0x60:
-	  stb       r5, 0x10(r7)
-	  b         .loc_0x6C
-
-	.loc_0x68:
-	  stb       r5, 0x11(r7)
-
-	.loc_0x6C:
-	  lbz       r4, 0xE(r7)
-	  lbz       r0, 0x10(r7)
-	  lbz       r6, 0x11(r7)
-	  rlwinm    r4,r4,1,0,30
-	  rlwinm    r0,r0,2,0,29
-	  lbz       r5, 0xF(r7)
-	  rlwinm    r6,r6,3,0,28
-	  add       r0, r4, r0
-	  add       r4, r0, r6
-	  add       r4, r5, r4
-	  bl        -0xF4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	z = thisBgm->isFadeOut << 3;
+	x = thisBgm->_0E << 1;
+	y = thisBgm->trackIntensity << 2;
+	Jac_ChangeBgmMode(trackNo, (thisBgm->_0F << 0) + (x) + (y) + (z));
 }
 
 /*
@@ -585,34 +531,34 @@ void Jac_GameVolume(u8 bgmVol, u8 seVol)
  * Address:	80019500
  * Size:	0000E4
  */
-void Jac_EasyCrossFade(u8 type, u32 val)
+void Jac_EasyCrossFade(u8 mode, u32 fadeTime)
 {
-	u8* REF_type = &type;
-	u32* REF_val = &val;
-	switch (type) {
-	case 0:
+	u8* REF_type = &mode;
+	u32* REF_val = &fadeTime;
+	switch (mode) {
+	case 0: // exit boss mode
 		bgm[0].gameVolume = game_bgm_volume;
 		bgm[1].gameVolume = 0.0f;
 		Jam_MuteTrack(Jaf_HandleToSeq(bgm[0].trackHandle), 0);
 		last_crossmode = 0;
 		break;
 
-	case 1:
+	case 1: // enter boss mode
 		bgm[1].gameVolume = game_bgm_volume;
 		bgm[0].gameVolume = 0.0f;
 		Jam_MuteTrack(Jaf_HandleToSeq(bgm[1].trackHandle), 0);
 		break;
 
-	case 2:
+	case 2: // volume changed
 		bgm[last_crossmode].gameVolume = game_bgm_volume;
-		bgm[last_crossmode].crossfade  = val;
+		bgm[last_crossmode].crossfade  = fadeTime;
 		return;
 	}
 
-	bgm[0].crossfade = val;
-	bgm[1].crossfade = val;
+	bgm[0].crossfade = fadeTime;
+	bgm[1].crossfade = fadeTime;
 
-	last_crossmode = type;
+	last_crossmode = mode;
 }
 
 /*
