@@ -38,10 +38,10 @@ struct PVWKeyInfoU8 {
 struct PVWKeyInfoS10 {
 	void read(RandomAccessStream& input)
 	{
-		_00        = input.readShort();
-		u16 unused = input.readShort();
-		_04        = input.readFloat();
-		_08        = input.readFloat();
+		_00         = input.readShort();
+		u16 padding = input.readShort();
+		_04         = input.readFloat();
+		_08         = input.readFloat();
 	}
 
 	s16 _00; // _00
@@ -52,14 +52,14 @@ struct PVWKeyInfoS10 {
 struct PVWKeyInfoF32 {
 	void read(RandomAccessStream& input)
 	{
-		_00 = input.readFloat();
-		_04 = input.readFloat();
-		_08 = input.readFloat();
+		mTime    = input.readFloat();
+		mValue   = input.readFloat();
+		mTangent = input.readFloat();
 	}
 
-	f32 _00; // _00
-	f32 _04; // _04
-	f32 _08; // _08
+	f32 mTime;    // _00
+	f32 mValue;   // _04
+	f32 mTangent; // _08
 };
 
 template <typename T>

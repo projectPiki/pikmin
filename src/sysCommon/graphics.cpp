@@ -352,17 +352,17 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 	}
 
 	if (mInfo.mSize == 1) {
-		target.x = mInfo.mKeyframes[0]._04._00;
-		target.y = mInfo.mKeyframes[0]._14._00;
-		target.z = mInfo.mKeyframes[0]._24._00;
+		target.x = mInfo.mKeyframes[0]._04.mTime;
+		target.y = mInfo.mKeyframes[0]._14.mTime;
+		target.z = mInfo.mKeyframes[0]._24.mTime;
 		return;
 	}
 
 	int idx = 0;
 	if (value >= f32(mInfo.mKeyframes[mInfo.mSize - 1]._00)) {
-		target.x = mInfo.mKeyframes[mInfo.mSize - 1]._04._00;
-		target.y = mInfo.mKeyframes[mInfo.mSize - 1]._14._00;
-		target.z = mInfo.mKeyframes[mInfo.mSize - 1]._24._00;
+		target.x = mInfo.mKeyframes[mInfo.mSize - 1]._04.mTime;
+		target.y = mInfo.mKeyframes[mInfo.mSize - 1]._14.mTime;
+		target.z = mInfo.mKeyframes[mInfo.mSize - 1]._24.mTime;
 		return;
 	}
 	for (int i = 0; i < (int)mInfo.mSize - 1; i++) {
@@ -372,21 +372,21 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 		}
 	}
 
-	target.x = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
-	             mInfo.mKeyframes[idx + 1]._04._08));
-	target.y = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14._00, mInfo.mKeyframes[idx]._14._04, mInfo.mKeyframes[idx]._14._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14._00, mInfo.mKeyframes[idx + 1]._14._04,
-	             mInfo.mKeyframes[idx + 1]._14._08));
-	target.z = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24._00, mInfo.mKeyframes[idx]._24._04, mInfo.mKeyframes[idx]._24._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24._00, mInfo.mKeyframes[idx + 1]._24._04,
-	             mInfo.mKeyframes[idx + 1]._24._08));
+	target.x = subExtract(value,
+	                      AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04.mTime, mInfo.mKeyframes[idx]._04.mValue,
+	                               mInfo.mKeyframes[idx]._04.mTangent),
+	                      AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04.mTime, mInfo.mKeyframes[idx + 1]._04.mValue,
+	                               mInfo.mKeyframes[idx + 1]._04.mTangent));
+	target.y = subExtract(value,
+	                      AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14.mTime, mInfo.mKeyframes[idx]._14.mValue,
+	                               mInfo.mKeyframes[idx]._14.mTangent),
+	                      AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14.mTime, mInfo.mKeyframes[idx + 1]._14.mValue,
+	                               mInfo.mKeyframes[idx + 1]._14.mTangent));
+	target.z = subExtract(value,
+	                      AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24.mTime, mInfo.mKeyframes[idx]._24.mValue,
+	                               mInfo.mKeyframes[idx]._24.mTangent),
+	                      AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24.mTime, mInfo.mKeyframes[idx + 1]._24.mValue,
+	                               mInfo.mKeyframes[idx + 1]._24.mTangent));
 }
 
 /*

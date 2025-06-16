@@ -329,47 +329,40 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 		return data.mData[dataSize * (param.mEntryNum - 1) + param.mDataOffset + 1];
 	}
 
-	// maybe AKeyInfo
-	struct interpolationPoint {
-		f32 time;
-		f32 value;
-		f32 tangent;
-	};
-
-	interpolationPoint start, end, unused;
+	PVWKeyInfoF32 start, end, unused;
 
 	if (dataSize == 3) {
-		start.time    = data.mData[offset];
-		start.value   = data.mData[offset + 1];
-		start.tangent = data.mData[offset + 2];
+		start.mTime    = data.mData[offset];
+		start.mValue   = data.mData[offset + 1];
+		start.mTangent = data.mData[offset + 2];
 		offset += dataSize;
-		end.time    = data.mData[offset];
-		end.value   = data.mData[offset + 1];
-		end.tangent = data.mData[offset + 2];
-		(void)(start.tangent - end.tangent);
+		end.mTime    = data.mData[offset];
+		end.mValue   = data.mData[offset + 1];
+		end.mTangent = data.mData[offset + 2];
+		(void)(start.mTangent - end.mTangent);
 	} else {
-		start.time    = data.mData[offset];
-		start.value   = data.mData[offset + 1];
-		start.tangent = data.mData[offset + 3];
+		start.mTime    = data.mData[offset];
+		start.mValue   = data.mData[offset + 1];
+		start.mTangent = data.mData[offset + 3];
 		offset += dataSize;
-		end.time    = data.mData[offset];
-		end.value   = data.mData[offset + 1];
-		end.tangent = data.mData[offset + 2];
+		end.mTime    = data.mData[offset];
+		end.mValue   = data.mData[offset + 1];
+		end.mTangent = data.mData[offset + 2];
 	}
 
 	// Interpolation calculations
 	// Chat-GPT says Hermite Interpolation
 	const f32 fps /*maybe*/ = 30.f;
-	f32 t                   = (currTime - start.time) * (1.0f / fps);
-	f32 frameDelta          = fps / (end.time - start.time);
+	f32 t                   = (currTime - start.mTime) * (1.0f / fps);
+	f32 frameDelta          = fps / (end.mTime - start.mTime);
 	f32 tSqr                = t * t;
 	f32 deltaSqr            = frameDelta * frameDelta;
 	f32 tCube               = tSqr * t;
 	f32 deltaCube           = deltaSqr * frameDelta;
 
-	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * start.value
-	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * end.value
-	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * start.tangent + (tCube * deltaSqr - tSqr * frameDelta) * end.tangent;
+	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * start.mValue
+	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * end.mValue
+	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * start.mTangent + (tCube * deltaSqr - tSqr * frameDelta) * end.mTangent;
 }
 
 /*
