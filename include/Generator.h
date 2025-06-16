@@ -691,14 +691,14 @@ struct GenArea : public GenBase {
 	{
 	}
 
-	virtual void doWrite(RandomAccessStream&);     // _08
-	virtual void doRead(RandomAccessStream&);      // _14
 	virtual u32 getLatestVersion();                // _20
 	virtual void init(Generator*) { }              // _24
 	virtual void update(Generator*) { }            // _28
 	virtual void render(Graphics&, Generator*) { } // _2C
 	virtual Vector3f getPos(Generator*) = 0;       // _30
 	virtual f32 getRadius() { return 0.0f; }       // _34
+	virtual void doWrite(RandomAccessStream&);     // _08
+	virtual void doRead(RandomAccessStream&);      // _14
 
 	// _04     = VTBL
 	// _00-_18 = GenBase

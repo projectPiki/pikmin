@@ -786,6 +786,8 @@ void Generator::render(Graphics& gfx)
 	}
 }
 
+char* coStrings[] = { "なし", "常に" };
+
 /*
  * --INFO--
  * Address:	800DC3DC
@@ -941,8 +943,6 @@ void Generator::write(RandomAccessStream& output)
 		output.writeInt(0);
 	}
 }
-
-char* coStrings[] = { "なし", "常に" };
 
 /*
  * --INFO--
