@@ -1416,117 +1416,10 @@ Vector3f GenAreaCircle::getPos(Generator* gen)
 	radius *= mRadius();
 
 	f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
-	pos           = Vector3f(radius * sinf(randAngle), 0.0f, radius * cosf(randAngle)) + pos;
+	Vector3f delta(radius * sinf(randAngle), 0.0f, radius * cosf(randAngle));
+	pos = delta + pos;
 
 	return pos;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xC8(r1)
-	  stfd      f31, 0xC0(r1)
-	  addi      r0, r1, 0x3C
-	  addi      r6, r1, 0x40
-	  stfd      f30, 0xB8(r1)
-	  stfd      f29, 0xB0(r1)
-	  stfd      f28, 0xA8(r1)
-	  stfd      f27, 0xA0(r1)
-	  stfd      f26, 0x98(r1)
-	  stw       r31, 0x94(r1)
-	  stw       r30, 0x90(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x8C(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r1, 0x38
-	  lfs       f1, 0xA0(r5)
-	  addi      r4, r3, 0
-	  lfs       f0, 0xAC(r5)
-	  addi      r3, r1, 0x4C
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x40(r1)
-	  lfs       f1, 0x9C(r5)
-	  lfs       f0, 0xA8(r5)
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x3C(r1)
-	  lfs       f1, 0x98(r5)
-	  lfs       f0, 0xA4(r5)
-	  mr        r5, r0
-	  fadds     f0, f1, f0
-	  stfs      f0, 0x38(r1)
-	  bl        -0xA7828
-	  lfs       f31, 0x4C(r1)
-	  lfs       f30, 0x50(r1)
-	  lfs       f29, 0x54(r1)
-	  bl        0x13971C
-	  xoris     r0, r3, 0x8000
-	  lfd       f3, -0x6788(r2)
-	  stw       r0, 0x84(r1)
-	  lis       r31, 0x4330
-	  lfs       f1, -0x6770(r2)
-	  stw       r31, 0x80(r1)
-	  lfs       f0, -0x6774(r2)
-	  lfd       f2, 0x80(r1)
-	  fsubs     f2, f2, f3
-	  fdivs     f1, f2, f1
-	  fmuls     f28, f0, f1
-	  bl        0x1396EC
-	  xoris     r0, r3, 0x8000
-	  lfs       f2, -0x6774(r2)
-	  stw       r0, 0x7C(r1)
-	  lfd       f5, -0x6788(r2)
-	  fsubs     f1, f2, f28
-	  stw       r31, 0x78(r1)
-	  lfs       f3, -0x6770(r2)
-	  lfd       f4, 0x78(r1)
-	  lfs       f0, 0x30(r30)
-	  fsubs     f4, f4, f5
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f1, f1, f2
-	  fadds     f27, f28, f1
-	  fmuls     f27, f27, f0
-	  bl        0x1396AC
-	  xoris     r0, r3, 0x8000
-	  lfd       f4, -0x6788(r2)
-	  stw       r0, 0x74(r1)
-	  lfs       f3, -0x6770(r2)
-	  stw       r31, 0x70(r1)
-	  lfs       f2, -0x6774(r2)
-	  lfd       f1, 0x70(r1)
-	  lfs       f0, -0x677C(r2)
-	  fsubs     f4, f1, f4
-	  lfs       f1, -0x6768(r2)
-	  fdivs     f3, f4, f3
-	  fmuls     f2, f2, f3
-	  fmuls     f0, f0, f2
-	  fmuls     f26, f1, f0
-	  fmr       f1, f26
-	  bl        0x13D150
-	  fmuls     f28, f27, f1
-	  fmr       f1, f26
-	  bl        0x13D2D8
-	  fmuls     f2, f27, f1
-	  lfs       f1, -0x39DC(r13)
-	  fadds     f0, f28, f29
-	  fadds     f3, f1, f30
-	  fadds     f1, f2, f31
-	  stfs      f1, 0x0(r29)
-	  stfs      f3, 0x4(r29)
-	  stfs      f0, 0x8(r29)
-	  lwz       r0, 0xCC(r1)
-	  lfd       f31, 0xC0(r1)
-	  lfd       f30, 0xB8(r1)
-	  lfd       f29, 0xB0(r1)
-	  lfd       f28, 0xA8(r1)
-	  lfd       f27, 0xA0(r1)
-	  lfd       f26, 0x98(r1)
-	  lwz       r31, 0x94(r1)
-	  lwz       r30, 0x90(r1)
-	  lwz       r29, 0x8C(r1)
-	  addi      r1, r1, 0xC8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -1540,97 +1433,20 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 	Matrix4f mtx2;
 
 	Vector3f scale;
-	scale.set(mRadius() / 100.0f, 1.0f, mRadius() / 100.0f);
-	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), gen->getPos());
+	f32 radius = mRadius() / 100.0f;
+	scale.set(radius, 1.0f, radius);
+	Vector3f& v = gen->getPos();
+	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), v);
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
 
 	Colour colour;
 	colour.set(255, 255, 0, 255);
-
-	STACK_PAD_VAR(2);
 	GlobalShape::enShape->mMaterialList->mColourInfo.mColour = colour;
 	GlobalShape::enShape->drawshape(gfx, *gfx.mCamera, nullptr);
 
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0xE8(r1)
-	  stw       r31, 0xE4(r1)
-	  addi      r31, r4, 0
-	  addi      r0, r1, 0x34
-	  lfs       f0, -0x6790(r2)
-	  addi      r6, r1, 0x40
-	  addi      r4, r1, 0x50
-	  stfs      f0, 0x58(r1)
-	  stfs      f0, 0x54(r1)
-	  stfs      f0, 0x50(r1)
-	  lfs       f1, -0x6764(r2)
-	  lfs       f2, 0x30(r3)
-	  addi      r3, r1, 0x9C
-	  lfs       f0, -0x39D8(r13)
-	  fdivs     f1, f2, f1
-	  stfs      f1, 0x50(r1)
-	  stfs      f0, 0x54(r1)
-	  stfs      f1, 0x58(r1)
-	  lfs       f1, 0x98(r5)
-	  lfs       f0, 0xA4(r5)
-	  lfs       f5, 0xA0(r5)
-	  fadds     f1, f1, f0
-	  lfs       f4, 0xAC(r5)
-	  lfs       f3, 0x9C(r5)
-	  lfs       f2, 0xA8(r5)
-	  fadds     f4, f5, f4
-	  stfs      f1, 0x2C(r1)
-	  fadds     f3, f3, f2
-	  lfs       f0, -0x39D4(r13)
-	  mr        r5, r0
-	  lfs       f2, 0x2C(r1)
-	  stfs      f0, 0x34(r1)
-	  lfs       f1, -0x39D0(r13)
-	  stfs      f2, 0x40(r1)
-	  lfs       f0, -0x39CC(r13)
-	  stfs      f3, 0x44(r1)
-	  stfs      f1, 0x38(r1)
-	  stfs      f4, 0x48(r1)
-	  stfs      f0, 0x3C(r1)
-	  bl        -0xA0A18
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x9C
-	  addi      r5, r1, 0x5C
-	  lwz       r12, 0x70(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x3B4(r31)
-	  addi      r4, r1, 0x5C
-	  li        r5, 0
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  li        r5, 0xFF
-	  lwz       r3, 0x2F5C(r13)
-	  stb       r5, 0x4C(r1)
-	  li        r0, 0
-	  addi      r4, r31, 0
-	  stb       r5, 0x4D(r1)
-	  li        r6, 0
-	  stb       r0, 0x4E(r1)
-	  stb       r5, 0x4F(r1)
-	  lwz       r3, 0x44(r3)
-	  lwz       r0, 0x4C(r1)
-	  stw       r0, 0x2C(r3)
-	  lwz       r3, 0x2F5C(r13)
-	  lwz       r5, 0x2E4(r31)
-	  bl        -0xAE714
-	  lwz       r0, 0xEC(r1)
-	  lwz       r31, 0xE4(r1)
-	  addi      r1, r1, 0xE8
-	  mtlr      r0
-	  blr
-	*/
+	STACK_PAD_STRUCT(1);
+	STACK_PAD_TERNARY(gen, 2);
 }
 
 /*
