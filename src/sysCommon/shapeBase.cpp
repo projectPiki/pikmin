@@ -370,8 +370,6 @@ static f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 	return (2.0f * tCube * deltaCube - 3.0f * tSqr * deltaSqr + 1.0f) * start.value
 	     + (-2.0f * tCube * deltaCube + 3.0f * tSqr * deltaSqr) * end.value
 	     + (tCube * deltaSqr - 2.0f * tSqr * frameDelta + t) * start.tangent + (tCube * deltaSqr - tSqr * frameDelta) * end.tangent;
-
-	STACK_PAD_VAR(9);
 }
 
 /*
