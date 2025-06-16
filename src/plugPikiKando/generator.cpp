@@ -1508,6 +1508,12 @@ void GeneratorList::updateUseList()
 	}
 }
 
+// This should be weak but having it here fixes weak function order
+f32 GenAreaCircle::getRadius()
+{
+	return mRadius();
+}
+
 // The functions following this point are exclusively found in the windows .dll build
 // None of this is confirmed to be equivalent for obvious reasons
 

@@ -719,7 +719,7 @@ struct GenAreaCircle : public GenArea {
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual void render(Graphics&, Generator*);          // _2C
 	virtual Vector3f getPos(Generator*);                 // _30
-	virtual f32 getRadius() { return mRadius(); }        // _34
+	virtual f32 getRadius();       // _34
 
 	// _04     = VTBL
 	// _00-_24 = GenArea
