@@ -3728,9 +3728,7 @@ void NaviNukuAdjustState::exec(Navi* navi)
 	f32 len = pos.normalise();
 	f32 ang = angDist(_10, navi->mFaceDirection);
 	if (quickABS(ang) < PI / 10.0f && len < 1.0f) {
-		// This is using len twice for the sake of matching
-		// even though its clearly wrong, maybe the devs made a typo :copium:
-		PRINT("dist = %f ang diff is %f\n", len, len);
+		PRINT("dist = %f ang diff is %f\n", len, ang);
 		if (DelayPikiBirth) {
 			pikiMgr->meBirthMode = 1;
 			Piki* piki           = (Piki*)pikiMgr->birth();

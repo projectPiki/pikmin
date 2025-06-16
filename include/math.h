@@ -9,13 +9,8 @@
 
 static inline f32 quickABS(f32 x)
 {
-	union {
-		u32 w;
-		f32 f;
-	} tmp;
-	tmp.f = x;
-	tmp.w &= ~0x80000000;
-	return tmp.f;
+	*(u32*)&x &= ~0x80000000;
+	return x;
 }
 
 static inline f32 u32ToFloat(u32 a)
