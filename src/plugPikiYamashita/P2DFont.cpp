@@ -66,58 +66,8 @@ P2DFont::P2DFont(char* fileName)
 	mFontType = 2;
 	mWidth    = (mFont->mTexture->mWidth / rows);
 	mLeading  = 5;
-	mDescent  = (mFont->mTexture->mHeight / columns) * 0.0f;
+	mDescent  = (s32)((mFont->mTexture->mHeight / columns) * 0.0f);
 	mAscent   = (mFont->mTexture->mHeight / columns) - mDescent;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  addi      r31, r3, 0
-	  addi      r5, r1, 0x18
-	  addi      r6, r1, 0x14
-	  bl        -0x16C
-	  stw       r3, 0x0(r31)
-	  li        r3, 0x2
-	  li        r0, 0x5
-	  sth       r3, 0x4(r31)
-	  lis       r5, 0x4330
-	  addi      r3, r31, 0
-	  lwz       r6, 0x0(r31)
-	  lwz       r4, 0x18(r1)
-	  lwz       r6, 0x0(r6)
-	  lhz       r6, 0x8(r6)
-	  divw      r4, r6, r4
-	  sth       r4, 0x6(r31)
-	  sth       r0, 0x8(r31)
-	  lwz       r6, 0x0(r31)
-	  lfs       f0, -0x48F0(r2)
-	  lwz       r6, 0x0(r6)
-	  fctiwz    f0, f0
-	  lwz       r4, 0x14(r1)
-	  lhz       r6, 0xA(r6)
-	  divw      r4, r6, r4
-	  stfd      f0, 0x20(r1)
-	  lwz       r0, 0x24(r1)
-	  sth       r0, 0xC(r31)
-	  xoris     r0, r4, 0x8000
-	  lwz       r4, 0x0(r31)
-	  stw       r0, 0x2C(r1)
-	  lwz       r4, 0x0(r4)
-	  lwz       r0, 0x14(r1)
-	  lhz       r4, 0xA(r4)
-	  stw       r5, 0x28(r1)
-	  divw      r0, r4, r0
-	  lhz       r4, 0xC(r31)
-	  sub       r0, r0, r4
-	  sth       r0, 0xA(r31)
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
