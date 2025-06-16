@@ -745,7 +745,7 @@ void AnimInfo::genAge(AgeServer& server)
 	for (effectKey; effectKey != &mEventKeys; effectKey = effectKey->mNext) {
 		sprintf(buf, "key %d", index);
 
-		server.NewButton("DEL", new Delegate1<AnimKey, AgeServer&>(infoKey, AnimKey::ageDelLastKey), 120);
+		server.NewButton("DEL", new Delegate1<AnimKey, AgeServer&>(effectKey, AnimKey::ageDelLastKey), 120);
 		server.StartOptionBox("type", (u16*)&effectKey->mEventType, 120);
 		server.NewOption("SND", ANIMEVENT_Notify);
 		server.NewOption("GFX", ANIMEVENT_Action);
