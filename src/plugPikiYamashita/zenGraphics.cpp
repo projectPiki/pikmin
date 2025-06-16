@@ -16,9 +16,8 @@ void zen::zenGraphics::drawOneTri(Vector3f* vertices, Colour& color)
 {
 	GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, 3);
 	u32 gxColor = *(u32*)&color;
-	for (int i = 0; i < 3; i++) {
-		Vector3f& vec = vertices[i];
-		GXPosition3f32(vec.x, vec.y, vec.z);
+	for (int i = 0; i < 3; i++, vertices++) {
+		GXPosition3f32(vertices->x, vertices->y, vertices->z);
 		GXColor1u32(gxColor);
 	}
 	GXEnd();

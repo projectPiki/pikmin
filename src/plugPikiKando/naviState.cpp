@@ -681,7 +681,7 @@ void NaviWalkState::exec(Navi* navi)
 			}
 		}
 
-		// problem in this area
+		(void)navi->mGroundTriangle->mEdgePlanes[index];
 		if (quickABS(navi->_AD0->mTriangle.mNormal.y) <= 0.01f) {
 			Plane* plane = &navi->mGroundTriangle->mEdgePlanes[index];
 			PRINT(" cliff dist = %.1f\n", plane->dist(navi->mPosition) - navi->mCollisionRadius);
