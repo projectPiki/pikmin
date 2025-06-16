@@ -58,7 +58,6 @@ static void writeID(RandomAccessStream& output, u32 id)
  */
 static u32 readID(RandomAccessStream& input)
 {
-	// the stack is wrong here somehow.
 	u32 outID;
 	u8* id = reinterpret_cast<u8*>(&outID);
 	id[3]  = input.readByte();
@@ -1506,12 +1505,6 @@ void GeneratorList::updateUseList()
 			gen->updateUseList();
 		}
 	}
-}
-
-// This should be weak but having it here fixes weak function order
-f32 GenAreaCircle::getRadius()
-{
-	return mRadius();
 }
 
 // The functions following this point are exclusively found in the windows .dll build

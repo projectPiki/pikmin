@@ -604,9 +604,9 @@ struct GenTypeAtOnce : public GenType {
 	{
 	}
 
+	virtual void init(Generator*);                       // _24
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
-	virtual void init(Generator*);                       // _24
 	virtual void setBirthInfo(BirthInfo&, Generator*);   // _30
 	virtual int getMaxCount();                           // _34
 
@@ -626,9 +626,9 @@ struct GenTypeInitRand : public GenType {
 	{
 	}
 
+	virtual void init(Generator*);                       // _24
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
-	virtual void init(Generator*);                       // _24
 	virtual void setBirthInfo(BirthInfo&, Generator*);   // _30
 	virtual int getMaxCount();                           // _34
 
@@ -650,9 +650,9 @@ struct GenTypeOne : public GenType {
 	{
 	}
 
+	virtual void init(Generator*);                       // _24
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
-	virtual void init(Generator*);                       // _24
 	virtual void render(Graphics&, Generator*);          // _2C
 	virtual void setBirthInfo(BirthInfo&, Generator*);   // _30
 	virtual int getMaxCount() { return 1; }              // _34
@@ -715,11 +715,11 @@ struct GenAreaCircle : public GenArea {
 	{
 	}
 
+	virtual Vector3f getPos(Generator*);                 // _30
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual void render(Graphics&, Generator*);          // _2C
-	virtual Vector3f getPos(Generator*);                 // _30
-	virtual f32 getRadius();       // _34
+	virtual f32 getRadius() { return mRadius(); }        // _34
 
 	// _04     = VTBL
 	// _00-_24 = GenArea
@@ -735,8 +735,8 @@ struct GenAreaPoint : public GenArea {
 	{
 	}
 
-	virtual void render(Graphics&, Generator*); // _2C
 	virtual Vector3f getPos(Generator*);        // _30
+	virtual void render(Graphics&, Generator*); // _2C
 
 	// _04     = VTBL
 	// _00-_24 = GenArea
