@@ -42,14 +42,14 @@ struct ArgListPair {
 	u16 argTypes; // This is a bitfield array of eight 2-bit values
 };
 
+static TrackCallback JAM_CALLBACK_FUNC = NULL;
+
 static size_t T_LISTS;
 static TrackListPair TRACK_LIST[TRACK_LIST_SIZE];
 
 static seqp_* SEQ_P;
 static u8 SEQ_CMD;
 static u32 SEQ_ARG[8];
-
-static TrackCallback JAM_CALLBACK_FUNC = NULL;
 
 // predeclare this so Jam_UpdateTrackAll can use this stupid function.
 extern "C" static void OSf32tos8(f32* in, s8* out);
@@ -2863,51 +2863,40 @@ static u8 osc_table[] = { 0x01, 0x02, 0x08, 0x04, 0x10 };
  */
 s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 {
-	s32 var_r29;
-	u8* var_r28;
-	s32 var_r27;
 	BOOL var_r26;
-	u8 bVar9;    // r25
-	u8 uVar5_2;  // r24
-	u32 uVar2;   // r23
-	s32 uVar5;   // r23
-	u8 bVar10_2; // r22
-
+	u8 bVar9;
+	u8 velocity;
+	u32 uVar2;
+	s32 uVar5;
+	u8 bVar10_2;
 	f32 tempoProportion;
 	u8 opcode;
-
-	u8 uVar6; // r21
-	u8 voice;
-
-	u8 local_53; // STACK 0x3D
-	u8 pitch;    // STACK 0x3C
-	s32 sp38;
-	u8 bVar10; // STACK 0x34
-	s32 sp30;
-	int local_64; // STACK 0x2C
-
+	u8 uVar6;
+	u8 keyTarget;
+	u8 pitch;
+	STACK_PAD_VAR(1);
+	u8 bVar10;
+	STACK_PAD_VAR(1);
+	int local_64;
 	int iVar11;
+	int iVar11_2;
 	int iVar12;
-	u32 seqRes;   // r30
-	int duration; // r22
-	jc_* pjVar3;  // r21
+	u32 seqRes;
+	int duration;
+	jc_* pjVar3;
+	int iVar11_3;
+	u8 voice;
+	STACK_PAD_VAR(6);
 
-	int* REF_local_64;
-
-	u8* bVar10_p;
-
-	// (void)&bVar10;
 	if (0) {
-		(void)&pitch;
+		(void)&bVar10;
 	}
 	if (0) {
-		(void)&local_53;
+		(void)&keyTarget;
 	}
 	if (0) {
 		(void)&local_64;
 	}
-
-	STACK_PAD_VAR(5);
 
 	seqRes = 0;
 	if (track->parent && track->doChangeTempo == TRUE) {
@@ -2966,7 +2955,7 @@ try_interrupt:
 	}
 	track->tickCounter++;
 	if (track->waitTimer == -1) {
-		if ((u8)CheckNoteStop(track, 0)) { // TODO: CheckNoteStop should return u8
+		if ((u8)CheckNoteStop(track, 0)) { // TODO: CheckNoteStop should return u8 or C++ bool
 			track->waitTimer = 0;
 		} else {
 			goto timed;
@@ -2993,40 +2982,42 @@ try_interrupt:
 			pitch = opcode;
 			pitch += track->finalTranspose;
 
-			bVar10_p = &bVar10;
 			if ((bVar10 = __ByteRead(track)) & 0x80) {
 				pitch = __ExchangeRegisterValue(track, pitch);
 				pitch += track->finalTranspose;
 			}
 
-			u8 pitch2 = (u8)pitch;
+			(void)pitch;
 
-			if (*bVar10_p >> 5 & 2) {
-				local_53 = pitch2;
-				pitch    = track->_D5;
+			if (bVar10 >> 5 & 2) {
+				keyTarget = pitch;
+				pitch     = track->_D5;
 			}
 
-			uVar5_2 = __ByteRead(track);
-			if (uVar5_2 >= 0x80) {
-				uVar5_2 = __ExchangeRegisterValue(track, uVar5_2 - 0x80);
+			velocity = __ByteRead(track);
+			if (velocity >= 0x80) {
+				velocity = __ExchangeRegisterValue(track, velocity - 0x80);
 			}
 
-			if ((*bVar10_p & 7) == 0) {
+			u32 lowBits = bVar10;
+			lowBits &= 7;
+			if (lowBits == 0) {
 				voice = 0;
 				bVar9 = __ByteRead(track);
 				if (bVar9 >= 0x80) {
 					bVar9 = __ExchangeRegisterValue(track, bVar9 - 0x80);
 				}
 				uVar2 = 0;
-				for (iVar11 = 0; iVar11 < (*bVar10_p >> 3 & 3); iVar11++) {
+				for (iVar11 = 0; iVar11 < (bVar10 >> 3 & 3); iVar11++) {
 					uVar2 = uVar2 << 8 | __ByteRead(track);
 				}
-				if ((u32)(*bVar10_p >> 3 & 3) == 1 && uVar2 >= 0x80) {
+				if ((u32)(bVar10 >> 3 & 3) == 1 && uVar2 >= 0x80) {
 					uVar2 = __ExchangeRegisterValue(track, uVar2 - 0x80);
 				}
 			} else {
-				voice = (*bVar10_p) & 7;
-				if (bVar10 >> 3 & 3) {
+				voice = lowBits;
+				// fake volatile for matching
+				if (*(volatile u8*)&bVar10 >> 3 & 3) {
 					voice = __ExchangeRegisterValue(track, voice - 1);
 					if (voice >= 8) {
 						break;
@@ -3036,50 +3027,54 @@ try_interrupt:
 				bVar9 = 100;
 			}
 
-			track->_D4 = *bVar10_p >> 5 & 3;
-			BOOL cond  = track->_D6 ? TRUE : FALSE;
-			// TODO: are these vars compiler-generated?
-			var_r27 = voice;
-			var_r29 = uVar5_2;
-			// TODO: not matching
-			var_r28 = ((u8*)track) + voice;
-			var_r26 = FALSE;
+			track->_D4 = bVar10 >> 5 & 3;
 
-			if (cond) {
-				duration = uVar2;
-				if (track->_D4 & 1) {
-					duration = -1;
-				}
-				if (duration != -1) {
-					duration = Jam_SEQtimeToDSPtime(track, duration, bVar9);
-				}
-				if (track->isPaused && (track->pauseStatus & 0x10)) {
-					iVar11 = -1;
-				} else {
-					iVar11 = GateON(track, var_r27, pitch, var_r29, duration);
-				}
-			} else {
-				if ((duration = uVar2) != -1) {
-					duration = Jam_SEQtimeToDSPtime(track, duration, bVar9);
-				}
-				if (track->_D4 & 1) {
-					duration = -1;
-				}
-				if (track->isPaused && (track->pauseStatus & 0x10)) {
-					iVar11 = -1;
-				} else {
-					iVar11 = NoteON(track, var_r27, pitch, var_r29, duration);
-				}
-			}
+			BOOL cond = track->_D6 ? TRUE : FALSE;
+			var_r26   = FALSE;
 
-			if (iVar11 != -1) {
-				((seqp_*)(var_r28))->_94[0] = pitch;
-				var_r26                     = TRUE;
+			for (int j = 0; j < 1; j++) {
+				int unused = j * 2;
+				(void)&pitch;
+				(void)(s32)velocity;
+				(void)track->_94[voice];
+
+				if (cond) {
+					duration = uVar2;
+					if (track->_D4 & 1) {
+						duration = -1;
+					}
+					if (duration != -1) {
+						duration = Jam_SEQtimeToDSPtime(track, duration, bVar9);
+					}
+					if (track->isPaused && (track->pauseStatus & 0x10)) {
+						iVar11_2 = -1;
+					} else {
+						iVar11_2 = GateON(track, voice, pitch, velocity, duration);
+					}
+				} else {
+					if ((duration = uVar2) != -1) {
+						duration = Jam_SEQtimeToDSPtime(track, duration, bVar9);
+					}
+					if (track->_D4 & 1) {
+						duration = -1;
+					}
+					if (track->isPaused && (track->pauseStatus & 0x10)) {
+						iVar11_2 = -1;
+					} else {
+						iVar11_2 = NoteON(track, voice, pitch, velocity, duration);
+					}
+				}
+
+				if (iVar11_2 != -1) {
+					track->_94[voice] = pitch;
+					var_r26           = TRUE;
+				}
+				!unused;
 			}
 
 			track->_90 = var_r26;
 			track->_CC = bVar9;
-			track->_CD = uVar5_2;
+			track->_CD = velocity;
 			track->_D0 = uVar2;
 
 			if (track->_D4 & 1) {
@@ -3093,8 +3088,8 @@ try_interrupt:
 				if (steps == -1) {
 					steps = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
 				}
-				SetKeyTarget_1Shot(track->channels[0], local_53 + track->finalTranspose, steps);
-				pitch = local_53;
+				SetKeyTarget_1Shot(track->channels[0], keyTarget + track->finalTranspose, steps);
+				pitch = keyTarget;
 			}
 
 			track->_D5 = pitch;
@@ -3107,8 +3102,8 @@ try_interrupt:
 				break;
 			}
 		} else if ((opcode & 0xf0) == 0x80 || opcode == 0xf9) {
-			iVar11 = 1;
-			uVar5  = 0;
+			iVar11_3 = 1;
+			uVar5    = 0;
 			if (opcode == 0xf9) {
 				bVar10_2 = __ByteRead(track);
 				uVar6    = __ExchangeRegisterValue(track, bVar10_2 & 7);
@@ -3125,7 +3120,7 @@ try_interrupt:
 			}
 			uVar6 = opcode & 0x0f;
 			if (uVar6 == 8) {
-				iVar11 = 2;
+				iVar11_3 = 2;
 				uVar6 -= 8;
 			}
 			if (uVar6 > 8) {
@@ -3137,7 +3132,7 @@ try_interrupt:
 			}
 			if (uVar6 == 0) {
 				// This for loop init feels fake... but idk.  Check this again later.
-				for (track->waitTimer = iVar12 = 0; iVar12 < iVar11; iVar12++) {
+				for (track->waitTimer = iVar12 = 0; iVar12 < iVar11_3; iVar12++) {
 					track->waitTimer = track->waitTimer << 8 | __ByteRead(track);
 				}
 				if (track->waitTimer == 0) {
@@ -3186,7 +3181,7 @@ timed:
 			if (i <= 5 || i >= 11) {
 				seqRes |= (1 << i);
 			} else {
-				Osc_Update_Param(track, (u8)i, move->currentValue);
+				Osc_Update_Param(track, i, move->currentValue);
 			}
 		}
 	}
@@ -3211,6 +3206,7 @@ LAB_800136e0:
 			}
 		}
 	}
+
 	return 0;
 }
 
