@@ -94,7 +94,7 @@ AnimMgr* PikiShapeObject::getAnimMgr()
 void PikiShapeObject::initOnce()
 {
 	_instances[Blue]           = new PikiShapeObject(gameflow.loadShape("pikis/bluModel.mod", true));
-	_instances[Blue]->mAnimMgr = new AnimMgr(_instances[Blue]->mShape, "pikis/animMgr.bin", 0x8000, nullptr);
+	_instances[Blue]->mAnimMgr = new AnimMgr(_instances[Blue]->mShape, "pikis/animMgr.bin", ANIMMGR_LOAD_BUNDLE, nullptr);
 
 	gameflow.addGenNode("pikiAnimMgr", _instances[Blue]->mAnimMgr);
 

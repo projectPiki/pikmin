@@ -1158,7 +1158,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		}
 
 		if (!gameflow.mMoviePlayer->setCamera(gfx)) {
+			// false = no scene currently active, so no preset camera information to go off
 			if (gameflow.mMoviePlayer->mCamTransitionFactor > 0.0f) {
+				// we're in an active transition, so follow it
 				gameflow.mMoviePlayer->mCamTransitionFactor -= gsys->getFrameTime() * 0.6f;
 				if (gameflow.mMoviePlayer->mCamTransitionFactor < 0.0f) {
 					gameflow.mMoviePlayer->mCamTransitionFactor = 0.0f;
@@ -1176,6 +1178,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 
 				gfx.mCamera->mFov = (fov - a) * tComp + a;
 			} else {
+				// no scene or active transition, so set to player cam
 				gameflow.mMoviePlayer->setGameCamInfo(true, cameraMgr->mCamera->getFov(), cameraMgr->mCamera->getViewpoint(),
 				                                      cameraMgr->mCamera->getWatchpoint());
 			}

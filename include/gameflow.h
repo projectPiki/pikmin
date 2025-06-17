@@ -537,7 +537,7 @@ struct GameFlow : public Node {
 	u8 _330;                       // _330
 	int mIsGameplayInputEnabled;   // _334
 	int mIsUiOverlayActive;        // _338
-	int mDisableController;        // _33C, if true, no controller input is accepted
+	int mDisableController;        // _33C, TODO: revisit this name, seems wrong
 	int mIsTutorialActive;         // _340
 	u8 _344[0x4];                  // _344, unknown
 	u32 _348;                      // _348, unknown

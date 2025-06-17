@@ -326,7 +326,7 @@ AnimMgr::AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath)
 {
 	setName("AnimMgr");
 	mModel       = model;
-	mSkipLoading = flags & 0x7FFF;
+	mSkipLoading = flags & ANIMMGR_LOAD_SKIP_MASK;
 	mAnimList.initCore("anims");
 	loadAnims(animPath, bundlePath);
 }

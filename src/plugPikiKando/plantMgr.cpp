@@ -372,10 +372,10 @@ PlantShapeObject::PlantShapeObject(Shape* shape, char* plantName, char* fileName
 	if (plantName) {
 		char buf[128];
 		sprintf(buf, "objects/plants/%s", fileName);
-		mAnimMgr        = new AnimMgr(shape, buf, 0x8000, nullptr);
+		mAnimMgr        = new AnimMgr(shape, buf, ANIMMGR_LOAD_BUNDLE, nullptr);
 		mAnimMgr->mName = plantName;
 	} else {
-		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
+		mAnimMgr = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_NOSKIP, nullptr);
 	}
 
 	mShape->overrideAnim(0, &mAnimContext);

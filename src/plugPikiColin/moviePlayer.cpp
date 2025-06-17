@@ -235,12 +235,12 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		type = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
 	}
 	info->mPlayer = new CinematicPlayer(info->mName);
-	if (_16C && info->mPlayer->mFlags & 0x200) {
+	if (mIsGameCam && info->mPlayer->mFlags & CINFLAG_FadeIn) {
 		mInitialCamBlend = 1.0f;
-		_16C             = 0;
+		mIsGameCam       = false;
 	}
 
-	if (heapid != 2) {
+	if (heapid != SYSHEAP_App) {
 		gsys->getHeap(SYSHEAP_Movie)->setAllocType(type);
 		gsys->setHeap(heapid);
 	}
@@ -445,7 +445,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	PRINT("movie attach\n");
 	gsys->attachObjs();
 
-	if (pos && (info->mPlayer->mFlags & 0x1)) {
+	if (pos && (info->mPlayer->mFlags & CINFLAG_Unk0)) {
 		if (pos && rot) {
 			PRINT("    localized at (%.1f, %.1f, %.1f) (%.1f, %.1f, %.1f)\n", pos->x, pos->y, pos->z, rot->x, rot->y, rot->z);
 		}
@@ -460,17 +460,22 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 
 	bool doPlayMovie = false;
 	if (mPlayInfoList.getChildCount() == 0) {
+		// if there are no currently playing cutscenes, play cutscene now
 		doPlayMovie = true;
 	} else {
-		if (info->mPlayer->mFlags & 0x100) {
+		// something's currently playing - check if we should override it
+		if (info->mPlayer->mFlags & CINFLAG_TakeOff) {
 			bool check = false;
+			// check if all queued movies have takeoff flag
 			FOREACH_NODE(MovieInfo, mStackInfoList.mChild, stackInfo)
 			{
-				if (!(stackInfo->mPlayer->mFlags & 0x100)) {
+				if (!(stackInfo->mPlayer->mFlags & CINFLAG_TakeOff)) {
 					check = true;
 					break;
 				}
 			}
+
+			// if all queued movies have takeoff flag, play cutscene anyway
 			if (!check) {
 				doPlayMovie = true;
 			}
@@ -480,8 +485,8 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	if (doPlayMovie) {
 		PRINT("playing movie %s\n", info->mName);
 		initMovieFlags(info);
-		if (info->mPlayer->mFlags & 0x80000) {
-			gameflow.mDisableController = 1;
+		if (info->mPlayer->mFlags & CINFLAG_Unk19) {
+			gameflow.mDisableController = TRUE;
 		}
 		info->update();
 		mPlayInfoList.add(info);
@@ -528,28 +533,32 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
  */
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
-	bool check = (info->mPlayer->mFlags & 0x4) != 0;
+	bool doHideNavi = (info->mPlayer->mFlags & CINFLAG_Unk2) != 0;
 	FOREACH_NODE(SceneCut, info->mPlayer->mCutList.mChild, cut)
 	{
 		FOREACH_NODE(ActorInstance, cut->mActor.mChild, actor)
 		{
-			if (actor->mFlags & (0x20 | 0x1)) {
-				check = false;
+			if (actor->mFlags & (CINFLAG_Unk5 | CINFLAG_Unk0)) {
+				doHideNavi = false;
 				break;
 			}
 		}
 	}
-	if (info->mPlayer->mFlags & 0x80) {
+	if (info->mPlayer->mFlags & CINFLAG_UseLights) {
 		PRINT("Killing all effects!!!\n");
 		effectMgr->killAll();
 	}
 
-	if (info->mPlayer->mFlags & 0x400000) {
+	if (info->mPlayer->mFlags & CINFLAG_DoCameraTransition) {
 		mCamTransitionFactor = 1.0f;
 	}
 
 	if (gameflow.mGameInterface) {
-		gameflow.mGameInterface->message(7, (check ? 0x80000000 : 0) | info->mPlayer->mFlags & ~(0xFFCA0383));
+		gameflow.mGameInterface->message(7, (doHideNavi ? 0x80000000 : 0)
+		                                        | info->mPlayer->mFlags
+		                                              & (CINFLAG_Unk2 | CINFLAG_Unk3 | CINFLAG_Unk4 | CINFLAG_Unk5 | CINFLAG_Unk6
+		                                                 | CINFLAG_Unk10 | CINFLAG_Unk11 | CINFLAG_Unk12 | CINFLAG_Unk13 | CINFLAG_Unk14
+		                                                 | CINFLAG_Unk15 | CINFLAG_Unk16 | CINFLAG_Unk18 | CINFLAG_Unk20 | CINFLAG_Unk21));
 	}
 }
 
@@ -597,7 +606,9 @@ void MoviePlayer::update()
 	MovieInfo* next;
 	for (MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild; info; info = next) {
 		next = (MovieInfo*)info->mNext;
-		gameflow.mDemoFlags |= info->mPlayer->mFlags & 0x4FC;
+		gameflow.mDemoFlags
+		    |= info->mPlayer->mFlags
+		     & (CINFLAG_Unk2 | CINFLAG_Unk3 | CINFLAG_Unk4 | CINFLAG_Unk5 | CINFLAG_Unk6 | CINFLAG_UseLights | CINFLAG_Unk10);
 		if (mInitialCamBlend > 0.0f) {
 			mInitialCamBlend -= gsys->getFrameTime() * 0.6f;
 			if (mInitialCamBlend < 0.0f) {
@@ -614,7 +625,7 @@ void MoviePlayer::update()
 			info->mPlayer->mCameraBlendRatio = (sinf(mInitialCamBlend * PI - HALF_PI) + 1.0f) * 0.5f;
 		}
 
-		if (info->mPlayer && info->mPlayer->mTarget && info->mPlayer->mFlags & 0x20000) {
+		if (info->mPlayer && info->mPlayer->mTarget && info->mPlayer->mFlags & CINFLAG_UseStaticCamera) {
 			info->mPlayer->mUseStaticCamera = true;
 			info->mPlayer->mStaticLookAt    = info->mPlayer->mTarget->mPosition;
 		}
@@ -627,6 +638,7 @@ void MoviePlayer::update()
 			info->initCore("");
 			mMovieInfoList.add(info);
 			while (mStackInfoList.getChildCount() != 0) {
+				// get next queued movie
 				MovieInfo* stackInfo = (MovieInfo*)mStackInfoList.mChild;
 				stackInfo->del();
 				stackInfo->initCore(stackInfo->mName);
@@ -638,7 +650,8 @@ void MoviePlayer::update()
 				if (!mStackInfoList.mChild) {
 					break;
 				}
-				if (!(static_cast<MovieInfo*>(mStackInfoList.mChild)->mPlayer->mFlags & 0x100)) {
+				// queue up all the takeoff movies at once
+				if (!(static_cast<MovieInfo*>(mStackInfoList.mChild)->mPlayer->mFlags & CINFLAG_TakeOff)) {
 					break;
 				}
 			}
@@ -654,7 +667,7 @@ void MoviePlayer::update()
 				PRINT("clearing top heap!\n");
 				gsys->resetHeap(SYSHEAP_Movie, 1);
 				gsys->mTogglePrint          = togglePrint;
-				gameflow.mDisableController = 0;
+				gameflow.mDisableController = FALSE;
 				PRINT("all movies ended!\n");
 			}
 
@@ -733,7 +746,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 	while (info) {
 		CinematicPlayer* cin = info->mPlayer;
 		MovieInfo* next      = (MovieInfo*)info->mNext;
-		if (cin->mFlags & 0x80) {
+		if (cin->mFlags & CINFLAG_UseLights) {
 			cin->addLights(gfx);
 		}
 		info = next;

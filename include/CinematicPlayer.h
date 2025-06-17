@@ -21,7 +21,38 @@ struct CineShapeObject;
 struct ActorInstance;
 
 /**
+ * @brief Enum for cinematic player flags.
+ */
+enum CinematicPlayerFlags {
+	CINFLAG_Unk0               = 1 << 0,  ///< 0x1, weird mix of use cases - fixed target camera?
+	CINFLAG_Unk1               = 1 << 1,  ///< 0x2, only used by day end cave/yakushima/last?
+	CINFLAG_Unk2               = 1 << 2,  ///< 0x4, weird mix of use cases, used by half?
+	CINFLAG_Unk3               = 1 << 3,  ///< 0x8, 3-5 only used by meet pikmin cutscenes (incl. bombs)
+	CINFLAG_Unk4               = 1 << 4,  ///< 0x10,
+	CINFLAG_Unk5               = 1 << 5,  ///< 0x20,
+	CINFLAG_Unk6               = 1 << 6,  ///< 0x40, weird mix of use cases, but used by most
+	CINFLAG_UseLights          = 1 << 7,  ///< 0x80, use scene light data from file - mainly for space/atmosphere cutscenes.
+	CINFLAG_TakeOff            = 1 << 8,  ///< 0x100, use special takeoff cutscene logic when deciding when to play.
+	CINFLAG_FadeIn             = 1 << 9,  ///< 0x200, fade in from black - only used by landing in area cutscenes.
+	CINFLAG_Unk10              = 1 << 10, ///< 0x400, used by onyon cutscenes?
+	CINFLAG_Unk11              = 1 << 11, ///< 0x800, 11-16 are usually used together (day end don't use 11 or 12)
+	CINFLAG_Unk12              = 1 << 12, ///< 0x1000,
+	CINFLAG_Unk13              = 1 << 13, ///< 0x2000,
+	CINFLAG_Unk14              = 1 << 14, ///< 0x4000,
+	CINFLAG_Unk15              = 1 << 15, ///< 0x8000,
+	CINFLAG_Unk16              = 1 << 16, ///< 0x10000,
+	CINFLAG_UseStaticCamera    = 1 << 17, ///< 0x20000, only used by Demo12.
+	CINFLAG_Unk18              = 1 << 18, ///< 0x40000, used by discover main engine + discover onyons?
+	CINFLAG_Unk19              = 1 << 19, ///< 0x80000, only used by Demo12?
+	CINFLAG_Unk20              = 1 << 20, ///< 0x100000, only used by olimin cutscene?
+	CINFLAG_Unk21              = 1 << 21, ///< 0x200000, used by parts and upgrades cutscenes?
+	CINFLAG_DoCameraTransition = 1 << 22, ///< 0x400000, never used by a demo.
+};
+
+/**
  * @brief TODO
+ *
+ * @note Size: 0x30.
  */
 struct SceneData : public CoreNode {
 	SceneData()
@@ -48,6 +79,8 @@ struct SceneData : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1A0.
  */
 struct ActorInstance : public CoreNode {
 	ActorInstance()
@@ -106,6 +139,8 @@ struct ActorInstance : public CoreNode {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0x1DC.
  */
 struct SceneCut : public CoreNode {
 	SceneCut()
@@ -138,9 +173,15 @@ struct SceneCut : public CoreNode {
 };
 
 /**
- * @brief TODO
+ * @brief Actor object for use in cutscenes.
+ *
+ * Stores model and animation information for a given cutscene actor.
+ *
+ * @note Size: 0x34.
  */
 struct CineShapeObject : public CoreNode {
+
+	/// Default constructor.
 	CineShapeObject()
 	    : CoreNode("")
 	{
@@ -148,23 +189,36 @@ struct CineShapeObject : public CoreNode {
 		mAnimFileName = mBundleFileName = nullptr;
 	}
 
-	// unused/inlined:
-	void init(char*, char*, char*);
+	/// STRIPPED - initialises model and animation manager.
+	void init(char* modelPath, char* animPath, char* bundlePath);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Shape* mShape;         // _14
-	char* mAnimFileName;   // _18
-	char* mBundleFileName; // _1C
-	AnimContext mContext;  // _20
-	AnimMgr* mMgr;         // _30
+	Shape* mModel;         ///< _14, parent model.
+	char* mAnimFileName;   ///< _18, path to animations file.
+	char* mBundleFileName; ///< _1C, path to bundle file.
+	AnimContext mContext;  ///< _20, context for animations.
+	AnimMgr* mMgr;         ///< _30, animation manager.
 };
 
+/**
+ * @brief Cutscene manager.
+ *
+ * Manages current cutscenes including actors, cameras, and scenes.
+ *
+ * @note Size: 0x2E8.
+ */
 struct CinematicPlayer {
-	CinematicPlayer(char*);
 
-	void init(char*);
-	void loadCin(char*);
+	/// Constructor - initialises given cutscene file.
+	CinematicPlayer(char* cinFilePath);
+
+	/// Initialises player, loads given cutscene file, and initialises current scene.
+	void init(char* cinFilePath);
+
+	/// Loads cutscene from given file path, including unpacking all command information.
+	void loadCin(char* cinFilePath);
+
 	void addScene(SceneData*);
 	SceneCut* addCut(int, int, int);
 	void addActor(CineShapeObject*);
@@ -224,31 +278,31 @@ struct CinematicPlayer {
 	void saveCin(char*);
 	void truncateName(char*);
 
-	u32 mFlags;                 // _00, 0x20000 = use static camera
-	int mType;                  // _04
-	Matrix4f mMtx;              // _08
-	Creature* mTarget;          // _48
-	SceneData mSceneList;       // _4C
-	SceneData* mCurrentScene;   // _7C
-	CineShapeObject mActorList; // _80
-	SceneCut mCutList;          // _B4
-	SceneCut* mCurrentCut;      // _290
-	SceneCut* mPreviousCut;     // _294
-	int mPlaybackMode;          // _298
-	f32 mCurrentCutStartTime;   // _29C
-	f32 mPlaybackSpeed;         // _2A0
-	f32 mCurrentPlaybackTime;   // _2A4
-	f32 mCurrentFramePosition;  // _2A8
-	f32 mPreviousFramePosition; // _2AC
-	int mTotalSceneDuration;    // _2B0
-	int mCutTransitionFlag;     // _2B4
-	Vector3f mCameraPosition;   // _2B8
-	Vector3f mCameraLookAt;     // _2CC
-	Vector3f mStaticLookAt;     // _2D0
-	f32 mCameraTargetFov;       // _2DC
-	f32 mCameraBlendRatio;      // _2E0
-	bool mUseStaticCamera;      // _2E4
-	bool mIsPlaying;            // _2E5
+	u32 mFlags;                 ///< _00, 0x20000 = use static camera
+	int mType;                  ///< _04, unused "type" information.
+	Matrix4f mMtx;              ///< _08
+	Creature* mTarget;          ///< _48
+	SceneData mSceneList;       ///< _4C
+	SceneData* mCurrentScene;   ///< _7C
+	CineShapeObject mActorList; ///< _80
+	SceneCut mCutList;          ///< _B4
+	SceneCut* mCurrentCut;      ///< _290
+	SceneCut* mPreviousCut;     ///< _294
+	int mPlaybackMode;          ///< _298
+	f32 mCurrentCutStartTime;   ///< _29C
+	f32 mPlaybackSpeed;         ///< _2A0
+	f32 mCurrentPlaybackTime;   ///< _2A4
+	f32 mCurrentFramePosition;  ///< _2A8
+	f32 mPreviousFramePosition; ///< _2AC
+	int mTotalSceneDuration;    ///< _2B0
+	int mCutTransitionFlag;     ///< _2B4
+	Vector3f mCameraPosition;   ///< _2B8
+	Vector3f mCameraLookAt;     ///< _2CC
+	Vector3f mStaticLookAt;     ///< _2D0
+	f32 mCameraTargetFov;       ///< _2DC
+	f32 mCameraBlendRatio;      ///< _2E0
+	bool mUseStaticCamera;      ///< _2E4
+	bool mIsPlaying;            ///< _2E5
 };
 
 #endif

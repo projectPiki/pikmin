@@ -185,7 +185,7 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
-	mAnimMgr             = new AnimMgr(shape, nullptr, 0x8000, nullptr);
+	mAnimMgr             = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_BUNDLE, nullptr);
 	mShape->overrideAnim(0, &mAnimContext);
 }
 

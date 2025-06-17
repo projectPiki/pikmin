@@ -86,10 +86,10 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	if (str2) {
 		char path[128];
 		sprintf(path, "objects/%s/%s", str2, str3);
-		mAnimMgr        = new AnimMgr(shape, path, 0x8000, nullptr);
+		mAnimMgr        = new AnimMgr(shape, path, ANIMMGR_LOAD_BUNDLE, nullptr);
 		mAnimMgr->mName = str1;
 	} else {
-		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
+		mAnimMgr = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_NOSKIP, nullptr);
 	}
 
 	mShape->overrideAnim(0, &mAnimatorA);

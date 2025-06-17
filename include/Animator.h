@@ -451,7 +451,9 @@ struct AnimInfo : public CoreNode {
 };
 
 /**
- * @brief TODO
+ * @brief Animation context.
+ *
+ * Tracks information connecting objects and animations (data, frame, speed).
  *
  * @note Size: 0x10.
  */
@@ -539,6 +541,11 @@ struct Animator {
  * @note Size: 0xB8.
  */
 struct AnimMgr : public CoreNode {
+
+/// These do the same thing (and are the only flags passed to AnimMgr, but whatever).
+#define ANIMMGR_LOAD_BUNDLE    (0x8000)
+#define ANIMMGR_LOAD_NOSKIP    (0x0)
+#define ANIMMGR_LOAD_SKIP_MASK (0x7FFF)
 
 	/**
 	 * @brief AnimMgr parameters.

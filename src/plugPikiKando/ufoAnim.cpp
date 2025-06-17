@@ -28,7 +28,7 @@ UfoShapeObject::UfoShapeObject(Shape* shape)
 	mAnimContexts   = new AnimContext[8];
 	mShape          = shape;
 	char* path      = "objects/ufo/ufo0705.bin";
-	mAnimMgr        = new AnimMgr(shape, path, 0x8000, nullptr);
+	mAnimMgr        = new AnimMgr(shape, path, ANIMMGR_LOAD_BUNDLE, nullptr);
 	mAnimMgr->mName = "ufo shape";
 
 	mShape->overrideAnim(0, &mAnimContexts[0]);

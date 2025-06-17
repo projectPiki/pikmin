@@ -678,7 +678,7 @@ void GameFlow::softReset()
 	      gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
-	mDisableController      = 0;
+	mDisableController      = FALSE;
 	mIsUiOverlayActive      = 0;
 	_348                    = 0;
 	_34C                    = 0;

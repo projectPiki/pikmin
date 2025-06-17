@@ -148,10 +148,10 @@ ItemShapeObject::ItemShapeObject(Shape* shape, char* objName, char* file)
 	char buf[128];
 	if (objName) {
 		sprintf(buf, "objects/%s/%s", objName, file);
-		mAnimMgr        = new AnimMgr(shape, buf, 0x8000, nullptr);
+		mAnimMgr        = new AnimMgr(shape, buf, ANIMMGR_LOAD_BUNDLE, nullptr);
 		mAnimMgr->mName = objName;
 	} else {
-		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
+		mAnimMgr = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_NOSKIP, nullptr);
 	}
 	mShape->overrideAnim(0, &mAnimContext);
 }

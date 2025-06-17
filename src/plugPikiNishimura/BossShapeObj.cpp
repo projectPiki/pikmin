@@ -31,11 +31,11 @@ BossShapeObject::BossShapeObject(Shape* shape, char* bossName)
 		PRINT("########## AnimMgr Construct Start -> %s\n", bossName);
 		char binFileName[128];
 		sprintf(binFileName, "bosses/%s/anims.bin", bossName);
-		mAnimMgr        = new AnimMgr(shape, binFileName, 0x8000, nullptr);
+		mAnimMgr        = new AnimMgr(shape, binFileName, ANIMMGR_LOAD_BUNDLE, nullptr);
 		mAnimMgr->mName = bossName;
 		PRINT("########## AnimMgr Construct END\n");
 	} else {
-		mAnimMgr = new AnimMgr(shape, nullptr, 0, nullptr);
+		mAnimMgr = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_NOSKIP, nullptr);
 	}
 
 	mShape->overrideAnim(0, &mAnimContext);

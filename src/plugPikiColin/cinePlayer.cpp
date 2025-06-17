@@ -14,43 +14,49 @@
 #include "Demo.h"
 #include "DebugLog.h"
 
-/*
+/**
+ * @brief Error function for cinePlayer.cpp, stripped in retail.
+ *
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
 DEFINE_ERROR()
 
-/*
+/**
+ * @brief Print function for cinePlayer.cpp, stripped in retail.
+ *
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
 DEFINE_PRINT("CinePlayer")
 
+/// Pointer buffer for storing backup animations during cutscenes (max 256).
 static AnimContext* bcs[0x100];
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	0000A0
  */
 void CineShapeObject::init(char* modelPath, char* animPath, char* bundlePath)
 {
-	mShape = gameflow.loadShape(modelPath, true);
+	mModel = gameflow.loadShape(modelPath, true);
 	if (animPath) {
-		mMgr        = new AnimMgr(mShape, animPath, 0x8000, bundlePath);
+		mMgr        = new AnimMgr(mModel, animPath, ANIMMGR_LOAD_BUNDLE, bundlePath);
 		mMgr->mName = animPath;
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	8006FA1C
  * Size:	0001BC
  */
-void CinematicPlayer::init(char* demoName)
+void CinematicPlayer::init(char* cinFilePath)
 {
+	// reset cutscene-specific things
 	mTotalSceneDuration  = 0;
 	mCurrentScene        = nullptr;
 	mCurrentPlaybackTime = 0.0f;
@@ -59,11 +65,13 @@ void CinematicPlayer::init(char* demoName)
 	mActorList.initCore("");
 	mCutList.initCore("");
 
-	if (demoName) {
-		loadCin(demoName);
+	// load in our cutscene
+	if (cinFilePath) {
+		loadCin(cinFilePath);
 		calcMaxFrames();
 	}
 
+	// if we have a scene, setup the cameras and lights
 	if (mCurrentScene) {
 		int i;
 		for (i = 0; i < mCurrentScene->mNumCameras; i++) {
@@ -77,13 +85,14 @@ void CinematicPlayer::init(char* demoName)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	8006FBD8
  * Size:	0001B0
  */
-CinematicPlayer::CinematicPlayer(char* demoName)
+CinematicPlayer::CinematicPlayer(char* cinFilePath)
 {
+	// reset essential things
 	mFlags                 = 0;
 	mType                  = 0;
 	mTarget                = nullptr;
@@ -91,19 +100,21 @@ CinematicPlayer::CinematicPlayer(char* demoName)
 	mPreviousCut           = nullptr;
 	mPreviousFramePosition = -1.0f;
 	mUseStaticCamera       = false;
-	init(demoName);
+
+	// setup given cutscene + current scene (if any)
+	init(cinFilePath);
 	mCutTransitionFlag = 0;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8006FEB8
  * Size:	000720
  */
-void CinematicPlayer::loadCin(char* demoName)
+void CinematicPlayer::loadCin(char* cinFilePath)
 {
 	mCurrentScene = nullptr;
-	Stream* data  = gsys->openFile(demoName, true, true);
+	Stream* data  = gsys->openFile(cinFilePath, true, true);
 	if (!data) {
 		return;
 	}
@@ -113,7 +124,8 @@ void CinematicPlayer::loadCin(char* demoName)
 		while (!cmd->endOfCmds() && !cmd->endOfSection()) {
 			cmd->getToken(true);
 
-			if (cmd->isToken("type")) {
+			//// "Movie flags" section in .cin file ////
+			if (cmd->isToken("type")) { // this is completely unused.
 				sscanf(cmd->getToken(true), "%d", &mType);
 				continue;
 			}
@@ -123,6 +135,7 @@ void CinematicPlayer::loadCin(char* demoName)
 				continue;
 			}
 
+			//// "Scene files" section in .cin file ////
 			if (cmd->isToken("addScene")) {
 				cmd->getToken(true);
 				while (!cmd->endOfCmds() && !cmd->endOfSection()) {
@@ -140,6 +153,7 @@ void CinematicPlayer::loadCin(char* demoName)
 				continue;
 			}
 
+			//// "Actor files" section in .cin file ////
 			if (cmd->isToken("addActor")) {
 				cmd->getToken(true);
 				CineShapeObject* shape = nullptr;
@@ -162,6 +176,7 @@ void CinematicPlayer::loadCin(char* demoName)
 				continue;
 			}
 
+			//// "Scene cuts" section in .cin file ////
 			if (cmd->isToken("addCut")) {
 				cmd->getToken(true);
 				SceneCut* cut        = nullptr;
@@ -245,7 +260,7 @@ void CinematicPlayer::loadCin(char* demoName)
 	STACK_PAD_VAR(1);
 }
 
-/*
+/**
  * --INFO--
  * Address:	800705D8
  * Size:	0000B4
@@ -263,7 +278,7 @@ void CinematicPlayer::addScene(SceneData* scene)
 	mCurrentScene = scene;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000124
@@ -277,7 +292,7 @@ SceneData* CinematicPlayer::addScene(char* name)
 	return data;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8007068C
  * Size:	000090
@@ -291,7 +306,7 @@ SceneCut* CinematicPlayer::addCut(int id, int startFrame, int endFrame)
 	cut->mEndFrame   = endFrame;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8007071C
  * Size:	0000A0
@@ -301,7 +316,7 @@ void CinematicPlayer::addActor(CineShapeObject* shape)
 	shape->init(shape->mName, shape->mAnimFileName, shape->mBundleFileName);
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000128
@@ -316,7 +331,7 @@ void CinematicPlayer::addActor(char* name, char* animFileName, char* bundleFileN
 	addActor(actor);
 }
 
-/*
+/**
  * --INFO--
  * Address:	800707BC
  * Size:	000138
@@ -331,7 +346,7 @@ SceneCut* CinematicPlayer::addSceneCut()
 	return cut;
 }
 
-/*
+/**
  * --INFO--
  * Address:	800708F4
  * Size:	000084
@@ -346,7 +361,7 @@ void CinematicPlayer::skipScene(int a)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80070978
  * Size:	000574
@@ -449,7 +464,7 @@ int CinematicPlayer::update()
 	return isFinished;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80070EEC
  * Size:	0000C4
@@ -468,7 +483,7 @@ void CinematicPlayer::addLights(Graphics& gfx)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80070FB0
  * Size:	0000A8
@@ -487,7 +502,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80071058
  * Size:	000190
@@ -505,7 +520,7 @@ ActorInstance* SceneCut::addInstance(char* name)
 	return actor;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000024
@@ -519,7 +534,7 @@ int SceneCut::countEKeys()
 	return i;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	00005C
@@ -527,11 +542,11 @@ int SceneCut::countEKeys()
 void ActorInstance::onceInit()
 {
 	mLeafModel = gameflow.loadShape("pikis/happas/leaf.mod", true);
-	mModelInstance->mShape->makeInstance(mDynMat, 0);
+	mModelInstance->mModel->makeInstance(mDynMat, 0);
 	// UNUSED FUNCTION
 }
 
-/*
+/**
  * --INFO--
  * Address:	800711E8
  * Size:	0000C4
@@ -556,7 +571,7 @@ void ActorInstance::exitInstance()
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	800712AC
  * Size:	0001BC
@@ -609,7 +624,7 @@ void ActorInstance::initInstance()
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80071468
  * Size:	000DCC
@@ -859,7 +874,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 	STACK_PAD_VAR(4);
 }
 
-/*
+/**
  * --INFO--
  * Address:	80072234
  * Size:	000F10
@@ -891,8 +906,8 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		b      = mAnim.mAnimationCounter;
 		check1 = true;
 		d      = &mAnim.mAnimationCounter;
-	} else if (p3 && mAnimInstance->mShape->mCurrentAnimation->mData->mTotalFrameCount) {
-		c = std::fmodf(*p3, f32(mAnimInstance->mShape->mCurrentAnimation->mData->mTotalFrameCount));
+	} else if (p3 && mAnimInstance->mModel->mCurrentAnimation->mData->mTotalFrameCount) {
+		c = std::fmodf(*p3, f32(mAnimInstance->mModel->mCurrentAnimation->mData->mTotalFrameCount));
 		d = &c;
 	}
 
@@ -900,33 +915,33 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 	bool check2 = true;
 
 	if (mFlags & 0x440) {
-		mAnimInstance->mShape->backupAnimOverrides(bcs);
+		mAnimInstance->mModel->backupAnimOverrides(bcs);
 		if (!(mFlags & 0x400)) {
 			check2 = false;
 		}
 
 		if (mAnim.mMgr) {
-			mAnimInstance->mShape->overrideAnim(0, &mAnimInstance->mContext);
+			mAnimInstance->mModel->overrideAnim(0, &mAnimInstance->mContext);
 		}
 
-		AnimFrameCacher* prevCacher         = mAnimInstance->mShape->mFrameCacher;
-		mAnimInstance->mShape->mFrameCacher = nullptr;
-		mAnimInstance->mShape->updateAnim(gfx, mtx, d);
-		mAnimInstance->mShape->mFrameCacher = prevCacher;
+		AnimFrameCacher* prevCacher         = mAnimInstance->mModel->mFrameCacher;
+		mAnimInstance->mModel->mFrameCacher = nullptr;
+		mAnimInstance->mModel->updateAnim(gfx, mtx, d);
+		mAnimInstance->mModel->mFrameCacher = prevCacher;
 
 		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[0]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[0]);
 		mJointPositions[1].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[1]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[1]);
 
 		if (check1) {
 			Vector3f pos(0.0f, 0.0f, 0.0f);
-			mAnimInstance->mShape->calcJointWorldPos(gfx, 0, pos);
+			mAnimInstance->mModel->calcJointWorldPos(gfx, 0, pos);
 			checkEventKeys(a, b, pos);
 		}
 
-		Matrix4f animMtx = mAnimInstance->mShape->getAnimMatrix(0);
-		mAnimInstance->mShape->restoreAnimOverrides();
+		Matrix4f animMtx = mAnimInstance->mModel->getAnimMatrix(0);
+		mAnimInstance->mModel->restoreAnimOverrides();
 
 		if (itemMgr && itemMgr->getUfo()) {
 			if (mFlags & 0x400) {
@@ -939,47 +954,47 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		}
 	} else if (mFlags & 0x80) {
 		check2 = false;
-		mAnimInstance->mShape->backupAnimOverrides(bcs);
+		mAnimInstance->mModel->backupAnimOverrides(bcs);
 		if (mAnim.mMgr) {
-			mAnimInstance->mShape->overrideAnim(0, &mAnimInstance->mContext);
+			mAnimInstance->mModel->overrideAnim(0, &mAnimInstance->mContext);
 		}
 
-		AnimFrameCacher* prevCacher         = mAnimInstance->mShape->mFrameCacher;
-		mAnimInstance->mShape->mFrameCacher = nullptr;
-		mAnimInstance->mShape->updateAnim(gfx, mtx, d);
-		mAnimInstance->mShape->mFrameCacher = prevCacher;
+		AnimFrameCacher* prevCacher         = mAnimInstance->mModel->mFrameCacher;
+		mAnimInstance->mModel->mFrameCacher = nullptr;
+		mAnimInstance->mModel->updateAnim(gfx, mtx, d);
+		mAnimInstance->mModel->mFrameCacher = prevCacher;
 		if (mParentPlayer->mTarget) {
 			mParentPlayer->mTarget->demoDraw(gfx, nullptr);
 		}
-		mAnimInstance->mShape->restoreAnimOverrides();
+		mAnimInstance->mModel->restoreAnimOverrides();
 	}
 
 	if (!check2) {
 		return;
 	}
 
-	mAnimInstance->mShape->backupAnimOverrides(bcs);
+	mAnimInstance->mModel->backupAnimOverrides(bcs);
 	if (mAnim.mMgr) {
-		mAnimInstance->mShape->overrideAnim(0, &mAnimInstance->mContext);
+		mAnimInstance->mModel->overrideAnim(0, &mAnimInstance->mContext);
 	}
 
 	int modelType = 0;
-	if (strcmp(mAnimInstance->mShape->mName, "pikis/bluModel.mod") == 0) {
+	if (strcmp(mAnimInstance->mModel->mName, "pikis/bluModel.mod") == 0) {
 		modelType = 1;
-		mAnimInstance->mShape->mMaterialList[0].setColour(Colour(0, 50, 255, 255));
+		mAnimInstance->mModel->mMaterialList[0].setColour(Colour(0, 50, 255, 255));
 		mDynMat.animate(nullptr);
 
-	} else if (strcmp(mAnimInstance->mShape->mName, "pikis/redModel.mod") == 0) {
+	} else if (strcmp(mAnimInstance->mModel->mName, "pikis/redModel.mod") == 0) {
 		modelType = 1;
-		mAnimInstance->mShape->mMaterialList[0].setColour(Colour(255, 30, 0, 255));
+		mAnimInstance->mModel->mMaterialList[0].setColour(Colour(255, 30, 0, 255));
 		mDynMat.animate(nullptr);
 
-	} else if (strcmp(mAnimInstance->mShape->mName, "pikis/yelModel.mod") == 0) {
+	} else if (strcmp(mAnimInstance->mModel->mName, "pikis/yelModel.mod") == 0) {
 		modelType = 1;
-		mAnimInstance->mShape->mMaterialList[0].setColour(Colour(255, 210, 0, 255));
+		mAnimInstance->mModel->mMaterialList[0].setColour(Colour(255, 210, 0, 255));
 		mDynMat.animate(nullptr);
 
-	} else if (strcmp(mAnimInstance->mShape->mName, "objects/pikihead/navihead.mod") == 0) {
+	} else if (strcmp(mAnimInstance->mModel->mName, "objects/pikihead/navihead.mod") == 0) {
 		modelType = 2;
 		mDynMat.animate(nullptr);
 	}
@@ -1005,26 +1020,26 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		}
 	}
 
-	AnimFrameCacher* prevCacher         = mAnimInstance->mShape->mFrameCacher;
-	mAnimInstance->mShape->mFrameCacher = nullptr;
-	mAnimInstance->mShape->updateAnim(gfx, mtx, d);
-	mAnimInstance->mShape->mFrameCacher = prevCacher;
+	AnimFrameCacher* prevCacher         = mAnimInstance->mModel->mFrameCacher;
+	mAnimInstance->mModel->mFrameCacher = nullptr;
+	mAnimInstance->mModel->updateAnim(gfx, mtx, d);
+	mAnimInstance->mModel->mFrameCacher = prevCacher;
 
 	mCenterPosition.set(0.0f, 0.0f, 0.0f);
-	mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mCenterPosition);
+	mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mCenterPosition);
 
 	_90.set(0.0f, 1.0f, 0.0f);
-	mAnimInstance->mShape->calcJointWorldDir(gfx, 0, _90);
+	mAnimInstance->mModel->calcJointWorldDir(gfx, 0, _90);
 
 	if (_19F) {
 		_108[0].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 69, _108[0]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 69, _108[0]);
 		_108[1].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 68, _108[1]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 68, _108[1]);
 		_108[2].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 67, _108[2]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 67, _108[2]);
 		_108[3].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 66, _108[3]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 66, _108[3]);
 	}
 
 	if (!mMeteorFlag) {
@@ -1032,7 +1047,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 			if (mEffectList[i]) {
 				if (_19C) {
 					mCenterPosition.set(0.0f, 134.0f, 0.0f);
-					mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mCenterPosition);
+					mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mCenterPosition);
 					Vector3f dir(_90);
 					mEffectList[i]->setEmitDir(dir);
 
@@ -1048,15 +1063,15 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 
 	} else {
 		mJointPositions[0].set(0.0f, 7.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[0]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[0]);
 		mJointPositions[1].set(-14.4f, 14.9f, 14.4f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[1]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[1]);
 		mJointPositions[2].set(-14.4f, 14.9f, -14.4f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[2]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[2]);
 		mJointPositions[3].set(14.4f, 14.9f, 14.4f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[3]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[3]);
 		mJointPositions[4].set(14.4f, 14.9f, -14.4f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, mJointPositions[4]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, mJointPositions[4]);
 
 		for (int i = 0; i < 7; i++) {
 			if (mEffectList[i]) {
@@ -1067,62 +1082,62 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 
 	if (mFlags & 0x200) {
 		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 3, mJointPositions[0]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 3, mJointPositions[0]);
 		mJointPositions[1].set(0.0f, -28.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 1, mJointPositions[1]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 1, mJointPositions[1]);
 	}
 
 	if (mFlags & 0x10000) {
 		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 9, mJointPositions[0]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 9, mJointPositions[0]);
 		mJointPositions[1].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 8, mJointPositions[1]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 8, mJointPositions[1]);
 		mJointPositions[2].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 7, mJointPositions[2]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 7, mJointPositions[2]);
 		mJointPositions[3].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 6, mJointPositions[3]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 6, mJointPositions[3]);
 		mJointPositions[4].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 5, mJointPositions[4]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 5, mJointPositions[4]);
 		mJointPositions[5].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 4, mJointPositions[5]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 4, mJointPositions[5]);
 		mJointPositions[6].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 3, mJointPositions[6]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 3, mJointPositions[6]);
 		mJointPositions[7].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 2, mJointPositions[7]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 2, mJointPositions[7]);
 		mJointPositions[8].set(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 1, mJointPositions[8]);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 1, mJointPositions[8]);
 	}
 
 	if (check1) {
 		Vector3f pos(0.0f, 0.0f, 0.0f);
-		mAnimInstance->mShape->calcJointWorldPos(gfx, 0, pos);
+		mAnimInstance->mModel->calcJointWorldPos(gfx, 0, pos);
 		checkEventKeys(a, b, pos);
 	}
 
 	if (mFlags & 0x21) {
 		if (naviMgr && naviMgr->getNavi()) {
 			Vector3f pos(0.0f, 0.0f, 0.0f);
-			pos.multMatrix(mAnimInstance->mShape->getAnimMatrix(0));
+			pos.multMatrix(mAnimInstance->mModel->getAnimMatrix(0));
 			pos.multMatrix(gfx.mCamera->mInverseLookAtMtx);
 			naviMgr->getNavi()->updateDayEnd(pos);
 			naviMgr->getNavi()->demoDraw(gfx, nullptr);
 		}
 	} else {
-		u32 flags = mAnimInstance->mShape->mSystemFlags;
+		u32 flags = mAnimInstance->mModel->mSystemFlags;
 		if (mFlags & 0x20000) {
-			mAnimInstance->mShape->mSystemFlags |= ShapeFlags::AlwaysRedraw;
+			mAnimInstance->mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 		}
-		mAnimInstance->mShape->drawshape(gfx, *gfx.mCamera, &mDynMat);
-		mAnimInstance->mShape->mSystemFlags = flags;
+		mAnimInstance->mModel->drawshape(gfx, *gfx.mCamera, &mDynMat);
+		mAnimInstance->mModel->mSystemFlags = flags;
 	}
 
 	if (modelType == 1) {
-		gfx.useMatrix(mAnimInstance->mShape->getAnimMatrix(6), 0);
+		gfx.useMatrix(mAnimInstance->mModel->getAnimMatrix(6), 0);
 		mLeafModel->drawshape(gfx, *gfx.mCamera, nullptr);
 	} else if (modelType == 2) {
-		gfx.useMatrix(mAnimInstance->mShape->getAnimMatrix(3), 0);
+		gfx.useMatrix(mAnimInstance->mModel->getAnimMatrix(3), 0);
 		mLeafModel->drawshape(gfx, *gfx.mCamera, nullptr);
 	}
 
-	mAnimInstance->mShape->restoreAnimOverrides();
+	mAnimInstance->mModel->restoreAnimOverrides();
 }
