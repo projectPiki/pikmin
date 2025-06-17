@@ -2863,39 +2863,51 @@ static u8 osc_table[] = { 0x01, 0x02, 0x08, 0x04, 0x10 };
  */
 s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 {
-	f32 tempoProportion;
-	u32 uVar2;
-	u8 uVar4;
-	s32 uVar5; // Should be signed
-	u8 uVar5_2;
-
+	s32 var_r29;
+	u8* var_r28;
+	s32 var_r27;
 	BOOL var_r26;
+	u8 bVar9;    // r25
+	u8 uVar5_2;  // r24
+	u32 uVar2;   // r23
+	s32 uVar5;   // r23
+	u8 bVar10_2; // r22
 
-	u8 uVar6;
-	s32 uVar6_2;
-	u8 bVar9; // r25
-	u32 test1;
+	f32 tempoProportion;
+	u8 opcode;
+
+	u8 uVar6; // r21
+	u8 voice;
 
 	u8 local_53; // STACK 0x3D
-	u8 local_54; // STACK 0x3C
-
-	seqp_* track_00;
+	u8 pitch;    // STACK 0x3C
+	s32 sp38;
 	u8 bVar10; // STACK 0x34
-	int iVar11;
-	int iVar12;
-	seqp_* puVar12;
-	u32 seqRes;  // r30
-	jc_* pjVar3; // r21
-	int uVar13;  // r22
-
+	s32 sp30;
 	int local_64; // STACK 0x2C
 
-	u8* REF_local_54;
-	u8* REF_bVar10;
-	int* REF_local_64;
-	u8* REF_local_53;
+	int iVar11;
+	int iVar12;
+	u32 seqRes;   // r30
+	int duration; // r22
+	jc_* pjVar3;  // r21
 
-	u32 badCompiler[2];
+	int* REF_local_64;
+
+	u8* bVar10_p;
+
+	// (void)&bVar10;
+	if (0) {
+		(void)&pitch;
+	}
+	if (0) {
+		(void)&local_53;
+	}
+	if (0) {
+		(void)&local_64;
+	}
+
+	STACK_PAD_VAR(5);
 
 	seqRes = 0;
 	if (track->parent && track->doChangeTempo == TRUE) {
@@ -2919,8 +2931,8 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 			if (pjVar3) {
 				List_AddChannel(&track->parent->parentController.freeChannels, pjVar3);
 				pjVar3->mMgr = &track->parent->parentController;
-				--track->parentController.chanCount;
-				++track->parent->parentController.chanCount;
+				track->parentController.chanCount--;
+				track->parent->parentController.chanCount++;
 			}
 		}
 		// This resembles `JASTrack::getTranspose` of later JAudio.
@@ -2952,9 +2964,9 @@ try_interrupt:
 	if (track->isPaused && (track->pauseStatus & 2)) {
 		goto LAB_800136e0;
 	}
-	++track->tickCounter;
+	track->tickCounter++;
 	if (track->waitTimer == -1) {
-		if ((u8)CheckNoteStop(track, 0)) { // Mysterious u8 cast again
+		if ((u8)CheckNoteStop(track, 0)) { // TODO: CheckNoteStop should return u8
 			track->waitTimer = 0;
 		} else {
 			goto timed;
@@ -2967,226 +2979,229 @@ try_interrupt:
 			goto timed;
 		}
 		if (track->_D0 != -1 && track->_D4 == 0) {
-			for (local_64 = 0; local_64 < (int)track->_90; ++local_64) {
-				REF_local_64              = &local_64;
+			for (local_64 = 0; local_64 < (int)track->_90; local_64++) {
 				track->_94[local_64]      = -1;
 				track->channels[local_64] = NULL;
 			}
 		}
 	}
-	s32 test2;
-loop_start:
-	while (1) {
-		// test1 = __ByteRead(track);
-		if ((test1 = test2 = __ByteRead(track)) & 0x80)
-			break;
-		local_54 = test1;
-		local_54 += track->finalTranspose;
 
-		if ((bVar10 = __ByteRead(track)) & 0x80) {
-			local_54 = __ExchangeRegisterValue(track, local_54);
-			local_54 = local_54 + track->finalTranspose;
-		}
-		REF_bVar10   = &bVar10;
-		REF_local_53 = &local_53;
-		REF_local_54 = &local_54;
-		if (bVar10 >> 5 & 2) {
-			local_53 = local_54;
-			local_54 = track->_D5;
-		}
-		if ((uVar5_2 = uVar5 = __ByteRead(track)) >= 0x80) {
-			uVar5 = __ExchangeRegisterValue(track, uVar5_2 - 0x80) & 0xff;
-		}
-		uVar6_2 = bVar10 & 7;
-		if (!(bVar10 & 7)) {
-			uVar6_2 = 0;
-			;
-			if ((bVar9 = __ByteRead(track)) >= 0x80) {
-				bVar9 = __ExchangeRegisterValue(track, bVar9 - 0x80);
+	while (TRUE) {
+		opcode = __ByteRead(track);
+		if (!(opcode & 0x80)) {
+			// MIDI pitch (0-127)
+			pitch = opcode;
+			pitch += track->finalTranspose;
+
+			bVar10_p = &bVar10;
+			if ((bVar10 = __ByteRead(track)) & 0x80) {
+				pitch = __ExchangeRegisterValue(track, pitch);
+				pitch += track->finalTranspose;
 			}
-			uVar2 = 0;
-			for (iVar11 = 0; iVar11 < (bVar10 >> 3 & 3); ++iVar11) {
-				uVar4 = __ByteRead(track);
-				uVar2 = uVar4 & 0xff | uVar2 << 8;
+
+			u8 pitch2 = (u8)pitch;
+
+			if (*bVar10_p >> 5 & 2) {
+				local_53 = pitch2;
+				pitch    = track->_D5;
 			}
-			if ((uVar4 == 1) && (uVar2 >= 0x80)) {
-				uVar2 = __ExchangeRegisterValue(track, uVar2 - 0x80);
+
+			uVar5_2 = __ByteRead(track);
+			if (uVar5_2 >= 0x80) {
+				uVar5_2 = __ExchangeRegisterValue(track, uVar5_2 - 0x80);
 			}
-		} else {
-			if (bVar10 >> 3 & 3) {
-				uVar6_2 = __ExchangeRegisterValue(track, uVar6_2 - 1);
-				if (uVar6_2 >= 8) {
-					goto timed;
+
+			if ((*bVar10_p & 7) == 0) {
+				voice = 0;
+				bVar9 = __ByteRead(track);
+				if (bVar9 >= 0x80) {
+					bVar9 = __ExchangeRegisterValue(track, bVar9 - 0x80);
 				}
+				uVar2 = 0;
+				for (iVar11 = 0; iVar11 < (*bVar10_p >> 3 & 3); iVar11++) {
+					uVar2 = uVar2 << 8 | __ByteRead(track);
+				}
+				if ((u32)(*bVar10_p >> 3 & 3) == 1 && uVar2 >= 0x80) {
+					uVar2 = __ExchangeRegisterValue(track, uVar2 - 0x80);
+				}
+			} else {
+				voice = (*bVar10_p) & 7;
+				if (bVar10 >> 3 & 3) {
+					voice = __ExchangeRegisterValue(track, voice - 1);
+					if (voice >= 8) {
+						break;
+					}
+				}
+				uVar2 = -1;
+				bVar9 = 100;
 			}
-			uVar2 = -1;
-			bVar9 = 100;
-		}
-		track->_D4 = bVar10 >> 5 & 3;
-		uVar13     = uVar2;
-		BOOL cond  = track->_D6 ? TRUE : FALSE;
-		var_r26    = FALSE;
-		if (cond) {
+
+			track->_D4 = *bVar10_p >> 5 & 3;
+			BOOL cond  = track->_D6 ? TRUE : FALSE;
+			// TODO: are these vars compiler-generated?
+			var_r27 = voice;
+			var_r29 = uVar5_2;
+			// TODO: not matching
+			var_r28 = ((u8*)track) + voice;
 			var_r26 = FALSE;
-			if ((track->_D4 & 1)) {
-				uVar13 = -1;
-			}
-			if (uVar13 != -1) {
-				uVar13 = Jam_SEQtimeToDSPtime(track, uVar13, bVar9);
-			}
-			if (track->isPaused && (track->pauseStatus & 0x10)) {
-				iVar11 = -1;
-			} else {
-				iVar11 = GateON(track, uVar6_2, local_54, uVar5, uVar13);
-			}
-		} else {
-			if ((s32)uVar2 != -1) {
-				uVar13 = Jam_SEQtimeToDSPtime(track, uVar2, bVar9);
-			}
-			if ((track->_D4 & 1) != 0) {
-				uVar13 = -1;
-			}
-			if (track->isPaused && (track->pauseStatus & 0x10)) {
-				iVar11 = -1;
-			} else {
-				iVar11 = NoteON(track, uVar6_2, local_54, uVar5, uVar13);
-			}
-		}
-		if (iVar11 != -1) {
-			track->_94[uVar6_2] = local_54;
-			var_r26             = TRUE;
-		}
-		track->_90 = var_r26;
-		track->_CC = bVar9;
-		track->_CD = uVar5;
-		track->_D0 = uVar2;
-		if (track->_D4 & 1) {
-			track->_D6 = TRUE;
-		} else {
-			track->_D6 = FALSE;
-		}
-		if ((track->_D4 & 2)) {
-			s32 steps = uVar13;
-			if (steps == -1) {
-				steps = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
-			}
-			SetKeyTarget_1Shot(track->channels[0], local_53 + track->finalTranspose, steps);
-			local_54 = local_53;
-		}
-		track->_D5 = local_54;
-		if (uVar2 != -1) {
-			track->waitTimer = uVar2;
-			if (uVar2 == 0) {
-				track->waitTimer = -1;
-			}
-			goto timed;
-		}
-	}
 
-	// s32 uVar5_3;
-	uVar5 = test2 & 0xf0;
-	if ((uVar5 == 0x80) || (test1 == 0xf9)) {
-		iVar11 = 1;
-		uVar5  = 0;
-		if (uVar4 == 0xf9) {
-			bVar10 = __ByteRead(track);
-			uVar2  = __ExchangeRegisterValue(track, bVar10 & 7);
-			uVar6  = uVar2;
-			if ((uVar6 > 7) || (uVar6 == 0)) {
-				if ((bVar10 & 0x80) != 0) {
-					__ByteRead(track);
+			if (cond) {
+				duration = uVar2;
+				if (track->_D4 & 1) {
+					duration = -1;
 				}
-				goto loop_start;
+				if (duration != -1) {
+					duration = Jam_SEQtimeToDSPtime(track, duration, bVar9);
+				}
+				if (track->isPaused && (track->pauseStatus & 0x10)) {
+					iVar11 = -1;
+				} else {
+					iVar11 = GateON(track, var_r27, pitch, var_r29, duration);
+				}
+			} else {
+				if ((duration = uVar2) != -1) {
+					duration = Jam_SEQtimeToDSPtime(track, duration, bVar9);
+				}
+				if (track->_D4 & 1) {
+					duration = -1;
+				}
+				if (track->isPaused && (track->pauseStatus & 0x10)) {
+					iVar11 = -1;
+				} else {
+					iVar11 = NoteON(track, var_r27, pitch, var_r29, duration);
+				}
 			}
-			test2 = uVar6 + 0x80;
-			if (bVar10 & 0x80) {
-				test2 += 8;
+
+			if (iVar11 != -1) {
+				((seqp_*)(var_r28))->_94[0] = pitch;
+				var_r26                     = TRUE;
 			}
-		}
-		uVar6 = test2 & 0x0f;
-		if (uVar6 == 8) {
-			iVar11 = 2;
-			uVar6 -= 8;
-		}
-		if (uVar6 > 8) {
-			uVar6 -= 8;
-			uVar5 = __ByteRead(track);
-			if (uVar5 > 100) {
-				uVar5 = (uVar5 - 98) * 20;
+
+			track->_90 = var_r26;
+			track->_CC = bVar9;
+			track->_CD = uVar5_2;
+			track->_D0 = uVar2;
+
+			if (track->_D4 & 1) {
+				track->_D6 = TRUE;
+			} else {
+				track->_D6 = FALSE;
 			}
-		}
-		if (uVar6 == 0) {
-			// This for loop init feels fake... but idk.  Check this again later.
-			for (track->waitTimer = iVar12 = 0; iVar12 < iVar11; ++iVar12) {
-				track->waitTimer = __ByteRead(track) | track->waitTimer << 8;
+
+			if (track->_D4 & 2) {
+				s32 steps = duration;
+				if (steps == -1) {
+					steps = Jam_SEQtimeToDSPtime(track, uVar2, track->_CC);
+				}
+				SetKeyTarget_1Shot(track->channels[0], local_53 + track->finalTranspose, steps);
+				pitch = local_53;
 			}
-			if (track->waitTimer == 0) {
-				goto loop_start;
+
+			track->_D5 = pitch;
+
+			if (uVar2 != -1) {
+				track->waitTimer = uVar2;
+				if (uVar2 == 0) {
+					track->waitTimer = -1;
+				}
+				break;
 			}
-			goto timed;
-		} else if (uVar5 == 0) {
-			NoteOFF(track, uVar6);
+		} else if ((opcode & 0xf0) == 0x80 || opcode == 0xf9) {
+			iVar11 = 1;
+			uVar5  = 0;
+			if (opcode == 0xf9) {
+				bVar10_2 = __ByteRead(track);
+				uVar6    = __ExchangeRegisterValue(track, bVar10_2 & 7);
+				if (uVar6 > 7 || uVar6 == 0) {
+					if ((bVar10_2 & 0x80) != 0) {
+						__ByteRead(track);
+					}
+					continue;
+				}
+				opcode = uVar6 + 0x80;
+				if (bVar10_2 & 0x80) {
+					opcode += 8;
+				}
+			}
+			uVar6 = opcode & 0x0f;
+			if (uVar6 == 8) {
+				iVar11 = 2;
+				uVar6 -= 8;
+			}
+			if (uVar6 > 8) {
+				uVar6 -= 8;
+				uVar5 = __ByteRead(track);
+				if (uVar5 > 100) {
+					uVar5 = (uVar5 - 98) * 20;
+				}
+			}
+			if (uVar6 == 0) {
+				// This for loop init feels fake... but idk.  Check this again later.
+				for (track->waitTimer = iVar12 = 0; iVar12 < iVar11; iVar12++) {
+					track->waitTimer = track->waitTimer << 8 | __ByteRead(track);
+				}
+				if (track->waitTimer == 0) {
+					continue;
+				}
+				break;
+			}
+			if (uVar5 == 0) {
+				NoteOFF(track, uVar6);
+			} else {
+				NoteOFF_R(track, uVar6, uVar5);
+			}
 		} else {
-			NoteOFF_R(track, uVar6, uVar5);
+			// This portion is equivalent to `JASSeqParser::parseSeq` in later JAudio.
+			u32 cmdResult = 0;
+			if ((opcode & 0xf0) == 0x90) {
+				Jam_WriteTimeParam(track, opcode & 0x0f);
+			} else if ((opcode & 0xf0) == 0xa0) {
+				Jam_WriteRegParam(track, opcode & 0x0f);
+			} else if ((opcode & 0xf0) == 0xb0) {
+				u32 param_3 = opcode & 7;
+				cmdResult   = RegCmd_Process(track, (opcode & 8) ? TRUE : FALSE, param_3);
+			} else {
+				cmdResult = Cmd_Process(track, opcode, 0);
+			}
+
+			if (cmdResult == 0) {
+				continue;
+			} else if (cmdResult == 1) {
+				break;
+			} else if (cmdResult == 2) {
+				goto try_interrupt;
+			} else if (cmdResult == 3) {
+				return -1;
+			}
 		}
-		goto loop_start;
 	}
-
-	// This portion is equivalent to `JASSeqParser::parseSeq` in later JAudio.
-	u32 iVar11_2 = 0;
-	if (uVar5 == 0x90) {
-		Jam_WriteTimeParam(track, test1 & 0x0f);
-	} else if (uVar5 == 0xa0) {
-		Jam_WriteRegParam(track, test1 & 0x0f);
-	} else if (uVar5 == 0xb0) {
-		u32 test = test1 & 7;
-		iVar11_2 = RegCmd_Process(track, (test1 & 8) ? TRUE : FALSE, test);
-	} else {
-		iVar11_2 = Cmd_Process(track, test1, 0);
-	}
-
-	if (iVar11_2 == 0) {
-		goto loop_start;
-	}
-	if (iVar11_2 == 1) {
-		goto timed;
-	}
-	if (iVar11_2 == 2) {
-		goto try_interrupt;
-	}
-	if (iVar11_2 == 3) {
-		return -1;
-	}
-	goto loop_start;
 
 timed:
-	//
-	{           // This portion is equivalent to `JASTrack::updateTimedParam` in later JAudio.
-		int i2; // r21
-		for (i2 = 0; i2 < 18; ++i2) {
-			MoveParam_* move = &track->timedParam.move[i2];
-			if (move->duration > 0.0f) {
-				move->currentValue += move->stepSize;
-				move->duration -= 1.0f;
-				if (i2 <= 5 || i2 >= 11) {
-					seqRes |= (1 << i2);
-				} else {
-					Osc_Update_Param(track, (u8)i2, move->currentValue);
-				}
+	// This portion is equivalent to `JASTrack::updateTimedParam` in later JAudio.
+	for (int i = 0; i < 18; i++) {
+		MoveParam_* move = &track->timedParam.move[i];
+		if (move->duration > 0.0f) {
+			move->currentValue += move->stepSize;
+			move->duration -= 1.0f;
+			if (i <= 5 || i >= 11) {
+				seqRes |= (1 << i);
+			} else {
+				Osc_Update_Param(track, (u8)i, move->currentValue);
 			}
 		}
-		// Except this stuff doesn't exist in later JAudio...
-		if (track->oscillatorRouting[0] == 0x0E) {
-			seqRes |= osc_table[track->oscillators[0].mode];
-		}
-		if (track->oscillatorRouting[1] == 0x0E) {
-			seqRes |= osc_table[track->oscillators[1].mode];
-		}
-	LAB_800136e0: // And this is strange as well...
-		track->updateFlags |= seqRes;
 	}
 
-	for (int i = 0; i < 16; ++i) {
+	if (track->oscillatorRouting[0] == 0x0E) {
+		seqRes |= osc_table[track->oscillators[0].mode];
+	}
+	if (track->oscillatorRouting[1] == 0x0E) {
+		seqRes |= osc_table[track->oscillators[1].mode];
+	}
+
+LAB_800136e0:
+	track->updateFlags |= seqRes;
+
+	for (int i = 0; i < 16; i++) {
 		if (track->children[i] && track->children[i]->trackState != 0) {
 			// Return of the worst bit extract extraction method known to man.
 			BOOL childIsMuted = track->isMuted | ((track->childMuteMask & (1 << i)) >> i);
