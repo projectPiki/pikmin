@@ -40,7 +40,7 @@ enum {
 	CrushDying   = 5,
 	ChasingSetup = 6,
 	Chasing      = 7,
-	Eating       = 8,
+	EatingBridge = 8,
 	Burrowing    = 9,
 	WaitingSetup = 10,
 	COUNT,

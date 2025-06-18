@@ -139,7 +139,7 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	TAIAinvincibleOff* invincibleOff                  = new TAIAinvincibleOff(TAI_NO_TRANSIT);
 	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiAStateID::Chasing);
 	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::Eating, TAIkabekuiAMotionID::Move);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::EatingBridge, TAIkabekuiAMotionID::Move);
 
 	TAIAattackWorkObjectKabekuiA* attackWorkObject
 	    = new TAIAattackWorkObjectKabekuiA(TAIkabekuiAStateID::Moving, TAIkabekuiAMotionID::Move, 8);
@@ -218,7 +218,7 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	state->setAction(j++, targetFaceDirThenEat); // after reaching the target, start eating the bridge
 	setState(TAIkabekuiAStateID::Chasing, state);
 
-	// STATE 8 - Eating
+	// STATE 8 - EatingBridge
 	state = new TaiState(5);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
@@ -226,9 +226,9 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	state->setAction(j++, deadCheck);
 	state->setAction(j++, pressCheck);
 	state->setAction(j++, attackWorkObject); // eat that bridge!
-	setState(TAIkabekuiAStateID::Eating, state);
+	setState(TAIkabekuiAStateID::EatingBridge, state);
 
-	// STATE 9 -
+	// STATE 9 - Burrowing
 	state = new TaiState(3);
 	j     = 0;
 	state->setAction(j++, invincibleOn);
@@ -236,7 +236,7 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	state->setAction(j++, stop);
 	setState(TAIkabekuiAStateID::Burrowing, state);
 
-	// STATE 10 -
+	// STATE 10 - WaitingSetup
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, shadowOff);
