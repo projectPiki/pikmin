@@ -311,7 +311,7 @@ struct TAIAlandingKabekuiC : public TAIAreserveMotion {
 			teki.mVelocity = teki.mTargetVelocity;
 		}
 
-		u32 bad[2];
+		STACK_PAD_VAR(2);
 		return output;
 	}
 

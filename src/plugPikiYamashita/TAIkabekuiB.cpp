@@ -277,7 +277,7 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	state->setAction(j++, sleepKabekuiB);
 	setState(TAIkabekuiBStateID::Unk13, state);
 
-	u32 bad[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

@@ -243,7 +243,7 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	state->setAction(j++, sleepKabekuiA); // go back to waiting after 3 seconds
 	setState(TAIkabekuiAStateID::WaitingSetup, state);
 
-	u32 bad[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

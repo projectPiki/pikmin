@@ -241,7 +241,7 @@ u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)
 	u32* REF_handle = &handle;
 	u8** REF_dst    = &dst;
 	u32* REF_length = &length;
-	u32 badCompile2[3];
+	STACK_PAD_VAR(3);
 
 	idx = handle >> 16;
 	src = JV_GetRealHandle(handle)->offset;

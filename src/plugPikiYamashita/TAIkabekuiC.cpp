@@ -183,7 +183,7 @@ TAIkabekuiCParameters::TAIkabekuiCParameters()
 	multiP->setF(TPF_FlightHeight, 50.0f);
 	multiP->setF(TPF_RippleScale, 1.0f);
 
-	u32 bad;
+	STACK_PAD_VAR(1);
 }
 
 /*
@@ -394,7 +394,7 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 	state->setAction(j++, sleepKabekuiC);
 	setState(TAIkabekuiCStateID::Unk16, state);
 
-	u32 bad[2];
+	STACK_PAD_VAR(2);
 }
 
 /*

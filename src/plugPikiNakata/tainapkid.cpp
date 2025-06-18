@@ -648,7 +648,7 @@ bool TekiNapkidShortRangeCondition::satisfy(Creature* target)
 		return true;
 	}
 
-	u32 bad[2];
+	STACK_PAD_VAR(2);
 	STACK_PAD_TERNARY(target, 1);
 	return false;
 	TekiDistanceCondition(nullptr, 0.0f);
@@ -1258,7 +1258,7 @@ bool TaiNapkidFlickAction::act(Teki& teki)
 		return false;
 	}
 
-	u32 bad[3];
+	STACK_PAD_VAR(3);
 	return true;
 }
 
@@ -1336,7 +1336,7 @@ void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 		teki.playSound(SE_FLOG_LAND);
 	}
 
-	u32 bad[2];
+	STACK_PAD_VAR(2);
 }
 
 /*
