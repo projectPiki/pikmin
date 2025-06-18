@@ -166,7 +166,6 @@ void BossMgr::addUseCount(int bossID, int count)
 bool BossMgr::useBoss(int bossID)
 {
 	return mUseCounts[bossID] > 0;
-	// UNUSED FUNCTION
 }
 
 /*
@@ -275,8 +274,14 @@ void BossMgr::constructBoss()
 		static_cast<CoreNucleusProp*>(mBossProps[BOSS_CoreNucleus])->load("bosses/core/", "parms.bin", 1);
 		memStat->end("core nucleus rest");
 
-		// INIT ONE TOTAL GOOLIX
+		// This is not really a bug, but it is a baffling decision that causes unexpected behavior.  The Goolix has issues
+		// drawing correctly when more than one exists at a time (see `SlimeBody::setSpherePosition`), so that's probably
+		// why it is restricted to just one here.  Still, you could also just not spawn more than one Goolix.  Silly devs...
+#ifdef BUGFIX
+		init(BOSS_Slime, getUseCount(BOSS_Slime));
+#else
 		init(BOSS_Slime, 1);
+#endif
 	}
 
 	// KING (Emperor Bulblax)
