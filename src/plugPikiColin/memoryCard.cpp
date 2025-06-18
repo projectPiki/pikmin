@@ -706,167 +706,53 @@ void MemoryCard::checkUseFile()
  */
 s32 MemoryCard::getMemoryCardState(bool flag)
 {
-	CARDMemoryCard* mem = &CardWorkArea;
-	u32 v               = flag;
-
 	mCardChannel   = -1;
 	mErrorCode     = CARD_RESULT_READY;
 	mSaveFileIndex = -1;
 	_3C            = -1;
 
-	if (getCardStatus(0)) {
-		mCardChannel = 0;
-		checkUseFile();
-		if (mSaveFileIndex == -1) {
-			s32 temp, temp2;
-			if (CARDFreeBlocks(mCardChannel, &temp, &temp2) < 0) {
+	for (int channel = 0; channel < 1; channel++) {
+		if (getCardStatus(channel)) {
+			mCardChannel = channel;
+			checkUseFile();
+			if (mSaveFileIndex == -1) {
+				s32 temp, temp2;
+				if (CARDFreeBlocks(mCardChannel, &temp, &temp2) < 0) {
+					CARDUnmount(mCardChannel);
+					mCardChannel = -1;
+					mErrorCode   = CARD_RESULT_NOFILE;
+					break;
+				}
+				if (temp2 < 1) {
+					CARDUnmount(mCardChannel);
+					mSaveFileIndex = -2;
+					mErrorCode     = CARD_RESULT_NOENT;
+					break;
+				}
+				if (temp < mRequiredFreeSpace) {
+					CARDUnmount(mCardChannel);
+					mSaveFileIndex = -2;
+					mErrorCode     = CARD_RESULT_NOCARD;
+					break;
+				}
 				CARDUnmount(mCardChannel);
-				mCardChannel = -1;
-				mErrorCode   = CARD_RESULT_NOFILE;
-				goto err;
 			}
-			if (temp2 < 1) {
-				CARDUnmount(mCardChannel);
-				mSaveFileIndex = -2;
-				mErrorCode     = CARD_RESULT_NOENT;
-				goto err;
-			}
-			if (temp < mRequiredFreeSpace) {
-				CARDUnmount(mCardChannel);
-				mSaveFileIndex = -2;
-				mErrorCode     = CARD_RESULT_NOCARD;
-				goto err;
-			}
-			CARDUnmount(mCardChannel);
+		}
+
+		if (flag && mCardChannel >= 0 && mSaveFileIndex != -2) {
+			loadCurrentFile();
+			mErrorCode = CARD_RESULT_READY;
+		} else if (_3C != -1) {
+			CardUtilMount(channel, &CardWorkArea);
+			CardUtilIdleWhileBusy();
+			CardUtilErase(channel, _3C);
+			CardUtilIdleWhileBusy();
+			CardUtilUnmount(channel);
+			CardUtilIdleWhileBusy();
 		}
 	}
 
-	if (v && mCardChannel >= 0 && mSaveFileIndex != -2) {
-		loadCurrentFile();
-		mErrorCode = CARD_RESULT_READY;
-		goto err;
-	}
-	if (_3C != -1) {
-		CardUtilMount(0, mem);
-		CardUtilIdleWhileBusy();
-		CardUtilErase(0, _3C);
-		CardUtilIdleWhileBusy();
-		CardUtilUnmount(0);
-		CardUtilIdleWhileBusy();
-	}
-
-err:
 	return mErrorCode;
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  li        r28, -0x1
-	  rlwinm    r29,r4,0,24,31
-	  addi      r31, r3, 0
-	  subi      r30, r5, 0x1DA0
-	  li        r27, 0
-	  li        r4, 0
-	  stw       r28, 0x34(r3)
-	  stw       r0, 0x44(r3)
-	  stw       r28, 0x38(r31)
-	  stw       r28, 0x3C(r31)
-	  bl        -0x2F8
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xF0
-	  stw       r27, 0x34(r31)
-	  mr        r3, r31
-	  bl        -0x150
-	  lwz       r0, 0x38(r31)
-	  cmpwi     r0, -0x1
-	  bne-      .loc_0xF0
-	  lwz       r3, 0x34(r31)
-	  addi      r4, r1, 0x14
-	  addi      r5, r1, 0x10
-	  bl        0x195040
-	  cmpwi     r3, 0
-	  bge-      .loc_0x94
-	  lwz       r3, 0x34(r31)
-	  bl        0x197280
-	  stw       r28, 0x34(r31)
-	  li        r0, -0x4
-	  stw       r0, 0x44(r31)
-	  b         .loc_0x15C
-
-	.loc_0x94:
-	  lwz       r0, 0x10(r1)
-	  cmpwi     r0, 0x1
-	  bge-      .loc_0xBC
-	  lwz       r3, 0x34(r31)
-	  bl        0x19725C
-	  li        r0, -0x2
-	  stw       r0, 0x38(r31)
-	  li        r0, -0x8
-	  stw       r0, 0x44(r31)
-	  b         .loc_0x15C
-
-	.loc_0xBC:
-	  lwz       r3, 0x14(r1)
-	  lwz       r0, 0x40(r31)
-	  cmplw     r3, r0
-	  bge-      .loc_0xE8
-	  lwz       r3, 0x34(r31)
-	  bl        0x197230
-	  li        r0, -0x2
-	  stw       r0, 0x38(r31)
-	  li        r0, -0x3
-	  stw       r0, 0x44(r31)
-	  b         .loc_0x15C
-
-	.loc_0xE8:
-	  lwz       r3, 0x34(r31)
-	  bl        0x197214
-
-	.loc_0xF0:
-	  cmplwi    r29, 0
-	  beq-      .loc_0x124
-	  lwz       r0, 0x34(r31)
-	  cmpwi     r0, 0
-	  blt-      .loc_0x124
-	  lwz       r0, 0x38(r31)
-	  cmpwi     r0, -0x2
-	  beq-      .loc_0x124
-	  mr        r3, r31
-	  bl        .loc_0x174
-	  li        r0, 0
-	  stw       r0, 0x44(r31)
-	  b         .loc_0x15C
-
-	.loc_0x124:
-	  lwz       r0, 0x3C(r31)
-	  cmpwi     r0, -0x1
-	  beq-      .loc_0x15C
-	  li        r3, 0
-	  addi      r4, r30, 0
-	  bl        -0x268B4
-	  bl        -0x26834
-	  li        r3, 0
-	  lwz       r4, 0x3C(r31)
-	  bl        -0x26800
-	  bl        -0x26844
-	  li        r3, 0
-	  bl        -0x2689C
-	  bl        -0x26850
-
-	.loc_0x15C:
-	  lwz       r3, 0x44(r31)
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-
-	.loc_0x174:
-	*/
 }
 
 /*
