@@ -34,20 +34,20 @@ enum {
  */
 BEGIN_ENUM_TYPE(TAIkabekuiBStateID)
 enum {
-	Unk0  = 0,
-	Unk1  = 1,
-	Unk2  = 2,
-	Unk3  = 3,
-	Unk4  = 4,
-	Unk5  = 5,
-	Unk6  = 6,
-	Unk7  = 7,
-	Unk8  = 8,
-	Unk9  = 9,
-	Unk10 = 10,
-	Unk11 = 11,
-	Unk12 = 12,
-	Unk13 = 13,
+	Dying        = 0,
+	Waiting      = 1,
+	Appearing    = 2,
+	MovingSetup  = 3,
+	MovingBridge = 4,
+	MovingPiki   = 5,
+	BiteAttack   = 6,
+	BiteChewing  = 7,
+	CrushDying   = 8,
+	ChasingSetup = 9,
+	Chasing      = 10,
+	EatingBridge = 11,
+	Burrowing    = 12,
+	WaitingSetup = 13,
 	COUNT, // 14
 } END_ENUM_TYPE;
 

@@ -117,9 +117,9 @@ TAIkabekuiBParameters::TAIkabekuiBParameters()
  * Size:	000E3C
  */
 TAIkabekuiBStrategy::TAIkabekuiBStrategy()
-    : YaiStrategy(TAIkabekuiBStateID::COUNT, TAIkabekuiBStateID::Unk1)
+    : YaiStrategy(TAIkabekuiBStateID::COUNT, TAIkabekuiBStateID::Waiting)
 {
-	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiBStateID::Unk0);
+	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiBStateID::Dying);
 	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TAIkabekuiBMotionID::Unk0, EffectMgr::EFF_SmokeRing_S);
 	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, 1);
 	TAIAstop* stop                 = new TAIAstop(TAI_NO_TRANSIT);
@@ -127,49 +127,51 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	new TAIArandomWalk(TAI_NO_TRANSIT, TAIkabekuiBMotionID::Unk6); // unused
 
 	TAIAsetMotionSpeed* setMotionSpeedAppear = new TAIAsetMotionSpeed(TAI_NO_TRANSIT, TAIkabekuiBMotionID::Unk4, 0.0f);
-	TAIAvisibleNavi* visibleNaviThenAppear   = new TAIAvisibleNavi(TAIkabekuiBStateID::Unk2);
+	TAIAvisibleNavi* visibleNaviThenAppear   = new TAIAvisibleNavi(TAIkabekuiBStateID::Appearing);
 
-	new TAIAvisiblePiki(TAIkabekuiBStateID::Unk2); // unused
+	new TAIAvisiblePiki(TAIkabekuiBStateID::Appearing); // unused
 
-	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiBStateID::Unk3, TAIkabekuiBMotionID::Unk4, 30.0f, 1);
-	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiBStateID::Unk4);
+	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiBStateID::MovingSetup, TAIkabekuiBMotionID::Unk4, 30.0f, 1);
+	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiBStateID::MovingBridge);
 	TAIAgoTargetPriorityFaceDir* turnToTargetThenSetup
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiBStateID::Unk3, TAIkabekuiBMotionID::Unk6);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiBStateID::MovingSetup, TAIkabekuiBMotionID::Unk6);
 
-	TAIAvisibleNavi* visibleNavi2                     = new TAIAvisibleNavi(TAIkabekuiBStateID::Unk5);
-	TAIAvisiblePiki* visiblePiki                      = new TAIAvisiblePiki(TAIkabekuiBStateID::Unk5);
+	TAIAvisibleNavi* visibleNavi2                     = new TAIAvisibleNavi(TAIkabekuiBStateID::MovingPiki);
+	TAIAvisiblePiki* visiblePiki                      = new TAIAvisiblePiki(TAIkabekuiBStateID::MovingPiki);
 	TAIAapproachTargetPriorityFaceDir* approachTarget = new TAIAapproachTargetPriorityFaceDir(TAI_NO_TRANSIT, TAIkabekuiBMotionID::Unk6);
-	TAIAattackableTarget* attackableTarget            = new TAIAattackableTarget(TAIkabekuiBStateID::Unk6);
-	TAIAunvisibleTarget* unvisibleTarget              = new TAIAunvisibleTarget(TAIkabekuiBStateID::Unk3);
-	TAIAbiteForKabekuiB* kabekuiBite                  = new TAIAbiteForKabekuiB(TAIkabekuiBStateID::Unk7, 3, TAIkabekuiBMotionID::Unk10);
-	TAIAeatPiki* eatPiki                              = new TAIAeatPiki(TAIkabekuiBStateID::Unk3, TAIkabekuiBMotionID::Unk11);
+	TAIAattackableTarget* attackableTarget            = new TAIAattackableTarget(TAIkabekuiBStateID::BiteAttack);
+	TAIAunvisibleTarget* unvisibleTarget              = new TAIAunvisibleTarget(TAIkabekuiBStateID::MovingSetup);
+	TAIAbiteForKabekuiB* kabekuiBite = new TAIAbiteForKabekuiB(TAIkabekuiBStateID::BiteChewing, 3, TAIkabekuiBMotionID::Unk10);
+	TAIAeatPiki* eatPiki                              = new TAIAeatPiki(TAIkabekuiBStateID::MovingSetup, TAIkabekuiBMotionID::Unk11);
 
-	TAIAhitCheckFlyingPiki* pressCheck = new TAIAhitCheckFlyingPiki(TAIkabekuiBStateID::Unk8);
+	TAIAhitCheckFlyingPiki* pressCheck = new TAIAhitCheckFlyingPiki(TAIkabekuiBStateID::CrushDying);
 	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TAIkabekuiBMotionID::Unk1, EffectMgr::EFF_SmokeRing_S);
-	TAIAsearchWorkObject* searchWorkObjectThenChase   = new TAIAsearchWorkObject(TAIkabekuiBStateID::Unk9);
+	TAIAsearchWorkObject* searchWorkObjectThenChase   = new TAIAsearchWorkObject(TAIkabekuiBStateID::ChasingSetup);
 	TAIAinvincibleOn* invincibleOn                    = new TAIAinvincibleOn(TAI_NO_TRANSIT);
 	TAIAinvincibleOff* invincibleOff                  = new TAIAinvincibleOff(TAI_NO_TRANSIT);
-	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiBStateID::Unk10);
+	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiBStateID::Chasing);
 	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiBStateID::Unk11, TAIkabekuiBMotionID::Unk6);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiBStateID::EatingBridge, TAIkabekuiBMotionID::Unk6);
 
 	TAIAattackWorkObjectKabekuiB* attackWorkObject
-	    = new TAIAattackWorkObjectKabekuiB(TAIkabekuiBStateID::Unk4, TAIkabekuiBMotionID::Unk6, 8);
+	    = new TAIAattackWorkObjectKabekuiB(TAIkabekuiBStateID::MovingBridge, TAIkabekuiBMotionID::Unk6, 8);
 
-	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiBStateID::Unk2);
-	TAIAdiveKabekuiB* diveKabekuiB                   = new TAIAdiveKabekuiB(TAIkabekuiBStateID::Unk12);
-	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiBStateID::Unk13, TAIkabekuiBMotionID::Unk5, 30.0f, 0);
-	TAIAsleepKabekuiB* sleepKabekuiB = new TAIAsleepKabekuiB(TAIkabekuiBStateID::Unk1);
+	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiBStateID::Appearing);
+	TAIAdiveKabekuiB* diveKabekuiB                   = new TAIAdiveKabekuiB(TAIkabekuiBStateID::Burrowing);
+	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiBStateID::WaitingSetup, TAIkabekuiBMotionID::Unk5, 30.0f, 0);
+	TAIAsleepKabekuiB* sleepKabekuiB = new TAIAsleepKabekuiB(TAIkabekuiBStateID::Waiting);
 	TAIAshadowOn* shadowOn           = new TAIAshadowOn(TAI_NO_TRANSIT);
 	TAIAshadowOff* shadowOff         = new TAIAshadowOff(TAI_NO_TRANSIT);
 	TAIAinWaterDamage* inWaterDamage = new TAIAinWaterDamage(TAI_NO_TRANSIT, 20.0f, 1);
 
+	// STATE 0 - Dying
 	TaiState* state = new TaiState(2);
 	int j           = 0;
 	state->setAction(j++, dyingKabekui);
 	state->setAction(j++, stop);
-	setState(TAIkabekuiBStateID::Unk0, state);
+	setState(TAIkabekuiBStateID::Dying, state);
 
+	// STATE 1 - Waiting
 	state = new TaiState(5);
 	j     = 0;
 	state->setAction(j++, shadowOff);
@@ -177,20 +179,23 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	state->setAction(j++, setMotionSpeedAppear);
 	state->setAction(j++, visibleNaviThenAppear);
 	state->setAction(j++, searchWorkObjectThenAppear);
-	setState(TAIkabekuiBStateID::Unk1, state);
+	setState(TAIkabekuiBStateID::Waiting, state);
 
+	// STATE 2 - Appearing
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, shadowOn);
 	state->setAction(j++, appearThenSetupMove);
-	setState(TAIkabekuiBStateID::Unk2, state);
+	setState(TAIkabekuiBStateID::Appearing, state);
 
+	// STATE 3 - MovingSetup
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, invincibleOff);
 	state->setAction(j++, setTargetThenMove);
-	setState(TAIkabekuiBStateID::Unk3, state);
+	setState(TAIkabekuiBStateID::MovingSetup, state);
 
+	// STATE 4 - MovingBridge
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
@@ -202,8 +207,9 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	state->setAction(j++, visibleNavi2);
 	state->setAction(j++, searchWorkObjectThenChase);
 	state->setAction(j++, diveKabekuiB);
-	setState(TAIkabekuiBStateID::Unk4, state);
+	setState(TAIkabekuiBStateID::MovingBridge, state);
 
+	// STATE 5 - MovingPiki
 	state = new TaiState(9);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
@@ -215,34 +221,39 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	state->setAction(j++, unvisibleTarget);
 	state->setAction(j++, visiblePiki);
 	state->setAction(j++, visibleNavi2);
-	setState(TAIkabekuiBStateID::Unk5, state);
+	setState(TAIkabekuiBStateID::MovingPiki, state);
 
+	// STATE 6 - BiteAttack
 	state = new TaiState(3);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
 	state->setAction(j++, pressCheck);
 	state->setAction(j++, kabekuiBite);
-	setState(TAIkabekuiBStateID::Unk6, state);
+	setState(TAIkabekuiBStateID::BiteAttack, state);
 
+	// STATE 7 - BiteChewing
 	state = new TaiState(4);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
 	state->setAction(j++, stop);
 	state->setAction(j++, pressCheck);
 	state->setAction(j++, eatPiki);
-	setState(TAIkabekuiBStateID::Unk7, state);
+	setState(TAIkabekuiBStateID::BiteChewing, state);
 
+	// STATE 8 - CrushDying
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, crushDying);
 	state->setAction(j++, stop);
-	setState(TAIkabekuiBStateID::Unk8, state);
+	setState(TAIkabekuiBStateID::CrushDying, state);
 
+	// STATE 9 - ChasingSetup
 	state = new TaiState(1);
 	j     = 0;
 	state->setAction(j++, setTargetWorkObject);
-	setState(TAIkabekuiBStateID::Unk9, state);
+	setState(TAIkabekuiBStateID::ChasingSetup, state);
 
+	// STATE 10 - Chasing
 	state = new TaiState(7);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
@@ -251,9 +262,10 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	state->setAction(j++, visiblePiki);
 	state->setAction(j++, visibleNavi2);
 	state->setAction(j++, pressCheck);
-	state->setAction(j++, targetFaceDirThenEat);
-	setState(TAIkabekuiBStateID::Unk10, state);
+	state->setAction(j++, targetFaceDirThenEat); // after reaching the target, start eating the bridge
+	setState(TAIkabekuiBStateID::Chasing, state);
 
+	// STATE 11 - EatingBridge
 	state = new TaiState(6);
 	j     = 0;
 	state->setAction(j++, inWaterDamage);
@@ -261,21 +273,23 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	state->setAction(j++, deadCheck);
 	state->setAction(j++, visiblePiki);
 	state->setAction(j++, visibleNavi2);
-	state->setAction(j++, attackWorkObject);
-	setState(TAIkabekuiBStateID::Unk11, state);
+	state->setAction(j++, attackWorkObject); // eat that bridge!
+	setState(TAIkabekuiBStateID::EatingBridge, state);
 
+	// STATE 12 - Burrowing
 	state = new TaiState(3);
 	j     = 0;
 	state->setAction(j++, invincibleOn);
 	state->setAction(j++, burrowKabekui);
 	state->setAction(j++, stop);
-	setState(TAIkabekuiBStateID::Unk12, state);
+	setState(TAIkabekuiBStateID::Burrowing, state);
 
+	// STATE 13 - WaitingSetup
 	state = new TaiState(2);
 	j     = 0;
 	state->setAction(j++, shadowOff);
 	state->setAction(j++, sleepKabekuiB);
-	setState(TAIkabekuiBStateID::Unk13, state);
+	setState(TAIkabekuiBStateID::WaitingSetup, state);
 
 	STACK_PAD_VAR(2);
 }
