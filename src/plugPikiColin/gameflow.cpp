@@ -393,7 +393,7 @@ void preloadLanguage()
 	heapIdx = gsys->getHeapNum();
 	gsys->setHeap(SYSHEAP_Lang);
 	gsys->resetHeap(SYSHEAP_Lang, 2);
-	gsys->getHeap(gsys->getHeapNum());
+	gsys->getHeap(gsys->getHeapNum())->getFree();
 	gsys->_31C.init();
 	gsys->mDvdRoot.initCore("");
 	gsys->mFileList = (DirEntry*)&gsys->mDvdRoot;
@@ -402,7 +402,7 @@ void preloadLanguage()
 	                            gameflow.mLangModes[gameflow.mLanguageIndex].mArcPath);
 	gsys->loadBundle(gameflow.mLangModes[gameflow.mLanguageIndex].mBunPath, true);
 	gsys->set2DRoot(gameflow.mLangModes[gameflow.mLanguageIndex].mBloPath, gameflow.mLangModes[gameflow.mLanguageIndex].mTexPath);
-	gsys->getHeap(gsys->getHeapNum());
+	gsys->getHeap(gsys->getHeapNum())->getFree();
 	gsys->setHeap(heapIdx);
 
 	!(unused++);
