@@ -67,4 +67,26 @@ struct KEffect : public zen::CallBack1<zen::particleGenerator*>,
 	// _08-_0C = CallBack1<mdl>
 };
 
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x14.
+ */
+struct SlimeEffect : public KEffect {
+	SlimeEffect();
+
+	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
+	virtual void emit(EffectParm&);                                  // _2C
+	virtual void kill();                                             // _30
+	virtual void stop();                                             // _34
+	virtual void restart();                                          // _38
+
+	// _00     = VTBL1
+	// _04     = VTBL2
+	// _08     = VTBL3
+	// _00-_0C = KEffect
+	zen::particleGenerator* mEfxGen; // _0C
+	Creature* mObj;                  // _10
+};
+
 #endif

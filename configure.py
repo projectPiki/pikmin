@@ -584,7 +584,7 @@ config.libs = [
             Object(Matching, "plugPikiKando/gmWin.cpp"),
             Object(Matching, "plugPikiKando/gameStat.cpp"),
             Object(Matching, "plugPikiKando/kmath.cpp"),
-            Object(Equivalent, "plugPikiKando/uteffect.cpp"),
+            Object(Matching, "plugPikiKando/uteffect.cpp"),
             Object(Matching, "plugPikiKando/kontroller.cpp"),
             Object(Matching, "plugPikiKando/mapcode.cpp"),
             Object(Matching, "plugPikiKando/utkando.cpp"),

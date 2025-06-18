@@ -58,59 +58,6 @@ DEFINE_ENUM_TYPE(
 /**
  * @brief TODO
  */
-struct BombEffect : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
-	{
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
-		if (efx) {
-			Vector3f nrm(0.0f, 1.0f, 0.0f);
-			efx->setOrientedNormalVector(nrm);
-		}
-		effectMgr->create(EffectMgr::EFF_Bomb_Wave, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Bomb_DustRing, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Bomb_Bang, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Bomb_FireBang, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Bomb_FireGlow, parm.mPosition, nullptr, nullptr);
-	}
-	virtual void kill() { } // _30
-
-	// _00     = VTBL1
-	// _04     = VTBL2
-	// _08     = VTBL3
-	// _00-_0C = KEffect
-	// TODO: members
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0xC.
- */
-struct BombEffectLight : public KEffect {
-	virtual void emit(EffectParm& parm) // _2C
-	{
-		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
-		if (efx) {
-			Vector3f nrm(0.0f, 1.0f, 0.0f);
-			efx->setOrientedNormalVector(nrm);
-		}
-		effectMgr->create(EffectMgr::EFF_BombLight_Bang, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_BombLight_Wave, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_BombLight_FireBang, parm.mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_BombLight_FireGlow, parm.mPosition, nullptr, nullptr);
-	}
-	virtual void kill() { } // _30
-
-	// _00     = VTBL1
-	// _04     = VTBL2
-	// _08     = VTBL3
-	// _00-_0C = KEffect
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
 struct BurnEffect : public KEffect {
 	BurnEffect(Vector3f* vec)
 	{
@@ -238,28 +185,6 @@ struct SimpleEffect : public KEffect {
 
 /**
  * @brief TODO
- *
- * @note Size: 0x14.
- */
-struct SlimeEffect : public KEffect {
-	SlimeEffect();
-
-	virtual bool invoke(zen::particleGenerator*, zen::particleMdl*); // _24
-	virtual void emit(EffectParm&);                                  // _2C
-	virtual void kill();                                             // _30
-	virtual void stop();                                             // _34
-	virtual void restart();                                          // _38
-
-	// _00     = VTBL1
-	// _04     = VTBL2
-	// _08     = VTBL3
-	// _00-_0C = KEffect
-	zen::particleGenerator* mEfxGen; // _0C
-	Creature* mObj;                  // _10
-};
-
-/**
- * @brief TODO
  */
 struct SmokeGrassEffect : public KEffect {
 	virtual void emit(EffectParm& parm) // _2C
@@ -356,6 +281,59 @@ struct UfoSuikomiEffect : public KEffect {
 	Vector3f _0C;                 // _0C
 	Vector3f _18;                 // _18
 	zen::particleGenerator* mEfx; // _24
+};
+
+/**
+ * @brief TODO
+ */
+struct BombEffect : public KEffect {
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
+		if (efx) {
+			Vector3f nrm(0.0f, 1.0f, 0.0f);
+			efx->setOrientedNormalVector(nrm);
+		}
+		effectMgr->create(EffectMgr::EFF_Bomb_Wave, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_DustRing, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_Bang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_FireBang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Bomb_FireGlow, parm.mPosition, nullptr, nullptr);
+	}
+	virtual void kill() { } // _30
+
+	// _00     = VTBL1
+	// _04     = VTBL2
+	// _08     = VTBL3
+	// _00-_0C = KEffect
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0xC.
+ */
+struct BombEffectLight : public KEffect {
+	virtual void emit(EffectParm& parm) // _2C
+	{
+		zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Bomb_Glow, parm.mPosition, nullptr, nullptr);
+		if (efx) {
+			Vector3f nrm(0.0f, 1.0f, 0.0f);
+			efx->setOrientedNormalVector(nrm);
+		}
+		effectMgr->create(EffectMgr::EFF_BombLight_Bang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BombLight_Wave, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BombLight_FireBang, parm.mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BombLight_FireGlow, parm.mPosition, nullptr, nullptr);
+	}
+	virtual void kill() { } // _30
+
+	// _00     = VTBL1
+	// _04     = VTBL2
+	// _08     = VTBL3
+	// _00-_0C = KEffect
+	// TODO: members
 };
 
 /**

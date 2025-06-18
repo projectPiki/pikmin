@@ -1,14 +1,9 @@
-#include "UtEffect.h"
 #include "Creature.h"
 #include "EffectMgr.h"
 #include "Matrix3f.h"
-#include "NaviMgr.h"
 #include "zen/Math.h"
-#include "NaviWhistle.h"
 #include "DebugLog.h"
-
-UtEffectMgr* utEffectMgr;
-KEffect** UtEffectMgr::effects;
+#include "KEffect.h"
 
 /*
  * --INFO--
@@ -99,6 +94,12 @@ void SlimeEffect::kill()
 		mEfxGen = nullptr;
 	}
 }
+
+#include "UtEffect.h"
+#include "NaviMgr.h"
+#include "NaviWhistle.h"
+UtEffectMgr* utEffectMgr;
+KEffect** UtEffectMgr::effects;
 
 /*
  * --INFO--
