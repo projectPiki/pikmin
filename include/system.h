@@ -321,6 +321,7 @@ struct System : public StdSystem {
 	void nudgeDvdThread();
 	void startDvdThread();
 	void Initialise();
+	RandomAccessStream* createFile(char*, BOOL);
 
 	// unused/inlined:
 	void findAddress(u32);

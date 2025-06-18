@@ -100,6 +100,10 @@ struct SceneData : public CoreNode {
 	void parse(CmdStream*);
 	void getAnimInfo(CmdStream*);
 
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+#endif
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	DataChunk* mCameraAnimations; // _14
@@ -146,6 +150,15 @@ struct ActorInstance : public CoreNode {
 	// unused/inlined:
 	void onceInit();
 
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+#endif
+
+	void ageChangeAttach(AgeServer&);
+	void ageChangeObject(AgeServer&);
+	void ageDelInstance(AgeServer&);
+	void genSection(AgeServer&);
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	Animator mAnimator;                        ///< _14
@@ -153,8 +166,8 @@ struct ActorInstance : public CoreNode {
 	Shape* mLeafModel;                         ///< _58
 	CineShapeObject* mActiveActor;             ///< _5C, animating actor information.
 	CineShapeObject* mDefaultActor;            ///< _60, default actor information.
-	int _64;                                   ///< _64
-	int mFlags;                                ///< _68
+	CineShapeObject* _64;                      ///< _64
+	u32 mFlags;                                ///< _68
 	int _6C;                                   ///< _6C
 	int mAnimPlayState;                        ///< _70
 	int mColourAnimIndex;                      ///< _74
@@ -197,6 +210,17 @@ struct SceneCut : public CoreNode {
 
 	ActorInstance* addInstance(char*);
 
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+#endif
+
+	void ageAddEffectKey(AgeServer&);
+	void ageAddInstance(AgeServer&);
+	void ageChangeScene(AgeServer&);
+	void ageDeleteCut(AgeServer&);
+	void ageRefresh(AgeServer&);
+	void genCutSection(AgeServer&);
+
 	// unused/inlined:
 	int countEKeys();
 
@@ -231,6 +255,10 @@ struct CineShapeObject : public CoreNode {
 
 	/// STRIPPED - initialises model and animation manager.
 	void init(char* modelPath, char* animPath, char* bundlePath);
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+#endif
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -289,6 +317,20 @@ struct CinematicPlayer {
 	/// STRIPPED - sets up new scene with given .dsk file path, reads in data, and sets as current scene.
 	SceneData* addScene(char* dskFilePath);
 
+	// DLL exclusive functions (use -DEVELOP)
+	void genAge(AgeServer&);
+	void ageAddActor(AgeServer&);
+	void ageAddCut(AgeServer&);
+	void ageAddScene(AgeServer&);
+	void ageLoad(AgeServer&);
+	void ageNew(AgeServer&);
+	void agePlayAnim(AgeServer&);
+	void ageRefreshSection(AgeServer&);
+	void ageSave(AgeServer&);
+	void genSection(AgeServer&);
+	void saveCin(char*);
+	static void truncateName(char*);
+
 	/// Retrieves actor information from overall actor list based on .mod file path.
 	CineShapeObject* findActor(char* modFilePath)
 	{
@@ -313,32 +355,20 @@ struct CinematicPlayer {
 		return nullptr;
 	}
 
-	void ageAddActor(AgeServer&);
-	void ageAddCut(AgeServer&);
-	void ageAddScene(AgeServer&);
-	void ageLoad(AgeServer&);
-	void ageNew(AgeServer&);
-	void agePlayAnim(AgeServer&);
-	void ageRefreshSection(AgeServer&);
-	void ageSave(AgeServer&);
 	void calcMaxFrames()
 	{
 		mTotalDuration = 0;
-		for (CineShapeObject* shape = (CineShapeObject*)mSceneList.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
-			mTotalDuration += abs(shape->mBundleFilePath - shape->mAnimFilePath);
+		for (SceneCut* shape = (SceneCut*)mSceneList.mChild; shape; shape = (SceneCut*)shape->mNext) {
+			mTotalDuration += abs(shape->mEndFrame - shape->mStartFrame);
 		}
 
 		if (mCurrentPlaybackTime >= (f32)mTotalDuration) {
 			mCurrentPlaybackTime = (f32)mTotalDuration - 1.0f;
 		}
 	}
-	void genAge(AgeServer&);
-	void genSection(AgeServer&);
-	void saveCin(char*);
-	void truncateName(char*);
 
 	u32 mFlags;                 ///< _00, flags for cutscene options - see CinematicPlayerFlags enum.
-	int mType;                  ///< _04, unused "type" information.
+	u32 mType;                  ///< _04, unused "type" information.
 	Matrix4f mWorldMtx;         ///< _08, world matrix to be used for camera transformations.
 	Creature* mTarget;          ///< _48, target object of cutscene.
 	SceneData mDataList;        ///< _4C, list of all loaded scene data.

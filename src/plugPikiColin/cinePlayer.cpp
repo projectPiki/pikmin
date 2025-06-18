@@ -12,6 +12,7 @@
 #include "zen/Math.h"
 #include "MoviePlayer.h"
 #include "Demo.h"
+#include "Age.h"
 #include "DebugLog.h"
 
 /**
@@ -1175,3 +1176,497 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 
 	mActiveActor->mModel->restoreAnimOverrides();
 }
+
+// The functions following this point are exclusively found in the windows .dll build
+// None of this is confirmed to be equivalent for obvious reasons
+
+#ifdef DEVELOP
+
+void CinematicPlayer::genAge(AgeServer& server)
+{
+	char buf[PATH_MAX];
+
+	server.StartSection("CinematicPlayer", true);
+	server.setSectionRefresh(new Delegate1<CinematicPlayer, AgeServer&>(this, genSection));
+
+	server.StartSection("Scenes", true);
+	server.StartGroup("Commands");
+	server.NewButton("Add Scene", new Delegate1<CinematicPlayer, AgeServer&>(this, ageAddScene), 120);
+	server.EndGroup();
+	int index = 0;
+	FOREACH_NODE(SceneData, mSceneList.mChild, scene)
+	{
+		sprintf(buf, "%d : %s", index, scene->mName);
+		server.StartSection(buf, true);
+		scene->genAge(server);
+		server.EndSection();
+		index++;
+	}
+	server.EndSection();
+
+	server.StartSection("Actors", true);
+	server.StartGroup("Commands");
+	server.NewButton("add Actor", new Delegate1<CinematicPlayer, AgeServer&>(this, ageAddActor), 120);
+	server.EndGroup();
+	FOREACH_NODE(CineShapeObject, mActorList.mChild, actor)
+	{
+		actor->genAge(server);
+	}
+	server.EndSection();
+
+	if (mSceneList.mChild) {
+		server.StartSection("Scene cuts", true);
+		server.StartGroup("Commands");
+		server.NewButton("add cut", new Delegate1<CinematicPlayer, AgeServer&>(this, ageAddCut), 120);
+		server.EndGroup();
+		FOREACH_NODE(SceneCut, mSceneList.mChild, cut)
+		{
+			cut->genAge(server);
+		}
+		server.EndSection();
+	}
+
+	server.EndSection();
+}
+
+void CinematicPlayer::genSection(AgeServer& server)
+{
+	server.StartGroup("Commands");
+	server.NewButton("New", new Delegate1<CinematicPlayer, AgeServer&>(this, ageNew), 444);
+	server.NewButton("Load", new Delegate1<CinematicPlayer, AgeServer&>(this, ageLoad), 222);
+	server.NewButton("Save", new Delegate1<CinematicPlayer, AgeServer&>(this, ageSave), 222);
+	server.EndGroup();
+
+	if (mSceneList.getChildCount() == 0) {
+		return;
+	}
+
+	calcMaxFrames();
+	server.StartGroup("Flags");
+	server.StartBitGroup("movieType", &mType, 120);
+	server.NewBit("skippable", 1, 0);
+	server.EndBitGroup();
+
+	server.StartBitGroup("movieFlags", &mFlags, 120);
+	server.NewBit("localized", 1, 0);
+	server.NewBit("navi no AI", 0x40, 0);
+	server.NewBit("hide navi", 4, 0);
+	server.NewBit("hide BLU piki", 8, 0);
+	server.NewBit("hide RED piki", 0x10, 0);
+	server.NewBit("hide YEL piki", 0x20, 0);
+	server.NewBit("show Tekis", 0x400, 0);
+	server.NewBit("show FreePiki", 0x800, 0);
+	server.NewBit("updt FreePiki", 0x1000, 0);
+	server.NewBit("show FormPiki", 0x2000, 0);
+	server.NewBit("updt FormPiki", 0x4000, 0);
+	server.NewBit("show WorkPiki", 0x8000, 0);
+	server.NewBit("updt WorkPiki", 0x10000, 0);
+	server.NewBit("show Pellets", 0x40000, 0);
+	server.NewBit("piki near ufo", 0x200000, 0);
+	server.NewBit("hide Red Cont", 0x100000, 0);
+	server.NewBit("nongame movie", 0x80, 0);
+	server.NewBit("camera blend", 0x200, 0);
+	server.NewBit("camera return", 0x400000, 0);
+	server.NewBit("obj watching", 0x20000, 0);
+	server.NewBit("pause all", 0x80000, 0);
+	server.NewBit("concurrent", 0x100, 0);
+	server.EndBitGroup();
+	server.EndGroup();
+
+	server.StartGroup("PlayControl");
+	server.NewButton("refresh", new Delegate1<CinematicPlayer, AgeServer&>(this, ageRefreshSection), 120);
+
+	if (mTotalDuration != 0) {
+		server.NewEditor("Frame", &mCurrentPlaybackTime, 0.0f, (f32)mTotalDuration - 1.0f, 320);
+		server.NewButton("play/pause Anim", new Delegate1<CinematicPlayer, AgeServer&>(this, agePlayAnim), 120);
+	}
+	server.EndGroup();
+}
+
+void CinematicPlayer::truncateName(char* name)
+{
+	int i = 0;
+	while (i < strlen(name)) {
+		if (!strncmp(name + i, "dataDir", 7)) {
+			sprintf(name, name + i + 8);
+
+			int j = 0;
+			while (j < strlen(name)) {
+				if (name[j] == '\\') {
+					name[j] = '/';
+				}
+				j++;
+			}
+		}
+		i++;
+	}
+}
+
+void CinematicPlayer::ageAddActor(AgeServer& server)
+{
+	String s1;
+	String s2;
+	String s3;
+
+	char* path1;
+	char* path2;
+
+	if (server.getOpenFilename(s1, "Shape Files (*.mod)|*.mod|")) {
+		truncateName(s1.mString);
+
+		bool hasanm = server.getOpenFilename(s3, "Bundle Files (*.anm)|*.anm|");
+		if (hasanm) {
+			truncateName(s3.mString);
+		}
+
+		if (server.getOpenFilename(s2, "Anim Files (*.bin)|*.bin|")) {
+			truncateName(s2.mString);
+			path1 = StdSystem::stringDup(s2.mString);
+		} else {
+			path1 = nullptr;
+		}
+
+		if (hasanm) {
+			path2 = StdSystem::stringDup(s3.mString);
+		} else {
+			path2 = nullptr;
+		}
+
+		addActor(s1.mString, path2, path1);
+	}
+
+	server.RefreshNode();
+}
+
+void CinematicPlayer::ageAddCut(AgeServer& server)
+{
+	addSceneCut();
+	server.RefreshNode();
+}
+
+void CinematicPlayer::ageAddScene(AgeServer& server)
+{
+	String s1;
+	if (server.getOpenFilename(s1, "Scene Files (*.dsk)|*.dsk|")) {
+		truncateName(s1.mString);
+		addScene(StdSystem::stringDup(s1.mString));
+		addSceneCut();
+		calcMaxFrames();
+		server.RefreshNode();
+	}
+}
+
+void CinematicPlayer::ageLoad(AgeServer& server)
+{
+	String s1;
+	if (server.getOpenFilename(s1, "Cinematic Files (*.cin)|*.cin|")) {
+		truncateName(s1.mString);
+		init(s1.mString);
+	}
+	server.RefreshNode();
+}
+
+void CinematicPlayer::ageNew(AgeServer& server)
+{
+	init(nullptr);
+	server.RefreshNode();
+}
+
+void CinematicPlayer::agePlayAnim(AgeServer& server)
+{
+	if (mPlaybackSpeed != 0.0f) {
+		mPlaybackSpeed = 0.0f;
+	} else {
+		mPlaybackSpeed = 30.0f;
+	}
+}
+
+void CinematicPlayer::ageRefreshSection(AgeServer& server)
+{
+	calcMaxFrames();
+	server.RefreshSection();
+}
+
+void CinematicPlayer::ageSave(AgeServer& server)
+{
+	String s1;
+	if (server.getOpenFilename(s1, "Cinematic Files (*.cin)|*.cin|")) {
+		saveCin(s1.mString);
+	}
+}
+
+void CinematicPlayer::saveCin(char* path)
+{
+	RandomAccessStream* file = gsys->createFile(path, FALSE);
+	if (file == nullptr) {
+		return;
+	}
+
+	PRINT("created file %s ok, writing ....\n", path);
+	file->print("// Movie flags\n");
+	file->print("type \t%d\n", mType);
+	file->print("flags \t%d\n\n", mFlags);
+
+	file->print("// Scene files\n");
+	FOREACH_NODE(SceneData, mSceneList.mChild, scene)
+	{
+		file->print("addScene {\tscene\t%s\n", scene->mName);
+		file->print("\t\t\t}\n\n");
+	}
+
+	file->print("// Actor files\n");
+	FOREACH_NODE(CineShapeObject, mActorList.mChild, actor)
+	{
+		file->print("addActor {\tshape\t%s\n", actor->mName);
+		if (actor->mBundleFilePath) {
+			file->print("\t\t\tbundle\t%s\n", actor->mBundleFilePath);
+		}
+		if (actor->mAnimFilePath) {
+			file->print("\t\t\tanims\t%s\n", actor->mAnimFilePath);
+		}
+		file->print("\t\t\t}\n\n");
+	}
+
+	file->print("// Scene cuts\n");
+	FOREACH_NODE(SceneCut, mSceneList.mChild, cut)
+	{
+		file->print("addCut {\tcut\t\t%d\t%d\t%d\n", cut->mSceneID, cut->mStartFrame, cut->mEndFrame);
+		file->print("\t\t\tflags\t%d\n", cut->mFlags);
+		FOREACH_NODE(ActorInstance, cut->mActorList.mChild, actor)
+		{
+			file->print("\t\t\tactor\t%s\n", actor->mActiveActor->mName);
+			file->print("\t\t\tacflags\t%d\n", actor->mFlags);
+			file->print("\t\t\tanim\t%d\t%d\n", actor->mAnimPlayState, actor->mColourAnimIndex);
+		}
+
+		file->print("\t\t\tkeys\t%d\t{\t\n", cut->countEKeys());
+		for (AnimKey* key = cut->mKey.mPrev; key != &cut->mKey; key = key->mNext) {
+			file->print("\t\t\t\t\t%d\t%d\t%d\t%d\n", key->mEventType, key->mEventCmdID, key->mKeyType, key->mFrameIndex);
+		}
+		file->print("\t\t\t\t\t\t}\n");
+		file->print("\t\t\t}\n\n");
+	}
+	file->close();
+}
+
+void CineShapeObject::genAge(AgeServer& server)
+{
+	server.StartSection(mName, true);
+	if (mMgr) {
+		mMgr->genAge(server);
+	}
+	server.EndSection();
+}
+
+void SceneCut::genAge(AgeServer& server)
+{
+	server.StartSection("cut", true);
+	server.setSectionRefresh(new Delegate1<SceneCut, AgeServer&>(this, genCutSection));
+
+	if (mParentPlayer->mActorList.getChildCount()) {
+		FOREACH_NODE(ActorInstance, mActorList.mChild, actor)
+		{
+			actor->genAge(server);
+		}
+	}
+	server.EndSection();
+}
+
+void SceneCut::genCutSection(AgeServer& server)
+{
+	if (mSceneData->mNumFrames < mStartFrame) {
+		mStartFrame = mSceneData->mNumFrames;
+	}
+	if (mSceneData->mNumFrames < mEndFrame) {
+		mEndFrame = mSceneData->mNumFrames;
+	}
+	server.StartGroup("cut");
+	server.NewEditor("start", &mStartFrame, 0, mSceneData->mNumFrames, 320);
+	server.NewButton("Delete", new Delegate1<SceneCut, AgeServer&>(this, ageDeleteCut), 120);
+	server.NewEditor("end", &mEndFrame, 0, mSceneData->mNumFrames, 320);
+	server.setOnChange(new Delegate1<SceneCut, AgeServer&>(this, ageChangeScene));
+	server.StartOptionBox("Scene", &mSceneID, 120);
+	for (int i = 0; i < mParentPlayer->mSceneList.getChildCount(); i++) {
+		char buf[64];
+		sprintf(buf, "Scene %d", i);
+		server.NewOption(buf, i);
+	}
+	server.EndOptionBox();
+	server.setOnChange((IDelegate*)nullptr);
+	server.StartBitGroup("sceneFlags", (u32*)&mFlags, 120);
+	server.NewBit("skippable", 1, 0);
+	server.NewBit("no loop", 2, 1);
+	server.NewBit("scene loop", 4, 1);
+	server.NewBit("movie loop", 8, 1);
+	server.EndBitGroup();
+	server.EndGroup();
+
+	server.StartGroup("Commands");
+	if (mParentPlayer->mActorList.getChildCount()) {
+		server.NewButton("add Instance", new Delegate1<SceneCut, AgeServer&>(this, ageDeleteCut), 120);
+	}
+	server.EndGroup();
+	server.StartGroup("Effect keys");
+	server.NewButton("add Effect Key", new Delegate1<SceneCut, AgeServer&>(this, ageAddEffectKey), 508);
+
+	int index = 0;
+	for (AnimKey* key = mKey.mPrev; key != &mKey; key = key->mNext) {
+		char buf[64];
+		sprintf(buf, "key %d", index);
+		server.NewButton("DEL", new Delegate1<AnimKey, AgeServer&>(key, AnimKey::ageDelLastKey), 32);
+		server.setOnChange(new Delegate1<SceneCut, AgeServer&>(this, ageRefresh));
+		server.StartOptionBox("", (u16*)&key->mEventType, 85);
+		server.NewOption("SHOW_MSG", 0);
+		server.NewOption("SEND_AI", 1);
+		server.NewOption("NONE", 2);
+		server.EndOptionBox();
+		server.setOnChange((IDelegate*)nullptr);
+		if (key->mEventType == 1) {
+			server.setOnChange(new Delegate1<SceneCut, AgeServer&>(this, ageRefresh));
+			server.StartOptionBox("", &key->mEventCmdID, 90);
+			for (int i = 0; i < demoEventMgr->getSenderMax(); i++) {
+				server.NewOption(demoEventMgr->getSenderName(i), i);
+			}
+			server.EndOptionBox();
+			server.setOnChange((IDelegate*)nullptr);
+
+			server.StartOptionBox("", &key->mKeyType, 80);
+			for (int i = 0; i < demoEventMgr->getEventMax(); i++) {
+				server.NewOption(demoEventMgr->getEventName(key->mEventCmdID, i), i);
+			}
+			server.EndOptionBox();
+		} else {
+			server.NewEditor("", (char*)&key->mEventCmdID, 0, 0, 320);
+			server.NewEditor("", (char*)&key->mEventCmdID, 0, 0, 320);
+		}
+		server.NewEditor("", &key->mFrameIndex, 0, mSceneData->mNumFrames - 1, ((key->mEventType == 1) & 28) + 202);
+		index++;
+	}
+
+	server.EndGroup();
+}
+
+void SceneCut::ageAddEffectKey(AgeServer& server)
+{
+	AnimKey* key     = new AnimKey;
+	key->mFrameIndex = mSceneData->mNumFrames - 1;
+	mKey.insertAfter(key);
+	server.RefreshSection();
+}
+
+void SceneCut::ageAddInstance(AgeServer& server)
+{
+	addInstance(nullptr);
+	server.RefreshNode();
+}
+
+void SceneCut::ageChangeScene(AgeServer& server)
+{
+	mSceneData = mParentPlayer->findScene(mSceneID);
+	server.RefreshSection();
+}
+
+void SceneCut::ageDeleteCut(AgeServer& server)
+{
+	del();
+	server.RefreshNode();
+}
+
+void SceneCut::ageRefresh(AgeServer& server)
+{
+	server.RefreshSection();
+}
+
+void ActorInstance::genAge(AgeServer& server)
+{
+	char* name;
+	if (mActiveActor) {
+		name = mActiveActor->mName;
+	} else {
+		name = "new instance";
+	}
+	server.StartSection(name, true);
+	server.setSectionRefresh(new Delegate1<ActorInstance, AgeServer&>(this, genSection));
+	server.EndSection();
+}
+
+// This function is never used (?)
+void ActorInstance::ageChangeAttach(AgeServer& server)
+{
+	server.RefreshSection();
+}
+
+void ActorInstance::ageChangeObject(AgeServer& server)
+{
+	PRINT("changed to new index %d\n", (int*)mDefaultActor);
+	initInstance();
+	_64 = (CineShapeObject*)mParentPlayer->mActorList.mChild;
+	server.RefreshNode();
+}
+
+void ActorInstance::ageDelInstance(AgeServer& server)
+{
+	del();
+	server.RefreshNode();
+}
+
+void ActorInstance::genSection(AgeServer& server)
+{
+	server.StartGroup("Commands");
+	server.setOnChange(new Delegate1<ActorInstance, AgeServer&>(this, ageChangeObject));
+	server.StartOptionBox("Use Actor", (int*)&mDefaultActor, 320);
+	server.NewOption("NULL", 0);
+	FOREACH_NODE(CineShapeObject, mParentPlayer->mActorList.mChild, actor)
+	{
+		server.NewOption(actor->mName, (int)actor);
+	}
+	server.EndOptionBox();
+	server.setOnChange((IDelegate*)nullptr);
+	server.NewButton("Delete", new Delegate1<ActorInstance, AgeServer&>(this, ageDelInstance), 120);
+
+	if (mDefaultActor && mDefaultActor->mMgr) {
+		server.StartOptionBox("AnimType", &mAnimPlayState, 200);
+		server.NewOption("ANIM_LOOP", 1);
+		server.NewOption("ANIM_ONESHOT", 2);
+		server.EndOptionBox();
+		server.StartOptionBox("Animation", &mColourAnimIndex, 240);
+		int index = 0;
+		FOREACH_NODE(AnimData, mDefaultActor->mMgr->mAnimList.mData, data)
+		{
+			server.NewOption(data->mName, index);
+			index++;
+		}
+		server.EndOptionBox();
+	}
+
+	server.StartBitGroup("actorFlags", &mFlags, 0x78);
+	server.NewBit("move AI navi", 1, 0);
+	server.NewBit("move DayEnd navi", 0x20, 0);
+	server.NewBit("move AI ufo", 0x40, 0);
+	server.NewBit("dummy ufo", 0x400, 0);
+	server.NewBit("move AI piki", 0x80, 0);
+	server.NewBit("move AI onion", 0x200, 0);
+	server.NewBit("move faller", 0x10000, 0);
+	server.NewBit("no XLU sort", 0x20000, 0);
+	server.NewBit("no sync", 0x100, 0);
+	server.NewBit("multicol", 0x40000, 0);
+	server.NewBit("col anims", 2, 1);
+	server.NewBit("fixed blu", 4, 1);
+	server.NewBit("fixed red", 8, 1);
+	server.NewBit("fixed yel", 0x10, 1);
+	server.NewBit("objMask 1", 0x800, 0);
+	server.NewBit("objMask 2", 0x1000, 0);
+	server.NewBit("objMask 3", 0x2000, 0);
+	server.NewBit("objMask 4", 0x4000, 0);
+	server.NewBit("objMask 5", 0x8000, 0);
+	server.EndBitGroup();
+	server.EndGroup();
+}
+
+void SceneData::genAge(AgeServer& server)
+{
+	server.StartGroup("Commands");
+	server.EndGroup();
+}
+
+#endif

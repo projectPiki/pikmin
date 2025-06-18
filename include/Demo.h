@@ -134,6 +134,9 @@ struct DemoEventMgr {
 	char* getEventName(int, int);
 	char* getSenderName(int);
 
+	int getEventMax() { return 6; }
+	int getSenderMax() { return 0x20; }
+
 	// no members
 };
 

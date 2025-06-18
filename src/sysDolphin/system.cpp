@@ -14,6 +14,7 @@
 #include "Graphics.h"
 #include "BaseApp.h"
 #include "Font.h"
+#include "AtxStream.h"
 #include "sysNew.h"
 #include "jaudio/verysimple.h"
 #include "jaudio/interface.h"
@@ -1077,3 +1078,38 @@ void System::startDvdThread()
 	OSCreateThread(&dvdThread, dvdFunc, nullptr, dvdThreadStack + 0x2000, 0x2000, 0xf, 1);
 	OSResumeThread(&dvdThread);
 }
+
+#ifdef DEVELOP
+
+// TODO, this function is pulled from MSVCRTD.dll
+FILE* fopen(char*, char*)
+{
+	return nullptr;
+}
+
+RandomAccessStream* System::createFile(char* name, BOOL useRoot)
+{
+	char* b;
+	char* c;
+
+	if (useRoot) {
+		b = mActiveDir;
+	} else {
+		b = "";
+	}
+	char path[PATH_MAX];
+	sprintf(path, "%s", b);
+	if (useRoot) {
+		c = mDataRoot;
+	} else {
+		c = "";
+	}
+	sprintf(path, "%s%s", c, name);
+	FILE* file = fopen(path, "wb");
+	if (file) {
+		return new AtxFileStream(); // file, name
+	}
+	return nullptr;
+}
+
+#endif
