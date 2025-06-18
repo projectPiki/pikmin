@@ -123,12 +123,12 @@ static MovieListInfo movieTitles[] = {
  */
 bool MovieInfo::update()
 {
-	bool res = false;
+	bool isFinished = false;
 	if (mPlayer) {
 		mPlayer->mPlaybackSpeed = 30.0f;
-		res                     = mPlayer->update() != 0;
+		isFinished              = mPlayer->update() != FALSE;
 	}
-	return !res;
+	return !isFinished;
 }
 
 /*
@@ -139,8 +139,8 @@ bool MovieInfo::update()
 bool MovieInfo::setCamera(Graphics& gfx)
 {
 	bool res = false;
-	if (mPlayer->mCurrentScene) {
-		gfx.setCamera(&mPlayer->mCurrentScene->mCameraData->mCamera);
+	if (mPlayer->mCurrentData) {
+		gfx.setCamera(&mPlayer->mCurrentData->mCameraData->mCamera);
 		gfx.mCamera->update(gfx.mCamera->mAspectRatio, gfx.mCamera->mFov, gfx.mCamera->mNear, gfx.mCamera->mFar);
 		res = true;
 	}
@@ -380,7 +380,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 {
 	MovieInfo* info;
 	if (movieIdx < 0) {
-		skipScene(1);
+		skipScene(SCENESKIP_Invalid);
 		return;
 	}
 
@@ -454,7 +454,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 		info->mRootTransform.makeIdentity();
 	}
 
-	info->mPlayer->mMtx       = info->mRootTransform;
+	info->mPlayer->mWorldMtx  = info->mRootTransform;
 	info->mPlayer->mTarget    = target;
 	info->mPlayer->mIsPlaying = isPlaying;
 
@@ -534,9 +534,9 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
 	bool doHideNavi = (info->mPlayer->mFlags & CINFLAG_Unk2) != 0;
-	FOREACH_NODE(SceneCut, info->mPlayer->mCutList.mChild, cut)
+	FOREACH_NODE(SceneCut, info->mPlayer->mSceneList.mChild, cut)
 	{
-		FOREACH_NODE(ActorInstance, cut->mActor.mChild, actor)
+		FOREACH_NODE(ActorInstance, cut->mActorList.mChild, actor)
 		{
 			if (actor->mFlags & (CINFLAG_Unk5 | CINFLAG_Unk0)) {
 				doHideNavi = false;
@@ -631,7 +631,7 @@ void MoviePlayer::update()
 		}
 
 		mMaskFlags = info->mMaskFlags;
-		if (!info->update()) {
+		if (!info->update()) { // returns false if playback is finished
 			PRINT("movie end!\n");
 			sndStopMovie(info);
 			info->del();
@@ -682,24 +682,26 @@ void MoviePlayer::update()
  * Address:	80077C54
  * Size:	0000AC
  */
-void MoviePlayer::skipScene(int id)
+void MoviePlayer::skipScene(int sceneSkipFlag)
 {
-	if (id == 3) {
+	if (sceneSkipFlag == SCENESKIP_SkipAll) {
 		PRINT("SKIP ALL !!! SKIP ALL !!! SKIP ALL !!! SKIP ALL !!! SKIP ALL !!! \n");
 		while (mStackInfoList.getChildCount()) {
+			// clear everything out of the queue
 			MovieInfo* info = (MovieInfo*)mStackInfoList.mChild;
 			info->del();
-			info->mChild  = 0;
-			info->mNext   = 0;
-			info->mParent = 0;
+			info->mChild  = nullptr;
+			info->mNext   = nullptr;
+			info->mParent = nullptr;
 			mMovieInfoList.add(info);
 		}
 	}
 
 	MovieInfo* info = (MovieInfo*)mPlayInfoList.mChild;
 	while (info) {
+		// apply skip flag to all active cutscenes
 		MovieInfo* next = (MovieInfo*)info->mNext;
-		info->mPlayer->skipScene(id);
+		info->mPlayer->skipScene(sceneSkipFlag);
 		info = next;
 	}
 }

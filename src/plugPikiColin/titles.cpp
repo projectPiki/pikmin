@@ -47,7 +47,7 @@ struct TitleSetupSection : public Node {
 		mDayMgr                 = new DayMgr(nullptr, mController);
 		gameflow.mDemoFlags     = 0;
 		mPlayer                 = new CinematicPlayer("cinemas/opening.cin");
-		mPlayer->mMtx.makeIdentity();
+		mPlayer->mWorldMtx.makeIdentity();
 		mPlayer->mIsPlaying = true;
 
 		RandomAccessStream* data = gsys->openFile("cinemas/opening.ini", true, true);
@@ -294,8 +294,8 @@ struct TitleSetupSection : public Node {
 	}
 	virtual void draw(Graphics& gfx) // _14
 	{
-		if (mPlayer->mCurrentScene) {
-			gfx.setCamera(&mPlayer->mCurrentScene->mCameraData->mCamera);
+		if (mPlayer->mCurrentData) {
+			gfx.setCamera(&mPlayer->mCurrentData->mCameraData->mCamera);
 		} else {
 			gfx.setCamera(&mCamera);
 			mCamera.update(f32(gfx.mScreenWidth) / f32(gfx.mScreenHeight), mCamera.mFov, 100.0f, 15000.0f);

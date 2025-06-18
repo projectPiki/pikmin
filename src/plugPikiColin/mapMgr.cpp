@@ -1058,7 +1058,7 @@ void MapMgr::preRender(Graphics& gfx)
 	mVertRayCount      = 0;
 	mGroundTriRayCount = 0;
 	gfx.setMatHandler(mShadowHandler);
-	gfx.mRenderState = 0x300;
+	gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2);
 
 	FOREACH_NODE(ShadowCaster, mShadowCaster.mChild, shadow)
 	{
@@ -1067,7 +1067,7 @@ void MapMgr::preRender(Graphics& gfx)
 		cam.calcProjection(gfx, false, mShadowCountdown > 0 ? nullptr : shadow->mDrawer);
 	}
 
-	gfx.mRenderState = 0x700;
+	gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 	gfx.setMatHandler(nullptr);
 
 	if (mShadowCountdown) {
@@ -1092,12 +1092,12 @@ void MapMgr::drawShadowCasters(Graphics& gfx)
 		mProjHandler->mProjMat->mTexture = cam->mLightMap;
 		mProjHandler->mLightCamera       = cam;
 		gfx.setMatHandler(mProjHandler);
-		gfx.mRenderState = 0x8700;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3 | GFXRENDER_Unk4);
 		gfx.mLightCam    = cam;
 		gfx.useMatrix(Matrix4f::ident, 0);
 		mMapShape->drawculled(gfx, *gfx.mCamera, nullptr);
 		gfx.mLightCam    = nullptr;
-		gfx.mRenderState = 0x700;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		gfx.setMaterial(nullptr, false);
 		gfx.setMatHandler(nullptr);
 		gfx.initProjTex(false, nullptr);
@@ -1131,11 +1131,11 @@ void MapMgr::refresh(Graphics& gfx)
 		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 		gfx.calcViewMatrix(mtx2, mtx1);
 		gfx.setLighting(true, nullptr);
-		gfx.mRenderState = 0x300;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2);
 		mMapShape->updateAnim(gfx, mtx1, nullptr);
 		gfx.useMatrix(Matrix4f::ident, 0);
 		mMapShape->drawculled(gfx, *gfx.mCamera, &mDynMaterials);
-		gfx.mRenderState = 0x700;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		gfx._324         = 0;
 
 		FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
@@ -1276,11 +1276,11 @@ void MapMgr::drawXLU(Graphics& gfx)
 		gfx.calcViewMatrix(mtx2, mtx1);
 		gfx.useMatrix(mtx1, 0);
 		gfx.setLighting(true, nullptr);
-		gfx.mRenderState = 0x400;
+		gfx.mRenderState = GFXRENDER_Unk3;
 		mMapShape->updateAnim(gfx, mtx1, nullptr);
 		gfx.useMatrix(Matrix4f::ident, 0);
 		mMapShape->drawshape(gfx, *gfx.mCamera, &mDynMaterials);
-		gfx.mRenderState = 0x700;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		// }
 		// gsys->mTimer->stop("mapPost");
 	}

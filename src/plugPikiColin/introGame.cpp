@@ -135,7 +135,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		Matrix4f mtx;
 		mtx.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
 		Matrix4f mtx2;
-		gfx.mRenderState = 0x700;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		mCurrentModeState->postRender(gfx);
 		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	}

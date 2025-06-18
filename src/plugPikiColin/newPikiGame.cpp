@@ -320,7 +320,7 @@ static void handleTutorialWindow(u32&, Controller* controller)
 {
 	if (tutorialWindow && tutorialWindow->update(controller) == zen::ogScrTutorialMgr::Status_4) {
 		if (gameflow.mMoviePlayer->mIsActive) {
-			gameflow.mMoviePlayer->skipScene(2);
+			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 		}
 		deleteTutorialWindow();
 	}
@@ -718,7 +718,7 @@ ModeState* DayOverModeState::update(u32& a)
 
 	if (totalWindow && totalWindow->update(mSection->mController)) {
 		if (mState == 2) {
-			gameflow.mMoviePlayer->skipScene(2);
+			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 			totalWindow = nullptr;
 		} else {
 			totalWindow              = nullptr;
@@ -1366,7 +1366,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gfx.setPerspective(gfx.mCamera->mPerspectiveMatrix.mMtx, 60.0f, gfx.mCamera->mAspectRatio, 1.0f, gfx.mCamera->mFar, 1.0f);
 		Matrix4f mtx;
 		mtx.makeSRT(Vector3f(0.1f, 0.1f, 0.1f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, -5.0f));
-		gfx.mRenderState = 0x700;
+		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		mCurrentModeState->postRender(gfx);
 		Matrix4f mtx2;
 		gfx.setOrthogonal(mtx2.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
@@ -1437,7 +1437,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		if (index == 17) {
 			if (gameflow.mMovieInfoNum == -1) {
 				if (gameflow.mMovieType == -1) {
-					gameflow.mMoviePlayer->skipScene(2);
+					gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 					return;
 				} else if (gameflow.mMovieType == 0) {
 					index = 26;

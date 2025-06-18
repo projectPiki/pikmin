@@ -970,7 +970,7 @@ void Graphics::flushCachedShapes()
 {
 	u32 oldRenderState = mRenderState;
 
-	mRenderState = 1024;
+	mRenderState = GFXRENDER_Unk3;
 	for (CachedShape* i = mShapeCache.mPrev; i != &mShapeCache; i = i->mPrev) {
 		if (i->mDynMaterials) {
 			for (ShapeDynMaterials* j = i->mDynMaterials; j; j = j->mParent) {

@@ -422,7 +422,7 @@ void DGXGraphics::initRender(int a1, int a2)
 	_334 = 0;
 	useTexture(nullptr, 0);
 	setMatHandler(nullptr);
-	mRenderState      = 0x700;
+	mRenderState      = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 	mCurrentMatrixId  = 0;
 	_3DC              = 30;
 	oldVerts          = 0;

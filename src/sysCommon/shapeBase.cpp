@@ -383,7 +383,7 @@ CamDataInfo::CamDataInfo()
  * Address:	8002A998
  * Size:	000334
  */
-void CamDataInfo::update(f32 p1, Matrix4f& mtx)
+void CamDataInfo::update(f32 currentFrame, Matrix4f& mtx)
 {
 	volatile f32 val1;
 	volatile f32 val2;
@@ -398,7 +398,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 			((f32*)&mCamera.mPosition)[i] = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			((f32*)&mCamera.mPosition)[i] = extract(p1, thisParam, *mSceneData->mCameraAnimations);
+			((f32*)&mCamera.mPosition)[i] = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
 		}
 	}
@@ -414,7 +414,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 			((f32*)&mCamera.mFocus)[i] = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			((f32*)&mCamera.mFocus)[i] = extract(p1, thisParam, *mSceneData->mCameraAnimations);
+			((f32*)&mCamera.mFocus)[i] = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
 		}
 	}
@@ -430,7 +430,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 			val1 = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			val1 = extract(p1, thisParam, *mSceneData->mCameraAnimations);
+			val1 = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
 		}
 	}
@@ -446,7 +446,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
 			val2 = mSceneData->mCameraAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			val2 = extract(p1, thisParam, *mSceneData->mCameraAnimations);
+			val2 = extract(currentFrame, thisParam, *mSceneData->mCameraAnimations);
 			break;
 		}
 	}
@@ -480,7 +480,7 @@ void CamDataInfo::update(f32 p1, Matrix4f& mtx)
  * Address:	8002ACCC
  * Size:	000264
  */
-void LightDataInfo::update(f32 p1)
+void LightDataInfo::update(f32 currentFrame)
 {
 	Vector3f vec1;
 	Vector3f vec2;
@@ -496,7 +496,7 @@ void LightDataInfo::update(f32 p1)
 			((f32*)&vec1)[i] = mSceneData->mLightAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			((f32*)&vec1)[i] = extract(p1, thisParam, *mSceneData->mLightAnimations);
+			((f32*)&vec1)[i] = extract(currentFrame, thisParam, *mSceneData->mLightAnimations);
 			break;
 		}
 	}
@@ -513,7 +513,7 @@ void LightDataInfo::update(f32 p1)
 			tmp2[i] = mSceneData->mLightAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			tmp2[i] = extract(p1, thisParam, *mSceneData->mLightAnimations);
+			tmp2[i] = extract(currentFrame, thisParam, *mSceneData->mLightAnimations);
 			break;
 		}
 	}
@@ -529,7 +529,7 @@ void LightDataInfo::update(f32 p1)
 			((f32*)&vec2)[i - 1] = mSceneData->mLightAnimations->mData[thisParam.mDataOffset];
 			break;
 		default:
-			((f32*)&vec2)[i - 1] = extract(p1, thisParam, *mSceneData->mLightAnimations);
+			((f32*)&vec2)[i - 1] = extract(currentFrame, thisParam, *mSceneData->mLightAnimations);
 			break;
 		}
 	}
@@ -2014,12 +2014,13 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 	gsys->mTimer->start("drawShape", true);
 	u32 prevRender = gfx.mRenderState;
 	if (mMeshCount) {
-		if (!(mSystemFlags & ShapeFlags::AlwaysRedraw) && (mSystemFlags & ShapeFlags::AllowCaching) && (gfx.mRenderState & 0x400)) {
+		if (!(mSystemFlags & ShapeFlags::AlwaysRedraw) && (mSystemFlags & ShapeFlags::AllowCaching)
+		    && (gfx.mRenderState & GFXRENDER_Unk3)) {
 			gfx.cacheShape(this, dynMats);
-			gfx.mRenderState &= ~0x400;
+			gfx.mRenderState &= ~GFXRENDER_Unk3;
 		}
 
-		if ((mSystemFlags & ShapeFlags::AlwaysRedraw) || (gfx.mRenderState & (0x8000 | 0x300))) {
+		if ((mSystemFlags & ShapeFlags::AlwaysRedraw) || (gfx.mRenderState & (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk4))) {
 			if (dynMats) {
 				for (ShapeDynMaterials* iMat = dynMats; iMat; iMat = iMat->mParent) {
 					iMat->updateContext();
@@ -2030,7 +2031,7 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 			gfx.drawMeshes(cam, (Shape*)this);
 			gfx.useMatrix(*activeMtx, 0);
 			drawlights(gfx, cam);
-			if (gsys->mToggleDebugInfo && (gfx.mRenderState & 0x400)) {
+			if (gsys->mToggleDebugInfo && (gfx.mRenderState & GFXRENDER_Unk3)) {
 				gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 				drawroutes(gfx, cam);
 			}

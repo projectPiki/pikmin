@@ -50,7 +50,41 @@ enum CinematicPlayerFlags {
 };
 
 /**
- * @brief TODO
+ * @brief Enum for cutscene skipping flags.
+ */
+enum SceneSkipFlags {
+	SCENESKIP_NULL    = 0, ///< 0, no skipping indicated.
+	SCENESKIP_Invalid = 1, ///< 1, invalid cutscene ID.
+	SCENESKIP_Skip    = 2, ///< 2, skip scene.
+	SCENESKIP_SkipAll = 3, ///< 3, skip all.
+};
+
+/**
+ * @brief Enum for scene control flags.
+ */
+enum SceneFlags {
+	SCENEFLAG_Unk1 = 0x1, ///< 0x1, unknown/unused.
+	SCENEFLAG_2    = 0x2, ///< 0x2, base for playback mode selection.
+	SCENEFLAG_4    = 0x4, ///< 0x4, base for playback mode selection.
+	SCENEFLAG_8    = 0x8, ///< 0x8, base for playback mode selection.
+
+	// based on how the code works, combos of the above flags will give different modes (up to 7) - only ModeLoop is actually used.
+	SCENEFLAG_ModeNormal = SCENEFLAG_2,
+	SCENEFLAG_ModeLoop   = SCENEFLAG_4,
+};
+
+/**
+ * @brief Enum for scene control flags.
+ */
+enum CinPlayBackMode {
+	CINMODE_Play      = 0x1, ///< 0x1, play normally.
+	CINMODE_LoopScene = 0x2, ///< 0x2, loop current scene.
+};
+
+/**
+ * @brief Object for storing scene data.
+ *
+ * Loads/stores overall information for a given SceneCut.
  *
  * @note Size: 0x30.
  */
@@ -78,7 +112,9 @@ struct SceneData : public CoreNode {
 };
 
 /**
- * @brief TODO
+ * @brief Managing object for a given scene actor.
+ *
+ * Tracks information about a given scene actor as it animates in a scene.
  *
  * @note Size: 0x1A0.
  */
@@ -86,10 +122,10 @@ struct ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
-		mAnimInstance    = 0;
-		mModelInstance   = 0;
+		mActiveActor     = 0;
+		mDefaultActor    = 0;
 		_64              = 0;
-		mAnim.mMgr       = 0;
+		mAnimator.mMgr   = 0;
 		_19E             = 0;
 		mMeteorFlag      = 0;
 		_19F             = 0;
@@ -112,45 +148,49 @@ struct ActorInstance : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Animator mAnim;                            // _14
-	ShapeDynMaterials mDynMat;                 // _48
-	Shape* mLeafModel;                         // _58
-	CineShapeObject* mAnimInstance;            // _5C
-	CineShapeObject* mModelInstance;           // _60
-	int _64;                                   // _64
-	int mFlags;                                // _68
-	int _6C;                                   // _6C
-	int mAnimPlayState;                        // _70
-	int mColourAnimIndex;                      // _74
-	int mIsLeaf;                               // _78
-	CinematicPlayer* mParentPlayer;            // _7C
-	f32 mColourValue;                          // _80
-	Vector3f mCenterPosition;                  // _84
-	Vector3f _90;                              // _90
-	Vector3f mJointPositions[9];               // _9C
-	Vector3f _108[4];                          // _108
-	zen::particleGenerator* mEffectList[9];    // _138
-	zen::particleGenerator* mEffectGrid[4][4]; // _15C
-	u8 _19C;                                   // _19C
-	u8 mMeteorFlag;                            // _19D
-	u8 _19E;                                   // _19E
-	u8 _19F;                                   // _19F
+	Animator mAnimator;                        ///< _14
+	ShapeDynMaterials mDynMats;                ///< _48
+	Shape* mLeafModel;                         ///< _58
+	CineShapeObject* mActiveActor;             ///< _5C, animating actor information.
+	CineShapeObject* mDefaultActor;            ///< _60, default actor information.
+	int _64;                                   ///< _64
+	int mFlags;                                ///< _68
+	int _6C;                                   ///< _6C
+	int mAnimPlayState;                        ///< _70
+	int mColourAnimIndex;                      ///< _74
+	int mIsLeaf;                               ///< _78
+	CinematicPlayer* mParentPlayer;            ///< _7C
+	f32 mColourValue;                          ///< _80
+	Vector3f mCenterPosition;                  ///< _84
+	Vector3f _90;                              ///< _90
+	Vector3f mJointPositions[9];               ///< _9C
+	Vector3f _108[4];                          ///< _108
+	zen::particleGenerator* mEffectList[9];    ///< _138
+	zen::particleGenerator* mEffectGrid[4][4]; ///< _15C
+	u8 _19C;                                   ///< _19C
+	u8 mMeteorFlag;                            ///< _19D
+	u8 _19E;                                   ///< _19E
+	u8 _19F;                                   ///< _19F
 };
 
 /**
- * @brief TODO
+ * @brief Scene object.
+ *
+ * Active object for a given scene section, pulling in data from SceneData.
  *
  * @note Size: 0x1DC.
  */
 struct SceneCut : public CoreNode {
+
+	/// Default constructor.
 	SceneCut()
 	    : CoreNode("")
 	{
 		mStartFrame = 0;
 		mEndFrame   = 0;
-		mActor.initCore("");
-		mFlags     = 0x1 | 0x2;
-		mSceneId   = 0;
+		mActorList.initCore("");
+		mFlags     = SCENEFLAG_Unk1 | SCENEFLAG_ModeNormal;
+		mSceneID   = 0;
 		mSceneData = nullptr;
 		mKey.mPrev = mKey.mNext = &mKey;
 	}
@@ -162,20 +202,20 @@ struct SceneCut : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mFlags;                     // _14
-	int mStartFrame;                // _18
-	int mEndFrame;                  // _1C
-	int mSceneId;                   // _20
-	SceneData* mSceneData;          // _24
-	ActorInstance mActor;           // _28
-	AnimKey mKey;                   // _1C8
-	CinematicPlayer* mParentPlayer; // _1D8
+	int mFlags;                     ///< _14, scene flags - see SceneFlags enum.
+	int mStartFrame;                ///< _18, scene start frame.
+	int mEndFrame;                  ///< _1C, scene end frame.
+	int mSceneID;                   ///< _20, ID for the scene to be cut to.
+	SceneData* mSceneData;          ///< _24, data for the scene to be cut to.
+	ActorInstance mActorList;       ///< _28, list of actors in scene.
+	AnimKey mKey;                   ///< _1C8
+	CinematicPlayer* mParentPlayer; ///< _1D8
 };
 
 /**
  * @brief Actor object for use in cutscenes.
  *
- * Stores model and animation information for a given cutscene actor.
+ * Stores basic model and animation information for a given cutscene actor.
  *
  * @note Size: 0x34.
  */
@@ -186,7 +226,7 @@ struct CineShapeObject : public CoreNode {
 	    : CoreNode("")
 	{
 		mMgr          = nullptr;
-		mAnimFileName = mBundleFileName = nullptr;
+		mAnimFilePath = mBundleFilePath = nullptr;
 	}
 
 	/// STRIPPED - initialises model and animation manager.
@@ -195,8 +235,8 @@ struct CineShapeObject : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	Shape* mModel;         ///< _14, parent model.
-	char* mAnimFileName;   ///< _18, path to animations file.
-	char* mBundleFileName; ///< _1C, path to bundle file.
+	char* mAnimFilePath;   ///< _18, path to animations file.
+	char* mBundleFilePath; ///< _1C, path to bundle file.
 	AnimContext mContext;  ///< _20, context for animations.
 	AnimMgr* mMgr;         ///< _30, animation manager.
 };
@@ -219,41 +259,60 @@ struct CinematicPlayer {
 	/// Loads cutscene from given file path, including unpacking all command information.
 	void loadCin(char* cinFilePath);
 
-	void addScene(SceneData*);
-	SceneCut* addCut(int, int, int);
-	void addActor(CineShapeObject*);
-	void addActor(char*, char*, char*);
+	/// Reads in scene data from file and sets as current scene.
+	void addScene(SceneData* scene);
+
+	/// Creates new scene cut with given scene ID, adds to cut list, and adds corresponding scene data.
+	SceneCut* addCut(int sceneID, int startFrame, int endFrame);
+
+	/// Initialises given actor using the actor's stored information.
+	void addActor(CineShapeObject* actor);
+
+	/// Sets up a new actor with given file paths, adds to actor list, and initialises.
+	void addActor(char* modelFilePath, char* animFilePath, char* bundleFilePath);
+
+	/// Creates new scene cut with first data from scene list, and adds to scene cut list.
 	SceneCut* addSceneCut();
-	void skipScene(int);
-	int update();
-	void addLights(Graphics&);
-	void refresh(Graphics&);
 
-	// unused/inlined:
-	SceneData* addScene(char*);
+	/// Updates playback time to end of current scene, and updates scene skipping flag (see SceneSkipFlag enum).
+	void skipScene(int sceneSkipFlag);
 
-	// DLL inlines
-	CineShapeObject* findActor(char* name)
+	/// Updates and transitions scenes, handles actor spawning/despawning, and triggers events - returns TRUE if playback is finished.
+	BOOL update();
+
+	/// Adds any active lights to the graphics manager to track and draw.
+	void addLights(Graphics& gfx);
+
+	/// Refreshes graphics of all actors in active scene using custom world matrix.
+	void refresh(Graphics& gfx);
+
+	/// STRIPPED - sets up new scene with given .dsk file path, reads in data, and sets as current scene.
+	SceneData* addScene(char* dskFilePath);
+
+	/// Retrieves actor information from overall actor list based on .mod file path.
+	CineShapeObject* findActor(char* modFilePath)
 	{
 		for (CineShapeObject* actor = (CineShapeObject*)mActorList.mChild; actor; actor = (CineShapeObject*)actor->mNext) {
-			if (!strcmp(actor->mName, name)) {
+			if (!strcmp(actor->mName, modFilePath)) {
 				return actor;
 			}
 		}
 		return nullptr;
 	}
 
-	SceneData* findScene(int id)
+	/// Retrieves scene data based on data list index.
+	SceneData* findScene(int sceneID)
 	{
 		int i = 0;
-		for (SceneData* scene = (SceneData*)mSceneList.mChild; scene; scene = (SceneData*)scene->mNext) {
-			if (i == id) {
+		for (SceneData* scene = (SceneData*)mDataList.mChild; scene; scene = (SceneData*)scene->mNext) {
+			if (i == sceneID) {
 				return scene;
 			}
 			i++;
 		}
 		return nullptr;
 	}
+
 	void ageAddActor(AgeServer&);
 	void ageAddCut(AgeServer&);
 	void ageAddScene(AgeServer&);
@@ -264,13 +323,13 @@ struct CinematicPlayer {
 	void ageSave(AgeServer&);
 	void calcMaxFrames()
 	{
-		mTotalSceneDuration = 0;
-		for (CineShapeObject* shape = (CineShapeObject*)mCutList.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
-			mTotalSceneDuration += abs(shape->mBundleFileName - shape->mAnimFileName);
+		mTotalDuration = 0;
+		for (CineShapeObject* shape = (CineShapeObject*)mSceneList.mChild; shape; shape = (CineShapeObject*)shape->mNext) {
+			mTotalDuration += abs(shape->mBundleFilePath - shape->mAnimFilePath);
 		}
 
-		if (mCurrentPlaybackTime >= (f32)mTotalSceneDuration) {
-			mCurrentPlaybackTime = (f32)mTotalSceneDuration - 1.0f;
+		if (mCurrentPlaybackTime >= (f32)mTotalDuration) {
+			mCurrentPlaybackTime = (f32)mTotalDuration - 1.0f;
 		}
 	}
 	void genAge(AgeServer&);
@@ -278,24 +337,24 @@ struct CinematicPlayer {
 	void saveCin(char*);
 	void truncateName(char*);
 
-	u32 mFlags;                 ///< _00, 0x20000 = use static camera
+	u32 mFlags;                 ///< _00, flags for cutscene options - see CinematicPlayerFlags enum.
 	int mType;                  ///< _04, unused "type" information.
-	Matrix4f mMtx;              ///< _08
-	Creature* mTarget;          ///< _48
-	SceneData mSceneList;       ///< _4C
-	SceneData* mCurrentScene;   ///< _7C
-	CineShapeObject mActorList; ///< _80
-	SceneCut mCutList;          ///< _B4
-	SceneCut* mCurrentCut;      ///< _290
-	SceneCut* mPreviousCut;     ///< _294
+	Matrix4f mWorldMtx;         ///< _08, world matrix to be used for camera transformations.
+	Creature* mTarget;          ///< _48, target object of cutscene.
+	SceneData mDataList;        ///< _4C, list of all loaded scene data.
+	SceneData* mCurrentData;    ///< _7C, data corresponding to current scene.
+	CineShapeObject mActorList; ///< _80, list of all loaded actors.
+	SceneCut mSceneList;        ///< _B4, list of all loaded scenes.
+	SceneCut* mCurrentScene;    ///< _290, currently playing scene.
+	SceneCut* mPreviousScene;   ///< _294, scene playing in previous frame.
 	int mPlaybackMode;          ///< _298
-	f32 mCurrentCutStartTime;   ///< _29C
+	f32 mCurrentSceneStartTime; ///< _29C, time current scene started, relative to cutscene start.
 	f32 mPlaybackSpeed;         ///< _2A0
-	f32 mCurrentPlaybackTime;   ///< _2A4
-	f32 mCurrentFramePosition;  ///< _2A8
-	f32 mPreviousFramePosition; ///< _2AC
-	int mTotalSceneDuration;    ///< _2B0
-	int mCutTransitionFlag;     ///< _2B4
+	f32 mCurrentPlaybackTime;   ///< _2A4, overall cutscene timer.
+	f32 mCurrentSceneFrame;     ///< _2A8, frame counter for active scene.
+	f32 mPreviousSceneFrame;    ///< _2AC, frame counter value on previous frame.
+	int mTotalDuration;         ///< _2B0, total length of all scenes (in frames).
+	int mSceneSkipFlag;         ///< _2B4, flag for skipping cutscene - see SceneSkipFlag enum.
 	Vector3f mCameraPosition;   ///< _2B8
 	Vector3f mCameraLookAt;     ///< _2CC
 	Vector3f mStaticLookAt;     ///< _2D0
