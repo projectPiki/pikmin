@@ -691,7 +691,7 @@ void NaviWalkState::exec(Navi* navi)
 			navi->_AD8 = 0.0f;
 		}
 
-		navi->mGroundTriangle ? "fake" : "fake";
+		STACK_PAD_TERNARY(navi->mGroundTriangle, 1);
 
 		if (quickABS(y) > cosf(THIRD_PI) && nrm1 >= cosf(QUARTER_PI) && nrm3 < sinf(THIRD_PI)) {
 			vel             = vel * 100.0f;

@@ -1882,29 +1882,16 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	// ternaries in the stripped out PRINT function generate inline stack.
 	// forgive my sins please, this combo lets it match.
 	STACK_PAD_VAR(48);
-	PRINT("FAKE FAKE FAKE FAKE FAKE", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad", triNames ? "bad" : "bad",
-	      triNames ? "bad" : "bad");
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 10);
+	STACK_PAD_TERNARY(triNames, 9);
 }

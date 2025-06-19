@@ -203,7 +203,7 @@ void TaiShellStrategy::start(Teki& teki)
 	teki.mPersonality->mID.setID('none');
 
 	// Just for stack.
-	PRINT("fake", pearl ? "yes" : "no", pearl ? "yes" : "no", pearl ? "yes" : "no", pearl ? "yes" : "no", pearl ? "yes" : "no");
+	STACK_PAD_TERNARY(pearl, 5);
 }
 
 /*

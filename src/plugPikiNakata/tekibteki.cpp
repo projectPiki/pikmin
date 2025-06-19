@@ -427,8 +427,7 @@ void BTeki::prepareEffects()
 	mParticleGenPack->setEmitPosPtr(&getPosition());
 
 	// fake just to inflate stack.
-	PRINT("fake", mParticleGenPack ? "yes" : "no", mParticleGenPack ? "yes" : "no", mParticleGenPack ? "yes" : "no",
-	      mParticleGenPack ? "yes" : "no");
+	STACK_PAD_TERNARY(mParticleGenPack, 4);
 }
 
 /*
@@ -1705,9 +1704,7 @@ void BTeki::flickLower(InteractFlick& flick)
 	interactPiki(flick, andCond);
 
 	// this is so fake and cursed, but whatever bullshit nakata did with the condition stacking has me stumped.
-	PRINT("fake", flick.mAngle ? "yes" : "no", flick.mAngle ? "yes" : "no", flick.mAngle ? "yes" : "no", flick.mAngle ? "yes" : "no",
-	      flick.mAngle ? "yes" : "no", flick.mAngle ? "yes" : "no", flick.mAngle ? "yes" : "no", flick.mAngle ? "yes" : "no",
-	      flick.mAngle ? "yes" : "no");
+	STACK_PAD_TERNARY(flick.mAngle, 9);
 }
 
 /*
@@ -2086,7 +2083,7 @@ void BTeki::drawDefault(Graphics& gfx)
 	}
 
 	// genuinely unsure what else would even be here, i assume it's the debug flag setting stuff
-	PRINT("fake", rad ? "yes" : "no", rad ? "yes" : "no");
+	STACK_PAD_TERNARY(rad, 2);
 }
 
 /*
@@ -2212,7 +2209,7 @@ void BTeki::refresh2d(Graphics& gfx)
 	}
 
 	// w/e man.
-	PRINT("fake", mDeadState ? "yes" : "no");
+	STACK_PAD_TERNARY(mDeadState, 1);
 }
 
 /*
