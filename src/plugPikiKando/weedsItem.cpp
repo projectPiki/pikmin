@@ -286,7 +286,7 @@ void RockGen::refresh(Graphics& gfx)
 		}
 
 		Matrix4f mtx;
-		f32 yRotation = pebble.mRotationDegrees / 255.0f * PI * 2;
+		f32 yRotation = (pebble.mRotationDegrees / 255.0f) * PI * 2;
 		mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, yRotation, 0.0f), pebble.mPosition);
 		Matrix4f mtx2;
 		gfx.calcViewMatrix(mtx, mtx2);
@@ -361,11 +361,11 @@ void GrassGen::create(int num, f32 size, int)
 		grassOffset   = grassOffset + mPosition;
 		grassOffset.y = mapMgr->getMinY(grassOffset.x, grassOffset.z, true);
 
-		Grass& obj        = mGrass[i];
-		obj.mPosition     = grassOffset;
-		obj._0E           = 0.99999f * (255.0f * gsys->getRand(1.0f));
-		obj.mGrassShapeId = 0;
-		obj.mHealth       = 1;
+		Grass& obj           = mGrass[i];
+		obj.mPosition        = grassOffset;
+		obj.mRotationDegrees = 0.99999f * (255.0f * gsys->getRand(1.0f));
+		obj.mGrassShapeId    = 0;
+		obj.mHealth          = 1;
 	}
 
 	resolve();
@@ -418,16 +418,16 @@ void GrassGen::refresh(Graphics& gfx)
 {
 	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
 		for (int i = 0; i < mTotalGrassCount; i++) {
-			Grass& pb = mGrass[i];
-			if (pb.mHealth) {
+			Grass& blade = mGrass[i];
+			if (blade.mHealth) {
 				Matrix4f mtx;
-				f32 test = pb._0E / 255.0f * PI * 2.0f;
-				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, test, 0.0f), pb.mPosition);
+				f32 yRotation = (blade.mRotationDegrees / 255.0f) * PI * 2.0f;
+				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, yRotation, 0.0f), blade.mPosition);
 				Matrix4f mtx2;
 				gfx.calcViewMatrix(mtx, mtx2);
 				gfx._324 = 1;
 				gfx.useMatrix(mtx2, 0);
-				itemMgr->getGrassShape(pb.mGrassShapeId)->drawshape(gfx, *gfx.mCamera, nullptr);
+				itemMgr->getGrassShape(blade.mGrassShapeId)->drawshape(gfx, *gfx.mCamera, nullptr);
 			}
 		}
 	}
@@ -445,13 +445,13 @@ Grass* GrassGen::getRandomGrass()
 
 	int id = mActiveGrass * gsys->getRand(1.0f) * 0.99999f;
 	for (int i = 0; i < mTotalGrassCount; i++) {
-		Grass& pb = mGrass[i];
-		if (!pb.mHealth) {
+		Grass& blade = mGrass[i];
+		if (!blade.mHealth) {
 			continue;
 		}
 
 		if (id <= 0) {
-			return &pb;
+			return &blade;
 		}
 
 		id--;

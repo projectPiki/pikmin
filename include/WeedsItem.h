@@ -22,10 +22,10 @@ struct Grass {
 		return ACTOUT_Fail;
 	}
 
-	Vector3f mPosition; // _00
-	u8 mHealth;         // _0C
-	u8 mGrassShapeId;   // _0D
-	u8 _0E;             // _0E
+	Vector3f mPosition;  // _00
+	u8 mHealth;          // _0C
+	u8 mGrassShapeId;    // _0D
+	u8 mRotationDegrees; // _0E
 };
 
 /*
