@@ -266,7 +266,7 @@ int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetry
 					// Copy waypoint data
 					mPathBuffers[i].mWayPointIdx = piki->mPathBuffers[i].mWayPointIdx;
 					int currentPoint             = mPathBuffers[i].mWayPointIdx;
-					mPathBuffers[i].mFlag        = piki->mPathBuffers[i].mFlag;
+					mPathBuffers[i].mDirection   = piki->mPathBuffers[i].mDirection;
 					pathLength++;
 
 					// Check if we've reached the destination
@@ -417,7 +417,7 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
 	mRouteGoalPos             = targetPos;
 
 	if (onlyLand) {
-		PathFinder::setMode(1);
+		PathFinder::setMode(PathFinderMode::AvoidWater);
 	}
 
 	mNumRoutePoints = findRoute(nearestPikiWP->mIndex, nearestTargetWP->mIndex, false, p2);

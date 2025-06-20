@@ -170,6 +170,32 @@ struct AnimParam {
 };
 
 /**
+ * @brief Flags indicating animation data status for scale/rotation/translation components
+ */
+DEFINE_ENUM_TYPE(AnimDataFlags,
+                 ScaleXStatic             = 0x1, // Scale X component has single value (no animation)
+                 ScaleYStatic             = 0x2, // Scale Y component has single value (no animation)
+                 ScaleZStatic             = 0x4, // Scale Z component has single value (no animation)
+                 AllIndividualScaleStatic = ScaleXStatic | ScaleYStatic | ScaleZStatic,
+                 AllScaleStatic           = 0x8, // All scale components are static
+
+                 RotationXStatic             = 0x10, // Rotation X component has single value (no animation)
+                 RotationYStatic             = 0x20, // Rotation Y component has single value (no animation)
+                 RotationZStatic             = 0x40, // Rotation Z component has single value (no animation)
+                 AllIndividualRotationStatic = RotationXStatic | RotationYStatic | RotationZStatic,
+                 AllRotationStatic           = 0x80, // All rotation components are static
+
+                 TranslationXStatic             = 0x100, // Translation X component has single value (no animation)
+                 TranslationYStatic             = 0x200, // Translation Y component has single value (no animation)
+                 TranslationZStatic             = 0x400, // Translation Z component has single value (no animation)
+                 AllIndividualTranslationStatic = TranslationXStatic | TranslationYStatic | TranslationZStatic,
+                 AllTranslationStatic           = 0x800, // All translation components are static
+
+                 AllComponentsStatic = 0x777,  // All individual component flags set (OR of all static flags)
+                 MatrixCalculated    = 0x8000, // Transform matrix has been calculated
+);
+
+/**
  * @brief Information about animation data, read in from a file.
  */
 struct AnimDataInfo {
@@ -604,11 +630,11 @@ struct AnimMgr : public CoreNode {
  */
 struct FrameCacher : public CacheInfo {
 	// _00-_0C = CacheInfo
-	CacheInfo** _0C; // _0C
-	u8 _10[4];       // _10, unknown
-	u32* _14;        // _14
-	u32* _18;        // _18
-	u32 _1C[1];      // _1C
+	CacheInfo** mInfo;     // _0C
+	u8 _10[4];             // _10, unknown
+	u32* mBoneMatricesEnd; // _14
+	u32* mBoneMtxList;     // _18
+	u32 mBoneMatrices[1];  // _1C
 };
 
 /**

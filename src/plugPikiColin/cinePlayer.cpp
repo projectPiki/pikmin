@@ -881,15 +881,19 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[id - 21], nullptr, nullptr);
 					break;
 				case 29:
-					_108[0].set(-25000.0f, -25000.0f, -25000.0f);
-					_108[1].set(-25000.0f, -25000.0f, -25000.0f);
-					_108[2].set(-25000.0f, -25000.0f, -25000.0f);
-					_108[3].set(-25000.0f, -25000.0f, -25000.0f);
-					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _108[0], nullptr, nullptr)->setEmitPosPtr(&_108[0]);
-					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _108[1], nullptr, nullptr)->setEmitPosPtr(&_108[1]);
-					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _108[2], nullptr, nullptr)->setEmitPosPtr(&_108[2]);
-					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, _108[3], nullptr, nullptr)->setEmitPosPtr(&_108[3]);
-					_19F = 1;
+					mRocketLightPosList[0].set(-25000.0f, -25000.0f, -25000.0f);
+					mRocketLightPosList[1].set(-25000.0f, -25000.0f, -25000.0f);
+					mRocketLightPosList[2].set(-25000.0f, -25000.0f, -25000.0f);
+					mRocketLightPosList[3].set(-25000.0f, -25000.0f, -25000.0f);
+					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mRocketLightPosList[0], nullptr, nullptr)
+					    ->setEmitPosPtr(&mRocketLightPosList[0]);
+					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mRocketLightPosList[1], nullptr, nullptr)
+					    ->setEmitPosPtr(&mRocketLightPosList[1]);
+					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mRocketLightPosList[2], nullptr, nullptr)
+					    ->setEmitPosPtr(&mRocketLightPosList[2]);
+					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mRocketLightPosList[3], nullptr, nullptr)
+					    ->setEmitPosPtr(&mRocketLightPosList[3]);
+					mUsingRocketLightPos = 1;
 					break;
 				case 30:
 					effectMgr->create(EffectMgr::EFF_Rocket_Opa1, mCenterPosition, nullptr, nullptr);
@@ -1064,18 +1068,18 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 	mCenterPosition.set(0.0f, 0.0f, 0.0f);
 	mActiveActor->mModel->calcJointWorldPos(gfx, 0, mCenterPosition);
 
-	_90.set(0.0f, 1.0f, 0.0f);
-	mActiveActor->mModel->calcJointWorldDir(gfx, 0, _90);
+	mActorWorldDir.set(0.0f, 1.0f, 0.0f);
+	mActiveActor->mModel->calcJointWorldDir(gfx, 0, mActorWorldDir);
 
-	if (_19F) {
-		_108[0].set(0.0f, 0.0f, 0.0f);
-		mActiveActor->mModel->calcJointWorldPos(gfx, 69, _108[0]);
-		_108[1].set(0.0f, 0.0f, 0.0f);
-		mActiveActor->mModel->calcJointWorldPos(gfx, 68, _108[1]);
-		_108[2].set(0.0f, 0.0f, 0.0f);
-		mActiveActor->mModel->calcJointWorldPos(gfx, 67, _108[2]);
-		_108[3].set(0.0f, 0.0f, 0.0f);
-		mActiveActor->mModel->calcJointWorldPos(gfx, 66, _108[3]);
+	if (mUsingRocketLightPos) {
+		mRocketLightPosList[0].set(0.0f, 0.0f, 0.0f);
+		mActiveActor->mModel->calcJointWorldPos(gfx, 69, mRocketLightPosList[0]);
+		mRocketLightPosList[1].set(0.0f, 0.0f, 0.0f);
+		mActiveActor->mModel->calcJointWorldPos(gfx, 68, mRocketLightPosList[1]);
+		mRocketLightPosList[2].set(0.0f, 0.0f, 0.0f);
+		mActiveActor->mModel->calcJointWorldPos(gfx, 67, mRocketLightPosList[2]);
+		mRocketLightPosList[3].set(0.0f, 0.0f, 0.0f);
+		mActiveActor->mModel->calcJointWorldPos(gfx, 66, mRocketLightPosList[3]);
 	}
 
 	if (!mMeteorFlag) {
@@ -1084,7 +1088,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 				if (_19C) {
 					mCenterPosition.set(0.0f, 134.0f, 0.0f);
 					mActiveActor->mModel->calcJointWorldPos(gfx, 0, mCenterPosition);
-					Vector3f dir(_90);
+					Vector3f dir(mActorWorldDir);
 					mEffectList[i]->setEmitDir(dir);
 
 					if (i >= 3) {
@@ -1092,7 +1096,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 						mEffectList[i]->setAirField(otherDir * mEffectList[i]->getAirField().length(), true);
 					}
 				} else {
-					mEffectList[i]->setEmitDir(_90);
+					mEffectList[i]->setEmitDir(mActorWorldDir);
 				}
 			}
 		}
@@ -1111,7 +1115,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 
 		for (int i = 0; i < 7; i++) {
 			if (mEffectList[i]) {
-				mEffectList[i]->setEmitDir(-_90);
+				mEffectList[i]->setEmitDir(-mActorWorldDir);
 			}
 		}
 	}

@@ -80,18 +80,18 @@ u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 
 	Client* client                = &mClient[mClientCount++];
 	client->mBuffer               = buf;
-	client->_04                   = a;
-	client->_08                   = b;
-	client->_0C                   = flag;
+	client->mStartWpIdx           = a;
+	client->mDestWpIdx            = b;
+	client->mIncludeBlockedPaths  = flag;
 	client->mMode                 = mode;
 	client->mHandle               = handle;
-	client->_18                   = 0;
-	client->_1C                   = 0;
-	client->_20                   = 0;
+	client->mCurrentBufIdx        = 0;
+	client->mStatus               = PathStatus::Searching;
+	client->mIsBacktracking       = 0;
 	client->mBuffer->mWayPointIdx = a;
 	if (a == b) {
-		client->_1C = 1;
-		client->_24 = 1;
+		client->mStatus     = PathStatus::Success;
+		client->mPathLength = 1;
 		return handle;
 	}
 	return handle;
@@ -111,14 +111,14 @@ int PathFinder::checkASync(u32 handle)
 	}
 
 	Client* client = &mClient[idx];
-	if (client->_1C == 2) {
+	if (client->mStatus == PathStatus::Failed) {
 		PRINT("FAIL WHY ? \n");
 		return -2;
 	}
 
-	if (client->_1C == 1) {
+	if (client->mStatus == PathStatus::Success) {
 		PRINT("SUCCESS\n");
-		return client->_24;
+		return client->mPathLength;
 	}
 
 	return -1;
@@ -142,16 +142,16 @@ void PathFinder::releaseHandle(u32 handle)
 		Client& a = mClient[i];
 		Client& b = mClient[i + 1];
 
-		a.mBuffer = b.mBuffer;
-		a._04     = b._04;
-		a._08     = b._08;
-		a._0C     = b._0C;
-		a.mHandle = b.mHandle;
-		a.mMode   = b.mMode;
-		a._18     = b._18;
-		a._1C     = b._1C;
-		a._20     = b._20;
-		a._24     = b._24;
+		a.mBuffer              = b.mBuffer;
+		a.mStartWpIdx          = b.mStartWpIdx;
+		a.mDestWpIdx           = b.mDestWpIdx;
+		a.mIncludeBlockedPaths = b.mIncludeBlockedPaths;
+		a.mHandle              = b.mHandle;
+		a.mMode                = b.mMode;
+		a.mCurrentBufIdx       = b.mCurrentBufIdx;
+		a.mStatus              = b.mStatus;
+		a.mIsBacktracking      = b.mIsBacktracking;
+		a.mPathLength          = b.mPathLength;
 	}
 }
 
@@ -181,55 +181,75 @@ void PathFinder::updateASync()
  */
 void PathFinder::updateClient(Client& client, int loops)
 {
-	while (client._1C == 0 && loops > 0) {
+	while (client.mStatus == PathStatus::Searching && loops > 0) {
 		loops--;
-		if (mBufferSize < client._18) {
+
+		// Safety check: ensure current buffer index is within allocated buffer size
+		if (mBufferSize < client.mCurrentBufIdx) {
 			ERROR("buffer full\n");
 		}
-		WayPoint* wp = getWayPoint(client.mBuffer[client._18].mWayPointIdx);
-		if (client._20 == 0) {
+
+		WayPoint* wp = getWayPoint(client.mBuffer[client.mCurrentBufIdx].mWayPointIdx);
+
+		// If not backtracking, initialize flags for each of the up to 8 links
+		if (client.mIsBacktracking == 0) {
 			for (int i = 0; i < 8; i++) {
 				if (wp->mLinkIndices[i] == -1) {
-					client.mBuffer[client._18].resetFlag(i);
+					// No link in the slot, clear the flag
+					client.mBuffer[client.mCurrentBufIdx].resetFlag(i);
 				} else {
-					client.mBuffer[client._18].setFlag(i);
+					// Link exists, set flag to allow consideration
+					client.mBuffer[client.mCurrentBufIdx].setFlag(i);
 				}
 			}
 		}
 
-		int handle = selectWay(client.mBuffer[client._18], client._08, client.mBuffer, client._18, client._0C);
-		if (handle != -1) {
-			int linkIdx = wp->mLinkIndices[handle];
-			if (linkIdx == client._08) {
-				client.mBuffer[++client._18].mWayPointIdx = client._08;
+		int handle = selectWay(client.mBuffer[client.mCurrentBufIdx], client.mDestWpIdx, client.mBuffer, client.mCurrentBufIdx,
+		                       client.mIncludeBlockedPaths);
 
-				if (mBufferSize < client._18) {
+		if (handle != -1) {
+			// Found a valid next link to follow
+			int linkIdx = wp->mLinkIndices[handle];
+
+			// Check if this link reaches the destination
+			if (linkIdx == client.mDestWpIdx) {
+				// Record destination waypoint in buffer
+				client.mBuffer[++client.mCurrentBufIdx].mWayPointIdx = client.mDestWpIdx;
+
+				if (mBufferSize < client.mCurrentBufIdx) {
 					ERROR("mem access\n");
 				}
 
+				// Mark pathfinding success and record path length
 				PRINT("OK FOUND!\n");
-				client._1C = 1;
-				client._24 = client._18 + 1;
+				client.mStatus     = PathStatus::Success;
+				client.mPathLength = client.mCurrentBufIdx + 1;
 				return;
 			}
 
-			client.mBuffer[client._18].resetFlag(handle);
-			client._18++;
-			if (client._18 >= mBufferSize) {
-				client._18--;
-				client._20 = 1;
+			// If destination not reached, mark this direction as tried
+			client.mBuffer[client.mCurrentBufIdx].resetFlag(handle);
+			client.mCurrentBufIdx++;
+
+			if (client.mCurrentBufIdx >= mBufferSize) {
+				// Ran out of buffer slots: cannot go deeper, backtrack instead
+				client.mCurrentBufIdx--;
+				client.mIsBacktracking = 1;
 			} else {
-				client.mBuffer[client._18].mWayPointIdx = linkIdx;
-				client._20                              = false;
+				client.mBuffer[client.mCurrentBufIdx].mWayPointIdx = linkIdx;
+				client.mIsBacktracking                             = false;
 			}
 		} else {
-			client._20                              = 1;
-			client.mBuffer[client._18].mWayPointIdx = -1;
-			client._18--;
-			if (client._18 < 0) {
+			// No valid direction found: enter backtracking
+			client.mIsBacktracking                             = 1;
+			client.mBuffer[client.mCurrentBufIdx].mWayPointIdx = -1;
+			client.mCurrentBufIdx--; // Step back!
+
+			if (client.mCurrentBufIdx < 0) {
+				// Stepped back past root: no path found
 				PRINT("GIVE UP\n");
-				client._1C = 2;
-				client._24 = -2;
+				client.mStatus     = PathStatus::Failed;
+				client.mPathLength = -2;
 				return;
 			}
 		}
@@ -249,6 +269,7 @@ int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWP
 			pathWayPoints[i] = getWayPoint(mBuffer[i].mWayPointIdx);
 		}
 	}
+
 	return res;
 }
 
@@ -259,26 +280,31 @@ int PathFinder::findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWP
  */
 int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int destWPIdx, bool includeBlockedPaths)
 {
-	if (checkMode(PFMODE_AvoidWater)) {
+	if (checkMode(PathFinderMode::AvoidWater)) {
 		PRINT("*** AVOID_WATER ROUTE FINDING START (%d - %d)\n", destWPIdx, startWPIdx);
 	}
 
 	Buffer* buf;
 	int wpCount = 0;
 
+	// We start at the start... (and exit early if we're here)
 	bufferList[0].mWayPointIdx = startWPIdx;
 	if (startWPIdx == destWPIdx) {
 		return 1;
 	}
 
-	int stat        = 0;
-	bool tryNewPath = false;
-	while (stat == 0) {
+	PathStatus::Type stat = PathStatus::Searching;
+	bool tryNewPath       = false;
+
+	while (stat == PathStatus::Searching) {
 		buf = &bufferList[wpCount];
 		if (mBufferSize < wpCount) {
 			ERROR("buffer full\n");
 		}
+
 		WayPoint* wp = getWayPoint(buf->mWayPointIdx);
+
+		// If not currently retrying/backtracking, reset flags for available links
 		if (!tryNewPath) {
 			for (int i = 0; i < 8; i++) {
 				if (wp->mLinkIndices[i] == -1) {
@@ -288,9 +314,14 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 				}
 			}
 		}
+
+		// Select next direction/link to explore
 		int way = selectWay(*buf, destWPIdx, bufferList, wpCount, includeBlockedPaths);
 		if (way != -1) {
+			// Valid next link found
 			int linkWPIdx = wp->mLinkIndices[way];
+
+			// Check if this link reaches the destination
 			if (linkWPIdx == destWPIdx) {
 				wpCount++;
 				bufferList[wpCount].mWayPointIdx = destWPIdx;
@@ -298,38 +329,47 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 				if (mBufferSize < wpCount) {
 					ERROR("mem access\n");
 				}
-				stat = 1;
+
+				stat = PathStatus::Success;
 				break;
 			}
 
-			// we didn't make it to the destination (yet)
+			// Mark this direction tried and advance deeper
 			buf->resetFlag(way);
-
 			wpCount++;
+
 			if (wpCount >= mBufferSize) {
+				// Buffer exhausted: backtrack/retry
 				PRINT("@@ backtrack (full buffer ptr=%d buffSize=%d)\n", wpCount, mBufferSize);
 				tryNewPath = true;
-				wpCount--;
+				wpCount--; // Step back!
 
 			} else {
+				// Continue forward along the chosen link
 				bufferList[wpCount].mWayPointIdx = linkWPIdx;
 				tryNewPath                       = false;
 			}
 
 		} else {
+			// No valid links: backtrack
 			buf->mWayPointIdx = -1;
 			tryNewPath        = true;
 			wpCount--;
+
+			// Nothing left, we failed...
 			if (wpCount < 0) {
-				stat = 2;
+				stat = PathStatus::Failed;
 			}
 		}
 	}
 
-	if (stat == 1) {
+	if (stat == PathStatus::Success) {
+		// Path length + 1 because we include the destination waypoint
 		return wpCount + 1;
+	} else {
+		// No path found
+		return 0;
 	}
-	return 0;
 
 	STACK_PAD_VAR(6);
 }
@@ -349,83 +389,106 @@ WayPoint* PathFinder::getWayPoint(int wpIdx)
  * Address:	8009FE14
  * Size:	0001FC
  */
-int PathFinder::selectWay(PathFinder::Buffer& buffer, int destWPIdx, PathFinder::Buffer* bufferList, int wpCount, bool includeBlockedPaths)
+int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList, int wpCount, bool includeBlockedPaths)
 {
-	int res     = -1;
-	int numWays = 0;
-	f32 distances[8];
-	int ids[8];
+	// Return value: index of chosen direction (0-7), or -1 if no valid path
+	int chosenDir      = -1;
+	int validLinkCount = 0; // number of valid candidate directions
 
-	Vector3f currPos = getWayPoint(buffer.mWayPointIdx)->mPosition;
+	// Store candidate direction indices and their squared distances to destination
+	f32 distToDestSq[8];
+	int dirIndices[8];
+
+	// Current and destination positions (XZ plane)
+	Vector3f currPos = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
-	for (int i = 0; i < 8; i++) {
-		if (!buffer.check(i)) {
+
+	for (int dir = 0; dir < 8; dir++) {
+		// Skip if this direction is not available
+		if (!buf.check(dir)) {
 			continue;
 		}
 
-		WayPoint* wp = getWayPoint(buffer.mWayPointIdx);
+		WayPoint* wp = getWayPoint(buf.mWayPointIdx);
 		if (!wp) {
-			PRINT("buffer.idx=%d", buffer.mWayPointIdx);
+			PRINT("buffer.idx=%d", buf.mWayPointIdx);
 			ERROR("wp is null!");
 		}
 
-		if ((!checkMode(PFMODE_Unk2) || avoidWayPointIndex == -1 || wp->mIndex != avoidWayPointIndex)
-		    && (!checkMode(PFMODE_AvoidWater) || !wp->inWater())) {
-			int linkIdx = wp->mLinkIndices[i];
-			if (linkIdx != buffer.mWayPointIdx) {
+		// Exclude waypoints based on mode flags (e.g., avoid a specific index or water)
+		if ((checkMode(PathFinderMode::Unk2) && avoidWayPointIndex != -1 && wp->mIndex == avoidWayPointIndex)
+		    || (checkMode(PathFinderMode::AvoidWater) && wp->inWater())) {
+			continue;
+		}
 
-				if (linkIdx == -1) {
-					// can't use this path, invalid waypoint idx
-					buffer.resetFlag(i);
-					continue;
-				}
+		// Skip self-links
+		int neighborIdx = wp->mLinkIndices[dir];
+		if (neighborIdx == buf.mWayPointIdx) {
+			continue;
+		}
 
-				if (!getWayPoint(linkIdx)) {
-					PRINT("idx=%d", linkIdx);
-					ERROR("no getwaypoint!");
-				}
+		// Invalid link index: clear flag and skip
+		if (neighborIdx == -1) {
+			buf.resetFlag(dir);
+			continue;
+		}
 
-				if (!includeBlockedPaths && !getWayPoint(linkIdx)->mIsOpen) {
-					buffer.resetFlag(i);
-					continue;
-				}
+		// Ensure waypoint exists
+		if (!getWayPoint(neighborIdx)) {
+			PRINT("idx=%d", neighborIdx);
+			ERROR("no getwaypoint!");
+		}
 
-				bool found = false;
-				for (int j = 0; j < wpCount; j++) {
-					if (linkIdx == bufferList[j].mWayPointIdx) {
-						found = true;
-						break;
-					}
-				}
+		// Exclude closed/blocked paths if not allowed
+		if (!includeBlockedPaths && !getWayPoint(neighborIdx)->mIsOpen) {
+			buf.resetFlag(dir);
+			continue;
+		}
 
-				if (!found) {
-					if (numWays > 7) {
-						PRINT("numWays=%d", numWays);
-						ERROR("numWays>=8");
-					}
-					ids[numWays] = i;
-					if (linkIdx == destWPIdx) {
-						return i;
-					}
-					Vector3f linkPos   = getWayPoint(linkIdx)->mPosition;
-					distances[numWays] = qdist2(linkPos.x, linkPos.z, destPos.x, destPos.z);
-					numWays++;
-				}
+		// Avoid revisiting waypoints already in current path buffer
+		bool alreadyVisited = false;
+		for (int j = 0; j < wpCount; j++) {
+			if (bufferList[j].mWayPointIdx == neighborIdx) {
+				alreadyVisited = true;
+				break;
 			}
 		}
-	}
 
-	// find id physically closest to destination
-	f32 minDist = 128000.0f;
-	for (int i = 0; i < numWays; i++) {
-		if (distances[i] < minDist) {
-			minDist = distances[i];
-			res     = ids[i];
+		if (alreadyVisited) {
+			continue;
+		}
+
+		// Record this direction as a candidate
+		dirIndices[validLinkCount] = dir;
+
+		// If this neighbor is the destination, return immediately
+		if (neighborIdx == destWPIdx) {
+			return dir;
+		}
+
+		// Squared horizontal distance to destination
+		Vector3f linkPos             = getWayPoint(neighborIdx)->mPosition;
+		distToDestSq[validLinkCount] = qdist2(linkPos.x, linkPos.z, destPos.x, destPos.z);
+
+		// Sanity check: no more than 8 candidates
+		if (++validLinkCount > 7) {
+			PRINT("numWays=%d", validLinkCount);
+			ERROR("numWays>=8");
 		}
 	}
 
-	return res;
+	// Choose the candidate with minimum squared distance to destination
+	f32 bestDist = 128000.0f;
+	for (int i = 0; i < validLinkCount; i++) {
+		if (distToDestSq[i] < bestDist) {
+			bestDist  = distToDestSq[i];
+			chosenDir = dirIndices[i];
+		}
+	}
 
+	return chosenDir;
+
+	// Reserve stack space (unused placeholder)
 	STACK_PAD_VAR(3);
 }
 
@@ -439,8 +502,9 @@ PathFinder* RouteMgr::getPathFinder(u32 handle)
 	int idx = id2idx(handle);
 	if (idx != -1) {
 		return mPathFinders[idx];
+	} else {
+		return nullptr;
 	}
-	return nullptr;
 }
 
 /*
@@ -466,8 +530,9 @@ int RouteMgr::getNumWayPoints(u32 handle)
 	int idx = id2idx(handle);
 	if (idx != -1) {
 		return mGroupList[idx].mNumPoints;
+	} else {
+		return -1;
 	}
-	return -1;
 }
 
 /*
@@ -477,21 +542,24 @@ int RouteMgr::getNumWayPoints(u32 handle)
  */
 Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 {
+	// Determine if current position is in water
 	CollTriInfo* tri = mapMgr->getCurrTri(pos.x, pos.z, true);
-	bool water       = false;
+	bool inWater     = false;
 	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
-		f32 max = mapMgr->getMaxY(pos.x, pos.z, false);
-		f32 min = mapMgr->getMinY(pos.x, pos.z, true);
-		if (max <= min && pos.y <= min) {
-			PRINT("minY = %.1f < %.1f < %.1f = maxY\n", min, pos.y, max);
-			water = true;
+		f32 maxY = mapMgr->getMaxY(pos.x, pos.z, false);
+		f32 minY = mapMgr->getMinY(pos.x, pos.z, true);
+		if (maxY <= minY && pos.y <= minY) {
+			PRINT("minY = %.1f < %.1f < %.1f = maxY\n", minY, pos.y, maxY);
+			inWater = true;
 		}
 	}
 
+	// Find nearest safe edge avoiding off-mesh areas, considering water state
 	WayPoint* wp;
 	WayPoint* wp2;
-	findNearestEdgeAvoidOff(&wp, &wp2, 'test', pos, false, true, water);
+	findNearestEdgeAvoidOff(&wp, &wp2, 'test', pos, false, true, inWater);
 
+	// Ensure two valid waypoints were found
 	if (!wp || !wp2) {
 		PRINT("from=%x to=%x pos(%.1f %.1f %.1f)\n", wp, wp2, pos.x, pos.y, pos.z);
 		ERROR("getSafePos (%.1f %.1f %.1f)", pos.x, pos.y, pos.z);
@@ -499,24 +567,32 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 
 	PRINT("getSafePos (%d-%d)\n", wp->mIndex, wp2->mIndex);
 
-	Vector3f sep = wp2->mPosition - wp->mPosition;
-	Vector3f dir = sep;
-	f32 nrm      = dir.normalise();
-	f32 dp       = dir.DP(pos - wp->mPosition) / nrm;
-	f32 a        = (1.0f - dp) * wp->mRadius + dp * wp2->mRadius;
-	Vector3f mod;
-	mod     = (dp * nrm) * dir + wp->mPosition;
-	mod     = mod - pos;
-	mod.y   = 0.0f;
-	f32 len = mod.length() - a;
+	// Compute directional vector and normalized distance between waypoints
+	Vector3f edge = wp2->mPosition - wp->mPosition;
+	Vector3f dir  = edge;
+	f32 edgeLen   = dir.normalise();
+	f32 t         = dir.DP(pos - wp->mPosition) / edgeLen;
 
-	if (len > 0.0f || dp < 0.0f || dp > 1.0f) {
-		if (dp < 0.0f) {
-			dp = 0.0f;
-		} else if (dp > 1.0f) {
-			dp = 1.0f;
+	// Interpolate radius at projection point
+	f32 radiusAtT = (1.0f - t) * wp->mRadius + t * wp2->mRadius;
+
+	// Compute offset vector from pos to projected point on edge
+	Vector3f offset;
+	offset   = (t * edgeLen) * dir + wp->mPosition; // Projected point on edge
+	offset   = offset - pos;                        // Offset vector from pos to projected point
+	offset.y = 0.0f;                                // Ignore vertical component
+
+	f32 offsetLen = offset.length() - radiusAtT;
+
+	// If outside safe corridor, clamp t and adjust position to edge
+	if (offsetLen > 0.0f || t < 0.0f || t > 1.0f) {
+		if (t < 0.0f) {
+			t = 0.0f;
+		} else if (t > 1.0f) {
+			t = 1.0f;
 		}
-		pos   = wp->mPosition + dp * sep;
+
+		pos   = wp->mPosition + t * edge;
 		pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 	}
 
@@ -528,63 +604,83 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
  * Address:	800A050C
  * Size:	000474
  */
-void RouteMgr::findNearestEdge(WayPoint** outWP1, WayPoint** outWP2, u32 handle, Vector3f& pos, bool p5, bool p6, bool p7)
+void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, Vector3f& pos, bool allowWater,
+                               bool requireOpen, bool avoidDestination)
 {
+	// Convert handle to index in group list
 	int idx = id2idx(handle);
 	if (idx == -1) {
-		*outWP1 = nullptr;
-		*outWP2 = nullptr;
+		*outNearestStart = nullptr;
+		*outNearestEnd   = nullptr;
 		return;
 	}
 
-	WayPoint* wp1 = nullptr;
-	WayPoint* wp2 = nullptr;
-	f32 minDist   = 128000.0f;
+	WayPoint* bestStart = nullptr;
+	WayPoint* bestEnd   = nullptr;
+	f32 closestDist     = 128000.0f;
 
 	for (int i = 0; i < mGroupList[idx].mNumPoints; i++) {
-		WayPoint* wp = &mGroupList[idx].mWayPoints[i];
-		if ((p5 || !p7 || wp->inWater()) && (p7 || !p5 || !wp->inWater()) && (!p6 || wp->mIsOpen) && (!p7 || !(wp->_40 & 4))) {
+		WayPoint* startWp = &mGroupList[idx].mWayPoints[i];
+
+		if ((allowWater || !avoidDestination || startWp->inWater()) && (avoidDestination || !allowWater || !startWp->inWater())
+		    && (!requireOpen || startWp->mIsOpen) && (!avoidDestination || !(startWp->mFlags & WayPointFlags::Destination))) {
+
 			for (int j = 0; j < 8; j++) {
-				if (wp->mLinkIndices[j] == -1) {
+				if (startWp->mLinkIndices[j] == -1) {
 					continue;
 				}
-				WayPoint* wpLink = &mGroupList[idx].mWayPoints[wp->mLinkIndices[j]];
-				if ((!p5 || !p7 || wpLink->inWater()) && (p7 || !p5 || !wpLink->inWater()) && (!p6 || wpLink->mIsOpen)) {
-					Vector3f sep = wpLink->mPosition - wp->mPosition;
-					Vector3f dir = sep;
-					f32 nrm      = dir.normalise();
-					f32 a        = dir.DP(pos - wp->mPosition) / nrm;
-					f32 dist;
-					if (a < 0.0f || a > 1.0f) {
-						Vector3f newDir = wp->mPosition - pos;
-						f32 distWP      = newDir.length();
-						newDir          = wpLink->mPosition - pos;
-						f32 distLink    = newDir.length();
-						if (distLink < distWP) {
-							dist = distLink;
+
+				WayPoint* wpLink = &mGroupList[idx].mWayPoints[startWp->mLinkIndices[j]];
+				if ((!allowWater || !avoidDestination || wpLink->inWater()) && (avoidDestination || !allowWater || !wpLink->inWater())
+				    && (!requireOpen || wpLink->mIsOpen)) {
+
+					// Compute edge vector and direction
+					Vector3f edgeVector = wpLink->mPosition - startWp->mPosition;
+					Vector3f direction  = edgeVector;
+					f32 edgeLength      = direction.normalise();
+
+					// Project the target position onto the edge
+					f32 projection = direction.DP(pos - startWp->mPosition) / edgeLength;
+
+					f32 distanceToEdge;
+					if (projection < 0.0f || projection > 1.0f) {
+						// Target is outside the segment - use closest endpoint
+						Vector3f diffVec = startWp->mPosition - pos;
+						f32 distToStart  = diffVec.length();
+
+						diffVec       = wpLink->mPosition - pos;
+						f32 distToEnd = diffVec.length();
+
+						if (distToEnd < distToStart) {
+							distanceToEdge = distToEnd;
 						} else {
-							dist = distWP;
+							distanceToEdge = distToStart;
 						}
 					} else {
-						Vector3f newDir;
-						newDir = (a * nrm) * dir + wp->mPosition;
-						newDir = newDir - pos;
-						f32 b  = (1.0f - a) * wp->mRadius + a * wpLink->mRadius;
-						dist   = newDir.normalise() - b;
+						Vector3f offset;
+
+						// Target projects onto the segment
+						offset = (projection * edgeLength) * direction + startWp->mPosition;
+						offset = offset - pos;
+
+						// Interpolate waypoint radius to get edge thickness
+						f32 blendedRadius = (1.0f - projection) * startWp->mRadius + projection * wpLink->mRadius;
+						distanceToEdge    = offset.normalise() - blendedRadius;
 					}
 
-					if (minDist > dist) {
-						wp1     = wp;
-						wp2     = wpLink;
-						minDist = dist;
+					// Keep closest edge
+					if (closestDist > distanceToEdge) {
+						bestStart   = startWp;
+						bestEnd     = wpLink;
+						closestDist = distanceToEdge;
 					}
 				}
 			}
 		}
 	}
 
-	*outWP1 = wp1;
-	*outWP2 = wp2;
+	*outNearestStart = bestStart;
+	*outNearestEnd   = bestEnd;
 }
 
 /*
@@ -592,82 +688,105 @@ void RouteMgr::findNearestEdge(WayPoint** outWP1, WayPoint** outWP2, u32 handle,
  * Address:	800A0980
  * Size:	000768
  */
-void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outWP1, WayPoint** outWP2, u32 handle, Vector3f& pos, bool p5, bool p6, bool p7)
+void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, Vector3f& pos, bool allowWater,
+                                       bool requireOpen, bool avoidDestination)
 {
 	int idx = id2idx(handle);
 	if (idx == -1) {
-		*outWP1 = nullptr;
-		*outWP2 = nullptr;
+		*outNearestStart = nullptr;
+		*outNearestEnd   = nullptr;
 		return;
 	}
 
-	WayPoint* wpOff = findNearestOffWayPoint(handle, pos, p5);
+	// Try to find a special "off" waypoint near the target position
+	WayPoint* wpOff = findNearestOffWayPoint(handle, pos, allowWater);
 	if (!wpOff) {
-		findNearestEdge(outWP1, outWP2, handle, pos, p5, p6, p7);
+		// Fallback to the regular nearest edge search
+		findNearestEdge(outNearestStart, outNearestEnd, handle, pos, allowWater, requireOpen, avoidDestination);
 		return;
 	}
 
+	// Construct a plane for filtering based on the off waypoint
 	Plane offPlane;
 	createOffPlane(handle, offPlane, wpOff);
-	bool isPosAbovePlane = !!(offPlane.dist(pos) >= 0.0f ? 1 : 0); // utterly ridiculous
 
-	WayPoint* wp1 = nullptr;
-	WayPoint* wp2 = nullptr;
-	f32 minDist   = 128000.0f;
+	bool isTargetAbovePlane = !!(offPlane.dist(pos) >= 0.0f ? 1 : 0); // utterly ridiculous
+
+	WayPoint* bestStart = nullptr;
+	WayPoint* bestEnd   = nullptr;
+	f32 closestDist     = 128000.0f;
 
 	for (int i = 0; i < mGroupList[idx].mNumPoints; i++) {
-		WayPoint* wp = &mGroupList[idx].mWayPoints[i];
-		if ((p5 || !p7 || wp->inWater()) && (p7 || !p5 || !wp->inWater()) && (!p7 || !(wp->_40 & 4)) && (!p6 || wp->mIsOpen)) {
+		WayPoint* startWP = &mGroupList[idx].mWayPoints[i];
+
+		if ((allowWater || !avoidDestination || startWP->inWater()) && (avoidDestination || !allowWater || !startWP->inWater())
+		    && (!avoidDestination || !(startWP->mFlags & WayPointFlags::Destination)) && (!requireOpen || startWP->mIsOpen)) {
+
 			for (int j = 0; j < 8; j++) {
-				if (wp->mLinkIndices[j] == -1) {
+				if (startWP->mLinkIndices[j] == -1) {
 					continue;
 				}
 
-				WayPoint* wpLink = &mGroupList[idx].mWayPoints[wp->mLinkIndices[j]];
-				if ((!p5 || !p7 || wpLink->inWater()) && (p7 || !p5 || !wpLink->inWater()) && (!p6 || wpLink->mIsOpen)) {
+				WayPoint* endWP = &mGroupList[idx].mWayPoints[startWP->mLinkIndices[j]];
+				if ((!allowWater || !avoidDestination || endWP->inWater()) && (avoidDestination || !allowWater || !endWP->inWater())
+				    && (!requireOpen || endWP->mIsOpen)) {
 
-					bool isWPAbovePlane   = !!(offPlane.dist(wp->mPosition) >= 0.0f ? 1 : 0);
-					bool isLinkAbovePlane = !!(offPlane.dist(wpLink->mPosition) >= 0.0f ? 1 : 0);
-					bool isOffInWPLinks   = false;
-					bool isOffInLinkLinks = false;
+					// Check if both waypoints are on the same side of the plane as the target
+					bool startAbovePlane = !!(offPlane.dist(startWP->mPosition) >= 0.0f ? 1 : 0);
+					bool endAbovePlane   = !!(offPlane.dist(endWP->mPosition) >= 0.0f ? 1 : 0);
+
+					// Check if either waypoint links to the off waypoint
+					bool startLinksToOff = false;
+					bool endLinksToOff   = false;
 					for (int k = 0; k < 8; k++) {
-						if (wp->mLinkIndices[k] == wpOff->mIndex) {
-							isOffInWPLinks = true;
+						if (startWP->mLinkIndices[k] == wpOff->mIndex) {
+							startLinksToOff = true;
 						}
-						if (wpLink->mLinkIndices[k] == wpOff->mIndex) {
-							isOffInLinkLinks = true;
+
+						if (endWP->mLinkIndices[k] == wpOff->mIndex) {
+							endLinksToOff = true;
 						}
 					}
 
-					if ((!isOffInWPLinks || isWPAbovePlane == isPosAbovePlane)
-					    && (!isOffInLinkLinks || isLinkAbovePlane == isPosAbovePlane)) {
-						Vector3f sep = wpLink->mPosition - wp->mPosition;
-						Vector3f dir = sep;
-						f32 nrm      = dir.normalise();
-						f32 a        = dir.DP(pos - wp->mPosition) / nrm;
-						f32 dist;
-						if (a < 0.0f || a > 1.0f) {
-							Vector3f newDir = wp->mPosition - pos;
-							f32 distWP      = newDir.length();
-							newDir          = wpLink->mPosition - pos;
-							f32 distLink    = newDir.length();
-							if (distLink < distWP) {
-								dist = distLink;
+					// Skip edges that cross the plane improperly
+					if ((!startLinksToOff || startAbovePlane == isTargetAbovePlane)
+					    && (!endLinksToOff || endAbovePlane == isTargetAbovePlane)) {
+
+						// Project the target onto the edge between startWP and endWP
+						Vector3f edgeVec = endWP->mPosition - startWP->mPosition;
+						Vector3f dir     = edgeVec;
+						f32 edgeLength   = dir.normalise();
+
+						f32 projection = dir.DP(pos - startWP->mPosition) / edgeLength;
+						f32 distance;
+
+						if (projection < 0.0f || projection > 1.0f) {
+							// Target projects outside the segment - use endpoint distances
+							Vector3f diffVec = startWP->mPosition - pos;
+							f32 distToStart  = diffVec.length();
+
+							diffVec       = endWP->mPosition - pos;
+							f32 distToEnd = diffVec.length();
+							if (distToEnd < distToStart) {
+								distance = distToEnd;
 							} else {
-								dist = distWP;
+								distance = distToStart;
 							}
 						} else {
-							Vector3f newDir;
-							newDir = (a * nrm) * dir + wp->mPosition;
-							newDir = newDir - pos;
-							f32 b  = (1.0f - a) * wp->mRadius + a * wpLink->mRadius;
-							dist   = newDir.normalise() - b;
+							// Target projects onto the segment
+							Vector3f offset;
+							offset = (projection * edgeLength) * dir + startWP->mPosition; // Projected point on edge
+							offset = offset - pos;                                         // Offset vector from pos to projected point
+
+							f32 radius = (1.0f - projection) * startWP->mRadius + projection * endWP->mRadius;
+							distance   = offset.normalise() - radius;
 						}
 
-						if (minDist > dist) {
-							wp1     = wp;
-							wp2     = wpLink;
-							minDist = dist;
+						// Store the closest valid edge
+						if (closestDist > distance) {
+							bestStart   = startWP;
+							bestEnd     = endWP;
+							closestDist = distance;
 						}
 					}
 				}
@@ -675,8 +794,8 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outWP1, WayPoint** outWP2, u32
 		}
 	}
 
-	*outWP1 = wp1;
-	*outWP2 = wp2;
+	*outNearestStart = bestStart;
+	*outNearestEnd   = bestEnd;
 }
 
 /*
@@ -684,27 +803,35 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outWP1, WayPoint** outWP2, u32
  * Address:	800A10E8
  * Size:	00016C
  */
-WayPoint* RouteMgr::findNearestWayPoint(u32 handle, Vector3f& pos, bool p3)
+WayPoint* RouteMgr::findNearestWayPoint(u32 handle, Vector3f& pos, bool excludeWater)
 {
 	int idx = id2idx(handle);
 	if (idx != -1) {
-		f32 minDist = 128000.0f;
-		int wpIdx   = -1;
+		f32 closestDist = 128000.0f;
+		int nearestIdx  = -1;
+
 		for (int i = 0; i < mGroupList[idx].mNumPoints; i++) {
-			WayPoint* wp = &mGroupList[idx].mWayPoints[i];
-			if ((!p3 || !wp->inWater()) && mGroupList[idx].mWayPoints[i].mIsOpen) {
-				Vector3f dir(mGroupList[idx].mWayPoints[i].mPosition);
-				dir      = dir - pos;
-				f32 dist = dir.length();
-				if (minDist > dist) {
-					minDist = dist;
-					wpIdx   = i;
-				}
+			WayPoint* waypoint = &mGroupList[idx].mWayPoints[i];
+
+			// Skip waypoints that are closed or in water if water is excluded
+			if ((excludeWater && waypoint->inWater()) || !mGroupList[idx].mWayPoints[i].mIsOpen) {
+				continue;
+			}
+
+			Vector3f offset(mGroupList[idx].mWayPoints[i].mPosition); // Get waypoint position
+			offset       = offset - pos;                              // Calculate offset vector from target position to waypoint
+			f32 distance = offset.length();                           // Calculate distance to waypoint
+
+			// Keep the closest
+			if (closestDist > distance) {
+				closestDist = distance;
+				nearestIdx  = i;
 			}
 		}
 
-		return &mGroupList[idx].mWayPoints[wpIdx];
+		return &mGroupList[idx].mWayPoints[nearestIdx];
 	}
+
 	return nullptr;
 }
 
@@ -713,27 +840,34 @@ WayPoint* RouteMgr::findNearestWayPoint(u32 handle, Vector3f& pos, bool p3)
  * Address:	800A1254
  * Size:	00016C
  */
-WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, Vector3f& pos, bool p3)
+WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, Vector3f& pos, bool excludeWater)
 {
 	int idx = id2idx(handle);
 	if (idx != -1) {
-		f32 minDist = 128000.0f;
-		int wpIdx   = -1;
+		f32 closestDist = 128000.0f;
+		int nearestIdx  = -1;
+
 		for (int i = 0; i < mGroupList[idx].mNumPoints; i++) {
-			WayPoint* wp = &mGroupList[idx].mWayPoints[i];
-			if ((!p3 || !wp->inWater()) && !mGroupList[idx].mWayPoints[i].mIsOpen) {
-				Vector3f dir(mGroupList[idx].mWayPoints[i].mPosition);
-				dir      = dir - pos;
-				f32 dist = dir.length();
-				if (minDist > dist) {
-					minDist = dist;
-					wpIdx   = i;
-				}
+			WayPoint* waypoint = &mGroupList[idx].mWayPoints[i];
+
+			// Skip waypoints that are open or in water if water is excluded
+			if ((excludeWater && waypoint->inWater()) || waypoint->mIsOpen) {
+				continue;
+			}
+
+			Vector3f offset(waypoint->mPosition); // Waypoint position
+			offset       = offset - pos;          // Offset vector to target position
+			f32 distance = offset.length();       // Euclidean distance
+
+			if (closestDist > distance) {
+				closestDist = distance;
+				nearestIdx  = i;
 			}
 		}
 
-		return &mGroupList[idx].mWayPoints[wpIdx];
+		return &mGroupList[idx].mWayPoints[nearestIdx];
 	}
+
 	return nullptr;
 }
 
@@ -744,23 +878,35 @@ WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, Vector3f& pos, bool p3)
  */
 void RouteMgr::createOffPlane(u32 handle, Plane& plane, WayPoint* wp)
 {
-	int idx = id2idx(handle);
-	if (idx != -1 && wp->mLinkCount > 0) {
-		int otherIdx = -1;
-		for (int i = 0; i < 8; i++) {
-			if (wp->mLinkIndices[i] != -1) {
-				otherIdx = wp->mLinkIndices[i];
-				break;
-			}
-		}
+	int groupIdx = id2idx(handle);
+	if (groupIdx == -1) {
+		return;
+	}
 
-		if (otherIdx != -1) {
-			Vector3f normal = mGroupList[idx].mWayPoints[otherIdx].mPosition - wp->mPosition;
-			normal.normalise();
-			plane.mNormal = normal;
-			plane.mOffset = normal.DP(wp->mPosition);
+	// No links available, cannot create a plane
+	if (wp->mLinkCount <= 0) {
+		return;
+	}
+
+	// Find the first valid link index (i.e., a connected waypoint)
+	int linkedIdx = -1;
+	for (int i = 0; i < 8; i++) {
+		if (wp->mLinkIndices[i] != -1) {
+			linkedIdx = wp->mLinkIndices[i];
+			break;
 		}
 	}
+
+	if (linkedIdx == -1) {
+		return;
+	}
+
+	// Compute plane normal as direction from this waypoint to the linked one
+	Vector3f direction = mGroupList[groupIdx].mWayPoints[linkedIdx].mPosition - wp->mPosition;
+	direction.normalise();
+
+	plane.mNormal = direction;
+	plane.mOffset = direction.DP(wp->mPosition); // Dot product gives offset from origin
 }
 
 /*
@@ -772,11 +918,13 @@ void RouteMgr::dump(u32 handle)
 {
 	int idx = id2idx(handle);
 	int num = mGroupList[idx].mNumPoints;
+
 	ID32 id(handle);
 	PRINT("--------- route info (%s) ---------\n", id.mStringID);
 	for (int i = 0; i < num; i++) {
 		PRINT("\t%d : %s\n", i, mGroupList[idx].mWayPoints[i].mIsOpen ? "o" : "x");
 	}
+
 	PRINT("----------------------------------------\n");
 }
 
@@ -789,20 +937,23 @@ WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, Vector3f& pos)
 {
 	int idx = id2idx(handle);
 	if (idx != -1) {
-		f32 minDist = 128000.0f;
-		int wpIdx   = -1;
+		f32 closestDist = 128000.0f;
+		int nearestIdx  = -1;
+
 		for (int i = 0; i < mGroupList[idx].mNumPoints; i++) {
-			Vector3f dir(mGroupList[idx].mWayPoints[i].mPosition);
-			dir      = dir - pos;
-			f32 dist = dir.length();
-			if (minDist > dist) {
-				minDist = dist;
-				wpIdx   = i;
+			Vector3f offset(mGroupList[idx].mWayPoints[i].mPosition);
+			offset       = offset - pos;
+			f32 distance = offset.length();
+
+			if (closestDist > distance) {
+				closestDist = distance;
+				nearestIdx  = i;
 			}
 		}
 
-		return &mGroupList[idx].mWayPoints[wpIdx];
+		return &mGroupList[idx].mWayPoints[nearestIdx];
 	}
+
 	return nullptr;
 }
 
@@ -816,8 +967,9 @@ WayPoint* RouteMgr::getWayPoint(u32 handle, int wpIdx)
 	int idx = id2idx(handle);
 	if (idx != -1) {
 		return &mGroupList[idx].mWayPoints[wpIdx];
+	} else {
+		return nullptr;
 	}
-	return nullptr;
 }
 
 /*
@@ -840,8 +992,8 @@ RouteMgr::RouteMgr()
  */
 void WayPoint::setFlag(bool flag)
 {
-	mIsOpen             = flag;
-	mRoutePoint->mState = flag;
+	mIsOpen              = flag;
+	mRoutePoint->mIsOpen = flag;
 }
 
 /*
@@ -871,15 +1023,17 @@ void RouteMgr::construct(MapMgr* map)
 		mPathFinders[i]   = new PathFinder(group);
 
 		for (int j = 0; j < group.mNumPoints; j++) {
-			WayPoint* wp     = &group.mWayPoints[j];
-			wp->mIsOpen      = true;
-			wp->mIndex       = j;
-			wp->mPosition    = point->mPosition;
-			wp->_40          = 0;
+			WayPoint* wp  = &group.mWayPoints[j];
+			wp->mIsOpen   = true;
+			wp->mIndex    = j;
+			wp->mPosition = point->mPosition;
+			wp->mFlags    = 0;
+
 			CollTriInfo* tri = map->getCurrTri(wp->mPosition.x, wp->mPosition.z, true);
 			if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
-				wp->_40 |= 1;
+				wp->mFlags |= WayPointFlags::InWater;
 			}
+
 			wp->mRadius     = point->mRadius;
 			wp->mRoutePoint = point;
 			int linkCount   = point->mLink.getChildCount();
@@ -950,6 +1104,7 @@ int RouteMgr::id2idx(u32 id)
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -1096,6 +1251,7 @@ int WayPoint::getLinkIndex(int idx)
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -1121,72 +1277,87 @@ void WayPoint::resetLinkInfos()
  */
 void WayPoint::initLinkInfos()
 {
-	PathFinder::setMode(PFMODE_Unk2);
+	PathFinder::setMode(PathFinderMode::Unk2);
 	PathFinder::avoidWayPointIndex = mIndex;
 
 	for (int i = 0; i < 8; i++) {
 		LinkInfo* info = &mLinkInfos[i];
+
+		// If no link exists in this slot, mark all info entries as dead ends (-2)
 		if (mLinkIndices[i] == -1) {
 			PRINT("nolink wp %d : link%d set deadend\n", mIndex, i);
 			for (int j = 0; j < 4; j++) {
 				info->setInfo(j, -2);
 			}
-		} else {
-			for (int j = 0; j < 4; j++) {
-				int wpIdx = -1;
-				switch (j) {
-				case 0:
-				case 1:
-				case 2:
-					GoalItem* onyon = itemMgr->getContainer(j);
-					if (onyon) {
-						wpIdx = onyon->mWaypointIdx;
-					}
-					break;
-				case 3:
-					UfoItem* ufo = itemMgr->getUfo();
-					if (ufo) {
-						wpIdx = ufo->mWaypointID;
-					}
-					break;
+
+			continue;
+		}
+
+		// For each "goal" type (3 containers and 1 UFO)
+		for (int goalIdx = 0; goalIdx < 4; goalIdx++) {
+			int wpIdx = -1;
+
+			switch (goalIdx) {
+			case 0: // Red onion
+			case 1: // Blue onion
+			case 2: // Yellow onion
+				GoalItem* container = itemMgr->getContainer(goalIdx);
+				if (container) {
+					wpIdx = container->mWaypointIdx;
+				}
+				break;
+			case 3: // Ship
+				UfoItem* ufo = itemMgr->getUfo();
+				if (ufo) {
+					wpIdx = ufo->mWaypointID;
+				}
+				break;
+			}
+
+			if (wpIdx != -1) {
+
+				int linkWaypointIdx    = mLinkIndices[i];
+				PathFinder* pathfinder = routeMgr->getPathFinder('test');
+
+				PRINT("** (%d to %d)\n", linkWaypointIdx, wpIdx);
+
+				int pathLength = pathfinder->findSync(pathfinder->mBuffer, linkWaypointIdx, wpIdx, true);
+
+				// If no path is found, mark dead end
+				if (pathLength == 0) {
+					info->setInfo(goalIdx, -2);
+					PRINT("noway wp %d : link%d set deadend\n", mIndex, i);
+					continue;
 				}
 
-				if (wpIdx != -1) {
-					int linkIdx      = mLinkIndices[i];
-					PathFinder* path = routeMgr->getPathFinder('test');
-					PRINT("** (%d to %d)\n", linkIdx, wpIdx);
-					int syncRes = path->findSync(path->mBuffer, linkIdx, wpIdx, true);
-					if (syncRes == 0) {
-						info->setInfo(j, -2);
-						PRINT("noway wp %d : link%d set deadend\n", mIndex, i);
-					} else {
-						int k;
-						int value = 0;
-						for (k = syncRes - 1; k >= 0; k--) {
-							int thisIdx = path->mBuffer[k].mWayPointIdx;
-							int prevIdx;
-							if (k == 0) {
-								prevIdx = mIndex;
-							} else {
-								prevIdx = path->mBuffer[k - 1].mWayPointIdx;
-							}
+				int step;
+				int accumCost = 0;
 
-							WayPoint* prevWP = routeMgr->getWayPoint('test', prevIdx);
-							WayPoint* thisWP = routeMgr->getWayPoint('test', thisIdx);
-							int thisLinkIdx  = prevWP->getLinkIndex(thisIdx);
-							Vector3f dir     = prevWP->mPosition - thisWP->mPosition;
-							value += int(dir.length());
-							if (prevWP->mLinkInfos[thisLinkIdx].getInfo(j) >= 0 && prevWP->mLinkInfos[thisLinkIdx].getInfo(j) <= value) {
-								continue;
-							}
-							prevWP->mLinkInfos[thisLinkIdx].setInfo(j, value);
-						}
+				// Walk backward along the found path to update link info costs
+				for (step = pathLength - 1; step >= 0; step--) {
+					int currentWPIdx = pathfinder->mBuffer[step].mWayPointIdx;
+					int prevWPIdx    = (step == 0) ? mIndex : pathfinder->mBuffer[step - 1].mWayPointIdx;
+
+					WayPoint* prevWP         = routeMgr->getWayPoint('test', prevWPIdx);
+					WayPoint* currentWP      = routeMgr->getWayPoint('test', currentWPIdx);
+					int prevToCurrentLinkIdx = prevWP->getLinkIndex(currentWPIdx);
+
+					Vector3f diff = prevWP->mPosition - currentWP->mPosition;
+					accumCost += int(diff.length());
+
+					// Update if no cost exists or new cost is lower
+					if (prevWP->mLinkInfos[prevToCurrentLinkIdx].getInfo(goalIdx) >= 0
+					    && prevWP->mLinkInfos[prevToCurrentLinkIdx].getInfo(goalIdx) <= accumCost) {
+						continue;
 					}
 
-				} else {
-					info->setInfo(j, -2);
-					PRINT("(goal%d) wp %d : link%d set deadend\n", j, mIndex, i);
+					prevWP->mLinkInfos[prevToCurrentLinkIdx].setInfo(goalIdx, accumCost);
 				}
+
+			} else {
+				// If no valid target waypoint, mark as dead end for this goal
+				info->setInfo(goalIdx, -2);
+				PRINT("(goal%d) wp %d : link%d set deadend\n", goalIdx, mIndex, i);
 			}
 		}
 	}
@@ -1209,59 +1380,72 @@ int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
  * Address:	800A2000
  * Size:	000580
  */
-int PathFinder::findSyncOnyon(Vector3f& p1, PathFinder::Buffer* bufferList, int startWPIdx, int goalType, bool p5)
+int PathFinder::findSyncOnyon(Vector3f& startPos, PathFinder::Buffer* bufferList, int startWPIdx, int goalType, bool ignoreClosedWaypoints)
 {
 	int destWPIdx = -1;
+
+	// Determine the destination waypoint index based on goalType
 	switch (goalType) {
-	case 0:
-	case 1:
-	case 2:
-		GoalItem* onyon = itemMgr->getContainer(goalType);
-		if (onyon) {
-			destWPIdx = onyon->mWaypointIdx;
+	case 0: // Red onion
+	case 1: // Blue onion
+	case 2: // Yellow onion
+		GoalItem* container = itemMgr->getContainer(goalType);
+		if (container) {
+			destWPIdx = container->mWaypointIdx;
 		}
 		break;
-	case 3:
+	case 3: // UFO
 		UfoItem* ufo = itemMgr->getUfo();
 		if (ufo) {
 			destWPIdx = ufo->mWaypointID;
 		}
 	}
 
+	// If no valid destination found, return 0 (no path)
 	if (destWPIdx == -1) {
 		return 0;
 	}
 
-	if (PathFinder::checkMode(PFMODE_AvoidWater)) {
+	if (PathFinder::checkMode(PathFinderMode::AvoidWater)) {
 		PRINT("*** AVOID_WATER ROUTE FINDING START (%d - %d)\n", startWPIdx, destWPIdx);
 	}
 
 	int bufIdx                 = 0;
 	bufferList[0].mWayPointIdx = startWPIdx;
+
+	// If start equals destination, path length is 1
 	if (startWPIdx == destWPIdx) {
 		return bufIdx + 1;
 	}
 
-	int a       = 0;
-	int b       = 1000;
-	bool check1 = false;
-	int c       = 0;
-	bool check2 = false;
-	int d;
-	int secondBestRes = selectSecondBestWayOnyon(p1, d, goalType, bufferList[bufIdx], destWPIdx, bufferList, bufIdx, p5);
+	PathStatus::Type status = PathStatus::Searching;
+	int UNUSED              = 1000;
+	bool isBacktracking     = false;
+	int currentCost         = 0;
+	bool secondBestFlag     = false;
+
+	// Attempt to find second best initial step, if any
+	int secondBestWayCost;
+	int secondBestRes = selectSecondBestWayOnyon(startPos, secondBestWayCost, goalType, bufferList[bufIdx], destWPIdx, bufferList, bufIdx,
+	                                             ignoreClosedWaypoints);
 	if (secondBestRes != -1) {
-		PRINT("******** SECOND BEST = %d (dist =%d)\n", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex, d);
-		check2 = true;
+		PRINT("******** SECOND BEST = %d (dist =%d)\n", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex,
+		      secondBestWayCost);
+		secondBestFlag = true;
 	}
 
-	check2 = false;
-	while (a == 0) {
+	secondBestFlag = false;
+
+	// Main pathfinding loop
+	while (status == PathStatus::Searching) {
 		if (bufIdx >= mBufferSize) {
 			ERROR("mem access !\n");
 		}
 
 		WayPoint* wp = getWayPoint(bufferList[bufIdx].mWayPointIdx);
-		if (!check1) {
+
+		// If not in backtracking mode, initialize flags for current waypoint links
+		if (!isBacktracking) {
 			for (int i = 0; i < 8; i++) {
 				if (wp->mLinkIndices[i] == -1) {
 					bufferList[bufIdx].resetFlag(i);
@@ -1271,71 +1455,93 @@ int PathFinder::findSyncOnyon(Vector3f& p1, PathFinder::Buffer* bufferList, int 
 			}
 		}
 
-		int bestRes = selectWayOnyon(c, goalType, bufferList[bufIdx], destWPIdx, bufferList, bufIdx, p5);
-		if (check2 && c > d) {
+		// Select the best next step based on pathfinding heuristics
+		int bestStep = selectWayOnyon(currentCost, goalType, bufferList[bufIdx], destWPIdx, bufferList, bufIdx, ignoreClosedWaypoints);
+
+		// If we're considering the second best route and current cost exceeds it, try switching
+		if (secondBestFlag && currentCost > secondBestWayCost) {
 			PRINT("---- second best wo sirabe mashou!\n"); // 'let's check second best'
+
+			// Reset flags to allow alternative paths on all buffered waypoints
 			for (int j = bufIdx; j > 0; j--) {
 				for (int k = 0; k < 8; k++) {
 					bufferList[j].setFlag(k);
 				}
 			}
 
-			wp      = getWayPoint(bufferList[0].mWayPointIdx);
-			bufIdx  = 0;
-			bestRes = secondBestRes;
-			check2  = false;
+			wp             = getWayPoint(bufferList[0].mWayPointIdx);
+			bufIdx         = 0;
+			bestStep       = secondBestRes;
+			secondBestFlag = false;
 			PRINT("second best route:%d", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex);
-			bufferList[0].resetFlag(bestRes);
+			bufferList[0].resetFlag(bestStep);
 		}
 
-		if (bestRes != -1) {
-			Vector3f dir = wp->mPosition - getWayPoint(wp->mLinkIndices[bestRes])->mPosition;
-			c += int(dir.length());
-			int linkIdx = wp->mLinkIndices[bestRes];
-			if (linkIdx == destWPIdx) {
+		if (bestStep != -1) {
+			// Calculate cost for the step
+			Vector3f dir = wp->mPosition - getWayPoint(wp->mLinkIndices[bestStep])->mPosition;
+			currentCost += int(dir.length());
+
+			int nextWpIdx = wp->mLinkIndices[bestStep];
+
+			// Check if reached destination
+			if (nextWpIdx == destWPIdx) {
 				bufferList[++bufIdx].mWayPointIdx = destWPIdx;
+
 				if (bufIdx >= mBufferSize) {
 					ERROR("mem access\n");
 				}
-				a = 1;
+
+				// Path found successfully WOO HOO!
+				status = PathStatus::Success;
 				break;
 			}
-			bufferList[bufIdx].resetFlag(bestRes);
+
+			// Mark this link as used to avoid revisiting
+			bufferList[bufIdx].resetFlag(bestStep);
 			bufIdx++;
+
+			// If buffer full, trigger backtracking
 			if (bufIdx >= mBufferSize) {
 				PRINT("@@ backtrack (full buffer ptr=%d buffSize=%d)\n", bufIdx, mBufferSize);
 				bufIdx--;
-				check1 = true;
+				isBacktracking = true;
 			} else {
-				bufferList[bufIdx].mWayPointIdx = linkIdx;
-				check1                          = false;
+				// Continue forward!
+				bufferList[bufIdx].mWayPointIdx = nextWpIdx;
+				isBacktracking                  = false;
 			}
 		} else {
-			check1 = true;
+			// No next step available: backtrack
+			isBacktracking = true;
 			if (bufIdx >= 1) {
-				Vector3f dir
+				Vector3f lastStepDir
 				    = getWayPoint(bufferList[bufIdx].mWayPointIdx)->mPosition - getWayPoint(bufferList[bufIdx - 1].mWayPointIdx)->mPosition;
-				c -= int(dir.length());
+				currentCost -= int(lastStepDir.length());
 			}
 
 			bufferList[bufIdx].mWayPointIdx = -1;
 			bufIdx--;
+
+			// No path found
 			if (bufIdx < 0) {
-				a = 2;
+				status = PathStatus::Failed;
 			}
 		}
 	}
 
-	if (a == 1) {
+	// If we exit the loop normally, we found a path
+	if (status == PathStatus::Success) {
 		PRINT("<onyon> find route ### result {\n");
 		for (int i = 0; i <= bufIdx; i++) {
 			PRINT("  %d -> ::: (%s) : %s\n", bufferList[i].mWayPointIdx,
 			      getWayPoint(bufferList[i].mWayPointIdx)->mIsOpen ? "[on]" : "*** off ***",
-			      (getWayPoint(bufferList[i].mWayPointIdx)->_40 & 2) ? "pebble" : "-");
+			      (getWayPoint(bufferList[i].mWayPointIdx)->mFlags & WayPointFlags::Pebble) ? "pebble" : "-");
 		}
 		PRINT("}\n");
-		return bufIdx + 1;
+		return bufIdx + 1; // Return the number of waypoints in the path + 1 for destination
 	}
+
 	return 0;
 }
 
@@ -1344,79 +1550,101 @@ int PathFinder::findSyncOnyon(Vector3f& p1, PathFinder::Buffer* bufferList, int 
  * Address:	800A2580
  * Size:	000264
  */
-int PathFinder::selectWayOnyon(int p1, int goalType, PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList, int bufIdx,
-                               bool p7)
+int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buffer& buf, int destWPIdx, PathFinder::Buffer* bufferList,
+                               int visitedBufferCount, bool ignoreClosedWaypoints)
 {
-	int vals2[8];
-	int vals1[8];
-	int wayIdx   = -1;
-	int valCount = 0;
+	int pathCosts[8];        // Cost values for each valid link
+	int validLinkIndices[8]; // Direction indices for valid links
 
-	// straight up never used lol.
+	int bestLinkIndex  = -1; // Index of the best (lowest cost) link direction
+	int validLinkCount = 0;  // Number of valid links found
+
+	// NEVER USED, FOR WHATEVER REASON /////////////////////////
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
+	////////////////////////////////////////////////////////////
 
-	for (int i = 0; i < 8; i++) {
-		if (!buf.check(i)) {
+	for (int dir = 0; dir < 8; dir++) {
+		// Skip if this direction is not available
+		if (!buf.check(dir)) {
 			continue;
 		}
 
-		WayPoint* currWP = getWayPoint(buf.mWayPointIdx);
-		if (!PathFinder::checkMode(PFMODE_AvoidWater) || !currWP->inWater()) {
-			int linkIdx = currWP->mLinkIndices[i];
-			if (linkIdx == buf.mWayPointIdx) {
+		WayPoint* wp = getWayPoint(buf.mWayPointIdx);
+		if (!PathFinder::checkMode(PathFinderMode::AvoidWater) || !wp->inWater()) {
+			int neighborIdx = wp->mLinkIndices[dir];
+
+			// Skip self-referencing links
+			if (neighborIdx == buf.mWayPointIdx) {
 				continue;
 			}
 
-			if (linkIdx == -1) {
-				buf.resetFlag(i);
+			// Handle invalid links by resetting the flag
+			if (neighborIdx == -1) {
+				buf.resetFlag(dir);
 				continue;
 			}
-			if (!p7 && !getWayPoint(linkIdx)->mIsOpen) {
-				buf.resetFlag(i);
+
+			// Check if connected waypoint is closed (and we're not ignoring closed waypoints)
+			if (!ignoreClosedWaypoints && !getWayPoint(neighborIdx)->mIsOpen) {
+				buf.resetFlag(dir);
 				continue;
 			}
-			bool check = false;
-			for (int j = 0; j < bufIdx; j++) {
-				if (bufferList[j].mWayPointIdx == linkIdx) {
-					check = true;
+
+			// Check if this waypoint has already been visited to avoid cycles
+			bool isAlreadyVisited = false;
+			for (int j = 0; j < visitedBufferCount; j++) {
+				if (bufferList[j].mWayPointIdx == neighborIdx) {
+					isAlreadyVisited = true;
 					break;
 				}
 			}
 
-			if (currWP->mLinkInfos[i].getInfo(goalType) != -2 && !check) {
-				vals1[valCount] = i;
-				if (linkIdx == destWPIdx) {
-					return i;
+			// Add to valid links if it has valid pathfinding info and hasn't been visited
+			if (wp->mLinkInfos[dir].getInfo(goalType) != -2 && !isAlreadyVisited) {
+				validLinkIndices[validLinkCount] = dir;
+
+				// If this link leads directly to destination, return immediately (optimal path found)
+				if (neighborIdx == destWPIdx) {
+					return dir;
 				}
 
-				vals2[valCount] = currWP->mLinkInfos[i].getInfo(goalType);
-				valCount++;
+				// Store the pathfinding cost for this link
+				pathCosts[validLinkCount] = wp->mLinkInfos[dir].getInfo(goalType);
+				validLinkCount++;
 			}
 		}
 	}
 
-	int minDist = 128000;
-	for (int i = 0; i < valCount; i++) {
-		if (vals2[i] < minDist) {
-			minDist = vals2[i];
-			wayIdx  = vals1[i];
+	// Phase 2: Find the best (lowest cost) option among all valid links
+	int lowestCost = 128000;
+	for (int i = 0; i < validLinkCount; i++) {
+		if (pathCosts[i] < lowestCost) {
+			lowestCost    = pathCosts[i];
+			bestLinkIndex = validLinkIndices[i];
 		}
 	}
 
-	if (wayIdx != -1) {
-		WayPoint* wp     = getWayPoint(buf.mWayPointIdx);
-		WayPoint* linkWP = getWayPoint(wp->mLinkIndices[wayIdx]);
-		Vector3f dir     = linkWP->mPosition - wp->mPosition;
-		f32 dist         = dir.length();
-		int iDist        = (int)dist + p1;
-		// end ternaries in this are fake for stack fixing, just FYI.
-		PRINT("\t way %d: next %d: sum is %d\n", wayIdx, linkWP->mIndex, iDist, iDist ? "yes" : "no", linkWP ? "yes" : "no");
+	// Debug output: Print information about the selected path
+	if (bestLinkIndex != -1) {
+		WayPoint* sourceWaypoint = getWayPoint(buf.mWayPointIdx);
+		WayPoint* targetWaypoint = getWayPoint(sourceWaypoint->mLinkIndices[bestLinkIndex]);
+
+		// Calculate actual distance between waypoints
+		Vector3f directionVector = targetWaypoint->mPosition - sourceWaypoint->mPosition;
+		f32 actualDistance       = directionVector.length();
+
+		// Add any additional cost penalty/bonus to the distance
+		int totalDistanceCost = (int)actualDistance + additionalCost;
+		PRINT("\t way %d: next %d: sum is %d\n", bestLinkIndex, targetWaypoint->mIndex, totalDistanceCost);
+
+		STACK_PAD_TERNARY(totalDistanceCost, 1);
+		STACK_PAD_TERNARY(targetWaypoint, 1);
 	}
 
 	STACK_PAD_VAR(4);
 
-	return wayIdx;
+	return bestLinkIndex;
 }
 
 /*
@@ -1424,116 +1652,142 @@ int PathFinder::selectWayOnyon(int p1, int goalType, PathFinder::Buffer& buf, in
  * Address:	800A27E4
  * Size:	00052C
  */
-int PathFinder::selectSecondBestWayOnyon(Vector3f& p1, int& p2, int goalType, PathFinder::Buffer& buf, int destWPIdx,
-                                         PathFinder::Buffer* bufferList, int bufIdx, bool p8)
+int PathFinder::selectSecondBestWayOnyon(Vector3f& curPos, int& secondBestCost, int goalType, PathFinder::Buffer& buf, int destWPIdx,
+                                         PathFinder::Buffer* bufferList, int bufIdx, bool ignoreClosedWaypoints)
 {
-	int vals2[8];
-	int vals1[8];
+	int pathCosts[8];        // Cost values for each valid link
+	int validLinkIndices[8]; // Direction indices forvalid links
+
 	STACK_PAD_VAR(1);
-	int bestWayIdx   = -1;
-	int valCount     = 0;
+
+	int bestLinkIndex  = -1; // Index of the best (lowest cost) link
+	int validLinkCount = 0;  // Number of valid links found
+
 	Vector3f wpPos   = getWayPoint(buf.mWayPointIdx)->mPosition;
 	Vector3f destPos = getWayPoint(destWPIdx)->mPosition;
 
-	for (int i = 0; i < 8; i++) {
-		if (!buf.check(i)) {
+	for (int dir = 0; dir < 8; dir++) {
+		// Skip if this direction is not available
+		if (!buf.check(dir)) {
 			continue;
 		}
 
 		WayPoint* currWP = getWayPoint(buf.mWayPointIdx);
-		if (!PathFinder::checkMode(PFMODE_AvoidWater) || !currWP->inWater()) {
-			int linkIdx = currWP->mLinkIndices[i];
-			if (linkIdx == buf.mWayPointIdx) {
+		if (!PathFinder::checkMode(PathFinderMode::AvoidWater) || !currWP->inWater()) {
+			int neighborIdx = currWP->mLinkIndices[dir];
+
+			// Skip self-referencing links
+			if (neighborIdx == buf.mWayPointIdx) {
 				continue;
 			}
 
-			if (linkIdx == -1) {
-				buf.resetFlag(i);
+			// Handle invalid links by resetting the flag
+			if (neighborIdx == -1) {
+				buf.resetFlag(dir);
 				continue;
 			}
-			if (!p8 && !getWayPoint(linkIdx)->mIsOpen) {
-				buf.resetFlag(i);
+
+			// Check if connected waypoint is closed (and we're not ignoring closed waypoints)
+			if (!ignoreClosedWaypoints && !getWayPoint(neighborIdx)->mIsOpen) {
+				buf.resetFlag(dir);
 				continue;
 			}
-			bool check = false;
+
+			// Check if this waypoint has already been visited to avoid cycles
+			bool isAlreadyVisited = false;
 			for (int j = 0; j < bufIdx; j++) {
-				if (bufferList[j].mWayPointIdx == linkIdx) {
-					check = true;
+				if (bufferList[j].mWayPointIdx == neighborIdx) {
+					isAlreadyVisited = true;
 					break;
 				}
 			}
 
-			if (currWP->mLinkInfos[i].getInfo(goalType) != -2 && !check) {
-				vals1[valCount] = i;
-				if (linkIdx == destWPIdx) {
-					return i;
+			// Add to valid links if it has valid pathfinding info and hasn't been visited
+			if (currWP->mLinkInfos[dir].getInfo(goalType) != -2 && !isAlreadyVisited) {
+				validLinkIndices[validLinkCount] = dir;
+
+				// If this link leads directly to destination, return immediately
+				if (neighborIdx == destWPIdx) {
+					return dir;
 				}
 
-				vals2[valCount] = currWP->mLinkInfos[i].getInfo(goalType);
-				valCount++;
+				// Store the pathfinding cost for this link
+				pathCosts[validLinkCount] = currWP->mLinkInfos[dir].getInfo(goalType);
+				validLinkCount++;
 			}
 		}
 	}
 
-	int minDist = 128000;
-	for (int i = 0; i < valCount; i++) {
-		if (vals2[i] < minDist) {
-			minDist    = vals2[i];
-			bestWayIdx = vals1[i];
+	// Phase 2: Find the best (lowest cost) option
+	int lowestCost = 128000;
+	for (int i = 0; i < validLinkCount; i++) {
+		if (pathCosts[i] < lowestCost) {
+			lowestCost    = pathCosts[i];
+			bestLinkIndex = validLinkIndices[i];
 		}
 	}
 
+	// Phase 3: Find the second-best option with geometric validation
 	int i;
-	int secondBestWayIdx = -1;
+	int secondBestLinkIndex = -1;
+	secondBestCost          = 128000;
 
-	p2 = 128000;
+	for (i = 0; i < validLinkCount; i++) {
+		// Skip the best option and only consider better costs than current second-best
+		if (i != bestLinkIndex && pathCosts[i] < secondBestCost) {
+			WayPoint* wp1 = getWayPoint(buf.mWayPointIdx);                       // Source waypoint
+			WayPoint* wp2 = getWayPoint(wp1->mLinkIndices[validLinkIndices[i]]); // Destination waypoint
 
-	for (i = 0; i < valCount; i++) {
-		if (i != bestWayIdx && vals2[i] < p2) {
-			WayPoint* wp     = getWayPoint(buf.mWayPointIdx);
-			WayPoint* linkWP = getWayPoint(wp->mLinkIndices[vals1[i]]);
-			bool check       = true;
+			bool geometricallyValid = true;
 
-			PRINT("wp(%d) = %s wp2(%d) = %s\n", wp->mIndex, wp->mIsOpen ? "on" : "off", linkWP->mIndex, linkWP->mIsOpen ? "on" : "off");
+			PRINT("wp(%d) = %s wp2(%d) = %s\n", wp1->mIndex, wp1->mIsOpen ? "on" : "off", wp2->mIndex, wp2->mIsOpen ? "on" : "off");
 
-			if (!wp->mIsOpen) {
-				Plane plane;
-				Vector3f dir = linkWP->mPosition - wp->mPosition;
-				dir.normalise();
-				plane.mNormal    = dir;
-				plane.mOffset    = dir.DP(wp->mPosition);
-				bool isAbove     = plane.dist(p1);
-				bool isLinkAbove = plane.dist(linkWP->mPosition);
+			if (!wp1->mIsOpen) {
+				// If source waypoint is closed, create plane at source facing target
+				Plane seperatingPlane;
+				Vector3f directionToTarget = wp2->mPosition - wp1->mPosition;
+				directionToTarget.normalise();
+				seperatingPlane.mNormal = directionToTarget;
+				seperatingPlane.mOffset = directionToTarget.DP(wp1->mPosition);
+
+				// Check if current position and target are on same side of plane
+				bool isAbove     = seperatingPlane.dist(curPos);
+				bool isLinkAbove = seperatingPlane.dist(wp2->mPosition);
 
 				if (isAbove != isLinkAbove) {
-					check = false;
+					geometricallyValid = false;
 					PRINT("another side !\n");
 				}
-			} else if (!linkWP->mIsOpen) {
-				Plane plane;
-				Vector3f dir = linkWP->mPosition - wp->mPosition;
-				dir.normalise();
-				plane.mNormal  = dir;
-				plane.mOffset  = dir.DP(linkWP->mPosition);
-				bool isAbove   = plane.dist(p1);
-				bool isWPAbove = plane.dist(wp->mPosition);
+			} else if (!wp2->mIsOpen) {
+				// If target waypoint is closed, create plane at target facing source
+				Plane separatingPlane;
+				Vector3f directionToTarget = wp2->mPosition - wp1->mPosition;
+				directionToTarget.normalise();
+				separatingPlane.mNormal = directionToTarget;
+				separatingPlane.mOffset = directionToTarget.DP(wp2->mPosition);
+
+				// Check if current position and source are on same side of plane
+				bool isAbove   = separatingPlane.dist(curPos);
+				bool isWPAbove = separatingPlane.dist(wp1->mPosition);
+
 				if (isAbove != isWPAbove) {
-					check = false;
+					geometricallyValid = false;
 					PRINT("another side !\n");
 				}
 			}
 
-			if (check) {
-				secondBestWayIdx = i;
-				p2               = vals2[i];
+			// Update second-best if this option passes geometric validation
+			if (geometricallyValid) {
+				secondBestLinkIndex = i;
+				secondBestCost      = pathCosts[i];
 			}
 		}
 	}
 
 	STACK_PAD_VAR(6);
 
-	PRINT("BEST IS %d : SECOND BEST IS %d\n", bestWayIdx, secondBestWayIdx);
-	return secondBestWayIdx;
+	PRINT("BEST IS %d : SECOND BEST IS %d\n", bestLinkIndex, secondBestLinkIndex);
+	return secondBestLinkIndex;
 }
 
 /*

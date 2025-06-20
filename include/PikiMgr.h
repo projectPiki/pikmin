@@ -237,16 +237,16 @@ struct PikiMgr : public MonoObjectMgr {
 	void refresh2d(Graphics&);
 
 	// 1 = free, 2 = formation, 4 = work
-	bool isUpdating(u16 flag) { return _70 & flag; }
-	void setUpdateFlag(u16 flag) { _70 |= flag; }
+	bool isUpdating(u16 flag) { return mUpdateFlag & flag; }
+	void setUpdateFlag(u16 flag) { mUpdateFlag |= flag; }
 
-	bool isRefreshing(u16 flag) { return _72 & flag; }
-	void setRefreshFlag(u16 flag) { _72 |= flag; }
+	bool isRefreshing(u16 flag) { return mRefreshFlag & flag; }
+	void setRefreshFlag(u16 flag) { mRefreshFlag |= flag; }
 
 	void hideAll()
 	{
-		_70 = 0;
-		_72 = 0;
+		mUpdateFlag  = 0;
+		mRefreshFlag = 0;
 	}
 
 	static bool meNukiMode;
@@ -269,8 +269,8 @@ struct PikiMgr : public MonoObjectMgr {
 	PaniMotionTable* mMotionTable; // _64
 	PikiProp* mPikiParms;          // _68
 	Navi* mNavi;                   // _6C
-	u16 _70;                       // _70, probably updateflag or refreshflag
-	u16 _72;                       // _72, probably updateflag or refreshflag
+	u16 mUpdateFlag;               // _70
+	u16 mRefreshFlag;              // _72
 };
 
 extern PikiMgr* pikiMgr;

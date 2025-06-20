@@ -155,20 +155,20 @@ struct ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
-		mActiveActor      = 0;
-		mDefaultActor     = 0;
-		mParentFirstChild = 0;
-		mAnimator.mMgr    = 0;
-		_19E              = 0;
-		mMeteorFlag       = 0;
-		_19F              = 0;
-		_19C              = 0;
-		_6C               = 0;
-		mAnimPlayState    = 1;
-		mColourAnimIndex  = -1;
-		mColourValue      = 0.0f;
-		mFlags            = CAF_ColourAnims;
-		mIsLeaf           = 0;
+		mActiveActor         = 0;
+		mDefaultActor        = 0;
+		mParentFirstChild    = 0;
+		mAnimator.mMgr       = 0;
+		_19E                 = 0;
+		mMeteorFlag          = 0;
+		mUsingRocketLightPos = 0;
+		_19C                 = 0;
+		_6C                  = 0;
+		mAnimPlayState       = 1;
+		mColourAnimIndex     = -1;
+		mColourValue         = 0.0f;
+		mFlags               = CAF_ColourAnims;
+		mIsLeaf              = 0;
 	}
 
 	void exitInstance();
@@ -204,15 +204,15 @@ struct ActorInstance : public CoreNode {
 	CinematicPlayer* mParentPlayer;            ///< _7C
 	f32 mColourValue;                          ///< _80
 	Vector3f mCenterPosition;                  ///< _84
-	Vector3f _90;                              ///< _90
+	Vector3f mActorWorldDir;                   ///< _90
 	Vector3f mJointPositions[9];               ///< _9C
-	Vector3f _108[4];                          ///< _108
+	Vector3f mRocketLightPosList[4];           ///< _108
 	zen::particleGenerator* mEffectList[9];    ///< _138
 	zen::particleGenerator* mEffectGrid[4][4]; ///< _15C
 	u8 _19C;                                   ///< _19C
 	u8 mMeteorFlag;                            ///< _19D
 	u8 _19E;                                   ///< _19E
-	u8 _19F;                                   ///< _19F
+	u8 mUsingRocketLightPos;                   ///< _19F
 };
 
 /**

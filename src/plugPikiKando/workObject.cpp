@@ -1179,13 +1179,13 @@ void Bridge::startAI(int)
 	}
 
 	mStartWaypoint = routeMgr->findNearestWayPointAll('test', mPosition);
-	mStartWaypoint->_40 |= 4;
+	mStartWaypoint->mFlags |= WayPointFlags::Destination;
 	mStartWaypoint->mPosition = getStartPos();
 	mStartWaypoint->setFlag(false);
 
 	Vector3f pos = getStagePos(mStageCount - 1);
 	mEndWaypoint = routeMgr->findNearestWayPointAll('test', pos);
-	mEndWaypoint->_40 |= 4;
+	mEndWaypoint->mFlags |= WayPointFlags::Destination;
 	mEndWaypoint->mPosition = pos;
 	mEndWaypoint->setFlag(false);
 

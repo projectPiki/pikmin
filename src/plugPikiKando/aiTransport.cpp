@@ -634,7 +634,7 @@ void ActTransport::doLift()
 			}
 			PRINT("start find route\n");
 			if (landOnly) {
-				PathFinder::setMode(1);
+				PathFinder::setMode(PathFinderMode::AvoidWater);
 			}
 
 			int routePoints = mPiki->findRoute(idx, goalWPIdx, false, false);
@@ -927,11 +927,11 @@ int ActTransport::moveGuruGuru()
 		WayPoint* wp    = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
 		Vector3f& wpPos = wp->mPosition;
 
-		if (wp->mIsOpen && !(wp->_40 & 2) && crPointOpen(mPathIndex + 1)) {
+		if (wp->mIsOpen && !(wp->mFlags & WayPointFlags::Pebble) && crPointOpen(mPathIndex + 1)) {
 			PRINT("curr = %d : currBase = %d\n", mPathIndex, mNextPathIndex);
 			PRINT("==== 開通ざました ====(%d) : %d (route %d)\n", wp->mIndex, mPathIndex,
 			      mPiki->mPathBuffers[mPathIndex].mWayPointIdx); // '==== opened ===='
-			PRINT("::: route=%s type=%s\n", (wp->mIsOpen) ? "on" : "*** off ***", (wp->_40 & 2) ? "pebble" : "---");
+			PRINT("::: route=%s type=%s\n", (wp->mIsOpen) ? "on" : "*** off ***", (wp->mFlags & WayPointFlags::Pebble) ? "pebble" : "---");
 			mState = STATE_Move;
 			return ACTOUT_Continue;
 		}
@@ -1169,7 +1169,7 @@ bool ActTransport::crPointOpen(int idx)
 		ERROR("gakkusi");
 	}
 
-	return wp->mIsOpen && !(wp->_40 & 2);
+	return wp->mIsOpen && !(wp->mFlags & WayPointFlags::Pebble);
 }
 
 /*
@@ -1325,7 +1325,8 @@ bool ActTransport::crMove()
 
 		WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
 		if (wp) {
-			PRINT("** ROUTE POINT %d is %s : %s\n", wp->mIndex, wp->mIsOpen ? "on" : "off", wp->_40 & 2 ? "pebble" : "-");
+			PRINT("** ROUTE POINT %d is %s : %s\n", wp->mIndex, wp->mIsOpen ? "on" : "off",
+			      wp->mFlags & WayPointFlags::Pebble ? "pebble" : "-");
 		}
 
 		mState             = STATE_Guru;
@@ -1567,7 +1568,7 @@ int ActTransport::moveToWayPoint()
 		}
 
 		WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
-		if (!wp->mIsOpen || (wp->_40 & 2)) {
+		if (!wp->mIsOpen || (wp->mFlags & WayPointFlags::Pebble)) {
 			Vector3f currPoint = crGetPoint(mPathIndex);
 			Vector3f nextPoint = crGetPoint(mPathIndex + 1);
 			Vector3f pathDir   = nextPoint - currPoint;

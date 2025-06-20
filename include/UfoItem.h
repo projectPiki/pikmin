@@ -82,7 +82,6 @@ struct UfoItem : public Suckable {
 
 		void setSpeed(f32 speed) { mSpeed = speed; }
 
-		// TODO: members
 		ShapeDynMaterials* mDyn; // _00
 		f32 mFrame;              // _04
 		f32 mSpeed;              // _08

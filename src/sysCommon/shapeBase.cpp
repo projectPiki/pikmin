@@ -93,18 +93,18 @@ void DispList::read(RandomAccessStream& stream)
  */
 void MtxGroup::read(RandomAccessStream& stream)
 {
-	mDependencyLength = stream.readInt();
-	if (mDependencyLength) {
-		mDependencyList = new int[mDependencyLength];
-		for (int i = 0; i < mDependencyLength; i++) {
-			mDependencyList[i] = stream.readShort();
+	mDepLength = stream.readInt();
+	if (mDepLength) {
+		mDepList = new int[mDepLength];
+		for (int i = 0; i < mDepLength; i++) {
+			mDepList[i] = stream.readShort();
 		}
 	}
 
-	mDispListLength = stream.readInt();
-	if (mDispListLength) {
-		mDispList = new DispList[mDispListLength];
-		for (int i = 0; i < mDispListLength; i++) {
+	mDispLength = stream.readInt();
+	if (mDispLength) {
+		mDispList = new DispList[mDispLength];
+		for (int i = 0; i < mDispLength; i++) {
 			mDispList[i].read(stream);
 		}
 	}
@@ -127,8 +127,8 @@ void Mesh::read(RandomAccessStream& stream)
 		for (int i = 0; i < mMtxGroupCount; i++) {
 			mMtxGroupList[i].read(stream);
 
-			if (mMtxGroupList[i].mDependencyLength > mMtxDepIdx) {
-				mMtxDepIdx = mMtxGroupList[i].mDependencyLength;
+			if (mMtxGroupList[i].mDepLength > mMtxDepIdx) {
+				mMtxDepIdx = mMtxGroupList[i].mDepLength;
 			}
 		}
 	}
@@ -766,11 +766,11 @@ void SceneData::getAnimInfo(CmdStream* stream)
  */
 void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 {
-	if (info->mFlags & 0x8000) {
+	if (info->mFlags & AnimDataFlags::MatrixCalculated) {
 		return;
 	}
 
-	if (!(info->mFlags & 0x8)) {
+	if (!(info->mFlags & AnimDataFlags::AllScaleStatic)) {
 		f32* scale = (f32*)&srt.mScale;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& param = info->mScale[i];
@@ -784,12 +784,12 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 			scale[i] = mScaleDataBlock->mData[offset];
 		}
 
-		if ((info->mFlags & 7) == 7) {
-			info->mFlags |= 8;
+		if ((info->mFlags & AnimDataFlags::AllIndividualScaleStatic) == AnimDataFlags::AllIndividualScaleStatic) {
+			info->mFlags |= AnimDataFlags::AllScaleStatic;
 		}
 	}
 
-	if (!(info->mFlags & 0x80)) {
+	if (!(info->mFlags & AnimDataFlags::AllRotationStatic)) {
 		f32* rotate = (f32*)&srt.mRotation;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& param = info->mRotation[i];
@@ -803,12 +803,12 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 			rotate[i] = mRotateDataBlock->mData[offset];
 		}
 
-		if ((info->mFlags & 0x70) == 0x70) {
-			info->mFlags |= 0x80;
+		if ((info->mFlags & AnimDataFlags::AllIndividualRotationStatic) == AnimDataFlags::AllIndividualRotationStatic) {
+			info->mFlags |= AnimDataFlags::AllRotationStatic;
 		}
 	}
 
-	if (!(info->mFlags & 0x800)) {
+	if (!(info->mFlags & AnimDataFlags::AllTranslationStatic)) {
 		f32* transl = (f32*)&srt.mTranslation;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& param = info->mTranslation[i];
@@ -822,8 +822,8 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 			transl[i] = mTranslationDataBlock->mData[offset];
 		}
 
-		if ((info->mFlags & 0x700) == 0x700) {
-			info->mFlags |= 0x800;
+		if ((info->mFlags & AnimDataFlags::AllIndividualTranslationStatic) == AnimDataFlags::AllIndividualTranslationStatic) {
+			info->mFlags |= AnimDataFlags::AllTranslationStatic;
 		}
 	}
 }
@@ -843,7 +843,8 @@ void AnimData::makeAnimSRT(int boneId, Matrix4f* parent, Matrix4f* output, AnimD
 	Matrix4f mtx;
 	bool check = true;
 	Matrix4f* boneTransform;
-	if ((info->mFlags & 0x777) != 0x777 && mAnimInfoList[frameNum].mCachedMtxBlock) {
+	if ((info->mFlags & AnimDataFlags::AllComponentsStatic) != AnimDataFlags::AllComponentsStatic
+	    && mAnimInfoList[frameNum].mCachedMtxBlock) {
 		AnimCacheInfo* cache = (AnimCacheInfo*)mAnimInfoList[frameNum].mCachedMtxBlock;
 		if (cache->mBoneMtxList[boneId]) {
 			check = false;
@@ -858,11 +859,11 @@ void AnimData::makeAnimSRT(int boneId, Matrix4f* parent, Matrix4f* output, AnimD
 	if (check) {
 		SRT& srt = info->mSRT;
 		extractSRT(info->mSRT, boneId, info, pos);
-		if ((info->mFlags & 0x777) == 0x777) {
+		if ((info->mFlags & AnimDataFlags::AllComponentsStatic) == AnimDataFlags::AllComponentsStatic) {
 			boneTransform = &info->mMtx;
-			if (!(info->mFlags & 0x8000)) {
+			if (!(info->mFlags & AnimDataFlags::MatrixCalculated)) {
 				boneTransform->makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
-				info->mFlags |= 0x8000;
+				info->mFlags |= AnimDataFlags::MatrixCalculated;
 			}
 		} else {
 			output->makeConcatSRT(parent, *boneTransform, srt);
@@ -941,7 +942,7 @@ void AnimData::checkMask()
 			continue;
 		}
 
-		if ((mAnimInfo[i].mFlags & 0x777) != 0x777) {
+		if ((mAnimInfo[i].mFlags & AnimDataFlags::AllComponentsStatic) != AnimDataFlags::AllComponentsStatic) {
 			mAnimJointIndices[i] = animJointCount++;
 		} else {
 			mAnimJointIndices[i] = 0;
@@ -1484,12 +1485,12 @@ void AnimDck::getAnimInfo(CmdStream* stream)
 void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 {
 	STACK_PAD_VAR(2);
-	if (anim->mFlags & 0x8000) {
+	if (anim->mFlags & AnimDataFlags::MatrixCalculated) {
 		return;
 	}
 
 	// APPLY SCALE
-	if (!(anim->mFlags & 8)) {
+	if (!(anim->mFlags & AnimDataFlags::AllScaleStatic)) {
 		// loop for x y and z
 		f32* s = (f32*)&srt.mScale;
 		for (int i = 0; i < 3; i++) {
@@ -1506,13 +1507,14 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 				break;
 			}
 		}
-		if ((anim->mFlags & 7) == 7) {
-			anim->mFlags |= 8;
+
+		if ((anim->mFlags & AnimDataFlags::AllIndividualScaleStatic) == AnimDataFlags::AllIndividualScaleStatic) {
+			anim->mFlags |= AnimDataFlags::AllScaleStatic;
 		}
 	}
 
 	// APPLY ROTATION
-	if (!(anim->mFlags & 0x80)) {
+	if (!(anim->mFlags & AnimDataFlags::AllRotationStatic)) {
 		// loop for x y and z
 		f32* r           = (f32*)&srt.mRotation;
 		AnimParam* param = anim->mRotation;
@@ -1530,13 +1532,14 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 				break;
 			}
 		}
-		if ((anim->mFlags & 0x70) == 0x70) {
-			anim->mFlags |= 0x80;
+
+		if ((anim->mFlags & AnimDataFlags::AllIndividualRotationStatic) == AnimDataFlags::AllIndividualRotationStatic) {
+			anim->mFlags |= AnimDataFlags::AllRotationStatic;
 		}
 	}
 
 	// APPLY TRANSLATION
-	if (!(anim->mFlags & 0x800)) {
+	if (!(anim->mFlags & AnimDataFlags::AllTranslationStatic)) {
 		// loop for x y and z
 		f32* t           = (f32*)&srt.mTranslation;
 		AnimParam* param = anim->mTranslation;
@@ -1554,8 +1557,9 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 				break;
 			}
 		}
-		if ((anim->mFlags & 0x700) == 0x700) {
-			anim->mFlags |= 0x800;
+
+		if ((anim->mFlags & AnimDataFlags::AllIndividualTranslationStatic) == AnimDataFlags::AllIndividualTranslationStatic) {
+			anim->mFlags |= AnimDataFlags::AllTranslationStatic;
 		}
 	}
 }
@@ -1569,10 +1573,10 @@ void AnimDck::makeAnimSRT(int a, Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* a
 {
 	SRT& srt = anim->mSRT;
 	extractSRT(srt, a, anim, time);
-	if ((anim->mFlags & 0x777) == 0x777) {
-		if (!(anim->mFlags & 0x8000)) {
+	if ((anim->mFlags & AnimDataFlags::AllComponentsStatic) == AnimDataFlags::AllComponentsStatic) {
+		if (!(anim->mFlags & AnimDataFlags::MatrixCalculated)) {
 			anim->mMtx.makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
-			anim->mFlags |= 0x8000;
+			anim->mFlags |= AnimDataFlags::MatrixCalculated;
 		}
 		PSMTXConcat(mtx1->mMtx, anim->mMtx.mMtx, mtx2->mMtx);
 	} else {
@@ -1728,20 +1732,20 @@ void ShapeDynMaterials::updateContext()
  */
 BaseShape::BaseShape()
 {
-	mName           = "noname";
-	mAnimMatrices   = nullptr;
-	mAnimMatrixId   = 0;
-	mSystemFlags    = 0;
-	_13C            = 0;
-	_2AC            = 1;
-	mVtxMatrixCount = 0;
-	mVtxMatrixList  = nullptr;
-	mMaterialCount  = 0;
-	mMaterialList   = nullptr;
-	mTevInfoCount   = 0;
-	mTevInfoList    = nullptr;
-	mMeshCount      = 0;
-	mMeshList       = nullptr;
+	mName             = "noname";
+	mAnimMatrices     = nullptr;
+	mAnimMatrixId     = 0;
+	mSystemFlags      = 0;
+	mVertexCacheFlags = VertexCacheFlags::None;
+	_2AC              = 1;
+	mVtxMatrixCount   = 0;
+	mVtxMatrixList    = nullptr;
+	mMaterialCount    = 0;
+	mMaterialList     = nullptr;
+	mTevInfoCount     = 0;
+	mTevInfoList      = nullptr;
+	mMeshCount        = 0;
+	mMeshList         = nullptr;
 
 	mEnvelopeCount = 0;
 	mEnvelopeList  = nullptr;
@@ -3267,13 +3271,13 @@ void AnimFrameCacher::cacheFrameSpace(int p1, AnimCacheInfo* info)
 
 	while (true) {
 		if (mCache->largestBlockFree() > texSize) {
-			FrameCacher* alloc = (FrameCacher*)mCache->mallocL(texSize);
-			alloc->_18         = &alloc->_1C[0];
-			alloc->_14         = &alloc->_1C[p1];
-			alloc->_0C         = &info->mCachedMtxBlock;
+			FrameCacher* alloc      = (FrameCacher*)mCache->mallocL(texSize);
+			alloc->mBoneMtxList     = &alloc->mBoneMatrices[0];
+			alloc->mBoneMatricesEnd = &alloc->mBoneMatrices[p1];
+			alloc->mInfo            = &info->mCachedMtxBlock;
 
 			for (int i = 0; i < p1; i++) {
-				alloc->_18[i] = 0;
+				alloc->mBoneMtxList[i] = 0;
 			}
 
 			info->mCachedMtxBlock = alloc;
@@ -3429,7 +3433,7 @@ void BaseShape::makeNormalIndexes(u16* indices)
 		for (int j = 0; j < mesh->mMtxGroupCount; j++) {
 			MtxGroup* group    = &mesh->mMtxGroupList[j];
 			DispList* dispList = group->mDispList;
-			for (int k = 0; k < group->mDispListLength; k++) {
+			for (int k = 0; k < group->mDispLength; k++) {
 				u8* data    = (u8*)dispList->mData;
 				u32 dataLen = dispList->mDataLength;
 

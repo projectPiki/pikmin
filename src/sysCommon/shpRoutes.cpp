@@ -30,7 +30,7 @@ RoutePoint::RoutePoint()
 	mLink.initCore("");
 	_20     = 8.0f;
 	mIndex  = 0;
-	mState  = 1;
+	mIsOpen = 1;
 	mRadius = 10.0f;
 }
 
@@ -75,7 +75,7 @@ void RoutePoint::loadini(CmdStream* s)
 			sscanf(s->getToken(true), "%f", &mPosition.y);
 			sscanf(s->getToken(true), "%f", &mPosition.z);
 		} else if (s->isToken("state")) {
-			sscanf(s->getToken(true), "%d", &mState);
+			sscanf(s->getToken(true), "%d", &mIsOpen);
 		} else if (s->isToken("width")) {
 			sscanf(s->getToken(true), "%f", &mRadius);
 		}
@@ -122,7 +122,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 			gfx.useTexture(nullptr, 0);
 			gfx.setColour(Colour(255, 255, 255, alpha), true);
 			gfx.drawLine(vec1 + vec3, vec2 + vec3);
-			f32 ratio = (!point->mState || !link->mPoint) ? 0.2f : 1.0f;
+			f32 ratio = (!point->mIsOpen || !link->mPoint) ? 0.2f : 1.0f;
 			gfx.setColour(Colour(int(mColour.r * ratio), int(mColour.g * ratio), int(mColour.b * ratio), alpha), true);
 
 			Vector3f vec4 = (vec1 + vec2) * 0.5f + vec3;
@@ -181,9 +181,9 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
  * Address:	80037138
  * Size:	000060
  */
-void RouteGroup::render2d(Graphics& gfx, int& p3)
+void RouteGroup::render2d(Graphics& gfx, int& textHeight)
 {
-	gfx.texturePrintf(gsys->mConsFont, 0, p3 += 12, "route [ %s ]", mRouteName);
+	gfx.texturePrintf(gsys->mConsFont, 0, textHeight += 12, "route [ %s ]", mRouteName);
 }
 
 /*
@@ -274,7 +274,7 @@ void RouteGroup::saveini(char* name, RandomAccessStream& s)
 		point->mIndex = idx++;
 		s.print("\n%s\tpoint {\n", name);
 		s.print("%s\t\tindex\t%d\n", name, point->mIndex);
-		s.print("%s\t\tstate\t%d\n", name, point->mState);
+		s.print("%s\t\tstate\t%d\n", name, point->mIsOpen);
 		s.print("%s\t\tpos\t%f %f %f\n", name, point->mPosition.x, point->mPosition.y, point->mPosition.z);
 		s.print("%s\t\twidth\t%f\n", name, point->mRadius);
 		s.print("%s\t\t}\n", name);

@@ -92,11 +92,11 @@ PikiMgr::PikiMgr(Navi* navi)
 	mMotionTable = PaniPikiAnimator::createMotionTable();
 	memStat->end("piki mtable");
 
-	_58 = 0;
-	_54 = 0;
-	_5C = 0;
-	_70 = 0x1 | 0x2 | 0x4;
-	_72 = 0x1 | 0x2 | 0x4;
+	_58          = 0;
+	_54          = 0;
+	_5C          = 0;
+	mUpdateFlag  = 0x1 | 0x2 | 0x4;
+	mRefreshFlag = 0x1 | 0x2 | 0x4;
 }
 
 /*

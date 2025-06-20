@@ -193,7 +193,7 @@ void Slime::drawShape(Graphics& gfx)
 	doAnimation();
 	gfx.useMatrix(Matrix4f::ident, 0);
 	if (_3D4 > 0.0f) {
-		mShapeObject->mShape->_13C |= 3;
+		mShapeObject->mShape->mVertexCacheFlags |= (VertexCacheFlags::VertexList | VertexCacheFlags::NormalList);
 		mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	}
 }

@@ -1143,21 +1143,21 @@ void DGXGraphics::initMesh(Shape* model)
 	GXSetVtxAttrFmtv(GX_VTXFMT0, meshVAT);
 	GXSetVtxDescv(meshVCD);
 	if (model->mVertexList) {
-		if (model->_13C & 0x1) {
+		if (model->mVertexCacheFlags & VertexCacheFlags::VertexList) {
 			DCStoreRange(model->mVertexList, model->mVertexCount * sizeof(Vector3f));
 		}
 		GXSetArray(GX_VA_POS, model->mVertexList, sizeof(Vector3f));
 	}
 
 	if (model->mNormalList) {
-		if (model->_13C & 0x2) {
+		if (model->mVertexCacheFlags & VertexCacheFlags::NormalList) {
 			DCStoreRange(model->mNormalList, model->mNormalCount * sizeof(Vector3f));
 		}
 		GXSetArray(GX_VA_NRM, model->mNormalList, sizeof(Vector3f));
 	}
 
 	if (model->mNBTList) {
-		if (model->_13C & 0x4) {
+		if (model->mVertexCacheFlags & VertexCacheFlags::NBTList) {
 			DCStoreRange(model->mNBTList, model->mNBTCount * sizeof(NBT));
 		}
 	}
@@ -1165,7 +1165,7 @@ void DGXGraphics::initMesh(Shape* model)
 	int i;
 	for (i = 0; i < model->mTotalActiveTexCoords; i++) {
 		if (model->mTexCoordList[i]) {
-			if (model->_13C & (1 << (i + 5))) {
+			if (model->mVertexCacheFlags & (1 << (i + 5))) {
 				DCStoreRange(model->mTexCoordList[i], model->mTexCoordCounts[i] * sizeof(Vector2f));
 			}
 			GXSetArray((GXAttr)(GX_VA_TEX0 + i), model->mTexCoordList[i], sizeof(Vector2f));
@@ -1173,14 +1173,14 @@ void DGXGraphics::initMesh(Shape* model)
 	}
 
 	if (model->mVtxColorList) {
-		if (model->_13C & 0x10) {
+		if (model->mVertexCacheFlags & VertexCacheFlags::ColorList) {
 			DCStoreRange(model->mVtxColorList, model->mVertexCount * sizeof(Colour));
 		}
 
 		GXSetArray(GX_VA_CLR0, model->mVtxColorList, sizeof(Colour));
 	}
 
-	model->_13C = 0;
+	model->mVertexCacheFlags = VertexCacheFlags::None;
 
 	sendTxIndx      = false;
 	sendMtxIndx     = true;
@@ -1304,12 +1304,12 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 
 	for (int i = 0; i < mesh.mMtxGroupCount; i++) {
 		MtxGroup& group = mesh.mMtxGroupList[i];
-		for (int j = 0; j < group.mDependencyLength; j++) {
-			if (group.mDependencyList[j] == -1) {
+		for (int j = 0; j < group.mDepLength; j++) {
+			if (group.mDepList[j] == -1) {
 				continue;
 			}
 
-			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDependencyList[j]];
+			VtxMatrix& vtxMtx = model->mVtxMatrixList[group.mDepList[j]];
 			if (model->mCurrentAnimation->mData) {
 				if (vtxMtx.mHasPartialWeights) {
 					useMatrixQuick(model->getAnimMatrix(vtxMtx.mIndex), j);
@@ -1321,7 +1321,7 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 			}
 		}
 
-		for (int j = 0; j < group.mDispListLength; j++) {
+		for (int j = 0; j < group.mDispLength; j++) {
 			DispList& list = group.mDispList[j];
 			setCullFront((list.mFlags & 3) ^ mCullFlip);
 			gsys->mPolygonCount += list.mFaceCount;
@@ -2167,9 +2167,10 @@ void Shape::optimize()
 		mTexCoordList[0][0].y = 0.0f;
 	}
 
-	_13C = 0x1 | 0x2 | 0x4 | 0x10;
+	mVertexCacheFlags
+	    = VertexCacheFlags::VertexList | VertexCacheFlags::NormalList | VertexCacheFlags::NBTList | VertexCacheFlags::ColorList;
 	for (int i = 0; i < mTotalActiveTexCoords; i++) {
-		_13C |= (1 << (i + 5));
+		mVertexCacheFlags |= (1 << (i + 5));
 	}
 
 	if (!mMeshCount) {
@@ -2179,7 +2180,7 @@ void Shape::optimize()
 	for (int i = 0; i < mMeshCount; i++) {
 		for (int j = 0; j < mMeshList[i].mMtxGroupCount; j++) {
 			DispList* list = mMeshList[i].mMtxGroupList[j].mDispList;
-			for (int k = 0; k < mMeshList[i].mMtxGroupList[j].mDispListLength; k++) {
+			for (int k = 0; k < mMeshList[i].mMtxGroupList[j].mDispLength; k++) {
 				DCStoreRange(list->mData, list->mDataLength);
 				list++; // why.
 			}

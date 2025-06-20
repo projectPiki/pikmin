@@ -1854,13 +1854,13 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	 * @brief The state of the action.
 	 */
 	enum State {
-		STATE_Go   = 0,
-		STATE_Wait = 1,
-		STATE_Lift = 2,
-		STATE_Move = 3,
-		STATE_Guru = 4,
-		STATE_Goal = 5,
-		STATE_Put  = 6,
+		STATE_Go   = 0, // Moving towards the pellet to pick it up
+		STATE_Wait = 1, // Waiting for pellet to settle before carrying
+		STATE_Lift = 2, // Lifting/grabbing the pellet
+		STATE_Move = 3, // Moving along the path while carrying
+		STATE_Guru = 4, // Spinning in place when path is blocked
+		STATE_Goal = 5, // Moving towards the final goal position
+		STATE_Put  = 6, // Putting down the pellet at destination
 		STATE_Jump = 7,
 	};
 
