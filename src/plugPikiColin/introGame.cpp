@@ -34,12 +34,13 @@ struct QuittingModeState : public ModeState {
 	{
 	}
 
-	virtual ModeState* update(u32& p1) // _08
+	virtual ModeState* update(u32& result) // _08
 	{
 		PRINT("quitter updating!\n");
-		p1 = 0;
+		result = UPDATE_NONE;
 		return this;
 	}
+
 	virtual void postUpdate() // _10
 	{
 		if (!gsys->resetPending()) {
@@ -66,15 +67,18 @@ struct IntroModeState : public ModeState {
 		mController = c->mController;
 	}
 
-	virtual ModeState* update(u32& p1) // _08
+	virtual ModeState* update(u32& result) // _08
 	{
-		p1 = 1;
+		result = UPDATE_AI;
+
 		if (!gameflow.mMoviePlayer->mIsActive) {
 			PRINT("quitting!\n");
 			return new QuittingModeState(mSection);
 		}
+
 		return this;
 	}
+
 	virtual void postRender(Graphics&) { } // _0C
 
 	// _00     = VTBL
@@ -105,8 +109,8 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 		int size = 0x500000;
 		gsys->mHeaps[SYSHEAP_Movie].init("movie", 2, new u8[size], size);
-		gameflow.mMoviePlayer->startMovie(1, 0, nullptr, nullptr, nullptr, -1, true);
-		gameflow.mMoviePlayer->startMovie(2, 0, nullptr, nullptr, nullptr, -1, true);
+		gameflow.mMoviePlayer->startMovie(DEMOID_OpeningIntroPt1, 0, nullptr, nullptr, nullptr, -1, true);
+		gameflow.mMoviePlayer->startMovie(DEMOID_OpeningIntroPt2, 0, nullptr, nullptr, nullptr, -1, true);
 		gsys->setFade(1.0f, 3.0f);
 		STACK_PAD_TERNARY(size, 1);
 	}

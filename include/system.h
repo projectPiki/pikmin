@@ -37,18 +37,18 @@ struct MemInfo;
 struct CacheInfo;
 
 /**
- * @brief For mHeaps array in StdSystem.
+ * @brief Used to seperate the memory arenas held in StdSystem.
  */
 enum SystemHeapType {
-	SYSHEAP_Sys     = 0,
-	SYSHEAP_Ovl     = 1,
-	SYSHEAP_App     = 2,
-	SYSHEAP_Load    = 3,
-	SYSHEAP_Teki    = 4,
-	SYSHEAP_Movie   = 5,
-	SYSHEAP_Message = 6,
-	SYSHEAP_Lang    = 7,
-	SYSHEAP_COUNT, // 8
+	SYSHEAP_Sys     = 0, // General system heap
+	SYSHEAP_Ovl     = 1, // Overlay heap
+	SYSHEAP_App     = 2, // Application heap
+	SYSHEAP_Load    = 3, // Load heap
+	SYSHEAP_Teki    = 4, // Enemy heap
+	SYSHEAP_Movie   = 5, // Movie heap
+	SYSHEAP_Message = 6, // Message heap
+	SYSHEAP_Lang    = 7, // Language heap
+	SYSHEAP_COUNT,       // 8, total number of heaps
 };
 
 /**

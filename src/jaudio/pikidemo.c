@@ -39,12 +39,36 @@ static CmdQueue demo_q;
 static u8 parts_bright_table[MAX_UFO_PARTS] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 typedef struct DemoStatus {
-	u8 _00;   // _00
-	u8 _01;   // _01
-	u8 _02;   // _02
-	u8 _03;   // _03
-	u8 _04;   // _04
-	s16* _08; // _08
+	u8 mPlayStartSound; // _00, Whether to play system sound when cutscene starts (0=no, 1=yes)
+
+	/**
+	 * - 0: Stop all BGM immediately
+	 * - 1: Keep current BGM playing
+	 * - 2: Fade in over 15 frames to 1% volume
+	 * - 3: Fade in over 8 frames to 0% volume
+	 * - 4: Fade out both BGM channels over 15 frames
+	 * - 5: Fade in over 30 frames to 50% volume
+	 */
+	u8 mBgmFadeMode; // _01
+
+	/**
+	 * - 0: Normal gameplay events continue
+	 * - 1: Pause main track, set pause counter for resuming later
+	 * - 2: Initialize all events, reset formation sound, block certain demo events
+	 */
+	u8 mGameplayFlags; // _02
+
+	/**
+	 * - Bits 0-3 (0x0F): Audio/BGM ID number (1-10 map to different tracks)
+	 * - Bit 5 (0x20): Special flag to prevent audio stopping
+	 * - Bits 0-6 (0x7F): Combined ID field
+	 * - Bit 7 (0x80): Demo sound vs BGM flag (1=demo sound, 0=BGM)
+	 * - Special values: 0x40 = no audio, 0x00 = default
+	 */
+	u8 mAudioConfig; // _03
+
+	u8 mSequenceFlags; // _04, Music sequence/MML activation mode
+	s16* mTimedEvents; // _08, Pointer to timed event sequence data
 } DemoStatus;
 
 static s16 demo1[]  = { 4, -6, 2000, -1 };
@@ -198,7 +222,7 @@ BOOL Jac_DemoWalkCheck()
 	}
 
 	switch (current_demo_no) {
-	case DEMOID_Unk89:
+	case DEMOID_GenericLanding:
 	case DEMOID_Unk100:
 	case DEMOID_LandingTutorial:
 	case DEMOID_LandingForest:
@@ -218,7 +242,7 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 {
 	if (Jac_DemoCheck()) {
 		switch (current_demo_no) {
-		case DEMOID_Unk87:
+		case DEMOID_GenericDayEnd:
 		case DEMOID_DayEndTutorial:
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
@@ -226,7 +250,7 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 			return FALSE;
 		}
 
-		if (DEMO_STATUS[current_demo_no]._02 == 2) {
+		if (DEMO_STATUS[current_demo_no].mGameplayFlags == 2) {
 			return FALSE;
 		}
 	}
@@ -243,7 +267,7 @@ static void DoSequence(u32 cinID, u32 a2)
 	u32 flag;
 	u16* REF_flag;
 	u32* REF_a2 = &a2;
-	u32* data   = (u32*)DEMO_STATUS[cinID]._08;
+	u32* data   = (u32*)DEMO_STATUS[cinID].mTimedEvents;
 	STACK_PAD_VAR(2);
 	if (data == NULL) {
 		demo_seq_active = -1;
@@ -267,12 +291,12 @@ static void DoSequence(u32 cinID, u32 a2)
 				break;
 			}
 		} else if (REF_flag[1] == 0xfffa) {
-			if (DEMO_STATUS[cinID]._03 & 0x80) {
-				Jac_StartDemoSound(DEMO_STATUS[cinID]._03 & 0xf);
+			if (DEMO_STATUS[cinID].mAudioConfig & 0x80) {
+				Jac_StartDemoSound(DEMO_STATUS[cinID].mAudioConfig & 0xf);
 			} else {
 				demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
-				Jam_WritePortAppDirect(demo_bgm_seqp, 0, DEMO_STATUS[cinID]._03 & 0xf);
-				current_seq_bgm = DEMO_STATUS[cinID]._03 & 0xf;
+				Jam_WritePortAppDirect(demo_bgm_seqp, 0, DEMO_STATUS[cinID].mAudioConfig & 0xf);
+				current_seq_bgm = DEMO_STATUS[cinID].mAudioConfig & 0xf;
 			}
 		} else {
 			if (REF_flag[1] == 0xffff) {
@@ -338,9 +362,9 @@ void Jac_StartDemo(u32 cinID)
 	if (cinID >= DEMOID_CHECK_BGM_CAT) {
 		switch (cinID) {
 		case DEMOID_Unk80:
-		case DEMOID_Unk87:
+		case DEMOID_GenericDayEnd:
 		case DEMOID_ChalDayEndLast:
-		case DEMOID_Unk89:
+		case DEMOID_GenericLanding:
 		case DEMOID_Unk90:
 		case DEMOID_Unk91:
 		case DEMOID_Unk92:
@@ -410,8 +434,8 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_Unk24:
 	case DEMOID_CollectPartTutorial:
 		if (parts_bright_table[demo_parts_id] == 0) {
-			status = &DEMO_STATUS[DEMOID_Unk101];
-			cinID  = DEMOID_Unk101;
+			status = &DEMO_STATUS[DEMOID_ShipUpgradeNonSparkling];
+			cinID  = DEMOID_ShipUpgradeNonSparkling;
 		}
 		break;
 
@@ -421,8 +445,8 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_ChalDayEndYakushima:
 	case DEMOID_ChalDayEndLast:
 		if (Jac_TellChgMode()) {
-			status = &DEMO_STATUS[DEMOID_Unk102];
-			cinID  = DEMOID_Unk102;
+			status = &DEMO_STATUS[DEMOID_GenericDayEndChal];
+			cinID  = DEMOID_GenericDayEndChal;
 		}
 		break;
 
@@ -430,7 +454,7 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_LandingForest:
 	case DEMOID_LandingCaveLast:
 	case DEMOID_LandingYakushima:
-	case DEMOID_Unk89:
+	case DEMOID_GenericLanding:
 		if (demo_onyon_num == 3) {
 			status = &DEMO_STATUS[DEMOID_Unk100];
 			cinID  = DEMOID_Unk100;
@@ -441,13 +465,13 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_DayEndForest:
 	case DEMOID_DayEndCaveLast:
 	case DEMOID_DayEndYakushima:
-	case DEMOID_Unk87:
+	case DEMOID_GenericDayEnd:
 		Jac_PlayOrimaSe(JACORIMA_PikiHit);
 		Jac_Delete_CurrentBgmWave();
 		break;
 	}
 
-	if (status->_00) {
+	if (status->mPlayStartSound) {
 		Jac_PlaySystemSe(JACSYS_Unk25);
 	}
 
@@ -462,7 +486,7 @@ void Jac_StartDemo(u32 cinID)
 		Jac_PrepareDemo(cinID);
 	}
 
-	switch (status->_01) {
+	switch (status->mBgmFadeMode) {
 	case 0:
 		Jac_StopBgm(0);
 		Jac_StopBgm(1);
@@ -484,7 +508,7 @@ void Jac_StartDemo(u32 cinID)
 		break;
 	}
 
-	switch (status->_02) {
+	switch (status->mGameplayFlags) {
 	case 0:
 		break;
 	case 1:
@@ -529,17 +553,17 @@ void Jac_StartDemo(u32 cinID)
 		}
 	}
 
-	s32 flag = status->_03 & 0x7f;
+	s32 flag = status->mAudioConfig & 0x7f;
 	if (flag != 0x40 && (flag >= 0x40 || flag != 0)) {
-		if (status->_03 & 0x80) {
-			if (status->_08 == NULL) {
-				Jac_StartDemoSound(status->_03 & 0xf);
+		if (status->mAudioConfig & 0x80) {
+			if (status->mTimedEvents == NULL) {
+				Jac_StartDemoSound(status->mAudioConfig & 0xf);
 			}
 		} else {
-			if (status->_03 & 0xf && status->_08 == NULL) {
+			if (status->mAudioConfig & 0xf && status->mTimedEvents == NULL) {
 				demo_bgm_seqp = Jam_GetTrackHandle(0x30000);
-				Jam_WritePortAppDirect(demo_bgm_seqp, 0, status->_03 & 0xf);
-				current_seq_bgm = status->_03 & 0xf;
+				Jam_WritePortAppDirect(demo_bgm_seqp, 0, status->mAudioConfig & 0xf);
+				current_seq_bgm = status->mAudioConfig & 0xf;
 			}
 		}
 	}
@@ -547,7 +571,7 @@ void Jac_StartDemo(u32 cinID)
 	demo_mml_active = -1;
 	demo_seq_active = 0;
 
-	switch (status->_04) {
+	switch (status->mSequenceFlags) {
 	case 0:
 		break;
 	case 1:
@@ -610,7 +634,7 @@ BOOL Jac_DemoFrame(int id)
 void Jac_BgmAnimEndRecover()
 {
 	DemoStatus* status = &DEMO_STATUS[current_demo_no];
-	switch (status->_01) {
+	switch (status->mBgmFadeMode) {
 	case 0:
 	case 1:
 		break;
@@ -632,7 +656,7 @@ void Jac_BgmAnimEndRecover()
 void Jac_BgmAnimEndStop()
 {
 	DemoStatus* status = &DEMO_STATUS[current_demo_no];
-	int flag           = status->_03;
+	int flag           = status->mAudioConfig;
 	if (flag && !(flag & 0x20)) {
 		if (flag & 0x80) {
 			Jac_StopDemoSound(flag & 0xf);
@@ -690,7 +714,7 @@ void __Jac_FinishDemo()
 	}
 
 	DemoStatus* status = &DEMO_STATUS[current_demo_no];
-	switch (status->_01) {
+	switch (status->mBgmFadeMode) {
 	case 0:
 	case 1:
 		break;
@@ -703,7 +727,7 @@ void __Jac_FinishDemo()
 		break;
 	}
 
-	switch (status->_02) {
+	switch (status->mGameplayFlags) {
 	case 2:
 		Jac_Orima_Formation(0, 0);
 		break;
@@ -714,7 +738,7 @@ void __Jac_FinishDemo()
 		break;
 	}
 
-	int flag = status->_03;
+	int flag = status->mAudioConfig;
 	if (flag && !(flag & 0x20)) {
 		if (flag & 0x80) {
 			Jac_StopDemoSound(flag & 0xf);
@@ -750,7 +774,7 @@ void Jac_FinishDemo(void)
 		case DEMOID_Unk24: // collect final ship part?
 			break;
 
-		case DEMOID_Unk87:
+		case DEMOID_GenericDayEnd:
 		case DEMOID_DayEndTutorial:
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
@@ -803,17 +827,17 @@ void __Prepare_BGM(u32 cinID)
 	if (cinID >= DEMOID_CHECK_BGM_CAT) {
 		switch (cinID) {
 		case DEMOID_Unk80:
-		case DEMOID_Unk87:
+		case DEMOID_GenericDayEnd:
 		case DEMOID_ChalDayEndLast:
-		case DEMOID_Unk89:
+		case DEMOID_GenericLanding:
 		case DEMOID_Unk90:
 		case DEMOID_Unk91:
 		case DEMOID_Unk92:
 		case DEMOID_Unk93:
 		case DEMOID_Unk94:
 		case DEMOID_Unk100:
-		case DEMOID_Unk101:
-		case DEMOID_Unk102:
+		case DEMOID_ShipUpgradeNonSparkling:
+		case DEMOID_GenericDayEndChal:
 		case DEMOID_GoodEndingTakeOff:
 		case DEMOID_NeutralEndingLeaveOK:
 			break;
@@ -832,7 +856,7 @@ void __Prepare_BGM(u32 cinID)
 		return;
 	}
 
-	flag = status->_03;
+	flag = status->mAudioConfig;
 	switch (flag & 0x7F) {
 	case 0x40:
 	case 0x0:
@@ -898,17 +922,17 @@ void Jac_PrepareDemo(u32 cinID)
 	if (cinID >= DEMOID_CHECK_BGM_CAT) {
 		switch (cinID) {
 		case DEMOID_Unk80:
-		case DEMOID_Unk87:
+		case DEMOID_GenericDayEnd:
 		case DEMOID_ChalDayEndLast:
-		case DEMOID_Unk89:
+		case DEMOID_GenericLanding:
 		case DEMOID_Unk90:
 		case DEMOID_Unk91:
 		case DEMOID_Unk92:
 		case DEMOID_Unk93:
 		case DEMOID_Unk94:
 		case DEMOID_Unk100:
-		case DEMOID_Unk101:
-		case DEMOID_Unk102:
+		case DEMOID_ShipUpgradeNonSparkling:
+		case DEMOID_GenericDayEndChal:
 		case DEMOID_GoodEndingTakeOff:
 		case DEMOID_NeutralEndingLeaveOK:
 			break;

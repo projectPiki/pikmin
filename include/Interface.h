@@ -9,6 +9,30 @@ struct NewPikiGameSetupSection;
 struct TitleSetupSection;
 
 /**
+ * @brief Game movie interface message commands.
+ */
+enum GameMovieCommand {
+	MOVIECMD_StartTutorial     = 0,  // Start tutorial window based on context
+	MOVIECMD_Unused            = 1,  // Unused/error command
+	MOVIECMD_ForceDayEnd       = 2,  // Force day to end
+	MOVIECMD_HideHUD           = 3,  // Hide game HUD frames
+	MOVIECMD_ShowHUD           = 4,  // Show game HUD frames
+	MOVIECMD_GameEndCondition  = 5,  // Handle extinction or Olimar down
+	MOVIECMD_ForceResults      = 6,  // Force results screen
+	MOVIECMD_StartMovie        = 7,  // Start movie with navi visibility control
+	MOVIECMD_EndMovie          = 8,  // End current movie
+	MOVIECMD_FadeOut           = 9,  // Fade screen to black
+	MOVIECMD_FadeIn            = 10, // Fade screen from black
+	MOVIECMD_CleanupDayEnd     = 11, // Clean up day end state
+	MOVIECMD_StartTotalResults = 12, // Start final score screen
+	MOVIECMD_SpecialDayEnd     = 13, // Special day end trigger
+	MOVIECMD_SetInputEnabled   = 14, // Enable/disable gameplay input
+	// 15 is missing
+	MOVIECMD_StageFinish        = 16, // Challenge mode stage complete
+	MOVIECMD_CreateSettingsMenu = 17, // Create settings menu
+};
+
+/**
  * @brief TODO
  */
 struct GameInterface {
@@ -27,17 +51,17 @@ struct GameInterface {
 struct GameMovieInterface : public GameInterface {
 	GameMovieInterface(NewPikiGameSetupSection* section)
 	{
-		_08        = 32;
-		mMesgCount = 0;
-		mSection   = section;
+		mMessageLimit = 32;
+		mMessageCount = 0;
+		mSection      = section;
 	}
 
 	/**
 	 * @brief TODO
 	 */
 	struct SimpleMessage {
-		int mCommand; // _00
-		int _04;      // _04
+		int mMessageId; // _00
+		int mData;      // _04
 	};
 
 	/**
@@ -55,19 +79,20 @@ struct GameMovieInterface : public GameInterface {
 		bool mIsPlaying;    // _28
 	};
 
-	virtual void message(int a1, int a2) // _08
+	virtual void message(int msgId, int data) // _08
 	{
-		if (mMesgCount >= _08) {
+		if (mMessageCount >= mMessageLimit) {
 			return;
 		}
-		mMesg[mMesgCount].mCommand = a1;
-		mMesg[mMesgCount]._04      = a2;
 
-		mMesgCount++;
+		mMesg[mMessageCount].mMessageId = msgId;
+		mMesg[mMessageCount].mData      = data;
+
+		mMessageCount++;
 	}
 	virtual void movie(int id, int a1, Creature* obj, Vector3f* pos, Vector3f* dir, u32 flags, bool a2) // _0C
 	{
-		if (mComplexMesgCount >= _08) {
+		if (mComplexMesgCount >= mMessageLimit) {
 			return;
 		}
 		mCompMesg[mComplexMesgCount].mMovieIdx = id;
@@ -94,9 +119,9 @@ struct GameMovieInterface : public GameInterface {
 
 	// _00 = VTBL
 	NewPikiGameSetupSection* mSection; //_04
-	int _08;                           // _08
+	int mMessageLimit;                 // _08
 	SimpleMessage mMesg[32];           // _0C
-	int mMesgCount;                    // _10C
+	int mMessageCount;                 // _10C
 	ComplexMessage mCompMesg[32];      // _110
 	int mComplexMesgCount;             // _690
 };

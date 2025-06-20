@@ -38,9 +38,16 @@
 #include "Font.h"
 #include "DebugLog.h"
 
+/// New piki game section instance
 static NewPikiGameSetupSection* npgss;
+
+/// Core gameplay section instance
 static GameCoreSection* gamecore;
+
+/// (UNUSED), but probably the currently selected movie index
 static int movieIndex;
+
+/// UI windows for various game states
 static zen::DrawCMresult* challengeWindow;
 static zen::DrawGameOver* gameoverWindow;
 static zen::DrawCountDown* countWindow;
@@ -48,32 +55,50 @@ static zen::ogScrPauseMgr* pauseWindow;
 static zen::ogScrResultMgr* resultWindow;
 static zen::DrawFinalResult* totalWindow;
 static zen::ogScrFileChkSelMgr* memcardWindow;
+
+/// Whether menu overlay is active
 static bool menuOn;
+
+/// Whether game info HUD should be displayed
 static bool gameInfoOn;
+
+/// Whether game info HUD is currently visible
 static bool gameInfoIn;
+
+/// UI windows for the main menu & tutorial
 static zen::ogScrMenuMgr* menuWindow;
 static zen::ogScrTutorialMgr* tutorialWindow;
+
+/// Whether or not the demo has sound enabled
 static bool hasDemoSound;
+
+/// Whether or not to suppress HUD frame display
 static bool dontShowFrame;
 
+/// Day end result documents table
 static int resultTable[16];
 
-/*
+/**
+ * @brief Error function for newPikiGame.cpp, stripped in retail.
+ *
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
 DEFINE_ERROR()
 
-/*
+/**
+ * @brief Print function for newPikiGame.cpp, stripped in retail.
+ *
+ *
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("newPikiGame")
+DEFINE_PRINT("newPikiGame");
 
 /**
- * @brief TODO
+ * @brief State for quitting the game and returning to menu.
  */
 struct QuittingGameModeState : public ModeState {
 	QuittingGameModeState(BaseGameSection* c)
@@ -81,31 +106,32 @@ struct QuittingGameModeState : public ModeState {
 	{
 	}
 
-	virtual ModeState* update(u32& a) // _08
+	virtual ModeState* update(u32& result) // _08
 	{
 		PRINT("quitter updating!\n");
-		a = 0;
+		result = UPDATE_NONE;
 		return this;
 	}
+
 	virtual void postUpdate() // _10
 	{
+		// Trigger soft reset when system operations are complete
 		if (!gsys->mSysOpPending) {
 			PRINT("sending softreset!\n");
 			gamecore->exitStage();
 			gameflow.mNextOnePlayerSectionID = mSection->mNextSectionId;
-			gameflow.mLevelIndex             = 6;
+			gameflow.mLevelIndex             = ONEPLAYER_MapSelect;
 			Jac_SceneExit(13, 0);
 			gsys->softReset();
 		}
 	}
 
-	// _00     = VTBL?
-	// _00-_04 = ModeState?
-	// TODO: members
+	///< 00     = VTBL
+	///< 00-_04 = ModeState
 };
 
 /**
- * @brief TODO
+ * @brief State for displaying either of the game over states
  */
 struct MessageModeState : public ModeState {
 	MessageModeState(BaseGameSection* c, bool flag)
@@ -114,8 +140,8 @@ struct MessageModeState : public ModeState {
 		mMessageTimer = flag ? 5.0f : 0.5f;
 	}
 
-	virtual ModeState* update(u32&);       // _08
-	virtual void postRender(Graphics& gfx) // _0C
+	virtual ModeState* update(u32& result); // _08
+	virtual void postRender(Graphics& gfx)  // _0C
 	{
 		Matrix4f mtx;
 		if (gameoverWindow) {
@@ -124,15 +150,15 @@ struct MessageModeState : public ModeState {
 		}
 	}
 
-	// _00     = VTBL?
-	// _00-_04 = ModeState?
-	f32 _08;           // _08
-	int mMessagePhase; // _0C
-	f32 mMessageTimer; // _10
+	///< 00     = VTBL
+	///< 00-_04 = ModeState
+	f32 _UNUSED08;     ///< 08, unused
+	int mMessagePhase; ///< _0C, current phase of message sequence
+	f32 mMessageTimer; ///< _10, timer for message transitions
 };
 
 /**
- * @brief TODO
+ * @brief State for handling end of day sequence
  */
 struct DayOverModeState : public ModeState {
 	DayOverModeState(BaseGameSection* c, int flag)
@@ -143,22 +169,25 @@ struct DayOverModeState : public ModeState {
 		gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 		gamecore->mDrawGameInfo->upperFrameOut(0.5f, true);
 		gamecore->mDrawGameInfo->lowerFrameOut(0.5f, true);
+
 		if (flag == 0) {
 			gamecore->cleanupDayEnd();
 
+			// Play day end cutscene if not last day and haven't collected all parts
 			if (gameflow.mWorldClock.mCurrentDay < MAX_DAYS && playerState->getCurrParts() != MAX_UFO_PARTS && !gameflow.mIsChallengeMode) {
 				mSection->mCurrentFade = -0.1f;
-				gameflow.mMoviePlayer->startMovie(28, 0, nullptr, nullptr, nullptr, -1, true);
+				gameflow.mMoviePlayer->startMovie(DEMOID_DayEnd, 0, nullptr, nullptr, nullptr, -1, true);
 			}
 
 			mSection->mTargetFade = 1.0f;
 			mSection->mFadeSpeed  = 0.5f;
 		}
+
 		mState = flag;
 	}
 
-	virtual ModeState* update(u32&);       // _08
-	virtual void postRender(Graphics& gfx) // _0C
+	virtual ModeState* update(u32& result); // _08
+	virtual void postRender(Graphics& gfx)  // _0C
 	{
 		Matrix4f mtx;
 		if (tutorialWindow) {
@@ -178,15 +207,19 @@ struct DayOverModeState : public ModeState {
 	ModeState* initialisePhaseThree();
 	ModeState* initialisePhaseFour();
 
-	// _00     = VTBL?
-	// _00-_04 = ModeState?
-	int mState; // _08
+	///< 00     = VTBL
+	///< 00-_04 = ModeState
+	int mState; ///< _08, current state of the day end sequence
 };
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	0000E4
+ *
+ * @brief Controls visibility of game HUD frames.
+ * @param set Whether to show (true) or hide (false) the frames
+ * @param time Fade duration in seconds
  */
 static void showFrame(bool set, f32 time)
 {
@@ -209,10 +242,12 @@ static void showFrame(bool set, f32 time)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80056B00
  * Size:	000118
+ *
+ * @brief Creates and initializes the debug menu window.
  */
 static void createMenuWindow()
 {
@@ -237,10 +272,12 @@ static void createMenuWindow()
 	gsys->attachObjs();
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000040
+ *
+ * @brief Destroys the debug menu window and frees resources.
  */
 static void deleteMenuWindow()
 {
@@ -249,12 +286,17 @@ static void deleteMenuWindow()
 	menuWindow                  = nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80056C18
  * Size:	0001B0
+ *
+ * @brief Creates and displays a tutorial window.
+ * @param tutorialId Tutorial message ID to display
+ * @param partId Part collection ID for audio (if applicable)
+ * @param hasAudio Whether tutorial has associated audio
  */
-static void createTutorialWindow(int a1, int a2, bool flag)
+static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 {
 	gsys->startLoading(nullptr, false, 0);
 	int heapold          = gsys->mPrevAllocType != 0;
@@ -262,18 +304,18 @@ static void createTutorialWindow(int a1, int a2, bool flag)
 	int heapid           = gsys->getHeapNum();
 	PRINT("using movie heap!\n");
 
-	hasDemoSound = (a2 >= 0 && flag);
+	hasDemoSound = (partId >= 0 && hasAudio);
 
 	if (hasDemoSound) {
-		Jac_StartPartsFindDemo(a2 + 1, flag);
+		Jac_StartPartsFindDemo(partId + 1, hasAudio);
 	} else {
-		Jac_StartTextDemo(a1);
+		Jac_StartTextDemo(tutorialId);
 	}
 	gsys->setHeap(5);
 
 	int oldtype    = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
 	tutorialWindow = new zen::ogScrTutorialMgr;
-	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)a1);
+	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)tutorialId);
 
 	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
@@ -286,10 +328,12 @@ static void createTutorialWindow(int a1, int a2, bool flag)
 	gsys->attachObjs();
 }
 
-/*
+/**
  * --INFO--
  * Address:	80056DC8
  * Size:	0000BC
+ *
+ * @brief Destroys the tutorial window and restores game state.
  */
 static void deleteTutorialWindow()
 {
@@ -298,6 +342,7 @@ static void deleteTutorialWindow()
 	} else {
 		Jac_FinishTextDemo();
 	}
+
 	gameflow.mIsTutorialActive = 0;
 	if (!dontShowFrame && gameInfoOn && !gameInfoIn) {
 		if (!playerState->isTutorial()) {
@@ -311,22 +356,27 @@ static void deleteTutorialWindow()
 	tutorialWindow              = 0;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	0000A8
+ *
+ * @brief Handles the tutorial window update logic.
+ * @param unused
+ * @param controller Player input controller
  */
-static void handleTutorialWindow(u32&, Controller* controller)
+static void handleTutorialWindow(u32& unused, Controller* controller)
 {
 	if (tutorialWindow && tutorialWindow->update(controller) == zen::ogScrTutorialMgr::Status_4) {
 		if (gameflow.mMoviePlayer->mIsActive) {
 			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 		}
+
 		deleteTutorialWindow();
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80056E84
  * Size:	000118
@@ -334,18 +384,18 @@ static void handleTutorialWindow(u32&, Controller* controller)
 BaseGameSection::BaseGameSection()
     : Node("")
 {
-	mNextSectionId    = 6;
-	mActiveMenu       = 0;
-	mCurrentModeState = 0;
-	mNextModeState    = 0;
+	mNextSectionId    = ONEPLAYER_MapSelect;
+	mActiveMenu       = nullptr;
+	mCurrentModeState = nullptr;
+	mNextModeState    = nullptr;
 	mController       = new Controller;
-	mUpdateFlags      = 0;
+	mUpdateFlags      = UPDATE_NONE;
 	mCurrentFade      = 0.0f;
 	mTargetFade       = 1.0f;
 	mFadeSpeed        = 0.5f;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80056F9C
  * Size:	000244
@@ -355,6 +405,7 @@ void BaseGameSection::draw(Graphics& gfx)
 	Matrix4f mtx;
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 
+	// Update fade transition
 	if (mCurrentFade < mTargetFade) {
 		mCurrentFade += mFadeSpeed * gsys->getFrameTime();
 		if (mCurrentFade > mTargetFade) {
@@ -367,6 +418,7 @@ void BaseGameSection::draw(Graphics& gfx)
 		}
 	}
 
+	// Draw fade overlay
 	if (mCurrentFade < 1.0f) {
 		f32 fade = mCurrentFade;
 		if (fade < 0.0f) {
@@ -380,6 +432,7 @@ void BaseGameSection::draw(Graphics& gfx)
 		gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	}
 
+	// Draw level banner if active
 	if (gameflow.mLevelBannerTexture && gameflow.mLevelBannerFadeValue > 0.0f) {
 		gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
 		if (gameflow.mLevelBannerFadeValue < 0.0f) {
@@ -389,19 +442,20 @@ void BaseGameSection::draw(Graphics& gfx)
 			gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
 		}
 	}
+
 	mCurrentModeState->postUpdate();
 }
 
-/*
+/**
  * --INFO--
  * Address:	800571E4
  * Size:	000128
  */
-ModeState* IntroGameModeState::update(u32& a)
+ModeState* IntroGameModeState::update(u32& result)
 {
-	a = 1;
+	result = UPDATE_AI;
 
-	handleTutorialWindow(a, mSection->mController);
+	handleTutorialWindow(result, mSection->mController);
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
 		gameInfoOn = true;
@@ -409,47 +463,56 @@ ModeState* IntroGameModeState::update(u32& a)
 
 		return new RunningModeState(mSection);
 	}
+
 	return this;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005730C
  * Size:	000640
  */
-ModeState* RunningModeState::update(u32& a)
+ModeState* RunningModeState::update(u32& result)
 {
-	a = 7;
+	result = UPDATE_ALL; // Enable all update types
+
+	// Check for day end during movie playback
 	if (!gameflow.mMoviePlayer->mIsActive && !gameflow.mIsTutorialActive && gameflow.mIsDayEndActive) {
-		a &= ~1;
+		result &= ~UPDATE_AI; // Disable AI updates during day end
 		PRINT("*-------------------------------- DAY END !!!!!!!!!!!!!!  --------------------------------*\n");
 		mSection->mNextSectionId = gameflow.mLevelIndex;
 		return new DayOverModeState(mSection, 0);
 	}
 
+	// Trigger day end when time expires
 	if (!gameflow.mIsDayEndActive && !gameflow.mMoviePlayer->mIsActive
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
 		gameflow.mIsGameplayInputEnabled = 0;
 		gameflow.mIsDayEndTriggered      = 1;
 	}
 
+	// Process day end trigger
 	if (gameflow.mIsDayEndTriggered && !gameflow.mIsUiOverlayActive) {
 		gameflow.mIsDayEndActive    = 1;
 		gameflow.mIsDayEndTriggered = 0;
+
+		// Special handling for final day
 		if (playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 			if (playerState->happyEndable()) {
 				flowCont._244 = 1;
-				gameflow.mGameInterface->message(0, 28);
+				gameflow.mGameInterface->message(MOVIECMD_StartTutorial, 28);
 			} else {
-				gameflow.mGameInterface->message(0, 28);
+				gameflow.mGameInterface->message(MOVIECMD_StartTutorial, 28);
 			}
 		}
 	}
 
 	bool mesgsPending = false;
-	if (static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mMesgCount) {
+	if (static_cast<GameMovieInterface*>(gameflow.mGameInterface)->mMessageCount) {
 		mesgsPending = true;
 	}
+
+	// Handle pause menu
 	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow.mDisableController
 	    && !gameflow.mMoviePlayer->mIsActive) {
 
@@ -464,7 +527,7 @@ ModeState* RunningModeState::update(u32& a)
 		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUiOverlayActive
 		           && !mesgsPending) {
-			gameflow.mGameInterface->message(17, 0);
+			gameflow.mGameInterface->message(MOVIECMD_CreateSettingsMenu, 0);
 			mCachedPauseFlag            = !!gameflow.mIsUiOverlayActive;
 			gameflow.mIsUiOverlayActive = 1;
 		}
@@ -472,11 +535,11 @@ ModeState* RunningModeState::update(u32& a)
 
 	if (flowCont.mGameEndCondition) {
 		if (flowCont.mGameEndCondition == 2) {
-			mSection->mNextSectionId = 7;
+			mSection->mNextSectionId = ONEPLAYER_NewPikiGame;
 			return new MessageModeState(mSection, false);
 		}
 		if (flowCont.mGameEndCondition == 1) {
-			mSection->mNextSectionId = 7;
+			mSection->mNextSectionId = ONEPLAYER_NewPikiGame;
 			return new MessageModeState(mSection, true);
 		}
 	}
@@ -487,37 +550,38 @@ ModeState* RunningModeState::update(u32& a)
 
 	if (menuWindow) {
 		int state = menuWindow->update(mController);
-		if (state == 0) {
-			a &= ~1;
-		} else if (state == 3) {
+		if (state == zen::ogScrMenuMgr::STATE_ActiveDisplay) {
+			result &= ~UPDATE_AI; // Disable AI updates when menu is active
+		} else if (state == zen::ogScrMenuMgr::STATE_TransitionToInactive) {
 			deleteMenuWindow();
 		}
 	}
 
-	handleTutorialWindow(a, mController);
+	handleTutorialWindow(result, mController);
 
 	int state = pauseWindow->update(mController);
-	if (state == 0) {
-		a &= ~1;
-	} else if (state == 6) {
+	if (state == zen::ogScrPauseMgr::PAUSE_Unk0) {
+		result &= ~UPDATE_AI; // Disable AI updates when pause menu is active
+	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk6) {
 		gamecore->forceDayEnd();
 		gameflow.mIsGameplayInputEnabled = 0;
 		gameflow.mIsDayEndTriggered      = 1;
 		gameflow.mIsUiOverlayActive      = mCachedPauseFlag;
 
-	} else if (state == 7) {
-		mSection->mNextSectionId = 1;
+	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk7) {
+		mSection->mNextSectionId = ONEPLAYER_CardSelect;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection);
-	} else if (state == 5) {
+	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk5) {
 		showFrame(true, 0.5f);
 		gameflow.mIsUiOverlayActive = mCachedPauseFlag;
 		seSystem->playSysSe(SYSSE_UNPAUSE);
 	}
+
 	return this;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80057950
  * Size:	000078
@@ -531,7 +595,7 @@ void IntroGameModeState::postRender(Graphics& gfx)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	800579C8
  * Size:	000294
@@ -547,7 +611,7 @@ void RunningModeState::postRender(Graphics& gfx)
 		gamecore->draw1D(gfx);
 	}
 
-	if (gameflow.mDisableController == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & 4) {
+	if (gameflow.mDisableController == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
 		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
 		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
 		if (time >= 0.0f && time < 1.0f) {
@@ -577,12 +641,12 @@ void RunningModeState::postRender(Graphics& gfx)
 	pauseWindow->draw(gfx);
 }
 
-/*
+/**
  * --INFO--
  * Address:	80057C5C
  * Size:	000360
  */
-ModeState* MessageModeState::update(u32& a)
+ModeState* MessageModeState::update(u32& result)
 {
 	if (flowCont.mGameEndCondition == 2) {
 		switch (mMessagePhase) {
@@ -622,7 +686,7 @@ ModeState* MessageModeState::update(u32& a)
 			gamecore->cleanupDayEnd();
 			if (!gameflow.mIsChallengeMode) {
 				if (gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
-					gameflow.mMoviePlayer->startMovie(52, 0, nullptr, nullptr, nullptr, -1, true);
+					gameflow.mMoviePlayer->startMovie(DEMOID_OliDownDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
 					if (gameoverWindow) {
 						gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
 					}
@@ -646,17 +710,17 @@ ModeState* MessageModeState::update(u32& a)
 	return this;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80057FBC
  * Size:	000474
  */
-ModeState* DayOverModeState::update(u32& a)
+ModeState* DayOverModeState::update(u32& result)
 {
 	STACK_PAD_VAR(1);
-	a = 1;
+	result = 1;
 
-	handleTutorialWindow(a, mSection->mController);
+	handleTutorialWindow(result, mSection->mController);
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
 		ModeState* state = nullptr;
@@ -684,7 +748,7 @@ ModeState* DayOverModeState::update(u32& a)
 	}
 
 	if (challengeWindow && challengeWindow->update(mSection->mController)) {
-		mSection->mNextSectionId = 6;
+		mSection->mNextSectionId = ONEPLAYER_MapSelect;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection);
 	}
@@ -706,9 +770,9 @@ ModeState* DayOverModeState::update(u32& a)
 
 			if (!memcardWindow) {
 				if (stat == 8) {
-					mSection->mNextSectionId = 1;
+					mSection->mNextSectionId = ONEPLAYER_CardSelect;
 				} else {
-					mSection->mNextSectionId = 6;
+					mSection->mNextSectionId = ONEPLAYER_MapSelect;
 				}
 				gsys->setFade(0.0f, 3.0f);
 				return new QuittingGameModeState(mSection);
@@ -722,7 +786,7 @@ ModeState* DayOverModeState::update(u32& a)
 			totalWindow = nullptr;
 		} else {
 			totalWindow              = nullptr;
-			mSection->mNextSectionId = 11;
+			mSection->mNextSectionId = ONEPLAYER_GameExit;
 			gsys->setFade(0.0f, 3.0f);
 			return new QuittingGameModeState(mSection);
 		}
@@ -757,7 +821,7 @@ ModeState* DayOverModeState::update(u32& a)
 	return this;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80058430
  * Size:	000250
@@ -795,7 +859,7 @@ void DayOverModeState::makeTotalScoreWindow()
 	totalWindow = new zen::DrawFinalResult(record);
 }
 
-/*
+/**
  * --INFO--
  * Address:	80058680
  * Size:	000368
@@ -863,7 +927,7 @@ ModeState* DayOverModeState::initialisePhaseOne()
 	return nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	800589E8
  * Size:	000410
@@ -923,9 +987,9 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	} else {
 		if (playerState->happyEndable()) {
 			flowCont._244 = 1;
-			gameflow.mMoviePlayer->startMovie(114, 0, nullptr, nullptr, nullptr, -1, true);
+			gameflow.mMoviePlayer->startMovie(DEMOID_NeutralEndingLeaveOK, 0, nullptr, nullptr, nullptr, -1, true);
 		} else {
-			gameflow.mMoviePlayer->startMovie(73, 0, nullptr, nullptr, nullptr, -1, true);
+			gameflow.mMoviePlayer->startMovie(DEMOID_BadEndingFailEscape, 0, nullptr, nullptr, nullptr, -1, true);
 			makeTotalScoreWindow();
 		}
 	}
@@ -938,7 +1002,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	return nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80058DF8
  * Size:	000258
@@ -982,7 +1046,7 @@ ModeState* DayOverModeState::initialisePhaseThree()
 	return nullptr;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80059050
  * Size:	00013C
@@ -999,7 +1063,7 @@ ModeState* DayOverModeState::initialisePhaseFour()
 		gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);
 		makeTotalScoreWindow();
 	} else {
-		mSection->mNextSectionId = 11;
+		mSection->mNextSectionId = ONEPLAYER_GameExit;
 		gsys->setFade(0.0f, 3.0f);
 		return new QuittingGameModeState(mSection); // When this happens, the heap isnt restored, potential bug?
 	}
@@ -1253,7 +1317,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		if (!mIsInitialSetup) {
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
 				if (!gameflow.mDisableController && !gameflow.mIsUiOverlayActive) {
-					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & 0x2 && !playerState->isTutorial()) {
+					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & UPDATE_WORLD_CLOCK && !playerState->isTutorial()) {
 						f32 tod = gameflow.mWorldClock.mTimeOfDay;
 						gameflow.mWorldClock.update(1.0f);
 						f32 tod2 = gameflow.mWorldClock.mTimeOfDay;
@@ -1261,7 +1325,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 					Node::update();
 				}
 				gamecore->mDrawGameInfo->update();
-				if (mUpdateFlags & 1 && !(gameflow.mDemoFlags & 0x80)) {
+				if (mUpdateFlags & UPDATE_AI && !(gameflow.mDemoFlags & 0x80)) {
 					gamecore->updateAI();
 				}
 			}
@@ -1383,36 +1447,36 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	void menuPlayMovie(Menu&);
 	void menuPauseMovie(Menu&);
 
-	// _00     = VTBL
-	// _00-_44 = BaseGameSection
-	int _44;                       // _44
-	u8 _48[8];                     // _48
-	Menu* mSectionMenu;            // _50
-	Controller* mSecondController; // _54
-	Font* mGameFont;               // _58
-	Camera mGameCamera;            // _5C
-	f32 mCameraFarClip;            // _3A4
-	Colour _3A8;                   // _3a8, unused
-	Colour _3AC[2];                // _3AC, unused
-	Colour _3B4[2];                // _3B4, unused
-	Colour _3BC[2];                // _3BC, unused
-	f32 _3C4[4];                   // _3C4, unused
-	bool mIsInitialSetup;          // _3D4
-	int mUpdateCountdown;          // _3D8
-	int _3DC;                      // _3DC
+	///< 00     = VTBL
+	///< 00-_44 = BaseGameSection
+	int _44;                       ///< 44
+	u8 _48[8];                     ///< 48
+	Menu* mSectionMenu;            ///< 50
+	Controller* mSecondController; ///< 54
+	Font* mGameFont;               ///< 58
+	Camera mGameCamera;            ///< 5C
+	f32 mCameraFarClip;            ///< 3A4
+	Colour _3A8;                   ///< 3a8, unused
+	Colour _3AC[2];                ///< 3AC, unused
+	Colour _3B4[2];                ///< 3B4, unused
+	Colour _3BC[2];                ///< 3BC, unused
+	f32 _3C4[4];                   ///< 3C4, unused
+	bool mIsInitialSetup;          ///< 3D4
+	int mUpdateCountdown;          ///< 3D8
+	int _3DC;                      ///< 3DC
 };
 
-/*
+/**
  * --INFO--
  * Address:	8005918C
  * Size:	0000C0
  */
 void GameMovieInterface::parseMessages()
 {
-	for (int i = 0; i < mMesgCount; i++) {
+	for (int i = 0; i < mMessageCount; i++) {
 		parse(mMesg[i]);
 	}
-	mMesgCount = 0;
+	mMessageCount = 0;
 
 	for (int i = 0; i < mComplexMesgCount; i++) {
 		parse(mCompMesg[i]);
@@ -1421,68 +1485,71 @@ void GameMovieInterface::parseMessages()
 	mComplexMesgCount = 0;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8005924C
  * Size:	000428
  */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
-	int index = msg._04;
-	switch (msg.mCommand) {
-	case 0:
+	int data = msg.mData;
+	switch (msg.mMessageId) {
+	case MOVIECMD_StartTutorial:
+		// Data from here uses the DEMOID_* define (cutscene ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
-		int a  = -1;
-		bool b = false;
-		if (index == 17) {
+		int partId  = -1;
+		bool hasAudio = false;
+		if (data == DEMOID_ShipUpgrade) {
 			if (gameflow.mMovieInfoNum == -1) {
 				if (gameflow.mMovieType == -1) {
 					gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
 					return;
 				} else if (gameflow.mMovieType == 0) {
-					index = 26;
+					data = DEMOID_ShipUpgradeLast;
 				} else {
-					index = 24;
+					data = DEMOID_Unk24;
 				}
+
 			} else if (gameflow.mMovieType == 0) {
-				index = gameflow.mMovieInfoNum + 92;
+				data = gameflow.mMovieInfoNum + 92;
 			} else if (gameflow.mMovieType == 1) {
-				index = gameflow.mMovieInfoNum + 62;
-				b     = false;
-				a     = gameflow.mMovieInfoNum;
+				data = gameflow.mMovieInfoNum + 62;
+				hasAudio    = false;
+				partId    = gameflow.mMovieInfoNum;
 			} else if (gameflow.mMovieType == 2) {
 				PRINT("showing power up message (%d)!!\n", gameflow.mMovieInfoNum + 122);
 				int id = gameflow.mMovieInfoNum + 122;
 				if (gameflow.mMovieInfoNum == DEMOID_ShipUpgradeLast) {
 					dontShowFrame = true;
-					index         = 27;
+					data          = 27;
 				} else {
-					index = id;
+					data = id;
 				}
 			} else if (gameflow.mMovieType == 3) {
-				a     = gameflow.mMovieInfoNum;
-				b     = true;
-				index = gameflow.mMovieInfoNum + 32;
+				partId    = gameflow.mMovieInfoNum;
+				hasAudio    = true;
+				data = gameflow.mMovieInfoNum + 32;
 			}
 		}
-		createTutorialWindow(index, a, b);
+
+		createTutorialWindow(data, partId, hasAudio);
 		gameflow.mIsUiOverlayActive = 1;
 		break;
-	case 1:
+	case MOVIECMD_Unused:
 		ERROR("SHOULD NOT GET THIS COMMAND!!!\n");
 		break;
-	case 2:
+	case MOVIECMD_ForceDayEnd:
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = 1;
 		break;
-	case 3:
+	case MOVIECMD_HideHUD:
 		showFrame(false, 0.5f);
 		break;
-	case 4:
+	case MOVIECMD_ShowHUD:
 		showFrame(true, 0.5f);
 		break;
-	case 5:
-		if (index == 0) {
+	case MOVIECMD_GameEndCondition:
+		if (data == 0) {
 			if (flowCont.mGameEndCondition == 1) {
 				if (!gameflow.mIsChallengeMode && gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
 					gameflow.mMoviePlayer->startMovie(DEMOID_ExtDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
@@ -1510,56 +1577,56 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 			PRINT("got navi dead flag!!\n");
 		}
 		break;
-	case 6:
+	case MOVIECMD_ForceResults:
 		PRINT("got FORCE RESULTS SCREEN !!!\n");
 		flowCont.mGameEndCondition = 0;
 		break;
-	case 7:
-		bool check = (index & 0x80000000) != 0;
-		gamecore->startMovie(index & 0x7FFFFFFF, check);
+	case MOVIECMD_StartMovie:
+		bool check = (data & 0x80000000) != 0;
+		gamecore->startMovie(data & 0x7FFFFFFF, check);
 		PRINT("%s\n", check ? "HIDING NAVI!!!" : "not hiding!");
 		break;
-	case 8:
-		gamecore->endMovie(index);
+	case MOVIECMD_EndMovie:
+		gamecore->endMovie(data);
 		break;
-	case 9:
+	case MOVIECMD_FadeOut:
 		mSection->mTargetFade = 0.0f;
 		mSection->mFadeSpeed  = 4.5f;
 		break;
-	case 10:
+	case MOVIECMD_FadeIn:
 		mSection->mCurrentFade = 0.0f;
 		mSection->mTargetFade  = 1.0f;
 		mSection->mFadeSpeed   = 2.5f;
 		break;
-	case 11:
+	case MOVIECMD_CleanupDayEnd:
 		PRINT("MESSAGE CLEANUPDAYEND!!!!\n");
 		PRINT("wwwwwhhhhyyyyyy??????|!!!\n");
 		gamecore->cleanupDayEnd();
 		break;
-	case 12:
+	case MOVIECMD_StartTotalResults:
 		PRINT("starting total results!!\n");
 		totalWindow->start();
 		Jac_SceneSetup(6, 1);
 		break;
-	case 13:
+	case MOVIECMD_SpecialDayEnd:
 		gamecore->forceDayEnd();
 		gameflow.mIsDayEndTriggered = 1;
 		flowCont._244               = 2;
 		break;
-	case 14:
-		gameflow.mIsGameplayInputEnabled = index;
+	case MOVIECMD_SetInputEnabled:
+		gameflow.mIsGameplayInputEnabled = data;
 		break;
-	case 16:
+	case MOVIECMD_StageFinish:
 		PRINT("GOT STAGE FINISH MESSAGE!!!\n");
 		gamecore->forceDayEnd();
 		break;
-	case 17:
+	case MOVIECMD_CreateSettingsMenu:
 		createMenuWindow();
 		break;
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	80059674
  * Size:	00004C
@@ -1569,7 +1636,7 @@ void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 	gameflow.mMoviePlayer->startMovie(msg.mMovieIdx, msg._04, msg.mTarget, &msg.mPosition, &msg.mRotation, msg.mFlags, msg.mIsPlaying);
 }
 
-/*
+/**
  * --INFO--
  * Address:	800596C0
  * Size:	000724

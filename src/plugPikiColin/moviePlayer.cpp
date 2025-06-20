@@ -385,7 +385,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	}
 
 	if (movieIdx == DEMOID_Unk12) { // title screen?
-		gameflow.mGameInterface->message(0, 17);
+		gameflow.mGameInterface->message(MOVIECMD_StartTutorial, 17);
 		return;
 	}
 
@@ -414,7 +414,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	}
 
 	if (gameflow.mGameInterface) {
-		gameflow.mGameInterface->message(3, 0);
+		gameflow.mGameInterface->message(MOVIECMD_HideHUD, 0);
 	}
 
 	PRINT("starting movie %d <%s> with creature %08x\n", translatedIdx, movie->mCinFileName, target);
@@ -554,11 +554,12 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 	}
 
 	if (gameflow.mGameInterface) {
-		gameflow.mGameInterface->message(7, (doHideNavi ? 0x80000000 : 0)
-		                                        | info->mPlayer->mFlags
-		                                              & (CINFLAG_Unk2 | CINFLAG_Unk3 | CINFLAG_Unk4 | CINFLAG_Unk5 | CINFLAG_Unk6
-		                                                 | CINFLAG_Unk10 | CINFLAG_Unk11 | CINFLAG_Unk12 | CINFLAG_Unk13 | CINFLAG_Unk14
-		                                                 | CINFLAG_Unk15 | CINFLAG_Unk16 | CINFLAG_Unk18 | CINFLAG_Unk20 | CINFLAG_Unk21));
+		gameflow.mGameInterface->message(MOVIECMD_StartMovie,
+		                                 (doHideNavi ? 0x80000000 : 0)
+		                                     | info->mPlayer->mFlags
+		                                           & (CINFLAG_Unk2 | CINFLAG_Unk3 | CINFLAG_Unk4 | CINFLAG_Unk5 | CINFLAG_Unk6
+		                                              | CINFLAG_Unk10 | CINFLAG_Unk11 | CINFLAG_Unk12 | CINFLAG_Unk13 | CINFLAG_Unk14
+		                                              | CINFLAG_Unk15 | CINFLAG_Unk16 | CINFLAG_Unk18 | CINFLAG_Unk20 | CINFLAG_Unk21));
 	}
 }
 
@@ -583,7 +584,7 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 	Jac_FinishDemo();
 	effectMgr->cullingOn();
 	if (gameflow.mGameInterface) {
-		gameflow.mGameInterface->message(8, info->mMovieIndex);
+		gameflow.mGameInterface->message(MOVIECMD_EndMovie, info->mMovieIndex);
 	}
 }
 
@@ -660,7 +661,7 @@ void MoviePlayer::update()
 				mIsActive           = false;
 				gameflow.mDemoFlags = 0;
 				if (gameflow.mGameInterface) {
-					gameflow.mGameInterface->message(4, 0);
+					gameflow.mGameInterface->message(MOVIECMD_ShowHUD, 0);
 				}
 				bool togglePrint   = gsys->mTogglePrint != 0;
 				gsys->mTogglePrint = 1;

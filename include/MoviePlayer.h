@@ -233,18 +233,18 @@ enum CinDemoIDs {
 	DEMOID_EndOfDayRedOnyon    = 84,
 	DEMOID_EndOfDayYellowOnyon = 85,
 	DEMOID_EndOfDayBlueOnyon   = 86,
-	DEMOID_Unk87               = 87, // unknown, used in pikidemo
+	DEMOID_GenericDayEnd       = 87,
 	DEMOID_ChalDayEndLast      = 88, // day end at final trial
-	DEMOID_Unk89               = 89, // unknown, used in pikidemo
+	DEMOID_GenericLanding      = 89, // unknown, used in pikidemo
 	DEMOID_Unk90               = 90, // unknown, used in pikidemo
 	DEMOID_Unk91               = 91, // unknown, used in pikidemo
 	DEMOID_Unk92               = 92, // unknown, used in pikidemo
 	DEMOID_Unk93               = 93, // unknown, used in pikidemo
 	DEMOID_Unk94               = 94, // unknown, used in pikidemo
 	// ...
-	DEMOID_Unk100 = 100, // unknown, used in pikidemo
-	DEMOID_Unk101 = 101, // unknown, used in pikidemo
-	DEMOID_Unk102 = 102, // unknown, used in pikidemo
+	DEMOID_Unk100                  = 100, // unknown, used in pikidemo
+	DEMOID_ShipUpgradeNonSparkling = 101, // unknown, used in pikidemo
+	DEMOID_GenericDayEndChal       = 102, // unknown, used in pikidemo
 	// ...
 	DEMOID_DayEndTakeOffLast = 109, // day end take off at final trial
 	// ...

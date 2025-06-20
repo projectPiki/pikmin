@@ -26,9 +26,9 @@ struct BaseGameSection : public Node {
 	f32 mCurrentFade;             // _28
 	f32 mTargetFade;              // _2C
 	f32 mFadeSpeed;               // _30
-	ModeState* mCurrentModeState; // _34, unknown
-	ModeState* mNextModeState;    // _38, unknown
-	u32 mUpdateFlags;             // _3C, unknown
+	ModeState* mCurrentModeState; // _34
+	ModeState* mNextModeState;    // _38
+	u32 mUpdateFlags;             // _3C
 	int mNextSectionId;           // _40
 };
 

@@ -17,6 +17,19 @@ struct Controller;
 extern GameCoreSection* gamecore;
 
 /**
+ * @brief Flags controlling which game components are updated in a given frame.
+ * @details This enum is used for the 'result' parameter in ModeState::update
+ * and for the mUpdateFlags member in BaseGameSection.
+ */
+enum ModeUpdateFlags {
+	UPDATE_NONE        = 0,                                                 // 0, No updates
+	UPDATE_AI          = 1 << 0,                                            // 1, Update AI logic
+	UPDATE_WORLD_CLOCK = 1 << 1,                                            // 2, Update the world clock and time-of-day
+	UPDATE_COUNTDOWN   = 1 << 2,                                            // 4, Update the end-of-day countdown
+	UPDATE_ALL         = UPDATE_AI | UPDATE_WORLD_CLOCK | UPDATE_COUNTDOWN, // 7, Update all components
+};
+
+/**
  * @brief TODO
  */
 struct ModeState {
@@ -27,9 +40,9 @@ struct ModeState {
 
 	BaseGameSection* mSection; // _00
 
-	virtual ModeState* update(u32& p1) { p1 = 3; } // _08
-	virtual void postRender(Graphics&) { }         // _0C
-	virtual void postUpdate() { }                  // _10
+	virtual ModeState* update(u32& result) { result = UPDATE_AI | UPDATE_WORLD_CLOCK; } // _08
+	virtual void postRender(Graphics&) { }                                              // _0C
+	virtual void postUpdate() { }                                                       // _10
 
 	// _04 = VTBL
 };
@@ -44,8 +57,8 @@ struct IntroGameModeState : public ModeState {
 		_08 = c->mController;
 	}
 
-	virtual ModeState* update(u32&);    // _08
-	virtual void postRender(Graphics&); // _0C
+	virtual ModeState* update(u32& result); // _08
+	virtual void postRender(Graphics&);     // _0C
 
 	// _00     = VTBL
 	// _00-_04 = ModeState
@@ -63,8 +76,8 @@ struct RunningModeState : public ModeState {
 		mController      = c->mController;
 	}
 
-	virtual void postRender(Graphics&); // _0C
-	virtual ModeState* update(u32&);    // _08
+	virtual void postRender(Graphics&);     // _0C
+	virtual ModeState* update(u32& result); // _08
 
 	// _00     = VTBL?
 	// _00-_04 = ModeState?
