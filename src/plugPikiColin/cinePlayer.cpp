@@ -532,7 +532,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
 
 	if (mCurrentScene) {
 		for (ActorInstance* actor = (ActorInstance*)mCurrentScene->mActorList.mChild; actor; actor = (ActorInstance*)actor->mNext) {
-			actor->refresh(mtx, gfx, !(actor->mFlags & 0x100) ? &mCurrentSceneFrame : nullptr);
+			actor->refresh(mtx, gfx, !(actor->mFlags & CAF_NoSync) ? &mCurrentSceneFrame : nullptr);
 		}
 	}
 }
@@ -631,8 +631,8 @@ void ActorInstance::initInstance()
 		}
 	}
 
-	if (mFlags & 0x200) {
-		if (mFlags & 0x40000) {
+	if (mFlags & CAF_MoveAiOnion) {
+		if (mFlags & CAF_MultiColour) {
 			PRINT("setting onion with multi colour %d\n", mColourAnimIndex);
 			static f32 onionColours[] = { 10.0f, 9.0f, 8.0, 13.0, 11.0, 12.0, 7.0, 10.0, 9.0, 8.0, 11.0, 8.0, 9.0, 10.0 };
 			mColourValue              = onionColours[mColourAnimIndex - 1];
@@ -644,7 +644,7 @@ void ActorInstance::initInstance()
 		}
 	}
 
-	if (mFlags & 0x20 && naviMgr && naviMgr->getNavi()) {
+	if (mFlags & CAF_MoveDayEndNavi && naviMgr && naviMgr->getNavi()) {
 		naviMgr->getNavi()->startDayEnd();
 	}
 
@@ -917,7 +917,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 {
 	// feels like a typo.
-	if ((mFlags & 0xf800) && !(gameflow.mMoviePlayer->mMaskFlags & (mFlags & 0xF800))) {
+	if ((mFlags & CAF_AllObjMasks) && !(gameflow.mMoviePlayer->mMaskFlags & (mFlags & CAF_AllObjMasks))) {
 		return;
 	}
 
@@ -949,9 +949,9 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 	gfx.useMatrix(Matrix4f::ident, 0);
 	bool check2 = true;
 
-	if (mFlags & 0x440) {
+	if (mFlags & (CAF_DummyUfo | CAF_MoveAiUfo)) {
 		mActiveActor->mModel->backupAnimOverrides(bcs);
-		if (!(mFlags & 0x400)) {
+		if (!(mFlags & CAF_DummyUfo)) {
 			check2 = false;
 		}
 
@@ -979,7 +979,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		mActiveActor->mModel->restoreAnimOverrides();
 
 		if (itemMgr && itemMgr->getUfo()) {
-			if (mFlags & 0x400) {
+			if (mFlags & CAF_DummyUfo) {
 				gfx.mRenderState = 0;
 			}
 
@@ -987,7 +987,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 			itemMgr->getUfo()->demoDraw(gfx, &animMtx);
 			gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		}
-	} else if (mFlags & 0x80) {
+	} else if (mFlags & CAF_MoveAiPiki) {
 		check2 = false;
 		mActiveActor->mModel->backupAnimOverrides(bcs);
 		if (mAnimator.mMgr) {
@@ -1035,9 +1035,10 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 	}
 
 	if (modelType == 0) {
-		if (mFlags & 0x40000) {
+		if (mFlags & CAF_MultiColour) {
 			mDynMats.animate(&mColourValue);
 		} else {
+			// Blue, Red, Yellow models have a special colour value
 			int v = (mFlags >> 1) & 0xF;
 			if (v != 1) {
 				if (v == 2) {
@@ -1115,14 +1116,14 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		}
 	}
 
-	if (mFlags & 0x200) {
+	if (mFlags & CAF_MoveAiOnion) {
 		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
 		mActiveActor->mModel->calcJointWorldPos(gfx, 3, mJointPositions[0]);
 		mJointPositions[1].set(0.0f, -28.0f, 0.0f);
 		mActiveActor->mModel->calcJointWorldPos(gfx, 1, mJointPositions[1]);
 	}
 
-	if (mFlags & 0x10000) {
+	if (mFlags & CAF_MoveFaller) {
 		mJointPositions[0].set(0.0f, 0.0f, 0.0f);
 		mActiveActor->mModel->calcJointWorldPos(gfx, 9, mJointPositions[0]);
 		mJointPositions[1].set(0.0f, 0.0f, 0.0f);
@@ -1149,7 +1150,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		checkEventKeys(a, b, pos);
 	}
 
-	if (mFlags & 0x21) {
+	if (mFlags & (CAF_MoveDayEndNavi | CAF_MoveAiNavi)) {
 		if (naviMgr && naviMgr->getNavi()) {
 			Vector3f pos(0.0f, 0.0f, 0.0f);
 			pos.multMatrix(mActiveActor->mModel->getAnimMatrix(0));
@@ -1159,7 +1160,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 		}
 	} else {
 		u32 flags = mActiveActor->mModel->mSystemFlags;
-		if (mFlags & 0x20000) {
+		if (mFlags & CAF_NoXluSort) {
 			mActiveActor->mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
 		}
 		mActiveActor->mModel->drawshape(gfx, *gfx.mCamera, &mDynMats);
@@ -1626,8 +1627,8 @@ void ActorInstance::genSection(AgeServer& server)
 
 	if (mDefaultActor && mDefaultActor->mMgr) {
 		server.StartOptionBox("AnimType", &mAnimPlayState, 200);
-		server.NewOption("ANIM_LOOP", 1);
-		server.NewOption("ANIM_ONESHOT", 2);
+		server.NewOption("ANIM_LOOP", ANIMSTATE_Loop);
+		server.NewOption("ANIM_ONESHOT", ANIMSTATE_OneShot);
 		server.EndOptionBox();
 		server.StartOptionBox("Animation", &mColourAnimIndex, 240);
 		int index = 0;
@@ -1640,25 +1641,25 @@ void ActorInstance::genSection(AgeServer& server)
 	}
 
 	server.StartBitGroup("actorFlags", &mFlags, 0x78);
-	server.NewBit("move AI navi", 1, 0);
-	server.NewBit("move DayEnd navi", 0x20, 0);
-	server.NewBit("move AI ufo", 0x40, 0);
-	server.NewBit("dummy ufo", 0x400, 0);
-	server.NewBit("move AI piki", 0x80, 0);
-	server.NewBit("move AI onion", 0x200, 0);
-	server.NewBit("move faller", 0x10000, 0);
-	server.NewBit("no XLU sort", 0x20000, 0);
-	server.NewBit("no sync", 0x100, 0);
-	server.NewBit("multicol", 0x40000, 0);
-	server.NewBit("col anims", 2, 1);
-	server.NewBit("fixed blu", 4, 1);
-	server.NewBit("fixed red", 8, 1);
-	server.NewBit("fixed yel", 0x10, 1);
-	server.NewBit("objMask 1", 0x800, 0);
-	server.NewBit("objMask 2", 0x1000, 0);
-	server.NewBit("objMask 3", 0x2000, 0);
-	server.NewBit("objMask 4", 0x4000, 0);
-	server.NewBit("objMask 5", 0x8000, 0);
+	server.NewBit("move AI navi", CAF_MoveAiNavi, 0);
+	server.NewBit("move DayEnd navi", CAF_MoveDayEndNavi, 0);
+	server.NewBit("move AI ufo", CAF_MoveAiUfo, 0);
+	server.NewBit("dummy ufo", CAF_DummyUfo, 0);
+	server.NewBit("move AI piki", CAF_MoveAiPiki, 0);
+	server.NewBit("move AI onion", CAF_MoveAiOnion, 0);
+	server.NewBit("move faller", CAF_MoveFaller, 0);
+	server.NewBit("no XLU sort", CAF_NoXluSort, 0);
+	server.NewBit("no sync", CAF_NoSync, 0);
+	server.NewBit("multicol", CAF_MultiColour, 0);
+	server.NewBit("col anims", CAF_ColourAnims, 1);
+	server.NewBit("fixed blu", CAF_FixedBlu, 1);
+	server.NewBit("fixed red", CAF_FixedRed, 1);
+	server.NewBit("fixed yel", CAF_FixedYel, 1);
+	server.NewBit("objMask 1", CAF_ObjMask1, 0);
+	server.NewBit("objMask 2", CAF_ObjMask2, 0);
+	server.NewBit("objMask 3", CAF_ObjMask3, 0);
+	server.NewBit("objMask 4", CAF_ObjMask4, 0);
+	server.NewBit("objMask 5", CAF_ObjMask5, 0);
 	server.EndBitGroup();
 	server.EndGroup();
 }

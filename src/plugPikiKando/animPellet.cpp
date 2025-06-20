@@ -30,7 +30,7 @@ PelletAnimInfo::PelletAnimInfo()
     , mFileName(this, String("noname", 0), String("", 0), String("", 0), "x01", nullptr)
 {
 	mID.setID('none');
-	mCreationType = 0;
+	mCreationType = PCT_Resident;
 	mTekiType     = -1;
 	mStartAnimId  = -1;
 
@@ -259,18 +259,20 @@ void PelletAnimInfo::genAge(AgeServer& server)
 	server.StartGroup("type");
 	server.setOnChange(new Delegate1<PelletAnimInfo, AgeServer&>(this, changeType));
 	server.StartOptionBox("type", &mCreationType, 272);
-	server.NewOption("常駐", 0);
-	server.NewOption("あればロード", 1);
-	server.NewOption("TEKI 次第でロード", 2);
-	server.NewOption("BOSS 次第でロード", 3);
+	server.NewOption("常駐", PCT_Resident);
+	server.NewOption("あればロード", PCT_LoadIfExists);
+	server.NewOption("TEKI 次第でロード", PCT_LoadOnTeki);
+	server.NewOption("BOSS 次第でロード", PCT_LoadOnBoss);
 	server.EndOptionBox();
-	if (mCreationType == 2) {
+
+	if (mCreationType == PCT_LoadOnTeki) {
 		server.StartOptionBox("TEKI", &mTekiType, 252);
 		for (int i = 0; i < TEKI_TypeCount; i++) {
 			server.NewOption(tekiMgr->getTypeName(i), i);
 		}
 		server.EndOptionBox();
 	}
+
 	server.setOnChange((IDelegate*)nullptr);
 	server.EndGroup();
 

@@ -538,7 +538,7 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 	{
 		FOREACH_NODE(ActorInstance, cut->mActorList.mChild, actor)
 		{
-			if (actor->mFlags & (CINFLAG_Unk5 | CINFLAG_Unk0)) {
+			if (actor->mFlags & (CAF_MoveDayEndNavi | CAF_MoveAiNavi)) {
 				doHideNavi = false;
 				break;
 			}

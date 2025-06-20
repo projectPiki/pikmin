@@ -13,6 +13,18 @@ struct PaniMotionTable;
 struct PelletShapeObject;
 
 /**
+ * @brief Enum for pellet types.
+ *
+ * These are used to determine how pellets are loaded and displayed in the game.
+ */
+enum PelletCreationType {
+	PCT_Resident     = 0, ///< 0, AKA always create the pellet.
+	PCT_LoadIfExists = 1, ///< 1, load if exists.
+	PCT_LoadOnTeki   = 2, ///< 2, load on teki.
+	PCT_LoadOnBoss   = 3, ///< 3, load on boss (isn't actually implemented lol, never creates)
+};
+
+/**
  * @brief TODO
  *
  * @note Size: 0x60.
@@ -30,8 +42,8 @@ struct PelletAnimInfo : public Parameters, public CoreNode {
 	// _00-_04 = Parameters
 	// _04-_18 = CoreNode
 	ID32 mID;                 // _18
-	int mCreationType;        // _24
-	int mTekiType;            // _28, for corpses
+	int mCreationType;        // _24, uses the PCT_* enum
+	int mTekiType;            // _28, uses the TekiTypes_* enum
 	Parm<String> mFolderPath; // _2C
 	Parm<String> mFileName;   // _40
 	int mStartAnimId;         // _54

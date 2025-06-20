@@ -1869,16 +1869,16 @@ void PelletMgr::createShapeObjects()
 		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(node);
 		bool doCreate        = false;
 		switch (info->mCreationType) {
-		case 0:
+		case PCT_Resident:
 			doCreate = true;
 			break;
-		case 1:
+		case PCT_LoadIfExists:
 			doCreate = useShape(info->mID.mId);
 			break;
-		case 2:
+		case PCT_LoadOnTeki:
 			doCreate = tekiMgr->mUsingType[info->mTekiType];
 			break;
-		case 3:
+		case PCT_LoadOnBoss:
 			PRINT("NOT YET\n");
 			break;
 		}

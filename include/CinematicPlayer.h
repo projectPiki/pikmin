@@ -116,6 +116,35 @@ struct SceneData : public CoreNode {
 };
 
 /**
+ * @brief Enum for actor's flags during a cutscene.
+ */
+enum CineActorFlags {
+	CAF_MoveAiNavi     = 1 << 0,  ///< 0x1, used during player movement cutscenes
+	CAF_ColourAnims    = 1 << 1,  ///< 0x2, never used (unknown)
+	CAF_FixedBlu       = 1 << 2,  ///< 0x4, force blue Pikmin colour
+	CAF_FixedRed       = 1 << 3,  ///< 0x8, force red Pikmin colour
+	CAF_FixedYel       = 1 << 4,  ///< 0x10, force yellow Pikmin colour
+	CAF_MoveDayEndNavi = 1 << 5,  ///< 0x20, used for player movement during sunset sequence
+	CAF_MoveAiUfo      = 1 << 6,  ///< 0x40, used with ship cutscenes
+	CAF_MoveAiPiki     = 1 << 7,  ///< 0x80, used with Pikmin cutscenes
+	CAF_NoSync         = 1 << 8,  ///< 0x100, animation runs independently of the scene
+	CAF_MoveAiOnion    = 1 << 9,  ///< 0x200, used by onion cutscenes
+	CAF_DummyUfo       = 1 << 10, ///< 0x400
+
+	CAF_ObjMask1 = 1 << 11, ///< 0x800, visibility group 1
+	CAF_ObjMask2 = 1 << 12, ///< 0x1000, visibility group 2
+	CAF_ObjMask3 = 1 << 13, ///< 0x2000, visibility group 3
+	CAF_ObjMask4 = 1 << 14, ///< 0x4000, visibility group 4
+	CAF_ObjMask5 = 1 << 15, ///< 0x8000, visibility group 5
+
+	CAF_AllObjMasks = CAF_ObjMask1 | CAF_ObjMask2 | CAF_ObjMask3 | CAF_ObjMask4 | CAF_ObjMask5, ///< 0xF800
+
+	CAF_MoveFaller  = 1 << 16, ///< 0x10000, object falls with gravity
+	CAF_NoXluSort   = 1 << 17, ///< 0x20000, skip transparency sorting
+	CAF_MultiColour = 1 << 18, ///< 0x40000, for cycling through colour variants
+};
+
+/**
  * @brief Managing object for a given scene actor.
  *
  * Tracks information about a given scene actor as it animates in a scene.
@@ -138,7 +167,7 @@ struct ActorInstance : public CoreNode {
 		mAnimPlayState   = 1;
 		mColourAnimIndex = -1;
 		mColourValue     = 0.0f;
-		mFlags           = 2;
+		mFlags           = CAF_ColourAnims;
 		mIsLeaf          = 0;
 	}
 
@@ -167,7 +196,7 @@ struct ActorInstance : public CoreNode {
 	CineShapeObject* mActiveActor;             ///< _5C, animating actor information.
 	CineShapeObject* mDefaultActor;            ///< _60, default actor information.
 	CineShapeObject* _64;                      ///< _64
-	u32 mFlags;                                ///< _68
+	u32 mFlags;                                ///< _68, uses the CAF_* flags enum.
 	int _6C;                                   ///< _6C
 	int mAnimPlayState;                        ///< _70
 	int mColourAnimIndex;                      ///< _74
