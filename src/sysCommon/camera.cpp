@@ -54,7 +54,7 @@ bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
  */
 void CullFrustum::draw(Graphics& gfx)
 {
-	gfx._324              = 0;
+	gfx.mHasTexGen        = 0;
 	bool prevLightSetting = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useTexture(nullptr, 0);

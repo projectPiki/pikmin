@@ -102,11 +102,11 @@ struct Graphics {
 	Colour mAuxiliaryColour;                  // _31C
 	bool mIsLightingEnabled;                  // _320
 	u8 mDepthMode;                            // _321
-	int _324;                                 // _324
-	u32 _328;                                 // _328
+	int mHasTexGen;                           // _324
+	u32 mMtxDepIdx;                           // _328
 	u32 mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
 	int mCullMode;                            // _330
-	u32 _334;                                 // _334
+	u32 mCullFlip;                            // _334
 	LightCamera* mLightCam;                   // _338
 	Vector3f mSunPosition;                    // _33C
 	u32 _348;                                 // _348
@@ -123,7 +123,7 @@ struct Graphics {
 	f32 mLightIntensity;                      // _374
 	u32 mActiveLightMask;                     // _378
 	f32 mLineWidth;                           // _37C
-	Vector3f* _380;                           // _380
+	Vector3f* mCustomScale;                   // _380
 	Matrix4f* mSystemMatrices;                // _384
 	u32 mMaxMatrixCount;                      // _388
 	u32 mActiveMatrixIdx;                     // _38C
@@ -294,9 +294,9 @@ struct DGXGraphics : public Graphics {
 	u8* mDisplayListPtr;                 // _3C8
 	int mDisplayListSize;                // _3CC
 	u32 _3D0;                            // _3D0
-	bool _3D4;                           // _3D4
+	bool mIsEnvMapActive;                // _3D4
 	int mCurrentMatrixId;                // _3D8
-	int _3DC;                            // _3DC
+	int mTexMtxBaseID;                   // _3DC
 	Mtx mProjectionTextureMatrix;        // _3E0, Mtx (3x4) not Matrix4f (4x4)
 	GXLightObj mGXLights[8];             // _410
 	u8* mDisplayBuffer;                  // _610

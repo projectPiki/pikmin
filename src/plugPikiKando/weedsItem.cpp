@@ -290,7 +290,7 @@ void RockGen::refresh(Graphics& gfx)
 		mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, yRotation, 0.0f), pebble.mPosition);
 		Matrix4f mtx2;
 		gfx.calcViewMatrix(mtx, mtx2);
-		gfx._324 = 1;
+		gfx.mHasTexGen = 1;
 		gfx.useMatrix(mtx2, 0);
 		itemMgr->getPebbleShape(pebble.mShapeIndex)->drawshape(gfx, *gfx.mCamera, nullptr);
 	}
@@ -425,7 +425,7 @@ void GrassGen::refresh(Graphics& gfx)
 				mtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, yRotation, 0.0f), blade.mPosition);
 				Matrix4f mtx2;
 				gfx.calcViewMatrix(mtx, mtx2);
-				gfx._324 = 1;
+				gfx.mHasTexGen = 1;
 				gfx.useMatrix(mtx2, 0);
 				itemMgr->getGrassShape(blade.mGrassShapeId)->drawshape(gfx, *gfx.mCamera, nullptr);
 			}
@@ -603,7 +603,7 @@ void Weed::refresh(Graphics& gfx)
 	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	Matrix4f mtx;
 	gfx.calcViewMatrix(mWorldMtx, mtx);
-	gfx._324 = 1;
+	gfx.mHasTexGen = 1;
 	gfx.useMatrix(mtx, 0);
 	gfx.mCamera->setBoundOffset(&mPosition);
 	mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);

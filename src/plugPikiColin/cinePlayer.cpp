@@ -1601,7 +1601,7 @@ void ActorInstance::ageChangeObject(AgeServer& server)
 {
 	PRINT("changed to new index %d\n", (int*)mDefaultActor);
 	initInstance();
-	_64 = (CineShapeObject*)mParentPlayer->mActorList.mChild;
+	mParentFirstChild = (CineShapeObject*)mParentPlayer->mActorList.mChild;
 	server.RefreshNode();
 }
 

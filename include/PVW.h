@@ -131,6 +131,24 @@ struct PVWAnimInfo3 {
 };
 
 /**
+ * @brief Lighting control flags for PVW materials
+ */
+DEFINE_ENUM_TYPE(LightingControlFlags,
+                 EnableColor0   = 0x0001, ///< Enable lighting for color channel 0
+                 EnableSpecular = 0x0002, ///< Enable specular lighting (color channel 1)
+                 EnableAlpha0   = 0x0004, ///< Enable lighting for alpha channel 0
+
+                 DiffFnColor0Shift   = 3, ///< Diffuse function for color 0 (bits 3-4)
+                 DiffFnAlpha0Shift   = 5, ///< Diffuse function for alpha 0 (bits 5-6)
+                 DiffFnSpecularShift = 7, ///< Diffuse function for specular (bits 7-8)
+
+                 AmbSrcColor0Vtx = 0x0200, ///< Use vertex color for ambient color 0 (vs register)
+                 AmbSrcAlpha0Vtx = 0x0400, ///< Use vertex alpha for ambient alpha 0 (vs register)
+                 MatSrcColor0Vtx = 0x0800, ///< Use vertex color for material color 0 (vs register)
+                 MatSrcAlpha0Vtx = 0x1000, ///< Use vertex alpha for material alpha 0 (vs register)
+);
+
+/**
  * @brief TODO
  * @note Size: 0xC.
  */
@@ -138,15 +156,15 @@ struct PVWLightingInfo {
 	PVWLightingInfo()
 	{
 		mNumChans = 1;
-		mCtrlFlag = 1;
-		_08       = 50.0f;
+		mCtrlFlag = LightingControlFlags::EnableColor0;
+		_UNUSED08 = 50.0f;
 	}
 
 	void read(RandomAccessStream&);
 
-	u32 mCtrlFlag; // _00
+	u32 mCtrlFlag; // _00, see LightingControlFlags enum
 	u32 mNumChans; // _04
-	f32 _08;       // _08
+	f32 _UNUSED08; // _08
 };
 
 struct AKeyInfo {
@@ -257,10 +275,10 @@ struct PVWTextureInfo {
 
 	void read(RandomAccessStream&);
 
-	Vector3f _00;                 // _00
+	Vector3f mScale;              // _00
 	u32 mTextureDataCount;        // _0C
 	u32 mTexGenDataCount;         // _10
-	u32 _14;                      // _14
+	u32 mUseScale;                // _14
 	u32 mTevStageCount;           // _18
 	PVWTextureData* mTextureData; // _1C
 	PVWTexGenData* mTexGenData;   // _20
@@ -270,25 +288,25 @@ struct PVWTextureInfo {
  * @brief TODO
  */
 struct PVWTevColReg {
-	PVWTevColReg() { _20 = 0.0f; }
+	PVWTevColReg() { mCurrentAnimFrame = 0.0f; }
 
 	void animate(f32*, ShortColour&);
 
 	void read(RandomAccessStream& input)
 	{
 		mAnimatedColor.read(input);
-		_08 = input.readInt();
-		_0C = input.readFloat();
-		_10.mInfo.read(input);
-		_18.mInfo.read(input);
+		mAnimFrameCount = input.readInt();
+		mAnimSpeed      = input.readFloat();
+		mColorAnimData.mInfo.read(input);
+		mAlphaAnimData.mInfo.read(input);
 	}
 
-	ShortColour mAnimatedColor; // _00
-	u32 _08;                    // _08
-	f32 _0C;                    // _0C
-	PVWColourShortAnimInfo _10; // _10
-	PVWAlphaShortAnimInfo _18;  // _10
-	f32 _20;                    // _20
+	ShortColour mAnimatedColor;            // _00
+	u32 mAnimFrameCount;                   // _08
+	f32 mAnimSpeed;                        // _0C
+	PVWColourShortAnimInfo mColorAnimData; // _10
+	PVWAlphaShortAnimInfo mAlphaAnimData;  // _10
+	f32 mCurrentAnimFrame;                 // _20
 };
 
 /**
@@ -364,10 +382,10 @@ struct PVWTevInfo {
 		mTevColRegs[0].read(input);
 		mTevColRegs[1].read(input);
 		mTevColRegs[2].read(input);
-		_6C[0].read(input);
-		_6C[1].read(input);
-		_6C[2].read(input);
-		_6C[3].read(input);
+		mKonstColors[0].read(input);
+		mKonstColors[1].read(input);
+		mKonstColors[2].read(input);
+		mKonstColors[3].read(input);
 		mTevStageCount = input.readInt();
 		if (mTevStageCount) {
 			mTevStages = new PVWTevStage[mTevStageCount];
@@ -378,7 +396,7 @@ struct PVWTevInfo {
 	}
 
 	PVWTevColReg mTevColRegs[3]; // _00
-	Colour _6C[4];               // _6C
+	Colour mKonstColors[4];      // _6C
 	u32 mTevStageCount;          // _7C
 	PVWTevStage* mTevStages;     // _80
 };
@@ -390,41 +408,41 @@ struct PVWTevInfo {
 struct PVWTextureData {
 	PVWTextureData()
 	{
-		_58      = 0.0f;
-		mTexture = nullptr;
-		_16      = 0;
+		mCurrentFrame  = 0.0f;
+		mTexture       = nullptr;
+		mIsMatrixDirty = 0;
 	}
 
 	void animate(f32*, Matrix4f&);
 	void read(RandomAccessStream&);
 
-	u32 mSourceAttrIndex;       // _00
-	TexAttr* mTextureAttribute; // _04
-	Texture* mTexture;          // _08
-	u16 _0C;                    // _0C
-	u16 _0E;                    // _0E
-	u8 _10;                     // _10
-	u8 _11;                     // _11
-	u8 _12;                     // _12
-	u8 _13;                     // _13
-	u8 mAnimationFactor;        // _14
-	u8 _15;                     // _15
-	u8 _16;                     // _16
-	u32 _18;                    // _18
-	f32 _1C;                    // _1C
-	f32 _20;                    // _20
-	f32 _24;                    // _24
-	f32 _28;                    // _28
-	f32 _2C;                    // _2C
-	f32 _30;                    // _30
-	f32 _34;                    // _34
-	u32 _38;                    // _38
-	f32 _3C;                    // _3C
-	PVWTexAnimInfo _40;         // _40
-	PVWTexAnimInfo _48;         // _48
-	PVWTexAnimInfo _50;         // _50
-	f32 _58;                    // _58
-	Matrix4f mAnimatedTexMtx;   // _5C
+	u32 mSourceAttrIndex;            // _00
+	TexAttr* mTextureAttribute;      // _04
+	Texture* mTexture;               // _08
+	u16 _UNUSED0C;                   // _0C
+	u16 _UNUSED0E;                   // _0E
+	u8 _UNUSED10;                    // _10
+	u8 _UNUSED11;                    // _11
+	u8 _UNUSED12;                    // _12
+	u8 _UNUSED13;                    // _13
+	u8 mAnimationFactor;             // _14
+	u8 _15;                          // _15
+	u8 mIsMatrixDirty;               // _16
+	u32 _UNUSED18;                   // _18
+	f32 mScaleX;                     // _1C
+	f32 mScaleY;                     // _20
+	f32 mRotationZ;                  // _24
+	f32 mTranslationX;               // _28
+	f32 mTranslationY;               // _2C
+	f32 mPivotX;                     // _30
+	f32 mPivotY;                     // _34
+	u32 mTotalFrameCount;            // _38
+	f32 mAnimSpeed;                  // _3C
+	PVWTexAnimInfo mScaleInfo;       // _40
+	PVWTexAnimInfo mRotationInfo;    // _48
+	PVWTexAnimInfo mTranslationInfo; // _50
+	f32 mCurrentFrame;               // _58
+	Matrix4f mAnimatedTexMtx;        // _5C
 };
 
 /**
@@ -434,10 +452,10 @@ struct PVWTexGenData {
 	// unused/inlined:
 	void read(RandomAccessStream& input);
 
-	u8 _00; // _00
-	u8 _01; // _01
-	u8 _02; // _02
-	u8 _03; // _03
+	u8 mTexCoordID; // _00
+	u8 mTexGenType; // _01
+	u8 mTexGenSrc;  // _02
+	u8 mMatrixType; // _03
 };
 
 /**

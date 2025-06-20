@@ -9,6 +9,18 @@
 struct Graphics;
 
 /**
+ * @brief Enum for material flags.
+ */
+enum MaterialFlags {
+	MATFLAG_PVW          = 1 << 0,  ///< 0x0001, Enables programmable vertex/pixel features.
+	MATFLAG_OPAQUE       = 1 << 8,  ///< 0x0100, Opaque material (no blending).
+	MATFLAG_ALPHA_TEST   = 1 << 9,  ///< 0x0200, Hard-edged alpha cutout.
+	MATFLAG_ALPHA_BLEND  = 1 << 10, ///< 0x0400, Smooth alpha blending.
+	MATFLAG_INVERT_BLEND = 1 << 15, ///< 0x8000, Invert blend mode (e.g., for shadows).
+	MATFLAG_SKIP         = 1 << 16, ///< 0x10000, Skip rendering this material.
+};
+
+/**
  * @brief TODO
  * @note Size: 0x9C.
  */
@@ -16,12 +28,12 @@ struct Material : public CoreNode {
 	Material()
 	    : CoreNode("material")
 	{
-		mIndex     = 0;
-		_28        = 0;
-		mTexture   = 0;
-		mAttribute = 0;
-		_28        = 0;
-		mFlags     = 0x100;
+		mIndex         = 0;
+		mEnvMapTexture = nullptr;
+		mTexture       = nullptr;
+		mAttribute     = nullptr;
+		mEnvMapTexture = nullptr;
+		mFlags         = MATFLAG_OPAQUE;
 		Colour().set(0xFF, 0xFF, 0xFF, 0xFF);
 		mTevInfoIndex   = 0;
 		mDisplayListPtr = nullptr;
@@ -34,7 +46,7 @@ struct Material : public CoreNode {
 
 	void setColour(struct Colour& color)
 	{
-		if (mLightingInfo.mCtrlFlag & 2) {
+		if (mLightingInfo.mCtrlFlag & LightingControlFlags::EnableSpecular) {
 			mTevInfo->mTevColRegs[0].mAnimatedColor.r = color.r;
 			mTevInfo->mTevColRegs[0].mAnimatedColor.g = color.g;
 			mTevInfo->mTevColRegs[0].mAnimatedColor.b = color.b;
@@ -47,11 +59,11 @@ struct Material : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	u32 mIndex;                       // _14
-	u32 mFlags;                       // _18 (PVW & 1, TEX & 2, XLU & 4)
+	u32 mFlags;                       // _18, see MaterialFlags enum
 	int mTextureIndex;                // _1C
 	TexAttr* mAttribute;              // _20
 	Texture* mTexture;                // _24
-	Texture* _28;                     // _28
+	Texture* mEnvMapTexture;          // _28
 	PVWPolygonColourInfo mColourInfo; // _2C [0x20]
 	PVWLightingInfo mLightingInfo;    // _4C [0x0C]
 	PVWPeInfo mPeInfo;                // _58 [0x10]

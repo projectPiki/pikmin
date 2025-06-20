@@ -884,10 +884,10 @@ MapMgr::MapMgr(Controller* controller)
 	mShadowCountdown = 3;
 	mShadowCaster.initCore("");
 	mShadowHandler                   = new MapShadMatHandler();
-	mShadowHandler->mShadMat->mFlags = 0x100;
+	mShadowHandler->mShadMat->mFlags = MATFLAG_OPAQUE;
 
 	mProjHandler                   = new MapProjMatHandler(nullptr);
-	mProjHandler->mProjMat->mFlags = 0x8100;
+	mProjHandler->mProjMat->mFlags = MATFLAG_INVERT_BLEND | MATFLAG_OPAQUE;
 
 	mProjHandler->mProjMat->Colour().set(255, 255, 255, 255);
 	memStat->end("shadMats");
@@ -1125,7 +1125,7 @@ void MapMgr::refresh(Graphics& gfx)
 		// this goes in the if condition above in the DLL, but fixes the stack in DOL if it's just empty.
 		if (!mController->keyDown(KBBTN_DPAD_UP)) { }
 		mDynMaterials.animate(nullptr);
-		gfx._324 = 1;
+		gfx.mHasTexGen = 1;
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
@@ -1136,16 +1136,16 @@ void MapMgr::refresh(Graphics& gfx)
 		gfx.useMatrix(Matrix4f::ident, 0);
 		mMapShape->drawculled(gfx, *gfx.mCamera, &mDynMaterials);
 		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
-		gfx._324         = 0;
+		gfx.mHasTexGen   = 0;
 
 		FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
 		{
 			gfx.calcViewMatrix(coll->mTransformMtx, coll->mWorldMatrix);
 			gfx.useMatrix(coll->mWorldMatrix, 0);
-			gfx._324 = 1;
+			gfx.mHasTexGen = 1;
 			gfx.setLighting(true, nullptr);
 			coll->refresh(gfx);
-			gfx._324 = 0;
+			gfx.mHasTexGen = 0;
 		}
 		mDynSimulator->Render(gfx);
 	}
@@ -1269,7 +1269,7 @@ void MapMgr::drawXLU(Graphics& gfx)
 		mDayMgr->setFog(gfx, nullptr);
 		// DLL only condition
 		// if (!mController->keyDown(KBBTN_DPAD_DOWN)) {
-		gfx._324 = 1;
+		gfx.mHasTexGen = 1;
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
@@ -1458,7 +1458,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 		mDebugCollCount = 0;
 		mActiveTriCount = 0;
 		// gsys->mTimer->stop("mapPost");
-		gfx._324 = 0;
+		gfx.mHasTexGen = 0;
 	}
 }
 

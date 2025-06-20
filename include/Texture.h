@@ -47,12 +47,12 @@ struct TexAttr : public CoreNode {
 	TexAttr()
 	    : CoreNode("texattr")
 	{
-		mTextureName = nullptr;
-		mTexture     = nullptr;
-		mImage       = nullptr;
-		mTilingType  = TILING_REPEAT;
-		_20          = 0;
-		mLODBias     = 0.0f;
+		mTextureName      = nullptr;
+		mTexture          = nullptr;
+		mImage            = nullptr;
+		mTilingType       = TILING_REPEAT;
+		mUseOffsetImgData = 0;
+		mLODBias          = 0.0f;
 	}
 
 	virtual void read(RandomAccessStream&); // _0C
@@ -61,16 +61,16 @@ struct TexAttr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mIndex;         // _14
-	int mTextureIndex;  // _18
-	s16 mTilingType;    // _1C
-	s16 mFlags;         // _1E
-	u16 _20;            // _20
-	s16 _22;            // _22
-	f32 mLODBias;       // _24
-	char* mTextureName; // _28
-	Texture* mTexture;  // _2C
-	TexImg* mImage;     // _30
+	int mIndex;            // _14
+	int mTextureIndex;     // _18
+	s16 mTilingType;       // _1C
+	s16 mFlags;            // _1E
+	u16 mUseOffsetImgData; // _20
+	s16 _22;               // _22
+	f32 mLODBias;          // _24
+	char* mTextureName;    // _28
+	Texture* mTexture;     // _2C
+	TexImg* mImage;        // _30
 };
 
 /**
@@ -134,8 +134,8 @@ struct TexImg : public CoreNode {
 	TexImg()
 	    : CoreNode("texImg")
 	{
-		_24        = 1;
-		mPixelData = nullptr;
+		mDataPtrOffset = 1;
+		mPixelData     = nullptr;
 	}
 
 	void read(RandomAccessStream&);
@@ -158,7 +158,7 @@ struct TexImg : public CoreNode {
 	TexImgFormat mFormat; // _18
 	int mWidth;           // _1C
 	int mHeight;          // _20
-	int _24;              // _24
+	int mDataPtrOffset;   // _24
 	int mDataSize;        // _28
 	void* mTextureData;   // _2C
 	void* mPixelData;     // _30

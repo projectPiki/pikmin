@@ -123,12 +123,12 @@ void Mesh::read(RandomAccessStream& stream)
 
 	if (mMtxGroupCount) {
 		mMtxGroupList = new MtxGroup[mMtxGroupCount];
-		mMtxDepIndex  = 0;
+		mMtxDepIdx    = 0;
 		for (int i = 0; i < mMtxGroupCount; i++) {
 			mMtxGroupList[i].read(stream);
 
-			if (mMtxGroupList[i].mDependencyLength > mMtxDepIndex) {
-				mMtxDepIndex = mMtxGroupList[i].mDependencyLength;
+			if (mMtxGroupList[i].mDependencyLength > mMtxDepIdx) {
+				mMtxDepIdx = mMtxGroupList[i].mDependencyLength;
 			}
 		}
 	}
@@ -1671,13 +1671,13 @@ void ShapeDynMaterials::animate(f32* data)
 
 	for (int i = 0; i < mMatCount; i++) {
 		Material& mat = mMaterials[i];
-		if (mat.mFlags & 1) {
+		if (mat.mFlags & MATFLAG_PVW) {
 			if (mat.mColourInfo.mTotalFrameCount != 0) {
 				mat.mColourInfo.animate(data, mat.Colour());
 			}
 
 			for (int j = 0; j < 3; j++) {
-				if (mat.mTevInfo->mTevColRegs[j]._08) {
+				if (mat.mTevInfo->mTevColRegs[j].mAnimFrameCount) {
 					mat.mTevInfo->mTevColRegs[j].animate(data, mat.mTevInfo->mTevColRegs[j].mAnimatedColor);
 				}
 			}
@@ -1702,11 +1702,11 @@ void ShapeDynMaterials::updateContext()
 {
 	for (int i = 0; i < mMatCount; i++) {
 		Material& mat = mMaterials[i];
-		if (mat.mFlags & 0x1) {
+		if (mat.mFlags & MATFLAG_PVW) {
 			mShape->mMaterialList[mat.mIndex].Colour() = mat.Colour();
 
 			for (int j = 0; j < 3; j++) {
-				if (mat.mTevInfo->mTevColRegs[j]._08) {
+				if (mat.mTevInfo->mTevColRegs[j].mAnimFrameCount) {
 					mShape->mMaterialList[mat.mIndex].mTevInfo->mTevColRegs[j].mAnimatedColor = mat.mTevInfo->mTevColRegs[j].mAnimatedColor;
 				}
 			}
@@ -1809,12 +1809,12 @@ void BaseShape::countMaterials(Joint* joint, u32 p2)
 			if (!check) {
 				Material* mat = mMatpolyList[i]->mMaterial;
 				bool check2   = false;
-				if (mat->mFlags & 1) {
+				if (mat->mFlags & MATFLAG_PVW) {
 					if (mat->mColourInfo.mTotalFrameCount) {
 						check2 = true;
 					}
 					for (int j = 0; j < 3; j++) {
-						if (mat->mTevInfo->mTevColRegs[j]._08) {
+						if (mat->mTevInfo->mTevColRegs[j].mAnimFrameCount) {
 							check2 = true;
 						}
 					}
@@ -1890,7 +1890,7 @@ void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int p2)
 	for (int i = 0; i < dynMats.mMatCount; i++) {
 		Material* mat = &dynMats.mMaterials[i];
 		memcpy(mat, &mMaterialList[matUsed[i]], sizeof(Material));
-		if (mat->mFlags & 1) {
+		if (mat->mFlags & MATFLAG_PVW) {
 			mat->mTevInfo = new PVWTevInfo();
 			memcpy(mat->mTevInfo, mMaterialList[matUsed[i]].mTevInfo, sizeof(PVWTevInfo));
 		}
@@ -2403,9 +2403,15 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			_dlindx = 0;
-			recAddMatpoly(mJointList, 4);
-			recAddMatpoly(mJointList, 2);
-			recAddMatpoly(mJointList, 1);
+
+			// Sorts materials in the following order:
+			// 1. Alpha-blended materials (transparent, needs to be last).
+			// 2. Alpha-test materials (cutout transparency).
+			// 3. Opaque materials (no transparency, needs to be first).
+			// This is to handle transparency correctly without per-frame depth sorting.
+			recAddMatpoly(mJointList, 4); // MATFLAG_ALPHA_BLEND
+			recAddMatpoly(mJointList, 2); // MATFLAG_ALPHA_TEST
+			recAddMatpoly(mJointList, 1); // MATFLAG_OPAQUE
 
 			for (int i = 0; i < mTotalMatpolyCount; i++) {
 				mMatpolyList[i]->mJointList = mMatpolyList[i]->mMesh->mJointList;
@@ -2658,7 +2664,7 @@ void BaseShape::initialise()
 	}
 
 	for (int i = 0; i < mMaterialCount; i++) {
-		if (mMaterialList[i].mFlags & 1) {
+		if (mMaterialList[i].mFlags & MATFLAG_PVW) {
 			for (int j = 0; j < mMaterialList[i].mTextureInfo.mTextureDataCount; j++) {
 				mMaterialList[i].mTextureInfo.mTextureData[j].mTextureAttribute
 				    = &mTexAttrList[mMaterialList[i].mTextureInfo.mTextureData[j].mSourceAttrIndex];

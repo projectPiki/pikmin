@@ -48,7 +48,7 @@ void Colour::write(Stream& s)
 void PVWLightingInfo::read(RandomAccessStream& s)
 {
 	mCtrlFlag = s.readInt();
-	_08       = s.readFloat();
+	_UNUSED08 = s.readFloat();
 }
 
 /*
@@ -404,41 +404,41 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 	Vector3f vec2(0.0f, 0.0f, 0.0f);
 	Vector3f vec3(0.0f, 0.0f, 0.0f);
 
-	if (!_38) {
-		if (!_16) {
-			vec1.set(_1C, _20, 0.0f);
-			vec2.set(0.0f, 0.0f, _24);
-			vec3.set(_28, _2C, 0.0f);
+	if (!mTotalFrameCount) {
+		if (!mIsMatrixDirty) {
+			vec1.set(mScaleX, mScaleY, 0.0f);
+			vec2.set(0.0f, 0.0f, mRotationZ);
+			vec3.set(mTranslationX, mTranslationY, 0.0f);
 		}
 	} else {
 		if (p1) {
-			_58 = std::fmodf(*p1, (f32)_38);
+			mCurrentFrame = std::fmodf(*p1, (f32)mTotalFrameCount);
 		} else {
-			_58 += gsys->getFrameTime() * (30.0f * _3C);
-			if (_58 >= f32(_38 - 1)) {
-				_58 = 0.0f;
+			mCurrentFrame += gsys->getFrameTime() * (30.0f * mAnimSpeed);
+			if (mCurrentFrame >= f32(mTotalFrameCount - 1)) {
+				mCurrentFrame = 0.0f;
 			}
 		}
 
-		_40.extract(_58, vec1);
-		_48.extract(_58, vec2);
-		_50.extract(_58, vec3);
-		_16 = 0;
+		mScaleInfo.extract(mCurrentFrame, vec1);
+		mRotationInfo.extract(mCurrentFrame, vec2);
+		mTranslationInfo.extract(mCurrentFrame, vec3);
+		mIsMatrixDirty = 0;
 	}
 
-	if (!_16) {
+	if (!mIsMatrixDirty) {
 		f32 sinTheta = sinf(vec2.z * PI / 180.0f);
 		f32 cosTheta = cosf(vec2.z * PI / 180.0f);
 
 		mtx.mMtx[0][0] = vec1.x * cosTheta;
 		mtx.mMtx[0][1] = -vec1.x * sinTheta;
 		mtx.mMtx[0][2] = 0.0f;
-		mtx.mMtx[0][3] = -vec1.x * cosTheta * _30 + vec1.x * sinTheta * _34 + _30 + vec3.x;
+		mtx.mMtx[0][3] = -vec1.x * cosTheta * mPivotX + vec1.x * sinTheta * mPivotY + mPivotX + vec3.x;
 
 		mtx.mMtx[1][0] = vec1.y * sinTheta;
 		mtx.mMtx[1][1] = vec1.y * cosTheta;
 		mtx.mMtx[1][2] = 0.0f;
-		mtx.mMtx[1][3] = -vec1.y * sinTheta * _30 - vec1.y * cosTheta * _34 + _34 + vec3.y;
+		mtx.mMtx[1][3] = -vec1.y * sinTheta * mPivotX - vec1.y * cosTheta * mPivotY + mPivotY + vec3.y;
 
 		mtx.mMtx[2][0] = 0.0f;
 		mtx.mMtx[2][1] = 0.0f;
@@ -450,7 +450,7 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 		mtx.mMtx[3][2] = 0.0f;
 		mtx.mMtx[3][3] = 1.0f;
 
-		_16 = 1;
+		mIsMatrixDirty = 1;
 	}
 }
 
@@ -462,26 +462,26 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 void PVWTextureData::read(RandomAccessStream& stream)
 {
 	mSourceAttrIndex = stream.readInt();
-	_0C              = stream.readShort();
-	_0E              = stream.readShort();
-	_10              = stream.readByte();
-	_11              = stream.readByte();
-	_12              = stream.readByte();
-	_13              = stream.readByte();
+	_UNUSED0C        = stream.readShort();
+	_UNUSED0E        = stream.readShort();
+	_UNUSED10        = stream.readByte();
+	_UNUSED11        = stream.readByte();
+	_UNUSED12        = stream.readByte();
+	_UNUSED13        = stream.readByte();
 	mAnimationFactor = stream.readInt();
-	_38              = stream.readInt();
-	_3C              = stream.readFloat();
-	_1C              = stream.readFloat();
-	_20              = stream.readFloat();
-	_24              = stream.readFloat();
-	_28              = stream.readFloat();
-	_2C              = stream.readFloat();
-	_30              = stream.readFloat();
-	_34              = stream.readFloat();
+	mTotalFrameCount = stream.readInt();
+	mAnimSpeed       = stream.readFloat();
+	mScaleX          = stream.readFloat();
+	mScaleY          = stream.readFloat();
+	mRotationZ       = stream.readFloat();
+	mTranslationX    = stream.readFloat();
+	mTranslationY    = stream.readFloat();
+	mPivotX          = stream.readFloat();
+	mPivotY          = stream.readFloat();
 
-	_40.mInfo.read(stream);
-	_48.mInfo.read(stream);
-	_50.mInfo.read(stream);
+	mScaleInfo.mInfo.read(stream);
+	mRotationInfo.mInfo.read(stream);
+	mTranslationInfo.mInfo.read(stream);
 
 	if (mAnimationFactor != 0xFF) {
 		PRINT("fake", mAnimationFactor);
@@ -495,10 +495,10 @@ void PVWTextureData::read(RandomAccessStream& stream)
  */
 void PVWTexGenData::read(RandomAccessStream& input)
 {
-	_00 = input.readByte();
-	_01 = input.readByte();
-	_02 = input.readByte();
-	_03 = input.readByte();
+	mTexCoordID = input.readByte();
+	mTexGenType = input.readByte();
+	mTexGenSrc  = input.readByte();
+	mMatrixType = input.readByte();
 }
 
 /*
@@ -508,8 +508,8 @@ void PVWTexGenData::read(RandomAccessStream& input)
  */
 void PVWTextureInfo::read(RandomAccessStream& input)
 {
-	_14 = input.readInt();
-	_00.read(input);
+	mUseScale = input.readInt();
+	mScale.read(input);
 	mTexGenDataCount = input.readInt();
 	if (mTexGenDataCount) {
 		mTexGenData = new PVWTexGenData[mTexGenDataCount];
@@ -526,7 +526,7 @@ void PVWTextureInfo::read(RandomAccessStream& input)
 
 		for (int i = 0; i < mTextureDataCount; i++) {
 			mTextureData[i].read(input);
-			if (mTextureData[i]._11 == 2) {
+			if (mTextureData[i]._UNUSED11 == 2) {
 				mTevStageCount++;
 			}
 		}
@@ -540,21 +540,21 @@ void PVWTextureInfo::read(RandomAccessStream& input)
  */
 void PVWTevColReg::animate(f32* p1, ShortColour& color)
 {
-	if (!_08) {
+	if (!mAnimFrameCount) {
 		return;
 	}
 
 	if (p1) {
-		_20 = std::fmodf(*p1, _08);
+		mCurrentAnimFrame = std::fmodf(*p1, mAnimFrameCount);
 	} else {
-		_20 += gsys->getFrameTime() * (30.0f * _0C);
-		if (_20 >= f32(_08 - 1)) {
-			_20 = 0.0f;
+		mCurrentAnimFrame += gsys->getFrameTime() * (30.0f * mAnimSpeed);
+		if (mCurrentAnimFrame >= f32(mAnimFrameCount - 1)) {
+			mCurrentAnimFrame = 0.0f;
 		}
 	}
 
-	_10.extract(_20, color);
-	_18.extract(_20, color);
+	mColorAnimData.extract(mCurrentAnimFrame, color);
+	mAlphaAnimData.extract(mCurrentAnimFrame, color);
 }
 
 /*
@@ -577,7 +577,8 @@ void Material::read(RandomAccessStream& input)
 	mFlags        = input.readInt();
 	mTextureIndex = input.readInt();
 	Colour().read(input);
-	if (mFlags & 0x1) {
+
+	if (mFlags & MATFLAG_PVW) {
 		mTevInfoIndex = input.readInt();
 		mColourInfo.read(input);
 		mLightingInfo.read(input);
@@ -1074,10 +1075,10 @@ void TexImg::setColour(Colour&)
  */
 void TexImg::read(RandomAccessStream& stream)
 {
-	mWidth  = stream.readShort();
-	mHeight = stream.readShort();
-	mFormat = static_cast<TexImgFormat>(stream.readInt());
-	_24     = stream.readInt();
+	mWidth         = stream.readShort();
+	mHeight        = stream.readShort();
+	mFormat        = static_cast<TexImgFormat>(stream.readInt());
+	mDataPtrOffset = stream.readInt();
 
 	s32 _ = stream.readInt();
 	_     = stream.readInt();
@@ -1247,8 +1248,8 @@ void TexAttr::initImage()
 
 	TexImg::getTileSize(mImage->mFormat, mTexture->mTileSizeX, mTexture->mTileSizeY);
 
-	if (_20) {
-		mTexture->mTextureData = (u32*)(mImage->_24 - 1);
+	if (mUseOffsetImgData) {
+		mTexture->mTextureData = (u32*)(mImage->mDataPtrOffset - 1);
 		mTexture->mLODBias     = mLODBias;
 	} else {
 		mTexture->mTextureData = nullptr;
@@ -1283,9 +1284,9 @@ void TexAttr::read(RandomAccessStream& stream)
 {
 	mTextureIndex = stream.readShort();
 	stream.readShort();
-	mTilingType = stream.readShort();
-	_20         = stream.readShort();
-	mLODBias    = stream.readFloat();
+	mTilingType       = stream.readShort();
+	mUseOffsetImgData = stream.readShort();
+	mLODBias          = stream.readFloat();
 }
 
 /*

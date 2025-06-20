@@ -155,20 +155,20 @@ struct ActorInstance : public CoreNode {
 	ActorInstance()
 	    : CoreNode("")
 	{
-		mActiveActor     = 0;
-		mDefaultActor    = 0;
-		_64              = 0;
-		mAnimator.mMgr   = 0;
-		_19E             = 0;
-		mMeteorFlag      = 0;
-		_19F             = 0;
-		_19C             = 0;
-		_6C              = 0;
-		mAnimPlayState   = 1;
-		mColourAnimIndex = -1;
-		mColourValue     = 0.0f;
-		mFlags           = CAF_ColourAnims;
-		mIsLeaf          = 0;
+		mActiveActor      = 0;
+		mDefaultActor     = 0;
+		mParentFirstChild = 0;
+		mAnimator.mMgr    = 0;
+		_19E              = 0;
+		mMeteorFlag       = 0;
+		_19F              = 0;
+		_19C              = 0;
+		_6C               = 0;
+		mAnimPlayState    = 1;
+		mColourAnimIndex  = -1;
+		mColourValue      = 0.0f;
+		mFlags            = CAF_ColourAnims;
+		mIsLeaf           = 0;
 	}
 
 	void exitInstance();
@@ -195,7 +195,7 @@ struct ActorInstance : public CoreNode {
 	Shape* mLeafModel;                         ///< _58
 	CineShapeObject* mActiveActor;             ///< _5C, animating actor information.
 	CineShapeObject* mDefaultActor;            ///< _60, default actor information.
-	CineShapeObject* _64;                      ///< _64
+	CineShapeObject* mParentFirstChild;        ///< _64
 	u32 mFlags;                                ///< _68, uses the CAF_* flags enum.
 	int _6C;                                   ///< _6C
 	int mAnimPlayState;                        ///< _70

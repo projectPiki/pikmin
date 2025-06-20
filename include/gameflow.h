@@ -392,9 +392,9 @@ struct GamePrefs : public CoreNode {
 		return false;
 	}
 
-	bool getVibeMode() { return (mFlags & 1) != 0; }
-	bool getStereoMode() { return (mFlags & 2) != 0; }
-	bool getChildMode() { return (mFlags & 4) != 0; }
+	bool getVibeMode() { return (mFlags & GAMEPREF_Vibe) != 0; }
+	bool getStereoMode() { return (mFlags & GAMEPREF_Stereo) != 0; }
+	bool getChildMode() { return (mFlags & GAMEPREF_Child) != 0; }
 
 	u8 getBgmVol() { return mBgmVol; }
 	u8 getSfxVol() { return mSfxVol; }

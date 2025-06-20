@@ -767,7 +767,7 @@ void ItemCreature::refresh(Graphics& gfx)
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 		Matrix4f mtx;
 		gfx.calcViewMatrix(mWorldMtx, mtx);
-		gfx._324 = 1;
+		gfx.mHasTexGen = 1;
 		gfx.useMatrix(mtx, 0);
 		gfx.mCamera->setBoundOffset(&mPosition);
 		mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);

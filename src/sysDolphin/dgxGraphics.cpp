@@ -303,7 +303,7 @@ void DGXGraphics::useDList(u32 num)
  */
 u32 DGXGraphics::compileMaterial(Material* mat)
 {
-	if (!(mat->mFlags & 1)) {
+	if (!(mat->mFlags & MATFLAG_PVW)) {
 		return 0;
 	}
 
@@ -322,28 +322,28 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 
 		GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
 		           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
-	} else if (mat->mFlags & 0x8000) {
+	} else if (mat->mFlags & MATFLAG_INVERT_BLEND) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-	} else if (mat->mFlags & 0x100) {
+	} else if (mat->mFlags & MATFLAG_OPAQUE) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mFlags & 0x200) {
+	} else if (mat->mFlags & MATFLAG_ALPHA_TEST) {
 		GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 		GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	} else if (mat->mFlags & 0x400) {
+	} else if (mat->mFlags & MATFLAG_ALPHA_BLEND) {
 		GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 		GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 	}
 
-	GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->_6C[0]));
-	GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->_6C[1]));
-	GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->_6C[2]));
-	GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->_6C[3]));
+	GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->mKonstColors[0]));
+	GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->mKonstColors[1]));
+	GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->mKonstColors[2]));
+	GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->mKonstColors[3]));
 	for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 		PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
 		GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA, (GXTevColorArg)stage.mTevColorCombiner.mInArgB,
@@ -359,16 +359,16 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	}
 
 	PVWLightingInfo* lightInfo = &mat->mLightingInfo;
-	bool doCombined            = (mat->mLightingInfo.mCtrlFlag & 0x1) != 0;
+	bool doCombined            = (mat->mLightingInfo.mCtrlFlag & LightingControlFlags::EnableColor0) != 0;
 	if (lightInfo) {
-		bool doEnableColor0 = (lightInfo->mCtrlFlag & 0x1);
-		u32 diffFnColor0    = (lightInfo->mCtrlFlag >> 3) & 0x3;
-		u32 diffFnAlpha0    = (lightInfo->mCtrlFlag >> 5) & 0x3;
-		bool doEnableAlpha0 = (lightInfo->mCtrlFlag & 0x4);
-		bool ambSrcColor0   = (lightInfo->mCtrlFlag & 0x200);
-		bool ambSrcAlpha0   = (lightInfo->mCtrlFlag & 0x400);
-		bool matSrcColor0   = (lightInfo->mCtrlFlag & 0x800);
-		bool matSrcAlpha0   = (lightInfo->mCtrlFlag & 0x1000);
+		bool doEnableColor0 = (lightInfo->mCtrlFlag & LightingControlFlags::EnableColor0);
+		u32 diffFnColor0    = (lightInfo->mCtrlFlag >> LightingControlFlags::DiffFnColor0Shift) & 0x3;
+		u32 diffFnAlpha0    = (lightInfo->mCtrlFlag >> LightingControlFlags::DiffFnAlpha0Shift) & 0x3;
+		bool doEnableAlpha0 = (lightInfo->mCtrlFlag & LightingControlFlags::EnableAlpha0);
+		bool ambSrcColor0   = (lightInfo->mCtrlFlag & LightingControlFlags::AmbSrcColor0Vtx);
+		bool ambSrcAlpha0   = (lightInfo->mCtrlFlag & LightingControlFlags::AmbSrcAlpha0Vtx);
+		bool matSrcColor0   = (lightInfo->mCtrlFlag & LightingControlFlags::MatSrcColor0Vtx);
+		bool matSrcAlpha0   = (lightInfo->mCtrlFlag & LightingControlFlags::MatSrcAlpha0Vtx);
 
 		GXSetChanCtrl(GX_COLOR0, doEnableColor0, (GXColorSrc)ambSrcColor0, (GXColorSrc)matSrcColor0, 3, (GXDiffuseFn)diffFnColor0,
 		              (!doEnableColor0) ? GX_AF_NONE : GX_AF_SPOT);
@@ -381,8 +381,9 @@ u32 DGXGraphics::compileMaterial(Material* mat)
 	}
 
 	int numChans = 1;
-	if (lightInfo && lightInfo->mCtrlFlag & 0x2) {
-		GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, 0x80, (GXDiffuseFn)((lightInfo->mCtrlFlag >> 7) & 0x3), GX_AF_SPEC);
+	if (lightInfo && lightInfo->mCtrlFlag & LightingControlFlags::EnableSpecular) {
+		GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, 0x80,
+		              (GXDiffuseFn)((lightInfo->mCtrlFlag >> LightingControlFlags::DiffFnSpecularShift) & 0x3), GX_AF_SPEC);
 		GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0x80, GX_DF_CLAMP, GX_AF_NONE);
 		numChans = 2;
 	} else {
@@ -417,14 +418,14 @@ void DGXGraphics::initRender(int a1, int a2)
 	mLineWidth = 1.0f;
 	GXSetLineWidth(mLineWidth * 6.0f, GX_TO_ZERO);
 	GXSetPointSize(24, GX_TO_ZERO);
-	_324 = 0;
-	_3D4 = 0;
-	_334 = 0;
+	mHasTexGen      = 0;
+	mIsEnvMapActive = 0;
+	mCullFlip       = 0;
 	useTexture(nullptr, 0);
 	setMatHandler(nullptr);
 	mRenderState      = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 	mCurrentMatrixId  = 0;
-	_3DC              = 30;
+	mTexMtxBaseID     = 30;
 	oldVerts          = 0;
 	oldNorms          = 0;
 	oldCols           = 0;
@@ -444,7 +445,7 @@ void DGXGraphics::initRender(int a1, int a2)
 	mActiveTexture[5] = nullptr;
 	mActiveTexture[6] = nullptr;
 	mActiveTexture[7] = nullptr;
-	_380              = 0;
+	mCustomScale      = 0;
 	gsys->resetLFlares();
 }
 
@@ -643,14 +644,14 @@ bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 	bool prevSetting   = mIsLightingEnabled;
 	mIsLightingEnabled = set;
 	if (lightInfo) {
-		bool doEnableColor0 = (lightInfo->mCtrlFlag & 0x1);
-		u32 diffFnColor0    = (lightInfo->mCtrlFlag >> 3) & 0x3;
-		u32 diffFnAlpha0    = (lightInfo->mCtrlFlag >> 5) & 0x3;
-		bool doEnableAlpha0 = (lightInfo->mCtrlFlag & 0x4);
-		bool ambSrcColor0   = (lightInfo->mCtrlFlag & 0x200);
-		bool ambSrcAlpha0   = (lightInfo->mCtrlFlag & 0x400);
-		bool matSrcColor0   = (lightInfo->mCtrlFlag & 0x800);
-		bool matSrcAlpha0   = (lightInfo->mCtrlFlag & 0x1000);
+		bool doEnableColor0 = (lightInfo->mCtrlFlag & LightingControlFlags::EnableColor0);
+		u32 diffFnColor0    = (lightInfo->mCtrlFlag >> LightingControlFlags::DiffFnColor0Shift) & 0x3;
+		u32 diffFnAlpha0    = (lightInfo->mCtrlFlag >> LightingControlFlags::DiffFnAlpha0Shift) & 0x3;
+		bool doEnableAlpha0 = (lightInfo->mCtrlFlag & LightingControlFlags::EnableAlpha0);
+		bool ambSrcColor0   = (lightInfo->mCtrlFlag & LightingControlFlags::AmbSrcColor0Vtx);
+		bool ambSrcAlpha0   = (lightInfo->mCtrlFlag & LightingControlFlags::AmbSrcAlpha0Vtx);
+		bool matSrcColor0   = (lightInfo->mCtrlFlag & LightingControlFlags::MatSrcColor0Vtx);
+		bool matSrcAlpha0   = (lightInfo->mCtrlFlag & LightingControlFlags::MatSrcAlpha0Vtx);
 
 		GXSetChanCtrl(GX_COLOR0, doEnableColor0, (GXColorSrc)ambSrcColor0, (GXColorSrc)matSrcColor0, mActiveLightMask,
 		              (GXDiffuseFn)diffFnColor0, (!doEnableColor0) ? GX_AF_NONE : GX_AF_SPOT);
@@ -663,8 +664,9 @@ bool DGXGraphics::setLighting(bool set, PVWLightingInfo* lightInfo)
 	}
 
 	int numChans = 1;
-	if (lightInfo && lightInfo->mCtrlFlag & 0x2) {
-		GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, 0x80, (GXDiffuseFn)((lightInfo->mCtrlFlag >> 7) & 0x3), GX_AF_SPEC);
+	if (lightInfo && lightInfo->mCtrlFlag & LightingControlFlags::EnableSpecular) {
+		GXSetChanCtrl(GX_COLOR1, GX_TRUE, GX_SRC_REG, GX_SRC_REG, 0x80,
+		              (GXDiffuseFn)((lightInfo->mCtrlFlag >> LightingControlFlags::DiffFnSpecularShift) & 0x3), GX_AF_SPEC);
 		GXSetChanCtrl(GX_ALPHA1, GX_FALSE, GX_SRC_REG, GX_SRC_REG, 0x80, GX_DF_CLAMP, GX_AF_NONE);
 		numChans = 2;
 	} else {
@@ -826,13 +828,13 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 	mActiveMatrix = &mtx;
 	GXLoadPosMtxImm(mtx.mMtx, gxID);
 
-	if (_380) {
+	if (mCustomScale) {
 		Mtx mtx2; // 0x110
 		Mtx mtx3; // 0xE0
 		Mtx mtx4; // 0xB0
 		Mtx mtx5; // 0x80
 
-		MTXScale(mtx2, _380->x, _380->y, _380->z);
+		MTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
 		PSMTXInverse(mtx.mMtx, mtx5);
 		PSMTXTranspose(mtx5, mtx3);
 		PSMTXConcat(mtx3, mtx2, mtx4);
@@ -848,7 +850,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 		return;
 	}
 
-	if (_324) {
+	if (mHasTexGen) {
 		Mtx texMtx;
 		f32 mag      = 0.5f / VECMag((Vec*)mtx.mMtx);
 		texMtx[0][0] = mag * mtx.mMtx[0][0];
@@ -860,7 +862,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 		texMtx[1][2] = mag * mtx.mMtx[1][2];
 		texMtx[1][3] = 0.5f;
 
-		GXLoadTexMtxImm(texMtx, _3DC + gxID, GX_MTX2x4);
+		GXLoadTexMtxImm(texMtx, mTexMtxBaseID + gxID, GX_MTX2x4);
 	}
 
 	STACK_PAD_VAR(3);
@@ -885,7 +887,7 @@ void DGXGraphics::useMatrix(Matrix4f& mtx, int a)
  */
 void DGXGraphics::useTexture(Texture* texture, int id)
 {
-	_324 = 0;
+	mHasTexGen = 0;
 	if (!texture || texture != mActiveTexture[id]) {
 		if (texture) {
 			texture->makeResident();
@@ -911,39 +913,38 @@ void DGXGraphics::useTexture(Texture* texture, int id)
  */
 void DGXGraphics::setMatMatrices(Material* mat, int p2)
 {
-	_324 = (mat->mTextureInfo.mTevStageCount) ? true : false;
+	mHasTexGen = (mat->mTextureInfo.mTevStageCount) ? true : false;
 	GXSetNumTexGens(mat->mTextureInfo.mTexGenDataCount);
 
-	int mtxID = 30;
+	int matrixType = 30;
 	for (int i = 0, j = 0; i < mat->mTextureInfo.mTexGenDataCount; i++) {
 
-		u32 postMtx = mat->mTextureInfo.mTexGenData[i]._03;
-		if (postMtx != 10) {
-			postMtx = mtxID;
+		u32 postMtxId = mat->mTextureInfo.mTexGenData[i].mMatrixType;
+		if (postMtxId != 10) {
+			postMtxId = matrixType;
 		} else {
-			postMtx = 60;
+			postMtxId = 60;
 		}
 
-		GXTexGenSrc texGenSrc   = GXTexGenSrc(mat->mTextureInfo.mTexGenData[i]._02);
-		GXTexGenType texGenType = GXTexGenType(mat->mTextureInfo.mTexGenData[i]._01);
-		GXTexCoordID texCoordID = GXTexCoordID(mat->mTextureInfo.mTexGenData[i]._00);
+		GXTexGenSrc texGenSrc   = GXTexGenSrc(mat->mTextureInfo.mTexGenData[i].mTexGenSrc);
+		GXTexGenType texGenType = GXTexGenType(mat->mTextureInfo.mTexGenData[i].mTexGenType);
+		GXTexCoordID texCoordID = GXTexCoordID(mat->mTextureInfo.mTexGenData[i].mTexCoordID);
+		GXSetTexCoordGen2(texCoordID, texGenType, texGenSrc, postMtxId, GX_FALSE, GX_PTIDENTITY);
 
-		GXSetTexCoordGen2(texCoordID, texGenType, texGenSrc, postMtx, GX_FALSE, GX_PTIDENTITY);
-
-		if (mat->mTextureInfo.mTexGenData[i]._01 != 1) {
+		if (mat->mTextureInfo.mTexGenData[i].mTexGenType != 1) {
 			continue;
 		}
 
 		int animFactor = mat->mTextureInfo.mTextureData[j].mAnimationFactor;
 		if (animFactor != 0xFF) {
-			int id = (animFactor != 10) ? mtxID : 60;
+			int id = (animFactor != 10) ? matrixType : 60;
 			GXLoadTexMtxImm(mat->mTextureInfo.mTextureData[j].mAnimatedTexMtx.mMtx, id, GX_MTX2x4);
 
-			if (_324 && mat->mTextureInfo.mTexGenData[i]._02 == 1) {
-				_3DC = mtxID;
-				mtxID += (mat->mTextureInfo.mTevStageCount * p2) * 3;
+			if (mHasTexGen && mat->mTextureInfo.mTexGenData[i].mTexGenSrc == 1) {
+				mTexMtxBaseID = matrixType;
+				matrixType += (mat->mTextureInfo.mTevStageCount * p2) * 3;
 			} else {
-				mtxID += 3;
+				matrixType += 3;
 			}
 		}
 		j++;
@@ -960,7 +961,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 	if (mat) {
 		gsys->mMaterialCount++;
 
-		if (mat->mFlags & 0x1) {
+		if (mat->mFlags & MATFLAG_PVW) {
 			if (mat->mDisplayListPtr) {
 				GXCallDisplayList(mat->mDisplayListPtr, mat->mDisplayListSize);
 				GXSetNumChans(mat->mLightingInfo.mNumChans);
@@ -977,28 +978,28 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 					GXSetZMode((mat->mPeInfo.mDepthTestFlags & 1) != 0, (GXCompare)(mat->mPeInfo.mDepthTestFlags >> 8 & 0xFF),
 					           (mat->mPeInfo.mDepthTestFlags & 2) != 0);
-				} else if (mat->mFlags & 0x8000) {
+				} else if (mat->mFlags & MATFLAG_INVERT_BLEND) {
 					GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-				} else if (mat->mFlags & 0x100) {
+				} else if (mat->mFlags & MATFLAG_OPAQUE) {
 					GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-				} else if (mat->mFlags & 0x200) {
+				} else if (mat->mFlags & MATFLAG_ALPHA_TEST) {
 					GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 					GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-				} else if (mat->mFlags & 0x400) {
+				} else if (mat->mFlags & MATFLAG_ALPHA_BLEND) {
 					GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 					GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 					GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 				}
 
-				GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->_6C[0]));
-				GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->_6C[1]));
-				GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->_6C[2]));
-				GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->_6C[3]));
+				GXSetTevKColor(GX_KCOLOR0, *((GXColor*)&mat->mTevInfo->mKonstColors[0]));
+				GXSetTevKColor(GX_KCOLOR1, *((GXColor*)&mat->mTevInfo->mKonstColors[1]));
+				GXSetTevKColor(GX_KCOLOR2, *((GXColor*)&mat->mTevInfo->mKonstColors[2]));
+				GXSetTevKColor(GX_KCOLOR3, *((GXColor*)&mat->mTevInfo->mKonstColors[3]));
 				for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 					PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
 					GXSetTevColorIn((GXTevStageID)i, (GXTevColorArg)stage.mTevColorCombiner.mInArgA,
@@ -1016,7 +1017,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 				}
 
 				gsys->mLightingSets++;
-				setLighting((mat->mLightingInfo.mCtrlFlag & 0x1) != 0, &mat->mLightingInfo);
+				setLighting((mat->mLightingInfo.mCtrlFlag & LightingControlFlags::EnableColor0) != 0, &mat->mLightingInfo);
 			}
 
 			for (int i = 0; i < mat->mTextureInfo.mTextureDataCount; i++) {
@@ -1045,31 +1046,31 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 			          mLightIntensity * mat->mColourInfo.mColour.a);
 			GXSetChanMatColor(GX_COLOR0A0, *(GXColor*)&color);
 
-			if (mat->mTextureInfo._14) {
-				_380 = &mat->mTextureInfo._00;
+			if (mat->mTextureInfo.mUseScale) {
+				mCustomScale = &mat->mTextureInfo.mScale;
 			} else {
-				_380 = nullptr;
+				mCustomScale = nullptr;
 			}
 
-			setMatMatrices(mat, _328);
+			setMatMatrices(mat, mMtxDepIdx);
 
 			return;
 		}
 
-		_380 = nullptr;
-		if (mat->mFlags & 0x8000) {
+		mCustomScale = nullptr;
+		if (mat->mFlags & MATFLAG_INVERT_BLEND) {
 			GXSetBlendMode(GX_BM_BLEND, GX_BL_ZERO, GX_BL_INVSRCCOL, GX_LO_CLEAR);
 			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
-		} else if (mat->mFlags & 0x100) {
+		} else if (mat->mFlags & MATFLAG_OPAQUE) {
 			GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-		} else if (mat->mFlags & 0x200) {
+		} else if (mat->mFlags & MATFLAG_ALPHA_TEST) {
 			GXSetBlendMode(GX_BM_NONE, GX_BL_ONE, GX_BL_ZERO, GX_LO_COPY);
 			GXSetAlphaCompare(GX_GEQUAL, 0x80, GX_AOP_AND, GX_LEQUAL, 255);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-		} else if (mat->mFlags & 0x400) {
+		} else if (mat->mFlags & MATFLAG_ALPHA_BLEND) {
 			GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_COPY);
 			GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
@@ -1085,9 +1086,9 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 			return;
 		}
 
-		if (mat->_28) {
-			if (!_3D4) {
-				useTexture(mat->_28, 1);
+		if (mat->mEnvMapTexture) {
+			if (!mIsEnvMapActive) {
+				useTexture(mat->mEnvMapTexture, 1);
 				if (mat->mTexture) {
 					GXSetNumTexGens(2);
 					GXSetNumTevStages(2);
@@ -1107,20 +1108,20 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 				GXSetTevColorOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
 				GXSetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_APREV, GX_CA_TEXA, GX_CA_ZERO);
 				GXSetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
-				_3D4 = true;
+				mIsEnvMapActive = true;
 			}
 
-			_324 = 1;
+			mHasTexGen = 1;
 			return;
 		}
 	}
 
-	_380 = nullptr;
-	if (_3D4) {
+	mCustomScale = nullptr;
+	if (mIsEnvMapActive) {
 		GXSetTevOp(GX_TEVSTAGE1, GX_PASSCLR);
 		GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX3X4, GX_TG_TEX1, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
 		GXSetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR_NULL);
-		_3D4 = false;
+		mIsEnvMapActive = false;
 	}
 
 	GXSetNumTevStages(1);
@@ -1128,7 +1129,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 	oldCull = FALSE;
 	GXSetCullMode(GX_CULL_BACK);
 
-	STACK_PAD_TERNARY(_380, 7);
+	STACK_PAD_TERNARY(mCustomScale, 7);
 }
 
 /*
@@ -1230,7 +1231,7 @@ void DGXGraphics::setupVtxDesc(Shape* model, Material* mat, Mesh* mesh)
 		}
 	}
 
-	if (_380) {
+	if (mCustomScale) {
 		if (!sendNbtIndx) {
 			GXSetArray(GX_VA_NBT, model->mNBTList, sizeof(NBT));
 			GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_NBT, GX_NRM_NBT, GX_F32, 0);
@@ -1285,17 +1286,19 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 	Mesh& mesh    = model->mMeshList[matPoly->mMeshIndex];
 	Material& mat = model->mMaterialList[matPoly->mIndex];
 
-	if (!mesh.mJointList || mat.mFlags & 0x10000) {
+	if (!mesh.mJointList || mat.mFlags & MATFLAG_SKIP) {
 		return;
 	}
+
 	if ((!mesh.mJointList->mFlags) & 0x1) { // is this a typo? feels like a typo.
 		return;
 	}
+
 	if (!(mat.mFlags & mRenderState)) {
 		return;
 	}
 
-	_328 = mesh.mMtxDepIndex;
+	mMtxDepIdx = mesh.mMtxDepIdx;
 	useMaterial(&mat);
 	setupVtxDesc(model, &mat, &mesh);
 
@@ -1320,7 +1323,7 @@ void DGXGraphics::drawSingleMatpoly(Shape* model, Joint::MatPoly* matPoly)
 
 		for (int j = 0; j < group.mDispListLength; j++) {
 			DispList& list = group.mDispList[j];
-			setCullFront((list.mFlags & 3) ^ _334);
+			setCullFront((list.mFlags & 3) ^ mCullFlip);
 			gsys->mPolygonCount += list.mFaceCount;
 			gsys->mDispCount++;
 			GXCallDisplayList(list.mData, list.mDataLength);
