@@ -1522,7 +1522,7 @@ void SceneCut::genCutSection(AgeServer& server)
 		server.NewOption("NONE", 2);
 		server.EndOptionBox();
 		server.setOnChange((IDelegate*)nullptr);
-		if (key->mEventType == 1) {
+		if (key->mEventType == ANIMEVENT_Action) {
 			server.setOnChange(new Delegate1<SceneCut, AgeServer&>(this, ageRefresh));
 			server.StartOptionBox("", &key->mEventCmdID, 90);
 			for (int i = 0; i < demoEventMgr->getSenderMax(); i++) {

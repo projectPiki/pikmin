@@ -33,8 +33,8 @@ enum AnimInfoFlags {
  * @brief Enum for AnimKey event types.
  */
 enum AnimKeyEvents {
-	ANIMEVENT_Notify = 0, ///< 0, play sound effect or send message.
-	ANIMEVENT_Action = 1, ///< 1, play cutscene or particle effect.
+	ANIMEVENT_Notify = 0, ///< 0, play sound effect or send message. TODO: some funny business going on here
+	ANIMEVENT_Action = 1, ///< 1, play cutscene or particle effect.  TODO: some funny business going on here
 	ANIMEVENT_None   = 2, ///< 2, do nothing (default).
 	ANIMEVENT_COUNT,      ///< 3 (max).
 };

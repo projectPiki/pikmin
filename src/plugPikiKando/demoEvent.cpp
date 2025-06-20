@@ -62,11 +62,11 @@ DemoEventMgr::DemoEventMgr()
  * Address:	80083140
  * Size:	00044C
  */
-void DemoEventMgr::act(int id, int id2)
+void DemoEventMgr::act(int cmd, int type)
 {
-	switch (id) {
+	switch (cmd) {
 	case 5:
-		switch (id2) {
+		switch (type) {
 		case 0:
 			gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 			break;
@@ -90,7 +90,7 @@ void DemoEventMgr::act(int id, int id2)
 		}
 		break;
 	case 0:
-		switch (id2) {
+		switch (type) {
 		case 0:
 			naviMgr->getNavi()->enterAllPikis();
 			break;
@@ -99,7 +99,7 @@ void DemoEventMgr::act(int id, int id2)
 	case 1:
 		UfoItem* ufo = itemMgr->getUfo();
 		if (ufo) {
-			switch (id2) {
+			switch (type) {
 			case 0:
 				ufo->startConeEffect(0);
 				break;
@@ -144,10 +144,10 @@ void DemoEventMgr::act(int id, int id2)
 	case 2:
 	case 3:
 	case 4:
-		int goalID     = id - 2;
+		int goalID     = cmd - 2;
 		GoalItem* goal = itemMgr->getContainer(goalID);
 		if (goal) {
-			switch (id2) {
+			switch (type) {
 			case 0:
 				goal->mCurrAnimId++;
 				goal->emitPiki();
