@@ -21,6 +21,9 @@ struct PelletAnimInfo : public Parameters, public CoreNode {
 	PelletAnimInfo();
 
 	PelletShapeObject* createShapeObject();
+	void changeType(AgeServer&);
+	void newShapeObject(AgeServer&);
+	void removeSelf(AgeServer&);
 
 	// _04     = VTBL 1
 	// _58     = VTBL 2
@@ -35,6 +38,10 @@ struct PelletAnimInfo : public Parameters, public CoreNode {
 
 	// why is this split like this.
 	virtual void read(RandomAccessStream&); // _18
+#ifdef DEVELOP
+	virtual void write(RandomAccessStream&);
+	virtual void genAge(AgeServer&);
+#endif
 
 	PelletShapeObject* mPelletShapeObject; // _5C
 };

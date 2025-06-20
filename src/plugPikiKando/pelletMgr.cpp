@@ -13,10 +13,12 @@
 #include "AIPerf.h"
 #include "teki.h"
 #include "Font.h"
+#include "Age.h"
 #include "Graphics.h"
 #include "EffectMgr.h"
 #include "DebugLog.h"
 #include "zen/Math.h"
+#include "ItemMgr.h"
 
 /*
  * --INFO--
@@ -1929,3 +1931,163 @@ void PelletMgr::refresh2d(Graphics&)
 }
 
 PelletMgr* pelletMgr;
+
+// The functions following this point are exclusively found in the windows .dll build
+// None of this is confirmed to be equivalent for obvious reasons
+#ifdef DEVELOP
+
+void PelletConfig::genAge(AgeServer& server)
+{
+	server.StartGroup("config");
+	server.NewButton("delete", new Delegate1<PelletConfig, AgeServer&>(this, removeSelf), 221);
+	mModelId.genAge(server, "id");
+	mPelletId.genAge(server, "shapeID");
+	mUnusedId.genAge(server, "split");
+	server.EndGroup();
+
+	Shape* ufo = itemMgr->getUfoShape();
+	if (ufo) {
+		server.StartGroup("joint");
+		server.StartOptionBox("ジョイント", &mRepairAnimJointIndex, 252);
+		server.NewOption("なし", -1);
+		for (int i = 0; i < ufo->mJointCount; i++) {
+			server.NewOption(ufo->mJointList[i].mName, i);
+		}
+		server.EndOptionBox();
+		server.EndGroup();
+	}
+
+	genAgeParms(server, 10);
+}
+
+void PelletConfig::write(RandomAccessStream& output)
+{
+	Parameters::write(output);
+	mModelId.write(output);
+	mPelletId.write(output);
+	mUnusedId.write(output);
+	output.writeInt(mRepairAnimJointIndex);
+}
+
+void PelletConfig::removeSelf(AgeServer& server)
+{
+	pelletMgr->removeConfig(server, this);
+}
+
+void PelletMgr::genAge(AgeServer& server)
+{
+	server.StartSection("ペレット", true);
+	server.StartGroup("operation");
+	server.NewButton("new animinfo", new Delegate1<PelletMgr, AgeServer&>(this, addAnimInfo), 221);
+	server.NewButton("new config", new Delegate1<PelletMgr, AgeServer&>(this, addConfig), 221);
+	server.EndGroup();
+
+	server.StartSection("シェイプ管理", true); // shape management
+	server.StartGroup("file");
+	server.NewButton("new animinfo", new Delegate1<PelletMgr, AgeServer&>(this, addAnimInfo), 221);
+	server.NewButton("Load", new Delegate1<PelletMgr, AgeServer&>(this, animInfoRead), 221);
+	server.NewButton("Save", new Delegate1<PelletMgr, AgeServer&>(this, animInfoWrite), 221);
+	FOREACH_NODE(PelletAnimInfo, mAnimInfoList.mChild, info)
+	{
+		server.StartSection(info->mID.mStringID, true);
+		server.setSectionRefresh(new Delegate1<PelletAnimInfo, AgeServer&>(info, PelletAnimInfo::genAge));
+		server.EndSection();
+	}
+	server.EndSection();
+
+	server.StartSection("config", true);
+	server.StartGroup("file");
+	server.NewButton("new config", new Delegate1<PelletMgr, AgeServer&>(this, addConfig), 221);
+	server.NewButton("Load", new Delegate1<PelletMgr, AgeServer&>(this, configRead), 221);
+	server.NewButton("Save", new Delegate1<PelletMgr, AgeServer&>(this, configWrite), 221);
+	FOREACH_NODE(PelletConfig, mConfigList.mChild, config)
+	{
+		server.StartSection(config->mPelletName().mString, true);
+		server.setSectionRefresh(new Delegate1<PelletConfig, AgeServer&>(config, CoreNode::genAge));
+		server.EndSection();
+	}
+	server.EndSection();
+
+	server.StartSection("animMgr", true);
+	FOREACH_NODE(PelletAnimInfo, mAnimInfoList.mChild, info)
+	{
+		if (info->mPelletShapeObject) {
+			info->mPelletShapeObject->genAge(server);
+		}
+	}
+	server.EndSection();
+
+	server.EndSection();
+}
+
+void PelletMgr::writeAnimInfos(RandomAccessStream& output)
+{
+	output.writeInt(mAnimInfoNum);
+	FOREACH_NODE(PelletAnimInfo, mAnimInfoList.mChild, info)
+	{
+		info->write(output);
+	}
+}
+
+void PelletMgr::writeConfigs(RandomAccessStream& output)
+{
+	output.writeInt(mConfigNum);
+	FOREACH_NODE(PelletConfig, mConfigList.mChild, config)
+	{
+		config->write(output);
+	}
+}
+
+void PelletMgr::addAnimInfo(AgeServer& server)
+{
+	mAnimInfoList.add(new AnimInfo);
+	mAnimInfoNum++;
+	server.RefreshNode();
+}
+
+void PelletMgr::addConfig(AgeServer& server)
+{
+	mConfigList.add(new PelletConfig);
+	mConfigNum++;
+	server.RefreshNode();
+}
+
+void PelletMgr::animInfoRead(AgeServer& server)
+{
+	mReadStage = 1;
+	genRead(server);
+}
+
+void PelletMgr::animInfoWrite(AgeServer& server)
+{
+	mReadStage = 1;
+	genWrite(server);
+}
+
+void PelletMgr::configRead(AgeServer& server)
+{
+	mReadStage = 0;
+	genRead(server);
+}
+
+void PelletMgr::configWrite(AgeServer& server)
+{
+	mReadStage = 0;
+	genWrite(server);
+}
+
+void PelletMgr::removeAnimInfo(AgeServer& server, PelletAnimInfo* info)
+{
+	info->del();
+	mAnimInfoNum--;
+	server.RefreshNode();
+}
+
+void PelletMgr::removeConfig(AgeServer& server, PelletConfig* config)
+{
+	config->del();
+	mConfigNum--;
+	server.RefreshNode();
+}
+
+#endif

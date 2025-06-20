@@ -1,6 +1,8 @@
 #include "PelletAnimator.h"
 #include "Pellet.h"
 #include "sysNew.h"
+#include "Age.h"
+#include "teki.h"
 #include "DebugLog.h"
 #include "gameflow.h"
 
@@ -232,3 +234,85 @@ PaniMotionTable* PaniPelletAnimator::createMotionTable()
 PaniPelletAnimator::PaniPelletAnimator()
 {
 }
+
+#ifdef DEVELOP
+
+void PelletAnimInfo::write(RandomAccessStream& output)
+{
+	mID.write(output);
+	output.writeInt(mCreationType);
+	output.writeInt(mTekiType);
+	output.writeInt(mStartAnimId);
+	Parameters::write(output);
+}
+
+void PelletAnimInfo::genAge(AgeServer& server)
+{
+	server.StartGroup("operation");
+	server.NewButton("delete", new Delegate1<PelletAnimInfo, AgeServer&>(this, removeSelf), 221);
+	mID.genAge(server, "id");
+	if (mPelletShapeObject == nullptr) {
+		server.NewButton("new ShapeObject", new Delegate1<PelletAnimInfo, AgeServer&>(this, newShapeObject), 221);
+	}
+	server.EndGroup();
+
+	server.StartGroup("type");
+	server.setOnChange(new Delegate1<PelletAnimInfo, AgeServer&>(this, changeType));
+	server.StartOptionBox("type", &mCreationType, 272);
+	server.NewOption("常駐", 0);
+	server.NewOption("あればロード", 1);
+	server.NewOption("TEKI 次第でロード", 2);
+	server.NewOption("BOSS 次第でロード", 3);
+	server.EndOptionBox();
+	if (mCreationType == 2) {
+		server.StartOptionBox("TEKI", &mTekiType, 252);
+		for (int i = 0; i < TEKI_TypeCount; i++) {
+			server.NewOption(tekiMgr->getTypeName(i), i);
+		}
+		server.EndOptionBox();
+	}
+	server.setOnChange((IDelegate*)nullptr);
+	server.EndGroup();
+
+	if (mPelletShapeObject) {
+		server.StartGroup("joint");
+		server.StartOptionBox("ジョイント", &mStartAnimId, 252);
+		server.NewOption("なし", -1);
+		for (int i = 0; i < mPelletShapeObject->mShape->mJointCount; i++) {
+			if (mPelletShapeObject->mShape->mJointList[i].mName) {
+				server.NewOption(mPelletShapeObject->mShape->mJointList[i].mName, i);
+			} else {
+				char buf[PATH_MAX];
+				sprintf(buf, "joint %d", i);
+				server.NewOption(buf, i);
+			}
+		}
+		server.EndOptionBox();
+		server.EndGroup();
+	}
+	genAgeParms(server, 10);
+}
+
+void PelletAnimInfo::changeType(AgeServer& server)
+{
+	server.RefreshSection();
+}
+
+void PelletAnimInfo::newShapeObject(AgeServer& server)
+{
+	if (createShapeObject()) {
+		server.RefreshNode();
+	}
+}
+
+void PelletAnimInfo::removeSelf(AgeServer& server)
+{
+	pelletMgr->removeAnimInfo(server, this);
+}
+
+void PelletShapeObject::genAge(AgeServer& server)
+{
+	mAnimMgr->genAge(server);
+}
+
+#endif

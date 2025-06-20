@@ -18,6 +18,10 @@ struct CoreNode : public ANode {
 	 */
 	CoreNode(char* name = "CoreNode") { initCore(name); }
 
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&) { }
+#endif
+
 	/**
 	 * @brief Reads the data from a random access stream into the CoreNode.
 	 * @param stream The random access stream to read from.
@@ -97,9 +101,6 @@ struct CoreNode : public ANode {
 
 	void genRead(AgeServer&) { }
 	void genWrite(AgeServer&) { }
-#ifdef DEVELOP
-	virtual void genAge(AgeServer&) { }
-#endif
 
 	// _00 = VTBL
 	char* mName;       // _04

@@ -59,17 +59,20 @@ u8 Texture::getAlpha(int x, int y)
 {
 	switch (mTexFormat) {
 	case TEX_FMT_IA4: {
-		// pretty sure this is "right", just needs massaging
 		int tileArea = mTileSizeX * mTileSizeY;
-		return ((u8*)mPixelData)[(x / mTileSizeX) * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY)
-		                         + (y / mTileSizeY) * ((mWidth / mTileSizeX) * tileArea)]
+		int x2       = x / mTileSizeX;
+		int y2       = y / mTileSizeY;
+		return ((u8*)mPixelData)[x2 * tileArea + (x % mTileSizeX) + mTileSizeX * (y % mTileSizeY) + y2 * ((mWidth / mTileSizeX) * tileArea)]
 		     & 0xF0;
 	}
 	default: {
-		// pretty sure this is "right", just needs massaging
 		int tileArea = mTileSizeX * mTileSizeY;
-		u16 alpha    = ((u16*)mPixelData)[(x % mTileSizeX) + (mTileSizeX * (y % mTileSizeY))
-                                       + (y / mTileSizeY) * ((mWidth / mTileSizeX) * tileArea) + (x / mTileSizeX) * tileArea];
+		int blockX   = (x / mTileSizeX) * (mWidth / mTileSizeX) * tileArea;
+		int blockY   = (y / mTileSizeY) * tileArea;
+		x %= mTileSizeX;
+		y %= mTileSizeY;
+		u16 alpha = ((u16*)mPixelData)[blockX + x + mTileSizeX * y + blockY];
+
 		if (alpha & 0x8000) {
 			return 255;
 		}

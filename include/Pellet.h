@@ -217,6 +217,8 @@ struct PelletShapeObject {
 	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
 	void setMotionFlag(u8 flag) { mMotionFlag |= flag; }
 
+	void genAge(AgeServer&);
+
 	Shape* mShape;          // _00
 	AnimMgr* mAnimMgr;      // _04
 	AnimContext mAnimatorA; // _08
@@ -258,6 +260,13 @@ struct PelletConfig : public Parameters, public CoreNode {
 	// this has to be down here or the second VTBL spawns at 0x18 (should spawn at 0x134)
 
 	virtual void read(RandomAccessStream&); // _18 (weak)
+
+	void removeSelf(AgeServer&);
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+	virtual void write(RandomAccessStream&);
+#endif
 };
 
 /**
@@ -405,6 +414,9 @@ struct PelletMgr : public MonoObjectMgr {
 
 	PelletMgr(MapMgr*);
 
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&);
+#endif
 	virtual ~PelletMgr() { }                // _48 (weak)
 	virtual void refresh(Graphics&);        // _58
 	virtual Creature* createObject();       // _80
@@ -435,12 +447,19 @@ struct PelletMgr : public MonoObjectMgr {
 
 	static int getUfoIndexFromID(u32 ufoID);
 	static u32 getUfoIDFromIndex(int);
+	int getNumConfigs() { return mConfigNum; }
 
-	// DLL inlines to make:
-	int getNumConfigs();
-
+	// .dll exclusive functions
 	void writeAnimInfos(RandomAccessStream&);
 	void writeConfigs(RandomAccessStream&);
+	void addAnimInfo(AgeServer&);
+	void addConfig(AgeServer&);
+	void animInfoRead(AgeServer&);
+	void animInfoWrite(AgeServer&);
+	void configRead(AgeServer&);
+	void configWrite(AgeServer&);
+	void removeAnimInfo(AgeServer&, PelletAnimInfo*);
+	void removeConfig(AgeServer&, PelletConfig*);
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2
