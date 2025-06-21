@@ -34,37 +34,37 @@ struct TAIeffectAttackParam {
 
 	void init()
 	{
-		mTeki = nullptr;
-		_00   = 0.0f;
-		_04   = 0.0f;
-		_0C   = 0.0f;
+		mTeki        = nullptr;
+		mCurrentTime = 0.0f;
+		mDuration    = 0.0f;
+		mMaxRange    = 0.0f;
 		mPosition.set(0.0f, 0.0f, 0.0f);
 		mVelocity.set(0.0f, 0.0f, 0.0f);
-		_28.set(0.0f, 0.0f, 0.0f);
-		_34 = 0.0f;
-		_3C = _40 = nullptr;
-		_44       = &mEventCallBack;
-		_4C.b     = 0;
-		_08       = 100.0f;
+		mDirection.set(0.0f, 0.0f, 0.0f);
+		mDamage      = 0.0f;
+		mSubEmitter1 = mSubEmitter2 = nullptr;
+		mCallBackRef                = &mEventCallBack;
+		mState.b                    = 0;
+		mRadius                     = 100.0f;
 	}
 
-	f32 _00;                                     // _00
-	f32 _04;                                     // _04
-	f32 _08;                                     // _08
-	f32 _0C;                                     // _0C
+	f32 mCurrentTime;                            // _00
+	f32 mDuration;                               // _04
+	f32 mRadius;                                 // _08
+	f32 mMaxRange;                               // _0C
 	Vector3f mPosition;                          // _10
 	Vector3f mVelocity;                          // _1C
-	Vector3f _28;                                // _28
-	f32 _34;                                     // _34
+	Vector3f mDirection;                         // _28
+	f32 mDamage;                                 // _34
 	Teki* mTeki;                                 // _38
-	zen::particleGenerator* _3C;                 // _3C
-	zen::particleGenerator* _40;                 // _40
-	TAIeffectAttackEventCallBack* _44;           // _44
+	zen::particleGenerator* mSubEmitter1;        // _3C
+	zen::particleGenerator* mSubEmitter2;        // _40
+	TAIeffectAttackEventCallBack* mCallBackRef;  // _44
 	TAIeffectAttackEventCallBack mEventCallBack; // _48
 	union {
-		u32 m0 : 1;
-		u8 b;
-	} _4C; // _4C
+		u32 mIsMoving : 1;
+		u8 b; // Unused
+	} mState; // _4C
 };
 
 /**
@@ -112,7 +112,7 @@ struct ConeTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	TAIeffectAttackParam* mParam; // _04
-	f32 _08;                      // _08
+	f32 mConeHalfAngle;           // _08
 };
 
 #endif

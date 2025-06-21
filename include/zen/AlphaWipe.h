@@ -61,7 +61,7 @@ struct AlphaWipe {
 	f32 mStartWipeTimer; // _0C
 	f32 mWipeDuration;   // _10
 	f32 mEndWipeTimer;   // _14
-	f32 _18;             // _18
+	f32 mTotalDuration;  // _18
 	f32 mDelayPeriod;    // _1C
 	Colour mStartColor;  // _20
 	Colour mEndColor;    // _24

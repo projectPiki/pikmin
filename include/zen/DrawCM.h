@@ -46,7 +46,7 @@ struct DrawCMtitleObj {
 	u32 getEvent() { return mEventFlag; }
 
 	P2DPane* mTitlePane;    // _00
-	Vector3f _04;           // _04
+	Vector3f mPosition;           // _04
 	int _10;                // _10
 	ModeFunc mModeFunction; // _14
 	f32 _20;                // _20

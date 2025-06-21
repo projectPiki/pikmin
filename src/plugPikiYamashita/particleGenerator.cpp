@@ -102,10 +102,10 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector
 
 			!!data;
 
-			u32 rotType            = (mAnimData.mFlags.bits._m1) & 0x7;
-			mOrientedDrawConfig.m0 = (mAnimData.mFlags.bits._m5);
-			mOrientedDrawConfig.m1 = mAnimData.mFlags.bits._m6;
-			mOrientedDrawConfig.m2 = 0;
+			u32 rotType                            = (mAnimData.mFlags.bits.mRotationType) & 0x7;
+			mOrientedDrawConfig.mOrientationSource = (mAnimData.mFlags.bits.mOrientationSource);
+			mOrientedDrawConfig.mIsDoubleSided     = mAnimData.mFlags.bits.mIsDoubleSided;
+			mOrientedDrawConfig.mFlipNormal        = 0;
 			mAnimData.mFlags.all &= 0x1;
 			mDrawCallBack = &drawPtclOriented;
 
@@ -1036,7 +1036,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 		PSMTXConcat(gfx.mCamera->mLookAtMtx.mMtx, mtx1.mMtx, mtx1.mMtx);
 
 		Vector3f* vec;
-		switch (mOrientedDrawConfig.m0) {
+		switch (mOrientedDrawConfig.mOrientationSource) {
 		case 0:
 			vec = &ptcl->mVelocity;
 			break;
@@ -1060,7 +1060,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 			if (len != 0.0f) {
 				vec2.normalize();
 
-				if (mOrientedDrawConfig.m2) {
+				if (mOrientedDrawConfig.mFlipNormal) {
 					vec3 = ptcl->mOrientedNormal;
 					vec1.cross(vec3, vec2);
 					vec1.normalize();
@@ -1098,7 +1098,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics& gfx)
 
 		GXLoadPosMtxImm(mtx1.mMtx, 0);
 
-		if (mOrientedDrawConfig.m1) {
+		if (mOrientedDrawConfig.mIsDoubleSided) {
 			GXBegin(GX_QUADS, GX_VTXFMT0, 8);
 			GXTexCoord2u8(0, 0);
 			GXTexCoord2u8(0, 0);

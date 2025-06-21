@@ -25,6 +25,15 @@ struct DrawGameOverLetter;
 struct DrawGameOverScreen;
 
 /**
+ * @brief The current state of the "Game Over" screen logic.
+ */
+DEFINE_ENUM_TYPE(GameOverState,
+                 Inactive  = 0, // The screen is not active.
+                 Start     = 1, // The screen has started and is in an initial delay period.
+                 WaitInput = 2  // The screen is waiting for player input or a timeout to finish.
+);
+
+/**
  * @brief TODO
  *
  * @note Size: 0x1C.
@@ -32,11 +41,11 @@ struct DrawGameOverScreen;
 struct DrawGameOver {
 
 	/**
-	 * @brief TODO
+	 * @brief The type of "Game Over" screen to display.
 	 */
 	enum modeFlag {
-		MODE_Unk0 = 0,
-		MODE_Unk1 = 1,
+		MODE_GameOverA = 0, // The normal "gameover.blo" screen.
+		MODE_GameOverB = 1, // The alternative "gameove2.blo" screen.
 	};
 
 	DrawGameOver();
@@ -45,13 +54,13 @@ struct DrawGameOver {
 	bool update(Controller*);
 	void draw(Graphics&);
 
-	int _00;                 // _00
-	DrawGameOverScreen* _04; // _04
-	DrawGameOverScreen* _08; // _08
-	DrawGameOverScreen* _0C; // _0C
-	modeFlag mMode;          // _10
-	f32 _14;                 // _14
-	f32 _18;                 // _18
+	int mState;                        // _00
+	DrawGameOverScreen* mGameOverA;    // _04
+	DrawGameOverScreen* mGameOverB;    // _08
+	DrawGameOverScreen* mActiveScreen; // _0C
+	modeFlag mMode;                    // _10
+	f32 mStateTimer;                   // _14
+	f32 mInputWaitTime;                // _18
 };
 
 } // namespace zen

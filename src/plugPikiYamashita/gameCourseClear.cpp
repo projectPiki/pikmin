@@ -384,7 +384,7 @@ struct GameOverMode : public GameModeBase {
 	    : GameModeBase("ゲームオーバー") // 'game over'
 	{
 		_0C = 0;
-		mGameOverScreen.start(zen::DrawGameOver::MODE_Unk1, 40.0f);
+		mGameOverScreen.start(zen::DrawGameOver::MODE_GameOverB, 40.0f);
 		mCancelButton = KBBTN_Z;
 	}
 
@@ -397,10 +397,10 @@ struct GameOverMode : public GameModeBase {
 			}
 			switch (_0C) {
 			case 0:
-				mGameOverScreen.start(zen::DrawGameOver::MODE_Unk1, 40.0f);
+				mGameOverScreen.start(zen::DrawGameOver::MODE_GameOverB, 40.0f);
 				break;
 			case 1:
-				mGameOverScreen.start(zen::DrawGameOver::MODE_Unk0, 40.0f);
+				mGameOverScreen.start(zen::DrawGameOver::MODE_GameOverA, 40.0f);
 				break;
 			}
 		}

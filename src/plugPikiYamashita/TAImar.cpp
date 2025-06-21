@@ -61,7 +61,7 @@ struct TAIeffectAttackEventCallBackMar : public TAIeffectAttackEventCallBack {
 	{
 		bool res = false;
 		Vector3f vec1;
-		if (!param->_3C && !param->_40) {
+		if (!param->mSubEmitter1 && !param->mSubEmitter2) {
 			MoveTrace trace(param->mPosition, param->mVelocity, 10.0f, false);
 			mapMgr->traceMove(nullptr, trace, gsys->getFrameTime());
 			if (param->mVelocity.x != trace.mVelocity.x || param->mVelocity.y != trace.mVelocity.y
@@ -75,18 +75,18 @@ struct TAIeffectAttackEventCallBackMar : public TAIeffectAttackEventCallBack {
 				vec2.normalize();
 				vec3.set(trace.mPosition.x, trace.mPosition.y + 10.0f, trace.mPosition.z);
 
-				param->_3C = effectMgr->create(EffectMgr::EFF_Mar_WindSpray, vec3, nullptr, nullptr);
-				if (param->_3C) {
+				param->mSubEmitter1 = effectMgr->create(EffectMgr::EFF_Mar_WindSpray, vec3, nullptr, nullptr);
+				if (param->mSubEmitter1) {
 					vec3.set(vec3.x + vec2.x * 30.0f, vec3.y, vec3.z + vec2.z * 30.0f);
-					param->_3C->setNewtonField(vec3, -0.032f, true);
-					param->_3C->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+					param->mSubEmitter1->setNewtonField(vec3, -0.032f, true);
+					param->mSubEmitter1->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 				}
 
-				param->_40 = effectMgr->create(EffectMgr::EFF_Mar_WindDust, vec3, nullptr, nullptr);
-				if (param->_40) {
+				param->mSubEmitter2 = effectMgr->create(EffectMgr::EFF_Mar_WindDust, vec3, nullptr, nullptr);
+				if (param->mSubEmitter2) {
 					vec3.set(vec3.x + vec2.x * 120.0f, vec3.y, vec3.z + vec2.z * 120.0f);
-					param->_40->setNewtonField(vec3, -0.005f, true);
-					param->_40->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+					param->mSubEmitter2->setNewtonField(vec3, -0.005f, true);
+					param->mSubEmitter2->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 				}
 
 				res = true;

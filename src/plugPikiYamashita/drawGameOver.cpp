@@ -20,6 +20,16 @@ DEFINE_PRINT("drawGameOver")
 
 namespace zen {
 /**
+ * @brief The animation state for an individual letter in the "Game Over" text.
+ */
+DEFINE_ENUM_TYPE(LetterState,
+                 Idle   = 0, // The letter is in its initial, unmoving state.
+                 Wait   = 1, // The letter is waiting for a staggered delay before starting its animation.
+                 Fall   = 2, // The letter is falling, bouncing, and rotating into its final position.
+                 Settle = 3  // The letter has landed and is settling into its final scale and rotation.
+);
+
+/**
  * @brief TODO
  *
  * @note Size: 0x30.
@@ -27,18 +37,18 @@ namespace zen {
 struct DrawGameOverLetter {
 	DrawGameOverLetter()
 	{
-		_00        = 0;
-		mLetterPic = 0;
-		_10        = 0;
-		_14        = 0;
-		_18        = 0.0f;
-		_1C        = 0.0f;
-		_20        = 0.0f;
-		_24        = 0.0f;
-		_28        = 0.0f;
-		_2C        = 0.0f;
-		_04        = 0.0f;
-		_08        = 0.0f;
+		mState           = LetterState::Idle;
+		mLetterPic       = 0;
+		mTargetX         = 0;
+		mTargetY         = 0;
+		mPositionX       = 0.0f;
+		mPositionY       = 0.0f;
+		mVelocityX       = 0.0f;
+		mVelocityY       = 0.0f;
+		mAngularVelocity = 0.0f;
+		mScaleVelocity   = 0.0f;
+		mStateTimer      = 0.0f;
+		mStartDelay      = 0.0f;
 	}
 
 	// weak
@@ -46,92 +56,98 @@ struct DrawGameOverLetter {
 	{
 		if (pane->getTypeID() == PANETYPE_Picture) {
 			mLetterPic = (P2DPicture*)pane;
-			_10        = mLetterPic->getPosH();
-			_14        = mLetterPic->getPosV();
+			mTargetX   = mLetterPic->getPosH();
+			mTargetY   = mLetterPic->getPosV();
 			initParams();
 		} else {
 			PRINT("not picture pane.\n");
 			ERROR("not picture pane.\n");
 		}
 	}
+
 	void initParams()
 	{
-		_00 = 0;
-		_04 = 0.0f;
-		_08 = 0.0f;
-		_18 = 320.0f;
-		_1C = _14 - 480.0f;
-		mLetterPic->move(RoundOff(_18), RoundOff(_1C));
-		_20 = Rand(10.0f) - 5.0f;
-		_24 = 0.0f;
-		_28 = 0.0f;
-		_2C = 0.0f;
+		mState      = LetterState::Idle;
+		mStateTimer = 0.0f;
+		mStartDelay = 0.0f;
+		mPositionX  = 320.0f;
+		mPositionY  = mTargetY - 480.0f;
+		mLetterPic->move(RoundOff(mPositionX), RoundOff(mPositionY));
+		mVelocityX       = Rand(10.0f) - 5.0f;
+		mVelocityY       = 0.0f;
+		mAngularVelocity = 0.0f;
+		mScaleVelocity   = 0.0f;
 	}
+
 	bool update()
 	{
 		bool res = false;
-		switch (_00) {
-		case 0:
+		switch (mState) {
+		case LetterState::Idle:
 			break;
-		case 1:
-			_04 += gsys->getFrameTime();
-			if (_04 > _08) {
-				_04 = 0.0f;
-				_00 = 2;
+
+		case LetterState::Wait:
+			mStateTimer += gsys->getFrameTime();
+			if (mStateTimer > mStartDelay) {
+				mStateTimer = 0.0f;
+				mState      = LetterState::Fall;
 				mLetterPic->setScale(0.5f);
 			}
 			break;
 
-		case 2:
-			_24 += gsys->getFrameTime() * 7200.0f * gsys->getFrameTime();
-			_1C += gsys->getFrameTime() * _24 * 30.0f;
-			_18 += gsys->getFrameTime() * _20 * 30.0f;
-			if (_1C > _14) {
-				_20 = gsys->getFrameTime() * ((_10 - _18) / 3.0f) * 30.0f;
-				if (_20 > 10.0f) {
-					_20 = 10.0f;
+		case LetterState::Fall:
+			mVelocityY += gsys->getFrameTime() * 7200.0f * gsys->getFrameTime();
+			mPositionY += gsys->getFrameTime() * mVelocityY * 30.0f;
+			mPositionX += gsys->getFrameTime() * mVelocityX * 30.0f;
+			if (mPositionY > mTargetY) {
+				mVelocityX = gsys->getFrameTime() * ((mTargetX - mPositionX) / 3.0f) * 30.0f;
+				if (mVelocityX > 10.0f) {
+					mVelocityX = 10.0f;
 				}
-				if (_20 < -10.0f) {
-					_20 = -10.0f;
+				if (mVelocityX < -10.0f) {
+					mVelocityX = -10.0f;
 				}
-				_1C = _14;
-				_24 *= Rand(0.2f) + -0.6f;
-				_28 = gsys->getFrameTime() * (_20 * 0.1f) * 30.0f;
+				mPositionY = mTargetY;
+				mVelocityY *= Rand(0.2f) + -0.6f;
+				mAngularVelocity = gsys->getFrameTime() * (mVelocityX * 0.1f) * 30.0f;
 			}
 
-			mLetterPic->move(RoundOff(_18), RoundOff(_1C));
-			mLetterPic->rotateZ(mLetterPic->getWidth() >> 1, RoundOff(mLetterPic->getHeight() * 0.75f), mLetterPic->getRotate() + _28);
-			_04 += gsys->getFrameTime();
-			if (_04 > 1.7f) {
-				_28 = 0.0f;
-				_04 = 0.0f;
-				_00 = 3;
-				_2C = 0.0f;
+			mLetterPic->move(RoundOff(mPositionX), RoundOff(mPositionY));
+			mLetterPic->rotateZ(mLetterPic->getWidth() >> 1, RoundOff(mLetterPic->getHeight() * 0.75f),
+			                    mLetterPic->getRotate() + mAngularVelocity);
+			mStateTimer += gsys->getFrameTime();
+			if (mStateTimer > 1.7f) {
+				mAngularVelocity = 0.0f;
+				mStateTimer      = 0.0f;
+				mState           = LetterState::Settle;
+				mScaleVelocity   = 0.0f;
 			}
 			break;
 
-		case 3:
-			_04 += gsys->getFrameTime();
-			if (_04 > 5.0f) {
-				_04 = 0.0f;
-				_28 = PI / 10.0f;
-				_2C = -0.2f;
+		case LetterState::Settle:
+			mStateTimer += gsys->getFrameTime();
+			if (mStateTimer > 5.0f) {
+				mStateTimer      = 0.0f;
+				mAngularVelocity = PI / 10.0f;
+				mScaleVelocity   = -0.2f;
 			}
 
 			if (mLetterPic->getRotate() < PI) {
-				_28 += -mLetterPic->getRotate() * gsys->getFrameTime();
+				mAngularVelocity += -mLetterPic->getRotate() * gsys->getFrameTime();
 			} else {
-				_28 += (TAU - mLetterPic->getRotate()) * gsys->getFrameTime();
+				mAngularVelocity += (TAU - mLetterPic->getRotate()) * gsys->getFrameTime();
 			}
 
-			_28 *= 0.95f;
-			mLetterPic->rotateZ(mLetterPic->getWidth() >> 1, RoundOff(mLetterPic->getHeight() * 0.75f), mLetterPic->getRotate() + _28);
+			mAngularVelocity *= 0.95f;
+			mLetterPic->rotateZ(mLetterPic->getWidth() >> 1, RoundOff(mLetterPic->getHeight() * 0.75f),
+			                    mLetterPic->getRotate() + mAngularVelocity);
 			Vector3f scale(mLetterPic->getScale());
-			_2C += gsys->getFrameTime() * (1.0f - scale.x) * 4.0f;
-			_2C *= 0.85f;
-			mLetterPic->setScale(scale.x + _2C);
+			mScaleVelocity += gsys->getFrameTime() * (1.0f - scale.x) * 4.0f;
+			mScaleVelocity *= 0.85f;
+			mLetterPic->setScale(scale.x + mScaleVelocity);
 			break;
 		}
+
 		return res;
 	}
 
@@ -139,23 +155,23 @@ struct DrawGameOverLetter {
 	void start(f32 p1)
 	{
 		initParams();
-		_00 = 1;
-		_04 = 0.0f;
-		_08 = p1;
+		mState      = LetterState::Wait;
+		mStateTimer = 0.0f;
+		mStartDelay = p1;
 	}
 
-	int _00;                // _00
-	f32 _04;                // _04
-	f32 _08;                // _08
+	int mState;             // _00
+	f32 mStateTimer;        // _04
+	f32 mStartDelay;        // _08
 	P2DPicture* mLetterPic; // _0C
-	int _10;                // _10
-	int _14;                // _14
-	f32 _18;                // _18
-	f32 _1C;                // _1C
-	f32 _20;                // _20
-	f32 _24;                // _24
-	f32 _28;                // _28
-	f32 _2C;                // _2C
+	int mTargetX;           // _10
+	int mTargetY;           // _14
+	f32 mPositionX;         // _18
+	f32 mPositionY;         // _1C
+	f32 mVelocityX;         // _20
+	f32 mVelocityY;         // _24
+	f32 mAngularVelocity;   // _28
+	f32 mScaleVelocity;     // _2C
 };
 
 /**
@@ -196,6 +212,7 @@ struct DrawGameOverScreen {
 			mLetters[i].start(f32(i) * 0.1f);
 		}
 	}
+
 	bool update()
 	{
 		for (int i = 0; i < mLetterCount; i++) {
@@ -204,6 +221,7 @@ struct DrawGameOverScreen {
 		mScreen->update();
 		return false;
 	}
+
 	void draw(Graphics&) { mScreen->draw(); }
 
 	DrawScreen* mScreen;          // _00
@@ -219,12 +237,12 @@ struct DrawGameOverScreen {
  */
 zen::DrawGameOver::DrawGameOver()
 {
-	_04   = new DrawGameOverScreen("screen/blo/gameover.blo");
-	_08   = new DrawGameOverScreen("screen/blo/gameove2.blo");
-	_00   = 0;
-	mMode = MODE_Unk0;
-	_14   = 0.0f;
-	_0C   = 0;
+	mGameOverA    = new DrawGameOverScreen("screen/blo/gameover.blo");
+	mGameOverB    = new DrawGameOverScreen("screen/blo/gameove2.blo");
+	mState        = GameOverState::Inactive;
+	mMode         = MODE_GameOverA;
+	mStateTimer   = 0.0f;
+	mActiveScreen = 0;
 }
 
 /*
@@ -234,16 +252,16 @@ zen::DrawGameOver::DrawGameOver()
  */
 void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 {
-	_00   = 1;
-	mMode = mode;
-	_18   = p2;
+	mState         = GameOverState::Start;
+	mMode          = mode;
+	mInputWaitTime = p2;
 	switch (mMode) {
-	case MODE_Unk0:
-		_0C = _04;
+	case MODE_GameOverA:
+		mActiveScreen = mGameOverA;
 		break;
 
-	case MODE_Unk1:
-		_0C = _08;
+	case MODE_GameOverB:
+		mActiveScreen = mGameOverB;
 		break;
 
 	default:
@@ -252,7 +270,7 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 		break;
 	}
 
-	_0C->start();
+	mActiveScreen->start();
 }
 
 /*
@@ -262,30 +280,34 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
  */
 bool zen::DrawGameOver::update(Controller* controller)
 {
-	bool res = false;
-	if (_00) {
-		_14 += gsys->getFrameTime();
-		switch (_00) {
-		case 1:
-			if (_14 > 2.0f) {
-				_00 = 2;
-				_14 = 0.0f;
+	bool isInputPeriodDone = false;
+	if (mState) {
+		mStateTimer += gsys->getFrameTime();
+		switch (mState) {
+		case GameOverState::Start:
+			if (mStateTimer > 2.0f) {
+				mState      = GameOverState::WaitInput;
+				mStateTimer = 0.0f;
 			}
 			break;
 
-		case 2:
+		case GameOverState::WaitInput:
 			if (controller->keyClick(KBBTN_START | KBBTN_A)) {
-				res = true;
+				isInputPeriodDone = true;
 			}
-			if (_14 > _18) {
-				_14 = _18;
-				res = true;
+
+			if (mStateTimer > mInputWaitTime) {
+				mStateTimer       = mInputWaitTime;
+				isInputPeriodDone = true;
 			}
+
 			break;
 		}
-		_0C->update();
+
+		mActiveScreen->update();
 	}
-	return res;
+
+	return isInputPeriodDone;
 }
 
 /*
@@ -295,7 +317,7 @@ bool zen::DrawGameOver::update(Controller* controller)
  */
 void zen::DrawGameOver::draw(Graphics& gfx)
 {
-	if (_00) {
-		_0C->draw(gfx);
+	if (mState) {
+		mActiveScreen->draw(gfx);
 	}
 }

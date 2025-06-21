@@ -31,12 +31,12 @@ struct bBoardColourAnimData {
 	u8 mDuration;  // _01
 	union {
 		struct {
-			u8 _m0 : 1;
-			u8 _m1 : 3;
-			u8 _m4 : 1;
-			u8 _m5 : 1;
-			u8 _m6 : 1;
-			u8 _m7 : 1;
+			u8 _m0 : 1;                // Unused
+			u8 mRotationType : 3;      // Sets rotation axis: 0=Y, 1=X, 2=Z, 3=XY, 4=XZ, 5=YZ, 6=XYZ
+			u8 _m4 : 1;                // Unused
+			u8 mOrientationSource : 1; // 0 = use velocity vector, 1 = use position vector for particle orientation
+			u8 mIsDoubleSided : 1;     // 0 = single-sided (4 vertices), 1 = render particles double-sided (8 vertices)
+			u8 _m7 : 1;                // Unused
 		} bits;
 		u8 all;
 	} mFlags;              // _02

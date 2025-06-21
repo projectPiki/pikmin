@@ -27,7 +27,7 @@ DEFINE_PRINT("TAIeffectAttack")
  */
 bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
-	mParam->_44->ptclHitMap(ptclGen, mParam);
+	mParam->mCallBackRef->ptclHitMap(ptclGen, mParam);
 	return true;
 }
 
@@ -41,21 +41,21 @@ void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3
 {
 	mParam = param;
 	mParam->init();
-	mParam->mTeki     = teki;
-	mParam->_00       = 0.0f;
-	mParam->_04       = p5;
-	mParam->_0C       = p7;
-	mParam->mVelocity = p4;
-	mParam->mPosition = p3;
-	mParam->_28       = p4;
-	mParam->_28.normalize();
-	mParam->_34 = p6;
-	mParam->_08 = p8;
+	mParam->mTeki        = teki;
+	mParam->mCurrentTime = 0.0f;
+	mParam->mDuration    = p5;
+	mParam->mMaxRange    = p7;
+	mParam->mVelocity    = p4;
+	mParam->mPosition    = p3;
+	mParam->mDirection   = p4;
+	mParam->mDirection.normalize();
+	mParam->mDamage = p6;
+	mParam->mRadius = p8;
 	if (eventCB) {
-		mParam->_44 = eventCB;
+		mParam->mCallBackRef = eventCB;
 	}
 
-	mParam->_4C.m0 = 1;
+	mParam->mState.mIsMoving = 1;
 }
 
 /*
@@ -69,11 +69,11 @@ void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creat
 	Vector3f vec1;
 	Vector3f vec2;
 
-	if (mParam->_44->hitCheckCulling(ptclGen, mParam, creature)) {
-		f32 pointDist
-		    = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(), mParam->mPosition + mParam->_28 * mParam->_08, t);
-		if (pointDist < creature->getCentreSize() + mParam->_08 && t >= 0.0f && t <= 1.0f) {
-			mParam->_44->hitCreature(mParam, creature);
+	if (mParam->mCallBackRef->hitCheckCulling(ptclGen, mParam, creature)) {
+		f32 pointDist = zen::getDistPointAndLine(creature->getPosition(), ptclGen->getEmitPos(),
+		                                         mParam->mPosition + mParam->mDirection * mParam->mRadius, t);
+		if (pointDist < creature->getCentreSize() + mParam->mRadius && t >= 0.0f && t <= 1.0f) {
+			mParam->mCallBackRef->hitCreature(mParam, creature);
 		}
 	}
 }
@@ -102,28 +102,28 @@ void CylinderTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
  */
 bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
-	mParam->_44->playEventSound(ptclGen, mParam);
-	f32 nextTime = gsys->getFrameTime() + mParam->_00;
-	mParam->_00  = nextTime;
+	mParam->mCallBackRef->playEventSound(ptclGen, mParam);
+	f32 nextTime         = gsys->getFrameTime() + mParam->mCurrentTime;
+	mParam->mCurrentTime = nextTime;
 
-	if (nextTime < mParam->_04 && mParam->mTeki->mHealth > 0.0f) {
+	if (nextTime < mParam->mDuration && mParam->mTeki->mHealth > 0.0f) {
 		Vector3f vec1;
 
-		if (mParam->_4C.m0) {
+		if (mParam->mState.mIsMoving) {
 			mParam->mPosition.add(Vector3f(mParam->mVelocity * gsys->getFrameTime()));
 			vec1 = mParam->mPosition - ptclGen->getEmitPos();
-			if (vec1.length() > mParam->_0C) {
-				mParam->_4C.m0 = 0;
+			if (vec1.length() > mParam->mMaxRange) {
+				mParam->mState.mIsMoving = 0;
 				mParam->mVelocity.normalize();
-			} else if (mParam->_44->hitMap(mParam)) {
-				mParam->_4C.m0 = 0;
+			} else if (mParam->mCallBackRef->hitMap(mParam)) {
+				mParam->mState.mIsMoving = 0;
 			}
 		}
 
 		hitCheck(ptclGen);
 	}
 
-	mParam->_44->ptclHitMap(ptclGen, mParam);
+	mParam->mCallBackRef->ptclHitMap(ptclGen, mParam);
 	return true;
 }
 
@@ -137,26 +137,26 @@ void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3f& p
 {
 	mParam = param;
 	mParam->init();
-	mParam->mTeki     = teki;
-	mParam->_00       = 0.0f;
-	mParam->_04       = p5;
-	mParam->_0C       = p7;
-	mParam->mPosition = p3;
-	mParam->_28       = p4;
-	mParam->_28.normalize();
+	mParam->mTeki        = teki;
+	mParam->mCurrentTime = 0.0f;
+	mParam->mDuration    = p5;
+	mParam->mMaxRange    = p7;
+	mParam->mPosition    = p3;
+	mParam->mDirection   = p4;
+	mParam->mDirection.normalize();
 	mParam->mVelocity = p4;
-	mParam->_34       = p8;
-	if (mParam->_3C && !mParam->_3C->checkEmit()) {
+	mParam->mDamage   = p8;
+	if (mParam->mSubEmitter1 && !mParam->mSubEmitter1->checkEmit()) {
 		ERROR("EMIT IS ALIVE! ");
 	}
-	if (mParam->_40 && !mParam->_40->checkEmit()) {
+	if (mParam->mSubEmitter2 && !mParam->mSubEmitter2->checkEmit()) {
 		ERROR("EMIT IS ALIVE! ");
 	}
-	mParam->_3C = mParam->_40 = nullptr;
+	mParam->mSubEmitter1 = mParam->mSubEmitter2 = nullptr;
 	if (eventCB) {
-		mParam->_44 = eventCB;
+		mParam->mCallBackRef = eventCB;
 	}
-	_08 = p6;
+	mConeHalfAngle = p6;
 }
 
 /*
@@ -177,7 +177,7 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 
 		f32 val;
 		if (mParam->mVelocity.x == 0.0f && mParam->mVelocity.y == 0.0f && mParam->mVelocity.z == 0.0f) {
-			val = mParam->_0C;
+			val = mParam->mMaxRange;
 		} else {
 			val = dist1;
 		}
@@ -192,7 +192,7 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 
 			// NMathF here fixes instruction order. Keep in mind for other functions.
 			f32 dot12 = dir1.DP(dir2);
-			f32 angle = NMathF::cos(_08);
+			f32 angle = NMathF::cos(mConeHalfAngle);
 
 			if (dot12 > angle) {
 				Vector3f vec1;
@@ -208,7 +208,7 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 
 				u32 flag = ptclGen->getControlFlag();
 
-				mParam->_44->hitCreature(ptclGen, mParam, creature, vec1);
+				mParam->mCallBackRef->hitCreature(ptclGen, mParam, creature, vec1);
 			}
 		}
 	}
@@ -241,36 +241,36 @@ void ConeTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
  */
 bool ConeTypeCallBack::invoke(zen::particleGenerator* ptclGen)
 {
-	f32 nextTime = mParam->_00 + gsys->getFrameTime();
-	mParam->_00  = nextTime;
+	f32 nextTime         = mParam->mCurrentTime + gsys->getFrameTime();
+	mParam->mCurrentTime = nextTime;
 
-	if (nextTime < mParam->_04 && mParam->mTeki->mHealth > 0.0f) {
+	if (nextTime < mParam->mDuration && mParam->mTeki->mHealth > 0.0f) {
 		Vector3f vec1;
 
 		mParam->mPosition.add(Vector3f(mParam->mVelocity * gsys->getFrameTime()));
 		vec1 = mParam->mPosition - ptclGen->getEmitPos();
-		if (vec1.length() > mParam->_0C) {
+		if (vec1.length() > mParam->mMaxRange) {
 			mParam->mVelocity.set(0.0f, 0.0f, 0.0f);
 		} else if (ptclGen->checkEmit()) {
-			if (mParam->_44->hitMap(mParam)) {
+			if (mParam->mCallBackRef->hitMap(mParam)) {
 				mParam->mVelocity.set(0.0f, 0.0f, 0.0f);
 			}
 		} else {
-			ERROR("HEN! %f %f \n", mParam->_00, mParam->_04);
+			ERROR("HEN! %f %f \n", mParam->mCurrentTime, mParam->mDuration);
 		}
 
 		hitCheck(ptclGen);
 	} else {
 		ptclGen->finish();
-		if (mParam->_3C) {
-			mParam->_3C->finish();
+		if (mParam->mSubEmitter1) {
+			mParam->mSubEmitter1->finish();
 		}
-		if (mParam->_40) {
-			mParam->_40->finish();
+		if (mParam->mSubEmitter2) {
+			mParam->mSubEmitter2->finish();
 		}
 	}
 
-	mParam->_44->ptclHitMap(ptclGen, mParam);
-	mParam->_44->playEventSound(ptclGen, mParam);
+	mParam->mCallBackRef->ptclHitMap(ptclGen, mParam);
+	mParam->mCallBackRef->playEventSound(ptclGen, mParam);
 	return true;
 }

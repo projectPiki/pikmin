@@ -111,7 +111,7 @@ struct TAItankAnimation : public TAIanimation {
 struct TAIeffectAttackEventCallBackTank : public TAIeffectAttackEventCallBack {
 	virtual bool hitCreature(TAIeffectAttackParam* param, Creature* target) // _08
 	{
-		InteractFire fire(param->mTeki, gsys->getFrameTime() * param->_34);
+		InteractFire fire(param->mTeki, gsys->getFrameTime() * param->mDamage);
 		target->stimulate(fire);
 		return false;
 	}
@@ -137,7 +137,7 @@ struct TAIeffectAttackEventCallBackTank : public TAIeffectAttackEventCallBack {
 	}
 	virtual void ptclHitMap(zen::particleGenerator* ptclGen, TAIeffectAttackParam* param) // _1C
 	{
-		if (!param->_4C.m0) {
+		if (!param->mState.mIsMoving) {
 			zen::zenListManager& ptclMgr = ptclGen->getPtclMdlListManager();
 			zen::zenList* list;
 			zen::zenList* end = ptclMgr.getOrigin();

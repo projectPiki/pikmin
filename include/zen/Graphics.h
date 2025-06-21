@@ -13,20 +13,20 @@ namespace zen {
 struct DrawLifeCircle {
 	DrawLifeCircle(Vector3f& p1, f32 p2)
 	{
-		_08 = p1;
-		_14 = p2;
-		_00 = int(TRI_NUM) - 1;
-		_04 = 0.0f;
+		_08                = p1;
+		mRadius            = p2;
+		mDisplayedTriCount = int(TRI_NUM) - 1;
+		mUpdateTimer       = 0.0f;
 	}
 
 	void drawLifeCircle(f32 healthRatio);
 
 	static const f32 TRI_NUM;
 
-	int _00;      // _00
-	f32 _04;      // _04
-	Vector3f _08; // _08
-	f32 _14;      // _14
+	int mDisplayedTriCount; // _00
+	f32 mUpdateTimer;       // _04
+	Vector3f _08;           // _08
+	f32 mRadius;            // _14
 };
 
 /**

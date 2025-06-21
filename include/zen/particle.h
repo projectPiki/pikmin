@@ -405,7 +405,7 @@ struct particleGenerator : public zenList {
 
 	f32 getNewtonFieldFrc() { return mNewtonFieldStrength; }
 
-	void setOrientedConstZAxis(bool set) { mOrientedDrawConfig.m2 = set; }
+	void setOrientedConstZAxis(bool set) { mOrientedDrawConfig.mFlipNormal = set; }
 
 	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
 	{
@@ -457,9 +457,9 @@ struct particleGenerator : public zenList {
 	f32 mLengthScale;                     // _60
 	f32 mPivotOffsetY;                    // _64
 	struct {
-		u32 m0 : 1;
-		u32 m1 : 1;
-		u32 m2 : 1;
+		u32 mOrientationSource : 1; // 0 = use velocity vector, 1 = use oriented position vector
+		u32 mIsDoubleSided : 1;     // If true, render particles double-sided (8 vertices), otherwise single-sided (4 vertices)
+		u32 mFlipNormal : 1;        // If true, reverse normal calculation order (affects which side faces camera)
 		u32 m3 : 1;
 		u32 m4 : 1;
 		u32 m5 : 1;

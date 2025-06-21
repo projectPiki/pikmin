@@ -91,7 +91,7 @@ struct TAIhibaAAnimation : public TAIanimation {
 struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
 	virtual bool hitCreature(TAIeffectAttackParam* param, Creature* target) // _08
 	{
-		InteractFire fire(target, gsys->getFrameTime() * param->_34);
+		InteractFire fire(target, gsys->getFrameTime() * param->mDamage);
 		target->stimulate(fire);
 		return false;
 	}
@@ -111,7 +111,7 @@ struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
 	}
 	virtual void ptclHitMap(zen::particleGenerator* ptclGen, TAIeffectAttackParam* param) // _1C
 	{
-		if (!param->_4C.m0) {
+		if (!param->mState.mIsMoving) {
 			zen::zenListManager& ptclMgr = ptclGen->getPtclMdlListManager();
 			zen::zenList* list;
 			zen::zenList* end = ptclMgr.getOrigin();
@@ -132,7 +132,7 @@ struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
 	virtual bool hitCheckCulling(zen::particleGenerator* ptclGen, TAIeffectAttackParam* param, Creature* target) // _20
 	{
 		bool res  = false;
-		f32 limit = target->getCentreSize() + param->_08;
+		f32 limit = target->getCentreSize() + param->mRadius;
 		if (zen::Abs(target->getPosition().x - ptclGen->getEmitPos().x) < limit
 		    && zen::Abs(target->getPosition().z - ptclGen->getEmitPos().z) < limit) {
 			res = true;

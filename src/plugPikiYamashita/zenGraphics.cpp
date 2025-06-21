@@ -55,21 +55,22 @@ void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 	zenGraphics::setTevFillPolygon();
 	int drawCount = RoundOff(TRI_NUM * healthRatio);
 
-	if (_00 != drawCount) {
+	if (mDisplayedTriCount != drawCount) {
 		f32 v;
-		if (drawCount < _00) {
+		if (drawCount < mDisplayedTriCount) {
 			v = 0.02f;
 		} else {
 			v = 0.05f;
 		}
-		_04 += gsys->getFrameTime();
-		if (_04 > v) {
-			int a = RoundOff(gsys->getFrameTime() * 30.0f) * (_00 < drawCount ? 1 : -1);
-			if (Abs(_00 - drawCount) < Abs(a)) {
-				a = Abs(_00 - drawCount) * (_00 < drawCount ? 1 : -1);
+
+		mUpdateTimer += gsys->getFrameTime();
+		if (mUpdateTimer > v) {
+			int a = RoundOff(gsys->getFrameTime() * 30.0f) * (mDisplayedTriCount < drawCount ? 1 : -1);
+			if (Abs(mDisplayedTriCount - drawCount) < Abs(a)) {
+				a = Abs(mDisplayedTriCount - drawCount) * (mDisplayedTriCount < drawCount ? 1 : -1);
 			}
-			_00 += a;
-			_04 -= v;
+			mDisplayedTriCount += a;
+			mUpdateTimer -= v;
 		}
 	}
 
@@ -81,19 +82,19 @@ void zen::DrawLifeCircle::drawLifeCircle(f32 healthRatio)
 		color.set(0, 255, 0, 255); // green for good health
 	}
 
-	vecs[0].x = _14 + 0.0f;
-	vecs[0].y = _14 + 0.0f;
+	vecs[0].x = mRadius + 0.0f;
+	vecs[0].y = mRadius + 0.0f;
 	vecs[0].z = 0.0f;
 
-	for (int i = 0; i < _00; i++) {
+	for (int i = 0; i < mDisplayedTriCount; i++) {
 		f32 angle = -HALF_PI - 1.0f / TRI_NUM * f32(i) * TAU;
-		vecs[1].x = NMathF::cos(angle) * _14 + vecs[0].x;
-		vecs[1].y = NMathF::sin(angle) * _14 + vecs[0].y;
+		vecs[1].x = NMathF::cos(angle) * mRadius + vecs[0].x;
+		vecs[1].y = NMathF::sin(angle) * mRadius + vecs[0].y;
 		vecs[1].z = 0.0f + vecs[0].z;
 
 		angle     = -HALF_PI - 1.0f / TRI_NUM * f32(i + 1) * TAU;
-		vecs[2].x = NMathF::cos(angle) * _14 + vecs[0].x;
-		vecs[2].y = NMathF::sin(angle) * _14 + vecs[0].y;
+		vecs[2].x = NMathF::cos(angle) * mRadius + vecs[0].x;
+		vecs[2].y = NMathF::sin(angle) * mRadius + vecs[0].y;
 		vecs[2].z = 0.0f + vecs[0].z;
 
 		zenGraphics::drawOneTri(vecs, color);
