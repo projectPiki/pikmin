@@ -1,10 +1,10 @@
-object_base: orig/DPIJ01
+object_base: orig/DPIJ01_PIKIDEMO
 object: files/zz_pikmin_game/PikiDemo.tgc:sys/main.dol
 hash: 16aa58df2658f79b1dbb0f8500afd65399253267
 
 # Generated from dataDir/build.map
-symbols: config/DPIJ01/symbols.txt
-splits: config/DPIJ01/splits.txt
+symbols: config/DPIJ01_PIKIDEMO/symbols.txt
+splits: config/DPIJ01_PIKIDEMO/splits.txt
 
 mw_comment_version: 8 # GC Linker 1.2.5
 symbols_known: false # Very fast analysis
