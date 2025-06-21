@@ -2790,17 +2790,16 @@ void PikiBuryState::init(Piki* piki)
  */
 void PikiBuryState::exec(Piki* piki)
 {
-// The developers were averse to Pikmin sprouts being placed in water, but if this code used by Miurin (Mamuta) were to actually
-// encounter water, it would produce uninitialized PikiHeadItems.  If stale data is found, this results in Pikmin sprout duplication.
-// If zero-initialized data is found, the Pikmin sprout will be unpluckable and will cause a crash during end-of-day cleanup.  In
-// order to fit everything into one if-statement, I had to abuse the comma operator.  This bug fix respects the developers' original
-// intentions, but their intentions make the Mamuta worthless when in water and allow sprouts where there is no ground triangle, so
-// you might wish to change it anyway.
+	// The developers were averse to Pikmin sprouts being placed in water, but if this code used by Miurin (Mamuta) were to actually
+	// encounter water, it would produce uninitialized PikiHeadItems.  If stale data is found, this results in Pikmin sprout duplication.
+	// If zero-initialized data is found, the Pikmin sprout will be unpluckable and will cause a crash during end-of-day cleanup.  In
+	// order to fit everything into one if-statement, I had to abuse the comma operator.  This bug fix respects the developers' original
+	// intentions, but their intentions make the Mamuta worthless when in water and allow sprouts where there is no ground triangle, so
+	// you might wish to change it anyway.
 #ifdef BUGFIX
 	PikiHeadItem* sprout;
 	if ((!piki->mGroundTriangle || MapCode::getAttribute(piki->mGroundTriangle) != ATTR_Water)
-	    && (PikiHeadMgr::buryMode = true, sprout = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead), PikiHeadMgr::buryMode = false,
-	        sprout)) {
+	    && (PikiHeadMgr::buryMode = true, sprout = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead), PikiHeadMgr::buryMode = false, sprout))
 #else
 	PikiHeadMgr::buryMode = true;
 	PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
@@ -2810,8 +2809,9 @@ void PikiBuryState::exec(Piki* piki)
 		attr = MapCode::getAttribute(piki->mGroundTriangle);
 	}
 
-	if (sprout && attr != ATTR_Water) {
+	if (sprout && attr != ATTR_Water)
 #endif
+	{
 		Vector3f pos(piki->mPosition);
 		pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 		effectMgr->create(EffectMgr::EFF_SD_DirtCloud, pos, nullptr, nullptr);
