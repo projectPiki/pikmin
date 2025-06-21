@@ -8,14 +8,14 @@
  * @brief TODO
  */
 struct Event {
-	Event(int p1, u32 p2)
+	Event(int p1, u32 id)
 	{
 		_00 = p1;
-		_04 = p2;
+		mId = id;
 	}
 
 	int _00; // _00
-	u32 _04; // _04
+	u32 mId; // _04
 };
 
 /**

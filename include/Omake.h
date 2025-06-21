@@ -49,11 +49,11 @@ struct AttentionCamera {
 	int mMaxFaders;      // _04
 	int mFaderCount;     // _08
 	u16 mFadeState;      // _0C
-	Creature* _10;       // _10
+	Creature* mTarget;   // _10
 	Fader* mActiveFader; // _14
-	f32 _18;             // _18
-	f32 _1C;             // _1C
-	u8 _20[0x4];         // _20, unknown
+	f32 _UNUSED18;       // _18
+	f32 _UNUSED1C;       // _1C
+	u8 _UNUSED20[0x4];   // _20
 };
 
 /**
@@ -62,9 +62,9 @@ struct AttentionCamera {
  * @note Probably corresponds to some other struct, just not sure what.
  */
 struct FaderSpring {
-	u16 _00; // _00
-	u16 _02; // _02
-	f32 _04; // _04
+	u16 mPtclIndexA; // _00
+	u16 mPtclIndexB; // _02
+	f32 mRestLength; // _04
 };
 
 /**
@@ -78,27 +78,27 @@ struct ClothFader : public AttentionCamera::Fader {
 	 * @brief TODO
 	 */
 	struct Particle {
-		Vector3f _00; // _00
-		Vector3f _0C; // _0C
-		Vector3f _18; // _18
+		Vector3f mPosition; // _00
+		Vector3f mVelocity; // _0C
+		Vector3f mForce;    // _18
 	};
 
 	ClothFader()
 	    : AttentionCamera::Fader('clot')
 	{
-		_0E        = 32;
-		_10        = 16;
-		_0C        = _0E * _10;
-		mParticles = new Particle[_0C];
-		_18        = (_0E - 1) * (_10 - 1) << 2;
-		mSprings   = new FaderSpring[_18];
+		mGridWidth     = 32;
+		mGridHeight    = 16;
+		mParticleCount = mGridWidth * mGridHeight;
+		mParticles     = new Particle[mParticleCount];
+		mSpringCount   = (mGridWidth - 1) * (mGridHeight - 1) << 2;
+		mSprings       = new FaderSpring[mSpringCount];
 		reset();
 	}
 
 	virtual void initFadeIn() // _08
 	{
-		_1C = 1.5f;
-		_20 = _1C;
+		mFadeDuration = 1.5f;
+		mFadeTimer    = mFadeDuration;
 		reset();
 		gsys->mToggleBlur = 0;
 
@@ -106,8 +106,8 @@ struct ClothFader : public AttentionCamera::Fader {
 	}
 	virtual void initFadeOut() // _14
 	{
-		_1C = 1.5f;
-		_20 = _1C;
+		mFadeDuration = 1.5f;
+		mFadeTimer    = mFadeDuration;
 		reset();
 		gsys->mToggleBlur = 0;
 
@@ -115,9 +115,9 @@ struct ClothFader : public AttentionCamera::Fader {
 	}
 	virtual bool updateFadeIn() // _0C
 	{
-		_20 -= gsys->getFrameTime();
-		if (_20 <= 0.0f) {
-			_20               = 0.0f;
+		mFadeTimer -= gsys->getFrameTime();
+		if (mFadeTimer <= 0.0f) {
+			mFadeTimer        = 0.0f;
 			gsys->mToggleBlur = 1;
 			return true;
 		}
@@ -127,9 +127,9 @@ struct ClothFader : public AttentionCamera::Fader {
 	}
 	virtual bool updateFadeOut() // _18
 	{
-		_20 -= gsys->getFrameTime();
-		if (_20 <= 0.0f) {
-			_20               = 0.0f;
+		mFadeTimer -= gsys->getFrameTime();
+		if (mFadeTimer <= 0.0f) {
+			mFadeTimer        = 0.0f;
 			gsys->mToggleBlur = 1;
 			return true;
 		}
@@ -145,40 +145,40 @@ struct ClothFader : public AttentionCamera::Fader {
 		int i, j, k;
 
 		k = 0;
-		for (i = 0; i < _0E - 1; i++) {
-			for (j = 0; j < _10 - 1; j++) {
+		for (i = 0; i < mGridWidth - 1; i++) {
+			for (j = 0; j < mGridHeight - 1; j++) {
 				Vector3f vec;
-				int a           = i + j * _0E;
-				int b           = a;
-				int c           = a + 1;
-				mSprings[k]._00 = a;
-				mSprings[k]._02 = c;
-				vec             = mParticles[c]._00 - mParticles[b]._00;
-				mSprings[k]._04 = vec.length();
+				int a                   = i + j * mGridWidth;
+				int b                   = a;
+				int c                   = a + 1;
+				mSprings[k].mPtclIndexA = a;
+				mSprings[k].mPtclIndexB = c;
+				vec                     = mParticles[c].mPosition - mParticles[b].mPosition;
+				mSprings[k].mRestLength = vec.length();
 				k++;
 
-				b               = a;
-				c               = a + _0E;
-				mSprings[k]._00 = a;
-				mSprings[k]._02 = c;
-				vec             = mParticles[c]._00 - mParticles[b]._00;
-				mSprings[k]._04 = vec.length();
+				b                       = a;
+				c                       = a + mGridWidth;
+				mSprings[k].mPtclIndexA = a;
+				mSprings[k].mPtclIndexB = c;
+				vec                     = mParticles[c].mPosition - mParticles[b].mPosition;
+				mSprings[k].mRestLength = vec.length();
 				k++;
 
-				b               = a;
-				c               = a + 1 + _0E;
-				mSprings[k]._00 = a;
-				mSprings[k]._02 = c;
-				vec             = mParticles[c]._00 - mParticles[b]._00;
-				mSprings[k]._04 = vec.length();
+				b                       = a;
+				c                       = a + 1 + mGridWidth;
+				mSprings[k].mPtclIndexA = a;
+				mSprings[k].mPtclIndexB = c;
+				vec                     = mParticles[c].mPosition - mParticles[b].mPosition;
+				mSprings[k].mRestLength = vec.length();
 				k++;
 
-				b               = a + 1;
-				c               = a + _0E;
-				mSprings[k]._00 = b;
-				mSprings[k]._02 = c;
-				vec             = mParticles[c]._00 - mParticles[b]._00;
-				mSprings[k]._04 = vec.length();
+				b                       = a + 1;
+				c                       = a + mGridWidth;
+				mSprings[k].mPtclIndexA = b;
+				mSprings[k].mPtclIndexB = c;
+				vec                     = mParticles[c].mPosition - mParticles[b].mPosition;
+				mSprings[k].mRestLength = vec.length();
 				k++;
 			}
 		}
@@ -186,25 +186,25 @@ struct ClothFader : public AttentionCamera::Fader {
 
 	void reset()
 	{
-		int x = 640 / (_0E - 1);
-		int y = 480 / (_10 - 1);
+		int x = 640 / (mGridWidth - 1);
+		int y = 480 / (mGridHeight - 1);
 		int i, j;
-		for (i = 0; i < _0E; i++) {
-			for (j = 0; j < _10; j++) {
-				mParticles[i + j * _0E]._00.set(x * i, y * j, 0.0f);
-				mParticles[i + j * _0E]._0C.set(0.0f, 0.0f, 0.0f);
+		for (i = 0; i < mGridWidth; i++) {
+			for (j = 0; j < mGridHeight; j++) {
+				mParticles[i + j * mGridWidth].mPosition.set(x * i, y * j, 0.0f);
+				mParticles[i + j * mGridWidth].mVelocity.set(0.0f, 0.0f, 0.0f);
 			}
 		}
 
 		makeSprings();
 
-		for (i = 0; i < _0E; i++) {
-			for (j = 0; j < _10; j++) {
+		for (i = 0; i < mGridWidth; i++) {
+			for (j = 0; j < mGridHeight; j++) {
 				Vector3f vec(0.0f, 0.0f, 0.0f);
-				if (i != 0 && j != 0 && i != _0E - 1 && j != _10 - 1) {
+				if (i != 0 && j != 0 && i != mGridWidth - 1 && j != mGridHeight - 1) {
 					vec.set(gsys->getRand(1.0f) - 2.0f, gsys->getRand(1.0f) - 2.0f, 0.0f);
 					vec.multiply(8.0f);
-					mParticles[i + j * _0E]._00.add(vec);
+					mParticles[i + j * mGridWidth].mPosition.add(vec);
 				}
 			}
 		}
@@ -229,16 +229,16 @@ struct ClothFader : public AttentionCamera::Fader {
 		col.set(255, 255, 255, 255);
 		u32 uCol = *(u32*)&col;
 
-		f32 width  = (640 / (_0E - 1)) / 640.0f;
-		f32 height = (480 / (_10 - 1)) / 480.0f;
-		for (int i = 0; i < _0E - 1; i++) {
+		f32 width  = (640 / (mGridWidth - 1)) / 640.0f;
+		f32 height = (480 / (mGridHeight - 1)) / 480.0f;
+		for (int i = 0; i < mGridWidth - 1; i++) {
 
-			for (int j = 0; j < _10 - 1; j++) {
+			for (int j = 0; j < mGridHeight - 1; j++) {
 
-				Vector3f vec1 = mParticles[j * _0E + i]._00;
-				Vector3f vec2 = mParticles[i + 1 + j * _0E]._00;
-				Vector3f vec3 = mParticles[(j + 1) * _0E + i]._00;
-				Vector3f vec4 = mParticles[i + 1 + (j + 1) * _0E]._00;
+				Vector3f vec1 = mParticles[j * mGridWidth + i].mPosition;
+				Vector3f vec2 = mParticles[i + 1 + j * mGridWidth].mPosition;
+				Vector3f vec3 = mParticles[(j + 1) * mGridWidth + i].mPosition;
+				Vector3f vec4 = mParticles[i + 1 + (j + 1) * mGridWidth].mPosition;
 
 				f32 x0 = width * i;
 				f32 y0 = height * j;
@@ -269,40 +269,40 @@ struct ClothFader : public AttentionCamera::Fader {
 	{
 		int i;
 		f32 fTime = gsys->getFrameTime();
-		for (i = 0; i < _0C; i++) {
-			mParticles[i]._18.set(0.0f, 400.0f, 0.0f);
+		for (i = 0; i < mParticleCount; i++) {
+			mParticles[i].mForce.set(0.0f, 400.0f, 0.0f);
 		}
 
-		for (i = 0; i < _18; i++) {
+		for (i = 0; i < mSpringCount; i++) {
 			FaderSpring* spring = &mSprings[i];
-			int a               = spring->_00;
-			int b               = spring->_02;
+			int a               = spring->mPtclIndexA;
+			int b               = spring->mPtclIndexB;
 			Particle* ptcl0     = &mParticles[a];
 			Particle* ptcl2     = &mParticles[b];
-			Vector3f vec1       = ptcl0->_00 - ptcl2->_00;
+			Vector3f vec1       = ptcl0->mPosition - ptcl2->mPosition;
 			f32 dist            = vec1.normalise();
-			f32 v               = spring->_04;
-			ptcl0->_18          = ptcl0->_18 - ((dist - spring->_04) * 10.0f) * vec1;
-			ptcl2->_18          = ptcl2->_18 + ((dist - spring->_04) * 10.0f) * vec1;
+			f32 v               = spring->mRestLength;
+			ptcl0->mForce       = ptcl0->mForce - ((dist - spring->mRestLength) * 10.0f) * vec1;
+			ptcl2->mForce       = ptcl2->mForce + ((dist - spring->mRestLength) * 10.0f) * vec1;
 		}
 
-		for (i = 0; i < _0C; i++) {
-			Particle* ptcl = &mParticles[i];
-			ptcl->_00      = ptcl->_00 + ptcl->_0C * fTime;
-			ptcl->_0C      = ptcl->_0C + ptcl->_18 * fTime;
+		for (i = 0; i < mParticleCount; i++) {
+			Particle* ptcl  = &mParticles[i];
+			ptcl->mPosition = ptcl->mPosition + ptcl->mVelocity * fTime;
+			ptcl->mVelocity = ptcl->mVelocity + ptcl->mForce * fTime;
 		}
 	}
 
 	// _04     = VTBL
 	// _00-_08 = AttentionCamera::Fader
 	Particle* mParticles;  // _08
-	u16 _0C;               // _0C
-	u16 _0E;               // _0E
-	u16 _10;               // _10
+	u16 mParticleCount;    // _0C
+	u16 mGridWidth;        // _0E
+	u16 mGridHeight;       // _10
 	FaderSpring* mSprings; // _14
-	u16 _18;               // _18
-	f32 _1C;               // _1C
-	f32 _20;               // _20
+	u16 mSpringCount;      // _18
+	f32 mFadeDuration;     // _1C
+	f32 mFadeTimer;        // _20
 };
 
 /**
@@ -318,19 +318,19 @@ struct SimpleFader : public AttentionCamera::Fader {
 
 	virtual void initFadeIn() // _08
 	{
-		_0C = 0.5f;
-		_08 = _0C;
+		mFadeDuration = 0.5f;
+		mFadeTimer    = mFadeDuration;
 	}
 	virtual void initFadeOut() // _14
 	{
-		_0C = 0.5f;
-		_08 = _0C;
+		mFadeDuration = 0.5f;
+		mFadeTimer    = mFadeDuration;
 	}
 	virtual bool updateFadeIn() // _0C
 	{
-		_08 -= gsys->getFrameTime();
-		if (_08 <= 0.0f) {
-			_08 = 0.0f;
+		mFadeTimer -= gsys->getFrameTime();
+		if (mFadeTimer <= 0.0f) {
+			mFadeTimer = 0.0f;
 			return true;
 		}
 
@@ -338,9 +338,9 @@ struct SimpleFader : public AttentionCamera::Fader {
 	}
 	virtual bool updateFadeOut() // _18
 	{
-		_08 -= gsys->getFrameTime();
-		if (_08 <= 0.0f) {
-			_08 = 0.0f;
+		mFadeTimer -= gsys->getFrameTime();
+		if (mFadeTimer <= 0.0f) {
+			mFadeTimer = 0.0f;
 			return true;
 		}
 
@@ -348,7 +348,7 @@ struct SimpleFader : public AttentionCamera::Fader {
 	}
 	virtual void drawFadeOut(Graphics& gfx) // _1C
 	{
-		int alpha = (1.0f - _08 / _0C) * 255.0f;
+		int alpha = (1.0f - mFadeTimer / mFadeDuration) * 255.0f;
 		gfx.setColour(Colour(255, 255, 255, alpha), true);
 		STACK_PAD_VAR(4);
 
@@ -364,7 +364,7 @@ struct SimpleFader : public AttentionCamera::Fader {
 	}
 	virtual void drawFadeIn(Graphics& gfx) // _10
 	{
-		int alpha = (_08 / _0C) * 255.0f;
+		int alpha = (mFadeTimer / mFadeDuration) * 255.0f;
 		gfx.setColour(Colour(255, 255, 255, alpha), true);
 		STACK_PAD_VAR(4);
 
@@ -381,8 +381,8 @@ struct SimpleFader : public AttentionCamera::Fader {
 
 	// _04     = VTBL
 	// _00-_08 = AttentionCamera::Fader
-	f32 _08; // _08
-	f32 _0C; // _0C
+	f32 mFadeTimer;    // _08
+	f32 mFadeDuration; // _0C
 };
 
 /**
@@ -398,14 +398,14 @@ struct DefaultFader : public AttentionCamera::Fader {
 
 	virtual void initFadeIn() // _08
 	{
-		_0C = 0.5f;
-		_08 = _0C;
+		mFadeDuration = 0.5f;
+		mFadeTimer    = mFadeDuration;
 	}
 	virtual bool updateFadeIn() // _0C
 	{
-		_08 -= gsys->getFrameTime();
-		if (_08 <= 0.0f) {
-			_08 = 0.0f;
+		mFadeTimer -= gsys->getFrameTime();
+		if (mFadeTimer <= 0.0f) {
+			mFadeTimer = 0.0f;
 			return true;
 		}
 
@@ -413,7 +413,7 @@ struct DefaultFader : public AttentionCamera::Fader {
 	}
 	virtual void drawFadeOut(Graphics& gfx) // _1C
 	{
-		f32 t = (1.0f - _08 / _0C);
+		f32 t = (1.0f - mFadeTimer / mFadeDuration);
 		int x = t * 320.0f;
 		int y = t * 240.0f;
 		RectArea area1(0, 0, 640, 480);
@@ -431,14 +431,14 @@ struct DefaultFader : public AttentionCamera::Fader {
 	}
 	virtual void initFadeOut() // _14
 	{
-		_0C = 0.5f;
-		_08 = _0C;
+		mFadeDuration = 0.5f;
+		mFadeTimer    = mFadeDuration;
 	}
 	virtual bool updateFadeOut() // _18
 	{
-		_08 -= gsys->getFrameTime();
-		if (_08 <= 0.0f) {
-			_08 = 0.0f;
+		mFadeTimer -= gsys->getFrameTime();
+		if (mFadeTimer <= 0.0f) {
+			mFadeTimer = 0.0f;
 			return true;
 		}
 
@@ -446,7 +446,7 @@ struct DefaultFader : public AttentionCamera::Fader {
 	}
 	virtual void drawFadeIn(Graphics& gfx) // _10
 	{
-		f32 t = (_08 / _0C);
+		f32 t = (mFadeTimer / mFadeDuration);
 		int x = t * 320.0f;
 		int y = t * 240.0f;
 		RectArea area1(0, 0, 640, 480);
@@ -465,8 +465,8 @@ struct DefaultFader : public AttentionCamera::Fader {
 
 	// _04     = VTBL
 	// _00-_08 = AttentionCamera::Fader
-	f32 _08; // _08
-	f32 _0C; // _0C
+	f32 mFadeTimer;    // _08
+	f32 mFadeDuration; // _0C
 };
 
 /**
@@ -492,8 +492,8 @@ struct TurbulenceFun : public NoiseFunction {
 	f32 getValue(f32);
 
 	// _00-_08 = NoiseFunction
-	int _08; // _08
-	f32 _0C; // _0C
+	int _UNUSED08;  // _08
+	f32 mFrequency; // _0C
 };
 
 extern AttentionCamera* attentionCamera;

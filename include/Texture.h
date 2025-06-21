@@ -66,7 +66,6 @@ struct TexAttr : public CoreNode {
 	s16 mTilingType;       // _1C
 	s16 mFlags;            // _1E
 	u16 mUseOffsetImgData; // _20
-	s16 _22;               // _22
 	f32 mLODBias;          // _24
 	char* mTextureName;    // _28
 	Texture* mTexture;     // _2C

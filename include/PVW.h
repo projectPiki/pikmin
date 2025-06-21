@@ -19,17 +19,17 @@ struct PVWKeyInfoU8 {
 
 	void read(RandomAccessStream& input)
 	{
-		_00 = input.readByte();
+		mTime = input.readByte();
 		input.readByte();
 		input.readByte();
 		input.readByte();
-		_04 = input.readFloat();
-		_08 = input.readFloat();
+		mValue   = input.readFloat();
+		mTangent = input.readFloat();
 	}
 
-	u8 _00;  // _00
-	f32 _04; // _04
-	f32 _08; // _08
+	u8 mTime;     // _00
+	f32 mValue;   // _04
+	f32 mTangent; // _08
 };
 
 /**
@@ -38,15 +38,15 @@ struct PVWKeyInfoU8 {
 struct PVWKeyInfoS10 {
 	void read(RandomAccessStream& input)
 	{
-		_00         = input.readShort();
+		mTime       = input.readShort();
 		u16 padding = input.readShort();
-		_04         = input.readFloat();
-		_08         = input.readFloat();
+		mValue      = input.readFloat();
+		mTangent    = input.readFloat();
 	}
 
-	s16 _00; // _00
-	f32 _04; // _04
-	f32 _08; // _08
+	s16 mTime;    // _00
+	f32 mValue;   // _04
+	f32 mTangent; // _08
 };
 
 struct PVWKeyInfoF32 {
@@ -66,28 +66,28 @@ template <typename T>
 struct PVWAnimInfo1Intermediate {
 	void read(RandomAccessStream& input)
 	{
-		_00 = input.readInt();
-		_04.read(input);
+		mTime = input.readInt();
+		mData.read(input);
 	}
 
-	u32 _00; // _00
-	T _04;   // _04
+	u32 mTime; // _00
+	T mData;   // _04
 };
 
 template <typename T>
 struct PVWAnimInfo3Intermediate {
 	void read(RandomAccessStream& input)
 	{
-		_00 = input.readInt();
-		_04.read(input);
-		_14.read(input);
-		_24.read(input);
+		mTime = input.readInt();
+		mRedData.read(input);
+		mGreenData.read(input);
+		mBlueData.read(input);
 	}
 
-	u32 _00; // _00
-	T _04;   // _04
-	T _14;   // _14
-	T _24;   // _24
+	u32 mTime; // _00
+	T mRedData;     // _04
+	T mGreenData;     // _14
+	T mBlueData;     // _24
 };
 
 template <typename T>
@@ -315,32 +315,32 @@ struct PVWTevColReg {
 struct PVWCombiner {
 	void read(RandomAccessStream& input)
 	{
-		mInArgA  = input.readByte();
-		mInArgB  = input.readByte();
-		mInArgC  = input.readByte();
-		mInArgD  = input.readByte();
-		mTevOp   = input.readByte();
-		mBias    = input.readByte();
-		mScale   = input.readByte();
-		mDoClamp = input.readByte();
-		mOutReg  = input.readByte();
-		_09      = input.readByte();
-		_0A      = input.readByte();
-		_0B      = input.readByte();
+		mInArgA   = input.readByte();
+		mInArgB   = input.readByte();
+		mInArgC   = input.readByte();
+		mInArgD   = input.readByte();
+		mTevOp    = input.readByte();
+		mBias     = input.readByte();
+		mScale    = input.readByte();
+		mDoClamp  = input.readByte();
+		mOutReg   = input.readByte();
+		_UNUSED09 = input.readByte();
+		_UNUSED0A = input.readByte();
+		_UNUSED0B = input.readByte();
 	}
 
-	u8 mInArgA;  // _00
-	u8 mInArgB;  // _01
-	u8 mInArgC;  // _02
-	u8 mInArgD;  // _03
-	u8 mTevOp;   // _04
-	u8 mBias;    // _05
-	u8 mScale;   // _06
-	u8 mDoClamp; // _07
-	u8 mOutReg;  // _08
-	u8 _09;      // _09
-	u8 _0A;      // _0A
-	u8 _0B;      // _0B
+	u8 mInArgA;   // _00
+	u8 mInArgB;   // _01
+	u8 mInArgC;   // _02
+	u8 mInArgD;   // _03
+	u8 mTevOp;    // _04
+	u8 mBias;     // _05
+	u8 mScale;    // _06
+	u8 mDoClamp;  // _07
+	u8 mOutReg;   // _08
+	u8 _UNUSED09; // _09
+	u8 _UNUSED0A; // _0A
+	u8 _UNUSED0B; // _0B
 };
 
 /**
@@ -349,24 +349,24 @@ struct PVWCombiner {
 struct PVWTevStage {
 	void read(RandomAccessStream& input)
 	{
-		_00        = input.readByte();
-		_01        = input.readByte();
-		_02        = input.readByte();
-		_03        = input.readByte();
-		_04        = input.readByte();
-		_05        = input.readByte();
-		u8 unused  = input.readByte();
-		u8 unused2 = input.readByte();
+		_UNUSED00     = input.readByte();
+		mTexCoordID   = input.readByte();
+		mTexMapID     = input.readByte();
+		mChannelID    = input.readByte();
+		mTevKColorSel = input.readByte();
+		mTevKAlphaSel = input.readByte();
+		u8 unused     = input.readByte();
+		u8 unused2    = input.readByte();
 		mTevColorCombiner.read(input);
 		mTevAlphaCombiner.read(input);
 	}
 
-	u8 _00;                        // _00
-	u8 _01;                        // _01
-	u8 _02;                        // _02
-	u8 _03;                        // _03
-	u8 _04;                        // _04
-	u8 _05;                        // _05
+	u8 _UNUSED00;                  // _00
+	u8 mTexCoordID;                // _01
+	u8 mTexMapID;                  // _02
+	u8 mChannelID;                 // _03
+	u8 mTevKColorSel;              // _04
+	u8 mTevKAlphaSel;              // _05
 	PVWCombiner mTevColorCombiner; // _06
 	PVWCombiner mTevAlphaCombiner; // _12
 };
@@ -426,7 +426,7 @@ struct PVWTextureData {
 	u8 _UNUSED12;                    // _12
 	u8 _UNUSED13;                    // _13
 	u8 mAnimationFactor;             // _14
-	u8 _15;                          // _15
+	u8 _UNUSED15;                    // _15
 	u8 mIsMatrixDirty;               // _16
 	u32 _UNUSED18;                   // _18
 	f32 mScaleX;                     // _1C

@@ -278,35 +278,35 @@ struct KingBody {
 	void checkBlendingParm(Matrix4f*);
 	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
 
-	King* mKing;                                                  // _00
-	bool _04;                                                     // _04
-	bool mDoFallSalivaEffect;                                     // _05
-	bool mDoSpreadSalivaEffect;                                   // _06
-	bool mIsFootOnGround[2];                                      // _07
-	bool _09[2];                                                  // _09
-	bool mIsFootGeneratingRipples[2];                             // _0B
-	int mFootMapAttr[2];                                          // _10
-	f32 mBlendingRate;                                            // _18
-	f32 mBlendingRatio;                                           // _1C
-	f32 mMoveSpeed;                                               // _20
-	Vector3f mFootPosList[2];                                     // _24
-	Vector3f mOldFootPosList[2];                                  // _3C
-	Vector3f _54;                                                 // _54
-	Vector3f _60;                                                 // _60
-	Vector3f _6C;                                                 // _6C
-	Vector3f _78[2];                                              // _78
-	Vector3f _90[2];                                              // _90
-	Vector3f _A8[4];                                              // _A8
-	Vector3f mSalivaEffectPosition;                               // _D8
-	Vector3f _E4;                                                 // _E4
-	Matrix4f* _F0;                                                // _F0
-	Matrix4f* _F4;                                                // _F4
-	KingGenSalivaCallBack* mSalivaCallBacks;                      // _F8
-	KingGenSpreadSalivaCallBack* mSpreadSalivaCallBack;           // _FC
-	KingGenSalivaParticleCallBack* mSalivaParticleCallBack;       // _100
-	KingGenDamageStarCallBack* mDamageStarCallBack;               // _104
-	KingGenRippleCallBack* mRippleCallBacks;                      // _108
-	KingGenSpitPartsParticleCallBack* mSpitPartsParticleCallBack; // _10C
+	King* mKing;                                                  ///< _00
+	bool mIsBlending;                                             ///< _04
+	bool mDoFallSalivaEffect;                                     ///< _05
+	bool mDoSpreadSalivaEffect;                                   ///< _06
+	bool mIsFootOnGround[2];                                      ///< _07
+	bool mPrevIsFootOnGround[2];                                  ///< _09
+	bool mIsFootGeneratingRipples[2];                             ///< _0B
+	int mFootMapAttr[2];                                          ///< _10
+	f32 mBlendingRate;                                            ///< _18
+	f32 mBlendingRatio;                                           ///< _1C
+	f32 mMoveSpeed;                                               ///< _20
+	Vector3f mFootPosList[2];                                     ///< _24
+	Vector3f mOldFootPosList[2];                                  ///< _3C
+	Vector3f _UNUSED54;                                           ///< _54
+	Vector3f mNormalisedJointDir;                                 ///< _60
+	Vector3f mMouthPos;                                           ///< _6C, TODO: these need confirmation (someone?)
+	Vector3f mEyePositions[2];                                    ///< _78, TODO: these need confirmation (someone?)
+	Vector3f mCheekPositions[2];                                  ///< _90, TODO: these need confirmation (someone?)
+	Vector3f mSalivaJointPositions[4];                            ///< _A8
+	Vector3f mSalivaEffectPos;                                    ///< _D8
+	Vector3f mPrevSalivaEffectPos;                                ///< _E4
+	Matrix4f* mBlendStartMatrices;                                ///< _F0
+	Matrix4f* mBlendResultMatrices;                               ///< _F4
+	KingGenSalivaCallBack* mSalivaCallBacks;                      ///< _F8
+	KingGenSpreadSalivaCallBack* mSpreadSalivaCallBack;           ///< _FC
+	KingGenSalivaParticleCallBack* mSalivaParticleCallBack;       ///< _100
+	KingGenDamageStarCallBack* mDamageStarCallBack;               ///< _104
+	KingGenRippleCallBack* mRippleCallBacks;                      ///< _108
+	KingGenSpitPartsParticleCallBack* mSpitPartsParticleCallBack; ///< _10C
 };
 
 /**
@@ -481,22 +481,22 @@ struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
 		Vector3f emitPos(*mRippleEmitPos);
 		emitPos.y = mKing->mPosition.y;
 		ptclGen->setEmitPos(emitPos);
-		if (!mKing->getAlive() || !*_04) {
+		if (!mKing->getAlive() || !*mIsActiveRef) {
 			ptclGen->finish();
 		}
 		return true;
 	}
 
-	void set(King* king, Vector3f* emitPos, bool* p3)
+	void set(King* king, Vector3f* emitPos, bool* isActive)
 	{
 		mKing          = king;
 		mRippleEmitPos = emitPos;
-		_04            = p3;
+		mIsActiveRef   = isActive;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	bool* _04;                // _04
+	bool* mIsActiveRef;       // _04
 	King* mKing;              // _08
 	Vector3f* mRippleEmitPos; // _0C
 };
@@ -509,10 +509,10 @@ struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
 struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
-		Vector3f midPt = *_04 + *_08;
+		Vector3f midPt = *mStartPos + *mEndPos;
 		midPt.multiply(0.5f);
 
-		Vector3f dir = *_04 - *_08;
+		Vector3f dir = *mStartPos - *mEndPos;
 		dir.normalise();
 
 		ptcl->setEmitPos(midPt);
@@ -531,18 +531,18 @@ struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 		return true;
 	}
 
-	void set(Vector3f* p1, Vector3f* p2, King* king)
+	void set(Vector3f* start, Vector3f* end, King* king)
 	{
-		_04   = p1;
-		_08   = p2;
-		mKing = king;
+		mStartPos = start;
+		mEndPos   = end;
+		mKing     = king;
 	}
 
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	Vector3f* _04; // _04
-	Vector3f* _08; // _08
-	King* mKing;   // _0C
+	Vector3f* mStartPos; // _04
+	Vector3f* mEndPos;   // _08
+	King* mKing;         // _0C
 };
 
 /**
@@ -554,8 +554,8 @@ struct KingGenSalivaParticleCallBack : public zen::CallBack2<zen::particleGenera
 	virtual bool invoke(zen::particleGenerator* ptclGen, zen::particleMdl* ptcl) // _08
 	{
 		if (ptcl->mAge == 0) {
-			ptcl->mVelocity.x += (mKing->mKingBody->mSalivaEffectPosition.x - mKing->mKingBody->_E4.x) / 2.0f;
-			ptcl->mVelocity.z += (mKing->mKingBody->mSalivaEffectPosition.z - mKing->mKingBody->_E4.z) / 2.0f;
+			ptcl->mVelocity.x += (mKing->mKingBody->mSalivaEffectPos.x - mKing->mKingBody->mPrevSalivaEffectPos.x) / 2.0f;
+			ptcl->mVelocity.z += (mKing->mKingBody->mSalivaEffectPos.z - mKing->mKingBody->mPrevSalivaEffectPos.z) / 2.0f;
 		}
 
 		Vector3f ptclPos = ptcl->getPos();
@@ -624,7 +624,7 @@ struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGen
 struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
-		ptcl->setEmitDir(mKing->mKingBody->_60);
+		ptcl->setEmitDir(mKing->mKingBody->mNormalisedJointDir);
 		if (mKing->mKingBody->mDoSpreadSalivaEffect) {
 			ptcl->startGen();
 		} else {

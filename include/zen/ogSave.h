@@ -23,28 +23,27 @@ struct ogFadeMgr;
  * @brief TODO
  */
 struct ogSaveMgr {
-
 	/**
-	 * @brief TODO
+	 * @brief Save manager state machine status values
 	 */
 	enum SaveStatus {
-		Status_NULL = -1,
-		Status_0    = 0,
-		Status_1    = 1,
-		Status_2    = 2,
-		Status_3    = 3,
-		Status_4    = 4,
-		Status_5    = 5,
-		Status_6    = 6,
-		Status_7    = 7,
-		Status_8    = 8,
-		Status_9    = 9,
-		Status_10   = 10,
-		Status_11   = 11,
-		Status_12   = 12,
-		Status_13   = 13,
-		Status_14   = 14,
-		Status_15   = 15,
+		Inactive                 = -1, // Initial/inactive state
+		MainSelectionActive      = 0,  // Main selection screen active
+		FadeIn                   = 1,  // Fade in animation
+		FadeOut                  = 2,  // Fade out animation
+		PreparingSave            = 3,  // Preparing to save
+		ShowingSaveNotice        = 4,  // Showing save notice
+		SavingInProgress         = 5,  // Saving in progress
+		SaveComplete             = 6,  // Save complete
+		MainWindowFadeOut        = 7,  // Transitioning out of main window
+		SecondaryWindowFadeIn    = 8,  // Transitioning into secondary window
+		SecondarySelectionActive = 9,  // Secondary selection screen active
+		SecondaryWindowFadeOut   = 10, // Transitioning out of secondary window
+		HandleSaveFailure        = 11, // Save failure handling
+		ExitFailure              = 12, // Exit with failure
+		ExitSuccess              = 13, // Exit with success
+		SaveCompletedSuccess     = 14, // Save completed successfully
+		AlternativeExitSuccess   = 15, // Alternative success exit
 	};
 
 	ogSaveMgr();
@@ -56,44 +55,44 @@ struct ogSaveMgr {
 	// unused/inlined:
 	void startDirectSave(s16);
 
-	bool isFileMode() { return _30; }
+	bool isFileMode() { return mFileChkSelected; }
 
-	SaveStatus mStatus;           // _00
-	SaveStatus _04;               // _04
-	P2DScreen* mScreen;           // _08
-	P2DScreen* _0C;               // _0C
-	f32 _10;                      // _10
-	u16 _14;                      // _14
-	ogNitakuMgr* _18;             // _18
-	ogNitakuMgr* _1C;             // _1C
-	ogScrMemChkMgr* mMemCheckMgr; // _20
-	P2DScreen* _24;               // _24
-	P2DPicture* _28;              // _28
-	DrawSaveFailure* mSaveFail;   // _2C
-	u8 _30;                       // _30
-	u16 _32;                      // _32
-	P2DTextBox* _34;              // _34
-	P2DTextBox* _38;              // _38
-	P2DPane* _3C;                 // _3C
-	P2DPane* _40;                 // _40
-	P2DTextBox* _44;              // _44
-	P2DTextBox* _48;              // _48
-	P2DTextBox* _4C;              // _4C
-	P2DTextBox* _50;              // _50
-	P2DTextBox* _54;              // _54
-	P2DPane* _58;                 // _58
-	P2DPane* _5C;                 // _5C
-	ogFadeMgr* _60;               // _60
-	ogFadeMgr* _64;               // _64
-	ogFadeMgr* _68;               // _68
-	ogFadeMgr* _6C;               // _6C
-	P2DPicture* _70;              // _70
-	P2DPicture* _74;              // _74
-	P2DPane* _78;                 // _78
-	P2DPane* _7C;                 // _7C
-	P2DPane* _80;                 // _80
-	ogScrFileChkSelMgr* _84;      // _84
-	CardQuickInfo _88;            // _88
+	SaveStatus mStatus;                   // _00
+	SaveStatus mNextStatus;               // _04
+	P2DScreen* mScreen;                   // _08
+	P2DScreen* mSecondaryScreen;          // _0C
+	f32 mAnimTimer;                       // _10
+	u16 _UNUSED14;                        // _14, unused
+	ogNitakuMgr* mPrimaryNikatuMgr;       // _18
+	ogNitakuMgr* mSecondaryNikatuMgr;     // _1C
+	ogScrMemChkMgr* mMemCheckMgr;         // _20
+	P2DScreen* mBlackScreen;              // _24
+	P2DPicture* mBlackPicture;            // _28
+	DrawSaveFailure* mSaveFail;           // _2C
+	u8 mFileChkSelected;                  // _30
+	u16 mDirectSaveState;                 // _32
+	P2DTextBox* mHeader0TextBox;          // _34
+	P2DTextBox* mHeader1TextBox;          // _38
+	P2DPane* mHeaderSub0;                 // _3C
+	P2DPane* mHeaderSub1;                 // _40
+	P2DTextBox* mSecondaryHeader0TextBox; // _44
+	P2DTextBox* mSecondaryHeader1TextBox; // _48
+	P2DTextBox* mSaveCenterTextBox;       // _4C
+	P2DTextBox* mSaveActionCenterTextBox; // _50
+	P2DTextBox* mSaveActionSideTextBox;   // _54
+	P2DPane* mSaveActionKC;               // _58
+	P2DPane* mSaveActionKS;               // _5C
+	ogFadeMgr* mSaveActionCenterFader;    // _60
+	ogFadeMgr* mSaveActionSideFader;      // _64
+	ogFadeMgr* mSaveActionKCFader;        // _68
+	ogFadeMgr* mSaveActionKSFader;        // _6C
+	P2DPicture* mBackPicture;             // _70
+	P2DPicture* mSecondaryBackPicture;    // _74
+	P2DPane* mWindow1;                    // _78
+	P2DPane* mWindow2;                    // _7C
+	P2DPane* mNoticePane;                 // _80
+	ogScrFileChkSelMgr* mFileChkSelMgr;   // _84
+	CardQuickInfo mFileChkData;           // _88
 };
 
 } // namespace zen

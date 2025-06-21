@@ -56,9 +56,9 @@ AttentionCamera::AttentionCamera()
 void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
 {
 	mFadeState = 1;
-	_10        = target;
-	_18        = p3;
-	_1C        = p4;
+	mTarget    = target;
+	_UNUSED18  = p3;
+	_UNUSED1C  = p4;
 	setFader(tag);
 	mActiveFader->initFadeOut();
 }
@@ -70,7 +70,7 @@ void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
  */
 void AttentionCamera::finish()
 {
-	_10        = naviMgr->getNavi();
+	mTarget    = naviMgr->getNavi();
 	mFadeState = 1;
 	mActiveFader->initFadeOut();
 }
@@ -87,13 +87,13 @@ void AttentionCamera::update()
 		if (!mActiveFader->updateFadeOut()) {
 			return;
 		}
-		_10->mFaceDirection = roundAng(getCameraSafeAngle(_10->mPosition, 600.0f, 400.0f));
+		mTarget->mFaceDirection = roundAng(getCameraSafeAngle(mTarget->mPosition, 600.0f, 400.0f));
 
 		// lol.
-		if (_10->mObjType != OBJTYPE_Navi) {
-			cameraMgr->mCamera->startCamera(_10);
+		if (mTarget->mObjType != OBJTYPE_Navi) {
+			cameraMgr->mCamera->startCamera(mTarget);
 		} else {
-			cameraMgr->mCamera->startCamera(_10);
+			cameraMgr->mCamera->startCamera(mTarget);
 		}
 
 		mFadeState = 2;
@@ -176,8 +176,8 @@ f32 NoiseFunction::getValue(f32 x)
 void TurbulenceFun::init(int p1, int count)
 {
 	NoiseFunction::init(count);
-	_08 = p1;
-	_0C = p1 / count;
+	_UNUSED08  = p1;
+	mFrequency = p1 / count;
 }
 
 /*
@@ -188,9 +188,9 @@ void TurbulenceFun::init(int p1, int count)
 f32 TurbulenceFun::getValue(f32 x)
 {
 	f32 res    = 0.0f;
-	int a      = log(_0C) / log(2.0f);
+	int a      = log(mFrequency) / log(2.0f);
 	f32 b      = 1.0f;
-	f32 factor = x / _0C;
+	f32 factor = x / mFrequency;
 
 	for (int i = 0; i < a; i++) {
 		res += NoiseFunction::getValue(b * factor) / b;

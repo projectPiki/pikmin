@@ -80,8 +80,8 @@ PaniMotion::PaniMotion(int animID, int p2)
  */
 void PaniMotion::init(int id, int p2)
 {
-	mAnimID = id;
-	_04     = p2;
+	mAnimID   = id;
+	_UNUSED04 = p2;
 }
 
 /*

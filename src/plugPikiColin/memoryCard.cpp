@@ -1361,7 +1361,7 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	stream->writeByte(2);
-	stream->writeByte(p2._04);
+	stream->writeByte(p2.mFlags);
 	stream->setPosition(0x7FF8);
 
 	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
@@ -1589,7 +1589,7 @@ void MemoryCard::delFile(CardQuickInfo& p1)
 	gsys->mIsCardSaving = TRUE;
 	PlayState state;
 	state.Initialise();
-	state.mSaveFlags  = p1._04;
+	state.mSaveFlags  = p1.mFlags;
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	writeCurrentGame(stream, state);
 	stream->padFileTo(0x8000, 8);
@@ -2249,8 +2249,8 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 					info.mCrc               = sum;
 					info._20                = a;
 					info.mIndex             = i;
-					info._04                = s;
-					info._08                = state._20;
+					info.mFlags             = s;
+					info.mIsSelected        = state._20;
 					info.mCurrentDay        = state.mSavedDay;
 					info.mCurrentPartsCount = state._22;
 					info.mRedPikiCount      = state._14;

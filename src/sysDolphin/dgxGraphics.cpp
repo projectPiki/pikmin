@@ -714,7 +714,7 @@ void DGXGraphics::setLight(Light* light, int idx)
 		lightDir.normalise();
 		lightDir.rotate(mCamera->mLookAtMtx);
 		GXInitSpecularDir(gxLight, lightDir.x, lightDir.y, lightDir.z);
-		GXInitLightAttn(gxLight, 0.0f, 0.0f, 1.0f, _370 / 2.0f, 0.0f, 1.0f - (_370 / 2.0f));
+		GXInitLightAttn(gxLight, 0.0f, 0.0f, 1.0f, mLightDistance / 2.0f, 0.0f, 1.0f - (mLightDistance / 2.0f));
 	}
 
 	lightColour.a *= mLightIntensity;
@@ -1039,9 +1039,9 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 			for (int i = 0; i < mat->mTevInfo->mTevStageCount; i++) {
 				PVWTevStage& stage = mat->mTevInfo->mTevStages[i];
-				GXSetTevOrder(GXTevStageID(i), GXTexCoordID(stage._01), GXTexMapID(stage._02), GXChannelID(stage._03));
-				GXSetTevKColorSel(GXTevStageID(i), GXTevKColorSel(stage._04));
-				GXSetTevKAlphaSel(GXTevStageID(i), GXTevKAlphaSel(stage._05));
+				GXSetTevOrder(GXTevStageID(i), GXTexCoordID(stage.mTexCoordID), GXTexMapID(stage.mTexMapID), GXChannelID(stage.mChannelID));
+				GXSetTevKColorSel(GXTevStageID(i), GXTevKColorSel(stage.mTevKColorSel));
+				GXSetTevKAlphaSel(GXTevStageID(i), GXTevKAlphaSel(stage.mTevKAlphaSel));
 			}
 
 			Colour color;

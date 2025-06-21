@@ -112,35 +112,35 @@ void PVWColourAnimInfo::extract(f32 value, Colour& target)
 	}
 
 	if (mAnimInfo.mSize == 1) {
-		target.r = mAnimInfo.mKeyframes[0]._04._00;
-		target.g = mAnimInfo.mKeyframes[0]._14._00;
-		target.b = mAnimInfo.mKeyframes[0]._24._00;
+		target.r = mAnimInfo.mKeyframes[0].mRedData.mTime;
+		target.g = mAnimInfo.mKeyframes[0].mGreenData.mTime;
+		target.b = mAnimInfo.mKeyframes[0].mBlueData.mTime;
 		return;
 	}
 
 	int idx = 0;
 	for (int i = 0; i < (int)mAnimInfo.mSize - 1; i++) {
-		if (mAnimInfo.mKeyframes[i]._00 <= value && mAnimInfo.mKeyframes[i + 1]._00 >= value) {
+		if (mAnimInfo.mKeyframes[i].mTime <= value && mAnimInfo.mKeyframes[i + 1].mTime >= value) {
 			idx = i;
 			break;
 		}
 	}
 
 	f32 red   = subExtract(value,
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._04._00, mAnimInfo.mKeyframes[idx]._04._04,
-	                                mAnimInfo.mKeyframes[idx]._04._08),
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._04._00,
-	                                mAnimInfo.mKeyframes[idx + 1]._04._04, mAnimInfo.mKeyframes[idx + 1]._04._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx].mTime, mAnimInfo.mKeyframes[idx].mRedData.mTime,
+	                                mAnimInfo.mKeyframes[idx].mRedData.mValue, mAnimInfo.mKeyframes[idx].mRedData.mTangent),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1].mTime, mAnimInfo.mKeyframes[idx + 1].mRedData.mTime,
+	                                mAnimInfo.mKeyframes[idx + 1].mRedData.mValue, mAnimInfo.mKeyframes[idx + 1].mRedData.mTangent));
 	f32 green = subExtract(value,
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._14._00, mAnimInfo.mKeyframes[idx]._14._04,
-	                                mAnimInfo.mKeyframes[idx]._14._08),
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._14._00,
-	                                mAnimInfo.mKeyframes[idx + 1]._14._04, mAnimInfo.mKeyframes[idx + 1]._14._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx].mTime, mAnimInfo.mKeyframes[idx].mGreenData.mTime,
+	                                mAnimInfo.mKeyframes[idx].mGreenData.mValue, mAnimInfo.mKeyframes[idx].mGreenData.mTangent),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1].mTime, mAnimInfo.mKeyframes[idx + 1].mGreenData.mTime,
+	                                mAnimInfo.mKeyframes[idx + 1].mGreenData.mValue, mAnimInfo.mKeyframes[idx + 1].mGreenData.mTangent));
 	f32 blue  = subExtract(value,
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._24._00, mAnimInfo.mKeyframes[idx]._24._04,
-	                                mAnimInfo.mKeyframes[idx]._24._08),
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._24._00,
-	                                mAnimInfo.mKeyframes[idx + 1]._24._04, mAnimInfo.mKeyframes[idx + 1]._24._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx].mTime, mAnimInfo.mKeyframes[idx].mBlueData.mTime,
+	                                mAnimInfo.mKeyframes[idx].mBlueData.mValue, mAnimInfo.mKeyframes[idx].mBlueData.mTangent),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1].mTime, mAnimInfo.mKeyframes[idx + 1].mBlueData.mTime,
+	                                mAnimInfo.mKeyframes[idx + 1].mBlueData.mValue, mAnimInfo.mKeyframes[idx + 1].mBlueData.mTangent));
 
 	int r;
 	if (red < 0.0f) {
@@ -189,23 +189,23 @@ void PVWAlphaAnimInfo::extract(f32 value, Colour& target)
 	}
 
 	if (mAnimInfo.mSize == 1) {
-		target.a = mAnimInfo.mKeyframes[0]._04._00;
+		target.a = mAnimInfo.mKeyframes[0].mData.mTime;
 		return;
 	}
 
 	int idx = 0;
 	for (int i = 0; i < (int)mAnimInfo.mSize - 1; i++) {
-		if (mAnimInfo.mKeyframes[i]._00 <= value && mAnimInfo.mKeyframes[i + 1]._00 >= value) {
+		if (mAnimInfo.mKeyframes[i].mTime <= value && mAnimInfo.mKeyframes[i + 1].mTime >= value) {
 			idx = i;
 			break;
 		}
 	}
 
 	f32 alpha = subExtract(value,
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx]._00, mAnimInfo.mKeyframes[idx]._04._00, mAnimInfo.mKeyframes[idx]._04._04,
-	                                mAnimInfo.mKeyframes[idx]._04._08),
-	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1]._00, mAnimInfo.mKeyframes[idx + 1]._04._00,
-	                                mAnimInfo.mKeyframes[idx + 1]._04._04, mAnimInfo.mKeyframes[idx + 1]._04._08));
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx].mTime, mAnimInfo.mKeyframes[idx].mData.mTime,
+	                                mAnimInfo.mKeyframes[idx].mData.mValue, mAnimInfo.mKeyframes[idx].mData.mTangent),
+	                       AKeyInfo(mAnimInfo.mKeyframes[idx + 1].mTime, mAnimInfo.mKeyframes[idx + 1].mData.mTime,
+	                                mAnimInfo.mKeyframes[idx + 1].mData.mValue, mAnimInfo.mKeyframes[idx + 1].mData.mTangent));
 
 	int a;
 	if (alpha < 0.0f) {
@@ -232,35 +232,35 @@ void PVWColourShortAnimInfo::extract(f32 value, ShortColour& target)
 	}
 
 	if (mInfo.mSize == 1) {
-		target.r = mInfo.mKeyframes[0]._04._00;
-		target.g = mInfo.mKeyframes[0]._14._00;
-		target.b = mInfo.mKeyframes[0]._24._00;
+		target.r = mInfo.mKeyframes[0].mRedData.mTime;
+		target.g = mInfo.mKeyframes[0].mGreenData.mTime;
+		target.b = mInfo.mKeyframes[0].mBlueData.mTime;
 		return;
 	}
 
 	int idx = 0;
 	for (int i = 0; i < (int)mInfo.mSize - 1; i++) {
-		if (mInfo.mKeyframes[i]._00 <= value && mInfo.mKeyframes[i + 1]._00 >= value) {
+		if (mInfo.mKeyframes[i].mTime <= value && mInfo.mKeyframes[i + 1].mTime >= value) {
 			idx = i;
 			break;
 		}
 	}
 
-	f32 red = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
-	             mInfo.mKeyframes[idx + 1]._04._08));
-	f32 green = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14._00, mInfo.mKeyframes[idx]._14._04, mInfo.mKeyframes[idx]._14._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14._00, mInfo.mKeyframes[idx + 1]._14._04,
-	             mInfo.mKeyframes[idx + 1]._14._08));
-	f32 blue = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24._00, mInfo.mKeyframes[idx]._24._04, mInfo.mKeyframes[idx]._24._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24._00, mInfo.mKeyframes[idx + 1]._24._04,
-	             mInfo.mKeyframes[idx + 1]._24._08));
+	f32 red   = subExtract(value,
+	                       AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mRedData.mTime, mInfo.mKeyframes[idx].mRedData.mValue,
+	                                mInfo.mKeyframes[idx].mRedData.mTangent),
+	                       AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mRedData.mTime,
+	                                mInfo.mKeyframes[idx + 1].mRedData.mValue, mInfo.mKeyframes[idx + 1].mRedData.mTangent));
+	f32 green = subExtract(value,
+	                       AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mGreenData.mTime,
+	                                mInfo.mKeyframes[idx].mGreenData.mValue, mInfo.mKeyframes[idx].mGreenData.mTangent),
+	                       AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mGreenData.mTime,
+	                                mInfo.mKeyframes[idx + 1].mGreenData.mValue, mInfo.mKeyframes[idx + 1].mGreenData.mTangent));
+	f32 blue  = subExtract(value,
+	                       AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mBlueData.mTime,
+	                                mInfo.mKeyframes[idx].mBlueData.mValue, mInfo.mKeyframes[idx].mBlueData.mTangent),
+	                       AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mBlueData.mTime,
+	                                mInfo.mKeyframes[idx + 1].mBlueData.mValue, mInfo.mKeyframes[idx + 1].mBlueData.mTangent));
 
 	int r;
 	if (red < -1023.0f) {
@@ -309,23 +309,23 @@ void PVWAlphaShortAnimInfo::extract(f32 value, ShortColour& target)
 	}
 
 	if (mInfo.mSize == 1) {
-		target.a = mInfo.mKeyframes[0]._04._00;
+		target.a = mInfo.mKeyframes[0].mData.mTime;
 		return;
 	}
 
 	int idx = 0;
 	for (int i = 0; i < (int)mInfo.mSize - 1; i++) {
-		if (mInfo.mKeyframes[i]._00 <= value && mInfo.mKeyframes[i + 1]._00 >= value) {
+		if (mInfo.mKeyframes[i].mTime <= value && mInfo.mKeyframes[i + 1].mTime >= value) {
 			idx = i;
 			break;
 		}
 	}
 
-	f32 alpha = subExtract(
-	    value,
-	    AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04._00, mInfo.mKeyframes[idx]._04._04, mInfo.mKeyframes[idx]._04._08),
-	    AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04._00, mInfo.mKeyframes[idx + 1]._04._04,
-	             mInfo.mKeyframes[idx + 1]._04._08));
+	f32 alpha = subExtract(value,
+	                       AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mData.mTime, mInfo.mKeyframes[idx].mData.mValue,
+	                                mInfo.mKeyframes[idx].mData.mTangent),
+	                       AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mData.mTime,
+	                                mInfo.mKeyframes[idx + 1].mData.mValue, mInfo.mKeyframes[idx + 1].mData.mTangent));
 
 	int a;
 	if (alpha < 0.0f) {
@@ -352,41 +352,41 @@ void PVWTexAnimInfo::extract(f32 value, Vector3f& target)
 	}
 
 	if (mInfo.mSize == 1) {
-		target.x = mInfo.mKeyframes[0]._04.mTime;
-		target.y = mInfo.mKeyframes[0]._14.mTime;
-		target.z = mInfo.mKeyframes[0]._24.mTime;
+		target.x = mInfo.mKeyframes[0].mRedData.mTime;
+		target.y = mInfo.mKeyframes[0].mGreenData.mTime;
+		target.z = mInfo.mKeyframes[0].mBlueData.mTime;
 		return;
 	}
 
 	int idx = 0;
-	if (value >= f32(mInfo.mKeyframes[mInfo.mSize - 1]._00)) {
-		target.x = mInfo.mKeyframes[mInfo.mSize - 1]._04.mTime;
-		target.y = mInfo.mKeyframes[mInfo.mSize - 1]._14.mTime;
-		target.z = mInfo.mKeyframes[mInfo.mSize - 1]._24.mTime;
+	if (value >= f32(mInfo.mKeyframes[mInfo.mSize - 1].mTime)) {
+		target.x = mInfo.mKeyframes[mInfo.mSize - 1].mRedData.mTime;
+		target.y = mInfo.mKeyframes[mInfo.mSize - 1].mGreenData.mTime;
+		target.z = mInfo.mKeyframes[mInfo.mSize - 1].mBlueData.mTime;
 		return;
 	}
 	for (int i = 0; i < (int)mInfo.mSize - 1; i++) {
-		if (mInfo.mKeyframes[i]._00 <= value && mInfo.mKeyframes[i + 1]._00 >= value) {
+		if (mInfo.mKeyframes[i].mTime <= value && mInfo.mKeyframes[i + 1].mTime >= value) {
 			idx = i;
 			break;
 		}
 	}
 
 	target.x = subExtract(value,
-	                      AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._04.mTime, mInfo.mKeyframes[idx]._04.mValue,
-	                               mInfo.mKeyframes[idx]._04.mTangent),
-	                      AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._04.mTime, mInfo.mKeyframes[idx + 1]._04.mValue,
-	                               mInfo.mKeyframes[idx + 1]._04.mTangent));
+	                      AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mRedData.mTime, mInfo.mKeyframes[idx].mRedData.mValue,
+	                               mInfo.mKeyframes[idx].mRedData.mTangent),
+	                      AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mRedData.mTime,
+	                               mInfo.mKeyframes[idx + 1].mRedData.mValue, mInfo.mKeyframes[idx + 1].mRedData.mTangent));
 	target.y = subExtract(value,
-	                      AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._14.mTime, mInfo.mKeyframes[idx]._14.mValue,
-	                               mInfo.mKeyframes[idx]._14.mTangent),
-	                      AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._14.mTime, mInfo.mKeyframes[idx + 1]._14.mValue,
-	                               mInfo.mKeyframes[idx + 1]._14.mTangent));
+	                      AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mGreenData.mTime,
+	                               mInfo.mKeyframes[idx].mGreenData.mValue, mInfo.mKeyframes[idx].mGreenData.mTangent),
+	                      AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mGreenData.mTime,
+	                               mInfo.mKeyframes[idx + 1].mGreenData.mValue, mInfo.mKeyframes[idx + 1].mGreenData.mTangent));
 	target.z = subExtract(value,
-	                      AKeyInfo(mInfo.mKeyframes[idx]._00, mInfo.mKeyframes[idx]._24.mTime, mInfo.mKeyframes[idx]._24.mValue,
-	                               mInfo.mKeyframes[idx]._24.mTangent),
-	                      AKeyInfo(mInfo.mKeyframes[idx + 1]._00, mInfo.mKeyframes[idx + 1]._24.mTime, mInfo.mKeyframes[idx + 1]._24.mValue,
-	                               mInfo.mKeyframes[idx + 1]._24.mTangent));
+	                      AKeyInfo(mInfo.mKeyframes[idx].mTime, mInfo.mKeyframes[idx].mBlueData.mTime,
+	                               mInfo.mKeyframes[idx].mBlueData.mValue, mInfo.mKeyframes[idx].mBlueData.mTangent),
+	                      AKeyInfo(mInfo.mKeyframes[idx + 1].mTime, mInfo.mKeyframes[idx + 1].mBlueData.mTime,
+	                               mInfo.mKeyframes[idx + 1].mBlueData.mValue, mInfo.mKeyframes[idx + 1].mBlueData.mTangent));
 }
 
 /*
@@ -658,14 +658,14 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 			// so much indexing, this isn't even an inline function
 			mChars[charIndex].mCharSpacing         = baselinePos - baseline;
 			mChars[charIndex].mLeftOffset          = baseline - leftEdge;
-			mChars[charIndex]._00                  = leftEdge + j * mCharWidth;
+			mChars[charIndex].mTextureX            = leftEdge + j * mCharWidth;
 			mChars[charIndex].mWidth               = mCharWidth - leftEdge - rightEdge;
-			mChars[charIndex]._02                  = i * mCharHeight;
+			mChars[charIndex].mTextureY            = i * mCharHeight;
 			mChars[charIndex].mHeight              = mCharHeight - 1;
-			mChars[charIndex].mTextureCoords.mMinX = (s16)mChars[charIndex]._00;
-			mChars[charIndex].mTextureCoords.mMinY = (s16)mChars[charIndex]._02;
-			mChars[charIndex].mTextureCoords.mMaxX = (s16)mChars[charIndex]._00 + (s16)mChars[charIndex].mWidth;
-			mChars[charIndex].mTextureCoords.mMaxY = (s16)mChars[charIndex]._02 + (s16)mChars[charIndex].mHeight - 1;
+			mChars[charIndex].mTextureCoords.mMinX = (s16)mChars[charIndex].mTextureX;
+			mChars[charIndex].mTextureCoords.mMinY = (s16)mChars[charIndex].mTextureY;
+			mChars[charIndex].mTextureCoords.mMaxX = (s16)mChars[charIndex].mTextureX + (s16)mChars[charIndex].mWidth;
+			mChars[charIndex].mTextureCoords.mMaxY = (s16)mChars[charIndex].mTextureY + (s16)mChars[charIndex].mHeight - 1;
 
 			charIndex++;
 		}
@@ -1408,7 +1408,7 @@ int Graphics::calcLighting(f32 intensity)
 	}
 
 	if (mLight.mChild) {
-		_370 = 50.0f;
+		mLightDistance = 50.0f;
 		setLight((Light*)mLight.mChild, 7);
 	}
 

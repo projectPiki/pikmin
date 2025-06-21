@@ -119,7 +119,7 @@ struct Graphics {
 	Colour mFogColour;                        // _364
 	Colour mAmbientFogColour;                 // _368
 	Colour _36C;                              // _36C
-	f32 _370;                                 // _370
+	f32 mLightDistance;                       // _370
 	f32 mLightIntensity;                      // _374
 	u32 mActiveLightMask;                     // _378
 	f32 mLineWidth;                           // _37C

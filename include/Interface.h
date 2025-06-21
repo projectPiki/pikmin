@@ -71,7 +71,7 @@ struct GameMovieInterface : public GameInterface {
 		ComplexMessage() { }
 
 		int mMovieIdx;      // _00
-		int _04;            // _04
+		int _UNUSED04;      // _04
 		Creature* mTarget;  // _08
 		Vector3f mPosition; // _0C
 		Vector3f mRotation; // _18
@@ -96,7 +96,7 @@ struct GameMovieInterface : public GameInterface {
 			return;
 		}
 		mCompMesg[mComplexMesgCount].mMovieIdx = id;
-		mCompMesg[mComplexMesgCount]._04       = a1;
+		mCompMesg[mComplexMesgCount]._UNUSED04 = a1;
 		mCompMesg[mComplexMesgCount].mTarget   = obj;
 		if (!pos) {
 			mCompMesg[mComplexMesgCount].mPosition.set(0.0f, 0.0f, 0.0f);

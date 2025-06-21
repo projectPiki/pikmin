@@ -16,11 +16,11 @@ extern u8 cardData[];
  * @note Size: 0x28.
  */
 struct CardQuickInfo {
-	CardQuickInfo() { _08 = 0; }
+	CardQuickInfo() { mIsSelected = 0; }
 
 	int mIndex;             // _00
-	u32 _04;                // _04, unknown
-	u32 _08;                // _08, maybe int
+	u32 mFlags;             // _04
+	u32 mIsSelected;        // _08, guessed name, not entirely sure
 	int mCurrentDay;        // _0C
 	int mCurrentPartsCount; // _10
 	int mRedPikiCount;      // _14

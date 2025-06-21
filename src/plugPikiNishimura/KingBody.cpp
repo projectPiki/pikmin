@@ -31,21 +31,21 @@ DEFINE_PRINT("KingBody");
  */
 void KingBody::setSalivaEffect()
 {
-	mSalivaCallBacks[0].set(&_A8[1], &_A8[2], mKing);
+	mSalivaCallBacks[0].set(&mSalivaJointPositions[1], &mSalivaJointPositions[2], mKing);
 	mSalivaParticleCallBack->set(mKing);
 	effectMgr->create(EffectMgr::EFF_King_Saliva1A, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[0], mSalivaParticleCallBack);
 
-	mSalivaCallBacks[1].set(&_A8[0], &_A8[3], mKing);
+	mSalivaCallBacks[1].set(&mSalivaJointPositions[0], &mSalivaJointPositions[3], mKing);
 	effectMgr->create(EffectMgr::EFF_King_Saliva1A, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[1], mSalivaParticleCallBack);
 
-	mSalivaCallBacks[2].set(&_A8[0], &_A8[1], mKing);
+	mSalivaCallBacks[2].set(&mSalivaJointPositions[0], &mSalivaJointPositions[1], mKing);
 	effectMgr->create(EffectMgr::EFF_King_Saliva1B, Vector3f(0.0f, 0.0f, 0.0f), &mSalivaCallBacks[2], mSalivaParticleCallBack);
 
 	mSpreadSalivaCallBack->set(mKing);
 	zen::particleGenerator* ptcl
 	    = effectMgr->create(EffectMgr::EFF_King_Saliva2, Vector3f(0.0f, 0.0f, 0.0f), mSpreadSalivaCallBack, mSalivaParticleCallBack);
 	if (ptcl) {
-		ptcl->setEmitPosPtr(&mSalivaEffectPosition);
+		ptcl->setEmitPosPtr(&mSalivaEffectPos);
 	}
 }
 
@@ -59,12 +59,12 @@ void KingBody::setSeedFlashEffect()
 	mDamageStarCallBack->set(mKing);
 
 	for (int i = 0; i < 2; i++) {
-		effectMgr->create(EffectMgr::EFF_Piki_HitA, _78[i], nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Piki_HitB, _78[i], nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_HitA, mEyePositions[i], nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Piki_HitB, mEyePositions[i], nullptr, nullptr);
 		zen::particleGenerator* ptcl
 		    = effectMgr->create(EffectMgr::EFF_King_SeedFlash, Vector3f(0.0f, 0.0f, 0.0f), mDamageStarCallBack, nullptr);
 		if (ptcl) {
-			ptcl->setEmitPosPtr(&_78[i]);
+			ptcl->setEmitPosPtr(&mEyePositions[i]);
 		}
 	}
 }
@@ -77,7 +77,7 @@ void KingBody::setSeedFlashEffect()
 void KingBody::setEatBombEffect()
 {
 	Vector3f dir(sinf(mKing->mFaceDirection), 0.0f, cosf(mKing->mFaceDirection));
-	Vector3f effectPos            = _6C + 50.0f * dir;
+	Vector3f effectPos            = mMouthPos + 50.0f * dir;
 	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_King_EatBomb2, effectPos, nullptr, nullptr);
 	if (ptcl1) {
 		ptcl1->setEmitDir(dir);
@@ -89,7 +89,7 @@ void KingBody::setEatBombEffect()
 
 	mDamageStarCallBack->set(mKing);
 	for (int i = 0; i < 2; i++) {
-		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_King_EatBomb3, _90[i], nullptr, nullptr);
+		zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_King_EatBomb3, mCheekPositions[i], nullptr, nullptr);
 		if (ptcl) {
 			ptcl->setEmitDir(dir);
 		}
@@ -203,8 +203,8 @@ void KingBody::killCallBackEffect(bool p1)
  */
 KingBody::KingBody(King*)
 {
-	_F0                        = new Matrix4f[66];
-	_F4                        = new Matrix4f[66];
+	mBlendStartMatrices        = new Matrix4f[66];
+	mBlendResultMatrices       = new Matrix4f[66];
 	mSalivaCallBacks           = new KingGenSalivaCallBack[3];
 	mSpreadSalivaCallBack      = new KingGenSpreadSalivaCallBack;
 	mSalivaParticleCallBack    = new KingGenSalivaParticleCallBack;
@@ -221,14 +221,14 @@ KingBody::KingBody(King*)
 void KingBody::init(King* king)
 {
 	mKing                 = king;
-	_04                   = 0;
+	mIsBlending           = 0;
 	mBlendingRatio        = 0.0f;
 	mMoveSpeed            = 0.0f;
 	mDoFallSalivaEffect   = 0;
 	mDoSpreadSalivaEffect = 0;
 
 	for (int i = 0; i < 2; i++) {
-		_09[i]                      = 1;
+		mPrevIsFootOnGround[i]      = 1;
 		mIsFootOnGround[i]          = true;
 		mIsFootGeneratingRipples[i] = false;
 		mFootMapAttr[i]             = ATTR_NULL;
@@ -236,7 +236,7 @@ void KingBody::init(King* king)
 		mOldFootPosList[i].set(0.0f, 0.0f, 0.0f);
 	}
 
-	_54.set(0.0f, 0.0f, 0.0f);
+	_UNUSED54.set(0.0f, 0.0f, 0.0f);
 	setSalivaEffect();
 }
 
@@ -248,7 +248,7 @@ void KingBody::init(King* king)
 void KingBody::initBlending(f32 blendRate)
 {
 	if (mBlendingRatio > 0.0f) {
-		_04 = 1;
+		mIsBlending = 1;
 	}
 	mBlendingRatio = 0.00001f;
 	mBlendingRate  = blendRate;
@@ -328,7 +328,7 @@ void KingBody::setVelocityFromPosition()
 void KingBody::emitOnGroundEffect()
 {
 	for (int i = 0; i < 2; i++) {
-		if (mIsFootOnGround[i] && !_09[i]) {
+		if (mIsFootOnGround[i] && !mPrevIsFootOnGround[i]) {
 			mFootMapAttr[i] = mKing->getMapAttribute(mFootPosList[i]);
 			if (mFootMapAttr[i] == ATTR_Water) {
 				createWaterEffect(i);
@@ -375,7 +375,7 @@ void KingBody::emitSlipEffect()
 void KingBody::copyOnGround()
 {
 	for (int i = 0; i < 2; i++) {
-		_09[i] = mIsFootOnGround[i];
+		mPrevIsFootOnGround[i] = mIsFootOnGround[i];
 	}
 }
 
@@ -421,13 +421,13 @@ void KingBody::checkBlendingParm(Matrix4f* animMatrices)
 	int i; // nishimura has a real holdover from C in pre-declaring these loop variables, damn
 	if (mBlendingRatio == 0.0f) {
 		for (i = 0; i < 66; i++) {
-			_F0[i] = animMatrices[i];
+			mBlendStartMatrices[i] = animMatrices[i];
 		}
-	} else if (_04) {
+	} else if (mIsBlending) {
 		for (i = 0; i < 66; i++) {
-			_F0[i] = _F4[i];
+			mBlendStartMatrices[i] = mBlendResultMatrices[i];
 		}
-		_04 = false;
+		mIsBlending = false;
 	}
 }
 
@@ -442,9 +442,9 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 		f32 tComp = 1.0f - mBlendingRatio;
 		Vector3f blendPositions[66];
 		for (int i = 0; i < 66; i++) {
-			blendPositions[i].x = mBlendingRatio * animMatrices[i].mMtx[0][3] + tComp * _F0[i].mMtx[0][3];
-			blendPositions[i].y = mBlendingRatio * animMatrices[i].mMtx[1][3] + tComp * _F0[i].mMtx[1][3];
-			blendPositions[i].z = mBlendingRatio * animMatrices[i].mMtx[2][3] + tComp * _F0[i].mMtx[2][3];
+			blendPositions[i].x = mBlendingRatio * animMatrices[i].mMtx[0][3] + tComp * mBlendStartMatrices[i].mMtx[0][3];
+			blendPositions[i].y = mBlendingRatio * animMatrices[i].mMtx[1][3] + tComp * mBlendStartMatrices[i].mMtx[1][3];
+			blendPositions[i].z = mBlendingRatio * animMatrices[i].mMtx[2][3] + tComp * mBlendStartMatrices[i].mMtx[2][3];
 		}
 
 		for (int i = 0; i < 66; i++) {
@@ -467,12 +467,12 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
 			Vector3f scales(xLen, yLen, zLen);
 			NsCalculation::calcMat4toMat3(animMatrices[i], mtx1);
 			q1.fromMat3f(mtx1);
-			NsCalculation::calcMat4toMat3(_F0[i], mtx2);
+			NsCalculation::calcMat4toMat3(mBlendStartMatrices[i], mtx2);
 			q2.fromMat3f(mtx2);
 
 			q2.slerp(q1, mBlendingRatio, 0);
 			animMatrices[i].makeVQS(blendPositions[i], q2, scales);
-			_F4[i] = animMatrices[i];
+			mBlendResultMatrices[i] = animMatrices[i];
 		}
 	}
 }
@@ -490,24 +490,24 @@ void KingBody::copyJointPosition(Matrix4f* animMatrices)
 
 	animMatrices[3].getColumn(3, mFootPosList[0]);
 	animMatrices[6].getColumn(3, mFootPosList[1]);
-	animMatrices[31].getColumn(1, _60);
+	animMatrices[31].getColumn(1, mNormalisedJointDir);
 
-	_60.multiply(-1.0f);
-	_60.normalise();
+	mNormalisedJointDir.multiply(-1.0f);
+	mNormalisedJointDir.normalise();
 
-	animMatrices[14].getColumn(3, _A8[3]);
-	animMatrices[15].getColumn(3, _A8[2]);
-	animMatrices[16].getColumn(3, _A8[1]);
-	animMatrices[17].getColumn(3, _A8[0]);
+	animMatrices[14].getColumn(3, mSalivaJointPositions[3]);
+	animMatrices[15].getColumn(3, mSalivaJointPositions[2]);
+	animMatrices[16].getColumn(3, mSalivaJointPositions[1]);
+	animMatrices[17].getColumn(3, mSalivaJointPositions[0]);
 
-	_E4 = mSalivaEffectPosition;
+	mPrevSalivaEffectPos = mSalivaEffectPos;
 
-	animMatrices[31].getColumn(3, mSalivaEffectPosition);
-	animMatrices[45].getColumn(3, _78[0]);
-	animMatrices[51].getColumn(3, _78[1]);
-	animMatrices[10].getColumn(3, _90[0]);
-	animMatrices[9].getColumn(3, _90[1]);
-	animMatrices[13].getColumn(3, _6C);
+	animMatrices[31].getColumn(3, mSalivaEffectPos);
+	animMatrices[45].getColumn(3, mEyePositions[0]);
+	animMatrices[51].getColumn(3, mEyePositions[1]);
+	animMatrices[10].getColumn(3, mCheekPositions[0]);
+	animMatrices[9].getColumn(3, mCheekPositions[1]);
+	animMatrices[13].getColumn(3, mMouthPos);
 }
 
 /*

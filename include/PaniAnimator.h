@@ -50,8 +50,8 @@ struct PaniMotion {
 
 	void init(int, int);
 
-	int mAnimID; // _00
-	int _04;     // _04
+	int mAnimID;   // _00
+	int _UNUSED04; // _04
 };
 
 /**

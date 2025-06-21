@@ -897,9 +897,9 @@ void zen::ogScrFileSelectMgr::ChkOnyonOnOff()
  */
 void zen::ogScrFileSelectMgr::ChkNewData()
 {
-	mFileSlotSelectionStates[0] = mCardInfo[0]._08 == 1;
-	mFileSlotSelectionStates[1] = mCardInfo[1]._08 == 1;
-	mFileSlotSelectionStates[2] = mCardInfo[2]._08 == 1;
+	mFileSlotSelectionStates[0] = mCardInfo[0].mIsSelected == 1;
+	mFileSlotSelectionStates[1] = mCardInfo[1].mIsSelected == 1;
+	mFileSlotSelectionStates[2] = mCardInfo[2].mIsSelected == 1;
 
 	for (int i = 0; i < 3; i++) {
 		OnOffNewPane(i);

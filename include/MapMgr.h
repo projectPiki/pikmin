@@ -268,9 +268,9 @@ struct MapRoom {
 		_00 = 1.0f;
 	}
 
-	f32 _00; // _00
-	f32 _04; // _04
-	u32 _08; // _08, unknown
+	f32 _00; // _00, all unknown
+	f32 _04; // _04, all unknown
+	u32 _08; // _08, all unknown
 };
 
 /**

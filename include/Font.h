@@ -15,12 +15,12 @@ struct Texture;
 struct FontChar {
 	FontChar()
 	{
-		_00 = _02 = 0;
+		mTextureX = mTextureY = 0;
 		mWidth = mHeight = 8;
 	}
 
-	u16 _00;                 // _00
-	u16 _02;                 // _02
+	u16 mTextureX;           // _00
+	u16 mTextureY;           // _02
 	s16 mWidth;              // _04
 	s16 mHeight;             // _06
 	s16 mCharSpacing;        // _08

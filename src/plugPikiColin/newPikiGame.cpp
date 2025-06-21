@@ -798,7 +798,7 @@ ModeState* DayOverModeState::update(u32& result)
 		if (state >= 1) {
 			memcardWindow = nullptr;
 			if (state != 1 && state != 5) {
-				gameflow.mPlayState.mSaveFlags          = info._04;
+				gameflow.mPlayState.mSaveFlags          = info.mFlags;
 				gameflow.mGamePrefs.mSpareSaveGameIndex = info.mIndex + 1;
 				PRINT("using save game file %d with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
 				      gameflow.mGamePrefs.mSpareSaveGameIndex);
@@ -1497,7 +1497,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	case MOVIECMD_StartTutorial:
 		// Data from here uses the DEMOID_* define (cutscene ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
-		int partId  = -1;
+		int partId    = -1;
 		bool hasAudio = false;
 		if (data == DEMOID_ShipUpgrade) {
 			if (gameflow.mMovieInfoNum == -1) {
@@ -1513,9 +1513,9 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 			} else if (gameflow.mMovieType == 0) {
 				data = gameflow.mMovieInfoNum + 92;
 			} else if (gameflow.mMovieType == 1) {
-				data = gameflow.mMovieInfoNum + 62;
-				hasAudio    = false;
-				partId    = gameflow.mMovieInfoNum;
+				data     = gameflow.mMovieInfoNum + 62;
+				hasAudio = false;
+				partId   = gameflow.mMovieInfoNum;
 			} else if (gameflow.mMovieType == 2) {
 				PRINT("showing power up message (%d)!!\n", gameflow.mMovieInfoNum + 122);
 				int id = gameflow.mMovieInfoNum + 122;
@@ -1526,9 +1526,9 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 					data = id;
 				}
 			} else if (gameflow.mMovieType == 3) {
-				partId    = gameflow.mMovieInfoNum;
-				hasAudio    = true;
-				data = gameflow.mMovieInfoNum + 32;
+				partId   = gameflow.mMovieInfoNum;
+				hasAudio = true;
+				data     = gameflow.mMovieInfoNum + 32;
 			}
 		}
 
@@ -1633,7 +1633,8 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
  */
 void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 {
-	gameflow.mMoviePlayer->startMovie(msg.mMovieIdx, msg._04, msg.mTarget, &msg.mPosition, &msg.mRotation, msg.mFlags, msg.mIsPlaying);
+	gameflow.mMoviePlayer->startMovie(msg.mMovieIdx, msg._UNUSED04, msg.mTarget, &msg.mPosition, &msg.mRotation, msg.mFlags,
+	                                  msg.mIsPlaying);
 }
 
 /**
