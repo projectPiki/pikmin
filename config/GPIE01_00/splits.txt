@@ -2813,6 +2813,9 @@ gx/GXPixel.c:
 	.data       start:0x802E8F38 end:0x802E8F58
 	.sdata2     start:0x803EC4E8 end:0x803EC518
 
+MSL_C/PPCEABI/bare/H/ansi_files.c:
+	.data       start:0x802E8F58 end:0x802E9030
+
 gx/GXStubs.c:
 	.text       start:0x80214034 end:0x80214038
 
@@ -2832,9 +2835,6 @@ Runtime/PPCEABI/H/global_destructor_chain.c:
 	.text       start:0x802148B4 end:0x80214914
 	.dtors      start:0x80221F28 end:0x80221F2C
 	.sbss       start:0x803E80E8 end:0x803E80F0
-
-Runtime/PPCEABI/H/__mem.c:
-	.init       start:0x80003320 end:0x80003464
 
 Runtime/PPCEABI/H/CPlusLibPPC.cp:
 	.text       start:0x80214914 end:0x80214944
@@ -2861,9 +2861,6 @@ Runtime/PPCEABI/H/__init_cpp_exceptions.cpp:
 	.ctors      start:0x80221EC0 end:0x80221EC4
 	.dtors      start:0x80221F20 end:0x80221F28
 	.sdata      start:0x803E7740 end:0x803E7748
-
-MSL_C/PPCEABI/bare/H/ansi_files.c:
-	.data       start:0x802E8F58 end:0x802E9030
 
 MSL_C/PPCEABI/bare/H/abort_exit.c:
 	.text       start:0x8021548C end:0x80215598
@@ -3055,6 +3052,9 @@ TRK_MINNOW_DOLPHIN/notify.c:
 
 TRK_MINNOW_DOLPHIN/flush_cache.c:
 	.text       start:0x8021E6D8 end:0x8021E710
+
+Runtime/PPCEABI/H/__mem.c:
+	.init       start:0x80003320 end:0x80003464
 
 TRK_MINNOW_DOLPHIN/mem_TRK.c:
 	.init       start:0x80003464 end:0x800034B8
