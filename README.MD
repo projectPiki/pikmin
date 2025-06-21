@@ -15,13 +15,13 @@ A work-in-progress decompilation of Pikmin (GameCube, 2001).
 
 Supported versions (active):
 
+- `GPIE01_00`: USA (Rev 0)
 - `GPIE01_01`: USA (Rev 1)
 
 Supported versions (to be worked on):
 - `DPIJ01`: PikiDemo / Jitsuen-you Sample
 - `GPIJ01_01`: Japan (Rev 1)
 - `GPIJ01_02`: Japan (Rev 2)
-- `GPIE01_00`: USA (Rev 0)
 - `GPIP01_00`: Europe (Rev 0)
 
 Note: this repository contains **no game assets** - an existing copy of the game is required.
