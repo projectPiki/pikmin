@@ -167,6 +167,7 @@ typedef struct VIPositionInfo {
 
 ///// VIDEO INTERFACE FUNCTIONS ////
 // Basic VI functions.
+void __VIInit(VITVMode mode);
 void VIInit(void);
 void VIFlush(void);
 void VIWaitForRetrace(void);

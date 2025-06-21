@@ -945,6 +945,8 @@ BOOL PlayLogicalChannel(jc_* jc)
 
 	for (u32 i = 0; i < 6; i++) {
 		MixConfig bus = jc->busRouting[i];
+#if defined(VERSION_GPIE01_00)
+#else
 		if (JAC_SYSTEM_OUTPUT_MODE == 0) {
 			switch (bus.parts.upper) {
 			case 8:
@@ -955,6 +957,7 @@ BOOL PlayLogicalChannel(jc_* jc)
 				break;
 			}
 		}
+#endif
 		DSP_SetBusConnect(jc->dspChannel->buffer_idx, i, bus.parts.upper);
 	}
 

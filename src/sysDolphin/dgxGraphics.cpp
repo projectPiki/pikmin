@@ -230,6 +230,9 @@ void DGXGraphics::videoReset()
 	if (videoModeAsIs != mRenderMode) {
 		videoModeAsIs = mRenderMode;
 		sFirstFrame   = 2;
+#if defined(VERSION_GPIE01_00)
+		__VIInit(mRenderMode == 0 ? VI_TVMODE_NTSC_INT : VI_TVMODE_NTSC_PROG);
+#endif
 		VIConfigure(sScreenMode[mRenderMode]);
 		VIFlush();
 		VIWaitForRetrace();

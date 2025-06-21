@@ -1007,10 +1007,15 @@ void Pellet::doLoad(RandomAccessStream& input)
 	if (displacement.length() < 40.0f) {
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
 		mPosition = mSpawnPosition;
-	} else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
-		// this isn't in the DLL, funnily enough
+	}
+#if defined(VERSION_GPIE01_00)
+	// This isn't in the USA versions' DLL, meaning that DLL is based on rev 0 instead of rev 1 (it was not recompiled between revisions).
+#else
+	else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
 		mPosition = mSpawnPosition;
-	} else {
+	}
+#endif
+	else {
 		PRINT("PARTS MOVED !!! (%.1f %.1f %.1f)\n", displacement.x, displacement.y, displacement.z);
 		mPosition = routeMgr->getSafePosition('test', mPosition);
 	}
