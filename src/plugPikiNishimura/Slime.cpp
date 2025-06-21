@@ -92,7 +92,7 @@ void Slime::init(Vector3f& pos)
 	mLeaderCreatureIndex   = SLIMECREATURE_CoreOuter;
 	mFollowerCreatureIndex = bossMgr->mSlimeCreatureCount - 1;
 	mLeaderSpeed           = 0.0f;
-	_3D4                   = 0.0f;
+	mAppearanceScale       = 0.0f;
 	mBodyThickness         = SLIME_PROP.mBodyThicknessContract(); // body thickness?
 	mNucleusPosition       = pos;
 	mCorePosition          = pos;
@@ -192,7 +192,7 @@ void Slime::drawShape(Graphics& gfx)
 {
 	doAnimation();
 	gfx.useMatrix(Matrix4f::ident, 0);
-	if (_3D4 > 0.0f) {
+	if (mAppearanceScale > 0.0f) {
 		mShapeObject->mShape->mVertexCacheFlags |= (VertexCacheFlags::VertexList | VertexCacheFlags::NormalList);
 		mShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	}

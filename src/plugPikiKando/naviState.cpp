@@ -1042,9 +1042,9 @@ void NaviContainerState::init(Navi* navi)
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField(), exitPikis + GameStat::mapPikis,
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField());
 	PRINT("FINISH START CONAINER WINDOW ***\n");
-	gameflow.mDisableController = 1;
-	_18                         = 0;
-	_1C                         = 0;
+	gameflow._33C = 1;
+	_18           = 0;
+	_1C           = 0;
 }
 
 /*
@@ -1164,7 +1164,7 @@ void NaviContainerState::exitPikis(Navi* navi, int p2)
 void NaviContainerState::cleanup(Navi* navi)
 {
 	PRINT("cleanup\n");
-	gameflow.mDisableController = 0;
+	gameflow._33C = 0;
 	navi->mGoalItem->setSpotActive(true);
 }
 
@@ -1819,7 +1819,7 @@ void NaviGatherState::exec(Navi* navi)
 		if (navi->_AB8 > C_NAVI_PROP(navi)._AC()) {
 			navi->_AB8 = C_NAVI_PROP(navi)._AC();
 
-			if (!gameflow.mDisableController) {
+			if (!gameflow._33C) {
 				navi->callPikis(C_NAVI_PROP(navi)._8C());
 			} else {
 				navi->callDebugs(C_NAVI_PROP(navi)._8C());
@@ -1841,7 +1841,7 @@ void NaviGatherState::exec(Navi* navi)
 		navi->_AB8 = 0.0f;
 		navi->_ABC = 2;
 		_14        = scale;
-		if (!gameflow.mDisableController) {
+		if (!gameflow._33C) {
 			navi->callPikis(scale);
 		} else {
 			navi->callDebugs(scale);
@@ -1852,7 +1852,7 @@ void NaviGatherState::exec(Navi* navi)
 	if (navi->_ABC != 2) {
 		return;
 	}
-	if (!gameflow.mDisableController) {
+	if (!gameflow._33C) {
 		navi->callPikis(_14);
 	} else {
 		navi->callDebugs(_14);

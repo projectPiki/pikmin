@@ -63,6 +63,15 @@ enum WorldMapScreenID {
 };
 
 /**
+ * @brief Animation states for world map title objects
+ */
+DEFINE_ENUM_TYPE(TitleAnimState,
+                 Idle      = 0, // Title is stationary or hidden
+                 Appearing = 1, // Title is animating into view
+                 Hiding    = 2, // Title is animating out of view
+);
+
+/**
  * @brief TODO
  *
  * @note Size: 0x28.
@@ -70,24 +79,24 @@ enum WorldMapScreenID {
 struct WorldMapTitleObj {
 	WorldMapTitleObj()
 	{
-		_04 = nullptr;
-		_00 = 0;
+		mTitlePane = nullptr;
+		mAnimState = TitleAnimState::Idle;
 	}
 
 	// weak:
 	void update()
 	{
-		switch (_00) {
-		case 0:
+		switch (mAnimState) {
+		case TitleAnimState::Idle:
 			break;
-		case 1:
+		case TitleAnimState::Appearing:
 			if (move(0.25f)) {
-				_00 = 0;
+				mAnimState = TitleAnimState::Idle;
 			}
 			break;
-		case 2:
+		case TitleAnimState::Hiding:
 			if (move(0.5f)) {
-				_00 = 0;
+				mAnimState = TitleAnimState::Idle;
 				hide();
 			}
 			break;
@@ -98,61 +107,61 @@ struct WorldMapTitleObj {
 	// DLL requires these inlines, they aren't in the list though, so fabricated name
 	void init(P2DPane* titlePane)
 	{
-		_04 = titlePane;
-		_04->setOffset(_04->getWidth() >> 1, _04->getHeight() >> 1);
-		_00 = 0;
+		mTitlePane = titlePane;
+		mTitlePane->setOffset(mTitlePane->getWidth() >> 1, mTitlePane->getHeight() >> 1);
+		mAnimState = TitleAnimState::Idle;
 	}
 	// probably? could be wait, maybe rename later
 	void disappear()
 	{
-		_04->move(640, 480);
-		_00 = 0;
+		mTitlePane->move(640, 480);
+		mAnimState = TitleAnimState::Idle;
 		hide();
 	}
-	void hide() { _04->hide(); }
+	void hide() { mTitlePane->hide(); }
 
 	bool move(f32 p1)
 	{
 		bool res = false;
-		_08 += gsys->getFrameTime();
-		if (_08 > p1) {
-			_08 = p1;
-			res = true;
+		mAnimTimer += gsys->getFrameTime();
+		if (mAnimTimer > p1) {
+			mAnimTimer = p1;
+			res        = true;
 		}
 
-		f32 t     = sinf(_08 / p1 * HALF_PI);
+		f32 t     = sinf(mAnimTimer / p1 * HALF_PI);
 		f32 tComp = 1.0f - t;
-		_04->move(zen::RoundOff(_10.x * tComp + _1C.x * t), zen::RoundOff(_10.y * tComp + _1C.y * t));
+		mTitlePane->move(zen::RoundOff(mStartPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mStartPos.y * tComp + mTargetPos.y * t));
 		return res;
 	}
 
-	void show() { _04->show(); }
+	void show() { mTitlePane->show(); }
 
 	// might be wait
 	void appear()
 	{
-		_10.set(640.0f, 30.0f, 0.0f);
-		_1C.set(40.0f, 30.0f, 0.0f);
-		_08 = 0.0f;
-		_00 = 1;
+		mStartPos.set(640.0f, 30.0f, 0.0f);
+		mTargetPos.set(40.0f, 30.0f, 0.0f);
+		mAnimTimer = 0.0f;
+		mAnimState = TitleAnimState::Appearing;
 		show();
 	}
 
 	void wait()
 	{
-		_10.set(_04->getPosH(), _04->getPosV(), 0.0f);
-		_1C.set(_10.x, _10.y - 320.0f, _10.z);
-		_08 = 0.0f;
-		_00 = 2;
+		mStartPos.set(mTitlePane->getPosH(), mTitlePane->getPosV(), 0.0f);
+		mTargetPos.set(mStartPos.x, mStartPos.y - 320.0f, mStartPos.z);
+		mAnimTimer = 0.0f;
+		mAnimState = TitleAnimState::Hiding;
 		show();
 	}
 
-	int _00;      // _00
-	P2DPane* _04; // _04, could be a pane subtype
-	f32 _08;      // _08
-	u8 _0C[0x4];  // _0C, unknown
-	Vector3f _10; // _10
-	Vector3f _1C; // _1C
+	int mAnimState;      // _00
+	P2DPane* mTitlePane; // _04, could be a pane subtype
+	f32 mAnimTimer;      // _08
+	u8 _UNUSED0C[0x4];   // _0C, unknown
+	Vector3f mStartPos;  // _10
+	Vector3f mTargetPos; // _1C
 };
 
 /**
@@ -209,6 +218,16 @@ struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex 
 };
 
 /**
+ * @brief Appearance states for course point animations
+ */
+DEFINE_ENUM_TYPE(CourseAppearState,
+                 Ready          = 0, // Course point is ready/idle
+                 RocketIncoming = 1, // Rocket is approaching (0.5s timer)
+                 Exploding      = 2, // Explosion effects playing (1.0s timer)
+                 Revealing      = 3, // Final reveal animation (1.0s timer)
+);
+
+/**
  * @brief TODO
  *
  * @note Size: 0x3C.
@@ -228,13 +247,13 @@ struct WorldMapCoursePoint {
 
 	WorldMapCoursePoint()
 	{
-		_04        = 0;
-		_08        = 0.0f;
-		mIsVisible = false;
-		_14        = nullptr;
-		_18        = nullptr;
-		mStayPane  = nullptr;
-		mLandPane  = nullptr;
+		mAppearState   = CourseAppearState::Ready;
+		mAppearTimer   = 0.0f;
+		mIsVisible     = false;
+		mUnselectedPic = nullptr;
+		mSelectedPic   = nullptr;
+		mStayPane      = nullptr;
+		mLandPane      = nullptr;
 		for (int i = 0; i < 4; i++) {
 			mLinkPoints[i] = nullptr;
 		}
@@ -244,30 +263,30 @@ struct WorldMapCoursePoint {
 	void select()
 	{
 		if (mIsVisible) {
-			_14->hide();
-			_18->show();
-			_20->show();
+			mUnselectedPic->hide();
+			mSelectedPic->show();
+			mSelectionLine->show();
 		}
 	}
 	void setPane(P2DScreen* pointScreen, u32 tag1, u32 tag2, u32 tag3, P2DScreen* lineScreen, u32 tag4)
 	{
 		P2DPane* pointPane1 = pointScreen->search(tag1, true);
 		if (pointPane1->getTypeID() == PANETYPE_Picture) {
-			_14 = (P2DPicture*)pointPane1;
-			_14->setOffset(_14->getWidth() >> 1, _14->getHeight());
+			mUnselectedPic = (P2DPicture*)pointPane1;
+			mUnselectedPic->setOffset(mUnselectedPic->getWidth() >> 1, mUnselectedPic->getHeight());
 		}
 		P2DPane* pointPane2 = pointScreen->search(tag2, true);
 		if (pointPane2->getTypeID() == PANETYPE_Picture) {
-			_18 = (P2DPicture*)pointPane2;
-			_18->setOffset(_18->getWidth() >> 1, _18->getHeight());
+			mSelectedPic = (P2DPicture*)pointPane2;
+			mSelectedPic->setOffset(mSelectedPic->getWidth() >> 1, mSelectedPic->getHeight());
 		}
 		P2DPane* pointPane3 = pointScreen->search(tag3, true);
 		if (pointPane3->getTypeID() == PANETYPE_Picture) {
-			_1C = (P2DPicture*)pointPane3;
-			_1C->setOffset(_18->getWidth() >> 1, _18->getHeight());
-			_1C->hide();
+			mOpenedPic = (P2DPicture*)pointPane3;
+			mOpenedPic->setOffset(mSelectedPic->getWidth() >> 1, mSelectedPic->getHeight());
+			mOpenedPic->hide();
 		}
-		_20 = lineScreen->search(tag4, true);
+		mSelectionLine = lineScreen->search(tag4, true);
 	}
 
 	// DLL:
@@ -290,37 +309,37 @@ struct WorldMapCoursePoint {
 	void nonSelect()
 	{
 		if (mIsVisible) {
-			_14->show();
-			_18->hide();
-			_20->hide();
+			mUnselectedPic->show();
+			mSelectedPic->hide();
+			mSelectionLine->hide();
 		}
 	}
 
 	void openCourse()
 	{
 		mIsVisible = true;
-		_14->hide();
-		_18->hide();
-		_1C->show();
-		_20->hide();
+		mUnselectedPic->hide();
+		mSelectedPic->hide();
+		mOpenedPic->show();
+		mSelectionLine->hide();
 	}
 	void closeCourse()
 	{
 		mIsVisible = false;
-		_14->hide();
-		_18->hide();
-		_1C->hide();
-		_20->hide();
+		mUnselectedPic->hide();
+		mSelectedPic->hide();
+		mOpenedPic->hide();
+		mSelectionLine->hide();
 	}
 
 	void appear()
 	{
-		_08 = 0.0f;
-		_04 = 1;
-		_14->hide();
-		_18->hide();
-		_1C->hide();
-		_20->hide();
+		mAppearTimer = 0.0f;
+		mAppearState = CourseAppearState::RocketIncoming;
+		mUnselectedPic->hide();
+		mSelectedPic->hide();
+		mOpenedPic->hide();
+		mSelectionLine->hide();
 	}
 
 	P2DPane* getStayPane() { return mStayPane; }
@@ -329,7 +348,7 @@ struct WorldMapCoursePoint {
 
 	void createCourseInEffect()
 	{
-		P2DPicture* pic = _14;
+		P2DPicture* pic = mUnselectedPic;
 		Vector3f vec1;
 		vec1.set(pic->getPosH() + (pic->getWidth() >> 1), 480 - (pic->getPosV() + (pic->getHeight() >> 1)), 0.0f);
 		WMeffMgr->create(EFF2D_MapRocketIn, vec1, nullptr, nullptr);
@@ -339,35 +358,36 @@ struct WorldMapCoursePoint {
 	{
 		bool res   = false;
 		mEventFlag = EVENT_NONE;
-		switch (_04) {
-		case 0:
+		switch (mAppearState) {
+		case CourseAppearState::Ready:
 			res = true;
 			break;
-		case 1:
-			f32 timer1 = _08 += gsys->getFrameTime();
+		case CourseAppearState::RocketIncoming:
+			f32 timer1 = mAppearTimer += gsys->getFrameTime();
 			if (timer1 > 0.5f) {
 				Vector3f vec1;
-				vec1.set(_14->getPosH() + (_14->getWidth() >> 1), 480 - (_14->getPosV() + (_14->getHeight() >> 1)), 0.0f);
+				vec1.set(mUnselectedPic->getPosH() + (mUnselectedPic->getWidth() >> 1),
+				         480 - (mUnselectedPic->getPosV() + (mUnselectedPic->getHeight() >> 1)), 0.0f);
 				WMeffMgr->create(EFF2D_MapAppear1, vec1, nullptr, nullptr);
 				WMeffMgr->create(EFF2D_MapAppear2, vec1, nullptr, nullptr);
 				SeSystem::playSysSe(SYSSE_SELECT_COURSEOPEN);
-				_04 = 2;
-				_08 = 0.0f;
+				mAppearState = CourseAppearState::Exploding;
+				mAppearTimer = 0.0f;
 			}
 			break;
-		case 2:
-			f32 timer2 = _08 += gsys->getFrameTime();
+		case CourseAppearState::Exploding:
+			f32 timer2 = mAppearTimer += gsys->getFrameTime();
 			if (timer2 > 1.0f) {
-				_08 = 0.0f;
-				_04 = 3;
-				_1C->show();
+				mAppearTimer = 0.0f;
+				mAppearState = CourseAppearState::Revealing;
+				mOpenedPic->show();
 			}
 			break;
-		case 3:
-			f32 timer3 = _08 += gsys->getFrameTime();
+		case CourseAppearState::Revealing:
+			f32 timer3 = mAppearTimer += gsys->getFrameTime();
 			if (timer3 > 1.0f) {
-				_08 = 0.0f;
-				_04 = 0;
+				mAppearTimer = 0.0f;
+				mAppearState = CourseAppearState::Ready;
 				mEventFlag |= EVENT_APPEAR_FINISH;
 				res = true;
 			}
@@ -387,14 +407,14 @@ struct WorldMapCoursePoint {
 	static const int EVENT_APPEAR_FINISH; // 1
 
 	u32 mEventFlag;                               // _00
-	int _04;                                      // _04
-	f32 _08;                                      // _08
+	int mAppearState;                             // _04
+	f32 mAppearTimer;                             // _08
 	bool mIsVisible;                              // _0C
 	WorldMapName mGameStageID;                    // _10
-	P2DPicture* _14;                              // _14, x_N, N=1-5
-	P2DPicture* _18;                              // _18, x_Ns, N=1-5
-	P2DPicture* _1C;                              // _1C, po0N, N=1-5
-	P2DPane* _20;                                 // _20, sliN, N=1-5 - might be a sub-class
+	P2DPicture* mUnselectedPic;                   // _14, x_N, N=1-5
+	P2DPicture* mSelectedPic;                     // _18, x_Ns, N=1-5
+	P2DPicture* mOpenedPic;                       // _1C, po0N, N=1-5
+	P2DPane* mSelectionLine;                      // _20, sliN, N=1-5 - might be a sub-class
 	P2DPane* mStayPane;                           // _24, onyN, N=1-5 - might be a sub-class
 	P2DPane* mLandPane;                           // _28, chaN, N=1-5 - might be a sub-class - cha for charkuriku = land
 	WorldMapCoursePoint* mLinkPoints[LINK_COUNT]; // _2C, indexed by linkFlag presumably
@@ -456,8 +476,8 @@ struct WorldMapPartsInfoMgr;
 struct WorldMapTitleMgr {
 	WorldMapTitleMgr()
 	{
-		mTitleObjects = new WorldMapTitleObj[OBJ_NUM];
-		_04           = -1;
+		mTitleObjects      = new WorldMapTitleObj[OBJ_NUM];
+		mCurrentTitleIndex = -1;
 	}
 
 	// DLL:
@@ -478,7 +498,7 @@ struct WorldMapTitleMgr {
 		for (int i = 0; i < OBJ_NUM; i++) {
 			mTitleObjects[i].disappear();
 		}
-		_04 = -1;
+		mCurrentTitleIndex = -1;
 	}
 
 	void update()
@@ -491,24 +511,24 @@ struct WorldMapTitleMgr {
 	void setTitle(WorldMapName id)
 	{
 		WorldMapScreenID scrID = (WorldMapScreenID)mapNoScr2Game[id];
-		if (_04 != scrID) {
-			_04 = scrID;
-			mTitleObjects[_04].appear();
+		if (mCurrentTitleIndex != scrID) {
+			mCurrentTitleIndex = scrID;
+			mTitleObjects[mCurrentTitleIndex].appear();
 		}
 	}
 
 	void exitTitle()
 	{
-		if (_04 != -1) {
-			mTitleObjects[_04].wait();
-			_04 = -1;
+		if (mCurrentTitleIndex != -1) {
+			mTitleObjects[mCurrentTitleIndex].wait();
+			mCurrentTitleIndex = -1;
 		}
 	}
 
 	static const int OBJ_NUM;
 
 	WorldMapTitleObj* mTitleObjects; // _00, array of OBJ_NUM objects
-	int _04;                         // _04
+	int mCurrentTitleIndex;          // _04
 };
 
 /**
@@ -567,30 +587,46 @@ struct WorldMapShootingStarMgr {
 };
 
 /**
+ * @brief Main operational modes for the world map screen
+ */
+DEFINE_ENUM_TYPE(DrawWorldMapMode,
+                 Null         = -1, // Invalid or uninitialized mode
+                 Start        = 0,  // Initial setup and transition in
+                 Appear       = 1,  // Course unlock animation playing
+                 Operation    = 2,  // Normal user interaction mode
+                 Paused       = 3,  // Pause menu is open
+                 Confirm      = 4,  // Course selection confirmation dialog
+                 DiaryClosing = 5,  // Transitioning to diary
+                 Diary        = 6,  // Captain's diary is open
+                 DiaryOpening = 7,  // Returning from diary
+                 End          = 8,  // Transition out of world map
+);
+
+/**
  * @brief TODO
  */
 struct DrawWorldMap {
 
 	/**
-	 * @brief TODO
+	 * @brief Type of course unlock animation to play
 	 */
 	enum startModeFlag {
-		START_Unk0 = 0,
-		START_Unk1 = 1,
-		START_Unk2 = 2,
-		START_Unk3 = 3,
-		START_Unk4 = 4,
+		None         = 0, // No unlock animation
+		ForestUnlock = 1, // Forest of Hope unlock
+		CaveUnlock   = 2, // Forest Navel unlock
+		SpringUnlock = 3, // Distant Spring unlock
+		FinalUnlock  = 4, // Final Trial unlock
 	};
 
 	/**
-	 * @brief TODO
+	 * @brief Starting course selection for world map
 	 */
 	enum startPlaceFlag {
-		PLACE_Unk0 = 0,
-		PLACE_Unk1 = 1,
-		PLACE_Unk2 = 2,
-		PLACE_Unk3 = 3,
-		PLACE_Unk4 = 4,
+		ImpactSite    = 0, // Start at Impact Site
+		ForestHope    = 1, // Start at Forest of Hope
+		ForestNavel   = 2, // Start at Forest Navel
+		DistantSpring = 3, // Start at Distant Spring
+		FinalTrial    = 4, // Start at Final Trial
 	};
 
 	/**
@@ -622,9 +658,9 @@ struct DrawWorldMap {
 	returnStatusFlag getReturnStatusFlag();
 
 	startModeFlag mStartMode;                  // _00
-	int _04;                                   // _04
-	int _08;                                   // _08
-	f32 _0C;                                   // _0C
+	int mCurrentMode;                          // _04
+	int mSelectedCourseNumber;                 // _08
+	f32 mModeTimer;                            // _0C
 	DrawScreen* mWipeScreen;                   // _10
 	DrawScreen* mIconScreen;                   // _14
 	DrawScreen* mTitleScreen;                  // _18

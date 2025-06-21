@@ -81,7 +81,7 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 	Matrix4f mtx;
 	llspin += (p2) ? 1.0f / 60.0f : gsys->getFrameTime();
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	if (_2D4) {
+	if (mRedLoadLogo) {
 		gfx.setColour(Colour(220, 0, 0, p4 * 255.0f), true);
 		gfx.setAuxColour(Colour(220, 0, 0, p4 * 255.0f));
 	} else {
@@ -92,7 +92,7 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 	gfx.useTexture(p3, 0);
 	int width  = gfx.mScreenWidth / 2 - p3->mWidth / 2;
 	int height = gfx.mScreenHeight / 2 - p3->mHeight / 2;
-	if (_2D4) {
+	if (mRedLoadLogo) {
 		height -= 40;
 	}
 
@@ -394,10 +394,10 @@ void preloadLanguage()
 	gsys->setHeap(SYSHEAP_Lang);
 	gsys->resetHeap(SYSHEAP_Lang, 2);
 	gsys->getHeap(gsys->getHeapNum())->getFree();
-	gsys->_31C.init();
+	gsys->mAramAllocator.init();
 	gsys->mDvdRoot.initCore("");
-	gsys->mFileList = (DirEntry*)&gsys->mDvdRoot;
-	gsys->_328      = &gsys->_31C;
+	gsys->mFileList         = (DirEntry*)&gsys->mDvdRoot;
+	gsys->mCurrentAllocator = &gsys->mAramAllocator;
 	gsys->parseArchiveDirectory(gameflow.mLangModes[gameflow.mLanguageIndex].mDirPath,
 	                            gameflow.mLangModes[gameflow.mLanguageIndex].mArcPath);
 	gsys->loadBundle(gameflow.mLangModes[gameflow.mLanguageIndex].mBunPath, true);
@@ -558,7 +558,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mLevelBannerTexture   = setLoadBanner("intro/nintendo.bti");
 	mLevelBannerFadeValue = 1.0f;
 	Jac_SceneSetup(0, 0);
-	_2D4 = 1;
+	mRedLoadLogo = 1;
 
 	PRINT("starting loading\n");
 	gsys->startLoading(&mGameLoadIdler, true, 0);
@@ -678,7 +678,7 @@ void GameFlow::softReset()
 	      gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
-	mDisableController      = FALSE;
+	_33C                    = FALSE;
 	mIsUiOverlayActive      = 0;
 	_348                    = 0;
 	_34C                    = 0;

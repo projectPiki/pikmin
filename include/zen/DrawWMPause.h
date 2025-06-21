@@ -17,13 +17,13 @@ struct DrawMenu;
 struct DrawWMPause {
 
 	/**
-	 * @brief TODO
+	 * @brief World map exit status codes
 	 */
 	enum returnStatusFlag {
-		RETURN_NULL = -1,
-		RETURN_Unk0 = 0,
-		RETURN_Unk1 = 1,
-		RETURN_Unk2 = 2,
+		RETURN_NULL    = -1,
+		CourseSelected = 0, // Player selected a course
+		DiaryOpened    = 1, // Player opened captain's diary
+		Cancelled      = 2, // Player cancelled/exited map
 	};
 
 	DrawWMPause();

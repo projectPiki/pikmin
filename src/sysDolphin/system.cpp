@@ -254,12 +254,12 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 	}
 
 	// inline?
-	u32 a                = 0;
-	FakeSystemList* list = _328;
-	u32 addr             = list->_04 + ALIGN_NEXT(stream.mPending, 0x20);
-	if (addr <= _328->_00 + _328->_08) {
-		a         = _328->_04;
-		list->_04 = addr;
+	u32 a               = 0;
+	AramAllocator* list = mCurrentAllocator;
+	u32 addr            = list->mCurrentOffset + ALIGN_NEXT(stream.mPending, 0x20);
+	if (addr <= mCurrentAllocator->mBaseAddress + mCurrentAllocator->mSize) {
+		a                    = mCurrentAllocator->mCurrentOffset;
+		list->mCurrentOffset = addr;
 	}
 
 	u32 unused;
@@ -530,7 +530,7 @@ System::System()
 	mDvdBufferSize    = 0x40000;
 	mCurrentThread    = OSGetCurrentThread();
 	mDvdErrorCallback = 0;
-	mDvdErrorCode     = -1;
+	mDvdErrorCode     = DvdError::None;
 	mPrevAllocType    = 0;
 	mDmaComplete      = 1;
 	mTexComplete      = 1;
@@ -615,7 +615,7 @@ static char** errorList[6] = {
  */
 void System::showDvdError(Graphics& gfx)
 {
-	if (mDvdErrorCode < 0) {
+	if (mDvdErrorCode < DvdError::ReadingDisc) {
 		return;
 	}
 
@@ -624,7 +624,7 @@ void System::showDvdError(Graphics& gfx)
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
 
-	if (mDvdErrorCode) {
+	if (mDvdErrorCode) { // DvdError::ReadingDisc or higher
 		int y         = 160;
 		char** errors = errorList[mDvdErrorCode];
 		while (*errors) {
@@ -666,12 +666,12 @@ void System::Initialise()
 	ARInit(mMemoryTable, 3);
 	ARQInit();
 
-	_2C0.mNext = _2C0.mPrev = &_2C0;
-	_2E8.mNext = _2E8.mPrev = &_2E8;
+	mActiveCacheList.mNext = mActiveCacheList.mPrev = &mActiveCacheList;
+	mFreeCacheList.mNext = mFreeCacheList.mPrev = &mFreeCacheList;
 
 	SystemCache* cacheStack = new SystemCache[64];
 	for (int i = 0; i < 64; i++) {
-		_2E8.insertAfter(&cacheStack[i]);
+		mFreeCacheList.insertAfter(&cacheStack[i]);
 	}
 
 	onceInit();
@@ -695,10 +695,10 @@ void System::Initialise()
 	u32 audioHeapSize = 0x80000;
 	Jac_Start(new (0x20) u8[audioHeapSize], audioHeapSize, 0x800000, "/dataDir/SndData/");
 	Jac_AddDVDBuffer((u8*)mMatrices, mMatrixCount * sizeof(Matrix4f)); // wack.
-	_31C._00 = 0x800000;
-	_31C._08 = 0x800000;
-	_31C._04 = _31C._00;
-	_328     = &_31C;
+	mAramAllocator.mBaseAddress   = 0x800000;
+	mAramAllocator.mSize          = 0x800000;
+	mAramAllocator.mCurrentOffset = mAramAllocator.mBaseAddress;
+	mCurrentAllocator             = &mAramAllocator;
 	mDvdRoot.initCore("");
 	mAramRoot.initCore("");
 	mFileList = (DirEntry*)&mDvdRoot;
@@ -881,7 +881,7 @@ void doneDMA(u32 cache)
 {
 	SystemCache* sysCache = (SystemCache*)((SystemCache*)cache)->owner;
 	sysCache->remove();
-	gsys->_2E8.insertAfter(sysCache);
+	gsys->mFreeCacheList.insertAfter(sysCache);
 	gsys->mDmaComplete = TRUE;
 }
 
@@ -906,13 +906,13 @@ u32 System::copyRamToCache(u32 src, u32 size, u32 dest)
 	u32 adjustedDest = dest;
 
 	if (!adjustedDest) {
-		adjustedDest = _328->getDest(size);
+		adjustedDest = mCurrentAllocator->getDest(size);
 	}
 
 	BOOL inter         = OSDisableInterrupts();
-	SystemCache* cache = _2E8.mNext;
+	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
-	_2C0.insertAfter(cache);
+	mActiveCacheList.insertAfter(cache);
 	OSRestoreInterrupts(inter);
 
 	gsys->mDmaComplete = 0;
@@ -933,9 +933,9 @@ void System::copyCacheToRam(u32 dst, u32 src, u32 size)
 	copyWaitUntilDone();
 
 	BOOL inter         = OSDisableInterrupts();
-	SystemCache* cache = _2E8.mNext;
+	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
-	_2C0.insertAfter(cache);
+	mActiveCacheList.insertAfter(cache);
 	OSRestoreInterrupts(inter);
 	gsys->mDmaComplete = 0;
 	DCInvalidateRange((void*)dst, size);
@@ -954,7 +954,7 @@ void freeBuffer(u32 cache)
 	DCStoreRange(texCache->mPixelData, texCache->mTexImage->mDataSize);
 
 	texCache->mSystemCache->remove();
-	gsys->_2E8.insertAfter(texCache->mSystemCache);
+	gsys->mFreeCacheList.insertAfter(texCache->mSystemCache);
 	texCache->mSystemCache = nullptr;
 	texCache->detach();
 	texCache->attach();
@@ -971,9 +971,9 @@ void freeBuffer(u32 cache)
 void System::copyCacheToTexture(CacheTexture* tex)
 {
 	BOOL inter         = OSDisableInterrupts();
-	SystemCache* cache = _2E8.mNext;
+	SystemCache* cache = mFreeCacheList.mNext;
 	cache->remove();
-	_2C0.insertAfter(cache);
+	mActiveCacheList.insertAfter(cache);
 	tex->mSystemCache = cache;
 
 	u32 data     = (u32)tex->mTexImage->mTextureData;
@@ -1030,28 +1030,28 @@ void* dvdFunc(void*)
 
 		s32 stat = DVDGetDriveStatus();
 		if (stat == DVD_STATE_FATAL_ERROR) {
-			gsys->mDvdErrorCode = 1;
+			gsys->mDvdErrorCode = DvdError::FatalError;
 		} else if (stat == DVD_STATE_RETRY) {
-			gsys->mDvdErrorCode = 2;
+			gsys->mDvdErrorCode = DvdError::RetryError;
 		} else if (stat == DVD_STATE_NO_DISK) {
-			gsys->mDvdErrorCode = 3;
+			gsys->mDvdErrorCode = DvdError::NoDisc;
 		} else if (stat == DVD_STATE_COVER_OPEN) {
-			gsys->mDvdErrorCode = 4;
+			gsys->mDvdErrorCode = DvdError::CoverOpen;
 		} else if (stat == DVD_STATE_WRONG_DISK) {
-			gsys->mDvdErrorCode = 5;
+			gsys->mDvdErrorCode = DvdError::WrongDisc;
 		} else {
-			int* test = &gsys->mDvdErrorCode;
-			if (*test != -1 && stat == 1) {
-				*test = 0;
+			int* dvdErrorCode = &gsys->mDvdErrorCode;
+			if (*dvdErrorCode != DvdError::None && stat == DVD_STATE_BUSY) {
+				*dvdErrorCode = DvdError::ReadingDisc;
 			} else {
-				*test = -1;
+				*dvdErrorCode = DvdError::None;
 			}
 		}
 
-		if (gsys->mDvdErrorCode >= 0 && !playedSe) {
+		if (gsys->mDvdErrorCode >= DvdError::ReadingDisc && !playedSe) {
 			Jac_PlaySystemSe(JACSYS_DVDPause);
 			playedSe = true;
-		} else if (gsys->mDvdErrorCode < 0 && playedSe) {
+		} else if (gsys->mDvdErrorCode < DvdError::ReadingDisc && playedSe) {
 			Jac_PlaySystemSe(JACSYS_DVDUnpause);
 			playedSe = false;
 		}

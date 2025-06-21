@@ -60,44 +60,56 @@ typedef void (particleGenerator::*PtclDrawCallBack)(Graphics&);
 typedef void (particleGenerator::*RotAxisCallBack)(Mtx&, f32&, f32&);
 
 /**
- * @brief TODO
+ * @brief Flags for controlling the particle generator's overall state.
  */
 enum ParticleGeneratorControlFlags {
-	PTCLCTRL_Stop       = 0x1,
-	PTCLCTRL_Finished   = 0x2,
-	PTCLCTRL_Active     = 0x4,
-	PTCLCTRL_GenStopped = 0x8,
-	PTCLCTRL_Visible    = 0x10,
+	PTCLCTRL_Stop       = 0x1,  // The generator is running updates.
+	PTCLCTRL_Finished   = 0x2,  // The generator is being drawn.
+	PTCLCTRL_Active     = 0x4,  // The generator is paused.
+	PTCLCTRL_GenStopped = 0x8,  // The generator has finished all passes and is waiting for particles to die.
+	PTCLCTRL_Visible    = 0x10, // The generator has been explicitly told to stop emitting new particles.
 };
 
 /**
- * @brief TODO
+ * @brief Flags that define the properties and behaviors of the particles and their emitter.
  */
 enum ParticleGeneratorFlags {
-	PTCLFLAG_Unk0     = 1 << 0,  // 0x1
-	PTCLFLAG_Unk1     = 1 << 1,  // 0x2
-	PTCLFLAG_Unk2     = 1 << 2,  // 0x4
-	PTCLFLAG_Unk3     = 1 << 3,  // 0x8
-	PTCLFLAG_ClampVel = 1 << 4,  // 0x10
-	PTCLFLAG_Unk5     = 1 << 5,  // 0x20
-	PTCLFLAG_Unk6     = 1 << 6,  // 0x40
-	PTCLFLAG_Unk7     = 1 << 7,  // 0x80
-	PTCLFLAG_Unk8     = 1 << 8,  // 0x100
-	PTCLFLAG_Unk9     = 1 << 9,  // 0x200
-	PTCLFLAG_Unk10    = 1 << 10, // 0x400
-	PTCLFLAG_Unk11    = 1 << 11, // 0x800
-	PTCLFLAG_Unk12    = 1 << 12, // 0x1000
-	PTCLFLAG_Unk13    = 1 << 13, // 0x2000
-	PTCLFLAG_Unk14    = 1 << 14, // 0x4000
-	// ...
-	PTCLFLAG_UseGravityField      = 1 << 16, // 0x10000
-	PTCLFLAG_UseAirField          = 1 << 17, // 0x20000
-	PTCLFLAG_UseVortexField       = 1 << 18, // 0x40000
-	PTCLFLAG_UseDampedNewtonField = 1 << 19, // 0x80000
-	PTCLFLAG_UseNewtonField       = 1 << 20, // 0x100000
-	PTCLFLAG_UseSolidTex          = 1 << 21, // 0x200000
-	PTCLFLAG_UseJitter            = 1 << 22, // 0x400000
-	PTCLFLAG_Unk23                = 1 << 23, // 0x800000
+	// Emission shape type (2-bit field: bits 0-1)
+	PTCLFLAG_EmitShapeSphere = 1 << 0, // 0x1, Spherical emission volume
+	PTCLFLAG_EmitShapeBox    = 1 << 1, // 0x2, Box-shaped emission volume
+
+	// Velocity direction type (2-bit field: bits 2-3)
+	PTCLFLAG_VelDirOmni        = 1 << 2, // 0x4, Omnidirectional velocity
+	PTCLFLAG_VelDirDirectional = 1 << 3, // 0x8, Velocity along emission direction
+	PTCLFLAG_ClampVelocity     = 1 << 4, // 0x10, Clamp particle velocity to maximum
+	// 0x20 is Unused
+
+	// Emission rate interpolation type
+	PTCLFLAG_EmissionRateManual = 1 << 6, // 0x40, Manual keyframe interpolation for emission rate
+	PTCLFLAG_EmissionRateLinear = 1 << 7, // 0x80, Linear keyframe interpolation for emission rate
+
+	// Emission radius interpolation type
+	PTCLFLAG_EmissionRadiusManual = 1 << 8, // 0x100, Manual keyframe interpolation for emission radius
+	PTCLFLAG_EmissionRadiusLinear = 1 << 9, // 0x200, Linear keyframe interpolation for emission radius
+
+	// Initial velocity interpolation type
+	PTCLFLAG_InitVelocityManual = 1 << 10, // 0x400, Manual keyframe interpolation for initial velocity
+	PTCLFLAG_InitVelocityLinear = 1 << 11, // 0x800, Linear keyframe interpolation for initial velocity
+
+	PTCLFLAG_DisableEmission      = 1 << 12, // 0x1000, Disable particle emission
+	PTCLFLAG_EnableChildParticles = 1 << 13, // 0x2000, Enable child particle spawning
+	PTCLFLAG_InheritParentColor   = 1 << 14, // 0x4000, Child particles inherit parent color
+	// 0x8000 is Unused
+
+	// Physics field flags
+	PTCLFLAG_UseGravityField      = 1 << 16, // 0x10000, Apply gravity acceleration
+	PTCLFLAG_UseAirField          = 1 << 17, // 0x20000, Apply air/wind velocity
+	PTCLFLAG_UseVortexField       = 1 << 18, // 0x40000, Apply vortex/spiral forces
+	PTCLFLAG_UseDampedNewtonField = 1 << 19, // 0x80000, Apply damped attraction forces
+	PTCLFLAG_UseNewtonField       = 1 << 20, // 0x100000, Apply simple attraction forces
+	PTCLFLAG_UseSolidTexField     = 1 << 21, // 0x200000, Apply solid texture-based forces
+	PTCLFLAG_UseJitterField       = 1 << 22, // 0x400000, Apply random jitter forces
+	PTCLFLAG_UseLineField         = 1 << 23, // 0x800000, Apply line-based axial/radial forces
 };
 
 /**
@@ -170,7 +182,7 @@ struct particleMdl : public particleMdlBase {
 		mRotAngle         = 0;
 		mRotSpeed         = 0;
 		mOrientedNormal.z = 1.0f;
-		_4C               = 0;
+		_UNUSED4C         = 0;
 		mEnvColor.set(0, 0, 0, 0);
 		mBBoardColourAnim.init(nullptr, 1);
 		mSimpleTex = 0;
@@ -183,7 +195,7 @@ struct particleMdl : public particleMdlBase {
 	f32 mAgeTimer;                          // _30
 	Vector3f mVelocity;                     // _34
 	Vector3f mAcceleration;                 // _40
-	u8 _4C;                                 // _4C
+	u8 _UNUSED4C;                           // _4C
 	f32 mScaleFactor;                       // _50
 	f32 mAlphaFactor;                       // _54
 	u16 mRotAngle;                          // _58
@@ -393,15 +405,15 @@ struct particleGenerator : public zenList {
 
 	f32 getNewtonFieldFrc() { return mNewtonFieldStrength; }
 
-	void setOrientedConstZAxis(bool set) { _68.m2 = set; }
+	void setOrientedConstZAxis(bool set) { mOrientedDrawConfig.m2 = set; }
 
 	void setVortexField(Vector3f pos, f32 a, f32 b, f32 c, f32 d, bool set)
 	{
 		mVortexCenter.set(pos);
-		mVortexRotationSpeed = a; // -0.12f;
-		mVortexStrength      = b; // -0.09f;
-		_158                 = c; // 0.3f;
-		_15C                 = d; // 400.0f;
+		mVortexRotationSpeed  = a; // -0.12f;
+		mVortexStrength       = b; // -0.09f;
+		mVortexFalloffFactor  = c; // 0.3f;
+		mVortexFalloffDivisor = d; // 400.0f;
 		pmSwitch(set, PTCLFLAG_UseVortexField);
 	}
 
@@ -411,8 +423,8 @@ struct particleGenerator : public zenList {
 		pmSwitch(set, PTCLFLAG_UseGravityField);
 	}
 
-	f32 getFreqFrm() { return _B8; }
-	void setFreqFrm(f32 freq) { _B8 = freq; }
+	f32 getFreqFrm() { return mEmissionRate; }
+	void setFreqFrm(f32 freq) { mEmissionRate = freq; }
 
 	f32 getInitVel() { return mInitVel; }
 	void setInitVel(f32 vel) { mInitVel = vel; }
@@ -442,8 +454,8 @@ struct particleGenerator : public zenList {
 	bBoardColourAnimData mAnimData;       // _48
 	Texture* mTexture;                    // _58
 	Texture* mChildTexture;               // _5C
-	f32 _60;                              // _60
-	f32 _64;                              // _64
+	f32 mLengthScale;                     // _60
+	f32 mPivotOffsetY;                    // _64
 	struct {
 		u32 m0 : 1;
 		u32 m1 : 1;
@@ -454,7 +466,7 @@ struct particleGenerator : public zenList {
 		u32 m6 : 1;
 		u32 m7 : 1;
 		u32 m8 : 1;
-	} _68;                                                   // _68
+	} mOrientedDrawConfig;                                   // _68
 	f32 mScaleRate1;                                         // _6C
 	f32 mScaleRate2;                                         // _70
 	f32 mAlphaRate1;                                         // _74
@@ -462,20 +474,20 @@ struct particleGenerator : public zenList {
 	u16* mSolidTexFieldData;                                 // _7C
 	u32 mControlFlags;                                       // _80, see ParticleGeneratorControlFlags enum
 	u32 mParticleFlags;                                      // _84, see ParticleGeneratorFlags enum
-	f32 _88;                                                 // _88
+	f32 mPartialParticleCount;                               // _88
 	f32 mPassTimer;                                          // _8C
 	s16 mCurrentFrame;                                       // _90
 	u8 mCurrentPass;                                         // _92
 	Vector3f mEmitPosOffset;                                 // _94
 	Vector3f mEmitDir;                                       // _A0
-	Vector3f _AC;                                            // _AC
-	f32 _B8;                                                 // _B8
-	f32 _BC;                                                 // _BC
-	f32 _C0;                                                 // _C0
-	f32 _C4;                                                 // _C4
-	f32 _C8;                                                 // _C8
+	Vector3f mEmissionBoxSize;                               // _AC
+	f32 mEmissionRate;                                       // _B8
+	f32 mEmissionRateJitter;                                 // _BC
+	f32 mEmissionSpread;                                     // _C0
+	f32 mEmissionRadiusScale;                                // _C4
+	f32 mEmissionRadius;                                     // _C8
 	f32 mInitVel;                                            // _CC
-	f32 _D0;                                                 // _D0
+	f32 mInitialVelocityJitter;                              // _D0
 	f32 mDrag;                                               // _D4
 	f32 mDragJitter;                                         // _D8
 	f32 mMaxVel;                                             // _DC
@@ -484,18 +496,18 @@ struct particleGenerator : public zenList {
 	f32 mMinScaleFactor1;                                    // _E8
 	f32 mMinScaleFactor2;                                    // _EC
 	f32 mScaleSize;                                          // _F0
-	f32 _F4;                                                 // _F4
+	f32 mSizeJitter;                                         // _F4
 	f32 mAlphaThreshold1;                                    // _F8
 	f32 mAlphaThreshold2;                                    // _FC
 	f32 mAlphaJitter;                                        // _100
 	s16 mRotSpeedMin;                                        // _104
 	s16 mRotSpeedJitter;                                     // _106
 	s16 mRotAngle;                                           // _108
-	f32 _10C;                                                // _10C
-	s16 _110;                                                // _110
-	u8 _112;                                                 // _112
+	f32 mLifetimeJitter;                                     // _10C
+	s16 mBaseLifetime;                                       // _110
+	u8 _UNUSED112;                                           // _112
 	f32 mChildScaleFactor;                                   // _114
-	f32 _118;                                                // _118
+	f32 mChildAlphaMultiplier;                               // _118
 	f32 mChildPosJitter;                                     // _11C
 	Colour mChildColor;                                      // _120
 	u8 _124;                                                 // _124
@@ -506,30 +518,30 @@ struct particleGenerator : public zenList {
 	Vector3f mVortexCenter;                                  // _144
 	f32 mVortexRotationSpeed;                                // _150
 	f32 mVortexStrength;                                     // _154
-	f32 _158;                                                // _158
-	f32 _15C;                                                // _15C
+	f32 mVortexFalloffFactor;                                // _158
+	f32 mVortexFalloffDivisor;                               // _15C
 	Vector3f mDampedNewtonFieldDir;                          // _160
 	f32 mDampedNewtonFieldStrength;                          // _16C
 	Vector3f mNewtonFieldDir;                                // _170
 	f32 mNewtonFieldStrength;                                // _17C
-	Vector3f _180;                                           // _180
-	u8 _18C;                                                 // _18C
-	u8 _18D;                                                 // _18D
+	Vector3f mSolidFieldForceMultiplier;                     // _180
+	u8 mSolidFieldGridScale;                                 // _18C
+	u8 mSolidFieldSampleOffset;                              // _18D
 	u8 mSolidFieldType;                                      // _18E
 	f32 mJitterStrength;                                     // _190
-	Vector3f _194;                                           // _194
-	f32 _1A0;                                                // _1A0
-	f32 _1A4;                                                // _1A4
+	Vector3f mLineFieldAxis;                                 // _194
+	f32 mLineFieldAxialForce;                                // _1A0
+	f32 mLineFieldRadialForce;                               // _1A4
 	u8 mFreePtclMotionTime;                                  // _1A8
-	f32* _1AC;                                               // _1AC
-	f32* _1B0;                                               // _1B0
-	f32* _1B4;                                               // _1B4
-	f32* _1B8;                                               // _1B8
+	f32* mEmissionRateKeyframes;                             // _1AC
+	f32* mEmissionRateValues;                                // _1B0
+	f32* mEmissionRadiusKeyframes;                           // _1B4
+	f32* mEmissionRadiusValues;                              // _1B8
 	f32* mInitVelIntpThresholds;                             // _1BC;
 	f32* mInitVelIntpValues;                                 // _1C0
-	u8 _1C4;                                                 // _1C4
-	u8 _1C5;                                                 // _1C5
-	u8 _1C6;                                                 // _1C6
+	u8 mEmissionRateKeyCount;                                // _1C4
+	u8 mEmissionRadiusKeyCount;                              // _1C5
+	u8 mInitialVelocityKeyCount;                             // _1C6
 	s16 mMaxFrame;                                           // _1C8
 	u8 mMaxPasses;                                           // _1CA
 	u8 mBlendFactor;                                         // _1CB

@@ -99,12 +99,12 @@ s32 CardUtilSectorSize()
 static int DoMount(s32 channel, void* a2)
 {
 	OSLockMutex(&CardControl.mMutex2);
-	CardControl._6C = 0;
+	CardControl.mDirentCount = 0;
 	OSUnlockMutex(&CardControl.mMutex2);
-	CardControl.mFilesNotUsed = 0;
-	CardControl.mByteNotUsed  = 0;
-	CardControl._4C           = 0xA000;
-	s32 res                   = CARDMount(channel, (CARDMemoryCard*)a2, 0);
+	CardControl.mFilesNotUsed  = 0;
+	CardControl.mByteNotUsed   = 0;
+	CardControl.mOperationSize = 0xA000;
+	s32 res                    = CARDMount(channel, (CARDMemoryCard*)a2, 0);
 	switch (res) {
 	case CARD_RESULT_READY:
 	case CARD_RESULT_BROKEN:
@@ -139,7 +139,7 @@ static int DoMount(s32 channel, void* a2)
 static int DoUnmount(s32 channel)
 {
 	OSLockMutex(&CardControl.mMutex2);
-	CardControl._6C = 0;
+	CardControl.mDirentCount = 0;
 	OSUnlockMutex(&CardControl.mMutex2);
 	return CARDUnmount(channel);
 }
@@ -152,10 +152,10 @@ static int DoUnmount(s32 channel)
 static int DoFormat(s32 channel)
 {
 	OSLockMutex(&CardControl.mMutex2);
-	CardControl._6C = 0;
+	CardControl.mDirentCount = 0;
 	OSUnlockMutex(&CardControl.mMutex2);
-	CardControl._4C = 0xA000;
-	int res         = CARDFormat(channel);
+	CardControl.mOperationSize = 0xA000;
+	int res                    = CARDFormat(channel);
 	if (res == CARD_RESULT_READY) {
 		res = CARDFreeBlocks(channel, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 	}
@@ -169,26 +169,28 @@ static int DoFormat(s32 channel)
  */
 static int DoErase(s32 chan, s32 fileNo)
 {
-	CardControl._4C = 0x4000;
-	int resDel      = CARDFastDelete(chan, fileNo);
+	CardControl.mOperationSize = 0x4000;
+	int resDel                 = CARDFastDelete(chan, fileNo);
 	if (resDel >= 0) {
 
 	} else {
 		return resDel;
 	}
 
-	if (CardControl._68) {
-		u8* card = (u8*)CardControl._68;
-		for (card; card < &((u8*)CardControl._68)[CardControl._6C * 0x5B40]; card += 0x5B40) {
+	if (CardControl.mDirentList) {
+		u8* card = (u8*)CardControl.mDirentList;
+		for (card; card < &((u8*)CardControl.mDirentList)[CardControl.mDirentCount * sizeof(CardUtilDirent)];
+		     card += sizeof(CardUtilDirent)) {
 			int a = *(int*)(card + 0x5A40);
 			if (a != fileNo) {
 				continue;
 			}
 
 			OSLockMutex(&CardControl.mMutex2);
-			memmove(card, card + 0x5B40, &((u8*)CardControl._68)[CardControl._6C * 0x5B40] - (card + 0x5B40));
-			CardControl._6C--;
-			DCStoreRange(card, &((u8*)CardControl._68)[CardControl._6C * 0x5B40] - card);
+			memmove(card, card + sizeof(CardUtilDirent),
+			        &((u8*)CardControl.mDirentList)[CardControl.mDirentCount * sizeof(CardUtilDirent)] - (card + sizeof(CardUtilDirent)));
+			CardControl.mDirentCount--;
+			DCStoreRange(card, &((u8*)CardControl.mDirentList)[CardControl.mDirentCount * sizeof(CardUtilDirent)] - card);
 			OSUnlockMutex(&CardControl.mMutex2);
 		}
 	}
@@ -207,8 +209,8 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 	DVDDiskID* diskID = DVDGetCurrentDiskID();
 	int res           = CARD_RESULT_READY;
 	CardUtilLockDirectory();
-	CardControl._68 = dirent;
-	CardControl._6C = 0;
+	CardControl.mDirentList  = dirent;
+	CardControl.mDirentCount = 0;
 	CardUtilUnlockDirectory();
 	if (!dirent) {
 		return CARD_RESULT_READY;
@@ -220,7 +222,7 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 	char buf2[36];
 	char buf[36];
 	for (int i = 0; i < 127; i++) {
-		CardUtilDirent& entry = dirent[CardControl._6C];
+		CardUtilDirent& entry = dirent[CardControl.mDirentCount];
 		if (CARDGetStatus(chan, i, &entry.mState) < 0) {
 			continue;
 		}
@@ -257,7 +259,7 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 			return res;
 		}
 
-		memset(&entry._00[0x5A00], 0, 0x40);
+		memset(&entry.mFileData[0x5A00], 0, 0x40);
 		if (entry.mState.commentAddr <= entry.mState.length - 0x40) {
 			res = CARDFastOpen(chan, i, &info);
 			if (res >= 0) {
@@ -273,8 +275,8 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 			if (res < 0) {
 				return res;
 			}
-			void* dst = &entry._00[0x5A00];
-			void* src = &entry._00[OFFSET(entry.mState.commentAddr, 0x200)];
+			void* dst = &entry.mFileData[0x5A00];
+			void* src = &entry.mFileData[OFFSET(entry.mState.commentAddr, 0x200)];
 			memmove(dst, src, 0x40);
 		}
 
@@ -294,11 +296,11 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 					return res;
 				}
 
-				memmove(&entry, &entry._00[OFFSET(entry.mState.iconAddr, 0x200)], entry.mState.offsetData - entry.mState.iconAddr);
+				memmove(&entry, &entry.mFileData[OFFSET(entry.mState.iconAddr, 0x200)], entry.mState.offsetData - entry.mState.iconAddr);
 
 				DCFlushRange(&entry, entry.mState.offsetData - entry.mState.iconAddr);
 
-				entry._5AB0 = 0;
+				entry.mAnimTotalFrames = 0;
 				int iconCnt;
 				int j;
 				int count;
@@ -308,9 +310,9 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 						break;
 					}
 
-					entry._5AB4[j] = entry._5AB0;
-					entry._5AEC[j] = iconCnt;
-					entry._5AB0 += speed << 2;
+					entry.mAnimFrameOffsets[j] = entry.mAnimTotalFrames;
+					entry.mAnimIconIndices[j]  = iconCnt;
+					entry.mAnimTotalFrames += speed << 2;
 
 					if (CARDGetIconFormat(&entry.mState, iconCnt) != CARD_STAT_ICON_NONE) {
 						iconCnt++;
@@ -319,10 +321,10 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 
 				if (CARDGetIconAnim(&entry.mState) == CARD_STAT_ANIM_BOUNCE && count > 2) {
 					for (int k = count - 2; k > 0; k--) {
-						int speed      = CARDGetIconSpeed(&entry.mState, k);
-						entry._5AB4[j] = entry._5AB0;
-						entry._5AEC[j] = entry._5AEC[k];
-						entry._5AB0 += speed << 2;
+						int speed                  = CARDGetIconSpeed(&entry.mState, k);
+						entry.mAnimFrameOffsets[j] = entry.mAnimTotalFrames;
+						entry.mAnimIconIndices[j]  = entry.mAnimIconIndices[k];
+						entry.mAnimTotalFrames += speed << 2;
 						j++;
 					}
 				}
@@ -330,7 +332,7 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 		}
 		entry.mFileNo = i;
 		CardUtilLockDirectory();
-		CardControl._6C++;
+		CardControl.mDirentCount++;
 		CardUtilUnlockDirectory();
 	}
 
@@ -356,8 +358,8 @@ static int DoOpen(s32 chan, s32 fileNo, void* addr)
 	} else {
 		return res2;
 	}
-	CardControl._4C = state.length;
-	int res3        = CARDRead(&info, addr, state.length, 0);
+	CardControl.mOperationSize = state.length;
+	int res3                   = CARDRead(&info, addr, state.length, 0);
 	CARDClose(&info);
 	return res3;
 }
@@ -418,9 +420,9 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 		CARDClose(&info);
 	}
 
-	CardControl._4C = state->length + 0x8000;
+	CardControl.mOperationSize = state->length + 0x8000;
 	if (fileNo >= 0 && fileNo < 127) {
-		CardControl._4C += 0x4000;
+		CardControl.mOperationSize += 0x4000;
 	}
 
 	int resCreate = CARDCreate(chan, buf2, state->length, &info);
@@ -452,35 +454,35 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 		return resRename;
 	}
 
-	if (!CardControl._68) {
+	if (!CardControl.mDirentList) {
 		return CARDFreeBlocks(chan, &CardControl.mByteNotUsed, &CardControl.mFilesNotUsed);
 	}
 
 	OSLockMutex(&CardControl.mMutex2);
 	CardUtilDirent* entry;
 	if (fileNo == -1) {
-		entry = &CardControl._68[CardControl._6C];
-		CardControl._6C++;
+		entry = &CardControl.mDirentList[CardControl.mDirentCount];
+		CardControl.mDirentCount++;
 	} else {
-		entry                    = CardControl._68;
-		CardUtilDirent* altEntry = &CardControl._68[CardControl._6C];
+		entry                    = CardControl.mDirentList;
+		CardUtilDirent* altEntry = &CardControl.mDirentList[CardControl.mDirentCount];
 		for (entry; entry < altEntry; entry++) {
 			if (entry->mFileNo == fileNo) {
 				break;
 			}
 		}
 		if (entry == altEntry) {
-			CardControl._6C++;
+			CardControl.mDirentCount++;
 		}
 	}
 
-	memset(&entry->_00[0x5A00], 0, 0x40);
+	memset(&entry->mFileData[0x5A00], 0, 0x40);
 
 	if (state->commentAddr <= state->length - 0x40) {
-		memmove(&entry->_00[0x5A00], (void*)((u32)addr + state->commentAddr), 0x40);
+		memmove(&entry->mFileData[0x5A00], (void*)((u32)addr + state->commentAddr), 0x40);
 	}
 
-	entry->_5AB0 = 0;
+	entry->mAnimTotalFrames = 0;
 	if (state->bannerFormat || state->iconFormat) {
 		memmove(entry, (void*)((u32)addr + state->iconAddr), state->offsetData - state->iconAddr);
 		DCFlushRange(entry, state->offsetData - state->iconAddr);
@@ -494,9 +496,9 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 				break;
 			}
 
-			entry->_5AB4[i] = entry->_5AB0;
-			entry->_5AEC[i] = iconCnt;
-			entry->_5AB0 += speed << 2;
+			entry->mAnimFrameOffsets[i] = entry->mAnimTotalFrames;
+			entry->mAnimIconIndices[i]  = iconCnt;
+			entry->mAnimTotalFrames += speed << 2;
 
 			if (CARDGetIconFormat(state, iconCnt) != CARD_STAT_ICON_NONE) {
 				iconCnt++;
@@ -505,10 +507,10 @@ static int DoSave(s32 chan, CARDStat* state, void* addr)
 
 		if (CARDGetIconAnim(state) == CARD_STAT_ANIM_BOUNCE && count > 2) {
 			for (int j = count - 2; j > 0; j--) {
-				int speed       = CARDGetIconSpeed(state, j);
-				entry->_5AB4[i] = entry->_5AB0;
-				entry->_5AEC[i] = entry->_5AEC[j];
-				entry->_5AB0 += speed << 2;
+				int speed                   = CARDGetIconSpeed(state, j);
+				entry->mAnimFrameOffsets[i] = entry->mAnimTotalFrames;
+				entry->mAnimIconIndices[i]  = entry->mAnimIconIndices[j];
+				entry->mAnimTotalFrames += speed << 2;
 				i++;
 			}
 		}
@@ -543,7 +545,7 @@ static int CardUtilCommand(s32 chan, s32 command, s32 file, void* addr, u32 offs
 		CardControl.mResultCode = CARD_RESULT_BUSY;
 
 		if (command != CARDCMD_List) {
-			CardControl._48 = CARDGetXferredBytes(chan);
+			CardControl.mTransferredBytes = CARDGetXferredBytes(chan);
 		}
 		res = CARD_RESULT_READY;
 		OSSignalCond(&CardControl.mCondition);

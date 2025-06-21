@@ -42,42 +42,42 @@ void zen::SpectrumCursorMgr::setMirror(P2DPane* pane)
 void zen::SpectrumCursorMgr::update()
 {
 	f32 t, tComp;
-	for (int i = _00 - 1; i > 0; i--) {
-		_04[i]->move(_04[i - 1]->getPosH(), _04[i - 1]->getPosV());
-		_04[i]->rotate(P2DROTATE_Y, _04[i - 1]->getRotate());
-		setMirror(_04[i]);
-		_04[i]->setScale(_04[0]->getScale());
+	for (int i = mPaneCount - 1; i > 0; i--) {
+		mPanes[i]->move(mPanes[i - 1]->getPosH(), mPanes[i - 1]->getPosV());
+		mPanes[i]->rotate(P2DROTATE_Y, mPanes[i - 1]->getRotate());
+		setMirror(mPanes[i]);
+		mPanes[i]->setScale(mPanes[0]->getScale());
 	}
 
-	if (_08 < _0C) {
-		_08 += gsys->getFrameTime();
-		if (_08 > _0C) {
-			_08 = _0C;
+	if (mMoveTimer < mMoveDuration) {
+		mMoveTimer += gsys->getFrameTime();
+		if (mMoveTimer > mMoveDuration) {
+			mMoveTimer = mMoveDuration;
 		}
-		t     = NMathF::sin(_08 / _0C * HALF_PI);
+		t     = NMathF::sin(mMoveTimer / mMoveDuration * HALF_PI);
 		tComp = 1.0f - t;
-		_04[0]->move(RoundOff(_18 * t + _10 * tComp), RoundOff(_1C * t + _14 * tComp));
+		mPanes[0]->move(RoundOff(mTargetPosX * t + mStartPosX * tComp), RoundOff(mTargetPosY * t + mStartPosY * tComp));
 	}
 
-	if (_20 < _24) {
-		_20 += gsys->getFrameTime();
-		if (_20 > _24) {
-			_20 = _24;
+	if (mScaleTimer < mScaleDuration) {
+		mScaleTimer += gsys->getFrameTime();
+		if (mScaleTimer > mScaleDuration) {
+			mScaleTimer = mScaleDuration;
 		}
-		t     = NMathF::sin(_20 / _24 * HALF_PI);
+		t     = NMathF::sin(mScaleTimer / mScaleDuration * HALF_PI);
 		tComp = 1.0f - t;
-		_04[0]->setScale(_28 * tComp + _2C * t);
+		mPanes[0]->setScale(mStartScale * tComp + mTargetScale * t);
 	}
 
-	t = _04[0]->getRotate() + gsys->getFrameTime() * 10.0f;
+	t = mPanes[0]->getRotate() + gsys->getFrameTime() * 10.0f;
 	if (t > TAU) {
 		t -= TAU;
 	} else if (t < 0.0f) {
 		t += TAU;
 	}
 
-	_04[0]->rotate(P2DROTATE_Y, t);
-	setMirror(_04[0]);
+	mPanes[0]->rotate(P2DROTATE_Y, t);
+	setMirror(mPanes[0]);
 }
 
 /*
@@ -87,12 +87,12 @@ void zen::SpectrumCursorMgr::update()
  */
 void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
 {
-	_08 = 0.0f;
-	_0C = p3;
-	_10 = _04[0]->getPosH();
-	_14 = _04[0]->getPosV();
-	_18 = x;
-	_1C = y;
+	mMoveTimer    = 0.0f;
+	mMoveDuration = p3;
+	mStartPosX    = mPanes[0]->getPosH();
+	mStartPosY    = mPanes[0]->getPosV();
+	mTargetPosX   = x;
+	mTargetPosY   = y;
 }
 
 /*
@@ -102,10 +102,10 @@ void zen::SpectrumCursorMgr::move(f32 x, f32 y, f32 p3)
  */
 void zen::SpectrumCursorMgr::scale(f32 p1, f32 p2)
 {
-	_20 = 0.0f;
-	_24 = p2;
-	_28 = _04[0]->getScale().x;
-	_2C = p1;
+	mScaleTimer    = 0.0f;
+	mScaleDuration = p2;
+	mStartScale    = mPanes[0]->getScale().x;
+	mTargetScale   = p1;
 }
 
 /*
@@ -116,34 +116,34 @@ void zen::SpectrumCursorMgr::scale(f32 p1, f32 p2)
 void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f32 p4, f32 p5)
 {
 	char buf[8];
-	_00        = 0;
-	*(u32*)buf = makeTag(p3, _00);
+	mPaneCount = 0;
+	*(u32*)buf = makeTag(p3, mPaneCount);
 	while (screen->search(P2DPaneLibrary::makeTag(buf), false)) {
-		_00++;
-		*(u32*)buf = makeTag(p3, _00);
+		mPaneCount++;
+		*(u32*)buf = makeTag(p3, mPaneCount);
 	}
 
-	if (_00 == 0) {
+	if (mPaneCount == 0) {
 		PRINT("残像ペインがありませんなァ。逝ってよし！\n"); // 'there's no spectrum pane - get outta here!'
 		ERROR("no spectrum pane.");
 	}
 
-	_04 = new P2DPane*[_00];
+	mPanes = new P2DPane*[mPaneCount];
 
-	for (int i = _00 - 1; i >= 0; i--) {
+	for (int i = mPaneCount - 1; i >= 0; i--) {
 		*(u32*)buf    = makeTag(p3, i);
 		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
-			_04[i] = pane;
-			P2DPaneLibrary::changeParent(_04[i], parent);
-			_04[i]->setOffset(_04[i]->getWidth() >> 1, _04[i]->getHeight() >> 1);
-			_04[i]->show();
-			_04[i]->setScale(0.0f);
+			mPanes[i] = pane;
+			P2DPaneLibrary::changeParent(mPanes[i], parent);
+			mPanes[i]->setOffset(mPanes[i]->getWidth() >> 1, mPanes[i]->getHeight() >> 1);
+			mPanes[i]->show();
+			mPanes[i]->setScale(0.0f);
 
 			if (i == 0) {
-				P2DPaneLibrary::setFamilyAlpha(_04[i], 255);
+				P2DPaneLibrary::setFamilyAlpha(mPanes[i], 255);
 			} else {
-				P2DPaneLibrary::setFamilyAlpha(_04[i], RoundOff((1.0f - f32(i) / f32(_00)) * 100.0f));
+				P2DPaneLibrary::setFamilyAlpha(mPanes[i], RoundOff((1.0f - f32(i) / f32(mPaneCount)) * 100.0f));
 			}
 		} else {
 			PRINT("not picture pane.\n");
@@ -153,7 +153,7 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
 
 	initPos(p4, p5);
 	initScale(0.0f);
-	move(_04[0]->getPosH(), _04[0]->getPosV(), 0.0f);
+	move(mPanes[0]->getPosH(), mPanes[0]->getPosV(), 0.0f);
 	scale(1.0f, 0.5f);
 }
 
@@ -164,11 +164,11 @@ void zen::SpectrumCursorMgr::init(P2DScreen* screen, P2DPane* parent, u32 p3, f3
  */
 void zen::SpectrumCursorMgr::initPos(f32 x, f32 y)
 {
-	for (int i = 0; i < _00; i++) {
-		_04[i]->move(RoundOff(x), RoundOff(y));
+	for (int i = 0; i < mPaneCount; i++) {
+		mPanes[i]->move(RoundOff(x), RoundOff(y));
 	}
-	_18 = x;
-	_1C = y;
+	mTargetPosX = x;
+	mTargetPosY = y;
 }
 
 /*
@@ -178,13 +178,13 @@ void zen::SpectrumCursorMgr::initPos(f32 x, f32 y)
  */
 void zen::SpectrumCursorMgr::initScale(f32 scale)
 {
-	_08 = 0.0f;
-	_0C = 0.0f;
-	for (int i = 0; i < _00; i++) {
-		_04[i]->setScale(scale);
+	mMoveTimer    = 0.0f;
+	mMoveDuration = 0.0f;
+	for (int i = 0; i < mPaneCount; i++) {
+		mPanes[i]->setScale(scale);
 	}
-	_28 = scale;
-	_2C = scale;
+	mStartScale  = scale;
+	mTargetScale = scale;
 }
 
 /*

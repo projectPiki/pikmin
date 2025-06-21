@@ -47,9 +47,9 @@ void SlimeAi::init(Slime* slime)
 	mSlime->setNextState(SLIMEAI_Stay);
 	mSlime->mAnimator.startMotion(PaniMotionInfo(0));
 	mIsContractFinished        = false;
-	_01                        = true;
+	mCanPlayExpandSound        = true;
 	mPrevNucleusStickPikiCount = 0;
-	_0C                        = 0;
+	mBubbleCheckIndex          = 0;
 	mContractHitType           = SLIMEHIT_NoHit;
 	mContractDamage            = 0.0f;
 	mStickersRatio             = 0.0f;
@@ -104,7 +104,7 @@ void SlimeAi::afterProcessing()
 void SlimeAi::calcBubblePiki()
 {
 	CollPart* part = nullptr;
-	switch (_0C) {
+	switch (mBubbleCheckIndex) {
 	case 0:
 		part = mSlime->mCollInfo->getSphere('stk1');
 		break;
@@ -142,9 +142,9 @@ void SlimeAi::calcBubblePiki()
 		}
 	}
 
-	_0C++;
-	if (_0C > 3) {
-		_0C = 0;
+	mBubbleCheckIndex++;
+	if (mBubbleCheckIndex > 3) {
+		mBubbleCheckIndex = 0;
 	}
 }
 
@@ -227,7 +227,7 @@ void SlimeAi::playExpandingSound()
 	f32 expansionRatio = mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mPosition.distance(
 	                         mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mPosition)
 	                   / mMaxLength;
-	if (mSlime->mIsMoveLeader && _01 && expansionRatio > 0.8f) {
+	if (mSlime->mIsMoveLeader && mCanPlayExpandSound && expansionRatio > 0.8f) {
 		if (mStickersRatio > 0.5f) {
 			if (mSlime->mSeContext) {
 				// very strained stretch
@@ -243,11 +243,11 @@ void SlimeAi::playExpandingSound()
 			mSlime->mSeContext->playSound(SE_SLIME_EXT1);
 		}
 
-		_01 = false;
+		mCanPlayExpandSound = false;
 	}
 
-	if (!_01 && expansionRatio < 0.7f) {
-		_01 = true;
+	if (!mCanPlayExpandSound && expansionRatio < 0.7f) {
+		mCanPlayExpandSound = true;
 	}
 }
 
@@ -929,7 +929,7 @@ bool SlimeAi::appearTransit()
  */
 bool SlimeAi::disAppearTransit()
 {
-	if (mSlime->_3D4 == 0.0f) {
+	if (mSlime->mAppearanceScale == 0.0f) {
 		return true;
 	}
 	return false;
@@ -1082,9 +1082,9 @@ void SlimeAi::dieState()
 {
 	bothEndsToGoal();
 	if (mSlime->getAttackTimer() > 0.0f) {
-		mSlime->_3D4 -= C_SLIME_PROP(mSlime).mDeadScaleSpeed() * gsys->getFrameTime();
-		if (mSlime->_3D4 < 0.0f) {
-			mSlime->_3D4 = 0.0f;
+		mSlime->mAppearanceScale -= C_SLIME_PROP(mSlime).mDeadScaleSpeed() * gsys->getFrameTime();
+		if (mSlime->mAppearanceScale < 0.0f) {
+			mSlime->mAppearanceScale = 0.0f;
 		}
 		if (!mSlime->getMotionFinish()) {
 			mSlime->setMotionFinish(true);
@@ -1190,7 +1190,7 @@ void SlimeAi::appearState()
 	slimeScalePts[2] = C_SLIME_PROP(mSlime).mRadiusContractionScore();
 	f32 timer1       = mSlime->getAttackTimer();
 	if (timer1 < 2.0f) {
-		mSlime->_3D4 = NsLibMath<f32>::lagrange3(slimeScalePts, timer1);
+		mSlime->mAppearanceScale = NsLibMath<f32>::lagrange3(slimeScalePts, timer1);
 		if (timer1 < 1.25f) {
 			mSlime->addAnimTimer(0.05f);
 		} else {
@@ -1200,7 +1200,7 @@ void SlimeAi::appearState()
 			}
 		}
 	} else {
-		mSlime->_3D4 = C_SLIME_PROP(mSlime).mRadiusContractionScore();
+		mSlime->mAppearanceScale = C_SLIME_PROP(mSlime).mRadiusContractionScore();
 	}
 
 	f32 coreScalePts[3];

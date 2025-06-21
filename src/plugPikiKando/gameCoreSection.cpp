@@ -1438,7 +1438,7 @@ void GameCoreSection::update()
 	accountWindow->update();
 	routeMgr->update();
 
-	if (gameflow.mDisableController == 0 && gameflow.mIsUiOverlayActive == 0) {
+	if (gameflow._33C == 0 && gameflow.mIsUiOverlayActive == 0) {
 		playerState->update();
 	}
 
@@ -1604,7 +1604,7 @@ void GameCoreSection::updateAI()
 			}
 		}
 
-		if (gameflow.mDisableController == 0) {
+		if (gameflow._33C == 0) {
 			if (!inPause() && bossMgr) {
 				if (!hideTeki()) {
 					bossMgr->update();
@@ -1631,7 +1631,7 @@ void GameCoreSection::updateAI()
 			naviMgr->postUpdate(0, time);
 		}
 
-		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow.mDisableController) {
+		if (!gameflow.mIsUiOverlayActive && !inPause() && !gameflow._33C) {
 			pikiMgr->postUpdate(0, time);
 			itemMgr->postUpdate(0, time);
 			pelletMgr->postUpdate(0, time);

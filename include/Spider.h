@@ -201,15 +201,24 @@ struct Spider : public Boss {
 	// _00-_3B8 = Boss
 	bool mIsBossBgm;            // _3B8
 	u8 _3B9;                    // _3B9
-	u8 _3BA;                    // _3BA
-	u8 _3BB;                    // _3BB
-	int _3BC;                   // _3BC
+	u8 mIsHalfDead;             // _3BA
+	u8 mCanCreateDeadBombFx;    // _3BB
+	int mActiveWalkCycleCount;  // _3BC
 	SpiderAi* mSpiderAi;        // _3C0
 	SpiderLeg* mSpiderLeg;      // _3C4
 	bool mIsAppear;             // _3C8
 	bool mHasShadow;            // _3C9
 	ShadowCaster mShadowCaster; // _3CC, cast mDrawer to SpiderDrawer*
 };
+
+/**
+ * @brief Spider leg motion types
+ */
+DEFINE_ENUM_TYPE(SpiderLegMotionType,
+                 Walk      = 0, // Normal walking motion
+                 ShakeOff  = 1, // Shaking off stuck pikmin (moves knees)
+                 BodyShake = 2, // Full body shake motion
+);
 
 /**
  * @brief TODO
@@ -275,41 +284,41 @@ struct SpiderLeg {
 	void checkMotionFinished();
 
 	Spider* mSpider;                                         // _00
-	u8 _04;                                                  // _04
-	u8 _05;                                                  // _05
-	u8 _06;                                                  // _06
-	u8 _07;                                                  // _07
-	u8 _08;                                                  // _08
-	u8 _09[4];                                               // _09
+	u8 mSoundQueued;                                         // _04
+	u8 mInitialised;                                         // _05
+	u8 mBodyShakeStarted;                                    // _06
+	u8 mMotionFinishFlag;                                    // _07
+	u8 mIsMoving;                                            // _08
+	u8 mLegMoving[4];                                        // _09
 	bool mIsOnGround[4];                                     // _0D
-	u8 _11[4];                                               // _11
-	u8 _15[4];                                               // _15
-	u8 _19[4];                                               // _19
-	u8 _1D;                                                  // _1D
-	u8 _1E;                                                  // _1E
-	f32 _20[16];                                             // _20
-	f32 _60[4];                                              // _60
-	f32 _70[4];                                              // _70
-	f32 _80;                                                 // _80
-	f32 _84;                                                 // _84
-	f32 _88[4][2];                                           // _88
-	f32 _A8[4];                                              // _A8
+	u8 mPrevOnGround[4];                                     // _11
+	u8 mLegCanMove[4];                                       // _15
+	u8 mLegMidStep[4];                                       // _19
+	u8 mShakeDirectionChanged;                               // _1D
+	u8 mPrevShakeDirection;                                  // _1E
+	f32 mSegmentScale[16];                                   // _20
+	f32 mJointBlendFactor[4];                                // _60
+	f32 mGroundHeight[4];                                    // _70
+	f32 mShakeAngle;                                         // _80
+	f32 mShakeAngularVel;                                    // _84
+	f32 mLegSegmentLength[4][2];                             // _88
+	f32 mLegMotionProgress[4];                               // _A8
 	u8 _B8[0xC8 - 0xB8];                                     // _B8, unknown
-	f32 _C8;                                                 // _C8
-	f32 _CC;                                                 // _CC
+	f32 mShakePhase;                                         // _C8
+	f32 mOscillationPhase;                                   // _CC
 	f32 mFootRaiseHeightList[4];                             // _D0
-	f32 _E0;                                                 // _E0
-	f32 _E4;                                                 // _E4
-	int _E8[4];                                              // _E8
-	int _F8;                                                 // _F8
-	Vector3f _FC[4];                                         // _FC
-	Vector3f _12C[4][3];                                     // _12C
-	Vector3f _1BC[4][3];                                     // _1BC
-	Vector3f _24C;                                           // _24C
-	Vector3f _258;                                           // _258
-	Vector3f _264;                                           // _264
-	Quat _270;                                               // _270
-	Matrix4f _280[4][4];                                     // _280
+	f32 mPikiWeightOffset;                                   // _E0
+	f32 mTargetDirection;                                    // _E4
+	int mStuckPikiCount[4];                                  // _E8
+	SpiderLegMotionType::Type mMotionType;                   // _F8
+	Vector3f mKneeDirection[4];                              // _FC
+	Vector3f mJointPositions[4][3];                          // _12C
+	Vector3f mBezierPoints[4][3];                            // _1BC
+	Vector3f mTargetCentre;                                  // _24C
+	Vector3f mCentreVelocity;                                // _258
+	Vector3f mCurrentCentre;                                 // _264
+	Quat mJointRotation;                                     // _270
+	Matrix4f mJointMatrices[4][4];                           // _280
 	SpiderGenHalfDeadCallBackJoint* mHalfDeadCallBackJoints; // _680
 	SpiderGenPerishCallBack* mPerishCallBacks;               // _684
 	SpiderGenRippleCallBack* mRippleCallBacks;               // _688
@@ -384,7 +393,7 @@ struct SpiderAi : public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	Spider* mSpider; // _04
-	bool _08;        // _08
+	bool mCanFlick;  // _08
 };
 
 /**
@@ -396,7 +405,7 @@ struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGener
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		ptclGen->setEmitPosPtr(mPosition);
-		if (!mSpider->_3BA || !mSpider->getAlive()) {
+		if (!mSpider->mIsHalfDead || !mSpider->getAlive()) {
 			ptclGen->finish();
 		}
 

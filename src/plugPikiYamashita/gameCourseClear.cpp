@@ -622,7 +622,7 @@ struct WorldMapMode : public GameModeBase {
 	WorldMapMode()
 	    : GameModeBase("ワールドマップ") // 'world map'
 	{
-		mWorldMapScreen.start(zen::DrawWorldMap::START_Unk0, zen::DrawWorldMap::PLACE_Unk0);
+		mWorldMapScreen.start(zen::DrawWorldMap::None, zen::DrawWorldMap::ImpactSite);
 		mCancelButton = KBBTN_Z;
 	}
 
@@ -630,7 +630,7 @@ struct WorldMapMode : public GameModeBase {
 	{
 		bool res = GameModeBase::update(controller);
 		if (controller->keyUnClick(KBBTN_X)) {
-			mWorldMapScreen.start(zen::DrawWorldMap::START_Unk4, zen::DrawWorldMap::PLACE_Unk2);
+			mWorldMapScreen.start(zen::DrawWorldMap::FinalUnlock, zen::DrawWorldMap::ForestNavel);
 		}
 		mWorldMapScreen.update(controller);
 		return res;
@@ -724,7 +724,7 @@ struct GameCourseClearScreen : public Node {
 		if (_1FC) {
 			_1FC = _1FC->doUpdate(false);
 		} else if (_1F0 == 0) {
-			gameflow.mDisableController = 0;
+			gameflow._33C = 0;
 			Node::update();
 		} else if (_1F0 == 1 && !_1FC && gsys->getFade() == 0.0f) {
 			_1F0                             = -1;

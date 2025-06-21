@@ -692,9 +692,9 @@ void MemoryCard::checkUseFile()
 		}
 
 		if (!strncmp(stat.fileName, "Pikmin", 6)) {
-			_3C = i;
+			mTempFileIndex = i;
 		} else if (!strncmp(stat.fileName, "~Pikmin", 7)) {
-			_3C = i;
+			mTempFileIndex = i;
 		}
 	}
 }
@@ -709,7 +709,7 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 	mCardChannel   = -1;
 	mErrorCode     = CARD_RESULT_READY;
 	mSaveFileIndex = -1;
-	_3C            = -1;
+	mTempFileIndex = -1;
 
 	for (int channel = 0; channel < 1; channel++) {
 		if (getCardStatus(channel)) {
@@ -742,10 +742,10 @@ s32 MemoryCard::getMemoryCardState(bool flag)
 		if (flag && mCardChannel >= 0 && mSaveFileIndex != -2) {
 			loadCurrentFile();
 			mErrorCode = CARD_RESULT_READY;
-		} else if (_3C != -1) {
+		} else if (mTempFileIndex != -1) {
 			CardUtilMount(channel, &CardWorkArea);
 			CardUtilIdleWhileBusy();
-			CardUtilErase(channel, _3C);
+			CardUtilErase(channel, mTempFileIndex);
 			CardUtilIdleWhileBusy();
 			CardUtilUnmount(channel);
 			CardUtilIdleWhileBusy();
@@ -864,10 +864,10 @@ void MemoryCard::loadCurrentGame()
  */
 void MemoryCard::saveCurrentGame()
 {
-	mDidSaveFail                  = false;
-	gsys->mIsCardSaving           = TRUE;
-	gameflow.mPlayState._20       = 2;
-	gameflow.mPlayState.mSavedDay = gameflow.mWorldClock.mCurrentDay;
+	mDidSaveFail                    = false;
+	gsys->mIsCardSaving             = TRUE;
+	gameflow.mPlayState.mSaveStatus = 2;
+	gameflow.mPlayState.mSavedDay   = gameflow.mWorldClock.mCurrentDay;
 
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 
@@ -901,14 +901,14 @@ void MemoryCard::saveCurrentGame()
 void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playState)
 {
 	if (playerState) {
-		playState._14 = playerState->hasContainer(Red) ? pikiInfMgr.getColorTotal(Red) : -1;
-		playState._18 = playerState->hasContainer(Yellow) ? pikiInfMgr.getColorTotal(Yellow) : -1;
-		playState._1C = playerState->hasContainer(Blue) ? pikiInfMgr.getColorTotal(Blue) : -1;
-		playState._22 = playerState->getCardUfoPartsCount();
+		playState.mRedPikiCount    = playerState->hasContainer(Red) ? pikiInfMgr.getColorTotal(Red) : -1;
+		playState.mYellowPikiCount = playerState->hasContainer(Yellow) ? pikiInfMgr.getColorTotal(Yellow) : -1;
+		playState.mBluePikiCount   = playerState->hasContainer(Blue) ? pikiInfMgr.getColorTotal(Blue) : -1;
+		playState.mShipPartsCount  = playerState->getCardUfoPartsCount();
 	}
 
 	playState.write(*output);
-	if (playState._20 == 2 && playerState) {
+	if (playState.mSaveStatus == 2 && playerState) {
 		playerState->saveCard(*output);
 	}
 }
@@ -921,7 +921,7 @@ void MemoryCard::writeCurrentGame(RandomAccessStream* output, PlayState& playSta
 void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
 	gameflow.mPlayState.read(*data);
-	if (gameflow.mPlayState._20 == 2 && playerState) {
+	if (gameflow.mPlayState.mSaveStatus == 2 && playerState) {
 		playerState->loadCard(*data);
 	}
 	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState.mSavedDay;
@@ -1677,7 +1677,7 @@ u32 MemoryCard::getOkSections()
 		flag &= ~0x1;
 	}
 
-	_60 = 0;
+	mValidOptionsCount = 0;
 	int i;
 	int j = 1;
 	for (i = 0; i < 2; i++) {
@@ -1689,16 +1689,16 @@ u32 MemoryCard::getOkSections()
 		if (val != sum) {
 			flag &= ~(1 << j);
 		} else {
-			_60++;
+			mValidOptionsCount++;
 		}
 		j++;
 	}
 
 	PlayState state;
 	mValidBlockCount = 0;
-	_4C[0]           = 0;
-	_4C[1]           = 0;
-	_4C[2]           = 0;
+	mValidSlots[0]   = 0;
+	mValidSlots[1]   = 0;
+	mValidSlots[2]   = 0;
 	for (i = 0; i < 4; i++) {
 		u32 sum           = calcChecksum(getGameFilePtr(i), 0x7FF8);
 		RamStream* stream = getGameFileStream(i);
@@ -1709,8 +1709,8 @@ u32 MemoryCard::getOkSections()
 		int val = stream->readInt();
 		if (val != sum) {
 			flag &= ~(1 << j);
-		} else if (_4C[idx] == 0) {
-			_4C[idx] = 1;
+		} else if (mValidSlots[idx] == 0) {
+			mValidSlots[idx] = 1;
 			mValidBlockCount++;
 		}
 		j++;
@@ -2107,12 +2107,12 @@ u32 MemoryCard::getOkSections()
 bool MemoryCard::isFileBroken()
 {
 	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
-		_48      = getOkSections();
-		bool res = false;
-		if (!(_48 & 0x1)) {
+		mOkSectionsMask = getOkSections();
+		bool res        = false;
+		if (!(mOkSectionsMask & 0x1)) {
 			res = true;
 		}
-		if (_60 < 1) {
+		if (mValidOptionsCount < 1) {
 			res = true;
 		}
 		if (mValidBlockCount < 3) {
@@ -2147,7 +2147,7 @@ void MemoryCard::repairFile()
 	(void)errCodes;
 
 	mDidSaveFail = false;
-	if (!(_48 & 0x1)) {
+	if (!(mOkSectionsMask & 0x1)) {
 		OSCalendarTime calendar;
 		OSTicksToCalendarTime(OSGetTime(), &calendar);
 		char buf[36];
@@ -2159,10 +2159,10 @@ void MemoryCard::repairFile()
 		writeOneBanner();
 	}
 
-	if (_60 < 1) {
-		int a = 1 - _60;
+	if (mValidOptionsCount < 1) {
+		int a = 1 - mValidOptionsCount;
 		for (int i = 0; i < 2; i++) {
-			if (!(_48 & (1 << (i + 1)))) {
+			if (!(mOkSectionsMask & (1 << (i + 1)))) {
 				gameflow.mGamePrefs._E0 = 0;
 				initOptionsArea(i);
 				writeOneOption(i);
@@ -2176,14 +2176,14 @@ void MemoryCard::repairFile()
 	if (mValidBlockCount < 3) {
 		int a = 3 - mValidBlockCount;
 		for (int i = 0; i < 4; i++) {
-			if (!(_48 & (1 << (i + 3)))) {
+			if (!(mOkSectionsMask & (1 << (i + 3)))) {
 				for (int j = 0; j < 3; j++) {
-					if (_4C[j] == FALSE) {
+					if (mValidSlots[j] == FALSE) {
 						gameflow.mGamePrefs._DC = 0;
 						initFileArea(j, i);
 						writeOneGameFile(i);
 						waitPolling();
-						_4C[j] = 1;
+						mValidSlots[j] = 1;
 						break;
 					}
 				}
@@ -2243,19 +2243,19 @@ void MemoryCard::getQuickInfos(CardQuickInfo* infos)
 				if (infos[state.mSaveFlags].mIndex != -1) {
 					gameflow.mGamePrefs.mSpareSaveGameIndex = infos[state.mSaveFlags].mIndex + 1;
 				}
-				if (state._20) {
+				if (state.mSaveStatus) {
 					u8 s                    = state.mSaveFlags;
 					CardQuickInfo& info     = infos[s];
 					info.mCrc               = sum;
 					info._20                = a;
 					info.mIndex             = i;
 					info.mFlags             = s;
-					info.mIsSelected        = state._20;
+					info.mIsSelected        = state.mSaveStatus;
 					info.mCurrentDay        = state.mSavedDay;
-					info.mCurrentPartsCount = state._22;
-					info.mRedPikiCount      = state._14;
-					info.mYellowPikiCount   = state._18;
-					info.mBluePikiCount     = state._1C;
+					info.mCurrentPartsCount = state.mShipPartsCount;
+					info.mRedPikiCount      = state.mRedPikiCount;
+					info.mYellowPikiCount   = state.mYellowPikiCount;
+					info.mBluePikiCount     = state.mBluePikiCount;
 				}
 			} else {
 				gameflow.mGamePrefs.mSpareSaveGameIndex = i + 1;

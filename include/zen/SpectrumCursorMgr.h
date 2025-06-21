@@ -16,12 +16,12 @@ namespace zen {
 struct SpectrumCursorMgr {
 	SpectrumCursorMgr()
 	{
-		_00 = 0;
-		_04 = nullptr;
-		_08 = _0C = 1.0f;
-		_10 = _14 = _18 = _1C = 0.0f;
-		_20 = _24 = 1.0f;
-		_28 = _2C = 1.0f;
+		mPaneCount = 0;
+		mPanes     = nullptr;
+		mMoveTimer = mMoveDuration = 1.0f;
+		mStartPosX = mStartPosY = mTargetPosX = mTargetPosY = 0.0f;
+		mScaleTimer = mScaleDuration = 1.0f;
+		mStartScale = mTargetScale = 1.0f;
 	}
 
 	void update();
@@ -35,20 +35,20 @@ struct SpectrumCursorMgr {
 	// unused/inlined:
 	void setMirror(P2DPane*);
 
-	bool checkFinish() { return _08 >= _0C && _20 >= _24; }
+	bool checkFinish() { return mMoveTimer >= mMoveDuration && mScaleTimer >= mScaleDuration; }
 
-	int _00;       // _00
-	P2DPane** _04; // _04
-	f32 _08;       // _08
-	f32 _0C;       // _0C
-	f32 _10;       // _10
-	f32 _14;       // _14
-	f32 _18;       // _18
-	f32 _1C;       // _1C
-	f32 _20;       // _20
-	f32 _24;       // _24
-	f32 _28;       // _28
-	f32 _2C;       // _2C
+	int mPaneCount;     // _00
+	P2DPane** mPanes;   // _04
+	f32 mMoveTimer;     // _08
+	f32 mMoveDuration;  // _0C
+	f32 mStartPosX;     // _10
+	f32 mStartPosY;     // _14
+	f32 mTargetPosX;    // _18
+	f32 mTargetPosY;    // _1C
+	f32 mScaleTimer;    // _20
+	f32 mScaleDuration; // _24
+	f32 mStartScale;    // _28
+	f32 mTargetScale;   // _2C
 };
 
 } // namespace zen

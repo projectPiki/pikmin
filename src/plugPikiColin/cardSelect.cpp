@@ -95,9 +95,9 @@ struct CardSelectSetupSection : public Node {
 					if (gameflow.mGamePrefs.mHasSaveGame) {
 						// save game exists, load it
 						gameflow.mMemoryCard.loadCurrentGame();
-						if (gameflow.mPlayState._20 == 1) {
+						if (gameflow.mPlayState.mSaveStatus == 1) {
 							gameflow.mPlayState.Initialise();
-							gameflow.mPlayState._20 = 2;
+							gameflow.mPlayState.mSaveStatus = 2;
 						}
 
 						// put us in the map select screen

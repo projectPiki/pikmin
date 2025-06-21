@@ -65,11 +65,11 @@ void Spider::init(Vector3f&)
 	mCollisionRadius = 64.0f;
 	setInvincible(1);
 	setIsOrganic(0);
-	mIsBossBgm = false;
-	_3B9       = 1;
-	_3BA       = 0;
-	_3BB       = 1;
-	_3BC       = 0;
+	mIsBossBgm            = false;
+	_3B9                  = 1;
+	mIsHalfDead           = 0;
+	mCanCreateDeadBombFx  = 1;
+	mActiveWalkCycleCount = 0;
 	mSpiderAi->initAI(this);
 	mSpiderLeg->init(this);
 	mHasShadow                      = false;
@@ -131,8 +131,9 @@ void Spider::draw(Graphics& gfx)
 	lightDirection.normalise();
 	lightDirection.multiply(500.0f);
 
-	mShadowCaster.mSourcePosition.set(mSpiderLeg->_264.x + lightDirection.x, mPosition.y + 1200.0f, mSpiderLeg->_264.z + lightDirection.z);
-	mShadowCaster.mTargetPosition.set(mSpiderLeg->_264.x, mPosition.y + 50.0f, mSpiderLeg->_264.z);
+	mShadowCaster.mSourcePosition.set(mSpiderLeg->mCurrentCentre.x + lightDirection.x, mPosition.y + 1200.0f,
+	                                  mSpiderLeg->mCurrentCentre.z + lightDirection.z);
+	mShadowCaster.mTargetPosition.set(mSpiderLeg->mCurrentCentre.x, mPosition.y + 50.0f, mSpiderLeg->mCurrentCentre.z);
 
 	mSpiderLeg->refresh(mShapeObject, gfx);
 }

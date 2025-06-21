@@ -269,24 +269,37 @@ struct StdSystem {
 /**
  * @brief Fabricated - some structure needs to live at 0x310 in System.
  */
-struct FakeSystemList {
+struct AramAllocator {
 	inline u32 getDest(u32 size)
 	{
 		u32 b = 0;
-		u32 a = _04;
-		if (a + size <= _00 + _08) {
-			b   = a;
-			_04 = a + size;
+		u32 a = mCurrentOffset;
+		if (a + size <= mBaseAddress + mSize) {
+			b              = a;
+			mCurrentOffset = a + size;
 		}
 		return b;
 	}
 
-	inline void init() { _04 = _00; }
+	inline void init() { mCurrentOffset = mBaseAddress; }
 
-	u32 _00; // _00, unknown
-	u32 _04; // _04, unknown
-	u32 _08; // _08, unknown
+	u32 mBaseAddress;   ///< _00
+	u32 mCurrentOffset; ///< _04
+	u32 mSize;          ///< _08
 };
+
+/**
+ * @brief DVD error states for disc reading operations
+ */
+DEFINE_ENUM_TYPE(DvdError,
+                 None        = -1, // No error, normal operation
+                 ReadingDisc = 0,  // Currently reading game disc
+                 FatalError  = 1,  // Fatal disc read error occurred
+                 RetryError  = 2,  // Disc read error, retrying
+                 NoDisc      = 3,  // No disc inserted
+                 CoverOpen   = 4,  // Disc cover is open
+                 WrongDisc   = 5   // Non-Pikmin disc inserted
+);
 
 /**
  * @brief TODO
@@ -343,15 +356,17 @@ struct System : public StdSystem {
 	f32 getFrameTime() { return mDeltaTime; }
 	f32 getFrameRate() { return mFPS; }
 
-	inline void initFakeThing1(FakeSystemList* p1, FakeSystemList* p2, u32 p3, u32 p4)
+	// Fake!
+	inline void initAramAllocator(AramAllocator* target, AramAllocator* prev, u32 baseAddr, u32 endAddr)
 	{
-		u32 x   = _31C._00 + p2->_08;
-		p1->_00 = p3;
-		p1->_08 = x - p4;
-		p1->_04 = p1->_00;
+		u32 x                  = mAramAllocator.mBaseAddress + prev->mSize;
+		target->mBaseAddress   = baseAddr;
+		target->mSize          = x - endAddr;
+		target->mCurrentOffset = target->mBaseAddress;
 	}
 
-	inline void initFakeThing2() { _328 = &_310; }
+	// Fake!
+	inline void initCurrentAllocator() { mCurrentAllocator = &mBaseAramAllocator; }
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
@@ -382,11 +397,11 @@ struct System : public StdSystem {
 	u32 mPrevAllocType;                              // _2A4
 	AddressNode _2A8;                                // _2A8
 	u32 mBuildMapFuncList;                           // _2BC, structure is nextItemPtr, virtAddr, char buf w/ demangled name/filename
-	SystemCache _2C0;                                // _2C0
-	SystemCache _2E8;                                // _2E8
-	FakeSystemList _310;                             // _310, fake
-	FakeSystemList _31C;                             // _31C, fake
-	FakeSystemList* _328;                            // _328, unknown
+	SystemCache mActiveCacheList;                    // _2C0
+	SystemCache mFreeCacheList;                      // _2E8
+	AramAllocator mBaseAramAllocator;                // _310, fake
+	AramAllocator mAramAllocator;                    // _31C, fake
+	AramAllocator* mCurrentAllocator;                // _328, unknown
 	vu32 mDmaComplete;                               // _32C
 	vu32 mTexComplete;                               // _330
 };
@@ -402,7 +417,7 @@ struct LogStream : public Stream {
 	LogStream()
 	{
 		mBufPosition = 0;
-		_0C          = 0;
+		_UNUSED0C    = 0;
 	}
 
 	virtual void flush() // _54 (weak)
@@ -448,7 +463,7 @@ struct LogStream : public Stream {
 	// _04     = VTBL
 	// _00-_08 = Stream
 	int mBufPosition;    // _08
-	u32 _0C;             // _0C, unknown
+	u32 _UNUSED0C;       // _0C
 	char mBuffer[0x100]; // _10
 };
 

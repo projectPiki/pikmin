@@ -184,13 +184,13 @@ struct MapSelectSetupSection : public Node {
 			}
 
 			if (mapWindow && mapWindow->update(mController)) {
-				int status = mapWindow->_08;
-				if (status == 6) {
+				int stageId = mapWindow->mSelectedCourseNumber;
+				if (stageId == 6) {
 					mSectionState = 1;
 					gsys->setFade(0.0f, 3.0f);
 				} else {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
-						if (inf->mStageID == status) {
+						if (inf->mStageID == stageId) {
 							flowCont.mCurrentStage = inf;
 							sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
 							sprintf(flowCont.mStagePath2, "%s", inf->mFileName);

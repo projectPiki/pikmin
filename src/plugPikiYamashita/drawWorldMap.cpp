@@ -50,7 +50,8 @@ struct WorldMapWipe {
 		P2DPane* pane = wipeScreen->search(tag, true);
 		if (pane->getTypeID() == PANETYPE_Picture) {
 			mWipePane = (P2DPicture*)pane;
-			_00.set(mWipePane->getPosH() + (mWipePane->getWidth() >> 1), mWipePane->getPosV() + (mWipePane->getHeight() >> 1), 0.0f);
+			mDefaultPos.set(mWipePane->getPosH() + (mWipePane->getWidth() >> 1), mWipePane->getPosV() + (mWipePane->getHeight() >> 1),
+			                0.0f);
 			move(mWipePane->getPosH(), mWipePane->getPosV());
 
 		} else {
@@ -65,8 +66,8 @@ struct WorldMapWipe {
 		x -= (mWipePane->getWidth() >> 1);
 		y -= (mWipePane->getHeight() >> 1);
 
-		_0C.set(mWipePane->getPosH(), mWipePane->getPosV(), 0.0f);
-		_18.set(x, y, 0.0f);
+		mCurrentPos.set(mWipePane->getPosH(), mWipePane->getPosV(), 0.0f);
+		mTargetPos.set(x, y, 0.0f);
 	}
 
 	void set(int x, int y)
@@ -74,25 +75,34 @@ struct WorldMapWipe {
 		x -= (mWipePane->getWidth() >> 1);
 		y -= (mWipePane->getHeight() >> 1);
 		mWipePane->move(x, y);
-		_0C.set(x, y, 0.0f);
-		_18.set(x, y, 0.0f);
+		mCurrentPos.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
 	}
 
-	void moveDefaultPos() { move(zen::RoundOff(_00.x), zen::RoundOff(_00.y)); }
+	void moveDefaultPos() { move(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
 	void update(f32 t, u8 alpha)
 	{
 		f32 tComp = 1.0f - t;
-		mWipePane->move(zen::RoundOff(_0C.x * tComp + _18.x * t), zen::RoundOff(_0C.y * tComp + _18.y * t));
+		mWipePane->move(zen::RoundOff(mCurrentPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mCurrentPos.y * tComp + mTargetPos.y * t));
 		mWipePane->setAlpha(alpha);
 	}
 
-	void setDefault() { set(zen::RoundOff(_00.x), zen::RoundOff(_00.y)); }
+	void setDefault() { set(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
 
-	Vector3f _00;          // _00
-	Vector3f _0C;          // _0C
-	Vector3f _18;          // _18
+	Vector3f mDefaultPos;  // _00
+	Vector3f mCurrentPos;  // _0C
+	Vector3f mTargetPos;   // _18
 	P2DPicture* mWipePane; // _24
 };
+
+/**
+ * @brief Wipe transition states for world map screen
+ */
+DEFINE_ENUM_TYPE(WipeState,
+                 Idle    = 0, // Wipe is not animating
+                 Closing = 1, // Wipe is closing (covering screen)
+                 Opening = 2, // Wipe is opening (revealing screen)
+);
 
 /**
  * @brief TODO
@@ -102,8 +112,8 @@ struct WorldMapWipe {
 struct WorldMapWipeMgr {
 	WorldMapWipeMgr()
 	{
-		_04       = 0.0f;
-		_08       = 1.0f;
+		mTimer    = 0.0f;
+		mDuration = 1.0f;
 		mIsActive = false;
 	}
 
@@ -118,8 +128,8 @@ struct WorldMapWipeMgr {
 
 	void init()
 	{
-		_04       = 0.0f;
-		_08       = 0.8f;
+		mTimer    = 0.0f;
+		mDuration = 0.8f;
 		mIsActive = false;
 	}
 
@@ -128,17 +138,19 @@ struct WorldMapWipeMgr {
 		for (int i = 0; i < 4; i++) {
 			mWipes[i].set(x, y);
 		}
-		_00 = 0;
+
+		mState = WipeState::Idle;
 	}
 
 	void open(f32 p1)
 	{
-		_04 = 0.0f;
-		_08 = p1;
+		mTimer    = 0.0f;
+		mDuration = p1;
 		for (int i = 0; i < 4; i++) {
 			mWipes[i].moveDefaultPos();
 		}
-		_00       = 2;
+
+		mState    = WipeState::Opening;
 		mIsActive = true;
 	}
 
@@ -151,21 +163,22 @@ struct WorldMapWipeMgr {
 		u8 alpha;
 
 		mIsActive = false;
-		switch (int state = _00) {
-		case 0:
+		switch (int state = mState) {
+		case WipeState::Idle:
 			break;
-		case 1:
-		case 2:
-			_04 += gsys->getFrameTime();
-			if (_04 > _08) {
-				_04   = _08;
-				state = 0;
+		case WipeState::Closing:
+		case WipeState::Opening:
+			mTimer += gsys->getFrameTime();
+			if (mTimer > mDuration) {
+				mTimer = mDuration;
+				state  = WipeState::Idle;
 			}
-			if (_00 == 2) {
-				blendFactor = (1.0f - NMathF::cos(_04 / _08 * PI)) * 0.5f;
+
+			if (mState == WipeState::Opening) {
+				blendFactor = (1.0f - NMathF::cos(mTimer / mDuration * PI)) * 0.5f;
 				alpha       = zen::RoundOff(255.0f * (1.0f - blendFactor));
 			} else {
-				blendFactor = NMathF::sin(_04 / _08 * HALF_PI);
+				blendFactor = NMathF::sin(mTimer / mDuration * HALF_PI);
 				alpha       = zen::RoundOff(255.0f * blendFactor);
 			}
 
@@ -173,7 +186,7 @@ struct WorldMapWipeMgr {
 				mWipes[i].update(blendFactor, alpha);
 			}
 
-			_00       = state;
+			mState    = state;
 			mIsActive = true;
 			break;
 		}
@@ -183,12 +196,14 @@ struct WorldMapWipeMgr {
 
 	void close(f32 p1, int p2, int p3)
 	{
-		_04 = 0.0f;
-		_08 = p1;
+		mTimer    = 0.0f;
+		mDuration = p1;
+
 		for (int i = 0; i < 4; i++) {
 			mWipes[i].move(p2, p3);
 		}
-		_00       = 1;
+
+		mState    = WipeState::Closing;
 		mIsActive = true;
 	}
 
@@ -197,12 +212,13 @@ struct WorldMapWipeMgr {
 		for (int i = 0; i < 4; i++) {
 			mWipes[i].setDefault();
 		}
-		_00 = 0;
+
+		mState = WipeState::Idle;
 	}
 
-	int _00;                // _00
-	f32 _04;                // _04
-	f32 _08;                // _08
+	int mState;             // _00
+	f32 mTimer;             // _04
+	f32 mDuration;          // _08
 	WorldMapWipe mWipes[4]; // _0C
 	bool mIsActive;         // _AC
 };
@@ -216,9 +232,9 @@ struct WorldMapCursorOnyon {
 	WorldMapCursorOnyon()
 	{
 		mOnyonIcon = nullptr;
-		_04.set(0.0f, 0.0f, 0.0f);
-		_1C.set(0.0f, 0.0f, 0.0f);
-		_34 = zen::Rand(scaleFrameMax);
+		mCurrentPos.set(0.0f, 0.0f, 0.0f);
+		mVelocity.set(0.0f, 0.0f, 0.0f);
+		mScaleTimer = zen::Rand(scaleFrameMax);
 		mBottomPos.set(0.0f, bottomLengthDefault, 0.0f);
 	}
 
@@ -232,17 +248,17 @@ struct WorldMapCursorOnyon {
 			ERROR("Illegal initialize.");
 		}
 
-		_34 = zen::Rand(scaleFrameMax);
+		mScaleTimer = zen::Rand(scaleFrameMax);
 
-		_04.set(0.0f, 0.0f, 0.0f);
-		_1C.set(0.0f, 0.0f, 0.0f);
+		mCurrentPos.set(0.0f, 0.0f, 0.0f);
+		mVelocity.set(0.0f, 0.0f, 0.0f);
 		mBottomPos.set(0.0f, bottomLengthDefault, 0.0f);
 
-		_38 = WMeffMgr->create(EFF2D_MapOnyonSparkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		mSparkleGenerator = WMeffMgr->create(EFF2D_MapOnyonSparkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 	}
 	void update(Vector3f& scale)
 	{
-		Vector3f vec1 = _10 - _04;
+		Vector3f vec1 = mTargetPos - mCurrentPos;
 		f32 time      = 60.0f * gsys->getFrameTime();
 		f32 len1      = vec1.length();
 		if (len1 > 0.000001f) {
@@ -252,24 +268,24 @@ struct WorldMapCursorOnyon {
 				factor = 15.0f;
 			}
 
-			_1C.set(Vector3f(vec1 * factor * time));
-			_04.add(_1C);
+			mVelocity.set(Vector3f(vec1 * factor * time));
+			mCurrentPos.add(mVelocity);
 		}
 
-		mOnyonIcon->move(_04.x, _04.y);
+		mOnyonIcon->move(mCurrentPos.x, mCurrentPos.y);
 		updateBottomPos();
-		_34 += gsys->getFrameTime();
-		if (_34 > scaleFrameMax) {
-			_34 -= scaleFrameMax;
+		mScaleTimer += gsys->getFrameTime();
+		if (mScaleTimer > scaleFrameMax) {
+			mScaleTimer -= scaleFrameMax;
 		}
-		f32 angle = _34 / scaleFrameMax;
+		f32 angle = mScaleTimer / scaleFrameMax;
 		mOnyonIcon->setScale(
 		    Vector3f(0.9f * scale.x + 0.1f * NMathF::sin(TAU * angle), 0.9f * scale.y - 0.1f * NMathF::sin(TAU * angle), 1.0f));
-		if (_38) {
+		if (mSparkleGenerator) {
 			Vector3f vec2;
 			vec2.set(mOnyonIcon->getPosH() + (mOnyonIcon->getWidth() >> 1), mOnyonIcon->getPosV(), 0.0f);
 			vec2.y = 480.0f - vec2.y;
-			_38->setEmitPos(vec2);
+			mSparkleGenerator->setEmitPos(vec2);
 		}
 	}
 
@@ -289,24 +305,24 @@ struct WorldMapCursorOnyon {
 	void show()
 	{
 		mOnyonIcon->show();
-		if (_38) {
-			_38->startGen();
+		if (mSparkleGenerator) {
+			mSparkleGenerator->startGen();
 		}
 	}
 	void hide()
 	{
 		mOnyonIcon->hide();
-		if (_38) {
-			_38->stopGen();
+		if (mSparkleGenerator) {
+			mSparkleGenerator->stopGen();
 		}
 	}
-	void move(f32 x, f32 y) { _10.set(x, y, 0.0f); }
+	void move(f32 x, f32 y) { mTargetPos.set(x, y, 0.0f); }
 	void set(f32 x, f32 y, f32 scale)
 	{
-		_04.set(x, y, 0.0f);
-		_10.set(x, y, 0.0f);
+		mCurrentPos.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
 		mBottomPos.set(x, y + bottomLengthDefault, 0.0f);
-		mOnyonIcon->move(_04.x, _04.y);
+		mOnyonIcon->move(mCurrentPos.x, mCurrentPos.y);
 		mOnyonIcon->setScale(Vector3f(scale, scale, 1.0f));
 	}
 
@@ -315,11 +331,11 @@ struct WorldMapCursorOnyon {
 		Vector3f vec1;
 		Vector3f vec2;
 		vec2.set(mBottomPos.x, mBottomPos.y + 3.0f * gsys->getFrameTime() * 60.0f, mBottomPos.z);
-		vec1.set(vec2 - _04);
+		vec1.set(vec2 - mCurrentPos);
 
 		f32 len1 = vec1.length();
 		if (len1 < 0.000001f) {
-			vec1.set(mBottomPos - _04);
+			vec1.set(mBottomPos - mCurrentPos);
 			len1 = vec1.length();
 
 			if (len1 < 0.000001f) {
@@ -334,7 +350,7 @@ struct WorldMapCursorOnyon {
 			vec1.multiply(bottomLengthMax / len1);
 		}
 
-		vec2.set(_04 + vec1);
+		vec2.set(mCurrentPos + vec1);
 		mOnyonIcon->rotateZ(NMathF::atan2(vec1.y, vec1.x) - HALF_PI);
 		vec1.normalize();
 
@@ -347,13 +363,13 @@ struct WorldMapCursorOnyon {
 	static f32 bottomLengthMax;
 	static f32 bottomLengthDefault;
 
-	P2DPicture* mOnyonIcon; // _00
-	Vector3f _04;           // _04
-	Vector3f _10;           // _10
-	Vector3f _1C;           // _1C
-	Vector3f mBottomPos;    // _28
-	f32 _34;                // _34
-	particleGenerator* _38; // _38
+	P2DPicture* mOnyonIcon;               // _00
+	Vector3f mCurrentPos;                 // _04
+	Vector3f mTargetPos;                  // _10
+	Vector3f mVelocity;                   // _1C
+	Vector3f mBottomPos;                  // _28
+	f32 mScaleTimer;                      // _34
+	particleGenerator* mSparkleGenerator; // _38
 };
 
 /**
@@ -364,19 +380,19 @@ struct WorldMapCursorOnyon {
 struct WorldMapCursorMgr {
 
 	/**
-	 * @brief TODO
+	 * @brief UFO cursor movement states
 	 */
 	enum ufoStatusFlag {
-		UFO_Unk0 = 0,
-		UFO_Unk1 = 1,
-		UFO_Unk2 = 2,
+		UFO_Hovering = 0, // UFO is hovering in place
+		UFO_Moving   = 1, // UFO is moving to target position
+		UFO_Landed   = 2, // UFO has landed at course point
 	};
 
 	WorldMapCursorMgr()
 	{
 		mRocketIcon = nullptr;
 		for (int i = 0; i < 2; i++) {
-			_110[i] = 0;
+			mExhaustGenerators[i] = 0;
 		}
 
 		initParams();
@@ -386,38 +402,38 @@ struct WorldMapCursorMgr {
 	void initParams()
 	{
 		setLandingFlag(false);
-		_35 = 0;
-		_38.set(0.0f, 0.0f, 0.0f);
-		_00 = 0.0f;
-		_0C.set(0.0f, 0.0f, 0.0f);
-		_24.set(0.0f, 0.0f, 0.0f);
+		mIsForcedMove = 0;
+		mForceMoveTarget.set(0.0f, 0.0f, 0.0f);
+		mLandingTimer = 0.0f;
+		mTargetPos.set(0.0f, 0.0f, 0.0f);
+		mVelocity.set(0.0f, 0.0f, 0.0f);
 		mRocketPos.set(0.0f, 0.0f, 0.0f);
-		_30 = 0.0f;
+		mRotationSpeed = 0.0f;
 		mBlueOnyonPos.set(0.0f, 0.0f, 0.0f);
 		mOnyonVelocity.set(0.0f, 0.0f, 0.0f);
-		setUfoStatus(UFO_Unk0);
-		_128 = 1.0f;
+		setUfoStatus(UFO_Hovering);
+		_UNUSED128 = 1.0f;
 	}
 
 	void setLandingFlag(bool doSet)
 	{
 		if (doSet) {
-			_34 = 1;
+			mIsLanding = 1;
 			SeSystem::playSysSe(SYSSE_SELECT_DECIDE);
 
-			if (_110[0]) {
-				_110[0]->setFreqFrm(4.0f * _118);
+			if (mExhaustGenerators[0]) {
+				mExhaustGenerators[0]->setFreqFrm(4.0f * mFireFreqFrame);
 			}
-			if (_110[1]) {
-				_110[1]->setFreqFrm(5.0f * _11C);
+			if (mExhaustGenerators[1]) {
+				mExhaustGenerators[1]->setFreqFrm(5.0f * mSmokeFreqFrame);
 			}
 		} else {
-			_34 = 0;
-			if (_110[0]) {
-				_110[0]->setFreqFrm(_118);
+			mIsLanding = 0;
+			if (mExhaustGenerators[0]) {
+				mExhaustGenerators[0]->setFreqFrm(mFireFreqFrame);
 			}
-			if (_110[1]) {
-				_110[1]->setFreqFrm(_11C);
+			if (mExhaustGenerators[1]) {
+				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame);
 			}
 		}
 	}
@@ -439,20 +455,20 @@ struct WorldMapCursorMgr {
 		mCursorOnyons[Yellow].init();
 
 		for (i = 0; i < 2; i++) {
-			if (_110[i]) {
-				_110[0]->forceFinish(); // oops
+			if (mExhaustGenerators[i]) {
+				mExhaustGenerators[0]->forceFinish(); // oops
 			}
 		}
 
-		_110[0] = WMeffMgr->create(EFF2D_MapRocketFire, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
-		_110[0]->invisible();
-		_118 = _110[0]->getFreqFrm();
-		_120 = _110[0]->getInitVel();
+		mExhaustGenerators[0] = WMeffMgr->create(EFF2D_MapRocketFire, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		mExhaustGenerators[0]->invisible();
+		mFireFreqFrame = mExhaustGenerators[0]->getFreqFrm();
+		mFireInitVel   = mExhaustGenerators[0]->getInitVel();
 
-		_110[1] = WMeffMgr->create(EFF2D_MapRocketSmoke, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
-		_110[1]->invisible();
-		_11C = _110[1]->getFreqFrm();
-		_124 = _110[0]->getInitVel(); // maybe typo?
+		mExhaustGenerators[1] = WMeffMgr->create(EFF2D_MapRocketSmoke, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
+		mExhaustGenerators[1]->invisible();
+		mSmokeFreqFrame = mExhaustGenerators[1]->getFreqFrm();
+		mSmokeInitVel   = mExhaustGenerators[0]->getInitVel(); // maybe typo?
 
 		if (playerState) {
 			for (i = 0; i < PikiColorCount; i++) {
@@ -516,35 +532,35 @@ struct WorldMapCursorMgr {
 	{
 		Vector3f vec1;
 		f32 sec = 60.0f * gsys->getFrameTime();
-		vec1.set(_0C.x - mRocketPos.x, _0C.y - mRocketPos.y, 0.0f);
+		vec1.set(mTargetPos.x - mRocketPos.x, mTargetPos.y - mRocketPos.y, 0.0f);
 		vec1.multiply(0.8f * gsys->getFrameTime());
-		_24.add(vec1);
-		_24.multiply(0.92f);
-		f32 len = _24.length();
+		mVelocity.add(vec1);
+		mVelocity.multiply(0.92f);
+		f32 len = mVelocity.length();
 		if (len < 0.000001f) {
-			_24.set(0.0f, 0.5f, 0.0f);
+			mVelocity.set(0.0f, 0.5f, 0.0f);
 		} else {
 			if (len > 1.0f) {
-				_24.multiply(1.0f / len);
+				mVelocity.multiply(1.0f / len);
 			}
 			if (len < 0.5f) {
-				_24.multiply(0.5f / len);
+				mVelocity.multiply(0.5f / len);
 			}
 		}
 
-		mRocketPos.add(_24);
+		mRocketPos.add(mVelocity);
 
 		mRocketIcon->move(zen::RoundOff(mRocketPos.x), zen::RoundOff(mRocketPos.y));
-		_30 += calcAddAngle(mRocketIcon->getRotate(), 0.0f, 0.017453292f, sec);
-		_30 *= 0.9999f;
-		if (_30 > (5.0f * PI / 180.0f)) {
-			_30 = (5.0f * PI / 180.0f);
+		mRotationSpeed += calcAddAngle(mRocketIcon->getRotate(), 0.0f, 0.017453292f, sec);
+		mRotationSpeed *= 0.9999f;
+		if (mRotationSpeed > (5.0f * PI / 180.0f)) {
+			mRotationSpeed = (5.0f * PI / 180.0f);
 		}
-		if (_30 < -(5.0f * PI / 180.0f)) {
-			_30 = -(5.0f * PI / 180.0f);
+		if (mRotationSpeed < -(5.0f * PI / 180.0f)) {
+			mRotationSpeed = -(5.0f * PI / 180.0f);
 		}
 
-		rotateUfo(zen::correctRad(_30 + mRocketIcon->getRotate()));
+		rotateUfo(zen::correctRad(mRotationSpeed + mRocketIcon->getRotate()));
 
 		STACK_PAD_VAR(1);
 	}
@@ -558,15 +574,15 @@ struct WorldMapCursorMgr {
 		f32 scale = mRocketIcon->getScale().x;
 		f32 a     = 1.0f;
 
-		vec1.set(_0C.x - mRocketPos.x, _0C.y - mRocketPos.y, 0.0f);
+		vec1.set(mTargetPos.x - mRocketPos.x, mTargetPos.y - mRocketPos.y, 0.0f);
 		f32 len1 = vec1.length();
 		f32 b    = mRocketIcon->getRotate() - HALF_PI;
 		b        = zen::correctRad(b);
 		f32 c    = NMathF::atan2(vec1.y, vec1.x);
 		d        = len1 / 300.0f * 15.0f;
 		f32 e;
-		if (_34) {
-			_00 += gsys->getFrameTime();
+		if (mIsLanding) {
+			mLandingTimer += gsys->getFrameTime();
 			if (len1 < 10.0f) {
 				a = 0.0f;
 				if (scale == 0.0f) {
@@ -580,7 +596,7 @@ struct WorldMapCursorMgr {
 			}
 
 			d *= 1.5f;
-			e = 20.0f * _00;
+			e = 20.0f * mLandingTimer;
 			if (e > 180.0f) {
 				e = 0.0f;
 			}
@@ -599,8 +615,8 @@ struct WorldMapCursorMgr {
 			d = 15.0f;
 		}
 
-		_24.set(d * NMathF::cos(b) * sec, d * NMathF::sin(b) * sec, 0.0f);
-		mRocketPos.add(_24);
+		mVelocity.set(d * NMathF::cos(b) * sec, d * NMathF::sin(b) * sec, 0.0f);
+		mRocketPos.add(mVelocity);
 
 		// don't let the rocket go more than 100 out of screen bounds (640 x 480)
 		if (mRocketPos.x < (0.0f - 100.0f)) {
@@ -634,11 +650,11 @@ struct WorldMapCursorMgr {
 	}
 	void forceMove()
 	{
-		if (_35) {
-			setUfoStatus(UFO_Unk1);
-			_00 = 0.0f;
-			_0C.set(_38);
-			_35 = false;
+		if (mIsForcedMove) {
+			setUfoStatus(UFO_Moving);
+			mLandingTimer = 0.0f;
+			mTargetPos.set(mForceMoveTarget);
+			mIsForcedMove = false;
 			setLandingFlag(true);
 		} else {
 			PRINT("can't forceMove.\n");
@@ -654,29 +670,29 @@ struct WorldMapCursorMgr {
 		                  NMathF::sin(angle) * (-f32(mRocketIcon->getHeight() >> 1) * mRocketIcon->getScale().y), 0.0f));
 		vec1.y = 480.0f - vec1.y;
 
-		if (_110[0]) {
-			_110[0]->visible();
-			_110[0]->setEmitPos(vec1);
-			_110[0]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
-			_110[0]->setScaleSize(mRocketIcon->getScale().x * 0.5f);
-			_110[0]->setInitVel(_120 * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
-			if (mUfoStatus == UFO_Unk0) {
-				_110[0]->setFreqFrm(_118);
+		if (mExhaustGenerators[0]) {
+			mExhaustGenerators[0]->visible();
+			mExhaustGenerators[0]->setEmitPos(vec1);
+			mExhaustGenerators[0]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
+			mExhaustGenerators[0]->setScaleSize(mRocketIcon->getScale().x * 0.5f);
+			mExhaustGenerators[0]->setInitVel(mFireInitVel * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
+			if (mUfoStatus == UFO_Hovering) {
+				mExhaustGenerators[0]->setFreqFrm(mFireFreqFrame);
 			} else {
-				_110[0]->setFreqFrm(2.0f * _118);
+				mExhaustGenerators[0]->setFreqFrm(2.0f * mFireFreqFrame);
 			}
 		}
 
-		if (_110[1]) {
-			_110[1]->visible();
-			_110[1]->setEmitPos(vec1);
-			_110[1]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
-			_110[1]->setScaleSize(mRocketIcon->getScale().x * 0.7f);
-			_110[1]->setInitVel(_124 * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
-			if (mUfoStatus == UFO_Unk0) {
-				_110[1]->setFreqFrm(_11C * 0.25f);
+		if (mExhaustGenerators[1]) {
+			mExhaustGenerators[1]->visible();
+			mExhaustGenerators[1]->setEmitPos(vec1);
+			mExhaustGenerators[1]->setEmitDir(Vector3f(-NMathF::cos(angle), NMathF::sin(angle), 0.0f));
+			mExhaustGenerators[1]->setScaleSize(mRocketIcon->getScale().x * 0.7f);
+			mExhaustGenerators[1]->setInitVel(mSmokeInitVel * mRocketIcon->getScale().x * mRocketIcon->getScale().x);
+			if (mUfoStatus == UFO_Hovering) {
+				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame * 0.25f);
 			} else {
-				_110[1]->setFreqFrm(_11C);
+				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame);
 			}
 		}
 	}
@@ -686,10 +702,10 @@ struct WorldMapCursorMgr {
 	{
 		mUfoStatus = status;
 		switch (mUfoStatus) {
-		case UFO_Unk0:
-			_30 = 0.0f;
+		case UFO_Hovering:
+			mRotationSpeed = 0.0f;
 			break;
-		case UFO_Unk1:
+		case UFO_Moving:
 			break;
 		}
 	}
@@ -716,22 +732,22 @@ struct WorldMapCursorMgr {
 	void update()
 	{
 		switch (mUfoStatus) {
-		case UFO_Unk0:
+		case UFO_Hovering:
 			stayUfo();
 			break;
 
-		case UFO_Unk1:
+		case UFO_Moving:
 			if (moveUfo()) {
-				if (_35) {
+				if (mIsForcedMove) {
 					forceMove();
-				} else if (_34) {
-					setUfoStatus(UFO_Unk2);
+				} else if (mIsLanding) {
+					setUfoStatus(UFO_Landed);
 				} else {
-					setUfoStatus(UFO_Unk0);
+					setUfoStatus(UFO_Hovering);
 				}
 			}
 			break;
-		case UFO_Unk2:
+		case UFO_Landed:
 			break;
 		}
 
@@ -741,8 +757,8 @@ struct WorldMapCursorMgr {
 
 	ufoStatusFlag getStatusFlag() { return mUfoStatus; }
 
-	bool isLanding() { return _34; }
-	bool isMoveOK() { return !_35 && !_34; }
+	bool isLanding() { return mIsLanding; }
+	bool isMoveOK() { return !mIsForcedMove && !mIsLanding; }
 
 	f32 calcAddAngle(f32 p1, f32 p2, f32 p3, f32 p4)
 	{
@@ -768,7 +784,7 @@ struct WorldMapCursorMgr {
 	void set(int x, int y, f32 scale)
 	{
 		mRocketPos.set(x, y, 0.0f);
-		_0C.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
 		mRocketIcon->move(x, y);
 		mRocketIcon->setScale(Vector3f(scale, scale, 1.0f));
 		setOnyonPos(scale);
@@ -784,44 +800,44 @@ struct WorldMapCursorMgr {
 	void move(int x, int y, bool p3)
 	{
 		bool check = false;
-		if (_35) {
+		if (mIsForcedMove) {
 			return;
 		}
 
 		if (p3) {
 			switch (mUfoStatus) {
-			case UFO_Unk0:
-				_00   = 0.0f;
-				check = true;
+			case UFO_Hovering:
+				mLandingTimer = 0.0f;
+				check         = true;
 				setLandingFlag(true);
 				break;
-			case UFO_Unk1:
-				if (!_34) {
-					_35 = true;
-					_38.set(x, y, 0.0f);
+			case UFO_Moving:
+				if (!mIsLanding) {
+					mIsForcedMove = true;
+					mForceMoveTarget.set(x, y, 0.0f);
 				}
 				break;
 			}
-		} else if (!_34) {
+		} else if (!mIsLanding) {
 			check = true;
 		}
 
 		if (check) {
-			if (!_34 && !_35) {
+			if (!mIsLanding && !mIsForcedMove) {
 				SeSystem::playSysSe(SYSSE_SELECT_MOVE);
 			}
-			setUfoStatus(UFO_Unk1);
-			_0C.set(x, y, 0.0f);
+			setUfoStatus(UFO_Moving);
+			mTargetPos.set(x, y, 0.0f);
 		}
 	}
 
 	void moveCancel(int x, int y)
 	{
-		if (_35 || _34) {
-			_35 = false;
+		if (mIsForcedMove || mIsLanding) {
+			mIsForcedMove = false;
 			setLandingFlag(false);
-			setUfoStatus(UFO_Unk1);
-			_0C.set(x, y, 0.0f);
+			setUfoStatus(UFO_Moving);
+			mTargetPos.set(x, y, 0.0f);
 			SeSystem::playSysSe(SYSSE_CANCEL);
 		}
 	}
@@ -833,25 +849,25 @@ struct WorldMapCursorMgr {
 	static const f32 ONYON_OFFSET_Y;
 	static const f32 ONYON_OFFSET_Z;
 
-	f32 _00;                                           // _00
+	f32 mLandingTimer;                                 // _00
 	ufoStatusFlag mUfoStatus;                          // _04
 	P2DPicture* mRocketIcon;                           // _08
-	Vector3f _0C;                                      // _0C
+	Vector3f mTargetPos;                               // _0C
 	Vector3f mRocketPos;                               // _18
-	Vector3f _24;                                      // _24
-	f32 _30;                                           // _30
-	bool _34;                                          // _34
-	bool _35;                                          // _35
-	Vector3f _38;                                      // _38
+	Vector3f mVelocity;                                // _24
+	f32 mRotationSpeed;                                // _30
+	bool mIsLanding;                                   // _34
+	bool mIsForcedMove;                                // _35
+	Vector3f mForceMoveTarget;                         // _38
 	WorldMapCursorOnyon mCursorOnyons[PikiColorCount]; // _44, indexed by PikiColor
 	Vector3f mBlueOnyonPos;                            // _F8
 	Vector3f mOnyonVelocity;                           // _104
-	zen::particleGenerator* _110[2];                   // _110
-	f32 _118;                                          // _118
-	f32 _11C;                                          // _11C
-	f32 _120;                                          // _120
-	f32 _124;                                          // _124
-	f32 _128;                                          // _128
+	zen::particleGenerator* mExhaustGenerators[2];     // _110
+	f32 mFireFreqFrame;                                // _118
+	f32 mSmokeFreqFrame;                               // _11C
+	f32 mFireInitVel;                                  // _120
+	f32 mSmokeInitVel;                                 // _124
+	f32 _UNUSED128;                                    // _128
 };
 
 /**
@@ -1004,21 +1020,21 @@ struct WorldMapPartsInfoMgr {
  */
 struct WorldMapConfirmMgr {
 	/**
-	 * @brief TODO
+	 * @brief Confirmation dialog animation states
 	 */
 	enum statusFlag {
-		STATUS_Unk0 = 0,
-		STATUS_Unk1 = 1,
-		STATUS_Unk2 = 2,
-		STATUS_Unk3 = 3,
+		Hidden       = 0, // Dialog is hidden
+		Appearing    = 1, // Dialog is rotating into view
+		Active       = 2, // Dialog is active and accepting input
+		Disappearing = 3, // Dialog is animating out
 	};
 
 	/**
-	 * @brief TODO
+	 * @brief Confirmation dialog selection options
 	 */
 	enum selectFlag {
-		SELECT_Unk0 = 0,
-		SELECT_Unk1 = 1,
+		Yes = 0,      // Confirm course selection
+		No  = 1,      // Cancel course selection
 		SELECT_COUNT, // 2
 	};
 
@@ -1069,8 +1085,8 @@ struct WorldMapConfirmMgr {
 		mConfirmScreen->getScreenPtr()->move(640, 0);
 		mConfirmScreen->getScreenPtr()->setScale(1.0f);
 		mConfirmScreen->getScreenPtr()->show();
-		_70               = 0.0f;
-		mCurrentSelection = SELECT_Unk0;
+		mAnimTimer        = 0.0f;
+		mCurrentSelection = Yes;
 		mLeftSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconLPosH(), mMenuItems[mCurrentSelection].getIconLPosV());
 		mRightSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconRPosH(), mMenuItems[mCurrentSelection].getIconRPosV());
 
@@ -1086,10 +1102,10 @@ struct WorldMapConfirmMgr {
 		int startSel = mCurrentSelection;
 		mCurrentSelection += controller->keyClick(KBBTN_MSTICK_DOWN) - controller->keyClick(KBBTN_MSTICK_UP);
 		if (mCurrentSelection < 0) {
-			mCurrentSelection = SELECT_Unk1;
+			mCurrentSelection = No;
 		}
 		if (mCurrentSelection > 1) {
-			mCurrentSelection = SELECT_Unk0;
+			mCurrentSelection = Yes;
 		}
 
 		currItem = &mMenuItems[mCurrentSelection];
@@ -1109,67 +1125,67 @@ struct WorldMapConfirmMgr {
 
 		if (controller->keyClick(KBBTN_B)) {
 			SeSystem::playSysSe(SYSSE_CANCEL);
-			mCurrentSelection = SELECT_Unk1;
+			mCurrentSelection = No;
 			res               = true;
 		}
 		return res;
 	}
 
 	// DLL:
-	void init() { init(STATUS_Unk0); }
+	void init() { init(Hidden); }
 
 	void draw(Graphics&) { mConfirmScreen->draw(); }
 
 	bool update(Controller* controller)
 	{
 		switch (mStatus) {
-		case STATUS_Unk1:
-			_70 += gsys->getFrameTime();
+		case Appearing:
+			mAnimTimer += gsys->getFrameTime();
 			f32 a;
-			if (_70 > 0.25f) {
-				_70     = 0.0f;
-				a       = 1.0f;
-				mStatus = STATUS_Unk2;
+			if (mAnimTimer > 0.25f) {
+				mAnimTimer = 0.0f;
+				a          = 1.0f;
+				mStatus    = Active;
 			} else {
-				a = NMathF::sin(_70 / 0.25f * HALF_PI);
+				a = NMathF::sin(mAnimTimer / 0.25f * HALF_PI);
 			}
 
 			f32 angle1 = HALF_PI * a;
-			_7C.x      = 100.0f * NMathF::cos(angle1);
-			_7C.y      = 0.0f;
-			_7C.z      = 100.0f * NMathF::sin(angle1) - 100.0f;
+			mAnimPos.x = 100.0f * NMathF::cos(angle1);
+			mAnimPos.y = 0.0f;
+			mAnimPos.z = 100.0f * NMathF::sin(angle1) - 100.0f;
 
-			mConfirmScreen->getScreenPtr()->move(zen::RoundOff(_7C.x), zen::RoundOff(_7C.y));
-			mConfirmScreen->getScreenPtr()->moveZ(_7C.z);
+			mConfirmScreen->getScreenPtr()->move(zen::RoundOff(mAnimPos.x), zen::RoundOff(mAnimPos.y));
+			mConfirmScreen->getScreenPtr()->moveZ(mAnimPos.z);
 			mConfirmScreen->getScreenPtr()->rotate(P2DROTATE_Unk1, TAU - (angle1 - HALF_PI));
 			break;
-		case STATUS_Unk2:
+		case Active:
 			if (modeOperation(controller)) {
-				mStatus = STATUS_Unk3;
-				_70     = 0.0f;
+				mStatus    = Disappearing;
+				mAnimTimer = 0.0f;
 			}
 			break;
-		case STATUS_Unk3:
-			_70 += gsys->getFrameTime();
+		case Disappearing:
+			mAnimTimer += gsys->getFrameTime();
 			f32 b;
-			if (_70 > 0.25f) {
-				_70     = 0.0f;
-				b       = 1.0f;
-				mStatus = STATUS_Unk0;
+			if (mAnimTimer > 0.25f) {
+				mAnimTimer = 0.0f;
+				b          = 1.0f;
+				mStatus    = Hidden;
 				mConfirmScreen->getScreenPtr()->hide();
 			} else {
-				b = 1.0f - NMathF::cos(_70 / 0.25f * HALF_PI);
+				b = 1.0f - NMathF::cos(mAnimTimer / 0.25f * HALF_PI);
 			}
-			if (mCurrentSelection == SELECT_Unk0) {
+			if (mCurrentSelection == Yes) {
 				mConfirmScreen->getScreenPtr()->move(0, zen::RoundOff(b * -480.0f));
 			} else {
 				f32 angle2 = HALF_PI * b + HALF_PI;
-				_7C.x      = 100.0f * NMathF::cos(angle2);
-				_7C.y      = 0.0f;
-				_7C.z      = 100.0f * NMathF::sin(angle2) - 100.0f;
+				mAnimPos.x = 100.0f * NMathF::cos(angle2);
+				mAnimPos.y = 0.0f;
+				mAnimPos.z = 100.0f * NMathF::sin(angle2) - 100.0f;
 
-				mConfirmScreen->getScreenPtr()->move(zen::RoundOff(_7C.x), zen::RoundOff(_7C.y));
-				mConfirmScreen->getScreenPtr()->moveZ(_7C.z);
+				mConfirmScreen->getScreenPtr()->move(zen::RoundOff(mAnimPos.x), zen::RoundOff(mAnimPos.y));
+				mConfirmScreen->getScreenPtr()->moveZ(mAnimPos.z);
 				mConfirmScreen->getScreenPtr()->rotate(P2DROTATE_Unk1, TAU - (angle2 - HALF_PI));
 			}
 			break;
@@ -1178,11 +1194,11 @@ struct WorldMapConfirmMgr {
 		mConfirmScreen->update();
 		mLeftSpecCursor.update();
 		mRightSpecCursor.update();
-		return mStatus == STATUS_Unk0;
+		return mStatus == Hidden;
 	}
 	selectFlag getSelectFlag() { return (selectFlag)mCurrentSelection; }
 
-	void start() { init(STATUS_Unk1); }
+	void start() { init(Appearing); }
 
 	DrawScreen* mConfirmScreen;         // _00
 	SpectrumCursorMgr mLeftSpecCursor;  // _04
@@ -1190,11 +1206,19 @@ struct WorldMapConfirmMgr {
 	DrawMenuItem* mMenuItems;           // _64
 	Colour mCharColor;                  // _68
 	Colour mGradColor;                  // _6C
-	f32 _70;                            // _70
+	f32 mAnimTimer;                     // _70
 	statusFlag mStatus;                 // _74
 	int mCurrentSelection;              // _78, see selectFlag enum
-	Vector3f _7C;                       // _7C
+	Vector3f mAnimPos;                  // _7C
 };
+
+/**
+ * @brief Course point manager operational modes
+ */
+DEFINE_ENUM_TYPE(CoursePointMode,
+                 Operation = 0, // Normal user interaction mode
+                 Appear    = 1, // Course point appearance animation
+);
 
 /**
  * @brief TODO
@@ -1206,7 +1230,7 @@ struct WorldMapCoursePointMgr {
 	{
 		mSelectedPoint = 0;
 		mEventFlag     = 0;
-		_00            = 0;
+		mMode          = CoursePointMode::Operation;
 	}
 
 	bool modeAppear()
@@ -1335,7 +1359,7 @@ struct WorldMapCoursePointMgr {
 	// might be appear
 	void start(WorldMapName id)
 	{
-		_00 = 0;
+		mMode = CoursePointMode::Operation;
 		for (int i = 0; i < WM_COUNT; i++) {
 			mCoursePoints[i].nonSelect();
 		}
@@ -1357,7 +1381,7 @@ struct WorldMapCoursePointMgr {
 
 	void appear(WorldMapName id)
 	{
-		_00 = 1;
+		mMode = CoursePointMode::Appear;
 		for (int i = 0; i < WM_COUNT; i++) {
 			if (mSelectedPoint != &mCoursePoints[i]) {
 				mCoursePoints[i].nonSelect();
@@ -1382,20 +1406,20 @@ struct WorldMapCoursePointMgr {
 	{
 		bool res   = false;
 		mEventFlag = 0;
-		switch (_00) {
-		case 0:
+		switch (mMode) {
+		case CoursePointMode::Operation:
 			res = modeOperation(controller, p2);
 			break;
-		case 1:
+		case CoursePointMode::Appear:
 			res = modeAppear();
 			if (res == true) {
-				_00        = 0;
+				mMode      = CoursePointMode::Operation;
 				mEventFlag = 0x40;
 			}
 			break;
 		default:
-			PRINT("unknown mode %d \n", _00);
-			ERROR("unknown mode %d \n", _00);
+			PRINT("unknown mode %d \n", mMode);
+			ERROR("unknown mode %d \n", mMode);
 			break;
 		}
 		return res;
@@ -1420,11 +1444,20 @@ struct WorldMapCoursePointMgr {
 		}
 	}
 
-	int _00;                              // _00
+	int mMode;                            // _00
 	WorldMapCoursePoint* mSelectedPoint;  // _04
 	WorldMapCoursePoint mCoursePoints[5]; // _08
 	u32 mEventFlag;                       // _134
 };
+
+/**
+ * @brief Map image display states
+ */
+DEFINE_ENUM_TYPE(MapImageState,
+                 Shown   = 0, // Map image is fully visible
+                 Closing = 1, // Map image is animating out
+                 Opening = 2, // Map image is animating in
+);
 
 /**
  * @brief TODO
@@ -1432,10 +1465,10 @@ struct WorldMapCoursePointMgr {
 struct WorldMapMapImageMgr {
 	WorldMapMapImageMgr()
 	{
-		_04 = 2;
-		_08 = -1;
-		_00 = 0.0f;
-		_20 = 0;
+		mState          = MapImageState::Opening;
+		mActiveMapIndex = -1;
+		mAnimTimer      = 0.0f;
+		mDelayedClose   = 0;
 		for (int i = 0; i < 5; i++) {
 			mMapImagePanes[i] = nullptr;
 		}
@@ -1444,7 +1477,7 @@ struct WorldMapMapImageMgr {
 	// weak:
 	void init()
 	{
-		_04 = 0;
+		mState = MapImageState::Shown;
 		for (int i = 0; i < 5; i++) {
 			if (mMapImagePanes[i]) {
 				mMapImagePanes[i]->hide();
@@ -1452,25 +1485,25 @@ struct WorldMapMapImageMgr {
 			}
 		}
 
-		_08 = 0;
+		mActiveMapIndex = 0;
 
 		closeMapImage();
 	}
 	void modeOpen()
 	{
-		_00 += gsys->getFrameTime();
+		mAnimTimer += gsys->getFrameTime();
 		f32 a;
-		if (_00 > 0.25f) {
-			a   = 1.0f;
-			_00 = 0.0f;
-			if (_20) {
-				_04 = 1;
-				_20 = 0;
+		if (mAnimTimer > 0.25f) {
+			a          = 1.0f;
+			mAnimTimer = 0.0f;
+			if (mDelayedClose) {
+				mState        = MapImageState::Closing;
+				mDelayedClose = 0;
 			} else {
-				_04 = 0;
+				mState = MapImageState::Shown;
 			}
 		} else {
-			a = _00 / 0.25f;
+			a = mAnimTimer / 0.25f;
 		}
 		f32 xScale = a / 0.5f;
 		if (xScale > 1.0f) {
@@ -1483,17 +1516,17 @@ struct WorldMapMapImageMgr {
 		if (yScale > 1.0f) {
 			yScale = 1.0f;
 		}
-		mMapImagePanes[_08]->setScale(xScale, yScale, 1.0f);
-		mMapImagePanes[_08]->show();
+		mMapImagePanes[mActiveMapIndex]->setScale(xScale, yScale, 1.0f);
+		mMapImagePanes[mActiveMapIndex]->show();
 	}
 	void modeClose()
 	{
-		_00 += gsys->getFrameTime();
-		if (_00 > 0.25f) {
-			_00 = 0.25f;
-			mMapImagePanes[_08]->hide();
+		mAnimTimer += gsys->getFrameTime();
+		if (mAnimTimer > 0.25f) {
+			mAnimTimer = 0.25f;
+			mMapImagePanes[mActiveMapIndex]->hide();
 		} else {
-			f32 a      = 1.0f - _00 / 0.25f;
+			f32 a      = 1.0f - mAnimTimer / 0.25f;
 			f32 xScale = a / 0.5f;
 			if (xScale > 1.0f) {
 				xScale = 1.0f;
@@ -1506,8 +1539,8 @@ struct WorldMapMapImageMgr {
 			if (yScale > 1.0f) {
 				yScale = 1.0f;
 			}
-			mMapImagePanes[_08]->setScale(xScale, yScale, 1.0f);
-			mMapImagePanes[_08]->show();
+			mMapImagePanes[mActiveMapIndex]->setScale(xScale, yScale, 1.0f);
+			mMapImagePanes[mActiveMapIndex]->show();
 		}
 	}
 
@@ -1540,49 +1573,49 @@ struct WorldMapMapImageMgr {
 
 	void closeMapImage()
 	{
-		switch (_04) {
-		case 0:
-			_00 = 0.0f;
-			_04 = 1;
+		switch (mState) {
+		case MapImageState::Shown:
+			mAnimTimer = 0.0f;
+			mState     = MapImageState::Closing;
 			break;
-		case 2:
-			_20 = 1;
+		case MapImageState::Opening:
+			mDelayedClose = 1;
 			break;
 		}
 	}
 
 	void update()
 	{
-		switch (_04) {
-		case 0:
-			if (_08 != -1) {
-				mMapImagePanes[_08]->show();
-				mMapImagePanes[_08]->setScale(1.0f);
+		switch (mState) {
+		case MapImageState::Shown:
+			if (mActiveMapIndex != -1) {
+				mMapImagePanes[mActiveMapIndex]->show();
+				mMapImagePanes[mActiveMapIndex]->setScale(1.0f);
 			}
 			break;
-		case 1:
+		case MapImageState::Closing:
 			modeClose();
 			break;
-		case 2:
+		case MapImageState::Opening:
 			modeOpen();
 			break;
 		}
 	}
 	void openMapImage(WorldMapName id)
 	{
-		if (_04 == 1) {
-			_00 = 0.0f;
-			_08 = id;
-			_04 = 2;
+		if (mState == MapImageState::Closing) {
+			mAnimTimer      = 0.0f;
+			mActiveMapIndex = id;
+			mState          = MapImageState::Opening;
 			PRINT("openMapImage %d \n", id);
 		}
 	}
 
-	f32 _00;                       // _00
-	int _04;                       // _04
-	int _08;                       // _08
+	f32 mAnimTimer;                // _00
+	int mState;                    // _04
+	int mActiveMapIndex;           // _08
 	P2DPicture* mMapImagePanes[5]; // _0C
-	u8 _20;                        // _20
+	u8 mDelayedClose;              // _20
 };
 
 } // namespace zen
@@ -1634,9 +1667,9 @@ zen::DrawWorldMap::DrawWorldMap()
 	mLineScreen  = new DrawScreen("screen/blo/w_line.blo", nullptr, true, true);
 	mBackScreen  = new DrawScreen("screen/blo/w_back.blo", nullptr, true, true);
 
-	_0C = 0.0f;
-	_04 = -1;
-	_08 = -1;
+	mModeTimer            = 0.0f;
+	mCurrentMode          = DrawWorldMapMode::Null;
+	mSelectedCourseNumber = -1;
 
 	// SET UP COURSE POINTS
 	mCoursePointMgr = new WorldMapCoursePointMgr();
@@ -1739,85 +1772,85 @@ zen::DrawWorldMap::DrawWorldMap()
 bool zen::DrawWorldMap::update(Controller* controller)
 {
 	bool res = false;
-	if (_04 != -1) {
-		if (_04 == 3) {
+	if (mCurrentMode != DrawWorldMapMode::Null) {
+		if (mCurrentMode == DrawWorldMapMode::Paused) {
 			DrawWMPause::returnStatusFlag pauseState = mPause.update(controller);
-			if (pauseState != DrawWMPause::RETURN_Unk0) {
-				if (pauseState == DrawWMPause::RETURN_Unk2) {
-					_04 = -1;
-					res = true;
-					_08 = 6;
+			if (pauseState != DrawWMPause::CourseSelected) {
+				if (pauseState == DrawWMPause::Cancelled) {
+					mCurrentMode          = DrawWorldMapMode::Null;
+					res                   = true;
+					mSelectedCourseNumber = 6;
 				} else {
-					_04 = 2;
+					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 			}
-		} else if (_04 == 6) {
+		} else if (mCurrentMode == DrawWorldMapMode::Diary) {
 			if (mSelectDiary.update(controller) == ogDrawSelectDiary::Inactive) {
-				_04 = 7;
+				mCurrentMode = DrawWorldMapMode::DiaryOpening;
 				mWipeMgr->set(320, 240);
 				mWipeMgr->open(0.5f);
 				SeSystem::playSysSe(YMENU_SELECT2);
 			}
 		} else {
-			switch (_04) {
-			case 5:
+			switch (mCurrentMode) {
+			case DrawWorldMapMode::DiaryClosing:
 				if (!mWipeMgr->isActive()) {
-					_04 = 6;
+					mCurrentMode = DrawWorldMapMode::Diary;
 					mSelectDiary.start();
 				}
 				mCursorMgr->update();
 				updateScreens();
 				break;
-			case 7:
+			case DrawWorldMapMode::DiaryOpening:
 				if (!mWipeMgr->isActive()) {
-					_04 = 2;
+					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 				mCursorMgr->update();
 				updateScreens();
 				break;
-			case 0:
+			case DrawWorldMapMode::Start:
 				if (modeStart(controller)) {
 					if (mStartMode) {
-						_04 = 1;
+						mCurrentMode = DrawWorldMapMode::Appear;
 					} else {
-						_04 = 2;
+						mCurrentMode = DrawWorldMapMode::Operation;
 					}
 				}
 				break;
-			case 1:
+			case DrawWorldMapMode::Appear:
 				if (modeAppear(controller)) {
-					_04 = 2;
+					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 				break;
-			case 4:
+			case DrawWorldMapMode::Confirm:
 				if (modeConfirm(controller)) {
-					_04 = 2;
+					mCurrentMode = DrawWorldMapMode::Operation;
 				}
 				break;
-			case 2:
+			case DrawWorldMapMode::Operation:
 				if (controller->keyClick(KBBTN_START)) {
 					mPause.start();
-					_04 = 3;
+					mCurrentMode = DrawWorldMapMode::Paused;
 				} else if (controller->keyClick(KBBTN_Y)) {
 					if (mCursorMgr->isMoveOK()) {
 						mWipeMgr->setDefault();
 						mWipeMgr->close(0.5f, 320, 240);
-						_04 = 5;
+						mCurrentMode = DrawWorldMapMode::DiaryClosing;
 						SeSystem::playSysSe(YMENU_SELECT2);
 					}
 				} else if (modeOperation(controller)) {
-					_04 = 8;
+					mCurrentMode = DrawWorldMapMode::End;
 				}
 				break;
-			case 8:
+			case DrawWorldMapMode::End:
 				if (modeEnd(controller)) {
-					_04 = -1;
-					res = true;
+					mCurrentMode = DrawWorldMapMode::Null;
+					res          = true;
 				}
 				break;
 			}
 
-			if (mCursorMgr->getStatusFlag() == WorldMapCursorMgr::UFO_Unk0 || mCursorMgr->isLanding()) {
+			if (mCursorMgr->getStatusFlag() == WorldMapCursorMgr::UFO_Hovering || mCursorMgr->isLanding()) {
 				openMapInfo();
 			}
 
@@ -1839,7 +1872,7 @@ bool zen::DrawWorldMap::update(Controller* controller)
  */
 void zen::DrawWorldMap::draw(Graphics& gfx)
 {
-	if (_04 != 6) {
+	if (mCurrentMode != DrawWorldMapMode::Diary) {
 		mBackScreen->draw();
 		mLineScreen->draw();
 		mPointScreen->draw();
@@ -1866,19 +1899,19 @@ void zen::DrawWorldMap::draw(Graphics& gfx)
 void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFlag)
 {
 	switch (placeFlag) {
-	case PLACE_Unk0:
+	case ImpactSite:
 		mCoursePointMgr->start(WM_Practice);
 		break;
-	case PLACE_Unk1:
+	case ForestHope:
 		mCoursePointMgr->start(WM_Forest);
 		break;
-	case PLACE_Unk2:
+	case ForestNavel:
 		mCoursePointMgr->start(WM_Cave);
 		break;
-	case PLACE_Unk3:
+	case DistantSpring:
 		mCoursePointMgr->start(WM_Yakushima);
 		break;
-	case PLACE_Unk4:
+	case FinalTrial:
 		mCoursePointMgr->start(WM_Last);
 		break;
 	default:
@@ -1895,11 +1928,11 @@ void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFl
  */
 void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::DrawWorldMap::startPlaceFlag placeFlag)
 {
-	mStartMode = modeFlag;
-	_04        = 0;
-	_0C        = 0.0f;
+	mStartMode   = modeFlag;
+	mCurrentMode = DrawWorldMapMode::Start;
+	mModeTimer   = 0.0f;
 	mEffectMgr2D->killAll(true);
-	_08 = 5;
+	mSelectedCourseNumber = 5;
 
 	P2DPaneLibrary::makeResident(mWipeScreen->getScreenPtr());
 	P2DPaneLibrary::makeResident(mMoniScreen->getScreenPtr());
@@ -1922,18 +1955,18 @@ void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::Dr
 	mCoursePointMgr->getStayPos(&x, &y);
 	mCursorMgr->move(x, y, false);
 
-	if (mStartMode != START_Unk0) {
+	if (mStartMode != None) {
 		switch (mStartMode) {
-		case START_Unk1:
+		case ForestUnlock:
 			mCoursePointMgr->appear(WM_Forest);
 			break;
-		case START_Unk2:
+		case CaveUnlock:
 			mCoursePointMgr->appear(WM_Cave);
 			break;
-		case START_Unk3:
+		case SpringUnlock:
 			mCoursePointMgr->appear(WM_Yakushima);
 			break;
-		case START_Unk4:
+		case FinalUnlock:
 			mCoursePointMgr->appear(WM_Last);
 			mShootingStarMgr->rapidFire();
 			break;
@@ -1977,12 +2010,12 @@ void zen::DrawWorldMap::start(zen::DrawWorldMap::startModeFlag modeFlag, zen::Dr
 bool zen::DrawWorldMap::modeStart(Controller* controller)
 {
 	bool res = false;
-	f32 c    = _0C += gsys->getFrameTime();
+	f32 c    = mModeTimer += gsys->getFrameTime();
 	f32 b    = 1.0f;
 	if (c > b) {
-		_0C = b;
+		mModeTimer = b;
 	}
-	f32 a             = _0C / b;
+	f32 a             = mModeTimer / b;
 	P2DScreen* screen = mPointScreen->getScreenPtr();
 	screen->move(zen::RoundOff(-2.0f * screen->getWidth() * (1.0f - NMathF::sin(HALF_PI * a))), screen->getPosV());
 
@@ -2030,17 +2063,17 @@ bool zen::DrawWorldMap::modeAppear(Controller* controller)
 		}
 
 		switch (mStartMode) {
-		case START_Unk1:
-			setCoursePoint(PLACE_Unk1);
+		case ForestUnlock:
+			setCoursePoint(ForestHope);
 			break;
-		case START_Unk2:
-			setCoursePoint(PLACE_Unk2);
+		case CaveUnlock:
+			setCoursePoint(ForestNavel);
 			break;
-		case START_Unk3:
-			setCoursePoint(PLACE_Unk3);
+		case SpringUnlock:
+			setCoursePoint(DistantSpring);
 			break;
-		case START_Unk4:
-			setCoursePoint(PLACE_Unk4);
+		case FinalUnlock:
+			setCoursePoint(FinalTrial);
 			break;
 		default:
 			PRINT("Illegal startMode. %d \n", mStartMode);
@@ -2077,15 +2110,15 @@ bool zen::DrawWorldMap::modeOperation(Controller* controller)
 
 	if (eventFlag & 0x10) {
 		mConfirmMgr->start();
-		_04 = 4;
+		mCurrentMode = DrawWorldMapMode::Confirm;
 	}
 	if (eventFlag & 0x20) {
 		mCoursePointMgr->getStayPos(&x, &y);
 		mCursorMgr->moveCancel(x, y);
 	}
 
-	if (mCursorMgr->getStatusFlag() == WorldMapCursorMgr::UFO_Unk2) {
-		_08 = mCoursePointMgr->getSelectCourseNumber();
+	if (mCursorMgr->getStatusFlag() == WorldMapCursorMgr::UFO_Landed) {
+		mSelectedCourseNumber = mCoursePointMgr->getSelectCourseNumber();
 		mEffectMgr2D->killAll(false);
 		mCoursePointMgr->createCourseInEffect();
 		mWipeMgr->setDefault();
@@ -2106,7 +2139,7 @@ bool zen::DrawWorldMap::modeOperation(Controller* controller)
 bool zen::DrawWorldMap::modeConfirm(Controller* controller)
 {
 	bool res = mConfirmMgr->update(controller);
-	if (res && mConfirmMgr->getSelectFlag() == WorldMapConfirmMgr::SELECT_Unk0) {
+	if (res && mConfirmMgr->getSelectFlag() == WorldMapConfirmMgr::Yes) {
 		int x, y;
 		mCoursePointMgr->getLandPos(&x, &y);
 		mCursorMgr->move(x, y, true);

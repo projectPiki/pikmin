@@ -66,7 +66,7 @@ struct TitleSetupSection : public Node {
 			data->close();
 		}
 		mCameraDistanceScale = 0.45f;
-		_39C                 = 1.0f;
+		_UNUSED39C           = 1.0f;
 
 #if 0 // DLL exclusive
 		PRINT("big font!\n");
@@ -124,7 +124,7 @@ struct TitleSetupSection : public Node {
 
 		gameflow.mFrameCacher = new AnimFrameCacher(8000);
 
-		_3B4.set(200.0f, 200.0f, 50.0f);
+		_UNUSED3B4.set(200.0f, 200.0f, 50.0f);
 		GameQuickInfo info;
 		info.mDay       = MAX_DAYS;
 		info.mBornPikis = 0;
@@ -422,7 +422,7 @@ struct TitleSetupSection : public Node {
 			gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
 			if (gameflow.mLevelBannerFadeValue < 0.0f) {
 				gameflow.mLevelBannerFadeValue = 0.0f;
-				gameflow._2D4                  = 0;
+				gameflow.mRedLoadLogo          = 0;
 			} else {
 				gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
 			}
@@ -452,27 +452,27 @@ struct TitleSetupSection : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 mState;                 // _20
-	u32 mNextSectionId;         // _24
-	Menu* mMenu;                // _28
-	Menu* mCurrentMenu;         // _2C
-	Controller* mController;    // _30
-	Font* mFont;                // _34
-	u8 _38[0x10];               // _38
-	f32 mStartTransitionTimer;  // _48
-	f32 mCameraDistanceScale;   // _4C
-	CinematicPlayer* mPlayer;   // _50
-	Camera mCamera;             // _54
-	f32 _39C;                   // _39C
-	u8 _3A0[0x3B4 - 0x3A0];     // _3A0, unknown
-	Vector3f _3B4;              // _3B4
-	u8 _3C0[0x4];               // _3C0, unknown
-	LightPool mLightPool;       // _3C4
-	int mEnableLightPool;       // _A34
-	u8 _A38[0x4];               // _A38, unknown
-	DayMgr* mDayMgr;            // _A3C
-	Vector3f mCameraFocusPoint; // _A40
-	                            // this has two extra CoreNodes at the end in the DLL, but not in the DOL
+	u32 mState;                   // _20
+	u32 mNextSectionId;           // _24
+	Menu* mMenu;                  // _28
+	Menu* mCurrentMenu;           // _2C
+	Controller* mController;      // _30
+	Font* mFont;                  // _34
+	u8 _UNUSED38[0x10];           // _38
+	f32 mStartTransitionTimer;    // _48
+	f32 mCameraDistanceScale;     // _4C
+	CinematicPlayer* mPlayer;     // _50
+	Camera mCamera;               // _54
+	f32 _UNUSED39C;               // _39C
+	u8 _UNUSED3A0[0x3B4 - 0x3A0]; // _3A0
+	Vector3f _UNUSED3B4;          // _3B4
+	u8 _UNUSED3C0[0x4];           // _3C0
+	LightPool mLightPool;         // _3C4
+	int mEnableLightPool;         // _A34
+	u8 _UNUSEDA38[0x4];           // _A38
+	DayMgr* mDayMgr;              // _A3C
+	Vector3f mCameraFocusPoint;   // _A40
+	                              // this has two extra CoreNodes at the end in the DLL, but not in the DOL
 };
 
 /*
@@ -510,7 +510,7 @@ void TitlesSection::init()
 		gameflow.mMemoryCard.loadOptions();
 	}
 	gameflow.mGamePrefs.fixSoundMode();
-	gsys->startLoading(&gameflow.mGameLoadIdler, true, gameflow._2D4 ? 0 : 60);
+	gsys->startLoading(&gameflow.mGameLoadIdler, true, gameflow.mRedLoadLogo ? 0 : 60);
 
 	int beforeLang = gameflow.mLanguageIndex;
 	if (!gameflow.mGamePrefs.getChildMode()) {

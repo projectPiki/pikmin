@@ -294,7 +294,7 @@ struct Slime : public Boss {
 						f32 x = weightPos.x - mSlime->mSlimeCreatures[k]->mPosition.x;
 						f32 y = weightPos.y - mSlime->mSlimeCreatures[k]->mPosition.y;
 						f32 z = weightPos.z - mSlime->mSlimeCreatures[k]->mPosition.z;
-						score += mSlime->_3D4 / std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z));
+						score += mSlime->mAppearanceScale / std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z));
 					}
 
 					// closer to other stick slimes = higher score
@@ -371,7 +371,7 @@ struct Slime : public Boss {
 	int mLeaderCreatureIndex;                     // _3C8, which slime creature is the leader nucleus (outer)?
 	int mFollowerCreatureIndex;                   // _3CC, which slime creature is the follower nucleus (outer)?
 	f32 mLeaderSpeed;                             // _3D0
-	f32 _3D4;                                     // _3D4
+	f32 mAppearanceScale;                         // _3D4
 	f32 mBodyThickness;                           // _3D8
 	Vector3f mNucleusPosition;                    // _3DC
 	Vector3f mCorePosition;                       // _3E8
@@ -455,10 +455,10 @@ struct SlimeAi {
 	void disAppearState();
 
 	bool mIsContractFinished;       // _00
-	bool _01;                       // _01
+	bool mCanPlayExpandSound;       // _01
 	int mPrevNucleusStickPikiCount; // _04
 	int mContractHitType;           // _08
-	int _0C;                        // _0C
+	int mBubbleCheckIndex;          // _0C
 	f32 mContractDamage;            // _10
 	f32 mStickersRatio;             // _14
 	f32 mMaxLength;                 // _18

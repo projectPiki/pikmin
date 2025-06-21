@@ -273,9 +273,9 @@ void SpiderLeg::createPerishEffect()
  */
 void SpiderLeg::createRippleEffect(int legNum)
 {
-	Vector3f footPos(_12C[legNum][0]);
+	Vector3f footPos(mJointPositions[legNum][0]);
 	footPos.y -= 5.0f;
-	effectMgr->create(EffectMgr::EFF_SmokeRing_M, _12C[legNum][0], nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SmokeRing_M, mJointPositions[legNum][0], nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, footPos, nullptr, nullptr);
 	mRippleCallBacks[legNum].set(&mIsOnGround[legNum]);
 
@@ -325,12 +325,12 @@ void SpiderLeg::setLegScaleParam(int jointIdx)
 	f32 stepTime = 1.0f / C_SPIDER_PROP(mSpider).mDeadMotionDelay();
 	if (jointIdx < 3) {
 		for (int i = 0; i < 4; i++) {
-			_20[Kumo::leg_index[i][jointIdx]]
-			    = NsLibMath<f32>::toGoal(_20[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
+			mSegmentScale[Kumo::leg_index[i][jointIdx]]
+			    = NsLibMath<f32>::toGoal(mSegmentScale[Kumo::leg_index[i][jointIdx]], 0.0f, gsys->getFrameTime() * stepTime);
 		}
 	} else {
 		for (int i = 0; i < 4; i++) {
-			_20[i] = NsLibMath<f32>::toGoal(_20[i], 0.0f, gsys->getFrameTime() * stepTime);
+			mSegmentScale[i] = NsLibMath<f32>::toGoal(mSegmentScale[i], 0.0f, gsys->getFrameTime() * stepTime);
 		}
 	}
 	/*
@@ -566,23 +566,23 @@ void SpiderLeg::init(Spider* spider)
 {
 	mSpider = spider;
 	initParm(0);
-	_05 = 1;
-	_08 = 0;
-	_258.set(0.0f, 0.0f, 0.0f);
-	_264 = mSpider->mPosition;
+	mInitialised = 1;
+	mIsMoving    = 0;
+	mCentreVelocity.set(0.0f, 0.0f, 0.0f);
+	mCurrentCentre = mSpider->mPosition;
 
 	for (int i = 0; i < 4; i++) {
-		_E8[i]                  = 0;
-		_11[i]                  = 0;
+		mStuckPikiCount[i]      = 0;
+		mPrevOnGround[i]        = 0;
 		mIsOnGround[i]          = false;
 		mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._264();
 
-		_12C[i][0] = mSpider->mPosition;
-		_1BC[i][0] = _12C[i][0];
+		mJointPositions[i][0] = mSpider->mPosition;
+		mBezierPoints[i][0]   = mJointPositions[i][0];
 	}
 
 	for (int i = 0; i < 16; i++) {
-		_20[i] = 1.0f;
+		mSegmentScale[i] = 1.0f;
 	}
 }
 
@@ -591,28 +591,28 @@ void SpiderLeg::init(Spider* spider)
  * Address:	80156E28
  * Size:	000090
  */
-void SpiderLeg::initParm(int p1)
+void SpiderLeg::initParm(int motionType)
 {
-	_F8 = p1;
-	_04 = 1;
-	_06 = 0;
-	_08 = 1;
-	_07 = 0;
-	_1E = 0;
-	_1D = 0;
+	mMotionType            = (SpiderLegMotionType::Type)motionType;
+	mSoundQueued           = 1;
+	mBodyShakeStarted      = 0;
+	mIsMoving              = 1;
+	mMotionFinishFlag      = 0;
+	mPrevShakeDirection    = 0;
+	mShakeDirectionChanged = 0;
 	for (int i = 0; i < 4; i++) {
-		_09[i] = 0;
-		_15[i] = 0;
-		_19[i] = 0;
-		_A8[i] = 0.0f;
-		_60[i] = 0.0f;
+		mLegMoving[i]         = 0;
+		mLegCanMove[i]        = 0;
+		mLegMidStep[i]        = 0;
+		mLegMotionProgress[i] = 0.0f;
+		mJointBlendFactor[i]  = 0.0f;
 	}
 
-	_15[0] = 1;
-	_CC    = 0.0f;
-	_C8    = 0.0f;
-	_84    = 0.0f;
-	_80    = 0.0f;
+	mLegCanMove[0]    = 1;
+	mOscillationPhase = 0.0f;
+	mShakePhase       = 0.0f;
+	mShakeAngularVel  = 0.0f;
+	mShakeAngle       = 0.0f;
 }
 
 /*
@@ -625,16 +625,16 @@ void SpiderLeg::initParm(int p1)
 void SpiderLeg::setLegParameter()
 {
 	if (mSpider->getAlive()) {
-		_E0 = mSpider->getStickPikiCount() * C_SPIDER_PROP(mSpider)._294();
-		if (_E0 > C_SPIDER_PROP(mSpider)._2A4()) {
-			_E0 = C_SPIDER_PROP(mSpider)._2A4();
+		mPikiWeightOffset = mSpider->getStickPikiCount() * C_SPIDER_PROP(mSpider)._294();
+		if (mPikiWeightOffset > C_SPIDER_PROP(mSpider)._2A4()) {
+			mPikiWeightOffset = C_SPIDER_PROP(mSpider)._2A4();
 		}
 	} else {
-		_E0 = 0.0f;
+		mPikiWeightOffset = 0.0f;
 	}
 
 	for (int i = 0; i < 4; i++) {
-		f32 goal = C_SPIDER_PROP(mSpider)._264() - _E8[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * _E0;
+		f32 goal = C_SPIDER_PROP(mSpider)._264() - mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._274() - 0.5f * mPikiWeightOffset;
 		mFootRaiseHeightList[i]
 		    = NsLibMath<f32>::toGoal(mFootRaiseHeightList[i], goal, C_SPIDER_PROP(mSpider)._4A4() * gsys->getFrameTime());
 
@@ -652,9 +652,9 @@ void SpiderLeg::setLegParameter()
  */
 void SpiderLeg::setWalkNewParameter()
 {
-	if (!_09[0] && _15[0] && !_07) {
-		if (mSpider->getLoopCounter() > mSpider->_3BC) {
-			_07 = 1;
+	if (!mLegMoving[0] && mLegCanMove[0] && !mMotionFinishFlag) {
+		if (mSpider->getLoopCounter() > mSpider->mActiveWalkCycleCount) {
+			mMotionFinishFlag = 1;
 		} else {
 			mSpider->addLoopCounter(1);
 		}
@@ -668,28 +668,28 @@ void SpiderLeg::setWalkNewParameter()
  */
 void SpiderLeg::setShakeOffNewParameter()
 {
-	if (_C8 < PI) {
-		_1E = _1D;
-		_C8 += C_SPIDER_PROP(mSpider)._3F4() * gsys->getFrameTime();
-		if (_C8 > HALF_PI) {
-			_1D = 1;
+	if (mShakePhase < PI) {
+		mPrevShakeDirection = mShakeDirectionChanged;
+		mShakePhase += C_SPIDER_PROP(mSpider)._3F4() * gsys->getFrameTime();
+		if (mShakePhase > HALF_PI) {
+			mShakeDirectionChanged = 1;
 		}
 	} else {
-		_C8 = 0.0f;
-		_07 = 1;
+		mShakePhase       = 0.0f;
+		mMotionFinishFlag = 1;
 	}
 
-	_CC += C_SPIDER_PROP(mSpider)._3E4() * gsys->getFrameTime();
-	if (_CC > TAU) {
-		_CC -= TAU;
+	mOscillationPhase += C_SPIDER_PROP(mSpider)._3E4() * gsys->getFrameTime();
+	if (mOscillationPhase > TAU) {
+		mOscillationPhase -= TAU;
 	}
 
-	_264.y += 1.5f * sinf(30.0f * _CC);
+	mCurrentCentre.y += 1.5f * sinf(30.0f * mOscillationPhase);
 
-	if (_04 && mSpider->mSeContext) {
+	if (mSoundQueued && mSpider->mSeContext) {
 		rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mPosition);
 		mSpider->mSeContext->playSound(SE_SPIDER_SWING);
-		_04 = false;
+		mSoundQueued = false;
 	}
 }
 
@@ -700,38 +700,38 @@ void SpiderLeg::setShakeOffNewParameter()
  */
 void SpiderLeg::setBodyShakeNewParameter()
 {
-	if (!_06 && _80 > C_SPIDER_PROP(mSpider)._434()) {
-		_06 = true;
-		_CC = C_SPIDER_PROP(mSpider)._424();
+	if (!mBodyShakeStarted && mShakeAngle > C_SPIDER_PROP(mSpider)._434()) {
+		mBodyShakeStarted = true;
+		mOscillationPhase = C_SPIDER_PROP(mSpider)._424();
 	}
 
-	if (_06) {
-		_1E     = _1D;
-		f32 val = -_80;
-		_84 *= _CC;
-		_84 += val * C_SPIDER_PROP(mSpider)._414();
-		_80 += _84;
+	if (mBodyShakeStarted) {
+		mPrevShakeDirection = mShakeDirectionChanged;
+		f32 val             = -mShakeAngle;
+		mShakeAngularVel *= mOscillationPhase;
+		mShakeAngularVel += val * C_SPIDER_PROP(mSpider)._414();
+		mShakeAngle += mShakeAngularVel;
 
-		if (NsLibMath<f32>::abs(_84) < 0.05f && NsLibMath<f32>::abs(_80) < 0.05f) {
-			_80 = 0.0f;
-			_84 = 0.0f;
-			_07 = true;
+		if (NsLibMath<f32>::abs(mShakeAngularVel) < 0.05f && NsLibMath<f32>::abs(mShakeAngle) < 0.05f) {
+			mShakeAngle       = 0.0f;
+			mShakeAngularVel  = 0.0f;
+			mMotionFinishFlag = true;
 		}
-		if (_84 > 0.0f) {
-			_1D = true;
-		}
-
-		if (_1D) {
-			_CC *= 0.97f;
+		if (mShakeAngularVel > 0.0f) {
+			mShakeDirectionChanged = true;
 		}
 
-		if (_04 && mSpider->mSeContext) {
+		if (mShakeDirectionChanged) {
+			mOscillationPhase *= 0.97f;
+		}
+
+		if (mSoundQueued && mSpider->mSeContext) {
 			rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mPosition);
 			mSpider->mSeContext->playSound(SE_SPIDER_SWING);
-			_04 = false;
+			mSoundQueued = false;
 		}
 	} else {
-		_80 += 1.5f * gsys->getFrameTime();
+		mShakeAngle += 1.5f * gsys->getFrameTime();
 	}
 }
 
@@ -742,7 +742,7 @@ void SpiderLeg::setBodyShakeNewParameter()
  */
 void SpiderLeg::setNextDirAndCent()
 {
-	if (!_09[0] && _15[0] && !_07) {
+	if (!mLegMoving[0] && mLegCanMove[0] && !mMotionFinishFlag) {
 		f32 centreDist = C_SPIDER_PROP(mSpider)._2B4()
 		               + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2C4() - C_SPIDER_PROP(mSpider)._2B4()));
 		f32 dirChangeThreshold = C_SPIDER_PROP(mSpider)._2F4()
@@ -753,11 +753,12 @@ void SpiderLeg::setNextDirAndCent()
 		    = qdist2(mSpider->mPosition.x, mSpider->mPosition.z, mSpider->getTargetPosition()->x, mSpider->getTargetPosition()->z);
 
 		mSpider->mFaceDirection = NsMathF::roundAngle(mSpider->mFaceDirection);
-		_E4 = atan2f(mSpider->getTargetPosition()->x - mSpider->mPosition.x, mSpider->getTargetPosition()->z - mSpider->mPosition.z);
-		_E4 = NsMathF::calcNearerDirection(mSpider->mFaceDirection, _E4);
+		mTargetDirection
+		    = atan2f(mSpider->getTargetPosition()->x - mSpider->mPosition.x, mSpider->getTargetPosition()->z - mSpider->mPosition.z);
+		mTargetDirection = NsMathF::calcNearerDirection(mSpider->mFaceDirection, mTargetDirection);
 
-		if (_E4 > mSpider->mFaceDirection) {
-			f32 diff = _E4 - mSpider->mFaceDirection;
+		if (mTargetDirection > mSpider->mFaceDirection) {
+			f32 diff = mTargetDirection - mSpider->mFaceDirection;
 			if (diff < dirChangeThreshold) {
 				if (diff > QUARTER_PI) {
 					if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
@@ -767,7 +768,7 @@ void SpiderLeg::setNextDirAndCent()
 					}
 				}
 			} else {
-				_E4 = mSpider->mFaceDirection + dirChangeThreshold;
+				mTargetDirection = mSpider->mFaceDirection + dirChangeThreshold;
 				if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
 					centreDist *= distFactor;
 				} else {
@@ -775,7 +776,7 @@ void SpiderLeg::setNextDirAndCent()
 				}
 			}
 		} else {
-			f32 diff = mSpider->mFaceDirection - _E4;
+			f32 diff = mSpider->mFaceDirection - mTargetDirection;
 			if (diff < dirChangeThreshold) {
 				if (diff > QUARTER_PI) {
 					if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
@@ -785,7 +786,7 @@ void SpiderLeg::setNextDirAndCent()
 					}
 				}
 			} else {
-				_E4 = mSpider->mFaceDirection - dirChangeThreshold;
+				mTargetDirection = mSpider->mFaceDirection - dirChangeThreshold;
 				if (factorThreshold < C_SPIDER_PROP(mSpider)._4C4()) {
 					centreDist *= distFactor;
 				} else {
@@ -794,9 +795,9 @@ void SpiderLeg::setNextDirAndCent()
 			}
 		}
 
-		_24C.x = centreDist * sinf(_E4) + mSpider->mPosition.x;
-		_24C.z = centreDist * cosf(_E4) + mSpider->mPosition.z;
-		_24C.y = mapMgr->getMinY(_24C.x, _24C.z, true);
+		mTargetCentre.x = centreDist * sinf(mTargetDirection) + mSpider->mPosition.x;
+		mTargetCentre.z = centreDist * cosf(mTargetDirection) + mSpider->mPosition.z;
+		mTargetCentre.y = mapMgr->getMinY(mTargetCentre.x, mTargetCentre.z, true);
 	}
 
 	STACK_PAD_VAR(2);
@@ -810,41 +811,41 @@ void SpiderLeg::setNextDirAndCent()
 void SpiderLeg::setWalkNewPosition()
 {
 	for (int i = 0; i < 4; i++) {
-		if (!_07 && !_09[i] && _15[i] && !_19[i]) {
+		if (!mMotionFinishFlag && !mLegMoving[i] && mLegCanMove[i] && !mLegMidStep[i]) {
 			Vector3f vec(0.0f, 0.0f, 0.0f);
 			f32 vals[4] = { 1.75f, 1.25f, 0.25f, 0.75f };
-			f32 angle   = _E4 - PI * vals[i];
+			f32 angle   = mTargetDirection - PI * vals[i];
 			f32 dist    = C_SPIDER_PROP(mSpider)._2D4()
 			         + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._2E4() - C_SPIDER_PROP(mSpider)._2D4()));
 
 			vec.x = dist * sinf(angle);
 			vec.z = dist * cosf(angle);
 
-			_1BC[i][0].x = _12C[i][0].x;
-			_1BC[i][0].y = _12C[i][0].y;
-			_1BC[i][0].z = _12C[i][0].z;
+			mBezierPoints[i][0].x = mJointPositions[i][0].x;
+			mBezierPoints[i][0].y = mJointPositions[i][0].y;
+			mBezierPoints[i][0].z = mJointPositions[i][0].z;
 
-			_1BC[i][2].x = _24C.x + vec.x;
-			_1BC[i][2].z = _24C.z + vec.z;
+			mBezierPoints[i][2].x = mTargetCentre.x + vec.x;
+			mBezierPoints[i][2].z = mTargetCentre.z + vec.z;
 
-			f32 minY     = mapMgr->getMinY(_1BC[i][2].x, _1BC[i][2].z, true);
-			_1BC[i][2].y = minY - 10.0f;
+			f32 minY              = mapMgr->getMinY(mBezierPoints[i][2].x, mBezierPoints[i][2].z, true);
+			mBezierPoints[i][2].y = minY - 10.0f;
 
-			_1BC[i][1].x = (_12C[i][0].x + 4.0f * _1BC[i][2].x) / 5.0f;
-			_1BC[i][1].z = (_12C[i][0].z + 4.0f * _1BC[i][2].z) / 5.0f;
-			_1BC[i][1].y = mSpider->mPosition.y + mFootRaiseHeightList[i];
+			mBezierPoints[i][1].x = (mJointPositions[i][0].x + 4.0f * mBezierPoints[i][2].x) / 5.0f;
+			mBezierPoints[i][1].z = (mJointPositions[i][0].z + 4.0f * mBezierPoints[i][2].z) / 5.0f;
+			mBezierPoints[i][1].y = mSpider->mPosition.y + mFootRaiseHeightList[i];
 
-			mIsOnGround[i] = false;
-			_15[i]         = false;
-			_19[i]         = true;
-			_09[i]         = true;
-			_A8[i]         = 0.0f;
+			mIsOnGround[i]        = false;
+			mLegCanMove[i]        = false;
+			mLegMidStep[i]        = true;
+			mLegMoving[i]         = true;
+			mLegMotionProgress[i] = 0.0f;
 		}
 
-		if (_09[i]) {
-			f32 goal     = _70[i] + mFootRaiseHeightList[i];
-			f32 step     = C_SPIDER_PROP(mSpider)._4B4() * gsys->getFrameTime();
-			_1BC[i][1].y = NsLibMath<f32>::toGoal(_1BC[i][1].y, goal, step);
+		if (mLegMoving[i]) {
+			f32 goal              = mGroundHeight[i] + mFootRaiseHeightList[i];
+			f32 step              = C_SPIDER_PROP(mSpider)._4B4() * gsys->getFrameTime();
+			mBezierPoints[i][1].y = NsLibMath<f32>::toGoal(mBezierPoints[i][1].y, goal, step);
 		}
 	}
 }
@@ -857,17 +858,17 @@ void SpiderLeg::setWalkNewPosition()
 void SpiderLeg::checkGroundTimer()
 {
 	setLegParameter();
-	if (_08) {
-		switch (_F8) {
-		case 0:
+	if (mIsMoving) {
+		switch (mMotionType) {
+		case SpiderLegMotionType::Walk:
 			setWalkNewParameter();
 			setNextDirAndCent();
 			setWalkNewPosition();
 			break;
-		case 1:
+		case SpiderLegMotionType::ShakeOff:
 			setShakeOffNewParameter();
 			break;
-		case 2:
+		case SpiderLegMotionType::BodyShake:
 			setBodyShakeNewParameter();
 		}
 	}
@@ -881,27 +882,27 @@ void SpiderLeg::checkGroundTimer()
  */
 void SpiderLeg::checkMotionRatio()
 {
-	if (_08) {
+	if (mIsMoving) {
 		for (int i = 0; i < 4; i++) {
-			if (_09[i] && _F8 < 1) {
+			if (mLegMoving[i] && mMotionType < SpiderLegMotionType::ShakeOff) {
 				f32 speed;
-				if (_A8[i] < 1.1f) {
-					speed = C_SPIDER_PROP(mSpider)._204() - _E8[i] * C_SPIDER_PROP(mSpider)._214();
+				if (mLegMotionProgress[i] < 1.1f) {
+					speed = C_SPIDER_PROP(mSpider)._204() - mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._214();
 					if (speed < C_SPIDER_PROP(mSpider)._224()) {
 						speed = C_SPIDER_PROP(mSpider)._224();
 					}
 				} else {
-					speed = C_SPIDER_PROP(mSpider)._234() + _E8[i] * C_SPIDER_PROP(mSpider)._244();
+					speed = C_SPIDER_PROP(mSpider)._234() + mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._244();
 					if (speed > C_SPIDER_PROP(mSpider)._254()) {
 						speed = C_SPIDER_PROP(mSpider)._254();
 					}
 				}
 
-				_A8[i] += speed * gsys->getFrameTime();
+				mLegMotionProgress[i] += speed * gsys->getFrameTime();
 
-				if (_19[i] && _A8[i] > C_SPIDER_PROP(mSpider)._314()) {
-					_15[NsMathI::intLoop(i + 1, 0, 3)] = true;
-					_19[i]                             = false;
+				if (mLegMidStep[i] && mLegMotionProgress[i] > C_SPIDER_PROP(mSpider)._314()) {
+					mLegCanMove[NsMathI::intLoop(i + 1, 0, 3)] = true;
+					mLegMidStep[i]                             = false;
 				}
 			}
 		}
@@ -919,23 +920,23 @@ void SpiderLeg::checkMotionRatio()
 void SpiderLeg::makeNewPosition()
 {
 	static f32 vibSpin = 0.0f;
-	if (_08) {
+	if (mIsMoving) {
 		vibSpin += 50.0f * gsys->getFrameTime();
 		if (vibSpin > TAU) {
 			vibSpin -= TAU;
 		}
 
 		for (int i = 0; i < 4; i++) {
-			if (_09[i]) {
-				NsCalculation::calcLagrange(_A8[i], _1BC[i], _12C[i][0]);
+			if (mLegMoving[i]) {
+				NsCalculation::calcLagrange(mLegMotionProgress[i], mBezierPoints[i], mJointPositions[i][0]);
 
-				f32 yOffs = _E8[i] * C_SPIDER_PROP(mSpider)._384() * sinf(vibSpin + i);
+				f32 yOffs = mStuckPikiCount[i] * C_SPIDER_PROP(mSpider)._384() * sinf(vibSpin + i);
 				if (yOffs > C_SPIDER_PROP(mSpider)._394()) {
 					yOffs = C_SPIDER_PROP(mSpider)._394();
 				}
 
-				if (_A8[i] > 0.01f) {
-					_12C[i][0].y += yOffs;
+				if (mLegMotionProgress[i] > 0.01f) {
+					mJointPositions[i][0].y += yOffs;
 				}
 			}
 		}
@@ -950,8 +951,8 @@ void SpiderLeg::makeNewPosition()
 void SpiderLeg::calcSpiderDirection()
 {
 	if (mSpider->getCurrentState() < SPIDERAI_Start) {
-		f32 x                = _12C[0][0].x - mSpider->mPosition.x + _12C[2][0].x - mSpider->mPosition.x;
-		f32 z                = _12C[0][0].z - mSpider->mPosition.z + _12C[2][0].z - mSpider->mPosition.z;
+		f32 x                = mJointPositions[0][0].x - mSpider->mPosition.x + mJointPositions[2][0].x - mSpider->mPosition.x;
+		f32 z                = mJointPositions[0][0].z - mSpider->mPosition.z + mJointPositions[2][0].z - mSpider->mPosition.z;
 		mSpider->mRotation.y = atan2f(x, z);
 	}
 	mSpider->mFaceDirection = mSpider->mRotation.y;
@@ -964,8 +965,8 @@ void SpiderLeg::calcSpiderDirection()
  */
 void SpiderLeg::calcShakeOffDirection()
 {
-	if (_F8 == 2) {
-		mSpider->mRotation.y += _80;
+	if (mMotionType == SpiderLegMotionType::ShakeOff) {
+		mSpider->mRotation.y += mShakeAngle;
 		mSpider->mFaceDirection = mSpider->mRotation.y;
 	}
 }
@@ -979,7 +980,7 @@ void SpiderLeg::calcStickersPiki()
 {
 	int i;
 	for (i = 0; i < 4; i++) {
-		_E8[i] = 0;
+		mStuckPikiCount[i] = 0;
 	}
 
 	CollPart* boundPart = mSpider->mCollInfo->getBoundingSphere();
@@ -993,7 +994,7 @@ void SpiderLeg::calcStickersPiki()
 		if (piki->isAlive()) {
 			for (i = 0; i < partCount; i++) {
 				if (boundPart->getChildAt(i)->getID().mId == piki->getStickPart()->getID().mId && Kumo::legId[i] >= 0) {
-					_E8[Kumo::legId[i]]++;
+					mStuckPikiCount[Kumo::legId[i]]++;
 				}
 			}
 		}
@@ -1007,9 +1008,9 @@ void SpiderLeg::calcStickersPiki()
  */
 void SpiderLeg::calcShakeOff()
 {
-	if (_F8 > 0 && _1D && !_1E) {
+	if (mMotionType > SpiderLegMotionType::Walk && mShakeDirectionChanged && !mPrevShakeDirection) {
 		mSpider->calcFlickPiki();
-		mSpider->mSpiderAi->_08 = false;
+		mSpider->mSpiderAi->mCanFlick = false;
 	}
 }
 
@@ -1024,9 +1025,9 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 		Vector3f vec(0.0f, 0.0f, 0.0f);
 		int i;
 		for (i = 0; i < 4; i++) {
-			centre.x += _12C[i][0].x;
-			centre.y += (_12C[i][0].y - _1BC[i][0].y) / 10.0f;
-			centre.z += _12C[i][0].z;
+			centre.x += mJointPositions[i][0].x;
+			centre.y += (mJointPositions[i][0].y - mBezierPoints[i][0].y) / 10.0f;
+			centre.z += mJointPositions[i][0].z;
 		}
 
 		centre.x /= 4.0f;
@@ -1034,8 +1035,8 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 
 		for (i = 0; i < 4; i++) {
 			if (mIsOnGround[i]) {
-				vec.x = _12C[i][0].x - centre.x;
-				vec.z = _12C[i][0].z - centre.z;
+				vec.x = mJointPositions[i][0].x - centre.x;
+				vec.z = mJointPositions[i][0].z - centre.z;
 				centre.x += C_SPIDER_PROP(mSpider)._3D4() * vec.x;
 				centre.z += C_SPIDER_PROP(mSpider)._3D4() * vec.z;
 			}
@@ -1045,7 +1046,7 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
 		centre.z = mSpider->getInitPosition()->z;
 	}
 
-	centre.y -= 15.0f + _E0;
+	centre.y -= 15.0f + mPikiWeightOffset;
 }
 
 /*
@@ -1055,22 +1056,22 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
  */
 void SpiderLeg::setRealCentre(Vector3f& centre)
 {
-	_258.multiply(C_SPIDER_PROP(mSpider)._3B4());
+	mCentreVelocity.multiply(C_SPIDER_PROP(mSpider)._3B4());
 
-	_258.x += C_SPIDER_PROP(mSpider)._3A4() * (centre.x - _264.x);
-	_258.y += C_SPIDER_PROP(mSpider)._3A4() * (centre.y - _264.y);
-	_258.z += C_SPIDER_PROP(mSpider)._3A4() * (centre.z - _264.z);
+	mCentreVelocity.x += C_SPIDER_PROP(mSpider)._3A4() * (centre.x - mCurrentCentre.x);
+	mCentreVelocity.y += C_SPIDER_PROP(mSpider)._3A4() * (centre.y - mCurrentCentre.y);
+	mCentreVelocity.z += C_SPIDER_PROP(mSpider)._3A4() * (centre.z - mCurrentCentre.z);
 
-	f32 dist = _258.length();
+	f32 dist = mCentreVelocity.length();
 
 	if (dist > 6.0f) {
-		_258.normalise();
-		_258.multiply(6.0f);
+		mCentreVelocity.normalise();
+		mCentreVelocity.multiply(6.0f);
 	}
 
-	_264.x += _258.x;
-	_264.y += _258.y;
-	_264.z += _258.z;
+	mCurrentCentre.x += mCentreVelocity.x;
+	mCurrentCentre.y += mCentreVelocity.y;
+	mCurrentCentre.z += mCentreVelocity.z;
 }
 
 /*
@@ -1084,17 +1085,17 @@ void SpiderLeg::setCentrePosition()
 	setIdealCentre(centre);
 	setRealCentre(centre);
 
-	f32 dist = centre.distance(_264);
+	f32 dist = centre.distance(mCurrentCentre);
 	if (dist > C_SPIDER_PROP(mSpider)._3C4()) {
 		dist -= C_SPIDER_PROP(mSpider)._3C4();
-		Vector3f dir(centre.x - _264.x, centre.y - _264.y, centre.z - _264.z);
+		Vector3f dir(centre.x - mCurrentCentre.x, centre.y - mCurrentCentre.y, centre.z - mCurrentCentre.z);
 		dir.normalise();
 		dir.multiply(dist);
-		_264.add(dir);
+		mCurrentCentre.add(dir);
 	}
 
-	mSpider->mPosition.x = _264.x;
-	mSpider->mPosition.z = _264.z;
+	mSpider->mPosition.x = mCurrentCentre.x;
+	mSpider->mPosition.z = mCurrentCentre.z;
 }
 
 /*
@@ -1107,7 +1108,7 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
 	Matrix4f mtx1;
 	Matrix4f mtx2;
 
-	mtx2.makeSRT(mSpider->mScale, mSpider->mRotation, _264);
+	mtx2.makeSRT(mSpider->mScale, mSpider->mRotation, mCurrentCentre);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mtx2, mtx1);
 
 	mSpider->mAnimator.updateContext();
@@ -1116,7 +1117,7 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
 
 	gfx.mCamera->mLookAtMtx.inverse(&animMtx);
 
-	if (_05) {
+	if (mInitialised) {
 		Matrix4f mtx3;
 		Matrix4f mtx4;
 		Matrix3f mtx33;
@@ -1125,7 +1126,7 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
 		mtx3.multiplyTo(shapeObj->mShape->getAnimMatrix(15), mtx4);
 		NsCalculation::calcMat4toMat3(mtx4, mtx33);
 
-		_270.fromMat3f(mtx33);
+		mJointRotation.fromMat3f(mtx33);
 	}
 }
 
@@ -1138,10 +1139,10 @@ void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, Matrix4f& animMt
 {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 3; j++) {
-			animMtx.multiplyTo(shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]), _280[i][j]);
+			animMtx.multiplyTo(shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]), mJointMatrices[i][j]);
 
 			if (j != 0 || mSpider->getCurrentState() >= SPIDERAI_Start) {
-				_280[i][j].getColumn(3, _12C[i][j]);
+				mJointMatrices[i][j].getColumn(3, mJointPositions[i][j]);
 			}
 		}
 	}
@@ -1156,9 +1157,9 @@ void SpiderLeg::setLength()
 {
 	if (mSpider->getCurrentState() >= SPIDERAI_Start) {
 		for (int i = 0; i < 4; i++) {
-			_88[i][0] = _12C[i][0].distance(_12C[i][1]);
-			f32 dist2 = _12C[i][1].distance(_12C[i][2]);
-			_88[i][1] = dist2;
+			mLegSegmentLength[i][0] = mJointPositions[i][0].distance(mJointPositions[i][1]);
+			f32 dist2               = mJointPositions[i][1].distance(mJointPositions[i][2]);
+			mLegSegmentLength[i][1] = dist2;
 		}
 	}
 }
@@ -1171,24 +1172,24 @@ void SpiderLeg::setLength()
 void SpiderLeg::getHeight()
 {
 	for (int i = 0; i < 4; i++) {
-		_70[i] = mapMgr->getMinY(_12C[i][0].x, _12C[i][0].z, true);
+		mGroundHeight[i] = mapMgr->getMinY(mJointPositions[i][0].x, mJointPositions[i][0].z, true);
 
-		f32 diff = _70[i] - _12C[i][0].y;
+		f32 diff = mGroundHeight[i] - mJointPositions[i][0].y;
 		if (diff > -5.0f) {
-			_12C[i][0].y += diff;
+			mJointPositions[i][0].y += diff;
 		}
 
-		if (_08) {
+		if (mIsMoving) {
 			if (diff > -5.0f) {
-				if (_A8[i] > 0.5f) {
-					_09[i]         = false;
+				if (mLegMotionProgress[i] > 0.5f) {
+					mLegMoving[i]  = false;
 					mIsOnGround[i] = true;
 				}
-			} else if (_A8[i] < 0.5f) {
+			} else if (mLegMotionProgress[i] < 0.5f) {
 				mIsOnGround[i] = false;
 			}
 		} else if (diff > -5.0f) {
-			_09[i]         = false;
+			mLegMoving[i]  = false;
 			mIsOnGround[i] = true;
 		} else {
 			mIsOnGround[i] = false;
@@ -1203,11 +1204,11 @@ void SpiderLeg::getHeight()
  */
 void SpiderLeg::getLegController()
 {
-	if (_08) {
+	if (mIsMoving) {
 		for (int i = 0; i < 4; i++) {
-			if (mIsOnGround[i] && !_11[i] && _19[i]) {
-				_15[NsMathI::intLoop(i + 1, 0, 3)] = true;
-				_19[i]                             = false;
+			if (mIsOnGround[i] && !mPrevOnGround[i] && mLegMidStep[i]) {
+				mLegCanMove[NsMathI::intLoop(i + 1, 0, 3)] = true;
+				mLegMidStep[i]                             = false;
 			}
 		}
 	}
@@ -1220,10 +1221,10 @@ void SpiderLeg::getLegController()
  */
 void SpiderLeg::setQuatParameter()
 {
-	if (_08) {
+	if (mIsMoving) {
 		for (int i = 0; i < 4; i++) {
-			f32 val = (_12C[i][0].y - _70[i] - 50.0f) / 50.0f;
-			_60[i]  = NsLibMath<f32>::revice(val, 0.0f, 1.0f);
+			f32 val              = (mJointPositions[i][0].y - mGroundHeight[i] - 50.0f) / 50.0f;
+			mJointBlendFactor[i] = NsLibMath<f32>::revice(val, 0.0f, 1.0f);
 		}
 	}
 }
@@ -1235,13 +1236,13 @@ void SpiderLeg::setQuatParameter()
  */
 void SpiderLeg::stepDamageNavi(int legNum)
 {
-	f32 heightCheck = _12C[legNum][0].y + 2.0f;
+	f32 heightCheck = mJointPositions[legNum][0].y + 2.0f;
 	Iterator iter(naviMgr);
 	CI_LOOP(iter)
 	{
 		Creature* navi = *iter;
 		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried() && heightCheck > navi->mPosition.y) {
-			if (_12C[legNum][0].distance(navi->mPosition) < C_SPIDER_PROP(mSpider)._324()) {
+			if (mJointPositions[legNum][0].distance(navi->mPosition) < C_SPIDER_PROP(mSpider)._324()) {
 				InteractPress press(mSpider, C_SPIDER_PROP(mSpider)._334());
 				navi->stimulate(press);
 			}
@@ -1256,9 +1257,9 @@ void SpiderLeg::stepDamageNavi(int legNum)
  */
 void SpiderLeg::stepDamagePiki(int legNum)
 {
-	Vector3f footPos(_12C[legNum][0]);
-	f32 heightAbove = _12C[legNum][0].y + 2.0f;
-	f32 heightBelow = _12C[legNum][0].y - 10.0f;
+	Vector3f footPos(mJointPositions[legNum][0]);
+	f32 heightAbove = mJointPositions[legNum][0].y + 2.0f;
+	f32 heightBelow = mJointPositions[legNum][0].y - 10.0f;
 	Iterator iter(pikiMgr);
 	CI_LOOP(iter)
 	{
@@ -1313,13 +1314,13 @@ void SpiderLeg::stepShakeOffPiki(int legNum)
  */
 void SpiderLeg::emitOnGroundEffect(int legNum)
 {
-	if (mSpider->getMapAttribute(_12C[legNum][0]) == ATTR_Water) {
+	if (mSpider->getMapAttribute(mJointPositions[legNum][0]) == ATTR_Water) {
 		createRippleEffect(legNum);
 	} else {
-		effectMgr->create(EffectMgr::EFF_BigDustRing, _12C[legNum][0], nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BigDustRing, mJointPositions[legNum][0], nullptr, nullptr);
 	}
 
-	if (mSpider->_3BA) {
+	if (mSpider->mIsHalfDead) {
 		createHalfDeadFallEffect(legNum);
 	}
 
@@ -1327,9 +1328,9 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 		mSpider->mSeContext->playSound(SE_SPIDER_WALK);
 	}
 
-	rumbleMgr->start(RUMBLE_Unk14, 0, _12C[legNum][0]);
-	cameraMgr->startVibrationEvent(3, _12C[legNum][0]);
-	_258.y -= 1.0f;
+	rumbleMgr->start(RUMBLE_Unk14, 0, mJointPositions[legNum][0]);
+	cameraMgr->startVibrationEvent(3, mJointPositions[legNum][0]);
+	mCentreVelocity.y -= 1.0f;
 }
 
 /*
@@ -1340,7 +1341,7 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 void SpiderLeg::onGroundFunction()
 {
 	for (int i = 0; i < 4; i++) {
-		if (mIsOnGround[i] && !_11[i]) {
+		if (mIsOnGround[i] && !mPrevOnGround[i]) {
 			stepDamageNavi(i);
 			stepDamagePiki(i);
 			stepShakeOffPiki(i);
@@ -1357,14 +1358,16 @@ void SpiderLeg::onGroundFunction()
 void SpiderLeg::emitOffGroundEffect()
 {
 	for (int i = 0; i < 4; i++) {
-		if (!mIsOnGround[i] && _11[i]) {
-			zen::particleGenerator* ptclGen1 = effectMgr->create(EffectMgr::EFF_Spider_OffGroundDebris, _12C[i][0], nullptr, nullptr);
+		if (!mIsOnGround[i] && mPrevOnGround[i]) {
+			zen::particleGenerator* ptclGen1
+			    = effectMgr->create(EffectMgr::EFF_Spider_OffGroundDebris, mJointPositions[i][0], nullptr, nullptr);
 			if (ptclGen1) {
-				ptclGen1->setEmitPosPtr(&_12C[i][0]);
+				ptclGen1->setEmitPosPtr(&mJointPositions[i][0]);
 			}
-			zen::particleGenerator* ptclGen2 = effectMgr->create(EffectMgr::EFF_Spider_OffGroundSmoke, _12C[i][0], nullptr, nullptr);
+			zen::particleGenerator* ptclGen2
+			    = effectMgr->create(EffectMgr::EFF_Spider_OffGroundSmoke, mJointPositions[i][0], nullptr, nullptr);
 			if (ptclGen2) {
-				ptclGen2->setEmitPosPtr(&_12C[i][0]);
+				ptclGen2->setEmitPosPtr(&mJointPositions[i][0]);
 			}
 		}
 	}
@@ -1377,7 +1380,7 @@ void SpiderLeg::emitOffGroundEffect()
  */
 void SpiderLeg::setKneeDirection()
 {
-	f32 sinVal  = sinf(_C8);
+	f32 sinVal  = sinf(mShakePhase);
 	f32 vals[4] = { 1.75f, 1.25f, 0.25f, 0.75f };
 
 	for (int i = 0; i < 4; i++) {
@@ -1388,24 +1391,24 @@ void SpiderLeg::setKneeDirection()
 		vec1.z    = cosf(angle);
 		vec1.normalise();
 
-		vec2.x = _12C[i][0].x - _264.x;
-		vec2.z = _12C[i][0].z - _264.z;
+		vec2.x = mJointPositions[i][0].x - mCurrentCentre.x;
+		vec2.z = mJointPositions[i][0].z - mCurrentCentre.z;
 		vec2.normalise();
 
-		_FC[i].x = 1.5f * vec1.x + vec2.x;
-		_FC[i].y = 0.0f;
-		_FC[i].z = 1.5f * vec1.z + vec2.z;
+		mKneeDirection[i].x = 1.5f * vec1.x + vec2.x;
+		mKneeDirection[i].y = 0.0f;
+		mKneeDirection[i].z = 1.5f * vec1.z + vec2.z;
 
-		_FC[i].normalise();
-		_FC[i].y = 1.0f;
+		mKneeDirection[i].normalise();
+		mKneeDirection[i].y = 1.0f;
 
-		if (_F8 == 1) {
-			f32 ang  = atan2f(_FC[i].x, _FC[i].z);
-			f32 ang2 = C_SPIDER_PROP(mSpider)._404() * sinVal * sinf(_CC + 1.5f * i);
+		if (mMotionType == SpiderLegMotionType::ShakeOff) {
+			f32 ang  = atan2f(mKneeDirection[i].x, mKneeDirection[i].z);
+			f32 ang2 = C_SPIDER_PROP(mSpider)._404() * sinVal * sinf(mOscillationPhase + 1.5f * i);
 
-			_FC[i].x = sinf(ang + ang2);
-			_FC[i].y = 1.0f;
-			_FC[i].z = cosf(ang + ang2);
+			mKneeDirection[i].x = sinf(ang + ang2);
+			mKneeDirection[i].y = 1.0f;
+			mKneeDirection[i].z = cosf(ang + ang2);
 		}
 	}
 }
@@ -1440,19 +1443,19 @@ void SpiderLeg::getJointMatrix(Vector3f& vec1, Vector3f& vec2, Vector3f& vec3, M
  */
 void SpiderLeg::calcQuatToMatrix(int legNum)
 {
-	if (_08 && _60[legNum] > 0.0f) {
+	if (mIsMoving && mJointBlendFactor[legNum] > 0.0f) {
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 		Quat q1;
 		Matrix3f mtx33;
 
-		_280[legNum][1].inverse(&mtx1);
-		mtx1.multiplyTo(_280[legNum][0], mtx2);
+		mJointMatrices[legNum][1].inverse(&mtx1);
+		mtx1.multiplyTo(mJointMatrices[legNum][0], mtx2);
 		NsCalculation::calcMat4toMat3(mtx2, mtx33);
 		q1.fromMat3f(mtx33);
-		q1.slerp(_270, _60[legNum], 0);
+		q1.slerp(mJointRotation, mJointBlendFactor[legNum], 0);
 		mtx2.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), q1, Vector3f(1.0f, 1.0f, 1.0f));
-		_280[legNum][1].multiplyTo(mtx2, _280[legNum][0]);
+		mJointMatrices[legNum][1].multiplyTo(mtx2, mJointMatrices[legNum][0]);
 	}
 }
 
@@ -1465,15 +1468,16 @@ void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
 {
 	Vector3f vec;
 	for (int i = 0; i < 4; i++) {
-		NsCalculation::calcJointPos(_12C[i][2], _12C[i][0], _88[i][1], _88[i][0], _FC[i], _12C[i][1]);
-		vec.sub(_12C[i][2], _12C[i][0]);
-		getJointMatrix(_12C[i][2], _12C[i][1], vec, _280[i][2]);
-		getJointMatrix(_12C[i][1], _12C[i][0], vec, _280[i][1]);
+		NsCalculation::calcJointPos(mJointPositions[i][2], mJointPositions[i][0], mLegSegmentLength[i][1], mLegSegmentLength[i][0],
+		                            mKneeDirection[i], mJointPositions[i][1]);
+		vec.sub(mJointPositions[i][2], mJointPositions[i][0]);
+		getJointMatrix(mJointPositions[i][2], mJointPositions[i][1], vec, mJointMatrices[i][2]);
+		getJointMatrix(mJointPositions[i][1], mJointPositions[i][0], vec, mJointMatrices[i][1]);
 		calcQuatToMatrix(i);
-		_280[i][0].setColumn(3, _12C[i][0]);
+		mJointMatrices[i][0].setColumn(3, mJointPositions[i][0]);
 
 		for (int j = 0; j < 3; j++) {
-			gfx.mCamera->mLookAtMtx.multiplyTo(_280[i][j], shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]));
+			gfx.mCamera->mLookAtMtx.multiplyTo(mJointMatrices[i][j], shapeObj->mShape->getAnimMatrix(Kumo::leg_index[i][j]));
 		}
 	}
 }
@@ -1490,7 +1494,7 @@ void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j < 3; j++) {
 				shapeObj->mShape->getAnimMatrix(i).getColumn(j, col);
-				col.multiply(_20[i]);
+				col.multiply(mSegmentScale[i]);
 				shapeObj->mShape->getAnimMatrix(i).setColumn(j, col);
 			}
 		}
@@ -1505,7 +1509,7 @@ void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 void SpiderLeg::setGroundFlag()
 {
 	for (int i = 0; i < 4; i++) {
-		_11[i] = mIsOnGround[i];
+		mPrevOnGround[i] = mIsOnGround[i];
 	}
 }
 
@@ -1516,17 +1520,17 @@ void SpiderLeg::setGroundFlag()
  */
 void SpiderLeg::checkMotionFinished()
 {
-	if (_08) {
+	if (mIsMoving) {
 		for (int i = 0; i < 4; i++) {
-			if (_07 && !_09[i]) {
-				_08 = false;
+			if (mMotionFinishFlag && !mLegMoving[i]) {
+				mIsMoving = false;
 			} else {
-				_08 = true;
+				mIsMoving = true;
 				break;
 			}
 		}
 
-		if (!_08) {
+		if (!mIsMoving) {
 			mSpider->setMotionFinish(true);
 		}
 	}

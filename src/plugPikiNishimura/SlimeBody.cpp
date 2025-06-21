@@ -164,8 +164,8 @@ f32 SlimeBody::calcVertexScore(Vector3f* vertex, Vector3f* creatureNormals, f32*
 		creatureNormals[i].x = vertex->x - mRelativeVelocities[i].x;
 		creatureNormals[i].y = (vertex->y - mRelativeVelocities[i].y) * mSlime->mBodyThickness;
 		creatureNormals[i].z = vertex->z - mRelativeVelocities[i].z;
-		creatureScores[i]
-		    = mSlime->_3D4 / std::sqrtf(SQUARE(creatureNormals[i].x) + SQUARE(creatureNormals[i].y) + SQUARE(creatureNormals[i].z));
+		creatureScores[i]    = mSlime->mAppearanceScale
+		                  / std::sqrtf(SQUARE(creatureNormals[i].x) + SQUARE(creatureNormals[i].y) + SQUARE(creatureNormals[i].z));
 		score += creatureScores[i];
 	}
 	return score;
@@ -234,7 +234,7 @@ void SlimeBody::update()
 	makeCentrePosition();
 	makeInnerPosition();
 	makeMaxRadius();
-	if (mSlime->aiCullable() && mSlime->_3D4 > 0.0f) {
+	if (mSlime->aiCullable() && mSlime->mAppearanceScale > 0.0f) {
 		setSpherePosition();
 		makeSlimeBody();
 	}

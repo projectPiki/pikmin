@@ -147,8 +147,8 @@ struct PlayState : public CoreNode {
 	PlayState()
 	    : CoreNode("playState")
 	{
-		mSaveFlags = 0;
-		_20        = 1;
+		mSaveFlags  = 0;
+		mSaveStatus = 1;
 	}
 
 	virtual void read(RandomAccessStream&);  // _0C
@@ -158,12 +158,12 @@ struct PlayState : public CoreNode {
 
 	void Initialise()
 	{
-		_20              = 1;
-		_1C              = -1;
-		_18              = -1;
-		_14              = -1;
+		mSaveStatus      = 1;
+		mBluePikiCount   = -1;
+		mYellowPikiCount = -1;
+		mRedPikiCount    = -1;
 		mSavedDay        = 1;
-		_22              = 0;
+		mShipPartsCount  = 0;
 		mCourseOpenFlags = 1;
 	}
 
@@ -177,12 +177,12 @@ struct PlayState : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14;              // _14
-	int _18;              // _18
-	int _1C;              // _1C
-	u8 _20;               // _20
+	int mRedPikiCount;    // _14
+	int mYellowPikiCount; // _18
+	int mBluePikiCount;   // _1C
+	u8 mSaveStatus;       // _20
 	u8 mSavedDay;         // _21
-	u8 _22;               // _22
+	u8 mShipPartsCount;   // _22
 	u8 mSaveFlags;        // _23
 	u32 mCourseOpenFlags; // _24, bitflag
 };
@@ -525,7 +525,7 @@ struct GameFlow : public Node {
 	vf32 mTargetEffectAlpha;       // _2C8
 	f32 mEffectDurationTimer;      // _2CC
 	int mAppTickCounter;           // _2D0
-	int _2D4;                      // _2D4, makes the load logo red?
+	int mRedLoadLogo;              // _2D4, makes the load logo red?
 	WorldClock mWorldClock;        // _2D8
 	f32 mTimeMultiplier;           // _304
 	AnimFrameCacher* mFrameCacher; // _308
@@ -537,7 +537,7 @@ struct GameFlow : public Node {
 	u8 _330;                       // _330
 	int mIsGameplayInputEnabled;   // _334
 	int mIsUiOverlayActive;        // _338
-	int mDisableController;        // _33C, TODO: revisit this name, seems wrong
+	int _33C;                      // _33C
 	int mIsTutorialActive;         // _340
 	u8 _344[0x4];                  // _344, unknown
 	u32 _348;                      // _348, unknown

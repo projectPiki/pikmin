@@ -43,7 +43,7 @@ zen::DrawWMPause::DrawWMPause()
 void zen::DrawWMPause::start()
 {
 	mPauseMenu->start(0);
-	mReturnFlag = RETURN_Unk0;
+	mReturnFlag = CourseSelected;
 	mBackPane->show();
 	mBackPane->setAlpha(0);
 	SeSystem::playSysSe(SYSSE_PAUSE);
@@ -58,7 +58,7 @@ zen::DrawWMPause::returnStatusFlag zen::DrawWMPause::update(Controller* controll
 {
 	if (mPauseMenu->update(controller)) {
 		int sel     = mPauseMenu->getSelectMenu();
-		mReturnFlag = (mPauseMenu->checkSelectMenuCancel()) ? RETURN_Unk1 : (returnStatusFlag)(sel + 1);
+		mReturnFlag = (mPauseMenu->checkSelectMenuCancel()) ? DiaryOpened : (returnStatusFlag)(sel + 1);
 	}
 
 	DrawMenu::StatusFlag pauseState = mPauseMenu->getStatusFlag();

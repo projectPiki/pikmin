@@ -294,13 +294,13 @@ void GamePrefs::read(RandomAccessStream& input)
  */
 void PlayState::write(RandomAccessStream& output)
 {
-	output.writeByte(_20);
+	output.writeByte(mSaveStatus);
 	output.writeByte(mSaveFlags);
 	output.writeByte(mSavedDay);
-	output.writeByte(_22);
-	output.writeInt(_14);
-	output.writeInt(_18);
-	output.writeInt(_1C);
+	output.writeByte(mShipPartsCount);
+	output.writeInt(mRedPikiCount);
+	output.writeInt(mYellowPikiCount);
+	output.writeInt(mBluePikiCount);
 	output.writeInt(mCourseOpenFlags);
 }
 
@@ -311,12 +311,12 @@ void PlayState::write(RandomAccessStream& output)
  */
 void PlayState::read(RandomAccessStream& input)
 {
-	_20              = input.readByte();
+	mSaveStatus      = input.readByte();
 	mSaveFlags       = input.readByte();
 	mSavedDay        = input.readByte();
-	_22              = input.readByte();
-	_14              = input.readInt();
-	_18              = input.readInt();
-	_1C              = input.readInt();
+	mShipPartsCount  = input.readByte();
+	mRedPikiCount    = input.readInt();
+	mYellowPikiCount = input.readInt();
+	mBluePikiCount   = input.readInt();
 	mCourseOpenFlags = input.readInt();
 }

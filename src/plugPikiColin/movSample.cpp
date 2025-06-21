@@ -71,7 +71,7 @@ struct MovSampleSetupSection : public Node {
 		int pic = 0;
 		u8* a   = nullptr;
 		int b, c;
-		if (gsys->mDvdErrorCode < 0) {
+		if (gsys->mDvdErrorCode < DvdError::ReadingDisc) { // AKA: DvdError::None (no issue)
 			pic = Jac_StreamMovieGetPicture(&a, &b, &c);
 		}
 

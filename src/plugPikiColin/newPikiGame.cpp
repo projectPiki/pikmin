@@ -513,8 +513,7 @@ ModeState* RunningModeState::update(u32& result)
 	}
 
 	// Handle pause menu
-	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow.mDisableController
-	    && !gameflow.mMoviePlayer->mIsActive) {
+	if (gameflow.mIsGameplayInputEnabled && !gameflow.mIsUiOverlayActive && !gameflow._33C && !gameflow.mMoviePlayer->mIsActive) {
 
 		if (mController->keyClick(KBBTN_START)) {
 			if (!gameflow.mIsUiOverlayActive && !mesgsPending) {
@@ -611,7 +610,7 @@ void RunningModeState::postRender(Graphics& gfx)
 		gamecore->draw1D(gfx);
 	}
 
-	if (gameflow.mDisableController == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
+	if (gameflow._33C == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
 		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
 		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
 		if (time >= 0.0f && time < 1.0f) {
@@ -1263,9 +1262,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		// gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow.mDisableController == 0 && gameflow.mIsUiOverlayActive == 0 || gameflow.mIsTutorialActive) {
+			if (gameflow._33C == 0 && gameflow.mIsUiOverlayActive == 0 || gameflow.mIsTutorialActive) {
 				bool check = true;
-				if (gsys->mDvdErrorCode >= 0) {
+				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 					check = false;
 				}
 				if (check) {
@@ -1316,7 +1315,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		BaseGameSection::draw(gfx);
 		if (!mIsInitialSetup) {
 			if (!gsys->resetPending() && (!mActiveMenu || gameflow.mMoviePlayer->mIsActive)) {
-				if (!gameflow.mDisableController && !gameflow.mIsUiOverlayActive) {
+				if (!gameflow._33C && !gameflow.mIsUiOverlayActive) {
 					if (!gameflow.mMoviePlayer->mIsActive && mUpdateFlags & UPDATE_WORLD_CLOCK && !playerState->isTutorial()) {
 						f32 tod = gameflow.mWorldClock.mTimeOfDay;
 						gameflow.mWorldClock.update(1.0f);

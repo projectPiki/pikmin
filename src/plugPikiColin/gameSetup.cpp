@@ -93,10 +93,10 @@ void GameSetupSection::preCacheShapes()
 	// what on earth is this even doing.
 	// this isn't in the DLL, so this is as close to a fake match as I can get.
 	// still refuses to addi the _310 and _31C stuff, but w/e
-	FakeSystemList* list1 = &gsys->_310;
-	FakeSystemList* list2 = &gsys->_31C;
-	gsys->initFakeThing1(list1, list2, gsys->_31C._04, gsys->_31C._04);
-	gsys->initFakeThing2();
+	AramAllocator* list1 = &gsys->mBaseAramAllocator;
+	AramAllocator* list2 = &gsys->mAramAllocator;
+	gsys->initAramAllocator(list1, list2, gsys->mAramAllocator.mCurrentOffset, gsys->mAramAllocator.mCurrentOffset);
+	gsys->initCurrentAllocator();
 
 	gsys->mAramRoot.initCore("");
 	gsys->mFileList = (DirEntry*)&gsys->mAramRoot;

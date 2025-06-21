@@ -37,7 +37,7 @@ struct MemoryCard : public CoreNode {
 	inline MemoryCard()
 	    : CoreNode("memoryCard")
 	{
-		_3C                = -1;
+		mTempFileIndex     = -1;
 		mCardChannel       = -1;
 		mSaveFileIndex     = -1;
 		mRequiredFreeSpace = 0x26000;
@@ -97,16 +97,16 @@ struct MemoryCard : public CoreNode {
 	char mFilePath[32];     // _14
 	int mCardChannel;       // _34
 	int mSaveFileIndex;     // _38
-	int _3C;                // _3C
+	int mTempFileIndex;     // _3C
 	u32 mRequiredFreeSpace; // _40
 	u32 mErrorCode;         // _44
-	u32 _48;                // _48
-	BOOL _4C[4];            // _4C
+	u32 mOkSectionsMask;    // _48
+	BOOL mValidSlots[4];    // _4C
 	int mValidBlockCount;   // _5C
-	int _60;                // _60
+	int mValidOptionsCount; // _60
 	u32 mSectorSize;        // _64
 	bool mDidSaveFail;      // _68
-	int _6C;                // _6C
+	int _UNUSED6C;                // _6C
 };
 
 #endif

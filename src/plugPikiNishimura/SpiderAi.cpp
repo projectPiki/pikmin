@@ -49,7 +49,7 @@ void SpiderAi::initAI(Spider* spider)
 	mSpider->setCurrentState(7);
 	mSpider->setNextState(7);
 	mSpider->mAnimator.startMotion(PaniMotionInfo(3, this));
-	_08 = false;
+	mCanFlick = false;
 	if (C_SPIDER_PROP(mSpider).mDoDropFromSky()) {
 		// drop from sky, so don't fall yet
 		mSpider->mIsAppear = false;
@@ -117,7 +117,7 @@ void SpiderAi::keyAction0()
 void SpiderAi::keyAction1()
 {
 	if (mSpider->getCurrentState() == SPIDERAI_Appear) {
-		mSpider->mSpiderLeg->_05 = 0;
+		mSpider->mSpiderLeg->mInitialised = 0;
 	}
 }
 
@@ -193,11 +193,11 @@ void SpiderAi::setEveryFrame()
  */
 void SpiderAi::checkFlickPiki()
 {
-	if (!_08 && mSpider->getAlive()) {
-		_08 = mSpider->flickPikiTransit();
+	if (!mCanFlick && mSpider->getAlive()) {
+		mCanFlick = mSpider->flickPikiTransit();
 	}
 
-	if (_08) {
+	if (mCanFlick) {
 		mSpider->addLoopCounter(1);
 	}
 }
@@ -210,12 +210,12 @@ void SpiderAi::checkFlickPiki()
 void SpiderAi::checkHalfDead()
 {
 	if (mSpider->getCurrentLife() < 0.35f * mSpider->getMaxLife()) {
-		if (!mSpider->_3BA) {
-			mSpider->_3BA = 1;
+		if (!mSpider->mIsHalfDead) {
+			mSpider->mIsHalfDead = 1;
 			mSpider->mSpiderLeg->createHalfDeadEffect();
 		}
 	} else {
-		mSpider->_3BA = 0;
+		mSpider->mIsHalfDead = 0;
 	}
 }
 
@@ -308,7 +308,7 @@ bool SpiderAi::chasePikiTransit()
  */
 bool SpiderAi::shakeOffTransit()
 {
-	return mSpider->getMotionFinish() && _08;
+	return mSpider->getMotionFinish() && mCanFlick;
 }
 
 /*
@@ -328,63 +328,57 @@ bool SpiderAi::targetLostTransit()
  */
 bool SpiderAi::appearTransit()
 {
-	// if beady hasn't appeared yet, see if we should trigger him
+	// Trigger appearance if not already visible
 	if (!mSpider->mIsAppear) {
-
-		// grab his spawn position
 		Vector3f* initPos = mSpider->getInitPosition();
 
-		// loop through all captains on the field (just 1 in reality)
+		// Check each captain to see if within spawn trigger distance
 		Iterator iterNavi(naviMgr);
 		CI_LOOP(iterNavi)
 		{
 			Creature* navi = *iterNavi;
 
-			// if navi is alive, visible, not buried, and
-			// within the trigger radius (only 2D, and roughly),
-			// make beady drop + start the music
+			// If alive, visible and not buried, and within spawn trigger distance
 			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
 			    && qdist2(initPos->x, initPos->z, navi->mPosition.x, navi->mPosition.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
+
 				mSpider->mIsAppear  = true;
 				mSpider->mIsBossBgm = true;
 
-				// check if we should get the easy-mode long fall timer
+				// Adjust drop timer for "easy mode" if any PikiHead is present
 				Iterator iterPikiHead(itemMgr->getPikiHeadMgr());
 				CI_LOOP(iterPikiHead)
 				{
-					// ARE YOU KIDDING ME - IT WAS A TYPO ALL ALONG
-					// THIS SHOULD BE *iterPikiHead BUT NO, THEY USED THE WRONG ITERATOR
-					// THIS LOOP ONLY RUNS AT ALL IF THERE'S A NON-NULL PIKIHEAD INDEX
-					// SO YOU NEED A SPROUT.
-					// BUT THE DISTANCE CHECK IS AGAINST THE CAPTAIN BY MISTAKE
-					Creature* sproutButActuallyNavi = *iterNavi; // TYPO.
+					// BUG NOTE: This mistakenly reuses the captain iterator, so this condition
+					// always evaluates against the last valid captain (not actual PikiHead).
+					// However, since the loop only runs if a sprout exists, the condition ends up true.
 
-					// if sprout (!!NAVI!!) is within trigger radius, make beady fall slower.
-					// because of the typo, if this loop runs, this is always true.
-					if (sproutButActuallyNavi
-					    && qdist2(initPos->x, initPos->z, sproutButActuallyNavi->mPosition.x, sproutButActuallyNavi->mPosition.z)
+					Creature* sprout = *iterNavi; // Not actually a sprout, it's the player (whoops!)
+
+					if (sprout
+					    && qdist2(initPos->x, initPos->z, sprout->mPosition.x, sprout->mPosition.z)
 					           < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
 						// change fall time from 0.05s to 5s
 						C_SPIDER_PROP(mSpider).mDropTimer() = 5.0f;
 						break;
 					}
 				}
+
 				break;
 			}
 		}
 	}
 
-	// if we're falling, inc the anim timer
+	// Handle falling animation once triggered
 	if (mSpider->mIsAppear) {
 		mSpider->addAnimTimer(gsys->getFrameTime());
 
-		// if we've fallen for the allocated time (fast or slow), say we're on the ground
 		if (mSpider->getAnimTimer() > C_SPIDER_PROP(mSpider).mDropTimer()) {
-			return true;
+			return true; // Completed the fall
 		}
 	}
 
-	return false;
+	return false; // Still in transit or not triggered
 }
 
 /*
@@ -399,7 +393,7 @@ void SpiderAi::initDie(int nextState)
 	mSpider->setTargetCreature(nullptr);
 	mSpider->mAnimator.startMotion(PaniMotionInfo(0, this));
 	mSpider->setAttackTimer(0.0f);
-	mSpider->mSpiderLeg->_07 = 1;
+	mSpider->mSpiderLeg->mMotionFinishFlag = 1;
 	resultFlagSeen();
 }
 
@@ -414,7 +408,7 @@ void SpiderAi::initWalk(int nextState)
 	if (mSpider->getMotionFinish()) {
 		mSpider->setMotionFinish(false);
 		mSpider->setTargetCreature(nullptr);
-		mSpider->_3BC
+		mSpider->mActiveWalkCycleCount
 		    = C_SPIDER_PROP(mSpider).mMinWalkCycles()
 		    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PROP(mSpider).mMaxWalkCycles() - C_SPIDER_PROP(mSpider).mMinWalkCycles()) + 1)
 		    - 1;
@@ -463,7 +457,7 @@ void SpiderAi::initAppear(int nextState)
 void SpiderAi::initWait(int nextState)
 {
 	mSpider->setNextState(nextState);
-	mSpider->_3BC
+	mSpider->mActiveWalkCycleCount
 	    = C_SPIDER_PROP(mSpider).mMinWaitCycles()
 	    + NsMathI::getRand(NsLibMath<int>::abs(C_SPIDER_PROP(mSpider).mMaxWaitCycles() - C_SPIDER_PROP(mSpider).mMinWaitCycles()) + 1) - 1;
 	mSpider->setLoopCounter(0);
@@ -490,9 +484,9 @@ void SpiderAi::dieState()
 		mSpider->mSpiderLeg->createSmallSparkEffect(1);
 	}
 
-	if (timer > C_SPIDER_PROP(mSpider).mDeadBombEffectDelay() && mSpider->_3BB) {
+	if (timer > C_SPIDER_PROP(mSpider).mDeadBombEffectDelay() && mSpider->mCanCreateDeadBombFx) {
 		mSpider->mSpiderLeg->createDeadBombEffect();
-		mSpider->_3BB = 0;
+		mSpider->mCanCreateDeadBombFx = 0;
 	}
 
 	if (timer > timings[0]) {
@@ -579,7 +573,7 @@ void SpiderAi::shakeOffState()
  */
 void SpiderAi::waitState()
 {
-	if (mSpider->getLoopCounter() >= mSpider->_3BC) {
+	if (mSpider->getLoopCounter() >= mSpider->mActiveWalkCycleCount) {
 		mSpider->mAnimator.finishMotion(PaniMotionInfo(-1, this));
 	}
 }
