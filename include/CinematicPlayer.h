@@ -23,31 +23,31 @@ struct ActorInstance;
 /**
  * @brief Enum for cinematic player flags.
  */
-enum CinematicPlayerFlags {
-	CINFLAG_Unk0               = 1 << 0,  ///< 0x1, weird mix of use cases - fixed target camera?
-	CINFLAG_Unk1               = 1 << 1,  ///< 0x2, only used by day end cave/yakushima/last?
-	CINFLAG_Unk2               = 1 << 2,  ///< 0x4, weird mix of use cases, used by half?
-	CINFLAG_Unk3               = 1 << 3,  ///< 0x8, 3-5 only used by meet pikmin cutscenes (incl. bombs)
-	CINFLAG_Unk4               = 1 << 4,  ///< 0x10,
-	CINFLAG_Unk5               = 1 << 5,  ///< 0x20,
-	CINFLAG_Unk6               = 1 << 6,  ///< 0x40, weird mix of use cases, but used by most
-	CINFLAG_UseLights          = 1 << 7,  ///< 0x80, use scene light data from file - mainly for space/atmosphere cutscenes.
-	CINFLAG_TakeOff            = 1 << 8,  ///< 0x100, use special takeoff cutscene logic when deciding when to play.
-	CINFLAG_FadeIn             = 1 << 9,  ///< 0x200, fade in from black - only used by landing in area cutscenes.
-	CINFLAG_Unk10              = 1 << 10, ///< 0x400, used by onyon cutscenes?
-	CINFLAG_Unk11              = 1 << 11, ///< 0x800, 11-16 are usually used together (day end don't use 11 or 12)
-	CINFLAG_Unk12              = 1 << 12, ///< 0x1000,
-	CINFLAG_Unk13              = 1 << 13, ///< 0x2000,
-	CINFLAG_Unk14              = 1 << 14, ///< 0x4000,
-	CINFLAG_Unk15              = 1 << 15, ///< 0x8000,
-	CINFLAG_Unk16              = 1 << 16, ///< 0x10000,
-	CINFLAG_UseStaticCamera    = 1 << 17, ///< 0x20000, only used by Demo12.
-	CINFLAG_Unk18              = 1 << 18, ///< 0x40000, used by discover main engine + discover onyons?
-	CINFLAG_Unk19              = 1 << 19, ///< 0x80000, only used by Demo12?
-	CINFLAG_Unk20              = 1 << 20, ///< 0x100000, only used by olimin cutscene?
-	CINFLAG_Unk21              = 1 << 21, ///< 0x200000, used by parts and upgrades cutscenes?
-	CINFLAG_DoCameraTransition = 1 << 22, ///< 0x400000, never used by a demo.
-};
+DEFINE_ENUM_TYPE(CinePlayerFlags,
+                 Localized      = 1 << 0,  // 0x1
+                 Unknown        = 1 << 1,  // 0x2
+                 HideNavi       = 1 << 2,  // 0x4
+                 HideBluePiki   = 1 << 3,  // 0x8
+                 HideRedPiki    = 1 << 4,  // 0x10
+                 HideYellowPiki = 1 << 5,  // 0x20
+                 NaviNoAI       = 1 << 6,  // 0x40
+                 NonGameMovie   = 1 << 7,  // 0x80
+                 Concurrent     = 1 << 8,  // 0x100
+                 CameraBlend    = 1 << 9,  // 0x200
+                 ShowTekis      = 1 << 10, // 0x400
+                 ShowFreePiki   = 1 << 11, // 0x800
+                 UpdateFreePiki = 1 << 12, // 0x1000
+                 ShowFormPiki   = 1 << 13, // 0x2000
+                 UpdateFormPiki = 1 << 14, // 0x4000
+                 ShowWorkPiki   = 1 << 15, // 0x8000
+                 UpdateWorkPiki = 1 << 16, // 0x10000
+                 ObjWatching    = 1 << 17, // 0x20000
+                 ShowPellets    = 1 << 18, // 0x40000
+                 PauseAll       = 1 << 19, // 0x80000
+                 HideRedCont    = 1 << 20, // 0x100000
+                 PikiNearUfo    = 1 << 21, // 0x200000
+                 CameraReturn   = 1 << 22, // 0x400000
+);
 
 /**
  * @brief Enum for cutscene skipping flags.

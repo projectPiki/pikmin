@@ -235,7 +235,7 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 		type = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
 	}
 	info->mPlayer = new CinematicPlayer(info->mName);
-	if (mIsGameCam && info->mPlayer->mFlags & CINFLAG_FadeIn) {
+	if (mIsGameCam && info->mPlayer->mFlags & CinePlayerFlags::CameraBlend) {
 		mInitialCamBlend = 1.0f;
 		mIsGameCam       = false;
 	}
@@ -445,7 +445,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	PRINT("movie attach\n");
 	gsys->attachObjs();
 
-	if (pos && (info->mPlayer->mFlags & CINFLAG_Unk0)) {
+	if (pos && (info->mPlayer->mFlags & CinePlayerFlags::Localized)) {
 		if (pos && rot) {
 			PRINT("    localized at (%.1f, %.1f, %.1f) (%.1f, %.1f, %.1f)\n", pos->x, pos->y, pos->z, rot->x, rot->y, rot->z);
 		}
@@ -464,12 +464,12 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 		doPlayMovie = true;
 	} else {
 		// something's currently playing - check if we should override it
-		if (info->mPlayer->mFlags & CINFLAG_TakeOff) {
+		if (info->mPlayer->mFlags & CinePlayerFlags::Concurrent) {
 			bool check = false;
 			// check if all queued movies have takeoff flag
 			FOREACH_NODE(MovieInfo, mStackInfoList.mChild, stackInfo)
 			{
-				if (!(stackInfo->mPlayer->mFlags & CINFLAG_TakeOff)) {
+				if (!(stackInfo->mPlayer->mFlags & CinePlayerFlags::Concurrent)) {
 					check = true;
 					break;
 				}
@@ -485,7 +485,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	if (doPlayMovie) {
 		PRINT("playing movie %s\n", info->mName);
 		initMovieFlags(info);
-		if (info->mPlayer->mFlags & CINFLAG_Unk19) {
+		if (info->mPlayer->mFlags & CinePlayerFlags::PauseAll) {
 			gameflow.mDisableController = TRUE;
 		}
 		info->update();
@@ -533,7 +533,7 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
  */
 void MoviePlayer::initMovieFlags(MovieInfo* info)
 {
-	bool doHideNavi = (info->mPlayer->mFlags & CINFLAG_Unk2) != 0;
+	bool doHideNavi = (info->mPlayer->mFlags & CinePlayerFlags::HideNavi) != 0;
 	FOREACH_NODE(SceneCut, info->mPlayer->mSceneList.mChild, cut)
 	{
 		FOREACH_NODE(ActorInstance, cut->mActorList.mChild, actor)
@@ -544,22 +544,25 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 			}
 		}
 	}
-	if (info->mPlayer->mFlags & CINFLAG_UseLights) {
+	if (info->mPlayer->mFlags & CinePlayerFlags::NonGameMovie) {
 		PRINT("Killing all effects!!!\n");
 		effectMgr->killAll();
 	}
 
-	if (info->mPlayer->mFlags & CINFLAG_DoCameraTransition) {
+	if (info->mPlayer->mFlags & CinePlayerFlags::CameraReturn) {
 		mCamTransitionFactor = 1.0f;
 	}
 
 	if (gameflow.mGameInterface) {
-		gameflow.mGameInterface->message(MOVIECMD_StartMovie,
-		                                 (doHideNavi ? 0x80000000 : 0)
-		                                     | info->mPlayer->mFlags
-		                                           & (CINFLAG_Unk2 | CINFLAG_Unk3 | CINFLAG_Unk4 | CINFLAG_Unk5 | CINFLAG_Unk6
-		                                              | CINFLAG_Unk10 | CINFLAG_Unk11 | CINFLAG_Unk12 | CINFLAG_Unk13 | CINFLAG_Unk14
-		                                              | CINFLAG_Unk15 | CINFLAG_Unk16 | CINFLAG_Unk18 | CINFLAG_Unk20 | CINFLAG_Unk21));
+		gameflow.mGameInterface->message(
+		    MOVIECMD_StartMovie,
+		    (doHideNavi ? 0x80000000 : 0)
+		        | info->mPlayer->mFlags
+		              & (CinePlayerFlags::HideNavi | CinePlayerFlags::HideBluePiki | CinePlayerFlags::HideRedPiki
+		                 | CinePlayerFlags::HideYellowPiki | CinePlayerFlags::NaviNoAI | CinePlayerFlags::ShowTekis
+		                 | CinePlayerFlags::ShowFreePiki | CinePlayerFlags::UpdateFreePiki | CinePlayerFlags::ShowFormPiki
+		                 | CinePlayerFlags::UpdateFormPiki | CinePlayerFlags::ShowWorkPiki | CinePlayerFlags::UpdateWorkPiki
+		                 | CinePlayerFlags::ShowPellets | CinePlayerFlags::HideRedCont | CinePlayerFlags::PikiNearUfo));
 	}
 }
 
@@ -609,7 +612,8 @@ void MoviePlayer::update()
 		next = (MovieInfo*)info->mNext;
 		gameflow.mDemoFlags
 		    |= info->mPlayer->mFlags
-		     & (CINFLAG_Unk2 | CINFLAG_Unk3 | CINFLAG_Unk4 | CINFLAG_Unk5 | CINFLAG_Unk6 | CINFLAG_UseLights | CINFLAG_Unk10);
+		     & (CinePlayerFlags::HideNavi | CinePlayerFlags::HideBluePiki | CinePlayerFlags::HideRedPiki | CinePlayerFlags::HideYellowPiki
+		        | CinePlayerFlags::NaviNoAI | CinePlayerFlags::NonGameMovie | CinePlayerFlags::ShowTekis);
 		if (mInitialCamBlend > 0.0f) {
 			mInitialCamBlend -= gsys->getFrameTime() * 0.6f;
 			if (mInitialCamBlend < 0.0f) {
@@ -626,7 +630,7 @@ void MoviePlayer::update()
 			info->mPlayer->mCameraBlendRatio = (sinf(mInitialCamBlend * PI - HALF_PI) + 1.0f) * 0.5f;
 		}
 
-		if (info->mPlayer && info->mPlayer->mTarget && info->mPlayer->mFlags & CINFLAG_UseStaticCamera) {
+		if (info->mPlayer && info->mPlayer->mTarget && info->mPlayer->mFlags & CinePlayerFlags::ObjWatching) {
 			info->mPlayer->mUseStaticCamera = true;
 			info->mPlayer->mStaticLookAt    = info->mPlayer->mTarget->mPosition;
 		}
@@ -652,7 +656,7 @@ void MoviePlayer::update()
 					break;
 				}
 				// queue up all the takeoff movies at once
-				if (!(static_cast<MovieInfo*>(mStackInfoList.mChild)->mPlayer->mFlags & CINFLAG_TakeOff)) {
+				if (!(static_cast<MovieInfo*>(mStackInfoList.mChild)->mPlayer->mFlags & CinePlayerFlags::Concurrent)) {
 					break;
 				}
 			}
@@ -749,7 +753,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 	while (info) {
 		CinematicPlayer* cin = info->mPlayer;
 		MovieInfo* next      = (MovieInfo*)info->mNext;
-		if (cin->mFlags & CINFLAG_UseLights) {
+		if (cin->mFlags & CinePlayerFlags::NonGameMovie) {
 			cin->addLights(gfx);
 		}
 		info = next;
