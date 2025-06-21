@@ -13,6 +13,9 @@
 #define VI_BITMASK(index) (1ull << (63 - (index)))
 
 static vu32 retraceCount;
+#if defined(VERSION_GPIE01_00)
+static vu32 changeMode; // This exists up here for some reason.
+#endif
 static u32 flushFlag;
 static OSThreadQueue retraceQueue;
 static VIRetraceCallback PreCB;
@@ -22,10 +25,13 @@ static u32 encoderType;
 static s16 displayOffsetH;
 static s16 displayOffsetV;
 
+#if defined(VERSION_GPIE01_00)
+static vu64 changed;
+#else
 static vu32 changeMode;
 static vu64 changed;
-
 static vu32 shdwChangeMode;
+#endif
 static vu64 shdwChanged;
 
 static u32 FBSet;
@@ -107,19 +113,27 @@ static BOOL VISetRegs(void)
 {
 	int regIndex;
 
-	if (!((shdwChangeMode == 1) && (getCurrentFieldEvenOdd() == 0))) {
+#if defined(VERSION_GPIE01_00)
+	if (!((changeMode == 1) && (getCurrentFieldEvenOdd() == 0)))
+#else
+	if (!((shdwChangeMode == 1) && (getCurrentFieldEvenOdd() == 0)))
+#endif
+	{
 		while (shdwChanged) {
 			regIndex           = cntlzd(shdwChanged);
 			__VIRegs[regIndex] = shdwRegs[regIndex];
 			shdwChanged &= ~(VI_BITMASK(regIndex));
 		}
 
+#if defined(VERSION_GPIE01_00)
+		changeMode = 0;
+#else
 		shdwChangeMode = 0;
+#endif
 
 		return TRUE;
 	}
 	return FALSE;
-	// UNUSED FUNCTION
 }
 
 /*
@@ -370,12 +384,15 @@ void VIInit(void)
 		__VIInit(VI_TVMODE_NTSC_INT);
 	}
 
-	retraceCount   = 0;
-	changed        = 0;
-	shdwChanged    = 0;
-	changeMode     = 0;
+	retraceCount = 0;
+	changed      = 0;
+	shdwChanged  = 0;
+	changeMode   = 0;
+#if defined(VERSION_GPIE01_00)
+#else
 	shdwChangeMode = 0;
-	flushFlag      = 0;
+#endif
+	flushFlag = 0;
 
 	__VIRegs[VI_FCT_0U] = ((((taps[0])) << 0) | (((taps[1] & ((1 << (6)) - 1))) << 10));
 	__VIRegs[VI_FCT_0]  = ((((taps[1] >> 6)) << 0) | (((taps[2])) << 4));
@@ -722,22 +739,37 @@ void VIConfigure(const GXRenderModeObj* obj)
 	BOOL enabled;
 	u32 newNonInter, tvInBootrom, tvInGame;
 
-	enabled     = OSDisableInterrupts();
-	newNonInter = (u32)obj->viTVmode & 3;
+	enabled = OSDisableInterrupts();
 
+#if defined(VERSION_GPIE01_00)
+	if (obj->viTVmode == VI_TVMODE_NTSC_PROG) {
+		HorVer.nonInter = VI_TVMODE_NTSC_PROG;
+		changeMode      = 1;
+	} else {
+		newNonInter = (u32)obj->viTVmode & 1;
+		if (HorVer.nonInter != newNonInter) {
+			changeMode = 1;
+		}
+		HorVer.nonInter = newNonInter;
+	}
+#else
+	newNonInter = (u32)obj->viTVmode & 3;
 	if (HorVer.nonInter != newNonInter) {
 		changeMode      = 1;
 		HorVer.nonInter = newNonInter;
 	}
+#endif
 
 	tvInBootrom = VIGetTvFormat();
 	tvInGame    = (u32)obj->viTVmode >> 2;
-	// tvInBootrom = *(u32*)OSPhysicalToCached(0xCC);
+#if 0
+	tvInBootrom = *(u32*)OSPhysicalToCached(0xCC);
 
-	// if ((tvInGame == VI_NTSC) || (tvInGame == VI_MPAL)) {
-	// } else {
-	// 	HorVer.tv = tvInGame;
-	// }
+	if ((tvInGame == VI_NTSC) || (tvInGame == VI_MPAL)) {
+	} else {
+		HorVer.tv = tvInGame;
+	}
+#endif
 
 	HorVer.tv        = tvInBootrom;
 	HorVer.dispPosX  = obj->viXOrigin;
@@ -755,7 +787,11 @@ void VIConfigure(const GXRenderModeObj* obj)
 	                         : (HorVer.xfbMode == VI_XFBMODE_SF) ? (u16)(2 * HorVer.panSizeY)
 	                                                             : HorVer.panSizeY);
 
-	tm            = getTiming((VITVMode)VI_TVMODE(HorVer.tv, HorVer.nonInter));
+#if defined(VERSION_GPIE01_00)
+	tm = getTiming(obj->viTVmode);
+#else
+	tm = getTiming((VITVMode)VI_TVMODE(HorVer.tv, HorVer.nonInter));
+#endif
 	HorVer.timing = tm;
 
 	AdjustPosition(tm->acv);
@@ -825,8 +861,11 @@ void VIFlush(void)
 	u32 val; // for stack.
 
 	enabled = OSDisableInterrupts();
+#if defined(VERSION_GPIE01_00)
+#else
 	shdwChangeMode |= changeMode;
 	changeMode = 0;
+#endif
 	shdwChanged |= changed;
 
 	while (changed) {
