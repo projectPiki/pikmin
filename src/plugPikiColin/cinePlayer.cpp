@@ -1269,7 +1269,7 @@ void CinematicPlayer::genSection(AgeServer& server)
 	server.NewBit("show Pellets", CinePlayerFlags::ShowPellets, 0);
 	server.NewBit("piki near ufo", CinePlayerFlags::PikiNearUfo, 0);
 	server.NewBit("hide Red Cont", CinePlayerFlags::HideRedCont, 0);
-	server.NewBit("nongame movie", CinePlayerFlags::NonGameMovie, 0);
+	server.NewBit("nongame movie", CinePlayerFlags::UseLights, 0);
 	server.NewBit("camera blend", CinePlayerFlags::CameraBlend, 0);
 	server.NewBit("camera return", CinePlayerFlags::CameraReturn, 0);
 	server.NewBit("obj watching", CinePlayerFlags::ObjWatching, 0);

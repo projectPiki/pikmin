@@ -31,6 +31,12 @@ enum CorePauseFlags {
 	COREPAUSE_Unk16 = 1 << 15, // 0x8000
 };
 
+DEFINE_ENUM_TYPE(GameHideFlags,
+                 ShowPellets             = 1 << 0, // 0x1
+                 ShowPelletsExceptSucked = 1 << 1, // 0x2
+                 ShowTeki                = 1 << 2, // 0x4 aka enemies
+);
+
 /**
  * @brief TODO
  */
@@ -79,7 +85,7 @@ struct GameCoreSection : public Node {
 	Controller* mController;          // _20
 	u8 _24[0x4];                      // _24, unknown
 	int mDrawHideType;                // _28, enum todo
-	u32 mHideFlags;                   // _2C, unknown
+	u32 mHideFlags;                   // _2C, see GameHideFlags enum
 	u8 mMovieBackCamera;              // _30
 	u8 mDoneSundownWarn;              // _31
 	u32 _34;                          // _34, unknown

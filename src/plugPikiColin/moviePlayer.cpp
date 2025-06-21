@@ -544,7 +544,7 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 			}
 		}
 	}
-	if (info->mPlayer->mFlags & CinePlayerFlags::NonGameMovie) {
+	if (info->mPlayer->mFlags & CinePlayerFlags::UseLights) {
 		PRINT("Killing all effects!!!\n");
 		effectMgr->killAll();
 	}
@@ -613,7 +613,7 @@ void MoviePlayer::update()
 		gameflow.mDemoFlags
 		    |= info->mPlayer->mFlags
 		     & (CinePlayerFlags::HideNavi | CinePlayerFlags::HideBluePiki | CinePlayerFlags::HideRedPiki | CinePlayerFlags::HideYellowPiki
-		        | CinePlayerFlags::NaviNoAI | CinePlayerFlags::NonGameMovie | CinePlayerFlags::ShowTekis);
+		        | CinePlayerFlags::NaviNoAI | CinePlayerFlags::UseLights | CinePlayerFlags::ShowTekis);
 		if (mInitialCamBlend > 0.0f) {
 			mInitialCamBlend -= gsys->getFrameTime() * 0.6f;
 			if (mInitialCamBlend < 0.0f) {
@@ -753,7 +753,7 @@ void MoviePlayer::addLights(Graphics& gfx)
 	while (info) {
 		CinematicPlayer* cin = info->mPlayer;
 		MovieInfo* next      = (MovieInfo*)info->mNext;
-		if (cin->mFlags & CinePlayerFlags::NonGameMovie) {
+		if (cin->mFlags & CinePlayerFlags::UseLights) {
 			cin->addLights(gfx);
 		}
 		info = next;

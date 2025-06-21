@@ -129,9 +129,11 @@ void GameCoreSection::updateTextDemo()
  */
 void GameCoreSection::startMovie(u32 flags, bool b)
 {
+	// Uses CinePlayerFlags
+
 	mMovieBackCamera       = b;
 	GoalItem::demoHideFlag = 0;
-	if (flags & 0x100000) {
+	if (flags & CinePlayerFlags::HideRedCont) {
 		GoalItem::demoHideFlag = 2;
 	}
 
@@ -147,22 +149,27 @@ void GameCoreSection::startMovie(u32 flags, bool b)
 	}
 
 	pikiMgr->hideAll();
-	if (flags & 0x800) {
+	if (flags & CinePlayerFlags::ShowFreePiki) {
 		pikiMgr->setRefreshFlag(PMREF_FreePiki);
 	}
-	if (flags & 0x1000) {
+
+	if (flags & CinePlayerFlags::UpdateFreePiki) {
 		pikiMgr->setUpdateFlag(PMUPDATE_FreePiki);
 	}
-	if (flags & 0x2000) {
+
+	if (flags & CinePlayerFlags::ShowFormPiki) {
 		pikiMgr->setRefreshFlag(PMREF_FormationPiki);
 	}
-	if (flags & 0x4000) {
+
+	if (flags & CinePlayerFlags::UpdateFormPiki) {
 		pikiMgr->setUpdateFlag(PMUPDATE_FormationPiki);
 	}
-	if (flags & 0x8000) {
+
+	if (flags & CinePlayerFlags::ShowWorkPiki) {
 		pikiMgr->setRefreshFlag(PMREF_WorkPiki);
 	}
-	if (flags & 0x10000) {
+
+	if (flags & CinePlayerFlags::UpdateWorkPiki) {
 		pikiMgr->setUpdateFlag(PMUPDATE_WorkPiki);
 	}
 
@@ -186,7 +193,7 @@ void GameCoreSection::startMovie(u32 flags, bool b)
 		PRINT("+ refresh work piki\n");
 	}
 
-	if (flags & 0x200000) {
+	if (flags & CinePlayerFlags::PikiNearUfo) {
 		pikiMgr->setUpdateFlag(PMUPDATE_Unk4);
 	}
 
@@ -236,14 +243,15 @@ void GameCoreSection::startMovie(u32 flags, bool b)
 		{
 			Piki* piki = (Piki*)(*it);
 			int color  = piki->mColor;
-			if ((color == Blue && flags & 0x8) || (color == Red && flags & 0x10) || (color == Yellow && flags & 0x20)) {
+			if ((color == Blue && flags & CinePlayerFlags::HideBluePiki) || (color == Red && flags & CinePlayerFlags::HideRedPiki)
+			    || (color == Yellow && flags & CinePlayerFlags::HideYellowPiki)) {
 				piki->mFreeLightEffect->stop();
 			}
 		}
 	}
 
-	if (flags & 0x400) {
-		mHideFlags |= 4;
+	if (flags & CinePlayerFlags::ShowTekis) {
+		mHideFlags |= GameHideFlags::ShowTeki;
 	}
 }
 
@@ -311,7 +319,7 @@ void GameCoreSection::endMovie(int movieIdx)
  */
 bool GameCoreSection::hideTeki()
 {
-	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & 4);
+	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & GameHideFlags::ShowTeki);
 }
 
 /*
@@ -321,7 +329,7 @@ bool GameCoreSection::hideTeki()
  */
 bool GameCoreSection::hideAllPellet()
 {
-	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & 1);
+	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & GameHideFlags::ShowPellets);
 }
 
 /*
@@ -331,7 +339,7 @@ bool GameCoreSection::hideAllPellet()
  */
 bool GameCoreSection::hidePelletExceptSucked()
 {
-	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & 2);
+	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & GameHideFlags::ShowPelletsExceptSucked);
 }
 
 /*
