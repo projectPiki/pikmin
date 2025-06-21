@@ -285,7 +285,9 @@ struct BaseShape : public CoreNode {
 		}
 		return mCollGroups[x + z * mGridSizeX];
 	}
-	void removeMtxDependancy();
+
+	// todo, use .cpp version once shapeBase is linked
+	void removeMtxDependancy() { }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

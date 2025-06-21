@@ -127,9 +127,9 @@ struct PolyObjectMgr : public ObjectMgr {
 	// unused/inlined:
 	int getEmptyIndex();
 	int getIndex(Creature*);
-	int getTemplateIndex(int);
-	int getTemplateID(int);
-	int getNumTemplates();
+	int getTemplateIndex(int i);
+	int getTemplateID(int i) { return mEntries[i].mClassId; }
+	int getNumTemplates() { return mEntryCount; }
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

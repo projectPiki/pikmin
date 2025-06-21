@@ -1,6 +1,8 @@
 #include "Generator.h"
 #include "Boss.h"
 #include "sysNew.h"
+#include "Age.h"
+#include "Pellet.h"
 #include "DebugLog.h"
 
 /*
@@ -232,3 +234,60 @@ Creature* GenObjectBoss::birth(BirthInfo& info)
 
 	return boss;
 }
+
+#ifdef DEVELOP
+
+void GenObjectBoss::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("ボスの種類", &mBossID, 252); // boss type
+	server.NewOption("ダマグモ", 0);
+	server.NewOption("ヘビガラス１", 1);
+	server.NewOption("ヘビガラス２", 7);
+	server.NewOption("スライム", 2);
+	server.NewOption("キングチャッピー", 3);
+	server.NewOption("コガネ", 4);
+	server.NewOption("ポンガシ草", 5);
+	server.NewOption("キングの背中", 6);
+	server.NewOption("間欠泉１", 8);
+	server.NewOption("間欠泉２", 9);
+	server.EndOptionBox();
+
+	server.StartOptionBox("ペレットの種類", &mItemIndex, 252);
+	server.NewOption("１ペレット", 0);
+	server.NewOption("５ペレット", 1);
+	server.NewOption("１０ペレット", 2);
+	server.NewOption("２０ペレット", 3);
+	server.EndOptionBox();
+
+	server.StartOptionBox("ペレットの色", &mItemColour, 252);
+	server.NewOption("青ペレット", 0);
+	server.NewOption("赤ペレット", 1);
+	server.NewOption("黄ペレット", 2);
+	server.NewOption("ランダム", 3);
+	server.EndOptionBox();
+
+	server.StartOptionBox("ペレットの数", &mItemCount, 252);
+	for (int i = 0; i < 16; i++) {
+		char id[4];
+		if (i / 10 < 1) {
+			id[0] = i % 10 + '0';
+			id[1] = 0;
+		} else {
+			id[0] = i / 10 + '0';
+			id[1] = i % 10 + '0';
+			id[2] = 0;
+		}
+		server.NewOption(id, i);
+	}
+	server.EndOptionBox();
+
+	server.StartOptionBox("ＵＦＯパーツ", &mPelletConfigIdx, 252);
+	server.NewOption("none", -1);
+	for (int i = 0; i < pelletMgr->getNumConfigs(); i++) {
+		PelletConfig* config = pelletMgr->getConfigFromIdx(i);
+		server.NewOption(config->mPelletName().mString, config->mPelletId.mId);
+	}
+	server.EndOptionBox();
+}
+
+#endif

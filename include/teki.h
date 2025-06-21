@@ -148,6 +148,8 @@ struct TekiEvent {
 struct TekiShapeObject {
 	TekiShapeObject(Shape*);
 
+	void genAge(AgeServer&);
+
 	Shape* mShape;            // _00
 	AnimContext mAnimContext; // _04
 	AnimMgr* mAnimMgr;        // _14

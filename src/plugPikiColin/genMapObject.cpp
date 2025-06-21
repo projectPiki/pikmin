@@ -2,6 +2,7 @@
 #include "DynSimulator.h"
 #include "DynObject.h"
 #include "MapMgr.h"
+#include "Age.h"
 #include "sysNew.h"
 #include "DebugLog.h"
 
@@ -39,7 +40,7 @@ static GenObject* makeObjectMapObject()
 GenObjectMapObject::GenObjectMapObject()
     : GenObject('mobj', "create MAP OBJECT")
 {
-	_18 = 0;
+	mObjType = 0;
 }
 
 /*
@@ -60,7 +61,7 @@ void GenObjectMapObject::initialise(MapMgr* mgr)
  */
 void GenObjectMapObject::doRead(RandomAccessStream& input)
 {
-	_18 = input.readInt();
+	mObjType = input.readInt();
 }
 
 /*
@@ -92,3 +93,25 @@ Creature* GenObjectMapObject::birth(BirthInfo&)
 	}
 	return obj;
 }
+
+#ifdef DEVELOP
+
+int numObjects = 8;
+
+static char* objectNames[] = { "see-saw", "log", "tabaco", "faller", "iwa", "mini see-saw", "kinoko", "lift" };
+
+void GenObjectMapObject::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("Map Object", (int*)&mObjType, 252);
+	for (int i = 0; i < numObjects; i++) {
+		server.NewOption(objectNames[i], i);
+	}
+	server.EndOptionBox();
+}
+
+void GenObjectMapObject::refreshSection(AgeServer& server)
+{
+	server.RefreshSection();
+}
+
+#endif

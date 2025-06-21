@@ -1,5 +1,6 @@
 #include "gameflow.h"
 #include "GlobalShape.h"
+#include "Shape.h"
 #include "DebugLog.h"
 
 /*
@@ -38,13 +39,7 @@ void exitCourse()
 void init()
 {
 	PRINT("* loading global shapes ...\n");
-	// TODO: Merge these code blocks once `removeMtxDependancy` becomes decompiled.
 #ifdef DEVELOP
-	arrowShape  = gameflow.loadShape("shapes/arrow.mod", true);
-	markerShape = gameflow.loadShape("shapes/oldMarkr.mod", true);
-	axisShape   = gameflow.loadShape("shapes/axis.mod", true);
-	enShape     = gameflow.loadShape("shapes/en.mod", true);
-#elif 0 // DLL only:
 	arrowShape = gameflow.loadShape("shapes/arrow.mod", true);
 	arrowShape->removeMtxDependancy();
 	markerShape = gameflow.loadShape("shapes/oldMarkr.mod", true);

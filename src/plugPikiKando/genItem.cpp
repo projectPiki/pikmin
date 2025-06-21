@@ -11,6 +11,7 @@
 #include "PikiHeadItem.h"
 #include "BombItem.h"
 #include "gameflow.h"
+#include "Age.h"
 
 /*
  * --INFO--
@@ -288,3 +289,21 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 	}
 	return item;
 }
+
+#ifdef DEVELOP
+
+void GenObjectItem::doGenAge(AgeServer& server)
+{
+	if (getLatestVersion() != 'v0.0') {
+		server.NewEditor("stage name", mName1, 32);
+		server.NewEditor("print name", mName2, 32);
+	}
+
+	server.StartOptionBox("アイテム", &mObjType, 252); // item
+	for (int i = 0; i < itemMgr->getNumTemplates(); i++) {
+		server.NewOption(ObjType::getName(itemMgr->getTemplateID(i)), i);
+	}
+	server.EndOptionBox();
+}
+
+#endif

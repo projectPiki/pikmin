@@ -153,6 +153,10 @@ struct ParaMultiParameters {
 	virtual void read(Stream&);  // _08
 	virtual void write(Stream&); // _0C
 	virtual void print();        // _10
+
+#ifdef DEVELOP
+	virtual void genAge(AgeServer&) { }
+#endif
 };
 
 #endif

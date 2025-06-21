@@ -3,6 +3,7 @@
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "sysNew.h"
+#include "Age.h"
 #include "GlobalShape.h"
 
 /*
@@ -23,7 +24,13 @@ MapMgr* GenObjectMapParts::mapMgr;
 int numShapes = 5;
 
 static char* shapeNames[] = { "box", "1", "2", "3", "log" };
-static char* kindNames[]  = { "slider", "entity", "dynamic" };
+
+#ifdef DEVELOP
+int numKinds             = 3;
+static char* partNames[] = { "mapparts/cone.mod", "mapparts/cylinder.mod", "mapparts/cube.mod", "mapparts/board.mod" };
+int numParts             = 4;
+#endif
+static char* kindNames[] = { "slider", "entity", "dynamic" };
 
 /*
  * --INFO--
@@ -61,9 +68,9 @@ void GenObjectMapParts::doRead(RandomAccessStream& input)
 		mStartPosition.y = input.readFloat();
 		mStartPosition.z = input.readFloat();
 
-		_84.x = input.readFloat();
-		_84.y = input.readFloat();
-		_84.z = input.readFloat();
+		mEndPosition.x = input.readFloat();
+		mEndPosition.y = input.readFloat();
+		mEndPosition.z = input.readFloat();
 	}
 }
 
@@ -102,7 +109,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	gfx.setLighting(true, nullptr);
 	shape->drawshape(gfx, *gfx.mCamera, nullptr);
 
-	globalPos = _84 + gen->getPos();
+	globalPos = mEndPosition + gen->getPos();
 	mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), globalPos);
 	gfx.calcViewMatrix(mtx2, mtx);
 	gfx.useMatrix(mtx, 0);
@@ -121,7 +128,7 @@ void GenObjectMapParts::render(Graphics& gfx, Generator* gen)
 	color1.set(255, 0, 0, 255);
 	GlobalShape::markerShape->mMaterialList->Colour() = color1;
 	GlobalShape::markerShape->drawshape(gfx, *gfx.mCamera, nullptr);
-	Vector3f globalPos2 = _84 + gen->getPos();
+	Vector3f globalPos2 = mEndPosition + gen->getPos();
 	mtx0.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), globalPos2);
 	gfx.calcViewMatrix(mtx0, mtx4);
 	gfx.useMatrix(mtx4, 0);
@@ -180,7 +187,7 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 		if (mUseStartOffset == 1) {
 			MapPartsPart* part   = new MapPartsPart(); // this is wrong
 			part->mStartPosition = mStartPosition + info.mPosition;
-			part->mEndPosition   = _84 + info.mPosition;
+			part->mEndPosition   = mEndPosition + info.mPosition;
 			PRINT("start(%.1f %.1f %.1f)\n", part->mStartPosition.x, part->mStartPosition.y, part->mStartPosition.z);
 			PRINT("start (%.1f %.1f %.1f) + info(%.1f %.1f %.1f)\n", mStartPosition.x, mStartPosition.y, mStartPosition.z, info.mPosition.x,
 			      info.mPosition.y, info.mPosition.z);
@@ -192,3 +199,47 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 
 	return nullptr;
 }
+
+#ifdef DEVELOP
+void GenObjectMapParts::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("マップパーツ", &mPartKind, 252); // Map Parts
+	for (int i = 0; i < numKinds; i++) {
+		server.NewOption(kindNames[i], i);
+	}
+	server.EndOptionBox();
+
+	server.StartOptionBox("シェイプ", &mShapeIndex, 252);
+	for (int i = 0; i < numShapes; i++) {
+		server.NewOption(shapeNames[i], i);
+	}
+	for (int i = 0; i < numParts; i++) {
+		server.NewOption(partNames[i], i + numShapes);
+	}
+	server.EndOptionBox();
+
+	server.setOnChange(new Delegate1<GenObjectMapParts, AgeServer&>(this, refreshSection));
+	server.StartOptionBox("移動形態", &mUseStartOffset, 252); // "movement type"
+	server.NewOption("固定", 0);                              // "Fixed"
+	server.NewOption("ライン", 1);                            // "Line"
+	server.EndOptionBox();
+	server.setOnChange((IDelegate*)nullptr);
+
+	if (mUseStartOffset == 1) {
+		server.NewLabel("始点オフセット"); // "Starting point offset"
+		server.NewEditor("x", &mStartPosition.x, -1000.0f, 1000.0f, 320);
+		server.NewEditor("y", &mStartPosition.y, -1000.0f, 1000.0f, 320);
+		server.NewEditor("z", &mStartPosition.z, -1000.0f, 1000.0f, 320);
+		server.NewLabel("終点オフセット"); // "End point offset"
+		server.NewEditor("x", &mEndPosition.x, -1000.0f, 1000.0f, 320);
+		server.NewEditor("y", &mEndPosition.y, -1000.0f, 1000.0f, 320);
+		server.NewEditor("z", &mEndPosition.z, -1000.0f, 1000.0f, 320);
+	}
+}
+
+void GenObjectMapParts::refreshSection(AgeServer& server)
+{
+	server.RefreshSection();
+}
+
+#endif

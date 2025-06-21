@@ -3522,3 +3522,19 @@ CollTriInfo* BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
 {
 	// UNUSED FUNCTION
 }
+
+#ifdef DEVELOP
+
+// TODO: UNCOMMENT THIS ONCE FILE IS LINKED
+
+// void BaseShape::removeMtxDependancy()
+//{
+//	for (int i = 0; i < mMeshCount; i++) {
+//		Mesh* mesh = &mMeshList[i];
+//		for (int j = 0; j < mesh->mMtxGroupCount; j++) {
+//			mesh->mMtxGroupList[j].mDepLength = 0;
+//		}
+//	}
+//}
+
+#endif

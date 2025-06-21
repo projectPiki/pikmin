@@ -414,6 +414,6 @@ void PelletGoalState::exec(Pellet* pelt)
 void PelletGoalState::cleanup(Pellet*)
 {
 	if (mTargetIsShip) {
-		utEffectMgr->kill(21);
+		utEffectMgr->kill(KandoEffect::UfoSuck);
 	}
 }

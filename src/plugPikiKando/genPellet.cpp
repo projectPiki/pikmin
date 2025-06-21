@@ -3,6 +3,7 @@
 #include "Dolphin/os.h"
 #include "DebugLog.h"
 #include "Pellet.h"
+#include "Age.h"
 #include "PelletState.h"
 
 /*
@@ -116,3 +117,17 @@ Creature* GenObjectPellet::birth(BirthInfo& info)
 	}
 	return pelt;
 }
+
+#ifdef DEVELOP
+
+void GenObjectPellet::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("ペレット", (int*)&mPelletId.mId, 252);
+	for (int i = 0; i < pelletMgr->getNumConfigs(); i++) {
+		PelletConfig* config = pelletMgr->getConfigFromIdx(i);
+		server.NewOption(config->mPelletName().mString, config->mPelletId.mId);
+	}
+	server.EndOptionBox();
+}
+
+#endif

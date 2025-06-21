@@ -4,6 +4,7 @@
 #include "TekiParameters.h"
 #include "Dolphin/os.h"
 #include "teki.h"
+#include "Age.h"
 #include "DebugLog.h"
 
 /*
@@ -87,12 +88,14 @@ void GenObjectTeki::doWrite(RandomAccessStream& output)
 void GenObjectTeki::updateUseList(Generator*, int)
 {
 	if (mTekiType < TEKI_START || mTekiType >= TEKI_TypeCount) {
+		ERROR("GenObjectTeki::updateUseList:kind:%d\n", mTekiType);
 		return;
 	}
 
 	tekiMgr->mUsingType[mTekiType] = true;
 
-	if (!tekiMgr->mTekiParams[mTekiType]) {
+	if (!tekiMgr->hasType(mTekiType)) {
+		ERROR("!tekiMgr->hasType(kind)\n");
 		return;
 	}
 
@@ -109,9 +112,6 @@ void GenObjectTeki::updateUseList(Generator*, int)
  */
 Creature* GenObjectTeki::birth(BirthInfo& info)
 {
-	// TODO: work out the right inlines for this
-	STACK_PAD_VAR(3);
-
 	Teki* teki = tekiMgr->newTeki(mTekiType);
 	if (!teki) {
 		return nullptr;
@@ -124,10 +124,24 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	teki->reset();
 	teki->startAI(0);
 	teki->mRotation = info.mRotation;
-	if (info.mGenerator->mGenType->mAdjustFaceDirection()) {
+	if (info.mGenerator->doAdjustFaceDir()) {
 		teki->setCreatureFlag(CF_FaceDirAdjust);
 	}
 
-	teki->mRebirthDay = info.mGenerator->mGenType->_18();
+	teki->mRebirthDay = info.mGenerator->getRebirthDay();
 	return teki;
 }
+
+#ifdef DEVELOP
+
+void GenObjectTeki::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("敵", &mTekiType, 252);
+	for (int i = 0; i < TEKI_TypeCount; i++) {
+		server.NewOption(tekiMgr->getTypeName(i), i);
+	}
+	server.EndOptionBox();
+	mPersonality->genAge(server);
+}
+
+#endif

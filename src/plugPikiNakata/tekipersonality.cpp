@@ -1,5 +1,7 @@
 #include "TekiPersonality.h"
 #include "sysNew.h"
+#include "Age.h"
+#include "Pellet.h"
 #include "ParaParameters.h"
 #include "DebugLog.h"
 
@@ -174,3 +176,39 @@ void TekiPersonality::write(RandomAccessStream& output)
 	mParams->write(output);
 	PRINT("TekiPersonality::write<\n");
 }
+
+#ifdef DEVELOP
+
+void TekiPersonality::genAge(AgeServer& server)
+{
+	PRINT("TekiPersonality::genAge>%08x\n", mParams);
+	int id = 0;
+	server.StartOptionBox("pellet kind", &mPelletKind, 252);
+	server.NewOption("pellet 1", id++);
+	server.NewOption("pellet 5", id++);
+	server.NewOption("pellet 10", id++);
+	server.NewOption("pellet 20", id);
+	server.EndOptionBox();
+
+	id = 0;
+	server.StartOptionBox("pellet color", &mPelletColor, 252);
+	server.NewOption("blue", id++);
+	server.NewOption("red", id++);
+	server.NewOption("yellow", id);
+	server.NewOption("random", -1);
+	server.EndOptionBox();
+
+	server.StartOptionBox("item", (int*)&mID.mId, 252);
+	for (int i = 0; i < pelletMgr->getNumConfigs(); i++) {
+		PelletConfig* config = pelletMgr->getConfigFromIdx(i);
+		server.NewOption(config->mPelletName().mString, config->mPelletId.mId);
+	}
+
+	server.NewOption("none", ID32('none').mId);
+	server.EndOptionBox();
+
+	mParams->genAge(server);
+	PRINT("TekiPersonality::genAge<%08x\n", mParams);
+}
+
+#endif

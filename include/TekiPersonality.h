@@ -54,6 +54,8 @@ struct TekiPersonality {
 	void setF(int idx, f32 val) { mParams->setF(idx, val); }
 	void setI(int idx, int val) { mParams->setI(idx, val); }
 
+	void genAge(AgeServer&);
+
 	// _00 = VTBL
 	Vector3f mPosition;           // _04
 	Vector3f mNestPosition;       // _10

@@ -1,6 +1,7 @@
 #include "Generator.h"
 #include "sysNew.h"
 #include "Actor.h"
+#include "Age.h"
 #include "DebugLog.h"
 
 /*
@@ -59,3 +60,14 @@ Creature* GenObjectActor::birth(BirthInfo& info)
 	newActor->startAI(0);
 	return newActor;
 }
+
+#ifdef DEVELOP
+
+void GenObjectActor::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("Actor", (int*)&mActorId, 252);
+	server.NewOption("POLICE", 0);
+	server.EndOptionBox();
+}
+
+#endif

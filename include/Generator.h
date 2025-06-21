@@ -232,6 +232,8 @@ struct GenBase : public Parameters {
 	void readVersion(RandomAccessStream&);
 	void read(RandomAccessStream&);
 
+	void genAge(AgeServer&) { }
+
 	// _04 = VTBL
 	// _00-_04 = Parameters
 	u32 mID;      // _08
@@ -275,6 +277,10 @@ struct GenObjectActor : public GenObject {
 
 	static void initialise();
 
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
+
 	// _04     = VTBL
 	// _00-_18 = GenObject
 	u32 mActorId; // _18
@@ -305,6 +311,10 @@ struct GenObjectBoss : public GenObject {
 
 	static void initialise();
 
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
+
 	void readParameters(RandomAccessStream&);
 	void writeParameters(RandomAccessStream&);
 
@@ -328,6 +338,10 @@ struct GenObjectDebug : public GenObject {
 
 	static void initialise();
 
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&) { }
+#endif
+
 	// _04     = VTBL
 	// _00-_18 = GenObject
 	Parm<int> mCollision;    // _18, p00
@@ -350,6 +364,10 @@ struct GenObjectItem : public GenObject {
 	virtual Creature* birth(BirthInfo&);                 // _34
 
 	static void initialise();
+
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -376,12 +394,16 @@ struct GenObjectMapObject : public GenObject {
 
 	static void initialise(MapMgr*);
 
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
+	void refreshSection(AgeServer&);
+
 	static MapMgr* mapMgr;
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	// TODO: members
-	u32 _18; // _18, unknown
+	u32 mObjType; // _18
 };
 
 /**
@@ -400,7 +422,7 @@ struct GenObjectMapParts : public GenObject {
 		mShapeIndex     = 0;
 		mUseStartOffset = 0;
 		mStartPosition.set(0.0f, 0.0f, 0.0f);
-		_84.set(0.0f, 0.0f, 0.0f);
+		mEndPosition.set(0.0f, 0.0f, 0.0f);
 	}
 
 	virtual void doRead(RandomAccessStream&);   // _14
@@ -408,6 +430,11 @@ struct GenObjectMapParts : public GenObject {
 	virtual Creature* birth(BirthInfo&);        // _34
 
 	static void initialise(MapMgr*);
+
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
+	void refreshSection(AgeServer&);
 
 	static MapMgr* mapMgr;
 
@@ -423,7 +450,7 @@ struct GenObjectMapParts : public GenObject {
 	int mShapeIndex;         // _70
 	int mUseStartOffset;     // _74
 	Vector3f mStartPosition; // _78
-	Vector3f _84;            // _84
+	Vector3f mEndPosition;   // _84
 };
 
 /**
@@ -439,6 +466,10 @@ struct GenObjectNavi : public GenObject {
 	virtual Creature* birth(BirthInfo&);      // _34
 
 	static void initialise();
+
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&) { }
+#endif
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -457,6 +488,10 @@ struct GenObjectPellet : public GenObject {
 	virtual Creature* birth(BirthInfo&);         // _34
 
 	static void initialise();
+
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -479,6 +514,8 @@ struct GenObjectPiki : public GenObject {
 	virtual void ramLoadParameters(RandomAccessStream&); // _10
 	virtual Creature* birth(BirthInfo&);                 // _34
 
+	// no doGenAge here for some reason?
+
 	// _04     = VTBL
 	// _00-_18 = GenObject
 	Parm<int> mSpawnState; // _18, p00, 0:buried, 1:free, 2:team
@@ -497,6 +534,10 @@ struct GenObjectPlant : public GenObject {
 	virtual Creature* birth(BirthInfo&);         // _34
 
 	static void initialise();
+
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
@@ -518,6 +559,10 @@ struct GenObjectTeki : public GenObject {
 
 	static void initialise();
 
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
+
 	// _04     = VTBL
 	// _00-_18 = GenObject
 	TekiPersonality* mPersonality; // _18
@@ -538,6 +583,13 @@ struct GenObjectWorkObject : public GenObject {
 	virtual Creature* birth(BirthInfo&);                 // _34
 
 	static void initialise();
+
+#ifdef DEVELOP
+	virtual void doGenAge(AgeServer&);
+#endif
+
+	void changeNaviPos();
+	void setNaviPos();
 
 	// _04     = VTBL
 	// _00-_18 = GenObject

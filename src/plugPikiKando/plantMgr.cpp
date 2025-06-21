@@ -7,6 +7,7 @@
 #include "SoundMgr.h"
 #include "MapMgr.h"
 #include "sysNew.h"
+#include "Age.h"
 #include "DebugLog.h"
 
 /*
@@ -466,3 +467,16 @@ void GenObjectPlant::render(Graphics&, Generator*)
 {
 	plantMgr->usePlantType(mPlantType);
 }
+
+#ifdef DEVELOP
+
+void GenObjectPlant::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("草のタイプ", &mPlantType, 252);
+	for (int i = 0; i < PLANT_COUNT; i++) {
+		server.NewOption(plantMgr->getPlantName(i), i);
+	}
+	server.EndOptionBox();
+}
+
+#endif

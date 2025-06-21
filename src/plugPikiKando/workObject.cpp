@@ -8,6 +8,8 @@
 #include "DebugLog.h"
 #include "MapMgr.h"
 #include "Graphics.h"
+#include "Age.h"
+#include "NaviMgr.h"
 #include "FlowController.h"
 #include "PlayerState.h"
 #include "RumbleMgr.h"
@@ -1652,3 +1654,45 @@ bool InteractBreak::actBridge(Bridge* bridge)
 	STACK_PAD_STRUCT(1);
 	return true;
 }
+
+#ifdef DEVELOP
+
+void GenObjectWorkObject::changeNaviPos()
+{
+	Navi* navi = naviMgr->getNavi();
+	if (navi) {
+		mHinderRockPosition = navi->mPosition;
+	}
+}
+
+void GenObjectWorkObject::setNaviPos()
+{
+	Navi* navi = naviMgr->getNavi();
+	if (navi) {
+		navi->mPosition     = mHinderRockPosition;
+		navi->mLastPosition = mHinderRockPosition;
+	}
+}
+
+void GenObjectWorkObject::doGenAge(AgeServer& server)
+{
+	server.StartOptionBox("仕事オブジェクト", (int*)&mObjectType, 252);
+	for (int i = 0; i < 2; i++) {
+		server.NewOption(workObjectMgr->getName(i), i);
+	}
+	server.EndOptionBox();
+
+	server.StartOptionBox("シェイプ", &mShapeType, 252);
+	for (int i = 0; i < 5; i++) {
+		server.NewOption(workObjectMgr->getShapeName(i), i);
+	}
+	server.EndOptionBox();
+
+	server.NewButton("move to navi pos", new Delegate<GenObjectWorkObject>(this, setNaviPos), 221);
+	server.NewButton("move navi to this pos", new Delegate<GenObjectWorkObject>(this, changeNaviPos), 221);
+	server.NewEditor("pos x", &mHinderRockPosition.x, -8000.0f, 8000.0f, 320);
+	server.NewEditor("pos y", &mHinderRockPosition.y, -8000.0f, 8000.0f, 320);
+	server.NewEditor("pos z", &mHinderRockPosition.z, -8000.0f, 8000.0f, 320);
+}
+
+#endif
