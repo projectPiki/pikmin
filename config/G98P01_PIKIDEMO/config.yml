@@ -1,0 +1,11 @@
+object_base: orig/G98P01_PIKIDEMO
+object: files/zz_PikiDemo.tgc:sys/main.dol
+hash: 834970dc37d45cd631477530af813fb8a2c0d085
+
+# Generated from dataDir/build.map
+symbols: config/G98P01_PIKIDEMO/symbols.txt
+splits: config/G98P01_PIKIDEMO/splits.txt
+
+mw_comment_version: 8 # GC Linker 1.2.5
+symbols_known: false # Very fast analysis
+fill_gaps: false # Alignments known

@@ -19,9 +19,11 @@ Supported versions (active):
 - `GPIE01_01`: USA (Rev 1)
 
 Supported versions (to be worked on):
-- `DPIJ01`: PikiDemo / Jitsuen-you Sample
+- `DPIJ01_PIKIDEMO`: 店頭ゲームデモディスク Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
 - `GPIJ01_01`: Japan (Rev 1)
 - `GPIJ01_02`: Japan (Rev 2)
+- `G98E01_PIKIDEMO`: USA Interactive Multi-Game Demo Disc - January 2002 "zz_PikminDemo-1210.tgc"
+- `G98P01_PIKIDEMO`: Europe Interactive Multi-Game Demo Disc - May 2002 "zz_PikiDemo.tgc"
 - `GPIP01_00`: Europe (Rev 0)
 
 Note: this repository contains **no game assets** - an existing copy of the game is required.

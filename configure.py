@@ -27,14 +27,16 @@ from tools.project import (
 )
 
 # Game versions
-DEFAULT_VERSION = 4
+DEFAULT_VERSION = 5
 VERSIONS = [
-    "DPIJ01",  # PikiDemo / Jitsuen-you Sample
-    "GPIJ01_01",  # JPN Rev 1
-    "GPIJ01_02",  # JPN Rev 2
-    "GPIE01_00",  # USA Rev 0
-    "GPIE01_01",  # USA Rev 1
-    "GPIP01_00",  # PAL Rev 0
+    "DPIJ01_PIKIDEMO",  # 店頭ゲームデモディスク Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
+    "GPIJ01_01"      ,  # JPN Rev 1
+    "GPIJ01_02"      ,  # JPN Rev 2
+    "G98E01_PIKIDEMO",  # USA Interactive Multi-Game Demo Disc - January 2002 "zz_PikminDemo-1210.tgc"
+    "GPIE01_00"      ,  # USA Rev 0
+    "GPIE01_01"      ,  # USA Rev 1
+    "G98P01_PIKIDEMO",  # PAL Interactive Multi-Game Demo Disc - May 2002 "zz_PikiDemo.tgc"
+    "GPIP01_00"      ,  # PAL Rev 0
 ]
 
 parser = argparse.ArgumentParser()
