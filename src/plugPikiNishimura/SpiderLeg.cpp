@@ -965,7 +965,7 @@ void SpiderLeg::calcSpiderDirection()
  */
 void SpiderLeg::calcShakeOffDirection()
 {
-	if (mMotionType == SpiderLegMotionType::ShakeOff) {
+	if (mMotionType == SpiderLegMotionType::BodyShake) {
 		mSpider->mRotation.y += mShakeAngle;
 		mSpider->mFaceDirection = mSpider->mRotation.y;
 	}
