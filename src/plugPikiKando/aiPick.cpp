@@ -91,7 +91,7 @@ int ActPickItem::exec()
 {
 	if (mPiki->isHolding()) {
 		mPiki->mActionState = 0;
-		mPiki->mEmotion     = PikiEmotion::Unk6;
+		mPiki->mEmotion     = PikiEmotion::Victorious;
 		return ACTOUT_Success;
 	}
 
@@ -108,7 +108,7 @@ int ActPickItem::exec()
 
 	if (bomb->getHolder() && bomb->getHolder() != mPiki) {
 		PRINT("BOMB HOLDER IS NOT ME (%x) ME IS %x\n", bomb->getHolder(), mPiki);
-		mPiki->mEmotion = PikiEmotion::Unk7;
+		mPiki->mEmotion = PikiEmotion::Searching;
 		return ACTOUT_Fail;
 	}
 

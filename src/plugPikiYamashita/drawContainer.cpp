@@ -36,35 +36,35 @@ const f32 zen::WindowPaneMgr::weightPosGravity = 9.8f;
 zen::DrawContainer::DrawContainer()
     : mZenController(nullptr)
 {
-	_194              = 0;
-	mDeltaPikiNum     = 0;
-	_1DC              = 0;
-	mColor            = COLOR_Red;
-	_178              = 0;
-	_17C              = 0;
-	_180              = 0;
-	_184              = 0;
-	_188              = 0;
-	_18C              = 0;
-	_190              = 0.0f;
-	_170              = 0.0f;
-	mContainerPikiNum = 0;
-	mSquadPikiNum     = 0;
-	mDeltaPikiNum     = 0;
-	mController       = new Controller(1);
+	mTransferDelta         = 0;
+	mDeltaPikiNum          = 0;
+	mIsActive              = 0;
+	mColor                 = COLOR_Red;
+	mInitialContainerCount = 0;
+	mContainerCapacity     = 0;
+	mInitialSquadCount     = 0;
+	mSquadCapacity         = 0;
+	mSquadTotalCount       = 0;
+	mSquadTotalLimit       = 0;
+	mTransferSpeed         = 0.0f;
+	mFrameTimer            = 0.0f;
+	mContainerPikiNum      = 0;
+	mSquadPikiNum          = 0;
+	mDeltaPikiNum          = 0;
+	mController            = new Controller(1);
 	mZenController.setContPtr(mController);
 
 	mPerspGraph = new P2DPerspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	mScreen.set("screen/blo/con01.blo", true);
 	mMessageMgr    = new MessageMgr(mScreen);
 	mWindowPaneMgr = new WindowPaneMgr(mScreen.search('pall', true));
-	_1A8           = (P2DPicture*)mScreen.search('maru', true);
-	_1A8->show();
-	_1A8->setAlpha(0);
-	_1A8->setScale(3.0f);
-	_1AC.x = _1A8->getPosH();
-	_1AC.y = _1A8->getPosV();
-	_1A8->setOffset(_1A8->getWidth() >> 1, _1A8->getHeight() >> 1);
+	mMarkerPicture = (P2DPicture*)mScreen.search('maru', true);
+	mMarkerPicture->show();
+	mMarkerPicture->setAlpha(0);
+	mMarkerPicture->setScale(3.0f);
+	mMarkerBasePosition.x = mMarkerPicture->getPosH();
+	mMarkerBasePosition.y = mMarkerPicture->getPosV();
+	mMarkerPicture->setOffset(mMarkerPicture->getWidth() >> 1, mMarkerPicture->getHeight() >> 1);
 
 	P2DPane* pane = mScreen.search('cu_l', true);
 	pane->setCallBack(new NumberPicCallBack<int>(pane, &mContainerPikiNum, 100, false));
@@ -122,15 +122,15 @@ zen::DrawContainer::DrawContainer()
 	pane = mScreen.search('cont', true);
 	pane->setCallBack(new StickCallBack(pane, this));
 
-	_1B8[0] = loadTexExp("screen/tex/p2b_64.bti", true, true);
-	_1B8[1] = loadTexExp("screen/tex/p2r_64.bti", true, true);
-	_1B8[2] = loadTexExp("screen/tex/p2y_64.bti", true, true);
-	_1C4[0] = loadTexExp("screen/tex/ws08_160.bti", true, true);
-	_1C4[1] = loadTexExp("screen/tex/ws08_red.bti", true, true);
-	_1C4[2] = loadTexExp("screen/tex/ws08_yel.bti", true, true);
-	_1D0[0] = loadTexExp("screen/tex/p2b_c_4.bti", true, true);
-	_1D0[1] = loadTexExp("screen/tex/p2b_c_r.bti", true, true);
-	_1D0[2] = loadTexExp("screen/tex/p2b_c_y.bti", true, true);
+	mPikminTextures[0]    = loadTexExp("screen/tex/p2b_64.bti", true, true);
+	mPikminTextures[1]    = loadTexExp("screen/tex/p2r_64.bti", true, true);
+	mPikminTextures[2]    = loadTexExp("screen/tex/p2y_64.bti", true, true);
+	mWindowTextures[0]    = loadTexExp("screen/tex/ws08_160.bti", true, true);
+	mWindowTextures[1]    = loadTexExp("screen/tex/ws08_red.bti", true, true);
+	mWindowTextures[2]    = loadTexExp("screen/tex/ws08_yel.bti", true, true);
+	mContainerTextures[0] = loadTexExp("screen/tex/p2b_c_4.bti", true, true);
+	mContainerTextures[1] = loadTexExp("screen/tex/p2b_c_r.bti", true, true);
+	mContainerTextures[2] = loadTexExp("screen/tex/p2b_c_y.bti", true, true);
 }
 
 /*
@@ -140,7 +140,7 @@ zen::DrawContainer::DrawContainer()
  */
 void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, int p3, int p4, int p5, int p6, int p7)
 {
-	if (!_1DC) {
+	if (!mIsActive) {
 		P2DPaneLibrary::makeResident(&mScreen);
 		ArrowCenterCallBack unused0;
 		StickCallBack unused1;
@@ -155,33 +155,33 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 			ERROR("unknown container type %d \n", color);
 		}
 
-		_1DC          = 1;
-		mState        = STATE_Wait;
-		mColor        = color;
-		_178          = p2;
-		_17C          = p3;
-		_194          = 0;
-		mDeltaPikiNum = 0;
-		_180          = p4;
-		_184          = p5;
-		_188          = p6;
-		_18C          = p7;
-		_170          = 0.0f;
+		mIsActive              = 1;
+		mState                 = STATE_Wait;
+		mColor                 = color;
+		mInitialContainerCount = p2;
+		mContainerCapacity     = p3;
+		mTransferDelta         = 0;
+		mDeltaPikiNum          = 0;
+		mInitialSquadCount     = p4;
+		mSquadCapacity         = p5;
+		mSquadTotalCount       = p6;
+		mSquadTotalLimit       = p7;
+		mFrameTimer            = 0.0f;
 
 		setDispParam();
 		mWindowPaneMgr->init();
 		mMessageMgr->init(mColor);
 
 		P2DWindow* pane = (P2DWindow*)mScreen.search('p264', true);
-		pane->setTexture(_1B8[mColor]);
+		pane->setTexture(mPikminTextures[mColor]);
 		P2DPicture* pic = (P2DPicture*)mScreen.search('ws8c', true);
-		pic->setTexture(_1C4[mColor], 0);
+		pic->setTexture(mWindowTextures[mColor], 0);
 		pic = (P2DPicture*)mScreen.search('p2c4', true);
-		pic->setTexture(_1D0[mColor], 0);
+		pic->setTexture(mContainerTextures[mColor], 0);
 		pic = (P2DPicture*)mScreen.search('ws8u', true);
-		pic->setTexture(_1C4[mColor], 0);
+		pic->setTexture(mWindowTextures[mColor], 0);
 		pic = (P2DPicture*)mScreen.search('ws8l', true);
-		pic->setTexture(_1C4[mColor], 0);
+		pic->setTexture(mWindowTextures[mColor], 0);
 		SeSystem::playSysSe(SYSSE_CMENU_ON);
 	}
 }
@@ -193,9 +193,9 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
  */
 void zen::DrawContainer::setDispParam()
 {
-	mContainerPikiNum = _178 + _194;
-	mSquadPikiNum     = _180 - _194;
-	mDeltaPikiNum     = Abs(_194);
+	mContainerPikiNum = mInitialContainerCount + mTransferDelta;
+	mSquadPikiNum     = mInitialSquadCount - mTransferDelta;
+	mDeltaPikiNum     = Abs(mTransferDelta);
 }
 
 /*
@@ -205,10 +205,10 @@ void zen::DrawContainer::setDispParam()
  */
 bool zen::DrawContainer::waitStatus()
 {
-	_170 += gsys->getFrameTime();
-	if (_170 > 0.1f) {
-		_170   = 0.0f;
-		mState = STATE_Start;
+	mFrameTimer += gsys->getFrameTime();
+	if (mFrameTimer > 0.1f) {
+		mFrameTimer = 0.0f;
+		mState      = STATE_Start;
 	}
 	return false;
 }
@@ -220,21 +220,21 @@ bool zen::DrawContainer::waitStatus()
  */
 bool zen::DrawContainer::startStatus()
 {
-	_170 += gsys->getFrameTime();
-	f32 a = _170 / 0.5f;
+	mFrameTimer += gsys->getFrameTime();
+	f32 a = mFrameTimer / 0.5f;
 	if (a > 1.0f) {
 		a = 1.0f;
 	}
 	a         = -NMathF::cos(PI * a);
 	f32 t     = (1.0f + a) * 0.5f;
 	f32 tComp = 1.0f - t;
-	mWindowPaneMgr->update(WindowPaneMgr::MODE_Unk1, t, tComp);
-	_1A8->setAlpha((200.0f * t));
-	_1A8->setScale((1.0f - NMathF::cos(PI * tComp)) * 1.0f + 1.0f);
-	_1A8->move(RoundOff(_1AC.x), RoundOff(_1AC.y));
+	mWindowPaneMgr->update(WindowPaneMgr::MODE_SlideIn, t, tComp);
+	mMarkerPicture->setAlpha((200.0f * t));
+	mMarkerPicture->setScale((1.0f - NMathF::cos(PI * tComp)) * 1.0f + 1.0f);
+	mMarkerPicture->move(RoundOff(mMarkerBasePosition.x), RoundOff(mMarkerBasePosition.y));
 	if (t == 1.0f) {
-		_170   = 0.0f;
-		mState = STATE_Unk2;
+		mFrameTimer = 0.0f;
+		mState      = STATE_Operation;
 	}
 	return false;
 }
@@ -246,81 +246,82 @@ bool zen::DrawContainer::startStatus()
  */
 bool zen::DrawContainer::operationStatus()
 {
-	_170 += gsys->getFrameTime() * 0.2f;
-	if (_170 > TAU) {
-		_170 -= TAU;
+	mFrameTimer += gsys->getFrameTime() * 0.2f;
+	if (mFrameTimer > TAU) {
+		mFrameTimer -= TAU;
 	}
 
-	mWindowPaneMgr->update(WindowPaneMgr::MODE_Unk2, 0.0f, 0.0f);
-	_1A8->move(RoundOff(NMathF::sin(_170) * 50.0f + _1AC.x), RoundOff(NMathF::sin(2.0f * _170) * 30.0f + _1AC.y));
+	mWindowPaneMgr->update(WindowPaneMgr::MODE_Hold, 0.0f, 0.0f);
+	mMarkerPicture->move(RoundOff(NMathF::sin(mFrameTimer) * 50.0f + mMarkerBasePosition.x),
+	                     RoundOff(NMathF::sin(2.0f * mFrameTimer) * 30.0f + mMarkerBasePosition.y));
 	if (mZenController.keyRepeat(KBBTN_MSTICK_UP) || mController->keyClick(KBBTN_MSTICK_UP)) {
 		if (mController->keyClick(KBBTN_MSTICK_UP)) {
-			_190 = 1.0f;
+			mTransferSpeed = 1.0f;
 		} else {
-			if (++_190 > 1.0f) {
-				_190 = 1.0f;
+			if (++mTransferSpeed > 1.0f) {
+				mTransferSpeed = 1.0f;
 			}
 		}
 	} else if (mZenController.keyRepeat(KBBTN_MSTICK_DOWN) || mController->keyClick(KBBTN_MSTICK_DOWN)) {
 		if (mController->keyClick(KBBTN_MSTICK_DOWN)) {
-			_190 = -1.0f;
+			mTransferSpeed = -1.0f;
 		} else {
-			if (--_190 < -1.0f) {
-				_190 = -1.0f;
+			if (--mTransferSpeed < -1.0f) {
+				mTransferSpeed = -1.0f;
 			}
 		}
 	} else {
-		_190 = 0.0f;
+		mTransferSpeed = 0.0f;
 	}
 
-	_194 += RoundOff(_190);
+	mTransferDelta += RoundOff(mTransferSpeed);
 
-	if (_180 == 0 && _178 == 0) {
-		if (_194) {
-			mMessageMgr->setMessage(MessageMgr::MSG_Unk9, 2.0f);
-			_194 = 0;
-			_190 = 0.0f;
+	if (mInitialSquadCount == 0 && mInitialContainerCount == 0) {
+		if (mTransferDelta) {
+			mMessageMgr->setMessage(MessageMgr::MSG_NothingToTransfer, 2.0f);
+			mTransferDelta = 0;
+			mTransferSpeed = 0.0f;
 		}
-	} else if (_194 > 0) {
-		if (_180 < _194) {
-			_194 = _180;
-			_190 = 0.0f;
-			mMessageMgr->setMessage(MessageMgr::MSG_Unk7, 2.0f);
-		} else if (_178 + _194 > _17C) {
-			_194 = _17C - _178;
-			_190 = 0.0f;
-			mMessageMgr->setMessage(MessageMgr::MSG_Unk4, 2.0f);
+	} else if (mTransferDelta > 0) {
+		if (mInitialSquadCount < mTransferDelta) {
+			mTransferDelta = mInitialSquadCount;
+			mTransferSpeed = 0.0f;
+			mMessageMgr->setMessage(MessageMgr::MSG_NotEnoughInSquad, 2.0f);
+		} else if (mInitialContainerCount + mTransferDelta > mContainerCapacity) {
+			mTransferDelta = mContainerCapacity - mInitialContainerCount;
+			mTransferSpeed = 0.0f;
+			mMessageMgr->setMessage(MessageMgr::MSG_ContainerFull, 2.0f);
 		}
-	} else if (_178 + _194 < 0) {
-		_194 = -_178;
-		_190 = 0.0f;
-		mMessageMgr->setMessage(MessageMgr::MSG_Unk8, 2.0f);
-	} else if (_180 - _194 > _184) {
-		_194 = -(_184 - _180);
-		_190 = 0.0f;
-		mMessageMgr->setMessage(MessageMgr::MSG_Unk5, 2.0f);
-	} else if (_188 - _194 > _18C) {
-		_194 = -(_18C - _188);
-		_190 = 0.0f;
-		mMessageMgr->setMessage(MessageMgr::MSG_Unk6, 2.0f);
+	} else if (mInitialContainerCount + mTransferDelta < 0) {
+		mTransferDelta = -mInitialContainerCount;
+		mTransferSpeed = 0.0f;
+		mMessageMgr->setMessage(MessageMgr::MSG_ContainerEmpty, 2.0f);
+	} else if (mInitialSquadCount - mTransferDelta > mSquadCapacity) {
+		mTransferDelta = -(mSquadCapacity - mInitialSquadCount);
+		mTransferSpeed = 0.0f;
+		mMessageMgr->setMessage(MessageMgr::MSG_SquadCapacityFull, 2.0f);
+	} else if (mSquadTotalCount - mTransferDelta > mSquadTotalLimit) {
+		mTransferDelta = -(mSquadTotalLimit - mSquadTotalCount);
+		mTransferSpeed = 0.0f;
+		mMessageMgr->setMessage(MessageMgr::MSG_SquadTotalFull, 2.0f);
 	}
 
-	if (Abs(_194) != mDeltaPikiNum) {
+	if (Abs(mTransferDelta) != mDeltaPikiNum) {
 		SeSystem::playSysSe(SYSSE_CMENU_SELECT);
 	}
 
 	setDispParam();
 
 	if (mController->keyClick(KBBTN_START | KBBTN_A)) {
-		_170   = 0.0f;
-		mState = STATE_Unk3;
+		mFrameTimer = 0.0f;
+		mState      = STATE_End;
 		SeSystem::playSysSe(SYSSE_CMENU_OFF);
 	}
 
 	if (mController->keyClick(KBBTN_B)) {
-		_170   = 0.0f;
-		mState = STATE_Unk3;
-		_194   = 0;
+		mFrameTimer    = 0.0f;
+		mState         = STATE_End;
+		mTransferDelta = 0;
 		SeSystem::playSysSe(SYSSE_CMENU_OFF);
 	}
 
@@ -336,8 +337,8 @@ bool zen::DrawContainer::operationStatus()
 bool zen::DrawContainer::endStatus()
 {
 	bool res = false;
-	_170 += gsys->getFrameTime();
-	f32 a = _170 / 0.5f;
+	mFrameTimer += gsys->getFrameTime();
+	f32 a = mFrameTimer / 0.5f;
 	if (a > 1.0f) {
 		a = 1.0f;
 	}
@@ -345,12 +346,12 @@ bool zen::DrawContainer::endStatus()
 	a         = -NMathF::cos(PI * a);
 	f32 t     = (1.0f + a) * 0.5f;
 	f32 tComp = 1.0f - t;
-	mWindowPaneMgr->update(WindowPaneMgr::MODE_Unk3, t, tComp);
-	_1A8->setAlpha(200.0f * tComp);
-	_1A8->setScale(2.0f * t + 1.0f);
+	mWindowPaneMgr->update(WindowPaneMgr::MODE_SlideOut, t, tComp);
+	mMarkerPicture->setAlpha(200.0f * tComp);
+	mMarkerPicture->setScale(2.0f * t + 1.0f);
 	if (t == 1.0f) {
-		_1DC = 0;
-		res  = true;
+		mIsActive = 0;
+		res       = true;
 	}
 	return res;
 }
@@ -363,7 +364,7 @@ bool zen::DrawContainer::endStatus()
 bool zen::DrawContainer::update(int& p1)
 {
 	bool res = false;
-	if (_1DC) {
+	if (mIsActive) {
 		mController->update();
 		mZenController.update();
 		switch (mState) {
@@ -375,15 +376,15 @@ bool zen::DrawContainer::update(int& p1)
 			res = startStatus();
 			break;
 
-		case STATE_Unk2:
+		case STATE_Operation:
 			res = operationStatus();
 			break;
 
-		case STATE_Unk3:
+		case STATE_End:
 			res = endStatus();
 			break;
 		}
-		p1 = _194;
+		p1 = mTransferDelta;
 		mMessageMgr->update(mController, mContainerPikiNum, mSquadPikiNum);
 		mScreen.update();
 	} else {
@@ -400,7 +401,7 @@ bool zen::DrawContainer::update(int& p1)
  */
 void zen::DrawContainer::draw(Graphics& gfx)
 {
-	if (_1DC) {
+	if (mIsActive) {
 		mPerspGraph->setPort();
 		mScreen.draw(0, 0, mPerspGraph);
 	}

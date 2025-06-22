@@ -130,10 +130,10 @@ void zen::AlphaWipe::start(f32 totalDuration, f32 delay, zen::AlphaWipe::typeFla
 	if (delay < 0.0f) {
 		delay = 0.0f;
 	}
-	mDelayPeriod  = delay;
-	mEndWipeTimer = -delay;
-	mTotalDuration           = totalDuration;
-	mWipeType     = type;
-	mStartColor.a = 0;
-	mEndColor.a   = 0;
+	mDelayPeriod   = delay;
+	mEndWipeTimer  = -delay;
+	mTotalDuration = totalDuration;
+	mWipeType      = type;
+	mStartColor.a  = 0;
+	mEndColor.a    = 0;
 }

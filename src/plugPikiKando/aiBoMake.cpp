@@ -55,7 +55,7 @@ int ActBoMake::exec()
 	}
 
 	if (!mBuildObject->isAlive()) {
-		mPiki->mEmotion = PikiEmotion::Unk0;
+		mPiki->mEmotion = PikiEmotion::Happy;
 		return ACTOUT_Success;
 	}
 

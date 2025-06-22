@@ -134,11 +134,11 @@ int ActMine::exeMine()
 			return ACTOUT_Fail;
 		}
 
-		mPiki->mEmotion = PikiEmotion::Unk6;
+		mPiki->mEmotion = PikiEmotion::Victorious;
 		return ACTOUT_Success;
 	}
 
-	mPiki->mEmotion = PikiEmotion::Unk1;
+	mPiki->mEmotion = PikiEmotion::Sad;
 	return ACTOUT_Fail;
 }
 
@@ -154,12 +154,12 @@ int ActMine::exec()
 	}
 
 	if (!mBombGen->pickable()) {
-		mPiki->mEmotion = PikiEmotion::Unk1;
+		mPiki->mEmotion = PikiEmotion::Sad;
 		return ACTOUT_Fail;
 	}
 
 	if (mPiki->isHolding()) {
-		mPiki->mEmotion = PikiEmotion::Unk6;
+		mPiki->mEmotion = PikiEmotion::Victorious;
 		return ACTOUT_Success;
 	}
 

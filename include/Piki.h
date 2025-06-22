@@ -40,10 +40,8 @@ enum PikiSituationType {
 	PIKISITCH_Unk14 = 14,
 };
 
-// clang-format off
 DEFINE_ENUM_TYPE(
 	PikiMode,
-
 	FreeMode = 0,  // 0
 	FormationMode, // 1
 	AttackMode,    // 2
@@ -70,25 +68,24 @@ DEFINE_ENUM_TYPE(
 	BoMode,        // 23
 	WarriorMode,   // 24
 );
-// clang-format on
 
-// clang-format off
+/**
+ * @brief Defines the different emotions a Pikmin can express.
+ */
 DEFINE_ENUM_TYPE(
 	PikiEmotion,
-
-	Unk0 = 0,  // 0
-	Unk1, // 1
-	Unk2, // 2
-	Unk3, // 3
-	Unk4, // 4
-	Unk5, // 5
-	Unk6, // 6
-	Unk7, // 7
-	Unk8, // 8
-	Unk9, // 9
-	Unk10, // 10
+    Happy = 0,          // General happiness, jumping.
+    Sad = 1,            // Gakkari animation, disappointment.
+	// 2 is unused
+    ShookDry = 3,       // Shaking off water after getting out.
+    ShipPartGaze = 4,   // Staring at a collected ship part.
+    Excited = 5,        // Excited, a mix of jumping and fist-pumping.
+    Victorious = 6,     // Yatta animation, celebrating a victory.
+    Searching = 7,      // Looking around for something.
+    Confused = 8,       // A mix of disappointment and searching.
+    ShipPartCheer = 9,  // Cheering for a collected ship part repeatedly.
+    None = 10           // No specific emotion.
 );
-// clang-format on
 
 /**
  * @brief TODO
@@ -297,11 +294,11 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Creature* mLeaderCreature;            // _4A8
 	Vector3f mPluckVelocity;              // _4AC
 	int mFormationPriority;               // _4B8
-	Vector3f _4BC;                        // _4BC
+	Vector3f mPushTargetPos;                        // _4BC
 	Vector3f _4C8;                        // _4C8
 	u8 _4D4[0x4];                         // _4D4, unknown
 	int _4D8;                             // _4D8
-	Piki* _4DC;                           // _4DC
+	Piki* mPushTargetPiki;                           // _4DC
 	Plane* mWallPlane;                    // _4E0
 	DynCollObject* mWallObj;              // _4E4
 	int _4E8;                             // _4E8

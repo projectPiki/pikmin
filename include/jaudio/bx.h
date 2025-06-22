@@ -157,8 +157,8 @@ struct Perc_ {
 	int mMagic;                    // _00 | 'PER2' (or 'PERC'?)
 	u8 _04[0x84];                  // _04, unknown
 	PercKeymap_* mKeyRegions[128]; // _88
-	s8 _288[128];                  // _288
-	u16 _308[128];                 // _308
+	s8 panTable[128];              // _288
+	u16 releaseTable[128];         // _308
 };
 
 struct Rand_ {
@@ -169,8 +169,8 @@ struct Rand_ {
 };
 
 struct Pmap_ {
-	Rand_* _00; // _00
-	int _04;    // _04
+	Rand_* randomEffect; // _00
+	int _04;             // _04
 };
 
 //////////////////////////////////////////////////////////
@@ -201,13 +201,13 @@ struct CtrlGroup_ {
 
 // Name fabricated based on magic ID.
 struct SCNE_ {
-	int magic;  // _00, 'SCNE'
-	u32 _04;    // _04
-	u32 _08;    // _08
-	Ctrl_* cdf; // _0C
-	Ctrl_* cex; // _10
-	Ctrl_* cst; // _14
-	int _18[1]; // _18, variable size?
+	int magic;            // _00, 'SCNE'
+	u32 externalMode;     // _04
+	u32 dependencyCount;  // _08
+	Ctrl_* cdf;           // _0C
+	Ctrl_* cex;           // _10
+	Ctrl_* cst;           // _14
+	int dependencyIds[1]; // _18, variable size?
 };
 
 struct Ctrl_ {
@@ -239,7 +239,7 @@ struct Wave_ {
 	u8 _00;                // _00
 	u8 compBlockIdx;       // _01
 	u8 key;                // _02
-	f32 _04;               // _04
+	f32 sampleRate;        // _04
 	int srcAddress;        // _08
 	int length;            // _0C
 	s32 isLooping;         // _10

@@ -1312,7 +1312,7 @@ bool TAIAflyingDistanceInTerritory::goal(Teki& teki)
 	Creature* target = teki.getCreaturePointer(0);
 	if (target) {
 		Vector3f pos;
-		f32 ratio = zen::Abs(teki.getPosition().y - target->getPosition().y) / NMathF::tan(_00);
+		f32 ratio = zen::Abs(teki.getPosition().y - target->getPosition().y) / NMathF::tan(mDiveAngle);
 		f32 vel   = getOffset(teki) + ratio;
 		pos.set(teki.mPersonality->mNestPosition - target->getPosition());
 		if (pos.length() > 0.0f) {
@@ -1363,7 +1363,7 @@ bool TAIAflyingDistance::act(Teki& teki)
 	Creature* target = teki.getCreaturePointer(0);
 	if (target) {
 		bool check = false;
-		f32 ratio  = zen::Abs(teki.getPosition().y - target->getPosition().y) / NMathF::tan(_00);
+		f32 ratio  = zen::Abs(teki.getPosition().y - target->getPosition().y) / NMathF::tan(mDiveAngle);
 		f32 offset = getOffset(teki) + ratio;
 		f32 dist   = target->getPosition().distance(teki.getPosition()) - offset;
 		f32 speed;

@@ -157,12 +157,12 @@ s32 NoteOFF(seqp_* track, u8 param_2)
  * Address:	80013CC0
  * Size:	000058
  */
-s32 GateON(seqp_* track, s32 param_2, s32 param_3, s32 param_4, s32 param_5)
+s32 GateON(seqp_* track, s32 channelId, s32 key, s32 velocity, s32 playId)
 {
-	s32* REF_param_3 = &param_3;
+	s32* REF_param_3 = &key;
 
-	if (track->channels[param_2]) {
-		Gate_1Shot(track->channels[param_2], param_3, param_4, param_5);
+	if (track->channels[channelId]) {
+		Gate_1Shot(track->channels[channelId], key, velocity, playId);
 	} else {
 		return -1;
 	}

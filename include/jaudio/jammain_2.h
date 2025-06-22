@@ -236,17 +236,17 @@ struct seqp_ {
 	u32 connectionId;                  // _084
 	u32 trackId;                       // _088
 	s32 waitTimer;                     // _08C
-	u32 _90;                           // _090
-	u8 _94[8];                         // _094
+	u32 wasNotePlayed;                 // _090
+	u8 activeNotes[8];                 // _094
 	jc_* channels[8];                  // _09C
 	u16 activeSoundIds[8];             // _0BC
-	u8 _CC;                            // _0CC
-	u8 _CD;                            // _0CD
+	u8 noteGateTime;                   // _0CC
+	u8 lastVelocity;                   // _0CD
 	u8 _CE[0x0d0 - 0x0ce];             // _0CE
-	u32 _D0;                           // _0D0
-	u8 _D4;                            // _0D4
-	u8 _D5;                            // _0D5
-	u8 _D6;                            // _0D6, boolean-like
+	u32 noteDuration;                  // _0D0
+	u8 noteFlags;                      // _0D4
+	u8 lastNote;                       // _0D5
+	u8 isGateMode;                     // _0D6, boolean-like
 	u8 _D7[0x0d8 - 0x0d7];             // _0D7
 	jcs_ parentController;             // _0D8
 	TimedParam_ timedParam;            // _14C
@@ -279,9 +279,9 @@ struct seqp_ {
 	u8 timerCount;                     // _3A7
 	u32 interruptAddresses[8];         // _3A8
 	u32 savedProgramCounter;           // _3C8
-	u32 _3CC;                          // _3CC, to do with timers (CMD_IntTimer)
-	u32 timer;                         // _3D0, to do with timers (CMD_IntTimer)
-	u32 maxTime;                       // _3D4, to do with timers (CMD_IntTimer)
+	u32 savedTimer;                    // _3CC
+	u32 timer;                         // _3D0
+	u32 maxTime;                       // _3D4
 	u32 updateFlags;                   // _3D8, see `SEQTRACK_FLAG_*` defines
 	u8 panCalcTypes[3];                // _3DC
 	u8 parentPanCalcTypes[3];          // _3DF

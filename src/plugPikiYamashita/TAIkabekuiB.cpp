@@ -142,7 +142,7 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	TAIAattackableTarget* attackableTarget            = new TAIAattackableTarget(TAIkabekuiBStateID::BiteAttack);
 	TAIAunvisibleTarget* unvisibleTarget              = new TAIAunvisibleTarget(TAIkabekuiBStateID::MovingSetup);
 	TAIAbiteForKabekuiB* kabekuiBite = new TAIAbiteForKabekuiB(TAIkabekuiBStateID::BiteChewing, 3, TAIkabekuiBMotionID::Unk10);
-	TAIAeatPiki* eatPiki                              = new TAIAeatPiki(TAIkabekuiBStateID::MovingSetup, TAIkabekuiBMotionID::Unk11);
+	TAIAeatPiki* eatPiki             = new TAIAeatPiki(TAIkabekuiBStateID::MovingSetup, TAIkabekuiBMotionID::Unk11);
 
 	TAIAhitCheckFlyingPiki* pressCheck = new TAIAhitCheckFlyingPiki(TAIkabekuiBStateID::CrushDying);
 	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TAIkabekuiBMotionID::Unk1, EffectMgr::EFF_SmokeRing_S);

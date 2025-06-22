@@ -54,7 +54,7 @@ void ActAttack::init(Creature* creature)
 	}
 
 	mPiki->mActionState = 0;
-	mPiki->mEmotion     = PikiEmotion::Unk5;
+	mPiki->mEmotion     = PikiEmotion::Excited;
 	mPiki->getState(); // this is also just like this in the DLL lol
 
 	if (!creature) {
@@ -254,7 +254,7 @@ int ActAttack::exec()
 	if (mOther.getPtr()->isPiki()) {
 		Piki* targetPiki = static_cast<Piki*>(mOther.getPtr());
 		if (!targetPiki->isKinoko() || (targetPiki->isKinoko() && targetPiki->getState() == PIKISTATE_KinokoChange)) {
-			mPiki->mEmotion = PikiEmotion::Unk7;
+			mPiki->mEmotion = PikiEmotion::Searching;
 			return ACTOUT_Success;
 		}
 	}
@@ -346,7 +346,7 @@ ActJumpAttack::ActJumpAttack(Piki* piki)
 void ActJumpAttack::init(Creature* creature)
 {
 	mPiki->mActionState = 0;
-	mPiki->mEmotion     = PikiEmotion::Unk5;
+	mPiki->mEmotion     = PikiEmotion::Excited;
 	if (creature) {
 		mTarget.set(creature);
 	}

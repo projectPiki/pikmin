@@ -15,9 +15,9 @@ typedef struct CtrlWave_ {
 	int _00;             // _00
 	int _04;             // _04
 	int _08;             // _08
-	u32 _0C;             // _0C
+	u32 sampleSrcType;   // _0C
 	u8 _10[0x34 - 0x10]; // _10, unknown
-	u32 _34;             // _34, unknown
+	u32 waveAddr;        // _34, unknown
 } CtrlWave_;
 typedef union SOUNDID_ SOUNDID_;
 

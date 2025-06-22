@@ -84,10 +84,10 @@ struct PVWAnimInfo3Intermediate {
 		mBlueData.read(input);
 	}
 
-	u32 mTime; // _00
-	T mRedData;     // _04
-	T mGreenData;     // _14
-	T mBlueData;     // _24
+	u32 mTime;    // _00
+	T mRedData;   // _04
+	T mGreenData; // _14
+	T mBlueData;  // _24
 };
 
 template <typename T>

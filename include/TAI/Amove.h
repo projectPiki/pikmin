@@ -505,15 +505,15 @@ struct TAIAflyingToGoal : public TAIAreserveMotion {
 struct FlyingDistance {
 	FlyingDistance(f32 p1, f32 p2, f32 p3)
 	{
-		_00     = p1;
-		mOffset = p2;
-		_08     = p3;
+		mDiveAngle = p1;
+		mOffset    = p2;
+		_08        = p3;
 	}
 
 	// _0C = VTBL
-	f32 _00;     // _00
-	f32 mOffset; // _04
-	f32 _08;     // _08
+	f32 mDiveAngle; // _00
+	f32 mOffset;    // _04
+	f32 _08;        // _08
 
 	virtual f32 getOffset(Teki&) { return mOffset; } // _08
 };

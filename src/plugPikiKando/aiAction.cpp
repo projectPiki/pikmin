@@ -57,7 +57,7 @@ void Action::procMsg(Msg* msg)
 void Action::Child::initialise(Creature* creature)
 {
 	if (mAction) {
-		mAction->mPiki->mEmotion     = PikiEmotion::Unk10;
+		mAction->mPiki->mEmotion     = PikiEmotion::None;
 		mAction->mPiki->mActionState = 2;
 	}
 
@@ -242,8 +242,8 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
-		mAction->_1A = 0;
-		mAction->mChildActions[mAction->mCurrActionIdx].initialise(mAction->_20);
+		mAction->mIsAnimating = 0;
+		mAction->mChildActions[mAction->mCurrActionIdx].initialise(mAction->mTarget);
 		break;
 	}
 }
@@ -261,12 +261,12 @@ TopAction::TopAction(Piki* piki)
 	memStat->start("topaction");
 
 	mListener    = new MotionListener(this);
-	_20          = 0;
+	mTarget          = 0;
 	_24          = -1;
 	_2C          = 1.0f;
 	_28          = 0;
 	mIsSuspended = false;
-	_1A          = 0;
+	mIsAnimating          = 0;
 	mName        = "top action";
 
 	setChildren(PikiAction::COUNT, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr,
@@ -301,10 +301,10 @@ void TopAction::init(Creature* creature)
 {
 	mCurrActionIdx = 0;
 	mChildActions[mCurrActionIdx].initialise(creature);
-	_20          = nullptr;
+	mTarget          = nullptr;
 	_2C          = 1.0f;
 	_28          = 0;
-	_1A          = 0;
+	mIsAnimating          = 0;
 	mIsSuspended = false;
 }
 
@@ -356,7 +356,7 @@ int TopAction::exec()
 
 		mChildActions[mCurrActionIdx].mAction->cleanup();
 
-		_20            = nullptr;
+		mTarget            = nullptr;
 		mCurrActionIdx = PikiAction::NOACTION;
 		_2C            = 1.0f;
 		if (mPiki->mMode != PikiMode::FreeMode) {
@@ -385,7 +385,7 @@ int TopAction::exec()
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
-				} else if (emote != PikiEmotion::Unk10) {
+				} else if (emote != PikiEmotion::None) {
 					mPiki->mEmotion = emote;
 					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
@@ -409,7 +409,7 @@ int TopAction::exec()
 					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
-				} else if (emote != PikiEmotion::Unk10) {
+				} else if (emote != PikiEmotion::None) {
 					mPiki->mEmotion = emote;
 					mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 				}
@@ -417,7 +417,7 @@ int TopAction::exec()
 		} else {
 			int emote = mPiki->mEmotion;
 			mPiki->actOnSituaton();
-			if (emote != PikiEmotion::Unk10) {
+			if (emote != PikiEmotion::None) {
 				mPiki->mEmotion = emote;
 				mPiki->mFSM->transit(mPiki, PIKISTATE_Emotion);
 			}
@@ -453,7 +453,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	mCurrActionIdx = -1;
 	_28            = 0;
 	_24            = 0;
-	_20            = nullptr;
+	mTarget            = nullptr;
 	mIsSuspended   = false;
 }
 

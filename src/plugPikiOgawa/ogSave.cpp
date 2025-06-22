@@ -242,8 +242,8 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mWindow1->setScale(1.0f);
 			mSaveActionCenterTextBox->show();
 			mSaveActionSideTextBox->show();
-			mSaveActionCenterFader->start(ogFadeMgr::Status_1, 0.25f);
-			mSaveActionKCFader->start(ogFadeMgr::Status_1, 0.25f);
+			mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+			mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
 			PRINT("######################\n");
 			PRINT("##\tSAVE to (%d)   ##\n", mDirectSaveState);
 			PRINT("######################\n");
@@ -275,8 +275,8 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mHeaderSub1->hide();
 			mSaveActionCenterTextBox->show();
 			mSaveActionSideTextBox->show();
-			mSaveActionCenterFader->start(ogFadeMgr::Status_1, 0.25f);
-			mSaveActionKCFader->start(ogFadeMgr::Status_1, 0.25f);
+			mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+			mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
 
 			// why.
 			BOOL cardChanged = !gameflow.mMemoryCard.hasCardChanged();
@@ -332,10 +332,10 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		} else {
 			mStatus    = SaveComplete;
 			mAnimTimer = 0.0f;
-			mSaveActionCenterFader->start(ogFadeMgr::Status_2, 0.25f);
-			mSaveActionKCFader->start(ogFadeMgr::Status_2, 0.25f);
-			mSaveActionSideFader->start(ogFadeMgr::Status_1, 0.25f);
-			mSaveActionKSFader->start(ogFadeMgr::Status_1, 0.25f);
+			mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+			mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+			mSaveActionSideFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+			mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
 		}
 		break;
 
@@ -344,8 +344,8 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mNextStatus = SaveCompletedSuccess;
 			mStatus     = FadeOut;
 			mAnimTimer  = 0.0f;
-			mSaveActionSideFader->start(ogFadeMgr::Status_2, 0.25f);
-			mSaveActionKSFader->start(ogFadeMgr::Status_2, 0.25f);
+			mSaveActionSideFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+			mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
 		}
 		break;
 

@@ -76,10 +76,10 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	    , FigureTex<T>(amountPtr, digit)
 	{
-		mUseShadowTex = p4;
-		mCurrentValue = *mNumberPtr;
-		mValueDifference           = 0;
-		mAnimTimer           = 0.0f;
+		mUseShadowTex    = p4;
+		mCurrentValue    = *mNumberPtr;
+		mValueDifference = 0;
+		mAnimTimer       = 0.0f;
 		setTexture(pane);
 		pane->setOffset(pane->getWidth() >> 1, pane->getHeight() >> 1);
 	}
@@ -89,13 +89,13 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 		if (getNumber() != getNumber(mCurrentValue)) {
 			setTexture(pane);
 			mValueDifference = *mNumberPtr - mCurrentValue;
-			mAnimTimer = 0.0f;
+			mAnimTimer       = 0.0f;
 		}
 
 		if (mValueDifference) {
 			mAnimTimer += gsys->getFrameTime();
 			if (mAnimTimer > 0.5f) {
-				mAnimTimer = 0.5f;
+				mAnimTimer       = 0.5f;
 				mValueDifference = 0;
 			}
 
@@ -129,9 +129,9 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
 	// _04-_0C = FigureTex
-	f32 mAnimTimer;            // _0C
+	f32 mAnimTimer;     // _0C
 	T mCurrentValue;    // _10
-	T mValueDifference;              // _14
+	T mValueDifference; // _14
 	bool mUseShadowTex; // _18
 };
 

@@ -424,11 +424,11 @@ void Channel_Init(jc_* jc)
 {
 	jc->updateCallback    = NULL;
 	jc->pitchSweepUpdater = NULL;
-	jc->playId            = 0;
-	jc->savedPlayId       = 0;
+	jc->_30               = 0;
+	jc->_34               = 0;
 	jc->waveData          = NULL;
 	jc->logicalChanType   = 0;
-	jc->_14               = 0;
+	jc->chanData          = 0;
 	jc->_18               = 0;
 	jc->_1C               = 0;
 
@@ -863,14 +863,14 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 			return TRUE;
 		}
 
-		if (jc->savedPlayId > 0) {
-			jc->savedPlayId--;
+		if (jc->_34 > 0) {
+			jc->_34--;
 		}
 	}
 
-	if (jc->savedPlayId == 0) {
+	if (jc->_34 == 0) {
 		jc->updateCallback(jc, JCSTAT_Unk0);
-		jc->savedPlayId = jc->playId;
+		jc->_34 = jc->_30;
 	}
 
 	if (jc->toFlush) {
@@ -934,12 +934,12 @@ BOOL PlayLogicalChannel(jc_* jc)
 
 	switch (jc->logicalChanType) {
 	case 0:
-		DSP_SetWaveInfo(jc->dspChannel->buffer_idx, jc->waveData, jc->_14);
+		DSP_SetWaveInfo(jc->dspChannel->buffer_idx, jc->waveData, jc->chanData);
 		break;
 	case 1:
 		break;
 	case 2:
-		DSP_SetOscInfo(jc->dspChannel->buffer_idx, jc->_14);
+		DSP_SetOscInfo(jc->dspChannel->buffer_idx, jc->chanData);
 		break;
 	}
 
@@ -1091,10 +1091,10 @@ void EntryCheck_WaitDSPChannel()
 		jc_* jc = waitp[(cur_top + i) & 0x1f];
 		if (jc) {
 			waittime[(cur_top + i) & 0x1f]++;
-			if (jc->playId > 0) {
-				jc->playId--;
+			if (jc->_30 > 0) {
+				jc->_30--;
 			}
-			if (jc->playId == 0) {
+			if (jc->_30 == 0) {
 				jc->updateCallback(jc, JCSTAT_Unk6);
 				waitp[(cur_top + i) & 0x1f] = NULL;
 			}

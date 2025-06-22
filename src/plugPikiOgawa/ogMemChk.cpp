@@ -476,7 +476,7 @@ void zen::ogScrMemChkMgr::FormatEffectStart()
  */
 bool zen::ogScrMemChkMgr::checkTypingAll()
 {
-	return mActiveTextMgr->check() == TypingTextMgr::STATE_2 ? true : false;
+	return mActiveTextMgr->check() == TypingTextMgr::STATE_Complete ? true : false;
 }
 
 /*

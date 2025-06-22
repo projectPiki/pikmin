@@ -92,7 +92,7 @@ enum PikiNaviAnim {
 	PIKIANIM_Jump_B1     = 81, // Jump B(1)
 	PIKIANIM_Nuku_Fast   = 82, // 'Pluck' fast
 	PIKIANIM_Nukare_Fast = 83, // 'Be plucked' fast
-	PIKIANIM_Mizuage     = 84, // 'Water' something
+	PIKIANIM_Mizuage     = 84, // Shaking dry
 	PIKIANIM_Sagasu      = 85, // 'Search'
 	PIKIANIM_Osu         = 86, // 'Push'
 	PIKIANIM_Osu_Walk    = 87, // 'Push walk'

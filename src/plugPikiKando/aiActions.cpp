@@ -98,7 +98,7 @@ int ActPick::exec()
 	if (mIsAnimationFinished) {
 		if (!mPiki->isHolding()) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
-			mPiki->mEmotion = PikiEmotion::Unk1;
+			mPiki->mEmotion = PikiEmotion::Sad;
 			return ACTOUT_Fail;
 		}
 

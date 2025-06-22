@@ -181,7 +181,7 @@ void ActPutBomb::initSet()
 int ActPutBomb::exeSet()
 {
 	if (!mPiki->hasBomb()) {
-		mPiki->mEmotion = PikiEmotion::Unk7;
+		mPiki->mEmotion = PikiEmotion::Searching;
 		return ACTOUT_Fail;
 	}
 
@@ -441,7 +441,7 @@ int ActPutBomb::exec()
 	}
 
 	if (mState != STATE_Throw && !mPiki->hasBomb()) {
-		mPiki->mEmotion = PikiEmotion::Unk7;
+		mPiki->mEmotion = PikiEmotion::Searching;
 		return ACTOUT_Fail;
 	}
 

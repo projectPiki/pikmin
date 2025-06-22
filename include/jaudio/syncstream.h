@@ -37,13 +37,13 @@ void StreamCheckBufferEmpty(void);
 void StreamCheckBufferRemainSize(void);
 
 struct BufControl_ {
-	u8 _00;  // _00
-	u8 _01;  // _01
-	u8 _02;  // _02
-	u8 _03;  // _03
-	u32 _04; // _04
-	u32 _08; // _08
-	u32 _0C; // _0C
+	u8 mStatus;       // _00
+	u8 mMaxBuffers;   // _01
+	u8 mCurrentIndex; // _02
+	u8 mActiveIndex;  // _03
+	u32 mBufferSize;  // _04
+	u32 mPosition;    // _08
+	u32 mLength;      // _0C
 };
 
 enum AudioFormat { AUDIOFRMT_ADPCM = 4, AUDIOFRMT_ADPCM4X = 5 };
@@ -68,46 +68,46 @@ union UNION_0x2420 {
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
 	union UNION_0x2420 _00[6];    // _00
-	s16 _0D8C0[2][0x2000];        // _0D8C0
-	s16 _158C0[2][0x2000];        // _158C0
-	s16 _1D8C0[2][0x1000];        // _1D8C0, PCM data?
+	s16 leftChanBufs[2][0x2000];  // _0D8C0
+	s16 rightChanBufs[2][0x2000]; // _158C0
+	s16 loopBufs[2][0x1000];      // _1D8C0, PCM data?
 	BufControl_ buffCtrl[6];      // _218C0
 	BufControl_ buffCtrlExtra[2]; // _21920
 	BufControl_ buffCtrlMain;     // _21940
 	BufControl_ buffCtrlMain2;    // _21950
 	BufControl_ buffCtrlMain3;    // _21960
-	u32 _21970;                   // _21970
-	u32 _21974;                   // _21974
-	u32 _21978;                   // _21978
+	u32 remainingBytes;           // _21970
+	u32 bytesRead;                // _21974
+	u32 chunkSize;                // _21978
 	u32 _2197C;                   // _2197C
-	u32 _21980;                   // _21980
-	u32 _21984;                   // _21984
+	u32 samplesDecoded;           // _21980
+	u32 playbackState;            // _21984
 	StreamHeader_ header;         // _21988
-	s32 _219A8;                   // _219A8
-	s32 _219AC;                   // _219AC
+	s32 autoStart;                // _219A8
+	s32 stopRequested;            // _219AC
 	BOOL isPaused;                // _219B0
-	s32 _219B4;                   // _219B4
+	s32 isAtEnd;                  // _219B4
 	DVDFileInfo fileinfo;         // _219B8
 	dspch_* dspch[2];             // _219F4
-	u32 _219FC;                   // _219FC
-	u32 _21A00;                   // _21A00
+	u32 totalSamples;             // _219FC
+	u32 loopSize;                 // _21A00
 	u32 _21A04;                   // _21A04
-	u32 _21A08;                   // _21A08
-	u32 _21A0C;                   // _21A0C
-	u32 _21A10;                   // _21A10
-	StreamCallback _21A14;        // _21A14
-	s16 _21A18[4];                // _21A18
-	s16 _21A20[4];                // _21A20
+	u32 frameCounter;             // _21A08
+	u32 controllerId;             // _21A0C
+	u32 streamId;                 // _21A10
+	StreamCallback syncCallback;  // _21A14
+	s16 leftAdpcmState[4];        // _21A18
+	s16 rightAdpcmState[4];       // _21A20
 	u16 volume[2];                // _21A28
 	u16 mixLevel[2];              // _21A28
-	f32 _21A30;                   // _21A30
-	u8 _21A34;                    // _21A34
-	u32 _21A38;                   // _21A38
+	f32 pitchRatio;               // _21A30
+	u8 isFromFile;                // _21A34
+	u32 updateFlags;              // _21A38
 	u32 _21A3C;                   // _21A3C
-	u32 _21A40;                   // _21A40
-	s32 _21A44;                   // _21A44
-	s32 _21A48;                   // _21A48
-	s32 _21A4C;                   // _21A4C
+	u32 samplesLoaded;            // _21A40
+	s32 isBufferingComplete;      // _21A44
+	s32 isLoadInProgress;         // _21A48
+	s32 bufferMargin;             // _21A4C
 };
 
 #ifdef __cplusplus

@@ -119,15 +119,15 @@ struct jc_ {
 	void** chanListHead;                // _08
 	u8 logicalChanType;                 // _0C, 0 = Wave, 1 = ??, 2 = Oscillator
 	Wave_* waveData;                    // _10
-	u32 _14;                            // _14
+	u32 chanData;                       // _14
 	u32 _18;                            // _18
 	u32 _1C;                            // _1C
 	dspch_* dspChannel;                 // _20
 	void* mNext;                        // _24
 	JCUpdateCallback updateCallback;    // _28
 	JCUpdateCallback pitchSweepUpdater; // _2C
-	s32 playId;                         // _30
-	s32 savedPlayId;                    // _34
+	s32 _30;                            // _30
+	s32 _34;                            // _34
 	struct Osc_* mOscillators[4];       // _38
 	struct Oscbuf_ mOscBuffers[2];      // _48
 	f32 _78;                            // _78

@@ -203,5 +203,5 @@ void zen::ogScrMakeDefaultMgr::draw(Graphics& gfx)
  */
 bool zen::ogScrMakeDefaultMgr::checkTypingAll()
 {
-	return mActiveTypingTextMgr->check() == TypingTextMgr::STATE_2 ? true : false;
+	return mActiveTypingTextMgr->check() == TypingTextMgr::STATE_Complete ? true : false;
 }

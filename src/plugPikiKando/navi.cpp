@@ -1038,10 +1038,10 @@ void Navi::callPikis(f32 radius)
 
 		int state = piki->getState();
 		if (state == PIKISTATE_Drown) {
-			static_cast<PikiDrownState*>(piki->getCurrState())->_28 = true;
+			static_cast<PikiDrownState*>(piki->getCurrState())->mIsBeingWhistled = true;
 			PRINT("call drown piki\n");
 		} else if (state == PIKISTATE_Flick) {
-			static_cast<PikiFlickState*>(piki->getCurrState())->_14 = 0.0f;
+			static_cast<PikiFlickState*>(piki->getCurrState())->mGetUpTimer = 0.0f;
 		} else if (state == PIKISTATE_Flown) {
 			static_cast<PikiFlownState*>(piki->getCurrState())->_10 = 0.0f;
 		}
@@ -1057,7 +1057,7 @@ void Navi::callPikis(f32 radius)
 
 				piki->mNavi = this;
 				if (state == PIKISTATE_Emotion) {
-					static_cast<PikiEmotionState*>(piki->getCurrState())->mRapCnt = 0;
+					static_cast<PikiEmotionState*>(piki->getCurrState())->mCheerCount = 0;
 				}
 
 				if (piki->mMode == PikiMode::PutbombMode && piki->isHolding()) {

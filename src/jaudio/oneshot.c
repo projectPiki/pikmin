@@ -146,10 +146,10 @@ static void EffecterInit_Perc(jc_* jc, Pmap_* pmap, u16 id)
 	// PERC instruments only have rand and not osc
 	for (u32 i = 0; i < 2; i++) {
 		Pmap_* map = (Pmap_*)((int*)pmap + i + 2);
-		if (map->_00) {
-			f32 r      = Bank_RandToOfs(map->_00);
+		if (map->randomEffect) {
+			f32 r      = Bank_RandToOfs(map->randomEffect);
 			f32* REF_r = &r;
-			__DoEffect(jc, map->_00->id, r);
+			__DoEffect(jc, map->randomEffect->id, r);
 		}
 
 		jc->mOscillators[i] = NULL;
@@ -212,15 +212,15 @@ void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
  * Address:	800155C0
  * Size:	00010C
  */
-static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 id)
+static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
 {
 	BOOL play;
 
-	if (id == 0) {
-		id = -1;
+	if (p3 == 0) {
+		p3 = -1;
 	}
-	jc->playId         = id;
-	jc->savedPlayId    = jc->playId;
+	jc->_30            = p3;
+	jc->_34            = jc->_30;
 	jc->updateCallback = Jesus1Shot_Update;
 	jc->dspChannel     = AllocDSPchannel(0, (u32)jc);
 
@@ -256,7 +256,7 @@ static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 id)
  */
 static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 {
-	if (wave && wave->_0C == NULL) {
+	if (wave && wave->sampleSrcType == NULL) {
 		return FALSE;
 	}
 
@@ -295,8 +295,8 @@ static jc_* __Oneshot_GetLogicalChannel(jcs_* jcs, CtrlWave_* wave)
 	}
 	Channel_Init(chan);
 	if (wave) {
-		chan->waveData        = (Wave_*)wave->_34;
-		chan->_14             = wave->_0C;
+		chan->waveData        = (Wave_*)wave->waveAddr;
+		chan->chanData        = wave->sampleSrcType;
 		chan->logicalChanType = 0;
 	}
 	chan->_18 = 0;
@@ -623,12 +623,12 @@ void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)
  * Address:	80015EA0
  * Size:	0000C8
  */
-void Gate_1Shot(jc_* jc, u8 key, u8 a2, s32 a3)
+void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 playId)
 {
 	STACK_PAD_VAR(2);
-	if (jc->playId == -1) {
-		jc->playId      = a3;
-		jc->savedPlayId = jc->playId;
+	if (jc->_30 == -1) {
+		jc->_30 = playId;
+		jc->_34 = jc->_30;
 		int pitchKey;
 		if (jc->logicalChanType == 2) {
 			pitchKey = key;
@@ -643,7 +643,7 @@ void Gate_1Shot(jc_* jc, u8 key, u8 a2, s32 a3)
 		}
 
 		f32 pitch         = C5BASE_PITCHTABLE[pitchKey];
-		jc->velocity      = a2;
+		jc->velocity      = velocity;
 		jc->note          = key;
 		jc->currentPitch  = jc->basePitch * pitch;
 		jc->currentVolume = jc->velocity / 127.0f;
@@ -778,7 +778,7 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 				jc->dspChannel->_03 = test2;
 			}
 		}
-		jc->playId = -1;
+		jc->_30 = -1;
 		return FALSE;
 	} else if (status == 1 || status == 2 || status == 6) {
 		if (jc->mMgr->chanAllocCount) {
@@ -803,7 +803,7 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 			Del_WaitDSPChannel(jc);
 		}
 		jc->note           = -1;
-		jc->playId         = -1;
+		jc->_30            = -1;
 		jc->updateCallback = NULL;
 	}
 	return FALSE;
@@ -907,7 +907,7 @@ jc_* Play_1shot(jcs_* jcs, SOUNDID_ sound, u32 id)
 	f32 pitch                      = C5BASE_PITCHTABLE[val];
 	chan->velocity                 = sound.bytes[3];
 	chan->note                     = sound.bytes[2];
-	chan->basePitch                = map->_0C * (wave->data->_04 / JAC_DAC_RATE) * inst->mGainMultiplier;
+	chan->basePitch                = map->_0C * (wave->data->sampleRate / JAC_DAC_RATE) * inst->mGainMultiplier;
 	chan->currentPitch             = chan->basePitch * pitch;
 	chan->baseVolume               = map->_08 * inst->mFreqMultiplier;
 	chan->currentVolume            = chan->velocity / 127.0f;
@@ -991,7 +991,7 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 	chan->velocity = sound.bytes[3];
 	chan->note     = sound.bytes[2];
 
-	chan->basePitch    = (wave->data->_04 / JAC_DAC_RATE) * map->_0C * perc->mKeyRegions[sound.bytes[2]]->mVolume;
+	chan->basePitch    = (wave->data->sampleRate / JAC_DAC_RATE) * map->_0C * perc->mKeyRegions[sound.bytes[2]]->mVolume;
 	chan->currentPitch = chan->basePitch;
 
 	chan->baseVolume    = map->_08 * perc->mKeyRegions[sound.bytes[2]]->mPitch;
@@ -1000,8 +1000,8 @@ jc_* Play_1shot_Perc(jcs_* jcs, SOUNDID_ sound, u32 id)
 
 	u16 flag;
 	if (perc->mMagic == 'PER2') {
-		chan->panMatrices[1].values[0] = perc->_288[sound.bytes[2]] / 127.0f;
-		flag                           = perc->_308[sound.bytes[2]];
+		chan->panMatrices[1].values[0] = perc->panTable[sound.bytes[2]] / 127.0f;
+		flag                           = perc->releaseTable[sound.bytes[2]];
 	} else {
 		flag                           = 1000;
 		chan->panMatrices[1].values[0] = 0.5f;
@@ -1033,7 +1033,7 @@ jc_* Play_1shot_Osc(jcs_* jcs, SOUNDID_ sound, u32 id)
 		return NULL;
 	}
 
-	chan->_14             = sound.bytes[1] - 0xf0;
+	chan->chanData        = sound.bytes[1] - 0xf0;
 	chan->logicalChanType = 2;
 
 	pit = sound.bytes[2];

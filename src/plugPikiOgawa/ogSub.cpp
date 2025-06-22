@@ -130,7 +130,7 @@ bool getStringCVS(char* p1, char* p2, s16 p3)
  */
 PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 {
-	_04 = 0;
+	mAlphaCount = 0;
 	char str[512];
 	char buf[8];
 	for (int i = 0; i < 100; i++) {
@@ -158,7 +158,7 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 		u8 cAlpha = tbox->getCharColor().a;
 		u8 gAlpha = tbox->getGradColor().a;
 
-		mTenmetuAlphas[_04] = new setTenmetuAlpha(pic, val0, val1, cAlpha, gAlpha);
+		mTenmetuAlphas[mAlphaCount] = new setTenmetuAlpha(pic, val0, val1, cAlpha, gAlpha);
 
 		for (int j = 0; j < 20; j++) {
 			s16 idx = 7 * j;
@@ -193,9 +193,9 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 
 			Colour col1(red1, green1, blue1, 255);
 			Colour col2(red2, green2, blue2, 255);
-			mTenmetuAlphas[_04]->setColorTab(j, &col1, &col2, val2);
+			mTenmetuAlphas[mAlphaCount]->setColorTab(j, &col1, &col2, val2);
 		}
-		_04++;
+		mAlphaCount++;
 	}
 }
 
@@ -207,7 +207,7 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 void PikaAlphaMgr::start()
 {
 	mState = 0;
-	for (int i = 0; i < _04; i++) {
+	for (int i = 0; i < mAlphaCount; i++) {
 		mTenmetuAlphas[i]->start();
 	}
 }
@@ -220,7 +220,7 @@ void PikaAlphaMgr::start()
 void PikaAlphaMgr::startFadeIn(f32 p1)
 {
 	mState = 1;
-	for (int i = 0; i < _04; i++) {
+	for (int i = 0; i < mAlphaCount; i++) {
 		mTenmetuAlphas[i]->startFadeIn(p1, 0.0f, 1.0f);
 	}
 }
@@ -233,7 +233,7 @@ void PikaAlphaMgr::startFadeIn(f32 p1)
 void PikaAlphaMgr::startFadeOut(f32 p1)
 {
 	mState = 2;
-	for (int i = 0; i < _04; i++) {
+	for (int i = 0; i < mAlphaCount; i++) {
 		mTenmetuAlphas[i]->startFadeOut(p1, 0.0f, 1.0f);
 	}
 }
@@ -248,7 +248,7 @@ void PikaAlphaMgr::update()
 	int i;
 	switch (mState) {
 	case 1:
-		for (i = 0; i < _04; i++) {
+		for (i = 0; i < mAlphaCount; i++) {
 			if (mTenmetuAlphas[i]->update() == 1) {
 				mState = 0;
 			}
@@ -256,7 +256,7 @@ void PikaAlphaMgr::update()
 		break;
 
 	case 2:
-		for (i = 0; i < _04; i++) {
+		for (i = 0; i < mAlphaCount; i++) {
 			if (mTenmetuAlphas[i]->update() == 0) {
 				mState = -1;
 			}
@@ -264,7 +264,7 @@ void PikaAlphaMgr::update()
 		break;
 
 	case 0:
-		for (i = 0; i < _04; i++) {
+		for (i = 0; i < mAlphaCount; i++) {
 			mTenmetuAlphas[i]->update();
 		}
 		break;
@@ -281,19 +281,19 @@ void PikaAlphaMgr::update()
  */
 setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
 {
-	mMode = MODE_Unk0;
-	mPic  = pic;
-	_08   = p2;
-	_0C   = p3;
-	_1C   = p4;
-	_1D   = p5;
-	_18   = (_1D - _1C);
-	_128  = 0;
-	_12A  = 0;
-	_120  = p3;
-	_124  = p3;
-	_10   = 0.0f;
-	_14   = 1.0f;
+	mMode              = MODE_Stopped;
+	mPic               = pic;
+	mPeriod            = p2;
+	mTimer             = p3;
+	mMinAlpha          = p4;
+	mMaxAlpha          = p5;
+	mAlphaRange        = (mMaxAlpha - mMinAlpha);
+	mColorCount        = 0;
+	mCurrentColorIndex = 0;
+	mColorTimer        = p3;
+	mReferenceTime     = p3;
+	mFadeTimer         = 0.0f;
+	mFadeDuration      = 1.0f;
 }
 
 /*
@@ -303,19 +303,19 @@ setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2, f32 p3, u8 p4, u8 p5)
  */
 setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
 {
-	mMode = MODE_Unk0;
-	mPic  = pic;
-	_08   = p2;
-	_0C   = 0.0f;
-	_1C   = 0;
-	_1D   = 255;
-	_18   = (_1D - _1C);
-	_128  = 0;
-	_12A  = 0;
-	_120  = 0.0f;
-	_124  = 0.0f;
-	_10   = 0.0f;
-	_14   = 1.0f;
+	mMode              = MODE_Stopped;
+	mPic               = pic;
+	mPeriod            = p2;
+	mTimer             = 0.0f;
+	mMinAlpha          = 0;
+	mMaxAlpha          = 255;
+	mAlphaRange        = (mMaxAlpha - mMinAlpha);
+	mColorCount        = 0;
+	mCurrentColorIndex = 0;
+	mColorTimer        = 0.0f;
+	mReferenceTime     = 0.0f;
+	mFadeTimer         = 0.0f;
+	mFadeDuration      = 1.0f;
 }
 
 /*
@@ -325,10 +325,10 @@ setTenmetuAlpha::setTenmetuAlpha(P2DPicture* pic, f32 p2)
  */
 void setTenmetuAlpha::updateColor()
 {
-	if (_128 > 0) {
-		Colour col1 = _30[_12A];
-		Colour col2 = _30[(_12A + 1) % _128];
-		f32 t       = _120 / _D0[_12A];
+	if (mColorCount > 0) {
+		Colour col1 = mPrimaryColors[mCurrentColorIndex];
+		Colour col2 = mPrimaryColors[(mCurrentColorIndex + 1) % mColorCount];
+		f32 t       = mColorTimer / mColorDurations[mCurrentColorIndex];
 
 		if (t > 1.0f) {
 			t = 1.0f;
@@ -338,9 +338,9 @@ void setTenmetuAlpha::updateColor()
 
 		Colour targCol(col1.r * tComp + col2.r * t, col1.g * tComp + col2.g * t, col1.b * tComp + col2.b * t, col1.a * tComp + col2.a * t);
 		mPic->setWhite(targCol);
-		col1 = _80[_12A];
-		col2 = _80[(_12A + 1) % _128];
-		t    = _120 / _D0[_12A];
+		col1 = mSecondaryColors[mCurrentColorIndex];
+		col2 = mSecondaryColors[(mCurrentColorIndex + 1) % mColorCount];
+		t    = mColorTimer / mColorDurations[mCurrentColorIndex];
 		if (t > 1.0f) {
 			t = 1.0f;
 		}
@@ -350,12 +350,12 @@ void setTenmetuAlpha::updateColor()
 		targCol.set(col1.r * tComp + col2.r * t, col1.g * tComp + col2.g * t, col1.b * tComp + col2.b * t, 0);
 		mPic->setBlack(targCol);
 
-		_120 += gsys->getFrameTime();
-		if (_120 > _D0[_12A]) {
-			_120 = 0.0f;
-			_12A++;
-			if (_12A >= _128) {
-				_12A = 0;
+		mColorTimer += gsys->getFrameTime();
+		if (mColorTimer > mColorDurations[mCurrentColorIndex]) {
+			mColorTimer = 0.0f;
+			mCurrentColorIndex++;
+			if (mCurrentColorIndex >= mColorCount) {
+				mCurrentColorIndex = 0;
 			}
 		}
 	}
@@ -368,10 +368,10 @@ void setTenmetuAlpha::updateColor()
  */
 void setTenmetuAlpha::start()
 {
-	_12A  = 0;
-	_0C   = _124;
-	_120  = _124;
-	mMode = MODE_Unk1;
+	mCurrentColorIndex = 0;
+	mTimer             = mReferenceTime;
+	mColorTimer        = mReferenceTime;
+	mMode              = MODE_Running;
 }
 
 /*
@@ -381,7 +381,7 @@ void setTenmetuAlpha::start()
  */
 void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
 {
-	if (mMode == MODE_Unk1) {
+	if (mMode == MODE_Running) {
 		return;
 	}
 
@@ -389,15 +389,15 @@ void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
 		p1 = 0.01f;
 	}
 
-	_12A  = 0;
-	_0C   = _124;
-	_120  = _124;
-	_14   = p1;
-	_10   = 0.0f;
-	_24   = p2;
-	_28   = p3;
-	_20   = p3 - p2;
-	mMode = MODE_Unk2;
+	mCurrentColorIndex = 0;
+	mTimer             = mReferenceTime;
+	mColorTimer        = mReferenceTime;
+	mFadeDuration      = p1;
+	mFadeTimer         = 0.0f;
+	mFadeStart         = p2;
+	mFadeEnd           = p3;
+	mFadeRange         = p3 - p2;
+	mMode              = MODE_FadeIn;
 }
 
 /*
@@ -407,7 +407,7 @@ void setTenmetuAlpha::startFadeIn(f32 p1, f32 p2, f32 p3)
  */
 void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
 {
-	if (mMode == MODE_Unk0) {
+	if (mMode == MODE_Stopped) {
 		return;
 	}
 
@@ -415,12 +415,12 @@ void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
 		p1 = 0.01f;
 	}
 
-	_14   = p1;
-	_10   = 0.0f;
-	_24   = p2;
-	_28   = p3;
-	_20   = p3 - p2;
-	mMode = MODE_Unk3;
+	mFadeDuration = p1;
+	mFadeTimer    = 0.0f;
+	mFadeStart    = p2;
+	mFadeEnd      = p3;
+	mFadeRange    = p3 - p2;
+	mMode         = MODE_FadeOut;
 }
 
 /*
@@ -430,15 +430,15 @@ void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
  */
 void setTenmetuAlpha::calcAlpha(f32 p1)
 {
-	if (_08 > 0.0f) {
-		_0C += gsys->getFrameTime();
-		if (_0C > _08) {
-			_0C -= _08;
+	if (mPeriod > 0.0f) {
+		mTimer += gsys->getFrameTime();
+		if (mTimer > mPeriod) {
+			mTimer -= mPeriod;
 		}
 
 		updateColor();
-		f32 angle = TAU * _0C / _08;
-		u8 alpha  = u8(_1C + int((sinf(angle) + 1.0f) * _18 / 2.0f));
+		f32 angle = TAU * mTimer / mPeriod;
+		u8 alpha  = u8(mMinAlpha + int((sinf(angle) + 1.0f) * mAlphaRange / 2.0f));
 		alpha     = alpha * p1;
 		mPic->setAlpha(alpha);
 	}
@@ -451,40 +451,40 @@ void setTenmetuAlpha::calcAlpha(f32 p1)
  */
 setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
 {
-	if (mMode == MODE_Unk0) {
+	if (mMode == MODE_Stopped) {
 		return mMode;
 	}
 
 	switch (mMode) {
-	case MODE_Unk2:
-		_10 += gsys->getFrameTime();
-		f32 t = _10 / _14;
+	case MODE_FadeIn:
+		mFadeTimer += gsys->getFrameTime();
+		f32 t = mFadeTimer / mFadeDuration;
 		if (t < 0.0f) {
 			t = 0.0f;
 		}
 		if (t > 1.0f) {
 			t     = 1.0f;
-			mMode = MODE_Unk1;
+			mMode = MODE_Running;
 		}
 
-		calcAlpha(_24 + _20 * t);
+		calcAlpha(mFadeStart + mFadeRange * t);
 		break;
 
-	case MODE_Unk3:
-		_10 += gsys->getFrameTime();
-		t = _10 / _14;
+	case MODE_FadeOut:
+		mFadeTimer += gsys->getFrameTime();
+		t = mFadeTimer / mFadeDuration;
 		if (t < 0.0f) {
 			t = 0.0f;
 		}
 		if (t > 1.0f) {
 			t     = 1.0f;
-			mMode = MODE_Unk0;
+			mMode = MODE_Stopped;
 		}
 
-		calcAlpha(_28 - _20 * t);
+		calcAlpha(mFadeEnd - mFadeRange * t);
 		break;
 
-	case MODE_Unk1:
+	case MODE_Running:
 		calcAlpha(1.0f);
 		break;
 	}
@@ -499,14 +499,14 @@ setTenmetuAlpha::TenmetuMode setTenmetuAlpha::update()
  */
 ogFadeMgr::ogFadeMgr(P2DPane* pane, u8 p2)
 {
-	mState    = Status_0;
-	mPane     = pane;
-	_0C       = 1.0f;
-	_10       = 0.0f;
-	_14       = 0.0f;
-	_18       = 0.0f;
-	_1C       = p2;
-	mPaneType = mPane->getTypeID();
+	mState        = STATUS_Idle;
+	mPane         = pane;
+	mFadeDuration = 1.0f;
+	mFadeTimer    = 0.0f;
+	mCurrentAlpha = 0.0f;
+	mSourceAlpha  = 0.0f;
+	mTargetAlpha  = p2;
+	mPaneType     = mPane->getTypeID();
 	setAlpha();
 }
 
@@ -520,16 +520,16 @@ void ogFadeMgr::start(ogFadeMgr::ogFadeStatusFlag state, f32 p2)
 	if (p2 == 0.0f) {
 		return;
 	}
-	mState = state;
-	_0C    = p2;
-	_10    = 0.0f;
+	mState        = state;
+	mFadeDuration = p2;
+	mFadeTimer    = 0.0f;
 	switch (mState) {
-	case Status_1:
-		_14 = _18;
+	case STATUS_FadeIn:
+		mCurrentAlpha = mSourceAlpha;
 		break;
 
-	case Status_2:
-		_14 = _1C;
+	case STATUS_FadeOut:
+		mCurrentAlpha = mTargetAlpha;
 		break;
 	}
 
@@ -546,12 +546,12 @@ void ogFadeMgr::setAlpha()
 	switch (mPaneType) {
 	case PANETYPE_Picture:
 		P2DPicture* pic = (P2DPicture*)mPane;
-		pic->setAlpha(_14);
+		pic->setAlpha(mCurrentAlpha);
 		break;
 
 	case PANETYPE_TextBox:
 		P2DTextBox* tbox = (P2DTextBox*)mPane;
-		tbox->setAlpha(_14);
+		tbox->setAlpha(mCurrentAlpha);
 		break;
 
 	default:
@@ -567,30 +567,30 @@ void ogFadeMgr::setAlpha()
  */
 ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 {
-	if (mState == Status_0) {
+	if (mState == STATUS_Idle) {
 		return mState;
 	}
 
-	_10 += gsys->getFrameTime();
-	if (_10 > _0C) {
-		_10 = _0C;
+	mFadeTimer += gsys->getFrameTime();
+	if (mFadeTimer > mFadeDuration) {
+		mFadeTimer = mFadeDuration;
 	}
 
-	f32 t = _10 / _0C;
+	f32 t = mFadeTimer / mFadeDuration;
 	switch (mState) {
-	case Status_1:
-		_14 = _18 * (1.0f - t) + _1C * t;
+	case STATUS_FadeIn:
+		mCurrentAlpha = mSourceAlpha * (1.0f - t) + mTargetAlpha * t;
 		break;
 
-	case Status_2:
-		_14 = _1C * (1.0f - t) + _18 * t;
+	case STATUS_FadeOut:
+		mCurrentAlpha = mTargetAlpha * (1.0f - t) + mSourceAlpha * t;
 		break;
 	}
 
 	setAlpha();
 
-	if (_10 >= _0C) {
-		mState = Status_0;
+	if (mFadeTimer >= mFadeDuration) {
+		mState = STATUS_Idle;
 	}
 
 	return mState;
@@ -616,10 +616,10 @@ void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
 ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox* tbox)
 {
 	char tmpStr[512];
-	_14        = 0;
-	mPicture   = pic;
-	mTextBox   = tbox;
-	char* text = mTextBox->getString();
+	mTextureCount = 0;
+	mPicture      = pic;
+	mTextBox      = tbox;
+	char* text    = mTextBox->getString();
 
 	for (int i = 0; i < 100; i++) {
 		if (getStringCVS(tmpStr, text, 2 * i)) {
@@ -635,21 +635,21 @@ ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox*
 			break;
 		}
 
-		_1A8[i] = pane;
+		mTextures[i] = pane;
 		if (getStringCVS(tmpStr, text, 2 * i + 1)) {
 			break;
 		}
 
-		_18[i] = atof(tmpStr);
-		_14++;
+		mDurations[i] = atof(tmpStr);
+		mTextureCount++;
 	}
 
-	_16 = 0;
-	_0C = 0.0f;
-	_10 = 1.0f;
-	if (_14 > 0) {
-		_08 = _18[_16];
-		movePicturePos(mPicture, _1A8[_16]);
+	mCurrentIndex    = 0;
+	mTimer           = 0.0f;
+	mSpeedMultiplier = 1.0f;
+	if (mTextureCount > 0) {
+		mCurrentDuration = mDurations[mCurrentIndex];
+		movePicturePos(mPicture, mTextures[mCurrentIndex]);
 	}
 }
 
@@ -660,19 +660,19 @@ ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox*
  */
 void ogTexAnimSubMgr::update()
 {
-	if (_14) {
-		_0C += gsys->getFrameTime() * _10;
-		if (_0C > _08) {
-			_1A8[_16]->hide();
-			_16++;
-			if (_16 >= _14) {
-				_16 = 0;
+	if (mTextureCount) {
+		mTimer += gsys->getFrameTime() * mSpeedMultiplier;
+		if (mTimer > mCurrentDuration) {
+			mTextures[mCurrentIndex]->hide();
+			mCurrentIndex++;
+			if (mCurrentIndex >= mTextureCount) {
+				mCurrentIndex = 0;
 			}
 
-			_0C = 0.0f;
-			_08 = _18[_16];
-			movePicturePos(mPicture, _1A8[_16]);
-			_1A8[_16]->show();
+			mTimer           = 0.0f;
+			mCurrentDuration = mDurations[mCurrentIndex];
+			movePicturePos(mPicture, mTextures[mCurrentIndex]);
+			mTextures[mCurrentIndex]->show();
 		}
 	}
 }
@@ -685,7 +685,7 @@ void ogTexAnimSubMgr::update()
 ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 {
 	char buf[8];
-	_00 = 0;
+	mSubMgrCount = 0;
 	for (int i = 0; i < 100; i++) {
 		sprintf(buf, "at%02d", i);
 		P2DPane* pane = screen->search(P2DPaneLibrary::makeTag(buf), false);
@@ -698,7 +698,7 @@ ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
 			P2DPicture* pic  = (P2DPicture*)parent;
 			P2DTextBox* tbox = (P2DTextBox*)pane;
 			mSubMgrs[i]      = new ogTexAnimSubMgr(screen, pic, tbox);
-			_00++;
+			mSubMgrCount++;
 		}
 	}
 }
@@ -710,7 +710,7 @@ ogTexAnimMgr::ogTexAnimMgr(P2DScreen* screen)
  */
 void ogTexAnimMgr::update()
 {
-	for (int i = 0; i < _00; i++) {
+	for (int i = 0; i < mSubMgrCount; i++) {
 		mSubMgrs[i]->update();
 	}
 }
@@ -837,9 +837,9 @@ TypingTextMgr::TypingTextMgr(P2DTextBox* textBox)
 	mTextBox = textBox;
 	mTextPtr = textBox->getString();
 	sprintf(mTextBuf, "");
-	_00  = 0;
-	_410 = 0.0f;
-	_414 = 0;
+	mState     = STATE_Stopped;
+	mTypeTimer = 0.0f;
+	mCharIndex = 0;
 
 	textBox->hide();
 	mCtrlTagMgr = new ogMsgCtrlTagMgr();
@@ -854,9 +854,9 @@ void TypingTextMgr::start()
 {
 	STACK_PAD_VAR(1);
 
-	_00  = 1;
-	_410 = 0.0f;
-	_414 = 0;
+	mState     = STATE_Typing;
+	mTypeTimer = 0.0f;
+	mCharIndex = 0;
 	sprintf(mTextBuf, "");
 	mTextBox->show();
 	mTextBox->setString(mTextBuf);
@@ -876,9 +876,9 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 	P2DTextBox* tensBox     = (P2DTextBox*)screen->search('ten', true);
 	P2DTextBox* hundredsBox = (P2DTextBox*)screen->search('han', true);
 
-	strcpy(_00, onesBox->getString());
-	strcpy(_08, tensBox->getString());
-	strcpy(_10, hundredsBox->getString());
+	strcpy(mOnesWaitChar, onesBox->getString());
+	strcpy(mTensWaitChar, tensBox->getString());
+	strcpy(mHankakuWaitChars, hundredsBox->getString());
 }
 
 /*
@@ -899,11 +899,11 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 	}
 
 	s16 c;
-	if (strncmp(tmpStr1, _00, 2) == 0) {
+	if (strncmp(tmpStr1, mOnesWaitChar, 2) == 0) {
 		PRINT("Hit MARU !!\n");
 		*p3 = 0.25f;
 		c   = a + 2;
-	} else if (strncmp(tmpStr1, _08, 2) == 0) {
+	} else if (strncmp(tmpStr1, mTensWaitChar, 2) == 0) {
 		PRINT("Hit TEN !!\n");
 		*p3 = 0.25f;
 		c   = a + 2;
@@ -939,7 +939,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 	} else if (b & 0x80) {
 		c = a + 2;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
-	} else if (strchr(_10, b)) {
+	} else if (strchr(mHankakuWaitChars, b)) {
 		PRINT("Hit HANKAKU WAIT!!\n");
 		*p3 = 0.25f;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
@@ -960,31 +960,32 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
  */
 void TypingTextMgr::update()
 {
-	if (_00 == 0) {
+	if (mState == STATE_Stopped) {
 		mTextBox->hide();
 		return;
 	}
-	if (_00 == 2) {
+
+	if (mState == STATE_Complete) {
 		mTextBox->setString(mTextPtr);
 		return;
 	}
 
-	_410 += gsys->getFrameTime();
-	if (_410 >= 0.029639998f) {
-		_410 -= 0.029639998f;
+	mTypeTimer += gsys->getFrameTime();
+	if (mTypeTimer >= 0.029639998f) {
+		mTypeTimer -= 0.029639998f;
 		f32 a;
-		if (mCtrlTagMgr->CheckCtrlTag(mTextPtr, &_414, &a)) {
-			_00 = 2;
+		if (mCtrlTagMgr->CheckCtrlTag(mTextPtr, &mCharIndex, &a)) {
+			mState = STATE_Complete;
 		}
 
 		if (a > 0.0f) {
-			_410 = -a;
+			mTypeTimer = -a;
 		}
-		if (_414 > 1023) {
-			_414 = 1023;
+		if (mCharIndex > 1023) {
+			mCharIndex = 1023;
 		}
-		strncpy(mTextBuf, mTextPtr, _414);
-		mTextBuf[_414] = 0;
+		strncpy(mTextBuf, mTextPtr, mCharIndex);
+		mTextBuf[mCharIndex] = 0;
 	}
 }
 

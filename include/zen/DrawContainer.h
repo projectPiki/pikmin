@@ -44,13 +44,13 @@ struct DrawContainer {
 	};
 
 	/**
-	 * @brief TODO
+	 * @brief Container operation states for the transfer interface
 	 */
 	enum statusFlag {
-		STATE_Wait  = 0,
-		STATE_Start = 1,
-		STATE_Unk2  = 2,
-		STATE_Unk3  = 3,
+		STATE_Wait      = 0, // Waiting state before interface appears
+		STATE_Start     = 1, // Interface sliding in animation
+		STATE_Operation = 2, // Active operation state - user can transfer Pikmin
+		STATE_End       = 3, // Interface sliding out animation
 	};
 
 	DrawContainer();
@@ -74,32 +74,32 @@ struct DrawContainer {
 	static const f32 waitFrame;
 	static const f32 addPikiMax;
 
-	statusFlag mState;             // _00
-	P2DScreen mScreen;             // _04
-	P2DPerspGraph* mPerspGraph;    // _FC
-	Controller* mController;       // _100
-	ZenController mZenController;  // _104
-	f32 _170;                      // _170
-	containerType mColor;          // _174
-	int _178;                      // _178
-	int _17C;                      // _17C
-	int _180;                      // _180
-	int _184;                      // _184
-	int _188;                      // _188
-	int _18C;                      // _18C
-	f32 _190;                      // _190
-	int _194;                      // _194
-	int mContainerPikiNum;         // _198
-	int mSquadPikiNum;             // _19C
-	int mDeltaPikiNum;             // _1A0
-	WindowPaneMgr* mWindowPaneMgr; // _1A4
-	P2DPicture* _1A8;              // _1A8
-	Vector2f _1AC;                 // _1AC
-	MessageMgr* mMessageMgr;       // _1B4
-	Texture* _1B8[3];              // _1B8
-	Texture* _1C4[3];              // _1C4
-	Texture* _1D0[3];              // _1D0
-	u8 _1DC;                       // _1DC
+	statusFlag mState;              // _00
+	P2DScreen mScreen;              // _04
+	P2DPerspGraph* mPerspGraph;     // _FC
+	Controller* mController;        // _100
+	ZenController mZenController;   // _104
+	f32 mFrameTimer;                // _170
+	containerType mColor;           // _174
+	int mInitialContainerCount;     // _178
+	int mContainerCapacity;         // _17C
+	int mInitialSquadCount;         // _180
+	int mSquadCapacity;             // _184
+	int mSquadTotalCount;           // _188
+	int mSquadTotalLimit;           // _18C
+	f32 mTransferSpeed;             // _190
+	int mTransferDelta;             // _194
+	int mContainerPikiNum;          // _198
+	int mSquadPikiNum;              // _19C
+	int mDeltaPikiNum;              // _1A0
+	WindowPaneMgr* mWindowPaneMgr;  // _1A4
+	P2DPicture* mMarkerPicture;     // _1A8
+	Vector2f mMarkerBasePosition;   // _1AC
+	MessageMgr* mMessageMgr;        // _1B4
+	Texture* mPikminTextures[3];    // _1B8
+	Texture* mWindowTextures[3];    // _1C4
+	Texture* mContainerTextures[3]; // _1D0
+	u8 mIsActive;                   // _1DC
 };
 
 /**
@@ -110,25 +110,25 @@ struct DrawContainer {
 struct ArrowBasicCallBack {
 
 	/**
-	 * @brief TODO
+	 * @brief Arrow display states based on Pikmin distribution
 	 */
 	enum arrowType {
-		ARROW_Up   = 0,
-		ARROW_Down = 1,
-		ARROW_Unk2 = 2,
-		ARROW_Unk3 = 3,
+		ARROW_Up   = 0, // Squad has Pikmin, container empty - show up arrow
+		ARROW_Down = 1, // Container has Pikmin, squad empty - show down arrow
+		ARROW_Both = 2, // Both squad and container have Pikmin - show both arrows
+		ARROW_None = 3, // Neither squad nor container have Pikmin - hide arrows
 	};
 
 	ArrowBasicCallBack() { }
 	ArrowBasicCallBack(P2DPane* pane, DrawContainer* container, f32 p3)
 	    : mContainerScreen(container)
-	    , _0C(0.0f)
-	    , _10(p3)
+	    , mAnimationAngle(0.0f)
+	    , mAnimationSpeed(p3)
 	{
-		_04        = pane->getPosH();
-		_08        = pane->getPosV();
-		mIsActive  = true;
-		mArrowType = ARROW_Unk3;
+		mOriginalPosX = pane->getPosH();
+		mOriginalPosY = pane->getPosV();
+		mIsActive     = true;
+		mArrowType    = ARROW_None;
 	}
 
 	arrowType judgeArrowType()
@@ -136,7 +136,7 @@ struct ArrowBasicCallBack {
 		if (mContainerScreen->getStatus() == DrawContainer::STATE_Wait) {
 			if (mContainerScreen->getContainerPikiDisp() > 0) {
 				if (mContainerScreen->getMyPikiDisp() > 0) {
-					mArrowType = ARROW_Unk2;
+					mArrowType = ARROW_Both;
 				} else {
 					mArrowType = ARROW_Down;
 				}
@@ -144,7 +144,7 @@ struct ArrowBasicCallBack {
 				if (mContainerScreen->getMyPikiDisp() > 0) {
 					mArrowType = ARROW_Up;
 				} else {
-					mArrowType = ARROW_Unk3;
+					mArrowType = ARROW_None;
 				}
 			}
 		}
@@ -158,12 +158,12 @@ struct ArrowBasicCallBack {
 	void update(P2DPicture* pic)
 	{
 		u8 alpha = pic->getAlpha();
-		_0C += _10;
-		if (_0C < 0.0f) {
-			_0C += TAU;
+		mAnimationAngle += mAnimationSpeed;
+		if (mAnimationAngle < 0.0f) {
+			mAnimationAngle += TAU;
 		}
-		if (_0C > TAU) {
-			_0C -= TAU;
+		if (mAnimationAngle > TAU) {
+			mAnimationAngle -= TAU;
 		}
 
 		if (mIsActive) {
@@ -179,14 +179,14 @@ struct ArrowBasicCallBack {
 		}
 
 		pic->setAlpha(alpha);
-		pic->move(_04, int(NMathF::sin(_0C) * 10.0f) + _08);
+		pic->move(mOriginalPosX, int(NMathF::sin(mAnimationAngle) * 10.0f) + mOriginalPosY);
 	}
 
 	DrawContainer* mContainerScreen; // _00
-	int _04;                         // _04
-	int _08;                         // _08
-	f32 _0C;                         // _0C
-	f32 _10;                         // _10
+	int mOriginalPosX;               // _04
+	int mOriginalPosY;               // _08
+	f32 mAnimationAngle;             // _0C
+	f32 mAnimationSpeed;             // _10
 	bool mIsActive;                  // _14
 	arrowType mArrowType;            // _18
 };
@@ -215,7 +215,7 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 		setTexture(pic);
 
 		// this is just to spawn a random cmpwi that doesn't show up in the DLL
-		if (mArrowType == ARROW_Unk3 && mContainerScreen) {
+		if (mArrowType == ARROW_None && mContainerScreen) {
 			;
 		}
 	}
@@ -231,7 +231,7 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 	arrowType setTexture(P2DPicture* pane)
 	{
 		judgeArrowType();
-		if (mArrowType == ARROW_Unk3 || mArrowType == ARROW_Unk2) {
+		if (mArrowType == ARROW_None || mArrowType == ARROW_Both) {
 			sleep();
 		} else {
 			active();
@@ -274,7 +274,7 @@ struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 	{
 		P2DPicture* pic = (P2DPicture*)pane;
 		judgeArrowType();
-		if (mArrowType != ARROW_Unk2) {
+		if (mArrowType != ARROW_Both) {
 			pic->setAlpha(0);
 		}
 	}
@@ -283,7 +283,7 @@ struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 	{
 		P2DPicture* pic = (P2DPicture*)pane;
 		judgeArrowType();
-		if (mArrowType == ARROW_Unk2) {
+		if (mArrowType == ARROW_Both) {
 			active();
 		} else {
 			sleep();
@@ -385,92 +385,92 @@ struct StickCallBack : public P2DPaneCallBack {
 			pTexTable[i] = loadTexExp(buf, true, true);
 		}
 
-		_08 = new TexAnim(20);
-		_08->setData(0, pTexTable[10], 0.2f);
-		_08->setData(1, pTexTable[9], 0.05f);
-		_08->setData(2, pTexTable[8], 0.05f);
-		_08->setData(3, pTexTable[7], 0.05f);
-		_08->setData(4, pTexTable[6], 0.05f);
-		_08->setData(5, pTexTable[5], 0.05f);
-		_08->setData(6, pTexTable[4], 0.05f);
-		_08->setData(7, pTexTable[3], 0.05f);
-		_08->setData(8, pTexTable[2], 0.05f);
-		_08->setData(9, pTexTable[1], 0.05f);
-		_08->setData(10, pTexTable[0], 0.3f);
-		_08->setData(11, pTexTable[1], 0.025f);
-		_08->setData(12, pTexTable[2], 0.025f);
-		_08->setData(13, pTexTable[3], 0.025f);
-		_08->setData(14, pTexTable[4], 0.025f);
-		_08->setData(15, pTexTable[5], 0.025f);
-		_08->setData(16, pTexTable[6], 0.025f);
-		_08->setData(17, pTexTable[7], 0.025f);
-		_08->setData(18, pTexTable[8], 0.025f);
-		_08->setData(19, pTexTable[9], 0.025f);
+		mLeftAnimation = new TexAnim(20);
+		mLeftAnimation->setData(0, pTexTable[10], 0.2f);
+		mLeftAnimation->setData(1, pTexTable[9], 0.05f);
+		mLeftAnimation->setData(2, pTexTable[8], 0.05f);
+		mLeftAnimation->setData(3, pTexTable[7], 0.05f);
+		mLeftAnimation->setData(4, pTexTable[6], 0.05f);
+		mLeftAnimation->setData(5, pTexTable[5], 0.05f);
+		mLeftAnimation->setData(6, pTexTable[4], 0.05f);
+		mLeftAnimation->setData(7, pTexTable[3], 0.05f);
+		mLeftAnimation->setData(8, pTexTable[2], 0.05f);
+		mLeftAnimation->setData(9, pTexTable[1], 0.05f);
+		mLeftAnimation->setData(10, pTexTable[0], 0.3f);
+		mLeftAnimation->setData(11, pTexTable[1], 0.025f);
+		mLeftAnimation->setData(12, pTexTable[2], 0.025f);
+		mLeftAnimation->setData(13, pTexTable[3], 0.025f);
+		mLeftAnimation->setData(14, pTexTable[4], 0.025f);
+		mLeftAnimation->setData(15, pTexTable[5], 0.025f);
+		mLeftAnimation->setData(16, pTexTable[6], 0.025f);
+		mLeftAnimation->setData(17, pTexTable[7], 0.025f);
+		mLeftAnimation->setData(18, pTexTable[8], 0.025f);
+		mLeftAnimation->setData(19, pTexTable[9], 0.025f);
 
-		_0C = new TexAnim(20);
-		_0C->setData(0, pTexTable[10], 0.2f);
-		_0C->setData(1, pTexTable[11], 0.05f);
-		_0C->setData(2, pTexTable[12], 0.05f);
-		_0C->setData(3, pTexTable[13], 0.05f);
-		_0C->setData(4, pTexTable[14], 0.05f);
-		_0C->setData(5, pTexTable[15], 0.05f);
-		_0C->setData(6, pTexTable[16], 0.05f);
-		_0C->setData(7, pTexTable[17], 0.05f);
-		_0C->setData(8, pTexTable[18], 0.05f);
-		_0C->setData(9, pTexTable[19], 0.05f);
-		_0C->setData(10, pTexTable[20], 0.3f);
-		_0C->setData(11, pTexTable[19], 0.025f);
-		_0C->setData(12, pTexTable[18], 0.025f);
-		_0C->setData(13, pTexTable[17], 0.025f);
-		_0C->setData(14, pTexTable[16], 0.025f);
-		_0C->setData(15, pTexTable[15], 0.025f);
-		_0C->setData(16, pTexTable[14], 0.025f);
-		_0C->setData(17, pTexTable[13], 0.025f);
-		_0C->setData(18, pTexTable[12], 0.025f);
-		_0C->setData(19, pTexTable[11], 0.025f);
+		mRightAnimation = new TexAnim(20);
+		mRightAnimation->setData(0, pTexTable[10], 0.2f);
+		mRightAnimation->setData(1, pTexTable[11], 0.05f);
+		mRightAnimation->setData(2, pTexTable[12], 0.05f);
+		mRightAnimation->setData(3, pTexTable[13], 0.05f);
+		mRightAnimation->setData(4, pTexTable[14], 0.05f);
+		mRightAnimation->setData(5, pTexTable[15], 0.05f);
+		mRightAnimation->setData(6, pTexTable[16], 0.05f);
+		mRightAnimation->setData(7, pTexTable[17], 0.05f);
+		mRightAnimation->setData(8, pTexTable[18], 0.05f);
+		mRightAnimation->setData(9, pTexTable[19], 0.05f);
+		mRightAnimation->setData(10, pTexTable[20], 0.3f);
+		mRightAnimation->setData(11, pTexTable[19], 0.025f);
+		mRightAnimation->setData(12, pTexTable[18], 0.025f);
+		mRightAnimation->setData(13, pTexTable[17], 0.025f);
+		mRightAnimation->setData(14, pTexTable[16], 0.025f);
+		mRightAnimation->setData(15, pTexTable[15], 0.025f);
+		mRightAnimation->setData(16, pTexTable[14], 0.025f);
+		mRightAnimation->setData(17, pTexTable[13], 0.025f);
+		mRightAnimation->setData(18, pTexTable[12], 0.025f);
+		mRightAnimation->setData(19, pTexTable[11], 0.025f);
 
-		_10 = new TexAnim(40);
-		_10->setData(0, pTexTable[10], 0.3f);
-		_10->setData(1, pTexTable[9], 0.05f);
-		_10->setData(2, pTexTable[8], 0.05f);
-		_10->setData(3, pTexTable[7], 0.05f);
-		_10->setData(4, pTexTable[6], 0.05f);
-		_10->setData(5, pTexTable[5], 0.05f);
-		_10->setData(6, pTexTable[4], 0.05f);
-		_10->setData(7, pTexTable[3], 0.05f);
-		_10->setData(8, pTexTable[2], 0.05f);
-		_10->setData(9, pTexTable[1], 0.05f);
-		_10->setData(10, pTexTable[0], 0.2f);
-		_10->setData(11, pTexTable[1], 0.025f);
-		_10->setData(12, pTexTable[2], 0.025f);
-		_10->setData(13, pTexTable[3], 0.025f);
-		_10->setData(14, pTexTable[4], 0.025f);
-		_10->setData(15, pTexTable[5], 0.025f);
-		_10->setData(16, pTexTable[6], 0.025f);
-		_10->setData(17, pTexTable[7], 0.025f);
-		_10->setData(18, pTexTable[8], 0.025f);
-		_10->setData(19, pTexTable[9], 0.025f);
-		_10->setData(20, pTexTable[10], 0.025f);
-		_10->setData(21, pTexTable[11], 0.025f);
-		_10->setData(22, pTexTable[12], 0.025f);
-		_10->setData(23, pTexTable[13], 0.025f);
-		_10->setData(24, pTexTable[14], 0.025f);
-		_10->setData(25, pTexTable[15], 0.025f);
-		_10->setData(26, pTexTable[16], 0.025f);
-		_10->setData(27, pTexTable[17], 0.025f);
-		_10->setData(28, pTexTable[18], 0.025f);
-		_10->setData(29, pTexTable[19], 0.025f);
-		_10->setData(30, pTexTable[20], 0.2f);
-		_10->setData(31, pTexTable[19], 0.05f);
-		_10->setData(32, pTexTable[18], 0.05f);
-		_10->setData(33, pTexTable[17], 0.05f);
-		_10->setData(34, pTexTable[16], 0.05f);
-		_10->setData(35, pTexTable[15], 0.05f);
-		_10->setData(36, pTexTable[14], 0.05f);
-		_10->setData(37, pTexTable[13], 0.05f);
-		_10->setData(38, pTexTable[12], 0.05f);
-		_10->setData(39, pTexTable[11], 0.05f);
-		_04 = 0;
+		mBothAnimation = new TexAnim(40);
+		mBothAnimation->setData(0, pTexTable[10], 0.3f);
+		mBothAnimation->setData(1, pTexTable[9], 0.05f);
+		mBothAnimation->setData(2, pTexTable[8], 0.05f);
+		mBothAnimation->setData(3, pTexTable[7], 0.05f);
+		mBothAnimation->setData(4, pTexTable[6], 0.05f);
+		mBothAnimation->setData(5, pTexTable[5], 0.05f);
+		mBothAnimation->setData(6, pTexTable[4], 0.05f);
+		mBothAnimation->setData(7, pTexTable[3], 0.05f);
+		mBothAnimation->setData(8, pTexTable[2], 0.05f);
+		mBothAnimation->setData(9, pTexTable[1], 0.05f);
+		mBothAnimation->setData(10, pTexTable[0], 0.2f);
+		mBothAnimation->setData(11, pTexTable[1], 0.025f);
+		mBothAnimation->setData(12, pTexTable[2], 0.025f);
+		mBothAnimation->setData(13, pTexTable[3], 0.025f);
+		mBothAnimation->setData(14, pTexTable[4], 0.025f);
+		mBothAnimation->setData(15, pTexTable[5], 0.025f);
+		mBothAnimation->setData(16, pTexTable[6], 0.025f);
+		mBothAnimation->setData(17, pTexTable[7], 0.025f);
+		mBothAnimation->setData(18, pTexTable[8], 0.025f);
+		mBothAnimation->setData(19, pTexTable[9], 0.025f);
+		mBothAnimation->setData(20, pTexTable[10], 0.025f);
+		mBothAnimation->setData(21, pTexTable[11], 0.025f);
+		mBothAnimation->setData(22, pTexTable[12], 0.025f);
+		mBothAnimation->setData(23, pTexTable[13], 0.025f);
+		mBothAnimation->setData(24, pTexTable[14], 0.025f);
+		mBothAnimation->setData(25, pTexTable[15], 0.025f);
+		mBothAnimation->setData(26, pTexTable[16], 0.025f);
+		mBothAnimation->setData(27, pTexTable[17], 0.025f);
+		mBothAnimation->setData(28, pTexTable[18], 0.025f);
+		mBothAnimation->setData(29, pTexTable[19], 0.025f);
+		mBothAnimation->setData(30, pTexTable[20], 0.2f);
+		mBothAnimation->setData(31, pTexTable[19], 0.05f);
+		mBothAnimation->setData(32, pTexTable[18], 0.05f);
+		mBothAnimation->setData(33, pTexTable[17], 0.05f);
+		mBothAnimation->setData(34, pTexTable[16], 0.05f);
+		mBothAnimation->setData(35, pTexTable[15], 0.05f);
+		mBothAnimation->setData(36, pTexTable[14], 0.05f);
+		mBothAnimation->setData(37, pTexTable[13], 0.05f);
+		mBothAnimation->setData(38, pTexTable[12], 0.05f);
+		mBothAnimation->setData(39, pTexTable[11], 0.05f);
+		mCurrentAnimation = 0;
 	}
 
 	virtual bool invoke(P2DPane* pane) // _08
@@ -480,33 +480,33 @@ struct StickCallBack : public P2DPaneCallBack {
 		Texture* tex;
 		if (mContainerScreen->getContainerPikiDisp() > 0) {
 			if (mContainerScreen->getMyPikiDisp() > 0) {
-				anim = _10;
+				anim = mBothAnimation;
 			} else {
-				anim = _0C;
+				anim = mRightAnimation;
 			}
 		} else {
 			if (mContainerScreen->getMyPikiDisp() > 0) {
-				anim = _08;
+				anim = mLeftAnimation;
 			} else {
 				anim = nullptr;
 			}
 		}
 
-		if (_04) {
-			tex = _04->update();
-			if (_04 != anim) {
+		if (mCurrentAnimation) {
+			tex = mCurrentAnimation->update();
+			if (mCurrentAnimation != anim) {
 				if (anim) {
 					if (tex == anim->getTexPtr()) {
-						_04 = anim;
+						mCurrentAnimation = anim;
 					}
 				} else {
-					_04 = nullptr;
-					tex = pTexTable[10];
+					mCurrentAnimation = nullptr;
+					tex               = pTexTable[10];
 				}
 			}
 		} else {
 			if (anim) {
-				_04 = anim;
+				mCurrentAnimation = anim;
 			}
 			tex = pTexTable[10];
 		}
@@ -529,10 +529,10 @@ struct StickCallBack : public P2DPaneCallBack {
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
-	TexAnim* _04;                    // _04
-	TexAnim* _08;                    // _08
-	TexAnim* _0C;                    // _0C
-	TexAnim* _10;                    // _10
+	TexAnim* mCurrentAnimation;      // _04
+	TexAnim* mLeftAnimation;         // _08
+	TexAnim* mRightAnimation;        // _0C
+	TexAnim* mBothAnimation;         // _10
 	DrawContainer* mContainerScreen; // _14
 };
 
@@ -544,36 +544,36 @@ struct StickCallBack : public P2DPaneCallBack {
 struct MessageMgr {
 
 	/**
-	 * @brief TODO
+	 * @brief Message display types for container interface feedback
 	 */
 	enum messageFlag {
-		MSG_NULL  = -1,
-		MSG_Unk0  = 0,
-		MSG_Unk1  = 1,
-		MSG_Unk2  = 2,
-		MSG_Unk3  = 3,
-		MSG_Unk4  = 4,
-		MSG_Unk5  = 5,
-		MSG_Unk6  = 6,
-		MSG_Unk7  = 7,
-		MSG_Unk8  = 8,
-		MSG_Unk9  = 9,
-		MSG_Unk10 = 10,
-		MSG_COUNT, // 1
+		MSG_NULL              = -1, // No message displayed
+		MSG_BothHavePikmin    = 0,  // Both container and squad have Pikmin
+		MSG_ContainerOnly     = 1,  // Only container has Pikmin
+		MSG_SquadOnly         = 2,  // Only squad has Pikmin
+		MSG_NeitherHave       = 3,  // Neither have Pikmin
+		MSG_ContainerFull     = 4,  // Container at capacity
+		MSG_SquadCapacityFull = 5,  // Squad at capacity limit
+		MSG_SquadTotalFull    = 6,  // Squad at total limit
+		MSG_NotEnoughInSquad  = 7,  // Not enough Pikmin in squad
+		MSG_ContainerEmpty    = 8,  // Container is empty
+		MSG_NothingToTransfer = 9,  // No Pikmin available to transfer
+		MSG_WaitInput         = 10, // Waiting for stick input to continue
+		MSG_COUNT,                  // 11
 	};
 
 	MessageMgr(P2DScreen& screen)
 	{
-		mMessageCount = MSG_COUNT;
-		_08           = new P2DTextBox*[mMessageCount];
-		_0C           = new P2DTextBox*[mMessageCount];
-		_10           = new P2DTextBox*[mMessageCount];
-		_14           = new P2DTextBox*[mMessageCount];
-		_18           = new P2DTextBox*[mMessageCount];
-		_1C           = new P2DTextBox*[mMessageCount];
-		_20           = 0.0f;
-		_24           = 0.0f;
-		mMessage      = MSG_NULL;
+		mMessageCount      = MSG_COUNT;
+		mRedTextBoxes      = new P2DTextBox*[mMessageCount];
+		mRedShadowBoxes    = new P2DTextBox*[mMessageCount];
+		mBlueTextBoxes     = new P2DTextBox*[mMessageCount];
+		mBlueShadowBoxes   = new P2DTextBox*[mMessageCount];
+		mYellowTextBoxes   = new P2DTextBox*[mMessageCount];
+		mYellowShadowBoxes = new P2DTextBox*[mMessageCount];
+		mCurrentTime       = 0.0f;
+		mDuration          = 0.0f;
+		mMessage           = MSG_NULL;
 
 		char buf[8];
 		for (int i = 0; i < MSG_COUNT; i++) {
@@ -605,12 +605,12 @@ struct MessageMgr {
 		setColorMode(color);
 		setMessage(MSG_NULL, 0.0f);
 		for (int i = 0; i < MSG_COUNT; i++) {
-			_08[i]->setAlpha(0);
-			_0C[i]->setAlpha(0);
-			_10[i]->setAlpha(0);
-			_14[i]->setAlpha(0);
-			_18[i]->setAlpha(0);
-			_1C[i]->setAlpha(0);
+			mRedTextBoxes[i]->setAlpha(0);
+			mRedShadowBoxes[i]->setAlpha(0);
+			mBlueTextBoxes[i]->setAlpha(0);
+			mBlueShadowBoxes[i]->setAlpha(0);
+			mYellowTextBoxes[i]->setAlpha(0);
+			mYellowShadowBoxes[i]->setAlpha(0);
 		}
 	}
 	void setTextBox(DrawContainer::containerType color, P2DScreen& screen, int msg, int tag1, int tag2)
@@ -626,18 +626,18 @@ struct MessageMgr {
 
 		switch (color) {
 		case DrawContainer::COLOR_Red:
-			_08[msg] = tBox1;
-			_0C[msg] = tBox2;
+			mRedTextBoxes[msg]   = tBox1;
+			mRedShadowBoxes[msg] = tBox2;
 			break;
 
 		case DrawContainer::COLOR_Blue:
-			_10[msg] = tBox1;
-			_14[msg] = tBox2;
+			mBlueTextBoxes[msg]   = tBox1;
+			mBlueShadowBoxes[msg] = tBox2;
 			break;
 
 		case DrawContainer::COLOR_Yellow:
-			_18[msg] = tBox1;
-			_1C[msg] = tBox2;
+			mYellowTextBoxes[msg]   = tBox1;
+			mYellowShadowBoxes[msg] = tBox2;
 			break;
 		}
 
@@ -650,35 +650,35 @@ struct MessageMgr {
 	{
 		if (mMessage != msg) {
 			switch (msg) {
-			case MSG_Unk4:
-			case MSG_Unk5:
-			case MSG_Unk6:
-			case MSG_Unk7:
-			case MSG_Unk8:
-			case MSG_Unk9:
+			case MSG_ContainerFull:
+			case MSG_SquadCapacityFull:
+			case MSG_SquadTotalFull:
+			case MSG_NotEnoughInSquad:
+			case MSG_ContainerEmpty:
+			case MSG_NothingToTransfer:
 				SeSystem::playSysSe(SYSSE_CMENU_ERROR);
 				break;
 			}
 		}
-		_20      = 0.0f;
-		_24      = p2;
-		mMessage = msg;
+		mCurrentTime = 0.0f;
+		mDuration    = p2;
+		mMessage     = msg;
 
 		if (msg != MSG_NULL) {
 			switch (mColorMode) {
 			case DrawContainer::COLOR_Red:
-				_08[mMessage]->show();
-				_0C[mMessage]->show();
+				mRedTextBoxes[mMessage]->show();
+				mRedShadowBoxes[mMessage]->show();
 				break;
 
 			case DrawContainer::COLOR_Blue:
-				_10[mMessage]->show();
-				_14[mMessage]->show();
+				mBlueTextBoxes[mMessage]->show();
+				mBlueShadowBoxes[mMessage]->show();
 				break;
 
 			case DrawContainer::COLOR_Yellow:
-				_18[mMessage]->show();
-				_1C[mMessage]->show();
+				mYellowTextBoxes[mMessage]->show();
+				mYellowShadowBoxes[mMessage]->show();
 				break;
 			}
 		}
@@ -691,41 +691,41 @@ struct MessageMgr {
 	void update(Controller* controller, int containerNum, int squadNum)
 	{
 		bool check = false;
-		if (_24 >= 0.0f) {
-			_20 += gsys->getFrameTime();
-			if (_20 > _24) {
-				_20   = 0.0f;
-				check = true;
+		if (mDuration >= 0.0f) {
+			mCurrentTime += gsys->getFrameTime();
+			if (mCurrentTime > mDuration) {
+				mCurrentTime = 0.0f;
+				check        = true;
 			}
 		}
 
-		if (mMessage == MSG_Unk10 && controller->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN)) {
+		if (mMessage == MSG_WaitInput && controller->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN)) {
 			setMessage(MSG_NULL, 0.0f);
 		}
 
 		if (check) {
 			switch (mMessage) {
 			case MSG_NULL:
-			case MSG_Unk0:
-			case MSG_Unk1:
-			case MSG_Unk2:
-			case MSG_Unk3:
+			case MSG_BothHavePikmin:
+			case MSG_ContainerOnly:
+			case MSG_SquadOnly:
+			case MSG_NeitherHave:
 				if (mMessage == MSG_NULL) {
 					if (containerNum > 0) {
 						if (squadNum > 0) {
-							setMessage(MSG_Unk0, 4.0f);
+							setMessage(MSG_BothHavePikmin, 4.0f);
 						} else {
-							setMessage(MSG_Unk1, 4.0f);
+							setMessage(MSG_ContainerOnly, 4.0f);
 						}
 					} else {
 						if (squadNum > 0) {
-							setMessage(MSG_Unk2, 4.0f);
+							setMessage(MSG_SquadOnly, 4.0f);
 						} else {
-							setMessage(MSG_Unk3, -1.0f);
+							setMessage(MSG_NeitherHave, -1.0f);
 						}
 					}
 				} else {
-					setMessage(MSG_Unk10, -1.0f);
+					setMessage(MSG_WaitInput, -1.0f);
 				}
 				break;
 
@@ -739,18 +739,18 @@ struct MessageMgr {
 		P2DTextBox** tBox2;
 		switch (mColorMode) {
 		case DrawContainer::COLOR_Red:
-			tBox1 = _08;
-			tBox2 = _0C;
+			tBox1 = mRedTextBoxes;
+			tBox2 = mRedShadowBoxes;
 			break;
 
 		case DrawContainer::COLOR_Blue:
-			tBox1 = _10;
-			tBox2 = _14;
+			tBox1 = mBlueTextBoxes;
+			tBox2 = mBlueShadowBoxes;
 			break;
 
 		case DrawContainer::COLOR_Yellow:
-			tBox1 = _18;
-			tBox2 = _1C;
+			tBox1 = mYellowTextBoxes;
+			tBox2 = mYellowShadowBoxes;
 			break;
 		}
 
@@ -779,14 +779,14 @@ struct MessageMgr {
 
 	messageFlag mMessage;                    // _00
 	int mMessageCount;                       // _04
-	P2DTextBox** _08;                        // _08
-	P2DTextBox** _0C;                        // _0C
-	P2DTextBox** _10;                        // _10
-	P2DTextBox** _14;                        // _14
-	P2DTextBox** _18;                        // _18
-	P2DTextBox** _1C;                        // _1C
-	f32 _20;                                 // _20
-	f32 _24;                                 // _24
+	P2DTextBox** mRedTextBoxes;              // _08
+	P2DTextBox** mRedShadowBoxes;            // _0C
+	P2DTextBox** mBlueTextBoxes;             // _10
+	P2DTextBox** mBlueShadowBoxes;           // _14
+	P2DTextBox** mYellowTextBoxes;           // _18
+	P2DTextBox** mYellowShadowBoxes;         // _1C
+	f32 mCurrentTime;                        // _20
+	f32 mDuration;                           // _24
 	DrawContainer::containerType mColorMode; // _28
 };
 
@@ -798,75 +798,77 @@ struct MessageMgr {
 struct WindowPaneMgr {
 
 	/**
-	 * @brief TODO
+	 * @brief Window pane animation modes for interface transitions
 	 */
 	enum modeFlag {
-		MODE_Unk0 = 0,
-		MODE_Unk1 = 1,
-		MODE_Unk2 = 2,
-		MODE_Unk3 = 3,
+		MODE_Idle     = 0, // No movement
+		MODE_SlideIn  = 1, // Sliding in from right
+		MODE_Hold     = 2, // Holding position during operation
+		MODE_SlideOut = 3, // Sliding out to left
 	};
 
 	WindowPaneMgr(P2DPane* pane)
 	{
-		_00 = pane;
-		_04.set(_00->getPosH(), _00->getPosV(), 0.0f);
+		mPane = pane;
+		mBasePosition.set(mPane->getPosH(), mPane->getPosV(), 0.0f);
 		init();
 	}
 
 	// DLL, but this needs to be above update or sdata gets screwy
 	void init()
 	{
-		_00->setScale(1.0f);
-		_00->move(_04.x + 640.0f, _04.y);
-		_00->setOffset(_00->getWidth() >> 1, _00->getHeight() >> 4);
-		_00->rotate(P2DROTATE_Z, 0.0f);
-		_10.set(_00->getPosH(), _00->getPosV() + weightPosLength, 0.0f);
-		_1C.set(0.0f, 0.0f, 0.0f);
+		mPane->setScale(1.0f);
+		mPane->move(mBasePosition.x + 640.0f, mBasePosition.y);
+		mPane->setOffset(mPane->getWidth() >> 1, mPane->getHeight() >> 4);
+		mPane->rotate(P2DROTATE_Z, 0.0f);
+		mWeightPosition.set(mPane->getPosH(), mPane->getPosV() + weightPosLength, 0.0f);
+		mVelocity.set(0.0f, 0.0f, 0.0f);
 	}
 
 	// weak:
 	void update(modeFlag mode, f32 t, f32 tComp)
 	{
 		switch (mode) {
-		case MODE_Unk0:
+		case MODE_Idle:
 			break;
 
-		case MODE_Unk1:
-			_00->move(RoundOff(_04.x * t + (_04.x + 640.0f) * tComp), RoundOff(_04.y * t + (_04.y - 0.0f) * tComp));
+		case MODE_SlideIn:
+			mPane->move(RoundOff(mBasePosition.x * t + (mBasePosition.x + 640.0f) * tComp),
+			            RoundOff(mBasePosition.y * t + (mBasePosition.y - 0.0f) * tComp));
 			break;
 
-		case MODE_Unk3:
-			_00->move(RoundOff(_04.x * tComp + (_04.x - 640.0f) * t), RoundOff(_04.y * tComp + (_04.y - 0.0f) * t));
+		case MODE_SlideOut:
+			mPane->move(RoundOff(mBasePosition.x * tComp + (mBasePosition.x - 640.0f) * t),
+			            RoundOff(mBasePosition.y * tComp + (mBasePosition.y - 0.0f) * t));
 			break;
 		}
 
 		Vector3f vec1;
 		Vector3f vec2;
 
-		_1C.y += weightPosGravity;
-		vec2.set(_10.x + _1C.x, _10.y + _1C.y, 0.0f);
-		vec1.x = vec2.x - _00->getPosH();
-		vec1.y = vec2.y - _00->getPosV();
+		mVelocity.y += weightPosGravity;
+		vec2.set(mWeightPosition.x + mVelocity.x, mWeightPosition.y + mVelocity.y, 0.0f);
+		vec1.x = vec2.x - mPane->getPosH();
+		vec1.y = vec2.y - mPane->getPosV();
 
 		if (vec1.length() != 0.0f) {
 			vec1.normalize();
 			vec1.multiply(weightPosLength);
-			vec2.x = _00->getPosH() + vec1.x;
-			vec2.y = _00->getPosV() + vec1.y;
-			_1C.set(vec2.x - _10.x, vec2.y - _10.y, 0.0f);
-			_10 = vec2;
-			_00->rotate(P2DROTATE_Z, NMathF::atan2(-vec1.y, -vec1.x) + HALF_PI);
+			vec2.x = mPane->getPosH() + vec1.x;
+			vec2.y = mPane->getPosV() + vec1.y;
+			mVelocity.set(vec2.x - mWeightPosition.x, vec2.y - mWeightPosition.y, 0.0f);
+			mWeightPosition = vec2;
+			mPane->rotate(P2DROTATE_Z, NMathF::atan2(-vec1.y, -vec1.x) + HALF_PI);
 		}
 	}
 
 	static const f32 weightPosGravity;
 	static const f32 weightPosLength;
 
-	P2DPane* _00; // _00
-	Vector3f _04; // _04
-	Vector3f _10; // _10
-	Vector3f _1C; // _1C
+	P2DPane* mPane;           // _00
+	Vector3f mBasePosition;   // _04
+	Vector3f mWeightPosition; // _10
+	Vector3f mVelocity;       // _1C
 };
 
 } // namespace zen

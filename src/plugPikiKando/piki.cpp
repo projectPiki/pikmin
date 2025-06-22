@@ -1447,7 +1447,7 @@ bool Piki::needShadow()
 bool Piki::isFixed()
 {
 	if (getState() == PIKISTATE_Push) {
-		return !static_cast<PikiPushState*>(getCurrState())->_10;
+		return !static_cast<PikiPushState*>(getCurrState())->mIsFinishing;
 	}
 
 	return false;
@@ -2314,7 +2314,7 @@ Piki::Piki(CreatureProp* prop)
 	_68              = 1;
 	mPanickedEffect  = new PermanentEffect();
 	mIsPanicked      = false;
-	_4DC             = 0;
+	mPushTargetPiki             = 0;
 	mCurrentState    = nullptr;
 	mCollisionRadius = 8.0f;
 	mNavi            = nullptr;
@@ -2465,7 +2465,7 @@ void Piki::init(Navi* navi)
 	mLookatTarget = nullptr;
 	mIsLooking    = 0;
 	forceFinishLook();
-	mEmotion          = PikiEmotion::Unk10;
+	mEmotion          = PikiEmotion::None;
 	mCarryingShipPart = nullptr;
 	mLeaderCreature   = nullptr;
 	mInWaterTimer     = 0;

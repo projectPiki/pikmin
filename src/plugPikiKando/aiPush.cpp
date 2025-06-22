@@ -39,7 +39,7 @@ void ActPush::init(Creature* target)
 {
 	mPushAnimationState = 2;
 	mPiki->mActionState = 2;
-	mPiki->mEmotion     = PikiEmotion::Unk0;
+	mPiki->mEmotion     = PikiEmotion::Happy;
 	mHinderRock         = 0;
 	if (target && target->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* obj = (WorkObject*)target;
@@ -78,7 +78,7 @@ int ActPush::exec()
 	}
 
 	if (_44 == 2) {
-		mPiki->mEmotion = PikiEmotion::Unk1;
+		mPiki->mEmotion = PikiEmotion::Sad;
 		return ACTOUT_Fail;
 	}
 

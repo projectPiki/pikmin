@@ -106,7 +106,7 @@ struct MemoryCard : public CoreNode {
 	int mValidOptionsCount; // _60
 	u32 mSectorSize;        // _64
 	bool mDidSaveFail;      // _68
-	int _UNUSED6C;                // _6C
+	int _UNUSED6C;          // _6C
 };
 
 #endif

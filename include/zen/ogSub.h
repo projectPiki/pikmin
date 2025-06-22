@@ -21,13 +21,13 @@ namespace zen {
 struct setTenmetuAlpha {
 
 	/**
-	 * @brief TODO
+	 * @brief Animation mode states for tenmetu alpha effects
 	 */
 	enum TenmetuMode {
-		MODE_Unk0 = 0,
-		MODE_Unk1 = 1,
-		MODE_Unk2 = 2,
-		MODE_Unk3 = 3,
+		MODE_Stopped = 0, // Animation is stopped
+		MODE_Running = 1, // Animation is running normally
+		MODE_FadeIn  = 2, // Animation is fading in
+		MODE_FadeOut = 3, // Animation is fading out
 	};
 
 	setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8);
@@ -52,33 +52,33 @@ struct setTenmetuAlpha {
 	void setColorTab(u16 p1, Colour* p2, Colour* p3, f32 p4)
 	{
 		if (p1 < 20) {
-			_30[p1] = *p2;
-			_80[p1] = *p3;
-			_D0[p1] = p4;
-			_128    = p1 + 1;
+			mPrimaryColors[p1]   = *p2;
+			mSecondaryColors[p1] = *p3;
+			mColorDurations[p1]  = p4;
+			mColorCount          = p1 + 1;
 		}
 	}
 
-	TenmetuMode mMode; // _00
-	P2DPicture* mPic;  // _04
-	f32 _08;           // _08
-	f32 _0C;           // _0C
-	f32 _10;           // _10
-	f32 _14;           // _14
-	f32 _18;           // _18
-	u8 _1C;            // _1C
-	u8 _1D;            // _1D
-	f32 _20;           // _20
-	f32 _24;           // _24
-	f32 _28;           // _28
-	u8 _2C[0x4];       // _2C, unknown
-	Colour _30[20];    // _30
-	Colour _80[20];    // _80
-	f32 _D0[20];       // _D0
-	f32 _120;          // _120
-	f32 _124;          // _124
-	s16 _128;          // _128
-	s16 _12A;          // _12A
+	TenmetuMode mMode;           // _00
+	P2DPicture* mPic;            // _04
+	f32 mPeriod;                 // _08
+	f32 mTimer;                  // _0C
+	f32 mFadeTimer;              // _10
+	f32 mFadeDuration;           // _14
+	f32 mAlphaRange;             // _18
+	u8 mMinAlpha;                // _1C
+	u8 mMaxAlpha;                // _1D
+	f32 mFadeRange;              // _20
+	f32 mFadeStart;              // _24
+	f32 mFadeEnd;                // _28
+	u8 _UNUSED2C[0x4];           // _2C, unknown
+	Colour mPrimaryColors[20];   // _30
+	Colour mSecondaryColors[20]; // _80
+	f32 mColorDurations[20];     // _D0
+	f32 mColorTimer;             // _120
+	f32 mReferenceTime;          // _124
+	s16 mColorCount;             // _128
+	s16 mCurrentColorIndex;      // _12A
 };
 
 /**
@@ -95,7 +95,7 @@ struct PikaAlphaMgr {
 	void update();
 
 	int mState;                           // _00
-	s16 _04;                              // _04
+	s16 mAlphaCount;                      // _04
 	setTenmetuAlpha* mTenmetuAlphas[100]; // _08
 };
 
@@ -105,14 +105,12 @@ struct PikaAlphaMgr {
 struct ogFadeMgr {
 
 	/**
-	 * @brief TODO
+	 * @brief Fade manager status flags
 	 */
 	enum ogFadeStatusFlag {
-		Status_0 = 0,
-		Status_1 = 1,
-		Status_2 = 2,
-		Status_3 = 3,
-		// TODO: this
+		STATUS_Idle    = 0, // No fade operation active
+		STATUS_FadeIn  = 1, // Fade in operation
+		STATUS_FadeOut = 2, // Fade out operation
 	};
 
 	ogFadeMgr(P2DPane*, u8);
@@ -124,11 +122,11 @@ struct ogFadeMgr {
 	ogFadeStatusFlag mState; // _00, unknown
 	P2DPane* mPane;          // _04
 	u16 mPaneType;           // _08
-	f32 _0C;                 // _0C
-	f32 _10;                 // _10
-	f32 _14;                 // _14
-	f32 _18;                 // _18
-	f32 _1C;                 // _1C
+	f32 mFadeDuration;       // _0C
+	f32 mFadeTimer;          // _10
+	f32 mCurrentAlpha;       // _14
+	f32 mSourceAlpha;        // _18
+	f32 mTargetAlpha;        // _1C
 };
 
 /**
@@ -140,15 +138,15 @@ struct ogTexAnimSubMgr {
 	// unused/inlined:
 	void update();
 
-	P2DPicture* mPicture;  // _00
-	P2DTextBox* mTextBox;  // _04
-	f32 _08;               // _08
-	f32 _0C;               // _0C
-	f32 _10;               // _10
-	s16 _14;               // _14
-	s16 _16;               // _16
-	f32 _18[100];          // _18
-	P2DPicture* _1A8[100]; // _1A8
+	P2DPicture* mPicture;       // _00
+	P2DTextBox* mTextBox;       // _04
+	f32 mCurrentDuration;       // _08
+	f32 mTimer;                 // _0C
+	f32 mSpeedMultiplier;       // _10
+	s16 mTextureCount;          // _14
+	s16 mCurrentIndex;          // _16
+	f32 mDurations[100];        // _18
+	P2DPicture* mTextures[100]; // _1A8
 };
 
 /**
@@ -161,9 +159,8 @@ struct ogTexAnimMgr {
 
 	void update();
 
-	// TODO: members
-	int _00; // _00
-	ogTexAnimSubMgr* mSubMgrs[100];
+	int mSubMgrCount;               // _00
+	ogTexAnimSubMgr* mSubMgrs[100]; // _04
 };
 
 /**
@@ -176,9 +173,9 @@ struct ogMsgCtrlTagMgr {
 
 	bool CheckCtrlTag(char*, s16*, f32*);
 
-	char _00[8]; // _00
-	char _08[8]; // _08
-	char _10[8]; // _10
+	char mOnesWaitChar[8];     // _00
+	char mTensWaitChar[8];     // _08
+	char mHankakuWaitChars[8]; // _10
 };
 
 /**
@@ -187,9 +184,13 @@ struct ogMsgCtrlTagMgr {
  * @note Size: 0x418.
  */
 struct TypingTextMgr {
+	/**
+	 * @brief Typing text manager states
+	 */
 	enum EnumPCTextStat {
-		STATE_2 = 2,
-		// TODO: this
+		STATE_Stopped  = 0, // Text display is stopped
+		STATE_Typing   = 1, // Text is being typed
+		STATE_Complete = 2, // Text typing is complete
 	};
 
 	TypingTextMgr(P2DTextBox*);
@@ -207,19 +208,19 @@ struct TypingTextMgr {
 	void off()
 	{
 		mTextBox->hide();
-		_00 = 0;
+		mState = STATE_Stopped;
 	}
 
 	// DLL inlines to do:
-	EnumPCTextStat check() { return (EnumPCTextStat)_00; };
+	EnumPCTextStat check() { return (EnumPCTextStat)mState; };
 
-	int _00;                      // _00
+	int mState;                   // _00
 	ogMsgCtrlTagMgr* mCtrlTagMgr; // _04
 	P2DTextBox* mTextBox;         // _08
 	char* mTextPtr;               // _0C
 	char mTextBuf[0x400];         // _10
-	f32 _410;                     // _410
-	s16 _414;                     // _414
+	f32 mTypeTimer;               // _410
+	s16 mCharIndex;               // _414
 };
 
 // global utility functions

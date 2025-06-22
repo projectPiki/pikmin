@@ -195,7 +195,7 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 		track->childMuteMask    = 0;
 	}
 	track->callStackDepth  = 0;
-	track->_D0             = 0;
+	track->noteDuration    = 0;
 	track->waitTimer       = 0;
 	track->trackState      = 1;
 	track->parent          = parent;
@@ -274,14 +274,14 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 	}
 
 	for (i = 0; i < 8; ++i) {
-		track->_94[i]            = -1;
+		track->activeNotes[i]    = -1;
 		track->channels[i]       = NULL;
 		track->activeSoundIds[i] = 0;
 	}
-	track->_D4 = 0;
-	track->_D5 = 0;
-	track->_90 = 0;
-	track->_D6 = FALSE;
+	track->noteFlags     = 0;
+	track->lastNote      = 0;
+	track->wasNotePlayed = 0;
+	track->isGateMode    = FALSE;
 	Osc_Init_Env(track);
 	track->transpose      = 0;
 	track->finalTranspose = 0;
@@ -546,14 +546,14 @@ void __AllNoteOff(seqp_* track)
 	if (!track->parent) {
 		for (i = 0; i < 8; ++i) {
 			NoteOFF_R(track, i, 10);
-			track->_94[i]      = -1;
-			track->channels[i] = NULL;
+			track->activeNotes[i] = -1;
+			track->channels[i]    = NULL;
 		}
 	} else {
 		for (i = 0; i < 8; ++i) {
 			NoteOFF(track, i);
-			track->_94[i]      = -1;
-			track->channels[i] = NULL;
+			track->activeNotes[i] = -1;
+			track->channels[i]    = NULL;
 		}
 	}
 }

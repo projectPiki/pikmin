@@ -51,7 +51,7 @@ struct Spine {
 	int mLinkCount;                     // _04
 	Rope* mRope;                        // _08
 	SmartPtr<Creature> mTargetCreature; // _0C
-	Vector3f _10;                       // _10
+	Vector3f _UNUSED10;                 // _10
 };
 
 /**
@@ -76,11 +76,11 @@ struct FormPoint {
 	bool isFree() { return mOwner.isNull(); }
 	void setOwner(Creature* owner) { mOwner.set(owner); }
 
-	Colour _00;                // _00
+	Colour mDebugColor;        // _00
 	Vector3f mOffset;          // _04
 	SmartPtr<Creature> mOwner; // _10
 	FormationMgr* mFormMgr;    // _14
-	Vector3f _18;              // _18
+	Vector3f mLocalPosition;   // _18
 };
 
 /**
@@ -110,16 +110,16 @@ struct FormationMgr : public Traversable {
 
 	// _00     = VTBL
 	// _00-_08 = Traversable
-	f32 mAngOffset;          // _08
-	f32 _0C;                 // _0C
-	Vector3f _10;            // _10
-	FormPoint* mFormPoints;  // _1C
-	Creature** mFormMembers; // _20
-	int _24;                 // _24
-	int mMax;                // _28, total slots
-	int mCount;              // _2C, total used slots
-	Vector3f mOffset;        // _30
-	FormArranger* mArranger; // _3C
+	f32 mAngOffset;           // _08
+	f32 mRotationAngle;       // _0C
+	Vector3f mCenterPosition; // _10
+	FormPoint* mFormPoints;   // _1C
+	Creature** mFormMembers;  // _20
+	int mFormPointCount;      // _24
+	int mMax;                 // _28, total slots
+	int mCount;               // _2C, total used slots
+	Vector3f mOffset;         // _30
+	FormArranger* mArranger;  // _3C
 };
 
 /**

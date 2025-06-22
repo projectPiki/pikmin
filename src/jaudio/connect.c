@@ -85,9 +85,9 @@ void Jac_SceneClose(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 	Jac_DeleteHeap(&arc->heap);
 	arc->fileLoadStatus = 0;
 
-	if (set && scene->_08) {
-		for (u32 i = 0; i < scene->_08; i++) {
-			Jac_SceneClose(bank, group, scene->_18[i], TRUE);
+	if (set && scene->dependencyCount) {
+		for (u32 i = 0; i < scene->dependencyCount; i++) {
+			Jac_SceneClose(bank, group, scene->dependencyIds[i], TRUE);
 		}
 	}
 
@@ -133,7 +133,7 @@ BOOL Jac_SceneSet(WaveArchiveBank_* bank, CtrlGroup_* group, u32 id, BOOL set)
 		stat = UpdateWave(arc, cdf, 0);
 	}
 	if (scene->cex) {
-		if (scene->_04 == 0) {
+		if (scene->externalMode == 0) {
 			UpdateWave(arc, scene->cex, stat);
 		} else {
 			UpdateWave_Extern(bank, group, scene->cex);
@@ -191,8 +191,8 @@ WaveID_* __GetSoundHandle(CtrlGroup_* group, u32 id, u32 id2)
 		}
 	}
 
-	for (u32 i = 0; i < scene->_08; i++) {
-		WaveID_* wave = __GetSoundHandle(group, id, scene->_18[i]);
+	for (u32 i = 0; i < scene->dependencyCount; i++) {
+		WaveID_* wave = __GetSoundHandle(group, id, scene->dependencyIds[i]);
 		if (wave && wave->data && (int)wave->data != 0xffffffff) {
 			return wave;
 		}

@@ -69,9 +69,10 @@ bool FormationMgr::isDone(int idx)
  */
 Vector3f FormPoint::getPos()
 {
-	f32 angle = mFormMgr->_0C;
-	Vector3f pos(sinf(angle) * _18.x + cosf(angle) * _18.z, 0.0f, cosf(angle) * _18.x - sinf(angle) * _18.z);
-	pos = pos + mFormMgr->_10;
+	f32 angle = mFormMgr->mRotationAngle;
+	Vector3f pos(sinf(angle) * mLocalPosition.x + cosf(angle) * mLocalPosition.z, 0.0f,
+	             cosf(angle) * mLocalPosition.x - sinf(angle) * mLocalPosition.z);
+	pos = pos + mFormMgr->mCenterPosition;
 	return pos + mOffset;
 }
 
@@ -82,10 +83,10 @@ Vector3f FormPoint::getPos()
  */
 Vector3f FormationMgr::getLastCentre()
 {
-	f32 angle  = _0C;
+	f32 angle  = mRotationAngle;
 	f32 radius = -mArranger->getLength(this);
 	Vector3f centre(radius * sinf(angle), 0.0f, radius * cosf(angle));
-	centre = centre + _10;
+	centre = centre + mCenterPosition;
 	return centre;
 }
 
@@ -96,11 +97,11 @@ Vector3f FormationMgr::getLastCentre()
  */
 FormationMgr::FormationMgr()
 {
-	mMax         = 300;
-	_24          = 0;
-	_0C          = 0.0f;
-	mFormPoints  = new FormPoint[mMax];
-	mFormMembers = new Creature*[mMax];
+	mMax            = 300;
+	mFormPointCount = 0;
+	mRotationAngle  = 0.0f;
+	mFormPoints     = new FormPoint[mMax];
+	mFormMembers    = new Creature*[mMax];
 	for (int i = 0; i < mMax; i++) {
 		mFormPoints[i].setMgr(this);
 		mFormMembers[i] = nullptr;
@@ -108,7 +109,7 @@ FormationMgr::FormationMgr()
 
 	mCount = 0;
 	clear();
-	_10.set(0.0f, 0.0f, 0.0f);
+	mCenterPosition.set(0.0f, 0.0f, 0.0f);
 	mOffset.set(0.0f, 0.0f, 0.0f);
 	mAngOffset = 0;
 }
@@ -134,7 +135,7 @@ FormPoint* FormationMgr::getFormPoint(Creature* target)
 	int replaceIdx      = -1;
 	Creature* toReplace = nullptr;
 	int i;
-	for (i = 0; i < _24; i++) {
+	for (i = 0; i < mFormPointCount; i++) {
 		toReplace = mFormPoints[i].getOwner();
 		if (!mFormPoints[i].isFree()) {
 			if (toReplace->getFormationPri() > target->getFormationPri()) {
@@ -209,7 +210,7 @@ void FormationMgr::slide(Creature* target, int idx)
 	}
 
 	int freeIdx = -1;
-	for (int i = 0; i < _24; i++) {
+	for (int i = 0; i < mFormPointCount; i++) {
 		if (mFormPoints[i].isFree()) {
 			freeIdx = i;
 			break;
@@ -230,10 +231,10 @@ void FormationMgr::add(Vector3f& p1, Vector3f& p2)
 {
 	Colour col;
 	col.set(int(255.0f * p2.x), int(255.0f * p2.y), int(255.0f * p2.z), 255);
-	mFormPoints[_24].reset();
-	mFormPoints[_24]._18 = p1;
-	mFormPoints[_24]._00 = col;
-	_24++;
+	mFormPoints[mFormPointCount].reset();
+	mFormPoints[mFormPointCount].mLocalPosition = p1;
+	mFormPoints[mFormPointCount].mDebugColor    = col;
+	mFormPointCount++;
 }
 
 /*
@@ -258,7 +259,7 @@ int FormationMgr::getIndex(Creature* target)
  */
 int FormationMgr::getFptIndex(FormPoint* point)
 {
-	for (int i = 0; i < _24; i++) {
+	for (int i = 0; i < mFormPointCount; i++) {
 		if (point == &mFormPoints[i]) {
 			return i;
 		}
@@ -600,7 +601,7 @@ void Spine::init(Creature* target)
 		rope->mRadius   = rad;
 	}
 
-	_10.set(0.0f, 0.0f, 0.0f);
+	_UNUSED10.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
