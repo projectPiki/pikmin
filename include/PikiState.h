@@ -12,7 +12,7 @@ enum PikiStateID {
 	PIKISTATE_Bury         = 2,
 	PIKISTATE_Nukare       = 3, // Being plucked from the ground by a captain.
 	PIKISTATE_NukareWait   = 4, // A planted sprout waiting to be plucked.
-	PIKISTATE_AutoNuki     = 5, // Plucking itself out of the ground (end of day).
+	PIKISTATE_AutoNuki     = 5, // Plucking itself out of the ground (cursor nuki, dororo bark).
 	PIKISTATE_Dying        = 6,
 	PIKISTATE_Dead         = 7,
 	PIKISTATE_Swallowed    = 8,
