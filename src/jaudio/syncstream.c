@@ -159,9 +159,8 @@ static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 
 	ctrl->isLoadInProgress = 0;
 
-	u32 idx = ctrl->buffCtrlMain.mCurrentIndex;
+	u32 idx = ctrl->buffCtrlMain.currentBufIdx;
 
-	// TODO: find the max value for ctrl->_21942 to resolve _218C0 size, and determine if really BufControl_
 	BufControl_* buff = &ctrl->buffCtrl[idx];
 
 	if (ctrl->isFromFile == 1) {
@@ -176,9 +175,9 @@ static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 		}
 	}
 
-	buff->mStatus = 2;
+	buff->state = 2;
 
-	ctrl->buffCtrlMain.mCurrentIndex = (idx + 1) % ctrl->buffCtrlMain.mMaxBuffers;
+	ctrl->buffCtrlMain.currentBufIdx = (idx + 1) % ctrl->buffCtrlMain.maxBufCount;
 
 	if (ctrl->remainingBytes == 0) {
 		ctrl->isBufferingComplete = 1;
@@ -200,7 +199,7 @@ static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 {
 	u32 size;
-	u32 idx           = ctrl->buffCtrlMain.mCurrentIndex;
+	u32 idx           = ctrl->buffCtrlMain.currentBufIdx;
 	BufControl_* buff = &ctrl->buffCtrl[idx];
 	u32 oldsize;
 	STACK_PAD_VAR(2);
@@ -209,7 +208,7 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 		return;
 	}
 
-	if (buff->mStatus) {
+	if (buff->state) {
 		return;
 	}
 
@@ -231,20 +230,20 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
 		}
 	}
 
-	buff->mBufferSize = 0;
-	buff->mPosition   = size;
-	buff->mStatus     = 1;
+	buff->usedSize = 0;
+	buff->pos      = size;
+	buff->state    = 1;
 
 	if (r28) {
-		ctrl->buffCtrlMain.mLength   = size;
-		ctrl->buffCtrlMain.mPosition = 0;
+		ctrl->buffCtrlMain.mLength = size;
+		ctrl->buffCtrlMain.pos     = 0;
 	}
 
 	u32 oldSize = ctrl->bytesRead;
 
 	ctrl->bytesRead += size;
 	ctrl->remainingBytes -= size;
-	ctrl->_2197C = size;
+	ctrl->lastLoadSize = size;
 
 	switch (ctrl->isFromFile) {
 	case 0:
@@ -279,12 +278,12 @@ static void LoadADPCM(StreamCtrl_* ctrl, int r28)
  */
 static void BufContInit(BufControl_* ctrl, u8 a, u8 b, u8 c, u8 d, u32 e, u32 f, u32 g)
 {
-	ctrl->mStatus       = a;
-	ctrl->mMaxBuffers   = b;
-	ctrl->mCurrentIndex = c;
-	ctrl->mActiveIndex  = d;
-	ctrl->mBufferSize   = e;
-	ctrl->mPosition     = f;
+	ctrl->state         = a;
+	ctrl->maxBufCount   = b;
+	ctrl->currentBufIdx = c;
+	ctrl->activeBufIdx  = d;
+	ctrl->usedSize      = e;
+	ctrl->pos           = f;
 	ctrl->mLength       = g;
 }
 
@@ -342,8 +341,8 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId, char* name, int r6, int r7, Stre
 			return FALSE;
 		}
 
-		DVDReadPrio(&ctrl->fileinfo, &ctrl->_00[0].header, 0x20, 0, 1);
-		ctrl->header    = ctrl->_00[0].header;
+		DVDReadPrio(&ctrl->fileinfo, &ctrl->data[0].header, 0x20, 0, 1);
+		ctrl->header    = ctrl->data[0].header;
 		ctrl->bytesRead = 0x20;
 	} else {
 		ctrl->header    = *header;
@@ -359,12 +358,12 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId, char* name, int r6, int r7, Stre
 	ctrl->playbackState       = 0;
 
 	for (i = 0; i < 6; i++) {
-		ctrl->buffCtrl[i].mStatus = 0;
-		ctrl->buffCtrl[i].mLength = (u32)&ctrl->_00[i]; // TODO: should be a pointer?
+		ctrl->buffCtrl[i].state   = 0;
+		ctrl->buffCtrl[i].mLength = (u32)&ctrl->data[i]; // TODO: should be a pointer?
 	}
 
 	for (i = 0; i < 2; i++) {
-		ctrl->buffCtrlExtra[i].mStatus = 0;
+		ctrl->buffCtrlExtra[i].state = 0;
 	}
 
 	ctrl->loopSize = 0x1000;
@@ -433,8 +432,8 @@ static s32 StreamAudio_Callback(void* data)
 
 	if (!ctrl->dspch[0]) {
 		for (i = 0; i < 2; i++) {
-			ctrl->dspch[i]      = AllocDSPchannel(0, (u32)&ctrl->dspch[i]);
-			ctrl->dspch[i]->_03 = 0x7f;
+			ctrl->dspch[i]       = AllocDSPchannel(0, (u32)&ctrl->dspch[i]);
+			ctrl->dspch[i]->prio = 0x7f;
 		}
 	}
 
@@ -445,7 +444,7 @@ static s32 StreamAudio_Callback(void* data)
 		}
 
 		if (ctrl->isAtEnd) {
-			if (ctrl->buffCtrl[ctrl->buffCtrlMain.mCurrentIndex].mStatus == 1) {
+			if (ctrl->buffCtrl[ctrl->buffCtrlMain.currentBufIdx].state == 1) {
 				return 0;
 			}
 
@@ -485,8 +484,8 @@ static s32 StreamAudio_Callback(void* data)
 			var_r3 = ctrl->loopSize;
 		}
 		u32 var_r4                       = (ctrl->loopSize - var_r3) >> 10;
-		ctrl->buffCtrlMain3.mActiveIndex = var_r4;
-		if (ctrl->buffCtrlMain3.mCurrentIndex != var_r4) {
+		ctrl->buffCtrlMain3.activeBufIdx = var_r4;
+		if (ctrl->buffCtrlMain3.currentBufIdx != var_r4) {
 			r25 = 1;
 		} else {
 			r25 = 0;
@@ -569,29 +568,28 @@ static s32 StreamAudio_Callback(void* data)
 		}
 	}
 
-	if (ctrl->buffCtrl[ctrl->buffCtrlMain.mActiveIndex].mStatus == 2
-	    && ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.mCurrentIndex].mStatus == 0) {
+	if (ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].state == 2 && ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.currentBufIdx].state == 0) {
 		u32 size = __Decode(ctrl);
 
-		ctrl->buffCtrl[ctrl->buffCtrlMain.mActiveIndex].mStatus = 0;
+		ctrl->buffCtrl[ctrl->buffCtrlMain.activeBufIdx].state = 0;
 
-		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.mCurrentIndex].mStatus     = 2;
-		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.mCurrentIndex].mBufferSize = 0;
-		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.mCurrentIndex].mPosition   = size;
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.currentBufIdx].state    = 2;
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.currentBufIdx].usedSize = 0;
+		ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.currentBufIdx].pos      = size;
 
-		ctrl->buffCtrlMain.mActiveIndex = (ctrl->buffCtrlMain.mActiveIndex + 1) % 6;
+		ctrl->buffCtrlMain.activeBufIdx = (ctrl->buffCtrlMain.activeBufIdx + 1) % 6;
 
-		ctrl->buffCtrlMain2.mCurrentIndex = (ctrl->buffCtrlMain2.mCurrentIndex + 1) % 2;
+		ctrl->buffCtrlMain2.currentBufIdx = (ctrl->buffCtrlMain2.currentBufIdx + 1) % 2;
 		ctrl->buffCtrlMain2.mLength += size;
 	}
 
 	if (r25 == 1 || ctrl->frameCounter == 0) {
-		if (ctrl->buffCtrlMain3.mCurrentIndex != ctrl->buffCtrlMain3.mActiveIndex) {
-			if (ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.mActiveIndex].mStatus == 2
-			    && ctrl->buffCtrlMain2.mLength >= ctrl->buffCtrlMain3.mBufferSize) {
+		if (ctrl->buffCtrlMain3.currentBufIdx != ctrl->buffCtrlMain3.activeBufIdx) {
+			if (ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.activeBufIdx].state == 2
+			    && ctrl->buffCtrlMain2.mLength >= ctrl->buffCtrlMain3.usedSize) {
 				__PcmToLoop(ctrl);
-				ctrl->buffCtrlMain3.mCurrentIndex = (ctrl->buffCtrlMain3.mCurrentIndex + 1) % 4;
-				ctrl->buffCtrlMain2.mLength -= ctrl->buffCtrlMain3.mBufferSize;
+				ctrl->buffCtrlMain3.currentBufIdx = (ctrl->buffCtrlMain3.currentBufIdx + 1) % 4;
+				ctrl->buffCtrlMain2.mLength -= ctrl->buffCtrlMain3.usedSize;
 			}
 		} else if (ctrl->frameCounter == 0) {
 			if (ctrl->autoStart == 1) {
@@ -639,7 +637,7 @@ static s32 StreamAudio_Callback(void* data)
 
 	if (ctrl->stopRequested != 0) {
 		if (ctrl->frameCounter == 0) {
-			if (ctrl->buffCtrl[ctrl->buffCtrlMain.mCurrentIndex].mStatus == 1) {
+			if (ctrl->buffCtrl[ctrl->buffCtrlMain.currentBufIdx].state == 1) {
 				return 0;
 			}
 			ctrl->stopRequested = 0;
@@ -740,8 +738,8 @@ void Jac_Decode_ADPCM(u8* src, s16* dst1, s16* dst2, u32 count, u8 arg4, s16* st
 static u32 __DecodeADPCM(StreamCtrl_* ctrl)
 {
 	STACK_PAD_VAR(4);
-	u32 a = ctrl->buffCtrlMain2.mCurrentIndex;
-	u32 b = ctrl->buffCtrlMain.mActiveIndex;
+	u32 a = ctrl->buffCtrlMain2.currentBufIdx;
+	u32 b = ctrl->buffCtrlMain.activeBufIdx;
 
 	if (ctrl->frameCounter == 0 && b == 0) {
 		for (int i = 0; i < 4; i++) {
@@ -752,10 +750,10 @@ static u32 __DecodeADPCM(StreamCtrl_* ctrl)
 	s16* dst1 = ctrl->leftChanBufs[a];
 	s16* dst2 = ctrl->rightChanBufs[a];
 
-	u8* src = ctrl->_00[b].data;
-	src += ctrl->buffCtrl[b].mBufferSize;
+	u8* src = ctrl->data[b].data;
+	src += ctrl->buffCtrl[b].usedSize;
 
-	u32 count = (ctrl->buffCtrl[b].mPosition - ctrl->buffCtrl[b].mBufferSize) / 18;
+	u32 count = (ctrl->buffCtrl[b].pos - ctrl->buffCtrl[b].usedSize) / 18;
 
 	Jac_Decode_ADPCM(src, dst1, dst2, count, 1, ctrl->leftAdpcmState);
 
@@ -788,8 +786,8 @@ static s16 Clamp16(s32 a)
 static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
 {
 	STACK_PAD_VAR(6);
-	u32 a = ctrl->buffCtrlMain2.mCurrentIndex;
-	u32 b = ctrl->buffCtrlMain.mActiveIndex;
+	u32 a = ctrl->buffCtrlMain2.currentBufIdx;
+	u32 b = ctrl->buffCtrlMain.activeBufIdx;
 	u32 count;
 	u32 i;
 	u32 outpos = 0;
@@ -804,15 +802,15 @@ static u32 __DecodeADPCM4X(StreamCtrl_* ctrl)
 	s16* dst1 = ctrl->leftChanBufs[a];
 	s16* dst2 = ctrl->rightChanBufs[a];
 
-	u8* src = ctrl->_00[b].data;
-	src += ctrl->buffCtrl[b].mBufferSize;
+	u8* src = ctrl->data[b].data;
+	src += ctrl->buffCtrl[b].usedSize;
 
 	u32 j;
 
 	u16 mixLevel0 = ctrl->mixLevel[0];
 	u16 mixLevel1 = ctrl->mixLevel[1];
 
-	count = (ctrl->buffCtrl[b].mPosition - ctrl->buffCtrl[b].mBufferSize) / 36;
+	count = (ctrl->buffCtrl[b].pos - ctrl->buffCtrl[b].usedSize) / 36;
 
 	s16 sp6C[16];
 	s16 sp4C[16];
@@ -862,16 +860,16 @@ static u32 __Decode(StreamCtrl_* ctrl)
  */
 static void __PcmToLoop(StreamCtrl_* ctrl)
 {
-	int count  = ctrl->buffCtrlMain3.mBufferSize;
-	s16* dst1  = &ctrl->loopBufs[0][ctrl->buffCtrlMain3.mCurrentIndex * 0x400];
-	s16* dst2  = &ctrl->loopBufs[1][ctrl->buffCtrlMain3.mCurrentIndex * 0x400];
+	int count  = ctrl->buffCtrlMain3.usedSize;
+	s16* dst1  = &ctrl->loopBufs[0][ctrl->buffCtrlMain3.currentBufIdx * 0x400];
+	s16* dst2  = &ctrl->loopBufs[1][ctrl->buffCtrlMain3.currentBufIdx * 0x400];
 	s16* data1 = dst1;
 	s16* data2 = dst2;
 
 	while (count > 0) {
-		int x   = ctrl->buffCtrlMain2.mActiveIndex;
-		u32 pos = ctrl->buffCtrlMain2.mPosition + ctrl->buffCtrlExtra[x].mBufferSize;
-		u32 end = ctrl->buffCtrlExtra[x].mPosition;
+		int x   = ctrl->buffCtrlMain2.activeBufIdx;
+		u32 pos = ctrl->buffCtrlMain2.pos + ctrl->buffCtrlExtra[x].usedSize;
+		u32 end = ctrl->buffCtrlExtra[x].pos;
 		while (pos < end && count > 0) {
 			*dst1++ = ctrl->leftChanBufs[x][pos];
 			*dst2++ = ctrl->rightChanBufs[x][pos];
@@ -880,17 +878,17 @@ static void __PcmToLoop(StreamCtrl_* ctrl)
 		}
 
 		if (pos == end) {
-			ctrl->buffCtrlExtra[x].mStatus   = 0;
-			ctrl->buffCtrlMain2.mActiveIndex = (x + 1) & 1;
-			ctrl->buffCtrlMain2.mPosition    = 0;
+			ctrl->buffCtrlExtra[x].state     = 0;
+			ctrl->buffCtrlMain2.activeBufIdx = (x + 1) & 1;
+			ctrl->buffCtrlMain2.pos          = 0;
 		} else {
-			ctrl->buffCtrlMain2.mPosition = pos - ctrl->buffCtrlExtra[x].mBufferSize;
+			ctrl->buffCtrlMain2.pos = pos - ctrl->buffCtrlExtra[x].usedSize;
 		}
 	}
 
-	DCStoreRangeNoSync(data1, ctrl->buffCtrlMain3.mBufferSize << 1);
-	DCStoreRangeNoSync(data2, ctrl->buffCtrlMain3.mBufferSize << 1);
-	ctrl->samplesLoaded += ctrl->buffCtrlMain3.mBufferSize;
+	DCStoreRangeNoSync(data1, ctrl->buffCtrlMain3.usedSize << 1);
+	DCStoreRangeNoSync(data2, ctrl->buffCtrlMain3.usedSize << 1);
+	ctrl->samplesLoaded += ctrl->buffCtrlMain3.usedSize;
 }
 
 /*

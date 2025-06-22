@@ -66,13 +66,13 @@ void PcamMotionInfo::println()
  */
 PcamControlInfo::PcamControlInfo()
 {
-	_00                = false;
+	mIsActive          = false;
 	mDoRotate          = false;
 	mDoAttentionCamera = false;
 	mDoToggleZoom      = false;
 	mDoAdjustAngle     = false;
-	_05                = false;
-	_06                = false;
+	mDoAdjustAngleDown = false;
+	_UNUSED06          = false;
 }
 
 /*
@@ -83,16 +83,16 @@ PcamControlInfo::PcamControlInfo()
 void PcamControlInfo::init(bool p1, bool doRotate, bool doAttention, bool toggleZoom, bool adjustAngle, bool p6, bool p7, f32 azimuthRot,
                            f32 p9, f32 p10)
 {
-	_00                  = p1;
+	mIsActive            = p1;
 	mDoRotate            = doRotate;
 	mDoAttentionCamera   = doAttention;
 	mDoToggleZoom        = toggleZoom;
 	mDoAdjustAngle       = adjustAngle;
-	_05                  = p6;
-	_06                  = p7;
+	mDoAdjustAngleDown   = p6;
+	_UNUSED06            = p7;
 	mAzimuthRotIntensity = azimuthRot;
-	_0C                  = p9;
-	_10                  = p10;
+	mSubStickInput       = p9;
+	mSubStickY           = p10;
 }
 
 /*
@@ -105,10 +105,10 @@ PcamCamera::PcamCamera(Camera* camera)
 {
 	mParameters = new PcamCameraParameters();
 	mParameters->load("camera/", "camepara.bin", 1);
-	mCreatureArray = new NArray<Creature>(4);
-	_B4            = 2000.0f;
-	_B8            = NMathF::d2r(2.0f);
-	_BC            = NMathF::d2r(80.0f);
+	mCreatureArray     = new NArray<Creature>(4);
+	mDefaultDistance   = 2000.0f;
+	mMinAngleThreshold = NMathF::d2r(2.0f);
+	mMaxAngleThreshold = NMathF::d2r(80.0f);
 }
 
 /*
@@ -140,15 +140,15 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 	setAspect(1.0f);
 	setBlur(getCurrentBlur());
 
-	_A4 = 1.0f;
-	_20 = 1;
-	_28 = 1;
-	_30 = 1;
+	mDistanceMultiplier = 1.0f;
+	mIsActive           = 1;
+	mAttentionEnabled   = 1;
+	mControlsEnabled    = 1;
 
 	mToggleZoomPending        = FALSE;
 	mAdjustInclinationPending = FALSE;
-	_98                       = 0;
-	mAttentionState           = 0;
+	_UNUSED98                 = 0;
+	mAttentionState           = AttentionState::Inactive;
 
 	for (int i = 0; i < 3; i++) {
 		mTimers[i] = 0.0f;
@@ -170,7 +170,7 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 void PcamCamera::makeCurrentPosition(f32 azimuth)
 {
 	mPolarDir.set(mTargetMotionInfo.mDistance, angleToMeridian(mTargetMotionInfo.mAngle), azimuth);
-	_A8 = mPolarDir.mRadius;
+	mStoredRadius = mPolarDir.mRadius;
 	NVector3f watchPt;
 	outputTargetWatchpoint(watchPt);
 
@@ -247,29 +247,29 @@ void PcamCamera::control(Controller& controller)
 void PcamCamera::control(PcamControlInfo& info)
 {
 	STACK_PAD_VAR(1);
-	if (!_20) {
+	if (!mIsActive) {
 		return;
 	}
-	if (!info._00) {
+	if (!info.mIsActive) {
 		return;
 	}
 
-	if (_30) {
+	if (mControlsEnabled) {
 		if (info.mDoToggleZoom) {
 			mToggleZoomPending = 1;
 		}
 		if (info.mDoAdjustAngle) {
 			mAdjustInclinationPending = 1;
-		} else if (info._05) {
+		} else if (info.mDoAdjustAngleDown) {
 			mAdjustInclinationPending = 2;
 		}
 	}
 
-	if (_28 && info.mDoAttentionCamera && !mAttentionState) {
+	if (mAttentionEnabled && info.mDoAttentionCamera && mAttentionState == AttentionState::Inactive) {
 		startAttention();
 	}
 
-	if (mAttentionState == 1) {
+	if (mAttentionState == AttentionState::Active) {
 		return;
 	}
 
@@ -294,7 +294,7 @@ void PcamCamera::control(PcamControlInfo& info)
 void PcamCamera::startAttention()
 {
 	mTimers[1]      = getParameterF(PCAMF_AttentionPeriod);
-	mAttentionState = 1;
+	mAttentionState = AttentionState::Active;
 	mCurrentAzimuth = mPolarDir.mAzimuth;
 }
 
@@ -360,9 +360,9 @@ void PcamCamera::makePosture()
 	moveDir.scale(homingSpeed);
 	target.add2(getWatchpoint(), moveDir);
 
-	if (mAttentionState == 1) {
+	if (mAttentionState == AttentionState::Active) {
 		if (timerElapsed(1)) {
-			mAttentionState = 0;
+			mAttentionState = AttentionState::Inactive;
 		} else {
 			f32 cursorDir       = NMathF::roundAngle(NMathF::pi + getCursorDirection());
 			cursorDir           = NMathF::calcNearerDirection(mCurrentAzimuth, cursorDir);
@@ -409,7 +409,7 @@ void PcamCamera::makePosture()
  */
 void PcamCamera::makePolarRadius()
 {
-	mPolarDir.mRadius = (_A0 == 1) ? _A8 : getGoalDistance();
+	mPolarDir.mRadius = (mRadiusMode == RadiusMode::Stored) ? mStoredRadius : getGoalDistance();
 }
 
 /*
@@ -534,7 +534,7 @@ f32 PcamCamera::getChangingMotionRate()
  */
 f32 PcamCamera::getGoalDistance()
 {
-	return NMathF::interpolate(mPrevMotionInfo.mDistance, mTargetMotionInfo.mDistance, getChangingMotionRate()) * _A4;
+	return NMathF::interpolate(mPrevMotionInfo.mDistance, mTargetMotionInfo.mDistance, getChangingMotionRate()) * mDistanceMultiplier;
 }
 
 /*
@@ -751,6 +751,6 @@ void PcamCamera::printInfo(Graphics& gfx, Font* font)
 {
 	// there's more to this, but this is enough to generate the right string for data
 	gfx.texturePrintf(font, 20, 400, "%2d,%3d,%4.0f,%4.0f,%4.0f,%3.2f,%3.2f,%3.2f", 90 - NMathF::r2d(mPolarDir.mInclination), mCurrDistance,
-	                  mPolarDir.mRadius, _A8);
+	                  mPolarDir.mRadius, mStoredRadius);
 	// UNUSED FUNCTION
 }

@@ -10,12 +10,12 @@
 struct Event {
 	Event(int p1, u32 id)
 	{
-		_00 = p1;
-		mId = id;
+		_UNUSED00 = p1;
+		mId       = id;
 	}
 
-	int _00; // _00
-	u32 mId; // _04
+	int _UNUSED00; // _00
+	u32 mId;       // _04
 };
 
 /**

@@ -10,13 +10,13 @@
  * @brief TODO
  */
 struct GemTable {
-	int _00;          // _00
-	int _04;          // _04
-	int _08;          // _08
-	int _0C;          // _0C
-	int _10;          // _10
+	int _00;          // _00, unused
+	int _04;          // _04, unused
+	int _08;          // _08, unused
+	int _0C;          // _0C, unused
+	int _10;          // _10, unused
 	int mSplitAmount; // _14
-	f32 _18;          // _18
+	f32 _18;          // _18, unused
 };
 
 /**

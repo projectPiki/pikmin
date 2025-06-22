@@ -2560,8 +2560,8 @@ void NaviNukuState::init(Navi* navi)
 	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->mTotalPluckedPikiCount < 100) {
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 		PRINT("> camera START MOTION | NUKU");
-		navi->mIsPlucking       = true;
-		cameraMgr->mCamera->_30 = 0;
+		navi->mIsPlucking                    = true;
+		cameraMgr->mCamera->mControlsEnabled = 0;
 	}
 
 	if (!AIConstant::_instance->mConstants._54()) {
@@ -3239,7 +3239,7 @@ void NaviDeadState::init(Navi* navi)
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
 	cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
-	cameraMgr->mCamera->_20 = 0;
+	cameraMgr->mCamera->mIsActive = 0;
 	seMgr->setPikiNum(0);
 	navi->releasePikis();
 	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);

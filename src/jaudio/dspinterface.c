@@ -241,7 +241,7 @@ void DSP_PlayStart(u8 idx)
 	u32 i;
 
 	DSPchannel_* buf     = &CH_BUF[idx];
-	buf->_10C            = 0;
+	buf->ageCounter      = 0;
 	buf->currentPosition = 0;
 	buf->currentPosFrac  = 0;
 	buf->resetVpb        = DSP_TRUE;

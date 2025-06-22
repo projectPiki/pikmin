@@ -308,9 +308,9 @@ static void Jac_Archiver_Init()
 static u16 TrackReceive(seqp_* track, u16 param_2)
 {
 	STACK_PAD_VAR(1);
-	u8 stupid1;  // Do it inside the if statement, idiots.
-	u8 stupid2;  // Do it inside the if statement, idiots.
-	u16 stupid3; // Do it inside the if statement, idiots.
+	u8 childTrackIndex;
+	u8 childSlotIndex;
+	u16 eventActionId;
 
 	u16 portReadOut;
 
@@ -318,11 +318,11 @@ static u16 TrackReceive(seqp_* track, u16 param_2)
 		WaveScene_Close(13, 6);
 	}
 	if ((param_2 & 0x8000) == 0x8000) {
-		stupid1 = (track->trackId & 0x00f0) >> 4;
-		stupid2 = (track->trackId & 0x000f) >> 0;
-		stupid3 = (param_2 & 0x0fff);
+		childTrackIndex = (track->trackId & 0x00f0) >> 4;
+		childSlotIndex  = (track->trackId & 0x000f) >> 0;
+		eventActionId   = (param_2 & 0x0fff);
 		if ((track->trackId & 0x0f00) >> 8 == 1) {
-			MML_StopEventAction(stupid1, stupid2, stupid3);
+			MML_StopEventAction(childTrackIndex, childSlotIndex, eventActionId);
 		}
 	}
 	if ((param_2 & 0x9000) == 0x9000) {

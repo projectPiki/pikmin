@@ -73,7 +73,7 @@ static BOOL BackTrack(seqp_* track)
 
 	REF_track         = &track;
 	track->trackState = 0;
-	if (track->_3E4 == 1) {
+	if (track->isAllocated == 1) {
 		if (SEQ_REMAIN == FREE_SEQP_QUEUE_SIZE) {
 			return FALSE;
 		}
@@ -111,8 +111,8 @@ static seqp_* GetNewTrack()
 		GET_P = 0;
 	}
 
-	track->trackState = 2;
-	track->_3E4       = 1;
+	track->trackState  = 2;
+	track->isAllocated = 1;
 	return track;
 }
 
@@ -172,7 +172,7 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 	int i;
 
 	if (!parent) {
-		track->baseData         = (u8*)dataAddress;
+		track->seqData          = (u8*)dataAddress;
 		track->programCounter   = 0;
 		track->tempo            = 120;
 		track->timeBase         = 48;
@@ -182,11 +182,11 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 		track->childMuteMask    = 0;
 		track->isMuted          = 0;
 	} else {
-		track->baseData         = parent->baseData;
+		track->seqData          = parent->seqData;
 		track->programCounter   = dataAddress;
 		track->fileHandle       = parent->fileHandle;
 		track->tempo            = parent->tempo;
-		track->doChangeTempo    = FALSE;
+		track->needsTempoSync   = FALSE;
 		track->tempoFactor      = parent->tempoFactor;
 		track->timeBase         = parent->timeBase;
 		track->timeRelationMode = parent->timeRelationMode;
@@ -217,10 +217,10 @@ static void Init_Track(seqp_* track, u32 dataAddress, seqp_* parent)
 	track->timedParam.inner.pan.currentValue   = 0.5f;
 	track->timedParam.inner.pan.targetValue    = 0.5f;
 
-	track->timedParam.inner._100.currentValue = 0.5f;
-	track->timedParam.inner._100.targetValue  = 0.5f;
-	track->timedParam.inner._110.currentValue = 0.0f;
-	track->timedParam.inner._110.targetValue  = 0.0f;
+	track->timedParam.inner.pauseVolumeFactor.currentValue = 0.5f;
+	track->timedParam.inner.pauseVolumeFactor.targetValue  = 0.5f;
+	track->timedParam.inner.panDelay.currentValue          = 0.0f;
+	track->timedParam.inner.panDelay.targetValue           = 0.0f;
 
 	track->timedParam.inner.fxmix.currentValue = 0.0f;
 	track->timedParam.inner.fxmix.targetValue  = 0.0f;
@@ -370,7 +370,7 @@ s32 Jaq_SetSeqData_Limit(seqp_* track, u8* param_2, u32 param_3, u32 param_4, u8
 			return -1;
 		}
 	} else {
-		track->_3E4 = 0;
+		track->isAllocated = 0;
 	}
 
 	root = AllocNewRoot(track);
@@ -438,7 +438,7 @@ static s32 Jaq_RootCallback(void* track);
 BOOL Jaq_StartSeq(u32 param_1)
 {
 	seqp_* track;
-	u8* lbzu;
+	u8* pTrackState;
 
 	if (param_1 == -1) {
 		return FALSE;
@@ -450,7 +450,7 @@ BOOL Jaq_StartSeq(u32 param_1)
 	};
 
 	// This feels like a fakematch, but oh well.
-	switch (*(lbzu = &track->trackState)) {
+	switch (*(pTrackState = &track->trackState)) {
 	case 0:
 		return FALSE;
 	case 1:
@@ -458,7 +458,7 @@ BOOL Jaq_StartSeq(u32 param_1)
 	case 3:
 		return FALSE;
 	case 2:
-		*lbzu = 1;
+		*pTrackState = 1;
 	}
 	Jac_RegisterDspPlayerCallback(&Jaq_RootCallback, rootseq[param_1]);
 	return TRUE;

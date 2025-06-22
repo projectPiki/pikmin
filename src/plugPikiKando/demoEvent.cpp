@@ -178,7 +178,7 @@ void DemoEventMgr::act(int cmd, int type)
 					naviMgr->getNavi();
 					playerState->mShipEffectPartFlag &= ~8;
 					cameraMgr->mCamera->finishMotion();
-					cameraMgr->mCamera->_30 = 1;
+					cameraMgr->mCamera->mControlsEnabled = 1;
 					cameraMgr->mCamera->startMotion(1, 0);
 					PRINT("*** FINISH MOTION \n");
 				}

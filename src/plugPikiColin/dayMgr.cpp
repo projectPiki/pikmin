@@ -675,7 +675,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 	gfx.mSunPosition = mSunPosition;
 
 	if (mMapMgr) {
-		mMapMgr->_08.set(mSunPosition.x / 20.0f, mSunPosition.y / 5.0f, mSunPosition.z / 20.0f);
+		mMapMgr->_UNUSED08.set(mSunPosition.x / 20.0f, mSunPosition.y / 5.0f, mSunPosition.z / 20.0f);
 	}
 
 	for (int i = 0; i < lights; i++) {

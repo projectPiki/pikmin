@@ -1202,7 +1202,7 @@ void GameCoreSection::finalSetup()
 			cameraMgr->mCamera->startCamera(mNavi, 0, 0);
 			if (playerState->isTutorial() && playerState->mShipEffectPartFlag & 8) {
 				cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
-				cameraMgr->mCamera->_30 = 0;
+				cameraMgr->mCamera->mControlsEnabled = 0;
 			}
 		} else {
 			cameraMgr->mCamera->startCamera(mNavi, 1, 0);

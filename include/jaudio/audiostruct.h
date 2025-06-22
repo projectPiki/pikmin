@@ -42,20 +42,26 @@ struct ALHeap {
 
 typedef BOOL (*DSPChannelCallback)(dspch_*, u32);
 
+typedef enum DSPChannelAllocState {
+	DSPCHAN_Free          = 0, // Channel is available for allocation
+	DSPCHAN_MonoAllocated = 1, // Channel allocated for mono playback
+	DSPCHAN_StereoLeft    = 2, // Left channel of stereo pair
+	DSPCHAN_StereoRight   = 3, // Right channel of stereo pair
+	DSPCHAN_Stopping      = 4  // Channel is being force stopped
+} DSPChannelAllocState;
+
 /**
- * @brief TODO.
+ * @brief DSP channel structure.
  */
 struct dspch_ {
-	u8 buffer_idx;          // _00
-	u8 _01;                 // _01
-	u8 _02;                 // _02
-	u8 _03;                 // _03
-	u16 _04;                // _04
-	u16 _06;                // _06
-	jc_* _08;               // _08
-	DSPChannelCallback _0C; // _0C
-
-	// DSPchannel_* _0C; // TODO: SMS says this exists, Pikmin 1 disagrees.
+	u8 buffer_idx;                    // _00
+	u8 allocState;                    // _01, uses DSPChannelAllocState
+	u8 _02;                           // _02
+	u8 prio;                          // _03
+	u16 releaseTime;                  // _04
+	u16 _06;                          // _06
+	jc_* logicalChan;                 // _08
+	DSPChannelCallback logicalChanCb; // _0C
 };
 
 typedef struct PanMatrix_ {
@@ -115,7 +121,7 @@ struct jc_ {
 	u8 note;                            // _01
 	u8 pauseFlag;                       // _02
 	u8 toFlush;                         // _03
-	jcs_* mMgr;                         // _04
+	jcs_* chanMgr;                      // _04
 	void** chanListHead;                // _08
 	u8 logicalChanType;                 // _0C, 0 = Wave, 1 = ??, 2 = Oscillator
 	Wave_* waveData;                    // _10
@@ -123,11 +129,11 @@ struct jc_ {
 	u32 _18;                            // _18
 	u32 _1C;                            // _1C
 	dspch_* dspChannel;                 // _20
-	void* mNext;                        // _24
+	void* nextChan;                     // _24, this is jcs_
 	JCUpdateCallback updateCallback;    // _28
 	JCUpdateCallback pitchSweepUpdater; // _2C
-	s32 _30;                            // _30
-	s32 _34;                            // _34
+	s32 noteId;                         // _30
+	s32 lastNotePlayed;                 // _34
 	struct Osc_* mOscillators[4];       // _38
 	struct Oscbuf_ mOscBuffers[2];      // _48
 	f32 _78;                            // _78

@@ -64,7 +64,7 @@ void* Jam_OfsToAddr(seqp_* track, u32 ofs)
 	// TODO: What do 0, 1, and 2 mean?
 	switch (track->dataSourceMode) {
 	case 0:
-		return track->baseData + ofs;
+		return track->seqData + ofs;
 	case 1:
 	case 2:
 		return FAT_GetPointer(track->fileHandle, ofs);
@@ -82,7 +82,7 @@ static u8 __ByteReadOfs(seqp_* track, u32 ofs)
 	// TODO: What do 0, 1, and 2 mean?
 	switch (track->dataSourceMode) {
 	case 0:
-		return track->baseData[ofs];
+		return track->seqData[ofs];
 	case 1:
 	case 2:
 		return FAT_ReadByte(track->fileHandle, ofs);
@@ -140,7 +140,7 @@ static u8 __ByteRead(seqp_* track)
 	// TODO: What do 0, 1, and 2 mean?
 	switch (track->dataSourceMode) {
 	case 0:
-		return track->baseData[track->programCounter++];
+		return track->seqData[track->programCounter++];
 	case 1:
 	case 2:
 		return FAT_ReadByte(track->fileHandle, track->programCounter++);
@@ -554,7 +554,7 @@ void Jam_WriteRegParam(seqp_* track, u8 param_2)
 	case 0x29:
 	case 0x2A:
 	case 0x2B:
-		track->regParam.param._20[r29_regIdx - 0x28] = unaff_r27;
+		track->regParam.param.extendedRegs[r29_regIdx - 0x28] = unaff_r27;
 		return;
 	default:
 		r28 = r30_newRegValue;
@@ -661,7 +661,7 @@ u32 Jam_ReadReg32(seqp_* track, u8 index)
 	case 41:
 	case 42:
 	case 43:
-		return track->regParam.param._20[index - 40];
+		return track->regParam.param.extendedRegs[index - 40];
 	case 35:
 		return Jam_ReadRegXY(track);
 	}
@@ -1298,7 +1298,7 @@ void Jam_UpdateTrackAll(seqp_* track)
 		track->parentController.releaseTime     = 0;
 
 		panDelayLeft = 0;
-		panScaled    = track->timedParam.inner._110.currentValue * 128.0f;
+		panScaled    = track->timedParam.inner.panDelay.currentValue * 128.0f;
 
 		OSf32tos8(&panScaled, &pan8bit);
 		if (pan8bit < 0) {
@@ -1440,7 +1440,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 		// Update master pan delay levels if requested
 		if (updateFlags & SEQTRACK_FLAG_MASTER_LEVEL) {
 			masterLeft     = 0;
-			masterLevelF32 = track->timedParam.inner._110.currentValue * 128.0f;
+			masterLevelF32 = track->timedParam.inner.panDelay.currentValue * 128.0f;
 			OSf32tos8(&masterLevelF32, &masterRight);
 			if (masterRight < 0) {
 				masterLeft  = -masterRight;
@@ -1467,7 +1467,7 @@ void Jam_UpdateTrack(seqp_* track, u32 updateFlags)
 			}
 
 			if (track->isPaused && (track->pauseStatus & 1)) {
-				computedVolume *= track->timedParam.inner._100.currentValue;
+				computedVolume *= track->timedParam.inner.pauseVolumeFactor.currentValue;
 			}
 		}
 
@@ -1735,7 +1735,7 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 void Jam_SetInterrupt(seqp_* track, u16 interrupt)
 {
 	if (track->interruptEnable & (1 << interrupt)) {
-		track->interruptPending |= (1 << interrupt);
+		track->pendingInterrupts |= (1 << interrupt);
 	}
 }
 
@@ -1754,13 +1754,13 @@ BOOL Jam_TryInterrupt(seqp_* track)
 	}
 	for (i = 0; i < 8; ++i) {
 		mask = 1 << i;
-		if ((track->interruptEnable & mask) && (track->interruptPending & mask)) {
+		if ((track->interruptEnable & mask) && (track->pendingInterrupts & mask)) {
 			track->savedProgramCounter = track->programCounter;
 			track->programCounter      = track->interruptAddresses[i];
 			track->interruptActive     = mask;
 			track->savedTimer          = track->waitTimer;
 			track->waitTimer           = 0;
-			track->interruptPending ^= mask;
+			track->pendingInterrupts ^= mask;
 			return TRUE;
 		}
 	}
@@ -2339,7 +2339,7 @@ static u32 Cmd_Tempo()
 	if (!SEQ_P->parent) {
 		Jam_UpdateTempo(SEQ_P);
 	} else {
-		SEQ_P->doChangeTempo = TRUE;
+		SEQ_P->needsTempoSync = TRUE;
 	}
 	return 0;
 }
@@ -2904,7 +2904,7 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 	updateFlags = 0;
 
 	// Handle tempo synchronization with parent track
-	if (track->parent && track->doChangeTempo == TRUE) {
+	if (track->parent && track->needsTempoSync == TRUE) {
 		childTempoRatio = (float)track->tempo / (float)track->parent->tempo;
 		if (childTempoRatio > 1.0f) {
 			childTempoRatio = 1.0f;
@@ -2931,7 +2931,7 @@ s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
 
 			if (chan) {
 				List_AddChannel(&track->parent->parentController.freeChannels, chan);
-				chan->mMgr = &track->parent->parentController;
+				chan->chanMgr = &track->parent->parentController;
 				track->parentController.chanCount--;
 				track->parent->parentController.chanCount++;
 			}

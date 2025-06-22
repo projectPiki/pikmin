@@ -10,17 +10,17 @@ static InterleaveBuffer* buf = &interleavebuf;
  */
 BOOL Jac_SendStreamData(u8* data, u32 size)
 {
-	if (buf->mStreamFree < size) {
+	if (buf->streamFree < size) {
 		return FALSE;
 	}
 	for (int i = 0; i < size; ++i, ++data) {
-		buf->mBufData[buf->mBufSendIdx++] = *data;
-		if (buf->mBufSendIdx == buf->mBufSize) {
-			buf->mBufSendIdx = 0;
+		buf->bufData[buf->bufSendIdx++] = *data;
+		if (buf->bufSendIdx == buf->bufSize) {
+			buf->bufSendIdx = 0;
 		}
 	}
-	buf->mStreamFree -= size;
-	buf->mStreamRemain += size;
+	buf->streamFree -= size;
+	buf->streamRemain += size;
 	return TRUE;
 }
 
@@ -31,7 +31,7 @@ BOOL Jac_SendStreamData(u8* data, u32 size)
  */
 BOOL Jac_CheckStreamFree(u32 size)
 {
-	return (buf->mStreamFree >= size) ? TRUE : FALSE;
+	return (buf->streamFree >= size) ? TRUE : FALSE;
 }
 
 /*
@@ -41,7 +41,7 @@ BOOL Jac_CheckStreamFree(u32 size)
  */
 BOOL Jac_CheckStreamRemain(u32 size)
 {
-	return (buf->mStreamRemain < size) ? FALSE : TRUE;
+	return (buf->streamRemain < size) ? FALSE : TRUE;
 }
 
 /*
@@ -52,7 +52,7 @@ BOOL Jac_CheckStreamRemain(u32 size)
  */
 u32 Jac_GetStreamRemain()
 {
-	return buf->mStreamRemain;
+	return buf->streamRemain;
 }
 
 /*
@@ -62,23 +62,23 @@ u32 Jac_GetStreamRemain()
  */
 u32 Jac_GetStreamData(u8* data, u32 size)
 {
-	if (buf->mIsInitialized) {
-		if (buf->mStreamRemain < buf->mBufSize / 2) {
+	if (buf->isInit) {
+		if (buf->streamRemain < buf->bufSize / 2) {
 			return 0;
 		}
-		buf->mIsInitialized = FALSE;
+		buf->isInit = FALSE;
 	}
-	if (buf->mStreamRemain < size) {
-		size = buf->mStreamRemain;
+	if (buf->streamRemain < size) {
+		size = buf->streamRemain;
 	}
 	for (int i = 0; i < size; ++i, ++data) {
-		*data = buf->mBufData[buf->mBufGetIdx++];
-		if (buf->mBufGetIdx == buf->mBufSize) {
-			buf->mBufGetIdx = 0;
+		*data = buf->bufData[buf->bufGetIdx++];
+		if (buf->bufGetIdx == buf->bufSize) {
+			buf->bufGetIdx = 0;
 		}
 	}
-	buf->mStreamRemain -= size;
-	buf->mStreamFree += size;
+	buf->streamRemain -= size;
+	buf->streamFree += size;
 	return size;
 }
 
@@ -89,11 +89,11 @@ u32 Jac_GetStreamData(u8* data, u32 size)
  */
 void Jac_InitStreamData(u8* data, u32 size)
 {
-	buf->mBufData       = data;
-	buf->mBufSize       = size;
-	buf->mBufSendIdx    = 0;
-	buf->mBufGetIdx     = 0;
-	buf->mStreamRemain  = 0;
-	buf->mStreamFree    = size;
-	buf->mIsInitialized = TRUE;
+	buf->bufData      = data;
+	buf->bufSize      = size;
+	buf->bufSendIdx   = 0;
+	buf->bufGetIdx    = 0;
+	buf->streamRemain = 0;
+	buf->streamFree   = size;
+	buf->isInit       = TRUE;
 }

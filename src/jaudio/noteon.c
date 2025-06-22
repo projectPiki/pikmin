@@ -46,7 +46,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 				jcs->chanCount--;
 				List_AddChannel(&track->parentController.freeChannels, chan);
 				parent->parentController.chanCount++;
-				chan->mMgr = &parent->parentController;
+				chan->chanMgr = &parent->parentController;
 			}
 			jcs = &parent->parentController;
 		}
@@ -56,7 +56,7 @@ s32 NoteON(seqp_* track, s32 channel, s32 flag1, s32 flag2, s32 playFlag)
 			jcs->chanCount--;
 			List_AddChannel(&track->parentController.freeChannels, chan);
 			track->parentController.chanCount++;
-			chan->mMgr = &track->parentController;
+			chan->chanMgr = &track->parentController;
 		}
 		jcs = &track->parentController;
 	}

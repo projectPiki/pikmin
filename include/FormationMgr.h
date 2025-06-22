@@ -24,7 +24,7 @@ struct Rope {
 	void move(Vector3f&, Vector3f&, Vector3f&);
 	void refresh(Graphics&);
 
-	Vector3f _00;       // _00
+	Vector3f _UNUSED00; // _00
 	Vector3f mVelocity; // _0C
 	Vector3f mPosition; // _18
 	Vector3f _24;       // _24

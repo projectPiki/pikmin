@@ -656,33 +656,33 @@ struct GameCourseClearScreen : public Node {
 	 */
 	struct Parms : public Parameters {
 		Parms()
-		    : _24(this, 300.0f, 0.0f, 1000.0f, "p00", "floatテストだぴょ−ン") // 'f32 test'
-		    , _34(this, 1, 0, 100, "i00", "intテストだぴょ−ン")               // 'int test'
+		    : mFloatTest(this, 300.0f, 0.0f, 1000.0f, "p00", "floatテストだぴょ−ン") // 'f32 test'
+		    , mIntTest(this, 1, 0, 100, "i00", "intテストだぴょ−ン")                 // 'int test'
 		{
 		}
 
 		// _20-_24 = Parameters
-		Parm<f32> _24; // _24, p00
-		Parm<int> _34; // _34, i00
+		Parm<f32> mFloatTest; // _24, p00
+		Parm<int> mIntTest;   // _34, i00
 	};
 
 	GameCourseClearScreen()
 	{
 		setName("GameCourseClearScreen");
 		mController  = new Controller(1);
-		_1F0         = 0;
+		mState       = 0;
 		Texture* tex = gsys->loadTexture("bigFont.bti", true);
 		mFont        = new Font();
 		mFont->setTexture(tex, 21, 42);
-		_1F8                     = new Menu(mController, gsys->mConsFont, false);
-		_1F8->mAnchorPoint.mMinX = glnWidth / 2;
-		_1F8->mAnchorPoint.mMinY = glnHeight / 2;
+		mMainMenu                     = new Menu(mController, gsys->mConsFont, false);
+		mMainMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		mMainMenu->mAnchorPoint.mMinY = glnHeight / 2;
 
-		_1F8->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(_1F8, &Menu::menuCloseMenu));
-		_1F8->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
-		_1FC = 0;
+		mMainMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
+		mMainMenu->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
+		mActiveMenu = 0;
 		gsys->setFade(1.0f, 3.0f);
-		_1F4 = 0xB0000;
+		mFlags = 0xB0000;
 
 		PRINT("パーティクルパックのテスト開始\n");
 		mPtclGenPack = new zen::PtclGenPack(3);
@@ -721,13 +721,13 @@ struct GameCourseClearScreen : public Node {
 	{
 		mController->update();
 		mScreen.update();
-		if (_1FC) {
-			_1FC = _1FC->doUpdate(false);
-		} else if (_1F0 == 0) {
+		if (mActiveMenu) {
+			mActiveMenu = mActiveMenu->doUpdate(false);
+		} else if (mState == 0) {
 			gameflow._33C = 0;
 			Node::update();
-		} else if (_1F0 == 1 && !_1FC && gsys->getFade() == 0.0f) {
-			_1F0                             = -1;
+		} else if (mState == 1 && !mActiveMenu && gsys->getFade() == 0.0f) {
+			mState                           = -1;
 			gameflow.mNextOnePlayerSectionID = gameflow.mLevelIndex;
 			gsys->softReset();
 		}
@@ -760,8 +760,8 @@ struct GameCourseClearScreen : public Node {
 		gfx.setLighting(false, nullptr);
 		gfx.useTexture(nullptr, 0);
 		mGameModeMgr->draw(gfx, mFont);
-		if (_1FC) {
-			_1FC->draw(gfx, 1.0f);
+		if (mActiveMenu) {
+			mActiveMenu->draw(gfx, 1.0f);
 		}
 	}
 	virtual void read(RandomAccessStream& input) // _0C
@@ -774,8 +774,8 @@ struct GameCourseClearScreen : public Node {
 	{
 		menu.close();
 		PRINT("Chose quit menu!!\n");
-		_1F0 = 1;
-		_1F4 = 0xB;
+		mState = 1;
+		mFlags = 0xB;
 		gsys->setFade(0.0f, 3.0f);
 	}
 
@@ -784,13 +784,13 @@ struct GameCourseClearScreen : public Node {
 	Parms mCourseClearParms;           // _20
 	zen::particleLoader mPtclLoader;   // _44
 	zen::particleManager mPtclManager; // _54
-	u8 _F0[0x4];                       // _F0, unknown
+	u8 _UNUSEDF0[0x4];                 // _F0, unknown
 	P2DScreen mScreen;                 // _F4
 	zen::PtclGenPack* mPtclGenPack;    // _1EC
-	u32 _1F0;                          // _1F0, unknown
-	u32 _1F4;                          // _1F4, unknown
-	Menu* _1F8;                        // _1F8
-	Menu* _1FC;                        // _1FC
+	u32 mState;                        // _1F0, unknown
+	u32 mFlags;                        // _1F4, unknown
+	Menu* mMainMenu;                   // _1F8
+	Menu* mActiveMenu;                 // _1FC
 	Controller* mController;           // _200
 	Font* mFont;                       // _204
 	Camera mCamera;                    // _208

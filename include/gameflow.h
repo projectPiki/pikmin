@@ -509,7 +509,7 @@ struct GameFlow : public Node {
 	int mGameSectionID;            // _1F0, see GameSectionID enum
 	s32 mNextOnePlayerSectionID;   // _1F4, see OnePlayerSectionID enum
 	u8 _1F8[0x4];                  // _1F8, unknown
-	int mLevelIndex;               // _1FC, see OnePlayerSectionID enum
+	int mLevelIndex;               // _1FC, WHAT IS THIS???
 	u32 _200;                      // _200, unknown
 	Section* mGameSection;         // _204
 	LangMode mLangModes[2];        // _208

@@ -37,12 +37,12 @@ void StreamCheckBufferEmpty(void);
 void StreamCheckBufferRemainSize(void);
 
 struct BufControl_ {
-	u8 mStatus;       // _00
-	u8 mMaxBuffers;   // _01
-	u8 mCurrentIndex; // _02
-	u8 mActiveIndex;  // _03
-	u32 mBufferSize;  // _04
-	u32 mPosition;    // _08
+	u8 state;         // _00
+	u8 maxBufCount;   // _01
+	u8 currentBufIdx; // _02
+	u8 activeBufIdx;  // _03
+	u32 usedSize;     // _04
+	u32 pos;          // _08
 	u32 mLength;      // _0C
 };
 
@@ -67,7 +67,7 @@ union UNION_0x2420 {
 
 // CONFIRMED SIZE: 0x21A50
 struct StreamCtrl_ {
-	union UNION_0x2420 _00[6];    // _00
+	union UNION_0x2420 data[6];   // _00
 	s16 leftChanBufs[2][0x2000];  // _0D8C0
 	s16 rightChanBufs[2][0x2000]; // _158C0
 	s16 loopBufs[2][0x1000];      // _1D8C0, PCM data?
@@ -79,7 +79,7 @@ struct StreamCtrl_ {
 	u32 remainingBytes;           // _21970
 	u32 bytesRead;                // _21974
 	u32 chunkSize;                // _21978
-	u32 _2197C;                   // _2197C
+	u32 lastLoadSize;             // _2197C
 	u32 samplesDecoded;           // _21980
 	u32 playbackState;            // _21984
 	StreamHeader_ header;         // _21988

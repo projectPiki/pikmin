@@ -7,13 +7,13 @@
  * @brief TODO
  */
 struct il_buf {
-	BOOL mIsInitialized; // _00
-	u8* mBufData;        // _04
-	u32 mBufSize;        // _08
-	u32 mBufSendIdx;     // _0C
-	u32 mBufGetIdx;      // _10
-	u32 mStreamRemain;   // _14
-	u32 mStreamFree;     // _18
+	BOOL isInit;      // _00
+	u8* bufData;      // _04
+	u32 bufSize;      // _08
+	u32 bufSendIdx;   // _0C
+	u32 bufGetIdx;    // _10
+	u32 streamRemain; // _14
+	u32 streamFree;   // _18
 };
 
 typedef struct il_buf InterleaveBuffer;

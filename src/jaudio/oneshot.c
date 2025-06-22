@@ -219,8 +219,8 @@ static jc_* __Oneshot_Play_Start(jcs_* jcs, jc_* jc, u32 p3)
 	if (p3 == 0) {
 		p3 = -1;
 	}
-	jc->_30            = p3;
-	jc->_34            = jc->_30;
+	jc->noteId         = p3;
+	jc->lastNotePlayed = jc->noteId;
 	jc->updateCallback = Jesus1Shot_Update;
 	jc->dspChannel     = AllocDSPchannel(0, (u32)jc);
 
@@ -364,7 +364,7 @@ static void __Oneshot_WavePause(jc_* jc, u8 a)
  */
 static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 {
-	jcs_* mgr = jc->mMgr;
+	jcs_* mgr = jc->chanMgr;
 	jc_* chan = mgr->activeChannels;
 	u8 flag   = id >> 0x18;
 	u8 poly   = polys_table[flag & 0xf];
@@ -394,7 +394,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 				}
 			}
 		}
-		chan = (jc_*)chan->mNext;
+		chan = (jc_*)chan->nextChan;
 	}
 
 	chan = mgr->releasingChannels;
@@ -414,7 +414,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 			}
 		}
 
-		chan = (jc_*)chan->mNext;
+		chan = (jc_*)chan->nextChan;
 	}
 
 	if (flag & 0x20) {
@@ -439,7 +439,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 	jc_* chan;
 	u8 poly;
 
-	chan = jc->mMgr->activeChannels;
+	chan = jc->chanMgr->activeChannels;
 	poly = polys_table[id >> 0x18 & 0xf];
 
 	if (id && poly) {
@@ -468,7 +468,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 				}
 			}
 
-			chan = (jc_*)chan->mNext;
+			chan = (jc_*)chan->nextChan;
 		}
 	}
 
@@ -542,7 +542,7 @@ void AllStop_1Shot(jcs_* jcs)
 	jc_** REF_jc = &jc;
 	STACK_PAD_VAR(4);
 	while (jc) {
-		next = (jc_*)jc->mNext;
+		next = (jc_*)jc->nextChan;
 		Stop_1Shot(jc);
 		jc = next;
 	}
@@ -623,26 +623,29 @@ void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)
  * Address:	80015EA0
  * Size:	0000C8
  */
-void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 playId)
+void Gate_1Shot(jc_* jc, u8 key, u8 velocity, s32 noteId)
 {
 	STACK_PAD_VAR(2);
-	if (jc->_30 == -1) {
-		jc->_30 = playId;
-		jc->_34 = jc->_30;
-		int pitchKey;
+	if (jc->noteId == -1) {
+		jc->noteId         = noteId;
+		jc->lastNotePlayed = jc->noteId;
+
+		int pitchTableIndex;
 		if (jc->logicalChanType == 2) {
-			pitchKey = key;
+			pitchTableIndex = key;
 		} else {
-			pitchKey = key + 60 - jc->waveData->key;
-		}
-		if (pitchKey < 0) {
-			pitchKey = 0;
-		}
-		if (pitchKey > 0x7f) {
-			pitchKey = 0x7f;
+			pitchTableIndex = key + 60 - jc->waveData->key;
 		}
 
-		f32 pitch         = C5BASE_PITCHTABLE[pitchKey];
+		if (pitchTableIndex < 0) {
+			pitchTableIndex = 0;
+		}
+
+		if (pitchTableIndex > 0x7f) {
+			pitchTableIndex = 0x7f;
+		}
+
+		f32 pitch         = C5BASE_PITCHTABLE[pitchTableIndex];
 		jc->velocity      = velocity;
 		jc->note          = key;
 		jc->currentPitch  = jc->basePitch * pitch;
@@ -768,22 +771,22 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 		}
 
 		if (test && List_CutChannel(jc) != -1) {
-			List_AddChannelTail(&jc->mMgr->releasingChannels, jc);
+			List_AddChannelTail(&jc->chanMgr->releasingChannels, jc);
 			if (jc->dspChannel) {
 				u8 flag   = jc->channelPriority >> 8;
 				u32 test2 = flag;
 				if ((flag & 0xff) == 0) {
 					test2 = 1;
 				}
-				jc->dspChannel->_03 = test2;
+				jc->dspChannel->prio = test2;
 			}
 		}
-		jc->_30 = -1;
+		jc->noteId = -1;
 		return FALSE;
 	} else if (status == 1 || status == 2 || status == 6) {
-		if (jc->mMgr->chanAllocCount) {
+		if (jc->chanMgr->chanAllocCount) {
 			if (List_CutChannel(jc) != -1) {
-				jc->mMgr->chanAllocCount--;
+				jc->chanMgr->chanAllocCount--;
 				int id      = jc->soundId;
 				jc->soundId = 0;
 				__Oneshot_StopMonoPolyCheck(jc, id);
@@ -794,7 +797,7 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 				int id      = jc->soundId;
 				jc->soundId = 0;
 				__Oneshot_StopMonoPolyCheck(jc, id);
-				List_AddChannel(&jc->mMgr->freeChannels, jc);
+				List_AddChannel(&jc->chanMgr->freeChannels, jc);
 			}
 		}
 		if (status != 6) {
@@ -803,7 +806,7 @@ static BOOL Jesus1Shot_Update(jc_* jc, JCSTATUS jstatus)
 			Del_WaitDSPChannel(jc);
 		}
 		jc->note           = -1;
-		jc->_30            = -1;
+		jc->noteId         = -1;
 		jc->updateCallback = NULL;
 	}
 	return FALSE;

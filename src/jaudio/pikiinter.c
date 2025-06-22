@@ -12,9 +12,9 @@
 
 // rename better later
 typedef struct SEvent_UnkC {
-	u32 _00; // _00, unknown
-	u8 _04;  // _04
-	u32 _08; // _08, unknown
+	u32 statusIdx; // _00, unknown
+	u8 actionGroup;        // _04
+	u32 timeStamp; // _08, unknown
 } SEvent_UnkC;
 
 /**
@@ -23,19 +23,19 @@ typedef struct SEvent_UnkC {
  * @note Size: 0x1B4.
  */
 typedef struct SEvent_ {
-	SVector_ position;      // _00
-	SEvent_UnkC _0C[16];    // _0C
-	u32 eventType;          // _CC
-	seqp_* track;           // _D0
-	CmdQueue cmdQueue;      // _D4
-	SEvent_* _140;          // _140
-	int _144;               // _144
-	u8 _148[0x160 - 0x148]; // _148, unknown
-	f32 volume;             // _160
-	f32 pan;                // _164
-	u8 _168[0x170 - 0x168]; // _168, unknown
-	int frameTimer;         // _170
-	OuterParam_ outerParam; // _174
+	SVector_ position;             // _00
+	SEvent_UnkC statusEntries[16]; // _0C
+	u32 eventType;                 // _CC
+	seqp_* track;                  // _D0
+	CmdQueue cmdQueue;             // _D4
+	SEvent_* selfRef;              // _140
+	int portArgs;                  // _144
+	u8 _148[0x160 - 0x148];        // _148, unknown
+	f32 volume;                    // _160
+	f32 pan;                       // _164
+	u8 _168[0x170 - 0x168];        // _168, unknown
+	int frameTimer;                // _170
+	OuterParam_ outerParam;        // _174
 } SEvent_;
 
 // fabricated name, need something for the CAMERA .comm entry
@@ -57,10 +57,10 @@ SCamera_ CAMERA;
 typedef struct ActionStatus ActionStatus;
 static int EVENT_OFFSET[] = { 0, 1, 0xad, 0xbe, 0xcd, 0xd7, 0xdb, 0x105 };
 static struct ActionStatus {
-	u8 _00;  // _00
-	u8 _01;  // _01
-	u8 _02;  // _02
-	u16 _04; // _03
+	u8 flags;  // _00
+	u8 prio;  // _01
+	u8 group;  // _02
+	u16 cmd; // _03
 } ACTION_STATUS[] = {
 	{ 0x00, 0x00, 0x00, 0x00 },  { 0x00, 0x01, 0x00, 0x01 },  { 0x10, 0x00, 0x01, 0x02 },  { 0x00, 0x00, 0x01, 0x03 },
 	{ 0x00, 0x00, 0x01, 0x04 },  { 0x00, 0x00, 0x01, 0x05 },  { 0x10, 0x00, 0x01, 0x06 },  { 0x10, 0x00, 0x01, 0x07 },
@@ -169,9 +169,9 @@ void __SetVolandPan(Portargs_* arg)
  */
 void SendToStack(SEvent_* evt)
 {
-	evt->_140 = evt;
-	Set_Portcmd(&evt->_144, (int)__SetVolandPan, (int)&evt->_140);
-	Add_PortcmdOnce((u32*)&evt->_144);
+	evt->selfRef = evt;
+	Set_Portcmd(&evt->portArgs, (int)__SetVolandPan, (int)&evt->selfRef);
+	Add_PortcmdOnce((u32*)&evt->portArgs);
 }
 
 /*
@@ -203,9 +203,9 @@ void Jac_InitEventSystem(void)
 		Jal_AddCmdQueue(&EVENT[i].cmdQueue, EVENT[i].track, 0);
 
 		for (j = 0; j < 16; j++) {
-			EVENT[i]._0C[j]._00 = 0;
-			EVENT[i]._0C[j]._04 = 0;
-			EVENT[i]._0C[j]._08 = 0;
+			EVENT[i].statusEntries[j].statusIdx = 0;
+			EVENT[i].statusEntries[j].actionGroup       = 0;
+			EVENT[i].statusEntries[j].timeStamp = 0;
 		}
 	}
 
@@ -241,7 +241,7 @@ void Jac_EventFrameCheck(void)
 			continue;
 		}
 		for (j = 0; j < 16; j++) {
-			event->_0C[i]._00 = 0;
+			event->statusEntries[i].statusIdx = 0;
 		}
 
 		Jal_SendCmdQueue_Force(&event->cmdQueue, 0xFFFF);
@@ -339,7 +339,7 @@ int Jac_CreateEvent(u32 eventType, struct SVector_* p2)
 	event->position.z = p2->y;
 
 	for (i = 0; i < 16; i++) {
-		event->_0C[i]._08 = event->_0C[i]._04 = event->_0C[i]._00 = 0;
+		event->statusEntries[i].timeStamp = event->statusEntries[i].actionGroup = event->statusEntries[i].statusIdx = 0;
 	}
 
 	event->frameTimer = 100;
@@ -378,130 +378,133 @@ BOOL Jac_UpdateEventPosition(int idx, struct SVector_* p2)
  * Address:	80017B20
  * Size:	0002E0
  */
-BOOL Jac_PlayEventAction(int a1, int a2)
+BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 {
-	u32 index;
-	u8 status;
-	u8 status2;
-	u32 offset;
-	SEvent_* event;
+	u32 targetSlot;
+	u8 lowestPrio;
+	u8 group;
+	u32 statusIdx;
+	SEvent_* ev;
 	u32 i;
 
-	if (a1 == -1) {
+	if (eventIdx == -1) {
 		return FALSE;
 	}
 
-	event = &EVENT[a1];
-	if (event->eventType == 0) {
+	ev = &EVENT[eventIdx];
+	if (ev->eventType == 0) {
 		return FALSE;
 	}
 
-	offset = a2 + EVENT_OFFSET[event->eventType];
+	statusIdx = actionId + EVENT_OFFSET[ev->eventType];
 
-	int index2 = 0;
+	int usedSlots = 0;
 	for (i = 0; i < 16; i++) {
-		SEvent_UnkC* u = &event->_0C[i];
-		if (u->_00 == 0) {
+		SEvent_UnkC* u = &ev->statusEntries[i];
+		if (u->statusIdx == 0) {
 			break;
 		}
-		index2++;
+		usedSlots++;
 	}
-	index = index2;
 
-	status  = ACTION_STATUS[offset]._00;
-	status2 = ACTION_STATUS[offset]._02;
+	targetSlot = usedSlots;
 
-	if (status & 0x10) {
-		u32 index2 = status & 0xf;
-		if (index2 == 0) {
-			index2 = 0x10;
+	lowestPrio  = ACTION_STATUS[statusIdx].flags;
+	group = ACTION_STATUS[statusIdx].group;
+
+	if (lowestPrio & 0x10) {
+		u32 maxConcurrent = lowestPrio & 0xf;
+		if (maxConcurrent == 0) {
+			maxConcurrent = 0x10;
 		}
 
-		u32 index3  = 0;
-		u32 time    = 0;
-		u32 index4  = 0;
-		u32 status3 = ACTION_STATUS[offset]._01;
+		u32 concurrentCount  = 0;
+		u32 oldestTime    = 0;
+		u32 oldestSlot  = 0;
+		u32 currentPriority = ACTION_STATUS[statusIdx].prio;
 		for (i = 0; i < 16; i++) {
-			if (event->_0C[i]._00) {
-				if (event->_0C[i]._04 == status2) {
-					index3++;
+			if (ev->statusEntries[i].statusIdx) {
+				if (ev->statusEntries[i].actionGroup == group) {
+					concurrentCount++;
 				}
 
-				u32 status4 = ACTION_STATUS[event->_0C[i]._00]._01;
-				if (status3 > status4) {
-					time    = CURRENT_TIME - event->_0C[i]._08;
-					index4  = i;
-					status3 = status4;
+				u32 status4 = ACTION_STATUS[ev->statusEntries[i].statusIdx].prio;
+				if (currentPriority > status4) {
+					oldestTime    = CURRENT_TIME - ev->statusEntries[i].timeStamp;
+					oldestSlot  = i;
+					currentPriority = status4;
 				}
 
-				if (status3 == status4) {
-					u32 time2 = CURRENT_TIME - event->_0C[i]._08;
-					if (time2 > time) {
-						time   = time2;
-						index4 = i;
+				if (currentPriority == status4) {
+					u32 slotAge = CURRENT_TIME - ev->statusEntries[i].timeStamp;
+					if (slotAge > oldestTime) {
+						oldestTime   = slotAge;
+						oldestSlot = i;
 					}
 				}
 			}
 		}
 
-		if (index3 >= index2 || index == 0x10) {
-			if (status & 0x20) {
+		if (concurrentCount >= maxConcurrent || targetSlot == 0x10) {
+			if (lowestPrio & 0x20) {
 				jac_debug_multi_cancel++;
 				return 0;
 			}
-			index = index4;
+
+			targetSlot = oldestSlot;
 		}
 	} else {
-		int temp2 = 16;
+		int firstFreeSlot = 16;
 		for (i = 0; i < 16; i++) {
-			u32 u = event->_0C[i]._00;
-			if (u == 0) {
-				temp2 = i;
+			u32 slotStatusIdx = ev->statusEntries[i].statusIdx;
+			if (slotStatusIdx == 0) {
+				firstFreeSlot = i;
 				continue;
 			}
 
-			if (event->_0C[i]._04 != status2) {
+			if (ev->statusEntries[i].actionGroup != group) {
 				continue;
 			}
 
-			if (status & 0x20) {
-				if (ACTION_STATUS[offset]._01 > ACTION_STATUS[u]._01) {
-					index = i;
+			if (lowestPrio & 0x20) {
+				if (ACTION_STATUS[statusIdx].prio > ACTION_STATUS[slotStatusIdx].prio) {
+					targetSlot = i;
 				} else {
 					jac_debug_multi_cancel++;
 					return 0;
 				}
 			} else {
-				index = i;
+				targetSlot = i;
 			}
 			break;
 		}
 
 		if (i == 16) {
-			index = temp2;
+			targetSlot = firstFreeSlot;
 		}
 	}
 
-	if (index == 16) {
-		status = ACTION_STATUS[offset]._01 + 1;
+	if (targetSlot == 16) {
+		lowestPrio = ACTION_STATUS[statusIdx].prio + 1;
 		for (i = 0; i < 16; i++) {
-			u8 status3 = ACTION_STATUS[event->_0C[i]._00]._01;
-			if (ACTION_STATUS[event->_0C[i]._00]._01 < status) {
-				status = status3;
-				index  = i;
+			u8 slotPrio = ACTION_STATUS[ev->statusEntries[i].statusIdx].prio;
+			if (ACTION_STATUS[ev->statusEntries[i].statusIdx].prio < lowestPrio) {
+				lowestPrio = slotPrio;
+				targetSlot  = i;
 			}
 		}
 
-		if (index == 16) {
+		if (targetSlot == 16) {
 			jac_debug_multi_cancel++;
 			return FALSE;
 		}
 	}
+
 	jac_debug_multi_entry++;
-	Jal_SendCmdQueue_Force(&event->cmdQueue, index << 0xc | ACTION_STATUS[offset]._04);
-	event->_0C[index]._00 = offset;
-	event->_0C[index]._04 = status2;
-	event->_0C[index]._08 = CURRENT_TIME;
+	Jal_SendCmdQueue_Force(&ev->cmdQueue, targetSlot << 0xc | ACTION_STATUS[statusIdx].cmd);
+	ev->statusEntries[targetSlot].statusIdx = statusIdx;
+	ev->statusEntries[targetSlot].actionGroup       = group;
+	ev->statusEntries[targetSlot].timeStamp = CURRENT_TIME;
 	return TRUE;
 }
 
@@ -524,10 +527,10 @@ BOOL Jac_StopEventAction(int a1, int a2)
 
 	int offset = a2 + EVENT_OFFSET[event->eventType];
 	for (i = 0; i < 16; i++) {
-		SEvent_UnkC* c = &event->_0C[i];
-		if (c->_00 == offset) {
+		SEvent_UnkC* c = &event->statusEntries[i];
+		if (c->statusIdx == offset) {
 			Jal_SendCmdQueue_Force(&event->cmdQueue, i * 0x1000);
-			c->_00 = 0;
+			c->statusIdx = 0;
 		}
 	}
 	return TRUE;
@@ -543,10 +546,10 @@ BOOL MML_StopEventAction(u8 idx, u8 a2, u16 a3)
 	if (EVENT[idx].eventType == 0) {
 		return FALSE;
 	}
-	if (ACTION_STATUS[EVENT[idx]._0C[a2]._00]._04 != a3) {
+	if (ACTION_STATUS[EVENT[idx].statusEntries[a2].statusIdx].cmd != a3) {
 		return FALSE;
 	}
-	EVENT[idx]._0C[a2]._00 = 0;
+	EVENT[idx].statusEntries[a2].statusIdx = 0;
 	return TRUE;
 }
 
@@ -565,7 +568,7 @@ void MML_StopEventAll(u8 idx, u16 p2)
 
 	for (i = 0; i < 16; i++) {
 		if ((p2 & flag) == 0) {
-			EVENT[idx]._0C[i]._00 = 0;
+			EVENT[idx].statusEntries[i].statusIdx = 0;
 		}
 		flag = (flag << 1) & 0xFFFE;
 	}
@@ -590,7 +593,7 @@ BOOL Jac_DestroyEvent(s32 idx)
 	}
 
 	for (i = 0; i < 16; i++) {
-		event->_0C[i]._00 = 0;
+		event->statusEntries[i].statusIdx = 0;
 	}
 
 	Jal_SendCmdQueue_Force(&event->cmdQueue, 0xFFFF);

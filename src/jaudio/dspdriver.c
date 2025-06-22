@@ -35,13 +35,13 @@ void InitDSPchannel()
 	for (i = 0; i < DSPCH_LENGTH; ++i) {
 		chan = &DSPCH[i];
 
-		chan->buffer_idx = i;
-		chan->_01        = 0;
-		chan->_08        = 0;
-		chan->_06        = 0;
-		chan->_0C        = NULL;
-		chan->_03        = 0;
-		chan->_04        = 0;
+		chan->buffer_idx    = i;
+		chan->allocState    = DSPCHAN_Free;
+		chan->logicalChan   = 0;
+		chan->_06           = 0;
+		chan->logicalChanCb = NULL;
+		chan->prio          = 0;
+		chan->releaseTime   = 0;
 	}
 }
 
@@ -60,10 +60,10 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 	if (param_1 == 0) {
 
 		for (i = 0; i < DSPCH_LENGTH; ++i) {
-			if (DSPCH[i]._01 == 0) {
-				DSPCH[i]._01 = TRUE;
-				DSPCH[i]._08 = (jc_*)param_2;
-				DSPCH[i]._03 = 1;
+			if (DSPCH[i].allocState == DSPCHAN_Free) {
+				DSPCH[i].allocState  = DSPCHAN_MonoAllocated;
+				DSPCH[i].logicalChan = (jc_*)param_2;
+				DSPCH[i].prio        = 1;
 				DSP_AllocInit(i);
 				return &DSPCH[i];
 			}
@@ -73,13 +73,13 @@ dspch_* AllocDSPchannel(u32 param_1, u32 param_2)
 
 	for (i = 1; i < DSPCH_LENGTH; i += 2) {
 
-		if (DSPCH[i]._01 || DSPCH[i - 1]._01)
+		if (DSPCH[i].allocState != DSPCHAN_Free || DSPCH[i - 1].allocState != DSPCHAN_Free)
 			continue;
 
-		DSPCH[i]._01     = 3;
-		DSPCH[i - 1]._01 = 2;
-		DSPCH[i]._08     = (jc_*)param_2;
-		DSPCH[i - 1]._08 = (jc_*)param_2;
+		DSPCH[i].allocState      = DSPCHAN_StereoRight;
+		DSPCH[i - 1].allocState  = DSPCHAN_StereoLeft;
+		DSPCH[i].logicalChan     = (jc_*)param_2;
+		DSPCH[i - 1].logicalChan = (jc_*)param_2;
 		DSP_AllocInit(i);
 		DSP_AllocInit(i - 1);
 		return &DSPCH[i - 1];
@@ -97,27 +97,27 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 	if (chan == NULL) {
 		return -1;
 	}
-	if (chan->_08 != (jc_*)id) {
+	if (chan->logicalChan != (jc_*)id) {
 		return -2;
 	}
 
-	switch (chan->_01) {
-	case 1:
-	case 4:
-		chan->_01 = 0;
+	switch (chan->allocState) {
+	case DSPCHAN_MonoAllocated:
+	case DSPCHAN_Stopping:
+		chan->allocState = DSPCHAN_Free;
 		break;
-	case 2:
-		chan->_01 = 0;
+	case DSPCHAN_StereoLeft:
+		chan->allocState = DSPCHAN_Free;
 		DeAllocDSPchannel(&DSPCH[chan->buffer_idx + 1], id);
 		break;
-	case 3:
-		chan->_01 = 0;
+	case DSPCHAN_StereoRight:
+		chan->allocState = DSPCHAN_Free;
 		DeAllocDSPchannel(&DSPCH[chan->buffer_idx - 1], id);
 		break;
 	}
-	chan->_03 = 0;
-	chan->_0C = nullptr;
-	chan->_08 = 0;
+	chan->prio          = 0;
+	chan->logicalChanCb = nullptr;
+	chan->logicalChan   = 0;
 	return 0;
 
 	STACK_PAD_VAR(2);
@@ -142,21 +142,21 @@ dspch_* GetLowerDSPchannel()
 	STACK_PAD_VAR(2);
 
 	for (i; i < DSPCH_LENGTH; i++) {
-		if (DSPCH[i]._01 != 4) {
-			if (DSPCH[i]._01 == 0) {
-				DSPCH[i]._03 = 0;
-				id           = i;
+		if (DSPCH[i].allocState != DSPCHAN_Stopping) {
+			if (DSPCH[i].allocState == DSPCHAN_Free) {
+				DSPCH[i].prio = 0;
+				id            = i;
 				break;
 			}
 
-			if (DSPCH[i]._0C) {
+			if (DSPCH[i].logicalChanCb) {
 				GetDspHandle(DSPCH[i].buffer_idx);
-				if (DSPCH[i]._03 <= max) {
+				if (DSPCH[i].prio <= max) {
 					DSPchannel_* buf = GetDspHandle(DSPCH[i].buffer_idx);
-					if (max != DSPCH[i]._03 || (x && (buf->_10C >= x || buf->_10C == 0))) {
-						x   = buf->_10C;
+					if (max != DSPCH[i].prio || (x && (buf->ageCounter >= x || buf->ageCounter == 0))) {
+						x   = buf->ageCounter;
 						id  = i;
-						max = DSPCH[i]._03;
+						max = DSPCH[i].prio;
 					}
 				}
 			}
@@ -184,23 +184,23 @@ dspch_* GetLowerActiveDSPchannel()
 	u32* REF_c     = &c;
 
 	for (i = 0; i < DSPCH_LENGTH; ++i) {
-		if (DSPCH[i]._01 == 4 || DSPCH[i]._01 == 0)
+		if (DSPCH[i].allocState == DSPCHAN_Stopping || DSPCH[i].allocState == DSPCHAN_Free)
 			continue;
 
-		if (DSPCH[i]._03 > a)
+		if (DSPCH[i].prio > a)
 			continue;
 
 		buf = GetDspHandle(DSPCH[i].buffer_idx);
-		if (a == DSPCH[i]._03) {
+		if (a == DSPCH[i].prio) {
 
 			if (c == 0)
 				continue;
-			if (buf->_10C < c && buf->_10C != 0)
+			if (buf->ageCounter < c && buf->ageCounter != 0)
 				continue;
 		}
-		c     = buf->_10C;
+		c     = buf->ageCounter;
 		index = i;
-		a     = DSPCH[i]._03;
+		a     = DSPCH[i].prio;
 	}
 
 	return &DSPCH[index];
@@ -218,13 +218,13 @@ BOOL ForceStopDSPchannel(dspch_* chan)
 	DSPchannel_* buf;
 
 	REF_chan = &chan;
-	if (chan->_01 == 4)
+	if (chan->allocState == DSPCHAN_Stopping)
 		return FALSE;
 	buf = GetDspHandle(chan->buffer_idx);
 	if (!buf->enabled)
 		return FALSE;
 	buf->endRequested = DSP_TRUE;
-	chan->_01         = 4;
+	chan->allocState  = DSPCHAN_Stopping;
 	DSP_FlushChannel(chan->buffer_idx);
 	return TRUE;
 }
@@ -243,16 +243,16 @@ BOOL BreakLowerDSPchannel(u8 param_1)
 
 	chan        = GetLowerDSPchannel();
 	REF_param_1 = &param_1;
-	if (chan->_03 > param_1)
+	if (chan->prio > param_1)
 		return FALSE;
-	if (chan->_03 == param_1) {
+	if (chan->prio == param_1) {
 		buf = GetDspHandle(chan->buffer_idx); // UNUSED??
 	}
-	if (chan->_01) {
-		if (chan->_0C) {
-			chan->_06 = chan->_0C(chan, 3);
+	if (chan->allocState != DSPCHAN_Free) {
+		if (chan->logicalChanCb) {
+			chan->_06 = chan->logicalChanCb(chan, 3);
 			ForceStopDSPchannel(chan);
-			chan->_01 = 4;
+			chan->allocState = DSPCHAN_Stopping;
 		}
 		ForceStopDSPchannel(chan);
 	} else {
@@ -271,19 +271,19 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
 	u8* id_ptr   = &id;
 	dspch_* chan = GetLowerActiveDSPchannel();
 
-	if (chan->_03 > id) {
+	if (chan->prio > id) {
 		return FALSE;
 	}
 
-	if (chan->_03 == id) {
+	if (chan->prio == id) {
 		GetDspHandle(chan->buffer_idx);
 	}
 
-	if (chan->_01) {
-		if (chan->_0C) {
-			chan->_06 = chan->_0C(chan, 3);
+	if (chan->allocState != DSPCHAN_Free) {
+		if (chan->logicalChanCb) {
+			chan->_06 = chan->logicalChanCb(chan, 3);
 			ForceStopDSPchannel(chan);
-			chan->_01 = 4;
+			chan->allocState = DSPCHAN_Stopping;
 		}
 		ForceStopDSPchannel(chan);
 	} else {
@@ -326,37 +326,37 @@ void UpdateDSPchannelAll()
 		dspch_* chan     = &DSPCH[i];
 		dspch_** chanptr = &chan;
 
-		if (chan->_01 == FALSE) {
+		if (chan->allocState == DSPCHAN_Free) {
 			continue;
 		}
 		DSPchannel_* buf = GetDspHandle(chan->buffer_idx);
 		if (buf->done) {
-			if (chan->_0C) {
-				chan->_06 = chan->_0C(chan, 2);
+			if (chan->logicalChanCb) {
+				chan->_06 = chan->logicalChanCb(chan, 2);
 			}
 			buf->done    = FALSE;
 			buf->enabled = FALSE;
 			DSP_FlushChannel(chan->buffer_idx);
-			if (chan->_01 == FALSE) {
+			if (chan->allocState == DSPCHAN_Free) {
 				continue;
 			}
 		}
 
 		if (!buf->endRequested) {
-			buf->_10C++;
-			if (buf->_10C == chan->_04 && chan->_0C) {
-				chan->_06 = chan->_0C(chan, 4);
+			buf->ageCounter++;
+			if (buf->ageCounter == chan->releaseTime && chan->logicalChanCb) {
+				chan->_06 = chan->logicalChanCb(chan, 4);
 			}
 		}
 
-		if (chan->_0C) {
+		if (chan->logicalChanCb) {
 			u16* ptr = &chan->_06;
 			u16 a    = *ptr;
 			if (a) {
 				*ptr = a - 1;
 			}
 			if (*ptr == 0) {
-				*ptr = chan->_0C(chan, 0);
+				*ptr = chan->logicalChanCb(chan, 0);
 				if (*ptr == 0) {
 					buf->done    = FALSE;
 					buf->enabled = FALSE;

@@ -120,7 +120,7 @@ struct QuittingGameModeState : public ModeState {
 			PRINT("sending softreset!\n");
 			gamecore->exitStage();
 			gameflow.mNextOnePlayerSectionID = mSection->mNextSectionId;
-			gameflow.mLevelIndex             = ONEPLAYER_MapSelect;
+			gameflow.mLevelIndex             = 6;
 			Jac_SceneExit(13, 0);
 			gsys->softReset();
 		}

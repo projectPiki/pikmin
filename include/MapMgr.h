@@ -321,7 +321,7 @@ struct MapMgr {
 
 	Controller* mController;            // _00
 	DayMgr* mDayMgr;                    // _04
-	Vector3f _08;                       // _08
+	Vector3f _UNUSED08;                 // _08
 	MapRoom* mMapRooms;                 // _14, array of 256 MapRooms
 	int mVertRayCount;                  // _18
 	int mGroundTriRayCount;             // _1C

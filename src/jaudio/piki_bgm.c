@@ -15,15 +15,13 @@
  * @note Size: 0x468.
  */
 typedef struct BgmControl_ {
-	int isActive;    // _00
-	int needsInit;   // _04
-	int modeChanged; // _08
-	u8 currentMode;  // _0C, flag with 0x1/2/4/8 corresponding to _0F/_0E/_10/_11 below
-	s8 trackHandle;  // _0D
-
-	// Something here is the battle mix / other stuff
-	u8 _0E;                      // _0E, bool, this and _0F control the mute set
-	u8 _0F;                      // _0F, bool
+	int isActive;                // _00
+	int needsInit;               // _04
+	int hasModeChanged;          // _08
+	u8 currentMode;              // _0C, flag with 0x1/2/4/8 corresponding to _0F/_0E/_10/_11 below
+	s8 trackHandle;              // _0D
+	u8 battleMixEnabled;         // _0E, bool, this and _0F control the mute set
+	u8 normalMixEnabled;         // _0F, bool
 	u8 trackIntensity;           // _10, bool, controls volume set
 	u8 isFadeOut;                // _11, bool
 	u32 songId;                  // _14
@@ -156,12 +154,12 @@ void Jac_InitBgm(void)
 {
 	u32 i;
 	for (i = 0; i < 3; i++) {
-		bgm[i].isActive       = 0;
-		bgm[i]._0E            = 0;
-		bgm[i]._0F            = 0;
-		bgm[i].trackIntensity = 0;
-		bgm[i].isFadeOut      = 0;
-		bgm[i].trackHandle    = -1;
+		bgm[i].isActive         = 0;
+		bgm[i].battleMixEnabled = 0;
+		bgm[i].normalMixEnabled = 0;
+		bgm[i].trackIntensity   = 0;
+		bgm[i].isFadeOut        = 0;
+		bgm[i].trackHandle      = -1;
 	}
 
 	u32* REF_i = &i;
@@ -280,7 +278,7 @@ void Jac_PlayBgm(u32 trackNo, u32 id)
 
 	bgm[trackNo].isActive        = 1;
 	bgm[trackNo].needsInit       = 1;
-	bgm[trackNo].modeChanged     = 0;
+	bgm[trackNo].hasModeChanged  = 0;
 	bgm[trackNo].transitionTimer = 0;
 	bgm[trackNo].currentMode     = 0;
 	bgm[trackNo].songId          = id - 2;
@@ -331,8 +329,8 @@ BOOL Jac_ChangeBgmMode(u32 trackNo, u8 mode)
 	}
 
 	if (bgm[trackNo].isActive) {
-		bgm[trackNo].currentMode = mode;
-		bgm[trackNo].modeChanged = 1;
+		bgm[trackNo].currentMode    = mode;
+		bgm[trackNo].hasModeChanged = 1;
 	} else {
 		return FALSE;
 	}
@@ -351,10 +349,10 @@ void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 	BgmControl_* thisBgm = &bgm[trackNo];
 	switch (flag) {
 	case 2:
-		thisBgm->_0E = doSet;
+		thisBgm->battleMixEnabled = doSet;
 		break;
 	case 1:
-		thisBgm->_0F = doSet;
+		thisBgm->normalMixEnabled = doSet;
 		break;
 	case 4:
 		thisBgm->trackIntensity = doSet;
@@ -364,9 +362,9 @@ void Jac_SetBgmModeFlag(u32 trackNo, u8 flag, u8 doSet)
 		break;
 	}
 	z = thisBgm->isFadeOut << 3;
-	x = thisBgm->_0E << 1;
+	x = thisBgm->battleMixEnabled << 1;
 	y = thisBgm->trackIntensity << 2;
-	Jac_ChangeBgmMode(trackNo, (thisBgm->_0F << 0) + (x) + (y) + (z));
+	Jac_ChangeBgmMode(trackNo, (thisBgm->normalMixEnabled << 0) + (x) + (y) + (z));
 }
 
 /*
@@ -387,9 +385,9 @@ void Jac_BgmFrameWork(void)
 				Jac_ChangeBgmTrackVol(&bgm[i]);
 				continue;
 			}
-			if (bgm[i].modeChanged) {
+			if (bgm[i].hasModeChanged) {
 				Jac_ChangeBgmTrackVol(&bgm[i]);
-				bgm[i].modeChanged = 0;
+				bgm[i].hasModeChanged = 0;
 			}
 			if (bgm[i].transitionTimer) {
 				Jac_MoveBgmTrackVol(&bgm[i]);

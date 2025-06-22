@@ -874,8 +874,8 @@ void Navi::update()
 				mIsFastPluckEnabled = false;
 				PRINT("< camera FINISH MOTION");
 				cameraMgr->mCamera->finishMotion();
-				cameraMgr->mCamera->_30 = 1;
-				mNoPluckTimer           = 0;
+				cameraMgr->mCamera->mControlsEnabled = 1;
+				mNoPluckTimer                        = 0;
 			}
 		}
 	}

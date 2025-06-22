@@ -144,21 +144,21 @@ struct MoveParam_ {
  * @note Size: 0x120
  */
 struct AInnerParam_ {
-	MoveParam_ volume;     // _00
-	MoveParam_ pitch;      // _10
-	MoveParam_ fxmix;      // _20
-	MoveParam_ pan;        // _30
-	MoveParam_ dolby;      // _40
-	MoveParam_ distFilter; // _50
-	MoveParam_ osc0Width;  // _60
-	MoveParam_ osc0Rate;   // _70
-	MoveParam_ osc0Vertex; // _80
-	MoveParam_ osc1Width;  // _90
-	MoveParam_ osc1Rate;   // _A0
-	MoveParam_ osc1Vertex; // _B0
-	MoveParam_ IIRs[4];    // _C0
-	MoveParam_ _100;       // _100
-	MoveParam_ _110;       // _110
+	MoveParam_ volume;            // _00
+	MoveParam_ pitch;             // _10
+	MoveParam_ fxmix;             // _20
+	MoveParam_ pan;               // _30
+	MoveParam_ dolby;             // _40
+	MoveParam_ distFilter;        // _50
+	MoveParam_ osc0Width;         // _60
+	MoveParam_ osc0Rate;          // _70
+	MoveParam_ osc0Vertex;        // _80
+	MoveParam_ osc1Width;         // _90
+	MoveParam_ osc1Rate;          // _A0
+	MoveParam_ osc1Vertex;        // _B0
+	MoveParam_ IIRs[4];           // _C0
+	MoveParam_ pauseVolumeFactor; // _100
+	MoveParam_ panDelay;          // _110
 };
 
 union TimedParam_ {
@@ -200,7 +200,7 @@ struct RegisterParam_ {
 	u16 arguments[5];    // _10, 08 - 12, Exact length confirmed: `Cmd_PanPowSet`.
 	u16 basePriority;    // _1A, 13
 	u8 _1C[0x20 - 0x1C]; // _1C, 14
-	u32 _20[4];          // _20, 15 - 22, Exact length semi-confirmed; Pikmin 2 also says 4.
+	u32 extendedRegs[4]; // _20, 15 - 22, Exact length semi-confirmed; Pikmin 2 also says 4.
 	u8 _30[0x40 - 0x30]; // _1C, 23 - 31
 };
 
@@ -220,14 +220,14 @@ union URegisterParam_ {
  * @note Size: 0x434 (Confirmed by `Jaf_HandleToSeq`).
  */
 struct seqp_ {
-	u8* baseData;                      // _000
+	u8* seqData;                       // _000
 	u32 programCounter;                // _004
 	u32 callStackDepth;                // _008
 	u32 callStack[2];                  // _00C, Exact length unknown, but it is an array.
 	u8 _10[0x02c - 0x014];             // _008
 	u16 loopCounters[2];               // _02C, Exact length unknown, but it is an array.
 	u8 _30[0x03c - 0x030];             // _030
-	u8 trackState;                     // _03C, Confirmed unsigned by switch cases
+	u8 trackState;                     // _03C
 	u8 dataSourceMode;                 // _03D
 	u8 fileHandle;                     // _03E
 	u8 flags;                          // _03F
@@ -274,7 +274,7 @@ struct seqp_ {
 	u16 childMuteMask;                 // _3A0
 	u8 _3A2[0x3a4 - 0x3a2];            // _3A2
 	u8 interruptActive;                // _3A4
-	u8 interruptPending;               // _3A5
+	u8 pendingInterrupts;              // _3A5
 	u8 interruptEnable;                // _3A6
 	u8 timerCount;                     // _3A7
 	u32 interruptAddresses[8];         // _3A8
@@ -283,11 +283,11 @@ struct seqp_ {
 	u32 timer;                         // _3D0
 	u32 maxTime;                       // _3D4
 	u32 updateFlags;                   // _3D8, see `SEQTRACK_FLAG_*` defines
-	u8 panCalcTypes[3];                // _3DC
+	u8 panCalcTypes[3];                // _3DC, 0 = pan, 1 = fxmix, 2 = dolby
 	u8 parentPanCalcTypes[3];          // _3DF
 	u8 isRegistered;                   // _3E2
-	u8 doChangeTempo;                  // _3E3, boolean-like
-	u8 _3E4;                           // _3E4
+	u8 needsTempoSync;                 // _3E3, boolean-like
+	u8 isAllocated;                    // _3E4
 	u8 _3E5[0x3e8 - 0x3e5];            // _3E5
 	Oscbuf_ oscillatorParams[2];       // _3E8
 	u8 _418[0x434 - 0x418];            // _400
