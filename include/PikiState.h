@@ -10,39 +10,39 @@ enum PikiStateID {
 	PIKISTATE_Normal       = 0,
 	PIKISTATE_Grow         = 1,
 	PIKISTATE_Bury         = 2,
-	PIKISTATE_Nukare       = 3,// Being plucked from the ground by a captain.
-	PIKISTATE_NukareWait   = 4,// A planted sprout waiting to be plucked.
-	PIKISTATE_AutoNuki     = 5,// Plucking itself out of the ground (end of day).
+	PIKISTATE_Nukare       = 3, // Being plucked from the ground by a captain.
+	PIKISTATE_NukareWait   = 4, // A planted sprout waiting to be plucked.
+	PIKISTATE_AutoNuki     = 5, // Plucking itself out of the ground (end of day).
 	PIKISTATE_Dying        = 6,
 	PIKISTATE_Dead         = 7,
 	PIKISTATE_Swallowed    = 8,
 	PIKISTATE_Fired        = 9,
 	PIKISTATE_Bubble       = 10,
-	PIKISTATE_GoHang       = 11,// Running to a captain to be thrown.
-	PIKISTATE_Hanged       = 12,// Held by a captain, ready for a throw.
-	PIKISTATE_WaterHanged  = 13,// Held by a captain over water.
-	PIKISTATE_Flying       = 14,// In the air after being thrown.
-	PIKISTATE_Emit         = 15,// Being ejected from an Onion.
-	PIKISTATE_Cliff        = 16,// Teetering on the edge of a cliff.
-	PIKISTATE_Fall         = 17,// Falling from a height.
-	PIKISTATE_Wave         = 18,// Stunned by a shockwave.
-	PIKISTATE_GrowUp       = 19,// Maturing flower stage after drinking nectar.
+	PIKISTATE_GoHang       = 11, // Running to a captain to be thrown.
+	PIKISTATE_Hanged       = 12, // Held by a captain, ready for a throw.
+	PIKISTATE_WaterHanged  = 13, // Held by a captain over water.
+	PIKISTATE_Flying       = 14, // In the air after being thrown.
+	PIKISTATE_Emit         = 15, // Being ejected from an Onion.
+	PIKISTATE_Cliff        = 16, // Teetering on the edge of a cliff.
+	PIKISTATE_Fall         = 17, // Falling from a height.
+	PIKISTATE_Wave         = 18, // Stunned by a shockwave.
+	PIKISTATE_GrowUp       = 19, // Maturing flower stage after drinking nectar.
 	PIKISTATE_Push         = 20,
 	PIKISTATE_PushPiki     = 21,
-	PIKISTATE_Flick        = 22,// Being knocked back by an attack.
-	PIKISTATE_Kinoko       = 23,// Infected by a Puffstool (mushroom state).
+	PIKISTATE_Flick        = 22, // Being knocked back by an attack.
+	PIKISTATE_Kinoko       = 23, // Infected by a Puffstool (mushroom state).
 	PIKISTATE_Drown        = 24,
 	PIKISTATE_Flown        = 25,
 	PIKISTATE_LookAt       = 26,
 	PIKISTATE_Bullet       = 27,
 	PIKISTATE_Absorb       = 28,
-	PIKISTATE_KinokoChange = 29,// Transforming into or out of the mushroom state.
-	PIKISTATE_FallMeck     = 30,// Special falling state from a mechanical enemy.
-	PIKISTATE_Emotion      = 31,// Performing an idle emotional animation (e.g., joy).
+	PIKISTATE_KinokoChange = 29, // Transforming into or out of the mushroom state.
+	PIKISTATE_FallMeck     = 30, // Special falling state from a mechanical enemy.
+	PIKISTATE_Emotion      = 31, // Performing an idle emotional animation (e.g., joy).
 	PIKISTATE_UNUSED32     = 32, // Unused
-	PIKISTATE_Pressed      = 33,// Crushed or flattened by an object or enemy.
+	PIKISTATE_Pressed      = 33, // Crushed or flattened by an object or enemy.
 	PIKISTATE_Unk34        = 34, // Unused
-	PIKISTATE_Count, // 35?
+	PIKISTATE_Count,             // 35?
 };
 
 /**
@@ -95,9 +95,9 @@ struct PikiAbsorbState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	int mState;           // _10
-	u8 mHasAbsorbedNectar;            // _14
-	Creature* mNectar; // _18
+	int mState;            // _10
+	u8 mHasAbsorbedNectar; // _14
+	Creature* mNectar;     // _18
 };
 
 /**
@@ -193,11 +193,11 @@ struct PikiCliffState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u32 mState;      // _10, unknown
-	int mLoopCounter;      // _14
-	int mCliffHangType;      // _18, 0 = fall, 1 = hang
+	u32 mState;                // _10, unknown
+	int mLoopCounter;          // _14
+	int mCliffHangType;        // _18, 0 = fall, 1 = hang
 	Vector3f mInitialVelocity; // _1C
-	f32 mInitialFaceDir;      // _28
+	f32 mInitialFaceDir;       // _28
 };
 
 /**
@@ -232,13 +232,13 @@ struct PikiDrownState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u16 mState;      // _10
-	u16 mStruggleDuration;      // _12
-	u16 _UNUSED14;      // _14
-	u16 mOutOfWaterFrames;      // _16
-	u8 _UNUSED18[0x4];  // _18
+	u16 mState;               // _10
+	u16 mStruggleDuration;    // _12
+	u16 _UNUSED14;            // _14
+	u16 mOutOfWaterFrames;    // _16
+	u8 _UNUSED18[0x4];        // _18
 	Vector3f mEscapeVelocity; // _1C
-	bool mIsBeingWhistled;     // _28, probably mIsCalled/mIsWhistled
+	bool mIsBeingWhistled;    // _28, probably mIsCalled/mIsWhistled
 };
 
 /**
@@ -296,7 +296,7 @@ struct PikiEmotionState : public PikiState {
 	// _00-_10 = PikiState
 	Vector3f mGazePosition; // _10
 	u8 mGazeFlag;           // _1C
-	u8 mCheerCount;             // _1D
+	u8 mCheerCount;         // _1D
 	f32 mTimer;             // _20
 };
 
@@ -371,11 +371,11 @@ struct PikiFlickState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u16 mState; // _10
-	f32 mGetUpTimer; // _14
-	f32 mInitialAngle; // _18
+	u16 mState;         // _10
+	f32 mGetUpTimer;    // _14
+	f32 mInitialAngle;  // _18
 	f32 mRotationDelta; // _1C
-	f32 mStrength; // _20
+	f32 mStrength;      // _20
 };
 
 /**
@@ -394,11 +394,11 @@ struct PikiFlownState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 _10; // _10
-	f32 mInitialAngle; // _14
-	f32 mRotationDelta; // _18
+	f32 _10;             // _10
+	f32 mInitialAngle;   // _14
+	f32 mRotationDelta;  // _18
 	f32 mFlickIntensity; // _1C
-	u16 mState; // _20
+	u16 mState;          // _20
 };
 
 /**
@@ -421,14 +421,14 @@ struct PikiFlyingState : public PikiState {
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	PermanentEffect mSparkleEffect; // _10
-	f32 mGlideTimer;             // _20
-	u8 mIsFlowerGliding;              // _24
-	u8 mHasBounced;              // _25
-	u8 _UNUSED26[0x2C - 0x26]; // _26
-	Vector3f mHorizontalDirection;        // _2C
-	f32 mInitialHorizontalSpeed;             // _38
-	f32 mTargetHorizontalSpeed;             // _3C
-	int mGroundTouchFrames;             // _40
+	f32 mGlideTimer;                // _20
+	u8 mIsFlowerGliding;            // _24
+	u8 mHasBounced;                 // _25
+	u8 _UNUSED26[0x2C - 0x26];      // _26
+	Vector3f mHorizontalDirection;  // _2C
+	f32 mInitialHorizontalSpeed;    // _38
+	f32 mTargetHorizontalSpeed;     // _3C
+	int mGroundTouchFrames;         // _40
 };
 
 /**
@@ -538,10 +538,10 @@ struct PikiKinokoState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	Creature* mTarget; // _10, nearest target?
-	f32 mWalkTimer;       // _14
-	Vector3f mTargetDir;  // _18
-	int mState;       // _24
+	Creature* mTarget;   // _10, nearest target?
+	f32 mWalkTimer;      // _14
+	Vector3f mTargetDir; // _18
+	int mState;          // _24
 };
 
 /**
@@ -559,8 +559,8 @@ struct PikiLookAtState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 mTimer; // _10
-	int mState; // _14
+	f32 mTimer;        // _10
+	int mState;        // _14
 	f32 mRotationStep; // _18
 };
 
@@ -641,8 +641,8 @@ struct PikiPressedState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 mStunTimer; // _10
-	u8 mIsInvincible;  // _14
+	f32 mStunTimer;   // _10
+	u8 mIsInvincible; // _14
 };
 
 /**
@@ -665,7 +665,7 @@ struct PikiPushPikiState : public PikiState {
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	int mCollisionFrameCount; // _10
-	u8 mIsFinishing;  // _14
+	u8 mIsFinishing;          // _14
 };
 
 /**

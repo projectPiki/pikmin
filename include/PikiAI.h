@@ -282,9 +282,9 @@ struct TopAction : public Action {
 	MotionListener* mListener; // _14
 	u8 mIsDebugDraw;           // _18
 	bool mIsSuspended;         // _19
-	u8 mIsAnimating;                    // _1A
+	u8 mIsAnimating;           // _1A
 	int _1C;                   // _1C
-	Creature* mTarget;             // _20
+	Creature* mTarget;         // _20
 	int _24;                   // _24
 	u32 _28;                   // _28, unknown
 	f32 _2C;                   // _2C

@@ -198,7 +198,7 @@ void PikiLookAtState::exec(Piki* piki)
 		}
 
 		if (mTimer < 0.0f) {
-			mTimer                  = 0.0f;
+			mTimer               = 0.0f;
 			piki->mFaceDirection = roundAng(piki->mFaceDirection + PI);
 			transit(piki, PIKISTATE_Normal);
 		}
@@ -225,9 +225,9 @@ void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
-		mState          = 2;
-		Vector3f dir = piki->mNavi->mPosition - piki->mPosition;
-		mRotationStep          = angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) / 7.0f;
+		mState        = 2;
+		Vector3f dir  = piki->mNavi->mPosition - piki->mPosition;
+		mRotationStep = angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) / 7.0f;
 		break;
 
 	case KEY_Action1:
@@ -325,7 +325,7 @@ void PikiNormalState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	if (!piki->isKinoko()) {
 		Creature* collider = msg->mEvent.mCollider;
 		int type           = collider->mObjType;
-		mPushPiki                = 0;
+		mPushPiki          = 0;
 		if (!piki->isDamaged() && piki->mMode != PikiMode::TransportMode) {
 			switch (type) {
 			case OBJTYPE_Water:
@@ -363,9 +363,9 @@ PikiAbsorbState::PikiAbsorbState()
 void PikiAbsorbState::init(Piki* piki)
 {
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Mizunomi, piki), PaniMotionInfo(PIKIANIM_Mizunomi));
-	mState     = 0;
-	mNectar = piki->mCurrNectar;
-	mHasAbsorbedNectar     = 0;
+	mState             = 0;
+	mNectar            = piki->mCurrNectar;
+	mHasAbsorbedNectar = 0;
 	piki->turnTo(mNectar->mPosition);
 }
 
@@ -622,7 +622,7 @@ void PikiKinokoState::init(Piki* piki)
  */
 void PikiKinokoState::initWalk(Piki* piki)
 {
-	mWalkTimer          = (2.0f * gsys->getRand(1.0f)) + 1.5f;
+	mWalkTimer   = (2.0f * gsys->getRand(1.0f)) + 1.5f;
 	Vector3f dir = mTarget->mPosition - piki->mPosition;
 	f32 d        = dir.normalise();
 	Vector3f orthoDir(dir.z, 0.0f, -dir.x);
@@ -1021,11 +1021,11 @@ PikiFlickState::PikiFlickState()
  */
 void PikiFlickState::init(Piki* piki)
 {
-	mState               = 0;
-	mInitialAngle               = piki->mRotationAngle;
-	mRotationDelta               = 0.1f * (PI * gsys->getRand(1.0f));
+	mState            = 0;
+	mInitialAngle     = piki->mRotationAngle;
+	mRotationDelta    = 0.1f * (PI * gsys->getRand(1.0f));
 	piki->mVelocity.y = (50.0f * gsys->getRand(1.0f)) + 100.0f;
-	mStrength               = piki->mFlickIntensity * 0.1f * gsys->getRand(1.0f) + piki->mFlickIntensity;
+	mStrength         = piki->mFlickIntensity * 0.1f * gsys->getRand(1.0f) + piki->mFlickIntensity;
 	piki->mActiveAction->resume();
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
@@ -1083,10 +1083,10 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			break;
 		}
 		if (mState == 1) {
-			mState     = 2;
-			f32 min = C_PIKI_PROP(piki)._32C();
-			f32 max = C_PIKI_PROP(piki)._31C();
-			mGetUpTimer     = (max - min) * gsys->getRand(1.0f) + min;
+			mState      = 2;
+			f32 min     = C_PIKI_PROP(piki)._32C();
+			f32 max     = C_PIKI_PROP(piki)._31C();
+			mGetUpTimer = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
 				transit(piki, PIKISTATE_Dead);
@@ -1164,9 +1164,9 @@ PikiFlownState::PikiFlownState()
  */
 void PikiFlownState::init(Piki* piki)
 {
-	mState = 0;
-	mInitialAngle = atan2f(piki->mVelocity.x, piki->mVelocity.z);
-	mRotationDelta = 0.1f * (PI * gsys->getRand(1.0f));
+	mState          = 0;
+	mInitialAngle   = atan2f(piki->mVelocity.x, piki->mVelocity.z);
+	mRotationDelta  = 0.1f * (PI * gsys->getRand(1.0f));
 	mFlickIntensity = 0.1f * piki->mFlickIntensity * gsys->getRand(1.0f) + piki->mFlickIntensity;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JHit, piki), PaniMotionInfo(PIKIANIM_JHit));
 }
@@ -1228,7 +1228,7 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
 		if (mState == 1) {
-			mState     = 2;
+			mState  = 2;
 			f32 min = C_PIKI_PROP(piki)._32C();
 			f32 max = C_PIKI_PROP(piki)._31C();
 			_10     = (max - min) * gsys->getRand(1.0f) + min;
@@ -1469,7 +1469,7 @@ PikiCliffState::PikiCliffState()
  */
 void PikiCliffState::init(Piki* piki)
 {
-	mInitialVelocity       = piki->mVelocity;
+	mInitialVelocity = piki->mVelocity;
 
 	f32 speed = mInitialVelocity.normalise();
 	if (speed < 1.0f) {
@@ -1560,7 +1560,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 				return;
 			}
 
-			mState = 1;
+			mState       = 1;
 			mLoopCounter = int((2.0f * gsys->getRand(1.0f))) + 1;
 			PRINT("otikake motion start\n");
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Otikake, piki), PaniMotionInfo(PIKIANIM_Otikake));
@@ -1600,7 +1600,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 						PRINT("dist is %.1f ( radius=%f : centresize=%f\n", dist, piki->mCollisionRadius, piki->getCentreSize());
 						if (dist > -0.2f && dist < 3.0f) {
 							PRINT("piki%x : ####### start buran motion :: floor = %s\n", piki, piki->mGroundTriangle ? "on floor" : "air");
-							mState = 2;
+							mState       = 2;
 							mLoopCounter = int((2.0f * gsys->getRand(1.0f))) + 2;
 							break;
 						}
@@ -1841,7 +1841,7 @@ void PikiEmitState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_WaveJmp, piki), PaniMotionInfo(PIKIANIM_WaveJmp));
 	piki->stopAI();
 	piki->mHasCollChangedVelocity = 0;
-	mHasLanded                           = 1;
+	mHasLanded                    = 1;
 }
 
 /*
@@ -1943,10 +1943,10 @@ void PikiFlyingState::init(Piki* piki)
 	piki->mHasCollChangedVelocity = 0;
 	SeSystem::playPlayerSe(SE_PIKI_FLY);
 	piki->mWantToStick = true;
-	mIsFlowerGliding                = 0;
+	mIsFlowerGliding   = 0;
 	mSparkleEffect.init(piki->mPosition, EffectMgr::EFF_SD_Sparkle);
 	mGroundTouchFrames = 0;
-	mHasBounced = 0;
+	mHasBounced        = 0;
 }
 
 /*
@@ -1986,25 +1986,25 @@ void PikiFlyingState::exec(Piki* piki)
 			val4 = C_NAVI_PROP(piki->mNavi)._17C();
 		}
 
-		f32 val5 = (speedy_sqrtf(val3 * val3 + 2.0f * val4 * val2) + -val3) / val2;
-		f32 val6 = C_NAVI_PROP(piki->mNavi)._1AC() * 0.5f;
-		f32 val7 = val6 / val5;
-		mHorizontalDirection.x    = piki->mVelocity.x;
-		mHorizontalDirection.y    = 0.0f;
-		mHorizontalDirection.z    = piki->mVelocity.z;
+		f32 val5               = (speedy_sqrtf(val3 * val3 + 2.0f * val4 * val2) + -val3) / val2;
+		f32 val6               = C_NAVI_PROP(piki->mNavi)._1AC() * 0.5f;
+		f32 val7               = val6 / val5;
+		mHorizontalDirection.x = piki->mVelocity.x;
+		mHorizontalDirection.y = 0.0f;
+		mHorizontalDirection.z = piki->mVelocity.z;
 		mHorizontalDirection.normalise();
-		f32 hSpeed = speedy_sqrtf(piki->mVelocity.x * piki->mVelocity.x + piki->mVelocity.z * piki->mVelocity.z);
-		mInitialHorizontalSpeed      = hSpeed;
-		f32 halfHorizSpeed = hSpeed * 0.5f;
-		mTargetHorizontalSpeed      = halfHorizSpeed;
-		val5     = ((hSpeed * val6) - (hSpeed - (hSpeed - halfHorizSpeed) * 0.5f - halfHorizSpeed) * 0.15f) / halfHorizSpeed;
+		f32 hSpeed              = speedy_sqrtf(piki->mVelocity.x * piki->mVelocity.x + piki->mVelocity.z * piki->mVelocity.z);
+		mInitialHorizontalSpeed = hSpeed;
+		f32 halfHorizSpeed      = hSpeed * 0.5f;
+		mTargetHorizontalSpeed  = halfHorizSpeed;
+		val5                    = ((hSpeed * val6) - (hSpeed - (hSpeed - halfHorizSpeed) * 0.5f - halfHorizSpeed) * 0.15f) / halfHorizSpeed;
 		piki->mVelocity.x *= val7;
 		piki->mVelocity.z *= val7;
 		piki->mTargetVelocity.x = piki->mVelocity.x;
 		piki->mTargetVelocity.z = piki->mVelocity.z;
 		piki->mVelocity.y       = 0.0f;
 		piki->mTargetVelocity.y = 0.0f;
-		mGlideTimer                     = 0.0f;
+		mGlideTimer             = 0.0f;
 		return;
 	}
 
@@ -2669,7 +2669,7 @@ void PikiPushPikiState::init(Piki* piki)
 {
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Push, piki), PaniMotionInfo(PIKIANIM_Push));
 	mCollisionFrameCount = 1;
-	mIsFinishing = 0;
+	mIsFinishing         = 0;
 }
 
 /*
@@ -2738,8 +2738,8 @@ void PikiPushPikiState::procCollideMsg(Piki* piki, MsgCollide* msg)
 		if (other->getState() == PIKISTATE_Push) {
 			Vector3f pos(other->mPushTargetPos);
 			piki->mFaceDirection = other->mFaceDirection;
-			piki->mPushTargetPos           = pos;
-			mCollisionFrameCount                  = 1;
+			piki->mPushTargetPos = pos;
+			mCollisionFrameCount = 1;
 		}
 	}
 }
@@ -3109,7 +3109,7 @@ PikiPressedState::PikiPressedState()
 void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider->mObjType == OBJTYPE_Teki) {
-		mStunTimer = 1.5f;
+		mStunTimer    = 1.5f;
 		mIsInvincible = 1;
 	}
 }
@@ -3123,7 +3123,7 @@ void PikiPressedState::init(Piki* piki)
 {
 	f32 scale = 2.0f * C_PIKI_PROP(piki).mPikiDisplayScale();
 	piki->mScale.set(scale, 0.01f, scale);
-	mStunTimer = 1.5f;
+	mStunTimer    = 1.5f;
 	mIsInvincible = 1;
 	PRINT("pressed init !\n");
 }

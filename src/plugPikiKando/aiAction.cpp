@@ -261,12 +261,12 @@ TopAction::TopAction(Piki* piki)
 	memStat->start("topaction");
 
 	mListener    = new MotionListener(this);
-	mTarget          = 0;
+	mTarget      = 0;
 	_24          = -1;
 	_2C          = 1.0f;
 	_28          = 0;
 	mIsSuspended = false;
-	mIsAnimating          = 0;
+	mIsAnimating = 0;
 	mName        = "top action";
 
 	setChildren(PikiAction::COUNT, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr,
@@ -301,10 +301,10 @@ void TopAction::init(Creature* creature)
 {
 	mCurrActionIdx = 0;
 	mChildActions[mCurrActionIdx].initialise(creature);
-	mTarget          = nullptr;
+	mTarget      = nullptr;
 	_2C          = 1.0f;
 	_28          = 0;
-	mIsAnimating          = 0;
+	mIsAnimating = 0;
 	mIsSuspended = false;
 }
 
@@ -356,7 +356,7 @@ int TopAction::exec()
 
 		mChildActions[mCurrActionIdx].mAction->cleanup();
 
-		mTarget            = nullptr;
+		mTarget        = nullptr;
 		mCurrActionIdx = PikiAction::NOACTION;
 		_2C            = 1.0f;
 		if (mPiki->mMode != PikiMode::FreeMode) {
@@ -453,7 +453,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	mCurrActionIdx = -1;
 	_28            = 0;
 	_24            = 0;
-	mTarget            = nullptr;
+	mTarget        = nullptr;
 	mIsSuspended   = false;
 }
 

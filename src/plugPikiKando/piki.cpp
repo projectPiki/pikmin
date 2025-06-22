@@ -2314,7 +2314,7 @@ Piki::Piki(CreatureProp* prop)
 	_68              = 1;
 	mPanickedEffect  = new PermanentEffect();
 	mIsPanicked      = false;
-	mPushTargetPiki             = 0;
+	mPushTargetPiki  = 0;
 	mCurrentState    = nullptr;
 	mCollisionRadius = 8.0f;
 	mNavi            = nullptr;
