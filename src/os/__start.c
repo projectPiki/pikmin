@@ -2,6 +2,7 @@
 
 #pragma section code_type ".init"
 
+#if defined(VERSION_G98E01_PIKIDEMO)
 static void __check_pad3(void)
 {
 	if ((Pad3Button & 0x0eef) == 0x0eef) {
@@ -9,6 +10,7 @@ static void __check_pad3(void)
 	}
 	return;
 }
+#endif
 
 WEAKFUNC ASM void __start(void)
 {

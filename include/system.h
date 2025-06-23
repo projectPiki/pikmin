@@ -341,12 +341,14 @@ struct System : public StdSystem {
 	bool hasDebugInfo();
 	static void halt(char* file, int line, char* message)
 	{
-		// char buffer[2048];
-		// sprintf(buffer, "%s\n\nClick OK to quit now !", message);
-		// MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
-		// exit(0); // Failure!
-
+#if 0 // DLL's version
+		char buffer[2048];
+		sprintf(buffer, "%s\n\nClick OK to quit now !", message);
+		MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
+		exit(0); // Failure!
+#else
 		OSPanic(file, line, message);
+#endif
 	}
 
 	static void* alloc(size_t);
@@ -384,6 +386,9 @@ struct System : public StdSystem {
 	u32 mIsCardSaving;                               // _270
 	OSThread* mCurrentThread;                        // _274
 	AtxRouter* mAtxRouter;                           // _278
+#if defined(VERSION_G98E01_PIKIDEMO)                 //
+	u8 _27C[0x280 - 0x27C];                          // _27C, TODO: Confirm where this member actually is.
+#endif                                               //
 	ControllerMgr mControllerMgr;                    // _27C
 	u32 mPrevTick;                                   // _280
 	u32 mFpsSampleStart;                             // _284
