@@ -41,18 +41,14 @@ struct Timers {
 
 	void start(char* name, bool p2)
 	{
-#ifdef __MWERKS__
-		;
-#else
+#if defined(VERSION_G98E01_PIKIDEMO)
 		_start(name, p2);
 #endif
 	}
 
 	void stop(char* name)
 	{
-#ifdef __MWERKS__
-		;
-#else
+#if defined(VERSION_G98E01_PIKIDEMO)
 		_stop(name);
 #endif
 	}
