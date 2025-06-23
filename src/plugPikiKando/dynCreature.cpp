@@ -556,7 +556,10 @@ void DynCreature::refresh(Graphics& gfx)
  */
 void DynCreature::doKill()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	releaseAllParticles();
+#endif
 }
 
 /*

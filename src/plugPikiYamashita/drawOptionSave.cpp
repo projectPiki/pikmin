@@ -189,16 +189,28 @@ void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 		break;
 
 	case MODE_Saving:
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(SE_PIKI_DAMAGED);
+#else
 		SeSystem::playSysSe(SYSSE_CARDACCESS);
+#endif
 		break;
 
 	case MODE_SaveFail:
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(SE_WALL_HIT);
+#else
 		SeSystem::playSysSe(SYSSE_CARDERROR);
+#endif
 		mSaveMes.saveError();
 		break;
 
 	case MODE_SaveOK:
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(SE_PIKI_PRESSED);
+#else
 		SeSystem::playSysSe(SYSSE_CARDOK);
+#endif
 		mSaveMes.saveFinish();
 		break;
 

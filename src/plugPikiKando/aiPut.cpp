@@ -63,7 +63,12 @@ ActPutBomb::ActPutBomb(Piki* piki)
  */
 void ActPutBomb::findTeki()
 {
-	if (!tekiMgr) {
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01)
+	if (!tekiMgr)
+#else
+	if (!tekiMgr || !bossMgr)
+#endif
+	{
 		mTarget = nullptr;
 		return;
 	}
@@ -427,9 +432,13 @@ int ActPutBomb::exePut()
 int ActPutBomb::exec()
 {
 	if (mTouchedPlayer) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
+#else
 		if (mPiki->getState() != PIKISTATE_LookAt) {
 			mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
 		}
+#endif
 		return ACTOUT_Continue;
 	}
 

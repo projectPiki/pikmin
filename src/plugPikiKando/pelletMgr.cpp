@@ -1008,7 +1008,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
 		mPosition = mSpawnPosition;
 	}
-#if defined(VERSION_GPIE01_00)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_G98E01_PIKIDEMO)
 	// This isn't in the USA versions' DLL, meaning that DLL is based on rev 0 instead of rev 1 (it was not recompiled between revisions).
 #else
 	else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
@@ -1371,11 +1371,19 @@ void Pellet::update()
 		mVelocity.z = mVelocity.z - mVelocity.z * rate;
 	}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	isNan(mPosition.x);
+	mStateMachine->exec(this);
+	isNan(mPosition.x);
+	DualCreature::update();
+	isNan(mPosition.x);
+#else
 	// removed nan check here
 	mStateMachine->exec(this);
 	// removed nan check here
 	DualCreature::update();
 	// removed nan check here
+#endif
 
 	if (mGroundTriangle && isDynFlag(1)) {
 		mVelocity = mVelocity - mVelocity * 2.0f * gsys->getFrameTime();

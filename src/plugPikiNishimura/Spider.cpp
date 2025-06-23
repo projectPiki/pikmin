@@ -63,7 +63,10 @@ f32 Spider::getiMass()
 void Spider::init(Vector3f&)
 {
 	mCollisionRadius = 64.0f;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	setInvincible(1);
+#endif
 	setIsOrganic(0);
 	mIsBossBgm            = false;
 	_3B9                  = 1;

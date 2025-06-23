@@ -177,11 +177,19 @@ bool zen::DrawSaveMes::update(Controller* controller)
 
 	case MODE_Unk1:
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			SeSystem::playSysSe(SE_CHAPPY_WALK);
+#else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
+#endif
 			setMode(MODE_Unk2);
 		}
 		if (controller->keyClick(KBBTN_B)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			SeSystem::playSysSe(SE_FLOG_HIJUMP);
+#else
 			SeSystem::playSysSe(SYSSE_CANCEL);
+#endif
 			setMode(MODE_Unk5);
 		} else {
 			_04 += gsys->getFrameTime();

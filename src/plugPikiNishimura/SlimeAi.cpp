@@ -983,9 +983,12 @@ void SlimeAi::initWalk(int nextState)
 	mSlime->setNextState(nextState);
 	mSlime->setMotionFinish(false);
 	mSlime->setTargetCreature(nullptr);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	if (mSlime->mSeContext) {
 		mSlime->mSeContext->playSound(SE_SLIME_WALK);
 	}
+#endif
 }
 
 /*

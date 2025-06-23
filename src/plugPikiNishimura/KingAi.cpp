@@ -150,12 +150,15 @@ void KingAi::keyAction0()
 		cameraMgr->startVibrationEvent(2, mKing->mPosition);
 		break;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	case KINGAI_Appear:
 		if (!mKing->needShadow()) {
 			mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
 			mKing->setShadowNeed(true);
 		}
 		break;
+#endif
 	}
 }
 
