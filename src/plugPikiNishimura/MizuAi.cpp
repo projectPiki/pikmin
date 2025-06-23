@@ -271,6 +271,8 @@ void MizuAi::readyState()
 			}
 		}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		if (mMizu->getAttackTimer() > 3.0f) {
 			mMizu->setAttackTimer(0.0f);
 			if (mMizu->mSeContext) {
@@ -279,6 +281,7 @@ void MizuAi::readyState()
 		} else {
 			mMizu->addAttackTimer(gsys->getFrameTime());
 		}
+#endif
 	}
 }
 

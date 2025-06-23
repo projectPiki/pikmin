@@ -650,12 +650,20 @@ void ViewPiki::refresh(Graphics& gfx)
 	mPikiShape->mShape->updateAnim(gfx, mtx, nullptr);
 
 	if ((AIPerf::useLOD && _528 < 1200.0f && aiCullable()) || !AIPerf::useLOD) {
-		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed && mMode != PikiMode::ExitMode) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed)
+#else
+		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed && mMode != PikiMode::ExitMode)
+#endif
+		{
 			updateLook();
 
-			Matrix4f animMtx1   = mPikiShape->mShape->getAnimMatrix(2);
+			Matrix4f animMtx1 = mPikiShape->mShape->getAnimMatrix(2);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 			animMtx1.mMtx[3][0] = animMtx1.mMtx[3][1] = animMtx1.mMtx[3][2] = 0.0f;
 			animMtx1.mMtx[3][3]                                             = 1.0f;
+#endif
 
 			Matrix4f mtx2;
 			Matrix4f mtx3;
@@ -685,9 +693,12 @@ void ViewPiki::refresh(Graphics& gfx)
 			mPikiShape->mShape->getAnimMatrix(2) = mtx3;
 
 			for (int j = 3; j <= 6; j++) {
-				Matrix4f animMtx   = mPikiShape->mShape->getAnimMatrix(j);
+				Matrix4f animMtx = mPikiShape->mShape->getAnimMatrix(j);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 				animMtx.mMtx[3][0] = animMtx.mMtx[3][1] = animMtx.mMtx[3][2] = 0.0f;
 				animMtx.mMtx[3][3]                                           = 1.0f;
+#endif
 
 				Matrix4f tmp1;
 				Matrix4f tmp2;

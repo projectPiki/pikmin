@@ -614,7 +614,11 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 		break;
 
 	case MODE_Challenge:
+#if defined(VERSION_G98E01_PIKIDEMO)
+		mModeScreenMgr = new DGIScreenMgr("screen/blo/ot_play.blo");
+#else
 		mModeScreenMgr = new DGIScreenMgr("screen/blo/play_cha.blo");
+#endif
 		break;
 
 	default:

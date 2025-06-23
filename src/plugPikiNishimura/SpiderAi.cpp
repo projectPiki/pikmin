@@ -342,7 +342,9 @@ bool SpiderAi::appearTransit()
 			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
 			    && qdist2(initPos->x, initPos->z, navi->mPosition.x, navi->mPosition.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
 
-				mSpider->mIsAppear  = true;
+				mSpider->mIsAppear = true;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 				mSpider->mIsBossBgm = true;
 
 				// Adjust drop timer for "easy mode" if any PikiHead is present
@@ -365,6 +367,7 @@ bool SpiderAi::appearTransit()
 				}
 
 				break;
+#endif
 			}
 		}
 	}
@@ -441,7 +444,10 @@ void SpiderAi::initAppear(int nextState)
 {
 	mSpider->setNextState(nextState);
 	mSpider->setMotionFinish(false);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	mSpider->mIsBossBgm = true;
+#endif
 	mSpider->setInvincible(false);
 	mSpider->setIsOrganic(true);
 	mSpider->setAnimTimer(30.0f);
