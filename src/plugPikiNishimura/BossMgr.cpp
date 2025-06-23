@@ -637,11 +637,11 @@ void BossMgr::init(int bossID, int count)
  * Address:	801513E4
  * Size:	000DB4
  */
-Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
+Creature* BossMgr::create(int genBossID, BirthInfo& birthInfo, GenObjectBoss* genBoss)
 {
 	Boss* boss = nullptr;
-	switch (bossID) {
-	case BOSS_Spider:
+	switch (genBossID) {
+	case GENBOSS_Spider:
 		boss = createBoss(BOSS_Spider);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Spider);
@@ -650,7 +650,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_Snake:
+	case GENBOSS_Snake:
 		boss = createBoss(BOSS_Snake);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Snake);
@@ -659,7 +659,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_BoxSnakeMake:
+	case GENBOSS_BoxSnake:
 		boss = createBoss(BOSS_BoxSnake);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Snake);
@@ -669,7 +669,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_Slime:
+	case GENBOSS_Slime:
 		boss = createBoss(BOSS_Slime);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Slime);
@@ -691,7 +691,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_King:
+	case GENBOSS_King:
 		boss = createBoss(BOSS_King);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_King);
@@ -700,7 +700,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_Kogane:
+	case GENBOSS_Kogane:
 		boss = createBoss(BOSS_Kogane);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Kogane);
@@ -709,7 +709,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_Pom:
+	case GENBOSS_Pom:
 		if (playerState->hasContainer(genBoss->mItemColour)) {
 			boss = createBoss(BOSS_Pom);
 			if (boss) {
@@ -721,7 +721,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_KingBack:
+	case GENBOSS_KingBack:
 		boss = createBoss(BOSS_KingBack);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_KingBack);
@@ -730,7 +730,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 		}
 		break;
 
-	case BOSS_MizuMake:
+	case GENBOSS_Mizu:
 		boss = createBoss(BOSS_Mizu);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Mizu);
@@ -738,7 +738,7 @@ Creature* BossMgr::create(int bossID, BirthInfo& birthInfo, GenObjectBoss* genBo
 			setBossParam(boss, genBoss);
 		}
 		break;
-	case BOSS_GeyzerMake:
+	case GENBOSS_Geyzer:
 		boss = createBoss(BOSS_Geyzer);
 		if (boss) {
 			boss->initBoss(birthInfo, OBJTYPE_Mizu);
