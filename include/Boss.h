@@ -20,8 +20,6 @@ struct GenObjectBoss;
 
 /**
  * @brief TODO
- *
- * @note This needs fixing still.
  */
 enum BossID {
 	BOSS_IDSTART     = 0,
@@ -38,11 +36,22 @@ enum BossID {
 	BOSS_Mizu        = 10,
 	BOSS_Geyzer      = 11,
 	BOSS_IDCOUNT, // 12
+};
 
-	// when processing IDs, some bosses use different IDs, idk.
-	BOSS_BoxSnakeMake = 7, // create, createBoss
-	BOSS_MizuMake     = 8, // create
-	BOSS_GeyzerMake   = 9, // create
+/**
+ * @brief `GenObjectBoss` uses different IDs from the BossMgr.  CoreNucleus and Nucleus are skipped.
+ */
+enum GenBossID {
+	GENBOSS_Spider   = 0,
+	GENBOSS_Snake    = 1,
+	GENBOSS_Slime    = 2,
+	GENBOSS_King     = 3,
+	GENBOSS_Kogane   = 4,
+	GENBOSS_Pom      = 5,
+	GENBOSS_KingBack = 6,
+	GENBOSS_BoxSnake = 7,
+	GENBOSS_Mizu     = 8,
+	GENBOSS_Geyzer   = 9,
 };
 
 /**

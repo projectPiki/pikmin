@@ -158,45 +158,45 @@ void GenObjectBoss::writeParameters(RandomAccessStream& output)
  */
 void GenObjectBoss::updateUseList(Generator*, int count)
 {
-	if (mBossID == BOSS_Spider) {
+	if (mBossID == GENBOSS_Spider) {
 		bossMgr->addUseCount(BOSS_Spider, 1);
 		return;
 	}
-	if (mBossID == BOSS_Snake) {
+	if (mBossID == GENBOSS_Snake) {
 		bossMgr->addUseCount(BOSS_Snake, 1);
 		return;
 	}
-	if (mBossID == BOSS_Slime) {
+	if (mBossID == GENBOSS_Slime) {
 		bossMgr->addUseCount(BOSS_Slime, 1);
 		bossMgr->addUseCount(BOSS_Nucleus, 1);
 		bossMgr->addUseCount(BOSS_CoreNucleus, 1);
 		return;
 	}
-	if (mBossID == BOSS_King) {
+	if (mBossID == GENBOSS_King) {
 		bossMgr->addUseCount(BOSS_King, 1);
 		return;
 	}
-	if (mBossID == BOSS_Kogane) {
+	if (mBossID == GENBOSS_Kogane) {
 		bossMgr->addUseCount(BOSS_Kogane, count);
 		return;
 	}
-	if (mBossID == BOSS_Pom) {
+	if (mBossID == GENBOSS_Pom) {
 		bossMgr->addUseCount(BOSS_Pom, 1);
 		return;
 	}
-	if (mBossID == BOSS_KingBack) {
+	if (mBossID == GENBOSS_KingBack) {
 		bossMgr->addUseCount(BOSS_KingBack, 1);
 		return;
 	}
-	if (mBossID == BOSS_BoxSnakeMake) {
+	if (mBossID == GENBOSS_BoxSnake) {
 		bossMgr->addUseCount(BOSS_BoxSnake, 1);
 		return;
 	}
-	if (mBossID == BOSS_MizuMake) {
+	if (mBossID == GENBOSS_Mizu) {
 		bossMgr->addUseCount(BOSS_Mizu, 1);
 		return;
 	}
-	if (mBossID == BOSS_GeyzerMake) {
+	if (mBossID == GENBOSS_Geyzer) {
 		bossMgr->addUseCount(BOSS_Geyzer, 1);
 		return;
 	}
@@ -210,26 +210,26 @@ void GenObjectBoss::updateUseList(Generator*, int count)
 Creature* GenObjectBoss::birth(BirthInfo& info)
 {
 	Creature* boss = nullptr;
-	if (mBossID == BOSS_Spider) {
-		boss = bossMgr->create(BOSS_Spider, info, this);
-	} else if (mBossID == BOSS_Snake) {
-		boss = bossMgr->create(BOSS_Snake, info, this);
-	} else if (mBossID == BOSS_Slime) {
-		boss = bossMgr->create(BOSS_Slime, info, this);
-	} else if (mBossID == BOSS_King) {
-		boss = bossMgr->create(BOSS_King, info, this);
-	} else if (mBossID == BOSS_Kogane) {
-		boss = bossMgr->create(BOSS_Kogane, info, this);
-	} else if (mBossID == BOSS_Pom) {
-		boss = bossMgr->create(BOSS_Pom, info, this);
-	} else if (mBossID == BOSS_KingBack) {
-		boss = bossMgr->create(BOSS_KingBack, info, this);
-	} else if (mBossID == BOSS_BoxSnakeMake) {
-		boss = bossMgr->create(BOSS_BoxSnakeMake, info, this);
-	} else if (mBossID == BOSS_MizuMake) {
-		boss = bossMgr->create(BOSS_MizuMake, info, this);
-	} else if (mBossID == BOSS_GeyzerMake) {
-		boss = bossMgr->create(BOSS_GeyzerMake, info, this);
+	if (mBossID == GENBOSS_Spider) {
+		boss = bossMgr->create(GENBOSS_Spider, info, this);
+	} else if (mBossID == GENBOSS_Snake) {
+		boss = bossMgr->create(GENBOSS_Snake, info, this);
+	} else if (mBossID == GENBOSS_Slime) {
+		boss = bossMgr->create(GENBOSS_Slime, info, this);
+	} else if (mBossID == GENBOSS_King) {
+		boss = bossMgr->create(GENBOSS_King, info, this);
+	} else if (mBossID == GENBOSS_Kogane) {
+		boss = bossMgr->create(GENBOSS_Kogane, info, this);
+	} else if (mBossID == GENBOSS_Pom) {
+		boss = bossMgr->create(GENBOSS_Pom, info, this);
+	} else if (mBossID == GENBOSS_KingBack) {
+		boss = bossMgr->create(GENBOSS_KingBack, info, this);
+	} else if (mBossID == GENBOSS_BoxSnake) {
+		boss = bossMgr->create(GENBOSS_BoxSnake, info, this);
+	} else if (mBossID == GENBOSS_Mizu) {
+		boss = bossMgr->create(GENBOSS_Mizu, info, this);
+	} else if (mBossID == GENBOSS_Geyzer) {
+		boss = bossMgr->create(GENBOSS_Geyzer, info, this);
 	}
 
 	return boss;
