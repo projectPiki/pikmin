@@ -43,6 +43,9 @@ struct __GXData_struct {
 	// total size: 0x4F4
 	unsigned short vNum;                                      // offset 0x0, size 0x2
 	unsigned short bpSent;                                    // offset 0x2, size 0x2
+#if defined(VERSION_GPIP01_00)                                //
+	u8 _04[0x08 - 0x04];                                      // _04, TODO: Confirm where this member actually is.
+#endif                                                        //
 	unsigned long vLim;                                       // offset 0x4, size 0x4
 	unsigned long cpEnable;                                   // offset 0x8, size 0x4
 	unsigned long cpStatus;                                   // offset 0xC, size 0x4

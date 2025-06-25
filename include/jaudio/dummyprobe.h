@@ -10,6 +10,7 @@ extern "C" {
 //////////// JAUDIO DUMMY PROBE FUNCTIONS ////////////
 void Probe_Start(s32 id, const char* label);
 void Probe_Finish(s32 id);
+void Console_printf(char*, ...);
 
 ///////////////////////////////////////////////////////
 

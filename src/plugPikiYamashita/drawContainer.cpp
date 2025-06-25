@@ -55,7 +55,11 @@ zen::DrawContainer::DrawContainer()
 	mZenController.setContPtr(mController);
 
 	mPerspGraph = new P2DPerspGraph(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
+#if defined(VERSION_GPIP01_00)
+	mScreen.set("screen/blo/conmix.blo", true);
+#else
 	mScreen.set("screen/blo/con01.blo", true);
+#endif
 	mMessageMgr    = new MessageMgr(mScreen);
 	mWindowPaneMgr = new WindowPaneMgr(mScreen.search('pall', true));
 	mMarkerPicture = (P2DPicture*)mScreen.search('maru', true);
