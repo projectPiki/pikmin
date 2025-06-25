@@ -351,7 +351,7 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 		break;
 	}
 
-	gx->bpSent = 1;
+	gx->bpSent = 0;
 }
 
 /*
