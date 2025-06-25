@@ -968,7 +968,7 @@ config.libs = [
             Object(Matching, "gx/GXStubs.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO"), "gx/GXDisplayList.c"),
             Object(not MatchingFor("G98E01_PIKIDEMO"), "gx/GXTransform.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "gx/GXPerf.c"),
+            Object(not MatchingFor("GPIP01_00"), "gx/GXPerf.c"),
         ]
     ),
     {
