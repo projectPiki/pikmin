@@ -16,9 +16,6 @@ sysBootup.cpp:
 	.text       start:0x800055C0 end:0x80005660
 	.data       start:0x80224BC0 end:0x80224BE0
 
-os/__start.c:
-	.init       start:0x80003100 end:0x80003330
-
 jaudio/dummyprobe.c:
 	.text       start:0x80005660 end:0x80005700
 
@@ -2611,6 +2608,9 @@ os/OSTime.c:
 	.text       start:0x801FA638 end:0x801FAA5C
 	.data       start:0x802EAA80 end:0x802EAAE0
 
+os/__start.c:
+	.init       start:0x80003100 end:0x80003330
+
 os/__ppc_eabi_init.cpp:
 	.init       start:0x80003330 end:0x80003384
 	.text       start:0x801FAA5C end:0x801FAAF0
@@ -2851,6 +2851,9 @@ gx/GXPerf.c:
 	.text       start:0x80215D50 end:0x802165F8
 	.data       start:0x802EBC58 end:0x802EBD48
 
+MSL_C/PPCEABI/bare/H/ansi_files.c:
+	.data       start:0x802EBD48 end:0x802EBE20
+
 Runtime/PPCEABI/H/__va_arg.c:
 	.text       start:0x802165F8 end:0x802166EC
 
@@ -2858,9 +2861,6 @@ Runtime/PPCEABI/H/global_destructor_chain.c:
 	.text       start:0x802166EC end:0x8021674C
 	.dtors      start:0x80223D68 end:0x80223D6C
 	.sbss       start:0x803ED0B0 end:0x803ED0B8
-
-Runtime/PPCEABI/H/__mem.c:
-	.init       start:0x80003384 end:0x800034C8
 
 Runtime/PPCEABI/H/CPlusLibPPC.cp:
 	.text       start:0x8021674C end:0x8021677C
@@ -2887,9 +2887,6 @@ Runtime/PPCEABI/H/__init_cpp_exceptions.cpp:
 	.ctors      start:0x80223D00 end:0x80223D04
 	.dtors      start:0x80223D60 end:0x80223D68
 	.sdata      start:0x803EC680 end:0x803EC688
-
-MSL_C/PPCEABI/bare/H/ansi_files.c:
-	.data       start:0x802EBD48 end:0x802EBE20
 
 MSL_C/PPCEABI/bare/H/abort_exit.c:
 	.text       start:0x802172C4 end:0x802173D0
@@ -3081,6 +3078,9 @@ TRK_MINNOW_DOLPHIN/notify.c:
 
 TRK_MINNOW_DOLPHIN/flush_cache.c:
 	.text       start:0x80220510 end:0x80220548
+
+Runtime/PPCEABI/H/__mem.c:
+	.init       start:0x80003384 end:0x800034C8
 
 TRK_MINNOW_DOLPHIN/mem_TRK.c:
 	.init       start:0x800034C8 end:0x8000351C

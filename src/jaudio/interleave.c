@@ -48,7 +48,6 @@ BOOL Jac_CheckStreamRemain(u32 size)
  * --INFO--
  * Address:	........
  * Size:	00000C
- * Note: Unused in the final game but easy to guess at its contents
  */
 u32 Jac_GetStreamRemain()
 {
