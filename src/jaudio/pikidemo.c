@@ -36,7 +36,7 @@ u32 demo_end_delay;
 static CmdQueue demo_q;
 
 // table for which parts play the sparkle sound on collect
-static u8 parts_bright_table[MAX_UFO_PARTS] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+static u8 parts_bright_table[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 typedef struct DemoStatus {
 	u8 mPlayStartSound; // _00, Whether to play system sound when cutscene starts (0=no, 1=yes)

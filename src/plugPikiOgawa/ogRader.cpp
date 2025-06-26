@@ -2,6 +2,7 @@
 #include "zen/ogSub.h"
 #include "P2D/Screen.h"
 #include "P2D/Graph.h"
+#include "jaudio/verysimple.h"
 #include "FlowController.h"
 #include "NaviMgr.h"
 #include "GoalItem.h"
@@ -76,12 +77,16 @@ zen::ogRaderMgr::ogRaderMgr()
 	P2DScreen* screen = new P2DScreen;
 
 	PRINT("----- RADER MAP (%d) -----\n", flowCont.mCurrentStage->mStageID);
+#if defined(VERSION_G98E01_PIKIDEMO)
+	switch (flowCont.mCurrentStage->mStageID) {
+#else
 	s16 stage = flowCont.mCurrentStage->mStageID;
 	_24       = map_area_data[stage][0];
 	_28       = map_area_data[stage][1];
 	_2C       = map_area_data[stage][2];
 
 	switch (stage) {
+#endif
 	case 0:
 		_54 = 0;
 		screen->set("screen/blo/p_map00.blo", true);
@@ -177,6 +182,12 @@ zen::ogRaderMgr::ogRaderMgr()
 	_420 = _4C;
 	_420->setOffset(0, 0);
 	_424->setOffset(0, 0);
+#if defined(VERSION_G98E01_PIKIDEMO)
+	_24demo[0].set(-150.0f, 0.0f, -160.0f);
+	_24demo[1].set(150.0f, 0.0f, -160.0f);
+	_24demo[2].set(150.0f, 0.0f, 160.0f);
+	_24demo[3].set(-150.0f, 0.0f, 160.0f);
+#endif
 	_458 = 0;
 	_420->setAlpha(_458);
 	white.set(128, 128, 255, 255);
@@ -305,11 +316,15 @@ void zen::ogRaderMgr::getRocketPos()
 		return;
 	}
 #endif
-	Vector3f pos = ufo->getPosition();
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	_7C->hide();
+#else
+	Vector3f pos  = ufo->getPosition();
 	Vector3f disp = ogCalcDispXZ(pos);
 	_7C->move(disp.x, disp.z);
 	_7C->setScale(10.0f / _428);
+#endif
 }
 
 /*
@@ -531,6 +546,8 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 	chaseRaderScale(_42C);
 }
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 /*
  * --INFO--
  * Address:	80186B08
@@ -558,6 +575,7 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 		_00 = 0;
 	}
 }
+#endif
 
 /*
  * --INFO--
@@ -566,59 +584,150 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
  */
 void zen::ogRaderMgr::updateMenu(Controller* input)
 {
-	if (mStatus != -1) {
-		f32 x = _428;
-		f32 y = input->getSubStickY();
-		if (y > 0.3f) {
-			x *= 1.1f;
-			if (x > 10.0f) {
-				x = 10.0f;
-				seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
-				_01 = 0;
-			} else if (!_01) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+	if (mStatus == -1) {
+		return;
+	}
+#endif
+	f32 x = _428;
+	f32 y = input->getSubStickY();
+	if (y > 0.3f) {
+		x *= 1.1f;
+		if (x > 10.0f) {
+			x = 10.0f;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
+			_01 = false;
+#endif
+		} else {
+			if (!_01) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+				seSystem->playSysSe(JACSYS_MenuZoomIn);
+			}
+			_01 = true;
+#else
 				seSystem->playSysSe(SYSSE_YMENU_ZOOMIN);
 				_01 = true;
 			}
-		} else if (y < -0.3f) {
-			x *= 0.9f;
-			if (x < 1.0f) {
-				x = 1.0f;
-				seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
-				_02 = 0;
-			} else if (!_02) {
+#endif
+		}
+	} else if (y < -0.3f) {
+		x *= 0.9f;
+		if (x < 1.0f) {
+			x = 1.0f;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
+			_02 = false;
+#endif
+		} else {
+			if (!_02) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+				seSystem->playSysSe(JACSYS_MenuZoomOut);
+			}
+			_02 = true;
+#else
 				seSystem->playSysSe(SYSSE_YMENU_ZOOMOUT);
 				_02 = true;
 			}
+#endif
 		}
+	}
 
-		f32 c = cosf(_454);
-		f32 s = sinf(_454);
-		if (input->keyDown(KBBTN_MSTICK_UP)) {
-			AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
-		} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
-			AreaScroll(&_34, &_38, s * 20.0f, c * 20.0f);
+	f32 c = cosf(_454);
+	f32 s = sinf(_454);
+	if (input->keyDown(KBBTN_MSTICK_UP)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (!_00) {
+			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
-		if (input->keyDown(KBBTN_MSTICK_LEFT)) {
-			AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
-		} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
-			AreaScroll(&_34, &_38, c * 20.0f, s * -20.0f);
+		_00 = 1;
+		_34 -= 20.0f * s;
+		_38 -= 20.0f * c;
+#else
+		AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
+#endif
+	} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (!_00) {
+			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
+		_00 = 1;
+		_34 += 20.0f * s;
+		_38 += 20.0f * c;
+#else
+		AreaScroll(&_34, &_38, s * 20.0f, c * 20.0f);
+#endif
+	}
+	if (input->keyDown(KBBTN_MSTICK_LEFT)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (!_00) {
+			seSystem->playSysSe(JACSYS_MenuScroll);
+		}
+		_00 = 1;
+		_34 -= 20.0f * c;
+		_38 += 20.0f * s;
+#else
+		AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
+#endif
+	} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (!_00) {
+			seSystem->playSysSe(JACSYS_MenuScroll);
+		}
+		_00 = 1;
+		_34 += 20.0f * c;
+		_38 -= 20.0f * s;
+#else
+		AreaScroll(&_34, &_38, c * 20.0f, s * -20.0f);
+#endif
+	}
 
-		if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
-			seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
-			_00 = false;
-		}
-		if (_01 && y < 0.2f) {
-			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
-			_01 = false;
-		}
-		if (_02 && y > -0.2f) {
-			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
-			_02 = false;
-		}
-		if (x != _428) {
-			setRaderScale(x);
-		}
+	if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		seSystem->stopSysSe(JACSYS_MenuScroll);
+#else
+		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
+#endif
+		_00 = false;
+	}
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (_01 && !(y < 0.2f)) {
+		seSystem->stopSysSe(JACSYS_MenuZoomIn);
+		_01 = false;
+	}
+	if (_02 && !(y > -0.2f)) {
+		seSystem->stopSysSe(JACSYS_MenuZoomOut);
+		_02 = false;
+	}
+	if (_34 < -4096.0f) {
+		_34 = -4096.0f;
+	}
+	if (_34 > 4096.0f) {
+		_34 = 4096.0f;
+	}
+	if (_38 < -4096.0f) {
+		_38 = -4096.0f;
+	}
+	if (_38 > 4096.0f) {
+		_38 = 4096.0f;
+	}
+#else
+	if (_01 && y < 0.2f) {
+		seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
+		_01 = false;
+	}
+	if (_02 && y > -0.2f) {
+		seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
+		_02 = false;
+	}
+#endif
+
+	if (x != _428) {
+		setRaderScale(x);
 	}
 }
 

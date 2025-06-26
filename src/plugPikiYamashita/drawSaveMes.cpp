@@ -3,6 +3,7 @@
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
 #include "nlib/Math.h"
+#include "jaudio/verysimple.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
 #include "DebugLog.h"
@@ -178,7 +179,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 	case MODE_Unk1:
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 #if defined(VERSION_G98E01_PIKIDEMO)
-			SeSystem::playSysSe(SE_CHAPPY_WALK);
+			SeSystem::playSysSe(JACSYS_Decide1);
 #else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
 #endif

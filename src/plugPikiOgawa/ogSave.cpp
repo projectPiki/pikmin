@@ -8,6 +8,7 @@
 #include "zen/ogMemChk.h"
 #include "zen/ogNitaku.h"
 #include "zen/ogSub.h"
+#include "jaudio/verysimple.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
 #include "gameflow.h"
@@ -34,8 +35,11 @@ DEFINE_PRINT("OgSaveSection")
  */
 zen::ogSaveMgr::ogSaveMgr()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	mFileChkSelected = 0;
-	mScreen          = new P2DScreen;
+#endif
+	mScreen = new P2DScreen;
 	mScreen->set("screen/blo/ac_save.blo", true, true, true);
 	mStatus = Inactive;
 
@@ -160,6 +164,9 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = Inactive;
 		return mStatus;
 	}
+#if defined(VERSION_G98E01_PIKIDEMO)
+	mFileChkSelected = 1;
+#endif
 
 	mBlackScreen->update();
 	bool savefail = mSaveFail->update(input);
@@ -177,26 +184,40 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mFileChkSelected                        = 0;
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
-		mStatus          = ExitSuccess;
+		mStatus = ExitSuccess;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		mFileChkSelected = 0;
+#endif
 		return mStatus;
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::ErrorOrCompleted) {
-		mStatus          = ExitFailure;
+		mStatus = ExitFailure;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		mFileChkSelected = 0;
+#endif
 		return mStatus;
 
 	} else if (fileChkSelRes != ogScrFileChkSelMgr::Null) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		mFileChkSelected = 0;
+#else
 		mFileChkSelected = 1;
+#endif
 		return mStatus;
 	}
 
 	zen::ogScrMemChkMgr::MemChkStatus memCheckRes = mMemCheckMgr->update(input);
 	if (memCheckRes == ogScrMemChkMgr::Finished) {
 		mFileChkSelMgr->startSave();
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		mFileChkSelected = 1;
-		mStatus          = PreparingSave;
-		mAnimTimer       = 0.0f;
+#endif
+		mStatus    = PreparingSave;
+		mAnimTimer = 0.0f;
+
 	} else if (memCheckRes == ogScrMemChkMgr::ExitSuccess) {
 		mStatus = ExitSuccess;
 		return mStatus;
@@ -205,9 +226,13 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = ExitFailure;
 		return mStatus;
 
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01)
 	} else if (memCheckRes != ogScrMemChkMgr::Inactive) {
 		return mStatus;
 	}
+#else
+	} else if (memCheckRes == ogScrMemChkMgr::Inactive) {
+#endif
 
 	mAnimTimer += gsys->getFrameTime();
 	mScreen->update();
@@ -231,7 +256,10 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mWindow1->setScale(t);
 			f32 alpha = f32(mSaveCenterTextBox->getAlpha() * t);
 			mBackPicture->setAlpha(alpha);
-			PRINT("SAVE FADEIN alpha = %d\n", (int)alpha);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+				PRINT("SAVE FADEIN alpha = %d\n", (int)alpha);
+#endif
 		}
 		break;
 
@@ -299,7 +327,11 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mStatus    = MainWindowFadeOut;
 			mAnimTimer = 0.0f;
 		} else if (nikatu1 == 4) {
-			seSystem->playSysSe(SYSSE_CANCEL);
+#if defined(VERSION_G98E01_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Cancel);
+#else
+				seSystem->playSysSe(SYSSE_CANCEL);
+#endif
 			mNextStatus = ExitFailure;
 			mStatus     = FadeOut;
 			mAnimTimer  = 0.0f;
@@ -316,14 +348,22 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		} else {
 			mStatus    = SavingInProgress;
 			mAnimTimer = 0.0f;
-			seSystem->playSysSe(SYSSE_CARDACCESS);
+#if defined(VERSION_G98E01_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_CardAccess);
+#else
+				seSystem->playSysSe(SYSSE_CARDACCESS);
+#endif
 			gameflow.mMemoryCard.saveCurrentGame();
 		}
 		break;
 
 	case SavingInProgress:
 		mNoticePane->setScale(1.0f);
-		seSystem->playSysSe(SYSSE_CARDOK);
+#if defined(VERSION_G98E01_PIKIDEMO)
+		seSystem->playSysSe(JACSYS_CardOK);
+#else
+			seSystem->playSysSe(SYSSE_CARDOK);
+#endif
 		if (gameflow.mMemoryCard.didSaveFail()) {
 			mSaveFail->open(1.0f);
 			mNextStatus = ExitFailure;
@@ -379,7 +419,11 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mStatus     = SecondaryWindowFadeOut;
 			mAnimTimer  = 0.0f;
 		} else if (nikatu2 == 4) {
-			seSystem->playSysSe(SYSSE_CANCEL);
+#if defined(VERSION_G98E01_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Cancel);
+#else
+				seSystem->playSysSe(SYSSE_CANCEL);
+#endif
 			mNextStatus = FadeIn;
 			mStatus     = SecondaryWindowFadeOut;
 			mAnimTimer  = 0.0f;
@@ -407,7 +451,11 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	STACK_PAD_TERNARY(mStatus, 2);
 
-	return mStatus;
+#if defined(VERSION_G98E01_PIKIDEMO)
+}
+#endif
+
+return mStatus;
 }
 
 /*
@@ -424,13 +472,25 @@ void zen::ogSaveMgr::draw(Graphics& gfx)
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	graf.setPort();
 
-	if (mFileChkSelected) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	if (!mFileChkSelected) {
 		mBlackScreen->draw(0, 0, &graf);
 		mFileChkSelMgr->draw(gfx);
-	} else {
-		mScreen->draw(0, 0, &graf);
-		mSecondaryScreen->draw(0, 0, &graf);
-		mMemCheckMgr->draw(gfx);
-		mSaveFail->draw(gfx);
+		return;
 	}
+	mScreen->draw(0, 0, &graf);
+	mSecondaryScreen->draw(0, 0, &graf);
+	mMemCheckMgr->draw(gfx);
+	mSaveFail->draw(gfx);
+#else
+		if (mFileChkSelected) {
+			mBlackScreen->draw(0, 0, &graf);
+			mFileChkSelMgr->draw(gfx);
+		} else {
+			mScreen->draw(0, 0, &graf);
+			mSecondaryScreen->draw(0, 0, &graf);
+			mMemCheckMgr->draw(gfx);
+			mSaveFail->draw(gfx);
+		}
+#endif
 }

@@ -69,17 +69,20 @@ struct ogRaderMgr {
 
 	P2DScreen* getScrPtr() { return mMainScreen; }
 
-	u8 _00;                                 // _00
-	u8 _01;                                 // _01
-	u8 _02;                                 // _02
-	int _04;                                // _04
-	RaderStatus mStatus;                    // _08
-	f32 _0C;                                // _0C
-	f32 _10;                                // _10
-	int _14;                                // _14
-	int _18;                                // _18
-	int _1C;                                // _1C
-	int _20;                                // _20
+	u8 _00;              // _00
+	u8 _01;              // _01
+	u8 _02;              // _02
+	int _04;             // _04
+	RaderStatus mStatus; // _08
+	f32 _0C;             // _0C
+	f32 _10;             // _10
+	int _14;             // _14
+	int _18;             // _18
+	int _1C;             // _1C
+	int _20;             // _20
+#if defined(VERSION_G98E01_PIKIDEMO)
+	Vector3f _24demo[4]; // _24
+#endif
 	f32 _24;                                // _24
 	f32 _28;                                // _28
 	f32 _2C;                                // _2C

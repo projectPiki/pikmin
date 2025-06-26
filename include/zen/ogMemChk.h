@@ -123,8 +123,11 @@ struct ogScrMemChkMgr {
 	P2DPane* mFormatEffPane;                 // _A8
 	P2DTextBox* mYesPane;                    // _AC
 	P2DTextBox* mNoPane;                     // _B0
-	P2DTextBox* mYesPane2;                   // _B4
-	P2DTextBox* mNoPane2;                    // _B8
+#if defined(VERSION_G98E01_PIKIDEMO)         //
+#else                                        //
+	P2DTextBox* mYesPane2; // _B4
+	P2DTextBox* mNoPane2;  // _B8
+#endif                                       //
 	setTenmetuAlpha* mCursorAlphaMgr;        // _BC
 	P2DPicture* mCursorPane;                 // _C0
 	f32 _UNUSEDC4;                           // _C4
@@ -132,11 +135,14 @@ struct ogScrMemChkMgr {
 	int _CC;                                 // _CC
 	int _D0;                                 // _D0
 	ogNitakuMgr* mNitakuMgr;                 // _D4
-	char* mYesText;                          // _D8
-	char* mNoText;                           // _DC
-	char* mFormatText;                       // _E0
-	char* mContinueNoSaveText;               // _E4
-	char* mRetryText;                        // _E8
+#if defined(VERSION_G98E01_PIKIDEMO)         //
+#else                                        //
+	char* mYesText;            // _D8
+	char* mNoText;             // _DC
+	char* mFormatText;         // _E0
+	char* mContinueNoSaveText; // _E4
+	char* mRetryText;          // _E8
+#endif                                       //
 	P2DTextBox* mNoCardTextBox;              // _EC
 	P2DTextBox* mCardFullTextBox;            // _F0
 	P2DTextBox* mUnusableCardTextBox;        // _F4

@@ -6,6 +6,7 @@
 #include "P2D/Screen.h"
 #include "P2D/Picture.h"
 #include "P2D/Graph.h"
+#include "jaudio/verysimple.h"
 #include "PlayerState.h"
 #include "SoundMgr.h"
 #include "GameStat.h"
@@ -641,7 +642,11 @@ zen::ogScrResultMgr::returnStatusFlag zen::ogScrResultMgr::update(Controller* in
 			mStatus    = Status_6;
 		} else if (mSaveStatus == -1) {
 			if (input->keyClick(KBBTN_START | KBBTN_A | KBBTN_B)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+				seSystem->playSysSe(JACSYS_Decide1);
+#else
 				seSystem->playSysSe(SYSSE_DECIDE1);
+#endif
 				mWaitTimer = 0.0f;
 				mSaveMgr->start();
 				PRINT("<<<<<<<<< SAVE Mgr START! >>>>>>>>>>>\n");
@@ -675,6 +680,12 @@ void zen::ogScrResultMgr::draw(Graphics& gfx)
 
 		P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 		graf.setPort();
+#if defined(VERSION_G98E01_PIKIDEMO)
+		mMainScreen->draw(0, 0, &graf);
+		mGraphMgr->draw(mGraphAlpha);
+		mSaveMgr->draw(gfx);
+		mBlackScreen->draw(0, 0, &graf);
+#else
 		if (mSaveMgr->isFileMode()) {
 			mSaveMgr->draw(gfx);
 		} else {
@@ -683,5 +694,6 @@ void zen::ogScrResultMgr::draw(Graphics& gfx)
 			mSaveMgr->draw(gfx);
 			mBlackScreen->draw(0, 0, &graf);
 		}
+#endif
 	}
 }

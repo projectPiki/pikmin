@@ -3,6 +3,7 @@
 #include "zen/ogMemChk.h"
 #include "P2D/Screen.h"
 #include "P2D/Graph.h"
+#include "jaudio/verysimple.h"
 #include "DebugLog.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
@@ -124,8 +125,13 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 
 	} else if (memChkState == ogScrMemChkMgr::Inactive) {
 		if (!ogCheckInsCard()) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			SeSystem::stopSysSe(JACSYS_CardAccess);
+			SeSystem::playSysSe(JACSYS_CardError);
+#else
 			SeSystem::stopSysSe(SYSSE_CARDACCESS);
 			SeSystem::playSysSe(SYSSE_CARDERROR);
+#endif
 			mState = ErrorOrCompleted;
 			return mState;
 		}

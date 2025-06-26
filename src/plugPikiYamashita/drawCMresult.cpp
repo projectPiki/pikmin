@@ -274,7 +274,11 @@ bool zen::DrawCMresult::modeOperation(Controller* controller)
 	} else if (mScoreMgr.getEventFlag() & 0x2) {
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 			SeSystem::playSysSe(SYSSE_DECIDE1);
+#if defined(VERSION_G98E01_PIKIDEMO)
+			gsys->forceHardReset();
+#else
 			setMode(MODE_Save);
+#endif
 		}
 	} else if (mScoreMgr.getEventFlag() & 0x1) {
 		mBest.appear();

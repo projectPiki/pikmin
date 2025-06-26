@@ -3,6 +3,7 @@
 #include "zen/DrawCommon.h"
 #include "zen/ogNitaku.h"
 #include "P2D/Graph.h"
+#include "jaudio/verysimple.h"
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "gameflow.h"
@@ -46,6 +47,8 @@ void zen::ogScrFileSelectMgr::copyCardInfosSub()
 bool zen::ogScrFileSelectMgr::getCardFileInfos()
 {
 	if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		bool vibe   = gameflow.mGamePrefs.getVibeMode();
 		bool stereo = gameflow.mGamePrefs.getStereoMode();
 		bool child  = gameflow.mGamePrefs.getChildMode();
@@ -59,6 +62,7 @@ bool zen::ogScrFileSelectMgr::getCardFileInfos()
 		gameflow.mGamePrefs.setChildMode(child);
 		gameflow.mGamePrefs.setBgmVol(bgmVol);
 		gameflow.mGamePrefs.setSfxVol(sfxVol);
+#endif
 
 		copyCardInfosSub();
 		return true;
@@ -1039,21 +1043,33 @@ int zen::ogScrFileSelectMgr::CanToCopy(int p1)
 void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 {
 	if (controller->keyClick(KBBTN_MSTICK_LEFT) && mCurrSlotIdx > 0) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(JACSYS_Move1);
+#else
 		SeSystem::playSysSe(SYSSE_MOVE1);
+#endif
 		mCurrSlotIdx--;
 		setDataNumber(mCurrSlotIdx);
 		return;
 	}
 
 	if (controller->keyClick(KBBTN_MSTICK_RIGHT) && mCurrSlotIdx < 2) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(JACSYS_Move1);
+#else
 		SeSystem::playSysSe(SYSSE_MOVE1);
+#endif
 		mCurrSlotIdx++;
 		setDataNumber(mCurrSlotIdx);
 		return;
 	}
 
 	if (controller->keyClick(KBBTN_A)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(JACSYS_Decide1);
+#else
 		SeSystem::playSysSe(SYSSE_DECIDE1);
+#endif
 		KetteiEffectStart();
 		if (mSaveMode) {
 			mSelectState                 = ExitRequested;
@@ -1078,7 +1094,11 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	if (controller->keyClick(KBBTN_B)) {
 		mIsTailMoveEffectActive = 1;
 		BeginFadeOut();
+#if defined(VERSION_G98E01_PIKIDEMO)
+		SeSystem::playSysSe(JACSYS_Cancel);
+#else
 		SeSystem::playSysSe(SYSSE_CANCEL);
+#endif
 		if (mCursorMoveEffectOnyon) {
 			mCursorMoveEffectOnyon->forceFinish();
 		}
@@ -1090,7 +1110,11 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 
 	if (controller->keyClick(KBBTN_Y)) {
 		if (!mFileSlotSelectionStates[mCurrSlotIdx] && !mSaveMode) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			SeSystem::playSysSe(JACSYS_Decide1);
+#else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
+#endif
 			setOperateMode(Copy);
 		}
 		return;
@@ -1098,7 +1122,11 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 
 	if (controller->keyClick(KBBTN_X)) {
 		if (!mFileSlotSelectionStates[mCurrSlotIdx] && !mSaveMode) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			SeSystem::playSysSe(JACSYS_Decide1);
+#else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
+#endif
 			setOperateMode(Delete);
 		}
 	}

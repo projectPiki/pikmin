@@ -36,22 +36,30 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackPane->setAlpha(0);
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	mDrawMenu1 = new DrawMenu("screen/blo/ot_pause.blo", false, false);
+#else
 	mDrawMenu1 = new DrawMenu("screen/blo/pause.blo", false, false);
-	_14        = mDrawMenu1->getScreenPtr();
-	mTextBox4  = static_cast<P2DTextBox*>(_14->search('yame', true));
-	mTextBox5  = static_cast<P2DTextBox*>(_14->search('he02', true));
-	mTextBox6  = static_cast<P2DTextBox*>(_14->search('hm02', true));
+#endif
+	_14       = mDrawMenu1->getScreenPtr();
+	mTextBox4 = static_cast<P2DTextBox*>(_14->search('yame', true));
+	mTextBox5 = static_cast<P2DTextBox*>(_14->search('he02', true));
+	mTextBox6 = static_cast<P2DTextBox*>(_14->search('hm02', true));
 
 	_3C = mTextBox4->getString();
 	_40 = mTextBox5->getString();
 
 	mTextBox4->hide();
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	mDrawMenu2 = new DrawMenu("screen/blo/ot_pa_ok.blo", false, false);
+#else
 	mDrawMenu2 = new DrawMenu("screen/blo/pause_ok.blo", false, false);
-	_18        = mDrawMenu2->getScreenPtr();
-	mTextBox1  = static_cast<P2DTextBox*>(_18->search('yame', true));
-	mTextBox2  = static_cast<P2DTextBox*>(_18->search('titl', true));
-	mTextBox3  = static_cast<P2DTextBox*>(_18->search('even', true));
+#endif
+	_18       = mDrawMenu2->getScreenPtr();
+	mTextBox1 = static_cast<P2DTextBox*>(_18->search('yame', true));
+	mTextBox2 = static_cast<P2DTextBox*>(_18->search('titl', true));
+	mTextBox3 = static_cast<P2DTextBox*>(_18->search('even', true));
 
 	mTextBox1->hide();
 	mTextBox2->hide();

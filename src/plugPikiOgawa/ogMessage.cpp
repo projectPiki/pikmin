@@ -4,6 +4,7 @@
 #include "P2D/Picture.h"
 #include "P2D/Graph.h"
 #include "P2D/TextBox.h"
+#include "jaudio/verysimple.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
 #include "Font.h"
@@ -670,7 +671,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 				mScreenFadeTimer  = 0.0f;
 				mState            = STATE_FadingOut;
 #if defined(VERSION_G98E01_PIKIDEMO)
-				SeSystem::playSysSe(SE_PIKI_ATTACK_VOICE); // probably need to fix this enum
+				SeSystem::playSysSe(JACSYS_MessageClose); // this is the wrong enum, devs.
 #else
 				SeSystem::playSysSe(SYSSE_MESSAGE_CLOSE);
 #endif

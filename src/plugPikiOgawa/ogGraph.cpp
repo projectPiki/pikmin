@@ -26,8 +26,8 @@ static s16 LinePointR[32]                     = { 0 };
 static s16 LinePointY[32]                     = { 0 };
 
 // day 1 graph points
-static s16 ogawa_per_line[15]                  = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
-static u32 og_piki_lines_color[PikiColorCount] = { 0x00C0FFFF, 0xFF0000FF, 0xFFFF00FF };
+static s16 ogawa_per_line[]                                        = { 1, 1, 2, 3, 10, 12, 12, 13, 13, 14, 19, 20, 22 };
+static u32 og_piki_lines_color[PikiColorCount] ATTRIBUTE_ALIGN(32) = { 0x00C0FFFF, 0xFF0000FF, 0xFFFF00FF };
 
 /*
  * --INFO--

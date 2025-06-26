@@ -109,11 +109,17 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	mNoInputTimer = 0.0f;
 	_9A           = 3;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	mMsSelectMenu->setCancelSE(JACSYS_Decide1);
+	mVSelectMenu->setCancelSE(JACSYS_Decide1);
+	mSoundSelectMenu->setCancelSE(JACSYS_Decide1);
+#else
 	mMsSelectMenu->setCancelSE(SYSSE_DECIDE1);
 	mVSelectMenu->setCancelSE(SYSSE_DECIDE1);
 	mSoundSelectMenu->setCancelSE(SYSSE_DECIDE1);
-
 	mOptionsMenu->setMenuItemActiveSw(1, false);
+#endif
+
 	StereoOnOff(false);
 	DispBarBGM(false);
 	DispBarSE(false);
@@ -132,7 +138,13 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 	} else {
 		mUseMenu = mMenu1;
 	}
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+	SeSystem::playSysSe(SE_PIKI_ATTACK_VOICE);
+#else
 	SeSystem::playSysSe(YMENU_SELECT2);
+#endif
+
 	mUseMenu->start(-1);
 	mCurrentMenu  = 0;
 	_A4           = 0;
@@ -250,6 +262,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			return mStatus;
 		}
 		if (mOptionsMenu->checkSelectMenuCancel()) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			STACK_PAD_VAR(2);
+#else
 			bool vibe   = gameflow.mGamePrefs.getVibeMode();
 			bool stereo = gameflow.mGamePrefs.getStereoMode();
 			bool child  = gameflow.mGamePrefs.getChildMode();
@@ -265,6 +280,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			gameflow.mGamePrefs.setSfxVol(sfxVol);
 			gameflow.mGamePrefs.mIsChanged = false;
 			gameflow.mMemoryCard.saveOptions();
+#endif
 
 			mOptionsMenu->setCancelSelectMenuNo(-1);
 			mUseMenu->start(-1);
@@ -281,7 +297,11 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (!mStereoMode) {
 					mStereoMode = true;
 					setGamePrefs();
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+#endif
 				}
 				break;
 
@@ -289,7 +309,11 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+#endif
 				}
 				break;
 
@@ -297,7 +321,11 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+#endif
 				}
 				break;
 			}
@@ -308,7 +336,11 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+#endif
 				}
 				break;
 
@@ -316,7 +348,11 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+#endif
 				}
 				break;
 
@@ -324,7 +360,11 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+#endif
 				}
 				break;
 			}

@@ -2,6 +2,7 @@
 #include "P2D/Screen.h"
 #include "P2D/Graph.h"
 #include "zen/ogSub.h"
+#include "jaudio/verysimple.h"
 #include "DebugLog.h"
 #include "gameflow.h"
 #include "SoundMgr.h"
@@ -162,11 +163,21 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 			mDefaultMessageTextBox->hide();
 			mStatus     = AwaitingConfirmation;
 			mStateTimer = 0.0f;
+#if defined(VERSION_G98E01_PIKIDEMO)
+			mAButtonPromptPicture->show();
+#endif
 			mAButtonPromptAlphaAnimator->start();
 		}
 		break;
 
 	case AwaitingConfirmation:
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (input->keyClick(KBBTN_A)) {
+			seSystem->playSysSe(JACSYS_Decide1);
+			mStatus     = Exiting;
+			mStateTimer = 0.0f;
+		}
+#else
 		if (checkTypingAll()) {
 			mAButtonPromptPicture->show();
 			if (input->keyClick(KBBTN_A)) {
@@ -175,6 +186,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 				mStateTimer = 0.0f;
 			}
 		}
+#endif
 		break;
 	}
 

@@ -6,6 +6,7 @@
 #include "P2D/Screen.h"
 #include "zen/ogSub.h"
 #include "P2D/Graph.h"
+#include "jaudio/verysimple.h"
 #include "SoundMgr.h"
 #include "gameflow.h"
 #include "DebugLog.h"
@@ -66,10 +67,14 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	// "The Memory Card could not be formatted."
 	mCantFormatTextBox = (P2DTextBox*)screen->search('shos', true);
 
-	mYesPane  = (P2DTextBox*)screen->search('hai', true);  // "Yes"
-	mNoPane   = (P2DTextBox*)screen->search('iie', true);  // "No"
+	mYesPane = (P2DTextBox*)screen->search('hai', true); // "Yes"
+	mNoPane  = (P2DTextBox*)screen->search('iie', true); // "No"
+
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	mYesPane2 = (P2DTextBox*)screen->search('haic', true); // "Yes"
 	mNoPane2  = (P2DTextBox*)screen->search('iiec', true); // "No"
+#endif
 
 	// "Some Pikmin save data is corrupted. The Pikmin file will now be repaired. Do not touch the Memory Card or POWER Button."
 	mRepairFileTextBox = (P2DTextBox*)screen->search('shuf', true);
@@ -156,6 +161,12 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mStatus          = Inactive;
 	mPrevStatusCheck = Inactive;
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+	P2DTextBox* yes = (P2DTextBox*)mMainScreen->search('hai', true); // "yes"
+	P2DTextBox* no  = (P2DTextBox*)mMainScreen->search('iie', true); // "no"
+	P2DTextBox* a4  = (P2DTextBox*)mMainScreen->search('se_c', true);
+	mNitakuMgr      = new ogNitakuMgr(mMainScreen, yes, no, a4, false, false);
+#else
 	P2DTextBox* a1 = (P2DTextBox*)mMainScreen->search('fomt', true); // "Format"
 	P2DTextBox* a2 = (P2DTextBox*)mMainScreen->search('cws', true);  // "Continue without saving"
 	P2DTextBox* a3 = (P2DTextBox*)mMainScreen->search('rtry', true); // "Retry"
@@ -169,6 +180,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	mFormatText         = a1->getString();
 	mContinueNoSaveText = a2->getString();
 	mRetryText          = a3->getString();
+#endif
 
 	mMakeDefaultMgr = new ogScrMakeDefaultMgr;
 	DispYesNo(true);
@@ -176,6 +188,8 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 	PRINT("---------------------------- ogScrMemChkMgr finish -----------\n");
 }
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 /*
  * --INFO--
  * Address:	........
@@ -183,6 +197,7 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
  */
 void zen::ogScrMemChkMgr::SetNitaku_Y_N()
 {
+
 	mYesPane->setString(mYesText);
 	mNoPane->setString(mNoText);
 	mYesPane2->setString(mYesText);
@@ -214,6 +229,7 @@ void zen::ogScrMemChkMgr::SetNitaku_F_N()
 	mYesPane2->setString(mFormatText);
 	mNoPane2->setString(mNoText);
 }
+#endif
 
 /*
  * --INFO--
@@ -240,20 +256,29 @@ void zen::ogScrMemChkMgr::StartSub()
  */
 void zen::ogScrMemChkMgr::StatusCheck()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	SetNitaku_Y_N();
+#endif
 
 	switch (mStatus) {
 	case UnformattedCard:
 		mPrevStatusCheck = UnformattedCard;
 		mStatus          = WritingFormatMsg;
 		setPCtex(mDoFixUnformattedTextMgr);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_F_N();
+#endif
 		break;
 	case BrokenCard:
 		mPrevStatusCheck = BrokenCard;
 		mStatus          = WritingFormatMsg;
 		setPCtex(mNeedFormatTextMgr);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_F_N();
+#endif
 		break;
 	}
 
@@ -272,12 +297,18 @@ void zen::ogScrMemChkMgr::StatusCheck()
 	case UnformattedCard:
 		setPCtex(mUnformattedCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_ENCODING in ogMemChk >>>>>>>>>>\n");
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_W_R();
+#endif
 		break;
 	case BrokenCard:
 		setPCtex(mBrokenCardTextMgr);
 		PRINT("<<<<<<<<<< ERR_BROKEN in ogMemChk >>>>>>>>>>\n");
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_W_R();
+#endif
 		break;
 	case CardFull:
 		setPCtex(mCardFullTextMgr);
@@ -511,7 +542,10 @@ void zen::ogScrMemChkMgr::setNoCard()
 	DispYesNo(false);
 	mAButtonPane->hide();
 	DispAcup(false);
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	SetNitaku_Y_N();
+#endif
 	mNitakuMgr->start();
 	setPCtex(mNoCardTextMgr);
 
@@ -562,20 +596,29 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 
 	case UnformattedCard:
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_W_R();
+#endif
 		PRINT("##### MEMCHK_DISP_ERR_KAIGAI  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
 	case BrokenCard:
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_W_R();
+#endif
 		PRINT("##### MEMCHK_DISP_ERR_IJYOU  ######\n");
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
 	case CardFull:
 	case FileNotMade:
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		SetNitaku_W_R();
+#endif
 		checkErrNitaku(mNitakuMgr, input);
 		break;
 
@@ -587,7 +630,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case WritingFormatMsg:
 		if (checkTypingAll()) {
 			mStatus = DoFormatSelection;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 			SetNitaku_F_N();
+#endif
 			mNitakuMgr->start();
 			DispYesNo(true);
 		} else {
@@ -623,7 +669,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case FormatConfirmation:
 		if (checkTypingAll()) {
 			mStatus = DoYouFormat;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 			SetNitaku_Y_N();
+#endif
 			mNitakuMgr->start();
 			DispYesNo(true);
 		} else {
@@ -683,7 +732,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		DispAcup(true);
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Decide1); // this is the wrong enum, devs.
+#else
 			seSystem->playSysSe(SYSSE_DECIDE1);
+#endif
 			_UNUSEDC4 = 0.0f;
 			if (gameflow.mMemoryCard.mSaveFileIndex < 0) {
 				MakeDefFileStart();
@@ -696,7 +749,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case FormatFail:
 		mAButtonAlphaMgr->update();
 		if (input->keyClick(KBBTN_A | KBBTN_START)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Decide1);
+#else
 			seSystem->playSysSe(SYSSE_DECIDE1);
+#endif
 			_UNUSEDC4 = 0.0f;
 			mStatus   = Inactive;
 			start();
@@ -708,19 +765,27 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		if (stat == ogScrMakeDefaultMgr::Success) {
 			mStatus = Finished;
 		} else if (stat == ogScrMakeDefaultMgr::Failure) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			start();
+#else
 			setPCtex(mBrokenCardTextMgr);
 			mStatus = BrokenCard;
 			SetNitaku_Y_N();
 			mNitakuMgr->start();
 			_UNUSEDC4  = 0.0f;
 			mWaitTimer = 0.0f;
+#endif
 		}
 	} break;
 
 	case RepairFile:
 		DispYesNo(false);
 		DispAcup(true);
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (checkTypingAll() && mWaitTimer > 5.0f) {
+#else
 		if (checkTypingAll() && mWaitTimer > 10.0f) {
+#endif
 			int fail = !gameflow.mMemoryCard.didSaveFail();
 			if (fail) {
 				mStatus = RepairSuccess;
@@ -741,7 +806,11 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonPane->show();
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+				seSystem->playSysSe(JACSYS_Decide1);
+#else
 				seSystem->playSysSe(SYSSE_DECIDE1);
+#endif
 				mStatus = Finished;
 			}
 		}
@@ -754,6 +823,10 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 			mAButtonPane->show();
 			mAButtonAlphaMgr->update();
 			if (input->keyClick(KBBTN_A | KBBTN_START)) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+				seSystem->playSysSe(JACSYS_Decide1);
+				start();
+#else
 				seSystem->playSysSe(SYSSE_DECIDE1);
 				setPCtex(mBrokenCardTextMgr);
 				mStatus = BrokenCard;
@@ -761,6 +834,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 				mNitakuMgr->start();
 				_UNUSEDC4  = 0.0f;
 				mWaitTimer = 0.0f;
+#endif
 			}
 		}
 		break;

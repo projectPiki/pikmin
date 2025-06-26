@@ -173,9 +173,12 @@ struct ogMsgCtrlTagMgr {
 
 	bool CheckCtrlTag(char*, s16*, f32*);
 
-	char mOnesWaitChar[8];     // _00
-	char mTensWaitChar[8];     // _08
+	char mOnesWaitChar[8];           // _00
+	char mTensWaitChar[8];           // _08
+#if defined(VERSION_G98E01_PIKIDEMO) //
+#else                                //
 	char mHankakuWaitChars[8]; // _10
+#endif                               //
 };
 
 /**
