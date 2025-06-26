@@ -29,7 +29,7 @@ from tools.project import (
 # Game versions
 DEFAULT_VERSION = 5
 VERSIONS = [
-    "DPIJ01_PIKIDEMO",  # 蠎鈴�ｭ繧ｲ繝ｼ繝�繝�繝｢繝�繧｣繧ｹ繧ｯ Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
+    "DPIJ01_PIKIDEMO",  # 店頭ゲームデモディスク Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
     "GPIJ01_01"      ,  # JPN Rev 1
     "GPIJ01_02"      ,  # JPN Rev 2
     "G98E01_PIKIDEMO",  # USA Interactive Multi-Game Demo Disc - January 2002 "zz_PikminDemo-1210.tgc"
