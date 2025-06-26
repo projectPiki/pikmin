@@ -65,9 +65,9 @@ void Spider::init(Vector3f&)
 	mCollisionRadius = 64.0f;
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
-	setInvincible(1);
+	setInvincible(true);
 #endif
-	setIsOrganic(0);
+	setIsOrganic(false);
 	mIsBossBgm            = false;
 	_3B9                  = 1;
 	mIsHalfDead           = 0;

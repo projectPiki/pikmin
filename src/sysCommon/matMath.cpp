@@ -292,10 +292,14 @@ void Matrix4f::inverse(Matrix4f* inv)
 	                - mMtx[2][0] * mMtx[1][1] * mMtx[0][2] - mMtx[1][0] * mMtx[0][1] * mMtx[2][2] - mMtx[0][0] * mMtx[2][1] * mMtx[1][2];
 
 	if (determinant == 0.0f) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		return;
+#else
 		temp->makeIdentity();
 		temp->mMtx[0][3] = -mMtx[0][3];
 		temp->mMtx[1][3] = -mMtx[1][3];
 		temp->mMtx[2][3] = -mMtx[2][3];
+#endif
 	} else {
 		f32 invDet = 1.0f / determinant;
 

@@ -15,6 +15,7 @@
 #include "gameflow.h"
 #include "PlayerState.h"
 #include "DebugLog.h"
+#include "timers.h"
 #include "sysNew.h"
 
 /*
@@ -807,6 +808,7 @@ void BossMgr::killAll()
  */
 void BossMgr::update()
 {
+	gsys->mTimer->start("boss updt", true);
 	if (mForceUpdate) {
 		for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
 			FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
@@ -815,25 +817,26 @@ void BossMgr::update()
 				node->mBoss->update();
 			}
 		}
-		return;
-	}
 
-	BossNode* next;
-	int i;
-	BossNode* node;
-	for (i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
-		node = static_cast<BossNode*>(mActiveNodes[i].mChild);
-		while (node) {
-			next = static_cast<BossNode*>(node->mNext);
+	} else {
+		BossNode* next;
+		int i;
+		BossNode* node;
+		for (i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
+			node = static_cast<BossNode*>(mActiveNodes[i].mChild);
+			while (node) {
+				next = static_cast<BossNode*>(node->mNext);
 
-			node->mBoss->updateBoss();
-			if (C_BOSS_PROP(node->mBoss)._1DC() == 0 || !node->mBoss->mGrid.aiCulling() || node->mBoss->aiCullable()) {
-				node->mBoss->update();
+				node->mBoss->updateBoss();
+				if (C_BOSS_PROP(node->mBoss)._1DC() == 0 || !node->mBoss->mGrid.aiCulling() || node->mBoss->aiCullable()) {
+					node->mBoss->update();
+				}
+
+				node = next;
 			}
-
-			node = next;
 		}
 	}
+	gsys->mTimer->stop("boss updt");
 }
 
 /*
@@ -843,6 +846,7 @@ void BossMgr::update()
  */
 void BossMgr::refresh(Graphics& gfx)
 {
+	gsys->mTimer->start("boss draw", true);
 	if (mForceUpdate) {
 		for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
 			FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
@@ -853,22 +857,23 @@ void BossMgr::refresh(Graphics& gfx)
 		}
 
 		mForceUpdate = false;
-		return;
-	}
 
-	for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
-		FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
-		{
-			node->mBoss->refreshViewCulling(gfx);
-			if (C_BOSS_PROP(node->mBoss)._1DC() == 0 || !node->mBoss->mGrid.aiCulling() || node->mBoss->aiCullable()) {
-				node->mBoss->refresh(gfx);
-			}
+	} else {
+		for (int i = BOSS_IDSTART; i < BOSS_IDCOUNT; i++) {
+			FOREACH_NODE(BossNode, mActiveNodes[i].mChild, node)
+			{
+				node->mBoss->refreshViewCulling(gfx);
+				if (C_BOSS_PROP(node->mBoss)._1DC() == 0 || !node->mBoss->mGrid.aiCulling() || node->mBoss->aiCullable()) {
+					node->mBoss->refresh(gfx);
+				}
 
-			if (node->mBoss->aiCullable()) {
-				node->mBoss->drawShape(gfx);
+				if (node->mBoss->aiCullable()) {
+					node->mBoss->drawShape(gfx);
+				}
 			}
 		}
 	}
+	gsys->mTimer->stop("boss draw");
 }
 
 /*

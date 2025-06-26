@@ -232,7 +232,9 @@ void TekiMgr::startStage()
  */
 void TekiMgr::update()
 {
+	gsys->mTimer->start("teki updt", true);
 	MonoObjectMgr::update();
+	gsys->mTimer->stop("teki updt");
 }
 
 /*

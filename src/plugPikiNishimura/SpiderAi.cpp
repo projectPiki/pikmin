@@ -444,11 +444,12 @@ void SpiderAi::initAppear(int nextState)
 {
 	mSpider->setNextState(nextState);
 	mSpider->setMotionFinish(false);
+	mSpider->mIsBossBgm = true;
 #if defined(VERSION_G98E01_PIKIDEMO)
 #else
-	mSpider->mIsBossBgm = true;
-#endif
+	// I don't think BLL is set to be invincible anywhere, so this does nothing?
 	mSpider->setInvincible(false);
+#endif
 	mSpider->setIsOrganic(true);
 	mSpider->setAnimTimer(30.0f);
 	mSpider->mRotation.y += NsMathF::getRand(PI) - HALF_PI;

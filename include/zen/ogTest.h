@@ -48,7 +48,7 @@ enum TestMode {
 /**
  * @brief TODO
  *
- * @note Size: 0x3C0.
+ * @note Size: 0x3C0 (0x3BC in USA demo).
  */
 struct OgTestScreen : public Node {
 	OgTestScreen();
@@ -60,10 +60,13 @@ struct OgTestScreen : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	u32 _20;                             // _20, unknown
-	u32 mActiveMode;                     // _24, active mode, see TestMode enum
-	Controller* mController;             // _28
-	ZenController* mZenController;       // _2C
+	u32 _20;                 // _20, unknown
+	u32 mActiveMode;         // _24, active mode, see TestMode enum
+	Controller* mController; // _28
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+	ZenController* mZenController; // _2C
+#endif
 	Font* mFont;                         // _30
 	Camera mTestCamera;                  // _34
 	s16 mSelectedMode;                   // _37C, mode setting cursor is on, see TestMode enum

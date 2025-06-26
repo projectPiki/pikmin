@@ -66,8 +66,12 @@ StdSystem::StdSystem()
  */
 void StdSystem::onceInit()
 {
+#if defined(VERSION_G98E01_PIKIDEMO)
+	mMatrixCount = 0x1000;
+#else
 	mMatrixCount = 0x2000;
-	mMatrices    = new (0x20) Matrix4f[mMatrixCount];
+#endif
+	mMatrices = new (0x20) Matrix4f[mMatrixCount];
 }
 
 /*

@@ -233,6 +233,9 @@ struct StdSystem {
 	virtual void copyCacheToRam(u32, u32, u32) { }                                                  // _14
 	virtual void copyWaitUntilDone() { }                                                            // _18
 	virtual void copyCacheToTexture(struct CacheTexture*) { }                                       // _1C
+#if defined(VERSION_G98E01_PIKIDEMO)                                                                //
+	virtual void forceHardReset() { }                                                               // _20 (USA DEMO only?)
+#endif                                                                                              //
 	virtual void Activate(bool) { }                                                                 // _20
 	virtual void parseArchiveDirectory(char*, char*) { }                                            // _24
 	virtual void sndPlaySe(u32) = 0;                                                                // _28
@@ -388,10 +391,10 @@ struct System : public StdSystem {
 	vu32 mIsRendering;                               // _26C
 	u32 mIsCardSaving;                               // _270
 	OSThread* mCurrentThread;                        // _274
-	AtxRouter* mAtxRouter;                           // _278
 #if defined(VERSION_G98E01_PIKIDEMO)                 //
-	u8 _27C[0x280 - 0x27C];                          // _27C, TODO: Confirm where this member actually is.
+	u8 _278[0x27C - 0x278];                          // _278, TODO: Confirm where this member actually is - definitely 0x278 or lower.
 #endif                                               //
+	AtxRouter* mAtxRouter;                           // _278
 	ControllerMgr mControllerMgr;                    // _27C
 	u32 mPrevTick;                                   // _280
 	u32 mFpsSampleStart;                             // _284

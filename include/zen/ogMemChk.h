@@ -21,7 +21,7 @@ struct particleGenerator;
 
 /**
  *
- * @note Size: 0x10C.
+ * @note Size: 0x10C (0xF0 in USA demo).
  */
 struct ogScrMemChkMgr {
 

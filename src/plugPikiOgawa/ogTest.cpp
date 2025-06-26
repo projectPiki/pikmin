@@ -74,17 +74,20 @@ zen::OgTestScreen::OgTestScreen()
 	PRINT("Target Mgr. MemSize = %d\n", size);
 	PRINT("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 
-	mPauseMgr             = new ogScrPauseMgr();
-	mResultMgr            = new ogScrResultMgr();
-	mTitleMgr             = new ogScrTitleMgr();
-	mTutorialMgr          = new ogScrTutorialMgr();
-	mMapMgr               = new ogScrMapMgr();
-	mDrawSelectDiary      = new ogDrawSelectDiary();
-	mFileChkSelMgr        = new ogScrFileChkSelMgr();
-	mTotalScoreMgr        = new ogScrTotalScoreMgr(nullptr);
-	mStartMgr             = new ogScrStartMgr();
+	mPauseMgr        = new ogScrPauseMgr();
+	mResultMgr       = new ogScrResultMgr();
+	mTitleMgr        = new ogScrTitleMgr();
+	mTutorialMgr     = new ogScrTutorialMgr();
+	mMapMgr          = new ogScrMapMgr();
+	mDrawSelectDiary = new ogDrawSelectDiary();
+	mFileChkSelMgr   = new ogScrFileChkSelMgr();
+	mTotalScoreMgr   = new ogScrTotalScoreMgr(nullptr);
+	mStartMgr        = new ogScrStartMgr();
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	mZenController        = new ZenController(nullptr);
 	KeyRepeat::repeatTime = 0.5f;
+#endif
 
 	PRINT("**********************************************\n");
 	PRINT("**\tTEST CONST FINISHED !!\t    \t\t   **\n");
@@ -107,11 +110,19 @@ void zen::OgTestScreen::modeSelectSub()
 	}
 
 	if (mSelectedMode == TESTMODE_Tutorial) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
+#else
 		if (mZenController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
+#endif
 			mTutorialMode++;
 		}
 
+#if defined(VERSION_G98E01_PIKIDEMO)
+		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
+#else
 		if (mZenController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
+#endif
 			mTutorialMode--;
 		}
 	}
@@ -270,8 +281,11 @@ void zen::OgTestScreen::modeSelectSub()
 void zen::OgTestScreen::update()
 {
 	mController->update();
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	mZenController->setContPtr(mController);
 	mZenController->update();
+#endif
 
 	if (mActiveMode == TESTMODE_INACTIVE) {
 		modeSelectSub();

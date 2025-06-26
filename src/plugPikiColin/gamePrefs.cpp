@@ -136,6 +136,13 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 	}
 }
 
+// the print statements in checkIsHiscore aren't emitted, but the strings somehow end up in .data
+// not sure how, so this is just a bandaid fix.
+#if defined(VERSION_G98E01_PIKIDEMO)
+static char unusedUSADemo1[] = "checking challenge info for course %d, top scores are :-\n";
+static char unusedUSADemo2[] = "\t[%d] ... %d\n";
+#endif
+
 /*
  * --INFO--
  * Address:	80053F2C
@@ -259,7 +266,11 @@ void GamePrefs::write(RandomAccessStream& output)
  */
 void GamePrefs::fixSoundMode()
 {
-	u32 mode = OSGetSoundMode(); // lol
+#if defined(VERSION_G98E01_PIKIDEMO)
+	_Print("fixing stereo mode to %s\n", OSGetSoundMode() ? "Stereo" : "Mono");
+#else
+	PRINT("fixing stereo mode to %s\n", OSGetSoundMode() ? "Stereo" : "Mono");
+#endif
 	setStereoMode(OSGetSoundMode());
 }
 
@@ -285,6 +296,9 @@ void GamePrefs::read(RandomAccessStream& input)
 	setSfxVol(getSfxVol());
 	setStereoMode(getStereoMode());
 	setVibeMode(getVibeMode());
+#if defined(VERSION_G98E01_PIKIDEMO)
+	STACK_PAD_VAR(1);
+#endif
 }
 
 /*

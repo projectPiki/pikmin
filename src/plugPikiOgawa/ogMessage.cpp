@@ -9,6 +9,8 @@
 #include "Font.h"
 #include "DebugLog.h"
 
+#if defined(VERSION_G98E01_PIKIDEMO) // these tables aren't here in demo
+#else
 static s16 sjis_convert_table[0x258] ATTRIBUTE_ALIGN(32) = {
 	0,     0x118, 0x119, 0xC,   0xE,   0x60,  0x1A,  0x1B,  0x1F,  0x1,   0x2,   0,     0,     0,     0,     0x3E,  0,     0,     0,
 	0,     0,     0,     0,     0,     0x123, 0,     0,     0xD,   0xD,   0xD,   0xF,   0x3C,  0x11A, 0,     0,     0x117, 0,     0x7,
@@ -55,6 +57,7 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 	"造勢戦襲言遮和厳密頂着休年昔想像響返白敏再還我懸草誰工月司髪毛細番予殊影過関係誇育腹次矢窒寸覚覗屋忘血航誌亡泉夕使期敗容制挿読扱説書閉"
 	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
 };
+#endif
 
 /*
  * --INFO--
@@ -246,6 +249,8 @@ s16 zen::ogScrMessageMgr::makePageInfo(char*** data)
 	return idx;
 }
 
+#if defined(VERSION_G98E01_PIKIDEMO) // these two functions are straight up not in demo
+#else
 /*
  * --INFO--
  * Address:	8018C018
@@ -372,6 +377,7 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 	}
 	cnvButtonIcon(tmp + len);
 }
+#endif
 
 /*
  * --INFO--
@@ -412,10 +418,14 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 		if (mPagePaneList[id]) {
 			switch (mPagePaneList[id]->getTypeID()) {
 			case PANETYPE_TextBox:
+#if defined(VERSION_G98E01_PIKIDEMO)
+				mProcessedTextBoxStrings[id] = ((P2DTextBox*)mPagePaneList[id])->getString();
+#else
 				sprintf(mRawPageTextBoxStrings[id], "%s", ((P2DTextBox*)mPagePaneList[id])->getString());
 				mProcessedTextBoxStrings[id] = mRawPageTextBoxStrings[id];
 				cnvSingleMulti(mProcessedTextBoxStrings[id]);
 				cnvButtonIcon(mProcessedTextBoxStrings[id]);
+#endif
 				((P2DTextBox*)mPagePaneList[id])->setString("");
 				id++;
 				break;
@@ -494,6 +504,8 @@ zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
 	mCurrentTextCharOffset = 0;
 	mNextPaneId            = 0;
 	mActivePaneId          = -1;
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 	sprintf(mButtonTagChars, "abcxyzlr");
 	sprintf(mButtonTagIconStrings, "日目時私未知星大地横名");
 	mDefaultButtonMarkupColour = "b4ffff";
@@ -505,6 +517,7 @@ zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
 	mButtonMarkupColours[5]    = "4040ff";
 	mButtonMarkupColours[6]    = "808080";
 	mButtonMarkupColours[7]    = "808080";
+#endif
 	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, nullptr);
 }
 
@@ -656,7 +669,11 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 				mCurrentMessageId = 0;
 				mScreenFadeTimer  = 0.0f;
 				mState            = STATE_FadingOut;
+#if defined(VERSION_G98E01_PIKIDEMO)
+				SeSystem::playSysSe(SE_PIKI_ATTACK_VOICE); // probably need to fix this enum
+#else
 				SeSystem::playSysSe(SYSSE_MESSAGE_CLOSE);
+#endif
 				PRINT("END MESSAGE!\n");
 				return mState;
 			}
@@ -695,7 +712,11 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 			break;
 
 		case PANETYPE_TextBox:
+#if defined(VERSION_G98E01_PIKIDEMO)
+			if (mTextAnimationProgress >= 0.04f) {
+#else
 			if (mTextAnimationProgress >= 0.029639998f) {
+#endif
 				mActivePaneId          = mNextPaneId;
 				mTextAnimationProgress = 0.0f;
 

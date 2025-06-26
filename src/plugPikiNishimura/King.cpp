@@ -75,7 +75,7 @@ void King::bombDamageCounter(CollPart*)
 void King::init(Vector3f&)
 {
 	mCollisionRadius = 50.0f;
-	setInvincible(1);
+	setInvincible(true);
 	setIsOrganic(0);
 	setShadowSize(150.0f);
 	mIsBossBgm = false;

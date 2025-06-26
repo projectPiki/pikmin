@@ -166,7 +166,7 @@ struct ogTexAnimMgr {
 /**
  * @brief TODO
  *
- * @note Size: 0x18.
+ * @note Size: 0x18 (0x10 in USA demo).
  */
 struct ogMsgCtrlTagMgr {
 	ogMsgCtrlTagMgr();

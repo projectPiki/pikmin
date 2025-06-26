@@ -1,6 +1,7 @@
 #include "Stream.h"
 
 #include "String.h"
+#include <stl/string.h>
 
 /*
  * --INFO--
@@ -178,9 +179,15 @@ void Stream::writeString(String& s)
  * Address:	........
  * Size:	0000C4
  */
-void Stream::print(char*, ...)
+void Stream::print(char* fmt, ...)
 {
-	// UNUSED FUNCTION
+	char dest[1024];
+	va_list args;
+	va_start(args, fmt);
+	vsprintf(dest, fmt, args);
+	if (strlen(dest)) {
+		write(dest, strlen(dest));
+	}
 }
 
 /*

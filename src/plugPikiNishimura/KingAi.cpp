@@ -150,7 +150,7 @@ void KingAi::keyAction0()
 		cameraMgr->startVibrationEvent(2, mKing->mPosition);
 		break;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 #else
 	case KINGAI_Appear:
 		if (!mKing->needShadow()) {
@@ -1506,14 +1506,19 @@ void KingAi::initAppear(int nextState)
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
+	// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
+	// Maybe it's a Mandela Effect. TODO: Make sure the demo code is producing the desired effect for a bugfix.
+#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+	if (!mKing->mIsBossBgm) {
+		mKing->mIsBossBgm = true;
+		mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
+		mKing->setShadowNeed(true);
+	}
+#else
 	mKing->mIsBossBgm = true;
+#endif
 	mKing->setInvincible(false);
 	mKing->setIsOrganic(true);
-	// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
-	// Maybe it's a Mandela Effect. This bug fix is inspired by code found in USA Demo, which means... TODO: Make sure this is right.
-#ifdef BUGFIX
-	mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
-#endif
 	dispelNaviPiki();
 	mKing->mAnimator.startMotion(PaniMotionInfo(12, this));
 	mKing->mKingBody->initBlending(10.0f);

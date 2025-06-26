@@ -120,13 +120,16 @@ struct ogScrMessageMgr {
 	u8 mIsInitialPageLoad;                    // _54F4
 	P2DScreen* mCurrentScreen;                // _54F8
 	P2DPane* mPagePaneList[20];               // _54FC
-	char mRawPageTextBoxStrings[20][0x400];   // _554C
-	char* mProcessedTextBoxStrings[20];       // _A54C
-	s16 mActivePaneCount;                     // _A59C
-	char mButtonTagChars[12];                 // _A59E
-	char mButtonTagIconStrings[34];           // _A5AA, unknown size
-	char* mDefaultButtonMarkupColour;         // _A5CC
-	char* mButtonMarkupColours[8];            // _A5D0
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
+	char mRawPageTextBoxStrings[20][0x400]; // _554C
+#endif
+	char* mProcessedTextBoxStrings[20]; // _A54C
+	s16 mActivePaneCount;               // _A59C
+	char mButtonTagChars[12];           // _A59E
+	char mButtonTagIconStrings[34];     // _A5AA, unknown size
+	char* mDefaultButtonMarkupColour;   // _A5CC
+	char* mButtonMarkupColours[8];      // _A5D0
 };
 
 } // namespace zen

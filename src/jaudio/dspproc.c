@@ -12,12 +12,18 @@ static u16 DSP_MIXERLEVEL = 0x4000;
 s32 DSPSendCommands(u32* commands, u32 count)
 {
 	if (DSPCheckMailToDSP() != 0) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		OSReport("DSP Err:not received mail (to DSP) is remained \n");
+#endif
 		return -1;
 	}
 
 	if (DSPCheckMailFromDSP() != 0) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		OSReport("DSP Err:not received mail (from DSP) is remained \n");
+#endif
 		return -1;
 	}
 
@@ -66,8 +72,10 @@ void DSPWaitFinish()
 		if (mail != 0x1357) {
 			return;
 		}
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+#else
 		OSReport("Error: DSP now in framework\n");
+#endif
 	}
 }
 
