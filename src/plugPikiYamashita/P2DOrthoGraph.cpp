@@ -47,8 +47,13 @@ void P2DOrthoGraph::setPort()
 {
 	P2DGrafContext::setPort();
 
+#if defined(VERSION_GPIP01_00)
+	C_MTXOrtho(mProjectionMtx.mMtx, mLogicalViewBounds.mMinY, mLogicalViewBounds.mMaxY, mLogicalViewBounds.mMinX, mLogicalViewBounds.mMaxX,
+	           mLogicalNearZ, mLogicalFarZ);
+#else
 	MTXOrtho(mProjectionMtx.mMtx, mLogicalViewBounds.mMinY, mLogicalViewBounds.mMaxY, mLogicalViewBounds.mMinX, mLogicalViewBounds.mMaxX,
 	         mLogicalNearZ, mLogicalFarZ);
+#endif
 	GXSetProjection(mProjectionMtx.mMtx, GX_ORTHOGRAPHIC);
 }
 
@@ -72,7 +77,6 @@ void P2DOrthoGraph::setOrtho(const PUTRect& p1, int p2, int p3)
 void P2DOrthoGraph::setOrigin(int x, int y)
 {
 	mLogicalViewBounds.add(-x, -y);
-	// a bunch of GX stuff probably - in the DLL it's all gl stuff
 }
 
 /*

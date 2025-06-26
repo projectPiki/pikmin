@@ -30,10 +30,13 @@ struct NinLogoSetupSection : public Node {
 		mController   = new Controller();
 		progresWindow = nullptr;
 
+#if defined(VERSION_GPIP01_00)
+#else
 		if ((VIGetDTVStatus() && OSGetProgressiveMode()) || (VIGetDTVStatus() && gsys->mControllerMgr.keyDown(KBBTN_DPAD_RIGHT))) {
 			progresWindow = new zen::DrawProgre();
 			progresWindow->start();
 		}
+#endif
 		mMenu                            = 0;
 		gameflow.mGamePrefs.mHasSaveGame = 1;
 		gsys->setFade(1.0f, 3.0f);

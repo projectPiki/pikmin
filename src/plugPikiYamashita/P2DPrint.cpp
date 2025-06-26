@@ -230,7 +230,11 @@ f32 P2DPrint::parse(const u8* textBuffer, int textLen, int maxWidth, u16* outXPo
 				} else {
 					continue;
 				}
+#if defined(VERSION_GPIP01_00)
+			} else if (mFont->getFontType() == OS_FONT_ENCODE_UNK2 && (currChar < 0xa0 && currChar >= 0x80) && *textBuffer != 0) {
+#else
 			} else if (mFont->getFontType() == OS_FONT_ENCODE_UNK2 && currChar >= ASCII_PRINTABLE_MAX && *textBuffer != 0) {
+#endif
 				currChar = (currChar << 8) | *textBuffer++;
 				if ((u32)textBuffer - (u32)textStart <= textLen) {
 					isMultiByteChar = true;

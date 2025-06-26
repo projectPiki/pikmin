@@ -34,8 +34,13 @@ u32 PSMTXInverse(const Mtx src, Mtx inv);
 ////////////////////////////////////////////
 
 ///////////  MATRIX44 FUNCTIONS ////////////
+#if defined(VERSION_GPIP01_00)
+void C_MTXPerspective(Mtx44 mtx, f32 fovY, f32 aspect, f32 n, f32 f);
+void C_MTXOrtho(Mtx44 mtx, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f);
+#else
 void MTXPerspective(Mtx44 mtx, f32 fovY, f32 aspect, f32 n, f32 f);
 void MTXOrtho(Mtx44 mtx, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f);
+#endif
 ////////////////////////////////////////////
 
 ///////// CODED C MATRIX FUNCTIONS /////////

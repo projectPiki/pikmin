@@ -223,7 +223,7 @@ struct StdSystem {
 	int mForcePrint;               // _198
 	MemInfo* mCurrMemInfo;         // _19C
 #if defined(VERSION_GPIP01_00)
-	u8 _1A0[0x1A4 - 0x1A0]; // _1A0, TODO: Confirm where this member actually is and it's relation to G98E01_PIKIDEMO.
+	u32 _1A0; // _1A0, TODO: Confirm where this member actually is and it's relation to G98E01_PIKIDEMO.
 #endif
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.

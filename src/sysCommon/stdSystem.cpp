@@ -43,7 +43,10 @@ StdSystem::StdSystem()
     : mDvdRoot("CoreNode")
     , mAramRoot("CoreNode")
 {
-	mConsFont         = nullptr;
+	mConsFont = nullptr;
+#if defined(VERSION_GPIP01_00)
+	_1A0 = 0;
+#endif
 	mCurrentFade      = 0.0f;
 	mFadeStart        = 0.0f;
 	mFadeEnd          = 1.0;

@@ -2667,9 +2667,9 @@ void BaseShape::initialise()
 		}
 	}
 
-	for (int i = 0; i < mMaterialCount; i++) {
+	for (int i = 0, unused = 0; i < mMaterialCount; i++, unused++) {
 		if (mMaterialList[i].mFlags & MATFLAG_PVW) {
-			for (int j = 0; j < mMaterialList[i].mTextureInfo.mTextureDataCount; j++) {
+			for (int j = 0; j < (int)mMaterialList[i].mTextureInfo.mTextureDataCount; j++) {
 				mMaterialList[i].mTextureInfo.mTextureData[j].mTextureAttribute
 				    = &mTexAttrList[mMaterialList[i].mTextureInfo.mTextureData[j].mSourceAttrIndex];
 				mMaterialList[i].mTextureInfo.mTextureData[j].mTexture
@@ -2681,6 +2681,7 @@ void BaseShape::initialise()
 		} else {
 			mMaterialList[i].mTexture = nullptr;
 		}
+		!!unused;
 	}
 
 	mCurrentAnimation                = new AnimContext();

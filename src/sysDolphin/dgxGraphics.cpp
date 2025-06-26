@@ -729,7 +729,11 @@ void DGXGraphics::setLight(Light* light, int idx)
  */
 void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5)
 {
+#if defined(VERSION_GPIP01_00)
+	C_MTXPerspective(mtx, a1, a2, a3, a4);
+#else
 	MTXPerspective(mtx, a1, a2, a3, a4);
+#endif
 	GXSetProjection(mtx, GX_PERSPECTIVE);
 	f32 a     = 1.0f / (a4 - a3);
 	mtx[2][2] = a * -(a4 + a3);
@@ -744,7 +748,11 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
  */
 void DGXGraphics::setOrthogonal(Mtx mtx, RectArea& bounds)
 {
+#if defined(VERSION_GPIP01_00)
+	C_MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
+#else
 	MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
+#endif
 	GXSetProjection(mtx, GX_ORTHOGRAPHIC);
 	GXLoadPosMtxImm(Matrix4f::ident.mMtx, 0);
 	GXSetCurrentMtx(0);

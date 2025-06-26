@@ -11,6 +11,7 @@
 #include "MovSampleSection.h"
 #include "OnePlayerSection.h"
 #include "PaniTestSection.h"
+#include "GameCourseClearSection.h"
 #include "zen/ogTest.h"
 #include "timers.h"
 #include "Delegate.h"
@@ -625,7 +626,11 @@ void GameFlow::softReset()
 			mGameSection = new OnePlayerSection();
 			break;
 		case SECTION_PaniTest:
+#if defined(VERSION_GPIP01_00)
+			mGameSection = new GameCourseClearSection();
+#else
 			mGameSection = new PaniTestSection();
+#endif
 			break;
 		case SECTION_OgTest:
 			mGameSection = new zen::OgTestSection();
