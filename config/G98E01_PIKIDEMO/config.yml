@@ -1,5 +1,5 @@
 object_base: orig/G98E01_PIKIDEMO
-object: files/zz_Pikmin-Demo-1210.tgc:sys/main.dol
+object: sys/main.dol
 hash: 610d4f61ff4a3ca0a8719624b24108cb7eccdf67
 
 # Generated from dataDir/build.map

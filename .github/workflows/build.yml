@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [GPIE01_01] # TODO: other versions
+        version: [GPIE01_01, G98E01_PIKIDEMO, GPIE01_00] # TODO: other versions
 
     steps:
     # Checkout the repository (shallow clone)

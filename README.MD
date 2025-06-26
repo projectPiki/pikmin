@@ -14,15 +14,14 @@ Pikmin
 A work-in-progress decompilation of Pikmin (GameCube, 2001).
 
 Supported versions (active):
-
+- `GPIE01_01`: USA (Rev 1) - Default Version
 - `GPIE01_00`: USA (Rev 0)
-- `GPIE01_01`: USA (Rev 1)
+- `G98E01_PIKIDEMO`: USA Interactive Multi-Game Demo Disc - January 2002 "zz_PikminDemo-1210.tgc"
 
 Supported versions (to be worked on):
-- `DPIJ01_PIKIDEMO`: 店頭ゲームデモディスク Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
+- `DPIJ01_PIKIDEMO`: 店�?�ゲー�?�?モ�?ィスク Oct'2001 (Pikmin Jitsuen-you Sample Disc) "zz_pikmin_game/PikiDemo.tgc"
 - `GPIJ01_01`: Japan (Rev 1)
 - `GPIJ01_02`: Japan (Rev 2)
-- `G98E01_PIKIDEMO`: USA Interactive Multi-Game Demo Disc - January 2002 "zz_PikminDemo-1210.tgc"
 - `G98P01_PIKIDEMO`: Europe Interactive Multi-Game Demo Disc - May 2002 "zz_PikiDemo.tgc"
 - `GPIP01_00`: Europe (Rev 0)
 

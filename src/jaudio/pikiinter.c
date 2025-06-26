@@ -12,9 +12,9 @@
 
 // rename better later
 typedef struct SEvent_UnkC {
-	u32 statusIdx; // _00, unknown
-	u8 actionGroup;        // _04
-	u32 timeStamp; // _08, unknown
+	u32 statusIdx;  // _00, unknown
+	u8 actionGroup; // _04
+	u32 timeStamp;  // _08, unknown
 } SEvent_UnkC;
 
 /**
@@ -57,10 +57,10 @@ SCamera_ CAMERA;
 typedef struct ActionStatus ActionStatus;
 static int EVENT_OFFSET[] = { 0, 1, 0xad, 0xbe, 0xcd, 0xd7, 0xdb, 0x105 };
 static struct ActionStatus {
-	u8 flags;  // _00
+	u8 flags; // _00
 	u8 prio;  // _01
-	u8 group;  // _02
-	u16 cmd; // _03
+	u8 group; // _02
+	u16 cmd;  // _03
 } ACTION_STATUS[] = {
 	{ 0x00, 0x00, 0x00, 0x00 },  { 0x00, 0x01, 0x00, 0x01 },  { 0x10, 0x00, 0x01, 0x02 },  { 0x00, 0x00, 0x01, 0x03 },
 	{ 0x00, 0x00, 0x01, 0x04 },  { 0x00, 0x00, 0x01, 0x05 },  { 0x10, 0x00, 0x01, 0x06 },  { 0x10, 0x00, 0x01, 0x07 },
@@ -203,9 +203,9 @@ void Jac_InitEventSystem(void)
 		Jal_AddCmdQueue(&EVENT[i].cmdQueue, EVENT[i].track, 0);
 
 		for (j = 0; j < 16; j++) {
-			EVENT[i].statusEntries[j].statusIdx = 0;
-			EVENT[i].statusEntries[j].actionGroup       = 0;
-			EVENT[i].statusEntries[j].timeStamp = 0;
+			EVENT[i].statusEntries[j].statusIdx   = 0;
+			EVENT[i].statusEntries[j].actionGroup = 0;
+			EVENT[i].statusEntries[j].timeStamp   = 0;
 		}
 	}
 
@@ -409,8 +409,8 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 
 	targetSlot = usedSlots;
 
-	lowestPrio  = ACTION_STATUS[statusIdx].flags;
-	group = ACTION_STATUS[statusIdx].group;
+	lowestPrio = ACTION_STATUS[statusIdx].flags;
+	group      = ACTION_STATUS[statusIdx].group;
 
 	if (lowestPrio & 0x10) {
 		u32 maxConcurrent = lowestPrio & 0xf;
@@ -418,9 +418,9 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 			maxConcurrent = 0x10;
 		}
 
-		u32 concurrentCount  = 0;
-		u32 oldestTime    = 0;
-		u32 oldestSlot  = 0;
+		u32 concurrentCount = 0;
+		u32 oldestTime      = 0;
+		u32 oldestSlot      = 0;
 		u32 currentPriority = ACTION_STATUS[statusIdx].prio;
 		for (i = 0; i < 16; i++) {
 			if (ev->statusEntries[i].statusIdx) {
@@ -430,15 +430,15 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 
 				u32 status4 = ACTION_STATUS[ev->statusEntries[i].statusIdx].prio;
 				if (currentPriority > status4) {
-					oldestTime    = CURRENT_TIME - ev->statusEntries[i].timeStamp;
-					oldestSlot  = i;
+					oldestTime      = CURRENT_TIME - ev->statusEntries[i].timeStamp;
+					oldestSlot      = i;
 					currentPriority = status4;
 				}
 
 				if (currentPriority == status4) {
 					u32 slotAge = CURRENT_TIME - ev->statusEntries[i].timeStamp;
 					if (slotAge > oldestTime) {
-						oldestTime   = slotAge;
+						oldestTime = slotAge;
 						oldestSlot = i;
 					}
 				}
@@ -490,7 +490,7 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 			u8 slotPrio = ACTION_STATUS[ev->statusEntries[i].statusIdx].prio;
 			if (ACTION_STATUS[ev->statusEntries[i].statusIdx].prio < lowestPrio) {
 				lowestPrio = slotPrio;
-				targetSlot  = i;
+				targetSlot = i;
 			}
 		}
 
@@ -502,9 +502,9 @@ BOOL Jac_PlayEventAction(int eventIdx, int actionId)
 
 	jac_debug_multi_entry++;
 	Jal_SendCmdQueue_Force(&ev->cmdQueue, targetSlot << 0xc | ACTION_STATUS[statusIdx].cmd);
-	ev->statusEntries[targetSlot].statusIdx = statusIdx;
-	ev->statusEntries[targetSlot].actionGroup       = group;
-	ev->statusEntries[targetSlot].timeStamp = CURRENT_TIME;
+	ev->statusEntries[targetSlot].statusIdx   = statusIdx;
+	ev->statusEntries[targetSlot].actionGroup = group;
+	ev->statusEntries[targetSlot].timeStamp   = CURRENT_TIME;
 	return TRUE;
 }
 
