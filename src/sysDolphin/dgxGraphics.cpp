@@ -893,7 +893,11 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 
 	if (mHasTexGen) {
 		Mtx texMtx;
+#if defined(VERSION_G98E01_PIKIDEMO)
 		f32 mag      = 0.5f / PSVECMag((Vec*)mtx.mMtx);
+#else
+		f32 mag      = 0.5f / VECMag((Vec*)mtx.mMtx);
+#endif
 		texMtx[0][0] = mag * mtx.mMtx[0][0];
 		texMtx[0][1] = mag * mtx.mMtx[0][1];
 		texMtx[0][2] = mag * mtx.mMtx[0][2];

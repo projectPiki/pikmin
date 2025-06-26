@@ -226,12 +226,12 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = ExitFailure;
 		return mStatus;
 
-#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01)
-	} else if (memCheckRes != ogScrMemChkMgr::Inactive) {
-		return mStatus;
-	}
+#if defined(VERSION_G98E01_PIKIDEMO)
+} else if (memCheckRes == ogScrMemChkMgr::Inactive) {
 #else
-	} else if (memCheckRes == ogScrMemChkMgr::Inactive) {
+} else if (memCheckRes != ogScrMemChkMgr::Inactive) {
+	return mStatus;
+}
 #endif
 
 	mAnimTimer += gsys->getFrameTime();
