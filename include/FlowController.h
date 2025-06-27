@@ -33,10 +33,11 @@ struct FlowController {
 	char mStagePath2[0x80];        // _1B0, identical to above
 	int mNaviOnMap;                // _230, unknown
 	int mGameEndCondition;         // _234
-	u32 mDayOverSeqStarted;        // _238
 #if defined(VERSION_GPIP01_00)     //
-	u8 _23C_PAD[0x244 - 0x23C];    // _23C, TODO: Confirm where this member actually is.
+	int _238PAL;                   // _238
+	int _23CPAL;                   //
 #endif                             //
+	u32 mDayOverSeqStarted;        // _238
 	u32 _23C;                      // _23C
 	int _240;                      // _240
 	int _244;                      // _244

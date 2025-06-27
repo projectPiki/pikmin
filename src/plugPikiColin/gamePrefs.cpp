@@ -42,6 +42,28 @@ void PlayState::openStage(int stageId)
 	mCourseOpenFlags |= (1 << stageId);
 }
 
+// This is a weak inline in US but a full function in PAL
+#if defined(VERSION_GPIP01_00)
+void GamePrefs::Initialise()
+{
+	mFlags     = 3;
+	gsys->_1A0 = 0;
+	int ids[]  = { 0, 2, 1, 3, 4, 0 };
+	STACK_PAD_VAR(3);
+	setChildMode(ids[OSGetLanguage()]);
+	mBgmVol             = 8;
+	mSfxVol             = 8;
+	mFileNum            = 0;
+	mHasSaveGame        = 0;
+	mSaveGameIndex      = 0;
+	mSpareSaveGameIndex = 0;
+	_1F                 = 0;
+	mUnlockedStageFlags = 0;
+	mIsChanged          = false;
+	mHiscores.Initialise();
+}
+#endif
+
 /*
  * --INFO--
  * Address:	80053C9C
@@ -115,6 +137,8 @@ void GamePrefs::setVibeMode(bool set)
  * Address:	80053E70
  * Size:	000054
  */
+#if defined(VERSION_GPIP01_00)
+#else
 void GamePrefs::setChildMode(bool set)
 {
 	if (set != getChildMode()) {
@@ -123,6 +147,7 @@ void GamePrefs::setChildMode(bool set)
 
 	mFlags = (set ? GAMEPREF_Child : 0) | mFlags & ~GAMEPREF_Child;
 }
+#endif
 
 /*
  * --INFO--
@@ -299,7 +324,46 @@ void GamePrefs::read(RandomAccessStream& input)
 #if defined(VERSION_G98E01_PIKIDEMO)
 	STACK_PAD_VAR(1);
 #endif
+#if defined(VERSION_GPIP01_00)
+	STACK_PAD_VAR(2);
+	int lang = mFlags >> 2 & 0xf;
+	if (lang < 0 || lang > 4) {
+		lang = 0;
+	}
+	gsys->_1A0 = lang;
+#endif
 }
+
+#if defined(VERSION_GPIP01_00)
+int GamePrefs::getChildMode()
+{
+	int id = mFlags >> 2 & 0xf;
+	if (id < 0 || id > 4) {
+		PRINT("trying to get invalid language mode!!\n");
+		return 0;
+	}
+	return id;
+}
+#endif
+
+#if defined(VERSION_GPIP01_00)
+void GamePrefs::setChildMode(int set)
+{
+	if (set != getChildMode()) {
+		mIsChanged = true;
+	}
+
+	if (set < 0 || set > 4) {
+		OSReport("trying to set invalid language mode (%d)!!\n", set);
+		set = 0;
+	}
+
+	STACK_PAD_VAR(1);
+
+	gsys->_1A0 = set;
+	mFlags     = mFlags & 0xffffffc3 | (set & 0xf) << 2;
+}
+#endif
 
 /*
  * --INFO--

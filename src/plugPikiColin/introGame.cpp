@@ -101,7 +101,10 @@ struct IntroGameSetupSection : public BaseGameSection {
 		mIsFirstFrame            = true;
 		gameflow.mIsDayEndActive = 0;
 		_44                      = 0;
-		mNextModeState           = 0;
+#if defined(VERSION_GPIP01_00)
+		_3A8 = 0;
+#endif
+		mNextModeState = 0;
 		Jac_SceneSetup(11, 0);
 		EffectMgr* mgr = new EffectMgr;
 		mgr->cullingOff();
@@ -151,6 +154,13 @@ struct IntroGameSetupSection : public BaseGameSection {
 	virtual void draw(Graphics& gfx) // _14
 	{
 		Matrix4f mtx;
+
+#if defined(VERSION_GPIP01_00)
+		_3A8++;
+		if (_3A8 == 5) {
+			_3A8 = 0;
+		}
+#endif
 
 		gameflow.mMoviePlayer->update();
 		if (!gameflow.mMoviePlayer->setCamera(gfx)) {
@@ -223,6 +233,10 @@ struct IntroGameSetupSection : public BaseGameSection {
 	DayMgr* mDayManager; // _39C
 	Colour _3A0;         // _3A0
 	u8 mIsFirstFrame;    // _3A4
+
+#if defined(VERSION_GPIP01_00)
+	int _3A8;
+#endif
 };
 
 static IntroGameSetupSection* igss;

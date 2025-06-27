@@ -76,6 +76,10 @@ struct ogScrTitleMgr {
 	u8 _A4;                        // _A4
 	u8 _A5;                        // _A5
 	u16 _A6;                       // _A6
+
+#if defined(VERSION_GPIP01_00)
+	u8 _A8[4]; // _A8, todo, find out where this actually goes, this just fixes the overall size for now
+#endif
 };
 
 } // namespace zen

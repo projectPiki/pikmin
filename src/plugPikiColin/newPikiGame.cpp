@@ -171,6 +171,14 @@ struct DayOverModeState : public ModeState {
 		gamecore->mDrawGameInfo->lowerFrameOut(0.5f, true);
 
 		if (flag == 0) {
+#if defined(VERSION_GPIP01_00)
+			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+#endif
 			gamecore->cleanupDayEnd();
 
 			// Play day end cutscene if not last day and haven't collected all parts
@@ -534,10 +542,16 @@ ModeState* RunningModeState::update(u32& result)
 
 	if (flowCont.mGameEndCondition) {
 		if (flowCont.mGameEndCondition == 2) {
+#if defined(VERSION_GPIP01_00)
+			flowCont._238PAL = 0;
+#endif
 			mSection->mNextSectionId = ONEPLAYER_NewPikiGame;
 			return new MessageModeState(mSection, false);
 		}
 		if (flowCont.mGameEndCondition == 1) {
+#if defined(VERSION_GPIP01_00)
+			flowCont._238PAL = 0;
+#endif
 			mSection->mNextSectionId = ONEPLAYER_NewPikiGame;
 			return new MessageModeState(mSection, true);
 		}
@@ -721,19 +735,52 @@ ModeState* DayOverModeState::update(u32& result)
 
 	handleTutorialWindow(result, mSection->mController);
 
+#if defined(VERSION_GPIP01_00)
+	bool skipped = false;
+	if (flowCont._238PAL && playerState->getCurrParts() != 30 && gameflow.mWorldClock.mCurrentDay < 30) {
+		if (mState == 0 && mSection->mController->keyClick(KBBTN_B | KBBTN_A)) {
+			OSReport("!!!!!!!!!!!!!! SKIPPING !!!!\n");
+			gameflow.mMoviePlayer->skipScene(SCENESKIP_Skip);
+			skipped          = true;
+			flowCont._23CPAL = 1;
+		}
+
+		if (mState == 1 && (flowCont._23CPAL || mSection->mController->keyClick(KBBTN_B | KBBTN_A))) {
+			skipped = true;
+		}
+	}
+	if (!gameflow.mMoviePlayer->mIsActive || skipped) {
+#else
 	if (!gameflow.mMoviePlayer->mIsActive) {
+#endif
 		ModeState* state = nullptr;
 		switch (mState) {
 		case 0:
+#if defined(VERSION_GPIP01_00)
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE ONE!!!!\n");
+#endif
 			state = initialisePhaseOne();
 			break;
 		case 1:
+#if defined(VERSION_GPIP01_00)
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE TWO!!!!\n");
+#endif
 			state = initialisePhaseTwo();
 			break;
 		case 2:
+#if defined(VERSION_GPIP01_00)
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE THREE!!!!\n");
+#endif
 			state = initialisePhaseThree();
 			break;
 		case 3:
+#if defined(VERSION_GPIP01_00)
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
+			OSReport("!!!!!!!!!!!!!! INITIALISE PHASE FOUR!!!!\n");
+#endif
 			state = initialisePhaseFour();
 			break;
 		}
@@ -1491,8 +1538,15 @@ void GameMovieInterface::parseMessages()
  */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
+#if defined(VERSION_GPIP01_00)
+	int id   = msg.mMessageId;
+	int data = msg.mData;
+	OSReport("!!!!!!!!!!! Got message %d : %d\n", id, data);
+	switch (id) {
+#else
 	int data = msg.mData;
 	switch (msg.mMessageId) {
+#endif
 	case MOVIECMD_StartTutorial:
 		// Data from here uses the DEMOID_* define (cutscene ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
@@ -1652,6 +1706,10 @@ NewPikiGameSection::NewPikiGameSection()
 		gameflow.mWorldClock.setTime(14.8f);
 	}
 	flowCont.mGameEndCondition = 0;
+#if defined(VERSION_GPIP01_00)
+	flowCont._238PAL = 1;
+	flowCont._23CPAL = 0;
+#endif
 	gsys->setFrameClamp(2);
 	mapMgr = nullptr;
 	npgss  = nullptr;

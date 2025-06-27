@@ -242,13 +242,23 @@ struct TitleSetupSection : public Node {
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
 					} else if (titleState == zen::ogScrTitleMgr::Status_5 || titleState == zen::ogScrTitleMgr::Status_3) {
+#if defined(VERSION_GPIP01_00)
+						int child = gameflow.mGamePrefs.getChildMode();
+						STACK_PAD_VAR(1);
+						PRINT("got language index %d\n", child);
+#else
 						bool child = gameflow.mGamePrefs.getChildMode();
+#endif
 						if (gameflow.mGamePrefs.mIsChanged) {
 							bool vibe   = gameflow.mGamePrefs.getVibeMode();
 							bool stereo = gameflow.mGamePrefs.getStereoMode();
-							bool child  = gameflow.mGamePrefs.getChildMode();
-							u8 bgmVol   = gameflow.mGamePrefs.getBgmVol();
-							u8 sfxVol   = gameflow.mGamePrefs.getSfxVol();
+#if defined(VERSION_GPIP01_00)
+							int child = gameflow.mGamePrefs.getChildMode();
+#else
+							bool child = gameflow.mGamePrefs.getChildMode();
+#endif
+							u8 bgmVol = gameflow.mGamePrefs.getBgmVol();
+							u8 sfxVol = gameflow.mGamePrefs.getSfxVol();
 
 							if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 								gameflow.mMemoryCard.loadOptions();
@@ -513,11 +523,19 @@ void TitlesSection::init()
 	gsys->startLoading(&gameflow.mGameLoadIdler, true, gameflow.mRedLoadLogo ? 0 : 60);
 
 	int beforeLang = gameflow.mLanguageIndex;
+#if defined(VERSION_GPIP01_00)
+	gameflow.mLanguageIndex = gameflow.mGamePrefs.getChildMode();
+	if (gameflow.mLanguageIndex < 0 || gameflow.mLanguageIndex > 4) {
+		PRINT("trying to load language %d\n", gameflow.mLanguageIndex);
+		gameflow.mLanguageIndex = 0;
+	}
+#else
 	if (!gameflow.mGamePrefs.getChildMode()) {
 		gameflow.mLanguageIndex = 0;
 	} else {
 		gameflow.mLanguageIndex = 1;
 	}
+#endif
 
 	if (gameflow.mLanguageIndex != beforeLang) {
 		preloadLanguage();

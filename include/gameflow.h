@@ -350,6 +350,9 @@ struct GamePrefs : public CoreNode {
 	virtual void read(RandomAccessStream&);  // _0C
 	virtual void write(RandomAccessStream&); // _10
 
+#if defined(VERSION_GPIP01_00)
+	void Initialise();
+#else
 	void Initialise()
 	{
 		mFlags              = 3;
@@ -364,12 +367,17 @@ struct GamePrefs : public CoreNode {
 		mIsChanged          = false;
 		mHiscores.Initialise();
 	}
+#endif
 
 	void setBgmVol(u8);
 	void setSfxVol(u8);
 	void setStereoMode(bool);
 	void setVibeMode(bool);
+#if defined(VERSION_GPIP01_00)
+	void setChildMode(int);
+#else
 	void setChildMode(bool);
+#endif
 	void getChallengeScores(GameChalQuickInfo&);
 	void checkIsHiscore(GameChalQuickInfo&);
 	void checkIsHiscore(GameQuickInfo&);
@@ -394,7 +402,12 @@ struct GamePrefs : public CoreNode {
 
 	bool getVibeMode() { return (mFlags & GAMEPREF_Vibe) != 0; }
 	bool getStereoMode() { return (mFlags & GAMEPREF_Stereo) != 0; }
+
+#if defined(VERSION_GPIP01_00)
+	int getChildMode();
+#else
 	bool getChildMode() { return (mFlags & GAMEPREF_Child) != 0; }
+#endif
 
 	u8 getBgmVol() { return mBgmVol; }
 	u8 getSfxVol() { return mSfxVol; }
