@@ -375,7 +375,7 @@ config.libs = [
             Object(not MatchingFor("GPIP01_00"), "jaudio/syncstream.c"),
             Object(Matching, "jaudio/bankloader.c"),
             Object(Matching, "jaudio/interleave.c"),
-            Object(not MatchingFor("GPIP01_00"), "jaudio/pikiseq.c"),
+            Object(Matching, "jaudio/pikiseq.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/hvqm_play.c"),
         ],
     },

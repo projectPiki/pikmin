@@ -3,8 +3,6 @@
 
 #include "types.h"
 
-#define BARC_HEADER_SIZE (32)
-
 typedef struct BarcHeader BarcHeader;
 typedef struct BarcEntry BarcEntry;
 typedef union Barc Barc;
