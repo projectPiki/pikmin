@@ -2,7 +2,7 @@
 * text=auto
 
 # Explicitly declare text files
-*.py   text
+*.py   text working-tree-encoding=UTF-8
 
 # Enforce platform-specific encodings
 *.bat  text eol=crlf
