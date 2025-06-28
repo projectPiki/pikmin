@@ -313,12 +313,15 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (!mStereoMode) {
 					mStereoMode = true;
 					setGamePrefs();
-#if defined(VERSION_GPIP01_00)
+
+					// For every time this sound is played here, it worked correctly in USA demo, then broken in final USA (Jac_PlaySystemSe
+					// is meant to use its own sound ids for system sounds), then fixed AGAIN in a different way for PAL
+#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
-					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#elif defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
-					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+					Jac_PlaySystemSe(Sound_Config);
 #endif
 				}
 				break;
@@ -327,12 +330,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
-#if defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
-					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#elif defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
-					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+					Jac_PlaySystemSe(Sound_Config);
 #endif
 				}
 				break;
@@ -341,12 +344,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
-#if defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
-					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#elif defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
-					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+					Jac_PlaySystemSe(Sound_Config);
 #endif
 				}
 				break;
@@ -358,12 +361,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
-#if defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
-					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#elif defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
-					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+					Jac_PlaySystemSe(Sound_Config);
 #endif
 				}
 				break;
@@ -372,12 +375,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
-#if defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
-					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#elif defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
-					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+					Jac_PlaySystemSe(Sound_Config);
 #endif
 				}
 				break;
@@ -386,12 +389,12 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
-#if defined(VERSION_GPIP01_00)
+#if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
-					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
+#elif defined(VERSION_G98E01_PIKIDEMO)
+					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
-					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
+					Jac_PlaySystemSe(Sound_Config);
 #endif
 				}
 				break;
