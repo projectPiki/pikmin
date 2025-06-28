@@ -72,14 +72,14 @@ struct ogScrTitleMgr {
 	s16 mBgmVol;                   // _9E
 	s16 mSfxVol;                   // _A0
 	bool mVibeMode;                // _A2
-	bool mChildMode;               // _A3
-	u8 _A4;                        // _A4
-	u8 _A5;                        // _A5
-	u16 _A6;                       // _A6
-
 #if defined(VERSION_GPIP01_00)
-	u8 _A8[4]; // _A8, todo, find out where this actually goes, this just fixes the overall size for now
+	int mChildMode; // _A4
+#else
+	bool mChildMode; // _A3
 #endif
+	u8 _A4;  // _A4
+	u8 _A5;  // _A5
+	u16 _A6; // _A6
 };
 
 } // namespace zen

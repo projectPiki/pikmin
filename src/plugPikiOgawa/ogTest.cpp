@@ -380,7 +380,11 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		gfx.setAuxColour(Colour(255, 255, 0, 255));
 
 		char scrnSelectorText[PATH_MAX];
+#if defined(VERSION_GPIP01_00)
+		sprintf(scrnSelectorText, "２Ｄ Screen checker"); // '2D screen selector'
+#else
 		sprintf(scrnSelectorText, "２Ｄスクリーン・セレクター"); // '2D screen selector'
+#endif
 		gfx.texturePrintf(mFont, 320 - mFont->stringWidth(scrnSelectorText) / 2, 20, scrnSelectorText);
 
 		gfx.setColour(Colour(200, 255, 255, 255), true);
@@ -388,6 +392,19 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 
 		char optionsTexts[11][PATH_MAX];
 
+#if defined(VERSION_GPIP01_00)
+		sprintf(optionsTexts[0], "title (%d)", mTitleMode);              // 'Title (%d)'
+		sprintf(optionsTexts[1], "tutorial (%d)", mTutorialMode);        // 'Tutorial (%d)'
+		sprintf(optionsTexts[2], "save select (%d)", mSaveMode);         // 'Save Select (%d)'
+		sprintf(optionsTexts[3], "test (%d)", mMapMode);                 // 'Test (%d)'
+		sprintf(optionsTexts[4], "memory check(%d)", mMemChkMode);       // 'Memory check(%d)'
+		sprintf(optionsTexts[5], "check & select(%d)", mFileChkSelMode); // 'Check  and Select (%d)'
+		sprintf(optionsTexts[6], "diary (%d)", mDiaryMode);              // 'Diary (%d)'
+		sprintf(optionsTexts[7], "result");                              // 'Results'
+		sprintf(optionsTexts[8], "pause (%d)", mPauseMode);              // 'Pause (%d)'
+		sprintf(optionsTexts[9], "total");                               // 'Total Score'
+		sprintf(optionsTexts[10], "start");                              // 'Start'
+#else
 		sprintf(optionsTexts[0], "タイトル (%d)", mTitleMode);               // 'Title (%d)'
 		sprintf(optionsTexts[1], "チュートリアル (%d)", mTutorialMode);      // 'Tutorial (%d)'
 		sprintf(optionsTexts[2], "セーブセレクト (%d)", mSaveMode);          // 'Save Select (%d)'
@@ -399,6 +416,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		sprintf(optionsTexts[8], "ポーズ (%d)", mPauseMode);                 // 'Pause (%d)'
 		sprintf(optionsTexts[9], "トータル成績");                            // 'Total Score'
 		sprintf(optionsTexts[10], "スタート");                               // 'Start'
+#endif
 
 		for (int i = 0; i < 11; i++) {
 			gfx.texturePrintf(mFont, 200, 30 * i + 60, optionsTexts[i]);
@@ -420,7 +438,11 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 
 		ogScrMessageMgr* msgMgr = mTutorialMgr->getScrMsgMgr();
 		char tutorialText[PATH_MAX];
+#if defined(VERSION_GPIP01_00)
+		sprintf(tutorialText, "<<< tutorial >>> tx(%d)", msgMgr->getTxtLineMax()); // '<<< Tutorial >>> Number of tx?? (%d)'
+#else
 		sprintf(tutorialText, "<<< チュ−トリアル >>> tx??の数(%d個)", msgMgr->getTxtLineMax()); // '<<< Tutorial >>> Number of tx?? (%d)'
+#endif
 		gfx.texturePrintf(mFont, 30, 20, tutorialText);
 		gfx.texturePrintf(mFont, 30, 40, msgMgr->getPageInfo()->mScreenResourcePath);
 	}

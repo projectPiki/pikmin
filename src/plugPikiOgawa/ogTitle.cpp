@@ -87,7 +87,11 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 
 	mAlphaMgr = new setTenmetuAlpha(_30, 0.5f, 0.0f, 0, 255);
 
+#if defined(VERSION_GPIP01_00)
+	char path[4];
+#else
 	char path[12];
+#endif
 	for (int i = 0; i < 10; i++) {
 		sprintf(path, "on%02d", i + 1);
 		u32 test        = RGBA_TO_U32(path[0], path[1], path[2], path[3]);
@@ -113,6 +117,10 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	mMsSelectMenu->setCancelSE(JACSYS_Decide1);
 	mVSelectMenu->setCancelSE(JACSYS_Decide1);
 	mSoundSelectMenu->setCancelSE(JACSYS_Decide1);
+#elif defined(VERSION_GPIP01_00)
+	mMsSelectMenu->setCancelSE(SYSSE_DECIDE1);
+	mVSelectMenu->setCancelSE(SYSSE_DECIDE1);
+	mSoundSelectMenu->setCancelSE(SYSSE_DECIDE1);
 #else
 	mMsSelectMenu->setCancelSE(SYSSE_DECIDE1);
 	mVSelectMenu->setCancelSE(SYSSE_DECIDE1);
@@ -240,11 +248,15 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		}
 		if (mCurrentSelection == 1) {
 			mCurrentMenu = 4;
+#if defined(VERSION_GPIP01_00)
+			mMsSelectMenu->start(mChildMode);
+#else
 			if (mChildMode) {
 				mMsSelectMenu->start(1);
 			} else {
 				mMsSelectMenu->start(0);
 			}
+#endif
 			break;
 		}
 		if (mCurrentSelection == 2) {
@@ -267,9 +279,13 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 #else
 			bool vibe   = gameflow.mGamePrefs.getVibeMode();
 			bool stereo = gameflow.mGamePrefs.getStereoMode();
-			bool child  = gameflow.mGamePrefs.getChildMode();
-			u8 bgmVol   = gameflow.mGamePrefs.getBgmVol();
-			u8 sfxVol   = gameflow.mGamePrefs.getSfxVol();
+#if defined(VERSION_GPIP01_00)
+			int child = gameflow.mGamePrefs.getChildMode();
+#else
+			bool child = gameflow.mGamePrefs.getChildMode();
+#endif
+			u8 bgmVol = gameflow.mGamePrefs.getBgmVol();
+			u8 sfxVol = gameflow.mGamePrefs.getSfxVol();
 			if (gameflow.mMemoryCard.getMemoryCardState(true) == 0 && gameflow.mMemoryCard.mSaveFileIndex >= 0) {
 				gameflow.mMemoryCard.loadOptions();
 			}
@@ -297,7 +313,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (!mStereoMode) {
 					mStereoMode = true;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIP01_00)
+					seSystem->playSysSe(Sound_Config);
+#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
 #else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
@@ -309,7 +327,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol > 0) {
 					mBgmVol--;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIP01_00)
+					seSystem->playSysSe(Sound_Config);
+#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
 #else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
@@ -321,7 +341,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol > 0) {
 					mSfxVol--;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIP01_00)
+					seSystem->playSysSe(Sound_Config);
+#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
 #else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
@@ -336,7 +358,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mStereoMode) {
 					mStereoMode = false;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIP01_00)
+					seSystem->playSysSe(Sound_Config);
+#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
 #else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
@@ -348,7 +372,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mBgmVol < 10) {
 					mBgmVol++;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIP01_00)
+					seSystem->playSysSe(Sound_Config);
+#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
 #else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
@@ -360,7 +386,9 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 				if (mSfxVol < 10) {
 					mSfxVol++;
 					setGamePrefs();
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIP01_00)
+					seSystem->playSysSe(Sound_Config);
+#elif defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig); // THIS IS THE RIGHT ONE!! WHY DID YOU CHANGE IT
 #else
 					Jac_PlaySystemSe(Sound_Config); // this... is the wrong ID to use, devs.
@@ -426,6 +454,16 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		mMsSelectMenu->update(input);
 		int flag4         = mMsSelectMenu->getStatusFlag();
 		mCurrentSelection = mMsSelectMenu->getSelectMenu();
+#if defined(VERSION_GPIP01_00)
+		if (mCurrentSelection >= 0) {
+			mChildMode = mCurrentSelection;
+		}
+		if (flag4) {
+			break;
+		}
+		STACK_PAD_VAR(1);
+		setGamePrefs();
+#else
 		if (input->keyClick(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN)) {
 			if (mCurrentSelection == 0) {
 				mChildMode = false;
@@ -438,6 +476,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 		if (flag4) {
 			break;
 		}
+#endif
 		_04     = Status_3;
 		mStatus = Status_2;
 		return mStatus;

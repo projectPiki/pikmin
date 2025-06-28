@@ -51,9 +51,13 @@ bool zen::ogScrFileSelectMgr::getCardFileInfos()
 #else
 		bool vibe   = gameflow.mGamePrefs.getVibeMode();
 		bool stereo = gameflow.mGamePrefs.getStereoMode();
-		bool child  = gameflow.mGamePrefs.getChildMode();
-		u8 bgmVol   = gameflow.mGamePrefs.getBgmVol();
-		u8 sfxVol   = gameflow.mGamePrefs.mSfxVol; // stack's one too big, something's gotta give
+#if defined(VERSION_GPIP01_00)
+		int child = gameflow.mGamePrefs.getChildMode();
+#else
+		bool child = gameflow.mGamePrefs.getChildMode();
+#endif
+		u8 bgmVol = gameflow.mGamePrefs.getBgmVol();
+		u8 sfxVol = gameflow.mGamePrefs.mSfxVol; // stack's one too big, something's gotta give
 
 		gameflow.mMemoryCard.loadOptions();
 
@@ -164,6 +168,11 @@ void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
 	if (mDataAnimationTimer < 0.25f) {
 		mDataAnimationTimer += gsys->getFrameTime();
 		f32 t = mDataAnimationTimer / 0.25f;
+#if defined(VERSION_GPIP01_00)
+		if (t >= 1.0f) {
+			t = 1.0f;
+		}
+#endif
 		if (mIsDataAnimating) {
 			mYesNoDialogPane->setScale(t);
 			f32 alpha = mYesNoDialogPromptText->getAlpha() * t;
@@ -743,7 +752,12 @@ void zen::ogScrFileSelectMgr::init()
 zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 {
 	init();
-	mFxMgr              = new EffectMgr2D(16, 0x400, 0x400);
+#if defined(VERSION_GPIP01_00)
+	mFxMgr = new EffectMgr2D(16, 0x800, 0x800);
+#else
+	mFxMgr = new EffectMgr2D(16, 0x400, 0x400);
+#endif
+
 	mSlotScreensData[0] = new P2DScreen();
 	mSlotScreensData[1] = new P2DScreen();
 	mSlotScreensData[2] = new P2DScreen();

@@ -46,9 +46,18 @@ static s16 sjis_convert_table[0x258] ATTRIBUTE_ALIGN(32) = {
 	0xFB,  0xFC,  0xFD,  0xFE,  0xFF,  0,     0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107, 0x108, 0x109, 0x10A, 0x10B, 0x10C,
 	0x10D, 0x10E, 0x10F, 0x110, 0x111, 0x112, 0x113, 0x114, 0x115, 0x116, 0x0,
 };
+#endif
 
+// PAL changed exactly ONE character in this table and its an extremely specific instance of "・" that
+// doesn't want to match  when copy-pasted from anywhere in the actual code (there seems to be dozens
+// of "・"s in the shift-jis table and its using the wrong one  if you dont manually specify it)
 static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
+#if defined(VERSION_GPIP01_00)
+	"日目時私未知星大地\x85\x20名前宇宙旅途中流墜落愛機号多失無残姿動一重迎教気猛毒酸素含生命維持装置限度修復考船探検奇妙物体待立上何械観察"
+	"芽光放"
+#else
 	"日目時私未知星大地横名前宇宙旅途中流墜落愛機号多失無残姿動一重迎教気猛毒酸素含生命維持装置限度修復考船探検奇妙物体待立上何械観察芽光放"
+#endif
 	"思試引抜植見害好野菜呼投反応操作回転今来倒取増殖母彼態不議少能力調必要興味集団合行習性利用繰希望灯近押解散隊列記録画面安心幸運事離陸可"
 	"飛明捜索後入森昨出下全滅種掴切色同赤注意深口部分他違黄帰特穴掘石割内高収個範囲没太陽仕暗去食発荷伝質超科学結晶除汚移永久燃料電済位確認"
 	"間叩当最激本妻子供顔浮射線遠外音鳴役息座娘元空欠嵐強噴脱速加費良家計衝撃吸亜複通雑場所父親人美咲別感続金属品買理遊泳腰晩庫以状実組異常"
@@ -58,7 +67,6 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 	"造勢戦襲言遮和厳密頂着休年昔想像響返白敏再還我懸草誰工月司髪毛細番予殊影過関係誇育腹次矢窒寸覚覗屋忘血航誌亡泉夕使期敗容制挿読扱説書閉"
 	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
 };
-#endif
 
 /*
  * --INFO--
@@ -362,8 +370,12 @@ void zen::ogScrMessageMgr::cnvButtonIcon(char* str)
 			tmp2[1] = 0;
 
 			char buf1[PATH_MAX];
+#if defined(VERSION_GPIP01_00)
+			sprintf(buf1, "%sCC[%s]%s%sCC[%s]", tmp2, mButtonMarkupColours[offset], tmp1, tmp2, mDefaultButtonMarkupColour);
+#else
 			sprintf(buf1, "%sFX[32]%sFY[28]%sCC[%s]%s%sCC[%s]%sFX[24]%sFY[24]", tmp2, tmp2, tmp2, mButtonMarkupColours[offset], tmp1, tmp2,
 			        mDefaultButtonMarkupColour, tmp2, tmp2);
+#endif
 			len = strlen(buf1);
 			char buf2[1024];
 			sprintf(buf2, "%s%s", buf1, tmp + 2);
