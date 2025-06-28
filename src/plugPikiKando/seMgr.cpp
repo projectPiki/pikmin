@@ -46,7 +46,7 @@ SeMgr::SeMgr()
 	addInfo(JACORIMA_PikiFly, "Piki Fly");
 	addInfo(JACORIMA_PikiPulling, "Piki Pulling");
 	addInfo(JACORIMA_PikiPulled, "Piki Pulled");
-	addInfo(JACORIMA_BreakupPikiVoice, "Piki Breakup Voice");
+	addInfo(JACORIMA_PikiBreakupVoice, "Piki Breakup Voice");
 	addInfo(JACORIMA_PikiLift, "Piki Lift");
 	addInfo(JACORIMA_PikiFind, "Piki Find");
 	addInfo(JACORIMA_PikiFlyReady, "Piki Flyready");

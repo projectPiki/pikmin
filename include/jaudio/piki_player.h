@@ -24,7 +24,7 @@ typedef enum JacOrimaSoundID {
 	JACORIMA_PIKISOUND        = 0x8000, // these all have special checks in piki_player
 	JACORIMA_ThrowHit         = 0x8001,
 	JACORIMA_PikiFly          = 0x8002,
-	JACORIMA_BreakupPikiVoice = 0x8003,
+	JACORIMA_PikiBreakupVoice = 0x8003,
 	JACORIMA_PikiFlyReady     = 0x8004,
 	JACORIMA_PikiCalled       = 0x8005,
 	JACORIMA_PikiFind         = 0x8006,
