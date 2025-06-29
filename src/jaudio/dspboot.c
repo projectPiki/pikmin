@@ -4,8 +4,7 @@
 #include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
 
-// fun fact: this comes up as incorrect in objdiff, but this is correct according to the linker (+ is the same as ac-decomp)
-// additional fun fact: Prior to Dolphin Emulator 5.0-16483, the demo versions' early DSP microcode required DSP LLE to run.
+// Fun Fact: Prior to Dolphin Emulator 5.0-16483, USA Demo's early DSP microcode required DSP LLE to run.
 // This wasn't because it was difficult to support or anything, it was just so obscure that nobody thought to add it yet.
 // https://dolphin-emu.org/download/dev/8b3517a9f943b7379805a5a6a5a4d77c60d366f9/
 u16 jdsp[] ATTRIBUTE_ALIGN(32) = {
