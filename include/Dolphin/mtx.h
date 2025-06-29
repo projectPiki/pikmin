@@ -45,7 +45,7 @@ void MTXOrtho(Mtx44 mtx, f32 t, f32 b, f32 l, f32 r, f32 n, f32 f);
 
 ///////// CODED C MATRIX FUNCTIONS /////////
 void MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT);
 void PSMTXScale(Mtx m, f32 xS, f32 yS, f32 zS);
 #else

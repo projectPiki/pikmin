@@ -399,7 +399,7 @@ config.libs = [
             Object(Matching, "sysCommon/stream.cpp"),
             Object(Matching, "sysCommon/streamBufferedInput.cpp"),
             Object(Matching, "sysCommon/string.cpp"),
-            Object(not MatchingFor("GPIP01_00"), "sysCommon/graphics.cpp"),
+            Object(Matching, "sysCommon/graphics.cpp"),
             Object(Matching, "sysCommon/grLight.cpp"),
             Object(Equivalent, "sysCommon/shapeBase.cpp"),
             Object(Matching, "sysCommon/shpLightFlares.cpp"),

@@ -26,12 +26,16 @@ GXRenderModeObj progressiveRenderMode = {
 	480,                 // efbHeight
 	480,                 // xfbHeight
 	40,                  // viXOrigin
-	0,                   // viYOrigin
-	640,                 // viWidth
-	480,                 // viHeight
-	VI_XFBMODE_SF,       // xFBmode
-	0,                   // fiend_rendering
-	0,                   // aa
+#if defined(VERSION_GPIP01_00)
+	47, // viYOrigin
+#else
+	0, // viYOrigin
+#endif
+	640,           // viWidth
+	480,           // viHeight
+	VI_XFBMODE_SF, // xFBmode
+	0,             // fiend_rendering
+	0,             // aa
 	{
 	    { 6, 6 }, // sample_pattern
 	    { 6, 6 },
@@ -48,6 +52,37 @@ GXRenderModeObj progressiveRenderMode = {
 	},
 	{ 0, 0, 21, 22, 21, 0, 0 }, // vfilter
 };
+#if defined(VERSION_GPIP01_00)
+GXRenderModeObj localGXPal528IntDf = {
+	VI_TVMODE_PAL_INT, // viTVmode
+	640,               // fbWidth
+	528,               // efbHeight
+	528,               // xfbHeight
+	30,                // viXOrigin
+	23,                // viYOrigin
+	660,               // viWidth
+	528,               // viHeight
+	VI_XFBMODE_DF,     // xFBmode
+	0,                 // fiend_rendering
+	0,                 // aa
+	{
+	    { 6, 6 }, // sample_pattern
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	    { 6, 6 },
+	},
+	{ 8, 8, 10, 12, 10, 8, 8 }, // vfilter
+};
+static GXRenderModeObj* sScreenMode[2] = { &localGXPal528IntDf, &progressiveRenderMode };
+#else
 GXRenderModeObj localNtsc480IntDf = {
 	VI_TVMODE_NTSC_INT, // viTVmode
 	640,                // fbWidth
@@ -76,8 +111,8 @@ GXRenderModeObj localNtsc480IntDf = {
 	},
 	{ 5, 6, 14, 14, 14, 6, 5 }, // vfilter
 };
-
 static GXRenderModeObj* sScreenMode[2] = { &localNtsc480IntDf, &progressiveRenderMode };
+#endif
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 static int sFirstFrame = 2;
@@ -146,11 +181,19 @@ DGXGraphics::DGXGraphics(bool flag)
 		mRenderMode = 0;
 	}
 
-	mScreenWidth  = sScreenMode[mRenderMode]->fbWidth;
+	mScreenWidth = sScreenMode[mRenderMode]->fbWidth;
+#if defined(VERSION_GPIP01_00)
+	mScreenHeight = 480;
+
+	GXSetDispCopySrc(0, 0, sScreenMode[mRenderMode]->fbWidth, mScreenHeight);
+	GXSetDispCopyDst(sScreenMode[mRenderMode]->fbWidth, sScreenMode[mRenderMode]->xfbHeight);
+	GXSetDispCopyYScale(1.1f);
+#else
 	mScreenHeight = sScreenMode[mRenderMode]->efbHeight;
 	GXSetDispCopySrc(0, 0, sScreenMode[mRenderMode]->fbWidth, sScreenMode[mRenderMode]->efbHeight);
 	GXSetDispCopyDst(sScreenMode[mRenderMode]->fbWidth, sScreenMode[mRenderMode]->xfbHeight);
 	GXSetDispCopyYScale((f32)sScreenMode[mRenderMode]->xfbHeight / (f32)sScreenMode[mRenderMode]->efbHeight);
+#endif
 	GXSetCopyFilter(sScreenMode[mRenderMode]->aa, sScreenMode[mRenderMode]->sample_pattern, GX_TRUE, sScreenMode[mRenderMode]->vfilter);
 
 	if (sScreenMode[mRenderMode]->aa) {
@@ -162,7 +205,11 @@ DGXGraphics::DGXGraphics(bool flag)
 	VIInit();
 	videoReset();
 
+#if defined(VERSION_GPIP01_00)
+	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * (sScreenMode[mRenderMode]->xfbHeight + 2) * 2;
+#else
 	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * sScreenMode[mRenderMode]->xfbHeight * 2;
+#endif
 
 #if defined(VERSION_G98E01_PIKIDEMO)
 	VISetBlack(TRUE);
@@ -837,7 +884,7 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 	STACK_PAD_VAR(0x40);
 	Mtx mtx;
 	if (set) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		C_MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y,
 		                      0.5f, 0.5f);
 #else
@@ -871,7 +918,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 		Mtx mtx4; // 0xB0
 		Mtx mtx5; // 0x80
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		PSMTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
 #else
 		MTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
@@ -893,10 +940,10 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 
 	if (mHasTexGen) {
 		Mtx texMtx;
-#if defined(VERSION_G98E01_PIKIDEMO)
-		f32 mag      = 0.5f / PSVECMag((Vec*)mtx.mMtx);
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+		f32 mag = 0.5f / PSVECMag((Vec*)mtx.mMtx);
 #else
-		f32 mag      = 0.5f / VECMag((Vec*)mtx.mMtx);
+		f32 mag = 0.5f / VECMag((Vec*)mtx.mMtx);
 #endif
 		texMtx[0][0] = mag * mtx.mMtx[0][0];
 		texMtx[0][1] = mag * mtx.mMtx[0][1];
@@ -1471,7 +1518,11 @@ void DGXGraphics::setFog(bool set)
 		if (mCamera->mNear < mCamera->mFar) {
 			GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 		} else {
+#if defined(VERSION_GPIP01_00)
+			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", "dgxGraphics.cpp", 1732);
+#else
 			OSReport("%s:%d Warning: cam->vNear >= cam->vFar\n", "dgxGraphics.cpp", 1683);
+#endif
 		}
 #endif
 	} else {
@@ -2059,14 +2110,30 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 	int yPos     = y;
 	char* bufPtr = buf;
 	while (*bufPtr) {
+#if defined(VERSION_GPIP01_00)
+		char z = *bufPtr;
+		STACK_PAD_VAR(2);
+		int idx;
+		if (z >= 0xa0) {
+			idx = font->charToIndex(z);
+			bufPtr++;
+		} else if (z & 0x80) {
+			idx = font->charToIndex(u16(bufPtr[0] << 8 | bufPtr[1]));
+			bufPtr += 2;
+		} else {
+			idx = font->charToIndex(z);
+			bufPtr++;
+		}
+#else
 		int idx;
 		if (*bufPtr & 0x80) {
 			idx = font->charToIndex(u16(bufPtr[0] << 8 | bufPtr[1]));
 			bufPtr += 2;
 		} else {
-			idx = font->charToIndex(bufPtr[0]);
+			idx = font->charToIndex(*bufPtr);
 			bufPtr++;
 		}
+#endif
 
 		RectArea& texCoords = font->mChars[idx].mTextureCoords;
 

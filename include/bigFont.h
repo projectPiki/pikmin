@@ -3,6 +3,7 @@
 
 #include "types.h"
 // this file is found on retail discs of Pikmin 1 GCN
+// Note that this is the USA 1.01 version of the file, use a different header for alternate versions of the font file
 // C:\Development\DolphinPiki\dvdImage\dataDir\bigFont.h got normal image of format GX_TF_IA4 : data = 508032 bytes
 // texture size = 504 x 1008
 // clang-format off

@@ -20,7 +20,7 @@ typedef struct SVec {
 } SVec;
 
 f32 PSVECSquareMag(Vec*);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
 f32 PSVECMag(Vec*);
 #else
 f32 VECMag(Vec*);

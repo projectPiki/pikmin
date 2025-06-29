@@ -1,6 +1,11 @@
 #include "system.h"
 
+#if defined(VERSION_GPIP01_00)
+#include "bigFont_PAL.h"
+#else
 #include "bigFont.h"
+#endif
+
 #include "LoadIdler.h"
 #include "Delegate.h"
 #include "Dolphin/os.h"
@@ -576,6 +581,154 @@ void initBigFont()
 	tex->attach();
 }
 
+#if defined(VERSION_GPIP01_00)
+static char* e_errorMessages[] = {
+	"Reading Game Disc...",
+	nullptr,
+	"An error has occurred.",
+	"Turn the power OFF and",
+	"check the NINTENDO GAMECUBE",
+	"Instruction Booklet for",
+	"instructions.",
+	nullptr,
+	"The Game Disc could not be read.",
+	"Please read the",
+	"NINTENDO GAMECUBE",
+	"Instruction Booklet",
+	"for more information.",
+	nullptr,
+	"Please insert a",
+	"Pikmin Game Disc.",
+	nullptr,
+	"Please close the",
+	"Disc Cover.",
+	nullptr,
+	"This is not a",
+	"Pikmin Game Disc.",
+	"Please insert a",
+	"Pikmin Game Disc.",
+	nullptr,
+};
+
+static char* f_errorMessages[] = {
+	"Lecture du disque...",
+	nullptr,
+	"Une erreur est survenue.",
+	"Eteignez la console et",
+	"reportez-vous au manuel",
+	"d'instructions de votre",
+	"NINTENDO GAMCUBE.", // Gamcube.
+	nullptr,
+	"Le disque ne peut \xEAtre lu.",
+	"Reportez-vous au manuel",
+	"d'instructions de votre",
+	"NINTENDO GAMECUBE",
+	"pour plus d'informations.",
+	nullptr,
+	"Veuillez ins\xEArer un",
+	"disque Pikmin.",
+	nullptr,
+	"Veuillez refermer le",
+	"couvercle.",
+	nullptr,
+	"Ce n'est pas un",
+	"disque Pikmin.",
+	"Veuillez ins\xE9rer un",
+	"disque Pikmin.",
+	nullptr,
+};
+
+static char* g_errorMessages[] = {
+	"Disc wird gelesen...",
+	nullptr,
+	"Ein Fehler ist aufgetreten.",
+	"Bitte schalten sie den",
+	"NINTENDO GAMECUBE(TM) aus",
+	"und lesen Sie die",
+	"Bedienungsanleitung f\xFCr",
+	"weitere Informationen.",
+	nullptr,
+	"Diese Disc kann nicht gelesen",
+	"werden. Bitte lesen Sie die",
+	"Bedienungsanleitung, um weitere",
+	"Informationen zu erhalten.",
+	nullptr,
+	"Bitte legen Sie eine",
+	"Pikmin Game Disc ein.",
+	nullptr,
+	"Bitte schlieen Sie den",
+	"Disc-Deckel.",
+	nullptr,
+	"Diese Disc beinhaltet",
+	"nicht Pikmin.",
+	"Bitte legen Sie eine",
+	"Pikmin Game Disc ein.",
+	nullptr,
+};
+
+static char* s_errorMessages[] = {
+	"Leyendo el disco...",
+	nullptr,
+	"Se ha producido un error.",
+	"Apaga la consola y consulta",
+	"el manual de instrucciones",
+	"de NINTENDO GAMECUBE",
+	"para obtener más información.",
+	nullptr,
+	"No se puede leer el disco.",
+	"Consulta el manual de",
+	"instrucciones de",
+	"NINTENDO GAMECUBE",
+	"para obtener más información.",
+	nullptr,
+	"Coloca el disco",
+	"de Pikmin.",
+	nullptr,
+	"Cierra la tapa",
+	"de la consola.",
+	nullptr,
+	"Éste no es el",
+	"disco de Pikmin.",
+	"Coloca el disco",
+	"apropiado.",
+	nullptr,
+};
+
+static char* i_errorMessages[] = {
+	"Lettura del disco...",
+	nullptr,
+	"Si è verificato un errore.",
+	"Spegnere il",
+	"NINTENDO GAMECUBE",
+	"e consultare il",
+	"relativo manuale d'istruzioni.",
+	nullptr,
+	"Impossibile leggere il disco.",
+	"Consultare il",
+	"manuale d'istruzioni",
+	"del NINTENDO GAMECUBE.",
+	nullptr,
+	"Inserire il",
+	"disco di Pikmin.",
+	nullptr,
+	"Chiudere il coperchio",
+	"del disco.",
+	nullptr,
+	"Questo non è un",
+	"disco di Pikmin.",
+	"Inserire un",
+	"disco di Pikmin.",
+	nullptr,
+};
+
+static char** errorList[30] = {
+	&e_errorMessages[0], &e_errorMessages[2], &e_errorMessages[8], &e_errorMessages[14], &e_errorMessages[17], &e_errorMessages[20],
+	&f_errorMessages[0], &f_errorMessages[2], &f_errorMessages[8], &f_errorMessages[14], &f_errorMessages[17], &f_errorMessages[20],
+	&g_errorMessages[0], &g_errorMessages[3], &g_errorMessages[8], &g_errorMessages[14], &g_errorMessages[17], &g_errorMessages[20],
+	&s_errorMessages[0], &s_errorMessages[2], &s_errorMessages[8], &s_errorMessages[14], &s_errorMessages[17], &s_errorMessages[20],
+	&i_errorMessages[0], &i_errorMessages[2], &i_errorMessages[8], &i_errorMessages[14], &i_errorMessages[17], &i_errorMessages[20],
+};
+#else
 static char* errorMessages[] = {
 	"Reading Game Disc...",
 	nullptr,
@@ -607,6 +760,7 @@ static char* errorMessages[] = {
 static char** errorList[6] = {
 	&errorMessages[0], &errorMessages[2], &errorMessages[8], &errorMessages[14], &errorMessages[17], &errorMessages[20],
 };
+#endif
 
 /*
  * --INFO--
@@ -625,8 +779,12 @@ void System::showDvdError(Graphics& gfx)
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
 
 	if (mDvdErrorCode) { // DvdError::ReadingDisc or higher
-		int y         = 160;
+		int y = 160;
+#if defined(VERSION_GPIP01_00)
+		char** errors = errorList[mDvdErrorCode + _1A0 * 6];
+#else
 		char** errors = errorList[mDvdErrorCode];
+#endif
 		while (*errors) {
 			gfx.texturePrintf(bigFont, 320 - (bigFont->stringWidth(*errors) / 2), y += 28, *errors);
 			errors++;
