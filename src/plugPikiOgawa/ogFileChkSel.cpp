@@ -66,6 +66,7 @@ void zen::ogScrFileChkSelMgr::startSub()
  */
 void zen::ogScrFileChkSelMgr::start(bool p1)
 {
+	PRINT("********** ogScrFileChkSelMgr %d ***************\n", p1);
 	mSkipFileSelect  = p1;
 	mIsSaveOperation = false;
 	mState           = MemoryCheckInProgress;
@@ -81,6 +82,7 @@ void zen::ogScrFileChkSelMgr::start(bool p1)
  */
 void zen::ogScrFileChkSelMgr::startSave()
 {
+	PRINT("********** ogScrFileChkSelMgr for <<SAVE>> ***************\n");
 	mSkipFileSelect  = false;
 	mIsSaveOperation = true;
 	mState           = MemoryCheckInProgress;

@@ -31,9 +31,12 @@ void* System::alloc(u32 size)
 
 	if (gsys->mActiveHeapIdx >= 0) {
 		AyuHeap* heap = &gsys->mHeaps[gsys->mActiveHeapIdx];
-		result        = heap->push(size);
+		if (size == 0) {
+			PRINT("trying to allocate %d bytes on heap\n", 0);
+		}
+		result = heap->push(size);
 		if (!result) {
-			PRINT("new[] %d failed in heap '%s'", gsys->mActiveHeapIdx, size);
+			ERROR("new[] %d failed in heap '%s'", gsys->mActiveHeapIdx, size);
 		}
 
 		if (size == 0 || gsys->mForcePrint) {

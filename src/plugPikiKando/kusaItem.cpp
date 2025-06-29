@@ -239,6 +239,7 @@ void BoBaseItem::update()
 		if (mEffectDuration <= 0) {
 			mEffectDuration = 0;
 			if (mParticleGenerator) {
+				PRINT("effect kill\n");
 				effectMgr->mPtclMgr.killGenerator(mParticleGenerator, false);
 				mParticleGenerator = nullptr;
 			}
@@ -296,6 +297,7 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
 			mEffectDuration = 30;
 			if (!mParticleGenerator) {
 				mParticleGenerator = effectMgr->create(EffectMgr::EFF_Kusa_Extend1, mPosition, nullptr, nullptr);
+				PRINT("effect created !!!!\n");
 			}
 		}
 
