@@ -194,6 +194,7 @@ void ID32::read(RandomAccessStream& stream)
  */
 void ID32::print()
 {
+	PRINT("id (%x) is %s\n", mId, mStringID);
 }
 
 /**

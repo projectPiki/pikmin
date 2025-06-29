@@ -693,8 +693,12 @@ void TextureCacher::cacheTexture(CacheTexture* tex)
 	u32 texSize = OSRoundDown32B(tex->mTexImage->mDataSize + 0x53);
 
 	while (true) {
-		if (mCache->largestBlockFree() > texSize) {
-			void* alloc                  = mCache->mallocL(texSize);
+		u32 largestBlockFree = mCache->largestBlockFree();
+		if (largestBlockFree > texSize) {
+			void* alloc = mCache->mallocL(texSize);
+			if (!alloc) {
+				ERROR("Could not get memory from cache! %d : %d\n", texSize, largestBlockFree);
+			}
 			tex->mTexImage->mTextureData = (void*)OSRoundDown32B((u32)alloc + 0x33);
 			TexCacheInfo* info           = (TexCacheInfo*)alloc;
 			info->_0C                    = (TexobjInfo*)&tex->mActiveCache;
