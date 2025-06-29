@@ -24,7 +24,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("tekinakata")
 
 namespace TekiNakata {
 

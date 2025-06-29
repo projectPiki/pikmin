@@ -16,7 +16,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("aiPush")
 
 /*
  * --INFO--
