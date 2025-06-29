@@ -331,7 +331,7 @@ config.libs = [
             Object(Matching, "jaudio/rate.c"),
             Object(Matching, "jaudio/audiomesg.c"),
             Object(Matching, "jaudio/stackchecker.c"),
-            Object(not MatchingFor("G98E01_PIKIDEMO"), "jaudio/dspboot.c"),
+            Object(Matching, "jaudio/dspboot.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/dspproc.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/dsptask.c"),
             Object(not MatchingFor("GPIP01_00"), "jaudio/osdsp.c"),
