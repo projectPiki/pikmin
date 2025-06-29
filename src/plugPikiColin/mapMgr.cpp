@@ -29,7 +29,7 @@ DEFINE_ERROR()
  * Address:	........
  * Size:	0000F0
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("mapMgr")
 
 /**
  * @brief Fabricated name. Some struct has to exist here, but I don't think it's exposed anywhere.

@@ -17,7 +17,7 @@
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT(nullptr)
+DEFINE_PRINT("OgNitakuSection")
 
 /*
  * --INFO--
