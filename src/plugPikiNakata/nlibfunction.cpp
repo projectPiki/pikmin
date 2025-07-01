@@ -101,10 +101,9 @@ f32 NPolynomialFunction::getCoefficient(int)
  */
 void NPolynomialFunction::println()
 {
-	// TODO: figure out wtf the DLL is doing here
-	PRINT(mData.mSize);
-	for (int i = 0; i < mData.mSize; i++) {
-		PRINT(mData.mValues[i]);
+	PRINT("NPolynomialFunction:%d\n", mData.getDimension());
+	for (int i = 0; i < mData.getDimension(); i++) {
+		PRINT("NPolynomialFunction:%d:%f\n", i, mData.mValues[i]);
 	}
 }
 
