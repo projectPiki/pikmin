@@ -38,12 +38,12 @@
 		System::halt(__FILE__, __LINE__, buffer); \
 	}
 
-#ifdef __MWERKS__
+#if defined(DEVELOP)
+#define PRINT(...) _Print(__VA_ARGS__)
+#define ERROR(...) _Error(__VA_ARGS__)
+#else
 #define PRINT(...) (__VA_ARGS__)
 #define ERROR(...) (__VA_ARGS__)
-#else
-#define PRINT(fmt, ...) _Print(fmt, ##__VA_ARGS__)
-#define ERROR(fmt, ...) _Error(fmt, ##__VA_ARGS__)
 #endif
 
 #endif // _DEBUGLOG_H
