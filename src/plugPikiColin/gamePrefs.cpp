@@ -291,7 +291,7 @@ void GamePrefs::write(RandomAccessStream& output)
  */
 void GamePrefs::fixSoundMode()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
 	_Print("fixing stereo mode to %s\n", OSGetSoundMode() ? "Stereo" : "Mono");
 #else
 	PRINT("fixing stereo mode to %s\n", OSGetSoundMode() ? "Stereo" : "Mono");

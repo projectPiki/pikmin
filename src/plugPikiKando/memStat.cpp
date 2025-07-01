@@ -108,9 +108,13 @@ void MemStat::end(char* name)
  * Address:	........
  * Size:	000034
  */
-int MemStat::getMemorySize(char*)
+int MemStat::getMemorySize(char* name)
 {
 	// UNUSED FUNCTION
+	if (MemInfo* info = getInfo(name)) {
+		return info->mMemorySize;
+	}
+	return 0;
 }
 
 /*
@@ -121,6 +125,7 @@ int MemStat::getMemorySize(char*)
 int MemStat::getRestMemory()
 {
 	// UNUSED FUNCTION
+	return gsys->getHeap(SYSHEAP_App)->getFree();
 }
 
 /*
@@ -131,6 +136,11 @@ int MemStat::getRestMemory()
 void MemStat::print()
 {
 	if (memStat) {
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+		_Print("****** MEMORY INFO ******\n");
+#else
+		PRINT("****** MEMORY INFO ******\n");
+#endif
 		printInfoRec(static_cast<MemInfo*>(mInfoListRoot.mChild), 4);
 	}
 }
@@ -150,26 +160,36 @@ MemInfo* MemStat::getInfo(char* name)
  * Address:	80086918
  * Size:	000238
  */
-void MemStat::printInfoRec(MemInfo* baseInfo, int idx)
+void MemStat::printInfoRec(MemInfo* info, int indentation)
 {
-	STACK_PAD_VAR(191); // this is a LOT of stack inflation, gotta be from some debug stuff.
+	int i;
+	char leftPad[PATH_MAX];
 
-	for (int i = 0; i < idx; i++) {
-		;
+	for (i = 0; i < indentation; i++) {
+		leftPad[i] = '\t';
 	}
+	leftPad[i] = '\0';
 
-	if (baseInfo->mMemorySize >= 0x100000) {
-		(f32(baseInfo->mMemorySize));
+	if (info->mMemorySize >= 1024 * 1024) {
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+		_Print("%s%s : %6.2f mbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f / 1024.0f);
+#else
+		PRINT("%s%s : %6.2f mbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f / 1024.0f);
+#endif
 	} else {
-		(f32(baseInfo->mMemorySize));
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+		_Print("%s%s : %6.2f kbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f);
+#else
+		PRINT("%s%s : %6.2f kbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f);
+#endif
 	}
 
-	if (baseInfo->mChild) {
-		printInfoRec(static_cast<MemInfo*>(baseInfo->mChild), idx + 4);
+	if (info->mChild) {
+		printInfoRec(static_cast<MemInfo*>(info->mChild), indentation + 4);
 	}
 
-	if (baseInfo->mNext) {
-		printInfoRec(static_cast<MemInfo*>(baseInfo->mNext), idx);
+	if (info->mNext) {
+		printInfoRec(static_cast<MemInfo*>(info->mNext), indentation);
 	}
 }
 
@@ -178,21 +198,21 @@ void MemStat::printInfoRec(MemInfo* baseInfo, int idx)
  * Address:	80086B50
  * Size:	000174
  */
-MemInfo* MemStat::getInfoRec(char* name, MemInfo* baseInfo)
+MemInfo* MemStat::getInfoRec(char* name, MemInfo* info)
 {
-	if (strcmp(baseInfo->mName, name) == 0) {
-		return baseInfo;
+	if (strcmp(info->mName, name) == 0) {
+		return info;
 	}
 
-	if (static_cast<MemInfo*>(baseInfo->mNext)) {
-		MemInfo* newInfo = getInfoRec(name, static_cast<MemInfo*>(baseInfo->mNext));
+	if (static_cast<MemInfo*>(info->mNext)) {
+		MemInfo* newInfo = getInfoRec(name, static_cast<MemInfo*>(info->mNext));
 		if (newInfo) {
 			return newInfo;
 		}
 	}
 
-	if (static_cast<MemInfo*>(baseInfo->mChild)) {
-		MemInfo* newInfo = getInfoRec(name, static_cast<MemInfo*>(baseInfo->mChild));
+	if (static_cast<MemInfo*>(info->mChild)) {
+		MemInfo* newInfo = getInfoRec(name, static_cast<MemInfo*>(info->mChild));
 		if (newInfo) {
 			return newInfo;
 		}
