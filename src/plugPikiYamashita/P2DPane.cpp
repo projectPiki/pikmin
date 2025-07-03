@@ -10,7 +10,7 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(30) // Why is this one suddenly capitalized?
 
 /*
  * --INFO--

@@ -8,7 +8,7 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(29)
 
 /*
  * --INFO--

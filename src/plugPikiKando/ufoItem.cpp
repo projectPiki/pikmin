@@ -15,7 +15,7 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 int numKeys          = 3;
 f32 trKeys[3]        = { 0.0f, 13.0f, 50.0f };

@@ -28,7 +28,7 @@ PlayerState* playerState;
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(20)
 
 /*
  * --INFO--

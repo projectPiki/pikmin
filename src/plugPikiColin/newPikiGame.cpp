@@ -85,7 +85,7 @@ static int resultTable[16];
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(61)
 
 /**
  * @brief Print function for newPikiGame.cpp, stripped in retail.

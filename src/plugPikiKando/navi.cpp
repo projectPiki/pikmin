@@ -53,7 +53,7 @@ static f32 controllerLen;
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(89)
 
 /*
  * --INFO--

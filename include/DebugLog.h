@@ -27,19 +27,22 @@
 	}
 
 // Size - 0x9C
-#define DEFINE_ERROR()                            \
-	static void _Error(const char* fmt, ...)      \
-	{                                             \
-		char buffer[2048];                        \
-		va_list args;                             \
-		va_start(args, fmt);                      \
-		vsprintf(buffer, fmt, args);              \
-		va_end(args);                             \
-		System::halt(__FILE__, __LINE__, buffer); \
+#define DEFINE_ERROR(line)                    \
+	static void _Error(char* fmt, ...)  \
+	{                                         \
+		char buffer[2048];                    \
+		va_list args;                         \
+		va_start(args, fmt);                  \
+		vsprintf(buffer, fmt, args);          \
+		va_end(args);                         \
+		System::halt(__FILE__, line, buffer); \
 	}
 
 #if defined(DEVELOP)
 #define PRINT(...) _Print(__VA_ARGS__)
+#define ERROR(...) _Error(__VA_ARGS__)
+#elif defined(VERSION_DPIJ01_PIKIDEMO)
+#define PRINT(...) (__VA_ARGS__)
 #define ERROR(...) _Error(__VA_ARGS__)
 #else
 #define PRINT(...) (__VA_ARGS__)
