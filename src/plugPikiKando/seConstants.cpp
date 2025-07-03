@@ -9,7 +9,7 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
  * @brief Print function for seConstants.cpp, stripped in retail.

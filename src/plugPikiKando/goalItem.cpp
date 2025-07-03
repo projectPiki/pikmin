@@ -35,7 +35,7 @@ static f32 rotateZ[1] = { 0.0f };
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(29)
 
 /*
  * --INFO--

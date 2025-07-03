@@ -8,7 +8,7 @@ PaniMotionTable* PaniPikiAnimMgr::motionTable;
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /*
  * --INFO--

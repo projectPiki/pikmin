@@ -17,7 +17,7 @@
  * Address:	........
  * Size:	00009C
  */
-DEFINE_ERROR()
+DEFINE_ERROR(12)
 
 /**
  * @brief Print function for animMgr.cpp, stripped in retail.
