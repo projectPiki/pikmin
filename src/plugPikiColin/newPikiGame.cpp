@@ -79,8 +79,6 @@ static bool dontShowFrame;
 static int resultTable[16];
 
 /**
- * @brief Error function for newPikiGame.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	00009C
@@ -88,9 +86,6 @@ static int resultTable[16];
 DEFINE_ERROR(61)
 
 /**
- * @brief Print function for newPikiGame.cpp, stripped in retail.
- *
- *
  * --INFO--
  * Address:	........
  * Size:	0000F4

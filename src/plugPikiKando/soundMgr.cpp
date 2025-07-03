@@ -15,8 +15,6 @@
 SeSystem* seSystem;
 
 /**
- * @brief Error function for soundMgr.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	00009C
@@ -24,8 +22,6 @@ SeSystem* seSystem;
 DEFINE_ERROR(11)
 
 /**
- * @brief Print function for soundMgr.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	0000F4

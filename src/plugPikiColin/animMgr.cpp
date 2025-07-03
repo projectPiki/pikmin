@@ -11,8 +11,6 @@
 #include "DebugLog.h"
 
 /**
- * @brief Error function for animMgr.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	00009C
@@ -20,9 +18,6 @@
 DEFINE_ERROR(12)
 
 /**
- * @brief Print function for animMgr.cpp, stripped in retail.
- *
- *
  * --INFO--
  * Address:	........
  * Size:	0000F0
