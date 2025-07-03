@@ -109,6 +109,9 @@ bool Navi::demoCheck()
 			len -= obj->getBottomRadius();
 			if (len <= maxDist) {
 				int id = PelletMgr::getUfoIndexFromID(obj->mConfig->mModelId.mId);
+				if (id == -1) {
+					ERROR("WHY !! THIS IS NOT UFO PARTS!!\n");
+				}
 				if (!playerState->mDemoFlags.isFlag(id + DEMOFLAG_UfoPartDiscoveryOffset)) {
 					gameflow.mMovieType    = 3;
 					gameflow.mMovieInfoNum = id;

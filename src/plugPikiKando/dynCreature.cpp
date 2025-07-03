@@ -179,28 +179,30 @@ void DynCreature::disablePickOffset()
 void DynCreature::addParticle(f32 mass, Vector3f& position)
 {
 	DynParticle* ptcl = particleHeap->getFreeOne();
-	if (!ptcl) {
-		// PRINT("PARTICLE ADD FAILED ! (%s)\n", ObjType::getName(mObjType));
-		ERROR("ZANNEN !\n");
-		return;
-	}
+	if (ptcl) {
+		ptcl->mMass            = mass;
+		ptcl->mLocalPosition   = position;
+		ptcl->mInitialPosition = position;
+		if (!mParticleList) {
+			mParticleList = ptcl;
+		} else {
+			DynParticle* nextPtcl = mParticleList;
+			while (nextPtcl->mNextParticle) {
+				nextPtcl = nextPtcl->mNextParticle;
+			}
 
-	ptcl->mMass            = mass;
-	ptcl->mLocalPosition   = position;
-	ptcl->mInitialPosition = position;
-	if (!mParticleList) {
-		mParticleList = ptcl;
-	} else {
-		DynParticle* nextPtcl = mParticleList;
-		while (nextPtcl->mNextParticle) {
-			nextPtcl = nextPtcl->mNextParticle;
+			nextPtcl->mNextParticle = ptcl;
 		}
 
-		nextPtcl->mNextParticle = ptcl;
+		mMass += mass;
+		mParticleCount++;
+	} else {
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00)
+#else
+		PRINT("PARTICLE ADD FAILED ! (%s)\n", ObjType::getName(mObjType));
+		ERROR("ZANNEN !\n");
+#endif
 	}
-
-	mMass += mass;
-	mParticleCount++;
 }
 
 /*

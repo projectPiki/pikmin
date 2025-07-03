@@ -720,6 +720,9 @@ void Creature::update()
 
 	// Skip AI updates for non-important and CULLED objects
 	if (!isPikiOrNavi && !isCreatureFlag(CF_AIAlwaysActive) && mGrid.aiCulling() && !aiCullable()) {
+		if (isPiki()) {
+			ERROR("meck'n meck\n");
+		}
 		return;
 	}
 

@@ -39,6 +39,7 @@ void ActBou::init(Creature* creature)
 		mTargetStick = creature;
 	} else {
 		PRINT("TARGET IS %x : %d\n", creature, creature ? creature->mObjType : OBJTYPE_INVALID);
+		ERROR("karl caught a cold !\n");
 	}
 
 	mState = STATE_GotoLeg;

@@ -89,14 +89,13 @@ void PikiInfMgr::loadCard(RandomAccessStream& input)
 void PikiInfMgr::incPiki(Piki* piki)
 {
 	u16 color = piki->mColor;
-	if (color >= PikiMinColor && color <= PikiMaxColor) {
-		// todo: COMEBACKHERE TODO TODO: TODO
-		piki->mColor;
+	if (color < PikiMinColor || color > PikiMaxColor) {
+		ERROR("illegal col %d\n", piki->mColor);
 	}
 
 	int happa = piki->mHappa;
-	if (happa >= PikiMinHappa && happa <= PikiMaxHappa) {
-		piki->mHappa;
+	if (happa < PikiMinHappa || happa > PikiMaxHappa) {
+		ERROR("illegal happa %d\n", piki->mHappa);
 	}
 
 	mPikiCounts[color][happa]++;
@@ -109,6 +108,12 @@ void PikiInfMgr::incPiki(Piki* piki)
  */
 void PikiInfMgr::incPiki(int color, int happa)
 {
+	if (color >= PikiMinColor || color <= PikiMaxColor) {
+		ERROR("illegal col %d\n", color);
+	}
+	if (happa >= PikiMinHappa || happa <= PikiMaxHappa) {
+		ERROR("illegal happa %d\n", happa);
+	}
 	mPikiCounts[color][happa]++;
 }
 
@@ -120,13 +125,13 @@ void PikiInfMgr::incPiki(int color, int happa)
 void PikiInfMgr::decPiki(Piki* piki)
 {
 	u16 color = piki->mColor;
-	if (color >= PikiMinColor && color <= PikiMaxColor) {
-		piki->mColor;
+	if (color < PikiMinColor || color > PikiMaxColor) {
+		ERROR("illegal col %d\n", piki->mColor);
 	}
 
 	int happa = piki->mHappa;
-	if (happa >= PikiMinHappa && happa <= PikiMaxHappa) {
-		piki->mHappa;
+	if (happa < PikiMinHappa || happa > PikiMaxHappa) {
+		ERROR("illegal happa %d\n", piki->mHappa);
 	}
 
 	mPikiCounts[color][happa]--;
@@ -264,6 +269,9 @@ void BPikiInf::loadCard(RandomAccessStream& card)
  */
 void BPikiInf::doStore(Creature* piki)
 {
+	if (piki->mObjType != OBJTYPE_Pikihead) {
+		ERROR("mail to teppe\n");
+	}
 	mPikiColour   = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mStartKeyIndex;
 	mNextKeyIndex = static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mEndKeyIndex;
 }
@@ -275,6 +283,9 @@ void BPikiInf::doStore(Creature* piki)
  */
 void BPikiInf::doRestore(Creature* piki)
 {
+	if (piki->mObjType != OBJTYPE_Pikihead) {
+		ERROR("mail to teppe2\n");
+	}
 	static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mStartKeyIndex = mPikiColour;
 	static_cast<Piki*>(piki)->mPikiAnimMgr.mLowerAnimator.mEndKeyIndex   = mNextKeyIndex;
 }
@@ -370,13 +381,23 @@ void MonoInfMgr::saveCard(RandomAccessStream&)
  */
 void MonoInfMgr::loadCard(RandomAccessStream& input)
 {
-	clearActiveList();
+	BaseInf* inf = static_cast<BaseInf*>(mActiveList.mChild);
+	while (inf) {
+		BaseInf* next = static_cast<BaseInf*>(inf->mNext);
+		inf->del();
+		mFreeList.add(inf);
+		inf = next;
+	}
 
 	int max = input.readInt();
-
 	for (int i = 0; i < max; i++) {
-		getFreeInf()->loadCard(input);
+		BaseInf* bi = getFreeInf();
+		if (!bi) {
+			ERROR("gakkari bi=0!\n");
+		}
+		bi->loadCard(input);
 	}
+	PRINT("*** %d ピキ デス\n", max); // "*** %d Piki Death\n"
 }
 
 /*
@@ -511,17 +532,23 @@ void CreatureInf::doStore(Creature* owner)
 	mObjType             = owner->mObjType;
 	mRebirthDay          = 0;
 	mCurrentDay          = -1;
-	mAdjustFaceDirection = owner->isCreatureFlag(CF_FaceDirAdjust) != 0;
+	mAdjustFaceDirection = owner->isCreatureFlag(CF_FaceDirAdjust) != false;
 	owner->doStore(this);
 
 	if (owner->mRebirthDay > 0) {
 		if (owner->isAlive()) {
 			mAdjustFaceDirection = 1;
 			mRebirthDay          = owner->mRebirthDay;
+			if (true) { // DLL: Some flag in memory controlling certain prints
+				PRINT("KKKKKKKKKKKK ALIVE : CARRYOVER !!!\n");
+			}
 		} else {
 			mAdjustFaceDirection = 0;
 			mCurrentDay          = gameflow.mWorldClock.mCurrentDay;
 			mRebirthDay          = owner->mRebirthDay;
+			if (true) { // DLL: Some flag in memory controlling certain prints
+				PRINT("KKKKKKKKKKKK DEAD : CARRYOVER !!!\n");
+			}
 		}
 	}
 }

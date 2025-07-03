@@ -30,7 +30,6 @@ u8* zen::particleLoader::load(char* fileName, bool p2)
 	u8* data = pmFind(fileName);
 	if (data) {
 		PRINT("すでにロードされています。\n"); // 'already loaded.'
-
 	} else {
 		RandomAccessStream* file = gsys->openFile(fileName, p2, true);
 		if (!file) {

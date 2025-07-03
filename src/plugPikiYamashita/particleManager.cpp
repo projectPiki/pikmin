@@ -26,17 +26,17 @@ const f32 zen::particleManager::DEFAULT_FRAME_RATE = 30.0f;
 void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4)
 {
 	if (numPtclGens > 0x1000) {
-		PRINT("パーティクルジェネレイタの個数が大きすぎ"); // 'number of particle generators is too large'
+		ERROR("パーティクルジェネレイタの個数が大きすぎます。\n"); // 'The number of particle generators is too large.'
 		numPtclGens = 0x1000;
 	}
 
 	if (numParticles > 0x2000) {
-		PRINT("パーティクルの個数がが大きすぎます."); // 'number of particles is too large.'
+		ERROR("パーティクルの個数がが大きすぎます. \n"); // 'The number of particles is too large.'
 		numParticles = 0x2000;
 	}
 
 	if (numChildParticles > 0x2000) {
-		PRINT("チャイルドパーティクルの個数がが大きすぎ"); // 'number of child particles is too large'
+		ERROR("チャイルドパーティクルの個数がが大きすぎます. \n"); // 'The number of child particles is too large.'
 		numChildParticles = 0x2000;
 	}
 

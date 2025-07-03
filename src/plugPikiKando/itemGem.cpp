@@ -111,7 +111,7 @@ void GemItem::setColorType(int col)
 	mColor = col;
 
 	if (mGemType < 0 || mGemType >= 5) {
-		ERROR("illegal gem type !\n", mGemType);
+		PRINT("illegal gem type !\n", mGemType);
 		mGemType = 0;
 	}
 	mItemShapeObject = itemMgr->getPelletShapeObject(mColor, mGemType);

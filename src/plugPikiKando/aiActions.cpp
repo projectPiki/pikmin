@@ -36,9 +36,11 @@ ActPick::ActPick(Piki* piki)
  */
 void ActPick::Initialiser::initialise(Action* action)
 {
-	// ActPick* act = (ActPick*)action;
-	// PRINT(" initialiser called ###################### \n");
-	// act->mObject = mObject;
+#if 0
+	ActPick* act = (ActPick*)action;
+	PRINT(" initialiser called ###################### \n");
+	act->mObject = mObject;
+#endif
 }
 
 /*

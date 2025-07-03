@@ -143,9 +143,11 @@ void ActFree::cleanup()
 	mPiki->mFreeLightEffect->kill();
 	GameStat::workPikis.inc(mPiki->mColor);
 	GameStat::freePikis.dec(mPiki->mColor);
-	// if (GameStat::freePikis < 0) {
-	// 	ERROR("counter minus(fp)");
-	// }
+#if 0 // DLL only?  Stack is too large if this is included.
+	if (GameStat::freePikis < 0) {
+		ERROR("counter minus(fp)");
+	}
+#endif
 	GameStat::update();
 }
 
