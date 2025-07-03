@@ -345,17 +345,7 @@ struct System : public StdSystem {
 	// unused/inlined:
 	void findAddress(u32);
 	bool hasDebugInfo();
-	static void halt(char* file, int line, char* message)
-	{
-#if 0 // DLL's version
-		char buffer[2048];
-		sprintf(buffer, "%s\n\nClick OK to quit now !", message);
-		MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
-		exit(0); // Failure!
-#else
-		OSPanic(file, line, message);
-#endif
-	}
+	static void halt(char* file, int line, char* message);
 
 	static void* alloc(size_t);
 

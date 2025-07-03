@@ -903,13 +903,19 @@ bool System::hasDebugInfo()
 /*
  * --INFO--
  * Address:	........
- * Size:	000030
- * DEFINED IN HEADER
+ * Size:	0000b8
  */
-// void System::halt(char*, int, char*)
-// {
-// 	// UNUSED FUNCTION
-// }
+void System::halt(char* file, int line, char* message)
+{
+#if 0 // DLL's version
+	char buffer[2048];
+	sprintf(buffer, "%s\n\nClick OK to quit now !", message);
+	MessageBox(NULL, buffer, "Error!", MB_ICONEXCLAMATION);
+	exit(0); // Failure!
+#else
+	OSPanic(file, line, message);
+#endif
+}
 
 /*
  * --INFO--
