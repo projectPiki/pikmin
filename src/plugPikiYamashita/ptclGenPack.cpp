@@ -1,5 +1,20 @@
 #include "zen/particle.h"
 #include "Vector.h"
+#include "DebugLog.h"
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	00009C
+ */
+DEFINE_ERROR(14)
+
+/*
+ * --INFO--
+ * Address:	........
+ * Size:	0000F4
+ */
+DEFINE_PRINT("ptclGenPack")
 
 /*
  * --INFO--
@@ -9,11 +24,12 @@
 namespace zen {
 void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
 {
-	if (idx >= mLimit) {
-		return;
+	if (idx < mLimit) {
+		mGeneratorList[idx] = gen;
+	} else {
+		PRINT("ptcl index %d is over %d. \n", idx, mLimit);
+		ERROR("ptcl index %d is over %d. \n", idx, mLimit);
 	}
-
-	mGeneratorList[idx] = gen;
 };
 
 /*

@@ -24,11 +24,12 @@ DEFINE_PRINT("interactGrab")
 bool InteractGrab::actCommon(Creature* creature)
 {
 	bool result = creature->setStateGrabbed(mOwner);
-	if (creature->mObjType == OBJTYPE_Bomb) {
-		// probably commented out code here
-		return result;
+	if (creature->mObjType != OBJTYPE_Bomb) {
+		ERROR("try to grab objType %d\n", creature->mObjType);
 	}
-
+	if (result) {
+		PRINT("grabbed %x\n", creature);
+	}
 	return result;
 }
 

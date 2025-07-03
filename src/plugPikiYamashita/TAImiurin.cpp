@@ -243,7 +243,7 @@ struct TAIAattackMiurin : public TAIAreserveMotion {
 			rumbleMgr->start(RUMBLE_Unk10, 0, teki.getPosition());
 
 		} else {
-			PRINT("ARIMASEN. ITTE YOSI!"); // 'there is nothing. go on!'
+			ERROR("ARIMASEN. ITTE YOSI!"); // 'there is nothing. go on!'
 		}
 	}
 

@@ -110,20 +110,6 @@ struct MonoInfMgr : public InfMgr {
 	// unused/inlined:
 	void saveCard(RandomAccessStream&);
 
-	inline void clearActiveList()
-	{
-		BaseInf* next;
-		BaseInf* inf;
-
-		inf = static_cast<BaseInf*>(mActiveList.mChild);
-		while (inf) {
-			next = static_cast<BaseInf*>(inf->mNext);
-			inf->del();
-			mFreeList.add(inf);
-			inf = next;
-		}
-	}
-
 	// _00     = VTBL
 	// _00-_04 = InfMgr
 	int mInfCount;       // _04
