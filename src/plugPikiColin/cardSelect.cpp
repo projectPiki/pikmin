@@ -15,8 +15,6 @@
 #include "zen/ogFileChkSel.h"
 
 /**
- * @brief Error function for cardSelect.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	00009C
@@ -24,8 +22,6 @@
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * @brief Print function for cardSelect.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	0000F4

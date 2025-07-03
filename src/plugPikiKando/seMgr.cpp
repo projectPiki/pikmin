@@ -8,8 +8,6 @@
 #include "zen/Math.h"
 
 /**
- * @brief Error function for seMgr.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	00009C
@@ -17,8 +15,6 @@
 DEFINE_ERROR(7)
 
 /**
- * @brief Print function for seMgr.cpp, stripped in retail.
- *
  * --INFO--
  * Address:	........
  * Size:	0000F0
