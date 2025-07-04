@@ -59,7 +59,8 @@ struct MovSampleSetupSection : public Node {
 			memset(dest, 0x10, ImgW * ImgH);
 			memset(dest2, 0x80, (ImgW / 2) * (ImgH / 2) * 2);
 		}
-		OSCreateThread(&playbackThread, &playbackFunc, 0, &playbackThreadStack[0x1000], 0x1000, 0x14, 1);
+		OSCreateThread(&playbackThread, &playbackFunc, 0, playbackThreadStack + sizeof(playbackThreadStack), sizeof(playbackThreadStack),
+		               0x14, OS_THREAD_ATTR_DETACH);
 		finishPlayback = false;
 		OSResumeThread(&playbackThread);
 	}

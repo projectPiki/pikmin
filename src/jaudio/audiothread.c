@@ -293,7 +293,7 @@ void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 	if ((flags & AUDIO_THREAD_FLAG_AUDIO)) {
 		// point to top of audioStack
 		u8* stack_p = jac_audioStack;
-		OSCreateThread(&jac_audioThread.thread, &audioproc, NULL, (void*)&stack_p[AUDIO_STACK_SIZE], AUDIO_STACK_SIZE, pri, 1);
+		OSCreateThread(&jac_audioThread.thread, &audioproc, NULL, stack_p + AUDIO_STACK_SIZE, AUDIO_STACK_SIZE, pri, OS_THREAD_ATTR_DETACH);
 		OSResumeThread(&jac_audioThread.thread);
 	}
 
@@ -302,7 +302,7 @@ void StartAudioThread(void* heap, s32 heapSize, u32 aramSize, u32 flags)
 		jac_dvdproc_init();
 		// point to top of dvdStack
 		u8* stack_p = jac_dvdStack;
-		OSCreateThread(&jac_dvdThread, &jac_dvdproc, NULL, &stack_p[AUDIO_STACK_SIZE], AUDIO_STACK_SIZE, pri3, 1);
+		OSCreateThread(&jac_dvdThread, &jac_dvdproc, NULL, stack_p + AUDIO_STACK_SIZE, AUDIO_STACK_SIZE, pri3, OS_THREAD_ATTR_DETACH);
 		OSResumeThread(&jac_dvdThread);
 	}
 

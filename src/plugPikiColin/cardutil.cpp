@@ -928,7 +928,7 @@ void CardUtilInit(void* stack, u32 stackSize, s32 prio)
 	OSInitMutex(&CardControl.mMutex);
 	OSInitMutex(&CardControl.mMutex2);
 	OSInitCond(&CardControl.mCondition);
-	OSCreateThread(&CardThread.mThread, CardUtilMain, nullptr, stack, stackSize, prio, 1);
+	OSCreateThread(&CardThread.mThread, CardUtilMain, nullptr, stack, stackSize, prio, OS_THREAD_ATTR_DETACH);
 	OSResumeThread(&CardThread.mThread);
 }
 

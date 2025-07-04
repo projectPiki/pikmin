@@ -1015,9 +1015,9 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
 #if defined(VERSION_G98E01_PIKIDEMO)
-		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, OS_THREAD_ATTR_DETACH);
+		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, OS_THREAD_ATTR_DETACH);
 #else
-		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, 0);
+		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, 0);
 #endif
 		mIsLoadingActive = 1;
 		OSResumeThread(&Thread);
@@ -1043,9 +1043,9 @@ void System::endLoading()
 {
 	gsys->mPrevAllocType = 1;
 	if (mIsLoadingActive) {
-		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', 1);
+		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', OS_MESSAGE_BLOCK);
 #if defined(VERSION_G98E01_PIKIDEMO)
-		OSReceiveMessage(&sysMesgQueue, nullptr, 1);
+		OSReceiveMessage(&sysMesgQueue, nullptr, OS_MESSAGE_BLOCK);
 		OSCancelThread(&Thread);
 #else
 		OSJoinThread(&Thread, nullptr);
@@ -1184,7 +1184,7 @@ void* dvdFunc(void*)
 	int inputCounter = 0;
 
 	while (true) {
-		OSReceiveMessage(&dvdMesgQueue, nullptr, 1);
+		OSReceiveMessage(&dvdMesgQueue, nullptr, OS_MESSAGE_BLOCK);
 		if (!stopped) {
 			if (gsys->mControllerMgr.keyDown(KBBTN_DPAD_UP) && gsys->mControllerMgr.keyDown(KBBTN_DPAD_RIGHT)
 			    && gsys->mControllerMgr.keyDown(KBBTN_A)) {
@@ -1264,7 +1264,8 @@ void System::nudgeDvdThread()
  */
 void System::startDvdThread()
 {
-	OSCreateThread(&dvdThread, dvdFunc, nullptr, dvdThreadStack + 0x2000, 0x2000, 0xf, 1);
+	OSCreateThread(&dvdThread, dvdFunc, nullptr, dvdThreadStack + sizeof(dvdThreadStack), sizeof(dvdThreadStack), 0xf,
+	               OS_THREAD_ATTR_DETACH);
 	OSResumeThread(&dvdThread);
 }
 
