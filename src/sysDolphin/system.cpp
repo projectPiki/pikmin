@@ -120,7 +120,11 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 
 	u32 old            = gsys->mTogglePrint;
 	gsys->mTogglePrint = 1;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	_Print("Opened file %s\n", strPath);
+#else
 	PRINT("Opened file %s\n", strPath);
+#endif
 	gsys->mTogglePrint = old;
 	dvdStream.mPath    = path;
 	dvdBufferedStream.init(&dvdStream, dvdStream.readBuffer, mDvdBufferSize);
@@ -532,6 +536,9 @@ System::System()
 	mToggleDebugExtra = 0;
 	mToggleBlur       = 1;
 	mToggleColls      = 0;
+#if defined(VERSION_G98E01_PIKIDEMO)
+	mIsDemoTimeUp = 0;
+#endif
 	mDvdBufferSize    = 0x40000;
 	mCurrentThread    = OSGetCurrentThread();
 	mDvdErrorCallback = 0;
@@ -930,7 +937,11 @@ void* loadFunc(void* idler)
 	}
 
 	int frameCount = 0; // r23
-	int b          = 2; // r22
+#if defined(VERSION_G98E01_PIKIDEMO)
+	int b = 4; // r22
+#else
+	int b = 2; // r22
+#endif
 	GXSetCurrentGXThread();
 	OSGetTick();
 
@@ -1003,7 +1014,11 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 	if (mIsLoadingActive == 0) {
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, OS_THREAD_ATTR_DETACH);
+#else
 		OSCreateThread(&Thread, loadFunc, idler, &dvdThread, 0x2000, 15, 0);
+#endif
 		mIsLoadingActive = 1;
 		OSResumeThread(&Thread);
 	}
@@ -1029,7 +1044,12 @@ void System::endLoading()
 	gsys->mPrevAllocType = 1;
 	if (mIsLoadingActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', 1);
+#if defined(VERSION_G98E01_PIKIDEMO)
+		OSReceiveMessage(&sysMesgQueue, nullptr, 1);
+		OSCancelThread(&Thread);
+#else
 		OSJoinThread(&Thread, nullptr);
+#endif
 		GXSetCurrentGXThread();
 		mIsLoadingActive    = 0;
 		mIsLoadScreenActive = 0;
@@ -1176,12 +1196,17 @@ void* dvdFunc(void*)
 			} else {
 				inputCounter = 0;
 			}
-			if (OSGetResetSwitchState() != 0) {
+#if defined(VERSION_G98E01_PIKIDEMO)
+			if (gsys->mIsDemoTimeUp || OSGetResetSwitchState())
+#else
+			if (OSGetResetSwitchState())
+#endif
+			{
 				Jac_Freeze_Precall();
 				stopped = true;
 			}
 		} else {
-			if (OSGetResetSwitchState() == 0 && gsys->mIsRendering == 0 && gsys->mIsCardSaving == 0) {
+			if (!OSGetResetSwitchState() && !gsys->mIsRendering && !gsys->mIsCardSaving) {
 				PADRecalibrate(0xf0000000);
 				Jac_Freeze();
 				VISetBlack(1);
