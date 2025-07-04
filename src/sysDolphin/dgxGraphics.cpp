@@ -592,7 +592,7 @@ void DGXGraphics::waitPostRetrace()
 	int a = mSystemFrameRate - (VIGetRetraceCount() - mRetraceCount) - 1;
 	if (a > 0) {
 		mPostRetraceWaitCount = a;
-		OSReceiveMessage(&mPostRetraceMsgQueue, nullptr, 1);
+		OSReceiveMessage(&mPostRetraceMsgQueue, nullptr, OS_MESSAGE_BLOCK);
 	}
 
 	OSRestoreInterrupts(interrupt);
