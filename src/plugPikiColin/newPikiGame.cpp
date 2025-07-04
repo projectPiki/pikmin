@@ -978,6 +978,10 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	gsys->startLoading(nullptr, true, 120);
 	PRINT("EXITDAYEND!!!!\n");
 	gamecore->exitDayEnd();
+#if defined(VERSION_G98E01_PIKIDEMO)
+	gsys->forceHardReset();
+	while (true) { }
+#else
 	gameflow.mMoviePlayer->fixMovieList();
 	Jac_SceneSetup(6, 0);
 	gsys->resetHeap(SYSHEAP_Movie, 1);
@@ -1040,6 +1044,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	mSection->mTargetFade = 1.0f;
 	mSection->mFadeSpeed  = 0.5f;
 	mState                = 2;
+#endif
 	return nullptr;
 }
 

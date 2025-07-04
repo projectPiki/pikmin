@@ -176,17 +176,17 @@ struct IntroGameSetupSection : public BaseGameSection {
 
 		if (effectMgr) {
 			if (gameflow._33C == FALSE && gameflow.mIsUiOverlayActive == 0) {
+				gsys->mTimer->start("effect", true);
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 					check = false;
 				}
 				if (check) {
-					gsys->mTimer->start("effect", true);
 					effectMgr->update();
-					gsys->mTimer->stop("effect");
 				}
+				gsys->mTimer->stop("effect");
 			}
-			// fun fact! this empty timer function is necessary to fix this instruction ordering :')
+			// fun fact! this empty (in retail) timer function is necessary to fix this instruction ordering :')
 			gsys->mTimer->start("eff draw", true);
 			effectMgr->draw(gfx);
 			gsys->mTimer->stop("eff draw");

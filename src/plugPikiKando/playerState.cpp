@@ -345,10 +345,11 @@ int PlayerState::getPartsGetCount(int stageID)
  */
 int PlayerState::getCardPikiCount(int color)
 {
-	if (color < 0 || color > 2) {
-		ERROR("NANDEYANEN-colr %d\n", color);
+	if (color >= PikiMinColor && color <= PikiMaxColor) {
+		return GameStat::allPikis[color];
 	}
-	// UNUSED FUNCTION
+	ERROR("NANDEYANEN-colr %d\n", color);
+	return GameStat::allPikis;
 }
 
 /*

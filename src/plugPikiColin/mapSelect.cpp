@@ -118,7 +118,12 @@ struct MapSelectSetupSection : public Node {
 
 			bool old           = gsys->mTogglePrint != 0;
 			gsys->mTogglePrint = 1;
-			PRINT("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId != 0);
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+			_Print("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
+#else
+			(gameflow.mCurrentStageId != 0); // huh?
+			PRINT("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
+#endif
 			gsys->mTogglePrint = old;
 
 			mapWindow->start(zen::DrawWorldMap::startModeFlag(gameflow.mLastUnlockedStageId == -1 ? 0 : gameflow.mLastUnlockedStageId),
