@@ -91,11 +91,12 @@ void GaugeInfo::update()
  */
 void GaugeInfo::showDigits(Vector3f position, Colour& colour, int number, f32 width, f32 height)
 {
-	if (number > 99) {
-		number = 99;
-	}
-
+#if defined(VERSION_G98E01_PIKIDEMO)
+	STACK_PAD_VAR(2);
 	int num = number;
+#else
+	int num = number > 99 ? 99 : number;
+#endif
 
 	// Either 1 or 2 digits (0-99)
 	int numDigits = num >= 10 ? 2 : 1;
@@ -115,6 +116,7 @@ void GaugeInfo::showDigits(Vector3f position, Colour& colour, int number, f32 wi
 		num /= 10;
 		position.x -= width * 1.5f;
 	}
+	FORCE_DONT_INLINE;
 }
 
 /*

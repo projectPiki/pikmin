@@ -175,11 +175,15 @@ void DemoEventMgr::act(int cmd, int type)
 				goal->startBoot();
 				playerState->setContainer(goalID + 3);
 				if (playerState->isTutorial() && playerState->mShipEffectPartFlag & 8) {
-					naviMgr->getNavi();
+					Navi* navi = naviMgr->getNavi();
 					playerState->mShipEffectPartFlag &= ~8;
 					cameraMgr->mCamera->finishMotion();
 					cameraMgr->mCamera->mControlsEnabled = 1;
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+					cameraMgr->mCamera->startCamera(navi, 1, 0);
+#else
 					cameraMgr->mCamera->startMotion(1, 0);
+#endif
 					PRINT("*** FINISH MOTION \n");
 				}
 				break;
@@ -195,6 +199,4 @@ void DemoEventMgr::act(int cmd, int type)
 		}
 		break;
 	}
-
-	STACK_PAD_VAR(2);
 }
