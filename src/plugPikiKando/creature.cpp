@@ -801,6 +801,7 @@ void Creature::update()
 
 	// Apply movement in two passes - volatile (temporary) and normal velocity
 	f32 deltaTime = gsys->getFrameTime();
+	MATCHING_START_TIMER("MOVENEW", true);
 	Vector3f originalVel(mVelocity);
 	mVelocity = mVolatileVelocity;
 	moveNew(deltaTime);
@@ -858,6 +859,7 @@ void Creature::update()
 
 	mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	moveRotation(deltaTime);
+	MATCHING_STOP_TIMER("MOVENEW");
 }
 
 /*
@@ -1257,7 +1259,9 @@ void Creature::drawShadow(Graphics& gfx)
 		return;
 	}
 
+	MATCHING_START_TIMER("shadow", true);
 	calcShadowTris(gfx, shadowPos, getShadowSize());
+	MATCHING_STOP_TIMER("shadow");
 }
 
 /*

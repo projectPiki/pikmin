@@ -1358,14 +1358,24 @@ bool ActTransport::crMove()
 	f32 pathDist = pathDir.normalise();
 	if (pathDist <= 0.0f) {
 		PRINT("DANGER ** CYLINDER ZERO! \n");
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+		// Kando, just use an ERROR at this point if you're so worried about it.
+		for (int i = 0; i < 100; ++i) {
+			PRINT("** ABUNAI DESU \n"); // "It's dangerous \n"
+		}
+#endif
 	}
 
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+	f32 factor = pathDir.DP(pel->mPosition - currPoint) / pathDist;
+#else
 	f32 factor;
 	if (pathDist > 0.0f) {
 		factor = pathDir.DP(pel->mPosition - currPoint) / pathDist;
 	} else {
 		factor = 1.0f;
 	}
+#endif
 
 	if (factor < 0.0f) {
 		factor = 0.0f;

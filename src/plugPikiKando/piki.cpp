@@ -26,6 +26,7 @@
 #include "WorkObject.h"
 #include "EffectMgr.h"
 #include "DebugLog.h"
+#include "timers.h"
 
 Colour Piki::pikiColors[6] = {
 	Colour(0, 50, 255, 255),  // blue
@@ -2884,9 +2885,11 @@ void Piki::doAI()
 			ERROR(" state is ABSORB or GROWUP!!!!!!!!!!\n");
 		}
 
+		gsys->mTimer->start("ai exec", true);
 		if (AIPerf::optLevel <= 2 || mOptUpdateContext.updatable()) {
 			mActiveAction->exec();
 		}
+		gsys->mTimer->stop("ai exec");
 	}
 
 	_500.reset();

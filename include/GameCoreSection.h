@@ -48,7 +48,11 @@ struct GameCoreSection : public Node {
 
 	void updateTextDemo();
 	void startMovie(u32, bool);
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+	void endMovie();
+#else
 	void endMovie(int);
+#endif
 	void exitDayEnd();
 	void forceDayEnd();
 	void clearDeadlyPikmins();

@@ -1614,9 +1614,13 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 	if (view) {
 		if (config) {
 			Pellet* pellet = static_cast<Pellet*>(birth());
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+			pellet->initPellet(view, config);
+#else
 			if (pellet) {
 				pellet->initPellet(view, config);
 			}
+#endif
 			return pellet;
 		}
 	} else {
@@ -1627,9 +1631,13 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 
 		if (config && obj) {
 			Pellet* pellet = static_cast<Pellet*>(birth());
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+			pellet->initPellet(obj, config);
+#else
 			if (pellet) {
 				pellet->initPellet(obj, config);
 			}
+#endif
 			PRINT("init pellet done ***\n");
 			return pellet;
 		}
@@ -1688,7 +1696,11 @@ PelletMgr::PelletMgr(MapMgr* mgr)
 	mConfigNum   = 0;
 	mReadStage   = 0;
 	load("parms/", "pelMgr.bin", 1);
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+	create(64);
+#else
 	create(96);
+#endif
 	mMovieFlags = PELMOVIE_Unk1 | PELMOVIE_Unk2 | PELMOVIE_Unk3;
 }
 

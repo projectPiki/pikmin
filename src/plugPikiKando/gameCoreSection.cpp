@@ -260,7 +260,11 @@ void GameCoreSection::startMovie(u32 flags, bool b)
  * Address:	8010D3FC
  * Size:	000254
  */
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+void GameCoreSection::endMovie()
+#else
 void GameCoreSection::endMovie(int movieIdx)
+#endif
 {
 	GoalItem::demoHideFlag = 0;
 	if (tekiMgr) {
@@ -298,6 +302,8 @@ void GameCoreSection::endMovie(int movieIdx)
 			PRINT("using previous camera\\n");
 		}
 		angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#else
 		if (movieIdx == DEMOID_FindRedOnyon || movieIdx == DEMOID_FindYellowOnyon || movieIdx == DEMOID_FindBlueOnyon
 		    || movieIdx == DEMOID_DiscoverMainEngine) {
 			Vector3f diff = gameflow.mMoviePlayer->mTargetViewpoint - gameflow.mMoviePlayer->mLookAtPos;
@@ -305,6 +311,7 @@ void GameCoreSection::endMovie(int movieIdx)
 			diff.normalise();
 			angle = atan2f(diff.x, diff.z);
 		}
+#endif
 		cameraMgr->mCamera->makeCurrentPosition(angle);
 		cameraMgr->update();
 	}
@@ -593,7 +600,10 @@ void GameCoreSection::cleanupDayEnd()
 			int mode   = piki->mMode;
 			if (piki->isKinoko()) {
 				GameStat::victimPikis.inc(piki->mColor);
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#else
 				GameStat::deadPikis.inc(piki->mColor);
+#endif
 				piki->setEraseKill();
 				piki->kill(false);
 				it.dec();
@@ -634,7 +644,10 @@ void GameCoreSection::cleanupDayEnd()
 					}
 					if (!isNearOnyonShip) {
 						GameStat::victimPikis.inc(piki->mColor);
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#else
 						GameStat::deadPikis.inc(piki->mColor);
+#endif
 						piki->setEraseKill();
 						piki->kill(false);
 						it.dec();
@@ -671,7 +684,7 @@ void GameCoreSection::cleanupDayEnd()
 
 	effectMgr->killAll();
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < PikiColorCount; i++) {
 		GoalItem* goal = itemMgr->getContainer(i);
 		if (goal && playerState->hasContainer(goal->mOnionColour)) {
 			goal->mSpotModelEff
@@ -923,6 +936,9 @@ void GameCoreSection::initStage()
 	*++tmp = 'e';
 	*++tmp = 'n';
 	*++tmp = '\0';
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+	gsys->openFile(path, true, true); // bruh
+#endif
 	PRINT("---------- auto load generator file : <%s>\n", path);
 	for (tmp = (u8*)path; *tmp != (u32)'.'; tmp++) { }
 	*tmp++ = '/';
@@ -1085,7 +1101,11 @@ void GameCoreSection::initStage()
 	cameraMgr->update();
 	mNavi->mIsCursorVisible = 1;
 
-	if (!playerState->isChallengeMode()) {
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#else
+	if (!playerState->isChallengeMode())
+#endif
+	{
 		StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 		PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
 		BaseInf* a = (BaseInf*)inf->mBPikiInfMgr.mActiveList.mChild;
@@ -1572,6 +1592,7 @@ void GameCoreSection::updateAI()
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
 	}
 
+	gsys->mTimer->start("GameCore", true);
 	AIPerf::clearCounts();
 	pikiUpdateMgr->update();
 	searchUpdateMgr->update();
@@ -1585,6 +1606,7 @@ void GameCoreSection::updateAI()
 
 	if (gameflow.mIsUiOverlayActive == 0) {
 		if (tekiMgr) {
+			gsys->mTimer->start("search", true);
 			if (AIPerf::insQuick) {
 				naviMgr->invalidateSearch();
 				pikiMgr->invalidateSearch();
@@ -1602,6 +1624,7 @@ void GameCoreSection::updateAI()
 			} else {
 				mSearchSystem->update();
 			}
+			gsys->mTimer->stop("search");
 		}
 
 		if (gameflow._33C == 0) {
@@ -1611,22 +1634,27 @@ void GameCoreSection::updateAI()
 				}
 			}
 
+			gsys->mTimer->start("ai", true);
 			if (!inPause()) {
 				pikiMgr->update();
 			}
+			gsys->mTimer->stop("ai");
 			itemMgr->update();
 			if (!inPause()) {
 				workObjectMgr->update();
 				plantMgr->update();
+				gsys->mTimer->start("teki", true);
 				if (tekiMgr && !gameflow.mMoviePlayer->mIsActive) {
 					tekiMgr->update();
 				}
+				gsys->mTimer->stop("teki");
 				pelletMgr->update();
 			}
 		}
 	}
 	if (tekiMgr) {
 		f32 time = gsys->getFrameTime();
+		MATCHING_START_TIMER("post", true);
 		if (gameflow.mIsUiOverlayActive == 0) {
 			naviMgr->postUpdate(0, time);
 		}
@@ -1644,6 +1672,8 @@ void GameCoreSection::updateAI()
 			}
 		}
 	}
+	MATCHING_STOP_TIMER("post"); // Wrong scope, but if the tekiMgr doesn't exist you probably have bigger problems.
+	gsys->mTimer->stop("GameCore");
 }
 
 /*
@@ -1676,9 +1706,11 @@ void GameCoreSection::draw(Graphics& gfx)
 		if (mDrawHideType != 2 && tekiMgr && !hideTeki()) {
 			tekiMgr->refresh(gfx);
 		}
+		gsys->mTimer->start("piki draw", true);
 		if (mDrawHideType != 1) {
 			pikiMgr->refresh(gfx);
 		}
+		gsys->mTimer->stop("piki draw");
 	}
 
 	gameflow.mMoviePlayer->refresh(gfx);
@@ -1721,6 +1753,7 @@ void GameCoreSection::draw(Graphics& gfx)
 
 	naviMgr->renderCircle(gfx);
 	mMapMgr->drawXLU(gfx);
+	MATCHING_START_TIMER("shadow draw", true);
 	mMapMgr->mDayMgr->setFog(gfx, &Colour(0, 0, 0, 0));
 	Matrix4f mtx;
 	gfx.calcViewMatrix(Matrix4f::ident, mtx);
@@ -1742,6 +1775,7 @@ void GameCoreSection::draw(Graphics& gfx)
 
 	gfx.setCBlending(blend);
 	gfx.setDepth(true);
+	MATCHING_STOP_TIMER("shadow draw");
 	mMapMgr->postrefresh(gfx);
 	if (AIPerf::soundDebug) {
 		seSystem->draw3d(gfx);

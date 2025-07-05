@@ -10,6 +10,7 @@
 #include "jaudio/piki_bgm.h"
 #include "jaudio/piki_player.h"
 #include "DebugLog.h"
+#include "timers.h"
 
 /// Global sound effect system manager object.
 SeSystem* seSystem;
@@ -493,12 +494,16 @@ void SeContext::playSound(int soundID)
 {
 	int jacID = seSystem->getJacID(soundID);
 	if (mEventHandle == -1) {
+		gsys->mTimer->start("createEvent", true);
 		createEvent(mEventType);
+		gsys->mTimer->stop("createEvent");
 	}
 
 	if (mEventHandle != -1) {
+		gsys->mTimer->start("JAC", true);
 		Jac_PlayEventAction(mEventHandle, jacID);
 		mClock = seSystem->mClock;
+		gsys->mTimer->stop("JAC");
 	}
 }
 
@@ -923,6 +928,15 @@ void SeSystem::update(Graphics& gfx, Vector3f& listenerPos)
 		PRINT("... seSystem closed\n");
 		return;
 	}
+
+#if defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00)
+#else
+	++mClock;
+	if (mClock >= 30 * 60 * 60) {
+		mClock = 0; // Reset the clock every hour (30 Hz * 60 seconds * 60 minutes)
+	}
+#endif
+
 	mListenerPosition = listenerPos;
 	mCameraMtx        = gfx.mCamera->mLookAtMtx;
 

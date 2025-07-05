@@ -671,9 +671,9 @@ void DynObjBody::computeForces(int configIdx, f32 p2)
 		applyWorldSpring(configIdx, mSprings[i].mHookIdx, mSprings[i].mOffset);
 	}
 
-	// gsys->mTimer->start("applyGround", true);
+	MATCHING_START_TIMER("applyGround", true);
 	applyGroundForces(configIdx, coll);
-	// gsys->mTimer->stop("applyGround");
+	MATCHING_STOP_TIMER("applyGround");
 
 	f32 a = Kdl;
 	f32 b = Kda / 1.0f;
@@ -1265,7 +1265,7 @@ bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
 void MapMgr::drawXLU(Graphics& gfx)
 {
 	if (mMapShape) {
-		// gsys->mTimer->start("mapPost", true);
+		MATCHING_START_TIMER("mapPost", true);
 		mDayMgr->setFog(gfx, nullptr);
 		// DLL only condition
 		// if (!mController->keyDown(KBBTN_DPAD_DOWN)) {
@@ -1282,7 +1282,7 @@ void MapMgr::drawXLU(Graphics& gfx)
 		mMapShape->drawshape(gfx, *gfx.mCamera, &mDynMaterials);
 		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 		// }
-		// gsys->mTimer->stop("mapPost");
+		MATCHING_STOP_TIMER("mapPost");
 	}
 }
 
@@ -1294,7 +1294,7 @@ void MapMgr::drawXLU(Graphics& gfx)
 void MapMgr::postrefresh(Graphics& gfx)
 {
 	if (mMapShape) {
-		// gsys->mTimer->start("mapPost", true);
+		MATCHING_START_TIMER("mapPost", true);
 		mDayMgr->setFog(gfx, nullptr);
 		drawShadowCasters(gfx);
 		if (lgMgr) {
@@ -1307,9 +1307,9 @@ void MapMgr::postrefresh(Graphics& gfx)
 		gsys->flushLFlares(gfx);
 
 		if (effectMgr) {
-			// gsys->mTimer->start("eff draw", true);
+			gsys->mTimer->start("eff draw", true);
 			effectMgr->drawshapes(gfx);
-			// gsys->mTimer->stop("eff draw");
+			gsys->mTimer->stop("eff draw");
 		}
 
 		if (gsys->mToggleBlur) {
@@ -1322,9 +1322,12 @@ void MapMgr::postrefresh(Graphics& gfx)
 			mCaptureTexture->grabBuffer(mCaptureTexture->mWidth, mCaptureTexture->mHeight, false, true);
 			gfx.useTexture(mBlurredTexture, 0);
 			gfx.useTexture(mCaptureTexture, 1);
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#else
 			if (gameflow.mMoviePlayer->mIsActive) {
 				gfx.mCamera->mBlur = 0.0f;
 			}
+#endif
 
 			int blend = gfx.setCBlending(6);
 			gfx.setPrimEnv(&Colour(255, 255, 255, gfx.mCamera->mBlur), nullptr);
@@ -1457,7 +1460,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 
 		mDebugCollCount = 0;
 		mActiveTriCount = 0;
-		// gsys->mTimer->stop("mapPost");
+		MATCHING_STOP_TIMER("mapPost");
 		gfx.mHasTexGen = 0;
 	}
 }
