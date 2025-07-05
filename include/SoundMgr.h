@@ -315,7 +315,7 @@ struct SeSystem {
 	int mMaxContextCount;       ///< _58, max amount of active sound effects.
 	SeContext* mContexts;       ///< _5C, list of active sound effects.
 	SeConstant* mSoundParams;   ///< _60, fixed sound constants/parameters read from file.
-	u32 mClock;                 ///< _64, unused clock/timer - set to 0 and never updated.
+	u32 mClock;                 ///< _64, unused clock/timer - set to 0 but only updated in demo versions.
 	int mCurrentEventCount;     ///< _68, count of current active sound events.
 	int mMaxEventCount;         ///< _6C, max amount of active sound events.
 	Event* mEvents;             ///< _70, list of active sound events.

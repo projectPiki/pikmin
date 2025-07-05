@@ -185,6 +185,9 @@ void DualCreature::update()
 void DualCreature::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_IKIDEMO)
+	// I don't enjoy splitting this difference in two, but syntax highlighting really hates extra opening braces.
+#else
 	bool isPointVisible = gfx.mCamera->isPointVisible(mPosition, 2.0f * getBoundingSphereRadius());
 
 	if (isPointVisible) {
@@ -192,9 +195,15 @@ void DualCreature::refresh(Graphics& gfx)
 	} else {
 		enableAICulling();
 	}
+#endif
 
 	if (!_43E) {
-		if (!mIsDynamicsSimpleFixed && isPointVisible) {
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_IKIDEMO)
+		if (!mIsDynamicsSimpleFixed && gfx.mCamera->isPointVisible(mPosition, 2.0f * getBoundingSphereRadius()))
+#else
+		if (!mIsDynamicsSimpleFixed && isPointVisible)
+#endif
+		{
 			if (!mIsRealDynamics) {
 				useRealDynamics();
 			}

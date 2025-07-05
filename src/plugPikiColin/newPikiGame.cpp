@@ -1640,7 +1640,11 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		PRINT("%s\n", check ? "HIDING NAVI!!!" : "not hiding!");
 		break;
 	case MOVIECMD_EndMovie:
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+		gamecore->endMovie();
+#else
 		gamecore->endMovie(data);
+#endif
 		break;
 	case MOVIECMD_FadeOut:
 		mSection->mTargetFade = 0.0f;
