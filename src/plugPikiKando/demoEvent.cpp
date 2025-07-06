@@ -11,6 +11,7 @@
 #include "Pcam/CameraManager.h"
 #include "PlayerState.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 DemoEventMgr* demoEventMgr;
 
@@ -179,7 +180,7 @@ void DemoEventMgr::act(int cmd, int type)
 					playerState->mShipEffectPartFlag &= ~8;
 					cameraMgr->mCamera->finishMotion();
 					cameraMgr->mCamera->mControlsEnabled = 1;
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 					cameraMgr->mCamera->startCamera(navi, 1, 0);
 #else
 					cameraMgr->mCamera->startMotion(1, 0);

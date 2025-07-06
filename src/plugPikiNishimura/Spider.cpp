@@ -2,6 +2,7 @@
 #include "DayMgr.h"
 #include "Graphics.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -63,7 +64,7 @@ f32 Spider::getiMass()
 void Spider::init(Vector3f&)
 {
 	mCollisionRadius = 64.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	setInvincible(true);
 #endif

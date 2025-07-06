@@ -4,6 +4,7 @@
 #include "types.h"
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
+#include "VersionGroups.h"
 
 struct Matrix3f;
 struct P2DPane;
@@ -173,12 +174,12 @@ struct ogMsgCtrlTagMgr {
 
 	bool CheckCtrlTag(char*, s16*, f32*);
 
-	char mOnesWaitChar[8];           // _00
-	char mTensWaitChar[8];           // _08
-#if defined(VERSION_G98E01_PIKIDEMO) //
-#else                                //
+	char mOnesWaitChar[8];    // _00
+	char mTensWaitChar[8];    // _08
+#if defined(VERSION_PIKIDEMO) //
+#else                         //
 	char mHankakuWaitChars[8]; // _10
-#endif                               //
+#endif                        //
 };
 
 /**

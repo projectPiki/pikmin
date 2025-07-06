@@ -9,6 +9,7 @@
 #include "Shape.h"
 #include "sysNew.h"
 #include "Graphics.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -69,7 +70,7 @@ StdSystem::StdSystem()
  */
 void StdSystem::onceInit()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mMatrixCount = 0x1000;
 #else
 	mMatrixCount = 0x2000;

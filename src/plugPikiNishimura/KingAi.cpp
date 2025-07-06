@@ -13,6 +13,7 @@
 #include "Pcam/CameraManager.h"
 #include "SoundMgr.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 static u32 kingSE[] = {
 	SE_KING_WALK,  SE_KING_READY, SE_KING_BERO1, SE_KING_BERO2, SE_KING_GEPPU, SE_KING_DRINK,  SE_KING_EAT,
@@ -150,7 +151,7 @@ void KingAi::keyAction0()
 		cameraMgr->startVibrationEvent(2, mKing->mPosition);
 		break;
 
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
 #else
 	case KINGAI_Appear:
 		if (!mKing->needShadow()) {
@@ -1508,7 +1509,7 @@ void KingAi::initAppear(int nextState)
 	mKing->setTargetCreature(nullptr);
 	// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
 	// Maybe it's a Mandela Effect. TODO: Make sure the demo code is producing the desired effect for a bugfix.
-#if defined(BUGFIX) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
 	if (!mKing->mIsBossBgm) {
 		mKing->mIsBossBgm = true;
 		mapMgr->mShadowCaster.add(&mKing->mShadowCaster);

@@ -6,6 +6,7 @@
 #include "NsMath.h"
 #include "MapMgr.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -271,7 +272,7 @@ void MizuAi::readyState()
 			}
 		}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		if (mMizu->getAttackTimer() > 3.0f) {
 			mMizu->setAttackTimer(0.0f);

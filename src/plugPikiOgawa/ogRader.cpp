@@ -14,6 +14,7 @@
 #include "SoundMgr.h"
 #include "sysNew.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -77,7 +78,7 @@ zen::ogRaderMgr::ogRaderMgr()
 	P2DScreen* screen = new P2DScreen;
 
 	PRINT("----- RADER MAP (%d) -----\n", flowCont.mCurrentStage->mStageID);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	switch (flowCont.mCurrentStage->mStageID) {
 #else
 	s16 stage = flowCont.mCurrentStage->mStageID;
@@ -182,7 +183,7 @@ zen::ogRaderMgr::ogRaderMgr()
 	_420 = _4C;
 	_420->setOffset(0, 0);
 	_424->setOffset(0, 0);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	_24demo[0].set(-150.0f, 0.0f, -160.0f);
 	_24demo[1].set(150.0f, 0.0f, -160.0f);
 	_24demo[2].set(150.0f, 0.0f, 160.0f);
@@ -317,7 +318,7 @@ void zen::ogRaderMgr::getRocketPos()
 	}
 #endif
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	_7C->hide();
 #else
 	Vector3f pos  = ufo->getPosition();
@@ -546,7 +547,7 @@ void zen::ogRaderMgr::updateGame(Controller* input)
 	chaseRaderScale(_42C);
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 /*
  * --INFO--
@@ -584,7 +585,7 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
  */
 void zen::ogRaderMgr::updateMenu(Controller* input)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	if (mStatus == -1) {
 		return;
@@ -596,14 +597,14 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		x *= 1.1f;
 		if (x > 10.0f) {
 			x = 10.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMIN);
 			_01 = false;
 #endif
 		} else {
 			if (!_01) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_MenuZoomIn);
 			}
 			_01 = true;
@@ -617,14 +618,14 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		x *= 0.9f;
 		if (x < 1.0f) {
 			x = 1.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 			seSystem->stopSysSe(SYSSE_YMENU_ZOOMOUT);
 			_02 = false;
 #endif
 		} else {
 			if (!_02) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_MenuZoomOut);
 			}
 			_02 = true;
@@ -639,7 +640,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	f32 c = cosf(_454);
 	f32 s = sinf(_454);
 	if (input->keyDown(KBBTN_MSTICK_UP)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
@@ -650,7 +651,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		AreaScroll(&_34, &_38, s * -20.0f, c * -20.0f);
 #endif
 	} else if (input->keyDown(KBBTN_MSTICK_DOWN)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
@@ -662,7 +663,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 #endif
 	}
 	if (input->keyDown(KBBTN_MSTICK_LEFT)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
@@ -673,7 +674,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		AreaScroll(&_34, &_38, c * -20.0f, s * 20.0f);
 #endif
 	} else if (input->keyDown(KBBTN_MSTICK_RIGHT)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
@@ -686,7 +687,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 	}
 
 	if (_00 && !input->keyDown(KBBTN_MSTICK_UP | KBBTN_MSTICK_DOWN | KBBTN_MSTICK_RIGHT | KBBTN_MSTICK_LEFT)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		seSystem->stopSysSe(JACSYS_MenuScroll);
 #else
 		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
@@ -694,7 +695,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		_00 = false;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	if (_01 && !(y < 0.2f)) {
 		seSystem->stopSysSe(JACSYS_MenuZoomIn);
 		_01 = false;

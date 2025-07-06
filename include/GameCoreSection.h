@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Node.h"
 #include "Light.h"
+#include "VersionGroups.h"
 
 struct Camera;
 struct Controller;
@@ -48,7 +49,7 @@ struct GameCoreSection : public Node {
 
 	void updateTextDemo();
 	void startMovie(u32, bool);
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	void endMovie();
 #else
 	void endMovie(int);

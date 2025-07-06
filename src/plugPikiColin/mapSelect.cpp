@@ -8,6 +8,7 @@
 #include "gameflow.h"
 #include "FlowController.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 zen::DrawCMcourseSelect* selectWindow;
 zen::DrawWorldMap* mapWindow;
@@ -118,7 +119,7 @@ struct MapSelectSetupSection : public Node {
 
 			bool old           = gsys->mTogglePrint != 0;
 			gsys->mTogglePrint = 1;
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			_Print("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
 #else
 			(gameflow.mCurrentStageId != 0); // huh?

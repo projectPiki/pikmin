@@ -7,6 +7,7 @@
 #include "MoviePlayer.h"
 #include "gameflow.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 static Colour lgborder;
 static Colour lglev0;
@@ -91,7 +92,7 @@ void GaugeInfo::update()
  */
 void GaugeInfo::showDigits(Vector3f position, Colour& colour, int number, f32 width, f32 height)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	STACK_PAD_VAR(2);
 	int num = number;
 #else

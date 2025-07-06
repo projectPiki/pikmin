@@ -1,5 +1,6 @@
 #include "P2D/Graph.h"
 #include "Dolphin/gx.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -47,7 +48,7 @@ void P2DOrthoGraph::setPort()
 {
 	P2DGrafContext::setPort();
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	C_MTXOrtho(mProjectionMtx.mMtx, mLogicalViewBounds.mMinY, mLogicalViewBounds.mMaxY, mLogicalViewBounds.mMinX, mLogicalViewBounds.mMaxX,
 	           mLogicalNearZ, mLogicalFarZ);
 #else

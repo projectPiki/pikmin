@@ -19,6 +19,7 @@
 #include "DebugLog.h"
 #include "zen/Math.h"
 #include "ItemMgr.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -1008,7 +1009,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
 		mPosition = mSpawnPosition;
 	}
-#if defined(VERSION_GPIE01_00) || defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_GPIE01_00) || defined(VERSION_PIKIDEMO)
 	// This isn't in the USA versions' DLL, meaning that DLL is based on rev 0 instead of rev 1 (it was not recompiled between revisions).
 #else
 	else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
@@ -1371,7 +1372,7 @@ void Pellet::update()
 		mVelocity.z = mVelocity.z - mVelocity.z * rate;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	isNan(mPosition.x);
 	mStateMachine->exec(this);
 	isNan(mPosition.x);
@@ -1614,7 +1615,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 	if (view) {
 		if (config) {
 			Pellet* pellet = static_cast<Pellet*>(birth());
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			pellet->initPellet(view, config);
 #else
 			if (pellet) {
@@ -1631,7 +1632,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 
 		if (config && obj) {
 			Pellet* pellet = static_cast<Pellet*>(birth());
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			pellet->initPellet(obj, config);
 #else
 			if (pellet) {
@@ -1696,7 +1697,7 @@ PelletMgr::PelletMgr(MapMgr* mgr)
 	mConfigNum   = 0;
 	mReadStage   = 0;
 	load("parms/", "pelMgr.bin", 1);
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	create(64);
 #else
 	create(96);

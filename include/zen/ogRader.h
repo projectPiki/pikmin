@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Vector.h"
 #include "GlobalGameOptions.h"
+#include "VersionGroups.h"
 
 struct P2DPane;
 struct P2DPicture;
@@ -80,7 +81,7 @@ struct ogRaderMgr {
 	int _18;             // _18
 	int _1C;             // _1C
 	int _20;             // _20
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	Vector3f _24demo[4]; // _24
 #endif
 	f32 _24;                                // _24

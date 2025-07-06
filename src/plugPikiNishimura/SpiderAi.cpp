@@ -11,6 +11,7 @@
 #include "PlayerState.h"
 #include "NsMath.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 static u32 spiderSE[] = { SE_SPIDER_WALK, SE_SPIDER_LAND, SE_SPIDER_SWING, SE_SPIDER_DEAD, SE_SPIDER_BOMB };
 
@@ -343,7 +344,7 @@ bool SpiderAi::appearTransit()
 			    && qdist2(initPos->x, initPos->z, navi->mPosition.x, navi->mPosition.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
 
 				mSpider->mIsAppear = true;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 				mSpider->mIsBossBgm = true;
 
@@ -445,7 +446,7 @@ void SpiderAi::initAppear(int nextState)
 	mSpider->setNextState(nextState);
 	mSpider->setMotionFinish(false);
 	mSpider->mIsBossBgm = true;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	// I don't think BLL is set to be invincible anywhere, so this does nothing?
 	mSpider->setInvincible(false);

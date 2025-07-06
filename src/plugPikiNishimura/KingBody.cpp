@@ -9,6 +9,7 @@
 #include "Graphics.h"
 #include "Pcam/CameraManager.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -172,7 +173,7 @@ void KingBody::createUfoParts()
 		}
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	mKing->mIsBossBgm = false;
 #endif

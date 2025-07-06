@@ -23,6 +23,7 @@
 #include "sysNew.h"
 #include "jaudio/verysimple.h"
 #include "jaudio/interface.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -120,7 +121,7 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 
 	u32 old            = gsys->mTogglePrint;
 	gsys->mTogglePrint = 1;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	_Print("Opened file %s\n", strPath);
 #else
 	PRINT("Opened file %s\n", strPath);
@@ -536,7 +537,7 @@ System::System()
 	mToggleDebugExtra = 0;
 	mToggleBlur       = 1;
 	mToggleColls      = 0;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mIsDemoTimeUp = 0;
 #endif
 	mDvdBufferSize    = 0x40000;
@@ -937,7 +938,7 @@ void* loadFunc(void* idler)
 	}
 
 	int frameCount = 0; // r23
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	int b = 4; // r22
 #else
 	int b = 2; // r22
@@ -1014,7 +1015,7 @@ void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 	if (mIsLoadingActive == 0) {
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, OS_THREAD_ATTR_DETACH);
 #else
 		OSCreateThread(&Thread, loadFunc, idler, ThreadStack + sizeof(ThreadStack), sizeof(ThreadStack), 15, 0);
@@ -1044,7 +1045,7 @@ void System::endLoading()
 	gsys->mPrevAllocType = 1;
 	if (mIsLoadingActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', OS_MESSAGE_BLOCK);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		OSReceiveMessage(&sysMesgQueue, nullptr, OS_MESSAGE_BLOCK);
 		OSCancelThread(&Thread);
 #else
@@ -1196,7 +1197,7 @@ void* dvdFunc(void*)
 			} else {
 				inputCounter = 0;
 			}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			if (gsys->mIsDemoTimeUp || OSGetResetSwitchState())
 #else
 			if (OSGetResetSwitchState())

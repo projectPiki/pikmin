@@ -9,6 +9,7 @@
 #include "KMath.h"
 #include "sysNew.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -558,7 +559,7 @@ void DynCreature::refresh(Graphics& gfx)
  */
 void DynCreature::doKill()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	releaseAllParticles();
 #endif

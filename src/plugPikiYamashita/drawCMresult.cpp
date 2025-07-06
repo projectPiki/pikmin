@@ -6,6 +6,7 @@
 #include "SoundMgr.h"
 #include "gameflow.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -274,7 +275,7 @@ bool zen::DrawCMresult::modeOperation(Controller* controller)
 	} else if (mScoreMgr.getEventFlag() & 0x2) {
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
 			SeSystem::playSysSe(SYSSE_DECIDE1);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			gsys->forceHardReset();
 #else
 			setMode(MODE_Save);

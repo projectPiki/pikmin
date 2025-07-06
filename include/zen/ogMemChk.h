@@ -2,6 +2,7 @@
 #define _ZEN_OGMEMCHK_H
 
 #include "types.h"
+#include "VersionGroups.h"
 
 struct Controller;
 struct Graphics;
@@ -123,7 +124,7 @@ struct ogScrMemChkMgr {
 	P2DPane* mFormatEffPane;                 // _A8
 	P2DTextBox* mYesPane;                    // _AC
 	P2DTextBox* mNoPane;                     // _B0
-#if defined(VERSION_G98E01_PIKIDEMO)         //
+#if defined(VERSION_PIKIDEMO)                //
 #else                                        //
 	P2DTextBox* mYesPane2; // _B4
 	P2DTextBox* mNoPane2;  // _B8
@@ -135,7 +136,7 @@ struct ogScrMemChkMgr {
 	int _CC;                                 // _CC
 	int _D0;                                 // _D0
 	ogNitakuMgr* mNitakuMgr;                 // _D4
-#if defined(VERSION_G98E01_PIKIDEMO)         //
+#if defined(VERSION_PIKIDEMO)                //
 #else                                        //
 	char* mYesText;            // _D8
 	char* mNoText;             // _DC

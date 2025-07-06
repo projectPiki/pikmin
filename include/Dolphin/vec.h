@@ -2,6 +2,7 @@
 #define _DOLPHIN_VEC_H
 
 #include "types.h"
+#include "VersionGroups.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,7 +21,7 @@ typedef struct SVec {
 } SVec;
 
 f32 PSVECSquareMag(Vec*);
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 f32 PSVECMag(Vec*);
 #else
 f32 VECMag(Vec*);

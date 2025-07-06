@@ -7,6 +7,7 @@
 #include "DebugLog.h"
 #include "sysNew.h"
 #include "PlayerState.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -36,7 +37,7 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));
 	mBlackPane->setAlpha(0);
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mDrawMenu1 = new DrawMenu("screen/blo/ot_pause.blo", false, false);
 #else
 	mDrawMenu1 = new DrawMenu("screen/blo/pause.blo", false, false);
@@ -51,7 +52,7 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 
 	mTextBox4->hide();
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mDrawMenu2 = new DrawMenu("screen/blo/ot_pa_ok.blo", false, false);
 #else
 	mDrawMenu2 = new DrawMenu("screen/blo/pause_ok.blo", false, false);

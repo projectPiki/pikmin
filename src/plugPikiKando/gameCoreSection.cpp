@@ -51,6 +51,7 @@
 #include "timers.h"
 #include "Graphics.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 static bool lastDamage;
 static bool currDamage;
@@ -260,7 +261,7 @@ void GameCoreSection::startMovie(u32 flags, bool b)
  * Address:	8010D3FC
  * Size:	000254
  */
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 void GameCoreSection::endMovie()
 #else
 void GameCoreSection::endMovie(int movieIdx)
@@ -302,7 +303,7 @@ void GameCoreSection::endMovie(int movieIdx)
 			PRINT("using previous camera\\n");
 		}
 		angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		if (movieIdx == DEMOID_FindRedOnyon || movieIdx == DEMOID_FindYellowOnyon || movieIdx == DEMOID_FindBlueOnyon
 		    || movieIdx == DEMOID_DiscoverMainEngine) {
@@ -600,7 +601,7 @@ void GameCoreSection::cleanupDayEnd()
 			int mode   = piki->mMode;
 			if (piki->isKinoko()) {
 				GameStat::victimPikis.inc(piki->mColor);
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 				GameStat::deadPikis.inc(piki->mColor);
 #endif
@@ -644,7 +645,7 @@ void GameCoreSection::cleanupDayEnd()
 					}
 					if (!isNearOnyonShip) {
 						GameStat::victimPikis.inc(piki->mColor);
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 						GameStat::deadPikis.inc(piki->mColor);
 #endif
@@ -936,7 +937,7 @@ void GameCoreSection::initStage()
 	*++tmp = 'e';
 	*++tmp = 'n';
 	*++tmp = '\0';
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	gsys->openFile(path, true, true); // bruh
 #endif
 	PRINT("---------- auto load generator file : <%s>\n", path);
@@ -1101,7 +1102,7 @@ void GameCoreSection::initStage()
 	cameraMgr->update();
 	mNavi->mIsCursorVisible = 1;
 
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	if (!playerState->isChallengeMode())
 #endif

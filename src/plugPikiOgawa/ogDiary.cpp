@@ -10,6 +10,7 @@
 #include "SoundMgr.h"
 #include "DebugLog.h"
 #include "Font.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -376,14 +377,14 @@ zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 		if (input->keyClick(KBBTN_B)) {
 			mStatus = Closing;
 			mEfxMgr->killAll(true);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_Cancel);
 #else
 			seSystem->playSysSe(SYSSE_CANCEL);
 #endif
 		} else if (input->keyClick(KBBTN_A)) {
 			if (mDiaryMgr->nextPage()) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_MessageClose);
 #else
 				seSystem->playSysSe(YMENU_SELECT2);
@@ -596,7 +597,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			f32 x         = pane->getPosH() + pane->getWidth() / 2;
 			f32 y         = pane->getPosV() + pane->getHeight() / 2;
 			mDiaryInstance->open(x, y, mSelectionIndex + 1);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_Decide1);
 #else
 			seSystem->playSysSe(SYSSE_DECIDE1);
@@ -616,7 +617,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			if (MoveCursor()) {
 				mSelectedColumnIndex++;
 			} else {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_Move1);
 #else
 				seSystem->playSysSe(SYSSE_MOVE1);
@@ -627,7 +628,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			if (MoveCursor()) {
 				mSelectedColumnIndex--;
 			} else {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_Move1);
 #else
 				seSystem->playSysSe(SYSSE_MOVE1);
@@ -638,7 +639,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			if (MoveCursor()) {
 				mSelectedRowIndex++;
 			} else {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_Move1);
 #else
 				seSystem->playSysSe(SYSSE_MOVE1);
@@ -649,7 +650,7 @@ zen::ogDrawSelectDiary::SelectDiaryStatus zen::ogDrawSelectDiary::update(Control
 			if (MoveCursor()) {
 				mSelectedRowIndex--;
 			} else {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				seSystem->playSysSe(JACSYS_Move1);
 #else
 				seSystem->playSysSe(SYSSE_MOVE1);

@@ -14,6 +14,7 @@
 #include "PikiState.h"
 #include "Graphics.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -650,7 +651,7 @@ void ViewPiki::refresh(Graphics& gfx)
 	mPikiShape->mShape->updateAnim(gfx, mtx, nullptr);
 
 	if ((AIPerf::useLOD && _528 < 1200.0f && aiCullable()) || !AIPerf::useLOD) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed)
 #else
 		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed && mMode != PikiMode::ExitMode)
@@ -659,7 +660,7 @@ void ViewPiki::refresh(Graphics& gfx)
 			updateLook();
 
 			Matrix4f animMtx1 = mPikiShape->mShape->getAnimMatrix(2);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 			animMtx1.mMtx[3][0] = animMtx1.mMtx[3][1] = animMtx1.mMtx[3][2] = 0.0f;
 			animMtx1.mMtx[3][3]                                             = 1.0f;
@@ -694,7 +695,7 @@ void ViewPiki::refresh(Graphics& gfx)
 
 			for (int j = 3; j <= 6; j++) {
 				Matrix4f animMtx = mPikiShape->mShape->getAnimMatrix(j);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 				animMtx.mMtx[3][0] = animMtx.mMtx[3][1] = animMtx.mMtx[3][2] = 0.0f;
 				animMtx.mMtx[3][3]                                           = 1.0f;

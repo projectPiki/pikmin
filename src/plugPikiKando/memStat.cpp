@@ -4,6 +4,7 @@
 #include "sysNew.h"
 #include "stl/string.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 MemStat* memStat;
 
@@ -136,7 +137,7 @@ int MemStat::getRestMemory()
 void MemStat::print()
 {
 	if (memStat) {
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		_Print("****** MEMORY INFO ******\n");
 #else
 		PRINT("****** MEMORY INFO ******\n");
@@ -171,13 +172,13 @@ void MemStat::printInfoRec(MemInfo* info, int indentation)
 	leftPad[i] = '\0';
 
 	if (info->mMemorySize >= 1024 * 1024) {
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		_Print("%s%s : %6.2f mbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f / 1024.0f);
 #else
 		PRINT("%s%s : %6.2f mbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f / 1024.0f);
 #endif
 	} else {
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		_Print("%s%s : %6.2f kbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f);
 #else
 		PRINT("%s%s : %6.2f kbytes\n", leftPad, info->mName, info->mMemorySize / 1024.0f);

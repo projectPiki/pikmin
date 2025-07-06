@@ -12,6 +12,7 @@
 #include "sysNew.h"
 #include "DebugLog.h"
 #include "Graphics.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -614,7 +615,7 @@ zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag playMode)
 		break;
 
 	case MODE_Challenge:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		mModeScreenMgr = new DGIScreenMgr("screen/blo/ot_play.blo");
 #else
 		mModeScreenMgr = new DGIScreenMgr("screen/blo/play_cha.blo");

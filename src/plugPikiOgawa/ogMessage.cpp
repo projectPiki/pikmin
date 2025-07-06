@@ -9,8 +9,9 @@
 #include "sysNew.h"
 #include "Font.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
-#if defined(VERSION_G98E01_PIKIDEMO) // these tables aren't here in demo
+#if defined(VERSION_PIKIDEMO) // these tables aren't here in demo
 #else
 static s16 sjis_convert_table[0x258] ATTRIBUTE_ALIGN(32) = {
 	0,     0x118, 0x119, 0xC,   0xE,   0x60,  0x1A,  0x1B,  0x1F,  0x1,   0x2,   0,     0,     0,     0,     0x3E,  0,     0,     0,
@@ -258,7 +259,7 @@ s16 zen::ogScrMessageMgr::makePageInfo(char*** data)
 	return idx;
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO) // these two functions are straight up not in demo
+#if defined(VERSION_PIKIDEMO) // these two functions are straight up not in demo
 #else
 /*
  * --INFO--
@@ -431,7 +432,7 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 		if (mPagePaneList[id]) {
 			switch (mPagePaneList[id]->getTypeID()) {
 			case PANETYPE_TextBox:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				mProcessedTextBoxStrings[id] = ((P2DTextBox*)mPagePaneList[id])->getString();
 #else
 				sprintf(mRawPageTextBoxStrings[id], "%s", ((P2DTextBox*)mPagePaneList[id])->getString());
@@ -517,7 +518,7 @@ zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
 	mCurrentTextCharOffset = 0;
 	mNextPaneId            = 0;
 	mActivePaneId          = -1;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	sprintf(mButtonTagChars, "abcxyzlr");
 	sprintf(mButtonTagIconStrings, "日目時私未知星大地横名");
@@ -682,7 +683,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 				mCurrentMessageId = 0;
 				mScreenFadeTimer  = 0.0f;
 				mState            = STATE_FadingOut;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				SeSystem::playSysSe(JACSYS_MessageClose); // this is the wrong enum, devs.
 #else
 				SeSystem::playSysSe(SYSSE_MESSAGE_CLOSE);
@@ -725,7 +726,7 @@ zen::ogScrMessageMgr::MessageStatus zen::ogScrMessageMgr::update(Controller* inp
 			break;
 
 		case PANETYPE_TextBox:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			if (mTextAnimationProgress >= 0.04f) {
 #else
 			if (mTextAnimationProgress >= 0.029639998f) {

@@ -2,6 +2,7 @@
 #define _TIMERS_H
 
 #include "types.h"
+#include "VersionGroups.h"
 
 struct Graphics;
 struct Font;
@@ -41,14 +42,14 @@ struct Timers {
 
 	void start(char* name, bool p2)
 	{
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		_start(name, p2);
 #endif
 	}
 
 	void stop(char* name)
 	{
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		_stop(name);
 #endif
 	}

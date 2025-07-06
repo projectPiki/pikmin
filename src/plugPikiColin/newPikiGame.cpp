@@ -37,6 +37,7 @@
 #include "Graphics.h"
 #include "Font.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /// New piki game section instance
 static NewPikiGameSetupSection* npgss;
@@ -978,7 +979,7 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	gsys->startLoading(nullptr, true, 120);
 	PRINT("EXITDAYEND!!!!\n");
 	gamecore->exitDayEnd();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	gsys->forceHardReset();
 	while (true) { }
 #endif
@@ -1639,7 +1640,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		PRINT("%s\n", check ? "HIDING NAVI!!!" : "not hiding!");
 		break;
 	case MOVIECMD_EndMovie:
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		gamecore->endMovie();
 #else
 		gamecore->endMovie(data);

@@ -10,6 +10,7 @@
 #include "SoundMgr.h"
 #include "DebugLog.h"
 #include "sysNew.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -874,14 +875,14 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 
 	P2DTextBox* onesBox = (P2DTextBox*)screen->search('maru', true);
 	P2DTextBox* tensBox = (P2DTextBox*)screen->search('ten', true);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	P2DTextBox* hundredsBox = (P2DTextBox*)screen->search('han', true);
 #endif
 
 	strcpy(mOnesWaitChar, onesBox->getString());
 	strcpy(mTensWaitChar, tensBox->getString());
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	strcpy(mHankakuWaitChars, hundredsBox->getString());
 #endif
@@ -945,7 +946,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 	} else if (b & 0x80) {
 		c = a + 2;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	} else if (strchr(mHankakuWaitChars, b)) {
 		PRINT("Hit HANKAKU WAIT!!\n");

@@ -13,6 +13,7 @@
 #include "sysNew.h"
 #include "gameflow.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -35,7 +36,7 @@ DEFINE_PRINT("OgSaveSection")
  */
 zen::ogSaveMgr::ogSaveMgr()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	mFileChkSelected = 0;
 #endif
@@ -164,7 +165,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = Inactive;
 		return mStatus;
 	}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mFileChkSelected = 1;
 #endif
 
@@ -185,7 +186,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
 		mStatus = ExitSuccess;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		mFileChkSelected = 0;
 #endif
@@ -193,14 +194,14 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::ErrorOrCompleted) {
 		mStatus = ExitFailure;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		mFileChkSelected = 0;
 #endif
 		return mStatus;
 
 	} else if (fileChkSelRes != ogScrFileChkSelMgr::Null) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		mFileChkSelected = 0;
 #else
 		mFileChkSelected = 1;
@@ -211,7 +212,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	zen::ogScrMemChkMgr::MemChkStatus memCheckRes = mMemCheckMgr->update(input);
 	if (memCheckRes == ogScrMemChkMgr::Finished) {
 		mFileChkSelMgr->startSave();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		mFileChkSelected = 1;
 #endif
@@ -226,7 +227,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = ExitFailure;
 		return mStatus;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 } else if (memCheckRes == ogScrMemChkMgr::Inactive) {
 #else
 } else if (memCheckRes != ogScrMemChkMgr::Inactive) {
@@ -256,7 +257,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mWindow1->setScale(t);
 			f32 alpha = f32(mSaveCenterTextBox->getAlpha() * t);
 			mBackPicture->setAlpha(alpha);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 				PRINT("SAVE FADEIN alpha = %d\n", (int)alpha);
 #endif
@@ -327,7 +328,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mStatus    = MainWindowFadeOut;
 			mAnimTimer = 0.0f;
 		} else if (nikatu1 == 4) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_Cancel);
 #else
 				seSystem->playSysSe(SYSSE_CANCEL);
@@ -348,7 +349,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		} else {
 			mStatus    = SavingInProgress;
 			mAnimTimer = 0.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_CardAccess);
 #else
 				seSystem->playSysSe(SYSSE_CARDACCESS);
@@ -359,7 +360,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	case SavingInProgress:
 		mNoticePane->setScale(1.0f);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		seSystem->playSysSe(JACSYS_CardOK);
 #else
 			seSystem->playSysSe(SYSSE_CARDOK);
@@ -419,7 +420,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 			mStatus     = SecondaryWindowFadeOut;
 			mAnimTimer  = 0.0f;
 		} else if (nikatu2 == 4) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_Cancel);
 #else
 				seSystem->playSysSe(SYSSE_CANCEL);
@@ -451,7 +452,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 
 	STACK_PAD_TERNARY(mStatus, 2);
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 }
 #endif
 
@@ -472,7 +473,7 @@ void zen::ogSaveMgr::draw(Graphics& gfx)
 	P2DPerspGraph graf(0, 0, 640, 480, 30.0f, 1.0f, 5000.0f);
 	graf.setPort();
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	if (!mFileChkSelected) {
 		mBlackScreen->draw(0, 0, &graf);
 		mFileChkSelMgr->draw(gfx);

@@ -9,6 +9,7 @@
 #include "SoundMgr.h"
 #include "jaudio/verysimple.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -113,7 +114,7 @@ zen::ogScrTitleMgr::ogScrTitleMgr()
 	mNoInputTimer = 0.0f;
 	_9A           = 3;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mMsSelectMenu->setCancelSE(JACSYS_Decide1);
 	mVSelectMenu->setCancelSE(JACSYS_Decide1);
 	mSoundSelectMenu->setCancelSE(JACSYS_Decide1);
@@ -147,7 +148,7 @@ void zen::ogScrTitleMgr::start(bool hasChallenge)
 		mUseMenu = mMenu1;
 	}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	SeSystem::playSysSe(SE_PIKI_ATTACK_VOICE);
 #else
 	SeSystem::playSysSe(YMENU_SELECT2);
@@ -274,7 +275,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 			return mStatus;
 		}
 		if (mOptionsMenu->checkSelectMenuCancel()) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			STACK_PAD_VAR(2);
 #else
 			bool vibe   = gameflow.mGamePrefs.getVibeMode();
@@ -318,7 +319,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					// is meant to use its own sound ids for system sounds), then fixed AGAIN in a different way for PAL
 #if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
 					Jac_PlaySystemSe(Sound_Config);
@@ -332,7 +333,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					setGamePrefs();
 #if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
 					Jac_PlaySystemSe(Sound_Config);
@@ -346,7 +347,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					setGamePrefs();
 #if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
 					Jac_PlaySystemSe(Sound_Config);
@@ -363,7 +364,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					setGamePrefs();
 #if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
 					Jac_PlaySystemSe(Sound_Config);
@@ -377,7 +378,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					setGamePrefs();
 #if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
 					Jac_PlaySystemSe(Sound_Config);
@@ -391,7 +392,7 @@ zen::ogScrTitleMgr::TitleStatus zen::ogScrTitleMgr::update(Controller* input)
 					setGamePrefs();
 #if defined(BUGFIX) || defined(VERSION_GPIP01_00)
 					seSystem->playSysSe(Sound_Config);
-#elif defined(VERSION_G98E01_PIKIDEMO)
+#elif defined(VERSION_PIKIDEMO)
 					Jac_PlaySystemSe(JACSYS_SoundConfig);
 #else
 					Jac_PlaySystemSe(Sound_Config);

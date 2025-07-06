@@ -2,6 +2,7 @@
 
 #include "Vector.h"
 #include "SRT.h"
+#include "VersionGroups.h"
 
 f32 sintable[0x1000];
 f32 costable[0x1000];
@@ -292,7 +293,7 @@ void Matrix4f::inverse(Matrix4f* inv)
 	                - mMtx[2][0] * mMtx[1][1] * mMtx[0][2] - mMtx[1][0] * mMtx[0][1] * mMtx[2][2] - mMtx[0][0] * mMtx[2][1] * mMtx[1][2];
 
 	if (determinant == 0.0f) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		return;
 #else
 		temp->makeIdentity();
