@@ -154,7 +154,7 @@ struct ParaMultiParameters {
 	virtual void write(Stream&); // _0C
 	virtual void print();        // _10
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&) { }
 #endif
 };

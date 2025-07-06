@@ -263,7 +263,7 @@ struct PelletConfig : public Parameters, public CoreNode {
 
 	void removeSelf(AgeServer&);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 	virtual void write(RandomAccessStream&);
 #endif
@@ -414,7 +414,7 @@ struct PelletMgr : public MonoObjectMgr {
 
 	PelletMgr(MapMgr*);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 	virtual ~PelletMgr() { }                // _48 (weak)

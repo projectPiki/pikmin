@@ -468,7 +468,7 @@ void GenObjectPlant::render(Graphics&, Generator*)
 	plantMgr->usePlantType(mPlantType);
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectPlant::doGenAge(AgeServer& server)
 {

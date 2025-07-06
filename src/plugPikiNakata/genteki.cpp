@@ -132,7 +132,7 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	return teki;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectTeki::doGenAge(AgeServer& server)
 {

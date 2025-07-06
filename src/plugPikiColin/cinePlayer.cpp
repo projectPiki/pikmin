@@ -1181,7 +1181,7 @@ void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
 // The functions following this point are exclusively found in the windows .dll build
 // None of this is confirmed to be equivalent for obvious reasons
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void CinematicPlayer::genAge(AgeServer& server)
 {

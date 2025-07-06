@@ -25,7 +25,7 @@ int numShapes = 5;
 
 static char* shapeNames[] = { "box", "1", "2", "3", "log" };
 
-#ifdef DEVELOP
+#ifdef WIN32
 int numKinds             = 3;
 static char* partNames[] = { "mapparts/cone.mod", "mapparts/cylinder.mod", "mapparts/cube.mod", "mapparts/board.mod" };
 int numParts             = 4;
@@ -200,7 +200,7 @@ Creature* GenObjectMapParts::birth(BirthInfo& info)
 	return nullptr;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 void GenObjectMapParts::doGenAge(AgeServer& server)
 {
 	server.StartOptionBox("マップパーツ", &mPartKind, 252); // Map Parts

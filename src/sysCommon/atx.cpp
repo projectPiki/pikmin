@@ -250,7 +250,7 @@ void AtxFileStream::setLength(int length)
 	mLength = length;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 // This a .dll exclusive function, equivalence is not guaranteed!
 

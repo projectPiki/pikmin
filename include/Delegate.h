@@ -3,14 +3,12 @@
 
 #include "types.h"
 
-// #ifdef DEVELOP
 /**
  * @brief Parent class for no argument delegates.  NOTE this is only used in the .dll, not the final game
  */
 struct IDelegate {
 	virtual void invoke() = 0; // _08
 };
-// #endif
 
 /**
  * @brief Parent class for single argument delegates.
@@ -28,7 +26,6 @@ struct IDelegate2 {
 	virtual void invoke(A, B) = 0; // _08
 };
 
-// #ifdef DEVELOP
 /**
  * @brief No argument delegates. NOTE this is only used in the .dll, not the final game
  *
@@ -51,7 +48,6 @@ struct Delegate : public IDelegate {
 	T* mTarget;             // _04
 	CallbackFunc mCallback; // _08
 };
-// #endif
 
 /**
  * @brief Single argument delegates.

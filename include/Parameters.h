@@ -17,7 +17,7 @@ struct BaseParm {
 	char* mID;       // _00
 	BaseParm* mNext; // _04
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 

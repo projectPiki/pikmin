@@ -581,7 +581,7 @@ void Animator::animate(f32 animSpeed)
 // The functions following this point are exclusively found in the windows .dll build
 // None of this is confirmed to be equivalent for obvious reasons
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void AnimMgr::genAge(AgeServer& server)
 {

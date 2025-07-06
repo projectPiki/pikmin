@@ -100,7 +100,7 @@ struct SceneData : public CoreNode {
 	void parse(CmdStream*);
 	void getAnimInfo(CmdStream*);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 
@@ -179,7 +179,7 @@ struct ActorInstance : public CoreNode {
 	// unused/inlined:
 	void onceInit();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 
@@ -239,7 +239,7 @@ struct SceneCut : public CoreNode {
 
 	ActorInstance* addInstance(char*);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 
@@ -285,7 +285,7 @@ struct CineShapeObject : public CoreNode {
 	/// STRIPPED - initialises model and animation manager.
 	void init(char* modelPath, char* animPath, char* bundlePath);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 
@@ -346,7 +346,7 @@ struct CinematicPlayer {
 	/// STRIPPED - sets up new scene with given .dsk file path, reads in data, and sets as current scene.
 	SceneData* addScene(char* dskFilePath);
 
-	// DLL exclusive functions (use -DEVELOP)
+	// DLL exclusive functions (use -DWIN32)
 	void genAge(AgeServer&);
 	void ageAddActor(AgeServer&);
 	void ageAddCut(AgeServer&);

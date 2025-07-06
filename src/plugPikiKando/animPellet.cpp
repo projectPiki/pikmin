@@ -235,7 +235,7 @@ PaniPelletAnimator::PaniPelletAnimator()
 {
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void PelletAnimInfo::write(RandomAccessStream& output)
 {

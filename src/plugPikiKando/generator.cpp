@@ -1511,7 +1511,7 @@ void GeneratorList::updateUseList()
 // The functions following this point are exclusively found in the windows .dll build
 // None of this is confirmed to be equivalent for obvious reasons
 
-#ifdef DEVELOP
+#ifdef WIN32
 void GeneratorMgr::genAge(AgeServer& server)
 {
 	server.StartSection(mName, true);
