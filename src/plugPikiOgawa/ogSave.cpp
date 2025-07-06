@@ -226,237 +226,234 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 	} else if (memCheckRes == ogScrMemChkMgr::ExitFailure) {
 		mStatus = ExitFailure;
 		return mStatus;
-
+	}
 #if defined(VERSION_PIKIDEMO)
-} else if (memCheckRes == ogScrMemChkMgr::Inactive) {
+	else if (memCheckRes == ogScrMemChkMgr::Inactive)
 #else
-} else if (memCheckRes != ogScrMemChkMgr::Inactive) {
-	return mStatus;
-}
+	else if (memCheckRes != ogScrMemChkMgr::Inactive) {
+		return mStatus;
+	}
 #endif
+	{
+		mAnimTimer += gsys->getFrameTime();
+		mScreen->update();
+		int nikatu1 = mPrimaryNikatuMgr->update(input);
+		mSecondaryScreen->update();
+		int nikatu2 = mSecondaryNikatuMgr->update(input);
+		mSaveActionCenterFader->update();
+		mSaveActionSideFader->update();
+		mSaveActionKCFader->update();
+		mSaveActionKSFader->update();
 
-	mAnimTimer += gsys->getFrameTime();
-	mScreen->update();
-	int nikatu1 = mPrimaryNikatuMgr->update(input);
-	mSecondaryScreen->update();
-	int nikatu2 = mSecondaryNikatuMgr->update(input);
-	mSaveActionCenterFader->update();
-	mSaveActionSideFader->update();
-	mSaveActionKCFader->update();
-	mSaveActionKSFader->update();
-
-	switch (mStatus) {
-	case FadeIn:
-		if (mAnimTimer > 0.25f) {
-			mStatus = MainSelectionActive;
-			mWindow1->setScale(1.0f);
-			mPrimaryNikatuMgr->start();
-			PRINT("SAVE FADEIN END \n");
-		} else {
-			f32 t = mAnimTimer / 0.25f;
-			mWindow1->setScale(t);
-			f32 alpha = f32(mSaveCenterTextBox->getAlpha() * t);
-			mBackPicture->setAlpha(alpha);
+		switch (mStatus) {
+		case FadeIn:
+			if (mAnimTimer > 0.25f) {
+				mStatus = MainSelectionActive;
+				mWindow1->setScale(1.0f);
+				mPrimaryNikatuMgr->start();
+				PRINT("SAVE FADEIN END \n");
+			} else {
+				f32 t = mAnimTimer / 0.25f;
+				mWindow1->setScale(t);
+				f32 alpha = f32(mSaveCenterTextBox->getAlpha() * t);
+				mBackPicture->setAlpha(alpha);
 #if defined(VERSION_PIKIDEMO)
 #else
 				PRINT("SAVE FADEIN alpha = %d\n", (int)alpha);
 #endif
-		}
-		break;
-
-	case PreparingSave:
-		if (mAnimTimer > 0.25f) {
-			mStatus    = ShowingSaveNotice;
-			mAnimTimer = 0.0f;
-			mWindow1->setScale(1.0f);
-			mSaveActionCenterTextBox->show();
-			mSaveActionSideTextBox->show();
-			mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
-			mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
-			PRINT("######################\n");
-			PRINT("##\tSAVE to (%d)   ##\n", mDirectSaveState);
-			PRINT("######################\n");
-		} else {
-			f32 t = mAnimTimer / 0.25f;
-			mWindow1->setScale(t);
-			mBackPicture->setAlpha(mSaveCenterTextBox->getAlpha() * t);
-		}
-		break;
-
-	case FadeOut:
-		if (mAnimTimer > 0.25f) {
-			mStatus = mNextStatus;
-			mWindow1->setScale(0.0f);
-		} else {
-			f32 t = 1.0f - mAnimTimer / 0.25f;
-			mWindow1->setScale(t);
-			mBackPicture->setAlpha(mSaveCenterTextBox->getAlpha() * t);
-		}
-		break;
-
-	case MainSelectionActive:
-		if (nikatu1 == 5) {
-			mStatus    = ShowingSaveNotice;
-			mAnimTimer = 0.0f;
-			mHeader0TextBox->hide();
-			mHeader1TextBox->hide();
-			mHeaderSub0->hide();
-			mHeaderSub1->hide();
-			mSaveActionCenterTextBox->show();
-			mSaveActionSideTextBox->show();
-			mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
-			mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
-
-			// why.
-			BOOL cardChanged = !gameflow.mMemoryCard.hasCardChanged();
-			if (!cardChanged) {
-				PRINT("#############################\n");
-				PRINT("#      NOT SAME FILE        #\n");
-				PRINT("#############################\n");
-				mMemCheckMgr->start();
-				if (mMemCheckMgr->update(input) == ogScrMemChkMgr::Finished) {
-					mFileChkSelMgr->startSave();
-					mStatus    = PreparingSave;
-					mAnimTimer = 0.0f;
-				}
-			} else {
-				PRINT("#############################\n");
-				PRINT("#         SAME FILE         #\n");
-				PRINT("#############################\n");
 			}
-		} else if (nikatu1 == 6) {
-			mStatus    = MainWindowFadeOut;
-			mAnimTimer = 0.0f;
-		} else if (nikatu1 == 4) {
+			break;
+
+		case PreparingSave:
+			if (mAnimTimer > 0.25f) {
+				mStatus    = ShowingSaveNotice;
+				mAnimTimer = 0.0f;
+				mWindow1->setScale(1.0f);
+				mSaveActionCenterTextBox->show();
+				mSaveActionSideTextBox->show();
+				mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+				mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+				PRINT("######################\n");
+				PRINT("##\tSAVE to (%d)   ##\n", mDirectSaveState);
+				PRINT("######################\n");
+			} else {
+				f32 t = mAnimTimer / 0.25f;
+				mWindow1->setScale(t);
+				mBackPicture->setAlpha(mSaveCenterTextBox->getAlpha() * t);
+			}
+			break;
+
+		case FadeOut:
+			if (mAnimTimer > 0.25f) {
+				mStatus = mNextStatus;
+				mWindow1->setScale(0.0f);
+			} else {
+				f32 t = 1.0f - mAnimTimer / 0.25f;
+				mWindow1->setScale(t);
+				mBackPicture->setAlpha(mSaveCenterTextBox->getAlpha() * t);
+			}
+			break;
+
+		case MainSelectionActive:
+			if (nikatu1 == 5) {
+				mStatus    = ShowingSaveNotice;
+				mAnimTimer = 0.0f;
+				mHeader0TextBox->hide();
+				mHeader1TextBox->hide();
+				mHeaderSub0->hide();
+				mHeaderSub1->hide();
+				mSaveActionCenterTextBox->show();
+				mSaveActionSideTextBox->show();
+				mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+				mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+
+				// why.
+				BOOL cardChanged = !gameflow.mMemoryCard.hasCardChanged();
+				if (!cardChanged) {
+					PRINT("#############################\n");
+					PRINT("#      NOT SAME FILE        #\n");
+					PRINT("#############################\n");
+					mMemCheckMgr->start();
+					if (mMemCheckMgr->update(input) == ogScrMemChkMgr::Finished) {
+						mFileChkSelMgr->startSave();
+						mStatus    = PreparingSave;
+						mAnimTimer = 0.0f;
+					}
+				} else {
+					PRINT("#############################\n");
+					PRINT("#         SAME FILE         #\n");
+					PRINT("#############################\n");
+				}
+			} else if (nikatu1 == 6) {
+				mStatus    = MainWindowFadeOut;
+				mAnimTimer = 0.0f;
+			} else if (nikatu1 == 4) {
 #if defined(VERSION_PIKIDEMO)
-			seSystem->playSysSe(JACSYS_Cancel);
+				seSystem->playSysSe(JACSYS_Cancel);
 #else
 				seSystem->playSysSe(SYSSE_CANCEL);
 #endif
-			mNextStatus = ExitFailure;
-			mStatus     = FadeOut;
-			mAnimTimer  = 0.0f;
-		}
-		break;
-
-	case ShowingSaveNotice:
-		if (mAnimTimer < 1.0f) {
-			f32 scale = 3.0f * mAnimTimer / 1.0f;
-			if (scale > 1.0f) {
-				scale = 1.0f;
+				mNextStatus = ExitFailure;
+				mStatus     = FadeOut;
+				mAnimTimer  = 0.0f;
 			}
-			mNoticePane->setScale(scale);
-		} else {
-			mStatus    = SavingInProgress;
-			mAnimTimer = 0.0f;
+			break;
+
+		case ShowingSaveNotice:
+			if (mAnimTimer < 1.0f) {
+				f32 scale = 3.0f * mAnimTimer / 1.0f;
+				if (scale > 1.0f) {
+					scale = 1.0f;
+				}
+				mNoticePane->setScale(scale);
+			} else {
+				mStatus    = SavingInProgress;
+				mAnimTimer = 0.0f;
 #if defined(VERSION_PIKIDEMO)
-			seSystem->playSysSe(JACSYS_CardAccess);
+				seSystem->playSysSe(JACSYS_CardAccess);
 #else
 				seSystem->playSysSe(SYSSE_CARDACCESS);
 #endif
-			gameflow.mMemoryCard.saveCurrentGame();
-		}
-		break;
+				gameflow.mMemoryCard.saveCurrentGame();
+			}
+			break;
 
-	case SavingInProgress:
-		mNoticePane->setScale(1.0f);
+		case SavingInProgress:
+			mNoticePane->setScale(1.0f);
 #if defined(VERSION_PIKIDEMO)
-		seSystem->playSysSe(JACSYS_CardOK);
+			seSystem->playSysSe(JACSYS_CardOK);
 #else
 			seSystem->playSysSe(SYSSE_CARDOK);
 #endif
-		if (gameflow.mMemoryCard.didSaveFail()) {
-			mSaveFail->open(1.0f);
-			mNextStatus = ExitFailure;
-			mStatus     = FadeOut;
-			mAnimTimer  = 0.0f;
-		} else {
-			mStatus    = SaveComplete;
-			mAnimTimer = 0.0f;
-			mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
-			mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
-			mSaveActionSideFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
-			mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
-		}
-		break;
+			if (gameflow.mMemoryCard.didSaveFail()) {
+				mSaveFail->open(1.0f);
+				mNextStatus = ExitFailure;
+				mStatus     = FadeOut;
+				mAnimTimer  = 0.0f;
+			} else {
+				mStatus    = SaveComplete;
+				mAnimTimer = 0.0f;
+				mSaveActionCenterFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+				mSaveActionKCFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+				mSaveActionSideFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+				mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeIn, 0.25f);
+			}
+			break;
 
-	case SaveComplete:
-		if (mAnimTimer > 1.0f) {
-			mNextStatus = SaveCompletedSuccess;
-			mStatus     = FadeOut;
-			mAnimTimer  = 0.0f;
-			mSaveActionSideFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
-			mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
-		}
-		break;
+		case SaveComplete:
+			if (mAnimTimer > 1.0f) {
+				mNextStatus = SaveCompletedSuccess;
+				mStatus     = FadeOut;
+				mAnimTimer  = 0.0f;
+				mSaveActionSideFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+				mSaveActionKSFader->start(ogFadeMgr::STATUS_FadeOut, 0.25f);
+			}
+			break;
 
-	case MainWindowFadeOut:
-		if (mAnimTimer > 0.25f) {
-			mWindow1->setScale(0.0f);
-			mStatus    = SecondaryWindowFadeIn;
-			mAnimTimer = 0.0f;
-		} else {
-			mWindow1->setScale(1.0f - (mAnimTimer / 0.25f));
-		}
-		break;
+		case MainWindowFadeOut:
+			if (mAnimTimer > 0.25f) {
+				mWindow1->setScale(0.0f);
+				mStatus    = SecondaryWindowFadeIn;
+				mAnimTimer = 0.0f;
+			} else {
+				mWindow1->setScale(1.0f - (mAnimTimer / 0.25f));
+			}
+			break;
 
-	case SecondaryWindowFadeIn:
-		if (mAnimTimer > 0.25f) {
-			mStatus = SecondarySelectionActive;
-			mWindow2->setScale(1.0f);
-			mSecondaryNikatuMgr->start();
-		} else {
-			mWindow2->setScale((mAnimTimer / 0.25f));
-		}
-		break;
+		case SecondaryWindowFadeIn:
+			if (mAnimTimer > 0.25f) {
+				mStatus = SecondarySelectionActive;
+				mWindow2->setScale(1.0f);
+				mSecondaryNikatuMgr->start();
+			} else {
+				mWindow2->setScale((mAnimTimer / 0.25f));
+			}
+			break;
 
-	case SecondarySelectionActive:
-		if (nikatu2 == 5) {
-			mNextStatus = ExitSuccess;
-			mStatus     = SecondaryWindowFadeOut;
-			mAnimTimer  = 0.0f;
-		} else if (nikatu2 == 6) {
-			mNextStatus = AlternativeExitSuccess;
-			mStatus     = SecondaryWindowFadeOut;
-			mAnimTimer  = 0.0f;
-		} else if (nikatu2 == 4) {
+		case SecondarySelectionActive:
+			if (nikatu2 == 5) {
+				mNextStatus = ExitSuccess;
+				mStatus     = SecondaryWindowFadeOut;
+				mAnimTimer  = 0.0f;
+			} else if (nikatu2 == 6) {
+				mNextStatus = AlternativeExitSuccess;
+				mStatus     = SecondaryWindowFadeOut;
+				mAnimTimer  = 0.0f;
+			} else if (nikatu2 == 4) {
 #if defined(VERSION_PIKIDEMO)
-			seSystem->playSysSe(JACSYS_Cancel);
+				seSystem->playSysSe(JACSYS_Cancel);
 #else
 				seSystem->playSysSe(SYSSE_CANCEL);
 #endif
-			mNextStatus = FadeIn;
-			mStatus     = SecondaryWindowFadeOut;
-			mAnimTimer  = 0.0f;
-		}
-		break;
+				mNextStatus = FadeIn;
+				mStatus     = SecondaryWindowFadeOut;
+				mAnimTimer  = 0.0f;
+			}
+			break;
 
-	case SecondaryWindowFadeOut:
-		if (mAnimTimer > 0.25f) {
-			mWindow2->setScale(0.0f);
-			mStatus    = mNextStatus;
-			mAnimTimer = 0.0f;
-		} else {
-			mWindow2->setScale(1.0f - (mAnimTimer / 0.25f));
-		}
-		break;
+		case SecondaryWindowFadeOut:
+			if (mAnimTimer > 0.25f) {
+				mWindow2->setScale(0.0f);
+				mStatus    = mNextStatus;
+				mAnimTimer = 0.0f;
+			} else {
+				mWindow2->setScale(1.0f - (mAnimTimer / 0.25f));
+			}
+			break;
 
-	case HandleSaveFailure:
-		if (!savefail) {
-			mNextStatus = ExitFailure;
-			mStatus     = FadeOut;
-			mAnimTimer  = 0.0f;
+		case HandleSaveFailure:
+			if (!savefail) {
+				mNextStatus = ExitFailure;
+				mStatus     = FadeOut;
+				mAnimTimer  = 0.0f;
+			}
+			break;
 		}
-		break;
+
+		STACK_PAD_TERNARY(mStatus, 2);
 	}
 
-	STACK_PAD_TERNARY(mStatus, 2);
-
-#if defined(VERSION_PIKIDEMO)
-}
-#endif
-
-return mStatus;
+	return mStatus;
 }
 
 /*

@@ -162,13 +162,6 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 	}
 }
 
-// the print statements in checkIsHiscore aren't emitted, but the strings somehow end up in .data
-// not sure how, so this is just a bandaid fix.
-#if defined(VERSION_PIKIDEMO)
-static char unusedUSADemo1[] = "checking challenge info for course %d, top scores are :-\n";
-static char unusedUSADemo2[] = "\t[%d] ... %d\n";
-#endif
-
 /*
  * --INFO--
  * Address:	80053F2C
@@ -178,9 +171,19 @@ void GamePrefs::checkIsHiscore(GameChalQuickInfo& info)
 {
 	info.mRank         = -1;
 	gsys->mTogglePrint = 1;
+#if defined(VERSION_PIKIDEMO)
+	// This somehow doesn't generate a function call.  How.
+	_Print("checking challenge info for course %d, top scores are :-\n", info.mCourseID);
+#else
 	PRINT("checking challenge info for course %d, top scores are :-\n", info.mCourseID);
+#endif
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
+#if defined(VERSION_PIKIDEMO)
+		// This somehow doesn't generate a function call.  How.
+		_Print("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mCourseID].mScores[i]);
+#else
 		PRINT("\t[%d] ... %d\n", i, mHiscores.mChalModeRecords[info.mCourseID].mScores[i]);
+#endif
 	}
 
 	for (int i = 0; i < MAX_HI_SCORES; i++) {
