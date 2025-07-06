@@ -249,7 +249,7 @@ Creature* GenObjectBoss::birth(BirthInfo& info)
 	return boss;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectBoss::doGenAge(AgeServer& server)
 {

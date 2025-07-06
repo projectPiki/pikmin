@@ -219,7 +219,7 @@ void ID32::sprint(char* buffer)
 	buffer[4] = 0;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 // .dll exclusive function
 

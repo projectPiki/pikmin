@@ -50,7 +50,7 @@ struct PelletAnimInfo : public Parameters, public CoreNode {
 
 	// why is this split like this.
 	virtual void read(RandomAccessStream&); // _18
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void write(RandomAccessStream&);
 	virtual void genAge(AgeServer&);
 #endif

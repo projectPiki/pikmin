@@ -1270,7 +1270,7 @@ void System::startDvdThread()
 	OSResumeThread(&dvdThread);
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 // TODO, this function is pulled from MSVCRTD.dll
 FILE* fopen(char*, char*)

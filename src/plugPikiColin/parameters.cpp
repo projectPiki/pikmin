@@ -214,7 +214,7 @@ void Parm<String>::write(RandomAccessStream& output)
 	output.writeString(mValue);
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void BaseParm::genAge(AgeServer& server)
 {

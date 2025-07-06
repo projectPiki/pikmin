@@ -61,7 +61,7 @@ Creature* GenObjectActor::birth(BirthInfo& info)
 	return newActor;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectActor::doGenAge(AgeServer& server)
 {

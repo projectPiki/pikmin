@@ -177,7 +177,7 @@ void TekiPersonality::write(RandomAccessStream& output)
 	PRINT("TekiPersonality::write<\n");
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void TekiPersonality::genAge(AgeServer& server)
 {

@@ -29,7 +29,7 @@ struct AgeServer : public AtxStream {
 // TODO: All of this should be moved to a dedicated ageServer.cpp, I just don't want to yet because of the hacky way you have to add it in
 // configure.py
 // Note that all of these functions work by sending a specific command id to the server, plugAtxServer.dll has the important stuff
-#ifdef DEVELOP
+#ifdef WIN32
 	void Done() { writeInt(200); }
 
 	void EndBitGroup() { writeInt(0); }

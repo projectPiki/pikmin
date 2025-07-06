@@ -1643,7 +1643,7 @@ bool InteractBreak::actBridge(Bridge* bridge)
 	return true;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectWorkObject::changeNaviPos()
 {

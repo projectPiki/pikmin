@@ -378,7 +378,7 @@ struct AnimKey {
  */
 struct AnimInfo : public CoreNode {
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer& server);
 #endif
 
@@ -455,7 +455,7 @@ struct AnimInfo : public CoreNode {
 	void addInfoKey(AnimKey* key) { mInfoKeys.mPrev->insertAfter(key); }
 
 // .dll exclusive function for writing animation data to file.
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void write(RandomAccessStream&);
 #endif
 	void ageAddEffectKey(AgeServer&);
@@ -610,7 +610,7 @@ struct AnimMgr : public CoreNode {
 	/// STRIPPED - gets animation from list at index `idx` and if not loaded, loads it.
 	AnimInfo* findAnim(int idx);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 	virtual void write(RandomAccessStream&);
 #endif

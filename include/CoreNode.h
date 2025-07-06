@@ -19,7 +19,7 @@ struct CoreNode : public ANode {
 	 */
 	CoreNode(char* name = "CoreNode") { initCore(name); }
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&) { }
 #endif
 

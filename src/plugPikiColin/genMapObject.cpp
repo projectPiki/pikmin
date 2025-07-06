@@ -94,7 +94,7 @@ Creature* GenObjectMapObject::birth(BirthInfo&)
 	return obj;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 int numObjects = 8;
 

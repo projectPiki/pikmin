@@ -290,7 +290,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 	return item;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectItem::doGenAge(AgeServer& server)
 {

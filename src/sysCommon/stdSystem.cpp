@@ -712,7 +712,7 @@ void TextureCacher::cacheTexture(CacheTexture* tex)
 	}
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void StdSystem::ageAnyAnimations(AgeServer& server, char* path)
 {

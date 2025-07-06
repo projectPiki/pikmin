@@ -277,7 +277,7 @@ struct GenObjectActor : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -311,7 +311,7 @@ struct GenObjectBoss : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -338,7 +338,7 @@ struct GenObjectDebug : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&) { }
 #endif
 
@@ -365,7 +365,7 @@ struct GenObjectItem : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -394,7 +394,7 @@ struct GenObjectMapObject : public GenObject {
 
 	static void initialise(MapMgr*);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 	void refreshSection(AgeServer&);
@@ -431,7 +431,7 @@ struct GenObjectMapParts : public GenObject {
 
 	static void initialise(MapMgr*);
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 	void refreshSection(AgeServer&);
@@ -467,7 +467,7 @@ struct GenObjectNavi : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&) { }
 #endif
 
@@ -489,7 +489,7 @@ struct GenObjectPellet : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -535,7 +535,7 @@ struct GenObjectPlant : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -559,7 +559,7 @@ struct GenObjectTeki : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -584,7 +584,7 @@ struct GenObjectWorkObject : public GenObject {
 
 	static void initialise();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void doGenAge(AgeServer&);
 #endif
 
@@ -894,7 +894,7 @@ struct Generator : public Node {
 struct GeneratorMgr : public Node {
 	GeneratorMgr();
 
-#ifdef DEVELOP
+#ifdef WIN32
 	virtual void genAge(AgeServer&);
 #endif
 

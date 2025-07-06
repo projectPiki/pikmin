@@ -118,7 +118,7 @@ Creature* GenObjectPellet::birth(BirthInfo& info)
 	return pelt;
 }
 
-#ifdef DEVELOP
+#ifdef WIN32
 
 void GenObjectPellet::doGenAge(AgeServer& server)
 {
