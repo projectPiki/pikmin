@@ -16,6 +16,7 @@
 #include "DayMgr.h"
 #include "CreatureCollPart.h"
 #include "sysNew.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -1322,7 +1323,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 			mCaptureTexture->grabBuffer(mCaptureTexture->mWidth, mCaptureTexture->mHeight, false, true);
 			gfx.useTexture(mBlurredTexture, 0);
 			gfx.useTexture(mCaptureTexture, 1);
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 			if (gameflow.mMoviePlayer->mIsActive) {
 				gfx.mCamera->mBlur = 0.0f;

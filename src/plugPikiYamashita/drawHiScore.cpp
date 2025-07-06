@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "sysNew.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -181,7 +182,7 @@ void zen::DrawHiScore::rewriteNumber(P2DScreen* screen, u32 tag, int value, int 
 		char* text = new char[digits + 1];
 		if (p5 && value < 0) {
 			for (i = 0; i < digits; i++) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 				text[i] = '-';
 #else
 				text[i] = '*';

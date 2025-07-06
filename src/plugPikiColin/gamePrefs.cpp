@@ -5,6 +5,7 @@
 #include "RumbleMgr.h"
 #include "system.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -163,7 +164,7 @@ void GamePrefs::getChallengeScores(GameChalQuickInfo& info)
 
 // the print statements in checkIsHiscore aren't emitted, but the strings somehow end up in .data
 // not sure how, so this is just a bandaid fix.
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 static char unusedUSADemo1[] = "checking challenge info for course %d, top scores are :-\n";
 static char unusedUSADemo2[] = "\t[%d] ... %d\n";
 #endif
@@ -291,7 +292,7 @@ void GamePrefs::write(RandomAccessStream& output)
  */
 void GamePrefs::fixSoundMode()
 {
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	_Print("fixing stereo mode to %s\n", OSGetSoundMode() ? "Stereo" : "Mono");
 #else
 	PRINT("fixing stereo mode to %s\n", OSGetSoundMode() ? "Stereo" : "Mono");
@@ -321,7 +322,7 @@ void GamePrefs::read(RandomAccessStream& input)
 	setSfxVol(getSfxVol());
 	setStereoMode(getStereoMode());
 	setVibeMode(getVibeMode());
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	STACK_PAD_VAR(1);
 #endif
 #if defined(VERSION_GPIP01_00)

@@ -6,6 +6,7 @@
 #include "SoundMgr.h"
 #include "gameflow.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -126,7 +127,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 
 		f32 rate = mCopyAnimTimer;
 		int x, y;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (rate > 2.25f) {
 			y = mCardAccessIcon->getPosV();
 			x = f32((rate - 2.25f) / 0.75) * 640.0f;
@@ -156,7 +157,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		mCopyAnimTimer -= gsys->getFrameTime();
 
 		if (mCopyAnimTimer < 0.0f && gameflow.mMemoryCard.hasCardFinished()) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_CardOK);
 #else
 			seSystem->playSysSe(SYSSE_CARDOK);
@@ -165,7 +166,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 			ChkNewData();
 			mIsCopyingFileActive         = false;
 			mIsCopyCompleteMessageActive = true;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			mCopyAnimTimer = 2.0f;
 #else
 			mCopyAnimTimer = 1.0f;
@@ -180,14 +181,14 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 
 	if (mIsCopyTargetSelectionActive) {
 		if (input->keyClick(KBBTN_B)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_Cancel);
 #else
 			seSystem->playSysSe(SYSSE_CANCEL);
 #endif
 			setOperateMode(Normal);
 		} else if (input->keyClick(KBBTN_A)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			seSystem->playSysSe(JACSYS_Decide1);
 #else
 			seSystem->playSysSe(SYSSE_DECIDE1);
@@ -203,7 +204,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		} else if (input->keyClick(KBBTN_MSTICK_LEFT)) {
 			for (int i = 0; i < 3; i++) {
 				if (i != mCurrSlotIdx) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 					seSystem->playSysSe(JACSYS_Move1);
 #else
 					seSystem->playSysSe(SYSSE_MOVE1);
@@ -216,7 +217,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		} else if (input->keyClick(KBBTN_MSTICK_RIGHT)) {
 			for (int i = 2; i >= 0; i--) {
 				if (i != mCurrSlotIdx) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 					seSystem->playSysSe(JACSYS_Move1);
 #else
 					seSystem->playSysSe(SYSSE_MOVE1);
@@ -236,7 +237,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 		CloseYesNoWindow();
 	}
 	if (status == ogNitakuMgr::Status_4) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		seSystem->playSysSe(JACSYS_Cancel);
 #else
 		seSystem->playSysSe(SYSSE_CANCEL);
@@ -245,7 +246,7 @@ void zen::ogScrFileSelectMgr::OperateCopy(Controller* input)
 	} else if (status == ogNitakuMgr::ExitSuccess) {
 		mIsCopyingFileActive = true;
 		mCopyAnimTimer       = 3.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		seSystem->playSysSe(JACSYS_CardAccess);
 #else
 		seSystem->playSysSe(SYSSE_CARDACCESS);

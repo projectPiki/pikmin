@@ -1,6 +1,7 @@
 #include "P2D/Graph.h"
 #include "Dolphin/gx.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -100,7 +101,7 @@ void P2DPerspGraph::setPort()
 	Matrix4f perspMtx;
 	f32 width  = f32(mViewportBounds.getWidth());
 	f32 height = f32(mViewportBounds.getHeight());
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	C_MTXPerspective(perspMtx.mMtx, mFovy, width / height, mNearClipZ, mFarClipZ);
 #else
 	MTXPerspective(perspMtx.mMtx, mFovy, width / height, mNearClipZ, mFarClipZ);

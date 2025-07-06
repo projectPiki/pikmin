@@ -2,6 +2,7 @@
 #include "SoundMgr.h"
 #include "gameflow.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -189,7 +190,7 @@ void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 		break;
 
 	case MODE_Saving:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		SeSystem::playSysSe(SE_PIKI_DAMAGED);
 #else
 		SeSystem::playSysSe(SYSSE_CARDACCESS);
@@ -197,7 +198,7 @@ void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 		break;
 
 	case MODE_SaveFail:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		SeSystem::playSysSe(SE_WALL_HIT);
 #else
 		SeSystem::playSysSe(SYSSE_CARDERROR);
@@ -206,7 +207,7 @@ void zen::DrawOptionSave::setMode(u32 mode, Controller* controller)
 		break;
 
 	case MODE_SaveOK:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		SeSystem::playSysSe(SE_PIKI_PRESSED);
 #else
 		SeSystem::playSysSe(SYSSE_CARDOK);

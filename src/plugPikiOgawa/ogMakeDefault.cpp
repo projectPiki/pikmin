@@ -7,6 +7,7 @@
 #include "gameflow.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -167,7 +168,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 			mDefaultMessageTextBox->hide();
 			mStatus     = AwaitingConfirmation;
 			mStateTimer = 0.0f;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			mAButtonPromptPicture->show();
 #endif
 			mAButtonPromptAlphaAnimator->start();
@@ -175,7 +176,7 @@ zen::ogScrMakeDefaultMgr::MakeDefaultStatus zen::ogScrMakeDefaultMgr::update(Con
 		break;
 
 	case AwaitingConfirmation:
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (input->keyClick(KBBTN_A)) {
 			seSystem->playSysSe(JACSYS_Decide1);
 			mStatus     = Exiting;

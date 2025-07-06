@@ -8,6 +8,7 @@
 #include "FlowController.h"
 #include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -55,7 +56,7 @@ void ActBreakWall::init(Creature* creature)
 	mIsAttackReady      = 0;
 	mPiki->mWantToStick = 0;
 	mWorkTimer          = (4.0f * gsys->getRand(1.0f));
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 #endif

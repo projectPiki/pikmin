@@ -7,6 +7,7 @@
 #include "SoundMgr.h"
 #include "sysNew.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -178,7 +179,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 
 	case MODE_Unk1:
 		if (controller->keyClick(KBBTN_START | KBBTN_A)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			SeSystem::playSysSe(JACSYS_Decide1);
 #else
 			SeSystem::playSysSe(SYSSE_DECIDE1);
@@ -186,7 +187,7 @@ bool zen::DrawSaveMes::update(Controller* controller)
 			setMode(MODE_Unk2);
 		}
 		if (controller->keyClick(KBBTN_B)) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			SeSystem::playSysSe(SE_FLOG_HIJUMP);
 #else
 			SeSystem::playSysSe(SYSSE_CANCEL);

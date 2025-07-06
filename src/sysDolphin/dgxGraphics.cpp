@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "sysNew.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -114,7 +115,7 @@ GXRenderModeObj localNtsc480IntDf = {
 static GXRenderModeObj* sScreenMode[2] = { &localNtsc480IntDf, &progressiveRenderMode };
 #endif
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 static int sFirstFrame = 2;
 #else
 static int sFirstFrame = 4;
@@ -211,7 +212,7 @@ DGXGraphics::DGXGraphics(bool flag)
 	sFrameSize = (sScreenMode[mRenderMode]->fbWidth + 0xf & 0xfff0) * sScreenMode[mRenderMode]->xfbHeight * 2;
 #endif
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	VISetBlack(TRUE);
 	VIFlush();
 	VIWaitForRetrace();
@@ -229,7 +230,7 @@ DGXGraphics::DGXGraphics(bool flag)
 
 	DCFlushRange(mDisplayBuffer, sFrameSize);
 	gsys->getHeap(gsys->mActiveHeapIdx)->mAllocType = backup;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	VISetNextFrameBuffer(mDisplayBuffer);
 #else
 	VISetBlack(TRUE);
@@ -287,7 +288,7 @@ void DGXGraphics::getVerticalFilter(u8* vf)
  */
 void DGXGraphics::videoReset()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	static int videoModeAsIs = -1;
 
@@ -302,7 +303,7 @@ void DGXGraphics::videoReset()
 	VIFlush();
 	VIWaitForRetrace();
 	VIWaitForRetrace();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	}
 #endif
@@ -797,7 +798,7 @@ void DGXGraphics::setLight(Light* light, int idx)
  */
 void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	C_MTXPerspective(mtx, a1, a2, a3, a4);
 #else
 	MTXPerspective(mtx, a1, a2, a3, a4);
@@ -816,7 +817,7 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
  */
 void DGXGraphics::setOrthogonal(Mtx mtx, RectArea& bounds)
 {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	C_MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
 #else
 	MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
@@ -884,7 +885,7 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 	STACK_PAD_VAR(0x40);
 	Mtx mtx;
 	if (set) {
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		C_MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y,
 		                      0.5f, 0.5f);
 #else
@@ -918,7 +919,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 		Mtx mtx4; // 0xB0
 		Mtx mtx5; // 0x80
 
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		PSMTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
 #else
 		MTXScale(mtx2, mCustomScale->x, mCustomScale->y, mCustomScale->z);
@@ -940,7 +941,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
 
 	if (mHasTexGen) {
 		Mtx texMtx;
-#if defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_GPIP01_00)
+#if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 		f32 mag = 0.5f / PSVECMag((Vec*)mtx.mMtx);
 #else
 		f32 mag = 0.5f / VECMag((Vec*)mtx.mMtx);
@@ -1512,7 +1513,7 @@ void DGXGraphics::clearBuffer(int, bool)
 void DGXGraphics::setFog(bool set)
 {
 	if (set) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		GXSetFog(GX_FOG_LINEAR, mFogStart, mFogEnd, mCamera->mNear, mCamera->mFar, *(GXColor*)&mFogColour);
 #else
 		if (mCamera->mNear < mCamera->mFar) {

@@ -13,6 +13,7 @@
 #include "BuildingItem.h"
 #include "PikiMgr.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -432,7 +433,7 @@ int ActPutBomb::exePut()
 int ActPutBomb::exec()
 {
 	if (mTouchedPlayer) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		mPiki->mFSM->transit(mPiki, PIKISTATE_LookAt);
 #else
 		if (mPiki->getState() != PIKISTATE_LookAt) {

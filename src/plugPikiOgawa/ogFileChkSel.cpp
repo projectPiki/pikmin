@@ -7,6 +7,7 @@
 #include "DebugLog.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -127,7 +128,7 @@ zen::ogScrFileChkSelMgr::returnStatusFlag zen::ogScrFileChkSelMgr::update(Contro
 
 	} else if (memChkState == ogScrMemChkMgr::Inactive) {
 		if (!ogCheckInsCard()) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 			SeSystem::stopSysSe(JACSYS_CardAccess);
 			SeSystem::playSysSe(JACSYS_CardError);
 #else

@@ -1,6 +1,7 @@
 #include "jaudio/dspproc.h"
 #include "Dolphin/dsp.h"
 #include "Dolphin/os.h"
+#include "VersionGroups.h"
 
 static u16 DSP_MIXERLEVEL = 0x4000;
 
@@ -12,7 +13,7 @@ static u16 DSP_MIXERLEVEL = 0x4000;
 s32 DSPSendCommands(u32* commands, u32 count)
 {
 	if (DSPCheckMailToDSP() != 0) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		OSReport("DSP Err:not received mail (to DSP) is remained \n");
 #endif
@@ -20,7 +21,7 @@ s32 DSPSendCommands(u32* commands, u32 count)
 	}
 
 	if (DSPCheckMailFromDSP() != 0) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		OSReport("DSP Err:not received mail (from DSP) is remained \n");
 #endif
@@ -72,7 +73,7 @@ void DSPWaitFinish()
 		if (mail != 0x1357) {
 			return;
 		}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		OSReport("Error: DSP now in framework\n");
 #endif

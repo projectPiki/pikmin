@@ -10,6 +10,7 @@
 #include "RumbleMgr.h"
 #include "PlayerState.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -983,7 +984,7 @@ void SlimeAi::initWalk(int nextState)
 	mSlime->setNextState(nextState);
 	mSlime->setMotionFinish(false);
 	mSlime->setTargetCreature(nullptr);
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	if (mSlime->mSeContext) {
 		mSlime->mSeContext->playSound(SE_SLIME_WALK);

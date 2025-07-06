@@ -15,6 +15,7 @@
 #include "BaseInf.h"
 #include "Camera.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -280,7 +281,7 @@ void zen::ogDrawScrController::update()
  */
 zen::ogDrawScrInfo::ogDrawScrInfo()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	mInfoScreenMenu.setScreen("screen/blo/ot_menu2.blo");
 #else
 	mInfoScreenMenu.setScreen("screen/blo/m_menu2.blo");
@@ -551,7 +552,7 @@ void zen::ogScrMenuMgr::updateInfo(Controller* input)
 	if (!input->keyClick(KBBTN_L) && input->keyClick(KBBTN_R)) {
 		mCurrentScreenIndex++;
 		mSwitchRightRequested = true;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		mRadarManager->end();
 #endif
@@ -571,7 +572,7 @@ void zen::ogScrMenuMgr::updateCont(Controller* input)
 	if (input->keyClick(KBBTN_L)) {
 		mCurrentScreenIndex--;
 		mSwitchLeftRequested = true;
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		mRadarManager->MapOn();
 #endif
@@ -641,7 +642,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 	mSwitchLeftRequested  = false;
 	mSwitchRightRequested = false;
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	if (input->keyClick(KBBTN_Y | KBBTN_B)) {
 		mTransitionTimer = 0.0f;
@@ -663,7 +664,7 @@ zen::ogScrMenuMgr::returnStatusFlag zen::ogScrMenuMgr::update(Controller* input)
 	mLeftRightIndicator->update();
 	mBlackScreen->update();
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	if (input->keyClick(KBBTN_Y | KBBTN_B)) {
 		mTransitionTimer = 0.0f;
 		mStatus          = STATE_FadingOut;

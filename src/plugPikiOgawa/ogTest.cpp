@@ -22,6 +22,7 @@
 #include "Graphics.h"
 #include "stl/stdio.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -83,7 +84,7 @@ zen::OgTestScreen::OgTestScreen()
 	mFileChkSelMgr   = new ogScrFileChkSelMgr();
 	mTotalScoreMgr   = new ogScrTotalScoreMgr(nullptr);
 	mStartMgr        = new ogScrStartMgr();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	mZenController        = new ZenController(nullptr);
 	KeyRepeat::repeatTime = 0.5f;
@@ -110,7 +111,7 @@ void zen::OgTestScreen::modeSelectSub()
 	}
 
 	if (mSelectedMode == TESTMODE_Tutorial) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
 #else
 		if (mZenController->keyRepeat(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT) && mTutorialMode < 152) {
@@ -118,7 +119,7 @@ void zen::OgTestScreen::modeSelectSub()
 			mTutorialMode++;
 		}
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
 #else
 		if (mZenController->keyRepeat(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT) && mTutorialMode > 0) {
@@ -281,7 +282,7 @@ void zen::OgTestScreen::modeSelectSub()
 void zen::OgTestScreen::update()
 {
 	mController->update();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	mZenController->setContPtr(mController);
 	mZenController->update();

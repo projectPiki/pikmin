@@ -1,5 +1,7 @@
 #include "Dolphin/gx.h"
 
+#include "VersionGroups.h"
+
 static struct __GXData_struct gxData;
 struct __GXData_struct* gx = &gxData;
 // DWARF info lists all of these as "void *", but these types make more sense.
@@ -90,7 +92,7 @@ GXFifoObj FifoObj;
  */
 GXFifoObj* GXInit(void* base, u32 size)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	GXRenderModeObj* rmode;
 	f32 identity_mtx[3][4];
@@ -209,7 +211,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 		SET_REG_FIELD(0, reg, 8, 24, 0x58);
 		GX_WRITE_RAS_REG(reg);
 	}
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	for (i = 0; i < 8; i++)
 		GXInitTexCacheRegion(&gx->TexRegions[i], 0, i * 0x8000, 0, 0x80000 + i * 0x8000, 0);
 	for (i = 0; i < 4; i++)
@@ -375,7 +377,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 	return &FifoObj;
 }
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 void __GXInitGX()
 {
 	GXRenderModeObj* rmode;

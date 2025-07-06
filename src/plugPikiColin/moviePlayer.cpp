@@ -11,6 +11,7 @@
 #include "EffectMgr.h"
 #include "jaudio/pikidemo.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -519,7 +520,7 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 	}
 	Jac_SetDemoOnyons(onyons);
 	effectMgr->cullingOff();
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
 #endif
@@ -590,7 +591,7 @@ void MoviePlayer::sndStopMovie(MovieInfo* info)
 	Jac_FinishDemo();
 	effectMgr->cullingOn();
 	if (gameflow.mGameInterface) {
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		gameflow.mGameInterface->message(MOVIECMD_EndMovie, 0);
 #else
 		gameflow.mGameInterface->message(MOVIECMD_EndMovie, info->mMovieIndex);

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "Section.h"
 #include "Camera.h"
+#include "VersionGroups.h"
 
 struct Font;
 
@@ -63,7 +64,7 @@ struct OgTestScreen : public Node {
 	u32 _20;                 // _20, unknown
 	u32 mActiveMode;         // _24, active mode, see TestMode enum
 	Controller* mController; // _28
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	ZenController* mZenController; // _2C
 #endif

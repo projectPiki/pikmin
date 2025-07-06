@@ -5,6 +5,7 @@
 #include "NaviMgr.h"
 #include "Kontroller.h"
 #include "DebugLog.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -185,7 +186,7 @@ void DualCreature::update()
 void DualCreature::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_IKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	// I don't enjoy splitting this difference in two, but syntax highlighting really hates extra opening braces.
 #else
 	bool isPointVisible = gfx.mCamera->isPointVisible(mPosition, 2.0f * getBoundingSphereRadius());
@@ -198,7 +199,7 @@ void DualCreature::refresh(Graphics& gfx)
 #endif
 
 	if (!_43E) {
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_IKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (!mIsDynamicsSimpleFixed && gfx.mCamera->isPointVisible(mPosition, 2.0f * getBoundingSphereRadius()))
 #else
 		if (!mIsDynamicsSimpleFixed && isPointVisible)

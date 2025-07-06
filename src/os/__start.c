@@ -1,8 +1,10 @@
 #include "Dolphin/__start.h"
 
+#include "VersionGroups.h"
+
 #pragma section code_type ".init"
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 static void __check_pad3(void)
 {
 	if ((Pad3Button & 0x0eef) == 0x0eef) {

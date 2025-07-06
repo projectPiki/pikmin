@@ -5,6 +5,7 @@
 #include "DebugLog.h"
 #include "SoundMgr.h"
 #include "gameflow.h"
+#include "VersionGroups.h"
 
 /*
  * --INFO--
@@ -41,7 +42,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Delete()
  */
 void zen::ogScrFileSelectMgr::DeleteEffectStart()
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 	SetTitleMsg(NoMemoryCardInserted);
 #endif
@@ -50,7 +51,7 @@ void zen::ogScrFileSelectMgr::DeleteEffectStart()
 	pos1.set(0.0f, 0.0f, 0.0f);
 
 	// this is to fix stack
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 	pos1.x = mIconOnyonPanes[mCurrSlotIdx]->getPosH() + mIconOnyonPanes[mCurrSlotIdx]->getWidth() / 2.0f;
 #else
 	f32 w  = mIconOnyonPanes[mCurrSlotIdx]->getPosH() + mIconOnyonPanes[mCurrSlotIdx]->getWidth() / 2.0f;
@@ -83,7 +84,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 	}
 
 	if (mCanCreateNewFile) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 #else
 		mCardAccessIcon->show();
 		f32 rate = mTailEffectSpawnTimer;
@@ -103,7 +104,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 #endif
 		mTailEffectSpawnTimer -= gsys->getFrameTime();
 
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		if (mTailEffectSpawnTimer < 0.0f && gameflow.mMemoryCard.hasCardFinished()) {
 			seSystem->playSysSe(JACSYS_CardOK);
 			copyCardInfosSub();
@@ -135,21 +136,21 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 		CloseYesNoWindow();
 	}
 	if (status == ogNitakuMgr::Status_4) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		seSystem->playSysSe(JACSYS_Cancel);
 #else
 		seSystem->playSysSe(SYSSE_CANCEL);
 #endif
 		setOperateMode(Normal);
 	} else if (status == 5) {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		seSystem->playSysSe(JACSYS_CardAccess);
 #else
 		seSystem->playSysSe(SYSSE_CARDACCESS);
 #endif
 		gameflow.mMemoryCard.delFile(mCardInfo[mCurrSlotIdx]);
 		DeleteEffectStart();
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(VERSION_PIKIDEMO)
 		mTailEffectSpawnTimer = 1.0f;
 		mCanCreateNewFile     = true;
 #else
