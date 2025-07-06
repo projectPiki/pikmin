@@ -69,7 +69,7 @@ struct ogSaveMgr {
 	P2DScreen* mBlackScreen;              // _24
 	P2DPicture* mBlackPicture;            // _28
 	DrawSaveFailure* mSaveFail;           // _2C
-	u8 mFileChkSelected;                  // _30
+	bool mFileChkSelected;                  // _30
 	u16 mDirectSaveState;                 // _32
 	P2DTextBox* mHeader0TextBox;          // _34
 	P2DTextBox* mHeader1TextBox;          // _38

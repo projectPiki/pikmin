@@ -38,7 +38,7 @@ zen::ogSaveMgr::ogSaveMgr()
 {
 #if defined(VERSION_PIKIDEMO)
 #else
-	mFileChkSelected = 0;
+	mFileChkSelected = false;
 #endif
 	mScreen = new P2DScreen;
 	mScreen->set("screen/blo/ac_save.blo", true, true, true);
@@ -166,7 +166,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		return mStatus;
 	}
 #if defined(VERSION_PIKIDEMO)
-	mFileChkSelected = 1;
+	mFileChkSelected = true;
 #endif
 
 	mBlackScreen->update();
@@ -182,13 +182,13 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		gameflow.mGamePrefs.mSpareSaveGameIndex = mFileChkData.mIndex + 1;
 		mStatus                                 = PreparingSave;
 		mAnimTimer                              = 0.0f;
-		mFileChkSelected                        = 0;
+		mFileChkSelected                        = false;
 
 	} else if (fileChkSelRes == ogScrFileChkSelMgr::FILECHKSEL_Unk5) {
 		mStatus = ExitSuccess;
 #if defined(VERSION_PIKIDEMO)
 #else
-		mFileChkSelected = 0;
+		mFileChkSelected = false;
 #endif
 		return mStatus;
 
@@ -196,15 +196,15 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mStatus = ExitFailure;
 #if defined(VERSION_PIKIDEMO)
 #else
-		mFileChkSelected = 0;
+		mFileChkSelected = false;
 #endif
 		return mStatus;
 
 	} else if (fileChkSelRes != ogScrFileChkSelMgr::Null) {
 #if defined(VERSION_PIKIDEMO)
-		mFileChkSelected = 0;
+		mFileChkSelected = false;
 #else
-		mFileChkSelected = 1;
+		mFileChkSelected = true;
 #endif
 		return mStatus;
 	}
@@ -214,7 +214,7 @@ zen::ogSaveMgr::SaveStatus zen::ogSaveMgr::update(Controller* input)
 		mFileChkSelMgr->startSave();
 #if defined(VERSION_PIKIDEMO)
 #else
-		mFileChkSelected = 1;
+		mFileChkSelected = true;
 #endif
 		mStatus    = PreparingSave;
 		mAnimTimer = 0.0f;
@@ -481,14 +481,14 @@ void zen::ogSaveMgr::draw(Graphics& gfx)
 	mMemCheckMgr->draw(gfx);
 	mSaveFail->draw(gfx);
 #else
-		if (mFileChkSelected) {
-			mBlackScreen->draw(0, 0, &graf);
-			mFileChkSelMgr->draw(gfx);
-		} else {
-			mScreen->draw(0, 0, &graf);
-			mSecondaryScreen->draw(0, 0, &graf);
-			mMemCheckMgr->draw(gfx);
-			mSaveFail->draw(gfx);
-		}
+	if (mFileChkSelected) {
+		mBlackScreen->draw(0, 0, &graf);
+		mFileChkSelMgr->draw(gfx);
+	} else {
+		mScreen->draw(0, 0, &graf);
+		mSecondaryScreen->draw(0, 0, &graf);
+		mMemCheckMgr->draw(gfx);
+		mSaveFail->draw(gfx);
+	}
 #endif
 }
