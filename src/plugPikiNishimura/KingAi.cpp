@@ -152,6 +152,7 @@ void KingAi::keyAction0()
 		break;
 
 #if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
+		// This case is never hit anyway.  Looks like someone forgot to add a keyAction0 to the appear animation.  See: the other bugfix.
 #else
 	case KINGAI_Appear:
 		if (!mKing->needShadow()) {
@@ -1507,17 +1508,18 @@ void KingAi::initAppear(int nextState)
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
-	// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
-	// Maybe it's a Mandela Effect. TODO: Make sure the demo code is producing the desired effect for a bugfix.
-#if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
-	if (!mKing->mIsBossBgm) {
+#if defined(VERSION_PIKIDEMO)
+	if (!mKing->mIsBossBgm)
+#endif
+	{
 		mKing->mIsBossBgm = true;
+		// Emperor Bulblax's shadow is... difficult.  I swear it can sometimes appear in USA rev 1, but frankly I don't know how.
+		// In any case, this code originally from the demo versions works much better than the solution in `KingAi::keyAction0`.
+#if defined(BUGFIX) || defined(VERSION_PIKIDEMO)
 		mapMgr->mShadowCaster.add(&mKing->mShadowCaster);
 		mKing->setShadowNeed(true);
-	}
-#else
-	mKing->mIsBossBgm = true;
 #endif
+	}
 	mKing->setInvincible(false);
 	mKing->setIsOrganic(true);
 	dispelNaviPiki();
