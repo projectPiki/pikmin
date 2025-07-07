@@ -1,6 +1,8 @@
 #ifndef __PPC_EABI_LINKER
 #define __PPC_EABI_LINKER
 
+#include "types.h"
+
 DECL_SECT(".init") extern char _stack_addr[];
 DECL_SECT(".init") extern char _stack_end[];
 DECL_SECT(".init") extern char _heap_addr[];
