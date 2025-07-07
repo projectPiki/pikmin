@@ -1,11 +1,11 @@
 #ifndef _NAVIMGR_H
 #define _NAVIMGR_H
 
-#include "types.h"
-#include "ObjectMgr.h"
 #include "CreatureProp.h"
-#include "Piki.h"
 #include "Navi.h"
+#include "ObjectMgr.h"
+#include "Piki.h"
+#include "types.h"
 
 /**
  * @brief TODO

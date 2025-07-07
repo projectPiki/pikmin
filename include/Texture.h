@@ -1,10 +1,10 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
-#include "CoreNode.h"
-#include "GfxObject.h"
-#include "Dolphin/gx.h"
 #include "Ayu.h"
+#include "CoreNode.h"
+#include "Dolphin/gx.h"
+#include "GfxObject.h"
 #include "Stream.h"
 
 struct Texture;

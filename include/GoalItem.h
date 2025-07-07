@@ -1,15 +1,15 @@
 #ifndef _GOALITEM_H
 #define _GOALITEM_H
 
-#include "types.h"
-#include "Suckable.h"
-#include "zen/CallBack.h"
-#include "zen/particle.h"
 #include "CreatureProp.h"
+#include "RopeCreature.h"
+#include "Shape.h"
 #include "SimpleAI.h"
 #include "SoundMgr.h"
-#include "Shape.h"
-#include "RopeCreature.h"
+#include "Suckable.h"
+#include "types.h"
+#include "zen/CallBack.h"
+#include "zen/particle.h"
 
 namespace zen {
 struct particleGenerator;

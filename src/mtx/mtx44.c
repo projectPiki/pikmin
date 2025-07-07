@@ -1,5 +1,5 @@
-#include "Dolphin/mtx.h"
 #include "Dolphin/math.h"
+#include "Dolphin/mtx.h"
 
 /*
  * --INFO--

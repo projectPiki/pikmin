@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_CMDQUEUE_H
 #define _JAUDIO_CMDQUEUE_H
 
-#include "jaudio/jammain_2.h"
 #include "jaudio/audiomesg.h"
+#include "jaudio/jammain_2.h"
 
 #include "types.h"
 

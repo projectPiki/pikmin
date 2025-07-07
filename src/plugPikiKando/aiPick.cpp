@@ -1,9 +1,9 @@
-#include "PikiAI.h"
-#include "PikiState.h"
-#include "PikiMgr.h"
+#include "DebugLog.h"
 #include "Interactions.h"
 #include "ItemMgr.h"
-#include "DebugLog.h"
+#include "PikiAI.h"
+#include "PikiMgr.h"
+#include "PikiState.h"
 
 /*
  * --INFO--

@@ -1,16 +1,16 @@
 #include "jaudio/aictrl.h"
+#include "Dolphin/ai.h"
+#include "Dolphin/os.h"
+#include "jaudio/audiocommon.h"
 #include "jaudio/audiostruct.h"
+#include "jaudio/driverinterface.h"
+#include "jaudio/dspbuf.h"
+#include "jaudio/dspproc.h"
+#include "jaudio/dummyprobe.h"
 #include "jaudio/memory.h"
 #include "jaudio/rate.h"
 #include "jaudio/sample.h"
-#include "jaudio/dummyprobe.h"
-#include "jaudio/dspbuf.h"
-#include "jaudio/audiocommon.h"
 #include "jaudio/streamctrl.h"
-#include "jaudio/dspproc.h"
-#include "jaudio/driverinterface.h"
-#include "Dolphin/os.h"
-#include "Dolphin/ai.h"
 
 u32 UNIVERSAL_DACCOUNTER = 0;
 

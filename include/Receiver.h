@@ -1,8 +1,8 @@
 #ifndef _RECEIVER_H
 #define _RECEIVER_H
 
-#include "types.h"
 #include "Msg.h"
+#include "types.h"
 
 /**
  * @brief TODO

@@ -1,6 +1,6 @@
-#include "nlib/Spline.h"
-#include "nlib/Array.h"
 #include "DebugLog.h"
+#include "nlib/Array.h"
+#include "nlib/Spline.h"
 
 /*
  * --INFO--

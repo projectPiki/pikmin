@@ -1,10 +1,10 @@
 #ifndef _MATERIAL_H
 #define _MATERIAL_H
 
-#include "Stream.h"
 #include "CoreNode.h"
 #include "GfxObject.h"
 #include "PVW.h"
+#include "Stream.h"
 
 struct Graphics;
 

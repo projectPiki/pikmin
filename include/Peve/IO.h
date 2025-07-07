@@ -1,10 +1,10 @@
 #ifndef _PEVE_IO_H
 #define _PEVE_IO_H
 
-#include "types.h"
-#include "nlib/Geometry.h"
 #include "Creature.h"
 #include "Pcam/Camera.h"
+#include "nlib/Geometry.h"
+#include "types.h"
 
 struct Creature;
 struct PcamCamera;

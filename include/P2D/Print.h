@@ -1,9 +1,9 @@
 #ifndef _P2D_PRINT_H
 #define _P2D_PRINT_H
 
-#include "types.h"
-#include "P2D/Util.h"
 #include "Colour.h"
+#include "P2D/Util.h"
+#include "types.h"
 
 struct P2DFont;
 

@@ -1,10 +1,10 @@
-#include "PelletAnimator.h"
-#include "Pellet.h"
-#include "sysNew.h"
 #include "Age.h"
-#include "teki.h"
 #include "DebugLog.h"
+#include "Pellet.h"
+#include "PelletAnimator.h"
 #include "gameflow.h"
+#include "sysNew.h"
+#include "teki.h"
 
 /*
  * --INFO--

@@ -1,10 +1,10 @@
 #ifndef _ZEN_OGSUB_H
 #define _ZEN_OGSUB_H
 
-#include "types.h"
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
 #include "VersionGroups.h"
+#include "types.h"
 
 struct Matrix3f;
 struct P2DPane;

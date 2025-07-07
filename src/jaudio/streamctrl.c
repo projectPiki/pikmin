@@ -1,6 +1,6 @@
 #include "jaudio/streamctrl.h"
-#include "Dolphin/dvd.h"
 #include "Dolphin/ai.h"
+#include "Dolphin/dvd.h"
 #include "jaudio/rate.h"
 
 char J_STREAMNAME[8][16] = {

@@ -1,17 +1,17 @@
 #ifndef _INTROGAMESECTION_H
 #define _INTROGAMESECTION_H
 
-#include "types.h"
-#include "Section.h"
 #include "Camera.h"
 #include "DayMgr.h"
-#include "system.h"
-#include "gameflow.h"
 #include "EffectMgr.h"
-#include "MoviePlayer.h"
 #include "Graphics.h"
-#include "jaudio/piki_scene.h"
 #include "ModeState.h"
+#include "MoviePlayer.h"
+#include "Section.h"
+#include "gameflow.h"
+#include "jaudio/piki_scene.h"
+#include "system.h"
+#include "types.h"
 
 /**
  * @brief TODO

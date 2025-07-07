@@ -1,7 +1,7 @@
-#include "zen/Math.h"
-#include "Vector.h"
-#include "Matrix3f.h"
 #include "DebugLog.h"
+#include "Matrix3f.h"
+#include "Vector.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

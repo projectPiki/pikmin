@@ -1,9 +1,9 @@
-#include "TAI/WaitActions.h"
-#include "teki.h"
-#include "Dolphin/os.h"
-#include "system.h"
-#include "nlib/Math.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "TAI/WaitActions.h"
+#include "nlib/Math.h"
+#include "system.h"
+#include "teki.h"
 
 /*
  * --INFO--

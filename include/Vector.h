@@ -1,9 +1,9 @@
 #ifndef _VECTOR3F_H
 #define _VECTOR3F_H
 
-#include "types.h"
-#include "math.h"
 #include "Stream.h"
+#include "math.h"
+#include "types.h"
 
 struct Matrix3f;
 struct Matrix4f;

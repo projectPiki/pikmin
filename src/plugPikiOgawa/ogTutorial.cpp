@@ -1,9 +1,9 @@
 #include "zen/ogTutorial.h"
+#include "DebugLog.h"
+#include "PlayerState.h"
 #include "sysNew.h"
 #include "zen/ogMessage.h"
-#include "PlayerState.h"
 #include "zen/ogSub.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

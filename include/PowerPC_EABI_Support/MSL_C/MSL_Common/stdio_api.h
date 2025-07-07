@@ -1,8 +1,8 @@
 #ifndef _STDIO_API_H
 #define _STDIO_API_H
 
-#include "types.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
+#include "types.h"
 
 enum __ReadProcActions { __GetAChar, __UngetAChar, __TestForError };
 

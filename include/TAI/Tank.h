@@ -1,18 +1,18 @@
 #ifndef _TAI_TANK_H
 #define _TAI_TANK_H
 
-#include "types.h"
-#include "TAI/Aattack.h"
-#include "TAI/Amove.h"
-#include "TAI/Ajudge.h"
-#include "TAI/EffectAttack.h"
-#include "TekiParameters.h"
-#include "TAI/Animation.h"
-#include "YaiStrategy.h"
-#include "zen/CallBack.h"
+#include "PaniAnimator.h"
 #include "PlayerState.h"
 #include "SoundMgr.h"
-#include "PaniAnimator.h"
+#include "TAI/Aattack.h"
+#include "TAI/Ajudge.h"
+#include "TAI/Amove.h"
+#include "TAI/Animation.h"
+#include "TAI/EffectAttack.h"
+#include "TekiParameters.h"
+#include "YaiStrategy.h"
+#include "types.h"
+#include "zen/CallBack.h"
 
 /////////// Fiery Blowhog AI Actions ///////////
 

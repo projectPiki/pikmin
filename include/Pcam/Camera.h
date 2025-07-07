@@ -1,11 +1,11 @@
 #ifndef _PCAM_CAMERA_H
 #define _PCAM_CAMERA_H
 
-#include "types.h"
-#include "nlib/Graphics.h"
-#include "nlib/Array.h"
 #include "Camera.h"
 #include "Pcam/CameraParameters.h"
+#include "nlib/Array.h"
+#include "nlib/Graphics.h"
+#include "types.h"
 
 struct Controller;
 struct Creature;

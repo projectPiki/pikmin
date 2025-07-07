@@ -1,13 +1,13 @@
 #include "PikiMgr.h"
-#include "sysNew.h"
-#include "gameflow.h"
-#include "MemStat.h"
 #include "AIConstant.h"
-#include "PikiAi.h"
-#include "ItemMgr.h"
-#include "Navi.h"
-#include "GameStat.h"
 #include "DebugLog.h"
+#include "GameStat.h"
+#include "ItemMgr.h"
+#include "MemStat.h"
+#include "Navi.h"
+#include "PikiAi.h"
+#include "gameflow.h"
+#include "sysNew.h"
 
 PikiMgr* pikiMgr;
 bool PikiMgr::containerDebug;

@@ -1,9 +1,9 @@
 #ifndef _TAI_AJUDGE_H
 #define _TAI_AJUDGE_H
 
-#include "types.h"
 #include "TAI/Action.h"
 #include "teki.h"
+#include "types.h"
 
 /**
  * @brief TODO

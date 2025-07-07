@@ -1,8 +1,8 @@
 #include "jaudio/bankloader.h"
 
+#include "jaudio/aictrl.h"
 #include "jaudio/bankread.h"
 #include "jaudio/dvdthread.h"
-#include "jaudio/aictrl.h"
 #include "jaudio/waveread.h"
 
 typedef struct BXHeader BXHeader;

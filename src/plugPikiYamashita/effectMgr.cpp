@@ -1,9 +1,9 @@
 #include "EffectMgr.h"
 #include "Colour.h"
-#include "Graphics.h"
-#include "gameflow.h"
-#include "MemStat.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "MemStat.h"
+#include "gameflow.h"
 
 /*
  * --INFO--

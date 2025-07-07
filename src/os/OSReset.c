@@ -1,5 +1,5 @@
-#include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/os.h"
 
 static OSResetQueue ResetFunctionQueue;
 

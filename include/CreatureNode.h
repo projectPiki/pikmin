@@ -1,8 +1,8 @@
 #ifndef _CREATURENODE_H
 #define _CREATURENODE_H
 
-#include "types.h"
 #include "ObjectMgr.h"
+#include "types.h"
 
 /**
  * @brief TODO

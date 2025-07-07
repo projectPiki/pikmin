@@ -1,10 +1,10 @@
 #ifndef _PIKIINF_H
 #define _PIKIINF_H
 
-#include "types.h"
 #include "CoreNode.h"
 #include "ObjType.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Creature;
 struct CreatureInf;

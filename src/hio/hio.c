@@ -1,6 +1,6 @@
 #include "Dolphin/hio.h"
-#include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/os.h"
 
 static s32 Chan = -1;
 static HIOCallback ExiCallback;

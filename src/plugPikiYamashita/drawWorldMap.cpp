@@ -1,11 +1,11 @@
 #include "zen/DrawWorldMap.h"
-#include "zen/EffectMgr2D.h"
-#include "zen/DrawCommon.h"
+#include "DebugLog.h"
 #include "P2D/Pane.h"
 #include "P2D/TextBox.h"
 #include "nlib/Math.h"
-#include "DebugLog.h"
 #include "sysNew.h"
+#include "zen/DrawCommon.h"
+#include "zen/EffectMgr2D.h"
 
 #define MAX_PARTS_PRACTICE  (2)
 #define MAX_PARTS_FOREST    (8)

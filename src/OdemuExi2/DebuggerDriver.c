@@ -1,6 +1,6 @@
-#include "types.h"
-#include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/os.h"
+#include "types.h"
 
 typedef void (*MTRCallbackType)(int);
 

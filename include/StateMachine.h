@@ -1,8 +1,8 @@
 #ifndef _STATEMACHINE_H
 #define _STATEMACHINE_H
 
-#include "types.h"
 #include "Receiver.h"
+#include "types.h"
 
 template <typename T>
 struct StateMachine;

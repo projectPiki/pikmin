@@ -1,9 +1,9 @@
 #ifndef _SLIME_H
 #define _SLIME_H
 
-#include "types.h"
 #include "Boss.h"
 #include "Collision.h"
+#include "types.h"
 
 /////////// Goolix (Slime) ///////////
 // Goolix is comprised of lots of parts:

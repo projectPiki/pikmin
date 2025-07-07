@@ -1,8 +1,8 @@
 #ifndef _CORENUCLEUS_H
 #define _CORENUCLEUS_H
 
-#include "types.h"
 #include "Boss.h"
+#include "types.h"
 
 struct CoreNucleusAi;
 struct Slime;

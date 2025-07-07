@@ -1,8 +1,8 @@
 #ifndef _SYSNEW_H
 #define _SYSNEW_H
 
-#include "types.h"
 #include "system.h"
+#include "types.h"
 
 inline void* operator new(u32 size)
 {

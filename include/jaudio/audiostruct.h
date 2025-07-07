@@ -1,9 +1,9 @@
 #ifndef _JAUDIO_AUDIOSTRUCT_H
 #define _JAUDIO_AUDIOSTRUCT_H
 
-#include "types.h"
 #include "Dolphin/os.h"
 #include "jaudio/bx.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

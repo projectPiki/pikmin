@@ -1,8 +1,8 @@
 #ifndef _RESULTFLAGS_H
 #define _RESULTFLAGS_H
 
-#include "types.h"
 #include "GlobalGameOptions.h"
+#include "types.h"
 
 struct RandomAccessStream;
 struct Creature;

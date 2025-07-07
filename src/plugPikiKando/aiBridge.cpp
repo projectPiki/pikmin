@@ -1,12 +1,12 @@
-#include "PikiAI.h"
 #include "AIPerf.h"
-#include "EffectMgr.h"
-#include "gameflow.h"
-#include "Dolphin/os.h"
-#include "Interactions.h"
-#include "zen/Math.h"
-#include "WorkObject.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "EffectMgr.h"
+#include "Interactions.h"
+#include "PikiAI.h"
+#include "WorkObject.h"
+#include "gameflow.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_OS_OSMEMORY_H
 #define _DOLPHIN_OS_OSMEMORY_H
 
-#include "types.h"
 #include "Dolphin/OS/OSContext.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

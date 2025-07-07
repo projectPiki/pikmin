@@ -1,16 +1,16 @@
 #include "zen/ogSub.h"
-#include "zen/Number.h"
-#include "zen/DrawCommon.h"
+#include "DebugLog.h"
+#include "P2D/Screen.h"
 #include "P2D/TextBox.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
-#include "P2D/Screen.h"
+#include "SoundMgr.h"
+#include "VersionGroups.h"
 #include "gameflow.h"
 #include "nlib/Math.h"
-#include "SoundMgr.h"
-#include "DebugLog.h"
 #include "sysNew.h"
-#include "VersionGroups.h"
+#include "zen/DrawCommon.h"
+#include "zen/Number.h"
 
 /*
  * --INFO--

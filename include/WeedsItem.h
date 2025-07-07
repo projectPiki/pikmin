@@ -1,9 +1,9 @@
 #ifndef _WEEDSITEM_H
 #define _WEEDSITEM_H
 
-#include "types.h"
 #include "ItemMgr.h"
 #include "PikiAI.h"
+#include "types.h"
 
 /*
  * @brief TODO

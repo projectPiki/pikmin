@@ -1,20 +1,20 @@
 #ifndef _TITLESECTION_H
 #define _TITLESECTION_H
 
-#include "types.h"
-#include "Section.h"
 #include "Camera.h"
-#include "Light.h"
-#include "Font.h"
-#include "sysNew.h"
 #include "CinematicPlayer.h"
-#include "gameflow.h"
-#include "Interface.h"
-#include "zen/ogStart.h"
-#include "zen/DrawHiScore.h"
-#include "zen/ogTitle.h"
-#include "Menu.h"
 #include "DayMgr.h"
+#include "Font.h"
+#include "Interface.h"
+#include "Light.h"
+#include "Menu.h"
+#include "Section.h"
+#include "gameflow.h"
+#include "sysNew.h"
+#include "types.h"
+#include "zen/DrawHiScore.h"
+#include "zen/ogStart.h"
+#include "zen/ogTitle.h"
 
 extern zen::ogScrStartMgr* startWindow;
 extern zen::ogScrTitleMgr* titleWindow;

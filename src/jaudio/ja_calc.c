@@ -1,8 +1,8 @@
 #include "jaudio/ja_calc.h"
 
-#include "std/Math.h"
-#include "jaudio/ja_calc.h"
 #include "Dolphin/math.h"
+#include "jaudio/ja_calc.h"
+#include "std/Math.h"
 #include "stl/math.h"
 
 #define SINTABLE_LENGTH (257)

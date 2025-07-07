@@ -1,14 +1,14 @@
 #include "UfoItem.h"
 #include "DebugLog.h"
-#include "SoundID.h"
-#include "UtEffect.h"
-#include "Pellet.h"
-#include "NaviMgr.h"
-#include "Route.h"
-#include "gameflow.h"
 #include "Graphics.h"
 #include "MoviePlayer.h"
+#include "NaviMgr.h"
+#include "Pellet.h"
 #include "PlayerState.h"
+#include "Route.h"
+#include "SoundID.h"
+#include "UtEffect.h"
+#include "gameflow.h"
 
 /*
  * --INFO--

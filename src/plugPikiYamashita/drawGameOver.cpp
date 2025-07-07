@@ -1,8 +1,8 @@
 #include "zen/DrawGameOver.h"
-#include "zen/Math.h"
+#include "DebugLog.h"
 #include "P2D/Picture.h"
 #include "sysNew.h"
-#include "DebugLog.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

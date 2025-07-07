@@ -1,9 +1,9 @@
 #include "zen/ogGraph.h"
-#include "PlayerState.h"
-#include "P2D/Screen.h"
-#include "P2D/Graph.h"
-#include "GameStat.h"
 #include "DebugLog.h"
+#include "GameStat.h"
+#include "P2D/Graph.h"
+#include "P2D/Screen.h"
+#include "PlayerState.h"
 
 /*
  * --INFO--

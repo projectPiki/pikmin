@@ -1,10 +1,10 @@
 #ifndef _APP_H
 #define _APP_H
 
-#include "types.h"
 #include "BaseApp.h"
-#include "timers.h"
 #include "gameflow.h"
+#include "timers.h"
+#include "types.h"
 
 /**
  * @brief TODO

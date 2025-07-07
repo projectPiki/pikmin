@@ -1,10 +1,10 @@
-#include "P2D/TextBox.h"
-#include "P2D/Font.h"
 #include "DebugLog.h"
-#include "sysNew.h"
-#include "P2D/Stream.h"
-#include "P2D/Print.h"
 #include "Dolphin/gx.h"
+#include "P2D/Font.h"
+#include "P2D/Print.h"
+#include "P2D/Stream.h"
+#include "P2D/TextBox.h"
+#include "sysNew.h"
 #include "zen/Math.h"
 
 /*

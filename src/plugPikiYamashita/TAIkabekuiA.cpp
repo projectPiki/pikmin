@@ -1,9 +1,9 @@
-#include "TAI/KabekuiA.h"
-#include "sysNew.h"
 #include "DebugLog.h"
 #include "SoundID.h"
-#include "TAI/Amove.h"
 #include "TAI/Ajudge.h"
+#include "TAI/Amove.h"
+#include "TAI/KabekuiA.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

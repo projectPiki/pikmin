@@ -1,17 +1,17 @@
 #ifndef _NINLOGOSETUPSECTION_H
 #define _NINLOGOSETUPSECTION_H
 
-#include "types.h"
-#include "Section.h"
 #include "Controller.h"
-#include "zen/DrawProgre.h"
-#include "Dolphin/vi.h"
 #include "Dolphin/os.h"
-#include "gameflow.h"
-#include "Graphics.h"
+#include "Dolphin/vi.h"
 #include "Geometry.h"
+#include "Graphics.h"
 #include "Menu.h"
+#include "Section.h"
+#include "gameflow.h"
 #include "sysNew.h"
+#include "types.h"
+#include "zen/DrawProgre.h"
 
 struct Menu;
 

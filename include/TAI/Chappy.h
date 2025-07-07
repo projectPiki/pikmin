@@ -1,12 +1,12 @@
 #ifndef _TAI_CHAPPY_H
 #define _TAI_CHAPPY_H
 
-#include "types.h"
-#include "TAI/MotionActions.h"
-#include "TekiParameters.h"
-#include "TAI/ReactionActions.h"
-#include "TAI/EffectActions.h"
 #include "PaniAnimator.h"
+#include "TAI/EffectActions.h"
+#include "TAI/MotionActions.h"
+#include "TAI/ReactionActions.h"
+#include "TekiParameters.h"
+#include "types.h"
 
 /**
  * @brief TODO

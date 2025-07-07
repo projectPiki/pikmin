@@ -1,12 +1,12 @@
 #include "Collision.h"
 
+#include "CmdStream.h"
+#include "DebugLog.h"
 #include "Shape.h"
+#include "stl/stdio.h"
 #include "stl/string.h"
 #include "sysNew.h"
-#include "stl/stdio.h"
-#include "CmdStream.h"
 #include "system.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

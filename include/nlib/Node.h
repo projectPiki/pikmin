@@ -1,8 +1,8 @@
 #ifndef _NLIB_NODE_H
 #define _NLIB_NODE_H
 
-#include "types.h"
 #include "nlib/Array.h"
+#include "types.h"
 
 /**
  * @brief TODO

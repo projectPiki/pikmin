@@ -1,12 +1,12 @@
+#include "Parameters.h"
+#include "Age.h"
 #include "Ayu.h"
 #include "Colour.h"
 #include "CoreNode.h"
-#include "Parameters.h"
+#include "DebugLog.h"
 #include "Stream.h"
 #include "String.h"
 #include "Vector.h"
-#include "Age.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

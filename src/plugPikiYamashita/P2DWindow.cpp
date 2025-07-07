@@ -1,8 +1,8 @@
-#include "P2D/Window.h"
-#include "zen/ogSub.h"
-#include "P2D/Stream.h"
 #include "DebugLog.h"
+#include "P2D/Stream.h"
+#include "P2D/Window.h"
 #include "sysNew.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

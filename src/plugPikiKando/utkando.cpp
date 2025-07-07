@@ -1,11 +1,11 @@
-#include "UtilityKando.h"
-#include "system.h"
-#include "sysNew.h"
-#include "Graphics.h"
-#include "MapMgr.h"
-#include "Font.h"
-#include "KMath.h"
 #include "DebugLog.h"
+#include "Font.h"
+#include "Graphics.h"
+#include "KMath.h"
+#include "MapMgr.h"
+#include "UtilityKando.h"
+#include "sysNew.h"
+#include "system.h"
 
 /*
  * --INFO--

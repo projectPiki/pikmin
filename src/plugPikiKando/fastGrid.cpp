@@ -1,8 +1,8 @@
 #include "FastGrid.h"
-#include "MemStat.h"
-#include "sysNew.h"
 #include "AIPerf.h"
 #include "DebugLog.h"
+#include "MemStat.h"
+#include "sysNew.h"
 
 u8* FastGrid::aiGridMap;
 u16 FastGrid::aiGridSize;

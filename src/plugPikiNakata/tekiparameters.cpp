@@ -1,6 +1,6 @@
 #include "TekiParameters.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

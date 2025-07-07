@@ -1,8 +1,8 @@
 #ifndef _PSU_TREE_H
 #define _PSU_TREE_H
 
-#include "types.h"
 #include "PSU/LinkList.h"
+#include "types.h"
 
 /**
  * @brief TODO

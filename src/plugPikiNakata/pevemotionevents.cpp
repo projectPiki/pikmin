@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "Peve/MotionEvents.h"
 #include "nlib/Geometry.h"
-#include "DebugLog.h"
 #include "sysNew.h"
 
 /*

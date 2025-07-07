@@ -1,10 +1,10 @@
 #include "zen/DrawHiScore.h"
+#include "DebugLog.h"
+#include "Graphics.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
-#include "Graphics.h"
-#include "sysNew.h"
-#include "DebugLog.h"
 #include "VersionGroups.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

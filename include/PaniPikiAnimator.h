@@ -1,8 +1,8 @@
 #ifndef _PANIPIKIANIMATOR_H
 #define _PANIPIKIANIMATOR_H
 
-#include "types.h"
 #include "PaniAnimator.h"
+#include "types.h"
 
 /**
  * @brief Animation indices for Piki and Navi

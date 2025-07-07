@@ -1,12 +1,12 @@
 #include "jaudio/piki_player.h"
-#include "jaudio/piki_bgm.h"
-#include "jaudio/jammain_2.h"
-#include "jaudio/pikidemo.h"
-#include "jaudio/piki_scene.h"
-#include "jaudio/verysimple.h"
-#include "jaudio/ja_calc.h"
-#include "jaudio/random.h"
 #include "jaudio/cmdqueue.h"
+#include "jaudio/ja_calc.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/piki_bgm.h"
+#include "jaudio/piki_scene.h"
+#include "jaudio/pikidemo.h"
+#include "jaudio/random.h"
+#include "jaudio/verysimple.h"
 
 static u32 gaya_timer;
 

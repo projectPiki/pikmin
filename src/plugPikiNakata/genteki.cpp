@@ -1,11 +1,11 @@
-#include "Generator.h"
-#include "sysNew.h"
-#include "TekiPersonality.h"
-#include "TekiParameters.h"
-#include "Dolphin/os.h"
-#include "teki.h"
 #include "Age.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Generator.h"
+#include "TekiParameters.h"
+#include "TekiPersonality.h"
+#include "sysNew.h"
+#include "teki.h"
 
 /*
  * --INFO--

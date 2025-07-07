@@ -1,10 +1,10 @@
 #ifndef _TAI_NAPKID_H
 #define _TAI_NAPKID_H
 
-#include "types.h"
+#include "PaniAnimator.h"
 #include "TAI/MotionActions.h"
 #include "TekiParameters.h"
-#include "PaniAnimator.h"
+#include "types.h"
 
 /////////// Snitchbug AI Actions ///////////
 

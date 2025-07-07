@@ -1,11 +1,11 @@
 #ifndef _P2D_WINDOW_H
 #define _P2D_WINDOW_H
 
-#include "types.h"
+#include "Colour.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
 #include "Texture.h"
-#include "Colour.h"
+#include "types.h"
 
 struct Texture;
 

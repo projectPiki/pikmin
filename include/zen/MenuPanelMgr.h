@@ -1,11 +1,11 @@
 #ifndef _ZEN_MENUPANELMGR_H
 #define _ZEN_MENUPANELMGR_H
 
+#include "P2D/Picture.h"
+#include "nlib/Math.h"
 #include "types.h"
 #include "zen/DrawCommon.h"
 #include "zen/Math.h"
-#include "nlib/Math.h"
-#include "P2D/Picture.h"
 
 struct P2DScreen;
 

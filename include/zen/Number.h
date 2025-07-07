@@ -1,11 +1,11 @@
 #ifndef _ZEN_NUMBER_H
 #define _ZEN_NUMBER_H
 
-#include "types.h"
 #include "P2D/Pane.h"
 #include "P2D/Picture.h"
 #include "Texture.h"
 #include "nlib/Math.h"
+#include "types.h"
 
 struct Texture;
 

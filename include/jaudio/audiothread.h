@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_AUDIOTHREAD_H
 #define _JAUDIO_AUDIOTHREAD_H
 
-#include "types.h"
 #include "Dolphin/OS/OSMessage.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

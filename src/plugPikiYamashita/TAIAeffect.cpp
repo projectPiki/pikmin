@@ -1,9 +1,9 @@
-#include "TAI/Aeffect.h"
-#include "teki.h"
+#include "DebugLog.h"
+#include "MapCode.h"
 #include "MapMgr.h"
 #include "RumbleMgr.h"
-#include "MapCode.h"
-#include "DebugLog.h"
+#include "TAI/Aeffect.h"
+#include "teki.h"
 
 /*
  * --INFO--

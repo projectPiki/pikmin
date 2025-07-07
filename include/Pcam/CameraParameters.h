@@ -1,9 +1,9 @@
 #ifndef _PCAM_CAMERAPARAMETERS_H
 #define _PCAM_CAMERAPARAMETERS_H
 
-#include "types.h"
 #include "Node.h"
 #include "ParaParameters.h"
+#include "types.h"
 
 /**
  * @brief TODO

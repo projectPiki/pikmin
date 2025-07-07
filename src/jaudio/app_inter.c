@@ -1,8 +1,8 @@
 #include "jaudio/app_inter.h"
 
-#include "jaudio/piki_scene.h"
-#include "jaudio/piki_bgm.h"
 #include "jaudio/hvqm_play.h"
+#include "jaudio/piki_bgm.h"
+#include "jaudio/piki_scene.h"
 
 static BOOL demo_fade_flag;
 

@@ -1,9 +1,9 @@
 #include "NsMath.h"
 
-#include "Vector.h"
+#include "DebugLog.h"
 #include "Matrix3f.h"
 #include "Matrix4f.h"
-#include "DebugLog.h"
+#include "Vector.h"
 
 /*
  * --INFO--

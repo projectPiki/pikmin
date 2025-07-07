@@ -1,14 +1,14 @@
 #ifndef _PELLET_H
 #define _PELLET_H
 
-#include "types.h"
-#include "DualCreature.h"
 #include "CreatureProp.h"
+#include "DualCreature.h"
+#include "EffectMgr.h"
 #include "ObjectMgr.h"
 #include "PelletAnimator.h"
-#include "StateMachine.h"
-#include "EffectMgr.h"
 #include "Shape.h"
+#include "StateMachine.h"
+#include "types.h"
 
 struct PaniAnimKeyEvent;
 struct PaniMotionTable;

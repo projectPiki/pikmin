@@ -1,8 +1,8 @@
 #ifndef _SRT_H
 #define _SRT_H
 
-#include "types.h"
 #include "Vector.h"
+#include "types.h"
 
 struct SRT {
 	SRT() { }

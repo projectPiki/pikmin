@@ -1,10 +1,10 @@
 #ifndef _EFFECTMGR_H
 #define _EFFECTMGR_H
 
-#include "types.h"
 #include "Node.h"
-#include "zen/particle.h"
 #include "Shape.h"
+#include "types.h"
+#include "zen/particle.h"
 
 struct Texture;
 struct EffectParticleRegistration;

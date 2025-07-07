@@ -1,15 +1,15 @@
 #ifndef _BOSS_H
 #define _BOSS_H
 
-#include "types.h"
 #include "Creature.h"
 #include "CreatureProp.h"
 #include "ID32.h"
-#include "Plane.h"
-#include "PaniAnimator.h"
 #include "ObjectMgr.h"
+#include "PaniAnimator.h"
+#include "Plane.h"
 #include "SearchSystem.h"
 #include "Vector.h"
+#include "types.h"
 
 struct BirthInfo;
 struct BossMgr;

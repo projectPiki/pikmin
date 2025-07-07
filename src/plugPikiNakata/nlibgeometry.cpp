@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "Vector.h"
 #include "nlib/Geometry.h"
 #include "nlib/Math.h"
-#include "Vector.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

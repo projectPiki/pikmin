@@ -1,8 +1,8 @@
 #ifndef _KEYCONFIG_H
 #define _KEYCONFIG_H
 
-#include "types.h"
 #include "Node.h"
+#include "types.h"
 
 /**
  * @brief TODO

@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_DSPBOOT_H
 #define _JAUDIO_DSPBOOT_H
 
-#include "types.h"
 #include "jaudio/audiocommon.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

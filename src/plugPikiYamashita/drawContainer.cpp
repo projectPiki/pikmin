@@ -1,11 +1,11 @@
 #include "zen/DrawContainer.h"
-#include "zen/TexAnim.h"
-#include "zen/Math.h"
-#include "zen/Number.h"
+#include "DebugLog.h"
 #include "P2D/Graph.h"
 #include "P2D/Picture.h"
 #include "P2D/Window.h"
-#include "DebugLog.h"
+#include "zen/Math.h"
+#include "zen/Number.h"
+#include "zen/TexAnim.h"
 
 /*
  * --INFO--

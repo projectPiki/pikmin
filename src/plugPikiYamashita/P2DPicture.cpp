@@ -1,9 +1,9 @@
+#include "DebugLog.h"
 #include "P2D/Picture.h"
 #include "P2D/Stream.h"
 #include "P2D/Util.h"
-#include "zen/ogSub.h"
 #include "Texture.h"
-#include "DebugLog.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

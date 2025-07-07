@@ -1,10 +1,10 @@
-#include "Menu.h"
-#include "Geometry.h"
-#include "Font.h"
-#include "sysNew.h"
-#include "PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Font.h"
+#include "Geometry.h"
+#include "Graphics.h"
+#include "Menu.h"
+#include "PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

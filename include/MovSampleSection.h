@@ -1,12 +1,12 @@
 #ifndef _MOVSAMPLESECTION_H
 #define _MOVSAMPLESECTION_H
 
-#include "types.h"
-#include "Section.h"
 #include "Controller.h"
+#include "Section.h"
+#include "gameflow.h"
 #include "jaudio/app_inter.h"
 #include "system.h"
-#include "gameflow.h"
+#include "types.h"
 
 /**
  * @brief TODO

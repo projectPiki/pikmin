@@ -1,10 +1,10 @@
 #ifndef _KEFFECT_H
 #define _KEFFECT_H
 
-#include "types.h"
-#include "zen/particle.h"
-#include "zen/CallBack.h"
 #include "Vector.h"
+#include "types.h"
+#include "zen/CallBack.h"
+#include "zen/particle.h"
 
 struct Creature;
 

@@ -1,12 +1,12 @@
-#include "zen/DrawCM.h"
-#include "zen/EffectMgr2D.h"
-#include "zen/DrawSave.h"
-#include "zen/Number.h"
-#include "nlib/Math.h"
-#include "SoundMgr.h"
-#include "gameflow.h"
 #include "DebugLog.h"
+#include "SoundMgr.h"
 #include "VersionGroups.h"
+#include "gameflow.h"
+#include "nlib/Math.h"
+#include "zen/DrawCM.h"
+#include "zen/DrawSave.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/Number.h"
 
 /*
  * --INFO--

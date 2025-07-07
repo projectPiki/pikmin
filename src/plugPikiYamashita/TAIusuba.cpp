@@ -1,7 +1,7 @@
-#include "TAI/Usuba.h"
-#include "SoundMgr.h"
-#include "teki.h"
 #include "DebugLog.h"
+#include "SoundMgr.h"
+#include "TAI/Usuba.h"
+#include "teki.h"
 
 /*
  * --INFO--

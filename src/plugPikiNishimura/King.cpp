@@ -1,7 +1,7 @@
 #include "King.h"
 #include "DayMgr.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
 
 /*
  * --INFO--

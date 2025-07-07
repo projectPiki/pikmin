@@ -1,11 +1,11 @@
 #ifndef _PELLETANIMATOR_H
 #define _PELLETANIMATOR_H
 
-#include "types.h"
 #include "CoreNode.h"
-#include "Parameters.h"
 #include "PaniAnimator.h"
+#include "Parameters.h"
 #include "String.h"
+#include "types.h"
 
 struct PaniAnimKeyListener;
 struct PaniMotionInfo;

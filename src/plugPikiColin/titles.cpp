@@ -1,13 +1,13 @@
-#include "TitlesSection.h"
-#include "Interface.h"
+#include "Controller.h"
+#include "DebugLog.h"
 #include "Delegate.h"
+#include "Graphics.h"
+#include "Interface.h"
+#include "Menu.h"
+#include "TitlesSection.h"
 #include "gameflow.h"
 #include "jaudio/piki_scene.h"
-#include "Menu.h"
 #include "jaudio/verysimple.h"
-#include "Graphics.h"
-#include "DebugLog.h"
-#include "Controller.h"
 
 zen::ogScrTitleMgr* titleWindow;
 bool titleWindowOn;

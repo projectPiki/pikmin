@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "KMath.h"
 #include "PikiAI.h"
 #include "PikiState.h"
 #include "zen/Math.h"
-#include "KMath.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -2,16 +2,16 @@
 
 #include "BaseInf.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "FlowController.h"
-#include "gameflow.h"
 #include "Generator.h"
 #include "Graphics.h"
 #include "MemoryCard.h"
 #include "PlayerState.h"
 #include "Section.h"
-#include "sysNew.h"
-#include "Dolphin/os.h"
+#include "gameflow.h"
 #include "jaudio/piki_scene.h"
+#include "sysNew.h"
 #include "zen/ogFileChkSel.h"
 
 /**

@@ -1,11 +1,11 @@
 #ifndef _TAI_SHELL_H
 #define _TAI_SHELL_H
 
-#include "types.h"
-#include "TAI/MotionActions.h"
-#include "TAI/EffectActions.h"
-#include "TekiParameters.h"
 #include "PaniAnimator.h"
+#include "TAI/EffectActions.h"
+#include "TAI/MotionActions.h"
+#include "TekiParameters.h"
+#include "types.h"
 
 struct Creature;
 

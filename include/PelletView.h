@@ -1,8 +1,8 @@
 #ifndef _PELLETVIEW_H
 #define _PELLETVIEW_H
 
-#include "types.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Pellet;
 

@@ -1,7 +1,7 @@
 #include "TekiStrategy.h"
-#include "teki.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "sysNew.h"
+#include "teki.h"
 
 /*
  * --INFO--

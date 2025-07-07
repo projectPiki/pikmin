@@ -1,8 +1,8 @@
 #include "jaudio/dvdthread.h"
-#include "jaudio/sample.h"
-#include "jaudio/aictrl.h"
-#include "Dolphin/os.h"
 #include "Dolphin/ar.h"
+#include "Dolphin/os.h"
+#include "jaudio/aictrl.h"
+#include "jaudio/sample.h"
 #include "stl/string.h"
 
 static char audio_root_path[32] = "";

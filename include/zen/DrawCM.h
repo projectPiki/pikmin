@@ -1,13 +1,13 @@
 #ifndef _ZEN_DRAWCM_H
 #define _ZEN_DRAWCM_H
 
+#include "gameflow.h"
+#include "nlib/Math.h"
+#include "stl/stdio.h"
 #include "types.h"
 #include "zen/DrawMenu.h"
-#include "zen/ogGraph.h"
 #include "zen/Number.h"
-#include "nlib/Math.h"
-#include "gameflow.h"
-#include "stl/stdio.h"
+#include "zen/ogGraph.h"
 
 struct GameChalQuickInfo;
 struct Graphics;

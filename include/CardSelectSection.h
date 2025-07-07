@@ -1,8 +1,8 @@
 #ifndef _CARDSELECT_H
 #define _CARDSELECT_H
 
-#include "types.h"
 #include "Section.h"
+#include "types.h"
 
 /**
  * @brief Game section for the memory card selection screen.

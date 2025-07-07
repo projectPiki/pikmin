@@ -1,7 +1,7 @@
 #include "jaudio/bankread.h"
 
-#include "jaudio/connect.h"
 #include "jaudio/bx.h"
+#include "jaudio/connect.h"
 
 #define BANKP_SIZE (0x100)
 static Bank_* bankp[BANKP_SIZE];

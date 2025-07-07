@@ -1,8 +1,8 @@
-#include "Generator.h"
 #include "CourseDebug.h"
-#include "Dolphin/os.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Generator.h"
+#include "sysNew.h"
 
 int CourseDebug::collision;
 int CourseDebug::pikiNoAttack;

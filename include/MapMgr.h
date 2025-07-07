@@ -1,12 +1,12 @@
 #ifndef _MAPMGR_H
 #define _MAPMGR_H
 
-#include "types.h"
 #include "Animator.h"
-#include "Shape.h"
 #include "DynColl.h"
 #include "Graphics.h"
 #include "Material.h"
+#include "Shape.h"
+#include "types.h"
 
 struct Controller;
 struct CreatureCollPart;

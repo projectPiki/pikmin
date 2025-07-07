@@ -1,5 +1,5 @@
-#include "Dolphin/os.h"
 #include "Dolphin/pad.h"
+#include "Dolphin/os.h"
 #include "Dolphin/vi.h"
 
 #define LATENCY 8

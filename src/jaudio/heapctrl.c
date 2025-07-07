@@ -2,9 +2,9 @@
 
 #include "jaudio/dummyrom.h"
 
+#include "Dolphin/OS/OSCache.h"
 #include "Dolphin/OS/OSMessage.h"
 #include "Dolphin/ar.h"
-#include "Dolphin/OS/OSCache.h"
 
 #define DMABUFFER_SIZE (0x10000)
 static u8 dmabuffer[DMABUFFER_SIZE] ATTRIBUTE_ALIGN(32);

@@ -1,9 +1,9 @@
 #include "zen/ogStart.h"
-#include "zen/DrawCommon.h"
+#include "DebugLog.h"
 #include "P2D/Graph.h"
 #include "P2D/Screen.h"
 #include "sysNew.h"
-#include "DebugLog.h"
+#include "zen/DrawCommon.h"
 
 /*
  * --INFO--

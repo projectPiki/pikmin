@@ -1,11 +1,11 @@
 #ifndef _BOMBITEM_H
 #define _BOMBITEM_H
 
-#include "types.h"
-#include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "ItemMgr.h"
 #include "SimpleAI.h"
 #include "SoundMgr.h"
+#include "types.h"
 
 struct InteractBikkuri;
 struct InteractSwallow;

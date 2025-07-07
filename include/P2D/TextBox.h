@@ -1,10 +1,10 @@
 #ifndef _P2D_TEXTBOX_H
 #define _P2D_TEXTBOX_H
 
-#include "types.h"
+#include "Colour.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
-#include "Colour.h"
+#include "types.h"
 
 struct Texture;
 struct P2DFont;

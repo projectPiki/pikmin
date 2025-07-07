@@ -1,8 +1,8 @@
 #include "WeedsItem.h"
-#include "SoundMgr.h"
-#include "MapMgr.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "MapMgr.h"
+#include "SoundMgr.h"
 
 /*
  * --INFO--

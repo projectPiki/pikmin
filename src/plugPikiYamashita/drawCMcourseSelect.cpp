@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "gameflow.h"
 #include "zen/DrawCM.h"
 #include "zen/EffectMgr2D.h"
-#include "gameflow.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

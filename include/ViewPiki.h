@@ -1,8 +1,8 @@
 #ifndef _VIEWPIKI_H
 #define _VIEWPIKI_H
 
-#include "types.h"
 #include "Piki.h"
+#include "types.h"
 
 struct Shape;
 struct MapMgr;

@@ -1,11 +1,11 @@
 #include "jaudio/dspinterface.h"
 
 #include "Dolphin/os.h"
-#include "jaudio/sample.h"
-#include "jaudio/dspproc.h"
-#include "jaudio/dspdriver.h"
 #include "jaudio/driverinterface.h"
+#include "jaudio/dspdriver.h"
+#include "jaudio/dspproc.h"
 #include "jaudio/fxinterface.h"
+#include "jaudio/sample.h"
 
 #include "limits.h"
 

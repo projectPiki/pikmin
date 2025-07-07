@@ -1,11 +1,11 @@
-#include "gameFlow.h"
-#include "OnePlayerSection.h"
-#include "jaudio/interface.h"
-#include "Dolphin/os.h"
-#include "RumbleMgr.h"
-#include "system.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "OnePlayerSection.h"
+#include "RumbleMgr.h"
 #include "VersionGroups.h"
+#include "gameFlow.h"
+#include "jaudio/interface.h"
+#include "system.h"
 
 /*
  * --INFO--

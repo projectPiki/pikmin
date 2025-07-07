@@ -1,10 +1,10 @@
 #ifndef _ZEN_OGMESSAGE_H
 #define _ZEN_OGMESSAGE_H
 
-#include "types.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
 #include "VersionGroups.h"
+#include "types.h"
 
 struct Controller;
 struct Graphics;

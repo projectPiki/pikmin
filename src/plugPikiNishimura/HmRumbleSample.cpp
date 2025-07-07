@@ -1,5 +1,5 @@
-#include "RumbleMgr.h"
 #include "Dolphin/pad.h"
+#include "RumbleMgr.h"
 
 /*
  * --INFO--

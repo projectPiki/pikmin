@@ -1,9 +1,9 @@
-#include "TAI/KabekuiB.h"
 #include "DebugLog.h"
 #include "SoundID.h"
 #include "TAI/Ajudge.h"
 #include "TAI/Amotion.h"
 #include "TAI/Amove.h"
+#include "TAI/KabekuiB.h"
 
 /*
  * --INFO--

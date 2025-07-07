@@ -1,8 +1,8 @@
-#include "zen/DrawMenu.h"
-#include "P2D/TextBox.h"
 #include "DebugLog.h"
+#include "P2D/TextBox.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
+#include "zen/DrawMenu.h"
 
 /*
  * --INFO--

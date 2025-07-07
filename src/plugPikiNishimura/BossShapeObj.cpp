@@ -1,7 +1,7 @@
 #include "Boss.h"
+#include "DebugLog.h"
 #include "Shape.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

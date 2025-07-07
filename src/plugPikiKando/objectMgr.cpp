@@ -1,9 +1,9 @@
 #include "ObjectMgr.h"
-#include "CreatureNode.h"
-#include "Creature.h"
-#include "sysNew.h"
 #include "AIPerf.h"
+#include "Creature.h"
+#include "CreatureNode.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

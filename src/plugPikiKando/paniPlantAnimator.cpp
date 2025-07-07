@@ -1,7 +1,7 @@
-#include "PaniAnimator.h"
-#include "Dolphin/os.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "PaniAnimator.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

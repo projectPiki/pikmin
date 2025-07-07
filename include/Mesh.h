@@ -1,8 +1,8 @@
 #ifndef _MESH_H
 #define _MESH_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 struct MtxGroup;
 

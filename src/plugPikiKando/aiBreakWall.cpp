@@ -1,14 +1,14 @@
+#include "AIPerf.h"
+#include "BuildingItem.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "FlowController.h"
+#include "Interactions.h"
 #include "PikiAI.h"
 #include "PikiState.h"
-#include "BuildingItem.h"
-#include "AIPerf.h"
 #include "UtEffect.h"
-#include "gameflow.h"
-#include "Interactions.h"
-#include "FlowController.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
 #include "VersionGroups.h"
+#include "gameflow.h"
 
 /*
  * --INFO--

@@ -1,10 +1,10 @@
 #include "SeedItem.h"
-#include "DebugLog.h"
-#include "ItemMgr.h"
-#include "NaviMgr.h"
 #include "AIConstant.h"
+#include "DebugLog.h"
 #include "Graphics.h"
 #include "Interactions.h"
+#include "ItemMgr.h"
+#include "NaviMgr.h"
 
 /*
  * --INFO--

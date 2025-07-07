@@ -1,8 +1,8 @@
 #ifndef _TRAVERSABLE_H
 #define _TRAVERSABLE_H
 
-#include "types.h"
 #include "Condition.h"
+#include "types.h"
 
 struct Creature;
 

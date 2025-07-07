@@ -1,21 +1,21 @@
 #ifndef _ZEN_DRAWWORLDMAP_H
 #define _ZEN_DRAWWORLDMAP_H
 
-#include "types.h"
+#include "OnePlayerSection.h"
 #include "P2D/Pane.h"
 #include "P2D/Picture.h"
 #include "P2D/Screen.h"
-#include "zen/Number.h"
-#include "zen/ogDiary.h"
-#include "zen/DrawWMPause.h"
 #include "PlayerState.h"
 #include "SoundMgr.h"
-#include "OnePlayerSection.h"
-#include "zen/SpectrumCursorMgr.h"
+#include "nlib/Math.h"
+#include "types.h"
 #include "zen/DrawCommon.h"
 #include "zen/DrawMenu.h"
+#include "zen/DrawWMPause.h"
 #include "zen/EffectMgr2D.h"
-#include "nlib/Math.h"
+#include "zen/Number.h"
+#include "zen/SpectrumCursorMgr.h"
+#include "zen/ogDiary.h"
 
 struct Controller;
 struct Graphics;

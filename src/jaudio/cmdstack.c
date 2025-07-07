@@ -1,6 +1,6 @@
 #include "jaudio/cmdstack.h"
-#include "jaudio/playercall.h"
 #include "Dolphin/os.h"
+#include "jaudio/playercall.h"
 
 JPorthead_ cmd_once;
 JPorthead_ cmd_stay;

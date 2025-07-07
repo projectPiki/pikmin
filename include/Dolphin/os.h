@@ -1,15 +1,14 @@
 #ifndef _DOLPHIN_OS_H
 #define _DOLPHIN_OS_H
 
-#include "types.h"
 #include "Dolphin/PPCArch.h"
 #include "Dolphin/dvd.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif // ifdef __cplusplus
 
-#include "Dolphin/OS/OSUtil.h"
 #include "Dolphin/OS/OSAlarm.h"
 #include "Dolphin/OS/OSAlloc.h"
 #include "Dolphin/OS/OSBootInfo.h"
@@ -19,6 +18,7 @@ extern "C" {
 #include "Dolphin/OS/OSException.h"
 #include "Dolphin/OS/OSExi.h"
 #include "Dolphin/OS/OSExpansion.h"
+#include "Dolphin/OS/OSUtil.h"
 // #include "Dolphin/OS/OSFastCast.h" // need to comment this out for jaudio bc paired single asm instructions mess with proc 750
 #include "Dolphin/OS/OSFont.h"
 #include "Dolphin/OS/OSInterrupt.h"

@@ -1,9 +1,9 @@
 #include "BombItem.h"
 #include "DebugLog.h"
-#include "gameflow.h"
+#include "Graphics.h"
 #include "MapCode.h"
 #include "MoviePlayer.h"
-#include "Graphics.h"
+#include "gameflow.h"
 
 /*
  * --INFO--

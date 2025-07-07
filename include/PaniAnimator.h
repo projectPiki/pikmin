@@ -1,8 +1,8 @@
 #ifndef _PANIANIMATOR_H
 #define _PANIANIMATOR_H
 
-#include "types.h"
 #include "Animator.h"
+#include "types.h"
 
 struct PaniMotion;
 struct PaniMotionTable;

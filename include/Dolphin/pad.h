@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#include "types.h"
 #include "Dolphin/os.h"
+#include "types.h"
 
 typedef struct PADStatus {
 	u16 button;      // _00, Or-ed PAD_BUTTON_* bits

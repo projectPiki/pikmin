@@ -1,8 +1,8 @@
 #ifndef _GAMESTAGECLEARSECTION_H
 #define _GAMESTAGECLEARSECTION_H
 
-#include "types.h"
 #include "Section.h"
+#include "types.h"
 
 /**
  * @brief TODO

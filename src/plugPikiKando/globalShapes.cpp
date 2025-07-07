@@ -1,7 +1,7 @@
-#include "gameflow.h"
+#include "DebugLog.h"
 #include "GlobalShape.h"
 #include "Shape.h"
-#include "DebugLog.h"
+#include "gameflow.h"
 
 /*
  * --INFO--

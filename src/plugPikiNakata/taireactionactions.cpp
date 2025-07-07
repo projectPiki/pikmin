@@ -1,9 +1,9 @@
-#include "TAI/ReactionActions.h"
-#include "teki.h"
-#include "TekiConditions.h"
+#include "DebugLog.h"
 #include "PikiState.h"
 #include "Stickers.h"
-#include "DebugLog.h"
+#include "TAI/ReactionActions.h"
+#include "TekiConditions.h"
+#include "teki.h"
 
 /*
  * --INFO--

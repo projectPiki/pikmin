@@ -1,11 +1,11 @@
 #ifndef _ZEN_DRAWCOUNTDOWN_H
 #define _ZEN_DRAWCOUNTDOWN_H
 
+#include "Colour.h"
+#include "gameflow.h"
 #include "types.h"
 #include "zen/DrawCommon.h"
 #include "zen/Math.h"
-#include "Colour.h"
-#include "gameflow.h"
 
 struct Graphics;
 struct P2DPicture;

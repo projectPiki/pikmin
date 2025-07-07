@@ -1,12 +1,12 @@
-#include "TAI/Mar.h"
-#include "PikiMgr.h"
-#include "NaviMgr.h"
-#include "MapCode.h"
-#include "PlayerState.h"
-#include "SoundMgr.h"
-#include "RumbleMgr.h"
-#include "Pcam/CameraManager.h"
 #include "DebugLog.h"
+#include "MapCode.h"
+#include "NaviMgr.h"
+#include "Pcam/CameraManager.h"
+#include "PikiMgr.h"
+#include "PlayerState.h"
+#include "RumbleMgr.h"
+#include "SoundMgr.h"
+#include "TAI/Mar.h"
 
 /*
  * --INFO--

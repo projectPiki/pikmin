@@ -1,6 +1,6 @@
 #include "Boss.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
 
 /*
  * --INFO--

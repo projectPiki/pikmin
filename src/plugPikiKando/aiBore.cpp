@@ -1,15 +1,15 @@
-#include "PikiAI.h"
-#include "UtilityKando.h"
-#include "teki.h"
-#include "ItemMgr.h"
 #include "Boss.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "ItemMgr.h"
 #include "NaviMgr.h"
 #include "NaviState.h"
+#include "PikiAI.h"
 #include "SoundMgr.h"
-#include "system.h"
+#include "UtilityKando.h"
 #include "sysNew.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
+#include "system.h"
+#include "teki.h"
 
 /*
  * --INFO--

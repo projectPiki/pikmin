@@ -1,17 +1,16 @@
 #include "zen/ogTotalScore.h"
 #include "DebugLog.h"
+#include "P2D/Graph.h"
+#include "P2D/Picture.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
 #include "sysNew.h"
-#include "zen/ZenController.h"
+#include "zen/DrawCM.h"
 #include "zen/DrawCommon.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/ZenController.h"
 #include "zen/ogMessage.h"
 #include "zen/ogSub.h"
-#include "zen/EffectMgr2D.h"
-#include "zen/DrawCM.h"
-#include "P2D/Screen.h"
-#include "P2D/Picture.h"
-#include "P2D/Graph.h"
 
 /*
  * --INFO--

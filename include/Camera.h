@@ -1,11 +1,11 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
-#include "types.h"
-#include "Vector.h"
+#include "Animator.h"
 #include "Matrix4f.h"
 #include "Plane.h"
-#include "Animator.h"
+#include "Vector.h"
+#include "types.h"
 
 struct Graphics;
 struct Node;

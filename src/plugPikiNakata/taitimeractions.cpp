@@ -1,7 +1,7 @@
-#include "TAI/TimerActions.h"
-#include "teki.h"
-#include "system.h"
 #include "DebugLog.h"
+#include "TAI/TimerActions.h"
+#include "system.h"
+#include "teki.h"
 
 /*
  * --INFO--

@@ -1,11 +1,11 @@
 #ifndef _CPLATE_H
 #define _CPLATE_H
 
-#include "types.h"
-#include "Traversable.h"
-#include "Parameters.h"
-#include "Node.h"
 #include "ComplexCreature.h"
+#include "Node.h"
+#include "Parameters.h"
+#include "Traversable.h"
+#include "types.h"
 
 struct MapMgr;
 struct Piki;

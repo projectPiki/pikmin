@@ -1,14 +1,14 @@
 #ifndef _PLAYERSTATE_H
 #define _PLAYERSTATE_H
 
-#include "types.h"
 #include "Demo.h"
-#include "ResultFlags.h"
 #include "PaniPikiAnimator.h"
-#include "UtilityKando.h"
 #include "PelletAnimator.h"
-#include "Shape.h"
 #include "Piki.h"
+#include "ResultFlags.h"
+#include "Shape.h"
+#include "UtilityKando.h"
+#include "types.h"
 
 struct Graphics;
 struct PelletShapeObject;

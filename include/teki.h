@@ -1,21 +1,21 @@
 #ifndef _TEKI_H
 #define _TEKI_H
 
-#include "types.h"
+#include "ComplexCreature.h"
 #include "Creature.h"
+#include "CreatureCollPart.h"
+#include "Interactions.h"
 #include "ObjectMgr.h"
 #include "PaniAnimator.h"
 #include "PelletView.h"
-#include "Interactions.h"
-#include "nlib/Geometry.h"
-#include "nlib/Function.h"
-#include "ComplexCreature.h"
-#include "CreatureCollPart.h"
+#include "Shape.h"
+#include "TAI/EffectAttack.h"
 #include "TekiParameters.h"
 #include "TekiPersonality.h"
-#include "Shape.h"
+#include "nlib/Function.h"
+#include "nlib/Geometry.h"
 #include "system.h"
-#include "TAI/EffectAttack.h"
+#include "types.h"
 #include "zen/CallBack.h"
 
 struct CollEvent;

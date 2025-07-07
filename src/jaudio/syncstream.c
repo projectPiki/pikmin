@@ -1,13 +1,13 @@
 #include "jaudio/syncstream.h"
-#include "jaudio/audiostruct.h"
-#include "jaudio/dspinterface.h"
 #include "Dolphin/dvd.h"
 #include "jaudio/aictrl.h"
-#include "jaudio/rate.h"
-#include "jaudio/interleave.h"
-#include "jaudio/dvdthread.h"
+#include "jaudio/audiostruct.h"
 #include "jaudio/dspdriver.h"
+#include "jaudio/dspinterface.h"
+#include "jaudio/dvdthread.h"
+#include "jaudio/interleave.h"
 #include "jaudio/playercall.h"
+#include "jaudio/rate.h"
 
 // fabricated, size 0x14.
 struct UNK_STRUCT {

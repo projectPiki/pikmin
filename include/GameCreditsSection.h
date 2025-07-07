@@ -1,8 +1,8 @@
 #ifndef _GAMECREDITSSECTION_H
 #define _GAMECREDITSSECTION_H
 
-#include "types.h"
 #include "Section.h"
+#include "types.h"
 
 /*
  * @brief TODO

@@ -1,12 +1,12 @@
 #include "jaudio/hvqm_play.h"
 #include "Dolphin/os.h"
-#include "jaudio/sample.h"
-#include "jaudio/interleave.h"
-#include "jaudio/syncstream.h"
-#include "jaudio/dvdthread.h"
-#include "jaudio/dspbuf.h"
-#include "stl/string.h"
 #include "hvqm4.h"
+#include "jaudio/dspbuf.h"
+#include "jaudio/dvdthread.h"
+#include "jaudio/interleave.h"
+#include "jaudio/sample.h"
+#include "jaudio/syncstream.h"
+#include "stl/string.h"
 
 static volatile BOOL dvd_loadfinish;
 static u32 dvdcount;

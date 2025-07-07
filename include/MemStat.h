@@ -1,8 +1,8 @@
 #ifndef _MEMSTAT_H
 #define _MEMSTAT_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 /**
  * @brief TODO

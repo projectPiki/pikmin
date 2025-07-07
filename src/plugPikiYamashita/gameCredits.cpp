@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "FlowController.h"
 #include "GameCreditsSection.h"
 #include "system.h"
-#include "FlowController.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

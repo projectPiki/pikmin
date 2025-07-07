@@ -1,12 +1,12 @@
 #ifndef _UFOITEM_H
 #define _UFOITEM_H
 
-#include "types.h"
-#include "Suckable.h"
 #include "CreatureProp.h"
 #include "EffectMgr.h"
 #include "Shape.h"
 #include "SoundMgr.h"
+#include "Suckable.h"
+#include "types.h"
 
 struct Piki;
 struct SimpleAI;

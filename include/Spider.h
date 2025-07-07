@@ -1,9 +1,9 @@
 #ifndef _SPIDER_H
 #define _SPIDER_H
 
-#include "types.h"
 #include "Boss.h"
 #include "MapMgr.h"
+#include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

@@ -1,10 +1,10 @@
 #ifndef _DOLPHIN_DSP_H
 #define _DOLPHIN_DSP_H
 
-#include "types.h"
-#include "Dolphin/OS/OSUtil.h"
 #include "Dolphin/OS/OSContext.h"
 #include "Dolphin/OS/OSInterrupt.h"
+#include "Dolphin/OS/OSUtil.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

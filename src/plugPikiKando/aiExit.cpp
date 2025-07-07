@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "PikiAI.h"
 #include "RopeCreature.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

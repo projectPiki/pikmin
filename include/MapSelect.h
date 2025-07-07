@@ -1,16 +1,16 @@
 #ifndef _MAPSELECT_H
 #define _MAPSELECT_H
 
-#include "types.h"
-#include "Font.h"
-#include "Section.h"
-#include "Menu.h"
 #include "Camera.h"
-#include "system.h"
-#include "zen/DrawWorldMap.h"
-#include "zen/DrawCM.h"
-#include "gameflow.h"
 #include "Controller.h"
+#include "Font.h"
+#include "Menu.h"
+#include "Section.h"
+#include "gameflow.h"
+#include "system.h"
+#include "types.h"
+#include "zen/DrawCM.h"
+#include "zen/DrawWorldMap.h"
 
 struct Menu;
 struct Font;

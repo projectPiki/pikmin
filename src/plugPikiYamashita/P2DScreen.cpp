@@ -1,11 +1,11 @@
-#include "P2D/Screen.h"
-#include "P2D/Window.h"
-#include "P2D/Picture.h"
-#include "P2D/TextBox.h"
-#include "P2D/Graph.h"
-#include "zen/ogSub.h"
 #include "DebugLog.h"
+#include "P2D/Graph.h"
+#include "P2D/Picture.h"
+#include "P2D/Screen.h"
+#include "P2D/TextBox.h"
+#include "P2D/Window.h"
 #include "sysNew.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

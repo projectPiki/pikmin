@@ -1,19 +1,19 @@
 #include "TekiYamashita.h"
 
-#include "system.h"
-#include "TAI/Tank.h"
-#include "TAI/Mar.h"
+#include "DebugLog.h"
 #include "TAI/Beatle.h"
+#include "TAI/Dororo.h"
+#include "TAI/HibaA.h"
 #include "TAI/KabekuiA.h"
 #include "TAI/KabekuiB.h"
 #include "TAI/KabekuiC.h"
-#include "TAI/Tamago.h"
-#include "TAI/Dororo.h"
-#include "TAI/HibaA.h"
+#include "TAI/Mar.h"
 #include "TAI/Miurin.h"
-#include "TAI/Usuba.h"
 #include "TAI/Otama.h"
-#include "DebugLog.h"
+#include "TAI/Tamago.h"
+#include "TAI/Tank.h"
+#include "TAI/Usuba.h"
+#include "system.h"
 
 /*
  * --INFO--

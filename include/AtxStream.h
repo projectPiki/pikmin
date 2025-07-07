@@ -1,8 +1,8 @@
 #ifndef _ATXSTREAM_H
 #define _ATXSTREAM_H
 
-#include "types.h"
 #include "Stream.h"
+#include "types.h"
 
 struct AtxStream;
 

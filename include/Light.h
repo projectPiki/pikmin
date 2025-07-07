@@ -1,12 +1,12 @@
 #ifndef _LIGHT_H
 #define _LIGHT_H
 
-#include "types.h"
-#include "Node.h"
-#include "Vector.h"
 #include "Camera.h"
 #include "Colour.h"
+#include "Node.h"
+#include "Vector.h"
 #include "system.h"
+#include "types.h"
 
 struct CmdStream;
 struct Graphics;

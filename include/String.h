@@ -1,8 +1,8 @@
 #ifndef _STRING_H
 #define _STRING_H
 
-#include "types.h"
 #include "stl/stdio.h"
+#include "types.h"
 
 /**
  * @brief TODO

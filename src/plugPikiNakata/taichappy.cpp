@@ -1,15 +1,15 @@
+#include "DebugLog.h"
+#include "MapMgr.h"
+#include "SoundMgr.h"
+#include "TAI/AttackActions.h"
+#include "TAI/BasicActions.h"
 #include "TAI/Chappy.h"
+#include "TAI/JudgementActions.h"
+#include "TAI/MessageActions.h"
 #include "TAI/MoveActions.h"
 #include "TAI/TimerActions.h"
-#include "TAI/JudgementActions.h"
-#include "TAI/BasicActions.h"
-#include "TAI/AttackActions.h"
-#include "TAI/MessageActions.h"
-#include "teki.h"
 #include "TekiConditions.h"
-#include "SoundMgr.h"
-#include "MapMgr.h"
-#include "DebugLog.h"
+#include "teki.h"
 
 /*
  * --INFO--

@@ -1,12 +1,12 @@
-#include "TAI/Amove.h"
-#include "nlib/Math.h"
+#include "DebugLog.h"
 #include "Dolphin/os.h"
 #include "EffectMgr.h"
-#include "MapMgr.h"
-#include "WorkObject.h"
-#include "ItemMgr.h"
 #include "GoalItem.h"
-#include "DebugLog.h"
+#include "ItemMgr.h"
+#include "MapMgr.h"
+#include "TAI/Amove.h"
+#include "WorkObject.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--

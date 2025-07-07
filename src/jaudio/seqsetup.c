@@ -1,13 +1,12 @@
 #include "jaudio/seqsetup.h"
 
-#include "jaudio/jammain_2.h"
-#include "jaudio/noteon.h"
-#include "jaudio/fat.h"
-#include "jaudio/playercall.h"
-#include "jaudio/jamosc.h"
 #include "jaudio/driverinterface.h"
-#include "jaudio/oneshot.h"
 #include "jaudio/fat.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/jamosc.h"
+#include "jaudio/noteon.h"
+#include "jaudio/oneshot.h"
+#include "jaudio/playercall.h"
 
 #include "Dolphin/OS/OSInterrupt.h"
 

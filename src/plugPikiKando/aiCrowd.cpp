@@ -1,16 +1,16 @@
-#include "PikiAI.h"
-#include "Navi.h"
 #include "CPlate.h"
+#include "DebugLog.h"
+#include "GameStat.h"
+#include "MoviePlayer.h"
+#include "Navi.h"
 #include "NaviMgr.h"
-#include "gameflow.h"
+#include "PikiAI.h"
 #include "PikiInfo.h"
 #include "PikiMgr.h"
-#include "MoviePlayer.h"
 #include "PlayerState.h"
-#include "ViewPiki.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/arith.h"
-#include "GameStat.h"
-#include "DebugLog.h"
+#include "ViewPiki.h"
+#include "gameflow.h"
 
 static bool newVer = true;
 

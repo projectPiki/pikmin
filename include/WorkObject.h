@@ -1,13 +1,13 @@
 #ifndef _WORKOBJECT_H
 #define _WORKOBJECT_H
 
-#include "types.h"
 #include "ItemMgr.h"
 #include "ObjectMgr.h"
 #include "Plane.h"
-#include "UtEffect.h"
 #include "Route.h"
 #include "Shape.h"
+#include "UtEffect.h"
+#include "types.h"
 
 struct DynBuildShape;
 

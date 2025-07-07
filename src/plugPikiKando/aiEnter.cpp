@@ -1,9 +1,9 @@
+#include "DebugLog.h"
+#include "GoalItem.h"
+#include "Interactions.h"
 #include "PikiAI.h"
 #include "PikiMgr.h"
 #include "zen/Math.h"
-#include "GoalItem.h"
-#include "Interactions.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

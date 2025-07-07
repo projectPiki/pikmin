@@ -1,12 +1,12 @@
+#include "DebugLog.h"
+#include "GameStat.h"
+#include "Navi.h"
 #include "PikiAI.h"
 #include "PikiMgr.h"
-#include "Navi.h"
 #include "PikiState.h"
-#include "GameStat.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,17 +1,17 @@
 #ifndef _TAI_KABEKUIB_H
 #define _TAI_KABEKUIB_H
 
-#include "types.h"
-#include "TAI/Aattack.h"
-#include "TAI/Areaction.h"
-#include "TAI/EffectAttack.h"
-#include "TekiParameters.h"
-#include "TAI/Animation.h"
-#include "YaiStrategy.h"
-#include "zen/CallBack.h"
 #include "PaniAnimator.h"
 #include "PlayerState.h"
 #include "SoundID.h"
+#include "TAI/Aattack.h"
+#include "TAI/Animation.h"
+#include "TAI/Areaction.h"
+#include "TAI/EffectAttack.h"
+#include "TekiParameters.h"
+#include "YaiStrategy.h"
+#include "types.h"
+#include "zen/CallBack.h"
 
 /////////// Male Sheargrub AI Actions ///////////
 

@@ -1,12 +1,12 @@
-#include "PikiAI.h"
-#include "PikiState.h"
-#include "ItemMgr.h"
-#include "PikiMgr.h"
-#include "Navi.h"
-#include "sysNew.h"
-#include "Graphics.h"
-#include "MemStat.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "ItemMgr.h"
+#include "MemStat.h"
+#include "Navi.h"
+#include "PikiAI.h"
+#include "PikiMgr.h"
+#include "PikiState.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

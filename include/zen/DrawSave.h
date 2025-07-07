@@ -2,8 +2,8 @@
 #define _ZEN_DRAWSAVE_H
 
 #include "types.h"
-#include "zen/ogMemChk.h"
 #include "zen/DrawCommon.h"
+#include "zen/ogMemChk.h"
 
 struct Graphics;
 struct Controller;

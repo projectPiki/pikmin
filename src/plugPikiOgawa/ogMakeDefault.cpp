@@ -1,13 +1,13 @@
 #include "zen/ogMakeDefault.h"
-#include "P2D/Screen.h"
-#include "P2D/Graph.h"
-#include "zen/ogSub.h"
-#include "jaudio/verysimple.h"
 #include "DebugLog.h"
-#include "gameflow.h"
+#include "P2D/Graph.h"
+#include "P2D/Screen.h"
 #include "SoundMgr.h"
-#include "sysNew.h"
 #include "VersionGroups.h"
+#include "gameflow.h"
+#include "jaudio/verysimple.h"
+#include "sysNew.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

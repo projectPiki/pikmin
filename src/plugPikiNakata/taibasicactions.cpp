@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "PlayerState.h"
 #include "TAI/BasicActions.h"
 #include "teki.h"
-#include "PlayerState.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

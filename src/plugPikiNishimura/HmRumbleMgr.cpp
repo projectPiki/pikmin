@@ -1,7 +1,7 @@
-#include "RumbleMgr.h"
-#include "NaviMgr.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "NaviMgr.h"
+#include "RumbleMgr.h"
+#include "sysNew.h"
 
 RumbleMgr* rumbleMgr;
 

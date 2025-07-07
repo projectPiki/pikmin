@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "TAI/MotionActions.h"
 #include "teki.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

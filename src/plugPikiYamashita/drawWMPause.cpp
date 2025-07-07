@@ -1,10 +1,10 @@
 #include "zen/DrawWMPause.h"
-#include "zen/DrawMenu.h"
-#include "zen/Math.h"
+#include "DebugLog.h"
 #include "P2D/Picture.h"
 #include "SoundMgr.h"
-#include "DebugLog.h"
 #include "sysNew.h"
+#include "zen/DrawMenu.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

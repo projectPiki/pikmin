@@ -1,8 +1,8 @@
 #include "jaudio/waveread.h"
 
+#include "jaudio/bx.h"
 #include "jaudio/connect.h"
 #include "jaudio/heapctrl.h"
-#include "jaudio/bx.h"
 
 #define WAVEARC_SIZE   (0x100)
 #define WAVEGROUP_SIZE (0x100)

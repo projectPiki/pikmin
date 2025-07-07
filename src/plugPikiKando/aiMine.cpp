@@ -1,8 +1,8 @@
-#include "PikiAI.h"
-#include "ItemObject.h"
 #include "BombItem.h"
-#include "Interactions.h"
 #include "DebugLog.h"
+#include "Interactions.h"
+#include "ItemObject.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--

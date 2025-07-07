@@ -1,9 +1,9 @@
 #include "Camera.h"
-#include "Texture.h"
-#include "Graphics.h"
-#include "Geometry.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Geometry.h"
+#include "Graphics.h"
+#include "Texture.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

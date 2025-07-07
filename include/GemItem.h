@@ -1,10 +1,10 @@
 #ifndef _GEMITEM_H
 #define _GEMITEM_H
 
-#include "types.h"
 #include "ItemMgr.h"
 #include "SimpleAI.h"
 #include "SoundMgr.h"
+#include "types.h"
 
 /**
  * @brief TODO

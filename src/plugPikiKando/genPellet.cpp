@@ -1,10 +1,10 @@
-#include "Generator.h"
-#include "sysNew.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
-#include "Pellet.h"
 #include "Age.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Generator.h"
+#include "Pellet.h"
 #include "PelletState.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

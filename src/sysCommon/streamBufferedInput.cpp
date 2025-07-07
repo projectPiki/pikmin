@@ -1,10 +1,10 @@
 #include "Stream.h"
 
-#include "system.h"
-#include "sysNew.h"
-#include "stl/mem.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "stl/mem.h"
+#include "sysNew.h"
+#include "system.h"
 
 /*
  * --INFO--

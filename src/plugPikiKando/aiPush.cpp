@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "Interactions.h"
 #include "PikiAI.h"
 #include "PikiMgr.h"
-#include "Interactions.h"
 #include "WorkObject.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,10 +1,10 @@
-#include "Generator.h"
-#include "DynSimulator.h"
-#include "DynObject.h"
-#include "MapMgr.h"
 #include "Age.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "DynObject.h"
+#include "DynSimulator.h"
+#include "Generator.h"
+#include "MapMgr.h"
+#include "sysNew.h"
 
 MapMgr* GenObjectMapObject::mapMgr;
 

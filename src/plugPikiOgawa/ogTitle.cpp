@@ -1,15 +1,15 @@
 #include "zen/ogTitle.h"
-#include "zen/DrawMenu.h"
+#include "DebugLog.h"
+#include "P2D/TextBox.h"
+#include "SoundID.h"
+#include "SoundMgr.h"
+#include "VersionGroups.h"
 #include "gameflow.h"
+#include "jaudio/verysimple.h"
+#include "sysNew.h"
+#include "zen/DrawMenu.h"
 #include "zen/ZenController.h"
 #include "zen/ogSub.h"
-#include "SoundID.h"
-#include "sysNew.h"
-#include "P2D/TextBox.h"
-#include "SoundMgr.h"
-#include "jaudio/verysimple.h"
-#include "DebugLog.h"
-#include "VersionGroups.h"
 
 /*
  * --INFO--

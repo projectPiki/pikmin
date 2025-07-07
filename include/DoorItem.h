@@ -1,9 +1,9 @@
 #ifndef _DOORITEM_H
 #define _DOORITEM_H
 
-#include "types.h"
-#include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "ItemMgr.h"
+#include "types.h"
 
 /**
  * @brief TODO

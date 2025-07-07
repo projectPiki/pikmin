@@ -1,9 +1,9 @@
 #ifndef _PEVE_EVENT_H
 #define _PEVE_EVENT_H
 
-#include "types.h"
-#include "nlib/Node.h"
 #include "Peve/Condition.h"
+#include "nlib/Node.h"
+#include "types.h"
 
 /**
  * @brief TODO

@@ -1,9 +1,9 @@
 #ifndef _TAI_AREACTION_H
 #define _TAI_AREACTION_H
 
-#include "types.h"
-#include "TAI/Amotion.h"
 #include "EffectMgr.h"
+#include "TAI/Amotion.h"
+#include "types.h"
 
 /**
  * @brief TODO

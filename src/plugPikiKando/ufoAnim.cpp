@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "PlayerState.h"
+#include "Shape.h"
 #include "UfoItem.h"
 #include "sysNew.h"
-#include "Shape.h"
-#include "PlayerState.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

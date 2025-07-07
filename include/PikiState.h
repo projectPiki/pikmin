@@ -1,10 +1,10 @@
 #ifndef _PIKISTATE_H
 #define _PIKISTATE_H
 
-#include "types.h"
 #include "Piki.h"
 #include "StateMachine.h"
 #include "Vector.h"
+#include "types.h"
 
 enum PikiStateID {
 	PIKISTATE_Normal       = 0,

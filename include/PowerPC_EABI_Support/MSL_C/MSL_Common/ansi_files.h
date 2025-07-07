@@ -1,8 +1,8 @@
 #ifndef _MSL_COMMON_ANSI_FILES_H
 #define _MSL_COMMON_ANSI_FILES_H
 
-#include "types.h"
 #include "stdio.h"
+#include "types.h"
 
 typedef struct _files {
 	FILE _stdin;

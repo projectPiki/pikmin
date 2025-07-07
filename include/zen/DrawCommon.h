@@ -1,8 +1,8 @@
 #ifndef _ZEN_DRAWCOMMON_H
 #define _ZEN_DRAWCOMMON_H
 
-#include "types.h"
 #include "P2D/Screen.h"
+#include "types.h"
 
 struct Graphics;
 

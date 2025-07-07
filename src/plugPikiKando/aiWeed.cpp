@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "MizuItem.h"
 #include "PikiAI.h"
 #include "SoundMgr.h"
-#include "MizuItem.h"
 #include "WeedsItem.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

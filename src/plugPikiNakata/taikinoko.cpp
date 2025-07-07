@@ -1,15 +1,15 @@
+#include "DebugLog.h"
+#include "Graphics.h"
+#include "MapMgr.h"
+#include "RumbleMgr.h"
+#include "SoundMgr.h"
+#include "TAI/JudgementActions.h"
 #include "TAI/Kinoko.h"
 #include "TAI/MoveActions.h"
 #include "TAI/ReactionActions.h"
-#include "TAI/JudgementActions.h"
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
 #include "teki.h"
-#include "RumbleMgr.h"
-#include "MapMgr.h"
-#include "Graphics.h"
-#include "SoundMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

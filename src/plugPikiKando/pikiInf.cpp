@@ -1,9 +1,9 @@
 #include "BaseInf.h"
-#include "Piki.h"
-#include "Dolphin/os.h"
-#include "sysNew.h"
-#include "gameflow.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Piki.h"
+#include "gameflow.h"
+#include "sysNew.h"
 
 PikiInfMgr pikiInfMgr;
 

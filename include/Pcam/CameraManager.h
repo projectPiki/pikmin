@@ -1,8 +1,8 @@
 #ifndef _PCAM_CAMERAMANAGER_H
 #define _PCAM_CAMERAMANAGER_H
 
-#include "types.h"
 #include "Node.h"
+#include "types.h"
 
 struct Camera;
 struct Controller;

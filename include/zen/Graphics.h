@@ -1,8 +1,8 @@
 #ifndef _ZEN_GRAPHICS_H
 #define _ZEN_GRAPHICS_H
 
-#include "types.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Colour;
 

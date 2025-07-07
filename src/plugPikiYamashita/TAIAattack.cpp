@@ -1,11 +1,11 @@
+#include "DebugLog.h"
+#include "NaviMgr.h"
+#include "PikiMgr.h"
+#include "SoundMgr.h"
 #include "TAI/Aattack.h"
 #include "TekiConditions.h"
-#include "SoundMgr.h"
 #include "WorkObject.h"
 #include "gameflow.h"
-#include "PikiMgr.h"
-#include "NaviMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

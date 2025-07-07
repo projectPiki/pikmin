@@ -1,8 +1,8 @@
 #include "jaudio/file_seq.h"
 
-#include "jaudio/virload.h"
 #include "jaudio/jammain_2.h"
 #include "jaudio/seqsetup.h"
+#include "jaudio/virload.h"
 
 #include "stl/string.h"
 

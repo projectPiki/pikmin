@@ -1,7 +1,7 @@
-#include "Light.h"
 #include "Camera.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "Light.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_VEC_H
 #define _DOLPHIN_VEC_H
 
-#include "types.h"
 #include "VersionGroups.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,8 +1,8 @@
 #include "KIO.h"
-#include "sysNew.h"
-#include "Dolphin/os.h"
-#include "Dolphin/hio.h"
 #include "DebugLog.h"
+#include "Dolphin/hio.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

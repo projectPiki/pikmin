@@ -1,9 +1,9 @@
 #ifndef _SIMPLEAI_H
 #define _SIMPLEAI_H
 
-#include "types.h"
 #include "AICreature.h"
 #include "StateMachine.h"
+#include "types.h"
 
 #define C_SAI(obj) static_cast<SimpleAI*>(obj->mStateMachine)
 

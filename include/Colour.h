@@ -1,8 +1,8 @@
 #ifndef _COLOUR_H
 #define _COLOUR_H
 
-#include "types.h"
 #include "Stream.h"
+#include "types.h"
 
 #define COLOUR_TO_U32(colour) ((u8)(colour.a) | (((u8)(colour.b) << 8) | (((u8)(colour.g) << 16) | ((u8)(colour.r) << 24))))
 

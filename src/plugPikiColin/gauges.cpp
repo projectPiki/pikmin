@@ -1,13 +1,13 @@
-#include "LifeGauge.h"
 #include "Colour.h"
+#include "DebugLog.h"
+#include "Graphics.h"
+#include "LifeGauge.h"
+#include "Light.h"
+#include "MoviePlayer.h"
+#include "VersionGroups.h"
+#include "gameflow.h"
 #include "sysNew.h"
 #include "system.h"
-#include "Light.h"
-#include "Graphics.h"
-#include "MoviePlayer.h"
-#include "gameflow.h"
-#include "DebugLog.h"
-#include "VersionGroups.h"
 
 static Colour lgborder;
 static Colour lglev0;

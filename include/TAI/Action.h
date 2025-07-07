@@ -1,8 +1,8 @@
 #ifndef _TAI_ACTION_H
 #define _TAI_ACTION_H
 
-#include "types.h"
 #include "TekiStrategy.h"
+#include "types.h"
 
 struct Teki;
 

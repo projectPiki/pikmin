@@ -1,8 +1,8 @@
 #include "jaudio/dspdriver.h"
 
-#include "jaudio/dspinterface.h"
 #include "jaudio/audiothread.h"
 #include "jaudio/driverinterface.h"
+#include "jaudio/dspinterface.h"
 #include "jaudio/rate.h"
 
 #define DSPCH_LENGTH (64)

@@ -1,10 +1,10 @@
 #ifndef _ROUTE_H
 #define _ROUTE_H
 
-#include "types.h"
-#include "Vector.h"
-#include "Node.h"
 #include "Colour.h"
+#include "Node.h"
+#include "Vector.h"
+#include "types.h"
 
 struct Creature;
 struct CmdStream;

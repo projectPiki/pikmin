@@ -1,9 +1,9 @@
 #ifndef _TAI_AMOVE_H
 #define _TAI_AMOVE_H
 
-#include "types.h"
-#include "TAI/Amotion.h"
 #include "NaviMgr.h"
+#include "TAI/Amotion.h"
+#include "types.h"
 
 struct Vector3f;
 

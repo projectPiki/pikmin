@@ -1,10 +1,10 @@
 #include "Omake.h"
-#include "NaviMgr.h"
-#include "Pcam/CameraManager.h"
-#include "Pcam/Camera.h"
-#include "KMath.h"
-#include "stl/math.h"
 #include "DebugLog.h"
+#include "KMath.h"
+#include "NaviMgr.h"
+#include "Pcam/Camera.h"
+#include "Pcam/CameraManager.h"
+#include "stl/math.h"
 #include "sysNew.h"
 
 AttentionCamera* attentionCamera;

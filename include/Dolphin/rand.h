@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_RAND_H
 #define _DOLPHIN_RAND_H
 
-#include "types.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/rand.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

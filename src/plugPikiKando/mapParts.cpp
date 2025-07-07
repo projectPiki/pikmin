@@ -1,7 +1,7 @@
-#include "MapMgr.h"
-#include "Font.h"
 #include "DebugLog.h"
+#include "Font.h"
 #include "Graphics.h"
+#include "MapMgr.h"
 
 /*
  * --INFO--

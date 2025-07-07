@@ -1,12 +1,12 @@
 #ifndef _AGE_H
 #define _AGE_H
 
-#include "types.h"
-#include "AtxStream.h"
-#include "String.h"
-#include "Delegate.h"
 #include "ANode.h"
+#include "AtxStream.h"
+#include "Delegate.h"
+#include "String.h"
 #include "stl/string.h"
+#include "types.h"
 
 enum PROP_TYPE {
 	CHAR_PROP = 0,

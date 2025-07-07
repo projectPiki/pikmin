@@ -1,11 +1,11 @@
-#include "MovSampleSection.h"
+#include "DebugLog.h"
 #include "Dolphin/gx.h"
+#include "FlowController.h"
+#include "Graphics.h"
+#include "MovSampleSection.h"
 #include "jaudio/app_inter.h"
 #include "jaudio/piki_scene.h"
-#include "Graphics.h"
-#include "FlowController.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 u16 ImgH;
 u16 ImgW;

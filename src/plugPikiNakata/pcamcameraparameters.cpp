@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "Pcam/CameraParameters.h"
 #include "nlib/Math.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #include "Ayu.h"
 
-#include "system.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "sysNew.h"
+#include "system.h"
 
 /*
  * --INFO--

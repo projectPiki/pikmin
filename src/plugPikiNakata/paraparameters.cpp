@@ -1,7 +1,7 @@
 #include "ParaParameters.h"
-#include "Stream.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Stream.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_OS_OSFASTCAST_H
 #define _DOLPHIN_OS_OSFASTCAST_H
 
-#include "types.h"
 #include "Dolphin/OS/OSUtil.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,20 +1,20 @@
 #ifndef _ZEN_DRAWCONTAINER_H
 #define _ZEN_DRAWCONTAINER_H
 
-#include "types.h"
 #include "P2D/Pane.h"
+#include "P2D/Picture.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
-#include "P2D/Picture.h"
-#include "zen/ZenController.h"
-#include "zen/DrawCommon.h"
-#include "zen/TexAnim.h"
-#include "zen/Math.h"
-#include "zen/ogSub.h"
-#include "stl/stdio.h"
-#include "nlib/Math.h"
 #include "SoundMgr.h"
+#include "nlib/Math.h"
+#include "stl/stdio.h"
 #include "sysNew.h"
+#include "types.h"
+#include "zen/DrawCommon.h"
+#include "zen/Math.h"
+#include "zen/TexAnim.h"
+#include "zen/ZenController.h"
+#include "zen/ogSub.h"
 
 struct P2DPicture;
 struct P2DPerspGraph;

@@ -1,8 +1,8 @@
 #ifndef _DYNOBJECT_H
 #define _DYNOBJECT_H
 
-#include "types.h"
 #include "DynSimulator.h"
+#include "types.h"
 
 struct DynCollObjBody;
 struct MapMgr;

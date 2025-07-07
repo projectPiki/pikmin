@@ -1,14 +1,14 @@
 #ifndef _ZEN_OGFILESELECT_H
 #define _ZEN_OGFILESELECT_H
 
-#include "types.h"
-#include "zen/SpectrumCursorMgr.h"
+#include "Colour.h"
 #include "MemoryCard.h"
 #include "P2D/TextBox.h"
-#include "zen/ogSub.h"
-#include "stl/string.h"
 #include "Vector.h"
-#include "Colour.h"
+#include "stl/string.h"
+#include "types.h"
+#include "zen/SpectrumCursorMgr.h"
+#include "zen/ogSub.h"
 
 struct Controller;
 struct CardQuickInfo;

@@ -1,9 +1,9 @@
 #ifndef _TAIANIMATION_H
 #define _TAIANIMATION_H
 
-#include "types.h"
 #include "Animator.h"
 #include "teki.h"
+#include "types.h"
 
 /**
  * @brief TODO

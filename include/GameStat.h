@@ -1,8 +1,8 @@
 #ifndef _GAMESTAT_H
 #define _GAMESTAT_H
 
-#include "types.h"
 #include "Piki.h"
+#include "types.h"
 
 /**
  * @brief TODO

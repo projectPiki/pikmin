@@ -1,6 +1,6 @@
 #include "zen/MenuPanelMgr.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

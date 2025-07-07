@@ -1,10 +1,10 @@
 #ifndef _GAMECORESECTION_H
 #define _GAMECORESECTION_H
 
-#include "types.h"
-#include "Node.h"
 #include "Light.h"
+#include "Node.h"
 #include "VersionGroups.h"
+#include "types.h"
 
 struct Camera;
 struct Controller;

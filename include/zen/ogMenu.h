@@ -1,12 +1,12 @@
 #ifndef _ZEN_OGMENU_H
 #define _ZEN_OGMENU_H
 
-#include "types.h"
 #include "Colour.h"
-#include "Vector.h"
-#include "system.h"
-#include "nlib/Math.h"
 #include "P2D/Screen.h"
+#include "Vector.h"
+#include "nlib/Math.h"
+#include "system.h"
+#include "types.h"
 
 struct Controller;
 struct Graphics;

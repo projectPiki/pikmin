@@ -1,14 +1,14 @@
 #include "math.h"
 
-#include "Plane.h"
-#include "Camera.h"
-#include "Matrix3f.h"
-#include "stl/math.h"
-#include "Collision.h"
 #include "BoundBox.h"
-#include "KMath.h"
-#include "Graphics.h"
+#include "Camera.h"
+#include "Collision.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "KMath.h"
+#include "Matrix3f.h"
+#include "Plane.h"
+#include "stl/math.h"
 
 /*
  * --INFO--

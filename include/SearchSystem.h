@@ -1,9 +1,9 @@
 #ifndef _SEARCHSYSTEM_H
 #define _SEARCHSYSTEM_H
 
-#include "types.h"
-#include "Traversable.h"
 #include "ComplexCreature.h"
+#include "Traversable.h"
+#include "types.h"
 
 struct Creature;
 

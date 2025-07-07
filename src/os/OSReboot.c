@@ -1,5 +1,5 @@
-#include "Dolphin/os.h"
 #include "Dolphin/ai.h"
+#include "Dolphin/os.h"
 
 static volatile BOOL Prepared;
 

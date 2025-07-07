@@ -1,6 +1,6 @@
-#include "types.h"
 #include "math.h"
 #include "stl/math.h"
+#include "types.h"
 
 #define __HI(x) (((int*)&x)[0])
 #define __LO(x) (((int*)&x)[1])

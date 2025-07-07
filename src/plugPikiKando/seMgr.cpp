@@ -1,7 +1,7 @@
 #include "DebugLog.h"
+#include "SoundMgr.h"
 #include "jaudio/piki_player.h"
 #include "jaudio/verysimple.h"
-#include "SoundMgr.h"
 #include "stdio.h"
 #include "sysNew.h"
 #include "system.h"

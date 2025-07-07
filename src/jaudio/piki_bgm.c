@@ -1,13 +1,13 @@
 #include "jaudio/piki_bgm.h"
 
-#include "jaudio/aictrl.h"
-#include "jaudio/playercall.h"
-#include "jaudio/file_seq.h"
-#include "jaudio/seqsetup.h"
-#include "jaudio/interface.h"
-#include "jaudio/piki_scene.h"
-#include "jaudio/jammain_2.h"
 #include "Dolphin/os.h"
+#include "jaudio/aictrl.h"
+#include "jaudio/file_seq.h"
+#include "jaudio/interface.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/piki_scene.h"
+#include "jaudio/playercall.h"
+#include "jaudio/seqsetup.h"
 
 /**
  * @brief TODO

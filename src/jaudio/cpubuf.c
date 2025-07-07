@@ -1,7 +1,7 @@
 #include "jaudio/cpubuf.h"
-#include "jaudio/rate.h"
-#include "jaudio/aictrl.h"
 #include "Dolphin/os.h"
+#include "jaudio/aictrl.h"
+#include "jaudio/rate.h"
 
 static u8 write_buffer = 0;
 static u8 read_buffer  = 0;

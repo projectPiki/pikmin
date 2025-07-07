@@ -1,8 +1,8 @@
 #ifndef _CORENODE_H
 #define _CORENODE_H
 
-#include "types.h"
 #include "ANode.h"
+#include "types.h"
 
 struct AgeServer;
 

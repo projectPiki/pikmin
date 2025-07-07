@@ -1,10 +1,10 @@
+#include "DebugLog.h"
 #include "Generator.h"
 #include "OnePlayerSection.h"
-#include "gameflow.h"
 #include "Pellet.h"
 #include "PelletState.h"
+#include "gameflow.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

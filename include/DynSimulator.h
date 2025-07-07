@@ -1,11 +1,11 @@
 #ifndef _DYNAMICS_H
 #define _DYNAMICS_H
 
-#include "types.h"
-#include "Node.h"
-#include "Matrix3f.h"
 #include "BoundBox.h"
 #include "Collision.h"
+#include "Matrix3f.h"
+#include "Node.h"
+#include "types.h"
 
 struct Collision;
 struct CollGroup;

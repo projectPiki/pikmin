@@ -1,8 +1,8 @@
 #include "DynSimulator.h"
 #include "Collision.h"
-#include "Matrix3f.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "Matrix3f.h"
 
 /*
  * --INFO--

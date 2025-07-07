@@ -2,8 +2,8 @@
 
 #define DEBUG
 
-#include "Dolphin/os.h"
 #include "Dolphin/card.h"
+#include "Dolphin/os.h"
 #include "Dolphin/rand.h"
 #include "jaudio/ipldec.h"
 #include "mem.h"

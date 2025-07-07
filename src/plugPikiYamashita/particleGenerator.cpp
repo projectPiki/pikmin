@@ -1,7 +1,7 @@
-#include "zen/particle.h"
-#include "Matrix3f.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "Matrix3f.h"
+#include "zen/particle.h"
 
 /*
  * --INFO--

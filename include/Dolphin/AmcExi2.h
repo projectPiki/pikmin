@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_AMCEXI2_H
 #define _DOLPHIN_AMCEXI2_H
 
-#include "types.h"
 #include "Dolphin/os.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

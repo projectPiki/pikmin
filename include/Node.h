@@ -1,10 +1,10 @@
 #ifndef _NODE_H
 #define _NODE_H
 
-#include "types.h"
 #include "CoreNode.h"
 #include "Matrix4f.h"
 #include "SRT.h"
+#include "types.h"
 
 struct Graphics;
 struct Vector3f;

@@ -1,8 +1,8 @@
 #ifndef _ZEN_OGGRAPH_H
 #define _ZEN_OGGRAPH_H
 
-#include "types.h"
 #include "Piki.h"
+#include "types.h"
 
 struct Controller;
 struct Graphics;

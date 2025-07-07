@@ -1,5 +1,5 @@
-#include "PikiAI.h"
 #include "DebugLog.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--

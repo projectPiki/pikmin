@@ -1,10 +1,10 @@
 #ifndef _KUSAITEM_H
 #define _KUSAITEM_H
 
-#include "types.h"
-#include "ItemMgr.h"
-#include "CreatureProp.h"
 #include "Collision.h"
+#include "CreatureProp.h"
+#include "ItemMgr.h"
+#include "types.h"
 
 namespace zen {
 struct particleGenerator;

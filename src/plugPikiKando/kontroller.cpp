@@ -1,6 +1,6 @@
 #include "Kontroller.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "KIO.h"
 
 RamStream* controllerBuffer;

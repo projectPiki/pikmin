@@ -1,9 +1,9 @@
 #ifndef _DOLPHIN_GBA_H
 #define _DOLPHIN_GBA_H
 
-#include "Dolphin/os.h"
 #include "Dolphin/db.h"
 #include "Dolphin/dsp.h"
+#include "Dolphin/os.h"
 
 #ifdef __cplusplus
 extern "C" {

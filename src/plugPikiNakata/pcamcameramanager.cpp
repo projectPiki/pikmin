@@ -1,11 +1,11 @@
-#include "Pcam/CameraManager.h"
-#include "Pcam/Camera.h"
-#include "Pcam/MotionEvents.h"
-#include "Peve/Event.h"
-#include "Peve/Condition.h"
-#include "NaviMgr.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "NaviMgr.h"
+#include "Pcam/Camera.h"
+#include "Pcam/CameraManager.h"
+#include "Pcam/MotionEvents.h"
+#include "Peve/Condition.h"
+#include "Peve/Event.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

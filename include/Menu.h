@@ -1,12 +1,12 @@
 #ifndef _MENU_H
 #define _MENU_H
 
-#include "types.h"
-#include "Node.h"
-#include "Delegate.h"
 #include "Colour.h"
-#include "system.h"
+#include "Delegate.h"
 #include "Geometry.h"
+#include "Node.h"
+#include "system.h"
+#include "types.h"
 
 struct TimeSetting;
 struct Controller;

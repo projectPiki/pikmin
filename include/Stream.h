@@ -1,8 +1,8 @@
 #ifndef _STREAM_H
 #define _STREAM_H
 
-#include "types.h"
 #include "stl/mem.h"
+#include "types.h"
 
 /**
  * @brief TODO

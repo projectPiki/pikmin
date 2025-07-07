@@ -1,16 +1,16 @@
 #include "jaudio/piki_scene.h"
 
-#include "jaudio/piki_bgm.h"
-#include "jaudio/pikiinter.h"
-#include "jaudio/pikidemo.h"
-#include "jaudio/piki_player.h"
-#include "jaudio/waveread.h"
 #include "jaudio/aramcall.h"
+#include "jaudio/dvdthread.h"
 #include "jaudio/interface.h"
 #include "jaudio/jammain_2.h"
-#include "jaudio/verysimple.h"
-#include "jaudio/dvdthread.h"
+#include "jaudio/piki_bgm.h"
+#include "jaudio/piki_player.h"
+#include "jaudio/pikidemo.h"
+#include "jaudio/pikiinter.h"
 #include "jaudio/syncstream.h"
+#include "jaudio/verysimple.h"
+#include "jaudio/waveread.h"
 
 static u32 current_bgm;
 static u32 current_ready; // type

@@ -1,8 +1,8 @@
-#include "TAI/Amotion.h"
-#include "teki.h"
-#include "system.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "TAI/Amotion.h"
+#include "system.h"
+#include "teki.h"
 
 /*
  * --INFO--

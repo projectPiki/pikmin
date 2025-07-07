@@ -1,9 +1,9 @@
 #ifndef _ODOMETER_H
 #define _ODOMETER_H
 
-#include "types.h"
 #include "Vector.h"
 #include "system.h"
+#include "types.h"
 
 /**
  * @brief TODO

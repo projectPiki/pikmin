@@ -1,10 +1,10 @@
 #ifndef _ZEN_DRAWHURRYUP_H
 #define _ZEN_DRAWHURRYUP_H
 
-#include "types.h"
-#include "P2D/Screen.h"
 #include "P2D/Graph.h"
 #include "P2D/Picture.h"
+#include "P2D/Screen.h"
+#include "types.h"
 
 struct Graphics;
 

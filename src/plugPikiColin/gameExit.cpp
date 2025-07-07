@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "FlowController.h"
 #include "GameExitSection.h"
 #include "gameflow.h"
-#include "FlowController.h"
 #include "system.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

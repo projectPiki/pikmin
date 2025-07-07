@@ -1,7 +1,7 @@
 #include "PaniPikiAnimator.h"
-#include "sysNew.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

@@ -1,6 +1,6 @@
-#include "TAI/Otama.h"
-#include "TAI/Ajudge.h"
 #include "DebugLog.h"
+#include "TAI/Ajudge.h"
+#include "TAI/Otama.h"
 
 /*
  * --INFO--

@@ -116,10 +116,10 @@
  * to produce the hexadecimal values shown.
  */
 
-#include "types.h"
-#include "errno.h"
 #include "Dolphin/float.h"
+#include "errno.h"
 #include "fdlibm.h"
+#include "types.h"
 
 /*
  * --INFO--

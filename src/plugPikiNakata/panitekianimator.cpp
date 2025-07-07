@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "PaniAnimator.h"
 #include "sysNew.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

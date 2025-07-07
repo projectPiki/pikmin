@@ -1,8 +1,8 @@
 #ifndef _TAI_COLLISIONACTIONS_H
 #define _TAI_COLLISIONACTIONS_H
 
-#include "types.h"
 #include "TAI/Action.h"
+#include "types.h"
 
 /**
  * @brief TODO

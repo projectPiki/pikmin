@@ -1,8 +1,8 @@
 #ifndef _ZEN_OGSAVE_H
 #define _ZEN_OGSAVE_H
 
-#include "types.h"
 #include "MemoryCard.h"
+#include "types.h"
 
 struct Controller;
 struct Graphics;
@@ -69,7 +69,7 @@ struct ogSaveMgr {
 	P2DScreen* mBlackScreen;              // _24
 	P2DPicture* mBlackPicture;            // _28
 	DrawSaveFailure* mSaveFail;           // _2C
-	bool mFileChkSelected;                  // _30
+	bool mFileChkSelected;                // _30
 	u16 mDirectSaveState;                 // _32
 	P2DTextBox* mHeader0TextBox;          // _34
 	P2DTextBox* mHeader1TextBox;          // _38

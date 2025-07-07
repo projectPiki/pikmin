@@ -1,11 +1,11 @@
 #ifndef _LIFEGAUGE_H
 #define _LIFEGAUGE_H
 
-#include "types.h"
+#include "Colour.h"
 #include "CoreNode.h"
 #include "Material.h"
-#include "Colour.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Colour;
 struct Graphics;

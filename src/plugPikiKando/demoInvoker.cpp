@@ -1,14 +1,14 @@
+#include "DebugLog.h"
+#include "FlowController.h"
+#include "GoalItem.h"
+#include "ItemMgr.h"
 #include "Navi.h"
+#include "Pellet.h"
 #include "Piki.h"
+#include "PikiHeadItem.h"
 #include "PikiMgr.h"
 #include "PlayerState.h"
-#include "Pellet.h"
-#include "ItemMgr.h"
-#include "GoalItem.h"
 #include "gameflow.h"
-#include "PikiHeadItem.h"
-#include "FlowController.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

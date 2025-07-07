@@ -1,9 +1,9 @@
 #ifndef _JAUDIO_DVDTHREAD_H
 #define _JAUDIO_DVDTHREAD_H
 
-#include "types.h"
-#include "jaudio/audiostruct.h"
 #include "Dolphin/dvd.h"
+#include "jaudio/audiostruct.h"
+#include "types.h"
 
 /////////// JAUDIO DVD THREAD DEFINITIONS ///////////
 // Callback function types.

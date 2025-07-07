@@ -1,8 +1,8 @@
+#include "DebugLog.h"
+#include "nlib/Math.h"
+#include "sysNew.h"
 #include "zen/DrawCM.h"
 #include "zen/Number.h"
-#include "nlib/Math.h"
-#include "DebugLog.h"
-#include "sysNew.h"
 
 namespace zen {
 

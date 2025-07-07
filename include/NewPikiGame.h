@@ -1,13 +1,13 @@
 #ifndef _NEWPIKIGAME_H
 #define _NEWPIKIGAME_H
 
-#include "types.h"
+#include "Interface.h"
 #include "LifeGauge.h"
+#include "MapMgr.h"
 #include "MemStat.h"
 #include "Section.h"
-#include "MapMgr.h"
 #include "jaudio/piki_scene.h"
-#include "Interface.h"
+#include "types.h"
 
 /**
  * @brief TODO

@@ -1,9 +1,9 @@
 #ifndef _PLANTMGR_H
 #define _PLANTMGR_H
 
-#include "types.h"
 #include "CreatureNode.h"
 #include "SimpleAI.h"
+#include "types.h"
 
 struct MapMgr;
 

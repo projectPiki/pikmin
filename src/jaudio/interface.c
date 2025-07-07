@@ -4,8 +4,8 @@
 #include "jaudio/aictrl.h"
 #include "jaudio/piki_bgm.h"
 #include "jaudio/pikidemo.h"
-#include "jaudio/verysimple.h"
 #include "jaudio/pikiinter.h"
+#include "jaudio/verysimple.h"
 
 static int process_stack[4];
 
