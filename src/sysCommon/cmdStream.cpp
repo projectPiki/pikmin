@@ -1,9 +1,9 @@
 #include "CmdStream.h"
 
+#include "DebugLog.h"
 #include "stl/mem.h"
 #include "stl/string.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 u8* CmdStream::statbuff;
 

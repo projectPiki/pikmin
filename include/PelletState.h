@@ -1,9 +1,9 @@
 #ifndef _PELLETSTATE_H
 #define _PELLETSTATE_H
 
-#include "types.h"
 #include "StateMachine.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Pellet;
 

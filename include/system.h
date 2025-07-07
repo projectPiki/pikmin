@@ -1,18 +1,18 @@
 #ifndef _SYSTEM_H
 #define _SYSTEM_H
 
-#include "types.h"
 #include "Ayu.h"
-#include "GfxObject.h"
-#include "CoreNode.h"
-#include "Stream.h"
 #include "Controller.h"
-#include "Dolphin/dvd.h"
-#include "Dolphin/rand.h"
-#include "Dolphin/os.h"
-#include "Dolphin/ar.h"
+#include "CoreNode.h"
 #include "Delegate.h"
+#include "Dolphin/ar.h"
+#include "Dolphin/dvd.h"
+#include "Dolphin/os.h"
+#include "Dolphin/rand.h"
+#include "GfxObject.h"
+#include "Stream.h"
 #include "VersionGroups.h"
+#include "types.h"
 
 struct DGXGraphics;
 struct BaseApp;

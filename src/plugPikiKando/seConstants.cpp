@@ -1,6 +1,6 @@
-#include "SoundMgr.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "SoundMgr.h"
 
 /**
  * --INFO--

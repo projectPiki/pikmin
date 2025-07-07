@@ -1,8 +1,8 @@
 #ifndef _DAYMGR_H
 #define _DAYMGR_H
 
-#include "types.h"
 #include "Light.h"
+#include "types.h"
 
 struct CmdStream;
 struct Colour;

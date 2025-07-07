@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_AUDIOMESG_H
 #define _JAUDIO_AUDIOMESG_H
 
-#include "types.h"
 #include "jaudio/audiostruct.h"
+#include "types.h"
 
 typedef struct Jac_MessageQueue Jac_MessageQueue;
 

@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_DRIVERINTERFACE_H
 #define _JAUDIO_DRIVERINTERFACE_H
 
-#include "types.h"
 #include "jaudio/audiostruct.h"
+#include "types.h"
 
 /////////// JAUDIO DRIVER INTERFACE DEFINITIONS ///////////
 // Global functions (all C++, so no extern C wrap).

@@ -1,5 +1,5 @@
-#include "Dolphin/os.h"
 #include "Dolphin/dvd.h"
+#include "Dolphin/os.h"
 
 struct bb2struct {
 	u32 _00;

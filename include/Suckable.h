@@ -1,8 +1,8 @@
 #ifndef _SUCKABLE_H
 #define _SUCKABLE_H
 
-#include "types.h"
 #include "ItemMgr.h"
+#include "types.h"
 
 /**
  * @brief TODO

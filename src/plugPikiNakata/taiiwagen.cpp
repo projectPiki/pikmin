@@ -1,15 +1,15 @@
-#include "TAI/Iwagen.h"
+#include "DebugLog.h"
+#include "MapCode.h"
 #include "SoundMgr.h"
-#include "teki.h"
+#include "TAI/AttackActions.h"
+#include "TAI/BasicActions.h"
+#include "TAI/CollisionActions.h"
+#include "TAI/EffectActions.h"
+#include "TAI/Iwagen.h"
 #include "TAI/MoveActions.h"
 #include "TAI/ReactionActions.h"
-#include "TAI/EffectActions.h"
-#include "TAI/BasicActions.h"
 #include "TAI/TimerActions.h"
-#include "TAI/CollisionActions.h"
-#include "TAI/AttackActions.h"
-#include "MapCode.h"
-#include "DebugLog.h"
+#include "teki.h"
 
 /*
  * --INFO--

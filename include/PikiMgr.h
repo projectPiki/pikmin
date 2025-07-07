@@ -1,10 +1,10 @@
 #ifndef _PIKIMGR_H
 #define _PIKIMGR_H
 
-#include "types.h"
-#include "ObjectMgr.h"
 #include "CreatureProp.h"
+#include "ObjectMgr.h"
 #include "ViewPiki.h"
+#include "types.h"
 
 struct Navi;
 struct CPlate;

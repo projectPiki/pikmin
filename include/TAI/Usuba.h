@@ -1,15 +1,15 @@
 #ifndef _TAI_USUBA_H
 #define _TAI_USUBA_H
 
-#include "types.h"
-#include "TAI/Areaction.h"
+#include "PaniAnimator.h"
 #include "TAI/Aattack.h"
 #include "TAI/Amove.h"
-#include "TekiParameters.h"
 #include "TAI/Animation.h"
+#include "TAI/Areaction.h"
+#include "TekiParameters.h"
 #include "YaiStrategy.h"
+#include "types.h"
 #include "zen/CallBack.h"
-#include "PaniAnimator.h"
 
 /////////// Usuba (Unused Enemy) AI Actions ///////////
 

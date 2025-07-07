@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_SYNCSTREAM_H
 #define _JAUDIO_SYNCSTREAM_H
 
-#include "types.h"
 #include "jaudio/dspinterface.h"
+#include "types.h"
 
 typedef struct dspch_ dspch_;
 typedef struct DSPchannel_ DSPchannel_;

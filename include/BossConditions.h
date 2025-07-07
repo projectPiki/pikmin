@@ -1,9 +1,9 @@
 #ifndef _BOSSCONDITIONS_H
 #define _BOSSCONDITIONS_H
 
-#include "types.h"
 #include "Condition.h"
 #include "ID32.h"
+#include "types.h"
 
 /**
  * @brief TODO

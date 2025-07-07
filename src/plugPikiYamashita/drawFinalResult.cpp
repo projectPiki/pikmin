@@ -1,11 +1,11 @@
 #include "zen/DrawFinalResult.h"
-#include "zen/ogSub.h"
-#include "zen/EffectMgr2D.h"
-#include "nlib/Math.h"
+#include "DebugLog.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
+#include "nlib/Math.h"
 #include "sysNew.h"
-#include "DebugLog.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

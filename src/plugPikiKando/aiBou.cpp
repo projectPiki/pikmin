@@ -1,6 +1,6 @@
-#include "PikiAI.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--

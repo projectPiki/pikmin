@@ -1,10 +1,10 @@
 #ifndef _DUALCREATURE_H
 #define _DUALCREATURE_H
 
-#include "types.h"
-#include "DynCreature.h"
 #include "Collision.h"
+#include "DynCreature.h"
 #include "PaniAnimator.h"
+#include "types.h"
 
 struct ItemShapeObject;
 struct MapMgr;

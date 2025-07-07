@@ -1,8 +1,8 @@
-#include "types.h"
-#include "stdarg.h"
-#include "ctype.h"
-#include "stdio.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/stdio_api.h"
+#include "ctype.h"
+#include "stdarg.h"
+#include "stdio.h"
+#include "types.h"
 
 typedef s64 intmax_t;
 

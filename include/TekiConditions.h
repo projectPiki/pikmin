@@ -1,9 +1,9 @@
 #ifndef _TEKICONDITION_H
 #define _TEKICONDITION_H
 
-#include "types.h"
 #include "Condition.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Teki;
 

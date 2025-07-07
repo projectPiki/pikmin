@@ -1,15 +1,15 @@
 #ifndef _TAI_HIBAA_H
 #define _TAI_HIBAA_H
 
-#include "types.h"
+#include "MapMgr.h"
+#include "PaniAnimator.h"
+#include "TAI/Animation.h"
 #include "TAI/Areaction.h"
 #include "TAI/EffectAttack.h"
 #include "TekiParameters.h"
-#include "TAI/Animation.h"
 #include "YaiStrategy.h"
+#include "types.h"
 #include "zen/CallBack.h"
-#include "PaniAnimator.h"
-#include "MapMgr.h"
 
 /////////// Fire Geyser AI Actions ///////////
 

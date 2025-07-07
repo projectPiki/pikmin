@@ -1,8 +1,8 @@
 #include "jaudio/aramcall.h"
 
-#include "jaudio/heapctrl.h"
 #include "jaudio/dummyrom.h"
 #include "jaudio/dvdthread.h"
+#include "jaudio/heapctrl.h"
 
 #include "stl/string.h"
 

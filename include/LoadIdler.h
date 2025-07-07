@@ -1,8 +1,8 @@
 #ifndef _LOADIDLER_H
 #define _LOADIDLER_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 struct Graphics;
 

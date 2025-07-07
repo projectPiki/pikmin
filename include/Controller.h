@@ -1,8 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "types.h"
 #include "Node.h"
+#include "types.h"
 
 /**
  * @brief TODO

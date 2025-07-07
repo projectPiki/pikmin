@@ -1,5 +1,5 @@
-#include "Event.h"
 #include "DebugLog.h"
+#include "Event.h"
 
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 

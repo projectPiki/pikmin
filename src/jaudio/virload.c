@@ -1,7 +1,7 @@
 #include "jaudio/virload.h"
 
-#include "jaudio/dvdthread.h"
 #include "jaudio/aictrl.h"
+#include "jaudio/dvdthread.h"
 
 #include "stl/string.h"
 

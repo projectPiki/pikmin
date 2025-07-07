@@ -1,9 +1,9 @@
-#include "TAI/JudgementActions.h"
-#include "teki.h"
+#include "DebugLog.h"
 #include "NaviMgr.h"
 #include "Stickers.h"
+#include "TAI/JudgementActions.h"
 #include "TekiConditions.h"
-#include "DebugLog.h"
+#include "teki.h"
 
 /*
  * --INFO--

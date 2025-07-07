@@ -1,10 +1,10 @@
 #include "jaudio/noteon.h"
 
 #include "jaudio/audiostruct.h"
-#include "jaudio/jammain_2.h"
-#include "jaudio/oneshot.h"
 #include "jaudio/connect.h"
 #include "jaudio/driverinterface.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/oneshot.h"
 
 /*
  * --INFO--

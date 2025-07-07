@@ -1,11 +1,11 @@
 #include "jaudio/driverinterface.h"
 
-#include "jaudio/dspinterface.h"
-#include "jaudio/audiostruct.h"
-#include "jaudio/dspdriver.h"
-#include "jaudio/ja_calc.h"
-#include "jaudio/bankdrv.h"
 #include "jaudio/aictrl.h"
+#include "jaudio/audiostruct.h"
+#include "jaudio/bankdrv.h"
+#include "jaudio/dspdriver.h"
+#include "jaudio/dspinterface.h"
+#include "jaudio/ja_calc.h"
 
 #define CHANNEL_SIZE (0x100)
 

@@ -1,8 +1,8 @@
 #ifndef _TAI_MESSAGEACTIONS_H
 #define _TAI_MESSAGEACTIONS_H
 
-#include "types.h"
 #include "TAI/Action.h"
+#include "types.h"
 
 /**
  * @brief TODO

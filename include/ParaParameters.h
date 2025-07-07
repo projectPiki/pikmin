@@ -1,8 +1,8 @@
 #ifndef _PARAPARAMETERS_H
 #define _PARAPARAMETERS_H
 
-#include "types.h"
 #include "sysNew.h"
+#include "types.h"
 
 struct Stream;
 

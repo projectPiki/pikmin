@@ -1,11 +1,11 @@
 #ifndef _ITEMMGR_H
 #define _ITEMMGR_H
 
-#include "types.h"
 #include "AICreature.h"
-#include "ObjectMgr.h"
 #include "CreatureNode.h"
+#include "ObjectMgr.h"
 #include "SimpleAI.h"
+#include "types.h"
 
 struct BuildingItemProp;
 struct GoalAI;

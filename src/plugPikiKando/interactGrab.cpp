@@ -1,6 +1,6 @@
 #include "Creature.h"
-#include "Interactions.h"
 #include "DebugLog.h"
+#include "Interactions.h"
 
 /*
  * --INFO--

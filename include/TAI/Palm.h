@@ -1,11 +1,11 @@
 #ifndef _TAI_PALM_H
 #define _TAI_PALM_H
 
-#include "types.h"
+#include "PaniAnimator.h"
 #include "TAI/MotionActions.h"
 #include "TAI/ReactionActions.h"
 #include "TekiParameters.h"
-#include "PaniAnimator.h"
+#include "types.h"
 
 /////////// Pellet Posy AI Actions ///////////
 

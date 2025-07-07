@@ -1,10 +1,10 @@
 #ifndef _TAI_OTIMOTI_H
 #define _TAI_OTIMOTI_H
 
-#include "types.h"
+#include "PaniAnimator.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
-#include "PaniAnimator.h"
+#include "types.h"
 
 /////////// Frog (Yellow and White) AI Actions ///////////
 

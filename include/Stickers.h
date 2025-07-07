@@ -1,8 +1,8 @@
 #ifndef _STICKERS_H
 #define _STICKERS_H
 
-#include "types.h"
 #include "Traversable.h"
+#include "types.h"
 
 /**
  * @brief TODO

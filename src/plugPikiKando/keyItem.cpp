@@ -1,9 +1,9 @@
 #include "KeyItem.h"
-#include "DoorItem.h"
 #include "DebugLog.h"
+#include "DoorItem.h"
+#include "Font.h"
 #include "Graphics.h"
 #include "MapMgr.h"
-#include "Font.h"
 
 /*
  * --INFO--

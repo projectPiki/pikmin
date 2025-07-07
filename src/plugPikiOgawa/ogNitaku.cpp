@@ -1,9 +1,9 @@
 #include "zen/ogNitaku.h"
-#include "zen/TextColorCallBack.h"
+#include "DebugLog.h"
 #include "P2D/Screen.h"
 #include "SoundMgr.h"
 #include "sysNew.h"
-#include "DebugLog.h"
+#include "zen/TextColorCallBack.h"
 
 /*
  * --INFO--

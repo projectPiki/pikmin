@@ -1,10 +1,10 @@
 #ifndef _SEEDITEM_H
 #define _SEEDITEM_H
 
-#include "types.h"
 #include "Creature.h"
 #include "CreatureProp.h"
 #include "Interactions.h"
+#include "types.h"
 
 struct Shape;
 

@@ -1,9 +1,9 @@
 #ifndef _KEYITEM_H
 #define _KEYITEM_H
 
-#include "types.h"
 #include "Creature.h"
 #include "CreatureProp.h"
+#include "types.h"
 
 struct Shape;
 

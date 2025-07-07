@@ -1,8 +1,8 @@
-#include "Generator.h"
-#include "sysNew.h"
 #include "Actor.h"
 #include "Age.h"
 #include "DebugLog.h"
+#include "Generator.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

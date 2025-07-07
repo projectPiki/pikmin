@@ -1,9 +1,9 @@
+#include "DebugLog.h"
 #include "Interactions.h"
 #include "Msg.h"
 #include "Piki.h"
 #include "PikiAI.h"
 #include "PikiState.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

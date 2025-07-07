@@ -1,11 +1,11 @@
+#include "CmdStream.h"
+#include "DebugLog.h"
 #include "Light.h"
 #include "Matrix4f.h"
-#include "CmdStream.h"
 #include "Shape.h"
 #include "stl/stdio.h"
 #include "stl/string.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

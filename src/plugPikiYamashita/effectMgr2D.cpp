@@ -1,7 +1,7 @@
 #include "zen/EffectMgr2D.h"
-#include "nlib/Math.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_OS_OSRESET_H
 #define _DOLPHIN_OS_OSRESET_H
 
-#include "types.h"
 #include "Dolphin/OS/OSContext.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

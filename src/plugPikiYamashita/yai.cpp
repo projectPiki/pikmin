@@ -1,8 +1,8 @@
-#include "YaiStrategy.h"
-#include "teki.h"
-#include "TAI/Action.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "TAI/Action.h"
+#include "YaiStrategy.h"
+#include "sysNew.h"
+#include "teki.h"
 
 /*
  * --INFO--

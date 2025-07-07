@@ -1,8 +1,8 @@
 #ifndef _SECTION_H
 #define _SECTION_H
 
-#include "types.h"
 #include "Node.h"
+#include "types.h"
 
 struct Controller;
 struct ModeState;

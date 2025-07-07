@@ -1,7 +1,7 @@
-#include "Slime.h"
-#include "Dolphin/os.h"
-#include "system.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Slime.h"
+#include "system.h"
 
 /*
  * --INFO--

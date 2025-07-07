@@ -1,9 +1,9 @@
 #ifndef _PEVE_CONDITION_H
 #define _PEVE_CONDITION_H
 
-#include "types.h"
 #include "nlib/Node.h"
 #include "nlib/System.h"
+#include "types.h"
 
 struct NVector3fIO;
 

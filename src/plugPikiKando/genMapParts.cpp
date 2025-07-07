@@ -1,10 +1,10 @@
-#include "Generator.h"
-#include "MapMgr.h"
-#include "DebugLog.h"
-#include "Graphics.h"
-#include "sysNew.h"
 #include "Age.h"
+#include "DebugLog.h"
+#include "Generator.h"
 #include "GlobalShape.h"
+#include "Graphics.h"
+#include "MapMgr.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

@@ -1,7 +1,7 @@
 #include "sysNew.h"
 
-#include "MemStat.h"
 #include "DebugLog.h"
+#include "MemStat.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
-#include "Slime.h"
-#include "Shape.h"
-#include "Graphics.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "Shape.h"
+#include "Slime.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

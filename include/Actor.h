@@ -1,12 +1,12 @@
 #ifndef _ACTOR_H
 #define _ACTOR_H
 
-#include "types.h"
-#include "ObjectMgr.h"
 #include "AICreature.h"
 #include "Graphics.h"
 #include "MapMgr.h"
+#include "ObjectMgr.h"
 #include "Piki.h"
+#include "types.h"
 
 struct SimpleAI;
 

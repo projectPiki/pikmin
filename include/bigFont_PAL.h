@@ -1,7 +1,8 @@
 #ifndef _BIGFONTPAL_H
 #define _BIGFONTPAL_H
 
-// This file is WAY too big to justify having multiple versions of the font in one header, so make sure this one is only included in PAL builds
+// This file is WAY too big to justify having multiple versions of the font in one header, so make sure this one is only included in PAL
+// builds
 
 #include "types.h"
 

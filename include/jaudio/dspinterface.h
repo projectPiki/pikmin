@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_DSPINTERFACE_H
 #define _JAUDIO_DSPINTERFACE_H
 
-#include "types.h"
 #include "jaudio/audiostruct.h"
+#include "types.h"
 
 typedef struct DSPMixerChannel DSPMixerChannel;
 typedef struct DSPchannel_ DSPchannel_;

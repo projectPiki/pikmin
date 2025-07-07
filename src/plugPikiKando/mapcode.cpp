@@ -1,7 +1,7 @@
 #include "MapCode.h"
 
-#include "math.h"
 #include "Collision.h"
+#include "math.h"
 
 /*
  * --INFO--

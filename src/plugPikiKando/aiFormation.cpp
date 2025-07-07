@@ -1,7 +1,7 @@
-#include "PikiAI.h"
+#include "DebugLog.h"
 #include "FormationMgr.h"
 #include "Navi.h"
-#include "DebugLog.h"
+#include "PikiAI.h"
 
 /*
  * --INFO--

@@ -1,5 +1,5 @@
-#include "zen/TextColorCallBack.h"
 #include "DebugLog.h"
+#include "zen/TextColorCallBack.h"
 
 /*
  * --INFO--

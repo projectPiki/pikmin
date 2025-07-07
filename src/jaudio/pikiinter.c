@@ -1,14 +1,14 @@
 #include "jaudio/pikiinter.h"
 
-#include "jaudio/jammain_2.h"
 #include "jaudio/cmdqueue.h"
 #include "jaudio/cmdstack.h"
+#include "jaudio/filter3d.h"
 #include "jaudio/interface.h"
+#include "jaudio/jammain_2.h"
+#include "jaudio/piki_bgm.h"
 #include "jaudio/piki_player.h"
 #include "jaudio/pikidemo.h"
 #include "jaudio/verysimple.h"
-#include "jaudio/piki_bgm.h"
-#include "jaudio/filter3d.h"
 
 // rename better later
 typedef struct SEvent_UnkC {

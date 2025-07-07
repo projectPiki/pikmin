@@ -1,9 +1,9 @@
 #ifndef _STL_STRING_H
 #define _STL_STRING_H
 
-#include "types.h"
-#include "mem.h"
 #include "extras.h"
+#include "mem.h"
+#include "types.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -1,9 +1,9 @@
 #include "Creature.h"
+#include "DebugLog.h"
 #include "EffectMgr.h"
+#include "KEffect.h"
 #include "Matrix3f.h"
 #include "zen/Math.h"
-#include "DebugLog.h"
-#include "KEffect.h"
 
 /*
  * --INFO--
@@ -95,9 +95,9 @@ void SlimeEffect::kill()
 	}
 }
 
-#include "UtEffect.h"
 #include "NaviMgr.h"
 #include "NaviWhistle.h"
+#include "UtEffect.h"
 UtEffectMgr* utEffectMgr;
 KEffect** UtEffectMgr::effects;
 

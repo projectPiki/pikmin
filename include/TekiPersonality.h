@@ -1,10 +1,10 @@
 #ifndef _TEKIPERSONALITY_H
 #define _TEKIPERSONALITY_H
 
-#include "types.h"
-#include "Vector.h"
 #include "ID32.h"
 #include "ParaParameters.h"
+#include "Vector.h"
+#include "types.h"
 
 struct RandomAccessStream;
 struct ParaMultiParameters;

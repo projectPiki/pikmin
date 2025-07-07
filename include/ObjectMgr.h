@@ -1,9 +1,9 @@
 #ifndef _OBJECTMGR_H
 #define _OBJECTMGR_H
 
-#include "types.h"
-#include "Traversable.h"
 #include "Node.h"
+#include "Traversable.h"
+#include "types.h"
 
 struct Condition;
 struct Texture;

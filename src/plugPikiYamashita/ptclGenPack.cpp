@@ -1,6 +1,6 @@
-#include "zen/particle.h"
-#include "Vector.h"
 #include "DebugLog.h"
+#include "Vector.h"
+#include "zen/particle.h"
 
 /*
  * --INFO--

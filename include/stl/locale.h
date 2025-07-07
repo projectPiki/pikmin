@@ -1,8 +1,8 @@
 #ifndef _LOCALE_H
 #define _LOCALE_H
 
-#include "types.h"
 #include "stdlib.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

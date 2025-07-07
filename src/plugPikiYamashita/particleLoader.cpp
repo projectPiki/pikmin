@@ -1,5 +1,5 @@
-#include "zen/particle.h"
 #include "DebugLog.h"
+#include "zen/particle.h"
 
 /*
  * --INFO--

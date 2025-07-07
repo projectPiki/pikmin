@@ -1,9 +1,9 @@
 #ifndef _MSG_H
 #define _MSG_H
 
-#include "types.h"
 #include "Collision.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Creature;
 struct PaniAnimKeyEvent;

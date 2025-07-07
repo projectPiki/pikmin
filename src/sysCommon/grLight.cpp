@@ -1,6 +1,6 @@
-#include "Light.h"
 #include "Camera.h"
 #include "DebugLog.h"
+#include "Light.h"
 
 /*
  * --INFO--

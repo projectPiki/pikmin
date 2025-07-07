@@ -1,9 +1,9 @@
 #ifndef _MOVIEPLAYER_H
 #define _MOVIEPLAYER_H
 
-#include "types.h"
-#include "CoreNode.h"
 #include "CinematicPlayer.h"
+#include "CoreNode.h"
+#include "types.h"
 
 struct Creature;
 struct Graphics;

@@ -1,7 +1,7 @@
-#include "TAI/MessageActions.h"
-#include "Dolphin/os.h"
-#include "teki.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "TAI/MessageActions.h"
+#include "teki.h"
 
 /*
  * --INFO--

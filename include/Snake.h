@@ -1,9 +1,9 @@
 #ifndef _SNAKE_H
 #define _SNAKE_H
 
-#include "types.h"
 #include "Boss.h"
 #include "Collision.h"
+#include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

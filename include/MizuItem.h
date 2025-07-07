@@ -1,9 +1,9 @@
 #ifndef _MIZUITEM_H
 #define _MIZUITEM_H
 
-#include "types.h"
-#include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "ItemMgr.h"
+#include "types.h"
 
 struct SimpleAI;
 

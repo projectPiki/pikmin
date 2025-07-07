@@ -1,6 +1,6 @@
-#include "ResultFlags.h"
 #include "DebugLog.h"
 #include "PlayerState.h"
+#include "ResultFlags.h"
 #include "sysNew.h"
 
 /*

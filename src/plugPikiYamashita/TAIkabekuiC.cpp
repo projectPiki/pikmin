@@ -1,5 +1,5 @@
-#include "TAI/KabekuiC.h"
 #include "DebugLog.h"
+#include "TAI/KabekuiC.h"
 
 /*
  * --INFO--

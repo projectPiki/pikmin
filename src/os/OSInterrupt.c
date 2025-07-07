@@ -1,5 +1,5 @@
-#include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/os.h"
 
 ASM static void ExternalInterruptHandler(register __OSException exception, register OSContext* context);
 

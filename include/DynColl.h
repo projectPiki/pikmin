@@ -1,9 +1,9 @@
 #ifndef _DYNCOLL_H
 #define _DYNCOLL_H
 
-#include "types.h"
-#include "Node.h"
 #include "BoundBox.h"
+#include "Node.h"
+#include "types.h"
 
 struct Creature;
 struct MapAnimShapeObject;

@@ -1,8 +1,8 @@
 #include "MizuItem.h"
-#include "SimpleAI.h"
-#include "ItemAI.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "ItemAI.h"
+#include "SimpleAI.h"
 
 /*
  * --INFO--

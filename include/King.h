@@ -1,14 +1,14 @@
 #ifndef _KING_H
 #define _KING_H
 
-#include "types.h"
 #include "Boss.h"
-#include "zen/CallBack.h"
-#include "zen/particle.h"
 #include "CreatureCollPart.h"
 #include "EffectMgr.h"
 #include "GlobalGameOptions.h"
 #include "MapMgr.h"
+#include "types.h"
+#include "zen/CallBack.h"
+#include "zen/particle.h"
 
 #define KING_PROP         (static_cast<KingProp*>(mProps)->mKingProps)
 #define C_KING_PROP(king) (static_cast<KingProp*>((king)->mProps)->mKingProps)

@@ -1,9 +1,9 @@
 #ifndef _PCAM_MOTIONEVENTS_H
 #define _PCAM_MOTIONEVENTS_H
 
-#include "types.h"
-#include "Peve/MotionEvents.h"
 #include "Peve/IO.h"
+#include "Peve/MotionEvents.h"
+#include "types.h"
 
 struct PcamCamera;
 

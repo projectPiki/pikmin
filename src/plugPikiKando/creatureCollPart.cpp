@@ -1,9 +1,9 @@
 #include "CreatureCollPart.h"
+#include "DebugLog.h"
 #include "Dolphin/os.h"
-#include "Shape.h"
 #include "Graphics.h"
 #include "MapMgr.h"
-#include "DebugLog.h"
+#include "Shape.h"
 
 /*
  * --INFO--

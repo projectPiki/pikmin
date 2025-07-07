@@ -1,9 +1,9 @@
 #ifndef _WIN_H
 #define _WIN_H
 
-#include "types.h"
 #include "Colour.h"
 #include "CoreNode.h"
+#include "types.h"
 
 struct Graphics;
 struct RectArea;

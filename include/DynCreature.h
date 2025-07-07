@@ -1,9 +1,9 @@
 #ifndef _DYNCREATURE_H
 #define _DYNCREATURE_H
 
-#include "types.h"
 #include "Creature.h"
 #include "Matrix4f.h"
+#include "types.h"
 
 struct DynParticle;
 

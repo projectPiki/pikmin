@@ -1,10 +1,10 @@
 #ifndef _TAI_MIZINKO_H
 #define _TAI_MIZINKO_H
 
-#include "types.h"
+#include "PaniAnimator.h"
 #include "TAI/TimerActions.h"
 #include "TekiParameters.h"
-#include "PaniAnimator.h"
+#include "types.h"
 
 /////////// Honeywisp Spawner AI Actions ///////////
 

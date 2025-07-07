@@ -1,14 +1,14 @@
 #ifndef _P2D_PANE_H
 #define _P2D_PANE_H
 
-#include "types.h"
-#include "zen/CallBack.h"
+#include "Delegate.h"
+#include "Matrix4f.h"
+#include "P2D/Util.h"
 #include "PSU/Tree.h"
 #include "PUT/Geometry.h"
 #include "Vector.h"
-#include "Matrix4f.h"
-#include "P2D/Util.h"
-#include "Delegate.h"
+#include "types.h"
+#include "zen/CallBack.h"
 
 struct P2DGrafContext;
 struct P2DPane;

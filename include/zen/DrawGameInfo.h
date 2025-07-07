@@ -1,15 +1,15 @@
 #ifndef _ZEN_DRAWGAMEINFO_H
 #define _ZEN_DRAWGAMEINFO_H
 
-#include "types.h"
+#include "P2D/Graph.h"
 #include "P2D/Pane.h"
 #include "P2D/Screen.h"
-#include "P2D/Graph.h"
-#include "zen/Number.h"
+#include "nlib/Math.h"
+#include "system.h"
+#include "types.h"
 #include "zen/DamageEffect.h"
 #include "zen/DrawCommon.h"
-#include "system.h"
-#include "nlib/Math.h"
+#include "zen/Number.h"
 
 struct Graphics;
 struct P2DPerspGraph;

@@ -1,10 +1,10 @@
 #include "zen/DrawMenu.h"
-#include "zen/Math.h"
+#include "DebugLog.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
-#include "DebugLog.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

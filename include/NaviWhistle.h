@@ -1,9 +1,9 @@
 #ifndef _NAVIWHISTLE_H
 #define _NAVIWHISTLE_H
 
-#include "types.h"
-#include "UtEffect.h"
 #include "Navi.h"
+#include "UtEffect.h"
+#include "types.h"
 
 // NB: had to split this out from UtEffect.h to prevent include looping
 

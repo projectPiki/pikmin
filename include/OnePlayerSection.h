@@ -1,10 +1,10 @@
 #ifndef _ONEPLAYERSECTION_H
 #define _ONEPLAYERSECTION_H
 
-#include "types.h"
-#include "Section.h"
 #include "BaseInf.h"
 #include "GlobalGameOptions.h"
+#include "Section.h"
+#include "types.h"
 
 struct CmdStream;
 

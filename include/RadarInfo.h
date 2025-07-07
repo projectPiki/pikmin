@@ -1,8 +1,8 @@
 #ifndef _RADARINFO_H
 #define _RADARINFO_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 struct Creature;
 struct Vector3f;

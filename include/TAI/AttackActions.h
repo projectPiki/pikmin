@@ -1,8 +1,8 @@
 #ifndef _TAI_ATTACKACTIONS_H
 #define _TAI_ATTACKACTIONS_H
 
-#include "types.h"
 #include "TAI/MotionActions.h"
+#include "types.h"
 
 /**
  * @brief TODO

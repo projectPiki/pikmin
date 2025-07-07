@@ -1,10 +1,10 @@
 #include "zen/SpectrumCursorMgr.h"
-#include "zen/Math.h"
-#include "zen/DrawCommon.h"
-#include "nlib/Math.h"
-#include "P2D/Pane.h"
 #include "DebugLog.h"
+#include "P2D/Pane.h"
+#include "nlib/Math.h"
 #include "sysNew.h"
+#include "zen/DrawCommon.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

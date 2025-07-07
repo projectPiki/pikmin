@@ -1,11 +1,11 @@
 #ifndef _JOINT_H
 #define _JOINT_H
 
-#include "types.h"
-#include "CoreNode.h"
-#include "Vector.h"
-#include "Matrix4f.h"
 #include "BoundBox.h"
+#include "CoreNode.h"
+#include "Matrix4f.h"
+#include "Vector.h"
+#include "types.h"
 
 struct AnimContext;
 struct Material;

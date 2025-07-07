@@ -1,8 +1,8 @@
 #ifndef _FONT_H
 #define _FONT_H
 
-#include "types.h"
 #include "Geometry.h"
+#include "types.h"
 
 struct Texture;
 

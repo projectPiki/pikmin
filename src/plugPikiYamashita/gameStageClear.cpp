@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "GameStageClearSection.h"
 #include "system.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

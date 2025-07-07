@@ -1,15 +1,15 @@
 #include "zen/ogFileSelect.h"
-#include "zen/EffectMgr2D.h"
-#include "zen/DrawCommon.h"
-#include "zen/ogNitaku.h"
-#include "P2D/Graph.h"
-#include "jaudio/verysimple.h"
 #include "DebugLog.h"
 #include "Graphics.h"
-#include "gameflow.h"
+#include "P2D/Graph.h"
 #include "SoundMgr.h"
-#include "sysNew.h"
 #include "VersionGroups.h"
+#include "gameflow.h"
+#include "jaudio/verysimple.h"
+#include "sysNew.h"
+#include "zen/DrawCommon.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/ogNitaku.h"
 
 /*
  * --INFO--

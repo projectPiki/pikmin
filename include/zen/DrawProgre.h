@@ -1,9 +1,9 @@
 #ifndef _ZEN_DRAWPROGRE_H
 #define _ZEN_DRAWPROGRE_H
 
+#include "SoundMgr.h"
 #include "types.h"
 #include "zen/DrawMenu.h"
-#include "SoundMgr.h"
 
 struct Controller;
 struct Graphics;

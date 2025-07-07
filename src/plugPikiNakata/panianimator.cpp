@@ -1,7 +1,7 @@
 #include "PaniAnimator.h"
-#include "sysNew.h"
-#include "nlib/System.h"
 #include "DebugLog.h"
+#include "nlib/System.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

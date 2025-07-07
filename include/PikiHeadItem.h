@@ -1,11 +1,11 @@
 #ifndef _PIKIHEADITEM_H
 #define _PIKIHEADITEM_H
 
-#include "types.h"
-#include "ItemMgr.h"
 #include "CreatureProp.h"
+#include "ItemMgr.h"
 #include "SimpleAI.h"
 #include "UtEffect.h"
+#include "types.h"
 
 struct InteractBikkuri;
 struct InteractSwallow;

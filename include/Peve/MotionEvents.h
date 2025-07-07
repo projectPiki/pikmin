@@ -1,11 +1,11 @@
 #ifndef _PEVE_MOTIONEVENTS_H
 #define _PEVE_MOTIONEVENTS_H
 
-#include "types.h"
 #include "Peve/Event.h"
-#include "nlib/Spline.h"
-#include "nlib/Geometry.h"
 #include "Peve/IO.h"
+#include "nlib/Geometry.h"
+#include "nlib/Spline.h"
+#include "types.h"
 
 struct NFunction3D;
 struct NPosture3DIO;

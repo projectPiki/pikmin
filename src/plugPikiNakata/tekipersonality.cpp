@@ -1,9 +1,9 @@
 #include "TekiPersonality.h"
-#include "sysNew.h"
 #include "Age.h"
-#include "Pellet.h"
-#include "ParaParameters.h"
 #include "DebugLog.h"
+#include "ParaParameters.h"
+#include "Pellet.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

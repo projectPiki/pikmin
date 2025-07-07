@@ -1,14 +1,14 @@
 #include "jaudio/oneshot.h"
-#include "jaudio/bankdrv.h"
 #include "jaudio/audiostruct.h"
-#include "jaudio/driverinterface.h"
-#include "jaudio/tables.h"
+#include "jaudio/bankdrv.h"
 #include "jaudio/bankread.h"
-#include "jaudio/waveread.h"
+#include "jaudio/bx.h"
 #include "jaudio/connect.h"
+#include "jaudio/driverinterface.h"
 #include "jaudio/dspdriver.h"
 #include "jaudio/rate.h"
-#include "jaudio/bx.h"
+#include "jaudio/tables.h"
+#include "jaudio/waveread.h"
 
 static int Jesus1Shot_Update(jc_*, JCSTATUS);
 

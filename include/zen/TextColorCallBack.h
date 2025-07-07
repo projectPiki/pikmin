@@ -1,9 +1,9 @@
 #ifndef _ZEN_OGGRAPH_H
 #define _ZEN_OGGRAPH_H
 
+#include "P2D/TextBox.h"
 #include "types.h"
 #include "zen/Math.h"
-#include "P2D/TextBox.h"
 
 struct Colour;
 

@@ -1,8 +1,8 @@
-#include "TAI/EffectActions.h"
-#include "teki.h"
+#include "DebugLog.h"
 #include "Dolphin/os.h"
 #include "EffectMgr.h"
-#include "DebugLog.h"
+#include "TAI/EffectActions.h"
+#include "teki.h"
 
 /*
  * --INFO--

@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "NaviMgr.h"
 #include "PikiAI.h"
 #include "teki.h"
-#include "NaviMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

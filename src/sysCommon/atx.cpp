@@ -1,7 +1,7 @@
 #include "AtxStream.h"
 
-#include "system.h"
 #include "DebugLog.h"
+#include "system.h"
 
 /*
  * --INFO--

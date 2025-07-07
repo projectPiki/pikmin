@@ -1,8 +1,8 @@
-#include "nlib/System.h"
-#include "nlib/Node.h"
-#include "sysNew.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "nlib/Node.h"
+#include "nlib/System.h"
+#include "sysNew.h"
 
 System* NSystem::system;
 

@@ -2,8 +2,8 @@
 #define _ZEN_DRAWHISCORE_H
 
 #include "types.h"
-#include "zen/DrawCM.h"
 #include "zen/AlphaWipe.h"
+#include "zen/DrawCM.h"
 
 struct Graphics;
 struct Controller;

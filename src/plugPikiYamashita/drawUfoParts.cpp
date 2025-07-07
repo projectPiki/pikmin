@@ -1,9 +1,9 @@
 #include "zen/DrawUfoParts.h"
-#include "P2D/TextBox.h"
-#include "SoundMgr.h"
 #include "Graphics.h"
-#include "PlayerState.h"
+#include "P2D/TextBox.h"
 #include "Pellet.h"
+#include "PlayerState.h"
+#include "SoundMgr.h"
 #include "sysNew.h"
 
 /*

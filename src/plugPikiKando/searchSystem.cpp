@@ -1,13 +1,13 @@
 #include "SearchSystem.h"
 #include "AIPerf.h"
-#include "NaviMgr.h"
-#include "ItemMgr.h"
-#include "teki.h"
 #include "Boss.h"
+#include "DebugLog.h"
+#include "ItemMgr.h"
+#include "NaviMgr.h"
+#include "Pellet.h"
 #include "PikiMgr.h"
 #include "PlantMgr.h"
-#include "Pellet.h"
-#include "DebugLog.h"
+#include "teki.h"
 
 /*
  * --INFO--

@@ -1,7 +1,7 @@
 #include "zen/AlphaWipe.h"
-#include "zen/Math.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "zen/Math.h"
 
 /*
  * --INFO--

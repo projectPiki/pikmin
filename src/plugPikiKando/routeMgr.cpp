@@ -1,15 +1,15 @@
-#include "Route.h"
 #include "Colour.h"
-#include "MapMgr.h"
-#include "MapCode.h"
-#include "ItemMgr.h"
-#include "GoalItem.h"
-#include "UfoItem.h"
-#include "Graphics.h"
+#include "DebugLog.h"
 #include "Font.h"
+#include "GoalItem.h"
+#include "Graphics.h"
+#include "ItemMgr.h"
+#include "MapCode.h"
+#include "MapMgr.h"
+#include "Route.h"
+#include "UfoItem.h"
 #include "UtilityKando.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

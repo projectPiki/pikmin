@@ -1,10 +1,10 @@
 #ifndef _DEMO_H
 #define _DEMO_H
 
-#include "types.h"
+#include "GlobalGameOptions.h"
 #include "Node.h"
 #include "Parameters.h"
-#include "GlobalGameOptions.h"
+#include "types.h"
 
 struct Creature;
 

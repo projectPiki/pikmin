@@ -1,14 +1,14 @@
 #ifndef _PIKI_H
 #define _PIKI_H
 
-#include "types.h"
 #include "Creature.h"
+#include "GlobalGameOptions.h"
+#include "OdoMeter.h"
 #include "PaniPikiAnimator.h"
+#include "Route.h"
 #include "StateMachine.h"
 #include "UtEffect.h"
-#include "OdoMeter.h"
-#include "GlobalGameOptions.h"
-#include "Route.h"
+#include "types.h"
 
 #define PIKI_PROP()       static_cast<PikiProp*>(mProps)->mPikiParms
 #define C_PIKI_PROP(piki) static_cast<PikiProp*>(piki->mProps)->mPikiParms

@@ -1,10 +1,10 @@
 #ifndef _TAI_IWAGEN_H
 #define _TAI_IWAGEN_H
 
-#include "types.h"
+#include "PaniAnimator.h"
 #include "TAI/Action.h"
 #include "TekiParameters.h"
-#include "PaniAnimator.h"
+#include "types.h"
 
 /////////// Rock AI Actions ///////////
 

@@ -1,5 +1,5 @@
-#include "PaniPikiAnimator.h"
 #include "DebugLog.h"
+#include "PaniPikiAnimator.h"
 
 PaniMotionTable* PaniPikiAnimMgr::motionTable;
 

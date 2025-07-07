@@ -1,8 +1,8 @@
 #ifndef _FLOWCONTROLLER_H
 #define _FLOWCONTROLLER_H
 
-#include "types.h"
 #include "OnePlayerSection.h"
+#include "types.h"
 
 struct StageInfo;
 struct Navi;

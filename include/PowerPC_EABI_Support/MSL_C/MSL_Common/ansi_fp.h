@@ -1,11 +1,11 @@
 #ifndef _MSL_C_ANSI_FP_H
 #define _MSL_C_ANSI_FP_H
 
-#include "types.h"
-#include "stl/math.h"
-#include "float.h"
-#include "fdlibm.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/math_api.h"
+#include "fdlibm.h"
+#include "float.h"
+#include "stl/math.h"
+#include "types.h"
 
 #define SIGDIGLEN 36
 

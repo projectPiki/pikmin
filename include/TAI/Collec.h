@@ -1,12 +1,12 @@
 #ifndef _TAI_COLLEC_H
 #define _TAI_COLLEC_H
 
-#include "types.h"
-#include "TAI/TimerActions.h"
-#include "TAI/MotionActions.h"
-#include "TAI/EffectActions.h"
-#include "TekiParameters.h"
 #include "PaniAnimator.h"
+#include "TAI/EffectActions.h"
+#include "TAI/MotionActions.h"
+#include "TAI/TimerActions.h"
+#include "TekiParameters.h"
+#include "types.h"
 
 struct NVector3f;
 

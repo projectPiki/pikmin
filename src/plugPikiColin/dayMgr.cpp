@@ -1,12 +1,12 @@
-#include "Menu.h"
 #include "DayMgr.h"
-#include "Graphics.h"
-#include "sysNew.h"
-#include "gameflow.h"
-#include "MapMgr.h"
-#include "NaviMgr.h"
-#include "DebugLog.h"
 #include "Controller.h"
+#include "DebugLog.h"
+#include "Graphics.h"
+#include "MapMgr.h"
+#include "Menu.h"
+#include "NaviMgr.h"
+#include "gameflow.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

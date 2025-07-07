@@ -1,8 +1,8 @@
 #ifndef _NLIB_GEOMETRY3D_H
 #define _NLIB_GEOMETRY3D_H
 
-#include "types.h"
 #include "nlib/Geometry.h"
+#include "types.h"
 
 struct NSegment;
 struct Plane;

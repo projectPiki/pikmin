@@ -1,15 +1,15 @@
 #include "jaudio/jammain_2.h"
 
-#include "jaudio/oneshot.h"
-#include "jaudio/jamosc.h"
-#include "jaudio/seqsetup.h"
-#include "jaudio/fat.h"
-#include "jaudio/noteon.h"
-#include "jaudio/rate.h"
-#include "jaudio/random.h"
-#include "jaudio/centcalc.h"
 #include "jaudio/bankdrv.h"
+#include "jaudio/centcalc.h"
 #include "jaudio/driverinterface.h"
+#include "jaudio/fat.h"
+#include "jaudio/jamosc.h"
+#include "jaudio/noteon.h"
+#include "jaudio/oneshot.h"
+#include "jaudio/random.h"
+#include "jaudio/rate.h"
+#include "jaudio/seqsetup.h"
 
 #include "Dolphin/OS/OSError.h"
 

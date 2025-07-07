@@ -1,10 +1,10 @@
 #ifndef _P2D_GRAPH_H
 #define _P2D_GRAPH_H
 
-#include "types.h"
-#include "PUT/Geometry.h"
-#include "Matrix4f.h"
 #include "Colour.h"
+#include "Matrix4f.h"
+#include "PUT/Geometry.h"
+#include "types.h"
 
 /**
  * @brief TODO

@@ -1,10 +1,10 @@
 #ifndef _ZEN_OGTEST_H
 #define _ZEN_OGTEST_H
 
-#include "types.h"
-#include "Section.h"
 #include "Camera.h"
+#include "Section.h"
 #include "VersionGroups.h"
+#include "types.h"
 
 struct Font;
 

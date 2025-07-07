@@ -1,7 +1,7 @@
 #include "Snake.h"
+#include "DebugLog.h"
 #include "Graphics.h"
 #include "Shape.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

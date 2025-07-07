@@ -1,8 +1,8 @@
-#include "GemItem.h"
-#include "DebugLog.h"
 #include "BaseInf.h"
-#include "Stickers.h"
+#include "DebugLog.h"
 #include "EffectMgr.h"
+#include "GemItem.h"
+#include "Stickers.h"
 
 // theres a lot more to this
 GemTable table[5] = {

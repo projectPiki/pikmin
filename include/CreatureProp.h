@@ -1,9 +1,9 @@
 #ifndef _CREATUREPROP_H
 #define _CREATUREPROP_H
 
-#include "types.h"
-#include "Parameters.h"
 #include "Ayu.h"
+#include "Parameters.h"
+#include "types.h"
 
 /**
  * @brief TODO

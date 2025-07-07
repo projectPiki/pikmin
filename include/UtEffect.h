@@ -1,12 +1,12 @@
 #ifndef _UTEFFECT_H
 #define _UTEFFECT_H
 
-#include "types.h"
-#include "KEffect.h"
-#include "EffectMgr.h"
 #include "Collision.h"
+#include "EffectMgr.h"
+#include "KEffect.h"
 #include "MapMgr.h"
 #include "Matrix3f.h"
+#include "types.h"
 #include "zen/Math.h"
 
 struct Navi;

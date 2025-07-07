@@ -1,14 +1,14 @@
 #ifndef _NAVI_H
 #define _NAVI_H
 
-#include "types.h"
 #include "Creature.h"
+#include "MapMgr.h"
 #include "Node.h"
 #include "PaniAnimator.h"
 #include "PaniPikiAnimator.h"
 #include "PelletView.h"
-#include "MapMgr.h"
 #include "Piki.h"
+#include "types.h"
 
 struct CPlate;
 struct BurnEffect;

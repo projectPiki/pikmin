@@ -1,10 +1,10 @@
 #ifndef _ZEN_EFFECTMGR2D_H
 #define _ZEN_EFFECTMGR2D_H
 
+#include "Camera.h"
 #include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
-#include "Camera.h"
 
 /**
  * @brief TODO

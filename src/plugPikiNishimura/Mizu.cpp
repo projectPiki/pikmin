@@ -1,9 +1,9 @@
 #include "Mizu.h"
 #include "Collision.h"
+#include "DebugLog.h"
 #include "EffectMgr.h"
 #include "Graphics.h"
 #include "Shape.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #include "Controller.h"
 
-#include "system.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "system.h"
 
 /*
  * --INFO--

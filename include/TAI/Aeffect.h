@@ -1,10 +1,10 @@
 #ifndef _TAI_AEFFECT_H
 #define _TAI_AEFFECT_H
 
-#include "types.h"
-#include "TAI/Action.h"
 #include "EffectMgr.h"
 #include "SoundID.h"
+#include "TAI/Action.h"
+#include "types.h"
 
 struct Vector3f;
 struct CollPart;

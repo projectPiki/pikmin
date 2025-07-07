@@ -1,8 +1,8 @@
 #ifndef _KMATH_H
 #define _KMATH_H
 
-#include "types.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Matrix4f;
 

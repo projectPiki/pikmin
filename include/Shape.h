@@ -1,20 +1,20 @@
 #ifndef _SHAPE_H
 #define _SHAPE_H
 
-#include "types.h"
-#include "Node.h"
-#include "Stream.h"
-#include "Colour.h"
-#include "Material.h"
-#include "Texture.h"
-#include "Collision.h"
-#include "Matrix4f.h"
-#include "GfxObject.h"
-#include "BoundBox.h"
-#include "Joint.h"
 #include "Animator.h"
+#include "BoundBox.h"
+#include "Collision.h"
+#include "Colour.h"
+#include "GfxObject.h"
+#include "Joint.h"
 #include "Light.h"
+#include "Material.h"
+#include "Matrix4f.h"
+#include "Node.h"
 #include "Route.h"
+#include "Stream.h"
+#include "Texture.h"
+#include "types.h"
 
 template <typename A, typename B>
 struct IDelegate2;

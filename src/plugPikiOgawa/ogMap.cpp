@@ -1,11 +1,11 @@
 #include "zen/ogMap.h"
-#include "zen/ogSub.h"
+#include "DebugLog.h"
+#include "P2D/Graph.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
-#include "P2D/Graph.h"
 #include "std/Math.h"
 #include "sysNew.h"
-#include "DebugLog.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

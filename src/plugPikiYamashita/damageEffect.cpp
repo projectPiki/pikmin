@@ -1,7 +1,7 @@
 #include "zen/DamageEffect.h"
+#include "Graphics.h"
 #include "NaviMgr.h"
 #include "gameflow.h"
-#include "Graphics.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #include "teki.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "Peve/MotionEvents.h"
 #include "sysNew.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

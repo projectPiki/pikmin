@@ -1,11 +1,11 @@
 #ifndef _POM_H
 #define _POM_H
 
-#include "types.h"
 #include "Boss.h"
+#include "Shape.h"
+#include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
-#include "Shape.h"
 
 struct PomAi;
 struct PomGenOpenStarCallBack;

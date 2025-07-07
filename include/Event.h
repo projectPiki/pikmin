@@ -1,8 +1,8 @@
 #ifndef _EVENT_H
 #define _EVENT_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 /**
  * @brief TODO

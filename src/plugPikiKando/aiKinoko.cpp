@@ -1,9 +1,9 @@
-#include "PikiAI.h"
+#include "DebugLog.h"
+#include "Interactions.h"
 #include "Navi.h"
 #include "NaviMgr.h"
-#include "Interactions.h"
+#include "PikiAI.h"
 #include "SoundMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

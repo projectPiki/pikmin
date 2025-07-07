@@ -1,8 +1,8 @@
 #ifndef _PLANE_H
 #define _PLANE_H
 
-#include "types.h"
 #include "Vector.h"
+#include "types.h"
 
 /**
  * @brief TODO

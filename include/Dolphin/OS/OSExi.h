@@ -1,10 +1,10 @@
 #ifndef _DOLPHIN_EXI_H
 #define _DOLPHIN_EXI_H
 
-#include "types.h"
 #include "Dolphin/OS/OSExpansion.h"
 #include "Dolphin/OS/OSInterrupt.h"
 #include "Dolphin/hw_regs.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

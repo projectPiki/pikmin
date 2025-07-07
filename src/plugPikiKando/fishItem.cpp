@@ -1,9 +1,9 @@
 #include "FishItem.h"
-#include "Graphics.h"
-#include "UtilityKando.h"
-#include "MapMgr.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Graphics.h"
+#include "MapMgr.h"
+#include "UtilityKando.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

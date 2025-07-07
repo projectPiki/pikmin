@@ -1,8 +1,8 @@
 #ifndef _DYNPARTICLE_H
 #define _DYNPARTICLE_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 /**
  * @brief TODO

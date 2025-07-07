@@ -1,8 +1,8 @@
 #ifndef _GEOMETRY_H
 #define _GEOMETRY_H
 
-#include "types.h"
 #include "Vector.h"
+#include "types.h"
 
 struct Sphere;
 

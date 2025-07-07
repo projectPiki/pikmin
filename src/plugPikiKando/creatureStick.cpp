@@ -1,13 +1,13 @@
-#include "Creature.h"
-#include "Iterator.h"
-#include "Stickers.h"
-#include "Interactions.h"
-#include "KMath.h"
 #include "Collision.h"
-#include "RopeCreature.h"
 #include "Condition.h"
-#include "Pellet.h"
+#include "Creature.h"
 #include "DebugLog.h"
+#include "Interactions.h"
+#include "Iterator.h"
+#include "KMath.h"
+#include "Pellet.h"
+#include "RopeCreature.h"
+#include "Stickers.h"
 
 /*
  * --INFO--

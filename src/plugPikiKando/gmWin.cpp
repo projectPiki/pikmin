@@ -1,10 +1,10 @@
+#include "DebugLog.h"
 #include "Font.h"
 #include "Geometry.h"
 #include "Graphics.h"
 #include "Matrix4f.h"
 #include "Vector.h"
 #include "Win.h"
-#include "DebugLog.h"
 
 static Texture* wintex;
 static Font* font;

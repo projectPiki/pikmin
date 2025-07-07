@@ -1,9 +1,9 @@
 #ifndef _P2D_STREAM_H
 #define _P2D_STREAM_H
 
+#include "Colour.h"
 #include "types.h"
 #include <Stream.h>
-#include "Colour.h"
 
 struct Colour;
 

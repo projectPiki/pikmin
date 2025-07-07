@@ -1,12 +1,12 @@
 #ifndef _P2D_PICTURE_H
 #define _P2D_PICTURE_H
 
-#include "types.h"
+#include "Colour.h"
+#include "Dolphin/gx.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
-#include "Dolphin/gx.h"
 #include "Texture.h"
-#include "Colour.h"
+#include "types.h"
 
 struct Texture;
 

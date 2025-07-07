@@ -1,9 +1,9 @@
 #include "jaudio/bankdrv.h"
 
-#include "jaudio/random.h"
-#include "jaudio/rate.h"
 #include "jaudio/bx.h"
 #include "jaudio/ja_calc.h"
+#include "jaudio/random.h"
+#include "jaudio/rate.h"
 
 static u32 FORCE_RELEASE_TABLE[3] = { 5, 15, 0 };
 

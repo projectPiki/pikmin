@@ -1,11 +1,11 @@
 #ifndef _TAI_SWALLOW_H
 #define _TAI_SWALLOW_H
 
-#include "types.h"
-#include "TAI/MotionActions.h"
-#include "TAI/EffectActions.h"
-#include "TekiParameters.h"
 #include "PaniAnimator.h"
+#include "TAI/EffectActions.h"
+#include "TAI/MotionActions.h"
+#include "TekiParameters.h"
+#include "types.h"
 
 /////////// (Big) Bulborb AI Actions ///////////
 

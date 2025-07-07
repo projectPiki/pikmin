@@ -1,7 +1,7 @@
-#include "Piki.h"
-#include "PikiState.h"
 #include "Collision.h"
 #include "DebugLog.h"
+#include "Piki.h"
+#include "PikiState.h"
 
 /*
  * --INFO--

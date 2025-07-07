@@ -1,21 +1,21 @@
 #ifndef _TAI_MIURIN_H
 #define _TAI_MIURIN_H
 
-#include "types.h"
-#include "TAI/Aattack.h"
-#include "TAI/Areaction.h"
-#include "TAI/Ajudge.h"
-#include "TAI/Amove.h"
-#include "TAI/EffectAttack.h"
-#include "TekiParameters.h"
-#include "TAI/Animation.h"
+#include "NaviMgr.h"
+#include "PaniAnimator.h"
 #include "Pcam/CameraManager.h"
 #include "RumbleMgr.h"
-#include "YaiStrategy.h"
-#include "NaviMgr.h"
 #include "SoundMgr.h"
+#include "TAI/Aattack.h"
+#include "TAI/Ajudge.h"
+#include "TAI/Amove.h"
+#include "TAI/Animation.h"
+#include "TAI/Areaction.h"
+#include "TAI/EffectAttack.h"
+#include "TekiParameters.h"
+#include "YaiStrategy.h"
+#include "types.h"
 #include "zen/CallBack.h"
-#include "PaniAnimator.h"
 
 struct CollPart;
 

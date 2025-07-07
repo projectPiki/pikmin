@@ -1,9 +1,9 @@
-#include "TAI/Tamago.h"
+#include "DebugLog.h"
+#include "SoundMgr.h"
 #include "TAI/Amove.h"
+#include "TAI/Tamago.h"
 #include "teki.h"
 #include "zen/Math.h"
-#include "SoundMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

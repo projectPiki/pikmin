@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "TAI/CollisionActions.h"
 #include "teki.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

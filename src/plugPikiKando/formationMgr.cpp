@@ -1,8 +1,8 @@
 #include "FormationMgr.h"
+#include "DebugLog.h"
+#include "GlobalShape.h"
 #include "Graphics.h"
 #include "system.h"
-#include "GlobalShape.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

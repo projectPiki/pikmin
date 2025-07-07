@@ -1,10 +1,10 @@
+#include "DebugLog.h"
+#include "NaviMgr.h"
+#include "PikiMgr.h"
 #include "TAI/Ajudge.h"
+#include "TekiConditions.h"
 #include "WorkObject.h"
 #include "teki.h"
-#include "TekiConditions.h"
-#include "PikiMgr.h"
-#include "NaviMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

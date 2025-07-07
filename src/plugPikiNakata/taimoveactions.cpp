@@ -1,9 +1,9 @@
-#include "TAI/MoveActions.h"
-#include "Peve/MotionEvents.h"
-#include "teki.h"
-#include "PikiMgr.h"
-#include "TekiConditions.h"
 #include "DebugLog.h"
+#include "Peve/MotionEvents.h"
+#include "PikiMgr.h"
+#include "TAI/MoveActions.h"
+#include "TekiConditions.h"
+#include "teki.h"
 
 /*
  * --INFO--

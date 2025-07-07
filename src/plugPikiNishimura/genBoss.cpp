@@ -1,9 +1,9 @@
-#include "Generator.h"
-#include "Boss.h"
-#include "sysNew.h"
 #include "Age.h"
-#include "Pellet.h"
+#include "Boss.h"
 #include "DebugLog.h"
+#include "Generator.h"
+#include "Pellet.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

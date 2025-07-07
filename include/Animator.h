@@ -1,18 +1,18 @@
 #ifndef _ANIMATOR_H
 #define _ANIMATOR_H
 
-#include "types.h"
-#include "CoreNode.h"
-#include "Stream.h"
-#include "SRT.h"
-#include "Matrix4f.h"
-#include "GfxObject.h"
-#include "Parameters.h"
 #include "Ayu.h"
+#include "CmdStream.h"
+#include "CoreNode.h"
+#include "GfxObject.h"
+#include "Matrix4f.h"
+#include "Parameters.h"
+#include "SRT.h"
+#include "Stream.h"
 #include "String.h"
 #include "Texture.h"
-#include "CmdStream.h"
 #include "system.h"
+#include "types.h"
 
 struct AnimMgr;
 struct BaseShape;

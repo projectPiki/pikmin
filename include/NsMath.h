@@ -1,9 +1,9 @@
 #ifndef _NSMATH_H
 #define _NSMATH_H
 
-#include "types.h"
 #include "Vector.h"
 #include "system.h"
+#include "types.h"
 
 namespace NsCalculation {
 void calcLagrange(f32, const Vector3f*, Vector3f&);

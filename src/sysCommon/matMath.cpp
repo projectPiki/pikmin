@@ -1,7 +1,7 @@
 #include "Matrix4f.h"
 
-#include "Vector.h"
 #include "SRT.h"
+#include "Vector.h"
 #include "VersionGroups.h"
 
 f32 sintable[0x1000];

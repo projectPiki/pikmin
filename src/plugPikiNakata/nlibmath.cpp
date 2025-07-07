@@ -1,5 +1,5 @@
-#include "nlib/Math.h"
 #include "DebugLog.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--

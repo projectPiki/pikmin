@@ -1,14 +1,14 @@
 #include "zen/DrawCommon.h"
-#include "zen/Number.h"
-#include "zen/ogSub.h"
-#include "zen/Math.h"
+#include "DebugLog.h"
 #include "P2D/Graph.h"
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
 #include "P2D/Window.h"
 #include "PSU/Tree.h"
-#include "DebugLog.h"
 #include "sysNew.h"
+#include "zen/Math.h"
+#include "zen/Number.h"
+#include "zen/ogSub.h"
 
 /*
  * --INFO--

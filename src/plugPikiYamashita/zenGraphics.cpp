@@ -1,9 +1,9 @@
+#include "Colour.h"
+#include "Dolphin/gx.h"
+#include "NaviMgr.h"
+#include "nlib/Math.h"
 #include "zen/Graphics.h"
 #include "zen/Math.h"
-#include "nlib/Math.h"
-#include "Colour.h"
-#include "NaviMgr.h"
-#include "Dolphin/gx.h"
 
 const f32 zen::DrawLifeCircle::TRI_NUM = 128.0f;
 

@@ -1,8 +1,8 @@
 #ifndef _ITEMAI_H
 #define _ITEMAI_H
 
-#include "types.h"
 #include "SimpleAI.h"
+#include "types.h"
 
 /**
  * @brief TODO

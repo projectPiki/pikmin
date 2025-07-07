@@ -1,11 +1,11 @@
 #include "Kogane.h"
 #include "Collision.h"
+#include "DebugLog.h"
 #include "Graphics.h"
-#include "Shape.h"
 #include "Piki.h"
 #include "PikiState.h"
+#include "Shape.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,7 +1,7 @@
-#include "nlib/Graphics.h"
-#include "nlib/Math.h"
 #include "Camera.h"
 #include "DebugLog.h"
+#include "nlib/Graphics.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--

@@ -1,11 +1,11 @@
 #include "Pom.h"
 #include "Collision.h"
-#include "Piki.h"
-#include "NsMath.h"
+#include "DebugLog.h"
 #include "Graphics.h"
+#include "NsMath.h"
+#include "Piki.h"
 #include "Shape.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

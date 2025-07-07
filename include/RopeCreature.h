@@ -1,9 +1,9 @@
 #ifndef _ROPECREATURE_H
 #define _ROPECREATURE_H
 
-#include "types.h"
 #include "Creature.h"
 #include "CreatureProp.h"
+#include "types.h"
 
 struct Shape;
 

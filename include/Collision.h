@@ -1,13 +1,13 @@
 #ifndef _COLLISION_H
 #define _COLLISION_H
 
-#include "types.h"
 #include "CoreNode.h"
-#include "Vector.h"
-#include "GfxObject.h"
 #include "Geometry.h"
-#include "Plane.h"
+#include "GfxObject.h"
 #include "Matrix4f.h"
+#include "Plane.h"
+#include "Vector.h"
+#include "types.h"
 
 struct CmdStream;
 struct Creature;

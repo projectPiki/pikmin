@@ -1,13 +1,13 @@
 #ifndef _GENERATOR_H
 #define _GENERATOR_H
 
-#include "types.h"
-#include "Node.h"
 #include "Actor.h"
-#include "Parameters.h"
 #include "Ayu.h"
-#include "Vector.h"
 #include "ID32.h"
+#include "Node.h"
+#include "Parameters.h"
+#include "Vector.h"
+#include "types.h"
 
 #define GENCACHE_HEAP_SIZE (0x6C00)
 

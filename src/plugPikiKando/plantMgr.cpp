@@ -1,14 +1,14 @@
 #include "PlantMgr.h"
+#include "Age.h"
+#include "CreatureProp.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "Generator.h"
 #include "Graphics.h"
-#include "gameflow.h"
-#include "CreatureProp.h"
-#include "Dolphin/os.h"
-#include "SoundMgr.h"
 #include "MapMgr.h"
+#include "SoundMgr.h"
+#include "gameflow.h"
 #include "sysNew.h"
-#include "Age.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

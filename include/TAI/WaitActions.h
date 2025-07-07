@@ -1,8 +1,8 @@
 #ifndef _TAI_WAITACTIONS_H
 #define _TAI_WAITACTIONS_H
 
-#include "types.h"
 #include "TAI/MotionActions.h"
+#include "types.h"
 
 /**
  * @brief TODO

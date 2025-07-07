@@ -1,18 +1,18 @@
 #ifndef _TAI_TAMAGO_H
 #define _TAI_TAMAGO_H
 
-#include "types.h"
-#include "TAI/Aattack.h"
-#include "TAI/Areaction.h"
-#include "TAI/EffectAttack.h"
-#include "TekiParameters.h"
-#include "TAI/Animation.h"
-#include "YaiStrategy.h"
-#include "zen/CallBack.h"
+#include "PaniAnimator.h"
 #include "Pcam/CameraManager.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
-#include "PaniAnimator.h"
+#include "TAI/Aattack.h"
+#include "TAI/Animation.h"
+#include "TAI/Areaction.h"
+#include "TAI/EffectAttack.h"
+#include "TekiParameters.h"
+#include "YaiStrategy.h"
+#include "types.h"
+#include "zen/CallBack.h"
 #include "zen/Math.h"
 
 /////////// Giant Egg AI Actions ///////////

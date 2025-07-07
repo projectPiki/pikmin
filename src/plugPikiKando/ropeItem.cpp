@@ -1,7 +1,7 @@
-#include "RopeCreature.h"
+#include "DebugLog.h"
 #include "Dolphin/os.h"
 #include "ItemMgr.h"
-#include "DebugLog.h"
+#include "RopeCreature.h"
 
 /*
  * --INFO--

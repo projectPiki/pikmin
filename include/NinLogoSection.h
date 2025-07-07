@@ -1,9 +1,9 @@
 #ifndef _NINLOGOSECTION_H
 #define _NINLOGOSECTION_H
 
-#include "types.h"
-#include "Section.h"
 #include "Controller.h"
+#include "Section.h"
+#include "types.h"
 
 struct Menu;
 

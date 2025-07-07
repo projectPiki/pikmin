@@ -1,6 +1,6 @@
-#include "types.h"
-#include "Dolphin/os.h"
 #include "Dolphin/PPCArch.h"
+#include "Dolphin/os.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

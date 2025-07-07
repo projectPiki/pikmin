@@ -1,7 +1,7 @@
 #include "CoreNucleus.h"
-#include "Slime.h"
-#include "EffectMgr.h"
 #include "DebugLog.h"
+#include "EffectMgr.h"
+#include "Slime.h"
 
 /*
  * --INFO--

@@ -1,12 +1,12 @@
 #ifndef _PIKIAI_H
 #define _PIKIAI_H
 
-#include "types.h"
 #include "PaniAnimator.h"
 #include "Piki.h"
 #include "Receiver.h"
 #include "SlotChangeListner.h"
 #include "stl/stdio.h"
+#include "types.h"
 
 struct BombGenItem;
 struct Bridge;

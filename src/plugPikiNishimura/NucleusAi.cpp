@@ -1,7 +1,7 @@
+#include "DebugLog.h"
+#include "EffectMgr.h"
 #include "Nucleus.h"
 #include "Slime.h"
-#include "EffectMgr.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_MEMORY_H
 #define _JAUDIO_MEMORY_H
 
-#include "types.h"
 #include "jaudio/audiostruct.h"
+#include "types.h"
 
 // Global functions:
 void* Nas_HeapAlloc(ALHeap*, s32);

@@ -1,8 +1,8 @@
 #ifndef _STDIO_H
 #define _STDIO_H
 
-#include "types.h"
 #include "stl/stdarg.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

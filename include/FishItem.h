@@ -1,8 +1,8 @@
 #ifndef _FISHITEM_H
 #define _FISHITEM_H
 
-#include "types.h"
 #include "ItemMgr.h"
+#include "types.h"
 
 /**
  * @brief

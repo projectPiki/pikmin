@@ -1,24 +1,24 @@
 #ifndef _TAI_BEATLE_H
 #define _TAI_BEATLE_H
 
-#include "types.h"
+#include "PaniAnimator.h"
+#include "Pcam/CameraManager.h"
+#include "PikiMgr.h"
+#include "PlayerState.h"
+#include "RumbleMgr.h"
+#include "SoundID.h"
 #include "TAI/Aattack.h"
-#include "TAI/Amove.h"
-#include "TAI/Areaction.h"
 #include "TAI/Ajudge.h"
+#include "TAI/Amove.h"
+#include "TAI/Animation.h"
+#include "TAI/Areaction.h"
 #include "TAI/EffectAttack.h"
 #include "TekiParameters.h"
-#include "TAI/Animation.h"
 #include "YaiStrategy.h"
+#include "iterator.h"
+#include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
-#include "PaniAnimator.h"
-#include "SoundID.h"
-#include "PlayerState.h"
-#include "iterator.h"
-#include "PikiMgr.h"
-#include "Pcam/CameraManager.h"
-#include "RumbleMgr.h"
 
 /////////// Armored Cannon Beetle AI Actions ///////////
 

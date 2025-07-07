@@ -1,16 +1,16 @@
 #ifndef _GAMEFLOW_H
 #define _GAMEFLOW_H
 
-#include "types.h"
-#include "Node.h"
-#include "MemoryCard.h"
+#include "Ayu.h"
+#include "GlobalGameOptions.h"
 #include "LoadIdler.h"
+#include "MemoryCard.h"
+#include "Node.h"
+#include "OnePlayerSection.h"
 #include "Parameters.h"
 #include "String.h"
-#include "OnePlayerSection.h"
 #include "WorldClock.h"
-#include "GlobalGameOptions.h"
-#include "Ayu.h"
+#include "types.h"
 
 struct AnimFrameCacher;
 struct BaseApp;

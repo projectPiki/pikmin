@@ -2,7 +2,7 @@
 
 BasedOnStyle: WebKit
 ColumnLimit: 140
-SortIncludes: false
+SortIncludes: true
 
 IndentWidth: 4
 TabWidth: 4

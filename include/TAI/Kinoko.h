@@ -1,10 +1,10 @@
 #ifndef _TAI_KINOKO_H
 #define _TAI_KINOKO_H
 
-#include "types.h"
+#include "PaniAnimator.h"
 #include "TAI/EffectActions.h"
 #include "TekiParameters.h"
-#include "PaniAnimator.h"
+#include "types.h"
 
 /////////// Puffstool AI Actions ///////////
 

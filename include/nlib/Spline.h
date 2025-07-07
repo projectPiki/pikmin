@@ -1,10 +1,10 @@
 #ifndef _NLIB_SPLINE_H
 #define _NLIB_SPLINE_H
 
-#include "types.h"
-#include "nlib/Geometry3D.h"
 #include "nlib/Array.h"
 #include "nlib/Function.h"
+#include "nlib/Geometry3D.h"
+#include "types.h"
 
 struct NPolynomialFunction;
 struct NPosture3D;

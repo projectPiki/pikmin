@@ -1,10 +1,10 @@
-#include "BossConditions.h"
 #include "Boss.h"
+#include "BossConditions.h"
 #include "Collision.h"
-#include "NsMath.h"
-#include "Dolphin/os.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "NsMath.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

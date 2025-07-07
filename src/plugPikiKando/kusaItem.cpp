@@ -1,12 +1,12 @@
 #include "KusaItem.h"
-#include "MapMgr.h"
-#include "Graphics.h"
-#include "SoundMgr.h"
-#include "EffectMgr.h"
-#include "Dolphin/os.h"
-#include "sysNew.h"
-#include "Interactions.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "EffectMgr.h"
+#include "Graphics.h"
+#include "Interactions.h"
+#include "MapMgr.h"
+#include "SoundMgr.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

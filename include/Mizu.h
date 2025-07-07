@@ -1,8 +1,8 @@
 #ifndef _MIZU_H
 #define _MIZU_H
 
-#include "types.h"
 #include "Boss.h"
+#include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
 

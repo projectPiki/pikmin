@@ -1,11 +1,11 @@
 #ifndef _OMAKE_H
 #define _OMAKE_H
 
-#include "types.h"
-#include "Vector.h"
-#include "system.h"
 #include "Graphics.h"
 #include "MapMgr.h"
+#include "Vector.h"
+#include "system.h"
+#include "types.h"
 
 struct Creature;
 struct Graphics;

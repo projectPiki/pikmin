@@ -1,8 +1,8 @@
 #ifndef _TEKIANIMATIONMANAGER_H
 #define _TEKIANIMATIONMANAGER_H
 
-#include "types.h"
 #include "Node.h"
+#include "types.h"
 
 struct TekiMgr;
 

@@ -1,22 +1,22 @@
 #ifndef _TAI_DORORO_H
 #define _TAI_DORORO_H
 
-#include "types.h"
-#include "TAI/Aattack.h"
-#include "TAI/Areaction.h"
-#include "TAI/Amove.h"
-#include "TAI/EffectAttack.h"
-#include "TekiParameters.h"
-#include "TAI/Animation.h"
-#include "YaiStrategy.h"
 #include "NaviMgr.h"
-#include "Pellet.h"
-#include "SoundMgr.h"
-#include "TekiConditions.h"
-#include "PlayerState.h"
-#include "PikiHeadItem.h"
-#include "zen/CallBack.h"
 #include "PaniAnimator.h"
+#include "Pellet.h"
+#include "PikiHeadItem.h"
+#include "PlayerState.h"
+#include "SoundMgr.h"
+#include "TAI/Aattack.h"
+#include "TAI/Amove.h"
+#include "TAI/Animation.h"
+#include "TAI/Areaction.h"
+#include "TAI/EffectAttack.h"
+#include "TekiConditions.h"
+#include "TekiParameters.h"
+#include "YaiStrategy.h"
+#include "types.h"
+#include "zen/CallBack.h"
 
 struct CollPart;
 

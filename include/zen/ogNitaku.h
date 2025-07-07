@@ -1,8 +1,8 @@
 #ifndef _ZEN_OGNITAKU_H
 #define _ZEN_OGNITAKU_H
 
-#include "types.h"
 #include "Colour.h"
+#include "types.h"
 #include "zen/SpectrumCursorMgr.h"
 
 struct Controller;

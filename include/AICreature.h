@@ -1,10 +1,10 @@
 #ifndef _AICREATURE_H
 #define _AICREATURE_H
 
-#include "types.h"
 #include "Creature.h"
-#include "Vector.h"
 #include "PaniAnimator.h"
+#include "Vector.h"
+#include "types.h"
 
 template <typename T>
 struct AState;

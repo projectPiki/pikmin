@@ -1,11 +1,11 @@
 #include "CPlate.h"
-#include "Piki.h"
 #include "AIPerf.h"
-#include "SlotChangeListner.h"
+#include "DebugLog.h"
 #include "GlobalShape.h"
 #include "Graphics.h"
+#include "Piki.h"
+#include "SlotChangeListner.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

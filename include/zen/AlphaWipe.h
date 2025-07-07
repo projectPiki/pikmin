@@ -1,8 +1,8 @@
 #ifndef _ZEN_ALPHAWIPE_H
 #define _ZEN_ALPHAWIPE_H
 
-#include "types.h"
 #include "Colour.h"
+#include "types.h"
 
 struct Graphics;
 

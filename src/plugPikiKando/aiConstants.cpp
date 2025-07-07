@@ -1,6 +1,6 @@
 #include "AIConstant.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 AIConstant* AIConstant::_instance;
 

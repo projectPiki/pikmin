@@ -1,8 +1,8 @@
 #ifndef _YAISTRATEGY_H
 #define _YAISTRATEGY_H
 
-#include "types.h"
 #include "TekiStrategy.h"
+#include "types.h"
 
 struct TaiState;
 

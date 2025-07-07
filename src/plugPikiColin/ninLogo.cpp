@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "NinLogoSection.h"
 #include "NinLogoSetupSection.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

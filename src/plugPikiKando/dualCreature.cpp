@@ -1,10 +1,10 @@
 #include "DualCreature.h"
+#include "DebugLog.h"
 #include "Graphics.h"
 #include "ItemMgr.h"
+#include "Kontroller.h"
 #include "MapMgr.h"
 #include "NaviMgr.h"
-#include "Kontroller.h"
-#include "DebugLog.h"
 #include "VersionGroups.h"
 
 /*

@@ -1,9 +1,9 @@
-#include "TAI/Tank.h"
-#include "TAI/Areaction.h"
-#include "TAI/Aeffect.h"
-#include "nlib/Math.h"
-#include "SoundMgr.h"
 #include "DebugLog.h"
+#include "SoundMgr.h"
+#include "TAI/Aeffect.h"
+#include "TAI/Areaction.h"
+#include "TAI/Tank.h"
+#include "nlib/Math.h"
 
 /*
  * --INFO--

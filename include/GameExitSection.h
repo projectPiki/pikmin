@@ -1,8 +1,8 @@
 #ifndef _GAMEEXITSECTION_H
 #define _GAMEEXITSECTION_H
 
-#include "types.h"
 #include "Section.h"
+#include "types.h"
 
 /**
  * @brief TODO

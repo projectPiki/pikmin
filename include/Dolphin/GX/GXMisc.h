@@ -8,8 +8,8 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 #include "Dolphin/GX/GXEnum.h"
-#include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/GX/GXFifo.h"
+#include "Dolphin/GX/GXTypes.h"
 #include "Dolphin/OS/OSInterrupt.h"
 
 //////////////// CALLBACKS /////////////////

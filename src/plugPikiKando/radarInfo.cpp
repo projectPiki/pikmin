@@ -1,9 +1,9 @@
 #include "RadarInfo.h"
-#include "Dolphin/os.h"
-#include "sysNew.h"
 #include "Creature.h"
-#include "Vector.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Vector.h"
+#include "sysNew.h"
 
 RadarInfo* radarInfo;
 

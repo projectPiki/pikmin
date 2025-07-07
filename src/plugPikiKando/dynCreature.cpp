@@ -1,15 +1,15 @@
 #include "DynCreature.h"
 
-#include "DynParticle.h"
-#include "MapMgr.h"
 #include "CreatureProp.h"
+#include "DebugLog.h"
+#include "DynParticle.h"
 #include "Graphics.h"
+#include "KMath.h"
+#include "MapMgr.h"
 #include "Matrix4f.h"
 #include "UtilityKando.h"
-#include "KMath.h"
-#include "sysNew.h"
-#include "DebugLog.h"
 #include "VersionGroups.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

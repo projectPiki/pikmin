@@ -1,10 +1,10 @@
 #include "teki.h"
 
+#include "DebugLog.h"
+#include "MapCode.h"
 #include "NaviMgr.h"
 #include "Stickers.h"
-#include "MapCode.h"
 #include "TAI/EffectAttack.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

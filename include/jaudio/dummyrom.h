@@ -1,8 +1,8 @@
 #ifndef _JAUDIO_DUMMYROM_H
 #define _JAUDIO_DUMMYROM_H
 
-#include "types.h"
 #include "jaudio/audiostruct.h"
+#include "types.h"
 
 /////////// JAUDIO DUMMY ROM DEFINITIONS ///////////
 // Global declarations.

@@ -1,11 +1,11 @@
 #ifndef _KOGANE_H
 #define _KOGANE_H
 
-#include "types.h"
 #include "Boss.h"
+#include "EffectMgr.h"
+#include "types.h"
 #include "zen/CallBack.h"
 #include "zen/particle.h"
-#include "EffectMgr.h"
 
 struct KoganeAi;
 struct KoganeGenRippleCallBack;

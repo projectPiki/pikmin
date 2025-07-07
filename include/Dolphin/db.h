@@ -1,9 +1,9 @@
 #ifndef _DOLPHIN_DB_H
 #define _DOLPHIN_DB_H
 
-#include "types.h"
-#include "Dolphin/os.h"
 #include "Dolphin/AmcExi2.h"
+#include "Dolphin/os.h"
+#include "types.h"
 
 #define ExceptionHookDestination 0x80000048
 #define IsDebuggerPresent        0x80000040

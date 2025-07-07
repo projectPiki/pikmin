@@ -1,11 +1,11 @@
 #ifndef _NLIB_MATH_H
 #define _NLIB_MATH_H
 
-#include "types.h"
-#include "Vector.h"
 #include "Dolphin/mtx.h"
-#include <system.h>
+#include "Vector.h"
 #include "nlib/System.h"
+#include "types.h"
+#include <system.h>
 
 template <typename T>
 struct NMath {

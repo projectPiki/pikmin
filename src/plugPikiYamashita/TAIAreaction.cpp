@@ -1,8 +1,8 @@
-#include "TAI/Areaction.h"
+#include "DebugLog.h"
+#include "MapCode.h"
 #include "PikiState.h"
 #include "SoundMgr.h"
-#include "MapCode.h"
-#include "DebugLog.h"
+#include "TAI/Areaction.h"
 
 /*
  * --INFO--

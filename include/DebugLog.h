@@ -1,12 +1,12 @@
 #ifndef _DEBUGLOG_H
 #define _DEBUGLOG_H
 
-#include "types.h"
-#include "stl/stdarg.h"
-#include "stl/string.h"
-#include "stl/stdio.h"
 #include "Stream.h"
+#include "stl/stdarg.h"
+#include "stl/stdio.h"
+#include "stl/string.h"
 #include "system.h"
+#include "types.h"
 
 #define DEFINE_PRINT(_NAME)                        \
 	static void _Print(char* fmt, ...)             \
@@ -28,7 +28,7 @@
 
 // Size - 0x9C
 #define DEFINE_ERROR(line)                    \
-	static void _Error(char* fmt, ...)  \
+	static void _Error(char* fmt, ...)        \
 	{                                         \
 		char buffer[2048];                    \
 		va_list args;                         \

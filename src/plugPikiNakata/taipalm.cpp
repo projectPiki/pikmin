@@ -1,13 +1,13 @@
+#include "DayMgr.h"
+#include "DebugLog.h"
+#include "MapMgr.h"
+#include "Pellet.h"
+#include "SoundMgr.h"
 #include "TAI/Palm.h"
 #include "TAI/TimerActions.h"
-#include "teki.h"
 #include "TekiConditions.h"
-#include "Pellet.h"
-#include "MapMgr.h"
-#include "DayMgr.h"
-#include "SoundMgr.h"
-#include "DebugLog.h"
 #include "sysNew.h"
+#include "teki.h"
 
 /*
  * --INFO--

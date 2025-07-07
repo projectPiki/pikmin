@@ -1,7 +1,7 @@
 #include "Spider.h"
 #include "DayMgr.h"
-#include "Graphics.h"
 #include "DebugLog.h"
+#include "Graphics.h"
 #include "VersionGroups.h"
 
 /*

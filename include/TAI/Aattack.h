@@ -1,8 +1,8 @@
 #ifndef _TAI_AATTACK_H
 #define _TAI_AATTACK_H
 
-#include "types.h"
 #include "TAI/Amotion.h"
+#include "types.h"
 
 struct Bridge;
 

@@ -1,8 +1,8 @@
 #include "jaudio/dspboot.h"
-#include "jaudio/dspproc.h"
 #include "Dolphin/dsp.h"
-#include "Dolphin/os.h"
 #include "Dolphin/hw_regs.h"
+#include "Dolphin/os.h"
+#include "jaudio/dspproc.h"
 
 // Fun Fact: Prior to Dolphin Emulator 5.0-16483, USA Demo's early DSP microcode required DSP LLE to run.
 // This wasn't because it was difficult to support or anything, it was just so obscure that nobody thought to add it yet.

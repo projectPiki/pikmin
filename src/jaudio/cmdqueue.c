@@ -1,8 +1,8 @@
 #include "jaudio/cmdqueue.h"
 
+#include "jaudio/jammain_2.h"
 #include "jaudio/playercall.h"
 #include "jaudio/verysimple.h"
-#include "jaudio/jammain_2.h"
 
 /*
  * --INFO--

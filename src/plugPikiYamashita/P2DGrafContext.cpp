@@ -1,8 +1,8 @@
+#include "Colour.h"
+#include "DebugLog.h"
+#include "Dolphin/gx.h"
 #include "P2D/Graph.h"
 #include "PUT/Geometry.h"
-#include "Colour.h"
-#include "Dolphin/gx.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

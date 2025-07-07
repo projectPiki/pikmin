@@ -1,13 +1,13 @@
 #include "zen/ogPause.h"
-#include "zen/DrawMenu.h"
+#include "DebugLog.h"
+#include "P2D/Graph.h"
+#include "P2D/Picture.h"
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
-#include "P2D/Picture.h"
-#include "P2D/Graph.h"
-#include "DebugLog.h"
-#include "sysNew.h"
 #include "PlayerState.h"
 #include "VersionGroups.h"
+#include "sysNew.h"
+#include "zen/DrawMenu.h"
 
 /*
  * --INFO--

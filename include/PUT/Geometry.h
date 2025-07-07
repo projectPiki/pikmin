@@ -1,8 +1,8 @@
 #ifndef _PUT_GEOMETRY_H
 #define _PUT_GEOMETRY_H
 
-#include "types.h"
 #include "Stream.h"
+#include "types.h"
 
 /**
  * @brief TODO

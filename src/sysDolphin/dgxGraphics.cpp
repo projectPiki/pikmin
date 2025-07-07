@@ -1,11 +1,11 @@
-#include "Graphics.h"
+#include "DebugLog.h"
 #include "Dolphin/os.h"
 #include "Font.h"
-#include "Shape.h"
+#include "Graphics.h"
 #include "Mesh.h"
-#include "sysNew.h"
-#include "DebugLog.h"
+#include "Shape.h"
 #include "VersionGroups.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

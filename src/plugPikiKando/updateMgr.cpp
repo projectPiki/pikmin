@@ -1,6 +1,6 @@
 #include "UpdateMgr.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "sysNew.h"
 
 UpdateMgr* pikiUpdateMgr;
 UpdateMgr* searchUpdateMgr;

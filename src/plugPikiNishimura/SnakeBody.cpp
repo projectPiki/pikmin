@@ -1,14 +1,14 @@
-#include "Snake.h"
-#include "MapCode.h"
+#include "DebugLog.h"
 #include "EffectMgr.h"
-#include "SoundMgr.h"
+#include "Graphics.h"
+#include "MapCode.h"
+#include "MapMgr.h"
+#include "Matrix3f.h"
 #include "NsMath.h"
 #include "Pellet.h"
-#include "Matrix3f.h"
-#include "MapMgr.h"
-#include "Graphics.h"
 #include "RumbleMgr.h"
-#include "DebugLog.h"
+#include "Snake.h"
+#include "SoundMgr.h"
 
 /*
  * --INFO--

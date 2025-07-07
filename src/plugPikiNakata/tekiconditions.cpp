@@ -1,7 +1,7 @@
 #include "TekiConditions.h"
-#include "teki.h"
-#include "Piki.h"
 #include "DebugLog.h"
+#include "Piki.h"
+#include "teki.h"
 
 /*
  * --INFO--

@@ -1,11 +1,11 @@
-#include "Mizu.h"
-#include "EffectMgr.h"
-#include "SoundMgr.h"
-#include "NaviMgr.h"
-#include "Interactions.h"
-#include "NsMath.h"
-#include "MapMgr.h"
 #include "DebugLog.h"
+#include "EffectMgr.h"
+#include "Interactions.h"
+#include "MapMgr.h"
+#include "Mizu.h"
+#include "NaviMgr.h"
+#include "NsMath.h"
+#include "SoundMgr.h"
 #include "VersionGroups.h"
 
 /*

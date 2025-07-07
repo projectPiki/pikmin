@@ -1,8 +1,8 @@
-#include "TAI/HibaA.h"
-#include "TAI/Amove.h"
-#include "SoundMgr.h"
-#include "MapMgr.h"
 #include "DebugLog.h"
+#include "MapMgr.h"
+#include "SoundMgr.h"
+#include "TAI/Amove.h"
+#include "TAI/HibaA.h"
 
 /*
  * --INFO--

@@ -1,15 +1,15 @@
 #ifndef _CINEMATICPLAYER_H
 #define _CINEMATICPLAYER_H
 
-#include "types.h"
-#include "CoreNode.h"
 #include "Animator.h"
 #include "Camera.h"
-#include "Light.h"
+#include "CoreNode.h"
 #include "Dolphin/arith.h"
-#include "stl/string.h"
 #include "EffectMgr.h"
+#include "Light.h"
 #include "Shape.h"
+#include "stl/string.h"
+#include "types.h"
 
 struct AgeServer;
 struct CmdStream;

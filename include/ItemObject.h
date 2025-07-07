@@ -1,9 +1,9 @@
 #ifndef _ITEMOBJECT_H
 #define _ITEMOBJECT_H
 
-#include "types.h"
-#include "ItemMgr.h"
 #include "Collision.h"
+#include "ItemMgr.h"
+#include "types.h"
 
 /**
  * @brief TODO.

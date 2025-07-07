@@ -1,10 +1,10 @@
 #ifndef _MATRIX4F_H
 #define _MATRIX4F_H
 
-#include "types.h"
 #include "Dolphin/mtx.h"
-#include "Vector.h"
 #include "SRT.h"
+#include "Vector.h"
+#include "types.h"
 
 /**
  * @brief 4x4 Matrix.

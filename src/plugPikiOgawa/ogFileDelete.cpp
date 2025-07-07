@@ -1,11 +1,11 @@
-#include "zen/ogFileSelect.h"
-#include "zen/EffectMgr2D.h"
-#include "zen/ogNitaku.h"
-#include "jaudio/verysimple.h"
 #include "DebugLog.h"
 #include "SoundMgr.h"
-#include "gameflow.h"
 #include "VersionGroups.h"
+#include "gameflow.h"
+#include "jaudio/verysimple.h"
+#include "zen/EffectMgr2D.h"
+#include "zen/ogFileSelect.h"
+#include "zen/ogNitaku.h"
 
 /*
  * --INFO--

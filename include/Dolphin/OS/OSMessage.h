@@ -1,9 +1,9 @@
 #ifndef _DOLPHIN_OS_OSMESSAGE_H
 #define _DOLPHIN_OS_OSMESSAGE_H
 
-#include "types.h"
-#include "Dolphin/OS/OSUtil.h"
 #include "Dolphin/OS/OSThread.h"
+#include "Dolphin/OS/OSUtil.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

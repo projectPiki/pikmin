@@ -1,14 +1,14 @@
 #include "jaudio/dspbuf.h"
-#include "jaudio/dummyprobe.h"
-#include "jaudio/rate.h"
+#include "Dolphin/os.h"
 #include "jaudio/aictrl.h"
 #include "jaudio/audiothread.h"
-#include "jaudio/dspproc.h"
-#include "jaudio/dspinterface.h"
-#include "jaudio/playercall.h"
-#include "jaudio/ipldec.h"
 #include "jaudio/dspdriver.h"
-#include "Dolphin/os.h"
+#include "jaudio/dspinterface.h"
+#include "jaudio/dspproc.h"
+#include "jaudio/dummyprobe.h"
+#include "jaudio/ipldec.h"
+#include "jaudio/playercall.h"
+#include "jaudio/rate.h"
 
 static u8 write_buffer      = 0;
 static u8 read_buffer       = 0;

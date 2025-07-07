@@ -1,9 +1,9 @@
 #ifndef _NLIB_GRAPHICS_H
 #define _NLIB_GRAPHICS_H
 
-#include "types.h"
-#include "nlib/Geometry.h"
 #include "Camera.h"
+#include "nlib/Geometry.h"
+#include "types.h"
 
 struct Camera;
 

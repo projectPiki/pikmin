@@ -1,15 +1,15 @@
 #ifndef _GAMESTATE_H
 #define _GAMESTATE_H
 
-#include "Section.h"
-#include "GameCoreSection.h"
-#include "gameflow.h"
-#include "PlayerState.h"
-#include "MoviePlayer.h"
 #include "FlowController.h"
+#include "GameCoreSection.h"
+#include "MoviePlayer.h"
+#include "PlayerState.h"
+#include "Section.h"
+#include "gameflow.h"
 #include "jaudio/piki_scene.h"
-#include "zen/DrawGameInfo.h"
 #include "types.h"
+#include "zen/DrawGameInfo.h"
 
 struct Graphics;
 struct Controller;

@@ -1,9 +1,9 @@
 #ifndef _P2D_SCREEN_H
 #define _P2D_SCREEN_H
 
-#include "types.h"
 #include "P2D/Pane.h"
 #include "P2D/Util.h"
+#include "types.h"
 
 namespace zen {
 struct PikaAlphaMgr;

@@ -1,8 +1,8 @@
 #include "NaviMgr.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "MemStat.h"
 #include "gameflow.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
 #include "sysNew.h"
 
 /*

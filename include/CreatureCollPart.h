@@ -1,8 +1,8 @@
 #ifndef _CREATURECOLLPART_H
 #define _CREATURECOLLPART_H
 
-#include "types.h"
 #include "DynColl.h"
+#include "types.h"
 
 struct CollPart;
 

@@ -1,7 +1,7 @@
-#include "TAI/Beatle.h"
 #include "DebugLog.h"
-#include "TAI/Aeffect.h"
 #include "PikiState.h"
+#include "TAI/Aeffect.h"
+#include "TAI/Beatle.h"
 
 /*
  * --INFO--

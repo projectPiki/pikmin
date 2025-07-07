@@ -1,13 +1,13 @@
 #ifndef _ZEN_DRAWMENU_H
 #define _ZEN_DRAWMENU_H
 
+#include "Colour.h"
+#include "P2D/Picture.h"
 #include "types.h"
 #include "zen/DrawCommon.h"
-#include "P2D/Picture.h"
-#include "zen/SpectrumCursorMgr.h"
-#include "zen/MenuPanelMgr.h"
 #include "zen/Math.h"
-#include "Colour.h"
+#include "zen/MenuPanelMgr.h"
+#include "zen/SpectrumCursorMgr.h"
 
 struct Colour;
 struct Graphics;

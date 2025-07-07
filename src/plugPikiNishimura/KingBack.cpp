@@ -1,9 +1,9 @@
-#include "King.h"
 #include "Collision.h"
-#include "MapMgr.h"
-#include "Graphics.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "Graphics.h"
+#include "King.h"
+#include "MapMgr.h"
 
 /*
  * --INFO--

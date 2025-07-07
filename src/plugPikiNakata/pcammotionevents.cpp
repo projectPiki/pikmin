@@ -1,6 +1,6 @@
-#include "Pcam/MotionEvents.h"
-#include "Pcam/Camera.h"
 #include "DebugLog.h"
+#include "Pcam/Camera.h"
+#include "Pcam/MotionEvents.h"
 #include "sysNew.h"
 
 /*

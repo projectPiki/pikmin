@@ -1,9 +1,9 @@
 #ifndef _DOLPHIN_OS_OSTHREAD_H
 #define _DOLPHIN_OS_OSTHREAD_H
 
-#include "types.h"
-#include "Dolphin/OS/OSUtil.h"
 #include "Dolphin/OS/OSContext.h"
+#include "Dolphin/OS/OSUtil.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

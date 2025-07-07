@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "PikiAI.h"
 #include "zen/Math.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

@@ -1,5 +1,5 @@
-#include "Dolphin/os.h"
 #include "Dolphin/db.h"
+#include "Dolphin/os.h"
 #define PPCSYNC sc // system call performs PPCSync()
 
 /*

@@ -1,13 +1,13 @@
 #ifndef _BUILDINGITEM_H
 #define _BUILDINGITEM_H
 
-#include "types.h"
-#include "ItemMgr.h"
-#include "CreatureProp.h"
 #include "CreatureCollPart.h"
-#include "UtEffect.h"
-#include "SoundMgr.h"
+#include "CreatureProp.h"
+#include "ItemMgr.h"
 #include "Shape.h"
+#include "SoundMgr.h"
+#include "UtEffect.h"
+#include "types.h"
 
 struct ItemShapeObject;
 struct SimpleAI;

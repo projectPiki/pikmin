@@ -1,9 +1,9 @@
 #include "CodeInitializer.h"
-#include "nlib/System.h"
+#include "DebugLog.h"
 #include "PaniPikiAnimator.h"
+#include "nlib/System.h"
 #include "system.h"
 #include "teki.h"
-#include "DebugLog.h"
 
 BOOL nakataDebugMode;
 

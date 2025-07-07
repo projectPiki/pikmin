@@ -1,9 +1,9 @@
 #include "Nucleus.h"
 #include "Collision.h"
+#include "DebugLog.h"
 #include "Graphics.h"
 #include "Shape.h"
 #include "sysNew.h"
-#include "DebugLog.h"
 
 /*
  * --INFO--

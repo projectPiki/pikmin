@@ -1,11 +1,11 @@
 #ifndef _P2D_FONT_H
 #define _P2D_FONT_H
 
-#include "types.h"
-#include "GfxObject.h"
-#include "Dolphin/gx.h"
-#include "Texture.h"
 #include "Colour.h"
+#include "Dolphin/gx.h"
+#include "GfxObject.h"
+#include "Texture.h"
+#include "types.h"
 #include <Font.h>
 
 /**

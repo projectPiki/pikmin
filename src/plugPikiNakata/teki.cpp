@@ -1,7 +1,7 @@
 #include "teki.h"
-#include "TekiParameters.h"
-#include "Dolphin/os.h"
 #include "DebugLog.h"
+#include "Dolphin/os.h"
+#include "TekiParameters.h"
 
 /*
  * --INFO--

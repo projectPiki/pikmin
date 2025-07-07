@@ -1,11 +1,11 @@
 #include "Texture.h"
 
-#include "Stream.h"
-#include "system.h"
-#include "sysNew.h"
-#include "Dolphin/gx.h"
 #include "DebugLog.h"
+#include "Dolphin/gx.h"
+#include "Stream.h"
 #include "stl/string.h"
+#include "sysNew.h"
+#include "system.h"
 
 /*
  * --INFO--

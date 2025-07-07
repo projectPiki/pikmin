@@ -1,11 +1,11 @@
 #ifndef _PANITESTSECTION_H
 #define _PANITESTSECTION_H
 
-#include "types.h"
-#include "Section.h"
-#include "PaniAnimator.h"
 #include "Camera.h"
 #include "Light.h"
+#include "PaniAnimator.h"
+#include "Section.h"
+#include "types.h"
 
 struct PaniAnimKeyEvent;
 struct Teki;

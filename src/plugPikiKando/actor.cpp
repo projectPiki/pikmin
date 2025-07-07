@@ -1,6 +1,6 @@
 #include "Actor.h"
-#include "SimpleAI.h"
 #include "DebugLog.h"
+#include "SimpleAI.h"
 
 /*
  * --INFO--

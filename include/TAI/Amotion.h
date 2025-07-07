@@ -1,9 +1,9 @@
 #ifndef _TAI_AMOTION_H
 #define _TAI_AMOTION_H
 
-#include "types.h"
 #include "TAI/Action.h"
 #include "teki.h"
+#include "types.h"
 
 /**
  * @brief TODO

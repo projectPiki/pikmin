@@ -1,10 +1,10 @@
 #ifndef _PVW_H
 #define _PVW_H
 
-#include "types.h"
 #include "Colour.h"
-#include "Vector.h"
 #include "Matrix4f.h"
+#include "Vector.h"
+#include "types.h"
 
 struct Matrix4f;
 struct RandomAccessStream;

@@ -1,15 +1,15 @@
 #include "PikiHeadItem.h"
 #include "DebugLog.h"
-#include "KEffect.h"
-#include "SoundMgr.h"
 #include "GameStat.h"
-#include "MapMgr.h"
-#include "KMath.h"
 #include "Graphics.h"
-#include "PikiMgr.h"
-#include "NaviMgr.h"
-#include "PikiState.h"
 #include "Interactions.h"
+#include "KEffect.h"
+#include "KMath.h"
+#include "MapMgr.h"
+#include "NaviMgr.h"
+#include "PikiMgr.h"
+#include "PikiState.h"
+#include "SoundMgr.h"
 
 /*
  * --INFO--

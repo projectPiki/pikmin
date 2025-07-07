@@ -1,11 +1,11 @@
 #include "CoreNucleus.h"
 #include "Collision.h"
+#include "DebugLog.h"
 #include "Graphics.h"
 #include "Piki.h"
+#include "PikiState.h"
 #include "Shape.h"
 #include "Slime.h"
-#include "PikiState.h"
-#include "DebugLog.h"
 #include "sysNew.h"
 
 /*

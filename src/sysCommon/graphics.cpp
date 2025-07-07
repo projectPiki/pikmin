@@ -1,17 +1,17 @@
 #include "Graphics.h"
 
-#include "Colour.h"
-#include "Material.h"
-#include "Font.h"
 #include "Collision.h"
-#include "Plane.h"
-#include "Texture.h"
-#include "Shape.h"
-#include "sysNew.h"
-#include "PVW.h"
+#include "Colour.h"
 #include "DebugLog.h"
+#include "Font.h"
+#include "Material.h"
+#include "PVW.h"
+#include "Plane.h"
+#include "Shape.h"
+#include "Texture.h"
 #include "nlib/Math.h"
 #include "stl/math.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

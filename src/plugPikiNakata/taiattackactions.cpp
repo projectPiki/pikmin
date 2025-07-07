@@ -1,15 +1,15 @@
-#include "Tai/AttackActions.h"
-#include "teki.h"
-#include "TekiPersonality.h"
-#include "TekiParameters.h"
-#include "TekiConditions.h"
+#include "DebugLog.h"
+#include "Dolphin/os.h"
 #include "Interactions.h"
 #include "NaviMgr.h"
 #include "PikiMgr.h"
-#include "Stickers.h"
 #include "PikiState.h"
-#include "Dolphin/os.h"
-#include "DebugLog.h"
+#include "Stickers.h"
+#include "Tai/AttackActions.h"
+#include "TekiConditions.h"
+#include "TekiParameters.h"
+#include "TekiPersonality.h"
+#include "teki.h"
 
 /*
  * --INFO--

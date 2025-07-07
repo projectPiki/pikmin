@@ -1,10 +1,10 @@
 #ifndef _ZEN_OGDIARY_H
 #define _ZEN_OGDIARY_H
 
-#include "types.h"
-#include "zen/ogMessage.h"
-#include "zen/SpectrumCursorMgr.h"
 #include "GlobalGameOptions.h"
+#include "types.h"
+#include "zen/SpectrumCursorMgr.h"
+#include "zen/ogMessage.h"
 
 struct Controller;
 struct Graphics;

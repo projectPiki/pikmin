@@ -1,12 +1,12 @@
 #ifndef _FORMATIONMGR_H
 #define _FORMATIONMGR_H
 
-#include "types.h"
-#include "Traversable.h"
-#include "Vector.h"
 #include "Colour.h"
 #include "ComplexCreature.h"
 #include "Creature.h"
+#include "Traversable.h"
+#include "Vector.h"
+#include "types.h"
 
 struct Graphics;
 struct FormArranger;

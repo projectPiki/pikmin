@@ -1,11 +1,11 @@
 #ifndef _AICONSTANT_H
 #define _AICONSTANT_H
 
-#include "types.h"
+#include "Ayu.h"
+#include "GlobalGameOptions.h"
 #include "Node.h"
 #include "Parameters.h"
-#include "GlobalGameOptions.h"
-#include "Ayu.h"
+#include "types.h"
 
 /**
  * @brief A node that contains AI constants.

@@ -1,10 +1,10 @@
-#include "PikiAI.h"
-#include "PikiState.h"
+#include "DebugLog.h"
+#include "Interactions.h"
 #include "Navi.h"
 #include "NaviState.h"
-#include "Interactions.h"
+#include "PikiAI.h"
 #include "PikiMgr.h"
-#include "DebugLog.h"
+#include "PikiState.h"
 
 /*
  * --INFO--

@@ -1,8 +1,8 @@
 #ifndef _DOLPHIN_HW_REGS_H
 #define _DOLPHIN_HW_REGS_H
 
-#include "types.h"
 #include "Dolphin/OS/OSUtil.h"
+#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {

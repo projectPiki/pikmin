@@ -1,8 +1,8 @@
 #ifndef _TAI_EFFECTACTIONS_H
 #define _TAI_EFFECTACTIONS_H
 
-#include "types.h"
 #include "TAI/Aeffect.h"
+#include "types.h"
 
 struct Vector3f;
 

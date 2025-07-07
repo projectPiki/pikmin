@@ -1,6 +1,6 @@
 #include "zen/DrawProgre.h"
-#include "SoundMgr.h"
 #include "DebugLog.h"
+#include "SoundMgr.h"
 #include "sysNew.h"
 
 /*

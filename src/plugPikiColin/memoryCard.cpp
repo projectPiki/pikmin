@@ -1,12 +1,12 @@
 #include "MemoryCard.h"
-#include "Stream.h"
-#include "CardUtil.h"
-#include "stl/string.h"
-#include "gameflow.h"
-#include "PlayerState.h"
-#include "system.h"
 #include "BaseInf.h"
+#include "CardUtil.h"
 #include "DebugLog.h"
+#include "PlayerState.h"
+#include "Stream.h"
+#include "gameflow.h"
+#include "stl/string.h"
+#include "system.h"
 
 /*
  * --INFO--

@@ -1,11 +1,11 @@
 #ifndef _NAVISTATE_H
 #define _NAVISTATE_H
 
-#include "types.h"
-#include "Win.h"
 #include "Navi.h"
 #include "StateMachine.h"
 #include "Vector.h"
+#include "Win.h"
+#include "types.h"
 
 struct NaviState;
 

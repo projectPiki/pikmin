@@ -1,7 +1,7 @@
-#include "Stream.h"
-#include "P2D/Stream.h"
-#include "sysNew.h"
 #include "DebugLog.h"
+#include "P2D/Stream.h"
+#include "Stream.h"
+#include "sysNew.h"
 
 /*
  * --INFO--

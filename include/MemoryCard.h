@@ -1,8 +1,8 @@
 #ifndef _MEMORYCARD_H
 #define _MEMORYCARD_H
 
-#include "types.h"
 #include "CoreNode.h"
+#include "types.h"
 
 struct CARDStat;
 struct PlayState;

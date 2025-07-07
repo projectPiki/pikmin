@@ -1,16 +1,16 @@
 #ifndef _CREATURE_H
 #define _CREATURE_H
 
-#include "types.h"
 #include "Event.h"
 #include "FastGrid.h"
+#include "LifeGauge.h"
+#include "Matrix4f.h"
 #include "ObjType.h"
 #include "RefCountable.h"
 #include "SearchSystem.h"
-#include "LifeGauge.h"
 #include "UpdateMgr.h"
 #include "Vector.h"
-#include "Matrix4f.h"
+#include "types.h"
 
 struct CollInfo;
 struct CollTriInfo;

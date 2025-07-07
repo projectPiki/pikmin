@@ -1,6 +1,6 @@
+#include "DebugLog.h"
 #include "P2D/Font.h"
 #include "Texture.h"
-#include "DebugLog.h"
 #include "sysNew.h"
 
 /*
