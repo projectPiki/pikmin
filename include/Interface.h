@@ -1,10 +1,10 @@
 #ifndef _INTERFACE_H
 #define _INTERFACE_H
 
+#include "Vector.h"
 #include "types.h"
 
 struct Creature;
-struct Vector3f;
 struct NewPikiGameSetupSection;
 struct TitleSetupSection;
 
