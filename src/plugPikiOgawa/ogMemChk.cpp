@@ -390,8 +390,11 @@ void zen::ogScrMemChkMgr::DispAcup(bool set)
 void zen::ogScrMemChkMgr::MakeDefFileStart()
 {
 	mMakeDefaultMgr->start();
-	mStatus    = MakeDefaultFile;
+	mStatus = MakeDefaultFile;
+#if defined(VERSION_PIKIDEMO)
+#else
 	mWaitTimer = 0.0f;
+#endif
 }
 
 /*
@@ -642,7 +645,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 		break;
 
 	case DoFormatSelection: {
-		int stat = mNitakuMgr->update(input);
+		ogNitakuMgr::NitakuStatus stat = mNitakuMgr->update(input);
 		if (stat >= ogNitakuMgr::Status_4) {
 			if (stat == ogNitakuMgr::ExitSuccess) {
 				setPCtex(mFormatConfirmTextMgr);
@@ -705,7 +708,12 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case Formatting:
 		DispYesNo(false);
 		DispAcup(true);
-		if (checkTypingAll() && mWaitTimer > 6.0f) {
+#if defined(VERSION_PIKIDEMO)
+		if (mWaitTimer > 6.0f)
+#else
+		if (checkTypingAll() && mWaitTimer > 6.0f)
+#endif
+		{
 			mEfxA->finish();
 			mEfxB->finish();
 			bool format = true;

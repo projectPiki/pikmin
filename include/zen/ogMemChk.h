@@ -86,7 +86,7 @@ private:
 	particleGenerator* mEfxB;                // _14
 	ogScrMakeDefaultMgr* mMakeDefaultMgr;    // _18
 	MemChkStatus mStatus;                    // _1C
-	int mPrevStatusCheck;                    // _20
+	MemChkStatus mPrevStatusCheck;           // _20
 	P2DScreen* mBlackScreen;                 // _24
 	P2DPicture* mBlackPane;                  // _28
 	P2DScreen* mMainScreen;                  // _2C

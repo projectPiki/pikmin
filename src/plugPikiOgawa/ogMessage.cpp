@@ -48,6 +48,8 @@ static s16 sjis_convert_table[0x258] ATTRIBUTE_ALIGN(32) = {
 };
 #endif
 
+#if defined(VERSION_PIKIDEMO)
+#else
 // PAL changed exactly ONE character in this table and its an extremely specific instance of "・" that
 // doesn't want to match  when copy-pasted from anywhere in the actual code (there seems to be dozens
 // of "・"s in the shift-jis table and its using the wrong one  if you dont manually specify it)
@@ -67,6 +69,7 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 	"造勢戦襲言遮和厳密頂着休年昔想像響返白敏再還我懸草誰工月司髪毛細番予殊影過関係誇育腹次矢窒寸覚覗屋忘血航誌亡泉夕使期敗容制挿読扱説書閉"
 	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
 };
+#endif
 
 /*
  * --INFO--
