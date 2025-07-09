@@ -7,11 +7,22 @@
 struct Graphics;
 struct Font;
 
-/*
- * @note Size: 0x28
+/**
+ * @note Size: 0x28.
  */
 struct TimerInf {
-	TimerInf(char*);
+	TimerInf(char* name)
+	{
+		mNext        = nullptr;
+		mTimerName   = name;
+		mDuration    = 0.0f;
+		mAverageTime = 0.0f;
+		mPeakTime    = 0.0f;
+		mDecayTime   = 0.0f;
+		mSampleTime  = 0;
+		_1C          = -1;
+		_20          = 0;
+	}
 
 	char* mTimerName; // _00
 	f32 mStartTime;   // _04
@@ -19,17 +30,20 @@ struct TimerInf {
 	f32 mAverageTime; // _0C
 	f32 mPeakTime;    // _10
 	f32 mDecayTime;   // _14
-	u32 mSampleTime;  // _18
+	int mSampleTime;  // _18
 	u32 _1C;          // _1C
 	u8 _20;           // _20
 	TimerInf* mNext;  // _24
 };
 
+/**
+ * @note Size: 0xC.
+ */
 struct Timers {
 	Timers()
 	{
-		mTimerInf   = nullptr;
-		_08         = 0;
+		mTimerList  = nullptr;
+		mTimerCount = 0;
 		mFrameCount = -1;
 	}
 
@@ -54,9 +68,9 @@ struct Timers {
 #endif
 	}
 
-	TimerInf* mTimerInf; // _00
-	s32 mFrameCount;     // _04
-	u32 _08;             // _08
+	TimerInf* mTimerList; // _00
+	s32 mFrameCount;      // _04
+	u32 mTimerCount;      // _08
 };
 
 // For some reason, certain functions cannot have known timers added to them without messing up matching.  At the same time, other functions
