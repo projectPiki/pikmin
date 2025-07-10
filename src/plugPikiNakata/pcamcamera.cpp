@@ -141,9 +141,9 @@ void PcamCamera::startCamera(Creature* target, int zoom, int angle)
 	setBlur(getCurrentBlur());
 
 	mDistanceMultiplier = 1.0f;
-	mIsActive           = 1;
-	mAttentionEnabled   = 1;
-	mControlsEnabled    = 1;
+	mIsActive           = true;
+	mAttentionEnabled   = true;
+	mControlsEnabled    = true;
 
 	mToggleZoomPending        = FALSE;
 	mAdjustInclinationPending = FALSE;

@@ -54,7 +54,7 @@ bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
  */
 void CullFrustum::draw(Graphics& gfx)
 {
-	gfx.mHasTexGen        = 0;
+	gfx.mHasTexGen        = FALSE;
 	bool prevLightSetting = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useTexture(nullptr, 0);
@@ -197,7 +197,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[0]);
 	planes[0].CheckMinMaxDir();
-	planes[0].mIsEnabled = 1;
+	planes[0].mIsEnabled = true;
 
 	vec.x = -mWidth / absF(rightScale);
 	vec.y = 0.0f;
@@ -205,7 +205,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[1]);
 	planes[1].CheckMinMaxDir();
-	planes[1].mIsEnabled = 1;
+	planes[1].mIsEnabled = true;
 
 	vec.x = 0.0f;
 	vec.y = absF(bottomScale) * -mWidth;
@@ -213,7 +213,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[2]);
 	planes[2].CheckMinMaxDir();
-	planes[2].mIsEnabled = 1;
+	planes[2].mIsEnabled = true;
 
 	vec.x = 0.0f;
 	vec.y = absF(topScale) * mWidth;
@@ -221,7 +221,7 @@ void CullFrustum::updateViewPlanes(f32 leftScale, f32 rightScale, f32 bottomScal
 	vec.normalise();
 	vectorToWorldPlane(vec, planes[3]);
 	planes[3].CheckMinMaxDir();
-	planes[3].mIsEnabled = 1;
+	planes[3].mIsEnabled = true;
 
 	mTotalPlaneCount = &planes[4] - mCullPlanes;
 }
@@ -241,12 +241,12 @@ void CullFrustum::createViewPlanes()
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, 1.0f), planes[0]);
 	planes[0].mPlane.mOffset += mNear;
 	planes[0].CheckMinMaxDir();
-	planes[0].mIsEnabled = 1;
+	planes[0].mIsEnabled = true;
 
 	vectorToWorldPlane(Vector3f(0.0f, 0.0f, -1.0f), planes[1]);
 	planes[1].mPlane.mOffset -= 2600.0f;
 	planes[1].CheckMinMaxDir();
-	planes[1].mIsEnabled = 1;
+	planes[1].mIsEnabled = true;
 
 	mViewPlaneIdx = &planes[2] - mCullPlanes;
 

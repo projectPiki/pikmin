@@ -173,7 +173,7 @@ struct KoganeAi : public PaniAnimKeyListener {
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
-	u8 mInWater;                              // _04
+	bool mInWater;                            // _04
 	KoganeGenRippleCallBack* mRippleCallBack; // _08
 	Kogane* mKogane;                          // _0C
 	int mDropCount;                           // _10

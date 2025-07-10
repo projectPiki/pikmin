@@ -41,7 +41,8 @@ ActBridge::ActBridge(Piki* piki)
  */
 void ActBridge::init(Creature* creature)
 {
-	mClimbingBridge = _33 = 0;
+	_33                   = 0;
+	mClimbingBridge       = false;
 	mPiki->mActionState   = 2;
 	mPiki->mEmotion       = PikiEmotion::Happy;
 	mBridge               = nullptr;
@@ -214,7 +215,7 @@ int ActBridge::exeClimb()
 void ActBridge::initApproach()
 {
 	mState          = STATE_Approach;
-	mClimbingBridge = 0;
+	mClimbingBridge = false;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
@@ -279,7 +280,7 @@ void ActBridge::doWork(int mins)
 	InteractBuild build(mPiki, mStageIdx, mins / 60.0f);
 	mBridge->stimulate(build);
 	mStartWorkTime = gameflow.mWorldClock.mMinutes;
-	mIsAttackReady = 0;
+	mIsAttackReady = FALSE;
 	// UNUSED FUNCTION
 }
 
@@ -293,7 +294,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 	STACK_PAD_VAR(1);
 	switch (event.mEventType) {
 	case KEY_LoopEnd:
-		mIsAttackReady = 1;
+		mIsAttackReady = TRUE;
 		break;
 	case KEY_PlayEffect:
 		if (mPiki->aiCullable() && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
@@ -301,7 +302,7 @@ void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	case KEY_Finished:
-		mAnimationFinished = 1;
+		mAnimationFinished = true;
 		break;
 	}
 }
@@ -479,7 +480,7 @@ void ActBridge::newInitWork()
 {
 	mState          = STATE_Work;
 	mStartWorkTime  = gameflow.mWorldClock.mMinutes;
-	mIsAttackReady  = 0;
+	mIsAttackReady  = FALSE;
 	mCollisionCount = 0;
 	_2A             = 0;
 
@@ -488,7 +489,7 @@ void ActBridge::newInitWork()
 	}
 
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
-	mAnimationFinished = 0;
+	mAnimationFinished = false;
 	if (AIPerf::bridgeFast) {
 		mPiki->setCreatureFlag(CF_DisableMovement);
 	}

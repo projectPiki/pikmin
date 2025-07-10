@@ -108,12 +108,12 @@ void ActRescue::animationKeyUpdated(PaniAnimKeyEvent& event)
 	switch (event.mEventType) {
 	case KEY_Action0:
 		if (mState == STATE_Rescue || (!mThrowReady && mState == STATE_Throw)) {
-			mGotAnimationAction = 1;
+			mGotAnimationAction = true;
 		}
 		break;
 	case KEY_Finished:
 		if (!mThrowReady && mState == STATE_Throw) {
-			mAnimationFinished = 1;
+			mAnimationFinished = true;
 		}
 		break;
 	}
@@ -158,7 +158,7 @@ void ActRescue::initRescue()
 	mState = STATE_Rescue;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_ThrowWait, this), PaniMotionInfo(PIKIANIM_ThrowWait));
 	mPiki->enableMotionBlend();
-	mGotAnimationAction = 0;
+	mGotAnimationAction = false;
 }
 
 /*
@@ -226,9 +226,9 @@ int ActRescue::exeGo()
 void ActRescue::initThrow()
 {
 	mState              = STATE_Throw;
-	mGotAnimationAction = 0;
-	mAnimationFinished  = 0;
-	mThrowReady         = 1;
+	mGotAnimationAction = false;
+	mAnimationFinished  = false;
+	mThrowReady         = true;
 }
 
 /*
@@ -246,7 +246,7 @@ int ActRescue::exeThrow()
 		f32 diff     = atan2f(dir.x, dir.z);
 		f32 angle    = angDist(diff, mPiki->mFaceDirection);
 		if (absF(angle) < 0.25132743f) {
-			mThrowReady = 0;
+			mThrowReady = false;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Throw, this), PaniMotionInfo(PIKIANIM_Throw));
 			PRINT("THROW MOTION START\n");
 		}
@@ -267,7 +267,7 @@ int ActRescue::exeThrow()
 			mDrowningPiki->mTargetVelocity = throwVel;
 			PRINT("throw Piki !\n");
 		}
-		mGotAnimationAction = 0;
+		mGotAnimationAction = false;
 	}
 
 	if (mAnimationFinished) {

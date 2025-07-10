@@ -42,8 +42,8 @@ struct DualCreature : public DynCreature {
 	// _00      = VTBL
 	// _00-_43C = DynCreature
 	bool mIsRealDynamics;        // _43C
-	u8 mIsCollisionInitialised;  // _43D
-	u8 _43E;                     // _43E
+	bool mIsCollisionInitialised; // _43D
+	bool _43E;                    // _43E
 	bool mIsDynamicsSimpleFixed; // _43F
 };
 

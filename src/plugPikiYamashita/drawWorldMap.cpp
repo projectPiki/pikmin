@@ -418,7 +418,7 @@ struct WorldMapCursorMgr {
 	void setLandingFlag(bool doSet)
 	{
 		if (doSet) {
-			mIsLanding = 1;
+			mIsLanding = true;
 			SeSystem::playSysSe(SYSSE_SELECT_DECIDE);
 
 			if (mExhaustGenerators[0]) {

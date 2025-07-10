@@ -99,7 +99,7 @@ struct DrawContainer {
 	Texture* mPikminTextures[3];    // _1B8
 	Texture* mWindowTextures[3];    // _1C4
 	Texture* mContainerTextures[3]; // _1D0
-	u8 mIsActive;                   // _1DC
+	bool mIsActive;                 // _1DC
 };
 
 /**

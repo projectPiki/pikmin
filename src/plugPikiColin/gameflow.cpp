@@ -200,7 +200,7 @@ void GameFlow::menuToggleTimers(Menu& menu)
  */
 void GameFlow::menuTogglePrint(Menu& menu)
 {
-	gsys->mTogglePrint ^= 1;
+	gsys->mTogglePrint ^= TRUE;
 	sprintf(menu.mCurrentItem->mName, "Toggle Print %s", (gsys->mTogglePrint) ? " [on]" : "[off]");
 }
 
@@ -233,7 +233,7 @@ void GameFlow::menuToggleDExtra(Menu& menu)
  */
 void GameFlow::menuToggleBlur(Menu& menu)
 {
-	gsys->mToggleBlur ^= 1;
+	gsys->mToggleBlur ^= true;
 	sprintf(menu.mCurrentItem->mName, "Toggle Blur %s", (gsys->mToggleBlur) ? " [on]" : "[off]");
 }
 
@@ -559,7 +559,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mLevelBannerTexture   = setLoadBanner("intro/nintendo.bti");
 	mLevelBannerFadeValue = 1.0f;
 	Jac_SceneSetup(0, 0);
-	mRedLoadLogo = 1;
+	mRedLoadLogo = TRUE;
 
 	PRINT("starting loading\n");
 	gsys->startLoading(&mGameLoadIdler, true, 0);
@@ -595,8 +595,8 @@ void GameFlow::hardReset(BaseApp* baseApp)
  */
 void GameFlow::softReset()
 {
-	int togglePrint    = gsys->mTogglePrint;
-	gsys->mTogglePrint = 0;
+	BOOL togglePrint   = gsys->mTogglePrint;
+	gsys->mTogglePrint = FALSE;
 
 	if (mGameSectionID != mNextSectionID) {
 		gsys->resetHeap(1, 2);
@@ -677,17 +677,17 @@ void GameFlow::softReset()
 	mEffectDurationTimer = 15.0f;
 	mTargetEffectAlpha   = 255.0f;
 	mAppTickCounter      = 0;
-	gsys->mTogglePrint   = 1;
+	gsys->mTogglePrint   = TRUE;
 	PRINT("*--------------- %.2fk free : %d files, %.1fk took %.1f secs : %.1f mb/sec\n",
 	      (u32)gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f, gsys->mDvdOpenFiles, gsys->mDvdBytesRead / 1024.0f, mLoadTimeSeconds,
 	      gsys->mDvdBytesRead / (1024.0f * 1024.0f) / mLoadTimeSeconds);
 	gsys->mTogglePrint = togglePrint;
 	mGenFlow->add(mGameSection);
 	_33C                    = FALSE;
-	mIsUiOverlayActive      = 0;
+	mIsUiOverlayActive      = FALSE;
 	_348                    = 0;
 	_34C                    = 0;
-	mIsGameplayInputEnabled = 1;
+	mIsGameplayInputEnabled = TRUE;
 	mNextSectionID          = mGameSectionID;
 
 	STACK_PAD_VAR(2);

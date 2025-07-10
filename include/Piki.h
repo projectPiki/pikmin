@@ -209,7 +209,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		mLookatTarget = other;
 
 		mLookTimer = 0;
-		mIsLooking = 0;
+		mIsLooking = false;
 
 		mLookAtTarget.reset();
 	}
@@ -220,7 +220,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 		mVerticalRotation   = 0.0f;
 		mHorizontalRotation = 0.0f;
 		mLookTimer          = 0;
-		mIsLooking          = 0;
+		mIsLooking          = false;
 
 		mLookAtTarget.reset();
 	}
@@ -247,7 +247,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Vector3f mSplineControlPts[4];        // _2F8
 	s16 mNumRoutePoints;                  // _328
 	Creature* mRouteTargetCreature;       // _32C
-	u8 mIsLooking;                        // _330
+	bool mIsLooking;                      // _330
 	f32 _334;                             // _334
 	SmartPtr<Creature> mLookAtTarget;     // _338
 	Vector3f* mLookatTarget;              // _33C
@@ -311,8 +311,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	Colour mDefaultColour;                // _50C
 	u16 mColor;                           // _510, red/yellow/blue
 	int mFloweringTimer;                  // _514
-	u8 _518;                              // _518
-	u8 _519;                              // _519
+	bool _518;                            // _518
+	bool _519;                            // _519
 	u32 _51C;                             // _51C, unknown
 	int mHappa;                           // _520, leaf/bud/flower - see PikiHappa enum
 	u16 mFiredState;                      // _524, 0:none, 1:fired, 2:recovering

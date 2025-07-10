@@ -790,8 +790,8 @@ void UfoItem::startTakeoff()
  */
 void UfoItem::startAI(int)
 {
-	mShouldLightActivate = 0;
-	mIsMenuOpen          = 0;
+	mShouldLightActivate = false;
+	mIsMenuOpen          = false;
 
 	if (playerState->isTutorial()) {
 		setTroubleEffect(true);
@@ -815,7 +815,7 @@ void UfoItem::startAI(int)
 	setPca1Effect(false);
 	setPca2Effect(false);
 
-	mNeedPathfindRefresh = 1;
+	mNeedPathfindRefresh = true;
 
 	mSeContext = &mShipSe;
 	mSeContext->setContext(this, 7);
@@ -899,7 +899,7 @@ bool UfoItem::accessible()
  */
 void UfoItem::startAccess()
 {
-	mIsMenuOpen = 1;
+	mIsMenuOpen = true;
 	startConeEffect(false);
 
 	mAnimator.startMotion(0, &PaniMotionInfo(16, this));
@@ -913,7 +913,7 @@ void UfoItem::startAccess()
  */
 void UfoItem::finishAccess()
 {
-	mIsMenuOpen = 0;
+	mIsMenuOpen = false;
 	UtEffectMgr::kill(mConeEffectId);
 	mAnimator.setMotionSpeed(0, 30.0f);
 }
@@ -1071,6 +1071,6 @@ void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
 		mWaypointID   = routeMgr->findNearestWayPoint('test', getGoalPos(), false)->mIndex;
 		Vector3f goal = getGoalPos();
 		PRINT("*** UFO ROUTE INDEX = %d (%.1f %.1f %.1f)\n", mWaypointID, goal.x, goal.y, goal.z);
-		mNeedPathfindRefresh = 0;
+		mNeedPathfindRefresh = false;
 	}
 }

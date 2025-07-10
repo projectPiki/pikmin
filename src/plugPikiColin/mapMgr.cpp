@@ -962,7 +962,7 @@ void MapMgr::initShape()
 		mCollShape->add(body->mCollObj);
 	}
 
-	mResetPending = 1;
+	mResetPending = true;
 }
 
 /*
@@ -983,8 +983,8 @@ void MapMgr::updateSimulation()
 {
 	if (mResetPending) {
 		mDynSimulator->resetWorld();
-		mResetPending            = 0;
-		mDynSimulator->mIsPaused = 0;
+		mResetPending            = false;
+		mDynSimulator->mIsPaused = false;
 	}
 
 	f32 time = gsys->getFrameTime();
@@ -1126,7 +1126,7 @@ void MapMgr::refresh(Graphics& gfx)
 		// this goes in the if condition above in the DLL, but fixes the stack in DOL if it's just empty.
 		if (!mController->keyDown(KBBTN_DPAD_UP)) { }
 		mDynMaterials.animate(nullptr);
-		gfx.mHasTexGen = 1;
+		gfx.mHasTexGen = TRUE;
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
@@ -1137,16 +1137,16 @@ void MapMgr::refresh(Graphics& gfx)
 		gfx.useMatrix(Matrix4f::ident, 0);
 		mMapShape->drawculled(gfx, *gfx.mCamera, &mDynMaterials);
 		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
-		gfx.mHasTexGen   = 0;
+		gfx.mHasTexGen   = FALSE;
 
 		FOREACH_NODE(DynCollShape, mCollShape->mChild, coll)
 		{
 			gfx.calcViewMatrix(coll->mTransformMtx, coll->mWorldMatrix);
 			gfx.useMatrix(coll->mWorldMatrix, 0);
-			gfx.mHasTexGen = 1;
+			gfx.mHasTexGen = TRUE;
 			gfx.setLighting(true, nullptr);
 			coll->refresh(gfx);
-			gfx.mHasTexGen = 0;
+			gfx.mHasTexGen = FALSE;
 		}
 		mDynSimulator->Render(gfx);
 	}
@@ -1270,7 +1270,7 @@ void MapMgr::drawXLU(Graphics& gfx)
 		mDayMgr->setFog(gfx, nullptr);
 		// DLL only condition
 		// if (!mController->keyDown(KBBTN_DPAD_DOWN)) {
-		gfx.mHasTexGen = 1;
+		gfx.mHasTexGen = TRUE;
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
@@ -1462,7 +1462,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 		mDebugCollCount = 0;
 		mActiveTriCount = 0;
 		MATCHING_STOP_TIMER("mapPost");
-		gfx.mHasTexGen = 0;
+		gfx.mHasTexGen = FALSE;
 	}
 }
 
@@ -1891,8 +1891,8 @@ CreatureCollPart* MapMgr::requestCollPart(ObjCollInfo* info, Creature* obj)
 ShadowCaster::ShadowCaster()
     : CoreNode("")
 {
-	int togglePrint    = !!gsys->mTogglePrint;
-	gsys->mTogglePrint = 1;
+	bool togglePrint   = gsys->mTogglePrint;
+	gsys->mTogglePrint = TRUE;
 	mLightCamera.mPosition.set(0.0f, 10.0f, 0.0f);
 	mLightCamera.mFocus.set(0.0f, 0.0f, 0.00001f);
 	mLightCamera.mRotation.set(0.0f, 0.0f, 0.0f);

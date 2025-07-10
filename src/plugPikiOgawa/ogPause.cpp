@@ -67,7 +67,7 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
 	mTextBox3->hide();
 
 	mState = PAUSE_NULL;
-	_00    = 0;
+	_00    = false;
 
 	// this might be P2DTextBox instead, unsure
 	mBackPane1 = static_cast<P2DPicture*>(_14->search('back', true));
@@ -100,7 +100,7 @@ void zen::ogScrPauseMgr::start(bool p1)
 	mDrawMenu1->start(-1);
 	mState      = PAUSE_Unk1;
 	mFrameTimer = 0.0f;
-	_00         = 1;
+	_00         = true;
 }
 
 /*
@@ -148,7 +148,7 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 		} else {
 			mBlackPane->setAlpha(0);
 			mState = mState2;
-			_00    = 0;
+			_00    = false;
 		}
 		break;
 

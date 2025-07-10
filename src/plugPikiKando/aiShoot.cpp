@@ -27,7 +27,7 @@ ActShoot::ActShoot(Piki* piki)
 {
 	setChildren(CHILD_COUNT, new ActGoto(piki), new ActGoto::Initialiser(220.0f, 100.0f, nullptr), new ActShootCreature(piki), nullptr);
 	mTarget.clear();
-	mTargetIsPlayer = 0;
+	mTargetIsPlayer = false;
 }
 
 /*
@@ -45,11 +45,11 @@ void ActShoot::init(Creature* target)
 	if (target->mObjType == OBJTYPE_Navi) {
 		mNavi           = static_cast<Navi*>(target);
 		newTarget       = findTarget();
-		mTargetIsPlayer = 1;
+		mTargetIsPlayer = true;
 	} else {
 		mNavi             = nullptr;
 		mTargetObjectPool = 0;
-		mTargetIsPlayer   = 0;
+		mTargetIsPlayer   = false;
 		newTarget         = target;
 	}
 

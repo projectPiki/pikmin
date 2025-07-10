@@ -388,9 +388,9 @@ Piki* GoalItem::exitPiki()
 		leg = 2;
 	}
 	CollPart* legColl          = mCollInfo->getSphere(leg_ids[leg]);
-	pikiMgr->containerExitMode = 1;
+	pikiMgr->containerExitMode = true;
 	Piki* piki                 = (Piki*)pikiMgr->birth();
-	pikiMgr->containerExitMode = 0;
+	pikiMgr->containerExitMode = false;
 	if (!piki) {
 		ERROR("*** PIKI BIRTH FAILED !!!\n");
 		return nullptr;
@@ -600,7 +600,7 @@ void GoalItem::updateConeEmit()
  */
 void GoalItem::startAI(int)
 {
-	_3F4     = 1;
+	_3F4     = true;
 	mSpotEfx = nullptr;
 	mHaloEfx = nullptr;
 	setSpotActive(false);

@@ -2464,7 +2464,7 @@ void Piki::init(Navi* navi)
 	_528                 = 0.0f;
 	mLookAtTarget.clear();
 	mLookatTarget = nullptr;
-	mIsLooking    = 0;
+	mIsLooking    = false;
 	forceFinishLook();
 	mEmotion          = PikiEmotion::None;
 	mCarryingShipPart = nullptr;
@@ -2497,7 +2497,7 @@ void Piki::init(Navi* navi)
 	mWallObj          = nullptr;
 	_4EC              = 0.0f;
 	_4F0              = 0.0f;
-	_519              = 0;
+	_519              = false;
 	_51C              = 0;
 	mMotionSpeed      = 1.0f;
 	mNavi             = navi;

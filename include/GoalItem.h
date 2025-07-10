@@ -122,7 +122,7 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 	zen::particleGenerator* mSuckEfx; // _3E8
 	bool _3EC;                        // _3EC
 	int _3F0;                         // _3F0
-	u8 _3F4;                          // _3F4
+	bool _3F4;                        // _3F4
 	bool _3F5;                        // _3F5
 	bool mIsClosing;                  // _3F6
 	f32 mConeSizeTimer;               // _3F8

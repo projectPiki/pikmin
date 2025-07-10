@@ -37,7 +37,7 @@ ActAttack::ActAttack(Piki* piki)
 	setName("attack");
 	setChildren(1, new ActJumpAttack(piki), nullptr);
 	mOther.clear();
-	mIsPlayer = 0;
+	mIsPlayer = false;
 }
 
 /*
@@ -61,15 +61,15 @@ void ActAttack::init(Creature* creature)
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
 		mPlayerObject = nullptr;
 		_20           = 0;
-		mIsPlayer     = 0;
+		mIsPlayer     = false;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
 		mPlayerObject = creature;
-		mIsPlayer     = 1;
+		mIsPlayer     = true;
 		creature      = findTarget();
 	} else {
 		mPlayerObject = nullptr;
 		_20           = 0;
-		mIsPlayer     = 0;
+		mIsPlayer     = false;
 	}
 
 	if (creature) {
@@ -82,8 +82,8 @@ void ActAttack::init(Creature* creature)
 	}
 
 	seMgr->joinBattle();
-	mHasLost          = 0;
-	mIsAttackFinished = 0;
+	mHasLost          = false;
+	mIsAttackFinished = false;
 }
 
 /*
@@ -93,8 +93,8 @@ void ActAttack::init(Creature* creature)
  */
 void ActAttack::startLost()
 {
-	mHasLost          = 1;
-	mIsAttackFinished = 0;
+	mHasLost          = true;
+	mIsAttackFinished = false;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, this), PaniMotionInfo(PIKIANIM_Sagasu2));
 }
 
@@ -108,7 +108,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
 	switch (event.mEventType) {
 	case KEY_Finished:
 		if (mHasLost) {
-			mIsAttackFinished = 1;
+			mIsAttackFinished = true;
 		}
 		break;
 	case KEY_PlayEffect:
@@ -132,7 +132,7 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActAttack::resume()
 {
-	mHasLost = 0;
+	mHasLost = false;
 }
 
 /*
@@ -324,7 +324,7 @@ void ActAttack::cleanup()
 	seMgr->leaveBattle();
 	mPiki->endStickObject();
 	mOther.reset();
-	mPiki->_519 = 0;
+	mPiki->_519 = false;
 }
 
 /*
@@ -351,7 +351,7 @@ void ActJumpAttack::init(Creature* creature)
 		mTarget.set(creature);
 	}
 	mState = 0;
-	_2C    = 0;
+	_2C    = false;
 	if (mPiki->isStickTo()) {
 		PRINT("jump attack : piki sticks to %s\n", mPiki->mStickPart ? mPiki->mStickPart->mCollInfo->mId.mStringID : "?");
 		if (mPiki->mStickPart && mPiki->mStickPart->isClimbable()) {
@@ -360,7 +360,7 @@ void ActJumpAttack::init(Creature* creature)
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
 		} else {
 			mState         = 5;
-			mIsCriticalHit = 0;
+			mIsCriticalHit = false;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 		}
 		mAttackState = 0;
@@ -405,10 +405,10 @@ f32 ActJumpAttack::getAttackSize()
 void ActJumpAttack::procStickMsg(Piki* piki, MsgStick* msg)
 {
 	mState         = 5;
-	mIsCriticalHit = 0;
+	mIsCriticalHit = false;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	mAttackState       = 0;
-	piki->mWantToStick = 0;
+	piki->mWantToStick = false;
 }
 
 /*
@@ -420,7 +420,7 @@ void ActJumpAttack::procBounceMsg(Piki* piki, MsgBounce* msg)
 {
 	if (mState == 1) {
 		mState = 0;
-		_2C    = 0;
+		_2C    = false;
 	}
 }
 
@@ -438,7 +438,7 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 
 	if (mTarget.getPtr()->mObjType == OBJTYPE_Piki && !static_cast<Piki*>(mTarget.getPtr())->isKinoko()) {
-		_2C = 1;
+		_2C = true;
 		return;
 	}
 
@@ -495,12 +495,12 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Noboru, this), PaniMotionInfo(PIKIANIM_Noboru));
 		mState = 6;
 	} else {
-		mIsCriticalHit = 0;
+		mIsCriticalHit = false;
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 	}
 
 	mAttackState       = 0;
-	piki->mWantToStick = 0;
+	piki->mWantToStick = false;
 
 	STACK_PAD_VAR(2);
 }
@@ -560,7 +560,7 @@ int ActJumpAttack::exec()
 			mPiki->mVelocity.set(100.0f * direction.x, vertSpeed, 100.0f * direction.z);
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
 			mState              = 1;
-			mPiki->mWantToStick = 1;
+			mPiki->mWantToStick = true;
 			PRINT("jump !\n");
 			break;
 		}
@@ -577,7 +577,7 @@ int ActJumpAttack::exec()
 		if ((!_2C || (_2C && mTargetCollider && !mTargetCollider->isStickable())) && angle < PI / 10.0f
 		    && dist3D < getAttackSize() + mPiki->getCentreSize() + 10.0f) {
 			if (!mPiki->isStickTo()) {
-				mIsCriticalHit = 0;
+				mIsCriticalHit = false;
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Attack, this), PaniMotionInfo(PIKIANIM_Attack));
 				mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 				mAttackState = 0;
@@ -599,7 +599,7 @@ int ActJumpAttack::exec()
 		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
 			mState = 5;
 			PRINT("start ATTACK(KUTTUKU)!\n");
-			mIsCriticalHit = 0;
+			mIsCriticalHit = false;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 			mAttackState = 0;
@@ -611,7 +611,7 @@ int ActJumpAttack::exec()
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		if (mPiki->isStickTo() && !mPiki->mGroundTriangle) {
 			mState         = 5;
-			mIsCriticalHit = 0;
+			mIsCriticalHit = false;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 			mPiki->playEventSound(target, SE_PIKI_ATTACK_VOICE);
 			mAttackState = 0;
@@ -637,7 +637,7 @@ int ActJumpAttack::exec()
 					mAttackState = 2;
 					break;
 				}
-				mIsCriticalHit = 1;
+				mIsCriticalHit = true;
 				break;
 			}
 
@@ -656,12 +656,12 @@ int ActJumpAttack::exec()
 						mAttackState = 2;
 						break;
 					}
-					mIsCriticalHit = 1;
+					mIsCriticalHit = true;
 					break;
 				}
 				break;
 			}
-			mIsCriticalHit = 1;
+			mIsCriticalHit = true;
 			break;
 		}
 		if (mAttackState == 4) {
@@ -690,7 +690,7 @@ int ActJumpAttack::exec()
 						attackHit();
 						mAttackState = 2;
 					} else {
-						mIsCriticalHit = 1;
+						mIsCriticalHit = true;
 					}
 				}
 
@@ -709,7 +709,7 @@ int ActJumpAttack::exec()
 							attackHit();
 							mAttackState = 2;
 						} else {
-							mIsCriticalHit = 1;
+							mIsCriticalHit = true;
 						}
 					}
 				}
@@ -738,7 +738,7 @@ int ActJumpAttack::exec()
 void ActJumpAttack::cleanup()
 {
 	mTarget.reset();
-	mPiki->mWantToStick = 0;
+	mPiki->mWantToStick = false;
 }
 
 /*
@@ -802,7 +802,7 @@ void ActJumpAttack::doClimb()
 			PRINT("  :: climb target distance = %.1f\n", dist);
 			if (dist < 5.0f) {
 				mState         = 5;
-				mIsCriticalHit = 0;
+				mIsCriticalHit = false;
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, this), PaniMotionInfo(PIKIANIM_Kuttuku));
 				mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 				mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);

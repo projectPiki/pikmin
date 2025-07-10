@@ -221,7 +221,7 @@ struct StdSystem {
 	char* mDataRoot;               // _50
 	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
 	int mActiveHeapIdx;            // _194
-	int mForcePrint;               // _198
+	BOOL mForcePrint;              // _198
 	MemInfo* mCurrMemInfo;         // _19C
 #if defined(VERSION_GPIP01_00)
 	u32 _1A0; // _1A0, language id, at least for PAL
@@ -399,7 +399,7 @@ struct System : public StdSystem {
 	u32 mFramesAtSampleStart;                        // _298
 	u32 mTotalFrames;                                // _29C
 	u32 mRetraceCount;                               // _2A0
-	u32 mPrevAllocType;                              // _2A4
+	BOOL mPrevAllocType;                             // _2A4, member name is seriously suspect
 	AddressNode _2A8;                                // _2A8
 	u32 mBuildMapFuncList;                           // _2BC, structure is nextItemPtr, virtAddr, char buf w/ demangled name/filename
 	SystemCache mActiveCacheList;                    // _2C0

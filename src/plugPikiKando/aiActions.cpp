@@ -59,7 +59,7 @@ void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 
 	case KEY_Finished:
-		mIsAnimationFinished = 1;
+		mIsAnimationFinished = true;
 		break;
 	}
 }
@@ -71,7 +71,7 @@ void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void ActPick::init(Creature* object)
 {
-	mIsAnimationFinished = 0;
+	mIsAnimationFinished = false;
 	mObject.set(object);
 
 	mPiki->startMotion(PaniMotionInfo(4, this), PaniMotionInfo(4));
@@ -210,7 +210,7 @@ void ActAdjust::init(Creature* target)
 	PRINT(" act adjust init\n");
 	if (target) {
 		PRINT(" target is %x\n", target);
-		mForceFail      = 0;
+		mForceFail      = false;
 		mTargetPosition = target->mPosition;
 		Vector3f dir    = mTargetPosition - mPiki->mPosition;
 		f32 adjPerFrame = mAdjustTimeLimit * (1.0f / 30.0f);
@@ -230,7 +230,7 @@ void ActAdjust::init(Creature* target)
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
 		mPiki->setCreatureFlag(CF_Unk11);
 	} else {
-		mForceFail = 1;
+		mForceFail = true;
 	}
 }
 

@@ -118,7 +118,7 @@ void SpiderAi::keyAction0()
 void SpiderAi::keyAction1()
 {
 	if (mSpider->getCurrentState() == SPIDERAI_Appear) {
-		mSpider->mSpiderLeg->mInitialised = 0;
+		mSpider->mSpiderLeg->mInitialised = false;
 	}
 }
 
@@ -212,11 +212,11 @@ void SpiderAi::checkHalfDead()
 {
 	if (mSpider->getCurrentLife() < 0.35f * mSpider->getMaxLife()) {
 		if (!mSpider->mIsHalfDead) {
-			mSpider->mIsHalfDead = 1;
+			mSpider->mIsHalfDead = true;
 			mSpider->mSpiderLeg->createHalfDeadEffect();
 		}
 	} else {
-		mSpider->mIsHalfDead = 0;
+		mSpider->mIsHalfDead = false;
 	}
 }
 
@@ -397,7 +397,7 @@ void SpiderAi::initDie(int nextState)
 	mSpider->setTargetCreature(nullptr);
 	mSpider->mAnimator.startMotion(PaniMotionInfo(0, this));
 	mSpider->setAttackTimer(0.0f);
-	mSpider->mSpiderLeg->mMotionFinishFlag = 1;
+	mSpider->mSpiderLeg->mMotionFinishFlag = true;
 	resultFlagSeen();
 }
 
@@ -494,13 +494,13 @@ void SpiderAi::dieState()
 
 	if (timer > C_SPIDER_PROP(mSpider).mDeadBombEffectDelay() && mSpider->mCanCreateDeadBombFx) {
 		mSpider->mSpiderLeg->createDeadBombEffect();
-		mSpider->mCanCreateDeadBombFx = 0;
+		mSpider->mCanCreateDeadBombFx = false;
 	}
 
 	if (timer > timings[0]) {
 		if (mSpider->_3B9) {
 			mSpider->mSpiderLeg->createPerishEffect();
-			mSpider->_3B9 = 0;
+			mSpider->_3B9 = false;
 			mSpider->setIsAtari(false);
 		}
 

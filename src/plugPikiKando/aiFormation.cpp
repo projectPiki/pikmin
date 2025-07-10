@@ -34,31 +34,31 @@ void ActFormation::animationKeyUpdated(PaniAnimKeyEvent& event)
 		if (mIsIdling || mHasStartedIdleAnim) {
 			if (mHasStartedIdleAnim) {
 				mIdleTimer          = (15.0f * gsys->getRand(1.0f)) + 15.0f;
-				mHasStartedIdleAnim = 0;
+				mHasStartedIdleAnim = false;
 			}
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait, this), PaniMotionInfo(PIKIANIM_Wait));
 			break;
 		}
 
-		if (mIsTripping == 0) {
+		if (mIsTripping == FALSE) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Korobu, this), PaniMotionInfo(PIKIANIM_Korobu));
 			Vector3f dir(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 			f32 speed              = mPiki->mVelocity.length();
 			mPiki->mVelocity       = speed * dir;
 			mPiki->mTargetVelocity = speed * dir;
 			mIdleTimer             = gsys->getRand(1.0f) + 0.8f;
-			mIsTripping            = 1;
+			mIsTripping            = TRUE;
 			break;
 		}
 
-		if (mIsTripping == 1) {
-			mIsOnFloorTripped = 0;
+		if (mIsTripping == TRUE) {
+			mIsOnFloorTripped = false;
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 			break;
 		}
 
 		if (mHasStartedRunAnim) {
-			mHasStartedRunAnim = 0;
+			mHasStartedRunAnim = false;
 			if (mDistanceToTarget > 5.0f) {
 				mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 			}
@@ -103,7 +103,7 @@ void ActFormation::getFormPoint()
 			}
 		}
 	}
-	mUseLastFormationPosition = 0;
+	mUseLastFormationPosition = false;
 }
 
 /*
@@ -117,7 +117,7 @@ void ActFormation::init(Creature* target)
 		ERROR("formation kinoko!");
 	}
 
-	mInFormation = 1;
+	mInFormation = true;
 
 	if (target->mObjType != OBJTYPE_Navi) {
 		PRINT("target is not navi (%d)\n", target->mObjType);
@@ -125,14 +125,14 @@ void ActFormation::init(Creature* target)
 
 	Navi* navi                = static_cast<Navi*>(target);
 	mFormMgr                  = navi->mFormMgr;
-	mUseLastFormationPosition = 1;
+	mUseLastFormationPosition = true;
 	mIdleTimer                = (2.0f * gsys->getRand(1.0f)) + 4.0f;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	mPiki->unsetPastel();
-	mIsIdling           = 0;
-	mHasStartedIdleAnim = 0;
-	mIsOnFloorTripped   = 0;
-	mIsTripping         = 0;
+	mIsIdling           = false;
+	mHasStartedIdleAnim = false;
+	mIsOnFloorTripped   = false;
+	mIsTripping         = FALSE;
 }
 
 /*
@@ -185,9 +185,9 @@ int ActFormation::exec()
 
 		if (!mIsIdling) {
 			mPiki->mPikiAnimMgr.finishMotion(this);
-			mIsIdling           = 1;
+			mIsIdling           = true;
 			mIdleTimer          = (15.0f * gsys->getRand(1.0f)) + 15.0f;
-			mHasStartedIdleAnim = 0;
+			mHasStartedIdleAnim = false;
 		} else {
 			mIdleTimer -= gsys->getFrameTime();
 			if (mIdleTimer < 0.0f && !mHasStartedIdleAnim) {
@@ -199,7 +199,7 @@ int ActFormation::exec()
 					randOffsetIdx = 0;
 				}
 				mPiki->startMotion(PaniMotionInfo(baseIdx[randOffsetIdx], this), PaniMotionInfo(baseIdx[randOffsetIdx]));
-				mHasStartedIdleAnim = 1;
+				mHasStartedIdleAnim = true;
 			}
 		}
 
@@ -209,14 +209,14 @@ int ActFormation::exec()
 	if (!mIsIdling && !mIsOnFloorTripped && gsys->getRand(1.0f) > 0.99f && gsys->getRand(1.0f) > 0.99f
 	    && mPiki->mVelocity.length() > mPiki->getSpeed(0.5f)) {
 		mPiki->mPikiAnimMgr.finishMotion(this);
-		mIsTripping       = 0;
-		mIsOnFloorTripped = 1;
+		mIsTripping       = FALSE;
+		mIsOnFloorTripped = true;
 		return ACTOUT_Continue;
 	}
 
 	if (mIsIdling) {
-		mIsIdling          = 0;
-		mHasStartedRunAnim = 0;
+		mIsIdling          = false;
+		mHasStartedRunAnim = false;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	}
 

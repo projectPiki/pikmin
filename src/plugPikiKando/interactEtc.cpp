@@ -55,7 +55,7 @@ bool InteractWarn::actPiki(Piki* piki)
 		piki->mFSM->transit(piki, PIKISTATE_LookAt);
 
 	} else {
-		piki->mIsWhistlePending = 1;
+		piki->mIsWhistlePending = true;
 	}
 
 	return true;

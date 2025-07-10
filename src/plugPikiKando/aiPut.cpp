@@ -40,7 +40,7 @@ void ActPutBomb::procCollideMsg(Piki* piki, MsgCollide* msg)
 		Creature* collider = msg->mEvent.mCollider;
 		if (collider->mObjType == OBJTYPE_Navi && !piki->isKinoko() && !collider->mStickListHead) {
 			rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
-			mTouchedPlayer = 1;
+			mTouchedPlayer = true;
 			piki->mNavi    = static_cast<Navi*>(collider);
 		}
 	}
@@ -127,7 +127,7 @@ void ActPutBomb::findTeki()
  */
 void ActPutBomb::init(Creature* target)
 {
-	mTouchedPlayer      = 0;
+	mTouchedPlayer      = false;
 	mState              = STATE_Unk5;
 	mPiki->mActionState = 0;
 	if (AIConstant::_instance->mConstants._124() != 0 && mPiki->isHolding()) {
@@ -335,7 +335,7 @@ int ActPutBomb::exeWait()
  */
 void ActPutBomb::initThrow()
 {
-	mAnimationFinished = 0;
+	mAnimationFinished = false;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Tanemaki, this), PaniMotionInfo(PIKIANIM_Tanemaki));
 	mState = STATE_Throw;
 }
@@ -358,7 +358,7 @@ void ActPutBomb::initPut()
 	MsgUser msg(0);
 	BombItem* bomb = static_cast<BombItem*>(held);
 	static_cast<SimpleAI*>(bomb->mStateMachine)->procMsg(bomb, &msg);
-	mAnimationFinished = 0;
+	mAnimationFinished = false;
 	mState             = STATE_Put;
 }
 
@@ -483,7 +483,7 @@ void ActPutBomb::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Put || mState == STATE_Throw) {
-			mAnimationFinished = 1;
+			mAnimationFinished = true;
 		}
 	}
 }

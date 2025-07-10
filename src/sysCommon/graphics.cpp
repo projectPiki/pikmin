@@ -423,7 +423,7 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 		mScaleInfo.extract(mCurrentFrame, vec1);
 		mRotationInfo.extract(mCurrentFrame, vec2);
 		mTranslationInfo.extract(mCurrentFrame, vec3);
-		mIsMatrixDirty = 0;
+		mIsMatrixDirty = false;
 	}
 
 	if (!mIsMatrixDirty) {
@@ -450,7 +450,7 @@ void PVWTextureData::animate(f32* p1, Matrix4f& mtx)
 		mtx.mMtx[3][2] = 0.0f;
 		mtx.mMtx[3][3] = 1.0f;
 
-		mIsMatrixDirty = 1;
+		mIsMatrixDirty = true;
 	}
 }
 

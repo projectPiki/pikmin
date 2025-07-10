@@ -148,7 +148,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	zen::particleGenerator* mDamageEfxA; // _2D4
 	zen::particleGenerator* mDamageEfxB; // _2D8
 	zen::particleGenerator* mDamageEfxC; // _2DC
-	u8 _2E0;                             // _2E0
+	bool _2E0;                           // _2E0
 	bool mIsPellet;                      // _2E1, is lying down/carryable
 	Kontroller* mKontroller;             // _2E4
 	Camera* mNaviCamera;                 // _2E8, could be CullFrustum*, but probably Camera*
@@ -161,7 +161,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Creature* _304;                      // _304, maybe Pellet*?
 	bool mIsInWater;                     // _308
 	int _30C;                            // _30C
-	int mIsCursorVisible;                // _310
+	BOOL mIsCursorVisible;               // _310
 	BurnEffect* mBurnEffect;             // _314
 	RippleEffect* mRippleEffect;         // _318
 	SlimeEffect* mSlimeEffect;           // _31C
@@ -178,14 +178,14 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	int _700;                            // _700
 	f32 _704;                            // _704
 	GoalItem* mGoalItem;                 // _708
-	u8 _70C;                             // _70C
+	bool _70C;                           // _70C
 	CPlate* mPlateMgr;                   // _710, manages pikis in navi's party
 	f32 _714;                            // _714
-	u8 _718;                             // _718
-	u8 _719;                             // _719
+	bool _718;                           // _718
+	bool _719;                           // _719
 	int _71C;                            // _71C
 	int _720;                            // _720
-	u8 _724;                             // _724
+	bool _724;                           // _724
 	u8 _725[0x72C - 0x725];              // _725, TODO: work out members
 	u32 _72C;                            // _72C, unknown
 	u32 _730;                            // _730, unknown
@@ -222,7 +222,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	u8 mNoPluckTimer;                    // _7E6, count after plucking stops to zoom out camera/stop fast pluck
 	u8 _7E7[0x7F8 - 0x7E7];              // _7E7, TODO: work out members
 	Piki* mNextThrowPiki;                // _7F8
-	u8 _7FC;                             // _7FC
+	bool _7FC;                           // _7FC
 	f32 _800;                            // _800
 	f32 _804;                            // _804
 	f32 _808;                            // _808
@@ -233,12 +233,12 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	Vector3f _81C;                       // _81C
 	u32 _828;                            // _828, unknown
 	PikiShapeObject* mNaviShapeObject;   // _82C
-	u8 _830;                             // _830
+	bool _830;                           // _830
 	PaniPikiAnimMgr mNaviAnimMgr;        // _834
 	SearchData mNaviSearchData[6];       // _8E0
 	u32 _928;                            // _928, unknown
 	int mNaviID;                         // _92C
-	u8 _930;                             // _930
+	bool _930;                           // _930
 	int _934;                            // _934
 	Vector3f _938[32];                   // _938
 	f32 _AB8;                            // _AB8
@@ -246,7 +246,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 _AC0;                            // _AC0
 	f32 _AC4;                            // _AC4
 	f32 _AC8;                            // _AC8
-	u8 _ACC;                             // _ACC
+	bool _ACC;                           // _ACC
 	CollTriInfo* _AD0;                   // _AD0
 	u8 _AD4[0x4];                        // _AD4, unknown
 	f32 _AD8;                            // _AD8

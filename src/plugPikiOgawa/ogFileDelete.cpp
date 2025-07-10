@@ -110,7 +110,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 			copyCardInfosSub();
 			ChkNewData();
 			mCanCreateNewFile     = false;
-			mMemoryCardCheckState = 1;
+			mMemoryCardCheckState = true;
 			mTailEffectSpawnTimer = 1.0f;
 		}
 #else

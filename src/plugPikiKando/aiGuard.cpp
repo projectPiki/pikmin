@@ -27,7 +27,7 @@ ActGuard::ActGuard(Piki* piki)
 	mTarget.clear();
 	mLeftGuard.clear();
 	mRightGuard.clear();
-	mIsGuardable      = 0;
+	mIsGuardable      = false;
 	mFormationSpacing = 30.0f;
 }
 
@@ -47,8 +47,8 @@ void ActGuard::init(Creature*)
 	}
 
 	mTimer       = 6.0f;
-	mIsWaiting   = 0;
-	mIsGuardable = 1;
+	mIsWaiting   = false;
+	mIsGuardable = true;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
 }
 
@@ -70,7 +70,7 @@ void ActGuard::cleanup()
 		mLeftGuard.reset();
 	}
 
-	mIsGuardable = 0;
+	mIsGuardable = false;
 
 	// this isn't elaborated on in the DLL either.
 	rand();

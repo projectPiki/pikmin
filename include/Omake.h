@@ -100,7 +100,7 @@ struct ClothFader : public AttentionCamera::Fader {
 		mFadeDuration = 1.5f;
 		mFadeTimer    = mFadeDuration;
 		reset();
-		gsys->mToggleBlur = 0;
+		gsys->mToggleBlur = false;
 
 		STACK_PAD_VAR(2);
 	}
@@ -109,7 +109,7 @@ struct ClothFader : public AttentionCamera::Fader {
 		mFadeDuration = 1.5f;
 		mFadeTimer    = mFadeDuration;
 		reset();
-		gsys->mToggleBlur = 0;
+		gsys->mToggleBlur = false;
 
 		STACK_PAD_VAR(2);
 	}
@@ -118,7 +118,7 @@ struct ClothFader : public AttentionCamera::Fader {
 		mFadeTimer -= gsys->getFrameTime();
 		if (mFadeTimer <= 0.0f) {
 			mFadeTimer        = 0.0f;
-			gsys->mToggleBlur = 1;
+			gsys->mToggleBlur = true;
 			return true;
 		}
 
@@ -130,7 +130,7 @@ struct ClothFader : public AttentionCamera::Fader {
 		mFadeTimer -= gsys->getFrameTime();
 		if (mFadeTimer <= 0.0f) {
 			mFadeTimer        = 0.0f;
-			gsys->mToggleBlur = 1;
+			gsys->mToggleBlur = true;
 			return true;
 		}
 

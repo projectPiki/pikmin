@@ -463,9 +463,9 @@ void zen::ogRaderMgr::startMenu(P2DPane* pane)
 {
 	if (mStatus == -1 && (!playerState || playerState->hasRadar())) {
 		_04  = 1;
-		_00  = 0;
-		_01  = 0;
-		_02  = 0;
+		_00  = false;
+		_01  = false;
+		_02  = false;
 		_45A = 200;
 
 		int posH = pane->getPosH();
@@ -571,10 +571,10 @@ void zen::ogRaderMgr::AreaScroll(f32* p1, f32* p2, f32 p3, f32 p4)
 		*p1 = a;
 		*p2 = b;
 		seSystem->playSysSe(SYSSE_YMENU_SCROLL);
-		_00 = 1;
+		_00 = true;
 	} else {
 		seSystem->stopSysSe(SYSSE_YMENU_SCROLL);
-		_00 = 0;
+		_00 = false;
 	}
 }
 #endif
@@ -645,7 +645,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
-		_00 = 1;
+		_00 = true;
 		_34 -= 20.0f * s;
 		_38 -= 20.0f * c;
 #else
@@ -656,7 +656,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
-		_00 = 1;
+		_00 = true;
 		_34 += 20.0f * s;
 		_38 += 20.0f * c;
 #else
@@ -668,7 +668,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
-		_00 = 1;
+		_00 = true;
 		_34 -= 20.0f * c;
 		_38 += 20.0f * s;
 #else
@@ -679,7 +679,7 @@ void zen::ogRaderMgr::updateMenu(Controller* input)
 		if (!_00) {
 			seSystem->playSysSe(JACSYS_MenuScroll);
 		}
-		_00 = 1;
+		_00 = true;
 		_34 += 20.0f * c;
 		_38 -= 20.0f * s;
 #else

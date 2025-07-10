@@ -359,7 +359,7 @@ struct GamePrefs : public CoreNode {
 		mBgmVol             = 8;
 		mSfxVol             = 8;
 		mFileNum            = 0;
-		mHasSaveGame        = 0;
+		mHasSaveGame        = false;
 		mSaveGameIndex      = 0;
 		mSpareSaveGameIndex = 0;
 		_1F                 = 0;
@@ -420,7 +420,7 @@ struct GamePrefs : public CoreNode {
 	int mFlags;             // _18
 	u8 mBgmVol;             // _1C
 	u8 mSfxVol;             // _1D
-	u8 mHasSaveGame;        // _1E
+	bool mHasSaveGame;      // _1E
 	u8 _1F;                 // _1F
 	u8 mSaveGameIndex;      // _20
 	u8 mSpareSaveGameIndex; // _21
@@ -530,7 +530,7 @@ struct GameFlow : public Node {
 	int mLanguageIndex;            // _2A8
 	u32 mIntroMovieIdCycle;        // _2AC
 	u32 mIntroMovieId;             // _2B0, could be int
-	int mIsChallengeMode;          // _2B4
+	BOOL mIsChallengeMode;         // _2B4
 	u32 _2B8;                      // _2B8, unknown
 	u32 mUpdateTickCount;          // _2BC
 	f32 mLoadTimeSeconds;          // _2C0
@@ -538,7 +538,7 @@ struct GameFlow : public Node {
 	vf32 mTargetEffectAlpha;       // _2C8
 	f32 mEffectDurationTimer;      // _2CC
 	int mAppTickCounter;           // _2D0
-	int mRedLoadLogo;              // _2D4, makes the load logo red?
+	BOOL mRedLoadLogo;             // _2D4, makes the load logo red?
 	WorldClock mWorldClock;        // _2D8
 	f32 mTimeMultiplier;           // _304
 	AnimFrameCacher* mFrameCacher; // _308
@@ -547,11 +547,11 @@ struct GameFlow : public Node {
 	f32 mLevelBannerFadeValue;     // _314
 	Texture* mLoadBannerTexture;   // _318
 	GameLoadIdler mGameLoadIdler;  // _31C
-	u8 _330;                       // _330
-	int mIsGameplayInputEnabled;   // _334
-	int mIsUiOverlayActive;        // _338
-	int _33C;                      // _33C
-	int mIsTutorialActive;         // _340
+	u8 _330[0x4];                  // _330
+	BOOL mIsGameplayInputEnabled;  // _334
+	BOOL mIsUiOverlayActive;       // _338
+	BOOL _33C;                     // _33C
+	BOOL mIsTutorialActive;        // _340
 	u8 _344[0x4];                  // _344, unknown
 	u32 _348;                      // _348, unknown
 	u32 _34C;                      // _34C, unknown

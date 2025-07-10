@@ -65,11 +65,11 @@ struct Plant : public AICreature {
 	// _00-_304 = AICreature
 	u16 mPlantType;                   // _304, see PlantTypes enum
 	f32 mMotionSpeed;                 // _308
-	u8 _30C;                          // _30C
+	bool _30C;                        // _30C
 	PaniPlantAnimator mPlantAnimator; // _310
 	SearchData mPlantSearchData[3];   // _364
 	Vector3f _388;                    // _388
-	u8 _394;                          // _394
+	bool _394;                        // _394
 	                                  // TODO: work out members
 };
 

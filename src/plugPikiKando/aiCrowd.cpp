@@ -74,7 +74,7 @@ void ActCrowd::init(Creature* target)
 	_30        = 5;
 	_32        = 0;
 	mIsWaiting = false;
-	_7E        = 0;
+	_7E        = false;
 	if (target->mObjType != OBJTYPE_Navi) {
 		PRINT("target is not navi (%d)\n", target->mObjType);
 	}
@@ -92,9 +92,9 @@ void ActCrowd::init(Creature* target)
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run), PaniMotionInfo(PIKIANIM_Run));
 	}
 	mPiki->unsetPastel();
-	_34              = 0;
-	_35              = 0;
-	_36              = 0;
+	_34              = false;
+	_35              = false;
+	_36              = false;
 	mState           = STATE_Unk0;
 	mTripLoopCounter = 0;
 	_60              = 0.0f;
@@ -168,7 +168,7 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 			}
 		}
 
-		_36 = 1;
+		_36 = true;
 	}
 }
 
@@ -181,7 +181,7 @@ void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
 	if (mCPlateSlotID != -1) {
 		_70 = *msg->mWallNormal;
-		_35 = 1;
+		_35 = true;
 	}
 }
 
@@ -521,7 +521,7 @@ int ActCrowd::exec()
 
 	if (plateDist2D < C_PIKI_PROP(mPiki)._27C()) {
 		_68 = 0.0f;
-		_34 = 0;
+		_34 = false;
 	} else if (plateDist2D < C_PIKI_PROP(mPiki)._28C()) {
 		_68 += gsys->getFrameTime();
 		if (!_34) {
@@ -530,7 +530,7 @@ int ActCrowd::exec()
 				mCPlateSlotID = mPlateMgr->getSlot(mPiki, this);
 			}
 
-			_34 = 1;
+			_34 = true;
 		}
 		if (mCPlateSlotID == -1 || _68 > C_PIKI_PROP(mPiki)._29C()) {
 			return ACTOUT_Fail;
@@ -580,7 +580,7 @@ void ActCrowd::finishZawatuki()
  */
 void ActCrowd::startBoredom()
 {
-	switch (_7C) {
+	switch (mBoredomMotion) {
 	case 0:
 		startTalk();
 		break;

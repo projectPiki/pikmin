@@ -32,7 +32,7 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 
 	mFont         = font;
 	mParentMenu   = 0;
-	mIsCustomMenu = 0;
+	mIsCustomMenu = FALSE;
 	mLastItem     = new MenuItem(MenuNavigationType::Unk0, 0, "menu", nullptr);
 
 	mLastItem->mPrev = mLastItem->mNext = mLastItem;

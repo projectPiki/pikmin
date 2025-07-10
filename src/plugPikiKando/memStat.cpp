@@ -94,7 +94,7 @@ void MemStat::end(char* name)
 	if (info) {
 		// Remove the current info from the stack
 		mStatCount--;
-		!!mStatCount;
+		static_cast<bool>(mStatCount);
 		unused             = mStatCount;
 		mCurrentInfo       = mPrevInfoStack[mStatCount];
 		gsys->mCurrMemInfo = mCurrentInfo;

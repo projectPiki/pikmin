@@ -566,14 +566,14 @@ void SpiderLeg::init(Spider* spider)
 {
 	mSpider = spider;
 	initParm(0);
-	mInitialised = 1;
-	mIsMoving    = 0;
+	mInitialised = true;
+	mIsMoving    = false;
 	mCentreVelocity.set(0.0f, 0.0f, 0.0f);
 	mCurrentCentre = mSpider->mPosition;
 
 	for (int i = 0; i < 4; i++) {
 		mStuckPikiCount[i]      = 0;
-		mPrevOnGround[i]        = 0;
+		mPrevOnGround[i]        = false;
 		mIsOnGround[i]          = false;
 		mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._264();
 
@@ -594,21 +594,21 @@ void SpiderLeg::init(Spider* spider)
 void SpiderLeg::initParm(int motionType)
 {
 	mMotionType            = (SpiderLegMotionType::Type)motionType;
-	mSoundQueued           = 1;
-	mBodyShakeStarted      = 0;
-	mIsMoving              = 1;
-	mMotionFinishFlag      = 0;
-	mPrevShakeDirection    = 0;
-	mShakeDirectionChanged = 0;
+	mSoundQueued           = true;
+	mBodyShakeStarted      = false;
+	mIsMoving              = true;
+	mMotionFinishFlag      = false;
+	mPrevShakeDirection    = false;
+	mShakeDirectionChanged = false;
 	for (int i = 0; i < 4; i++) {
-		mLegMoving[i]         = 0;
-		mLegCanMove[i]        = 0;
-		mLegMidStep[i]        = 0;
+		mLegMoving[i]         = false;
+		mLegCanMove[i]        = false;
+		mLegMidStep[i]        = false;
 		mLegMotionProgress[i] = 0.0f;
 		mJointBlendFactor[i]  = 0.0f;
 	}
 
-	mLegCanMove[0]    = 1;
+	mLegCanMove[0]    = true;
 	mOscillationPhase = 0.0f;
 	mShakePhase       = 0.0f;
 	mShakeAngularVel  = 0.0f;
@@ -654,7 +654,7 @@ void SpiderLeg::setWalkNewParameter()
 {
 	if (!mLegMoving[0] && mLegCanMove[0] && !mMotionFinishFlag) {
 		if (mSpider->getLoopCounter() > mSpider->mActiveWalkCycleCount) {
-			mMotionFinishFlag = 1;
+			mMotionFinishFlag = true;
 		} else {
 			mSpider->addLoopCounter(1);
 		}
@@ -672,11 +672,11 @@ void SpiderLeg::setShakeOffNewParameter()
 		mPrevShakeDirection = mShakeDirectionChanged;
 		mShakePhase += C_SPIDER_PROP(mSpider)._3F4() * gsys->getFrameTime();
 		if (mShakePhase > HALF_PI) {
-			mShakeDirectionChanged = 1;
+			mShakeDirectionChanged = true;
 		}
 	} else {
 		mShakePhase       = 0.0f;
-		mMotionFinishFlag = 1;
+		mMotionFinishFlag = true;
 	}
 
 	mOscillationPhase += C_SPIDER_PROP(mSpider)._3E4() * gsys->getFrameTime();

@@ -24,7 +24,7 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
-		mAction->mIsAnimFinishing = 0;
+		mAction->mIsAnimFinishing = false;
 		switch (mAction->mState) {
 		case STATE_Boid:
 			f32 angle = 2.0f * (PI * gsys->getRand(1.0f));
@@ -90,8 +90,8 @@ void ActRandomBoid::init(Creature*)
 	f32 angle   = 2.0f * (PI * gsys->getRand(1.0f));
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, mListener), PaniMotionInfo(PIKIANIM_Run, mListener));
-	mListener->_0C   = 0;
-	mIsAnimFinishing = 0;
+	mListener->_0C   = false;
+	mIsAnimFinishing = false;
 }
 
 /*
@@ -121,20 +121,20 @@ int ActRandomBoid::exec()
 		if (mState == STATE_Boid && gsys->getRand(1.0f) > 0.5f) {
 			mState = STATE_Idle;
 			mPiki->mPikiAnimMgr.finishMotion(mListener);
-			mIsAnimFinishing = 1;
+			mIsAnimFinishing = true;
 			mStateTimer += int((50.0f * gsys->getRand(1.0f))) + 30;
 		} else if (gsys->getRand(1.0f) > 0.65f) {
 			if (gsys->getRand(1.0f) > 0.75f) {
 				mState = STATE_Random;
 				if (startState != STATE_Random) {
 					mPiki->mPikiAnimMgr.finishMotion(mListener);
-					mIsAnimFinishing = 1;
+					mIsAnimFinishing = true;
 				}
 			} else {
 				mState = STATE_Boid;
 				if (startState != STATE_Stop && startState != STATE_Boid) {
 					mPiki->mPikiAnimMgr.finishMotion(mListener);
-					mIsAnimFinishing = 1;
+					mIsAnimFinishing = true;
 				}
 			}
 
@@ -146,7 +146,7 @@ int ActRandomBoid::exec()
 			mState = STATE_Stop;
 			if (startState != STATE_Stop || startState != STATE_Boid) {
 				mPiki->mPikiAnimMgr.finishMotion(mListener);
-				mIsAnimFinishing = 1;
+				mIsAnimFinishing = true;
 				return ACTOUT_Continue;
 			}
 		}

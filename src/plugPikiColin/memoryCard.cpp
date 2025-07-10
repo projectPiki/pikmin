@@ -1627,7 +1627,7 @@ int MemoryCard::doFormatCard()
  */
 bool MemoryCard::isCardInserted()
 {
-	return !!CARDProbe(0);
+	return CARDProbe(0);
 }
 
 /*
@@ -1696,9 +1696,9 @@ u32 MemoryCard::getOkSections()
 
 	PlayState state;
 	mValidBlockCount = 0;
-	mValidSlots[0]   = 0;
-	mValidSlots[1]   = 0;
-	mValidSlots[2]   = 0;
+	mValidSlots[0]   = FALSE;
+	mValidSlots[1]   = FALSE;
+	mValidSlots[2]   = FALSE;
 	for (i = 0; i < 4; i++) {
 		u32 sum           = calcChecksum(getGameFilePtr(i), 0x7FF8);
 		RamStream* stream = getGameFileStream(i);
@@ -1709,8 +1709,8 @@ u32 MemoryCard::getOkSections()
 		int val = stream->readInt();
 		if (val != sum) {
 			flag &= ~(1 << j);
-		} else if (mValidSlots[idx] == 0) {
-			mValidSlots[idx] = 1;
+		} else if (!mValidSlots[idx]) {
+			mValidSlots[idx] = TRUE;
 			mValidBlockCount++;
 		}
 		j++;
@@ -2183,7 +2183,7 @@ void MemoryCard::repairFile()
 						initFileArea(j, i);
 						writeOneGameFile(i);
 						waitPolling();
-						mValidSlots[j] = 1;
+						mValidSlots[j] = TRUE;
 						break;
 					}
 				}

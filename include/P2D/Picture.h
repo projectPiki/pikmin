@@ -94,7 +94,7 @@ struct P2DPicture : public P2DPane {
 	Texture* mTextures[1]; // _EC
 	u8 mAlpha;             // _F0
 	u8 mTextureCount;      // _F1
-	u8 _F2[1];             // _F2
+	bool _F2[1];           // _F2
 	P2DBinding mBinding;   // _F4
 	P2DMirror mMirror;     // _F8
 	bool mTumble;          // _FC

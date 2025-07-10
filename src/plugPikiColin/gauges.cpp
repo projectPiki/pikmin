@@ -245,7 +245,7 @@ LifeGauge::LifeGauge()
 	mDisplayState              = 0;
 	mFadeTransitionValue       = 0.0f;
 	mVisibleHoldTimer          = 0.0f;
-	mSnapToTargetHealth        = 0;
+	mSnapToTargetHealth        = false;
 	mCurrentDisplayHealthRatio = 1.0f;
 	mHealthRatio               = 1.0f;
 

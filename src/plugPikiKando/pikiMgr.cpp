@@ -108,8 +108,8 @@ void PikiMgr::init()
 {
 	AiTable::init();
 	mDeadPikis           = 0;
-	PikiMgr::meNukiMode  = 0;
-	PikiMgr::meBirthMode = 0;
+	PikiMgr::meNukiMode  = false;
+	PikiMgr::meBirthMode = false;
 }
 
 /*

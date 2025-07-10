@@ -117,8 +117,8 @@ struct MapSelectSetupSection : public Node {
 		if (!gameflow.mIsChallengeMode) {
 			mapWindow = new zen::DrawWorldMap;
 
-			bool old           = gsys->mTogglePrint != 0;
-			gsys->mTogglePrint = 1;
+			bool old           = gsys->mTogglePrint != FALSE;
+			gsys->mTogglePrint = TRUE;
 #if defined(VERSION_PIKIDEMO)
 			_Print("opening map window with %d : %d\n", gameflow.mLastUnlockedStageId, gameflow.mCurrentStageId);
 #else

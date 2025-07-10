@@ -100,7 +100,7 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector
 			mPivotOffsetY = u32ToFloat(((u32*)data)[3]);
 			mAnimData.set(&data[16]);
 
-			!!data;
+			static_cast<bool>(data);
 
 			u32 rotType                            = (mAnimData.mFlags.bits.mRotationType) & 0x7;
 			mOrientedDrawConfig.mOrientationSource = (mAnimData.mFlags.bits.mOrientationSource);

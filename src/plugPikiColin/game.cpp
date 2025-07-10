@@ -203,7 +203,7 @@ static char* levNames[] = {
 void OnePlayerSection::init()
 {
 	Node::init("<OnePlayerSection>");
-	u32 displayState        = gsys->mTogglePrint;
+	BOOL displayState       = gsys->mTogglePrint;
 	Section* currentSection = nullptr;
 
 	while (!currentSection) {

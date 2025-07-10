@@ -203,10 +203,10 @@ struct ogScrFileSelectMgr {
 	bool mIsLayoutActive;                                  // _278
 	titleMessageFlag mTitleMsg;                            // _27C
 	f32 mFadeOutTimer;                                     // _280
-	u8 mIsFadingOut;                                       // _284
+	bool mIsFadingOut;                                     // _284
 	f32 mTitleAnimationTimer;                              // _288
-	u8 mIsTitleAnimating;                                  // _28C
-	u8 mIsDataAnimating;                                   // _28D
+	bool mIsTitleAnimating;                                // _28C
+	bool mIsDataAnimating;                                 // _28D
 	f32 mDataAnimationTimer;                               // _290
 	int mYesNoWindowChoice;                                // _294
 	int mTailEffectCounter;                                // _298
@@ -300,16 +300,16 @@ struct ogScrFileSelectMgr {
 	f32 mSelectionConfirmEffectTimer;                      // _1184
 	f32 mTailEffectSpawnTimer;                             // _1188
 	f32 mCopyAnimTimer;                                    // _118C
-	u8 mFileSlotSelectionStates[3];                        // _1190
-	u8 mIsTailMoveEffectActive;                            // _1193
-	u8 mActiveTailMoveEffectsCount;                        // _1194
-	u8 mCanCreateNewFile;                                  // _1195
-	u8 mMemoryCardCheckState;                              // _1196
-	u8 mIsCopyingFileActive;                               // _1197
-	u8 mIsCopyCompleteMessageActive;                       // _1198
-	u8 mIsDeletingFileActive;                              // _1199
+	bool mFileSlotSelectionStates[3];                      // _1190
+	bool mIsTailMoveEffectActive;                          // _1193
+	bool _1194;                                            // _1194
+	bool mCanCreateNewFile;                                // _1195
+	bool mMemoryCardCheckState;                            // _1196
+	bool mIsCopyingFileActive;                             // _1197
+	bool mIsCopyCompleteMessageActive;                     // _1198
+	bool mIsDeletingFileActive;                            // _1199
 	int mCopyTargetFileIndex;                              // _119C
-	u8 mIsCopyTargetSelectionActive;                       // _11A0
+	bool mIsCopyTargetSelectionActive;                     // _11A0
 };
 
 } // namespace zen

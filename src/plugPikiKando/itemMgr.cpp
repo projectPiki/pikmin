@@ -590,7 +590,7 @@ void ItemCreature::init(Vector3f& pos)
 	if (mItemShapeObject) {
 		mItemAnimator.init(&mItemShapeObject->mAnimContext, mItemShapeObject->mAnimMgr, itemMgr->mItemMotionTable);
 	}
-	_3C4 = 1;
+	_3C4 = true;
 }
 
 /*
@@ -748,7 +748,7 @@ void ItemCreature::refresh(Graphics& gfx)
 	}
 
 	if (mItemShapeObject) {
-		_3C4 = 0;
+		_3C4 = false;
 		Matrix4f mtx;
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
@@ -767,7 +767,7 @@ void ItemCreature::refresh(Graphics& gfx)
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 		Matrix4f mtx;
 		gfx.calcViewMatrix(mWorldMtx, mtx);
-		gfx.mHasTexGen = 1;
+		gfx.mHasTexGen = TRUE;
 		gfx.useMatrix(mtx, 0);
 		gfx.mCamera->setBoundOffset(&mPosition);
 		mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);
@@ -1035,7 +1035,7 @@ void BuildingItem::startAI(int)
 	mItemShapeObject->mShape->makeInstance(mDynMats, 0);
 	mCounter    = 0;
 	mCurrAnimId = 0;
-	_3C4        = 1;
+	_3C4        = true;
 	mSeContext  = &mBuildSFX;
 	mSeContext->setContext(this, 4);
 	PRINT("*** \n");
@@ -1148,7 +1148,7 @@ void BuildingItem::refresh(Graphics& gfx)
 	}
 
 	if (mItemShapeObject) {
-		_3C4 = 0;
+		_3C4 = false;
 		Matrix4f mtx;
 		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);

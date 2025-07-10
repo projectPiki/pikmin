@@ -172,7 +172,7 @@ void PlayerState::initGame()
 	}
 	mResultFlags.initGame();
 	mDemoFlags.initGame();
-	mIsChallengeMode       = 0;
+	mIsChallengeMode       = false;
 	mLeftBehindPikis       = 0;
 	mLostBattlePikis       = 0;
 	mSproutedNum           = 0;
@@ -224,7 +224,7 @@ PlayerState::PlayerState()
 		mPartsToNextByDay[i]    = 0;
 	}
 
-	mIsChallengeMode       = 0;
+	mIsChallengeMode       = false;
 	mLeftBehindPikis       = 0;
 	mLostBattlePikis       = 0;
 	mSproutedNum           = 0;
@@ -300,7 +300,7 @@ bool PlayerState::happyEndable()
  */
 void PlayerState::setChallengeMode()
 {
-	mIsChallengeMode = 1;
+	mIsChallengeMode = true;
 
 	// set EVERY demo flag. no cutscenes!!
 	for (int i = 0; i < DEMOFLAG_COUNT; i++) {

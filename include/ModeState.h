@@ -81,7 +81,7 @@ struct RunningModeState : public ModeState {
 
 	// _00     = VTBL?
 	// _00-_04 = ModeState?
-	u8 mCachedPauseFlag;     // _08
+	bool mCachedPauseFlag;   // _08
 	Controller* mController; // _0C
 };
 

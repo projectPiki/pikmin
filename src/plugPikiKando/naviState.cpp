@@ -874,7 +874,8 @@ void NaviUfoState::init(Navi* navi)
 	navi->mOdoMeter.start(0.5f, 8.0f);
 	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk2 | COREPAUSE_Unk16);
 	Jac_StartPartsFindDemo(0, 1);
-	mPunchCooldownTimer = _21 = 0;
+	_21                 = false;
+	mPunchCooldownTimer = 0;
 }
 
 /*
@@ -910,7 +911,7 @@ void NaviUfoState::exec(Navi* navi)
 				mPunchCooldownTimer = 20;
 			}
 
-			_21 = 1;
+			_21 = true;
 
 			f32 rotDelta = angDist(roundAng(-onion->mFaceDirection), navi->mFaceDirection);
 			navi->mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -958,7 +959,7 @@ void NaviUfoState::exec(Navi* navi)
 		mState = 3;
 	}
 
-	if (mState == 3 && gameflow.mIsUiOverlayActive == 0) {
+	if (mState == 3 && !gameflow.mIsUiOverlayActive) {
 		transit(navi, NAVISTATE_Walk);
 	}
 }
@@ -1013,7 +1014,7 @@ NaviContainerState::NaviContainerState()
  */
 void NaviContainerState::init(Navi* navi)
 {
-	navi->_70C = 1;
+	navi->_70C = true;
 	int store  = navi->mGoalItem->getTotalStorePikis() - navi->mGoalItem->mPikisToExit;
 	rumbleMgr->stop();
 	int pikisInParty = 0;
@@ -1042,7 +1043,7 @@ void NaviContainerState::init(Navi* navi)
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField(), exitPikis + GameStat::mapPikis,
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField());
 	PRINT("FINISH START CONAINER WINDOW ***\n");
-	gameflow._33C = 1;
+	gameflow._33C = TRUE;
 	_18           = 0;
 	_1C           = 0;
 }
@@ -1164,7 +1165,7 @@ void NaviContainerState::exitPikis(Navi* navi, int p2)
 void NaviContainerState::cleanup(Navi* navi)
 {
 	PRINT("cleanup\n");
-	gameflow._33C = 0;
+	gameflow._33C = FALSE;
 	navi->mGoalItem->setSpotActive(true);
 }
 
@@ -1357,7 +1358,7 @@ void NaviFunbariState::init(Navi* navi)
 {
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Kuttuku, navi), PaniMotionInfo(PIKIANIM_Kuttuku));
 	navi->mNaviAnimMgr.finishMotion(navi);
-	navi->_ACC = 1;
+	navi->_ACC = true;
 	PRINT("funbari start\n");
 }
 
@@ -1599,7 +1600,7 @@ void NaviGeyzerState::init(Navi* navi)
 	mPlayerDirection = navi->mFaceDirection;
 	_1C              = 0.1f * (PI * gsys->getRand(1.0f));
 	navi->startMotion(PaniMotionInfo(PIKIANIM_JHit, navi), PaniMotionInfo(PIKIANIM_JHit));
-	_30 = 0;
+	_30 = false;
 	navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_OCarry, navi), PaniMotionInfo(PIKIANIM_OCarry));
 
 	mGeyserState = 2; // does this
@@ -1756,7 +1757,7 @@ void NaviGatherState::init(Navi* navi)
 	EffectParm parm(navi->mPosition);
 	UtEffectMgr::cast(kEffID, parm);
 	UtEffectMgr::cast(KandoEffect::NaviFue0, parm);
-	_18 = 0;
+	_18 = false;
 	rumbleMgr->start(RUMBLE_Unk3, 0, nullptr);
 }
 
@@ -1943,7 +1944,7 @@ void NaviReleaseState::init(Navi* navi)
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Fue, navi), PaniMotionInfo(PIKIANIM_Fue));
 	navi->enableMotionBlend();
 	seSystem->playPlayerSe(SE_BREAKUP);
-	_10 = 0;
+	_10 = false;
 }
 
 /*
@@ -1959,7 +1960,7 @@ void NaviReleaseState::exec(Navi* navi)
 
 	navi->makeVelocity(false);
 
-	if (_10 == 1 && navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
+	if (_10 == true && navi->mKontroller->keyClick(KeyConfig::_instance->mSetCursorKey.mBind)) {
 		transit(navi, NAVISTATE_Gather);
 	}
 }
@@ -2069,7 +2070,7 @@ void NaviThrowWaitState::init(Navi* navi)
 			_14->mFSM->transit(_14, PIKISTATE_GoHang);
 		}
 	}
-	_1C = 0;
+	_1C = false;
 	_18 = 0;
 
 	navi->_804 = C_NAVI_PROP(navi)._16C() + (_18 / 3.0f) * (C_NAVI_PROP(navi)._15C() - C_NAVI_PROP(navi)._16C());
@@ -2257,9 +2258,9 @@ void NaviThrowState::init(Navi* navi)
 	navi->mMotionSpeed = 30.0f;
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Throw, navi), PaniMotionInfo(PIKIANIM_Throw));
 	navi->enableMotionBlend();
-	_10 = 0;
+	_10 = false;
 	seSystem->playPlayerSe(SE_THROW);
-	_11 = 0;
+	_11 = false;
 }
 
 /*
@@ -2292,7 +2293,7 @@ void NaviThrowState::procAnimMsg(Navi* navi, MsgAnim* msg)
 
 		speed = navi->mCursorWorldPos;
 		navi->throwPiki(_14, speed);
-		_10 = 1;
+		_10 = true;
 		break;
 	case KEY_Finished:
 		transit(navi, NAVISTATE_Walk);
@@ -2387,7 +2388,7 @@ void NaviPushState::exec(Navi* navi)
 	if (dir.DP(vec) <= 0.0f || len < 0.1f) {
 		PRINT("navi finish pushing : ang %.1f len %.1f\n", dir.DP(vec), len);
 		navi->mNaviAnimMgr.finishMotion(navi);
-		_10 = 1;
+		_10 = true;
 		return;
 	}
 
@@ -2561,17 +2562,17 @@ void NaviNukuState::init(Navi* navi)
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
 		PRINT("> camera START MOTION | NUKU");
 		navi->mIsPlucking                    = true;
-		cameraMgr->mCamera->mControlsEnabled = 0;
+		cameraMgr->mCamera->mControlsEnabled = false;
 	}
 
 	if (!AIConstant::_instance->mConstants._54()) {
-		navi->_930 = 0;
+		navi->_930 = false;
 	}
-	navi->_930 = 0;
-	_12        = 0;
-	_14        = 0;
-	_13        = 0;
-	_15        = 0;
+	navi->_930 = false;
+	_12        = false;
+	_14        = false;
+	_13        = false;
+	_15        = false;
 	seSystem->playPlayerSe(SE_PIKI_PULLING);
 }
 
@@ -2627,7 +2628,7 @@ void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
 		_15        = true;
-		navi->_930 = 0;
+		navi->_930 = false;
 		seSystem->playPlayerSe(SE_PIKI_PULLED2);
 		_10--;
 		if (_10 == 0) {
@@ -2692,7 +2693,7 @@ void NaviNukuAdjustState::restart(Navi* navi)
 void NaviNukuAdjustState::init(Navi* navi)
 {
 	playerState->mDemoFlags.setFlagOnly(DEMOFLAG_NoPikminTimeout);
-	_20 = 0;
+	_20 = false;
 	PRINT("NAVI ADJUST INIT *\n");
 
 	Vector3f pos;
@@ -2745,9 +2746,9 @@ void NaviNukuAdjustState::exec(Navi* navi)
 	if (quickABS(ang) < PI / 10.0f && len < 1.0f) {
 		PRINT("dist = %f ang diff is %f\n", len, ang);
 		if (DelayPikiBirth) {
-			pikiMgr->meBirthMode = 1;
+			pikiMgr->meBirthMode = true;
 			Piki* piki           = (Piki*)pikiMgr->birth();
-			pikiMgr->meBirthMode = 0;
+			pikiMgr->meBirthMode = false;
 			if (!piki) {
 				transit(navi, NAVISTATE_Walk);
 				PRINT("nuku failed\n");
@@ -2758,9 +2759,9 @@ void NaviNukuAdjustState::exec(Navi* navi)
 			piki->setFlower(navi->_7C0->mFlowerStage);
 			piki->resetPosition(navi->_7C0->mPosition);
 
-			pikiMgr->meNukiMode = 1;
+			pikiMgr->meNukiMode = true;
 			piki->changeMode(PikiMode::FormationMode, navi);
-			pikiMgr->meNukiMode = 0;
+			pikiMgr->meNukiMode = false;
 			navi->_7C0->finishWaterEffect();
 			navi->_7C0->kill(false);
 			navi->_7C0 = nullptr;
@@ -2989,7 +2990,7 @@ void NaviAttackState::init(Navi* navi)
 	_18                                                     = 0.0f;
 	_14                                                     = 0.0f;
 	seSystem->playPlayerSe(SE_PLAYER_PUNCH);
-	_12 = 0;
+	_12 = false;
 }
 
 /*
@@ -3239,7 +3240,7 @@ void NaviDeadState::init(Navi* navi)
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
 	cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
-	cameraMgr->mCamera->mIsActive = 0;
+	cameraMgr->mCamera->mIsActive = false;
 	seMgr->setPikiNum(0);
 	navi->releasePikis();
 	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
@@ -3395,7 +3396,7 @@ void NaviStartingState::procCollideMsg(Navi* navi, MsgCollide* msg)
 	navi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, navi), PaniMotionInfo(PIKIANIM_Sagasu2));
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	_32 = 0;
+	_32 = false;
 }
 
 /*
@@ -3499,7 +3500,7 @@ void NaviPartsAccessState::init(Navi* navi)
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	gameflow.mGameInterface->message(14, 0);
 	GameCoreSection::startPause(0x8001);
-	_10 = 0;
+	_10 = false;
 
 	int id = PelletMgr::getUfoIndexFromID(((Pellet*)navi->_304)->mConfig->mModelId.mId) + 1;
 	Jac_StartPartsFindDemo(id, 0);
@@ -3585,7 +3586,7 @@ void NaviUfoAccessState::init(Navi* navi)
  */
 void NaviUfoAccessState::exec(Navi* navi)
 {
-	if (_10 == 1 && gameflow.mIsUiOverlayActive == 0) {
+	if (_10 == true && !gameflow.mIsUiOverlayActive) {
 		PRINT("TRANSIT TO WALK !\n");
 		transit(navi, NAVISTATE_Walk);
 	}

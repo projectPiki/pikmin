@@ -64,9 +64,9 @@ void PomAi::initAI(Pom* pom)
 	}
 
 	mPom->setAnimTimer(30.0f);
-	mHasCollided        = 1;
-	mPlaySound          = 0;
-	mIsOpening          = 0;
+	mHasCollided        = true;
+	mPlaySound          = false;
+	mIsOpening          = false;
 	mPrevStickPikiCount = 0;
 	mReleasedSeedCount  = 0;
 
@@ -125,7 +125,7 @@ void PomAi::keyAction0()
 void PomAi::keyAction1()
 {
 	if (mPom->getCurrentState() == 2) {
-		mIsOpening = 0;
+		mIsOpening = false;
 	}
 }
 
@@ -228,15 +228,15 @@ void PomAi::collidePetal(Creature* collider)
  */
 void PomAi::setCollideSound(Creature* collider)
 {
-	mHasCollided = 1;
+	mHasCollided = true;
 
 	// don't trigger collision sound for pikis flying into flower
 	if (collider->mObjType == OBJTYPE_Piki) {
 		if (static_cast<Piki*>(collider)->getState() != PIKISTATE_Flying) {
-			mPlaySound = 1;
+			mPlaySound = true;
 		}
 	} else {
-		mPlaySound = 1;
+		mPlaySound = true;
 	}
 }
 

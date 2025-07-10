@@ -225,14 +225,14 @@ KingBody::KingBody(King*)
 void KingBody::init(King* king)
 {
 	mKing                 = king;
-	mIsBlending           = 0;
+	mIsBlending           = false;
 	mBlendingRatio        = 0.0f;
 	mMoveSpeed            = 0.0f;
-	mDoFallSalivaEffect   = 0;
-	mDoSpreadSalivaEffect = 0;
+	mDoFallSalivaEffect   = false;
+	mDoSpreadSalivaEffect = false;
 
 	for (int i = 0; i < 2; i++) {
-		mPrevIsFootOnGround[i]      = 1;
+		mPrevIsFootOnGround[i]      = true;
 		mIsFootOnGround[i]          = true;
 		mIsFootGeneratingRipples[i] = false;
 		mFootMapAttr[i]             = ATTR_NULL;
@@ -252,7 +252,7 @@ void KingBody::init(King* king)
 void KingBody::initBlending(f32 blendRate)
 {
 	if (mBlendingRatio > 0.0f) {
-		mIsBlending = 1;
+		mIsBlending = true;
 	}
 	mBlendingRatio = 0.00001f;
 	mBlendingRate  = blendRate;

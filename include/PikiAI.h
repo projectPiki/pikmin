@@ -280,9 +280,9 @@ struct TopAction : public Action {
 	// _00     = VTBL
 	// _00-_14 = Action
 	MotionListener* mListener; // _14
-	u8 mIsDebugDraw;           // _18
+	bool mIsDebugDraw;         // _18
 	bool mIsSuspended;         // _19
-	u8 mIsAnimating;           // _1A
+	bool mIsAnimating;         // _1A
 	int _1C;                   // _1C
 	Creature* mTarget;         // _20
 	int _24;                   // _24
@@ -327,7 +327,7 @@ struct ActAdjust : public Action {
 	f32 mAdjustTimer;         // _28
 	f32 mTurnSpeed;           // _2C
 	Vector3f mVelocity;       // _30
-	u8 mForceFail;            // _3C
+	bool mForceFail;          // _3C
 };
 
 /**
@@ -356,10 +356,10 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	// _18     = PaniAnimKeyListener
-	u8 mHasLost;               // _1C
-	u8 mIsAttackFinished;      // _1D
-	u8 mIsCriticalHit;         // _1E
-	u8 mIsPlayer;              // _1F
+	bool mHasLost;             // _1C
+	bool mIsAttackFinished;    // _1D
+	bool mIsCriticalHit;       // _1E
+	bool mIsPlayer;            // _1F
 	Traversable* _20;          // _20, idk what this is but it's something inheriting from this
 	SmartPtr<Creature> mOther; // _24
 	Creature* mPlayerObject;   // _28
@@ -459,17 +459,17 @@ struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
 	// unused/inlined:
 	void standUp();
 
-	void finishRest() { mIsFinished = 1; }
+	void finishRest() { mIsFinished = true; }
 
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	u8 mIsFinished;     // _18
-	int mRestState;     // _1C
-	f32 mRestTimer;     // _20, unknown
-	u8 mIsAnimFinished; // _24
-	u8 mForceComplete;  // _25
-	                    // _28-_30 = PaniAnimKeyListener
+	bool mIsFinished;     // _18
+	int mRestState;       // _1C
+	f32 mRestTimer;       // _20, unknown
+	bool mIsAnimFinished; // _24
+	bool mForceComplete;  // _25
+	                      // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -506,7 +506,7 @@ struct ActBoreSelect : public Action {
 	f32 mActionTimer;          // _14
 	bool mIsTimerActive;       // _18
 	bool mIsChildActionActive; // _19
-	u8 mStop;                  // _1A
+	bool mStop;                // _1A
 	f32 _1C;                   // _1C
 };
 
@@ -529,7 +529,7 @@ struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	int mIsLookHandledElsewhere; // _18
+	BOOL mIsLookHandledElsewhere; // _18
 	Creature* mTarget;           // _1C
 	f32 mTalkTimer;              // _20
 	bool mIsAnimFinished;        // _24
@@ -611,7 +611,7 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	int mStartAttackTime;        // _2C
 	u8 mWorkTimer;               // _30
 	u8 mFailAttackCounter;       // _31
-	u8 mIsAttackReady;           // _32
+	bool mIsAttackReady;         // _32
 };
 
 /**
@@ -670,17 +670,17 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	Bridge* mBridge;            // _18, unknown
 	u16 mState;                 // _1C
 	int mStartWorkTime;         // _20, unknown - same as _300 in gameflow
-	int mIsAttackReady;         // _24
+	BOOL mIsAttackReady;        // _24
 	u16 mCollisionCount;        // _28
 	u16 _2A;                    // _2A
 	f32 mRandomBridgeWidth;     // _2C
 	s16 mStageIdx;              // _30
-	u8 mClimbingBridge;         // _32
+	bool mClimbingBridge;       // _32
 	u8 _33;                     // _33
 	Vector3f mBridgeWallNormal; // _34
 	Vector3f mClimbingVelocity; // _40
 	u8 mActionCounter;          // _4C
-	u8 mAnimationFinished;      // _4D
+	bool mAnimationFinished;    // _4D
 	                            // _50-_58 = PaniAnimKeyListener
 };
 
@@ -762,9 +762,9 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	u16 mMode;                    // _2E
 	u16 _30;                      // _30
 	u16 _32;                      // _32
-	u8 _34;                       // _34
-	u8 _35;                       // _35
-	u8 _36;                       // _36
+	bool _34;                     // _34
+	bool _35;                     // _35
+	bool _36;                     // _36
 	u32 _38;                      // _38, unknown
 	Vector3f _3C;                 // _3C
 	Vector3f _48;                 // _48
@@ -776,9 +776,9 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	f32 _68;                      // _68
 	CPlate* mPlateMgr;            // _6C
 	Vector3f _70;                 // _70
-	u8 _7C;                       // _7C
+	u8 mBoredomMotion;            // _7C, is never initialized to anything
 	bool mIsWaiting;              // _7D
-	u8 _7E;                       // _7E
+	bool _7E;                     // _7E
 	bool mHasRoute;               // _7F
 	                              // _80-_88 = SlotChangeListner
 };
@@ -884,7 +884,7 @@ struct ActEnter : public Action {
 	GoalItem* mOnyon;       // _18
 	CollPart* mLeg;         // _1C
 	Vector3f mLastPosition; // _20
-	u8 mHasCollided;        // _2C, unknown
+	bool mHasCollided;      // _2C, unknown
 };
 
 /**
@@ -946,7 +946,7 @@ struct ActExit : public Action {
 	// _00     = VTBL
 	// _00-_14 = Action
 	Vector3f mPrevPosition; // _14
-	u8 mHasCollided;        // _20
+	bool mHasCollided;      // _20
 };
 
 /**
@@ -964,10 +964,10 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
-	f32 mElapsedTime;        // _18
-	u8 mIsAnimationComplete; // _1C
-	u8 mIsCarryEmpty;        // _1D
-	                         // _20-_24 = PaniAnimKeyListener
+	f32 mElapsedTime;          // _18
+	bool mIsAnimationComplete; // _1C
+	bool mIsCarryEmpty;        // _1D
+	                           // _20-_24 = PaniAnimKeyListener
 };
 
 /**
@@ -989,16 +989,16 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u8 mInFormation;              // _18
-	f32 mIdleTimer;               // _1C
-	FormationMgr* mFormMgr;       // _20
-	f32 mDistanceToTarget;        // _24
-	u8 mUseLastFormationPosition; // _28
-	u8 mIsIdling;                 // _29
-	u8 mHasStartedIdleAnim;       // _2A
-	u8 mIsOnFloorTripped;         // _2B
-	u8 mHasStartedRunAnim;        // _2C
-	int mIsTripping;              // _30
+	bool mInFormation;              // _18
+	f32 mIdleTimer;                 // _1C
+	FormationMgr* mFormMgr;         // _20
+	f32 mDistanceToTarget;          // _24
+	bool mUseLastFormationPosition; // _28
+	bool mIsIdling;                 // _29
+	bool mHasStartedIdleAnim;       // _2A
+	bool mIsOnFloorTripped;         // _2B
+	bool mHasStartedRunAnim;        // _2C
+	BOOL mIsTripping;               // _30
 };
 
 /**
@@ -1031,11 +1031,11 @@ struct ActFreeSelect : public Action {
 
 	// _00     = VTBL
 	// _00-_14 = Action
-	f32 mActionTimer;             // _14, timer?
-	volatile bool mIsTimerActive; // _18
-	bool mIsChildActionActive;    // _19
-	u8 mIsFinished;               // _1A
-	f32 _1C;                      // _1C
+	f32 mActionTimer;          // _14, timer?
+	bool mIsTimerActive;       // _18
+	bool mIsChildActionActive; // _19
+	bool mIsFinished;          // _1A
+	f32 _1C;                   // _1C
 };
 
 /**
@@ -1069,9 +1069,9 @@ struct ActFree : public Action, virtual PaniAnimKeyListener {
 	Vector3f mTargetPosition;     // _30
 	f32 mArrivalRadius;           // _3C
 	f32 mCollisionCooldownTimer;  // _40
-	u8 _44;                       // _44
-	u8 mTouchedPlayer;            // _45
-	u8 mIsBoidActive;             // _46
+	bool _44;                     // _44
+	bool mTouchedPlayer;          // _45
+	bool mIsBoidActive;           // _46
 	                              // _48-_50 = PaniAnimKeyListener
 };
 
@@ -1156,7 +1156,7 @@ struct ActGuard : public Action {
 	f32 mTimer;                     // _40
 	int mFormationSide;             // _44
 	bool mIsWaiting;                // _48
-	u8 mIsGuardable;                // _49
+	bool mIsGuardable;              // _49
 };
 
 /**
@@ -1191,8 +1191,8 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	int mAttackState;           // _20
 	SmartPtr<Creature> mTarget; // _24
 	CollPart* mTargetCollider;  // _28
-	u8 _2C;                     // _2C
-	u8 mIsCriticalHit;          // _2D
+	bool _2C;                   // _2C
+	bool mIsCriticalHit;        // _2D
 };
 
 /**
@@ -1314,7 +1314,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
 	SmartPtr<Creature> mObject; // _18, thing to be picked up
-	u8 mIsAnimationFinished;    // _1C
+	bool mIsAnimationFinished;  // _1C
 };
 
 /**
@@ -1443,7 +1443,7 @@ struct ActPulloutCreature : public Action, private PaniAnimKeyListener {
 	int mState;                 // _18
 	f32 mPulloutTimer;          // _1C
 	SmartPtr<Creature> mTarget; // _20
-	u8 mPulloutSuccess;         // _24
+	bool mPulloutSuccess;       // _24
 };
 
 /**
@@ -1488,11 +1488,11 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	u8 _28[0x4];             // _28, unknown
 	Vector3f _2C;            // _2C
 	f32 _38;                 // _38
-	u8 mPushObjectStopped;   // _3C
+	bool mPushObjectStopped; // _3C
 	f32 _40;                 // _40
 	u8 _44;                  // _44
 	s8 mPushCount;           // _45
-	u8 mIsPushReady;         // _46
+	bool mIsPushReady;       // _46
 	                         // _48-_50 = PaniAnimKeyListener
 };
 
@@ -1569,13 +1569,13 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u16 mState;            // _18
-	u8 mAnimationFinished; // _1A
-	u8 mTouchedPlayer;     // _1B
-	f32 mAimTimer;         // _1C
-	f32 mPlaceTimer;       // _20
-	Creature* mTarget;     // _24
-	                       // _28-_30 = PaniAnimKeyListener
+	u16 mState;              // _18
+	bool mAnimationFinished; // _1A
+	bool mTouchedPlayer;     // _1B
+	f32 mAimTimer;           // _1C
+	f32 mPlaceTimer;         // _20
+	Creature* mTarget;       // _24
+	                         // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -1642,7 +1642,7 @@ struct ActRandomBoid : public Action {
 		// _00 = VTBL
 		ActRandomBoid* mAction; // _04
 		Piki* mPiki;            // _08
-		u8 _0C;                 // _0C
+		bool _0C;               // _0C
 	};
 
 	ActRandomBoid(Piki*);
@@ -1657,7 +1657,7 @@ struct ActRandomBoid : public Action {
 	// _00-_14 = Action
 	int mState;              // _14
 	int mStateTimer;         // _18
-	u8 mIsAnimFinishing;     // _1C
+	bool mIsAnimFinishing;   // _1C
 	u32 _20;                 // _20, unknown
 	AnimListener* mListener; // _24
 };
@@ -1703,9 +1703,9 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	Piki* mDrowningPiki;            // _1C
 	u16 mTargetSurviveTimer;        // _20
 	Vector3f mRescueTargetPosition; // _24
-	u8 mGotAnimationAction;         // _30
-	u8 mAnimationFinished;          // _31
-	u8 mThrowReady;                 // _32
+	bool mGotAnimationAction;       // _30
+	bool mAnimationFinished;        // _31
+	bool mThrowReady;               // _32
 	                                // _34-_3C = PaniAnimKeyListener
 };
 
@@ -1759,7 +1759,7 @@ struct ActShoot : public AndAction {
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
-	u8 mTargetIsPlayer;             // _18
+	bool mTargetIsPlayer;           // _18
 	Traversable* mTargetObjectPool; // _1C, idk *what* but it inherits from Traversable
 	SmartPtr<Creature> mTarget;     // _20
 	Navi* mNavi;                    // _24
@@ -1840,7 +1840,7 @@ struct ActStone : public Action, private PaniAnimKeyListener {
 	u8 _1A[0x20 - 0x1A]; // _1A, unknown
 	Pebble* mCurrPebble; // _20, unknown
 	RockGen* mRockGen;   // _24
-	u8 mIsAttackReady;   // _28
+	bool mIsAttackReady; // _28
 };
 
 /**
@@ -1920,14 +1920,14 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 	u8 mPathType;                  // _88
 	int mSlotIndex;                // _8C
 	Vector3f mSpinStartPosition;   // _90
-	u8 mFinishPutting;             // _9C
-	u8 mIsLiftActionDone;          // _9D
+	bool mFinishPutting;           // _9C
+	bool mIsLiftActionDone;        // _9D
 	int mLiftRetryCount;           // _A0
 	f32 mWaitTimer;                // _A4
 	int mPathIndex;                // _A8
 	int mGoalWPIndex;              // _AC
 	Suckable* mGoal;               // _B0, either GoalItem* or UfoItem*
-	u8 mCanCarry;                  // _B4
+	bool mCanCarry;                // _B4
 	                               // _B8-_C0 = PaniAnimKeyListener
 };
 
@@ -2017,12 +2017,12 @@ struct ActWeed : public Action, private PaniAnimKeyListener {
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
-	u16 mState;            // _18
-	u8 _1A[0x6];           // _1A, unknown
-	Grass* mCurrGrass;     // _20
-	GrassGen* mGrassGen;   // _24
-	u16 _28;               // _28
-	u8 mAnimationFinished; // _2A
+	u16 mState;              // _18
+	u8 _1A[0x6];             // _1A, unknown
+	Grass* mCurrGrass;       // _20
+	GrassGen* mGrassGen;     // _24
+	u16 _28;                 // _28
+	bool mAnimationFinished; // _2A
 };
 
 /**

@@ -14,7 +14,7 @@ typedef struct DBInterface {
 } DBInterface;
 
 extern DBInterface* __DBInterface;
-extern int DBVerbose;
+extern BOOL DBVerbose;
 
 void DBInit(void);
 int DBInitComm(void*, AmcEXICallback); // possibly not this type, but some similar construction

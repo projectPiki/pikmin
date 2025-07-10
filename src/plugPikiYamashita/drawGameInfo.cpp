@@ -174,7 +174,7 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 	{
 		P2DPicture* pic = (P2DPicture*)pane;
 		_04 = _08 = 0.0f;
-		_10       = 0;
+		_10       = false;
 		_0C       = 0;
 		pic->setAlpha(0);
 		pic->setOffset(pic->getWidth() >> 1, pic->getHeight() >> 1);
@@ -204,7 +204,7 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 		} else {
 			_0C = 0;
 			if (!_10 && navi && navi->mHealth > 0.0f && navi->orimaDamaged()) {
-				_10 = 1;
+				_10 = true;
 				_04 = 255.0f;
 				_08 = 0.0f;
 			}
@@ -212,14 +212,14 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 				_04 -= 5.0f;
 			} else {
 				_04 = 0.0f;
-				_10 = 0;
+				_10 = false;
 			}
 			_08 += 15.0f * PI / 180.0f;
 		}
 
 		if (_08 > TAU) {
 			_08 -= TAU;
-			_10 = 0;
+			_10 = false;
 			if (_0C > 0) {
 				SeSystem::playSysSe(SYSSE_ORIMA_LIFEDIM);
 			}
@@ -235,7 +235,7 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 	f32 _04; // _04
 	f32 _08; // _08
 	int _0C; // _0C
-	u8 _10;  // _10
+	bool _10; // _10
 };
 
 /**
@@ -440,7 +440,7 @@ struct SunAnim {
 		P2DPicture* pic = (P2DPicture*)pane;
 		if (gameflow.mWorldClock.mTimeOfDay >= 7.0f && gameflow.mWorldClock.mTimeOfDay <= 19.0f) {
 			pic->show();
-			if (gameflow.mIsUiOverlayActive == 0) {
+			if (!gameflow.mIsUiOverlayActive) {
 				f32 t = NMathF::sin(2.0f * pane->getRotate());
 				pic->rotate(pane->getWidth() >> 1, pane->getHeight() >> 1, P2DROTATE_Unk2, pane->getRotate() + mIncrementAngle);
 				pic->setScale(0.1f * t + 0.9f);

@@ -493,10 +493,10 @@ Navi::Navi(CreatureProp* props, int naviID)
 	mPlateMgr        = nullptr;
 	_AD8             = 0.0f;
 	mNaviID          = naviID;
-	_ACC             = 0;
+	_ACC             = false;
 	_AD0             = 0;
 	mNeutralTime     = 0.0f;
-	_718             = 0;
+	_718             = false;
 	_720             = 0;
 	_71C             = 0;
 	mCurrState       = nullptr;
@@ -532,9 +532,9 @@ Navi::Navi(CreatureProp* props, int naviID)
 	memStat->end("naviStateM");
 
 	_828 = 0;
-	_724 = 0;
+	_724 = false;
 	_800 = 0.0f;
-	_7FC = 0;
+	_7FC = false;
 	_928 = 0;
 	resetCreatureFlag(CF_Unk1 | CF_Unk10);
 	mObjType = OBJTYPE_Navi;
@@ -581,7 +581,7 @@ void Navi::startKontroller()
  */
 void Navi::rideUfo()
 {
-	_2E0 = 1;
+	_2E0 = true;
 	mNaviLightEfx->kill();
 	mNaviLightGlowEfx->kill();
 }
@@ -598,8 +598,8 @@ void Navi::reset()
 	_2F4                                    = 0.0f;
 	_2F8                                    = 0.0f;
 	enableFixPos();
-	_830 = 0;
-	_2E0 = 0;
+	_830 = false;
+	_2E0 = false;
 	setPellet(false);
 	mLookAtPosPtr       = nullptr;
 	mIsPlucking         = false;
@@ -608,7 +608,7 @@ void Navi::reset()
 	_300                = 0.0f;
 	mIsInWater          = false;
 	_30C                = 0;
-	mIsCursorVisible    = 0;
+	mIsCursorVisible    = FALSE;
 	_6FC                = 1;
 	_700                = 5;
 	_79C.set(0.0f, 0.0f, 0.0f);
@@ -618,17 +618,17 @@ void Navi::reset()
 
 	GlobalShape::cursorShape->makeInstance(mNaviDynMats, 0);
 
-	_70C = 0;
+	_70C = false;
 	mStateMachine->transit(this, NAVISTATE_Walk);
 	mPlateMgr = new CPlate(mapMgr);
 
-	_719 = 0;
+	_719 = false;
 	mPlateMgr->init(mPosition);
 	_7B4         = 0;
 	mWallCollObj = nullptr;
 	mAiTickTimer = 0.0f;
 	mNaviLightPosition.set(0.0f, 0.0f, 0.0f);
-	_724 = 0;
+	_724 = false;
 
 	f32 dist = (NAVI_PROP._38C() + NAVI_PROP._39C()) * 0.5f;
 	mCursorPosition.set(dist * sinf(mFaceDirection), 0.0f, dist * cosf(mFaceDirection));
@@ -874,7 +874,7 @@ void Navi::update()
 				mIsFastPluckEnabled = false;
 				PRINT("< camera FINISH MOTION");
 				cameraMgr->mCamera->finishMotion();
-				cameraMgr->mCamera->mControlsEnabled = 1;
+				cameraMgr->mCamera->mControlsEnabled = true;
 				mNoPluckTimer                        = 0;
 			}
 		}
@@ -1101,9 +1101,9 @@ void Navi::callPikis(f32 radius)
 
 			if (sprout->canPullout() && sproutDist < radius) {
 				ERROR("cursor nuki!\n");
-				PikiMgr::meBirthMode = 1;
+				PikiMgr::meBirthMode = true;
 				Piki* piki           = static_cast<Piki*>(pikiMgr->birth());
-				PikiMgr::meBirthMode = 0;
+				PikiMgr::meBirthMode = false;
 
 				if (piki) {
 					piki->init(this);
@@ -1477,9 +1477,9 @@ bool Navi::procActionButton()
 			return true;
 		}
 
-		PikiMgr::meBirthMode = 1;
+		PikiMgr::meBirthMode = true;
 		Piki* piki           = static_cast<Piki*>(pikiMgr->birth());
-		PikiMgr::meBirthMode = 0;
+		PikiMgr::meBirthMode = false;
 
 		if (piki) {
 			piki->init(this);
@@ -1613,9 +1613,9 @@ void Navi::letPikiWork()
 		}
 
 		CollEvent event(_2FC, part, nullptr);
-		_830 = 1;
+		_830 = true;
 		piki->collisionCallback(event);
-		_830 = 0;
+		_830 = false;
 	}
 }
 
@@ -1944,11 +1944,11 @@ void Navi::makeCStick(bool p1)
 		mPlateMgr->refresh(getPlatePikis(), dist);
 
 		mPlateMgr->setPos(mPosition, newAngle, mVelocity);
-		_718 = 0;
-		_724 = 0;
+		_718 = false;
+		_724 = false;
 	} else {
 		if (!_718) {
-			_724 = 1;
+			_724 = true;
 		}
 
 		f32 backDir = mFaceDirection + PI;
@@ -1956,7 +1956,7 @@ void Navi::makeCStick(bool p1)
 			backDir = _714;
 			mPlateMgr->setPos(mPosition, backDir, mVelocity);
 		} else {
-			_718 = 1;
+			_718 = true;
 		}
 
 		mPlateMgr->refresh(getPlatePikis(), 0.0f);
@@ -2003,17 +2003,17 @@ void Navi::makeCStick(bool p1)
 		}
 
 		if (_71C == 0) {
-			_719 = 1;
+			_719 = true;
 		} else if (_71C == 1) {
-			_719              = 1;
+			_719              = true;
 			Vector3f squadSep = mPlateMgr->mPlateOffset - mPosition;
 			squadSep.normalise();
 			mPlateMgr->setPosGray(mPosition, atan2f(squadSep.x, squadSep.z), mVelocity);
 		} else if (_71C == 2) {
-			_724 = 0;
+			_724 = false;
 			if (_719) {
 				mPlateMgr->rearrangeSlot(mPosition, backDir, mVelocity);
-				_719 = 0;
+				_719 = false;
 			}
 			mPlateMgr->setPos(mPosition, backDir, mVelocity);
 		}

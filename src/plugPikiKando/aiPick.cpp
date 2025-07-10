@@ -156,13 +156,13 @@ void ActFlower::init(Creature*)
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mFSM->transit(mPiki, PIKISTATE_UNUSED32);
-	mIsAnimationComplete = 0;
+	mIsAnimationComplete = false;
 	if (!mPiki->isHolding()) {
-		mIsCarryEmpty = 1;
+		mIsCarryEmpty = true;
 		return;
 	}
 
-	mIsCarryEmpty = 0;
+	mIsCarryEmpty = false;
 	if (mPiki->mFloweringTimer + 1 >= C_PIKI_PROP(mPiki).mFlowerEnergyRequirement()) {
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_GrowUp2, this), PaniMotionInfo(PIKIANIM_GrowUp2));
 	} else {
@@ -195,7 +195,7 @@ void ActFlower::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 		break;
 	case KEY_Finished:
-		mIsAnimationComplete = 1;
+		mIsAnimationComplete = true;
 		break;
 	}
 }

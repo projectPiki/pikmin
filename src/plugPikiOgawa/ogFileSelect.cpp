@@ -136,7 +136,7 @@ void zen::ogScrFileSelectMgr::MovePaneXY()
  */
 void zen::ogScrFileSelectMgr::OpenYesNoWindow()
 {
-	mIsDataAnimating    = 1;
+	mIsDataAnimating    = true;
 	mDataAnimationTimer = 0.0f;
 	mNitaku->start();
 	mYesNoDialogPane->setScale(0.0f);
@@ -155,7 +155,7 @@ void zen::ogScrFileSelectMgr::OpenYesNoWindow()
  */
 void zen::ogScrFileSelectMgr::CloseYesNoWindow()
 {
-	mIsDataAnimating    = 0;
+	mIsDataAnimating    = false;
 	mDataAnimationTimer = 0.0f;
 }
 
@@ -568,7 +568,7 @@ void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageF
 	if (flag != mTitleMsg) {
 		mTitleMsg     = flag;
 		mFadeOutTimer = 0.0f;
-		mIsFadingOut  = 1;
+		mIsFadingOut  = true;
 	}
 
 	switch (flag) {
@@ -636,7 +636,7 @@ void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
 	if (mIsFadingOut) {
 		mFadeOutTimer += gsys->getFrameTime();
 		if (mFadeOutTimer > 5.0f) {
-			mIsFadingOut = 0;
+			mIsFadingOut = false;
 		}
 
 		f32 scale = calcPuruPuruScale(mFadeOutTimer);
@@ -657,7 +657,7 @@ void zen::ogScrFileSelectMgr::ScaleAnimeData()
 	if (mIsTitleAnimating) {
 		mTitleAnimationTimer += gsys->getFrameTime();
 		if (mTitleAnimationTimer > 5.0f) {
-			mIsTitleAnimating = 0;
+			mIsTitleAnimating = false;
 		}
 
 		f32 scale = calcPuruPuruScale(mTitleAnimationTimer);
@@ -676,7 +676,7 @@ void zen::ogScrFileSelectMgr::ScaleAnimeData()
 void zen::ogScrFileSelectMgr::setDataNumber(int p1)
 {
 	mTitleAnimationTimer = 0.0f;
-	mIsTitleAnimating    = 1;
+	mIsTitleAnimating    = true;
 	mFileInfoPane1->hide();
 	mFileInfoPane2->hide();
 	mFileInfoPane3->hide();
@@ -731,11 +731,11 @@ void zen::ogScrFileSelectMgr::setDataNumber(int p1)
 void zen::ogScrFileSelectMgr::init()
 {
 	mSelectState                    = Inactive;
-	mIsTailMoveEffectActive         = 0;
-	mActiveTailMoveEffectsCount     = 0;
-	mCanCreateNewFile               = 0;
-	mMemoryCardCheckState           = 0;
-	mIsCopyCompleteMessageActive    = 0;
+	mIsTailMoveEffectActive         = false;
+	_1194                                 = false;
+	mCanCreateNewFile               = false;
+	mMemoryCardCheckState                 = false;
+	mIsCopyCompleteMessageActive    = false;
 	mSaveMode                       = 0;
 	mMainInteractTimer              = 0.0f;
 	mIsSelectionConfirmEffectActive = 0;
@@ -945,11 +945,11 @@ void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 	mCursorMoveEffectPikminGroup = nullptr;
 	getCardFileInfos();
 
-	mIsTailMoveEffectActive      = 0;
-	mActiveTailMoveEffectsCount  = 0;
-	mCanCreateNewFile            = 0;
-	mMemoryCardCheckState        = 0;
-	mIsCopyingFileActive         = 0;
+	mIsTailMoveEffectActive      = false;
+	_1194                              = false;
+	mCanCreateNewFile            = false;
+	mMemoryCardCheckState              = false;
+	mIsCopyingFileActive         = false;
 	mSelectionChangeTimer        = 0.0f;
 	mSelectionConfirmEffectTimer = 0.0f;
 	mSelectState                 = FileChosen;
@@ -999,8 +999,8 @@ void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 
 	mIsSelectionConfirmEffectActive = 0;
 	mTitleMsg                       = SelectDataToLoadOrSave;
-	mIsFadingOut                    = 0;
-	mIsTitleAnimating               = 0;
+	mIsFadingOut                    = false;
+	mIsTitleAnimating               = false;
 
 	mDeleteCursorPicture->setAlpha(255);
 
@@ -1107,7 +1107,7 @@ void zen::ogScrFileSelectMgr::OperateSelect(Controller* controller)
 	}
 
 	if (controller->keyClick(KBBTN_B)) {
-		mIsTailMoveEffectActive = 1;
+		mIsTailMoveEffectActive = true;
 		BeginFadeOut();
 #if defined(VERSION_PIKIDEMO)
 		SeSystem::playSysSe(JACSYS_Cancel);

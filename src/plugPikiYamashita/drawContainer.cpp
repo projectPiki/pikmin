@@ -38,7 +38,7 @@ zen::DrawContainer::DrawContainer()
 {
 	mTransferDelta         = 0;
 	mDeltaPikiNum          = 0;
-	mIsActive              = 0;
+	mIsActive              = false;
 	mColor                 = COLOR_Red;
 	mInitialContainerCount = 0;
 	mContainerCapacity     = 0;
@@ -159,7 +159,7 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType color, int p2, 
 			ERROR("unknown container type %d \n", color);
 		}
 
-		mIsActive              = 1;
+		mIsActive              = true;
 		mState                 = STATE_Wait;
 		mColor                 = color;
 		mInitialContainerCount = p2;
@@ -354,7 +354,7 @@ bool zen::DrawContainer::endStatus()
 	mMarkerPicture->setAlpha(200.0f * tComp);
 	mMarkerPicture->setScale(2.0f * t + 1.0f);
 	if (t == 1.0f) {
-		mIsActive = 0;
+		mIsActive = false;
 		res       = true;
 	}
 	return res;

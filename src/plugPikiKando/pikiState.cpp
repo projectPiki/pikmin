@@ -365,7 +365,7 @@ void PikiAbsorbState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Mizunomi, piki), PaniMotionInfo(PIKIANIM_Mizunomi));
 	mState             = 0;
 	mNectar            = piki->mCurrNectar;
-	mHasAbsorbedNectar = 0;
+	mHasAbsorbedNectar = false;
 	piki->turnTo(mNectar->mPosition);
 }
 
@@ -387,7 +387,7 @@ void PikiAbsorbState::exec(Piki* piki)
 			C_SAI(nectar)->procMsg(nectar, &msg);
 		}
 
-		mHasAbsorbedNectar = 1;
+		mHasAbsorbedNectar = true;
 		break;
 	}
 
@@ -1841,7 +1841,7 @@ void PikiEmitState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_WaveJmp, piki), PaniMotionInfo(PIKIANIM_WaveJmp));
 	piki->stopAI();
 	piki->mHasCollChangedVelocity = 0;
-	mHasLanded                    = 1;
+	mHasLanded                    = true;
 }
 
 /*
@@ -1851,7 +1851,7 @@ void PikiEmitState::init(Piki* piki)
  */
 void PikiEmitState::exec(Piki* piki)
 {
-	if (mHasLanded == 0) {
+	if (!mHasLanded) {
 		piki->mVelocity.set(0.0f, 0.0f, 0.0f);
 		piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	}
@@ -1875,7 +1875,7 @@ void PikiEmitState::cleanup(Piki* piki)
 void PikiEmitState::procBounceMsg(Piki* piki, MsgBounce*)
 {
 	if (mHasLanded) {
-		mHasLanded = 0;
+		mHasLanded = false;
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Umaru, piki), PaniMotionInfo(PIKIANIM_Umaru));
 	}
 }
@@ -1943,10 +1943,10 @@ void PikiFlyingState::init(Piki* piki)
 	piki->mHasCollChangedVelocity = 0;
 	SeSystem::playPlayerSe(SE_PIKI_FLY);
 	piki->mWantToStick = true;
-	mIsFlowerGliding   = 0;
+	mIsFlowerGliding   = false;
 	mSparkleEffect.init(piki->mPosition, EffectMgr::EFF_SD_Sparkle);
 	mGroundTouchFrames = 0;
-	mHasBounced        = 0;
+	mHasBounced        = false;
 }
 
 /*
@@ -1977,7 +1977,7 @@ void PikiFlyingState::exec(Piki* piki)
 	f32 f    = 0.15f;
 	f32 val3 = val1 * f - 0.5f * 0.15f * (val1 - val2) - val2 * f;
 	if (!mIsFlowerGliding && piki->mHappa == Flower && piki->mVelocity.y <= 0.0f) {
-		mIsFlowerGliding = 1;
+		mIsFlowerGliding = true;
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Hang), PaniMotionInfo(PIKIANIM_Hang));
 		f32 val4;
 		if (piki->mColor == Yellow) {
@@ -2132,7 +2132,7 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 			piki->mTargetVelocity = bounceDir;
 		}
 
-		mHasBounced = 1;
+		mHasBounced = true;
 		return;
 	}
 
@@ -2669,7 +2669,7 @@ void PikiPushPikiState::init(Piki* piki)
 {
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Push, piki), PaniMotionInfo(PIKIANIM_Push));
 	mCollisionFrameCount = 1;
-	mIsFinishing         = 0;
+	mIsFinishing         = false;
 }
 
 /*
@@ -2681,14 +2681,14 @@ void PikiPushPikiState::exec(Piki* piki)
 {
 	if (!mIsFinishing && piki->mPushTargetPiki->getState() != PIKISTATE_Push && piki->mPushTargetPiki->getState() != PIKISTATE_PushPiki) {
 		piki->mPikiAnimMgr.finishMotion(piki);
-		mIsFinishing = 1;
+		mIsFinishing = true;
 	}
 
 	piki->mMotionSpeed = 30.0f;
 
 	if (!mIsFinishing && piki->mNavi->_764.length() <= 0.1f) {
 		piki->mPikiAnimMgr.finishMotion(piki);
-		mIsFinishing = 1;
+		mIsFinishing = true;
 	}
 
 	mCollisionFrameCount = 0;
@@ -3041,7 +3041,7 @@ void PikiAutoNukiState::init(Piki* piki)
 	Choice motionChoice[1] = { PIKIANIM_Kaifuku, 1.0f }; // lol
 	int motionIdx          = selectRandomly(motionChoice, 1);
 	piki->mPikiAnimMgr.startMotion(PaniMotionInfo(motionIdx, piki), PaniMotionInfo(motionIdx));
-	mToCreateEffect = 0;
+	mToCreateEffect = false;
 	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	piki->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
@@ -3058,7 +3058,7 @@ void PikiAutoNukiState::exec(Piki* piki)
 		Vector3f pos(piki->mPosition); // lol
 		effectMgr->create(EffectMgr::EFF_SD_DirtCloud, piki->mPosition, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_SD_DirtSpray, piki->mPosition, nullptr, nullptr);
-		mToCreateEffect = 0;
+		mToCreateEffect = false;
 	}
 }
 
@@ -3080,7 +3080,7 @@ void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
-		mToCreateEffect = 1;
+		mToCreateEffect = true;
 		SeSystem::playPlayerSe(SE_PIKI_PULLED);
 		break;
 	case KEY_Finished:
@@ -3110,7 +3110,7 @@ void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider->mObjType == OBJTYPE_Teki) {
 		mStunTimer    = 1.5f;
-		mIsInvincible = 1;
+		mIsInvincible = true;
 	}
 }
 
@@ -3124,7 +3124,7 @@ void PikiPressedState::init(Piki* piki)
 	f32 scale = 2.0f * C_PIKI_PROP(piki).mPikiDisplayScale();
 	piki->mScale.set(scale, 0.01f, scale);
 	mStunTimer    = 1.5f;
-	mIsInvincible = 1;
+	mIsInvincible = true;
 	PRINT("pressed init !\n");
 }
 
@@ -3158,7 +3158,7 @@ void PikiPressedState::exec(Piki* piki)
 	if (mStunTimer > 0.0f) {
 		mStunTimer -= gsys->getFrameTime();
 	} else {
-		mIsInvincible = 0;
+		mIsInvincible = false;
 	}
 }
 

@@ -99,7 +99,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gameflow.mMoviePlayer->setGameCamInfo(false, 60.0f, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 
 		mIsFirstFrame            = true;
-		gameflow.mIsDayEndActive = 0;
+		gameflow.mIsDayEndActive = FALSE;
 		_44                      = 0;
 #if defined(VERSION_GPIP01_00)
 		_3A8 = 0;
@@ -175,7 +175,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow._33C == FALSE && gameflow.mIsUiOverlayActive == 0) {
+			if (gameflow._33C == FALSE && !gameflow.mIsUiOverlayActive) {
 				gsys->mTimer->start("effect", true);
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {

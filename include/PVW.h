@@ -410,7 +410,7 @@ struct PVWTextureData {
 	{
 		mCurrentFrame  = 0.0f;
 		mTexture       = nullptr;
-		mIsMatrixDirty = 0;
+		mIsMatrixDirty = false;
 	}
 
 	void animate(f32*, Matrix4f&);
@@ -427,7 +427,7 @@ struct PVWTextureData {
 	u8 _UNUSED13;                    // _13
 	u8 mAnimationFactor;             // _14
 	u8 _UNUSED15;                    // _15
-	u8 mIsMatrixDirty;               // _16
+	bool mIsMatrixDirty;             // _16
 	u32 _UNUSED18;                   // _18
 	f32 mScaleX;                     // _1C
 	f32 mScaleY;                     // _20

@@ -172,7 +172,7 @@ void zen::ogScrMessageMgr::start(int page)
 	mStateEntryDelay = 3;
 	mScreenFadeTimer = 0.0f;
 	mButtonPromptPane->hide();
-	mIsInitialPageLoad = 1;
+	mIsInitialPageLoad = true;
 	if (page >= 0) {
 		setMessagePage(SearchTopPage(page));
 	}
@@ -493,7 +493,7 @@ zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
 	mBaseScreen = new P2DScreen;
 	mBaseScreen->set(path, true, true, true);
 	P2DPaneLibrary::makeResident(mBaseScreen);
-	mAlwaysShowNextPrompt = 0;
+	mAlwaysShowNextPrompt = false;
 	mCtrlTagMgr           = new ogMsgCtrlTagMgr;
 	mPageDrawDelayTimer   = 5;
 	Texture* tex          = gsys->loadTexture("bigFont.bti", true);

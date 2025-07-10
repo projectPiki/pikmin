@@ -161,7 +161,7 @@ struct PomAi : public PaniAnimKeyListener {
 	// _00-_04 = PaniAnimKeyListener
 	Pom* mPom;                                 // _04
 	bool mHasCollided;                         // _08
-	u8 mPlaySound;                             // _09
+	bool mPlaySound;                           // _09
 	bool mIsOpening;                           // _0A
 	int mPrevStickPikiCount;                   // _0C
 	int mReleasedSeedCount;                    // _10
