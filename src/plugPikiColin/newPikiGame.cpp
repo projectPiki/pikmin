@@ -744,10 +744,11 @@ ModeState* DayOverModeState::update(u32& result)
 			skipped = true;
 		}
 	}
-	if (!gameflow.mMoviePlayer->mIsActive || skipped) {
+	if (!gameflow.mMoviePlayer->mIsActive || skipped)
 #else
-	if (!gameflow.mMoviePlayer->mIsActive) {
+	if (!gameflow.mMoviePlayer->mIsActive)
 #endif
+	{
 		ModeState* state = nullptr;
 		switch (mState) {
 		case 0:
