@@ -49,7 +49,7 @@ struct Plant : public AICreature {
 
 	virtual void startAI(int);                                       // _34
 	virtual f32 getiMass() { return 0.0f; }                          // _38
-	virtual bool isAlive() { return !_30C; }                         // _88
+	virtual bool isAlive() { return !mIsCulled; }                    // _88
 	virtual void update();                                           // _E0
 	virtual void refresh(Graphics&);                                 // _EC
 	virtual void doAnimation();                                      // _108
@@ -65,7 +65,7 @@ struct Plant : public AICreature {
 	// _00-_304 = AICreature
 	u16 mPlantType;                   // _304, see PlantTypes enum
 	f32 mMotionSpeed;                 // _308
-	bool _30C;                        // _30C
+	bool mIsCulled;                   // _30C
 	PaniPlantAnimator mPlantAnimator; // _310
 	SearchData mPlantSearchData[3];   // _364
 	Vector3f _388;                    // _388
