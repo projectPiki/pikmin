@@ -218,7 +218,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	f32 _7DC;                            // _7DC
 	int mPreBlendLowerMotionID;          // _7E0
 	bool mIsPlucking;                    // _7E4
-	u8 mIsFastPluckEnabled;              // _7E5
+	u8 mFastPluckKeyTaps;                // _7E5, number of times A has been pressed to continue (fast) plucking
 	u8 mNoPluckTimer;                    // _7E6, count after plucking stops to zoom out camera/stop fast pluck
 	u8 _7E7[0x7F8 - 0x7E7];              // _7E7, TODO: work out members
 	Piki* mNextThrowPiki;                // _7F8

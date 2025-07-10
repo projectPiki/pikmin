@@ -2548,7 +2548,7 @@ void NaviNukuState::init(Navi* navi)
 	PRINT("NAVI NUKU INIT *\n");
 	navi->mMotionSpeed = 30.0f;
 
-	if (navi->mIsFastPluckEnabled) {
+	if (navi->mFastPluckKeyTaps > 0) {
 		navi->startMotion(PaniMotionInfo(PIKIANIM_Nuku_Fast, navi), PaniMotionInfo(PIKIANIM_Nuku_Fast));
 		PRINT("**** FAST NUKU\n");
 	} else {
@@ -2593,7 +2593,7 @@ void NaviNukuState::exec(Navi* navi)
 	if (_13 && navi->mKontroller->keyDown(KeyConfig::_instance->mExtractKey.mBind)) {
 		_14 = true;
 		navi->mIsPlucking;
-		navi->mIsFastPluckEnabled++;
+		navi->mFastPluckKeyTaps++;
 	}
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->_814 += gsys->getFrameTime();
@@ -2610,8 +2610,8 @@ void NaviNukuState::exec(Navi* navi)
 void NaviNukuState::cleanup(Navi* navi)
 {
 	if (!_14 && navi->mIsPlucking) {
-		PRINT("renzoku %d + 1 nuki !!\n", navi->mIsFastPluckEnabled);
-		navi->mIsFastPluckEnabled = 0;
+		PRINT("renzoku %d + 1 nuki !!\n", navi->mFastPluckKeyTaps);
+		navi->mFastPluckKeyTaps   = 0;
 		navi->mNoPluckTimer       = 0;
 	}
 	playerState->mTotalPluckedPikiCount++;
@@ -2644,11 +2644,11 @@ void NaviNukuState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			if (!navi->procActionButton()) {
 				_14 = false;
 				transit(navi, NAVISTATE_Walk);
-				navi->mIsFastPluckEnabled = 0;
+				navi->mFastPluckKeyTaps = 0;
 			}
 		} else {
 			transit(navi, NAVISTATE_Walk);
-			navi->mIsFastPluckEnabled = 0;
+			navi->mFastPluckKeyTaps = 0;
 		}
 		navi->_770 = 0;
 		break;
@@ -2720,13 +2720,13 @@ void NaviNukuAdjustState::init(Navi* navi)
 void NaviNukuAdjustState::exec(Navi* navi)
 {
 	if (navi->mKontroller->keyDown(KBBTN_B)) {
-		navi->mIsFastPluckEnabled = 0;
+		navi->mFastPluckKeyTaps = 0;
 		transit(navi, NAVISTATE_Walk);
 		return;
 	}
 
 	if (!navi->mOdoMeter.moving(navi->mPosition, _24)) {
-		navi->mIsFastPluckEnabled = 0;
+		navi->mFastPluckKeyTaps = 0;
 		transit(navi, NAVISTATE_Walk);
 		return;
 	}
