@@ -1268,21 +1268,23 @@ void MapMgr::drawXLU(Graphics& gfx)
 	if (mMapShape) {
 		MATCHING_START_TIMER("mapPost", true);
 		mDayMgr->setFog(gfx, nullptr);
-		// DLL only condition
-		// if (!mController->keyDown(KBBTN_DPAD_DOWN)) {
-		gfx.mHasTexGen = TRUE;
-		Matrix4f mtx1;
-		Matrix4f mtx2;
-		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
-		gfx.calcViewMatrix(mtx2, mtx1);
-		gfx.useMatrix(mtx1, 0);
-		gfx.setLighting(true, nullptr);
-		gfx.mRenderState = GFXRENDER_Unk3;
-		mMapShape->updateAnim(gfx, mtx1, nullptr);
-		gfx.useMatrix(Matrix4f::ident, 0);
-		mMapShape->drawshape(gfx, *gfx.mCamera, &mDynMaterials);
-		gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
-		// }
+#if 0 // DLL only condition
+		if (!mController->keyDown(KBBTN_DPAD_DOWN))
+#endif
+		{
+			gfx.mHasTexGen = TRUE;
+			Matrix4f mtx1;
+			Matrix4f mtx2;
+			mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
+			gfx.calcViewMatrix(mtx2, mtx1);
+			gfx.useMatrix(mtx1, 0);
+			gfx.setLighting(true, nullptr);
+			gfx.mRenderState = GFXRENDER_Unk3;
+			mMapShape->updateAnim(gfx, mtx1, nullptr);
+			gfx.useMatrix(Matrix4f::ident, 0);
+			mMapShape->drawshape(gfx, *gfx.mCamera, &mDynMaterials);
+			gfx.mRenderState = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
+		}
 		MATCHING_STOP_TIMER("mapPost");
 	}
 }
