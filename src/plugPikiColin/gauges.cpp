@@ -241,7 +241,7 @@ void LifeGaugeMgr::removeLG(GaugeInfo* info)
  */
 LifeGauge::LifeGauge()
 {
-	mRenderStyle               = 0;
+	mRenderStyle               = LifeGauge::Bar;
 	mDisplayState              = 0;
 	mFadeTransitionValue       = 0.0f;
 	mVisibleHoldTimer          = 0.0f;
@@ -313,7 +313,7 @@ void LifeGauge::refresh(Graphics& gfx)
 		mVisibleHoldTimer -= gsys->getFrameTime();
 		if (mVisibleHoldTimer <= 0.0f) {
 			mVisibleHoldTimer = 0.0f;
-			if (mRenderStyle == 0 || mCurrentDisplayHealthRatio <= 0.0f || mCurrentDisplayHealthRatio >= 1.0f) {
+			if (mRenderStyle == LifeGauge::Bar || mCurrentDisplayHealthRatio <= 0.0f || mCurrentDisplayHealthRatio >= 1.0f) {
 				mDisplayState = 3;
 			}
 		}
@@ -354,7 +354,7 @@ void LifeGauge::refresh(Graphics& gfx)
 
 	STACK_PAD_VAR(2);
 	if (proj1 > 0.0f && proj2 > 0.0f) {
-		if (mRenderStyle == 0) {
+		if (mRenderStyle == LifeGauge::Bar) {
 			gfx.setColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * mFadeTransitionValue)), true);
 			gfx.setAuxColour(Colour(lgborder.r, lgborder.g, lgborder.b, (int)(f32(lgborder.a) * mFadeTransitionValue)));
 			gfx.lineRectangle(RectArea(pos2.x - 19.0f, pos2.y - 10.0f, pos2.x + 19.0f, pos2.y - 6.0f));
@@ -366,41 +366,40 @@ void LifeGauge::refresh(Graphics& gfx)
 			gfx.setAuxColour(Colour(colour.r, colour.g, colour.b, (int)(f32(colour.a) * mFadeTransitionValue)));
 			gfx.fillRectangle(
 			    RectArea(pos2.x - 18.0f, pos2.y - 9.0f, pos2.x - 18.0f + (mCurrentDisplayHealthRatio * 37.0f), pos2.y - 7.0f));
-			return;
-		}
+		} else {
+			f32 a = mScale * (1.0f - proj1);
+			f32 b = a * 1.1666f;
 
-		f32 a = mScale * (1.0f - proj1);
-		f32 b = a * 1.1666f;
+			Vector3f vecs3D[4];
+			Vector2f vecs2D[4];
 
-		Vector3f vecs3D[4];
-		Vector2f vecs2D[4];
+			vecs2D[0].set(0.0f, 0.0f);
+			vecs2D[1].set(0.0f, 0.0f);
+			vecs2D[2].set(0.0f, 0.0f);
+			vecs2D[3].set(0.0f, 0.0f);
 
-		vecs2D[0].set(0.0f, 0.0f);
-		vecs2D[1].set(0.0f, 0.0f);
-		vecs2D[2].set(0.0f, 0.0f);
-		vecs2D[3].set(0.0f, 0.0f);
+			for (int i = 0; i < 32; i++) {
+				f32 angle1 = f32(i) * (11.25f * PI / 180.0f);
+				f32 angle2 = f32((i + 1) % 32) * (11.25f * PI / 180.0f);
+				vecs3D[0].set(pos2.x, pos2.y, 0.0f);
+				vecs3D[1].set(sinf(angle2) * -a + pos2.x, cosf(angle2) * -a + pos2.y, 0.0f);
+				vecs3D[2].set(sinf(angle1) * -a + pos2.x, cosf(angle1) * -a + pos2.y, 0.0f);
+				if ((mCurrentDisplayHealthRatio > 0.0f && i == 0) || i < int(32.0f * mCurrentDisplayHealthRatio)) {
+					gfx.setColour(colour, true);
+					gfx.drawOneTri(vecs3D, nullptr, vecs2D, 3);
+				} else {
+					gfx.setColour(Colour(32, 32, 32, 192), true);
+					gfx.drawOneTri(vecs3D, nullptr, vecs2D, 3);
+				}
 
-		for (int i = 0; i < 32; i++) {
-			f32 angle1 = f32(i) * (11.25f * PI / 180.0f);
-			f32 angle2 = f32((i + 1) % 32) * (11.25f * PI / 180.0f);
-			vecs3D[0].set(pos2.x, pos2.y, 0.0f);
-			vecs3D[1].set(sinf(angle2) * -a + pos2.x, cosf(angle2) * -a + pos2.y, 0.0f);
-			vecs3D[2].set(sinf(angle1) * -a + pos2.x, cosf(angle1) * -a + pos2.y, 0.0f);
-			if ((mCurrentDisplayHealthRatio > 0.0f && i == 0) || i < int(32.0f * mCurrentDisplayHealthRatio)) {
-				gfx.setColour(colour, true);
-				gfx.drawOneTri(vecs3D, nullptr, vecs2D, 3);
-			} else {
-				gfx.setColour(Colour(32, 32, 32, 192), true);
-				gfx.drawOneTri(vecs3D, nullptr, vecs2D, 3);
+				vecs3D[0].set(sinf(angle2) * -a + pos2.x, cosf(angle2) * -a + pos2.y, 0.0f);
+				vecs3D[1].set(sinf(angle2) * -b + pos2.x, cosf(angle2) * -b + pos2.y, 0.0f);
+				vecs3D[2].set(sinf(angle1) * -b + pos2.x, cosf(angle1) * -b + pos2.y, 0.0f);
+				vecs3D[3].set(sinf(angle1) * -a + pos2.x, cosf(angle1) * -a + pos2.y, 0.0f);
+
+				gfx.setColour(Colour(0, 0, 0, 255), true);
+				gfx.drawOneTri(vecs3D, nullptr, vecs2D, 4);
 			}
-
-			vecs3D[0].set(sinf(angle2) * -a + pos2.x, cosf(angle2) * -a + pos2.y, 0.0f);
-			vecs3D[1].set(sinf(angle2) * -b + pos2.x, cosf(angle2) * -b + pos2.y, 0.0f);
-			vecs3D[2].set(sinf(angle1) * -b + pos2.x, cosf(angle1) * -b + pos2.y, 0.0f);
-			vecs3D[3].set(sinf(angle1) * -a + pos2.x, cosf(angle1) * -a + pos2.y, 0.0f);
-
-			gfx.setColour(Colour(0, 0, 0, 255), true);
-			gfx.drawOneTri(vecs3D, nullptr, vecs2D, 4);
 		}
 	}
 }

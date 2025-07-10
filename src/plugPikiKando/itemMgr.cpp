@@ -1005,7 +1005,7 @@ BuildingItem::BuildingItem(int objType, CreatureProp* props, ItemShapeObject* it
 {
 	mItemShapeObject        = itemShape;
 	mStateMachine           = ai;
-	mLifeGauge.mRenderStyle = 1;
+	mLifeGauge.mRenderStyle = LifeGauge::Wheel;
 }
 
 /*
