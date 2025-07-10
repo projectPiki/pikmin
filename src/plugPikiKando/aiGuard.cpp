@@ -149,7 +149,7 @@ int ActGuard::exec()
 	setGoal();
 
 	bool doSet = false;
-	if (mFormationSide == 1) {
+	if (mFormationSide == Right) {
 		doSet = setRight();
 	} else {
 		doSet = setLeft();
@@ -158,15 +158,15 @@ int ActGuard::exec()
 	if (doSet) {
 		mIsWaiting        = true;
 		mFormationSpacing = 30.0f;
-		if (mFormationSide == 1) {
-			mFormationSide = 0;
+		if (mFormationSide == Right) {
+			mFormationSide = Left;
 		} else {
-			mFormationSide = 1;
+			mFormationSide = Right;
 		}
 		Piki* friendPiki = findFriend(mFormationSide);
 		if (friendPiki) {
 			mTarget.set(friendPiki);
-			if (mFormationSide == 1) {
+			if (mFormationSide == Right) {
 				setRight();
 			} else {
 				setLeft();
@@ -249,7 +249,7 @@ int ActGuard::checkLoop(Piki* piki)
  * Address:	800BC1B0
  * Size:	000258
  */
-Piki* ActGuard::findFriend(int idx)
+Piki* ActGuard::findFriend(int side)
 {
 	Iterator iter(pikiMgr);
 	Piki* friendPiki = nullptr;
@@ -260,11 +260,11 @@ Piki* ActGuard::findFriend(int idx)
 		if (piki != mTarget.getPtr() && piki != mPiki && piki->isVisible() && piki->mMode == PikiMode::GuardMode
 		    && static_cast<ActGuard*>(piki->mActiveAction->getCurrAction())->mIsGuardable) {
 			f32 dist = qdist2(piki, mPiki);
-			if (getLeft(piki) && idx == 0) {
+			if (getLeft(piki) && side == Left) {
 				continue;
 			}
 
-			if (getRight(piki) && idx == 1) {
+			if (getRight(piki) && side == Right) {
 				continue;
 			}
 
@@ -296,14 +296,14 @@ void ActGuard::setGoal()
 {
 	Piki* target = static_cast<Piki*>(mTarget.getPtr());
 	if (getLeft(target) && !getRight(target)) {
-		mFormationSide = 1;
+		mFormationSide = Right;
 	} else if (!getLeft(target) && getRight(target)) {
-		mFormationSide = 0;
+		mFormationSide = Left;
 	} else if (!getLeft(target) && !getRight(target)) {
 		if (gsys->getRand(1.0f) > 0.5f) {
-			mFormationSide = 1;
+			mFormationSide = Right;
 		} else {
-			mFormationSide = 0;
+			mFormationSide = Left;
 		}
 	} else {
 		mTarget.reset();
@@ -313,7 +313,7 @@ void ActGuard::setGoal()
 	Vector3f targetPos(target->mPosition);
 	f32 rad = 2.5f * target->getSize();
 
-	f32 angle = (mFormationSide == 1) ? _2C : PI - _2C;
+	f32 angle = (mFormationSide == Right) ? _2C : PI - _2C;
 
 	targetPos = targetPos + Vector3f(rad * sinf(angle), 0.0f, rad * cosf(angle));
 	_20       = targetPos;

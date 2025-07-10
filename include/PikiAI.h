@@ -530,10 +530,10 @@ struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
 	BOOL mIsLookHandledElsewhere; // _18
-	Creature* mTarget;           // _1C
-	f32 mTalkTimer;              // _20
-	bool mIsAnimFinished;        // _24
-	                             // _28-_30 = PaniAnimKeyListener
+	Creature* mTarget;            // _1C
+	f32 mTalkTimer;               // _20
+	bool mIsAnimFinished;         // _24
+	                              // _28-_30 = PaniAnimKeyListener
 };
 
 /**
@@ -1127,6 +1127,11 @@ struct ActGoto : public Action {
  * @note Size: 0x4C.
  */
 struct ActGuard : public Action {
+	enum FormationSide {
+		Left,  // 0
+		Right, // 1
+	};
+
 	ActGuard(Piki*);
 
 	virtual void dump();          // _3C
@@ -1154,7 +1159,7 @@ struct ActGuard : public Action {
 	Vector3f mLandPosition;         // _30
 	f32 mFormationSpacing;          // _3C
 	f32 mTimer;                     // _40
-	int mFormationSide;             // _44
+	FormationSide mFormationSide;   // _44
 	bool mIsWaiting;                // _48
 	bool mIsGuardable;              // _49
 };
