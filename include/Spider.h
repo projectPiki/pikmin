@@ -200,7 +200,7 @@ struct Spider : public Boss {
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsBossBgm;            // _3B8
-	bool _3B9;                  // _3B9
+	bool mCanCreatePerishFx;    // _3B9
 	bool mIsHalfDead;           // _3BA
 	bool mCanCreateDeadBombFx;  // _3BB
 	int mActiveWalkCycleCount;  // _3BC

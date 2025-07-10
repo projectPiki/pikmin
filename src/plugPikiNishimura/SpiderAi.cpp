@@ -498,9 +498,9 @@ void SpiderAi::dieState()
 	}
 
 	if (timer > timings[0]) {
-		if (mSpider->_3B9) {
+		if (mSpider->mCanCreatePerishFx) {
 			mSpider->mSpiderLeg->createPerishEffect();
-			mSpider->_3B9 = false;
+			mSpider->mCanCreatePerishFx = false;
 			mSpider->setIsAtari(false);
 		}
 

@@ -70,7 +70,7 @@ void Spider::init(Vector3f&)
 #endif
 	setIsOrganic(false);
 	mIsBossBgm            = false;
-	_3B9                  = true;
+	mCanCreatePerishFx    = true;
 	mIsHalfDead           = false;
 	mCanCreateDeadBombFx  = true;
 	mActiveWalkCycleCount = 0;
