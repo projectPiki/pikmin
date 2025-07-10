@@ -1304,9 +1304,9 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		}
 
 		// need these to be commented out, otherwise gsys does weird things in the next if block.
-		// gsys->mTimer->start("mainRender", true);
+		MATCHING_START_TIMER("mainRender", true);
 		mainRender(gfx);
-		// gsys->mTimer->stop("mainRender");
+		MATCHING_STOP_TIMER("mainRender");
 
 		if (effectMgr) {
 			if (!gameflow._33C && !gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
