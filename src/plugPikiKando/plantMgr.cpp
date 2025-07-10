@@ -74,9 +74,9 @@ void Plant::reset(int plantType)
  */
 void Plant::startAI(int)
 {
-	_30C   = false;
-	mapMgr = plantMgr->mMapMgr;
-	mProps = plantMgr->mPlantProps;
+	mIsCulled = false;
+	mapMgr    = plantMgr->mMapMgr;
+	mProps    = plantMgr->mPlantProps;
 	startMotion(0);
 	mMotionSpeed = 0.0f;
 	mPlantAnimator.startMotion(PaniMotionInfo(0));
@@ -104,7 +104,7 @@ void Plant::doAnimation()
  */
 void Plant::update()
 {
-	if (_30C) {
+	if (mIsCulled) {
 		return;
 	}
 
@@ -137,14 +137,14 @@ void Plant::refresh(Graphics& gfx)
 
 			if (!gfx.mCamera->isBoundVisible(box, 0x8000 | 0x20 | 0x10 | 0x1 | 0x2 | 0x4 | 0x8) && !_394) {
 				C_SAI(this)->start(this, PlantAI::STATE_Wait);
-				_30C = true;
+				mIsCulled = true;
 				return;
 			}
 		}
 	}
 
-	_30C = false;
-	_394 = false;
+	mIsCulled = false;
+	_394      = false;
 	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
 	Matrix4f mtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
