@@ -94,9 +94,9 @@ struct GameCoreSection : public Node {
 	bool mMovieBackCamera;            // _30
 	bool mDoneSundownWarn;            // _31
 	u32 _34;                          // _34, unknown
-	bool _38;                         // _38
-	bool _39;                         // _39
-	bool _3A;                         // _3A
+	bool mIsTimePastQuarter1;         // _38
+	bool mIsTimePastQuarter2;         // _39
+	bool mIsTimePastQuarter3;         // _3A
 	Menu* mAiPerfDebugMenu;           // _3C, unknown
 	u8 _40[0x50 - 0x40];              // _40, unknown
 	Shape* mPikiShape;                // _50, unknown

@@ -387,10 +387,10 @@ void GameCoreSection::forceDayEnd()
 	seSystem->resetSystem();
 	playerState->setDayEnd(true);
 	PRINT("------------ forceDayEnd --------------\n");
-	_3A              = true;
-	_39              = true;
-	_38              = true;
-	mDoneSundownWarn = true;
+	mIsTimePastQuarter3 = true;
+	mIsTimePastQuarter2 = true;
+	mIsTimePastQuarter1 = true;
+	mDoneSundownWarn    = true;
 	clearDeadlyPikmins();
 	enterFreePikmins();
 
@@ -852,17 +852,17 @@ void GameCoreSection::initStage()
 		pikiInfMgr.initGame();
 	}
 
-	lastDamage = false;
-	currDamage = false;
-	damageParm = 0;
-	_3A        = false;
-	_39        = false;
-	_38        = false;
+	lastDamage          = false;
+	currDamage          = false;
+	damageParm          = 0;
+	mIsTimePastQuarter3 = false;
+	mIsTimePastQuarter2 = false;
+	mIsTimePastQuarter1 = false;
 
 	if (playerState->isTutorial()) {
-		_3A = true;
-		_39 = true;
-		_38 = true;
+		mIsTimePastQuarter3 = true;
+		mIsTimePastQuarter2 = true;
+		mIsTimePastQuarter1 = true;
 	}
 
 	// hmm. not sure how to get the orphaned cmpwi x2 to spawn in the middle of this switch
@@ -1568,23 +1568,23 @@ void GameCoreSection::updateAI()
 	int start     = playerState->getStartHour();
 	int dayLength = playerState->getEndHour() - start;
 
-	int morningBell   = start + (dayLength / 4);
-	int middayBell    = start + (dayLength / 2);
-	int afternoonBell = start + (dayLength / 4) * 3;
+	int timeQuarter1 = start + (dayLength / 4);
+	int timeQuarter2 = start + (dayLength / 2);
+	int timeQuarter3 = start + (dayLength / 4) * 3;
 
 	// some nonsense
-	if (!_38 && gameflow.mWorldClock.mCurrentTime >= morningBell) {
-		_38 = true;
+	if (!mIsTimePastQuarter1 && gameflow.mWorldClock.mCurrentTime >= timeQuarter1) {
+		mIsTimePastQuarter1 = true;
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
-	} else if (!_39 && gameflow.mWorldClock.mCurrentTime >= middayBell) {
-		_39 = true;
+	} else if (!mIsTimePastQuarter2 && gameflow.mWorldClock.mCurrentTime >= timeQuarter2) {
+		mIsTimePastQuarter2 = true;
 		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNoon)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNoon);
 			gameflow.mGameInterface->message(0, 31);
 		}
-	} else if (!_3A && gameflow.mWorldClock.mCurrentTime >= afternoonBell) {
-		_3A = true;
+	} else if (!mIsTimePastQuarter3 && gameflow.mWorldClock.mCurrentTime >= timeQuarter3) {
+		mIsTimePastQuarter3 = true;
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
 	}
 
