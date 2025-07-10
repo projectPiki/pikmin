@@ -142,7 +142,7 @@ void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 {
 	if (msg->mEvent.mCollider->mObjType == OBJTYPE_Pellet && (mState == STATE_GotoLeg || mState == STATE_Climb)) {
 		PRINT("enter : collide with %s\n", ObjType::getName(msg->mEvent.mCollider->mObjType));
-		mHasCollided = 1;
+		mHasCollided = true;
 	}
 }
 

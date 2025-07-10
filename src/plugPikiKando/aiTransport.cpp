@@ -267,11 +267,11 @@ void ActTransport::init(Creature* target)
 	mStateProgress    = 0;
 	mState            = STATE_Go;
 	mWaitTimer        = 3.0f;
-	mFinishPutting    = 0;
-	mIsLiftActionDone = 0;
+	mFinishPutting    = false;
+	mIsLiftActionDone = false;
 	mGoal             = nullptr;
 	setSlotIndex();
-	mCanCarry = 0;
+	mCanCarry = false;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 }
 
@@ -299,7 +299,7 @@ void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		mIsLiftActionDone = 1;
+		mIsLiftActionDone = true;
 		break;
 	case KEY_LoopEnd:
 		if (mState == STATE_Lift) {
@@ -315,12 +315,12 @@ void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Put) {
-			mFinishPutting = 1;
+			mFinishPutting = true;
 			break;
 		}
 		if (mState == STATE_Lift) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
-			mIsLiftActionDone = 0;
+			mIsLiftActionDone = false;
 			mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		}
 		break;
@@ -400,7 +400,7 @@ int ActTransport::execJump()
 		pel->setTrySound(true);
 
 		Vector3f pelNorm(0.0f, pel->getCylinderHeight(), 0.0f);
-		mIsLiftActionDone = 0;
+		mIsLiftActionDone = false;
 		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
 
@@ -509,7 +509,7 @@ bool ActTransport::gotoLiftPos()
 		}
 
 		Vector3f pelNorm(0.0f, pellet->getCylinderHeight(), 0.0f);
-		mIsLiftActionDone = 0;
+		mIsLiftActionDone = false;
 		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pellet, nullptr, mSlotIndex, 0.0f);
 		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
@@ -598,7 +598,7 @@ void ActTransport::doLift()
 			decideGoal(pel);
 			// this isn't in the DLL, but the asm is so dumb it has to be something like this
 			// it also fixes the stack, so.
-			bool landOnly       = !!doLandOnly();
+			bool landOnly       = doLandOnly();
 			WayPoint* nearestWP = nullptr;
 			WayPoint* wpA;
 			WayPoint* wpB;
@@ -668,7 +668,7 @@ void ActTransport::doLift()
 			if (landOnly) {
 				PathFinder::clearMode();
 			}
-			mCanCarry    = 1;
+			mCanCarry    = true;
 			mPathIndex   = 0;
 			mGoalWPIndex = goalWPIdx;
 			pel->startPick();
@@ -801,7 +801,7 @@ int ActTransport::exec()
 			if (goalDir.normalise() == 0.0f) {
 				goalDir.set(0.0f, 0.0f, 0.0f);
 			}
-			mCanCarry = 1;
+			mCanCarry = true;
 
 			if (goalDistXZ < 10.0f) {
 				mState = STATE_Put;

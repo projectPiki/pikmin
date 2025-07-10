@@ -41,7 +41,7 @@ struct ogScrPauseMgr {
 	PauseStatus update(Controller*);
 	void draw(Graphics&);
 
-	u8 _00;                  // _00, unknown
+	bool _00;                // _00, unknown
 	PauseStatus mState;      // _04
 	PauseStatus mState2;     // _08
 	DrawMenu* mDrawMenu1;    // _0c

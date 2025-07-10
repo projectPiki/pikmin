@@ -30,7 +30,7 @@ struct CullingPlane {
 	int mNVertexXIndex; // _10
 	int mNVertexYIndex; // _10
 	int mNVertexZIndex; // _24
-	u8 mIsEnabled;      // _28
+	bool mIsEnabled;    // _28
 };
 
 /**

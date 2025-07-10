@@ -87,7 +87,7 @@ u32 PathFinder::findASync(PathFinder::Buffer* buf, int a, int b, bool flag)
 	client->mHandle               = handle;
 	client->mCurrentBufIdx        = 0;
 	client->mStatus               = PathStatus::Searching;
-	client->mIsBacktracking       = 0;
+	client->mIsBacktracking       = false;
 	client->mBuffer->mWayPointIdx = a;
 	if (a == b) {
 		client->mStatus     = PathStatus::Success;
@@ -192,7 +192,7 @@ void PathFinder::updateClient(Client& client, int loops)
 		WayPoint* wp = getWayPoint(client.mBuffer[client.mCurrentBufIdx].mWayPointIdx);
 
 		// If not backtracking, initialize flags for each of the up to 8 links
-		if (client.mIsBacktracking == 0) {
+		if (!client.mIsBacktracking) {
 			for (int i = 0; i < 8; i++) {
 				if (wp->mLinkIndices[i] == -1) {
 					// No link in the slot, clear the flag
@@ -234,14 +234,14 @@ void PathFinder::updateClient(Client& client, int loops)
 			if (client.mCurrentBufIdx >= mBufferSize) {
 				// Ran out of buffer slots: cannot go deeper, backtrack instead
 				client.mCurrentBufIdx--;
-				client.mIsBacktracking = 1;
+				client.mIsBacktracking = true;
 			} else {
 				client.mBuffer[client.mCurrentBufIdx].mWayPointIdx = linkIdx;
 				client.mIsBacktracking                             = false;
 			}
 		} else {
 			// No valid direction found: enter backtracking
-			client.mIsBacktracking                             = 1;
+			client.mIsBacktracking                             = true;
 			client.mBuffer[client.mCurrentBufIdx].mWayPointIdx = -1;
 			client.mCurrentBufIdx--; // Step back!
 
@@ -710,7 +710,7 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** ou
 	Plane offPlane;
 	createOffPlane(handle, offPlane, wpOff);
 
-	bool isTargetAbovePlane = !!(offPlane.dist(pos) >= 0.0f ? 1 : 0); // utterly ridiculous
+	bool isTargetAbovePlane = offPlane.dist(pos) >= 0.0f ? TRUE : FALSE; // utterly ridiculous
 
 	WayPoint* bestStart = nullptr;
 	WayPoint* bestEnd   = nullptr;
@@ -732,8 +732,8 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** ou
 				    && (!requireOpen || endWP->mIsOpen)) {
 
 					// Check if both waypoints are on the same side of the plane as the target
-					bool startAbovePlane = !!(offPlane.dist(startWP->mPosition) >= 0.0f ? 1 : 0);
-					bool endAbovePlane   = !!(offPlane.dist(endWP->mPosition) >= 0.0f ? 1 : 0);
+					bool startAbovePlane = offPlane.dist(startWP->mPosition) >= 0.0f ? TRUE : FALSE;
+					bool endAbovePlane   = offPlane.dist(endWP->mPosition) >= 0.0f ? TRUE : FALSE;
 
 					// Check if either waypoint links to the off waypoint
 					bool startLinksToOff = false;
@@ -1068,7 +1068,7 @@ void RouteMgr::initLinks()
 {
 	// this gsys stuff isn't in the DLL
 	bool check           = gsys->mPrevAllocType;
-	gsys->mPrevAllocType = 0;
+	gsys->mPrevAllocType = FALSE;
 
 	int numWPs = getNumWayPoints('test');
 	PRINT("total %d links\n", numWPs);

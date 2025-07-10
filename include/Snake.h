@@ -247,7 +247,7 @@ struct SnakeBody {
 
 	Snake* mSnake;                                               // _00
 	bool mIsDying;                                               // _04
-	u8 mUseBlend;                                                // _05
+	bool mUseBlend;                                              // _05
 	int mDeadEffectSegmentIndex;                                 // _08
 	f32 mBlendingRatio;                                          // _0C
 	f32 mBlendingRate;                                           // _10

@@ -106,8 +106,8 @@ void GameSetupSection::preCacheShapes()
 		gsys->parseArchiveDirectory(bundlePair[0], bundlePair[1]);
 	}
 
-	u32 print          = gsys->mTogglePrint;
-	gsys->mTogglePrint = 1;
+	BOOL print         = gsys->mTogglePrint;
+	gsys->mTogglePrint = TRUE;
 	gsys->mTogglePrint = print;
 
 	for (bundlePair = shapeList[0]; bundlePair[0]; bundlePair += 2) {

@@ -242,7 +242,7 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
-		mAction->mIsAnimating = 0;
+		mAction->mIsAnimating = false;
 		mAction->mChildActions[mAction->mCurrActionIdx].initialise(mAction->mTarget);
 		break;
 	}
@@ -256,7 +256,7 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
 TopAction::TopAction(Piki* piki)
     : Action(piki, false)
 {
-	mIsDebugDraw = 0;
+	mIsDebugDraw = false;
 
 	memStat->start("topaction");
 
@@ -266,7 +266,7 @@ TopAction::TopAction(Piki* piki)
 	_2C          = 1.0f;
 	_28          = 0;
 	mIsSuspended = false;
-	mIsAnimating = 0;
+	mIsAnimating = false;
 	mName        = "top action";
 
 	setChildren(PikiAction::COUNT, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr,
@@ -304,7 +304,7 @@ void TopAction::init(Creature* creature)
 	mTarget      = nullptr;
 	_2C          = 1.0f;
 	_28          = 0;
-	mIsAnimating = 0;
+	mIsAnimating = false;
 	mIsSuspended = false;
 }
 

@@ -221,7 +221,7 @@ struct TitleSetupSection : public Node {
 						PRINT("going to CHALLENGE MODE SETUP!\n");
 						mNextSectionId                   = 0x40000;
 						gameflow.mGamePrefs.mHasSaveGame = false;
-						gameflow.mIsChallengeMode        = true;
+						gameflow.mIsChallengeMode        = TRUE;
 						Jac_SceneExit(13, 0);
 						mState = 1;
 						gsys->setFade(0.0f, 3.0f);
@@ -432,7 +432,7 @@ struct TitleSetupSection : public Node {
 			gameflow.mLevelBannerFadeValue -= gsys->getFrameTime();
 			if (gameflow.mLevelBannerFadeValue < 0.0f) {
 				gameflow.mLevelBannerFadeValue = 0.0f;
-				gameflow.mRedLoadLogo          = 0;
+				gameflow.mRedLoadLogo          = FALSE;
 			} else {
 				gameflow.drawLoadLogo(gfx, false, gameflow.mLevelBannerTexture, gameflow.mLevelBannerFadeValue);
 			}
@@ -442,7 +442,7 @@ struct TitleSetupSection : public Node {
 	void menuSelectOption(Menu& parent)
 	{
 		mNextSectionId            = parent.mCurrentItem->mFilterIndex;
-		gameflow.mIsChallengeMode = 0;
+		gameflow.mIsChallengeMode = FALSE;
 		Jac_SceneExit(13, 0);
 		parent.close();
 		mState = 1;
@@ -540,7 +540,7 @@ void TitlesSection::init()
 	if (gameflow.mLanguageIndex != beforeLang) {
 		preloadLanguage();
 	}
-	gameflow.mIsChallengeMode = 0;
+	gameflow.mIsChallengeMode = FALSE;
 	gameflow._2B8             = 0;
 	gameflow.mIntroMovieId    = 0;
 

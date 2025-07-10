@@ -35,7 +35,7 @@ void TRKCopyEvent(TRKEvent* dstEvent, const TRKEvent* srcEvent)
  */
 BOOL TRKGetNextEvent(TRKEvent* event)
 {
-	BOOL status = 0;
+	BOOL status = FALSE;
 	TRKAcquireMutex(&gTRKEventQueue);
 	if (0 < gTRKEventQueue.count) {
 		TRKCopyEvent(event, &gTRKEventQueue.events[gTRKEventQueue.next]);
@@ -44,7 +44,7 @@ BOOL TRKGetNextEvent(TRKEvent* event)
 		if (gTRKEventQueue.next == 2)
 			gTRKEventQueue.next = 0;
 
-		status = 1;
+		status = TRUE;
 	}
 	TRKReleaseMutex(&gTRKEventQueue);
 	return status;

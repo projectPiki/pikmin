@@ -226,8 +226,8 @@ MovieListInfo* MoviePlayer::findMovie(int id)
  */
 void MoviePlayer::initMovie(MovieInfo* info, int)
 {
-	int old              = !!gsys->mPrevAllocType; // required for regalloc lol.
-	gsys->mPrevAllocType = 0;
+	bool old             = gsys->mPrevAllocType; // BOOL -> bool conversion required for regalloc lol.
+	gsys->mPrevAllocType = FALSE;
 	int heapid           = gsys->getHeapNum();
 	int type;
 	if (heapid == SYSHEAP_App) {
@@ -496,8 +496,8 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 		mStackInfoList.add(info);
 	}
 
-	bool printToggle   = gsys->mTogglePrint != 0;
-	gsys->mTogglePrint = 1;
+	bool printToggle   = gsys->mTogglePrint != FALSE;
+	gsys->mTogglePrint = TRUE;
 	PRINT("*--------------- %.2fk free\n", gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f);
 	gsys->mTogglePrint = printToggle;
 
@@ -524,8 +524,8 @@ void MoviePlayer::sndStartMovie(MovieInfo* info)
 #else
 	Jac_SetDemoPartsCount(playerState ? playerState->getCurrParts() : 0);
 #endif
-	u32 old              = gsys->mPrevAllocType != 0;
-	gsys->mPrevAllocType = 0;
+	bool old             = gsys->mPrevAllocType;
+	gsys->mPrevAllocType = FALSE;
 	Jac_StartDemo(info->mMovieIndex);
 	gsys->mPrevAllocType = old;
 }
@@ -675,8 +675,8 @@ void MoviePlayer::update()
 				if (gameflow.mGameInterface) {
 					gameflow.mGameInterface->message(MOVIECMD_ShowHUD, 0);
 				}
-				bool togglePrint   = gsys->mTogglePrint != 0;
-				gsys->mTogglePrint = 1;
+				bool togglePrint   = gsys->mTogglePrint != FALSE;
+				gsys->mTogglePrint = TRUE;
 				PRINT("clearing top heap!\n");
 				gsys->resetHeap(SYSHEAP_Movie, 1);
 				gsys->mTogglePrint = togglePrint;

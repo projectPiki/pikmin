@@ -108,7 +108,7 @@ int ActPullout::exec()
 void ActPullout::cleanup()
 {
 	Action::cleanup();
-	mPiki->_518 = 1;
+	mPiki->_518 = true;
 	mTarget.reset();
 }
 
@@ -138,7 +138,7 @@ void ActPulloutCreature::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action1:
-		mPulloutSuccess = 1;
+		mPulloutSuccess = true;
 		Piki* piki      = static_cast<Piki*>(mTarget.getPtr());
 		if (piki) {
 			piki->changeShape(piki->mFormationPriority);
@@ -170,7 +170,7 @@ void ActPulloutCreature::init(Creature* target)
 	mState = STATE_Unk0;
 	mTarget.set(target);
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mPulloutSuccess = 0;
+	mPulloutSuccess = false;
 }
 
 /*

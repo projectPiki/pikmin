@@ -70,9 +70,9 @@ void Spider::init(Vector3f&)
 #endif
 	setIsOrganic(false);
 	mIsBossBgm            = false;
-	_3B9                  = 1;
-	mIsHalfDead           = 0;
-	mCanCreateDeadBombFx  = 1;
+	_3B9                  = true;
+	mIsHalfDead           = false;
+	mCanCreateDeadBombFx  = true;
 	mActiveWalkCycleCount = 0;
 	mSpiderAi->initAI(this);
 	mSpiderLeg->init(this);

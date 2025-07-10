@@ -179,7 +179,7 @@ void DemoEventMgr::act(int cmd, int type)
 					Navi* navi = naviMgr->getNavi();
 					playerState->mShipEffectPartFlag &= ~8;
 					cameraMgr->mCamera->finishMotion();
-					cameraMgr->mCamera->mControlsEnabled = 1;
+					cameraMgr->mCamera->mControlsEnabled = true;
 #if defined(VERSION_PIKIDEMO)
 					cameraMgr->mCamera->startCamera(navi, 1, 0);
 #else

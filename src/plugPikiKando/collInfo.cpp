@@ -683,10 +683,10 @@ CollInfo::CollInfo(int maxParts)
 	mPartsCount = 0;
 	if (maxParts == 0) {
 		mMaxParts           = 10;
-		mUseDefaultMaxParts = 1;
+		mUseDefaultMaxParts = true;
 	} else {
 		mMaxParts           = maxParts;
-		mUseDefaultMaxParts = 0;
+		mUseDefaultMaxParts = false;
 		mCollParts          = new CollPart[mMaxParts];
 		mPartIDs            = new u32[mMaxParts];
 	}

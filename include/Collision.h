@@ -264,12 +264,12 @@ struct CollInfo {
 	void makeTubes(u32, int);
 	int getIndex(ObjCollInfo*);
 
-	u8 mUseDefaultMaxParts; // _00
-	CollPart* mCollParts;   // _04, array of size mMaxParts
-	u32* mPartIDs;          // _08, array of size mMaxParts
-	u16 mPartsCount;        // _0C, number of parts in array
-	u16 mMaxParts;          // _0E, max size of arrays
-	Shape* mShape;          // _10
+	bool mUseDefaultMaxParts; // _00
+	CollPart* mCollParts;     // _04, array of size mMaxParts
+	u32* mPartIDs;            // _08, array of size mMaxParts
+	u16 mPartsCount;          // _0C, number of parts in array
+	u16 mMaxParts;            // _0E, max size of arrays
+	Shape* mShape;            // _10
 };
 
 /**

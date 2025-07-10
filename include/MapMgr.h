@@ -343,7 +343,7 @@ struct MapMgr {
 	f32 mAccumPhysicsTime;              // _F8
 	f32 mFixedTimeStep;                 // _FC
 	f32 mIntegrationStep;               // _100
-	u8 mResetPending;                   // _104
+	bool mResetPending;                 // _104
 	DynSimulator* mDynSimulator;        // _108
 	int mCollCheckCount;                // _10C
 	int mShadowCountdown;               // _110

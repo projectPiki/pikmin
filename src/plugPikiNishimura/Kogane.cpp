@@ -63,11 +63,11 @@ f32 Kogane::getiMass()
 void Kogane::init(Vector3f&)
 {
 	mCollisionRadius = 25.0f;
-	mIsOrganic       = 0;
-	mIsInvincible    = 1;
-	mNeedShadow      = 0;
+	mIsOrganic       = false;
+	mIsInvincible    = true;
+	mNeedShadow      = false;
 	mShadowSize      = 20.0f;
-	_3B9             = 0;
+	_3B9             = false;
 	mIsAppear        = false;
 	mKoganeAi->initAI(this);
 }
@@ -162,6 +162,6 @@ void Kogane::doAnimation()
 void Kogane::collisionCallback(CollEvent& event)
 {
 	if (!_3B9 && event.mCollider->mObjType == OBJTYPE_Piki && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {
-		_3B9 = 1;
+		_3B9 = true;
 	}
 }

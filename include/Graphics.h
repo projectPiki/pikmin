@@ -101,8 +101,8 @@ struct Graphics {
 	Colour mPrimaryColour;                    // _318
 	Colour mAuxiliaryColour;                  // _31C
 	bool mIsLightingEnabled;                  // _320
-	u8 mDepthMode;                            // _321
-	int mHasTexGen;                           // _324
+	bool mIsDepthEnabled;                     // _321
+	BOOL mHasTexGen;                          // _324
 	u32 mMtxDepIdx;                           // _328
 	u32 mBlendMode;                           // _32C, 0 is normal, 1 is additive, 2 is subtractive, 3 is alpha additive, 4 is no blend
 	int mCullMode;                            // _330

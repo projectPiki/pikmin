@@ -107,7 +107,7 @@ struct ogScrMessageMgr {
 	bool mIsTextPausedByTag;                  // _4DD
 	bool mIsUiInputDisabled;                  // _4DE
 	bool mHasDrawOccurredThisFrame;           // _4DF
-	u8 mAlwaysShowNextPrompt;                 // _4E0
+	bool mAlwaysShowNextPrompt;               // _4E0
 	s16 mStateEntryDelay;                     // _4E2
 	s16 mCursorTargetX;                       // _4E4
 	s16 mCursorTargetY;                       // _4E6
@@ -118,7 +118,7 @@ struct ogScrMessageMgr {
 	s16 mPageInfoEntryCount;                  // _4F0
 	char mFormattedDisplayStrings[20][0x400]; // _4F2
 	s16 mPageDrawDelayTimer;                  // _54F2
-	u8 mIsInitialPageLoad;                    // _54F4
+	bool mIsInitialPageLoad;                  // _54F4
 	P2DScreen* mCurrentScreen;                // _54F8
 	P2DPane* mPagePaneList[20];               // _54FC
 #if defined(VERSION_PIKIDEMO)

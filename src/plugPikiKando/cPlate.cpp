@@ -47,8 +47,8 @@ CPlate::CPlate(MapMgr* mgr)
 	mTotalSlotCount = 0;
 	mPlatePikiCount = 0;
 	mUsedSlotCount  = 0;
-	_C8             = 0;
-	mIsNeutral      = 1;
+	_C8             = false;
+	mIsNeutral      = true;
 
 	load("parms/", "cunit.bin", 1);
 	mDevOffsetTest.set(0.0f, 0.0f, 0.0f);
@@ -92,7 +92,7 @@ void CPlate::setPos(Vector3f& position, f32 angle, Vector3f& velocity)
 	mPlateCenter     = mOriginPosition + Vector3f(totalRadius * sinf(angle), 0.0f, totalRadius * cosf(angle));
 	mCurrentVelocity = velocity;
 	mPlateOffset     = position + Vector3f(mInnerRadius * sinf(angle), 0.0f, mInnerRadius * cosf(angle));
-	mIsNeutral       = 0;
+	mIsNeutral       = false;
 
 	STACK_PAD_VAR(2);
 }
@@ -114,7 +114,7 @@ void CPlate::setPosGray(Vector3f& position, f32 angle, Vector3f& velocity)
 	mPlateCenter     = mOriginPosition + Vector3f(dist * sinf(angle), 0.0f, dist * cosf(angle));
 	mCurrentVelocity = velocity;
 	mPlateOffset     = position + Vector3f(mInnerRadius * sinf(angle), 0.0f, mInnerRadius * cosf(angle));
-	mIsNeutral       = 0;
+	mIsNeutral       = false;
 
 	STACK_PAD_VAR(2);
 }
@@ -127,7 +127,7 @@ void CPlate::setPosGray(Vector3f& position, f32 angle, Vector3f& velocity)
 void CPlate::setPosNeutral(Vector3f& position, f32 angle, Vector3f& velocity)
 {
 	setPos(position, angle, velocity);
-	mIsNeutral   = 1;
+	mIsNeutral   = true;
 	mPlateCenter = mOriginPosition;
 }
 

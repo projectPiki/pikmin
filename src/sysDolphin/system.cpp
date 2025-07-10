@@ -119,8 +119,8 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
 		return nullptr;
 	}
 
-	u32 old            = gsys->mTogglePrint;
-	gsys->mTogglePrint = 1;
+	BOOL old           = gsys->mTogglePrint;
+	gsys->mTogglePrint = TRUE;
 #if defined(VERSION_PIKIDEMO)
 	_Print("Opened file %s\n", strPath);
 #else
@@ -141,7 +141,7 @@ RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
  */
 void System::initSoftReset()
 {
-	gsys->mPrevAllocType = 0;
+	gsys->mPrevAllocType = FALSE;
 	StdSystem::initSoftReset();
 	if (mDGXGfx) {
 		static_cast<DGXGraphics*>(mDGXGfx)->setupRender();
@@ -503,8 +503,8 @@ void System::findAddress(u32)
  */
 void System::hardReset()
 {
-	int old     = !!mForcePrint;
-	mForcePrint = 0;
+	bool old    = mForcePrint;
+	mForcePrint = FALSE;
 	if (useSymbols) {
 		int a = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 		int c = OSTicksToMilliseconds(OSGetTick());
@@ -532,10 +532,10 @@ void System::hardReset()
 System::System()
 {
 	mTimerState       = TS_Off;
-	mTogglePrint      = 0;
+	mTogglePrint      = FALSE;
 	mToggleDebugInfo  = 0;
 	mToggleDebugExtra = 0;
-	mToggleBlur       = 1;
+	mToggleBlur       = true;
 	mToggleColls      = 0;
 #if defined(VERSION_PIKIDEMO)
 	mIsDemoTimeUp = 0;
@@ -544,7 +544,7 @@ System::System()
 	mCurrentThread    = OSGetCurrentThread();
 	mDvdErrorCallback = 0;
 	mDvdErrorCode     = DvdError::None;
-	mPrevAllocType    = 0;
+	mPrevAllocType    = FALSE;
 	mDmaComplete      = 1;
 	mTexComplete      = 1;
 	mActiveDir        = "";
@@ -1011,7 +1011,7 @@ u8 dvdThreadStack[0x2000] ATTRIBUTE_ALIGN(32);
  */
 void System::startLoading(LoadIdler* idler, bool useLoadScreen, u32 loadDelay)
 {
-	gsys->mPrevAllocType = 0;
+	gsys->mPrevAllocType = FALSE;
 	if (mIsLoadingActive == 0) {
 		mLoadTimeBeforeIdling = loadDelay;
 		mIsLoadScreenActive   = useLoadScreen;
@@ -1042,7 +1042,7 @@ void System::nudgeLoading()
  */
 void System::endLoading()
 {
-	gsys->mPrevAllocType = 1;
+	gsys->mPrevAllocType = TRUE;
 	if (mIsLoadingActive) {
 		OSSendMessage(&loadMesgQueue, (OSMessage)'QUIT', OS_MESSAGE_BLOCK);
 #if defined(VERSION_PIKIDEMO)

@@ -81,7 +81,7 @@ struct LifeGauge {
 	Vector3f mOffset;               // _0C
 	int mDisplayState;              // _18
 	int mRenderStyle;               // _1C
-	u8 mSnapToTargetHealth;         // _20
+	bool mSnapToTargetHealth;       // _20
 	f32 mFadeTransitionValue;       // _24
 	f32 mVisibleHoldTimer;          // _28
 	f32 mHealthRatio;               // _2C, aka "value"

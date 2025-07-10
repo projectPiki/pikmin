@@ -200,9 +200,9 @@ struct Spider : public Boss {
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsBossBgm;            // _3B8
-	u8 _3B9;                    // _3B9
-	u8 mIsHalfDead;             // _3BA
-	u8 mCanCreateDeadBombFx;    // _3BB
+	bool _3B9;                  // _3B9
+	bool mIsHalfDead;           // _3BA
+	bool mCanCreateDeadBombFx;  // _3BB
 	int mActiveWalkCycleCount;  // _3BC
 	SpiderAi* mSpiderAi;        // _3C0
 	SpiderLeg* mSpiderLeg;      // _3C4
@@ -284,18 +284,18 @@ struct SpiderLeg {
 	void checkMotionFinished();
 
 	Spider* mSpider;                                         // _00
-	u8 mSoundQueued;                                         // _04
-	u8 mInitialised;                                         // _05
-	u8 mBodyShakeStarted;                                    // _06
-	u8 mMotionFinishFlag;                                    // _07
-	u8 mIsMoving;                                            // _08
-	u8 mLegMoving[4];                                        // _09
+	bool mSoundQueued;                                       // _04
+	bool mInitialised;                                       // _05
+	bool mBodyShakeStarted;                                  // _06
+	bool mMotionFinishFlag;                                  // _07
+	bool mIsMoving;                                          // _08
+	bool mLegMoving[4];                                      // _09
 	bool mIsOnGround[4];                                     // _0D
-	u8 mPrevOnGround[4];                                     // _11
-	u8 mLegCanMove[4];                                       // _15
-	u8 mLegMidStep[4];                                       // _19
-	u8 mShakeDirectionChanged;                               // _1D
-	u8 mPrevShakeDirection;                                  // _1E
+	bool mPrevOnGround[4];                                   // _11
+	bool mLegCanMove[4];                                     // _15
+	bool mLegMidStep[4];                                     // _19
+	bool mShakeDirectionChanged;                             // _1D
+	bool mPrevShakeDirection;                                // _1E
 	f32 mSegmentScale[16];                                   // _20
 	f32 mJointBlendFactor[4];                                // _60
 	f32 mGroundHeight[4];                                    // _70

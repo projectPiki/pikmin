@@ -255,7 +255,7 @@ static void showFrame(bool set, f32 time)
 static void createMenuWindow()
 {
 	gsys->startLoading(nullptr, false, 0);
-	int heapold          = !!gsys->mPrevAllocType;
+	bool heapold         = gsys->mPrevAllocType;
 	gsys->mPrevAllocType = 0;
 	int heapid           = gsys->getHeapNum();
 	PRINT("using movie heap!\n");
@@ -285,7 +285,7 @@ static void createMenuWindow()
 static void deleteMenuWindow()
 {
 	gsys->resetHeap(5, 1);
-	gameflow.mIsUiOverlayActive = 0;
+	gameflow.mIsUiOverlayActive = FALSE;
 	menuWindow                  = nullptr;
 }
 
@@ -302,8 +302,8 @@ static void deleteMenuWindow()
 static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 {
 	gsys->startLoading(nullptr, false, 0);
-	int heapold          = gsys->mPrevAllocType != 0;
-	gsys->mPrevAllocType = 0;
+	bool heapold         = gsys->mPrevAllocType;
+	gsys->mPrevAllocType = FALSE;
 	int heapid           = gsys->getHeapNum();
 	PRINT("using movie heap!\n");
 
@@ -323,7 +323,7 @@ static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 	gsys->getHeap(SYSHEAP_Movie)->setAllocType(oldtype);
 	gsys->setHeap(heapid);
 	showFrame(false, 0.5f);
-	gameflow.mIsTutorialActive = 1;
+	gameflow.mIsTutorialActive = TRUE;
 	gsys->mRetraceCount        = 0;
 	gsys->mPrevAllocType       = heapold;
 	gsys->endLoading();
@@ -346,7 +346,7 @@ static void deleteTutorialWindow()
 		Jac_FinishTextDemo();
 	}
 
-	gameflow.mIsTutorialActive = 0;
+	gameflow.mIsTutorialActive = FALSE;
 	if (!dontShowFrame && gameInfoOn && !gameInfoIn) {
 		if (!playerState->isTutorial()) {
 			gamecore->mDrawGameInfo->upperFrameIn(0.5f, true);
@@ -355,7 +355,7 @@ static void deleteTutorialWindow()
 		gameInfoIn = true;
 	}
 
-	gameflow.mIsUiOverlayActive = 0;
+	gameflow.mIsUiOverlayActive = FALSE;
 	tutorialWindow              = 0;
 }
 
@@ -490,14 +490,14 @@ ModeState* RunningModeState::update(u32& result)
 	// Trigger day end when time expires
 	if (!gameflow.mIsDayEndActive && !gameflow.mMoviePlayer->mIsActive
 	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mEndHour()) {
-		gameflow.mIsGameplayInputEnabled = 0;
-		gameflow.mIsDayEndTriggered      = 1;
+		gameflow.mIsGameplayInputEnabled = FALSE;
+		gameflow.mIsDayEndTriggered      = TRUE;
 	}
 
 	// Process day end trigger
 	if (gameflow.mIsDayEndTriggered && !gameflow.mIsUiOverlayActive) {
-		gameflow.mIsDayEndActive    = 1;
-		gameflow.mIsDayEndTriggered = 0;
+		gameflow.mIsDayEndActive    = TRUE;
+		gameflow.mIsDayEndTriggered = FALSE;
 
 		// Special handling for final day
 		if (playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
@@ -522,16 +522,16 @@ ModeState* RunningModeState::update(u32& result)
 			if (!gameflow.mIsUiOverlayActive && !mesgsPending) {
 				PRINT("starting pause menu!\n");
 				seSystem->playSysSe(SYSSE_PAUSE);
-				pauseWindow->start(!!gameflow.mIsChallengeMode);
-				mCachedPauseFlag            = !!gameflow.mIsUiOverlayActive;
-				gameflow.mIsUiOverlayActive = 1;
+				pauseWindow->start(gameflow.mIsChallengeMode);
+				mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
+				gameflow.mIsUiOverlayActive = TRUE;
 			}
 		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUiOverlayActive
 		           && !mesgsPending) {
 			gameflow.mGameInterface->message(MOVIECMD_CreateSettingsMenu, 0);
-			mCachedPauseFlag            = !!gameflow.mIsUiOverlayActive;
-			gameflow.mIsUiOverlayActive = 1;
+			mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
+			gameflow.mIsUiOverlayActive = TRUE;
 		}
 	}
 
@@ -572,8 +572,8 @@ ModeState* RunningModeState::update(u32& result)
 		result &= ~UPDATE_AI; // Disable AI updates when pause menu is active
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk6) {
 		gamecore->forceDayEnd();
-		gameflow.mIsGameplayInputEnabled = 0;
-		gameflow.mIsDayEndTriggered      = 1;
+		gameflow.mIsGameplayInputEnabled = FALSE;
+		gameflow.mIsDayEndTriggered      = TRUE;
 		gameflow.mIsUiOverlayActive      = mCachedPauseFlag;
 
 	} else if (state == zen::ogScrPauseMgr::PAUSE_Unk7) {
@@ -619,7 +619,7 @@ void RunningModeState::postRender(Graphics& gfx)
 		gamecore->draw1D(gfx);
 	}
 
-	if (gameflow._33C == 0 && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
+	if (!gameflow._33C && !gameflow.mMoviePlayer->mIsActive && mSection->mUpdateFlags & UPDATE_COUNTDOWN) {
 		f32 time = (gameflow.mWorldClock.mTimeOfDay - gameflow.mParameters->mNightCountdown())
 		         / (gameflow.mParameters->mNightEnd() - gameflow.mParameters->mNightCountdown());
 		if (time >= 0.0f && time < 1.0f) {
@@ -844,8 +844,8 @@ ModeState* DayOverModeState::update(u32& result)
 				PRINT("using save game file %d with %d as the spare\n", gameflow.mGamePrefs.mSaveGameIndex,
 				      gameflow.mGamePrefs.mSpareSaveGameIndex);
 
-				bool sysbackup     = gsys->mTogglePrint != 0;
-				gsys->mTogglePrint = 1;
+				bool sysbackup     = gsys->mTogglePrint != FALSE;
+				gsys->mTogglePrint = TRUE;
 				PRINT("doing save now!!\n");
 				gameflow.mMemoryCard.saveCurrentGame();
 				if (mSection->mController->keyDown(KBBTN_Z)) {
@@ -1132,13 +1132,13 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		gameflow.mMoviePlayer->setGameCamInfo(false, 60.0f, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 
 		dontShowFrame              = false;
-		gameflow.mIsTutorialActive = 0;
+		gameflow.mIsTutorialActive = FALSE;
 		mIsInitialSetup            = true;
 
 		lgMgr                       = new LifeGaugeMgr;
 		movieIndex                  = 0;
-		gameflow.mIsDayEndActive    = 0;
-		gameflow.mIsDayEndTriggered = 0;
+		gameflow.mIsDayEndActive    = FALSE;
+		gameflow.mIsDayEndTriggered = FALSE;
 		_44                         = 0;
 		mSecondController           = new Controller(2);
 		mNextModeState              = nullptr;
@@ -1202,8 +1202,8 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		_3C4[2] = 1000.0f;
 		_3C4[3] = 3000.0f;
 
-		bool old           = gsys->mTogglePrint != 0;
-		gsys->mTogglePrint = 1;
+		bool old           = gsys->mTogglePrint != FALSE;
+		gsys->mTogglePrint = TRUE;
 		PRINT("tekiHeap has %d bytes free\n", gsys->getHeap(SYSHEAP_Teki)->getFree());
 		gsys->mTogglePrint = old;
 
@@ -1226,8 +1226,8 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		mUpdateCountdown--;
 		if (!gameflow.mMoviePlayer->mIsActive) {
 			if (gsys->getHeap(SYSHEAP_Movie)->getTopUsed()) {
-				bool old           = gsys->mTogglePrint != 0;
-				gsys->mTogglePrint = 1;
+				bool old           = gsys->mTogglePrint != FALSE;
+				gsys->mTogglePrint = TRUE;
 				gsys->resetHeap(SYSHEAP_Movie, true);
 				gsys->mTogglePrint = old;
 			}
@@ -1262,7 +1262,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	{
 		Matrix4f mtx;
 
-		if (gameflow.mIsUiOverlayActive == 0 || gameflow.mIsTutorialActive) {
+		if (!gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
 			gameflow.mMoviePlayer->update();
 		}
 
@@ -1308,7 +1308,7 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		// gsys->mTimer->stop("mainRender");
 
 		if (effectMgr) {
-			if (gameflow._33C == 0 && gameflow.mIsUiOverlayActive == 0 || gameflow.mIsTutorialActive) {
+			if (!gameflow._33C && !gameflow.mIsUiOverlayActive || gameflow.mIsTutorialActive) {
 				bool check = true;
 				if (gsys->mDvdErrorCode >= DvdError::ReadingDisc) {
 					check = false;
@@ -1585,14 +1585,14 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		}
 
 		createTutorialWindow(data, partId, hasAudio);
-		gameflow.mIsUiOverlayActive = 1;
+		gameflow.mIsUiOverlayActive = TRUE;
 		break;
 	case MOVIECMD_Unused:
 		ERROR("SHOULD NOT GET THIS COMMAND!!!\n");
 		break;
 	case MOVIECMD_ForceDayEnd:
 		gamecore->forceDayEnd();
-		gameflow.mIsDayEndTriggered = 1;
+		gameflow.mIsDayEndTriggered = TRUE;
 		break;
 	case MOVIECMD_HideHUD:
 		showFrame(false, 0.5f);
@@ -1666,7 +1666,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 		break;
 	case MOVIECMD_SpecialDayEnd:
 		gamecore->forceDayEnd();
-		gameflow.mIsDayEndTriggered = 1;
+		gameflow.mIsDayEndTriggered = TRUE;
 		flowCont._244               = 2;
 		break;
 	case MOVIECMD_SetInputEnabled:
@@ -1722,8 +1722,8 @@ NewPikiGameSection::NewPikiGameSection()
 	add(setup);
 	memStat->end("all");
 
-	u32 print          = !!gsys->mTogglePrint;
-	gsys->mTogglePrint = 1;
+	bool print         = gsys->mTogglePrint;
+	gsys->mTogglePrint = TRUE;
 	memStat->print();
 	gsys->mTogglePrint = print;
 

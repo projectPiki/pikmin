@@ -60,8 +60,8 @@ f32 KingBack::getiMass()
 void KingBack::init(Vector3f&)
 {
 	mCollisionRadius = 20.0f;
-	mIsOrganic       = 0;
-	mIsInvincible    = 1;
+	mIsOrganic       = false;
+	mIsInvincible    = true;
 	mPlatMgr.init(this, mapMgr, mShapeObject->mShape);
 }
 

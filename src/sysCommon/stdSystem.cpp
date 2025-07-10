@@ -52,7 +52,7 @@ StdSystem::StdSystem()
 	mFadeStart        = 0.0f;
 	mFadeEnd          = 1.0;
 	mToggleFileInfo   = 1;
-	mForcePrint       = 0;
+	mForcePrint       = FALSE;
 	mGfxobjInfo.mPrev = &mGfxobjInfo;
 	mGfxobjInfo.mNext = &mGfxobjInfo;
 	mHasGfxObjects    = true;

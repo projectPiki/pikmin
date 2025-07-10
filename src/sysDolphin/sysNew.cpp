@@ -40,8 +40,8 @@ void* System::alloc(u32 size)
 		}
 
 		if (size == 0 || gsys->mForcePrint) {
-			u32 print          = !!gsys->mTogglePrint;
-			gsys->mTogglePrint = 1;
+			bool print         = gsys->mTogglePrint;
+			gsys->mTogglePrint = TRUE;
 			gsys->mTogglePrint = print;
 		}
 

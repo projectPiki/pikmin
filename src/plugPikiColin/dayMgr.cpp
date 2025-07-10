@@ -74,7 +74,7 @@ struct PositionMenu : public Menu {
 	{
 		mPosition          = pos;
 		mIsSmallAdjustment = smlAdjust;
-		mIsCustomMenu      = 1;
+		mIsCustomMenu      = TRUE;
 		mAnchorPoint.mMinX = glnWidth / 2;
 		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
@@ -160,7 +160,7 @@ struct ColourMenu : public Menu {
 	    : Menu(controller, font, p4)
 	{
 		mColour            = color;
-		mIsCustomMenu      = 1;
+		mIsCustomMenu      = TRUE;
 		mAnchorPoint.mMinX = glnWidth / 2;
 		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
@@ -237,7 +237,7 @@ struct FogMenu : public Menu {
 	{
 		mNear              = near;
 		mFar               = far;
-		mIsCustomMenu      = 1;
+		mIsCustomMenu      = TRUE;
 		mAnchorPoint.mMinX = glnWidth / 2;
 		mAnchorPoint.mMinY = glnHeight / 2;
 		mDiffuseColour.set(32, 128, 128, 192);
@@ -455,7 +455,7 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	mTimeSettings = new TimeSetting[5];
 
 	mMenu                     = new Menu(control, gsys->mConsFont, false);
-	mMenu->mIsCustomMenu      = 1;
+	mMenu->mIsCustomMenu      = TRUE;
 	mMenu->mAnchorPoint.mMinX = glnWidth / 2;
 	mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 90;
 	mMenu->mDiffuseColour.set(32, 128, 32, 192);
@@ -726,8 +726,8 @@ void DayMgr::menuDumpSettings(Menu&)
 	static char* settingnames[5] = { "night", "morning", "day", "evening", "movie" };
 	static char* lightnames[7]   = { "main light", "sub light", "+1", "+2", "+3", "+4", "+5" };
 
-	int old            = gsys->mTogglePrint;
-	gsys->mTogglePrint = 1;
+	BOOL old           = gsys->mTogglePrint;
+	gsys->mTogglePrint = TRUE;
 
 	PRINT("\n------- cut here -----------------\n\n");
 	PRINT("dayMgr {\n");

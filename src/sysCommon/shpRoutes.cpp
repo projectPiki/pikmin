@@ -30,7 +30,7 @@ RoutePoint::RoutePoint()
 	mLink.initCore("");
 	_20     = 8.0f;
 	mIndex  = 0;
-	mIsOpen = 1;
+	mIsOpen = true;
 	mRadius = 10.0f;
 }
 

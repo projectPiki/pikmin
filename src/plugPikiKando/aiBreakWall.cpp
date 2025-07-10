@@ -53,8 +53,8 @@ void ActBreakWall::init(Creature* creature)
 	}
 
 	mState              = STATE_GotoWall;
-	mIsAttackReady      = 0;
-	mPiki->mWantToStick = 0;
+	mIsAttackReady      = false;
+	mPiki->mWantToStick = false;
 	mWorkTimer          = (4.0f * gsys->getRand(1.0f));
 #if defined(VERSION_PIKIDEMO)
 #else
@@ -88,15 +88,15 @@ void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
-		mIsAttackReady = 1;
+		mIsAttackReady = true;
 		break;
 	case KEY_Action1:
-		mIsAttackReady = 0;
+		mIsAttackReady = false;
 		break;
 	case KEY_Finished:
 		mWorkTimer = (4.0f * gsys->getRand(1.0f));
 		startWorkMotion();
-		mIsAttackReady = 0;
+		mIsAttackReady = false;
 		break;
 	case KEY_PlayEffect:
 		if (!mPiki->isCreatureFlag(CF_IsAICullingActive) && (AIPerf::optLevel <= 0 || mPiki->mOptUpdateContext.updatable())) {
@@ -211,7 +211,7 @@ int ActBreakWall::breakWall()
 
 	if (timeSinceLastAttack > 0 && mIsAttackReady) {
 		InteractAttack attack(mPiki, nullptr, timeSinceLastAttack / 60.0f, false);
-		mIsAttackReady = 0;
+		mIsAttackReady = false;
 		if (!mWall->stimulate(attack)) {
 			if (mWall->isCompleted()) {
 				return ACTOUT_Success;

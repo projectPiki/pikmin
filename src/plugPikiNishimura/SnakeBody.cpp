@@ -105,8 +105,8 @@ SnakeBody::SnakeBody(Snake* snake)
 void SnakeBody::init(Vector3f&, Snake* snake)
 {
 	mSnake         = snake;
-	mIsDying       = 0;
-	mUseBlend      = 0;
+	mIsDying       = false;
+	mUseBlend      = false;
 	mBlendingRatio = 0.0f;
 
 	for (int i = 0; i < 7; i++) {
@@ -129,7 +129,7 @@ void SnakeBody::init(Vector3f&, Snake* snake)
 void SnakeBody::initBlending(f32 blendRate)
 {
 	if (mBlendingRatio > 0.0f) {
-		mUseBlend = 1;
+		mUseBlend = true;
 	}
 
 	mBlendingRatio = 0.00001f;
@@ -1011,7 +1011,7 @@ void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
 		for (i = 0; i < 8; i++) {
 			mPrevAnimMatrices[i] = mActiveAnimMatrices[i];
 		}
-		mUseBlend = 0;
+		mUseBlend = false;
 	}
 }
 

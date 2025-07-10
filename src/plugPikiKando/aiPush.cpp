@@ -48,7 +48,7 @@ void ActPush::init(Creature* target)
 		}
 	}
 	mState             = STATE_Approach;
-	mPushObjectStopped = 0;
+	mPushObjectStopped = false;
 	_44                = 0;
 }
 
@@ -83,10 +83,10 @@ int ActPush::exec()
 	}
 
 	if (mHinderRock->isMoving() && mPushObjectStopped) {
-		mPushObjectStopped = 0;
+		mPushObjectStopped = false;
 		_40                = pikiMgr->mPikiParms->mPikiParms._49C();
 	} else if (!mHinderRock->isMoving()) {
-		mPushObjectStopped = 1;
+		mPushObjectStopped = true;
 	}
 
 	_44 = 0;
@@ -165,7 +165,7 @@ int ActPush::exeApproach()
 void ActPush::initGo()
 {
 	mState       = STATE_Go;
-	mIsPushReady = 0;
+	mIsPushReady = false;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 	mPushAnimationState = 2;
 	if (mHinderRock) {
@@ -174,10 +174,10 @@ void ActPush::initGo()
 
 	_40 = pikiMgr->mPikiParms->mPikiParms._49C();
 	if (!mPushObjectStopped) {
-		mPushObjectStopped = 1;
+		mPushObjectStopped = true;
 	}
 
-	mIsPushReady = 1;
+	mIsPushReady = true;
 	mPushCount   = int(5.0f * gsys->getRand(1.0f)) + 5;
 
 	if (mHinderRock) {
@@ -222,7 +222,7 @@ int ActPush::exeGo()
 		if (mIsPushReady) {
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
 			mPushAnimationState = 0;
-			mIsPushReady        = 0;
+			mIsPushReady        = false;
 		}
 	}
 

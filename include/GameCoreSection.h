@@ -91,12 +91,12 @@ struct GameCoreSection : public Node {
 	u8 _24[0x4];                      // _24, unknown
 	int mDrawHideType;                // _28, enum todo
 	u32 mHideFlags;                   // _2C, see GameHideFlags enum
-	u8 mMovieBackCamera;              // _30
-	u8 mDoneSundownWarn;              // _31
+	bool mMovieBackCamera;            // _30
+	bool mDoneSundownWarn;            // _31
 	u32 _34;                          // _34, unknown
-	u8 _38;                           // _38
-	u8 _39;                           // _39
-	u8 _3A;                           // _3A
+	bool _38;                         // _38
+	bool _39;                         // _39
+	bool _3A;                         // _3A
 	Menu* mAiPerfDebugMenu;           // _3C, unknown
 	u8 _40[0x50 - 0x40];              // _40, unknown
 	Shape* mPikiShape;                // _50, unknown

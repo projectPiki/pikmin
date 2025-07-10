@@ -165,7 +165,7 @@ void MizuAi::initWait(int stateID)
 {
 	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mMizu->_3B8       = 1;
+	mMizu->_3B8       = true;
 	mMizu->mIsVisible = true;
 	mMizu->setIsAlive(1);
 	mMizu->setIsOrganic(1);
@@ -188,7 +188,7 @@ void MizuAi::initReady(int stateID)
 {
 	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
-	mMizu->_3B8       = 0;
+	mMizu->_3B8       = false;
 	mMizu->mIsVisible = false;
 	mMizu->setIsAlive(0);
 	mMizu->setIsOrganic(0);
@@ -215,7 +215,7 @@ void MizuAi::initJet(int stateID)
 {
 	mMizu->setNextState(stateID);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(10, this));
-	mMizu->_3B8       = 1;
+	mMizu->_3B8       = true;
 	mMizu->mIsVisible = false;
 	mMizu->setIsAlive(false);
 	mMizu->setIsOrganic(false);
@@ -268,7 +268,7 @@ void MizuAi::readyState()
 		if (absX < 7.5f) {
 			f32 absZ = NsLibMath<f32>::abs(mMizu->mPosition.z - navi->mPosition.z);
 			if (absZ < 7.5f && NsLibMath<f32>::abs(mMizu->mPosition.y - navi->mPosition.y) < 10.0f) {
-				mMizu->_3B8 = 1;
+				mMizu->_3B8 = true;
 			}
 		}
 

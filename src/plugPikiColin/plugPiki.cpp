@@ -54,7 +54,7 @@ void PlugPikiApp::softReset()
 {
 	BaseApp::softReset();
 	gameflow.softReset();
-	mIsReadyToDraw = 1;
+	mIsReadyToDraw = TRUE;
 }
 
 /*
@@ -206,6 +206,6 @@ PlugPikiApp::PlugPikiApp()
 	gsys->hardReset();
 	PRINT("*--------------- <%s> after all system setup %.2fk free \n", gsys->getHeap(gsys->mActiveHeapIdx)->mName,
 	      gsys->getHeap(gsys->mActiveHeapIdx)->getFree() / 1024.0f);
-	gsys->mForcePrint = 0;
+	gsys->mForcePrint = FALSE;
 	gsys->setHeap(-1);
 }

@@ -90,7 +90,7 @@ BombItem::BombItem(CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai)
     : ItemCreature(OBJTYPE_Bomb, props, nullptr)
     , mBombColl(0)
 {
-	mLifeGauge.mSnapToTargetHealth = 1;
+	mLifeGauge.mSnapToTargetHealth = true;
 	mItemShapeObject               = shape;
 	mStateMachine                  = ai;
 	mLifeGauge.mRenderStyle        = 1;

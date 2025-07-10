@@ -94,7 +94,7 @@ void KoganeAi::initAI(Kogane* kogane)
 	mKogane->setCurrentState(1);
 	mKogane->setNextState(1);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
-	mInWater     = 0;
+	mInWater     = false;
 	mDropCount   = 0;
 	mEffectType  = EffectMgr::EFF_NULL;
 	mAppearTimer = C_KOGANE_PROP(mKogane).mAppearTimeMin()
@@ -198,7 +198,7 @@ void KoganeAi::keyFinished()
 {
 	mKogane->setMotionFinish(true);
 	if (mKogane->getCurrentState() == 4) {
-		mKogane->_3B9 = 0;
+		mKogane->_3B9 = false;
 	}
 }
 
@@ -251,7 +251,7 @@ void KoganeAi::setMapAttribute()
 		break;
 	case ATTR_Water:
 		if (!mInWater) {
-			mInWater    = 1;
+			mInWater    = true;
 			mEffectType = EffectMgr::EFF_NULL;
 			createWaterEffect();
 		}
@@ -262,7 +262,7 @@ void KoganeAi::setMapAttribute()
 	}
 
 	if (mapAttr != ATTR_Water) {
-		mInWater = 0;
+		mInWater = false;
 	}
 }
 

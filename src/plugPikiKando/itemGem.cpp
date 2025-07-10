@@ -400,5 +400,5 @@ void GemItem::setRouteTracer(RouteTracer*)
  */
 void ItemCreature::finalSetup()
 {
-	_3C4 = 1;
+	_3C4 = true;
 }

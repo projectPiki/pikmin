@@ -645,7 +645,7 @@ void ActorInstance::initInstance()
 	}
 
 	if (!mIsLeaf) {
-		mIsLeaf = 1;
+		mIsLeaf = TRUE;
 		onceInit();
 	}
 
@@ -735,7 +735,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					effectMgr->create(EffectMgr::EFF_MC_Debris, pos8, nullptr, nullptr);
 					break;
 				case 9:
-					mMeteorFlag = 0;
+					mMeteorFlag = false;
 					for (int i = 0; i < 4; i++) {
 						for (int j = 0; j < 4; j++) {
 							if (mEffectGrid[i][j]) {
@@ -764,7 +764,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					mEffectList[5]->setEmitPosPtr(&mCenterPosition);
 					mEffectList[6] = effectMgr->create(EffectMgr::EFF_Rocket_1Meteor, mCenterPosition, nullptr, nullptr);
 					mEffectList[6]->setEmitPosPtr(&mCenterPosition);
-					_19C = 1;
+					_19C = true;
 					break;
 				case 10:
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_Rocket_SCT01, mJointPositions[0], nullptr, nullptr);
@@ -857,14 +857,14 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 						mEffectGrid[i][1]->setEmitPosPtr(&mJointPositions[i + 1]);
 						mEffectGrid[i][1]->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 					}
-					mMeteorFlag = 1;
+					mMeteorFlag = true;
 					break;
 				case 20:
 					mEffectList[0] = effectMgr->create(EffectMgr::EFF_MTotl01, mCenterPosition, nullptr, nullptr);
 					mEffectList[0]->setEmitPosPtr(&mCenterPosition);
 					mEffectList[1] = effectMgr->create(EffectMgr::EFF_MTotl03, mCenterPosition, nullptr, nullptr);
 					mEffectList[1]->setEmitPosPtr(&mCenterPosition);
-					_19E = 1;
+					_19E = true;
 					break;
 				case 21:
 				case 22:
@@ -889,7 +889,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 					    ->setEmitPosPtr(&mRocketLightPosList[2]);
 					effectMgr->create(EffectMgr::EFF_Rocket_SSLight, mRocketLightPosList[3], nullptr, nullptr)
 					    ->setEmitPosPtr(&mRocketLightPosList[3]);
-					mUsingRocketLightPos = 1;
+					mUsingRocketLightPos = true;
 					break;
 				case 30:
 					effectMgr->create(EffectMgr::EFF_Rocket_Opa1, mCenterPosition, nullptr, nullptr);

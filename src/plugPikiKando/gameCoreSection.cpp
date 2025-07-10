@@ -387,10 +387,10 @@ void GameCoreSection::forceDayEnd()
 	seSystem->resetSystem();
 	playerState->setDayEnd(true);
 	PRINT("------------ forceDayEnd --------------\n");
-	_3A              = 1;
-	_39              = 1;
-	_38              = 1;
-	mDoneSundownWarn = 1;
+	_3A              = true;
+	_39              = true;
+	_38              = true;
+	mDoneSundownWarn = true;
 	clearDeadlyPikmins();
 	enterFreePikmins();
 
@@ -855,14 +855,14 @@ void GameCoreSection::initStage()
 	lastDamage = false;
 	currDamage = false;
 	damageParm = 0;
-	_3A        = 0;
-	_39        = 0;
-	_38        = 0;
+	_3A        = false;
+	_39        = false;
+	_38        = false;
 
 	if (playerState->isTutorial()) {
-		_3A = 1;
-		_39 = 1;
-		_38 = 1;
+		_3A = true;
+		_39 = true;
+		_38 = true;
 	}
 
 	// hmm. not sure how to get the orphaned cmpwi x2 to spawn in the middle of this switch
@@ -1099,7 +1099,7 @@ void GameCoreSection::initStage()
 	attentionCamera = new AttentionCamera;
 	cameraMgr->startCamera(naviMgr->getNavi());
 	cameraMgr->update();
-	mNavi->mIsCursorVisible = 1;
+	mNavi->mIsCursorVisible = TRUE;
 
 #if defined(VERSION_PIKIDEMO)
 #else
@@ -1222,7 +1222,7 @@ void GameCoreSection::finalSetup()
 			cameraMgr->mCamera->startCamera(mNavi, 0, 0);
 			if (playerState->isTutorial() && playerState->mShipEffectPartFlag & 8) {
 				cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
-				cameraMgr->mCamera->mControlsEnabled = 0;
+				cameraMgr->mCamera->mControlsEnabled = false;
 			}
 		} else {
 			cameraMgr->mCamera->startCamera(mNavi, 1, 0);
@@ -1268,7 +1268,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	demoEventMgr     = new DemoEventMgr();
 	radarInfo        = new RadarInfo();
 	_34              = 0;
-	mDoneSundownWarn = 0;
+	mDoneSundownWarn = false;
 
 	memStat->start("gamecore");
 	seSystem      = new SeSystem();
@@ -1430,8 +1430,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 	gameflow.addGenNode("cameraMgr", cameraMgr);
 	memStat->end("gamecore");
 
-	mDrawGameInfo
-	    = new zen::DrawGameInfo(gameflow.mIsChallengeMode == FALSE ? zen::DrawGameInfo::MODE_Story : zen::DrawGameInfo::MODE_Challenge);
+	mDrawGameInfo = new zen::DrawGameInfo(!gameflow.mIsChallengeMode ? zen::DrawGameInfo::MODE_Story : zen::DrawGameInfo::MODE_Challenge);
 }
 
 /*
@@ -1442,8 +1441,7 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 void GameCoreSection::update()
 {
 	STACK_PAD_VAR(2);
-	if (!gameflow.mMoviePlayer->mIsActive && mDoneSundownWarn == false
-	    && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
+	if (!gameflow.mMoviePlayer->mIsActive && !mDoneSundownWarn && gameflow.mWorldClock.mTimeOfDay >= gameflow.mParameters->mNightWarning()
 	    && (flowCont.mGameEndCondition != 1 || flowCont.mGameEndCondition != 2)) {
 		if (playerState->inDayEnd()) {
 			PRINT("======== IN DAY END *** \n");
@@ -1458,7 +1456,7 @@ void GameCoreSection::update()
 	accountWindow->update();
 	routeMgr->update();
 
-	if (gameflow._33C == 0 && gameflow.mIsUiOverlayActive == 0) {
+	if (!gameflow._33C && !gameflow.mIsUiOverlayActive) {
 		playerState->update();
 	}
 
@@ -1531,7 +1529,7 @@ void GameCoreSection::startContainerDemo()
  */
 void GameCoreSection::startSundownWarn()
 {
-	mDoneSundownWarn = 1;
+	mDoneSundownWarn = true;
 	PRINT("***** START HURRY UP WINDOW\n");
 	hurryupWindow->start(zen::DrawHurryUp::MesgType1);
 	seSystem->playSysSe(SYSSE_EVENING_ALERT);
@@ -1576,19 +1574,17 @@ void GameCoreSection::updateAI()
 
 	// some nonsense
 	if (!_38 && gameflow.mWorldClock.mCurrentTime >= morningBell) {
-		_38 = 1;
+		_38 = true;
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
-
 	} else if (!_39 && gameflow.mWorldClock.mCurrentTime >= middayBell) {
-		_39 = 1;
+		_39 = true;
 		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNoon)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNoon);
 			gameflow.mGameInterface->message(0, 31);
 		}
-
 	} else if (!_3A && gameflow.mWorldClock.mCurrentTime >= afternoonBell) {
-		_3A = 1;
+		_3A = true;
 		seSystem->playSysSe(SYSSE_TIME_SMALLSIGNAL);
 	}
 
@@ -1600,11 +1596,11 @@ void GameCoreSection::updateAI()
 	pikiOptUpdateMgr->update();
 	tekiOptUpdateMgr->update();
 	mMapMgr->update();
-	if (gameflow.mIsUiOverlayActive == 0) {
+	if (!gameflow.mIsUiOverlayActive) {
 		naviMgr->update();
 	}
 
-	if (gameflow.mIsUiOverlayActive == 0) {
+	if (!gameflow.mIsUiOverlayActive) {
 		if (tekiMgr) {
 			gsys->mTimer->start("search", true);
 			if (AIPerf::insQuick) {
@@ -1627,7 +1623,7 @@ void GameCoreSection::updateAI()
 			gsys->mTimer->stop("search");
 		}
 
-		if (gameflow._33C == 0) {
+		if (!gameflow._33C) {
 			if (!inPause() && bossMgr) {
 				if (!hideTeki()) {
 					bossMgr->update();
@@ -1655,7 +1651,7 @@ void GameCoreSection::updateAI()
 	if (tekiMgr) {
 		f32 time = gsys->getFrameTime();
 		MATCHING_START_TIMER("post", true);
-		if (gameflow.mIsUiOverlayActive == 0) {
+		if (!gameflow.mIsUiOverlayActive) {
 			naviMgr->postUpdate(0, time);
 		}
 

@@ -96,7 +96,7 @@ struct PikiAbsorbState : public PikiState {
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	int mState;            // _10
-	u8 mHasAbsorbedNectar; // _14
+	bool mHasAbsorbedNectar; // _14
 	Creature* mNectar;     // _18
 };
 
@@ -116,7 +116,7 @@ struct PikiAutoNukiState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 mToCreateEffect; // _10
+	bool mToCreateEffect; // _10
 };
 
 /**
@@ -275,7 +275,7 @@ struct PikiEmitState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 mHasLanded; // _10
+	bool mHasLanded; // _10
 };
 
 /**
@@ -422,8 +422,8 @@ struct PikiFlyingState : public PikiState {
 	// _00-_10 = PikiState
 	PermanentEffect mSparkleEffect; // _10
 	f32 mGlideTimer;                // _20
-	u8 mIsFlowerGliding;            // _24
-	u8 mHasBounced;                 // _25
+	bool mIsFlowerGliding;          // _24
+	bool mHasBounced;               // _25
 	u8 _UNUSED26[0x2C - 0x26];      // _26
 	Vector3f mHorizontalDirection;  // _2C
 	f32 mInitialHorizontalSpeed;    // _38
@@ -642,7 +642,7 @@ struct PikiPressedState : public PikiState {
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	f32 mStunTimer;   // _10
-	u8 mIsInvincible; // _14
+	bool mIsInvincible; // _14
 };
 
 /**
@@ -665,7 +665,7 @@ struct PikiPushPikiState : public PikiState {
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	int mCollisionFrameCount; // _10
-	u8 mIsFinishing;          // _14
+	bool mIsFinishing;        // _14
 };
 
 /**

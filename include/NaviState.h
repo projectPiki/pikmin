@@ -98,10 +98,10 @@ struct NaviAttackState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10; // _10
-	u8 _12;  // _12
-	f32 _14; // _14
-	f32 _18; // _18
+	u16 _10;  // _10
+	bool _12; // _12
+	f32 _14;  // _14
+	f32 _18;  // _18
 };
 
 /**
@@ -446,9 +446,9 @@ struct NaviGatherState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10; // _10
-	f32 _14; // _14
-	u8 _18;  // _18
+	u16 _10;  // _10
+	f32 _14;  // _14
+	bool _18; // _18
 };
 
 /**
@@ -474,7 +474,7 @@ struct NaviGeyzerState : public NaviState {
 	f32 _1C;              // _1C
 	Vector3f _20;         // _20
 	f32 _2C;              // _2C
-	u8 _30;               // _30
+	bool _30;             // _30
 };
 
 /**
@@ -546,7 +546,7 @@ struct NaviNukuAdjustState : public NaviState {
 	// _00-_10 = NaviState
 	f32 _10;      // _10
 	Vector3f _14; // _14
-	u8 _20;       // _20
+	bool _20;     // _20
 	Vector3f _24; // _24
 };
 
@@ -566,11 +566,11 @@ struct NaviNukuState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u16 _10; // _10
-	u8 _12;  // _12
-	u8 _13;  // _13
-	u8 _14;  // _14
-	u8 _15;  // _15
+	u16 _10;  // _10
+	bool _12; // _12
+	bool _13; // _13
+	bool _14; // _14
+	bool _15; // _15
 };
 
 /**
@@ -589,7 +589,7 @@ struct NaviPartsAccessState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10; // _10
+	bool _10; // _10
 };
 
 /**
@@ -644,8 +644,8 @@ struct NaviPikiZeroState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10;  // _10
-	u8 _11;  // _11
+	bool _10; // _10
+	bool _11; // _11
 	u16 _12; // _12
 	u32 _14; // _14
 };
@@ -702,7 +702,7 @@ struct NaviPushState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10; // _10
+	bool _10; // _10
 };
 
 /**
@@ -720,7 +720,7 @@ struct NaviReleaseState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10; // _10, unknown
+	bool _10; // _10, unknown
 };
 
 /**
@@ -793,7 +793,7 @@ struct NaviStartingState : public NaviState {
 	Vector3f _20; // _20
 	u32 _2C;      // _2C
 	u16 _30;      // _30
-	u8 _32;       // _32
+	bool _32;     // _32
 	Vector3f _34; // _34
 };
 
@@ -832,8 +832,8 @@ struct NaviThrowState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10;    // _10
-	u8 _11;    // _11
+	bool _10;  // _10
+	bool _11;  // _11
 	Piki* _14; // _14
 };
 
@@ -862,7 +862,7 @@ struct NaviThrowWaitState : public NaviState {
 	Piki* _10; // _10
 	Piki* _14; // _14
 	int _18;   // _18
-	u8 _1C;    // _1C
+	bool _1C;  // _1C
 	u32 _20;   // _20
 	f32 _24;   // _24
 	f32 _28;   // _28
@@ -884,7 +884,7 @@ struct NaviUfoAccessState : public NaviState {
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
-	u8 _10; // _10
+	bool _10; // _10
 };
 
 /**
@@ -908,7 +908,7 @@ struct NaviUfoState : public NaviState {
 	u16 mRecoveryTimer;     // _12
 	Vector3f mLastPosition; // _14
 	s8 mPunchCooldownTimer; // _20
-	u8 _21;                 // _21
+	bool _21;               // _21
 };
 
 /**

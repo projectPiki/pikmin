@@ -48,7 +48,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 
 	mOperationCursorsScreenPane->show();
 	paneOnOffXY(false);
-	mIsCopyTargetSelectionActive = 1;
+	mIsCopyTargetSelectionActive = true;
 	mCopyLeftCursor.scale(1.0f, 0.25f);
 	mCopyRightCursor.scale(1.0f, 0.25f);
 

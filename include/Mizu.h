@@ -68,7 +68,7 @@ struct Mizu : public Boss {
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
-	u8 _3B8;         // _3B8
+	bool _3B8;       // _3B8
 	bool mIsVisible; // _3B9
 	MizuAi* mMizuAi; // _3BC
 };

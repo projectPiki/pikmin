@@ -100,8 +100,8 @@ struct CPlate : public Traversable, public Node {
 	f32 mDirectionAngle;       // _AC
 	Vector3f mDevOffsetTest;   // _B0, unused
 	int mHappaCounts[3];       // _BC, indexed by PikiHappa
-	u8 _C8;                    // _C8
-	u8 mIsNeutral;             // _C9
+	bool _C8;                  // _C8
+	bool mIsNeutral;           // _C9
 };
 
 #endif

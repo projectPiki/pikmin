@@ -484,14 +484,14 @@ void DGXGraphics::initRender(int a1, int a2)
 	GXSetDither(GX_FALSE);
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_NOOP);
 	GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	mDepthMode = 1;
+	mIsDepthEnabled = true;
 	GXSetZCompLoc(GX_FALSE);
 	GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_OR, GX_ALWAYS, 0);
 	mLineWidth = 1.0f;
 	GXSetLineWidth(mLineWidth * 6.0f, GX_TO_ZERO);
 	GXSetPointSize(24, GX_TO_ZERO);
-	mHasTexGen      = 0;
-	mIsEnvMapActive = 0;
+	mHasTexGen      = FALSE;
+	mIsEnvMapActive = false;
 	mCullFlip       = 0;
 	useTexture(nullptr, 0);
 	setMatHandler(nullptr);
@@ -657,11 +657,11 @@ f32 DGXGraphics::setLineWidth(f32 width)
  * Address:	80048310
  * Size:	00005C
  */
-u8 DGXGraphics::setDepth(bool depth)
+u8 DGXGraphics::setDepth(bool enabled)
 {
-	u8 old     = mDepthMode;
-	mDepthMode = depth;
-	if (!depth) {
+	bool old        = mIsDepthEnabled;
+	mIsDepthEnabled = enabled;
+	if (!enabled) {
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 	} else {
 		GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
@@ -980,7 +980,7 @@ void DGXGraphics::useMatrix(Matrix4f& mtx, int a)
  */
 void DGXGraphics::useTexture(Texture* texture, int id)
 {
-	mHasTexGen = 0;
+	mHasTexGen = FALSE;
 	if (!texture || texture != mActiveTexture[id]) {
 		if (texture) {
 			texture->makeResident();
@@ -1204,7 +1204,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 				mIsEnvMapActive = true;
 			}
 
-			mHasTexGen = 1;
+			mHasTexGen = TRUE;
 			return;
 		}
 	}

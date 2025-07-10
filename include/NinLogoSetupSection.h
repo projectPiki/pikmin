@@ -38,7 +38,7 @@ struct NinLogoSetupSection : public Node {
 		}
 #endif
 		mMenu                            = 0;
-		gameflow.mGamePrefs.mHasSaveGame = 1;
+		gameflow.mGamePrefs.mHasSaveGame = true;
 		gsys->setFade(1.0f, 3.0f);
 	}
 

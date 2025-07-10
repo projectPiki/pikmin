@@ -28,7 +28,7 @@ DEFINE_PRINT(nullptr);
  */
 DualCreature::DualCreature()
 {
-	mIsCollisionInitialised = 0;
+	mIsCollisionInitialised = false;
 	setCreatureFlag(CF_Unk1 | CF_Unk10);
 	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
 	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
@@ -44,7 +44,7 @@ DualCreature::DualCreature()
 void DualCreature::doKill()
 {
 	DynCreature::doKill();
-	mIsCollisionInitialised = 0;
+	mIsCollisionInitialised = false;
 }
 
 /*
@@ -109,7 +109,7 @@ void DualCreature::createCollisions(Graphics& gfx)
 {
 	if (!mIsCollisionInitialised) {
 		releaseAllParticles();
-		mIsCollisionInitialised = 1;
+		mIsCollisionInitialised = true;
 		mMass                   = 0.0f;
 		doCreateColls(gfx);
 		initialiseSystem();
@@ -124,7 +124,7 @@ void DualCreature::createCollisions(Graphics& gfx)
 void DualCreature::useRealDynamics()
 {
 	if (!mIsDynamicsSimpleFixed) {
-		_43E            = 1;
+		_43E            = true;
 		mIsRealDynamics = true;
 		mRotationQuat.fromEuler(mRotation);
 	} else {
@@ -139,7 +139,7 @@ void DualCreature::useRealDynamics()
  */
 void DualCreature::useSimpleDynamics()
 {
-	_43E            = 1;
+	_43E            = true;
 	mIsRealDynamics = false;
 	mPrevAngularVelocity.set(0.0f, 0.0f, 0.0f);
 	mAngularMomentum.set(0.0f, 0.0f, 0.0f);
@@ -225,7 +225,7 @@ void DualCreature::refresh(Graphics& gfx)
 		createCollisions(gfx);
 	}
 
-	_43E = 0;
+	_43E = false;
 }
 
 /*

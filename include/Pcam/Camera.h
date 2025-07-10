@@ -151,11 +151,11 @@ struct PcamCamera : public NCamera {
 
 	// _50     = VTBL
 	// _00-_20 = NCamera
-	u8 mIsActive;                  // _20
+	bool mIsActive;                // _20
 	u8 _21[0x28 - 0x21];           // _21, unknown
-	u8 mAttentionEnabled;          // _28
+	bool mAttentionEnabled;        // _28
 	u8 _29[0x30 - 0x29];           // _29, unknown
-	u8 mControlsEnabled;           // _30
+	bool mControlsEnabled;         // _30
 	u8 _31[0x38 - 0x31];           // _31, unknown
 	PcamMotionInfo mAttentionInfo; // _38
 

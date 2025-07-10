@@ -101,7 +101,7 @@ P2DPicture::P2DPicture(P2DPane* parent, RandomAccessStream* input, u16 paneType)
 	stream.align(4);
 	mTextures[0]  = nullptr;
 	mTextureCount = 0;
-	_F2[0]        = 1;
+	_F2[0]        = true;
 	setAlpha(255);
 	initBlack();
 	initWhite();
@@ -143,7 +143,7 @@ bool P2DPicture::insert(Texture* texture, u8 idx, f32)
 	}
 
 	mTextures[idx] = texture;
-	_F2[idx]       = 0;
+	_F2[idx]       = false;
 	mTextureCount++;
 	return true;
 }

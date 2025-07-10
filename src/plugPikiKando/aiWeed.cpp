@@ -171,7 +171,7 @@ void ActWeed::initNuking()
 	mState = STATE_Attack;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Nuku, this), PaniMotionInfo(PIKIANIM_Nuku));
 	_28                = 4;
-	mAnimationFinished = 0;
+	mAnimationFinished = false;
 }
 
 /*
@@ -240,7 +240,7 @@ void ActWeed::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Attack) {
-			mAnimationFinished = 1;
+			mAnimationFinished = true;
 		}
 
 		break;

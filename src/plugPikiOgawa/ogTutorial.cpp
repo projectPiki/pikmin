@@ -28,7 +28,7 @@ zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
 	mMessageMgr = new ogScrMessageMgr("screen/blo/tu_base.blo");
 	mMessageMgr->MakeAndSetPageInfo(bloFiles_Tutorial);
-	mMessageMgr->mAlwaysShowNextPrompt = 1;
+	mMessageMgr->mAlwaysShowNextPrompt = true;
 	mStatus                            = Status_Null;
 }
 

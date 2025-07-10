@@ -290,7 +290,7 @@ struct PathFinder {
 		u16 mMode;                 ///< _14, PathFinderMode flags
 		int mCurrentBufIdx;        ///< _18, Current position in buffer
 		PathStatus::Type mStatus;  ///< _1C, Current search status
-		u8 mIsBacktracking;        ///< _20, Currently backtracking
+		bool mIsBacktracking;      ///< _20, Currently backtracking
 		int mPathLength;           ///< _24, Final path length
 	};
 

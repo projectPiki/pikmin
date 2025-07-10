@@ -70,9 +70,9 @@ struct ogRaderMgr {
 
 	P2DScreen* getScrPtr() { return mMainScreen; }
 
-	u8 _00;              // _00
-	u8 _01;              // _01
-	u8 _02;              // _02
+	bool _00;            // _00
+	bool _01;            // _01
+	bool _02;            // _02
 	int _04;             // _04
 	RaderStatus mStatus; // _08
 	f32 _0C;             // _0C

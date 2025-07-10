@@ -172,7 +172,7 @@ void ActStone::initAttack()
 {
 	mState = STATE_Attack;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Job2, this), PaniMotionInfo(PIKIANIM_Job2));
-	mIsAttackReady = 0;
+	mIsAttackReady = false;
 	mPiki->enableFixPos();
 }
 
@@ -249,7 +249,7 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 	case KEY_Finished:
 		if (mState == STATE_Attack) {
-			mIsAttackReady = 1;
+			mIsAttackReady = true;
 		}
 
 		break;
