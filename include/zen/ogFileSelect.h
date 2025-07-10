@@ -296,7 +296,7 @@ struct ogScrFileSelectMgr {
 	Colour mColorNoDataFile;                               // _558
 	Colour mColorNoDataSelectedFile;                       // _55C
 	u8 _UNUSED560[0xC20];                                  // _560, unknown
-	u8 mIsSelectionConfirmEffectActive;                    // _1180
+	u8 mDeleteCursorPictureOpacity;                        // _1180
 	f32 mSelectionConfirmEffectTimer;                      // _1184
 	f32 mTailEffectSpawnTimer;                             // _1188
 	f32 mCopyAnimTimer;                                    // _118C

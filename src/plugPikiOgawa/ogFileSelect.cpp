@@ -730,19 +730,19 @@ void zen::ogScrFileSelectMgr::setDataNumber(int p1)
  */
 void zen::ogScrFileSelectMgr::init()
 {
-	mSelectState                    = Inactive;
-	mIsTailMoveEffectActive         = false;
-	_1194                                 = false;
-	mCanCreateNewFile               = false;
-	mMemoryCardCheckState                 = false;
-	mIsCopyCompleteMessageActive    = false;
-	mSaveMode                       = 0;
-	mMainInteractTimer              = 0.0f;
-	mIsSelectionConfirmEffectActive = 0;
-	mYesNoWindowChoice              = 0;
-	mTailEffectCounter              = 0;
-	mCursorMoveEffectOnyon          = 0;
-	mCursorMoveEffectPikminGroup    = 0;
+	mSelectState                 = Inactive;
+	mIsTailMoveEffectActive      = false;
+	_1194                        = false;
+	mCanCreateNewFile            = false;
+	mMemoryCardCheckState        = false;
+	mIsCopyCompleteMessageActive = false;
+	mSaveMode                    = 0;
+	mMainInteractTimer           = 0.0f;
+	mDeleteCursorPictureOpacity  = 0;
+	mYesNoWindowChoice           = 0;
+	mTailEffectCounter           = 0;
+	mCursorMoveEffectOnyon       = 0;
+	mCursorMoveEffectPikminGroup = 0;
 }
 
 /*
@@ -946,9 +946,9 @@ void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 	getCardFileInfos();
 
 	mIsTailMoveEffectActive      = false;
-	_1194                              = false;
+	_1194                        = false;
 	mCanCreateNewFile            = false;
-	mMemoryCardCheckState              = false;
+	mMemoryCardCheckState        = false;
 	mIsCopyingFileActive         = false;
 	mSelectionChangeTimer        = 0.0f;
 	mSelectionConfirmEffectTimer = 0.0f;
@@ -997,10 +997,10 @@ void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 		mIconEmptyPanes[i]->setScale(1.0f);
 	}
 
-	mIsSelectionConfirmEffectActive = 0;
-	mTitleMsg                       = SelectDataToLoadOrSave;
-	mIsFadingOut                    = false;
-	mIsTitleAnimating               = false;
+	mDeleteCursorPictureOpacity = 0;
+	mTitleMsg                   = SelectDataToLoadOrSave;
+	mIsFadingOut                = false;
+	mIsTitleAnimating           = false;
 
 	mDeleteCursorPicture->setAlpha(255);
 
@@ -1263,8 +1263,8 @@ zen::ogScrFileSelectMgr::FileSelectUpdateResult zen::ogScrFileSelectMgr::update(
 		if (mSelectionConfirmEffectTimer >= 0.5f) {
 			mSelectState = Continue;
 		} else {
-			mIsSelectionConfirmEffectActive = 255.0f * mSelectionConfirmEffectTimer / 0.5f;
-			mDeleteCursorPicture->setAlpha(255 - mIsSelectionConfirmEffectActive);
+			mDeleteCursorPictureOpacity = 255.0f * mSelectionConfirmEffectTimer / 0.5f;
+			mDeleteCursorPicture->setAlpha(255 - mDeleteCursorPictureOpacity);
 		}
 
 		if (mSelectionConfirmEffectTimer < 0.05f) {
@@ -1296,8 +1296,8 @@ zen::ogScrFileSelectMgr::FileSelectUpdateResult zen::ogScrFileSelectMgr::update(
 				}
 			}
 		} else {
-			mIsSelectionConfirmEffectActive = 255.0f * (0.5f - mSelectionConfirmEffectTimer) / 0.5f;
-			mDeleteCursorPicture->setAlpha(255 - mIsSelectionConfirmEffectActive);
+			mDeleteCursorPictureOpacity = 255.0f * (0.5f - mSelectionConfirmEffectTimer) / 0.5f;
+			mDeleteCursorPicture->setAlpha(255 - mDeleteCursorPictureOpacity);
 		}
 		return mSelectState;
 
