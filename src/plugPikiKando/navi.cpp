@@ -601,16 +601,16 @@ void Navi::reset()
 	_830         = false;
 	mIsRidingUfo = false;
 	setPellet(false);
-	mLookAtPosPtr       = nullptr;
-	mIsPlucking         = false;
-	mIsFastPluckEnabled = false;
-	_2FC                = nullptr;
-	_300                = 0.0f;
-	mIsInWater          = false;
-	_30C                = 0;
-	mIsCursorVisible    = FALSE;
-	_6FC                = 1;
-	_700                = 5;
+	mLookAtPosPtr     = nullptr;
+	mIsPlucking       = false;
+	mFastPluckKeyTaps = false;
+	_2FC              = nullptr;
+	_300              = 0.0f;
+	mIsInWater        = false;
+	_30C              = 0;
+	mIsCursorVisible  = FALSE;
+	_6FC              = 1;
+	_700              = 5;
 	_79C.set(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < 32; i++) {
 		_938[i].set(0.0f, 0.0f, 0.0f);
@@ -870,8 +870,8 @@ void Navi::update()
 		if (state != NAVISTATE_Nuku && state != NAVISTATE_NukuAdjust) {
 			mNoPluckTimer++;
 			if (mNoPluckTimer > NAVI_PROP.mPostPluckZoomOutTime()) {
-				mIsPlucking         = false;
-				mIsFastPluckEnabled = false;
+				mIsPlucking       = false;
+				mFastPluckKeyTaps = 0;
 				PRINT("< camera FINISH MOTION");
 				cameraMgr->mCamera->finishMotion();
 				cameraMgr->mCamera->mControlsEnabled = true;
@@ -1438,7 +1438,7 @@ bool Navi::procActionButton()
 	} else {
 		minDist = NAVI_PROP._7C();
 	}
-	if (mIsFastPluckEnabled) {
+	if (mFastPluckKeyTaps > 0) {
 		minDist = NAVI_PROP._6C();
 	}
 	CI_LOOP(iter)
@@ -1464,7 +1464,7 @@ bool Navi::procActionButton()
 		if (DelayPikiBirth) {
 			_814 = 0.0f;
 			startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
-			PRINT("nuki d=%.1f rn=%d", minDist, mIsFastPluckEnabled);
+			PRINT("nuki d=%.1f rn=%d", minDist, mFastPluckKeyTaps);
 			Vector3f sproutSep = closestSprout->mPosition - mPosition;
 			_7D0               = angDist(roundAng(atan2f(sproutSep.x, sproutSep.z)), mFaceDirection) / 10.0f;
 			f32 dist           = sproutSep.length();
