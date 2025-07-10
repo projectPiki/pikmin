@@ -37,7 +37,7 @@ ActAttack::ActAttack(Piki* piki)
 	setName("attack");
 	setChildren(1, new ActJumpAttack(piki), nullptr);
 	mOther.clear();
-	mIsPlayer = false;
+	mTargetIsPlayer = false;
 }
 
 /*
@@ -61,15 +61,15 @@ void ActAttack::init(Creature* creature)
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
 		mPlayerObject = nullptr;
 		_20           = 0;
-		mIsPlayer     = false;
+		mTargetIsPlayer = false;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
 		mPlayerObject = creature;
-		mIsPlayer     = true;
+		mTargetIsPlayer = true;
 		creature      = findTarget();
 	} else {
 		mPlayerObject = nullptr;
 		_20           = 0;
-		mIsPlayer     = false;
+		mTargetIsPlayer = false;
 	}
 
 	if (creature) {
@@ -275,7 +275,7 @@ int ActAttack::exec()
 
 	int andRet = AndAction::exec();
 	if (andRet != ACTOUT_Continue) {
-		if (mIsPlayer) {
+		if (mTargetIsPlayer) {
 			Creature* target = findTarget();
 			PRINT("piki attack : res is %s\n", (andRet == 2) ? "success" : (andRet == 1) ? "failed" : "not");
 			if (target && andRet == ACTOUT_Success) {

@@ -359,7 +359,7 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	bool mHasLost;             // _1C
 	bool mIsAttackFinished;    // _1D
 	bool mIsCriticalHit;       // _1E
-	bool mIsPlayer;            // _1F
+	bool mTargetIsPlayer;      // _1F
 	Traversable* _20;          // _20, idk what this is but it's something inheriting from this
 	SmartPtr<Creature> mOther; // _24
 	Creature* mPlayerObject;   // _28
