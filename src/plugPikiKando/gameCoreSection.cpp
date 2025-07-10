@@ -127,11 +127,11 @@ void GameCoreSection::updateTextDemo()
  * Address:	8010CF98
  * Size:	000464
  */
-void GameCoreSection::startMovie(u32 flags, bool b)
+void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 {
 	// Uses CinePlayerFlags
 
-	mMovieBackCamera       = b;
+	mUseMovieBackCamera    = useMovieBackCamera;
 	GoalItem::demoHideFlag = 0;
 	if (flags & CinePlayerFlags::HideRedCont) {
 		GoalItem::demoHideFlag = 2;
@@ -225,7 +225,7 @@ void GameCoreSection::startMovie(u32 flags, bool b)
 			orima->finishDamage();
 		}
 		int state = orima->mStateMachine->getCurrID(orima);
-		if (b) {
+		if (useMovieBackCamera) {
 			PRINT("++++++++++ KILL ANTENNA\n");
 			orima->mNaviLightEfx->stop();
 			orima->mNaviLightGlowEfx->stop();
@@ -294,7 +294,7 @@ void GameCoreSection::endMovie(int movieIdx)
 
 	if (mNavi) {
 		f32 angle;
-		if (mMovieBackCamera) {
+		if (mUseMovieBackCamera) {
 			angle = mNavi->mFaceDirection + PI;
 			PRINT("use navi back camera\n");
 		} else {
