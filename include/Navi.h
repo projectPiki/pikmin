@@ -148,7 +148,7 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	zen::particleGenerator* mDamageEfxA; // _2D4
 	zen::particleGenerator* mDamageEfxB; // _2D8
 	zen::particleGenerator* mDamageEfxC; // _2DC
-	bool _2E0;                           // _2E0
+	bool mIsRidingUfo;                   // _2E0
 	bool mIsPellet;                      // _2E1, is lying down/carryable
 	Kontroller* mKontroller;             // _2E4
 	Camera* mNaviCamera;                 // _2E8, could be CullFrustum*, but probably Camera*
