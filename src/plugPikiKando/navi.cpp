@@ -581,7 +581,7 @@ void Navi::startKontroller()
  */
 void Navi::rideUfo()
 {
-	_2E0 = true;
+	mIsRidingUfo = true;
 	mNaviLightEfx->kill();
 	mNaviLightGlowEfx->kill();
 }
@@ -598,8 +598,8 @@ void Navi::reset()
 	_2F4                                    = 0.0f;
 	_2F8                                    = 0.0f;
 	enableFixPos();
-	_830 = false;
-	_2E0 = false;
+	_830         = false;
+	mIsRidingUfo = false;
 	setPellet(false);
 	mLookAtPosPtr       = nullptr;
 	mIsPlucking         = false;
@@ -2177,7 +2177,7 @@ void Navi::draw(Graphics& gfx)
 	}
 
 	updateHeadMatrix();
-	if (!(gameflow.mDemoFlags & 4) && !_2E0) {
+	if (!(gameflow.mDemoFlags & 4) && !mIsRidingUfo) {
 		demoDraw(gfx, nullptr);
 	}
 
