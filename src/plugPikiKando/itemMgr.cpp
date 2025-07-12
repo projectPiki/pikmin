@@ -1265,7 +1265,9 @@ void BuildingItem::doRestore(CreatureInf* info)
 	// wall is (presumably) destroyed, open waypoint
 	else {
 		int finalKeyframeIdx = mItemAnimator.mAnimInfo->countAKeys() - 1;
-		startMotion(mNumStages - 1, mItemAnimator.mAnimInfo->getKeyValue(finalKeyframeIdx) - 1.0f);
+		f32 frame            = mItemAnimator.mAnimInfo->getKeyValue(finalKeyframeIdx) - 1.0f;
+		PRINT("*** BUILDING ITEM START MOTION (%d) @ %.1f frame\n", mNumStages - 1, frame);
+		startMotion(mNumStages - 1, frame);
 		mWayPoint->setFlag(true);
 	}
 

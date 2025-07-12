@@ -864,6 +864,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 		GameStat::update();
 		oldSeed->kill(false);
 		GameStat::workPikis.dec(oldSeed->mSeedColor);
+		PRINT("far mePiki was killed\n");
 	} else {
 
 		Piki* oldPiki = nullptr;
@@ -892,6 +893,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 		}
 	}
 
+	PRINT("try again\n");
 	act(item);
 	STACK_PAD_VAR(3);
 }
@@ -958,6 +960,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 				playerState->mDemoFlags.setFlagOnly(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset);
 				gameflow.mGameInterface->message(0, 21);
 			}
+			PRINT("COUNTER UP!\n");
 		}
 
 		obj->mCurrAnimId--;

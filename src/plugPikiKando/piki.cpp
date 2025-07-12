@@ -3091,7 +3091,7 @@ void Piki::dump()
 		PRINT(" _stickObject=%x(%d) : _stickToObject=%s\n", getStickObject(), getStickObject() ? getStickObject()->mObjType : -1,
 		      mStickPart ? mStickPart->getTypeString() : "none");
 		PRINT(" floorCollTri=%x\n", mGroundTriangle);
-		PRINT(" standType = %s fluteBooking = %s\n", _standStr[getStandType()], mIsWhistlePending ? "true" : "-");
+		PRINT(" standType = %s\n", _standStr[getStandType()]);
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
 		// why not use the inline to get it, idk

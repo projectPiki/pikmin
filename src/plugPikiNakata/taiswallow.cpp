@@ -598,14 +598,14 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiTurnAction::act:target==null:%08x\n",
-		      &teki); // looks like someone was copying and pasting code lol (me too buddy, me too)
+		// Looks like someone was copying and pasting code lol (me too buddy, me too)
+		PRINT("!TaiTurnAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki);
+		PRINT("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki); // And again
 		return true;
 	}
 

@@ -186,6 +186,7 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
 	mAnimMgr             = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_BUNDLE, nullptr);
+	PRINT("OVERRIDING ANIM with %08x\n", &mAnimContext);
 	mShape->overrideAnim(0, &mAnimContext);
 }
 

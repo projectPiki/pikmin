@@ -776,6 +776,7 @@ void zen::ogScrMessageMgr::draw(Graphics& gfx)
 		if (mPageDrawDelayTimer > 0) {
 			mPageDrawDelayTimer--;
 			mHasDrawOccurredThisFrame = false;
+			PRINT("########  ogawa MessageMgr WAIT Frame(%d) ##########\n", mPageDrawDelayTimer);
 		} else {
 			mCurrentScreen->draw(0, 0, &graf);
 			mHasDrawOccurredThisFrame = true;

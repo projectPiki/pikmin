@@ -663,6 +663,7 @@ bool MemoryCard::getCardStatus(int channel)
 			return true;
 		}
 	}
+	PRINT("no card inserted!!!\n");
 	mErrorCode = CARD_RESULT_BUSY;
 	return false;
 }
@@ -922,6 +923,7 @@ void MemoryCard::readCurrentGame(RandomAccessStream* data)
 {
 	gameflow.mPlayState.read(*data);
 	if (gameflow.mPlayState.mSaveStatus == 2 && playerState) {
+		PRINT("LOADING PLAYERSTATE->LOADCARD!!\n");
 		playerState->loadCard(*data);
 	}
 	gameflow.mWorldClock.mCurrentDay = gameflow.mPlayState.mSavedDay;
@@ -1028,6 +1030,9 @@ void MemoryCard::initOptionsArea(int idx)
  */
 s32 MemoryCard::makeDefaultFile()
 {
+	PRINT("*-----------------------------------------------------------*\n");
+	PRINT("Making default file ....\n");
+
 	createFile(cst);
 	cst.length = ((mRequiredFreeSpace + mSectorSize - 1) / (mSectorSize)) * mSectorSize;
 	memset(cardData, 0, cst.length);
@@ -1355,6 +1360,9 @@ s32 MemoryCard::makeDefaultFile()
  */
 void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 {
+	PRINT("wants to copy from file %d to %d\n", p1.mIndex + 1, p2.mIndex + 1);
+	PRINT("wants to copy game file %d to %d\n", p1.mFlags + 1, p2.mFlags + 1);
+
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = TRUE;
 	memcpy(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), getGameFilePtr(p1.mIndex), 0x8000);
@@ -1585,6 +1593,8 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
  */
 void MemoryCard::delFile(CardQuickInfo& p1)
 {
+	PRINT("wants to delete file %d\n", p1.mIndex + 1);
+
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = TRUE;
 	PlayState state;
@@ -1611,12 +1621,14 @@ int MemoryCard::doFormatCard()
 {
 	PRINT("*-----------------------------------------------------------*\n");
 	PRINT("Formatting memory card ....\n");
+
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = true;
 	attemptFormatCard(false);
 	gsys->mIsCardSaving = false;
-	int state           = gameflow.mMemoryCard.getMemoryCardState(false);
-	STACK_PAD_VAR(1);
+	gameflow.mMemoryCard.getMemoryCardState(false); // Updates the value of `mErrorCode`.
+	PRINT("Result = (%s)\n", errCodes[-mErrorCode]);
+	STACK_PAD_VAR(2);
 	return mErrorCode;
 }
 

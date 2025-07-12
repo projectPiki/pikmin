@@ -717,6 +717,10 @@ EffectMgr::EffectMgr()
 
 	mEffectShapeList.initCore("");
 
+	if (EFF_COUNT != EFF_COUNT) { // Bruh moment.
+		PRINT("ptcl data is wrong. %d %d\n", EFF_COUNT, EFF_COUNT);
+		ERROR("ptcl data is wrong.\n");
+	}
 	memStat->start("ptclRegist");
 	int i;
 	for (i = 0; i < EFF_COUNT; i++) {

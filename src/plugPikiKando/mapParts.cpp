@@ -92,7 +92,8 @@ MapSlider::MapSlider(Shape* shape, int activationCount, int triggerCount, f32 ho
 void MapSlider::init()
 {
 	if (mCurrentPart) {
-		mPosition      = mCurrentPart->mStartPosition;
+		mPosition = mCurrentPart->mStartPosition;
+		PRINT("MapSlider init() : t(%.1f %.1f %.1f)\n", mPosition.x, mPosition.y, mPosition.z);
 		mTimer         = mHoldTime1;
 		mStateMode     = 2;
 		mDirectionMode = 1;

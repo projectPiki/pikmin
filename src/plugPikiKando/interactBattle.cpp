@@ -517,6 +517,7 @@ bool InteractSwallow::actPiki(Piki* piki)
 
 	if (!isPiki) {
 		PRINT("WHY=============??\n");
+		PRINT("ちゃんとスティックしてません 口に\n"); // "It's not sticking properly in my mouth"
 		PRINT("p->_stickObject = %x sender = %x\n", piki->mStickTarget, mOwner);
 		PRINT("CHAPPY no stickers ==\n");
 		for (Creature* stuck = mOwner->mStickListHead; stuck; stuck = stuck->mNextSticker) {
@@ -597,6 +598,7 @@ bool InteractPress::actPiki(Piki* piki)
 
 	piki->mDeathTimer = C_PIKI_PROP(piki)._15C();
 	piki->mHealth -= mDamage;
+	PRINT(">>> piki pressed : life is %.1f (damage %.1f)\n", piki->mHealth, mDamage);
 	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiHealth());
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	return true;

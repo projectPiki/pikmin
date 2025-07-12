@@ -229,6 +229,7 @@ void ActRescue::initThrow()
 	mGotAnimationAction = false;
 	mAnimationFinished  = false;
 	mThrowReady         = true;
+	PRINT("INIT THROW!\n");
 }
 
 /*

@@ -92,7 +92,11 @@ struct TAIAcountStartTamago : public TaiAction {
 
 	virtual bool act(Teki& teki) // _10
 	{
-		return teki.isNaviWatch();
+		bool res = teki.isNaviWatch();
+		if (res) {
+			// PRINT("COUNT START! ==============================-\n");
+		}
+		return res;
 	}
 
 	// _04     = VTBL

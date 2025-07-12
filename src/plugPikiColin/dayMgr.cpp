@@ -765,8 +765,9 @@ void DayMgr::menuDumpSettings(Menu&)
 		      mTimeSettings[i].mFogColour.a);
 		PRINT("\t\tdist\t%.2f %.2f\n", mTimeSettings[i].mFogNear, mTimeSettings[i].mFogFar);
 		PRINT("\t\t}\n");
+		PRINT("\t}\n");
 	}
-	PRINT("\t}\n");
+	PRINT("}\n\n");
 	PRINT("\n------- cut here -----------------\n");
 
 	gsys->mTogglePrint = old;

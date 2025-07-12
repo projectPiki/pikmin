@@ -267,6 +267,11 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state
 		}
 
 		navi->mGoalItem = goals[pikiList[i]->mColor];
+
+		if (!navi->mGoalItem) {
+			PRINT("navi accesscontainer = 0\n");
+			ERROR("navi->ac=0");
+		}
 		pikiList[i]->changeMode(11, nullptr);
 	}
 }

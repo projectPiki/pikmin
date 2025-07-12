@@ -898,6 +898,7 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 	if (config->mPelletColor() != PELCOLOR_NULL || isUfoParts()) {
 		mShapeObject->mShape->makeInstance(mShapeDynMaterials, 0);
 	}
+	PRINT("*** MATERIAL : %d\n", mShapeDynMaterials.mParent);
 }
 
 /*

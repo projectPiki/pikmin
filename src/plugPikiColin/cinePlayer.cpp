@@ -671,8 +671,8 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 				continue;
 			}
 			if (key->mEventType == ANIMEVENT_Action) {
-				u8 id = key->mKeyType;
-				switch (id) {
+				PRINT("cine effect (frame %d) %d at %f, %f, %f\n", key->mFrameIndex, key->mKeyType, pos.x, pos.y, pos.z);
+				switch (key->mKeyType) {
 				case 0:
 					if (mapMgr) {
 						pos.y = mapMgr->getMinY(pos.x, pos.z, true);
@@ -874,7 +874,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 				case 26:
 				case 27:
 				case 28:
-					effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[id - 21], nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_SCT00N, mJointPositions[key->mKeyType - 21], nullptr, nullptr);
 					break;
 				case 29:
 					mRocketLightPosList[0].set(-25000.0f, -25000.0f, -25000.0f);

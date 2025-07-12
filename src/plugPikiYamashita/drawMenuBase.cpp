@@ -89,6 +89,7 @@ bool zen::DrawMenuBase::update(Controller* controller)
 	bool res   = false;
 	mEventFlag = 0;
 	if ((this->*mModeFunction)(controller)) {
+		PRINT("finish \n");
 		res = true;
 	}
 

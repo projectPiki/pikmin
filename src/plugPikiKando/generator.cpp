@@ -702,6 +702,7 @@ void Generator::init()
 				}
 			}
 		}
+		PRINT("::: create %d \n", mAliveCount);
 		return;
 	}
 

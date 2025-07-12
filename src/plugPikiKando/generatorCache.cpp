@@ -276,7 +276,8 @@ void GeneratorCache::preload(u32 stageIdx)
 		RamStream stream(heapedCache, cache->mTotalCacheSize);
 		for (int i = 0; i < cache->mGenCount; i++) {
 			PRINT("reading generator %d from ram : %x\n", i, stream.getPosition());
-			Generator* gen     = new Generator();
+			Generator* gen = new Generator();
+			PRINT("NEW DONE\n");
 			Generator::ramMode = true;
 			gen->read(stream);
 			PRINT("generator read done\n");
@@ -342,6 +343,7 @@ void GeneratorCache::load(u32 stageIdx)
 	if (cache) {
 		PRINT("cache = %x\n", cache);
 		void* heap = (void*)(((u32)mCacheHeap + cache->mHeapOffset + cache->mGenCacheSize));
+		PRINT("load from %x : %d creatures\n", heap, cache->mCreatureCount);
 		RamStream stream(heap, cache->mCreatureCacheSize);
 		for (int i = 0; i < cache->mCreatureCount; i++) {
 			PRINT("reading creature %d from ram\n", i);
@@ -391,8 +393,6 @@ void GeneratorCache::load(u32 stageIdx)
 		assertValid();
 		dump();
 	}
-
-	STACK_PAD_VAR(1);
 }
 
 /*
@@ -635,8 +635,8 @@ void GeneratorCache::Cache::dump()
 	PRINT("\tcourse %d\n", mCourseIdx);
 	PRINT("\t%x - %x : (%.2fK)\n", mHeapOffset, mTotalCacheSize + mHeapOffset, mTotalCacheSize / 1024.0f);
 	PRINT("\tgenerator = %d size = %d\n", mGenCount, mGenCacheSize);
-	PRINT("\tcreature = %d size = %d\n", mCreatureCount, mCreatureCacheSize);
-	PRINT("\tufo parts = %d size = %d\n", mUfoPartsCount, mUfoPartsCacheSize);
+	PRINT("\tcreature  = %d size = %d\n", mCreatureCount, mCreatureCacheSize);
+	PRINT("\tufo parts  = %d size = %d\n", mUfoPartsCount, mUfoPartsCacheSize);
 }
 
 /*

@@ -182,7 +182,7 @@ void TekiParameters::read(RandomAccessStream& input)
 		multiP->setF(TPF_CollisionRadius, 16.0f);
 
 	} else if (mVersion <= 10) {
-		PRINT("TekiParameters::read:TEKIPARAMETERS_VERSION_0908\n");
+		PRINT("TekiParameters::read:TEKIPARAMETERS_VERSION_0925\n");
 
 		int i;
 		for (i = 0; i < 8; i++) {

@@ -1144,6 +1144,7 @@ void PikiFlickState::cleanup(Piki* piki)
 		return;
 	}
 
+	PRINT("piki%x FLICK ** aiAction->curr = %d is not resumable!\n", piki, piki->mActiveAction->mCurrActionIdx);
 	piki->mActiveAction->abandon(nullptr);
 }
 
@@ -1649,6 +1650,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
  */
 void PikiCliffState::cleanup(Piki* piki)
 {
+	PRINT("cliff cleanup\n");
 }
 
 /*
@@ -1796,6 +1798,7 @@ void PikiWaterHangedState::init(Piki* piki)
 	piki->mHasCollChangedVelocity = 0;
 	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
+	PRINT("water hang init!\n");
 }
 
 /*
@@ -1806,6 +1809,7 @@ void PikiWaterHangedState::init(Piki* piki)
 void PikiWaterHangedState::exec(Piki* piki)
 {
 	if (piki->mNavi->getCurrState()->getID() != NAVISTATE_ThrowWait) {
+		PRINT("???\n");
 		transit(piki, PIKISTATE_Normal);
 	}
 }
@@ -1817,6 +1821,7 @@ void PikiWaterHangedState::exec(Piki* piki)
  */
 void PikiWaterHangedState::cleanup(Piki* piki)
 {
+	PRINT("water hang exit\n");
 	SeSystem::stopPlayerSe(SE_PIKI_FLYREADY);
 }
 

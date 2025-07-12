@@ -173,6 +173,8 @@ struct DayOverModeState : public ModeState {
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
 			OSReport("!!!!!!!!!!!!!! CLEANUPDAYEND!!!!\n");
+#else
+			PRINT("CLEANUPDAYEND!!!!\n");
 #endif
 			gamecore->cleanupDayEnd();
 
@@ -285,6 +287,7 @@ static void createMenuWindow()
 static void deleteMenuWindow()
 {
 	gsys->resetHeap(5, 1);
+	PRINT("menu window detach\n");
 	gameflow.mIsUiOverlayActive = FALSE;
 	menuWindow                  = nullptr;
 }
@@ -461,6 +464,7 @@ ModeState* IntroGameModeState::update(u32& result)
 	handleTutorialWindow(result, mSection->mController);
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
+		PRINT("switching to running!\n");
 		gameInfoOn = true;
 		showFrame(true, 2.0f);
 
@@ -691,6 +695,7 @@ ModeState* MessageModeState::update(u32& result)
 			DayOverModeState* state  = new DayOverModeState(mSection, 1);
 			state->mState            = 0;
 			mSection->mNextModeState = state;
+			PRINT("CLEANUPDAYEND!!!!\n");
 			gamecore->cleanupDayEnd();
 			if (!gameflow.mIsChallengeMode) {
 				if (gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
@@ -705,6 +710,7 @@ ModeState* MessageModeState::update(u32& result)
 			break;
 		}
 	} else if (flowCont.mGameEndCondition == 0) {
+		PRINT("DOING FORCE RESULTS SCREEN !!!\n");
 		DayOverModeState* state  = new DayOverModeState(mSection, 1);
 		gameoverWindow           = nullptr;
 		state->mState            = 0;

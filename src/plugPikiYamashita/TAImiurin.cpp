@@ -366,6 +366,7 @@ struct TAIAwatchNaviMiurin : public TaiAction {
 		} else {
 			mNextState = mNextStateOther;
 		}
+		PRINT("nextState %d \n", mNextState);
 	}
 
 	// _04     = VTBL

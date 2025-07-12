@@ -116,6 +116,7 @@ bool Navi::demoCheck()
 					gameflow.mMovieType    = 3;
 					gameflow.mMovieInfoNum = id;
 					playerState->mDemoFlags.setFlag(id + DEMOFLAG_UfoPartDiscoveryOffset, obj);
+					PRINT("*** set ufo-parts flag %d\n", id);
 					return true;
 				}
 			}

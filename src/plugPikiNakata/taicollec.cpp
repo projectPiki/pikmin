@@ -690,7 +690,7 @@ bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
 	if (!target) {
-		PRINT("TaiCollecPelletDisappearedAction::act:target==null:%08x\n", &teki);
+		PRINT("!TaiCollecPelletDisappearedAction::act:target==null:%08x,%d\n", &teki, teki.mStateID);
 		return true;
 	}
 
@@ -703,7 +703,6 @@ bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 
 	return false;
 
-	TekiVisibleCondition(nullptr);
 	TekiVisibleCondition(nullptr);
 }
 

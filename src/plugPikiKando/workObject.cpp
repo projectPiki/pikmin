@@ -1023,6 +1023,7 @@ bool Bridge::workable(Vector3f& pos)
 			return false;
 		}
 	} else if (z < -100.0f) {
+		PRINT("z = %.1f\n", z);
 		return false;
 	}
 

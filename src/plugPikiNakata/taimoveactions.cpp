@@ -489,13 +489,13 @@ bool TaiTraceTurningAction::act(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiTurningAwayAction::act:target==null:%08x\n", &teki);
+		PRINT("!TaiTraceTurnAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT("!TaiTurningAwayAction::act:!condition.satisfy:%08x\n", &teki);
+		PRINT("!TaiTraceTurnAction2::act:%08x\n", &teki);
 		return true;
 	}
 

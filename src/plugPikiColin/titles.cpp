@@ -232,10 +232,11 @@ struct TitleSetupSection : public Node {
 						totalWindow->start();
 
 					} else if (titleState == zen::ogScrTitleMgr::Status_4) {
-						PRINT("going to SETUP!\n");
 						if (gameflow.mGamePrefs.mHasSaveGame) {
+							PRINT("going to SETUP!\n");
 							mNextSectionId = 0x40000;
 						} else {
+							PRINT("going to SETUP!\n");
 							mNextSectionId = 0x40000;
 						}
 						Jac_SceneExit(13, 0);

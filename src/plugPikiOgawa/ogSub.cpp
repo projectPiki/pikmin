@@ -737,6 +737,7 @@ int getSpecialNumber(int idx)
  */
 void setSpecialNumber(int idx, int value)
 {
+	PRINT("setSpecialNumber()  @d%d = %d\n", idx, value);
 	if (idx < 0 || idx > 99) {
 		return;
 	}

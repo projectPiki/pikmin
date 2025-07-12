@@ -125,7 +125,7 @@ void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 {
 	resetCreatureFlag(CF_StuckToMouth);
 	if (mStickTarget) {
-		PRINT("startStickMouth:already stuck to %s : endStick\n", mStickPart->mCollInfo->mId.mStringID);
+		PRINT("startStickMouth::already stuck to %s : endStick\n", mStickPart->mCollInfo->mId.mStringID);
 		endStick();
 	}
 
@@ -192,6 +192,7 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 
 	// Convert final position to object's local space
 	mAttachPosition.multMatrix(invWorldMatrix);
+	PRINT("StartStick SPHERE * (%.1f %.1f %.1f) \n", mAttachPosition.x, mAttachPosition.y, mAttachPosition.z);
 }
 
 /*

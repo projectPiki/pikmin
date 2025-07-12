@@ -229,6 +229,7 @@ void Action::setChildren(int count, ...)
 void Action::cleanup()
 {
 	for (int i = 0; i < mChildCount; i++) {
+		PRINT("cleaning up.. %d\n", i);
 		mChildActions[i].mAction->cleanup();
 	}
 }
@@ -382,7 +383,7 @@ int TopAction::exec()
 				int emote = mPiki->mEmotion;
 				mPiki->changeMode(PikiMode::FormationMode, nullptr);
 				if (mPiki->isKinoko()) {
-					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
+					PRINT("キノコピキ：もとにもどる！\n"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
 				} else if (emote != PikiEmotion::None) {
@@ -406,7 +407,7 @@ int TopAction::exec()
 				mChildActions[mCurrActionIdx].initialise(nullptr);
 
 				if (mPiki->isKinoko()) {
-					PRINT("キノコピキ：もとにもどる！"); // 'kinokopiki: back to normal!'
+					PRINT("キノコピキ：もとにもどる！\n"); // 'kinokopiki: back to normal!'
 					mPiki->mFSM->transit(mPiki, PIKISTATE_KinokoChange);
 
 				} else if (emote != PikiEmotion::None) {
