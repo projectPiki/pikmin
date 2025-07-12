@@ -2289,6 +2289,7 @@ bool InteractGeyzer::actNavi(Navi* navi)
 	navi->mStateMachine->transit(navi, NAVISTATE_Geyzer);
 	NaviGeyzerState* geyzer = static_cast<NaviGeyzerState*>(navi->mStateMachine->getNaviState(navi));
 	geyzer->_20             = _08;
+	PRINT("geyzer !\n");
 	return true;
 }
 

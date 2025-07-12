@@ -349,6 +349,7 @@ void PaniTestNode::updateTekis()
  */
 void PaniTestNode::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
+	PRINT("animationKeyUpdated:%d\n", event.mEventType);
 	mAnimationEvent = event.mEventType;
 	if (mTestMode == PANITEST_Piki) {
 		mTestPikiList[0]->animationKeyUpdated(event);

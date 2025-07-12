@@ -44,6 +44,7 @@ bool TaiGroundCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiWallCollisionAction::actByEvent(TekiEvent& event)
 {
+	PRINT("TaiWallCollisionAction::actByEvent:%08x,%d\n", event.mTeki, event.mEventType);
 	return event.mEventType == TekiEventType::Wall;
 }
 
@@ -69,6 +70,7 @@ bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
 	}
 
 	if (!event.mOther) {
+		PRINT("!TaiPikiCollisionAction::actByEvent:%08x\n", event.mTeki);
 		return false;
 	}
 
@@ -87,6 +89,7 @@ bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
 	}
 
 	if (!event.mOther) {
+		PRINT("!TaiNaviCollisionAction::actByEvent:%08x\n", event.mTeki);
 		return false;
 	}
 
@@ -105,6 +108,7 @@ bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent& event)
 	}
 
 	if (!event.mOther) {
+		PRINT("!TaiTekiTypeCollisionAction::actByEvent:%08x\n", event.mTeki);
 		return false;
 	}
 

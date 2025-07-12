@@ -395,6 +395,7 @@ void UfoItem::setJetEffect(int level, bool doSmokeEffects)
 				case 3:
 					// don't do smoke effect if we've fixed enough of the ship
 					if (doSmokeEffects && playerState->mShipUpgradeLevel != 5) {
+						PRINT("SMOKE * CA *\n");
 						mEngineParticleGenList[engine][0]
 						    = effectMgr->create(effects[stage + engine * offset][3], coll->mCentre, nullptr, nullptr);
 						if (mEngineParticleGenList[engine][0]) {

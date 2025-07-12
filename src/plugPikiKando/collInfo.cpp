@@ -264,8 +264,7 @@ bool CollPart::isStickable()
 
 	if (mPartType == PART_Platform) {
 		if (getCode().match('c***')) {
-			getCode();
-			getID();
+			PRINT("collide with code c**** : code(%s) id(%s)\n", getCode().mStringID, getID().mStringID);
 			return false;
 		}
 

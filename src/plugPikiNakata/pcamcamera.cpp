@@ -513,6 +513,7 @@ void PcamCamera::startMotion(PcamMotionInfo& info)
  */
 void PcamCamera::finishMotion()
 {
+	PRINT("finishMotion\n");
 	startMotion(PcamMotionInfo(mPrevMotionInfo));
 }
 

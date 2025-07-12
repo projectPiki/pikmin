@@ -24,6 +24,7 @@ DEFINE_PRINT("taimessageactions")
  */
 void TaiSendMessageAction::start(Teki& teki)
 {
+	PRINT("TaiSendMessageAction::start:%08x:type:%d,id:%d\n", &teki, teki.mTekiType, mMessage);
 	teki.sendMessage(mMessage);
 }
 
@@ -35,6 +36,7 @@ void TaiSendMessageAction::start(Teki& teki)
 bool TaiKeySendMessageAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(mAnimKeyOpt)) {
+		PRINT("TaiSendMessageAction::act:%08x:type:%d,id:%d\n", &teki, teki.mTekiType, mMessage);
 		teki.sendMessage(mMessage);
 	}
 	return false;

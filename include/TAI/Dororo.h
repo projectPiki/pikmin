@@ -134,7 +134,11 @@ struct TAIAinitDororo : public TaiAction {
 		teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
 		teki.setDesire(0.0f);
 	}
-	virtual bool act(Teki& teki) { return true; } // _10
+	virtual bool act(Teki& teki) // _10
+	{
+		// PRINT("INIT FINISH \n");
+		return true;
+	}
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

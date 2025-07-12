@@ -618,13 +618,17 @@ void Creature::kill(bool p1)
 	}
 
 	if (mRopeListHead) {
+		PRINT("%x(type%d) died : release all ropeStickers ..\n", this, mObjType);
 		while (mRopeListHead) {
 			mRopeListHead->endRope();
 		}
+		PRINT("done\n");
 	}
 
 	doKill();
 	if (mSeContext) {
+		PRINT("***************************************\n");
+		PRINT("objType %d : dead : release secontext\n", mObjType);
 		mSeContext->releaseEvent();
 	}
 

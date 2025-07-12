@@ -476,12 +476,13 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		}
 	} else {
 		if (msg->mEvent.mColliderPart->isCollisionType() || msg->mEvent.mColliderPart->isTubeType()) {
+			PRINT("try to stick %s : いみない \n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID); // 'no point'
 			if (msg->mEvent.mColliderPart->isStickable()) {
 				PRINT(" stick to 球 or チューブ\n"); // 'stick to ball or tube'
 				piki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
 			} else {
-				PRINT("try to stick to coll-sphere (%s:code %s): ", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID,
-				      msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
+				PRINT("try to stick to coll-sphere (%s:code %s): いまはくっっつかない\n", // 'it doesn't stick now'
+				      msg->mEvent.mColliderPart->mCollInfo->mId.mStringID, msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
 				return;
 			}
 		} else {

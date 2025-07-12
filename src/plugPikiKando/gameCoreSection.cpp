@@ -899,6 +899,7 @@ void GameCoreSection::initStage()
 
 	memStat->start("initStage");
 	flowCont.mNaviOnMap = 0;
+	PRINT("initStage start\n");
 	seMgr->setPikiNum(0);
 	mNavi->_730 = flowCont._250;
 	mNavi->_72C = flowCont._24C;
@@ -1122,7 +1123,7 @@ void GameCoreSection::initStage()
 				BaseInf* b = a; // why
 				a          = (BaseInf*)a->mNext;
 				inf->mBPikiInfMgr.delInf(b);
-				PRINT("@@@@ FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
+				PRINT("::::::: FREE = %d ACTIVE = %d\n", inf->mBPikiInfMgr.getFreeNum(), inf->mBPikiInfMgr.getActiveNum());
 			} else {
 				PRINT("no room for pikihead! ****\n");
 				a = (BaseInf*)a->mNext;
@@ -1350,10 +1351,12 @@ GameCoreSection::GameCoreSection(Controller* controller, MapMgr* mgr, Camera& ca
 
 	pikiInfo = new PikiInfo();
 
+	PRINT("================== NAVI ===================\n");
 	memStat->start("navi");
 	naviMgr = new NaviMgr();
 	naviMgr->create(1);
 	mNavi = static_cast<Navi*>(naviMgr->birth());
+	PRINT("********* navi ==== %x\n", mNavi);
 	gameflow.addGenNode("naviMgr", naviMgr);
 	memStat->end("navi");
 

@@ -42,6 +42,7 @@ DEFINE_PRINT("GameOnePlayer");
  */
 void StageInfo::write(RandomAccessStream&)
 {
+	PRINT("writing information for stage %d\n", mStageID);
 	// UNUSED FUNCTION
 }
 
@@ -52,6 +53,7 @@ void StageInfo::write(RandomAccessStream&)
  */
 void StageInfo::read(RandomAccessStream&)
 {
+	PRINT("reading information for stage %d\n", mStageID);
 }
 
 /*
@@ -84,6 +86,7 @@ void StageInfo::parseGenerators(CmdStream* commands)
 		fileInfo->mEndDay   = byte2;
 		fileInfo->mDuration = byte3;
 
+		PRINT("adding new genfile info %s : %d, %d -> %d\n", fileInfo->mName, fileInfo->mStartDay, fileInfo->mEndDay, fileInfo->mDuration);
 		mFileInfoList.add(fileInfo);
 	}
 
@@ -152,6 +155,7 @@ void FlowController::readMapList(char* fileName)
 			commands->getToken(true);
 			if (commands->isToken("name")) {
 				newStage->mStageName = StdSystem::stringDup(commands->getToken(true));
+				PRINT("adding new stage %s\n", newStage->mStageName);
 				continue;
 			}
 

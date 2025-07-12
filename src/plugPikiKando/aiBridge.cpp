@@ -41,11 +41,11 @@ ActBridge::ActBridge(Piki* piki)
  */
 void ActBridge::init(Creature* creature)
 {
-	_33                   = 0;
-	mClimbingBridge       = false;
-	mPiki->mActionState   = 2;
-	mPiki->mEmotion       = PikiEmotion::Happy;
-	mBridge               = nullptr;
+	_33                 = 0;
+	mClimbingBridge     = false;
+	mPiki->mActionState = 2;
+	mPiki->mEmotion     = PikiEmotion::Happy;
+	mBridge             = nullptr;
 
 	if (creature && creature->mObjType == OBJTYPE_WorkObject) {
 		WorkObject* bridge = static_cast<WorkObject*>(creature);
@@ -435,7 +435,10 @@ int ActBridge::newExeGo()
 	}
 
 	if (!mBridge) {
+		PRINT("failed \n");
+		PRINT("no bridge fail");
 		mPiki->mEmotion = PikiEmotion::Sad;
+		PRINT("NO BRIDGE!\n");
 		return ACTOUT_Fail;
 	}
 

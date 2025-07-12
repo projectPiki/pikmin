@@ -626,6 +626,8 @@ void SeSystem::resetSystem()
 int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffset)
 {
 	if (mIsClosed) {
+		PRINT("seSystem は閉店です!\n");
+		ERROR("seSystem closed\n");
 		return -1;
 	}
 

@@ -210,6 +210,8 @@ void GenObjectBoss::updateUseList(Generator*, int count)
 Creature* GenObjectBoss::birth(BirthInfo& info)
 {
 	Creature* boss = nullptr;
+	PRINT("\n");
+	PRINT("************ BOSS BIRTH START : kind = %d ************\n", mBossID);
 	if (mBossID == GENBOSS_Spider) {
 		boss = bossMgr->create(GENBOSS_Spider, info, this);
 	} else if (mBossID == GENBOSS_Snake) {
@@ -231,6 +233,18 @@ Creature* GenObjectBoss::birth(BirthInfo& info)
 	} else if (mBossID == GENBOSS_Geyzer) {
 		boss = bossMgr->create(GENBOSS_Geyzer, info, this);
 	}
+
+	if (!boss) {
+		PRINT("************ BOSS BIRTH END   : FAILURE  ************\n");
+	} else {
+		PRINT("  VVVVVVVVV   \n");
+		PRINT(" ww       ww  \n");
+		PRINT("<-○--__   |  \n");
+		PRINT(" |    Λ -○->\n");
+		PRINT("  ＼  ё ／   \n");
+		PRINT("************ BOSS BIRTH END   : SUCCESS  ************\n");
+	}
+	PRINT("\n");
 
 	return boss;
 }

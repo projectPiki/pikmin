@@ -938,6 +938,8 @@ void PlayerState::registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pe
 	if (mTotalRegisteredParts >= mTotalParts) {
 		ID32 id1(modelID);
 		ID32 id2(pelletID);
+		PRINT("failed to register (%d,%s,%s)\n", repairAnimJointIndex, id1.mStringID, id2.mStringID);
+		ERROR("sorry\n");
 	}
 
 	UfoParts* part              = &mUfoParts[mTotalRegisteredParts];
@@ -1208,7 +1210,9 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	}
 
 	if (mCurrParts >= AIConstant::_instance->mConstants._184()) {
+		PRINT("PERFECT !\n");
 		mShipUpgradeLevel = 5;
+		PRINT("--- perfect 5");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._174()) {
 		gameflow.mPlayState.openStage(4);
 		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);

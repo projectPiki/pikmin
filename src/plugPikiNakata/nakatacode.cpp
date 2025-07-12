@@ -29,6 +29,7 @@ DEFINE_PRINT("nakatacode")
 void NakataCodeInitializer::init()
 {
 	nakataDebugMode = TRUE;
+	PRINT("NNNNNNNNNNNNNNNNNNNNNNNakataCodeInitializer::init\n"); // lol
 	NSystem::initSystem(gsys);
 	PaniPikiAnimMgr::motionTable = nullptr;
 	TekiMgr::initTekiMgr();
