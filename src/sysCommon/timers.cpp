@@ -109,6 +109,9 @@ void Timers::_stop(char* name)
  */
 void Timers::showTimes()
 {
+	for (TimerInf* info = mTimerList; info; info = info->mNext) {
+		PRINT("timer : %s = %f\n", info->mTimerName, info->mAverageTime);
+	}
 }
 
 /*

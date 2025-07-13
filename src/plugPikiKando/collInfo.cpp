@@ -262,7 +262,7 @@ bool CollPart::isStickable()
 		return false;
 	}
 
-	if (mPartType == PART_Platform) {
+	if (isPlatformType()) {
 		if (getCode().match('c***')) {
 			PRINT("collide with code c**** : code(%s) id(%s)\n", getCode().mStringID, getID().mStringID);
 			return false;
@@ -275,7 +275,7 @@ bool CollPart::isStickable()
 		return true;
 	}
 
-	if (isTubeType() || mPartType == PART_Collision) {
+	if (isTubeType() || isCollisionType()) {
 		if (getCode().match('s***')) {
 			return true;
 		}
@@ -291,7 +291,7 @@ bool CollPart::isStickable()
  */
 bool CollPart::isClimbable()
 {
-	if (mPartType == PART_Platform && getCode().match('c***')) {
+	if (isPlatformType() && getCode().match('c***')) {
 		return true;
 	}
 	return false;

@@ -202,3 +202,18 @@ void TekiParameters::read(RandomAccessStream& input)
 		mParameters->read(input);
 	}
 }
+
+#if 0
+void TekiParameters::write(RandomAccessStream& output)
+{
+	PRINT("TekiParameters::write>\n");
+
+	output.writeInt(11);
+	for (int i = 0; i < 8; i++) {
+		mParaIDs[i].write(output);
+	}
+	mParameters->write(output);
+
+	PRINT("TekiParameters::write<\n");
+}
+#endif

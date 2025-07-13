@@ -459,7 +459,7 @@ void KoganeAi::createPellet()
 {
 	mDropCount++;
 
-	// glint beetle can drop up to 8 things - same 4 things, repeated.
+	// flint beetle can drop up to 8 things - same 4 things, repeated.
 	if (mDropCount <= 8) {
 		int dropTable[4] = { KOGANEDROP_1Pellet, KOGANEDROP_Nectar, KOGANEDROP_Nectar, KOGANEDROP_5Pellet };
 

@@ -547,9 +547,15 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
  * Address:	........
  * Size:	000004
  */
-static void printMatrix(char*, Matrix4f&)
+static void printMatrix(char* name, Matrix4f& mat)
 {
-	// UNUSED FUNCTION
+	// I can't find this function in the DLL at the moment and nothing in this decomp currently uses it.  See also: goalItem.cpp where this
+	// implementation is copied from and dynCreature.cpp wherein the function has known uses but the DLL shows an empty implementation.
+	PRINT("++++ MATRIX %s ++++\n", name);
+	for (int i = 0; i < 4; ++i) {
+		PRINT("  %f %f %f %f\n", mat.mMtx[i][0], mat.mMtx[i][1], mat.mMtx[i][2], mat.mMtx[i][3]);
+	}
+	PRINT("-------------------------\n");
 }
 
 /*

@@ -540,15 +540,15 @@ struct EffectMgr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	zen::particleManager mPtclMgr;                         // _14
-	zen::particleLoader mPtclLoader;                       // _B0
-	EffectShape mEffectShapeList;                          // _C0
-	EffShpInst mInactiveGeomList;                          // _E8
-	EffShpInst mActiveGeomList;                            // _12C
-	EffectParticleRegistration* mParticles[332];           // _170
-	EffectSimpleParticleRegistration* mSimpleParticles[1]; // _6A0
-	EffectGeometryRegistration* mModels[3];                // _6A4
-	bool mDoCulling;                                       // _6B0
+	zen::particleManager mPtclMgr;                                    // _14
+	zen::particleLoader mPtclLoader;                                  // _B0
+	EffectShape mEffectShapeList;                                     // _C0
+	EffShpInst mInactiveGeomList;                                     // _E8
+	EffShpInst mActiveGeomList;                                       // _12C
+	EffectParticleRegistration* mParticles[EFF_COUNT];                // _170
+	EffectSimpleParticleRegistration* mSimpleParticles[SIMPLE_COUNT]; // _6A0
+	EffectGeometryRegistration* mModels[MOD_COUNT];                   // _6A4
+	bool mDoCulling;                                                  // _6B0
 };
 
 extern EffectMgr* effectMgr;

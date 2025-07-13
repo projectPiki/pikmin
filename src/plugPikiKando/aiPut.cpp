@@ -27,7 +27,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Address:	........
  * Size:	0000F4
  */
-DEFINE_PRINT("PickItem")
+DEFINE_PRINT("PickItem") // Nice copy-paste...
 
 /*
  * --INFO--

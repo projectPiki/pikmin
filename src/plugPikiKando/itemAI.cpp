@@ -890,6 +890,8 @@ void GoalAI::BootEmit::act(AICreature* item)
 			PRINT("far Piki was killed ** color%d\n", oldPiki->mColor);
 			oldPiki->setEraseKill();
 			oldPiki->kill(false);
+		} else {
+			ERROR("the end\n");
 		}
 	}
 

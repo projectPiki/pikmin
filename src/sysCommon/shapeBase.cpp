@@ -1598,21 +1598,21 @@ void BaseShape::exportIni(RandomAccessStream& stream, bool doSkipLights)
 		for (RouteGroup* route = (RouteGroup*)mRouteGroup.Child(); route; route = (RouteGroup*)route->mNext) {
 			route->saveini("", stream);
 		}
-		// stream.print("\n");
+		stream.print("\n");
 	}
 	if (!doSkipLights && mLightGroup.Child()) {
 		stream.print("// LightGroups info file for %s", Name());
 		for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
 			light->saveini("", stream);
 		}
-		// stream.print("\n");
+		stream.print("\n");
 	}
 	if (mCollisionInfo.Child()) {
 		stream.print("// Collision info file for %s", Name());
 		for (ObjCollInfo* info = (ObjCollInfo*)mCollisionInfo.Child(); info; info = (ObjCollInfo*)info->mNext) {
 			info->saveini("", stream);
 		}
-		// stream.print("\n");
+		stream.print("\n");
 	}
 }
 

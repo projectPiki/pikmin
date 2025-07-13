@@ -162,3 +162,12 @@ void NaviMgr::read(RandomAccessStream& input)
 {
 	mNaviParms->read(input);
 }
+
+#if 0
+void NaviMgr::write(RandomAccessStream& output)
+{
+	PRINT("writing naviProp\n");
+	mNaviParms->write(output);
+	PRINT("done\n");
+}
+#endif

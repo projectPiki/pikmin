@@ -73,18 +73,18 @@ void StageInfo::parseGenerators(CmdStream* commands)
 
 		fileInfo->setName(StdSystem::stringDup(commands->getToken(true)));
 
-		u32 byte1;
-		sscanf(commands->getToken(true), "%d", &byte1);
+		u32 startDay;
+		sscanf(commands->getToken(true), "%d", &startDay);
 
-		u32 byte2;
-		sscanf(commands->getToken(true), "%d", &byte2);
+		u32 endDay;
+		sscanf(commands->getToken(true), "%d", &endDay);
 
-		u32 byte3;
-		sscanf(commands->getToken(true), "%d", &byte3);
+		u32 duration;
+		sscanf(commands->getToken(true), "%d", &duration);
 
-		fileInfo->mStartDay = byte1;
-		fileInfo->mEndDay   = byte2;
-		fileInfo->mDuration = byte3;
+		fileInfo->mStartDay = startDay;
+		fileInfo->mEndDay   = endDay;
+		fileInfo->mDuration = duration;
 
 		PRINT("adding new genfile info %s : %d, %d -> %d\n", fileInfo->mName, fileInfo->mStartDay, fileInfo->mEndDay, fileInfo->mDuration);
 		mFileInfoList.add(fileInfo);
@@ -238,7 +238,9 @@ void OnePlayerSection::init()
 			currentSection = new MapSelectSection();
 			break;
 
-		case ONEPLAYER_Demo_LoadImpactSite:
+		// The following three cases are leftovers from the E3 2001 showfloor demo!  At the event, the title screen had a
+		// unique menu that could directly access three different stages: "Tutorial", "Forest Day 1", and "Forest Day 2".
+		case ONEPLAYER_E3Tutorial:
 			if (!gameflow.mLevelBannerTexture) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
@@ -253,7 +255,7 @@ void OnePlayerSection::init()
 			gameflow.mLevelIndex             = 3;
 			break;
 
-		case ONEPLAYER_Demo_LoadForestOfHope:
+		case ONEPLAYER_E3ForestDay1:
 			if (!gameflow.mLevelBannerTexture) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);
@@ -267,7 +269,7 @@ void OnePlayerSection::init()
 			gameflow.mLevelIndex             = 4;
 			break;
 
-		case ONEPLAYER_Demo_LoadE3ForestOfHope:
+		case ONEPLAYER_E3ForestDay2:
 			if (!gameflow.mLevelBannerTexture) {
 				PRINT("setting banner!\n");
 				gameflow.mLevelBannerTexture = gameflow.setLoadBanner(levNames[nextSectionType - 2]);

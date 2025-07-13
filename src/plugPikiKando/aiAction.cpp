@@ -446,7 +446,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 		if (particle && !particle->checkEmit()) {
 			PRINT("curr = %d\n", mCurrActionIdx);
 			mChildActions[mCurrActionIdx].mAction->dump();
-			PRINT("mck\n");
+			ERROR("mck\n");
 		}
 #endif
 	}

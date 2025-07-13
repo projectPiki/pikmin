@@ -260,7 +260,7 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state
 	}
 
 	for (i = 0; i < pikis; i++) {
-		if (pikiList[i]->mColor >= 3) {
+		if (pikiList[i]->mColor >= PikiColorCount) {
 			PRINT("COLOR ID = %d\n", pikiList[i]->mColor);
 			sprintf(colorBuf, "COLOR %d !!", pikiList[i]->mColor);
 			ERROR(colorBuf);
@@ -272,7 +272,7 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState* state
 			PRINT("navi accesscontainer = 0\n");
 			ERROR("navi->ac=0");
 		}
-		pikiList[i]->changeMode(11, nullptr);
+		pikiList[i]->changeMode(PikiMode::EnterMode, nullptr);
 	}
 }
 

@@ -165,7 +165,7 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 
 	// Get world transform from either attach point or full object
 	if (stickPart) {
-		worldMatrix = mStickPart->getMatrix(); // Likely bug: should use attachPoint instead of mAttachPoint
+		worldMatrix = mStickPart->getMatrix(); // Likely bug: should use stickPart instead of mStickPart
 	} else {
 		worldMatrix.makeSRT(obj->mScale, obj->mRotation, obj->mPosition);
 	}

@@ -227,9 +227,12 @@ void P2DGrafContext::lineTo(PUTPoint)
  * Address:	........
  * Size:	0001D0
  */
-void P2DGrafContext::polyline(PUTPoint*, int)
+void P2DGrafContext::polyline(PUTPoint* param_1, int param_2)
 {
 	// UNUSED FUNCTION
+	if (param_2 > 1) {
+		PRINT("polyline \n");
+	}
 }
 
 /*
@@ -237,9 +240,12 @@ void P2DGrafContext::polyline(PUTPoint*, int)
  * Address:	........
  * Size:	0001E4
  */
-void P2DGrafContext::polyline(int*, int)
+void P2DGrafContext::polyline(int* param_1, int param_2)
 {
 	// UNUSED FUNCTION
+	if (param_2 > 1) {
+		PRINT("polyline \n");
+	}
 }
 
 /*
@@ -247,9 +253,11 @@ void P2DGrafContext::polyline(int*, int)
  * Address:	........
  * Size:	0001F8
  */
-void P2DGrafContext::polylineTo(PUTPoint*, int)
+void P2DGrafContext::polylineTo(PUTPoint* param_1, int param_2)
 {
 	// UNUSED FUNCTION
+	PRINT("polylineTo \n");
+	// more stuff
 }
 
 /*
@@ -257,7 +265,9 @@ void P2DGrafContext::polylineTo(PUTPoint*, int)
  * Address:	........
  * Size:	000218
  */
-void P2DGrafContext::polylineTo(int*, int)
+void P2DGrafContext::polylineTo(int* param_1, int param_2)
 {
 	// UNUSED FUNCTION
+	PRINT("polyLineTo \n");
+	// more stuff
 }

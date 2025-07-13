@@ -1062,7 +1062,7 @@ s32 MemoryCard::makeDefaultFile()
 	CardUtilIdleWhileBusy();
 	CardUtilSave(0, &cst, cardData);
 	gsys->mIsCardSaving = FALSE;
-	mErrorCode          = 0;
+	mErrorCode          = CARD_RESULT_READY;
 
 	STACK_PAD_VAR(1);
 	STACK_PAD_TERNARY(mRequiredFreeSpace, 4);
@@ -1624,7 +1624,7 @@ int MemoryCard::doFormatCard()
 
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = true;
-	attemptFormatCard(false);
+	attemptFormatCard(0);
 	gsys->mIsCardSaving = false;
 	gameflow.mMemoryCard.getMemoryCardState(false); // Updates the value of `mErrorCode`.
 	PRINT("Result = (%s)\n", errCodes[-mErrorCode]);
