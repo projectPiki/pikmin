@@ -42,36 +42,36 @@ ID32::ID32(u32 id)
 /**
  * @brief Sets the ID value for the ID32 object.
  *
- * @param _id The ID value to be set.
+ * @param id The ID value to be set.
  *
  * --INFO--
  * Address:	80043EC4
  * Size:	000024
  */
-void ID32::setID(u32 _id)
+void ID32::setID(u32 id)
 {
-	mId = _id;
+	mId = id;
 	updateString();
 }
 
 /**
  * @brief Checks if the given ID matches the ID stored in the ID32 object.
  *
- * @param pId The ID to be checked.
- * @param exception The exception value that will be ignored during the matching process.
- * @return true if the ID matches the stored ID, false otherwise.
+ * @param id The value to compare against the ID32.
+ * @param wild The alternative "wildcard" character to compare against.  Default is '*'.
+ * @return true if the given ID matches the stored ID, false otherwise.
  *
  * --INFO--
  * Address:	80043EE8
  * Size:	0000A8
  */
-bool ID32::match(u32 pId, char exception)
+bool ID32::match(u32 id, char wild)
 {
-	u8* paramId = reinterpret_cast<u8*>(&pId);
-	u8* id      = reinterpret_cast<u8*>(&mId);
+	u8* other = reinterpret_cast<u8*>(&id);
+	u8* self  = reinterpret_cast<u8*>(&mId);
 
 	for (int i = 0; i < 4; i++) {
-		if (paramId[i] != (u8)exception && paramId[i] != id[i]) {
+		if (other[i] != (u8)wild && other[i] != self[i]) {
 			return false;
 		}
 	}

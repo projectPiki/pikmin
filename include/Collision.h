@@ -215,7 +215,7 @@ struct CndCollPart {
 struct CndBombable : public CndCollPart {
 	virtual bool satisfy(CollPart* part) // _08 (weak)
 	{
-		if (part && part->getCode().match('**b*', '*')) {
+		if (part && part->getCode().match('**b*')) {
 			return true;
 		}
 		return false;

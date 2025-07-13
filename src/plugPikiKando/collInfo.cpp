@@ -263,13 +263,13 @@ bool CollPart::isStickable()
 	}
 
 	if (mPartType == PART_Platform) {
-		if (getCode().match('c***', '*')) {
+		if (getCode().match('c***')) {
 			getCode();
 			getID();
 			return false;
 		}
 
-		if (!getCode().match('s***', '*')) {
+		if (!getCode().match('s***')) {
 			return false;
 		}
 
@@ -277,7 +277,7 @@ bool CollPart::isStickable()
 	}
 
 	if (isTubeType() || mPartType == PART_Collision) {
-		if (getCode().match('s***', '*')) {
+		if (getCode().match('s***')) {
 			return true;
 		}
 	}
@@ -292,7 +292,7 @@ bool CollPart::isStickable()
  */
 bool CollPart::isClimbable()
 {
-	if (mPartType == PART_Platform && getCode().match('c***', '*')) {
+	if (mPartType == PART_Platform && getCode().match('c***')) {
 		return true;
 	}
 	return false;
@@ -315,7 +315,7 @@ bool CollPart::isDamagable()
  */
 bool CollPart::isBouncy()
 {
-	if (getCode().match('b***', '*')) {
+	if (getCode().match('b***')) {
 		return true;
 	}
 	return false;
@@ -931,7 +931,7 @@ CollPart* CollInfo::getNearestCollPart(Vector3f& pos, u32 tag)
 			continue;
 		}
 
-		if (part->getCode().match(tag, '*')) {
+		if (part->getCode().match(tag)) {
 			Vector3f sep = pos - part->mCentre;
 			f32 dist     = sep.length();
 			if (minDist > dist) {
@@ -959,7 +959,7 @@ CollPart* CollInfo::getRandomCollPart(u32 tag)
 			continue;
 		}
 
-		if (part->getCode().match(tag, '*') && count < 128) {
+		if (part->getCode().match(tag) && count < 128) {
 			partList[count++] = part;
 		}
 	}
@@ -1054,7 +1054,7 @@ void CollInfo::dumpInfo()
 	for (int i = 0; i < mPartsCount; i++) {
 		PRINT("index %d id(%s) code(%s): next=%d child=%d %s\n", i, mCollParts[i].getID().mStringID, mCollParts[i].getCode().mStringID,
 		      mCollParts[i].mNextIndex, mCollParts[i].mFirstChildIndex, mCollParts[i].getTypeString());
-		if (mCollParts[i].getCode().match('***1', '*')) {
+		if (mCollParts[i].getCode().match('***1')) {
 			PRINT("***1 code FOUND!!\n");
 		}
 	}
@@ -1162,7 +1162,7 @@ void CollInfo::createPart(ObjCollInfo* objInfo, int p2, bool p3)
 
 	} else {
 		if (objInfo->mChild) {
-			if (objInfo->mId.match('cyl*', '*')) {
+			if (objInfo->mId.match('cyl*')) {
 				part->mPartType = PART_Cylinder;
 			} else {
 				part->mPartType = PART_BoundSphere;

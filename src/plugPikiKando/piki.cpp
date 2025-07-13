@@ -2185,7 +2185,7 @@ void Piki::collisionCallback(CollEvent& event)
 
 	if (distCheck && collider->isSluice() && mMode == PikiMode::FormationMode && collider->isAlive()) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (collPart->getID().match('gate', '*') && crowd && crowd->mState == 1) {
+		if (collPart->getID().match('gate') && crowd && crowd->mState == 1) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);

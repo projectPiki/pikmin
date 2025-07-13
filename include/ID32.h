@@ -43,12 +43,12 @@ struct ID32 {
 	bool operator!=(u32 id);
 
 	/**
-	 * @brief Checks if the ID32 matches the given value and character.
-	 * @param id The value to compare with the ID32.
-	 * @param c The character to compare with the ID32's string ID.
-	 * @return True if the ID32 matches the given value and character, false otherwise.
+	 * @brief Checks if the given ID matches the ID stored in the ID32 object.
+	 * @param id The value to compare against the ID32.
+	 * @param wild The alternative "wildcard" character to compare against.  Default is '*'.
+	 * @return true if the given ID matches the stored ID, false otherwise.
 	 */
-	bool match(u32 id, char c);
+	bool match(u32 id, char wild = '*');
 
 	/**
 	 * @brief Prints the ID32's value and string ID to the console.
