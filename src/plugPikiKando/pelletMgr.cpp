@@ -243,7 +243,7 @@ Pellet::Pellet()
 bool Pellet::isUfoPartsID(u32 partsID)
 {
 	ID32 id(partsID);
-	return id.match('u***', '*');
+	return id.match('u***');
 }
 
 /*
@@ -650,7 +650,7 @@ void Pellet::endStickTeki(Creature* teki)
  */
 bool Pellet::winnable(int tekiStrength)
 {
-	if (mConfig->mModelId.match('NAVI', '*')) {
+	if (mConfig->mModelId.match('NAVI')) {
 		// breadbugs aren't allowed to yoink sleeping captains.
 		return false;
 	}
@@ -1606,7 +1606,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 		return nullptr;
 	}
 
-	if (config->mModelId.match('tk**', '*') && !view) {
+	if (config->mModelId.match('tk**') && !view) {
 		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
 		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
 		ERROR("nakata!");
@@ -1872,7 +1872,7 @@ void PelletMgr::initTekiNakaParts()
 	FOREACH_NODE(CoreNode, mAnimInfoList.mChild, node)
 	{
 		PelletAnimInfo* info = static_cast<PelletAnimInfo*>(node);
-		if (useShape(info->mID.mId) && !info->mPelletShapeObject && info->mID.match('un**', '*')) {
+		if (useShape(info->mID.mId) && !info->mPelletShapeObject && info->mID.match('un**')) {
 			PRINT("*** NAKA PARTS (%s)\n", info->mID.mStringID);
 			if (info->createShapeObject()) {
 				PRINT("NAKA (%s) create done !\n", info->mID.mStringID);

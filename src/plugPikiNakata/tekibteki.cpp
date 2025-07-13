@@ -437,7 +437,7 @@ void BTeki::prepareEffects()
  */
 void BTeki::setCorpsePartJoint(int partIdx, int jointIdx)
 {
-	if (getCorpsePartID(partIdx).match('none', '*')) {
+	if (getCorpsePartID(partIdx).match('none')) {
 		PRINT("!setCorpsePartJoint:%08x:%d,%d\n", this, partIdx, jointIdx);
 		return;
 	}
@@ -932,7 +932,7 @@ void BTeki::spawnItems()
 {
 	// spawn item
 	ID32& id = mPersonality->mID;
-	if (!id.match('none', '*')) {
+	if (!id.match('none')) {
 		PRINT("spawnItems:%08x:spawn item:%s\n", this, id.mStringID);
 		spawnPellets(id.mId, -2, 1);
 		radarInfo->detachParts(this);

@@ -337,43 +337,43 @@ int InteractAttack::getDamagePortion()
 {
 	if (mCollPart) {
 		ID32& id = mCollPart->getCode();
-		if (id.match('***0', '*')) {
+		if (id.match('***0')) {
 			return 0;
 		}
 
-		if (id.match('***1', '*')) {
+		if (id.match('***1')) {
 			return 1;
 		}
 
-		if (id.match('***2', '*')) {
+		if (id.match('***2')) {
 			return 2;
 		}
 
-		if (id.match('***3', '*')) {
+		if (id.match('***3')) {
 			return 3;
 		}
 
-		if (id.match('***4', '*')) {
+		if (id.match('***4')) {
 			return 4;
 		}
 
-		if (id.match('***5', '*')) {
+		if (id.match('***5')) {
 			return 5;
 		}
 
-		if (id.match('***6', '*')) {
+		if (id.match('***6')) {
 			return 6;
 		}
 
-		if (id.match('***7', '*')) {
+		if (id.match('***7')) {
 			return 7;
 		}
 
-		if (id.match('***8', '*')) {
+		if (id.match('***8')) {
 			return 8;
 		}
 
-		if (id.match('***9', '*')) {
+		if (id.match('***9')) {
 			return 9;
 		}
 	}
