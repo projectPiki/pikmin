@@ -26,7 +26,7 @@ void zen::makePathName(const char* directoryPath, const char* fileName, char* ou
 	char buffer[PATH_MAX];
 
 	int strLength = strlen(fileName);
-	for (i = 0; strLength - i - 1 >= 0 && (u8)fileName[strLength - i - 1] != (u8)'/'; ++i) {
+	for (i = 0; strLength - i - 1 >= 0 && fileName[strLength - i - 1] != '/'; ++i) {
 		buffer[i] = fileName[strLength - i - 1];
 	}
 	buffer[i]     = '\0';

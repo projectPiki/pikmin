@@ -112,10 +112,7 @@ void CmdStream::fillBuffer(bool force)
  */
 bool CmdStream::whiteSpace(char toCheck)
 {
-	u8 checkChar = toCheck;
-
-	if (checkChar == (u8)'\0' || checkChar == (u8)'\r' || checkChar == (u8)'\n' || checkChar == (u8)'\t' || checkChar == (u8)' '
-	    || checkChar == (u8)',') {
+	if (toCheck == '\0' || toCheck == '\r' || toCheck == '\n' || toCheck == '\t' || toCheck == ' ' || toCheck == ',') {
 		return true;
 	}
 
@@ -142,7 +139,7 @@ bool CmdStream::endOfCmds()
 	}
 
 	if (mCurrentPosition < mTotalStreamSize) {
-		if ((u8)mBuffer[mCurrentPosition] == -1) {
+		if (mBuffer[mCurrentPosition] == -1) {
 			return true;
 		}
 
@@ -164,7 +161,7 @@ bool CmdStream::endOfCmds()
  */
 bool CmdStream::LineIsComment()
 {
-	if (mBuffer[mCurrentPosition] == (u8)'#' || mBuffer[mCurrentPosition] == (u8)'/' && mBuffer[mCurrentPosition + 1] == (u8)'/') {
+	if (mBuffer[mCurrentPosition] == '#' || mBuffer[mCurrentPosition] == '/' && mBuffer[mCurrentPosition + 1] == '/') {
 		return true;
 	}
 
@@ -185,8 +182,8 @@ void CmdStream::copyToToken(int length)
 {
 	int i = 0;
 	for (; i < length; i++) {
-		u8 currCharOfToken = mBuffer[mCurrentPosition + i];
-		if (currCharOfToken == (u8)'\t') {
+		char currCharOfToken = mBuffer[mCurrentPosition + i];
+		if (currCharOfToken == '\t') {
 			currCharOfToken = ' ';
 		}
 
@@ -210,13 +207,13 @@ char* CmdStream::skipLine()
 	fillBuffer(false);
 
 	int currentPos = mCurrentPosition;
-	while (currentPos < mTotalStreamSize && (u8)mBuffer[currentPos] != (u8)'\n' && (u8)mBuffer[currentPos] != (u8)'\r') {
+	while (currentPos < mTotalStreamSize && mBuffer[currentPos] != '\n' && mBuffer[currentPos] != '\r') {
 		currentPos++;
 	}
 
 	copyToToken(currentPos - mCurrentPosition);
 
-	while ((u8)mBuffer[currentPos] == (u8)'\n' || (u8)mBuffer[currentPos] == (u8)'\r') {
+	while (mBuffer[currentPos] == '\n' || mBuffer[currentPos] == '\r') {
 		currentPos++;
 	}
 
@@ -248,13 +245,13 @@ char* CmdStream::getToken(bool skipComments)
 	int currChar            = mCurrentPosition;
 	bool tokenInParenthesis = 0;
 
-	if (mBuffer[currChar] == (u8)'"' || mBuffer[currChar] == (u8)'\'') {
+	if (mBuffer[currChar] == '"' || mBuffer[currChar] == '\'') {
 		tokenInParenthesis = true;
 		++currChar;
 		++mCurrentPosition;
 	}
 
-	for (; tokenInParenthesis ? (mBuffer[currChar] != (u8)'"' && mBuffer[currChar] != (u8)'\'') : !whiteSpace(mBuffer[currChar]);) {
+	for (; tokenInParenthesis ? (mBuffer[currChar] != '"' && mBuffer[currChar] != '\'') : !whiteSpace(mBuffer[currChar]);) {
 		currChar++;
 	}
 
@@ -304,7 +301,7 @@ bool CmdStream::isToken(char* str)
 	}
 
 	for (s32 i = 0; i < (s32)strlen(mCurrentToken); i++) {
-		if ((u8)mCurrentToken[i] != (u8)str[i]) {
+		if (mCurrentToken[i] != str[i]) {
 			return false;
 		}
 	}
@@ -325,7 +322,7 @@ bool CmdStream::endOfSection()
 {
 	fillBuffer(false);
 
-	if (mBuffer[mCurrentPosition] == (u8)'}') {
+	if (mBuffer[mCurrentPosition] == '}') {
 		return true;
 	}
 
