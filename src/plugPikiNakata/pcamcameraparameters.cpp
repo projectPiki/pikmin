@@ -175,3 +175,13 @@ void PcamCameraParameters::read(RandomAccessStream& input)
 
 	PRINT("PcamCameraParameters::read<\n");
 }
+
+#if 0
+void PcamCameraParameters::write(RandomAccessStream& output)
+{
+	PRINT("PcamCameraParameters::write>\n");
+	output.writeInt(7);
+	mParameters->write(output);
+	PRINT("PcamCameraParameters::write<\n");
+}
+#endif

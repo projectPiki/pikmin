@@ -132,7 +132,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 	}
 
 	ogNitakuMgr::NitakuStatus status = mNitaku->update(input);
-	if (status >= 4) {
+	if (status >= ogNitakuMgr::Status_4) {
 		CloseYesNoWindow();
 	}
 	if (status == ogNitakuMgr::Status_4) {
@@ -142,7 +142,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 		seSystem->playSysSe(SYSSE_CANCEL);
 #endif
 		setOperateMode(Normal);
-	} else if (status == 5) {
+	} else if (status == ogNitakuMgr::ExitSuccess) {
 #if defined(VERSION_PIKIDEMO)
 		seSystem->playSysSe(JACSYS_CardAccess);
 #else
@@ -158,7 +158,7 @@ void zen::ogScrFileSelectMgr::OperateDelete(Controller* input)
 		mCanCreateNewFile     = true;
 		mIsDeletingFileActive = false;
 #endif
-	} else if (status == 6) {
+	} else if (status == ogNitakuMgr::ExitFailure) {
 		setOperateMode(Normal);
 	}
 }

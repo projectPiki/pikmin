@@ -5,6 +5,7 @@
 #include "types.h"
 
 struct AgeServer;
+struct RandomAccessStream;
 
 /**
  * @brief The CoreNode struct represents a node in a core data structure.
@@ -26,7 +27,7 @@ struct CoreNode : public ANode {
 	 * @brief Reads the data from a random access stream into the CoreNode.
 	 * @param stream The random access stream to read from.
 	 */
-	virtual void read(struct RandomAccessStream& stream) { } // _0C (weak)
+	virtual void read(RandomAccessStream& stream) { } // _0C (weak)
 
 	/**
 	 * @brief Initializes the core data of the CoreNode.

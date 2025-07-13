@@ -32,9 +32,17 @@ DynParticleHeap* particleHeap;
  * Address:	........
  * Size:	000004
  */
-static void printMatrix(char*, Matrix4f&)
+static void printMatrix(char* name, Matrix4f& mat)
 {
-	// UNUSED FUNCTION
+	// This implementation borrowed from goalItem.cpp inflates the stack too much to be left in matching builds.
+	// According to the DLL, this TU's implementation of this function was genuinely empty / commented-out.
+#if defined(DEVELOP)
+	PRINT("++++ MATRIX %s ++++\n", name);
+	for (int i = 0; i < 4; ++i) {
+		PRINT("  %f %f %f %f\n", mat.mMtx[i][0], mat.mMtx[i][1], mat.mMtx[i][2], mat.mMtx[i][3]);
+	}
+	PRINT("-------------------------\n");
+#endif
 }
 
 /*

@@ -181,6 +181,15 @@ void PikiMgr::read(RandomAccessStream& input)
 	mPikiParms->read(input);
 }
 
+#if 0
+void PikiMgr::write(RandomAccessStream& output)
+{
+	PRINT("writing pikiProp\n");
+	mPikiParms->write(output);
+	PRINT("done\n");
+}
+#endif
+
 /*
  * --INFO--
  * Address:	800CEEBC

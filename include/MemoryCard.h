@@ -94,7 +94,7 @@ struct MemoryCard : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	char mFilePath[32];     // _14
+	char mFilePath[32];     // _14, Not present in the DLL.
 	int mCardChannel;       // _34
 	int mSaveFileIndex;     // _38
 	int mTempFileIndex;     // _3C

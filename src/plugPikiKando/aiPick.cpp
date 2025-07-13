@@ -127,12 +127,7 @@ int ActPickItem::exec()
  */
 void ActPickItem::cleanup()
 {
-	if (mPiki->isHolding()) {
-		PRINT("### piki is%sholding\n", " ");
-	} else {
-		PRINT("### piki is%sholding\n", " not ");
-	}
-
+	PRINT("### piki is%sholding\n", mPiki->isHolding() ? " " : " not ");
 	mTargetItem.reset();
 }
 

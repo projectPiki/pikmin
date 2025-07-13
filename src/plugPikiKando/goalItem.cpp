@@ -53,8 +53,13 @@ u8 GoalItem::demoHideFlag;
  * Address:	........
  * Size:	000004
  */
-static void printMatrix(char*, Matrix4f&)
+static void printMatrix(char* name, Matrix4f& mat)
 {
+	PRINT("++++ MATRIX %s ++++\n", name);
+	for (int i = 0; i < 4; ++i) {
+		PRINT("  %f %f %f %f\n", mat.mMtx[i][0], mat.mMtx[i][1], mat.mMtx[i][2], mat.mMtx[i][3]);
+	}
+	PRINT("-------------------------\n");
 }
 
 /*
@@ -822,6 +827,6 @@ void GoalItem::refresh(Graphics& gfx)
 		}
 	}
 
-	STACK_PAD_TERNARY(mCollInfo, 2);
-	STACK_PAD_VAR(5);
+	STACK_PAD_TERNARY(mCollInfo, 1);
+	STACK_PAD_VAR(3);
 }

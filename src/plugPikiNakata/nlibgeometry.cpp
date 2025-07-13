@@ -1702,6 +1702,9 @@ void NVector::input(NVector&)
 void NVector::println()
 {
 	// UNUSED FUNCTION
+	for (int i = 0; i < mSize; i++) {
+		PRINT("e[%d]:%f\n", i, mValues[i]);
+	}
 }
 
 /*

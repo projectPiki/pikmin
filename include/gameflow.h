@@ -48,18 +48,18 @@ enum GameSectionID {
  * @brief TODO
  */
 enum OnePlayerSectionID {
-	ONEPLAYER_GameSetup               = 0,
-	ONEPLAYER_CardSelect              = 1,
-	ONEPLAYER_Demo_LoadImpactSite     = 2,
-	ONEPLAYER_Demo_LoadForestOfHope   = 3,
-	ONEPLAYER_Demo_LoadE3ForestOfHope = 4,
-	ONEPLAYER_IntroGame               = 5,
-	ONEPLAYER_MapSelect               = 6,
-	ONEPLAYER_NewPikiGame             = 7,
-	ONEPLAYER_GameCourseClear         = 8,
-	ONEPLAYER_GameStageClear          = 9,
-	ONEPLAYER_GameCredits             = 10,
-	ONEPLAYER_GameExit                = 11,
+	ONEPLAYER_GameSetup       = 0,
+	ONEPLAYER_CardSelect      = 1,
+	ONEPLAYER_E3Tutorial      = 2,
+	ONEPLAYER_E3ForestDay1    = 3,
+	ONEPLAYER_E3ForestDay2    = 4,
+	ONEPLAYER_IntroGame       = 5,
+	ONEPLAYER_MapSelect       = 6,
+	ONEPLAYER_NewPikiGame     = 7,
+	ONEPLAYER_GameCourseClear = 8,
+	ONEPLAYER_GameStageClear  = 9,
+	ONEPLAYER_GameCredits     = 10,
+	ONEPLAYER_GameExit        = 11,
 };
 
 /**

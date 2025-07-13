@@ -65,7 +65,7 @@ bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event.mEventType != TekiEventType::Entity) {
+	if (!TaiCreatureCollisionAction::actByEvent(event)) {
 		return false;
 	}
 
@@ -84,7 +84,7 @@ bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event.mEventType != TekiEventType::Entity) {
+	if (!TaiCreatureCollisionAction::actByEvent(event)) {
 		return false;
 	}
 
@@ -103,7 +103,7 @@ bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
  */
 bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent& event)
 {
-	if (event.mEventType != TekiEventType::Entity) {
+	if (!TaiCreatureCollisionAction::actByEvent(event)) {
 		return false;
 	}
 

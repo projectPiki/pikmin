@@ -123,10 +123,9 @@ void PcamCameraManager::updateVibrationEvent()
 		PRINT("updateVibrationEvent:event->isFinished:%08x\n", event);
 		event->finish();
 		mCurrEventIndex = PCAMVIB_NULL;
-		return;
+	} else {
+		event->update();
 	}
-
-	event->update();
 }
 
 /*
