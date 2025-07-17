@@ -218,6 +218,9 @@ void DemoFlags::registerDemoFlag(int index, char* name, u16 movieIndex, u16 a2, 
 		PRINT("<%s> curr=%d idx=%d\n", name, mCurrentDataIndex, index);
 		ERROR("登録は順序よく!\n"); // "Registration is in order"
 	}
+	if (mCurrentDataIndex >= mFlagDataNum) {
+		ERROR("超えた！"); // "Exceeded!"
+	}
 
 	DemoFlag* flag    = new DemoFlag;
 	flag->mName       = name;

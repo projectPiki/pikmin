@@ -1226,6 +1226,16 @@ void Pellet::postUpdate(int _, f32 __)
  */
 void Pellet::update()
 {
+#if defined(VERSION_PIKIDEMO)
+#define ASSERT_POSITION_NOTNAN(...)  \
+	/* Yeah, just the X position. */ \
+	if (isNan(mPosition.x)) {        \
+		ERROR(__VA_ARGS__);          \
+	}
+#else
+#define ASSERT_POSITION_NOTNAN(...)
+#endif
+
 	mLastPosition   = mPosition;
 	bool isOnGround = onGround();
 	if (isOnGround && !mIsAIActive && mConfig->mBounceSoundID() != -1) {
@@ -1373,23 +1383,17 @@ void Pellet::update()
 		mVelocity.z = mVelocity.z - mVelocity.z * rate;
 	}
 
-#if defined(VERSION_PIKIDEMO)
-	isNan(mPosition.x);
+	ASSERT_POSITION_NOTNAN("pellet nan before fsm!");
 	mStateMachine->exec(this);
-	isNan(mPosition.x);
+	ASSERT_POSITION_NOTNAN("pellet nan before dual!");
 	DualCreature::update();
-	isNan(mPosition.x);
-#else
-	// removed nan check here
-	mStateMachine->exec(this);
-	// removed nan check here
-	DualCreature::update();
-	// removed nan check here
-#endif
+	ASSERT_POSITION_NOTNAN("pellet nan after dual!");
 
 	if (mGroundTriangle && isDynFlag(1)) {
 		mVelocity = mVelocity - mVelocity * 2.0f * gsys->getFrameTime();
 	}
+
+#undef ASSERT_POSITION_NOTNAN
 }
 
 /*
@@ -1792,8 +1796,13 @@ PelletConfig* PelletMgr::getConfigFromIdx(int idx)
  */
 ID32 PelletMgr::getConfigIdAt(int idx)
 {
-
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (matching by size)
+	PelletConfig* config = getConfigFromIdx(idx);
+	if (config) {
+		return config->mModelId;
+	}
+	ERROR("config index error");
+	return config->mModelId; // Crash inbound if you have ERRORs disabled.
 }
 
 /*

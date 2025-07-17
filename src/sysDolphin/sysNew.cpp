@@ -29,7 +29,15 @@ void* System::alloc(u32 size)
 		size = (size + 3) & ~0x3;
 	}
 
-	if (gsys->mActiveHeapIdx >= 0) {
+	if (gsys->mActiveHeapIdx < 0) {
+#if 0
+		// The DLL uses `GlobalAlloc` here and has an ERROR if that fails.  This branch of code is probably DLL exclusive,
+		// since the GCN can't just ask WinAPI for unlimited memory.  We'll see once JPN Demo version matching begins.
+		if (!result) {
+			ERROR("new[] %d failed", size);
+		}
+#endif
+	} else {
 		AyuHeap* heap = &gsys->mHeaps[gsys->mActiveHeapIdx];
 		if (size == 0) {
 			PRINT("trying to allocate %d bytes on heap\n", 0);

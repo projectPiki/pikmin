@@ -145,6 +145,9 @@ UtEffectMgr::UtEffectMgr()
  */
 void UtEffectMgr::registerEffect(int kEffID, KEffect* efx)
 {
+	if (kEffID < KandoEffect::START || kEffID > KandoEffect::END) {
+		ERROR("regist oob : %d", kEffID);
+	}
 	effects[kEffID] = efx;
 }
 

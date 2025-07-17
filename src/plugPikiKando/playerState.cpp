@@ -1182,7 +1182,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("U GOT LEFT HORN !\n");
 		}
 		if (!hasUfoLeftControl()) {
-			ERROR("sonna!");
+			ERROR("sonna!\n");
 		}
 		break;
 
@@ -1192,7 +1192,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("U GOT RIGHT HORN !\n");
 		}
 		if (!hasUfoRightControl()) {
-			ERROR("sonna!");
+			ERROR("sonna!\n");
 		}
 		break;
 	}

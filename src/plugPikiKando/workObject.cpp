@@ -1070,7 +1070,7 @@ Bridge::Bridge(Shape* shape, bool a3)
 	}
 
 	PRINT("numStages = %d\n", mStageCount);
-	if (!mStageCount) {
+	if (mStageCount == 0) {
 		ERROR("numStage is 0 \n");
 	}
 

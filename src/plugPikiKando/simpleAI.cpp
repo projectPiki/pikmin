@@ -112,11 +112,7 @@ void AICreature::setEventFlag(int flagID, bool value)
 {
 	if (mCurrentEventCount < mMaxEventCount) {
 		if (flagID >= mMaxEventCount) {
-			if (value) {
-				ERROR("EVENT %d flag = %s\n", flagID, true);
-			} else {
-				ERROR("EVENT %d flag = %s\n", flagID, false);
-			}
+			ERROR("EVENT %d flag = %s\n", flagID, value ? "true" : "false");
 		}
 		mEventFlags[flagID] = value;
 	} else {

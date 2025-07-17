@@ -325,7 +325,7 @@ P2DPane* P2DPane::search(u32 tag, bool doPanicOnNull)
 
 	if (doPanicOnNull) {
 		PRINT("tag <%c%c%c%c> is not found.\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]);
-		ERROR("tag <%c%c%c%c> is not found.\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]);
+		ERROR("tag <%c%c%c%c> is not found. 逝ってよし\n", ((u8*)&tag)[0], ((u8*)&tag)[1], ((u8*)&tag)[2], ((u8*)&tag)[3]); // "Go away"
 	}
 	return nullptr;
 }

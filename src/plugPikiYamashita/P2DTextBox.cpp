@@ -106,7 +106,7 @@ void P2DTextBox::drawSelf(int param1, int param2, Matrix4f* mtx)
 {
 	if (mFont == nullptr) {
 		printTagName(false);
-		ERROR("逝ってよし！");
+		ERROR("逝ってよし！\n"); // "Go away!"
 	}
 
 	P2DPrint print(mFont, mSpacing, mLeading, mCharColor, mGradColor);

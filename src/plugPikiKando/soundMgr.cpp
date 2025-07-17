@@ -781,16 +781,18 @@ bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 		PRINT("++++destroy success ! handle %d\n", handle);
 		PRINT("********************* NUM EVENTS = %d\n", mCurrentEventCount);
 		return true;
+	} else {
+		PRINT("---- destroy FAILED no handle\n");
+		return false;
 	}
 
+	// You have exhausted your options already!  IT'S UNREACHABLE CODE!
 	PRINT("++++destroy FAILED ! handle %d\n", handle);
 	if (handle != -1) {
 		PRINT("WHYYYYYYYYYYYYYYYY?????\n");
+		dumpEvents();
 		ERROR("meck!\n");
 	}
-
-	PRINT("---- destroy FAILED no handle\n");
-	return false;
 
 	STACK_PAD_VAR(2);
 }
@@ -915,7 +917,7 @@ void SeSystem::dumpEvents()
 
 	for (int i = 0; i < max; i++) {
 		// probably something like this
-		PRINT("%d", test[i]);
+		PRINT("%d\n", test[i]);
 	}
 }
 

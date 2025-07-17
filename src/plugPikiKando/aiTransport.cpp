@@ -1314,6 +1314,15 @@ void ActTransport::findObstacle()
  */
 bool ActTransport::crMove()
 {
+#if 0 // Seems to only exist in the DLL, and it's very repetitive.
+#define ASSERT_MVDIR_NOTNAN(...)                                       \
+	if (isNan(mMoveDir.x) || isNan(mMoveDir.y) || isNan(mMoveDir.z)) { \
+		ERROR(__VA_ARGS__);                                            \
+	}
+#else
+#define ASSERT_MVDIR_NOTNAN(...)
+#endif
+
 	Pellet* pel        = mPellet.getPtr();
 	Vector3f currPoint = crGetPoint(mNextPathIndex);
 	Vector3f point2(mSplineControlPts[2]);
@@ -1341,6 +1350,7 @@ bool ActTransport::crMove()
 		if (mNextPathIndex >= mNumRoutePoints - 2) {
 			mState   = STATE_Goal;
 			mMoveDir = CRSplineTangent(1.0f, mSplineControlPts);
+			ASSERT_MVDIR_NOTNAN("mvDir 1");
 			mMoveDir.normalise();
 			return true;
 		}
@@ -1350,6 +1360,7 @@ bool ActTransport::crMove()
 		crMakeRefs();
 		findObstacle();
 		mMoveDir = CRSplineTangent(0.0f, mSplineControlPts);
+		ASSERT_MVDIR_NOTNAN("mvDir nan 2");
 		mMoveDir.normalise();
 		return true;
 	}
@@ -1415,6 +1426,7 @@ bool ActTransport::crMove()
 		if (mNextPathIndex >= mNumRoutePoints - 2) {
 			mState   = STATE_Goal;
 			mMoveDir = CRSplineTangent(factor, mSplineControlPts);
+			ASSERT_MVDIR_NOTNAN("mvDir nan 3");
 			mMoveDir.normalise();
 			return true;
 		}
@@ -1425,14 +1437,17 @@ bool ActTransport::crMove()
 		crMakeRefs();
 		findObstacle();
 		mMoveDir = CRSplineTangent(factor, mSplineControlPts);
+		ASSERT_MVDIR_NOTNAN("mvDir nan 4");
 		mMoveDir.normalise();
 		return true;
 	}
 
 	mMoveDir = CRSplineTangent(factor, mSplineControlPts);
+	ASSERT_MVDIR_NOTNAN("mvDir nan 5");
 	mMoveDir.normalise();
 
 	mMoveDir = (1.0f - blend) * mMoveDir + blend * vec;
+	ASSERT_MVDIR_NOTNAN("mvDir nan 6 blend=%f", blend);
 
 	if (mMoveDir.x * pathDir.x + mMoveDir.z * pathDir.z <= 0.0f) {
 		mMoveDir = pathDir;
@@ -1446,6 +1461,8 @@ bool ActTransport::crMove()
 			return false;
 		}
 	}
+
+#undef ASSERT_MVDIR_NOTNAN
 }
 
 /*

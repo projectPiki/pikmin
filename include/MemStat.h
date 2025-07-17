@@ -50,7 +50,7 @@ struct MemStat {
 	MemInfo mInfoListRoot;       // _00
 	MemInfo* mCurrentInfo;       // _18
 	MemInfo* mPrevInfoStack[32]; // _1C
-	int mStatCount;              // _9C
+	u32 mStatCount;              // _9C
 };
 
 extern MemStat* memStat;
