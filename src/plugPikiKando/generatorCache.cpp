@@ -171,6 +171,7 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 			{
 				PRINT("deadList : id %d", dead->mCourseIdx);
 			}
+			ERROR("bikkuri %d", i);
 		}
 
 		PRINT("load cache %d from %d\n", input.getPosition());
@@ -592,7 +593,7 @@ void GeneratorCache::saveGeneratorCreature(Generator* gen)
 
 	Cache* cache = findCache(mDeadCacheList, mCurrentSaveCacheIdx);
 	if (!cache) {
-		PRINT("currID(%d) is broken !\n", mCurrentSaveCacheIdx);
+		ERROR("currID(%d) is broken !\n", mCurrentSaveCacheIdx);
 	}
 
 	void* heap = (void*)(((u32)mCacheHeap + mUsedSize));

@@ -131,7 +131,7 @@ void Creature::startStickMouth(Creature* mouthOwner, CollPart* mouthPart)
 
 	if (startStick(mouthOwner, mouthPart)) {
 		if (mObjType == OBJTYPE_Rope) {
-			PRINT("stick to mouth!!\n");
+			ERROR("stick to mouth!!\n");
 		}
 		setCreatureFlag(CF_StuckToMouth);
 	} else {

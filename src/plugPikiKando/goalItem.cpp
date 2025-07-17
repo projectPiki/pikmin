@@ -484,6 +484,9 @@ bool GoalItem::ignoreAtari(Creature* obj)
  */
 void GoalItem::setColorType(int type)
 {
+	if (type < PikiMinColor || type > PikiMaxColor) {
+		ERROR("illegal color type !\n");
+	}
 	mOnionColour     = type;
 	mItemShapeObject = _438[type];
 	mItemShapeObject->mShape->makeInstance(mDynMaterial, 0);

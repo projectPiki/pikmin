@@ -85,7 +85,6 @@ void MemStat::start(char* name)
  */
 void MemStat::end(char* name)
 {
-	int unused;
 	if (!memStat) {
 		return;
 	}
@@ -94,14 +93,16 @@ void MemStat::end(char* name)
 	if (info) {
 		// Remove the current info from the stack
 		mStatCount--;
-		static_cast<bool>(mStatCount);
-		unused             = mStatCount;
+		// Trick question!  MWCC refuses to treat this condition with respect, but MSVC emits code indicating `mStatCount` is unsigned
+		// and thus it would be UNDEFINED BEHAVIOR for it to underflow.  Sorry Kando, the C++ Standard says fuck your underflow check.
+		if (mStatCount < 0) {
+			ERROR("%s:end", name);
+		}
 		mCurrentInfo       = mPrevInfoStack[mStatCount];
 		gsys->mCurrMemInfo = mCurrentInfo;
 	} else {
 		PRINT("no INFOOO\n", name);
 	}
-	!(unused++);
 }
 
 /*

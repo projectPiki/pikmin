@@ -143,7 +143,7 @@ void P2DScreen::makeHiearachyPanes(P2DPane* parent, RandomAccessStream* input, b
  */
 P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 {
-	PRINT("There is a unknown pane in SCRN resource\n");
+	ERROR("There is a unknown pane in SCRN resource\n");
 	return nullptr;
 }
 
@@ -154,7 +154,7 @@ P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
  */
 P2DPane* P2DScreen::stop()
 {
-	PRINT("There is a unknown pane in SCRN resource\n");
+	ERROR("There is a unknown pane in SCRN resource\n");
 	return nullptr;
 }
 

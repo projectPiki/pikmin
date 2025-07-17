@@ -297,11 +297,11 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 	bool tryNewPath       = false;
 
 	while (stat == PathStatus::Searching) {
-		buf = &bufferList[wpCount];
-		if (mBufferSize < wpCount) {
-			ERROR("buffer full\n");
+		if (wpCount >= mBufferSize) {
+			ERROR("mem access !\n");
 		}
 
+		buf          = &bufferList[wpCount];
 		WayPoint* wp = getWayPoint(buf->mWayPointIdx);
 
 		// If not currently retrying/backtracking, reset flags for available links
@@ -326,7 +326,7 @@ int PathFinder::findSync(PathFinder::Buffer* bufferList, int startWPIdx, int des
 				wpCount++;
 				bufferList[wpCount].mWayPointIdx = destWPIdx;
 
-				if (mBufferSize < wpCount) {
+				if (wpCount >= mBufferSize) {
 					ERROR("mem access\n");
 				}
 

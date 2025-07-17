@@ -24,18 +24,19 @@
 				sysCon->write(dest, strlen(dest)); \
 			}                                      \
 		}                                          \
+		va_end(args);                              \
 	}
 
 // Size - 0x9C
 #define DEFINE_ERROR(line)                    \
 	static void _Error(char* fmt, ...)        \
 	{                                         \
-		char buffer[2048];                    \
 		va_list args;                         \
 		va_start(args, fmt);                  \
+		char buffer[2048];                    \
 		vsprintf(buffer, fmt, args);          \
-		va_end(args);                         \
 		System::halt(__FILE__, line, buffer); \
+		va_end(args);                         \
 	}
 
 #if defined(DEVELOP)

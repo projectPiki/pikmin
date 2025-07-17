@@ -152,7 +152,7 @@ void PikiHeadItem::startAI(int)
 
 	C_SAI(this)->start(this, PikiHeadAI::PIKIHEAD_Wait);
 
-	if (mSeedColor < 0 || mSeedColor > 2) {
+	if (mSeedColor < PikiMinColor || mSeedColor > PikiMaxColor) {
 		ERROR("set pikihead color before startAI\n");
 	}
 
