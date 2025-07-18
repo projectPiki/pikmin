@@ -42,7 +42,7 @@ int BaseApp::idleupdate()
 {
 
 	bool hasUpdates = false;
-#ifndef __MWERKS__
+#ifdef WIN32
 	if (mCommandStream) {
 		const int commandStatus = mCommandStream->checkCommands();
 
@@ -74,7 +74,7 @@ int BaseApp::idleupdate()
  */
 void BaseApp::startAgeServer()
 {
-#ifndef __MWERKS__
+#ifdef WIN32
 	if (mAgeServer) {
 		return;
 	}
@@ -100,7 +100,7 @@ void BaseApp::startAgeServer()
  */
 void BaseApp::stopAgeServer()
 {
-#ifndef __MWERKS__
+#ifdef WIN32
 	if (mAgeServer) {
 		PRINT("Atx - Wants to close Age service\n");
 		mAgeServer->mNetStream->writeInt(0xFFFF);
