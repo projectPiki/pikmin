@@ -180,7 +180,7 @@ struct LightGroup : public CoreNode {
 		mFlareGroup = nullptr;
 	}
 
-#ifndef __MWERKS__
+#ifdef WIN32
 	void addLight(struct Vector3f&, f32);
 	void ageAddFlare(struct AgeServer&);
 	void ageChangeTexture(struct AgeServer&);

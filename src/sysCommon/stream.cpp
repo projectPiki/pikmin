@@ -101,7 +101,7 @@ void Stream::readString(String& str)
 void Stream::writeInt(int i)
 {
 	int result = i;
-#ifndef __MWERKS__
+#ifdef WIN32
 	result = (((result & 0xFF000000) >> 24) | ((result & 0xFF0000) >> 8) | ((result & 0xFF00) << 8) | (result << 24));
 #endif
 	write(&result, sizeof(result));
@@ -125,7 +125,7 @@ void Stream::writeByte(u8 c)
 void Stream::writeShort(s16 _s)
 {
 	s16 s = _s;
-#ifndef __MWERKS__
+#ifdef WIN32
 	s = (((s & 0xFF00) >> 8) | (s << 8));
 #endif
 	write(&s, sizeof(s16));
@@ -139,7 +139,7 @@ void Stream::writeShort(s16 _s)
 void Stream::writeFloat(f32 f)
 {
 	f32 result = f;
-#ifndef __MWERKS__
+#ifdef WIN32
 	int c  = *static_cast<int*>(&result);
 	result = ((u8)c << 24) | ((c & 0xFF00) << 8) | ((c & 0xFF0000) >> 8) | ((c & 0xFF000000) >> 24);
 #endif

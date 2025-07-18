@@ -1162,7 +1162,7 @@ static char* btipalFmts[] = { "GX_TF_C4", "GX_TF_C8", "GX_TF_C14X2" };
  */
 void TexImg::dumpBti(Texture* tex, char* name, RandomAccessStream& input, RandomAccessStream& output)
 {
-#ifndef __MWERKS__
+#ifdef WIN32
 	// read BTI function
 	// blah blah
 

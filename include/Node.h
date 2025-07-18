@@ -57,7 +57,7 @@ struct FaceNode : public CoreNode {
 	{
 	}
 
-#ifndef __MWERKS__
+#ifdef WIN32
 	FaceNode(int faceCount)
 	{
 		mFaceCount        = faceCount;
@@ -85,7 +85,7 @@ struct FaceNode : public CoreNode {
 	int* mNrmIdx;       // _24
 	int* mTexCoords[8]; // _28
 
-#ifndef __MWERKS__
+#ifdef WIN32
 	int mMtxGroupIndex;    // _2C
 	int mMtxGroupCount;    // _30
 	int mNumMatrices;      // _34

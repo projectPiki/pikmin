@@ -222,7 +222,7 @@ struct Vector3f {
 		z += _z;
 	}
 
-#ifndef __MWERKS__
+#ifdef WIN32
 	void genAge(struct AgeServer&, char*, Vector3f&, Vector3f&)
 	{
 		// Empty implementation
