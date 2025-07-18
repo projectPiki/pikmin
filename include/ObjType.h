@@ -76,7 +76,7 @@ struct ObjType {
 	static char* getName(int);
 	static int getIndex(char*);
 
-	int mIndex;  // _00
+	EObjType mIndex; // _00
 	char* mName; // _04
 };
 
