@@ -1535,7 +1535,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 
 	if (isFinished) {
 		if (_3CA != -1) {
-			PRINT("abunai!"); // 'dangerous!'
+			PRINT("abunai!" MISSING_NEWLINE); // 'dangerous!'
 		}
 		rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
 

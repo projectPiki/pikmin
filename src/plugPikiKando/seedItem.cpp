@@ -192,7 +192,7 @@ void SeedItem::update()
 void SeedItem::doAI()
 {
 	if (mStateId != 2 && !(mStateId == 2)) {
-		PRINT("idek man", mGrowthTimer);
+		(mGrowthTimer); // idek man
 		return;
 	}
 }

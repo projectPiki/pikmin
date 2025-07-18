@@ -484,7 +484,7 @@ void PVWTextureData::read(RandomAccessStream& stream)
 	mTranslationInfo.mInfo.read(stream);
 
 	if (mAnimationFactor != 0xFF) {
-		PRINT("fake", mAnimationFactor);
+		(mAnimationFactor); // fake
 	}
 }
 

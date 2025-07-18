@@ -299,7 +299,7 @@ void GameCoreSection::endMovie(int movieIdx)
 			PRINT("use navi back camera\n");
 		} else {
 			angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
-			PRINT("using previous camera\\n");
+			PRINT("using previous camera\\n" MISSING_NEWLINE); // This bugfix could be better, but idc.
 		}
 		angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
 #if defined(VERSION_PIKIDEMO)
@@ -495,7 +495,7 @@ void GameCoreSection::enterFreePikmins()
 		}
 	}
 
-	PRINT("enterFreePikmins %d + %d = %d", goalSafe, ufoSafe, goalSafe + ufoSafe);
+	PRINT("enterFreePikmins %d + %d = %d" MISSING_NEWLINE, goalSafe, ufoSafe, goalSafe + ufoSafe);
 }
 
 /*
@@ -1468,8 +1468,8 @@ void GameCoreSection::update()
 		int id     = navi->getCurrState()->getID();
 		if (id != NAVISTATE_PikiZero && id != NAVISTATE_DemoSunset && id != NAVISTATE_DemoWait && id != NAVISTATE_DemoInf) {
 			PRINT("**** PIKI ZERO GAME OVER *******\n");
-			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d", GameStat::deadPikis, GameStat::getPellets, GameStat::killTekis,
-			      GameStat::maxPikis);
+			PRINT("deadpikis %d pellets %d killtekis %d maxpikis %d" MISSING_NEWLINE, GameStat::deadPikis, GameStat::getPellets,
+			      GameStat::killTekis, GameStat::maxPikis);
 			navi->mStateMachine->transit(navi, NAVISTATE_PikiZero);
 			playerState->mResultFlags.setOn(RESFLAG_PikminExtinction);
 		}

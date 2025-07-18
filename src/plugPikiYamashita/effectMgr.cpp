@@ -862,7 +862,7 @@ EffShpInst* EffectMgr::getShapeInst()
 		inst->del();
 		inst->initEffShpInst();
 	} else {
-		PRINT("Shape effect buffer is empty.");
+		PRINT("Shape effect buffer is empty." MISSING_NEWLINE);
 	}
 
 	return inst;

@@ -2286,7 +2286,7 @@ void Piki::collisionCallback(CollEvent& event)
 
 	int state2 = getState();
 	if (isAlive() && !(state2 == PIKISTATE_Grow || state2 == PIKISTATE_Bury) && !isDamaged() && mMode == PikiMode::FormationMode) {
-		PRINT("idk this isn't in the DLL", mMode);
+		(mMode); // Probably a PRINT or ERROR here, but this isn't in the DLL
 	}
 }
 
@@ -3036,7 +3036,7 @@ void Piki::dump()
 		if (mActiveAction->getCurrAction() && mMode == PikiMode::FormationMode) {
 			ActCrowd* action = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 
-			PRINT("<form> md %d koke %s route %s wait %s st %d", action->mMode, action->mIsTripping ? "Y" : "N",
+			PRINT("<form> md %d koke %s route %s wait %s st %d" MISSING_NEWLINE, action->mMode, action->mIsTripping ? "Y" : "N",
 			      action->mHasRoute ? "Y" : "N", action->mIsWaiting ? "Y" : "N", action->mState);
 		}
 

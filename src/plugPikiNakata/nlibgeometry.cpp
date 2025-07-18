@@ -902,7 +902,7 @@ void NPosture3D::normalize()
 	NVector3f& dir = NVector3f();
 	outputRelative(dir);
 	if (NMathF::isZero(dir.length())) {
-		PRINT("?normalize:zero:");
+		PRINT("?normalize:zero:" MISSING_NEWLINE);
 		mWatchpoint.add(NVector3f(0.0f, 0.0f, 1.0f));
 	}
 }
