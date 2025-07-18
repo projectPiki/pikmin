@@ -248,7 +248,7 @@ void RockGen::doLoad(RandomAccessStream& data)
 {
 	mActivePebbles = data.readByte();
 	for (int i = 0; i < mMaxPebbles - mActivePebbles; i++) {
-		PRINT("%s", mActivePebbles - mMaxPebbles); // fake but fixes register issues
+		(mActivePebbles - mMaxPebbles); // fake but fixes register issues
 
 		int offset = mMaxPebbles - 1 - i;
 

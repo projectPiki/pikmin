@@ -60,7 +60,7 @@ void* System::alloc(u32 size)
 		}
 
 		if ((u32)result & 0x3) {
-			PRINT("idek man", (u32)result);
+			((u32)result); // idek man
 		}
 
 		int length = size / 4;

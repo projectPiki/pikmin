@@ -314,7 +314,7 @@ void System::parseArchiveDirectory(char* path1, char* path2)
 		file->close();
 	}
 	!unused;
-	PRINT("fake duration?", getTime() - startTime - unused2);
+	(getTime() - startTime - unused2); // duration? (fakematch)
 	int freeEnd = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 }
 
@@ -825,9 +825,8 @@ void System::Initialise()
 	if (!dvdStream.readBuffer) {
 		dvdStream.readBuffer = new (0x20) u8[dvdStream.mSize];
 	}
-	int heapIdx = SYSHEAP_Sys;
 	!mHeapStart;
-	PRINT("fake start size?", gsys->getHeap(heapIdx)->getFree() / 1024.0f);
+	(gsys->getHeap(SYSHEAP_Sys)->getFree() / 1024.0f); // fakematch free size KB print?
 	static u32 mMemoryTable[3];
 	ARInit(mMemoryTable, 3);
 	ARQInit();

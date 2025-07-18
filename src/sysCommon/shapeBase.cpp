@@ -2177,7 +2177,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2193,7 +2193,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2211,7 +2211,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2227,7 +2227,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2252,7 +2252,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			mTotalActiveTexCoords++;
 			break;
@@ -2269,7 +2269,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2285,7 +2285,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2319,7 +2319,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2335,7 +2335,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2351,7 +2351,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2367,7 +2367,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}
@@ -2422,7 +2422,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			break;
 		}
 
@@ -2462,7 +2462,7 @@ void BaseShape::read(RandomAccessStream& stream)
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
-			PRINT("This isn't in the DLL but clearly needs a kb print", (before - after) / 1024.0f);
+			((before - after) / 1024.0f); // The DLL does nothing here but this is clearly resembles a stripped KB print
 			stream.skipPadding(0x20);
 			break;
 		}

@@ -31,7 +31,7 @@ void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable effID, bool p2, int soundI
 {
 	_20 = p2;
 	if (footNum > 4) {
-		PRINT("foot Max is %d", 4);
+		PRINT("foot Max is %d" MISSING_NEWLINE, 4);
 		ERROR("foot Max is %d", 4);
 		return;
 	}

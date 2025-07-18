@@ -116,7 +116,7 @@ void PikiStateMachine::transit(Piki* piki, int stateID)
 {
 	if (getCurrID(piki) == PIKISTATE_Grow) {
 		// just need something to spawn this properly
-		PRINT("%s", getCurrID(piki) == PIKISTATE_Grow);
+		(getCurrID(piki) == PIKISTATE_Grow);
 	}
 	StateMachine::transit(piki, stateID);
 }

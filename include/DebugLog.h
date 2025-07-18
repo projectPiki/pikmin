@@ -41,17 +41,25 @@
 	}
 
 #if defined(DEVELOP)
-#define PRINT(...) _Print(__VA_ARGS__)
-#define ERROR(...) _Error(__VA_ARGS__)
+#define PRINT(...)        _Print(__VA_ARGS__)
+#define ERROR(...)        _Error(__VA_ARGS__)
 #define PRINT_GLOBAL(...) OSReport(__VA_ARGS__)
 #elif defined(VERSION_DPIJ01_PIKIDEMO)
-#define PRINT(...) (__VA_ARGS__)
-#define ERROR(...) _Error(__VA_ARGS__)
+#define PRINT(...)        (__VA_ARGS__)
+#define ERROR(...)        _Error(__VA_ARGS__)
 #define PRINT_GLOBAL(...) (__VA_ARGS__)
 #else
-#define PRINT(...) (__VA_ARGS__)
-#define ERROR(...) (__VA_ARGS__)
+#define PRINT(...)        (__VA_ARGS__)
+#define ERROR(...)        (__VA_ARGS__)
 #define PRINT_GLOBAL(...) (__VA_ARGS__)
+#endif
+
+// TODO: Confirm if newlines are necessary or even just desirable for `ERROR`s.   Given the samples we have, it seems the
+// devs were mixed on whether one should be used or not.  We'll have to wait until JPN Demo's error handler is understood.
+#if defined(BUGFIX)
+#define MISSING_NEWLINE "\n"
+#else
+#define MISSING_NEWLINE
 #endif
 
 #endif // _DEBUGLOG_H
