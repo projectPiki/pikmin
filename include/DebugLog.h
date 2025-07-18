@@ -1,6 +1,7 @@
 #ifndef _DEBUGLOG_H
 #define _DEBUGLOG_H
 
+#include "Dolphin/OS/OSError.h"
 #include "Stream.h"
 #include "stl/stdarg.h"
 #include "stl/stdio.h"
@@ -42,12 +43,15 @@
 #if defined(DEVELOP)
 #define PRINT(...) _Print(__VA_ARGS__)
 #define ERROR(...) _Error(__VA_ARGS__)
+#define PRINT_GLOBAL(...) OSReport(__VA_ARGS__)
 #elif defined(VERSION_DPIJ01_PIKIDEMO)
 #define PRINT(...) (__VA_ARGS__)
 #define ERROR(...) _Error(__VA_ARGS__)
+#define PRINT_GLOBAL(...) (__VA_ARGS__)
 #else
 #define PRINT(...) (__VA_ARGS__)
 #define ERROR(...) (__VA_ARGS__)
+#define PRINT_GLOBAL(...) (__VA_ARGS__)
 #endif
 
 #endif // _DEBUGLOG_H

@@ -439,7 +439,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 	if (mCurrActionIdx != -1) {
 		mChildActions[mCurrActionIdx].mAction->cleanup();
 		if (mPiki->isKinoko()) {
-			PRINT("kinoko %d exit", mCurrActionIdx);
+			PRINT_GLOBAL("kinoko %d exit", mCurrActionIdx);
 		}
 
 #if 0 // DLL code, but not present in GC:

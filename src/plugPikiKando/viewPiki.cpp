@@ -643,7 +643,7 @@ void ViewPiki::refresh(Graphics& gfx)
 		Matrix4f mouthMtx = mSwallowMouthPart->getJointMatrix();
 		f32 swallowScale  = 1.0f / ((Vector3f*)&mouthMtx)->length();
 		if (swallowScale <= 0.0f) {
-			PRINT("swallow scale=%f", swallowScale);
+			PRINT_GLOBAL("swallow scale=%f", swallowScale);
 			swallowScale = 1.0f;
 		}
 

@@ -655,7 +655,7 @@ void ActTransport::doLift()
 					}
 
 					if (routePoints == 0) {
-						PRINT("end of abusan!");
+						PRINT_GLOBAL("end of abusan!");
 						mState = STATE_Put;
 						pel->mVelocity.set(0.0f, 0.0f, 0.0f);
 						mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -979,7 +979,7 @@ int ActTransport::moveGuruGuru()
 		f32 distToPath     = dirToPath.length();
 
 		if (distToPath > 80.0f) {
-			PRINT("might stray guru : %.1f", distToPath);
+			PRINT_GLOBAL("might stray guru : %.1f", distToPath);
 			doLift();
 			return ACTOUT_Continue;
 		}
@@ -1331,7 +1331,7 @@ bool ActTransport::crMove()
 		PRINT("******** GURUGURU START : currBase+1 = %d is off !\n", mNextPathIndex);
 		PRINT("ROUTE IS OFF !!! currBase+1 = %d\n", mNextPathIndex + 1);
 		PRINT("ROUTE INDEX IS %d\n", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
-		PRINT("crPoint : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
+		PRINT_GLOBAL("crPoint : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
 
 		WayPoint* wp = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
 		if (wp) {
@@ -1411,7 +1411,7 @@ bool ActTransport::crMove()
 	}
 
 	if (blend > 2.0f && absF(val1) > 130.0f) {
-		PRINT("danger root strayed:blend %.2f\n", blend);
+		PRINT_GLOBAL("danger root strayed:blend %.2f\n", blend);
 		doLift();
 		return true;
 	}
@@ -1457,7 +1457,7 @@ bool ActTransport::crMove()
 	if (!gameflow.mMoviePlayer->mIsActive) {
 		bool isMoving = mOdometer.moving(pel->mPosition, pel->mLastPosition);
 		if (!isMoving) {
-			PRINT("pellet %s is not moving", pel->mConfig->mPelletId.mStringID);
+			PRINT_GLOBAL("pellet %s is not moving", pel->mConfig->mPelletId.mStringID);
 			return false;
 		}
 	}
@@ -1608,7 +1608,7 @@ int ActTransport::moveToWayPoint()
 				PRINT("===== MOVETOWAY POINT !\n");
 				PRINT("plane Dist=%f\n", plane.dist(pel->mPosition));
 				PRINT("curr=%d : idx=%d **** WAYPOINT IS OFF !!!\n", mPathIndex, mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
-				PRINT("moveWay : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
+				PRINT_GLOBAL("moveWay : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
 				mSpinStartPosition = pel->mPosition;
 				mState             = STATE_Guru;
 				mWaitTimer         = 0.0f;

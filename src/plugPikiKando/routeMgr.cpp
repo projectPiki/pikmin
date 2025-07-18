@@ -411,7 +411,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		WayPoint* wp = getWayPoint(buf.mWayPointIdx);
 		if (!wp) {
-			PRINT("buffer.idx=%d", buf.mWayPointIdx);
+			PRINT_GLOBAL("buffer.idx=%d", buf.mWayPointIdx);
 			ERROR("wp is null!");
 		}
 
@@ -435,7 +435,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		// Ensure waypoint exists
 		if (!getWayPoint(neighborIdx)) {
-			PRINT("idx=%d", neighborIdx);
+			PRINT_GLOBAL("idx=%d", neighborIdx);
 			ERROR("no getwaypoint!");
 		}
 
@@ -472,7 +472,7 @@ int PathFinder::selectWay(PathFinder::Buffer& buf, int destWPIdx, PathFinder::Bu
 
 		// Sanity check: no more than 8 candidates
 		if (++validLinkCount > 7) {
-			PRINT("numWays=%d", validLinkCount);
+			PRINT_GLOBAL("numWays=%d", validLinkCount);
 			ERROR("numWays>=8");
 		}
 	}
@@ -561,7 +561,7 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
 
 	// Ensure two valid waypoints were found
 	if (!wp || !wp2) {
-		PRINT("from=%x to=%x pos(%.1f %.1f %.1f)\n", wp, wp2, pos.x, pos.y, pos.z);
+		PRINT_GLOBAL("from=%x to=%x pos(%.1f %.1f %.1f)\n", wp, wp2, pos.x, pos.y, pos.z);
 		ERROR("getSafePos (%.1f %.1f %.1f)", pos.x, pos.y, pos.z);
 	}
 
@@ -1473,7 +1473,7 @@ int PathFinder::findSyncOnyon(Vector3f& startPos, PathFinder::Buffer* bufferList
 			bufIdx         = 0;
 			bestStep       = secondBestRes;
 			secondBestFlag = false;
-			PRINT("second best route:%d", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex);
+			PRINT_GLOBAL("second best route:%d", getWayPoint(getWayPoint(startWPIdx)->mLinkIndices[secondBestRes])->mIndex);
 			bufferList[0].resetFlag(bestStep);
 		}
 

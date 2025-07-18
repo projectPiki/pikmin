@@ -10,6 +10,7 @@
 #include "Generator.h"
 #include "Geometry.h"
 #include "Graphics.h"
+#include "KMath.h"
 #include "MapCode.h"
 #include "MapMgr.h"
 #include "Pellet.h"
@@ -733,11 +734,30 @@ void Creature::update()
 	mHasCollChangedVelocity = 0;
 	mCollisionOccurred      = 0;
 
+#if 0
+	bool wasNanBeforeUpdateAI = false;
+	if (mObjType == OBJTYPE_Teki) {
+		wasNanBeforeUpdateAI = isNan(mFaceDirection);
+	}
+#endif
+
 	// Handle AI and animations if not frozen
 	if (!mIsFrozen) {
 		doAnimation();
 		updateAI();
 	}
+
+#if 0
+	if (mObjType == OBJTYPE_Teki) {
+		if (isNan(mFaceDirection)) {
+			PRINT_GLOBAL("nan detected !");
+			dump();
+			if (!wasNanBeforeUpdateAI) {
+				PRINT_GLOBAL("after update AI");
+			}
+		}
+	}
+#endif
 
 	// Skip remaining updates if holding something
 	if (!mHoldingCreature.isNull()) {

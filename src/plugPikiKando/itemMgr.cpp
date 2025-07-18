@@ -873,7 +873,7 @@ bool InteractBomb::actItem(ItemCreature* item)
 		}
 
 		PRINT(" GOT BOMB!!!!\n");
-		PRINT("sluice got bomb by %x\n", mOwner);
+		PRINT_GLOBAL("sluice got bomb by %x\n", mOwner);
 		switch (item->mObjType) {
 		case OBJTYPE_SluiceSoft:
 			item->playEventSound(item, SEB_SOFTWALL_HIT);
