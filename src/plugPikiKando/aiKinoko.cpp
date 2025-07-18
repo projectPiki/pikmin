@@ -298,7 +298,7 @@ void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent& event)
 			if (!navi) {
 				ERROR("kinoko no navi!\n");
 			}
-			PRINT("navi=%x", navi);
+			PRINT_GLOBAL("navi=%x", navi);
 			InteractSuck suck(mPiki, 0.5f);
 			if (navi->stimulate(suck)) {
 				SeSystem::playPlayerSe(SE_KINOKOPIKI_ATTACK);

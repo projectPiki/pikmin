@@ -1204,7 +1204,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 		parts->mPartVisType = PARTVIS_Invisible;
 	}
 	mCurrParts++;
-	PRINT("ufo parts %d/%d", mRequiredUfoPartCount, mCurrParts);
+	PRINT_GLOBAL("ufo parts %d/%d", mRequiredUfoPartCount, mCurrParts);
 	for (int i = 0; i < 33; i++) {
 		PRINT("ufoPartsCount = %d\n", mCurrParts);
 	}
@@ -1212,7 +1212,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	if (mCurrParts >= AIConstant::_instance->mConstants._184()) {
 		PRINT("PERFECT !\n");
 		mShipUpgradeLevel = 5;
-		PRINT("--- perfect 5");
+		PRINT_GLOBAL("--- perfect 5");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._174()) {
 		gameflow.mPlayState.openStage(4);
 		playerState->mResultFlags.setSeen(RESFLAG_Collect15Parts);
@@ -1220,6 +1220,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("OPEN STAGE 4 ***\n");
 		}
 		mShipUpgradeLevel = 4;
+		PRINT_GLOBAL("--- level 4");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._164()) {
 		gameflow.mPlayState.openStage(3);
 		playerState->mResultFlags.setOn(RESFLAG_UnlockYakushima);
@@ -1227,6 +1228,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("OPEN STAGE 3 ***\n");
 		}
 		mShipUpgradeLevel = 3;
+		PRINT_GLOBAL("--- level 3");
 	} else if (mCurrParts >= AIConstant::_instance->mConstants._154()) {
 		playerState->mResultFlags.setOn(RESFLAG_UnlockCave);
 		gameflow.mPlayState.openStage(2);
@@ -1234,11 +1236,13 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 			PRINT("OPEN STAGE 2 ***\n");
 		}
 		mShipUpgradeLevel = 2;
+		PRINT_GLOBAL("--- level 2");
 	} else if (mCurrParts >= 1) {
 		gameflow.mPlayState.openStage(1);
 		for (int i = 0; i < 10; i++) {
 			PRINT("OPEN STAGE 1 ***\n");
 		}
+		PRINT_GLOBAL("--- level 1"); // Yes, it's before the value assignment here.
 		mShipUpgradeLevel = 1;
 	}
 

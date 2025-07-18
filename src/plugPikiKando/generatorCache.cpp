@@ -169,7 +169,7 @@ void GeneratorCache::loadCard(RandomAccessStream& input)
 			PRINT("NO CACHE %d in DeadList\n", i);
 			FOREACH_NODE(Cache, mDeadCacheList.mChild, dead)
 			{
-				PRINT("deadList : id %d", dead->mCourseIdx);
+				PRINT_GLOBAL("deadList : id %d", dead->mCourseIdx);
 			}
 			ERROR("bikkuri %d", i);
 		}

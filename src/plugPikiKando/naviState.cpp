@@ -226,7 +226,7 @@ void NaviDemoWaitState::init(Navi* navi)
 	if (navi->mGoalItem) {
 		navi->mGoalItem->setSpotActive(false);
 	}
-	PRINT("orima demo wait start");
+	PRINT_GLOBAL("orima demo wait start");
 }
 
 /*
@@ -246,7 +246,7 @@ void NaviDemoWaitState::exec(Navi* navi)
 
 		PRINT("RETURN TO WALK : MOVIE END \n");
 		if (navi->isDamaged()) {
-			PRINT("finish orima damage");
+			PRINT_GLOBAL("finish orima damage");
 			navi->finishDamage();
 		}
 
@@ -925,15 +925,17 @@ void NaviUfoState::exec(Navi* navi)
 			} else {
 				navi->mFaceDirection = roundAng(navi->mFaceDirection + 0.1f * rotDelta);
 				if (--mPunchCooldownTimer <= 0) {
+					PRINT_GLOBAL("ang timer done\n");
 					navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 					mState = 1;
-					effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 					PRINT("ang time out recover !!\n");
+					effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
 				}
 			}
 
 		} else if (!navi->mOdoMeter.moving(navi->mPosition, mLastPosition)) {
 			PRINT("giveup using odometer!\n");
+			PRINT_GLOBAL("giveup using odometer");
 			navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 			mState = 1;
 			effectMgr->create(EffectMgr::EFF_Rocket_NaviRecover, navi->mPosition, nullptr, nullptr);
@@ -2560,7 +2562,7 @@ void NaviNukuState::init(Navi* navi)
 	_10        = C_NAVI_PROP(navi)._1CC();
 	if (navi->mIsCursorVisible && !playerState->isChallengeMode() && !navi->mIsPlucking && playerState->mTotalPluckedPikiCount < 100) {
 		cameraMgr->mCamera->startMotion(cameraMgr->mCamera->mAttentionInfo);
-		PRINT("> camera START MOTION | NUKU");
+		PRINT_GLOBAL("> camera START MOTION | NUKU");
 		navi->mIsPlucking                    = true;
 		cameraMgr->mCamera->mControlsEnabled = false;
 	}

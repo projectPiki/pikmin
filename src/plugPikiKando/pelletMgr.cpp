@@ -1023,7 +1023,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 	}
 
 	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
-	PRINT("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mPosition.x, mPosition.y, mPosition.z);
+	PRINT_GLOBAL("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mPosition.x, mPosition.y, mPosition.z);
 	disableFixPos();
 	enableFixPos();
 	mStateMachine->transit(this, PELSTATE_UfoLoad);
@@ -1613,7 +1613,7 @@ Pellet* PelletMgr::newPellet(u32 pelletID, PelletView* view)
 
 	if (config->mModelId.match('tk**') && !view) {
 		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
-		PRINT("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
+		PRINT_GLOBAL("** newPellet( %s, 0 ) ! teki : use becomepellet!\n", config->mModelId.mStringID);
 		ERROR("nakata!");
 	}
 

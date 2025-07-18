@@ -86,7 +86,7 @@ bool InteractBury::actPiki(Piki* piki)
 
 	if (mMakeFlower && piki->mHappa < Flower) {
 		piki->mHappa = Flower;
-		PRINT("miurin %d\n", piki->mHappa);
+		PRINT_GLOBAL("miurin %d\n", piki->mHappa);
 	}
 
 	piki->mFSM->transit(piki, PIKISTATE_Bury);

@@ -120,7 +120,7 @@ int ActBridge::exec()
 	if (!mBridge) {
 		PRINT("no bridge!\n");
 		mPiki->mEmotion = PikiEmotion::Sad;
-		PRINT("exe:no bridge!");
+		PRINT_GLOBAL("exe:no bridge!");
 		return ACTOUT_Fail;
 	}
 
@@ -338,7 +338,7 @@ void ActBridge::newInitApproach()
 int ActBridge::newExeApproach()
 {
 	if (!mBridge) {
-		PRINT("app bri fail");
+		PRINT_GLOBAL("app bri fail");
 		mPiki->mEmotion = PikiEmotion::Sad;
 		PRINT("app failed\n");
 		return ACTOUT_Fail;
@@ -430,13 +430,13 @@ int ActBridge::newExeGo()
 {
 	if (mStageIdx == -1) {
 		PRINT("stage = -1\n");
-		PRINT("go : stage=-1 suc");
+		PRINT_GLOBAL("go : stage=-1 suc");
 		return ACTOUT_Success;
 	}
 
 	if (!mBridge) {
 		PRINT("failed \n");
-		PRINT("no bridge fail");
+		PRINT_GLOBAL("no bridge fail");
 		mPiki->mEmotion = PikiEmotion::Sad;
 		PRINT("NO BRIDGE!\n");
 		return ACTOUT_Fail;
@@ -508,7 +508,7 @@ int ActBridge::newExeWork()
 	// If the bridge is finished, continue
 	if (mBridge->isStageFinished(mStageIdx)) {
 		PRINT("**** STAGE IS FINISHED *** WORK\n");
-		PRINT("stage fin! work->go");
+		PRINT_GLOBAL("stage fin! work->go");
 		newInitGo();
 		mPiki->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Continue;

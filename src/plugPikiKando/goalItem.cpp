@@ -750,7 +750,7 @@ void GoalItem::update()
 			if (!exitPiki()) {
 				int mapPikis = GameStat::mapPikis;
 				int mePikis  = GameStat::mePikis;
-				PRINT("map=%d mePiki=%d exitC=%d", mapPikis, mePikis, mPikisToExit);
+				PRINT_GLOBAL("map=%d mePiki=%d exitC=%d", mapPikis, mePikis, mPikisToExit);
 				ERROR("2d err %d %d %d", mapPikis, mePikis, mPikisToExit);
 			}
 

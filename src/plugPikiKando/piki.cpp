@@ -503,7 +503,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 
 		} else {
 			PRINT("waiting for handle\n");
-			PRINT("wait for r-handle");
+			PRINT_GLOBAL("wait for r-handle");
 			mRouteHandle = routeMgr->getPathFinder('test')->findASync(mPathBuffers, mRouteSourceIndex, mRouteDestinationIndex, false);
 			return 2;
 		}

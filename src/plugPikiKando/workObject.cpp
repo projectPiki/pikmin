@@ -1352,7 +1352,7 @@ void Bridge::flatten()
 		int index = mStageJoints[i * 2]->mIndex;
 		if (mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex] && mBuildShape->mVisibleList[index]) {
 			mBuildShape->jointVisible(index, false);
-			PRINT("flatten bridge");
+			PRINT_GLOBAL("flatten bridge");
 		}
 	}
 }
@@ -1365,23 +1365,10 @@ void Bridge::flatten()
 void Bridge::dump()
 {
 	for (int i = 0; i < mStageCount; i++) {
-		char a, b;
-		if (mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex]) {
-			a = '|';
-		} else {
-			a = 'x';
-		}
-
-		if (mBuildShape->mVisibleList[mStageJoints[i * 2]->mIndex]) {
-			b = '|';
-		} else {
-			b = 'x';
-		}
-		f32 test = mStageProgressList[i] / mMaxHealth * 100.0f;
-		PRINT("brd %d : %d%%(w%s:p%s)\n", i, (int)test, &a, &b);
+		const char* a = mBuildShape->mVisibleList[mStageJoints[i * 2 + 1]->mIndex] ? "|" : "x";
+		const char* b = mBuildShape->mVisibleList[mStageJoints[i * 2]->mIndex] ? "|" : "x";
+		PRINT_GLOBAL("brd %d : %d%%(w%s:p%s)\n", i, (int)(mStageProgressList[i] / mMaxHealth * 100.0f), a, b);
 	}
-
-	STACK_PAD_VAR(2);
 }
 
 /*
