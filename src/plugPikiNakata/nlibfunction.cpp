@@ -101,9 +101,9 @@ f32 NPolynomialFunction::getCoefficient(int)
  */
 void NPolynomialFunction::println()
 {
-	PRINT("NPolynomialFunction:%d\n", mData.getDimension());
+	PRINT_NAKATA("NPolynomialFunction:%d\n", mData.getDimension());
 	for (int i = 0; i < mData.getDimension(); i++) {
-		PRINT("NPolynomialFunction:%d:%f\n", i, mData.mValues[i]);
+		PRINT_NAKATA("NPolynomialFunction:%d:%f\n", i, mData.mValues[i]);
 	}
 }
 

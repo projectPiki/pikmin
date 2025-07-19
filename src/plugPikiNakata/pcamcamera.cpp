@@ -305,7 +305,7 @@ void PcamCamera::startAttention()
  */
 void PcamCamera::playCameraSound(int soundID)
 {
-	PRINT("playCameraSound:%d\n", soundID);
+	PRINT_NAKATA("playCameraSound:%d\n", soundID);
 	SeSystem::playSysSe(soundID);
 }
 
@@ -500,7 +500,7 @@ void PcamCamera::startMotion(int zoom, int incl)
  */
 void PcamCamera::startMotion(PcamMotionInfo& info)
 {
-	PRINT("startMotion\n");
+	PRINT_NAKATA("startMotion\n");
 	mPrevMotionInfo   = mTargetMotionInfo;
 	mTargetMotionInfo = info;
 	mTimers[0]        = getParameterF(PCAMF_ChangingMotionPeriod);
@@ -513,7 +513,7 @@ void PcamCamera::startMotion(PcamMotionInfo& info)
  */
 void PcamCamera::finishMotion()
 {
-	PRINT("finishMotion\n");
+	PRINT_NAKATA("finishMotion\n");
 	startMotion(PcamMotionInfo(mPrevMotionInfo));
 }
 

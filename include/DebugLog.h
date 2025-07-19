@@ -54,6 +54,20 @@
 #define PRINT_GLOBAL(...) (__VA_ARGS__)
 #endif
 
+// This macro exists to abstract the user PRINTs seen below.  mapMgr.cpp seems to have used this macro as well.
+#define PRINT_IF(cond, ...) \
+	if (cond) {             \
+		PRINT(__VA_ARGS__); \
+	}
+
+// In the DLL, there are five global BOOLs (only three are actually used) consistently used to control `PRINT_IF` statements belonging
+// to a specific plugPiki library (e.g. plugPikiKando).  However, these BOOLs seemingly only exist in the DLL.  I'm not even sure what
+// translation unit they belong to.  For now, this stubbed configuration doesn't break matching.
+
+#define PRINT_KANDO(...)  PRINT_IF(true, __VA_ARGS__)
+#define PRINT_NAKATA(...) PRINT_IF(true, __VA_ARGS__)
+#define PRINT_YAMASH(...) PRINT_IF(true, __VA_ARGS__)
+
 // TODO: Confirm if newlines are necessary or even just desirable for `ERROR`s.   Given the samples we have, it seems the
 // devs were mixed on whether one should be used or not.  We'll have to wait until JPN Demo's error handler is understood.
 #if defined(BUGFIX)

@@ -163,7 +163,7 @@ void BTeki::viewKill()
 void BTeki::doStore(CreatureInf* info)
 {
 	info->mObjInfo1 = mTekiType;
-	PRINT("TEKI STORE *****************************************\n");
+	PRINT_NAKATA("TEKI STORE *****************************************\n");
 }
 
 /*
@@ -186,7 +186,7 @@ TekiShapeObject::TekiShapeObject(Shape* shape)
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
 	mAnimMgr             = new AnimMgr(shape, nullptr, ANIMMGR_LOAD_BUNDLE, nullptr);
-	PRINT("OVERRIDING ANIM with %08x\n", &mAnimContext);
+	PRINT_NAKATA("OVERRIDING ANIM with %08x\n", &mAnimContext);
 	mShape->overrideAnim(0, &mAnimContext);
 }
 
@@ -295,7 +295,7 @@ BTeki::BTeki()
  */
 void BTeki::init(int tekiType)
 {
-	PRINT("Teki::init:%08x:%d\n", this, tekiType);
+	PRINT_NAKATA("Teki::init:%08x:%d\n", this, tekiType);
 	mTekiType   = (TekiTypes)tekiType;
 	mTekiParams = tekiMgr->getTekiParameters(mTekiType);
 	mSearchBuffer.init(mTekiSearchData, 3);
@@ -310,7 +310,7 @@ void BTeki::init(int tekiType)
  */
 void BTeki::reset()
 {
-	PRINT("Teki::reset>:%08x\n", this);
+	PRINT_NAKATA("Teki::reset>:%08x\n", this);
 	if (tekiOptUpdateMgr) {
 		mOptUpdateContext.init(tekiOptUpdateMgr);
 	}
@@ -396,7 +396,7 @@ void BTeki::reset()
 	prepareEffects();
 	stopMove();
 
-	PRINT("NNNNNreset:%08x:%d:%s:%f\n", this, mTekiType, TekiMgr::getTypeName(mTekiType), getCentreSize());
+	PRINT_NAKATA("NNNNNreset:%08x:%d:%s:%f\n", this, mTekiType, TekiMgr::getTypeName(mTekiType), getCentreSize());
 }
 
 /*
@@ -460,7 +460,7 @@ void BTeki::startAI(int)
 	}
 	strat->start(*static_cast<Teki*>(this));
 	ID32& id = mPersonality->mID;
-	PRINT("BTeki::reset:%08x:item:%s\n", this, id.mStringID);
+	PRINT_NAKATA("BTeki::reset:%08x:item:%s\n", this, id.mStringID);
 	if (Pellet::isUfoPartsID(id.mId)) {
 		radarInfo->attachParts(this);
 		pelletMgr->addUseList(id.mId);
@@ -533,7 +533,7 @@ void BTeki::startMotion(int motionID)
  */
 void BTeki::startStoppingMove()
 {
-	PRINT("startStoppingMove:%08x:%f,%f\n", this, mAnimationSpeed, mPreStopAnimationSpeed);
+	PRINT_NAKATA("startStoppingMove:%08x:%f,%f\n", this, mAnimationSpeed, mPreStopAnimationSpeed);
 	stopMove();
 	setTekiOption(TEKIOPT_StoppingMove);
 	mPreStopAnimationSpeed = mAnimationSpeed;
@@ -546,7 +546,7 @@ void BTeki::startStoppingMove()
  */
 void BTeki::finishStoppingMove()
 {
-	PRINT("finishStoppingMove:%08x:%f,%f\n", this, mAnimationSpeed, mPreStopAnimationSpeed);
+	PRINT_NAKATA("finishStoppingMove:%08x:%f,%f\n", this, mAnimationSpeed, mPreStopAnimationSpeed);
 	clearTekiOption(TEKIOPT_StoppingMove);
 }
 
@@ -656,25 +656,25 @@ void BTeki::die()
  */
 void BTeki::dieSoon()
 {
-	PRINT("dieSoon:%08x:\n", this);
+	PRINT_NAKATA("dieSoon:%08x:\n", this);
 	clearTekiOption(TEKIOPT_Alive | TEKIOPT_Visible | TEKIOPT_ShadowVisible | TEKIOPT_Atari);
 	if (getParameterI(TPI_CorpseType) == TEKICORPSE_LeaveCorpse) {
 		createSoulEffect();
 		u32 typeID = TekiMgr::getTypeId(mTekiType);
 		ID32 id(typeID);
-		PRINT("dieSoon:%08x:%d,%s\n", this, mTekiType, id.mStringID);
+		PRINT_NAKATA("dieSoon:%08x:%d,%s\n", this, mTekiType, id.mStringID);
 
 		NVector3f vec1;
 		CollPart* carcass = mCollInfo->getSphere('carc');
 		if (!carcass) {
 			vec1.set(getCentre());
 		} else {
-			PRINT("dieSoon:%08x:'carc'\n", this);
+			PRINT_NAKATA("dieSoon:%08x:'carc'\n", this);
 			vec1.set(carcass->mCentre);
 		}
 
 		becomePellet(typeID, vec1, getDirection());
-		PRINT("dieSoon:%08x:pellet:%08x\n", this, mPellet);
+		PRINT_NAKATA("dieSoon:%08x:pellet:%08x\n", this, mPellet);
 		if (!mPellet) {
 			ERROR("?dieSoon:%08x:pellet==null:abusan\n", this);
 			return;
@@ -708,7 +708,7 @@ void BTeki::dieSoon()
  */
 void BTeki::becomeCorpse()
 {
-	PRINT("BTeki::becomeCorpse:%08x\n", this);
+	PRINT_NAKATA("BTeki::becomeCorpse:%08x\n", this);
 	for (int i = 0; i < 4; i++) {
 		if (mParticleGenerators[i]) {
 			mParticleGenerators[i]->finish();
@@ -725,7 +725,7 @@ void BTeki::becomeCorpse()
  */
 void BTeki::doKill()
 {
-	PRINT("BTeki::doKill:%08x\n", this);
+	PRINT_NAKATA("BTeki::doKill:%08x\n", this);
 	if (tekiOptUpdateMgr) {
 		mOptUpdateContext.exit();
 	}
@@ -752,7 +752,7 @@ void BTeki::doKill()
  */
 void BTeki::exitCourse()
 {
-	PRINT("BTeki::exitCourse:%08x\n", this);
+	PRINT_NAKATA("BTeki::exitCourse:%08x\n", this);
 	for (int i = 0; i < 4; i++) {
 		if (mParticleGenerators[i]) {
 			mParticleGenerators[i]->forceFinish();
@@ -872,7 +872,7 @@ void BTeki::startDamageMotion(f32 period, f32 amp)
  */
 void BTeki::releasePlatCollisions()
 {
-	PRINT("releasePlatCollisions:%08x:\n", this);
+	PRINT_NAKATA("releasePlatCollisions:%08x:\n", this);
 	mPlatMgr.release();
 }
 
@@ -934,7 +934,7 @@ void BTeki::spawnItems()
 	// spawn item
 	ID32& id = mPersonality->mID;
 	if (!id.match('none')) {
-		PRINT("spawnItems:%08x:spawn item:%s\n", this, id.mStringID);
+		PRINT_NAKATA("spawnItems:%08x:spawn item:%s\n", this, id.mStringID);
 		spawnPellets(id.mId, -2, 1);
 		radarInfo->detachParts(this);
 		detachGenerator();
@@ -961,7 +961,7 @@ void BTeki::spawnItems()
 		int min       = getPersonalityI(TekiPersonality::INT_NectarMinCount);
 		int max       = getPersonalityI(TekiPersonality::INT_NectarMaxCount);
 		int nectarNum = NMathI::rangeRandom(min, max);
-		PRINT("spawnItems:spawnWaters:%08x:%d,%d,%d\n", this, min, max, nectarNum);
+		PRINT_NAKATA("spawnItems:spawnWaters:%08x:%d,%d,%d\n", this, min, max, nectarNum);
 		spawnWaters(nectarNum);
 	}
 }
@@ -973,7 +973,7 @@ void BTeki::spawnItems()
  */
 void BTeki::spawnPellets(int kind, int color, int count)
 {
-	PRINT("spawnPellets:%08x:%d,%d,%d\n", this, kind, color, count);
+	PRINT_NAKATA("spawnPellets:%08x:%d,%d,%d\n", this, kind, color, count);
 	Vector3f spawnPos   = getCentre();
 	f32 spawnSpeedVert  = getParameterF(TPF_SpawnPelletVelocityVert);
 	f32 spawnSpeedHoriz = getParameterF(TPF_SpawnPelletVelocityHoriz);
@@ -1031,7 +1031,7 @@ void BTeki::spawnPellets(int kind, int color, int count)
  */
 void BTeki::spawnWaters(int count)
 {
-	PRINT("spawnWaters:%08x:%d\n", this, count);
+	PRINT_NAKATA("spawnWaters:%08x:%d\n", this, count);
 	Vector3f spawnPos   = getCentre();
 	f32 spawnSpeedVert  = getParameterF(TPF_SpawnPelletVelocityVert);
 	f32 spawnSpeedHoriz = getParameterF(TPF_SpawnPelletVelocityHoriz);
@@ -1321,7 +1321,7 @@ bool BTeki::separateCreature(Creature& target)
 
 	f32 collDist = calcCollisionDistance(target);
 	if (collDist > range) {
-		PRINT("separateCreature1:%08x:%08x:%f,%f\n", this, &target, range, collDist);
+		PRINT_NAKATA("separateCreature1:%08x:%08x:%f,%f\n", this, &target, range, collDist);
 		return true;
 	}
 
@@ -1972,7 +1972,7 @@ void BTeki::makeWayPointRoute(int p1, int p2, bool includeBlockedPaths)
 		PRINT("!makeWayPointRoute:routeWayPointCount>routeWayPointMax:%08x:%d,%d\n", this, mRouteWayPointCount, mTekiType);
 	}
 
-	PRINT("makeWayPointRoute:%08x,%d->%d,%d\n", this, p1, p2, mRouteWayPointCount);
+	PRINT_NAKATA("makeWayPointRoute:%08x,%d->%d,%d\n", this, p1, p2, mRouteWayPointCount);
 	if (mRouteWayPointCount == 0) {
 		PRINT("!makeWayPointRoute:%08x,%d->%d,%d\n", this, p1, p2, mRouteWayPointCount);
 	}
@@ -2311,7 +2311,7 @@ void BTeki::stopSound(int soundID)
  */
 void BTeki::createTekiEffect(int effectID)
 {
-	PRINT("createTekiEffect:%08x,%d:%d\n", this, mTekiType, effectID);
+	PRINT_NAKATA("createTekiEffect:%08x,%d:%d\n", this, mTekiType, effectID);
 	TekiStrategy* strategy = tekiMgr->getStrategy(mTekiType);
 	strategy->createEffect(*(Teki*)this, effectID);
 }

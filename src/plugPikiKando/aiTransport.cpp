@@ -629,7 +629,7 @@ void ActTransport::doLift()
 			int idx       = nearestWP->mIndex;
 			int goalWPIdx = mGoal->getRouteIndex();
 			int maxNumWP  = routeMgr->getNumWayPoints('test') - 1;
-			PRINT("PATHFINDING : %d ==> %d\n", idx, goalWPIdx);
+			PRINT_KANDO("PATHFINDING : %d ==> %d\n", idx, goalWPIdx);
 			if (idx < 0 || idx > maxNumWP || goalWPIdx < 0 || goalWPIdx > maxNumWP) {
 				ERROR("sorry");
 			}
@@ -1036,7 +1036,7 @@ void ActTransport::decideGoal(Creature* cargo)
 	int onyonColor = Blue;
 	bool isVsMode  = flowCont.mNaviOnMap == 1;
 
-	PRINT("###### decide goal\n");
+	PRINT_KANDO("###### decide goal\n");
 	int i;
 	for (i = 0; i < PikiColorCount; i++) {
 		colorCounts[i] = 0;
@@ -1064,7 +1064,7 @@ void ActTransport::decideGoal(Creature* cargo)
 	for (i = 0; i < PikiColorCount; i++) {
 		if (colorCounts[i] > maxCount) {
 			maxCount = colorCounts[i];
-			PRINT("color %d : is max (%d)\n", i, maxCount);
+			PRINT_KANDO("color %d : is max (%d)\n", i, maxCount);
 		}
 	}
 
@@ -1076,12 +1076,12 @@ void ActTransport::decideGoal(Creature* cargo)
 
 	int randColor = (f32(numOptions) * gsys->getRand(1.0f));
 	if (randColor >= numOptions) {
-		PRINT("random select color=%d : maxcols=%d\n", randColor, numOptions);
+		PRINT_KANDO("random select color=%d : maxcols=%d\n", randColor, numOptions);
 		randColor = Blue;
 	}
 
 	onyonColor = optionColors[randColor];
-	PRINT(" ## color %d is selected\n", onyonColor);
+	PRINT_KANDO(" ## color %d is selected\n", onyonColor);
 	mGoal                     = itemMgr->getContainer(onyonColor);
 	mPellet.mPtr->mTargetGoal = mGoal; // hmm.
 

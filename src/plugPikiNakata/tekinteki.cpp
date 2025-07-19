@@ -49,7 +49,7 @@ NTeki::NTeki()
  */
 void NTeki::sendMessage(int msg)
 {
-	PRINT("sendMessage:%08x:%d\n", this, msg);
+	PRINT_NAKATA("sendMessage:%08x:%d\n", this, msg);
 	Iterator iter(tekiMgr);
 	CI_LOOP(iter)
 	{

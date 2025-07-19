@@ -531,10 +531,10 @@ bool TaiSwallowStrategy::interact(Teki& teki, TekiInteractionKey& key)
 		if (teki.getTekiOption(BTeki::TEKI_OPTION_DAMAGE_COUNTABLE)) {
 			if (attack->getDamagePortion() != 1) {
 				attack->mDamage *= teki.getParameterF(SWALLOWPF_LowerDamageRate);
-				PRINT("TaiSwallowStrategy::interact:%08x:!PART_UPPER\n", &teki);
+				PRINT_NAKATA("TaiSwallowStrategy::interact:%08x:!PART_UPPER\n", &teki);
 				teki.mDamageCount += teki.getParameterF(SWALLOWPF_LowerDamageCountRate);
 			} else {
-				PRINT("TaiSwallowStrategy::interact:%08x:PART_UPPER\n", &teki);
+				PRINT_NAKATA("TaiSwallowStrategy::interact:%08x:PART_UPPER\n", &teki);
 				teki.mDamageCount++;
 			}
 		}
@@ -577,7 +577,7 @@ void TaiSwallowStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 bool TaiSwallowReceiveMessageAction::actByEvent(TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::WakeUpCall) {
-		PRINT("TaiSwallowReceiveMessageAction::act:%08x\n", event.mTeki);
+		PRINT_NAKATA("TaiSwallowReceiveMessageAction::act:%08x\n", event.mTeki);
 		return true;
 	}
 
@@ -599,13 +599,13 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
 		// Looks like someone was copying and pasting code lol (me too buddy, me too)
-		PRINT("!TaiTurnAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTurnAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki); // And again
+		PRINT_NAKATA("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki); // And again
 		return true;
 	}
 
@@ -617,7 +617,7 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 	                                teki.getParameterF(SWALLOWPF_TurnVelocityFuncMaxRate));
 
 	f32 factor = linFunc.getValue(f32(pikiCount));
-	PRINT("TaiSwallowTurningAction::act:%08x:%f,%d\n", &teki, factor, pikiCount);
+	PRINT_NAKATA("TaiSwallowTurningAction::act:%08x:%f,%d\n", &teki, factor, pikiCount);
 	f32 speed         = mTurnSpeed * factor;
 	teki.mTargetAngle = teki.calcTargetDirection(target->getPosition());
 	return teki.turnToward(teki.mTargetAngle, speed);
@@ -720,7 +720,7 @@ bool TaiSwallowSwallowingFlickAction::act(Teki& teki)
  */
 void TaiSwallowSnoreAction::start(Teki& teki)
 {
-	PRINT("TaiSwallowSnoreAction::start:%08x\n", &teki);
+	PRINT_NAKATA("TaiSwallowSnoreAction::start:%08x\n", &teki);
 	teki.startParticleGenerator(0);
 }
 
@@ -731,7 +731,7 @@ void TaiSwallowSnoreAction::start(Teki& teki)
  */
 void TaiSwallowSnoreAction::finish(Teki& teki)
 {
-	PRINT("TaiSwallowSnoreAction::finish:%08x\n", &teki);
+	PRINT_NAKATA("TaiSwallowSnoreAction::finish:%08x\n", &teki);
 	teki.stopParticleGenerator(0);
 }
 
@@ -747,7 +747,7 @@ bool TaiSwallowNoticeAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("TaiSwallowNoticeAction::act:%08x\n", &teki);
+	PRINT_NAKATA("TaiSwallowNoticeAction::act:%08x\n", &teki);
 	teki.setCreaturePointer(0, naviPiki);
 	return true;
 

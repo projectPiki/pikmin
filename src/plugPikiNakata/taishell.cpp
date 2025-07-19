@@ -175,7 +175,7 @@ void TaiShellStrategy::start(Teki& teki)
 	if (hasPart == TRUE) {
 		ID32& id = teki.mPersonality->mID;
 		if (playerState->existUfoParts(id.mId)) {
-			PRINT("!!!TaiShellStrategy::start:%08x:%s already exists\n", teki, id.mStringID);
+			PRINT("!!!TaiShellStrategy::start:%08x:%s already exists\n", &teki, id.mStringID);
 			teki.mPersonality->mID.setID('none');
 		} else {
 			type = TEKI_Rocpe;
@@ -185,14 +185,14 @@ void TaiShellStrategy::start(Teki& teki)
 	Teki* pearl = teki.generateTeki(type);
 
 	if (!pearl) {
-		PRINT("!TaiShellStrategy::start:teki==null:%08x\n", teki);
+		PRINT("!TaiShellStrategy::start:teki==null:%08x\n", &teki);
 		return;
 	}
 
 	NVector3f spawnPos;
 	teki.outputSpawnPosition(spawnPos);
 	ID32& id = teki.mPersonality->mID;
-	PRINT("TaiShellStrategy:%08x:%d,%s\n", this, type, id.mStringID);
+	PRINT_NAKATA("TaiShellStrategy:%08x:%d,%s\n", this, type, id.mStringID);
 	pearl->mPersonality->mID.setID(id.mId);
 	pearl->startAI(0); // unused, will go to default state (PEARLSTATE_Normal)
 
@@ -201,9 +201,6 @@ void TaiShellStrategy::start(Teki& teki)
 	teki.setCreaturePointer(2, pearl);
 	pearl->setCreaturePointer(0, &teki);
 	teki.mPersonality->mID.setID('none');
-
-	// Just for stack.
-	STACK_PAD_TERNARY(pearl, 5);
 }
 
 /*
@@ -273,7 +270,7 @@ bool TaiShellSaveItemPositionAction::act(Teki& teki)
 	Pellet* item = static_cast<Teki*>(teki.getCreaturePointer(2))->mPellet;
 
 	if (!item) {
-		PRINT("TaiShellSaveItemPositionAction::act:item==null:%08x\n", teki);
+		PRINT_NAKATA("TaiShellSaveItemPositionAction::act:item==null:%08x\n", &teki);
 		return false;
 	}
 
@@ -281,15 +278,13 @@ bool TaiShellSaveItemPositionAction::act(Teki& teki)
 	teki.outputSpawnPosition(savePos);
 	f32 dist = savePos.distanceXZ(item->getPosition());
 	if (dist >= teki.getAttackableRange()) {
-		PRINT("TaiShellResetPearlAction::resetPearl:%08x:outside:%f,%f\n", teki, dist, teki.getAttackableRange());
+		PRINT_NAKATA("TaiShellResetPearlAction::resetPearl:%08x:outside:%f,%f\n", &teki, dist, teki.getAttackableRange());
 		return false;
 	}
 
-	PRINT("TaiShellResetPearlAction::resetPearl:%08x:inside:%f,%f\n", teki, dist, teki.getAttackableRange());
+	PRINT_NAKATA("TaiShellResetPearlAction::resetPearl:%08x:inside:%f,%f\n", &teki, dist, teki.getAttackableRange());
 	setPosition(teki, item);
 	return false;
-
-	STACK_PAD_VAR(6);
 }
 
 /*
@@ -486,8 +481,6 @@ void TaiPearlTresureSoundAction::start(Teki& teki)
 		clam->playSound(SE_SHELL_TRESURE);
 		clam->playSound(SE_KURIONE_HIT);
 	} else {
-		PRINT("TaiPearlTresureSoundAction::start:creature==null:%08x\n", teki);
+		PRINT_NAKATA("TaiPearlTresureSoundAction::start:creature==null:%08x\n", &teki);
 	}
-
-	STACK_PAD_VAR(2);
 }

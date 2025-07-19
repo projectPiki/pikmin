@@ -1057,7 +1057,7 @@ void BuildingItem::startAI(int)
 
 	mWayPoint            = routeMgr->findNearestWayPointAll('test', mPosition);
 	mWayPoint->mPosition = mPosition;
-	PRINT("*** \n");
+	PRINT_KANDO("*** \n");
 	C_SAI(this)->start(this, SluiceAI::Sluice_WaitInit);
 
 	_448   = mPosition;
@@ -1196,7 +1196,7 @@ void BuildingItem::doSave(RandomAccessStream& output)
 	output.writeInt(mCurrStage);
 	output.writeInt(mNumStages);
 	output.writeInt(mCurrAnimId);
-	PRINT("\t life=%.1f maxLife=%.1f curr/num=%d/%d\n", mHealth, mMaxHealth, mCurrStage, mNumStages);
+	PRINT_KANDO("\t life=%.1f maxLife=%.1f curr/num=%d/%d\n", mHealth, mMaxHealth, mCurrStage, mNumStages);
 }
 
 /*
@@ -1212,7 +1212,7 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 	mNumStages  = input.readInt();
 	mCurrAnimId = input.readInt();
 
-	PRINT("currStage %d numStages %d\n", mCurrStage, mNumStages);
+	PRINT_KANDO("currStage %d numStages %d\n", mCurrStage, mNumStages);
 
 	if (mCurrStage < mNumStages) {
 		startMotion(mCurrStage);
@@ -1226,7 +1226,7 @@ void BuildingItem::doLoad(RandomAccessStream& input)
 
 	stopMotion();
 	C_SAI(this)->start(this, SluiceAI::Sluice_WaitInit);
-	PRINT("* DONE\n");
+	PRINT_KANDO("* DONE\n");
 }
 
 /*
@@ -1266,7 +1266,7 @@ void BuildingItem::doRestore(CreatureInf* info)
 	else {
 		int finalKeyframeIdx = mItemAnimator.mAnimInfo->countAKeys() - 1;
 		f32 frame            = mItemAnimator.mAnimInfo->getKeyValue(finalKeyframeIdx) - 1.0f;
-		PRINT("*** BUILDING ITEM START MOTION (%d) @ %.1f frame\n", mNumStages - 1, frame);
+		PRINT_KANDO("*** BUILDING ITEM START MOTION (%d) @ %.1f frame\n", mNumStages - 1, frame);
 		startMotion(mNumStages - 1, frame);
 		mWayPoint->setFlag(true);
 	}
@@ -1386,11 +1386,11 @@ void ItemMgr::kill(Creature* item)
 PikiHeadMgr::PikiHeadMgr(ItemMgr* mgr)
 {
 	mItemMgr = mgr;
-	PRINT("PIKIHEADMGR *** this = %x\n", this);
+	PRINT_KANDO("PIKIHEADMGR *** this = %x\n", this);
 	mPikiHeadProps = new PikiHeadItemProp();
 	mPikiHeadAI    = new PikiHeadAI();
 	create(MAX_PIKI_ON_FIELD);
-	PRINT("=====================================\n");
+	PRINT_KANDO("=====================================\n");
 }
 
 /*

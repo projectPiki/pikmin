@@ -664,7 +664,7 @@ void PolyObjectMgr::update()
 		}
 
 		if (mObjectIndices[i] == -2 && get(i)->removable()) {
-			PRINT("killing ... %x\n", get(i));
+			PRINT_KANDO("killing ... %x\n", get(i));
 			kill(get(i));
 		} else if (mObjectIndices[i] == -2) {
 			get(i)->clearCnt();
@@ -876,7 +876,7 @@ void PolyObjectMgr::kill(Creature* obj)
 {
 	int id = getIndex(obj);
 	if (obj->removable()) {
-		PRINT("%x really dead (index %d) \n", obj, id);
+		PRINT_KANDO("%x really dead (index %d) \n", obj, id);
 		mObjectIndices[id] = -1;
 		mActiveObjects--;
 	} else {

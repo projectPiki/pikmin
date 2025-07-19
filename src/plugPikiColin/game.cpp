@@ -303,6 +303,7 @@ void OnePlayerSection::init()
 			} else {
 				gameflow.mLevelBannerTexture = tex;
 			}
+			// It is somewhere before this PRINT that all of the BOOLs controlling user PRINTs are set to FALSE.
 			PRINT("making new MAINGAME\n");
 			currentSection = new NewPikiGameSection();
 			break;

@@ -244,7 +244,7 @@ struct WorldMapCursorOnyon {
 		if (mOnyonIcon) {
 			mOnyonIcon->setOffset(mOnyonIcon->getWidth() >> 1, mOnyonIcon->getHeight() >> 2);
 		} else {
-			PRINT("Illegal init WorldMapCursorOnyon Class.\n");
+			PRINT_YAMASH("Illegal init WorldMapCursorOnyon Class.\n");
 			ERROR("Illegal initialize.");
 		}
 
@@ -445,7 +445,7 @@ struct WorldMapCursorMgr {
 			mRocketIcon->setOffset(mRocketIcon->getWidth() >> 1, mRocketIcon->getHeight() >> 1);
 			mRocketIcon->setScale(1.0f);
 		} else {
-			PRINT("Illegal initilize.\n");
+			PRINT_YAMASH("Illegal initilize.\n");
 			ERROR("Illegal initilize.\n");
 		}
 
@@ -657,7 +657,7 @@ struct WorldMapCursorMgr {
 			mIsForcedMove = false;
 			setLandingFlag(true);
 		} else {
-			PRINT("can't forceMove.\n");
+			PRINT_YAMASH("can't forceMove.\n");
 			ERROR("can't forceMove.");
 		}
 	}

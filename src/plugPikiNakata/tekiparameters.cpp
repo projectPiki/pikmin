@@ -206,7 +206,7 @@ void TekiParameters::read(RandomAccessStream& input)
 #if 0
 void TekiParameters::write(RandomAccessStream& output)
 {
-	PRINT("TekiParameters::write>\n");
+	PRINT_NAKATA("TekiParameters::write>\n");
 
 	output.writeInt(11);
 	for (int i = 0; i < 8; i++) {
@@ -214,6 +214,6 @@ void TekiParameters::write(RandomAccessStream& output)
 	}
 	mParameters->write(output);
 
-	PRINT("TekiParameters::write<\n");
+	PRINT_NAKATA("TekiParameters::write<\n");
 }
 #endif

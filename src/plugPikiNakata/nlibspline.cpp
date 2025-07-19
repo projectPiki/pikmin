@@ -156,7 +156,7 @@ int SplineInterpolator::searchSegmentIndex(f32 targetParam, int startIdx)
 		}
 	}
 
-	PRINT("?searchSegmentIndex:%f,%f,%d\n", targetParam, mFrameArray->get(mFrameArray->getSize() - 1)->getParameter(), startIdx);
+	PRINT_NAKATA("?searchSegmentIndex:%f,%f,%d\n", targetParam, mFrameArray->get(mFrameArray->getSize() - 1)->getParameter(), startIdx);
 	return mFrameArray->getSize() - 2;
 }
 

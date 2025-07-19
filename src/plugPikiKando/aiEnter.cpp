@@ -154,7 +154,7 @@ void ActEnter::procCollideMsg(Piki*, MsgCollide* msg)
 int ActEnter::gotoLeg()
 {
 	if (mPiki->mRope) {
-		PRINT("goto leg ok! %x\n", mPiki);
+		PRINT_KANDO("goto leg ok! %x\n", mPiki);
 		mState = STATE_Climb;
 		mPiki->playEventSound(mOnyon, SE_CONTAINER_CLIMB);
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -182,7 +182,7 @@ int ActEnter::gotoLeg()
 int ActEnter::climb()
 {
 	if (!mPiki->mRope || mPiki->mRopePosRatio > 0.9f) {
-		PRINT("enter goal ???\n");
+		PRINT_KANDO("enter goal ???\n");
 		mOnyon->enterGoal(mPiki);
 		return ACTOUT_Fail;
 	}
@@ -192,7 +192,7 @@ int ActEnter::climb()
 	}
 
 	if (mPiki->mRopePosRatio > 0.72f) {
-		PRINT("piki->ropePos = %f\n", mPiki->mRopePosRatio);
+		PRINT_KANDO("piki->ropePos = %f\n", mPiki->mRopePosRatio);
 		mPiki->mIsCallable = false;
 		f32 scale          = (1.0f - mPiki->mRopePosRatio) / (1.0f - 0.72f) * 1.0f;
 		if (scale < 0.0f) {

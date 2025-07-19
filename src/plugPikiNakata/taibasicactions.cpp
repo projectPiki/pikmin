@@ -84,7 +84,7 @@ void TaiTypeNaviWatchResultOnAction::start(Teki& teki)
 {
 	if (!teki.isCreatureFlag(CF_IsAICullingActive)) {
 		int resFlag = tekiMgr->getResultFlag(teki.mTekiType);
-		PRINT("TaiTypeNaviWatchResultOnAction::start:%08x:%d\n", &teki, resFlag);
+		PRINT_NAKATA("TaiTypeNaviWatchResultOnAction::start:%08x:%d\n", &teki, resFlag);
 		playerState->mResultFlags.setOn(resFlag);
 	}
 }

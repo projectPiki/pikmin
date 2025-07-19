@@ -92,10 +92,10 @@ void TaiMizigenStrategy::start(Teki& teki)
  */
 void TaiMizigenGeneratingAction::start(Teki& teki)
 {
-	PRINT("TaiMizigenGeneratingAction::start:%08x\n", &teki);
+	PRINT_NAKATA("TaiMizigenGeneratingAction::start:%08x\n", &teki);
 	Teki* wisp = teki.generateTeki(teki.getParameterI(TPI_SpawnType));
 	if (!wisp) {
-		PRINT("TaiMizigenGeneratingAction::start:teki==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiMizigenGeneratingAction::start:teki==null:%08x\n", &teki);
 		return;
 	}
 
@@ -112,7 +112,7 @@ void TaiMizigenGeneratingAction::start(Teki& teki)
 	wisp->mTargetPosition.add2(teki.getPosition(), dir);
 	wisp->setPersonalityF(TekiPersonality::FLT_TerritoryRange, distance);
 	wisp->startAI(0);
-	PRINT("TaiMizigenGeneratingAction::start<%08x\n", &teki);
+	PRINT_NAKATA("TaiMizigenGeneratingAction::start<%08x\n", &teki);
 }
 
 /*
@@ -144,7 +144,7 @@ bool TaiMizigenNaviApprouchAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("TaiMizigenNaviApprouchAction::act:%08x:%f,%f\n", &teki, naviDist, range);
+	PRINT_NAKATA("TaiMizigenNaviApprouchAction::act:%08x:%f,%f\n", &teki, naviDist, range);
 	return true;
 }
 
@@ -393,7 +393,7 @@ bool TaiMizinkoStrategy::hasWater(Teki& teki)
 bool TaiMizinkoCryTimerAction::act(Teki& teki)
 {
 	if (teki.timerElapsed(mTimerIdx)) {
-		PRINT("TaiMizinkoCryTimerAction::act:%08x,%f\n", &teki, teki.mTimers[mTimerIdx]);
+		PRINT_NAKATA("TaiMizinkoCryTimerAction::act:%08x,%f\n", &teki, teki.mTimers[mTimerIdx]);
 		teki.playSound(SE_KURIONE_FLYING);
 		resetTimer(teki);
 	}

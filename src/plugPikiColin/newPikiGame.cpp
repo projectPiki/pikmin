@@ -1721,6 +1721,7 @@ NewPikiGameSection::NewPikiGameSection()
 	flowCont._23CPAL = 0;
 #endif
 	gsys->setFrameClamp(2);
+	// In the DLL, Nakata and Kando have their PRINTs disabled here for a second time.
 	mapMgr = nullptr;
 	npgss  = nullptr;
 

@@ -530,7 +530,7 @@ bool TaiCollecImpassableAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("TaiCollecImpassableAction::act:%08x:%f,%f,%f\n", &teki, dist, mMaxDistance, mTimerLength);
+	PRINT_NAKATA("TaiCollecImpassableAction::act:%08x:%f,%f,%f\n", &teki, dist, mMaxDistance, mTimerLength);
 	return true;
 
 	STACK_PAD_VAR(2);
@@ -556,7 +556,7 @@ bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
 	if (!target) {
-		PRINT("TaiCollecLetGoOfPelletAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiCollecLetGoOfPelletAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
@@ -564,7 +564,7 @@ bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
 	pellet->endStickTeki(&teki);
 	teki.clearCreaturePointer(2);
 	teki.stopParticleGenerator(2);
-	PRINT("TaiCollecLetGoOfPelletAction::act:endStickTeki:%08x\n", &teki);
+	PRINT_NAKATA("TaiCollecLetGoOfPelletAction::act:endStickTeki:%08x\n", &teki);
 	return true;
 }
 
@@ -578,7 +578,7 @@ bool TaiCollecLetGoOfPelletAction::actByEvent(TekiEvent& event)
 	Teki* teki       = event.mTeki;
 	Creature* target = teki->getCreaturePointer(2);
 	if (!target) {
-		PRINT("TaiCollecLetGoOfPelletAction::actByEvent:target==null:%08x\n", teki);
+		PRINT_NAKATA("TaiCollecLetGoOfPelletAction::actByEvent:target==null:%08x\n", &teki);
 		return true;
 	}
 
@@ -586,7 +586,7 @@ bool TaiCollecLetGoOfPelletAction::actByEvent(TekiEvent& event)
 	pellet->endStickTeki(teki);
 	teki->clearCreaturePointer(2);
 	teki->stopParticleGenerator(2);
-	PRINT("TaiCollecLetGoOfPelletAction::actactByEvent:endStickTeki:%08x\n", teki);
+	PRINT_NAKATA("TaiCollecLetGoOfPelletAction::actactByEvent:endStickTeki:%08x\n", &teki);
 	return true;
 }
 
@@ -608,7 +608,7 @@ bool TaiCollecTargetPelletAction::act(Teki& teki)
 	}
 
 	teki.setCreaturePointer(0, nearest);
-	PRINT("TaiCollecTargetPelletAction::act:%08x,%08x,%08x\n", &teki, target, nearest);
+	PRINT_NAKATA("TaiCollecTargetPelletAction::act:%08x,%08x,%08x\n", &teki, target, nearest);
 	return true;
 
 	TekiAndCondition(nullptr, nullptr);
@@ -626,13 +626,13 @@ bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("TaiCollecVisibleHeightPelletLostAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiCollecVisibleHeightPelletLostAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiVisibleHeightCondition& cond = TekiVisibleHeightCondition(&teki);
 	if (!cond.satisfy(target)) {
-		PRINT("TaiCollecVisibleHeightPelletLostAction::act:!condition.satisfy:%08x,%08x\n", &teki, target);
+		PRINT_NAKATA("TaiCollecVisibleHeightPelletLostAction::act:!condition.satisfy:%08x,%08x\n", &teki, target);
 		teki.setCreaturePointer(3, target);
 		teki.clearCreaturePointer(0);
 		return true;
@@ -664,7 +664,7 @@ bool TaiCollecPelletLostAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("TaiCollecPelletLostAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiCollecPelletLostAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
@@ -715,7 +715,7 @@ bool TaiCollecHoldPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiCollecHoldPelletAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiCollecHoldPelletAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 
@@ -735,7 +735,7 @@ bool TaiCollecHoldPelletAction::act(Teki& teki)
 	teki.clearCreaturePointer(0);
 	teki.setCreaturePointer(2, pellet);
 	teki.startParticleGenerator(2);
-	PRINT("TaiCollecHoldPelletAction::act:%08x:startStickTeki:target:%08x\n", &teki, pellet);
+	PRINT_NAKATA("TaiCollecHoldPelletAction::act:%08x:startStickTeki:target:%08x\n", &teki, pellet);
 	return true;
 }
 
@@ -767,7 +767,7 @@ void TaiCollecCatchingAction::finish(Teki& teki)
  */
 void TaiCollecCarryingAction::start(Teki& teki)
 {
-	PRINT("TaiCollecCarryingAction::start:%08x\n", &teki);
+	PRINT_NAKATA("TaiCollecCarryingAction::start:%08x\n", &teki);
 	teki.setTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
@@ -778,7 +778,7 @@ void TaiCollecCarryingAction::start(Teki& teki)
  */
 void TaiCollecCarryingAction::finish(Teki& teki)
 {
-	PRINT("TaiCollecCarryingAction::finish:%08x\n", &teki);
+	PRINT_NAKATA("TaiCollecCarryingAction::finish:%08x\n", &teki);
 	teki.clearTekiOption(BTeki::TEKI_OPTION_MANUAL_ANIMATION);
 }
 
@@ -810,7 +810,7 @@ bool TaiCollecCarryingAction::act(Teki& teki)
  */
 void TaiCollecBeingDraggedAction::start(Teki& teki)
 {
-	PRINT("TaiCollecBeingDraggedAction::start:%08x\n", &teki);
+	PRINT_NAKATA("TaiCollecBeingDraggedAction::start:%08x\n", &teki);
 	teki.startParticleGenerator(3);
 }
 
@@ -821,7 +821,7 @@ void TaiCollecBeingDraggedAction::start(Teki& teki)
  */
 void TaiCollecBeingDraggedAction::finish(Teki& teki)
 {
-	PRINT("TaiCollecBeingDraggedAction::finish:%08x\n", &teki);
+	PRINT_NAKATA("TaiCollecBeingDraggedAction::finish:%08x\n", &teki);
 	teki.stopParticleGenerator(3);
 }
 
@@ -908,7 +908,7 @@ void TaiCollecPuttingPelletAction::start(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(2);
 	if (!target) {
-		PRINT("TaiCollecPuttingPelletAction::start:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiCollecPuttingPelletAction::start:target==null:%08x\n", &teki);
 		return;
 	}
 
@@ -937,7 +937,7 @@ bool TaiCollecPuttingPelletAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(2);
 	if (!target) {
-		PRINT("TaiCollecPuttingPelletAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiCollecPuttingPelletAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 
@@ -975,16 +975,16 @@ bool TaiCollecCarryingToNestAction::act(Teki& teki)
 	}
 
 	if (teki.mRouteWayPointCount > teki.mRouteWayPointMax && teki.mCurrRouteWayPointID > teki.mRouteWayPointMax - 1) {
-		PRINT("!TaiCollecCarryingToNestAction::act:too long route:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID,
-		      teki.mRouteWayPointCount);
+		PRINT_NAKATA("!TaiCollecCarryingToNestAction::act:too long route:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID,
+		             teki.mRouteWayPointCount);
 		makePositionRoute(teki);
 		return false;
 	}
 
 	f32 val = teki.getParameterF(_0C);
 	if (teki.mRouteWayPointCount == 0 || teki.mCurrRouteWayPointID > teki.mRouteWayPointCount - 1) {
-		PRINT("TaiCollecCarryingToNestAction::act:%08x:%f,%d/%d\n", &teki, teki.getDirection(), teki.mCurrRouteWayPointID,
-		      teki.mRouteWayPointCount);
+		PRINT_NAKATA("TaiCollecCarryingToNestAction::act:%08x:%f,%d/%d\n", &teki, teki.getDirection(), teki.mCurrRouteWayPointID,
+		             teki.mRouteWayPointCount);
 		NVector3f ugPos;
 		TaiCollecStrategy* strat = (TaiCollecStrategy*)teki.getStrategy();
 		strat->outputUndergroundPosition(teki, ugPos);
@@ -1008,7 +1008,7 @@ bool TaiCollecCarryingToNestAction::act(Teki& teki)
 	}
 
 	if (BTeki::moveTowardStatic(target->getPosition(), wp->mPosition, val, teki.mTargetVelocity)) {
-		PRINT("TaiCollecCarryingToNestAction::act2:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		PRINT_NAKATA("TaiCollecCarryingToNestAction::act2:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		teki.mCurrRouteWayPointID++;
 	}
 
@@ -1065,7 +1065,8 @@ bool TaiCollecRouteImpassableAction::act(Teki& teki)
 	}
 
 	if (!wp->mIsOpen) {
-		PRINT("TaiCollecRouteImpassableAction::act:%08x:!wayPoint->on:%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		PRINT_NAKATA("TaiCollecRouteImpassableAction::act:%08x:!wayPoint->on:%d/%d\n", &teki, teki.mCurrRouteWayPointID,
+		             teki.mRouteWayPointCount);
 		// blocked waypoint? that's a paddling.
 		return true;
 	}
@@ -1128,7 +1129,7 @@ bool TaiCollecPelletStartContainerizedAction::act(Teki& teki)
 bool TaiCollecPelletFinishContainerizedAction::act(Teki& teki)
 {
 	if (!teki.getStickObject()) {
-		PRINT("TaiCollecPelletFinishContainerizedAction::act:%08x\n", &teki);
+		PRINT_NAKATA("TaiCollecPelletFinishContainerizedAction::act:%08x\n", &teki);
 		teki.clearCreaturePointer(2);
 		return true;
 	}

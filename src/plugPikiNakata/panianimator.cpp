@@ -223,8 +223,7 @@ void PaniAnimator::animate(f32 speed)
 	}
 
 	if (speed < 0.0f) {
-		mAnimationCounter;
-		PRINT("!animate:%08x:%f,%f\n", this, mAnimationCounter, speed);
+		PRINT_NAKATA("!animate:%08x:%f,%f\n", this, mAnimationCounter, speed);
 	}
 
 	if (mCurrentKeyIndex < 0) {
@@ -234,8 +233,7 @@ void PaniAnimator::animate(f32 speed)
 	f32 startValue = (f32)mAnimInfo->getKeyValue(mStartKeyIndex);
 	f32 endValue   = (f32)mAnimInfo->getKeyValue(mEndKeyIndex);
 	if (startValue > endValue) {
-		mAnimationCounter;
-		PRINT("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mAnimationCounter);
+		PRINT_NAKATA("!animate:%08x:to<from:%f,%f,%f\n", this, endValue, startValue, mAnimationCounter);
 		return;
 	}
 

@@ -1285,7 +1285,7 @@ void WayPoint::initLinkInfos()
 
 		// If no link exists in this slot, mark all info entries as dead ends (-2)
 		if (mLinkIndices[i] == -1) {
-			PRINT("nolink wp %d : link%d set deadend\n", mIndex, i);
+			PRINT_KANDO("nolink wp %d : link%d set deadend\n", mIndex, i);
 			for (int j = 0; j < 4; j++) {
 				info->setInfo(j, -2);
 			}
@@ -1319,14 +1319,14 @@ void WayPoint::initLinkInfos()
 				int linkWaypointIdx    = mLinkIndices[i];
 				PathFinder* pathfinder = routeMgr->getPathFinder('test');
 
-				PRINT("** (%d to %d)\n", linkWaypointIdx, wpIdx);
+				PRINT_KANDO("** (%d to %d)\n", linkWaypointIdx, wpIdx);
 
 				int pathLength = pathfinder->findSync(pathfinder->mBuffer, linkWaypointIdx, wpIdx, true);
 
 				// If no path is found, mark dead end
 				if (pathLength == 0) {
 					info->setInfo(goalIdx, -2);
-					PRINT("noway wp %d : link%d set deadend\n", mIndex, i);
+					PRINT_KANDO("noway wp %d : link%d set deadend\n", mIndex, i);
 					continue;
 				}
 
@@ -1357,7 +1357,7 @@ void WayPoint::initLinkInfos()
 			} else {
 				// If no valid target waypoint, mark as dead end for this goal
 				info->setInfo(goalIdx, -2);
-				PRINT("(goal%d) wp %d : link%d set deadend\n", goalIdx, mIndex, i);
+				PRINT_KANDO("(goal%d) wp %d : link%d set deadend\n", goalIdx, mIndex, i);
 			}
 		}
 	}

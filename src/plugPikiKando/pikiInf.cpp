@@ -532,23 +532,19 @@ void CreatureInf::doStore(Creature* owner)
 	mObjType             = owner->mObjType;
 	mRebirthDay          = 0;
 	mCurrentDay          = -1;
-	mAdjustFaceDirection = owner->isCreatureFlag(CF_FaceDirAdjust) != false;
+	mAdjustFaceDirection = owner->isCreatureFlag(CF_FaceDirAdjust);
 	owner->doStore(this);
 
-	if (owner->mRebirthDay > 0) {
+	if (owner->getRebirthDay() > 0) {
 		if (owner->isAlive()) {
 			mAdjustFaceDirection = 1;
 			mRebirthDay          = owner->mRebirthDay;
-			if (true) { // DLL: Some flag in memory controlling certain prints
-				PRINT("KKKKKKKKKKKK ALIVE : CARRYOVER !!!\n");
-			}
+			PRINT_KANDO("KKKKKKKKKKKK ALIVE : CARRYOVER !!!\n");
 		} else {
 			mAdjustFaceDirection = 0;
 			mCurrentDay          = gameflow.mWorldClock.mCurrentDay;
 			mRebirthDay          = owner->mRebirthDay;
-			if (true) { // DLL: Some flag in memory controlling certain prints
-				PRINT("KKKKKKKKKKKK DEAD : CARRYOVER !!!\n");
-			}
+			PRINT_KANDO("KKKKKKKKKKKK DEAD : CARRYOVER !!!\n");
 		}
 	}
 }

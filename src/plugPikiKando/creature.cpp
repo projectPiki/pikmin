@@ -562,7 +562,7 @@ void Creature::kill(bool p1)
 	finishWaterEffect();
 
 	if (mObjType == OBJTYPE_Teki) {
-		PRINT("TEKI DIED ************************************\n");
+		PRINT_KANDO("TEKI DIED ************************************\n");
 	}
 
 	detachGenerator();
@@ -628,8 +628,9 @@ void Creature::kill(bool p1)
 
 	doKill();
 	if (mSeContext) {
-		PRINT("***************************************\n");
-		PRINT("objType %d : dead : release secontext\n", mObjType);
+		// This specific spot is what convinced me these conditional PRINTs were originally implemented with a macro.
+		PRINT_KANDO("***************************************\n");
+		PRINT_KANDO("objType %d : dead : release secontext\n", mObjType);
 		mSeContext->releaseEvent();
 	}
 

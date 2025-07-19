@@ -363,7 +363,7 @@ void NMatrix4f::makeIdentRow(int row)
 void NMatrix4f::println()
 {
 	for (int i = 0; i < 4; i++) {
-		PRINT("|%f,%f,%f,%f|\n", mMtx[i][0], mMtx[i][1], mMtx[i][2], mMtx[i][3]);
+		PRINT_NAKATA("|%f,%f,%f,%f|\n", mMtx[i][0], mMtx[i][1], mMtx[i][2], mMtx[i][3]);
 	}
 }
 
@@ -487,7 +487,7 @@ void NOrientation::makeUp()
 		orient.inputUp(NVector3f(0.0f, 0.0f, 1.0f));
 
 	} else {
-		PRINT("?makeUp\n");
+		PRINT_NAKATA("?makeUp\n");
 	}
 
 	orient.normalize();
@@ -553,9 +553,9 @@ void NOrientation::inputRotation(NTransform3D& transform)
  */
 void NOrientation::println()
 {
-	PRINT("fore:");
+	PRINT_NAKATA("fore:");
 	mDirection.println();
-	PRINT("up:");
+	PRINT_NAKATA("up:");
 	mUpVector.println();
 }
 
@@ -738,7 +738,7 @@ bool NPolar3f::clampMeridian(f32 angle)
  */
 void NPolar3f::println()
 {
-	PRINT("(%f,%f,%f)\n", mRadius, mInclination, mAzimuth);
+	PRINT_NAKATA("(%f,%f,%f)\n", mRadius, mInclination, mAzimuth);
 }
 
 /*
@@ -835,9 +835,9 @@ void NPosture2D::readData(Stream& input)
  */
 void NPosture2D::println()
 {
-	PRINT("translation:");
+	PRINT_NAKATA("translation:");
 	mTranslation.println();
-	PRINT("direction:%f\n", mDirection);
+	PRINT_NAKATA("direction:%f\n", mDirection);
 }
 
 /*
@@ -902,7 +902,7 @@ void NPosture3D::normalize()
 	NVector3f& dir = NVector3f();
 	outputRelative(dir);
 	if (NMathF::isZero(dir.length())) {
-		PRINT("?normalize:zero:" MISSING_NEWLINE);
+		PRINT_NAKATA("?normalize:zero:" MISSING_NEWLINE);
 		mWatchpoint.add(NVector3f(0.0f, 0.0f, 1.0f));
 	}
 }
@@ -1185,7 +1185,7 @@ void NLowerMatrix::solve(NVector& inVec, NVector& outVec)
 void NLowerMatrix::println()
 {
 	for (int i = 0; i < mDimension - 1; i++) {
-		PRINT("l[%d]:%f\n", i, mLower[i]);
+		PRINT_NAKATA("l[%d]:%f\n", i, mLower[i]);
 	}
 }
 
@@ -1233,10 +1233,10 @@ void NUpperMatrix::solve(NVector& inVec, NVector& outVec)
 void NUpperMatrix::println()
 {
 	for (int i = 0; i < mDimension; i++) {
-		PRINT("e[%d]:%f\n", i, mCentre[i]);
+		PRINT_NAKATA("e[%d]:%f\n", i, mCentre[i]);
 	}
 	for (int i = 0; i < mDimension - 1; i++) {
-		PRINT("u[%d]:%f\n", i, mUpper[i]);
+		PRINT_NAKATA("u[%d]:%f\n", i, mUpper[i]);
 	}
 }
 
@@ -1317,13 +1317,13 @@ void LUMatrix::decompose()
 void LUMatrix::println()
 {
 	for (int i = 0; i < mDimension; i++) {
-		PRINT("e[%d]:%f\n", i, mCentreVals[i]);
+		PRINT_NAKATA("e[%d]:%f\n", i, mCentreVals[i]);
 	}
 	for (int i = 0; i < mDimension - 1; i++) {
-		PRINT("l[%d]:%f\n", i, mLowerVals[i]);
+		PRINT_NAKATA("l[%d]:%f\n", i, mLowerVals[i]);
 	}
 	for (int i = 0; i < mDimension - 1; i++) {
-		PRINT("u[%d]:%f\n", i, mUpperVals[i]);
+		PRINT_NAKATA("u[%d]:%f\n", i, mUpperVals[i]);
 	}
 }
 
@@ -1703,7 +1703,7 @@ void NVector::println()
 {
 	// UNUSED FUNCTION
 	for (int i = 0; i < mSize; i++) {
-		PRINT("e[%d]:%f\n", i, mValues[i]);
+		PRINT_NAKATA("e[%d]:%f\n", i, mValues[i]);
 	}
 }
 
@@ -1911,7 +1911,7 @@ f32 NVector3f::calcLargerAngle(NVector3f& other)
  */
 void NVector3f::print()
 {
-	PRINT("(%f,%f,%f)", x, y, z);
+	PRINT_NAKATA("(%f,%f,%f)", x, y, z);
 }
 
 /*
@@ -1921,7 +1921,7 @@ void NVector3f::print()
  */
 void NVector3f::println()
 {
-	PRINT("(%f,%f,%f)\n", x, y, z);
+	PRINT_NAKATA("(%f,%f,%f)\n", x, y, z);
 }
 
 /*

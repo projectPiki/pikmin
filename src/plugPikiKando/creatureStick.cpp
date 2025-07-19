@@ -192,7 +192,7 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 
 	// Convert final position to object's local space
 	mAttachPosition.multMatrix(invWorldMatrix);
-	PRINT("StartStick SPHERE * (%.1f %.1f %.1f) \n", mAttachPosition.x, mAttachPosition.y, mAttachPosition.z);
+	PRINT_KANDO("StartStick SPHERE * (%.1f %.1f %.1f) \n", mAttachPosition.x, mAttachPosition.y, mAttachPosition.z);
 }
 
 /*
@@ -329,7 +329,7 @@ bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 		return false;
 	}
 
-	PRINT("piki%x :::: stick ! : standType = %s\n", _standType[getStandType()]);
+	PRINT_KANDO("piki%x :::: stick ! : standType = %s\n", _standType[getStandType()]);
 
 	mStickTarget = stickTarget;
 	if (!stickTarget->mStickListHead) {
@@ -464,7 +464,7 @@ void Creature::endRope()
 		return;
 	}
 
-	PRINT("endRope called ! : %x\n", this);
+	PRINT_KANDO("endRope called ! : %x\n", this);
 
 	if (!mPrevRopeHolder && !mNextRopeHolder) {
 		mRope->mRopeListHead = nullptr;
@@ -808,7 +808,7 @@ void Creature::updateStickRope()
 	if (mRopePosRatio > 1.0f) {
 		endRope();
 		if (rope->mParentRope->mObjType == OBJTYPE_Rope) {
-			PRINT("upper rope\n");
+			PRINT_KANDO("upper rope\n");
 			PRINT("%x upper rope!\n", this);
 			startRope(static_cast<RopeCreature*>(rope->mParentRope), 0.0f);
 			PRINT("==> ratio = %f\n", mRopePosRatio);
@@ -820,7 +820,7 @@ void Creature::updateStickRope()
 
 	} else if (mRopePosRatio < 0.0f && rope->mAttachedObj) {
 		endRope();
-		PRINT("lower rope\n");
+		PRINT_KANDO("lower rope\n");
 		PRINT("%x lower rope!\n", this);
 		startRope(rope->mAttachedObj, 1.0f);
 		PRINT("==> ratio = %f\n", mRopePosRatio);

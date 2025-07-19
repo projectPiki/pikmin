@@ -98,7 +98,7 @@ void TekiPersonality::input(TekiPersonality& other)
  */
 void TekiPersonality::read(RandomAccessStream& input, int version)
 {
-	PRINT("TekiPersonality::read:%d\n", version);
+	PRINT_NAKATA("TekiPersonality::read:%d\n", version);
 
 	ParaMultiParameters* params = mParams;
 
@@ -159,7 +159,7 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
 	mPelletColor = (s8)input.readByte();
 	mID.read(input);
 	params->read(input);
-	PRINT("TekiPersonality::read:pelletColor:%d\n", mPelletColor);
+	PRINT_NAKATA("TekiPersonality::read:pelletColor:%d\n", mPelletColor);
 }
 
 /*
@@ -169,19 +169,19 @@ void TekiPersonality::read(RandomAccessStream& input, int version)
  */
 void TekiPersonality::write(RandomAccessStream& output)
 {
-	PRINT("TekiPersonality::write>\n");
+	PRINT_NAKATA("TekiPersonality::write>\n");
 	output.writeByte((s8)mPelletKind);
 	output.writeByte((s8)mPelletColor);
 	mID.write(output);
 	mParams->write(output);
-	PRINT("TekiPersonality::write<\n");
+	PRINT_NAKATA("TekiPersonality::write<\n");
 }
 
 #ifdef WIN32
 
 void TekiPersonality::genAge(AgeServer& server)
 {
-	PRINT("TekiPersonality::genAge>%08x\n", mParams);
+	PRINT_NAKATA("TekiPersonality::genAge>%08x\n", mParams);
 	int id = 0;
 	server.StartOptionBox("pellet kind", &mPelletKind, 252);
 	server.NewOption("pellet 1", id++);
@@ -208,7 +208,7 @@ void TekiPersonality::genAge(AgeServer& server)
 	server.EndOptionBox();
 
 	mParams->genAge(server);
-	PRINT("TekiPersonality::genAge<%08x\n", mParams);
+	PRINT_NAKATA("TekiPersonality::genAge<%08x\n", mParams);
 }
 
 #endif
