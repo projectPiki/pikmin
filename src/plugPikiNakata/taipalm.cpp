@@ -161,10 +161,10 @@ void TaiPalmStrategy::start(Teki& teki)
 	TekiAndCondition& cond = TekiAndCondition(&TekiNotCondition(&TekiCreaturePointerCondition(&teki)),
 	                                          &TekiAndCondition(&TekiTypeCondition(teki.mTekiType), &TekiDistanceCondition(&teki, rad)));
 	Creature* neighbor     = tekiMgr->findClosest(teki.getPosition(), &cond);
-	PRINT("TaiPalmStrategy::start:%08x:neighbor:%08x\n", &teki, neighbor);
+	PRINT_NAKATA("TaiPalmStrategy::start:%08x:neighbor:%08x\n", &teki, neighbor);
 
 	if (neighbor) {
-		PRINT("TaiPalmStrategy::start:%08x:neighbor!=null:%08x\n", &teki, neighbor);
+		PRINT_NAKATA("TaiPalmStrategy::start:%08x:neighbor!=null:%08x\n", &teki, neighbor);
 		NVector3f::printlnVector3f(teki.getPosition());
 		NVector3f vec1;
 		vec1.sub(teki.getPosition(), neighbor->getPosition());
@@ -207,7 +207,7 @@ void TaiPalmStrategy::draw(Teki& teki, Graphics& gfx)
  */
 void TaiPalmStrategy::createEffect(Teki& teki, int palmEffectID)
 {
-	PRINT("TaiPalmStrategy::createEffect:%08x:%d\n", &teki, palmEffectID);
+	PRINT_NAKATA("TaiPalmStrategy::createEffect:%08x:%d\n", &teki, palmEffectID);
 	TekiStrategy::createEffect(teki, palmEffectID);
 	if (!effectMgr) {
 		return;
@@ -292,7 +292,7 @@ void TaiPalmMotionAction::start(Teki& teki)
 	TaiPalmStrategy* strat = (TaiPalmStrategy*)teki.getStrategy();
 	int motionIdx          = strat->translateMotionIndex(teki, mMotionIdx);
 	teki.startMotion(motionIdx);
-	PRINT("TaiPalmMotionAction::start:%08x:%d->%d\n", &teki, mMotionIdx, motionIdx);
+	PRINT_NAKATA("TaiPalmMotionAction::start:%08x:%d->%d\n", &teki, mMotionIdx, motionIdx);
 }
 
 /*
@@ -335,7 +335,7 @@ void TaiPalmDamagingAction::start(Teki& teki)
 	TaiPalmStrategy* strat = (TaiPalmStrategy*)teki.getStrategy();
 	int motionIdx          = strat->translateMotionIndex(teki, mMotionIdx);
 	teki.startMotion(motionIdx);
-	PRINT("TaiPalmDamagingAction::start:%08x:%d->%d\n", &teki, mMotionIdx, motionIdx);
+	PRINT_NAKATA("TaiPalmDamagingAction::start:%08x:%d->%d\n", &teki, mMotionIdx, motionIdx);
 	teki.makeDamaged();
 }
 
@@ -349,7 +349,7 @@ void TaiPalmGrowingAction::start(Teki& teki)
 	int size = teki.getPersonalityF(TekiPersonality::FLT_Strength);
 	size++;
 	teki.setPersonalityF(TekiPersonality::FLT_Strength, size);
-	PRINT("TaiPalmGrowingAction::start:%08x:%d\n", &teki, size);
+	PRINT_NAKATA("TaiPalmGrowingAction::start:%08x:%d\n", &teki, size);
 }
 
 /*
@@ -382,7 +382,7 @@ bool TaiPalmFlowerDamageAction::act(Teki& teki)
 		return false;
 	}
 	if (teki._344 == 0) {
-		PRINT("TaiPalmFlowerDamageAction::act:%08x:DMG_0\n", &teki);
+		PRINT_NAKATA("TaiPalmFlowerDamageAction::act:%08x:DMG_0\n", &teki);
 		return true;
 	}
 

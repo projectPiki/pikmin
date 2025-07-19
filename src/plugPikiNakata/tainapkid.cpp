@@ -687,7 +687,7 @@ bool TaiNapkidWanderingRouteAction::act(Teki& teki)
 	}
 
 	if (teki.moveToward(currWaypoint->mPosition, _0C)) {
-		PRINT("TaiNapkidWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		PRINT_NAKATA("TaiNapkidWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		makeTargetPosition(teki);
 	}
 
@@ -709,8 +709,8 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 	}
 
 	int randomIndex = NSystem::randomInt(currWaypoint->mLinkCount - 1);
-	PRINT("TaiNapkidWanderingRouteAction::makeTargetPosition::act:%08x,%d,%d,%d\n", &teki, teki.mCurrRouteWayPointID, randomIndex,
-	      currWaypoint->mLinkCount);
+	PRINT_NAKATA("TaiNapkidWanderingRouteAction::makeTargetPosition::act:%08x,%d,%d,%d\n", &teki, teki.mCurrRouteWayPointID, randomIndex,
+	             currWaypoint->mLinkCount);
 
 	int j;
 	int i = 0;
@@ -724,7 +724,7 @@ void TaiNapkidWanderingRouteAction::makeTargetPosition(Teki& teki)
 		}
 	}
 
-	PRINT("TaiNapkidWanderingRouteAction::makeTargetPosition::act:%08x:->%d\n", &teki, teki.mCurrRouteWayPointID);
+	PRINT_NAKATA("TaiNapkidWanderingRouteAction::makeTargetPosition::act:%08x:->%d\n", &teki, teki.mCurrRouteWayPointID);
 }
 
 /*
@@ -757,12 +757,12 @@ bool TaiNapkidPikiLostAction::act(Teki& teki)
 
 	Creature* targetCreature = teki.getCreaturePointer(0);
 	if (targetCreature == nullptr) {
-		PRINT("TaiNapkidPikiLostAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiNapkidPikiLostAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	if (!TekiNapkidTargetPikiCondition(&teki).satisfy(targetCreature)) {
-		PRINT("TaiNapkidPikiLostAction::act:!condition.satisfy:%08x\n", &teki);
+		PRINT_NAKATA("TaiNapkidPikiLostAction::act:!condition.satisfy:%08x\n", &teki);
 		teki.clearCreaturePointer(0);
 		return true;
 	}
@@ -782,12 +782,12 @@ bool TaiNapkidShortRangeAction::act(Teki& teki)
 {
 	Creature* targetCreature = teki.getCreaturePointer(0);
 	if (targetCreature == nullptr) {
-		PRINT("TaiNapkidShortRangeAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiNapkidShortRangeAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	if (TekiNapkidShortRangeCondition(&teki).satisfy(targetCreature)) {
-		PRINT("TaiNapkidShortRangeAction::act:condition.satisfy:%08x\n", &teki);
+		PRINT_NAKATA("TaiNapkidShortRangeAction::act:condition.satisfy:%08x\n", &teki);
 		return true;
 	}
 
@@ -921,7 +921,7 @@ bool TaiNapkidCirclingAction::act(Teki& teki)
 	teki._3A4 = -NMathF::pi / 4.0f * NMathF::sin(angle);
 
 	if (teki.mCircleMoveEvent->isFinished()) {
-		PRINT("TaiNapkidCirclingAction::act:%08x\n", &teki);
+		PRINT_NAKATA("TaiNapkidCirclingAction::act:%08x\n", &teki);
 		return true;
 	}
 
@@ -960,7 +960,7 @@ bool TaiNapkidApproachPikiAction::act(Teki& teki)
 {
 	Creature* targetCreature = teki.getCreaturePointer(0);
 	if (targetCreature == nullptr) {
-		PRINT("!TaiNapkidApproachPikiAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiNapkidApproachPikiAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 
@@ -1211,7 +1211,7 @@ void TaiNapkidRisingAscendingAction::start(Teki& teki)
 bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(Teki::ANIMATION_KEY_OPTION_ACTION_0)) {
-		PRINT("TaiNapkidThrowingPikiAction::act:%08x:ACTION_0\n", &teki);
+		PRINT_NAKATA("TaiNapkidThrowingPikiAction::act:%08x:ACTION_0\n", &teki);
 		NVector3f throwVel(teki.getVelocity());
 		throwVel.y = -teki.getParameterF(TaiNapkidFloatParms::ThrowVelocity);
 
@@ -1222,7 +1222,7 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 			Creature* throwPiki = *iter;
 			if (throwPiki != nullptr) {
 				if (throwPiki->isStickToMouth()) {
-					PRINT("TaiNapkidThrowingPikiAction::act:%08x:endStickObject\n", &teki);
+					PRINT_NAKATA("TaiNapkidThrowingPikiAction::act:%08x:endStickObject\n", &teki);
 					throwPiki->endStickMouth();
 
 					throwPiki->stimulate(InteractThrowAway(&teki));
@@ -1237,7 +1237,7 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 			}
 		}
 	}
-	PRINT("!TaiNapkidThrowingPikiAction::act:%08x\n", &teki);
+	PRINT_NAKATA("!TaiNapkidThrowingPikiAction::act:%08x\n", &teki);
 
 	STACK_PAD_TERNARY(&teki, 1);
 	return false;
@@ -1258,7 +1258,7 @@ bool TaiNapkidFlickAction::act(Teki& teki)
 	cLinearFunc.makeClampLinearFunction(1.0f, 0.1f, 5.0f, 0.7f);
 
 	f32 flickChance = cLinearFunc.getValue(f32(stickCount));
-	PRINT("TaiNapkidFlickAction::act:%08x:%f\n", &teki, flickChance);
+	PRINT_NAKATA("TaiNapkidFlickAction::act:%08x:%f\n", &teki, flickChance);
 	if (NMathF::occurred(flickChance)) {
 		return false;
 	}
@@ -1274,7 +1274,7 @@ bool TaiNapkidFlickAction::act(Teki& teki)
  */
 void TaiNapkidFallingAction::start(Teki& teki)
 {
-	PRINT("TaiNapkidFallingAction::start:%08x\n", &teki);
+	PRINT_NAKATA("TaiNapkidFallingAction::start:%08x\n", &teki);
 	teki.mPositionIO.input(NVector3f(teki.getPosition()));
 
 	NVector3f fallVel(0.0f, -20.0f, 0.0f);
@@ -1286,14 +1286,14 @@ void TaiNapkidFallingAction::start(Teki& teki)
 	CI_LOOP(iter)
 	{
 		Creature* heldPiki = *iter;
-		PRINT("TaiNapkidFallingAction::start:%08x:%08x\n", &teki, heldPiki);
+		PRINT_NAKATA("TaiNapkidFallingAction::start:%08x:%08x\n", &teki, heldPiki);
 		if (heldPiki == nullptr) {
 			PRINT("???TaiNapkidFallingAction::start:%08x:creature==null:%08x\n", &teki, nullptr);
 			return;
 		}
 
 		if (heldPiki != nullptr && heldPiki->isStickToMouth()) {
-			PRINT("TaiNapkidFallingAction::start:%08x:endStickObject:%08x\n", &teki, heldPiki);
+			PRINT_NAKATA("TaiNapkidFallingAction::start:%08x:endStickObject:%08x\n", &teki, heldPiki);
 			heldPiki->endStickMouth();
 			iter.dec();
 		}
@@ -1328,7 +1328,7 @@ void TaiNapkidShockFallingAction::start(Teki& teki)
 void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 {
 	int mapCode = teki.getPositionMapCode();
-	PRINT("TaiNapkidFallingWaterEffectAction::start:%08x:mapCode:%d\n", &teki, mapCode);
+	PRINT_NAKATA("TaiNapkidFallingWaterEffectAction::start:%08x:mapCode:%d\n", &teki, mapCode);
 
 	Vector3f pos(teki.getPosition());
 	f32 minY = mapMgr->getMinY(pos.x, pos.z, true);
@@ -1351,7 +1351,7 @@ void TaiNapkidFallingWaterEffectAction::start(Teki& teki)
 void TaiNapkidStartDroppingWaterAction::start(Teki& teki)
 {
 	int mapCode = teki.getPositionMapCode();
-	PRINT("TaiNapkidStartDroppingWaterAction::start:%08x:mapCode:%d\n", &teki, mapCode);
+	PRINT_NAKATA("TaiNapkidStartDroppingWaterAction::start:%08x:mapCode:%d\n", &teki, mapCode);
 
 	if (mapCode == ATTR_Water) {
 		teki.startParticleGenerator(0);

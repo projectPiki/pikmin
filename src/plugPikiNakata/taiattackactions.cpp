@@ -100,7 +100,7 @@ void TaiAnimationSwallowingAction::start(Teki& teki)
 bool TaiAnimationSwallowingAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
-		PRINT("TaiAnimationSwallowingAction::act:ACTION_0:%08x:\n", &teki);
+		PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_0:%08x:\n", &teki);
 		teki.flickUpper();
 		Vector3f center;
 		teki.outputHitCenter(center);
@@ -113,7 +113,7 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 		int numSlots       = 0;
 		CollPart* mouth    = teki.mCollInfo->getSphere('slot');
 		if (!mouth) {
-			PRINT("TaiAnimationSwallowingAction::act:mouthPart==null:%08x\n", &teki);
+			PRINT_NAKATA("TaiAnimationSwallowingAction::act:mouthPart==null:%08x\n", &teki);
 		} else {
 			numSlots = mouth->getChildCount();
 		}
@@ -146,7 +146,7 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 			}
 
 			if (mouth && swallowPikiNum < numSlots) {
-				PRINT("TaiAnimationSwallowingAction::act:ACTION_0:swallow:%08x:%08x,%d\n", &teki, piki, swallowPikiNum);
+				PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_0:swallow:%08x:%08x,%d\n", &teki, piki, swallowPikiNum);
 				piki->stimulate(InteractSwallow(&teki, mouth->getChildAt(swallowPikiNum++), 0));
 			} else {
 				piki->stimulate(kill);
@@ -176,15 +176,15 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 		CI_LOOP(iter)
 		{
 			Creature* stuck = *iter;
-			PRINT("TaiAnimationSwallowingAction::act:ACTION_1:stick:%08x:%08x\n", &teki, stuck);
-			PRINT("TaiAnimationSwallowingAction::act:ACTION_1:count:%08x:%d\n", &teki, stuckList.getCount());
+			PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_1:stick:%08x:%08x\n", &teki, stuck);
+			PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_1:count:%08x:%d\n", &teki, stuckList.getCount());
 			if (!stuck) {
 				PRINT("?TaiAnimationSwallowingAction::act:ANIMATION_KEY_OPTION_ACTION_1:%08x:creature==null\n", &teki);
 				break;
 			}
 
 			if (stuck->isStickToMouth()) {
-				PRINT("TaiAnimationSwallowingAction::act:ACTION_1:kill:%08x:%08x\n", &teki, stuck);
+				PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_1:kill:%08x:%08x\n", &teki, stuck);
 				stuck->stimulate(InteractKill(&teki, 0));
 				iter.dec();
 			}
@@ -214,14 +214,14 @@ void TaiAnimationSwallowingAction::finish(Teki& teki)
 	CI_LOOP(iter)
 	{
 		Creature* stuck = *iter;
-		PRINT("TaiAnimationSwallowingAction::finish:stick:%08x:%08x\n", &teki, stuck);
+		PRINT_NAKATA("TaiAnimationSwallowingAction::finish:stick:%08x:%08x\n", &teki, stuck);
 		if (!stuck) {
 			PRINT("?TaiAnimationSwallowingAction::finish:%08x:creature==null\n", &teki);
 			return;
 		}
 
 		if (stuck->isStickToMouth()) {
-			PRINT("TaiAnimationSwallowingAction::finish:release:%08x:%08x\n", &teki, stuck);
+			PRINT_NAKATA("TaiAnimationSwallowingAction::finish:release:%08x:%08x\n", &teki, stuck);
 			stuck->endStickMouth();
 			iter.dec();
 		}

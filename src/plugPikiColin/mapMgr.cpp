@@ -1730,11 +1730,9 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 			if (trace.mObject) {
 				trace.mObject->mCollisionOccurred = 1;
 			}
-			if (false) {
-				PRINT(">> before bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) % s :%.1f %.1f\n", normal.x, normal.y,
-				      normal.z, vel.x, vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z, currColls->mSourceCollider ? "PLATFORM" : "MAP", pen,
-				      rad);
-			}
+			PRINT_IF(false, ">> before bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) % s :%.1f %.1f\n", normal.x,
+			         normal.y, normal.z, vel.x, vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z,
+			         currColls->mSourceCollider ? "PLATFORM" : "MAP", pen, rad);
 			bool check2 = false;
 			if (!currColls->mSourceCollider) {
 				check1 = true;
@@ -1743,9 +1741,7 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 				vel.bounce(normal, bounceFactor);
 			} else if (check1 && vec.DP(normal) < -0.5f) {
 				check2 = true;
-				if (false) {
-					PRINT("ignore platform\n");
-				}
+				PRINT_IF(false, "ignore platform\n");
 			} else {
 				if (trace.mObject && currColls->mSourceCollider && currColls->mSourceCollider->mCreature) {
 					bounceFactor = 1.0f;
@@ -1753,10 +1749,8 @@ void MapMgr::recTraceMove(CollGroup* colls, MoveTrace& trace, f32 timeStep)
 				trace.mVelocity.bounce(normal, bounceFactor);
 				vel.bounce(normal, bounceFactor);
 			}
-			if (false) {
-				PRINT(">> after bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s\n", normal.x, normal.y, normal.z, vel.x,
-				      vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z, currColls->mSourceCollider ? "PLATFORM" : "MAP");
-			}
+			PRINT_IF(false, ">> after bounce : n(%.1f,%.1f,%.1f) vel(%.1f,%.1f,%.1f) p(%.1f,%.1f,%.1f) %s\n", normal.x, normal.y, normal.z,
+			         vel.x, vel.y, vel.z, nextPos.x, nextPos.y, nextPos.z, currColls->mSourceCollider ? "PLATFORM" : "MAP");
 			if (!check2) {
 				nextPos.x += normal.x * (rad - pen);
 				nextPos.y += normal.y * (rad - pen);

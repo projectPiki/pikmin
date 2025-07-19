@@ -291,7 +291,7 @@ bool TaiSmashedAction::actByEvent(TekiEvent& event)
 		Teki* teki      = event.mTeki;
 		Creature* other = event.mOther;
 		if (other->mObjType == OBJTYPE_Piki && static_cast<Piki*>(other)->getState() == PIKISTATE_Flying) {
-			PRINT("TaiSmashedAction::actByEvent:FLYING:%08x\n", teki);
+			PRINT_NAKATA("TaiSmashedAction::actByEvent:FLYING:%08x\n", &teki);
 			return true;
 		}
 	}
@@ -318,7 +318,7 @@ void TaiBeingPressedAction::start(Teki& teki)
 bool TaiPressedAction::actByEvent(TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Pressed) {
-		PRINT("TaiPressedAction::actByEvent:EVENT_PRESSED:%08x\n", event.mTeki);
+		PRINT_NAKATA("TaiPressedAction::actByEvent:EVENT_PRESSED:%08x\n", event.mTeki);
 		return true;
 	}
 

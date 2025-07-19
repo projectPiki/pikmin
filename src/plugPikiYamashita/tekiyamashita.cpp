@@ -100,7 +100,7 @@ void TekiYamashita::makeTekis(TekiMgr* mgr)
  */
 void TekiYamashita::makeDefaultAnimations()
 {
-	PRINT("makeDefaultAnimations>\n");
+	PRINT_NAKATA("makeDefaultAnimations>\n"); // The DLL says the wrong user print was used here.
 	TAItankAnimation().makeDefaultAnimations();
 	TAImarAnimation().makeDefaultAnimations();
 	TAIbeatleAnimation().makeDefaultAnimations();
@@ -113,5 +113,5 @@ void TekiYamashita::makeDefaultAnimations()
 	TAImiurinAnimation().makeDefaultAnimations();
 	TAIusubaAnimation().makeDefaultAnimations();
 	TAIotamaAnimation().makeDefaultAnimations();
-	PRINT("makeDefaultAnimations<\n");
+	PRINT_NAKATA("makeDefaultAnimations<\n"); // The DLL says the wrong user print was used here.
 }

@@ -193,9 +193,9 @@ void NLine::transform(NTransform3D& transform)
  */
 void NLine::println()
 {
-	PRINT("position:\n");
+	PRINT_NAKATA("position:\n");
 	mPosition.println();
-	PRINT("direction:\n");
+	PRINT_NAKATA("direction:\n");
 	mDirection.println();
 }
 
@@ -474,9 +474,9 @@ void NPlane::transform(NTransform3D& transform)
  */
 void NPlane::println()
 {
-	PRINT("normal:\n");
+	PRINT_NAKATA("normal:\n");
 	mNormal.println();
-	PRINT("difference:%f\n", mDifference);
+	PRINT_NAKATA("difference:%f\n", mDifference);
 }
 
 /*
@@ -597,6 +597,6 @@ void NSegment::makeProjectionY()
 void NSegment::println()
 {
 	NLine::println();
-	PRINT("edge:\n");
+	PRINT_NAKATA("edge:\n");
 	mEdge.println();
 }

@@ -28,7 +28,7 @@ bool TaiVisibleTargetAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiVisibleTargetAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiVisibleTargetAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 	if (!teki.visibleCreature(*target)) {
@@ -47,7 +47,7 @@ bool TaiContactTargetAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiContactTargetAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiContactTargetAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 	if (!teki.contactCreature(*target)) {
@@ -66,7 +66,7 @@ bool TaiSeparateTargetAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiSeparateTargetAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiSeparateTargetAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 	if (!teki.separateCreature(*target)) {
@@ -85,7 +85,7 @@ bool TaiTargetLostAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("TaiTargetLostAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("TaiTargetLostAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 	if (!teki.visibleCreature(*target)) {

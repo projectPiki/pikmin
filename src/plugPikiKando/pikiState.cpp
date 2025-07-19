@@ -889,7 +889,7 @@ PikiSwallowedState::PikiSwallowedState()
  */
 void PikiSwallowedState::init(Piki* piki)
 {
-	PRINT("swallowed init **** \n");
+	PRINT_KANDO("swallowed init **** \n");
 	piki->stopAI();
 }
 
@@ -1039,7 +1039,7 @@ void PikiFlickState::exec(Piki* piki)
 {
 	PaniAnimator& upper = piki->mPikiAnimMgr.getUpperAnimator();
 	if (upper.getCurrentMotionIndex() == PIKIANIM_Kuttuku) {
-		PRINT("piki %x motion KENKA!\n", piki);
+		PRINT_KANDO("piki %x motion KENKA!\n", piki);
 	}
 
 	if (mState == 0) {
@@ -1144,7 +1144,7 @@ void PikiFlickState::cleanup(Piki* piki)
 		return;
 	}
 
-	PRINT("piki%x FLICK ** aiAction->curr = %d is not resumable!\n", piki, piki->mActiveAction->mCurrActionIdx);
+	PRINT_KANDO("piki%x FLICK ** aiAction->curr = %d is not resumable!\n", piki, piki->mActiveAction->mCurrActionIdx);
 	piki->mActiveAction->abandon(nullptr);
 }
 
@@ -1194,7 +1194,7 @@ void PikiFlownState::exec(Piki* piki)
 {
 	PaniAnimator& upper = piki->mPikiAnimMgr.getUpperAnimator();
 	if (upper.getCurrentMotionIndex() == PIKIANIM_Kuttuku) {
-		PRINT("piki %x motion KENKA!\n", piki);
+		PRINT_KANDO("piki %x motion KENKA!\n", piki);
 	}
 
 	if (mState == 0) {
@@ -1303,7 +1303,7 @@ PikiFallMeckState::PikiFallMeckState()
  */
 void PikiFallMeckState::init(Piki* piki)
 {
-	PRINT("--- fall start\n");
+	PRINT_KANDO("--- fall start\n");
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Fall, piki), PaniMotionInfo(PIKIANIM_Fall));
 	piki->endStickMouth();
 	piki->mSwallowMouthPart = nullptr;
@@ -1396,7 +1396,7 @@ PikiFallState::PikiFallState()
  */
 void PikiFallState::init(Piki* piki)
 {
-	PRINT("--- fall start\n");
+	PRINT_KANDO("--- fall start\n");
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Fall, piki), PaniMotionInfo(PIKIANIM_Fall));
 	mState = 0;
 }
@@ -1417,7 +1417,7 @@ void PikiFallState::exec(Piki* piki)
  */
 void PikiFallState::procBounceMsg(Piki* piki, MsgBounce*)
 {
-	PRINT("fall : got bounce\n");
+	PRINT_KANDO("fall : got bounce\n");
 	mState = 1;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_JKoke, piki), PaniMotionInfo(PIKIANIM_JKoke));
 }
@@ -1482,7 +1482,7 @@ void PikiCliffState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_LSuberu, piki), PaniMotionInfo(PIKIANIM_LSuberu));
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mState = 0;
-	PRINT("%x cliff start :: %s\n", piki, mCliffHangType ? "BURAN" : "OTIKAKE"); // 'hang' and 'fall' (i think)
+	PRINT_KANDO("%x cliff start :: %s\n", piki, mCliffHangType ? "BURAN" : "OTIKAKE"); // 'hang' and 'fall' (i think)
 	mInitialFaceDir = piki->mFaceDirection;
 }
 
@@ -1494,7 +1494,7 @@ void PikiCliffState::init(Piki* piki)
 void PikiCliffState::exec(Piki* piki)
 {
 	if (!piki->mGroundTriangle) {
-		PRINT("piki %x: no floor !\n", piki);
+		PRINT_KANDO("piki %x: no floor !\n", piki);
 		transit(piki, PIKISTATE_Fall);
 	}
 }
@@ -1540,7 +1540,7 @@ bool PikiCliffState::nearEnough(Piki* piki)
 			return true;
 		}
 
-		PRINT("currY = %.1f botY = %.1f\n", currY, botY);
+		PRINT_KANDO("currY = %.1f botY = %.1f\n", currY, botY);
 	}
 
 	return false;
@@ -1563,22 +1563,22 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 
 			mState       = 1;
 			mLoopCounter = int((2.0f * gsys->getRand(1.0f))) + 1;
-			PRINT("otikake motion start\n");
+			PRINT_KANDO("otikake motion start\n");
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Otikake, piki), PaniMotionInfo(PIKIANIM_Otikake));
 			break;
 
 		case 3:
 			if (!piki->mGroundTriangle) {
-				PRINT("piki fall (otiru) %x\n", piki);
+				PRINT_KANDO("piki fall (otiru) %x\n", piki);
 				transit(piki, PIKISTATE_Fall);
 				return;
 			}
-			PRINT("otiru escaped\n");
+			PRINT_KANDO("otiru escaped\n");
 			transit(piki, PIKISTATE_Normal);
 			break;
 
 		case 1:
-			PRINT("goto normal !?\n");
+			PRINT_KANDO("goto normal !?\n");
 			transit(piki, PIKISTATE_Normal);
 			break;
 		}
@@ -1598,33 +1598,34 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 					Plane* plane = piki->getNearestPlane(piki->mGroundTriangle);
 					if (plane) {
 						f32 dist = plane->dist(piki->mPosition);
-						PRINT("dist is %.1f ( radius=%f : centresize=%f\n", dist, piki->mCollisionRadius, piki->getCentreSize());
+						PRINT_KANDO("dist is %.1f ( radius=%f : centresize=%f\n", dist, piki->mCollisionRadius, piki->getCentreSize());
 						if (dist > -0.2f && dist < 3.0f) {
-							PRINT("piki%x : ####### start buran motion :: floor = %s\n", piki, piki->mGroundTriangle ? "on floor" : "air");
+							PRINT_KANDO("piki%x : ####### start buran motion :: floor = %s\n", piki,
+							            piki->mGroundTriangle ? "on floor" : "air");
 							mState       = 2;
 							mLoopCounter = int((2.0f * gsys->getRand(1.0f))) + 2;
 							break;
 						}
-						PRINT("buran is not executable : dist is too far\n");
+						PRINT_KANDO("buran is not executable : dist is too far\n");
 						transit(piki, PIKISTATE_Normal);
 						break;
 					}
-					PRINT("buran is not executable : no plane\n");
+					PRINT_KANDO("buran is not executable : no plane\n");
 					transit(piki, PIKISTATE_Normal);
 					break;
 				}
-				PRINT("buran is not executable : no floorCollTri\n");
+				PRINT_KANDO("buran is not executable : no floorCollTri\n");
 				startFall(piki);
 				break;
 			}
 
 			if (piki->mGroundTriangle) {
-				PRINT("piki escaped from falling!\n");
+				PRINT_KANDO("piki escaped from falling!\n");
 				transit(piki, PIKISTATE_Normal);
 				break;
 			}
 
-			PRINT("fall start : \n");
+			PRINT_KANDO("fall start : \n");
 			startFall(piki);
 			break;
 
@@ -1635,7 +1636,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 			}
 
 			piki->mPosition = piki->getCentre();
-			PRINT("piki %x : do fall\n", piki);
+			PRINT_KANDO("piki %x : do fall\n", piki);
 			transit(piki, PIKISTATE_Fall);
 			break;
 		}
@@ -1650,7 +1651,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
  */
 void PikiCliffState::cleanup(Piki* piki)
 {
-	PRINT("cliff cleanup\n");
+	PRINT_KANDO("cliff cleanup\n");
 }
 
 /*
@@ -1940,8 +1941,8 @@ void PikiFlyingState::restartEffect()
  */
 void PikiFlyingState::init(Piki* piki)
 {
-	PRINT("flying state init\n");
-	PRINT("piki is %s\n", piki->isHolding() ? "holding" : "not holding");
+	PRINT_KANDO("flying state init\n");
+	PRINT_KANDO("piki is %s\n", piki->isHolding() ? "holding" : "not holding");
 	piki->mMotionSpeed = 30.0f;
 	piki->startMotion(PaniMotionInfo(PIKIANIM_RollJmp), PaniMotionInfo(PIKIANIM_RollJmp));
 	piki->stopAI();
@@ -2143,38 +2144,39 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 
 	if (colliderType == OBJTYPE_Teki && collider->isOrganic()) {
 		piki->mActiveAction->abandon(nullptr);
-		PRINT("FLYING .. collide\n");
+		PRINT_KANDO("FLYING .. collide\n");
 		if (msg->mEvent.mColliderPart->isPlatformType()) {
 			if (msg->mEvent.mColliderPart->isStickable()) {
-				PRINT("flying ... stick to platform::%s(code %s)\n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID,
-				      msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
+				PRINT_KANDO("flying ... stick to platform::%s(code %s)\n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID,
+				            msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
 				piki->startStick(collider, msg->mEvent.mColliderPart);
 				SeSystem::playPlayerSe(SE_PIKI_ATTACHENEMY);
 			} else if (msg->mEvent.mColliderPart->isClimbable()) {
-				PRINT("flying ... stick to platform::%s(code %s)\n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID,
-				      msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
+				PRINT_KANDO("flying ... stick to platform::%s(code %s)\n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID,
+				            msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
 				piki->startStick(collider, msg->mEvent.mColliderPart);
 				SeSystem::playPlayerSe(SE_PIKI_ATTACHENEMY);
 			}
 		} else if ((msg->mEvent.mColliderPart->isCollisionType() || msg->mEvent.mColliderPart->isTubeType())
 		           && msg->mEvent.mColliderPart->isStickable()) {
-			PRINT("flying ... stick to sphere\n");
+			PRINT_KANDO("flying ... stick to sphere\n");
 			piki->startStickObject(collider, msg->mEvent.mColliderPart, -1, 0.0f);
 			SeSystem::playPlayerSe(SE_PIKI_ATTACHENEMY);
 		}
 
 		transit(piki, PIKISTATE_Normal);
-		PRINT("++++++++++++++++++++++++++++++++\n");
-		PRINT(" _stickPart = %x : %s\n", piki->mStickPart, piki->mStickPart ? piki->mStickPart->mCollInfo->mId.mStringID : "nothing!");
-		PRINT(" _stickPart = %x\n", piki->mStickPart);
+		PRINT_KANDO("++++++++++++++++++++++++++++++++\n");
+		PRINT_KANDO(" _stickPart = %x : %s\n", piki->mStickPart,
+		            piki->mStickPart ? piki->mStickPart->mCollInfo->mId.mStringID : "nothing!");
+		PRINT_KANDO(" _stickPart = %x\n", piki->mStickPart);
 		piki->mActiveAction->mCurrActionIdx = PikiAction::Attack;
-		PRINT("----------------\n");
+		PRINT_KANDO("----------------\n");
 		piki->mActiveAction->mChildActions[PikiAction::Attack].initialise(collider);
-		PRINT("----------------\n");
+		PRINT_KANDO("----------------\n");
 		piki->mMode = PikiMode::AttackMode;
-		PRINT(" _stickPart = %x\n", piki->mStickPart);
-		PRINT("(%x) stick OBJECT attack start ? ########\n", piki);
-		PRINT(" _stickPart = %x\n", piki->mStickPart); // this is excessive.
+		PRINT_KANDO(" _stickPart = %x\n", piki->mStickPart);
+		PRINT_KANDO("(%x) stick OBJECT attack start ? ########\n", piki);
+		PRINT_KANDO(" _stickPart = %x\n", piki->mStickPart); // this is excessive.
 		return;
 	}
 
@@ -2194,7 +2196,7 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 
 	if (collider->isSluice()) {
-		PRINT("got here\n");
+		PRINT_KANDO("got here\n");
 		piki->mMode                         = PikiMode::BreakwallMode;
 		piki->mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 		piki->mActiveAction->mChildActions[PikiAction::BreakWall].initialise(collider);
@@ -2211,7 +2213,7 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 
 	if (colliderType != OBJTYPE_Navi) {
-		PRINT("collide restart!!\n");
+		PRINT_KANDO("collide restart!!\n");
 		piki->restartAI();
 		transit(piki, PIKISTATE_Normal);
 	}
@@ -3130,7 +3132,7 @@ void PikiPressedState::init(Piki* piki)
 	piki->mScale.set(scale, 0.01f, scale);
 	mStunTimer    = 1.5f;
 	mIsInvincible = true;
-	PRINT("pressed init !\n");
+	PRINT_KANDO("pressed init !\n");
 }
 
 /*

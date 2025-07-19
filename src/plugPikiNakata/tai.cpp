@@ -137,8 +137,8 @@ bool TaiState::act(Teki& teki)
 	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->act(teki) && action->hasNextState()) {
-			PRINT("transit:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", &teki, i, teki.mStateID, action->mNextState, teki.mReturnStateID,
-			      teki.mTekiType, teki.mTekiAnimator->getCurrentMotionIndex());
+			PRINT_NAKATA("transit:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", &teki, i, teki.mStateID, action->mNextState, teki.mReturnStateID,
+			             teki.mTekiType, teki.mTekiAnimator->getCurrentMotionIndex());
 
 			volatile int& stateID = teki.mStateID;
 			int startVal          = teki.mStateID;
@@ -166,8 +166,8 @@ bool TaiState::eventPerformed(TekiEvent& event)
 	for (int i = 0; i < mCount; i++) {
 		TaiAction* action = mActions[i];
 		if (action->actByEvent(event) && action->hasNextState()) {
-			PRINT("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", event.mTeki, i, event.mTeki->mStateID, action->mNextState,
-			      event.mTeki->mReturnStateID, event.mTeki->mTekiType, event.mTeki->mTekiAnimator->getCurrentMotionIndex());
+			PRINT_NAKATA("eventPerformed:%08x:i:%d:%d->%d(%d),t:%d,m:%d\n", event.mTeki, i, event.mTeki->mStateID, action->mNextState,
+			             event.mTeki->mReturnStateID, event.mTeki->mTekiType, event.mTeki->mTekiAnimator->getCurrentMotionIndex());
 
 			Teki* volatile teki = event.mTeki;
 			int startVal        = event.mTeki->mStateID;

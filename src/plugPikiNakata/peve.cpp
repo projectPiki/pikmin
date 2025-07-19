@@ -122,7 +122,7 @@ void PeveSerialEvent::update()
 {
 	PeveEvent* currEvent = getCurrentEvent();
 	if (currEvent->isFinished()) {
-		PRINT("isFinished:%d\n", mEventIdx);
+		PRINT_NAKATA("isFinished:%d\n", mEventIdx);
 		if (mEventIdx + 1 < getChildCount()) {
 			mEventIdx++;
 			PeveEvent* newEvent = getCurrentEvent();

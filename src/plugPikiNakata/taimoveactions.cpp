@@ -210,7 +210,7 @@ bool TaiClampMinVelocityYAction::act(Teki& teki)
 	NVector3f vel;
 	teki.mVelocityIO.output(vel);
 	if (vel.y < mMinVertSpeed) {
-		PRINT("TaiClampMinVelocityYAction::act:%08x:%f,%f\n", &teki, vel.y, mMinVertSpeed);
+		PRINT_NAKATA("TaiClampMinVelocityYAction::act:%08x:%f,%f\n", &teki, vel.y, mMinVertSpeed);
 		vel.y = mMinVertSpeed;
 		teki.mVelocityIO.input(vel);
 		return true;
@@ -245,7 +245,7 @@ bool TaiImpassableAction::act(Teki& teki)
 		return false;
 	}
 
-	PRINT("TaiImpassableAction::act:%08x:%f,%f,%f\n", &teki, distXZ, mMaxDistance, mTimerLength);
+	PRINT_NAKATA("TaiImpassableAction::act:%08x:%f,%f,%f\n", &teki, distXZ, mMaxDistance, mTimerLength);
 	return true;
 
 	STACK_PAD_VAR(2);
@@ -300,8 +300,8 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
 	}
 
 	if (teki.mRouteWayPointCount > teki.mRouteWayPointMax && teki.mCurrRouteWayPointID > teki.mRouteWayPointMax - 1) {
-		PRINT("TaiRandomWanderingRouteAction::act:o.routeWayPointCount>o.routeWayPointMax:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID,
-		      teki.mRouteWayPointCount);
+		PRINT_NAKATA("TaiRandomWanderingRouteAction::act:o.routeWayPointCount>o.routeWayPointMax:%08x,%d/%d\n", &teki,
+		             teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		makeTargetPosition(teki);
 		return false;
 	}
@@ -326,7 +326,7 @@ bool TaiRandomWanderingRouteAction::act(Teki& teki)
 	}
 
 	if (teki.moveToward(wp->mPosition, mTargetPosition)) {
-		PRINT("TaiRandomWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
+		PRINT_NAKATA("TaiRandomWanderingRouteAction::act:%08x,%d/%d\n", &teki, teki.mCurrRouteWayPointID, teki.mRouteWayPointCount);
 		teki.mCurrRouteWayPointID++;
 	}
 	return false;
@@ -359,7 +359,7 @@ bool TaiTracingAction::act(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiTracingAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTracingAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 
@@ -400,7 +400,7 @@ bool TaiDirectTurnAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiDirectTurnAction::start:target==null:%08x\n", &teki); // that's not what this function is, nakata.
+		PRINT_NAKATA("!TaiDirectTurnAction::start:target==null:%08x\n", &teki); // that's not what this function is, nakata.
 		return false;
 	}
 
@@ -422,13 +422,13 @@ bool TaiTurningAction::act(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiTurnAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTurnAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki);
 		return true;
 	}
 
@@ -455,13 +455,13 @@ bool TaiTurningAwayAction::act(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiTurningAwayAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTurningAwayAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT("!TaiTurningAwayAction::act:!condition.satisfy:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTurningAwayAction::act:!condition.satisfy:%08x\n", &teki);
 		return true;
 	}
 
@@ -489,13 +489,13 @@ bool TaiTraceTurningAction::act(Teki& teki)
 
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiTraceTurnAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTraceTurnAction::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT("!TaiTraceTurnAction2::act:%08x\n", &teki);
+		PRINT_NAKATA("!TaiTraceTurnAction2::act:%08x\n", &teki);
 		return true;
 	}
 
@@ -521,7 +521,7 @@ bool TaiOutOfTraceAngleAction::act(Teki& teki)
 {
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
-		PRINT("!TaiOutOfTraceAngleAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA("!TaiOutOfTraceAngleAction::act:target==null:%08x\n", &teki);
 		return false;
 	}
 

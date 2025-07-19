@@ -162,7 +162,7 @@ PcamCameraParameters::PcamCameraParameters()
 void PcamCameraParameters::read(RandomAccessStream& input)
 {
 	mVersion = input.readInt();
-	PRINT("PcamCameraParameters::read>%d\n", mVersion);
+	PRINT_NAKATA("PcamCameraParameters::read>%d\n", mVersion);
 	ParaMultiParameters* multiP = mParameters;
 	if (mVersion <= 6) {
 		multiP->mIntParams->read(input);
@@ -173,15 +173,15 @@ void PcamCameraParameters::read(RandomAccessStream& input)
 		multiP->read(input);
 	}
 
-	PRINT("PcamCameraParameters::read<\n");
+	PRINT_NAKATA("PcamCameraParameters::read<\n");
 }
 
 #if 0
 void PcamCameraParameters::write(RandomAccessStream& output)
 {
-	PRINT("PcamCameraParameters::write>\n");
+	PRINT_NAKATA("PcamCameraParameters::write>\n");
 	output.writeInt(7);
 	mParameters->write(output);
-	PRINT("PcamCameraParameters::write<\n");
+	PRINT_NAKATA("PcamCameraParameters::write<\n");
 }
 #endif

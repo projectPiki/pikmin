@@ -542,11 +542,11 @@ void SeContext::update()
  */
 bool SeContext::releaseEvent()
 {
-	PRINT("releaseEvent : %x : handle = %d\n", this, mEventHandle);
+	PRINT_KANDO("releaseEvent : %x : handle = %d\n", this, mEventHandle);
 
 	if (mEventHandle != -1) {
 		bool ret = seSystem->destroyEvent(this, mEventHandle);
-		PRINT("** destroyEvent %s\n", ret ? "succeeded" : "failed");
+		PRINT_KANDO("** destroyEvent %s\n", ret ? "succeeded" : "failed");
 		mEventHandle = -1;
 		return ret;
 	}

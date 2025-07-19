@@ -120,7 +120,7 @@ void PcamCameraManager::updateVibrationEvent()
 
 	PeveEvent* event = mVibrationEvents[mCurrEventIndex];
 	if (event->isFinished()) {
-		PRINT("updateVibrationEvent:event->isFinished:%08x\n", event);
+		PRINT_NAKATA("updateVibrationEvent:event->isFinished:%08x\n", event);
 		event->finish();
 		mCurrEventIndex = PCAMVIB_NULL;
 	} else {

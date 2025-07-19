@@ -264,9 +264,9 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 
 		if (mPushAnimationState == 0) {
 			mPushCount--;
-			PRINT("loopCnt = %d\n", mPushCount);
+			PRINT_KANDO("loopCnt = %d\n", mPushCount);
 			if (mPushCount <= 0) {
-				PRINT("osu count = 0: finish motion\n");
+				PRINT_KANDO("osu count = 0: finish motion\n");
 				mPiki->mPikiAnimMgr.finishMotion(this);
 			}
 		}
@@ -280,7 +280,7 @@ void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 
 		if (mState == STATE_Go) {
-			PRINT("restart motion !\n");
+			PRINT_KANDO("restart motion !\n");
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Osu, this), PaniMotionInfo(PIKIANIM_Osu));
 			mPushCount = int(5.0f * gsys->getRand(1.0f)) + 5;
 		}

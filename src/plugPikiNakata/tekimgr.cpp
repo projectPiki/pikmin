@@ -126,7 +126,7 @@ int TekiMgr::getTypeIndex(char* typeName)
 			return i;
 		}
 	}
-	PRINT("!getType:%s\n", typeName);
+	PRINT_NAKATA("!getType:%s\n", typeName);
 	return -1;
 }
 
@@ -137,7 +137,7 @@ int TekiMgr::getTypeIndex(char* typeName)
  */
 TekiMgr::TekiMgr()
 {
-	PRINT("TekiMgr>\n");
+	PRINT_NAKATA("TekiMgr>\n");
 	memStat->start("tekiMgr");
 	int heapStartSize = NSystem::getFreeHeap();
 	mTekiAnimMgr      = new TekiAnimationManager(this);
@@ -158,7 +158,7 @@ TekiMgr::TekiMgr()
 		if (hasType(i)) {
 			char buf[128];
 			sprintf(buf, "tekipara/%s.bin", typeNames[i]);
-			PRINT("TekiMgr:fileName:%d:%s\n", i, buf);
+			PRINT_NAKATA("TekiMgr:fileName:%d:%s\n", i, buf);
 			mTekiParams[i]->load("", buf, 1);
 		}
 	}
@@ -177,7 +177,7 @@ TekiMgr::TekiMgr()
 	int tekiHeapEndSize = NSystem::getFreeHeap();
 	PRINT("TekiMgr:manager uses %.2f[KB],%d tekis use %.2f[KB]\n", (heapStartSize - heapEndSize) / 1024.0f, 80,
 	      (tekisHeapStartSize - tekiHeapEndSize) / 1024.0f);
-	PRINT("TekiMgr<\n");
+	PRINT_NAKATA("TekiMgr<\n");
 }
 
 /*
@@ -189,7 +189,7 @@ void TekiMgr::startStage()
 {
 	char filename[128];
 	char buf[128];
-	PRINT("startStage>\n");
+	PRINT_NAKATA("startStage>\n");
 	TekiNakata::makeTekis(this);
 	TekiYamashita::makeTekis(this);
 
@@ -202,7 +202,7 @@ void TekiMgr::startStage()
 			sprintf(buf, "%s model data", typeNames[i]);
 			int tekiHeapStartSize = NSystem::getFreeHeap();
 			sprintf(filename, "tekis/%s/%s.mod", typeNames[i], typeNames[i]);
-			PRINT("startStage:fileName:%d:%s\n", i, filename);
+			PRINT_NAKATA("startStage:fileName:%d:%s\n", i, filename);
 			mTekiShapes[i]       = new TekiShapeObject(gameflow.loadShape(filename, true));
 			int modelHeapEndSize = NSystem::getFreeHeap();
 
@@ -210,7 +210,7 @@ void TekiMgr::startStage()
 			int animHeapStartSize = NSystem::getFreeHeap();
 			sprintf(filename, "tekikeys/%s.key", typeNames[i]);
 			mTekiShapes[i]->mAnimMgr->loadAnims(filename, nullptr);
-			PRINT("startStage:%d:%d\n", i, mTekiShapes[i]->mAnimMgr->countAnims());
+			PRINT_NAKATA("startStage:%d:%d\n", i, mTekiShapes[i]->mAnimMgr->countAnims());
 			memStat->end(typeNames[i]);
 			int tekiHeapEndSize = NSystem::getFreeHeap();
 			add(mTekiShapes[i]->mAnimMgr);
@@ -222,7 +222,7 @@ void TekiMgr::startStage()
 	memStat->end("teki data");
 	NSystem::getFreeHeap();
 	reset();
-	PRINT("startStage<\n");
+	PRINT_NAKATA("startStage<\n");
 }
 
 /*
@@ -284,7 +284,7 @@ Teki* TekiMgr::newTeki(int type)
  */
 void TekiMgr::reset()
 {
-	PRINT("reset>\n");
+	PRINT_NAKATA("reset>\n");
 	Iterator iter(this);
 	CI_LOOP(iter)
 	{
@@ -292,7 +292,7 @@ void TekiMgr::reset()
 		teki->reset();
 	}
 
-	PRINT("reset<\n");
+	PRINT_NAKATA("reset<\n");
 }
 
 /*

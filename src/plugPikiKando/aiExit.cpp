@@ -77,7 +77,7 @@ int ActExit::exec()
 
 	mPrevPosition = mPiki->mPosition;
 	if (mPiki->mRopePosRatio > 0.72f) {
-		PRINT("piki->ropePos = %f\n", mPiki->mRopePosRatio);
+		PRINT_KANDO("piki->ropePos = %f\n", mPiki->mRopePosRatio);
 		mPiki->mIsCallable = false;
 		f32 scale          = (1.0f - mPiki->mRopePosRatio) / (1.0f - 0.72f) * 1.0f;
 		if (scale < 0.0f) {

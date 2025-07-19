@@ -442,7 +442,7 @@ void TaiKinokoTurningOverAction::start(Teki& teki)
 bool TaiKinokoChargingSporesAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_1)) {
-		PRINT("TaiKinokoChargingSporesAction:act:%08x:ACTION_1:\n", &teki);
+		PRINT_NAKATA("TaiKinokoChargingSporesAction:act:%08x:ACTION_1:\n", &teki);
 		NVector3f effectPos(teki.getPosition());
 		effectMgr->create(EffectMgr::EFF_Kinoko_ChargeSpores, effectPos, nullptr, nullptr);
 		STACK_PAD_VAR(1);
@@ -468,10 +468,10 @@ bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 {
 	if (!teki.animationFinished()) {
 		if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
-			PRINT("TaiKinokoDischargingSporesAction:act:%08x:ACTION_0:\n", &teki);
+			PRINT_NAKATA("TaiKinokoDischargingSporesAction:act:%08x:ACTION_0:\n", &teki);
 			teki.flickUpper();
 		} else if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_2)) {
-			PRINT("TaiKinokoDischargingSporesAction:act:%08x:ACTION_2:\n", &teki);
+			PRINT_NAKATA("TaiKinokoDischargingSporesAction:act:%08x:ACTION_2:\n", &teki);
 			InteractSpore& spore = InteractSpore(&teki);
 			TekiAndCondition andCond(&TekiRecognitionCondition(&teki), &TekiDistanceCondition(&teki, teki.getAttackRange()));
 			teki.interactNaviPiki(spore, andCond);

@@ -237,7 +237,7 @@ int ActAttack::exec()
 		if (target) {
 			seMgr->leaveBattle();
 			init(target);
-			PRINT("... found new target!\n");
+			PRINT_KANDO("... found new target!\n");
 			return ACTOUT_Continue;
 		}
 
@@ -260,15 +260,15 @@ int ActAttack::exec()
 	}
 
 	if (!mPiki->isStickTo() && (mOther.getPtr()->isFlying() || !mOther.getPtr()->isVisible())) {
-		PRINT("target start flying\n");
+		PRINT_KANDO("target start flying\n");
 
 		Creature* target = findTarget();
 		if (target) {
 			init(target);
-			PRINT("... found new target!\n");
+			PRINT_KANDO("... found new target!\n");
 			return ACTOUT_Continue;
 		}
-		PRINT("TARGET LOST !!\n");
+		PRINT_KANDO("TARGET LOST !!\n");
 		startLost();
 		return ACTOUT_Continue;
 	}
@@ -277,14 +277,14 @@ int ActAttack::exec()
 	if (andRet != ACTOUT_Continue) {
 		if (mTargetIsPlayer) {
 			Creature* target = findTarget();
-			PRINT("piki attack : res is %s\n", (andRet == 2) ? "success" : (andRet == 1) ? "failed" : "not");
+			PRINT_KANDO("piki attack : res is %s\n", (andRet == 2) ? "success" : (andRet == 1) ? "failed" : "not");
 			if (target && andRet == ACTOUT_Success) {
 				seMgr->leaveBattle();
 				init(mPlayerObject);
 				return ACTOUT_Success;
 			}
 
-			PRINT("all targets are removed !\n");
+			PRINT_KANDO("all targets are removed !\n");
 			return ACTOUT_Success;
 		}
 
@@ -296,17 +296,17 @@ int ActAttack::exec()
 				return ACTOUT_Continue;
 			}
 
-			PRINT("genocide start ?\n"); // lol?
+			PRINT_KANDO("genocide start ?\n"); // lol?
 			target = findTarget();
 			if (target) {
 				seMgr->leaveBattle();
 				init(target);
-				PRINT("... found new target!\n");
+				PRINT_KANDO("... found new target!\n");
 				return ACTOUT_Continue;
 			}
 		}
 
-		PRINT("once is done : %x\n", mPiki);
+		PRINT_KANDO("once is done : %x\n", mPiki);
 		return ACTOUT_Success;
 	}
 
@@ -353,7 +353,7 @@ void ActJumpAttack::init(Creature* creature)
 	mState = 0;
 	_2C    = false;
 	if (mPiki->isStickTo()) {
-		PRINT("jump attack : piki sticks to %s\n", mPiki->mStickPart ? mPiki->mStickPart->mCollInfo->mId.mStringID : "?");
+		PRINT_KANDO("jump attack : piki sticks to %s\n", mPiki->mStickPart ? mPiki->mStickPart->mCollInfo->mId.mStringID : "?");
 		if (mPiki->mStickPart && mPiki->mStickPart->isClimbable()) {
 			mPiki->startClimb();
 			mState = 6;
@@ -454,7 +454,7 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 		return;
 	}
 
-	PRINT("JUMP STICK ###\n");
+	PRINT_KANDO("JUMP STICK ###\n");
 
 	if (msg->mEvent.mColliderPart == 0) {
 		PRINT("ざまし! ta no coll part\n"); // 'alarm clock! ta no coll part'
@@ -463,29 +463,29 @@ void ActJumpAttack::procCollideMsg(Piki* piki, MsgCollide* msg)
 
 	if (msg->mEvent.mColliderPart->isPlatformType()) {
 		if (msg->mEvent.mColliderPart->isStickable()) {
-			PRINT("stick to platform\n");
+			PRINT_KANDO("stick to platform\n");
 			piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
 		} else {
 			if (msg->mEvent.mColliderPart->isClimbable()) {
-				PRINT("start climb platform\n");
+				PRINT_KANDO("start climb platform\n");
 				piki->startStick(msg->mEvent.mCollider, msg->mEvent.mColliderPart);
 			} else {
-				PRINT("stickable nor climbable platform\n");
+				PRINT_KANDO("stickable nor climbable platform\n");
 				return;
 			}
 		}
 	} else {
 		if (msg->mEvent.mColliderPart->isCollisionType() || msg->mEvent.mColliderPart->isTubeType()) {
-			PRINT("try to stick %s : いみない \n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID); // 'no point'
 			if (msg->mEvent.mColliderPart->isStickable()) {
-				PRINT(" stick to 球 or チューブ\n"); // 'stick to ball or tube'
+				PRINT_KANDO(" stick to 球 or チューブ\n"); // 'stick to ball or tube'
 				piki->startStickObject(msg->mEvent.mCollider, msg->mEvent.mColliderPart, -1, 0.0f);
 			} else {
-				PRINT("try to stick to coll-sphere (%s:code %s): いまはくっっつかない\n", // 'it doesn't stick now'
-				      msg->mEvent.mColliderPart->mCollInfo->mId.mStringID, msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
+				PRINT_KANDO("try to stick to coll-sphere (%s:code %s): いまはくっっつかない\n", // 'it doesn't stick now'
+				            msg->mEvent.mColliderPart->mCollInfo->mId.mStringID, msg->mEvent.mColliderPart->mCollInfo->mCode.mStringID);
 				return;
 			}
 		} else {
+			PRINT_KANDO("try to stick %s : いみない \n", msg->mEvent.mColliderPart->mCollInfo->mId.mStringID); // 'no point'
 			return;
 		}
 	}
@@ -562,7 +562,7 @@ int ActJumpAttack::exec()
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
 			mState              = 1;
 			mPiki->mWantToStick = true;
-			PRINT("jump !\n");
+			PRINT_KANDO("jump !\n");
 			break;
 		}
 
@@ -589,7 +589,7 @@ int ActJumpAttack::exec()
 			mState = 2;
 		} else {
 			if (dist2D < getAttackSize() + mPiki->getCentreSize() && gsys->getRand(1.0f) > 0.7f) {
-				PRINT("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
+				PRINT_KANDO("jump adjust : dist2d = %.1f d = %.1f\n", dist2D, dist3D);
 				mState = 2;
 			}
 
@@ -720,7 +720,7 @@ int ActJumpAttack::exec()
 		}
 
 		if (!mPiki->isStickTo()) {
-			PRINT("jump attack : finish stick\n");
+			PRINT_KANDO("jump attack : finish stick\n");
 			mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 			mState = 0;
 			return ACTOUT_Continue;
@@ -800,7 +800,7 @@ void ActJumpAttack::doClimb()
 			Vector3f dir = part->mCentre - mPiki->mPosition;
 			f32 sep      = dir.length();
 			f32 dist     = sep - part->mRadius - mPiki->getCentreSize();
-			PRINT("  :: climb target distance = %.1f\n", dist);
+			PRINT_KANDO("  :: climb target distance = %.1f\n", dist);
 			if (dist < 5.0f) {
 				mState         = 5;
 				mIsCriticalHit = false;
@@ -814,7 +814,7 @@ void ActJumpAttack::doClimb()
 		}
 	}
 
-	PRINT("climbing ...\n");
+	PRINT_KANDO("climbing ...\n");
 	if (!mPiki->mClimbingTri) {
 		mState = 0;
 		mPiki->endClimb();
@@ -824,8 +824,8 @@ void ActJumpAttack::doClimb()
 	bool check = true;
 	for (int i = 0; i < 3; i++) {
 		if (mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition) < -2.0f * mPiki->getCentreSize()) {
-			PRINT("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition),
-			      -2.0f * mPiki->getCentreSize());
+			PRINT_KANDO("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition),
+			            -2.0f * mPiki->getCentreSize());
 			check = false;
 		}
 	}
@@ -833,7 +833,7 @@ void ActJumpAttack::doClimb()
 	if (!check) {
 		mPiki->endStick();
 		mState = 0;
-		PRINT("finish stick :: out of tri\n");
+		PRINT_KANDO("finish stick :: out of tri\n");
 		return;
 	}
 

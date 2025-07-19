@@ -566,7 +566,7 @@ void TaiOtimotiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
 void TaiOtimotiStartDroppingWaterAction::start(Teki& teki)
 {
 	int attr = teki.getPositionMapCode();
-	PRINT("TaiOtimotiStartDroppingWaterAction::start:%08x:mapCode:%d\n", &teki, attr);
+	PRINT_NAKATA("TaiOtimotiStartDroppingWaterAction::start:%08x:mapCode:%d\n", &teki, attr);
 	if (attr == ATTR_Water) {
 		teki.startParticleGenerator(0);
 	} else {
@@ -585,7 +585,7 @@ bool TaiOtimotiFlickAction::act(Teki& teki)
 	int flickCount = teki.getFlickDamageCount(pikiNum);
 
 	if (teki.mDamageCount >= f32(flickCount)) {
-		PRINT("TaiOtimotiFlickAction::act:%08x:%d,%d,%d\n", &teki, pikiNum, teki.mDamageCount, flickCount);
+		PRINT_NAKATA("TaiOtimotiFlickAction::act:%08x:%d,%d,%d\n", &teki, pikiNum, teki.mDamageCount, flickCount);
 		teki.mTargetPosition.input(teki.getPosition());
 		teki.setCreaturePointer(0, nullptr);
 		return true;
@@ -610,7 +610,7 @@ bool TaiOtimotiFailToJumpAction::act(Teki& teki)
 	linFunc.makeClampLinearFunction(teki.getParameterF(OTIMOTIPF_MissFuncMinCount), teki.getParameterF(OTIMOTIPF_MissFuncMinChance),
 	                                teki.getParameterF(OTIMOTIPF_MissFuncMaxCount), teki.getParameterF(OTIMOTIPF_MissFuncMaxChance));
 	f32 failChance = linFunc.getValue(f32(pikiNum));
-	PRINT("TaiOtimotiFailToJumpAction::act:%08x:%f,%d\n", &teki, failChance, pikiNum);
+	PRINT_NAKATA("TaiOtimotiFailToJumpAction::act:%08x:%f,%d\n", &teki, failChance, pikiNum);
 	if (NMathF::occurred(failChance)) {
 		return true;
 	}
@@ -734,12 +734,12 @@ bool TaiOtimotiAirWaitingAction::act(Teki& teki)
 	}
 
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
-		PRINT("TaiOtimotiAirWaiting::act:%08x:ACTION_0\n", &teki);
+		PRINT_NAKATA("TaiOtimotiAirWaiting::act:%08x:ACTION_0\n", &teki);
 		teki.stopParticleGenerator(0);
 		teki.stopParticleGenerator(1);
 
 	} else if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_LOOPEND)) {
-		PRINT("TaiOtimotiAirWaiting::act:%08x:LOOPEND\n", &teki);
+		PRINT_NAKATA("TaiOtimotiAirWaiting::act:%08x:LOOPEND\n", &teki);
 		return true;
 	}
 	return false;
@@ -780,7 +780,7 @@ bool TaiOtimotiDroppingAction::act(Teki& teki)
 bool TaiOtimotiDroppingAction::actByEvent(TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Ground) {
-		PRINT("!TaiOtimotiDroppingAction::actByEvent:EVENT_BOUNCED:%08x\n", event.mTeki);
+		PRINT_NAKATA("!TaiOtimotiDroppingAction::actByEvent:EVENT_BOUNCED:%08x\n", event.mTeki);
 		event.mTeki->finishFlying();
 		event.mTeki->clearTekiOption(BTeki::TEKI_OPTION_GRAVITATABLE);
 	}
@@ -895,7 +895,7 @@ bool TaiOtimotiAttackingAction::act(Teki& teki)
 	f32 unused = teki.mTekiAnimator->getCounter();
 
 	if (teki.mTekiAnimator->isFinished()) {
-		PRINT("!TaiOtimotiAttackingAction::act:%08x:FINISHED\n", &teki);
+		PRINT_NAKATA("!TaiOtimotiAttackingAction::act:%08x:FINISHED\n", &teki);
 		return true;
 	}
 
@@ -920,7 +920,7 @@ bool TaiOtimotiAttackingAction::actByEvent(TekiEvent&)
 void TaiOtimotiAttackingEffectAction::start(Teki& teki)
 {
 	int attr = teki.getPositionMapCode();
-	PRINT("TaiOtimotiAttackingEffectAction::start:%08x:mapCode:%d\n", &teki, attr);
+	PRINT_NAKATA("TaiOtimotiAttackingEffectAction::start:%08x:mapCode:%d\n", &teki, attr);
 	Vector3f pos(teki.getPosition());
 	pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 	if (attr == ATTR_Water) {

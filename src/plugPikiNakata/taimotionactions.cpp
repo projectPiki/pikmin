@@ -203,10 +203,10 @@ bool TaiStoppingMoveAction::act(Teki& teki)
 	int currMotionidx = teki.mTekiAnimator->getCurrentMotionIndex();
 	if (currMotionidx == mMotionIdx) {
 		if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_LOOPEND)) {
-			PRINT("TaiStoppingMoveAction::act:%08x:LOOPEND:%f,%f\n", &teki, teki.mAnimationSpeed, teki.mPreStopAnimationSpeed);
+			PRINT_NAKATA("TaiStoppingMoveAction::act:%08x:LOOPEND:%f,%f\n", &teki, teki.mAnimationSpeed, teki.mPreStopAnimationSpeed);
 			teki.startStoppingMove();
 		} else if (teki.animationFinished()) {
-			PRINT("TaiStoppingMoveAction::act:%08x:animationFinished\n", &teki);
+			PRINT_NAKATA("TaiStoppingMoveAction::act:%08x:animationFinished\n", &teki);
 			teki.finishStoppingMove();
 		}
 	}
