@@ -90,7 +90,7 @@ bool SlimeEffect::invoke(zen::particleGenerator* gen, zen::particleMdl* mdl)
 void SlimeEffect::kill()
 {
 	if (mEfxGen) {
-		effectMgr->mPtclMgr.killGenerator(mEfxGen, false);
+		effectMgr->kill(mEfxGen, false);
 		mEfxGen = nullptr;
 	}
 }
@@ -108,7 +108,7 @@ KEffect** UtEffectMgr::effects;
  */
 UtEffectMgr::UtEffectMgr()
 {
-	UtEffectMgr::effects = new KEffect*[28];
+	UtEffectMgr::effects = new KEffect*[KandoEffect::COUNT];
 	registerEffect(KandoEffect::Goal, new GoalEffect);
 	registerEffect(KandoEffect::NaviWhistle0, new NaviWhistle(naviMgr->getNavi(0)));
 	registerEffect(KandoEffect::NaviWhistle1, new NaviWhistle(naviMgr->getNavi(1))); // louie confirmed?
@@ -235,7 +235,7 @@ void PermanentEffect::updatePos(Vector3f& pos)
 void PermanentEffect::changeEffect(int effType)
 {
 	if (mPtclGen) {
-		effectMgr->mPtclMgr.killGenerator(mPtclGen, false);
+		effectMgr->kill(mPtclGen, false);
 	}
 	mPtclGen = effectMgr->create((EffectMgr::effTypeTable)effType, mPosition, nullptr, nullptr);
 	if (mPtclGen) {
@@ -275,7 +275,7 @@ void PermanentEffect::restart()
 void PermanentEffect::kill()
 {
 	if (mPtclGen) {
-		effectMgr->mPtclMgr.killGenerator(mPtclGen, false);
+		effectMgr->kill(mPtclGen, false);
 		mPtclGen = nullptr;
 	}
 }
@@ -340,7 +340,7 @@ void FreeLightEffect::setScale(f32 scale)
 void FreeLightEffect::kill()
 {
 	if (mEfx) {
-		effectMgr->mPtclMgr.killGenerator(mEfx, false);
+		effectMgr->kill(mEfx, false);
 		mEfx = nullptr;
 	}
 }
@@ -382,15 +382,15 @@ void RippleEffect::emit(EffectParm& parm)
 void RippleEffect::kill()
 {
 	if (mEfxB) {
-		effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+		effectMgr->kill(mEfxB, false);
 		mEfxB = nullptr;
 	}
 	if (mEfxC) {
-		effectMgr->mPtclMgr.killGenerator(mEfxC, false);
+		effectMgr->kill(mEfxC, false);
 		mEfxC = nullptr;
 	}
 	if (mEfxA) {
-		effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+		effectMgr->kill(mEfxA, false);
 		mEfxA = nullptr;
 	}
 }
@@ -488,11 +488,11 @@ void BurnEffect::emit(EffectParm& parm)
 void BurnEffect::kill()
 {
 	if (mEfxA) {
-		effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+		effectMgr->kill(mEfxA, false);
 		mEfxA = nullptr;
 	}
 	if (mEfxB) {
-		effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+		effectMgr->kill(mEfxB, false);
 		mEfxB = nullptr;
 	}
 }

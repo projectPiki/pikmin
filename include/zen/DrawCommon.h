@@ -13,31 +13,25 @@ namespace zen {
 
 /**
  * @brief TODO
- *
- * @note Might be a struct? I think it's a namespace.
  */
-namespace P2DPaneLibrary {
-void makeResident(P2DPane*);
-void setFamilyAlpha(P2DPane*, u8);
-void setAlpha(P2DPane*, u8);
-void setFamilyMirror(P2DPane*, P2DMirror);
-P2DPane* getParentPane(P2DPane*);
-void getWorldPos(P2DPane*, int*, int*);
-void changeParent(P2DPane*, P2DPane*);
+struct P2DPaneLibrary {
+	static void makeResident(P2DPane*);
+	static void setFamilyAlpha(P2DPane*, u8);
+	static void setAlpha(P2DPane*, u8);
+	static void setFamilyMirror(P2DPane*, P2DMirror);
+	static P2DPane* getParentPane(P2DPane*);
+	static void getWorldPos(P2DPane*, int*, int*);
+	static void changeParent(P2DPane*, P2DPane*);
 
-// unused/inlined:
-void setMirror(P2DPane*, P2DMirror);
-void printTag(P2DPane*);
-void printUseTexName(P2DPane*, IDelegate1<char*>*);
-void printUseTexName(char*, IDelegate1<char*>*);
+	// unused/inlined:
+	static void setMirror(P2DPane*, P2DMirror);
+	static void printTag(P2DPane*);
+	static void printUseTexName(P2DPane*, IDelegate1<char*>*);
+	static void printUseTexName(char*, IDelegate1<char*>*);
 
-// DLL inlines:
-inline int makeTag(char* str)
-{
-	return ((u8)str[0] << 24) | ((u8)str[1] << 16) | ((u8)str[2] << 8) | (u8)str[3];
-}
-
-}; // namespace P2DPaneLibrary
+	// DLL inlines:
+	static int makeTag(char* str) { return ((u8)str[0] << 24) | ((u8)str[1] << 16) | ((u8)str[2] << 8) | (u8)str[3]; }
+};
 
 /**
  * @brief TODO

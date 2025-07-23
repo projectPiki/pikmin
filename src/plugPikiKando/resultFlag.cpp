@@ -349,21 +349,22 @@ void ResultFlags::dump()
 			break;
 		}
 
-		// This all seems to be DLL exclusive
-		// char* strs[4];
-		// strs[3] = nullptr;
-		// int type = info[id].type();
-		// if (type < 0x191) {
-		//	if (type == 400) {
-		//		strs[3] = "TEK";
-		//	} else if (type == 0) {
-		//		strs[3] = "GEN";
-		//	} else if (type == 200) {
-		//		strs[3] = "SET";
-		//	}
-		//} else if (type == 600) {
-		//	strs[3] = "ETC";
-		//}
+#if 0 // This all seems to be DLL exclusive
+		char* strs[4];
+		strs[3]  = nullptr;
+		int type = info[id].type();
+		if (type < 0x191) {
+			if (type == 400) {
+				strs[3] = "TEK";
+			} else if (type == 0) {
+				strs[3] = "GEN";
+			} else if (type == 200) {
+				strs[3] = "SET";
+			}
+		} else if (type == 600) {
+			strs[3] = "ETC";
+		}
+#endif
 
 		if (prev != flagTable[i].type()) {
 			p    = 0;

@@ -79,7 +79,7 @@ struct WorkObjectMgr : public ObjectMgr {
 	// _00-_28 = ObjectMgr
 	WorkObjectNode mRootNode; // _28
 	Shape** mItemShapes;      // _40, array of 5 shapes
-	u8* mShouldThisShapeLoad; // _44, array of 5 bytes/bools
+	bool* mShouldThisShapeLoad; // _44, array of 5 bools
 };
 
 /**

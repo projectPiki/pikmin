@@ -164,9 +164,9 @@ struct SnakeProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mSnakeProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mSnakeProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -312,8 +312,6 @@ struct Snake : public Boss {
 	virtual void drawShape(Graphics&); // _120
 
 	void setBossType(bool);
-
-	inline SnakeProp* getSnakeProp() { return static_cast<SnakeProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss

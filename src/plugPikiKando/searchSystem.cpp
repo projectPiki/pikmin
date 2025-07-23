@@ -140,10 +140,10 @@ void SearchSystem::updateLoopOptimised()
 				}
 			}
 			f32 dist = sphereDist(piki, obj);
-			if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+			if (dist <= 300.0f && piki->mSearchBuffer.available()) {
 				piki->mSearchBuffer.insert(obj, dist);
 			}
-			if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+			if (dist <= 300.0f && obj->mSearchBuffer.available()) {
 				obj->mSearchBuffer.insert(piki, dist);
 			}
 		}
@@ -161,10 +161,10 @@ void SearchSystem::updateLoopOptimised()
 					}
 				}
 				f32 dist = sphereDist(piki, obj);
-				if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+				if (dist <= 300.0f && piki->mSearchBuffer.available()) {
 					piki->mSearchBuffer.insert(obj, dist);
 				}
-				if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+				if (dist <= 300.0f && obj->mSearchBuffer.available()) {
 					obj->mSearchBuffer.insert(piki, dist);
 				}
 			}
@@ -183,10 +183,10 @@ void SearchSystem::updateLoopOptimised()
 					}
 				}
 				f32 dist = sphereDist(piki, obj);
-				if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+				if (dist <= 300.0f && piki->mSearchBuffer.available()) {
 					piki->mSearchBuffer.insert(obj, dist);
 				}
-				if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+				if (dist <= 300.0f && obj->mSearchBuffer.available()) {
 					obj->mSearchBuffer.insert(piki, dist);
 				}
 			}
@@ -205,10 +205,10 @@ void SearchSystem::updateLoopOptimised()
 					}
 				}
 				f32 dist = sphereDist(piki, obj);
-				if (dist <= 300.0f && piki->mSearchBuffer.mDataList) {
+				if (dist <= 300.0f && piki->mSearchBuffer.available()) {
 					piki->mSearchBuffer.insert(obj, dist);
 				}
-				if (dist <= 300.0f && obj->mSearchBuffer.mDataList) {
+				if (dist <= 300.0f && obj->mSearchBuffer.available()) {
 					obj->mSearchBuffer.insert(piki, dist);
 				}
 			}
@@ -231,10 +231,10 @@ void SearchSystem::updateLoopOptimised()
 				}
 				f32 dist = sphereDist(piki, piki2);
 				if (dist <= 300.0f) {
-					if (piki->mSearchBuffer.mDataList) {
+					if (piki->mSearchBuffer.available()) {
 						piki->mSearchBuffer.insert(piki2, dist);
 					}
-					if (piki2->mSearchBuffer.mDataList) {
+					if (piki2->mSearchBuffer.available()) {
 						piki2->mSearchBuffer.insert(piki, dist);
 					}
 				}

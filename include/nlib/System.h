@@ -23,22 +23,19 @@ struct NHeap {
 	NArray<NHeap>* mHeapArray; // _04
 };
 
-namespace NSystem {
-extern ::System* system;
+/**
+ * @brief TODO
+ */
+struct NSystem {
+	static void initSystem(System*);
 
-void initSystem(::System*);
-int randomInt(int);
-u32 getFreeHeap();
+	static f32 getFrameTime() { return system->getFrameTime(); }
+	static u32 getFreeHeap();
 
-inline f32 getFrameTime()
-{
-	return system->getFrameTime();
-}
-inline f32 random()
-{
-	return system->getRand(1.0f);
-}
+	static int randomInt(int);
+	static f32 random() { return system->getRand(1.0f); }
 
-}; // namespace NSystem
+	static System* system;
+};
 
 #endif

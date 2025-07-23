@@ -189,10 +189,10 @@ char* WorkObjectMgr::getShapeName(int type)
 WorkObjectMgr::WorkObjectMgr()
 {
 	mItemShapes          = new Shape*[5];
-	mShouldThisShapeLoad = new u8[5];
+	mShouldThisShapeLoad = new bool[5];
 
 	for (int i = 0; i < 5; i++) {
-		mShouldThisShapeLoad[i] = 0;
+		mShouldThisShapeLoad[i] = false;
 	}
 }
 

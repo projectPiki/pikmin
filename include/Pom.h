@@ -60,9 +60,9 @@ struct PomProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mPomProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mPomProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -92,8 +92,6 @@ struct Pom : public Boss {
 	virtual void drawShape(Graphics&);          // _120
 
 	void setColor(int);
-
-	inline PomProp* getPomProp() { return static_cast<PomProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss

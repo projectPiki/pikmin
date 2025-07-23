@@ -28,7 +28,10 @@ ActPickItem::ActPickItem(Piki* piki)
     : AndAction(piki)
 {
 	setName("pick item");
-	setChildren(CHILD_COUNT, new ActGoto(piki), nullptr, new ActPick(piki), nullptr);
+	setChildren(CHILD_COUNT,                //
+	            new ActGoto(piki), nullptr, //
+	            new ActPick(piki), nullptr  //
+	);
 	mTargetItem.clear();
 }
 

@@ -216,9 +216,9 @@ struct TypingTextMgr {
 	}
 
 	// DLL inlines to do:
-	EnumPCTextStat check() { return (EnumPCTextStat)mState; };
+	EnumPCTextStat check() { return mState; };
 
-	int mState;                   // _00
+	EnumPCTextStat mState;        // _00
 	ogMsgCtrlTagMgr* mCtrlTagMgr; // _04
 	P2DTextBox* mTextBox;         // _08
 	char* mTextPtr;               // _0C

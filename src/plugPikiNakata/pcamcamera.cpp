@@ -10,6 +10,7 @@
 #include "SoundMgr.h"
 #include "nlib/Geometry3D.h"
 #include "nlib/System.h"
+#include "stl/limits.h"
 #include "sysNew.h"
 
 /*
@@ -432,7 +433,7 @@ void PcamCamera::makeWatchObjectViewpoint(NVector3f& p1, NVector3f& p2)
 
 		f32 invtan = 1.0f / NMathF::tan(NMathF::d2r(getFov() / 2.0f) * 0.7f);
 		f32 ratio  = invtan / getAspect();
-		f32 minVal = 2147483600.0f;
+		f32 minVal = f32(INT_MAX);
 		for (int i = 0; i < mCreatureArray->getSize(); i++) {
 			Creature* creature = mCreatureArray->get(i);
 			NVector3f vec3;

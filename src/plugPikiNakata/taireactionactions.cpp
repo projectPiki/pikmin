@@ -276,7 +276,7 @@ bool TaiTargetNearestCollisionAction::actByEvent(TekiEvent& event)
 bool TaiStickedAction::act(Teki& teki)
 {
 	Stickers stuckList(&teki);
-	int count = stuckList.getCount();
+	int count = stuckList.getNumStickers();
 	return count > 0;
 }
 

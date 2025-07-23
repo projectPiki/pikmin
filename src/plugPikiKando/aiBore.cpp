@@ -34,8 +34,12 @@ ActFreeSelect::ActFreeSelect(Piki* piki)
     : Action(piki, true)
 {
 	setName("freebore");
-	setChildren(CHILD_COUNT, new ActWatch(piki), nullptr, new ActBoreTalk(piki), nullptr, new ActBoreOneshot(piki), nullptr,
-	            new ActBoreRest(piki), nullptr);
+	setChildren(CHILD_COUNT,                       //
+	            new ActWatch(piki), nullptr,       //
+	            new ActBoreTalk(piki), nullptr,    //
+	            new ActBoreOneshot(piki), nullptr, //
+	            new ActBoreRest(piki), nullptr     //
+	);
 }
 
 /*
@@ -223,9 +227,13 @@ void ActFreeSelect::determine()
 ActBoreSelect::ActBoreSelect(Piki* piki)
     : Action(piki, true)
 {
-	mName = "bore";
-	setChildren(CHILD_COUNT, new ActWatch(piki), nullptr, new ActBoreTalk(piki), nullptr, new ActBoreOneshot(piki), nullptr,
-	            new ActBoreRest(piki), nullptr);
+	setName("bore");
+	setChildren(CHILD_COUNT,                       //
+	            new ActWatch(piki), nullptr,       //
+	            new ActBoreTalk(piki), nullptr,    //
+	            new ActBoreOneshot(piki), nullptr, //
+	            new ActBoreRest(piki), nullptr     //
+	);
 }
 
 /*

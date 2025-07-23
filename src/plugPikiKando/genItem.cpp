@@ -40,8 +40,8 @@ GenObjectItem::GenObjectItem()
     , mParameterD(this, 3, 3, 3, "p03", nullptr)
 {
 	mObjType = 1;
-	sprintf(mName1, " ");
-	sprintf(mName2, " ");
+	sprintf(mStageName, " ");
+	sprintf(mPrintName, " ");
 }
 
 /*
@@ -112,15 +112,15 @@ void GenObjectItem::doRead(RandomAccessStream& stream)
 
 	if (mVersion != 'v0.0') {
 		for (int i = 0; i < 32; i++) {
-			mName1[i] = stream.readByte();
+			mStageName[i] = stream.readByte();
 		}
 
 		for (int i = 0; i < 32; i++) {
-			mName2[i] = stream.readByte();
+			mPrintName[i] = stream.readByte();
 		}
 	} else {
-		sprintf(mName1, " ");
-		sprintf(mName2, " ");
+		sprintf(mStageName, " ");
+		sprintf(mPrintName, " ");
 	}
 }
 
@@ -139,11 +139,11 @@ void GenObjectItem::doWrite(RandomAccessStream& stream)
 	stream.writeString(ObjType::getName(mObjType));
 	if (getLatestVersion() != 'v0.0') {
 		for (int i = 0; i < 32; i++) {
-			stream.writeByte(mName1[i]);
+			stream.writeByte(mStageName[i]);
 		}
 
 		for (int i = 0; i < 32; i++) {
-			stream.writeByte(mName2[i]);
+			stream.writeByte(mPrintName[i]);
 		}
 	}
 }
@@ -235,8 +235,8 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			grass->setSizeAndNum(size, mParameterD());
 			break;
 		case OBJTYPE_Weeds:
-			GrassGen* weeds      = (GrassGen*)item;
-			weeds->mWorkingPikis = mParameterD();
+			WeedsGen* weeds    = (WeedsGen*)item;
+			weeds->mWeedsCount = mParameterD();
 			break;
 		}
 
@@ -257,8 +257,8 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 
 		if (mVersion != 'v0.0' && item->mObjType == OBJTYPE_Door) {
 			DoorItem* door              = (DoorItem*)item;
-			door->mDestinationStagePath = mName1;
-			door->mLabelText            = mName2;
+			door->mDestinationStagePath = mStageName;
+			door->mLabelText            = mPrintName;
 		}
 
 		if (item->mObjType == OBJTYPE_BombGen) {
@@ -295,8 +295,8 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 void GenObjectItem::doGenAge(AgeServer& server)
 {
 	if (getLatestVersion() != 'v0.0') {
-		server.NewEditor("stage name", mName1, 32);
-		server.NewEditor("print name", mName2, 32);
+		server.NewEditor("stage name", mStageName, 32);
+		server.NewEditor("print name", mPrintName, 32);
 	}
 
 	server.StartOptionBox("アイテム", &mObjType, 252); // item

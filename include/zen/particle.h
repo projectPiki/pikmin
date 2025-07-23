@@ -63,11 +63,11 @@ typedef void (particleGenerator::*RotAxisCallBack)(Mtx&, f32&, f32&);
  * @brief Flags for controlling the particle generator's overall state.
  */
 enum ParticleGeneratorControlFlags {
-	PTCLCTRL_Stop       = 0x1,  // The generator is running updates.
-	PTCLCTRL_Finished   = 0x2,  // The generator is being drawn.
-	PTCLCTRL_Active     = 0x4,  // The generator is paused.
-	PTCLCTRL_GenStopped = 0x8,  // The generator has finished all passes and is waiting for particles to die.
-	PTCLCTRL_Visible    = 0x10, // The generator has been explicitly told to stop emitting new particles.
+	PTCLCTRL_Stop       = 1 << 0, // The generator is running updates.
+	PTCLCTRL_Finished   = 1 << 1, // The generator is being drawn.
+	PTCLCTRL_Active     = 1 << 2, // The generator is paused.
+	PTCLCTRL_GenStopped = 1 << 3, // The generator has finished all passes and is waiting for particles to die.
+	PTCLCTRL_Visible    = 1 << 4, // The generator has been explicitly told to stop emitting new particles.
 };
 
 /**
@@ -725,8 +725,6 @@ struct PtclGenPack {
 	bool checkStop();
 	bool checkEmit();
 	bool checkActive();
-
-	inline particleGenerator** getGenList() { return mGeneratorList; }
 
 	u32 mLimit;                         // _00
 	particleGenerator** mGeneratorList; // _04

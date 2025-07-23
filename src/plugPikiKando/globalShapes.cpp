@@ -17,16 +17,14 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("globalShape");
 
-namespace GlobalShape {
+Shape* GlobalShape::arrowShape;
+Shape* GlobalShape::markerShape;
+Shape* GlobalShape::axisShape;
+Shape* GlobalShape::enShape;
+Shape* GlobalShape::markerShape2;
+Shape* GlobalShape::cursorShape;
 
-Shape* arrowShape;
-Shape* markerShape;
-Shape* axisShape;
-Shape* enShape;
-Shape* markerShape2;
-Shape* cursorShape;
-
-void exitCourse()
+void GlobalShape::exitCourse()
 {
 	arrowShape   = nullptr;
 	markerShape  = nullptr;
@@ -36,7 +34,7 @@ void exitCourse()
 	cursorShape  = nullptr;
 }
 
-void init()
+void GlobalShape::init()
 {
 	PRINT("* loading global shapes ...\n");
 #ifdef DEVELOP
@@ -61,4 +59,3 @@ void init()
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
 	PRINT("* done\n");
 }
-} // namespace GlobalShape

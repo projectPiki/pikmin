@@ -23,7 +23,7 @@ int Stream::readInt()
 u8 Stream::readByte()
 {
 	u8 c;
-	read(&c, sizeof(char));
+	read(&c, sizeof(u8));
 	return c;
 }
 

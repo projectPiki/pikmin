@@ -21,7 +21,7 @@ struct TextColorCallBack : public P2DPaneCallBack {
 	void setTargetColor(Colour& targetCharacterColour, Colour& targetGradientColour, f32 transitionDuration);
 
 	// Utility function to interpolate between two color component values based on given weights
-	u8 colorMerge(u8 c1, f32 t1, u8 c2, f32 t2) { return RoundOff(c1 * t1 + c2 * t2); }
+	u8 colorBlend(u8 c1, f32 t1, u8 c2, f32 t2) { return RoundOff(c1 * t1 + c2 * t2); }
 
 	// _00     = VTBL
 	P2DTextBox* mTextBox;     // _04

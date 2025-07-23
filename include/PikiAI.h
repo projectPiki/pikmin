@@ -34,9 +34,11 @@ enum ActionResults {
 	ACTOUT_Success  = 2,
 };
 
-namespace Reaction {
-extern char* info[9];
-} // namespace Reaction
+struct Reaction {
+	struct Info { }; // TODO: The ILK says this exists.
+
+	static char* info[9];
+};
 
 BEGIN_ENUM_TYPE(PikiAction)
 enum {
@@ -266,7 +268,7 @@ struct TopAction : public Action {
 	// unused/inlined:
 	void knowledgeCheck();
 
-	Action* getCurrAction() { return (mCurrActionIdx == -1) ? nullptr : mChildActions[mCurrActionIdx].mAction; }
+	Action* getCurrAction() { return (mCurrActionIdx == PikiAction::NOACTION) ? nullptr : mChildActions[mCurrActionIdx].mAction; }
 
 	void startAction(int actionID, Creature* target)
 	{
@@ -333,6 +335,16 @@ struct ActAdjust : public Action {
  * @note Size: 0x2C.
  */
 struct ActAttack : public AndAction, public PaniAnimKeyListener {
+
+	/**
+	 * @brief TODO
+	 */
+	enum ChildID {
+		CHILD_NULL       = -1,
+		CHILD_JumpAttack = 0,
+		CHILD_COUNT, // 1
+	};
+
 	ActAttack(Piki*);
 
 	virtual ~ActAttack() { }                             // _44
@@ -749,6 +761,8 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 	void setFormed();
 	void startBoredom();
 	void startTalk();
+
+	int getSlotID() { return mCPlateSlotID; }
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -2003,7 +2017,7 @@ struct ActWeed : public Action, private PaniAnimKeyListener {
 
 	ActWeed(Piki*);
 
-	// virtual ~ActWeed() { }                                  // _44
+	virtual ~ActWeed() { }                               // _44
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
@@ -2036,14 +2050,33 @@ struct AiTable {
 	 * @brief Completely stripped. Static member shows up stripped in map.
 	 */
 	struct Row {
+		Row();
+
+		void print();
+
 		static int numInputs;
 
 		// TODO: members
 	};
 
-	static AiTable* uniqueInstance;
+	struct Tables {
+		// TODO: This class shows up in the ILK.
+	};
+
+	struct Output {
+		// TODO: This class shows up in the ILK.
+	};
+
+	AiTable(struct AbsStates*);
+
+	void addRows(int, Tables*, int);
+	void addRow(int, ...); // __cdecl?
+	Output* find(int, struct AbsStates*);
 
 	static void init() { uniqueInstance = nullptr; }
+	static AiTable* create(struct AbsStates*); // __cdecl?
+
+	static AiTable* uniqueInstance;
 
 	// TODO: members
 };

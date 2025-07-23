@@ -87,7 +87,7 @@ struct ogScrFileSelectMgr {
 	/**
 	 * @brief Defines the return status of the file select manager's update function, indicating the next action for the game flow.
 	 */
-	enum FileSelectUpdateResult {
+	enum returnStatusFlag {
 		Inactive = -1,  // No action required, or initial state
 		Continue,       // Continue updating the file select screen
 		FileChosen,     // A file has been chosen (e.g., for loading/saving)
@@ -127,7 +127,7 @@ struct ogScrFileSelectMgr {
 	void OperateSelect(Controller* pController);
 	void KetteiEffectStart();
 	void TailEffectStart();
-	FileSelectUpdateResult update(Controller* pController, CardQuickInfo& outCardInfo);
+	returnStatusFlag update(Controller* pController, CardQuickInfo& outCardInfo);
 	void draw(Graphics& gfx);
 
 	void setOperateMode_Copy();
@@ -161,7 +161,7 @@ struct ogScrFileSelectMgr {
 	particleGenerator* mCursorMoveEffectOnyon;             // _14
 	particleGenerator* mCursorMoveEffectPikminGroup;       // _18
 	u8 _UNUSED1C[0x4];                                     // _1C, unknown
-	FileSelectUpdateResult mSelectState;                   // _20
+	returnStatusFlag mSelectState;                         // _20
 	FileOperateMode mOperation;                            // _24
 	bool mSaveMode;                                        // _28
 	CardQuickInfo mCardInfo[3];                            // _2C

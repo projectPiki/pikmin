@@ -24,7 +24,7 @@ PikiInfo::PikiInfo()
  * Address:	80119D08
  * Size:	000024
  */
-void PikiInfo::addFormationPiki(void)
+void PikiInfo::addFormationPiki()
 {
 	mFormationPikiCnt++;
 	if (_04 >= mFormationPikiCnt) {
@@ -40,7 +40,7 @@ void PikiInfo::addFormationPiki(void)
  * Size:	000010
  */
 
-void PikiInfo::subFormationPiki(void)
+void PikiInfo::subFormationPiki()
 {
 	BUMP_REGISTER(r4);
 	mFormationPikiCnt--;

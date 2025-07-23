@@ -27,7 +27,7 @@ DEFINE_PRINT("aiKinoko")
 ActKinoko::ActKinoko(Piki* piki)
     : Action(piki, true)
 {
-	mName = "kinoko";
+	setName("kinoko");
 	mTarget.clear();
 }
 

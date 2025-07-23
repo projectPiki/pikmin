@@ -30,14 +30,14 @@ struct ogScrDiaryMgr {
 	/**
 	 * @brief Status of the main diary screen manager.
 	 */
-	enum DiaryMgrStatus {
+	enum DiaryStatus {
 		Inactive = -1, // Manager is not active or initialized
 		Active   = 0,  // Manager is actively updating the current diary page
 	};
 
 	ogScrDiaryMgr();
 
-	DiaryMgrStatus update(Controller* pController);
+	DiaryStatus update(Controller* pController);
 	void draw(Graphics& gfx);
 	void start(s16 startScreenIndex, s16 day);
 	void typePage();
@@ -53,7 +53,7 @@ struct ogScrDiaryMgr {
 	void setScale(f32 scale) { mMesgMgr->setScale(scale); }
 	ogScrMessageMgr* getScrMsgMgr() { return mMesgMgr; }
 
-	DiaryMgrStatus mStatus;                  // _00
+	DiaryStatus mStatus;                     // _00
 	ogScrMessageMgr* mMesgMgr;               // _04
 	int mMessageMgrPosX;                     // _08
 	int mMessageMgrPosY;                     // _0C

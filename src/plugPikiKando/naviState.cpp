@@ -750,10 +750,10 @@ void NaviWalkState::exec(Navi* navi)
 		}
 		Piki* nearestPiki = nullptr;
 		f32 maxDist       = C_NAVI_PROP(navi)._1BC();
-		Iterator it(navi->mPlateMgr);
-		CI_LOOP(it)
+		Iterator plateIter(navi->mPlateMgr);
+		CI_LOOP(plateIter)
 		{
-			Piki* piki = (Piki*)*it;
+			Piki* piki = (Piki*)*plateIter;
 			if (!roughCull(piki, navi, maxDist)) {
 				f32 distance = qdist2(piki, navi);
 				if (distance < maxDist && piki->getState() == 0 && !piki->isHolding()) {
@@ -773,10 +773,10 @@ void NaviWalkState::exec(Navi* navi)
 			return;
 		}
 		if (KeyConfig::_instance->mThrowKey.mBind == KeyConfig::_instance->mAttackKey.mBind) {
-			Iterator it(tekiMgr);
-			CI_LOOP(it)
+			Iterator tekiIter(tekiMgr);
+			CI_LOOP(tekiIter)
 			{
-				Creature* teki = *it;
+				Creature* teki = *tekiIter;
 				if (!roughCull(teki, navi, teki->getCentreSize() + navi->getCentreSize() + 10.0f) && teki->isAlive() && teki->isVisible()
 				    && !teki->isFlying() && teki->isOrganic()) {
 					Vector3f diff = teki->mPosition - navi->mPosition;
@@ -2067,10 +2067,8 @@ void NaviThrowWaitState::init(Navi* navi)
 		navi->mMotionSpeed = 30.0f;
 		navi->startMotion(PaniMotionInfo(PIKIANIM_ThrowWait, navi), PaniMotionInfo(PIKIANIM_ThrowWait));
 		navi->enableMotionBlend();
-	} else {
-		if (_14) {
-			_14->mFSM->transit(_14, PIKISTATE_GoHang);
-		}
+	} else if (_14) {
+		_14->mFSM->transit(_14, PIKISTATE_GoHang);
 	}
 	_1C = false;
 	_18 = 0;

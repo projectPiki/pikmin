@@ -2,6 +2,7 @@
 #define _PIKIINF_H
 
 #include "CoreNode.h"
+#include "GlobalGameOptions.h"
 #include "ObjType.h"
 #include "Vector.h"
 #include "types.h"
@@ -175,10 +176,10 @@ struct PikiInfMgr {
 	// unused/inlined:
 	int getTotal();
 
-	int getColorTotal(int col) { return mPikiCounts[col][0] + mPikiCounts[col][1] + mPikiCounts[col][2]; }
+	int getColorTotal(int col) { return mPikiCounts[col][Leaf] + mPikiCounts[col][Bud] + mPikiCounts[col][Flower]; }
 
 	// TODO: members
-	int mPikiCounts[3][3]; // _00, indexed by color and happa maybe?
+	int mPikiCounts[PikiColorCount][PikiHappaCount]; // _00
 };
 
 /**

@@ -9,6 +9,7 @@
 #include "jaudio/piki_player.h"
 #include "jaudio/pikiinter.h"
 #include "jaudio/verysimple.h"
+#include "math.h"
 #include "sysNew.h"
 #include "timers.h"
 
@@ -652,14 +653,13 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
 	} else {
 		// we have too many sound events happening, filter out the farthest one away.
 		int farthestEventIdx = -1;
-		f32 distance         = soundOffset->x * soundOffset->x + soundOffset->y * soundOffset->y + soundOffset->z * soundOffset->z;
+		f32 distance         = SQUARE(soundOffset->x) + SQUARE(soundOffset->y) + SQUARE(soundOffset->z);
 		for (int i = 0; i < mMaxEventCount; i++) {
 			SeContext* ctx = mEvents[i].mContext;
 			if (ctx) {
 				// active sound effect, check how far away it is
-				f32 camDist = ctx->mSourceListenerOffset.x * ctx->mSourceListenerOffset.x
-				            + ctx->mSourceListenerOffset.y * ctx->mSourceListenerOffset.y
-				            + ctx->mSourceListenerOffset.z * ctx->mSourceListenerOffset.z;
+				f32 camDist
+				    = SQUARE(ctx->mSourceListenerOffset.x) + SQUARE(ctx->mSourceListenerOffset.y) + SQUARE(ctx->mSourceListenerOffset.z);
 				if (camDist > distance) {
 					// new farthest sound effect, track the index
 					distance         = camDist;

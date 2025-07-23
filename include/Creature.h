@@ -316,7 +316,6 @@ struct Creature : public RefCountable, public EventTalker {
 
 	/*
 	    DLL inlines to assign/make:
-	    bool insideView();
 
 	    f32 calcDistance(Creature&);
 

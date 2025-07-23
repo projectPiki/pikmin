@@ -119,8 +119,9 @@ void P2DTextBox::drawSelf(int param1, int param2, Matrix4f* mtx)
 	GXLoadPosMtxImm(worldmat.mMtx, 0);
 
 	print.locate(param1, param2);
-	print.printReturn(mText, getWidth(), getHeight(), mAlignmentH, mAlignmentV, mOffsetX, mOffsetY);
+	// The P2DTextBox `getWidth` and `getHeight` inlines would make sense here, but Yamashita disagrees.
+	print.printReturn(mText, mBounds.getWidth(), mBounds.getHeight(), mAlignmentH, mAlignmentV, mOffsetX, mOffsetY);
 
-	mCursorX = zen::RoundOff(print.mCursorX);
-	mCursorY = zen::RoundOff(print.mCursorY);
+	mCursorX = zen::RoundOff(print.getCursorH());
+	mCursorY = zen::RoundOff(print.getCursorV());
 }

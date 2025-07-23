@@ -39,9 +39,9 @@ struct CoreNucleusProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mCoreNucleusProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mCoreNucleusProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -69,8 +69,6 @@ struct CoreNucleus : public Boss {
 	virtual void doKill();                      // _10C
 	virtual void exitCourse();                  // _110
 	virtual void drawShape(Graphics&);          // _120
-
-	inline CoreNucleusProp* getCoreNucleusProp() { return static_cast<CoreNucleusProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss
@@ -118,8 +116,6 @@ struct CoreNucleusAi : public PaniAnimKeyListener {
 	void damageState();
 	void followState();
 	void hitState();
-
-	inline void setCore(CoreNucleus* core) { mCore = core; }
 
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener

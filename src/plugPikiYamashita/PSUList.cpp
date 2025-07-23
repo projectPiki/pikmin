@@ -160,7 +160,7 @@ bool PSUPtrList::remove(PSUPtrLink* link)
  * Address:	........
  * Size:	000088
  */
-void PSUPtrList::getNthLink(u32) const
+PSUPtrLink* PSUPtrList::getNthLink(u32) const
 {
 	// UNUSED FUNCTION
 }

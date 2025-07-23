@@ -2064,7 +2064,7 @@ void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
 	if (state != PIKISTATE_Pressed && state != PIKISTATE_Dead && state != PIKISTATE_Dying) {
 		if (object && object->mObjType == OBJTYPE_WorkObject) {
 			Action* action = mActiveAction->getCurrAction();
-			if (action && static_cast<ActCrowd*>(action)->mState == 1) {
+			if (action && static_cast<ActCrowd*>(action)->mState == ActCrowd::STATE_Formed) {
 				WorkObject* workObj = static_cast<WorkObject*>(object);
 				if (workObj->isBridge()) {
 					Bridge* bridge = static_cast<Bridge*>(workObj);
@@ -2115,7 +2115,7 @@ void Piki::collisionCallback(CollEvent& event)
 			bool crowdCheck = false;
 			if (mMode == PikiMode::FormationMode) {
 				ActCrowd* action = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-				if (action && action->mState != 1) {
+				if (action && action->mState != ActCrowd::STATE_Formed) {
 					crowdCheck = true;
 				}
 			}
@@ -2162,7 +2162,7 @@ void Piki::collisionCallback(CollEvent& event)
 	if (AIConstant::_instance->mConstants.mDoCStickAttack() && (collider->mObjType == OBJTYPE_Teki || collider->isBoss())
 	    && collider->isOrganic() && mMode == PikiMode::FormationMode && getState() != PIKISTATE_Pressed) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (crowd && crowd->mState == 1) {
+		if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::Attack;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -2174,7 +2174,7 @@ void Piki::collisionCallback(CollEvent& event)
 	if (!isKinoko() && collider->mObjType == OBJTYPE_Piki && mMode == PikiMode::FormationMode && getState() != PIKISTATE_Pressed
 	    && static_cast<Piki*>(collider)->isTeki(this)) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (crowd && crowd->mState == 1) {
+		if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::Attack;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -2185,7 +2185,7 @@ void Piki::collisionCallback(CollEvent& event)
 
 	if (distCheck && collider->isSluice() && mMode == PikiMode::FormationMode && collider->isAlive()) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (collPart->getID().match('gate') && crowd && crowd->mState == 1) {
+		if (collPart->getID().match('gate') && crowd && crowd->mState == ActCrowd::STATE_Formed) {
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -2200,7 +2200,7 @@ void Piki::collisionCallback(CollEvent& event)
 			HinderRock* rock = static_cast<HinderRock*>(obj);
 			if (!rock->isFinished()) {
 				ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-				if (crowd && crowd->mState == 1) {
+				if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 					mActiveAction->abandon(nullptr);
 					mActiveAction->mCurrActionIdx = PikiAction::Push;
 					mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -2215,7 +2215,7 @@ void Piki::collisionCallback(CollEvent& event)
 		Pellet* pellet = static_cast<Pellet*>(collider);
 		if (pellet->isAlive() && pellet->getMinFreeSlotIndex() != -1) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-			if (crowd && crowd->mState == 1) {
+			if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Transport;
 				mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].initialise(collider);
@@ -2245,7 +2245,7 @@ void Piki::collisionCallback(CollEvent& event)
 		GrassGen* grass = static_cast<GrassGen*>(collider);
 		if (grass->workable()) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-			if (crowd && crowd->mState == 1) {
+			if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 				seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Weed;
@@ -2258,7 +2258,7 @@ void Piki::collisionCallback(CollEvent& event)
 
 	if (distCheck && collider->isAlive() && collider->mObjType == OBJTYPE_BoBase && mMode == PikiMode::FormationMode && !isHolding()) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-		if (crowd && crowd->mState == 1) {
+		if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 			seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::BoMake;
@@ -2273,7 +2273,7 @@ void Piki::collisionCallback(CollEvent& event)
 		RockGen* pebble = static_cast<RockGen*>(collider);
 		if (pebble->workable()) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
-			if (crowd && crowd->mState == 1) {
+			if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
 				seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Stone;
@@ -3047,7 +3047,7 @@ void Piki::dump()
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
 		// why not use the inline to get it, idk
-		if (mActiveAction->mCurrActionIdx != -1) {
+		if (mActiveAction->mCurrActionIdx != PikiAction::NOACTION) {
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].mAction->dump();
 		}
 
@@ -3095,7 +3095,7 @@ void Piki::dump()
 		PRINT(" wantToStick = %s\n", mWantToStick ? "true" : "false");
 
 		// why not use the inline to get it, idk
-		if (mActiveAction->mCurrActionIdx != -1) {
+		if (mActiveAction->mCurrActionIdx != PikiAction::NOACTION) {
 			mActiveAction->mChildActions[mActiveAction->mCurrActionIdx].mAction->dump();
 		}
 	}

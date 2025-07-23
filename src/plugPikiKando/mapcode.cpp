@@ -13,15 +13,20 @@ int MapCode::getAttribute(CollTriInfo* triInfo)
 	return triInfo->mMapCode >> 29;
 };
 
+// I'm not sure how this was originally coded, but when this array was stripped I think it bloated the .sdata2 of this TU.
+static char* mapcodeNames[] = {
+	"solid", "rock", "grass", "wood", "mud", "water", "hole",
+};
+
 /*
  * --INFO--
  * Address:	........
  * Size:	000018
  */
-char* MapCode::getAttributeName(int)
+char* MapCode::getAttributeName(int num)
 {
-	// UNUSED FUNCTION
-	return "UNUSED";
+	// UNUSED FUNCTION (matching by size)
+	return mapcodeNames[num];
 };
 
 /*
@@ -33,9 +38,8 @@ int MapCode::getSlipCode(CollTriInfo* triInfo)
 {
 	if (triInfo) {
 		return triInfo->mMapCode >> 27 & 3;
-	} else {
-		return 0;
 	}
+	return 0;
 };
 
 /*
@@ -45,8 +49,14 @@ int MapCode::getSlipCode(CollTriInfo* triInfo)
  */
 bool MapCode::isBald(CollTriInfo* triInfo)
 {
-	return (triInfo) ? (triInfo->mTriangle.mNormal.y < sinf(45 * PI / 180)) ? true
-	                 : ((triInfo->mMapCode >> 25 & 1) != 0)                 ? false
-	                                                                        : true
-	                 : true;
+	if (triInfo) {
+		if (triInfo->mTriangle.mNormal.y < sinf(45 * PI / 180)) {
+			return true;
+		}
+		if (triInfo->mMapCode >> 25 & 1) {
+			return false;
+		}
+		return true;
+	}
+	return true;
 }

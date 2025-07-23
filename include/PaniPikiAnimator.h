@@ -144,12 +144,7 @@ struct PaniPikiAnimMgr {
 	// unused/inlined:
 	static PaniMotionTable* getMotionTable();
 
-	// these are fake according to the DLL
-	inline bool isFinished() { return mUpperAnimator.isFinished(); }
-	inline f32 getAnimSpeed() { return mAnimSpeed; }
-	inline void setAnimSpeed(f32 speed) { mAnimSpeed = speed; }
-
-	// Names taken from linker file
+	// Names taken from the ILK
 	PaniPikiAnimator& getUpperAnimator() { return mUpperAnimator; }
 	PaniPikiAnimator& getLowerAnimator() { return mLowerAnimator; }
 

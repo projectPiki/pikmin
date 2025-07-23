@@ -129,8 +129,10 @@ void Creature::moveNew(f32 deltaTime)
 			for (int i = 0; i < 20; i++) {
 				PRINT("++++ PELLET (%s) FALL !!!!!!!\n", pellet->mConfig->mModelId.mStringID);
 			}
+#if 0
 			// not used any further in the DLL either.
-			// pellet->isUfoParts();
+			pellet->isUfoParts();
+#endif
 
 			pellet->mPosition.y = mapMgr->getMinY(pellet->mPosition.x, pellet->mPosition.z, true) + 30.0f;
 

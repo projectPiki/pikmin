@@ -28,8 +28,8 @@ zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
 	mMessageMgr = new ogScrMessageMgr("screen/blo/tu_base.blo");
 	mMessageMgr->MakeAndSetPageInfo(bloFiles_Tutorial);
-	mMessageMgr->mAlwaysShowNextPrompt = true;
-	mStatus                            = Status_Null;
+	mMessageMgr->setSolidMode(true);
+	mStatus = Status_Null;
 }
 
 /*

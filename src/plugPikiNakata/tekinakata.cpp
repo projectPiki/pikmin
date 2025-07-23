@@ -26,14 +26,12 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("tekinakata")
 
-namespace TekiNakata {
-
 /*
  * --INFO--
  * Address:	8014B124
  * Size:	000244
  */
-void makeTekiParameters(TekiMgr* mgr)
+void TekiNakata::makeTekiParameters(TekiMgr* mgr)
 {
 	mgr->mTekiParams[TEKI_Frog]    = new TaiOtimotiParameters();
 	mgr->mTekiParams[TEKI_Iwagen]  = new TaiIwagenParameters();
@@ -61,7 +59,7 @@ void makeTekiParameters(TekiMgr* mgr)
  * Address:	8014B368
  * Size:	000690
  */
-void makeTekis(TekiMgr* mgr)
+void TekiNakata::makeTekis(TekiMgr* mgr)
 {
 	if (mgr->isUsingType(TEKI_Frog)) {
 		TekiParameters* param = mgr->mTekiParams[TEKI_Frog];
@@ -182,4 +180,3 @@ void makeTekis(TekiMgr* mgr)
 		mgr->mTekiSoundTables[TEKI_Namazu] = new TaiCatfishSoundTable();
 	}
 }
-} // namespace TekiNakata

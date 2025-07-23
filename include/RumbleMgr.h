@@ -131,7 +131,7 @@ struct ControlerMgr {
 	// DLL inline:
 	void draw2d(Graphics&, Font*);
 
-	static const int maxChannel;
+	static const int maxChannel; // Unused
 
 	f32 mRumbleIntensity;     // _00
 	ChannelMgr* mChannelMgrs; // _04
@@ -157,6 +157,9 @@ struct RumbleMgr {
 	// unused/inlined:
 	void init();
 	void rumblePause(bool);
+
+	static int maxControler;  // Unused
+	static f32 pauseTimerMax; // Unused
 
 	f32 mRumbleIntensity;            // _00
 	f32 mRumbleFadeOutTimer;         // _04

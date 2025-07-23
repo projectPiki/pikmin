@@ -510,7 +510,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 		ActCrowd* act = (ActCrowd*)mActiveAction->getCurrAction();
 		if (act) {
 			Vector3f pos = mPosition;
-			int slotID   = act->mCPlateSlotID;
+			int slotID   = act->getSlotID();
 			pos.y += 2.0f * f32(slotID) + 50.0f;
 			bool light = gfx.setLighting(false, nullptr);
 			gfx.useMatrix(Matrix4f::ident, 0);

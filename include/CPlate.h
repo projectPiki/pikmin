@@ -2,6 +2,7 @@
 #define _CPLATE_H
 
 #include "ComplexCreature.h"
+#include "GlobalGameOptions.h"
 #include "Node.h"
 #include "Parameters.h"
 #include "Traversable.h"
@@ -84,24 +85,24 @@ struct CPlate : public Traversable, public Node {
 	// _08 = VTBL 2
 	// _00-_08 = Traversable
 	// _08-_28 = Node
-	Parms mCPlateParms;        // _28
-	Vector3f mPlateOffset;     // _5C, denoted by a markerShape in debug mode
-	f32 mPlateLength;          // _68
-	f32 mPlateSize;            // _6C
-	f32 mInnerRadius;          // _70
-	int mTotalSlotCount;       // _74
-	u32 mPlatePikiCount;       // _78
-	int mUsedSlotCount;        // _7C
-	CPlate::Slot* mSlotList;   // _80
-	int mSlotListSize;         // _84, max slots
-	Vector3f mOriginPosition;  // _88
-	Vector3f mPlateCenter;     // _94, denoted by a markerShape in debug mode
-	Vector3f mCurrentVelocity; // _A0
-	f32 mDirectionAngle;       // _AC
-	Vector3f mDevOffsetTest;   // _B0, unused
-	int mHappaCounts[3];       // _BC, indexed by PikiHappa
-	bool _C8;                  // _C8
-	bool mIsNeutral;           // _C9
+	Parms mCPlateParms;               // _28
+	Vector3f mPlateOffset;            // _5C, denoted by a markerShape in debug mode
+	f32 mPlateLength;                 // _68
+	f32 mPlateSize;                   // _6C
+	f32 mInnerRadius;                 // _70
+	int mTotalSlotCount;              // _74
+	u32 mPlatePikiCount;              // _78
+	int mUsedSlotCount;               // _7C
+	CPlate::Slot* mSlotList;          // _80
+	int mSlotListSize;                // _84, max slots
+	Vector3f mOriginPosition;         // _88
+	Vector3f mPlateCenter;            // _94, denoted by a markerShape in debug mode
+	Vector3f mCurrentVelocity;        // _A0
+	f32 mDirectionAngle;              // _AC
+	Vector3f mDevOffsetTest;          // _B0, unused
+	int mHappaCounts[PikiHappaCount]; // _BC, indexed by PikiHappa
+	bool _C8;                         // _C8
+	bool mIsNeutral;                  // _C9
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "BaseInf.h"
 #include "DebugLog.h"
 #include "Dolphin/os.h"
+#include "GlobalGameOptions.h"
 #include "Piki.h"
 #include "gameflow.h"
 #include "sysNew.h"
@@ -28,8 +29,8 @@ DEFINE_PRINT("pikiInf");
  */
 PikiInfMgr::PikiInfMgr()
 {
-	for (int i = 0; i < 3; i++) {
-		mPikiCounts[0][i] = mPikiCounts[1][i] = mPikiCounts[2][i] = 0;
+	for (int i = 0; i < PikiHappaCount; i++) {
+		mPikiCounts[Blue][i] = mPikiCounts[Red][i] = mPikiCounts[Yellow][i] = 0;
 	}
 }
 
@@ -50,8 +51,8 @@ void PikiInfMgr::initGame()
  */
 void PikiInfMgr::saveCard(RandomAccessStream& output)
 {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < PikiColorCount; i++) {
+		for (int j = 0; j < PikiHappaCount; j++) {
 			output.writeInt(mPikiCounts[i][j]);
 		}
 	}
@@ -67,15 +68,15 @@ void PikiInfMgr::loadCard(RandomAccessStream& input)
 	// is this C? Kando, why did you do that?
 	int i, j;
 
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 3; j++) {
+	for (i = 0; i < PikiColorCount; i++) {
+		for (j = 0; j < PikiHappaCount; j++) {
 			mPikiCounts[i][j] = input.readInt();
 		}
 	}
 
 	PRINT("** loadCard (Container Piki Counts)\n");
-	for (i = 0; i < 3; i++) {
-		for (j = 0; j < 3; j++) {
+	for (i = 0; i < PikiColorCount; i++) {
+		for (j = 0; j < PikiHappaCount; j++) {
 			PRINT("\tcolor%d:%d = %d pikis\n", i, j, mPikiCounts[i][j]);
 		}
 	}

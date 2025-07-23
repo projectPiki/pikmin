@@ -2,6 +2,7 @@
 #define _PLAYERSTATE_H
 
 #include "Demo.h"
+#include "GlobalGameOptions.h"
 #include "PaniPikiAnimator.h"
 #include "PelletAnimator.h"
 #include "Piki.h"
@@ -64,9 +65,9 @@ struct TimeGraph {
 			return getSum();
 		}
 
-		int getSum() { return mNum[0] + mNum[1] + mNum[2]; }
+		int getSum() { return mNum[Blue] + mNum[Red] + mNum[Yellow]; }
 
-		int mNum[3]; // _00
+		int mNum[PikiColorCount]; // _00
 	};
 
 	TimeGraph(); // unused/inlined

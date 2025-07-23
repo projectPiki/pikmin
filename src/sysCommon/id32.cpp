@@ -24,7 +24,7 @@ DEFINE_PRINT("id32");
  * Address:	80043E5C
  * Size:	000038
  */
-ID32::ID32(void)
+ID32::ID32()
 {
 	setID('none');
 }

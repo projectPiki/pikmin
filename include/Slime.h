@@ -359,8 +359,6 @@ struct Slime : public Boss {
 	virtual void exitCourse();                  // _110
 	virtual void drawShape(Graphics&);          // _120
 
-	inline CollideSphereUpdater* getCollideUpdater(int idx) { return &mCollideSphereUpdaters[idx]; }
-
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	BoundSphereUpdater* mCentreUpdater;           // _3B8

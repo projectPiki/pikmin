@@ -636,7 +636,14 @@ struct DrawWorldMap {
 	 * @brief TODO
 	 */
 	enum returnStatusFlag {
-		// TODO: this
+		RETURNSTATUS_Null = -1,          // Invalid or uninitialized flag
+		RETURNSTATUS_UfoLandedPractice,  // See `DrawWorldMap::modeOperation`
+		RETURNSTATUS_UfoLandedForest,    // ...
+		RETURNSTATUS_UfoLandedCave,      // ...
+		RETURNSTATUS_UfoLandedYakushima, // ...
+		RETURNSTATUS_UfoLandedLast,      // ...
+		RETURNSTATUS_WorldMapActive,     // See `DrawWorldMap::start`
+		RETURNSTATUS_WorldMapPaused,     // See `DrawWorldMap::update`
 	};
 
 	DrawWorldMap();
@@ -658,11 +665,11 @@ struct DrawWorldMap {
 	void setCoursePoint(startPlaceFlag);
 
 	// DLL inlines:
-	returnStatusFlag getReturnStatusFlag();
+	returnStatusFlag getReturnStatusFlag() { return mReturnStatus; }
 
 	startModeFlag mStartMode;                  // _00
 	int mCurrentMode;                          // _04
-	int mSelectedCourseNumber;                 // _08
+	returnStatusFlag mReturnStatus;            // _08
 	f32 mModeTimer;                            // _0C
 	DrawScreen* mWipeScreen;                   // _10
 	DrawScreen* mIconScreen;                   // _14

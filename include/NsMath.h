@@ -5,38 +5,38 @@
 #include "system.h"
 #include "types.h"
 
-namespace NsCalculation {
-void calcLagrange(f32, const Vector3f*, Vector3f&);
-void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&);
-void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&);
-void calcMat4toMat3(const Matrix4f&, Matrix3f&);
+struct NsCalculation {
+	static void calcLagrange(f32, const Vector3f*, Vector3f&);
+	static void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&);
+	static void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&);
+	static void calcMat4toMat3(const Matrix4f&, Matrix3f&);
 
-// unused/inlined:
-void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&);
-int calcMtxDirect(const Matrix4f&, const Matrix4f&);
-void calcMat3toMat4(const Matrix3f&, Matrix4f&);
+	// unused/inlined:
+	static void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&);
+	static int calcMtxDirect(const Matrix4f&, const Matrix4f&);
+	static void calcMat3toMat4(const Matrix3f&, Matrix4f&);
 
-// other existing (inline) functions according to the DLL:
-f32 calcInnerRatio(const Vector3f&, const Vector3f&);
-void calcMtxTrans(const Matrix4f&, int, Vector3f&);
-void calcVectorTrans(const Vector3f&, int, Matrix4f&);
+	// other existing (inline) functions according to the DLL:
+	static f32 calcInnerRatio(const Vector3f&, const Vector3f&);
+	static void calcMtxTrans(const Matrix4f&, int, Vector3f&);
+	static void calcVectorTrans(const Vector3f&, int, Matrix4f&);
 
-// Calculates the cross product
-static inline void calcOuterPro(const Vector3f& a, const Vector3f& b, Vector3f& result)
-{
-	result.x = a.y * b.z - a.z * b.y;
-	result.y = a.z * b.x - a.x * b.z;
-	result.z = a.x * b.y - a.y * b.x;
-}
+	// Calculates the cross product
+	static void calcOuterPro(const Vector3f& a, const Vector3f& b, Vector3f& result)
+	{
+		result.x = a.y * b.z - a.z * b.y;
+		result.y = a.z * b.x - a.x * b.z;
+		result.z = a.x * b.y - a.y * b.x;
+	}
 
-static inline void calcMtxBotIdent(Matrix4f& mtx)
-{
-	mtx.mMtx[3][0] = 0.0f;
-	mtx.mMtx[3][1] = 0.0f;
-	mtx.mMtx[3][2] = 0.0f;
-	mtx.mMtx[3][3] = 1.0f;
-}
-} // namespace NsCalculation
+	static void calcMtxBotIdent(Matrix4f& mtx)
+	{
+		mtx.mMtx[3][0] = 0.0f;
+		mtx.mMtx[3][1] = 0.0f;
+		mtx.mMtx[3][2] = 0.0f;
+		mtx.mMtx[3][3] = 1.0f;
+	}
+};
 
 // these exist in the DLL "map"
 template <typename T>
@@ -65,55 +65,49 @@ struct NsLibMath {
 	}
 };
 
-namespace NsMathF {
-inline f32 calcNearerDirection(f32 from, f32 to)
-{
-	if (to >= from) {
-		f32 diff = to - from;
-		if (TAU - diff < diff) {
-			to -= TAU;
+struct NsMathF {
+	static f32 calcNearerDirection(f32 from, f32 to)
+	{
+		if (to >= from) {
+			f32 diff = to - from;
+			if (TAU - diff < diff) {
+				to -= TAU;
+			}
+		} else {
+			f32 diff = from - to;
+			if (TAU - diff < diff) {
+				to += TAU;
+			}
 		}
-	} else {
-		f32 diff = from - to;
-		if (TAU - diff < diff) {
-			to += TAU;
+
+		return to;
+	}
+
+	static f32 getRand(f32 val) { return gsys->getRand(1.0f) * (val * 0.99999899f); }
+
+	static f32 roundAngle(f32 angle)
+	{
+		if (angle < 0.0f) {
+			return angle + TAU;
 		}
+
+		if (angle >= TAU) {
+			return angle - TAU;
+		}
+
+		return angle;
 	}
+};
 
-	return to;
-}
+struct NsMathI {
+	static int getRand(int val) { return gsys->getRand(1.0f) * (val * 0.99999899f); }
 
-inline f32 getRand(f32 val)
-{
-	return gsys->getRand(1.0f) * (val * 0.99999899f);
-}
-
-inline f32 roundAngle(f32 angle)
-{
-	if (angle < 0.0f) {
-		return angle + TAU;
+	// this COULD be revice instead, but i haven't seen a f32 version yet. TBD.
+	// just bounds value in [min,max]
+	static int intLoop(int value, int min, int max)
+	{
+		return (value < min) ? max + value - min + 1 : (value > max) ? min + value - max - 1 : value;
 	}
-
-	if (angle >= TAU) {
-		return angle - TAU;
-	}
-
-	return angle;
-}
-} // namespace NsMathF
-
-namespace NsMathI {
-inline int getRand(int val)
-{
-	return gsys->getRand(1.0f) * (val * 0.99999899f);
-}
-
-// this COULD be revice instead, but i haven't seen a f32 version yet. TBD.
-// just bounds value in [min,max]
-inline int intLoop(int value, int min, int max)
-{
-	return (value < min) ? max + value - min + 1 : (value > max) ? min + value - max - 1 : value;
-}
-} // namespace NsMathI
+};
 
 #endif

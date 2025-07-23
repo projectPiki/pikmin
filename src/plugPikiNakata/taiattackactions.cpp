@@ -177,7 +177,7 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 		{
 			Creature* stuck = *iter;
 			PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_1:stick:%08x:%08x\n", &teki, stuck);
-			PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_1:count:%08x:%d\n", &teki, stuckList.getCount());
+			PRINT_NAKATA("TaiAnimationSwallowingAction::act:ACTION_1:count:%08x:%d\n", &teki, stuckList.getNumStickers());
 			if (!stuck) {
 				PRINT("?TaiAnimationSwallowingAction::act:ANIMATION_KEY_OPTION_ACTION_1:%08x:creature==null\n", &teki);
 				break;

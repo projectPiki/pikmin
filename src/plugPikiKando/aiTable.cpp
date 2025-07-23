@@ -10,4 +10,8 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 DEFINE_PRINT("aiTable")
 
+AiTable::Tables* enemyTable;
+AiTable::Tables* naviTable;
+AiTable::Tables* ballTable;
+
 #endif

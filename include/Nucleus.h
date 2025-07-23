@@ -38,9 +38,9 @@ struct NucleusProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mNucleusProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mNucleusProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -65,8 +65,6 @@ struct Nucleus : public Boss {
 	virtual void doKill();             // _10C
 	virtual void exitCourse();         // _110
 	virtual void drawShape(Graphics&); // _120
-
-	inline NucleusProp* getNucleusProp() { return static_cast<NucleusProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss?

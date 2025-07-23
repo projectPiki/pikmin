@@ -4,6 +4,7 @@
 #include "DebugLog.h"
 #include "EffectMgr.h"
 #include "GameStat.h"
+#include "GlobalGameOptions.h"
 #include "Graphics.h"
 #include "ItemObject.h"
 #include "MoviePlayer.h"
@@ -407,12 +408,12 @@ Piki* GoalItem::exitPiki()
 
 	// always pull the highest stage pikmin out first
 	int happa;
-	if (pikiInfMgr.mPikiCounts[mOnionColour][2] > 0) {
-		happa = 2;
-	} else if (pikiInfMgr.mPikiCounts[mOnionColour][1] > 0) {
-		happa = 1;
+	if (pikiInfMgr.mPikiCounts[mOnionColour][Flower] > 0) {
+		happa = Flower;
+	} else if (pikiInfMgr.mPikiCounts[mOnionColour][Bud] > 0) {
+		happa = Bud;
 	} else {
-		happa = 0;
+		happa = Leaf;
 	}
 	piki->setFlower(happa);
 	piki->initColor(mOnionColour);
@@ -427,7 +428,7 @@ Piki* GoalItem::exitPiki()
 	GameStat::update();
 	playEventSound(this, SE_PIKI_OUTHOME);
 
-	if (mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2] == 0) {
+	if (mHeldPikis[Leaf] + mHeldPikis[Bud] + mHeldPikis[Flower] == 0) {
 		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 	return piki;
@@ -618,7 +619,7 @@ void GoalItem::startAI(int)
 	mIsConeEmit = false;
 	mSeContext  = &_45C;
 	mSeContext->setContext(this, 3);
-	mHeldPikis[Leaf] = mHeldPikis[Bud] = mHeldPikis[Flower] = nullptr;
+	mHeldPikis[Leaf] = mHeldPikis[Bud] = mHeldPikis[Flower] = 0;
 	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
 	mWaypointIdx = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
 

@@ -22,11 +22,9 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT("aiAction")
 
-namespace Reaction {
-char* info[9] = {
+char* Reaction::info[9] = {
 	"-", "WATCH", "ESCAPE", "CHASE", "GOTO", "PICK", "PUT", "KICK", "FORMATION",
 };
-}
 
 /*
  * --INFO--
@@ -42,7 +40,7 @@ void Action::procMsg(Msg* msg)
 
 	Receiver::procMsg(mPiki, msg);
 
-	if (mCurrActionIdx != -1 && mCurrActionIdx < mChildCount) {
+	if (mCurrActionIdx != PikiAction::NOACTION && mCurrActionIdx < mChildCount) {
 		if (mChildActions[mCurrActionIdx].mAction) {
 			mChildActions[mCurrActionIdx].mAction->procMsg(msg);
 		}
@@ -82,8 +80,9 @@ Action::Action(Piki* actor, bool p2)
 {
 	mPiki          = actor;
 	mChildActions  = nullptr;
-	mCurrActionIdx = mChildCount = 0;
-	mName                        = "no name";
+	mChildCount    = 0;
+	mCurrActionIdx = PikiAction::RandomBoid;
+	mName          = "no name";
 }
 
 /*
@@ -106,7 +105,7 @@ Action::~Action()
  */
 void Action::init(Creature*)
 {
-	mCurrActionIdx = 0;
+	mCurrActionIdx = PikiAction::RandomBoid;
 }
 
 /*
@@ -126,7 +125,7 @@ int Action::exec()
  */
 void AndAction::init(Creature* creature)
 {
-	mCurrActionIdx = 0;
+	mCurrActionIdx = PikiAction::RandomBoid;
 	mChildActions[mCurrActionIdx].initialise(creature);
 	mOtherCreature = creature;
 }
@@ -167,7 +166,7 @@ int AndAction::exec()
  */
 void OrAction::init(Creature* creature)
 {
-	mCurrActionIdx = 0;
+	mCurrActionIdx = PikiAction::RandomBoid;
 	mChildActions[mCurrActionIdx].initialise(creature);
 	mOtherCreature = creature;
 }
@@ -270,14 +269,39 @@ TopAction::TopAction(Piki* piki)
 	mIsAnimating = false;
 	mName        = "top action";
 
-	setChildren(PikiAction::COUNT, new ActRandomBoid(piki), nullptr, new ActWatch(piki), nullptr, new ActEscape(piki), nullptr,
-	            new ActChase(piki), nullptr, new ActGoto(piki), nullptr, new ActPickCreature(piki), nullptr, new ActPutItem(piki), nullptr,
-	            new ActFormation(piki), nullptr, new ActAttack(piki), nullptr, new ActShoot(piki), nullptr, new ActGuard(piki), nullptr,
-	            new ActPullout(piki), nullptr, new ActPickItem(piki), nullptr, new ActDecoy(piki), nullptr, new ActCrowd(piki), nullptr,
-	            new ActFree(piki), nullptr, new ActRope(piki), nullptr, new ActEnter(piki), nullptr, new ActExit(piki), nullptr,
-	            new ActBreakWall(piki), nullptr, new ActMine(piki), nullptr, new ActTransport(piki), nullptr, new ActKinoko(piki), nullptr,
-	            new ActBridge(piki), nullptr, new ActPush(piki), nullptr, new ActPutBomb(piki), nullptr, new ActRescue(piki), nullptr,
-	            new ActWeed(piki), nullptr, new ActStone(piki), nullptr, new ActBoMake(piki), nullptr, new ActBou(piki), nullptr);
+	setChildren(PikiAction::COUNT,                  //
+	            new ActRandomBoid(piki), nullptr,   //
+	            new ActWatch(piki), nullptr,        //
+	            new ActEscape(piki), nullptr,       //
+	            new ActChase(piki), nullptr,        //
+	            new ActGoto(piki), nullptr,         //
+	            new ActPickCreature(piki), nullptr, //
+	            new ActPutItem(piki), nullptr,      //
+	            new ActFormation(piki), nullptr,    //
+	            new ActAttack(piki), nullptr,       //
+	            new ActShoot(piki), nullptr,        //
+	            new ActGuard(piki), nullptr,        //
+	            new ActPullout(piki), nullptr,      //
+	            new ActPickItem(piki), nullptr,     //
+	            new ActDecoy(piki), nullptr,        //
+	            new ActCrowd(piki), nullptr,        //
+	            new ActFree(piki), nullptr,         //
+	            new ActRope(piki), nullptr,         //
+	            new ActEnter(piki), nullptr,        //
+	            new ActExit(piki), nullptr,         //
+	            new ActBreakWall(piki), nullptr,    //
+	            new ActMine(piki), nullptr,         //
+	            new ActTransport(piki), nullptr,    //
+	            new ActKinoko(piki), nullptr,       //
+	            new ActBridge(piki), nullptr,       //
+	            new ActPush(piki), nullptr,         //
+	            new ActPutBomb(piki), nullptr,      //
+	            new ActRescue(piki), nullptr,       //
+	            new ActWeed(piki), nullptr,         //
+	            new ActStone(piki), nullptr,        //
+	            new ActBoMake(piki), nullptr,       //
+	            new ActBou(piki), nullptr           //
+	);
 
 	_1C = -1;
 
@@ -300,7 +324,7 @@ TopAction::~TopAction()
  */
 void TopAction::init(Creature* creature)
 {
-	mCurrActionIdx = 0;
+	mCurrActionIdx = PikiAction::RandomBoid;
 	mChildActions[mCurrActionIdx].initialise(creature);
 	mTarget      = nullptr;
 	_2C          = 1.0f;
@@ -436,7 +460,7 @@ int TopAction::exec()
  */
 void TopAction::abandon(zen::particleGenerator* particle)
 {
-	if (mCurrActionIdx != -1) {
+	if (mCurrActionIdx != PikiAction::NOACTION) {
 		mChildActions[mCurrActionIdx].mAction->cleanup();
 		if (mPiki->isKinoko()) {
 			PRINT_GLOBAL("kinoko %d exit", mCurrActionIdx);
@@ -451,7 +475,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
 #endif
 	}
 
-	mCurrActionIdx = -1;
+	mCurrActionIdx = PikiAction::NOACTION;
 	_28            = 0;
 	_24            = 0;
 	mTarget        = nullptr;
@@ -465,7 +489,7 @@ void TopAction::abandon(zen::particleGenerator* particle)
  */
 bool TopAction::resumable()
 {
-	if (mCurrActionIdx != -1) {
+	if (mCurrActionIdx != PikiAction::NOACTION) {
 		return mChildActions[mCurrActionIdx].mAction->resumable();
 	}
 	return false;
@@ -479,7 +503,7 @@ bool TopAction::resumable()
 void TopAction::resume()
 {
 	mIsSuspended = true;
-	if (mCurrActionIdx == -1) {
+	if (mCurrActionIdx == PikiAction::NOACTION) {
 		PRINT("topAction resume : no curr action!\n");
 	} else {
 		mChildActions[mCurrActionIdx].mAction->resume();
@@ -494,7 +518,7 @@ void TopAction::resume()
 void TopAction::restart()
 {
 	mIsSuspended = false;
-	if (mCurrActionIdx == -1) {
+	if (mCurrActionIdx == PikiAction::NOACTION) {
 		PRINT("topAction restart : no curr action!\n");
 	} else {
 		mChildActions[mCurrActionIdx].mAction->restart();

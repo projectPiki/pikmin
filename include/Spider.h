@@ -162,9 +162,9 @@ struct SpiderProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mSpiderProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mSpiderProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -194,8 +194,6 @@ struct Spider : public Boss {
 	virtual void drawShape(Graphics&);              // _120
 
 	void draw(Graphics&);
-
-	inline SpiderProp* getSpiderProp() { return static_cast<SpiderProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss

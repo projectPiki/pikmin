@@ -63,7 +63,7 @@ void PtclGenPack::setEmitPosPtr(Vector3f* posPtr)
 	particleGenerator** genList = mGeneratorList;
 	for (i = 0; i < mLimit; i++, genList++) {
 		if (*genList) {
-			(*genList)->mEmitPosPtr = posPtr;
+			(*genList)->setEmitPosPtr(posPtr);
 		}
 	}
 }

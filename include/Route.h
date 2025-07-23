@@ -262,7 +262,7 @@ struct PathFinder {
 		}
 
 		// DLL inlines to make:
-		bool check(int flag) { return mDirection & 1 << flag; }
+		bool check(int flag) { return mDirection & (1 << flag); }
 		void resetFlag(int flag) { mDirection ^= (1 << flag); }
 		void setFlag(int flag) { mDirection |= (1 << flag); }
 
@@ -323,7 +323,7 @@ struct PathFinder {
 	static void clearMode() { mode = 0; }
 	static void setMode(int flag) { mode |= flag; }
 
-	static f32 limitDistance;
+	static f32 limitDistance;      // Unused
 	static int avoidWayPointIndex; // Waypoint to avoid when Unk2 mode is set
 	static u16 mode;               // Current PathFinderMode
 

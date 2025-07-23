@@ -135,8 +135,10 @@ void ObjectMgr::postUpdate(int a1, f32 a2)
 	{
 		Creature* obj = *it;
 		obj->postUpdate(a1, a2);
-		if (!AIPerf::insQuick && !AIPerf::updateSearchBuffer && obj->mSearchBuffer.available()) {
-			obj->mSearchBuffer.clear();
+		if (!AIPerf::insQuick && !AIPerf::updateSearchBuffer) {
+			if (obj->mSearchBuffer.available()) {
+				obj->mSearchBuffer.clear();
+			}
 		}
 	}
 }
@@ -262,8 +264,10 @@ void MonoObjectMgr::postUpdate(int a1, f32 a2)
 		if (mEntryStatus[i] == 0) {
 			Creature* obj = mObjectList[i];
 			obj->postUpdate(a1, a2);
-			if (!AIPerf::insQuick && !AIPerf::updateSearchBuffer && obj->mSearchBuffer.available()) {
-				obj->mSearchBuffer.clear();
+			if (!AIPerf::insQuick && !AIPerf::updateSearchBuffer) {
+				if (obj->mSearchBuffer.available()) {
+					obj->mSearchBuffer.clear();
+				}
 			}
 		}
 	}
@@ -524,12 +528,12 @@ void MonoObjectMgr::search(ObjectMgr* mgr)
 			f32 s2   = obj->getBoundingSphereRadius() + obj2->getBoundingSphereRadius();
 			dist     = dist - s2;
 
-			if (dist <= 300.0f && obj->isAlive() && obj->mSearchBuffer.mDataList) {
+			if (dist <= 300.0f && obj->isAlive() && obj->mSearchBuffer.available()) {
 				if (!AIPerf::useUpdateMgr || obj->mSearchContext.updatable()) {
 					obj->mSearchBuffer.insert(obj2, dist);
 				}
 			}
-			if (dist <= 300.0f && obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
+			if (dist <= 300.0f && obj2->isAlive() && obj2->mSearchBuffer.available()) {
 				if (!AIPerf::useUpdateMgr || obj2->mSearchContext.updatable()) {
 					obj2->mSearchBuffer.insert(obj, dist);
 				}
@@ -595,12 +599,12 @@ void MonoObjectMgr::searchSelf()
 			f32 dist  = dist1 - s1;
 
 			if (dist <= 300.0f && obj->isAlive()) {
-				if (obj->isAlive() && obj->mSearchBuffer.mDataList) {
+				if (obj->isAlive() && obj->mSearchBuffer.available()) {
 					if ((!AIPerf::useUpdateMgr && !mabiki) || obj->mSearchContext.updatable()) {
 						obj->mSearchBuffer.insert(obj2, dist);
 					}
 				}
-				if (obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
+				if (obj2->isAlive() && obj2->mSearchBuffer.available()) {
 					if ((!AIPerf::useUpdateMgr && !mabiki) || obj2->mSearchContext.updatable()) {
 						obj2->mSearchBuffer.insert(obj, dist);
 					}
@@ -1017,12 +1021,12 @@ void PolyObjectMgr::searchSelf()
 			f32 dist  = dist1 - s1;
 
 			if (dist <= 300.0f) {
-				if (obj->isAlive() && obj->mSearchBuffer.mDataList) {
+				if (obj->isAlive() && obj->mSearchBuffer.available()) {
 					if ((!AIPerf::useUpdateMgr) || obj->mSearchContext.updatable()) {
 						obj->mSearchBuffer.insert(obj2, dist);
 					}
 				}
-				if (obj2->isAlive() && obj2->mSearchBuffer.mDataList) {
+				if (obj2->isAlive() && obj2->mSearchBuffer.available()) {
 					if ((!AIPerf::useUpdateMgr) || obj2->mSearchContext.updatable()) {
 						obj2->mSearchBuffer.insert(obj, dist);
 					}
@@ -1090,14 +1094,14 @@ void ObjectMgr::search(ObjectMgr* otherMgr)
 			// 2) Alive
 			// 3) Have initialized data lists
 			// 4) Pass update manager checks (if enabled)
-			if (distance <= INTERACTION_RANGE && sourceObj->isAlive() && sourceObj->mSearchBuffer.mDataList) {
+			if (distance <= INTERACTION_RANGE && sourceObj->isAlive() && sourceObj->mSearchBuffer.available()) {
 				// Add target to source's search buffer if conditions met
 				if (!AIPerf::useUpdateMgr || sourceObj->mSearchContext.updatable()) {
 					sourceObj->mSearchBuffer.insert(targetObj, distance);
 				}
 			}
 
-			if (distance <= INTERACTION_RANGE && targetObj->isAlive() && targetObj->mSearchBuffer.mDataList) {
+			if (distance <= INTERACTION_RANGE && targetObj->isAlive() && targetObj->mSearchBuffer.available()) {
 				// Add source to target's search buffer if conditions met
 				if (!AIPerf::useUpdateMgr || targetObj->mSearchContext.updatable()) {
 					targetObj->mSearchBuffer.insert(sourceObj, distance);

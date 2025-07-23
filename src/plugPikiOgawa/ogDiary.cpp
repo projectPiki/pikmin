@@ -66,7 +66,7 @@ zen::ogScrDiaryMgr::ogScrDiaryMgr()
  * Address:	8018F344
  * Size:	0000FC
  */
-zen::ogScrDiaryMgr::DiaryMgrStatus zen::ogScrDiaryMgr::update(Controller* input)
+zen::ogScrDiaryMgr::DiaryStatus zen::ogScrDiaryMgr::update(Controller* input)
 {
 	if (mStatus == Inactive) {
 		return mStatus;
@@ -89,7 +89,7 @@ zen::ogScrDiaryMgr::DiaryMgrStatus zen::ogScrDiaryMgr::update(Controller* input)
 		}
 	}
 
-	return (DiaryMgrStatus)msgState;
+	return (DiaryStatus)msgState;
 }
 
 /*

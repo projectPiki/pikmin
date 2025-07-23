@@ -14,7 +14,7 @@ struct ID32 {
 	/**
 	 * @brief Default constructor.
 	 */
-	ID32(void);
+	ID32();
 
 	/**
 	 * @brief Constructor that initializes the ID32 with the given value.
@@ -53,7 +53,7 @@ struct ID32 {
 	/**
 	 * @brief Prints the ID32's value and string ID to the console.
 	 */
-	void print(void);
+	void print();
 
 	/**
 	 * @brief Reads the ID32's value and string ID from the given random access stream.
@@ -76,12 +76,12 @@ struct ID32 {
 	/**
 	 * @brief Updates the ID32's value based on its string ID.
 	 */
-	void updateID(void);
+	void updateID();
 
 	/**
 	 * @brief Updates the ID32's string ID based on its value.
 	 */
-	void updateString(void);
+	void updateString();
 
 	/**
 	 * @brief Writes the ID32's value and string ID to the given random access stream.

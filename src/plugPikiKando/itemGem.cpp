@@ -199,7 +199,7 @@ void GemItem::update()
 bool GemItem::reachCapacity()
 {
 	Stickers stick(this);
-	return mMaxAttachedObjects < stick.getCount();
+	return mMaxAttachedObjects < stick.getNumStickers();
 }
 
 /*

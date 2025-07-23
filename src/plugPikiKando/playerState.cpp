@@ -187,8 +187,8 @@ void PlayerState::initGame()
 	mCurrParts             = 0;
 	mCurrentRepairingPart  = nullptr;
 	mContainerFlag         = 0;
-	setContainer(1);
-	setDisplayPikiCount(1);
+	setContainer(Red);
+	setDisplayPikiCount(Red);
 	mTotalRegisteredParts = 0;
 
 	for (i = 0; i < mTotalParts; i++) {
@@ -201,7 +201,7 @@ void PlayerState::initGame()
 	}
 
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		if (node->mFileInfoList.getChildCount() > 0) {
 			mCourseFlags[i]->reset();
 		}
@@ -241,8 +241,8 @@ PlayerState::PlayerState()
 	mCurrParts            = 0;
 	mCurrentRepairingPart = nullptr;
 	mContainerFlag        = 0;
-	setContainer(1);
-	setDisplayPikiCount(1);
+	setContainer(Red);
+	setDisplayPikiCount(Red);
 	mTotalRegisteredParts = 0;
 
 	for (i = 0; i < mTotalParts; i++) {
@@ -254,10 +254,10 @@ PlayerState::PlayerState()
 	for (i = 0; i < STAGE_COUNT; i++) {
 		mStagePartsCollected[i] = 0;
 	}
-	mCourseFlags = new BitFlags*[5];
+	mCourseFlags = new BitFlags*[STAGE_COUNT];
 
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		int size = node->mFileInfoList.getChildCount();
 		if (size > 0) {
 			mCourseFlags[i] = new BitFlags;
@@ -384,7 +384,7 @@ int PlayerState::getTotalPikiCount(int color)
 
 	int test        = 0;
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < STAGE_COUNT; i++) {
 		test += node->mStageInf.mBPikiInfMgr.getPikiCount(color);
 		node = (StageInfo*)node->mNext;
 	}
@@ -415,7 +415,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	id.setID('meck');
 	id.write(data);
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		node->mStageInf.saveCard(data);
 		node = (StageInfo*)node->mNext;
 	}
@@ -444,7 +444,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	data.writeByte(mShipEffectPartFlag);
 	data.writeByte(mDisplayPikiFlag);
 
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		data.writeByte(mStagePartsCollected[i]);
 	}
 	data.writeInt(mTotalDeadPikiNum);
@@ -454,7 +454,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 	id.write(data);
 
 	node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		if (node->mFileInfoList.getChildCount() > 0) {
 			mCourseFlags[i]->saveCard(data);
 		}
@@ -466,7 +466,7 @@ void PlayerState::saveCard(RandomAccessStream& data)
 
 	node = (StageInfo*)flowCont.mRootInfo.mChild;
 	PRINT("SAVE VISIT FLAGS FROM %d\n", data.getPosition());
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		PRINT("\t++++ STAGE %d as %s\n", i, node->mHasInitialised ? "VISITED" : "NEVER VISITED");
 		data.writeByte(node->mHasInitialised);
 		node = (StageInfo*)node->mNext;
@@ -501,7 +501,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
 	StageInfo* node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		node->mStageInf.loadCard(data);
 		node = (StageInfo*)node->mNext;
 	}
@@ -532,7 +532,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	_186                   = data.readByte();
 	mShipEffectPartFlag    = data.readByte();
 	mDisplayPikiFlag       = data.readByte();
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		mStagePartsCollected[i] = data.readByte();
 	}
 	mTotalDeadPikiNum = data.readInt();
@@ -544,7 +544,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
 
 	node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		if (node->mFileInfoList.getChildCount() > 0) {
 			mCourseFlags[i]->loadCard(data);
 		}
@@ -555,7 +555,7 @@ void PlayerState::loadCard(RandomAccessStream& data)
 	id.read(data);
 	PRINT("___ CARD * <%s> BLOCK ___\n", id.mStringID);
 	node = (StageInfo*)flowCont.mRootInfo.mChild;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < STAGE_COUNT; i++) {
 		node->mHasInitialised = data.readByte();
 		PRINT("\t+++++++++ STAGE %d : %s\n", i, node->mHasInitialised ? "VISITED BEFORE" : "NEVER BEFORE");
 		node = (StageInfo*)node->mNext;
@@ -595,7 +595,7 @@ bool PlayerState::isTutorial()
 bool PlayerState::isGameCourse()
 {
 	int val = flowCont.mCurrentStage->mStageIndex;
-	return (val >= 0 && val < 5);
+	return (val >= STAGE_START && val < STAGE_END);
 }
 
 /*
@@ -1097,10 +1097,10 @@ void PlayerState::ufoAssignStart()
  */
 void PlayerState::startSpecialMotions()
 {
-	startUfoPartsMotion('ust1', 4, false);
-	startUfoPartsMotion('uf01', 4, false);
-	startUfoPartsMotion('uf02', 4, false);
-	startUfoPartsMotion('uf03', 4, false);
+	startUfoPartsMotion(UFOID_Bowsprit, 4, false);
+	startUfoPartsMotion(UFOID_WhimsicalRadar, 4, false);
+	startUfoPartsMotion(UFOID_InterstellarRadio, 4, false);
+	startUfoPartsMotion(UFOID_GuardSatellite, 4, false);
 }
 
 /*
