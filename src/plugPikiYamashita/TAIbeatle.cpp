@@ -39,7 +39,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 
 		teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
 		teki.playEventSound(&teki, SE_KABUTO_OVERHEAT);
-		teki.mTekiSwitches.m1 = false;
+		teki.setRunAwaySwitch(false);
 	}
 
 	virtual bool act(Teki& teki) // _10

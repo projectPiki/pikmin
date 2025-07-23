@@ -805,9 +805,9 @@ void UfoItem::startAI(int)
 
 	// This is an incredibly dumb thing for them to do, but I SAW THAT THEY DID THIS!!!
 	// I COULD SEEEEE THEY WROTE THIS INSTEAD OF TWO FOR LOOPS!!!
-	int* x = (int*)mEngineParticleGenList;
+	zen::particleGenerator** ptclGen = (zen::particleGenerator**)mEngineParticleGenList;
 	for (int i = 0; i < 16; i++) {
-		x[i] = nullptr;
+		ptclGen[i] = nullptr;
 	}
 
 	// NONMATCHING HERE - addi vs mr memes :')

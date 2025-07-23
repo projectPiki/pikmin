@@ -9,19 +9,19 @@ struct AgeServer;
 
 struct BaseApp : public Node {
 	BaseApp();
-	int idleupdate(void);
+	int idleupdate();
 
 	f32 rnd(f32);
-	f32 rnd(void);
+	f32 rnd();
 
-	void startAgeServer(void);
-	void stopAgeServer(void);
+	void startAgeServer();
+	void stopAgeServer();
 
-	virtual ~BaseApp(void);                               // _30
+	virtual ~BaseApp();                                   // _30
 	virtual void InitApp(char*) { }                       // _34
-	virtual int idle(void) { return 0; }                  // _38
+	virtual int idle() { return 0; }                      // _38
 	virtual bool keyDown(int, int, int) { return false; } // _3C
-	virtual void softReset(void);                         // _40
+	virtual void softReset();                             // _40
 	virtual void useHeap(int index)                       // _44
 	{
 		mHeapIndex = index;

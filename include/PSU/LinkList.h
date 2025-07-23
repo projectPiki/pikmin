@@ -41,7 +41,7 @@ struct PSUPtrList {
 	void setFirst(PSUPtrLink*);
 	bool prepend(PSUPtrLink*);
 	bool insert(PSUPtrLink*, PSUPtrLink*);
-	void getNthLink(u32) const;
+	PSUPtrLink* getNthLink(u32) const;
 
 	// no more DLL inlines.
 

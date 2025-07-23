@@ -19,14 +19,13 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("TODO: Replace")
 
-namespace NsCalculation {
 /*
  * --INFO--
  * Address:	8017C2C8
  * Size:	0000C0
  * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
-void calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& outPoint)
+void NsCalculation::calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& outPoint)
 {
 	outPoint.x = (t - 2.0f) * (controlPts[0].x * 0.5f * (t - 1.0f)) - ((t - 2.0f) * (controlPts[1].x * t))
 	           + (t - 1.0f) * (controlPts[2].x * 0.5f * t);
@@ -41,7 +40,7 @@ void calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& outPoint)
  * Address:	8017C388
  * Size:	00019C
  */
-void calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec, const Vector3f& transVec, Matrix4f& mtx)
+void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec, const Vector3f& transVec, Matrix4f& mtx)
 {
 	Vector3f inXVec, inYVec, inZVec;
 
@@ -63,7 +62,7 @@ void calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const Vector3f& zVec
  * Address:	........
  * Size:	00004C
  */
-void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
+void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -83,8 +82,8 @@ void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
  * @param middleJointPos [out] The calculated position of the middle joint.
  * @param bottomJointPosition [out] The calculated position of the bottom joint.
  */
-void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f32 topToMiddleDistance, f32 middleToBottomDistance,
-                  Vector3f& middleJointPos, Vector3f& bottomJointPosition)
+void NsCalculation::calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f32 topToMiddleDistance,
+                                 f32 middleToBottomDistance, Vector3f& middleJointPos, Vector3f& bottomJointPosition)
 {
 	Vector3f botToTop;
 	Vector3f adjBotToTop;
@@ -140,7 +139,7 @@ void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f
  * Address:	........
  * Size:	0001E8
  */
-int calcMtxDirect(const Matrix4f&, const Matrix4f&)
+int NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
@@ -150,7 +149,7 @@ int calcMtxDirect(const Matrix4f&, const Matrix4f&)
  * Address:	8017C81C
  * Size:	00004C
  */
-void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
+void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
 	outMtx.mMtx[0][0] = inMtx.mMtx[0][0];
 	outMtx.mMtx[1][0] = inMtx.mMtx[1][0];
@@ -170,8 +169,7 @@ void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
  * Address:	........
  * Size:	00004C
  */
-void calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)
+void NsCalculation::calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)
 {
 	// UNUSED FUNCTION
 }
-} // namespace NsCalculation

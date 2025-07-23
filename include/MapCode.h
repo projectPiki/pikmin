@@ -20,16 +20,15 @@ enum MapAttributes {
 };
 
 /**
- * @brief This used to be a struct, but these are all static methods, I don't think it's a struct.
+ * @brief TODO.
  */
-namespace MapCode {
+struct MapCode {
+	static int getAttribute(CollTriInfo*);
+	static int getSlipCode(CollTriInfo*);
+	static bool isBald(CollTriInfo*);
 
-int getAttribute(CollTriInfo*);
-int getSlipCode(CollTriInfo*);
-bool isBald(CollTriInfo*);
-
-// unused/inlined
-char* getAttributeName(int); // UNUSED
-}; // namespace MapCode
+	// unused/inlined
+	static char* getAttributeName(int); // UNUSED
+};
 
 #endif

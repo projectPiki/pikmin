@@ -34,8 +34,10 @@ ActorMgr::ActorMgr(MapMgr*)
  */
 Creature* ActorMgr::createObject()
 {
-	return nullptr;
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	Actor* actor = new Actor();
+	actor->mMgr  = this;
+	return actor;
 }
 
 /*

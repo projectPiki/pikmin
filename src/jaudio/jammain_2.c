@@ -2629,7 +2629,7 @@ static u32 Cmd_Printf()
 		}
 	}
 	// A restoration of this command's functionality can be enabled below:
-#if 0
+#if defined(DEVELOP)
 	OSReport(fmtStr, fmtParms[0], fmtParms[1], fmtParms[2], fmtParms[3]);
 #endif
 	return 0;

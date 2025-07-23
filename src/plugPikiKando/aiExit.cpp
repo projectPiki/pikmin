@@ -25,7 +25,7 @@ ActExit::ActExit(Piki* piki)
     : Action(piki, true)
 {
 	setName("Exit");
-	mCurrActionIdx = -1;
+	mCurrActionIdx = PikiAction::NOACTION;
 }
 
 /*

@@ -14,8 +14,26 @@ struct Matrix3f {
 	enum mode {
 		MODE_Unk0 = 0,
 	};
+	enum do_not_initialize { };
 
 	Matrix3f() { identity(); }
+
+	Matrix3f(float (*arr)[3])
+	{
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++)
+				(*this)(row, col) = arr[row][col];
+		}
+	};
+
+	Matrix3f(mode)
+	{
+		for (int row = 0; row < 3; row++) {
+			mMtx[row][0] = 0.0f;
+			mMtx[row][1] = 0.0f;
+			mMtx[row][2] = 0.0f;
+		}
+	}
 
 	Matrix3f(const Vector3f& vec, mode)
 	{
@@ -30,6 +48,10 @@ struct Matrix3f {
 		(*this)(2, 2) = 0.0f;
 	}
 
+protected:
+	Matrix3f(do_not_initialize) { }
+
+public:
 	void identity()
 	{
 		for (int i = 0; i < 9; i++) {

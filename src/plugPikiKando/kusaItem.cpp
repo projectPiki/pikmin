@@ -240,7 +240,7 @@ void BoBaseItem::update()
 			mEffectDuration = 0;
 			if (mParticleGenerator) {
 				PRINT("effect kill\n");
-				effectMgr->mPtclMgr.killGenerator(mParticleGenerator, false);
+				effectMgr->kill(mParticleGenerator, false);
 				mParticleGenerator = nullptr;
 			}
 		}

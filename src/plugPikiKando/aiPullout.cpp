@@ -28,8 +28,11 @@ DEFINE_PRINT("aiPullout")
 ActPullout::ActPullout(Piki* piki)
     : AndAction(piki)
 {
-	// setName("chungus");
-	setChildren(CHILD_COUNT, new ActGoto(piki), nullptr, new ActAdjust(piki), nullptr, new ActPulloutCreature(piki), nullptr);
+	setChildren(CHILD_COUNT,                          //
+	            new ActGoto(piki), nullptr,           //
+	            new ActAdjust(piki), nullptr,         //
+	            new ActPulloutCreature(piki), nullptr //
+	);
 	mTarget.clear();
 }
 

@@ -39,12 +39,11 @@ namespace zen {
 struct PtclGenPack;
 } // namespace zen
 
-namespace TekiNakata {
 // Teki-making utility functions
-void makeTekiParameters(TekiMgr*);
-void makeTekis(TekiMgr*);
-
-} // namespace TekiNakata
+struct TekiNakata {
+	static void makeTekiParameters(TekiMgr*);
+	static void makeTekis(TekiMgr*);
+};
 
 /**
  * @brief TODO
@@ -589,14 +588,14 @@ struct YTeki : public NTeki {
 		}
 	}
 
-	bool getChokeSwitch() { return mTekiSwitches.m6; }
-	void setChokeSwitch(bool set) { mTekiSwitches.m6 = set; }
+	bool getChokeSwitch() { return mTekiSwitches.mChoke; }
+	void setChokeSwitch(bool set) { mTekiSwitches.mChoke = set; }
 
 	bool getBiteSwitch() { return mTekiSwitches.mBite; }
 	void setBiteSwitch(bool isBite) { mTekiSwitches.mBite = isBite; }
 
-	bool getRunAwaySwitch() { return mTekiSwitches.m1; }
-	void setRunAwaySwitch(bool set) { mTekiSwitches.m1 = set; }
+	bool getRunAwaySwitch() { return mTekiSwitches.mRunAway; }
+	void setRunAwaySwitch(bool set) { mTekiSwitches.mRunAway = set; }
 
 	bool getTimerStart() { return mTekiSwitches.mTimer; }
 	void setTimerStart(bool set) { mTekiSwitches.mTimer = set; }
@@ -697,12 +696,12 @@ struct YTeki : public NTeki {
 	f32 mDororoBarkDesire;                   // _4C4
 	struct {
 		u32 mBite : 1;
-		u32 m1 : 1;
-		u32 m2 : 1;
+		u32 mRunAway : 1;
+		u32 m2 : 1; // This unused one might be "EffectSwitch".
 		u32 mStay : 1;
 		u32 mFlying : 1;
 		u32 mTimer : 1;
-		u32 m6 : 1;
+		u32 mChoke : 1;
 		u32 mFootEffect : 4;
 	} mTekiSwitches;                         // _4C8
 	TAIeffectAttackParam mEffectAttackParam; // _4CC

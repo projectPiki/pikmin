@@ -4,10 +4,12 @@
 #include "DebugLog.h"
 #include "Delegate.h"
 #include "GameStat.h"
+#include "GlobalGameOptions.h"
 #include "GoalItem.h"
 #include "Interactions.h"
 #include "Menu.h"
 #include "NaviMgr.h"
+#include "Pellet.h"
 #include "PikiMgr.h"
 #include "PlayerState.h"
 #include "UfoItem.h"
@@ -404,8 +406,38 @@ void AIPerf::decOptLevel(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "Opt Level %d", AIPerf::optLevel);
 }
 
-u32 ufoParts[] = { 'ust5', 'ust1', 'ust2', 'ust3', 'ust4', 'uf01', 'uf02', 'uf03', 'uf04', 'uf05', 'uf06', 'uf07', 'uf08', 'uf09', 'uf10',
-	               'uf11', 'un01', 'un02', 'un03', 'un04', 'un05', 'un06', 'un07', 'un08', 'un09', 'un10', 'un11', 'un12', 'un13', 'un14' };
+u32 ufoParts[] = {
+	UFOID_MainEngine,
+	UFOID_Bowsprit,
+	UFOID_GluonDrive,
+	UFOID_AntiDioxinFilter,
+	UFOID_EternalFuelDynamo,
+	UFOID_WhimsicalRadar,
+	UFOID_InterstellarRadio,
+	UFOID_GuardSatellite,
+	UFOID_ChronosReactor,
+	UFOID_RadiationCanopy,
+	UFOID_GeigerCounter,
+	UFOID_Sagittarius,
+	UFOID_Libra,
+	UFOID_OmegaStabilizer,
+	UFOID_IoniumJet1,
+	UFOID_IoniumJet2,
+	UFOID_ShockAbsorber,
+	UFOID_GravityJumper,
+	UFOID_PilotSeat,
+	UFOID_NovaBlaster,
+	UFOID_AutomaticGear,
+	UFOID_ZirconiumRotor,
+	UFOID_ExtraordinaryBolt,
+	UFOID_RepairTypeBolt,
+	UFOID_SpaceFloat,
+	UFOID_MassageMachine,
+	UFOID_SecretSafe,
+	UFOID_PositronGenerator,
+	UFOID_AnalogComputer,
+	UFOID_UVLamp,
+};
 
 /*
  * --INFO--
@@ -414,10 +446,11 @@ u32 ufoParts[] = { 'ust5', 'ust1', 'ust2', 'ust3', 'ust4', 'uf01', 'uf02', 'uf03
  */
 void AIPerf::incUfoLevel(Menu& menu)
 {
-	if (AIPerf::ufoLevel <= 30) {
-		bool halfComplete = false;
-		if (AIPerf::ufoLevel >= 16) {
-			halfComplete = true;
+	if (AIPerf::ufoLevel <= MAX_UFO_PARTS) {
+		bool isInvisiblePart = false;
+		if (AIPerf::ufoLevel >= UFO_ShockAbsorber) {
+			// "Naka" ship parts are not visible on the UFO.
+			isInvisiblePart = true;
 		}
 
 		UfoItem* shipInstance = itemMgr->getUfo();
@@ -433,7 +466,7 @@ void AIPerf::incUfoLevel(Menu& menu)
 			shipInstance->mAnimator.setMotionSpeed(0, 30.0f);
 		}
 
-		playerState->getUfoParts(ufoParts[AIPerf::ufoLevel], halfComplete);
+		playerState->getUfoParts(ufoParts[AIPerf::ufoLevel], isInvisiblePart);
 		playerState->ufoAssignStart();
 
 		if (shipInstance && lastLevel != playerState->mShipUpgradeLevel) {
@@ -505,8 +538,8 @@ void AIPerf::fullfillPiki(Menu& menu)
 		GoalItem* currentOnion = itemMgr->getContainer(i);
 		if (currentOnion) {
 			for (int i = 0; i < MAX_PIKI_ON_FIELD; i++) {
-				pikiInfMgr.incPiki(currentOnion->mOnionColour, 0);
-				currentOnion->mHeldPikis[0]++;
+				pikiInfMgr.incPiki(currentOnion->mOnionColour, Leaf);
+				currentOnion->mHeldPikis[Leaf]++;
 				GameStat::containerPikis.inc(currentOnion->mOnionColour);
 				GameStat::update();
 			}

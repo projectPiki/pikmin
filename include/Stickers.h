@@ -28,7 +28,7 @@ struct Stickers : public Traversable {
 		return false;
 	}
 
-	inline int getCount() { return mCount; }
+	inline int getNumStickers() { return mCount; }
 
 	// _00     = VTBL
 	// _00-_08 = Traversable

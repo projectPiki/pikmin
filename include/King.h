@@ -160,9 +160,9 @@ struct KingProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mKingProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mKingProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -176,20 +176,32 @@ struct KingProp : public BossProp, public CoreNode {
  * @brief TODO.
  */
 struct KingBackProp : public BossProp, public CoreNode {
+
+	/**
+	 * @brief KingBack genuinely doesn't have any specific properties, but still needs this. Go figure.
+	 */
+	struct KingBackProperties : public Parameters {
+		inline KingBackProperties() // TODO
+		{
+		}
+
+		// _200-_204 = Parameters
+	};
+
 	KingBackProp();
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
 		mCreatureProps.read(input);
 		mBossProps.read(input);
-		_200.read(input);
+		mKingBackProps.read(input);
 	}
 
 	// _F8       = VTBL 1
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	Parameters _200; // _200
+	KingBackProperties mKingBackProps; // _200
 };
 
 /**

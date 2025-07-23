@@ -171,13 +171,7 @@ struct MapSelectSetupSection : public Node {
 				} else {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
 						if (inf->mChalStageID == status) {
-							flowCont.mCurrentStage = inf;
-							sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
-							sprintf(flowCont.mStagePath2, "%s", inf->mFileName);
-
-							if (gameflow.mGamePrefs.mUnlockedStageFlags)
-								gameflow.mGamePrefs.openStage(inf->mStageID);
-
+							enterCourse(inf);
 							mNextSectionId = 0x70000;
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
@@ -190,20 +184,14 @@ struct MapSelectSetupSection : public Node {
 			}
 
 			if (mapWindow && mapWindow->update(mController)) {
-				int stageId = mapWindow->mSelectedCourseNumber;
-				if (stageId == 6) {
+				zen::DrawWorldMap::returnStatusFlag returnStatus = mapWindow->getReturnStatusFlag();
+				if (returnStatus == zen::DrawWorldMap::RETURNSTATUS_WorldMapPaused) {
 					mSectionState = 1;
 					gsys->setFade(0.0f, 3.0f);
 				} else {
 					for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
-						if (inf->mStageID == stageId) {
-							flowCont.mCurrentStage = inf;
-							sprintf(flowCont.mStagePath1, "%s", inf->mFileName);
-							sprintf(flowCont.mStagePath2, "%s", inf->mFileName);
-
-							if (gameflow.mGamePrefs.mUnlockedStageFlags)
-								gameflow.mGamePrefs.openStage(inf->mStageID);
-
+						if (inf->mStageID == returnStatus) {
+							enterCourse(inf);
 							mNextSectionId = 0x70000;
 
 							gameflow.mWorldClock.setTime(gameflow.mParameters->mStartHour());
@@ -222,8 +210,6 @@ struct MapSelectSetupSection : public Node {
 			Jac_SceneExit(13, 0);
 			gsys->softReset();
 		}
-
-		STACK_PAD_VAR(2);
 	}
 	virtual void draw(Graphics& gfx) // _14 (weak)
 	{

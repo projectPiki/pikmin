@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-namespace NakataCodeInitializer {
-void init();
+struct NakataCodeInitializer {
+	static void init();
 };
 
 extern BOOL nakataDebugMode;

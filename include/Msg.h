@@ -34,7 +34,7 @@ struct Msg {
 	{
 	}
 
-	int mMsgType; // _00
+	int mMsgType; // _00, see `MsgType` enum.
 };
 
 /**

@@ -71,17 +71,17 @@ struct NaviWhistle : public KEffect {
 	virtual void kill() // _30
 	{
 		if (mEfxA) {
-			effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+			effectMgr->kill(mEfxA, false);
 			mEfxA = nullptr;
 		}
 
 		if (mEfxB) {
-			effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+			effectMgr->kill(mEfxB, false);
 			mEfxB = nullptr;
 		}
 
 		if (mEfxC) {
-			effectMgr->mPtclMgr.killGenerator(mEfxC, false);
+			effectMgr->kill(mEfxC, false);
 			mEfxC = nullptr;
 		}
 	}
@@ -135,7 +135,7 @@ struct NaviFue : public KEffect {
 		for (int i = 0; i < mEntryNum; i++) {
 			if (mEntries[i]) {
 				mEntries[i]->setFreqFrm(0.0f);
-				effectMgr->mPtclMgr.killGenerator(mEntries[i], false);
+				effectMgr->kill(mEntries[i], false);
 			}
 			mEntries[i] = nullptr;
 		}

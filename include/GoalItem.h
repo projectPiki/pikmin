@@ -2,6 +2,7 @@
 #define _GOALITEM_H
 
 #include "CreatureProp.h"
+#include "GlobalGameOptions.h"
 #include "RopeCreature.h"
 #include "Shape.h"
 #include "SimpleAI.h"
@@ -106,7 +107,7 @@ struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*
 		mColourAnimationEnabled = true;
 	}
 
-	int getTotalStorePikis() { return mHeldPikis[0] + mHeldPikis[1] + mHeldPikis[2]; }
+	int getTotalStorePikis() { return mHeldPikis[Leaf] + mHeldPikis[Bud] + mHeldPikis[Flower]; }
 
 	// _00       = VTBL
 	// _00-_3C8  = Suckable

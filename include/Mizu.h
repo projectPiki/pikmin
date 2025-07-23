@@ -30,9 +30,9 @@ struct MizuProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mMizuProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mMizuProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -63,8 +63,6 @@ struct Mizu : public Boss {
 
 	void initMizu(Vector3f&);
 	void initGeyzer(Vector3f&);
-
-	inline MizuProp* getMizuProp() { return static_cast<MizuProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss

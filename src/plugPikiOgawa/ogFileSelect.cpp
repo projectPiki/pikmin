@@ -1237,7 +1237,7 @@ void zen::ogScrFileSelectMgr::quit()
  * Address:	8018AFB0
  * Size:	000A20
  */
-zen::ogScrFileSelectMgr::FileSelectUpdateResult zen::ogScrFileSelectMgr::update(Controller* controller, CardQuickInfo& cardInfo)
+zen::ogScrFileSelectMgr::returnStatusFlag zen::ogScrFileSelectMgr::update(Controller* controller, CardQuickInfo& cardInfo)
 {
 	if (mSelectState == Inactive) {
 		return mSelectState;

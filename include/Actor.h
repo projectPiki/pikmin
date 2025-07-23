@@ -8,12 +8,14 @@
 #include "Piki.h"
 #include "types.h"
 
+struct ActorMgr;
 struct SimpleAI;
 
 /**
  * @brief TODO
  *
  * @note Fun fact: The vtable for this does spawn, but then gets stripped :')
+ * @note Size: 0x3DC.
  */
 struct Actor : public AICreature {
 	Actor(); // unused/inlined
@@ -36,6 +38,8 @@ struct Actor : public AICreature {
 	// _00-_304 = AICreature
 	PaniPikiAnimMgr mPikiAnimMgr; // _304
 	PikiShapeObject* mPikiShape;  // _3B0
+	u8 _3B4[0x3d8 - 0x3b4];       // _3B4
+	ActorMgr* mMgr;               // _3D8
 };
 
 /**

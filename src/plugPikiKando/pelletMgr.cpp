@@ -38,37 +38,37 @@ DEFINE_PRINT("pel");
 bool SmartTurnOver;
 
 static u32 _ufoIDTable[] = {
-	'ust1', // 0, bowsprit
-	'ust2', // 1, gluon drive
-	'ust3', // 2, anti-dioxin filter
-	'ust4', // 3, eternal fuel dynamo
-	'ust5', // 4, main engine
-	'uf01', // 5, whimsical radar
-	'uf02', // 6, interstellar radio
-	'uf03', // 7, guard satellite
-	'uf04', // 8, chronos reactor
-	'uf05', // 9, radiation canopy
-	'uf06', // 10, geiger counter
-	'uf07', // 11, sagittarius
-	'uf08', // 12, libra
-	'uf09', // 13, omega stabilizer
-	'uf10', // 14, ionium jet #1
-	'uf11', // 15, ionium jet #2
-	'un01', // 16, shock absorber
-	'un02', // 17, gravity jumper
-	'un03', // 18, pilot seat
-	'un04', // 19, nova blaster
-	'un05', // 20, automatic gear
-	'un06', // 21, zirconium rotor
-	'un07', // 22, extraordinary bolt
-	'un08', // 23, repair-type bolt
-	'un09', // 24, space float
-	'un10', // 25, massage machine
-	'un11', // 26, secret safe
-	'un12', // 27, positron generator
-	'un13', // 28, analog computer
-	'un14', // 29, UV lamp
-	'udef', // 30, undefined/invalid
+	UFOID_Bowsprit,
+	UFOID_GluonDrive,
+	UFOID_AntiDioxinFilter,
+	UFOID_EternalFuelDynamo,
+	UFOID_MainEngine,
+	UFOID_WhimsicalRadar,
+	UFOID_InterstellarRadio,
+	UFOID_GuardSatellite,
+	UFOID_ChronosReactor,
+	UFOID_RadiationCanopy,
+	UFOID_GeigerCounter,
+	UFOID_Sagittarius,
+	UFOID_Libra,
+	UFOID_OmegaStabilizer,
+	UFOID_IoniumJet1,
+	UFOID_IoniumJet2,
+	UFOID_ShockAbsorber,
+	UFOID_GravityJumper,
+	UFOID_PilotSeat,
+	UFOID_NovaBlaster,
+	UFOID_AutomaticGear,
+	UFOID_ZirconiumRotor,
+	UFOID_ExtraordinaryBolt,
+	UFOID_RepairTypeBolt,
+	UFOID_SpaceFloat,
+	UFOID_MassageMachine,
+	UFOID_SecretSafe,
+	UFOID_PositronGenerator,
+	UFOID_AnalogComputer,
+	UFOID_UVLamp,
+	UFOID_UNDEF,
 };
 
 /*
@@ -80,7 +80,7 @@ int PelletMgr::getUfoIndexFromID(u32 ufoID)
 {
 	int i;
 	for (i = 0;; i++) {
-		if (_ufoIDTable[i] == 'udef') {
+		if (_ufoIDTable[i] == UFOID_UNDEF) {
 			return -1;
 		}
 
@@ -1059,7 +1059,7 @@ void Pellet::doSave(RandomAccessStream& output)
  * Address:	80096E7C
  * Size:	0003B8
  */
-void Pellet::startAI(BOOL doSpawnScaleOff)
+void Pellet::startAI(int doSpawnScaleOff)
 {
 	mRotationQuat.fromEuler(Vector3f(0.0f, mFaceDirection, 0.0f));
 	mRotation.set(0.0f, mFaceDirection, 0.0f);
@@ -1100,7 +1100,8 @@ void Pellet::startAI(BOOL doSpawnScaleOff)
 	}
 
 	if (check) {
-		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isCreatureFlag(CF_GravityEnabled) ? "true" : "false");
+		// The string says `isMotionFlag`, but the code says `isCreatureFlag`. I think `isMotionFlag` was intended.
+		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isCreatureFlag(2) ? "true" : "false");
 		ERROR("DAME DESU YO !\n"); // 'no you can't!'
 	}
 
@@ -1250,6 +1251,7 @@ void Pellet::update()
 	mIsAIActive = isOnGround;
 	int state   = getState();
 
+	// TODO: This is supposed to use `isMovieFlag(1)`, but the stack gets too inflated if it does.
 	if (state == PELSTATE_Swallowed && !(pelletMgr->mMovieFlags & 1)) {
 		mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 		return;
@@ -1548,7 +1550,13 @@ bool InteractKill::actPellet(Pellet* pellet)
  */
 bool PelletMgr::decomposeNumberPellet(u32 id, int& color, int& type)
 {
-	for (int i = 0; i < 20; i++) {
+	// Blantant undefined behavior, as `numberPellets` contains less than 20 elements.
+#if defined(BUGFIX)
+	for (int i = 0; i < ARRAY_SIZE(numberPellets); i++)
+#else
+	for (int i = 0; i < 20; i++)
+#endif
+	{
 		if (id == numberPellets[i].mPelletID) {
 			color = numberPellets[i].mPelletColor;
 			type  = numberPellets[i].mPelletType;

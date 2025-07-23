@@ -25,7 +25,7 @@ ActBou::ActBou(Piki* piki)
     : Action(piki, true)
 {
 	setName("Bou");
-	mCurrActionIdx = -1;
+	mCurrActionIdx = PikiAction::NOACTION;
 }
 
 /*

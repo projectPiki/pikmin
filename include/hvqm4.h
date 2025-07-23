@@ -8,7 +8,8 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 /*
- * Hudson Video Quantization Method 4 (HVQM4) Video Decoder
+ * Hybrid Vector Quantization Movie 4 (HVQM4) Video Decoder
+ * An expired patent for it: https://patents.google.com/patent/US6714687B2/
  *
  * == Frame Structure ==
  * Video frames are divided into 4x4 pixel blocks, which are grouped into 8x8 macroblocks.

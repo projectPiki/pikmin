@@ -75,7 +75,7 @@ void RopeItem::init(Vector3f& pos)
  */
 void RopeItem::autoInit()
 {
-	Iterator it(itemMgr, 0);
+	Iterator it(itemMgr);
 
 	if (_2D0 == 0) {
 		Creature* fulcrum = nullptr;

@@ -8,16 +8,16 @@ struct Shape;
 /*
  * @brief TODO
  */
-namespace GlobalShape {
-void exitCourse();
-void init();
+struct GlobalShape {
+	static void exitCourse();
+	static void init();
 
-extern Shape* arrowShape;
-extern Shape* markerShape;
-extern Shape* axisShape;
-extern Shape* enShape;
-extern Shape* markerShape2;
-extern Shape* cursorShape;
-} // namespace GlobalShape
+	static Shape* arrowShape;
+	static Shape* markerShape;
+	static Shape* axisShape;
+	static Shape* enShape;
+	static Shape* markerShape2;
+	static Shape* cursorShape;
+};
 
 #endif

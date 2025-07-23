@@ -554,7 +554,15 @@ Navi::Navi(CreatureProp* props, int naviID)
  */
 void Navi::Locus::update()
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (matching by size)
+	f32 time = gsys->getFrameTime() * 2.4f;
+	_00      = _00 + _0C * time;
+	_18.updatePos(_00);
+	if (_00.y < mapMgr->getMinY(_00.x, _00.z, true)) {
+		_28 = 1;
+		_18.kill();
+	}
+	_0C.y -= AIConstant::_instance->mConstants.mGravity() * time;
 }
 
 /*
@@ -1802,7 +1810,7 @@ void Navi::makeVelocity(bool p1)
 		transform.transform(stickVec);
 		if (!p1) {
 			Stickers stuckList(this);
-			int stickCount = stuckList.getCount();
+			int stickCount = stuckList.getNumStickers();
 			f32 drag       = 1.0f;
 			if (stickCount > 0) {
 				drag -= stickCount * 0.08f;
@@ -1916,7 +1924,8 @@ void Navi::makeCStick(bool p1)
 
 	_764.set(0.0f, 0.0f, 0.0f);
 
-	if (subStick.length() > 0.05f) {
+	f32 val = 0.05f;
+	if (subStick.length() > val) {
 		mNeutralTime = 0.0f;
 		_764         = subStick;
 		f32 angle1   = atan2f(subStick.x, subStick.z);
@@ -1934,7 +1943,7 @@ void Navi::makeCStick(bool p1)
 		newAngle = roundAng(newAngle);
 		_714     = newAngle;
 
-		f32 dist = (subStick.length() - 0.05f) / (1.0f - 0.05f);
+		f32 dist = (subStick.length() - val) / (1.0f - val);
 		if (dist >= 0.9f) {
 			dist = 1.0f;
 		} else {
@@ -2021,7 +2030,7 @@ void Navi::makeCStick(bool p1)
 
 	_758 = subStick;
 
-	STACK_PAD_VAR(2);
+	STACK_PAD_VAR(1);
 }
 
 /*

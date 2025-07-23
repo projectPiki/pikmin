@@ -4,6 +4,7 @@
 #include "DebugLog.h"
 #include "FlowController.h"
 #include "GameStat.h"
+#include "GlobalGameOptions.h"
 #include "P2D/Graph.h"
 #include "P2D/Pane.h"
 #include "P2D/Screen.h"
@@ -358,13 +359,13 @@ zen::ogDrawScrInfo::ogDrawScrInfo()
  */
 void zen::ogDrawScrInfo::start()
 {
-	mBluePikminInSquadCount   = GameStat::formationPikis[0];
-	mRedPikminInSquadCount    = GameStat::formationPikis[1];
-	mYellowPikminInSquadCount = GameStat::formationPikis[2];
+	mBluePikminInSquadCount   = GameStat::formationPikis[Blue];
+	mRedPikminInSquadCount    = GameStat::formationPikis[Red];
+	mYellowPikminInSquadCount = GameStat::formationPikis[Yellow];
 	PRINT("ScrInfo start!\n");
-	mBluePikminTotalCount   = pikiInfMgr.getColorTotal(0);
-	mRedPikminTotalCount    = pikiInfMgr.getColorTotal(1);
-	mYellowPikminTotalCount = pikiInfMgr.getColorTotal(2);
+	mBluePikminTotalCount   = pikiInfMgr.getColorTotal(Blue);
+	mRedPikminTotalCount    = pikiInfMgr.getColorTotal(Red);
+	mYellowPikminTotalCount = pikiInfMgr.getColorTotal(Yellow);
 
 	mPikminInSquadAndOnionCount = GameStat::formationPikis + GameStat::containerPikis; // All Pikmin in formation + in the onion
 	mFieldPikminCount           = GameStat::freePikis + GameStat::workPikis + GameStat::mePikis;

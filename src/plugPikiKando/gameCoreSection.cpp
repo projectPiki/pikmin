@@ -134,7 +134,7 @@ void GameCoreSection::startMovie(u32 flags, bool useMovieBackCamera)
 	mUseMovieBackCamera    = useMovieBackCamera;
 	GoalItem::demoHideFlag = 0;
 	if (flags & CinePlayerFlags::HideRedCont) {
-		GoalItem::demoHideFlag = 2;
+		GoalItem::demoHideFlag = 2; // See: `GoalItem::refresh`
 	}
 
 	if (pelletMgr) {

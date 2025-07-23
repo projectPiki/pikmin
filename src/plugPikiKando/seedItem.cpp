@@ -177,7 +177,7 @@ void SeedItem::update()
 		// Check if the seed is close enough to the player to be picked up
 		if (distanceToPlayer < 8.0f) {
 			player->_72C++;
-			kill(nullptr);
+			kill(false);
 		}
 	}
 

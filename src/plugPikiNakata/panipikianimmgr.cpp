@@ -122,25 +122,23 @@ void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
  */
 void PaniPikiAnimMgr::updateAnimation(f32 speed)
 {
-	STACK_PAD_VAR(1); // i tried really hard to get the inlines to work, i promise
-
-	if (isFinished()) {
-		if (mAnimSpeed < mUpperAnimator.mAnimInfo->mParams.mSpeed()) {
-			setAnimSpeed(mUpperAnimator.mAnimInfo->mParams.mSpeed());
+	if (mUpperAnimator.isFinished()) {
+		if (mAnimSpeed < mUpperAnimator.getAnimationSpeed()) {
+			mAnimSpeed = mUpperAnimator.getAnimationSpeed();
 		}
 	} else {
-		setAnimSpeed(speed);
+		mAnimSpeed = speed;
 	}
 
 	f32 currSpeed = mAnimSpeed;
-	if (!(mUpperAnimator.mAnimInfo->mParams.mFlags() & ANIMFLAG_UseDynamicSpeed)) {
-		setAnimSpeed(mUpperAnimator.mAnimInfo->mParams.mSpeed());
+	if (!mUpperAnimator.getCurrentOption(ANIMFLAG_UseDynamicSpeed)) {
+		mAnimSpeed = mUpperAnimator.getAnimationSpeed();
 	}
 
 	mUpperAnimator.animate(mAnimSpeed);
 
-	if (!(mLowerAnimator.mAnimInfo->mParams.mFlags() & ANIMFLAG_UseDynamicSpeed)) {
-		setAnimSpeed(mLowerAnimator.mAnimInfo->mParams.mSpeed());
+	if (!mLowerAnimator.getCurrentOption(ANIMFLAG_UseDynamicSpeed)) {
+		mAnimSpeed = mLowerAnimator.getAnimationSpeed();
 	}
 
 	mLowerAnimator.animate(currSpeed);

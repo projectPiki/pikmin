@@ -23,7 +23,10 @@ DEFINE_PRINT("pickCreature\n")
 ActPickCreature::ActPickCreature(Piki* piki)
     : AndAction(piki)
 {
-	setChildren(CHILD_COUNT, new ActGoto(piki), nullptr, new ActPick(piki), nullptr);
+	setChildren(CHILD_COUNT,                //
+	            new ActGoto(piki), nullptr, //
+	            new ActPick(piki), nullptr  //
+	);
 }
 
 /*
@@ -55,8 +58,11 @@ void ActPickCreature::InitGoto::initialise(Action*, Action*)
 ActDeliver::ActDeliver(Piki* piki)
     : AndAction(piki)
 {
-	setChildren(CHILD_COUNT, new ActPickCreature(piki), nullptr, new ActGoto(piki), new ActGoto::Initialiser(50.0f, 0.0f, nullptr),
-	            new ActPut(piki), nullptr);
+	setChildren(CHILD_COUNT,                                                       //
+	            new ActPickCreature(piki), nullptr,                                //
+	            new ActGoto(piki), new ActGoto::Initialiser(50.0f, 0.0f, nullptr), //
+	            new ActPut(piki), nullptr                                          //
+	);
 }
 
 /*

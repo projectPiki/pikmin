@@ -30,7 +30,7 @@ DEFINE_PRINT("aiBridge")
 ActBridge::ActBridge(Piki* piki)
     : Action(piki, true)
 {
-	mName   = "Bridge";
+	setName("Bridge");
 	mBridge = nullptr;
 }
 

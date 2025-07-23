@@ -124,7 +124,7 @@ bool TAIAreserveMotion::act(Teki& teki)
 void TAIAmotionLoop::start(Teki& teki)
 {
 	TAIAreserveMotion::start(teki);
-	teki.mFrameCounter = 0.0f;
+	teki.setFrameCounter(0.0f);
 }
 
 /*

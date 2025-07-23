@@ -327,7 +327,7 @@ void PelletGoalState::init(Pellet* pelt)
 
 	_10        = 0.0f;
 	mWaitTimer = 1.5f;
-	pelt->setCreatureFlag(CF_Unk8); // needs a further inline
+	pelt->setFlag80();
 	pelt->mVelocity.y = 0.0f;
 
 	if (pelt->mTargetGoal->mObjType != OBJTYPE_Ufo) {

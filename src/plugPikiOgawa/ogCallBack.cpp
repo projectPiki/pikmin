@@ -80,14 +80,14 @@ bool zen::TextColorCallBack::invoke(P2DPane* pane)
 		// and interpolate the character and gradient colors
 		f32 in           = mElapsedTime / mTransitionDuration;
 		f32 out          = 1.0f - in;
-		characterColor.r = colorMerge(mTargetCharColor.r, in, mInitialCharColor.r, out);
-		characterColor.g = colorMerge(mTargetCharColor.g, in, mInitialCharColor.g, out);
-		characterColor.b = colorMerge(mTargetCharColor.b, in, mInitialCharColor.b, out);
+		characterColor.r = colorBlend(mTargetCharColor.r, in, mInitialCharColor.r, out);
+		characterColor.g = colorBlend(mTargetCharColor.g, in, mInitialCharColor.g, out);
+		characterColor.b = colorBlend(mTargetCharColor.b, in, mInitialCharColor.b, out);
 		characterColor.a = mTextBox->getAlphaChar();
 
-		gradientColor.r = colorMerge(mTargetGradColor.r, in, mInitialGradColor.r, out);
-		gradientColor.g = colorMerge(mTargetGradColor.g, in, mInitialGradColor.g, out);
-		gradientColor.b = colorMerge(mTargetGradColor.b, in, mInitialGradColor.b, out);
+		gradientColor.r = colorBlend(mTargetGradColor.r, in, mInitialGradColor.r, out);
+		gradientColor.g = colorBlend(mTargetGradColor.g, in, mInitialGradColor.g, out);
+		gradientColor.b = colorBlend(mTargetGradColor.b, in, mInitialGradColor.b, out);
 		gradientColor.a = mTextBox->getAlphaChar();
 
 		mTextBox->setCharColor(characterColor);

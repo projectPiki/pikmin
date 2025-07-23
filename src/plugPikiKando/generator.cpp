@@ -811,7 +811,7 @@ void Generator::read(RandomAccessStream& input)
 	mGeneratorVersion != 'v0.0';
 
 	if (!ramMode) {
-		for (int i = 0; i < 0x20; i++) {
+		for (int i = 0; i < 32; i++) {
 			mMemo[i] = input.readByte();
 		}
 	} else {

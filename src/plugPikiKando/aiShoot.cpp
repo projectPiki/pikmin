@@ -25,7 +25,10 @@ DEFINE_PRINT("aiShoot")
 ActShoot::ActShoot(Piki* piki)
     : AndAction(piki)
 {
-	setChildren(CHILD_COUNT, new ActGoto(piki), new ActGoto::Initialiser(220.0f, 100.0f, nullptr), new ActShootCreature(piki), nullptr);
+	setChildren(CHILD_COUNT,                                                          //
+	            new ActGoto(piki), new ActGoto::Initialiser(220.0f, 100.0f, nullptr), //
+	            new ActShootCreature(piki), nullptr                                   //
+	);
 	mTarget.clear();
 	mTargetIsPlayer = false;
 }

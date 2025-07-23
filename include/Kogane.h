@@ -79,9 +79,9 @@ struct KoganeProp : public BossProp, public CoreNode {
 
 	virtual void read(RandomAccessStream& input) // _08
 	{
-		mCreatureProps.Parameters::read(input);
-		mBossProps.Parameters::read(input);
-		mKoganeProps.Parameters::read(input);
+		mCreatureProps.read(input);
+		mBossProps.read(input);
+		mKoganeProps.read(input);
 	};
 
 	// _54       = VTBL 1
@@ -109,8 +109,6 @@ struct Kogane : public Boss {
 	virtual void doKill();                      // _10C
 	virtual void exitCourse();                  // _110
 	virtual void drawShape(Graphics&);          // _120
-
-	inline KoganeProp* getKoganeProp() { return static_cast<KoganeProp*>(mProps); }
 
 	// _00      = VTBL
 	// _00-_3B8 = Boss

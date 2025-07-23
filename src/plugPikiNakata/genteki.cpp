@@ -63,7 +63,7 @@ void GenObjectTeki::doRead(RandomAccessStream& input)
 	if (mVersion <= 8) {
 		mTekiType = input.readInt();
 	} else {
-		mTekiType = (u8)input.readByte();
+		mTekiType = input.readByte();
 	}
 
 	mPersonality->read(input, mVersion);

@@ -35,7 +35,9 @@ ActAttack::ActAttack(Piki* piki)
     : AndAction(piki)
 {
 	setName("attack");
-	setChildren(1, new ActJumpAttack(piki), nullptr);
+	setChildren(CHILD_COUNT,                     //
+	            new ActJumpAttack(piki), nullptr //
+	);
 	mOther.clear();
 	mTargetIsPlayer = false;
 }
@@ -60,7 +62,7 @@ void ActAttack::init(Creature* creature)
 	if (!creature) {
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
 		mPlayerObject = nullptr;
-		_20           = 0;
+		_20             = nullptr;
 		mTargetIsPlayer = false;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
 		mPlayerObject = creature;
@@ -68,7 +70,7 @@ void ActAttack::init(Creature* creature)
 		creature      = findTarget();
 	} else {
 		mPlayerObject = nullptr;
-		_20           = 0;
+		_20             = nullptr;
 		mTargetIsPlayer = false;
 	}
 

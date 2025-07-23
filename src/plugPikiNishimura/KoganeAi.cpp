@@ -467,10 +467,10 @@ void KoganeAi::createPellet()
 		int dropType = dropTable[(mDropCount - 1) % 4];
 		switch (dropType) {
 		case KOGANEDROP_1Pellet:
-			birthItemPellet(0);
+			birthItemPellet(NUMPEL_OnePellet);
 			break;
 		case KOGANEDROP_5Pellet:
-			birthItemPellet(1);
+			birthItemPellet(NUMPEL_FivePellet);
 			break;
 		case KOGANEDROP_Nectar:
 			birthItemWater(2, 0.4f);

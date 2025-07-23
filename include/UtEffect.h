@@ -168,7 +168,7 @@ struct SimpleEffect : public KEffect {
 	virtual void kill() // _30
 	{
 		if (mEfx) {
-			effectMgr->mPtclMgr.killGenerator(mEfx, false);
+			effectMgr->kill(mEfx, false);
 		}
 	}
 
@@ -266,7 +266,7 @@ struct UfoSuikomiEffect : public KEffect {
 	virtual void kill() // _30
 	{
 		if (mEfx) {
-			effectMgr->mPtclMgr.killGenerator(mEfx, false);
+			effectMgr->kill(mEfx, false);
 			mEfx = nullptr;
 		}
 	}
@@ -394,12 +394,12 @@ struct WhistleTemplate : public KEffect {
 		// PRINT("** KILL WHISTLE TYPE\n");
 		if (mEfxA) {
 			// PRINT("* DO KILL pg2\n");
-			effectMgr->mPtclMgr.killGenerator(mEfxA, false);
+			effectMgr->kill(mEfxA, false);
 			mEfxA = nullptr;
 		}
 		if (mEfxB) {
 			// PRINT("* DO KILL pg3\n");
-			effectMgr->mPtclMgr.killGenerator(mEfxB, false);
+			effectMgr->kill(mEfxB, false);
 			mEfxB = nullptr;
 		}
 	}

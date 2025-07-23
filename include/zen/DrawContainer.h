@@ -1,6 +1,7 @@
 #ifndef _ZEN_DRAWCONTAINER_H
 #define _ZEN_DRAWCONTAINER_H
 
+#include "GlobalGameOptions.h"
 #include "P2D/Pane.h"
 #include "P2D/Picture.h"
 #include "P2D/Screen.h"
@@ -38,9 +39,9 @@ struct DrawContainer {
 	 * @brief TODO
 	 */
 	enum containerType {
-		COLOR_Blue   = 0, // probably blue?
-		COLOR_Red    = 1, // probably red?
-		COLOR_Yellow = 2, // probably yellow?
+		COLOR_Blue   = Blue,
+		COLOR_Red    = Red,
+		COLOR_Yellow = Yellow,
 	};
 
 	/**

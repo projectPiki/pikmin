@@ -2,6 +2,7 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_fp.h"
 #include "ctype.h"
 #include "stdarg.h"
+#include "stl/limits.h"
 #include "stl/stdio.h"
 #include "stl/string.h"
 #include "types.h"
@@ -1114,7 +1115,7 @@ int vsnprintf(char* s, size_t n, const char* format, va_list arg)
  */
 int vsprintf(char* s, const char* format, va_list arg)
 {
-	return vsnprintf(s, 0xFFFFFFFFUL, format, arg);
+	return vsnprintf(s, UINT_MAX, format, arg);
 }
 
 /*
@@ -1136,5 +1137,5 @@ int sprintf(char* s, const char* format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	return vsnprintf(s, 0xFFFFFFFFUL, format, args);
+	return vsnprintf(s, UINT_MAX, format, args);
 }

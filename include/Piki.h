@@ -305,7 +305,7 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	f32 _4EC;                             // _4EC
 	f32 _4F0;                             // _4F0
 	f32 mPikiSize;                        // _4F4
-	TopAction* mActiveAction;             // _4F8, may be just Action*
+	TopAction* mActiveAction;             // _4F8
 	u16 mMode;                            // _4FC, use PikiMode enum
 	SmartPtr<Creature> _500;              // _500
 	Navi* mNavi;                          // _504

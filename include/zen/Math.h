@@ -55,19 +55,18 @@ inline f32 RandShift(f32 min)
 {
 	return Rand(2.0f * min) - min;
 }
+
+struct ZenQuat {
+	// unused globals
+	static void GetMatrix(const Quat&, Matrix3f&);
+	static void GetMatrix(const Quat&, Matrix4f&);
+	static void GetRotate(const Quat&, Vector3f&);
+};
+
+struct zenMatrix4f {
+	// Probably an inline
+	static void tMatrixTo(Matrix4f&, Matrix4f&);
+};
 } // namespace zen
-
-namespace ZenQuat {
-
-// unused globals
-static void GetMatrix(Quat const&, Matrix3f&);
-static void GetMatrix(Quat const&, Matrix4f&);
-static void GetRotate(Quat const&, Vector3f&);
-
-} // namespace ZenQuat
-
-namespace zenMatrix4f {
-static void tMatrixTo(Matrix4f&, Matrix4f&);
-}
 
 #endif

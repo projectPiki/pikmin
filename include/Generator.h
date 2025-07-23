@@ -108,15 +108,26 @@ struct Factory {
 		return id;
 	}
 
-	// DLL inlines to make:
-	// bool isDone(Member*);
-	// Member* first();
-	// Member* next();
+	Member* first()
+	{
+		mIterIndex = 0;
+		return next();
+	}
+
+	Member* next()
+	{
+		if (mIterIndex < mSpawnerCount) {
+			return &mSpawnerInfo[mIterIndex++];
+		}
+		return nullptr;
+	}
+
+	bool isDone(Member* member) { return !member; }
 
 	int mSpawnerCount;    // _00
 	int mMaxSpawners;     // _04
 	Member* mSpawnerInfo; // _08, array
-	u8 _0C[0x4];          // _0C, unknown
+	int mIterIndex;       // _0C
 };
 
 /**
@@ -269,7 +280,7 @@ struct GenObjectActor : public GenObject {
 	inline GenObjectActor()
 	    : GenObject('actr', "create actor")
 	{
-		mActorId = nullptr;
+		mActorId = 0; // POLICE
 	}
 
 	virtual void doRead(RandomAccessStream&); // _14
@@ -283,7 +294,7 @@ struct GenObjectActor : public GenObject {
 
 	// _04     = VTBL
 	// _00-_18 = GenObject
-	u32 mActorId; // _18
+	int mActorId; // _18
 };
 
 /**
@@ -376,8 +387,8 @@ struct GenObjectItem : public GenObject {
 	Parm<int> mParameterC; // _38
 	Parm<int> mParameterD; // _48
 	int mObjType;          // _58
-	char mName1[32];       // _5C
-	char mName2[32];       // _7C
+	char mStageName[32];   // _5C
+	char mPrintName[32];   // _7C
 };
 
 /**
@@ -731,7 +742,7 @@ struct GenTypeFactory : public Factory<GenType> {
 
 	static GenTypeFactory* factory;
 
-	// TODO: members
+	// _00-_0C = Factory
 };
 
 /**
@@ -809,7 +820,7 @@ struct GenAreaFactory : public Factory<GenArea> {
 
 	static GenAreaFactory* factory;
 
-	// TODO: members
+	// _00-_0C = Factory
 };
 
 /**

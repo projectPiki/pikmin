@@ -1159,7 +1159,7 @@ void TaiNapkidCatchAscendingAction::start(Teki& teki)
 void TaiNapkidTakingOffAscendingAction::start(Teki& teki)
 {
 	Stickers stickers(&teki);
-	int stickerCount = stickers.getCount();
+	int stickerCount = stickers.getNumStickers();
 
 	f32 values[2];
 	NClampLinearFunction linearFunc(values);
@@ -1251,7 +1251,7 @@ bool TaiNapkidThrowingPikiAction::act(Teki& teki)
 bool TaiNapkidFlickAction::act(Teki& teki)
 {
 	Stickers stickers(&teki);
-	int stickCount = stickers.getCount();
+	int stickCount = stickers.getNumStickers();
 
 	f32 linValues[2];
 	NClampLinearFunction cLinearFunc(linValues);

@@ -447,7 +447,7 @@ bool Boss::flickPikiTransit()
 int Boss::getStickPikiCount()
 {
 	Stickers stickers(this);
-	return stickers.getCount();
+	return stickers.getNumStickers();
 }
 
 /*
