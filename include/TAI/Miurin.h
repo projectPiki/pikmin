@@ -134,6 +134,7 @@ struct TAImiurinAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAinitMiurin : public TaiAction {
+public:
 	TAIAinitMiurin(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -149,6 +150,7 @@ struct TAIAinitMiurin : public TaiAction {
 		return true;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -158,6 +160,7 @@ struct TAIAinitMiurin : public TaiAction {
  * @brief TODO
  */
 struct TAIAgroggyMiurin : public TAIAreserveMotion {
+public:
 	TAIAgroggyMiurin(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -184,6 +187,7 @@ struct TAIAgroggyMiurin : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -193,6 +197,7 @@ struct TAIAgroggyMiurin : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAresetAnimSpeedMiurin : public TaiAction {
+public:
 	TAIAresetAnimSpeedMiurin()
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
@@ -200,6 +205,7 @@ struct TAIAresetAnimSpeedMiurin : public TaiAction {
 
 	virtual void start(Teki& teki) { teki.setManualAnimation(false); } // _08
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -230,6 +236,7 @@ struct TAIAcheckFlowerPikmin;
  * @brief TODO
  */
 struct TAIAsatisfyMiurin : public TAIAreserveMotion {
+public:
 	TAIAsatisfyMiurin(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -266,6 +273,7 @@ struct TAIAsatisfyMiurin : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -282,6 +290,7 @@ struct TAIAwatchNaviMiurin;
  * @brief TODO
  */
 struct TAIAoutsideTerritoryMiurin : public TAIAoutsideTerritory {
+public:
 	TAIAoutsideTerritoryMiurin(int nextState)
 	    : TAIAoutsideTerritory(nextState)
 	{
@@ -300,6 +309,7 @@ struct TAIAoutsideTerritoryMiurin : public TAIAoutsideTerritory {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAoutsideTerritory?
 	// TODO: members
@@ -309,11 +319,13 @@ struct TAIAoutsideTerritoryMiurin : public TAIAoutsideTerritory {
  * @brief TODO
  */
 struct TAIAflickingMiurin : public TAIAflickingReserveMotion {
+public:
 	TAIAflickingMiurin(int nextState, int motionID)
 	    : TAIAflickingReserveMotion(nextState, motionID)
 	{
 	}
 
+protected:
 	virtual f32 getFlickDirection(Teki& teki) // _20
 	{
 		return teki.mFaceDirection + PI;
@@ -328,6 +340,7 @@ struct TAIAflickingMiurin : public TAIAflickingReserveMotion {
  * @brief TODO
  */
 struct TAIAflickCheckMiurin : public TAIAflickCheck {
+public:
 	TAIAflickCheckMiurin(int nextState)
 	    : TAIAflickCheck(nextState, -1)
 	{
@@ -337,6 +350,8 @@ struct TAIAflickCheckMiurin : public TAIAflickCheck {
 	{
 		return TAIAflickCheck::act(teki);
 	}
+
+protected:
 	virtual int getDamageCountLimit(Teki& teki) // _1C
 	{
 		return teki.getParameterI(TAImiurinIntParams::ShakeOffHitCount);
@@ -351,11 +366,13 @@ struct TAIAflickCheckMiurin : public TAIAflickCheck {
  * @brief TODO
  */
 struct TAIAstickingPikiMiurin : public TAIAstickingPiki {
+public:
 	TAIAstickingPikiMiurin(int nextState)
 	    : TAIAstickingPiki(nextState, 0)
 	{
 	}
 
+protected:
 	virtual int getPikiNum(Teki& teki) // _1C
 	{
 		return teki.getParameterI(TAImiurinIntParams::MaxStickPiki);
@@ -384,6 +401,7 @@ struct TAIAattackMiurin;
  * @brief TODO
  */
 struct TAIAattackPosture : public TAIAreserveMotion {
+public:
 	TAIAattackPosture(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -399,6 +417,7 @@ struct TAIAattackPosture : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -415,6 +434,7 @@ struct TAIAattackableTargetMiurin;
  * @brief TODO
  */
 struct TAIAapproachTargetPriorityFaceDirMiurin : public TAIAapproachTargetPriorityFaceDir {
+public:
 	TAIAapproachTargetPriorityFaceDirMiurin(int nextState, int motionID)
 	    : TAIAapproachTargetPriorityFaceDir(nextState, motionID)
 	{
@@ -425,6 +445,8 @@ struct TAIAapproachTargetPriorityFaceDirMiurin : public TAIAapproachTargetPriori
 		TAIAapproachTargetPriorityFaceDir::start(teki);
 		teki.setAnimSpeed(60.0f);
 	}
+
+protected:
 	virtual f32 getVelocity(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TPF_RunVelocity);
@@ -439,6 +461,7 @@ struct TAIAapproachTargetPriorityFaceDirMiurin : public TAIAapproachTargetPriori
  * @brief TODO
  */
 struct TAIAturnFocusCreatureMiurin : public TAIAturnFocusCreature {
+public:
 	TAIAturnFocusCreatureMiurin(int nextState, int leftMotionID, int rightMotionID, bool p4)
 	    : TAIAturnFocusCreature(nextState, leftMotionID, rightMotionID, p4)
 	{
@@ -449,6 +472,8 @@ struct TAIAturnFocusCreatureMiurin : public TAIAturnFocusCreature {
 		TAIAturnFocusCreature::start(teki);
 		teki.setAnimSpeed(60.0f);
 	}
+
+protected:
 	virtual f32 getTurnVelocity(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAImiurinFloatParams::AngryRotationSpeed);
@@ -463,6 +488,7 @@ struct TAIAturnFocusCreatureMiurin : public TAIAturnFocusCreature {
  * @brief TODO
  */
 struct TAIAdyingMiurin : public TAIAdying {
+public:
 	TAIAdyingMiurin(int nextState, int motionID)
 	    : TAIAdying(nextState, motionID)
 	{
@@ -489,6 +515,7 @@ struct TAIAdyingMiurin : public TAIAdying {
 		return TAIAdying::act(teki);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAdying?
 	// TODO: members

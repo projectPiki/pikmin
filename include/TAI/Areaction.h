@@ -9,6 +9,7 @@
  * @brief TODO
  */
 struct TAIAhitCheckFlyingPiki : public TaiAction {
+public:
 	inline TAIAhitCheckFlyingPiki(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -16,6 +17,7 @@ struct TAIAhitCheckFlyingPiki : public TaiAction {
 
 	virtual bool actByEvent(TekiEvent&); // _14
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -25,6 +27,7 @@ struct TAIAhitCheckFlyingPiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAdeadCheck : public TaiAction {
+public:
 	TAIAdeadCheck(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -32,6 +35,7 @@ struct TAIAdeadCheck : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -41,6 +45,7 @@ struct TAIAdeadCheck : public TaiAction {
  * @brief TODO
  */
 struct TAIAdie : public TaiAction {
+public:
 	inline TAIAdie() // TODO: this is a guess
 	    : TaiAction(-1)
 	{
@@ -48,6 +53,7 @@ struct TAIAdie : public TaiAction {
 
 	virtual void start(Teki&); // _08
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -57,6 +63,7 @@ struct TAIAdie : public TaiAction {
  * @brief TODO
  */
 struct TAIAdying : public TAIAmotion {
+public:
 	TAIAdying(int nextState, int motionID)
 	    : TAIAmotion(nextState, motionID)
 	{
@@ -65,6 +72,7 @@ struct TAIAdying : public TAIAmotion {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion
 };
@@ -73,6 +81,7 @@ struct TAIAdying : public TAIAmotion {
  * @brief TODO
  */
 struct TAIAdyingKabekui : public TAIAdying {
+public:
 	TAIAdyingKabekui(int nextState, int motionID, EffectMgr::effTypeTable effID)
 	    : TAIAdying(nextState, motionID)
 	{
@@ -82,6 +91,7 @@ struct TAIAdyingKabekui : public TAIAdying {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAdying
 	EffectMgr::effTypeTable mEffectType; // _0C
@@ -91,6 +101,7 @@ struct TAIAdyingKabekui : public TAIAdying {
  * @brief TODO
  */
 struct TAIAdyingCrushKabekui : public TAIAdyingKabekui {
+public:
 	TAIAdyingCrushKabekui(int nextState, int motionID, EffectMgr::effTypeTable effID)
 	    : TAIAdyingKabekui(nextState, motionID, effID)
 	{
@@ -98,6 +109,7 @@ struct TAIAdyingCrushKabekui : public TAIAdyingKabekui {
 
 	virtual void start(Teki&); // _08
 
+protected:
 	// _04     = VTBL
 	// _00-_10 = TAIAdyingKabekui
 };
@@ -106,6 +118,7 @@ struct TAIAdyingCrushKabekui : public TAIAdyingKabekui {
  * @brief TODO
  */
 struct TAIAdamage : public TaiAction {
+public:
 	TAIAdamage(int nextState, bool p2)
 	    : TaiAction(nextState)
 	{
@@ -113,6 +126,8 @@ struct TAIAdamage : public TaiAction {
 	}
 
 	virtual bool act(Teki&);                         // _10
+
+protected:
 	virtual bool judgeDamage(Teki&) { return true; } // _1C
 
 	// _04     = VTBL
@@ -124,6 +139,7 @@ struct TAIAdamage : public TaiAction {
  * @brief TODO
  */
 struct TAIAinWater : public TaiAction {
+public:
 	TAIAinWater(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -132,6 +148,7 @@ struct TAIAinWater : public TaiAction {
 	virtual bool act(Teki&);             // _10
 	virtual bool actByEvent(TekiEvent&); // _14
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -141,6 +158,7 @@ struct TAIAinWater : public TaiAction {
  * @brief TODO
  */
 struct TAIAinWaterDamage : public TAIAinWater {
+public:
 	TAIAinWaterDamage(int nextState, f32 damage, bool p3)
 	    : TAIAinWater(nextState)
 	{
@@ -151,6 +169,7 @@ struct TAIAinWaterDamage : public TAIAinWater {
 	virtual bool act(Teki&);             // _10
 	virtual bool actByEvent(TekiEvent&); // _14
 
+protected:
 	void createEffect(Teki&);
 
 	// _04     = VTBL
@@ -163,6 +182,7 @@ struct TAIAinWaterDamage : public TAIAinWater {
  * @brief TODO
  */
 struct TAIAnoReaction : public TaiAction {
+public:
 	TAIAnoReaction(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -170,6 +190,7 @@ struct TAIAnoReaction : public TaiAction {
 
 	virtual bool act(Teki&) { return true; } // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -179,6 +200,7 @@ struct TAIAnoReaction : public TaiAction {
  * @brief TODO
  */
 struct TAIAtimerReaction : public TaiAction {
+public:
 	TAIAtimerReaction(int nextState, f32 frameMax)
 	    : TaiAction(nextState)
 	{
@@ -197,6 +219,8 @@ struct TAIAtimerReaction : public TaiAction {
 		}
 		return false;
 	}
+
+protected:
 	virtual f32 getFrameMax(Teki& teki) { return mFrameMax; } // _1C
 
 	// _04     = VTBL
@@ -208,6 +232,7 @@ struct TAIAtimerReaction : public TaiAction {
  * @brief TODO
  */
 struct TAIAinvincibleOff : public TaiAction {
+public:
 	inline TAIAinvincibleOff(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -218,6 +243,7 @@ struct TAIAinvincibleOff : public TaiAction {
 		teki.clearTekiOption(Teki::TEKI_OPTION_INVINCIBLE);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -227,6 +253,7 @@ struct TAIAinvincibleOff : public TaiAction {
  * @brief TODO
  */
 struct TAIAinvincibleOn : public TaiAction {
+public:
 	inline TAIAinvincibleOn(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -237,6 +264,7 @@ struct TAIAinvincibleOn : public TaiAction {
 		teki.setTekiOption(Teki::TEKI_OPTION_INVINCIBLE);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -246,6 +274,7 @@ struct TAIAinvincibleOn : public TaiAction {
  * @brief TODO
  */
 struct TAIAshadowOff : public TaiAction {
+public:
 	inline TAIAshadowOff(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -257,6 +286,7 @@ struct TAIAshadowOff : public TaiAction {
 		teki.clearTekiOption(Teki::TEKI_OPTION_SHADOW_VISIBLE);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -266,6 +296,7 @@ struct TAIAshadowOff : public TaiAction {
  * @brief TODO
  */
 struct TAIAshadowOn : public TaiAction {
+public:
 	inline TAIAshadowOn(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -277,6 +308,7 @@ struct TAIAshadowOn : public TaiAction {
 		teki.setTekiOption(Teki::TEKI_OPTION_SHADOW_VISIBLE);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members

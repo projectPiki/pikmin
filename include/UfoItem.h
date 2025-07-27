@@ -43,6 +43,7 @@ struct UfoItemProp : public CreatureProp {
  * @brief TODO
  */
 struct UfoAnimator {
+public:
 	UfoAnimator();
 
 	void init(UfoShapeObject*, PaniMotionTable*);
@@ -52,11 +53,13 @@ struct UfoAnimator {
 	void stopAllMotions();
 	void initFlagMotions(int);
 	void startFlagMotions(int);
-	void setMotionLastFrame(int);
 	void updateAnimation();
 	void updateContext();
 
 	f32 getMotionSpeed(int id) { return mAnimSpeeds[id]; }
+
+protected:
+	void setMotionLastFrame(int);
 
 	PaniUfoAnimator* mAnims; // _00
 	f32* mAnimSpeeds;        // _04
@@ -68,7 +71,7 @@ struct UfoAnimator {
  * @note Size: 0x5D0.
  */
 struct UfoItem : public Suckable {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -129,8 +132,8 @@ struct UfoItem : public Suckable {
 	void updateTroubleEffect();
 	void startConeEffect(int);
 	void finishConeEffect();
+	void initLevelFlag(int);
 	void startLevelFlag(int);
-	void lightLevelFlag(int);
 	void setJetEffect(int, bool);
 	void startYozora();
 	void startGalaxy();
@@ -141,9 +144,11 @@ struct UfoItem : public Suckable {
 	void setPca1Effect(bool);
 	void setPca2Effect(bool);
 
-	// unused/inlined:
-	void initLevelFlag(int);
+protected:
+	void lightLevelFlag(int);
 
+	// I took `GameCoreSection` and `AIPerf` directly accessing members as a clue that this class was never properly encapsulated.
+public:
 	// _00      = VTBL
 	// _00-_3C8 = Suckable
 	bool mIsMenuOpen;                                     // _3C8

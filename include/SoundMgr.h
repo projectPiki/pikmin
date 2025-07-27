@@ -76,7 +76,9 @@ struct SeConstant : public Node {
  * @note Size: 0x28.
  */
 struct SeContext {
+	friend struct SeSystem;
 
+public:
 	/// Default constructor, has no emitting creature and defaults to system event type.
 	SeContext();
 
@@ -104,14 +106,15 @@ struct SeContext {
 	/// STRIPPED - gets ObjType of assigned object.
 	int getObjType();
 
-	/// STRIPPED - initialises new event of given type with updated position and event handle.
-	void createEvent(int eventType);
-
 	/// STRIPPED - prints debug information about current context.
 	void dump();
 
 	/// Sets current emitter position.
 	void setPosition(Vector3f& pos) { mSourcePosition = pos; }
+
+protected:
+	/// STRIPPED - initialises new event of given type with updated position and event handle.
+	void createEvent(int eventType);
 
 	u32 mClock;                     ///< _00, never updated, seems to be an unimplemented timer.
 	Creature* mGameObj;             ///< _04, game object emitting the sound effect.
@@ -127,7 +130,7 @@ struct SeContext {
  * @note Size: 0x30.
  */
 struct SeMgr : public Node {
-
+public:
 	/// Constructor, sets up SeInfos for some pikmin and player sounds.
 	SeMgr();
 
@@ -137,9 +140,6 @@ struct SeMgr : public Node {
 	/// Starts c-sticking "formation" sound based on c-stick magnitude/direction.
 	void playNaviSound(s32 stickX, s32 stickY);
 
-	/// Adds a new info to the list with given Jac player sound ID and name (unless maxed out).
-	void addInfo(int jacSeID, char* seName);
-
 	/// Increments the battle tracker.
 	void joinBattle();
 
@@ -148,9 +148,6 @@ struct SeMgr : public Node {
 
 	/// Passes pikmin count to jaudio to process for 'gaya' sounds.
 	void setPikiNum(int pikiNum);
-
-	/// STRIPPED - gets pointer to SeInfo based on Jac player sound ID.
-	SeInfo* findInfo(int jacSeID);
 
 	/// STRIPPED - trivial.
 	void playBGM(u32);
@@ -173,6 +170,13 @@ struct SeMgr : public Node {
 	/// Gets pointer to SeInfo based on array index (rather than sound ID).
 	SeInfo* getIndexInfo(int idx) { return &mSeInfos[idx]; }
 
+protected:
+	/// STRIPPED - gets pointer to SeInfo based on Jac player sound ID.
+	SeInfo* findInfo(int jacSeID);
+
+	/// Adds a new info to the list with given Jac player sound ID and name (unless maxed out).
+	void addInfo(int jacSeID, char* seName);
+
 	// _00     = VTBL
 	// _00-_20 = Node
 	// _00-_30 = SeMgr
@@ -188,7 +192,7 @@ struct SeMgr : public Node {
  * @note Size: 0x64.
  */
 struct SeWin : public GmWin {
-
+public:
 	/// Starts window open sequence.
 	virtual void open(); // _10
 
@@ -201,6 +205,7 @@ struct SeWin : public GmWin {
 	/// Prints current sound effect information to screen.
 	virtual void doRender(Graphics& gfx); // _1C
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	// _00-_48 = GmWin
@@ -219,7 +224,9 @@ struct SeWin : public GmWin {
  * @note Size: 0x78.
  */
 struct SeSystem {
+	friend struct SeContext;
 
+public:
 	/**
 	 * @brief Quick storage object for active sound effect events.
 	 *
@@ -241,26 +248,14 @@ struct SeSystem {
 	/// Constructor - resets everything, max 16 events by default.
 	SeSystem();
 
-	/// Initialises system and resets all events to inactive.
-	void initEvent();
-
 	/// Re-initialises + resets all events.
 	void resetSystem();
-
-	/// Creates new sound event with given context, event type and offset, and returns event handle.
-	int createEvent(SeContext* context, int eventType, SVector_* soundOffset);
 
 	/// Plays sound of given (game) ID at given position, with Piki event type.
 	void playPikiSound(int soundID, Vector3f& sourcePos);
 
 	/// Plays sound of given type, (game) ID at given position by reusing an existing context.
 	void playSoundDirect(int eventType, int soundID, Vector3f& sourcePos);
-
-	/// Destroys an event with given context and handle - returns true if successful, false if not.
-	bool destroyEvent(SeContext* context, s32 handle);
-
-	/// Gets event index of given context.
-	int getEvent(SeContext* context);
 
 	/// Renders "SE [index]" above each current active sound event.
 	void draw3d(Graphics& gfx);
@@ -283,9 +278,6 @@ struct SeSystem {
 	/// Resets and closes system, and prints debug information.
 	void exitCourse();
 
-	/// STRIPPED - gets event index of given handle.
-	int getEvent(s32 handle);
-
 	/// STRIPPED - gets name of sound based on input (game) sound ID.
 	char* getSoundName(int soundID);
 
@@ -306,6 +298,22 @@ struct SeSystem {
 
 	/// STATIC - stops given player (game) sound ID.
 	static void stopPlayerSe(int soundID);
+
+protected:
+	/// Initialises system and resets all events to inactive.
+	void initEvent();
+
+	/// Creates new sound event with given context, event type and offset, and returns event handle.
+	int createEvent(SeContext* context, int eventType, SVector_* soundOffset);
+
+	/// Destroys an event with given context and handle - returns true if successful, false if not.
+	bool destroyEvent(SeContext* context, s32 handle);
+
+	/// STRIPPED - gets event index of given handle.
+	int getEvent(s32 handle);
+
+	/// Gets event index of given context.
+	int getEvent(SeContext* context);
 
 	int mMaxSoundID;            ///< _00, initialised to number of total game sound IDs, used to check indices.
 	Matrix4f mCameraMtx;        ///< _04, matrix to do camera transformations for positions.

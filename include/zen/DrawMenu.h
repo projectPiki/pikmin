@@ -24,6 +24,7 @@ namespace zen {
  * @note Size: 0x18.
  */
 struct DrawMenuText {
+public:
 	DrawMenuText()
 	{
 		mBlendTimer = 0.0f;
@@ -42,9 +43,10 @@ struct DrawMenuText {
 
 	bool getActiveSw() { return mIsActive; }
 
-	u8 colorBlend(u8 comp1, f32 t1, u8 comp2, f32 t2) { return RoundOff(comp1 * t1 + comp2 * t2); }
-
 	void setActiveSw(bool isActive) { mIsActive = isActive; }
+
+protected:
+	u8 colorBlend(u8 comp1, f32 t1, u8 comp2, f32 t2) { return RoundOff(comp1 * t1 + comp2 * t2); }
 
 	static const f32 frameMax;
 
@@ -62,6 +64,7 @@ struct DrawMenuText {
  * @note Size: 0xC.
  */
 struct DrawMenuItem {
+public:
 	DrawMenuItem()
 	{
 		mText      = new DrawMenuText();
@@ -114,6 +117,7 @@ struct DrawMenuItem {
 
 	void setScale(f32 xScale, f32 yScale) { mText->setScale(xScale, yScale); }
 
+protected:
 	DrawMenuText* mText;    // _00
 	P2DPicture* mIconLPane; // _04
 	P2DPicture* mIconRPane; // _08
@@ -125,7 +129,7 @@ struct DrawMenuItem {
  * @note Size: 0x8.
  */
 struct DrawMenuTitle {
-
+public:
 	enum Mode {
 		MODE_Wait      = 0,
 		MODE_Start     = 1,
@@ -148,6 +152,7 @@ struct DrawMenuTitle {
 	// unused/inlined:
 	void operation();
 
+protected:
 	int mMode;           // _00
 	P2DPane* mTitlePane; // _04
 };
@@ -158,6 +163,7 @@ struct DrawMenuTitle {
  * @note Size: 0x198.
  */
 struct DrawMenuBase : public DrawScreen {
+public:
 	enum Mode {
 		MODE_Sleep     = 0,
 		MODE_Operation = 1,
@@ -170,12 +176,6 @@ struct DrawMenuBase : public DrawScreen {
 	virtual void draw(Graphics&);                           // _10
 	virtual bool update(Controller*);                       // _14
 	virtual void start();                                   // _18
-	virtual bool modeDefault(Controller*) { return false; } // _1C
-	virtual bool modeSleep(Controller*);                    // _20
-	virtual bool modeOperation(Controller*);                // _24
-	virtual void setModeFunc(int);                          // _28
-
-	void init(int);
 
 	// unused/inlined:
 	~DrawMenuBase() { }
@@ -188,6 +188,14 @@ struct DrawMenuBase : public DrawScreen {
 	u32 getEventFlag() { return mEventFlag; }
 
 	static const int SELECT_CANCEL;
+
+protected:
+	virtual bool modeDefault(Controller*) { return false; } // _1C
+	virtual bool modeSleep(Controller*);                    // _20
+	virtual bool modeOperation(Controller*);                // _24
+	virtual void setModeFunc(int);                          // _28
+
+	void init(int);
 
 	// _00-_100 = DrawScreen
 	int mMode;                         // _100
@@ -210,7 +218,7 @@ struct DrawMenuBase : public DrawScreen {
  * @brief TODO
  */
 struct DrawMenu : public DrawScreen {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -224,16 +232,10 @@ struct DrawMenu : public DrawScreen {
 	DrawMenu(char*, bool, bool);
 
 	void start(int);
-	void updateMenuPanes();
-	void updateSelectMenuNo(Controller*);
 	bool update(Controller*);
 	void draw(Graphics&);
 	void setMenuItemActiveSw(int, bool);
 	void setCancelSelectMenuNo(int);
-
-	// unused/inlined:
-	void setMirror(P2DPane*);
-	void updateSpectPanes(P2DPane*, P2DPicture**, bool);
 
 	P2DScreen* getScreenPtr() { return &mScreen; }
 
@@ -255,6 +257,12 @@ struct DrawMenu : public DrawScreen {
 	bool checkSelectMenuCancel() { return mIsSelectMenuCancel; }
 	void setCancelKeyAssign(u32 key) { mKeyCancel = key; }
 	void setDecideKeyAssign(u32 key) { mKeyDecide = key; }
+
+protected:
+	void updateMenuPanes();
+	void setMirror(P2DPane*);
+	void updateSpectPanes(P2DPane*, P2DPicture**, bool);
+	void updateSelectMenuNo(Controller*);
 
 	// _00     = VTBL
 	// _00-_100 = DrawScreen

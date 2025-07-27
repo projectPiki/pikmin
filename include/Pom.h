@@ -18,7 +18,7 @@ struct ShapeDynMaterials;
  * @brief TODO.
  */
 struct PomProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -78,6 +78,9 @@ struct PomProp : public BossProp, public CoreNode {
  * @note Size: 0x3D4.
  */
 struct Pom : public Boss {
+	friend struct PomAi;
+
+public:
 	Pom(CreatureProp*);
 
 	virtual void init(Vector3f&);               // _28
@@ -93,6 +96,7 @@ struct Pom : public Boss {
 
 	void setColor(int);
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsPikiOrPlayerTouching;   // _3B8
@@ -107,48 +111,49 @@ struct Pom : public Boss {
  * @note Size: 0x24.
  */
 struct PomAi : public PaniAnimKeyListener {
+public:
 	PomAi(Pom*);
 
+	void initAI(Pom*);
+	void killCallBackEffect(bool);
+	void update();
+	void collidePetal(Creature*);
+
+private:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void initAI(Pom*);
 	void keyAction0();
 	void keyAction1();
+	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
-	void killCallBackEffect(bool);
-	void collidePetal(Creature*);
 	void setCollideSound(Creature*);
-	int killStickPiki();
-	void createPikiHead();
-	void calcPetalStickers();
-	void initWait(int);
-	void initDischarge(int);
-	void update();
-
-	// unused/inlined:
-	void keyAction2();
-	void keyAction3();
 	void setEveryFrame();
-	void resultFlagOn();
-	bool isMotionFinishTransit();
-	void initDie(int);
-	void dieState();
 	void checkSwayAndScale();
 	void calcSwayAndScale();
 	void setInitPosition();
+	int killStickPiki();
+	void createPikiHead();
 	void emitPomOpenEffect(u32);
 	void createPomOpenEffect();
+	void calcPetalStickers();
+	void resultFlagOn();
 	void resultFlagSeen();
+	bool isMotionFinishTransit();
 	bool deadTransit();
 	bool petalOpenTransit();
 	bool petalShakeTransit();
 	bool petalCloseTransit();
 	bool dischargeTransit();
+	void initDie(int);
+	void initWait(int);
 	void initPetalOpen(int);
 	void initPetalShake(int);
 	void initPetalClose(int);
+	void initDischarge(int);
+	void dieState();
 	void waitState();
 	void openState();
 	void shakeState();
@@ -175,6 +180,7 @@ struct PomAi : public PaniAnimKeyListener {
  * @note Size: 0x8.
  */
 struct PomGenOpenStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	PomGenOpenStarCallBack() { }
 
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
@@ -188,6 +194,7 @@ struct PomGenOpenStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
 
 	void set(bool* val) { mIsActive = val; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	bool* mIsActive; // _04, points to _0A in PomAi

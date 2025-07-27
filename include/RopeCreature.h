@@ -51,6 +51,7 @@ struct RopeCreature : public Creature {
  * @note Size: 0x300.
  */
 struct RopeItem : public RopeCreature {
+public:
 	RopeItem(CreatureProp*, Shape*);
 
 	virtual void init(Vector3f&);               // _28
@@ -61,10 +62,13 @@ struct RopeItem : public RopeCreature {
 	virtual bool isAlive() { return true; }     // _88
 	virtual bool isVisible() { return true; }   // _74
 	virtual bool isAtari();                     // _84
-	virtual void doKill();                      // _10C
 
 	void autoInit();
 
+protected:
+	virtual void doKill(); // _10C
+
+public:
 	// _00      = VTBL
 	// _00-_2D0 = RopeCreature
 	int _2D0;              // _2D0

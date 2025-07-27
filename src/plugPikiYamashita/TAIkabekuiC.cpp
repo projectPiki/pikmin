@@ -21,6 +21,7 @@ DEFINE_PRINT("TAIkabekuiC")
  * @note Lives here because it needs PRINT to match.
  */
 struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
+public:
 	TAIAtakeOffKabekuiC(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -76,6 +77,7 @@ struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
 		return false;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	f32 mTakeoffSpeed;          // _0C

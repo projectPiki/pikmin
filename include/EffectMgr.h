@@ -139,7 +139,11 @@ struct EffShpInst : public CoreNode {
  * @note Size: 0x6B4
  */
 struct EffectMgr : public CoreNode {
+	friend struct EffectParticleRegistration;
+	friend struct EffectGeometryRegistration;
+	friend struct EffectSimpleParticleRegistration;
 
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -505,7 +509,6 @@ struct EffectMgr : public CoreNode {
 
 	EffectMgr();
 
-	void initEffectGeometry(int);
 	void update();
 	void draw(Graphics&);
 	void drawshapes(Graphics&);
@@ -537,6 +540,9 @@ struct EffectMgr : public CoreNode {
 
 	void cullingOn() { mDoCulling = true; }
 	void cullingOff() { mDoCulling = false; }
+
+protected:
+	void initEffectGeometry(int);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

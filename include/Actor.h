@@ -18,6 +18,9 @@ struct SimpleAI;
  * @note Size: 0x3DC.
  */
 struct Actor : public AICreature {
+	friend struct ActorMgr;
+
+public:
 	Actor(); // unused/inlined
 
 	void setType(int, PikiShapeObject*, CreatureProp*, SimpleAI*);
@@ -28,11 +31,13 @@ struct Actor : public AICreature {
 	virtual void update();                  // _E0
 	virtual void doAnimation();             // _108
 	virtual void doAI();                    // _104
-	virtual void doKill();                  // _10C
 	virtual void startMotion(int);          // _130
 	virtual void startMotion(int, f32);     // _13C
 	virtual void finishMotion();            // _134
 	virtual void finishMotion(f32);         // _138
+
+protected:
+	virtual void doKill(); // _10C
 
 	// _00      = VTBL
 	// _00-_304 = AICreature
@@ -48,12 +53,17 @@ struct Actor : public AICreature {
  * @note This also spawns a vtable but it gets stripped.
  */
 struct ActorMgr : public MonoObjectMgr {
+	friend struct Actor;
+
+public:
 	ActorMgr(MapMgr*); // unused/inlined
 
-	virtual ~ActorMgr();              // _48
-	virtual Creature* createObject(); // _80
+	virtual ~ActorMgr(); // _48
 
 	Actor* newActor(int);
+
+protected:
+	virtual Creature* createObject(); // _80
 
 	// _00     = VTBL
 	// _08     = VTBL

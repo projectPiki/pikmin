@@ -50,7 +50,7 @@ enum SnakeAIAttackID {
  * @note Size: 0x504
  */
 struct SnakeProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -205,43 +205,45 @@ enum {
  * @note Size: 0x890.
  */
 struct SnakeBody {
+public:
 	SnakeBody(Snake*);
 
-	void setBodyOnGroundEffect();
-	void killCallBackEffect(bool);
 	void init(Vector3f&, Snake*);
+	void killCallBackEffect(bool);
+	void refresh(BossShapeObject*, Graphics&);
+	void update();
+	void setBodyOnGroundEffect();
 	void initBlending(f32);
+
+private:
+	void updateBlendingRatio();
+	void setInitializePosition();
+	void copyAnimPosition();
+	void makeHeadDirection();
 	void makeTurnVelocity();
+	void makeNewPosition();
 	void makeResultPosition();
 	void makeVectorMatrix();
+	void createDeadPellet(Vector3f&, int);
 	void createDeadHeadEffect();
 	void createDeadBodyEffect();
 	void makeDeadPattern01();
-	void update();
+	void makeDeadPattern02();
+	void makeDeadScaleParms();
+	void makeAnimation(BossShapeObject*, Graphics&);
 	void makeBodySize();
 	void makeHeadPosition();
 	void makeBodyMatrix();
 	void makeAnimMatrix();
 	void caseOfMatrix(Matrix4f*);
+	void checkBlendingParm(Matrix4f*);
 	void makeBlending(Matrix4f*);
 	void setDeadPattern01(Matrix4f*);
-	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
-	void refresh(BossShapeObject*, Graphics&);
-
-	// unused/inlined:
-	void updateBlendingRatio();
-	void setInitializePosition();
-	void copyAnimPosition();
-	void makeHeadDirection();
-	void makeNewPosition();
-	void createDeadPellet(Vector3f&, int);
-	void makeDeadPattern02();
-	void makeDeadScaleParms();
-	void makeAnimation(BossShapeObject*, Graphics&);
-	void checkBlendingParm(Matrix4f*);
 	void setDeadPattern02(Matrix4f*);
 	void setDeadScale(Matrix4f*);
+	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
 
+public:
 	Snake* mSnake;                                               // _00
 	bool mIsDying;                                               // _04
 	bool mUseBlend;                                              // _05
@@ -268,7 +270,13 @@ struct SnakeBody {
  * @note Size: 0x3DC.
  */
 struct Snake : public Boss {
+	friend struct SnakeAi;
+	friend struct SnakeBody;
 
+	friend struct SnakeGenBodyOnGroundCallBack;
+	friend struct SnakeGenBodyRotateCallBack;
+
+public:
 	/**
 	 * @brief TODO.
 	 */
@@ -296,6 +304,7 @@ struct Snake : public Boss {
 		f32 mSize;                // _20
 		Vector3f mCentrePosition; // _24
 	};
+	friend struct BoundSphereUpdater;
 
 	Snake(CreatureProp*);
 
@@ -313,6 +322,7 @@ struct Snake : public Boss {
 
 	void setBossType(bool);
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	BoundSphereUpdater* mBoundsUpdater; // _3B8
@@ -330,20 +340,33 @@ struct Snake : public Boss {
  * @note Size: 0x50.
  */
 struct SnakeAi : public PaniAnimKeyListener {
+public:
 	SnakeAi(Snake*);
 
+	void initAI(Snake*);
+	void update();
+
+private:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void initAI(Snake*);
 	void keyAction0();
 	void keyAction1();
+	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
+	void setEveryFrame();
+	void setInitPosition();
+	void setUnderPosition();
+	void setAppearPosition01();
+	void setAppearPosition02();
 	void traceTargetPosition();
 	void setAttackPosition();
 	void checkAttackTarget();
 	void naviNudge();
+	void setMouthCollPart(int);
+	int getMouthCollPart(int);
 	void pikiStickMouth();
 	void eatStickToMouthPiki();
 	void nearNaviInAttackArea(Creature**, f32*, int);
@@ -352,30 +375,15 @@ struct SnakeAi : public PaniAnimKeyListener {
 	bool pikiInAttackArea(int);
 	bool appearType01();
 	bool appearType02();
+	void resultFlagOn();
+	void resultFlagSeen();
+	bool dieTransit();
+	bool struggleTransit();
 	bool chaseNaviTransit();
 	bool chasePikiTransit();
 	bool targetLostTransit();
 	bool attackTransit(int);
 	bool collPartMaxTransit();
-	void initAttack(int, f32);
-	void initAppear(int);
-	void struggleState();
-	void update();
-
-	// unused/inlined:
-	void keyAction2();
-	void keyAction3();
-	void setEveryFrame();
-	void setInitPosition();
-	void setUnderPosition();
-	void setAppearPosition01();
-	void setAppearPosition02();
-	void setMouthCollPart(int);
-	int getMouthCollPart(int);
-	void resultFlagOn();
-	void resultFlagSeen();
-	bool dieTransit();
-	bool struggleTransit();
 	bool eatPikiTransit();
 	bool intoGroundTransit();
 	bool diveTimerTransit();
@@ -384,11 +392,14 @@ struct SnakeAi : public PaniAnimKeyListener {
 	void initDie(int);
 	void initStruggle(int);
 	void initChase(int);
+	void initAttack(int, f32);
 	void initEat(int);
 	void initWait(int);
 	void initGointo(int);
 	void initUnder(int);
+	void initAppear(int);
 	void dieState();
+	void struggleState();
 	void chaseState();
 	void attackState();
 	void eatState();
@@ -396,6 +407,7 @@ struct SnakeAi : public PaniAnimKeyListener {
 	void gointoState();
 	void underState();
 
+public:
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	bool mIsFacingTarget;       // _04
@@ -421,6 +433,7 @@ struct SnakeAi : public PaniAnimKeyListener {
  * @brief TODO
  */
 struct SnakeGenBodyOnGroundCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		if (!mSnake->getAlive() || mSnake->getNextState() == 8) {
@@ -432,6 +445,7 @@ struct SnakeGenBodyOnGroundCallBack : public zen::CallBack1<zen::particleGenerat
 
 	void set(Snake* snake) { mSnake = snake; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	Snake* mSnake; // _04
@@ -441,6 +455,7 @@ struct SnakeGenBodyOnGroundCallBack : public zen::CallBack1<zen::particleGenerat
  * @brief TODO
  */
 struct SnakeGenBodyRotateCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		if (mSnake->mSnakeAi->mIsFacingTarget) {
@@ -458,6 +473,7 @@ struct SnakeGenBodyRotateCallBack : public zen::CallBack1<zen::particleGenerator
 
 	void set(Snake* snake) { mSnake = snake; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	Snake* mSnake; // _04

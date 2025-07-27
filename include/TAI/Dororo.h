@@ -87,6 +87,7 @@ struct TAIdororoParameters : public TekiParameters {
  * @note Size: 0x18.
  */
 struct TAIdororoStrategy : public YaiStrategy {
+public:
 	TAIdororoStrategy();
 
 	virtual void start(Teki&);             // _08
@@ -94,6 +95,7 @@ struct TAIdororoStrategy : public YaiStrategy {
 	virtual void createEffect(Teki&, int); // _14
 	virtual void draw(Teki&, Graphics&);   // _18
 
+protected:
 	void createCloudOfDust(Teki&, CollPart*);
 
 	// _00     = VTBL
@@ -122,6 +124,7 @@ struct TAIdororoAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAinitDororo : public TaiAction {
+public:
 	TAIAinitDororo(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -140,6 +143,7 @@ struct TAIAinitDororo : public TaiAction {
 		return true;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -149,6 +153,7 @@ struct TAIAinitDororo : public TaiAction {
  * @brief TODO
  */
 struct TAIAgravityDororo : public TaiAction {
+public:
 	TAIAgravityDororo(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -170,6 +175,7 @@ struct TAIAgravityDororo : public TaiAction {
 		return false;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -179,6 +185,7 @@ struct TAIAgravityDororo : public TaiAction {
  * @brief TODO
  */
 struct TAIAcheckBarkDororo : public TaiAction {
+public:
 	TAIAcheckBarkDororo(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -204,6 +211,7 @@ struct TAIAcheckBarkDororo : public TaiAction {
 		return doBark;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -234,6 +242,7 @@ struct TAIAbirthDororo;
  * @brief TODO
  */
 struct TAIAwaitDororo : public TAIAwait {
+public:
 	TAIAwaitDororo(int nextState, int motionIdx)
 	    : TAIAwait(nextState, motionIdx, 0.0f)
 	{
@@ -244,6 +253,8 @@ struct TAIAwaitDororo : public TAIAwait {
 		TAIAwait::start(teki);
 		teki.setFrameCounterMax(teki.getParameterF(DOROROPF_WaitTime) + zen::Rand(teki.getParameterF(DOROROPF_WaitTime)));
 	}
+
+protected:
 	virtual f32 getWaitCounterMax(Teki& teki) { return teki.getFrameCounterMax(); } // _1C
 
 	// _04     = VTBL
@@ -255,6 +266,7 @@ struct TAIAwaitDororo : public TAIAwait {
  * @brief TODO
  */
 struct TAIAflickingDororo : public TAIAflicking {
+public:
 	TAIAflickingDororo(int nextState, int motionIdx)
 	    : TAIAflicking(nextState, motionIdx)
 	{
@@ -275,6 +287,7 @@ struct TAIAflickingDororo : public TAIAflicking {
 		return TAIAflicking::act(teki);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAflicking?
 	// TODO: members
@@ -284,11 +297,13 @@ struct TAIAflickingDororo : public TAIAflicking {
  * @brief TODO
  */
 struct TAIAgoGoalPathDororo : public TAIAgoGoalPath {
+public:
 	TAIAgoGoalPathDororo(int nextState, int motionIdx)
 	    : TAIAgoGoalPath(nextState, motionIdx)
 	{
 	}
 
+protected:
 	virtual f32 getWalkVelocity(Teki& teki) // _20
 	{
 		int pikiCount   = teki.countPikis(TekiStickerCondition(&teki));

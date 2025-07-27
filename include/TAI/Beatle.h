@@ -112,11 +112,13 @@ struct TAIAinitBeatle;
  * @brief TODO
  */
 struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
+public:
 	TAIAcheckInsideRangePikiBeatle(int nextState, int pikiMax)
 	    : TAIAcheckInsideRangePiki(nextState, pikiMax, 0.0f)
 	{
 	}
 
+protected:
 	virtual f32 getRange(Teki& teki) { return teki.getParameterF(TPF_AttackRange); } // _20
 
 	// _04     = VTBL
@@ -128,6 +130,7 @@ struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
  * @brief TODO
  */
 struct TAIAdisableStick : public TaiAction {
+public:
 	inline TAIAdisableStick(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -135,6 +138,7 @@ struct TAIAdisableStick : public TaiAction {
 
 	virtual void start(Teki& teki) { teki.disableStick(); } // _08
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -144,11 +148,13 @@ struct TAIAdisableStick : public TaiAction {
  * @brief TODO
  */
 struct TAIAflickingBeatle : public TAIAflicking {
+public:
 	TAIAflickingBeatle(int nextState, int motionIdx)
 	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 
+protected:
 	virtual void flick(Teki& teki) // _1C
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -178,6 +184,7 @@ struct TAIAflickingAfterMotionLoopBeatle;
  * @brief TODO
  */
 struct TAIArockAttack : public TAIAreserveMotion {
+public:
 	inline TAIArockAttack(int nextState, int p2, int motionIdx) // TODO: this is a guess
 	    : TAIAreserveMotion(nextState, motionIdx)
 	{
@@ -441,6 +448,7 @@ struct TAIArockAttack : public TAIAreserveMotion {
 		return result;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	int _0C; // _0C
@@ -451,11 +459,13 @@ struct TAIArockAttack : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAinsideOptionalRangeBeatle : public TAIAinsideOptionalRange {
+public:
 	TAIAinsideOptionalRangeBeatle(int nextState)
 	    : TAIAinsideOptionalRange(nextState)
 	{
 	}
 
+protected:
 	virtual bool setTargetPosition(Teki& teki) { setTargetPositionCreature(teki); }                           // _1C
 	virtual f32 getOptionalRange(Teki& teki) { return teki.getParameterF(TAIbeatleFloatParms::AttackRange); } // _20
 
@@ -468,6 +478,7 @@ struct TAIAinsideOptionalRangeBeatle : public TAIAinsideOptionalRange {
  * @brief TODO
  */
 struct TAIAvisiblePikiBeatle : public TaiAction {
+public:
 	inline TAIAvisiblePikiBeatle(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -496,6 +507,7 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
 		return result;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -505,11 +517,13 @@ struct TAIAvisiblePikiBeatle : public TaiAction {
  * @brief TODO
  */
 struct TAIAdamageBeatle : public TAIAdamage {
+public:
 	inline TAIAdamageBeatle(int nextState) // TODO: this is a guess
 	    : TAIAdamage(nextState, true)
 	{
 	}
 
+protected:
 	virtual bool judgeDamage(Teki& teki) // _1C
 	{
 		if (teki._344 == 0) {
@@ -529,6 +543,7 @@ struct TAIAdamageBeatle : public TAIAdamage {
  * @brief TODO
  */
 struct TAIAdyingBeatle : public TAIAdying {
+public:
 	inline TAIAdyingBeatle(int nextState, int motionIdx) // TODO: this is a guess
 	    : TAIAdying(nextState, motionIdx)
 	{
@@ -558,6 +573,7 @@ struct TAIAdyingBeatle : public TAIAdying {
 		TAIAdying::act(teki);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAdying?
 	// TODO: members

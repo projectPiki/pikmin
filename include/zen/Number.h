@@ -15,10 +15,8 @@ namespace zen {
  * @brief TODO
  */
 struct NumberTex {
+public:
 	NumberTex();
-
-	static Texture* texTable[10];       // unknown type
-	static Texture* shadowTexTable[10]; // unknown type
 
 	static void makeResident()
 	{
@@ -32,6 +30,10 @@ struct NumberTex {
 		}
 	}
 
+protected:
+	static Texture* texTable[10];       // unknown type
+	static Texture* shadowTexTable[10]; // unknown type
+
 	// empty
 };
 
@@ -40,12 +42,18 @@ struct NumberTex {
  */
 template <typename T>
 struct FigureTex : public NumberTex {
+public:
 	FigureTex(T* numberPtr, int digit)
 	{
 		mNumberPtr = numberPtr;
 		mDigit     = digit;
 	}
 
+	// DLL inlines:
+	Texture* getTexPtr() { return texTable[getNumber()]; }
+	Texture* getShadowTexPtr() { return shadowTexTable[getNumber()]; }
+
+protected:
 	int getNumber() { return getNumber(*mNumberPtr); }
 	int getNumber(T& numPtr)
 	{
@@ -55,10 +63,6 @@ struct FigureTex : public NumberTex {
 		}
 		return num;
 	}
-
-	// DLL inlines:
-	Texture* getTexPtr() { return texTable[getNumber()]; }
-	Texture* getShadowTexPtr() { return shadowTexTable[getNumber()]; }
 
 	// _00-_00 = NumberTex (empty)
 	T* mNumberPtr; // _00, pointer to count/amount to display
@@ -72,6 +76,7 @@ struct FigureTex : public NumberTex {
  */
 template <typename T>
 struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
+public:
 	NumberPicCallBack(P2DPane* pane, T* amountPtr, int digit, bool p4)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	    , FigureTex<T>(amountPtr, digit)
@@ -126,6 +131,7 @@ struct NumberPicCallBack : public P2DPaneCallBack, public FigureTex<T> {
 		}
 	}
 
+protected:
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
 	// _04-_0C = FigureTex

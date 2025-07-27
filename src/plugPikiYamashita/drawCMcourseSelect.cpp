@@ -24,7 +24,7 @@ namespace zen {
  * @note Size: 0x19C.
  */
 struct DrawCMCSmenu : public DrawMenuBase {
-
+public:
 	enum ModeCMCS {
 		MODE_Unk2 = 2,
 	};
@@ -35,6 +35,7 @@ struct DrawCMCSmenu : public DrawMenuBase {
 	 * @note Size: 0x34.
 	 */
 	struct MenuExpansion {
+	public:
 		enum modeFlag {
 			MODE_Unk0 = 0,
 			MODE_Unk1 = 1,
@@ -89,6 +90,7 @@ struct DrawCMCSmenu : public DrawMenuBase {
 		}
 		Vector3f& getDefaultPos() { return _10; }
 
+	protected:
 		modeFlag mMode;     // _00
 		f32 _04;            // _04
 		f32 _08;            // _08
@@ -127,6 +129,17 @@ struct DrawCMCSmenu : public DrawMenuBase {
 		DrawMenuBase::start();
 		setModeFunc(2);
 	}
+
+	void hide()
+	{
+		for (int i = 0; i < 5; i++) {
+			mMenuExpansions[i].hide();
+		}
+		mLeftCursorMgr.initScale(0.0f);
+		mRightCursorMgr.initScale(0.0f);
+	}
+
+protected:
 	virtual void setModeFunc(int mode) // _28
 	{
 		DrawMenuBase::setModeFunc(mode);
@@ -174,15 +187,6 @@ struct DrawCMCSmenu : public DrawMenuBase {
 		}
 
 		return false;
-	}
-
-	void hide()
-	{
-		for (int i = 0; i < 5; i++) {
-			mMenuExpansions[i].hide();
-		}
-		mLeftCursorMgr.initScale(0.0f);
-		mRightCursorMgr.initScale(0.0f);
 	}
 
 	// _00      = VTBL

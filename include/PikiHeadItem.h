@@ -308,13 +308,16 @@ struct PikiHeadAI : public SimpleAI {
  * @note Size: 0x48.
  */
 struct PikiHeadMgr : public MonoObjectMgr {
+public:
 	PikiHeadMgr(ItemMgr*);
 
-	virtual ~PikiHeadMgr() { }        // _48 (weak)
-	virtual Creature* birth();        // _78
-	virtual Creature* createObject(); // _80
+	virtual ~PikiHeadMgr() { } // _48 (weak)
+	virtual Creature* birth(); // _78
 
 	static bool buryMode;
+
+protected:
+	virtual Creature* createObject(); // _80
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

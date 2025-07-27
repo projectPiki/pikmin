@@ -11,6 +11,7 @@ struct System;
  * @brief TODO
  */
 struct NHeap {
+public:
 	NHeap(int); // unused/inlined
 
 	virtual void release();           // _08
@@ -19,6 +20,7 @@ struct NHeap {
 		mHeapArray->add(heap);
 	}
 
+protected:
 	// _00 = VTBL
 	NArray<NHeap>* mHeapArray; // _04
 };
@@ -27,6 +29,7 @@ struct NHeap {
  * @brief TODO
  */
 struct NSystem {
+public:
 	static void initSystem(System*);
 
 	static f32 getFrameTime() { return system->getFrameTime(); }
@@ -35,6 +38,7 @@ struct NSystem {
 	static int randomInt(int);
 	static f32 random() { return system->getRand(1.0f); }
 
+protected:
 	static System* system;
 };
 

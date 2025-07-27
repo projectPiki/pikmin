@@ -26,6 +26,7 @@ struct SeedProp : public CreatureProp {
  * @note Size: 0x2FC
  */
 struct SeedItem : public Creature {
+public:
 	SeedItem(CreatureProp*, Shape**);
 
 	virtual void init(Vector3f&);            // _28
@@ -35,7 +36,6 @@ struct SeedItem : public Creature {
 	virtual void update();                   // _E0
 	virtual void refresh(Graphics&);         // _EC
 	virtual void doAI();                     // _104
-	virtual void doKill();                   // _10C
 	virtual bool stimulate(Interaction& act) // _A0
 	{
 		act.actCommon(this);
@@ -47,6 +47,9 @@ struct SeedItem : public Creature {
 	// unused/inlined:
 	void startBirth();
 	void startSown();
+
+protected:
+	virtual void doKill(); // _10C
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature

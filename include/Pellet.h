@@ -6,6 +6,7 @@
 #include "EffectMgr.h"
 #include "ObjectMgr.h"
 #include "PelletAnimator.h"
+#include "PlayerState.h"
 #include "Shape.h"
 #include "StateMachine.h"
 #include "types.h"
@@ -275,6 +276,9 @@ struct PelletConfig : public Parameters, public CoreNode {
  * @note Size: 0x5BC.
  */
 struct Pellet : public DualCreature, public PaniAnimKeyListener {
+	friend struct PelletMgr;
+
+public:
 	Pellet();
 
 	virtual void init(Vector3f&);                        // _28
@@ -298,10 +302,6 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	virtual void update();                               // _E0
 	virtual void postUpdate(int, f32);                   // _E4
 	virtual void refresh(Graphics&);                     // _EC
-	virtual void doAnimation();                          // _108
-	virtual void doKill();                               // _10C
-	virtual void doRender(Graphics&, Matrix4f&);         // _118
-	virtual void doCreateColls(Graphics&);               // _11C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _12C (weak)
 
 	int getState();
@@ -321,16 +321,10 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	int getRandomFreeSlotIndex();
 	Vector3f getSlotLocalPos(int, f32);
 	Vector3f getSlotGlobalPos(int, f32);
-	void setSlotFlag(int);
-	void resetSlotFlag(int);
-	bool isSlotFlag(int);
-	void initPellet(PelletShapeObject*, PelletConfig*);
 	void startCarryMotion(f32);
 	void finishMotion();
 
 	// unused/inlined:
-	void initSlotFlags();
-	void initPellet(PelletView*, PelletConfig*);
 	void stopMotion();
 	void startAppear();
 
@@ -356,6 +350,22 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 	// DLL inlines to do:
 	int getNearestFreeSlotIndex();
 
+protected:
+	virtual void doAnimation();                  // _108
+	virtual void doKill();                       // _10C
+	virtual void doRender(Graphics&, Matrix4f&); // _118
+	virtual void doCreateColls(Graphics&);       // _11C
+
+	void initSlotFlags();
+	void setSlotFlag(int);
+	void resetSlotFlag(int);
+	bool isSlotFlag(int);
+
+	void initPellet(PelletShapeObject*, PelletConfig*);
+	void initPellet(PelletView*, PelletConfig*);
+
+	// Some member variables (not grouped in any particular way) are directly accessed by a lot of stuff.
+public:
 	// _00       = VTBL1
 	// _440      = VTBL2
 	// _00-_440  = DualCreature
@@ -400,7 +410,17 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
  * @note Size: 0x204.
  */
 struct PelletMgr : public MonoObjectMgr {
+	friend struct Pellet;
 
+	// `PlayerState` is one of very few 100% confirmed breaches of interface in the codebase, as the ILK tells us the access modifiers
+	// for all member functions.  `PlayerState::UfoParts` on the other hand is the single worst ambiguous breach of interface I've decided
+	// to accept across the entire codebase (all protected member variables are guesses).  Because `PlayerState::UfoParts` is a child
+	// struct, I must include the PlayerState header in its entirety to make it a friend in any way.  I want to believe the devs were
+	// principled about proper encapsulation, but things like this make me question my faith.
+	friend void PlayerState::registerUfoParts(int, u32, u32);        // Accesses `getShapeObject`.
+	friend void PlayerState::UfoParts::initAnim(PelletShapeObject*); // Accesses `mUfoMotionTable`.
+
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -419,14 +439,12 @@ struct PelletMgr : public MonoObjectMgr {
 #endif
 	virtual ~PelletMgr() { }                // _48 (weak)
 	virtual void refresh(Graphics&);        // _58
-	virtual Creature* createObject();       // _80
 	virtual void read(RandomAccessStream&); // _84 (weak)
 
 	bool decomposeNumberPellet(u32, int&, int&);
 	void registerUfoParts();
 	Pellet* newNumberPellet(int, int);
 	Pellet* newPellet(u32, PelletView*);
-	PelletShapeObject* getShapeObject(u32);
 	void addUseList(u32);
 	void initShapeInfos();
 	int getConfigIndex(u32);
@@ -460,6 +478,11 @@ struct PelletMgr : public MonoObjectMgr {
 	void configWrite(AgeServer&);
 	void removeAnimInfo(AgeServer&, PelletAnimInfo*);
 	void removeConfig(AgeServer&, PelletConfig*);
+
+protected:
+	virtual Creature* createObject(); // _80
+
+	PelletShapeObject* getShapeObject(u32); // I don't understand why this is protected, but the ILK says it is.
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

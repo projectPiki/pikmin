@@ -42,6 +42,7 @@ struct GameInfo {
  * @note Size: 0x104.
  */
 struct DGIScreenMgr {
+public:
 	enum modeFlag {
 		MODE_Unk0 = 0,
 		MODE_Unk1 = 1,
@@ -90,18 +91,6 @@ struct DGIScreenMgr {
 		}
 	}
 
-	bool addFrame(f32* val)
-	{
-		bool res = false;
-		_04 += gsys->getFrameTime();
-		if (_04 > _08) {
-			_04 = _08;
-			res = true;
-		}
-		*val = sinf(_04 / _08 * 90.0f * PI / 180.0f);
-		return res;
-	}
-
 	void draw(P2DPerspGraph* perspGraph) { mScreen.draw(0, 0, perspGraph); }
 
 	void makeResident() { P2DPaneLibrary::makeResident(&mScreen); }
@@ -142,6 +131,19 @@ struct DGIScreenMgr {
 	bool isFrameIn() { return mMode == MODE_Unk2; }
 	bool isFrameOut() { return mMode == MODE_Unk0; }
 
+protected:
+	bool addFrame(f32* val)
+	{
+		bool res = false;
+		_04 += gsys->getFrameTime();
+		if (_04 > _08) {
+			_04 = _08;
+			res = true;
+		}
+		*val = sinf(_04 / _08 * 90.0f * PI / 180.0f);
+		return res;
+	}
+
 	int mMode;         // _00
 	f32 _04;           // _04
 	f32 _08;           // _08
@@ -154,7 +156,7 @@ struct DGIScreenMgr {
  * @note Size: 0x1C.
  */
 struct DrawGameInfo {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -182,6 +184,7 @@ struct DrawGameInfo {
 	bool isLowerFrameIn();
 	bool isLowerFrameOut();
 
+protected:
 	DGIScreenMgr* mUpperScreenMgr; // _00
 	DGIScreenMgr* mLowerScreenMgr; // _04
 	DGIScreenMgr* mModeScreenMgr;  // _08

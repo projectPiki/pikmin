@@ -105,6 +105,7 @@ struct TAIeffectAttackEventCallBackMar : public TAIeffectAttackEventCallBack {
  * @brief TODO
  */
 struct BreathEffect : public zen::CallBack1<Teki&> {
+public:
 	virtual bool invoke(Teki& teki) // _08
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -137,6 +138,7 @@ struct BreathEffect : public zen::CallBack1<Teki&> {
 		return true;
 	}
 
+protected:
 	static TAIeffectAttackEventCallBackMar eventCallBack;
 
 	// _00     = VTBL

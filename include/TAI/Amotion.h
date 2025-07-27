@@ -9,11 +9,13 @@
  * @brief TODO
  */
 struct TAIAmotion : public TaiAction {
+public:
 	TAIAmotion(int nextState, int motionID);
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	int mMotionID; // _08
@@ -23,11 +25,13 @@ struct TAIAmotion : public TaiAction {
  * @brief TODO
  */
 struct TAIAreserveMotion : public TaiAction {
+public:
 	TAIAreserveMotion(int nextState, int motionID);
 
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	int mMotionID; // _08
@@ -39,6 +43,7 @@ struct TAIAreserveMotion : public TaiAction {
  * @note Size: 0x10.
  */
 struct TAIAmotionLoop : public TAIAreserveMotion {
+public:
 	TAIAmotionLoop(int nextState, int motionIdx, f32 frameMax)
 	    : TAIAreserveMotion(nextState, motionIdx)
 	{
@@ -47,6 +52,8 @@ struct TAIAmotionLoop : public TAIAreserveMotion {
 
 	virtual void start(Teki&);     // _08
 	virtual bool act(Teki&);       // _10
+
+protected:
 	virtual f32 getFrameMax(Teki&) // _1C (weak)
 	{
 		return mFrameMax;
@@ -61,6 +68,7 @@ struct TAIAmotionLoop : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAsetMotionSpeed : public TAIAmotion {
+public:
 	TAIAsetMotionSpeed(int nextState, int motionID, f32 motionSpeed)
 	    : TAIAmotion(nextState, motionID)
 	{
@@ -73,6 +81,7 @@ struct TAIAsetMotionSpeed : public TAIAmotion {
 		teki.setAnimSpeed(mMotionSpeed);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TaiAmotion
 	f32 mMotionSpeed; // _0C

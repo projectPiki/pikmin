@@ -85,6 +85,7 @@ struct TAItamagoAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAcountStartTamago : public TaiAction {
+public:
 	TAIAcountStartTamago(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -99,6 +100,7 @@ struct TAIAcountStartTamago : public TaiAction {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 };
@@ -107,6 +109,7 @@ struct TAIAcountStartTamago : public TaiAction {
  * @brief TODO
  */
 struct TAIAhatch : public TAIAmotion {
+public:
 	TAIAhatch(int nextState, int motionIdx)
 	    : TAIAmotion(nextState, motionIdx)
 	{
@@ -133,6 +136,7 @@ struct TAIAhatch : public TAIAmotion {
 		return res;
 	}
 
+protected:
 	void birth(Teki& teki)
 	{
 		Vector3f effPos(teki.getPosition());
@@ -158,6 +162,7 @@ struct TAIAhatch : public TAIAmotion {
  * @brief TODO
  */
 struct TAIAtimerReactionTamago : public TAIAtimerReaction {
+public:
 	TAIAtimerReactionTamago(int nextState)
 	    : TAIAtimerReaction(nextState, 0.0f)
 	{
@@ -173,6 +178,8 @@ struct TAIAtimerReactionTamago : public TAIAtimerReaction {
 	{
 		return TAIAtimerReaction::act(teki);
 	}
+
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getFrameCounterMax();
@@ -186,6 +193,7 @@ struct TAIAtimerReactionTamago : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAdyingTamago : public TAIAmotion {
+public:
 	TAIAdyingTamago(int nextState, int motionIdx)
 	    : TAIAmotion(nextState, motionIdx)
 	{
@@ -217,6 +225,7 @@ struct TAIAdyingTamago : public TAIAmotion {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAmotion
 	// TODO: members

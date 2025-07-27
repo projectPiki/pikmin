@@ -77,6 +77,7 @@ namespace {
  * @brief TODO
  */
 struct rippleEffect : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* generator) // _08
 	{
 		if (generator->getCurrentFrame() >= generator->getMaxFrame() - 1) {
@@ -157,11 +158,13 @@ struct TAIkabekuiCAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAsleepKabekuiC : public TAIAtimerReaction {
+public:
 	TAIAsleepKabekuiC(int nextState)
 	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiCFloatParms::MaxSleepTime);
@@ -176,11 +179,13 @@ struct TAIAsleepKabekuiC : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAdiveKabekuiC : public TAIAtimerReaction {
+public:
 	TAIAdiveKabekuiC(int nextState)
 	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiCFloatParms::TimeUntilBurrow);
@@ -195,6 +200,7 @@ struct TAIAdiveKabekuiC : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAattackWorkObjectKabekuiC : public TAIAattackWorkObject {
+public:
 	inline TAIAattackWorkObjectKabekuiC(int nextState, int motionID, int p3) // TODO: this is a guess
 	    : TAIAattackWorkObject(nextState, motionID, p3)
 	{
@@ -210,6 +216,7 @@ struct TAIAattackWorkObjectKabekuiC : public TAIAattackWorkObject {
 		return TAIAattackWorkObject::act(teki);
 	}
 
+protected:
 	virtual f32 getDamage(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiCFloatParms::BridgeDamage);
@@ -258,6 +265,7 @@ struct TAIAattackWorkObjectKabekuiC : public TAIAattackWorkObject {
  * @brief TODO
  */
 struct TAIAlandingKabekuiC : public TAIAreserveMotion {
+public:
 	inline TAIAlandingKabekuiC(int nextState, int motionID) // TODO: this is a guess
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -315,6 +323,7 @@ struct TAIAlandingKabekuiC : public TAIAreserveMotion {
 		return output;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -324,11 +333,13 @@ struct TAIAlandingKabekuiC : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
+public:
 	TAIAmoreLifeKabekuiC(int nextState)
 	    : TAIAmoreLife(nextState)
 	{
 	}
 
+protected:
 	virtual f32 getLifePercentThreshold(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiCFloatParms::MaxFlightLifePercent);
@@ -343,11 +354,13 @@ struct TAIAmoreLifeKabekuiC : public TAIAmoreLife {
  * @brief TODO
  */
 struct TAIAlessLifeKabekuiC : public TAIAlessLife {
+public:
 	TAIAlessLifeKabekuiC(int nextState)
 	    : TAIAlessLife(nextState)
 	{
 	}
 
+protected:
 	virtual f32 getLifePercentThreshold(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiCFloatParms::FlightAlertLifePercent);
@@ -362,6 +375,7 @@ struct TAIAlessLifeKabekuiC : public TAIAlessLife {
  * @brief TODO
  */
 struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
+public:
 	inline TAIAcheckPikiFlyKabekuiC(int nextState) // TODO: this is a guess
 	    : TAIAhitCheckFlyingPiki(nextState)
 	{
@@ -372,6 +386,7 @@ struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
 		return false;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAhitCheckFlyingPiki?
 	// TODO: members
@@ -381,6 +396,7 @@ struct TAIAcheckPikiFlyKabekuiC : public TAIAhitCheckFlyingPiki {
  * @brief TODO
  */
 struct TAIAflyingMotionKabekuiC : public TAIAreserveMotion {
+public:
 	inline TAIAflyingMotionKabekuiC(int nextState, int motionID) // TODO: this is a guess
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -392,6 +408,7 @@ struct TAIAflyingMotionKabekuiC : public TAIAreserveMotion {
 		teki.playEventSound(&teki, SE_SARAI_HOVER);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -401,11 +418,13 @@ struct TAIAflyingMotionKabekuiC : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflyingBaseKabekuiC : public TAIAflyingBase {
+public:
 	inline TAIAflyingBaseKabekuiC(int nextState) // TODO: this is a guess
 	    : TAIAflyingBase(nextState)
 	{
 	}
 
+protected:
 	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
 	{
 		if (teki.getChokeSwitch()) {
@@ -431,11 +450,13 @@ struct TAIAtakeOffKabekuiC;
  * @brief TODO
  */
 struct TAIAbiteForKabekuiC : public TAIAbiteForKabekui {
+public:
 	inline TAIAbiteForKabekuiC(int nextState, int p2, int motionID) // TODO: this is a guess
 	    : TAIAbiteForKabekui(nextState, p2, motionID)
 	{
 	}
 
+protected:
 	virtual f32 getPikiAttackSize(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiCFloatParms::PikiAttackRange);

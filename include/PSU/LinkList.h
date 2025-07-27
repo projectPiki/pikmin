@@ -10,11 +10,11 @@ struct PSUPtrLink;
  * @brief TODO
  */
 struct PSUPtrLink {
+	friend struct PSUPtrList;
+
+protected:
 	PSUPtrLink(void*);
-
 	~PSUPtrLink();
-
-	// no DLL inlines.
 
 	void* mObject;     // _00
 	PSUPtrList* mList; // _04
@@ -26,24 +26,25 @@ struct PSUPtrLink {
  * @brief TODO
  */
 struct PSUPtrList {
+	friend struct PSUPtrLink;
+
+protected:
 	PSUPtrList() { initiate(); }
 	PSUPtrList(bool); // unused/inlined
-
 	~PSUPtrList();
 
 	void initiate();
-	bool append(PSUPtrLink*);
-	bool remove(PSUPtrLink*);
 
 	PSUPtrLink* getFirstLink() const { return mHead; }
-
-	// unused/inlined:
-	void setFirst(PSUPtrLink*);
-	bool prepend(PSUPtrLink*);
-	bool insert(PSUPtrLink*, PSUPtrLink*);
 	PSUPtrLink* getNthLink(u32) const;
 
-	// no more DLL inlines.
+	bool append(PSUPtrLink*);
+	bool remove(PSUPtrLink*);
+	bool prepend(PSUPtrLink*);
+	bool insert(PSUPtrLink*, PSUPtrLink*);
+
+private:
+	void setFirst(PSUPtrLink*);
 
 	PSUPtrLink* mHead; // _00
 	PSUPtrLink* mTail; // _04
@@ -55,6 +56,7 @@ struct PSUPtrList {
  */
 template <typename T>
 struct PSULink : public PSUPtrLink {
+public:
 	inline PSULink(T* object)
 	    : PSUPtrLink((void*)object)
 	{
@@ -72,6 +74,7 @@ struct PSULink : public PSUPtrLink {
  */
 template <typename T>
 struct PSUList : public PSUPtrList {
+public:
 	PSUList() { } // DLL, to do/check
 
 	~PSUList() { } // unused/inlined

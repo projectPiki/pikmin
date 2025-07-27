@@ -87,7 +87,7 @@ struct TimeGraph {
  * @brief TODO
  */
 struct PlayerState {
-
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -162,7 +162,6 @@ struct PlayerState {
 	void getUfoParts(u32, bool);
 	int getNextPowerupNumber();
 	void preloadHenkaMovie();
-	UfoParts* findUfoParts(u32);
 	void renderParts(Graphics&, Shape*);
 
 	// unused/inlined:
@@ -196,8 +195,12 @@ struct PlayerState {
 	int getDayCollectCount(int day) { return mPartsCollectedByDay[day]; }
 	int getDayPowerupCount(int day) { return mPartsToNextByDay[day]; }
 
+protected:
+	UfoParts* findUfoParts(u32); // Was it really necessary to make this protected?
+
 	static int totalUfoParts;
 
+public:
 	int mSproutedNum;                     // _00
 	int mLostBattlePikis;                 // _04
 	int mLeftBehindPikis;                 // _08

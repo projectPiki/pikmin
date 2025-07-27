@@ -454,16 +454,16 @@ struct PermanentEffect {
  * @brief TODO
  */
 struct UtEffectMgr {
+public:
 	UtEffectMgr();
 
-	void registerEffect(int, KEffect*);
 	static void kill(int);
-
 	static void cast(int, EffectParm&);
 
-	static KEffect** effects;
+protected:
+	void registerEffect(int, KEffect*);
 
-	// TODO: members
+	static KEffect** effects;
 };
 
 extern UtEffectMgr* utEffectMgr;

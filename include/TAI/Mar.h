@@ -135,6 +135,7 @@ struct TAIeffectAttackEventCallBackMar;
  * @brief TODO
  */
 struct TAIAinitMar : public TaiAction {
+public:
 	TAIAinitMar(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -146,6 +147,7 @@ struct TAIAinitMar : public TaiAction {
 	}
 	virtual bool act(Teki&) { return true; } // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -155,11 +157,13 @@ struct TAIAinitMar : public TaiAction {
  * @brief TODO
  */
 struct TAIAflyingDistanceInTerritoryMar : public TAIAflyingDistanceInTerritory {
+public:
 	TAIAflyingDistanceInTerritoryMar(int nextState, int motionID, f32 p3, f32 p4)
 	    : TAIAflyingDistanceInTerritory(nextState, motionID, p3, 0.0f, p4)
 	{
 	}
 
+protected:
 	virtual f32 getVelocity(Teki& teki) { return teki.getParameterF(TPF_RunVelocity); }        // _20
 	virtual f32 getOffset(Teki& teki) { return teki.getParameterF(TAImarFloatParams::Unk50); } // _30
 
@@ -173,6 +177,7 @@ struct TAIAflyingDistanceInTerritoryMar : public TAIAflyingDistanceInTerritory {
  * @brief TODO
  */
 struct TAIAfireBreathMar : public TAIAfireBreath {
+public:
 	inline TAIAfireBreathMar(int nextState, int motionID, zen::CallBack1<Teki&>* cb)
 	    : TAIAfireBreath(nextState, motionID, cb)
 	{
@@ -186,6 +191,8 @@ struct TAIAfireBreathMar : public TAIAfireBreath {
 		}
 	}
 	virtual bool act(Teki& teki) { return TAIAfireBreath::act(teki); }                                  // _10
+
+protected:
 	virtual f32 getPreviousAnimSpeed(Teki&) { return 60.0f; }                                           // _1C
 	virtual f32 getAttackAnimSpeed(Teki& teki) { return teki.getParameterF(TAImarFloatParams::Unk52); } // _20
 
@@ -203,6 +210,7 @@ struct BreathEffect;
  * @brief TODO
  */
 struct TAIAflyingDistanceMar : public TAIAflyingDistance {
+public:
 	TAIAflyingDistanceMar(int nextState, f32 p2, f32 p3)
 	    : TAIAflyingDistance(nextState, p2, 0.0f, p3)
 	{
@@ -246,6 +254,8 @@ struct TAIAflyingDistanceMar : public TAIAflyingDistance {
 
 		return res;
 	}
+
+protected:
 	virtual f32 getGoalAreaRange(Teki&) { return 40.0f; }                                      // _28
 	virtual f32 getOffset(Teki& teki) { return teki.getParameterF(TAImarFloatParams::Unk50); } // _2C
 
@@ -259,11 +269,13 @@ struct TAIAflyingDistanceMar : public TAIAflyingDistance {
  * @brief TODO
  */
 struct TAIAtimerTakeOffMar : public TAIAtimerReaction {
+public:
 	TAIAtimerTakeOffMar(int nextState)
 	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) { return teki.getParameterF(TAImarFloatParams::Unk54); } // _1C
 
 	// _04     = VTBL
@@ -274,11 +286,13 @@ struct TAIAtimerTakeOffMar : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAtakeOffMar : public TAIAtakeOff {
+public:
 	TAIAtakeOffMar(int nextState, int motionID)
 	    : TAIAtakeOff(nextState, motionID)
 	{
 	}
 
+protected:
 	virtual void startFlying(Teki& teki) // _1C
 	{
 		CollTriInfo* tri = mapMgr->getCurrTri(teki.getPosition().x, teki.getPosition().z, true);
@@ -301,11 +315,13 @@ struct TAIAtakeOffMar : public TAIAtakeOff {
  * @brief TODO
  */
 struct TAIAstickingPikiMar : public TAIAstickingPiki {
+public:
 	TAIAstickingPikiMar(int nextState) // TODO: this is a guess
 	    : TAIAstickingPiki(nextState, 0)
 	{
 	}
 
+protected:
 	virtual int getPikiNum(Teki& teki) { return teki.getParameterI(TAImarIntParams::Unk22); } // _1C
 
 	// _04     = VTBL
@@ -317,11 +333,13 @@ struct TAIAstickingPikiMar : public TAIAstickingPiki {
  * @brief TODO
  */
 struct TAIAflickCheckMar : public TAIAflickCheck {
+public:
 	TAIAflickCheckMar(int nextState)
 	    : TAIAflickCheck(nextState, TAImarMotionID::Unk1)
 	{
 	}
 
+protected:
 	virtual int getDamageCountLimit(Teki& teki) { return teki.getParameterI(TAImarIntParams::Unk20); } // _1C
 
 	// _04     = VTBL
@@ -333,11 +351,13 @@ struct TAIAflickCheckMar : public TAIAflickCheck {
  * @brief TODO
  */
 struct TAIAlandingMar : public TAIAlanding {
+public:
 	TAIAlandingMar(int nextState, int motionID)
 	    : TAIAlanding(nextState, motionID)
 	{
 	}
 
+protected:
 	virtual void landingEffect(Teki& teki) // _1C
 	{
 		CollTriInfo* tri = mapMgr->getCurrTri(teki.getPosition().x, teki.getPosition().z, true);
@@ -369,11 +389,13 @@ struct TAIAlandingMar : public TAIAlanding {
  * @brief TODO
  */
 struct TAIAstickingPikiMarFly : public TAIAstickingPiki {
+public:
 	TAIAstickingPikiMarFly(int nextState) // TODO: this is a guess
 	    : TAIAstickingPiki(nextState, 0)
 	{
 	}
 
+protected:
 	virtual int getPikiNum(Teki& teki) { return teki.getParameterI(TAImarIntParams::Unk21); } // _1C
 
 	// _04     = VTBL
@@ -385,6 +407,7 @@ struct TAIAstickingPikiMarFly : public TAIAstickingPiki {
  * @brief TODO
  */
 struct TAIAflickingMar : public TAIAflicking {
+public:
 	TAIAflickingMar(int nextState, int motionIdx)
 	    : TAIAflicking(nextState, motionIdx)
 	{
@@ -395,6 +418,8 @@ struct TAIAflickingMar : public TAIAflicking {
 		TAIAflicking::start(teki);
 		teki.playEventSound(&teki, SE_CHAPPY_SWING);
 	}
+
+protected:
 	virtual void flick(Teki& teki) // _1C
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -413,6 +438,7 @@ struct TAIAflickingMar : public TAIAflicking {
  * @brief TODO
  */
 struct TAIAflickCheckTimerMar : public TaiAction {
+public:
 	TAIAflickCheckTimerMar(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -433,6 +459,7 @@ struct TAIAflickCheckTimerMar : public TaiAction {
 		return res;
 	}
 
+protected:
 	void setTimerStartFlag(Teki& teki)
 	{
 		int pikis = teki.countPikis(TekiStickerCondition(&teki));
@@ -455,11 +482,13 @@ struct TAIAflickCheckTimerMar : public TaiAction {
  * @brief TODO
  */
 struct TAIAflyingBaseMar : public TAIAflyingBase {
+public:
 	inline TAIAflyingBaseMar(int nextState) // TODO: this is a guess
 	    : TAIAflyingBase(nextState)
 	{
 	}
 
+protected:
 	virtual f32 getFlyingStayVelocity(Teki& teki) { return teki.getParameterF(TAImarFloatParams::Unk56); } // _1C
 
 	// _04     = VTBL
@@ -471,6 +500,7 @@ struct TAIAflyingBaseMar : public TAIAflyingBase {
  * @brief TODO
  */
 struct TAIAdyingMar : public TAIAdying {
+public:
 	TAIAdyingMar(int nextState, int motionID)
 	    : TAIAdying(nextState, motionID)
 	{
@@ -539,6 +569,7 @@ struct TAIAdyingMar : public TAIAdying {
 		return res;
 	}
 
+protected:
 	static f32 effectScale0;
 	static f32 effectScale1;
 	static f32 effectStartCounter;

@@ -37,6 +37,7 @@ struct ItemShapeObject {
  * @brief TODO.
  */
 struct ItemCreature : public AICreature {
+public:
 	ItemCreature(int objType, CreatureProp*, Shape*);
 
 	virtual void init(Vector3f&);            // _28
@@ -46,7 +47,6 @@ struct ItemCreature : public AICreature {
 	virtual void refresh(Graphics&);         // _EC
 	virtual void doAI();                     // _104
 	virtual void doAnimation();              // _108
-	virtual void doKill();                   // _10C
 	virtual void startMotion(int);           // _130
 	virtual void finishMotion();             // _134
 	virtual void finishMotion(f32);          // _138
@@ -58,6 +58,10 @@ struct ItemCreature : public AICreature {
 	virtual void stopMotion();               // _150
 	virtual void finalSetup();               // _158 (weak)
 
+protected:
+	virtual void doKill(); // _10C
+
+public:
 	// _00      = VTBL
 	// _00-_304 = AICreature
 	f32 mMotionSpeed;                  // _304

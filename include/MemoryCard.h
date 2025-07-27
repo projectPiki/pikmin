@@ -34,6 +34,7 @@ struct CardQuickInfo {
  * @brief TODO
  */
 struct MemoryCard : public CoreNode {
+public:
 	inline MemoryCard()
 	    : CoreNode("memoryCard")
 	{
@@ -44,39 +45,52 @@ struct MemoryCard : public CoreNode {
 		mErrorCode         = 0;
 	}
 
-	int getOptionsOffset(int);
-	int getGameFileOffset(int);
-	u32 calcChecksum(void*, u32);
+	void init();
 	bool hasCardFinished();
-	bool attemptFormatCard(int);
-	s32 waitWhileBusy(int);
-	bool getCardStatus(int);
-	void checkUseFile();
 	s32 getMemoryCardState(bool);
-	void loadCurrentFile();
 	s32 getNewestOptionsIndex();
+
 	void loadOptions();
 	void saveOptions();
 	void loadCurrentGame();
 	void saveCurrentGame();
-	void writeCurrentGame(RandomAccessStream*, PlayState&);
-	void readCurrentGame(RandomAccessStream*);
-	void initBannerArea(CARDStat&, char*);
-	void initOptionsArea(int);
+
 	s32 makeDefaultFile();
 	void copyFile(CardQuickInfo&, CardQuickInfo&);
 	void delFile(CardQuickInfo&);
 	int doFormatCard();
+
 	bool isCardInserted();
 	bool hasCardChanged();
-	u32 getOkSections();
 	bool isFileBroken();
+	void breakFile();
 	void repairFile();
 	bool didSaveFail();
 	void getQuickInfos(CardQuickInfo*);
-	void init();
 
-	// unused/inlined:
+protected:
+	u32 calcChecksum(void*, u32);
+	void waitPolling();
+	void createFile(CARDStat&);
+	void writeOneBanner();
+	void writeOneOption(int);
+	void writeOneGameFile(int);
+	bool attemptFormatCard(int);
+	s32 waitWhileBusy(int);
+	bool getCardStatus(int);
+	void checkUseFile();
+	void loadCurrentFile();
+
+	void writeCurrentGame(RandomAccessStream*, PlayState&);
+	void readCurrentGame(RandomAccessStream*);
+
+	void initBannerArea(CARDStat&, char*);
+	void initFileArea(int, int);
+	void initOptionsArea(int);
+
+	u32 getOkSections();
+	int getOptionsOffset(int);
+	int getGameFileOffset(int);
 	void GetBlockSize(s32);
 	void* getBannerPtr();
 	void* getOptionsPtr(int);
@@ -84,14 +98,8 @@ struct MemoryCard : public CoreNode {
 	RamStream* getBannerStream();
 	RamStream* getOptionsStream(int);
 	RamStream* getGameFileStream(int);
-	void waitPolling();
-	void createFile(CARDStat&);
-	void writeOneBanner();
-	void writeOneOption(int);
-	void writeOneGameFile(int);
-	void initFileArea(int, int);
-	void breakFile();
 
+public:
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	char mFilePath[32];     // _14, Not present in the DLL.

@@ -30,7 +30,7 @@ enum EnumResult {
  * @note Size: 0x55C.
  */
 struct ogScrResultMgr {
-
+public:
 	enum returnStatusFlag {
 		Status_NULL = -1,
 		Status_0    = 0,
@@ -46,12 +46,12 @@ struct ogScrResultMgr {
 	ogScrResultMgr();
 	ogScrResultMgr(EnumResult*);
 
-	void ogScrResultMgrSub();
-	void start();
 	returnStatusFlag update(Controller*);
+	void start();
 	void draw(Graphics&);
 
-	// unused/inlined:
+private:
+	void ogScrResultMgrSub();
 	void check1000(int, P2DPane*, P2DPane*, int);
 	void setEnumResultTable(EnumResult*);
 	void StartRESULT();

@@ -17,7 +17,7 @@ namespace zen {
  * @note Size: 0x10.
  */
 struct MenuPanelMgr {
-
+public:
 	enum statusFlag {
 		STATE_Wait      = 0,
 		STATE_Start     = 1,
@@ -35,17 +35,6 @@ struct MenuPanelMgr {
 	bool update();
 	bool checkFinish();
 
-	// unused/inlined:
-
-	void changeState(statusFlag state, f32 duration)
-	{
-		mState    = state;
-		mTimer    = 0.0f;
-		mDuration = duration;
-	}
-
-	void updateRatio() { mRatio = mTimer / mDuration; }
-
 	void wait() { changeState(STATE_Wait, 1.0f); }
 	void start(f32 duration) { changeState(STATE_Start, duration); }
 	void operation() { changeState(STATE_Operation, 1.0f); }
@@ -54,6 +43,16 @@ struct MenuPanelMgr {
 	// DLL inlines, to do:
 	statusFlag getStatusFlag() { return mState; }
 	f32 getRatio() { return mRatio; }
+
+protected:
+	void updateRatio() { mRatio = mTimer / mDuration; }
+
+	void changeState(statusFlag state, f32 duration)
+	{
+		mState    = state;
+		mTimer    = 0.0f;
+		mDuration = duration;
+	}
 
 	statusFlag mState; // _00
 	f32 mTimer;        // _04
@@ -67,6 +66,7 @@ struct MenuPanelMgr {
  * @note Size: 0x64.
  */
 struct MenuPanel : public P2DPaneCallBack {
+public:
 	MenuPanel(P2DPane* pane, P2DPane* centPane, MenuPanelMgr* mgr)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	{
@@ -156,6 +156,8 @@ struct MenuPanel : public P2DPaneCallBack {
 
 		pic->move(RoundOff(mCurrentPos.x + mOffset.x), RoundOff(mCurrentPos.y + mOffset.y));
 	}
+
+protected:
 	void setLagrangeFunction(Vector3f* coes)
 	{
 		setLagrangeCoe(mLagrangeCoeffsX, coes[0].x, coes[1].x, coes[2].x);

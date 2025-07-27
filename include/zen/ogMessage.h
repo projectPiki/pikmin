@@ -28,6 +28,7 @@ struct TextInfoType {
  * @note Size: 0xA5F0.
  */
 struct ogScrMessageMgr {
+public:
 	/**
 	 * @brief Defines the operational states of the message manager.
 	 */
@@ -42,16 +43,11 @@ struct ogScrMessageMgr {
 
 	ogScrMessageMgr(char*);
 
-	s16 SearchTopPage(int);
 	void resetPage();
 	void start(int);
 	void setPage(int);
 	void nextPage();
 	void backPage();
-	s16 makePageInfo(char***);
-	void cnvSingleMulti(char*);
-	void cnvButtonIcon(char*);
-	void setPageInfoSub();
 	void MakeAndSetPageInfo(char***);
 	void dispAll();
 	void fadeOut();
@@ -59,7 +55,6 @@ struct ogScrMessageMgr {
 	void draw(Graphics&);
 
 	// unused/inlined:
-	void setMessagePage(int);
 	void ReadAllScreen();
 	void setScreenAlpha(u8);
 
@@ -90,6 +85,14 @@ struct ogScrMessageMgr {
 		mBaseScreen->move(x, y);
 		mCurrentScreen->move(x, y);
 	}
+
+private:
+	s16 SearchTopPage(int);
+	void setMessagePage(int);
+	s16 makePageInfo(char***);
+	void cnvSingleMulti(char*);
+	void cnvButtonIcon(char*);
+	void setPageInfoSub();
 
 	P2DScreen* mBaseScreen;                   // _00
 	ogMsgCtrlTagMgr* mCtrlTagMgr;             // _04

@@ -16,7 +16,7 @@ namespace zen {
  * @note Size: 0x154.
  */
 struct DrawHurryUp {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -38,18 +38,20 @@ struct DrawHurryUp {
 
 	DrawHurryUp();
 
-	void initPanes();
 	void start(messageTypeFlag);
-	void startStatus();
-	bool endStatus();
 	bool update();
 	void draw(Graphics&);
 
 	// unused/inlined:
 	~DrawHurryUp();
+
+protected:
+	void initPanes();
+	void startStatus();
 	void enlargeStatus();
 	void brightShotStatus();
 	void brightStatus();
+	bool endStatus();
 
 	modeFlag mMode;                 // _00
 	P2DScreen mScreen;              // _04

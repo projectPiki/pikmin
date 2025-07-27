@@ -26,7 +26,7 @@ struct ogDrawSelectDiary;
  * @brief Manages the diary screen, handling message display and page navigation.
  */
 struct ogScrDiaryMgr {
-
+public:
 	/**
 	 * @brief Status of the main diary screen manager.
 	 */
@@ -40,18 +40,18 @@ struct ogScrDiaryMgr {
 	DiaryStatus update(Controller* pController);
 	void draw(Graphics& gfx);
 	void start(s16 startScreenIndex, s16 day);
+	void setDiarySpecialNumber(s16 day);
 	void typePage();
 	bool nextPage();
 	void backPage();
 	void exit();
-
-	// unused/inlined:
-	void setDiarySpecialNumber(s16 day);
 	void setCursorXY(P2DTextBox* pTextBox);
-	void updateDiary(Controller* pController);
 
-	void setScale(f32 scale) { mMesgMgr->setScale(scale); }
 	ogScrMessageMgr* getScrMsgMgr() { return mMesgMgr; }
+	void setScale(f32 scale) { mMesgMgr->setScale(scale); }
+
+private:
+	void updateDiary(Controller* pController);
 
 	DiaryStatus mStatus;                     // _00
 	ogScrMessageMgr* mMesgMgr;               // _04
@@ -69,7 +69,7 @@ struct ogScrDiaryMgr {
  * @brief Controls the visual presentation and animation of a single diary entry.
  */
 struct ogDrawDiary {
-
+public:
 	/**
 	 * @brief Animation and interaction state for the diary display.
 	 */
@@ -90,6 +90,7 @@ struct ogDrawDiary {
 	void setOffset();
 	void draw(Graphics& gfx);
 
+private:
 	ogScrDiaryMgr* mDiaryMgr; // _00
 	EffectMgr2D* mEfxMgr;     // _04
 	DiaryStatus mStatus;      // _08
@@ -107,7 +108,7 @@ struct ogDrawDiary {
  * @note Size: 0x2F0.
  */
 struct ogDrawSelectDiary {
-
+public:
 	/**
 	 * @brief State of the diary selection screen.
 	 */
@@ -123,13 +124,16 @@ struct ogDrawSelectDiary {
 	ogDrawSelectDiary();
 
 	void start();
-	void setCursorAlpha();
-	bool MoveCursor();
 	SelectDiaryStatus update(Controller* pController);
 	void draw(Graphics& gfx);
 
 	int getOpenX() { return mOpenTargetPane->getPosH() + mOpenTargetPane->getWidth() / 2; }
 	int getOpenY() { return mOpenTargetPane->getPosV() + mOpenTargetPane->getHeight() / 2; }
+
+	void setCursorAlpha();
+
+private:
+	bool MoveCursor();
 
 	SelectDiaryStatus mStatus;                  // _00
 	P2DScreen* mScreen;                         // _04

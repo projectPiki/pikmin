@@ -8,14 +8,13 @@
  * @brief TODO
  */
 struct Stickers : public Traversable {
+public:
 	Stickers(Creature*);
 
 	virtual Creature* getCreature(int); // _08
 	virtual int getFirst();             // _0C
 	virtual int getNext(int);           // _10
 	virtual bool isDone(int);           // _14
-
-	void calcNum();
 
 	inline bool isEnd(int i)
 	{
@@ -29,6 +28,9 @@ struct Stickers : public Traversable {
 	}
 
 	inline int getNumStickers() { return mCount; }
+
+protected:
+	void calcNum();
 
 	// _00     = VTBL
 	// _00-_08 = Traversable

@@ -9,6 +9,7 @@
  * @brief TODO
  */
 struct TAIAsearchWorkObject : public TaiAction {
+public:
 	inline TAIAsearchWorkObject(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -17,6 +18,7 @@ struct TAIAsearchWorkObject : public TaiAction {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -26,11 +28,13 @@ struct TAIAsearchWorkObject : public TaiAction {
  * @brief TODO
  */
 struct TAIAjudgeLife : public TaiAction {
+public:
 	TAIAjudgeLife(int nextState)
 	    : TaiAction(nextState)
 	{
 	}
 
+protected:
 	virtual f32 getLifePercentThreshold(Teki&) = 0; // _1C
 
 	f32 getLifePercent(Teki& teki) { return teki.mHealth / teki.getParameterF(TPF_Life); }
@@ -44,12 +48,15 @@ struct TAIAjudgeLife : public TaiAction {
  * @brief TODO
  */
 struct TAIAlessLife : public TAIAjudgeLife {
+public:
 	TAIAlessLife(int nextState)
 	    : TAIAjudgeLife(nextState)
 	{
 	}
 
 	virtual bool act(Teki&);                        // _10
+
+protected:
 	virtual f32 getLifePercentThreshold(Teki&) = 0; // _1C
 
 	// _04     = VTBL
@@ -61,12 +68,15 @@ struct TAIAlessLife : public TAIAjudgeLife {
  * @brief TODO
  */
 struct TAIAmoreLife : public TAIAjudgeLife {
+public:
 	TAIAmoreLife(int nextState)
 	    : TAIAjudgeLife(nextState)
 	{
 	}
 
 	virtual bool act(Teki&);                        // _10
+
+protected:
 	virtual f32 getLifePercentThreshold(Teki&) = 0; // _1C
 
 	// _04     = VTBL
@@ -78,12 +88,15 @@ struct TAIAmoreLife : public TAIAjudgeLife {
  * @brief TODO
  */
 struct TAIAjudgeOptionalRange : public TaiAction {
+public:
 	TAIAjudgeOptionalRange(int nextState)
 	    : TaiAction(nextState)
 	{
 	}
 
 	virtual bool act(Teki&);                   // _10
+
+protected:
 	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
 	virtual bool judgement(Teki&)         = 0; // _24
@@ -99,11 +112,13 @@ struct TAIAjudgeOptionalRange : public TaiAction {
  * @brief TODO
  */
 struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
+public:
 	TAIAinsideOptionalRange(int nextState) // TODO: this is a guess
 	    : TAIAjudgeOptionalRange(nextState)
 	{
 	}
 
+protected:
 	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
 	virtual bool judgement(Teki&);             // _24
@@ -117,11 +132,13 @@ struct TAIAinsideOptionalRange : public TAIAjudgeOptionalRange {
  * @brief TODO
  */
 struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
+public:
 	TAIAoutsideOptionalRange(int nextState)
 	    : TAIAjudgeOptionalRange(nextState)
 	{
 	}
 
+protected:
 	virtual bool setTargetPosition(Teki&) = 0; // _1C
 	virtual f32 getOptionalRange(Teki&)   = 0; // _20
 	virtual bool judgement(Teki&);             // _24
@@ -135,6 +152,7 @@ struct TAIAoutsideOptionalRange : public TAIAjudgeOptionalRange {
  * @brief TODO
  */
 struct TAIAcheckInsideRangePiki : public TaiAction {
+public:
 	TAIAcheckInsideRangePiki(int nextState, int pikiMax, f32 range)
 	    : TaiAction(nextState)
 	{
@@ -143,6 +161,8 @@ struct TAIAcheckInsideRangePiki : public TaiAction {
 	}
 
 	virtual bool act(Teki&);                           // _10
+
+protected:
 	virtual int getPikiMax(Teki&) { return mPikiMax; } // _1C
 	virtual f32 getRange(Teki&) { return mRange; }     // _20
 
@@ -156,6 +176,7 @@ struct TAIAcheckInsideRangePiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAinsideTerritoryRangeNavi : public TaiAction {
+public:
 	TAIAinsideTerritoryRangeNavi(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -163,6 +184,7 @@ struct TAIAinsideTerritoryRangeNavi : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -172,6 +194,7 @@ struct TAIAinsideTerritoryRangeNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAoutsideTerritoryRangeNavi : public TaiAction {
+public:
 	inline TAIAoutsideTerritoryRangeNavi() // TODO: this is a guess
 	    : TaiAction(-1)
 	{
@@ -179,6 +202,7 @@ struct TAIAoutsideTerritoryRangeNavi : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -188,6 +212,7 @@ struct TAIAoutsideTerritoryRangeNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAvisibleNavi : public TaiAction {
+public:
 	inline TAIAvisibleNavi(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -195,6 +220,7 @@ struct TAIAvisibleNavi : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -204,6 +230,7 @@ struct TAIAvisibleNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAvisiblePiki : public TaiAction {
+public:
 	TAIAvisiblePiki(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -211,6 +238,7 @@ struct TAIAvisiblePiki : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -220,17 +248,18 @@ struct TAIAvisiblePiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackableTarget : public TaiAction {
+public:
 	inline TAIAattackableTarget(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
 	}
 
 	virtual bool act(Teki&);   // _10
+
+protected:
 	virtual bool judge(Teki&); // _1C
 
 	bool checkAngle(Teki&);
-
-	// unused/inlined:
 	bool checkDist(Teki&);
 
 	// _04     = VTBL
@@ -242,6 +271,7 @@ struct TAIAattackableTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAunvisibleTarget : public TaiAction {
+public:
 	inline TAIAunvisibleTarget(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -249,6 +279,7 @@ struct TAIAunvisibleTarget : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -258,6 +289,7 @@ struct TAIAunvisibleTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAstickingPiki : public TaiAction {
+public:
 	TAIAstickingPiki(int nextState, int stickNum)
 	    : TaiAction(nextState)
 	{
@@ -266,6 +298,8 @@ struct TAIAstickingPiki : public TaiAction {
 
 	virtual void start(Teki&) { }                              // _08
 	virtual bool act(Teki&);                                   // _10
+
+protected:
 	virtual int getPikiNum(Teki&) { return mStickingPikiNum; } // _1C
 
 	// _04     = VTBL
@@ -277,6 +311,7 @@ struct TAIAstickingPiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAdistanceTarget : public TaiAction {
+public:
 	TAIAdistanceTarget() // this never gets called, so who knows
 	    : TaiAction(TAI_NO_TRANSIT)
 	{
@@ -285,6 +320,7 @@ struct TAIAdistanceTarget : public TaiAction {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	f32 _08;       // _08
@@ -295,6 +331,7 @@ struct TAIAdistanceTarget : public TaiAction {
  * @brief TODO
  */
 struct TAIAcheckTurnAngle : public TaiAction {
+public:
 	TAIAcheckTurnAngle(int nextState, f32 p2, bool p3)
 	    : TaiAction(nextState)
 	{
@@ -305,6 +342,7 @@ struct TAIAcheckTurnAngle : public TaiAction {
 	virtual void start(Teki&); // _08
 	virtual bool act(Teki&);   // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	f32 _08;  // _08
@@ -315,6 +353,7 @@ struct TAIAcheckTurnAngle : public TaiAction {
  * @brief TODO
  */
 struct TAIAoutsideTerritory : public TaiAction {
+public:
 	TAIAoutsideTerritory(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -325,6 +364,7 @@ struct TAIAoutsideTerritory : public TaiAction {
 		return teki.getTerritoryDistance() > teki.getParameterF(TPF_DangerTerritoryRange);
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -334,11 +374,13 @@ struct TAIAoutsideTerritory : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackableAngleTarget : public TAIAattackableTarget {
+public:
 	inline TAIAattackableAngleTarget(int nextState) // TODO: this is a guess
 	    : TAIAattackableTarget(nextState)
 	{
 	}
 
+protected:
 	virtual bool judge(Teki& teki) // _1C
 	{
 		return TAIAattackableTarget::checkAngle(teki);

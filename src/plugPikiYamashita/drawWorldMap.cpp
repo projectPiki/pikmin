@@ -42,6 +42,7 @@ namespace zen {
  * @note Size: 0x28.
  */
 struct WorldMapWipe {
+public:
 	WorldMapWipe() { mWipePane = nullptr; }
 
 	// weak
@@ -89,6 +90,7 @@ struct WorldMapWipe {
 
 	void setDefault() { set(zen::RoundOff(mDefaultPos.x), zen::RoundOff(mDefaultPos.y)); }
 
+protected:
 	Vector3f mDefaultPos;  // _00
 	Vector3f mCurrentPos;  // _0C
 	Vector3f mTargetPos;   // _18
@@ -111,6 +113,7 @@ enum {
  * @note Size: 0xB0.
  */
 struct WorldMapWipeMgr {
+public:
 	WorldMapWipeMgr()
 	{
 		mTimer    = 0.0f;
@@ -217,6 +220,7 @@ struct WorldMapWipeMgr {
 		mState = WipeState::Idle;
 	}
 
+protected:
 	int mState;             // _00
 	f32 mTimer;             // _04
 	f32 mDuration;          // _08
@@ -230,6 +234,7 @@ struct WorldMapWipeMgr {
  * @note Size: 0x3C.
  */
 struct WorldMapCursorOnyon {
+public:
 	WorldMapCursorOnyon()
 	{
 		mOnyonIcon = nullptr;
@@ -327,6 +332,7 @@ struct WorldMapCursorOnyon {
 		mOnyonIcon->setScale(Vector3f(scale, scale, 1.0f));
 	}
 
+protected:
 	void updateBottomPos()
 	{
 		Vector3f vec1;
@@ -379,7 +385,7 @@ struct WorldMapCursorOnyon {
  * @note Size: 0x12C.
  */
 struct WorldMapCursorMgr {
-
+public:
 	/**
 	 * @brief UFO cursor movement states
 	 */
@@ -416,28 +422,6 @@ struct WorldMapCursorMgr {
 		_UNUSED128 = 1.0f;
 	}
 
-	void setLandingFlag(bool doSet)
-	{
-		if (doSet) {
-			mIsLanding = true;
-			SeSystem::playSysSe(SYSSE_SELECT_DECIDE);
-
-			if (mExhaustGenerators[0]) {
-				mExhaustGenerators[0]->setFreqFrm(4.0f * mFireFreqFrame);
-			}
-			if (mExhaustGenerators[1]) {
-				mExhaustGenerators[1]->setFreqFrm(5.0f * mSmokeFreqFrame);
-			}
-		} else {
-			mIsLanding = 0;
-			if (mExhaustGenerators[0]) {
-				mExhaustGenerators[0]->setFreqFrm(mFireFreqFrame);
-			}
-			if (mExhaustGenerators[1]) {
-				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame);
-			}
-		}
-	}
 	void init()
 	{
 		int i;
@@ -485,6 +469,143 @@ struct WorldMapCursorMgr {
 			mCursorOnyons[Yellow].show();
 		}
 	}
+
+	void init(P2DScreen* iconScreen)
+	{
+		P2DPane* rocket = iconScreen->search('ri', true);
+		if (rocket->getTypeID() == PANETYPE_Picture) {
+			mRocketIcon = (P2DPicture*)rocket;
+		}
+
+		mCursorOnyons[Blue].init(iconScreen, 'ci_b', false);
+		mCursorOnyons[Red].init(iconScreen, 'ci_r', false);
+		mCursorOnyons[Yellow].init(iconScreen, 'ci_y', false);
+		init();
+	}
+
+	void forceMove()
+	{
+		if (mIsForcedMove) {
+			setUfoStatus(UFO_Moving);
+			mLandingTimer = 0.0f;
+			mTargetPos.set(mForceMoveTarget);
+			mIsForcedMove = false;
+			setLandingFlag(true);
+		} else {
+			PRINT_YAMASH("can't forceMove.\n");
+			ERROR("can't forceMove.");
+		}
+	}
+
+	void update()
+	{
+		switch (mUfoStatus) {
+		case UFO_Hovering:
+			stayUfo();
+			break;
+
+		case UFO_Moving:
+			if (moveUfo()) {
+				if (mIsForcedMove) {
+					forceMove();
+				} else if (mIsLanding) {
+					setUfoStatus(UFO_Landed);
+				} else {
+					setUfoStatus(UFO_Hovering);
+				}
+			}
+			break;
+		case UFO_Landed:
+			break;
+		}
+
+		updateOnyons();
+		effect();
+	}
+
+	ufoStatusFlag getStatusFlag() { return mUfoStatus; }
+
+	bool isLanding() { return mIsLanding; }
+	bool isMoveOK() { return !mIsForcedMove && !mIsLanding; }
+
+	void set(int x, int y, f32 scale)
+	{
+		mRocketPos.set(x, y, 0.0f);
+		mTargetPos.set(x, y, 0.0f);
+		mRocketIcon->move(x, y);
+		mRocketIcon->setScale(Vector3f(scale, scale, 1.0f));
+		setOnyonPos(scale);
+	}
+
+	void move(int x, int y, bool p3)
+	{
+		bool check = false;
+		if (mIsForcedMove) {
+			return;
+		}
+
+		if (p3) {
+			switch (mUfoStatus) {
+			case UFO_Hovering:
+				mLandingTimer = 0.0f;
+				check         = true;
+				setLandingFlag(true);
+				break;
+			case UFO_Moving:
+				if (!mIsLanding) {
+					mIsForcedMove = true;
+					mForceMoveTarget.set(x, y, 0.0f);
+				}
+				break;
+			}
+		} else if (!mIsLanding) {
+			check = true;
+		}
+
+		if (check) {
+			if (!mIsLanding && !mIsForcedMove) {
+				SeSystem::playSysSe(SYSSE_SELECT_MOVE);
+			}
+			setUfoStatus(UFO_Moving);
+			mTargetPos.set(x, y, 0.0f);
+		}
+	}
+
+	void moveCancel(int x, int y)
+	{
+		if (mIsForcedMove || mIsLanding) {
+			mIsForcedMove = false;
+			setLandingFlag(false);
+			setUfoStatus(UFO_Moving);
+			mTargetPos.set(x, y, 0.0f);
+			SeSystem::playSysSe(SYSSE_CANCEL);
+		}
+	}
+
+protected:
+	void setLandingFlag(bool doSet)
+	{
+		if (doSet) {
+			mIsLanding = true;
+			SeSystem::playSysSe(SYSSE_SELECT_DECIDE);
+
+			if (mExhaustGenerators[0]) {
+				mExhaustGenerators[0]->setFreqFrm(4.0f * mFireFreqFrame);
+			}
+			if (mExhaustGenerators[1]) {
+				mExhaustGenerators[1]->setFreqFrm(5.0f * mSmokeFreqFrame);
+			}
+		} else {
+			mIsLanding = 0;
+			if (mExhaustGenerators[0]) {
+				mExhaustGenerators[0]->setFreqFrm(mFireFreqFrame);
+			}
+			if (mExhaustGenerators[1]) {
+				mExhaustGenerators[1]->setFreqFrm(mSmokeFreqFrame);
+			}
+		}
+	}
+
 	void moveOnyon()
 	{
 		Vector3f onyonPos[PikiColorCount];
@@ -493,6 +614,7 @@ struct WorldMapCursorMgr {
 		mCursorOnyons[Red].move(onyonPos[Red].x, onyonPos[Red].y);
 		mCursorOnyons[Yellow].move(onyonPos[Yellow].x, onyonPos[Yellow].y);
 	}
+
 	void updateOnyonPos(Vector3f* bluePos, Vector3f* redPos, Vector3f* yellowPos)
 	{
 		Vector3f orbitCenter;
@@ -529,6 +651,7 @@ struct WorldMapCursorMgr {
 		f32 sinY = sinf(TORADIANS(240));
 		yellowPos->set(orbitVec.x * cosY + orbitCenter.x - orbitVec.y * sinY, orbitVec.x * sinY + orbitCenter.y + orbitVec.y * cosY, 0.0f);
 	}
+
 	void stayUfo()
 	{
 		Vector3f vec1;
@@ -649,19 +772,7 @@ struct WorldMapCursorMgr {
 		STACK_PAD_VAR(2);
 		return res;
 	}
-	void forceMove()
-	{
-		if (mIsForcedMove) {
-			setUfoStatus(UFO_Moving);
-			mLandingTimer = 0.0f;
-			mTargetPos.set(mForceMoveTarget);
-			mIsForcedMove = false;
-			setLandingFlag(true);
-		} else {
-			PRINT_YAMASH("can't forceMove.\n");
-			ERROR("can't forceMove.");
-		}
-	}
+
 	void effect()
 	{
 		f32 angle = mRocketIcon->getRotate() - HALF_PI;
@@ -698,7 +809,6 @@ struct WorldMapCursorMgr {
 		}
 	}
 
-	// DLL:
 	void setUfoStatus(ufoStatusFlag status)
 	{
 		mUfoStatus = status;
@@ -711,18 +821,6 @@ struct WorldMapCursorMgr {
 		}
 	}
 
-	void init(P2DScreen* iconScreen)
-	{
-		P2DPane* rocket = iconScreen->search('ri', true);
-		if (rocket->getTypeID() == PANETYPE_Picture) {
-			mRocketIcon = (P2DPicture*)rocket;
-		}
-
-		mCursorOnyons[Blue].init(iconScreen, 'ci_b', false);
-		mCursorOnyons[Red].init(iconScreen, 'ci_r', false);
-		mCursorOnyons[Yellow].init(iconScreen, 'ci_y', false);
-		init();
-	}
 	void updateOnyons()
 	{
 		moveOnyon();
@@ -730,36 +828,6 @@ struct WorldMapCursorMgr {
 			mCursorOnyons[i].update(mRocketIcon->getScale());
 		}
 	}
-	void update()
-	{
-		switch (mUfoStatus) {
-		case UFO_Hovering:
-			stayUfo();
-			break;
-
-		case UFO_Moving:
-			if (moveUfo()) {
-				if (mIsForcedMove) {
-					forceMove();
-				} else if (mIsLanding) {
-					setUfoStatus(UFO_Landed);
-				} else {
-					setUfoStatus(UFO_Hovering);
-				}
-			}
-			break;
-		case UFO_Landed:
-			break;
-		}
-
-		updateOnyons();
-		effect();
-	}
-
-	ufoStatusFlag getStatusFlag() { return mUfoStatus; }
-
-	bool isLanding() { return mIsLanding; }
-	bool isMoveOK() { return !mIsForcedMove && !mIsLanding; }
 
 	f32 calcAddAngle(f32 p1, f32 p2, f32 p3, f32 p4)
 	{
@@ -782,14 +850,6 @@ struct WorldMapCursorMgr {
 
 	void rotateUfo(f32 angle) { mRocketIcon->rotateZ(mRocketIcon->getWidth() >> 1, mRocketIcon->getHeight() >> 1, angle); }
 
-	void set(int x, int y, f32 scale)
-	{
-		mRocketPos.set(x, y, 0.0f);
-		mTargetPos.set(x, y, 0.0f);
-		mRocketIcon->move(x, y);
-		mRocketIcon->setScale(Vector3f(scale, scale, 1.0f));
-		setOnyonPos(scale);
-	}
 	void setOnyonPos(f32 scale)
 	{
 		Vector3f onyonPos[PikiColorCount];
@@ -798,52 +858,6 @@ struct WorldMapCursorMgr {
 		mCursorOnyons[Red].set(onyonPos[Red].x, onyonPos[Red].y, scale);
 		mCursorOnyons[Yellow].set(onyonPos[Yellow].x, onyonPos[Yellow].y, scale);
 	}
-	void move(int x, int y, bool p3)
-	{
-		bool check = false;
-		if (mIsForcedMove) {
-			return;
-		}
-
-		if (p3) {
-			switch (mUfoStatus) {
-			case UFO_Hovering:
-				mLandingTimer = 0.0f;
-				check         = true;
-				setLandingFlag(true);
-				break;
-			case UFO_Moving:
-				if (!mIsLanding) {
-					mIsForcedMove = true;
-					mForceMoveTarget.set(x, y, 0.0f);
-				}
-				break;
-			}
-		} else if (!mIsLanding) {
-			check = true;
-		}
-
-		if (check) {
-			if (!mIsLanding && !mIsForcedMove) {
-				SeSystem::playSysSe(SYSSE_SELECT_MOVE);
-			}
-			setUfoStatus(UFO_Moving);
-			mTargetPos.set(x, y, 0.0f);
-		}
-	}
-
-	void moveCancel(int x, int y)
-	{
-		if (mIsForcedMove || mIsLanding) {
-			mIsForcedMove = false;
-			setLandingFlag(false);
-			setUfoStatus(UFO_Moving);
-			mTargetPos.set(x, y, 0.0f);
-			SeSystem::playSysSe(SYSSE_CANCEL);
-		}
-	}
-
-	// DLL inlines to do:
 
 	static const f32 ONYON_POS_RADIUS;
 	static const f32 ONYON_OFFSET_X;
@@ -875,29 +889,13 @@ struct WorldMapCursorMgr {
  * @brief TODO
  */
 struct WorldMapPartsInfoMgr {
+public:
 	WorldMapPartsInfoMgr()
 	{
 		mMaxPartCount   = 0;
 		mFadedStarIcons = nullptr;
 	}
 
-	void setDisplayParts(int max, int curr)
-	{
-		for (int i = 0; i < mMaxPartCount; i++) {
-			if (i < max) {
-				if (i < curr) {
-					mGlowingStarIcons[i]->show();
-					mFadedStarIcons[i]->hide();
-				} else {
-					mGlowingStarIcons[i]->hide();
-					mFadedStarIcons[i]->show();
-				}
-			} else {
-				mGlowingStarIcons[i]->hide();
-				mFadedStarIcons[i]->hide();
-			}
-		}
-	}
 	void setActiveMapNo(WorldMapName id)
 	{
 		int curr, max;
@@ -1009,6 +1007,25 @@ struct WorldMapPartsInfoMgr {
 
 	void close() { setActiveMapNo(WM_NULL); }
 
+protected:
+	void setDisplayParts(int max, int curr)
+	{
+		for (int i = 0; i < mMaxPartCount; i++) {
+			if (i < max) {
+				if (i < curr) {
+					mGlowingStarIcons[i]->show();
+					mFadedStarIcons[i]->hide();
+				} else {
+					mGlowingStarIcons[i]->hide();
+					mFadedStarIcons[i]->show();
+				}
+			} else {
+				mGlowingStarIcons[i]->hide();
+				mFadedStarIcons[i]->hide();
+			}
+		}
+	}
+
 	int mMaxPartCount;              // _00
 	P2DPicture** mFadedStarIcons;   // _04
 	P2DPicture** mGlowingStarIcons; // _08
@@ -1020,6 +1037,7 @@ struct WorldMapPartsInfoMgr {
  * @note Size: 0x88.
  */
 struct WorldMapConfirmMgr {
+public:
 	/**
 	 * @brief Confirmation dialog animation states
 	 */
@@ -1078,22 +1096,6 @@ struct WorldMapConfirmMgr {
 		mLeftSpecCursor.init(confScreen, parent, 'z**l', 10.0f, 100.0f);
 		mRightSpecCursor.init(confScreen, parent, 'z**r', 50.0f, 100.0f);
 		init();
-	}
-
-	void init(statusFlag status)
-	{
-		mStatus = status;
-		mConfirmScreen->getScreenPtr()->move(640, 0);
-		mConfirmScreen->getScreenPtr()->setScale(1.0f);
-		mConfirmScreen->getScreenPtr()->show();
-		mAnimTimer        = 0.0f;
-		mCurrentSelection = Yes;
-		mLeftSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconLPosH(), mMenuItems[mCurrentSelection].getIconLPosV());
-		mRightSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconRPosH(), mMenuItems[mCurrentSelection].getIconRPosV());
-
-		for (int i = 0; i < SELECT_COUNT; i++) {
-			mMenuItems[i].init(i == mCurrentSelection, mCharColor, mGradColor);
-		}
 	}
 
 	bool modeOperation(Controller* controller)
@@ -1201,6 +1203,23 @@ struct WorldMapConfirmMgr {
 
 	void start() { init(Appearing); }
 
+protected:
+	void init(statusFlag status)
+	{
+		mStatus = status;
+		mConfirmScreen->getScreenPtr()->move(640, 0);
+		mConfirmScreen->getScreenPtr()->setScale(1.0f);
+		mConfirmScreen->getScreenPtr()->show();
+		mAnimTimer        = 0.0f;
+		mCurrentSelection = Yes;
+		mLeftSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconLPosH(), mMenuItems[mCurrentSelection].getIconLPosV());
+		mRightSpecCursor.initPos(mMenuItems[mCurrentSelection].getIconRPosH(), mMenuItems[mCurrentSelection].getIconRPosV());
+
+		for (int i = 0; i < SELECT_COUNT; i++) {
+			mMenuItems[i].init(i == mCurrentSelection, mCharColor, mGradColor);
+		}
+	}
+
 	DrawScreen* mConfirmScreen;         // _00
 	SpectrumCursorMgr mLeftSpecCursor;  // _04
 	SpectrumCursorMgr mRightSpecCursor; // _34
@@ -1228,58 +1247,12 @@ enum {
  * @note Size: 0x138.
  */
 struct WorldMapCoursePointMgr {
+public:
 	WorldMapCoursePointMgr()
 	{
 		mSelectedPoint = 0;
 		mEventFlag     = 0;
 		mMode          = CoursePointMode::Operation;
-	}
-
-	bool modeAppear()
-	{
-		bool res                   = false;
-		WorldMapCoursePoint* point = mCoursePoints;
-		for (int i = 0; i < 5; i++) {
-			point->update(point == mSelectedPoint);
-			if (point->getEventFlag() & 0x1) {
-				res = true;
-			}
-			point++;
-		}
-		return res;
-	}
-	bool modeOperation(Controller* controller, bool p2)
-	{
-		WorldMapCoursePoint* point = mCoursePoints;
-		for (int i = 0; i < 5; i++) {
-			point->update(point == mSelectedPoint);
-			point++;
-			STACK_PAD_VAR(1);
-		}
-		if (controller) {
-			if (p2) {
-				keyOperation(controller, KBBTN_MSTICK_UP, WorldMapCoursePoint::LINK_Up);
-				keyOperation(controller, KBBTN_MSTICK_DOWN, WorldMapCoursePoint::LINK_Down);
-				keyOperation(controller, KBBTN_MSTICK_LEFT, WorldMapCoursePoint::LINK_Left);
-				keyOperation(controller, KBBTN_MSTICK_RIGHT, WorldMapCoursePoint::LINK_Right);
-
-				if (controller->keyClick(KBBTN_START | KBBTN_A)) {
-					SeSystem::playSysSe(SYSSE_DECIDE1);
-					mEventFlag |= 0x10;
-				}
-			} else if (controller->keyClick(KBBTN_B)) {
-				SeSystem::playSysSe(SYSSE_CANCEL);
-				mEventFlag |= 0x20;
-			}
-		}
-		return false;
-	}
-
-	// DLL:
-	void setSelectCourse(WorldMapName gameStageID)
-	{
-		mSelectedPoint = &mCoursePoints[mapNoGame2Scr[gameStageID]];
-		mSelectedPoint->select();
 	}
 
 	void init(P2DScreen* pointScreen, P2DScreen* lineScreen, WorldMapName startStageID)
@@ -1431,7 +1404,55 @@ struct WorldMapCoursePointMgr {
 
 	void createCourseInEffect() { mSelectedPoint->createCourseInEffect(); }
 
-	// DLL inlines to do:
+protected:
+	// DLL:
+	void setSelectCourse(WorldMapName gameStageID)
+	{
+		mSelectedPoint = &mCoursePoints[mapNoGame2Scr[gameStageID]];
+		mSelectedPoint->select();
+	}
+
+	bool modeAppear()
+	{
+		bool res                   = false;
+		WorldMapCoursePoint* point = mCoursePoints;
+		for (int i = 0; i < 5; i++) {
+			point->update(point == mSelectedPoint);
+			if (point->getEventFlag() & 0x1) {
+				res = true;
+			}
+			point++;
+		}
+		return res;
+	}
+
+	bool modeOperation(Controller* controller, bool p2)
+	{
+		WorldMapCoursePoint* point = mCoursePoints;
+		for (int i = 0; i < 5; i++) {
+			point->update(point == mSelectedPoint);
+			point++;
+			STACK_PAD_VAR(1);
+		}
+		if (controller) {
+			if (p2) {
+				keyOperation(controller, KBBTN_MSTICK_UP, WorldMapCoursePoint::LINK_Up);
+				keyOperation(controller, KBBTN_MSTICK_DOWN, WorldMapCoursePoint::LINK_Down);
+				keyOperation(controller, KBBTN_MSTICK_LEFT, WorldMapCoursePoint::LINK_Left);
+				keyOperation(controller, KBBTN_MSTICK_RIGHT, WorldMapCoursePoint::LINK_Right);
+
+				if (controller->keyClick(KBBTN_START | KBBTN_A)) {
+					SeSystem::playSysSe(SYSSE_DECIDE1);
+					mEventFlag |= 0x10;
+				}
+			} else if (controller->keyClick(KBBTN_B)) {
+				SeSystem::playSysSe(SYSSE_CANCEL);
+				mEventFlag |= 0x20;
+			}
+		}
+		return false;
+	}
+
 	void keyOperation(Controller* controller, u32 button, WorldMapCoursePoint::linkFlag linkID)
 	{
 		if (controller->keyClick(button)) {
@@ -1466,6 +1487,7 @@ enum {
  * @brief TODO
  */
 struct WorldMapMapImageMgr {
+public:
 	WorldMapMapImageMgr()
 	{
 		mState          = MapImageState::Opening;
@@ -1491,60 +1513,6 @@ struct WorldMapMapImageMgr {
 		mActiveMapIndex = 0;
 
 		closeMapImage();
-	}
-	void modeOpen()
-	{
-		mAnimTimer += gsys->getFrameTime();
-		f32 a;
-		if (mAnimTimer > 0.25f) {
-			a          = 1.0f;
-			mAnimTimer = 0.0f;
-			if (mDelayedClose) {
-				mState        = MapImageState::Closing;
-				mDelayedClose = 0;
-			} else {
-				mState = MapImageState::Shown;
-			}
-		} else {
-			a = mAnimTimer / 0.25f;
-		}
-		f32 xScale = a / 0.5f;
-		if (xScale > 1.0f) {
-			xScale = 1.0f;
-		}
-		f32 yScale = (a - 0.5f) / 0.5f;
-		if (yScale < 0.05f) {
-			yScale = 0.05f;
-		}
-		if (yScale > 1.0f) {
-			yScale = 1.0f;
-		}
-		mMapImagePanes[mActiveMapIndex]->setScale(xScale, yScale, 1.0f);
-		mMapImagePanes[mActiveMapIndex]->show();
-	}
-	void modeClose()
-	{
-		mAnimTimer += gsys->getFrameTime();
-		if (mAnimTimer > 0.25f) {
-			mAnimTimer = 0.25f;
-			mMapImagePanes[mActiveMapIndex]->hide();
-		} else {
-			f32 a      = 1.0f - mAnimTimer / 0.25f;
-			f32 xScale = a / 0.5f;
-			if (xScale > 1.0f) {
-				xScale = 1.0f;
-			}
-
-			f32 yScale = (a - 0.5f) / 0.5f;
-			if (yScale < 0.05f) {
-				yScale = 0.05f;
-			}
-			if (yScale > 1.0f) {
-				yScale = 1.0f;
-			}
-			mMapImagePanes[mActiveMapIndex]->setScale(xScale, yScale, 1.0f);
-			mMapImagePanes[mActiveMapIndex]->show();
-		}
 	}
 
 	// DLL:
@@ -1604,6 +1572,7 @@ struct WorldMapMapImageMgr {
 			break;
 		}
 	}
+
 	void openMapImage(WorldMapName id)
 	{
 		if (mState == MapImageState::Closing) {
@@ -1611,6 +1580,63 @@ struct WorldMapMapImageMgr {
 			mActiveMapIndex = id;
 			mState          = MapImageState::Opening;
 			PRINT("openMapImage %d \n", id);
+		}
+	}
+
+protected:
+	void modeOpen()
+	{
+		mAnimTimer += gsys->getFrameTime();
+		f32 a;
+		if (mAnimTimer > 0.25f) {
+			a          = 1.0f;
+			mAnimTimer = 0.0f;
+			if (mDelayedClose) {
+				mState        = MapImageState::Closing;
+				mDelayedClose = 0;
+			} else {
+				mState = MapImageState::Shown;
+			}
+		} else {
+			a = mAnimTimer / 0.25f;
+		}
+		f32 xScale = a / 0.5f;
+		if (xScale > 1.0f) {
+			xScale = 1.0f;
+		}
+		f32 yScale = (a - 0.5f) / 0.5f;
+		if (yScale < 0.05f) {
+			yScale = 0.05f;
+		}
+		if (yScale > 1.0f) {
+			yScale = 1.0f;
+		}
+		mMapImagePanes[mActiveMapIndex]->setScale(xScale, yScale, 1.0f);
+		mMapImagePanes[mActiveMapIndex]->show();
+	}
+
+	void modeClose()
+	{
+		mAnimTimer += gsys->getFrameTime();
+		if (mAnimTimer > 0.25f) {
+			mAnimTimer = 0.25f;
+			mMapImagePanes[mActiveMapIndex]->hide();
+		} else {
+			f32 a      = 1.0f - mAnimTimer / 0.25f;
+			f32 xScale = a / 0.5f;
+			if (xScale > 1.0f) {
+				xScale = 1.0f;
+			}
+
+			f32 yScale = (a - 0.5f) / 0.5f;
+			if (yScale < 0.05f) {
+				yScale = 0.05f;
+			}
+			if (yScale > 1.0f) {
+				yScale = 1.0f;
+			}
+			mMapImagePanes[mActiveMapIndex]->setScale(xScale, yScale, 1.0f);
+			mMapImagePanes[mActiveMapIndex]->show();
 		}
 	}
 

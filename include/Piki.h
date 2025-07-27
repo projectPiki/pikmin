@@ -91,6 +91,7 @@ enum {
  * @brief TODO
  */
 struct Piki : public Creature, public PaniAnimKeyListener {
+public:
 	Piki(CreatureProp*);
 
 	virtual void addCntCallback();                         // _08
@@ -124,7 +125,6 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual Vector3f getCatchPos(Creature*);               // _100
 	virtual void doAI();                                   // _104
 	virtual void doAnimation();                            // _108
-	virtual void doKill();                                 // _10C
 	virtual bool isKinoko() = 0;                           // _120
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&);   // _124
 	virtual void initBirth() { }                           // _128
@@ -155,10 +155,6 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	int moveRouteTraceDynamic(f32);
 	bool initRouteTrace(Vector3f&, bool);
 	int moveRouteTrace(f32);
-	Vector3f crGetPoint(int);
-	bool crPointOpen(int);
-	f32 crGetRadius(int);
-	void crMakeRefs();
 	bool hasBomb();
 	void startFire();
 	void endFire();
@@ -229,6 +225,15 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 
 	bool isFired() { return mFiredState == 1; }
 
+protected:
+	virtual void doKill(); // _10C
+
+	Vector3f crGetPoint(int);
+	bool crPointOpen(int);
+	f32 crGetRadius(int);
+	void crMakeRefs();
+
+public:
 	static bool directDumpMode;
 	static Colour kinokoColors[6];
 	static Colour pikiColors[6];
@@ -331,17 +336,21 @@ struct Piki : public Creature, public PaniAnimKeyListener {
  * @brief TODO
  */
 struct PikiShapeObject {
-	PikiShapeObject(Shape*);
+	friend struct NaviMgr; // Needs the protected constructor.
 
-	static AnimMgr* getAnimMgr();
+public:
 	static void init();
-	static void initOnce();
+	static AnimMgr* getAnimMgr();
 	static void exitCourse();
-
-	// unused/inlined:
 	static PikiShapeObject* create(int);
 
+protected:
+	PikiShapeObject(Shape*);
+
+	static void initOnce();
 	static bool firstTime;
+
+public:
 	static PikiShapeObject* _instances[4];
 
 	Shape* mShape;          // _00

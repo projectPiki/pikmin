@@ -61,6 +61,7 @@ struct Pebble {
  * @note Size: 0x3E4.
  */
 struct GrassGen : public ItemCreature {
+public:
 	GrassGen(Shape*, CreatureProp*);
 
 	virtual void startAI(int);                           // _34
@@ -75,11 +76,13 @@ struct GrassGen : public ItemCreature {
 	void startWork();
 	void finishWork();
 	void resolve();
-	void create(int, f32, int);
 	void setSizeAndNum(f32, int);
 	Grass* getRandomGrass();
 
 	void killGrass() { mActiveGrass--; }
+
+protected:
+	void create(int, f32, int);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
@@ -97,6 +100,7 @@ struct GrassGen : public ItemCreature {
  * @note Size: 0x3E8
  */
 struct RockGen : public ItemCreature {
+public:
 	RockGen(Shape*, CreatureProp*);
 
 	virtual void startAI(int);                             // _34
@@ -113,10 +117,12 @@ struct RockGen : public ItemCreature {
 	void startWork();
 	void finishWork();
 	void resolve();
-	void create(int, f32, int);
 	void setSizeAndNum(f32, int);
 	void killPebble();
 	Pebble* getRandomPebble();
+
+protected:
+	void create(int, f32, int);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

@@ -23,7 +23,7 @@ namespace zen {
  * @note Size: 0x20.
  */
 struct DrawCMBpicObj {
-
+public:
 	typedef bool (DrawCMBpicObj::*ModeFunc)();
 
 	/**
@@ -51,6 +51,21 @@ struct DrawCMBpicObj {
 		mModeFunction = &modeSleep;
 	}
 
+	// DLL:
+	void update() { (this->*mModeFunction)(); }
+	void sleep() { setMode(MODE_Sleep); }
+	void wait(f32 p1)
+	{
+		setMode(MODE_Wait);
+		_04 = p1;
+	}
+	void appear(f32 p1)
+	{
+		setMode(MODE_Appear);
+		_08 = p1;
+	}
+
+protected:
 	// weak:
 	bool modeSleep() { return false; }
 	bool modeAppear()
@@ -102,20 +117,6 @@ struct DrawCMBpicObj {
 			mModeFunction = &modeWait;
 			break;
 		}
-	}
-
-	// DLL:
-	void update() { (this->*mModeFunction)(); }
-	void sleep() { setMode(MODE_Sleep); }
-	void wait(f32 p1)
-	{
-		setMode(MODE_Wait);
-		_04 = p1;
-	}
-	void appear(f32 p1)
-	{
-		setMode(MODE_Appear);
-		_08 = p1;
 	}
 
 	P2DPane* mRootPane;     // _00, unknown

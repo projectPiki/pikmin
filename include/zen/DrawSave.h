@@ -18,7 +18,7 @@ namespace zen {
  * @note Size: 0x18.
  */
 struct DrawSaveFailure {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -34,9 +34,11 @@ struct DrawSaveFailure {
 	bool update(Controller*);
 	void draw(Graphics&);
 	void open(f32);
+	void init();
+
+protected:
 	void setMode(modeFlag);
 	f32 calcFrame(f32);
-	void init();
 
 	DrawScreen* mSaveFailScreen; // _00
 	modeFlag mMode;              // _04
@@ -52,7 +54,7 @@ struct DrawSaveFailure {
  * @note Size: 0x4C.
  */
 struct DrawSaveMes {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -77,13 +79,15 @@ struct DrawSaveMes {
 	void saveError();
 	bool update(Controller*);
 	void draw(Graphics&);
-	void setMode(modeFlag);
 
 	// unused/inlined:
 	void hide();
 
 	// DLL inlines to do:
 	modeFlag getModeFlag() { return mMode; }
+
+protected:
+	void setMode(modeFlag);
 
 	modeFlag mMode;               // _00
 	f32 _04;                      // _04
@@ -107,6 +111,7 @@ struct DrawSaveMes {
  * @note Size: 0x15C.
  */
 struct DrawOptionSave {
+public:
 	enum Mode {
 		MODE_Sleep     = 0,
 		MODE_Start     = 1,
@@ -124,12 +129,14 @@ struct DrawOptionSave {
 
 	bool update(Controller*);
 	void draw(Graphics&);
-	void modeCardCheck(Controller*);
 	void init();
 	void start();
-	void setMode(u32, Controller*);
 
 	u32 getModeFlag() { return mMode; }
+
+protected:
+	void modeCardCheck(Controller*);
+	void setMode(u32, Controller*);
 
 	u32 mMode;                 // _00
 	DrawSaveMes mSaveMes;      // _04

@@ -36,6 +36,7 @@ enum {
  * @note Size: 0x30.
  */
 struct DrawGameOverLetter {
+public:
 	DrawGameOverLetter()
 	{
 		mState           = LetterState::Idle;
@@ -64,20 +65,6 @@ struct DrawGameOverLetter {
 			PRINT("not picture pane.\n");
 			ERROR("not picture pane.\n");
 		}
-	}
-
-	void initParams()
-	{
-		mState      = LetterState::Idle;
-		mStateTimer = 0.0f;
-		mStartDelay = 0.0f;
-		mPositionX  = 320.0f;
-		mPositionY  = mTargetY - 480.0f;
-		mLetterPic->move(RoundOff(mPositionX), RoundOff(mPositionY));
-		mVelocityX       = Rand(10.0f) - 5.0f;
-		mVelocityY       = 0.0f;
-		mAngularVelocity = 0.0f;
-		mScaleVelocity   = 0.0f;
 	}
 
 	bool update()
@@ -161,6 +148,21 @@ struct DrawGameOverLetter {
 		mStartDelay = p1;
 	}
 
+protected:
+	void initParams()
+	{
+		mState      = LetterState::Idle;
+		mStateTimer = 0.0f;
+		mStartDelay = 0.0f;
+		mPositionX  = 320.0f;
+		mPositionY  = mTargetY - 480.0f;
+		mLetterPic->move(RoundOff(mPositionX), RoundOff(mPositionY));
+		mVelocityX       = Rand(10.0f) - 5.0f;
+		mVelocityY       = 0.0f;
+		mAngularVelocity = 0.0f;
+		mScaleVelocity   = 0.0f;
+	}
+
 	int mState;             // _00
 	f32 mStateTimer;        // _04
 	f32 mStartDelay;        // _08
@@ -181,6 +183,7 @@ struct DrawGameOverLetter {
  * @note Size: 0xC.
  */
 struct DrawGameOverScreen {
+public:
 	DrawGameOverScreen(char* bloFileName)
 	{
 		mScreen      = new DrawScreen(bloFileName, nullptr, true, true);
@@ -225,6 +228,7 @@ struct DrawGameOverScreen {
 
 	void draw(Graphics&) { mScreen->draw(); }
 
+protected:
 	DrawScreen* mScreen;          // _00
 	int mLetterCount;             // _04
 	DrawGameOverLetter* mLetters; // _08

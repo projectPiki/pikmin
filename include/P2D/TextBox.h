@@ -15,13 +15,12 @@ struct P2DFont;
  * @note Size: 0x118.
  */
 struct P2DTextBox : public P2DPane {
+public:
 	P2DTextBox(P2DPane*, RandomAccessStream*, u16);
 
 	virtual void loadResource();                // _08
 	virtual void makeResident();                // _0C
 	virtual ~P2DTextBox() { }                   // _10 (weak)
-	virtual void drawSelf(int, int);            // _2C
-	virtual void drawSelf(int, int, Matrix4f*); // _30
 
 	char* getString() const { return mText; }
 	void setString(char* text) { mText = text; }
@@ -55,6 +54,11 @@ struct P2DTextBox : public P2DPane {
 	int getCursorX() { return mCursorX; }
 	int getCursorY() { return mCursorY; }
 
+protected:
+	virtual void drawSelf(int, int);            // _2C
+	virtual void drawSelf(int, int, Matrix4f*); // _30
+
+private:
 	// _00     = VTBL
 	// _00-_EC = P2DPane
 	char* mFontString;              // _EC

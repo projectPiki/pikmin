@@ -76,6 +76,7 @@ enum CreatureStandType {
  * @note Size: 0x2B5.
  */
 struct Creature : public RefCountable, public EventTalker {
+public:
 	Creature(CreatureProp*);
 
 	virtual bool insideSafeArea(struct Vector3f&) { return true; }   // _10 (weak)
@@ -139,10 +140,14 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual void drawShadow(Graphics&);                              // _F8
 	virtual void demoDraw(Graphics&, Matrix4f*) { }                  // _FC
 	virtual Vector3f getCatchPos(Creature*);                         // _100
-	virtual void doAI() { }                                          // _104 (weak)
-	virtual void doAnimation() { }                                   // _108 (weak)
-	virtual void doKill() = 0;                                       // _10C
-	virtual void exitCourse() { }                                    // _110 (weak)
+
+protected:
+	virtual void doAI() { }        // _104 (weak)
+	virtual void doAnimation() { } // _108 (weak)
+	virtual void doKill() = 0;     // _10C
+
+public:
+	virtual void exitCourse() { } // _110 (weak), public for `Creature`
 
 	void finishFixPosition();
 	void load(RandomAccessStream&, bool);
@@ -165,12 +170,9 @@ struct Creature : public RefCountable, public EventTalker {
 	void kill(bool);
 	void updateStatic();
 	void updateAI();
-	void collisionCheck(f32);
 	void moveVelocity();
 	bool getAvoid(Vector3f&, Vector3f&);
-	void respondColl(Creature*, f32, CollPart*, CollPart*, const Vector3f&);
 	void moveRotation(f32);
-	void moveAttach();
 	void moveNew(f32);
 	Plane* getNearestPlane(CollTriInfo*);
 	void interactStickers(Creature*, Interaction&, Condition*);
@@ -180,8 +182,6 @@ struct Creature : public RefCountable, public EventTalker {
 	bool isStickToPlatform();
 	void startStickMouth(Creature*, CollPart*);
 	void endStickMouth();
-	void startStickObjectSphere(Creature*, CollPart*, f32);
-	void startStickObjectTube(Creature*, CollPart*);
 	void startStickObject(Creature*, CollPart*, int, f32);
 	void endStickObject();
 	bool startStick(Creature*, CollPart*);
@@ -190,9 +190,6 @@ struct Creature : public RefCountable, public EventTalker {
 	void endRope();
 	void updateStickPlatform();
 	void updateStickNonPlatform();
-	void updateStickSphere();
-	void updateStickPellet();
-	void updateStickTube();
 	void updateStickRope();
 
 	// unused/inlined:
@@ -205,7 +202,6 @@ struct Creature : public RefCountable, public EventTalker {
 	void renderCollTriInfo(Graphics&, CollTriInfo*, Colour&);
 	bool isStickToSphere();
 	void adjustStickObject(Vector3f&);
-	void startStickObjectPellet(Pellet*, int, f32);
 	bool isStickLeader();
 
 	// these are ONE PAIR of the inlines.
@@ -326,6 +322,23 @@ struct Creature : public RefCountable, public EventTalker {
 	    void unsetCarryOver();
 	*/
 
+protected:
+	void moveAttach();
+	void respondColl(Creature*, f32, CollPart*, CollPart*, const Vector3f&);
+
+	void startStickObjectSphere(Creature*, CollPart*, f32);
+	void startStickObjectTube(Creature*, CollPart*);
+	void startStickObjectPellet(Pellet*, int, f32);
+
+	void updateStickSphere();
+	void updateStickPellet();
+	void updateStickTube();
+
+private:
+	void collisionCheck(f32);
+
+	// Not even going to pretend this shit was ever properly encapsulated.  I don't blame them, either.
+public:
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker

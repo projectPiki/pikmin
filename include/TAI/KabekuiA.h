@@ -110,11 +110,13 @@ struct TAIkabekuiAAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIAsleepKabekuiA : public TAIAtimerReaction {
+public:
 	TAIAsleepKabekuiA(int nextState)
 	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiAFloatParms::MaxSleepTime);
@@ -129,11 +131,13 @@ struct TAIAsleepKabekuiA : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAdiveKabekuiA : public TAIAtimerReaction {
+public:
 	TAIAdiveKabekuiA(int nextState)
 	    : TAIAtimerReaction(nextState, 3.0f)
 	{
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiAFloatParms::TimeUntilBurrow);
@@ -148,6 +152,7 @@ struct TAIAdiveKabekuiA : public TAIAtimerReaction {
  * @brief TODO
  */
 struct TAIAattackWorkObjectKabekuiA : public TAIAattackWorkObject {
+public:
 	inline TAIAattackWorkObjectKabekuiA(int nextState, int motionID, int p3) // TODO: this is a guess
 	    : TAIAattackWorkObject(nextState, motionID, p3)
 	{
@@ -163,6 +168,7 @@ struct TAIAattackWorkObjectKabekuiA : public TAIAattackWorkObject {
 		return TAIAattackWorkObject::act(teki);
 	}
 
+protected:
 	virtual f32 getDamage(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIkabekuiAFloatParms::BridgeDamage);

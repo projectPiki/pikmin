@@ -11,7 +11,7 @@ struct P2DFont;
  * @brief TODO
  */
 struct P2DPrint {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -22,13 +22,24 @@ struct P2DPrint {
 		f32 mHeightFromStart; // _0C
 	};
 
+	void setFontSize(int width, int height)
+	{
+		mFontWidth  = width > 0 ? width : 0;
+		mFontHeight = height > 0 ? height : 0;
+	}
+
+	f32 getCursorH() { return mCursorX; }
+	f32 getCursorV() { return mCursorY; }
+
 	P2DPrint(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour);
 
-	void private_initiate(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour);
+	void printReturn(const char* textBuffer, int, int, P2DTextBoxHBinding, P2DTextBoxVBinding, int, int);
 	void locate(int x, int y);
 	void setFontSize();
+
+private:
+	void private_initiate(P2DFont* font, int spacing, int leading, Colour topColour, Colour bottomColour);
 	void initchar();
-	void printReturn(const char* textBuffer, int, int, P2DTextBoxHBinding, P2DTextBoxVBinding, int, int);
 	f32 parse(const u8* textBuffer, int textLen, int maxWidth, u16* outLineWidths, P2DPrint::TSize& textSize, bool doDraw);
 	u16 doEscapeCode(const u8** textPtr);
 	void doCtrlCode(int charCode);
@@ -39,17 +50,6 @@ struct P2DPrint {
 		outColour->set(((u8*)&value)[0], ((u8*)&value)[1], ((u8*)&value)[2], ((u8*)&value)[3]);
 	}
 	u32 ColourTou32(const Colour& colour) { return colour.r << 24 | colour.g << 16 | colour.b << 8 | colour.a; }
-
-	// DLL inlines:
-	void setFontSize(int width, int height)
-	{
-		mFontWidth  = width > 0 ? width : 0;
-		mFontHeight = height > 0 ? height : 0;
-	}
-
-	f32 getCursorH() { return mCursorX; }
-
-	f32 getCursorV() { return mCursorY; }
 
 	P2DFont* mFont;           // _00
 	int mFontSpacing;         // _04

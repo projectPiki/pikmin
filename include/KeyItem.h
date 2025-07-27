@@ -47,7 +47,9 @@ struct KeyItem : public Creature {
 	virtual void collisionCallback(CollEvent&); // _A8
 	virtual void update();                      // _E0
 	virtual void refresh(Graphics&);            // _EC
-	virtual void doKill();                      // _10C
+
+protected:
+	virtual void doKill(); // _10C
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature

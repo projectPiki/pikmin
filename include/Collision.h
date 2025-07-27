@@ -231,15 +231,16 @@ struct CndBombable : public CndCollPart {
  * @note Size: 0x14.
  */
 struct CollInfo {
+	friend struct CollPart; // Accesses `mCollParts` in `CollPart::getChild`/`getChildAt`/`getNext`.
+
+public:
 	CollInfo(int);
 
 	void enableStick();
 	void disableStick();
 	CollPart* checkCollisionSpecial(Vector3f&, f32, CndCollPart*);
 	CollPart* checkCollision(Creature*, Vector3f&);
-	CollPart* checkCollisionRec(Creature*, int, Vector3f&);
 	bool checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
-	bool checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
 	CollPart* getBoundingSphere();
 	CollPart* getSphere(u32 id);
 	CollPart* getNearestCollPart(Vector3f&, u32);
@@ -250,19 +251,24 @@ struct CollInfo {
 	void initInfo(Shape*, CollPart*, u32*);
 	void makeTubesChild(u32, int);
 	void setUpdater(u32, CollPartUpdater*);
-	void createPart(ObjCollInfo*, int, bool);
-	int getId2Index(u32);
-	void makeTree();
+	void dumpInfo();
+	void makeTubes(u32, int);
 
 	// unused/inlined:
 	void startUpdate(u32);
-	void startUpdateRec(int);
 	void stopUpdate(u32);
+
+private:
+	void startUpdateRec(int);
 	void stopUpdateRec(int);
 	CollPart* checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*);
-	void dumpInfo();
-	void makeTubes(u32, int);
+	CollPart* checkCollisionRec(Creature*, int, Vector3f&);
+	bool checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
+
+	void createPart(ObjCollInfo*, int, bool);
+	int getId2Index(u32);
 	int getIndex(ObjCollInfo*);
+	void makeTree();
 
 	bool mUseDefaultMaxParts; // _00
 	CollPart* mCollParts;     // _04, array of size mMaxParts

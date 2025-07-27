@@ -17,7 +17,7 @@ namespace zen {
 struct PikaAlphaMgr;
 
 struct ogRaderMgr {
-
+public:
 	// Completely fabricated struct
 	struct PikiRaderEntry {
 		P2DPicture* mPic; // _00
@@ -40,35 +40,35 @@ struct ogRaderMgr {
 		// TODO: this
 	};
 
+	P2DScreen* getScrPtr() { return mMainScreen; }
+
 	ogRaderMgr();
 
-	void setRaderAngle(f32);
-	void setRaderScroll(int, int);
-	void getPartsPos();
-	void getAllPikiPos();
-	void startSub();
 	void startMenu(P2DPane*);
-	void MapOn();
-	void updateGame(Controller*);
-	void AreaScroll(f32*, f32*, f32, f32);
-	void updateMenu(Controller*);
-	RaderStatus update(Controller*);
 	void end();
+	void MapOn();
+	RaderStatus update(Controller*);
 	void draw(Graphics&);
+	void start();
+	void MapOff();
 
-	// unused/inlined:
+private:
 	Vector3f ogCalcDispXZ(Vector3f);
 	void setRaderScale(f32);
 	void chaseRaderScale(f32);
+	void setRaderAngle(f32);
+	void setRaderScroll(int, int);
 	void getOrimaPos();
 	void getContainerPos();
 	void getRocketPos();
-	void start();
-	void MapOff();
+	void getPartsPos();
+	void getAllPikiPos();
+	void startSub();
+	void updateGame(Controller*);
+	void AreaScroll(f32*, f32*, f32, f32);
+	void updateMenu(Controller*);
 	void RotatePos(f32*, f32*);
 	void DrawCircle(u8, u8, u8, u8, f32);
-
-	P2DScreen* getScrPtr() { return mMainScreen; }
 
 	bool _00;            // _00
 	bool _01;            // _01

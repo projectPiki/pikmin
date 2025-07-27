@@ -24,6 +24,7 @@ DEFINE_PRINT("TAIhibaA")
  * @note In TAIhibaA.cpp to match a function with a PRINT statement.
  */
 struct TAIAfireAttackHibaA : public TAIAreserveMotion {
+public:
 	TAIAfireAttackHibaA(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -82,6 +83,7 @@ struct TAIAfireAttackHibaA : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	static TAIeffectAttackEventCallBackHibaA eventCallBack;
 
 	// _04     = VTBL

@@ -42,7 +42,7 @@ struct AccountData {
  * @note Size: 0x120.
  */
 struct DrawAccount : public DrawScreen {
-
+public:
 	DrawAccount();
 
 	virtual void update(); // _08
@@ -50,8 +50,7 @@ struct DrawAccount : public DrawScreen {
 	void start(AccountData&);
 	void draw(Graphics&);
 
-	// unused/inlined:
-
+protected:
 	// _00-_100 = DrawScreen
 	f32 mAppearTimer;    // _100
 	f32 mAppearDuration; // _104

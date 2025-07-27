@@ -240,6 +240,7 @@ struct particleChildMdl : public particleMdlBase {
  * @brief TODO
  */
 struct particleMdlManager {
+public:
 	particleMdlManager()
 	{
 		mPtclList      = nullptr;
@@ -261,6 +262,7 @@ struct particleMdlManager {
 	zenList* getPtcl() { return mSleepPtclList.get(); }
 	zenList* getPtclChild() { return mSleepPtclChildList.get(); }
 
+protected:
 	zenListManager mSleepPtclList;      // _00
 	zenListManager mSleepPtclChildList; // _10
 	particleMdl* mPtclList;             // _20
@@ -273,6 +275,7 @@ struct particleMdlManager {
  * @note Size: 0x200.
  */
 struct particleGenerator : public zenList {
+public:
 	particleGenerator()
 	{
 		ClearPtclsStatus(nullptr, nullptr);
@@ -294,14 +297,6 @@ struct particleGenerator : public zenList {
 	          CallBack2<particleGenerator*, particleMdl*>* cbPtcl);
 	bool update(f32 timeStep);
 	void draw(Graphics& gfx);
-	void pmSetDDF(u8* data);
-	void SetPtclsLife();
-	void PtclsGen(particleMdl* ptcl);
-	void pmCalcAccel(particleMdl* ptcl);
-	void UpdatePtclsStatus(f32 timeStep);
-	void ClearPtclsStatus(Texture* tex, Texture* childTex);
-	void drawPtclBillboard(Graphics& gfx);
-	void drawPtclOriented(Graphics& gfx);
 	void RotAxisX(Mtx&, f32&, f32&);
 	void RotAxisY(Mtx&, f32&, f32&);
 	void RotAxisZ(Mtx&, f32&, f32&);
@@ -309,30 +304,9 @@ struct particleGenerator : public zenList {
 	void RotAxisXZ(Mtx&, f32&, f32&);
 	void RotAxisYZ(Mtx&, f32&, f32&);
 	void RotAxisXYZ(Mtx&, f32&, f32&);
-	void updatePtclChildren(f32 timeStep);
-	void drawPtclChildren(Graphics& gfx);
 	void forceFinish();
 	bool finish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
 	bool forceFinish(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
-	particleMdl* pmGetParticle();
-	particleChildMdl* pmGetParticleChild();
-
-	// unused/inlined:
-	f32 pmIntpManual(f32*, f32*);
-	f32 pmIntpLinear(f32*, f32*);
-
-	// these are correct from the DLL
-
-	void pmSwitchOn(u32 flag) { mParticleFlags |= flag; }
-	void pmSwitchOff(u32 flag) { mParticleFlags &= ~flag; }
-	void pmSwitch(bool turnOn, u32 flag)
-	{
-		if (turnOn) {
-			pmSwitchOn(flag);
-		} else {
-			pmSwitchOff(flag);
-		}
-	}
 
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
@@ -386,8 +360,6 @@ struct particleGenerator : public zenList {
 	u32 getControlFlag() { return mControlFlags; }
 
 	void killParticle(particleMdl* ptcl) { pmPutParticle(ptcl); }
-	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
-	void pmPutParticleChild(zenList* child) { mMdlMgr->putPtclChild(child); }
 
 	void setAirField(Vector3f& vel, bool set)
 	{
@@ -432,6 +404,27 @@ struct particleGenerator : public zenList {
 	s16 getCurrentFrame() { return mCurrentFrame; }
 	s16 getMaxFrame() { return mMaxFrame; }
 
+protected:
+	void pmSwitchOn(u32 flag) { mParticleFlags |= flag; }
+	void pmSwitchOff(u32 flag) { mParticleFlags &= ~flag; }
+	void pmSwitch(bool turnOn, u32 flag)
+	{
+		if (turnOn) {
+			pmSwitchOn(flag);
+		} else {
+			pmSwitchOff(flag);
+		}
+	}
+
+	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
+	void pmSetDDF(u8* data);
+	f32 pmIntpManual(f32*, f32*);
+	f32 pmIntpLinear(f32*, f32*);
+	particleMdl* pmGetParticle();
+	particleChildMdl* pmGetParticleChild();
+	void pmPutParticleChild(zenList* child) { mMdlMgr->putPtclChild(child); }
+	void pmCalcAccel(particleMdl* ptcl);
+
 	void pmGetArbitUnitVec(Vector3f& unitVec)
 	{
 		f32 angle1 = zen::Rand(TAU);
@@ -443,6 +436,16 @@ struct particleGenerator : public zenList {
 		f32 cos2 = cosf(angle2);
 		unitVec.set(sin1 * cos2, sin1 * sin2, cos1);
 	}
+
+	void ClearPtclsStatus(Texture* tex, Texture* childTex);
+	void SetPtclsLife();
+	void PtclsGen(particleMdl* ptcl);
+	void drawPtclBillboard(Graphics& gfx);
+	void drawPtclOriented(Graphics& gfx);
+	void drawPtclChildren(Graphics& gfx);
+
+	void UpdatePtclsStatus(f32 timeStep);
+	void updatePtclChildren(f32 timeStep);
 
 	// _00     = VTBL
 	// _00-_0C = zenList
@@ -558,17 +561,19 @@ struct particleGenerator : public zenList {
  * @brief TODO
  */
 struct PCRData : public zenList {
+public:
 	PCRData(char* name, u32 bufSize) { pmSet(name, bufSize); }
 
+	char* getName() { return mName; }
+	u8* getDataBuf() { return mDataBuf; }
+
+protected:
 	// DLL inlines to do:
 	u8* pmSet(char* name, u32 bufSize)
 	{
 		mName    = StdSystem::stringDup(name);
 		mDataBuf = new (0x20) u8[bufSize];
 	}
-
-	char* getName() { return mName; }
-	u8* getDataBuf() { return mDataBuf; }
 
 	// _00     = VTBL
 	// _00-_0C = zenList
@@ -582,13 +587,15 @@ struct PCRData : public zenList {
  * @note Size: 0x10.
  */
 struct particleLoader : public zenListManager {
+public:
 	u8* load(char*, bool);
-	u8* pmFind(char*);
 
 	// unused/inlined:
 	~particleLoader();
 
-	// DLL inlines to do:
+protected:
+	u8* pmFind(char*);
+
 	PCRData* pmCreatePCRData(char* name, u32 bufSize)
 	{
 		PCRData* data = new PCRData(name, bufSize);
@@ -603,6 +610,7 @@ struct particleLoader : public zenListManager {
  * @brief TODO
  */
 struct simplePtclManager : public zenListManager {
+public:
 	simplePtclManager() { mMdlMgr = nullptr; }
 
 	void update(f32);
@@ -617,6 +625,7 @@ struct simplePtclManager : public zenListManager {
 
 	void init(particleMdlManager* mdlMgr) { mMdlMgr = mdlMgr; }
 
+protected:
 	void pmPutParticle(zenList* ptcl) { mMdlMgr->putPtcl(ptcl); }
 
 	particleMdl* pmGetParticle()
@@ -638,6 +647,7 @@ struct simplePtclManager : public zenListManager {
  * @note Size: 0x9C.
  */
 struct particleManager {
+public:
 	particleManager()
 	{
 		mPtclGenList = nullptr;
@@ -653,16 +663,11 @@ struct particleManager {
 	void killAllGenarator(bool doForceFinish); // dev typo
 	void killGenerator(particleGenerator* gen, bool doForceFinish);
 	void killGenerator(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2, bool doForceFinish);
-	bool pmCheckList(particleGenerator* testGen);
-	particleGenerator* pmGetPtclGen();
 
 	// unused/inlined:
 	~particleManager();
-	void calcActiveList();
 	void debugUpdate();
 	void debugDraw(Graphics&);
-
-	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
 
 	particleMdl* createParticle(Texture* simpleTex, s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size,
 	                            f32 rotSpeed, Colour primColor, Colour envColor, CallBack1<particleMdl*>* cbPtcl)
@@ -671,6 +676,13 @@ struct particleManager {
 	}
 
 	static const f32 DEFAULT_FRAME_RATE;
+
+protected:
+	void calcActiveList();
+	bool pmCheckList(particleGenerator* testGen);
+	particleGenerator* pmGetPtclGen();
+	void pmPutPtclGen(zenList* gen) { _20.put(gen); }
+
 	static const u16 MAX_PTCLGENS_NUM;
 	static const u16 MAX_PTCLS_NUM;
 	static const u16 MAX_PTCL_CHILD_NUM;
@@ -698,6 +710,7 @@ struct particleManager {
  * @brief TODO
  */
 struct PtclGenPack {
+public:
 	inline PtclGenPack(int limit)
 	{
 		mLimit         = limit;
@@ -726,6 +739,7 @@ struct PtclGenPack {
 	bool checkEmit();
 	bool checkActive();
 
+protected:
 	u32 mLimit;                         // _00
 	particleGenerator** mGeneratorList; // _04
 };

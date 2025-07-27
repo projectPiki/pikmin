@@ -26,6 +26,7 @@ DEFINE_PRINT("TAImiurin")
  * @brief TODO
  */
 struct TAIAangryMiurin : public TAIAmotion {
+public:
 	TAIAangryMiurin(int nextState, int motionID)
 	    : TAIAmotion(nextState, motionID)
 	{
@@ -67,6 +68,8 @@ struct TAIAangryMiurin : public TAIAmotion {
 		STACK_PAD_TERNARY(navi, 1);
 		return res;
 	}
+
+protected:
 	virtual f32 getFlickDirection(Teki& teki) // _1C
 	{
 		return teki.mFaceDirection + PI;
@@ -81,6 +84,7 @@ struct TAIAangryMiurin : public TAIAmotion {
  * @brief TODO
  */
 struct TAIAcheckNaviMiurin : public TAIAinsideTerritoryRangeNavi {
+public:
 	TAIAcheckNaviMiurin(int nextState)
 	    : TAIAinsideTerritoryRangeNavi(nextState)
 	{
@@ -99,6 +103,7 @@ struct TAIAcheckNaviMiurin : public TAIAinsideTerritoryRangeNavi {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAinsideTerritoryRangeNavi?
 	// TODO: members
@@ -108,6 +113,7 @@ struct TAIAcheckNaviMiurin : public TAIAinsideTerritoryRangeNavi {
  * @brief TODO
  */
 struct TAIAcheckFlowerPikmin : public TaiAction {
+public:
 	TAIAcheckFlowerPikmin(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -141,6 +147,7 @@ struct TAIAcheckFlowerPikmin : public TaiAction {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -150,6 +157,7 @@ struct TAIAcheckFlowerPikmin : public TaiAction {
  * @brief TODO
  */
 struct TAIAattackMiurin : public TAIAreserveMotion {
+public:
 	TAIAattackMiurin(int nextState, int p2, int motionID, int p4)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -204,6 +212,7 @@ struct TAIAattackMiurin : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	void attack(Teki& teki, int handID)
 	{
 		CollPart* hand = teki.mCollInfo->getSphere(handID);
@@ -258,6 +267,7 @@ struct TAIAattackMiurin : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAattackableTargetMiurin : public TAIAattackableTarget {
+public:
 	TAIAattackableTargetMiurin(int nextState)
 	    : TAIAattackableTarget(nextState)
 	{
@@ -276,6 +286,7 @@ struct TAIAattackableTargetMiurin : public TAIAattackableTarget {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAattackableTarget?
 	// TODO: members
@@ -285,6 +296,7 @@ struct TAIAattackableTargetMiurin : public TAIAattackableTarget {
  * @brief TODO
  */
 struct TAIAcheckSatisfyMiurin : public TaiAction {
+public:
 	TAIAcheckSatisfyMiurin(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -304,6 +316,7 @@ struct TAIAcheckSatisfyMiurin : public TaiAction {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -313,6 +326,7 @@ struct TAIAcheckSatisfyMiurin : public TaiAction {
  * @brief TODO
  */
 struct TAIAwatchNaviMiurin : public TaiAction {
+public:
 	TAIAwatchNaviMiurin(int nextState, int nextStateNaviBury)
 	    : TaiAction(nextState)
 	{
@@ -357,6 +371,7 @@ struct TAIAwatchNaviMiurin : public TaiAction {
 		return res;
 	}
 
+protected:
 	void goNextState(Teki& teki)
 	{
 		Navi* navi = naviMgr->getNavi();

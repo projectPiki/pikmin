@@ -45,6 +45,7 @@ struct PlantShapeObject {
  * @note Size: 0x398.
  */
 struct Plant : public AICreature {
+public:
 	Plant();
 
 	virtual void startAI(int);                                       // _34
@@ -53,17 +54,21 @@ struct Plant : public AICreature {
 	virtual void update();                                           // _E0
 	virtual void refresh(Graphics&);                                 // _EC
 	virtual void doAnimation();                                      // _108
-	virtual void doKill();                                           // _10C
 	virtual void startMotion(int);                                   // _130
 	virtual void setMotionSpeed(f32 speed) { mMotionSpeed = speed; } // _14C
 	virtual void stopMotion() { mMotionSpeed = 0.0f; }               // _150
 
-	// unused/inlined:
 	void reset(int);
 
+protected:
+	virtual void doKill(); // _10C
+
+public:
 	// _00      = VTBL
 	// _00-_304 = AICreature
 	u16 mPlantType;                   // _304, see PlantTypes enum
+
+protected:
 	f32 mMotionSpeed;                 // _308
 	bool mIsCulled;                   // _30C
 	PaniPlantAnimator mPlantAnimator; // _310
@@ -134,7 +139,10 @@ struct PlantAI : public SimpleAI {
  * @brief TODO
  */
 struct PlantMgr : public CreatureNodeMgr {
+	friend struct Plant;
+	friend struct PlantShapeObject;
 
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -148,8 +156,7 @@ struct PlantMgr : public CreatureNodeMgr {
 
 	PlantMgr(MapMgr*);
 
-	virtual ~PlantMgr() { }           // _48
-	virtual Creature* createObject(); // _78
+	virtual ~PlantMgr() { } // _48
 
 	void initialise();
 	bool usePlantType(int);
@@ -158,6 +165,9 @@ struct PlantMgr : public CreatureNodeMgr {
 	char* getPlantName(int);
 	void addUseList(int);
 	Creature* birth();
+
+protected:
+	virtual Creature* createObject(); // _78
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

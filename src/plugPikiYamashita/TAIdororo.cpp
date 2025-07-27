@@ -122,6 +122,7 @@ void killDororoEffect(Teki& teki)
  * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
  */
 struct TAIAkillTouchPiki : public TaiAction {
+public:
 	TAIAkillTouchPiki(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -135,6 +136,7 @@ struct TAIAkillTouchPiki : public TaiAction {
 		return false;
 	}
 
+protected:
 	void attack(Teki& teki, u32 partID)
 	{
 		CollPart* part = teki.mCollInfo->getSphere(partID);
@@ -171,6 +173,7 @@ struct TAIAkillTouchPiki : public TaiAction {
  * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
  */
 struct TAIAtransformationDororo : public TAIAreserveMotion {
+public:
 	TAIAtransformationDororo(int nextState, int motionIdx)
 	    : TAIAreserveMotion(nextState, motionIdx)
 	{
@@ -203,6 +206,7 @@ struct TAIAtransformationDororo : public TAIAreserveMotion {
 		return true;
 	}
 
+protected:
 	void corpse(Teki& teki)
 	{
 		int typeID = TekiMgr::getTypeId(teki.mTekiType);
@@ -231,6 +235,7 @@ struct TAIAtransformationDororo : public TAIAreserveMotion {
  * @note This is defined here cause it needs to use the PRINT function in this file, sigh.
  */
 struct TAIAbarkDororo : public TAIAmotionLoop {
+public:
 	TAIAbarkDororo(int nextState, int motionIdx, f32 frameMax)
 	    : TAIAmotionLoop(nextState, motionIdx, frameMax)
 	{
@@ -273,6 +278,7 @@ struct TAIAbarkDororo : public TAIAmotionLoop {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_10 = TAIAmotionLoop
 };
@@ -283,6 +289,7 @@ struct TAIAbarkDororo : public TAIAmotionLoop {
  * @note This is defined here cause it needs to use the PRINT function in this file, sigh.
  */
 struct TAIAbirthDororo : public TAIAreserveMotion {
+public:
 	TAIAbirthDororo(int nextState, int motionIdx)
 	    : TAIAreserveMotion(nextState, motionIdx)
 	{
@@ -321,6 +328,7 @@ struct TAIAbirthDororo : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members
@@ -332,6 +340,7 @@ struct TAIAbirthDororo : public TAIAreserveMotion {
  * @note This is defined here cause it needs to use the anonymous namespace functions in this file, sigh.
  */
 struct TAIAdyingDororo : public TAIAdying {
+public:
 	TAIAdyingDororo(int nextState, int motionIdx)
 	    : TAIAdying(nextState, motionIdx)
 	{
@@ -394,6 +403,7 @@ struct TAIAdyingDororo : public TAIAdying {
 		return true;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAdying?
 	// TODO: members

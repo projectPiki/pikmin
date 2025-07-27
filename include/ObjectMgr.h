@@ -36,8 +36,6 @@ struct ObjectMgr : public Traversable, public Node {
 
 	void invalidateSearch();
 	void store();
-
-	// unused/inlined:
 	void restore();
 
 	// _00     = VTBL 1
@@ -52,12 +50,11 @@ struct ObjectMgr : public Traversable, public Node {
  * @note Size: 0x3C.
  */
 struct MonoObjectMgr : public ObjectMgr {
+	friend struct SearchSystem;
+
+public:
 	MonoObjectMgr();
 
-	virtual Creature* getCreature(int);           // _08
-	virtual int getFirst();                       // _0C
-	virtual int getNext(int);                     // _10
-	virtual bool isDone(int);                     // _14
 	virtual ~MonoObjectMgr() { }                  // _48 (weak)
 	virtual void update();                        // _4C (weak)
 	virtual void postUpdate(int, f32);            // _50
@@ -73,7 +70,12 @@ struct MonoObjectMgr : public ObjectMgr {
 	void create(int);
 	void searchSelf();
 
-	// unused/inlined:
+protected:
+	virtual Creature* getCreature(int); // _08
+	virtual int getFirst();             // _0C
+	virtual int getNext(int);           // _10
+	virtual bool isDone(int);           // _14
+
 	int getEmptyIndex();
 	int getIndex(Creature*);
 
@@ -102,10 +104,6 @@ struct PolyObjectMgr : public ObjectMgr {
 		int mClassId;
 	};
 
-	virtual Creature* getCreature(int);              // _08
-	virtual int getFirst();                          // _0C
-	virtual int getNext(int);                        // _10
-	virtual bool isDone(int);                        // _14
 	virtual ~PolyObjectMgr() { }                     // _48
 	virtual void update();                           // _4C
 	virtual void postUpdate(int, f32);               // _50
@@ -118,18 +116,25 @@ struct PolyObjectMgr : public ObjectMgr {
 	virtual void kill(Creature*);                    // _7C
 
 	void create(int);
-	void beginRegister();
-	void registerClass(int objType, Creature* object, int size);
-	void endRegister();
-	Creature* get(int);
-	void searchSelf();
 
-	// unused/inlined:
+	int getTemplateID(int i) { return mEntries[i].mClassId; }
+	int getNumTemplates() { return mEntryCount; }
+
+protected:
+	virtual Creature* getCreature(int); // _08
+	virtual int getFirst();             // _0C
+	virtual int getNext(int);           // _10
+	virtual bool isDone(int);           // _14
+
+	void beginRegister();
+	void endRegister();
+	void registerClass(int objType, Creature* object, int size);
+
 	int getEmptyIndex();
 	int getIndex(Creature*);
 	int getTemplateIndex(int i);
-	int getTemplateID(int i) { return mEntries[i].mClassId; }
-	int getNumTemplates() { return mEntryCount; }
+	Creature* get(int);
+	void searchSelf();
 
 	// _00     = VTBL 1
 	// _08     = VTBL 2

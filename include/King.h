@@ -58,7 +58,7 @@ enum KingAttackType {
  * @brief TODO.
  */
 struct KingProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -176,7 +176,7 @@ struct KingProp : public BossProp, public CoreNode {
  * @brief TODO.
  */
 struct KingBackProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief KingBack genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
@@ -210,6 +210,17 @@ struct KingBackProp : public BossProp, public CoreNode {
  * @note Size: 0x7A4.
  */
 struct King : public Boss {
+	friend struct KingAi;
+	friend struct KingBody;
+
+	friend struct KingGenDamageStarCallBack;
+	friend struct KingGenRippleCallBack;
+	friend struct KingGenSalivaCallBack;
+	friend struct KingGenSalivaParticleCallBack;
+	friend struct KingGenSpitPartsParticleCallBack;
+	friend struct KingGenSpreadSalivaCallBack;
+
+public:
 	King(CreatureProp*);
 
 	virtual void init(Vector3f&);                    // _28
@@ -226,6 +237,7 @@ struct King : public Boss {
 
 	void draw(Graphics&);
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsBossBgm;            // _3B8
@@ -241,6 +253,7 @@ struct King : public Boss {
  * @note Size: 0x400.
  */
 struct KingBack : public Boss {
+public:
 	KingBack(CreatureProp*);
 
 	virtual void init(Vector3f&);      // _28
@@ -253,6 +266,7 @@ struct KingBack : public Boss {
 	virtual void exitCourse();         // _110
 	virtual void drawShape(Graphics&); // _120
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	CreaturePlatMgr mPlatMgr; // _3B8
@@ -264,30 +278,41 @@ struct KingBack : public Boss {
  * @note Size: 0x110.
  */
 struct KingBody {
+	friend struct KingAi;
+	friend struct KingBody;
+
+	friend struct KingGenDamageStarCallBack;
+	friend struct KingGenRippleCallBack;
+	friend struct KingGenSalivaCallBack;
+	friend struct KingGenSalivaParticleCallBack;
+	friend struct KingGenSpitPartsParticleCallBack;
+	friend struct KingGenSpreadSalivaCallBack;
+
+public:
 	KingBody(King*);
 
 	void init(King*);
-	void initBlending(f32);
+	void killCallBackEffect(bool);
+	void refresh(BossShapeObject*, Graphics&);
+	void update();
 	void setSeedFlashEffect();
 	void setEatBombEffect();
-	void createWaterEffect(int);
 	void createUfoParts();
-	void killCallBackEffect(bool);
-	void setVelocityFromPosition();
-	void emitOnGroundEffect();
-	void update();
-	void makeBlending(Matrix4f*);
-	void copyJointPosition(Matrix4f*);
-	void refresh(BossShapeObject*, Graphics&);
+	void initBlending(f32);
 
-	// unused/inlined:
+private:
 	void setSalivaEffect();
+	void createWaterEffect(int);
 	void updateBlendingRatio();
 	void checkOnGround();
+	void setVelocityFromPosition();
+	void emitOnGroundEffect();
 	void emitSlipEffect();
 	void copyOnGround();
 	void makeAnimation(BossShapeObject*, Graphics&, Matrix4f*);
 	void checkBlendingParm(Matrix4f*);
+	void makeBlending(Matrix4f*);
+	void copyJointPosition(Matrix4f*);
 	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
 
 	King* mKing;                                                  ///< _00
@@ -346,57 +371,47 @@ struct KingDrawer : public Node {
  * @note Size: 0x50.
  */
 struct KingAi : public PaniAnimKeyListener {
+public:
 	KingAi(King*);
+	void initAI(King*);
+	void update();
 
+private:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void initAI(King*);
 	void keyAction0();
 	void keyAction1();
 	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
 	void createEffect(BOOL);
+	void setAttackPosition();
 	void calcDamageScale();
 	void startSpreadSaliva();
 	void endSpreadSaliva();
+	void startFallSaliva();
+	void endFallSaliva();
 	void fallBackSide();
+	void setMouthCollPart(int);
+	int getMouthCollPart(int);
 	void pikiStickToKingMouth();
 	void tongueBombExplosion();
 	void killStickToMouthPiki();
 	void tongueAttackNavi();
+	void setDispelParm(Creature*, f32);
 	void dispelNaviPiki();
 	void setDamageLoopCounter(int, int, int, int, int, int);
 	void setEatDamageLoopCounter();
-	void setAttackPriority();
-	bool inJumpAngle(Creature*);
-	bool inTurnAngleTransit();
-	bool chaseNaviTransit();
-	bool chasePikiTransit();
-	bool attackTransit();
-	bool jumpAttackTransit();
-	bool eatThrowPikiTransit();
-	bool targetLostTransit();
-	bool appearTransit();
-	void initDie(int);
-	void initAppear(int);
-	void update();
-
-	// unused/inlined:
-	void keyAction3();
-	void setAttackPosition();
-	void startFallSaliva();
-	void endFallSaliva();
-	void setMouthCollPart(int);
-	int getMouthCollPart(int);
-	void setDispelParm(Creature*, f32);
 	void setBombDamageLoopCounter();
 	void setMoveVelocity(f32);
+	void setAttackPriority();
 	void resetAttackPriority();
 	void resultFlagOn();
 	void resultFlagSeen();
 	bool attackInArea(Creature*, Vector3f*);
+	bool inJumpAngle(Creature*);
 	bool jumpAttackInArea(Creature*, Vector3f*);
 	bool dieTransit();
 	bool damageTransit();
@@ -404,9 +419,18 @@ struct KingAi : public PaniAnimKeyListener {
 	bool isMotionFinishTransit();
 	bool outSideChaseRangeTransit();
 	bool inSideWaitRangeTransit();
+	bool inTurnAngleTransit();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool attackTransit();
 	bool missAttackNextTransit();
+	bool jumpAttackTransit();
 	bool swallowTransit();
+	bool eatThrowPikiTransit();
 	bool flickTransit();
+	bool targetLostTransit();
+	bool appearTransit();
+	void initDie(int);
 	void initDamage(int);
 	void initBombDown(int);
 	void initWalkRandom(int, bool);
@@ -421,6 +445,7 @@ struct KingAi : public PaniAnimKeyListener {
 	void initEatThrowPiki(int);
 	void initFlick(int);
 	void initWaveNeck(int);
+	void initAppear(int);
 	void initStay(int);
 	void dieState();
 	void damageState();
@@ -443,6 +468,7 @@ struct KingAi : public PaniAnimKeyListener {
 	void setEveryFrame();
 	void afterProcessing();
 
+public:
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	King* mKing;                        // _04
@@ -467,6 +493,7 @@ struct KingAi : public PaniAnimKeyListener {
  * @note Size: 0x8.
  */
 struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		if (mKing->getCurrentState() != 1 && mKing->getCurrentState() != 2) {
@@ -477,6 +504,7 @@ struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*
 
 	void set(King* king) { mKing = king; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	King* mKing; // _04
@@ -488,6 +516,7 @@ struct KingGenDamageStarCallBack : public zen::CallBack1<zen::particleGenerator*
  * @note Size: 0x10.
  */
 struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		Vector3f emitPos(*mRippleEmitPos);
@@ -506,6 +535,7 @@ struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
 		mIsActiveRef   = isActive;
 	}
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	bool* mIsActiveRef;       // _04
@@ -519,6 +549,7 @@ struct KingGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
  * @note Size: 0x10.
  */
 struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
 		Vector3f midPt = *mStartPos + *mEndPos;
@@ -550,6 +581,7 @@ struct KingGenSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
 		mKing     = king;
 	}
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	Vector3f* mStartPos; // _04
@@ -634,6 +666,7 @@ struct KingGenSpitPartsParticleCallBack : public zen::CallBack2<zen::particleGen
  * @note Size: 0x8.
  */
 struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
 	{
 		ptcl->setEmitDir(mKing->mKingBody->mNormalisedJointDir);
@@ -652,6 +685,7 @@ struct KingGenSpreadSalivaCallBack : public zen::CallBack1<zen::particleGenerato
 
 	void set(King* king) { mKing = king; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	King* mKing; // _04

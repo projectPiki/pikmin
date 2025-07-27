@@ -87,6 +87,10 @@ struct FormPoint {
  * @brief TODO
  */
 struct FormationMgr : public Traversable {
+	friend struct FormPoint;
+	friend struct PyramidArranger; // Unused code wants to access a member? Whatever.
+
+public:
 	FormationMgr(); // unused/inlined
 
 	virtual Creature* getCreature(int); // _08
@@ -96,17 +100,17 @@ struct FormationMgr : public Traversable {
 
 	Vector3f getLastCentre();
 	FormPoint* getFormPoint(Creature*);
-	void slide(Creature*, int);
 	void exit(Creature*);
-
-	// unused/inlined:
 	void add(Vector3f&, Vector3f&);
-	int getIndex(Creature*);
-	int getFptIndex(FormPoint*);
 	void clear();
 	void rearrange();
 	void setOffset(Vector3f&);
 	void setAngOffset(f32);
+
+protected:
+	void slide(Creature*, int);
+	int getIndex(Creature*);
+	int getFptIndex(FormPoint*);
 
 	// _00     = VTBL
 	// _00-_08 = Traversable

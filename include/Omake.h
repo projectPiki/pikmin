@@ -14,7 +14,7 @@ struct Graphics;
  * @brief TODO
  */
 struct AttentionCamera {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -37,12 +37,12 @@ struct AttentionCamera {
 
 	AttentionCamera();
 
+	void start(u32, Creature*, f32, f32);
 	void finish();
 	void update();
 	void refresh(Graphics&);
 
-	// unused/inlined:
-	void start(u32, Creature*, f32, f32);
+protected:
 	void setFader(u32);
 
 	Fader** mFaders;     // _00
