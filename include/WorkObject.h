@@ -53,6 +53,7 @@ struct WorkObjectNode : public CoreNode {
  * @brief TODO
  */
 struct WorkObjectMgr : public ObjectMgr {
+public:
 	WorkObjectMgr();
 
 	virtual Creature* getCreature(int);      // _08
@@ -74,11 +75,12 @@ struct WorkObjectMgr : public ObjectMgr {
 	static char* getShapeName(int);
 	void addUseList(int);
 
+protected:
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	WorkObjectNode mRootNode; // _28
-	Shape** mItemShapes;      // _40, array of 5 shapes
+	WorkObjectNode mRootNode;   // _28
+	Shape** mItemShapes;        // _40, array of 5 shapes
 	bool* mShouldThisShapeLoad; // _44, array of 5 bools
 };
 
@@ -88,6 +90,7 @@ struct WorkObjectMgr : public ObjectMgr {
  * @note Size: 0x428.
  */
 struct Bridge : public WorkObject {
+public:
 	Bridge(Shape*, bool);
 
 	virtual bool insideSafeArea(Vector3f&);                   // _10
@@ -108,7 +111,6 @@ struct Bridge : public WorkObject {
 
 	int getFirstUnfinishedStage();
 	int getFirstFinishedStage();
-	int getJointIndex(int);
 	bool isStageFinished(int);
 	void flatten();
 	void setStageFinished(int, bool);
@@ -122,6 +124,11 @@ struct Bridge : public WorkObject {
 	f32 getStageWidth();
 	void startStageFinished(int, bool);
 
+protected:
+	int getJointIndex(int);
+
+	// This class requires 7 friend classes in order for it to be "encapsulated".  Yeah, no.
+public:
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
 	bool mDoUseJointSegments;       // _3C8
@@ -148,6 +155,7 @@ struct Bridge : public WorkObject {
  * @note Size: 0x478.
  */
 struct HinderRock : public WorkObject {
+public:
 	HinderRock(Shape*);
 
 	virtual bool insideSafeArea(Vector3f&);      // _10
@@ -167,7 +175,6 @@ struct HinderRock : public WorkObject {
 	Vector3f getZVector();
 	Vector3f getXVector();
 	u8 getPlaneFlag(Vector3f&);
-	void updatePlanes();
 	Vector3f getVertex(int);
 
 	// unused/inlined:
@@ -176,6 +183,11 @@ struct HinderRock : public WorkObject {
 
 	bool isMoving() { return mIsMoving; }
 
+protected:
+	void updatePlanes();
+
+	// This class only needs 2 friends but idc at this point.
+public:
 	// _00      = VTBL
 	// _00-_3C8 = WorkObject
 	u16 mPushingPikmin;            // _3C8

@@ -15,7 +15,7 @@ namespace zen {
  * @brief TODO
  */
 struct DrawHiScore {
-
+public:
 	enum modeFlag {
 		MODE_Sleep     = 0,
 		MODE_FadeIn    = 1,
@@ -28,6 +28,8 @@ struct DrawHiScore {
 	bool update(Controller*);
 	void draw(Graphics&);
 	void start();
+
+protected:
 	void rewriteNumber(P2DScreen*, u32, int, int, bool);
 
 	modeFlag mMode;          // _00

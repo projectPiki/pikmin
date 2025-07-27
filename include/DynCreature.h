@@ -11,6 +11,7 @@ struct DynParticle;
  * @brief TODO
  */
 struct DynCreature : public Creature {
+public:
 	DynCreature();
 
 	virtual void update();           // _E0
@@ -30,10 +31,6 @@ struct DynCreature : public Creature {
 
 	f32 getPickOffset() { return mPickOffset; }
 
-	bool isDynFlag(int flag) { return mDynFlag & flag; }
-	void setDynFlag(int flag) { mDynFlag |= flag; }
-	void resetDynFlag(int flag) { mDynFlag &= ~flag; }
-
 	u8 getGroundFlag() { return mGroundFlag; }
 
 	// might be disableFriction
@@ -42,10 +39,18 @@ struct DynCreature : public Creature {
 	// might be enableFriction
 	void disableFriction() { resetDynFlag(1); }
 
+protected:
+	void setDynFlag(int flag) { mDynFlag |= flag; }
+	void resetDynFlag(int flag) { mDynFlag &= ~flag; }
+	bool isDynFlag(int flag) { return mDynFlag & flag; }
+
+	// Users of the derived `Pellet` class access `mAngularMomentum` and `mAngularVelocity` in violating ways.
+	// It's complicated enough that I doubt this class was ever properly encapsulated.  DualCreature totally was, though.
+public:
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	Vector3f mAngularMomentum;       // _2B8
-	Vector3f mAngularVelocity;       // _2C4
+	Vector3f mAngularMomentum; // _2B8
+	Vector3f mAngularVelocity; // _2C4
 	f32 mPickOffset;                 // _2D0
 	u16 mParticleCount;              // _2D4, might be s16
 	DynParticle* mParticleList;      // _2D8

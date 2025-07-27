@@ -16,7 +16,13 @@ struct SlotChangeListner;
  * @brief TODO
  */
 struct CPlate : public Traversable, public Node {
+	// These all all pretty unsurprising.
+	friend struct Navi;
+	friend struct NaviThrowWaitState;
+	friend struct NaviDemoSunsetState;
+	friend struct ActCrowd;
 
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -78,8 +84,10 @@ struct CPlate : public Traversable, public Node {
 
 	// unused/inlined:
 	void setPosNeutral(Vector3f&, f32, Vector3f&);
-	void swapSlot(int, int);
 	void postUpdate(f32);
+
+protected:
+	void swapSlot(int, int);
 
 	// _00 = VTBL 1
 	// _08 = VTBL 2

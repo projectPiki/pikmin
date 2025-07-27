@@ -94,6 +94,7 @@ struct TAIotamaAnimation : public TAIanimation {
  * @brief TODO
  */
 struct TAIArunAwayOtama : public TAIAreserveMotion {
+public:
 	TAIArunAwayOtama(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -119,6 +120,7 @@ struct TAIArunAwayOtama : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	bool setTargetPosition(Teki& teki)
 	{
 		Navi* navi = naviMgr->getNavi();
@@ -151,11 +153,13 @@ struct TAIArunAwayOtama : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAappealOtama : public TAIAflickingReserveMotion {
+public:
 	TAIAappealOtama(int nextState, int motionID)
 	    : TAIAflickingReserveMotion(nextState, motionID)
 	{
 	}
 
+protected:
 	virtual void flick(Teki& teki) // _1C
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -180,6 +184,7 @@ struct TAIAappealOtama : public TAIAflickingReserveMotion {
  * @brief TODO
  */
 struct TAIAsetTargetOtama : public TAIAsetTargetPointCircleRandom {
+public:
 	TAIAsetTargetOtama(int nextState, int p2)
 	    : TAIAsetTargetPointCircleRandom(nextState)
 	{
@@ -200,6 +205,7 @@ struct TAIAsetTargetOtama : public TAIAsetTargetPointCircleRandom {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAsetTargetPointCircleRandom?
 	int mNormalNextState; // _08
@@ -210,6 +216,7 @@ struct TAIAsetTargetOtama : public TAIAsetTargetPointCircleRandom {
  * @brief TODO
  */
 struct TAIAwaitOtama : public TAIAreserveMotion {
+public:
 	TAIAwaitOtama(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -239,6 +246,7 @@ struct TAIAwaitOtama : public TAIAreserveMotion {
 		return res;
 	}
 
+protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
 	// TODO: members

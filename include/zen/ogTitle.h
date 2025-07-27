@@ -20,6 +20,7 @@ struct setTenmetuAlpha;
  * @note Size: 0xA8.
  */
 struct ogScrTitleMgr {
+public:
 	enum TitleStatus {
 		Status_Null = -1,
 		Status_0    = 0,
@@ -34,16 +35,16 @@ struct ogScrTitleMgr {
 
 	ogScrTitleMgr();
 
-	void start(bool);
 	TitleStatus update(Controller*);
+	void start(bool);
 	void draw(Graphics&);
+
+private:
+	void getGamePrefs();
+	void setGamePrefs();
 	void StereoOnOff(bool);
 	void DispBarBGM(bool);
 	void DispBarSE(bool);
-
-	// unused/inlined:
-	void getGamePrefs();
-	void setGamePrefs();
 
 	TitleStatus mStatus;           // _00
 	TitleStatus _04;               // _04

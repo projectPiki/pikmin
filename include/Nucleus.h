@@ -20,7 +20,7 @@ enum NucleusAIStateID {
  * @brief TODO.
  */
 struct NucleusProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -54,6 +54,13 @@ struct NucleusProp : public BossProp, public CoreNode {
  * @brief TODO.
  */
 struct Nucleus : public Boss {
+	friend struct NucleusAi;
+
+	// This feels a little extra but then again so does Goolix as a whole.
+	friend struct SlimeAi;
+	friend struct BossMgr; // To initialize `mSlime`.
+
+public:
 	Nucleus(CreatureProp*);
 
 	virtual void init(Vector3f&);      // _28
@@ -66,6 +73,7 @@ struct Nucleus : public Boss {
 	virtual void exitCourse();         // _110
 	virtual void drawShape(Graphics&); // _120
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss?
 	Slime* mSlime;         // _3B8
@@ -78,21 +86,22 @@ struct Nucleus : public Boss {
  * @note Size: 0xC.
  */
 struct NucleusAi : public PaniAnimKeyListener {
+public:
 	NucleusAi(Nucleus*);
 
+	void initAI(Nucleus*);
+	void update();
+
+private:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void initAI(Nucleus*);
 	void keyAction0();
 	void keyAction1();
+	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
-	void update();
-
-	// unused/inlined:
-	void keyAction2();
-	void keyAction3();
 	void setEveryFrame();
 	void setBossPosition();
 	void setSlimeDamagePoint();
@@ -107,6 +116,7 @@ struct NucleusAi : public PaniAnimKeyListener {
 	void damageState();
 	void followState();
 
+public:
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	int mStickPikiCount; // _04

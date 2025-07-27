@@ -30,7 +30,7 @@ struct PikiHeadItem;
  * @brief TODO
  */
 struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
-
+public:
 	struct Locus {
 		Locus() { _28 = 1; }; // Only the DLL has it, so it was probably inline.
 
@@ -108,7 +108,6 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 	void swapMotion(PaniMotionInfo&, PaniMotionInfo&);
 	void finishLook();
 	void updateLook();
-	void updateHeadMatrix();
 
 	// unused/inlined:
 	void startMovie(bool);
@@ -141,6 +140,10 @@ struct Navi : public Creature, public PaniAnimKeyListener, public PelletView {
 		_2F0          = 0;
 	}
 
+protected: // Nothing else, just this.
+	void updateHeadMatrix();
+
+public:
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2BC = PaniAnimKeyListener

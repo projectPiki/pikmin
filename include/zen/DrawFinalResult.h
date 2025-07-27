@@ -64,7 +64,7 @@ struct TotalScoreRecord {
  * @note Size: 0x848.
  */
 struct DrawTotalScore {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -78,16 +78,16 @@ struct DrawTotalScore {
 	DrawTotalScore(TotalScoreRecord*);
 
 	bool update(Controller*);
-	void setMode(modeFlag);
-	void playRankInFanfare();
-	void setRankInEffect();
-	void setRankInColor();
-
-	// unused/inlined:
 	void draw(Graphics&);
 	void sleep();
 	void start();
+
+protected:
+	void setMode(modeFlag);
 	void setEffect(P2DPane*, int);
+	void playRankInFanfare();
+	void setRankInEffect();
+	void setRankInColor();
 
 	modeFlag mMode;                        // _00
 	f32 _04;                               // _04
@@ -129,7 +129,7 @@ struct DrawTotalScore {
  * @note Size: 0x1B4.
  */
 struct DrawFinalResult {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -148,6 +148,8 @@ struct DrawFinalResult {
 	bool update(Controller*);
 	void draw(Graphics&);
 	void start();
+
+protected:
 	void setMode(modeFlag);
 
 	modeFlag mMode;               // _00

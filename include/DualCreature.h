@@ -15,6 +15,7 @@ struct MapMgr;
  * @note Size: 0x440.
  */
 struct DualCreature : public DynCreature {
+public:
 	DualCreature();
 
 	virtual void update();                           // _E0
@@ -39,6 +40,7 @@ struct DualCreature : public DynCreature {
 	bool isRealDynamics() { return mIsRealDynamics; }
 	void invalidateCollisions() { mIsCollisionInitialised = false; }
 
+protected:
 	// _00      = VTBL
 	// _00-_43C = DynCreature
 	bool mIsRealDynamics;        // _43C
@@ -51,6 +53,7 @@ struct DualCreature : public DynCreature {
  * @brief TODO
  */
 struct PelCreature : public DualCreature {
+public:
 	PelCreature(int, ItemShapeObject*, CreatureProp*, MapMgr*);
 
 	virtual void init(Vector3f&);                // _28
@@ -60,6 +63,7 @@ struct PelCreature : public DualCreature {
 	virtual void doRender(Graphics&, Matrix4f&); // _118
 	virtual void doCreateColls(Graphics&);       // _11C
 
+protected:
 	// _00      = VTBL
 	// _00-_440 = DualCreature
 	PaniItemAnimator mItemAnimator; // _440

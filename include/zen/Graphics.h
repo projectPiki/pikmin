@@ -11,6 +11,7 @@ namespace zen {
  * @brief TODO
  */
 struct DrawLifeCircle {
+public:
 	DrawLifeCircle(Vector3f& p1, f32 p2)
 	{
 		_08                = p1;
@@ -21,6 +22,7 @@ struct DrawLifeCircle {
 
 	void drawLifeCircle(f32 healthRatio);
 
+protected:
 	static const f32 TRI_NUM;
 
 	int mDisplayedTriCount; // _00
@@ -33,6 +35,7 @@ struct DrawLifeCircle {
  * @brief TODO
  */
 struct DrawNaviLifeCircle : public DrawLifeCircle {
+public:
 	DrawNaviLifeCircle(int p1, Vector3f& p2, f32 p3)
 	    : DrawLifeCircle(p2, p3)
 	{
@@ -41,6 +44,7 @@ struct DrawNaviLifeCircle : public DrawLifeCircle {
 
 	void drawLifeCircle();
 
+protected:
 	// _00-_18 = DrawLifeCircle
 	int mNaviIndex; // _18, navi index? should be 0
 };

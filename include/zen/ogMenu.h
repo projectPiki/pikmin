@@ -22,7 +22,7 @@ struct ogRaderMgr;
  * @brief TODO
  */
 struct ogDrawScrMenu {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -65,6 +65,7 @@ struct ogDrawScrMenu {
 		mRootPane->rotate(320, 240, P2DROTATE_Y, -mCurrentAngle);
 	}
 
+private:
 	P2DScreen* mScreen;                   // _00
 	returnStatusFlag mUpdateResultStatus; // _04
 	P2DPane* mRootPane;                   // _08
@@ -80,16 +81,19 @@ struct ogDrawScrMenu {
  * @brief TODO
  */
 struct ogDrawScrController {
+public:
 	ogDrawScrController();
 
-	void update();
-
-	// unused/inlined:
-	void setWinColor();
 	void setOriginalColor();
 	void setHantenColor();
+	void update();
 
-	ogDrawScrMenu mControllerScreenMenu;         // _00
+	// There's no way this wasn't public.
+	ogDrawScrMenu mControllerScreenMenu; // _00
+
+private:
+	void setWinColor();
+
 	P2DPicture* mButtonMaskPanes[9];             // _24
 	P2DPicture* mButtonBasePanes[9];             // _48
 	P2DTextBox* mButtonTextBoxes[9];             // _6C
@@ -108,6 +112,7 @@ struct ogDrawScrController {
  * @brief TODO
  */
 struct ogDrawScrInfo {
+public:
 	ogDrawScrInfo();
 
 	void start();
@@ -115,7 +120,10 @@ struct ogDrawScrInfo {
 	// unused/inlined:
 	void update(Controller*);
 
-	ogDrawScrMenu mInfoScreenMenu;   // _00
+	// There's no way this wasn't public.
+	ogDrawScrMenu mInfoScreenMenu; // _00
+
+private:
 	int _24;                         // _24
 	P2DPane* mStageTitlePanes[5];    // _28
 	P2DPane* mRootPane;              // _3C
@@ -141,6 +149,7 @@ struct ogDrawScrInfo {
 };
 
 struct ogDrawScrInfo2 {
+public:
 	ogDrawScrInfo2(); // unused/inlined
 
 	// unused/inlined:
@@ -150,7 +159,10 @@ struct ogDrawScrInfo2 {
 
 	P2DPane* getPaneMaps() { return mMapsPane; }
 
+	// There's no way this wasn't public.
 	ogDrawScrMenu mMinimapScreenMenu; // _00
+
+private:
 	P2DPane* mMapsPane;               // _24
 	Vector3f mMapAnchorPosition;      // _28
 	P2DPane* mDirectionArrowPane;     // _34
@@ -158,6 +170,7 @@ struct ogDrawScrInfo2 {
 
 // This struct is completely inlined
 struct ogDrawLR {
+public:
 	ogDrawLR()
 	{
 		mScreen = new P2DScreen;
@@ -218,6 +231,7 @@ struct ogDrawLR {
 		}
 	}
 
+private:
 	P2DScreen* mScreen; // _00
 	u8 _04;             // _04
 	u8 _05;             // _05
@@ -233,6 +247,7 @@ struct ogDrawLR {
  * @brief TODO
  */
 struct ogScrMenuMgr {
+public:
 	/**
 	 * @brief Defines the operational states of the screen menu manager.
 	 */
@@ -246,11 +261,11 @@ struct ogScrMenuMgr {
 
 	ogScrMenuMgr();
 
-	void start();
 	returnStatusFlag update(Controller*);
+	void start();
 	bool draw(Graphics&);
 
-	// unused/inlined:
+private:
 	void updateInfo(Controller*);
 	void updateCont(Controller*);
 

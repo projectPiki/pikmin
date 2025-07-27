@@ -52,11 +52,13 @@ enum TestMode {
  * @note Size: 0x3C0 (0x3BC in USA demo).
  */
 struct OgTestScreen : public Node {
+public:
 	OgTestScreen();
 
 	virtual void update();        // _10
 	virtual void draw(Graphics&); // _14
 
+private:
 	void modeSelectSub();
 
 	// _00     = VTBL

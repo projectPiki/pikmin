@@ -83,7 +83,7 @@ enum {
  * @note Size: 0x14.
  */
 struct Action : public Receiver<Piki> {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -155,6 +155,7 @@ struct Action : public Receiver<Piki> {
  * @brief TODO
  */
 struct AndAction : public Action {
+public:
 	AndAction(Piki* piki)
 	    : Action(piki, true)
 	{
@@ -165,6 +166,7 @@ struct AndAction : public Action {
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	Creature* mOtherCreature; // _14
@@ -174,12 +176,14 @@ struct AndAction : public Action {
  * @brief TODO
  */
 struct OrAction : public Action {
+public:
 	inline OrAction(); // TODO: probably
 
 	virtual ~OrAction() { }       // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual int exec();           // _4C
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	Creature* mOtherCreature; // _14
@@ -189,7 +193,11 @@ struct OrAction : public Action {
  * @brief TODO
  */
 struct TopAction : public Action {
+	// Another encapsulation fail...  Write a getter for `mIsSuspended`, Kando!
+	friend struct Piki;
+	friend struct PikiSwallowedState;
 
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -206,6 +214,7 @@ struct TopAction : public Action {
 		// _00 = VTBL
 		TopAction* mAction; // _04
 	};
+	friend struct MotionListener;
 
 	/**
 	 * @brief TODO
@@ -265,9 +274,6 @@ struct TopAction : public Action {
 
 	void abandon(zen::particleGenerator*);
 
-	// unused/inlined:
-	void knowledgeCheck();
-
 	Action* getCurrAction() { return (mCurrActionIdx == PikiAction::NOACTION) ? nullptr : mChildActions[mCurrActionIdx].mAction; }
 
 	void startAction(int actionID, Creature* target)
@@ -275,6 +281,9 @@ struct TopAction : public Action {
 		mCurrActionIdx = actionID;
 		mChildActions[mCurrActionIdx].initialise(target);
 	}
+
+protected:
+	void knowledgeCheck();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -294,7 +303,7 @@ struct TopAction : public Action {
  * @brief TODO
  */
 struct ActAdjust : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -305,6 +314,7 @@ struct ActAdjust : public Action {
 		f32 mAdjustDistance;  // _04, same as _14 in ActAdjust
 		int mAdjustTimeLimit; // _08, same as _18 in ActAdjust
 	};
+	friend struct Initialiser;
 
 	ActAdjust(Piki*);
 
@@ -318,6 +328,7 @@ struct ActAdjust : public Action {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	f32 mAdjustDistance;      // _14
@@ -335,7 +346,7 @@ struct ActAdjust : public Action {
  * @note Size: 0x2C.
  */
 struct ActAttack : public AndAction, public PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -356,11 +367,10 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
 	virtual bool resumable();                            // _5C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
-	Creature* findTarget();
-
-	// unused/inlined:
-	Creature* decideTarget();
+protected:
 	void startLost();
+	Creature* findTarget();
+	Creature* decideTarget();
 
 	// _00     = VTBL
 	// _00-_18 = AndAction
@@ -380,7 +390,7 @@ struct ActAttack : public AndAction, public PaniAnimKeyListener {
  * @note Size: 0x24.
  */
 struct ActBoMake : public Action, private PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -402,6 +412,7 @@ struct ActBoMake : public Action, private PaniAnimKeyListener {
 	void initWork();
 	int exeWork();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -414,6 +425,7 @@ struct ActBoMake : public Action, private PaniAnimKeyListener {
  * @brief TODO
  */
 struct ActBoreListen : public Action {
+public:
 	ActBoreListen(Piki*);
 
 	virtual void procAnimMsg(Piki*, MsgAnim*); // _20
@@ -422,6 +434,7 @@ struct ActBoreListen : public Action {
 	virtual int exec();                        // _4C
 	virtual void cleanup();                    // _50
 
+protected:
 	// _00 = VTBL
 	// TODO: members
 };
@@ -432,6 +445,7 @@ struct ActBoreListen : public Action {
  * @note Size: 0x24.
  */
 struct ActBoreOneshot : public Action, virtual PaniAnimKeyListener {
+public:
 	ActBoreOneshot(Piki*);
 
 	virtual ~ActBoreOneshot() { }                        // _44
@@ -442,6 +456,7 @@ struct ActBoreOneshot : public Action, virtual PaniAnimKeyListener {
 
 	void finish();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -455,6 +470,7 @@ struct ActBoreOneshot : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x30.
  */
 struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
+public:
 	ActBoreRest(Piki*);
 
 	virtual ~ActBoreRest() { }                           // _44
@@ -470,6 +486,7 @@ struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
 
 	void finishRest() { mIsFinished = true; }
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -485,7 +502,7 @@ struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
  * @brief TODO
  */
 struct ActBoreSelect : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -508,6 +525,8 @@ struct ActBoreSelect : public Action {
 	virtual void cleanup();                        // _50
 
 	void stop();
+
+protected:
 	void determine();
 
 	// _00     = VTBL
@@ -525,6 +544,11 @@ struct ActBoreSelect : public Action {
  * @note Size: 0x30.
  */
 struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
+	// `mIsLookHandledElsewhere` and `mTarget` are altered by these two.
+	friend struct ActFreeSelect;
+	friend struct ActBoreSelect;
+
+public:
 	ActBoreTalk(Piki*);
 
 	virtual ~ActBoreTalk() { }                           // _44
@@ -535,6 +559,7 @@ struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
 
 	void startTalk();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -551,7 +576,7 @@ struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x34.
  */
 struct ActBou : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -571,6 +596,7 @@ struct ActBou : public Action {
 	int gotoLeg();
 	int climb();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	u16 mState;               // _14
@@ -586,7 +612,7 @@ struct ActBou : public Action {
  * @note Size: 0x34.
  */
 struct ActBreakWall : public Action, public PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -611,6 +637,7 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
 	void startWorkMotion();
 	int breakWall();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -629,7 +656,7 @@ struct ActBreakWall : public Action, public PaniAnimKeyListener {
  * @note Size: 0x58.
  */
 struct ActBridge : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -643,23 +670,19 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 
 	ActBridge(Piki*);
 
+	virtual ~ActBridge() { }      // _44
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
+
+protected:
 	virtual void procWallMsg(Piki*, MsgWall*);           // _28
 	virtual void dump();                                 // _3C
-	virtual ~ActBridge() { }                             // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
-	int newExeApproach();
-	void newInitGo();
-	int newExeGo();
-	void newInitWork();
-	int newExeWork();
-
-	// unused/inlined:
 	bool collideBridgeSurface();
 	bool collideBridgeBlocker();
+
 	void initDetour();
 	int exeDetour();
 	void initClimb();
@@ -671,7 +694,13 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
 	void initWork();
 	int exeWork();
 	void doWork(int);
+
 	void newInitApproach();
+	int newExeApproach();
+	void newInitGo();
+	int newExeGo();
+	void newInitWork();
+	int newExeWork();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -699,7 +728,7 @@ struct ActBridge : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x1C.
  */
 struct ActChase : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -709,6 +738,7 @@ struct ActChase : public Action {
 		// _00 = VTBL
 		// TODO: members
 	};
+	friend struct Initialiser;
 
 	ActChase(Piki*);
 
@@ -717,6 +747,7 @@ struct ActChase : public Action {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	SmartPtr<Creature> mTarget; // _14
@@ -729,7 +760,13 @@ struct ActChase : public Action {
  * @note Size: 0x88.
  */
 struct ActCrowd : public Action, virtual SlotChangeListner {
+	// I want to believe in encapsulation so bad... it's probably to a fault.
+	friend struct Navi;
+	friend struct NaviDemoSunsetState;
+	friend struct Piki;
+	friend struct ViewPiki;
 
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -764,6 +801,7 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
 
 	int getSlotID() { return mCPlateSlotID; }
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = SlotChangeListner ptr
@@ -800,6 +838,7 @@ struct ActCrowd : public Action, virtual SlotChangeListner {
  * @note Size: 0x20.
  */
 struct ActDecoy : public Action, public PaniAnimKeyListener {
+public:
 	ActDecoy(Piki*);
 
 	virtual ~ActDecoy() { }                              // _44 (weak)
@@ -808,9 +847,8 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
+protected:
 	Creature* findTeki();
-
-	// unused/inlined:
 	Creature* update();
 
 	// _00     = VTBL
@@ -824,7 +862,7 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
  * @brief TODO
  */
 struct ActDeliver : public AndAction {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -845,6 +883,7 @@ struct ActDeliver : public AndAction {
 		// _00 = VTBL
 		Creature* mObject; // _04
 	};
+	friend struct Initialiser;
 
 	ActDeliver(Piki*);
 
@@ -853,6 +892,7 @@ struct ActDeliver : public AndAction {
 	virtual void init(Creature*);                          // _48
 	virtual void cleanup() { mObject.reset(); }            // _50 (weak)
 
+protected:
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	SmartPtr<Creature> mObject; // _18
@@ -864,7 +904,7 @@ struct ActDeliver : public AndAction {
  * @note Size: 0x30.
  */
 struct ActEnter : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -889,6 +929,7 @@ struct ActEnter : public Action {
 	// unused/inlined:
 	int routeMove();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	u16 mState;             // _14
@@ -904,7 +945,7 @@ struct ActEnter : public Action {
  * @note Size: 0x30.
  */
 struct ActEscape : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -922,6 +963,7 @@ struct ActEscape : public Action {
 		// _00 = VTBL
 		// TODO: members
 	};
+	friend struct Initialiser;
 
 	ActEscape(Piki*);
 
@@ -931,6 +973,7 @@ struct ActEscape : public Action {
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	SmartPtr<Creature> mTarget; // _14
@@ -946,6 +989,7 @@ struct ActEscape : public Action {
  * @note Size: 0x24.
  */
 struct ActExit : public Action {
+public:
 	ActExit(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
@@ -954,6 +998,7 @@ struct ActExit : public Action {
 	virtual int exec();                              // _4C
 	virtual void cleanup();                          // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	Vector3f mPrevPosition; // _14
@@ -964,6 +1009,7 @@ struct ActExit : public Action {
  * @brief TODO
  */
 struct ActFlower : public Action, virtual PaniAnimKeyListener {
+public:
 	ActFlower(Piki*);
 
 	virtual ~ActFlower() { }                             // _44 (weak)
@@ -972,6 +1018,7 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -987,12 +1034,17 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x34.
  */
 struct ActFormation : public Action, public PaniAnimKeyListener {
+	friend struct TopAction; // Brazenly accesses `mInFormation`.
+
+public:
 	ActFormation(Piki*);
 
-	virtual ~ActFormation() { }                          // _44 (weak)
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual ~ActFormation() { }   // _44 (weak)
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
+
+protected:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
 
 	void getFormPoint();
@@ -1016,7 +1068,7 @@ struct ActFormation : public Action, public PaniAnimKeyListener {
  * @brief TODO
  */
 struct ActFreeSelect : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1038,6 +1090,8 @@ struct ActFreeSelect : public Action {
 	virtual void cleanup();                        // _50
 
 	void finishRest();
+
+protected:
 	void determine();
 
 	// _00     = VTBL
@@ -1055,6 +1109,7 @@ struct ActFreeSelect : public Action {
  * @note Size: 0x50.
  */
 struct ActFree : public Action, virtual PaniAnimKeyListener {
+public:
 	ActFree(Piki*);
 
 	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
@@ -1068,6 +1123,7 @@ struct ActFree : public Action, virtual PaniAnimKeyListener {
 	void initBoid(struct Vector3f&, f32);
 	void exeBoid();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -1092,7 +1148,7 @@ struct ActFree : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x24.
  */
 struct ActGoto : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1111,6 +1167,7 @@ struct ActGoto : public Action {
 		f32 mMaxDistance;  // _08
 		f32 mMinDistance;  // _0C
 	};
+	friend struct Initialiser;
 
 	ActGoto(Piki*);
 
@@ -1124,6 +1181,7 @@ struct ActGoto : public Action {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	f32 mMaxDistance;           // _14
@@ -1138,6 +1196,7 @@ struct ActGoto : public Action {
  * @note Size: 0x4C.
  */
 struct ActGuard : public Action {
+public:
 	enum FormationSide {
 		Left,  // 0
 		Right, // 1
@@ -1160,6 +1219,7 @@ struct ActGuard : public Action {
 	bool setLeft();
 	bool setRight();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	SmartPtr<Creature> mTarget;     // _14
@@ -1181,6 +1241,7 @@ struct ActGuard : public Action {
  * @note Size: 0x30.
  */
 struct ActJumpAttack : public Action, public PaniAnimKeyListener {
+public:
 	ActJumpAttack(Piki*);
 
 	virtual void procBounceMsg(Piki*, MsgBounce*);       // _0C
@@ -1199,6 +1260,7 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 	Vector3f getAttackPos();
 	f32 getAttackSize();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -1217,7 +1279,7 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
  * @note Size: 0x38.
  */
 struct ActKinoko : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1230,22 +1292,22 @@ struct ActKinoko : public Action, virtual PaniAnimKeyListener {
 
 	ActKinoko(Piki*);
 
-	virtual ~ActKinoko() { }                             // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual ~ActKinoko() { }      // _44
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
+
+protected:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
+	void initStick();
 	int exeStick();
+	void initJump();
 	int exeJump();
 	void initAttack();
 	int exeAttack();
 	void initBoid();
 	int exeBoid();
-
-	// unused/inlined:
-	void initStick();
-	void initJump();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1263,7 +1325,7 @@ struct ActKinoko : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x30.
  */
 struct ActMine : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1290,6 +1352,7 @@ struct ActMine : public Action, virtual PaniAnimKeyListener {
 	void initMine();
 	void initGo();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener ptr
@@ -1306,7 +1369,7 @@ struct ActMine : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x20.
  */
 struct ActPick : public Action, public PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1317,6 +1380,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 		// TODO: members
 		Creature* mObject; // _04
 	};
+	friend struct Initialiser;
 
 	ActPick(Piki*);
 
@@ -1326,6 +1390,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -1339,7 +1404,7 @@ struct ActPick : public Action, public PaniAnimKeyListener {
  * @note Size: 0x1C.
  */
 struct ActPickCreature : public AndAction {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1357,12 +1422,14 @@ struct ActPickCreature : public AndAction {
 		void initialise(Action*, Action*);
 		// TODO: members
 	};
+	friend struct InitGoto;
 
 	ActPickCreature(Piki*);
 
 	virtual ~ActPickCreature() { } // _44 (weak)
 	virtual void init(Creature*);  // _48
 
+protected:
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	SmartPtr<Creature> _18; // _18
@@ -1374,7 +1441,7 @@ struct ActPickCreature : public AndAction {
  * @note Size: 0x1C.
  */
 struct ActPickItem : public AndAction {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1394,6 +1461,7 @@ struct ActPickItem : public AndAction {
 
 	Creature* findItem();
 
+protected:
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	SmartPtr<Creature> mTargetItem; // _18
@@ -1405,7 +1473,7 @@ struct ActPickItem : public AndAction {
  * @note Size: 0x1C.
  */
 struct ActPullout : public AndAction {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1424,6 +1492,7 @@ struct ActPullout : public AndAction {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_18 = AndAction
 	SmartPtr<Creature> mTarget; // _18
@@ -1435,7 +1504,7 @@ struct ActPullout : public AndAction {
  * @note Size: 0x28.
  */
 struct ActPulloutCreature : public Action, private PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1453,6 +1522,7 @@ struct ActPulloutCreature : public Action, private PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -1468,7 +1538,7 @@ struct ActPulloutCreature : public Action, private PaniAnimKeyListener {
  * @note Size: 0x50.
  */
 struct ActPush : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1483,15 +1553,16 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
+
+protected:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
 
+	bool collideRockSurface();
+
+	void initApproach();
 	int exeApproach();
 	void initGo();
 	int exeGo();
-
-	// unused/inlined:
-	bool collideRockSurface();
-	void initApproach();
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1516,7 +1587,7 @@ struct ActPush : public Action, virtual PaniAnimKeyListener {
  * @brief TODO
  */
 struct ActPut : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1526,6 +1597,7 @@ struct ActPut : public Action {
 		// _00 = VTBL
 		// TODO: members
 	};
+	friend struct Initialiser;
 
 	ActPut(Piki*);
 
@@ -1534,6 +1606,7 @@ struct ActPut : public Action {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	f32 mFailCountdownTimer; // _14
@@ -1545,7 +1618,7 @@ struct ActPut : public Action {
  * @note Size: 0x30.
  */
 struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1565,21 +1638,22 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
+
+protected:
+	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
 
 	void findTeki();
+	void warnPikis();
+
 	void initSet();
 	int exeSet();
-	void warnPikis();
 	void initAim();
 	int exeAim();
 	void initWait();
-	void initThrow();
-	void initPut();
-	int exeThrow();
-
-	// unused/inlined:
 	int exeWait();
+	void initThrow();
+	int exeThrow();
+	void initPut();
 	int exePut();
 
 	// _00     = VTBL
@@ -1600,6 +1674,7 @@ struct ActPutBomb : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x24.
  */
 struct ActPutItem : public Action {
+public:
 	ActPutItem(Piki*);
 
 	virtual ~ActPutItem() { }     // _44
@@ -1610,6 +1685,7 @@ struct ActPutItem : public Action {
 	void findPos();
 	bool findAdjacent(Creature*);
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	Vector3f mItemPosition;   // _14
@@ -1622,7 +1698,7 @@ struct ActPutItem : public Action {
  * @note Size: 0x28.
  */
 struct ActRandomBoid : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1642,6 +1718,7 @@ struct ActRandomBoid : public Action {
 		// _00 = VTBL
 		// TODO: members
 	};
+	friend struct Initialiser;
 
 	/**
 	 * @brief TODO
@@ -1660,6 +1737,7 @@ struct ActRandomBoid : public Action {
 		Piki* mPiki;            // _08
 		bool _0C;               // _0C
 	};
+	friend struct AnimListener;
 
 	ActRandomBoid(Piki*);
 
@@ -1669,6 +1747,7 @@ struct ActRandomBoid : public Action {
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	int mState;              // _14
@@ -1684,7 +1763,7 @@ struct ActRandomBoid : public Action {
  * @note Size: 0x3C.
  */
 struct ActRescue : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1701,7 +1780,6 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	virtual void init(Creature*);                        // _48
 	virtual int exec();                                  // _4C
 	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
 	void initApproach();
 	int exeApproach();
@@ -1711,6 +1789,9 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
 	int exeGo();
 	void initThrow();
 	int exeThrow();
+
+protected:
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1731,6 +1812,7 @@ struct ActRescue : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x24.
  */
 struct ActRope : public Action {
+public:
 	ActRope(Piki*);
 
 	virtual ~ActRope() { }        // _44 (weak)
@@ -1738,6 +1820,7 @@ struct ActRope : public Action {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	f32 mSpeed;              // _14
@@ -1750,7 +1833,7 @@ struct ActRope : public Action {
  * @note Size: 0x28.
  */
 struct ActShoot : public AndAction {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1768,9 +1851,8 @@ struct ActShoot : public AndAction {
 	virtual int exec();           // _4C
 	virtual void cleanup();       // _50
 
+protected:
 	Creature* findTarget();
-
-	// unused/inlined:
 	Creature* decideTarget();
 
 	// _00     = VTBL
@@ -1787,7 +1869,7 @@ struct ActShoot : public AndAction {
  * @note Size: 0x24.
  */
 struct ActShootCreature : public Action, public PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief The state of the action.
 	 */
@@ -1808,6 +1890,7 @@ struct ActShootCreature : public Action, public PaniAnimKeyListener {
 	virtual void cleanup();                              // _50
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -1825,6 +1908,7 @@ struct ActStone : public Action, private PaniAnimKeyListener {
 
 #define STONE_NECTAR_CHANCE (0.08f)
 
+public:
 	/**
 	 * @brief The state of the action.
 	 */
@@ -1849,6 +1933,7 @@ struct ActStone : public Action, private PaniAnimKeyListener {
 	void initAttack();
 	int exeAttack();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -1865,7 +1950,7 @@ struct ActStone : public Action, private PaniAnimKeyListener {
  * @note Size: 0xC0.
  */
 struct ActTransport : public Action, virtual PaniAnimKeyListener {
-
+public:
 	/**
 	 * @brief The state of the action.
 	 */
@@ -1882,42 +1967,43 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
 
 	ActTransport(Piki*);
 
-	virtual void draw(Graphics&);                        // _40
-	virtual ~ActTransport() { }                          // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual void draw(Graphics&); // _40
+	virtual ~ActTransport() { }   // _44
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
+
+	bool useWaterRoute();
+	// not in the DLL, but necessary for doLift
+	inline BOOL doLandOnly() { return useWaterRoute() ? FALSE : TRUE; }
+
+protected:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+
+	void initWait();
+	int exeWait();
+	void initJump();
+	int execJump();
 
 	void turnOver();
 	bool isStickLeader();
 	f32 getCarriers();
+	int getNumStickers();
+	int calcNumStickers();
 	Pellet* findPellet();
 	void setSlotIndex();
-	int execJump();
 	bool gotoLiftPos();
 	void doLift();
-	bool useWaterRoute();
 	int moveGuruGuru();
 	void decideGoal(Creature*);
 	Vector3f crGetPoint(int);
 	bool crPointOpen(int);
+	f32 crGetRadius(int);
 	void crInit();
 	void crMakeRefs();
 	void findObstacle();
 	bool crMove();
 	int moveToWayPoint();
-
-	// unused/inlined:
-	void initWait();
-	int exeWait();
-	int getNumStickers();
-	int calcNumStickers();
-	void initJump();
-	f32 crGetRadius(int);
-
-	// not in the DLL, but necessary for doLift
-	inline BOOL doLandOnly() { return useWaterRoute() ? FALSE : TRUE; }
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1953,7 +2039,7 @@ struct ActTransport : public Action, virtual PaniAnimKeyListener {
  * @note Size: 0x2C.
  */
 struct ActWatch : public Action {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -1963,6 +2049,7 @@ struct ActWatch : public Action {
 		// _00 = VTBL
 		// TODO: members
 	};
+	friend struct Initialiser;
 
 	/**
 	 * @brief TODO
@@ -1980,6 +2067,7 @@ struct ActWatch : public Action {
 		ActWatch* mOwnerAction; // _04
 		Piki* mActor;           // _08
 	};
+	friend struct AnimListener;
 
 	ActWatch(Piki* piki);
 
@@ -1989,6 +2077,7 @@ struct ActWatch : public Action {
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	SmartPtr<Creature> mTarget; // _14
@@ -2006,6 +2095,7 @@ struct ActWeed : public Action, private PaniAnimKeyListener {
 
 #define GRASS_NECTAR_CHANCE (0.08f)
 
+public:
 	/**
 	 * @brief The state of the action.
 	 */
@@ -2030,6 +2120,7 @@ struct ActWeed : public Action, private PaniAnimKeyListener {
 	void initNuking();
 	int exeNuking();
 
+protected:
 	// _00     = VTBL
 	// _00-_14 = Action
 	// _14     = PaniAnimKeyListener
@@ -2045,7 +2136,7 @@ struct ActWeed : public Action, private PaniAnimKeyListener {
  * @brief Almost completely stripped, uniqueInstance gets set to nullptr in pikiMgr.
  */
 struct AiTable {
-
+public:
 	/**
 	 * @brief Completely stripped. Static member shows up stripped in map.
 	 */
@@ -2067,14 +2158,15 @@ struct AiTable {
 		// TODO: This class shows up in the ILK.
 	};
 
-	AiTable(struct AbsStates*);
-
 	void addRows(int, Tables*, int);
 	void addRow(int, ...); // __cdecl?
 	Output* find(int, struct AbsStates*);
 
 	static void init() { uniqueInstance = nullptr; }
 	static AiTable* create(struct AbsStates*); // __cdecl?
+
+protected:
+	AiTable(struct AbsStates*);
 
 	static AiTable* uniqueInstance;
 

@@ -93,7 +93,7 @@ enum EResultsFlags {
  * @brief TODO
  */
 struct ResultFlags {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -124,6 +124,8 @@ struct ResultFlags {
 	int getDayDocument(int, int&);
 	int getDocument(int&);
 	void dump();
+
+protected:
 	u8 getFlag(int);
 	void setFlag(int, u8);
 

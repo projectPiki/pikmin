@@ -38,7 +38,7 @@ enum SpiderAIStateID {
  * @note Size: 0x554.
  */
 struct SpiderProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -180,6 +180,14 @@ struct SpiderProp : public BossProp, public CoreNode {
  * @note Size: 0x764
  */
 struct Spider : public Boss {
+	friend struct SpiderAi;
+	friend struct SpiderLeg;
+
+	friend struct SpiderGenHalfDeadCallBackJoint;
+	friend struct SpiderGenPerishCallBack;
+	friend struct SpiderGenRippleCallBack;
+
+public:
 	Spider(CreatureProp*);
 
 	virtual void init(Vector3f&);                   // _28
@@ -195,6 +203,7 @@ struct Spider : public Boss {
 
 	void draw(Graphics&);
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsBossBgm;            // _3B8
@@ -225,63 +234,66 @@ enum {
  * @note Size: 0x68C.
  */
 struct SpiderLeg {
+public:
 	SpiderLeg(Spider*);
 
-	void setHalfDeadFallEffect(u32);
-	void setDeadBombEffect(u32);
+	void init(Spider*);
+	void killCallBackEffect(bool);
+	void update();
+	void refresh(BossShapeObject*, Graphics&);
+
 	void createHalfDeadEffect();
+	void createHalfDeadFallEffect(int);
 	void createDeadBombEffect();
 	void createSmallSparkEffect(int);
 	void createPerishEffect();
 	void createRippleEffect(int);
-	void killCallBackEffect(bool);
 	void setLegScaleParam(int);
-	void init(Spider*);
 	void initParm(int);
+
+private:
+	void setHalfDeadEffect(u32, int, int);
+	void setHalfDeadFallEffect(u32);
+	void setDeadBombEffect(u32);
+	void setSmallSparkEffect(u32, int*);
+	void setPerishEffect(u32, int);
 	void setLegParameter();
 	void setWalkNewParameter();
 	void setShakeOffNewParameter();
 	void setBodyShakeNewParameter();
 	void setNextDirAndCent();
 	void setWalkNewPosition();
+	void checkGroundTimer();
 	void checkMotionRatio();
 	void makeNewPosition();
+	void calcSpiderDirection();
+	void calcShakeOffDirection();
 	void calcStickersPiki();
+	void calcShakeOff();
 	void setIdealCentre(Vector3f&);
 	void setRealCentre(Vector3f&);
+	void setCentrePosition();
 	void updateAnimation(const BossShapeObject*, Graphics&, Matrix4f&);
+	void setJointMatrix(const BossShapeObject*, Matrix4f&);
+	void setLength();
 	void getHeight();
+	void getLegController();
+	void setQuatParameter();
 	void stepDamageNavi(int);
 	void stepDamagePiki(int);
 	void stepShakeOffPiki(int);
 	void emitOnGroundEffect(int);
-	void setKneeDirection();
-	void create3Joint(BossShapeObject*, Graphics&);
-	void update();
-	void refresh(BossShapeObject*, Graphics&);
-
-	// unused/inlined:
-	void setHalfDeadEffect(u32, int, int);
-	void setSmallSparkEffect(u32, int*);
-	void setPerishEffect(u32, int);
-	void createHalfDeadFallEffect(int);
-	void checkGroundTimer();
-	void calcSpiderDirection();
-	void calcShakeOffDirection();
-	void calcShakeOff();
-	void setCentrePosition();
-	void setJointMatrix(const BossShapeObject*, Matrix4f&);
-	void setLength();
-	void getLegController();
-	void setQuatParameter();
 	void onGroundFunction();
 	void emitOffGroundEffect();
+	void setKneeDirection();
 	void getJointMatrix(Vector3f&, Vector3f&, Vector3f&, Matrix4f&);
 	void calcQuatToMatrix(int);
+	void create3Joint(BossShapeObject*, Graphics&);
 	void createMatrixScale(BossShapeObject*, Graphics&);
 	void setGroundFlag();
 	void checkMotionFinished();
 
+public:
 	Spider* mSpider;                                         // _00
 	bool mSoundQueued;                                       // _04
 	bool mInitialised;                                       // _05
@@ -346,23 +358,22 @@ struct SpiderDrawer : public Node {
  * @note Size: 0xC.
  */
 struct SpiderAi : public PaniAnimKeyListener {
+public:
 	SpiderAi(Spider*);
 
+	void initAI(Spider*);
+	void update();
+
+private:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void initAI(Spider*);
 	void keyAction0();
 	void keyAction1();
+	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
-	bool appearTransit();
-	void dieState();
-	void update();
-
-	// unused/inlined:
-	void keyAction2();
-	void keyAction3();
 	void setEveryFrame();
 	void checkFlickPiki();
 	void checkHalfDead();
@@ -376,11 +387,13 @@ struct SpiderAi : public PaniAnimKeyListener {
 	bool chasePikiTransit();
 	bool shakeOffTransit();
 	bool targetLostTransit();
+	bool appearTransit();
 	void initDie(int);
 	void initWalk(int);
 	void initShakeOff(int);
 	void initAppear(int);
 	void initWait(int);
+	void dieState();
 	void walkRandomState();
 	void walkGoHomeState();
 	void chaseNaviState();
@@ -389,6 +402,7 @@ struct SpiderAi : public PaniAnimKeyListener {
 	void waitState();
 	void appearState();
 
+public:
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	Spider* mSpider; // _04
@@ -401,6 +415,7 @@ struct SpiderAi : public PaniAnimKeyListener {
  * @note Size: 0xC.
  */
 struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		ptclGen->setEmitPosPtr(mPosition);
@@ -417,6 +432,7 @@ struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGener
 		mSpider   = spider;
 	}
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	Vector3f* mPosition; // _04
@@ -429,6 +445,7 @@ struct SpiderGenHalfDeadCallBackJoint : public zen::CallBack1<zen::particleGener
  * @note Size: 0x10.
  */
 struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		Vector3f midPt = *mStartPoint + *mEndPoint;
@@ -454,6 +471,7 @@ struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> 
 		mSpider     = spider;
 	}
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	Vector3f* mStartPoint; // _04
@@ -467,6 +485,7 @@ struct SpiderGenPerishCallBack : public zen::CallBack1<zen::particleGenerator*> 
  * @note Size: 0x8.
  */
 struct SpiderGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		if (!*mIsRunning) {
@@ -478,6 +497,7 @@ struct SpiderGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> 
 
 	void set(bool* cond) { mIsRunning = cond; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	bool* mIsRunning; // _04

@@ -25,7 +25,7 @@ struct particleGenerator;
  * @note Size: 0x10C (0xF0 in USA demo).
  */
 struct ogScrMemChkMgr {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -57,27 +57,27 @@ struct ogScrMemChkMgr {
 
 	ogScrMemChkMgr();
 
-	void StatusCheck();
-	void setPCtex(TypingTextMgr*);
-	void DispYesNo(bool);
-	void DispAcup(bool);
+	void draw(Graphics&);
+	MemChkStatus update(Controller*);
 	void start();
 	void DebugStart(int);
-	MemChkStatus update(Controller*);
-	void draw(Graphics&);
-	void setErrorMessage();
 
-	// unused/inlined:
+private:
 	void SetNitaku_Y_N();
 	void SetNitaku_W_R();
 	void SetNitaku_F_N();
 	void StartSub();
+	void StatusCheck();
+	void setPCtex(TypingTextMgr*);
+	void DispYesNo(bool);
+	void DispAcup(bool);
 	void MakeDefFileStart();
 	void RepairFileStart();
 	void FormatEffectStart();
 	bool checkTypingAll();
 	void checkErrNitaku(zen::ogNitakuMgr*, Controller*);
 	void setNoCard();
+	void setErrorMessage();
 
 	bool mIsDebugMode;                       // _00
 	int mDebugState;                         // _04

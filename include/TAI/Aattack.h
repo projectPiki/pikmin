@@ -10,6 +10,7 @@ struct Bridge;
  * @brief TODO
  */
 struct TAIAattackWorkObject : public TAIAreserveMotion {
+public:
 	inline TAIAattackWorkObject(int nextState, int motionID, int p3) // TODO: this is a guess
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -19,6 +20,8 @@ struct TAIAattackWorkObject : public TAIAreserveMotion {
 
 	virtual void start(Teki&);                                // _08
 	virtual bool act(Teki&);                                  // _10
+
+protected:
 	virtual f32 getDamage(Teki&) { return 1.0f; }             // _1C
 	virtual f32 getAttackPointRadius(Teki&) { return 10.0f; } // _20
 	virtual void attackEffect(Teki&) { }                      // _24
@@ -38,6 +41,7 @@ struct TAIAattackWorkObject : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflickingAfterMotionLoop : public TAIAmotionLoop {
+public:
 	TAIAflickingAfterMotionLoop(int nextState, int motionIdx, f32 frameMax)
 	    : TAIAmotionLoop(nextState, motionIdx, frameMax)
 	{
@@ -45,6 +49,8 @@ struct TAIAflickingAfterMotionLoop : public TAIAmotionLoop {
 
 	virtual void start(Teki&);                           // _08
 	virtual bool act(Teki&);                             // _10
+
+protected:
 	virtual f32 getFrameMax(Teki&) { return mFrameMax; } // _1C
 	virtual bool permitFlick(Teki&);                     // _20
 
@@ -57,6 +63,7 @@ struct TAIAflickingAfterMotionLoop : public TAIAmotionLoop {
  * @brief TODO
  */
 struct TAIAtargetNavi : public TaiAction {
+public:
 	inline TAIAtargetNavi() // TODO: this is a guess
 	    : TaiAction(-1)
 	{
@@ -64,6 +71,7 @@ struct TAIAtargetNavi : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -73,6 +81,7 @@ struct TAIAtargetNavi : public TaiAction {
  * @brief TODO
  */
 struct TAIAtargetPiki : public TaiAction {
+public:
 	inline TAIAtargetPiki() // TODO: this is a guess
 	    : TaiAction(-1)
 	{
@@ -80,6 +89,7 @@ struct TAIAtargetPiki : public TaiAction {
 
 	virtual bool act(Teki&); // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -89,6 +99,7 @@ struct TAIAtargetPiki : public TaiAction {
  * @brief TODO
  */
 struct TAIAfireBreath : public TAIAreserveMotion {
+public:
 	TAIAfireBreath(int nextState, int motionID, zen::CallBack1<Teki&>* cb)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -97,6 +108,8 @@ struct TAIAfireBreath : public TAIAreserveMotion {
 
 	virtual void start(Teki&);                                // _08
 	virtual bool act(Teki&);                                  // _10
+
+protected:
 	virtual f32 getPreviousAnimSpeed(Teki&) { return 30.0f; } // _1C
 	virtual f32 getAttackAnimSpeed(Teki&) { return 30.0f; }   // _20
 
@@ -109,6 +122,7 @@ struct TAIAfireBreath : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAflickCheck : public TaiAction {
+public:
 	TAIAflickCheck(int nextState, int damageCountLimit)
 	    : TaiAction(nextState)
 	{
@@ -116,6 +130,8 @@ struct TAIAflickCheck : public TaiAction {
 	}
 
 	virtual bool act(Teki&);                                             // _10
+
+protected:
 	virtual int getDamageCountLimit(Teki&) { return mDamageCountLimit; } // _1C
 
 	// _04     = VTBL
@@ -127,6 +143,7 @@ struct TAIAflickCheck : public TaiAction {
  * @brief TODO
  */
 struct TAIAflicking : public TAIAmotion {
+public:
 	TAIAflicking(int nextState, int motionIdx)
 	    : TAIAmotion(nextState, motionIdx)
 	{
@@ -134,6 +151,8 @@ struct TAIAflicking : public TAIAmotion {
 
 	virtual void start(Teki&);                                             // _08
 	virtual bool act(Teki&);                                               // _10
+
+protected:
 	virtual void flick(Teki&);                                             // _1C
 	virtual f32 getFlickDirection(Teki&) { return FLICK_BACKWARDS_ANGLE; } // _20
 
@@ -146,6 +165,7 @@ struct TAIAflicking : public TAIAmotion {
  * @brief TODO
  */
 struct TAIAflickingReserveMotion : public TAIAreserveMotion {
+public:
 	TAIAflickingReserveMotion(int nextState, int motionID)
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -153,6 +173,8 @@ struct TAIAflickingReserveMotion : public TAIAreserveMotion {
 
 	virtual void start(Teki&);                                             // _08
 	virtual bool act(Teki&);                                               // _10
+
+protected:
 	virtual void flick(Teki&);                                             // _1C
 	virtual f32 getFlickDirection(Teki&) { return FLICK_BACKWARDS_ANGLE; } // _20
 
@@ -165,6 +187,7 @@ struct TAIAflickingReserveMotion : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAbiteForKabekui : public TAIAreserveMotion {
+public:
 	inline TAIAbiteForKabekui(int nextState, int p2, int motionID) // TODO: this is a guess
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -174,6 +197,8 @@ struct TAIAbiteForKabekui : public TAIAreserveMotion {
 
 	virtual void start(Teki&);                             // _08
 	virtual bool act(Teki&);                               // _10
+
+protected:
 	virtual f32 getPikiAttackSize(Teki&) { return 15.0f; } // _1C
 	virtual f32 getNaviAttackSize(Teki&) { return 15.0f; } // _20
 
@@ -190,6 +215,7 @@ struct TAIAbiteForKabekui : public TAIAreserveMotion {
  * @brief TODO
  */
 struct TAIAeatPiki : public TAIAreserveMotion {
+public:
 	inline TAIAeatPiki(int nextState, int motionID) // TODO: this is a guess
 	    : TAIAreserveMotion(nextState, motionID)
 	{
@@ -197,6 +223,8 @@ struct TAIAeatPiki : public TAIAreserveMotion {
 
 	virtual void start(Teki&);     // _08
 	virtual bool act(Teki&);       // _10
+
+protected:
 	virtual void eatEffect(Teki&); // _1C
 
 	// _04     = VTBL

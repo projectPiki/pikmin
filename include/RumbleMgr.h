@@ -37,6 +37,7 @@ enum RumbleType {
  * @brief TODO
  */
 struct RumbleSample {
+public:
 	RumbleSample(int);
 
 	void simpleStop();
@@ -45,6 +46,7 @@ struct RumbleSample {
 	// unused/inlined:
 	void init();
 
+private:
 	f32 mCurrentIntensity; // _00
 	f32 mTotalIntensity;   // _04
 	int mChannel;          // _08
@@ -73,12 +75,14 @@ struct ChannelData {
  * @note Size: 0x4.
  */
 struct ChannelDataMgr {
+public:
 	ChannelDataMgr(); // unused/inlined
 
 	// unused/inlined:
 	void init();
 	ChannelData* getChannelDataTbl(int row);
 
+private:
 	ChannelData* mDataTbl; // _00
 };
 
@@ -88,6 +92,7 @@ struct ChannelDataMgr {
  * @note Size: 0x18.
  */
 struct ChannelMgr {
+public:
 	ChannelMgr();
 
 	void start(int, f32*);
@@ -103,6 +108,7 @@ struct ChannelMgr {
 	// DLL inlines:
 	void draw2d(Graphics&, Font*);
 
+private:
 	f32 mRumbleTimer;         // _00
 	f32 mRumbleIntensity;     // _04
 	f32 mRumbleScale;         // _08
@@ -117,6 +123,7 @@ struct ChannelMgr {
  * @note Size: 0xC.
  */
 struct ControlerMgr {
+public:
 	ControlerMgr(); // unused/inlined
 
 	void start(int, f32*);
@@ -131,6 +138,7 @@ struct ControlerMgr {
 	// DLL inline:
 	void draw2d(Graphics&, Font*);
 
+private:
 	static const int maxChannel; // Unused
 
 	f32 mRumbleIntensity;     // _00
@@ -144,6 +152,7 @@ struct ControlerMgr {
  * @note Size: 0x30.
  */
 struct RumbleMgr {
+public:
 	RumbleMgr(bool, bool, bool, bool);
 
 	void reset();
@@ -158,6 +167,7 @@ struct RumbleMgr {
 	void init();
 	void rumblePause(bool);
 
+private:
 	static int maxControler;  // Unused
 	static f32 pauseTimerMax; // Unused
 

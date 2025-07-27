@@ -20,7 +20,7 @@ namespace zen {
  * @brief TODO
  */
 struct setTenmetuAlpha {
-
+public:
 	/**
 	 * @brief Animation mode states for tenmetu alpha effects
 	 */
@@ -31,25 +31,20 @@ struct setTenmetuAlpha {
 		MODE_FadeOut = 3, // Animation is fading out
 	};
 
-	setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8);
-	setTenmetuAlpha(P2DPicture*, f32);
-
-	void updateColor();
-	void start();
-	void startFadeIn(f32, f32, f32);
-	void startFadeOut(f32, f32, f32);
-	TenmetuMode update();
-
 	void update(P2DPicture* pic)
 	{
 		mPic = pic;
 		update();
 	}
 
-	// unused/inlined:
-	void calcAlpha(f32);
+	setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8);
+	setTenmetuAlpha(P2DPicture*, f32);
 
-	// DLL inlines to do:
+	TenmetuMode update();
+	void start();
+	void startFadeIn(f32, f32, f32);
+	void startFadeOut(f32, f32, f32);
+
 	void setColorTab(u16 p1, Colour* p2, Colour* p3, f32 p4)
 	{
 		if (p1 < 20) {
@@ -59,6 +54,10 @@ struct setTenmetuAlpha {
 			mColorCount          = p1 + 1;
 		}
 	}
+
+private:
+	void updateColor();
+	void calcAlpha(f32);
 
 	TenmetuMode mMode;           // _00
 	P2DPicture* mPic;            // _04
@@ -88,6 +87,7 @@ struct setTenmetuAlpha {
  * @note Size: 0x198
  */
 struct PikaAlphaMgr {
+public:
 	PikaAlphaMgr(P2DScreen*);
 
 	void start();
@@ -95,6 +95,7 @@ struct PikaAlphaMgr {
 	void startFadeOut(f32);
 	void update();
 
+private:
 	int mState;                           // _00
 	s16 mAlphaCount;                      // _04
 	setTenmetuAlpha* mTenmetuAlphas[100]; // _08
@@ -104,7 +105,7 @@ struct PikaAlphaMgr {
  * @brief TODO
  */
 struct ogFadeMgr {
-
+public:
 	/**
 	 * @brief Fade manager status flags
 	 */
@@ -117,8 +118,10 @@ struct ogFadeMgr {
 	ogFadeMgr(P2DPane*, u8);
 
 	void start(ogFadeStatusFlag, f32);
-	void setAlpha();
 	ogFadeStatusFlag update();
+
+private:
+	void setAlpha();
 
 	ogFadeStatusFlag mState; // _00, unknown
 	P2DPane* mPane;          // _04
@@ -134,11 +137,13 @@ struct ogFadeMgr {
  * @brief TODO
  */
 struct ogTexAnimSubMgr {
+public:
 	ogTexAnimSubMgr(P2DScreen*, P2DPicture*, P2DTextBox*);
 
 	// unused/inlined:
 	void update();
 
+private:
 	P2DPicture* mPicture;       // _00
 	P2DTextBox* mTextBox;       // _04
 	f32 mCurrentDuration;       // _08
@@ -156,10 +161,12 @@ struct ogTexAnimSubMgr {
  * @note Size: 0x194.
  */
 struct ogTexAnimMgr {
+public:
 	ogTexAnimMgr(P2DScreen*);
 
 	void update();
 
+private:
 	int mSubMgrCount;               // _00
 	ogTexAnimSubMgr* mSubMgrs[100]; // _04
 };
@@ -170,10 +177,12 @@ struct ogTexAnimMgr {
  * @note Size: 0x18 (0x10 in USA demo).
  */
 struct ogMsgCtrlTagMgr {
+public:
 	ogMsgCtrlTagMgr();
 
 	bool CheckCtrlTag(char*, s16*, f32*);
 
+private:
 	char mOnesWaitChar[8];    // _00
 	char mTensWaitChar[8];    // _08
 #if defined(VERSION_PIKIDEMO) //
@@ -188,6 +197,7 @@ struct ogMsgCtrlTagMgr {
  * @note Size: 0x418.
  */
 struct TypingTextMgr {
+public:
 	/**
 	 * @brief Typing text manager states
 	 */
@@ -218,6 +228,7 @@ struct TypingTextMgr {
 	// DLL inlines to do:
 	EnumPCTextStat check() { return mState; };
 
+private:
 	EnumPCTextStat mState;        // _00
 	ogMsgCtrlTagMgr* mCtrlTagMgr; // _04
 	P2DTextBox* mTextBox;         // _08

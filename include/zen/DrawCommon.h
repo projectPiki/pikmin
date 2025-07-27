@@ -39,7 +39,7 @@ struct P2DPaneLibrary {
  * @note Size: 0x100.
  */
 struct DrawScreen {
-
+public:
 	DrawScreen(char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr);
 
 	virtual void update(); // _08
@@ -52,6 +52,7 @@ struct DrawScreen {
 	P2DScreen* getScreenPtr() { return &mScreen; }
 	void makeResident() { P2DPaneLibrary::makeResident(&mScreen); }
 
+protected:
 	// _00 = VTBL
 	P2DScreen mScreen;            // _04
 	P2DGrafContext* mGrafContext; // _FC
@@ -61,10 +62,12 @@ struct DrawScreen {
  * @brief TODO
  */
 struct BalloonPane : public P2DPaneCallBack {
+public:
 	BalloonPane(P2DPane*, f32);
 
 	virtual bool invoke(P2DPane*); // _08
 
+protected:
 	void setGoalPos();
 	void setGoalRotate();
 

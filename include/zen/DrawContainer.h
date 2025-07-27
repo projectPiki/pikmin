@@ -34,7 +34,7 @@ struct WindowPaneMgr;
  * @note Size: 0x1E0.
  */
 struct DrawContainer {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -58,22 +58,24 @@ struct DrawContainer {
 
 	void start(containerType, int, int, int, int, int, int);
 	void draw(Graphics&);
-	void setDispParam();
-	bool operationStatus();
 	bool update(int&);
 
 	// unused/inlined:
 	~DrawContainer();
-	bool waitStatus();
-	bool startStatus();
-	bool endStatus();
 
 	statusFlag getStatus() { return mState; }
 	int getContainerPikiDisp() { return mContainerPikiNum; }
 	int getMyPikiDisp() { return mSquadPikiNum; }
 
+protected:
+	void setDispParam();
+	bool waitStatus();
+	bool startStatus();
+	bool operationStatus();
+	bool endStatus();
+
 	static const f32 waitFrame;
-	static const f32 addPikiMax;
+	static const f32 addPikiMax; // Technically public, but it's unused so idgaf.
 
 	statusFlag mState;              // _00
 	P2DScreen mScreen;              // _04
@@ -109,7 +111,7 @@ struct DrawContainer {
  * @note Size: 0x1C.
  */
 struct ArrowBasicCallBack {
-
+public:
 	/**
 	 * @brief Arrow display states based on Pikmin distribution
 	 */
@@ -183,6 +185,7 @@ struct ArrowBasicCallBack {
 		pic->move(mOriginalPosX, int(NMathF::sin(mAnimationAngle) * 10.0f) + mOriginalPosY);
 	}
 
+protected:
 	DrawContainer* mContainerScreen; // _00
 	int mOriginalPosX;               // _04
 	int mOriginalPosY;               // _08
@@ -196,6 +199,7 @@ struct ArrowBasicCallBack {
  * @brief TODO
  */
 struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
+public:
 	ArrowCenterCallBack()
 	    : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 	{
@@ -257,6 +261,7 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 		}
 	}
 
+protected:
 	static Texture* pDownTex;
 	static Texture* pUpTex;
 
@@ -269,6 +274,7 @@ struct ArrowCenterCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
  * @brief TODO
  */
 struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
+public:
 	ArrowLRCallBack(P2DPane* pane, DrawContainer* container, f32 p3)
 	    : P2DPaneCallBack(pane, PANETYPE_Picture)
 	    , ArrowBasicCallBack(pane, container, p3)
@@ -293,6 +299,7 @@ struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
 		return true;
 	}
 
+protected:
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
 	// _04-_20 = ArrowBasicCallBack
@@ -305,6 +312,7 @@ struct ArrowLRCallBack : public P2DPaneCallBack, public ArrowBasicCallBack {
  * @note Size: 0x18.
  */
 struct StickCallBack : public P2DPaneCallBack {
+public:
 	StickCallBack()
 	    : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 	{
@@ -526,6 +534,7 @@ struct StickCallBack : public P2DPaneCallBack {
 		}
 	}
 
+protected:
 	static Texture* pTexTable[21];
 
 	// _00     = VTBL
@@ -543,7 +552,7 @@ struct StickCallBack : public P2DPaneCallBack {
  * @note Size: 0x2C.
  */
 struct MessageMgr {
-
+public:
 	/**
 	 * @brief Message display types for container interface feedback
 	 */
@@ -778,6 +787,7 @@ struct MessageMgr {
 		}
 	}
 
+protected:
 	messageFlag mMessage;                    // _00
 	int mMessageCount;                       // _04
 	P2DTextBox** mRedTextBoxes;              // _08
@@ -797,7 +807,7 @@ struct MessageMgr {
  * @note Size: 0x28.
  */
 struct WindowPaneMgr {
-
+public:
 	/**
 	 * @brief Window pane animation modes for interface transitions
 	 */
@@ -866,6 +876,7 @@ struct WindowPaneMgr {
 	static const f32 weightPosGravity;
 	static const f32 weightPosLength;
 
+protected:
 	P2DPane* mPane;           // _00
 	Vector3f mBasePosition;   // _04
 	Vector3f mWeightPosition; // _10

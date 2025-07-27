@@ -12,7 +12,7 @@ namespace zen {
  * @note Size: 0x50.
  */
 struct DrawCMscoreObj {
-
+public:
 	typedef bool (DrawCMscoreObj::*ModeFunc)();
 
 	enum modeFlag {
@@ -86,6 +86,10 @@ struct DrawCMscoreObj {
 	void show() { mScorePane->show(); }
 	void hide() { mScorePane->hide(); }
 
+	modeFlag getModeFlag() { return mMode; }
+	void setScore(int score) { mScore = score; }
+
+protected:
 	bool modeWait() { return false; }
 	bool modeMove()
 	{
@@ -107,9 +111,6 @@ struct DrawCMscoreObj {
 
 		return res;
 	}
-
-	modeFlag getModeFlag() { return mMode; }
-	void setScore(int score) { mScore = score; }
 
 	P2DPane* mScorePane;             // _00
 	P2DPicture* mScoreDigitOnes;     // _04

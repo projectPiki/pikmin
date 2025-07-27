@@ -17,11 +17,14 @@ namespace zen {
  * @note Size: 0x14.
  */
 struct ogGraphMgr {
+public:
 	ogGraphMgr(P2DScreen* pParent);
 
+	void draw(u8 alpha);
+
+private:
 	void SetDummyLineData();
 	void MakeData();
-	void draw(u8 alpha);
 
 	P2DPane* mParent;               // _00
 	int mMaxPikis;                  // _04

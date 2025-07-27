@@ -21,7 +21,7 @@ enum CoreNucleusAIStateID {
  * @brief TODO.
  */
 struct CoreNucleusProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -57,6 +57,13 @@ struct CoreNucleusProp : public BossProp, public CoreNode {
  * @note Size: 0x3C8.
  */
 struct CoreNucleus : public Boss {
+	friend struct CoreNucleusAi;
+
+	// This feels a little extra but then again so does Goolix as a whole.
+	friend struct SlimeAi;
+	friend struct BossMgr; // To initialize `mSlime`.
+
+public:
 	CoreNucleus(CreatureProp*);
 
 	virtual void init(Vector3f& pos);           // _28
@@ -70,6 +77,7 @@ struct CoreNucleus : public Boss {
 	virtual void exitCourse();                  // _110
 	virtual void drawShape(Graphics&);          // _120
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	u8 _3B8[0x4];           // _3B8, unknown
@@ -84,22 +92,23 @@ struct CoreNucleus : public Boss {
  * @note Size: 0xC.
  */
 struct CoreNucleusAi : public PaniAnimKeyListener {
+public:
 	CoreNucleusAi(CoreNucleus*);
 
+	void initAI(CoreNucleus*);
+	void update();
+	void setHitMotionStart();
+
+private:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void initAI(CoreNucleus*);
 	void keyAction0();
 	void keyAction1();
+	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
-	void setHitMotionStart();
-	void update();
-
-	// unused/inlined:
-	void keyAction2();
-	void keyAction3();
 	void setEveryFrame();
 	void setBossPosition();
 	void setSlimeDamagePoint();

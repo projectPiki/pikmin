@@ -191,7 +191,7 @@ struct WayPoint {
  * @brief Manages all routing and pathfinding functionality
  */
 struct RouteMgr : public Node {
-
+public:
 	/**
 	 * @brief Container for a group of waypoints
 	 */
@@ -220,13 +220,15 @@ struct RouteMgr : public Node {
 	WayPoint* getWayPoint(u32 handle, int wpIdx);
 	void construct(MapMgr* map);
 	void initLinks();
-	int id2idx(u32 id);
-	int getColinIndex(RouteGroup* group, RoutePoint* point);
 	void refresh(Graphics& gfx);
 
 	// unused/inlined:
 	void dump(u32 handle);
+
+protected:
+	int id2idx(u32 id);
 	u32 idx2id(int idx);
+	int getColinIndex(RouteGroup* group, RoutePoint* point);
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -250,7 +252,9 @@ enum {
  * @brief Implements pathfinding algorithms for route navigation
  */
 struct PathFinder {
+	friend struct WayPoint;
 
+public:
 	/**
 	 * @brief Stores waypoint visit information during pathfinding
 	 */
@@ -302,7 +306,6 @@ struct PathFinder {
 	u32 findASync(Buffer* buf, int startWPIdx, int destWPIdx, bool includeBlockedPaths);
 	int checkASync(u32 handle);
 	void releaseHandle(u32 handle);
-	void updateClient(Client& client, int loops);
 	int findSync(WayPoint** pathWayPoints, int numWPsToFind, int startWPIdx, int destWPIdx, bool includeBlockedPaths);
 	int findSync(Buffer* bufferList, int startWPIdx, int destWPIdx, bool includeBlockedPaths);
 	WayPoint* getWayPoint(int wpIdx);
@@ -314,7 +317,6 @@ struct PathFinder {
 	                             int bufIdx, bool ignoreClosedWaypoints);
 
 	// unused/inlined:
-	int handle2idx(u32 handle);
 	void updateASync();
 	int findFirstStepOnyon(int startWPIdx, int goalType, Buffer* bufferList);
 
@@ -322,6 +324,10 @@ struct PathFinder {
 	static bool checkMode(int flag) { return mode & flag; }
 	static void clearMode() { mode = 0; }
 	static void setMode(int flag) { mode |= flag; }
+
+protected:
+	int handle2idx(u32 handle);
+	void updateClient(Client& client, int loops);
 
 	static f32 limitDistance;      // Unused
 	static int avoidWayPointIndex; // Waypoint to avoid when Unk2 mode is set
@@ -340,7 +346,7 @@ struct PathFinder {
  * @brief Follows routes for creatures (mostly stripped)
  */
 struct RouteTracer {
-
+public:
 	/**
 	 * @brief Context for route tracing (mostly stripped)
 	 */
@@ -369,8 +375,10 @@ struct RouteTracer {
 	void render(Graphics& gfx);
 	bool noLink();
 	void startConsult(Creature* creature, PathFinder* pathfinder, PathFinder::Buffer* buffer, int wpCount, Vector3f& pos);
-	void updateState();
 	Vector3f getTarget();
+
+protected:
+	void updateState();
 
 	// TODO: members
 	Context mContext;    ///< _00

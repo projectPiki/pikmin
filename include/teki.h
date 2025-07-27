@@ -142,11 +142,14 @@ enum {
  * @note Size: 0xC.
  */
 struct TekiEvent {
+public:
 	TekiEvent(int collisionType, Teki* teki);
 	TekiEvent(int collisionType, Teki* teki, Creature* other);
 
+private:
 	void init(int collisionType, Teki* teki, Creature* other);
 
+public:
 	TekiEventType::Type mEventType; // _00
 	Teki* mTeki;                    // _04
 	Creature* mOther;               // _08
@@ -179,6 +182,7 @@ struct TekiMessage {
  * @brief TODO
  */
 struct BTeki : public Creature, virtual public PaniAnimKeyListener, public PelletView {
+public:
 	BTeki();
 
 	virtual bool alwaysUpdatePlatform();                 // _18
@@ -197,8 +201,6 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	virtual void refresh2d(Graphics&);                   // _F0
 	virtual void doAI();                                 // _104
 	virtual void doAnimation();                          // _108
-	virtual void doKill();                               // _10C
-	virtual void exitCourse();                           // _110
 	virtual void viewStartTrembleMotion(f32);            // _148
 	virtual void viewSetMotionSpeed(f32);                // _14C
 	virtual void viewDoAnimation();                      // _150
@@ -258,8 +260,16 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	{
 		mAnimKeyOptions = 0;
 	}
-	virtual void dieSoon();                                                              // _1EC
-	virtual void becomeCorpse();                                                         // _1F0
+
+	// And now for a brief `protected` intermission.
+protected:
+	virtual void doKill();       // _10C
+	virtual void exitCourse();   // _110
+	virtual void dieSoon();      // _1EC
+	virtual void becomeCorpse(); // _1F0
+
+	// Now back to your completely un-encapsulated class.
+public:
 	virtual f32 getShadowSize() { return mTekiParams->getF(TPF_ShadowSize); }            // _70
 	virtual bool isVisible() { return getTekiOption(TEKI_OPTION_VISIBLE) != 0; }         // _74
 	virtual bool isOrganic() { return getTekiOption(TEKI_OPTION_ORGANIC) != 0; }         // _78
@@ -446,6 +456,8 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 	static const int ANIMATION_KEY_OPTION_LOOPSTART;
 	static const int ANIMATION_KEY_OPTION_LOOPEND;
 
+	// This was already public up above, but in case you forgot.  This class cannot possibly have been encapsulated properly.
+public:
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
@@ -502,6 +514,7 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
  * @brief TODO
  */
 struct NTeki : public BTeki {
+public:
 	NTeki();
 
 	void sendMessage(int);
@@ -521,7 +534,7 @@ struct NTeki : public BTeki {
  * @brief TODO
  */
 struct YTeki : public NTeki {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -679,6 +692,7 @@ struct YTeki : public NTeki {
 	    void setEffectSwitch(bool);
 	*/
 
+protected:
 	// _00       = VTBL
 	// _000-_46C = NTeki
 	int mStatus;                             // _46C
@@ -728,12 +742,12 @@ struct Teki : public YTeki {
  * @note Size: 0x1B4.
  */
 struct TekiMgr : public MonoObjectMgr {
+public:
 	TekiMgr();
 
-	virtual ~TekiMgr() { }            // _48
-	virtual void update();            // _4C
-	virtual void refresh(Graphics&);  // _58
-	virtual Creature* createObject(); // _80
+	virtual ~TekiMgr() { }           // _48
+	virtual void update();           // _4C
+	virtual void refresh(Graphics&); // _58
 
 	void startStage();
 	Teki* newTeki(int);
@@ -758,13 +772,18 @@ struct TekiMgr : public MonoObjectMgr {
 	static char* getTypeName(int idx) { return typeNames[idx]; }
 	static int getTypeId(int idx) { return typeIds[idx]; }
 
-	static char* typeNames[TEKI_TypeCount];
-	static int typeIds[TEKI_TypeCount];
-
 	bool isUsingType(int type) { return mUsingType[type]; }
 	bool hasType(int type) { return mTekiParams[type] != nullptr; }
 	bool isVisibleType(int type) { return mVisibleType[type]; }
 
+protected:
+	virtual Creature* createObject(); // _80
+
+	static char* typeNames[TEKI_TypeCount];
+	static int typeIds[TEKI_TypeCount];
+
+	// This, like `BTeki`, clearly was never properly encapsulated.
+public:
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_3C = MonoObjectMgr

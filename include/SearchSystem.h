@@ -26,12 +26,8 @@ struct SearchData {
  * @note Size: 0x28.
  */
 struct SearchBuffer : public Traversable {
+public:
 	SearchBuffer();
-
-	virtual Creature* getCreature(int); // _08
-	virtual int getFirst();             // _0C
-	virtual int getNext(int);           // _10
-	virtual bool isDone(int);           // _14
 
 	void init(SearchData*, int);
 	void clear();
@@ -46,6 +42,12 @@ struct SearchBuffer : public Traversable {
 	void update();
 
 	bool available() { return mDataList != nullptr; }
+
+protected:
+	virtual Creature* getCreature(int); // _08
+	virtual int getFirst();             // _0C
+	virtual int getNext(int);           // _10
+	virtual bool isDone(int);           // _14
 
 	// _00     = VTBL
 	// _00-_08 = Traversable

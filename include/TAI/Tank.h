@@ -165,6 +165,7 @@ struct TAIeffectAttackEventCallBackTank : public TAIeffectAttackEventCallBack {
  * @brief TODO
  */
 struct TAIAinitTank : public TaiAction {
+public:
 	TAIAinitTank(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -176,6 +177,7 @@ struct TAIAinitTank : public TaiAction {
 	}
 	virtual bool act(Teki& teki) { return true; } // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -185,11 +187,13 @@ struct TAIAinitTank : public TaiAction {
  * @brief TODO
  */
 struct TAIAflickingTank : public TAIAflicking {
+public:
 	TAIAflickingTank(int nextState, int motionIdx)
 	    : TAIAflicking(nextState, motionIdx)
 	{
 	}
 
+protected:
 	virtual f32 getFlickDirection(Teki& teki) // _20
 	{
 		return teki.mFaceDirection + PI;
@@ -204,6 +208,7 @@ struct TAIAflickingTank : public TAIAflicking {
  * @brief TODO
  */
 struct TAIAfireBreathTank : public TAIAfireBreath {
+public:
 	inline TAIAfireBreathTank(int nextState, int motionID, zen::CallBack1<Teki&>* cb)
 	    : TAIAfireBreath(nextState, motionID, cb)
 	{
@@ -216,6 +221,8 @@ struct TAIAfireBreathTank : public TAIAfireBreath {
 			playerState->mResultFlags.setOn(RESFLAG_Tank);
 		}
 	}
+
+protected:
 	virtual f32 getPreviousAnimSpeed(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAItankFloatParams::FireAttackAnimSpeed);
@@ -234,6 +241,7 @@ struct TAIAfireBreathTank : public TAIAfireBreath {
  * @brief TODO
  */
 struct FireEffect : public zen::CallBack1<Teki&> {
+public:
 	virtual bool invoke(Teki& teki) // _08
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
@@ -267,6 +275,7 @@ struct FireEffect : public zen::CallBack1<Teki&> {
 		return true;
 	}
 
+protected:
 	static TAIeffectAttackEventCallBackTank eventCallBackFire;
 
 	// _00     = VTBL
@@ -278,6 +287,7 @@ struct FireEffect : public zen::CallBack1<Teki&> {
  * @brief TODO
  */
 struct TAIAstepBackTank : public TAIAstepBack {
+public:
 	TAIAstepBackTank(int nextState, int motionID)
 	    : TAIAstepBack(nextState, motionID)
 	{
@@ -287,6 +297,8 @@ struct TAIAstepBackTank : public TAIAstepBack {
 	{
 		return TAIAstepBack::act(teki);
 	}
+
+protected:
 	virtual f32 getVelocity(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAItankFloatParams::StepBackSpeed);
@@ -301,11 +313,13 @@ struct TAIAstepBackTank : public TAIAstepBack {
  * @brief TODO
  */
 struct TAIAoutsideOptionalRangeTank : public TAIAoutsideOptionalRange {
+public:
 	TAIAoutsideOptionalRangeTank(int nextState)
 	    : TAIAoutsideOptionalRange(nextState)
 	{
 	}
 
+protected:
 	virtual bool setTargetPosition(Teki& teki) // _1C
 	{
 		return TAIAjudgeOptionalRange::setTargetPositionCreature(teki);
@@ -324,6 +338,7 @@ struct TAIAoutsideOptionalRangeTank : public TAIAoutsideOptionalRange {
  * @brief TODO
  */
 struct TAIApatrolTank : public TAIApatrol {
+public:
 	TAIApatrolTank(int nextState, int p2, int leftMotionID, int rightMotionID, Vector3f* p5, int p6)
 	    : TAIApatrol(nextState, p2, leftMotionID, rightMotionID, p5, p6, true)
 	{
@@ -333,6 +348,8 @@ struct TAIApatrolTank : public TAIApatrol {
 	{
 		return TAIApatrol::act(teki);
 	}
+
+protected:
 	virtual f32 getTimeout(Teki& teki) // _20
 	{
 		return teki.getParameterF(TAItankFloatParams::PatrolTimeout);

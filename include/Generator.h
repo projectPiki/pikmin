@@ -136,7 +136,7 @@ struct Factory {
  * @note Size: 0x84.
  */
 struct GeneratorCache {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -182,10 +182,8 @@ struct GeneratorCache {
 
 	void init(u8*, int);
 	void initGame();
-	void addOne(u32);
 	void saveCard(RandomAccessStream&);
 	void loadCard(RandomAccessStream&);
-	Cache* findCache(Cache&, u32);
 	void preload(u32);
 	bool hasUfoParts(u32, u32);
 	void load(u32);
@@ -198,6 +196,10 @@ struct GeneratorCache {
 	void saveGeneratorCreature(Generator*);
 	void dump();
 	void assertValid();
+
+protected:
+	void addOne(u32);
+	Cache* findCache(Cache&, u32);
 
 	Cache mAliveCacheList;    // _00, i.e. used caches
 	Cache mDeadCacheList;     // _38, i.e. free caches
@@ -617,12 +619,13 @@ struct GenObjectWorkObject : public GenObject {
  * @brief TODO
  */
 struct GenObjectFactory : public Factory<GenObject> {
+protected:
 	GenObjectFactory()
 	    : Factory<GenObject>(12)
 	{
 	}
 
-	// unused/inlined:
+public:
 	static GenObject* getProduct(u32 id);
 	static void createInstance();
 
@@ -731,12 +734,13 @@ struct GenTypeOne : public GenType {
  * @brief TODO
  */
 struct GenTypeFactory : public Factory<GenType> {
+protected:
 	GenTypeFactory()
 	    : Factory<GenType>(6)
 	{
 	}
 
-	// unused/inlined:
+public:
 	static GenType* getProduct(u32 id);
 	static void createInstance();
 
@@ -809,12 +813,13 @@ struct GenAreaPoint : public GenArea {
  * @brief TODO
  */
 struct GenAreaFactory : public Factory<GenArea> {
+protected:
 	GenAreaFactory()
 	    : Factory<GenArea>(6)
 	{
 	}
 
-	// unused/inlined:
+public:
 	static GenArea* getProduct(u32 id);
 	static void createInstance();
 
@@ -903,6 +908,7 @@ struct Generator : public Node {
  * @note Size: 0x60.
  */
 struct GeneratorMgr : public Node {
+public:
 	GeneratorMgr();
 
 #ifdef WIN32
@@ -919,8 +925,6 @@ struct GeneratorMgr : public Node {
 
 	// unused/inlined:
 	void write(RandomAccessStream&);
-	void setNaviPos();
-	void changeNaviPos();
 
 	// DLL inlines:
 	void setLimitGenerator(bool val) { mIsLimitGenerator = val; }
@@ -928,6 +932,10 @@ struct GeneratorMgr : public Node {
 	void genWrite(AgeServer&);
 	void addGenerator(AgeServer&);
 	void removeGenerator(AgeServer&, Generator*);
+
+protected:
+	void setNaviPos();
+	void changeNaviPos();
 
 	// _00     = VTBL
 	// _00-_20 = Node

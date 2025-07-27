@@ -13,6 +13,7 @@ struct CollPart;
  * @brief TODO
  */
 struct TAIAeffCloudOfDust : public TaiAction {
+public:
 	TAIAeffCloudOfDust(int nextState, EffectMgr::effTypeTable effID, f32 sinkThreshold, int footNum, int jointID0, int jointID1,
 	                   int jointID2, int jointID3)
 	    : TaiAction(nextState)
@@ -36,6 +37,8 @@ struct TAIAeffCloudOfDust : public TaiAction {
 
 	virtual void start(Teki&);                 // _08
 	virtual bool act(Teki&);                   // _10
+
+protected:
 	virtual void setType(Vector3f&, int, int); // _1C
 
 	void init(EffectMgr::effTypeTable effID, bool p2, int soundID, int rumbleType, f32 sinkThreshold, int footNum, int jointID0,

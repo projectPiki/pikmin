@@ -16,6 +16,7 @@ namespace zen {
  * @brief TODO
  */
 struct DrawCountDown {
+public:
 	DrawCountDown();
 
 	void setRate(f32, f32, f32);
@@ -23,7 +24,7 @@ struct DrawCountDown {
 	void update();
 	void draw(Graphics&);
 
-	// DLL inlines to do:
+protected:
 	u8 colorMerge(u8 c1, f32 t1, u8 c2, f32 t2) { return RoundOff(c1 * t1 + c2 * t2); }
 	f32 getClock() { return (mTimePtr) ? *mTimePtr : gameflow.mWorldClock.mTimeOfDay; }
 

@@ -13,12 +13,14 @@ namespace zen {
  * @brief Manages animated color transitions for its parent P2DTextBox.
  */
 struct TextColorCallBack : public P2DPaneCallBack {
+public:
 	TextColorCallBack(P2DPane* parent);
-
-	virtual bool invoke(P2DPane* UNUSED); // _08
 
 	// Configures a new color transition with specified target colors and duration.
 	void setTargetColor(Colour& targetCharacterColour, Colour& targetGradientColour, f32 transitionDuration);
+
+private:
+	virtual bool invoke(P2DPane* UNUSED); // _08
 
 	// Utility function to interpolate between two color component values based on given weights
 	u8 colorBlend(u8 c1, f32 t1, u8 c2, f32 t2) { return RoundOff(c1 * t1 + c2 * t2); }

@@ -19,6 +19,7 @@ struct TypingTextMgr;
  * @brief TODO
  */
 struct ogScrMakeDefaultMgr {
+public:
 	/**
 	 * @brief Defines the states for the "make default save file" screen manager.
 	 */
@@ -37,6 +38,8 @@ struct ogScrMakeDefaultMgr {
 	void start();
 	MakeDefaultStatus update(Controller*);
 	void draw(Graphics&);
+
+private:
 	bool checkTypingAll();
 
 	MakeDefaultStatus mStatus;                    // _00

@@ -63,7 +63,7 @@ struct TotalScoreType {
  * @note Size: 0x830.
  */
 struct ogScrTotalScoreMgr {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -80,11 +80,11 @@ struct ogScrTotalScoreMgr {
 	void start();
 	TotalScoreStatus update(Controller*);
 	void draw(Graphics&);
+
+private:
+	void setEffect(P2DPane*, int);
 	void setRankInEffect();
 	void setRankInColor();
-
-	// unused/inlined:
-	void setEffect(P2DPane*, int);
 
 	TotalScoreStatus mState;              // _00
 	P2DScreen* mScreen;                   // _04

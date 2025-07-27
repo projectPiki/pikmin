@@ -71,10 +71,12 @@ struct TAIeffectAttackParam {
  * @brief TODO
  */
 struct EventTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator*); // _08
 
 	void init(TAIeffectAttackParam* param) { mParam = param; }
 
+protected:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	TAIeffectAttackParam* mParam; // _04
@@ -84,6 +86,7 @@ struct EventTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
  * @brief TODO
  */
 struct CylinderTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator*); // _08
 
 	void init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
@@ -92,6 +95,7 @@ struct CylinderTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	// unused/inlined:
 	void hitCheck(zen::particleGenerator*);
 
+protected:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	TAIeffectAttackParam* mParam; // _04
@@ -101,6 +105,7 @@ struct CylinderTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
  * @brief TODO
  */
 struct ConeTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator*); // _08
 
 	void init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
@@ -109,6 +114,7 @@ struct ConeTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 	// unused/inlined:
 	void hitCheck(zen::particleGenerator*);
 
+protected:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	TAIeffectAttackParam* mParam; // _04

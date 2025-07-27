@@ -14,7 +14,7 @@ struct MizuAi;
  * @note Size: 0x204.
  */
 struct MizuProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief Mizu genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
@@ -48,6 +48,11 @@ struct MizuProp : public BossProp, public CoreNode {
  * @note Size: 0x3C0.
  */
 struct Mizu : public Boss {
+	friend struct MizuAi;
+
+	friend struct MizuGenSpringPuffCallBack; // Not actually required, but other bosses do similar.
+
+public:
 	Mizu(CreatureProp*);
 
 	virtual f32 getiMass();                         // _38
@@ -64,6 +69,7 @@ struct Mizu : public Boss {
 	void initMizu(Vector3f&);
 	void initGeyzer(Vector3f&);
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool _3B8;       // _3B8
@@ -75,6 +81,7 @@ struct Mizu : public Boss {
  * @brief TODO
  */
 struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		if (mPtcl) {
@@ -105,6 +112,7 @@ struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*
 
 	void set(zen::particleGenerator* ptcl) { mPtcl = ptcl; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	zen::particleGenerator* mPtcl; // _04
@@ -116,28 +124,30 @@ struct MizuGenSpringPuffCallBack : public zen::CallBack1<zen::particleGenerator*
  * @note Size: 0x14.
  */
 struct MizuAi : public PaniAnimKeyListener {
+public:
 	MizuAi(Mizu*);
-
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
 	void initMizu(Mizu*);
 	void initGeyzer(Mizu*);
 	void killCallBackEffect(bool);
-	void initWait(int);
-	void initReady(int);
-	void initJet(int);
 	void update();
 
-	// unused/inlined:
+private:
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+
 	void setEveryFrame();
 	void naviGeyzerJump();
 	bool readyTransit();
 	bool jetTransit();
 	bool waitTransit();
+	void initWait(int);
+	void initReady(int);
+	void initJet(int);
 	void waitState();
 	void readyState();
 	void jetState();
 
+public:
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	Mizu* mMizu;                              // _04

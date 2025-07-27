@@ -11,6 +11,7 @@ namespace zen {
  * @note Size: 0xC.
  */
 struct zenList {
+public:
 	zenList() { mPrev = mNext = this; }
 
 	virtual void insertAfter(zenList* newList) // _08
@@ -37,6 +38,7 @@ struct zenList {
  * @note Size: 0x10.
  */
 struct zenListManager {
+public:
 	zenListManager()
 	{
 		mOrigin = &mList;
@@ -91,6 +93,7 @@ struct zenListManager {
 		return count;
 	}
 
+private:
 	zenList* mOrigin; // _00
 	zenList mList;    // _04
 };

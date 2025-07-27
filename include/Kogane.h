@@ -31,7 +31,7 @@ enum KoganeSoundIDs {
  * @brief TODO.
  */
 struct KoganeProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -97,6 +97,11 @@ struct KoganeProp : public BossProp, public CoreNode {
  * @note Size: 0x3C0.
  */
 struct Kogane : public Boss {
+	friend struct KoganeAi;
+
+	friend struct KoganeGenRippleCallBack;
+
+public:
 	Kogane(CreatureProp*);
 
 	virtual void init(Vector3f&);               // _28
@@ -110,6 +115,7 @@ struct Kogane : public Boss {
 	virtual void exitCourse();                  // _110
 	virtual void drawShape(Graphics&);          // _120
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	bool mIsAppear;      // _3B8
@@ -123,39 +129,40 @@ struct Kogane : public Boss {
  * @note Size: 0x20.
  */
 struct KoganeAi : public PaniAnimKeyListener {
+public:
 	KoganeAi(Kogane*);
+
+	void initAI(Kogane*);
+	void killCallBackEffect(bool);
+	void update();
+
+private:
+	void createWaterEffect();
 
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
-	void createWaterEffect();
-	void killCallBackEffect(bool);
-	void initAI(Kogane*);
 	void keyAction0();
 	void keyAction1();
+	void keyAction2();
+	void keyAction3();
 	void keyLoopEnd();
 	void keyFinished();
 	void playSound(int);
+	void setEveryFrame();
 	void setMapAttribute();
+	void checkAppearTimeCounter();
+	void calcScaleUp();
 	void setNewTargetPosition();
 	void setRouteTargetPosition();
+	void makeTargetRandom();
+	void makeStopMoving();
 	void birthItemPellet(int);
 	void birthItemWater(int, f32);
 	void createPellet();
-	bool appearTransit();
-	void initCreate(int);
-	void update();
-
-	// unused/inlined:
-	void keyAction2();
-	void keyAction3();
-	void setEveryFrame();
-	void checkAppearTimeCounter();
-	void calcScaleUp();
-	void makeTargetRandom();
-	void makeStopMoving();
 	void resultFlagOn();
 	bool dieTransit();
 	bool isMotionFinishTransit();
+	bool appearTransit();
 	bool startWalkTransit();
 	bool stopWalkTransit();
 	bool changeTargetTransit();
@@ -164,11 +171,13 @@ struct KoganeAi : public PaniAnimKeyListener {
 	void initAppear(int);
 	void initWalkRandom(int, bool);
 	void initStopWalk(int);
+	void initCreate(int);
 	void dieState();
 	void walkRandomState();
 	void stopWalkState();
 	void createState();
 
+public:
 	// _00     = VTBL
 	// _00-_04 = PaniAnimKeyListener
 	bool mInWater;                            // _04
@@ -184,6 +193,7 @@ struct KoganeAi : public PaniAnimKeyListener {
  * @brief TODO
  */
 struct KoganeGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> {
+public:
 	KoganeGenRippleCallBack() { }
 
 	virtual bool invoke(zen::particleGenerator* ptcl) // _08
@@ -197,6 +207,7 @@ struct KoganeGenRippleCallBack : public zen::CallBack1<zen::particleGenerator*> 
 
 	void set(Kogane* kogane) { mKogane = kogane; }
 
+private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	Kogane* mKogane; // _04

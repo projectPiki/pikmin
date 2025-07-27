@@ -23,6 +23,7 @@ DEFINE_PRINT("TAIbeatle")
  * @note Defined in TAIbeatle.cpp
  */
 struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
+public:
 	TAIAflickingAfterMotionLoopBeatle(int nextState, int motionIdx) // TODO: check this when used
 	    : TAIAflickingAfterMotionLoop(nextState, motionIdx, 0.0f)
 	{
@@ -116,6 +117,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 		return TAIAflickingAfterMotionLoop::act(teki);
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIbeatleFloatParms::FlickingTime);
@@ -248,6 +250,7 @@ struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
  * @note Defined in TAIbeatle.cpp
  */
 struct TAIAinitBeatle : public TaiAction {
+public:
 	inline TAIAinitBeatle(int nextState) // TODO: this is a guess
 	    : TaiAction(nextState)
 	{
@@ -288,6 +291,7 @@ struct TAIAinitBeatle : public TaiAction {
 
 	virtual bool act(Teki&) { return true; } // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members

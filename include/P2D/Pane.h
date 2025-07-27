@@ -56,6 +56,7 @@ struct P2DPaneCallBackBase {
  * @note Size: 0x4.
  */
 struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBackBase {
+public:
 	P2DPaneCallBack(P2DPane* pane, P2DPaneType type)
 	    : P2DPaneCallBackBase(pane, type)
 	{
@@ -73,6 +74,7 @@ struct P2DPaneCallBack : public zen::CallBack1<P2DPane*>, public P2DPaneCallBack
  * @note Size: 0xEC.
  */
 struct P2DPane {
+public:
 	P2DPane();
 	P2DPane(P2DPane*, u16, bool, u32, const PUTRect&);
 	P2DPane(u32, const PUTRect&);                // unused/inlined
@@ -99,21 +101,9 @@ struct P2DPane {
 	virtual void moveZ(f32 newZ) { mPaneZ = newZ; }                               // _20
 	virtual void add(int x, int y) { mBounds.add(x, y); }                         // _24
 	virtual void resize(int width, int height) { mBounds.resize(width, height); } // _28
-	virtual void drawSelf(int x, int y)                                           // _2C
-	{
-		Matrix4f mtx;
-		mtx.makeIdentity();
-		drawSelf(x, y, &mtx);
-	}
-	virtual void drawSelf(int x, int y, Matrix4f* transform); // _30
-	virtual P2DPane* search(u32 tag, bool doPanicOnNull);     // _34
-	virtual void makeMatrix(int x, int y);                    // _38
 
 	void setCallBack(P2DPaneCallBack*);
 	void printTagName(bool);
-	void update();
-	void draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor);
-	void clip(const PUTRect& clippingRect);
 	void loadChildResource();
 
 	// weak
@@ -129,7 +119,6 @@ struct P2DPane {
 	}
 
 	// unused/inlined:
-	void init();
 	void setCullBack(bool);
 
 	u16 getTypeID() { return mPaneType; }
@@ -138,18 +127,11 @@ struct P2DPane {
 	void show() { mFlag.mIsVisible = true; }
 	void hide() { mFlag.mIsVisible = false; }
 	bool IsVisible() { return mFlag.mIsVisible; }
-	void updateSelf()
-	{
-		if (mCallBack) {
-			mCallBack->invoke(this);
-		}
-	}
 
 	int getPosH() { return mBounds.mMinX; }
 	int getPosV() { return mBounds.mMinY; }
 
 	const PUTRect& getBounds() { return mBounds; }
-	void setBounds(const PUTRect& bounds) { mBounds = bounds; }
 
 	// these seem to genuinely be the same
 	void place(const PUTRect& bounds) { mBounds = bounds; }
@@ -192,6 +174,31 @@ struct P2DPane {
 		mWorldMtx.getColumn(3, pos);
 		*dispPos = pos;
 	}
+
+protected:
+	virtual void drawSelf(int x, int y) // _2C
+	{
+		Matrix4f mtx;
+		mtx.makeIdentity();
+		drawSelf(x, y, &mtx);
+	}
+	virtual void drawSelf(int x, int y, Matrix4f* transform); // _30
+	virtual P2DPane* search(u32 tag, bool doPanicOnNull);     // _34
+	virtual void makeMatrix(int x, int y);                    // _38
+
+	void update();
+	void draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor);
+	void init();
+
+	void updateSelf()
+	{
+		if (mCallBack) {
+			mCallBack->invoke(this);
+		}
+	}
+
+	void clip(const PUTRect& clippingRect);
+	void setBounds(const PUTRect& bounds) { mBounds = bounds; }
 
 	// _00 = VTBL
 	P2DPaneCallBack* mCallBack; // _04

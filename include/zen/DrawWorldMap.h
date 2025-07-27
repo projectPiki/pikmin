@@ -78,6 +78,7 @@ enum {
  * @note Size: 0x28.
  */
 struct WorldMapTitleObj {
+public:
 	WorldMapTitleObj()
 	{
 		mTitlePane = nullptr;
@@ -121,21 +122,6 @@ struct WorldMapTitleObj {
 	}
 	void hide() { mTitlePane->hide(); }
 
-	bool move(f32 p1)
-	{
-		bool res = false;
-		mAnimTimer += gsys->getFrameTime();
-		if (mAnimTimer > p1) {
-			mAnimTimer = p1;
-			res        = true;
-		}
-
-		f32 t     = sinf(mAnimTimer / p1 * HALF_PI);
-		f32 tComp = 1.0f - t;
-		mTitlePane->move(zen::RoundOff(mStartPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mStartPos.y * tComp + mTargetPos.y * t));
-		return res;
-	}
-
 	void show() { mTitlePane->show(); }
 
 	// might be wait
@@ -157,6 +143,22 @@ struct WorldMapTitleObj {
 		show();
 	}
 
+protected:
+	bool move(f32 p1)
+	{
+		bool res = false;
+		mAnimTimer += gsys->getFrameTime();
+		if (mAnimTimer > p1) {
+			mAnimTimer = p1;
+			res        = true;
+		}
+
+		f32 t     = sinf(mAnimTimer / p1 * HALF_PI);
+		f32 tComp = 1.0f - t;
+		mTitlePane->move(zen::RoundOff(mStartPos.x * tComp + mTargetPos.x * t), zen::RoundOff(mStartPos.y * tComp + mTargetPos.y * t));
+		return res;
+	}
+
 	int mAnimState;      // _00
 	P2DPane* mTitlePane; // _04, could be a pane subtype
 	f32 mAnimTimer;      // _08
@@ -171,6 +173,7 @@ struct WorldMapTitleObj {
  * @note Size: 0x10.
  */
 struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex {
+public:
 	DrawWorldMapDateCallBack(P2DPane* centrePane, P2DPane* leftPane, P2DPane* rightPane)
 	    : P2DPaneCallBack(nullptr, PANETYPE_Pane)
 	{
@@ -210,6 +213,7 @@ struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex 
 		}
 	}
 
+protected:
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
 	// _04     = zen::NumberTex (empty)
@@ -235,7 +239,7 @@ enum {
  * @note Size: 0x3C.
  */
 struct WorldMapCoursePoint {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -408,6 +412,7 @@ struct WorldMapCoursePoint {
 	static const int EVENT_NONE;          // 0
 	static const int EVENT_APPEAR_FINISH; // 1
 
+protected:
 	u32 mEventFlag;                               // _00
 	int mAppearState;                             // _04
 	f32 mAppearTimer;                             // _08
@@ -476,6 +481,7 @@ struct WorldMapPartsInfoMgr;
  * @note Size: 0x8.
  */
 struct WorldMapTitleMgr {
+public:
 	WorldMapTitleMgr()
 	{
 		mTitleObjects      = new WorldMapTitleObj[OBJ_NUM];
@@ -527,6 +533,7 @@ struct WorldMapTitleMgr {
 		}
 	}
 
+protected:
 	static const int OBJ_NUM;
 
 	WorldMapTitleObj* mTitleObjects; // _00, array of OBJ_NUM objects
@@ -553,6 +560,7 @@ struct WorldMapWipeMgr;
  * @note Size: 0x8.
  */
 struct WorldMapShootingStarMgr {
+public:
 	WorldMapShootingStarMgr()
 	{
 		mStarFallChance  = 0.2f;
@@ -584,6 +592,7 @@ struct WorldMapShootingStarMgr {
 		}
 	}
 
+protected:
 	f32 mStarFallChance;   // _00, as a percent
 	bool mIsRapidFireMode; // _04
 };
@@ -609,7 +618,7 @@ enum {
  * @brief TODO
  */
 struct DrawWorldMap {
-
+public:
 	/**
 	 * @brief Type of course unlock animation to play
 	 */
@@ -651,6 +660,15 @@ struct DrawWorldMap {
 	bool update(Controller*);
 	void draw(Graphics&);
 	void start(startModeFlag, startPlaceFlag);
+
+	// unused/inlined:
+	~DrawWorldMap();
+
+	// DLL inlines:
+	returnStatusFlag getReturnStatusFlag() { return mReturnStatus; }
+
+protected:
+	void setCoursePoint(startPlaceFlag);
 	bool modeStart(Controller*);
 	bool modeAppear(Controller*);
 	bool modeOperation(Controller*);
@@ -659,13 +677,6 @@ struct DrawWorldMap {
 	void updateScreens();
 	void closeMapInfo();
 	void openMapInfo();
-
-	// unused/inlined:
-	~DrawWorldMap();
-	void setCoursePoint(startPlaceFlag);
-
-	// DLL inlines:
-	returnStatusFlag getReturnStatusFlag() { return mReturnStatus; }
 
 	startModeFlag mStartMode;                  // _00
 	int mCurrentMode;                          // _04

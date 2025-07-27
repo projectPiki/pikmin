@@ -28,6 +28,7 @@ struct particleGenerator;
  * @note Size: 0x108.
  */
 struct ogCnvStringMgr {
+public:
 	ogCnvStringMgr(P2DTextBox* tbox)
 	{
 		mTextBox = tbox;
@@ -42,6 +43,7 @@ struct ogCnvStringMgr {
 		mTextBox->setString(mTextBuffer);
 	}
 
+private:
 	P2DTextBox* mTextBox;    // _00
 	char* mTextPtr;          // _04
 	char mTextBuffer[0x100]; // _08
@@ -54,7 +56,7 @@ struct ogCnvStringMgr {
  * @note Size: 0x11A4.
  */
 struct ogScrFileSelectMgr {
-
+public:
 	/**
 	 * @brief Defines the current operation mode for file management.
 	 */
@@ -104,54 +106,52 @@ struct ogScrFileSelectMgr {
 
 	ogScrFileSelectMgr();
 
+	returnStatusFlag update(Controller* pController, CardQuickInfo& outCardInfo);
+	void start(bool isSaveMode, int fileSelectMode);
+	void draw(Graphics& gfx);
+	void quit();
+
+private:
 	void copyCardInfosSub();
 	bool getCardFileInfos();
 	void paneOnOffXY(bool isVisible);
 	void MovePaneXY();
 	void OpenYesNoWindow();
 	void CloseYesNoWindow();
+	void UpDateYesNoWindow();
+	void setOperateMode_Normal();
 	void setOperateMode(FileOperateMode mode);
 	void getPane_FileTop1();
 	void getPane_FileTop2();
 	void setFileData(int fileSlotIndex);
+	void set_SM_C();
 	void getPane_FileIcon();
 	void OnOffKetaNissuu(int fileSlotIndex);
 	void getPane_CpyCurScreen();
 	void SetTitleMsg(titleMessageFlag msgId);
+	void ScaleAnimeTitle();
+	void ScaleAnimeData();
 	void setDataNumber(int fileSlotIndex);
+	void init();
+	void setDataScale();
 	void chaseDataScale();
 	void OnOffNewPane(int fileSlotIndex);
 	void ChkOnyonOnOff();
 	void ChkNewData();
-	void start(bool isSaveMode, int fileSelectMode);
+	void BeginFadeOut();
+	int CanToCopy(int sourceSlotIndex);
 	void OperateSelect(Controller* pController);
 	void KetteiEffectStart();
 	void TailEffectStart();
-	returnStatusFlag update(Controller* pController, CardQuickInfo& outCardInfo);
-	void draw(Graphics& gfx);
-
-	void setOperateMode_Copy();
-	void CopyEffectStart();
-	void OperateCopy(Controller* pController);
-
-	void setOperateMode_Delete();
-	void OperateDelete(Controller* pController);
-
-	// unused/inlined:
-	void UpDateYesNoWindow();
-	void setOperateMode_Normal();
-	void set_SM_C();
-	void ScaleAnimeTitle();
-	void ScaleAnimeData();
-	void init();
-	void setDataScale();
-	void BeginFadeOut();
-	int CanToCopy(int sourceSlotIndex);
 	void TailEffectMove(int x, int y);
 	void TailEffectMoveM(int x, int y);
-	void quit();
-	void MoveCpyCursor(int targetSlotIndex, f32 animationSpeed);
+	void setOperateMode_Delete();
+	void setOperateMode_Copy();
+	void OperateDelete(Controller* pController);
+	void OperateCopy(Controller* pController);
 	void DeleteEffectStart();
+	void MoveCpyCursor(int targetSlotIndex, f32 animationSpeed);
+	void CopyEffectStart();
 
 	EffectMgr2D* mFxMgr;                                   // _00
 	particleGenerator* mFileCopyEffectOnyon;               // _04

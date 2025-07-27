@@ -60,7 +60,7 @@ enum GenBossID {
  * @note Size: 0x1EC.
  */
 struct BossProp : public CreatureProp {
-
+public:
 	/**
 	 * @brief TODO
 	 *
@@ -154,6 +154,9 @@ struct BossShapeObject {
  * @note Size: 0x3B8.
  */
 struct Boss : public Creature {
+	friend struct BossMgr;
+
+public:
 	Boss(CreatureProp*);
 
 	virtual bool isAlive() { return mIsAlive; }           // _88
@@ -205,7 +208,6 @@ struct Boss : public Creature {
 	// unused/inlined:
 	void towardFaceDirection(f32);
 	bool checkInWater(Vector3f&);
-	void recoveryLife();
 
 	f32 getAnimTimer() { return mAnimTimer; }
 	void addAnimTimer(f32 val) { mAnimTimer += val; }
@@ -272,6 +274,10 @@ struct Boss : public Creature {
 	inline void setAttackTimer(f32 val) { mAttackTimer = val; }
 	inline void addAttackTimer(f32 val) { mAttackTimer += val; }
 
+private:
+	void recoveryLife();
+
+protected:
 	// _00      = VTBL
 	// _00-_2B8 = Creature
 	bool mIsAlive;                  // _2B8
@@ -337,6 +343,7 @@ struct BossAnimationManager : public Node {
  * @brief TODO
  */
 struct BossMgr : public ObjectMgr {
+public:
 	BossMgr();
 
 	virtual Creature* getCreature(int); // _08
@@ -363,6 +370,8 @@ struct BossMgr : public ObjectMgr {
 	// unused/inlined:
 	bool useBoss(int bossID);
 	int getUseCount(int bossID);
+
+private:
 	void animatorInit(Boss*);
 	void initSpider(int);
 	void initSnake(int);
@@ -376,10 +385,15 @@ struct BossMgr : public ObjectMgr {
 	void setBossParam(Boss*, GenObjectBoss*);
 	Boss* createBoss(int);
 
+	// This has no getter but it's the only thing holding this class back from being properly encapsulated.  My guess
+	// is it was genuinely left public in the original codebase because it is a stupid member variable to begin with.
+public:
 	// _00     = VTBL 1
 	// _08     = VTBL 2
 	// _00-_28 = ObjectMgr
-	int mSlimeCreatureCount;         // _28, this is always 4, idk why it's a variable
+	int mSlimeCreatureCount; // _28, this is always 4, idk why it's a variable
+
+protected:
 	bool mForceUpdate;               // _2C
 	int* mActiveBossCounts;          // _30, indexed by BossID enum
 	int* mInitialisedBossCounts;     // _34, indexed by BossID enum

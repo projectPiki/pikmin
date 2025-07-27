@@ -16,7 +16,7 @@ namespace zen {
  * @note Size: 0x50.
  */
 struct DrawUfoParts {
-
+public:
 	enum modeFlag {
 		MODE_Sleep     = 0,
 		MODE_FadeIn    = 1,
@@ -37,10 +37,12 @@ struct DrawUfoParts {
 	void sleep();
 	void start();
 	void operation();
-	void dataSet();
 
 	modeFlag getModeFlag() { return mMode; }
 	returnStatusFlag getReturnStatusFlag() { return mReturnState; }
+
+protected:
+	void dataSet();
 
 	modeFlag mMode;                // _00
 	returnStatusFlag mReturnState; // _04

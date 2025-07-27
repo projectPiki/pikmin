@@ -14,6 +14,7 @@ namespace zen {
  * @note Size: 0x30.
  */
 struct SpectrumCursorMgr {
+public:
 	SpectrumCursorMgr()
 	{
 		mPaneCount = 0;
@@ -30,12 +31,12 @@ struct SpectrumCursorMgr {
 	void init(P2DScreen*, P2DPane*, u32, f32, f32);
 	void initPos(f32, f32);
 	void initScale(f32);
-	u32 makeTag(u32, int);
-
-	// unused/inlined:
-	void setMirror(P2DPane*);
 
 	bool checkFinish() { return mMoveTimer >= mMoveDuration && mScaleTimer >= mScaleDuration; }
+
+protected:
+	void setMirror(P2DPane*);
+	u32 makeTag(u32, int);
 
 	int mPaneCount;     // _00
 	P2DPane** mPanes;   // _04

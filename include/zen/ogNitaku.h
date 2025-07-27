@@ -18,7 +18,7 @@ struct TextColorCallBack;
  * @brief TODO
  */
 struct ogNitakuMgr {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -37,14 +37,14 @@ struct ogNitakuMgr {
 
 	void start();
 	NitakuStatus update(Controller*);
-	void cursorEnable(f32);
-	void cursorDisable(f32);
+	void stop();
 
-	// unused/inlined:
+private:
 	void MoveCursorYes(f32);
 	void MoveCursorNo(f32);
 	void InitCursor();
-	void stop();
+	void cursorEnable(f32);
+	void cursorDisable(f32);
 
 	NitakuStatus mStatus;              // _00
 	NitakuStatus mStatus2;             // _04

@@ -33,19 +33,22 @@ struct MemInfo : public MemInfoNode {
  * @note Size: 0xA0.
  */
 struct MemStat {
+public:
 	MemStat();
 
 	void reset();
 	void start(char* name);
 	void end(char* name);
 	void print();
-	MemInfo* getInfo(char*);
-	void printInfoRec(MemInfo*, int);
-	MemInfo* getInfoRec(char*, MemInfo*);
 
 	// unused/inlined:
 	int getMemorySize(char*);
 	int getRestMemory();
+
+protected:
+	MemInfo* getInfo(char*);
+	void printInfoRec(MemInfo*, int);
+	MemInfo* getInfoRec(char*, MemInfo*);
 
 	MemInfo mInfoListRoot;       // _00
 	MemInfo* mCurrentInfo;       // _18

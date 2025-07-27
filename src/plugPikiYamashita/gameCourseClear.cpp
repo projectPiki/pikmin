@@ -29,6 +29,7 @@ DEFINE_PRINT("GameCourseClearSection")
  * @brief TODO
  */
 struct GameModeBase {
+public:
 	GameModeBase(char* name)
 	{
 		mName         = name;
@@ -48,6 +49,7 @@ struct GameModeBase {
 
 	char* getModeName() { return mName; }
 
+protected:
 	// _00 = VTBL
 	int mCancelButton; // _04
 	char* mName;       // _08
@@ -59,6 +61,7 @@ struct GameModeBase {
  * @note Size: 0x10. In gameCourseClear.cpp for PRINT reasons.
  */
 struct GameModeMgr {
+public:
 	GameModeMgr(int count)
 	{
 		mModeCount = count;
@@ -68,42 +71,6 @@ struct GameModeMgr {
 		}
 		mState         = 0;
 		mCurrentSelect = 0;
-	}
-
-	bool updateSelect(Controller* controller)
-	{
-		bool res = false;
-		mCurrentSelect += controller->keyUnClick(KBBTN_MSTICK_DOWN) - controller->keyUnClick(KBBTN_MSTICK_UP);
-		if (mCurrentSelect < 0) {
-			mCurrentSelect += mModeCount;
-		}
-		if (mCurrentSelect >= mModeCount) {
-			mCurrentSelect -= mModeCount;
-		}
-		if (controller->keyUnClick(KBBTN_A)) {
-			SeSystem::playSysSe(SYSSE_DECIDE1);
-			res = true;
-		}
-
-		return res;
-	}
-	void drawSelect(Graphics& gfx, Font* font)
-	{
-		Matrix4f mtx;
-		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-
-		for (int i = 0; i < mModeCount; i++) {
-			if (mCurrentSelect == i) {
-				gfx.setColour(Colour(192, 64, 255, 255), true);
-				gfx.setAuxColour(Colour(64, 64, 192, 255));
-			} else {
-				gfx.setColour(Colour(192, 255, 255, 255), true);
-				gfx.setAuxColour(Colour(200, 215, 192, 255));
-			}
-
-			char* name = mModes[i]->getModeName();
-			gfx.texturePrintf(font, 320 - font->stringWidth(name) / 2, i * font->stringHeight(name) + 70, name);
-		}
 	}
 
 	// DLL inlines:
@@ -155,6 +122,44 @@ struct GameModeMgr {
 		mModes[idx] = mode;
 	}
 
+protected:
+	bool updateSelect(Controller* controller)
+	{
+		bool res = false;
+		mCurrentSelect += controller->keyUnClick(KBBTN_MSTICK_DOWN) - controller->keyUnClick(KBBTN_MSTICK_UP);
+		if (mCurrentSelect < 0) {
+			mCurrentSelect += mModeCount;
+		}
+		if (mCurrentSelect >= mModeCount) {
+			mCurrentSelect -= mModeCount;
+		}
+		if (controller->keyUnClick(KBBTN_A)) {
+			SeSystem::playSysSe(SYSSE_DECIDE1);
+			res = true;
+		}
+
+		return res;
+	}
+
+	void drawSelect(Graphics& gfx, Font* font)
+	{
+		Matrix4f mtx;
+		gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
+
+		for (int i = 0; i < mModeCount; i++) {
+			if (mCurrentSelect == i) {
+				gfx.setColour(Colour(192, 64, 255, 255), true);
+				gfx.setAuxColour(Colour(64, 64, 192, 255));
+			} else {
+				gfx.setColour(Colour(192, 255, 255, 255), true);
+				gfx.setAuxColour(Colour(200, 215, 192, 255));
+			}
+
+			char* name = mModes[i]->getModeName();
+			gfx.texturePrintf(font, 320 - font->stringWidth(name) / 2, i * font->stringHeight(name) + 70, name);
+		}
+	}
+
 	int mState;            // _00
 	int mCurrentSelect;    // _04
 	int mModeCount;        // _08
@@ -165,6 +170,7 @@ struct GameModeMgr {
  * @brief TODO
  */
 struct CMcourseSelectMode : public GameModeBase {
+public:
 	CMcourseSelectMode()
 	    : GameModeBase("チャレンジモード・コースセレクト") // 'challenge mode course select'
 	{
@@ -184,6 +190,7 @@ struct CMcourseSelectMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mCourseSelectScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawCMcourseSelect mCourseSelectScreen; // _0C
@@ -193,6 +200,7 @@ struct CMcourseSelectMode : public GameModeBase {
  * @brief TODO
  */
 struct CMresultMode : public GameModeBase {
+public:
 	CMresultMode()
 	    : GameModeBase("チャレンジモード・リザルト") // 'challenge mode results'
 	{
@@ -220,6 +228,7 @@ struct CMresultMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mResultScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawCMresult mResultScreen; // _0C
@@ -230,6 +239,7 @@ struct CMresultMode : public GameModeBase {
  * @brief TODO
  */
 struct ContainerMode : public GameModeBase {
+public:
 	ContainerMode()
 	    : GameModeBase("ピクミン出し入れ") // 'pikmin in and out'
 	{
@@ -265,6 +275,7 @@ struct ContainerMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mContainerMenu.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	u32 mContainerColor;               // _0C
@@ -275,6 +286,7 @@ struct ContainerMode : public GameModeBase {
  * @brief TODO
  */
 struct CountDownMode : public GameModeBase {
+public:
 	CountDownMode()
 	    : GameModeBase("カウントダウン") // 'countdown'
 	{
@@ -306,6 +318,7 @@ struct CountDownMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mCountDownScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	f32 mDummyTimeOfDay;                 // _0C
@@ -316,6 +329,7 @@ struct CountDownMode : public GameModeBase {
  * @brief TODO
  */
 struct FinalResultMode : public GameModeBase {
+public:
 	FinalResultMode()
 	    : GameModeBase("ファイナルリザルト") // 'final result'
 	{
@@ -337,6 +351,7 @@ struct FinalResultMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mFinalResultScreen->draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawFinalResult* mFinalResultScreen; // _0C
@@ -346,6 +361,7 @@ struct FinalResultMode : public GameModeBase {
  * @brief TODO
  */
 struct GameInfoMode : public GameModeBase {
+public:
 	GameInfoMode()
 	    : GameModeBase("ゲーム情報") // 'game info'
 	    , mGameInfoScreen(zen::DrawGameInfo::MODE_Story)
@@ -371,6 +387,7 @@ struct GameInfoMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mGameInfoScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawGameInfo mGameInfoScreen; // _0C
@@ -380,6 +397,7 @@ struct GameInfoMode : public GameModeBase {
  * @brief TODO
  */
 struct GameOverMode : public GameModeBase {
+public:
 	GameOverMode()
 	    : GameModeBase("ゲームオーバー") // 'game over'
 	{
@@ -409,6 +427,7 @@ struct GameOverMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mGameOverScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	int _0C;                           // _0C
@@ -419,6 +438,7 @@ struct GameOverMode : public GameModeBase {
  * @brief TODO
  */
 struct HiScoreMode : public GameModeBase {
+public:
 	HiScoreMode()
 	    : GameModeBase("ハイスコア") // 'high score'
 	{
@@ -437,6 +457,7 @@ struct HiScoreMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mHiScoreScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawHiScore mHiScoreScreen; // _0C
@@ -446,6 +467,7 @@ struct HiScoreMode : public GameModeBase {
  * @brief TODO
  */
 struct HurryUpMode : public GameModeBase {
+public:
 	HurryUpMode()
 	    : GameModeBase("Hurry Up!")
 	{
@@ -464,6 +486,7 @@ struct HurryUpMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mHurryUpScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawHurryUp mHurryUpScreen; // _0C
@@ -473,6 +496,7 @@ struct HurryUpMode : public GameModeBase {
  * @brief TODO
  */
 struct ProgressiveMode : public GameModeBase {
+public:
 	ProgressiveMode()
 	    : GameModeBase("プログレッシブモード") // 'progressive mode'
 	{
@@ -491,6 +515,7 @@ struct ProgressiveMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mProgressiveScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawProgre mProgressiveScreen; // _0C
@@ -500,6 +525,7 @@ struct ProgressiveMode : public GameModeBase {
  * @brief TODO
  */
 struct SaveFailureMode : public GameModeBase {
+public:
 	SaveFailureMode()
 	    : GameModeBase("オプションセーブ") // 'options save'
 	{
@@ -518,6 +544,7 @@ struct SaveFailureMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mSaveScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawOptionSave mSaveScreen; // _0C
@@ -527,6 +554,7 @@ struct SaveFailureMode : public GameModeBase {
  * @brief TODO
  */
 struct SaveMesMode : public GameModeBase {
+public:
 	SaveMesMode()
 	    : GameModeBase("セーブメッセージ") // 'save message'
 	{
@@ -556,6 +584,7 @@ struct SaveMesMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mSaveMesScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawSaveMes mSaveMesScreen; // _0C
@@ -565,6 +594,7 @@ struct SaveMesMode : public GameModeBase {
  * @brief TODO
  */
 struct UfoPartsMode : public GameModeBase {
+public:
 	UfoPartsMode()
 	    : GameModeBase("ＵＦＯパーツ") // 'UFO parts'
 	{
@@ -583,6 +613,7 @@ struct UfoPartsMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mUfoPartsScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawUfoParts mUfoPartsScreen; // _0C
@@ -592,6 +623,7 @@ struct UfoPartsMode : public GameModeBase {
  * @brief TODO
  */
 struct WMPauseMode : public GameModeBase {
+public:
 	WMPauseMode()
 	    : GameModeBase("ワールドマップポーズメニュー") // 'world map pause menu'
 	{
@@ -610,6 +642,7 @@ struct WMPauseMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mWMPauseScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawWMPause mWMPauseScreen; // _0C
@@ -619,6 +652,7 @@ struct WMPauseMode : public GameModeBase {
  * @brief TODO
  */
 struct WorldMapMode : public GameModeBase {
+public:
 	WorldMapMode()
 	    : GameModeBase("ワールドマップ") // 'world map'
 	{
@@ -637,6 +671,7 @@ struct WorldMapMode : public GameModeBase {
 	}
 	virtual void draw(Graphics& gfx) { mWorldMapScreen.draw(gfx); } // _0C
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = GameModeBase
 	zen::DrawWorldMap mWorldMapScreen; // _0C

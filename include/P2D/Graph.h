@@ -20,6 +20,9 @@ enum P2DGrafType {
  * @note Size: 0xD4.
  */
 struct P2DGrafContext {
+	friend struct P2DPane;
+
+public:
 	P2DGrafContext(int x0, int y0, int width, int height);
 	P2DGrafContext(const PUTRect&); // unused/inlined
 
@@ -32,7 +35,6 @@ struct P2DGrafContext {
 	virtual void setPort();      // _14
 	virtual void setup2D();      // _18
 	virtual void setScissor();   // _1C
-	virtual void setLookat() { } // _20
 
 	void scissor(const PUTRect& pos);
 	void setColor(Colour&, Colour&, Colour&, Colour&);
@@ -49,6 +51,9 @@ struct P2DGrafContext {
 	void polylineTo(int*, int);
 
 	void setColor(Colour& colour) { setColor(colour, colour, colour, colour); }
+
+protected:
+	virtual void setLookat() { } // _20
 
 	// _00 = VTBL
 	int mGrafType;           // _04, see P2DGrafType enum
@@ -76,16 +81,15 @@ struct P2DGrafContext {
  * @note Size: 0xE4.
  */
 struct P2DPerspGraph : public P2DGrafContext {
+public:
 	P2DPerspGraph(int x0, int y0, int width, int height, f32 fovy, f32, f32);
 	P2DPerspGraph();                              // unused/inlined
 	P2DPerspGraph(const PUTRect&, f32, f32, f32); // unused/inlined
 
 	virtual ~P2DPerspGraph() { } // _08 (weak)
 	virtual void setPort();      // _14
-	virtual void setLookat();    // _20
 
 	void set(f32 fovy, f32, f32);
-	void makeLookat();
 	void setFovy(f32 fovy);
 
 	// unused/inlined:
@@ -94,6 +98,11 @@ struct P2DPerspGraph : public P2DGrafContext {
 
 	void setNearClip(f32 nearZ) { mNearClipZ = nearZ; }
 	void setFarClip(f32 farZ) { mFarClipZ = farZ; }
+
+protected:
+	virtual void setLookat(); // _20
+
+	void makeLookat();
 
 	// _00     = VTBL
 	// _00-_D4 = P2DGrafContext
@@ -107,19 +116,24 @@ struct P2DPerspGraph : public P2DGrafContext {
  * @brief TODO
  */
 struct P2DOrthoGraph : public P2DGrafContext {
+	friend struct P2DPane; // Accesses `scissorBounds` (why is it protected)
+
+public:
 	P2DOrthoGraph(int, int, int, int);
 	P2DOrthoGraph();               // unused/inlined
 	P2DOrthoGraph(const PUTRect&); // unused/inlined
 
 	virtual ~P2DOrthoGraph() { } // _08 (weak)
 	virtual void setPort();      // _14
-	virtual void setLookat();    // _20
-
-	void scissorBounds(PUTRect*, PUTRect*);
 
 	// unused/inlined:
 	void setOrtho(const PUTRect&, int, int);
 	void setOrigin(int, int);
+
+protected:
+	virtual void setLookat(); // _20
+
+	void scissorBounds(PUTRect*, PUTRect*);
 
 	// DLL inlines:
 	f32 getWidthPower() { return f32(mViewportBounds.getWidth()) / f32(mLogicalViewBounds.getWidth()); }

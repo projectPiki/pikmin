@@ -25,7 +25,7 @@ struct EffectMgr2D;
  * @note Size: 0x2C.
  */
 struct DrawCMtitleObj {
-
+public:
 	typedef bool (DrawCMtitleObj::*ModeFunc)();
 
 	DrawCMtitleObj()
@@ -45,6 +45,7 @@ struct DrawCMtitleObj {
 
 	u32 getEvent() { return mEventFlag; }
 
+protected:
 	P2DPane* mTitlePane;    // _00
 	Vector3f mPosition;     // _04
 	int _10;                // _10
@@ -67,7 +68,7 @@ struct DrawCMscoreObj;
  * @note Size: 0x20.
  */
 struct DrawCMscoreMgr {
-
+public:
 	typedef bool (DrawCMscoreMgr::*ModeFunc)();
 
 	enum Mode {
@@ -89,9 +90,6 @@ struct DrawCMscoreMgr {
 	void hide();
 	void sleep();
 	void appear(f32);
-	bool modeSleep();
-	bool modeAppear();
-	bool modeWait();
 	void setScore(int, int);
 
 	// unused/inlined:
@@ -99,6 +97,11 @@ struct DrawCMscoreMgr {
 
 	// DLL inlines to do:
 	u32 getEventFlag() { return mEventFlag; }
+
+protected:
+	bool modeSleep();
+	bool modeAppear();
+	bool modeWait();
 
 	static const int MEMORY_BEST_SCORE;
 
@@ -123,7 +126,7 @@ struct DrawCMBpicObj;
  * @note Size: 0x1C.
  */
 struct DrawCMbest {
-
+public:
 	typedef bool (DrawCMbest::*ModeFunc)();
 
 	/**
@@ -149,13 +152,15 @@ struct DrawCMbest {
 	void update();
 	void appear();
 	void wait();
+
+	void show() { _04->show(); }
+	void hide() { _04->hide(); }
+
+protected:
 	bool modeSleep();
 	bool modeWait();
 	bool modeAppear();
 	void setMode(modeFlag);
-
-	void show() { _04->show(); }
-	void hide() { _04->hide(); }
 
 	modeFlag mMode;          // _00
 	P2DPane* _04;            // _04
@@ -168,6 +173,7 @@ struct DrawCMbest {
  * @brief TODO
  */
 struct DrawCMresultAlpha {
+public:
 	DrawCMresultAlpha() { init(); }
 
 	virtual bool update() // _08
@@ -196,6 +202,7 @@ struct DrawCMresultAlpha {
 
 	void appear() { _04 = 1; }
 
+protected:
 	// _00 = VTBL
 	int _04; // _04
 	u8 _08;  // _08
@@ -207,11 +214,13 @@ struct DrawCMresultAlpha {
  * @note Size: 0x10.
  */
 struct DrawCMresultGraph : public DrawCMresultAlpha {
+public:
 	DrawCMresultGraph(P2DScreen* screen) { mGraphMgr = new ogGraphMgr(screen); }
 
 	// DLL inlines to do:
 	void draw() { mGraphMgr->draw(_08); }
 
+protected:
 	// _00     = VTBL
 	// _00-_0C = DrawCMresultAlpha
 	ogGraphMgr* mGraphMgr; // _0C
@@ -223,7 +232,7 @@ struct DrawCMresultGraph : public DrawCMresultAlpha {
  * @note Size: 0xA0.
  */
 struct DrawCMresult {
-
+public:
 	typedef bool (DrawCMresult::*ModeFunc)(Controller*);
 
 	/**
@@ -243,6 +252,8 @@ struct DrawCMresult {
 	bool update(Controller*);
 	void draw(Graphics&);
 	void start(const GameChalQuickInfo&);
+
+protected:
 	void makeResident();
 	void setMode(modeFlag);
 	bool modeSleep(Controller*);
@@ -282,6 +293,7 @@ struct DrawCMCSmenu;
  * @note Size: 0x94.
  */
 struct DrawCMcourseSelect {
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -306,10 +318,12 @@ struct DrawCMcourseSelect {
 	DrawCMcourseSelect();
 
 	void start();
-	void setBestScore();
 	bool update(Controller*);
 	void draw(Graphics&);
 	returnStatusFlag getReturnStatusFlag();
+
+protected:
+	void setBestScore();
 	bool modeOperation(Controller*);
 
 	DrawScreen* mSelectScreen;     // _00

@@ -149,6 +149,7 @@ struct TAIeffectAttackEventCallBackHibaA : public TAIeffectAttackEventCallBack {
  * @brief TODO
  */
 struct TAIAinitHibaA : public TaiAction {
+public:
 	TAIAinitHibaA(int nextState)
 	    : TaiAction(nextState)
 	{
@@ -162,6 +163,7 @@ struct TAIAinitHibaA : public TaiAction {
 	}
 	virtual bool act(Teki&) { return true; } // _10
 
+protected:
 	// _04     = VTBL
 	// _00-_08 = TaiAction
 	// TODO: members
@@ -178,11 +180,13 @@ struct TAIAfireAttackHibaA;
  * @brief TODO
  */
 struct TAIAtimerReactionHibaA : public TAIAtimerReaction {
+public:
 	TAIAtimerReactionHibaA(int nextState)
 	    : TAIAtimerReaction(nextState, 0.0f)
 	{
 	}
 
+protected:
 	virtual f32 getFrameMax(Teki& teki) // _1C
 	{
 		return teki.getParameterF(TAIhibaAFloatParams::WaitTime);

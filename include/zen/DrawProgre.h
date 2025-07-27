@@ -18,7 +18,7 @@ namespace zen {
  * @note Size: 0x30.
  */
 struct DrawProgreMes {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -50,36 +50,6 @@ struct DrawProgreMes {
 		mMenuPanelMgr.setCallBack(screen, screen);
 
 		setMode(MODE_Unk0);
-	}
-
-	// weak:
-	void setMode(zen::DrawProgreMes::modeFlag mode)
-	{
-		mMode = mode;
-		switch (mMode) {
-		case MODE_Unk0:
-			_28 = 0.0f;
-			_2C = 0.0f;
-			break;
-
-		case MODE_Unk1:
-			_28 = 0.0f;
-			_2C = 0.5f;
-			mMenuPanelMgr.start(_2C);
-			mMenuTitle.start();
-			break;
-
-		case MODE_Unk2:
-			mMenuPanelMgr.operation();
-			break;
-
-		case MODE_Unk3:
-			_28 = 0.0f;
-			_2C = 0.5f;
-			mMenuPanelMgr.end(_2C);
-			mMenuTitle.end();
-			break;
-		}
 	}
 
 	// DLL:
@@ -148,6 +118,37 @@ struct DrawProgreMes {
 
 	void draw(Graphics&) { mProgreScreen->draw(); }
 
+protected:
+	// weak:
+	void setMode(zen::DrawProgreMes::modeFlag mode)
+	{
+		mMode = mode;
+		switch (mMode) {
+		case MODE_Unk0:
+			_28 = 0.0f;
+			_2C = 0.0f;
+			break;
+
+		case MODE_Unk1:
+			_28 = 0.0f;
+			_2C = 0.5f;
+			mMenuPanelMgr.start(_2C);
+			mMenuTitle.start();
+			break;
+
+		case MODE_Unk2:
+			mMenuPanelMgr.operation();
+			break;
+
+		case MODE_Unk3:
+			_28 = 0.0f;
+			_2C = 0.5f;
+			mMenuPanelMgr.end(_2C);
+			mMenuTitle.end();
+			break;
+		}
+	}
+
 	modeFlag mMode;             // _00
 	DrawScreen* mProgreScreen;  // _04
 	DrawMenuTitle mMenuTitle;   // _08
@@ -164,7 +165,7 @@ struct DrawProgreMes {
  * @note Size: 0x10.
  */
 struct DrawProgre {
-
+public:
 	/**
 	 * @brief TODO
 	 */
@@ -179,6 +180,7 @@ struct DrawProgre {
 	returnStatusFlag update(Controller*);
 	void draw(Graphics&);
 
+protected:
 	DrawMenu* mMenu;               // _00
 	returnStatusFlag mReturnState; // _04
 	u8 _08[0x4];                   // _08, unknown

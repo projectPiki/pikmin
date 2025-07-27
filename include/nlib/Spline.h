@@ -31,6 +31,7 @@ struct NPool {
  * @brief TODO
  */
 struct SplineSegment {
+public:
 	SplineSegment();
 
 	// unused/inlined:
@@ -39,6 +40,7 @@ struct SplineSegment {
 	// DLL inlines:
 	void outputPosition(f32 t, NVector3f& pos) { mFunction3D.outputPosition(t, pos); }
 
+protected:
 	NFunction3D mFunction3D;       // _00
 	NPolynomialFunction mPolyFunX; // _0C
 	NPolynomialFunction mPolyFunY; // _18
@@ -52,17 +54,17 @@ struct SplineSegment {
  * @brief TODO
  */
 struct SplineCurve {
+public:
 	SplineCurve(int);
 
-	// unused/inlined:
 	void makeCurve(f32*, NVector3f**, int);
-	static void makeFunctions(int, f32*, f32*, NPolynomialFunction**);
-
-	// DLL inlines:
 	SplineSegment* getSegment(int idx) { return mSegmentArray->get(idx); }
 	int getSegmentCount();
 	void addSegment(SplineSegment*);
 	void removeAllSegments();
+
+protected:
+	static void makeFunctions(int, f32*, f32*, NPolynomialFunction**);
 
 	NArray<SplineSegment>* mSegmentArray; // _00
 };
@@ -71,6 +73,7 @@ struct SplineCurve {
  * @brief TODO
  */
 struct SplineKeyFrame {
+public:
 	SplineKeyFrame(); // unused/inlined
 
 	// unused/inlined:
@@ -84,6 +87,7 @@ struct SplineKeyFrame {
 	NPosture3D& getPosture() { return mPosture; }
 	f32 getParameter() { return mParameter; }
 
+protected:
 	// _00     = VTBL
 	NPosture3D mPosture; // _04
 	f32 mParameter;      // _20
@@ -93,6 +97,7 @@ struct SplineKeyFrame {
  * @brief TODO
  */
 struct SplineInterpolator {
+public:
 	SplineInterpolator(int, NPool<SplineSegment>*); // unused/inlined
 
 	void reset();
@@ -111,6 +116,7 @@ struct SplineInterpolator {
 	// DLL inlines:
 	SplineKeyFrame* getFrame(int idx) { return mFrameArray->get(idx); }
 
+protected:
 	// TODO: members
 	NArray<SplineKeyFrame>* mFrameArray; // _00
 	NPool<SplineSegment>* _04;           // _04

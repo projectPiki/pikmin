@@ -68,7 +68,7 @@ enum SlimeContractHitType {
  * @brief TODO.
  */
 struct SlimeProp : public BossProp, public CoreNode {
-
+public:
 	/**
 	 * @brief TODO.
 	 *
@@ -160,20 +160,21 @@ struct SlimeProp : public BossProp, public CoreNode {
  * @note Size: 0x20.
  */
 struct SlimeBody {
+public:
 	SlimeBody(Slime*);
 
 	void init(Slime*);
-	void sortPosition(Vector3f*, Vector3f*, Vector3f*);
-	void update();
 	void refresh(BossShapeObject*, Graphics&);
+	void update();
 
-	// unused/inlined:
+private:
 	void traceCreaturePosition();
 	void makeCentrePosition();
 	void makeInnerPosition();
 	void makeMaxRadius();
 	void setSpherePosition();
 	f32 calcVertexScore(Vector3f*, Vector3f*, f32*);
+	void sortPosition(Vector3f*, Vector3f*, Vector3f*);
 	void makeSlimeBody();
 	void setJointPosition(BossShapeObject*, Graphics&);
 
@@ -220,6 +221,15 @@ struct SlimeCreature : public Creature {
  * @brief TODO.
  */
 struct Slime : public Boss {
+	friend struct SlimeAi;
+	friend struct SlimeBody;
+
+	// This feels a little extra but then again so does Goolix as a whole.
+	friend struct CoreNucleus;
+	friend struct CoreNucleusAi;
+	friend struct Nucleus;
+	friend struct NucleusAi;
+	friend struct BossMgr; // To initialize `mNucleus` and `mCore`.
 
 	/**
 	 * @brief TODO.
@@ -251,6 +261,7 @@ struct Slime : public Boss {
 		Slime* mSlime; // _1C
 		f32 mSize;     // _20
 	};
+	friend struct BoundSphereUpdater;
 
 	/**
 	 * @brief TODO.
@@ -326,6 +337,7 @@ struct Slime : public Boss {
 		Slime* mSlime;            // _1C
 		SlimeCreature* mCreature; // _20
 	};
+	friend struct CollideSphereUpdater;
 
 	/**
 	 * @brief TODO.
@@ -344,6 +356,7 @@ struct Slime : public Boss {
 		// _00-_1C = CollPartUpdater
 		CollPart* mSphere; // _1C
 	};
+	friend struct TubeSphereUpdater;
 
 	Slime(CreatureProp*, BossShapeObject*);
 
@@ -359,6 +372,7 @@ struct Slime : public Boss {
 	virtual void exitCourse();                  // _110
 	virtual void drawShape(Graphics&);          // _120
 
+private:
 	// _00      = VTBL
 	// _00-_3B8 = Boss
 	BoundSphereUpdater* mCentreUpdater;           // _3B8
@@ -386,56 +400,56 @@ struct Slime : public Boss {
  * @note Size: 0x24.
  */
 struct SlimeAi {
+public:
 	SlimeAi(Slime*);
 
 	void init(Slime*);
+	void update();
 	void addDamagePoint(f32);
+
+private:
+	void setEveryFrame();
+	void afterProcessing();
 	void calcBubblePiki();
 	void calcStickersRatio();
+	void setLeaderIndex();
+	void makeInterrelation();
+	void makeBodyThickness();
 	void playExpandingSound();
 	void calcCollisionCheck();
 	void setLeaderNearerTarget();
 	void moveFlagCheck();
+	void makeTargetPosition();
 	void makeFollowerVelocity();
 	void makeLeaderVelocity();
 	void setMidPointVelocity();
+	void walkAllState();
 	void calcContractDamage();
 	void contractCoreFlickPiki();
 	void contractSubFlickPiki();
 	void inCaseOfContract();
-	void makeTargetRandom();
-	bool chaseNaviTransit();
-	bool chasePikiTransit();
-	bool targetLostTransit();
-	bool appearTransit();
-	void initDie(int);
-	void appearState();
-	void update();
-
-	// unused/inlined:
-	void setEveryFrame();
-	void afterProcessing();
-	void setLeaderIndex();
-	void makeInterrelation();
-	void makeBodyThickness();
-	void makeTargetPosition();
-	void walkAllState();
 	void setDieGoal();
 	void setContractGoal();
 	void setExpansionGoal();
 	void setAppearGoal();
 	void bothEndsToGoal();
 	void bothEndsToAppearGoal();
+	void makeTargetRandom();
 	void setVelocity(f32);
 	bool motionFinishTransit();
 	bool dieTransit();
 	bool outSideChaseRangeTransit();
 	bool inSideWaitRangeTransit();
+	bool chaseNaviTransit();
+	bool chasePikiTransit();
+	bool targetLostTransit();
 	bool collisionContractTransit();
 	bool dissolutionContractTransit();
 	bool finishContractTransit();
 	bool finishExpansionTransit();
+	bool appearTransit();
 	bool disAppearTransit();
+	void initDie(int);
 	void initWalk(int);
 	void initChase(int);
 	void initContract(int);
@@ -450,8 +464,10 @@ struct SlimeAi {
 	void contractState();
 	void expansionState();
 	void stayState();
+	void appearState();
 	void disAppearState();
 
+public:
 	bool mIsContractFinished;       // _00
 	bool mCanPlayExpandSound;       // _01
 	int mPrevNucleusStickPikiCount; // _04
