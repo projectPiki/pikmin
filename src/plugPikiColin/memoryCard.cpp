@@ -1036,14 +1036,15 @@ s32 MemoryCard::makeDefaultFile()
 	createFile(cst);
 	cst.length = ((mRequiredFreeSpace + mSectorSize - 1) / (mSectorSize)) * mSectorSize;
 	memset(cardData, 0, cst.length);
-	STACK_PAD_VAR(1);
 	OSCalendarTime calendar;
 	OSTicksToCalendarTime(OSGetTime(), &calendar);
 
 	char buf1[36];
 	sprintf(buf1, "%s", basecardname);
 	char buf2[36];
-	sprintf(buf2, "%02d/%02d %02d:%02d", calendar.mon + 1, calendar.mday, calendar.hour, calendar.min);
+	// These explicit temps are silly.  Do they hint at an inline?  The same sprintf does exists another function...
+	int monPlusOne = calendar.mon + 1, mday = calendar.mday;
+	sprintf(buf2, "%02d/%02d %02d:%02d", monPlusOne, mday, calendar.hour, calendar.min);
 	strncpy(cst.fileName, buf1, 0x20);
 	initBannerArea(cst, buf2);
 
