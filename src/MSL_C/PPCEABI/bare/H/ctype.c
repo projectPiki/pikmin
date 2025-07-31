@@ -1,133 +1,133 @@
-#include "Dolphin/ctype.h"
+#include "stl/ctype.h"
 
-const u8 __ctype_map[256] = { CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_SPACE,
-	                          CTYPE_SPACE,
-	                          CTYPE_SPACE,
-	                          CTYPE_SPACE,
-	                          CTYPE_SPACE,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_CNTRL,
-	                          CTYPE_BLANK,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_DIGIT | CTYPE_XDIGIT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_XDIGIT | CTYPE_UPPER,
-	                          CTYPE_XDIGIT | CTYPE_UPPER,
-	                          CTYPE_XDIGIT | CTYPE_UPPER,
-	                          CTYPE_XDIGIT | CTYPE_UPPER,
-	                          CTYPE_XDIGIT | CTYPE_UPPER,
-	                          CTYPE_XDIGIT | CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_UPPER,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_XDIGIT | CTYPE_LOWER,
-	                          CTYPE_XDIGIT | CTYPE_LOWER,
-	                          CTYPE_XDIGIT | CTYPE_LOWER,
-	                          CTYPE_XDIGIT | CTYPE_LOWER,
-	                          CTYPE_XDIGIT | CTYPE_LOWER,
-	                          CTYPE_XDIGIT | CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_LOWER,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_PUNCT,
-	                          CTYPE_CNTRL,
+const u8 __ctype_map[256] = { __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __motion_char,
+	                          __motion_char,
+	                          __motion_char,
+	                          __motion_char,
+	                          __motion_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __control_char,
+	                          __space_char,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __digit | __hex_digit,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __hex_digit | __upper_case,
+	                          __hex_digit | __upper_case,
+	                          __hex_digit | __upper_case,
+	                          __hex_digit | __upper_case,
+	                          __hex_digit | __upper_case,
+	                          __hex_digit | __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __upper_case,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __hex_digit | __lower_case,
+	                          __hex_digit | __lower_case,
+	                          __hex_digit | __lower_case,
+	                          __hex_digit | __lower_case,
+	                          __hex_digit | __lower_case,
+	                          __hex_digit | __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __lower_case,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __punctuation,
+	                          __control_char,
 	                          0,
 	                          0,
 	                          0,
@@ -288,129 +288,12 @@ const u8 __upper_map[256] = {
 
 /*
  * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isalnum(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isalpha(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void iscntrl(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-// inlined
-// BOOL isdigit(void)
-// {
-// UNUSED FUNCTION
-// }
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isgraph(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void islower(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isprint(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void ispunct(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isspace(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-void isupper(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address: ........
- * Size:    00001C
- */
-BOOL isxdigit(u8 c)
-{
-	// UNUSED FUNCTION
-	return (__ctype_map[c] & CTYPE_XDIGIT) != 0;
-}
-
-/*
- * --INFO--
  * Address: 80215DDC
  * Size:    000028
  */
-int tolower(int __c)
+int tolower(int c)
 {
-	{
-		if (__c == -1) {
-			return 0xffffffff;
-		}
-		return (unsigned int)__lower_map[__c & 0xff];
-	}
+	return (c == -1) ? -1 : __lower_map[c & 0xff];
 }
 
 /*
@@ -418,12 +301,7 @@ int tolower(int __c)
  * Address: 80215DB4
  * Size:    000028
  */
-int toupper(int __c)
+int toupper(int c)
 {
-	{
-		if (__c == -1) {
-			return 0xffffffff;
-		}
-		return (unsigned int)__upper_map[__c & 0xff];
-	}
+	return (c == -1) ? -1 : __upper_map[c & 0xff];
 }

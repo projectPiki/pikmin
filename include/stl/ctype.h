@@ -9,15 +9,40 @@
 extern "C" {
 #endif
 
-int tolower(int __c);
+int tolower(int c);
+int toupper(int c);
 
+inline int isalnum(u8 c)
+{
+	return (int)(__ctype_map[c] & __alphanumeric);
+}
 inline int isalpha(u8 c)
 {
 	return (int)(__ctype_map[c] & __letter);
 }
+inline int iscntrl(u8 c)
+{
+	return (int)(__ctype_map[c] & __control);
+}
 inline int isdigit(u8 c)
 {
 	return (int)(__ctype_map[c] & __digit);
+}
+inline int isgraph(u8 c)
+{
+	return (int)(__ctype_map[c] & __graphic);
+}
+inline int islower(u8 c)
+{
+	return (int)(__ctype_map[c] & __lower_case);
+}
+inline int isprint(u8 c)
+{
+	return (int)(__ctype_map[c] & __printable);
+}
+inline int ispunct(u8 c)
+{
+	return (int)(__ctype_map[c] & __punctuation);
 }
 inline int isspace(u8 c)
 {
@@ -30,15 +55,6 @@ inline int isupper(u8 c)
 inline int isxdigit(u8 c)
 {
 	return (int)(__ctype_map[c] & __hex_digit);
-}
-// added underscore to avoid naming conflicts
-inline int _tolower(u8 c)
-{
-	return (c == -1 ? -1 : (int)__lower_map[c]);
-}
-inline int _toupper(u8 c)
-{
-	return (c == -1 ? -1 : (int)__upper_map[c]);
 }
 
 #ifdef __cplusplus
