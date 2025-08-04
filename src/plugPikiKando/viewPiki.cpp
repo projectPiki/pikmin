@@ -335,7 +335,7 @@ void ViewPiki::update()
 			EffectParm parm(pos, rot);
 
 			int attr = MapCode::getAttribute(mGroundTriangle);
-			if (attr >= ATTR_Soil && attr <= ATTR_Tree) {
+			if (attr >= ATTR_Solid && attr <= ATTR_Wood) {
 				utEffectMgr->cast(attr + KandoEffect::SmokeOffset, parm);
 			}
 

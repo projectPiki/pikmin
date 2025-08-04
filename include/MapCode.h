@@ -10,13 +10,13 @@ struct CollTriInfo;
  */
 enum MapAttributes {
 	ATTR_NULL  = -1,
-	ATTR_Soil  = 0,
-	ATTR_Rock  = 1,
-	ATTR_Grass = 2,
-	ATTR_Tree  = 3,
-	ATTR_Unk4  = 4,
-	ATTR_Water = 5,
-	ATTR_Unk6  = 6,
+	ATTR_Solid = 0, // "solid"
+	ATTR_Rock  = 1, // "rock"
+	ATTR_Grass = 2, // "grass"
+	ATTR_Wood  = 3, // "wood"
+	ATTR_Mud   = 4, // "mud"
+	ATTR_Water = 5, // "water"
+	ATTR_Hole  = 6, // "hole"
 };
 
 /**

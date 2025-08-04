@@ -290,7 +290,7 @@ struct BaseCollTriInfo {
 		mTriangle.read(input);
 	}
 
-	u32 mMapCode;               // _00
+	u32 mMapCode;               // _00, see MapAttributes enum in MapCode.h
 	u32 mVertexIndices[3];      // _04
 	s16 mCollRoomId;            // _10
 	s16 mAdjacentTriIndices[3]; // _12

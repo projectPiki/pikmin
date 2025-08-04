@@ -234,7 +234,7 @@ void KoganeAi::setMapAttribute()
 {
 	int mapAttr = mKogane->getMapAttribute(mKogane->mPosition);
 	switch (mapAttr) {
-	case ATTR_Soil:
+	case ATTR_Solid:
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
 	case ATTR_Rock:
@@ -243,10 +243,10 @@ void KoganeAi::setMapAttribute()
 	case ATTR_Grass:
 		mEffectType = EffectMgr::EFF_Kogane_Walk1;
 		break;
-	case ATTR_Tree:
+	case ATTR_Wood:
 		mEffectType = EffectMgr::EFF_Kogane_Walk3;
 		break;
-	case ATTR_Unk4:
+	case ATTR_Mud:
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
 	case ATTR_Water:
@@ -256,7 +256,7 @@ void KoganeAi::setMapAttribute()
 			createWaterEffect();
 		}
 		break;
-	case ATTR_Unk6:
+	case ATTR_Hole:
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
 		break;
 	}

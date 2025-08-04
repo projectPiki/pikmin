@@ -952,7 +952,7 @@ void Navi::update()
 
 		Vector3f parmVel(0.01667f * mVelocity.x, 2.0f, 0.01667f * mVelocity.z);
 		int effAttr = MapCode::getAttribute(mGroundTriangle);
-		if (effAttr >= ATTR_Soil && effAttr <= ATTR_Tree) {
+		if (effAttr >= ATTR_Solid && effAttr <= ATTR_Wood) {
 			EffectParm parm(parmPos, parmVel);
 			UtEffectMgr::cast(effAttr + KandoEffect::SmokeOffset, parm);
 			mDayEndPosition = mPosition;
@@ -971,13 +971,13 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 	int lowerMotionID = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
 	int upperMotionID = mNaviAnimMgr.getUpperAnimator().getCurrentMotionIndex();
 	if (event.mEventType == KEY_PlaySound) {
-		int attr = ATTR_Soil;
+		int attr = ATTR_Solid;
 		if (mGroundTriangle) {
 			attr = MapCode::getAttribute(mGroundTriangle);
 		}
 		int soundType;
 		switch (attr) {
-		case ATTR_Soil:
+		case ATTR_Solid:
 			soundType = 1;
 			break;
 		case ATTR_Rock:
@@ -986,13 +986,13 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
 		case ATTR_Grass:
 			soundType = 0;
 			break;
-		case ATTR_Tree:
+		case ATTR_Wood:
 			soundType = 2;
 			break;
 		case ATTR_Water:
 			soundType = 4;
 			break;
-		case ATTR_Unk4:
+		case ATTR_Mud:
 			soundType = 5;
 			break;
 		default:
