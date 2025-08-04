@@ -38,7 +38,7 @@ void InitDSPchannel()
 		chan->buffer_idx    = i;
 		chan->allocState    = DSPCHAN_Free;
 		chan->logicalChan   = 0;
-		chan->_06           = 0;
+		chan->callbackTimer = 0;
 		chan->logicalChanCb = NULL;
 		chan->prio          = 0;
 		chan->releaseTime   = 0;
@@ -116,8 +116,8 @@ int DeAllocDSPchannel(dspch_* chan, u32 id)
 		break;
 	}
 	chan->prio          = 0;
-	chan->logicalChanCb = nullptr;
-	chan->logicalChan   = 0;
+	chan->logicalChanCb = NULL;
+	chan->logicalChan   = NULL;
 	return 0;
 
 	STACK_PAD_VAR(2);
@@ -250,7 +250,7 @@ BOOL BreakLowerDSPchannel(u8 param_1)
 	}
 	if (chan->allocState != DSPCHAN_Free) {
 		if (chan->logicalChanCb) {
-			chan->_06 = chan->logicalChanCb(chan, 3);
+			chan->callbackTimer = chan->logicalChanCb(chan, DSPCHCB_StateChange);
 			ForceStopDSPchannel(chan);
 			chan->allocState = DSPCHAN_Stopping;
 		}
@@ -281,7 +281,7 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
 
 	if (chan->allocState != DSPCHAN_Free) {
 		if (chan->logicalChanCb) {
-			chan->_06 = chan->logicalChanCb(chan, 3);
+			chan->callbackTimer = chan->logicalChanCb(chan, DSPCHCB_StateChange);
 			ForceStopDSPchannel(chan);
 			chan->allocState = DSPCHAN_Stopping;
 		}
@@ -312,28 +312,39 @@ void UpdateDSPchannel(dspch_* chan)
  */
 void UpdateDSPchannelAll()
 {
+	// Calculate delta time since last update
 	int tick    = OSGetTick();
 	u32 old     = tick - old_time;
 	old_time    = tick;
-	int id      = JAC_SUBFRAMES - DspSyncCountCheck();
-	history[id] = old;
 
-	if (id != 0 && (f32)history[0] / (f32)old < 1.1f) {
-		BreakLowerActiveDSPchannel(0x7e);
+	// Get subframe index based on DSP sync status and store timing history
+	int subframeIdx      = JAC_SUBFRAMES - DspSyncCountCheck();
+	history[subframeIdx] = old;
+
+	// Break lower priority DSP channels if timing variance is within tolerance
+	if (subframeIdx != 0 && (f32)history[0] / (f32)old < 1.1f) {
+		BreakLowerActiveDSPchannel(DSPCHAN_MAX_PRIO);
 	}
 
+	// Update all DSP channels
 	for (u32 i = 0; i < DSPCH_LENGTH; i++) {
 		dspch_* chan     = &DSPCH[i];
 		dspch_** chanptr = &chan;
 
+		// Skip free channels
 		if (chan->allocState == DSPCHAN_Free) {
 			continue;
 		}
+
 		DSPchannel_* buf = GetDspHandle(chan->buffer_idx);
+
 		if (buf->done) {
+			// Call logical channel for completion notification
 			if (chan->logicalChanCb) {
-				chan->_06 = chan->logicalChanCb(chan, 2);
+				chan->callbackTimer = chan->logicalChanCb(chan, DSPCHCB_Completion);
 			}
+
+			// Reset buffer state and flush the channel
 			buf->done    = FALSE;
 			buf->enabled = FALSE;
 			DSP_FlushChannel(chan->buffer_idx);
@@ -342,22 +353,28 @@ void UpdateDSPchannelAll()
 			}
 		}
 
+		// Handle aging and release timing
 		if (!buf->endRequested) {
 			buf->ageCounter++;
 			if (buf->ageCounter == chan->releaseTime && chan->logicalChanCb) {
-				chan->_06 = chan->logicalChanCb(chan, 4);
+				chan->callbackTimer = chan->logicalChanCb(chan, DSPCHCB_PriorityUpdate);
 			}
 		}
 
 		if (chan->logicalChanCb) {
-			u16* ptr = &chan->_06;
-			u16 a    = *ptr;
-			if (a) {
-				*ptr = a - 1;
+			// This is a bit weird, but below is a timer that decrements
+			u16* frameDelay  = &chan->callbackTimer;
+			u16 currentDelay = *frameDelay;
+			if (currentDelay) {
+				*frameDelay = currentDelay - 1;
 			}
-			if (*ptr == 0) {
-				*ptr = chan->logicalChanCb(chan, 0);
-				if (*ptr == 0) {
+
+			// Once the timer hits 0, call them back!
+			if (*frameDelay == 0) {
+				*frameDelay = chan->logicalChanCb(chan, DSPCHCB_NormalUpdate);
+
+				// If the callback returns 0, (STOP) the channel immediately
+				if (*frameDelay == 0) {
 					buf->done    = FALSE;
 					buf->enabled = FALSE;
 					__Entry_WaitChannel(1);

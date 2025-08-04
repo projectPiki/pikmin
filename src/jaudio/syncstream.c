@@ -349,8 +349,8 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId, char* name, int r6, int r7, Stre
 		ctrl->bytesRead = 0;
 	}
 
-	ctrl->remainingBytes      = ctrl->header._00;
-	ctrl->totalSamples        = ctrl->header._04;
+	ctrl->remainingBytes      = ctrl->header.fileSize;
+	ctrl->totalSamples        = ctrl->header.sampleCount;
 	ctrl->samplesDecoded      = 0;
 	ctrl->samplesLoaded       = 0;
 	ctrl->isBufferingComplete = 0;
@@ -373,13 +373,13 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId, char* name, int r6, int r7, Stre
 	BufContInit(&ctrl->buffCtrlMain3, 2, 4, 0, 3, 0x400, 0, 0);
 
 	switch (ctrl->header.audioFormat) {
-	case 2:
-		ctrl->chunkSize = 0x2400;
+	case AUDIOFRMT_16BIT_PCM:
+		ctrl->chunkSize = 0x2400; 
+		break;
+	case AUDIOFRMT_8BIT_PCM:
+		ctrl->chunkSize = 0x1200; 
 		break;
 
-	case 3:
-		ctrl->chunkSize = 0x1200;
-		break;
 	case AUDIOFRMT_ADPCM:
 		ctrl->chunkSize = 0x2400;
 		break;
@@ -426,14 +426,14 @@ static u32 __Decode(StreamCtrl_* ctrl);
 static s32 StreamAudio_Callback(void* data)
 {
 	StreamCtrl_* ctrl = (StreamCtrl_*)data;
-	int r25           = 0;
-	u32 i;
+	int bufferUpdatePending = 0;
+	u32 channelIdx;
 	STACK_PAD_VAR(2);
 
 	if (!ctrl->dspch[0]) {
-		for (i = 0; i < 2; i++) {
-			ctrl->dspch[i]       = AllocDSPchannel(0, (u32)&ctrl->dspch[i]);
-			ctrl->dspch[i]->prio = 0x7f;
+		for (channelIdx = 0; channelIdx < 2; channelIdx++) {
+			ctrl->dspch[channelIdx]       = AllocDSPchannel(0, (u32)&ctrl->dspch[channelIdx]);
+			ctrl->dspch[channelIdx]->prio = DSPCHAN_MAX_PRIO;
 		}
 	}
 
@@ -448,10 +448,10 @@ static s32 StreamAudio_Callback(void* data)
 				return 0;
 			}
 
-			for (i = 0; i < 2; i++) {
-				Stop_DirectPCM(ctrl->dspch[i]);
-				DeAllocDSPchannel(ctrl->dspch[i], (u32)&ctrl->dspch[i]);
-				ctrl->dspch[i] = NULL;
+			for (channelIdx = 0; channelIdx < 2; channelIdx++) {
+				Stop_DirectPCM(ctrl->dspch[channelIdx]);
+				DeAllocDSPchannel(ctrl->dspch[channelIdx], (u32)&ctrl->dspch[channelIdx]);
+				ctrl->dspch[channelIdx] = NULL;
 			}
 
 			if (ctrl->syncCallback) {
@@ -467,7 +467,7 @@ static s32 StreamAudio_Callback(void* data)
 			return -1;
 		}
 
-		int r4 = ctrl->samplesDecoded * ctrl->header._0E / ctrl->header._08;
+		int r4 = ctrl->samplesDecoded * ctrl->header.frameRate / ctrl->header.sampleRate;
 
 		if (ctrl->syncCallback) {
 			int callbackResult = ctrl->syncCallback(ctrl->controllerId, r4);
@@ -486,9 +486,9 @@ static s32 StreamAudio_Callback(void* data)
 		u32 var_r4                       = (ctrl->loopSize - var_r3) >> 10;
 		ctrl->buffCtrlMain3.activeBufIdx = var_r4;
 		if (ctrl->buffCtrlMain3.currentBufIdx != var_r4) {
-			r25 = 1;
+			bufferUpdatePending = 1;
 		} else {
-			r25 = 0;
+			bufferUpdatePending = 0;
 		}
 	}
 
@@ -583,7 +583,7 @@ static s32 StreamAudio_Callback(void* data)
 		ctrl->buffCtrlMain2.mLength += size;
 	}
 
-	if (r25 == 1 || ctrl->frameCounter == 0) {
+	if (bufferUpdatePending == 1 || ctrl->frameCounter == 0) {
 		if (ctrl->buffCtrlMain3.currentBufIdx != ctrl->buffCtrlMain3.activeBufIdx) {
 			if (ctrl->buffCtrlExtra[ctrl->buffCtrlMain2.activeBufIdx].state == 2
 			    && ctrl->buffCtrlMain2.mLength >= ctrl->buffCtrlMain3.usedSize) {
@@ -610,22 +610,24 @@ static s32 StreamAudio_Callback(void* data)
 				ctrl->playbackState = 1;
 				ctrl->frameCounter++;
 				u32 mode = Jac_GetOutputMode();
-				for (i = 0; i < 2; i++) {
-					u16 pitch = (4096.0f * ctrl->header._08 * ctrl->pitchRatio) / JAC_DAC_RATE;
-					Play_DirectPCM(ctrl->dspch[i], ctrl->loopBufs[i], ctrl->loopSize, ctrl->totalSamples);
+				for (channelIdx = 0; channelIdx < 2; channelIdx++) {
+					u16 pitch = (4096.0f * ctrl->header.sampleRate * ctrl->pitchRatio) / JAC_DAC_RATE;
+					Play_DirectPCM(ctrl->dspch[channelIdx], ctrl->loopBufs[channelIdx], ctrl->loopSize, ctrl->totalSamples);
 					switch (mode) {
 					case 0:
-						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
-						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, 1 - i, ctrl->volume[i] * 0xBFFD / 0x10000, 0);
+						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx] * 0xBFFD / 0x10000,
+						                       0);
+						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx,
+						                       ctrl->volume[channelIdx] * 0xBFFD / 0x10000, 0);
 						break;
 
 					default:
-						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, i, ctrl->volume[i], 0);
-						DSP_SetMixerInitVolume(ctrl->dspch[i]->buffer_idx, 1 - i, 0, 0);
+						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, channelIdx, ctrl->volume[channelIdx], 0);
+						DSP_SetMixerInitVolume(ctrl->dspch[channelIdx]->buffer_idx, 1 - channelIdx, 0, 0);
 						break;
 					}
-					DSP_SetPitch(ctrl->dspch[i]->buffer_idx, pitch);
-					DSP_FlushChannel(ctrl->dspch[i]->buffer_idx);
+					DSP_SetPitch(ctrl->dspch[channelIdx]->buffer_idx, pitch);
+					DSP_FlushChannel(ctrl->dspch[channelIdx]->buffer_idx);
 				}
 			}
 		}
@@ -650,8 +652,8 @@ static s32 StreamAudio_Callback(void* data)
 		}
 		ctrl->stopRequested = 0;
 		ctrl->playbackState = 3;
-		for (i = 0; i < 2; i++) {
-			ForceStopDSPchannel(ctrl->dspch[i]);
+		for (channelIdx = 0; channelIdx < 2; channelIdx++) {
+			ForceStopDSPchannel(ctrl->dspch[channelIdx]);
 		}
 	} else {
 		LoadADPCM(ctrl, 0);
@@ -1001,7 +1003,7 @@ static void __StreamChgPitch(StreamCtrl_* ctrl)
 {
 	if (ctrl->dspch[0]) {
 
-		u16 pitch = ctrl->header._08 * 4096.0f * ctrl->pitchRatio / JAC_DAC_RATE;
+		u16 pitch = ctrl->header.sampleRate * 4096.0f * ctrl->pitchRatio / JAC_DAC_RATE;
 
 		for (u32 i = 0; i < 2; i++) {
 			DSP_SetPitch(ctrl->dspch[i]->buffer_idx, pitch);
@@ -1080,27 +1082,27 @@ void StreamChgMixLevel(u32 ctrlID, int mixLevelL, int mixLevelR)
  * Address:	8001D780
  * Size:	000190
  */
-int StreamGetCurrentFrame(u32 id1, u32 id2)
+int StreamGetCurrentFrame(u32 streamId, u32 id2)
 {
-	StreamCtrl_* ctrl = &SC[id1];
-	dspch_* ch        = ctrl->dspch[0];
+	StreamCtrl_* ctrl = &SC[streamId];
+	dspch_* dspCh     = ctrl->dspch[0];
 
-	if (ch == NULL) {
+	if (dspCh == NULL) {
 		return -1;
 	}
 
 	switch (id2) {
 	case 0:
-		return ctrl->samplesDecoded * ctrl->header._0E / ctrl->header._08;
+		return ctrl->samplesDecoded * ctrl->header.frameRate / ctrl->header.sampleRate;
 	case 1:
 		f32 subframeRate = JAC_DAC_RATE * JAC_SUBFRAMES / JAC_FRAMESAMPLES;
-		return ctrl->header._0E / subframeRate * ctrl->frameCounter;
+		return ctrl->header.frameRate / subframeRate * ctrl->frameCounter;
 	case 2:
 		if (ctrl->frameCounter == 0) {
 			return 0;
 		}
-		u32 size = ctrl->totalSamples - Get_DirectPCM_Remain(GetDspHandle(ch->buffer_idx));
-		return size * (f32)ctrl->header._0E / ctrl->header._08 + 0.499f;
+		u32 size = ctrl->totalSamples - Get_DirectPCM_Remain(GetDspHandle(dspCh->buffer_idx));
+		return size * (f32)ctrl->header.frameRate / ctrl->header.sampleRate + 0.499f;
 	}
 
 	STACK_PAD_VAR(3);

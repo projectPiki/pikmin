@@ -344,7 +344,7 @@ void Jac_SetStreamLevel(u16 streamLevel, u16 seLevel)
  */
 void Jac_UpdateStreamLevel()
 {
-	if (StreamCheckAudioFormat(0) == 5) {
+	if (StreamCheckAudioFormat(0) == AUDIOFRMT_ADPCM4X) {
 		StreamChgVolume(0, 0x7fff, 0x7fff);
 		StreamChgMixLevel(0, stream_level, stream_se_level);
 	} else {
@@ -359,14 +359,16 @@ static volatile u32 stop_ready;
  * --INFO--
  * Address:	80019E80
  * Size:	00007C
+ *
+ * cmd -1: stop, cmd 0: ready
  */
-static int MovieSync(u32 a1, s32 a2)
+static int MovieSync(u32 a1, s32 cmd)
 {
 	int sync;
 
 	Jac_UpdateStreamLevel();
 
-	if (a2 == -1) {
+	if (cmd == -1) {
 		stop_ready = 1;
 		sync       = 0;
 		stop_flag  = 0;
@@ -374,7 +376,7 @@ static int MovieSync(u32 a1, s32 a2)
 		sync      = -1;
 		stop_flag = 0;
 	} else {
-		if (a2 == 0) {
+		if (cmd == 0) {
 			stop_ready = 1;
 		}
 		sync = 0;

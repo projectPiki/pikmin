@@ -755,23 +755,25 @@ static void KillBrokenLogicalChannels(dspch_* ch)
  * --INFO--
  * Address:	8000A2E0
  * Size:	000384
- * @returns TRUE - continue, FALSE - stop
  */
-static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
+static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 {
-	u32 b   = 0;
+	u32 activeOscCount = 0;
 	jc_* jc = ch->logicalChan;
-	u32 i;
+	u32 oscIndex;
 	dspch_** REF_ch = &ch;
 	jc_** REF_jc    = &jc;
 	STACK_PAD_VAR(10);
+
+	// Handle null logical channel - cleanup and return
 	if (jc == NULL) {
 		ch->logicalChanCb = NULL;
 		ch->prio          = 0;
 		KillBrokenLogicalChannels(ch);
-		return FALSE;
+		return DSPCHAN_CALLBACK_STOP;
 	}
 
+	// Verify channel relationship integrity
 	if (jc->dspChannel != ch) {
 		if (jc->dspChannel && jc->dspChannel->logicalChan == jc) {
 			KillBrokenLogicalChannels(ch);
@@ -781,13 +783,15 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 				List_AddChannel(&jc->chanMgr->freeChannels, jc);
 			}
 		}
+
 		ch->logicalChan   = 0;
 		ch->prio          = 0;
 		ch->logicalChanCb = nullptr;
-		return FALSE;
+		return DSPCHAN_CALLBACK_STOP;
 	}
 
-	if (a == 2) {
+	// Handle completion event
+	if (eventType == DSPCHCB_Completion) {
 		if (jc->updateCallback) {
 			jc->updateCallback(jc, JCSTAT_Unk1);
 		} else {
@@ -796,90 +800,110 @@ static int CommonCallbackLogicalChannel(dspch_* ch, u32 a)
 				List_AddChannel(&jc->chanMgr->freeChannels, jc);
 			}
 		}
-		return FALSE;
+
+		return DSPCHAN_CALLBACK_STOP;
 	}
 
+	// Check if wave data is loaded, force stop if not
 	if (jc->waveData && !*jc->waveData->fileLoadStatus) {
 		ForceStopDSPchannel(jc->dspChannel);
-		return -1;
+		return DSPCHAN_CALLBACK_FORCE_STOP;
 	}
 
-	if (a == 4) {
+	// Handle priority update event
+	if (eventType == DSPCHCB_PriorityUpdate) {
 		u8 prio = jc->channelPriority >> 16;
 		if (jc->dspChannel && prio < jc->dspChannel->prio) {
 			jc->dspChannel->prio = prio;
 		}
-		return FALSE;
+
+		return DSPCHAN_CALLBACK_STOP;
 	}
 
-	if (a == 3) {
+	// Handle state change event - move to waiting list
+	if (eventType == DSPCHCB_StateChange) {
 		jc->mOscBuffers[0].state = 6;
 		if (List_CutChannel(jc) == -1) {
-			return TRUE;
+			return DSPCHAN_CALLBACK_CONTINUE;
 		}
+
 		List_AddChannel(&jc->chanMgr->waitingChannels, jc);
-		a = 0;
+		eventType = 0;
 	}
 
-	if (a == 0) {
+	// Handle normal update processing
+	if (eventType == DSPCHCB_NormalUpdate) {
+		// Reset modifiers to default values
 		jc->pitchModifier            = 1.0f;
 		jc->volumeModifier           = 1.0f;
 		jc->panMatrices[1].values[1] = 0.5f;
 		jc->panMatrices[2].values[1] = 0.0f;
 		jc->panMatrices[3].values[1] = 0.0f;
 
-		for (i = 0; i < 4; i++) {
-			u32* REF_i = &i;
-			if (jc->mOscillators[i]) {
-				DoEffectOsc(jc, jc->mOscillators[i]->mode, Bank_OscToOfs(jc->mOscillators[i], &jc->mOscBuffers[i]));
-				if (jc->mOscBuffers[i].state == 0) {
+		// Process all oscillators
+		for (oscIndex = 0; oscIndex < 4; oscIndex++) {
+			u32* REF_i = &oscIndex;
+			if (jc->mOscillators[oscIndex]) {
+				DoEffectOsc(jc, jc->mOscillators[oscIndex]->mode, Bank_OscToOfs(jc->mOscillators[oscIndex], &jc->mOscBuffers[oscIndex]));
+
+				// Check if oscillator finished
+				if (jc->mOscBuffers[oscIndex].state == 0) {
 					if (jc->updateCallback == NULL) {
+						// No callback - stop channel immediately
 						if (StopLogicalChannel(jc) == FALSE) {
 							DSP_PlayStop(ch->buffer_idx);
 							DSP_FlushChannel(ch->buffer_idx);
 						}
+
 						if (List_CutChannel(jc) != -1) {
 							List_AddChannel(&jc->chanMgr->freeChannels, jc);
 						}
-						return FALSE;
+						return DSPCHAN_CALLBACK_STOP;
 					} else {
+						// Has callback - notify completion
 						jc->updateCallback(jc, JCSTAT_Unk2);
-						return FALSE;
+						return DSPCHAN_CALLBACK_STOP;
 					}
 				}
-				b++;
+				activeOscCount++;
 			}
 		}
 
-		if (b) {
+		// Update effects if any oscillators are active
+		if (activeOscCount) {
 			UpdateEffecterParam(jc);
 			jc->toFlush = 1;
 		}
 
+		// Handle pitch sweep updates
 		if (jc->pitchSweepUpdater && (u32)jc->pitchSweepUpdater(jc, JCSTAT_Unk0) == TRUE) {
 			jc->toFlush++;
 		}
 
+		// Early return if no update callback
 		if (jc->updateCallback == NULL) {
-			return TRUE;
+			return DSPCHAN_CALLBACK_CONTINUE;
 		}
 
+		// Decrement note timer
 		if (jc->lastNotePlayed > 0) {
 			jc->lastNotePlayed--;
 		}
 	}
 
+	// Handle callback timing and notification
 	if (jc->lastNotePlayed == 0) {
 		jc->updateCallback(jc, JCSTAT_Unk0);
 		jc->lastNotePlayed = jc->noteId;
 	}
 
+	// Flush changes to DSP if needed
 	if (jc->toFlush) {
 		UpdateJcToDSP(jc);
 		jc->toFlush = 0;
 	}
 
-	return TRUE;
+	return DSPCHAN_CALLBACK_CONTINUE;
 }
 
 /*
@@ -895,7 +919,7 @@ BOOL StopLogicalChannel(jc_* jc)
 	}
 
 	ch->logicalChanCb   = NULL;
-	jc->dspChannel->_06 = 0;
+	jc->dspChannel->callbackTimer = 0;
 	DSP_PlayStop(jc->dspChannel->buffer_idx);
 	DSP_FlushChannel(jc->dspChannel->buffer_idx);
 	DeAllocDSPchannel(jc->dspChannel, (u32)jc);
@@ -931,7 +955,7 @@ BOOL PlayLogicalChannel(jc_* jc)
 	}
 
 	jc->dspChannel->logicalChanCb = CommonCallbackLogicalChannel;
-	jc->dspChannel->_06           = 1;
+	jc->dspChannel->callbackTimer = 1;
 
 	switch (jc->logicalChanType) {
 	case 0:

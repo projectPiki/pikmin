@@ -40,7 +40,18 @@ struct ALHeap {
 	u8* last;    // _10
 };
 
-typedef BOOL (*DSPChannelCallback)(dspch_*, u32);
+typedef enum DSPChannelCallbackEvent {
+	DSPCHCB_NormalUpdate   = 0,
+	DSPCHCB_Completion     = 2,
+	DSPCHCB_StateChange    = 3,
+	DSPCHCB_PriorityUpdate = 4,
+} DSPChannelCallbackEvent;
+
+#define DSPCHAN_CALLBACK_FORCE_STOP (-1) // AKA call me again in 65535 frames (never)
+#define DSPCHAN_CALLBACK_STOP       (0)  // AKA call me again in 0 frames (immediate stop)
+#define DSPCHAN_CALLBACK_CONTINUE   (1)  // AKA call me again in 1 frame (continue processing)
+
+typedef int /*(DSPCHAN_CALLBACK_*)*/ (*DSPChannelCallback)(dspch_*, u32 /*aka DSPChannelCallbackEvent*/);
 
 typedef enum DSPChannelAllocState {
 	DSPCHAN_Free          = 0, // Channel is available for allocation
@@ -59,10 +70,12 @@ struct dspch_ {
 	u8 _02;                           // _02
 	u8 prio;                          // _03
 	u16 releaseTime;                  // _04
-	u16 _06;                          // _06
+	u16 callbackTimer;                // _06
 	jc_* logicalChan;                 // _08
 	DSPChannelCallback logicalChanCb; // _0C
 };
+
+#define DSPCHAN_MAX_PRIO (0x7f)
 
 typedef struct PanMatrix_ {
 	f32 values[3];

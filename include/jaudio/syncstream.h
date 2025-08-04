@@ -46,17 +46,22 @@ struct BufControl_ {
 	u32 mLength;      // _0C
 };
 
-enum AudioFormat { AUDIOFRMT_ADPCM = 4, AUDIOFRMT_ADPCM4X = 5 };
+enum AudioFormat {
+	AUDIOFRMT_16BIT_PCM = 2, // Uncompressed 16-bit PCM audio
+	AUDIOFRMT_8BIT_PCM  = 3, // Uncompressed 8-bit PCM audio
+	AUDIOFRMT_ADPCM     = 4, // ADPCM compressed audio
+	AUDIOFRMT_ADPCM4X   = 5, // 4x compressed ADPCM variant
+};
 
 // size 0x20
 struct StreamHeader_ {
-	u32 _00;         // _00
-	u32 _04;         // _04
-	u16 _08;         // _08
+	u32 fileSize;    // _00
+	u32 sampleCount; // _04
+	u16 sampleRate;  // _08
 	u16 audioFormat; // _0A
-	u16 _0C;         // _0C
-	u16 _0E;         // _0E
-	u32 _10[4];      // _10
+	u16 _0C;         // _0C, unused
+	u16 frameRate;   // _0E
+	u32 _10[4];      // _10, unused
 };
 
 // size 0x2420
