@@ -323,7 +323,7 @@ void UpdateDSPchannelAll()
 
 	// Break lower priority DSP channels if timing variance is within tolerance
 	if (subframeIdx != 0 && (f32)history[0] / (f32)old < 1.1f) {
-		BreakLowerActiveDSPchannel(DSPCHAN_MAX_PRIO);
+		BreakLowerActiveDSPchannel(DSPCHAN_MAX_PRIO - 1);
 	}
 
 	// Update all DSP channels
