@@ -25,12 +25,12 @@ struct Menu : public Node {
 	BEGIN_ENUM_TYPE(KeyEventType)
 	enum {
 		Null           = 0,
-		Press          = 1,
-		Hold           = 2,
-		Input          = 4,
-		Release        = 8,
-		Navigate       = 16,
-		SpecialRelease = 32,
+		Press          = 1 << 0,
+		Hold           = 1 << 1,
+		Input          = 1 << 2,
+		Release        = 1 << 3,
+		Navigate       = 1 << 4,
+		SpecialRelease = 1 << 5,
 	} END_ENUM_TYPE;
 
 	BEGIN_ENUM_TYPE(MenuNavigationType)

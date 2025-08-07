@@ -198,10 +198,10 @@ enum {
 
 BEGIN_ENUM_TYPE(ShapeFlags)
 enum {
-	None         = 0x00, //
-	AllowCaching = 0x02, // Allows caching of shape geometry into a display list.
-	AlwaysRedraw = 0x04, // Forces the shape to be redrawn every frame, bypassing any cached display list.
-	IsPlatform   = 0x10, // Indicates the shape is a platform or has platform collision.
+	None         = 0,      //
+	AllowCaching = 1 << 1, // Allows caching of shape geometry into a display list.
+	AlwaysRedraw = 1 << 2, // Forces the shape to be redrawn every frame, bypassing any cached display list.
+	IsPlatform   = 1 << 4, // Indicates the shape is a platform or has platform collision.
 } END_ENUM_TYPE;
 
 /**
@@ -209,19 +209,19 @@ enum {
  */
 BEGIN_ENUM_TYPE(VertexCacheFlags)
 enum {
-	None       = 0x0,    //
-	VertexList = 0x1,    // Vertex position data needs cache flush
-	NormalList = 0x2,    // Normal vector data needs cache flush
-	NBTList    = 0x4,    // Normal/Binormal/Tangent data needs cache flush
-	ColorList  = 0x10,   // Vertex color data needs cache flush
-	TexCoord0  = 0x20,   // Texture coordinate 0 needs cache flush
-	TexCoord1  = 0x40,   // Texture coordinate 1 needs cache flush
-	TexCoord2  = 0x80,   // Texture coordinate 2 needs cache flush
-	TexCoord3  = 0x100,  // Texture coordinate 3 needs cache flush
-	TexCoord4  = 0x200,  // Texture coordinate 4 needs cache flush
-	TexCoord5  = 0x400,  // Texture coordinate 5 needs cache flush
-	TexCoord6  = 0x800,  // Texture coordinate 6 needs cache flush
-	TexCoord7  = 0x1000, // Texture coordinate 7 needs cache flush
+	None       = 0,       //
+	VertexList = 1 << 0,  // Vertex position data needs cache flush
+	NormalList = 1 << 1,  // Normal vector data needs cache flush
+	NBTList    = 1 << 2,  // Normal/Binormal/Tangent data needs cache flush
+	ColorList  = 1 << 4,  // Vertex color data needs cache flush
+	TexCoord0  = 1 << 5,  // Texture coordinate 0 needs cache flush
+	TexCoord1  = 1 << 6,  // Texture coordinate 1 needs cache flush
+	TexCoord2  = 1 << 7,  // Texture coordinate 2 needs cache flush
+	TexCoord3  = 1 << 8,  // Texture coordinate 3 needs cache flush
+	TexCoord4  = 1 << 9,  // Texture coordinate 4 needs cache flush
+	TexCoord5  = 1 << 10, // Texture coordinate 5 needs cache flush
+	TexCoord6  = 1 << 11, // Texture coordinate 6 needs cache flush
+	TexCoord7  = 1 << 12, // Texture coordinate 7 needs cache flush
 } END_ENUM_TYPE;
 
 /**
