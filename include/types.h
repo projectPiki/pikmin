@@ -40,14 +40,7 @@ typedef volatile f128 vf128;
 typedef u16 wchar_t;
 #endif
 
-// Workaround for strongly typed enums (our version of C++ doesn't support them)
-#define DEFINE_ENUM_TYPE(name, ...)  \
-	struct name {                    \
-		enum Values { __VA_ARGS__ }; \
-		typedef Values Type;         \
-	}
-
-// Workaround for Visual Studio and VS Code not recognising the above macro as a valid type
+// Workaround to introduce scoped enums (A feature of C++11 and onward).
 #define BEGIN_ENUM_TYPE(name) \
 	struct name {             \
 		typedef

@@ -23,31 +23,32 @@ struct ActorInstance;
 /**
  * @brief Enum for cinematic player flags.
  */
-DEFINE_ENUM_TYPE(CinePlayerFlags,
-                 Localized      = 1 << 0,  // 0x1
-                 Unknown        = 1 << 1,  // 0x2
-                 HideNavi       = 1 << 2,  // 0x4
-                 HideBluePiki   = 1 << 3,  // 0x8
-                 HideRedPiki    = 1 << 4,  // 0x10
-                 HideYellowPiki = 1 << 5,  // 0x20
-                 NaviNoAI       = 1 << 6,  // 0x40
-                 UseLights      = 1 << 7,  // 0x80, originally called "NonGameMovie"
-                 Concurrent     = 1 << 8,  // 0x100, use special takeoff cutscene logic
-                 CameraBlend    = 1 << 9,  // 0x200, fade in from black when starting a scene
-                 ShowTekis      = 1 << 10, // 0x400
-                 ShowFreePiki   = 1 << 11, // 0x800
-                 UpdateFreePiki = 1 << 12, // 0x1000
-                 ShowFormPiki   = 1 << 13, // 0x2000
-                 UpdateFormPiki = 1 << 14, // 0x4000
-                 ShowWorkPiki   = 1 << 15, // 0x8000
-                 UpdateWorkPiki = 1 << 16, // 0x10000
-                 ObjWatching    = 1 << 17, // 0x20000, static camera
-                 ShowPellets    = 1 << 18, // 0x40000
-                 PauseAll       = 1 << 19, // 0x80000
-                 HideRedCont    = 1 << 20, // 0x100000
-                 PikiNearUfo    = 1 << 21, // 0x200000
-                 CameraReturn   = 1 << 22, // 0x400000
-);
+BEGIN_ENUM_TYPE(CinePlayerFlags)
+enum {
+	Localized      = 1 << 0,  // 0x1
+	Unknown        = 1 << 1,  // 0x2
+	HideNavi       = 1 << 2,  // 0x4
+	HideBluePiki   = 1 << 3,  // 0x8
+	HideRedPiki    = 1 << 4,  // 0x10
+	HideYellowPiki = 1 << 5,  // 0x20
+	NaviNoAI       = 1 << 6,  // 0x40
+	UseLights      = 1 << 7,  // 0x80, originally called "NonGameMovie"
+	Concurrent     = 1 << 8,  // 0x100, use special takeoff cutscene logic
+	CameraBlend    = 1 << 9,  // 0x200, fade in from black when starting a scene
+	ShowTekis      = 1 << 10, // 0x400
+	ShowFreePiki   = 1 << 11, // 0x800
+	UpdateFreePiki = 1 << 12, // 0x1000
+	ShowFormPiki   = 1 << 13, // 0x2000
+	UpdateFormPiki = 1 << 14, // 0x4000
+	ShowWorkPiki   = 1 << 15, // 0x8000
+	UpdateWorkPiki = 1 << 16, // 0x10000
+	ObjWatching    = 1 << 17, // 0x20000, static camera
+	ShowPellets    = 1 << 18, // 0x40000
+	PauseAll       = 1 << 19, // 0x80000
+	HideRedCont    = 1 << 20, // 0x100000
+	PikiNearUfo    = 1 << 21, // 0x200000
+	CameraReturn   = 1 << 22, // 0x400000
+} END_ENUM_TYPE;
 
 /**
  * @brief Enum for cutscene skipping flags.

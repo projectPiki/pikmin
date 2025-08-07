@@ -128,11 +128,12 @@ struct RouteGroup : public EditNode {
 /**
  * @brief Waypoint flags for pathfinding
  */
-DEFINE_ENUM_TYPE(WayPointFlags,
-                 InWater     = 1, // Waypoint is in water
-                 Pebble      = 2, // Waypoint has pebble obstacle
-                 Destination = 4  // Either the start or destination waypoint in a pathfinding request
-);
+BEGIN_ENUM_TYPE(WayPointFlags)
+enum {
+	InWater     = 1, // Waypoint is in water
+	Pebble      = 2, // Waypoint has pebble obstacle
+	Destination = 4  // Either the start or destination waypoint in a pathfinding request
+} END_ENUM_TYPE;
 
 /**
  * @brief Runtime waypoint used for pathfinding
@@ -238,11 +239,12 @@ struct RouteMgr : public Node {
 /**
  * @brief Pathfinding mode flags
  */
-DEFINE_ENUM_TYPE(PathFinderMode,
-                 None       = 0, // No special pathfinding mode
-                 AvoidWater = 1, // Avoid water waypoints when pathfinding
-                 Unk2       = 2  // Avoid specific waypoint index
-);
+BEGIN_ENUM_TYPE(PathFinderMode)
+enum {
+	None       = 0, // No special pathfinding mode
+	AvoidWater = 1, // Avoid water waypoints when pathfinding
+	Unk2       = 2  // Avoid specific waypoint index
+} END_ENUM_TYPE;
 
 /**
  * @brief Implements pathfinding algorithms for route navigation
@@ -271,11 +273,12 @@ struct PathFinder {
 	/**
 	 * @brief Status of pathfinding client request
 	 */
-	DEFINE_ENUM_TYPE(PathStatus,
-	                 Searching = 0, // Currently searching for path
-	                 Success   = 1, // Path found successfully
-	                 Failed    = 2, // No path exists to destination
-	);
+	BEGIN_ENUM_TYPE(PathStatus)
+	enum {
+		Searching = 0, // Currently searching for path
+		Success   = 1, // Path found successfully
+		Failed    = 2, // No path exists to destination
+	} END_ENUM_TYPE;
 
 	/**
 	 * @brief Asynchronous pathfinding client

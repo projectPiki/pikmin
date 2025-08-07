@@ -98,11 +98,12 @@ struct WorldMapWipe {
 /**
  * @brief Wipe transition states for world map screen
  */
-DEFINE_ENUM_TYPE(WipeState,
-                 Idle    = 0, // Wipe is not animating
-                 Closing = 1, // Wipe is closing (covering screen)
-                 Opening = 2, // Wipe is opening (revealing screen)
-);
+BEGIN_ENUM_TYPE(WipeState)
+enum {
+	Idle    = 0, // Wipe is not animating
+	Closing = 1, // Wipe is closing (covering screen)
+	Opening = 2, // Wipe is opening (revealing screen)
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -1215,10 +1216,11 @@ struct WorldMapConfirmMgr {
 /**
  * @brief Course point manager operational modes
  */
-DEFINE_ENUM_TYPE(CoursePointMode,
-                 Operation = 0, // Normal user interaction mode
-                 Appear    = 1, // Course point appearance animation
-);
+BEGIN_ENUM_TYPE(CoursePointMode)
+enum {
+	Operation = 0, // Normal user interaction mode
+	Appear    = 1, // Course point appearance animation
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -1453,11 +1455,12 @@ struct WorldMapCoursePointMgr {
 /**
  * @brief Map image display states
  */
-DEFINE_ENUM_TYPE(MapImageState,
-                 Shown   = 0, // Map image is fully visible
-                 Closing = 1, // Map image is animating out
-                 Opening = 2, // Map image is animating in
-);
+BEGIN_ENUM_TYPE(MapImageState)
+enum {
+	Shown   = 0, // Map image is fully visible
+	Closing = 1, // Map image is animating out
+	Opening = 2, // Map image is animating in
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

@@ -32,11 +32,12 @@ enum CorePauseFlags {
 	COREPAUSE_Unk16 = 1 << 15, // 0x8000
 };
 
-DEFINE_ENUM_TYPE(GameHideFlags,
-                 ShowPellets             = 1 << 0, // 0x1
-                 ShowPelletsExceptSucked = 1 << 1, // 0x2
-                 ShowTeki                = 1 << 2, // 0x4 aka enemies
-);
+BEGIN_ENUM_TYPE(GameHideFlags)
+enum {
+	ShowPellets             = 1 << 0, // 0x1
+	ShowPelletsExceptSucked = 1 << 1, // 0x2
+	ShowTeki                = 1 << 2, // 0x4 aka enemies
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

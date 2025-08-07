@@ -128,7 +128,10 @@ struct SystemCache : public ARQRequest {
 	SystemCache* mPrev; // _24
 };
 
-DEFINE_ENUM_TYPE(SystemFlags, Shutdown = 0x80000000);
+BEGIN_ENUM_TYPE(SystemFlags)
+enum {
+	Shutdown = 0x80000000,
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -298,15 +301,16 @@ struct AramAllocator {
 /**
  * @brief DVD error states for disc reading operations
  */
-DEFINE_ENUM_TYPE(DvdError,
-                 None        = -1, // No error, normal operation
-                 ReadingDisc = 0,  // Currently reading game disc
-                 FatalError  = 1,  // Fatal disc read error occurred
-                 RetryError  = 2,  // Disc read error, retrying
-                 NoDisc      = 3,  // No disc inserted
-                 CoverOpen   = 4,  // Disc cover is open
-                 WrongDisc   = 5   // Non-Pikmin disc inserted
-);
+BEGIN_ENUM_TYPE(DvdError)
+enum {
+	None        = -1, // No error, normal operation
+	ReadingDisc = 0,  // Currently reading game disc
+	FatalError  = 1,  // Fatal disc read error occurred
+	RetryError  = 2,  // Disc read error, retrying
+	NoDisc      = 3,  // No disc inserted
+	CoverOpen   = 4,  // Disc cover is open
+	WrongDisc   = 5   // Non-Pikmin disc inserted
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

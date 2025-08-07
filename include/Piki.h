@@ -40,50 +40,52 @@ enum PikiSituationType {
 	PIKISITCH_Unk14 = 14,
 };
 
-DEFINE_ENUM_TYPE(PikiMode,
-                 FreeMode = 0,  // 0
-                 FormationMode, // 1
-                 AttackMode,    // 2
-                 NukuMode,      // 3
-                 GuardMode,     // 4
-                 PickMode,      // 5
-                 DecoyMode,     // 6
-                 ArrowMode,     // 7
-                 CarryMode,     // 8
-                 TransportMode, // 9
-                 RopeMode,      // 10
-                 EnterMode,     // 11
-                 ExitMode,      // 12
-                 BreakwallMode, // 13
-                 MineMode,      // 14
-                 KinokoMode,    // 15
-                 BridgeMode,    // 16
-                 PushstoneMode, // 17
-                 PutbombMode,   // 18
-                 RescueMode,    // 19
-                 WeedMode,      // 20
-                 PebbleMode,    // 21
-                 BomakeMode,    // 22
-                 BoMode,        // 23
-                 WarriorMode,   // 24
-);
+BEGIN_ENUM_TYPE(PikiMode)
+enum {
+	FreeMode = 0,  // 0
+	FormationMode, // 1
+	AttackMode,    // 2
+	NukuMode,      // 3
+	GuardMode,     // 4
+	PickMode,      // 5
+	DecoyMode,     // 6
+	ArrowMode,     // 7
+	CarryMode,     // 8
+	TransportMode, // 9
+	RopeMode,      // 10
+	EnterMode,     // 11
+	ExitMode,      // 12
+	BreakwallMode, // 13
+	MineMode,      // 14
+	KinokoMode,    // 15
+	BridgeMode,    // 16
+	PushstoneMode, // 17
+	PutbombMode,   // 18
+	RescueMode,    // 19
+	WeedMode,      // 20
+	PebbleMode,    // 21
+	BomakeMode,    // 22
+	BoMode,        // 23
+	WarriorMode,   // 24
+} END_ENUM_TYPE;
 
 /**
  * @brief Defines the different emotions a Pikmin can express.
  */
-DEFINE_ENUM_TYPE(PikiEmotion,
-                 Happy = 0,         // General happiness, jumping.
-                 Sad   = 1,         // Gakkari animation, disappointment.
-                                    // 2 is unused
-                 ShookDry      = 3, // Shaking off water after getting out.
-                 ShipPartGaze  = 4, // Staring at a collected ship part.
-                 Excited       = 5, // Excited, a mix of jumping and fist-pumping.
-                 Victorious    = 6, // Yatta animation, celebrating a victory.
-                 Searching     = 7, // Looking around for something.
-                 Confused      = 8, // A mix of disappointment and searching.
-                 ShipPartCheer = 9, // Cheering for a collected ship part repeatedly.
-                 None          = 10 // No specific emotion.
-);
+BEGIN_ENUM_TYPE(PikiEmotion)
+enum {
+	Happy = 0,         // General happiness, jumping.
+	Sad   = 1,         // Gakkari animation, disappointment.
+	                   // 2 is unused
+	ShookDry      = 3, // Shaking off water after getting out.
+	ShipPartGaze  = 4, // Staring at a collected ship part.
+	Excited       = 5, // Excited, a mix of jumping and fist-pumping.
+	Victorious    = 6, // Yatta animation, celebrating a victory.
+	Searching     = 7, // Looking around for something.
+	Confused      = 8, // A mix of disappointment and searching.
+	ShipPartCheer = 9, // Cheering for a collected ship part repeatedly.
+	None          = 10 // No specific emotion.
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

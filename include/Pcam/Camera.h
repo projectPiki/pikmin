@@ -37,18 +37,20 @@ enum PcamAngleLevels {
 /**
  * @brief Camera attention states
  */
-DEFINE_ENUM_TYPE(AttentionState,
-                 Inactive = 0, // Camera is not in attention mode
-                 Active   = 1, // Camera is actively tracking attention target
-);
+BEGIN_ENUM_TYPE(AttentionState)
+enum {
+	Inactive = 0, // Camera is not in attention mode
+	Active   = 1, // Camera is actively tracking attention target
+} END_ENUM_TYPE;
 
 /**
  * @brief Radius calculation modes for camera
  */
-DEFINE_ENUM_TYPE(RadiusMode,
-                 Dynamic = 0, // Use calculated goal distance
-                 Stored  = 1, // Use stored previous radius value
-);
+BEGIN_ENUM_TYPE(RadiusMode)
+enum {
+	Dynamic = 0, // Use calculated goal distance
+	Stored  = 1, // Use stored previous radius value
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

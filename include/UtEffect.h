@@ -14,10 +14,8 @@ struct Navi;
 // NB: could maybe split these into smaller headers down the line
 // Most of their functions are in uteffect in Kando, so they're here for now.
 
-// clang-format off
-DEFINE_ENUM_TYPE(
-	KandoEffect,
-
+BEGIN_ENUM_TYPE(KandoEffect)
+enum {
 	Goal = 0,         // 0
 	NaviWhistle0,     // 1
 	NaviWhistle1,     // 2
@@ -48,12 +46,11 @@ DEFINE_ENUM_TYPE(
 	IdleYellowPiki,   // 27
 	COUNT,            // 28
 
-	START = Goal,         // 0
-	END = IdleYellowPiki, // 27
+	START = Goal,           // 0
+	END   = IdleYellowPiki, // 27
 
 	SmokeOffset = SmokeSoil, // 3, for different map code attributes
-);
-// clang-format on
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

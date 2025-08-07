@@ -23,11 +23,12 @@ struct KeyProp : public CreatureProp {
 	// _00-_58 = CreatureProp
 };
 
-DEFINE_ENUM_TYPE(KeyState,
-                 Active,    // Key is interactive
-                 Collected, // Key has been collected
-                 Inactive,  // Key is initialized but not started
-);
+BEGIN_ENUM_TYPE(KeyState)
+enum {
+	Active,    // Key is interactive
+	Collected, // Key has been collected
+	Inactive,  // Key is initialized but not started
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
