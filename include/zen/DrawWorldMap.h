@@ -65,11 +65,12 @@ enum WorldMapScreenID {
 /**
  * @brief Animation states for world map title objects
  */
-DEFINE_ENUM_TYPE(TitleAnimState,
-                 Idle      = 0, // Title is stationary or hidden
-                 Appearing = 1, // Title is animating into view
-                 Hiding    = 2, // Title is animating out of view
-);
+BEGIN_ENUM_TYPE(TitleAnimState)
+enum {
+	Idle      = 0, // Title is stationary or hidden
+	Appearing = 1, // Title is animating into view
+	Hiding    = 2, // Title is animating out of view
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -220,12 +221,13 @@ struct DrawWorldMapDateCallBack : public P2DPaneCallBack, public zen::NumberTex 
 /**
  * @brief Appearance states for course point animations
  */
-DEFINE_ENUM_TYPE(CourseAppearState,
-                 Ready          = 0, // Course point is ready/idle
-                 RocketIncoming = 1, // Rocket is approaching (0.5s timer)
-                 Exploding      = 2, // Explosion effects playing (1.0s timer)
-                 Revealing      = 3, // Final reveal animation (1.0s timer)
-);
+BEGIN_ENUM_TYPE(CourseAppearState)
+enum {
+	Ready          = 0, // Course point is ready/idle
+	RocketIncoming = 1, // Rocket is approaching (0.5s timer)
+	Exploding      = 2, // Explosion effects playing (1.0s timer)
+	Revealing      = 3, // Final reveal animation (1.0s timer)
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -589,18 +591,19 @@ struct WorldMapShootingStarMgr {
 /**
  * @brief Main operational modes for the world map screen
  */
-DEFINE_ENUM_TYPE(DrawWorldMapMode,
-                 Null         = -1, // Invalid or uninitialized mode
-                 Start        = 0,  // Initial setup and transition in
-                 Appear       = 1,  // Course unlock animation playing
-                 Operation    = 2,  // Normal user interaction mode
-                 Paused       = 3,  // Pause menu is open
-                 Confirm      = 4,  // Course selection confirmation dialog
-                 DiaryClosing = 5,  // Transitioning to diary
-                 Diary        = 6,  // Captain's diary is open
-                 DiaryOpening = 7,  // Returning from diary
-                 End          = 8,  // Transition out of world map
-);
+BEGIN_ENUM_TYPE(DrawWorldMapMode)
+enum {
+	Null         = -1, // Invalid or uninitialized mode
+	Start        = 0,  // Initial setup and transition in
+	Appear       = 1,  // Course unlock animation playing
+	Operation    = 2,  // Normal user interaction mode
+	Paused       = 3,  // Pause menu is open
+	Confirm      = 4,  // Course selection confirmation dialog
+	DiaryClosing = 5,  // Transitioning to diary
+	Diary        = 6,  // Captain's diary is open
+	DiaryOpening = 7,  // Returning from diary
+	End          = 8,  // Transition out of world map
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

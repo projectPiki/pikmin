@@ -176,31 +176,28 @@ struct SnakeProp : public BossProp, public CoreNode {
 	SnakeProperties mSnakeProps; // _200
 };
 
-// clang-format off
 // https://intns.github.io/media/snake_joints.png
-DEFINE_ENUM_TYPE(
-	SnakeJointType,
-
-	Root = 0,     // bodyjnt1
-	Segment1 = 1, // bodyjnt2
-	Segment2 = 2, // bodyjnt3
-	Segment4 = 3, // bodyjnt4
-	Segment5 = 4, // bodyjnt5, middle
-	Segment6 = 5, // bodyjnt6
-	Segment7 = 6, // bodyjnt7
-	Neck = 7,     // bodyjnt8
+BEGIN_ENUM_TYPE(SnakeJointType)
+enum {
+	Root         = 0, // bodyjnt1
+	Segment1     = 1, // bodyjnt2
+	Segment2     = 2, // bodyjnt3
+	Segment4     = 3, // bodyjnt4
+	Segment5     = 4, // bodyjnt5, middle
+	Segment6     = 5, // bodyjnt6
+	Segment7     = 6, // bodyjnt7
+	Neck         = 7, // bodyjnt8
 	SegmentCount = 8,
 
 	// 8 is the eye root
 	RightEye = 9,  // bb_rme
 	LeftEye  = 10, // bb_lme
 
-	JawHinge = 11,	 // kutijnt1
-	LeftCheek = 12,	 // kamujnt3
+	JawHinge   = 11, // kutijnt1
+	LeftCheek  = 12, // kamujnt3
 	RightCheek = 13, // kamujnt2
-	Beak = 14,		 // kamujnt1
-);
-// clang-format on
+	Beak       = 14, // kamujnt1
+} END_ENUM_TYPE;
 
 /**
  * @brief Snake Body controller

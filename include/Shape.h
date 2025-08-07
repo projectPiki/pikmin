@@ -126,12 +126,13 @@ struct ShapeDynMaterials {
 	BaseShape* mShape;          // _0C
 };
 
-DEFINE_ENUM_TYPE(DisplayListFlags,
-                 Front    = 0,         //
-                 Other    = 1,         //
-                 Both     = 2,         //
-                 Stripped = 0x1000000, //
-);
+BEGIN_ENUM_TYPE(DisplayListFlags)
+enum {
+	Front    = 0,         //
+	Other    = 1,         //
+	Both     = 2,         //
+	Stripped = 0x1000000, //
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -167,58 +168,61 @@ struct DlobjInfo : public GfxobjInfo {
 	DlobjInfo();
 };
 
-DEFINE_ENUM_TYPE(BaseShapeChunk,
-                 Header           = 0x00,   //
-                 Vertex           = 0x10,   //
-                 VertexNormal     = 0x11,   //
-                 VertexNBT        = 0x12,   //
-                 VertexColour     = 0x13,   //
-                 TexCoord0        = 0x18,   //
-                 TexCoord1        = 0x19,   //
-                 TexCoord2        = 0x1A,   //
-                 TexCoord3        = 0x1B,   //
-                 TexCoord4        = 0x1C,   //
-                 TexCoord5        = 0x1D,   //
-                 TexCoord6        = 0x1E,   //
-                 TexCoord7        = 0x1F,   //
-                 Texture          = 0x20,   //
-                 TextureAttribute = 0x22,   //
-                 Material         = 0x30,   //
-                 VertexMatrix     = 0x40,   //
-                 MatrixEnvelope   = 0x41,   //
-                 Mesh             = 0x50,   //
-                 Joint            = 0x60,   //
-                 JointName        = 0x61,   //
-                 CollisionPrism   = 0x100,  //
-                 CollisionGrid    = 0x110,  //
-                 EndOfFile        = 0xFFFF, //
-);
+BEGIN_ENUM_TYPE(BaseShapeChunk)
+enum {
+	Header           = 0x00,   //
+	Vertex           = 0x10,   //
+	VertexNormal     = 0x11,   //
+	VertexNBT        = 0x12,   //
+	VertexColour     = 0x13,   //
+	TexCoord0        = 0x18,   //
+	TexCoord1        = 0x19,   //
+	TexCoord2        = 0x1A,   //
+	TexCoord3        = 0x1B,   //
+	TexCoord4        = 0x1C,   //
+	TexCoord5        = 0x1D,   //
+	TexCoord6        = 0x1E,   //
+	TexCoord7        = 0x1F,   //
+	Texture          = 0x20,   //
+	TextureAttribute = 0x22,   //
+	Material         = 0x30,   //
+	VertexMatrix     = 0x40,   //
+	MatrixEnvelope   = 0x41,   //
+	Mesh             = 0x50,   //
+	Joint            = 0x60,   //
+	JointName        = 0x61,   //
+	CollisionPrism   = 0x100,  //
+	CollisionGrid    = 0x110,  //
+	EndOfFile        = 0xFFFF, //
+} END_ENUM_TYPE;
 
-DEFINE_ENUM_TYPE(ShapeFlags,
-                 None         = 0x00, //
-                 AllowCaching = 0x02, // Allows caching of shape geometry into a display list.
-                 AlwaysRedraw = 0x04, // Forces the shape to be redrawn every frame, bypassing any cached display list.
-                 IsPlatform   = 0x10, // Indicates the shape is a platform or has platform collision.
-);
+BEGIN_ENUM_TYPE(ShapeFlags)
+enum {
+	None         = 0x00, //
+	AllowCaching = 0x02, // Allows caching of shape geometry into a display list.
+	AlwaysRedraw = 0x04, // Forces the shape to be redrawn every frame, bypassing any cached display list.
+	IsPlatform   = 0x10, // Indicates the shape is a platform or has platform collision.
+} END_ENUM_TYPE;
 
 /**
  * @brief Flags indicating which vertex data needs cache flushing
  */
-DEFINE_ENUM_TYPE(VertexCacheFlags,
-                 None       = 0x0,    //
-                 VertexList = 0x1,    // Vertex position data needs cache flush
-                 NormalList = 0x2,    // Normal vector data needs cache flush
-                 NBTList    = 0x4,    // Normal/Binormal/Tangent data needs cache flush
-                 ColorList  = 0x10,   // Vertex color data needs cache flush
-                 TexCoord0  = 0x20,   // Texture coordinate 0 needs cache flush
-                 TexCoord1  = 0x40,   // Texture coordinate 1 needs cache flush
-                 TexCoord2  = 0x80,   // Texture coordinate 2 needs cache flush
-                 TexCoord3  = 0x100,  // Texture coordinate 3 needs cache flush
-                 TexCoord4  = 0x200,  // Texture coordinate 4 needs cache flush
-                 TexCoord5  = 0x400,  // Texture coordinate 5 needs cache flush
-                 TexCoord6  = 0x800,  // Texture coordinate 6 needs cache flush
-                 TexCoord7  = 0x1000, // Texture coordinate 7 needs cache flush
-);
+BEGIN_ENUM_TYPE(VertexCacheFlags)
+enum {
+	None       = 0x0,    //
+	VertexList = 0x1,    // Vertex position data needs cache flush
+	NormalList = 0x2,    // Normal vector data needs cache flush
+	NBTList    = 0x4,    // Normal/Binormal/Tangent data needs cache flush
+	ColorList  = 0x10,   // Vertex color data needs cache flush
+	TexCoord0  = 0x20,   // Texture coordinate 0 needs cache flush
+	TexCoord1  = 0x40,   // Texture coordinate 1 needs cache flush
+	TexCoord2  = 0x80,   // Texture coordinate 2 needs cache flush
+	TexCoord3  = 0x100,  // Texture coordinate 3 needs cache flush
+	TexCoord4  = 0x200,  // Texture coordinate 4 needs cache flush
+	TexCoord5  = 0x400,  // Texture coordinate 5 needs cache flush
+	TexCoord6  = 0x800,  // Texture coordinate 6 needs cache flush
+	TexCoord7  = 0x1000, // Texture coordinate 7 needs cache flush
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

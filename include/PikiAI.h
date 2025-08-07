@@ -38,45 +38,42 @@ namespace Reaction {
 extern char* info[9];
 } // namespace Reaction
 
-// clang-format off
-DEFINE_ENUM_TYPE(
-	PikiAction,
-
-	NOACTION = -1,  // -1
-	RandomBoid = 0, // 0
-	Watch,          // 1
-	Escape,         // 2
-	Chase,          // 3
-	Goto,           // 4
-	PickCreature,   // 5
-	PutItem,        // 6
-	Formation,      // 7
-	Attack,         // 8
-	Shoot,          // 9
-	Guard,          // 10
-	Pullout,        // 11
-	PickItem,       // 12
-	Decoy,          // 13
-	Crowd,          // 14
-	Free,           // 15
-	Rope,           // 16
-	Enter,          // 17
-	Exit,           // 18
-	BreakWall,      // 19
-	Mine,           // 20
-	Transport,      // 21
-	Kinoko,         // 22
-	Bridge,         // 23
-	Push,           // 24
-	PutBomb,        // 25
-	Rescue,         // 26
-	Weed,           // 27
-	Stone,          // 28
-	BoMake,         // 29
-	Bou,            // 30
-	COUNT,          // 31
-);
-// clang-format on
+BEGIN_ENUM_TYPE(PikiAction)
+enum {
+	NOACTION   = -1, // -1
+	RandomBoid = 0,  // 0
+	Watch,           // 1
+	Escape,          // 2
+	Chase,           // 3
+	Goto,            // 4
+	PickCreature,    // 5
+	PutItem,         // 6
+	Formation,       // 7
+	Attack,          // 8
+	Shoot,           // 9
+	Guard,           // 10
+	Pullout,         // 11
+	PickItem,        // 12
+	Decoy,           // 13
+	Crowd,           // 14
+	Free,            // 15
+	Rope,            // 16
+	Enter,           // 17
+	Exit,            // 18
+	BreakWall,       // 19
+	Mine,            // 20
+	Transport,       // 21
+	Kinoko,          // 22
+	Bridge,          // 23
+	Push,            // 24
+	PutBomb,         // 25
+	Rescue,          // 26
+	Weed,            // 27
+	Stone,           // 28
+	BoMake,          // 29
+	Bou,             // 30
+	COUNT,           // 31
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

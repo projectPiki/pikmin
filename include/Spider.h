@@ -214,11 +214,12 @@ struct Spider : public Boss {
 /**
  * @brief Spider leg motion types
  */
-DEFINE_ENUM_TYPE(SpiderLegMotionType,
-                 Walk      = 0, // Normal walking motion
-                 ShakeOff  = 1, // Shaking off stuck pikmin (moves knees)
-                 BodyShake = 2, // Full body shake motion
-);
+BEGIN_ENUM_TYPE(SpiderLegMotionType)
+enum {
+	Walk      = 0, // Normal walking motion
+	ShakeOff  = 1, // Shaking off stuck pikmin (moves knees)
+	BodyShake = 2, // Full body shake motion
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

@@ -213,12 +213,10 @@ struct LightGroup : public CoreNode {
 	LFlareGroup* mFlareGroup; // _68
 };
 
-// clang-format off
-DEFINE_ENUM_TYPE(
-	LightPoolFlags,
+BEGIN_ENUM_TYPE(LightPoolFlags)
+enum {
 	DrawFrustum = 1,
-);
-// clang-format on
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

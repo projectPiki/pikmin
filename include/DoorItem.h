@@ -21,12 +21,13 @@ struct DoorProp : public CreatureProp {
 	// _00-_58 = CreatureProp
 };
 
-DEFINE_ENUM_TYPE(DoorState,
-                 Active,   // Door is interactive
-                 Killed,   // Door has been destroyed
-                 Inactive, // Door is initialized but not started
-                 Vanishing // Door is disappearing
-);
+BEGIN_ENUM_TYPE(DoorState)
+enum {
+	Active,   // Door is interactive
+	Killed,   // Door has been destroyed
+	Inactive, // Door is initialized but not started
+	Vanishing // Door is disappearing
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

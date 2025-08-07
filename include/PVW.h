@@ -133,20 +133,21 @@ struct PVWAnimInfo3 {
 /**
  * @brief Lighting control flags for PVW materials
  */
-DEFINE_ENUM_TYPE(LightingControlFlags,
-                 EnableColor0   = 0x0001, ///< Enable lighting for color channel 0
-                 EnableSpecular = 0x0002, ///< Enable specular lighting (color channel 1)
-                 EnableAlpha0   = 0x0004, ///< Enable lighting for alpha channel 0
+BEGIN_ENUM_TYPE(LightingControlFlags)
+enum {
+	EnableColor0   = 0x0001, ///< Enable lighting for color channel 0
+	EnableSpecular = 0x0002, ///< Enable specular lighting (color channel 1)
+	EnableAlpha0   = 0x0004, ///< Enable lighting for alpha channel 0
 
-                 DiffFnColor0Shift   = 3, ///< Diffuse function for color 0 (bits 3-4)
-                 DiffFnAlpha0Shift   = 5, ///< Diffuse function for alpha 0 (bits 5-6)
-                 DiffFnSpecularShift = 7, ///< Diffuse function for specular (bits 7-8)
+	DiffFnColor0Shift   = 3, ///< Diffuse function for color 0 (bits 3-4)
+	DiffFnAlpha0Shift   = 5, ///< Diffuse function for alpha 0 (bits 5-6)
+	DiffFnSpecularShift = 7, ///< Diffuse function for specular (bits 7-8)
 
-                 AmbSrcColor0Vtx = 0x0200, ///< Use vertex color for ambient color 0 (vs register)
-                 AmbSrcAlpha0Vtx = 0x0400, ///< Use vertex alpha for ambient alpha 0 (vs register)
-                 MatSrcColor0Vtx = 0x0800, ///< Use vertex color for material color 0 (vs register)
-                 MatSrcAlpha0Vtx = 0x1000, ///< Use vertex alpha for material alpha 0 (vs register)
-);
+	AmbSrcColor0Vtx = 0x0200, ///< Use vertex color for ambient color 0 (vs register)
+	AmbSrcAlpha0Vtx = 0x0400, ///< Use vertex alpha for ambient alpha 0 (vs register)
+	MatSrcColor0Vtx = 0x0800, ///< Use vertex color for material color 0 (vs register)
+	MatSrcAlpha0Vtx = 0x1000, ///< Use vertex alpha for material alpha 0 (vs register)
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

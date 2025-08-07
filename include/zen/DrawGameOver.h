@@ -27,11 +27,12 @@ struct DrawGameOverScreen;
 /**
  * @brief The current state of the "Game Over" screen logic.
  */
-DEFINE_ENUM_TYPE(GameOverState,
-                 Inactive  = 0, // The screen is not active.
-                 Start     = 1, // The screen has started and is in an initial delay period.
-                 WaitInput = 2  // The screen is waiting for player input or a timeout to finish.
-);
+BEGIN_ENUM_TYPE(GameOverState)
+enum {
+	Inactive  = 0, // The screen is not active.
+	Start     = 1, // The screen has started and is in an initial delay period.
+	WaitInput = 2  // The screen is waiting for player input or a timeout to finish.
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

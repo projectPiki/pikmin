@@ -22,12 +22,13 @@ namespace zen {
 /**
  * @brief The animation state for an individual letter in the "Game Over" text.
  */
-DEFINE_ENUM_TYPE(LetterState,
-                 Idle   = 0, // The letter is in its initial, unmoving state.
-                 Wait   = 1, // The letter is waiting for a staggered delay before starting its animation.
-                 Fall   = 2, // The letter is falling, bouncing, and rotating into its final position.
-                 Settle = 3  // The letter has landed and is settling into its final scale and rotation.
-);
+BEGIN_ENUM_TYPE(LetterState)
+enum {
+	Idle   = 0, // The letter is in its initial, unmoving state.
+	Wait   = 1, // The letter is waiting for a staggered delay before starting its animation.
+	Fall   = 2, // The letter is falling, bouncing, and rotating into its final position.
+	Settle = 3  // The letter has landed and is settling into its final scale and rotation.
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO

@@ -14,9 +14,31 @@ struct Font;
 struct Light;
 
 struct Menu : public Node {
-	DEFINE_ENUM_TYPE(MenuStateType, Idle = 0, FadeIn = 1, Open = 2, FadeOut = 3);
-	DEFINE_ENUM_TYPE(KeyEventType, Null = 0, Press = 1, Hold = 2, Input = 4, Release = 8, Navigate = 16, SpecialRelease = 32);
-	DEFINE_ENUM_TYPE(MenuNavigationType, Unk0 = 0, TopMenu = 1, SubMenu = 2);
+	BEGIN_ENUM_TYPE(MenuStateType)
+	enum {
+		Idle    = 0,
+		FadeIn  = 1,
+		Open    = 2,
+		FadeOut = 3,
+	} END_ENUM_TYPE;
+
+	BEGIN_ENUM_TYPE(KeyEventType)
+	enum {
+		Null           = 0,
+		Press          = 1,
+		Hold           = 2,
+		Input          = 4,
+		Release        = 8,
+		Navigate       = 16,
+		SpecialRelease = 32,
+	} END_ENUM_TYPE;
+
+	BEGIN_ENUM_TYPE(MenuNavigationType)
+	enum {
+		Unk0    = 0,
+		TopMenu = 1,
+		SubMenu = 2,
+	} END_ENUM_TYPE;
 
 	/**
 	 * @brief Linked list of key events.

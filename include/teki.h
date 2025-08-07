@@ -112,7 +112,11 @@ enum TekiTypes {
 	TEKI_TypeCount,     // 35
 };
 
-DEFINE_ENUM_TYPE(TekiInteractType, Attack = 0, HitEffect = 1);
+BEGIN_ENUM_TYPE(TekiInteractType)
+enum {
+	Attack    = 0,
+	HitEffect = 1,
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
@@ -124,7 +128,14 @@ struct TekiInteractionKey {
 	Interaction* mInteraction; // _04
 };
 
-DEFINE_ENUM_TYPE(TekiEventType, Ground = 0, Entity = 1, Wall = 2, Pressed = 3, WakeUpCall = 4);
+BEGIN_ENUM_TYPE(TekiEventType)
+enum {
+	Ground     = 0,
+	Entity     = 1,
+	Wall       = 2,
+	Pressed    = 3,
+	WakeUpCall = 4,
+} END_ENUM_TYPE;
 
 /**
  * @brief TODO
