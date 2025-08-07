@@ -174,26 +174,26 @@ struct AnimParam {
  */
 BEGIN_ENUM_TYPE(AnimDataFlags)
 enum {
-	ScaleXStatic             = 0x1, // Scale X component has single value (no animation)
-	ScaleYStatic             = 0x2, // Scale Y component has single value (no animation)
-	ScaleZStatic             = 0x4, // Scale Z component has single value (no animation)
+	ScaleXStatic             = 1 << 0, // Scale X component has single value (no animation)
+	ScaleYStatic             = 1 << 1, // Scale Y component has single value (no animation)
+	ScaleZStatic             = 1 << 2, // Scale Z component has single value (no animation)
 	AllIndividualScaleStatic = ScaleXStatic | ScaleYStatic | ScaleZStatic,
-	AllScaleStatic           = 0x8, // All scale components are static
+	AllScaleStatic           = 1 << 3, // All scale components are static
 
-	RotationXStatic             = 0x10, // Rotation X component has single value (no animation)
-	RotationYStatic             = 0x20, // Rotation Y component has single value (no animation)
-	RotationZStatic             = 0x40, // Rotation Z component has single value (no animation)
+	RotationXStatic             = 1 << 4, // Rotation X component has single value (no animation)
+	RotationYStatic             = 1 << 5, // Rotation Y component has single value (no animation)
+	RotationZStatic             = 1 << 6, // Rotation Z component has single value (no animation)
 	AllIndividualRotationStatic = RotationXStatic | RotationYStatic | RotationZStatic,
-	AllRotationStatic           = 0x80, // All rotation components are static
+	AllRotationStatic           = 1 << 7, // All rotation components are static
 
-	TranslationXStatic             = 0x100, // Translation X component has single value (no animation)
-	TranslationYStatic             = 0x200, // Translation Y component has single value (no animation)
-	TranslationZStatic             = 0x400, // Translation Z component has single value (no animation)
+	TranslationXStatic             = 1 << 8,  // Translation X component has single value (no animation)
+	TranslationYStatic             = 1 << 9,  // Translation Y component has single value (no animation)
+	TranslationZStatic             = 1 << 10, // Translation Z component has single value (no animation)
 	AllIndividualTranslationStatic = TranslationXStatic | TranslationYStatic | TranslationZStatic,
-	AllTranslationStatic           = 0x800, // All translation components are static
+	AllTranslationStatic           = 1 << 11, // All translation components are static
 
-	AllComponentsStatic = 0x777,  // All individual component flags set (OR of all static flags)
-	MatrixCalculated    = 0x8000, // Transform matrix has been calculated
+	AllComponentsStatic = AllIndividualScaleStatic | AllIndividualRotationStatic | AllIndividualTranslationStatic,
+	MatrixCalculated    = 1 << 15, // Transform matrix has been calculated
 } END_ENUM_TYPE;
 
 /**

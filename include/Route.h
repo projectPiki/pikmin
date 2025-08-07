@@ -130,9 +130,9 @@ struct RouteGroup : public EditNode {
  */
 BEGIN_ENUM_TYPE(WayPointFlags)
 enum {
-	InWater     = 1, // Waypoint is in water
-	Pebble      = 2, // Waypoint has pebble obstacle
-	Destination = 4  // Either the start or destination waypoint in a pathfinding request
+	InWater     = 1 << 0, // Waypoint is in water
+	Pebble      = 1 << 1, // Waypoint has pebble obstacle
+	Destination = 1 << 2, // Either the start or destination waypoint in a pathfinding request
 } END_ENUM_TYPE;
 
 /**
@@ -241,9 +241,9 @@ struct RouteMgr : public Node {
  */
 BEGIN_ENUM_TYPE(PathFinderMode)
 enum {
-	None       = 0, // No special pathfinding mode
-	AvoidWater = 1, // Avoid water waypoints when pathfinding
-	Unk2       = 2  // Avoid specific waypoint index
+	None       = 0,      // No special pathfinding mode
+	AvoidWater = 1 << 0, // Avoid water waypoints when pathfinding
+	Unk2       = 1 << 1, // Avoid specific waypoint index
 } END_ENUM_TYPE;
 
 /**

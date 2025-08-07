@@ -74,9 +74,9 @@ enum {
  */
 BEGIN_ENUM_TYPE(PikiEmotion)
 enum {
-	Happy = 0,         // General happiness, jumping.
-	Sad   = 1,         // Gakkari animation, disappointment.
-	                   // 2 is unused
+	Happy         = 0, // General happiness, jumping.
+	Sad           = 1, // Gakkari animation, disappointment.
+	Unused        = 2, //
 	ShookDry      = 3, // Shaking off water after getting out.
 	ShipPartGaze  = 4, // Staring at a collected ship part.
 	Excited       = 5, // Excited, a mix of jumping and fist-pumping.
