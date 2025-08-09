@@ -148,14 +148,43 @@ struct TitleSetupSection : public Node {
 			mLightPool.add(light);
 		}
 
-		mCurrentMenu              = nullptr;
-		mMenu                     = new Menu(mController, gsys->mConsFont, false);
+		mCurrentMenu = nullptr;
+
+#if defined(DEVELOP) || defined(WIN32)
+		Menu* optionsMenu = new Menu(mController, gsys->mConsFont, false);
+
+		optionsMenu->mAnchorPoint.mMinX = glnWidth / 2;
+		optionsMenu->mAnchorPoint.mMinY = glnHeight / 2 + 40;
+		optionsMenu->mDiffuseColour.set(128, 32, 32, 192);
+		optionsMenu->mHighlightColour.set(32, 32, 32, 64);
+
+		optionsMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+		gameflow.addOptionsMenu(optionsMenu);
+#endif
+
+		mMenu = new Menu(mController, gsys->mConsFont, false);
+
 		mMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 80;
 
 		mMenu->addKeyEvent(Menu::KeyEventType::Navigate, KBBTN_START | KBBTN_A,
 		                   new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
 		mMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+
+#if defined(DEVELOP) || defined(WIN32)
+		mMenu->addOption(SECTION_OnePlayer << 16, "Start GL Game", nullptr, true);
+		mMenu->addOption(SECTION_OnePlayer << 16, "Challenge Mode", new Delegate1<TitleSetupSection, Menu&>(this, &menuChallengeOption),
+		                 true);
+		mMenu->addOption(SECTION_MovSample << 16, "Movie Sample", nullptr, true);
+		mMenu->addOption(SECTION_OgTest << 16, "Rumble", nullptr, true);
+		mMenu->addOption(SECTION_PaniTest << 16, "TestScreen", nullptr, true);
+
+		mMenu->addOption(0, nullptr, nullptr, true);
+		mMenu->addMenu(mDayMgr->mMenu, 0, "Lighting");
+		mMenu->addOption(0, nullptr, nullptr, true);
+		mMenu->addMenu(optionsMenu, 0, "Options");
+#endif
+
 		mNextSectionId = 0;
 
 		gameflow.mFrameCacher = new AnimFrameCacher(8000);
@@ -358,11 +387,13 @@ struct TitleSetupSection : public Node {
 					}
 				}
 
-				// if (mController->keyUnClick(KBBTN_Z)) {
-				// 	_2C = mMenu;
-				// 	_2C->open(false);
-				// 	_2C->mIsMenuChanging = true;
-				// }
+#if defined(DEVELOP) || defined(WIN32)
+				if (mController->keyUnClick(KBBTN_Z)) {
+					mCurrentMenu = mMenu;
+					mCurrentMenu->open(false);
+					mCurrentMenu->mIsMenuChanging = true;
+				}
+#endif
 
 				Node::update();
 			}
@@ -521,6 +552,18 @@ struct TitleSetupSection : public Node {
 		mState = 1;
 		gsys->setFade(0.0f, 3.0f);
 	}
+
+	void menuChallengeOption(Menu& parent)
+	{
+		mNextSectionId = parent.mCurrentItem->mData;
+		gameflow.mGamePrefs.Initialise();
+		gameflow.mIsChallengeMode = TRUE;
+		Jac_SceneExit(SCENE_Unk13, 0); // Just an educated guess, as this function is DLL-exclusive.
+		parent.close();
+		mState = 1;
+		gsys->setFade(0.0f, 3.0f);
+	}
+
 	void drawMenu(Graphics& gfx, Menu* menu, f32 p3)
 	{
 		if (menu->mUseCustomPosition) {
@@ -529,9 +572,6 @@ struct TitleSetupSection : public Node {
 
 		menu->draw(gfx, p3);
 	}
-
-	// DLL inlines that look to be cut:
-	void menuChallengeOption(Menu&);
 
 	// _00     = VTBL
 	// _00-_20 = Node
