@@ -95,6 +95,7 @@ protected:
 	void* getBannerPtr();
 	void* getOptionsPtr(int);
 	void* getGameFilePtr(int);
+	void* FAKE_getGameFilePtr(int); // FAKE FAKE FAKE FAKE IT SHOULDN'T NEED TO EXIST
 	RamStream* getBannerStream();
 	RamStream* getOptionsStream(int);
 	RamStream* getGameFileStream(int);
