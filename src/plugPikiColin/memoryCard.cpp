@@ -416,6 +416,13 @@ void* MemoryCard::getGameFilePtr(int idx)
 	// UNUSED FUNCTION
 }
 
+void* MemoryCard::FAKE_getGameFilePtr(int idx)
+{
+	// This explicit temp nonsense seems to be a clue regarding all of the STACK_PAD used in this TU.
+	int gameFileOffset = getGameFileOffset(idx);
+	return &cardData[gameFileOffset];
+}
+
 /*
  * --INFO--
  * Address:	........
@@ -1366,225 +1373,20 @@ void MemoryCard::copyFile(CardQuickInfo& p1, CardQuickInfo& p2)
 
 	mDidSaveFail        = false;
 	gsys->mIsCardSaving = TRUE;
-	memcpy(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), getGameFilePtr(p1.mIndex), 0x8000);
+	memcpy(FAKE_getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), FAKE_getGameFilePtr(p1.mIndex), 0x8000);
 
 	RamStream* stream = getGameFileStream(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	stream->writeByte(2);
 	stream->writeByte(p2.mFlags);
 	stream->setPosition(0x7FF8);
 
-	u32 sum = calcChecksum(getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
+	u32 sum = calcChecksum(FAKE_getGameFilePtr(gameflow.mGamePrefs.mSpareSaveGameIndex - 1), 0x7FF8);
 	stream->writeInt(gameflow.mGamePrefs._DC);
 	stream->writeInt(sum);
 	writeOneGameFile(gameflow.mGamePrefs.mSpareSaveGameIndex - 1);
 	gsys->mIsCardSaving = FALSE;
 
-	STACK_PAD_VAR(12);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r6, 0x803A
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x1
-	  stwu      r1, -0xB0(r1)
-	  stmw      r24, 0x90(r1)
-	  li        r29, 0
-	  addi      r26, r5, 0
-	  subi      r28, r6, 0x1E20
-	  lis       r5, 0x803A
-	  addi      r25, r3, 0
-	  addis     r30, r28, 0x1
-	  lis       r31, 0x1
-	  stb       r29, 0x68(r3)
-	  subi      r3, r5, 0x2848
-	  addi      r27, r3, 0xB5
-	  lwz       r5, 0x2DEC(r13)
-	  stw       r0, 0x270(r5)
-	  subi      r5, r31, 0x8000
-	  lbz       r3, 0xB5(r3)
-	  lwz       r4, 0x0(r4)
-	  subi      r0, r3, 0x1
-	  rlwinm    r3,r0,15,0,16
-	  rlwinm    r0,r4,15,0,16
-	  addi      r3, r3, 0x6000
-	  add       r4, r0, r30
-	  add       r3, r30, r3
-	  subi      r3, r3, 0x5F80
-	  addi      r4, r4, 0x80
-	  bl        -0x72114
-	  lbz       r4, 0x0(r27)
-	  li        r3, 0x14
-	  subi      r24, r4, 0x1
-	  bl        -0x2E534
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD0
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x7398
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x74C8
-	  lis       r4, 0x802A
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x755C
-	  rlwinm    r0,r24,15,0,16
-	  stw       r4, 0x4(r3)
-	  add       r4, r0, r30
-	  addi      r0, r4, 0x80
-	  stw       r0, 0x8(r3)
-	  subi      r0, r31, 0x8000
-	  stw       r29, 0xC(r3)
-	  stw       r0, 0x10(r3)
-
-	.loc_0xD0:
-	  mr        r29, r3
-	  lwz       r12, 0x4(r29)
-	  li        r4, 0x2
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r0, 0x4(r26)
-	  lwz       r12, 0x4(r29)
-	  rlwinm    r4,r0,0,24,31
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  li        r4, 0x7FF8
-	  lwz       r12, 0x5C(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r3, 0x0(r27)
-	  li        r0, 0x666
-	  mtctr     r0
-	  lis       r4, 0x3254
-	  subi      r0, r3, 0x1
-	  addis     r3, r28, 0x1
-	  rlwinm    r0,r0,15,0,16
-	  add       r12, r0, r3
-	  addi      r24, r4, 0x6532
-	  li        r11, 0
-	  addi      r12, r12, 0x80
-
-	.loc_0x148:
-	  rlwinm    r10,r11,0,24,31
-	  lwz       r0, 0x0(r12)
-	  addi      r5, r10, 0x1
-	  rlwinm    r6,r11,24,0,7
-	  rlwinm    r4,r5,16,8,15
-	  subi      r7, r10, 0x1
-	  or        r4, r6, r4
-	  rlwinm    r6,r7,8,16,23
-	  addi      r11, r11, 0x1
-	  addi      r9, r10, 0x2
-	  rlwinm    r10,r11,0,24,31
-	  or        r3, r6, r4
-	  rlwimi    r3,r9,0,24,31
-	  addi      r5, r10, 0x1
-	  rlwinm    r6,r11,24,0,7
-	  addi      r9, r10, 0x2
-	  rlwinm    r4,r5,16,8,15
-	  add       r24, r24, r3
-	  add       r24, r24, r0
-	  lwz       r0, 0x4(r12)
-	  addi      r11, r11, 0x1
-	  subi      r7, r10, 0x1
-	  rlwinm    r10,r11,0,24,31
-	  or        r4, r6, r4
-	  rlwinm    r6,r7,8,16,23
-	  rlwinm    r8,r9,0,24,31
-	  or        r3, r6, r4
-	  addi      r5, r10, 0x1
-	  rlwinm    r6,r11,24,0,7
-	  rlwinm    r4,r5,16,8,15
-	  or        r3, r8, r3
-	  addi      r9, r10, 0x2
-	  add       r24, r24, r3
-	  add       r24, r24, r0
-	  lwz       r0, 0x8(r12)
-	  subi      r7, r10, 0x1
-	  addi      r11, r11, 0x1
-	  rlwinm    r10,r11,0,24,31
-	  or        r4, r6, r4
-	  rlwinm    r6,r7,8,16,23
-	  rlwinm    r8,r9,0,24,31
-	  or        r3, r6, r4
-	  addi      r5, r10, 0x1
-	  rlwinm    r6,r11,24,0,7
-	  rlwinm    r4,r5,16,8,15
-	  or        r3, r8, r3
-	  add       r24, r24, r3
-	  add       r24, r24, r0
-	  lwz       r0, 0xC(r12)
-	  subi      r7, r10, 0x1
-	  or        r4, r6, r4
-	  rlwinm    r6,r7,8,16,23
-	  addi      r11, r11, 0x1
-	  addi      r9, r10, 0x2
-	  rlwinm    r10,r11,0,24,31
-	  or        r3, r6, r4
-	  rlwimi    r3,r9,0,24,31
-	  addi      r5, r10, 0x1
-	  add       r24, r24, r3
-	  rlwinm    r4,r5,16,8,15
-	  rlwimi    r4,r11,24,0,7
-	  add       r24, r24, r0
-	  lwz       r0, 0x10(r12)
-	  subi      r7, r10, 0x1
-	  addi      r3, r4, 0
-	  addi      r9, r10, 0x2
-	  rlwimi    r3,r7,8,16,23
-	  rlwimi    r3,r9,0,24,31
-	  add       r24, r24, r3
-	  add       r24, r24, r0
-	  addi      r12, r12, 0x14
-	  addi      r11, r11, 0x1
-	  bdnz+     .loc_0x148
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lis       r5, 0x3254
-	  lis       r4, 0x803A
-	  lwz       r12, 0x24(r12)
-	  addi      r0, r5, 0x6532
-	  subi      r4, r4, 0x2848
-	  sub       r0, r0, r24
-	  mtlr      r12
-	  lwz       r4, 0x170(r4)
-	  mr        r24, r0
-	  blrl
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  mr        r4, r24
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lbz       r5, 0x0(r27)
-	  addi      r4, r28, 0x80
-	  li        r3, 0
-	  subi      r24, r5, 0x1
-	  bl        -0x28004
-	  bl        -0x27F84
-	  rlwinm    r3,r24,15,0,16
-	  lwz       r4, 0x38(r25)
-	  addi      r6, r3, 0x6000
-	  addis     r0, r28, 0x1
-	  add       r5, r0, r6
-	  lis       r3, 0x1
-	  subi      r7, r3, 0x8000
-	  li        r3, 0
-	  subi      r5, r5, 0x5F80
-	  bl        -0x27ED0
-	  lwz       r3, 0x2DEC(r13)
-	  li        r0, 0
-	  stw       r0, 0x270(r3)
-	  lwz       r0, 0xB4(r1)
-	  lmw       r24, 0x90(r1)
-	  addi      r1, r1, 0xB0
-	  mtlr      r0
-	  blr
-	*/
+	STACK_PAD_VAR(10);
 }
 
 /*
