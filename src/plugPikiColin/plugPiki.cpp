@@ -194,7 +194,7 @@ int PlugPikiApp::idle()
 PlugPikiApp::PlugPikiApp()
 {
 	setName("Piki the Game");
-	gsys->setHeap(0);
+	gsys->setHeap(SYSHEAP_Sys);
 	hardReset();
 	mCommandStream = new AtxCommandStream(this);
 	if (mCommandStream->open("app", 3)) {
