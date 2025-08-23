@@ -62,8 +62,10 @@ struct MapSelectSetupSection : public Node {
 		mMapListMenu                     = new Menu(mController, mConsFont, false);
 		mMapListMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMapListMenu->mAnchorPoint.mMinY = glnHeight / 2 + 30;
-		mMapListMenu->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
-		mMapListMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
+		mMapListMenu->addKeyEvent(Menu::KeyEventType::Navigate, KBBTN_START | KBBTN_A,
+		                          new Delegate1<MapSelectSetupSection, Menu&>(this, &menuSelectOption));
+		mMapListMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B,
+		                          new Delegate1<Menu, Menu&>(mMapListMenu, &Menu::menuCloseMenu));
 
 		for (StageInfo* inf = (StageInfo*)flowCont.mRootInfo.mChild; inf; inf = (StageInfo*)inf->mNext) {
 			if (gameflow.mIsChallengeMode) {

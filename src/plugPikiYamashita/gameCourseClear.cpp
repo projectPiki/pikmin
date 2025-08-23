@@ -713,7 +713,7 @@ struct GameCourseClearScreen : public Node {
 		mMainMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMainMenu->mAnchorPoint.mMinY = glnHeight / 2;
 
-		mMainMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
+		mMainMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMainMenu, &Menu::menuCloseMenu));
 		mMainMenu->addOption(0, "Quit", new Delegate1<GameCourseClearScreen, Menu&>(this, &menuQuitGame), true);
 		mActiveMenu = 0;
 		gsys->setFade(1.0f, 3.0f);
