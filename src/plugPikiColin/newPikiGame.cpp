@@ -317,7 +317,7 @@ static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 	} else {
 		Jac_StartTextDemo(tutorialId);
 	}
-	gsys->setHeap(5);
+	gsys->setHeap(SYSHEAP_Movie);
 
 	int oldtype    = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
 	tutorialWindow = new zen::ogScrTutorialMgr;
@@ -1066,7 +1066,7 @@ ModeState* DayOverModeState::initialisePhaseThree()
 	gsys->resetHeap(5, 1);
 	gsys->resetHeap(4, 1);
 	gsys->resetHeap(4, 2);
-	int old = gsys->setHeap(4);
+	int old = gsys->setHeap(SYSHEAP_Teki);
 	playerState->setNavi(false);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
@@ -1109,7 +1109,7 @@ ModeState* DayOverModeState::initialisePhaseFour()
 	gsys->resetHeap(5, 1);
 	gsys->resetHeap(4, 1);
 	gsys->resetHeap(4, 2);
-	int old = gsys->setHeap(4);
+	int old = gsys->setHeap(SYSHEAP_Teki);
 
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
 		gameflow.mMoviePlayer->startMovie(DEMOID_EndingSpace, 0, nullptr, nullptr, nullptr, 0xFFFFFFFF, true);

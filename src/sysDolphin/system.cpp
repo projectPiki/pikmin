@@ -818,7 +818,7 @@ void System::Initialise()
 		useSymbols = false;
 	}
 	mHeaps[0].init("sys", 1, (void*)mHeapStart, mHeapEnd);
-	setHeap(0);
+	setHeap(SYSHEAP_Sys);
 	sysCon = new LogStream;
 	errCon = sysCon;
 	DVDInit();
