@@ -364,8 +364,8 @@ void GameFlow::addFilterMenu(Menu* parent)
 		char* buf = new char[0x40];
 		sprintf(buf, "Filter setting %d", mFilters[i]);
 		parent->addOption(i, buf, nullptr, true);
-		parent->addKeyEvent(8, KBBTN_Y, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
-		parent->addKeyEvent(8, KBBTN_X, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
+		parent->addKeyEvent(Menu::KeyEventType::Release, KBBTN_Y, new Delegate1<GameFlow, Menu&>(this, &menuDecreaseFilter));
+		parent->addKeyEvent(Menu::KeyEventType::Release, KBBTN_X, new Delegate1<GameFlow, Menu&>(this, &menuIncreaseFilter));
 	}
 }
 

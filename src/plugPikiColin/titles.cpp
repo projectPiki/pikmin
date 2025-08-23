@@ -118,8 +118,9 @@ struct TitleSetupSection : public Node {
 		mMenu->mAnchorPoint.mMinX = glnWidth / 2;
 		mMenu->mAnchorPoint.mMinY = glnHeight / 2 + 80;
 
-		mMenu->addKeyEvent(0x10, KBBTN_START | KBBTN_A, new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
-		mMenu->addKeyEvent(0x20, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
+		mMenu->addKeyEvent(Menu::KeyEventType::Navigate, KBBTN_START | KBBTN_A,
+		                   new Delegate1<TitleSetupSection, Menu&>(this, &menuSelectOption));
+		mMenu->addKeyEvent(Menu::KeyEventType::SpecialRelease, KBBTN_B, new Delegate1<Menu, Menu&>(mMenu, &Menu::menuCloseMenu));
 		mNextSectionId = 0;
 
 		gameflow.mFrameCacher = new AnimFrameCacher(8000);
