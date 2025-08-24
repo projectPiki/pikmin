@@ -536,7 +536,7 @@ Weed::Weed()
     : ItemCreature(0, nullptr, nullptr)
 {
 	mItemShapeObject = nullptr;
-	setCreatureFlag(0x11);
+	setCreatureFlag(CF_Unk1 | CF_Unk5);
 	// UNUSED FUNCTION
 }
 
