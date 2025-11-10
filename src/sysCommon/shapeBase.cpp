@@ -2055,7 +2055,7 @@ void BaseShape::resolveTextureNames()
 {
 	if (mTextureNameList) {
 		for (int i = 0; i < mAttrListMatCount; i++) {
-			char* texName = &mTextureNameList[32 * i];
+			char* texName = mTextureNameList[i];
 			char filepath[PATH_MAX];
 			sprintf(filepath, "%s%s", gsys->mTextureBase2, texName);
 			mResolvedTextureList[i] = gsys->loadTexture(filepath, true);

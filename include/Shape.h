@@ -349,7 +349,7 @@ struct BaseShape : public CoreNode {
 	int mFallbackTexAttrCount;      // _29C
 	Texture** mResolvedTextureList; // _2A0
 	int mAttrListMatCount;          // _2A4
-	char* mTextureNameList;         // _2A8
+	char (*mTextureNameList)[32];   // _2A8
 	u8 _2AC;                        // _2AC
 };
 
