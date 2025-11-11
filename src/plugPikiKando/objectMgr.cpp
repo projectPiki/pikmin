@@ -745,6 +745,8 @@ void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 {
 	for (int i = 0; i < mMaxClassLength; i++) {
 		if (id == mEntries[i].mClassId) {
+			PRINT("registerClass::id %d duplicates\n", id);
+			ERROR("hello mck\n");
 			return;
 		}
 	}
@@ -757,9 +759,6 @@ void PolyObjectMgr::registerClass(int id, Creature* obj, int size)
 	mEntries[mEntryCount].mClassSize = size;
 	mEntries[mEntryCount].mClassId   = id;
 	mEntryCount++;
-
-	PRINT("registerClass::id %d duplicates\n", id);
-	ERROR("hello mck\n");
 }
 
 /*
