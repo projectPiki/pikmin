@@ -70,5 +70,5 @@ void NTeki::sendMessage(int msg)
  */
 void NTeki::receiveMessage(TekiMessage& msg)
 {
-	eventPerformed(TekiEvent(4, static_cast<Teki*>(this), msg.mTeki));
+	eventPerformed(TekiEvent(TekiEventType::WakeUpCall, static_cast<Teki*>(this), msg.mTeki));
 }
