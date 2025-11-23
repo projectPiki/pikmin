@@ -2133,6 +2133,17 @@ protected:
 };
 
 /**
+ * @brief Completely stripped. This class shows up in the ILK.
+ */
+struct AbsStates {
+public:
+	AbsStates(Piki*);
+
+	void init();
+	void update(Creature*);
+};
+
+/**
  * @brief Almost completely stripped, uniqueInstance gets set to nullptr in pikiMgr.
  */
 struct AiTable {
@@ -2160,13 +2171,13 @@ public:
 
 	void addRows(int, Tables*, int);
 	void addRow(int, ...); // __cdecl?
-	Output* find(int, struct AbsStates*);
+	Output* find(int, AbsStates*);
 
 	static void init() { uniqueInstance = nullptr; }
-	static AiTable* create(struct AbsStates*); // __cdecl?
+	static AiTable* create(AbsStates*); // __cdecl?
 
 protected:
-	AiTable(struct AbsStates*);
+	AiTable(AbsStates*);
 
 	static AiTable* uniqueInstance;
 
