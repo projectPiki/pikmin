@@ -181,7 +181,7 @@ public:
 	virtual void bombDamageCounter(CollPart*) { }         // _11C
 	virtual void drawShape(Graphics&);                    // _120
 
-	void initBoss(struct BirthInfo&, int);
+	void initBoss(BirthInfo&, int);
 	void calcFlickPiki();
 	void createPellet(Vector3f&, f32, bool);
 	bool changeDirection(f32);

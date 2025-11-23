@@ -126,7 +126,7 @@ public:
 
 	virtual void defaultInitialiser() { }                  // _38 (weak)
 	virtual void dump() { }                                // _3C (weak)
-	virtual void draw(struct Graphics&) { }                // _40 (weak)
+	virtual void draw(Graphics&) { }                       // _40 (weak)
 	virtual ~Action();                                     // _44
 	virtual void init(Creature*);                          // _48
 	virtual int exec();                                    // _4C
@@ -1120,7 +1120,7 @@ public:
 	virtual bool resumable() { return true; }            // _5C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
 
-	void initBoid(struct Vector3f&, f32);
+	void initBoid(Vector3f&, f32);
 	void exeBoid();
 
 protected:

@@ -8,8 +8,10 @@
 #include "system.h"
 #include "types.h"
 
+struct AgeServer;
 struct CmdStream;
 struct Graphics;
+struct Material;
 struct SceneData;
 struct Shape;
 struct Texture;
@@ -90,8 +92,8 @@ struct LFlareGroup : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	u32 _14;                    // _14
-	struct Texture* mTexture;   // _18
-	struct Material* mMaterial; // _1C
+	Texture* mTexture;          // _18
+	Material* mMaterial;        // _1C
 	LFInfo* mLFInfo;            // _20
 	u32 mBlendMode;             // _24
 };
@@ -181,12 +183,12 @@ struct LightGroup : public CoreNode {
 	}
 
 #ifdef WIN32
-	void addLight(struct Vector3f&, f32);
-	void ageAddFlare(struct AgeServer&);
-	void ageChangeTexture(struct AgeServer&);
-	void ageDel(struct AgeServer&);
+	void addLight(Vector3f&, f32);
+	void ageAddFlare(AgeServer&);
+	void ageChangeTexture(AgeServer&);
+	void ageDel(AgeServer&);
 
-	virtual void genAge(class AgeServer&);
+	virtual void genAge(AgeServer&);
 #endif
 
 	void loadini(CmdStream*);

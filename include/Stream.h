@@ -4,6 +4,8 @@
 #include "stl/mem.h"
 #include "types.h"
 
+struct String;
+
 /**
  * @brief TODO
  *
@@ -20,7 +22,7 @@ struct Stream {
 	virtual s16 readShort();                    // _10
 	virtual f32 readFloat();                    // _14
 	virtual void readString(char*, int);        // _18
-	virtual void readString(struct String&);    // _1C
+	virtual void readString(String&);           // _1C
 	virtual char* readString();                 // _20
 	virtual void writeInt(int);                 // _24
 	virtual void writeByte(u8);                 // _28

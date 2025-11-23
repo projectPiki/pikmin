@@ -231,8 +231,8 @@ struct AnimData : public CoreNode {
 		_38        = 0;
 	}
 
-	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
-	virtual void makeAnimSRT(int, struct Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
+	virtual void extractSRT(SRT&, int, AnimDataInfo*, f32);                         // _10
+	virtual void makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32);        // _14
 	virtual void detach();                                                          // _18
 	virtual void writeType(RandomAccessStream&) { }                                 // _1C
 

@@ -5,6 +5,7 @@
 #include "math.h"
 #include "types.h"
 
+struct AgeServer;
 struct Matrix3f;
 struct Matrix4f;
 struct Quat;
@@ -223,7 +224,7 @@ struct Vector3f {
 	}
 
 #ifdef WIN32
-	void genAge(struct AgeServer&, char*, Vector3f&, Vector3f&)
+	void genAge(AgeServer&, char*, Vector3f&, Vector3f&)
 	{
 		// Empty implementation
 	}

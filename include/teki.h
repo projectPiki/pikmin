@@ -19,6 +19,7 @@
 #include "zen/CallBack.h"
 
 struct CollEvent;
+struct Colour;
 struct CreaturePlatMgr;
 struct NTeki;
 struct PeveAccelerationEvent;
@@ -224,7 +225,7 @@ public:
 	virtual Teki* spawnTeki(int);                        // _198
 	virtual void shootBall(Creature&);                   // _19C
 	virtual void eventPerformed(TekiEvent&);             // _1A0
-	virtual bool interact(struct TekiInteractionKey&);   // _1A4
+	virtual bool interact(TekiInteractionKey&);          // _1A4
 	virtual bool interactDefault(TekiInteractionKey&);   // _1A8
 	virtual void drawDefault(Graphics&);                 // _1AC
 	virtual void drawTekiShape(Graphics&);               // _1B0
@@ -308,7 +309,7 @@ public:
 	bool interactNavi(Interaction&, Condition&);
 	bool interactPiki(Interaction&, Condition&);
 	void flick();
-	void flick(struct InteractFlick&, InteractFlick&);
+	void flick(InteractFlick&, InteractFlick&);
 	void flickUpper();
 	void flickUpper(InteractFlick&);
 	void flickLower();
@@ -327,7 +328,7 @@ public:
 	WayPoint* getWayPoint(int);
 	WayPoint* getRouteWayPoint(int);
 	void updateLifeGauge();
-	void drawRange(Graphics&, Vector3f&, f32, struct Colour&);
+	void drawRange(Graphics&, Vector3f&, f32, Colour&);
 	CollPart* getFreeSlot();
 	bool isFreeCollPart(CollPart*);
 	void outputWorldAnimationPosition(Vector3f&, int, Matrix4f&);

@@ -90,7 +90,7 @@ public:
 	void rideUfo();
 	void reset();
 	void findNextThrowPiki();
-	void startMotion(struct PaniMotionInfo&, PaniMotionInfo&);
+	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
 	void enableMotionBlend();
 	void updateWalkAnimation();
 	void callPikis(f32);

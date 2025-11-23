@@ -10,6 +10,7 @@
 struct AnimContext;
 struct Material;
 struct BaseShape;
+struct Graphics;
 struct Mesh;
 struct Joint;
 
@@ -54,7 +55,7 @@ struct Joint : public CoreNode {
 	// unused/inlined:
 	void recShowHierarchy();
 	void overrideAnim(AnimContext*);
-	void render(struct Graphics&);
+	void render(Graphics&);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

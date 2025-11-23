@@ -4,8 +4,9 @@
 #include "Ayu.h"
 #include "types.h"
 
-struct Parameters;
 struct AgeServer;
+struct Parameters;
+struct RandomAccessStream;
 
 /**
  * @brief TODO
@@ -22,7 +23,7 @@ struct BaseParm {
 #endif
 
 	virtual int size() = 0;                            // _08
-	virtual void write(struct RandomAccessStream&) { } // _0C
+	virtual void write(RandomAccessStream&) { }        // _0C
 	virtual void read(RandomAccessStream&) { }         // _10
 };
 
@@ -62,7 +63,7 @@ struct Parm : public BaseParm {
 	}
 
 	virtual int size() { return sizeof(T); }        // _08
-	virtual void write(struct RandomAccessStream&); // _0C
+	virtual void write(RandomAccessStream&);        // _0C
 	virtual void read(RandomAccessStream&);         // _10
 
 	T& operator()() { return mValue; }

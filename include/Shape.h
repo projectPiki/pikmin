@@ -20,18 +20,20 @@ template <typename A, typename B>
 struct IDelegate2;
 
 struct AnimContext;
-struct CmdStream;
-struct RouteGroup;
-struct VtxMatrix;
-struct Texture;
-struct CollTriInfo;
-struct NBT;
-struct DispList;
-struct PVWTevInfo;
-struct LFlareGroup;
 struct AnimFrameCacher;
+struct Camera;
+struct CollTriInfo;
+struct CmdStream;
+struct DispList;
+struct Graphics;
 struct Joint;
 struct Joint::MatPoly;
+struct LFlareGroup;
+struct NBT;
+struct PVWTevInfo;
+struct RouteGroup;
+struct Texture;
+struct VtxMatrix;
 
 struct NBT {
 	Vector3f mNormal;   // _00
@@ -233,7 +235,7 @@ struct BaseShape : public CoreNode {
 	virtual void read(RandomAccessStream&);   // _0C
 	virtual void optimize() { }               // _10
 	virtual void update() { }                 // _14
-	virtual void render(struct Graphics&) { } // _18
+	virtual void render(Graphics&) { }        // _18
 	virtual void render2d(Graphics&) { }      // _1C
 	virtual RouteGroup* makeRouteGroup()      // _20
 	{
@@ -246,27 +248,27 @@ struct BaseShape : public CoreNode {
 	void countMaterials(Joint*, u32);
 	void recTraverseMaterials(Joint*, IDelegate2<Joint*, u32>*);
 	ShapeDynMaterials* instanceMaterials(int);
-	void makeInstance(struct ShapeDynMaterials&, int);
-	void drawculled(Graphics&, struct Camera&, ShapeDynMaterials*);
+	void makeInstance(ShapeDynMaterials&, int);
+	void drawculled(Graphics&, Camera&, ShapeDynMaterials*);
 	void drawshape(Graphics&, Camera&, ShapeDynMaterials*);
 	void resolveTextureNames();
 	void recAddMatpoly(Joint*, int);
 	void initIni(bool);
 	void initialise();
 	void createCollisions(int);
-	void calcBasePose(struct Matrix4f&);
+	void calcBasePose(Matrix4f&);
 	AnimData* loadDck(char*, RandomAccessStream&);
 	AnimData* importDck(char*, CmdStream*);
 	AnimData* loadDca(char*, RandomAccessStream&);
 	AnimData* loadAnimation(char* path, bool isRelativePath);
-	struct Matrix4f& getAnimMatrix(int);
+	Matrix4f& getAnimMatrix(int);
 	void backupAnimOverrides(AnimContext**);
 	void restoreAnimOverrides();
 	void overrideAnim(int, AnimContext*);
 	void updateAnim(Graphics&, Matrix4f&, f32*);
 	void calcWeightedMatrices();
 	void makeNormalIndexes(u16*);
-	f32 calcJointWorldPos(Graphics&, int, struct Vector3f&);
+	f32 calcJointWorldPos(Graphics&, int, Vector3f&);
 	void calcJointWorldDir(Graphics&, int, Vector3f&);
 
 	// unused/inlined:

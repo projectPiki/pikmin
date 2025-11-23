@@ -6,6 +6,7 @@
 
 struct PaniMotion;
 struct PaniMotionTable;
+struct PaniMotionInfo;
 
 /**
  * @brief TODO
@@ -80,7 +81,7 @@ struct PaniAnimator : public Animator {
 	virtual void updateContext();             // _18
 
 	void init(AnimContext*, AnimMgr*, PaniMotionTable*);
-	void startMotion(struct PaniMotionInfo&);
+	void startMotion(PaniMotionInfo&);
 	void finishMotion(PaniMotionInfo&);
 	void checkConstantKeys();
 	void checkConstantKey(int);

@@ -11,6 +11,7 @@
 
 #define GENCACHE_HEAP_SIZE (0x6C00)
 
+struct AgeServer;
 struct Creature;
 struct MapMgr;
 struct Pellet;
@@ -19,7 +20,7 @@ struct GenType;
 struct GenArea;
 struct GenObject;
 struct GeneratorMgr;
-struct AgeServer;
+struct RandomAccessStream;
 struct TekiPersonality;
 
 /**
@@ -835,9 +836,9 @@ struct Generator : public Node {
 	Generator();
 	Generator(int);
 
-	virtual void read(struct RandomAccessStream&); // _0C
+	virtual void read(RandomAccessStream&);        // _0C
 	virtual void update();                         // _10
-	virtual void render(struct Graphics&);         // _18
+	virtual void render(Graphics&);                // _18
 
 	bool isExpired();
 	void loadCreature(RandomAccessStream&);

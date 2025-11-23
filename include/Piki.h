@@ -172,7 +172,7 @@ public:
 	void startDamage();
 	void finishDamage();
 	bool isThrowable();
-	void startMotion(struct PaniMotionInfo&, PaniMotionInfo&);
+	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
 	void enableMotionBlend();
 	void checkBridgeWall(Creature*, Vector3f&);
 

@@ -12,6 +12,7 @@
 #include "Vector.h"
 #include "types.h"
 
+struct CollEvent;
 struct CollInfo;
 struct CollTriInfo;
 struct CollPart;
@@ -23,13 +24,18 @@ struct DynCollObject;
 struct FormationMgr;
 struct FormPoint;
 struct Generator;
+struct Graphics;
+struct Interaction;
 struct Matrix4f;
 struct MoveTrace;
 struct Msg;
 struct Pellet;
+struct Plane;
+struct RandomAccessStream;
 struct RopeCreature;
 struct RouteTracer;
 struct SeContext;
+struct Sphere;
 
 /**
  * @brief TODO
@@ -79,7 +85,7 @@ struct Creature : public RefCountable, public EventTalker {
 public:
 	Creature(CreatureProp*);
 
-	virtual bool insideSafeArea(struct Vector3f&) { return true; }   // _10 (weak)
+	virtual bool insideSafeArea(Vector3f&) { return true; }          // _10 (weak)
 	virtual bool platAttachable() { return false; }                  // _14 (weak)
 	virtual bool alwaysUpdatePlatform() { return false; }            // _18
 	virtual bool doDoAI() { return true; }                           // _1C (weak)
@@ -95,7 +101,7 @@ public:
 	virtual f32 getCylinderHeight() { return 10.0f; }                // _44 (weak)
 	virtual void doStore(CreatureInf*) { }                           // _48 (weak)
 	virtual void doRestore(CreatureInf*) { }                         // _4C (weak)
-	virtual void doSave(struct RandomAccessStream&) { }              // _50 (weak)
+	virtual void doSave(RandomAccessStream&) { }                     // _50 (weak)
 	virtual void doLoad(RandomAccessStream&) { }                     // _54 (weak)
 	virtual Vector3f getCentre();                                    // _58
 	virtual f32 getCentreSize();                                     // _5C
@@ -115,12 +121,12 @@ public:
 	virtual bool needFlick(Creature*) { return true; }               // _94 (weak)
 	virtual bool ignoreAtari(Creature*) { return false; }            // _98 (weak)
 	virtual bool isFree() { return isCreatureFlag(CF_Free) != 0; }   // _9C (weak)
-	virtual bool stimulate(struct Interaction&);                     // _A0
+	virtual bool stimulate(Interaction&);                            // _A0
 	virtual void sendMsg(Msg*) { }                                   // _A4 (weak)
-	virtual void collisionCallback(struct CollEvent&) { }            // _A8 (weak)
+	virtual void collisionCallback(CollEvent&) { }                   // _A8 (weak)
 	virtual void bounceCallback() { }                                // _AC (weak)
 	virtual void jumpCallback() { }                                  // _B0 (weak)
-	virtual void wallCallback(struct Plane&, DynCollObject*) { }     // _B4
+	virtual void wallCallback(Plane&, DynCollObject*) { }            // _B4
 	virtual void offwallCallback(DynCollObject*) { }                 // _B8 (weak)
 	virtual void stickCallback(Creature*) { }                        // _BC (weak)
 	virtual void offstickCallback(Creature*) { }                     // _C0 (weak)
@@ -134,7 +140,7 @@ public:
 	virtual void update();                                           // _E0
 	virtual void postUpdate(int, f32);                               // _E4
 	virtual void stickUpdate();                                      // _E8
-	virtual void refresh(struct Graphics&) = 0;                      // _EC
+	virtual void refresh(Graphics&) = 0;                             // _EC
 	virtual void refresh2d(Graphics&) { }                            // _F0 (weak)
 	virtual void renderAtari(Graphics&);                             // _F4
 	virtual void drawShadow(Graphics&);                              // _F8
@@ -194,7 +200,7 @@ public:
 
 	// unused/inlined:
 	void startFixPosition();
-	bool insideSphere(struct Sphere&);
+	bool insideSphere(Sphere&);
 	void adjustDistance(Vector3f&, f32);
 	int getAtariType();
 	CollTriInfo* checkForward(Vector3f&, f32, f32&);
