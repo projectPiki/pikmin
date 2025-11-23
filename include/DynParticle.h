@@ -4,6 +4,8 @@
 #include "CoreNode.h"
 #include "types.h"
 
+struct Graphics;
+
 /**
  * @brief TODO
  *
@@ -14,7 +16,7 @@ struct DynParticle : public CoreNode {
 
 	virtual bool isFree() { return !-mIsFree; }; // _10
 	virtual f32 getSize();                       // _14
-	virtual void refresh(struct Graphics&);      // _18
+	virtual void refresh(Graphics&);             // _18
 	virtual void doKill();                       // _1C
 
 	// _00     = VTBL

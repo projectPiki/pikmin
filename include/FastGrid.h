@@ -3,6 +3,9 @@
 
 #include "types.h"
 
+struct Graphics;
+struct Vector3f;
+
 /**
  * @brief TODO
  */
@@ -13,12 +16,12 @@ struct FastGrid {
 	bool aiCulling();
 	bool aiCullingLarge(int);
 	bool doCulling(const FastGrid&, f32);
-	void updateGrid(const struct Vector3f&);
+	void updateGrid(const Vector3f&);
 	void updateAIGrid(const Vector3f&, bool);
 
 	// unused/inlined:
 	void addAIGrid();
-	void renderAIGrid2D(struct Graphics&);
+	void renderAIGrid2D(Graphics&);
 
 	static void initAIGrid(u8);
 	static void clearAIGrid();

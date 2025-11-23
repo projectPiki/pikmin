@@ -18,6 +18,7 @@ struct GameQuickInfo;
 struct GameChalQuickInfo;
 struct GameInterface;
 struct GameGenFlow;
+struct Menu;
 struct MoviePlayer;
 struct Section;
 struct Shape;
@@ -481,7 +482,7 @@ struct GameFlow : public Node {
 	virtual void update();                  // _10
 
 	void drawLoadLogo(Graphics&, bool, Texture*, f32);
-	void menuToggleTimers(struct Menu&);
+	void menuToggleTimers(Menu&);
 	void menuTogglePrint(Menu&);
 	void menuToggleDInfo(Menu&);
 	void menuToggleDExtra(Menu&);

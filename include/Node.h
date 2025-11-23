@@ -8,6 +8,7 @@
 
 struct Graphics;
 struct Vector3f;
+struct VQS;
 
 /**
  * @brief TODO
@@ -23,7 +24,7 @@ struct Node : public CoreNode {
 	virtual void draw(Graphics&);                          // _14
 	virtual void render(Graphics&);                        // _18
 	virtual void concat() { }                              // _1C (weak)
-	virtual void concat(struct VQS&) { concat(); }         // _20 (weak)
+	virtual void concat(VQS&) { concat(); }                // _20 (weak)
 	virtual void concat(SRT&) { concat(); }                // _24 (weak)
 	virtual void concat(Matrix4f&) { concat(); }           // _28 (weak)
 	virtual Matrix4f* getModelMatrix() { return nullptr; } // _2C (weak)

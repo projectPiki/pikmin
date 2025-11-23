@@ -6,6 +6,8 @@
 #include "Vector.h"
 #include "types.h"
 
+struct Plane;
+
 /**
  * @brief 4x4 Matrix.
  *
@@ -17,18 +19,18 @@ struct Matrix4f {
 	Matrix4f(Mtx44); // stripped, only in matMath.cpp
 
 	void makeIdentity();
-	void makeRotate(struct Vector3f&, f32, f32);
+	void makeRotate(Vector3f&, f32, f32);
 	void makeRotate(Vector3f&, f32);
 	void multiply(Matrix4f&);
 	void multiplyTo(Matrix4f&, Matrix4f&);
 	void makeSRT(Vector3f&, Vector3f&, Vector3f&);
-	void makeConcatSRT(Matrix4f*, Matrix4f&, struct SRT&);
+	void makeConcatSRT(Matrix4f*, Matrix4f&, SRT&);
 	void inverse(Matrix4f*);
 	void scale(Vector3f&);
 	void makeLookat(Vector3f& cameraPos, Vector3f& targetPos, Vector3f* optionalUp);
 	void makeLookat(Vector3f& cameraPos, Vector3f& rightDir, Vector3f& upDir, Vector3f& backDir);
 	void transposeTo(Matrix4f&);
-	void makeVQS(Vector3f&, struct Quat&, Vector3f&);
+	void makeVQS(Vector3f&, Quat&, Vector3f&);
 
 	// unused/inlined:
 	void blend(Matrix4f&, f32);
@@ -44,7 +46,7 @@ struct Matrix4f {
 	void rotateZ(f32);
 	void translate(f32, f32, f32);
 	void makeLookfrom(Vector3f&, Vector3f&);
-	void makeProjection(Vector3f&, struct Plane&);
+	void makeProjection(Vector3f&, Plane&);
 	void makeReflection(Plane&);
 	void makeBillVector(Vector3f&, Matrix4f&, Vector3f&);
 

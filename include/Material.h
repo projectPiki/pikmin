@@ -7,6 +7,7 @@
 #include "Stream.h"
 
 struct Graphics;
+struct Colour;
 
 /**
  * @brief Enum for material flags.
@@ -42,9 +43,7 @@ struct Material : public CoreNode {
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
 
-	Colour& Colour() { return mColourInfo.mColour; }
-
-	void setColour(struct Colour& color)
+	void setColour(Colour& color)
 	{
 		if (mLightingInfo.mCtrlFlag & LightingControlFlags::EnableSpecular) {
 			mTevInfo->mTevColRegs[0].mAnimatedColor.r = color.r;
@@ -55,6 +54,8 @@ struct Material : public CoreNode {
 			mColourInfo.mColour = color;
 		}
 	}
+
+	Colour& Colour() { return mColourInfo.mColour; }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

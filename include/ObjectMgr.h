@@ -7,6 +7,7 @@
 
 struct Condition;
 struct Texture;
+struct Vector3f;
 
 /**
  * @brief TODO.
@@ -29,7 +30,7 @@ struct ObjectMgr : public Traversable, public Node {
 	virtual void drawShadow(Graphics&, Texture*);                     // _5C
 	virtual int getSize() = 0;                                        // _60
 	virtual int getMax()  = 0;                                        // _64
-	virtual Creature* findClosest(struct Vector3f&, f32, Condition*); // _68
+	virtual Creature* findClosest(Vector3f&, f32, Condition*);        // _68
 	virtual Creature* findClosest(Vector3f&, Condition*);             // _6C
 	virtual void search(ObjectMgr*);                                  // _70
 	virtual void killAll();                                           // _74

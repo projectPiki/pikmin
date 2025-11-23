@@ -2,6 +2,7 @@
 #define BOUNDBOX_H
 
 #include "Vector.h"
+
 struct Graphics;
 
 struct BoundBox {

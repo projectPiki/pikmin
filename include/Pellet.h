@@ -295,7 +295,7 @@ public:
 	virtual bool ignoreAtari(Creature*);                 // _98
 	virtual bool isFree();                               // _9C
 	virtual bool stimulate(Interaction&);                // _A0
-	virtual void collisionCallback(struct CollEvent&);   // _A8
+	virtual void collisionCallback(CollEvent&);          // _A8
 	virtual void bounceCallback();                       // _AC
 	virtual void startWaterEffect();                     // _CC
 	virtual void finishWaterEffect();                    // _D0

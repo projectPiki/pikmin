@@ -4,6 +4,7 @@
 #include "types.h"
 
 struct AgeServer;
+struct RandomAccessStream;
 
 /**
  * @brief Represents a 32-bit identifier with associated string ID.
@@ -59,7 +60,7 @@ struct ID32 {
 	 * @brief Reads the ID32's value and string ID from the given random access stream.
 	 * @param stream The random access stream to read from.
 	 */
-	void read(struct RandomAccessStream& stream);
+	void read(RandomAccessStream& stream);
 
 	/**
 	 * @brief Sets the ID32's value to the given value.

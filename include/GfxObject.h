@@ -3,9 +3,10 @@
 
 #include "ID32.h"
 
-struct Texture;
-struct TexImg;
 struct AnimData;
+struct Shape;
+struct TexImg;
+struct Texture;
 
 /**
  * @brief TODO
@@ -61,7 +62,7 @@ struct ShpobjInfo : public GfxobjInfo {
 	{
 	}
 
-	struct Shape* mTarget; // _20
+	Shape* mTarget; // _20
 };
 
 #endif

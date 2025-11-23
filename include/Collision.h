@@ -92,7 +92,7 @@ struct ObjCollInfo : public CoreNode {
 
 	// unused/inlined:
 	void getCentreSize(Vector3f&, f32&);
-	void showInfo(Graphics&, struct Matrix4f&);
+	void showInfo(Graphics&, Matrix4f&);
 	void saveini(char*, RandomAccessStream&);
 
 	// _00     = VTBL
@@ -143,17 +143,17 @@ struct CollPart {
 	ID32 getID();
 	ID32 getCode();
 	Matrix4f getMatrix();
-	void update(struct Graphics&, bool);
-	bool collide(CollPart*, struct Vector3f&);
-	void makeTube(struct Tube&);
+	void update(Graphics&, bool);
+	bool collide(CollPart*, Vector3f&);
+	void makeTube(Tube&);
 
 	// unused/inlined:
 	bool isDamagable();
 	CollPart* getNext();
 	bool collide(Creature*, Vector3f&);
 	bool collide(Vector3f&, f32, Vector3f&);
-	void makeSphere(struct Sphere&);
-	void makeCylinder(struct Cylinder&);
+	void makeSphere(Sphere&);
+	void makeCylinder(Cylinder&);
 	bool samePlatShape(Shape*);
 
 	bool isTubeType() { return mPartType == PART_Tube || mPartType == PART_TubeChild; }

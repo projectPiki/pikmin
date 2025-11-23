@@ -31,7 +31,7 @@ struct Colour {
 	}
 
 	// unused/inlined:
-	void write(struct Stream&);
+	void write(Stream&);
 
 	void lerpTo(Colour& target, f32 ratio, Colour& outColour)
 	{
