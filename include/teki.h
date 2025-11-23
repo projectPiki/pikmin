@@ -143,11 +143,11 @@ enum {
  */
 struct TekiEvent {
 public:
-	TekiEvent(int collisionType, Teki* teki);
-	TekiEvent(int collisionType, Teki* teki, Creature* other);
+	TekiEvent(int eventType, Teki* teki);
+	TekiEvent(int eventType, Teki* teki, Creature* other);
 
 private:
-	void init(int collisionType, Teki* teki, Creature* other);
+	void init(int eventType, Teki* teki, Creature* other);
 
 public:
 	TekiEventType::Type mEventType; // _00

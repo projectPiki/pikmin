@@ -75,7 +75,7 @@ bool InteractSwallow::actTeki(Teki*)
  */
 bool InteractPress::actTeki(Teki* teki)
 {
-	teki->eventPerformed(TekiEvent(3, teki, mOwner));
+	teki->eventPerformed(TekiEvent(TekiEventType::Pressed, teki, mOwner));
 	return true;
 }
 
