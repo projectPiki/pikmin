@@ -389,7 +389,7 @@ public:
 	Vector3f mCurrentPelletPosition;      // _494
 	u16 _4A0;                             // _4A0
 	f32 mCurrentPelletHeight;             // _4A4
-	void* mPelletView;                    // _4A8, both PelletView* and Creature* - see Pellet::getBottomRadius
+	PelletView* mPelletView;              // _4A8
 	PelletAnimator mAnimator;             // _4AC
 	PelletShapeObject* mShapeObject;      // _554
 	u8 _558[0x4];                         // _558, unknown
