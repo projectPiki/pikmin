@@ -32,7 +32,7 @@ PelletAnimInfo::PelletAnimInfo()
 	mID.setID('none');
 	mCreationType = PCT_Resident;
 	mTekiType     = -1;
-	mStartAnimId  = -1;
+	mOverrideJoint  = -1;
 
 	initCore("pelletAnimInfo");
 	mPelletShapeObject = nullptr;
@@ -53,7 +53,7 @@ PelletShapeObject* PelletAnimInfo::createShapeObject()
 
 	if (shape) {
 		sprintf(path2, "%s.bin", mFileName().mString);
-		mPelletShapeObject = new PelletShapeObject(mID.mStringID, shape, mFolderPath().mString, path2, mStartAnimId);
+		mPelletShapeObject = new PelletShapeObject(mID.mStringID, shape, mFolderPath().mString, path2, mOverrideJoint);
 	} else {
 		mPelletShapeObject = nullptr;
 	}
@@ -71,7 +71,7 @@ void PelletAnimInfo::read(RandomAccessStream& stream)
 	mID.read(stream);
 	mCreationType = stream.readInt();
 	mTekiType     = stream.readInt();
-	mStartAnimId  = stream.readInt();
+	mOverrideJoint  = stream.readInt();
 	Parameters::read(stream);
 }
 
@@ -80,7 +80,7 @@ void PelletAnimInfo::read(RandomAccessStream& stream)
  * Address:	8009982C
  * Size:	000140
  */
-PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char* str3, int animationFlag)
+PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char* str3, int overrideJoint)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
@@ -97,8 +97,8 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	mShape->overrideAnim(0, &mAnimatorA);
 	mMotionFlag = 1;
 
-	if (animationFlag != -1) {
-		mShape->overrideAnim(animationFlag, &mAnimatorB);
+	if (overrideJoint != -1) {
+		mShape->overrideAnim(overrideJoint, &mAnimatorB);
 		setMotionFlag(2);
 	}
 }
@@ -242,7 +242,7 @@ void PelletAnimInfo::write(RandomAccessStream& output)
 	mID.write(output);
 	output.writeInt(mCreationType);
 	output.writeInt(mTekiType);
-	output.writeInt(mStartAnimId);
+	output.writeInt(mOverrideJoint);
 	Parameters::write(output);
 }
 
@@ -278,7 +278,7 @@ void PelletAnimInfo::genAge(AgeServer& server)
 
 	if (mPelletShapeObject) {
 		server.StartGroup("joint");
-		server.StartOptionBox("ジョイント", &mStartAnimId, 252);
+		server.StartOptionBox("ジョイント", &mOverrideJoint, 252);
 		server.NewOption("なし", -1);
 		for (int i = 0; i < mPelletShapeObject->mShape->mJointCount; i++) {
 			if (mPelletShapeObject->mShape->mJointList[i].mName) {

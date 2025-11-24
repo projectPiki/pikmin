@@ -46,7 +46,7 @@ struct PelletAnimInfo : public Parameters, public CoreNode {
 	int mTekiType;            // _28, uses the TekiTypes_* enum
 	Parm<String> mFolderPath; // _2C
 	Parm<String> mFileName;   // _40
-	int mStartAnimId;         // _54
+	int mOverrideJoint;         // _54
 
 	// why is this split like this.
 	virtual void read(RandomAccessStream&); // _18
