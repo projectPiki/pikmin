@@ -970,7 +970,7 @@ void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 
 	mAnimator.init(&mPelletShape->mAnimatorA, &mPelletShape->mAnimatorB, mPelletShape->mAnimMgr, pelletMgr->mUfoMotionTable);
 	mMotionSpeed = 0.0f;
-	mAnimator.startMotion(PaniMotionInfo(0));
+	mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry));
 }
 
 /*
@@ -1043,7 +1043,7 @@ void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
 		break;
 
 	case KEY_Finished:
-		startMotion(2, 2);
+		startMotion(PelletMotion::After, PelletMotion::After);
 		mMotionSpeed = 30.0f;
 		PRINT("*** AFTER MOTION START * (%s)\n", ID32(mModelID).mStringID);
 		break;
@@ -1081,10 +1081,10 @@ void PlayerState::ufoAssignStart()
 	}
 
 	if (parts->mPelletShape->isMotionFlag(PelletMotionFlags::UsePassive)) {
-		parts->startMotion(1, 3);
+		parts->startMotion(PelletMotion::Appear, PelletMotion::Passive);
 		parts->setMotionSpeed(30.0f);
 	} else {
-		parts->startMotion(1);
+		parts->startMotion(PelletMotion::Appear);
 		parts->setMotionSpeed(30.0f);
 	}
 	mCurrentRepairingPart = nullptr;
@@ -1097,10 +1097,10 @@ void PlayerState::ufoAssignStart()
  */
 void PlayerState::startSpecialMotions()
 {
-	startUfoPartsMotion(UFOID_Bowsprit, 4, false);
-	startUfoPartsMotion(UFOID_WhimsicalRadar, 4, false);
-	startUfoPartsMotion(UFOID_InterstellarRadio, 4, false);
-	startUfoPartsMotion(UFOID_GuardSatellite, 4, false);
+	startUfoPartsMotion(UFOID_Bowsprit, PelletMotion::Special, false);
+	startUfoPartsMotion(UFOID_WhimsicalRadar, PelletMotion::Special, false);
+	startUfoPartsMotion(UFOID_InterstellarRadio, PelletMotion::Special, false);
+	startUfoPartsMotion(UFOID_GuardSatellite, PelletMotion::Special, false);
 }
 
 /*
@@ -1114,7 +1114,7 @@ void PlayerState::startAfterMotions()
 		UfoParts* part = &mUfoParts[i];
 		if (part && part->mPartVisType != PARTVIS_Uncollected && part->mPelletShape) {
 			PRINT("(%s) : AFTER motion \n", ID32(part->mModelID).mStringID);
-			part->startMotion(2, 2);
+			part->startMotion(PelletMotion::After, PelletMotion::After);
 			part->setMotionSpeed(30.0f);
 		}
 	}
@@ -1131,7 +1131,7 @@ void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 	if (part) {
 		if (part->mPelletShape->isMotionFlag(PelletMotionFlags::UsePassive)) {
 			if (wantPassiveMotion) {
-				part->startMotion(anim, 3);
+				part->startMotion(anim, PelletMotion::Passive);
 			} else {
 				part->startMotion(anim, anim);
 			}
@@ -1260,10 +1260,10 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 
 	if (!isInvisiblePart) {
 		if (parts->mPelletShape->isMotionFlag(PelletMotionFlags::UsePassive)) {
-			parts->startMotion(1, 3);
+			parts->startMotion(PelletMotion::Appear, PelletMotion::Passive);
 			parts->setMotionSpeed(0.0f);
 		} else {
-			parts->startMotion(1);
+			parts->startMotion(PelletMotion::Appear);
 			parts->setMotionSpeed(0.0f);
 		}
 	}
