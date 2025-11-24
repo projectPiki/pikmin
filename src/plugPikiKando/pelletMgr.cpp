@@ -406,9 +406,9 @@ void Pellet::startPick()
 
 	if (!mPelletView) {
 		if (isMotionFlag(PelletMotionFlags::UsePassive)) {
-			mAnimator.startMotion(PaniMotionInfo(0), PaniMotionInfo(3, this));
+			mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry), PaniMotionInfo(PelletMotion::Passive, this));
 		} else {
-			mAnimator.startMotion(PaniMotionInfo(0));
+			mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry));
 		}
 	}
 
@@ -1103,10 +1103,10 @@ void Pellet::startAI(int doSpawnScaleOff)
 
 	if (mPelletView == nullptr) {
 		if (isMotionFlag(PelletMotionFlags::UsePassive)) {
-			mAnimator.startMotion(PaniMotionInfo(0), PaniMotionInfo(3, this));
+			mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry), PaniMotionInfo(PelletMotion::Passive, this));
 			badMotionOverride = false;
 		} else {
-			mAnimator.startMotion(PaniMotionInfo(0));
+			mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry));
 		}
 	} else {
 		startCarryMotion(0.0f);
@@ -1174,7 +1174,7 @@ void Pellet::startAppear()
 	mTargetGoal  = nullptr;
 	mPikiCarrier = nullptr;
 	if (!mPelletView) {
-		mAnimator.startMotion(PaniMotionInfo(0));
+		mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry));
 		mMotionSpeed = 30.0f;
 	}
 	mStateMachine->transit(this, PELSTATE_Appear);
