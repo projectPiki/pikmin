@@ -1076,7 +1076,7 @@ void PlayerState::ufoAssignStart()
 {
 	UfoParts* parts = mCurrentRepairingPart;
 	if (!parts) {
-		PRINT("after motion を再生すべき ?\n");
+		PRINT("after motion を再生すべき ?\n"); // Should I play after motion?
 		return;
 	}
 
@@ -1113,8 +1113,7 @@ void PlayerState::startAfterMotions()
 	for (int i = 0; i < mTotalRegisteredParts; i++) {
 		UfoParts* part = &mUfoParts[i];
 		if (part && part->mPartVisType != PARTVIS_Uncollected && part->mPelletShape) {
-			ID32 id(part->mModelID);
-			PRINT("(%s) : AFTER motion \n", id.mStringID);
+			PRINT("(%s) : AFTER motion \n", ID32(part->mModelID).mStringID);
 			part->startMotion(2, 2);
 			part->setMotionSpeed(30.0f);
 		}
@@ -1126,20 +1125,20 @@ void PlayerState::startAfterMotions()
  * Address:	8008120C
  * Size:	00010C
  */
-void PlayerState::startUfoPartsMotion(u32 id, int anim, bool flag)
+void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 {
-	UfoParts* parts = findUfoParts(id);
-	if (parts) {
-		if (parts->mPelletShape->isMotionFlag(2)) {
-			if (flag) {
-				parts->startMotion(anim, 3);
+	UfoParts* part = findUfoParts(id);
+	if (part) {
+		if (part->mPelletShape->isMotionFlag(2)) {
+			if (wantPassiveMotion) {
+				part->startMotion(anim, 3);
 			} else {
-				parts->startMotion(anim, anim);
+				part->startMotion(anim, anim);
 			}
-			parts->setMotionSpeed(30.0f);
+			part->setMotionSpeed(30.0f);
 		} else {
-			parts->startMotion(anim);
-			parts->setMotionSpeed(30.0f);
+			part->startMotion(anim);
+			part->setMotionSpeed(30.0f);
 		}
 	}
 }
@@ -1153,9 +1152,8 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 {
 	UfoParts* parts = findUfoParts(partID);
 	if (!parts && !isInvisiblePart) {
-		ID32 id(partID);
-		STACK_PAD_VAR(1);
-		PRINT("parts %s is not registered !\n", id.mStringID);
+		STACK_PAD_INLINE(1);
+		PRINT("parts %s is not registered !\n", ID32(partID).mStringID);
 		ERROR("sorry\n");
 	}
 
