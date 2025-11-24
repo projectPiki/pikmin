@@ -1080,7 +1080,7 @@ void PlayerState::ufoAssignStart()
 		return;
 	}
 
-	if (parts->mPelletShape->isMotionFlag(2)) {
+	if (parts->mPelletShape->isMotionFlag(PelletMotionFlags::UsePassive)) {
 		parts->startMotion(1, 3);
 		parts->setMotionSpeed(30.0f);
 	} else {
@@ -1129,7 +1129,7 @@ void PlayerState::startUfoPartsMotion(u32 id, int anim, bool wantPassiveMotion)
 {
 	UfoParts* part = findUfoParts(id);
 	if (part) {
-		if (part->mPelletShape->isMotionFlag(2)) {
+		if (part->mPelletShape->isMotionFlag(PelletMotionFlags::UsePassive)) {
 			if (wantPassiveMotion) {
 				part->startMotion(anim, 3);
 			} else {
@@ -1259,7 +1259,7 @@ void PlayerState::getUfoParts(u32 partID, bool isInvisiblePart)
 	}
 
 	if (!isInvisiblePart) {
-		if (parts->mPelletShape->isMotionFlag(2)) {
+		if (parts->mPelletShape->isMotionFlag(PelletMotionFlags::UsePassive)) {
 			parts->startMotion(1, 3);
 			parts->setMotionSpeed(0.0f);
 		} else {

@@ -405,7 +405,7 @@ void Pellet::startPick()
 	startCarryMotion(30.0f);
 
 	if (!mPelletView) {
-		if (isMotionFlag(2)) {
+		if (isMotionFlag(PelletMotionFlags::UsePassive)) {
 			mAnimator.startMotion(PaniMotionInfo(0), PaniMotionInfo(3, this));
 		} else {
 			mAnimator.startMotion(PaniMotionInfo(0));
@@ -892,11 +892,11 @@ bool Pellet::isSlotFlag(int slotID)
 void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 {
 	mCarrierCounter = 0;
-	mMotionFlag     = 1;
+	mMotionFlag     = PelletMotionFlags::Unknown;
 	mShapeObject    = shapeObj;
-	if (shapeObj->isMotionFlag(2)) {
-		setMotionFlag(2);
-		if (!isMotionFlag(2)) {
+	if (shapeObj->isMotionFlag(PelletMotionFlags::UsePassive)) {
+		setMotionFlag(PelletMotionFlags::UsePassive);
+		if (!isMotionFlag(PelletMotionFlags::UsePassive)) {
 			ERROR("WHYYYYYYYYYYY\n"); // same kando
 		}
 	}
@@ -920,7 +920,7 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 void Pellet::initPellet(PelletView* view, PelletConfig* config)
 {
 	mCarrierCounter = 0;
-	mMotionFlag     = 1;
+	mMotionFlag     = PelletMotionFlags::Unknown;
 	mPelletView     = view;
 	mConfig         = config;
 	mScale.set(view->viewGetScale());
@@ -1047,7 +1047,7 @@ void Pellet::doLoad(RandomAccessStream& input)
  */
 void Pellet::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	if (isMotionFlag(2) && event.mEventType == KEY_LoopEnd && isUfoParts() && mConfig->mAnimSoundID() >= 0) {
+	if (isMotionFlag(PelletMotionFlags::UsePassive) && event.mEventType == KEY_LoopEnd && isUfoParts() && mConfig->mAnimSoundID() >= 0) {
 		playEventSound(this, mConfig->mAnimSoundID() + SE_UFOPARTS_SOUNDTYPE);
 	}
 }
@@ -1094,15 +1094,17 @@ void Pellet::startAI(int doSpawnScaleOff)
 	mStuckMouthPart = 0;
 	mPikiCarrier    = nullptr;
 
-	bool check = false;
-	if (mMotionFlag == 3) {
-		check = true;
+	// Pellets using mPelletView (corpses) are forbidden from using `PelletMotionFlags::UsePassive`.  This is because
+	// the animation manager for a PelletView will have some unrelated animation at the index `PelletMotion::Passive`.
+	bool badMotionOverride = false;
+	if (mMotionFlag == (PelletMotionFlags::Unknown | PelletMotionFlags::UsePassive)) {
+		badMotionOverride = true;
 	}
 
-	if (!mPelletView) {
-		if (isMotionFlag(2)) {
+	if (mPelletView == nullptr) {
+		if (isMotionFlag(PelletMotionFlags::UsePassive)) {
 			mAnimator.startMotion(PaniMotionInfo(0), PaniMotionInfo(3, this));
-			check = false;
+			badMotionOverride = false;
 		} else {
 			mAnimator.startMotion(PaniMotionInfo(0));
 		}
@@ -1110,9 +1112,14 @@ void Pellet::startAI(int doSpawnScaleOff)
 		startCarryMotion(0.0f);
 	}
 
-	if (check) {
-		// The string says `isMotionFlag`, but the code says `isCreatureFlag`. I think `isMotionFlag` was intended.
-		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isCreatureFlag(2) ? "true" : "false");
+	if (badMotionOverride) {
+		// The string says `isMotionFlag`, but the code says `isCreatureFlag`.  Note that `Creature::isCreatureFlag` is
+		// actually `Creature::isFlag` according to the ILK, but we chose to ignore that.  This must have been a typo.
+#if defined(BUGFIX)
+		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isMotionFlag(PelletMotionFlags::UsePassive) ? "true" : "false");
+#else
+		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isCreatureFlag(PelletMotionFlags::UsePassive) ? "true" : "false");
+#endif
 		ERROR("DAME DESU YO !\n"); // 'no you can't!'
 	}
 
