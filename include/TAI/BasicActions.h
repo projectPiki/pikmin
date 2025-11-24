@@ -27,7 +27,7 @@ struct TaiActionStateAction : public TaiAction {
  */
 struct TaiSetOptionAction : public TaiAction {
 	TaiSetOptionAction(int option, bool doSet)
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 		mOpt   = option;
 		mDoSet = doSet;

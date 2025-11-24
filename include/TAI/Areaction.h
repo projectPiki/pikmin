@@ -47,7 +47,7 @@ protected:
 struct TAIAdie : public TaiAction {
 public:
 	inline TAIAdie() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

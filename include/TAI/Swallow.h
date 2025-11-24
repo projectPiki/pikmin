@@ -150,7 +150,7 @@ struct TaiSwallowFlickingAction : public TaiMotionAction {
  */
 struct TaiSwallowSwallowingFlickAction : public TaiAction {
 	inline TaiSwallowSwallowingFlickAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
