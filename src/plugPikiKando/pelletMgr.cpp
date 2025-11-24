@@ -279,7 +279,7 @@ void Pellet::doKill()
 	setTrySound(false);
 	mIsAlive = 0;
 	if (mPelletView) {
-		static_cast<PelletView*>(mPelletView)->viewKill();
+		mPelletView->viewKill();
 		mPelletView = nullptr;
 	}
 	mSeContext->releaseEvent();
@@ -312,7 +312,13 @@ bool Pellet::ignoreAtari(Creature* creature)
 		return true;
 	}
 
-	if (mPelletView && creature == mPelletView) {
+	// The following C-style cast is illegal, as `Creature` does not inherit from `PelletView`.
+#if defined(BUGFIX)
+	if (mPelletView && creature == static_cast<BTeki*>(mPelletView))
+#else
+	if (mPelletView && creature == (Creature*)mPelletView)
+#endif
+	{
 		return true;
 	}
 
@@ -532,7 +538,7 @@ void Pellet::doCarry(Creature* carryingPiki, Vector3f& direction, u16 carrierCou
 f32 Pellet::getBottomRadius()
 {
 	if (mPelletView) {
-		return static_cast<PelletView*>(mPelletView)->viewGetBottomRadius();
+		return mPelletView->viewGetBottomRadius();
 	}
 
 	bool hasCentPart = false;
@@ -557,7 +563,12 @@ f32 Pellet::getBottomRadius()
 		}
 
 		PRINT("PELLE IS %s (view=%x)\n", mConfig->mPelletName.mValue.mString, mPelletView);
-		PRINT("if view is creature, the name is %s\n", ObjType::getName(static_cast<Creature*>(mPelletView)->mObjType));
+		// The following C-style cast is illegal, as `Creature` does not inherit from `PelletView`.
+#if defined(BUGFIX)
+		PRINT("if view is creature, the name is %s\n", ObjType::getName(static_cast<BTeki*>(mPelletView)->mObjType));
+#else
+		PRINT("if view is creature, the name is %s\n", ObjType::getName(((Creature*)mPelletView)->mObjType));
+#endif
 		ERROR("BottomRadius Loop\n");
 	}
 
@@ -582,7 +593,7 @@ Vector3f Pellet::getCentre()
 f32 Pellet::getCylinderHeight()
 {
 	if (mPelletView) {
-		return static_cast<PelletView*>(mPelletView)->viewGetHeight();
+		return mPelletView->viewGetHeight();
 	}
 	return mConfig->mCarryInfoHeight();
 }
@@ -595,8 +606,8 @@ f32 Pellet::getCylinderHeight()
 f32 Pellet::getSize()
 {
 	if (mPelletView) {
-		Vector3f viewScale(static_cast<PelletView*>(mPelletView)->viewGetScale());
-		return viewScale.x * static_cast<PelletView*>(mPelletView)->viewGetBottomRadius();
+		Vector3f viewScale(mPelletView->viewGetScale());
+		return viewScale.x * mPelletView->viewGetBottomRadius();
 	}
 	return getBottomRadius();
 }
@@ -926,7 +937,7 @@ void Pellet::startCarryMotion(f32 speed)
 {
 	mMotionSpeed = speed;
 	if (mPelletView) {
-		static_cast<PelletView*>(mPelletView)->viewStartTrembleMotion(mMotionSpeed);
+		mPelletView->viewStartTrembleMotion(mMotionSpeed);
 	}
 }
 
@@ -938,7 +949,7 @@ void Pellet::startCarryMotion(f32 speed)
 void Pellet::stopMotion()
 {
 	if (mPelletView) {
-		static_cast<PelletView*>(mPelletView)->viewSetMotionSpeed(0.0f);
+		mPelletView->viewSetMotionSpeed(0.0f);
 	} else {
 		mMotionSpeed = 0.0f;
 	}
@@ -952,7 +963,7 @@ void Pellet::stopMotion()
 void Pellet::finishMotion()
 {
 	if (mPelletView) {
-		static_cast<PelletView*>(mPelletView)->viewFinishMotion();
+		mPelletView->viewFinishMotion();
 	} else {
 		mAnimator.finishMotion(&PaniMotionInfo(-1), nullptr);
 	}
@@ -1174,7 +1185,7 @@ void Pellet::doAnimation()
 	}
 
 	if (mPelletView) {
-		static_cast<PelletView*>(mPelletView)->viewDoAnimation();
+		mPelletView->viewDoAnimation();
 	}
 }
 
@@ -1452,7 +1463,7 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 
 	if (mPelletView) {
 		if (aiCullable()) {
-			static_cast<PelletView*>(mPelletView)->viewDraw(gfx, mtx);
+			mPelletView->viewDraw(gfx, mtx);
 		}
 		return;
 	}
@@ -1493,7 +1504,7 @@ void Pellet::doCreateColls(Graphics& gfx)
 	int collNum        = mConfig->_C0();
 
 	if (mPelletView) {
-		rad *= static_cast<PelletView*>(mPelletView)->viewGetScale().x;
+		rad *= mPelletView->viewGetScale().x;
 	}
 
 	for (int i = 0; i < collNum; i++) {
@@ -1503,7 +1514,7 @@ void Pellet::doCreateColls(Graphics& gfx)
 
 		ptclPos.set(rad * cosf(angle), 0.0f, rad * sinf(angle));
 
-		ptclPos.y += (mPelletView) ? getCylinderHeight() : getCylinderHeight() * mConfig->mPelletScale();
+		ptclPos.y += mPelletView ? getCylinderHeight() : getCylinderHeight() * mConfig->mPelletScale();
 		addParticle(secondPtclSize, ptclPos);
 	}
 }
