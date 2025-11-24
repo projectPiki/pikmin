@@ -95,11 +95,11 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	}
 
 	mShape->overrideAnim(0, &mAnimatorA);
-	mMotionFlag = 1;
+	mMotionFlag = PelletMotionFlags::Unknown;
 
 	if (overrideJoint != -1) {
 		mShape->overrideAnim(overrideJoint, &mAnimatorB);
-		setMotionFlag(2);
+		setMotionFlag(PelletMotionFlags::UsePassive);
 	}
 }
 
