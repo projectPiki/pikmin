@@ -21,11 +21,11 @@ struct TaiAction {
 	// _04 = VTBL
 	int mNextState; // _00
 
-	virtual void start(Teki& teki) { }                                            // _08
-	virtual void finish(Teki& teki) { }                                           // _0C
-	virtual bool act(Teki& teki) { return 0; }                                    // _10
-	virtual bool actByEvent(TekiEvent& event) { return 0; }                       // _14
-	virtual bool hasNextState() { return (mNextState >= 0 || mNextState == -2); } // _18
+	virtual void start(Teki& teki) { }                                                            // _08
+	virtual void finish(Teki& teki) { }                                                           // _0C
+	virtual bool act(Teki& teki) { return 0; }                                                    // _10
+	virtual bool actByEvent(TekiEvent& event) { return 0; }                                       // _14
+	virtual bool hasNextState() { return (mNextState >= 0 || mNextState == TAI_RETURN_TRANSIT); } // _18
 };
 
 /**

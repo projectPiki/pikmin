@@ -9,7 +9,7 @@
  */
 struct TaiBounceAction : public TaiAction {
 	inline TaiBounceAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -24,7 +24,7 @@ struct TaiBounceAction : public TaiAction {
  */
 struct TaiGroundCollisionAction : public TaiAction {
 	inline TaiGroundCollisionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -84,7 +84,7 @@ struct TaiPikiCollisionAction : public TaiCreatureCollisionAction {
  */
 struct TaiNaviCollisionAction : public TaiCreatureCollisionAction {
 	inline TaiNaviCollisionAction() // TODO: this is a guess
-	    : TaiCreatureCollisionAction(-1)
+	    : TaiCreatureCollisionAction(TAI_NO_TRANSIT)
 	{
 	}
 

@@ -79,7 +79,7 @@ struct TaiShellStrategy : public TaiStrategy {
  */
 struct TaiShellSetPositionAction : public TaiAction {
 	inline TaiShellSetPositionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -97,7 +97,7 @@ struct TaiShellSetPositionAction : public TaiAction {
  */
 struct TaiShellSaveItemPositionAction : public TaiAction {
 	inline TaiShellSaveItemPositionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -203,7 +203,7 @@ struct TaiPearlStrategy : public TaiStrategy {
  */
 struct TaiPearlTresureSoundAction : public TaiAction {
 	inline TaiPearlTresureSoundAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

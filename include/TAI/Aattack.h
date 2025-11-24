@@ -65,7 +65,7 @@ protected:
 struct TAIAtargetNavi : public TaiAction {
 public:
 	inline TAIAtargetNavi() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -83,7 +83,7 @@ protected:
 struct TAIAtargetPiki : public TaiAction {
 public:
 	inline TAIAtargetPiki() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

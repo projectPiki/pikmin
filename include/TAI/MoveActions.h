@@ -39,7 +39,7 @@ struct TaiStopMoveAction : public TaiAction {
  */
 struct TaiStartFlyingAction : public TaiAction {
 	inline TaiStartFlyingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -54,7 +54,7 @@ struct TaiStartFlyingAction : public TaiAction {
  */
 struct TaiFinishFlyingAction : public TaiAction {
 	inline TaiFinishFlyingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -69,7 +69,7 @@ struct TaiFinishFlyingAction : public TaiAction {
  */
 struct TaiMakeVelocityDirectionAction : public TaiAction {
 	inline TaiMakeVelocityDirectionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -84,7 +84,7 @@ struct TaiMakeVelocityDirectionAction : public TaiAction {
  */
 struct TaiMakeAccelerationDirectionAction : public TaiAction {
 	inline TaiMakeAccelerationDirectionAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -161,7 +161,7 @@ struct TaiParabolaAction : public TaiAction {
  */
 struct TaiCircleMoveAction : public TaiAction {
 	inline TaiCircleMoveAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -319,7 +319,7 @@ struct TaiGoingHomeAction : public TaiContinuousMotionAction {
  */
 struct TaiDirectTurnAction : public TaiAction {
 	inline TaiDirectTurnAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

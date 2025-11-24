@@ -89,7 +89,7 @@ struct TaiStartDyingAction : public TaiAction {
  */
 struct TaiSpawnItemsAction : public TaiAction {
 	TaiSpawnItemsAction()
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

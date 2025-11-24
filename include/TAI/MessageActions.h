@@ -28,7 +28,7 @@ struct TaiKeySendMessageAction : public TaiAction {
  */
 struct TaiSendMessageAction : public TaiAction {
 	inline TaiSendMessageAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 

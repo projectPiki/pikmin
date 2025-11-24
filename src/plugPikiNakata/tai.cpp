@@ -142,7 +142,7 @@ bool TaiState::act(Teki& teki)
 
 			volatile int& stateID = teki.mStateID;
 			int startVal          = teki.mStateID;
-			if (action->mNextState == -2) {
+			if (action->mNextState == TAI_RETURN_TRANSIT) {
 				stateID = teki.mReturnStateID;
 			} else {
 				stateID = action->mNextState;
@@ -172,7 +172,7 @@ bool TaiState::eventPerformed(TekiEvent& event)
 			Teki* volatile teki = event.mTeki;
 			int startVal        = event.mTeki->mStateID;
 			int nextState       = action->mNextState;
-			if (nextState == -2) {
+			if (nextState == TAI_RETURN_TRANSIT) {
 				event.mTeki->mStateID = event.mTeki->mReturnStateID;
 			} else {
 				event.mTeki->mStateID = nextState;

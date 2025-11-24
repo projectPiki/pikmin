@@ -250,7 +250,7 @@ struct TaiNapkidFlyingAction : public TaiAction {
  */
 struct TaiNapkidAscendingAction : public TaiAction {
 	inline TaiNapkidAscendingAction() // TODO: i believe this is unused
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -299,7 +299,7 @@ struct TaiNapkidCatchingAction : public TaiAction {
  */
 struct TaiNapkidCatchDescendingAction : public TaiAction {
 	inline TaiNapkidCatchDescendingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -315,7 +315,7 @@ struct TaiNapkidCatchDescendingAction : public TaiAction {
  */
 struct TaiNapkidCatchTracingAction : public TaiAction {
 	inline TaiNapkidCatchTracingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -331,7 +331,7 @@ struct TaiNapkidCatchTracingAction : public TaiAction {
  */
 struct TaiNapkidCatchFlyingAction : public TaiAction {
 	inline TaiNapkidCatchFlyingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -347,7 +347,7 @@ struct TaiNapkidCatchFlyingAction : public TaiAction {
  */
 struct TaiNapkidCatchAscendingAction : public TaiAction {
 	inline TaiNapkidCatchAscendingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -363,7 +363,7 @@ struct TaiNapkidCatchAscendingAction : public TaiAction {
  */
 struct TaiNapkidTakingOffAscendingAction : public TaiAction {
 	inline TaiNapkidTakingOffAscendingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -379,7 +379,7 @@ struct TaiNapkidTakingOffAscendingAction : public TaiAction {
  */
 struct TaiNapkidRisingAscendingAction : public TaiAction {
 	inline TaiNapkidRisingAscendingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -395,7 +395,7 @@ struct TaiNapkidRisingAscendingAction : public TaiAction {
  */
 struct TaiNapkidThrowingPikiAction : public TaiAction {
 	inline TaiNapkidThrowingPikiAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -427,7 +427,7 @@ struct TaiNapkidFlickAction : public TaiAction {
  */
 struct TaiNapkidFallingAction : public TaiAction {
 	inline TaiNapkidFallingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -444,7 +444,7 @@ struct TaiNapkidFallingAction : public TaiAction {
  */
 struct TaiNapkidShockFallingAction : public TaiAction {
 	inline TaiNapkidShockFallingAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -460,7 +460,7 @@ struct TaiNapkidShockFallingAction : public TaiAction {
  */
 struct TaiNapkidFallingWaterEffectAction : public TaiAction {
 	inline TaiNapkidFallingWaterEffectAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
@@ -476,7 +476,7 @@ struct TaiNapkidFallingWaterEffectAction : public TaiAction {
  */
 struct TaiNapkidStartDroppingWaterAction : public TaiAction {
 	inline TaiNapkidStartDroppingWaterAction() // TODO: this is a guess
-	    : TaiAction(-1)
+	    : TaiAction(TAI_NO_TRANSIT)
 	{
 	}
 
