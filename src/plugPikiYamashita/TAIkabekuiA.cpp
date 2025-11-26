@@ -141,7 +141,8 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
 	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::EatingBridge, TekiMotion::Move1);
 
-	TAIAattackWorkObjectKabekuiA* attackWorkObject = new TAIAattackWorkObjectKabekuiA(TAIkabekuiAStateID::Moving, TekiMotion::Move1, 8);
+	TAIAattackWorkObjectKabekuiA* attackWorkObject
+	    = new TAIAattackWorkObjectKabekuiA(TAIkabekuiAStateID::Moving, TekiMotion::Move1, TekiMotion::Attack);
 
 	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiAStateID::Appearing);
 	TAIAdiveKabekuiA* diveKabekuiA                   = new TAIAdiveKabekuiA(TAIkabekuiAStateID::Burrowing);

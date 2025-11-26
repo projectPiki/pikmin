@@ -401,39 +401,40 @@ TAIbeatleStrategy::TAIbeatleStrategy()
 {
 	TAIAinitBeatle* initBeatle     = new TAIAinitBeatle(TAIbeatleStateID::Unk2);
 	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIbeatleStateID::Dying);
-	TAIAdyingBeatle* dyingBeatle   = new TAIAdyingBeatle(TAI_NO_TRANSIT, 0);
+	TAIAdyingBeatle* dyingBeatle   = new TAIAdyingBeatle(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAstop* stopAct              = new TAIAstop(TAI_NO_TRANSIT);
 	TAIAdamageBeatle* damageBeatle = new TAIAdamageBeatle(TAI_NO_TRANSIT);
 
-	TAIAreserveMotion* unused1 = new TAIAreserveMotion(TAI_NO_TRANSIT, 2);
+	TAIAreserveMotion* unused1 = new TAIAreserveMotion(TAI_NO_TRANSIT, TekiMotion::Wait1);
 
 	TAIAtimerReaction* timerReaction = new TAIAtimerReaction(TAIbeatleStateID::Unk3, 3.0f);
 
-	TAIArandomWalk* unused2 = new TAIArandomWalk(TAI_NO_TRANSIT, 6);
+	TAIArandomWalk* unused2 = new TAIArandomWalk(TAI_NO_TRANSIT, TekiMotion::Move1);
 
-	TAIAlookAround* lookAroundAct                        = new TAIAlookAround(TAI_NO_TRANSIT, 2, 10, 11);
+	TAIAlookAround* lookAroundAct = new TAIAlookAround(TAI_NO_TRANSIT, TekiMotion::Wait1, TekiMotion::Type1, TekiMotion::Type2);
 	TAIAvisibleNavi* visibleNaviAct                      = new TAIAvisibleNavi(TAIbeatleStateID::Unk6);
 	TAIAvisiblePikiBeatle* visiblePikiAct                = new TAIAvisiblePikiBeatle(TAIbeatleStateID::Unk6);
-	TAIAturnFocusCreature* focusOnCreatureAct            = new TAIAturnFocusCreature(TAIbeatleStateID::Unk8, 10, 11, true);
+	TAIAturnFocusCreature* focusOnCreatureAct
+	    = new TAIAturnFocusCreature(TAIbeatleStateID::Unk8, TekiMotion::Type1, TekiMotion::Type2, true);
 	TAIAunvisibleTarget* unvisibleTargetAct              = new TAIAunvisibleTarget(TAIbeatleStateID::Unk2);
-	TAIAapproachTargetPriorityFaceDir* approachTargetAct = new TAIAapproachTargetPriorityFaceDir(TAIbeatleStateID::Unk8, 6);
+	TAIAapproachTargetPriorityFaceDir* approachTargetAct = new TAIAapproachTargetPriorityFaceDir(TAIbeatleStateID::Unk8, TekiMotion::Move1);
 
 	TAIAinsideOptionalRangeBeatle* inOptionalRange = new TAIAinsideOptionalRangeBeatle(TAIbeatleStateID::Unk8);
-	TAIArockAttack* rockAttack                     = new TAIArockAttack(TAIbeatleStateID::Unk13, TAIbeatleStateID::Unk11, 8);
+	TAIArockAttack* rockAttack = new TAIArockAttack(TAIbeatleStateID::Unk13, TAIbeatleStateID::Unk11, TekiMotion::Attack);
 	TAIAoutsideTerritory* outsideTerritoryAct      = new TAIAoutsideTerritory(TAIbeatleStateID::Unk9);
 
-	TAIAturnHome* turnHomeAct = new TAIAturnHome(TAIbeatleStateID::Unk10, 10, 11);
-	TAIAgoingHome* goHomeAct  = new TAIAgoingHome(TAIbeatleStateID::Unk2, 6);
+	TAIAturnHome* turnHomeAct = new TAIAturnHome(TAIbeatleStateID::Unk10, TekiMotion::Type1, TekiMotion::Type2);
+	TAIAgoingHome* goHomeAct  = new TAIAgoingHome(TAIbeatleStateID::Unk2, TekiMotion::Move1);
 
-	TAIAflickingAfterMotionLoopBeatle* flickAfterMotion = new TAIAflickingAfterMotionLoopBeatle(TAIbeatleStateID::Unk2, 9);
+	TAIAflickingAfterMotionLoopBeatle* flickAfterMotion = new TAIAflickingAfterMotionLoopBeatle(TAIbeatleStateID::Unk2, TekiMotion::Flick);
 	TAIAinvincibleOff* invincibleOffAct1                = new TAIAinvincibleOff(TAI_NO_TRANSIT);
 	TAIAinvincibleOff* invincibleOffAct2                = new TAIAinvincibleOff(TAI_NO_TRANSIT);
 	TAIAcheckTurnAngle* checkTurnAngleAct               = new TAIAcheckTurnAngle(TAIbeatleStateID::Unk12, 1.5707964f, false);
 	TAIAflickingBeatle* flickingAct                     = new TAIAflickingBeatle(TAIbeatleStateID::Unk13, 12);
 
 	TAIAsetTargetPointCircle* setTargetInRadius = new TAIAsetTargetPointCircle(TAIbeatleStateID::Unk4, 0.69813174f);
-	TAIAturnToTarget* turnToTargetAct           = new TAIAturnToTarget(TAIbeatleStateID::Unk5, 10, 11, true);
-	TAIAgoTarget* goToTargetAct                 = new TAIAgoTarget(TAIbeatleStateID::Unk2, 6);
+	TAIAturnToTarget* turnToTargetAct           = new TAIAturnToTarget(TAIbeatleStateID::Unk5, TekiMotion::Type1, TekiMotion::Type2, true);
+	TAIAgoTarget* goToTargetAct                 = new TAIAgoTarget(TAIbeatleStateID::Unk2, TekiMotion::Move1);
 	TAIAnoReaction* noReaction                  = new TAIAnoReaction(TAIbeatleStateID::Unk2);
 	TAIAdisableStick* disableStickAct           = new TAIAdisableStick(TAI_NO_TRANSIT);
 	TAIAeffCloudOfDust* cloudOfDustEffect

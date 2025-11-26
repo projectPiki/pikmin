@@ -276,7 +276,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
     : TaiStrategy(CHAPPYSTATE_COUNT, CHAPPYSTATE_Unk15)
 {
 	TaiStopMoveAction* stopMove                     = new TaiStopMoveAction();
-	TaiStoppingMoveAction* stoppingMove             = new TaiStoppingMoveAction(6);
+	TaiStoppingMoveAction* stoppingMove             = new TaiStoppingMoveAction(TekiMotion::Move1);
 	TaiFinishStoppingMoveAction* finishStoppingMove = new TaiFinishStoppingMoveAction();
 	TaiDeadAction* dead1                            = new TaiDeadAction(CHAPPYSTATE_Unk0);
 	TaiPressedAction* pressed                       = new TaiPressedAction(CHAPPYSTATE_Unk2);
@@ -290,7 +290,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	TaiSimultaneousDamageAction* simDamage                           = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
 	TaiCounterattackSimultaneousDamageAction* counterAttackSimDamage = new TaiCounterattackSimultaneousDamageAction(CHAPPYSTATE_Unk10);
 	TaiChappyLegEffectAction* legEffect                              = new TaiChappyLegEffectAction(-0.5f);
-	TaiDyingAction* dying1                                           = new TaiDyingAction(0);
+	TaiDyingAction* dying1                                           = new TaiDyingAction(TekiMotion::Dead);
 	TaiStartDyingAction* startDying                                  = new TaiStartDyingAction();
 
 	//  STATE -
@@ -316,7 +316,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, once1);
 	setState(CHAPPYSTATE_Unk13, state);
 
-	TaiMotionAction* motion1 = new TaiMotionAction(CHAPPYSTATE_Unk6, 1);
+	TaiMotionAction* motion1 = new TaiMotionAction(CHAPPYSTATE_Unk6, TekiMotion::Damage);
 
 	//  STATE -
 	state = new TaiState(4);
@@ -327,7 +327,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, motion1);
 	setState(CHAPPYSTATE_Unk14, state);
 
-	TaiDyingAction* dying2 = new TaiDyingAction(10);
+	TaiDyingAction* dying2 = new TaiDyingAction(TekiMotion::Type1);
 
 	//  STATE -
 	state = new TaiState(4);
@@ -363,7 +363,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, dye);
 	setState(CHAPPYSTATE_Unk3, state);
 
-	TaiFlickingAction* flicking = new TaiFlickingAction(TAI_RETURN_TRANSIT, 9);
+	TaiFlickingAction* flicking = new TaiFlickingAction(TAI_RETURN_TRANSIT, TekiMotion::Flick);
 
 	//  STATE -
 	state = new TaiState(6);
@@ -377,7 +377,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	setState(CHAPPYSTATE_Unk4, state);
 
 	TaiKeySendMessageAction* keySendMessage = new TaiKeySendMessageAction(0, BTeki::ANIMATION_KEY_OPTION_ACTION_0);
-	TaiContinuousMotionAction* contMotion1  = new TaiContinuousMotionAction(CHAPPYSTATE_Unk11, 11);
+	TaiContinuousMotionAction* contMotion1  = new TaiContinuousMotionAction(CHAPPYSTATE_Unk11, TekiMotion::Type2);
 
 	//  STATE -
 	state = new TaiState(8);
@@ -395,7 +395,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	TaiOutsideTerritoryAction* outsideTerritory2 = new TaiOutsideTerritoryAction(CHAPPYSTATE_Unk12, params->getF(TPF_SafetyTerritoryRange));
 	TaiTargetVisibleNaviPikiAction* targetVisNaviPiki1        = new TaiTargetVisibleNaviPikiAction(CHAPPYSTATE_Unk10);
 	TaiWatchOffTerritoryCenterAction* watchOffTerritoryCenter = new TaiWatchOffTerritoryCenterAction(CHAPPYSTATE_Unk7);
-	TaiContinuousMotionAction* contMotion2                    = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 2);
+	TaiContinuousMotionAction* contMotion2                    = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 	TaiRandomSetAnimationCounterAction* randomAnimCounter     = new TaiRandomSetAnimationCounterAction(0, 1);
 
 	//  STATE -
@@ -442,7 +442,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	setState(CHAPPYSTATE_Unk10, state);
 
 	TaiTurningToTargetPositionAction* turningToTargetPos
-	    = new TaiTurningToTargetPositionAction(CHAPPYSTATE_Unk6, 4, params->getF(TPF_TurnVelocity));
+	    = new TaiTurningToTargetPositionAction(CHAPPYSTATE_Unk6, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 	TaiTargetNestAction* targetNest = new TaiTargetNestAction();
 
 	//  STATE -
@@ -461,7 +461,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 
 	TaiTargetVisibleNaviPikiAction* targetVisNaviPiki2 = new TaiTargetVisibleNaviPikiAction(TAI_NO_TRANSIT);
 	TaiTargetLostAction* targetLost                    = new TaiTargetLostAction(CHAPPYSTATE_Unk12);
-	TaiTracingAction* tracing                          = new TaiTracingAction(6, params->getF(TPF_RunVelocity));
+	TaiTracingAction* tracing                          = new TaiTracingAction(TekiMotion::Move1, params->getF(TPF_RunVelocity));
 
 	//  STATE -
 	state = new TaiState(13);
@@ -481,9 +481,9 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, legEffect);
 	setState(CHAPPYSTATE_Unk11, state);
 
-	TaiMotionAction* motion2                     = new TaiMotionAction(TAI_RETURN_TRANSIT, 8);
+	TaiMotionAction* motion2                     = new TaiMotionAction(TAI_RETURN_TRANSIT, TekiMotion::Attack);
 	TaiAnimationSwallowingAction* animSwallowing = new TaiAnimationSwallowingAction(CHAPPYSTATE_Unk9);
-	TaiActionStateAction* actionState            = new TaiActionStateAction(CHAPPYSTATE_Unk9, 1);
+	TaiActionStateAction* actionState            = new TaiActionStateAction(CHAPPYSTATE_Unk9, TekiMotion::Damage);
 
 	//  STATE -
 	state = new TaiState(8);
@@ -498,7 +498,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, motion2);
 	setState(CHAPPYSTATE_Unk8, state);
 
-	TaiSwitchMotionAction* switchMotion = new TaiSwitchMotionAction(CHAPPYSTATE_Unk11, 5);
+	TaiSwitchMotionAction* switchMotion = new TaiSwitchMotionAction(CHAPPYSTATE_Unk11, TekiMotion::WaitAct2);
 
 	//  STATE -
 	state = new TaiState(5);
@@ -510,7 +510,7 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
 	state->setAction(j++, switchMotion);
 	setState(CHAPPYSTATE_Unk9, state);
 
-	TaiGoingHomeAction* goingHome             = new TaiGoingHomeAction(6, params->getF(TPF_RunVelocity));
+	TaiGoingHomeAction* goingHome             = new TaiGoingHomeAction(TekiMotion::Move1, params->getF(TPF_RunVelocity));
 	TaiInsideTerritoryAction* insideTerritory = new TaiInsideTerritoryAction(CHAPPYSTATE_Unk6, params->getF(TPF_SafetyTerritoryRange));
 
 	//  STATE -

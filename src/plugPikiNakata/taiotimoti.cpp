@@ -263,7 +263,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	TaiSimultaneousDamageAction* simDamage      = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
 	TaiCounterattackSimultaneousDamageAction* counterAttackSimDamage = new TaiCounterattackSimultaneousDamageAction(OTIMOTISTATE_Unk5);
 	TaiOtimotiLegEffectAction* legEffect                             = new TaiOtimotiLegEffectAction(-0.5f);
-	TaiDyingAction* dying                                            = new TaiDyingAction(0);
+	TaiDyingAction* dying                                            = new TaiDyingAction(TekiMotion::Dead);
 	TaiStartDyingAction* startDying                                  = new TaiStartDyingAction();
 
 	//  STATE -
@@ -274,7 +274,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	state->setAction(j++, dying);
 	setState(OTIMOTISTATE_Unk0, state);
 
-	TaiDamagingAction* damaging = new TaiDamagingAction(OTIMOTISTATE_Unk2, 1);
+	TaiDamagingAction* damaging = new TaiDamagingAction(OTIMOTISTATE_Unk2, TekiMotion::Damage);
 
 	//  STATE -
 	state = new TaiState(4);
@@ -291,7 +291,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	    = new TaiStartingTimerAction(OTIMOTISTATE_Unk3, 1, params->getF(OTIMOTIPF_WaitingTurnPeriod), 0.5f,
 	                                 params->getF(OTIMOTIPF_WaitingWashChance)); // is this a typo lol.
 
-	TaiMotionAction* motion1 = new TaiMotionAction(TAI_NO_TRANSIT, 2);
+	TaiMotionAction* motion1 = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 
 	//  STATE -
 	state = new TaiState(10);
@@ -308,7 +308,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	state->setAction(j++, motion1);
 	setState(OTIMOTISTATE_Unk2, state);
 
-	TaiMotionAction* motion2 = new TaiMotionAction(OTIMOTISTATE_Unk2, 5);
+	TaiMotionAction* motion2 = new TaiMotionAction(OTIMOTISTATE_Unk2, TekiMotion::WaitAct2);
 
 	//  STATE -
 	state = new TaiState(6);
@@ -321,7 +321,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	state->setAction(j++, motion2);
 	setState(OTIMOTISTATE_Unk4, state);
 
-	TaiWaitTurningAction* waitTurning = new TaiWaitTurningAction(OTIMOTISTATE_Unk2, 4);
+	TaiWaitTurningAction* waitTurning = new TaiWaitTurningAction(OTIMOTISTATE_Unk2, TekiMotion::WaitAct1);
 
 	//  STATE -
 	state = new TaiState(6);
@@ -334,7 +334,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	state->setAction(j++, waitTurning);
 	setState(OTIMOTISTATE_Unk3, state);
 
-	TaiTurningAction* turning = new TaiTurningAction(TAI_NO_TRANSIT, 4, params->getF(TPF_TurnVelocity));
+	TaiTurningAction* turning = new TaiTurningAction(TAI_NO_TRANSIT, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 	TaiWarnAction* warn       = new TaiWarnAction();
 
 	//  STATE -
@@ -366,7 +366,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	state->setAction(j++, once);
 	setState(OTIMOTISTATE_Unk6, state);
 
-	TaiMotionAction* motion3 = new TaiMotionAction(OTIMOTISTATE_Unk2, 1);
+	TaiMotionAction* motion3 = new TaiMotionAction(OTIMOTISTATE_Unk2, TekiMotion::Damage);
 
 	//  STATE -
 	state = new TaiState(3);
@@ -377,7 +377,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	setState(OTIMOTISTATE_Unk7, state);
 
 	TaiAnimationKeyAction* animKey = new TaiAnimationKeyAction(OTIMOTISTATE_Unk9, BTeki::ANIMATION_KEY_OPTION_ACTION_0);
-	TaiMotionAction* motion4       = new TaiMotionAction(TAI_NO_TRANSIT, 9);
+	TaiMotionAction* motion4       = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Flick);
 
 	//  STATE -
 	state = new TaiState(3);
@@ -402,7 +402,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	setState(OTIMOTISTATE_Unk9, state);
 
 	TaiOtimotiAirWaitingAction* airWaiting = new TaiOtimotiAirWaitingAction(OTIMOTISTATE_Unk11);
-	TaiMotionAction* motion5               = new TaiMotionAction(TAI_NO_TRANSIT, 3);
+	TaiMotionAction* motion5               = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait2);
 
 	//  STATE -
 	state = new TaiState(5);
@@ -419,7 +419,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	dropThenPressThenBounce->setAction(1, new TaiOtimotiPressingAction(TAI_NO_TRANSIT));
 	dropThenPressThenBounce->setAction(2, new TaiOtimotiBouncingAction(TAI_NO_TRANSIT));
 
-	TaiMotionAction* motion6 = new TaiMotionAction(TAI_NO_TRANSIT, 10);
+	TaiMotionAction* motion6 = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Type1);
 
 	//  STATE -
 	state = new TaiState(4);
@@ -443,7 +443,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	setState(OTIMOTISTATE_Unk12, state);
 
 	TaiTimerAction* timer    = new TaiTimerAction(OTIMOTISTATE_Unk2, 0, params->getF(TPF_UnguardedPeriod), 0.0f);
-	TaiMotionAction* motion7 = new TaiMotionAction(TAI_NO_TRANSIT, 2);
+	TaiMotionAction* motion7 = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 
 	//  STATE -
 	state = new TaiState(5);
@@ -456,7 +456,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	setState(OTIMOTISTATE_Unk13, state);
 
 	TaiTurningToTargetPositionAction* turningToTargetPos
-	    = new TaiTurningToTargetPositionAction(OTIMOTISTATE_Unk15, 4, params->getF(TPF_TurnVelocity));
+	    = new TaiTurningToTargetPositionAction(OTIMOTISTATE_Unk15, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 	TaiTargetNestAction* targetNest = new TaiTargetNestAction();
 
 	//  STATE -
@@ -473,7 +473,7 @@ TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters* params)
 	TaiImpassableAction* impassable           = new TaiImpassableAction(OTIMOTISTATE_Unk16, 0, params->getF(OTIMOTIPF_ImpassablePeriod),
 	                                                                    params->getF(OTIMOTIPF_ImpassableDistance));
 	TaiInsideTerritoryAction* insideTerritory = new TaiInsideTerritoryAction(OTIMOTISTATE_Unk16, params->getF(TPF_SafetyTerritoryRange));
-	TaiGoingHomeAction* goingHome             = new TaiGoingHomeAction(6, params->getF(TPF_RunVelocity));
+	TaiGoingHomeAction* goingHome             = new TaiGoingHomeAction(TekiMotion::Move1, params->getF(TPF_RunVelocity));
 	TaiOutsideKeyStopMoveAction* outsideKeyStopMove = new TaiOutsideKeyStopMoveAction(2, 3);
 
 	//  STATE -
@@ -794,7 +794,7 @@ bool TaiOtimotiDroppingAction::actByEvent(TekiEvent& event)
  */
 void TaiOtimotiPressingAction::start(Teki& teki)
 {
-	teki.startMotion(8);
+	teki.startMotion(TekiMotion::Attack);
 }
 
 /*

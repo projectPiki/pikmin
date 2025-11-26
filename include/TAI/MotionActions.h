@@ -45,7 +45,7 @@ struct TaiContinuousMotionAction : public TaiMotionAction {
  */
 struct TaiFinishMotionAction : public TaiMotionAction {
 	TaiFinishMotionAction(int nextState)
-	    : TaiMotionAction(nextState, 0)
+	    : TaiMotionAction(nextState, 0) // TODO: Should be `TekiMotion::Dead`, but headers...
 	{
 	}
 

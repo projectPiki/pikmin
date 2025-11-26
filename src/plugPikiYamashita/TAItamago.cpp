@@ -101,7 +101,7 @@ TAItamagoStrategy::TAItamagoStrategy()
     : YaiStrategy(TAMAGOSTATE_COUNT, TAMAGOSTATE_Wait)
 {
 	TAIAdeadCheck* deadCheck            = new TAIAdeadCheck(TAMAGOSTATE_Dead);
-	TAIAdyingTamago* dying              = new TAIAdyingTamago(TAI_NO_TRANSIT, 0);
+	TAIAdyingTamago* dying              = new TAIAdyingTamago(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAdamage* damage                  = new TAIAdamage(TAI_NO_TRANSIT, false);
 	TAIAstop* stop                      = new TAIAstop(TAI_NO_TRANSIT);
 	TAIAtimerReactionTamago* timerReact = new TAIAtimerReactionTamago(TAMAGOSTATE_Hatch);

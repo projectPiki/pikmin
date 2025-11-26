@@ -199,7 +199,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
     : TaiStrategy(SWALLOWSTATE_COUNT, SWALLOWSTATE_Unk15)
 {
 	TaiStopMoveAction* stopMove                          = new TaiStopMoveAction();
-	TaiStoppingMoveAction* stoppingMove                  = new TaiStoppingMoveAction(7);
+	TaiStoppingMoveAction* stoppingMove                  = new TaiStoppingMoveAction(TekiMotion::Move2);
 	TaiFinishStoppingMoveAction* finishStoppingMove      = new TaiFinishStoppingMoveAction();
 	TaiDeadAction* dead                                  = new TaiDeadAction(SWALLOWSTATE_Unk0);
 	TaiSimultaneousDamageAction* simDamage               = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
@@ -217,7 +217,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	TaiAttackableNaviPikiAction* attackableNaviPiki     = new TaiAttackableNaviPikiAction(SWALLOWSTATE_Unk9);
 	TaiSwallowLegEffectAction* legEffect                = new TaiSwallowLegEffectAction(-0.5f);
 	TaiTypeNaviWatchResultOnAction* typeNaviWatchResult = new TaiTypeNaviWatchResultOnAction();
-	TaiDyingAction* dying                               = new TaiDyingAction(0);
+	TaiDyingAction* dying                               = new TaiDyingAction(TekiMotion::Dead);
 	TaiStartDyingAction* startDying                     = new TaiStartDyingAction();
 
 	//  STATE -
@@ -228,7 +228,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, dying);
 	setState(SWALLOWSTATE_Unk0, state);
 
-	TaiMotionAction* motion                               = new TaiMotionAction(TAI_NO_TRANSIT, 9);
+	TaiMotionAction* motion                               = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Flick);
 	TaiTargetNearestCollisionAction* targetNearestColl3   = new TaiTargetNearestCollisionAction(SWALLOWSTATE_Unk2);
 	TaiSwallowSnoreAction* snore                          = new TaiSwallowSnoreAction();
 	TaiSwallowReceiveMessageAction* receiveMessage        = new TaiSwallowReceiveMessageAction(SWALLOWSTATE_Unk2, 0);
@@ -264,7 +264,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, notice);
 	setState(SWALLOWSTATE_Unk1, state);
 
-	TaiDamagingAction* damaging = new TaiDamagingAction(SWALLOWSTATE_Unk4, 1);
+	TaiDamagingAction* damaging = new TaiDamagingAction(SWALLOWSTATE_Unk4, TekiMotion::Damage);
 	TaiWarnAction* warn         = new TaiWarnAction();
 
 	//  STATE -
@@ -291,7 +291,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, finishMotion);
 	setState(SWALLOWSTATE_Unk2, state);
 
-	TaiSwallowTurningAction* turning = new TaiSwallowTurningAction(SWALLOWSTATE_Unk5, 4, params->getF(TPF_TurnVelocity));
+	TaiSwallowTurningAction* turning = new TaiSwallowTurningAction(SWALLOWSTATE_Unk5, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 
 	//  STATE -
 	state = new TaiState(10);
@@ -325,7 +325,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, once);
 	setState(SWALLOWSTATE_Unk5, state);
 
-	TaiContinuousMotionAction* contMotion1 = new TaiContinuousMotionAction(SWALLOWSTATE_Unk11, 3);
+	TaiContinuousMotionAction* contMotion1 = new TaiContinuousMotionAction(SWALLOWSTATE_Unk11, TekiMotion::Wait2);
 
 	//  STATE -
 	state = new TaiState(9);
@@ -341,7 +341,8 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, contMotion1);
 	setState(SWALLOWSTATE_Unk6, state);
 
-	TaiTraceTurningAction* traceTurning = new TaiTraceTurningAction(SWALLOWSTATE_Unk8, 4, params->getF(TPF_TurnVelocity));
+	TaiTraceTurningAction* traceTurning
+	    = new TaiTraceTurningAction(SWALLOWSTATE_Unk8, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 
 	//  STATE -
 	state = new TaiState(11);
@@ -360,7 +361,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	setState(SWALLOWSTATE_Unk7, state);
 
 	TaiOutOfTraceAngleAction* outOfTraceAngle = new TaiOutOfTraceAngleAction(SWALLOWSTATE_Unk7);
-	TaiTracingAction* tracing                 = new TaiTracingAction(7, params->getF(TPF_RunVelocity));
+	TaiTracingAction* tracing                 = new TaiTracingAction(TekiMotion::Move2, params->getF(TPF_RunVelocity));
 
 	//  STATE -
 	state = new TaiState(14);
@@ -381,7 +382,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, legEffect);
 	setState(SWALLOWSTATE_Unk8, state);
 
-	TaiContinuousMotionAction* contMotion2       = new TaiContinuousMotionAction(SWALLOWSTATE_Unk5, 8);
+	TaiContinuousMotionAction* contMotion2       = new TaiContinuousMotionAction(SWALLOWSTATE_Unk5, TekiMotion::Attack);
 	TaiAnimationSwallowingAction* animSwallowing = new TaiAnimationSwallowingAction(SWALLOWSTATE_Unk14);
 
 	//  STATE -
@@ -396,7 +397,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, typeNaviWatchResult);
 	setState(SWALLOWSTATE_Unk9, state);
 
-	TaiSwitchMotionAction* switchMotion                   = new TaiSwitchMotionAction(SWALLOWSTATE_Unk5, 5);
+	TaiSwitchMotionAction* switchMotion                   = new TaiSwitchMotionAction(SWALLOWSTATE_Unk5, TekiMotion::WaitAct2);
 	TaiSwallowMissAttackingEffectAction* missAttackEffect = new TaiSwallowMissAttackingEffectAction(-0.5f);
 
 	//  STATE -
@@ -409,7 +410,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, missAttackEffect);
 	setState(SWALLOWSTATE_Unk14, state);
 
-	TaiSwallowFlickingAction* flicking = new TaiSwallowFlickingAction(SWALLOWSTATE_Unk5, 10);
+	TaiSwallowFlickingAction* flicking = new TaiSwallowFlickingAction(SWALLOWSTATE_Unk5, TekiMotion::Type1);
 
 	//  STATE -
 	state = new TaiState(5);
@@ -422,7 +423,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	setState(SWALLOWSTATE_Unk10, state);
 
 	TaiTurningToTargetPositionAction* turnToTargetPos
-	    = new TaiTurningToTargetPositionAction(SWALLOWSTATE_Unk12, 4, params->getF(TPF_TurnVelocity));
+	    = new TaiTurningToTargetPositionAction(SWALLOWSTATE_Unk12, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 	TaiTargetNestAction* targetNest           = new TaiTargetNestAction();
 	TaiInsideTerritoryAction* insideTerritory = new TaiInsideTerritoryAction(SWALLOWSTATE_Unk13, params->getF(TPF_SafetyTerritoryRange));
 
@@ -440,7 +441,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, legEffect);
 	setState(SWALLOWSTATE_Unk11, state);
 
-	TaiGoingHomeAction* goingHome = new TaiGoingHomeAction(7, params->getF(TPF_RunVelocity));
+	TaiGoingHomeAction* goingHome = new TaiGoingHomeAction(TekiMotion::Move2, params->getF(TPF_RunVelocity));
 
 	//  STATE -
 	state = new TaiState(10);
@@ -457,7 +458,7 @@ TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters* params)
 	state->setAction(j++, legEffect);
 	setState(SWALLOWSTATE_Unk12, state);
 
-	TaiContinuousMotionAction* contMotion3 = new TaiContinuousMotionAction(SWALLOWSTATE_Unk1, 3);
+	TaiContinuousMotionAction* contMotion3 = new TaiContinuousMotionAction(SWALLOWSTATE_Unk1, TekiMotion::Wait2);
 
 	//  STATE -
 	state = new TaiState(9);
