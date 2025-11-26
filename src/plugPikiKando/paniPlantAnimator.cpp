@@ -29,13 +29,13 @@ char* PaniPlantAnimator::motionLabels[7] = {
 PaniMotionTable* PaniPlantAnimator::createMotionTable()
 {
 	PaniMotionTable* table = new PaniMotionTable(7);
-	table->mMotions[0]     = new PaniMotion(0);
-	table->mMotions[1]     = new PaniMotion(1);
-	table->mMotions[2]     = new PaniMotion(2);
-	table->mMotions[3]     = new PaniMotion(3);
-	table->mMotions[4]     = new PaniMotion(4);
-	table->mMotions[5]     = new PaniMotion(5);
-	table->mMotions[6]     = new PaniMotion(6);
+	table->setMotion(0, new PaniMotion(0));
+	table->setMotion(1, new PaniMotion(1));
+	table->setMotion(2, new PaniMotion(2));
+	table->setMotion(3, new PaniMotion(3));
+	table->setMotion(4, new PaniMotion(4));
+	table->setMotion(5, new PaniMotion(5));
+	table->setMotion(6, new PaniMotion(6));
 
 	return table;
 }
