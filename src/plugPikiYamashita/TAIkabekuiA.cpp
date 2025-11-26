@@ -117,7 +117,7 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 {
 	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiAStateID::Dying);
 	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TAIkabekuiAMotionID::Dead, EffectMgr::EFF_SmokeRing_S);
-	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, 1);
+	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                 = new TAIAstop(TAI_NO_TRANSIT);
 
 	new TAIArandomWalk(TAI_NO_TRANSIT, TAIkabekuiAMotionID::Move); // unused
@@ -127,7 +127,7 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 
 	new TAIAvisiblePiki(TAIkabekuiAStateID::Appearing); // unused
 
-	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiAStateID::MovingSetup, TAIkabekuiAMotionID::Appear, 30.0f, 1);
+	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiAStateID::MovingSetup, TAIkabekuiAMotionID::Appear, 30.0f, true);
 	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiAStateID::Moving);
 	TAIAgoTargetPriorityFaceDir* turnToTargetThenSetup
 	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::MovingSetup, TAIkabekuiAMotionID::Move);
@@ -146,11 +146,11 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 
 	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiAStateID::Appearing);
 	TAIAdiveKabekuiA* diveKabekuiA                   = new TAIAdiveKabekuiA(TAIkabekuiAStateID::Burrowing);
-	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiAStateID::WaitingSetup, TAIkabekuiAMotionID::Burrow, 30.0f, 0);
+	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiAStateID::WaitingSetup, TAIkabekuiAMotionID::Burrow, 30.0f, false);
 	TAIAsleepKabekuiA* sleepKabekuiA = new TAIAsleepKabekuiA(TAIkabekuiAStateID::Waiting);
 	TAIAshadowOn* shadowOn           = new TAIAshadowOn(TAI_NO_TRANSIT);
 	TAIAshadowOff* shadowOff         = new TAIAshadowOff(TAI_NO_TRANSIT);
-	TAIAinWaterDamage* inWaterDamage = new TAIAinWaterDamage(TAI_NO_TRANSIT, 20.0f, 1);
+	TAIAinWaterDamage* inWaterDamage = new TAIAinWaterDamage(TAI_NO_TRANSIT, 20.0f, true);
 
 	// STATE 0 - Dying
 	TaiState* state = new TaiState(2);

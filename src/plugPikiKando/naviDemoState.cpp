@@ -134,7 +134,7 @@ void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState*)
  */
 void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState* state)
 {
-	state->mNavi->startMotion(PaniMotionInfo(65, state->mNavi), PaniMotionInfo(65));
+	state->mNavi->startMotion(PaniMotionInfo(PIKIANIM_Sagasu2, state->mNavi), PaniMotionInfo(PIKIANIM_Sagasu2));
 	cameraMgr->mCamera->finishMotion();
 }
 
@@ -181,7 +181,7 @@ void NaviDemoSunsetState::LookState::procAnimMsg(NaviDemoSunsetState* state, Msg
  */
 void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState* state)
 {
-	state->mNavi->startMotion(PaniMotionInfo(49, state->mNavi), PaniMotionInfo(49));
+	state->mNavi->startMotion(PaniMotionInfo(PIKIANIM_Fue, state->mNavi), PaniMotionInfo(PIKIANIM_Fue));
 	_10           = 0;
 	flowCont._23C = 1;
 }

@@ -2984,7 +2984,7 @@ void NaviAttackState::init(Navi* navi)
 {
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 	navi->enableMotionBlend();
-	navi->mNaviAnimMgr.getLowerAnimator().startMotion(PaniMotionInfo(1));
+	navi->mNaviAnimMgr.getLowerAnimator().startMotion(PaniMotionInfo(PIKIANIM_Nigeru));
 	navi->mNaviAnimMgr.getLowerAnimator().mAnimationCounter = 10.0f;
 	_10                                                     = 0;
 	_18                                                     = 0.0f;

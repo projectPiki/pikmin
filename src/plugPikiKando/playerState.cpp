@@ -936,9 +936,7 @@ void PlayerState::registerUfoParts(int repairAnimJointIndex, u32 modelID, u32 pe
 {
 	pelletMgr->mUfoMotionTable = PaniPelletAnimator::createMotionTable();
 	if (mTotalRegisteredParts >= mTotalParts) {
-		ID32 id1(modelID);
-		ID32 id2(pelletID);
-		PRINT("failed to register (%d,%s,%s)\n", repairAnimJointIndex, id1.mStringID, id2.mStringID);
+		PRINT("failed to register (%d,%s,%s)\n", repairAnimJointIndex, ID32(modelID).mStringID, ID32(pelletID).mStringID);
 		ERROR("sorry\n");
 	}
 

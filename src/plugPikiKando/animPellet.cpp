@@ -30,9 +30,9 @@ PelletAnimInfo::PelletAnimInfo()
     , mFileName(this, String("noname", 0), String("", 0), String("", 0), "x01", nullptr)
 {
 	mID.setID('none');
-	mCreationType = PCT_Resident;
-	mTekiType     = -1;
-	mOverrideJoint  = -1;
+	mCreationType  = PCT_Resident;
+	mTekiType      = -1;
+	mOverrideJoint = -1;
 
 	initCore("pelletAnimInfo");
 	mPelletShapeObject = nullptr;
@@ -69,9 +69,9 @@ PelletShapeObject* PelletAnimInfo::createShapeObject()
 void PelletAnimInfo::read(RandomAccessStream& stream)
 {
 	mID.read(stream);
-	mCreationType = stream.readInt();
-	mTekiType     = stream.readInt();
-	mOverrideJoint  = stream.readInt();
+	mCreationType  = stream.readInt();
+	mTekiType      = stream.readInt();
+	mOverrideJoint = stream.readInt();
 	Parameters::read(stream);
 }
 
@@ -103,7 +103,7 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	}
 }
 
-char* PaniPelletAnimator::motionLabels[] = { "Carry", "Appear", "3", "4", "5", "6", "7" };
+char* PaniPelletAnimator::motionLabels[PelletMotion::COUNT] = { "Carry", "Appear", "3", "4", "5", "6", "7" };
 
 /*
  * --INFO--
@@ -215,14 +215,14 @@ void PelletAnimator::updateContext()
  */
 PaniMotionTable* PaniPelletAnimator::createMotionTable()
 {
-	PaniMotionTable* table = new PaniMotionTable(7);
-	table->mMotions[0]     = new PaniMotion(0);
-	table->mMotions[1]     = new PaniMotion(1);
-	table->mMotions[2]     = new PaniMotion(2);
-	table->mMotions[3]     = new PaniMotion(3);
-	table->mMotions[4]     = new PaniMotion(4);
-	table->mMotions[5]     = new PaniMotion(5);
-	table->mMotions[6]     = new PaniMotion(6);
+	PaniMotionTable* table                 = new PaniMotionTable(PelletMotion::COUNT);
+	table->mMotions[PelletMotion::Carry]   = new PaniMotion(PelletMotion::Carry);
+	table->mMotions[PelletMotion::Appear]  = new PaniMotion(PelletMotion::Appear);
+	table->mMotions[PelletMotion::After]   = new PaniMotion(PelletMotion::After);
+	table->mMotions[PelletMotion::Passive] = new PaniMotion(PelletMotion::Passive);
+	table->mMotions[PelletMotion::Special] = new PaniMotion(PelletMotion::Special);
+	table->mMotions[PelletMotion::Unk5]    = new PaniMotion(PelletMotion::Unk5);
+	table->mMotions[PelletMotion::Unk6]    = new PaniMotion(PelletMotion::Unk6);
 	return table;
 }
 

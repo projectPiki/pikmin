@@ -70,8 +70,8 @@ struct TaiPalmStrategy : public TaiStrategy {
  * @brief TODO
  */
 struct TaiPalmMotionAction : public TaiMotionAction {
-	TaiPalmMotionAction(int nextState, int p2)
-	    : TaiMotionAction(nextState, p2)
+	TaiPalmMotionAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
 	{
 	}
 
@@ -86,8 +86,8 @@ struct TaiPalmMotionAction : public TaiMotionAction {
  * @brief TODO
  */
 struct TaiPalmDyingAction : public TaiDyingAction {
-	TaiPalmDyingAction(int p1)
-	    : TaiDyingAction(p1)
+	TaiPalmDyingAction(int motionIdx)
+	    : TaiDyingAction(motionIdx)
 	{
 	}
 
@@ -135,10 +135,10 @@ struct TaiPalmGrowingAction : public TaiAction {
  * @brief TODO
  */
 struct TaiPalmGrowAction : public TaiAction {
-	TaiPalmGrowAction(int nextState, int p2)
+	TaiPalmGrowAction(int nextState, int timerIdx)
 	    : TaiAction(nextState)
 	{
-		mTimerIdx = p2;
+		mTimerIdx = timerIdx;
 	}
 
 	virtual bool act(Teki&); // _10

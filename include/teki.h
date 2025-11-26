@@ -372,7 +372,7 @@ public:
 	void setPersonalityF(int idx, f32 val) { mPersonality->setF(idx, val); }
 	void setPersonalityI(int idx, int val) { mPersonality->setI(idx, val); }
 
-	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see Tekif32Params enum
+	f32 getParameterF(int idx) { return mTekiParams->getF(idx); } // see TekiFloatParams enum
 	int getParameterI(int idx) { return mTekiParams->getI(idx); } // see TekiIntParams enum
 
 	void outputDirectionVector(Vector3f& outDir) { BTeki::outputDirectionVector(getDirection(), outDir); }

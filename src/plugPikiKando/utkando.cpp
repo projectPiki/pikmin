@@ -28,16 +28,13 @@ DEFINE_PRINT("utKando");
  */
 int selectRandomly(Choice* choice, int num)
 {
-	f32 r     = gsys->getRand(1.0f);
-	int i     = 0;
+	f32 lower = gsys->getRand(1.0f);
 	f32 total = 0.0f;
-
-	while (i < num) {
+	for (int i = 0; i < num; ++i) {
 		total += choice[i].mChance;
-		if (r < total) {
+		if (lower < total) {
 			return choice[i].mValue;
 		}
-		i++;
 	}
 	return choice[num - 1].mValue;
 }
