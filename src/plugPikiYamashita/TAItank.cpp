@@ -127,7 +127,7 @@ TAItankStrategy::TAItankStrategy()
 
 	TAIAdeadCheck* deadCheck      = new TAIAdeadCheck(TAItankStateID::Unk0);
 	TAIAdying* dying              = new TAIAdying(TAI_NO_TRANSIT, TAItankMotionID::Unk0);
-	TAIAdamage* damage            = new TAIAdamage(TAI_NO_TRANSIT, TAItankMotionID::Unk1);
+	TAIAdamage* damage            = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                = new TAIAstop(TAI_NO_TRANSIT);
 	TAIApatrolTank* patrol        = new TAIApatrolTank(TAI_NO_TRANSIT, 6, TAItankMotionID::Unk4, TAItankMotionID::Unk4, vecs, 3);
 	TAIAvisiblePiki* visiblePiki1 = new TAIAvisiblePiki(TAItankStateID::Unk3);

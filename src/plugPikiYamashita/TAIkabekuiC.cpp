@@ -198,7 +198,7 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 {
 	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiCStateID::Dying);
 	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk0, EffectMgr::EFF_SmokeRing_S);
-	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, 1);
+	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                 = new TAIAstop(TAI_NO_TRANSIT);
 
 	new TAIArandomWalk(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk6); // unused
@@ -208,7 +208,7 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 
 	new TAIAvisiblePiki(TAIkabekuiCStateID::Appearing); // unused
 
-	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk4, 30.0f, 1);
+	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk4, 30.0f, true);
 	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiCStateID::MovingBridge);
 	TAIAgoTargetPriorityFaceDir* turnToTargetThenSetup
 	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk6);
@@ -218,7 +218,8 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 	TAIAapproachTargetPriorityFaceDir* approachTarget = new TAIAapproachTargetPriorityFaceDir(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk6);
 	TAIAattackableTarget* attackableTarget            = new TAIAattackableTarget(TAIkabekuiCStateID::BiteAttack);
 	TAIAunvisibleTarget* unvisibleTarget              = new TAIAunvisibleTarget(TAIkabekuiCStateID::MovingSetup);
-	TAIAbiteForKabekuiC* kabekuiBite = new TAIAbiteForKabekuiC(TAIkabekuiCStateID::BiteChewing, 3, TAIkabekuiCMotionID::Unk10);
+	TAIAbiteForKabekuiC* kabekuiBite
+	    = new TAIAbiteForKabekuiC(TAIkabekuiCStateID::BiteChewing, TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk10);
 	TAIAeatPiki* eatPiki             = new TAIAeatPiki(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk11);
 
 	TAIAlessLifeKabekuiC* alertFlightLife = new TAIAlessLifeKabekuiC(TAIkabekuiCStateID::Takeoff);
@@ -245,11 +246,11 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 
 	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiCStateID::Appearing);
 	TAIAdiveKabekuiC* diveKabekuiC                   = new TAIAdiveKabekuiC(TAIkabekuiCStateID::Burrowing);
-	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiCStateID::WaitingSetup, TAIkabekuiCMotionID::Unk5, 30.0f, 0);
+	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiCStateID::WaitingSetup, TAIkabekuiCMotionID::Unk5, 30.0f, false);
 	TAIAsleepKabekuiC* sleepKabekuiC = new TAIAsleepKabekuiC(TAIkabekuiCStateID::Waiting);
 	TAIAshadowOn* shadowOn           = new TAIAshadowOn(TAI_NO_TRANSIT);
 	TAIAshadowOff* shadowOff         = new TAIAshadowOff(TAI_NO_TRANSIT);
-	TAIAinWaterDamage* inWaterDamage = new TAIAinWaterDamage(TAI_NO_TRANSIT, 20.0f, 1);
+	TAIAinWaterDamage* inWaterDamage = new TAIAinWaterDamage(TAI_NO_TRANSIT, 20.0f, true);
 
 	// STATE 0 - Dying
 	TaiState* state = new TaiState(2);
