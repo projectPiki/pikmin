@@ -215,14 +215,14 @@ void PelletAnimator::updateContext()
  */
 PaniMotionTable* PaniPelletAnimator::createMotionTable()
 {
-	PaniMotionTable* table                 = new PaniMotionTable(PelletMotion::COUNT);
-	table->mMotions[PelletMotion::Carry]   = new PaniMotion(PelletMotion::Carry);
-	table->mMotions[PelletMotion::Appear]  = new PaniMotion(PelletMotion::Appear);
-	table->mMotions[PelletMotion::After]   = new PaniMotion(PelletMotion::After);
-	table->mMotions[PelletMotion::Passive] = new PaniMotion(PelletMotion::Passive);
-	table->mMotions[PelletMotion::Special] = new PaniMotion(PelletMotion::Special);
-	table->mMotions[PelletMotion::Unk5]    = new PaniMotion(PelletMotion::Unk5);
-	table->mMotions[PelletMotion::Unk6]    = new PaniMotion(PelletMotion::Unk6);
+	PaniMotionTable* table = new PaniMotionTable(PelletMotion::COUNT);
+	table->setMotion(PelletMotion::Carry, new PaniMotion(PelletMotion::Carry));
+	table->setMotion(PelletMotion::Appear, new PaniMotion(PelletMotion::Appear));
+	table->setMotion(PelletMotion::After, new PaniMotion(PelletMotion::After));
+	table->setMotion(PelletMotion::Passive, new PaniMotion(PelletMotion::Passive));
+	table->setMotion(PelletMotion::Special, new PaniMotion(PelletMotion::Special));
+	table->setMotion(PelletMotion::Unk5, new PaniMotion(PelletMotion::Unk5));
+	table->setMotion(PelletMotion::Unk6, new PaniMotion(PelletMotion::Unk6));
 	return table;
 }
 
