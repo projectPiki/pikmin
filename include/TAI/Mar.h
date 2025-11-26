@@ -62,20 +62,6 @@ enum {
 	COUNT, // 15
 } END_ENUM_TYPE;
 
-BEGIN_ENUM_TYPE(TAImarMotionID)
-enum {
-	Unk0  = 0,  //
-	Unk1  = 1,  //
-	Unk2  = 2,  //
-	Unk6  = 6,  //
-	Unk7  = 7,  //
-	Unk8  = 8,  //
-	Unk9  = 9,  //
-	Unk10 = 10, //
-	Unk11 = 11, //
-	Unk12 = 12, //
-} END_ENUM_TYPE;
-
 /*
  * @brief TODO
  */
@@ -335,7 +321,7 @@ protected:
 struct TAIAflickCheckMar : public TAIAflickCheck {
 public:
 	TAIAflickCheckMar(int nextState)
-	    : TAIAflickCheck(nextState, TAImarMotionID::Unk1)
+	    : TAIAflickCheck(nextState, TekiMotion::Damage)
 	{
 	}
 

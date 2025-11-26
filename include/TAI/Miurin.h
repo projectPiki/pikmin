@@ -65,23 +65,6 @@ enum {
 	COUNT, // 24
 } END_ENUM_TYPE;
 
-BEGIN_ENUM_TYPE(TAImiurinMotionID)
-enum {
-	Unk0  = 0,  //
-	Unk2  = 2,  //
-	Unk3  = 3,  //
-	Unk4  = 4,  //
-	Unk5  = 5,  //
-	Unk6  = 6,  //
-	Unk7  = 7,  //
-	Unk8  = 8,  //
-	Unk9  = 9,  //
-	Unk10 = 10, //
-	Unk11 = 11, //
-	Unk12 = 12, //
-	Unk13 = 13, //
-} END_ENUM_TYPE;
-
 /////////// Mamuta AI Actions ///////////
 
 /**

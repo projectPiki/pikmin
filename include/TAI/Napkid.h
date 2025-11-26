@@ -69,24 +69,6 @@ enum {
 	COUNT, // 23
 } END_ENUM_TYPE;
 
-/**
- * @brief Napkid animation indices.
- */
-BEGIN_ENUM_TYPE(TaiNapkidMotionID)
-enum {
-	Dead       = 0,  // 'dead'
-	Idle       = 2,  // 'wait1'
-	Throw      = 4,  // 'waitact1'
-	CarryFly   = 5,  // 'waitact2'
-	Fly        = 6,  // 'move1'
-	Attack     = 8,  // 'attack'
-	Flick      = 9,  // 'flick'
-	Fall       = 10, // 'type1'
-	Flail      = 11, // 'type2'
-	Ascend     = 12, // 'type3'
-	AttackMiss = 13, // 'type4'
-} END_ENUM_TYPE;
-
 /*
  * @brief TODO
  */

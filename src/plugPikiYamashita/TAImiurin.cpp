@@ -499,59 +499,57 @@ TAImiurinStrategy::TAImiurinStrategy()
 {
 	TAIAinitMiurin* init       = new TAIAinitMiurin(TAImiurinStateID::Unk3);
 	TAIAdeadCheck* deadCheck   = new TAIAdeadCheck(TAImiurinStateID::Dead);
-	TAIAdyingMiurin* dying     = new TAIAdyingMiurin(TAI_NO_TRANSIT, TAImiurinMotionID::Unk0);
+	TAIAdyingMiurin* dying     = new TAIAdyingMiurin(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAdamage* damage         = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop             = new TAIAstop(TAI_NO_TRANSIT);
-	TAIAreserveMotion* motion1 = new TAIAreserveMotion(TAI_NO_TRANSIT, TAImiurinMotionID::Unk2);
+	TAIAreserveMotion* motion1 = new TAIAreserveMotion(TAI_NO_TRANSIT, TekiMotion::Wait1);
 	TAIAeffCloudOfDust* effCloud1
 	    = new TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_SmokeRing_S, SE_MIURIN_WALK, 15, -0.5f, 2, 'asi1', 'asi2', 0, 0);
 	TAIAeffCloudOfDust* effCloud2
 	    = new TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_SmokeRing_M, SE_KABUTO_WALK, 15, -0.5f, 2, 'asi1', 'asi2', 0, 0);
 	TAIAturnFocusCreatureMiurin* turnFocus1
-	    = new TAIAturnFocusCreatureMiurin(TAImiurinStateID::Unk9, TAImiurinMotionID::Unk4, TAImiurinMotionID::Unk4, false);
+	    = new TAIAturnFocusCreatureMiurin(TAImiurinStateID::Unk9, TekiMotion::WaitAct1, TekiMotion::WaitAct1, false);
 	TAIAapproachTargetPriorityFaceDirMiurin* approachTarget
-	    = new TAIAapproachTargetPriorityFaceDirMiurin(TAI_NO_TRANSIT, TAImiurinMotionID::Unk6);
+	    = new TAIAapproachTargetPriorityFaceDirMiurin(TAI_NO_TRANSIT, TekiMotion::Move1);
 	TAIAattackableTargetMiurin* attackableTarget1 = new TAIAattackableTargetMiurin(TAImiurinStateID::Unk10);
-	TAIAattackPosture* attackPosture1             = new TAIAattackPosture(TAImiurinStateID::Unk11, TAImiurinMotionID::Unk8);
-	TAIAattackMiurin* attack1
-	    = new TAIAattackMiurin(TAImiurinStateID::Unk12, TAImiurinMotionID::Unk12, TAImiurinMotionID::Unk10, TAImiurinMotionID::Unk11);
+	TAIAattackPosture* attackPosture1             = new TAIAattackPosture(TAImiurinStateID::Unk11, TekiMotion::Attack);
+	TAIAattackMiurin* attack1 = new TAIAattackMiurin(TAImiurinStateID::Unk12, TekiMotion::Type3, TekiMotion::Type1, TekiMotion::Type2);
 	TAIAcheckSatisfyMiurin* checkSatisfy1          = new TAIAcheckSatisfyMiurin(TAImiurinStateID::Unk3);
 	TAIAcheckSatisfyMiurin* checkSatisfy2          = new TAIAcheckSatisfyMiurin(TAImiurinStateID::Unk15);
 	TAIAattackableTargetMiurin* attackableTarget2  = new TAIAattackableTargetMiurin(TAImiurinStateID::Unk11);
 	TAIAnoReaction* noReact1                       = new TAIAnoReaction(TAImiurinStateID::Unk13);
-	TAIAreserveMotion* motion2                     = new TAIAreserveMotion(TAImiurinStateID::Unk14, TAImiurinMotionID::Unk13);
+	TAIAreserveMotion* motion2                     = new TAIAreserveMotion(TAImiurinStateID::Unk14, TekiMotion::Type4);
 	TAIAinsideTerritoryRangeNavi* insideRangeNavi1 = new TAIAinsideTerritoryRangeNavi(TAImiurinStateID::Unk8);
 	TAIAnoReaction* noReact2                       = new TAIAnoReaction(TAImiurinStateID::Unk2);
 	TAIAstickingPikiMiurin* stickingPiki           = new TAIAstickingPikiMiurin(TAImiurinStateID::Unk16);
 	TAIAflickCheckMiurin* flickCheck               = new TAIAflickCheckMiurin(TAImiurinStateID::Unk16);
-	TAIAflickingMiurin* flicking1                  = new TAIAflickingMiurin(TAImiurinStateID::Unk10, TAImiurinMotionID::Unk9);
+	TAIAflickingMiurin* flicking1                  = new TAIAflickingMiurin(TAImiurinStateID::Unk10, TekiMotion::Flick);
 	TAIAoutsideTerritoryMiurin* outsideTerritory   = new TAIAoutsideTerritoryMiurin(TAImiurinStateID::Unk17);
-	TAIAflickingMiurin* flicking2                  = new TAIAflickingMiurin(TAImiurinStateID::Unk19, TAImiurinMotionID::Unk9);
-	TAIAturnFocusCreature* turnFocus2 = new TAIAturnFocusCreature(TAI_NO_TRANSIT, TAImiurinMotionID::Unk7, TAImiurinMotionID::Unk7, false);
-	TAIAunvisibleTarget* unvisibleTarget = new TAIAunvisibleTarget(TAImiurinStateID::Unk3);
+	TAIAflickingMiurin* flicking2                  = new TAIAflickingMiurin(TAImiurinStateID::Unk19, TekiMotion::Flick);
+	TAIAturnFocusCreature* turnFocus2              = new TAIAturnFocusCreature(TAI_NO_TRANSIT, TekiMotion::Move2, TekiMotion::Move2, false);
+	TAIAunvisibleTarget* unvisibleTarget           = new TAIAunvisibleTarget(TAImiurinStateID::Unk3);
 	new TAIAinsideTerritoryRangeNavi(TAImiurinStateID::Unk3);
 	TAIAattackableTargetMiurin* attackableTarget3 = new TAIAattackableTargetMiurin(TAImiurinStateID::Unk19);
-	TAIAattackPosture* attackPosture2             = new TAIAattackPosture(TAImiurinStateID::Unk20, TAImiurinMotionID::Unk8);
-	TAIAattackMiurin* attack2
-	    = new TAIAattackMiurin(TAImiurinStateID::Unk21, TAImiurinMotionID::Unk12, TAImiurinMotionID::Unk10, TAImiurinMotionID::Unk11);
-	TAIAnoReaction* noReact3                      = new TAIAnoReaction(TAImiurinStateID::Unk22);
+	TAIAattackPosture* attackPosture2             = new TAIAattackPosture(TAImiurinStateID::Unk20, TekiMotion::Attack);
+	TAIAattackMiurin* attack2 = new TAIAattackMiurin(TAImiurinStateID::Unk21, TekiMotion::Type3, TekiMotion::Type1, TekiMotion::Type2);
+	TAIAnoReaction* noReact3  = new TAIAnoReaction(TAImiurinStateID::Unk22);
 	TAIAattackableTargetMiurin* attackableTarget4 = new TAIAattackableTargetMiurin(TAImiurinStateID::Unk20);
-	TAIAreserveMotion* motion3                    = new TAIAreserveMotion(TAImiurinStateID::Unk3, TAImiurinMotionID::Unk13);
+	TAIAreserveMotion* motion3                    = new TAIAreserveMotion(TAImiurinStateID::Unk3, TekiMotion::Type4);
 	TAIAsetTargetPointCircle* setTargetCircle     = new TAIAsetTargetPointCircle(TAImiurinStateID::Unk5, PI / 3.0f);
-	TAIAturnToTarget* turnToTarget = new TAIAturnToTarget(TAImiurinStateID::Unk6, TAImiurinMotionID::Unk4, TAImiurinMotionID::Unk4, true);
-	TAIAgoTarget* goTarget         = new TAIAgoTarget(TAImiurinStateID::Unk2, TAImiurinMotionID::Unk6);
-	TAIAtimerReaction* timer1      = new TAIAtimerReaction(TAImiurinStateID::Unk3, 1.5f);
-	TAIAtimerReaction* timer2      = new TAIAtimerReaction(TAImiurinStateID::Unk3, 5.0f);
-	TAIAwatchNaviMiurin* watchNavi = new TAIAwatchNaviMiurin(TAImiurinStateID::Angry, TAImiurinStateID::Unk16);
-	TAIAsatisfyMiurin* satisfy     = new TAIAsatisfyMiurin(TAImiurinStateID::Unk3, TAImiurinMotionID::Unk5);
+	TAIAturnToTarget* turnToTarget      = new TAIAturnToTarget(TAImiurinStateID::Unk6, TekiMotion::WaitAct1, TekiMotion::WaitAct1, true);
+	TAIAgoTarget* goTarget              = new TAIAgoTarget(TAImiurinStateID::Unk2, TekiMotion::Move1);
+	TAIAtimerReaction* timer1           = new TAIAtimerReaction(TAImiurinStateID::Unk3, 1.5f);
+	TAIAtimerReaction* timer2           = new TAIAtimerReaction(TAImiurinStateID::Unk3, 5.0f);
+	TAIAwatchNaviMiurin* watchNavi      = new TAIAwatchNaviMiurin(TAImiurinStateID::Angry, TAImiurinStateID::Unk16);
+	TAIAsatisfyMiurin* satisfy          = new TAIAsatisfyMiurin(TAImiurinStateID::Unk3, TekiMotion::WaitAct2);
 	TAIAcheckFlowerPikmin* checkFlowers = new TAIAcheckFlowerPikmin(TAImiurinStateID::Unk15);
 	TAIAcheckNaviMiurin* checkNavi      = new TAIAcheckNaviMiurin(TAImiurinStateID::Unk4);
 	TAIAturnFocusCreature* turnfocus3
-	    = new TAIAturnFocusCreature(TAImiurinStateID::Unk2, TAImiurinMotionID::Unk4, TAImiurinMotionID::Unk4, false);
-	TAIAangryMiurin* angry                   = new TAIAangryMiurin(TAImiurinStateID::Unk9, TAImiurinMotionID::Unk3);
+	    = new TAIAturnFocusCreature(TAImiurinStateID::Unk2, TekiMotion::WaitAct1, TekiMotion::WaitAct1, false);
+	TAIAangryMiurin* angry                   = new TAIAangryMiurin(TAImiurinStateID::Unk9, TekiMotion::Wait2);
 	TAIAresetAnimSpeedMiurin* resetAnimSpeed = new TAIAresetAnimSpeedMiurin();
 	new TAIAcheckTurnAngle(TAImiurinStateID::Groggy, 2.0f * TAU, true);
-	TAIAgroggyMiurin* groggy = new TAIAgroggyMiurin(TAImiurinStateID::Unk3, TAImiurinMotionID::Unk5);
+	TAIAgroggyMiurin* groggy = new TAIAgroggyMiurin(TAImiurinStateID::Unk3, TekiMotion::WaitAct2);
 
 	// STATE 1 - Init
 	TaiState* state = new TaiState(1);

@@ -42,19 +42,6 @@ enum {
 	COUNT, // 12
 } END_ENUM_TYPE;
 
-BEGIN_ENUM_TYPE(TAItankMotionID)
-enum {
-	Unk0  = 0,  //
-	Unk1  = 1,  //
-	Unk2  = 2,  //
-	Unk4  = 4,  //
-	Unk5  = 5,  //
-	Unk7  = 7,  //
-	Unk8  = 8,  //
-	Unk9  = 9,  //
-	Unk10 = 10, //
-} END_ENUM_TYPE;
-
 /**
  * @brief TODO
  */

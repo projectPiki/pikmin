@@ -197,56 +197,56 @@ TAIkabekuiCStrategy::TAIkabekuiCStrategy()
     : YaiStrategy(TAIkabekuiCStateID::COUNT, TAIkabekuiCStateID::Waiting)
 {
 	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiCStateID::Dying);
-	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk0, EffectMgr::EFF_SmokeRing_S);
+	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TekiMotion::Dead, EffectMgr::EFF_SmokeRing_S);
 	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                 = new TAIAstop(TAI_NO_TRANSIT);
 
-	new TAIArandomWalk(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk6); // unused
+	new TAIArandomWalk(TAI_NO_TRANSIT, TekiMotion::Move1); // unused
 
-	TAIAsetMotionSpeed* setMotionSpeedAppear = new TAIAsetMotionSpeed(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk4, 0.0f);
+	TAIAsetMotionSpeed* setMotionSpeedAppear = new TAIAsetMotionSpeed(TAI_NO_TRANSIT, TekiMotion::WaitAct1, 0.0f);
 	TAIAvisibleNavi* visibleNaviThenAppear   = new TAIAvisibleNavi(TAIkabekuiCStateID::Appearing);
 
 	new TAIAvisiblePiki(TAIkabekuiCStateID::Appearing); // unused
 
-	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk4, 30.0f, true);
+	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiCStateID::MovingSetup, TekiMotion::WaitAct1, 30.0f, true);
 	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiCStateID::MovingBridge);
 	TAIAgoTargetPriorityFaceDir* turnToTargetThenSetup
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk6);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::MovingSetup, TekiMotion::Move1);
 
 	TAIAvisibleNavi* visibleNavi2                     = new TAIAvisibleNavi(TAIkabekuiCStateID::MovingPiki);
 	TAIAvisiblePiki* visiblePiki                      = new TAIAvisiblePiki(TAIkabekuiCStateID::MovingPiki);
-	TAIAapproachTargetPriorityFaceDir* approachTarget = new TAIAapproachTargetPriorityFaceDir(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk6);
+	TAIAapproachTargetPriorityFaceDir* approachTarget = new TAIAapproachTargetPriorityFaceDir(TAI_NO_TRANSIT, TekiMotion::Move1);
 	TAIAattackableTarget* attackableTarget            = new TAIAattackableTarget(TAIkabekuiCStateID::BiteAttack);
 	TAIAunvisibleTarget* unvisibleTarget              = new TAIAunvisibleTarget(TAIkabekuiCStateID::MovingSetup);
 	TAIAbiteForKabekuiC* kabekuiBite
-	    = new TAIAbiteForKabekuiC(TAIkabekuiCStateID::BiteChewing, TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk10);
-	TAIAeatPiki* eatPiki             = new TAIAeatPiki(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk11);
+	    = new TAIAbiteForKabekuiC(TAIkabekuiCStateID::BiteChewing, TAIkabekuiCStateID::MovingSetup, TekiMotion::Type1);
+	TAIAeatPiki* eatPiki = new TAIAeatPiki(TAIkabekuiCStateID::MovingSetup, TekiMotion::Type2);
 
 	TAIAlessLifeKabekuiC* alertFlightLife = new TAIAlessLifeKabekuiC(TAIkabekuiCStateID::Takeoff);
-	TAIAtakeOffKabekuiC* takeoff          = new TAIAtakeOffKabekuiC(TAIkabekuiCStateID::Flying, TAIkabekuiCMotionID::Unk12);
+	TAIAtakeOffKabekuiC* takeoff          = new TAIAtakeOffKabekuiC(TAIkabekuiCStateID::Flying, TekiMotion::Type3);
 
 	TAIAflyingInTerritory* flyingInTerritory  = new TAIAflyingInTerritory(TAI_NO_TRANSIT, 0.25f);
 	TAIAflyingBaseKabekuiC* flyingBase        = new TAIAflyingBaseKabekuiC(TAI_NO_TRANSIT);
-	TAIAflyingMotionKabekuiC* flyingMotion    = new TAIAflyingMotionKabekuiC(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk3);
+	TAIAflyingMotionKabekuiC* flyingMotion    = new TAIAflyingMotionKabekuiC(TAI_NO_TRANSIT, TekiMotion::Wait2);
 	TAIAcheckPikiFlyKabekuiC* flyingHitCheck  = new TAIAcheckPikiFlyKabekuiC(TAIkabekuiCStateID::Dying);
 	TAIAmoreLifeKabekuiC* flyingLifeThreshold = new TAIAmoreLifeKabekuiC(TAIkabekuiCStateID::Landing);
-	TAIAlandingKabekuiC* landing              = new TAIAlandingKabekuiC(TAIkabekuiCStateID::MovingSetup, TAIkabekuiCMotionID::Unk13);
+	TAIAlandingKabekuiC* landing              = new TAIAlandingKabekuiC(TAIkabekuiCStateID::MovingSetup, TekiMotion::Type4);
 
 	TAIAhitCheckFlyingPiki* pressCheck = new TAIAhitCheckFlyingPiki(TAIkabekuiCStateID::CrushDying);
-	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TAIkabekuiCMotionID::Unk1, EffectMgr::EFF_SmokeRing_S);
+	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TekiMotion::Damage, EffectMgr::EFF_SmokeRing_S);
 	TAIAsearchWorkObject* searchWorkObjectThenChase   = new TAIAsearchWorkObject(TAIkabekuiCStateID::ChasingSetup);
 	TAIAinvincibleOn* invincibleOn                    = new TAIAinvincibleOn(TAI_NO_TRANSIT);
 	TAIAinvincibleOff* invincibleOff                  = new TAIAinvincibleOff(TAI_NO_TRANSIT);
 	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiCStateID::Chasing);
 	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::EatingBridge, TAIkabekuiCMotionID::Unk6);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiCStateID::EatingBridge, TekiMotion::Move1);
 
 	TAIAattackWorkObjectKabekuiC* attackWorkObject
-	    = new TAIAattackWorkObjectKabekuiC(TAIkabekuiCStateID::MovingBridge, TAIkabekuiCMotionID::Unk6, 8);
+	    = new TAIAattackWorkObjectKabekuiC(TAIkabekuiCStateID::MovingBridge, TekiMotion::Move1, 8);
 
 	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiCStateID::Appearing);
 	TAIAdiveKabekuiC* diveKabekuiC                   = new TAIAdiveKabekuiC(TAIkabekuiCStateID::Burrowing);
-	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiCStateID::WaitingSetup, TAIkabekuiCMotionID::Unk5, 30.0f, false);
+	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiCStateID::WaitingSetup, TekiMotion::WaitAct2, 30.0f, false);
 	TAIAsleepKabekuiC* sleepKabekuiC = new TAIAsleepKabekuiC(TAIkabekuiCStateID::Waiting);
 	TAIAshadowOn* shadowOn           = new TAIAshadowOn(TAI_NO_TRANSIT);
 	TAIAshadowOff* shadowOff         = new TAIAshadowOff(TAI_NO_TRANSIT);
