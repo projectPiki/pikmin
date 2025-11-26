@@ -35,14 +35,6 @@ enum {
 	COUNT, // 7
 } END_ENUM_TYPE;
 
-BEGIN_ENUM_TYPE(TAIotamaMotionID)
-enum {
-	Unk0 = 0, //
-	Unk2 = 2, //
-	Unk4 = 4, //
-	Unk6 = 6, //
-} END_ENUM_TYPE;
-
 /**
  * @brief TODO
  */

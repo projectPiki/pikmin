@@ -28,13 +28,6 @@ enum {
 	COUNT, // 3
 } END_ENUM_TYPE;
 
-BEGIN_ENUM_TYPE(TAIhibaAMotionID)
-enum {
-	Unk0 = 0, //
-	Unk2 = 2, //
-	Unk8 = 8, //
-} END_ENUM_TYPE;
-
 /**
  * @brief TODO
  */

@@ -116,37 +116,36 @@ TAIkabekuiAStrategy::TAIkabekuiAStrategy()
     : YaiStrategy(TAIkabekuiAStateID::COUNT, TAIkabekuiAStateID::Waiting) // TODO: fix
 {
 	TAIAdeadCheck* deadCheck       = new TAIAdeadCheck(TAIkabekuiAStateID::Dying);
-	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TAIkabekuiAMotionID::Dead, EffectMgr::EFF_SmokeRing_S);
+	TAIAdyingKabekui* dyingKabekui = new TAIAdyingKabekui(TAI_NO_TRANSIT, TekiMotion::Dead, EffectMgr::EFF_SmokeRing_S);
 	TAIAdamage* damage             = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                 = new TAIAstop(TAI_NO_TRANSIT);
 
-	new TAIArandomWalk(TAI_NO_TRANSIT, TAIkabekuiAMotionID::Move); // unused
+	new TAIArandomWalk(TAI_NO_TRANSIT, TekiMotion::Move1); // unused
 
-	TAIAsetMotionSpeed* setMotionSpeedAppear = new TAIAsetMotionSpeed(TAI_NO_TRANSIT, TAIkabekuiAMotionID::Appear, 0.0f);
+	TAIAsetMotionSpeed* setMotionSpeedAppear = new TAIAsetMotionSpeed(TAI_NO_TRANSIT, TekiMotion::WaitAct1, 0.0f);
 	TAIAvisibleNavi* visibleNaviThenAppear   = new TAIAvisibleNavi(TAIkabekuiAStateID::Appearing);
 
 	new TAIAvisiblePiki(TAIkabekuiAStateID::Appearing); // unused
 
-	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiAStateID::MovingSetup, TAIkabekuiAMotionID::Appear, 30.0f, true);
+	TAIAappearKabekui* appearThenSetupMove = new TAIAappearKabekui(TAIkabekuiAStateID::MovingSetup, TekiMotion::WaitAct1, 30.0f, true);
 	TAIAsetTargetPointCircleRandom* setTargetThenMove = new TAIAsetTargetPointCircleRandom(TAIkabekuiAStateID::Moving);
 	TAIAgoTargetPriorityFaceDir* turnToTargetThenSetup
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::MovingSetup, TAIkabekuiAMotionID::Move);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::MovingSetup, TekiMotion::Move1);
 
 	TAIAhitCheckFlyingPiki* pressCheck = new TAIAhitCheckFlyingPiki(TAIkabekuiAStateID::CrushDying);
-	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TAIkabekuiAMotionID::Press, EffectMgr::EFF_SmokeRing_S);
+	TAIAdyingCrushKabekui* crushDying  = new TAIAdyingCrushKabekui(TAI_NO_TRANSIT, TekiMotion::Damage, EffectMgr::EFF_SmokeRing_S);
 	TAIAsearchWorkObject* searchWorkObjectThenChase   = new TAIAsearchWorkObject(TAIkabekuiAStateID::ChasingSetup);
 	TAIAinvincibleOn* invincibleOn                    = new TAIAinvincibleOn(TAI_NO_TRANSIT);
 	TAIAinvincibleOff* invincibleOff                  = new TAIAinvincibleOff(TAI_NO_TRANSIT);
 	TAIAsetTargetPointWorkObject* setTargetWorkObject = new TAIAsetTargetPointWorkObject(TAIkabekuiAStateID::Chasing);
 	TAIAgoTargetPriorityFaceDir* targetFaceDirThenEat
-	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::EatingBridge, TAIkabekuiAMotionID::Move);
+	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiAStateID::EatingBridge, TekiMotion::Move1);
 
-	TAIAattackWorkObjectKabekuiA* attackWorkObject
-	    = new TAIAattackWorkObjectKabekuiA(TAIkabekuiAStateID::Moving, TAIkabekuiAMotionID::Move, 8);
+	TAIAattackWorkObjectKabekuiA* attackWorkObject = new TAIAattackWorkObjectKabekuiA(TAIkabekuiAStateID::Moving, TekiMotion::Move1, 8);
 
 	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiAStateID::Appearing);
 	TAIAdiveKabekuiA* diveKabekuiA                   = new TAIAdiveKabekuiA(TAIkabekuiAStateID::Burrowing);
-	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiAStateID::WaitingSetup, TAIkabekuiAMotionID::Burrow, 30.0f, false);
+	TAIAappearKabekui* burrowKabekui = new TAIAappearKabekui(TAIkabekuiAStateID::WaitingSetup, TekiMotion::WaitAct2, 30.0f, false);
 	TAIAsleepKabekuiA* sleepKabekuiA = new TAIAsleepKabekuiA(TAIkabekuiAStateID::Waiting);
 	TAIAshadowOn* shadowOn           = new TAIAshadowOn(TAI_NO_TRANSIT);
 	TAIAshadowOff* shadowOff         = new TAIAshadowOff(TAI_NO_TRANSIT);

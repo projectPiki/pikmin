@@ -114,17 +114,17 @@ TAIotamaStrategy::TAIotamaStrategy()
     : YaiStrategy(TAIotamaStateID::COUNT, TAIotamaStateID::Wait)
 {
 	TAIAdeadCheck* deadCheck              = new TAIAdeadCheck(TAIotamaStateID::Dead);
-	TAIAdying* dying                      = new TAIAdying(TAI_NO_TRANSIT, TAIotamaMotionID::Unk0);
+	TAIAdying* dying                      = new TAIAdying(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAdamage* damage                    = new TAIAdamage(TAI_NO_TRANSIT, false);
 	TAIAstop* stop                        = new TAIAstop(TAI_NO_TRANSIT);
-	TAIAwaitOtama* wait                   = new TAIAwaitOtama(TAIotamaStateID::SetTarget, TAIotamaMotionID::Unk2);
+	TAIAwaitOtama* wait                   = new TAIAwaitOtama(TAIotamaStateID::SetTarget, TekiMotion::Wait1);
 	TAIAsetTargetOtama* setTarget         = new TAIAsetTargetOtama(TAIotamaStateID::GoTarget, TAIotamaStateID::AppealTarget);
-	TAIAgoTargetPriorityFaceDir* goTarget = new TAIAgoTargetPriorityFaceDir(TAIotamaStateID::Wait, TAIotamaMotionID::Unk6);
-	TAIAappealOtama* appeal1              = new TAIAappealOtama(TAIotamaStateID::GoTarget, TAIotamaMotionID::Unk4);
+	TAIAgoTargetPriorityFaceDir* goTarget = new TAIAgoTargetPriorityFaceDir(TAIotamaStateID::Wait, TekiMotion::Move1);
+	TAIAappealOtama* appeal1              = new TAIAappealOtama(TAIotamaStateID::GoTarget, TekiMotion::WaitAct1);
 	TAIAvisibleNavi* visibleNavi          = new TAIAvisibleNavi(TAIotamaStateID::AppealRun);
-	TAIAappealOtama* appeal2              = new TAIAappealOtama(TAIotamaStateID::RunAway, TAIotamaMotionID::Unk4);
+	TAIAappealOtama* appeal2              = new TAIAappealOtama(TAIotamaStateID::RunAway, TekiMotion::WaitAct1);
 	TAIAtimerReaction* timer              = new TAIAtimerReaction(TAIotamaStateID::SetTarget, 3.0f);
-	TAIArunAwayOtama* runAway             = new TAIArunAwayOtama(TAIotamaStateID::Wait, TAIotamaMotionID::Unk6);
+	TAIArunAwayOtama* runAway             = new TAIArunAwayOtama(TAIotamaStateID::Wait, TekiMotion::Move1);
 
 	// STATE 0 - Dead
 	TaiState* state = new TaiState(2);

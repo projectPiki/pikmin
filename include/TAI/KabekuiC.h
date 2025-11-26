@@ -56,21 +56,6 @@ enum {
 	COUNT, // 17
 } END_ENUM_TYPE;
 
-BEGIN_ENUM_TYPE(TAIkabekuiCMotionID)
-enum {
-	Unk0  = 0, // 'dead'
-	Unk1  = 1, // 'damage'
-	Unk3  = 3,
-	Unk4  = 4,  // 'waitact1'
-	Unk5  = 5,  // 'waitact2'
-	Unk6  = 6,  // 'move1'
-	Unk8  = 8,  // 'attack'
-	Unk10 = 10, //
-	Unk11 = 11, //
-	Unk12 = 12, //
-	Unk13 = 13, //
-} END_ENUM_TYPE;
-
 namespace {
 
 /*

@@ -46,19 +46,6 @@ enum {
 	COUNT,
 } END_ENUM_TYPE;
 
-/**
- * @brief
- */
-BEGIN_ENUM_TYPE(TAIkabekuiAMotionID)
-enum {
-	Dead   = 0, // 'dead'
-	Press  = 1, // 'damage'
-	Appear = 4, // 'waitact1'
-	Burrow = 5, // 'waitact2'
-	Move   = 6, // 'move1'
-	Eat    = 8, // 'attack'
-} END_ENUM_TYPE;
-
 /*
  * @brief TODO
  */

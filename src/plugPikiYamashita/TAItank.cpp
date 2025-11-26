@@ -126,24 +126,24 @@ TAItankStrategy::TAItankStrategy()
 	vecs[2].set(-0.5f, 0.0f, -0.5f);
 
 	TAIAdeadCheck* deadCheck      = new TAIAdeadCheck(TAItankStateID::Unk0);
-	TAIAdying* dying              = new TAIAdying(TAI_NO_TRANSIT, TAItankMotionID::Unk0);
+	TAIAdying* dying              = new TAIAdying(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAdamage* damage            = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                = new TAIAstop(TAI_NO_TRANSIT);
-	TAIApatrolTank* patrol        = new TAIApatrolTank(TAI_NO_TRANSIT, 6, TAItankMotionID::Unk4, TAItankMotionID::Unk4, vecs, 3);
+	TAIApatrolTank* patrol        = new TAIApatrolTank(TAI_NO_TRANSIT, TekiMotion::Move1, 6, TekiMotion::WaitAct1, vecs, 3);
 	TAIAvisiblePiki* visiblePiki1 = new TAIAvisiblePiki(TAItankStateID::Unk3);
 	TAIAvisibleNavi* visibleNavi1 = new TAIAvisibleNavi(TAItankStateID::Unk3);
-	TAIAwait* wait1               = new TAIAwait(TAItankStateID::Unk5, TAItankMotionID::Unk2, 0.5f);
-	TAIAwait* wait2               = new TAIAwait(TAItankStateID::Unk2, TAItankMotionID::Unk5, 0.0f);
+	TAIAwait* wait1               = new TAIAwait(TAItankStateID::Unk5, TekiMotion::Wait1, 0.5f);
+	TAIAwait* wait2               = new TAIAwait(TAItankStateID::Unk2, TekiMotion::WaitAct2, 0.0f);
 	TAIAattackableAngleTarget* attackableAngleTarget = new TAIAattackableAngleTarget(TAItankStateID::Unk6);
-	TAIAturnFocusCreature* turnFocus = new TAIAturnFocusCreature(TAItankStateID::Unk7, TAItankMotionID::Unk4, TAItankMotionID::Unk4, true);
+	TAIAturnFocusCreature* turnFocus = new TAIAturnFocusCreature(TAItankStateID::Unk7, TekiMotion::WaitAct1, TekiMotion::WaitAct1, true);
 	TAIAunvisibleTarget* unvisibleTarget       = new TAIAunvisibleTarget(TAItankStateID::Unk4);
 	TAIAoutsideOptionalRangeTank* outsideRange = new TAIAoutsideOptionalRangeTank(TAItankStateID::Unk7);
-	TAIAstepBackTank* stepBack                 = new TAIAstepBackTank(TAItankStateID::Unk7, TAItankMotionID::Unk7);
-	TAIAfireBreathTank* fireBreath             = new TAIAfireBreathTank(TAItankStateID::Unk8, TAItankMotionID::Unk8, new FireEffect());
+	TAIAstepBackTank* stepBack                 = new TAIAstepBackTank(TAItankStateID::Unk7, TekiMotion::Move2);
+	TAIAfireBreathTank* fireBreath             = new TAIAfireBreathTank(TAItankStateID::Unk8, TekiMotion::Attack, new FireEffect());
 	TAIAflickCheck* flickCheck                 = new TAIAflickCheck(TAItankStateID::Unk9, -1);
-	TAIAflickingTank* flicking                 = new TAIAflickingTank(TAItankStateID::Unk7, TAItankMotionID::Unk9);
-	TAIArandomWalk* randomWalk                 = new TAIArandomWalk(TAItankStateID::Unk11, TAItankMotionID::Unk10);
-	TAIAgoingHomePriorityFaceDir* goingHome    = new TAIAgoingHomePriorityFaceDir(TAItankStateID::Unk2, TAItankMotionID::Unk10);
+	TAIAflickingTank* flicking                 = new TAIAflickingTank(TAItankStateID::Unk7, TekiMotion::Flick);
+	TAIArandomWalk* randomWalk                 = new TAIArandomWalk(TAItankStateID::Unk11, TekiMotion::Type1);
+	TAIAgoingHomePriorityFaceDir* goingHome    = new TAIAgoingHomePriorityFaceDir(TAItankStateID::Unk2, TekiMotion::Type1);
 	TAIAoutsideTerritory* outsideTerritory     = new TAIAoutsideTerritory(TAItankStateID::Unk11);
 	TAIAeffCloudOfDust* effCloud
 	    = new TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_SmokeRing_S, SE_TANK_WALK, -0.5f, 4, 'asi1', 'asi2', 'asi3', 'asi4');

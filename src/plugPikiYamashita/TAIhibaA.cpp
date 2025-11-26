@@ -185,8 +185,8 @@ TAIhibaAStrategy::TAIhibaAStrategy()
 	TAIAinitHibaA* init             = new TAIAinitHibaA(TAIhibaAStateID::Wait);
 	TAIAstop* stop                  = new TAIAstop(TAI_NO_TRANSIT);
 	TAIAtimerReactionHibaA* timer   = new TAIAtimerReactionHibaA(TAIhibaAStateID::Attack);
-	TAIAreserveMotion* unused       = new TAIAreserveMotion(TAI_NO_TRANSIT, TAIhibaAMotionID::Unk2);
-	TAIAfireAttackHibaA* fireAttack = new TAIAfireAttackHibaA(TAIhibaAStateID::Wait, TAIhibaAMotionID::Unk8);
+	TAIAreserveMotion* unused       = new TAIAreserveMotion(TAI_NO_TRANSIT, TekiMotion::Wait1);
+	TAIAfireAttackHibaA* fireAttack = new TAIAfireAttackHibaA(TAIhibaAStateID::Wait, TekiMotion::Attack);
 
 	// STATE 0 - Initialise
 	TaiState* state = new TaiState(1);
