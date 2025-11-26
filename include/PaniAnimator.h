@@ -214,6 +214,26 @@ struct PaniPlantAnimator : public PaniAnimator {
 	// _00-_54 = PaniAnimator
 };
 
+BEGIN_ENUM_TYPE(TekiMotion)
+enum {
+	Dead     = 0,
+	Damage   = 1,
+	Wait1    = 2,
+	Wait2    = 3,
+	WaitAct1 = 4,
+	WaitAct2 = 5,
+	Move1    = 6,
+	Move2    = 7,
+	Attack   = 8,
+	Flick    = 9,
+	Type1    = 10,
+	Type2    = 11,
+	Type3    = 12,
+	Type4    = 13,
+	Type5    = 14, // "tremble"?
+	COUNT,
+} END_ENUM_TYPE;
+
 /**
  * @brief TODO
  */
@@ -222,7 +242,7 @@ struct PaniTekiAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[15];
+	static char* motionLabels[TekiMotion::COUNT];
 
 	// DLL inline:
 	char* getCurrentMotionName()

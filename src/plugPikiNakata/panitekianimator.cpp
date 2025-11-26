@@ -17,7 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("panitekianimator")
 
-char* PaniTekiAnimator::motionLabels[15] = {
+char* PaniTekiAnimator::motionLabels[TekiMotion::COUNT] = {
 	"DEAD",         // 0
 	"DAMAGE",       // 1
 	"WAIT_1",       // 2
@@ -42,22 +42,22 @@ char* PaniTekiAnimator::motionLabels[15] = {
  */
 PaniMotionTable* PaniTekiAnimator::createMotionTable()
 {
-	PaniMotionTable* table = new PaniMotionTable(15);
-	table->setMotion(0, new PaniMotion(0));
-	table->setMotion(1, new PaniMotion(1));
-	table->setMotion(2, new PaniMotion(2));
-	table->setMotion(3, new PaniMotion(3));
-	table->setMotion(4, new PaniMotion(4));
-	table->setMotion(5, new PaniMotion(5));
-	table->setMotion(6, new PaniMotion(6));
-	table->setMotion(7, new PaniMotion(7));
-	table->setMotion(8, new PaniMotion(8));
-	table->setMotion(9, new PaniMotion(9));
-	table->setMotion(10, new PaniMotion(10));
-	table->setMotion(11, new PaniMotion(11));
-	table->setMotion(12, new PaniMotion(12));
-	table->setMotion(13, new PaniMotion(13));
-	table->setMotion(14, new PaniMotion(14));
+	PaniMotionTable* table = new PaniMotionTable(TekiMotion::COUNT);
+	table->setMotion(TekiMotion::Dead, new PaniMotion(TekiMotion::Dead));
+	table->setMotion(TekiMotion::Damage, new PaniMotion(TekiMotion::Damage));
+	table->setMotion(TekiMotion::Wait1, new PaniMotion(TekiMotion::Wait1));
+	table->setMotion(TekiMotion::Wait2, new PaniMotion(TekiMotion::Wait2));
+	table->setMotion(TekiMotion::WaitAct1, new PaniMotion(TekiMotion::WaitAct1));
+	table->setMotion(TekiMotion::WaitAct2, new PaniMotion(TekiMotion::WaitAct2));
+	table->setMotion(TekiMotion::Move1, new PaniMotion(TekiMotion::Move1));
+	table->setMotion(TekiMotion::Move2, new PaniMotion(TekiMotion::Move2));
+	table->setMotion(TekiMotion::Attack, new PaniMotion(TekiMotion::Attack));
+	table->setMotion(TekiMotion::Flick, new PaniMotion(TekiMotion::Flick));
+	table->setMotion(TekiMotion::Type1, new PaniMotion(TekiMotion::Type1));
+	table->setMotion(TekiMotion::Type2, new PaniMotion(TekiMotion::Type2));
+	table->setMotion(TekiMotion::Type3, new PaniMotion(TekiMotion::Type3));
+	table->setMotion(TekiMotion::Type4, new PaniMotion(TekiMotion::Type4));
+	table->setMotion(TekiMotion::Type5, new PaniMotion(TekiMotion::Type5));
 
 	return table;
 }
