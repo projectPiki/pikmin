@@ -136,14 +136,14 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
     : TaiStrategy(KINOKOSTATE_COUNT, KINOKOSTATE_Wait)
 {
 	TaiStopMoveAction* stopMoveAction                     = new TaiStopMoveAction();
-	TaiStoppingMoveAction* stoppingMoveAction             = new TaiStoppingMoveAction(6);
+	TaiStoppingMoveAction* stoppingMoveAction             = new TaiStoppingMoveAction(TekiMotion::Move1);
 	TaiFinishStoppingMoveAction* finishStoppingMoveAction = new TaiFinishStoppingMoveAction();
 	TaiDeadAction* deadAction1                            = new TaiDeadAction(KINOKOSTATE_DeadUpright);
 	TaiDeadAction* deadAction2                            = new TaiDeadAction(KINOKOSTATE_DeadFlipped);
 	TaiSimultaneousDamageAction* simDamageAction1         = new TaiSimultaneousDamageAction(TAI_NO_TRANSIT);
 	TaiDamageScaleAction* damageScaleAction               = new TaiDamageScaleAction(params->getF(KINOKOPF_StandingDamageRate));
 	TaiKinokoLegEffectAction* legEffectAction             = new TaiKinokoLegEffectAction(-0.5f);
-	TaiDyingAction* dyingAction1                          = new TaiDyingAction(0);
+	TaiDyingAction* dyingAction1                          = new TaiDyingAction(TekiMotion::Dead);
 	TaiStartDyingAction* startDyingAction                 = new TaiStartDyingAction();
 
 	// DEAD (UPRIGHT) STATE - die using animation 0
@@ -154,7 +154,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	state->setAction(j++, dyingAction1);
 	setState(KINOKOSTATE_DeadUpright, state);
 
-	TaiDyingAction* dyingAction2 = new TaiDyingAction(1);
+	TaiDyingAction* dyingAction2 = new TaiDyingAction(TekiMotion::Damage);
 
 	// DEAD (FLIPPED) STATE - die using animation 1
 	state = new TaiState(3);
@@ -165,7 +165,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	setState(KINOKOSTATE_DeadFlipped, state);
 
 	TaiTargetVisibleNaviAction* targetVisNaviAction                = new TaiTargetVisibleNaviAction(KINOKOSTATE_TurningAway);
-	TaiContinuousMotionAction* contMotionAction1                   = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 2);
+	TaiContinuousMotionAction* contMotionAction1                   = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 	TaiCounterattackSimultaneousDamageAction* counterAttackAction1 = new TaiCounterattackSimultaneousDamageAction(KINOKOSTATE_TurningAway);
 	TaiTimerAction* timerAction1 = new TaiTimerAction(TAI_NO_TRANSIT, 0, params->getF(KINOKOPF_WaitingPeriod), 0.4f);
 	TaiOutsideTerritoryAction* outsideTerritoryAction
@@ -184,7 +184,8 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	state->setAction(j++, contMotionAction1);
 	setState(KINOKOSTATE_Wait, state);
 
-	TaiTurningAwayAction* turningAwayAction = new TaiTurningAwayAction(KINOKOSTATE_RunningAway, 4, params->getF(TPF_TurnVelocity));
+	TaiTurningAwayAction* turningAwayAction
+	    = new TaiTurningAwayAction(KINOKOSTATE_RunningAway, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
 	TaiNotAction* notVisTargetAction        = new TaiNotAction(KINOKOSTATE_RunningAway, new TaiVisibleTargetAction(TAI_NO_TRANSIT));
 	TaiTimerAction* timerAction2 = new TaiTimerAction(KINOKOSTATE_RunningAway, 0, params->getF(KINOKOPF_TurningAwayPeriod), 0.0f);
 	TaiCounterattackSimultaneousDamageAction* counterAttackAction2 = new TaiCounterattackSimultaneousDamageAction(KINOKOSTATE_RunningAway);
@@ -204,7 +205,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 
 	TaiTimerAction* timerAction3 = new TaiTimerAction(KINOKOSTATE_SporeAttackRun, 0, params->getF(KINOKOPF_RunningAwayPeriod), 0.0f);
 	TaiRunningAwayToTargetDirectionAction* runningAwayAction
-	    = new TaiRunningAwayToTargetDirectionAction(TAI_NO_TRANSIT, 6, params->getF(TPF_RunVelocity));
+	    = new TaiRunningAwayToTargetDirectionAction(TAI_NO_TRANSIT, TekiMotion::Move1, params->getF(TPF_RunVelocity));
 	TaiDamageCountAction* damageCountAction
 	    = new TaiDamageCountAction(KINOKOSTATE_TurningOver, params->getI(KINOKOPI_TurningOverDamageCount));
 	TaiDamageCountResetAction* damageCountReset                  = new TaiDamageCountResetAction();
@@ -226,7 +227,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	setState(KINOKOSTATE_RunningAway, state);
 
 	TaiKinokoTurningOverAction* turningOverAction = new TaiKinokoTurningOverAction();
-	TaiMotionAction* motionAction1                = new TaiMotionAction(TAI_NO_TRANSIT, 10);
+	TaiMotionAction* motionAction1                = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Type1);
 	TaiAnimationKeyAction* animKeyAction          = new TaiAnimationKeyAction(KINOKOSTATE_Flipped, BTeki::ANIMATION_KEY_OPTION_ACTION_0);
 
 	// TURNING OVER STATE - we tripped, so now we need to flip
@@ -263,7 +264,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	state->setAction(j++, timerElapsedAction); // when timer's done, flip back upright and attack
 	setState(KINOKOSTATE_Flick, state);
 
-	TaiContinuousMotionAction* contMotionAction2      = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 9);
+	TaiContinuousMotionAction* contMotionAction2      = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TekiMotion::Flick);
 	TaiKinokoDischargingSporesAction* dischargeAction = new TaiKinokoDischargingSporesAction();
 	TaiKinokoChargingSporesAction* chargeAction       = new TaiKinokoChargingSporesAction();
 	TaiSerialAction* serialAction1                    = new TaiSerialAction(KINOKOSTATE_Wait, 2);
@@ -280,7 +281,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	state->setAction(j++, contMotionAction2);
 	setState(KINOKOSTATE_SporeAttackFlip, state);
 
-	TaiContinuousMotionAction* contMotionAction3 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, 12);
+	TaiContinuousMotionAction* contMotionAction3 = new TaiContinuousMotionAction(TAI_NO_TRANSIT, TekiMotion::Type3);
 
 	// SPORE ATTACK (AFTER RUNNING) STATE - gas cloud after running away for too long
 	state = new TaiState(6);
@@ -295,7 +296,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 
 	TaiSerialAction* serialAction2 = new TaiSerialAction(KINOKOSTATE_Wait, 2);
 	serialAction2->setAction(0, new TaiFinishMotionAction(TAI_NO_TRANSIT));
-	serialAction2->setAction(1, new TaiMotionAction(TAI_NO_TRANSIT, 11));
+	serialAction2->setAction(1, new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Type2));
 
 	// UNUSED STATE - never gets transitioned to.
 	state = new TaiState(2);
@@ -305,7 +306,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	setState(KINOKOSTATE_UnusedMotion, state);
 
 	TaiTurningToTargetPositionAction* turningToTargetPosAction
-	    = new TaiTurningToTargetPositionAction(KINOKOSTATE_GoingHome, 4, params->getF(KINOKOPF_SlowTurnVelocity));
+	    = new TaiTurningToTargetPositionAction(KINOKOSTATE_GoingHome, TekiMotion::WaitAct1, params->getF(KINOKOPF_SlowTurnVelocity));
 	TaiTargetNestAction* targetNestAction = new TaiTargetNestAction();
 
 	// TURN TO HOME STATE - we're too far from home, (slowly) turn back
@@ -320,7 +321,7 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 	state->setAction(j++, legEffectAction);
 	setState(KINOKOSTATE_TurnToHome, state);
 
-	TaiGoingHomeAction* goingHomeAction = new TaiGoingHomeAction(6, params->getF(TPF_WalkVelocity));
+	TaiGoingHomeAction* goingHomeAction = new TaiGoingHomeAction(TekiMotion::Move1, params->getF(TPF_WalkVelocity));
 	TaiInsideTerritoryAction* insideTerritoryAction
 	    = new TaiInsideTerritoryAction(KINOKOSTATE_Wait, params->getF(TPF_SafetyTerritoryRange));
 

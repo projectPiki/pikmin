@@ -155,7 +155,7 @@ TAIkabekuiBStrategy::TAIkabekuiBStrategy()
 	    = new TAIAgoTargetPriorityFaceDir(TAIkabekuiBStateID::EatingBridge, TekiMotion::Move1);
 
 	TAIAattackWorkObjectKabekuiB* attackWorkObject
-	    = new TAIAattackWorkObjectKabekuiB(TAIkabekuiBStateID::MovingBridge, TekiMotion::Move1, 8);
+	    = new TAIAattackWorkObjectKabekuiB(TAIkabekuiBStateID::MovingBridge, TekiMotion::Move1, TekiMotion::Attack);
 
 	TAIAsearchWorkObject* searchWorkObjectThenAppear = new TAIAsearchWorkObject(TAIkabekuiBStateID::Appearing);
 	TAIAdiveKabekuiB* diveKabekuiB                   = new TAIAdiveKabekuiB(TAIkabekuiBStateID::Burrowing);

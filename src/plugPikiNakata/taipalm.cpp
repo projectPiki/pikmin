@@ -91,7 +91,7 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
 	TaiPalmChangingColorAction* changingColorAction
 	    = new TaiPalmChangingColorAction(1, params->getF(PALMPF_ChangingColorPeriod), params->getF(PALMPF_ChangingColorPeriodRandomRate));
 	TaiPalmSettingPelletAction* settingPelletAction = new TaiPalmSettingPelletAction();
-	TaiPalmDyingAction* dyingAction                 = new TaiPalmDyingAction(0);
+	TaiPalmDyingAction* dyingAction                 = new TaiPalmDyingAction(TekiMotion::Dead);
 
 	// DEAD STATE - dead.
 	TaiState* state = new TaiState(2);
@@ -100,7 +100,7 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
 	state->setAction(j++, dyingAction);
 	setState(PALMSTATE_Dead, state);
 
-	TaiPalmDamagingAction* damagingAction = new TaiPalmDamagingAction(PALMSTATE_Normal, 1);
+	TaiPalmDamagingAction* damagingAction = new TaiPalmDamagingAction(PALMSTATE_Normal, TekiMotion::Damage);
 
 	// DAMAGE STATE - taking damage (and screaming about it)
 	state = new TaiState(4);
@@ -111,7 +111,7 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
 	state->setAction(j++, changingColorAction);
 	setState(PALMSTATE_Damage, state);
 
-	TaiPalmMotionAction* motionAction1  = new TaiPalmMotionAction(PALMSTATE_Normal, 4);
+	TaiPalmMotionAction* motionAction1  = new TaiPalmMotionAction(PALMSTATE_Normal, TekiMotion::WaitAct1);
 	TaiPalmGrowingAction* growingAction = new TaiPalmGrowingAction();
 	TaiTimerAction* timerAction         = new TaiTimerAction(TAI_NO_TRANSIT, 0, params->getF(PALMPF_GrowingPeriod), 0.0f);
 
@@ -124,7 +124,7 @@ TaiPalmStrategy::TaiPalmStrategy(TekiParameters* params)
 	setState(PALMSTATE_Grow, state);
 
 	TaiPalmGrowAction* growAction      = new TaiPalmGrowAction(PALMSTATE_Grow, 0);
-	TaiPalmMotionAction* motionAction2 = new TaiPalmMotionAction(TAI_NO_TRANSIT, 2);
+	TaiPalmMotionAction* motionAction2 = new TaiPalmMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 
 	// NORMAL STATE - straight chillin
 	state = new TaiState(6);

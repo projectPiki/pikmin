@@ -93,10 +93,10 @@ TAIusubaStrategy::TAIusubaStrategy()
     : YaiStrategy(USUBASTATE_COUNT, USUBASTATE_Fly)
 {
 	TAIAdeadCheck* dead = new TAIAdeadCheck(USUBASTATE_Die);
-	TAIAdying* dying    = new TAIAdying(TAI_NO_TRANSIT, 0);
+	TAIAdying* dying    = new TAIAdying(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAdamage* damage  = new TAIAdamage(TAI_NO_TRANSIT, false);
 	TAIAstop* stop      = new TAIAstop(TAI_NO_TRANSIT);
-	TAIAflyUsuba* fly   = new TAIAflyUsuba(USUBASTATE_Die, 6);
+	TAIAflyUsuba* fly   = new TAIAflyUsuba(USUBASTATE_Die, TekiMotion::Move1);
 
 	TaiState* state = new TaiState(2);
 	int j           = 0;

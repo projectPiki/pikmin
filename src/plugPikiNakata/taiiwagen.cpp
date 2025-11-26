@@ -72,7 +72,7 @@ TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters* params)
     : TaiStrategy(IWAGONSTATE_COUNT, IWAGONSTATE_Roll)
 {
 	TaiStopMoveAction* stopMove                = new TaiStopMoveAction();
-	TaiDyingAction* dying                      = new TaiDyingAction(0);
+	TaiDyingAction* dying                      = new TaiDyingAction(TekiMotion::Dead);
 	TaiStopGenParticleGeneratorAction* stopGen = new TaiStopGenParticleGeneratorAction(0);
 	TaiStopSoundAction* stopSound              = new TaiStopSoundAction(SE_ROCK_ROLL);
 	TaiSetOptionAction* setOpt                 = new TaiSetOptionAction(BTeki::TEKI_OPTION_SHADOW_VISIBLE, false);
@@ -98,7 +98,7 @@ TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters* params)
 	TaiBangingAction* banging                 = new TaiBangingAction(TAI_NO_TRANSIT);
 	// die when rolling (ends?)
 	TaiIwagonRollingAction* iwagonRolling       = new TaiIwagonRollingAction(IWAGONSTATE_Die);
-	TaiMotionAction* motion                     = new TaiMotionAction(TAI_NO_TRANSIT, 6);
+	TaiMotionAction* motion                     = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Move1);
 	TaiIwagonDustEffectAction* iwagonDustEffect = new TaiIwagonDustEffectAction();
 
 	state = new TaiState(9);
@@ -225,7 +225,7 @@ TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters* params)
 
 	// wait for anim to finish after spawning rock
 	TaiIwagenShootingAction* shoot = new TaiIwagenShootingAction(IWAGENSTATE_Reset);
-	TaiMotionAction* motion        = new TaiMotionAction(TAI_NO_TRANSIT, 8);
+	TaiMotionAction* motion        = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Attack);
 
 	state = new TaiState(2);
 	j     = 0;

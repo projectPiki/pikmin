@@ -509,24 +509,24 @@ TAIdororoStrategy::TAIdororoStrategy()
 {
 	TAIAinitDororo* init             = new TAIAinitDororo(DOROROSTATE_Birth);
 	TAIAdeadCheck* deadCheck         = new TAIAdeadCheck(DOROROSTATE_Dead);
-	TAIAdyingDororo* dying           = new TAIAdyingDororo(TAI_NO_TRANSIT, 0);
+	TAIAdyingDororo* dying           = new TAIAdyingDororo(TAI_NO_TRANSIT, TekiMotion::Dead);
 	TAIAdamage* damage               = new TAIAdamage(TAI_NO_TRANSIT, true);
 	TAIAstop* stop                   = new TAIAstop(TAI_NO_TRANSIT);
 	TAIAkillTouchPiki* killTouchPiki = new TAIAkillTouchPiki(DOROROSTATE_Transform);
-	TAIAgoGoalPathDororo* goGoalPath = new TAIAgoGoalPathDororo(DOROROSTATE_BarkGoal, 6);
+	TAIAgoGoalPathDororo* goGoalPath = new TAIAgoGoalPathDororo(DOROROSTATE_BarkGoal, TekiMotion::Move1);
 	TAIAflickCheck* flickCheck       = new TAIAflickCheck(DOROROSTATE_Flick, -1);
-	TAIAflickingDororo* flicking     = new TAIAflickingDororo(TAI_RETURN_TRANSIT, 9);
-	TAIAwaitDororo* wait             = new TAIAwaitDororo(DOROROSTATE_LookAround, 2);
+	TAIAflickingDororo* flicking     = new TAIAflickingDororo(TAI_RETURN_TRANSIT, TekiMotion::Flick);
+	TAIAwaitDororo* wait             = new TAIAwaitDororo(DOROROSTATE_LookAround, TekiMotion::Wait1);
 	TAIAvisiblePiki* visiblePiki     = new TAIAvisiblePiki(DOROROSTATE_GoTargetPiki);
 	TAIAnoReaction* noReact          = new TAIAnoReaction(DOROROSTATE_Idle);
-	TAIAgoTargetPiki* goTargetPiki   = new TAIAgoTargetPiki(DOROROSTATE_GoGoalPath, 6);
+	TAIAgoTargetPiki* goTargetPiki   = new TAIAgoTargetPiki(DOROROSTATE_GoGoalPath, TekiMotion::Move1);
 	TAIAeffCloudOfDust* effCloud
 	    = new TAIAeffCloudOfDust(TAI_NO_TRANSIT, EffectMgr::EFF_CloudOfDust_2, SOUND_NULL, -0.1f, 2, 'lhnd', 'rhnd', 0, 0);
-	TAIAbirthDororo* birth              = new TAIAbirthDororo(DOROROSTATE_GoGoalPath, 10);
-	TAIAtransformationDororo* transform = new TAIAtransformationDororo(TAI_NO_TRANSIT, 13);
-	TAIAbarkDororo* bark1               = new TAIAbarkDororo(DOROROSTATE_Wait, 11, 2.0f);
-	TAIAbarkDororo* bark2               = new TAIAbarkDororo(TAI_RETURN_TRANSIT, 11, 2.0f);
-	TAIAreserveMotion* reserveMotion    = new TAIAreserveMotion(DOROROSTATE_Wait, 12);
+	TAIAbirthDororo* birth              = new TAIAbirthDororo(DOROROSTATE_GoGoalPath, TekiMotion::Type1);
+	TAIAtransformationDororo* transform = new TAIAtransformationDororo(TAI_NO_TRANSIT, TekiMotion::Type4);
+	TAIAbarkDororo* bark1               = new TAIAbarkDororo(DOROROSTATE_Wait, TekiMotion::Type2, 2.0f);
+	TAIAbarkDororo* bark2               = new TAIAbarkDororo(TAI_RETURN_TRANSIT, TekiMotion::Type2, 2.0f);
+	TAIAreserveMotion* reserveMotion    = new TAIAreserveMotion(DOROROSTATE_Wait, TekiMotion::Type3);
 	TAIAcheckBarkDororo* checkBark      = new TAIAcheckBarkDororo(DOROROSTATE_Bark);
 	TAIAgravityDororo* gravity          = new TAIAgravityDororo(TAI_NO_TRANSIT);
 

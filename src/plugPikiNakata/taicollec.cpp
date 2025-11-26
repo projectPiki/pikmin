@@ -146,7 +146,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	TaiDependenceAction* flickLetGo       = new TaiDependenceAction(COLLECSTATE_Unk2, letGo, flick);
 	TaiDependenceAction* disappearLetGo   = new TaiDependenceAction(COLLECSTATE_Unk3, letGo, pelletDisappeared);
 	TaiDependenceAction* impassableLetGo  = new TaiDependenceAction(COLLECSTATE_Unk8, letGo, impassable);
-	TaiDyingAction* dying                 = new TaiDyingAction(0);
+	TaiDyingAction* dying                 = new TaiDyingAction(TekiMotion::Dead);
 	TaiStartDyingAction* startDying       = new TaiStartDyingAction();
 
 	//  STATE -
@@ -157,7 +157,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, dying);
 	setState(COLLECSTATE_Unk0, state);
 
-	TaiDamagingAction* damaging      = new TaiDamagingAction(COLLECSTATE_Unk3, 1);
+	TaiDamagingAction* damaging      = new TaiDamagingAction(COLLECSTATE_Unk3, TekiMotion::Damage);
 	TaiLifeDamageAction* lifeDamage1 = new TaiLifeDamageAction(params->getF(COLLECPF_PressedDamage));
 
 	//  STATE -
@@ -168,7 +168,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, damaging);
 	setState(COLLECSTATE_Unk1, state);
 
-	TaiFlickingAction* flicking = new TaiFlickingAction(COLLECSTATE_Unk3, 9);
+	TaiFlickingAction* flicking = new TaiFlickingAction(COLLECSTATE_Unk3, TekiMotion::Flick);
 
 	//  STATE -
 	state = new TaiState(4);
@@ -180,7 +180,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	setState(COLLECSTATE_Unk2, state);
 
 	TaiCollecTargetPelletAction* targetPellet1     = new TaiCollecTargetPelletAction(COLLECSTATE_Unk4);
-	TaiRandomWanderingRouteAction* randomWandering = new TaiRandomWanderingRouteAction(6, params->getF(TPF_WalkVelocity));
+	TaiRandomWanderingRouteAction* randomWandering = new TaiRandomWanderingRouteAction(TekiMotion::Move1, params->getF(TPF_WalkVelocity));
 	TaiHeadOnCollisionAvoidanceAction* headOnAvoid = new TaiHeadOnCollisionAvoidanceAction(50.0f);
 	TaiCollecVisibleHeightPelletLostTimerAction* visibleHeightLostTimer = new TaiCollecVisibleHeightPelletLostTimerAction(1, 15.0f);
 
@@ -202,7 +202,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	TaiCollecPelletLostAction* pelletLost                     = new TaiCollecPelletLostAction(COLLECSTATE_Unk3);
 	TaiCollecTargetPelletAction* targetPellet2                = new TaiCollecTargetPelletAction(TAI_NO_TRANSIT);
 	TaiCollecHoldPelletAction* holdPellet                     = new TaiCollecHoldPelletAction(COLLECSTATE_Unk5);
-	TaiTracingAction* tracing                                 = new TaiTracingAction(6, params->getF(TPF_RunVelocity));
+	TaiTracingAction* tracing                                 = new TaiTracingAction(TekiMotion::Move1, params->getF(TPF_RunVelocity));
 	TaiCollecVisibleHeightPelletLostAction* visibleHeightLost = new TaiCollecVisibleHeightPelletLostAction(COLLECSTATE_Unk3);
 
 	//  STATE -
@@ -221,7 +221,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, holdPellet);
 	setState(COLLECSTATE_Unk4, state);
 
-	TaiMotionAction* motion1          = new TaiMotionAction(TAI_NO_TRANSIT, 7);
+	TaiMotionAction* motion1          = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Move2);
 	TaiAnimationKeyAction* animKey    = new TaiAnimationKeyAction(COLLECSTATE_Unk6, BTeki::ANIMATION_KEY_OPTION_LOOPSTART);
 	TaiCollecCatchingAction* catching = new TaiCollecCatchingAction();
 
@@ -240,7 +240,8 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, naviWatchResult);
 	setState(COLLECSTATE_Unk5, state);
 
-	TaiCollecCarryingToNestAction* carryingToNest   = new TaiCollecCarryingToNestAction(COLLECSTATE_Unk8, 7, 3);
+	TaiCollecCarryingToNestAction* carryingToNest
+	    = new TaiCollecCarryingToNestAction(COLLECSTATE_Unk8, TekiMotion::Move2, TPF_WalkVelocity);
 	TaiCollecRouteImpassableAction* routeImpassable = new TaiCollecRouteImpassableAction(COLLECSTATE_Unk14);
 	TaiCollecPutAction* put                         = new TaiCollecPutAction(COLLECSTATE_Unk8);
 	TaiCollecDefeatCarryingAction* defeatCarrying   = new TaiCollecDefeatCarryingAction(COLLECSTATE_Unk7);
@@ -266,7 +267,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 
 	TaiCollecWinCarryingAction* winCarrying = new TaiCollecWinCarryingAction(TAI_NO_TRANSIT);
 	TaiDependenceAction* winCarryingLetGo   = new TaiDependenceAction(COLLECSTATE_Unk4, letGo, winCarrying);
-	TaiMotionAction* motion2                = new TaiMotionAction(TAI_NO_TRANSIT, 10);
+	TaiMotionAction* motion2                = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Type1);
 	TaiCollecBeingDraggedAction* dragged    = new TaiCollecBeingDraggedAction();
 
 	//  STATE -
@@ -283,7 +284,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, motion2);
 	setState(COLLECSTATE_Unk7, state);
 
-	TaiMotionAction* motion3                    = new TaiMotionAction(COLLECSTATE_Unk9, 12);
+	TaiMotionAction* motion3                    = new TaiMotionAction(COLLECSTATE_Unk9, TekiMotion::Type3);
 	TaiCollecPuttingPelletAction* puttingPellet = new TaiCollecPuttingPelletAction(TAI_NO_TRANSIT);
 
 	//  STATE -
@@ -310,7 +311,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, timer1);
 	setState(COLLECSTATE_Unk9, state);
 
-	TaiMotionAction* motion4 = new TaiMotionAction(COLLECSTATE_Unk3, 11);
+	TaiMotionAction* motion4 = new TaiMotionAction(COLLECSTATE_Unk3, TekiMotion::Type2);
 	TaiSetOptionAction* setOption2
 	    = new TaiSetOptionAction(BTeki::TEKI_OPTION_VISIBLE | BTeki::TEKI_OPTION_ATARI | BTeki::TEKI_OPTION_SHADOW_VISIBLE, true);
 	TaiCollecGetOutAction* getOut = new TaiCollecGetOutAction();
@@ -350,7 +351,7 @@ TaiCollecStrategy::TaiCollecStrategy(TekiParameters* params)
 	state->setAction(j++, playSound);
 	setState(COLLECSTATE_Unk12, state);
 
-	TaiMotionAction* motion5         = new TaiMotionAction(COLLECSTATE_Unk3, 13);
+	TaiMotionAction* motion5         = new TaiMotionAction(COLLECSTATE_Unk3, TekiMotion::Type4);
 	TaiLifeDamageAction* lifeDamage2 = new TaiLifeDamageAction(params->getF(COLLECPF_BouncingDamage));
 
 	//  STATE -
@@ -1235,7 +1236,7 @@ TaiHollecParameters::TaiHollecParameters()
 TaiHollecStrategy::TaiHollecStrategy(TekiParameters*)
     : TaiStrategy(HOLLECSTATE_COUNT, HOLLECSTATE_Unk0)
 {
-	TaiMotionAction* motion = new TaiMotionAction(TAI_NO_TRANSIT, 2);
+	TaiMotionAction* motion = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 
 	//  STATE -
 	TaiState* state = new TaiState(1);

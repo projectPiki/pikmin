@@ -125,15 +125,15 @@ TAItankStrategy::TAItankStrategy()
 	vecs[1].set(0.5f, 0.0f, -0.5f);
 	vecs[2].set(-0.5f, 0.0f, -0.5f);
 
-	TAIAdeadCheck* deadCheck      = new TAIAdeadCheck(TAItankStateID::Unk0);
-	TAIAdying* dying              = new TAIAdying(TAI_NO_TRANSIT, TekiMotion::Dead);
-	TAIAdamage* damage            = new TAIAdamage(TAI_NO_TRANSIT, true);
-	TAIAstop* stop                = new TAIAstop(TAI_NO_TRANSIT);
-	TAIApatrolTank* patrol        = new TAIApatrolTank(TAI_NO_TRANSIT, TekiMotion::Move1, 6, TekiMotion::WaitAct1, vecs, 3);
-	TAIAvisiblePiki* visiblePiki1 = new TAIAvisiblePiki(TAItankStateID::Unk3);
-	TAIAvisibleNavi* visibleNavi1 = new TAIAvisibleNavi(TAItankStateID::Unk3);
-	TAIAwait* wait1               = new TAIAwait(TAItankStateID::Unk5, TekiMotion::Wait1, 0.5f);
-	TAIAwait* wait2               = new TAIAwait(TAItankStateID::Unk2, TekiMotion::WaitAct2, 0.0f);
+	TAIAdeadCheck* deadCheck = new TAIAdeadCheck(TAItankStateID::Unk0);
+	TAIAdying* dying         = new TAIAdying(TAI_NO_TRANSIT, TekiMotion::Dead);
+	TAIAdamage* damage       = new TAIAdamage(TAI_NO_TRANSIT, true);
+	TAIAstop* stop           = new TAIAstop(TAI_NO_TRANSIT);
+	TAIApatrolTank* patrol   = new TAIApatrolTank(TAI_NO_TRANSIT, TekiMotion::Move1, TekiMotion::WaitAct1, TekiMotion::WaitAct1, vecs, 3);
+	TAIAvisiblePiki* visiblePiki1                    = new TAIAvisiblePiki(TAItankStateID::Unk3);
+	TAIAvisibleNavi* visibleNavi1                    = new TAIAvisibleNavi(TAItankStateID::Unk3);
+	TAIAwait* wait1                                  = new TAIAwait(TAItankStateID::Unk5, TekiMotion::Wait1, 0.5f);
+	TAIAwait* wait2                                  = new TAIAwait(TAItankStateID::Unk2, TekiMotion::WaitAct2, 0.0f);
 	TAIAattackableAngleTarget* attackableAngleTarget = new TAIAattackableAngleTarget(TAItankStateID::Unk6);
 	TAIAturnFocusCreature* turnFocus = new TAIAturnFocusCreature(TAItankStateID::Unk7, TekiMotion::WaitAct1, TekiMotion::WaitAct1, true);
 	TAIAunvisibleTarget* unvisibleTarget       = new TAIAunvisibleTarget(TAItankStateID::Unk4);

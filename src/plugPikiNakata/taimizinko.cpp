@@ -230,7 +230,7 @@ TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
 	TaiHorizontalSinWaveAction* hSinWaveAction = new TaiHorizontalSinWaveAction();
 	TaiMakingNextVelocityAction* nextVelAction = new TaiMakingNextVelocityAction();
 	TaiMizinkoWaitingAction* waitingAction     = new TaiMizinkoWaitingAction();
-	TaiMotionAction* motionAction1             = new TaiMotionAction(TAI_NO_TRANSIT, 2);
+	TaiMotionAction* motionAction1             = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Wait1);
 	TaiMizinkoFadingAction* fadingAction       = new TaiMizinkoFadingAction();
 	TaiPikiCollisionAction* pikiCollAction     = new TaiPikiCollisionAction(MIZINKOSTATE_DropWater);
 	TaiDamageAction* damageAction              = new TaiDamageAction(MIZINKOSTATE_DropWater);
@@ -291,7 +291,7 @@ TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
 	setState(MIZINKOSTATE_HidingStart, state);
 
 	TaiTypeNaviWatchResultOnAction* naviWatchResAction = new TaiTypeNaviWatchResultOnAction();
-	TaiDamagingAction* damagingAction                  = new TaiDamagingAction(MIZINKOSTATE_FlyingAway, 1);
+	TaiDamagingAction* damagingAction                  = new TaiDamagingAction(MIZINKOSTATE_FlyingAway, TekiMotion::Damage);
 	TaiMizinkoDropWaterAction* dropWaterAction         = new TaiMizinkoDropWaterAction();
 
 	// DROP WATER STATE - has been hit, dropping nectar
@@ -304,7 +304,7 @@ TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters* params)
 
 	TaiTimerAction* timerAction3                 = new TaiTimerAction(MIZINKOSTATE_Dead, 0, params->getF(TPF_LifePeriod), 0.0f);
 	TaiMizinkoFlyingAwayAction* flyingAwayAction = new TaiMizinkoFlyingAwayAction();
-	TaiMotionAction* motionAction2               = new TaiMotionAction(TAI_NO_TRANSIT, 0);
+	TaiMotionAction* motionAction2               = new TaiMotionAction(TAI_NO_TRANSIT, TekiMotion::Dead);
 
 	// FLYING AWAY STATE - has dropped nectar, disappearing
 	state = new TaiState(5);
