@@ -236,50 +236,67 @@ void TaiPalmStrategy::createEffect(Teki& teki, int palmEffectID)
  * Address:	8013E650
  * Size:	000100
  */
-int TaiPalmStrategy::translateMotionIndex(Teki& teki, int palmMotionIdx)
+int TaiPalmStrategy::translateMotionIndex(Teki& teki, int tekiMotionIdx)
 {
+	enum PalmMotion {
+		Size0_Dead,
+		Size0_Damage,
+		Size0_Wait1,
+
+		Size1_Dead,
+		Size1_Damage,
+		Size1_Wait1,
+
+		Size2_Dead,
+		Size2_Damage,
+		Size2_Wait1,
+
+		Size0_Flick,
+		Size1_Flick,
+	};
+
 	int size = teki.getPersonalityF(TekiPersonality::FLT_Strength);
 
 	if (size == 0) {
-		if (palmMotionIdx == 0) {
-			return 0;
+		if (tekiMotionIdx == TekiMotion::Dead) {
+			return Size0_Dead;
 		}
-		if (palmMotionIdx == 1) {
-			return 1;
+		if (tekiMotionIdx == TekiMotion::Damage) {
+			return Size0_Damage;
 		}
-		if (palmMotionIdx == 2) {
-			return 2;
+		if (tekiMotionIdx == TekiMotion::Wait1) {
+			return Size0_Wait1;
 		}
-		if (palmMotionIdx == 4) {
-			return 9;
+		if (tekiMotionIdx == TekiMotion::WaitAct1) {
+			return Size0_Flick;
 		}
 	} else if (size == 1) {
-		if (palmMotionIdx == 0) {
-			return 3;
+		if (tekiMotionIdx == TekiMotion::Dead) {
+			return Size1_Dead;
 		}
-		if (palmMotionIdx == 1) {
-			return 4;
+		if (tekiMotionIdx == TekiMotion::Damage) {
+			return Size1_Damage;
 		}
-		if (palmMotionIdx == 2) {
-			return 5;
+		if (tekiMotionIdx == TekiMotion::Wait1) {
+			return Size1_Wait1;
 		}
-		if (palmMotionIdx == 4) {
-			return 10;
+		if (tekiMotionIdx == TekiMotion::WaitAct1) {
+			return Size1_Flick;
 		}
 	} else if (size == 2) {
-		if (palmMotionIdx == 0) {
-			return 6;
+		if (tekiMotionIdx == TekiMotion::Dead) {
+			return Size2_Dead;
 		}
-		if (palmMotionIdx == 1) {
-			return 7;
+		if (tekiMotionIdx == TekiMotion::Damage) {
+			return Size2_Damage;
 		}
-		if (palmMotionIdx == 2) {
-			return 8;
+		if (tekiMotionIdx == TekiMotion::Wait1) {
+			return Size2_Wait1;
 		}
 	}
 
-	PRINT("!TaiPalmStrategy::start:%08x:%d,%d\n", &teki, size, palmMotionIdx);
-	return 0;
+	PRINT("!TaiPalmStrategy::start:%08x:%d,%d\n", &teki, size, tekiMotionIdx);
+	return TekiMotion::Dead;
 }
 
 /*
