@@ -67,7 +67,7 @@ DEFINE_PRINT("teki");
  */
 void BTeki::viewStartTrembleMotion(f32 motionSpeed)
 {
-	startMotion(14);
+	startMotion(TekiMotion::Type5);
 	setTekiOption(TEKIOPT_ManualAnimation);
 	mMotionSpeed = motionSpeed;
 }
