@@ -11,6 +11,18 @@ struct InteractBikkuri;
 struct InteractSwallow;
 struct SimpleAI;
 
+BEGIN_ENUM_TYPE(PikiHeadMotion)
+enum {
+	TaneFall = 0, // tane fall = seed fall (たね fall)
+	TaneUp   = 1, // tane up   = seed up (たね up)
+	Hatuga   = 2, // hat(s)uga = germination (発芽)
+	UgWait   = 3, //           = grow-up wait (ug = up-grow)
+	UgGrow   = 4, //           = grow-up grow (ug = up-grow)
+	Sioreru  = 5, // soireru   = wilt (しおれる)
+	TaneDown = 6, // tane down = seed down (たね down)
+	COUNT,
+} END_ENUM_TYPE;
+
 /**
  * @brief TODO
  *

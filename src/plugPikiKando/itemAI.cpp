@@ -169,18 +169,18 @@ void SluiceAI::DamageInit::act(AICreature* item)
 PikiHeadAI::PikiHeadAI()
 {
 	create(PIKIHEAD_COUNT);
-	addState(PIKIHEAD_Unk13, 0);
-	addState(PIKIHEAD_Bounce, 6, new BounceSound);
+	addState(PIKIHEAD_Unk13, PikiHeadMotion::TaneFall);
+	addState(PIKIHEAD_Bounce, PikiHeadMotion::TaneDown, new BounceSound);
 	addState(PIKIHEAD_Bury2, PANI_NO_MOTION, new BuryInit2, new BuryExec2);
-	addState(PIKIHEAD_Flying, 0, new FlyingEffect, new FlyingExec, new FlyingCleanup);
+	addState(PIKIHEAD_Flying, PikiHeadMotion::TaneFall, new FlyingEffect, new FlyingExec, new FlyingCleanup);
 	addState(PIKIHEAD_Bury, PANI_NO_MOTION, new BuryInit, new BuryExec);
 	addState(PIKIHEAD_Tane, PANI_NO_MOTION, new TaneInit, new TaneExec);
-	addState(PIKIHEAD_Unk5, 2);
-	addState(PIKIHEAD_Wait, 3, new WaitInit, new WaitExec);
-	addState(PIKIHEAD_Unk7, 4);
+	addState(PIKIHEAD_Unk5, PikiHeadMotion::Hatuga);
+	addState(PIKIHEAD_Wait, PikiHeadMotion::UgWait, new WaitInit, new WaitExec);
+	addState(PIKIHEAD_Unk7, PikiHeadMotion::UgGrow);
 	addState(PIKIHEAD_Growuped, PANI_NO_MOTION, new GrowupedExec);
 	addState(PIKIHEAD_Grow, PANI_NO_MOTION, new GrowEffect);
-	addState(PIKIHEAD_Unk10, 5);
+	addState(PIKIHEAD_Unk10, PikiHeadMotion::Sioreru);
 	addState(PIKIHEAD_Kareta, PANI_NO_MOTION, new KaretaInit, new KaretaExec);
 	addState(PIKIHEAD_Dead, PANI_NO_MOTION, new Dead);
 
@@ -307,7 +307,7 @@ void PikiHeadAI::BuryExec::act(AICreature* item)
 	f32& health = item->mCurrentItemHealth;
 	health -= gsys->getFrameTime();
 	if (health < 0.0f) {
-		item->startMotion(1);
+		item->startMotion(PikiHeadMotion::TaneUp);
 		item->mStateMachine->transit(item, PIKIHEAD_Tane);
 	}
 }
