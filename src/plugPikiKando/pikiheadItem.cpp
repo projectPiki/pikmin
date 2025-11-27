@@ -143,7 +143,7 @@ void PikiHeadItem::startAI(int)
 {
 	startFix();
 	_3E0 = nullptr;
-	mItemAnimator.startMotion(PaniMotionInfo(0));
+	mItemAnimator.startMotion(PaniMotionInfo(PikiHeadMotion::TaneFall));
 
 	f32 scale = 1.0f;
 	mScale.set(scale, scale, scale);
