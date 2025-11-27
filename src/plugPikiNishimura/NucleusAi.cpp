@@ -37,7 +37,7 @@ void NucleusAi::initAI(Nucleus* nucleus)
 	mNucleus = nucleus;
 	mNucleus->setCurrentState(NUCLEUSAI_Follow);
 	mNucleus->setNextState(NUCLEUSAI_Follow);
-	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mNucleus->setAnimTimer(30.0f);
 	mStickPikiCount = 0;
 }
@@ -216,7 +216,7 @@ void NucleusAi::initDie(int val)
 	mNucleus->setNextState(val);
 	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
-	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 	mNucleus->setAttackTimer(0.0f);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mNucleus->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mNucleus->mPosition, nullptr, nullptr);
@@ -234,7 +234,7 @@ void NucleusAi::initDamage(int val)
 	mNucleus->setNextState(val);
 	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
-	mNucleus->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 }
 
 /*
@@ -247,7 +247,7 @@ void NucleusAi::initFollow(int val)
 	mNucleus->setNextState(val);
 	mNucleus->setMotionFinish(false);
 	mNucleus->setLoopCounter(0);
-	mNucleus->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 }
 
 /*

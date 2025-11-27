@@ -37,7 +37,7 @@ void CoreNucleusAi::initAI(CoreNucleus* core)
 	mCore = core;
 	mCore->setCurrentState(COREAI_Follow);
 	mCore->setNextState(COREAI_Follow);
-	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mCore->setAnimTimer(30.0f);
 	mIsHit = false;
 }
@@ -237,7 +237,7 @@ void CoreNucleusAi::initDie(int val)
 	mCore->setNextState(val);
 	mCore->setMotionFinish(false);
 	mCore->setLoopCounter(0);
-	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 	mCore->setAttackTimer(0.0f);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mCore->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mCore->mPosition, nullptr, nullptr);
@@ -255,7 +255,7 @@ void CoreNucleusAi::initDamage(int val)
 	mCore->setNextState(val);
 	mCore->setMotionFinish(false);
 	mCore->setLoopCounter(0);
-	mCore->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 }
 
 /*
@@ -267,7 +267,7 @@ void CoreNucleusAi::initFollow(int val)
 {
 	mCore->setNextState(val);
 	mCore->setMotionFinish(false);
-	mCore->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mIsHit = 0;
 }
 
@@ -280,7 +280,7 @@ void CoreNucleusAi::initHit(int val)
 {
 	mCore->setNextState(val);
 	mCore->setMotionFinish(false);
-	mCore->mAnimator.startMotion(PaniMotionInfo(10, this));
+	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 	Vector3f ptclPos(sinf(mCore->mFaceDirection), 0.0f, cosf(mCore->mFaceDirection));
 	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mCore->mPosition, nullptr, nullptr);
 	if (ptcl) {

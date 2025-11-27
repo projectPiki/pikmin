@@ -49,7 +49,7 @@ void SpiderAi::initAI(Spider* spider)
 	mSpider = spider;
 	mSpider->setCurrentState(7);
 	mSpider->setNextState(7);
-	mSpider->mAnimator.startMotion(PaniMotionInfo(3, this));
+	mSpider->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait2, this));
 	mCanFlick = false;
 	if (C_SPIDER_PROP(mSpider).mDoDropFromSky()) {
 		// drop from sky, so don't fall yet
@@ -395,7 +395,7 @@ void SpiderAi::initDie(int nextState)
 	mSpider->setNextState(nextState);
 	mSpider->setMotionFinish(true);
 	mSpider->setTargetCreature(nullptr);
-	mSpider->mAnimator.startMotion(PaniMotionInfo(0, this));
+	mSpider->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Dead, this));
 	mSpider->setAttackTimer(0.0f);
 	mSpider->mSpiderLeg->mMotionFinishFlag = true;
 	resultFlagSeen();
@@ -471,7 +471,7 @@ void SpiderAi::initWait(int nextState)
 	mSpider->setLoopCounter(0);
 	mSpider->setMotionFinish(false);
 	mSpider->setTargetCreature(nullptr);
-	mSpider->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mSpider->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 }
 
 /*

@@ -46,7 +46,7 @@ void MizuAi::initMizu(Mizu* mizu)
 	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mPosition, nullptr, nullptr);
 	mMizu->setCurrentState(0);
 	mMizu->setNextState(0);
-	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mMizu->setAnimTimer(30.0f);
 	initWait(0);
 }
@@ -63,7 +63,7 @@ void MizuAi::initGeyzer(Mizu* geyzer)
 	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mPosition, nullptr, nullptr);
 	mMizu->setCurrentState(1);
 	mMizu->setNextState(1);
-	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mMizu->setAnimTimer(30.0f);
 	initReady(1);
 }
@@ -164,7 +164,7 @@ bool MizuAi::waitTransit()
 void MizuAi::initWait(int stateID)
 {
 	mMizu->setNextState(stateID);
-	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mMizu->_3B8       = true;
 	mMizu->mIsVisible = true;
 	mMizu->setIsAlive(1);
@@ -187,7 +187,7 @@ void MizuAi::initWait(int stateID)
 void MizuAi::initReady(int stateID)
 {
 	mMizu->setNextState(stateID);
-	mMizu->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mMizu->_3B8       = false;
 	mMizu->mIsVisible = false;
 	mMizu->setIsAlive(0);
@@ -214,7 +214,7 @@ void MizuAi::initReady(int stateID)
 void MizuAi::initJet(int stateID)
 {
 	mMizu->setNextState(stateID);
-	mMizu->mAnimator.startMotion(PaniMotionInfo(10, this));
+	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 	mMizu->_3B8       = true;
 	mMizu->mIsVisible = false;
 	mMizu->setIsAlive(false);
