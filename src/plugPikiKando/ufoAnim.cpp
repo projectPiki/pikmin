@@ -41,7 +41,7 @@ UfoShapeObject::UfoShapeObject(Shape* shape)
 	mShape->overrideAnim(53, &mAnimContexts[7]);
 }
 
-char* PaniUfoAnimator::motionLabels[17] = {
+char* PaniUfoAnimator::motionLabels[UfoMotion::COUNT] = {
 	"wait tut", "wait",    "takeoff",   "henka1",    "henka1b",   "henka1d",   "henka2",    "henka2d",    "henka3",
 	"henka4a",  "henka4b", "takeoff-1", "takeoff-2", "takeoff-3", "takeoff-4", "takeoff-5", "open-close",
 };
@@ -53,25 +53,25 @@ char* PaniUfoAnimator::motionLabels[17] = {
  */
 PaniMotionTable* PaniUfoAnimator::createMotionTable()
 {
-	PaniMotionTable* table = new PaniMotionTable(17);
+	PaniMotionTable* table = new PaniMotionTable(UfoMotion::COUNT);
 
-	table->setMotion(0, new PaniMotion(0));
-	table->setMotion(1, new PaniMotion(1));
-	table->setMotion(2, new PaniMotion(2));
-	table->setMotion(3, new PaniMotion(3));
-	table->setMotion(4, new PaniMotion(4));
-	table->setMotion(5, new PaniMotion(5));
-	table->setMotion(6, new PaniMotion(6));
-	table->setMotion(7, new PaniMotion(7));
-	table->setMotion(8, new PaniMotion(8));
-	table->setMotion(9, new PaniMotion(9));
-	table->setMotion(10, new PaniMotion(10));
-	table->setMotion(11, new PaniMotion(11));
-	table->setMotion(12, new PaniMotion(12));
-	table->setMotion(13, new PaniMotion(13));
-	table->setMotion(14, new PaniMotion(14));
-	table->setMotion(15, new PaniMotion(15));
-	table->setMotion(16, new PaniMotion(16));
+	table->setMotion(UfoMotion::WaitTutorial, new PaniMotion(UfoMotion::WaitTutorial));
+	table->setMotion(UfoMotion::Wait, new PaniMotion(UfoMotion::Wait));
+	table->setMotion(UfoMotion::Takeoff, new PaniMotion(UfoMotion::Takeoff));
+	table->setMotion(UfoMotion::Henka1, new PaniMotion(UfoMotion::Henka1));
+	table->setMotion(UfoMotion::Henka1b, new PaniMotion(UfoMotion::Henka1b));
+	table->setMotion(UfoMotion::Henka1d, new PaniMotion(UfoMotion::Henka1d));
+	table->setMotion(UfoMotion::Henka2, new PaniMotion(UfoMotion::Henka2));
+	table->setMotion(UfoMotion::Henka2d, new PaniMotion(UfoMotion::Henka2d));
+	table->setMotion(UfoMotion::Henka3, new PaniMotion(UfoMotion::Henka3));
+	table->setMotion(UfoMotion::Henka4a, new PaniMotion(UfoMotion::Henka4a));
+	table->setMotion(UfoMotion::Henka4b, new PaniMotion(UfoMotion::Henka4b));
+	table->setMotion(UfoMotion::Takeoff1, new PaniMotion(UfoMotion::Takeoff1));
+	table->setMotion(UfoMotion::Takeoff2, new PaniMotion(UfoMotion::Takeoff2));
+	table->setMotion(UfoMotion::Takeoff3, new PaniMotion(UfoMotion::Takeoff3));
+	table->setMotion(UfoMotion::Takeoff4, new PaniMotion(UfoMotion::Takeoff4));
+	table->setMotion(UfoMotion::Takeoff5, new PaniMotion(UfoMotion::Takeoff5));
+	table->setMotion(UfoMotion::OpenClose, new PaniMotion(UfoMotion::OpenClose));
 	return table;
 }
 
@@ -105,7 +105,7 @@ void UfoAnimator::init(UfoShapeObject* shape, PaniMotionTable* table)
 	for (int i = 0; i < 8; i++) {
 		mAnims[i].init(shape->mAnimContexts + i, shape->mAnimMgr, table);
 		mAnimSpeeds[i] = 0.0f;
-		mAnims[i].startMotion(PaniMotionInfo(0));
+		mAnims[i].startMotion(PaniMotionInfo(UfoMotion::WaitTutorial));
 	}
 }
 
@@ -197,7 +197,7 @@ void UfoAnimator::startFlagMotions(int id)
 {
 	switch (id) {
 	case 5:
-		startMotion(7, &PaniMotionInfo(10));
+		startMotion(7, &PaniMotionInfo(UfoMotion::Henka4b));
 		playerState->startSpecialMotions();
 	case 4:
 		setMotionSpeed(6, 30.0f);
@@ -213,7 +213,7 @@ void UfoAnimator::startFlagMotions(int id)
 		break;
 	case 0:
 		for (int i = 1; i < 8; i++) {
-			startMotion(i, &PaniMotionInfo(i + 2));
+			startMotion(i, &PaniMotionInfo(i + UfoMotion::Henka1 - 1));
 			setMotionSpeed(i, 0.0f);
 		}
 		break;

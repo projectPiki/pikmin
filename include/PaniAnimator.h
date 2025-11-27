@@ -260,6 +260,28 @@ struct PaniTekiAnimator : public PaniAnimator {
 	// _00-_54 = PaniAnimator
 };
 
+BEGIN_ENUM_TYPE(UfoMotion)
+enum {
+	WaitTutorial = 0,  // kiso_t (kiso = 基礎 = basic)
+	Wait         = 1,  // kiso
+	Takeoff      = 2,  // kiso_t (unused)
+	Henka1       = 3,  // henka1 (henka = 変化 = change)
+	Henka1b      = 4,  // henka1b
+	Henka1d      = 5,  // henka1d
+	Henka2       = 6,  // henka2
+	Henka2d      = 7,  // henka2d
+	Henka3       = 8,  // henka3
+	Henka4a      = 9,  // henka4a
+	Henka4b      = 10, // henka4b
+	Takeoff1     = 11, // pm_st_l1
+	Takeoff2     = 12, // pm_st_l2
+	Takeoff3     = 13, // pm_st_l3
+	Takeoff4     = 14, // pm_st_l4 (unused duplicate of Takeoff2)
+	Takeoff5     = 15, // pm_st_l5 (unused duplicate of Takeoff3)
+	OpenClose    = 16, // op_cl
+	COUNT,
+} END_ENUM_TYPE;
+
 /**
  * @brief TODO
  */
@@ -268,7 +290,7 @@ struct PaniUfoAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[17];
+	static char* motionLabels[UfoMotion::COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
