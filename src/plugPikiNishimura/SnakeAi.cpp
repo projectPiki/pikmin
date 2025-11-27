@@ -59,7 +59,7 @@ void SnakeAi::initAI(Snake* snake)
 	mSnake = snake;
 	mSnake->setCurrentState(8);
 	mSnake->setNextState(8);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(6, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 
 	mFastAppear        = true;
 	mIsFacingTarget    = false;
@@ -997,7 +997,7 @@ void SnakeAi::initDie(int nextState)
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
 	mSnake->setWalkTimer(0.0f);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(0, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Dead, this));
 	mSnake->mSnakeBody->initBlending(2.0f);
 	resultFlagSeen();
 }
@@ -1011,7 +1011,7 @@ void SnakeAi::initStruggle(int nextState)
 {
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(5, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::WaitAct2, this));
 	mSnake->setLoopCounter(0);
 	mSnake->mSnakeBody->initBlending(3.0f);
 	resultFlagOn();
@@ -1026,7 +1026,7 @@ void SnakeAi::initChase(int nextState)
 {
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mSnake->mSnakeBody->initBlending(C_SNAKE_PROP(mSnake).mChaseBlendingRate());
 	resultFlagOn();
 }
@@ -1045,15 +1045,15 @@ void SnakeAi::initAttack(int nextState, f32 frame)
 	mIsAttackAllowed = true;
 
 	if (mAttackId == 0) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(10, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 	} else if (mAttackId == 1) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(11, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type2, this));
 	} else if (mAttackId == 2) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(12, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type3, this));
 	} else if (mAttackId == 3) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(13, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type4, this));
 	} else if (mAttackId == 4) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(14, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type5, this));
 	} else {
 		PRINT(" Hanai Bug. Report it to Mr. Hanai !! ( No such attack area ) \n");
 	}
@@ -1075,7 +1075,7 @@ void SnakeAi::initEat(int nextState)
 {
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(4, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::WaitAct1, this));
 	mSnake->mSnakeBody->initBlending(3.0f);
 	resultFlagOn();
 }
@@ -1089,7 +1089,7 @@ void SnakeAi::initWait(int nextState)
 {
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	mSnake->setTargetCreature(nullptr);
 	mSnake->setWalkTimer(0.0f);
 	mSnake->mSnakeBody->initBlending(1.0f);
@@ -1105,7 +1105,7 @@ void SnakeAi::initGointo(int nextState)
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
 	mSnake->setShadowNeed(false);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(9, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Flick, this));
 	mSnake->mSnakeBody->initBlending(2.0f);
 	effectMgr->create(EffectMgr::EFF_Snake_Appear1, mSnake->mPosition, nullptr, nullptr);
 	effectMgr->create(EffectMgr::EFF_Snake_Appear2, mSnake->mPosition, nullptr, nullptr);
@@ -1123,7 +1123,7 @@ void SnakeAi::initUnder(int nextState)
 	mSnake->setNextState(nextState);
 	mSnake->setMotionFinish(false);
 	mSnake->setAnimTimer(0.0f);
-	mSnake->mAnimator.startMotion(PaniMotionInfo(6, this));
+	mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 	effectMgr->create(EffectMgr::EFF_BigDustRing, mSnake->mPosition, nullptr, nullptr);
 	mSnake->mSnakeBody->initBlending(12800.0f);
 	mOccupiedSlotCount = 0;
@@ -1147,12 +1147,12 @@ void SnakeAi::initAppear(int nextState)
 	mSnake->setMotionFinish(false);
 	mSnake->setAnimTimer(30.0f);
 	if (mFastAppear) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		mFastAppear = false;
 	} else if (NsMathF::getRand(1.0f) < C_SNAKE_PROP(mSnake).mFastAppearChance()) {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 	} else {
-		mSnake->mAnimator.startMotion(PaniMotionInfo(7, this));
+		mSnake->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move2, this));
 	}
 
 	mSnake->mSnakeBody->initBlending(12800.0f);

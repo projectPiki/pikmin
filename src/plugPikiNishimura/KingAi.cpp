@@ -54,7 +54,7 @@ void KingAi::initAI(King* king)
 	mKing = king;
 	mKing->setCurrentState(16);
 	mKing->setNextState(16);
-	mKing->mAnimator.startMotion(PaniMotionInfo(3, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait2, this));
 	mKing->setAnimTimer(30.0f);
 	mAttackType    = KINGATK_Tongue;
 	mIsTongueOut   = false;
@@ -1213,7 +1213,7 @@ void KingAi::initDie(int nextState)
 	mKing->setIsAlive(false);
 	mKing->setIsOrganic(false);
 	mKing->disableStick();
-	mKing->mAnimator.startMotion(PaniMotionInfo(0, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Dead, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 	mKing->mPlatMgr.release();
@@ -1238,7 +1238,7 @@ void KingAi::initDamage(int nextState)
 	mKing->setTargetCreature(nullptr);
 	setEatDamageLoopCounter();
 	setMoveVelocity(0.0f);
-	mKing->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 }
 
 /*
@@ -1255,7 +1255,7 @@ void KingAi::initBombDown(int nextState)
 	setBombDamageLoopCounter();
 	killStickToMouthPiki();
 	setMoveVelocity(0.0f);
-	mKing->mAnimator.startMotion(PaniMotionInfo(14, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type5, this));
 	mKing->mKingBody->initBlending(3.0f);
 }
 
@@ -1272,7 +1272,7 @@ void KingAi::initWalkRandom(int nextState, bool doBlending)
 	mKing->setTargetCreature(nullptr);
 	if (mKing->getCurrentState() < KINGAI_WalkRandom || mKing->getCurrentState() > KINGAI_WalkGoHome) {
 		// if we're not chasing a navi or piki, essentially.
-		mKing->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		mKing->setAnimTimer(30.0f);
 	}
 	if (doBlending) {
@@ -1296,7 +1296,7 @@ void KingAi::initWalkGoHome(int nextState, bool doBlending)
 	mKing->setTargetCreature(nullptr);
 	if (mKing->getCurrentState() < KINGAI_WalkRandom || mKing->getCurrentState() > KINGAI_WalkGoHome) {
 		// i.e. not chasing piki or navi
-		mKing->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		mKing->setAnimTimer(30.0f);
 	}
 
@@ -1320,7 +1320,7 @@ void KingAi::initChaseNavi(int nextState, bool doBlending)
 	mKing->setLoopCounter(0);
 	if (mKing->getCurrentState() < KINGAI_WalkRandom || mKing->getCurrentState() > KINGAI_WalkGoHome) {
 		// i.e. not chaseNavi or chasePiki
-		mKing->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		mKing->setAnimTimer(30.0f);
 	}
 
@@ -1344,7 +1344,7 @@ void KingAi::initChasePiki(int nextState, bool doBlending)
 	mKing->setLoopCounter(0);
 	if (mKing->getCurrentState() < KINGAI_WalkRandom || mKing->getCurrentState() > KINGAI_WalkGoHome) {
 		// i.e. not chaseNavi or chasePiki
-		mKing->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		mKing->setAnimTimer(30.0f);
 	}
 
@@ -1367,7 +1367,7 @@ void KingAi::initHomeTurn(int nextState)
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
-	mKing->mAnimator.startMotion(PaniMotionInfo(4, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::WaitAct1, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 }
@@ -1382,7 +1382,7 @@ void KingAi::initChaseTurn(int nextState)
 	mKing->setNextState(nextState);
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
-	mKing->mAnimator.startMotion(PaniMotionInfo(4, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::WaitAct1, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 }
@@ -1399,7 +1399,7 @@ void KingAi::initAttack(int nextState)
 	mKing->setLoopCounter(0);
 	mIsTongueOut       = false;
 	mBombDamageCounter = 0;
-	mKing->mAnimator.startMotion(PaniMotionInfo(8, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Attack, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 	resultFlagOn();
@@ -1415,7 +1415,7 @@ void KingAi::initJumpAttack(int nextState)
 	mKing->setNextState(nextState);
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
-	mKing->mAnimator.startMotion(PaniMotionInfo(13, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type4, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 	resultFlagOn();
@@ -1440,7 +1440,7 @@ void KingAi::initSwallow(int nextState)
 	mKing->setNextState(nextState);
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
-	mKing->mAnimator.startMotion(PaniMotionInfo(10, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 	resultFlagOn();
@@ -1456,7 +1456,7 @@ void KingAi::initEatThrowPiki(int nextState)
 	mKing->setNextState(nextState);
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
-	mKing->mAnimator.startMotion(PaniMotionInfo(11, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type2, this));
 	mKing->mKingBody->initBlending(6.0f);
 	setMoveVelocity(0.0f);
 	resultFlagOn();
@@ -1473,7 +1473,7 @@ void KingAi::initFlick(int nextState)
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
-	mKing->mAnimator.startMotion(PaniMotionInfo(9, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Flick, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 	setAttackPriority();
@@ -1491,7 +1491,7 @@ void KingAi::initWaveNeck(int nextState)
 	mKing->setMotionFinish(false);
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
-	mKing->mAnimator.startMotion(PaniMotionInfo(5, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::WaitAct2, this));
 	mKing->mKingBody->initBlending(3.0f);
 	setMoveVelocity(0.0f);
 	resultFlagOn();
@@ -1523,7 +1523,7 @@ void KingAi::initAppear(int nextState)
 	mKing->setInvincible(false);
 	mKing->setIsOrganic(true);
 	dispelNaviPiki();
-	mKing->mAnimator.startMotion(PaniMotionInfo(12, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type3, this));
 	mKing->mKingBody->initBlending(10.0f);
 	setMoveVelocity(0.0f);
 	resultFlagOn();
@@ -1547,7 +1547,7 @@ void KingAi::initStay(int nextState)
 	mKing->setLoopCounter(0);
 	mKing->setTargetCreature(nullptr);
 	mKing->setAttackTimer(0.0f);
-	mKing->mAnimator.startMotion(PaniMotionInfo(3, this));
+	mKing->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait2, this));
 	mKing->mKingBody->initBlending(15.0f);
 	setMoveVelocity(0.0f);
 }

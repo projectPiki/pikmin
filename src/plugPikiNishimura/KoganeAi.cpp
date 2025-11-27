@@ -93,7 +93,7 @@ void KoganeAi::initAI(Kogane* kogane)
 	mKogane->mScale.set(0.0f, 0.0f, 0.0f);
 	mKogane->setCurrentState(1);
 	mKogane->setNextState(1);
-	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
+	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 	mInWater     = false;
 	mDropCount   = 0;
 	mEffectType  = EffectMgr::EFF_NULL;
@@ -625,7 +625,7 @@ void KoganeAi::initAppear(int nextState)
 	mKogane->setMotionFinish(false);
 	mKogane->setAnimTimer(30.0f);
 	mKogane->setWalkTimer(0.0f);
-	mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
+	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 
 	mKogane->mPosition.x += 5.0f * sinf(mKogane->mRotation.y);
 	mKogane->mPosition.z += 5.0f * cosf(mKogane->mRotation.y);
@@ -648,7 +648,7 @@ void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
 	mKogane->setWalkTimer(0.0f);
 
 	if (isRandomPos) {
-		mKogane->mAnimator.startMotion(PaniMotionInfo(6, this));
+		mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 		setNewTargetPosition();
 	} else {
 		setRouteTargetPosition();
@@ -671,7 +671,7 @@ void KoganeAi::initStopWalk(int nextState)
 	mKogane->setNextState(nextState);
 	mKogane->setMotionFinish(false);
 	mKogane->setWalkTimer(0.0f);
-	mKogane->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 	makeStopMoving();
 	_1C = C_KOGANE_PROP(mKogane).mIdleTimeMin()
 	    + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
@@ -692,7 +692,7 @@ void KoganeAi::initCreate(int nextState)
 {
 	mKogane->setNextState(nextState);
 	mKogane->setMotionFinish(false);
-	mKogane->mAnimator.startMotion(PaniMotionInfo(1, this));
+	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 
 	f32 perpDir = mKogane->mFaceDirection + HALF_PI;
 	Vector3f vec1(sinf(mKogane->mFaceDirection), 0.0f, cosf(mKogane->mFaceDirection));

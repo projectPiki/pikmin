@@ -53,13 +53,13 @@ void PomAi::initAI(Pom* pom)
 	if (C_POM_PROP(mPom).mOpenOnInteractionOnly() < 2) {
 		mPom->setCurrentState(2);
 		mPom->setNextState(2);
-		mPom->mAnimator.startMotion(PaniMotionInfo(10, this));
+		mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 		mPom->enableStick();
 		mPom->mAnimator.setCounter(28.0f);
 	} else {
 		mPom->setCurrentState(1);
 		mPom->setNextState(1);
-		mPom->mAnimator.startMotion(PaniMotionInfo(2, this));
+		mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 		mPom->disableStick();
 	}
 
@@ -547,7 +547,7 @@ void PomAi::initDie(int nextState)
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
 	mPom->setAttackTimer(0.0f);
-	mPom->mAnimator.startMotion(PaniMotionInfo(0, this));
+	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Dead, this));
 }
 
 /*
@@ -559,7 +559,7 @@ void PomAi::initWait(int nextState)
 {
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
-	mPom->mAnimator.startMotion(PaniMotionInfo(2, this));
+	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 
 	Stickers stuckList(mPom);
 	Iterator iter(&stuckList);
@@ -586,7 +586,7 @@ void PomAi::initPetalOpen(int nextState)
 {
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
-	mPom->mAnimator.startMotion(PaniMotionInfo(10, this));
+	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 	createPomOpenEffect();
 	mPom->setWalkTimer(0.0f);
 	mHasCollided = false;
@@ -602,7 +602,7 @@ void PomAi::initPetalShake(int nextState)
 {
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
-	mPom->mAnimator.startMotion(PaniMotionInfo(13, this));
+	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type4, this));
 	mHasCollided = false;
 	if (mPlaySound) {
 		mPlaySound = false;
@@ -620,7 +620,7 @@ void PomAi::initPetalClose(int nextState)
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
 	mPom->setLoopCounter(0);
-	mPom->mAnimator.startMotion(PaniMotionInfo(11, this));
+	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type2, this));
 	mPom->disableStick();
 	mIsOpening = false;
 }
@@ -634,7 +634,7 @@ void PomAi::initDischarge(int nextState)
 {
 	mPom->setNextState(nextState);
 	mPom->setMotionFinish(false);
-	mPom->mAnimator.startMotion(PaniMotionInfo(12, this));
+	mPom->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type3, this));
 
 	CollPart* slotPart = mPom->mCollInfo->getSphere('slot');
 	Stickers stuckList(mPom);
