@@ -458,9 +458,9 @@ void AIPerf::incUfoLevel(Menu& menu)
 
 		if (shipInstance) {
 			if (AIPerf::ufoLevel == 0) {
-				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(0, shipInstance));
+				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::WaitTutorial, shipInstance));
 			} else {
-				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(1, shipInstance));
+				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(UfoMotion::Wait, shipInstance));
 			}
 
 			shipInstance->mAnimator.setMotionSpeed(0, 30.0f);
