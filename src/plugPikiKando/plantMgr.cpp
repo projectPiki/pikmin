@@ -175,8 +175,8 @@ PlantAI::PlantAI()
 {
 	OpponentMove* oppMove = new OpponentMove();
 	create(STATE_COUNT);
-	addState(STATE_Wait, -1, new WaitInit(), nullptr, nullptr);
-	addState(STATE_Touch, -1, new TouchInit(), nullptr, nullptr);
+	addState(STATE_Wait, -1, new WaitInit());
+	addState(STATE_Touch, -1, new TouchInit());
 	addArrow(STATE_Wait, saiCollideEvent, STATE_Touch)->addCondition(oppMove);
 	addArrow(STATE_Touch, saiMotionDoneEvent, STATE_Wait);
 }

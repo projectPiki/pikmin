@@ -46,12 +46,12 @@ SluiceAI::SluiceAI()
 	SAIUserEvent* evt1 = new SAIUserEvent(0);
 	SAIUserEvent* evt2 = new SAIUserEvent(1);
 	create(Sluice_COUNT);
-	addState(Sluice_Init, -1, new SluiceAI::Init, nullptr, nullptr);
-	addState(Sluice_WaitInit, -1, new SluiceAI::WaitInit, nullptr, nullptr);
-	addState(Sluice_AddCount, -1, new SluiceAI::AddCount, nullptr, nullptr);
-	addState(Sluice_ChangeInit, -1, new SluiceAI::ChangeInit, nullptr, nullptr);
-	addState(Sluice_MotionDone, -1, new SluiceAI::MotionDone, nullptr, nullptr);
-	addState(Sluice_DamageInit, -1, new SluiceAI::DamageInit, nullptr, nullptr);
+	addState(Sluice_Init, -1, new SluiceAI::Init);
+	addState(Sluice_WaitInit, -1, new SluiceAI::WaitInit);
+	addState(Sluice_AddCount, -1, new SluiceAI::AddCount);
+	addState(Sluice_ChangeInit, -1, new SluiceAI::ChangeInit);
+	addState(Sluice_MotionDone, -1, new SluiceAI::MotionDone);
+	addState(Sluice_DamageInit, -1, new SluiceAI::DamageInit);
 
 	addArrow(Sluice_ChangeInit, saiMotionDoneEvent, Sluice_MotionDone);
 	addArrow(Sluice_ChangeInit, evt1, Sluice_AddCount);
@@ -169,20 +169,20 @@ void SluiceAI::DamageInit::act(AICreature* item)
 PikiHeadAI::PikiHeadAI()
 {
 	create(PIKIHEAD_COUNT);
-	addState(PIKIHEAD_Unk13, 0, nullptr, nullptr, nullptr);
-	addState(PIKIHEAD_Bounce, 6, new BounceSound, nullptr, nullptr);
-	addState(PIKIHEAD_Bury2, -1, new BuryInit2, new BuryExec2, nullptr);
+	addState(PIKIHEAD_Unk13, 0);
+	addState(PIKIHEAD_Bounce, 6, new BounceSound);
+	addState(PIKIHEAD_Bury2, -1, new BuryInit2, new BuryExec2);
 	addState(PIKIHEAD_Flying, 0, new FlyingEffect, new FlyingExec, new FlyingCleanup);
-	addState(PIKIHEAD_Bury, -1, new BuryInit, new BuryExec, nullptr);
-	addState(PIKIHEAD_Tane, -1, new TaneInit, new TaneExec, nullptr);
-	addState(PIKIHEAD_Unk5, 2, nullptr, nullptr, nullptr);
-	addState(PIKIHEAD_Wait, 3, new WaitInit, new WaitExec, nullptr);
-	addState(PIKIHEAD_Unk7, 4, nullptr, nullptr, nullptr);
-	addState(PIKIHEAD_Growuped, -1, new GrowupedExec, nullptr, nullptr);
-	addState(PIKIHEAD_Grow, -1, new GrowEffect, nullptr, nullptr);
-	addState(PIKIHEAD_Unk10, 5, nullptr, nullptr, nullptr);
-	addState(PIKIHEAD_Kareta, -1, new KaretaInit, new KaretaExec, nullptr);
-	addState(PIKIHEAD_Dead, -1, new Dead, nullptr, nullptr);
+	addState(PIKIHEAD_Bury, -1, new BuryInit, new BuryExec);
+	addState(PIKIHEAD_Tane, -1, new TaneInit, new TaneExec);
+	addState(PIKIHEAD_Unk5, 2);
+	addState(PIKIHEAD_Wait, 3, new WaitInit, new WaitExec);
+	addState(PIKIHEAD_Unk7, 4);
+	addState(PIKIHEAD_Growuped, -1, new GrowupedExec);
+	addState(PIKIHEAD_Grow, -1, new GrowEffect);
+	addState(PIKIHEAD_Unk10, 5);
+	addState(PIKIHEAD_Kareta, -1, new KaretaInit, new KaretaExec);
+	addState(PIKIHEAD_Dead, -1, new Dead);
 
 	addArrow(PIKIHEAD_Flying, saiBounceEvent, PIKIHEAD_Bounce);
 	addArrow(PIKIHEAD_Bounce, saiMotionDoneEvent, PIKIHEAD_Bury);
@@ -465,12 +465,12 @@ BombAI::BombAI()
 	SAIUserEvent* evt3 = new SAIUserEvent(2);
 
 	create(BOMB_COUNT);
-	addState(BOMB_Unk0, -1, nullptr, nullptr, nullptr);
-	addState(BOMB_Unk1, -1, nullptr, nullptr, nullptr);
-	addState(BOMB_Set, -1, new SetInit, new SetExec, nullptr);
-	addState(BOMB_Bomb, 0, new BombInit, new BombExec, nullptr);
-	addState(BOMB_Mizu, -1, new MizuInit, new MizuExec, nullptr);
-	addState(BOMB_Die, -1, new DieInit, new DieExec, nullptr);
+	addState(BOMB_Unk0, -1);
+	addState(BOMB_Unk1, -1);
+	addState(BOMB_Set, -1, new SetInit, new SetExec);
+	addState(BOMB_Bomb, 0, new BombInit, new BombExec);
+	addState(BOMB_Mizu, -1, new MizuInit, new MizuExec);
+	addState(BOMB_Die, -1, new DieInit, new DieExec);
 
 	addArrow(BOMB_Unk0, evt1, BOMB_Set);
 	addArrow(BOMB_Set, evt2, BOMB_Bomb);
@@ -747,12 +747,12 @@ GoalAI::GoalAI()
 	NotFinished* nf   = new NotFinished;
 
 	create(GOAL_COUNT);
-	addState(GOAL_Wait, -1, new WaitInit, nullptr, nullptr);
-	addState(GOAL_Effect, 2, new Effect, nullptr, nullptr);
-	addState(GOAL_Unk2, 0, nullptr, nullptr, nullptr);
-	addState(GOAL_EmitPiki, -1, new EmitPiki, nullptr, nullptr);
-	addState(GOAL_EmitWait, -1, nullptr, new EmitWait, nullptr);
-	addState(GOAL_BootInit, -1, new BootInit, nullptr, nullptr);
+	addState(GOAL_Wait, -1, new WaitInit);
+	addState(GOAL_Effect, 2, new Effect);
+	addState(GOAL_Unk2, 0);
+	addState(GOAL_EmitPiki, -1, new EmitPiki);
+	addState(GOAL_EmitWait, -1, nullptr, new EmitWait);
+	addState(GOAL_BootInit, -1, new BootInit);
 	addState(GOAL_BootEmit, -1, new BootEmit, nullptr, new BootDone);
 
 	addArrow(GOAL_Wait, evt, GOAL_Effect);
@@ -1006,9 +1006,9 @@ GemAI::GemAI()
 	SAIUserEvent* evt = new SAIUserEvent(0);
 
 	create(GEM_COUNT);
-	addState(GEM_Unk0, -1, nullptr, nullptr, nullptr);
-	addState(GEM_Rise, -1, new RiseInit, new RiseExec, nullptr);
-	addState(GEM_Die, -1, new Die, nullptr, nullptr);
+	addState(GEM_Unk0, -1);
+	addState(GEM_Rise, -1, new RiseInit, new RiseExec);
+	addState(GEM_Die, -1, new Die);
 
 	addArrow(GEM_Unk0, evt, GEM_Rise);
 }
@@ -1108,11 +1108,11 @@ WaterAI::WaterAI()
 	SAIUserEvent* evt = new SAIUserEvent(0);
 
 	create(WATER_COUNT);
-	addState(WATER_Unk0, 0, nullptr, nullptr, nullptr);
-	addState(WATER_Unk1, 1, nullptr, nullptr, nullptr);
-	addState(WATER_Unk2, 3, nullptr, nullptr, nullptr);
-	addState(WATER_Unk3, 2, nullptr, nullptr, nullptr);
-	addState(WATER_Die, -1, new Die, nullptr, nullptr);
+	addState(WATER_Unk0, 0);
+	addState(WATER_Unk1, 1);
+	addState(WATER_Unk2, 3);
+	addState(WATER_Unk3, 2);
+	addState(WATER_Die, -1, new Die);
 
 	addArrow(WATER_Unk3, saiMotionDoneEvent, WATER_Unk0);
 	addArrow(WATER_Unk0, saiCollideEvent, WATER_Unk1)->mCondition.add(new CollideChar);
@@ -1155,11 +1155,11 @@ void WaterAI::Die::act(AICreature* item)
 FallWaterAI::FallWaterAI()
 {
 	create(FALLWATER_COUNT);
-	addState(FALLWATER_Unk0, 1, nullptr, nullptr, nullptr);
-	addState(FALLWATER_Unk1, 0, nullptr, nullptr, nullptr);
-	addState(FALLWATER_Collide, -1, new CollideInit, nullptr, nullptr);
-	addState(FALLWATER_Emit, -1, new EmitInit, nullptr, nullptr);
-	addState(FALLWATER_Disappear, -1, new DisappearInit, nullptr, nullptr);
+	addState(FALLWATER_Unk0, 1);
+	addState(FALLWATER_Unk1, 0);
+	addState(FALLWATER_Collide, -1, new CollideInit);
+	addState(FALLWATER_Emit, -1, new EmitInit);
+	addState(FALLWATER_Disappear, -1, new DisappearInit);
 
 	addArrow(FALLWATER_Unk0, saiMotionDoneEvent, FALLWATER_Unk1);
 	addArrow(FALLWATER_Unk1, saiBounceEvent, FALLWATER_Collide);
