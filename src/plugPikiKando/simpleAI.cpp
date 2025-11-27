@@ -265,7 +265,7 @@ SAIState::SAIState(int stateID)
     : AState<AICreature>(stateID)
 {
 	mRootArrow.mCondition.initCore("saiCondition");
-	mMotionIdx     = -1;
+	mMotionIdx     = PANI_NO_MOTION;
 	mCleanupAction = nullptr;
 	mExecAction    = nullptr;
 	mInitAction    = nullptr;
@@ -280,7 +280,7 @@ SAIState::SAIState(int stateID)
  */
 void SAIState::init(AICreature* creature)
 {
-	if (mMotionIdx != -1) {
+	if (mMotionIdx != PANI_NO_MOTION) {
 		creature->startMotion(mMotionIdx);
 	}
 

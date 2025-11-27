@@ -957,7 +957,7 @@ void Pellet::finishMotion()
 	if (mPelletView) {
 		mPelletView->viewFinishMotion();
 	} else {
-		mAnimator.finishMotion(&PaniMotionInfo(-1), nullptr);
+		mAnimator.finishMotion(&PaniMotionInfo(PANI_NO_MOTION), nullptr);
 	}
 }
 

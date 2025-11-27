@@ -430,7 +430,7 @@ public:
 
 			if (teki.getCreaturePointer(2) == nullptr && teki.mCurrentAnimEvent == KEY_LoopEnd) {
 				mNextState = _0C;
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 
 			if (teki.mCurrentAnimEvent == KEY_Finished) {

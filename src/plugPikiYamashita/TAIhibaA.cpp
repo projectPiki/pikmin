@@ -66,7 +66,7 @@ public:
 			}
 
 			if (teki.getFrameCounter() > teki.getParameterF(TAIhibaAFloatParams::AttackTime)) {
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 				ptclGen = teki.getPtclGenPtr(YTeki::PTCL_Unk0);
 				if (ptclGen) {
 					ptclGen->finish();

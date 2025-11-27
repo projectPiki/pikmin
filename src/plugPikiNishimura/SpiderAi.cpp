@@ -582,7 +582,7 @@ void SpiderAi::shakeOffState()
 void SpiderAi::waitState()
 {
 	if (mSpider->getLoopCounter() >= mSpider->mActiveWalkCycleCount) {
-		mSpider->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mSpider->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 

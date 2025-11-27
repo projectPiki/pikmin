@@ -112,7 +112,7 @@ void PaniPikiAnimMgr::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motio
  */
 void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener* listener)
 {
-	finishMotion(&PaniMotionInfo(-1, listener), &PaniMotionInfo(-1, nullptr));
+	finishMotion(&PaniMotionInfo(PANI_NO_MOTION, listener), &PaniMotionInfo(PANI_NO_MOTION, nullptr));
 }
 
 /*

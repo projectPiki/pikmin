@@ -702,7 +702,7 @@ void PomAi::shakeState()
 void PomAi::closeState()
 {
 	if (mPom->getLoopCounter() >= C_POM_PROP(mPom).mDoAnimLoopWhenClosed()) {
-		mPom->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mPom->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 

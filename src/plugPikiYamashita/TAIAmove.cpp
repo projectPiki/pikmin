@@ -424,13 +424,13 @@ bool TAIAlookAround::act(Teki& teki)
 
 		if (teki.mTekiAnimator->getCurrentMotionIndex() != motionID || teki.mTekiAnimator->isFinished()) {
 			if (!teki.mTekiAnimator->isFinished()) {
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 			if (teki.mTekiAnimator->isFinishing()) {
 				teki.mTekiAnimator->startMotion(PaniMotionInfo(motionID, &teki));
 			}
 		} else if (teki.turnToward(teki.mTargetAngle, teki.getParameterF(TPF_TurnVelocity))) {
-			teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+			teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			teki.setFrameCounter(0.0f);
 			teki.setStatus(1);
 		}
@@ -438,7 +438,7 @@ bool TAIAlookAround::act(Teki& teki)
 	case 1:
 		if (teki.mTekiAnimator->getCurrentMotionIndex() != mMotionID || teki.mTekiAnimator->isFinished()) {
 			if (!teki.mTekiAnimator->isFinished()) {
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 			if (teki.mTekiAnimator->isFinishing()) {
 				teki.mTekiAnimator->startMotion(PaniMotionInfo(mMotionID, &teki));
@@ -449,7 +449,7 @@ bool TAIAlookAround::act(Teki& teki)
 				teki.setFrameCounter(0.0f);
 				teki.setStatus(0);
 				setTargetDirection(teki, 40.0f * PI / 180.0f);
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 		}
 		break;
@@ -498,7 +498,7 @@ bool TAIAturnToTarget::act(Teki& teki)
 	int motionID = getTurnMotionIndex(teki);
 	if (teki.mTekiAnimator->getCurrentMotionIndex() != motionID || teki.mTekiAnimator->isFinished()) {
 		if (!teki.mTekiAnimator->isFinished()) {
-			teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+			teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 		}
 		if (teki.mTekiAnimator->isFinishing()) {
 			teki.mTekiAnimator->startMotion(PaniMotionInfo(motionID, &teki));
@@ -513,7 +513,7 @@ bool TAIAturnToTarget::act(Teki& teki)
 		} else {
 			if (teki.turnToward(teki.mTargetAngle, getTurnVelocity(teki))) {
 				if (_14) {
-					teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+					teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 				}
 				res = true;
 			}
@@ -957,7 +957,7 @@ bool TAIApatrol::act(Teki& teki)
 	case 0:
 		if (teki.mTekiAnimator->getCurrentMotionIndex() != _20 || teki.mTekiAnimator->isFinished()) {
 			if (!teki.mTekiAnimator->isFinished()) {
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 			if (teki.mTekiAnimator->isFinishing()) {
 				teki.mTekiAnimator->startMotion(PaniMotionInfo(_20, &teki));
@@ -971,7 +971,7 @@ bool TAIApatrol::act(Teki& teki)
 					teki.setTableIndex(0);
 				}
 				setTargetPosition(teki);
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 				changeStatus(1, teki);
 			} else {
 				teki.moveToward(teki.mTargetPosition, teki.getParameterF(TPF_WalkVelocity));
