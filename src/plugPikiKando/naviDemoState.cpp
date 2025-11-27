@@ -53,7 +53,7 @@ void NaviDemoSunsetState::DemoStateMachine::init(NaviDemoSunsetState*)
  */
 void NaviDemoSunsetState::GoState::init(NaviDemoSunsetState* state)
 {
-	state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(0, state->mNavi), PaniMotionInfo(0));
+	state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Run, state->mNavi), PaniMotionInfo(PIKIANIM_Run));
 	_14 = false;
 }
 
@@ -112,7 +112,7 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState* state, MsgAn
 		}
 		break;
 	case 0:
-		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(2, state->mNavi), PaniMotionInfo(2));
+		state->mNavi->mNaviAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_Walk, state->mNavi), PaniMotionInfo(PIKIANIM_Walk));
 		_14 = false;
 		break;
 	}

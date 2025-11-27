@@ -221,8 +221,8 @@ PaniMotionTable* PaniPelletAnimator::createMotionTable()
 	table->setMotion(PelletMotion::After, new PaniMotion(PelletMotion::After));
 	table->setMotion(PelletMotion::Passive, new PaniMotion(PelletMotion::Passive));
 	table->setMotion(PelletMotion::Special, new PaniMotion(PelletMotion::Special));
-	table->setMotion(PelletMotion::Unk5, new PaniMotion(PelletMotion::Unk5));
-	table->setMotion(PelletMotion::Unk6, new PaniMotion(PelletMotion::Unk6));
+	table->setMotion(PelletMotion::Unused5, new PaniMotion(PelletMotion::Unused5));
+	table->setMotion(PelletMotion::Unused6, new PaniMotion(PelletMotion::Unused6));
 	return table;
 }
 

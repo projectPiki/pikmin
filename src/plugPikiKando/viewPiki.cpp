@@ -211,7 +211,7 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	mScale.set(scale, scale, scale);
 	setLeaves(1);
 
-	mPikiAnimMgr.startMotion(PaniMotionInfo(22, this), PaniMotionInfo(22));
+	mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
 
 	mScale.set(1.0f, 1.0f, 1.0f);
 	mRotation.set(0.0f, 0.0f, 0.0f);

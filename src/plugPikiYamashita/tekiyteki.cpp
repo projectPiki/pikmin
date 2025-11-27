@@ -85,7 +85,7 @@ bool YTeki::isNaviWatch()
  */
 int YTeki::getMapAttribute()
 {
-	int attr         = -1;
+	int attr         = ATTR_NULL;
 	CollTriInfo* tri = mapMgr->getCurrTri(getPosition().x, getPosition().z, true);
 	if (tri) {
 		attr = MapCode::getAttribute(tri);

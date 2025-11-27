@@ -181,8 +181,8 @@ enum {
 	After   = 2, // 'f' (Animation after attached to UFO, see `playerState::startAfterMotions`)
 	Passive = 3, // 'p' (secondary "upper" animation, see `PelletMotionFlags::UsePassive`)
 	Special = 4, // 's' (UFO liftoff animation, see `PlayerState::startSpecialMotions`)
-	Unk5    = 5, //
-	Unk6    = 6, //
+	Unused5 = 5, //
+	Unused6 = 6, //
 	COUNT,
 } END_ENUM_TYPE;
 
@@ -230,7 +230,7 @@ enum {
 	Type2    = 11,
 	Type3    = 12,
 	Type4    = 13,
-	Type5    = 14, // "tremble"?
+	Type5    = 14, // "tremble" motion used when carried as a PelletView
 	COUNT,
 } END_ENUM_TYPE;
 

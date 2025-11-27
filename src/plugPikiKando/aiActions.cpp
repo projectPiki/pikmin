@@ -74,7 +74,7 @@ void ActPick::init(Creature* object)
 	mIsAnimationFinished = false;
 	mObject.set(object);
 
-	mPiki->startMotion(PaniMotionInfo(4, this), PaniMotionInfo(4));
+	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Pick, this), PaniMotionInfo(PIKIANIM_Pick));
 	mPiki->enableMotionBlend();
 }
 

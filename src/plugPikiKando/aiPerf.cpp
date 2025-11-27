@@ -457,7 +457,7 @@ void AIPerf::incUfoLevel(Menu& menu)
 		int lastLevel         = playerState->mShipUpgradeLevel;
 
 		if (shipInstance) {
-			if (!AIPerf::ufoLevel) {
+			if (AIPerf::ufoLevel == 0) {
 				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(0, shipInstance));
 			} else {
 				shipInstance->mAnimator.startMotion(0, &PaniMotionInfo(1, shipInstance));
