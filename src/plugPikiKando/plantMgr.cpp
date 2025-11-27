@@ -77,9 +77,9 @@ void Plant::startAI(int)
 	mIsCulled = false;
 	mapMgr    = plantMgr->mMapMgr;
 	mProps    = plantMgr->mPlantProps;
-	startMotion(0);
+	startMotion(PlantMotion::Touch);
 	mMotionSpeed = 0.0f;
-	mPlantAnimator.startMotion(PaniMotionInfo(0));
+	mPlantAnimator.startMotion(PaniMotionInfo(PlantMotion::Touch));
 	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
 	plantMgr->mAI->start(this, PlantAI::STATE_Wait);
 	if (mPlantType == PLANT_Mizukusa) {
@@ -207,10 +207,10 @@ void PlantAI::WaitInit::act(AICreature* plant)
 	STACK_PAD_VAR(1);
 
 	if (static_cast<Plant*>(plant)->mPlantType == PLANT_Mizukusa) {
-		plant->startMotion(0);
+		plant->startMotion(PlantMotion::Touch);
 		plant->setMotionSpeed(30.0f);
 	} else {
-		plant->startMotion(0);
+		plant->startMotion(PlantMotion::Touch);
 		plant->stopMotion();
 	}
 }

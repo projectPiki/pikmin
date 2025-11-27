@@ -17,7 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("paniPlantAnimator")
 
-char* PaniPlantAnimator::motionLabels[7] = {
+char* PaniPlantAnimator::motionLabels[PlantMotion::COUNT] = {
 	"1", "2", "3", "4", "5", "6", "7",
 };
 
@@ -28,14 +28,14 @@ char* PaniPlantAnimator::motionLabels[7] = {
  */
 PaniMotionTable* PaniPlantAnimator::createMotionTable()
 {
-	PaniMotionTable* table = new PaniMotionTable(7);
-	table->setMotion(0, new PaniMotion(0));
-	table->setMotion(1, new PaniMotion(1));
-	table->setMotion(2, new PaniMotion(2));
-	table->setMotion(3, new PaniMotion(3));
-	table->setMotion(4, new PaniMotion(4));
-	table->setMotion(5, new PaniMotion(5));
-	table->setMotion(6, new PaniMotion(6));
+	PaniMotionTable* table = new PaniMotionTable(PlantMotion::COUNT);
+	table->setMotion(PlantMotion::Touch, new PaniMotion(PlantMotion::Touch));
+	table->setMotion(PlantMotion::Unused1, new PaniMotion(PlantMotion::Unused1));
+	table->setMotion(PlantMotion::Unused2, new PaniMotion(PlantMotion::Unused2));
+	table->setMotion(PlantMotion::Unused3, new PaniMotion(PlantMotion::Unused3));
+	table->setMotion(PlantMotion::Unused4, new PaniMotion(PlantMotion::Unused4));
+	table->setMotion(PlantMotion::Unused5, new PaniMotion(PlantMotion::Unused5));
+	table->setMotion(PlantMotion::Unused6, new PaniMotion(PlantMotion::Unused6));
 
 	return table;
 }
