@@ -99,7 +99,7 @@ void BTeki::viewDoAnimation()
  */
 void BTeki::viewFinishMotion()
 {
-	mTekiAnimator->finishMotion(PaniMotionInfo(-1, this));
+	mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 }
 
 /*

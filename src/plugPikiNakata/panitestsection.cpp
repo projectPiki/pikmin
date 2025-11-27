@@ -303,10 +303,10 @@ void PaniTestNode::updatePikis()
 	}
 
 	if (mController->keyUnClick(KBBTN_X)) {
-		mTestPikiList[0]->mPikiAnimMgr.finishMotion(&PaniMotionInfo(-1, this), &PaniMotionInfo(-1));
+		mTestPikiList[0]->mPikiAnimMgr.finishMotion(&PaniMotionInfo(PANI_NO_MOTION, this), &PaniMotionInfo(PANI_NO_MOTION));
 
 		for (i = 1; i < mTestPikiCount; i++) {
-			mTestPikiList[i]->mPikiAnimMgr.finishMotion(&PaniMotionInfo(-1, nullptr), &PaniMotionInfo(-1));
+			mTestPikiList[i]->mPikiAnimMgr.finishMotion(&PaniMotionInfo(PANI_NO_MOTION, nullptr), &PaniMotionInfo(PANI_NO_MOTION));
 		}
 	}
 }
@@ -338,7 +338,7 @@ void PaniTestNode::updateTekis()
 	}
 
 	if (mController->keyUnClick(KBBTN_X)) {
-		mTestTekiList[mFocusTekiType]->mTekiAnimator->finishMotion(PaniMotionInfo(-1, this));
+		mTestTekiList[mFocusTekiType]->mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 

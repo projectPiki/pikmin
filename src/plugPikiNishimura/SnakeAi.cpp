@@ -418,7 +418,7 @@ void SnakeAi::checkAttackTarget()
 
 		// check if we should stop attacking (hit a navi, full mouth, or no pikis)
 		if (isNavi || collPartMaxTransit() || !pikiInAttackArea(5)) {
-			mSnake->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+			mSnake->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 			mIsAttackAllowed = false;
 		}
 		return;
@@ -426,7 +426,7 @@ void SnakeAi::checkAttackTarget()
 
 	// no target found
 	mSnake->setTargetCreature(nullptr);
-	mSnake->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+	mSnake->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	mIsAttackAllowed = false;
 }
 
@@ -1629,10 +1629,10 @@ void SnakeAi::struggleState()
 
 		if (mSnake->getLoopCounter() >= loopLimit) {
 			mSnake->setLoopCounter(C_SNAKE_PROP(mSnake).mStruggleLoopMax());
-			mSnake->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+			mSnake->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 		}
 	} else {
-		mSnake->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mSnake->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 

@@ -1570,7 +1570,7 @@ void KingAi::dieState()
 void KingAi::damageState()
 {
 	if (mKing->getLoopCounter() >= mDamageLoopCounter) {
-		mKing->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 
@@ -1582,7 +1582,7 @@ void KingAi::damageState()
 void KingAi::bombDownState()
 {
 	if (mKing->getLoopCounter() >= mDamageLoopCounter) {
-		mKing->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 
@@ -1619,7 +1619,7 @@ void KingAi::homeTurnState()
 	mKing->stopMovement();
 	mKing->changeDirection(C_KING_PROP(mKing).mTurningTurnSpeed());
 	if (!inTurnAngleTransit()) {
-		mKing->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 
@@ -1639,7 +1639,7 @@ void KingAi::chaseTurnState()
 
 	mKing->changeDirection(C_KING_PROP(mKing).mTurningTurnSpeed());
 	if (!inTurnAngleTransit()) {
-		mKing->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 
@@ -1676,7 +1676,7 @@ void KingAi::attackState()
 	pikiStickToKingMouth();
 	tongueBombExplosion();
 	if (mKing->getLoopCounter() >= C_KING_PROP(mKing).mTongueRollLoopCount()) {
-		mKing->mAnimator.finishMotion(PaniMotionInfo(-1, this));
+		mKing->mAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	}
 }
 

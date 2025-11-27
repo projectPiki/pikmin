@@ -46,12 +46,12 @@ SluiceAI::SluiceAI()
 	SAIUserEvent* evt1 = new SAIUserEvent(0);
 	SAIUserEvent* evt2 = new SAIUserEvent(1);
 	create(Sluice_COUNT);
-	addState(Sluice_Init, -1, new SluiceAI::Init);
-	addState(Sluice_WaitInit, -1, new SluiceAI::WaitInit);
-	addState(Sluice_AddCount, -1, new SluiceAI::AddCount);
-	addState(Sluice_ChangeInit, -1, new SluiceAI::ChangeInit);
-	addState(Sluice_MotionDone, -1, new SluiceAI::MotionDone);
-	addState(Sluice_DamageInit, -1, new SluiceAI::DamageInit);
+	addState(Sluice_Init, PANI_NO_MOTION, new SluiceAI::Init);
+	addState(Sluice_WaitInit, PANI_NO_MOTION, new SluiceAI::WaitInit);
+	addState(Sluice_AddCount, PANI_NO_MOTION, new SluiceAI::AddCount);
+	addState(Sluice_ChangeInit, PANI_NO_MOTION, new SluiceAI::ChangeInit);
+	addState(Sluice_MotionDone, PANI_NO_MOTION, new SluiceAI::MotionDone);
+	addState(Sluice_DamageInit, PANI_NO_MOTION, new SluiceAI::DamageInit);
 
 	addArrow(Sluice_ChangeInit, saiMotionDoneEvent, Sluice_MotionDone);
 	addArrow(Sluice_ChangeInit, evt1, Sluice_AddCount);
@@ -171,18 +171,18 @@ PikiHeadAI::PikiHeadAI()
 	create(PIKIHEAD_COUNT);
 	addState(PIKIHEAD_Unk13, 0);
 	addState(PIKIHEAD_Bounce, 6, new BounceSound);
-	addState(PIKIHEAD_Bury2, -1, new BuryInit2, new BuryExec2);
+	addState(PIKIHEAD_Bury2, PANI_NO_MOTION, new BuryInit2, new BuryExec2);
 	addState(PIKIHEAD_Flying, 0, new FlyingEffect, new FlyingExec, new FlyingCleanup);
-	addState(PIKIHEAD_Bury, -1, new BuryInit, new BuryExec);
-	addState(PIKIHEAD_Tane, -1, new TaneInit, new TaneExec);
+	addState(PIKIHEAD_Bury, PANI_NO_MOTION, new BuryInit, new BuryExec);
+	addState(PIKIHEAD_Tane, PANI_NO_MOTION, new TaneInit, new TaneExec);
 	addState(PIKIHEAD_Unk5, 2);
 	addState(PIKIHEAD_Wait, 3, new WaitInit, new WaitExec);
 	addState(PIKIHEAD_Unk7, 4);
-	addState(PIKIHEAD_Growuped, -1, new GrowupedExec);
-	addState(PIKIHEAD_Grow, -1, new GrowEffect);
+	addState(PIKIHEAD_Growuped, PANI_NO_MOTION, new GrowupedExec);
+	addState(PIKIHEAD_Grow, PANI_NO_MOTION, new GrowEffect);
 	addState(PIKIHEAD_Unk10, 5);
-	addState(PIKIHEAD_Kareta, -1, new KaretaInit, new KaretaExec);
-	addState(PIKIHEAD_Dead, -1, new Dead);
+	addState(PIKIHEAD_Kareta, PANI_NO_MOTION, new KaretaInit, new KaretaExec);
+	addState(PIKIHEAD_Dead, PANI_NO_MOTION, new Dead);
 
 	addArrow(PIKIHEAD_Flying, saiBounceEvent, PIKIHEAD_Bounce);
 	addArrow(PIKIHEAD_Bounce, saiMotionDoneEvent, PIKIHEAD_Bury);
@@ -465,12 +465,12 @@ BombAI::BombAI()
 	SAIUserEvent* evt3 = new SAIUserEvent(2);
 
 	create(BOMB_COUNT);
-	addState(BOMB_Unk0, -1);
-	addState(BOMB_Unk1, -1);
-	addState(BOMB_Set, -1, new SetInit, new SetExec);
+	addState(BOMB_Unk0, PANI_NO_MOTION);
+	addState(BOMB_Unk1, PANI_NO_MOTION);
+	addState(BOMB_Set, PANI_NO_MOTION, new SetInit, new SetExec);
 	addState(BOMB_Bomb, 0, new BombInit, new BombExec);
-	addState(BOMB_Mizu, -1, new MizuInit, new MizuExec);
-	addState(BOMB_Die, -1, new DieInit, new DieExec);
+	addState(BOMB_Mizu, PANI_NO_MOTION, new MizuInit, new MizuExec);
+	addState(BOMB_Die, PANI_NO_MOTION, new DieInit, new DieExec);
 
 	addArrow(BOMB_Unk0, evt1, BOMB_Set);
 	addArrow(BOMB_Set, evt2, BOMB_Bomb);
@@ -747,13 +747,13 @@ GoalAI::GoalAI()
 	NotFinished* nf   = new NotFinished;
 
 	create(GOAL_COUNT);
-	addState(GOAL_Wait, -1, new WaitInit);
+	addState(GOAL_Wait, PANI_NO_MOTION, new WaitInit);
 	addState(GOAL_Effect, 2, new Effect);
 	addState(GOAL_Unk2, 0);
-	addState(GOAL_EmitPiki, -1, new EmitPiki);
-	addState(GOAL_EmitWait, -1, nullptr, new EmitWait);
-	addState(GOAL_BootInit, -1, new BootInit);
-	addState(GOAL_BootEmit, -1, new BootEmit, nullptr, new BootDone);
+	addState(GOAL_EmitPiki, PANI_NO_MOTION, new EmitPiki);
+	addState(GOAL_EmitWait, PANI_NO_MOTION, nullptr, new EmitWait);
+	addState(GOAL_BootInit, PANI_NO_MOTION, new BootInit);
+	addState(GOAL_BootEmit, PANI_NO_MOTION, new BootEmit, nullptr, new BootDone);
 
 	addArrow(GOAL_Wait, evt, GOAL_Effect);
 	addArrow(GOAL_Effect, saiMotionDoneEvent, GOAL_Unk2);
@@ -1006,9 +1006,9 @@ GemAI::GemAI()
 	SAIUserEvent* evt = new SAIUserEvent(0);
 
 	create(GEM_COUNT);
-	addState(GEM_Unk0, -1);
-	addState(GEM_Rise, -1, new RiseInit, new RiseExec);
-	addState(GEM_Die, -1, new Die);
+	addState(GEM_Unk0, PANI_NO_MOTION);
+	addState(GEM_Rise, PANI_NO_MOTION, new RiseInit, new RiseExec);
+	addState(GEM_Die, PANI_NO_MOTION, new Die);
 
 	addArrow(GEM_Unk0, evt, GEM_Rise);
 }
@@ -1112,7 +1112,7 @@ WaterAI::WaterAI()
 	addState(WATER_Unk1, 1);
 	addState(WATER_Unk2, 3);
 	addState(WATER_Unk3, 2);
-	addState(WATER_Die, -1, new Die);
+	addState(WATER_Die, PANI_NO_MOTION, new Die);
 
 	addArrow(WATER_Unk3, saiMotionDoneEvent, WATER_Unk0);
 	addArrow(WATER_Unk0, saiCollideEvent, WATER_Unk1)->mCondition.add(new CollideChar);
@@ -1157,9 +1157,9 @@ FallWaterAI::FallWaterAI()
 	create(FALLWATER_COUNT);
 	addState(FALLWATER_Unk0, 1);
 	addState(FALLWATER_Unk1, 0);
-	addState(FALLWATER_Collide, -1, new CollideInit);
-	addState(FALLWATER_Emit, -1, new EmitInit);
-	addState(FALLWATER_Disappear, -1, new DisappearInit);
+	addState(FALLWATER_Collide, PANI_NO_MOTION, new CollideInit);
+	addState(FALLWATER_Emit, PANI_NO_MOTION, new EmitInit);
+	addState(FALLWATER_Disappear, PANI_NO_MOTION, new DisappearInit);
 
 	addArrow(FALLWATER_Unk0, saiMotionDoneEvent, FALLWATER_Unk1);
 	addArrow(FALLWATER_Unk1, saiBounceEvent, FALLWATER_Collide);

@@ -211,7 +211,7 @@ bool YTeki::startNewMotion(int motionIdx)
 {
 	if (mTekiAnimator->getCurrentMotionIndex() != motionIdx || mTekiAnimator->isFinished()) {
 		if (!mTekiAnimator->isFinished()) {
-			mTekiAnimator->finishMotion(PaniMotionInfo(-1, this));
+			mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 		}
 
 		if (mTekiAnimator->isFinishing()) {

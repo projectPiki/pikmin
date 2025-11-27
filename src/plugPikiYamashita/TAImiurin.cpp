@@ -202,7 +202,7 @@ public:
 			}
 
 			if (teki.mCurrentAnimEvent == KEY_LoopStart) {
-				teki.mTekiAnimator->finishMotion(PaniMotionInfo(-1, &teki));
+				teki.mTekiAnimator->finishMotion(PaniMotionInfo(PANI_NO_MOTION, &teki));
 			}
 
 			if (teki.mCurrentAnimEvent == KEY_Finished) {

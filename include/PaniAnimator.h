@@ -8,6 +8,8 @@ struct PaniMotion;
 struct PaniMotionTable;
 struct PaniMotionInfo;
 
+#define PANI_NO_MOTION (-1)
+
 /**
  * @brief TODO
  */

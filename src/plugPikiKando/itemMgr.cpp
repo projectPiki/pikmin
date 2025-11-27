@@ -660,7 +660,7 @@ void ItemCreature::startMotion(int motionID)
  */
 void ItemCreature::finishMotion()
 {
-	mItemAnimator.finishMotion(PaniMotionInfo(-1, this));
+	mItemAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 }
 
 /*
@@ -681,7 +681,7 @@ void ItemCreature::startMotion(int motionID, f32 frame)
  */
 void ItemCreature::finishMotion(f32 frame)
 {
-	mItemAnimator.finishMotion(PaniMotionInfo(-1, this));
+	mItemAnimator.finishMotion(PaniMotionInfo(PANI_NO_MOTION, this));
 	mItemAnimator.mAnimationCounter = frame;
 }
 

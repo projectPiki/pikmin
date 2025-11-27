@@ -1883,7 +1883,7 @@ void NaviGatherState::exec(Navi* navi)
 	if (check || navi->_AB8 > C_NAVI_PROP(navi)._BC()) {
 		navi->_AB8 = 0.0f;
 		navi->_ABC = 0;
-		navi->mNaviAnimMgr.getUpperAnimator().finishMotion(PaniMotionInfo(-1, navi));
+		navi->mNaviAnimMgr.getUpperAnimator().finishMotion(PaniMotionInfo(PANI_NO_MOTION, navi));
 		transit(navi, NAVISTATE_Walk);
 	}
 
