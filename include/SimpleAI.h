@@ -220,7 +220,7 @@ struct SimpleAI : public StateMachine<AICreature> {
 	virtual void procMsg(AICreature*, Msg*); // _10
 	virtual void exec(AICreature*);          // _0C
 
-	void addState(int, int, SAIAction*, SAIAction*, SAIAction*);
+	void addState(int, int, SAIAction* = nullptr, SAIAction* = nullptr, SAIAction* = nullptr);
 	SAIArrow* addArrow(int, SAIEvent*, int);
 	void start(AICreature*, int);
 	void checkEvent(AICreature*);
