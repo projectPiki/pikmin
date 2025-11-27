@@ -202,6 +202,18 @@ struct PaniPelletAnimator : public PaniAnimator {
 	// _00-_54 = PaniAnimator
 };
 
+BEGIN_ENUM_TYPE(PlantMotion)
+enum {
+	Touch   = 0,
+	Unused1 = 1,
+	Unused2 = 2,
+	Unused3 = 3,
+	Unused4 = 4,
+	Unused5 = 5,
+	Unused6 = 6,
+	COUNT,
+} END_ENUM_TYPE;
+
 /**
  * @brief TODO
  */
@@ -210,7 +222,7 @@ struct PaniPlantAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[7];
+	static char* motionLabels[PlantMotion::COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
