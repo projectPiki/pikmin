@@ -210,11 +210,7 @@ public:
 	{
 		P2DPicture* pic = (P2DPicture*)pane;
 		// There is no file named "ys_u.bti" on the disc, but there is one named "ya_u.bti".
-#ifdef BUGFIX
-		pUpTex = loadTexExp("ya_u.bti", true, true);
-#else
-		pUpTex = loadTexExp("ys_u.bti", true, true);
-#endif
+		pUpTex   = loadTexExp(TERNARY_BUGFIX("ya_u.bti", "ys_u.bti"), true, true);
 		pDownTex = loadTexExp("ya_l.bti", true, true);
 		judgeArrowType();
 		setTexture(pic);

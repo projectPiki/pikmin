@@ -299,7 +299,7 @@ void GameCoreSection::endMovie(int movieIdx)
 			PRINT("use navi back camera\n");
 		} else {
 			angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
-			PRINT("using previous camera\\n" MISSING_NEWLINE); // This bugfix could be better, but idc.
+			PRINT("using previous camera" TERNARY_BUGFIX("\n", "\\n"));
 		}
 		angle = cameraMgr->mCamera->mPolarDir.mAzimuth;
 #if defined(VERSION_PIKIDEMO)
