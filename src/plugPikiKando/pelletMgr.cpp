@@ -313,12 +313,7 @@ bool Pellet::ignoreAtari(Creature* creature)
 	}
 
 	// The following C-style cast is illegal, as `Creature` does not inherit from `PelletView`.
-#if defined(BUGFIX)
-	if (mPelletView && creature == static_cast<BTeki*>(mPelletView))
-#else
-	if (mPelletView && creature == (Creature*)mPelletView)
-#endif
-	{
+	if (mPelletView && creature == TERNARY_BUGFIX(static_cast<BTeki*>, (Creature*))(mPelletView)) {
 		return true;
 	}
 
@@ -564,11 +559,8 @@ f32 Pellet::getBottomRadius()
 
 		PRINT("PELLE IS %s (view=%x)\n", mConfig->mPelletName.mValue.mString, mPelletView);
 		// The following C-style cast is illegal, as `Creature` does not inherit from `PelletView`.
-#if defined(BUGFIX)
-		PRINT("if view is creature, the name is %s\n", ObjType::getName(static_cast<BTeki*>(mPelletView)->mObjType));
-#else
-		PRINT("if view is creature, the name is %s\n", ObjType::getName(((Creature*)mPelletView)->mObjType));
-#endif
+		PRINT("if view is creature, the name is %s\n",
+		      ObjType::getName((TERNARY_BUGFIX(static_cast<BTeki*>, (Creature*))(mPelletView))->mObjType));
 		ERROR("BottomRadius Loop\n");
 	}
 
@@ -1115,11 +1107,8 @@ void Pellet::startAI(int doSpawnScaleOff)
 	if (badMotionOverride) {
 		// The string says `isMotionFlag`, but the code says `isCreatureFlag`.  Note that `Creature::isCreatureFlag` is
 		// actually `Creature::isFlag` according to the ILK, but we chose to ignore that.  This must have been a typo.
-#if defined(BUGFIX)
-		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isMotionFlag(PelletMotionFlags::UsePassive) ? "true" : "false");
-#else
-		PRINT("view=%x isMotionFlag() = %s\n", mPelletView, isCreatureFlag(PelletMotionFlags::UsePassive) ? "true" : "false");
-#endif
+		PRINT("view=%x isMotionFlag() = %s\n", mPelletView,
+		      TERNARY_BUGFIX(isMotionFlag, isCreatureFlag)(PelletMotionFlags::UsePassive) ? "true" : "false");
 		ERROR("DAME DESU YO !\n"); // 'no you can't!'
 	}
 
@@ -1569,12 +1558,7 @@ bool InteractKill::actPellet(Pellet* pellet)
 bool PelletMgr::decomposeNumberPellet(u32 id, int& color, int& type)
 {
 	// Blantant undefined behavior, as `numberPellets` contains less than 20 elements.
-#if defined(BUGFIX)
-	for (int i = 0; i < ARRAY_SIZE(numberPellets); i++)
-#else
-	for (int i = 0; i < 20; i++)
-#endif
-	{
+	for (int i = 0; i < TERNARY_BUGFIX(ARRAY_SIZE(numberPellets), 20); i++) {
 		if (id == numberPellets[i].mPelletID) {
 			color = numberPellets[i].mPelletColor;
 			type  = numberPellets[i].mPelletType;

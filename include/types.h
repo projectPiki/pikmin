@@ -49,6 +49,13 @@ typedef u16 wchar_t;
 	Type;             \
 	}
 
+// For bugfixes that can fit sub-statement, use this instead of a clunky #if #else #endif.
+#if defined(BUGFIX)
+#define TERNARY_BUGFIX(fixed, buggy) fixed
+#else
+#define TERNARY_BUGFIX(fixed, buggy) buggy
+#endif
+
 // Workarounds for our version of C++ and other stupidities
 #undef TRUE
 #define TRUE (1)

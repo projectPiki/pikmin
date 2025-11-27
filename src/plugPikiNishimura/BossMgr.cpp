@@ -278,11 +278,7 @@ void BossMgr::constructBoss()
 		// This is not really a bug, but it is a baffling decision that causes unexpected behavior.  The Goolix has issues
 		// drawing correctly when more than one exists at a time (see `SlimeBody::setSpherePosition`), so that's probably
 		// why it is restricted to just one here.  Still, you could also just not spawn more than one Goolix.  Silly devs...
-#ifdef BUGFIX
-		init(BOSS_Slime, getUseCount(BOSS_Slime));
-#else
-		init(BOSS_Slime, 1);
-#endif
+		init(BOSS_Slime, TERNARY_BUGFIX(getUseCount(BOSS_Slime), 1));
 	}
 
 	// KING (Emperor Bulblax)

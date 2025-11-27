@@ -107,11 +107,7 @@ bool TAIAgoGoalPath::makePath(Teki& teki)
 	GoalItem* onyon = itemMgr->getNearestContainer(teki.getPosition(), 12800.0f);
 	if (onyon) {
 		// `TAIAgoGoalPath` is obstructed by blocked paths, but requests a position route that permits them.
-#ifdef BUGFIX
-		teki.makePositionRoute(teki.getPosition(), onyon->getPosition(), false);
-#else
-		teki.makePositionRoute(teki.getPosition(), onyon->getPosition(), true);
-#endif
+		teki.makePositionRoute(teki.getPosition(), onyon->getPosition(), TERNARY_BUGFIX(false, true));
 		if (teki.mRouteWayPointCount > 0) {
 			teki.mTargetPosition.set(teki.getRouteWayPoint(teki.getTableIndex())->mPosition);
 		} else {
@@ -162,12 +158,7 @@ bool TAIAgoGoalPath::act(Teki& teki)
 		teki.setTableIndex(teki.getTableIndex() + 1);
 		// If Dororo (Smoky Progg) plots a route containing the maximum number of waypoints, `getRouteWayPoint` will
 		// eventually return an un-checked nullptr.  Without this bounds-check, a crash is possible in Distant Spring.
-#ifdef BUGFIX
-		if (teki.getTableIndex() >= teki.mRouteWayPointCount || teki.getTableIndex() >= teki.mRouteWayPointMax)
-#else
-		if (teki.getTableIndex() >= teki.mRouteWayPointCount)
-#endif
-		{
+		if (teki.getTableIndex() >= teki.mRouteWayPointCount || TERNARY_BUGFIX(teki.getTableIndex() >= teki.mRouteWayPointMax, false)) {
 			teki.setTableIndex(0);
 			if (makePath(teki)) {
 				PRINT("GOAL! \n");

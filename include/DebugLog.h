@@ -70,10 +70,6 @@
 
 // TODO: Confirm if newlines are necessary or even just desirable for `ERROR`s.   Given the samples we have, it seems the
 // devs were mixed on whether one should be used or not.  We'll have to wait until JPN Demo's error handler is understood.
-#if defined(BUGFIX)
-#define MISSING_NEWLINE "\n"
-#else
-#define MISSING_NEWLINE
-#endif
+#define MISSING_NEWLINE TERNARY_BUGFIX("\n", "")
 
 #endif // _DEBUGLOG_H
