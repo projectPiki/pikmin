@@ -83,9 +83,9 @@ DEFINE_PRINT("gameCoreSection")
  * Address:	8010CE6C
  * Size:	000040
  */
-void GameCoreSection::startTextDemo(Creature*, int p2)
+void GameCoreSection::startTextDemo(Creature*, int textDemoID)
 {
-	gameflow.mGameInterface->message(0, p2);
+	gameflow.mGameInterface->message(0, textDemoID);
 }
 
 /*
@@ -1562,7 +1562,7 @@ void GameCoreSection::updateAI()
 		AIPerf::optLevel = 0;
 	}
 
-	if (textDemoState) {
+	if (textDemoState != 0) {
 		updateTextDemo();
 		return;
 	}

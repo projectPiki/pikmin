@@ -1627,15 +1627,12 @@ void GameMovieInterface::parseMessages()
  */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
-#if defined(VERSION_GPIP01_00)
 	int id   = msg.mMessageId;
 	int data = msg.mData;
+#if defined(VERSION_GPIP01_00)
 	OSReport("!!!!!!!!!!! Got message %d : %d\n", id, data);
-	switch (id) {
-#else
-	int data = msg.mData;
-	switch (msg.mMessageId) {
 #endif
+	switch (id) {
 	case MOVIECMD_StartTutorial:
 		// Data from here uses the DEMOID_* define (cutscene ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
