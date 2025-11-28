@@ -1091,7 +1091,8 @@ void Navi::callPikis(f32 radius)
 		    && piki->isBuried() && piki->getState() == PIKISTATE_Bury && dist < radius) {
 			piki->mNavi = this;
 			piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
-			ERROR("cursor nuki!\n");
+			// Why would you put an `ERROR` here?  Just don't enable it??
+			TERNARY_BUGFIX(, ERROR("cursor nuki!\n"));
 		}
 	}
 
@@ -1108,7 +1109,8 @@ void Navi::callPikis(f32 radius)
 			}
 
 			if (sprout->canPullout() && sproutDist < radius) {
-				ERROR("cursor nuki!\n");
+				// Why would you put an `ERROR` here?  Just don't enable it??
+				TERNARY_BUGFIX(, ERROR("cursor nuki!\n"));
 				PikiMgr::meBirthMode = true;
 				Piki* piki           = static_cast<Piki*>(pikiMgr->birth());
 				PikiMgr::meBirthMode = false;

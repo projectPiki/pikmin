@@ -61,8 +61,8 @@ struct Vector3f {
 	void input(Vector3f& other) { set(other.x, other.y, other.z); }
 	void output(Vector3f& outVec) { outVec.set(x, y, z); }
 
-	f32 length() { return std::sqrtf(x * x + y * y + z * z); }
-	f32 squaredLength() { return x * x + y * y + z * z; }
+	f32 length() { return std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z)); }
+	f32 squaredLength() { return SQUARE(x) + SQUARE(y) + SQUARE(z); }
 
 	// TODO: implementions are guessed, a manual check if accurate required
 	f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
@@ -153,7 +153,6 @@ struct Vector3f {
 		z = scale * vec.z;
 	}
 
-	// TODO: check if this is this, or x *= -1.0f etc
 	void negate()
 	{
 		x = -x;

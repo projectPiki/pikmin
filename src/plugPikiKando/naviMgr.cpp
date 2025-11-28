@@ -106,7 +106,8 @@ Navi* NaviMgr::getNavi()
 Navi* NaviMgr::getNavi(int idx)
 {
 	if (idx >= mNumObjects) {
-		PRINT("err : getNavi(%d) : numNavis=%d\n", idx, mNumObjects); // Should probably be an `ERROR`...
+		// Given this is a bounds-check, this should probably be an `ERROR`...
+		TERNARY_BUGFIX(ERROR, PRINT)("err : getNavi(%d) : numNavis=%d\n", idx, mNumObjects);
 	}
 	return static_cast<Navi*>(mObjectList[idx]);
 }
