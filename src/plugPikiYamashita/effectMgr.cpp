@@ -629,7 +629,7 @@ void EffShpInst::draw(Graphics& gfx)
 		return;
 	}
 
-	mtx1.makeSRT_(mSRT);
+	mtx1.makeSRT(mSRT);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
 	mEffectShape->refresh(gfx, mtx2, &_3C);
 }

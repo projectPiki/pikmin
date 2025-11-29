@@ -50,8 +50,7 @@ struct Matrix4f {
 	void makeReflection(Plane&);
 	void makeBillVector(Vector3f&, Matrix4f&, Vector3f&);
 
-	// should be without the _ but compiler complains about the vector one
-	void makeSRT_(SRT srt) { makeSRT(srt.s, srt.r, srt.t); }
+	void makeSRT(SRT srt) { makeSRT(srt.s, srt.r, srt.t); }
 
 	inline void set(Matrix4f& other)
 	{
