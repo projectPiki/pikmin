@@ -274,9 +274,7 @@ void PaniTestNode::updatePikis()
 {
 	int i;
 	for (i = 0; i < mTestPikiCount; i++) {
-		// can you tell how much i dont wanna change the Creature scale/rot/pos definition to an SRT?
-		SRT* srt = (SRT*)&mTestPikiList[i]->mSRT.s;
-		mTestPikiList[i]->mWorldMtx.makeSRT_(*srt);
+		mTestPikiList[i]->mWorldMtx.makeSRT(mTestPikiList[i]->mSRT);
 	}
 
 	if (_68C) {
@@ -318,9 +316,7 @@ void PaniTestNode::updatePikis()
  */
 void PaniTestNode::updateTekis()
 {
-	// can you tell how much i dont wanna change the Creature scale/rot/pos definition to an SRT?
-	SRT* srt = (SRT*)&mTestTekiList[mFocusTekiType]->mSRT.s;
-	mTestTekiList[mFocusTekiType]->mWorldMtx.makeSRT_(*srt);
+	mTestTekiList[mFocusTekiType]->mWorldMtx.makeSRT(mTestTekiList[mFocusTekiType]->mSRT);
 
 	if (_68C) {
 		if (mController->keyUnClick(KBBTN_A)) {

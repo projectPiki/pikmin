@@ -680,8 +680,7 @@ void Creature::updateStickPellet()
 	if (stickObj->isRealDynamics()) {
 		pelMtx.makeVQS(stickObj->mSRT.t, stickObj->mRotationQuat, stickObj->mSRT.s);
 	} else {
-		// this should really be makeSRT(SRT(const SRT&)) not vectors but bite me.
-		pelMtx.makeSRT_(SRT(stickObj->mSRT.s, stickObj->mSRT.r, stickObj->mSRT.t));
+		pelMtx.makeSRT(stickObj->mSRT);
 	}
 
 	Vector3f attachPos(mAttachPosition);

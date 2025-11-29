@@ -861,7 +861,7 @@ void Navi::update()
 		f32 maxY = mapMgr->getMaxY(mSRT.t.x, mSRT.t.z, true);
 		if (maxY > mSRT.t.y) {
 			PRINT("navi(%.1f %.1f %.1f) : map(%.1f %.1f %.1f)\n", mSRT.t.x, mSRT.t.y, mSRT.t.z, mSRT.t.x, maxY, mSRT.t.z);
-			PRINT("mapY %.1f srt.t.y %.1f\n", maxY, mSRT.t.y); // (we know they had mSRT.s/mSRT.r/mSRT.t as an SRT already)
+			PRINT("mapY %.1f srt.t.y %.1f\n", maxY, mSRT.t.y);
 			PRINT("navi almost fall !\n");
 			mSRT.t.y = maxY;
 		}
