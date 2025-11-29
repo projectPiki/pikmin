@@ -126,7 +126,7 @@ void DualCreature::useRealDynamics()
 	if (!mIsDynamicsSimpleFixed) {
 		_43E            = true;
 		mIsRealDynamics = true;
-		mRotationQuat.fromEuler(mRotation);
+		mRotationQuat.fromEuler(mSRT.r);
 	} else {
 		useSimpleDynamics();
 	}
@@ -160,7 +160,7 @@ void DualCreature::rotateY(f32 rotY)
 		mRotationQuat.normalise();
 	} else {
 		mFaceDirection = roundAng(mFaceDirection + rotY);
-		mRotation.set(0.0f, mFaceDirection, 0.0f);
+		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 	}
 }
 
@@ -189,7 +189,7 @@ void DualCreature::refresh(Graphics& gfx)
 #if defined(VERSION_PIKIDEMO)
 	// I don't enjoy splitting this difference in two, but syntax highlighting really hates extra opening braces.
 #else
-	bool isPointVisible = gfx.mCamera->isPointVisible(mPosition, 2.0f * getBoundingSphereRadius());
+	bool isPointVisible = gfx.mCamera->isPointVisible(mSRT.t, 2.0f * getBoundingSphereRadius());
 
 	if (isPointVisible) {
 		disableAICulling();
@@ -200,7 +200,7 @@ void DualCreature::refresh(Graphics& gfx)
 
 	if (!_43E) {
 #if defined(VERSION_PIKIDEMO)
-		if (!mIsDynamicsSimpleFixed && gfx.mCamera->isPointVisible(mPosition, 2.0f * getBoundingSphereRadius()))
+		if (!mIsDynamicsSimpleFixed && gfx.mCamera->isPointVisible(mSRT.t, 2.0f * getBoundingSphereRadius()))
 #else
 		if (!mIsDynamicsSimpleFixed && isPointVisible)
 #endif
@@ -214,9 +214,9 @@ void DualCreature::refresh(Graphics& gfx)
 	}
 
 	if (mIsRealDynamics) {
-		mWorldMtx.makeVQS(mPosition, mRotationQuat, mScale);
+		mWorldMtx.makeVQS(mSRT.t, mRotationQuat, mSRT.s);
 	} else {
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	}
 
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
@@ -300,7 +300,7 @@ void PelCreature::doRender(Graphics& gfx, Matrix4f& mtx)
 		if (mIsRealDynamics) {
 			useSimpleDynamics();
 		} else {
-			mRotation.set(PI / 10.0f, 0.0f, 0.0f);
+			mSRT.r.set(PI / 10.0f, 0.0f, 0.0f);
 			useRealDynamics();
 		}
 	}

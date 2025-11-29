@@ -72,8 +72,8 @@ Creature* GenObjectNavi::birth(BirthInfo& info)
 		PRINT("*************************************************\n");
 
 		newNavi->init(info.mPosition);
-		newNavi->mRotation      = info.mRotation;
-		newNavi->mFaceDirection = newNavi->mRotation.y;
+		newNavi->mSRT.r         = info.mRotation;
+		newNavi->mFaceDirection = newNavi->mSRT.r.y;
 		newNavi->reset();
 		newNavi->mGenerator  = info.mGenerator;
 		newNavi->mNaviCamera = naviMgr->getNavi()->mNaviCamera;

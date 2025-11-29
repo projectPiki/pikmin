@@ -88,7 +88,7 @@ void RadarInfo::detachParts(Creature* part)
 Vector3f RadarInfo::PartsInfo::getPos()
 {
 	if (mPart) {
-		return mPart->mPosition;
+		return mPart->mSRT.t;
 	}
 
 	Vector3f vec(0.0f, 0.0f, 0.0f); // this is necessary unfortunately

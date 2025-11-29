@@ -53,7 +53,7 @@ void RopeCreature::setRope(Creature* obj)
 void RopeCreature::update()
 {
 	Creature::update();
-	mRopeDirection = mParentRope->mPosition - mPosition;
+	mRopeDirection = mParentRope->mSRT.t - mSRT.t;
 	mRopeDirection.normalise();
 }
 
@@ -64,7 +64,7 @@ void RopeCreature::update()
  */
 Vector3f RopeCreature::getRopePos(f32 size)
 {
-	Vector3f pos(mPosition);
+	Vector3f pos(mSRT.t);
 	pos = pos + (mRopeLength * size) * mRopeDirection;
 	return pos;
 }

@@ -151,7 +151,7 @@ void PikiLookAtState::init(Piki* piki)
 	mTimer = (0.3f * gsys->getRand(1.0f));
 	mState = 0;
 	SeSystem::playPlayerSe(SE_PIKI_CALLED);
-	seSystem->playPikiSound(SEF_PIKI_CALLED, piki->mPosition);
+	seSystem->playPikiSound(SEF_PIKI_CALLED, piki->mSRT.t);
 	piki->endStickObject();
 	piki->endStick();
 }
@@ -163,7 +163,7 @@ void PikiLookAtState::init(Piki* piki)
  */
 void PikiLookAtState::exec(Piki* piki)
 {
-	Vector3f dir = piki->mPosition - piki->mNavi->mPosition;
+	Vector3f dir = piki->mSRT.t - piki->mNavi->mSRT.t;
 	piki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	piki->mVelocity.x = piki->mVelocity.z = 0.0f;
 	piki->mFaceDirection                  = roundAng(angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) * 0.1f + piki->mFaceDirection);
@@ -183,7 +183,7 @@ void PikiLookAtState::exec(Piki* piki)
 
 	case 2:
 		piki->mFaceDirection += mRotationStep;
-		piki->mRotation.set(0.0f, mRotationStep, 0.0f);
+		piki->mSRT.r.set(0.0f, mRotationStep, 0.0f);
 		break;
 
 	case 3:
@@ -226,7 +226,7 @@ void PikiLookAtState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
 		mState        = 2;
-		Vector3f dir  = piki->mNavi->mPosition - piki->mPosition;
+		Vector3f dir  = piki->mNavi->mSRT.t - piki->mSRT.t;
 		mRotationStep = angDist(atan2f(dir.x, dir.z), piki->mFaceDirection) / 7.0f;
 		break;
 
@@ -366,7 +366,7 @@ void PikiAbsorbState::init(Piki* piki)
 	mState             = 0;
 	mNectar            = piki->mCurrNectar;
 	mHasAbsorbedNectar = false;
-	piki->turnTo(mNectar->mPosition);
+	piki->turnTo(mNectar->mSRT.t);
 }
 
 /*
@@ -407,7 +407,7 @@ void PikiAbsorbState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_LoopStart:
 		if (mState != 1) {
-			seSystem->playPikiSound(SEF_PIKI_DRINK, piki->mPosition);
+			seSystem->playPikiSound(SEF_PIKI_DRINK, piki->mSRT.t);
 		}
 		mState = 1;
 		break;
@@ -472,7 +472,7 @@ void PikiDrownState::init(Piki* piki)
 		piki->getHoldCreature()->stimulate(release);
 	}
 
-	seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mPosition);
+	seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mSRT.t);
 	mOutOfWaterFrames = 0;
 
 	// we already did this, but sure
@@ -497,7 +497,7 @@ void PikiDrownState::exec(Piki* piki)
 	if (mState != 2 && piki->mInWaterTimer == 0) {
 		mOutOfWaterFrames++;
 		if (mOutOfWaterFrames > 1) {
-			piki->mPosition.y += 20.0f;
+			piki->mSRT.t.y += 20.0f;
 			Vector3f vel(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
 			vel.multiply(80.0f);
 			piki->mVelocity = vel;
@@ -515,7 +515,7 @@ void PikiDrownState::exec(Piki* piki)
 	}
 
 	if (mState == 1) {
-		Vector3f dir = piki->mNavi->mPosition - piki->mPosition;
+		Vector3f dir = piki->mNavi->mSRT.t - piki->mSRT.t;
 		dir.normalise();
 		mEscapeVelocity = piki->getSpeed(0.5f) * dir;
 	} else {
@@ -564,7 +564,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Finished:
 		if (mState == 2) {
-			seSystem->playSoundDirect(5, SEW_PIKI_DEAD, piki->mPosition);
+			seSystem->playSoundDirect(5, SEW_PIKI_DEAD, piki->mSRT.t);
 			piki->kill(false);
 			break;
 		}
@@ -572,7 +572,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		if (mState == 1) {
 			if (--mStruggleDuration == 0) {
 				piki->startMotion(PaniMotionInfo(PIKIANIM_Sizumu, piki), PaniMotionInfo(PIKIANIM_Sizumu));
-				seSystem->playSoundDirect(5, SEW_PIKI_SINK, piki->mPosition);
+				seSystem->playSoundDirect(5, SEW_PIKI_SINK, piki->mSRT.t);
 				mState = 2;
 			} else {
 				piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
@@ -584,7 +584,7 @@ void PikiDrownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		if (mState == 0) {
 			mState = 1;
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Oboreru, piki), PaniMotionInfo(PIKIANIM_Oboreru));
-			seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mPosition);
+			seSystem->playSoundDirect(5, SEW_PIKI_DROWN, piki->mSRT.t);
 		}
 
 		break;
@@ -609,7 +609,7 @@ PikiKinokoState::PikiKinokoState()
 void PikiKinokoState::init(Piki* piki)
 {
 	piki->startKinoko();
-	mTarget = tekiMgr->findClosest(piki->mPosition, nullptr);
+	mTarget = tekiMgr->findClosest(piki->mSRT.t, nullptr);
 	initWalk(piki);
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 	mState = 0;
@@ -623,7 +623,7 @@ void PikiKinokoState::init(Piki* piki)
 void PikiKinokoState::initWalk(Piki* piki)
 {
 	mWalkTimer   = (2.0f * gsys->getRand(1.0f)) + 1.5f;
-	Vector3f dir = mTarget->mPosition - piki->mPosition;
+	Vector3f dir = mTarget->mSRT.t - piki->mSRT.t;
 	f32 d        = dir.normalise();
 	Vector3f orthoDir(dir.z, 0.0f, -dir.x);
 	if (gsys->getRand(1.0f) > 0.5f) {
@@ -694,14 +694,14 @@ void PikiKinokoState::exeBoid(Piki* piki)
 		}
 
 		if (other->isKinoko()) {
-			f32 dist = qdist2(other->mPosition.x, other->mPosition.z, piki->mPosition.x, piki->mPosition.z);
+			f32 dist = qdist2(other->mSRT.t.x, other->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z);
 			if (dist < minDist) {
 				minDist    = dist;
-				dirNearest = piki->mPosition - other->mPosition;
+				dirNearest = piki->mSRT.t - other->mSRT.t;
 				isNearest  = true;
 			}
 
-			boidPos = boidPos + other->mPosition;
+			boidPos = boidPos + other->mSRT.t;
 			boidVel = boidVel + other->mVelocity;
 			count++;
 		}
@@ -713,7 +713,7 @@ void PikiKinokoState::exeBoid(Piki* piki)
 		boidVel.multiply(1.0f / f32(count));
 		boidVel.normalise();
 
-		Vector3f dir = boidPos - piki->mPosition;
+		Vector3f dir = boidPos - piki->mSRT.t;
 		Vector3f pikiDir(sinf(piki->mFaceDirection), 0.0f, cosf(piki->mFaceDirection));
 		dir.normalise();
 		Vector3f moveDir;
@@ -730,7 +730,7 @@ void PikiKinokoState::exeBoid(Piki* piki)
 		piki->setSpeed(0.3f, mTargetDir);
 	}
 
-	Vector3f targetDir = mTarget->mPosition - piki->mPosition;
+	Vector3f targetDir = mTarget->mSRT.t - piki->mSRT.t;
 	f32 dist           = targetDir.normalise();
 	if (dist < 100.0f) {
 		return;
@@ -775,7 +775,7 @@ void PikiBubbleState::init(Piki* piki)
 	mSpeedRatio           = 1.0f;
 	EffectParm parm(piki);
 	piki->mSlimeEffect->emit(parm);
-	seSystem->playPikiSound(SEF_PIKI_WATERED, piki->mPosition);
+	seSystem->playPikiSound(SEF_PIKI_WATERED, piki->mSRT.t);
 }
 
 /*
@@ -959,7 +959,7 @@ void PikiBulletState::exec(Piki* piki)
 	{
 		Creature* teki = *iter;
 		if (teki->isAlive() && teki->isVisible() && !teki->isFlying()) {
-			Vector3f dir = teki->mPosition - piki->mPosition;
+			Vector3f dir = teki->mSRT.t - piki->mSRT.t;
 			f32 dist     = dir.length();
 			if (dist < 100.0f) {
 				piki->mActiveAction->abandon(nullptr);
@@ -1330,13 +1330,13 @@ void PikiFallMeckState::procBounceMsg(Piki* piki, MsgBounce*)
 		attr = MapCode::getAttribute(piki->mGroundTriangle);
 	}
 
-	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mPosition) && !MapCode::isBald(piki->mGroundTriangle) && attr != ATTR_Water) {
+	if (!piki->hasBomb() && Piki::isSafeMePos(piki->mSRT.t) && !MapCode::isBald(piki->mGroundTriangle) && attr != ATTR_Water) {
 		PikiHeadMgr::buryMode = true;
 		PikiHeadItem* sprout  = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 		PikiHeadMgr::buryMode = false;
 
 		if (sprout) {
-			Vector3f pos(piki->mPosition);
+			Vector3f pos(piki->mSRT.t);
 			pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, pos, nullptr, nullptr);
 			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, pos, nullptr, nullptr);
@@ -1528,11 +1528,11 @@ bool PikiCliffState::nearEnough(Piki* piki)
 		}
 	}
 
-	f32 dist = piki->mGroundTriangle->mEdgePlanes[planeIdx].dist(piki->mPosition);
+	f32 dist = piki->mGroundTriangle->mEdgePlanes[planeIdx].dist(piki->mSRT.t);
 	if (dist < piki->mCollisionRadius + 0.2f) {
-		f32 x     = piki->mPosition.x;
-		f32 z     = piki->mPosition.z;
-		f32 currY = piki->mPosition.y;
+		f32 x     = piki->mSRT.t.x;
+		f32 z     = piki->mSRT.t.z;
+		f32 currY = piki->mSRT.t.y;
 		x += dir.x * piki->mCollisionRadius * 1.5f;
 		z += dir.z * piki->mCollisionRadius * 1.5f;
 		f32 botY = mapMgr->getMinY(x, z, true);
@@ -1597,7 +1597,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 					piki->startMotion(PaniMotionInfo(PIKIANIM_Hikakaru, piki), PaniMotionInfo(PIKIANIM_Hikakaru));
 					Plane* plane = piki->getNearestPlane(piki->mGroundTriangle);
 					if (plane) {
-						f32 dist = plane->dist(piki->mPosition);
+						f32 dist = plane->dist(piki->mSRT.t);
 						PRINT_KANDO("dist is %.1f ( radius=%f : centresize=%f\n", dist, piki->mCollisionRadius, piki->getCentreSize());
 						if (dist > -0.2f && dist < 3.0f) {
 							PRINT_KANDO("piki%x : ####### start buran motion :: floor = %s\n", piki,
@@ -1635,7 +1635,7 @@ void PikiCliffState::procAnimMsg(Piki* piki, MsgAnim* msg)
 				break;
 			}
 
-			piki->mPosition = piki->getCentre();
+			piki->mSRT.t = piki->getCentre();
 			PRINT_KANDO("piki %x : do fall\n", piki);
 			transit(piki, PIKISTATE_Fall);
 			break;
@@ -1682,7 +1682,7 @@ void PikiGoHangState::init(Piki* piki)
 void PikiGoHangState::exec(Piki* piki)
 {
 	CollPart* naviHand = piki->mNavi->mCollInfo->getSphere('rhnd');
-	Vector3f dir       = naviHand->mCentre - piki->mPosition;
+	Vector3f dir       = naviHand->mCentre - piki->mSRT.t;
 	f32 dist           = dir.normalise();
 	f32 speedFactor    = 1.0f;
 	if (dist > 2.0f * C_NAVI_PROP(piki->mNavi)._1BC()) {
@@ -1950,7 +1950,7 @@ void PikiFlyingState::init(Piki* piki)
 	SeSystem::playPlayerSe(SE_PIKI_FLY);
 	piki->mWantToStick = true;
 	mIsFlowerGliding   = false;
-	mSparkleEffect.init(piki->mPosition, EffectMgr::EFF_SD_Sparkle);
+	mSparkleEffect.init(piki->mSRT.t, EffectMgr::EFF_SD_Sparkle);
 	mGroundTouchFrames = 0;
 	mHasBounced        = false;
 }
@@ -1976,7 +1976,7 @@ void PikiFlyingState::exec(Piki* piki)
 		mGroundTouchFrames = 0;
 	}
 
-	mSparkleEffect.updatePos(piki->mPosition);
+	mSparkleEffect.updatePos(piki->mSRT.t);
 
 	f32 startGrav          = AIConstant::_instance->mConstants.mGravity() * 0.8f;
 	f32 glideGrav          = AIConstant::_instance->mConstants.mGravity() * C_PIKI_PROP(piki).mFlowerGravityScale();
@@ -2092,7 +2092,7 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	if (colliderType == OBJTYPE_WorkObject) {
 		WorkObject* obj = (WorkObject*)collider;
 		if (obj->isBridge()) {
-			PRINT("FLYING COLLIDE BRIDGE bridge is %s!!!\n", obj->workable(piki->mPosition) ? "workable" : "dame!");
+			PRINT("FLYING COLLIDE BRIDGE bridge is %s!!!\n", obj->workable(piki->mSRT.t) ? "workable" : "dame!");
 			piki->mActiveAction->abandon(nullptr);
 			piki->mActiveAction->mCurrActionIdx = PikiAction::Bridge;
 			piki->mActiveAction->mChildActions[PikiAction::Bridge].initialise(collider);
@@ -2130,11 +2130,11 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	}
 
 	if (colliderType == OBJTYPE_Teki || collider->isBoss()) {
-		Vector3f effPos = collider->mPosition - piki->mPosition;
+		Vector3f effPos = collider->mSRT.t - piki->mSRT.t;
 		effPos.normalise();
 		Vector3f effDir(effPos);
 		effPos.multiply(piki->getCentreSize() * 1.5f);
-		effPos.add(piki->mPosition);
+		effPos.add(piki->mSRT.t);
 		InteractHitEffect hit(piki, effPos, effDir, msg->mEvent.mColliderPart);
 		collider->stimulate(hit);
 	}
@@ -2142,7 +2142,7 @@ void PikiFlyingState::procCollideMsg(Piki* piki, MsgCollide* msg)
 	CollPart* part = msg->mEvent.mColliderPart;
 	if (part && part->isBouncy()) {
 		if (!mHasBounced) {
-			Vector3f bounceDir = piki->mPosition - collider->mPosition;
+			Vector3f bounceDir = piki->mSRT.t - collider->mSRT.t;
 			bounceDir.normalise();
 			bounceDir.multiply(140.0f);
 			piki->mVelocity       = bounceDir;
@@ -2257,7 +2257,7 @@ void PikiFlyingState::procBounceMsg(Piki* piki, MsgBounce*)
 
 	piki->restartAI();
 	transit(piki, PIKISTATE_Normal);
-	seSystem->playPikiSound(SEF_PIKI_LAND, piki->mPosition);
+	seSystem->playPikiSound(SEF_PIKI_LAND, piki->mSRT.t);
 	if (piki->isHolding()) {
 		if (piki->getHoldCreature()->mObjType != OBJTYPE_Bomb) {
 			PRINT("*** HOLD CREATURE = %x\n", piki->getHoldCreature());
@@ -2467,7 +2467,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	switch (msg->mKeyEvent->mEventType) {
 	case KEY_Action0:
 		piki->mFloweringTimer++;
-		seSystem->playPikiSound(SEF_PIKI_GROW4, piki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_GROW4, piki->mSRT.t);
 		piki->setFlower(Flower);
 		playerState->mResultFlags.setOn(RESFLAG_PikminSeeds);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNectar) && !gameflow.mMoviePlayer->mIsActive && piki->aiCullable()) {
@@ -2840,7 +2840,7 @@ void PikiBuryState::exec(Piki* piki)
 	if (sprout && attr != ATTR_Water)
 #endif
 	{
-		Vector3f pos(piki->mPosition);
+		Vector3f pos(piki->mSRT.t);
 		pos.y = mapMgr->getMinY(pos.x, pos.z, true);
 		effectMgr->create(EffectMgr::EFF_SD_DirtCloud, pos, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_SD_DirtSpray, pos, nullptr, nullptr);
@@ -3012,20 +3012,20 @@ void PikiNukareState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	case KEY_Action0:
 		rumbleMgr->start(RUMBLE_Unk0, 0, nullptr);
 		if (piki->mGroundTriangle && MapCode::getAttribute(piki->mGroundTriangle) == ATTR_Water) {
-			effectMgr->create(EffectMgr::EFF_P_Bubbles, piki->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_P_Bubbles, piki->mSRT.t, nullptr, nullptr);
 		} else {
-			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, piki->mPosition, nullptr, nullptr);
-			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, piki->mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_SD_DirtCloud, piki->mSRT.t, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_SD_DirtSpray, piki->mSRT.t, nullptr, nullptr);
 		}
 		break;
 	case KEY_Finished:
-		piki->mRotation.y    = piki->mNavi->mFaceDirection;
-		piki->mFaceDirection = piki->mRotation.y;
-		piki->mPosition      = piki->mShadowPos;
-		f32 minY             = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
-		if (minY > piki->mPosition.y) {
+		piki->mSRT.r.y       = piki->mNavi->mFaceDirection;
+		piki->mFaceDirection = piki->mSRT.r.y;
+		piki->mSRT.t         = piki->mShadowPos;
+		f32 minY             = mapMgr->getMinY(piki->mSRT.t.x, piki->mSRT.t.z, true);
+		if (minY > piki->mSRT.t.y) {
 			PRINT("*** ABUNAI !!\n");
-			piki->mPosition.y = minY + 1.0f;
+			piki->mSRT.t.y = minY + 1.0f;
 		}
 		transit(piki, PIKISTATE_Normal);
 		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
@@ -3073,9 +3073,9 @@ void PikiAutoNukiState::init(Piki* piki)
 void PikiAutoNukiState::exec(Piki* piki)
 {
 	if (mToCreateEffect) {
-		Vector3f pos(piki->mPosition); // lol
-		effectMgr->create(EffectMgr::EFF_SD_DirtCloud, piki->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_SD_DirtSpray, piki->mPosition, nullptr, nullptr);
+		Vector3f pos(piki->mSRT.t); // lol
+		effectMgr->create(EffectMgr::EFF_SD_DirtCloud, piki->mSRT.t, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_SD_DirtSpray, piki->mSRT.t, nullptr, nullptr);
 		mToCreateEffect = false;
 	}
 }
@@ -3102,7 +3102,7 @@ void PikiAutoNukiState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		SeSystem::playPlayerSe(SE_PIKI_PULLED);
 		break;
 	case KEY_Finished:
-		piki->mPosition = piki->mShadowPos;
+		piki->mSRT.t = piki->mShadowPos;
 		transit(piki, PIKISTATE_Normal);
 		piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 		break;
@@ -3140,7 +3140,7 @@ void PikiPressedState::procCollideMsg(Piki* piki, MsgCollide* msg)
 void PikiPressedState::init(Piki* piki)
 {
 	f32 scale = 2.0f * C_PIKI_PROP(piki).mPikiDisplayScale();
-	piki->mScale.set(scale, 0.01f, scale);
+	piki->mSRT.s.set(scale, 0.01f, scale);
 	mStunTimer    = 1.5f;
 	mIsInvincible = true;
 	PRINT_KANDO("pressed init !\n");
@@ -3167,7 +3167,7 @@ void PikiPressedState::exec(Piki* piki)
 		piki->mDeathTimer = 0.0f;
 		transit(piki, PIKISTATE_Normal);
 		f32 scale = C_PIKI_PROP(piki).mPikiDisplayScale();
-		piki->mScale.set(scale, scale, scale);
+		piki->mSRT.s.set(scale, scale, scale);
 	}
 
 	piki->mVelocity.set(0.0f, 0.0f, 0.0f);
@@ -3292,7 +3292,7 @@ void PikiDeadState::init(Piki* piki)
 void PikiDeadState::exec(Piki* piki)
 {
 	f32 scale = piki->mDeathTimer / 1.5f;
-	piki->mScale.set(scale, scale, scale);
+	piki->mSRT.s.set(scale, scale, scale);
 	if (piki->mDeathTimer > 8.0f) {
 		// also not in the DLL, i assume it's commented out code
 	}
@@ -3312,7 +3312,7 @@ void PikiDeadState::exec(Piki* piki)
  */
 void PikiDeadState::cleanup(Piki* piki)
 {
-	piki->mScale.set(0.0f, 0.0f, 0.0f);
+	piki->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -3352,7 +3352,7 @@ void PikiEmotionState::init(Piki* piki)
 
 		int randIdx  = (2.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
-		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
 		PRINT("play sound %d\n", motionID); // wrong variable kando
@@ -3373,7 +3373,7 @@ void PikiEmotionState::init(Piki* piki)
 
 		int randIdx  = (3.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
-		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
 	} break;
@@ -3402,7 +3402,7 @@ void PikiEmotionState::init(Piki* piki)
 
 		int randIdx  = (2.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
-		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
 	} break;
@@ -3410,24 +3410,24 @@ void PikiEmotionState::init(Piki* piki)
 	case PikiEmotion::Sad: {
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Gakkari, piki), PaniMotionInfo(PIKIANIM_Gakkari));
 		piki->mPikiAnimMgr.finishMotion(piki);
-		seSystem->playPikiSound(SEF_PIKI_GAKKARI, piki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_GAKKARI, piki->mSRT.t);
 	} break;
 
 	case PikiEmotion::ShookDry: {
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Mizuage, piki), PaniMotionInfo(PIKIANIM_Mizuage));
 		piki->mPikiAnimMgr.finishMotion(piki);
-		seSystem->playPikiSound(SEF_PIKI_BURUBURU, piki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_BURUBURU, piki->mSRT.t);
 	} break;
 
 	case PikiEmotion::Victorious: {
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Jump_B1, piki), PaniMotionInfo(PIKIANIM_Jump_B1));
 		piki->mPikiAnimMgr.finishMotion(piki);
-		seSystem->playPikiSound(SEF_PIKI_YATTA, piki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_YATTA, piki->mSRT.t);
 	} break;
 
 	case PikiEmotion::ShipPartGaze: {
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
-		piki->startLook(&piki->mCarryingShipPart->mPosition);
+		piki->startLook(&piki->mCarryingShipPart->mSRT.t);
 		mGazeFlag = 1;
 	} break;
 
@@ -3443,13 +3443,13 @@ void PikiEmotionState::init(Piki* piki)
 
 		int randIdx  = (5.0f * gsys->getRand(1.0f)) * 0.9999f;
 		int motionID = motionChoices[randIdx].mValue;
-		seSystem->playPikiSound(soundChoices[randIdx], piki->mPosition);
+		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
 		if (mCheerCount == 0) {
 			mCheerCount = 5;
 			piki->startMotion(PaniMotionInfo(PIKIANIM_Wait, piki), PaniMotionInfo(PIKIANIM_Wait));
-			piki->startLook(&piki->mCarryingShipPart->mPosition);
+			piki->startLook(&piki->mCarryingShipPart->mSRT.t);
 			mGazeFlag = 1;
 		}
 	} break;
@@ -3484,7 +3484,7 @@ void PikiEmotionState::exec(Piki* piki)
 		case 1:
 			if (!piki->mCarryingShipPart->isAlive()) {
 				mGazeFlag     = 2;
-				mGazePosition = piki->mCarryingShipPart->mPosition;
+				mGazePosition = piki->mCarryingShipPart->mSRT.t;
 				piki->startLook(&mGazePosition);
 				mTimer = (0.4f * gsys->getRand(1.0f)) + 1.5f;
 			}

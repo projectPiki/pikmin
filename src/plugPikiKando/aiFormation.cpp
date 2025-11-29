@@ -172,7 +172,7 @@ int ActFormation::exec()
 		pos = mPiki->mFormPoint->getPos();
 	}
 
-	Vector3f directionToTarget = pos - mPiki->mPosition;
+	Vector3f directionToTarget = pos - mPiki->mSRT.t;
 	f32 distanceToTarget       = directionToTarget.length();
 	mDistanceToTarget          = distanceToTarget;
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
@@ -221,13 +221,13 @@ int ActFormation::exec()
 	}
 
 	Vector3f zeroVector(0.0f, 0.0f, 0.0f);
-	Vector3f normalisedDirection = pos - mPiki->mPosition;
+	Vector3f normalisedDirection = pos - mPiki->mSRT.t;
 	normalisedDirection.normalise();
 
 	Vector3f perpDirection(-normalisedDirection.z, 0.0f, normalisedDirection.x);
 	bool shouldApplyDrag = false;
 
-	Vector3f flatDirection = pos - mPiki->mPosition;
+	Vector3f flatDirection = pos - mPiki->mSRT.t;
 	flatDirection.y        = 0.0f;
 	f32 flatDistance       = flatDirection.length();
 	if (flatDistance > 0.0f) {

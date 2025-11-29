@@ -113,7 +113,7 @@ int ActStone::exeApproach()
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mCurrPebble->mPosition - mPiki->mPosition;
+	Vector3f direction = mCurrPebble->mPosition - mPiki->mSRT.t;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
 
@@ -148,7 +148,7 @@ int ActStone::exeAdjust()
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mCurrPebble->mPosition - mPiki->mPosition;
+	Vector3f direction = mCurrPebble->mPosition - mPiki->mSRT.t;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
 
@@ -221,7 +221,7 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
 		}
 
 		Vector3f effectPos(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
-		effectPos = effectPos * 5.0f + mPiki->mPosition;
+		effectPos = effectPos * 5.0f + mPiki->mSRT.t;
 		EffectParm parm(effectPos);
 		UtEffectMgr::cast(KandoEffect::WallHit0, parm);
 

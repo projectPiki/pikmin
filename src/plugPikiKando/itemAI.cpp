@@ -201,25 +201,25 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
-	CollTriInfo* tri = mapMgr->getCurrTri(item->mPosition.x, item->mPosition.z, true);
+	CollTriInfo* tri = mapMgr->getCurrTri(item->mSRT.t.x, item->mSRT.t.z, true);
 	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
 		item->startWaterEffect();
-		effectMgr->create(EffectMgr::EFF_P_Bubbles, item->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_P_Bubbles, item->mSRT.t, nullptr, nullptr);
 		if (obj->_3E0) {
 			item->playEventSound(obj->_3E0, SE_PIKI_GROW0_WATER);
 		} else {
-			seSystem->playPikiSound(SEF_PIKI_GROW0_WATER, obj->mPosition);
+			seSystem->playPikiSound(SEF_PIKI_GROW0_WATER, obj->mSRT.t);
 		}
 		return;
 	}
 
-	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, item->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, item->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, item->mSRT.t, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, item->mSRT.t, nullptr, nullptr);
 	if (obj->_3E0) {
 		item->playEventSound(obj->_3E0, SE_PIKI_GROW0);
 	} else {
 		PRINT("******** SEF_PIKI_GROW0 !!!! %d !!!!!\n", seSystem->getJacID(SEF_PIKI_GROW0));
-		seSystem->playPikiSound(SEF_PIKI_GROW0, obj->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_GROW0, obj->mSRT.t);
 	}
 }
 
@@ -231,7 +231,7 @@ void PikiHeadAI::BounceSound::act(AICreature* item)
 void PikiHeadAI::FlyingEffect::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
-	obj->_3E4.init(obj->mPosition, EffectMgr::EFF_SD_Sparkle);
+	obj->_3E4.init(obj->mSRT.t, EffectMgr::EFF_SD_Sparkle);
 	obj->finishFix();
 }
 
@@ -243,7 +243,7 @@ void PikiHeadAI::FlyingEffect::act(AICreature* item)
 void PikiHeadAI::FlyingExec::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
-	obj->_3E4.updatePos(obj->mPosition);
+	obj->_3E4.updatePos(obj->mSRT.t);
 }
 
 /*
@@ -373,7 +373,7 @@ void PikiHeadAI::WaitExec::act(AICreature* item)
 			item->mStateMachine->transit(item, PIKIHEAD_Unk7);
 		}
 	} else if (health < 2.0f && obj->mCounter == 0 && obj->mFlowerStage != Flower) {
-		Vector3f pos = obj->mPosition;
+		Vector3f pos = obj->mSRT.t;
 		pos.y += 13.0f;
 		EffectParm parm(pos);
 		utEffectMgr->cast(KandoEffect::PikiGrowup1, parm);
@@ -397,10 +397,10 @@ void PikiHeadAI::GrowupedExec::act(AICreature* item)
 	if (obj->_3E0) {
 		obj->playEventSound(obj->_3E0, soundsA[obj->mFlowerStage]);
 	} else {
-		seSystem->playPikiSound(soundsB[obj->mFlowerStage], obj->mPosition);
+		seSystem->playPikiSound(soundsB[obj->mFlowerStage], obj->mSRT.t);
 	}
 
-	Vector3f pos = item->mPosition;
+	Vector3f pos = item->mSRT.t;
 	pos.y += 13.0f;
 	EffectParm parm(pos);
 	utEffectMgr->cast(KandoEffect::PikiGrowup2, parm);
@@ -534,8 +534,8 @@ void BombAI::BombInit::act(AICreature* item)
 	f32 unused   = pikiMgr->mPikiParms->mPikiParms.mBombDamageBomb();
 	item->setMotionSpeed(30.0f);
 	playerState->mResultFlags.setOn(RESFLAG_YellowWithBomb);
-	rumbleMgr->start(RUMBLE_Unk8, 0, item->mPosition);
-	EffectParm parm(item->mPosition);
+	rumbleMgr->start(RUMBLE_Unk8, 0, item->mSRT.t);
+	EffectParm parm(item->mSRT.t);
 	if (item->mCurrAnimId == 1) {
 		utEffectMgr->cast(KandoEffect::BombLight, parm);
 		PRINT("USE LIGHTWEIGHT BOMB EFFECT\n");
@@ -579,12 +579,12 @@ void BombAI::BombInit::act(AICreature* item)
 	{
 		Creature* obj = *tekiIt;
 		if (obj->isAlive() && obj->isVisible() && obj->mCollInfo && obj->mCollInfo->hasInfo()) {
-			f32 dist = qdist2(item->mPosition.x, item->mPosition.z, obj->mPosition.x, obj->mPosition.z);
+			f32 dist = qdist2(item->mSRT.t.x, item->mSRT.t.z, obj->mSRT.t.x, obj->mSRT.t.z);
 			if (dist - maxRange - obj->getBoundingSphereRadius() > 0.0f) {
 				continue;
 			}
 			PRINT("checkCollisionSpecial start <\n");
-			CollPart* part = obj->mCollInfo->checkCollisionSpecial(item->mPosition, maxRange, &cnd);
+			CollPart* part = obj->mCollInfo->checkCollisionSpecial(item->mSRT.t, maxRange, &cnd);
 			PRINT("checkCollisionSpecial done >\n");
 			if (part) {
 				PRINT("part found \n");
@@ -602,12 +602,12 @@ void BombAI::BombInit::act(AICreature* item)
 	{
 		Creature* obj = *bossIt;
 		if (obj->isAlive() && obj->isVisible() && obj->mCollInfo && obj->mCollInfo->hasInfo()) {
-			f32 dist = qdist2(item->mPosition.x, item->mPosition.z, obj->mPosition.x, obj->mPosition.z);
+			f32 dist = qdist2(item->mSRT.t.x, item->mSRT.t.z, obj->mSRT.t.x, obj->mSRT.t.z);
 			if (dist - maxRange - obj->getBoundingSphereRadius() > 0.0f) {
 				continue;
 			}
 			PRINT("checkCollisionSpecial start <\n");
-			CollPart* part = obj->mCollInfo->checkCollisionSpecial(item->mPosition, maxRange, &cnd);
+			CollPart* part = obj->mCollInfo->checkCollisionSpecial(item->mSRT.t, maxRange, &cnd);
 			PRINT("checkCollisionSpecial done >\n");
 			InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageEnemy(), part);
 			if (part) {
@@ -630,7 +630,7 @@ void BombAI::BombInit::act(AICreature* item)
 			CollPart* flagPart = obj->mCollInfo->getSphere('flag');
 			for (int i = 0; i < flagPart->getChildCount(); i++) {
 				CollPart* child = flagPart->getChildAt(i);
-				Vector3f dir    = child->mCentre - item->mPosition;
+				Vector3f dir    = child->mCentre - item->mSRT.t;
 				f32 dist        = dir.length() - child->mRadius - item->getCentreSize();
 				if (dist < minDist) {
 					minDist = dist;
@@ -707,7 +707,7 @@ void BombAI::MizuExec::act(AICreature* item)
 	if (health <= 0.0f) {
 		item->mStateMachine->transit(item, BOMB_Die);
 	}
-	item->mScale.set(health, health, health);
+	item->mSRT.s.set(health, health, health);
 }
 
 /*
@@ -718,7 +718,7 @@ void BombAI::MizuExec::act(AICreature* item)
 void BombAI::DieInit::act(AICreature* item)
 {
 	item->mCurrentItemHealth = 5.0f;
-	item->mScale.set(0.0f, 0.0f, 0.0f);
+	item->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -827,7 +827,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 	PikiHeadItem* seed = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 	if (seed) {
 		GameStat::bornPikis.inc(obj->mOnionColour);
-		Vector3f pos = item->mPosition;
+		Vector3f pos = item->mSRT.t;
 		pos.y += 110.0f;
 		seed->init(pos);
 		seed->setColor(obj->mOnionColour);
@@ -849,7 +849,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 	CI_LOOP(it)
 	{
 		PikiHeadItem* item = (PikiHeadItem*)*it;
-		f32 dist           = qdist2(item->mPosition.x, item->mPosition.z, obj->mPosition.x, obj->mPosition.z);
+		f32 dist           = qdist2(item->mSRT.t.x, item->mSRT.t.z, obj->mSRT.t.x, obj->mSRT.t.z);
 		if (dist > seeddist) {
 			seeddist = dist;
 			oldSeed  = item;
@@ -874,7 +874,7 @@ void GoalAI::BootEmit::act(AICreature* item)
 		CI_LOOP(pikiIt)
 		{
 			Piki* item = (Piki*)*pikiIt;
-			f32 dist   = qdist2(item->mPosition.x, item->mPosition.z, obj->mPosition.x, obj->mPosition.z);
+			f32 dist   = qdist2(item->mSRT.t.x, item->mSRT.t.z, obj->mSRT.t.x, obj->mSRT.t.z);
 			if (dist > pikidist) {
 				pikidist = dist;
 				oldPiki  = item;
@@ -919,14 +919,14 @@ void GoalAI::EmitPiki::act(AICreature* item)
 	GoalItem* obj = (GoalItem*)item;
 
 	if (item->mCounter > 0) {
-		Vector3f pos = item->mPosition;
+		Vector3f pos = item->mSRT.t;
 		pos.y += 110.0f; // some dll exclusive unused stuff here
 		rand();
 
-		effectMgr->create(EffectMgr::EFF_Onyon_FireworkTrail, item->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Onyon_FireworkMain, item->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Onyon_FireworkKisek, item->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Onyon_FireworkSmall, item->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Onyon_FireworkTrail, item->mSRT.t, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Onyon_FireworkMain, item->mSRT.t, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Onyon_FireworkKisek, item->mSRT.t, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Onyon_FireworkSmall, item->mSRT.t, nullptr, nullptr);
 		item->mCounter--;
 	}
 
@@ -942,7 +942,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 		PikiHeadItem* seed = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 		GameStat::bornPikis.inc(obj->mOnionColour);
 		if (seed) {
-			Vector3f pos = obj->mPosition;
+			Vector3f pos = obj->mSRT.t;
 			pos.y += 110.0f;
 			seed->init(pos);
 			seed->setColor(obj->mOnionColour);
@@ -990,7 +990,7 @@ void GoalAI::EmitWait::act(AICreature*)
  */
 void GoalAI::Effect::act(AICreature* item)
 {
-	Vector3f pos = item->mPosition;
+	Vector3f pos = item->mSRT.t;
 	pos.y += 90.0f;
 	effectMgr->create(EffectMgr::EFF_Onyon_ActEffect, pos, nullptr, nullptr);
 	item->playEventSound(item, SE_CONTAINER_PELLETIN2);
@@ -1024,7 +1024,7 @@ void GemAI::RiseInit::act(AICreature* item)
 	item->mMaxItemHealth     = 1.5f;
 	item->setFlag80();
 
-	Vector3f pos = item->mPosition;
+	Vector3f pos = item->mSRT.t;
 	EffectParm parm(pos);
 	utEffectMgr->cast(KandoEffect::Goal, parm);
 	item->playEventSound(item->mTargetCreature, SE_CONTAINER_PELLETIN);
@@ -1053,7 +1053,7 @@ void GemAI::RiseExec::act(AICreature* item)
 		item->mCurrAnimId = 1;
 	}
 
-	Vector3f diff = item->mTargetCreature->mPosition - item->mPosition;
+	Vector3f diff = item->mTargetCreature->mSRT.t - item->mSRT.t;
 	diff.y        = 0.0f;
 	diff.normalise();
 	diff              = diff * 60.0f;
@@ -1064,7 +1064,7 @@ void GemAI::RiseExec::act(AICreature* item)
 
 	f32 div = item->mCurrentItemHealth / 74.0f;
 	f32 b   = 1.0f - div * 1.0f;
-	item->mScale.set(b, b, b);
+	item->mSRT.s.set(b, b, b);
 	if (div >= 1.0f) {
 		item->mStateMachine->transit(item, GEM_Die);
 		GameStat::getPellets.inc();
@@ -1176,7 +1176,7 @@ FallWaterAI::FallWaterAI()
 void FallWaterAI::CollideInit::act(AICreature* item)
 {
 	item->finishMotion(29.0f);
-	seSystem->playSoundDirect(1, SE_KURIONE_WATER, item->mPosition);
+	seSystem->playSoundDirect(1, SE_KURIONE_WATER, item->mSRT.t);
 }
 
 /*
@@ -1190,7 +1190,7 @@ void FallWaterAI::EmitInit::act(AICreature* item)
 	Creature* obj = itemMgr->birth(OBJTYPE_Water);
 	if (obj) {
 		PRINT("water born\n");
-		obj->init(item->mPosition);
+		obj->init(item->mSRT.t);
 		obj->startAI(0);
 	}
 }

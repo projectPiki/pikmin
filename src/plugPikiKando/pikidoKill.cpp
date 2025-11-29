@@ -64,14 +64,14 @@ void Piki::doKill()
 	// Check if the lost pikmin should leave a seed behind
 	int state = getState();
 	if (!playerState->mInDayEnd && state != PIKISTATE_Swallowed && mHappa == Flower && mMode != PikiMode::EnterMode && !mEraseOnKill) {
-		CollTriInfo* tri = mapMgr->getCurrTri(mPosition.x, mPosition.z, true);
-		if (tri && !MapCode::isBald(tri) && isSafeMePos(mPosition) && MapCode::getAttribute(tri) != ATTR_Water) {
+		CollTriInfo* tri = mapMgr->getCurrTri(mSRT.t.x, mSRT.t.z, true);
+		if (tri && !MapCode::isBald(tri) && isSafeMePos(mSRT.t) && MapCode::getAttribute(tri) != ATTR_Water) {
 			if (gsys->getRand(1.0f) >= pikiMgr->mPikiParms->mPikiParms.mPikiLeaveSeedChance()) {
 				PikiHeadItem* item = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 				if (item) {
 					StageInf* inf = &flowCont.mCurrentStage->mStageInf;
 
-					Vector3f pos = mPosition;
+					Vector3f pos = mSRT.t;
 					pos.y        = mapMgr->getMinY(pos.x, pos.z, true);
 					item->init(pos);
 
@@ -101,7 +101,7 @@ void Piki::doKill()
 #else
 		effectMgr->create(EffectMgr::EFF_Piki_DeadSoul, mShadowPos, nullptr, nullptr);
 #endif
-		seSystem->playSoundDirect(1, SE_PIKI_DEAD, mPosition);
+		seSystem->playSoundDirect(1, SE_PIKI_DEAD, mSRT.t);
 		GameStat::deadPikis.inc(mColor);
 	}
 

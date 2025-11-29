@@ -46,7 +46,7 @@ void ActRope::init(Creature*)
 		mPiki->mStickPart->makeTube(tube);
 		Vector3f vec1;
 		Vector3f vec2;
-		tube.getPosGradient(mPiki->mPosition, mPiki->mAttachPosition.x, vec1, vec2);
+		tube.getPosGradient(mPiki->mSRT.t, mPiki->mAttachPosition.x, vec1, vec2);
 		mRopeDirection = vec2;
 	} else {
 		mRopeDirection.set(0.0f, 1.0f, 0.0f);

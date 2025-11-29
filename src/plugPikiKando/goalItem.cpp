@@ -70,7 +70,7 @@ static void printMatrix(char* name, Matrix4f& mat)
  */
 bool GoalItem::insideSafeArea(Vector3f& pos)
 {
-	Vector3f diff = pos - mPosition;
+	Vector3f diff = pos - mSRT.t;
 	if (diff.x * diff.x + diff.z * diff.z < 2500.0f) {
 		return false;
 	}
@@ -90,7 +90,7 @@ void GoalItem::playEffect(int id)
 	case 11:
 		switch (id) {
 		case 0:
-			effectMgr->create(EffectMgr::EFF_Rocket_LandS, mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_LandS, mSRT.t, nullptr, nullptr);
 			break;
 		case 1:
 			CollPart* part = mCollInfo->getSphere('bas1');
@@ -123,7 +123,7 @@ void GoalItem::playEffect(int id)
 			startConeShrink();
 			break;
 		case 2:
-			effectMgr->create(EffectMgr::EFF_Rocket_TakeS, mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Rocket_TakeS, mSRT.t, nullptr, nullptr);
 			break;
 		case 3:
 			setFlightLight(true);
@@ -167,7 +167,7 @@ void GoalItem::playEffect(int id)
 			effectMgr->create(EffectMgr::EFF_Kafun_BS, pos, nullptr, nullptr);
 			break;
 		case 1:
-			Vector3f pos2(mPosition);
+			Vector3f pos2(mSRT.t);
 			if (mOnionColour == Blue) {
 				effectMgr->create(EffectMgr::EFF_Onyon_Bubbles, pos2, nullptr, nullptr);
 				zen::particleGenerator* efx = effectMgr->create(EffectMgr::EFF_Onyon_Ripples2, pos2, nullptr, nullptr);
@@ -253,9 +253,9 @@ void GoalItem::setSpotActive(bool set)
 		    = { EffectMgr::EFF_Onyon_BeaconRingBlue, EffectMgr::EFF_Onyon_BeaconRingRed, EffectMgr::EFF_Onyon_BeaconRingYellow };
 
 		if (!mSpotEfx) {
-			mSpotEfx = effectMgr->create(efxIDs[mOnionColour], mPosition, nullptr, nullptr);
+			mSpotEfx = effectMgr->create(efxIDs[mOnionColour], mSRT.t, nullptr, nullptr);
 			if (mSpotEfx) {
-				mSpotEfx->setEmitPosPtr(&mPosition);
+				mSpotEfx->setEmitPosPtr(&mSRT.t);
 			}
 			SeSystem::playSysSe(SYSSE_CONTAINER_OK);
 		}
@@ -272,9 +272,9 @@ void GoalItem::setSpotActive(bool set)
 		    = { EffectMgr::EFF_Onyon_HaloRingBlue, EffectMgr::EFF_Onyon_HaloRingRed, EffectMgr::EFF_Onyon_HaloRingYellow };
 
 		if (!mHaloEfx) {
-			mHaloEfx = effectMgr->create(efxIDs[mOnionColour], mPosition, nullptr, nullptr);
+			mHaloEfx = effectMgr->create(efxIDs[mOnionColour], mSRT.t, nullptr, nullptr);
 			if (mHaloEfx) {
-				mHaloEfx->setEmitPosPtr(&mPosition);
+				mHaloEfx->setEmitPosPtr(&mSRT.t);
 			}
 		}
 	} else {
@@ -316,7 +316,7 @@ void GoalItem::setFlightLight(bool a1)
  */
 Vector3f GoalItem::getSuckPos()
 {
-	Vector3f ret = mPosition;
+	Vector3f ret = mSRT.t;
 	ret.y += 74.0f;
 	return ret;
 }
@@ -418,7 +418,7 @@ Piki* GoalItem::exitPiki()
 	piki->setFlower(happa);
 	piki->initColor(mOnionColour);
 	pikiInfMgr.decPiki(piki);
-	piki->mScale.set(1.0f, 1.0f, 1.0f);
+	piki->mSRT.s.set(1.0f, 1.0f, 1.0f);
 	piki->mFSM->transit(piki, PIKISTATE_Normal);
 	piki->startRope(mRope[leg * 2], 1.0f);
 	piki->changeMode(12, nullptr);
@@ -621,12 +621,12 @@ void GoalItem::startAI(int)
 	mSeContext->setContext(this, 3);
 	mHeldPikis[Leaf] = mHeldPikis[Bud] = mHeldPikis[Flower] = 0;
 	mCollInfo->initInfo(mItemShapeObject->mShape, nullptr, nullptr);
-	mWaypointIdx = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
+	mWaypointIdx = routeMgr->findNearestWayPoint('test', mSRT.t, false)->mIndex;
 
-	mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mPosition, Vector3f(posX, posY, posZ),
+	mSpotModelEff = effectMgr->create((EffectMgr::modelTypeTable)mOnionColour, mSRT.t, Vector3f(posX, posY, posZ),
 	                                  Vector3f(rotateX[0], rotateY[0], rotateZ[0]));
 	f32 scale     = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	mCurrAnimId = 0;
 	mCounter    = 0;
 
@@ -670,8 +670,8 @@ void GoalItem::startAI(int)
 		disableColorAnim();
 		wp->setFlag(true);
 	}
-	_41C               = mPosition;
-	_41C.y             = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	_41C               = mSRT.t;
+	_41C.y             = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
 	mIsDispensingPikis = false;
 	mPikisToExit       = 0;
 	mPikiSpawnTimer    = 0.0f;
@@ -744,7 +744,7 @@ void GoalItem::update()
 		updateConeEmit();
 	}
 
-	mPosition = _41C;
+	mSRT.t = _41C;
 
 	if (mIsDispensingPikis) {
 		if (mPikiSpawnTimer <= 0.0f) {
@@ -780,12 +780,12 @@ void GoalItem::refresh(Graphics& gfx)
 	}
 
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	Matrix4f mtx1;
-	Vector3f pos = mPosition;
-	mWorldMtx.makeSRT(mScale, mRotation, pos);
+	Vector3f pos = mSRT.t;
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, pos);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx1);
-	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
+	if (!gfx.mCamera->isPointVisible(mSRT.t, 200.0f)) {
 		enableAICulling();
 		if (!gameflow.mMoviePlayer->mIsActive) {
 			mSpotModelEff->mIsVisible = false;
@@ -815,17 +815,17 @@ void GoalItem::refresh(Graphics& gfx)
 	for (int i = 0; i < 3; i++) {
 		GoalLeg* leg = (GoalLeg*)((&this->_444) + i * 2);
 		if (pikiMgr->containerDebug) {
-			PRINT("leg %d : (%.1f %.1f %.1f) \n", i, leg->mRope->mPosition.x, leg->mRope->mPosition.y, leg->mRope->mPosition.z);
+			PRINT("leg %d : (%.1f %.1f %.1f) \n", i, leg->mRope->mSRT.t.x, leg->mRope->mSRT.t.y, leg->mRope->mSRT.t.z);
 		}
-		CollPart* coll           = mCollInfo->getSphere(leg_ids[i]);
-		CollPart* child          = coll->getChild();
-		leg->mFulcrum->mPosition = coll->mCentre;
-		leg->mRope->mPosition    = child->mCentre;
+		CollPart* coll        = mCollInfo->getSphere(leg_ids[i]);
+		CollPart* child       = coll->getChild();
+		leg->mFulcrum->mSRT.t = coll->mCentre;
+		leg->mRope->mSRT.t    = child->mCentre;
 
-		Vector3f diff           = leg->mFulcrum->mPosition - leg->mRope->mPosition;
+		Vector3f diff           = leg->mFulcrum->mSRT.t - leg->mRope->mSRT.t;
 		leg->mRope->mRopeLength = diff.length();
 		if (pikiMgr->containerDebug) {
-			PRINT("==> (%.1f %.1f %.1f) : motion %d\n", leg->mRope->mPosition.x, leg->mRope->mPosition.y, leg->mRope->mPosition.z,
+			PRINT("==> (%.1f %.1f %.1f) : motion %d\n", leg->mRope->mSRT.t.x, leg->mRope->mSRT.t.y, leg->mRope->mSRT.t.z,
 			      mItemAnimator.getCurrentMotionIndex());
 			printMatrix("invCam", gfx.mCamera->mInverseLookAtMtx);
 		}

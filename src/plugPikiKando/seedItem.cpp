@@ -33,7 +33,7 @@ SeedItem::SeedItem(CreatureProp* props, Shape** shapes)
 	mCurrentShape = mSeedShape;
 
 	f32 scale = 0.2f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 
 	_68 = 4;
 	resetCreatureFlag(CF_Unk10);
@@ -135,7 +135,7 @@ void SeedItem::update()
 	if (mStateId == 0) {
 		Navi* player = naviMgr->getNavi();
 
-		Vector3f toPlayer    = player->mPosition - mPosition;
+		Vector3f toPlayer    = player->mSRT.t - mSRT.t;
 		toPlayer.y           = 0.0f;
 		f32 distanceToPlayer = toPlayer.length();
 		f32 rotationSpeed, moveSpeed, targetHeight;
@@ -162,7 +162,7 @@ void SeedItem::update()
 		// Update rotation
 		mFaceDirection += gsys->getFrameTime() * PI * rotationSpeed;
 		mFaceDirection = roundAng(mFaceDirection);
-		mRotation.set(0.0f, mFaceDirection, 0.0f);
+		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 
 		// Update velocity towards the player
 		toPlayer    = toPlayer * (1.0f / distanceToPlayer);
@@ -170,7 +170,7 @@ void SeedItem::update()
 		mVelocity.z = moveSpeed * toPlayer.z;
 
 		// Apply upward force if below target
-		if (mPosition.y < targetHeight && mVelocity.y < 100.0f) {
+		if (mSRT.t.y < targetHeight && mVelocity.y < 100.0f) {
 			mVelocity.y += AIConstant::_instance->mConstants.mGravity() * gsys->getFrameTime() * 2.5f;
 		}
 
@@ -206,13 +206,13 @@ void SeedItem::refresh(Graphics& gfx)
 {
 	if (mStateId != 2) {
 		Matrix4f unused;
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 
 		Matrix4f mtx;
 		gfx.calcViewMatrix(mWorldMtx, mtx);
 		gfx.useMatrix(mtx, 0);
-		gfx.mCamera->setBoundOffset(&mPosition);
-		mapMgr->getLight(mPosition.x, mPosition.z);
+		gfx.mCamera->setBoundOffset(&mSRT.t);
+		mapMgr->getLight(mSRT.t.x, mSRT.t.z);
 		bool l = gfx.setLighting(true, nullptr);
 		mCurrentShape->drawshape(gfx, *gfx.mCamera, nullptr);
 		gfx.mCamera->setBoundOffset(nullptr);

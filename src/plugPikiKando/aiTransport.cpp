@@ -66,7 +66,7 @@ void ActTransport::turnOver()
 		}
 	}
 
-	Vector3f torqueDir = mPiki->mPosition - pellet->mPosition;
+	Vector3f torqueDir = mPiki->mSRT.t - pellet->mSRT.t;
 	torqueDir.normalise();
 	torqueDir.multiply(pellet->getBottomRadius());
 
@@ -85,7 +85,7 @@ void ActTransport::initWait()
 {
 	Pellet* pel = mPellet.getPtr();
 	mState      = STATE_Wait;
-	mPiki->startLook(&pel->mPosition);
+	mPiki->startLook(&pel->mSRT.t);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Wait), PaniMotionInfo(PIKIANIM_Wait));
 	mWaitTimer = 3.0f;
 }
@@ -360,7 +360,7 @@ int ActTransport::execJump()
 	}
 
 	Vector3f slotPos = pel->getSlotGlobalPos(mSlotIndex, 0.0f);
-	Vector3f slotDir = slotPos - mPiki->mPosition;
+	Vector3f slotDir = slotPos - mPiki->mSRT.t;
 	f32 slotDistXZ   = speedy_sqrtf(slotDir.x * slotDir.x + slotDir.z * slotDir.z);
 	f32 slotHeight   = slotDir.y;
 	f32 dist         = slotDir.normalise() - pel->getCentreSize();
@@ -374,7 +374,7 @@ int ActTransport::execJump()
 	if (absF(slotHeight) <= 8.8f) {
 		if (!pel->isSlotFree(mSlotIndex)) {
 			int oldSlot = mSlotIndex;
-			mSlotIndex  = pel->getNearestFreeSlotIndex(mPiki->mPosition);
+			mSlotIndex  = pel->getNearestFreeSlotIndex(mPiki->mSRT.t);
 			if (oldSlot == mSlotIndex) {
 				mPiki->mEmotion = PikiEmotion::Sad;
 				return ACTOUT_Fail;
@@ -391,7 +391,7 @@ int ActTransport::execJump()
 		}
 
 		mPiki->mFaceDirection = roundAng(atan2f(slotDir.x, slotDir.z));
-		mPiki->mRotation.y    = mPiki->mFaceDirection;
+		mPiki->mSRT.r.y       = mPiki->mFaceDirection;
 		mState                = STATE_Lift;
 
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
@@ -404,13 +404,13 @@ int ActTransport::execJump()
 		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pel, nullptr, mSlotIndex, 0.0f);
 
-		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mSRT.t);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 
 		int numStickers = calcNumStickers();
 		int minWeight   = pel->mConfig->mCarryMinPikis();
-		Vector3f carryInfoPos(pel->mPosition);
+		Vector3f carryInfoPos(pel->mSRT.t);
 		carryInfoPos.y += 5.0f + pel->getCylinderHeight();
 
 		pel->mLifeGauge.countOn(carryInfoPos, numStickers, minWeight);
@@ -447,7 +447,7 @@ bool ActTransport::gotoLiftPos()
 	}
 
 	Vector3f targetSlotPos = pellet->getSlotGlobalPos(mSlotIndex, 0.0f);
-	Vector3f slotDirection = targetSlotPos - mPiki->mPosition;
+	Vector3f slotDirection = targetSlotPos - mPiki->mSRT.t;
 	f32 horizontalDist     = speedy_sqrtf(slotDirection.x * slotDirection.x + slotDirection.z * slotDirection.z);
 	f32 verticalDist       = slotDirection.y;
 	f32 totalDist          = slotDirection.normalise();
@@ -455,7 +455,7 @@ bool ActTransport::gotoLiftPos()
 
 	if (horizontalDist < 100.0f && ++mStateProgress >= 60) {
 		int previousSlot = mSlotIndex;
-		mSlotIndex       = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
+		mSlotIndex       = pellet->getNearestFreeSlotIndex(mPiki->mSRT.t);
 		if (previousSlot == mSlotIndex) {
 			mPiki->mEmotion = PikiEmotion::Sad;
 			return false;
@@ -484,7 +484,7 @@ bool ActTransport::gotoLiftPos()
 		}
 
 		if (!pellet->isSlotFree(mSlotIndex)) {
-			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
+			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mSRT.t);
 			if (mSlotIndex == -1) {
 				mPiki->mEmotion = PikiEmotion::Sad;
 				return false;
@@ -497,7 +497,7 @@ bool ActTransport::gotoLiftPos()
 		}
 
 		mPiki->mFaceDirection = roundAng(atan2f(slotDirection.x, slotDirection.z));
-		mPiki->mRotation.y    = mPiki->mFaceDirection;
+		mPiki->mSRT.r.y       = mPiki->mFaceDirection;
 		mState                = STATE_Lift;
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_PickLoop, this), PaniMotionInfo(PIKIANIM_PickLoop));
 		mPiki->enableMotionBlend();
@@ -512,19 +512,19 @@ bool ActTransport::gotoLiftPos()
 		mIsLiftActionDone = false;
 		mLiftRetryCount   = int(3.0f * gsys->getRand(1.0f)) + 5;
 		mPiki->startStickObject(pellet, nullptr, mSlotIndex, 0.0f);
-		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_HANG, mPiki->mSRT.t);
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 		mPiki->mVelocity.set(0.0f, 0.0f, 0.0f);
 
 		int currentCarriers  = calcNumStickers();
 		int requiredCarriers = pellet->mConfig->mCarryMinPikis();
-		Vector3f carryInfoPos(pellet->mPosition);
+		Vector3f carryInfoPos(pellet->mSRT.t);
 		carryInfoPos.y += 5.0f + pellet->getCylinderHeight();
 		pellet->mLifeGauge.countOn(carryInfoPos, currentCarriers, requiredCarriers);
 		return true;
 	}
 
-	Vector3f centreDir = pellet->getCentre() - mPiki->mPosition;
+	Vector3f centreDir = pellet->getCentre() - mPiki->mSRT.t;
 	f32 centreDist     = centreDir.normalise();
 	Vector3f orthoDir(slotDirection);
 	orthoDir.CP(centreDir);
@@ -539,7 +539,7 @@ bool ActTransport::gotoLiftPos()
 		mWaitTimer -= gsys->getFrameTime();
 
 		if (mWaitTimer < 0.0f) {
-			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mPosition);
+			mSlotIndex = pellet->getNearestFreeSlotIndex(mPiki->mSRT.t);
 			if (mSlotIndex == -1) {
 				mPiki->mEmotion = PikiEmotion::Sad;
 				return false;
@@ -607,15 +607,15 @@ void ActTransport::doLift()
 				fxCheck = true;
 			}
 			PRINT("** NEAREST EDGE AVOID OFF =================\n");
-			routeMgr->findNearestEdgeAvoidOff(&wpA, &wpB, 'test', mPiki->mPosition, landOnly, false, fxCheck);
+			routeMgr->findNearestEdgeAvoidOff(&wpA, &wpB, 'test', mPiki->mSRT.t, landOnly, false, fxCheck);
 
 			if (wpA && wpB) {
 				PRINT("** FIND NEAREST EDGE %d and %d\n", wpA->mIndex, wpB->mIndex);
 			}
 
 			if (wpA && wpB) {
-				Vector3f sepA = wpA->mPosition - mPiki->mPosition;
-				Vector3f sepB = wpB->mPosition - mPiki->mPosition;
+				Vector3f sepA = wpA->mPosition - mPiki->mSRT.t;
+				Vector3f sepB = wpB->mPosition - mPiki->mSRT.t;
 				if (sepA.length() > sepB.length()) {
 					nearestWP = wpB;
 				} else {
@@ -623,7 +623,7 @@ void ActTransport::doLift()
 				}
 			} else {
 				PRINT("gakkari desu ...\n");
-				nearestWP = routeMgr->findNearestWayPoint('test', mPiki->mPosition, landOnly);
+				nearestWP = routeMgr->findNearestWayPoint('test', mPiki->mSRT.t, landOnly);
 			}
 
 			int idx       = nearestWP->mIndex;
@@ -796,7 +796,7 @@ int ActTransport::exec()
 				ERROR("mail to zamsi\n");
 			}
 
-			Vector3f goalDir = mGoal->getGoalPos() - pel->mPosition;
+			Vector3f goalDir = mGoal->getGoalPos() - pel->mSRT.t;
 			f32 goalDistXZ   = speedy_sqrtf(goalDir.x * goalDir.x + goalDir.z * goalDir.z);
 			if (goalDir.normalise() == 0.0f) {
 				goalDir.set(0.0f, 0.0f, 0.0f);
@@ -975,7 +975,7 @@ int ActTransport::moveGuruGuru()
 			}
 		}
 
-		Vector3f dirToPath = pathDir - pel->mPosition;
+		Vector3f dirToPath = pathDir - pel->mSRT.t;
 		f32 distToPath     = dirToPath.length();
 
 		if (distToPath > 80.0f) {
@@ -1105,7 +1105,7 @@ void ActTransport::cleanup()
 		int numStickers = calcNumStickers();
 		int minCarry    = pel->mConfig->mCarryMinPikis();
 		if (numStickers > 0) {
-			Vector3f carryInfoPos(pel->mPosition);
+			Vector3f carryInfoPos(pel->mSRT.t);
 			carryInfoPos.y += pel->getCylinderHeight() + 5.0f;
 			pel->mLifeGauge.countOn(carryInfoPos, numStickers, minCarry);
 
@@ -1201,13 +1201,13 @@ void ActTransport::crInit()
 {
 	Pellet* pel     = mPellet.getPtr();
 	mNextPathIndex  = -1;
-	mRouteStartPos  = pel->mPosition;
+	mRouteStartPos  = pel->mSRT.t;
 	Vector3f point1 = crGetPoint(mNextPathIndex + 1);
 	Vector3f point2 = crGetPoint(mNextPathIndex + 2);
 	Tube crTube(point1, point2, crGetRadius(mNextPathIndex + 1), crGetRadius(mNextPathIndex + 2));
 	f32 collDepth;
 	Vector3f pushVec;
-	Sphere sphere(pel->mPosition, 0.0f);
+	Sphere sphere(pel->mSRT.t, 0.0f);
 	if (crTube.collide(sphere, pushVec, collDepth) && crPointOpen(mNextPathIndex + 2)) {
 		PRINT("crInit() TUBE START **\n");
 		mNextPathIndex       = 0;
@@ -1235,7 +1235,7 @@ void ActTransport::crInit()
 			Vector3f tmpDir  = wpB->mPosition - wpA->mPosition;
 			Vector3f pathDir = tmpDir;
 			f32 pathDist     = pathDir.normalise();
-			f32 proj         = pathDir.DP(pel->mPosition - wpA->mPosition) / pathDist;
+			f32 proj         = pathDir.DP(pel->mSRT.t - wpA->mPosition) / pathDist;
 			if (proj < 0.0f) {
 				nextPoint = wpA->mPosition;
 			} else if (proj > 1.0f) {
@@ -1294,11 +1294,11 @@ void ActTransport::findObstacle()
 	{
 		Creature* teki = *iter;
 		if (teki->isAlive() && teki->isTerrible()) {
-			f32 proj = pathDir.DP(teki->mPosition - point1) / pathDist;
+			f32 proj = pathDir.DP(teki->mSRT.t - point1) / pathDist;
 			Vector3f vec;
 			STACK_PAD_INLINE(1);
 			vec = (proj * pathDist) * pathDir + point1;
-			vec = vec - teki->mPosition;
+			vec = vec - teki->mSRT.t;
 			vec.normalise();
 			f32 unusedWeightedVal = crGetRadius(mNextPathIndex) * (1.0f - proj) + crGetRadius(mNextPathIndex + 1) * (proj);
 		}
@@ -1340,13 +1340,13 @@ bool ActTransport::crMove()
 		}
 
 		mState             = STATE_Guru;
-		mSpinStartPosition = pel->mPosition;
+		mSpinStartPosition = pel->mSRT.t;
 		mWaitTimer         = 0.0f;
 		return true;
 	}
 
-	Vector3f dir = point2 - pel->mPosition;
-	if (qdist2(point2.x, point2.z, pel->mPosition.x, pel->mPosition.z) < 6.0f) {
+	Vector3f dir = point2 - pel->mSRT.t;
+	if (qdist2(point2.x, point2.z, pel->mSRT.t.x, pel->mSRT.t.z) < 6.0f) {
 		if (mNextPathIndex >= mNumRoutePoints - 2) {
 			mState   = STATE_Goal;
 			mMoveDir = CRSplineTangent(1.0f, mSplineControlPts);
@@ -1379,11 +1379,11 @@ bool ActTransport::crMove()
 	}
 
 #if defined(VERSION_PIKIDEMO)
-	f32 factor = pathDir.DP(pel->mPosition - currPoint) / pathDist;
+	f32 factor = pathDir.DP(pel->mSRT.t - currPoint) / pathDist;
 #else
 	f32 factor;
 	if (pathDist > 0.0f) {
-		factor = pathDir.DP(pel->mPosition - currPoint) / pathDist;
+		factor = pathDir.DP(pel->mSRT.t - currPoint) / pathDist;
 	} else {
 		factor = 1.0f;
 	}
@@ -1399,7 +1399,7 @@ bool ActTransport::crMove()
 
 	Vector3f vec;
 	vec              = (factor * pathDist) * pathDir + currPoint;
-	vec              = vec - pel->mPosition;
+	vec              = vec - pel->mSRT.t;
 	vec.y            = 0.0f;
 	f32 val1         = vec.normalise();
 	f32 weightedProj = crGetRadius(mNextPathIndex) * (1.0f - factor) + crGetRadius(mNextPathIndex + 1) * factor;
@@ -1455,7 +1455,7 @@ bool ActTransport::crMove()
 	}
 
 	if (!gameflow.mMoviePlayer->mIsActive) {
-		bool isMoving = mOdometer.moving(pel->mPosition, pel->mLastPosition);
+		bool isMoving = mOdometer.moving(pel->mSRT.t, pel->mLastPosition);
 		if (!isMoving) {
 			PRINT_GLOBAL("pellet %s is not moving", pel->mConfig->mPelletId.mStringID);
 			return false;
@@ -1490,7 +1490,7 @@ void ActTransport::draw(Graphics& gfx)
 		"other",
 	};
 
-	Vector3f pikiPos = mPiki->mPosition;
+	Vector3f pikiPos = mPiki->mSRT.t;
 	char buf2[256];
 	char buf1[256];
 	sprintf(buf1, " ");
@@ -1501,7 +1501,7 @@ void ActTransport::draw(Graphics& gfx)
 		Vector3f nextPoint = crGetPoint(mNextPathIndex + 1);
 		Vector3f pathDir   = nextPoint - currPoint;
 		f32 pathDist       = pathDir.normalise();
-		f32 proj           = pathDir.DP(pel->mPosition - currPoint) / pathDist;
+		f32 proj           = pathDir.DP(pel->mSRT.t - currPoint) / pathDist;
 		if (proj < 0.0f) {
 			proj = 0.0f;
 		}
@@ -1511,7 +1511,7 @@ void ActTransport::draw(Graphics& gfx)
 
 		Vector3f vec;
 		vec              = (proj * pathDist) * pathDir + currPoint;
-		vec              = vec - pel->mPosition;
+		vec              = vec - pel->mSRT.t;
 		f32 val1         = vec.normalise();
 		f32 weightedProj = crGetRadius(mNextPathIndex) * (1.0f - proj) + crGetRadius(mNextPathIndex + 1) * proj;
 		Vector3f vec2;
@@ -1604,12 +1604,12 @@ int ActTransport::moveToWayPoint()
 			Plane plane;
 			plane.mNormal = pathDir;
 			plane.mOffset = pathDir.DP(currPoint);
-			if (plane.dist(pel->mPosition) <= 0.0f) {
+			if (plane.dist(pel->mSRT.t) <= 0.0f) {
 				PRINT("===== MOVETOWAY POINT !\n");
-				PRINT("plane Dist=%f\n", plane.dist(pel->mPosition));
+				PRINT("plane Dist=%f\n", plane.dist(pel->mSRT.t));
 				PRINT("curr=%d : idx=%d **** WAYPOINT IS OFF !!!\n", mPathIndex, mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
 				PRINT_GLOBAL("moveWay : offp=%d", mPiki->mPathBuffers[mNextPathIndex + 1].mWayPointIdx);
-				mSpinStartPosition = pel->mPosition;
+				mSpinStartPosition = pel->mSRT.t;
 				mState             = STATE_Guru;
 				mWaitTimer         = 0.0f;
 				return ACTOUT_Continue;

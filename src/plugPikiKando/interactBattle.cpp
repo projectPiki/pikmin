@@ -60,7 +60,7 @@ bool InteractBomb::actPiki(Piki* piki)
 	// update this when PikiProp is filled out
 	piki->mLifeGauge.updValue(piki->mHealth, C_PIKI_PROP(piki).mPikiMaxHealth());
 
-	Vector3f diff = mOwner->mPosition - piki->mPosition;
+	Vector3f diff = mOwner->mSRT.t - piki->mSRT.t;
 	diff.normalise();
 	piki->mRotationAngle  = atan2f(diff.x, diff.z);
 	piki->mFlickIntensity = 180.0f;
@@ -80,7 +80,7 @@ bool InteractBury::actPiki(Piki* piki)
 		return false;
 	}
 
-	if (!piki->isSafeMePos(piki->mPosition) || MapCode::isBald(piki->mGroundTriangle)) {
+	if (!piki->isSafeMePos(piki->mSRT.t) || MapCode::isBald(piki->mGroundTriangle)) {
 		return false;
 	}
 

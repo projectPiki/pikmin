@@ -165,7 +165,7 @@ public:
 	virtual bool isOrganic() { return mIsOrganic; }       // _78
 	virtual bool isFixed() { return true; }               // _8C
 	virtual bool ignoreAtari(Creature*) { return false; } // _98
-	virtual Vector3f getCentre() { return mPosition; }    // _58
+	virtual Vector3f getCentre() { return mSRT.t; }       // _58
 	virtual bool needShadow() { return mNeedShadow; }     // _90
 	virtual f32 getShadowSize() { return mShadowSize; }   // _70
 	virtual bool stimulate(Interaction&);                 // _A0

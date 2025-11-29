@@ -89,7 +89,7 @@ int ActPullout::exec()
 		}
 
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		mPiki->turnTo(mPiki->mNavi->mPosition);
+		mPiki->turnTo(mPiki->mNavi->mSRT.t);
 
 	} else {
 		int res = AndAction::exec();
@@ -189,7 +189,7 @@ int ActPulloutCreature::exec()
 		return ACTOUT_Success;
 
 	case STATE_Unk0:
-		Vector3f dir = mTarget.getPtr()->mPosition - mPiki->mPosition;
+		Vector3f dir = mTarget.getPtr()->mSRT.t - mPiki->mSRT.t;
 		f32 angleSep = atan2f(dir.x, dir.z);
 		mPiki->mFaceDirection += 0.4f * angDist(angleSep, mPiki->mFaceDirection);
 		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);

@@ -629,7 +629,7 @@ f32 PcamCamera::calcCurrentDirection()
  */
 f32 PcamCamera::calcTargetDistance()
 {
-	NVector3f& targetPos = NVector3f(mTargetCreature->mPosition);
+	NVector3f& targetPos = NVector3f(mTargetCreature->mSRT.t);
 	return targetPos.distance(getViewpoint());
 }
 
@@ -640,7 +640,7 @@ f32 PcamCamera::calcTargetDistance()
  */
 f32 PcamCamera::getTargetDirection()
 {
-	return mTargetCreature->mRotation.y;
+	return mTargetCreature->mSRT.r.y;
 }
 
 /*
@@ -666,7 +666,7 @@ f32 PcamCamera::getCursorDirection()
  */
 void PcamCamera::outputTargetPosition(NVector3f& outPosition)
 {
-	outPosition.input(mTargetCreature->mPosition);
+	outPosition.input(mTargetCreature->mSRT.t);
 }
 
 /*

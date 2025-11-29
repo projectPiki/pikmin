@@ -92,7 +92,7 @@ DEFINE_PRINT("ufoItem")
  */
 bool UfoItem::insideSafeArea(Vector3f& pos)
 {
-	Vector3f diff = pos - mPosition;
+	Vector3f diff = pos - mSRT.t;
 	f32 dist      = diff.x * diff.x + diff.z * diff.z;
 	if (dist < 8100.0f) {
 		return false;
@@ -295,7 +295,7 @@ void UfoItem::startLevelFlag(int flag)
 {
 	lightLevelFlag(flag);
 	zen::particleGenerator* efx;
-	Vector3f pos = mPosition;
+	Vector3f pos = mSRT.t;
 	if (playerState->mShipUpgradeLevel == 5) {
 		efx = effectMgr->create(EffectMgr::EFF_Rocket_Complete1, pos, nullptr, nullptr);
 		efx->setOrientedNormalVector(Vector3f(0.0f, 0.0f, 1.0f));
@@ -625,15 +625,15 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 			switch (event.mValue) { // yes this is a switch in a switch in a switch
 			case 0:
 				if (anim == 0) {
-					effectMgr->create(EffectMgr::EFF_Rocket_Nke1, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Nke2, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Nke1, mSRT.t, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Nke2, mSRT.t, nullptr, nullptr);
 				}
 				break;
 			case 2:
 				if (anim == 0) {
-					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mSRT.t, nullptr, nullptr);
 				} else {
-					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mSRT.t, nullptr, nullptr);
 				}
 				break;
 			case 3:
@@ -671,22 +671,22 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
 				switch (playerState->mShipUpgradeLevel) {
 				case 0:
 				case 1:
-					effectMgr->create(EffectMgr::EFF_Rocket_JetG01, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG01, mSRT.t, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mSRT.t, nullptr, nullptr);
 					break;
 				case 2:
 				case 3:
-					effectMgr->create(EffectMgr::EFF_Rocket_JetG02, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG02, mSRT.t, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mSRT.t, nullptr, nullptr);
 					break;
 				case 4:
-					effectMgr->create(EffectMgr::EFF_Rocket_JetG03, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_JetG03, mSRT.t, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Fkm1, mSRT.t, nullptr, nullptr);
 					break;
 				case 5:
-					effectMgr->create(EffectMgr::EFF_Rocket_Bstg, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Bst1db, mPosition, nullptr, nullptr);
-					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mPosition, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Bstg, mSRT.t, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Bst1db, mSRT.t, nullptr, nullptr);
+					effectMgr->create(EffectMgr::EFF_Rocket_Bst1da, mSRT.t, nullptr, nullptr);
 					break;
 				}
 				// no break here?
@@ -732,7 +732,7 @@ UfoItem::UfoItem(CreatureProp* prop, UfoShapeObject* shape)
 		mTroubleFxGenList[i] = nullptr;
 	}
 	mShipModel = shape;
-	mScale.set(1.0f, 1.0f, 1.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
 	mDynMat = nullptr;
 
 	ShapeDynMaterials* mat = shape->mShape->instanceMaterials(15);
@@ -798,7 +798,7 @@ void UfoItem::startAI(int)
 		setTroubleEffect(true);
 	} else {
 		setTroubleEffect(false);
-		effectMgr->create(EffectMgr::EFF_Rocket_Land, mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Rocket_Land, mSRT.t, nullptr, nullptr);
 	}
 
 	mConeEffectId = KandoEffect::UfoSuck;
@@ -822,10 +822,10 @@ void UfoItem::startAI(int)
 	mSeContext->setContext(this, 7);
 	mCollInfo = new CollInfo(16);
 	mCollInfo->initInfo(mShipModel->mShape, nullptr, nullptr);
-	mWaypointID = routeMgr->findNearestWayPoint('test', mPosition, false)->mIndex;
+	mWaypointID = routeMgr->findNearestWayPoint('test', mSRT.t, false)->mIndex;
 	setMotionSpeed(30.0f);
-	mSpotlightPosition   = mPosition;
-	mSpotlightPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mSpotlightPosition   = mSRT.t;
+	mSpotlightPosition.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
 	mAnimator.init(mShipModel, itemMgr->mUfoMotionTable);
 
 	if (playerState->isUfoBroken()) {
@@ -930,7 +930,7 @@ void UfoItem::update()
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	ItemCreature::update();
 	mAnimator.updateAnimation();
-	mPosition = mSpotlightPosition;
+	mSRT.t = mSpotlightPosition;
 }
 
 /*
@@ -985,10 +985,10 @@ void UfoItem::setPca2Effect(bool set)
 void UfoItem::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
-	Vector3f pos = mPosition;
-	mWorldMtx.makeSRT(mScale, mRotation, pos);
+	Vector3f pos = mSRT.t;
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, pos);
 
-	if (!gfx.mCamera->isPointVisible(mPosition, 200.0f)) {
+	if (!gfx.mCamera->isPointVisible(mSRT.t, 200.0f)) {
 		enableAICulling();
 	} else {
 		disableAICulling();

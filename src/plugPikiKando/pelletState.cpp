@@ -75,9 +75,9 @@ void PelletUfoLoadState::exec(Pellet* pelt)
 		return;
 	}
 
-	Vector3f pos(pelt->mPosition);
-	pelt->mPosition.y = mapMgr->getMinY(pos.x, pos.z, true);
-	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mName, pelt->mPosition.y);
+	Vector3f pos(pelt->mSRT.t);
+	pelt->mSRT.t.y = mapMgr->getMinY(pos.x, pos.z, true);
+	PRINT("setting ufo parts(%s) : y=%f\n", pelt->mConfig->mName, pelt->mSRT.t.y);
 }
 
 /*
@@ -226,7 +226,7 @@ void PelletAppearState::init(Pellet* pelt)
 {
 	f32 scale     = pelt->mConfig->mPelletScale();
 	mCurrentScale = 0.1f;
-	pelt->mScale.set(mCurrentScale * scale, mCurrentScale * scale, mCurrentScale * scale);
+	pelt->mSRT.s.set(mCurrentScale * scale, mCurrentScale * scale, mCurrentScale * scale);
 	mTransitionTimer = 2.0f;
 }
 
@@ -252,9 +252,9 @@ void PelletAppearState::exec(Pellet* pelt)
 	mCurrentScale += gsys->getFrameTime() * 3.3333333f;
 	if (mCurrentScale >= 1.0f) {
 		mCurrentScale = 1.0f;
-		pelt->mScale.set(scale, scale, scale);
+		pelt->mSRT.s.set(scale, scale, scale);
 	} else {
-		pelt->mScale.set(mCurrentScale * scale, mCurrentScale * scale, mCurrentScale * scale);
+		pelt->mSRT.s.set(mCurrentScale * scale, mCurrentScale * scale, mCurrentScale * scale);
 	}
 
 	if (mCurrentScale >= 1.0f) {
@@ -309,7 +309,7 @@ void PelletGoalState::init(Pellet* pelt)
 			gameflow.mMovieInfoNum = pelletMgr->getUfoIndexFromID(pelt->mConfig->mModelId.mId);
 			gameflow.mMovieType    = check ? 2 : 0;
 			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow.mMovieType, gameflow.mMovieInfoNum);
-			gameflow.mGameInterface->movie(79, 0, pelt, &pelt->mPosition, &pelt->mRotation, -1, true);
+			gameflow.mGameInterface->movie(79, 0, pelt, &pelt->mSRT.t, &pelt->mSRT.r, -1, true);
 		}
 		playerState->preloadHenkaMovie();
 
@@ -336,7 +336,7 @@ void PelletGoalState::init(Pellet* pelt)
 		utEffectMgr->cast(KandoEffect::Goal, parm);
 	}
 
-	mStartScaleX = pelt->mScale.x;
+	mStartScaleX = pelt->mSRT.s.x;
 	pelt->playEventSound(pelt->mTargetGoal, SE_CONTAINER_PELLETIN);
 	pelt->mAngularMomentum = pelt->mAngularMomentum + Vector3f(100.0f, 200.0f, 10.0f);
 
@@ -378,7 +378,7 @@ void PelletGoalState::exec(Pellet* pelt)
 	}
 
 	if (mIsFirstMove) {
-		mStartPosition    = pelt->mPosition;
+		mStartPosition    = pelt->mSRT.t;
 		mSuckProgress     = 0.0f;
 		mIsFirstMove      = false;
 		Vector3f diff     = pelt->mTargetGoal->getSuckPos() - mStartPosition;
@@ -386,10 +386,10 @@ void PelletGoalState::exec(Pellet* pelt)
 		mSuckSpeed        = 0.0f;
 	}
 
-	Vector3f diff   = (pelt->mTargetGoal->getSuckPos() - mStartPosition);
-	pelt->mPosition = mStartPosition + diff * mSuckProgress;
-	f32 scale       = (1.0f - mSuckProgress * 0.75f) * mStartScaleX;
-	pelt->mScale.set(scale, scale, scale);
+	Vector3f diff = (pelt->mTargetGoal->getSuckPos() - mStartPosition);
+	pelt->mSRT.t  = mStartPosition + diff * mSuckProgress;
+	f32 scale     = (1.0f - mSuckProgress * 0.75f) * mStartScaleX;
+	pelt->mSRT.s.set(scale, scale, scale);
 	mSuckProgress += (mSuckSpeed * gsys->getFrameTime()) / mDistanceToTarget;
 	mSuckSpeed += gsys->getFrameTime() * 720.0f;
 

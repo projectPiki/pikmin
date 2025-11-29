@@ -48,12 +48,12 @@ void ActEnter::init(Creature* target)
 
 	findLeg();
 
-	Vector3f onionPosition(mOnyon->mPosition);
-	onionPosition       = onionPosition - mPiki->mPosition;
+	Vector3f onionPosition(mOnyon->mSRT.t);
+	onionPosition       = onionPosition - mPiki->mSRT.t;
 	f32 distanceToOnion = onionPosition.length();
 	if (distanceToOnion > 400.0f) {
 		mState = 0;
-		if (!mPiki->initRouteTrace(mOnyon->mPosition, false)) {
+		if (!mPiki->initRouteTrace(mOnyon->mSRT.t, false)) {
 			PRINT("zannen !\n");
 			mPiki->mOdometer.start(1.0f, 5.0f);
 			mState = STATE_GotoLeg;
@@ -113,9 +113,9 @@ int ActEnter::exec()
 {
 	if (mState == STATE_Climb) {
 		if (PikiMgr::containerDebug) {
-			PRINT("  %x enter (%.1f %.1f %.1f) : ropePos %f\n", mPiki, mPiki->mPosition.x, mPiki->mPosition.y, mPiki->mPosition.z,
+			PRINT("  %x enter (%.1f %.1f %.1f) : ropePos %f\n", mPiki, mPiki->mSRT.t.x, mPiki->mSRT.t.y, mPiki->mSRT.t.z,
 			      mPiki->mRopePosRatio);
-			if (absF(mPiki->mPosition.x) > 10000.0f || absF(mPiki->mPosition.y) > 10000.0f || absF(mPiki->mPosition.z) > 10000.0f) {
+			if (absF(mPiki->mSRT.t.x) > 10000.0f || absF(mPiki->mSRT.t.y) > 10000.0f || absF(mPiki->mSRT.t.z) > 10000.0f) {
 				ERROR("stoP!\n");
 			}
 		}
@@ -163,12 +163,12 @@ int ActEnter::gotoLeg()
 		return ACTOUT_Continue;
 	}
 
-	if (mHasCollided && !mPiki->mOdometer.moving(mPiki->mPosition, mLastPosition)) {
+	if (mHasCollided && !mPiki->mOdometer.moving(mPiki->mSRT.t, mLastPosition)) {
 		return ACTOUT_Fail;
 	}
 
-	mLastPosition   = mPiki->mPosition;
-	Vector3f legDir = mLeg->mCentre - mPiki->mPosition;
+	mLastPosition   = mPiki->mSRT.t;
+	Vector3f legDir = mLeg->mCentre - mPiki->mSRT.t;
 	f32 unused      = legDir.normalise();
 	mPiki->setSpeed(0.5f, legDir);
 	return ACTOUT_Continue;
@@ -198,7 +198,7 @@ int ActEnter::climb()
 		if (scale < 0.0f) {
 			scale = 0.0f;
 		}
-		mPiki->mScale.set(scale, scale, scale);
+		mPiki->mSRT.s.set(scale, scale, scale);
 	}
 
 	f32 sideWeight = 8.0f * (gsys->getRand(1.0f) - 0.5f);

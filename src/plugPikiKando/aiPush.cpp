@@ -122,7 +122,7 @@ int ActPush::exeApproach()
 		return ACTOUT_Fail;
 	}
 
-	u8 planeFlag = mHinderRock->getPlaneFlag(mPiki->mPosition);
+	u8 planeFlag = mHinderRock->getPlaneFlag(mPiki->mSRT.t);
 	if (planeFlag == 0x4) {
 		initGo();
 		return ACTOUT_Continue;
@@ -204,7 +204,7 @@ int ActPush::exeGo()
 		return ACTOUT_Success;
 	}
 
-	u8 planeFlag = mHinderRock->getPlaneFlag(mPiki->mPosition);
+	u8 planeFlag = mHinderRock->getPlaneFlag(mPiki->mSRT.t);
 
 	if (planeFlag != 0x4) {
 		mHinderRock->endPush();

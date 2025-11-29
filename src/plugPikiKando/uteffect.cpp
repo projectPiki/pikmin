@@ -59,10 +59,10 @@ void SlimeEffect::restart()
 void SlimeEffect::emit(EffectParm& parm)
 {
 	mObj         = parm.mOwner;
-	Vector3f pos = mObj->mPosition;
+	Vector3f pos = mObj->mSRT.t;
 	if (!mEfxGen) {
 		mEfxGen = effectMgr->create(EffectMgr::EFF_Piki_Bubble, pos, this, this);
-		mEfxGen->setEmitPosPtr(&mObj->mPosition);
+		mEfxGen->setEmitPosPtr(&mObj->mSRT.t);
 	}
 }
 

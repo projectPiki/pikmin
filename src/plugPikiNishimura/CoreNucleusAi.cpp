@@ -163,8 +163,8 @@ void CoreNucleusAi::setEveryFrame()
  */
 void CoreNucleusAi::setBossPosition()
 {
-	mCore->mPosition.x = mCore->mSlime->mCorePosition.x;
-	mCore->mPosition.z = mCore->mSlime->mCorePosition.z;
+	mCore->mSRT.t.x = mCore->mSlime->mCorePosition.x;
+	mCore->mSRT.t.z = mCore->mSlime->mCorePosition.z;
 }
 
 /*
@@ -239,9 +239,9 @@ void CoreNucleusAi::initDie(int val)
 	mCore->setLoopCounter(0);
 	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 	mCore->setAttackTimer(0.0f);
-	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mCore->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mCore->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mCore->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mCore->mSRT.t, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mCore->mSRT.t, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mCore->mSRT.t, nullptr, nullptr);
 	mCore->doKill();
 }
 
@@ -282,7 +282,7 @@ void CoreNucleusAi::initHit(int val)
 	mCore->setMotionFinish(false);
 	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Type1, this));
 	Vector3f ptclPos(sinf(mCore->mFaceDirection), 0.0f, cosf(mCore->mFaceDirection));
-	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mCore->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mCore->mSRT.t, nullptr, nullptr);
 	if (ptcl) {
 		ptcl->setEmitDir(ptclPos);
 	}

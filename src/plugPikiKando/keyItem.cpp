@@ -54,7 +54,7 @@ f32 KeyItem::getSize()
 void KeyItem::init(Vector3f& pos)
 {
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	Creature::init(pos);
 	mSearchBuffer.init(mSearch, 3);
 	mState = KeyState::Inactive;
@@ -112,7 +112,7 @@ void KeyItem::update()
 
 	mFaceDirection += rotationSpeed * TAU;
 	mFaceDirection = roundAng(mFaceDirection);
-	mGrid.updateGrid(mPosition);
+	mGrid.updateGrid(mSRT.t);
 	updateAI();
 
 	STACK_PAD_VAR(2);
@@ -146,12 +146,12 @@ void KeyItem::refresh(Graphics& gfx)
 {
 	Matrix4f transform, viewTransform;
 
-	mWorldMtx.makeSRT(mScale, mRotation, Vector3f(mPosition.x, mPosition.y + 20.0f, mPosition.z));
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, Vector3f(mSRT.t.x, mSRT.t.y + 20.0f, mSRT.t.z));
 	gfx.calcViewMatrix(mWorldMtx, viewTransform);
 	gfx.useMatrix(viewTransform, 0);
 
-	gfx.mCamera->setBoundOffset(&mPosition);
-	mapMgr->getLight(mPosition.x, mPosition.z);
+	gfx.mCamera->setBoundOffset(&mSRT.t);
+	mapMgr->getLight(mSRT.t.x, mSRT.t.z);
 
 	bool l = gfx.setLighting(true, nullptr);
 	mModel->drawshape(gfx, *gfx.mCamera, nullptr);
@@ -221,7 +221,7 @@ void DoorItem::init(Vector3f& pos)
 	if (mObjType == OBJTYPE_Gate) {
 		scale = 2.0f;
 	}
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	mStateId = DoorState::Inactive;
 }
 
@@ -245,9 +245,9 @@ void DoorItem::update()
 	if (mStateId == DoorState::Vanishing) {
 		mFadeTimer -= gsys->getFrameTime();
 		f32 yscale = (mFadeTimer / 2.5f) * 2.0f;
-		mPosition.y -= gsys->getFrameTime() * 3.0f;
+		mSRT.t.y -= gsys->getFrameTime() * 3.0f;
 
-		mScale.set(2.0f, yscale, 2.0f);
+		mSRT.s.set(2.0f, yscale, 2.0f);
 
 		if (mFadeTimer < 0.0f) {
 			mStateId = DoorState::Killed;
@@ -303,7 +303,7 @@ bool DoorItem::isAtari()
  */
 void DoorItem::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f mtx;
 	gfx.calcViewMatrix(mWorldMtx, mtx);
 

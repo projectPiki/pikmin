@@ -211,8 +211,8 @@ void ActAdjust::init(Creature* target)
 	if (target) {
 		PRINT(" target is %x\n", target);
 		mForceFail      = false;
-		mTargetPosition = target->mPosition;
-		Vector3f dir    = mTargetPosition - mPiki->mPosition;
+		mTargetPosition = target->mSRT.t;
+		Vector3f dir    = mTargetPosition - mPiki->mSRT.t;
 		f32 adjPerFrame = mAdjustTimeLimit * (1.0f / 30.0f);
 		STACK_PAD_VAR(1);
 		mTurnSpeed = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection) / adjPerFrame;
@@ -259,7 +259,7 @@ int ActAdjust::exec()
 	mPiki->mTargetVelocity = mVelocity;
 	mPiki->mFaceDirection += mTurnSpeed * gsys->getFrameTime();
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);
-	mPiki->mRotation.set(0.0f, mPiki->mFaceDirection, 0.0f);
+	mPiki->mSRT.r.set(0.0f, mPiki->mFaceDirection, 0.0f);
 
 	mAdjustTimer += gsys->getFrameTime();
 	if (mAdjustTimer > f32(mAdjustTimeLimit) * (1 / 30.0f)) {

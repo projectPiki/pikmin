@@ -64,7 +64,7 @@ void ActFree::initBoid(Vector3f& targetPosition, f32 radius)
  */
 void ActFree::exeBoid()
 {
-	Vector3f dirToTarget = mTargetPosition - mPiki->mPosition;
+	Vector3f dirToTarget = mTargetPosition - mPiki->mSRT.t;
 	f32 distanceToTarget = dirToTarget.normalise();
 	mBoidTimer -= gsys->getFrameTime();
 
@@ -121,7 +121,7 @@ void ActFree::init(Creature*)
 	GameStat::update();
 
 	if (mPiki->aiCullable() && !PikiMgr::meNukiMode) {
-		seSystem->playPikiSound(SEF_PIKI_BREAKUP, mPiki->mPosition);
+		seSystem->playPikiSound(SEF_PIKI_BREAKUP, mPiki->mSRT.t);
 	}
 
 	EffectParm parm(&mPiki->mEffectPos);

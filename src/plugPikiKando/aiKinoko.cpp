@@ -126,7 +126,7 @@ int ActKinoko::exeJump()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f sep = mPiki->mNavi->mPosition - mPiki->mPosition;
+	Vector3f sep = mPiki->mNavi->mSRT.t - mPiki->mSRT.t;
 	f32 dist     = sep.normalise();
 	if (dist < 12.0f) {
 		mPiki->startStickObject(mPiki->mNavi, mPiki->mNavi->mCollInfo->getSphere('head'), -1, 0.0f);
@@ -164,7 +164,7 @@ int ActKinoko::exeAttack()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f sep = mPiki->mNavi->mPosition - mPiki->mPosition;
+	Vector3f sep = mPiki->mNavi->mSRT.t - mPiki->mSRT.t;
 	dist         = sep.normalise();
 	if (dist < 25.0f) {
 		initJump();
@@ -189,7 +189,7 @@ void ActKinoko::initBoid()
 	}
 
 	mStateTimer  = 2.0f * gsys->getRand(1.0f) + 1.5f;
-	Vector3f sep = target->mPosition - mPiki->mPosition;
+	Vector3f sep = target->mSRT.t - mPiki->mSRT.t;
 	f32 dist     = sep.normalise();
 	Vector3f orthoDir(sep.z, 0.0f, -sep.x);
 	if (gsys->getRand(1.0f) > 0.5f) {
@@ -215,7 +215,7 @@ int ActKinoko::exeBoid()
 		return ACTOUT_Fail;
 	}
 
-	if (qdist2(mPiki->mNavi->mPosition.x, mPiki->mNavi->mPosition.z, mPiki->mPosition.x, mPiki->mPosition.z) < 120.0f) {
+	if (qdist2(mPiki->mNavi->mSRT.t.x, mPiki->mNavi->mSRT.t.z, mPiki->mSRT.t.x, mPiki->mSRT.t.z) < 120.0f) {
 		initAttack();
 		return ACTOUT_Continue;
 	}
@@ -239,14 +239,14 @@ int ActKinoko::exeBoid()
 		if (obj->mObjType == OBJTYPE_Piki) {
 			Piki* piki = static_cast<Piki*>(obj);
 			if (piki != mPiki && piki->isKinoko()) {
-				f32 dist = qdist2(piki->mPosition.x, piki->mPosition.z, mPiki->mPosition.x, mPiki->mPosition.z);
+				f32 dist = qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mPiki->mSRT.t.x, mPiki->mSRT.t.z);
 				if (dist < minDist) {
 					minDist           = dist;
-					closestPartnerDir = mPiki->mPosition - piki->mPosition;
+					closestPartnerDir = mPiki->mSRT.t - piki->mSRT.t;
 					isClosePartner    = true;
 				}
 
-				boidPos = boidPos + piki->mPosition;
+				boidPos = boidPos + piki->mSRT.t;
 				boidVel = boidVel + piki->mVelocity;
 				boidCount++;
 			}
@@ -258,7 +258,7 @@ int ActKinoko::exeBoid()
 		boidPos.multiply(1.0f / f32(boidCount));
 		boidVel.multiply(1.0f / f32(boidCount));
 		boidVel.normalise();
-		Vector3f boidDir = boidPos - mPiki->mPosition;
+		Vector3f boidDir = boidPos - mPiki->mSRT.t;
 		Vector3f offset(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 		boidDir.normalise();
 		Vector3f moveDir;
@@ -275,7 +275,7 @@ int ActKinoko::exeBoid()
 		mPiki->setSpeed(0.3f, mTargetDirection);
 	}
 
-	Vector3f newMoveDir = target->mPosition - mPiki->mPosition;
+	Vector3f newMoveDir = target->mSRT.t - mPiki->mSRT.t;
 	f32 len             = 100.0f;
 	if (!(newMoveDir.normalise() < len)) {
 		mPiki->setSpeed(0.5f, newMoveDir);

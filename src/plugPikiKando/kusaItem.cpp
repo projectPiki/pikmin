@@ -46,10 +46,10 @@ void KusaItem::startAI(int)
 	mCollInfo = &mKusaCollision;
 	mCollInfo->initInfo(mItemShape, mKusaParts, mPartIDs);
 	mCollInfo->makeTubesChild('rope', 1);
-	mScale.set(1.0f, 1.0f, 1.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
 
-	mGroundPosition   = mPosition;
-	mGroundPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mGroundPosition   = mSRT.t;
+	mGroundPosition.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
 
 	mHealth    = 50.0f;
 	mMaxHealth = 200.0f;
@@ -126,7 +126,7 @@ f32 KusaItem::getiMass()
  */
 void KusaItem::update()
 {
-	mPosition = mGroundPosition;
+	mSRT.t = mGroundPosition;
 	ItemCreature::update();
 }
 
@@ -140,7 +140,7 @@ void KusaItem::refresh(Graphics& gfx)
 	Matrix4f camMat;
 	Matrix4f mat;
 	mat.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, mHealth - mMaxHealth, 0.0f));
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	mWorldMtx.multiply(mat);
 
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, camMat);
@@ -178,9 +178,9 @@ void BoBaseItem::startAI(int)
 	setCreatureFlag(CF_Unk10);
 	mCollInfo = &mBaseCollision;
 	mCollInfo->initInfo(mItemShape, mBaseParts, mPartIDs);
-	mScale.set(1.0f, 1.0f, 1.0f);
-	mGroundPosition    = mPosition;
-	mGroundPosition.y  = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
+	mGroundPosition    = mSRT.t;
+	mGroundPosition.y  = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
 	mIsActive          = true;
 	mParticleGenerator = nullptr;
 	mEffectDuration    = 0;
@@ -232,7 +232,7 @@ f32 BoBaseItem::getiMass()
 void BoBaseItem::update()
 {
 	if (mIsActive) {
-		mPosition = mGroundPosition;
+		mSRT.t = mGroundPosition;
 		ItemCreature::update();
 
 		mEffectDuration--;
@@ -262,7 +262,7 @@ void BoBaseItem::refresh(Graphics& gfx)
 {
 	if (mIsActive || (!mIsActive && mEffectDuration > 0)) {
 		Matrix4f camMat;
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, camMat);
 		gfx.setLighting(true, nullptr);
@@ -286,7 +286,7 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
 		if (mStickItem->mHealth >= mStickItem->mMaxHealth) {
 			mStickItem->mHealth = mStickItem->mMaxHealth;
 			mIsActive           = 0;
-			effectMgr->create(EffectMgr::EFF_Kusa_Extend2, mPosition, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Kusa_Extend2, mSRT.t, nullptr, nullptr);
 			playEventSound(this, SEB_WALL_DOWN);
 			mEffectDuration = 30;
 			if (mParticleGenerator) {
@@ -296,7 +296,7 @@ bool BoBaseItem::interactBuild(InteractBuild& build)
 			playEventSound(this, SEB_CONSTRUCTION);
 			mEffectDuration = 30;
 			if (!mParticleGenerator) {
-				mParticleGenerator = effectMgr->create(EffectMgr::EFF_Kusa_Extend1, mPosition, nullptr, nullptr);
+				mParticleGenerator = effectMgr->create(EffectMgr::EFF_Kusa_Extend1, mSRT.t, nullptr, nullptr);
 				PRINT("effect created !!!!\n");
 			}
 		}

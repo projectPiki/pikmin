@@ -63,7 +63,7 @@ f32 RopeItem::getSize()
 void RopeItem::init(Vector3f& pos)
 {
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	Creature::init(pos);
 	mSearchBuffer.init(mSearch, 3);
 }

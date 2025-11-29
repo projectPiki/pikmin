@@ -144,7 +144,7 @@ void KingBody::createUfoParts()
 	Pellet* ufoPart = pelletMgr->newPellet(mKing->mPelletID.mId, nullptr);
 	if (ufoPart) {
 		CollPart* nosePart = mKing->mCollInfo->getSphere('nose');
-		f32 angle          = atan2f(nosePart->mCentre.x - mKing->mPosition.x, nosePart->mCentre.z - mKing->mPosition.z);
+		f32 angle          = atan2f(nosePart->mCentre.x - mKing->mSRT.t.x, nosePart->mCentre.z - mKing->mSRT.t.z);
 		f32 xOffs          = sinf(angle) + sinf(mKing->mFaceDirection);
 		f32 zOffs          = cosf(angle) + cosf(mKing->mFaceDirection);
 		Vector3f dir(xOffs, 0.0f, zOffs);
@@ -281,7 +281,7 @@ void KingBody::updateBlendingRatio()
 void KingBody::checkOnGround()
 {
 	for (int i = 0; i < 2; i++) {
-		f32 heightDiff = mFootPosList[i].y - mKing->mPosition.y;
+		f32 heightDiff = mFootPosList[i].y - mKing->mSRT.t.y;
 		if (heightDiff < 3.75f) {
 			mIsFootOnGround[i] = true;
 		} else if (heightDiff > 10.0f) {
@@ -348,8 +348,8 @@ void KingBody::emitOnGroundEffect()
 				if (mKing->mSeContext) {
 					mKing->mSeContext->playSound(SE_KING_WALK);
 				}
-				rumbleMgr->start(RUMBLE_Unk4, 0, mKing->mPosition);
-				cameraMgr->startVibrationEvent(3, mKing->mPosition);
+				rumbleMgr->start(RUMBLE_Unk4, 0, mKing->mSRT.t);
+				cameraMgr->startVibrationEvent(3, mKing->mSRT.t);
 			}
 		}
 	}

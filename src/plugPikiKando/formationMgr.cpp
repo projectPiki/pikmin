@@ -576,7 +576,7 @@ Spine::Spine()
  */
 void Spine::init(Creature* target)
 {
-	Vector3f startPosition = target->mPosition;
+	Vector3f startPosition = target->mSRT.t;
 	mTargetCreature.set(target);
 
 	mRope          = new Rope();

@@ -64,7 +64,7 @@ f32 CoreNucleus::getiMass()
 void CoreNucleus::init(Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
-	mScale.set(0.0f, 0.0f, 0.0f);
+	mSRT.s.set(0.0f, 0.0f, 0.0f);
 	setIsAlive(0);
 	setIsOrganic(0);
 	setShadowNeed(1);
@@ -110,7 +110,7 @@ void CoreNucleus::update()
  */
 void CoreNucleus::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f onCamMtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
 	mAnimator.updateContext();

@@ -191,7 +191,7 @@ int ActPutBomb::exeSet()
 		return ACTOUT_Fail;
 	}
 
-	Vector3f dir          = mTarget->mPosition - mPiki->mPosition;
+	Vector3f dir          = mTarget->mSRT.t - mPiki->mSRT.t;
 	f32 dist              = qdist2(mTarget, mPiki);
 	f32 angle             = angDist(atan2f(dir.x, dir.z), mPiki->mFaceDirection);
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * angle);
@@ -258,7 +258,7 @@ int ActPutBomb::exeAim()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f dirToTarget  = mTarget->mPosition - mPiki->mPosition;
+	Vector3f dirToTarget  = mTarget->mSRT.t - mPiki->mSRT.t;
 	f32 distanceToTarget  = qdist2(mTarget, mPiki);
 	f32 angleToTarget     = angDist(atan2f(dirToTarget.x, dirToTarget.z), mPiki->mFaceDirection);
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * angleToTarget);
@@ -522,7 +522,7 @@ void ActPutItem::findPos()
 	CI_LOOP(iter)
 	{
 		Creature* item = *iter;
-		Vector3f dir   = item->mPosition - mItem.getPtr()->mPosition;
+		Vector3f dir   = item->mSRT.t - mItem.getPtr()->mSRT.t;
 		f32 dist       = dir.length();
 		lastDist       = dist;
 		if (dist <= minDist) {
@@ -539,7 +539,7 @@ void ActPutItem::findPos()
 			CI_LOOP(iter)
 			{
 				Creature* item = *iter;
-				Vector3f dir   = item->mPosition - mItem.getPtr()->mPosition;
+				Vector3f dir   = item->mSRT.t - mItem.getPtr()->mSRT.t;
 				f32 dist       = dir.length();
 				if (dist <= minDist && dist >= lastDist) {
 					closestItem = item;
@@ -549,14 +549,14 @@ void ActPutItem::findPos()
 
 			if (!closestItem) {
 				PRINT("no room to place !\n");
-				mItemPosition = mItem.getPtr()->mPosition;
+				mItemPosition = mItem.getPtr()->mSRT.t;
 				return;
 			}
 			lastDist = minDist;
 		}
 
 	} else {
-		mItemPosition = mItem.getPtr()->mPosition;
+		mItemPosition = mItem.getPtr()->mSRT.t;
 	}
 }
 
@@ -567,7 +567,7 @@ void ActPutItem::findPos()
  */
 bool ActPutItem::findAdjacent(Creature* target)
 {
-	Vector3f pos(mItem.getPtr()->mPosition);
+	Vector3f pos(mItem.getPtr()->mSRT.t);
 	f32 size = (target->getSize() + mItem.getPtr()->getSize()) * 1.3f;
 	Vector3f vec;
 	for (int i = 0; i < 8; i++) {
@@ -580,7 +580,7 @@ bool ActPutItem::findAdjacent(Creature* target)
 		CI_LOOP(iter)
 		{
 			Creature* item = *iter;
-			Vector3f sep   = item->mPosition - vec;
+			Vector3f sep   = item->mSRT.t - vec;
 			f32 dist       = sep.length();
 			if (dist <= item->getSize() + mItem.getPtr()->getSize()) {
 				check = true;
@@ -614,7 +614,7 @@ void ActPutItem::init(Creature* target)
  */
 int ActPutItem::exec()
 {
-	Vector3f dir = mItemPosition - mPiki->mPosition;
+	Vector3f dir = mItemPosition - mPiki->mSRT.t;
 	f32 dist     = dir.normalise();
 
 	if (dist <= mItem.getPtr()->getSize()) {

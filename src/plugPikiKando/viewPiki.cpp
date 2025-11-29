@@ -156,7 +156,7 @@ void ViewPiki::changeShape(int index)
 	}
 
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	setLeaves(index + 1);
 
 	STACK_PAD_VAR(2);
@@ -186,7 +186,7 @@ void ViewPiki::initBirth()
 	mPikiAnimMgr.init(mPikiShape->mAnimMgr, &mPikiShape->mAnimatorB, &mPikiShape->mAnimatorA, pikiMgr->mMotionTable);
 
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	setFlower(0);
 
 	STACK_PAD_VAR(4);
@@ -208,20 +208,20 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 
 	f32 scale = 1.0f;
 	scale *= pikiMgr->mPikiParms->mPikiParms.mPluckStrength0();
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	setLeaves(1);
 
 	mPikiAnimMgr.startMotion(PaniMotionInfo(PIKIANIM_StillJump, this), PaniMotionInfo(PIKIANIM_StillJump));
 
-	mScale.set(1.0f, 1.0f, 1.0f);
-	mRotation.set(0.0f, 0.0f, 0.0f);
-	mPosition.set((gsys->getRand(1.0f) - 0.5f) * 300.0f, 0.0f, (gsys->getRand(1.0f) - 0.5f) * 300.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
+	mSRT.r.set(0.0f, 0.0f, 0.0f);
+	mSRT.t.set((gsys->getRand(1.0f) - 0.5f) * 300.0f, 0.0f, (gsys->getRand(1.0f) - 0.5f) * 300.0f);
 
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	_268 = 0.0f;
 	Piki::init(navi);
-	mLastPosition       = mPosition;
-	mLastEffectPosition = mPosition;
+	mLastPosition       = mSRT.t;
+	mLastEffectPosition = mSRT.t;
 
 	STACK_PAD_TERNARY(_268, 1);
 }
@@ -268,7 +268,7 @@ void ViewPiki::postUpdate(int _, f32 __)
 	}
 
 	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(PMUPDATE_Unk4)) {
-		Vector3f toShip = mPosition - itemMgr->getUfo()->getGoalPos();
+		Vector3f toShip = mSRT.t - itemMgr->getUfo()->getGoalPos();
 		if (toShip.length() > 100.0f) {
 			return;
 		}
@@ -301,7 +301,7 @@ void ViewPiki::update()
 	}
 
 	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(PMUPDATE_Unk4)) {
-		Vector3f toShip = mPosition - itemMgr->getUfo()->getGoalPos();
+		Vector3f toShip = mSRT.t - itemMgr->getUfo()->getGoalPos();
 		if (toShip.length() > 100.0f) {
 			mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 			return;
@@ -326,11 +326,11 @@ void ViewPiki::update()
 	}
 
 	if (AIPerf::optLevel == 0 && mGroundTriangle && gsys->getRand(1.0f) > 0.99f) {
-		Vector3f toLastPosition = mLastEffectPosition - mPosition;
+		Vector3f toLastPosition = mLastEffectPosition - mSRT.t;
 
 		// If we've moved enough, create an effect
 		if (toLastPosition.length() > 40.0f) {
-			Vector3f pos(mPosition.x, mPosition.y + 1.0f, mPosition.z);
+			Vector3f pos(mSRT.t.x, mSRT.t.y + 1.0f, mSRT.t.z);
 			Vector3f rot(mVelocity.x * 0.01667f, 1.0f, mVelocity.z * 0.01667f);
 			EffectParm parm(pos, rot);
 
@@ -339,7 +339,7 @@ void ViewPiki::update()
 				utEffectMgr->cast(attr + KandoEffect::SmokeOffset, parm);
 			}
 
-			mLastEffectPosition = mPosition;
+			mLastEffectPosition = mSRT.t;
 		}
 	}
 }
@@ -393,7 +393,7 @@ void Piki::updateLook()
 	f32 horizontalDistance;
 	f32 verticalAngle;
 	if (mLookatTarget) {
-		Vector3f targetOffset = *mLookatTarget - mPosition;
+		Vector3f targetOffset = *mLookatTarget - mSRT.t;
 		horizontalAngle       = atan2f(targetOffset.x, targetOffset.z);
 		horizontalDistance    = std::sqrtf(targetOffset.x * targetOffset.x + targetOffset.z * targetOffset.z);
 		verticalAngle         = atan2f(targetOffset.y, horizontalDistance);
@@ -509,7 +509,7 @@ void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
 		gfx.useMatrix(Matrix4f::ident, 0);
 		ActCrowd* act = (ActCrowd*)mActiveAction->getCurrAction();
 		if (act) {
-			Vector3f pos = mPosition;
+			Vector3f pos = mSRT.t;
 			int slotID   = act->getSlotID();
 			pos.y += 2.0f * f32(slotID) + 50.0f;
 			bool light = gfx.setLighting(false, nullptr);
@@ -587,19 +587,19 @@ void ViewPiki::refresh(Graphics& gfx)
 	}
 
 	if (gameflow.mMoviePlayer->mIsActive && pikiMgr->isUpdating(PMUPDATE_Unk4)) {
-		Vector3f diff = mPosition - itemMgr->getUfo()->getGoalPos();
+		Vector3f diff = mSRT.t - itemMgr->getUfo()->getGoalPos();
 		if (diff.length() > 100.0f) {
 			return;
 		}
 	}
 	Matrix4f mtx;
 	f32 size = getSize();
-	if (!gfx.mCamera->isPointVisible(mPosition, size * 4.0f)) {
+	if (!gfx.mCamera->isPointVisible(mSRT.t, size * 4.0f)) {
 		enableAICulling();
 	} else {
 		disableAICulling();
 		if (AIPerf::useLOD) {
-			Vector3f diff = gfx.mCamera->mPosition - mPosition;
+			Vector3f diff = gfx.mCamera->mPosition - mSRT.t;
 			_528          = diff.length();
 		} else {
 			_528 = 12800.0f;
@@ -620,20 +620,20 @@ void ViewPiki::refresh(Graphics& gfx)
 				ERROR("sacle minus!\n");
 			}
 		}
-		mScale.set(scaleFactor * scaleXZ, scaleFactor * scaleY, scaleFactor * scaleXZ);
+		mSRT.s.set(scaleFactor * scaleXZ, scaleFactor * scaleY, scaleFactor * scaleXZ);
 	}
 
 	if ((mStickTarget && isStickToPlatform()) || mRope || (mStickTarget && mStickPart && mStickPart->isTubeType())) {
 		mWorldMtx = mConstrainedMoveMtx;
 		for (int i = 0; i < 3; i++) {
-			mWorldMtx.mMtx[i][0] *= mScale.x;
-			mWorldMtx.mMtx[i][1] *= mScale.y;
-			mWorldMtx.mMtx[i][2] *= mScale.z;
+			mWorldMtx.mMtx[i][0] *= mSRT.s.x;
+			mWorldMtx.mMtx[i][1] *= mSRT.s.y;
+			mWorldMtx.mMtx[i][2] *= mSRT.s.z;
 		}
 
-		mWorldMtx.setTranslation(mPosition.x, mPosition.y, mPosition.z);
+		mWorldMtx.setTranslation(mSRT.t.x, mSRT.t.y, mSRT.t.z);
 	} else {
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		mConstrainedMoveMtx = mWorldMtx;
 	}
 
@@ -650,7 +650,7 @@ void ViewPiki::refresh(Graphics& gfx)
 		Matrix4f mtx2;
 		mtx2.makeSRT(Vector3f(swallowScale, swallowScale, swallowScale), Vector3f(0.0f, 0.0f, HALF_PI), Vector3f(0.0f, 0.0f, 0.0f));
 		mouthMtx.multiplyTo(mtx2, mtx);
-		mPosition = mSwallowMouthPart->mCentre;
+		mSRT.t = mSwallowMouthPart->mCentre;
 	}
 
 	mPikiAnimMgr.updateContext();

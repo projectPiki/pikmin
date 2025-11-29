@@ -73,7 +73,7 @@ int ActMine::exeWatch()
  */
 int ActMine::exeGo()
 {
-	Vector3f dir = mBombGen->mPosition - mPiki->mPosition;
+	Vector3f dir = mBombGen->mSRT.t - mPiki->mSRT.t;
 	f32 dist     = dir.normalise();
 	if (dist < 15.0f) {
 		initMine();
@@ -126,7 +126,7 @@ int ActMine::exeMine()
 	BombItem* bomb = static_cast<BombItem*>(itemMgr->birth(OBJTYPE_Bomb));
 	if (bomb) {
 		PRINT("new bomb = %x\n", bomb);
-		bomb->init(mPiki->mPosition);
+		bomb->init(mPiki->mSRT.t);
 		bomb->startAI(0);
 		bomb->dump();
 		if (!bomb->stimulate(InteractGrab(mPiki))) {

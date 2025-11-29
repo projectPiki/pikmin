@@ -242,8 +242,8 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 
 		int health = mParameterC() + mParameterB() * (int)gameflow.mWorldClock.mHoursInDay;
 		item->init(info.mPosition);
-		item->mRotation      = info.mRotation;
-		item->mFaceDirection = item->mRotation.y;
+		item->mSRT.r         = info.mRotation;
+		item->mFaceDirection = item->mSRT.r.y;
 		item->mGenerator     = info.mGenerator;
 		item->mHealth        = health;
 		item->mMaxHealth     = item->mHealth;
@@ -266,7 +266,7 @@ Creature* GenObjectItem::birth(BirthInfo& info)
 			BombItem* bomb = (BombItem*)item;
 			bomb->_3CA     = val;
 			bomb->_3C8     = val;
-			bomb->mGrid.updateGrid(item->mPosition);
+			bomb->mGrid.updateGrid(item->mSRT.t);
 		}
 
 		if (item->mObjType == OBJTYPE_Pikihead) {

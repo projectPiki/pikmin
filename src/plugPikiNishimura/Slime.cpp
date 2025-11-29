@@ -174,7 +174,7 @@ void Slime::update()
  */
 void Slime::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f onCamMtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
 	mAnimator.updateContext();

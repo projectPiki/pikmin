@@ -83,7 +83,7 @@ void Snake::init(Vector3f& pos)
 	mCollisionRadius = 15.0f;
 	setShadowSize(30.0f);
 	mBossType      = true;
-	_3C0           = mRotation.y;
+	_3C0           = mSRT.r.y;
 	_3C4           = 0.0f;
 	mSpawnPosition = pos;
 	mSnakeAi->initAI(this);
@@ -136,7 +136,7 @@ void Snake::update()
 void Snake::refresh(Graphics& gfx)
 {
 	Matrix4f onCamMtx;
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
 	mAnimator.updateContext();
 	mShapeObject->mShape->updateAnim(gfx, onCamMtx, nullptr);
@@ -163,7 +163,7 @@ void Snake::drawShape(Graphics& gfx)
  */
 void Snake::refresh2d(Graphics& gfx)
 {
-	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition = mSRT.t;
 	mLifeGauge.mPosition.y += BOSS_PROP.mLifeGaugeHeight();
 	mLifeGauge.mScale = BOSS_PROP.mLifeGaugeScale() * _3C4 / gfx.mCamera->mNear;
 	mLifeGauge.refresh(gfx);

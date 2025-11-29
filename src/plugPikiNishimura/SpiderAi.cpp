@@ -105,8 +105,8 @@ void SpiderAi::keyAction0()
 	}
 
 	if (currState == SPIDERAI_Appear) {
-		rumbleMgr->start(RUMBLE_Unk5, 0, mSpider->mPosition);
-		cameraMgr->startVibrationEvent(2, mSpider->mPosition);
+		rumbleMgr->start(RUMBLE_Unk5, 0, mSpider->mSRT.t);
+		cameraMgr->startVibrationEvent(2, mSpider->mSRT.t);
 	}
 }
 
@@ -341,7 +341,7 @@ bool SpiderAi::appearTransit()
 
 			// If alive, visible and not buried, and within spawn trigger distance
 			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
-			    && qdist2(initPos->x, initPos->z, navi->mPosition.x, navi->mPosition.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
+			    && qdist2(initPos->x, initPos->z, navi->mSRT.t.x, navi->mSRT.t.z) < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
 
 				mSpider->mIsAppear = true;
 #if defined(VERSION_PIKIDEMO)
@@ -359,7 +359,7 @@ bool SpiderAi::appearTransit()
 					Creature* sprout = *iterNavi; // Not actually a sprout, it's the player (whoops!)
 
 					if (sprout
-					    && qdist2(initPos->x, initPos->z, sprout->mPosition.x, sprout->mPosition.z)
+					    && qdist2(initPos->x, initPos->z, sprout->mSRT.t.x, sprout->mSRT.t.z)
 					           < C_SPIDER_PROP(mSpider).mSpawnTriggerDist()) {
 						// change fall time from 0.05s to 5s
 						C_SPIDER_PROP(mSpider).mDropTimer() = 5.0f;
@@ -453,8 +453,8 @@ void SpiderAi::initAppear(int nextState)
 #endif
 	mSpider->setIsOrganic(true);
 	mSpider->setAnimTimer(30.0f);
-	mSpider->mRotation.y += NsMathF::getRand(PI) - HALF_PI;
-	mSpider->mFaceDirection = mSpider->mRotation.y;
+	mSpider->mSRT.r.y += NsMathF::getRand(PI) - HALF_PI;
+	mSpider->mFaceDirection = mSpider->mSRT.r.y;
 }
 
 /*
@@ -594,7 +594,7 @@ void SpiderAi::waitState()
 void SpiderAi::appearState()
 {
 	if (!mSpider->mHasShadow) {
-		if (mSpider->mCollInfo->getBoundingSphere()->mCentre.y < mSpider->mPosition.y + 1200.0f) {
+		if (mSpider->mCollInfo->getBoundingSphere()->mCentre.y < mSpider->mSRT.t.y + 1200.0f) {
 			mSpider->mHasShadow = true;
 			mapMgr->mShadowCaster.add(&mSpider->mShadowCaster);
 		}

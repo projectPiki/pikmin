@@ -36,24 +36,24 @@ static u32 koganeSE[] = { SE_KOGANE_WALK, SE_KOGANE_DAMAGE };
  */
 void KoganeAi::createWaterEffect()
 {
-	effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mSRT.t, nullptr, nullptr);
 	mRippleCallBack->set(mKogane);
 
 	zen::particleGenerator* ptcl14 = effectMgr->create(EffectMgr::EFF_RippleWhite, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl14) {
-		ptcl14->setEmitPosPtr(&mKogane->mPosition);
+		ptcl14->setEmitPosPtr(&mKogane->mSRT.t);
 		ptcl14->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
 	zen::particleGenerator* ptcl12 = effectMgr->create(EffectMgr::EFF_RippleSurface, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl12) {
-		ptcl12->setEmitPosPtr(&mKogane->mPosition);
+		ptcl12->setEmitPosPtr(&mKogane->mSRT.t);
 		ptcl12->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
 	zen::particleGenerator* ptcl13 = effectMgr->create(EffectMgr::EFF_RippleBlack, Vector3f(0.0f, 0.0f, 0.0f), mRippleCallBack, nullptr);
 	if (ptcl13) {
-		ptcl13->setEmitPosPtr(&mKogane->mPosition);
+		ptcl13->setEmitPosPtr(&mKogane->mSRT.t);
 		ptcl13->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 	}
 
@@ -90,7 +90,7 @@ KoganeAi::KoganeAi(Kogane* kogane)
 void KoganeAi::initAI(Kogane* kogane)
 {
 	mKogane = kogane;
-	mKogane->mScale.set(0.0f, 0.0f, 0.0f);
+	mKogane->mSRT.s.set(0.0f, 0.0f, 0.0f);
 	mKogane->setCurrentState(1);
 	mKogane->setNextState(1);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
@@ -139,7 +139,7 @@ void KoganeAi::keyAction0()
 		return;
 	}
 	if (mKogane->getCurrentState() == 2 && mEffectType >= 0) {
-		effectMgr->create(mEffectType, mKogane->mPosition, nullptr, nullptr);
+		effectMgr->create(mEffectType, mKogane->mSRT.t, nullptr, nullptr);
 	}
 }
 
@@ -152,11 +152,11 @@ void KoganeAi::keyAction1()
 {
 	if (mKogane->getCurrentState() == 4) {
 		if (mInWater) {
-			effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mPosition, nullptr, nullptr);
-			rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mPosition);
+			effectMgr->create(EffectMgr::EFF_P_Bubbles, mKogane->mSRT.t, nullptr, nullptr);
+			rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mSRT.t);
 		} else {
-			effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
-			rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mPosition);
+			effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mSRT.t, nullptr, nullptr);
+			rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mSRT.t);
 		}
 	}
 }
@@ -232,7 +232,7 @@ void KoganeAi::setEveryFrame()
  */
 void KoganeAi::setMapAttribute()
 {
-	int mapAttr = mKogane->getMapAttribute(mKogane->mPosition);
+	int mapAttr = mKogane->getMapAttribute(mKogane->mSRT.t);
 	switch (mapAttr) {
 	case ATTR_Solid:
 		mEffectType = EffectMgr::EFF_Kogane_Walk0;
@@ -285,13 +285,13 @@ void KoganeAi::checkAppearTimeCounter()
  */
 void KoganeAi::calcScaleUp()
 {
-	if (mKogane->mScale.x < C_KOGANE_PROP(mKogane).mModelScale()) {
-		mKogane->mScale.x += C_KOGANE_PROP(mKogane).mAppearScaleUpSpeed() * gsys->getFrameTime();
-		if (mKogane->mScale.x > C_KOGANE_PROP(mKogane).mModelScale()) {
-			mKogane->mScale.x = C_KOGANE_PROP(mKogane).mModelScale();
+	if (mKogane->mSRT.s.x < C_KOGANE_PROP(mKogane).mModelScale()) {
+		mKogane->mSRT.s.x += C_KOGANE_PROP(mKogane).mAppearScaleUpSpeed() * gsys->getFrameTime();
+		if (mKogane->mSRT.s.x > C_KOGANE_PROP(mKogane).mModelScale()) {
+			mKogane->mSRT.s.x = C_KOGANE_PROP(mKogane).mModelScale();
 		}
 
-		mKogane->mScale.y = mKogane->mScale.z = mKogane->mScale.x;
+		mKogane->mSRT.s.y = mKogane->mSRT.s.z = mKogane->mSRT.s.x;
 	}
 }
 
@@ -319,7 +319,7 @@ void KoganeAi::setNewTargetPosition()
 		angle -= randGoalAngle;
 	}
 
-	targetPos.set(randGoalDist * sinf(angle) + mKogane->mPosition.x, 0.0f, randGoalDist * cosf(angle) + mKogane->mPosition.z);
+	targetPos.set(randGoalDist * sinf(angle) + mKogane->mSRT.t.x, 0.0f, randGoalDist * cosf(angle) + mKogane->mSRT.t.z);
 	mKogane->setTargetPosition(targetPos);
 }
 
@@ -330,9 +330,9 @@ void KoganeAi::setNewTargetPosition()
  */
 void KoganeAi::setRouteTargetPosition()
 {
-	WayPoint* wp = routeMgr->findNearestWayPoint('test', mKogane->mPosition, false);
+	WayPoint* wp = routeMgr->findNearestWayPoint('test', mKogane->mSRT.t, false);
 	Vector3f wayPointPos(wp->mPosition);
-	f32 angle = atan2f(wayPointPos.x - mKogane->mPosition.x, wayPointPos.z - mKogane->mPosition.z);
+	f32 angle = atan2f(wayPointPos.x - mKogane->mSRT.t.x, wayPointPos.z - mKogane->mSRT.t.z);
 
 	f32 randGoalAngle
 	    = (C_KOGANE_PROP(mKogane).mGoalAngleMin()
@@ -350,7 +350,7 @@ void KoganeAi::setRouteTargetPosition()
 		angle -= randGoalAngle;
 	}
 
-	targetPos.set(randGoalDist * sinf(angle) + mKogane->mPosition.x, 0.0f, randGoalDist * cosf(angle) + mKogane->mPosition.z);
+	targetPos.set(randGoalDist * sinf(angle) + mKogane->mSRT.t.x, 0.0f, randGoalDist * cosf(angle) + mKogane->mSRT.t.z);
 	mKogane->setTargetPosition(targetPos);
 }
 
@@ -362,9 +362,9 @@ void KoganeAi::setRouteTargetPosition()
 void KoganeAi::makeTargetRandom()
 {
 	Vector3f* targetPos        = mKogane->getTargetPosition();
-	mKogane->mTargetVelocity.x = targetPos->x - mKogane->mPosition.x;
+	mKogane->mTargetVelocity.x = targetPos->x - mKogane->mSRT.t.x;
 	mKogane->mTargetVelocity.y = 0.0f;
-	mKogane->mTargetVelocity.z = targetPos->z - mKogane->mPosition.z;
+	mKogane->mTargetVelocity.z = targetPos->z - mKogane->mSRT.t.z;
 	mKogane->mTargetVelocity.normalise();
 	mKogane->mTargetVelocity.multiply(C_KOGANE_PROP(mKogane).mMoveSpeed());
 }
@@ -527,9 +527,9 @@ bool KoganeAi::appearTransit()
 		{
 			Creature* navi = *iter;
 			if (navi->isAlive() && navi->isVisible() && !navi->isBuried()
-			    && qdist2(navi->mPosition.x, navi->mPosition.z, mKogane->mPosition.x, mKogane->mPosition.z)
+			    && qdist2(navi->mSRT.t.x, navi->mSRT.t.z, mKogane->mSRT.t.x, mKogane->mSRT.t.z)
 			           < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()
-			    && NsLibMath<f32>::abs(navi->mPosition.y - mKogane->mPosition.y) < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()) {
+			    && NsLibMath<f32>::abs(navi->mSRT.t.y - mKogane->mSRT.t.y) < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()) {
 				mKogane->mIsAppear = true;
 				break;
 			}
@@ -542,9 +542,9 @@ bool KoganeAi::appearTransit()
 		{
 			Creature* piki = *iter;
 			if (piki->isAlive() && piki->isVisible() && !piki->isBuried()
-			    && qdist2(piki->mPosition.x, piki->mPosition.z, mKogane->mPosition.x, mKogane->mPosition.z)
+			    && qdist2(piki->mSRT.t.x, piki->mSRT.t.z, mKogane->mSRT.t.x, mKogane->mSRT.t.z)
 			           < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()
-			    && NsLibMath<f32>::abs(piki->mPosition.y - mKogane->mPosition.y) < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()) {
+			    && NsLibMath<f32>::abs(piki->mSRT.t.y - mKogane->mSRT.t.y) < C_KOGANE_PROP(mKogane).mAppearTriggerRadius()) {
 				mKogane->mIsAppear = true;
 				break;
 			}
@@ -572,7 +572,7 @@ bool KoganeAi::startWalkTransit()
 bool KoganeAi::stopWalkTransit()
 {
 	Vector3f* targetPos = mKogane->getTargetPosition();
-	return (qdist2(targetPos->x, targetPos->z, mKogane->mPosition.x, mKogane->mPosition.z) < 10.0f) ? true : false;
+	return (qdist2(targetPos->x, targetPos->z, mKogane->mSRT.t.x, mKogane->mSRT.t.z) < 10.0f) ? true : false;
 }
 
 /*
@@ -627,13 +627,13 @@ void KoganeAi::initAppear(int nextState)
 	mKogane->setWalkTimer(0.0f);
 	mKogane->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Move1, this));
 
-	mKogane->mPosition.x += 5.0f * sinf(mKogane->mRotation.y);
-	mKogane->mPosition.z += 5.0f * cosf(mKogane->mRotation.y);
+	mKogane->mSRT.t.x += 5.0f * sinf(mKogane->mSRT.r.y);
+	mKogane->mSRT.t.z += 5.0f * cosf(mKogane->mSRT.r.y);
 	mKogane->setIsOrganic(true);
 	mKogane->setShadowNeed(true);
 	setNewTargetPosition();
 	resultFlagOn();
-	effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mSRT.t, nullptr, nullptr);
 }
 
 /*
@@ -655,7 +655,7 @@ void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
 	}
 
 	if (mEffectType >= 0) {
-		effectMgr->create(mEffectType, mKogane->mPosition, nullptr, nullptr);
+		effectMgr->create(mEffectType, mKogane->mSRT.t, nullptr, nullptr);
 	}
 
 	resultFlagOn();
@@ -677,7 +677,7 @@ void KoganeAi::initStopWalk(int nextState)
 	    + NsMathF::getRand(NsLibMath<f32>::abs(C_KOGANE_PROP(mKogane).mIdleTimeMax() - C_KOGANE_PROP(mKogane).mIdleTimeMin()));
 
 	if (mEffectType >= 0) {
-		effectMgr->create(mEffectType, mKogane->mPosition, nullptr, nullptr);
+		effectMgr->create(mEffectType, mKogane->mSRT.t, nullptr, nullptr);
 	}
 
 	resultFlagOn();
@@ -699,20 +699,20 @@ void KoganeAi::initCreate(int nextState)
 	Vector3f vec2(sinf(perpDir), 0.0f, cosf(perpDir));
 	Vector3f vec3 = -vec2;
 
-	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mKogane->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl1 = effectMgr->create(EffectMgr::EFF_Kogane_Hit, mKogane->mSRT.t, nullptr, nullptr);
 	if (ptcl1) {
 		ptcl1->setEmitDir(vec1);
 	}
-	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Kogane_SmokeR, mKogane->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl2 = effectMgr->create(EffectMgr::EFF_Kogane_SmokeR, mKogane->mSRT.t, nullptr, nullptr);
 	if (ptcl2) {
 		ptcl2->setEmitDir(vec2);
 	}
-	zen::particleGenerator* ptcl3 = effectMgr->create(EffectMgr::EFF_Kogane_SmokeL, mKogane->mPosition, nullptr, nullptr);
+	zen::particleGenerator* ptcl3 = effectMgr->create(EffectMgr::EFF_Kogane_SmokeL, mKogane->mSRT.t, nullptr, nullptr);
 	if (ptcl3) {
 		ptcl3->setEmitDir(vec3);
 	}
 
-	rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mPosition);
+	rumbleMgr->start(RUMBLE_Unk15, 0, mKogane->mSRT.t);
 	resultFlagOn();
 }
 
@@ -723,15 +723,15 @@ void KoganeAi::initCreate(int nextState)
  */
 void KoganeAi::dieState()
 {
-	if (mKogane->mScale.x > 0.0f) {
-		mKogane->mScale.x -= C_KOGANE_PROP(mKogane).mDisappearScaleDownSpeed() * gsys->getFrameTime();
-		if (mKogane->mScale.x < 0.0f) {
-			mKogane->mScale.x = 0.0f;
+	if (mKogane->mSRT.s.x > 0.0f) {
+		mKogane->mSRT.s.x -= C_KOGANE_PROP(mKogane).mDisappearScaleDownSpeed() * gsys->getFrameTime();
+		if (mKogane->mSRT.s.x < 0.0f) {
+			mKogane->mSRT.s.x = 0.0f;
 		}
 
-		mKogane->mScale.y = mKogane->mScale.z = mKogane->mScale.x;
+		mKogane->mSRT.s.y = mKogane->mSRT.s.z = mKogane->mSRT.s.x;
 	} else {
-		effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mSRT.t, nullptr, nullptr);
 		mKogane->doKill();
 	}
 }

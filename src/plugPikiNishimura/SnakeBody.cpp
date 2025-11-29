@@ -32,40 +32,37 @@ DEFINE_PRINT("SnakeBody");
 void SnakeBody::setBodyOnGroundEffect()
 {
 	mOnGroundCallBack->set(mSnake);
-	zen::particleGenerator* groundPtclGen = effectMgr->create(EffectMgr::EFF_Snake_OnGround, mSnake->mPosition, mOnGroundCallBack, nullptr);
+	zen::particleGenerator* groundPtclGen = effectMgr->create(EffectMgr::EFF_Snake_OnGround, mSnake->mSRT.t, mOnGroundCallBack, nullptr);
 	if (groundPtclGen) {
-		groundPtclGen->setEmitPosPtr(&mSnake->mPosition);
+		groundPtclGen->setEmitPosPtr(&mSnake->mSRT.t);
 	}
 
 	mRotateCallBack->set(mSnake);
-	zen::particleGenerator* rotatePtclGen = effectMgr->create(EffectMgr::EFF_Snake_Rotate, mSnake->mPosition, mRotateCallBack, nullptr);
+	zen::particleGenerator* rotatePtclGen = effectMgr->create(EffectMgr::EFF_Snake_Rotate, mSnake->mSRT.t, mRotateCallBack, nullptr);
 	if (rotatePtclGen) {
-		rotatePtclGen->setEmitPosPtr(&mSnake->mPosition);
+		rotatePtclGen->setEmitPosPtr(&mSnake->mSRT.t);
 	}
 
 	// water?
-	if (mSnake->getMapAttribute(mSnake->mPosition) == ATTR_Water) {
-		effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, mSnake->mPosition, nullptr, nullptr);
-		zen::particleGenerator* waterPtclGen1
-		    = effectMgr->create(EffectMgr::EFF_RippleWhite, mSnake->mPosition, mOnGroundCallBack, nullptr);
+	if (mSnake->getMapAttribute(mSnake->mSRT.t) == ATTR_Water) {
+		effectMgr->create(EffectMgr::EFF_Frog_BubbleRingS, mSnake->mSRT.t, nullptr, nullptr);
+		zen::particleGenerator* waterPtclGen1 = effectMgr->create(EffectMgr::EFF_RippleWhite, mSnake->mSRT.t, mOnGroundCallBack, nullptr);
 		if (waterPtclGen1) {
-			waterPtclGen1->setEmitPosPtr(&mSnake->mPosition);
+			waterPtclGen1->setEmitPosPtr(&mSnake->mSRT.t);
 			waterPtclGen1->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen1->getScaleSize();
 			waterPtclGen1->setScaleSize(3.0f * f0);
 		}
-		zen::particleGenerator* waterPtclGen2
-		    = effectMgr->create(EffectMgr::EFF_RippleSurface, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		zen::particleGenerator* waterPtclGen2 = effectMgr->create(EffectMgr::EFF_RippleSurface, mSnake->mSRT.t, mOnGroundCallBack, nullptr);
 		if (waterPtclGen2) {
-			waterPtclGen2->setEmitPosPtr(&mSnake->mPosition);
+			waterPtclGen2->setEmitPosPtr(&mSnake->mSRT.t);
 			waterPtclGen2->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen2->getScaleSize();
 			waterPtclGen2->setScaleSize(3.0f * f0);
 		}
-		zen::particleGenerator* waterPtclGen3
-		    = effectMgr->create(EffectMgr::EFF_RippleBlack, mSnake->mPosition, mOnGroundCallBack, nullptr);
+		zen::particleGenerator* waterPtclGen3 = effectMgr->create(EffectMgr::EFF_RippleBlack, mSnake->mSRT.t, mOnGroundCallBack, nullptr);
 		if (waterPtclGen3) {
-			waterPtclGen3->setEmitPosPtr(&mSnake->mPosition);
+			waterPtclGen3->setEmitPosPtr(&mSnake->mSRT.t);
 			waterPtclGen3->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
 			f32 f0 = waterPtclGen3->getScaleSize();
 			waterPtclGen3->setScaleSize(3.0f * f0);
@@ -162,8 +159,8 @@ void SnakeBody::updateBlendingRatio()
  */
 void SnakeBody::setInitializePosition()
 {
-	mSnake->mPosition.x = mSnake->getInitPosition()->x;
-	mSnake->mPosition.z = mSnake->getInitPosition()->z;
+	mSnake->mSRT.t.x = mSnake->getInitPosition()->x;
+	mSnake->mSRT.t.z = mSnake->getInitPosition()->z;
 }
 
 /*
@@ -218,7 +215,7 @@ void SnakeBody::makeTurnVelocity()
 
 		// Determine the direction the snake needs to move to reach its target
 		// This creates the primary steering force that guides the snake's movement
-		Vector3f targetDirection = mSnake->mPosition - *mSnake->getTargetPosition();
+		Vector3f targetDirection = mSnake->mSRT.t - *mSnake->getTargetPosition();
 		targetDirection.normalise();
 
 		for (int i = 1; i < 7; i++) {
@@ -869,7 +866,7 @@ void SnakeBody::makeHeadPosition()
 
 		if (mSnake->mAnimator.getCounter() > keyVals[mSnake->mSnakeAi->mAttackId][0]
 		    && mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->mAttackId][2]) {
-			f32 yDiff = mSnake->mSnakeAi->mAttackPositions[mSnake->mSnakeAi->mAttackId].y - mSnake->mPosition.y;
+			f32 yDiff = mSnake->mSnakeAi->mAttackPositions[mSnake->mSnakeAi->mAttackId].y - mSnake->mSRT.t.y;
 			if (mSnake->mAnimator.getCounter() < keyVals[mSnake->mSnakeAi->mAttackId][1]) {
 				mSegmentMatrices[SnakeJointType::Neck].mMtx[1][3]
 				    += (mSnake->mAnimator.getCounter() - keyVals[mSnake->mSnakeAi->mAttackId][0])
@@ -881,7 +878,7 @@ void SnakeBody::makeHeadPosition()
 			}
 		}
 	} else if (mSnake->getCurrentState() == SNAKEAI_Die && mSnake->mAnimator.getCounter() > 60.0f) {
-		f32 yDiff = mSnake->mSnakeAi->mAttackPositions[1].y - mSnake->mPosition.y;
+		f32 yDiff = mSnake->mSnakeAi->mAttackPositions[1].y - mSnake->mSRT.t.y;
 		if (mSnake->mAnimator.getCounter() < 70.0f) {
 			mSegmentMatrices[SnakeJointType::Neck].mMtx[1][3] += (mSnake->mAnimator.getCounter() - 60.0f) / 10.0f * yDiff;
 		} else {

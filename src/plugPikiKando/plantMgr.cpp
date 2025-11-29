@@ -80,7 +80,7 @@ void Plant::startAI(int)
 	startMotion(PlantMotion::Touch);
 	mMotionSpeed = 0.0f;
 	mPlantAnimator.startMotion(PaniMotionInfo(PlantMotion::Touch));
-	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	mSRT.t.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
 	plantMgr->mAI->start(this, PlantAI::STATE_Wait);
 	if (mPlantType == PLANT_Mizukusa) {
 		mMotionSpeed = 30.0f;
@@ -108,8 +108,8 @@ void Plant::update()
 		return;
 	}
 
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 	if (mPlantType == PLANT_Hae || mPlantType == PLANT_Mizukusa || !mGrid.aiCulling()) {
 		doAnimation();
 		plantMgr->mAI->exec(this);
@@ -132,8 +132,8 @@ void Plant::refresh(Graphics& gfx)
 
 		f32 rad = 2.0f * getBoundingSphereRadius();
 		if (rad > 0.0f) {
-			BoundBox box(Vector3f(mPosition.x - rad, mPosition.y, mPosition.z - rad),
-			             Vector3f(mPosition.x + rad, mPosition.y + 2.0f * rad, mPosition.z + rad));
+			BoundBox box(Vector3f(mSRT.t.x - rad, mSRT.t.y, mSRT.t.z - rad),
+			             Vector3f(mSRT.t.x + rad, mSRT.t.y + 2.0f * rad, mSRT.t.z + rad));
 
 			if (!gfx.mCamera->isBoundVisible(box, 0x8000 | 0x20 | 0x10 | 0x1 | 0x2 | 0x4 | 0x8) && !_394) {
 				C_SAI(this)->start(this, PlantAI::STATE_Wait);
@@ -145,7 +145,7 @@ void Plant::refresh(Graphics& gfx)
 
 	mIsCulled = false;
 	_394      = false;
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f mtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 
@@ -443,8 +443,8 @@ Creature* GenObjectPlant::birth(BirthInfo& info)
 	Creature* plant = plantMgr->birth();
 	if (plant) {
 		plant->init(info.mPosition);
-		plant->mRotation      = info.mRotation;
-		plant->mFaceDirection = plant->mRotation.y;
+		plant->mSRT.r         = info.mRotation;
+		plant->mFaceDirection = plant->mSRT.r.y;
 
 		Plant* pPlant = static_cast<Plant*>(plant);
 		pPlant->reset(mPlantType);

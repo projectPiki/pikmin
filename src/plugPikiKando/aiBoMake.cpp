@@ -87,7 +87,7 @@ void ActBoMake::initApproach()
  */
 int ActBoMake::exeApproach()
 {
-	Vector3f direction = mBuildObject->mPosition - mPiki->mPosition;
+	Vector3f direction = mBuildObject->mSRT.t - mPiki->mSRT.t;
 	if (direction.normalise() - mBuildObject->getCentreSize() - mPiki->getCentreSize() < 3.0f) {
 		initWork();
 		return ACTOUT_Continue;

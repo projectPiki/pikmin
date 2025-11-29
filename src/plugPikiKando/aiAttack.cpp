@@ -370,7 +370,7 @@ void ActJumpAttack::init(Creature* creature)
 		mPiki->startMotion(PaniMotionInfo(PIKIANIM_Run, this), PaniMotionInfo(PIKIANIM_Run));
 	}
 
-	mTargetCollider = creature->getNearestCollPart(mPiki->mPosition, '*t**');
+	mTargetCollider = creature->getNearestCollPart(mPiki->mSRT.t, '*t**');
 }
 
 /*
@@ -539,7 +539,7 @@ int ActJumpAttack::exec()
 		doClimb();
 		break;
 	case 2: {
-		Vector3f direction = getAttackPos() - mPiki->mPosition;
+		Vector3f direction = getAttackPos() - mPiki->mSRT.t;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 unused         = direction.normalise();
 		f32 angle          = angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection);
@@ -573,7 +573,7 @@ int ActJumpAttack::exec()
 	} break;
 
 	case 0: {
-		Vector3f direction = getAttackPos() - mPiki->mPosition;
+		Vector3f direction = getAttackPos() - mPiki->mSRT.t;
 		f32 dist2D         = speedy_sqrtf(direction.x * direction.x + direction.z * direction.z);
 		f32 dist3D         = direction.normalise();
 		f32 angle          = absF(angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection));
@@ -622,7 +622,7 @@ int ActJumpAttack::exec()
 		}
 
 		if (mAttackState == 1) {
-			Vector3f direction = getAttackPos() - mPiki->mPosition;
+			Vector3f direction = getAttackPos() - mPiki->mSRT.t;
 			f32 angle          = angDist(atan2f(direction.x, direction.z), mPiki->mFaceDirection);
 			f32 sep            = direction.length();
 			f32 dist           = sep - getAttackSize() - mPiki->getCentreSize();
@@ -799,7 +799,7 @@ void ActJumpAttack::doClimb()
 	if (target && target->mCollInfo && target->mCollInfo->hasInfo()) {
 		CollPart* part = target->mCollInfo->getSphere('cent');
 		if (part) {
-			Vector3f dir = part->mCentre - mPiki->mPosition;
+			Vector3f dir = part->mCentre - mPiki->mSRT.t;
 			f32 sep      = dir.length();
 			f32 dist     = sep - part->mRadius - mPiki->getCentreSize();
 			PRINT_KANDO("  :: climb target distance = %.1f\n", dist);
@@ -825,8 +825,8 @@ void ActJumpAttack::doClimb()
 
 	bool check = true;
 	for (int i = 0; i < 3; i++) {
-		if (mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition) < -2.0f * mPiki->getCentreSize()) {
-			PRINT_KANDO("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mPosition),
+		if (mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mSRT.t) < -2.0f * mPiki->getCentreSize()) {
+			PRINT_KANDO("out of tri : dist is %.1f | centre * -2.0f = %.1f\n", mPiki->mClimbingTri->mEdgePlanes[i].dist(mPiki->mSRT.t),
 			            -2.0f * mPiki->getCentreSize());
 			check = false;
 		}

@@ -32,7 +32,7 @@ DEFINE_PRINT("pikiheadItem")
  */
 void PikiHeadItem::startWaterEffect()
 {
-	EffectParm parm(&mPosition);
+	EffectParm parm(&mSRT.t);
 	mRippleEfx->emit(parm);
 }
 
@@ -60,7 +60,7 @@ void PikiHeadItem::playSound(int id)
 
 	if (id > 0) {
 		int sound = id + 0x108;
-		seSystem->playPikiSound(sound, mPosition);
+		seSystem->playPikiSound(sound, mSRT.t);
 		PRINT("SEF_PIKI_GROW1 = %d / seIdx = %d\n", SEF_PIKI_GROW1, sound);
 		seSystem->getJacID(sound);
 		PRINT("play (idx=%d) Pikihead sound jac =%d/simz(dmg=%d grow1=%d)\n", id, sound, SE_PIKI_DAMAGED, 0x23);
@@ -146,7 +146,7 @@ void PikiHeadItem::startAI(int)
 	mItemAnimator.startMotion(PaniMotionInfo(PikiHeadMotion::TaneFall));
 
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 
 	enableAirResist(10.0f - (0.5f * gsys->getRand(1.0f)));
 
@@ -158,7 +158,7 @@ void PikiHeadItem::startAI(int)
 
 	GameStat::mePikis.inc(mSeedColor);
 	GameStat::update();
-	_3D4                  = mPosition;
+	_3D4                  = mSRT.t;
 	mFreeLightEfx->mColor = mSeedColor;
 	EffectParm parm(&_3D4);
 	mFreeLightEfx->emit(parm);
@@ -233,11 +233,11 @@ void PikiHeadItem::setColor(int color)
 void PikiHeadItem::refresh(Graphics& gfx)
 {
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
-	f32 light = mapMgr->getLight(mPosition.x, mPosition.z);
+	mSRT.s.set(scale, scale, scale);
+	f32 light = mapMgr->getLight(mSRT.t.x, mSRT.t.z);
 	if (mItemShapeObject) {
 		Matrix4f mtx;
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		mItemShapeObject->mShape->mMaterialList->setColour(Piki::pikiColors[mSeedColor]);
 
 		if (!isCreatureFlag(CF_IsOnGround) && mVelocity.length() > 0.0f) {
@@ -255,7 +255,7 @@ void PikiHeadItem::refresh(Graphics& gfx)
 			zVel.normalise();
 
 			makePostureMatrix(xVel, vel, zVel, mConstrainedMoveMtx);
-			mConstrainedMoveMtx.setTranslation(mPosition);
+			mConstrainedMoveMtx.setTranslation(mSRT.t);
 			gfx.mCamera->mLookAtMtx.multiplyTo(mConstrainedMoveMtx, mtx);
 		} else {
 			gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
@@ -300,7 +300,7 @@ bool PikiHeadItem::interactBikkuri(InteractBikkuri& act)
 		piki->init(navi);
 		piki->initColor(mSeedColor);
 		piki->setFlower(mFlowerStage);
-		piki->resetPosition(mPosition);
+		piki->resetPosition(mSRT.t);
 
 		PikiMgr::meNukiMode = true;
 		piki->changeMode(PikiMode::FreeMode, nullptr);
@@ -329,7 +329,7 @@ bool PikiHeadItem::interactSwallow(InteractSwallow& act)
 		piki->init(navi);
 		piki->initColor(mSeedColor);
 		piki->setFlower(mFlowerStage);
-		piki->resetPosition(mPosition);
+		piki->resetPosition(mSRT.t);
 		piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
 		kill(false);
 

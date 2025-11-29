@@ -109,7 +109,7 @@ void BTeki::viewFinishMotion()
  */
 Vector3f BTeki::viewGetScale()
 {
-	return mScale;
+	return mSRT.s;
 }
 
 /*
@@ -626,10 +626,10 @@ void BTeki::doAI()
 		}
 
 		if (getTekiOption(TEKIOPT_Pressed)) {
-			mScale.set(1.2f, 0.2f, 1.2f);
+			mSRT.s.set(1.2f, 0.2f, 1.2f);
 		} else {
 			f32 scale = getScale();
-			mScale.set(scale * factor, scale / factor, scale * factor);
+			mSRT.s.set(scale * factor, scale / factor, scale * factor);
 		}
 
 		updateLifeGauge();
@@ -774,7 +774,7 @@ void BTeki::gravitate(f32 accel)
 	mActionVelocity.y -= accel * fTime;
 	Vector3f vec(mActionVelocity);
 	vec.scale(fTime);
-	mPosition.add(vec);
+	mSRT.t.add(vec);
 	f32 seaLevel = getSeaLevel();
 	if (getPosition().y <= seaLevel) {
 		getPosition().y = seaLevel;
@@ -2107,7 +2107,7 @@ void BTeki::drawTekiShape(Graphics& gfx)
 	q1.genVectorZ(zVec);
 	q1.rotate(zVec, _3A4);
 
-	mWorldMtx.makeVQS(mPosition, q1, mScale);
+	mWorldMtx.makeVQS(mSRT.t, q1, mSRT.s);
 
 	Matrix4f onCamMtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
@@ -2399,7 +2399,7 @@ bool BTeki::inWaterTeki()
  */
 void BTeki::moveNestPosition()
 {
-	mPosition = mPersonality->mNestPosition;
+	mSRT.t = mPersonality->mNestPosition;
 }
 
 /*

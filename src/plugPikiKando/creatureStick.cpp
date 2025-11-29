@@ -167,13 +167,13 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 	if (stickPart) {
 		worldMatrix = mStickPart->getMatrix(); // Likely bug: should use stickPart instead of mStickPart
 	} else {
-		worldMatrix.makeSRT(obj->mScale, obj->mRotation, obj->mPosition);
+		worldMatrix.makeSRT(obj->mSRT.s, obj->mSRT.r, obj->mSRT.t);
 	}
 
 	worldMatrix.inverse(&invWorldMatrix);
 
 	// Start from current position
-	mAttachPosition = mPosition;
+	mAttachPosition = mSRT.t;
 
 	if (stickPart) {
 		// Position relative to attach point's center
@@ -184,10 +184,10 @@ void Creature::startStickObjectSphere(Creature* obj, CollPart* stickPart, f32 st
 		mAttachPosition = mAttachPosition * (stickPart->mRadius + stickDist) + stickPart->mCentre;
 	} else {
 		// Same process but using full object's center and size
-		mAttachPosition = mAttachPosition - obj->mPosition;
+		mAttachPosition = mAttachPosition - obj->mSRT.t;
 		mAttachPosition.normalise();
 
-		mAttachPosition = mAttachPosition * (obj->getCentreSize() + stickDist) + obj->mPosition;
+		mAttachPosition = mAttachPosition * (obj->getCentreSize() + stickDist) + obj->mSRT.t;
 	}
 
 	// Convert final position to object's local space
@@ -204,7 +204,7 @@ void Creature::startStickObjectTube(Creature* obj, CollPart* stickPart)
 {
 	Tube tube;
 	stickPart->makeTube(tube);
-	f32 ratio = tube.getPosRatio(mPosition);
+	f32 ratio = tube.getPosRatio(mSRT.t);
 	if (ratio < 0.0f) {
 		ratio = 0.0f;
 	} else if (ratio > 1.0f) {
@@ -214,12 +214,12 @@ void Creature::startStickObjectTube(Creature* obj, CollPart* stickPart)
 	mAttachPosition.x = ratio;
 	Vector3f vec1;
 	Vector3f vec2;
-	tube.getPosGradient(mPosition, ratio, vec1, vec2);
-	mPosition = vec1;
+	tube.getPosGradient(mSRT.t, ratio, vec1, vec2);
+	mSRT.t = vec1;
 	vec2.normalise();
 
 	Vector3f vec3 = tube.setPos(mAttachPosition.x);
-	vec3          = vec3 - mPosition;
+	vec3          = vec3 - mSRT.t;
 	vec3.normalise();
 	Vector3f yVec(vec2);
 	Vector3f xVec(vec3);
@@ -429,9 +429,9 @@ bool Creature::startRope(RopeCreature* rope, f32 ropeRatio)
 
 	mRope = rope;
 
-	Cylinder cylinder(rope->mPosition, rope->mParentRope->mPosition, 2.0f);
-	mRopePosRatio = cylinder.getPosRatio(mPosition);
-	mPosition     = rope->getRopePos(mRopePosRatio);
+	Cylinder cylinder(rope->mSRT.t, rope->mParentRope->mSRT.t, 2.0f);
+	mRopePosRatio = cylinder.getPosRatio(mSRT.t);
+	mSRT.t        = rope->getRopePos(mRopePosRatio);
 
 	if (!rope->mRopeListHead) {
 		rope->mRopeListHead = this;
@@ -581,7 +581,7 @@ void Creature::updateStickPlatform()
 {
 	if (mCollPlatNormal && mClimbingTri) {
 		if (mStickPart->isClimbable() && isCreatureFlag(CF_IsClimbing)) {
-			Vector3f pos(mPosition);
+			Vector3f pos(mSRT.t);
 			moveNew(gsys->getFrameTime());
 			moveAttach();
 		}
@@ -640,7 +640,7 @@ void Creature::updateStickSphere()
 	if (mStickPart) {
 		partMtx = mStickPart->getMatrix();
 	} else {
-		partMtx.makeSRT(stickObj->mScale, stickObj->mRotation, stickObj->mPosition);
+		partMtx.makeSRT(stickObj->mSRT.s, stickObj->mSRT.r, stickObj->mSRT.t);
 	}
 
 	Vector3f attachPos(mAttachPosition);
@@ -649,19 +649,19 @@ void Creature::updateStickSphere()
 	if (mStickPart) {
 		dir = mStickPart->mCentre - attachPos;
 	} else {
-		dir = stickObj->mPosition - attachPos;
+		dir = stickObj->mSRT.t - attachPos;
 	}
 
-	mRotation.set(0.0f, atan2f(dir.x, dir.z), 0.0f);
+	mSRT.r.set(0.0f, atan2f(dir.x, dir.z), 0.0f);
 
-	mVelocity       = attachPos - mPosition;
+	mVelocity       = attachPos - mSRT.t;
 	f32 fTime       = gsys->getFrameTime();
 	mVelocity       = mVelocity * (1.0f / fTime);
 	mTargetVelocity = mVelocity;
 	moveNew(fTime);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mLastPosition = mPosition;
+	mLastPosition = mSRT.t;
 }
 
 /*
@@ -678,10 +678,10 @@ void Creature::updateStickPellet()
 	Pellet* stickObj = static_cast<Pellet*>(getStickObject());
 	Matrix4f pelMtx;
 	if (stickObj->isRealDynamics()) {
-		pelMtx.makeVQS(stickObj->mPosition, stickObj->mRotationQuat, stickObj->mScale);
+		pelMtx.makeVQS(stickObj->mSRT.t, stickObj->mRotationQuat, stickObj->mSRT.s);
 	} else {
 		// this should really be makeSRT(SRT(const SRT&)) not vectors but bite me.
-		pelMtx.makeSRT_(SRT(stickObj->mScale, stickObj->mRotation, stickObj->mPosition));
+		pelMtx.makeSRT_(SRT(stickObj->mSRT.s, stickObj->mSRT.r, stickObj->mSRT.t));
 	}
 
 	Vector3f attachPos(mAttachPosition);
@@ -693,11 +693,11 @@ void Creature::updateStickPellet()
 	attachPos.multMatrix(pelMtx);
 
 	Vector3f dir;
-	dir         = stickObj->mPosition - attachPos;
+	dir         = stickObj->mSRT.t - attachPos;
 	f32 faceDir = atan2f(dir.x, dir.z);
-	mRotation.set(0.0f, faceDir, 0.0f);
+	mSRT.r.set(0.0f, faceDir, 0.0f);
 	mFaceDirection = faceDir;
-	mVelocity      = attachPos - mPosition;
+	mVelocity      = attachPos - mSRT.t;
 
 	f32 fTime = gsys->getFrameTime();
 	f32 speed = mVelocity.length();
@@ -712,7 +712,7 @@ void Creature::updateStickPellet()
 	moveNew(fTime);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	mLastPosition = mPosition;
+	mLastPosition = mSRT.t;
 
 	STACK_PAD_VAR(1);
 }
@@ -728,9 +728,9 @@ void Creature::updateStickTube()
 	mStickPart->makeTube(tube);
 	Vector3f vec1;
 	Vector3f vec2;
-	tube.getPosGradient(mPosition, mAttachPosition.x, vec1, vec2);
+	tube.getPosGradient(mSRT.t, mAttachPosition.x, vec1, vec2);
 	Vector3f vec3 = tube.setPos(mAttachPosition.x);
-	vec3          = vec3 - mPosition;
+	vec3          = vec3 - mSRT.t;
 	vec3.normalise();
 	Vector3f unused;
 	Vector3f vec4;
@@ -749,13 +749,13 @@ void Creature::updateStickTube()
 	zVec.normalise();
 
 	makePostureMatrix(xVec, yVec, zVec, mConstrainedMoveMtx);
-	f32 ratio         = tube.getPosRatio(mPosition);
+	f32 ratio         = tube.getPosRatio(mSRT.t);
 	mAttachPosition.x = ratio;
 	if (ratio > 1.0f) {
 		endStickObject();
 	} else {
-		tube.getPosGradient(mPosition, mAttachPosition.x, vec1, vec2);
-		mPosition = vec1;
+		tube.getPosGradient(mSRT.t, mAttachPosition.x, vec1, vec2);
+		mSRT.t = vec1;
 	}
 }
 
@@ -799,8 +799,8 @@ void Creature::updateStickRope()
 		ERROR(buf);
 	}
 
-	Cylinder cyl(rope->mPosition, rope->mParentRope->mPosition, scale);
-	mRopePosRatio = cyl.getPosRatio(mPosition);
+	Cylinder cyl(rope->mSRT.t, rope->mParentRope->mSRT.t, scale);
+	mRopePosRatio = cyl.getPosRatio(mSRT.t);
 	if (cyl.mStartPoint.x == cyl.mEndPoint.x && cyl.mStartPoint.y == cyl.mEndPoint.y && cyl.mStartPoint.z == cyl.mEndPoint.z) {
 		ERROR("rope kowareta!\n");
 	}
@@ -832,8 +832,8 @@ void Creature::updateStickRope()
 	vec3.normalise();
 	vec3 = vec3 * scale;
 	if (rope) {
-		mPosition = rope->getRopePos(mRopePosRatio);
+		mSRT.t = rope->getRopePos(mRopePosRatio);
 	}
 
-	mPosition = mPosition - vec3;
+	mSRT.t = mSRT.t - vec3;
 }

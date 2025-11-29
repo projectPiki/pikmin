@@ -72,7 +72,7 @@ void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
 	if (piki->getState() != PIKISTATE_LookAt) {
 		Creature* collider = msg->mEvent.mCollider;
 		if (collider == mWall && mState != STATE_BreakWall && msg->mEvent.mColliderPart->getID() == 'gate' && !piki->isStickTo()) {
-			mHitPikminPosition = piki->mPosition;
+			mHitPikminPosition = piki->mSRT.t;
 			initBreakWall();
 		}
 		collider->isPiki();
@@ -132,7 +132,7 @@ int ActBreakWall::exec()
 		return gotoWall();
 
 	case STATE_BreakWall:
-		Vector3f sep = mHitPikminPosition - mPiki->mPosition;
+		Vector3f sep = mHitPikminPosition - mPiki->mSRT.t;
 		if (sep.length() > 5.0f) {
 			mState = STATE_GotoWall;
 			break;
@@ -150,7 +150,7 @@ int ActBreakWall::exec()
  */
 int ActBreakWall::gotoWall()
 {
-	Vector3f direction = mWall->mPosition - mPiki->mPosition;
+	Vector3f direction = mWall->mSRT.t - mPiki->mSRT.t;
 	direction.normalise();
 	mPiki->setSpeed(1.0f, direction);
 	return ACTOUT_Continue;

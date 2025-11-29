@@ -225,7 +225,7 @@ int ActFlower::exec()
 	if (heldItem) {
 		// The iconic nectar drinking animation
 		f32 shrinkScale = (1.0f - mElapsedTime / 1.0f) * 0.3f;
-		heldItem->mScale.set(shrinkScale, shrinkScale, shrinkScale);
+		heldItem->mSRT.s.set(shrinkScale, shrinkScale, shrinkScale);
 	}
 
 	if (mIsAnimationComplete) {

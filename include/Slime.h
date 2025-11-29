@@ -239,13 +239,13 @@ struct Slime : public Boss {
 	struct BoundSphereUpdater : public CollPartUpdater {
 		BoundSphereUpdater(Slime* slime) { mSlime = slime; }
 
-		virtual Vector3f getPos() { return mSlime->mPosition; } // _08
-		virtual f32 getSize()                                   // _0C
+		virtual Vector3f getPos() { return mSlime->mSRT.t; } // _08
+		virtual f32 getSize()                                // _0C
 		{
 			mSize = 0.0f;
 			for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 				if (mSlime->mSlimeCreatures[i]) {
-					f32 dist = mSlime->mPosition.distance(mSlime->mSlimeCreatures[i]->mPosition);
+					f32 dist = mSlime->mSRT.t.distance(mSlime->mSlimeCreatures[i]->mSRT.t);
 					if (dist > mSize) {
 						mSize = dist;
 					}
@@ -271,8 +271,8 @@ struct Slime : public Boss {
 	struct CollideSphereUpdater : public CollPartUpdater {
 		CollideSphereUpdater() { }
 
-		virtual Vector3f getPos() { return mCreature->mPosition; } // _08
-		virtual f32 getSize()                                      // _0C
+		virtual Vector3f getPos() { return mCreature->mSRT.t; } // _08
+		virtual f32 getSize()                                   // _0C
 		{
 			Vector3f adjustVecs[4];
 
@@ -285,12 +285,12 @@ struct Slime : public Boss {
 			for (int i = 0; i < 4; i++) {
 
 				// weightPos is kind of the centre of mass?
-				Vector3f weightPos = mCreature->mPosition
+				Vector3f weightPos = mCreature->mSRT.t
 				                   + static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxRadiusCompensation()
 				                         * adjustVecs[i]; // max radius compensation
 
 				Vector3f farPos  = weightPos;
-				Vector3f nearPos = mCreature->mPosition;
+				Vector3f nearPos = mCreature->mSRT.t;
 
 				// iterate like 10 times to jiggle the weightPos closer to the middle of the 4 stick slimes
 				for (int j = 0; j < static_cast<SlimeProp*>(mSlime->mProps)->mSlimeProps.mMaxSortCount(); j++) { // number of sorts?
@@ -302,9 +302,9 @@ struct Slime : public Boss {
 
 					for (int k = 0; k < 4; k++) {
 						// why this isn't a vector distance, i have no clue.
-						f32 x = weightPos.x - mSlime->mSlimeCreatures[k]->mPosition.x;
-						f32 y = weightPos.y - mSlime->mSlimeCreatures[k]->mPosition.y;
-						f32 z = weightPos.z - mSlime->mSlimeCreatures[k]->mPosition.z;
+						f32 x = weightPos.x - mSlime->mSlimeCreatures[k]->mSRT.t.x;
+						f32 y = weightPos.y - mSlime->mSlimeCreatures[k]->mSRT.t.y;
+						f32 z = weightPos.z - mSlime->mSlimeCreatures[k]->mSRT.t.z;
 						score += mSlime->mAppearanceScale / std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z));
 					}
 
@@ -317,7 +317,7 @@ struct Slime : public Boss {
 				}
 
 				// keep track of smallest distance from this piece of slime
-				f32 dist = weightPos.distance(mCreature->mPosition);
+				f32 dist = weightPos.distance(mCreature->mSRT.t);
 				if (minDist > dist) {
 					minDist = dist;
 				}

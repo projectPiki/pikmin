@@ -131,22 +131,22 @@ void King::update()
  */
 void King::draw(Graphics& gfx)
 {
-	Vector3f lightDirection = mapMgr->mDayMgr->mSunPosition - mPosition;
+	Vector3f lightDirection = mapMgr->mDayMgr->mSunPosition - mSRT.t;
 	lightDirection.y        = 0.0f;
 	lightDirection.normalise();
 	lightDirection.multiply(150.0f);
 
 	Vector3f centre = mCollInfo->getBoundingSphere()->mCentre;
-	f32 yDiff       = centre.y - mPosition.y;
+	f32 yDiff       = centre.y - mSRT.t.y;
 	if (yDiff > 0.0f) {
 		centre.y += yDiff * 3.0f;
 	}
 
 	mShadowCaster.mSourcePosition.set(centre.x + lightDirection.x, centre.y + 1000.0f, centre.z + lightDirection.z);
-	mShadowCaster.mTargetPosition.set(mPosition.x, mPosition.y + 50.0f, mPosition.z);
+	mShadowCaster.mTargetPosition.set(mSRT.t.x, mSRT.t.y + 50.0f, mSRT.t.z);
 
 	Matrix4f viewMatrix;
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, viewMatrix);
 
 	mAnimator.updateContext();

@@ -516,7 +516,7 @@ void AIPerf::collectPikis(Menu& menu)
 	{
 		Creature* piki = *iter;
 		if (piki->isAlive() && !piki->isStickTo()) {
-			piki->mPosition = playerPos;
+			piki->mSRT.t = playerPos;
 		}
 	}
 }
@@ -581,7 +581,7 @@ void AIPerf::breakSluice(Menu& menu)
 				continue;
 			}
 
-			f32 distance = qdist2(player->mCursorWorldPos.x, player->mCursorWorldPos.z, wall->mPosition.x, wall->mPosition.z);
+			f32 distance = qdist2(player->mCursorWorldPos.x, player->mCursorWorldPos.z, wall->mSRT.t.x, wall->mSRT.t.z);
 			if (distance < distanceToWall) {
 				distanceToWall = distance;
 				nearestWall    = wall;
@@ -598,7 +598,7 @@ void AIPerf::breakSluice(Menu& menu)
 				continue;
 			}
 
-			f32 distance = qdist2(player->mCursorWorldPos.x, player->mCursorWorldPos.z, i->mPosition.x, i->mPosition.z);
+			f32 distance = qdist2(player->mCursorWorldPos.x, player->mCursorWorldPos.z, i->mSRT.t.x, i->mSRT.t.z);
 			if (distance < distToBridge) {
 				distToBridge  = distance;
 				closestBridge = (Bridge*)i;

@@ -235,7 +235,7 @@ int ActShootCreature::exec()
 	}
 
 	if (mState == STATE_Chasing) {
-		Vector3f dirToTarget = mTarget.getPtr()->mPosition - mPiki->mPosition;
+		Vector3f dirToTarget = mTarget.getPtr()->mSRT.t - mPiki->mSRT.t;
 		f32 distanceToTarget = dirToTarget.length();
 
 		dirToTarget = (1.0f / distanceToTarget) * dirToTarget;
@@ -249,7 +249,7 @@ int ActShootCreature::exec()
 		}
 	}
 
-	Vector3f sep    = mTarget.getPtr()->mPosition - mPiki->mPosition;
+	Vector3f sep    = mTarget.getPtr()->mSRT.t - mPiki->mSRT.t;
 	f32 targetAngle = atan2f(sep.x, sep.z);
 
 	mPiki->mFaceDirection += 0.4f * angDist(targetAngle, mPiki->mFaceDirection);

@@ -285,9 +285,9 @@ public:
 
 		virtual Vector3f getPos() // _08
 		{
-			mCentrePosition.x = (mSnake->mSnakeBody->mNeckPosition.x + mSnake->mPosition.x) / 2.0f;
-			mCentrePosition.y = (mSnake->mSnakeBody->mNeckPosition.y + mSnake->mPosition.y) / 2.0f;
-			mCentrePosition.z = (mSnake->mSnakeBody->mNeckPosition.z + mSnake->mPosition.z) / 2.0f;
+			mCentrePosition.x = (mSnake->mSnakeBody->mNeckPosition.x + mSnake->mSRT.t.x) / 2.0f;
+			mCentrePosition.y = (mSnake->mSnakeBody->mNeckPosition.y + mSnake->mSRT.t.y) / 2.0f;
+			mCentrePosition.z = (mSnake->mSnakeBody->mNeckPosition.z + mSnake->mSRT.t.z) / 2.0f;
 
 			return mCentrePosition;
 		}

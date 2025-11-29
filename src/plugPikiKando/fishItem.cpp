@@ -46,7 +46,7 @@ void FishGenerator::startAI(int)
 		f32 randMag   = (40.0f * gsys->getRand(1.0f));
 		f32 randAngle = 2.0f * (PI * gsys->getRand(1.0f));
 
-		fish.mPosition = mPosition + Vector3f(randMag * sinf(randAngle), 4.0f, randMag * cosf(randAngle));
+		fish.mPosition = mSRT.t + Vector3f(randMag * sinf(randAngle), 4.0f, randMag * cosf(randAngle));
 		fish.mVelocity.set(0.0f, 0.0f, 0.0f);
 		fish.mDirection = 2.0f * (PI * gsys->getRand(1.0f));
 	}

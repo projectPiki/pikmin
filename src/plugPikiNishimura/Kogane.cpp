@@ -112,7 +112,7 @@ void Kogane::update()
  */
 void Kogane::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f mtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 	mAnimator.updateContext();
