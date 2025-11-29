@@ -523,6 +523,8 @@ f32 angDist(f32 angle1, f32 angle2)
  */
 f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 {
+	f32 min;
+
 	x1 -= x0;
 	if (x1 < 0.0f) {
 		x1 = -x1;
@@ -533,7 +535,11 @@ f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 		y1 = -y1;
 	}
 
-	f32 min = (x1 > y1) ? y1 : x1;
+	if (x1 > y1) {
+		min = y1;
+	} else {
+		min = x1;
+	}
 
 	return (x1 + y1) - (0.5f * min);
 }
@@ -543,9 +549,41 @@ f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
  * Address: ........
  * Size:    000080
  */
-f32 qdist3(f32, f32, f32, f32, f32, f32)
+f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
 {
-	// UNUSED FUNCTION
+	f32 min, mid, max;
+
+	x1 -= x0;
+	if (x1 < 0.0f) {
+		x1 = -x1;
+	}
+
+	y1 -= y0;
+	if (y1 < 0.0f) {
+		y1 = -y1;
+	}
+
+	z1 -= z0;
+	if (z1 < 0.0f) {
+		z1 = -z1;
+	}
+
+	if (x1 > y1) {
+		min = y1;
+		mid = x1;
+	} else {
+		min = x1;
+		mid = y1;
+	}
+
+	if (mid > z1) {
+		max = mid;
+		mid = z1;
+	} else {
+		max = z1;
+	}
+
+	return (min + mid) / 2.0f + max;
 }
 
 /*
