@@ -237,33 +237,33 @@ void Matrix4f::makeConcatSRT(Matrix4f* a, Matrix4f& b, SRT& srt)
 {
 	u32 stackFix[6];
 
-	f32 sinX = sinf(srt.mRotation.x);
-	f32 sinY = sinf(srt.mRotation.y);
-	f32 sinZ = sinf(srt.mRotation.z);
+	f32 sinX = sinf(srt.r.x);
+	f32 sinY = sinf(srt.r.y);
+	f32 sinZ = sinf(srt.r.z);
 
-	f32 cosX = cosf(srt.mRotation.x);
-	f32 cosY = cosf(srt.mRotation.y);
-	f32 cosZ = cosf(srt.mRotation.z);
+	f32 cosX = cosf(srt.r.x);
+	f32 cosY = cosf(srt.r.y);
+	f32 cosZ = cosf(srt.r.z);
 
 	f32 cosX_cosZ = cosX * cosZ;
 	f32 sinX_sinY = sinX * sinY;
 	f32 cosX_sinZ = cosX * sinZ;
 
-	b.mMtx[0][0] = cosY * cosZ * srt.mScale.x;
-	b.mMtx[1][0] = cosY * sinZ * srt.mScale.x;
-	b.mMtx[2][0] = srt.mScale.x * -sinY;
+	b.mMtx[0][0] = cosY * cosZ * srt.s.x;
+	b.mMtx[1][0] = cosY * sinZ * srt.s.x;
+	b.mMtx[2][0] = srt.s.x * -sinY;
 
-	b.mMtx[0][1] = (sinX_sinY * cosZ - cosX_sinZ) * srt.mScale.y;
-	b.mMtx[1][1] = (sinX_sinY * sinZ + cosX_cosZ) * srt.mScale.y;
-	b.mMtx[2][1] = sinX * cosY * srt.mScale.y;
+	b.mMtx[0][1] = (sinX_sinY * cosZ - cosX_sinZ) * srt.s.y;
+	b.mMtx[1][1] = (sinX_sinY * sinZ + cosX_cosZ) * srt.s.y;
+	b.mMtx[2][1] = sinX * cosY * srt.s.y;
 
-	b.mMtx[0][2] = (cosX_cosZ * sinY + sinX * sinZ) * srt.mScale.z;
-	b.mMtx[1][2] = (cosX_sinZ * sinY - sinX * cosZ) * srt.mScale.z;
-	b.mMtx[2][2] = cosX * cosY * srt.mScale.z;
+	b.mMtx[0][2] = (cosX_cosZ * sinY + sinX * sinZ) * srt.s.z;
+	b.mMtx[1][2] = (cosX_sinZ * sinY - sinX * cosZ) * srt.s.z;
+	b.mMtx[2][2] = cosX * cosY * srt.s.z;
 
-	b.mMtx[0][3] = srt.mTranslation.x;
-	b.mMtx[1][3] = srt.mTranslation.y;
-	b.mMtx[2][3] = srt.mTranslation.z;
+	b.mMtx[0][3] = srt.t.x;
+	b.mMtx[1][3] = srt.t.y;
+	b.mMtx[2][3] = srt.t.z;
 
 	b.mMtx[3][0] = 0.0f;
 	b.mMtx[3][1] = 0.0f;

@@ -108,13 +108,13 @@ struct SRTNode : public Node {
 	virtual void concat() { }                                 // _1C (weak)
 	virtual Matrix4f* getModelMatrix() { return &mWorldMtx; } // _2C (weak)
 
-	Vector3f& getPosition() { return mSRT.mTranslation; }
-	Vector3f& getRotation() { return mSRT.mRotation; }
-	Vector3f& getScale() { return mSRT.mScale; }
+	Vector3f& getPosition() { return mSRT.t; }
+	Vector3f& getRotation() { return mSRT.r; }
+	Vector3f& getScale() { return mSRT.s; }
 	Vector3f& getWorldPosition() { return (Vector3f&)mWorldMtx.mMtx[3]; }
-	void setPosition(Vector3f& pos) { mSRT.mTranslation = pos; }
-	void setRotation(Vector3f& rot) { mSRT.mRotation = rot; }
-	void setScale(Vector3f& scale) { mSRT.mScale = scale; }
+	void setPosition(Vector3f& pos) { mSRT.t = pos; }
+	void setRotation(Vector3f& rot) { mSRT.r = rot; }
+	void setScale(Vector3f& scale) { mSRT.s = scale; }
 
 	// _00 - VTBL
 	// _00 - _14 - CoreNode
