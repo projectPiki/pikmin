@@ -931,22 +931,22 @@ void Navi::update()
 	mNaviAnimMgr.updateAnimation(mMotionSpeed);
 
 	STACK_PAD_VAR(1);
-	/*
-	// game freeze keybind?
-	// this has to have been commented out from release or it inflates the stack a LOT
+
+	// Game freeze keybind? This has to be excluded from release because it inflates the stack a LOT.
+#ifdef WIN32
 	if (mKontroller->keyClick(KBBTN_R) && mKontroller->keyDown(KBBTN_B) && mKontroller->keyDown(KBBTN_A)) {
-	    // flip a debug flag
+		// flip a debug flag
 	}
 
 	// if some other debug flag is true and debug flag is false, flip them both
 
 	if (mKontroller->keyClick(KBBTN_Z)) { // && debug flag
-	    // other debug flag = true
-	    // debug flag = false
-	    int id = getCurrState()->getID();
-	    PRINT("---- game frozen : naviState %d\n", id);
+		// other debug flag = true
+		// debug flag = false
+		int id = getCurrState()->getID();
+		PRINT("---- game frozen : naviState %d\n", id);
 	}
-	*/
+#endif
 
 	mKontroller->update();
 	_7DC = mFaceDirection;
