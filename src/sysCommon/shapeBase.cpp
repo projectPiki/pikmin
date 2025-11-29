@@ -2641,9 +2641,12 @@ void BaseShape::initIni(bool p1)
 	}
 
 	for (RouteGroup* route = (RouteGroup*)mRouteGroup.Child(); route; route = (RouteGroup*)route->mNext) {
-		// route->_BC = gsys->loadTexture("rootRing.txe", true);
-		// route->_BC->mTexFlags = (0x100 | 0x1);
+#ifdef WIN32
+		route->mDebugWaypointTexture            = gsys->loadTexture("rootRing.txe", true);
+		route->mDebugWaypointTexture->mTexFlags = (0x100 | 0x1);
+#else
 		route->mDebugWaypointTexture = nullptr;
+#endif
 	}
 }
 
