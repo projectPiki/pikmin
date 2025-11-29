@@ -8,24 +8,24 @@ struct SRT {
 	SRT() { }
 
 	SRT(const SRT& other)
-	    : mScale(other.mScale)
-	    , mRotation(other.mRotation)
-	    , mTranslation(other.mTranslation)
+	    : s(other.s)
+	    , r(other.r)
+	    , t(other.t)
 	{
 	}
 
 	// this is fake but i really really don't wanna have to change Creature.
 	// still seems to work though so fingers crossed.
 	SRT(const Vector3f& scale, const Vector3f& rot, const Vector3f& pos)
-	    : mScale(scale)
-	    , mRotation(rot)
-	    , mTranslation(pos)
+	    : s(scale)
+	    , r(rot)
+	    , t(pos)
 	{
 	}
 
-	Vector3f mScale;       // _00
-	Vector3f mRotation;    // _0C
-	Vector3f mTranslation; // _18, aka position
+	Vector3f s; // _00, scale
+	Vector3f r; // _0C, rotation
+	Vector3f t; // _18, translation (aka position)
 };
 
 #endif

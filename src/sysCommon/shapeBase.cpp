@@ -771,7 +771,7 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 	}
 
 	if (!(info->mFlags & AnimDataFlags::AllScaleStatic)) {
-		f32* scale = (f32*)&srt.mScale;
+		f32* scale = (f32*)&srt.s;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& param = info->mScale[i];
 			int offset;
@@ -790,7 +790,7 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 	}
 
 	if (!(info->mFlags & AnimDataFlags::AllRotationStatic)) {
-		f32* rotate = (f32*)&srt.mRotation;
+		f32* rotate = (f32*)&srt.r;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& param = info->mRotation[i];
 			int offset;
@@ -809,7 +809,7 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
 	}
 
 	if (!(info->mFlags & AnimDataFlags::AllTranslationStatic)) {
-		f32* transl = (f32*)&srt.mTranslation;
+		f32* transl = (f32*)&srt.t;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& param = info->mTranslation[i];
 			int offset;
@@ -862,7 +862,7 @@ void AnimData::makeAnimSRT(int boneId, Matrix4f* parent, Matrix4f* output, AnimD
 		if ((info->mFlags & AnimDataFlags::AllComponentsStatic) == AnimDataFlags::AllComponentsStatic) {
 			boneTransform = &info->mMtx;
 			if (!(info->mFlags & AnimDataFlags::MatrixCalculated)) {
-				boneTransform->makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
+				boneTransform->makeSRT(srt.s, srt.r, srt.t);
 				info->mFlags |= AnimDataFlags::MatrixCalculated;
 			}
 		} else {
@@ -1492,7 +1492,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 	// APPLY SCALE
 	if (!(anim->mFlags & AnimDataFlags::AllScaleStatic)) {
 		// loop for x y and z
-		f32* s = (f32*)&srt.mScale;
+		f32* s = (f32*)&srt.s;
 		for (int i = 0; i < 3; i++) {
 			AnimParam* param = &anim->mScale[i];
 			switch (param->mEntryNum) {
@@ -1516,7 +1516,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 	// APPLY ROTATION
 	if (!(anim->mFlags & AnimDataFlags::AllRotationStatic)) {
 		// loop for x y and z
-		f32* r           = (f32*)&srt.mRotation;
+		f32* r           = (f32*)&srt.r;
 		AnimParam* param = anim->mRotation;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& p = param[i];
@@ -1541,7 +1541,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 	// APPLY TRANSLATION
 	if (!(anim->mFlags & AnimDataFlags::AllTranslationStatic)) {
 		// loop for x y and z
-		f32* t           = (f32*)&srt.mTranslation;
+		f32* t           = (f32*)&srt.t;
 		AnimParam* param = anim->mTranslation;
 		for (int i = 0; i < 3; i++) {
 			AnimParam& p = param[i];
@@ -1575,7 +1575,7 @@ void AnimDck::makeAnimSRT(int a, Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* a
 	extractSRT(srt, a, anim, time);
 	if ((anim->mFlags & AnimDataFlags::AllComponentsStatic) == AnimDataFlags::AllComponentsStatic) {
 		if (!(anim->mFlags & AnimDataFlags::MatrixCalculated)) {
-			anim->mMtx.makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
+			anim->mMtx.makeSRT(srt.s, srt.r, srt.t);
 			anim->mFlags |= AnimDataFlags::MatrixCalculated;
 		}
 		PSMTXConcat(mtx1->mMtx, anim->mMtx.mMtx, mtx2->mMtx);
@@ -3030,9 +3030,9 @@ void BaseShape::calcBasePose(Matrix4f& target)
 {
 	for (int i = 0; i < mJointCount; i++) {
 		SRT srt;
-		srt.mScale       = mJointList[i].mScale;
-		srt.mRotation    = mJointList[i].mRotation;
-		srt.mTranslation = mJointList[i].mTranslation;
+		srt.s = mJointList[i].mScale;
+		srt.r = mJointList[i].mRotation;
+		srt.t = mJointList[i].mTranslation;
 
 		int parentIndex = mJointList[i].mParentIndex;
 		Matrix4f initialPose;
@@ -3339,9 +3339,9 @@ void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
 		Joint* joint = &mJointList[0];
 		for (int i = 0; i < mJointCount; i++) {
 			SRT srt;
-			srt.mScale       = joint->mScale;
-			srt.mRotation    = joint->mRotation;
-			srt.mTranslation = joint->mTranslation;
+			srt.s = joint->mScale;
+			srt.r = joint->mRotation;
+			srt.t = joint->mTranslation;
 			Matrix4f tmpMtx;
 			Matrix4f* jointMtx = (joint->mParentIndex == -1) ? &mtx : &mJointList[joint->mParentIndex].mAnimMatrix;
 			joint->mAnimMatrix.makeConcatSRT(jointMtx, tmpMtx, srt);

@@ -578,9 +578,9 @@ void EffShpInst::initEffShpInst()
 {
 	_3C          = 0.0f;
 	mEffectShape = 0;
-	mSRT.mScale.set(1.0f, 1.0f, 1.0f);
-	mSRT.mRotation.set(0.0f, 0.0f, 0.0f);
-	mSRT.mTranslation.set(0.0f, 0.0f, 0.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
+	mSRT.r.set(0.0f, 0.0f, 0.0f);
+	mSRT.t.set(0.0f, 0.0f, 0.0f);
 	mLoop    = 0;
 	mLoopMax = 0;
 	visible();
@@ -665,13 +665,13 @@ EffShpInst* EffectGeometryRegistration::create(Vector3f& pos, Vector3f& scale, V
 	if (inst) {
 		inst->initCore("");
 		inst->mEffectShape = mEffectShape;
-		inst->mSRT.mScale.set(mScale, mScale, mScale);
-		inst->mSRT.mScale.x *= scale.x;
-		inst->mSRT.mScale.y *= scale.y;
-		inst->mSRT.mScale.z *= scale.z;
+		inst->mSRT.s.set(mScale, mScale, mScale);
+		inst->mSRT.s.x *= scale.x;
+		inst->mSRT.s.y *= scale.y;
+		inst->mSRT.s.z *= scale.z;
 
-		inst->mSRT.mRotation    = rot;
-		inst->mSRT.mTranslation = pos;
+		inst->mSRT.r = rot;
+		inst->mSRT.t = pos;
 
 		inst->setLoop(0);
 		inst->setLoopMax(mLoopMax);

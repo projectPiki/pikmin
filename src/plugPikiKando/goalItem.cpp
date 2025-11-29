@@ -520,10 +520,10 @@ void GoalItem::startLand()
 	_3CC = 0;
 	startMotion(mOnionColour + 9);
 	setMotionSpeed(30.0f);
-	_3FC = mSpotModelEff->mSRT.mScale;
+	_3FC = mSpotModelEff->mSRT.s;
 	setFlowEffect(true);
 	setFlightLight(true);
-	mSpotModelEff->mSRT.mScale.set(0.0f, 0.0f, 0.0f);
+	mSpotModelEff->mSRT.s.set(0.0f, 0.0f, 0.0f);
 }
 
 /*
@@ -535,7 +535,7 @@ void GoalItem::startConeShrink()
 {
 	mIsClosing     = true;
 	mConeSizeTimer = 0.8f;
-	_3FC           = mSpotModelEff->mSRT.mScale;
+	_3FC           = mSpotModelEff->mSRT.s;
 }
 
 /*
@@ -554,12 +554,12 @@ void GoalItem::updateConeShrink()
 	scale.x *= test;
 	scale.z *= test;
 
-	mSpotModelEff->mSRT.mScale = scale;
+	mSpotModelEff->mSRT.s = scale;
 
 	mConeSizeTimer -= gsys->getFrameTime();
 
 	if (mConeSizeTimer <= 0.0f) {
-		mSpotModelEff->mSRT.mScale.set(0.0f, 0.0f, 0.0f);
+		mSpotModelEff->mSRT.s.set(0.0f, 0.0f, 0.0f);
 		mIsClosing = false;
 	}
 }
@@ -591,13 +591,13 @@ void GoalItem::updateConeEmit()
 	pos.x *= test;
 	pos.z *= test;
 
-	mSpotModelEff->mSRT.mScale = pos;
+	mSpotModelEff->mSRT.s = pos;
 
 	mConeSizeTimer += gsys->getFrameTime();
 
 	if (mConeSizeTimer >= 0.8f) {
-		mSpotModelEff->mSRT.mScale = _3FC;
-		mIsConeEmit                = false;
+		mSpotModelEff->mSRT.s = _3FC;
+		mIsConeEmit           = false;
 		C_SAI(this)->start(this, GoalAI::GOAL_Wait);
 	}
 }
