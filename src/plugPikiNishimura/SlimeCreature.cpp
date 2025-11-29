@@ -37,7 +37,7 @@ void SlimeCreature::init(Vector3f& pos, Slime* slime)
 {
 	mSlime           = slime;
 	mCollisionRadius = 20.0f;
-	mPosition        = pos;
+	mSRT.t           = pos;
 	mTargetPosition  = pos;
 	Creature::init();
 	startFlying();
@@ -70,7 +70,7 @@ f32 SlimeCreature::getiMass()
  */
 Vector3f SlimeCreature::getCentre()
 {
-	return mPosition;
+	return mSRT.t;
 }
 
 /*
@@ -142,7 +142,7 @@ void SlimeCreature::doAnimation()
  */
 void SlimeCreature::update()
 {
-	mPosition.y -= 0.5f;
+	mSRT.t.y -= 0.5f;
 	moveVelocity();
 	moveNew(gsys->getFrameTime());
 }

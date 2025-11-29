@@ -60,7 +60,7 @@ void GemItem::setAtariFree()
 void GemItem::bounceCallback()
 {
 	if (mIsFree) {
-		effectMgr->create(EffectMgr::EFF_BigDustRing, mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_BigDustRing, mSRT.t, nullptr, nullptr);
 	}
 
 	mIsFree = false;
@@ -132,8 +132,8 @@ void GemItem::startAI(int)
 	mSeContext->setContext(this, 2);
 	mCollInfo = &mGemCollInfo;
 	mGemCollInfo.initInfo(mItemShapeObject->mShape, mGemColl, nullptr);
-	mScale.set(1.0f, 1.0f, 1.0f);
-	mRotation.set(1.0f, mFaceDirection, 1.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
+	mSRT.r.set(1.0f, mFaceDirection, 1.0f);
 	resetCreatureFlag(CF_Unk8);
 	C_SAI(this)->start(this, GemAI::GEM_Unk0);
 	mIsBeingLifted = false;
@@ -216,7 +216,7 @@ void GemItem::updateLiftup()
 		mIsRising      = false;
 	}
 	enableGroundOffset(mCurrentHeight);
-	mPosition.y += mCurrentHeight - prevHeight;
+	mSRT.t.y += mCurrentHeight - prevHeight;
 
 	Stickers stick(this);
 	Iterator it(nullptr);
@@ -306,8 +306,8 @@ void GemItem::split()
 
 		for (int i = 0; i < splitAmount; i++) {
 			Creature* obj = itemMgr->birth(objType);
-			Vector3f pos  = mPosition;
-			mPosition.y += 10.0f;
+			Vector3f pos  = mSRT.t;
+			mSRT.t.y += 10.0f;
 
 			f32 angle      = 2.0f * (PI * gsys->getRand(1.0f));
 			f32 vertSpeed  = 240.0f;

@@ -37,8 +37,8 @@ void ActExit::init(Creature*)
 {
 	mPiki->mActionState = 0;
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_HNoboru), PaniMotionInfo(PIKIANIM_HNoboru));
-	mPiki->mScale.set(0.0f, 0.0f, 0.0f);
-	mPrevPosition = mPiki->mPosition;
+	mPiki->mSRT.s.set(0.0f, 0.0f, 0.0f);
+	mPrevPosition = mPiki->mSRT.t;
 	mPiki->mOdometer.start(1.0f, 5.0f);
 	mHasCollided = false;
 }
@@ -64,18 +64,18 @@ void ActExit::procCollideMsg(Piki*, MsgCollide* msg)
 int ActExit::exec()
 {
 	if (mHasCollided || !mPiki->mRope) {
-		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
+		mPiki->mSRT.s.set(1.0f, 1.0f, 1.0f);
 		PRINT("*** EXIT ** NO ROPE\n");
 		return ACTOUT_Fail;
 	}
 
-	if (!mPiki->mOdometer.moving(mPiki->mPosition, mPrevPosition)) {
+	if (!mPiki->mOdometer.moving(mPiki->mSRT.t, mPrevPosition)) {
 		mPiki->endRope();
-		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
+		mPiki->mSRT.s.set(1.0f, 1.0f, 1.0f);
 		return ACTOUT_Fail;
 	}
 
-	mPrevPosition = mPiki->mPosition;
+	mPrevPosition = mPiki->mSRT.t;
 	if (mPiki->mRopePosRatio > 0.72f) {
 		PRINT_KANDO("piki->ropePos = %f\n", mPiki->mRopePosRatio);
 		mPiki->mIsCallable = false;
@@ -83,9 +83,9 @@ int ActExit::exec()
 		if (scale < 0.0f) {
 			scale = 0.0f;
 		}
-		mPiki->mScale.set(scale, scale, scale);
+		mPiki->mSRT.s.set(scale, scale, scale);
 	} else {
-		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
+		mPiki->mSRT.s.set(1.0f, 1.0f, 1.0f);
 	}
 
 	if (mPiki->mGroundTriangle) {
@@ -118,7 +118,7 @@ int ActExit::exec()
 void ActExit::cleanup()
 {
 	if (mPiki->isAlive()) {
-		mPiki->mScale.set(1.0f, 1.0f, 1.0f);
+		mPiki->mSRT.s.set(1.0f, 1.0f, 1.0f);
 	}
 
 	mPiki->mIsCallable = true;

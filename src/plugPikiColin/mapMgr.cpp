@@ -297,11 +297,11 @@ void DynCollShape::jointVisible(int id, int set)
  */
 void DynCollShape::adjust(Creature* obj)
 {
-	obj->mPositionInShapeSpace = obj->mPosition;
+	obj->mPositionInShapeSpace = obj->mSRT.t;
 	obj->mPositionInShapeSpace.multMatrix(mInverseMatrix);
-	obj->mPosition = obj->mPositionInShapeSpace;
-	obj->mPosition.multMatrix(mTransformMtx);
-	obj->mLastPosition = obj->mPosition;
+	obj->mSRT.t = obj->mPositionInShapeSpace;
+	obj->mSRT.t.multMatrix(mTransformMtx);
+	obj->mLastPosition = obj->mSRT.t;
 }
 
 /*

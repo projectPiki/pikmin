@@ -70,7 +70,7 @@ void NaviDemoSunsetState::GoState::exec(NaviDemoSunsetState* state)
 		return;
 	}
 
-	Vector3f diff = state->mGoalPos - state->mNavi->mPosition;
+	Vector3f diff = state->mGoalPos - state->mNavi->mSRT.t;
 	f32 dist      = std::sqrtf(diff.x * diff.x + diff.z * diff.z);
 	f32 nrm       = diff.normalise() / state->_2C;
 
@@ -373,9 +373,9 @@ void NaviDemoSunsetState::init(Navi* navi)
 	{
 		Creature* obj = *it;
 		if (obj->mObjType == OBJTYPE_SunsetStart) {
-			mStartPos = obj->mPosition;
+			mStartPos = obj->mSRT.t;
 		} else if (obj->mObjType == OBJTYPE_SunsetGoal) {
-			mGoalPos = obj->mPosition;
+			mGoalPos = obj->mSRT.t;
 		}
 	}
 
@@ -392,7 +392,7 @@ void NaviDemoSunsetState::init(Navi* navi)
  */
 void NaviDemoSunsetState::setActors(Navi* navi)
 {
-	navi->mPosition = mStartPos;
+	navi->mSRT.t = mStartPos;
 
 	Vector3f dist        = mGoalPos - mStartPos;
 	_2C                  = dist.normalise();
@@ -402,11 +402,11 @@ void NaviDemoSunsetState::setActors(Navi* navi)
 	Iterator iterParty(navi->mPlateMgr);
 	CI_LOOP(iterParty)
 	{
-		Piki* piki        = (Piki*)*iterParty;
-		ActCrowd* act     = (ActCrowd*)piki->mActiveAction->getCurrAction();
-		Vector3f newpos   = navi->mPlateMgr->mSlotList[act->mCPlateSlotID].mOffsetFromCenter + navi->mPlateMgr->mPlateCenter;
-		piki->mPosition   = newpos;
-		piki->mPosition.y = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
+		Piki* piki      = (Piki*)*iterParty;
+		ActCrowd* act   = (ActCrowd*)piki->mActiveAction->getCurrAction();
+		Vector3f newpos = navi->mPlateMgr->mSlotList[act->mCPlateSlotID].mOffsetFromCenter + navi->mPlateMgr->mPlateCenter;
+		piki->mSRT.t    = newpos;
+		piki->mSRT.t.y  = mapMgr->getMinY(piki->mSRT.t.x, piki->mSRT.t.z, true);
 	}
 
 	Iterator iterPiki(pikiMgr);

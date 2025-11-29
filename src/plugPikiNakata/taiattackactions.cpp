@@ -69,7 +69,7 @@ bool TaiAttackableNaviAction::act(Teki& teki)
 bool TaiAttackablePikiAction::act(Teki& teki)
 {
 	TekiAttackableCondition cond(&teki);
-	Creature* nearest = pikiMgr->findClosest(teki.mPosition, &cond);
+	Creature* nearest = pikiMgr->findClosest(teki.mSRT.t, &cond);
 	if (!nearest) {
 		return false;
 	}

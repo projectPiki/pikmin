@@ -92,8 +92,8 @@ void Navi::viewStartTrembleMotion(f32)
  */
 void Navi::viewKill()
 {
-	mPosition = mPellet->mPosition;
-	mPellet   = nullptr;
+	mSRT.t  = mPellet->mSRT.t;
+	mPellet = nullptr;
 }
 
 /*
@@ -217,7 +217,7 @@ void Navi::updateDayEnd(Vector3f& pos)
 	if (mIsDayEnd) {
 		mIsDayEnd = 0;
 
-		mPosition       = pos;
+		mSRT.t          = pos;
 		mDayEndPosition = pos;
 		mPlateMgr->update();
 		makeCStick(false);
@@ -235,7 +235,7 @@ void Navi::updateDayEnd(Vector3f& pos)
 			if (piki->mMode != PikiMode::EnterMode) {
 				piki->changeMode(PikiMode::FormationMode, piki->mNavi);
 				piki->forceFinishLook();
-				piki->startLook(&piki->mNavi->mPosition);
+				piki->startLook(&piki->mNavi->mSRT.t);
 				pikiCount++;
 
 				if (piki->mMode != PikiMode::FormationMode) {
@@ -248,9 +248,9 @@ void Navi::updateDayEnd(Vector3f& pos)
 				}
 
 				// Issues here
-				Vector3f slotPos  = piki->mNavi->mPlateMgr->mSlotList[slotID].mOffsetFromCenter + piki->mNavi->mPlateMgr->mPlateCenter;
-				piki->mPosition   = slotPos;
-				piki->mPosition.y = mapMgr->getMinY(piki->mPosition.x, piki->mPosition.z, true);
+				Vector3f slotPos = piki->mNavi->mPlateMgr->mSlotList[slotID].mOffsetFromCenter + piki->mNavi->mPlateMgr->mPlateCenter;
+				piki->mSRT.t     = slotPos;
+				piki->mSRT.t.y   = mapMgr->getMinY(piki->mSRT.t.x, piki->mSRT.t.z, true);
 			}
 		}
 
@@ -264,8 +264,8 @@ void Navi::updateDayEnd(Vector3f& pos)
 
 	makeCStick(false);
 
-	mDayEndPosition = mPosition;
-	mPosition       = pos;
+	mDayEndPosition = mSRT.t;
+	mSRT.t          = pos;
 
 	mVelocity  = pos - mDayEndPosition;
 	f32 length = mVelocity.length();
@@ -436,7 +436,7 @@ void Navi::startDamageEffect()
 	int vibTypes[2] = { 0, 1 };
 	f32 randIdx     = gsys->getRand(1.0f);
 	// int vib         = vibTypes[int(2.0f * randIdx * 0.9999999f)];
-	cameraMgr->startVibrationEvent(vibTypes[int(2.0f * randIdx * 0.9999999f)], mPosition);
+	cameraMgr->startVibrationEvent(vibTypes[int(2.0f * randIdx * 0.9999999f)], mSRT.t);
 
 	SeSystem::playPlayerSe(SE_DAMAGED);
 }
@@ -517,9 +517,9 @@ Navi::Navi(CreatureProp* props, int naviID)
 	startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 
 	f32 s = 1.0f;
-	mScale.set(s, s, s);
-	mRotation.set(0.0f, 0.0f, 0.0f);
-	mPosition.set(0.0f, 0.0f, 0.0f);
+	mSRT.s.set(s, s, s);
+	mSRT.r.set(0.0f, 0.0f, 0.0f);
+	mSRT.t.set(0.0f, 0.0f, 0.0f);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_268        = 0.0f;
@@ -631,7 +631,7 @@ void Navi::reset()
 	mPlateMgr = new CPlate(mapMgr);
 
 	_719 = false;
-	mPlateMgr->init(mPosition);
+	mPlateMgr->init(mSRT.t);
 	_7B4         = 0;
 	mWallCollObj = nullptr;
 	mAiTickTimer = 0.0f;
@@ -744,7 +744,7 @@ bool Navi::doMotionBlend()
 void Navi::updateWalkAnimation()
 {
 	mCollisionRadius  = NAVI_PROP._20C();
-	Vector3f sep      = mPosition - _79C;
+	Vector3f sep      = mSRT.t - _79C;
 	sep.y             = 0.0f;
 	f32 speed         = sep.length() / gsys->getFrameTime();
 	int lowerMotionID = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
@@ -858,12 +858,12 @@ void Navi::postUpdate(int p1, f32 p2)
 void Navi::update()
 {
 	if (!mGroundTriangle) {
-		f32 maxY = mapMgr->getMaxY(mPosition.x, mPosition.z, true);
-		if (maxY > mPosition.y) {
-			PRINT("navi(%.1f %.1f %.1f) : map(%.1f %.1f %.1f)\n", mPosition.x, mPosition.y, mPosition.z, mPosition.x, maxY, mPosition.z);
-			PRINT("mapY %.1f srt.t.y %.1f\n", maxY, mPosition.y); // (we know they had mScale/mRotation/mPosition as an SRT already)
+		f32 maxY = mapMgr->getMaxY(mSRT.t.x, mSRT.t.z, true);
+		if (maxY > mSRT.t.y) {
+			PRINT("navi(%.1f %.1f %.1f) : map(%.1f %.1f %.1f)\n", mSRT.t.x, mSRT.t.y, mSRT.t.z, mSRT.t.x, maxY, mSRT.t.z);
+			PRINT("mapY %.1f srt.t.y %.1f\n", maxY, mSRT.t.y); // (we know they had mSRT.s/mSRT.r/mSRT.t as an SRT already)
 			PRINT("navi almost fall !\n");
-			mPosition.y = maxY;
+			mSRT.t.y = maxY;
 		}
 	}
 
@@ -896,8 +896,8 @@ void Navi::update()
 	if (attr == ATTR_Water) {
 		if (!mIsInWater) {
 			// we just moved into water, create ripple effects
-			EffectParm rippleParm(&mPosition);
-			EffectParm castParm(mPosition);
+			EffectParm rippleParm(&mSRT.t);
+			EffectParm castParm(mSRT.t);
 			mRippleEffect->emit(rippleParm);
 			UtEffectMgr::cast(KandoEffect::Bubbles, castParm);
 			SeSystem::playPlayerSe(SE_PIKI_WATERDROP);
@@ -927,7 +927,7 @@ void Navi::update()
 
 	mPlateMgr->update();
 	updateWalkAnimation();
-	_79C = mPosition;
+	_79C = mSRT.t;
 	mNaviAnimMgr.updateAnimation(mMotionSpeed);
 
 	STACK_PAD_VAR(1);
@@ -952,18 +952,18 @@ void Navi::update()
 	_7DC = mFaceDirection;
 	Creature::update();
 
-	mapMgr->updatePos(mPosition.x, mPosition.z);
+	mapMgr->updatePos(mSRT.t.x, mSRT.t.z);
 
-	Vector3f dayEndSep = mDayEndPosition - mPosition;
+	Vector3f dayEndSep = mDayEndPosition - mSRT.t;
 	if (dayEndSep.length() > 35.0f && mGroundTriangle) {
-		Vector3f parmPos(mPosition.x, mPosition.y + 1.0f, mPosition.z);
+		Vector3f parmPos(mSRT.t.x, mSRT.t.y + 1.0f, mSRT.t.z);
 
 		Vector3f parmVel(0.01667f * mVelocity.x, 2.0f, 0.01667f * mVelocity.z);
 		int effAttr = MapCode::getAttribute(mGroundTriangle);
 		if (effAttr >= ATTR_Solid && effAttr <= ATTR_Wood) {
 			EffectParm parm(parmPos, parmVel);
 			UtEffectMgr::cast(effAttr + KandoEffect::SmokeOffset, parm);
-			mDayEndPosition = mPosition;
+			mDayEndPosition = mSRT.t;
 		}
 	}
 }
@@ -1027,7 +1027,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
  */
 void Navi::callPikis(f32 radius)
 {
-	Vector3f unused = mCursorWorldPos - mPosition;
+	Vector3f unused = mCursorWorldPos - mSRT.t;
 	STACK_PAD_VAR(4);
 
 	Iterator iterPiki(pikiMgr);
@@ -1038,7 +1038,7 @@ void Navi::callPikis(f32 radius)
 			continue;
 		}
 
-		Vector3f sep = piki->mPosition - mCursorWorldPos;
+		Vector3f sep = piki->mSRT.t - mCursorWorldPos;
 		f32 dist     = speedy_sqrtf(sep.x * sep.x + sep.z * sep.z);
 		if (dist >= radius) {
 			continue;
@@ -1101,7 +1101,7 @@ void Navi::callPikis(f32 radius)
 		Creature* maybeSprout = *iterSprout;
 		if (maybeSprout->mObjType == OBJTYPE_Pikihead) {
 			PikiHeadItem* sprout = static_cast<PikiHeadItem*>(maybeSprout);
-			Vector3f sproutSep   = maybeSprout->mPosition - mCursorWorldPos;
+			Vector3f sproutSep   = maybeSprout->mSRT.t - mCursorWorldPos;
 			f32 sproutDist       = speedy_sqrtf(sproutSep.x * sproutSep.x + sproutSep.z * sproutSep.z);
 			if (!AIConstant::_instance->mConstants.mDoPluckWithCursor()) {
 				continue;
@@ -1117,7 +1117,7 @@ void Navi::callPikis(f32 radius)
 					piki->init(this);
 					piki->initColor(sprout->mSeedColor);
 					piki->setFlower(sprout->mFlowerStage);
-					piki->resetPosition(sprout->mPosition);
+					piki->resetPosition(sprout->mSRT.t);
 					piki->mFSM->transit(piki, PIKISTATE_AutoNuki);
 					sprout->kill(false);
 				}
@@ -1133,7 +1133,7 @@ void Navi::callPikis(f32 radius)
 	CI_LOOP(iterTeki)
 	{
 		Creature* teki   = *iterTeki;
-		Vector3f tekiSep = teki->mPosition - mCursorWorldPos;
+		Vector3f tekiSep = teki->mSRT.t - mCursorWorldPos;
 		f32 tekiDist     = speedy_sqrtf(tekiSep.x * tekiSep.x + tekiSep.z * tekiSep.z);
 		if (teki->isAlive() && teki->isVisible() && tekiDist < radius) {
 			InteractFlute flute(this);
@@ -1154,7 +1154,7 @@ void Navi::callDebugs(f32 radius)
 	CI_LOOP(iterPiki)
 	{
 		Piki* piki       = static_cast<Piki*>(*iterPiki);
-		Vector3f pikiSep = piki->mPosition - mCursorWorldPos;
+		Vector3f pikiSep = piki->mSRT.t - mCursorWorldPos;
 		f32 tekiDist     = pikiSep.length();
 		if (tekiDist < radius) {
 			if (pikiCount == 0) {
@@ -1172,7 +1172,7 @@ void Navi::callDebugs(f32 radius)
 	CI_LOOP(iterTeki)
 	{
 		Creature* teki   = *iterTeki;
-		Vector3f tekiSep = teki->mPosition - mCursorWorldPos;
+		Vector3f tekiSep = teki->mSRT.t - mCursorWorldPos;
 		f32 tekiDist     = tekiSep.length();
 		if (tekiDist < radius) {
 			if (tekiCount == 0) {
@@ -1243,16 +1243,16 @@ void Navi::releasePikis()
 			if (i == Blue || i == Red) {
 				if (i == pikiList[j]->mColor) {
 					colorCounts[i]++;
-					colorCoMs[i].add(pikiList[j]->mPosition);
+					colorCoMs[i].add(pikiList[j]->mSRT.t);
 				}
 			} else {
 				if (pikiList[j]->mColor == Yellow) {
 					if (pikiList[j]->hasBomb()) {
 						colorCounts[3]++;
-						colorCoMs[3].add(pikiList[j]->mPosition);
+						colorCoMs[3].add(pikiList[j]->mSRT.t);
 					} else {
 						colorCounts[Yellow]++;
-						colorCoMs[Yellow].add(pikiList[j]->mPosition);
+						colorCoMs[Yellow].add(pikiList[j]->mSRT.t);
 					}
 				}
 			}
@@ -1268,7 +1268,7 @@ void Navi::releasePikis()
 
 	for (int i = 0; i < PikiColorCount + 1; i++) {
 		if (colorCounts[i] > 0) {
-			Vector3f sepNaviGroup = colorCoMs[i] - mPosition;
+			Vector3f sepNaviGroup = colorCoMs[i] - mSRT.t;
 			f32 dist              = sepNaviGroup.normalise() - colorSizes[i] - 15.0f;
 			if (dist < 18.0f) {
 				dist = 18.0f - dist;
@@ -1359,8 +1359,8 @@ bool Navi::insideOnyon()
 	for (int i = 0; i < PikiColorCount; i++) {
 		GoalItem* onyon = itemMgr->getContainer(i);
 		if (onyon) {
-			f32 xDiff = onyon->mPosition.x - mPosition.x;
-			f32 zDiff = onyon->mPosition.z - mPosition.z;
+			f32 xDiff = onyon->mSRT.t.x - mSRT.t.x;
+			f32 zDiff = onyon->mSRT.t.z - mSRT.t.z;
 			f32 sqrXZ = xDiff * xDiff + zDiff * zDiff;
 
 			if (sqrXZ <= SQUARE(220.0f)) {
@@ -1399,14 +1399,14 @@ bool Navi::procActionButton()
 				if (ship)
 #endif
 				{
-					Vector3f pelShipSep = pellet->mPosition - ship->getGoalPos();
+					Vector3f pelShipSep = pellet->mSRT.t - ship->getGoalPos();
 					f32 distFromShip    = std::sqrtf(pelShipSep.x * pelShipSep.x + pelShipSep.z * pelShipSep.z);
 					if (distFromShip < 30.0f && pellet->mCarrierCounter != 0) {
 						continue;
 					}
 				}
 
-				Vector3f pelNaviSep = pellet->mPosition - mPosition;
+				Vector3f pelNaviSep = pellet->mSRT.t - mSRT.t;
 				f32 distFromNavi    = std::sqrtf(pelNaviSep.x * pelNaviSep.x + pelNaviSep.z * pelNaviSep.z) - pellet->getBottomRadius();
 				if (distFromNavi <= 20.0f) {
 					int idx = PelletMgr::getUfoIndexFromID(pellet->mConfig->mModelId.mId);
@@ -1427,7 +1427,7 @@ bool Navi::procActionButton()
 		PRINT("tod = %f : endhour = %f\n", gameflow.mWorldClock.mTimeOfDay, gameflow.mParameters->mEndHour());
 		UfoItem* ship = itemMgr->getUfo();
 		if (ship) {
-			Vector3f naviShipSep = ship->mPosition - mPosition;
+			Vector3f naviShipSep = ship->mSRT.t - mSRT.t;
 			f32 naviShipDist     = std::sqrtf(naviShipSep.x * naviShipSep.x + naviShipSep.z * naviShipSep.z);
 			if (naviShipDist <= 50.0f) {
 				mStateMachine->transit(this, NAVISTATE_UfoAccess);
@@ -1458,7 +1458,7 @@ bool Navi::procActionButton()
 				continue;
 			}
 
-			Vector3f sproutNaviSep = sprout->mPosition - mPosition;
+			Vector3f sproutNaviSep = sprout->mSRT.t - mSRT.t;
 			f32 sproutDist         = std::sqrtf(sproutNaviSep.x * sproutNaviSep.x + sproutNaviSep.z * sproutNaviSep.z);
 			f32 heightDiff         = absF(sproutNaviSep.y);
 			if (sprout->canPullout() && sproutDist < minDist && heightDiff < 25.0f) {
@@ -1473,7 +1473,7 @@ bool Navi::procActionButton()
 			_814 = 0.0f;
 			startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
 			PRINT_GLOBAL("nuki d=%.1f rn=%d", minDist, mFastPluckKeyTaps);
-			Vector3f sproutSep = closestSprout->mPosition - mPosition;
+			Vector3f sproutSep = closestSprout->mSRT.t - mSRT.t;
 			_7D0               = angDist(roundAng(atan2f(sproutSep.x, sproutSep.z)), mFaceDirection) / 10.0f;
 			f32 dist           = sproutSep.length();
 			// f32 scaledDist     = 3.0003002f * ((1.0f / dist) * (dist - 15.0f));
@@ -1493,7 +1493,7 @@ bool Navi::procActionButton()
 			piki->init(this);
 			piki->initColor(closestSprout->mSeedColor);
 			piki->setFlower(closestSprout->mFlowerStage);
-			piki->resetPosition(closestSprout->mPosition);
+			piki->resetPosition(closestSprout->mSRT.t);
 			piki->changeMode(PikiMode::FreeMode, this);
 			piki->mFSM->transit(piki, PIKISTATE_NukareWait);
 			closestSprout->kill(false);
@@ -1501,7 +1501,7 @@ bool Navi::procActionButton()
 			_814 = 0.0f;
 			startMotion(PaniMotionInfo(PIKIANIM_Asibumi), PaniMotionInfo(PIKIANIM_Asibumi));
 
-			Vector3f pikiSep = piki->mPosition - mPosition;
+			Vector3f pikiSep = piki->mSRT.t - mSRT.t;
 			_7D0             = angDist(roundAng(atan2f(pikiSep.x, pikiSep.z)), mFaceDirection) / 10.0f;
 
 			f32 pikiDist = pikiSep.length();
@@ -1692,7 +1692,7 @@ void Navi::collisionCallback(CollEvent& event)
 			if (mCurrKeyCount > 0 && state != NAVISTATE_Clear) {
 				DoorItem* door = static_cast<DoorItem*>(collider);
 				sprintf(flowCont.mStagePath2, "%s", door->mDestinationStagePath);
-				Vector3f naviDoorSep = mPosition - door->mPosition;
+				Vector3f naviDoorSep = mSRT.t - door->mSRT.t;
 				naviDoorSep.normalise();
 				Vector3f faceDir(sinf(door->mFaceDirection), 0.0f, cosf(door->mFaceDirection));
 				if (faceDir.DP(naviDoorSep) >= cosf(HALF_PI)) {
@@ -1873,7 +1873,7 @@ void Navi::makeVelocity(bool p1)
 		Vector3f cursorPos(mCursorPosition);
 		mFaceDirection += 0.2f * angDist(roundAng(atan2f(cursorPos.x, cursorPos.z)), mFaceDirection);
 		mFaceDirection = roundAng(mFaceDirection);
-		mRotation.set(0.0f, mFaceDirection, 0.0f);
+		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 		setCreatureFlag(CF_Unk11);
 	} else {
 		resetCreatureFlag(CF_Unk11);
@@ -1952,7 +1952,7 @@ void Navi::makeCStick(bool p1)
 
 		mPlateMgr->refresh(getPlatePikis(), dist);
 
-		mPlateMgr->setPos(mPosition, newAngle, mVelocity);
+		mPlateMgr->setPos(mSRT.t, newAngle, mVelocity);
 		_718 = false;
 		_724 = false;
 	} else {
@@ -1963,7 +1963,7 @@ void Navi::makeCStick(bool p1)
 		f32 backDir = mFaceDirection + PI;
 		if (!_718 && mTargetVelocity.length() < 50.0f && mStateMachine->getCurrID(this) != NAVISTATE_ThrowWait) {
 			backDir = _714;
-			mPlateMgr->setPos(mPosition, backDir, mVelocity);
+			mPlateMgr->setPos(mSRT.t, backDir, mVelocity);
 		} else {
 			_718 = true;
 		}
@@ -1981,7 +1981,7 @@ void Navi::makeCStick(bool p1)
 				continue;
 			}
 
-			Vector3f sep = c->mPosition - mPosition;
+			Vector3f sep = c->mSRT.t - mSRT.t;
 			f32 dist     = sep.length();
 			if (dist < minDist) {
 				minDist = dist;
@@ -2015,16 +2015,16 @@ void Navi::makeCStick(bool p1)
 			_719 = true;
 		} else if (_71C == 1) {
 			_719              = true;
-			Vector3f squadSep = mPlateMgr->mPlateOffset - mPosition;
+			Vector3f squadSep = mPlateMgr->mPlateOffset - mSRT.t;
 			squadSep.normalise();
-			mPlateMgr->setPosGray(mPosition, atan2f(squadSep.x, squadSep.z), mVelocity);
+			mPlateMgr->setPosGray(mSRT.t, atan2f(squadSep.x, squadSep.z), mVelocity);
 		} else if (_71C == 2) {
 			_724 = false;
 			if (_719) {
-				mPlateMgr->rearrangeSlot(mPosition, backDir, mVelocity);
+				mPlateMgr->rearrangeSlot(mSRT.t, backDir, mVelocity);
 				_719 = false;
 			}
-			mPlateMgr->setPos(mPosition, backDir, mVelocity);
+			mPlateMgr->setPos(mSRT.t, backDir, mVelocity);
 		}
 	}
 
@@ -2043,7 +2043,7 @@ void Navi::refresh(Graphics& gfx)
 	draw(gfx);
 	if (!movieMode()) {
 		if (gsys->mToggleColls) {
-			mapMgr->showCollisions(mPosition);
+			mapMgr->showCollisions(mSRT.t);
 		}
 
 		Matrix4f viewMtx;
@@ -2054,7 +2054,7 @@ void Navi::refresh(Graphics& gfx)
 		f32 unusedVal2 = cosf(mFaceDirection);
 		STACK_PAD_VAR(1);
 
-		mCursorWorldPos   = mCursorPosition + mPosition;
+		mCursorWorldPos   = mCursorPosition + mSRT.t;
 		mCursorWorldPos.y = mapMgr->getMinY(mCursorWorldPos.x, mCursorWorldPos.z, true) + 1.0f;
 
 		CollTriInfo* cursorTri = mapMgr->getCurrTri(mCursorWorldPos.x, mCursorWorldPos.z, true);
@@ -2062,7 +2062,7 @@ void Navi::refresh(Graphics& gfx)
 		Matrix4f orientMatrix;
 		orientMatrix.makeIdentity();
 
-		Vector3f cursorDir = mCursorWorldPos - mPosition;
+		Vector3f cursorDir = mCursorWorldPos - mSRT.t;
 		cursorDir.normalise();
 
 		Vector3f surfaceNormal(0.0f, 1.0f, 0.0f);
@@ -2126,8 +2126,8 @@ void Navi::refresh(Graphics& gfx)
  */
 void Navi::demoDraw(Graphics& gfx, Matrix4f* mtx)
 {
-	mShadowCaster.mSourcePosition.set(mPosition.x + 75.0f, mPosition.y + 100.0f, mPosition.z + 25.0f);
-	mShadowCaster.mTargetPosition.set(mPosition.x, mPosition.y + 10.0f, mPosition.z);
+	mShadowCaster.mSourcePosition.set(mSRT.t.x + 75.0f, mSRT.t.y + 100.0f, mSRT.t.z + 25.0f);
+	mShadowCaster.mTargetPosition.set(mSRT.t.x, mSRT.t.y + 10.0f, mSRT.t.z);
 	mNaviShapeObject->mShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	mCollInfo->updateInfo(gfx, false);
 	mNaviLightPosition = mCollInfo->getSphere('ante')->mCentre;
@@ -2148,14 +2148,14 @@ void Navi::draw(Graphics& gfx)
 
 	if (mStateMachine->getCurrID(this) != NAVISTATE_Pressed) {
 		f32 scale = NAVI_PROP.mDisplayScale();
-		mScale.set(scale, scale, scale);
+		mSRT.s.set(scale, scale, scale);
 	}
 
 	if (mRope) {
 		mWorldMtx = mConstrainedMoveMtx;
-		mWorldMtx.setTranslation(mPosition.x, mPosition.y, mPosition.z);
+		mWorldMtx.setTranslation(mSRT.t.x, mSRT.t.y, mSRT.t.z);
 	} else {
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		mConstrainedMoveMtx = mWorldMtx;
 	}
 
@@ -2166,7 +2166,7 @@ void Navi::draw(Graphics& gfx)
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, viewMtx);
 
 	mNaviAnimMgr.updateContext();
-	mapMgr->getLight(mPosition.x, mPosition.z);
+	mapMgr->getLight(mSRT.t.x, mSRT.t.z);
 
 	bool hasAnimError = false;
 	for (int i = 0; i < mNaviShapeObject->mShape->mJointCount; i++) {
@@ -2639,8 +2639,8 @@ void Navi::throwPiki(Piki* piki, Vector3f& pos)
 	f32 unused = mFaceDirection + PI;
 	piki->mActiveAction->abandon(nullptr);
 	rumbleMgr->start(RUMBLE_Unk2, 0, nullptr);
-	piki->mPosition      = mPosition + Vector3f(0.0f, 10.0f, 0.0f);
-	Vector3f throwDir    = pos - piki->mPosition;
+	piki->mSRT.t         = mSRT.t + Vector3f(0.0f, 10.0f, 0.0f);
+	Vector3f throwDir    = pos - piki->mSRT.t;
 	f32 throwDist        = speedy_sqrtf(throwDir.x * throwDir.x + throwDir.z * throwDir.z);
 	f32 throwAngle       = atan2f(throwDir.x, throwDir.z);
 	piki->mFaceDirection = roundAng(throwAngle);
@@ -2706,7 +2706,7 @@ void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 
 	f32 a = -4.0f * height / (len * len);
 	f32 b = height;
-	Vector3f prevPos(mPosition);
+	Vector3f prevPos(mSRT.t);
 	Vector3f dir(sinf(mFaceDirection), 0.0f, cosf(mFaceDirection));
 	Vector3f up(0.0f, 1.0f, 0.0f);
 
@@ -2752,7 +2752,7 @@ void Navi::updateLook()
 	f32 angle2;
 	f32 val = 0.05f;
 	if (mLookAtPosPtr) {
-		Vector3f lookDir = *mLookAtPosPtr - mPosition;
+		Vector3f lookDir = *mLookAtPosPtr - mSRT.t;
 		angle2           = atan2f(lookDir.x, lookDir.z);
 		f32 dist         = std::sqrtf(lookDir.x * lookDir.x + lookDir.z * lookDir.z);
 		angle1           = atan2f(lookDir.y, dist);

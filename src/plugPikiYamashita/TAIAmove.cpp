@@ -1014,7 +1014,7 @@ bool TAIAstepBack::act(Teki& teki)
 			teki.mFaceDirection
 			    += angDist(teki.mTargetAngle, teki.mFaceDirection) * teki.getParameterF(TPF_TurnVelocity) * gsys->getFrameTime() * 10.0f;
 			teki.mFaceDirection = roundAng(teki.mFaceDirection);
-			teki.mRotation.set(0.0f, teki.mFaceDirection, 0.0f);
+			teki.mSRT.r.set(0.0f, teki.mFaceDirection, 0.0f);
 			teki.mTargetVelocity.set(NMathF::sin(teki.mFaceDirection), 0.0f, NMathF::cos(teki.mFaceDirection));
 			teki.mTargetVelocity.multiply(-speed);
 			return false;
@@ -1383,7 +1383,7 @@ bool TAIAflyingDistance::act(Teki& teki)
 		teki.mFaceDirection += angSep * teki.mProps->mCreatureProps.mFaceDirAdjust() * gsys->getFrameTime() * 10.0f;
 		teki.mFaceDirection = roundAng(teki.mFaceDirection);
 
-		teki.mRotation.set(0.0f, teki.mFaceDirection, 0.0f);
+		teki.mSRT.r.set(0.0f, teki.mFaceDirection, 0.0f);
 		teki.mTargetVelocity.set(NMathF::sin(teki.mFaceDirection) * teki.getSpeed(), teki.mTargetVelocity.y,
 		                         NMathF::cos(teki.mFaceDirection) * teki.getSpeed());
 

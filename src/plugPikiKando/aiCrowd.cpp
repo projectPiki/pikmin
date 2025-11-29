@@ -308,7 +308,7 @@ int ActCrowd::exec()
 
 	Vector3f platePos = mPlateMgr->mSlotList[mCPlateSlotID].mOffsetFromCenter + mPlateMgr->mPlateCenter;
 
-	Vector3f effDir = static_cast<ViewPiki*>(mPiki)->mLastEffectPosition - mPiki->mPosition;
+	Vector3f effDir = static_cast<ViewPiki*>(mPiki)->mLastEffectPosition - mPiki->mSRT.t;
 	f32 travelDist  = effDir.length();
 
 	if (mPiki->hasBomb() && !playerState->mDemoFlags.isFlag(DEMOFLAG_GrabFirstBomb) && travelDist < 100.0f) {
@@ -334,7 +334,7 @@ int ActCrowd::exec()
 		_60 = 0.0f;
 	}
 
-	Vector3f plateDir = platePos - mPiki->mPosition;
+	Vector3f plateDir = platePos - mPiki->mSRT.t;
 	f32 plateDist2D   = std::sqrtf(plateDir.x * plateDir.x + plateDir.z * plateDir.z);
 	plateDir.normalise();
 
@@ -369,16 +369,16 @@ int ActCrowd::exec()
 			}
 
 			if (minPiki) {
-				platePos = minPiki->mPosition;
+				platePos = minPiki->mSRT.t;
 			} else {
-				platePos = mPiki->mNavi->mPosition;
+				platePos = mPiki->mNavi->mSRT.t;
 			}
 
 			STACK_PAD_VAR(1);
 			mIsWaiting       = false;
-			Vector3f moveDir = platePos - mPiki->mPosition;
+			Vector3f moveDir = platePos - mPiki->mSRT.t;
 			f32 moveDist     = moveDir.normalise();
-			moveDist         = qdist2(platePos.x, platePos.z, mPiki->mPosition.x, mPiki->mPosition.z);
+			moveDist         = qdist2(platePos.x, platePos.z, mPiki->mSRT.t.x, mPiki->mSRT.t.z);
 			if (moveDist <= 40.0f) {
 				if (mState != STATE_Formed) {
 					setFormed();
@@ -398,7 +398,7 @@ int ActCrowd::exec()
 
 		mMode = 1;
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		Vector3f naviDir = mPiki->mNavi->mPosition - mPiki->mPosition;
+		Vector3f naviDir = mPiki->mNavi->mSRT.t - mPiki->mSRT.t;
 		f32 diff         = atan2f(naviDir.x, naviDir.z);
 		mPiki->mFaceDirection += 0.3f * angDist(diff, mPiki->mFaceDirection);
 		if (!gameflow.mMoviePlayer->mIsActive && !mIsWaiting
@@ -427,7 +427,7 @@ int ActCrowd::exec()
 		mMode = 2;
 		mOdometer.reset();
 		mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-		plateDir  = mPiki->mNavi->mPosition - mPiki->mPosition;
+		plateDir  = mPiki->mNavi->mSRT.t - mPiki->mSRT.t;
 		f32 diff  = atan2f(plateDir.x, plateDir.z);
 		f32 angle = angDist(diff, mPiki->mFaceDirection);
 		mPiki->mFaceDirection += 0.3f * angle;
@@ -464,7 +464,7 @@ int ActCrowd::exec()
 				mIsWaiting = true;
 				startZawatuki();
 			}
-			plateDir  = mPiki->mNavi->mPosition - mPiki->mPosition;
+			plateDir  = mPiki->mNavi->mSRT.t - mPiki->mSRT.t;
 			f32 diff  = atan2f(plateDir.x, plateDir.z);
 			f32 angle = angDist(diff, mPiki->mFaceDirection);
 			mPiki->mFaceDirection += 0.3f * angle;
@@ -475,8 +475,8 @@ int ActCrowd::exec()
 			mPiki->setSpeed(1.0f, plateDir);
 		}
 
-		Vector3f pikiDir      = mPiki->mPosition - mPiki->mNavi->mPosition;
-		Vector3f naviPlateDir = mPiki->mNavi->mPosition - mPlateMgr->mPlateOffset;
+		Vector3f pikiDir      = mPiki->mSRT.t - mPiki->mNavi->mSRT.t;
+		Vector3f naviPlateDir = mPiki->mNavi->mSRT.t - mPlateMgr->mPlateOffset;
 		naviPlateDir.normalise();
 		if (naviPlateDir.DP(pikiDir) > 0.0f) {
 			Vector3f sideDir(-pikiDir.z, 0.0f, pikiDir.x);
@@ -498,8 +498,8 @@ int ActCrowd::exec()
 		mMode = 4;
 		mPiki->setSpeed(1.0f, plateDir);
 
-		Vector3f pikiDir      = mPiki->mPosition - mPiki->mNavi->mPosition;
-		Vector3f naviPlateDir = mPiki->mNavi->mPosition - mPlateMgr->mPlateOffset;
+		Vector3f pikiDir      = mPiki->mSRT.t - mPiki->mNavi->mSRT.t;
+		Vector3f naviPlateDir = mPiki->mNavi->mSRT.t - mPlateMgr->mPlateOffset;
 		naviPlateDir.normalise();
 		if (naviPlateDir.DP(pikiDir) > 0.0f) {
 			Vector3f sideDir(-pikiDir.z, 0.0f, pikiDir.x);
@@ -603,7 +603,7 @@ void ActCrowd::startTalk()
 	Iterator iter(&mPiki->mSearchBuffer);
 	iter.first();
 	Creature* closest     = *iter;
-	Vector3f dir          = closest->mPosition - mPiki->mPosition;
+	Vector3f dir          = closest->mSRT.t - mPiki->mSRT.t;
 	mPiki->mFaceDirection = atan2f(dir.x, dir.z);
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Chatting), PaniMotionInfo(PIKIANIM_Chatting));
 }

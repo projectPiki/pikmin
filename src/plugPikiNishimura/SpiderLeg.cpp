@@ -55,7 +55,7 @@ void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
 		}
 		if (i == jointIdx) {
 			mHalfDeadCallBackJoints[legNum].set(&legPart->mCentre, mSpider);
-			effectMgr->create(EffectMgr::EFF_Spider_HalfDead, mSpider->mPosition, &mHalfDeadCallBackJoints[legNum], nullptr);
+			effectMgr->create(EffectMgr::EFF_Spider_HalfDead, mSpider->mSRT.t, &mHalfDeadCallBackJoints[legNum], nullptr);
 		}
 		legPart = child;
 	}
@@ -75,7 +75,7 @@ void SpiderLeg::setHalfDeadFallEffect(u32 legCollPartID)
 			return;
 		}
 
-		zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Spider_HalfDeadFall, mSpider->mPosition, nullptr, nullptr);
+		zen::particleGenerator* ptclGen = effectMgr->create(EffectMgr::EFF_Spider_HalfDeadFall, mSpider->mSRT.t, nullptr, nullptr);
 		if (ptclGen) {
 			Vector3f midPt = child->mCentre + legPart->mCentre;
 			midPt.multiply(0.5f);
@@ -159,8 +159,8 @@ void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
 		}
 
 		mPerishCallBacks[i + p2].set(&child->mCentre, &legPart->mCentre, mSpider);
-		effectMgr->create(EffectMgr::EFF_Spider_PerishBubbles, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
-		effectMgr->create(EffectMgr::EFF_Spider_PerishSmoke, mSpider->mPosition, &mPerishCallBacks[i + p2], nullptr);
+		effectMgr->create(EffectMgr::EFF_Spider_PerishBubbles, mSpider->mSRT.t, &mPerishCallBacks[i + p2], nullptr);
+		effectMgr->create(EffectMgr::EFF_Spider_PerishSmoke, mSpider->mSRT.t, &mPerishCallBacks[i + p2], nullptr);
 		legPart = child;
 	}
 }
@@ -212,7 +212,7 @@ void SpiderLeg::createDeadBombEffect()
 	setDeadBombEffect('leg4');
 	CollPart* body = mSpider->mCollInfo->getSphere('tama');
 	effectMgr->create(EffectMgr::EFF_Spider_DeadBombSparks, body->mCentre, nullptr, nullptr);
-	rumbleMgr->start(RUMBLE_Unk5, 0, mSpider->mPosition);
+	rumbleMgr->start(RUMBLE_Unk5, 0, mSpider->mSRT.t);
 	if (mSpider->mSeContext) {
 		mSpider->mSeContext->playSound(SE_SPIDER_DEAD);
 	}
@@ -569,7 +569,7 @@ void SpiderLeg::init(Spider* spider)
 	mInitialised = true;
 	mIsMoving    = false;
 	mCentreVelocity.set(0.0f, 0.0f, 0.0f);
-	mCurrentCentre = mSpider->mPosition;
+	mCurrentCentre = mSpider->mSRT.t;
 
 	for (int i = 0; i < 4; i++) {
 		mStuckPikiCount[i]      = 0;
@@ -577,7 +577,7 @@ void SpiderLeg::init(Spider* spider)
 		mIsOnGround[i]          = false;
 		mFootRaiseHeightList[i] = C_SPIDER_PROP(mSpider)._264();
 
-		mJointPositions[i][0] = mSpider->mPosition;
+		mJointPositions[i][0] = mSpider->mSRT.t;
 		mBezierPoints[i][0]   = mJointPositions[i][0];
 	}
 
@@ -687,7 +687,7 @@ void SpiderLeg::setShakeOffNewParameter()
 	mCurrentCentre.y += 1.5f * sinf(30.0f * mOscillationPhase);
 
 	if (mSoundQueued && mSpider->mSeContext) {
-		rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mPosition);
+		rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mSRT.t);
 		mSpider->mSeContext->playSound(SE_SPIDER_SWING);
 		mSoundQueued = false;
 	}
@@ -726,7 +726,7 @@ void SpiderLeg::setBodyShakeNewParameter()
 		}
 
 		if (mSoundQueued && mSpider->mSeContext) {
-			rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mPosition);
+			rumbleMgr->start(RUMBLE_Unk3, 0, mSpider->mSRT.t);
 			mSpider->mSeContext->playSound(SE_SPIDER_SWING);
 			mSoundQueued = false;
 		}
@@ -750,11 +750,10 @@ void SpiderLeg::setNextDirAndCent()
 		f32 distFactor = C_SPIDER_PROP(mSpider)._4D4()
 		               + NsMathF::getRand(NsLibMath<f32>::abs(C_SPIDER_PROP(mSpider)._4E4() - C_SPIDER_PROP(mSpider)._4D4()));
 		f32 factorThreshold
-		    = qdist2(mSpider->mPosition.x, mSpider->mPosition.z, mSpider->getTargetPosition()->x, mSpider->getTargetPosition()->z);
+		    = qdist2(mSpider->mSRT.t.x, mSpider->mSRT.t.z, mSpider->getTargetPosition()->x, mSpider->getTargetPosition()->z);
 
 		mSpider->mFaceDirection = NsMathF::roundAngle(mSpider->mFaceDirection);
-		mTargetDirection
-		    = atan2f(mSpider->getTargetPosition()->x - mSpider->mPosition.x, mSpider->getTargetPosition()->z - mSpider->mPosition.z);
+		mTargetDirection = atan2f(mSpider->getTargetPosition()->x - mSpider->mSRT.t.x, mSpider->getTargetPosition()->z - mSpider->mSRT.t.z);
 		mTargetDirection = NsMathF::calcNearerDirection(mSpider->mFaceDirection, mTargetDirection);
 
 		if (mTargetDirection > mSpider->mFaceDirection) {
@@ -795,8 +794,8 @@ void SpiderLeg::setNextDirAndCent()
 			}
 		}
 
-		mTargetCentre.x = centreDist * sinf(mTargetDirection) + mSpider->mPosition.x;
-		mTargetCentre.z = centreDist * cosf(mTargetDirection) + mSpider->mPosition.z;
+		mTargetCentre.x = centreDist * sinf(mTargetDirection) + mSpider->mSRT.t.x;
+		mTargetCentre.z = centreDist * cosf(mTargetDirection) + mSpider->mSRT.t.z;
 		mTargetCentre.y = mapMgr->getMinY(mTargetCentre.x, mTargetCentre.z, true);
 	}
 
@@ -833,7 +832,7 @@ void SpiderLeg::setWalkNewPosition()
 
 			mBezierPoints[i][1].x = (mJointPositions[i][0].x + 4.0f * mBezierPoints[i][2].x) / 5.0f;
 			mBezierPoints[i][1].z = (mJointPositions[i][0].z + 4.0f * mBezierPoints[i][2].z) / 5.0f;
-			mBezierPoints[i][1].y = mSpider->mPosition.y + mFootRaiseHeightList[i];
+			mBezierPoints[i][1].y = mSpider->mSRT.t.y + mFootRaiseHeightList[i];
 
 			mIsOnGround[i]        = false;
 			mLegCanMove[i]        = false;
@@ -951,11 +950,11 @@ void SpiderLeg::makeNewPosition()
 void SpiderLeg::calcSpiderDirection()
 {
 	if (mSpider->getCurrentState() < SPIDERAI_Start) {
-		f32 x                = mJointPositions[0][0].x - mSpider->mPosition.x + mJointPositions[2][0].x - mSpider->mPosition.x;
-		f32 z                = mJointPositions[0][0].z - mSpider->mPosition.z + mJointPositions[2][0].z - mSpider->mPosition.z;
-		mSpider->mRotation.y = atan2f(x, z);
+		f32 x             = mJointPositions[0][0].x - mSpider->mSRT.t.x + mJointPositions[2][0].x - mSpider->mSRT.t.x;
+		f32 z             = mJointPositions[0][0].z - mSpider->mSRT.t.z + mJointPositions[2][0].z - mSpider->mSRT.t.z;
+		mSpider->mSRT.r.y = atan2f(x, z);
 	}
-	mSpider->mFaceDirection = mSpider->mRotation.y;
+	mSpider->mFaceDirection = mSpider->mSRT.r.y;
 }
 
 /*
@@ -966,8 +965,8 @@ void SpiderLeg::calcSpiderDirection()
 void SpiderLeg::calcShakeOffDirection()
 {
 	if (mMotionType == SpiderLegMotionType::BodyShake) {
-		mSpider->mRotation.y += mShakeAngle;
-		mSpider->mFaceDirection = mSpider->mRotation.y;
+		mSpider->mSRT.r.y += mShakeAngle;
+		mSpider->mFaceDirection = mSpider->mSRT.r.y;
 	}
 }
 
@@ -1081,7 +1080,7 @@ void SpiderLeg::setRealCentre(Vector3f& centre)
  */
 void SpiderLeg::setCentrePosition()
 {
-	Vector3f centre(0.0f, mSpider->mPosition.y, 0.0f);
+	Vector3f centre(0.0f, mSpider->mSRT.t.y, 0.0f);
 	setIdealCentre(centre);
 	setRealCentre(centre);
 
@@ -1094,8 +1093,8 @@ void SpiderLeg::setCentrePosition()
 		mCurrentCentre.add(dir);
 	}
 
-	mSpider->mPosition.x = mCurrentCentre.x;
-	mSpider->mPosition.z = mCurrentCentre.z;
+	mSpider->mSRT.t.x = mCurrentCentre.x;
+	mSpider->mSRT.t.z = mCurrentCentre.z;
 }
 
 /*
@@ -1108,7 +1107,7 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
 	Matrix4f mtx1;
 	Matrix4f mtx2;
 
-	mtx2.makeSRT(mSpider->mScale, mSpider->mRotation, mCurrentCentre);
+	mtx2.makeSRT(mSpider->mSRT.s, mSpider->mSRT.r, mCurrentCentre);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mtx2, mtx1);
 
 	mSpider->mAnimator.updateContext();
@@ -1241,8 +1240,8 @@ void SpiderLeg::stepDamageNavi(int legNum)
 	CI_LOOP(iter)
 	{
 		Creature* navi = *iter;
-		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried() && heightCheck > navi->mPosition.y) {
-			if (mJointPositions[legNum][0].distance(navi->mPosition) < C_SPIDER_PROP(mSpider)._324()) {
+		if (navi && navi->isAlive() && navi->isVisible() && !navi->isBuried() && heightCheck > navi->mSRT.t.y) {
+			if (mJointPositions[legNum][0].distance(navi->mSRT.t) < C_SPIDER_PROP(mSpider)._324()) {
 				InteractPress press(mSpider, C_SPIDER_PROP(mSpider)._334());
 				navi->stimulate(press);
 			}
@@ -1265,8 +1264,8 @@ void SpiderLeg::stepDamagePiki(int legNum)
 	{
 		Creature* piki = *iter;
 		if (piki && piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != mSpider
-		    && piki->mPosition.y < heightAbove && piki->mPosition.y > heightBelow) {
-			if (qdist2(piki->mPosition.x, piki->mPosition.z, footPos.x, footPos.z) < C_SPIDER_PROP(mSpider)._324()) {
+		    && piki->mSRT.t.y < heightAbove && piki->mSRT.t.y > heightBelow) {
+			if (qdist2(piki->mSRT.t.x, piki->mSRT.t.z, footPos.x, footPos.z) < C_SPIDER_PROP(mSpider)._324()) {
 				InteractPress press(mSpider, C_SPIDER_PROP(mSpider)._344());
 				piki->stimulate(press);
 			}

@@ -464,7 +464,7 @@ void GameCoreSection::enterFreePikmins()
 					Navi* navi     = naviMgr->getNavi();
 					GoalItem* goal = itemMgr->getContainer(i);
 					if (goal
-					    && qdist2(goal->mPosition.x, goal->mPosition.z, piki->mPosition.x, piki->mPosition.z)
+					    && qdist2(goal->mSRT.t.x, goal->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z)
 					           <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 						if (state == PIKISTATE_LookAt || state == PIKISTATE_Nukare || state == PIKISTATE_Absorb) {
 							piki->mFSM->transit(piki, PIKISTATE_Normal);
@@ -479,8 +479,7 @@ void GameCoreSection::enterFreePikmins()
 					UfoItem* ufo = itemMgr->getUfo();
 					if (ufo) {
 						Vector3f pos = ufo->getGoalPos();
-						if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z)
-						    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
+						if (qdist2(pos.x, pos.z, piki->mSRT.t.x, piki->mSRT.t.z) <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 							if (state == PIKISTATE_LookAt || state == PIKISTATE_Nukare || state == PIKISTATE_Absorb) {
 								piki->mFSM->transit(piki, PIKISTATE_Normal);
 							}
@@ -628,7 +627,7 @@ void GameCoreSection::cleanupDayEnd()
 						for (int i = 0; i < 3; i++) {
 							GoalItem* goal = itemMgr->getContainer(i);
 							if (goal
-							    && qdist2(goal->mPosition.x, goal->mPosition.z, piki->mPosition.x, piki->mPosition.z)
+							    && qdist2(goal->mSRT.t.x, goal->mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z)
 							           <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 								isNearOnyonShip = true;
 								break;
@@ -636,7 +635,7 @@ void GameCoreSection::cleanupDayEnd()
 							UfoItem* ufo = itemMgr->getUfo();
 							if (ufo) {
 								Vector3f pos = ufo->getGoalPos();
-								if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z)
+								if (qdist2(pos.x, pos.z, piki->mSRT.t.x, piki->mSRT.t.z)
 								    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 									isNearOnyonShip = true;
 									break;
@@ -690,7 +689,7 @@ void GameCoreSection::cleanupDayEnd()
 		GoalItem* goal = itemMgr->getContainer(i);
 		if (goal && playerState->hasContainer(goal->mOnionColour)) {
 			goal->mSpotModelEff
-			    = effectMgr->create((EffectMgr::modelTypeTable)i, goal->mPosition, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+			    = effectMgr->create((EffectMgr::modelTypeTable)i, goal->mSRT.t, Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
 		}
 	}
 
@@ -961,10 +960,10 @@ void GameCoreSection::initStage()
 		useDefault = true;
 	} else {
 		PRINT("*** NO GENERATOR FILE\n");
-		mNavi->mPosition.set(0.0f, 0.0f, 0.0f);
-		mNavi->mDayEndPosition = mNavi->mPosition;
+		mNavi->mSRT.t.set(0.0f, 0.0f, 0.0f);
+		mNavi->mDayEndPosition = mNavi->mSRT.t;
 		mNavi->mFaceDirection  = 0.0f;
-		mNavi->mRotation.set(0.0f, 0.0f, 0.0f);
+		mNavi->mSRT.r.set(0.0f, 0.0f, 0.0f);
 	}
 	mNavi->reset();
 
@@ -1116,8 +1115,8 @@ void GameCoreSection::initStage()
 			PikiHeadItem* item = (PikiHeadItem*)itemMgr->birth(OBJTYPE_Pikihead);
 			if (item) {
 				a->restore(item);
-				item->mPosition.y = mMapMgr->getMinY(item->mPosition.x, item->mPosition.z, true);
-				item->init(item->mPosition);
+				item->mSRT.t.y = mMapMgr->getMinY(item->mSRT.t.x, item->mSRT.t.z, true);
+				item->init(item->mSRT.t);
 				item->setColor(item->mSeedColor);
 				item->startAI(0);
 				C_SAI(item)->start(item, PikiHeadAI::PIKIHEAD_Wait);
@@ -1183,7 +1182,7 @@ void GameCoreSection::finalSetup()
 	{
 		Creature* pellet = *it;
 		if (pellet) {
-			pellet->mPosition.y = mMapMgr->getMinY(pellet->mPosition.x, pellet->mPosition.z, true);
+			pellet->mSRT.t.y = mMapMgr->getMinY(pellet->mSRT.t.x, pellet->mSRT.t.z, true);
 		}
 	}
 
@@ -1692,7 +1691,7 @@ void GameCoreSection::draw(Graphics& gfx)
 		gameflow.mMoviePlayer->getLookAtPos(pos);
 		seSystem->update(gfx, pos);
 	} else {
-		seSystem->update(gfx, mNavi->mPosition);
+		seSystem->update(gfx, mNavi->mSRT.t);
 	}
 	gsys->mTimer->stop("se updt");
 

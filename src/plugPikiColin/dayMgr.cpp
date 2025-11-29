@@ -694,7 +694,7 @@ void DayMgr::refresh(Graphics& gfx, f32 time, int p2)
 			mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, naviMgr->getNavi()->mFaceDirection, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
 			mCurrentTimeSetting.mDayPhaseLights[i].mDirection.rotate(mtx2);
 			mCurrentTimeSetting.mDayPhaseLights[i].mPosition.rotate(mtx2);
-			mCurrentTimeSetting.mDayPhaseLights[i].mPosition.add(naviMgr->getNavi()->mPosition);
+			mCurrentTimeSetting.mDayPhaseLights[i].mPosition.add(naviMgr->getNavi()->mSRT.t);
 		}
 	}
 

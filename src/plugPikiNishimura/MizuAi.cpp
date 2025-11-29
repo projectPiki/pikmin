@@ -42,8 +42,8 @@ MizuAi::MizuAi(Mizu* mizu)
 void MizuAi::initMizu(Mizu* mizu)
 {
 	mMizu = mizu;
-	_0C   = effectMgr->create(EffectMgr::EFF_Mizu_IdleMist, mMizu->mPosition, nullptr, nullptr);
-	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mPosition, nullptr, nullptr);
+	_0C   = effectMgr->create(EffectMgr::EFF_Mizu_IdleMist, mMizu->mSRT.t, nullptr, nullptr);
+	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mSRT.t, nullptr, nullptr);
 	mMizu->setCurrentState(0);
 	mMizu->setNextState(0);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
@@ -59,8 +59,8 @@ void MizuAi::initMizu(Mizu* mizu)
 void MizuAi::initGeyzer(Mizu* geyzer)
 {
 	mMizu = geyzer;
-	_0C   = effectMgr->create(EffectMgr::EFF_Mizu_IdleMist, mMizu->mPosition, nullptr, nullptr);
-	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mPosition, nullptr, nullptr);
+	_0C   = effectMgr->create(EffectMgr::EFF_Mizu_IdleMist, mMizu->mSRT.t, nullptr, nullptr);
+	_08   = effectMgr->create(EffectMgr::EFF_Mizu_IdleBubbles, mMizu->mSRT.t, nullptr, nullptr);
 	mMizu->setCurrentState(1);
 	mMizu->setNextState(1);
 	mMizu->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
@@ -104,10 +104,10 @@ void MizuAi::killCallBackEffect(bool p1)
  */
 void MizuAi::setEveryFrame()
 {
-	Vector3f* vec      = mMizu->getInitPosition();
-	mMizu->mPosition.x = vec->x;
-	mMizu->mPosition.y = vec->y;
-	mMizu->mPosition.z = vec->z;
+	Vector3f* vec   = mMizu->getInitPosition();
+	mMizu->mSRT.t.x = vec->x;
+	mMizu->mSRT.t.y = vec->y;
+	mMizu->mSRT.t.z = vec->z;
 }
 
 /*
@@ -119,7 +119,7 @@ void MizuAi::naviGeyzerJump()
 {
 	Vector3f dir(sinf(mMizu->mFaceDirection), 0.0f, cosf(mMizu->mFaceDirection));
 	dir.multiply(C_BOSS_PROP(mMizu).mTerritoryRadius());
-	Vector3f targetPos = mMizu->mPosition + dir;
+	Vector3f targetPos = mMizu->mSRT.t + dir;
 	targetPos.y        = mapMgr->getMinY(targetPos.x, targetPos.z, true);
 
 	Navi* navi = naviMgr->getNavi();
@@ -231,14 +231,14 @@ void MizuAi::initJet(int stateID)
 		_08->stopGen();
 	}
 
-	effectMgr->create(EffectMgr::EFF_Mizu_JetPuff, mMizu->mPosition, mPuffCallBack, nullptr);
-	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Mizu_JetStream, mMizu->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Mizu_JetPuff, mMizu->mSRT.t, mPuffCallBack, nullptr);
+	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_Mizu_JetStream, mMizu->mSRT.t, nullptr, nullptr);
 	mPuffCallBack->set(ptcl);
 	if (ptcl) {
 		ptcl->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
 	}
 
-	effectMgr->create(EffectMgr::EFF_Mizu_JetMist, mMizu->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Mizu_JetMist, mMizu->mSRT.t, nullptr, nullptr);
 
 	if (mMizu->mSeContext) {
 		mMizu->mSeContext->stopSound(SE_GEYSER_NORMAL);
@@ -264,10 +264,10 @@ void MizuAi::readyState()
 {
 	if (!mMizu->_3B8) {
 		Navi* navi = naviMgr->getNavi();
-		f32 absX   = NsLibMath<f32>::abs(mMizu->mPosition.x - navi->mPosition.x);
+		f32 absX   = NsLibMath<f32>::abs(mMizu->mSRT.t.x - navi->mSRT.t.x);
 		if (absX < 7.5f) {
-			f32 absZ = NsLibMath<f32>::abs(mMizu->mPosition.z - navi->mPosition.z);
-			if (absZ < 7.5f && NsLibMath<f32>::abs(mMizu->mPosition.y - navi->mPosition.y) < 10.0f) {
+			f32 absZ = NsLibMath<f32>::abs(mMizu->mSRT.t.z - navi->mSRT.t.z);
+			if (absZ < 7.5f && NsLibMath<f32>::abs(mMizu->mSRT.t.y - navi->mSRT.t.y) < 10.0f) {
 				mMizu->_3B8 = true;
 			}
 		}

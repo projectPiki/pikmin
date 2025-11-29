@@ -85,7 +85,7 @@ int ActEscape::exec()
 
 	switch (mState) {
 	case STATE_Normal:
-		Vector3f escapeDirection = mPiki->mPosition - target->mPosition;
+		Vector3f escapeDirection = mPiki->mSRT.t - target->mSRT.t;
 		Vector3f tmp(escapeDirection);
 		f32 dist = escapeDirection.length();
 		if (dist > 0.0f) {

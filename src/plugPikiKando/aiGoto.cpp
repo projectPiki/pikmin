@@ -80,7 +80,7 @@ int ActGoto::exec()
 	mTimeoutDuration -= gsys->getFrameTime();
 
 	f32 distanceToTarget = qdist2(target, mPiki);
-	f32 verticalDistance = absF(target->mPosition.y - mPiki->mPosition.y);
+	f32 verticalDistance = absF(target->mSRT.t.y - mPiki->mSRT.t.y);
 
 	// If distance is within the range, return success
 	if (distanceToTarget >= mMinDistance && distanceToTarget <= mMaxDistance + mPiki->getCentreSize() + target->getCentreSize()) {
@@ -98,8 +98,8 @@ int ActGoto::exec()
 	}
 
 	// Calculate desired position maintaining minimum distance from target
-	Vector3f targetPosition(target->mPosition);
-	Vector3f directionToTarget = mPiki->mPosition - targetPosition;
+	Vector3f targetPosition(target->mSRT.t);
+	Vector3f directionToTarget = mPiki->mSRT.t - targetPosition;
 	directionToTarget.normalise();
 	directionToTarget = directionToTarget * mMinDistance;
 	targetPosition    = targetPosition + directionToTarget;
@@ -108,7 +108,7 @@ int ActGoto::exec()
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
 	// Calculate movement direction, ignoring vertical component
-	Vector3f moveDirection = targetPosition - mPiki->mPosition;
+	Vector3f moveDirection = targetPosition - mPiki->mSRT.t;
 	moveDirection.y        = 0.0f;
 	f32 horizontalDistance = moveDirection.length();
 
@@ -125,7 +125,7 @@ int ActGoto::exec()
 	// But it is some sort of smoothing algorithm for the movement direction
 	// It is not clear what the purpose of this is, but it is likely to make the movement more natural
 	Vector3f vec1(0.0f, 0.0f, 0.0f);
-	Vector3f unitDirToTarget = targetPosition - mPiki->mPosition;
+	Vector3f unitDirToTarget = targetPosition - mPiki->mSRT.t;
 	unitDirToTarget.normalise();
 	Vector3f perpDir(-unitDirToTarget.z, 0.0f, unitDirToTarget.x);
 	bool velocityBlending = false;

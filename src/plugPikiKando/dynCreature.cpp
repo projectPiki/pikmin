@@ -320,7 +320,7 @@ void DynCreature::simulate(f32 timeStep)
 		ptcl->mWorldPosition = localPosition;
 		ptcl->mWorldPosition.multMatrix(rotMtx);
 		ptcl->mWorldPosition.add(mCenterOfMass);
-		ptcl->mWorldPosition.add(mPosition);
+		ptcl->mWorldPosition.add(mSRT.t);
 
 		ptcl->mWorldVelocity = mAngularVelocity;
 
@@ -360,8 +360,8 @@ void DynCreature::simulate(f32 timeStep)
 			}
 
 			// Handle deep penetration by using direction to center
-			if (0.5f * getCylinderHeight() + mPosition.y < groundHeight) {
-				collisionNormal = mPosition - ptcl->mWorldPosition;
+			if (0.5f * getCylinderHeight() + mSRT.t.y < groundHeight) {
+				collisionNormal = mSRT.t - ptcl->mWorldPosition;
 				collisionNormal.normalise();
 			}
 
@@ -415,7 +415,7 @@ void DynCreature::simulate(f32 timeStep)
 			correctionStrength = 30.0f;
 		}
 
-		mPosition = mPosition + maxNormal * correctionStrength;
+		mSRT.t = mSRT.t + maxNormal * correctionStrength;
 	}
 
 	// Update angular momentum
@@ -520,7 +520,7 @@ void DynCreature::calcModelMatrix(Matrix4f& modelMtx)
 	Matrix4f mtx2;
 	mtx2.makeIdentity();
 	mtx2.setTranslation(mCenterOfMass);
-	mtx1.makeVQS(mPosition, mRotationQuat, mScale);
+	mtx1.makeVQS(mSRT.t, mRotationQuat, mSRT.s);
 	mtx1.multiplyTo(mtx2, modelMtx);
 }
 
@@ -533,11 +533,11 @@ void DynCreature::refresh(Graphics& gfx)
 {
 	Matrix4f mtx1;
 	Matrix4f mtx2;
-	Vector3f startScale(mScale);
+	Vector3f startScale(mSRT.s);
 
-	mScale.set(1.0f, 1.0f, 1.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
 	calcModelMatrix(mtx1);
-	mScale = startScale;
+	mSRT.s = startScale;
 
 	gfx.useMatrix(Matrix4f::ident, 0);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);

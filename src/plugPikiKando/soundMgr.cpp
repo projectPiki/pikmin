@@ -456,7 +456,7 @@ void SeContext::setContext(Creature* obj, int type)
 Vector3f SeContext::getPos()
 {
 	if (mGameObj) {
-		return mGameObj->mPosition;
+		return mGameObj->mSRT.t;
 	}
 	return mSourcePosition;
 }

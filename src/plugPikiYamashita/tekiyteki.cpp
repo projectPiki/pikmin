@@ -117,7 +117,7 @@ void YTeki::moveTowardPriorityFaceDir(Vector3f& p1, f32 p2, f32 turnSpeed)
 	f32 angSep   = angDist(mTargetAngle, mFaceDirection);
 	mFaceDirection += gsys->getFrameTime() * (angSep * turnSpeed);
 	mFaceDirection = roundAng(mFaceDirection);
-	mRotation.set(0.0f, mFaceDirection, 0.0f);
+	mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 
 	f32 angle = 2.0f * (zen::Abs(angSep) / PI);
 	if (angle > 1.0f) {
@@ -150,7 +150,7 @@ bool YTeki::turnToTarget()
 		f32 angSep   = angDist(mTargetAngle, mFaceDirection);
 		mFaceDirection += mProps->mCreatureProps.mFaceDirAdjust() * angSep * gsys->getFrameTime() * 10.0f;
 		mFaceDirection = roundAng(mFaceDirection);
-		mRotation.set(0.0f, mFaceDirection, 0.0f);
+		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 		if (angSep < getParameterF(TPF_AttackableAngle) * PI / 180.0f) {
 			return true;
 		}

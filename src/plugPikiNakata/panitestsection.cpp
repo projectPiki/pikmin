@@ -76,9 +76,9 @@ PaniTestNode::PaniTestNode()
 	for (i = 0; i < mTestPikiCount; i++) {
 		mTestPikiList[i] = static_cast<ViewPiki*>(pikiMgr->birth());
 		mTestPikiList[i]->init(nullptr);
-		mTestPikiList[i]->mScale.set(1.0f, 1.0f, 1.0f);
-		mTestPikiList[i]->mRotation.set(0.0f, 0.0f, 0.0f);
-		mTestPikiList[i]->mPosition.set(0.0f, 0.0f, 0.0f);
+		mTestPikiList[i]->mSRT.s.set(1.0f, 1.0f, 1.0f);
+		mTestPikiList[i]->mSRT.r.set(0.0f, 0.0f, 0.0f);
+		mTestPikiList[i]->mSRT.t.set(0.0f, 0.0f, 0.0f);
 		mTestPikiList[i]->initColor(Blue);
 	}
 
@@ -275,7 +275,7 @@ void PaniTestNode::updatePikis()
 	int i;
 	for (i = 0; i < mTestPikiCount; i++) {
 		// can you tell how much i dont wanna change the Creature scale/rot/pos definition to an SRT?
-		SRT* srt = (SRT*)&mTestPikiList[i]->mScale;
+		SRT* srt = (SRT*)&mTestPikiList[i]->mSRT.s;
 		mTestPikiList[i]->mWorldMtx.makeSRT_(*srt);
 	}
 
@@ -319,7 +319,7 @@ void PaniTestNode::updatePikis()
 void PaniTestNode::updateTekis()
 {
 	// can you tell how much i dont wanna change the Creature scale/rot/pos definition to an SRT?
-	SRT* srt = (SRT*)&mTestTekiList[mFocusTekiType]->mScale;
+	SRT* srt = (SRT*)&mTestTekiList[mFocusTekiType]->mSRT.s;
 	mTestTekiList[mFocusTekiType]->mWorldMtx.makeSRT_(*srt);
 
 	if (_68C) {

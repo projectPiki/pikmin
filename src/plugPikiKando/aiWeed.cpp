@@ -106,7 +106,7 @@ int ActWeed::exeApproach()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f direction = mCurrGrass->mPosition - mPiki->mPosition;
+	Vector3f direction = mCurrGrass->mPosition - mPiki->mSRT.t;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
 
@@ -146,7 +146,7 @@ int ActWeed::exeAdjust()
 		return ACTOUT_Continue;
 	}
 
-	Vector3f direction = mCurrGrass->mPosition - mPiki->mPosition;
+	Vector3f direction = mCurrGrass->mPosition - mPiki->mSRT.t;
 	f32 dist2D         = std::sqrtf(direction.x * direction.x + direction.z * direction.z);
 	f32 unused         = direction.normalise();
 

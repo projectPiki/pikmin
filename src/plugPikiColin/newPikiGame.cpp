@@ -1624,7 +1624,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 				flowCont.mGameEndCondition = 1;
 				PRINT("got zero pikis flag!!\n");
 				Navi* navi = naviMgr->getNavi(0);
-				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mPosition, &navi->mRotation, -1, true);
+				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mSRT.t, &navi->mSRT.r, -1, true);
 				if (gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 					if (gameoverWindow) {
 						gameoverWindow->start(zen::DrawGameOver::modeFlag(1), 40.0f);

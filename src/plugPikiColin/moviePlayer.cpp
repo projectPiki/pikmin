@@ -395,8 +395,8 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 		if (!onyon) {
 			return;
 		}
-		pos = &onyon->mPosition;
-		rot = &onyon->mRotation;
+		pos = &onyon->mSRT.t;
+		rot = &onyon->mSRT.r;
 	}
 
 	// whimsical radar check?
@@ -640,7 +640,7 @@ void MoviePlayer::update()
 
 		if (info->mPlayer && info->mPlayer->mTarget && info->mPlayer->mFlags & CinePlayerFlags::ObjWatching) {
 			info->mPlayer->mUseStaticCamera = true;
-			info->mPlayer->mStaticLookAt    = info->mPlayer->mTarget->mPosition;
+			info->mPlayer->mStaticLookAt    = info->mPlayer->mTarget->mSRT.t;
 		}
 
 		mMaskFlags = info->mMaskFlags;

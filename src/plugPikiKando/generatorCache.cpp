@@ -540,7 +540,7 @@ void GeneratorCache::loadUfoParts(GeneratorCache::Cache* cache)
 		}
 
 		part->load(stream, true);
-		part->init(part->mPosition);
+		part->init(part->mSRT.t);
 		part->startAI(0);
 		part->mStateMachine->transit(part, 5);
 		PRINT("CREATE PELLET !!!!!!!!\n");

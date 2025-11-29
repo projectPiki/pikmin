@@ -167,12 +167,12 @@ void PomAi::keyFinished()
 	if (mPom->getCurrentState() == 0) {
 		mPom->setIsAlive(0);
 		mPom->setIsAtari(0);
-		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeS, mPom->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowS, mPom->mPosition, nullptr, nullptr);
-		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, mPom->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeS, mPom->mSRT.t, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowS, mPom->mSRT.t, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, mPom->mSRT.t, nullptr, nullptr);
 
 		playSound(0);
-		mPom->createPellet(mPom->mPosition, 150.0f, true);
+		mPom->createPellet(mPom->mSRT.t, 150.0f, true);
 	}
 
 	mPom->setMotionFinish(1);
@@ -263,7 +263,7 @@ void PomAi::checkSwayAndScale()
 	int stickPikiCount = mPom->getStickPikiCount();
 	if (stickPikiCount > mPrevStickPikiCount) {
 		mDeformAmount -= C_POM_PROP(mPom).mSquashAmount();
-		effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPom->mPosition, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_CloudOfDust_1, mPom->mSRT.t, nullptr, nullptr);
 		playSound(5);
 		resultFlagSeen();
 	}
@@ -279,9 +279,9 @@ void PomAi::checkSwayAndScale()
 void PomAi::calcSwayAndScale()
 {
 	mCurrentDeform += mDeformAmount;
-	mPom->mScale.x = 1.0f - mCurrentDeform;
-	mPom->mScale.y = 1.0f + mCurrentDeform;
-	mPom->mScale.z = 1.0f - mCurrentDeform;
+	mPom->mSRT.s.x = 1.0f - mCurrentDeform;
+	mPom->mSRT.s.y = 1.0f + mCurrentDeform;
+	mPom->mSRT.s.z = 1.0f - mCurrentDeform;
 
 	mDeformAmount *= C_POM_PROP(mPom).mSquashPersistence();
 
@@ -295,10 +295,10 @@ void PomAi::calcSwayAndScale()
  */
 void PomAi::setInitPosition()
 {
-	Vector3f* pos     = mPom->getInitPosition();
-	mPom->mPosition.x = pos->x;
-	mPom->mPosition.y = pos->y;
-	mPom->mPosition.z = pos->z;
+	Vector3f* pos  = mPom->getInitPosition();
+	mPom->mSRT.t.x = pos->x;
+	mPom->mSRT.t.y = pos->y;
+	mPom->mSRT.t.z = pos->z;
 }
 
 /*
@@ -341,7 +341,7 @@ void PomAi::createPikiHead()
 {
 	int seedCount = killStickPiki();
 	Navi* player  = naviMgr->getNavi();
-	f32 baseAngle = atan2f(mPom->mPosition.x - player->mPosition.x, mPom->mPosition.z - player->mPosition.z);
+	f32 baseAngle = atan2f(mPom->mSRT.t.x - player->mSRT.t.x, mPom->mSRT.t.z - player->mSRT.t.z);
 
 	f32 spreadAngle = PI * (C_POM_PROP(mPom).mDischargeAngle() / 360.0f);
 	f32 minAngle    = baseAngle - spreadAngle;
@@ -350,7 +350,7 @@ void PomAi::createPikiHead()
 	for (int i = 0; i < seedCount; i++) {
 		PikiHeadItem* sprout = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 		if (sprout) {
-			Vector3f spawnPos = mPom->mPosition;
+			Vector3f spawnPos = mPom->mSRT.t;
 			spawnPos.y += 50.0f;
 			sprout->init(spawnPos);
 
@@ -364,7 +364,7 @@ void PomAi::createPikiHead()
 		}
 	}
 
-	rumbleMgr->start(RUMBLE_Unk10, 0, mPom->mPosition);
+	rumbleMgr->start(RUMBLE_Unk10, 0, mPom->mSRT.t);
 	playSound(3);
 	mReleasedSeedCount++;
 	STACK_PAD_VAR(1);
@@ -378,7 +378,7 @@ void PomAi::createPikiHead()
 void PomAi::emitPomOpenEffect(u32 collPartID)
 {
 	CollPart* part               = mPom->mCollInfo->getSphere(collPartID);
-	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_SD_Sparkle, mPom->mPosition, mOpenStarCallBack, nullptr);
+	zen::particleGenerator* ptcl = effectMgr->create(EffectMgr::EFF_SD_Sparkle, mPom->mSRT.t, mOpenStarCallBack, nullptr);
 	if (ptcl) {
 		ptcl->setEmitPosPtr(&part->mCentre);
 	}

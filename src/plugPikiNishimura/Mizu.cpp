@@ -50,8 +50,8 @@ Mizu::Mizu(CreatureProp* props)
  */
 bool Mizu::attackDefaultPortion()
 {
-	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtSpray, mSRT.t, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_SD_DirtCloud, mSRT.t, nullptr, nullptr);
 	return true;
 }
 
@@ -132,7 +132,7 @@ void Mizu::update()
  */
 void Mizu::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f onCamMtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, onCamMtx);
 	mAnimator.updateContext();

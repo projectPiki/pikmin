@@ -495,8 +495,8 @@ Creature* GenObjectWorkObject::birth(BirthInfo& info)
 	if (obj) {
 		info.mPosition.y = mapMgr->getMinY(info.mPosition.x, info.mPosition.z, true);
 		obj->init(info.mPosition);
-		obj->mRotation      = info.mRotation;
-		obj->mFaceDirection = obj->mRotation.y;
+		obj->mSRT.r         = info.mRotation;
+		obj->mFaceDirection = obj->mSRT.r.y;
 		obj->mGenerator     = info.mGenerator;
 
 		if (mObjectType == 1) {
@@ -542,7 +542,7 @@ HinderRock::HinderRock(Shape* shape)
  */
 bool HinderRock::insideSafeArea(Vector3f& pos)
 {
-	Vector3f pos2 = mPosition;
+	Vector3f pos2 = mSRT.t;
 	Cylinder cyl(pos2, mDestinationPosition, 1.0f);
 	if (cyl.get2dDist(pos) < 120.0f) {
 		return false;
@@ -564,8 +564,8 @@ void HinderRock::doLoad(RandomAccessStream& stream)
 	mPushMoveTimer = 0.0f;
 
 	if (mState == 2) {
-		mPosition   = mDestinationPosition;
-		mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, false);
+		mSRT.t   = mDestinationPosition;
+		mSRT.t.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, false);
 		for (int i = 0; i < 10; i++) {
 			PRINT("goal Y = %f\n", mDestinationPosition.y);
 		}
@@ -575,7 +575,7 @@ void HinderRock::doLoad(RandomAccessStream& stream)
 	}
 
 	;
-	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mSRT.r, mSRT.t);
 
 	mBuildShape->mTransformMtx = mWorldMtx;
 }
@@ -829,11 +829,11 @@ void HinderRock::update()
 	if (mSeContext) {
 		mSeContext->update();
 	}
-	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition = mSRT.t;
 	mLifeGauge.mPosition.y += 40.0f;
 	mIsMoving = false;
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 
 	if (mPushingPikmin) {
 		mLifeGauge.countOn(mLifeGauge.mPosition, mPushingPikmin, mAmountPushersToStart);
@@ -897,9 +897,9 @@ void HinderRock::update()
 		}
 
 		mIsMoving = true;
-		mVelocity = mDestinationPosition - mPosition;
+		mVelocity = mDestinationPosition - mSRT.t;
 		if (std::sqrtf(mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 4.0f) {
-			mPosition = mDestinationPosition;
+			mSRT.t = mDestinationPosition;
 			mState    = 2;
 			mWayPoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
@@ -925,7 +925,7 @@ void HinderRock::update()
 		mVelocity.normalise();
 		mVelocity.multiply(mPushSpeed * 0.5f);
 		moveNew(gsys->getFrameTime());
-		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+		mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mSRT.r, mSRT.t);
 		mBuildShape->mTransformMtx = mWorldMtx;
 		mPushMoveTimer += gsys->getFrameTime();
 		if (!mIsSoundPlaying) {
@@ -973,21 +973,21 @@ void HinderRock::startAI(int)
 	mFxCooldownTimer = false;
 	_428             = false;
 	mCollInfo->initInfo(mBoxShape, nullptr, nullptr);
-	Vector3f dist  = mDestinationPosition - mPosition;
+	Vector3f dist  = mDestinationPosition - mSRT.t;
 	f32 y          = atan2f(dist.x, dist.z);
 	mFaceDirection = y;
-	mRotation.set(0.0f, y, 0.0f);
-	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mSRT.r.set(0.0f, y, 0.0f);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mSRT.r, mSRT.t);
 	mBuildShape->mTransformMtx = mWorldMtx;
 	mapMgr->mCollShape->add(mBuildShape);
 	mTotalPushStrength = 0;
 	mState             = 0;
 	mPushMoveTimer     = 0.0f;
-	mWayPoint          = routeMgr->findNearestWayPointAll('test', mPosition);
+	mWayPoint          = routeMgr->findNearestWayPointAll('test', mSRT.t);
 	mWayPoint->setFlag(false);
 	PRINT("********* ROCK WAYPOINT(%d) OFF\n", mWayPoint->mIsOpen);
 	mIsSoundPlaying = false;
-	mPosition.y     = mapMgr->getMinY(mPosition.x, mPosition.z, false);
+	mSRT.t.y        = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, false);
 }
 
 /*
@@ -1126,8 +1126,8 @@ void Bridge::update()
 	if (mSeContext) {
 		mSeContext->update();
 	}
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 
 	if (_3CC == 0) {
 		return;
@@ -1162,7 +1162,7 @@ void Bridge::startAI(int)
 		mCollInfo->initInfo(mBridgeShape, nullptr, nullptr);
 	}
 	mBridgeShape->makeInstance(mDynMaterial, 0);
-	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mRotation, mPosition);
+	mWorldMtx.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), mSRT.r, mSRT.t);
 	mBuildShape->mTransformMtx = mWorldMtx;
 	mapMgr->mCollShape->add(mBuildShape);
 
@@ -1181,7 +1181,7 @@ void Bridge::startAI(int)
 		}
 	}
 
-	mStartWaypoint = routeMgr->findNearestWayPointAll('test', mPosition);
+	mStartWaypoint = routeMgr->findNearestWayPointAll('test', mSRT.t);
 	mStartWaypoint->mFlags |= WayPointFlags::Destination;
 	mStartWaypoint->mPosition = getStartPos();
 	mStartWaypoint->setFlag(false);
@@ -1253,7 +1253,7 @@ void Bridge::doSave(RandomAccessStream& data)
  */
 bool Bridge::insideSafeArea(Vector3f& pos)
 {
-	Vector3f bridgePos = mPosition;
+	Vector3f bridgePos = mSRT.t;
 	Vector3f stage     = getStagePos(mStageCount - 1);
 	Cylinder cyl(bridgePos, stage);
 	if (cyl.get2dDist(pos) < 120.0f) {
@@ -1433,7 +1433,7 @@ Vector3f Bridge::getStagePos(int stage)
 	if (mDoUseJointSegments) {
 		Vector3f pos;
 		f32 z = getStageZ(stage);
-		pos   = mPosition + getBridgeZVec() * z;
+		pos   = mSRT.t + getBridgeZVec() * z;
 		return pos;
 	}
 
@@ -1475,7 +1475,7 @@ void Bridge::getBridgePos(Vector3f& origin, f32& xProjection, f32& zProjection)
  */
 Vector3f Bridge::getBridgeZVec()
 {
-	f32 yRot = mRotation.y;
+	f32 yRot = mSRT.r.y;
 	Vector3f zvec(sinf(yRot), 0.0f, cosf(yRot));
 	return zvec;
 }
@@ -1487,7 +1487,7 @@ Vector3f Bridge::getBridgeZVec()
  */
 Vector3f Bridge::getBridgeXVec()
 {
-	f32 yRot = mRotation.y;
+	f32 yRot = mSRT.r.y;
 	Vector3f xvec(cosf(yRot), 0.0f, -sinf(yRot));
 	return xvec;
 }
@@ -1499,7 +1499,7 @@ Vector3f Bridge::getBridgeXVec()
  */
 Vector3f Bridge::getStartPos()
 {
-	Vector3f pos = mPosition;
+	Vector3f pos = mSRT.t;
 	pos          = pos - 20.0f * getBridgeZVec();
 	return pos;
 }
@@ -1537,7 +1537,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 		if (_3CA != -1) {
 			PRINT("abunai!" MISSING_NEWLINE); // 'dangerous!'
 		}
-		rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
+		rumbleMgr->start(RUMBLE_Unk7, 0, mSRT.t);
 
 		f32 z = 0.0f;
 		if (stageIndex <= 0) {
@@ -1545,7 +1545,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
 		} else {
 			z = (f32)(stageIndex - 1) * 20.0f + bridgeFirstPos[_400];
 		}
-		Vector3f pos(mPosition);
+		Vector3f pos(mSRT.t);
 		pos = pos + getBridgeZVec() * z;
 		if (stageIndex == 1) {
 			pos.y += bridgeFirstY[_400];
@@ -1649,7 +1649,7 @@ void GenObjectWorkObject::changeNaviPos()
 {
 	Navi* navi = naviMgr->getNavi();
 	if (navi) {
-		mHinderRockPosition = navi->mPosition;
+		mHinderRockPosition = navi->mSRT.t;
 	}
 }
 
@@ -1657,7 +1657,7 @@ void GenObjectWorkObject::setNaviPos()
 {
 	Navi* navi = naviMgr->getNavi();
 	if (navi) {
-		navi->mPosition     = mHinderRockPosition;
+		navi->mSRT.t        = mHinderRockPosition;
 		navi->mLastPosition = mHinderRockPosition;
 	}
 }

@@ -137,7 +137,7 @@ void ActRescue::initApproach()
  */
 int ActRescue::exeApproach()
 {
-	Vector3f dir = mDrowningPiki->mPosition - mPiki->mPosition;
+	Vector3f dir = mDrowningPiki->mSRT.t - mPiki->mSRT.t;
 	f32 dist     = dir.normalise();
 	if (dist < 5.0f) {
 		initRescue();
@@ -185,9 +185,9 @@ int ActRescue::exeRescue()
 void ActRescue::initGo()
 {
 	mState                = STATE_Go;
-	WayPoint* wp          = routeMgr->findNearestWayPoint('test', mPiki->mPosition, true);
+	WayPoint* wp          = routeMgr->findNearestWayPoint('test', mPiki->mSRT.t, true);
 	mRescueTargetPosition = wp->mPosition;
-	Vector3f dir          = mPiki->mPosition - mRescueTargetPosition;
+	Vector3f dir          = mPiki->mSRT.t - mRescueTargetPosition;
 	f32 dist              = dir.normalise();
 	if (dist > wp->mRadius) {
 		mRescueTargetPosition = mRescueTargetPosition + dir * wp->mRadius * 0.8f;
@@ -206,9 +206,9 @@ int ActRescue::exeGo()
 	Vector3f offset(sinf(mPiki->mFaceDirection), 0.0f, cosf(mPiki->mFaceDirection));
 	offset.multiply(-5.0f);
 	offset.y += 10.0f;
-	mDrowningPiki->mPosition = mPiki->mPosition + offset;
-	Vector3f dir             = mRescueTargetPosition - mPiki->mPosition;
-	f32 dist                 = dir.normalise();
+	mDrowningPiki->mSRT.t = mPiki->mSRT.t + offset;
+	Vector3f dir          = mRescueTargetPosition - mPiki->mSRT.t;
+	f32 dist              = dir.normalise();
 	if (dist < 200.0f) {
 		initThrow();
 		return ACTOUT_Continue;
@@ -243,7 +243,7 @@ int ActRescue::exeThrow()
 	int state = mDrowningPiki->getState();
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	if (mThrowReady) {
-		Vector3f dir = mRescueTargetPosition - mPiki->mPosition;
+		Vector3f dir = mRescueTargetPosition - mPiki->mSRT.t;
 		f32 diff     = atan2f(dir.x, dir.z);
 		f32 angle    = angDist(diff, mPiki->mFaceDirection);
 		if (absF(angle) < 0.25132743f) {
@@ -257,12 +257,12 @@ int ActRescue::exeThrow()
 
 	if (mGotAnimationAction) {
 		PRINT("got key : target state = %d\n", mDrowningPiki->getState());
-		Vector3f dir = mDrowningPiki->mPosition - mPiki->mPosition;
+		Vector3f dir = mDrowningPiki->mSRT.t - mPiki->mSRT.t;
 		f32 dist     = dir.length();
 		if (dist < 15.0f) {
 			Vector3f vec1(0.0f, 0.0f, 0.0f);
 			Vector3f throwVel;
-			throwVel = getThrowVelocity(mPiki->mPosition, 200.0f, mRescueTargetPosition, vec1);
+			throwVel = getThrowVelocity(mPiki->mSRT.t, 200.0f, mRescueTargetPosition, vec1);
 			mDrowningPiki->mFSM->transit(mDrowningPiki, PIKISTATE_Flying);
 			mDrowningPiki->mVelocity       = throwVel;
 			mDrowningPiki->mTargetVelocity = throwVel;

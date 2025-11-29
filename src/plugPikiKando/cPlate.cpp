@@ -289,10 +289,10 @@ void CPlate::rearrangeSlot(Vector3f& p1, f32, Vector3f&)
 {
 	for (int i = mUsedSlotCount - 1; i >= 1; i--) {
 		for (int j = i; j >= 1; j--) {
-			Vector3f sep = p1 - mSlotList[j].mOccupant.getPtr()->mPosition;
+			Vector3f sep = p1 - mSlotList[j].mOccupant.getPtr()->mSRT.t;
 			f32 jDist    = sep.length();
 
-			sep          = p1 - mSlotList[j - 1].mOccupant.getPtr()->mPosition;
+			sep          = p1 - mSlotList[j - 1].mOccupant.getPtr()->mSRT.t;
 			f32 prevDist = sep.length();
 
 			if (jDist < prevDist) {

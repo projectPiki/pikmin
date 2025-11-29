@@ -123,7 +123,7 @@ Creature* GenObjectTeki::birth(BirthInfo& info)
 	teki->mPersonality->input(*mPersonality);
 	teki->reset();
 	teki->startAI(0);
-	teki->mRotation = info.mRotation;
+	teki->mSRT.r = info.mRotation;
 	if (info.mGenerator->doAdjustFaceDir()) {
 		teki->setCreatureFlag(CF_FaceDirAdjust);
 	}

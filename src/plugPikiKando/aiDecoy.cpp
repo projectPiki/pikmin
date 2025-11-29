@@ -121,7 +121,7 @@ int ActDecoy::exec()
 		}
 		break;
 	case 2:
-		Vector3f dir = mPiki->mPosition - teki->mPosition;
+		Vector3f dir = mPiki->mSRT.t - teki->mSRT.t;
 		f32 dist     = dir.length();
 		dir          = dir * (-1.0f / dist);
 		if (dist < 80.0f && dist > 60.0f) {
@@ -133,9 +133,9 @@ int ActDecoy::exec()
 		break;
 	case 0:
 		Navi* navi       = naviMgr->getNavi();
-		Vector3f naviDir = mPiki->mPosition - navi->mPosition;
+		Vector3f naviDir = mPiki->mSRT.t - navi->mSRT.t;
 		naviDir.normalise();
-		Vector3f tekiDir = mPiki->mPosition - teki->mPosition;
+		Vector3f tekiDir = mPiki->mSRT.t - teki->mSRT.t;
 		dist             = tekiDir.length();
 		tekiDir          = tekiDir * (1.0f / dist);
 		tekiDir          = tekiDir + quickABS(tekiDir.DP(naviDir)) * naviDir * 1.3f;

@@ -87,12 +87,12 @@ void ActGuard::dump()
 	if (mTarget.isNull()) {
 		PRINT(" target is null (%x)\n", mTarget.getPtr());
 	} else {
-		PRINT(" xx target = %x(%.1f,%.1f) timer = %.1f\n", mTarget.getPtr(), mTarget.getPtr()->mPosition.x, mTarget.getPtr()->mPosition.z,
+		PRINT(" xx target = %x(%.1f,%.1f) timer = %.1f\n", mTarget.getPtr(), mTarget.getPtr()->mSRT.t.x, mTarget.getPtr()->mSRT.t.z,
 		      mTimer);
 	}
 
 	PRINT(" wait = %s landPos=(%.1f,%.1f)\n", mIsWaiting ? "true" : "false", mLandPosition.x, mLandPosition.z);
-	PRINT(" currPos(%.1f,%.1f)\n", mPiki->mPosition.x, mPiki->mPosition.z);
+	PRINT(" currPos(%.1f,%.1f)\n", mPiki->mSRT.t.x, mPiki->mSRT.t.z);
 }
 
 /*
@@ -116,7 +116,7 @@ int ActGuard::exec()
 	if (mIsWaiting) {
 		Creature* sidePiki = mLeftGuard.getPtr();
 		if (sidePiki) {
-			Vector3f dir     = sidePiki->mPosition - mPiki->mPosition;
+			Vector3f dir     = sidePiki->mSRT.t - mPiki->mSRT.t;
 			f32 angle        = atan2f(dir.x, dir.z);
 			f32 dist         = dir.length();
 			dir              = dir * (1.0f / dist);
@@ -132,7 +132,7 @@ int ActGuard::exec()
 
 		sidePiki = mRightGuard.getPtr();
 		if (sidePiki) {
-			Vector3f dir     = sidePiki->mPosition - mPiki->mPosition;
+			Vector3f dir     = sidePiki->mSRT.t - mPiki->mSRT.t;
 			f32 dist         = dir.length();
 			dir              = dir * (1.0f / dist);
 			Vector3f offset  = (dist - mFormationSpacing) * dir * gsys->getFrameTime() * 13.0f;
@@ -205,7 +205,7 @@ Piki* ActGuard::findFriend()
 	}
 
 	if (friendPiki) {
-		Vector3f dir = mPiki->mPosition - friendPiki->mPosition;
+		Vector3f dir = mPiki->mSRT.t - friendPiki->mSRT.t;
 		_2C          = atan2f(dir.x, dir.z);
 	}
 
@@ -280,7 +280,7 @@ Piki* ActGuard::findFriend(int side)
 	}
 
 	if (friendPiki) {
-		Vector3f dir = mPiki->mPosition - friendPiki->mPosition;
+		Vector3f dir = mPiki->mSRT.t - friendPiki->mSRT.t;
 		_2C          = atan2f(dir.x, dir.z);
 	}
 
@@ -310,7 +310,7 @@ void ActGuard::setGoal()
 		return;
 	}
 
-	Vector3f targetPos(target->mPosition);
+	Vector3f targetPos(target->mSRT.t);
 	f32 rad = 2.5f * target->getSize();
 
 	f32 angle = (mFormationSide == Right) ? _2C : PI - _2C;
@@ -363,7 +363,7 @@ bool ActGuard::setLeft()
 		}
 
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLeftGuard.set(mPiki);
-		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLandPosition.set(target->mPosition);
+		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLandPosition.set(target->mSRT.t);
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mIsWaiting = true;
 		mRightGuard.set(target);
 		return true;
@@ -386,7 +386,7 @@ bool ActGuard::setRight()
 		}
 
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mRightGuard.set(mPiki);
-		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLandPosition.set(target->mPosition);
+		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mLandPosition.set(target->mSRT.t);
 		static_cast<ActGuard*>(target->mActiveAction->getCurrAction())->mIsWaiting = true;
 		mLeftGuard.set(target);
 		return true;

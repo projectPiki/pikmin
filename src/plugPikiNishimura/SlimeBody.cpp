@@ -70,7 +70,7 @@ void SlimeBody::init(Slime* slime)
 
 	for (i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 		mVelocities[i].set(0.0f, 0.0f, 0.0f);
-		mPrevVelocities[i] = mSlime->mPosition;
+		mPrevVelocities[i] = mSlime->mSRT.t;
 	}
 }
 
@@ -84,7 +84,7 @@ void SlimeBody::traceCreaturePosition()
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
 		mVelocities[i].multiply(C_SLIME_PROP(mSlime).mTraceDrag());
 
-		Vector3f displacement = mSlime->mSlimeCreatures[i]->mPosition - mPrevVelocities[i];
+		Vector3f displacement = mSlime->mSlimeCreatures[i]->mSRT.t - mPrevVelocities[i];
 		displacement.multiply(C_SLIME_PROP(mSlime).mSpringForce());
 
 		mVelocities[i].add(displacement);
@@ -99,12 +99,12 @@ void SlimeBody::traceCreaturePosition()
  */
 void SlimeBody::makeCentrePosition()
 {
-	mSlime->mPosition.set(0.0f, 0.0f, 0.0f);
+	mSlime->mSRT.t.set(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		mSlime->mPosition.add(mSlime->mSlimeCreatures[i]->mPosition);
+		mSlime->mSRT.t.add(mSlime->mSlimeCreatures[i]->mSRT.t);
 	}
 
-	mSlime->mPosition.multiply(0.25f); // Average of 4 parts
+	mSlime->mSRT.t.multiply(0.25f); // Average of 4 parts
 }
 
 /*
@@ -115,7 +115,7 @@ void SlimeBody::makeCentrePosition()
 void SlimeBody::makeInnerPosition()
 {
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
-		mRelativeVelocities[i].sub(mPrevVelocities[i], mSlime->mPosition);
+		mRelativeVelocities[i].sub(mPrevVelocities[i], mSlime->mSRT.t);
 		mRelativeVelocities[i].y += C_SLIME_PROP(mSlime).mBodyHeight();
 	}
 }
@@ -253,13 +253,13 @@ void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
 
 	// do "centre" (main slime)
 	invLookAtMtx.multiplyTo(shape->mShape->getAnimMatrix(0), tmpAnimMtx);
-	tmpAnimMtx.setColumn(3, mSlime->mPosition);
+	tmpAnimMtx.setColumn(3, mSlime->mSRT.t);
 	gfx.mCamera->mLookAtMtx.multiplyTo(tmpAnimMtx, shape->mShape->getAnimMatrix(0));
 
 	// do each slime creature
 	for (int i = 0, j = 1; i < 4; i++, j++) {
 		invLookAtMtx.multiplyTo(shape->mShape->getAnimMatrix(j), tmpAnimMtx);
-		tmpAnimMtx.setColumn(3, mSlime->mSlimeCreatures[i]->mPosition);
+		tmpAnimMtx.setColumn(3, mSlime->mSlimeCreatures[i]->mSRT.t);
 		gfx.mCamera->mLookAtMtx.multiplyTo(tmpAnimMtx, shape->mShape->getAnimMatrix(j));
 	}
 }

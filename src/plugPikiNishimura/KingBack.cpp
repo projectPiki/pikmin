@@ -103,7 +103,7 @@ void KingBack::update()
  */
 void KingBack::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 
 	Matrix4f mtx;
 	gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
@@ -131,7 +131,7 @@ void KingBack::drawShape(Graphics& gfx)
  */
 void KingBack::doAI()
 {
-	mPosition.set(mInitPosition);
+	mSRT.t.set(mInitPosition);
 }
 
 /*

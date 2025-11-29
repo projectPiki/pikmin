@@ -272,7 +272,7 @@ void zen::ogRaderMgr::getOrimaPos()
 	_44C = _43C.z;
 	_6C->move(_448, _44C);
 	_6C->setScale(10.0f / _428);
-	_450 = PI - navi->mRotation.y;
+	_450 = PI - navi->mSRT.r.y;
 	_6C->rotate(P2DROTATE_Unk2, _450);
 	f32 x = (_428 * -(_43C.x + _34)) / 10.0f;
 	f32 y = (_428 * -(_43C.z + _38)) / 10.0f;
@@ -372,7 +372,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 	{
 		Piki* piki = (Piki*)*iterator;
 		if (piki->isAlive()) {
-			Vector3f pos = ogCalcDispXZ(piki->mPosition);
+			Vector3f pos = ogCalcDispXZ(piki->mSRT.t);
 			data->mColor = piki->mColor;
 			data->mPic->show();
 			data->mPic->move(pos.x, pos.z);
@@ -387,7 +387,7 @@ void zen::ogRaderMgr::getAllPikiPos()
 	{
 		PikiHeadItem* piki = (PikiHeadItem*)*iterator2;
 
-		Vector3f pos = ogCalcDispXZ(piki->mPosition);
+		Vector3f pos = ogCalcDispXZ(piki->mSRT.t);
 		data->mColor = -1;
 		data->mPic->show();
 		data->mPic->move(pos.x, pos.z);

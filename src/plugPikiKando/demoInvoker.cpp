@@ -68,7 +68,7 @@ bool Navi::demoCheck()
 
 	// pikmin seed in ground cutscene
 	if (!playerState->mDemoFlags.isFlag(DEMOFLAG_ApproachSeed) && playerState->isTutorial()) {
-		PikiHeadItem* item = (PikiHeadItem*)itemMgr->getPikiHeadMgr()->findClosest(mPosition, nullptr);
+		PikiHeadItem* item = (PikiHeadItem*)itemMgr->getPikiHeadMgr()->findClosest(mSRT.t, nullptr);
 		if (item && item->mGroundTriangle && item->getCurrState()->getID() == 6
 		    && qdist2(item, this) <= demoParms->mParms.mSeedDemoTriggerRadius()) {
 			playerState->mDemoFlags.setFlag(DEMOFLAG_ApproachSeed, item);
@@ -86,7 +86,7 @@ bool Navi::demoCheck()
 		{
 			Pellet* obj = (Pellet*)(*it);
 			if (obj->mConfig->mPelletType() == PELTYPE_UfoPart) {
-				Vector3f diff = obj->mPosition - mPosition;
+				Vector3f diff = obj->mSRT.t - mSRT.t;
 				f32 len       = sqrtf(diff.x * diff.x + diff.z * diff.z);
 				len -= obj->getBottomRadius();
 				if (len <= maxDist) {
@@ -104,7 +104,7 @@ bool Navi::demoCheck()
 	{
 		Pellet* obj = (Pellet*)(*it);
 		if (obj->mConfig->mPelletType() == PELTYPE_UfoPart && obj->onGround()) {
-			Vector3f diff = obj->mPosition - mPosition;
+			Vector3f diff = obj->mSRT.t - mSRT.t;
 			f32 len       = sqrtf(diff.x * diff.x + diff.z * diff.z);
 			len -= obj->getBottomRadius();
 			if (len <= maxDist) {
@@ -141,7 +141,7 @@ void Piki::demoCheck()
 		{
 			Pellet* obj = (Pellet*)(*it);
 			if (obj->mConfig->mPelletType() == PELTYPE_UfoPart) {
-				Vector3f diff = obj->mPosition - mPosition;
+				Vector3f diff = obj->mSRT.t - mSRT.t;
 				f32 len       = sqrtf(diff.x * diff.x + diff.z * diff.z);
 				len -= obj->getBottomRadius();
 				if (len <= maxDist) {

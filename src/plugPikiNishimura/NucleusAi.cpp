@@ -152,8 +152,8 @@ void NucleusAi::setEveryFrame()
  */
 void NucleusAi::setBossPosition()
 {
-	mNucleus->mPosition.x = mNucleus->mSlime->mNucleusPosition.x;
-	mNucleus->mPosition.z = mNucleus->mSlime->mNucleusPosition.z;
+	mNucleus->mSRT.t.x = mNucleus->mSlime->mNucleusPosition.x;
+	mNucleus->mSRT.t.z = mNucleus->mSlime->mNucleusPosition.z;
 }
 
 /*
@@ -218,9 +218,9 @@ void NucleusAi::initDie(int val)
 	mNucleus->setLoopCounter(0);
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 	mNucleus->setAttackTimer(0.0f);
-	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mNucleus->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mNucleus->mPosition, nullptr, nullptr);
-	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mNucleus->mPosition, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathSmokeL, mNucleus->mSRT.t, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathGlowL, mNucleus->mSRT.t, nullptr, nullptr);
+	effectMgr->create(EffectMgr::EFF_Teki_DeathWaveL, mNucleus->mSRT.t, nullptr, nullptr);
 	mNucleus->doKill();
 }
 

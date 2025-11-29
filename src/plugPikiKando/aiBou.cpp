@@ -94,7 +94,7 @@ int ActBou::gotoLeg()
 
 		Vector3f pos;
 		Vector3f gradient;
-		tube.getPosGradient(mPiki->mPosition, mPiki->mAttachPosition.x, pos, gradient);
+		tube.getPosGradient(mPiki->mSRT.t, mPiki->mAttachPosition.x, pos, gradient);
 		mClimbDirection = gradient;
 		return ACTOUT_Continue;
 	}
@@ -104,7 +104,7 @@ int ActBou::gotoLeg()
 		return ACTOUT_Fail;
 	}
 
-	Vector3f direction = mTargetStick->mPosition - mPiki->mPosition;
+	Vector3f direction = mTargetStick->mSRT.t - mPiki->mSRT.t;
 	f32 dist           = direction.normalise();
 	PRINT("d is %.1f\n", dist);
 	mPiki->setSpeed(0.5f, direction);
@@ -138,7 +138,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 
 	msg->mEvent.mColliderPart->makeTube(tube);
 
-	f32 groundRatio = tube.getYRatio(10.0f + mTargetStick->mPosition.y);
+	f32 groundRatio = tube.getYRatio(10.0f + mTargetStick->mSRT.t.y);
 
 	Vector3f collisionPoint;
 	f32 ratio;
@@ -149,7 +149,7 @@ void ActBou::procCollideMsg(Piki* piki, MsgCollide* msg)
 		mPiki->finishLook();
 
 		mPiki->mOdometer.start(1.0f, 5.0f);
-		mLastPosition = mPiki->mPosition;
+		mLastPosition = mPiki->mSRT.t;
 	}
 }
 
@@ -164,12 +164,12 @@ int ActBou::climb()
 		return ACTOUT_Fail;
 	}
 
-	if (!mPiki->mOdometer.moving(mPiki->mPosition, mLastPosition)) {
+	if (!mPiki->mOdometer.moving(mPiki->mSRT.t, mLastPosition)) {
 		PRINT("======= BO ODOMETER FAILED\n");
 		return ACTOUT_Fail;
 	}
 
-	mLastPosition    = mPiki->mPosition;
+	mLastPosition    = mPiki->mSRT.t;
 	f32 mag          = (22.0f + 4.0f * gsys->getRand(1.0f));
 	mPiki->mVelocity = mClimbDirection * mag;
 	return ACTOUT_Continue;

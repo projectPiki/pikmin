@@ -102,15 +102,15 @@ Creature* GenObjectPellet::birth(BirthInfo& info)
 	Pellet* pelt = pelletMgr->newPellet(mPelletId.mId, nullptr);
 	if (pelt) {
 		pelt->init(info.mPosition);
-		pelt->mRotation      = info.mRotation;
-		pelt->mFaceDirection = pelt->mRotation.y;
+		pelt->mSRT.r         = info.mRotation;
+		pelt->mFaceDirection = pelt->mSRT.r.y;
 		pelt->mGenerator     = info.mGenerator;
 		pelt->startAI(0);
 		if (info.mGenerator->doAdjustFaceDir()) {
 			pelt->enableFaceDirAdjust();
 		}
 		f32 scale = pelt->mConfig->mPelletScale();
-		pelt->mScale.set(scale, scale, scale);
+		pelt->mSRT.s.set(scale, scale, scale);
 		pelt->mStateMachine->transit(pelt, 0);
 	} else {
 		PRINT("FAILED!!!\n");

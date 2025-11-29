@@ -263,8 +263,8 @@ bool AtxFileStream::open(char* path, u32 a)
 
 	mAtxStream.writeString(path);
 	mAtxStream.writeInt(a);
-	mLength   = getLength();
-	mPosition = 0;
+	mLength = getLength();
+	mSRT.t  = 0;
 
 	if (mLength < 0) {
 		mAtxStream.close();

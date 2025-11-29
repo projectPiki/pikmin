@@ -130,14 +130,14 @@ void Spider::update()
  */
 void Spider::draw(Graphics& gfx)
 {
-	Vector3f lightDirection = mapMgr->mDayMgr->mSunPosition - mPosition;
+	Vector3f lightDirection = mapMgr->mDayMgr->mSunPosition - mSRT.t;
 	lightDirection.y        = 0.0f;
 	lightDirection.normalise();
 	lightDirection.multiply(500.0f);
 
-	mShadowCaster.mSourcePosition.set(mSpiderLeg->mCurrentCentre.x + lightDirection.x, mPosition.y + 1200.0f,
+	mShadowCaster.mSourcePosition.set(mSpiderLeg->mCurrentCentre.x + lightDirection.x, mSRT.t.y + 1200.0f,
 	                                  mSpiderLeg->mCurrentCentre.z + lightDirection.z);
-	mShadowCaster.mTargetPosition.set(mSpiderLeg->mCurrentCentre.x, mPosition.y + 50.0f, mSpiderLeg->mCurrentCentre.z);
+	mShadowCaster.mTargetPosition.set(mSpiderLeg->mCurrentCentre.x, mSRT.t.y + 50.0f, mSpiderLeg->mCurrentCentre.z);
 
 	mSpiderLeg->refresh(mShapeObject, gfx);
 }

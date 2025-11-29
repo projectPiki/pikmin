@@ -177,13 +177,13 @@ void ActFreeSelect::determine()
 	switch (randIdx) {
 	case CHILD_Watch:
 
-		nearestTeki = (tekiMgr) ? tekiMgr->findClosest(mPiki->mPosition, nullptr) : nullptr;
+		nearestTeki = (tekiMgr) ? tekiMgr->findClosest(mPiki->mSRT.t, nullptr) : nullptr;
 
-		nearestItem = itemMgr->findClosest(mPiki->mPosition, nullptr);
-		nearestNavi = naviMgr->findClosest(mPiki->mPosition, nullptr);
+		nearestItem = itemMgr->findClosest(mPiki->mSRT.t, nullptr);
+		nearestNavi = naviMgr->findClosest(mPiki->mSRT.t, nullptr);
 
 		if (bossMgr) {
-			nearestBoss = bossMgr->findClosest(mPiki->mPosition, nullptr);
+			nearestBoss = bossMgr->findClosest(mPiki->mSRT.t, nullptr);
 		} else {
 			nearestBoss = nullptr;
 		}
@@ -393,12 +393,12 @@ void ActBoreSelect::determine()
 	switch (randIdx) {
 	case CHILD_Watch:
 
-		nearestTeki = (tekiMgr) ? tekiMgr->findClosest(mPiki->mPosition, nullptr) : nullptr;
+		nearestTeki = (tekiMgr) ? tekiMgr->findClosest(mPiki->mSRT.t, nullptr) : nullptr;
 
-		nearestItem = itemMgr->findClosest(mPiki->mPosition, nullptr);
-		nearestNavi = naviMgr->findClosest(mPiki->mPosition, nullptr);
+		nearestItem = itemMgr->findClosest(mPiki->mSRT.t, nullptr);
+		nearestNavi = naviMgr->findClosest(mPiki->mSRT.t, nullptr);
 
-		nearestBoss = (bossMgr) ? bossMgr->findClosest(mPiki->mPosition, nullptr) : nullptr;
+		nearestBoss = (bossMgr) ? bossMgr->findClosest(mPiki->mSRT.t, nullptr) : nullptr;
 
 		if (nearestBoss) {
 			target = nearestBoss;
@@ -467,7 +467,7 @@ void ActBoreTalk::init(Creature* creature)
 void ActBoreTalk::startTalk()
 {
 	Iterator iter(&mPiki->mSearchBuffer);
-	mPiki->turnTo(mTarget->mPosition);
+	mPiki->turnTo(mTarget->mSRT.t);
 
 	CI_LOOP(iter)
 	{
@@ -505,7 +505,7 @@ int ActBoreTalk::exec()
 	}
 
 	if (!mIsLookHandledElsewhere) {
-		Vector3f dir          = mTarget->mPosition - mPiki->mPosition;
+		Vector3f dir          = mTarget->mSRT.t - mPiki->mSRT.t;
 		f32 ang               = atan2f(dir.x, dir.z);
 		ang                   = angDist(ang, mPiki->mFaceDirection);
 		mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection + 0.1f * ang);

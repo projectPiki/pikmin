@@ -61,8 +61,8 @@ void Boss::initBoss(BirthInfo& birthInfo, int objType)
 {
 	Creature::init(birthInfo.mPosition);
 	mObjType           = (EObjType)objType;
-	mRotation          = birthInfo.mRotation;
-	mFaceDirection     = mRotation.y;
+	mSRT.r             = birthInfo.mRotation;
+	mFaceDirection     = mSRT.r.y;
 	mIsAlive           = true;
 	mIsAtari           = true;
 	mIsVisible         = true;
@@ -163,7 +163,7 @@ bool Boss::changeDirection(f32 turnSpeed)
 {
 	bool notFacingTarget = false;
 	f32 maxTurnDist      = turnSpeed * gsys->getFrameTime();
-	f32 targetDir        = atan2f(mTargetPosition.x - mPosition.x, mTargetPosition.z - mPosition.z);
+	f32 targetDir        = atan2f(mTargetPosition.x - mSRT.t.x, mTargetPosition.z - mSRT.t.z);
 	mFaceDirection       = NsMathF::roundAngle(mFaceDirection);
 	f32 properTargetDir  = NsMathF::calcNearerDirection(mFaceDirection, targetDir);
 
@@ -181,7 +181,7 @@ bool Boss::changeDirection(f32 turnSpeed)
 		notFacingTarget = true;
 	}
 
-	mFaceDirection = mRotation.y = NsMathF::roundAngle(mFaceDirection);
+	mFaceDirection = mSRT.r.y = NsMathF::roundAngle(mFaceDirection);
 
 	return notFacingTarget;
 }
@@ -227,9 +227,9 @@ void Boss::calcBossDamage()
 void Boss::makeTargetCreature()
 {
 	if (mTargetCreature) {
-		mTargetPosition.x = mTargetCreature->mPosition.x;
-		mTargetPosition.y = mTargetCreature->mPosition.y;
-		mTargetPosition.z = mTargetCreature->mPosition.z;
+		mTargetPosition.x = mTargetCreature->mSRT.t.x;
+		mTargetPosition.y = mTargetCreature->mSRT.t.y;
+		mTargetPosition.z = mTargetCreature->mSRT.t.z;
 	}
 }
 
@@ -241,7 +241,7 @@ void Boss::makeTargetCreature()
 void Boss::makeTargetRandom(f32 p1)
 {
 	mWalkTimer += gsys->getFrameTime();
-	if (mWalkTimer > 5.0f || qdist2(mPosition.x, mPosition.z, mTargetPosition.x, mTargetPosition.z) < p1) {
+	if (mWalkTimer > 5.0f || qdist2(mSRT.t.x, mSRT.t.z, mTargetPosition.x, mTargetPosition.z) < p1) {
 		f32 randAngle = NsMathF::getRand(TAU);
 		Vector3f vec;
 		f32 randDist = NsMathF::getRand(BOSS_PROP.mMaxWaitRadius());
@@ -264,7 +264,7 @@ bool Boss::chaseNaviTransit()
 	Creature* target = nullptr;
 	f32 minDist      = 12800.0f;
 	if (mTargetCreature) {
-		minDist = mPosition.distance(mTargetCreature->mPosition);
+		minDist = mSRT.t.distance(mTargetCreature->mSRT.t);
 	}
 
 	Iterator iter(naviMgr);
@@ -272,10 +272,10 @@ bool Boss::chaseNaviTransit()
 	{
 		Creature* navi = *iter;
 		if (navi->isAlive() && navi->isVisible() && !navi->isBuried()) {
-			f32 quickDist = qdist2(mPosition.x, mPosition.z, navi->mPosition.x, navi->mPosition.z);
+			f32 quickDist = qdist2(mSRT.t.x, mSRT.t.z, navi->mSRT.t.x, navi->mSRT.t.z);
 			if (quickDist < BOSS_PROP.mSearchRadius() && quickDist < minDist && inSearchAngle(navi)) {
 				// we're actually close, so do things properly
-				f32 naviDist = mPosition.distance(navi->mPosition);
+				f32 naviDist = mSRT.t.distance(navi->mSRT.t);
 				if (naviDist < BOSS_PROP.mSearchRadius() && naviDist < minDist) {
 					minDist = naviDist;
 					target  = navi;
@@ -302,7 +302,7 @@ bool Boss::chasePikiTransit()
 	Creature* target = nullptr;
 	f32 minDist      = 12800.0f;
 	if (mTargetCreature) {
-		minDist = mPosition.distance(mTargetCreature->mPosition);
+		minDist = mSRT.t.distance(mTargetCreature->mSRT.t);
 	}
 
 	Iterator iter(pikiMgr);
@@ -310,10 +310,10 @@ bool Boss::chasePikiTransit()
 	{
 		Creature* piki = *iter;
 		if (piki->isAlive() && piki->isVisible() && !piki->isBuried() && piki->getStickObject() != this) {
-			f32 quickDist = qdist2(mPosition.x, mPosition.z, piki->mPosition.x, piki->mPosition.z);
+			f32 quickDist = qdist2(mSRT.t.x, mSRT.t.z, piki->mSRT.t.x, piki->mSRT.t.z);
 			if (quickDist < BOSS_PROP.mSearchRadius() && quickDist < minDist && inSearchAngle(piki)) {
 				// we're actually close, so do things properly
-				f32 pikiDist = mPosition.distance(piki->mPosition);
+				f32 pikiDist = mSRT.t.distance(piki->mSRT.t);
 				if (pikiDist < BOSS_PROP.mSearchRadius() && pikiDist < minDist) {
 					minDist = pikiDist;
 					target  = piki;
@@ -349,7 +349,7 @@ bool Boss::targetLostTransit()
 			return true;
 		}
 
-		if (mPosition.distance(mTargetCreature->mPosition) > BOSS_PROP.mSearchRadius()) {
+		if (mSRT.t.distance(mTargetCreature->mSRT.t) > BOSS_PROP.mSearchRadius()) {
 			mTargetCreature = nullptr;
 			return true;
 		}
@@ -365,7 +365,7 @@ bool Boss::targetLostTransit()
  */
 bool Boss::inSideWaitRangeTransit()
 {
-	if (qdist2(mPosition.x, mPosition.z, mInitPosition.x, mInitPosition.z) < BOSS_PROP.mMaxWaitRadius()) {
+	if (qdist2(mSRT.t.x, mSRT.t.z, mInitPosition.x, mInitPosition.z) < BOSS_PROP.mMaxWaitRadius()) {
 		mTargetCreature = nullptr;
 		return true;
 	}
@@ -379,7 +379,7 @@ bool Boss::inSideWaitRangeTransit()
  */
 bool Boss::outSideChaseRangeTransit()
 {
-	if (qdist2(mPosition.x, mPosition.z, mInitPosition.x, mInitPosition.z) > BOSS_PROP.mTerritoryRadius()) {
+	if (qdist2(mSRT.t.x, mSRT.t.z, mInitPosition.x, mInitPosition.z) > BOSS_PROP.mTerritoryRadius()) {
 		mTargetCreature = nullptr;
 		return true;
 	}
@@ -393,7 +393,7 @@ bool Boss::outSideChaseRangeTransit()
  */
 bool Boss::inSearchAngle(Creature* target)
 {
-	f32 dir       = atan2f(target->mPosition.x - mPosition.x, target->mPosition.z - mPosition.z);
+	f32 dir       = atan2f(target->mSRT.t.x - mSRT.t.x, target->mSRT.t.z - mSRT.t.z);
 	f32 targetDir = NsMathF::calcNearerDirection(mFaceDirection, dir);
 	if (targetDir > mFaceDirection) {
 		f32 diff = targetDir - mFaceDirection;
@@ -534,7 +534,7 @@ bool Boss::insideAndInSearch()
 {
 	if (aiCullable()) {
 		Navi* navi = naviMgr->getNavi();
-		if (qdist2(mPosition.x, mPosition.z, navi->mPosition.x, navi->mPosition.z) < BOSS_PROP.mSearchRadius()) {
+		if (qdist2(mSRT.t.x, mSRT.t.z, navi->mSRT.t.x, navi->mSRT.t.z) < BOSS_PROP.mSearchRadius()) {
 			return true;
 		}
 	}
@@ -570,8 +570,8 @@ void Boss::recoveryLife()
  */
 void Boss::updateBoss()
 {
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 	if (mSeContext) {
 		mSeContext->update();
 	}
@@ -587,7 +587,7 @@ void Boss::updateBoss()
  */
 void Boss::refreshViewCulling(Graphics& gfx)
 {
-	Vector3f point(mPosition);
+	Vector3f point(mSRT.t);
 	point.y += BOSS_PROP.mRenderSphereHeight();
 	if (!gfx.mCamera->isPointVisible(point, BOSS_PROP.mRenderSphereRadius())) {
 		enableAICulling();
@@ -612,7 +612,7 @@ void Boss::drawShape(Graphics&)
  */
 void Boss::refresh2d(Graphics& gfx)
 {
-	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition = mSRT.t;
 	mLifeGauge.mPosition.y += BOSS_PROP.mLifeGaugeHeight();
 	mLifeGauge.mScale = BOSS_PROP.mLifeGaugeScale() / gfx.mCamera->mNear;
 	mLifeGauge.refresh(gfx);

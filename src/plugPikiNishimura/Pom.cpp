@@ -128,7 +128,7 @@ void Pom::update()
 void Pom::refresh(Graphics& gfx)
 {
 	if (isAlive()) {
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		Matrix4f mtx;
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 		mAnimator.updateContext();

@@ -61,23 +61,23 @@ void Creature::moveRotation(f32 p1)
 			mFaceDirection += angDist(angle, mFaceDirection) * mProps->mCreatureProps.mFaceDirAdjust() * p1 * 10.0f;
 			mFaceDirection = roundAng(mFaceDirection);
 			if (mRope) {
-				mRotation.y = mFaceDirection;
+				mSRT.r.y = mFaceDirection;
 			} else {
-				mRotation.set(0.0f, mFaceDirection, 0.0f);
+				mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 			}
 			return;
 		}
 
 		if (mRope) {
-			mRotation.y = mFaceDirection;
+			mSRT.r.y = mFaceDirection;
 		} else {
-			mRotation.set(0.0f, mFaceDirection, 0.0f);
+			mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 		}
 		return;
 	}
 
 	if (!isCreatureFlag(CF_Unk10) && isCreatureFlag(CF_Unk11)) {
-		mRotation.set(0.0f, mFaceDirection, 0.0f);
+		mSRT.r.set(0.0f, mFaceDirection, 0.0f);
 	}
 }
 
@@ -88,7 +88,7 @@ void Creature::moveRotation(f32 p1)
  */
 void Creature::moveAttach()
 {
-	_29C = mPosition;
+	_29C = mSRT.t;
 	if (mCollPlatform) {
 		Creature* plat = mCollPlatform->mCreature;
 		if (platAttachable() || mStickTarget && isStickToPlatform()) {
@@ -107,7 +107,7 @@ void Creature::moveAttach()
 		}
 	}
 
-	_29C = _29C - mPosition;
+	_29C = _29C - mSRT.t;
 }
 
 /*
@@ -117,7 +117,7 @@ void Creature::moveAttach()
  */
 void Creature::moveNew(f32 deltaTime)
 {
-	if (mPosition.y < -2000.0f && isAlive()) {
+	if (mSRT.t.y < -2000.0f && isAlive()) {
 		if (mObjType == OBJTYPE_Piki) {
 			Piki* piki = static_cast<Piki*>(this);
 			GameStat::fallPikis.inc(piki->mColor);
@@ -134,7 +134,7 @@ void Creature::moveNew(f32 deltaTime)
 			pellet->isUfoParts();
 #endif
 
-			pellet->mPosition.y = mapMgr->getMinY(pellet->mPosition.x, pellet->mPosition.z, true) + 30.0f;
+			pellet->mSRT.t.y = mapMgr->getMinY(pellet->mSRT.t.x, pellet->mSRT.t.z, true) + 30.0f;
 
 		} else {
 			kill(false);
@@ -159,7 +159,7 @@ void Creature::moveNew(f32 deltaTime)
 
 	if (mObjType == OBJTYPE_Rope) {
 		RopeCreature* rope = static_cast<RopeCreature*>(this);
-		Cylinder ropeBoundary(rope->mParentRope->mPosition, rope->mPosition, 1.0f);
+		Cylinder ropeBoundary(rope->mParentRope->mSRT.t, rope->mSRT.t, 1.0f);
 		Vector3f pushVec;
 		f32 collisionRatio;
 		RopeItem* ropeItem = static_cast<RopeItem*>(rope);
@@ -182,7 +182,7 @@ void Creature::moveNew(f32 deltaTime)
 
 				if (ropeBoundary.collide(pikminBounds, pushVec, collisionRatio) && !piki->mRope) {
 					Vector3f attachPoint     = rope->getRopePos(collisionRatio);
-					Vector3f directionVector = attachPoint - piki->mPosition;
+					Vector3f directionVector = attachPoint - piki->mSRT.t;
 					f32 angle                = atan2f(directionVector.x, directionVector.z);
 
 					if (collisionRatio < 0.0f) {
@@ -199,7 +199,7 @@ void Creature::moveNew(f32 deltaTime)
 			}
 		}
 
-		Vector3f dir                  = mPosition - rope->mParentRope->mPosition;
+		Vector3f dir                  = mSRT.t - rope->mParentRope->mSRT.t;
 		f32 distance                  = dir.normalise();
 		Vector3f ropeDirectedVelocity = mVelocity.DP(dir) * dir;
 		Vector3f perpVelocity         = mVelocity - ropeDirectedVelocity;
@@ -213,14 +213,14 @@ void Creature::moveNew(f32 deltaTime)
 		}
 
 		if (distance != rope->mRopeLength) {
-			mPosition = rope->mParentRope->mPosition + rope->mRopeLength * dir;
+			mSRT.t = rope->mParentRope->mSRT.t + rope->mRopeLength * dir;
 		}
 	}
 
 	mCollPlatform = nullptr;
 
 	if (mObjType != OBJTYPE_Pellet) {
-		Vector3f adjustedPos(mPosition);
+		Vector3f adjustedPos(mSRT.t);
 		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
 			adjustedPos.y -= mGroundOffset;
 		}
@@ -229,16 +229,16 @@ void Creature::moveNew(f32 deltaTime)
 			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, true);
 			mapMgr->traceMove(this, trace, deltaTime);
 			mVelocity = trace.mVelocity;
-			mPosition = trace.mPosition;
+			mSRT.t    = trace.mPosition;
 		} else {
 			MoveTrace trace(adjustedPos, mVelocity, mCollisionRadius, false);
 			mapMgr->traceMove(this, trace, deltaTime);
 			mVelocity = trace.mVelocity;
-			mPosition = trace.mPosition;
+			mSRT.t    = trace.mPosition;
 		}
 
 		if (isCreatureFlag(CF_GroundOffsetEnabled)) {
-			mPosition.y += mGroundOffset;
+			mSRT.t.y += mGroundOffset;
 		}
 	} else {
 		Pellet* pellet = static_cast<Pellet*>(this);
@@ -252,16 +252,16 @@ void Creature::moveNew(f32 deltaTime)
 			heightVector.multMatrix(rotationMtx);
 
 			Vector3f tmpHeightVec = heightVector;
-			heightVector          = heightVector + mPosition;
+			heightVector          = heightVector + mSRT.t;
 
 			MoveTrace movePath(heightVector, mVelocity, 0.5f * cylinderHeight + grabOffset, false);
 			traceMove2(this, movePath, deltaTime);
 
 			mVelocity = movePath.mVelocity;
-			mPosition = movePath.mPosition - tmpHeightVec;
+			mSRT.t    = movePath.mPosition - tmpHeightVec;
 
 		} else {
-			Vector3f adjustedPos(mPosition);
+			Vector3f adjustedPos(mSRT.t);
 			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
 				adjustedPos.y -= mGroundOffset;
 			}
@@ -270,10 +270,10 @@ void Creature::moveNew(f32 deltaTime)
 			mapMgr->traceMove(this, trace, deltaTime);
 
 			mVelocity = trace.mVelocity;
-			mPosition = trace.mPosition;
+			mSRT.t    = trace.mPosition;
 
 			if (isCreatureFlag(CF_GroundOffsetEnabled)) {
-				mPosition.y += mGroundOffset;
+				mSRT.t.y += mGroundOffset;
 			}
 		}
 	}
@@ -295,7 +295,7 @@ void Creature::moveNew(f32 deltaTime)
 			f32 minDist  = 12800.0f;
 
 			for (int i = 0; i < 3; i++) {
-				f32 dist = mPreviousTriangle->mEdgePlanes[i].dist(mPosition);
+				f32 dist = mPreviousTriangle->mEdgePlanes[i].dist(mSRT.t);
 				if (dist <= minDist) {
 					planeIdx = mPreviousTriangle->mAdjacentTriIndices[i];
 					minDist  = dist;
@@ -351,7 +351,7 @@ Plane* Creature::getNearestPlane(CollTriInfo* tri)
 	int planeIdx = -1;
 	f32 minDist  = 12800.0f;
 	for (int i = 0; i < 3; i++) {
-		f32 dist = tri->mEdgePlanes[i].dist(mPosition);
+		f32 dist = tri->mEdgePlanes[i].dist(mSRT.t);
 		PRINT(" :: plane%d dist is %f\n", i, dist);
 		if (dist <= minDist) {
 			planeIdx = i;

@@ -47,7 +47,7 @@ DEFINE_PRINT("Creature");
  */
 void Creature::startFixPosition()
 {
-	mFixedPosition = mPosition;
+	mFixedPosition = mSRT.t;
 	setCreatureFlag(CF_IsPositionFixed);
 }
 
@@ -82,9 +82,9 @@ void Creature::load(RandomAccessStream& stream, bool doLoadPosition)
 	int startPos = stream.getPosition();
 	if (doLoadPosition) {
 		// idk why they didn't use the Vector3f::read inline here, but they didn't
-		mPosition.x = stream.readFloat();
-		mPosition.y = stream.readFloat();
-		mPosition.z = stream.readFloat();
+		mSRT.t.x = stream.readFloat();
+		mSRT.t.y = stream.readFloat();
+		mSRT.t.z = stream.readFloat();
 	}
 
 	doLoad(stream);
@@ -102,9 +102,9 @@ void Creature::save(RandomAccessStream& stream, bool doSavePosition)
 	int startPos = stream.getPosition();
 	if (doSavePosition) {
 		// idk why they didn't use the Vector3f::write inline here but they didn't
-		stream.writeFloat(mPosition.x);
-		stream.writeFloat(mPosition.y);
-		stream.writeFloat(mPosition.z);
+		stream.writeFloat(mSRT.t.x);
+		stream.writeFloat(mSRT.t.y);
+		stream.writeFloat(mSRT.t.z);
 	}
 
 	doSave(stream);
@@ -215,7 +215,7 @@ Vector3f Creature::getBoundingSphereCentre()
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		if (mObjType != OBJTYPE_Navi && !isPiki() && !aiCullable() && mGrid.aiCulling()) {
-			return mPosition;
+			return mSRT.t;
 		}
 
 		CollPart* bound = mCollInfo->getBoundingSphere();
@@ -275,7 +275,7 @@ void Creature::stopEventSound(Creature* target, int soundID)
  */
 bool Creature::insideSphere(Sphere& sphere)
 {
-	Vector3f diff = sphere.mCentre - mPosition;
+	Vector3f diff = sphere.mCentre - mSRT.t;
 	if (diff.length() <= sphere.mRadius) {
 		return true;
 	}
@@ -292,14 +292,14 @@ Vector3f Creature::getCentre()
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		CollPart* spherePart = mCollInfo->getSphere('cent');
 		if (mObjType != OBJTYPE_Navi && !isPiki() && !aiCullable() && mGrid.aiCulling()) {
-			return mPosition;
+			return mSRT.t;
 		}
 		if (spherePart) {
 			return spherePart->mCentre;
 		}
 	}
 
-	Vector3f pos = mPosition;
+	Vector3f pos = mSRT.t;
 	return pos;
 }
 
@@ -438,7 +438,7 @@ void Creature::resetStateGrabbed()
  */
 void Creature::turnTo(Vector3f& targetDir)
 {
-	mFaceDirection = atan2f(targetDir.x - mPosition.x, targetDir.z - mPosition.z);
+	mFaceDirection = atan2f(targetDir.x - mSRT.t.x, targetDir.z - mSRT.t.z);
 }
 
 /*
@@ -448,10 +448,10 @@ void Creature::turnTo(Vector3f& targetDir)
  */
 void Creature::adjustDistance(Vector3f& targetPos, f32 targetDist)
 {
-	Vector3f sep = targetPos - mPosition;
+	Vector3f sep = targetPos - mSRT.t;
 	f32 dist     = sep.length();
 	sep          = (targetDist / dist) * sep;
-	mPosition    = targetPos - sep;
+	mSRT.t       = targetPos - sep;
 }
 
 /*
@@ -535,7 +535,7 @@ int Creature::getAtariType()
  */
 void Creature::resetPosition(Vector3f& pos)
 {
-	mPosition     = pos;
+	mSRT.t        = pos;
 	mLastPosition = pos;
 }
 
@@ -662,9 +662,9 @@ Creature::Creature(CreatureProp* props)
 	mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	_B0.set(0.0f, 0.0f, 0.0f);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
-	mRotation.set(0.0f, 0.0f, 0.0f);
-	mPosition.set(0.0f, 0.0f, 0.0f);
-	mScale.set(1.0f, 1.0f, 1.0f);
+	mSRT.r.set(0.0f, 0.0f, 0.0f);
+	mSRT.t.set(0.0f, 0.0f, 0.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
 
 	mFaceDirection   = 0.0f;
 	mSize            = 10.0f;
@@ -698,8 +698,8 @@ void Creature::updateStatic()
 	if (mSeContext) {
 		mSeContext->update();
 	}
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 	doAnimation();
 	updateAI();
 }
@@ -717,12 +717,12 @@ void Creature::update()
 	}
 
 	// Update spatial grid positions
-	mGrid.updateGrid(mPosition);
+	mGrid.updateGrid(mSRT.t);
 	bool isPikiOrNavi = false;
 	if (mObjType == OBJTYPE_Piki || mObjType == OBJTYPE_Navi) {
 		isPikiOrNavi = true;
 	}
-	mGrid.updateAIGrid(mPosition, isPikiOrNavi);
+	mGrid.updateAIGrid(mSRT.t, isPikiOrNavi);
 
 	// Skip AI updates for non-important and CULLED objects
 	if (!isPikiOrNavi && !isCreatureFlag(CF_AIAlwaysActive) && mGrid.aiCulling() && !aiCullable()) {
@@ -768,7 +768,7 @@ void Creature::update()
 	// Handle being stuck to another creature's mouth
 	if (isCreatureFlag(CF_StuckToMouth)) {
 		if (mStickListHead) {
-			mPosition = mStickListHead->mPosition;
+			mSRT.t = mStickListHead->mSRT.t;
 		}
 
 		if (!mStickTarget) {
@@ -834,7 +834,7 @@ void Creature::update()
 	// Handle fixed position on non-slippery surfaces, with a slope < 60 degrees
 	if (mVolatileVelocity.length() > 0.0f && isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed) && mGroundTriangle
 	    && MapCode::getSlipCode(mGroundTriangle) == 0 && mGroundTriangle->mTriangle.mNormal.y > sinf(THIRD_PI)) {
-		mFixedPosition = mPosition;
+		mFixedPosition = mSRT.t;
 	}
 
 	mVelocity = originalVel;
@@ -849,7 +849,7 @@ void Creature::update()
 			if (mTargetVelocity.length() < 0.01f) {
 				if (!isCreatureFlag(CF_IsPositionFixed)) {
 					setCreatureFlag(CF_IsPositionFixed);
-					mFixedPosition = mPosition;
+					mFixedPosition = mSRT.t;
 				}
 
 			} else {
@@ -864,7 +864,7 @@ void Creature::update()
 
 		// Pull creature back to fixed position if drifted
 		if (isCreatureFlag(CF_IsPositionFixed)) {
-			Vector3f pullDir = mFixedPosition - mPosition;
+			Vector3f pullDir = mFixedPosition - mSRT.t;
 			f32 driftDist    = pullDir.normalise();
 
 			// Only apply pull force if within 30 units
@@ -929,12 +929,12 @@ void Creature::postUpdate(int, f32 _unused)
 		}
 	}
 
-	mLastPosition = mPosition;
+	mLastPosition = mSRT.t;
 
 	if (getHoldCreature()) {
-		Creature* held  = getHoldCreature();
-		held->mPosition = getCatchPos(held);
-		held->mRotation = mRotation;
+		Creature* held = getHoldCreature();
+		held->mSRT.t   = getCatchPos(held);
+		held->mSRT.r   = mSRT.r;
 	}
 }
 
@@ -1099,7 +1099,7 @@ Vector3f Creature::getCatchPos(Creature* target)
 	f32 rad = 0.95f * getSize();
 
 	Vector3f v(rad * sinf(mFaceDirection), 0.0f, rad * cosf(mFaceDirection));
-	v = v + mPosition;
+	v = v + mSRT.t;
 	return v;
 }
 
@@ -1123,7 +1123,7 @@ bool Creature::needShadow()
  */
 f32 Creature::getShadowSize()
 {
-	return mScale.x * getSize();
+	return mSRT.s.x * getSize();
 }
 
 /*
@@ -1296,8 +1296,8 @@ void Creature::drawShadow(Graphics& gfx)
  */
 f32 qdist2(Creature* c1, Creature* c2)
 {
-	f32 xDiff = c1->mPosition.x - c2->mPosition.x;
-	f32 zDiff = c1->mPosition.z - c2->mPosition.z;
+	f32 xDiff = c1->mSRT.t.x - c2->mSRT.t.x;
+	f32 zDiff = c1->mSRT.t.z - c2->mSRT.t.z;
 	return std::sqrtf(SQUARE(xDiff) + SQUARE(zDiff));
 }
 
@@ -1390,7 +1390,7 @@ void Creature::renderAtari(Graphics& gfx)
 		Matrix4f mtx1;
 		Matrix4f mtx2;
 
-		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
+		mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mSRT.t);
 		gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
 		gfx.setColour(Colour(0, 255, 0, 255), true);
 		gfx.drawSphere(Vector3f(0.0f, -mGroundOffset, 0.0f), mCollisionRadius, mtx2);
@@ -1407,7 +1407,7 @@ void Creature::renderAtari(Graphics& gfx)
 		mtx.makeVQS(Vector3f(0.0f, 0.0f, 0.0f), mRotationQuat, Vector3f(1.0f, 1.0f, 1.0f));
 		pos.multMatrix(mtx);
 		Vector3f unused(pos);
-		pos = pos + mPosition;
+		pos = pos + mSRT.t;
 
 		Matrix4f mtx2;
 		Matrix4f mtx3;
@@ -1423,7 +1423,7 @@ void Creature::renderAtari(Graphics& gfx)
 	// pellet but not a ufo part
 	Matrix4f mtx1;
 	Matrix4f mtx2;
-	mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mPosition);
+	mtx1.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f), mSRT.t);
 	gfx.mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
 	gfx.setColour(Colour(0, 255, 0, 255), true);
 	gfx.drawSphere(Vector3f(0.0f, -mGroundOffset, 0.0f), mCollisionRadius, mtx2);

@@ -520,7 +520,7 @@ public:
 	virtual bool invoke(zen::particleGenerator* ptclGen) // _08
 	{
 		Vector3f emitPos(*mRippleEmitPos);
-		emitPos.y = mKing->mPosition.y;
+		emitPos.y = mKing->mSRT.t.y;
 		ptclGen->setEmitPos(emitPos);
 		if (!mKing->getAlive() || !*mIsActiveRef) {
 			ptclGen->finish();

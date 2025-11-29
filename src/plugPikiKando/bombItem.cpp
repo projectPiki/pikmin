@@ -116,11 +116,11 @@ void BombItem::startAI(int)
 	mMotionSpeed = 0.0f;
 
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 
 	C_SAI(this)->start(this, BombAI::BOMB_Unk0);
 
-	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition = mSRT.t;
 	mLifeGauge.mOffset.set(0.0f, 20.0f, 0.0f);
 }
 
@@ -189,7 +189,7 @@ void BombItem::refresh2d(Graphics& gfx)
 
 	if (state == 2) {
 		mLifeGauge.updValue(mCurrentItemHealth, mMaxItemHealth);
-		mLifeGauge.mPosition = mPosition;
+		mLifeGauge.mPosition = mSRT.t;
 		mLifeGauge.mScale    = 5000.0f / gfx.mCamera->mNear;
 		mLifeGauge.refresh(gfx);
 	}

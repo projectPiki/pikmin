@@ -55,8 +55,8 @@ ItemMgr* itemMgr;
  */
 bool BuildingItem::insideSafeArea(Vector3f& pos)
 {
-	f32 z = pos.z - mPosition.z;
-	f32 x = pos.x - mPosition.x;
+	f32 z = pos.z - mSRT.t.z;
+	f32 x = pos.x - mSRT.t.x;
 	if (SQUARE(x) + SQUARE(z) < 10000.0f) {
 		return false;
 	}
@@ -106,7 +106,7 @@ GoalItem* ItemMgr::getNearestContainer(Vector3f& pos, f32 radius)
 		Creature* creature = *iter;
 		if (creature->mObjType == OBJTYPE_Goal) {
 			GoalItem* newGoal = static_cast<GoalItem*>(creature);
-			f32 dist          = qdist2(creature->mPosition.x, creature->mPosition.z, pos.x, pos.z);
+			f32 dist          = qdist2(creature->mSRT.t.x, creature->mSRT.t.z, pos.x, pos.z);
 			if (dist < minDist) {
 				minDist = dist;
 				goal    = newGoal;
@@ -740,7 +740,7 @@ void ItemCreature::refresh(Graphics& gfx)
 {
 	bool isOffCamera = false;
 
-	if (!gfx.mCamera->isPointVisible(mPosition, getBoundingSphereRadius())) {
+	if (!gfx.mCamera->isPointVisible(mSRT.t, getBoundingSphereRadius())) {
 		enableAICulling();
 		isOffCamera = true;
 	} else {
@@ -750,7 +750,7 @@ void ItemCreature::refresh(Graphics& gfx)
 	if (mItemShapeObject) {
 		_3C4 = false;
 		Matrix4f mtx;
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 		mItemAnimator.updateContext();
 		mItemShapeObject->mShape->updateAnim(gfx, mtx, nullptr);
@@ -764,12 +764,12 @@ void ItemCreature::refresh(Graphics& gfx)
 
 	if (mItemShape && !isOffCamera) {
 		PRINT("refreshing : %s\n", ObjType::getName(mObjType));
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		Matrix4f mtx;
 		gfx.calcViewMatrix(mWorldMtx, mtx);
 		gfx.mHasTexGen = TRUE;
 		gfx.useMatrix(mtx, 0);
-		gfx.mCamera->setBoundOffset(&mPosition);
+		gfx.mCamera->setBoundOffset(&mSRT.t);
 		mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);
 		gfx.mCamera->setBoundOffset(nullptr);
 	}
@@ -933,9 +933,9 @@ void BuildingItem::playEffect(int id)
 	switch (id) {
 	case 0:
 		if (mCurrStage >= mNumStages) {
-			cameraMgr->startVibrationEvent(4, mPosition);
+			cameraMgr->startVibrationEvent(4, mSRT.t);
 		} else {
-			cameraMgr->startVibrationEvent(2, mPosition);
+			cameraMgr->startVibrationEvent(2, mSRT.t);
 		}
 		break;
 	}
@@ -1046,7 +1046,7 @@ void BuildingItem::startAI(int)
 	stopMotion();
 
 	f32 scale = 1.0f;
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	mCollInfo = &mBuildCollision;
 	mCollInfo->initInfo(mItemShapeObject->mShape, mBuildParts, mBuildPartIDs);
 	PRINT("*** \n");
@@ -1055,16 +1055,16 @@ void BuildingItem::startAI(int)
 		mPlatMgr.init(this, mapMgr, mItemShapeObject->mShape);
 	}
 
-	mWayPoint            = routeMgr->findNearestWayPointAll('test', mPosition);
-	mWayPoint->mPosition = mPosition;
+	mWayPoint            = routeMgr->findNearestWayPointAll('test', mSRT.t);
+	mWayPoint->mPosition = mSRT.t;
 	PRINT_KANDO("*** \n");
 	C_SAI(this)->start(this, SluiceAI::Sluice_WaitInit);
 
-	_448   = mPosition;
-	_448.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
+	_448   = mSRT.t;
+	_448.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
 
-	mPosition.y          = _448.y;
-	mLifeGauge.mPosition = mPosition;
+	mSRT.t.y             = _448.y;
+	mLifeGauge.mPosition = mSRT.t;
 	mLifeGauge.mPosition.y += 110.0f;
 	mLifeGauge.mOffset.set(0.0f, 0.0f, 0.0f);
 }
@@ -1077,9 +1077,9 @@ void BuildingItem::startAI(int)
 void BuildingItem::startBreakEffect()
 {
 	playEventSound(this, SEB_WALL_DOWN);
-	rumbleMgr->start(RUMBLE_Unk7, 0, mPosition);
-	_3D8.init(mPosition, EffectMgr::EFF_Wl_Brk00);
-	_3E8.init(mPosition, EffectMgr::EFF_Wl_Brk01);
+	rumbleMgr->start(RUMBLE_Unk7, 0, mSRT.t);
+	_3D8.init(mSRT.t, EffectMgr::EFF_Wl_Brk00);
+	_3E8.init(mSRT.t, EffectMgr::EFF_Wl_Brk01);
 	if (_3D8.mPtclGen) {
 		_3D8.mPtclGen->setFreqFrm(5.0f);
 	}
@@ -1114,8 +1114,8 @@ void BuildingItem::stopBreakEffect()
 void BuildingItem::update()
 {
 	updateStatic();
-	_3D8.updatePos(mPosition);
-	_3E8.updatePos(mPosition);
+	_3D8.updatePos(mSRT.t);
+	_3E8.updatePos(mSRT.t);
 	mLifeGauge.updValue(mHealth, mMaxHealth);
 }
 
@@ -1140,7 +1140,7 @@ void BuildingItem::refresh(Graphics& gfx)
 	mDynMats.animate(&val);
 
 	bool isOffCamera = false;
-	if (!gfx.mCamera->isPointVisible(mPosition, getBoundingSphereRadius())) {
+	if (!gfx.mCamera->isPointVisible(mSRT.t, getBoundingSphereRadius())) {
 		enableAICulling();
 		isOffCamera = true;
 	} else {
@@ -1150,7 +1150,7 @@ void BuildingItem::refresh(Graphics& gfx)
 	if (mItemShapeObject) {
 		_3C4 = false;
 		Matrix4f mtx;
-		mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+		mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 		gfx.mCamera->mLookAtMtx.multiplyTo(mWorldMtx, mtx);
 		mItemAnimator.updateContext();
 		mItemShapeObject->mShape->updateAnim(gfx, mtx, nullptr);

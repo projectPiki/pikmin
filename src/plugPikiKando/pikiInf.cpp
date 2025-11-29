@@ -185,8 +185,8 @@ BaseInf::BaseInf()
  */
 void BaseInf::store(Creature* owner)
 {
-	mPosition = owner->mPosition;
-	mRotation = owner->mRotation;
+	mPosition = owner->mSRT.t;
+	mRotation = owner->mSRT.r;
 	doStore(owner);
 }
 
@@ -197,8 +197,8 @@ void BaseInf::store(Creature* owner)
  */
 void BaseInf::restore(Creature* owner)
 {
-	owner->mPosition = mPosition;
-	owner->mRotation = mRotation;
+	owner->mSRT.t = mPosition;
+	owner->mSRT.r = mRotation;
 	doRestore(owner);
 }
 

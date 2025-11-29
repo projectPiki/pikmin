@@ -300,8 +300,7 @@ int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetry
 	// Calculate new path
 	int handle;
 	if (destinationType != -1) {
-		handle
-		    = routeMgr->getPathFinder('test')->findSyncOnyon(mPosition, mPathBuffers, sourceWaypointIndex, destinationType, isRetryAttempt);
+		handle = routeMgr->getPathFinder('test')->findSyncOnyon(mSRT.t, mPathBuffers, sourceWaypointIndex, destinationType, isRetryAttempt);
 		if (!handle) {
 			PRINT("ONYON ROOT FAILED\n");
 		}
@@ -362,7 +361,7 @@ int Piki::moveRouteTraceDynamic(f32 p1)
 	}
 
 	Vector3f centre = mRouteTargetCreature->getCentre();
-	centre.sub(mPosition);
+	centre.sub(mSRT.t);
 	f32 dist = centre.length();
 	if (dist < 110.0f) {
 		return 0;
@@ -397,12 +396,12 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
 	PRINT("****** PIKI FIND NEAREST EDGE AVOID OFF================\n");
 	WayPoint* wp1;
 	WayPoint* wp2;
-	routeMgr->findNearestEdgeAvoidOff(&wp1, &wp2, 'test', mPosition, onlyLand, true, false);
+	routeMgr->findNearestEdgeAvoidOff(&wp1, &wp2, 'test', mSRT.t, onlyLand, true, false);
 
 	WayPoint* nearestPikiWP;
 	if (wp1 && wp2) {
-		Vector3f wp1Dist = wp1->mPosition - mPosition;
-		Vector3f wp2Dist = wp2->mPosition - mPosition;
+		Vector3f wp1Dist = wp1->mPosition - mSRT.t;
+		Vector3f wp2Dist = wp2->mPosition - mSRT.t;
 		if (wp1Dist.length() > wp2Dist.length()) {
 			nearestPikiWP = wp2;
 		} else {
@@ -410,11 +409,11 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
 		}
 	} else {
 		PRINT("gakkari desu ...\n");
-		nearestPikiWP = routeMgr->findNearestWayPoint('test', mPosition, onlyLand);
+		nearestPikiWP = routeMgr->findNearestWayPoint('test', mSRT.t, onlyLand);
 	}
 
 	WayPoint* nearestTargetWP = routeMgr->findNearestWayPoint('test', targetPos, false);
-	mRouteStartPos            = mPosition;
+	mRouteStartPos            = mSRT.t;
 	mRouteGoalPos             = targetPos;
 
 	if (onlyLand) {
@@ -444,7 +443,7 @@ bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
 	Tube tube(cr1, cr2, crGetRadius(mCurrRoutePoint + 1), crGetRadius(mCurrRoutePoint + 2));
 	f32 collDepth;
 	Vector3f pushVec;
-	Sphere sphere(mPosition, 0.0f);
+	Sphere sphere(mSRT.t, 0.0f);
 	if (tube.collide(sphere, pushVec, collDepth) && crPointOpen(mCurrRoutePoint + 2)) {
 		mCurrRoutePoint      = 0;
 		mSplineControlPts[0] = crGetPoint(-1);
@@ -486,7 +485,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 			Tube tube(cr1, cr2, crGetRadius(mCurrRoutePoint + 1), crGetRadius(mCurrRoutePoint + 2));
 			f32 collDepth;
 			Vector3f pushVec;
-			Sphere sphere(mPosition, 0.0f);
+			Sphere sphere(mSRT.t, 0.0f);
 			if (tube.collide(sphere, pushVec, collDepth) && crPointOpen(mCurrRoutePoint + 2)) {
 				mCurrRoutePoint      = 0;
 				mSplineControlPts[0] = crGetPoint(-1);
@@ -517,7 +516,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 	Vector3f crDir = cr1 - cr0;
 	f32 crDist     = crDir.normalise();
 
-	f32 ctrlRatio = crDir.DP(mPosition - cr0) / crDist;
+	f32 ctrlRatio = crDir.DP(mSRT.t - cr0) / crDist;
 	if (ctrlRatio < 0.0f) {
 		ctrlRatio = 0.0f;
 	}
@@ -527,7 +526,7 @@ int Piki::moveRouteTrace(f32 speedRatio)
 
 	Vector3f dirToPath;
 	dirToPath      = (ctrlRatio * crDist) * crDir + cr0;
-	dirToPath      = dirToPath - mPosition;
+	dirToPath      = dirToPath - mSRT.t;
 	dirToPath.y    = 0.0f;
 	f32 distToPath = dirToPath.normalise();
 
@@ -663,7 +662,7 @@ bool Piki::hasBomb()
 void Piki::startFire()
 {
 	mFiredState = 1;
-	seSystem->playPikiSound(SEF_PIKI_FIRED, mPosition);
+	seSystem->playPikiSound(SEF_PIKI_FIRED, mSRT.t);
 	EffectParm parm(&mEffectPos);
 	mBurnEffect->emit(parm);
 	mIsPanicked = true;
@@ -744,7 +743,7 @@ void Piki::actOnSituaton()
 
 	switch (graspSituation(&target)) {
 	case PIKISITCH_Unk1:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Attack;
 		mActiveAction->mChildActions[PikiAction::Attack].initialise(target);
@@ -756,7 +755,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk14:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Bou;
 		mActiveAction->mChildActions[PikiAction::Bou].initialise(target);
@@ -764,7 +763,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk9:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Transport;
 		mActiveAction->mChildActions[PikiAction::Transport].initialise(target);
@@ -772,7 +771,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk10:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Rescue;
 		mActiveAction->mChildActions[PikiAction::Rescue].initialise(target);
@@ -780,7 +779,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk11:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Weed;
 		mActiveAction->mChildActions[PikiAction::Weed].initialise(target);
@@ -788,7 +787,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk13:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::BoMake;
 		mActiveAction->mChildActions[PikiAction::BoMake].initialise(target);
@@ -796,7 +795,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk12:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Stone;
 		mActiveAction->mChildActions[PikiAction::Stone].initialise(target);
@@ -804,7 +803,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk4:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Mine;
 		mActiveAction->mChildActions[PikiAction::Mine].initialise(target);
@@ -812,7 +811,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk3:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::PickItem;
 		mActiveAction->mChildActions[PikiAction::PickItem].initialise(target);
@@ -820,7 +819,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk7:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Bridge;
 		mActiveAction->mChildActions[PikiAction::Bridge].initialise(target);
@@ -828,7 +827,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk8:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::Push;
 		mActiveAction->mChildActions[PikiAction::Push].initialise(target);
@@ -836,7 +835,7 @@ void Piki::actOnSituaton()
 		break;
 
 	case PIKISITCH_Unk6:
-		seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+		seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 		mActiveAction->abandon(nullptr);
 		mActiveAction->mCurrActionIdx = PikiAction::BreakWall;
 		mActiveAction->mChildActions[PikiAction::BreakWall].initialise(target);
@@ -1080,7 +1079,7 @@ int Piki::graspSituation(Creature** outTarget)
 				for (int i = 0; i < flagPart->getChildCount(); i++) {
 					checker.update();
 					CollPart* childPart = flagPart->getChildAt(i);
-					Vector3f partDir    = childPart->mCentre - mPosition;
+					Vector3f partDir    = childPart->mCentre - mSRT.t;
 					f32 objDist         = partDir.length() - childPart->mRadius - getCentreSize();
 					if (objDist <= minTestDist) {
 						minTestDist = objDist;
@@ -1243,7 +1242,7 @@ int Piki::graspSituation(Creature** outTarget)
 		if (workObj->isBridge()) {
 			test = minTestDist * 7.0f;
 		}
-		if (workDist < test && !workObj->isFinished() && workObj->workable(mPosition)) {
+		if (workDist < test && !workObj->isFinished() && workObj->workable(mSRT.t)) {
 			minTestDist = workDist;
 			workTarget  = workObj;
 		}
@@ -1251,7 +1250,7 @@ int Piki::graspSituation(Creature** outTarget)
 
 	if (workTarget) {
 		WorkObject* workObj = static_cast<WorkObject*>(workTarget);
-		if (workObj->workable(mPosition)) {
+		if (workObj->workable(mSRT.t)) {
 			if (workObj->isBridge()) {
 				if (minTestDist < minDist) {
 					minDist    = minTestDist;
@@ -1571,7 +1570,7 @@ void Piki::finishDamage()
 void Piki::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
 	if (mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 56 && event.mEventType == KEY_PlayEffect) {
-		EffectParm parm(mPosition);
+		EffectParm parm(mSRT.t);
 		UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 	}
 
@@ -1881,7 +1880,7 @@ void Piki::bounceCallback()
 	} else if (isStickTo() && mInWaterTimer == 0 && mColor != Blue) {
 		Creature* obj = getStickObject();
 		if (obj && obj->mGroundTriangle && MapCode::getAttribute(obj->mGroundTriangle) == ATTR_Water) {
-			if (absF(obj->mPosition.y - mPosition.y) < 10.0f) {
+			if (absF(obj->mSRT.t.y - mSRT.t.y) < 10.0f) {
 				isDrownSurface = true;
 			}
 		}
@@ -1889,11 +1888,11 @@ void Piki::bounceCallback()
 
 	if (isDrownSurface && isAlive() && state != PIKISTATE_Dead && state != PIKISTATE_Dying && state != PIKISTATE_Pressed
 	    && state != PIKISTATE_WaterHanged) {
-		seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mPosition);
+		seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mSRT.t);
 		startMotion(PaniMotionInfo(PIKIANIM_TYakusui, this), PaniMotionInfo(PIKIANIM_TYakusui));
 		mFSM->transit(this, PIKISTATE_Drown);
-		EffectParm rippleParm(&mPosition);
-		EffectParm parm(mPosition);
+		EffectParm rippleParm(&mSRT.t);
+		EffectParm parm(mSRT.t);
 		rippleParm.mScale = 2.0f;
 
 		mRippleEffect->emit(rippleParm);
@@ -1903,7 +1902,7 @@ void Piki::bounceCallback()
 	}
 
 	if (mMode == PikiMode::GuardMode) {
-		mPosition.y = 0.0f;
+		mSRT.t.y = 0.0f;
 		setCreatureFlag(CF_IsOnGround);
 		mVelocity.set(0.0f, 0.0f, 0.0f);
 	}
@@ -1973,7 +1972,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 				return;
 			}
 
-			startHimaLook(&target->mPosition);
+			startHimaLook(&target->mSRT.t);
 			mLookAtTarget.set(target);
 			return;
 		}
@@ -1986,7 +1985,7 @@ void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
 			if (part) {
 				startHimaLook(&part->mCentre);
 			} else {
-				startHimaLook(&target->mPosition);
+				startHimaLook(&target->mSRT.t);
 			}
 
 			if (isStickTo()) {
@@ -2071,7 +2070,7 @@ void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
 					f32 zComp      = direction.DP(bridge->getBridgeZVec());
 					if (bridge->mDoUseJointSegments && zComp < -0.8f && !bridge->isFinished()) {
 						PRINT("** BRIDGE AI START\n");
-						seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+						seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 						mActiveAction->abandon(nullptr);
 						mActiveAction->mCurrActionIdx = PikiAction::Bridge;
 						mActiveAction->mChildActions[PikiAction::Bridge].initialise(bridge);
@@ -2246,7 +2245,7 @@ void Piki::collisionCallback(CollEvent& event)
 		if (grass->workable()) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 			if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
-				seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+				seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Weed;
 				mActiveAction->mChildActions[PikiAction::Weed].initialise(collider);
@@ -2259,7 +2258,7 @@ void Piki::collisionCallback(CollEvent& event)
 	if (distCheck && collider->isAlive() && collider->mObjType == OBJTYPE_BoBase && mMode == PikiMode::FormationMode && !isHolding()) {
 		ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 		if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
-			seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+			seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 			mActiveAction->abandon(nullptr);
 			mActiveAction->mCurrActionIdx = PikiAction::BoMake;
 			mActiveAction->mChildActions[PikiAction::BoMake].initialise(collider);
@@ -2274,7 +2273,7 @@ void Piki::collisionCallback(CollEvent& event)
 		if (pebble->workable()) {
 			ActCrowd* crowd = static_cast<ActCrowd*>(mActiveAction->getCurrAction());
 			if (crowd && crowd->mState == ActCrowd::STATE_Formed) {
-				seSystem->playPikiSound(SEF_PIKI_FIND, mPosition);
+				seSystem->playPikiSound(SEF_PIKI_FIND, mSRT.t);
 				mActiveAction->abandon(nullptr);
 				mActiveAction->mCurrActionIdx = PikiAction::Stone;
 				mActiveAction->mChildActions[PikiAction::Stone].initialise(collider);
@@ -2458,7 +2457,7 @@ void Piki::init(Navi* navi)
 {
 	mHorizontalRotation = 0.0f;
 	mVerticalRotation   = 0.0f;
-	mScale.set(1.0f, 1.0f, 1.0f);
+	mSRT.s.set(1.0f, 1.0f, 1.0f);
 	mRouteHandle         = 0;
 	mUseAsyncPathfinding = false;
 	_528                 = 0.0f;
@@ -2576,7 +2575,7 @@ void Piki::updateLookCreature()
 
 	f32 minDist = 128000.0f;
 	if (target) {
-		minDist = qdist2(mPosition.x, mPosition.z, target->mPosition.x, target->mPosition.z) - target->getBoundingSphereRadius();
+		minDist = qdist2(mSRT.t.x, mSRT.t.z, target->mSRT.t.x, target->mSRT.t.z) - target->getBoundingSphereRadius();
 		if (minDist > 200.0f) {
 			mLookAtTarget.reset();
 			target  = nullptr;
@@ -2590,7 +2589,7 @@ void Piki::updateLookCreature()
 	{
 		Creature* teki = *iter;
 		if (teki->isAlive()) {
-			f32 tekiDist = qdist2(mPosition.x, mPosition.z, teki->mPosition.x, teki->mPosition.z) - teki->getBoundingSphereRadius();
+			f32 tekiDist = qdist2(mSRT.t.x, mSRT.t.z, teki->mSRT.t.x, teki->mSRT.t.z) - teki->getBoundingSphereRadius();
 			if (tekiDist < minDist) {
 				newTarget = teki;
 				minDist   = tekiDist;
@@ -2618,7 +2617,7 @@ void Piki::updateLookCreature()
 void Piki::doAnimation()
 {
 	updateWalkAnimation();
-	mLastAnimPosition = mPosition;
+	mLastAnimPosition = mSRT.t;
 	mPikiAnimMgr.updateAnimation(mMotionSpeed);
 }
 
@@ -2640,7 +2639,7 @@ void Piki::updateWalkAnimation()
 			enableMotionBlend();
 		}
 
-		Vector3f sep = mPosition - mLastAnimPosition;
+		Vector3f sep = mSRT.t - mLastAnimPosition;
 		sep.y        = 0.0f;
 		f32 speed    = sep.length() / gsys->getFrameTime();
 
@@ -2813,7 +2812,7 @@ void Piki::realAI()
 	} else if (isStickTo()) {
 		Creature* stickObj = getStickObject();
 		if (stickObj && stickObj->mGroundTriangle && MapCode::getAttribute(stickObj->mGroundTriangle) == ATTR_Water
-		    && absF(stickObj->mPosition.y - mPosition.y) < 10.0f) {
+		    && absF(stickObj->mSRT.t.y - mSRT.t.y) < 10.0f) {
 			isInWater = true;
 		}
 	}
@@ -2824,7 +2823,7 @@ void Piki::realAI()
 			EffectParm castParm(mShadowPos);
 			mRippleEffect->emit(rippleParm);
 			UtEffectMgr::cast(KandoEffect::Bubbles, castParm);
-			seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mPosition);
+			seSystem->playSoundDirect(5, SEW_PIKI_WATERDROP, mSRT.t);
 		}
 
 		mIsPanicked = true; // huh. sure.

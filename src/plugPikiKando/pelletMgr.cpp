@@ -193,7 +193,7 @@ void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
 	pellet->init(pos);
 	pellet->mFaceDirection = direction;
 	pellet->mRotationQuat.fromEuler(Vector3f(0.0f, direction, 0.0f));
-	pellet->mRotation.set(0.0f, direction, 0.0f);
+	pellet->mSRT.r.set(0.0f, direction, 0.0f);
 	pellet->mVelocity.set(0.0f, 0.0f, 0.0f);
 	pellet->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	pellet->mAngularMomentum.set(0.0f, 0.0f, 0.0f);
@@ -253,8 +253,8 @@ bool Pellet::isUfoPartsID(u32 partsID)
  */
 void Pellet::startWaterEffect()
 {
-	EffectParm unused(&mPosition); // lol.
-	EffectParm parm(mPosition);
+	EffectParm unused(&mSRT.t); // lol.
+	EffectParm parm(mSRT.t);
 	unused.mScale = 2.0f; // this is so dumb
 	UtEffectMgr::cast(KandoEffect::Bubbles, parm);
 }
@@ -411,7 +411,7 @@ void Pellet::startPick()
 	if (mPelletView) {
 		offset = 4.0f;
 	} else {
-		offset = offset / mScale.y;
+		offset = offset / mSRT.s.y;
 	}
 
 	f32 dir = 1.0f;
@@ -442,12 +442,12 @@ void Pellet::startPick()
 		}
 	}
 
-	f32 minY = mapMgr->getMinY(mPosition.x, mPosition.z, true);
-	if (minY > mPosition.y) {
+	f32 minY = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
+	if (minY > mSRT.t.y) {
 		PRINT("************* START PICK YABAI !!!\n");
 	}
 	if (!isRealDynamics()) {
-		mPosition.y += offset;
+		mSRT.t.y += offset;
 	}
 }
 
@@ -574,7 +574,7 @@ f32 Pellet::getBottomRadius()
  */
 Vector3f Pellet::getCentre()
 {
-	return mPosition;
+	return mSRT.t;
 }
 
 /*
@@ -790,7 +790,7 @@ Vector3f Pellet::getSlotLocalPos(int slotID, f32 offset)
 	f32 pickupHeight = mPickOffset;
 	if (!mPelletView) {
 		grabRadius = getBottomRadius() + offset;
-		grabRadius /= mScale.x;
+		grabRadius /= mSRT.s.x;
 	} else {
 		grabRadius = getBottomRadius() + offset;
 	}
@@ -897,7 +897,7 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 	mCollInfo = mPelletCollInfo;
 	mCollInfo->initInfo(mShapeObject->mShape, nullptr, nullptr);
 	f32 scale = config->mPelletScale();
-	mScale.set(scale, scale, scale);
+	mSRT.s.set(scale, scale, scale);
 	if (config->mPelletColor() != PELCOLOR_NULL || isUfoParts()) {
 		mShapeObject->mShape->makeInstance(mShapeDynMaterials, 0);
 	}
@@ -915,7 +915,7 @@ void Pellet::initPellet(PelletView* view, PelletConfig* config)
 	mMotionFlag     = PelletMotionFlags::Unknown;
 	mPelletView     = view;
 	mConfig         = config;
-	mScale.set(view->viewGetScale());
+	mSRT.s.set(view->viewGetScale());
 	mShapeObject = nullptr;
 	mCollInfo    = nullptr;
 }
@@ -1008,25 +1008,25 @@ void Pellet::doLoad(RandomAccessStream& input)
 	mSpawnPosition.x      = input.readFloat();
 	mSpawnPosition.y      = input.readFloat();
 	mSpawnPosition.z      = input.readFloat();
-	Vector3f displacement = mSpawnPosition - mPosition;
+	Vector3f displacement = mSpawnPosition - mSRT.t;
 	if (displacement.length() < 40.0f) {
 		PRINT("UFO PARTS DIDN'T MOVE!\n");
-		mPosition = mSpawnPosition;
+		mSRT.t = mSpawnPosition;
 	}
 #if defined(VERSION_GPIE01_00) || defined(VERSION_PIKIDEMO)
 	// This isn't in the USA versions' DLL, meaning that DLL is based on rev 0 instead of rev 1 (it was not recompiled between revisions).
 #else
-	else if (isNan(mPosition.x) || isNan(mPosition.y) || isNan(mPosition.z)) {
-		mPosition = mSpawnPosition;
+	else if (isNan(mSRT.t.x) || isNan(mSRT.t.y) || isNan(mSRT.t.z)) {
+		mSRT.t = mSpawnPosition;
 	}
 #endif
 	else {
 		PRINT("PARTS MOVED !!! (%.1f %.1f %.1f)\n", displacement.x, displacement.y, displacement.z);
-		mPosition = routeMgr->getSafePosition('test', mPosition);
+		mSRT.t = routeMgr->getSafePosition('test', mSRT.t);
 	}
 
-	mPosition.y = mapMgr->getMinY(mPosition.x, mPosition.z, true);
-	PRINT_GLOBAL("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mPosition.x, mPosition.y, mPosition.z);
+	mSRT.t.y = mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true);
+	PRINT_GLOBAL("ufo parts %s : (%.1f %.1f %.1f)", mConfig->mModelId.mStringID, mSRT.t.x, mSRT.t.y, mSRT.t.z);
 	disableFixPos();
 	enableFixPos();
 	mStateMachine->transit(this, PELSTATE_UfoLoad);
@@ -1065,11 +1065,11 @@ void Pellet::doSave(RandomAccessStream& output)
 void Pellet::startAI(int doSpawnScaleOff)
 {
 	mRotationQuat.fromEuler(Vector3f(0.0f, mFaceDirection, 0.0f));
-	mRotation.set(0.0f, mFaceDirection, 0.0f);
-	mLastPosition = mPosition;
+	mSRT.r.set(0.0f, mFaceDirection, 0.0f);
+	mLastPosition = mSRT.t;
 	enableFixPos();
 	if (mUseSpawnPosition) {
-		mSpawnPosition = mPosition;
+		mSpawnPosition = mSRT.t;
 	}
 
 	setTrySound(false);
@@ -1134,7 +1134,7 @@ void Pellet::startAI(int doSpawnScaleOff)
 			EffectMgr::EFF_Empl_10,
 			EffectMgr::EFF_Empl_20,
 		};
-		Vector3f pos(mPosition);
+		Vector3f pos(mSRT.t);
 		pos.y += heights[type];
 		mCurrentPelletHeight   = heights[type];
 		mCurrentPelletPosition = pos;
@@ -1237,14 +1237,14 @@ void Pellet::update()
 #if defined(VERSION_PIKIDEMO)
 #define ASSERT_POSITION_NOTNAN(...)  \
 	/* Yeah, just the X position. */ \
-	if (isNan(mPosition.x)) {        \
+	if (isNan(mSRT.t.x)) {           \
 		ERROR(__VA_ARGS__);          \
 	}
 #else
 #define ASSERT_POSITION_NOTNAN(...)
 #endif
 
-	mLastPosition   = mPosition;
+	mLastPosition   = mSRT.t;
 	bool isOnGround = onGround();
 	if (isOnGround && !mIsAIActive && mConfig->mBounceSoundID() != -1) {
 		playEventSound(this, bounceSounds[mConfig->mBounceSoundID()]);
@@ -1276,7 +1276,7 @@ void Pellet::update()
 
 	if (_4A0) {
 		_4A0--;
-		mCurrentPelletPosition = mPosition;
+		mCurrentPelletPosition = mSRT.t;
 		mCurrentPelletPosition.y += mCurrentPelletHeight;
 	}
 
@@ -1293,7 +1293,7 @@ void Pellet::update()
 
 	mCarrierCounter      = carryCount;
 	f32 height           = getCylinderHeight();
-	mLifeGauge.mPosition = mPosition;
+	mLifeGauge.mPosition = mSRT.t;
 	mLifeGauge.mPosition.y += height + 5.0f;
 	mCollisionRadius = height * 0.5f;
 
@@ -1341,7 +1341,7 @@ void Pellet::update()
 			mVelocity.y += mCarryDirection.y;
 		}
 
-		if (mapMgr->getMinY(mPosition.x, mPosition.z, true) > mPosition.y) {
+		if (mapMgr->getMinY(mSRT.t.x, mSRT.t.z, true) > mSRT.t.y) {
 			PRINT("** YABAI YO!\n");
 		}
 
@@ -1374,10 +1374,10 @@ void Pellet::update()
 
 		f32 targetAngle;
 		if (isTekiAttached) {
-			Vector3f tekiDir = mPosition - attachedTeki->mPosition;
+			Vector3f tekiDir = mSRT.t - attachedTeki->mSRT.t;
 			targetAngle      = atan2f(tekiDir.x, tekiDir.z);
 		} else {
-			Vector3f targetDir = mPikiCarrier->mPosition - mPosition;
+			Vector3f targetDir = mPikiCarrier->mSRT.t - mSRT.t;
 			targetAngle        = atan2f(targetDir.x, targetDir.z);
 		}
 
@@ -1453,7 +1453,7 @@ void Pellet::doRender(Graphics& gfx, Matrix4f& mtx)
 		Matrix4f transformMtx;
 		f32 scale = 1.0f / reinterpret_cast<Vector3f*>(&jointMtx)->length();
 		transformMtx.makeSRT(Vector3f(scale, scale, scale), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 0.0f));
-		mPosition = mStuckMouthPart->mCentre;
+		mSRT.t = mStuckMouthPart->mCentre;
 		jointMtx.multiplyTo(transformMtx, mtx);
 	}
 
@@ -1958,7 +1958,7 @@ void PelletMgr::refresh(Graphics& gfx)
 				sprintf(buf, "back");
 			}
 
-			Vector3f pos(pellet->mPosition);
+			Vector3f pos(pellet->mSRT.t);
 			pos.y += pellet->getCylinderHeight();
 			pos.multMatrix(gfx.mCamera->mLookAtMtx);
 			int val = -(gsys->mConsFont->stringWidth(buf) / 2);

@@ -61,14 +61,14 @@ void Actor::startAI(int state)
  */
 void Actor::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	gfx.useMatrix(Matrix4f::ident, 0);
 
 	Matrix4f mtx;
 	mtx.multiplyTo(gfx.mCamera->mLookAtMtx, mWorldMtx);
 
 	mPikiAnimMgr.updateContext();
-	mapMgr->getLight(mPosition.x, mPosition.z);
+	mapMgr->getLight(mSRT.t.x, mSRT.t.z);
 
 	gfx.initRender(1, 0);
 

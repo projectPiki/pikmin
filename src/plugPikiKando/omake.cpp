@@ -87,7 +87,7 @@ void AttentionCamera::update()
 		if (!mActiveFader->updateFadeOut()) {
 			return;
 		}
-		mTarget->mFaceDirection = roundAng(getCameraSafeAngle(mTarget->mPosition, 600.0f, 400.0f));
+		mTarget->mFaceDirection = roundAng(getCameraSafeAngle(mTarget->mSRT.t, 600.0f, 400.0f));
 
 		// lol.
 		if (mTarget->mObjType != OBJTYPE_Navi) {

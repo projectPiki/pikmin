@@ -180,7 +180,7 @@ void RockGen::create(int num, f32 radius, int)
 
 		f32 randomAngle = (TAU * gsys->getRand(1.0f));
 		Vector3f pebbleOffset(sinf(randomAngle) * finalRadius, 0.0f, cosf(randomAngle) * finalRadius);
-		pebbleOffset   = pebbleOffset + mPosition;
+		pebbleOffset   = pebbleOffset + mSRT.t;
 		pebbleOffset.y = mapMgr->getMinY(pebbleOffset.x, pebbleOffset.z, true);
 
 		Pebble& obj          = mPebbles[i];
@@ -215,8 +215,8 @@ void RockGen::startAI(int state)
 	mWorkingPikis = 0;
 	create(mMaxPebbles, mSize, 0);
 	PRINT("++++++++ CREATE ROCK GEN +++++++\n");
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 }
 
 /*
@@ -275,7 +275,7 @@ void RockGen::update()
  */
 void RockGen::refresh(Graphics& gfx)
 {
-	if (!gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
+	if (!gfx.mCamera->isPointVisible(mSRT.t, getSize() * 4.0f)) {
 		return;
 	}
 
@@ -358,7 +358,7 @@ void GrassGen::create(int num, f32 size, int)
 
 		f32 randomAngle = (TAU * gsys->getRand(1.0f));
 		Vector3f grassOffset(sinf(randomAngle) * finalRadius, 0.0f, cosf(randomAngle) * finalRadius);
-		grassOffset   = grassOffset + mPosition;
+		grassOffset   = grassOffset + mSRT.t;
 		grassOffset.y = mapMgr->getMinY(grassOffset.x, grassOffset.z, true);
 
 		Grass& obj           = mGrass[i];
@@ -392,8 +392,8 @@ void GrassGen::startAI(int)
 {
 	mWorkingPikis = 0;
 	create(mTotalGrassCount, mSize, 0);
-	mGrid.updateGrid(mPosition);
-	mGrid.updateAIGrid(mPosition, false);
+	mGrid.updateGrid(mSRT.t);
+	mGrid.updateAIGrid(mSRT.t, false);
 	PRINT("++++++++ CREATE GRASS GEN +++++++\n");
 }
 
@@ -416,7 +416,7 @@ void GrassGen::update()
  */
 void GrassGen::refresh(Graphics& gfx)
 {
-	if (gfx.mCamera->isPointVisible(mPosition, getSize() * 4.0f)) {
+	if (gfx.mCamera->isPointVisible(mSRT.t, getSize() * 4.0f)) {
 		for (int i = 0; i < mTotalGrassCount; i++) {
 			Grass& blade = mGrass[i];
 			if (blade.mHealth) {
@@ -512,7 +512,7 @@ void WeedsGen::startAI(int ai)
 		f32 angle = gsys->getRand(1.0f) * TAU;
 
 		Vector3f offset(sinf(angle) * size, 0.0f, cosf(angle) * size);
-		offset   = offset + mPosition;
+		offset   = offset + mSRT.t;
 		offset.y = mapMgr->getMinY(offset.x, offset.z, true);
 
 		if (!mWeedShape) {
@@ -547,7 +547,7 @@ Weed::Weed()
  */
 void Weed::startAI(int)
 {
-	mScale.set(0.1f, 0.1f, 0.1f);
+	mSRT.s.set(0.1f, 0.1f, 0.1f);
 	mIsPulled = 0;
 }
 
@@ -588,7 +588,7 @@ void Weed::update()
 		} else {
 			f32 s = (1.0f - mPulloutTimer / 30.0f);
 			s *= 0.1f;
-			mScale.set(s, s, s);
+			mSRT.s.set(s, s, s);
 		}
 	}
 }
@@ -600,12 +600,12 @@ void Weed::update()
  */
 void Weed::refresh(Graphics& gfx)
 {
-	mWorldMtx.makeSRT(mScale, mRotation, mPosition);
+	mWorldMtx.makeSRT(mSRT.s, mSRT.r, mSRT.t);
 	Matrix4f mtx;
 	gfx.calcViewMatrix(mWorldMtx, mtx);
 	gfx.mHasTexGen = TRUE;
 	gfx.useMatrix(mtx, 0);
-	gfx.mCamera->setBoundOffset(&mPosition);
+	gfx.mCamera->setBoundOffset(&mSRT.t);
 	mItemShape->drawshape(gfx, *gfx.mCamera, nullptr);
 	gfx.mCamera->setBoundOffset(nullptr);
 }

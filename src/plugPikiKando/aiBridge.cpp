@@ -68,7 +68,7 @@ void ActBridge::dump()
 	const char* stateNames[] = { "approach", "detour", "go", "work" };
 	PRINT("state : %s  bridge stage : %d\n", stateNames[mState], mStageIdx);
 	Vector3f stagePos = mBridge->getStagePos(mStageIdx);
-	Vector3f sep      = stagePos - mPiki->mPosition;
+	Vector3f sep      = stagePos - mPiki->mSRT.t;
 	Vector3f zVec     = mBridge->getBridgeZVec();
 	f32 zdist         = sep.DP(zVec);
 	PRINT("zdist is %.1f\n", zdist);
@@ -355,7 +355,7 @@ int ActBridge::newExeApproach()
 	if (direction.normalise() < 300.0f) {
 		f32 bridgePosY;
 		f32 bridgePosX;
-		mBridge->getBridgePos(mPiki->mPosition, bridgePosX, bridgePosY);
+		mBridge->getBridgePos(mPiki->mSRT.t, bridgePosX, bridgePosY);
 		STACK_PAD_VAR(3);
 		int currStage = mBridge->getFirstUnfinishedStage();
 		if (currStage == -1) {
@@ -369,7 +369,7 @@ int ActBridge::newExeApproach()
 		if (absF(bridgePosX) < 0.8f * (0.5f * mBridge->getStageWidth())) {
 			if (bridgePosY <= 0.0f) {
 				mBridge->getStagePos(mStageIdx);
-				// stagePos = stagePos - mActor->mPosition;
+				// stagePos = stagePos - mActor->mSRT.t;
 				Vector3f zVec = mBridge->getBridgeZVec();
 				// f32 val = stagePos.DP(zVec);
 				direction = zVec;
@@ -464,7 +464,7 @@ int ActBridge::newExeGo()
 	xVec.multiply(mRandomBridgeWidth * mBridge->getStageWidth());
 	stagePos.add(xVec);
 
-	Vector3f direction = stagePos - mPiki->mPosition;
+	Vector3f direction = stagePos - mPiki->mSRT.t;
 	mBridge->getBridgeZVec();
 
 	direction.normalise();
@@ -531,7 +531,7 @@ int ActBridge::newExeWork()
 		}
 	}
 
-	if (!mBridge->workable(mPiki->mPosition)) {
+	if (!mBridge->workable(mPiki->mSRT.t)) {
 		mPiki->mEmotion = PikiEmotion::Sad;
 		mPiki->resetCreatureFlag(CF_DisableMovement);
 		return ACTOUT_Fail;
@@ -551,7 +551,7 @@ int ActBridge::newExeWork()
 	}
 
 	Vector3f stagePos(mBridge->getStagePos(mStageIdx));
-	Vector3f sep = stagePos - mPiki->mPosition;
+	Vector3f sep = stagePos - mPiki->mSRT.t;
 	Vector3f zVec(mBridge->getBridgeZVec());
 	Vector3f xVec(mBridge->getBridgeXVec());
 	f32 zDist = sep.DP(zVec);

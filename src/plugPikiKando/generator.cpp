@@ -1055,10 +1055,10 @@ void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 	if (!p2) {
 		Navi* navi = naviMgr->getNavi();
 		if (navi) {
-			navi->mPosition      = mNaviPos;
+			navi->mSRT.t         = mNaviPos;
 			navi->mLastPosition  = mNaviPos;
 			navi->mFaceDirection = PI * (mNaviDirection / 180.0f);
-			navi->mRotation.y    = navi->mFaceDirection;
+			navi->mSRT.r.y       = navi->mFaceDirection;
 		} else {
 			PRINT("@@@@@@@@@ SET STARTPOS NAVI FAIL !!!!!!!!!!!!!!!\n");
 		}
@@ -1117,7 +1117,7 @@ void GeneratorMgr::setNaviPos()
 {
 	Navi* navi = naviMgr->getNavi();
 	if (navi) {
-		mNaviPos = navi->mPosition;
+		mNaviPos = navi->mSRT.t;
 	}
 }
 
@@ -1130,7 +1130,7 @@ void GeneratorMgr::changeNaviPos()
 {
 	Navi* navi = naviMgr->getNavi();
 	if (navi) {
-		navi->mPosition = mNaviPos;
+		navi->mSRT.t = mNaviPos;
 	}
 }
 
@@ -1178,7 +1178,7 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 		PikiHeadItem* sprout = static_cast<PikiHeadItem*>(itemMgr->birth(OBJTYPE_Pikihead));
 		if (sprout) {
 			sprout->init(info.mPosition);
-			sprout->mPosition.y = mapMgr->getMinY(sprout->mPosition.x, sprout->mPosition.z, true);
+			sprout->mSRT.t.y = mapMgr->getMinY(sprout->mSRT.t.x, sprout->mSRT.t.z, true);
 			sprout->setColor(color);
 			sprout->startAI(0);
 			C_SAI(sprout)->start(sprout, PikiHeadAI::PIKIHEAD_Wait);
@@ -1580,7 +1580,7 @@ void GeneratorMgr::addGenerator(AgeServer& server)
 
 	if (mGenListHead == nullptr) {
 		mGenListHead = new Generator;
-		mGenListHead->setPos(navi->mPosition);
+		mGenListHead->setPos(navi->mSRT.t);
 		mGenListHead->setOffset(Vector3f(0.0f, 0.0f, 0.0f));
 		mGenListHead->mMgr = this;
 		mGenCount++;
@@ -1592,7 +1592,7 @@ void GeneratorMgr::addGenerator(AgeServer& server)
 		Generator* gen          = new Generator;
 		lastGen->mNextGenerator = gen;
 		gen->mPrevGenerator     = lastGen;
-		gen->setPos(navi->mPosition);
+		gen->setPos(navi->mSRT.t);
 		gen->setOffset(Vector3f(0.0f, 0.0f, 0.0f));
 		mGenListHead->mMgr = this;
 		mGenCount++;
@@ -1643,7 +1643,7 @@ void Generator::changeNaviPos()
 {
 	Navi* navi = naviMgr->getNavi();
 	if (navi) {
-		navi->mPosition     = mGenPosition;
+		navi->mSRT.t        = mGenPosition;
 		navi->mLastPosition = mGenPosition;
 	}
 }
@@ -1652,7 +1652,7 @@ void Generator::setNaviPos()
 {
 	Navi* navi = naviMgr->getNavi();
 	if (navi) {
-		mGenPosition = navi->mPosition;
+		mGenPosition = navi->mSRT.t;
 	}
 }
 

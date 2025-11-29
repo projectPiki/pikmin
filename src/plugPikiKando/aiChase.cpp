@@ -83,7 +83,7 @@ int ActChase::exec()
 
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 
-	Vector3f chaseDir = target->mPosition - mPiki->mPosition;
+	Vector3f chaseDir = target->mSRT.t - mPiki->mSRT.t;
 	chaseDir.y        = 0.0f;
 	f32 chaseDist     = chaseDir.length();
 	if (chaseDist > 0.0f) {

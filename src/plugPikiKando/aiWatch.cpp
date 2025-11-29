@@ -100,14 +100,14 @@ int ActWatch::exec()
 	}
 
 	// what the hell did you do man
-	Vector3f lookDir = target->mPosition - mPiki->mPosition;
+	Vector3f lookDir = target->mSRT.t - mPiki->mSRT.t;
 	Vector3f* p      = &lookDir;
 
 	f32 dist = qdist2(0.0f, 0.0f, lookDir.x, lookDir.z);
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	mPiki->mFaceDirection += 0.4f * angDist(atan2f(lookDir.x, lookDir.z), mPiki->mFaceDirection);
 	mPiki->mFaceDirection = roundAng(mPiki->mFaceDirection);
-	mPiki->mRotation.set(0.0f, mPiki->mFaceDirection, 0.0f);
+	mPiki->mSRT.r.set(0.0f, mPiki->mFaceDirection, 0.0f);
 	return ACTOUT_Continue;
 
 	STACK_PAD_VAR(7);
