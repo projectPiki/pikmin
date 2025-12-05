@@ -92,9 +92,9 @@ void GmWin::render(Graphics& gfx)
 	gfx.setOrthogonal(matrix.mMtx, area);
 	gfx.setColour(mColourA, true);
 	gfx.setAuxColour(mAuxColourA);
-	gfx.useTexture(wintex, 0);
+	gfx.useTexture(wintex, GX_TEXMAP0);
 	gfx.drawRectangle(area, RectArea(0, 0, 128, 128), nullptr);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	doRender(gfx);
 }
@@ -187,7 +187,7 @@ void GmWin::texture(Graphics& gfx, Texture* texture, int minX, int minY, int max
 {
 	minX = minX + mPosX;
 	minY = minY + mPosY;
-	gfx.useTexture(texture, 0);
+	gfx.useTexture(texture, GX_TEXMAP0);
 	gfx.drawRectangle(RectArea(minX, minY, minX + maxX, minY + maxY), area, nullptr);
 }
 
@@ -200,7 +200,7 @@ void GmWin::texturecentre(Graphics& gfx, Texture* texture, int minY, int width, 
 {
 	const int minX = mPosX + (mWidth >> 1) - (width >> 1);
 	minY           = minY + mPosY;
-	gfx.useTexture(texture, 0);
+	gfx.useTexture(texture, GX_TEXMAP0);
 	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, nullptr);
 }
 
@@ -213,7 +213,7 @@ void GmWin::textureleft(Graphics& gfx, Texture* texture, int minY, int width, in
 {
 	const int minX = mPosX + 32;
 	minY           = minY + mPosY;
-	gfx.useTexture(texture, 0);
+	gfx.useTexture(texture, GX_TEXMAP0);
 	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, 0);
 }
 
@@ -226,7 +226,7 @@ void GmWin::textureright(Graphics& gfx, Texture* texture, int minY, int width, i
 {
 	const int minX = mPosX + mWidth - width - 32;
 	minY           = minY + mPosY;
-	gfx.useTexture(texture, 0);
+	gfx.useTexture(texture, GX_TEXMAP0);
 	gfx.drawRectangle(RectArea(minX, minY, minX + width, minY + height), area, nullptr);
 }
 

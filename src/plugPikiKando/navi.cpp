@@ -2717,7 +2717,7 @@ void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 	f32 inc          = len / 16.0f;
 	f32 x            = 0.0f;
 	gfx.setLighting(false, nullptr);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(0, 255, 0, 255), true);
 
 	for (int i = 0; i < segmentCount - 1; i++) {

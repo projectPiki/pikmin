@@ -90,7 +90,7 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 		gfx.setAuxColour(Colour(255, 192, 0, p4 * 255.0f));
 	}
 
-	gfx.useTexture(p3, 0);
+	gfx.useTexture(p3, GX_TEXMAP0);
 	int width  = gfx.mScreenWidth / 2 - p3->mWidth / 2;
 	int height = gfx.mScreenHeight / 2 - p3->mHeight / 2;
 	if (mRedLoadLogo) {

@@ -96,7 +96,7 @@ void zen::simplePtclManager::draw(Graphics& gfx)
 		for (list = getTopList(); list != getOrigin(); list = next) {
 			next              = list->mNext;
 			particleMdl* ptcl = (particleMdl*)list;
-			gfx.useTexture(ptcl->mSimpleTex, 0);
+			gfx.useTexture(ptcl->mSimpleTex, GX_TEXMAP0);
 			gfx.setBlendMode(84, 11, 2);
 			Colour primColor(ptcl->mPrimaryColor.r, ptcl->mPrimaryColor.g, ptcl->mPrimaryColor.b,
 			                 RoundOff(ptcl->mPrimaryColor.a * ptcl->mAlphaFactor));

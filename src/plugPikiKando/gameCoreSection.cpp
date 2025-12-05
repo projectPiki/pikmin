@@ -1761,7 +1761,7 @@ void GameCoreSection::draw(Graphics& gfx)
 	int blend = gfx.setCBlending(2);
 	gfx.setDepth(false);
 	gfx.setLighting(false, nullptr);
-	gfx.useTexture(mShadowTexture, 0);
+	gfx.useTexture(mShadowTexture, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 255, 255, 128), true);
 	if (AIPerf::optLevel <= 1) {
 		pikiMgr->drawShadow(gfx, mShadowTexture);
@@ -1824,7 +1824,7 @@ void GameCoreSection::draw1D(Graphics& gfx)
 	if (gsys->mToggleDebugExtra) {
 		gfx.setColour(Colour(255, 255, 255, 255), true);
 		gfx.setAuxColour(Colour(255, 255, 255, 255));
-		gfx.useTexture(nullptr, 0);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
 		char str[PATH_MAX];
 		sprintf(str, "culled:ai %d view %d/%d shape %d (%d tekis)", AIPerf::aiCullCnt, AIPerf::viewCullCnt, AIPerf::outsideViewCnt,
 		        AIPerf::drawshapeCullCnt, tekiMgr ? tekiMgr->getSize() : 0);
@@ -1849,7 +1849,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.texturePrintf(gsys->mConsFont, 60, 120, triNames[mDrawHideType]);
 
 	if (AIPerf::soundDebug) {
@@ -1857,7 +1857,7 @@ void GameCoreSection::draw2D(Graphics& gfx)
 	}
 
 	if (AIPerf::moveType) {
-		gfx.useTexture(mMapMgr->mBlurredTexture, 0);
+		gfx.useTexture(mMapMgr->mBlurredTexture, GX_TEXMAP0);
 		GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP1, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
 		GXSetTevSwapModeTable(GX_TEV_SWAP2, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);

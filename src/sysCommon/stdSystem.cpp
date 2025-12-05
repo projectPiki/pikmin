@@ -535,7 +535,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
 			} else {
 				gfx.setCBlending(flareGroup->mBlendMode);
 				gfx.useMaterial(nullptr);
-				gfx.useTexture(flareGroup->mTexture, 0);
+				gfx.useTexture(flareGroup->mTexture, GX_TEXMAP0);
 			}
 
 			gfx.initParticle(true);

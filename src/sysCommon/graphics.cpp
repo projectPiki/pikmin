@@ -1309,7 +1309,7 @@ void TexAttr::read(RandomAccessStream& stream)
  */
 void Graphics::drawCylinder(Vector3f& p1, Vector3f& p2, f32 p3, Matrix4f& p4)
 {
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 
 	Vector3f vec1(p1);
 	Vector3f vec2 = p2 - p1;
@@ -1354,7 +1354,7 @@ void Graphics::drawCircle(Vector3f&, f32, Matrix4f&)
  */
 void Graphics::drawSphere(Vector3f& p1, f32 p2, Matrix4f& p3)
 {
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 
 	for (int i = 0; i < 16; i++) {
 		Matrix4f mtx1;
@@ -1384,7 +1384,7 @@ void Graphics::perspPrintf(Font* font, Vector3f& pos, int p3, int p4, char* fmt,
 	va_list vlist;
 	va_start(vlist, fmt);
 	vsprintf(buf, fmt, vlist);
-	useTexture(font->mTexture, 0);
+	useTexture(font->mTexture, GX_TEXMAP0);
 	int x = p3;
 	int y = p4;
 	for (int i = 0; i < (int)strlen(buf); i++) {

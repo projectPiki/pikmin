@@ -793,7 +793,7 @@ struct GameCourseClearScreen : public Node {
 		gfx.setPerspective(camera.mPerspectiveMatrix.mMtx, camera.mFov, camera.mAspectRatio, camera.mNear, camera.mFar, 1.0f);
 		gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 		gfx.setLighting(false, nullptr);
-		gfx.useTexture(nullptr, 0);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
 		mGameModeMgr->draw(gfx, mFont);
 		if (mActiveMenu) {
 			mActiveMenu->draw(gfx, 1.0f);

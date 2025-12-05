@@ -197,13 +197,13 @@ void zen::particleGenerator::draw(Graphics& gfx)
 		gfx.setDepth(false);
 
 		if (mChildTexture) {
-			gfx.useTexture(mChildTexture, 0);
+			gfx.useTexture(mChildTexture, GX_TEXMAP0);
 		} else {
-			gfx.useTexture(mTexture, 0);
+			gfx.useTexture(mTexture, GX_TEXMAP0);
 		}
 		drawPtclChildren(gfx);
 
-		gfx.useTexture(mTexture, 0);
+		gfx.useTexture(mTexture, GX_TEXMAP0);
 		(this->*mDrawCallBack)(gfx);
 
 		gfx.setDepth(true);

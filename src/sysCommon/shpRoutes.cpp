@@ -119,7 +119,7 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 			Vector3f vec2(link->mPoint->mPosition.x, link->mPoint->mPosition.y + 8.0f, link->mPoint->mPosition.z);
 			Vector3f vec3(0.0f, 4.0f, 0.0f);
 
-			gfx.useTexture(nullptr, 0);
+			gfx.useTexture(nullptr, GX_TEXMAP0);
 			gfx.setColour(Colour(255, 255, 255, alpha), true);
 			gfx.drawLine(vec1 + vec3, vec2 + vec3);
 			f32 ratio = (!point->mIsOpen || !link->mPoint) ? 0.2f : 1.0f;
@@ -164,11 +164,11 @@ void RouteGroup::refresh(Graphics& gfx, EditNode* node)
 
 	FOREACH_NODE(RoutePoint, mPointListRoot.mChild, point)
 	{
-		gfx.useTexture(nullptr, 0);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
 		gfx.setColour(Colour(255, 255, 0, 64), true);
 		gfx.drawLine(point->mPosition, Vector3f(point->mPosition.x, point->mPosition.y + 8.0f, point->mPosition.z));
 		gfx.setColour(Colour(255, 255, 255, alpha), true);
-		gfx.useTexture(mDebugWaypointTexture, 0);
+		gfx.useTexture(mDebugWaypointTexture, GX_TEXMAP0);
 
 		point->refresh(gfx);
 	}

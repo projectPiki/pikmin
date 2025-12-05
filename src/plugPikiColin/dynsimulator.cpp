@@ -114,7 +114,7 @@ void RigidBody::render(Graphics& gfx)
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	bool lighting = gfx.setLighting(false, nullptr);
 
 	for (int i = 0; i < 24; i += 2) {

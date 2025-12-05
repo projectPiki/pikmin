@@ -466,7 +466,7 @@ void CollPart::update(Graphics& gfx, bool p2)
 			return;
 		}
 
-		gfx.useTexture(nullptr, 0);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
 		bool light = gfx.setLighting(false, nullptr);
 
 		switch (mPartType) {

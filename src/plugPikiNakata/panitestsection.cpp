@@ -404,7 +404,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	int blend = gfx.setCBlending(2);
 	gfx.setDepth(0);
 	gfx.setLighting(false, nullptr);
-	gfx.useTexture(mShadowTexture, 0);
+	gfx.useTexture(mShadowTexture, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setCBlending(blend);
 	gfx.setDepth(1);
