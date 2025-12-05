@@ -49,7 +49,7 @@ void LightPool::draw(Graphics& gfx)
 	int oldBlend = gfx.setCBlending(3);
 	gfx.setDepth(false);
 	bool lighting = gfx.setLighting(false, nullptr);
-	gfx.useTexture(mBoxTexture, 0);
+	gfx.useTexture(mBoxTexture, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 255, 64, 64), true);
 	gfx.setColour(mColour, true);
 
@@ -79,7 +79,7 @@ void LightPool::draw(Graphics& gfx)
 
 	gfx.drawOneTri(boxPositions, nullptr, texCoords, 4);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-	gfx.useTexture(mParticleTexture, 0);
+	gfx.useTexture(mParticleTexture, GX_TEXMAP0);
 	gfx.setCBlending(4);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 

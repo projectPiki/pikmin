@@ -493,7 +493,7 @@ void DGXGraphics::initRender(int a1, int a2)
 	mHasTexGen      = FALSE;
 	mIsEnvMapActive = false;
 	mCullFlip       = 0;
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 	setMatHandler(nullptr);
 	mRenderState      = (GFXRENDER_Unk1 | GFXRENDER_Unk2 | GFXRENDER_Unk3);
 	mCurrentMatrixId  = 0;
@@ -832,7 +832,7 @@ void DGXGraphics::setOrthogonal(Mtx mtx, RectArea& bounds)
 	setViewport(bounds);
 	GXSetNumTexGens(1);
 	GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3X4, GX_TG_TEX0, 0x3c, 0, 0x7d);
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 	setFog(false);
 }
 
@@ -1169,7 +1169,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 			GXSetZMode(GX_TRUE, GX_LEQUAL, GX_FALSE);
 		}
 
-		useTexture(mat->mTexture, 0);
+		useTexture(mat->mTexture, GX_TEXMAP0);
 		Colour color;
 		color.set(mat->mColourInfo.mColour.r, mat->mColourInfo.mColour.g, mat->mColourInfo.mColour.b,
 		          mLightIntensity * mat->mColourInfo.mColour.a);
@@ -1181,7 +1181,7 @@ void DGXGraphics::setMaterial(Material* mat, bool p2)
 
 		if (mat->mEnvMapTexture) {
 			if (!mIsEnvMapActive) {
-				useTexture(mat->mEnvMapTexture, 1);
+				useTexture(mat->mEnvMapTexture, GX_TEXMAP1);
 				if (mat->mTexture) {
 					GXSetNumTexGens(2);
 					GXSetNumTevStages(2);
@@ -1806,7 +1806,7 @@ void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& extents,
  */
 void DGXGraphics::drawLine(Vector3f& start, Vector3f& end)
 {
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -1831,7 +1831,7 @@ void DGXGraphics::drawLine(Vector3f& start, Vector3f& end)
  */
 void DGXGraphics::drawPoints(Vector3f* points, int count)
 {
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
 	GXSetVtxDesc(GX_VA_CLR0, GX_DIRECT);
@@ -2024,7 +2024,7 @@ void DGXGraphics::lineRectangle(RectArea& rect)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 
 	u32 primClr = *(u32*)&mPrimaryColour;
 	u32 auxClr  = *(u32*)&mAuxiliaryColour;
@@ -2061,7 +2061,7 @@ void DGXGraphics::fillRectangle(RectArea& rect)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XYZ, GX_F32, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 
-	useTexture(nullptr, 0);
+	useTexture(nullptr, GX_TEXMAP0);
 
 	u32 primClr = *(u32*)&mPrimaryColour;
 	u32 auxClr  = *(u32*)&mAuxiliaryColour;
@@ -2095,7 +2095,7 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 	vsprintf(buf, format, vlist);
 	GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
 	GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-	useTexture(font->mTexture, 0);
+	useTexture(font->mTexture, GX_TEXMAP0);
 
 	GXSetChanMatColor(GX_COLOR0, *(GXColor*)&mPrimaryColour);
 

@@ -161,7 +161,7 @@ void System::beginRender()
 	GXSetViewport(0.0f, 0.0f, glnWidth, glnHeight, 0.0f, 1.0f);
 	GXSetScissor(0, 0, glnWidth, glnHeight);
 	GXSetColorUpdate(GX_TRUE);
-	mDGXGfx->useTexture(nullptr, 0);
+	mDGXGfx->useTexture(nullptr, GX_TEXMAP0);
 	mDGXGfx->initRender(glnWidth, glnHeight);
 }
 

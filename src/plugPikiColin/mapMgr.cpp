@@ -230,7 +230,7 @@ void DynCollShape::drawAtari(Graphics& gfx)
 	gfx.initRender(0, 0);
 
 	gfx.setColour(Colour(255, 255, 0, 255), true);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setPointSize(4.0f);
 	gfx.drawPoints(mVertexList, mShape->mVertexCount);
 
@@ -648,7 +648,7 @@ void DynObjBody::render(Graphics& gfx)
 	gfx.mCamera->setBoundOffset(&mRenderPosition);
 	gfx.useMatrix(mtx, 0);
 	gfx.mCamera->setBoundOffset(nullptr);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
@@ -1323,8 +1323,8 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setColour(Colour(255, 255, 255, 255), true);
 			gfx.setAuxColour(Colour(255, 255, 255, 255));
 			mCaptureTexture->grabBuffer(mCaptureTexture->mWidth, mCaptureTexture->mHeight, false, true);
-			gfx.useTexture(mBlurredTexture, 0);
-			gfx.useTexture(mCaptureTexture, 1);
+			gfx.useTexture(mBlurredTexture, GX_TEXMAP0);
+			gfx.useTexture(mCaptureTexture, GX_TEXMAP1);
 #if defined(VERSION_PIKIDEMO)
 #else
 			if (gameflow.mMoviePlayer->mIsActive) {
@@ -1373,12 +1373,12 @@ void MapMgr::postrefresh(Graphics& gfx)
 			gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_RED, GX_CH_RED, GX_CH_ALPHA);
 			gfx.setColour(Colour(160, 160, 160, (int)(mDesaturationLevel * 255.0f)), true);
-			gfx.useTexture(mBlurredTexture, 0);
+			gfx.useTexture(mBlurredTexture, GX_TEXMAP0);
 			gfx.drawRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight),
 			                  RectArea(0, 0, mBlurredTexture->mWidth, mBlurredTexture->mHeight), nullptr);
 			GXSetTevSwapModeTable(GX_TEV_SWAP0, GX_CH_RED, GX_CH_GREEN, GX_CH_BLUE, GX_CH_ALPHA);
 			gfx.setColour(Colour(0, 0, 0, int(mFadeProgress * 255.0f)), true);
-			gfx.useTexture(nullptr, 0);
+			gfx.useTexture(nullptr, GX_TEXMAP0);
 			gfx.fillRectangle(RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 		}
 
@@ -1386,7 +1386,7 @@ void MapMgr::postrefresh(Graphics& gfx)
 			int blend     = gfx.setCBlending(0);
 			bool lighting = gfx.setLighting(false, nullptr);
 			gfx.setFog(false);
-			gfx.useTexture(nullptr, 0);
+			gfx.useTexture(nullptr, GX_TEXMAP0);
 			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 
 			Colour colours[3];

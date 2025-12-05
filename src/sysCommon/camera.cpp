@@ -57,7 +57,7 @@ void CullFrustum::draw(Graphics& gfx)
 	gfx.mHasTexGen        = FALSE;
 	bool prevLightSetting = gfx.setLighting(false, nullptr);
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(255, 255, 255, 255), true);
 	gfx.setAuxColour(Colour(255, 255, 255, 255));
 	gfx.drawLine(mPosition, mFocus);
@@ -508,7 +508,7 @@ void LightCamera::calcProjection(Graphics& gfx, bool p2, Node* p3)
 		gfx.setFog(false);
 		gfx.setLighting(false, nullptr);
 		gfx.setCamera(this);
-		gfx.useTexture(nullptr, 0);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
 		p3->draw(gfx);
 
 		mLightMap->grabBuffer(mLightMap->mWidth, mLightMap->mHeight, true, true);

@@ -479,7 +479,7 @@ void SmokeEmitter::draw(Graphics& gfx)
 		Matrix4f mtx;
 		gfx.calcViewMatrix(Matrix4f::ident, mtx);
 		gfx.useMatrix(mtx, 0);
-		gfx.useTexture(mTexture, 0);
+		gfx.useTexture(mTexture, GX_TEXMAP0);
 
 		if (gfx.initParticle(true)) {
 			for (Smoke* smoke = mActiveSmokeList->mNext; smoke != mActiveSmokeList; smoke = smoke->mNext) {

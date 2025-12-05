@@ -343,7 +343,7 @@ void LifeGauge::refresh(Graphics& gfx)
 		colour = lglev0;
 	}
 
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	Vector3f pos1 = mPosition + mOffset;
 	Vector3f pos2 = mPosition + mOffset;
 

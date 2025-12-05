@@ -1982,7 +1982,7 @@ void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMat
 	if (gsys->mToggleDebugInfo) {
 		for (int i = 0; i < mJointCount; i++) {
 			gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
-			gfx.useTexture(nullptr, 0);
+			gfx.useTexture(nullptr, GX_TEXMAP0);
 			gfx.setColour(Colour(255, 32, 32, 255), true);
 			bool lighting = gfx.setLighting(false, nullptr);
 			mJointList[i].mBounds.draw(gfx);

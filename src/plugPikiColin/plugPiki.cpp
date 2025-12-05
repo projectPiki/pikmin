@@ -94,7 +94,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 
 	Matrix4f mtx;
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 
 	if (gsys->mTimerState) {
 		gfx.setColour(Colour(255, 255, 255, 255), true);
@@ -125,7 +125,7 @@ void PlugPikiApp::draw(Graphics& gfx)
 		sprintf(buf, "load took %.1f secs", gameflow.mLoadTimeSeconds);
 	}
 
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	if (gsys->mCurrentFade < gsys->mFadeStart) {
 		gsys->mCurrentFade += gsys->getFrameTime() * gsys->mFadeEnd;
 		if (gsys->mCurrentFade > gsys->mFadeStart) {

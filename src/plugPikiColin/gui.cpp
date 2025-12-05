@@ -577,7 +577,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 	progress *= fadePct;
 
 	// Use texture and set initial color for the menu box
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(mDiffuseColour.r, mDiffuseColour.g, mDiffuseColour.b, mDiffuseColour.a * progress), true);
 	gfx.setAuxColour(Colour(mHighlightColour.r, mHighlightColour.g, mHighlightColour.b, mHighlightColour.a * progress));
 
@@ -631,7 +631,7 @@ void Menu::draw(Graphics& gfx, f32 fadePct)
 		int y3 = baseYPosition + 14 * mCurrentItemDisplayIndex + 1;
 		gfx.setColour(Colour(128, 128, 128, 128), true);
 		gfx.setAuxColour(Colour(192, 192, 192, 128));
-		gfx.useTexture(nullptr, 0);
+		gfx.useTexture(nullptr, GX_TEXMAP0);
 		gfx.lineRectangle(RectArea(x - maxStringWidth + 4, y3, mAnchorPoint.mMinX + maxStringWidth - 4, y3 + 14));
 	}
 }

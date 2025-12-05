@@ -544,7 +544,7 @@ void DynCreature::refresh(Graphics& gfx)
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.useMatrix(mtx2, 0);
 
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setColour(Colour(0, 255, 0, 255), true);
 
 	for (DynParticle* ptcl = mParticleList; ptcl; ptcl = ptcl->mNextParticle) {

@@ -839,7 +839,7 @@ void SeSystem::draw3d(Graphics& gfx)
 	char str[PATH_MAX];
 
 	gfx.setColour(Colour(255, 0, 0, 255), true);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	gfx.setLighting(false, nullptr);
 	gfx.useMatrix(Matrix4f::ident, 0);
 
@@ -865,7 +865,7 @@ void SeSystem::draw2d(Graphics& gfx)
 	char str[PATH_MAX];
 
 	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 
 	gfx.setColour(Colour(55, 55, 55, 128), true);
 

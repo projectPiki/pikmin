@@ -122,7 +122,7 @@ void Timers::showTimes()
 void Timers::draw(Graphics& gfx, Font* font)
 {
 #if defined(VERSION_G98E01_PIKIDEMO)
-	gfx.useTexture(nullptr, 0);
+	gfx.useTexture(nullptr, GX_TEXMAP0);
 	for (TimerInf* info = mTimerList; info; info = info->mNext) {
 		info->mSampleTime++;
 		if (info->mSampleTime == 10) {

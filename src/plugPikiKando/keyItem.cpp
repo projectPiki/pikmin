@@ -315,7 +315,7 @@ void DoorItem::refresh(Graphics& gfx)
 	char str[256];
 
 	gfx.setColour(Colour(255, 255, 255, 255), true);
-	gfx.useTexture(gsys->mConsFont->mTexture, 0);
+	gfx.useTexture(gsys->mConsFont->mTexture, GX_TEXMAP0);
 	int blend = gfx.setCBlending(0);
 
 	sprintf(str, "%s", mLabelText);
