@@ -118,7 +118,7 @@ void ActCrowd::initRouteMove()
 		PRINT("OKOK!\n");
 		mHasRoute = true;
 	}
-	_68 = 5.0f;
+	mLostChildTimer = 5.0f;
 }
 
 /*
@@ -254,8 +254,8 @@ int ActCrowd::exec()
 	if (mHasRoute) {
 		exeRouteMove();
 		if (mPiki->mUseAsyncPathfinding) {
-			_68 -= gsys->getFrameTime();
-			if (_68 < 0.0f) {
+			mLostChildTimer -= gsys->getFrameTime();
+			if (mLostChildTimer < 0.0f) {
 				mPiki->mActionState = 2;
 				return ACTOUT_Fail;
 			}
@@ -519,11 +519,11 @@ int ActCrowd::exec()
 		}
 	}
 
-	if (plateDist2D < C_PIKI_PROP(mPiki)._27C()) {
-		_68 = 0.0f;
-		_34 = false;
-	} else if (plateDist2D < C_PIKI_PROP(mPiki)._28C()) {
-		_68 += gsys->getFrameTime();
+	if (plateDist2D < C_PIKI_PROP(mPiki).mFormationSlipRange()) {
+		mLostChildTimer = 0.0f;
+		_34             = false;
+	} else if (plateDist2D < C_PIKI_PROP(mPiki).mFormationBreakRange()) {
+		mLostChildTimer += gsys->getFrameTime();
 		if (!_34) {
 			if (mCPlateSlotID != -1) {
 				mPlateMgr->releaseSlot(mPiki, mCPlateSlotID);
@@ -532,7 +532,7 @@ int ActCrowd::exec()
 
 			_34 = true;
 		}
-		if (mCPlateSlotID == -1 || _68 > C_PIKI_PROP(mPiki)._29C()) {
+		if (mCPlateSlotID == -1 || mLostChildTimer > C_PIKI_PROP(mPiki).mMaxLostChildTime()) {
 			return ACTOUT_Fail;
 		}
 	} else {

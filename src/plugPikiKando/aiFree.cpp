@@ -93,7 +93,7 @@ void ActFree::init(Creature*)
 {
 	mIsBoidActive           = false;
 	mCollisionCooldownTimer = 1.0f;
-	mBoidTimer              = C_PIKI_PROP(mPiki)._2EC() + (3.0f * gsys->getRand(1.0f));
+	mBoidTimer              = C_PIKI_PROP(mPiki).mDefaultFreeBoidTime() + (3.0f * gsys->getRand(1.0f));
 	_20                     = 0.9f * mBoidTimer;
 	_24                     = 0.8f * mBoidTimer;
 

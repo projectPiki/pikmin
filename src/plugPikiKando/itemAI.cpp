@@ -291,7 +291,7 @@ void PikiHeadAI::BuryInit::act(AICreature* item)
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 	obj->startFix();
 	obj->mFlowerStage       = Leaf;
-	obj->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._38C() + gsys->getRand(1.0f) * 2.0f;
+	obj->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mSeedUpTime() + gsys->getRand(1.0f) * 2.0f;
 
 	STACK_PAD_VAR(2);
 }
@@ -319,7 +319,7 @@ void PikiHeadAI::BuryExec::act(AICreature* item)
  */
 void PikiHeadAI::TaneInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._39C() + gsys->getRand(1.0f) * 2.0f;
+	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mPluckWaitTime() + gsys->getRand(1.0f) * 2.0f;
 }
 
 /*
@@ -346,9 +346,9 @@ void PikiHeadAI::WaitInit::act(AICreature* item)
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
 	if (obj->mFlowerStage == Flower) {
-		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3BC() + gsys->getRand(1.0f) * 2.0f;
+		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mWiltTime() + gsys->getRand(1.0f) * 2.0f;
 	} else {
-		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3AC() + gsys->getRand(1.0f) * 2.0f;
+		item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mGrowUpTime() + gsys->getRand(1.0f) * 2.0f;
 	}
 	item->mCounter = 0;
 }
@@ -425,7 +425,7 @@ void PikiHeadAI::KaretaInit::act(AICreature* item)
 {
 	PikiHeadItem* obj = (PikiHeadItem*)item;
 
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3CC() + 2.0f * gsys->getRand(1.0f);
+	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mRebirthSeedTime() + 2.0f * gsys->getRand(1.0f);
 	obj->mFlowerStage        = Leaf;
 }
 
@@ -485,7 +485,7 @@ BombAI::BombAI()
  */
 void BombAI::SetInit::act(AICreature* item)
 {
-	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms._3FC() * (gsys->getRand(1.0f) * 0.05f + 1.0f);
+	item->mCurrentItemHealth = pikiMgr->mPikiParms->mPikiParms.mBombSetFuseTime() * (gsys->getRand(1.0f) * 0.05f + 1.0f);
 	item->mMaxItemHealth     = item->mCurrentItemHealth;
 	PRINT("BOMB * %f/%f\n", item->mCurrentItemHealth, item->mMaxItemHealth);
 
@@ -530,8 +530,8 @@ void BombAI::BombInit::act(AICreature* item)
 		ERROR("this is not bomb %s\n", "bombinit");
 	}
 	CndBombable cnd;
-	f32 maxRange = pikiMgr->mPikiParms->mPikiParms._40C();
-	f32 unused   = pikiMgr->mPikiParms->mPikiParms._41C();
+	f32 maxRange = pikiMgr->mPikiParms->mPikiParms.mBombExplodeRadius();
+	f32 unused   = pikiMgr->mPikiParms->mPikiParms.mBombDamageBomb();
 	item->setMotionSpeed(30.0f);
 	playerState->mResultFlags.setOn(RESFLAG_YellowWithBomb);
 	rumbleMgr->start(RUMBLE_Unk8, 0, item->mPosition);
@@ -556,7 +556,7 @@ void BombAI::BombInit::act(AICreature* item)
 		Creature* obj = *naviIt;
 		f32 dist      = circleDist(item, obj) + obj->getCentreSize();
 		if (obj->isAlive() && obj->isVisible() && dist <= maxRange) {
-			InteractBomb act(item, pikiMgr->mPikiParms->mPikiParms._42C(), nullptr);
+			InteractBomb act(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageNavi(), nullptr);
 			obj->stimulate(act);
 		}
 	}
@@ -569,7 +569,7 @@ void BombAI::BombInit::act(AICreature* item)
 		if (obj->isAlive() && (obj->isVisible() || obj->getState() == PIKISTATE_Flying) && dist <= maxRange
 		    && obj->getState() != PIKISTATE_Pressed) {
 			PRINT("piki %x got bomb interaction!\n", obj);
-			InteractBomb act(item, pikiMgr->mPikiParms->mPikiParms._44C(), nullptr);
+			InteractBomb act(item, pikiMgr->mPikiParms->mPikiParms.mBombDamagePiki(), nullptr);
 			obj->stimulate(act);
 		}
 	}
@@ -588,10 +588,10 @@ void BombAI::BombInit::act(AICreature* item)
 			PRINT("checkCollisionSpecial done >\n");
 			if (part) {
 				PRINT("part found \n");
-				obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms._43C(), part));
+				obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageEnemy(), part));
 			} else {
 				if (centreDist(item, obj) - maxRange - obj->getCentreSize() < 0.0f) {
-					obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms._43C(), nullptr));
+					obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageEnemy(), nullptr));
 				}
 			}
 		}
@@ -609,13 +609,13 @@ void BombAI::BombInit::act(AICreature* item)
 			PRINT("checkCollisionSpecial start <\n");
 			CollPart* part = obj->mCollInfo->checkCollisionSpecial(item->mPosition, maxRange, &cnd);
 			PRINT("checkCollisionSpecial done >\n");
-			InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms._43C(), part);
+			InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageEnemy(), part);
 			if (part) {
 				PRINT("part found \n");
-				obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms._43C(), part));
+				obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageEnemy(), part));
 			} else {
 				if (centreDist(item, obj) - maxRange - obj->getCentreSize() < 0.0f) {
-					obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms._43C(), nullptr));
+					obj->stimulate(InteractBomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageEnemy(), nullptr));
 				}
 			}
 		}
@@ -639,7 +639,7 @@ void BombAI::BombInit::act(AICreature* item)
 		} else {
 			minDist = circleDist(item, obj) - obj->getCentreSize();
 		}
-		InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms._42C(), nullptr);
+		InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageNavi(), nullptr);
 		if (obj->isAlive() && obj->isVisible() && minDist <= maxRange) {
 			obj->stimulate(bomb);
 		}
@@ -666,7 +666,7 @@ void BombAI::BombInit::act(AICreature* item)
 		}
 
 		if (check) {
-			InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms._41C(), nullptr);
+			InteractBomb bomb(item, pikiMgr->mPikiParms->mPikiParms.mBombDamageBomb(), nullptr);
 			c->stimulate(bomb);
 		}
 	}

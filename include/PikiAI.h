@@ -822,7 +822,7 @@ protected:
 	int mTripLoopCounter;         // _5C
 	f32 _60;                      // _60
 	bool mIsTripping;             // _64
-	f32 _68;                      // _68
+	f32 mLostChildTimer;          // _68
 	CPlate* mPlateMgr;            // _6C
 	Vector3f _70;                 // _70
 	u8 mBoredomMotion;            // _7C, is never initialized to anything
@@ -1549,10 +1549,10 @@ public:
 
 	ActPush(Piki*);
 
-	virtual ~ActPush() { }                               // _44 (weak)
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual ~ActPush() { }        // _44 (weak)
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
 
 protected:
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
@@ -1776,10 +1776,10 @@ public:
 
 	ActRescue(Piki*);
 
-	virtual ~ActRescue() { }                             // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual ~ActRescue() { }      // _44
+	virtual void init(Creature*); // _48
+	virtual int exec();           // _4C
+	virtual void cleanup();       // _50
 
 	void initApproach();
 	int exeApproach();

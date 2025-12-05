@@ -970,7 +970,7 @@ int Piki::graspSituation(Creature** outTarget)
 	int sitchID = PIKISITCH_Unk0;
 
 	////////// CHECK FOR TEKI OR BOSS TO ATTACK //////////
-	f32 minTestDist = pikiMgr->mPikiParms->mPikiParms._2FC();
+	f32 minTestDist = pikiMgr->mPikiParms->mPikiParms.mIdleAttackSearchRange();
 
 	Iterator iterTeki(tekiMgr);
 	Creature* closestTarget = nullptr;
@@ -1062,7 +1062,7 @@ int Piki::graspSituation(Creature** outTarget)
 	Creature* pebbleTarget = nullptr;
 	Creature* boTarget     = nullptr;
 	Creature* kusaTarget   = nullptr;
-	minTestDist            = pikiMgr->mPikiParms->mPikiParms._30C();
+	minTestDist            = pikiMgr->mPikiParms->mPikiParms.mIdleWorkSearchRange();
 	Iterator iterMP(itemMgr->getMeltingPotMgr());
 	CI_LOOP(iterMP)
 	{
@@ -1133,7 +1133,7 @@ int Piki::graspSituation(Creature** outTarget)
 
 	////////// CHECK FOR PELLETS TO PICK UP //////////
 	Creature* pelletTarget = nullptr;
-	minTestDist            = pikiMgr->mPikiParms->mPikiParms._30C();
+	minTestDist            = pikiMgr->mPikiParms->mPikiParms.mIdleWorkSearchRange();
 	Iterator iterPellet(pelletMgr);
 	CI_LOOP(iterPellet)
 	{
@@ -1163,7 +1163,7 @@ int Piki::graspSituation(Creature** outTarget)
 	Creature* removedTarget = nullptr; // this should be here according to the DLL
 	Creature* bombTarget    = nullptr;
 
-	minTestDist = pikiMgr->mPikiParms->mPikiParms._30C();
+	minTestDist = pikiMgr->mPikiParms->mPikiParms.mIdleWorkSearchRange();
 	Iterator iterItem(itemMgr);
 	CI_LOOP(iterItem)
 	{
@@ -1231,7 +1231,7 @@ int Piki::graspSituation(Creature** outTarget)
 
 	////////// CHECK FOR THINGS TO WORK ON //////////
 	Creature* workTarget = nullptr;
-	minTestDist          = pikiMgr->mPikiParms->mPikiParms._2FC();
+	minTestDist          = pikiMgr->mPikiParms->mPikiParms.mIdleAttackSearchRange();
 
 	Iterator iterWork(workObjectMgr);
 	CI_LOOP(iterWork)
@@ -1271,7 +1271,7 @@ int Piki::graspSituation(Creature** outTarget)
 	////////// CHECK FOR BOMB GENERATORS (YELLOW ONLY) //////////
 	if (mColor == Yellow) {
 		Creature* bombGenTarget = nullptr;
-		minTestDist             = pikiMgr->mPikiParms->mPikiParms._2FC();
+		minTestDist             = pikiMgr->mPikiParms->mPikiParms.mIdleAttackSearchRange();
 		Iterator iterBomb(itemMgr);
 		CI_LOOP(iterBomb)
 		{
@@ -2434,7 +2434,7 @@ f32 Piki::getiMass()
 	if (state == PIKISTATE_Grow || state == PIKISTATE_Bury) {
 		return 0.0f;
 	}
-	return pikiMgr->mPikiParms->mPikiParms._25C();
+	return pikiMgr->mPikiParms->mPikiParms.mInvMass();
 }
 
 /*
@@ -2511,12 +2511,12 @@ void Piki::init(Navi* navi)
 	resetCreatureFlag(CF_Unk6);
 	_500.reset();
 	mMode   = PikiMode::FormationMode;
-	mHealth = pikiMgr->mPikiParms->mPikiParms.mPikiHealth();
+	mHealth = pikiMgr->mPikiParms->mPikiParms.mPikiMaxHealth();
 	mFSM->transit(this, PIKISTATE_Normal);
 	mFloweringTimer = 0;
 	mFSM->transit(this, PIKISTATE_Normal);
-	mPikiSize = pikiMgr->mPikiParms->mPikiParms._23C()
-	          + (pikiMgr->mPikiParms->mPikiParms._24C() - pikiMgr->mPikiParms->mPikiParms._23C()) * gsys->getRand(1.0f);
+	mPikiSize = pikiMgr->mPikiParms->mPikiParms.mMinPikiSize()
+	          + (pikiMgr->mPikiParms->mPikiParms.mMaxPikiSize() - pikiMgr->mPikiParms->mPikiParms.mMinPikiSize()) * gsys->getRand(1.0f);
 	mOldFaceDirection = mFaceDirection;
 	initBirth();
 	mRouteDestinationIndex = -1;
@@ -2655,32 +2655,38 @@ void Piki::updateWalkAnimation()
 		f32 angleDiff     = absF(mFaceDirection - mOldFaceDirection);
 		doMotionBlend();
 		int newMotionID;
-		if (speed < pikiMgr->mPikiParms->mPikiParms._19C()) {
+		if (speed < pikiMgr->mPikiParms->mPikiParms.mStepSpeedThreshold()) {
 			newMotionID = PIKIANIM_Wait;
 			if (angleDiff > 0.01f) {
 				newMotionID = PIKIANIM_Asibumi;
 			}
-			speed = 30.0f;
-		} else if (speed < pikiMgr->mPikiParms->mPikiParms._1AC()) {
+			speed = 30.0f; // waiting + turning always at 30 fps
+		} else if (speed < pikiMgr->mPikiParms->mPikiParms.mWalkSpeedThreshold()) {
 			newMotionID = PIKIANIM_Asibumi;
-			speed       = 30.0f;
-		} else if (speed < pikiMgr->mPikiParms->mPikiParms._1BC()) {
+			speed       = 30.0f; // stepping always at 30 fps
+		} else if (speed < pikiMgr->mPikiParms->mPikiParms.mRunSpeedThreshold()) {
 			newMotionID = PIKIANIM_Walk;
-			f32 diff    = speed - pikiMgr->mPikiParms->mPikiParms._1AC();
-			f32 ratio   = diff / (pikiMgr->mPikiParms->mPikiParms._1BC() - pikiMgr->mPikiParms->mPikiParms._1AC());
-			speed       = pikiMgr->mPikiParms->mPikiParms._1DC()
-			      + (pikiMgr->mPikiParms->mPikiParms._1EC() - pikiMgr->mPikiParms->mPikiParms._1DC()) * ratio;
+			f32 diff    = speed - pikiMgr->mPikiParms->mPikiParms.mWalkSpeedThreshold();
+			f32 ratio
+			    = diff / (pikiMgr->mPikiParms->mPikiParms.mRunSpeedThreshold() - pikiMgr->mPikiParms->mPikiParms.mWalkSpeedThreshold());
 
-		} else if (speed < pikiMgr->mPikiParms->mPikiParms._1CC()) {
+			// gradually scale anim speed from mMinWalkAnimSpeed to mMaxWalkAnimSpeed
+			speed = pikiMgr->mPikiParms->mPikiParms.mMinWalkAnimSpeed()
+			      + (pikiMgr->mPikiParms->mPikiParms.mMaxWalkAnimSpeed() - pikiMgr->mPikiParms->mPikiParms.mMinWalkAnimSpeed()) * ratio;
+
+		} else if (speed < pikiMgr->mPikiParms->mPikiParms.mEscapeSpeedThreshold()) {
 			newMotionID = PIKIANIM_Run;
-			f32 diff    = speed - pikiMgr->mPikiParms->mPikiParms._1BC();
-			f32 ratio   = diff / (pikiMgr->mPikiParms->mPikiParms._1CC() - pikiMgr->mPikiParms->mPikiParms._1BC());
-			speed       = pikiMgr->mPikiParms->mPikiParms._1FC()
-			      + (pikiMgr->mPikiParms->mPikiParms._20C() - pikiMgr->mPikiParms->mPikiParms._1FC()) * ratio;
+			f32 diff    = speed - pikiMgr->mPikiParms->mPikiParms.mRunSpeedThreshold();
+			f32 ratio
+			    = diff / (pikiMgr->mPikiParms->mPikiParms.mEscapeSpeedThreshold() - pikiMgr->mPikiParms->mPikiParms.mRunSpeedThreshold());
+
+			// gradually scale anim speed from mMinRunAnimSpeed to mMaxRunAnimSpeed
+			speed = pikiMgr->mPikiParms->mPikiParms.mMinRunAnimSpeed()
+			      + (pikiMgr->mPikiParms->mPikiParms.mMaxRunAnimSpeed() - pikiMgr->mPikiParms->mPikiParms.mMinRunAnimSpeed()) * ratio;
 
 		} else {
 			newMotionID = PIKIANIM_Nigeru;
-			speed       = pikiMgr->mPikiParms->mPikiParms._21C();
+			speed       = pikiMgr->mPikiParms->mPikiParms.mEscapeAnimSpeed(); // escape always at set anim speed
 		}
 
 		if (newMotionID != lowerMotionID) {
@@ -2833,8 +2839,8 @@ void Piki::realAI()
 
 		if (state != PIKISTATE_Swallowed && state != PIKISTATE_Dead && state != PIKISTATE_Dying && state != PIKISTATE_Pressed
 		    && state != PIKISTATE_Drown && state != PIKISTATE_Flying && mColor != Blue && isAlive()) {
-			if (mInWaterTimer
-			    >= int(gsys->getRand(1.0f) * pikiMgr->mPikiParms->mPikiParms._48C()) + pikiMgr->mPikiParms->mPikiParms._47C()) {
+			if (mInWaterTimer >= int(gsys->getRand(1.0f) * pikiMgr->mPikiParms->mPikiParms.mRandStartDrownFrames())
+			                         + pikiMgr->mPikiParms->mPikiParms.mMinStartDrownFrames()) {
 				startMotion(PaniMotionInfo(PIKIANIM_TYakusui, this), PaniMotionInfo(PIKIANIM_TYakusui));
 				mFSM->transit(this, PIKISTATE_Drown);
 			}

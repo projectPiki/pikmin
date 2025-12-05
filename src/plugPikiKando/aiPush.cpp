@@ -84,7 +84,7 @@ int ActPush::exec()
 
 	if (mHinderRock->isMoving() && mPushObjectStopped) {
 		mPushObjectStopped = false;
-		_40                = pikiMgr->mPikiParms->mPikiParms._49C();
+		_40                = pikiMgr->mPikiParms->mPikiParms.mUnusedPushTime();
 	} else if (!mHinderRock->isMoving()) {
 		mPushObjectStopped = true;
 	}
@@ -172,7 +172,7 @@ void ActPush::initGo()
 		_38 = gsys->getRand(1.0f);
 	}
 
-	_40 = pikiMgr->mPikiParms->mPikiParms._49C();
+	_40 = pikiMgr->mPikiParms->mPikiParms.mUnusedPushTime();
 	if (!mPushObjectStopped) {
 		mPushObjectStopped = true;
 	}
