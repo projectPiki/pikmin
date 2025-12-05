@@ -207,7 +207,7 @@ void ViewPiki::init(Shape* shp, MapMgr*, Navi* navi)
 	mPikiAnimMgr.init(mPikiShape->mAnimMgr, &mPikiShape->mAnimatorB, &mPikiShape->mAnimatorA, pikiMgr->mMotionTable);
 
 	f32 scale = 1.0f;
-	scale *= pikiMgr->mPikiParms->mPikiParms._12C();
+	scale *= pikiMgr->mPikiParms->mPikiParms.mPluckStrength0();
 	mScale.set(scale, scale, scale);
 	setLeaves(1);
 
@@ -609,8 +609,8 @@ void ViewPiki::refresh(Graphics& gfx)
 	if (getState() == PIKISTATE_Pressed) {
 		f32 scaleFactor = pikiMgr->mPikiParms->mPikiParms.mPikiDisplayScale();
 		f32 scaleXZ, scaleY;
-		f32 norm = pikiMgr->mPikiParms->mPikiParms._15C() - pikiMgr->mPikiParms->mPikiParms._16C();
-		if (mDeathTimer > pikiMgr->mPikiParms->mPikiParms._15C() - pikiMgr->mPikiParms->mPikiParms._16C()) {
+		f32 norm = pikiMgr->mPikiParms->mPikiParms.mPressDeathFactor() - pikiMgr->mPikiParms->mPikiParms.mNormalPikiPressFactor();
+		if (mDeathTimer > pikiMgr->mPikiParms->mPikiParms.mPressDeathFactor() - pikiMgr->mPikiParms->mPikiParms.mNormalPikiPressFactor()) {
 			scaleXZ = 2.0f;
 			scaleY  = 0.01f;
 		} else {

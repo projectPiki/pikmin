@@ -260,7 +260,7 @@ void PikiNormalState::init(Piki* piki)
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Walk), PaniMotionInfo(PIKIANIM_Walk));
 	_UNUSED10 = 0;
 	_UNUSED14 = 0.0f;
-	_UNUSED1C = C_PIKI_PROP(piki)._2CC();
+	_UNUSED1C = C_PIKI_PROP(piki).mUnusedDynWallPushTime();
 	mPushPiki = 0;
 }
 
@@ -768,7 +768,7 @@ void PikiBubbleState::init(Piki* piki)
 	piki->changeMode(PikiMode::FreeMode, piki->mNavi);
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Moeru), PaniMotionInfo(PIKIANIM_Moeru));
 	piki->enableMotionBlend();
-	mSurvivalTimer = C_PIKI_PROP(piki)._3DC();
+	mSurvivalTimer = C_PIKI_PROP(piki).mPanicTime();
 	mSurvivalTimer *= (0.1f * gsys->getRand(1.0f)) + 1.0f;
 	mChangeDirectionTimer = 0.1f;
 	mMoveDirection        = piki->mFaceDirection;
@@ -833,7 +833,7 @@ void PikiFiredState::init(Piki* piki)
 	piki->changeMode(PikiMode::FreeMode, piki->mNavi);
 	piki->startMotion(PaniMotionInfo(PIKIANIM_Moeru), PaniMotionInfo(PIKIANIM_Moeru));
 	piki->enableMotionBlend();
-	mSurvivalTimer = C_PIKI_PROP(piki)._3DC();
+	mSurvivalTimer = C_PIKI_PROP(piki).mPanicTime();
 	mSurvivalTimer *= (0.1f * gsys->getRand(1.0f)) + 1.0f;
 	mChangeDirectionTimer = 0.1f;
 	mMoveDirection        = piki->mFaceDirection;
@@ -1084,8 +1084,8 @@ void PikiFlickState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		}
 		if (mState == 1) {
 			mState      = 2;
-			f32 min     = C_PIKI_PROP(piki)._32C();
-			f32 max     = C_PIKI_PROP(piki)._31C();
+			f32 min     = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
+			f32 max     = C_PIKI_PROP(piki).mMaxFlickKnockDownTime();
 			mGetUpTimer = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
@@ -1230,8 +1230,8 @@ void PikiFlownState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	case KEY_Finished:
 		if (mState == 1) {
 			mState  = 2;
-			f32 min = C_PIKI_PROP(piki)._32C();
-			f32 max = C_PIKI_PROP(piki)._31C();
+			f32 min = C_PIKI_PROP(piki).mMinFlickKnockDownTime();
+			f32 max = C_PIKI_PROP(piki).mMaxFlickKnockDownTime();
 			_10     = (max - min) * gsys->getRand(1.0f) + min;
 			if (piki->mHealth <= 0.0f) {
 				PRINT("piki died !\n");
@@ -1978,36 +1978,45 @@ void PikiFlyingState::exec(Piki* piki)
 
 	mSparkleEffect.updatePos(piki->mPosition);
 
-	f32 val1 = AIConstant::_instance->mConstants.mGravity() * 0.8f;
-	f32 val2 = AIConstant::_instance->mConstants.mGravity() * C_PIKI_PROP(piki)._37C();
-	f32 f    = 0.15f;
-	f32 val3 = val1 * f - 0.5f * 0.15f * (val1 - val2) - val2 * f;
+	f32 startGrav          = AIConstant::_instance->mConstants.mGravity() * 0.8f;
+	f32 glideGrav          = AIConstant::_instance->mConstants.mGravity() * C_PIKI_PROP(piki).mFlowerGravityScale();
+	f32 gravTransitionTime = 0.15f;
+	f32 gravInterp         = startGrav * gravTransitionTime - 0.5f * 0.15f * (startGrav - glideGrav) - glideGrav * gravTransitionTime;
 	if (!mIsFlowerGliding && piki->mHappa == Flower && piki->mVelocity.y <= 0.0f) {
 		mIsFlowerGliding = true;
 		piki->startMotion(PaniMotionInfo(PIKIANIM_Hang), PaniMotionInfo(PIKIANIM_Hang));
-		f32 val4;
+		f32 glideDist;
 		if (piki->mColor == Yellow) {
-			val4 = C_NAVI_PROP(piki->mNavi)._19C();
+			glideDist = C_NAVI_PROP(piki->mNavi)._19C();
 		} else {
-			val4 = C_NAVI_PROP(piki->mNavi)._17C();
+			glideDist = C_NAVI_PROP(piki->mNavi)._17C();
 		}
 
-		f32 val5               = (speedy_sqrtf(val3 * val3 + 2.0f * val4 * val2) + -val3) / val2;
-		f32 val6               = C_NAVI_PROP(piki->mNavi)._1AC() * 0.5f;
-		f32 val7               = val6 / val5;
+		f32 glideTime        = (speedy_sqrtf(gravInterp * gravInterp + 2.0f * glideDist * glideGrav) + -gravInterp) / glideGrav;
+		f32 glideSpeedXZ     = C_NAVI_PROP(piki->mNavi)._1AC() * 0.5f;
+		f32 glideSpeedFactor = glideSpeedXZ / glideTime;
+
 		mHorizontalDirection.x = piki->mVelocity.x;
 		mHorizontalDirection.y = 0.0f;
 		mHorizontalDirection.z = piki->mVelocity.z;
 		mHorizontalDirection.normalise();
-		f32 hSpeed              = speedy_sqrtf(piki->mVelocity.x * piki->mVelocity.x + piki->mVelocity.z * piki->mVelocity.z);
-		mInitialHorizontalSpeed = hSpeed;
-		f32 halfHorizSpeed      = hSpeed * 0.5f;
-		mTargetHorizontalSpeed  = halfHorizSpeed;
-		val5                    = ((hSpeed * val6) - (hSpeed - (hSpeed - halfHorizSpeed) * 0.5f - halfHorizSpeed) * 0.15f) / halfHorizSpeed;
-		piki->mVelocity.x *= val7;
-		piki->mVelocity.z *= val7;
+
+		f32 startSpeedXZ        = speedy_sqrtf(piki->mVelocity.x * piki->mVelocity.x + piki->mVelocity.z * piki->mVelocity.z);
+		mInitialHorizontalSpeed = startSpeedXZ;
+
+		f32 targetSpeedXZ      = startSpeedXZ * 0.5f;
+		mTargetHorizontalSpeed = targetSpeedXZ;
+
+		// this calc is unused
+		glideTime = ((startSpeedXZ * glideSpeedXZ) - (startSpeedXZ - (startSpeedXZ - targetSpeedXZ) * 0.5f - targetSpeedXZ) * 0.15f)
+		          / targetSpeedXZ;
+
+		piki->mVelocity.x *= glideSpeedFactor;
+		piki->mVelocity.z *= glideSpeedFactor;
+
 		piki->mTargetVelocity.x = piki->mVelocity.x;
 		piki->mTargetVelocity.z = piki->mVelocity.z;
+
 		piki->mVelocity.y       = 0.0f;
 		piki->mTargetVelocity.y = 0.0f;
 		mGlideTimer             = 0.0f;
@@ -2020,18 +2029,20 @@ void PikiFlyingState::exec(Piki* piki)
 
 	piki->mFaceDirection = roundAng(gsys->getFrameTime() * PI / 0.42f + piki->mFaceDirection);
 	mGlideTimer += gsys->getFrameTime();
-	f32 rval = (gsys->getRand(1.0f) - 0.5f) * 0.01f;
 
-	STACK_PAD_TERNARY(rval, 1);
+	// for some natural variation in fall speed
+	f32 randomFactor = (gsys->getRand(1.0f) - 0.5f) * 0.01f;
 
-	f32 val;
+	STACK_PAD_TERNARY(randomFactor, 1);
+
+	f32 gravAdjust;
 	if (mGlideTimer < 0.15f) {
-		val = val1 - (val1 - val2) / 0.15f * mGlideTimer;
+		gravAdjust = startGrav - (startGrav - glideGrav) / 0.15f * mGlideTimer;
 	} else {
-		val = val2;
+		gravAdjust = glideGrav;
 	}
 
-	piki->mVelocity.y += ((AIConstant::_instance->mConstants.mGravity() - val) * (rval + 1.0f)) * gsys->getFrameTime();
+	piki->mVelocity.y += ((AIConstant::_instance->mConstants.mGravity() - gravAdjust) * (randomFactor + 1.0f)) * gsys->getFrameTime();
 
 	STACK_PAD_VAR(4);
 }
@@ -3146,7 +3157,7 @@ void PikiPressedState::exec(Piki* piki)
 		piki->mDeathTimer -= gsys->getFrameTime();
 	}
 
-	if (piki->mDeathTimer > C_PIKI_PROP(piki)._15C() - C_PIKI_PROP(piki)._16C() && piki->mHealth <= 0.0f) {
+	if (piki->mDeathTimer > C_PIKI_PROP(piki).mPressDeathFactor() - C_PIKI_PROP(piki).mNormalPikiPressFactor() && piki->mHealth <= 0.0f) {
 		PRINT("*** PRESS DIE ! timer = %.1f\n", piki->mDeathTimer);
 		transit(piki, PIKISTATE_Dead);
 		return;

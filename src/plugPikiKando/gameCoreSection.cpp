@@ -465,7 +465,7 @@ void GameCoreSection::enterFreePikmins()
 					GoalItem* goal = itemMgr->getContainer(i);
 					if (goal
 					    && qdist2(goal->mPosition.x, goal->mPosition.z, piki->mPosition.x, piki->mPosition.z)
-					           <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+					           <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 						if (state == PIKISTATE_LookAt || state == PIKISTATE_Nukare || state == PIKISTATE_Absorb) {
 							piki->mFSM->transit(piki, PIKISTATE_Normal);
 						}
@@ -479,7 +479,8 @@ void GameCoreSection::enterFreePikmins()
 					UfoItem* ufo = itemMgr->getUfo();
 					if (ufo) {
 						Vector3f pos = ufo->getGoalPos();
-						if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z) <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+						if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z)
+						    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 							if (state == PIKISTATE_LookAt || state == PIKISTATE_Nukare || state == PIKISTATE_Absorb) {
 								piki->mFSM->transit(piki, PIKISTATE_Normal);
 							}
@@ -628,14 +629,15 @@ void GameCoreSection::cleanupDayEnd()
 							GoalItem* goal = itemMgr->getContainer(i);
 							if (goal
 							    && qdist2(goal->mPosition.x, goal->mPosition.z, piki->mPosition.x, piki->mPosition.z)
-							           <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+							           <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 								isNearOnyonShip = true;
 								break;
 							}
 							UfoItem* ufo = itemMgr->getUfo();
 							if (ufo) {
 								Vector3f pos = ufo->getGoalPos();
-								if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z) <= pikiMgr->mPikiParms->mPikiParms._45C()) {
+								if (qdist2(pos.x, pos.z, piki->mPosition.x, piki->mPosition.z)
+								    <= pikiMgr->mPikiParms->mPikiParms.mSunsetSafetyRange()) {
 									isNearOnyonShip = true;
 									break;
 								}
