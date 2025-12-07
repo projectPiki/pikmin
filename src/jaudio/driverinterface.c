@@ -62,7 +62,7 @@ int List_CountChannel(jc_** jc)
 		if (chan == NULL) {
 			break;
 		}
-		chan = (jc_*)chan->nextChan;
+		chan = chan->nextChan;
 		num++;
 	}
 
@@ -106,7 +106,7 @@ void List_GlobalChannel()
  */
 int List_CutChannel(jc_* jc)
 {
-	jc_* chan = (jc_*)*jc->chanListHead;
+	jc_* chan = *jc->chanListHead;
 	int num   = 0;
 
 	if (chan == jc) {
@@ -125,7 +125,7 @@ int List_CutChannel(jc_* jc)
 			break;
 		}
 
-		chan = (jc_*)chan->nextChan;
+		chan = chan->nextChan;
 	}
 
 	chan->nextChan   = jc->nextChan;
@@ -147,7 +147,7 @@ jc_* List_GetChannel(jc_** jc)
 		return NULL;
 	}
 
-	*jc                = (jc_*)chan->nextChan;
+	*jc                = chan->nextChan;
 	chan->chanListHead = NULL;
 	return chan;
 }
@@ -170,7 +170,7 @@ void List_AddChannelTail(jc_** jc, jc_* in)
 
 	jc_* next;
 	while (TRUE) {
-		next = (jc_*)chan->nextChan;
+		next = chan->nextChan;
 		if (next == NULL) {
 			chan->nextChan = in;
 			in->nextChan   = NULL;

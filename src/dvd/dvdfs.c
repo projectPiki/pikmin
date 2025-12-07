@@ -78,7 +78,7 @@ static BOOL isSame(const char* path, const char* string)
  * Address:	801FEFB8
  * Size:	0002E0
  */
-s32 DVDConvertPathToEntrynum(char* pathPtr)
+s32 DVDConvertPathToEntrynum(const char* pathPtr)
 {
 	const char* ptr;
 	char* stringPtr;
@@ -202,7 +202,7 @@ BOOL DVDFastOpen(s32 entrynum, DVDFileInfo* fileInfo)
  * Address:	801FF30C
  * Size:	0000C8
  */
-BOOL DVDOpen(char* fileName, DVDFileInfo* fileInfo)
+BOOL DVDOpen(const char* fileName, DVDFileInfo* fileInfo)
 {
 	s32 entry;
 	char currentDir[128];
@@ -328,7 +328,7 @@ BOOL DVDGetCurrentDir(char* path, u32 maxlen)
  * Address:	........
  * Size:	000060
  */
-BOOL DVDChangeDir(char* dirName)
+BOOL DVDChangeDir(const char* dirName)
 {
 	s32 entry;
 	entry = DVDConvertPathToEntrynum(dirName);

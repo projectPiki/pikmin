@@ -89,7 +89,7 @@ typedef struct {
 } __OutStrCtrl;
 
 typedef struct {
-	char* NextChar;
+	const char* NextChar;
 	int NullCharDetected;
 } __InStrCtrl;
 
@@ -100,7 +100,7 @@ typedef struct {
 } __wOutStrCtrl;
 
 typedef struct {
-	wchar_t* wNextChar;
+	const wchar_t* wNextChar;
 	int wNullCharDetected;
 } __wInStrCtrl;
 

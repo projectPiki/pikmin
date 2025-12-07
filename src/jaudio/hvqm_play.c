@@ -239,7 +239,7 @@ void Jac_HVQM_Init(const char* movieFilePath, u8* data, u32 bufferSize)
 	dvdfile_size   = DVDT_CheckFile(movieFilePath);
 	dvdfile_size -= 0x80000;
 	volatile u32 status;
-	DVDT_LoadtoDRAM(dvdcount, movieFilePath, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, &status, 0);
+	DVDT_LoadtoDRAM(dvdcount, movieFilePath, (u32)dvd_buf[dvdcount % 3], 0, 0x80000, (u32*)&status, 0);
 	while (status == 0) { }
 
 	dvd_ctrl[0].mFileOffset = 0;

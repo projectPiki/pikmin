@@ -613,7 +613,7 @@ void CARDInit(void)
  * Address:	80208E54
  * Size:	00001C
  */
-void __CARDSetDiskID(const DVDDiskID* diskID)
+void __CARDSetDiskID(DVDDiskID* diskID)
 {
 	__CARDDiskID = diskID ? diskID : &__CARDDiskNone;
 }

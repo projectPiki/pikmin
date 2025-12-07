@@ -312,7 +312,7 @@ u32 strtoul(const char* str, char** end, int base)
 	int count, negative, overflow;
 
 	__InStrCtrl isc;
-	isc.NextChar         = (char*)str;
+	isc.NextChar         = str;
 	isc.NullCharDetected = 0;
 
 	value = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);
@@ -353,7 +353,7 @@ s32 strtol(const char* str, char** end, int base)
 	int count, negative, overflow;
 
 	__InStrCtrl isc;
-	isc.NextChar         = (char*)str;
+	isc.NextChar         = str;
 	isc.NullCharDetected = 0;
 
 	uvalue = __strtoul(base, 0x7FFFFFFF, &__StringRead, (void*)&isc, &count, &negative, &overflow);

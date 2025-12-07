@@ -216,7 +216,7 @@ u32 JV_LoadFile(u32 handle, u8* dst, u32 param_3, u32 length)
 	strcpy(name, JV_DIR_NAME[idx]);
 	strcat(name, "/");
 	strcat(name, JV_ARC[idx]->meta.arcName);
-	DVDT_LoadtoDRAM(0, name, (u32)dst, src, length, &status, NULL);
+	DVDT_LoadtoDRAM(0, name, (u32)dst, src, length, (u32*)&status, NULL);
 
 	while (status == 0) {
 		;

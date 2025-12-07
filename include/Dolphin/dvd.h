@@ -109,7 +109,7 @@ typedef struct DVDBB2 {
 ///////// DVD FUNCTIONS //////////
 // Basic DVD functions.
 void DVDInit();
-BOOL DVDOpen(char* filename, DVDFileInfo* fileInfo);
+BOOL DVDOpen(const char* filename, DVDFileInfo* fileInfo);
 BOOL DVDFastOpen(s32 entryNum, DVDFileInfo* fileInfo);
 s32 DVDReadPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, s32 prio);
 BOOL DVDReadAsyncPrio(DVDFileInfo* fileInfo, void* addr, s32 length, s32 offset, DVDCallback callback, s32 prio);
@@ -137,8 +137,8 @@ BOOL DVDOpenDir(char* dirName, DVDDir* dir);
 BOOL DVDReadDir(DVDDir* dir, DVDDirEntry* dirEntry);
 BOOL DVDCloseDir(DVDDir* dir);
 BOOL DVDGetCurrentDir(char* path, u32 maxLength);
-BOOL DVDChangeDir(char* dirName);
-s32 DVDConvertPathToEntrynum(char* path);
+BOOL DVDChangeDir(const char* dirName);
+s32 DVDConvertPathToEntrynum(const char* path);
 
 // Other disk functions.
 void __DVDLowSetWAType(u32 type, u32 location);

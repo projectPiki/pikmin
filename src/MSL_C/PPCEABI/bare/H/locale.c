@@ -1,16 +1,16 @@
 #include "types.h"
 
 typedef struct {
-	char* _0;
-	char* _4;
-	char* _8;
-	char* _C;
-	char* _10;
-	char* _14;
-	char* _18;
-	char* _1C;
-	char* _20;
-	char* _2C;
+	const char* _0;
+	const char* _4;
+	const char* _8;
+	const char* _C;
+	const char* _10;
+	const char* _14;
+	const char* _18;
+	const char* _1C;
+	const char* _20;
+	const char* _2C;
 	char _30;
 	char _31;
 	char _32;

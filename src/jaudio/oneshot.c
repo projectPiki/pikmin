@@ -394,7 +394,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 				}
 			}
 		}
-		chan = (jc_*)chan->nextChan;
+		chan = chan->nextChan;
 	}
 
 	chan = mgr->releasingChannels;
@@ -414,7 +414,7 @@ static BOOL __Oneshot_StartMonoPolyCheck(jc_* jc, u32 id)
 			}
 		}
 
-		chan = (jc_*)chan->nextChan;
+		chan = chan->nextChan;
 	}
 
 	if (flag & 0x20) {
@@ -468,7 +468,7 @@ static void __Oneshot_StopMonoPolyCheck(jc_* jc, u32 id)
 				}
 			}
 
-			chan = (jc_*)chan->nextChan;
+			chan = chan->nextChan;
 		}
 	}
 
@@ -542,7 +542,7 @@ void AllStop_1Shot(jcs_* jcs)
 	jc_** REF_jc = &jc;
 	STACK_PAD_VAR(4);
 	while (jc) {
-		next = (jc_*)jc->nextChan;
+		next = jc->nextChan;
 		Stop_1Shot(jc);
 		jc = next;
 	}

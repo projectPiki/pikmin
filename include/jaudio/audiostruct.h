@@ -135,14 +135,14 @@ struct jc_ {
 	u8 pauseFlag;                       // _02
 	u8 toFlush;                         // _03
 	jcs_* chanMgr;                      // _04
-	void** chanListHead;                // _08
+	jc_** chanListHead;                 // _08
 	u8 logicalChanType;                 // _0C, 0 = Wave, 1 = ??, 2 = Oscillator
 	Wave_* waveData;                    // _10
 	u32 chanData;                       // _14
 	u32 _18;                            // _18
 	u32 _1C;                            // _1C
 	dspch_* dspChannel;                 // _20
-	void* nextChan;                     // _24, this is jcs_
+	jc_* nextChan;                      // _24
 	JCUpdateCallback updateCallback;    // _28
 	JCUpdateCallback pitchSweepUpdater; // _2C
 	s32 noteId;                         // _30

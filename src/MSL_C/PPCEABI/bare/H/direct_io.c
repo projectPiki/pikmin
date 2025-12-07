@@ -49,7 +49,7 @@ size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 		return 0;
 	}
 
-	write_ptr     = buffer;
+	write_ptr     = (char*)buffer;
 	bytes_written = 0;
 
 	if (bytes_to_go && (stream->mBufferPtr != stream->mBuffer || always_buffer)) {
