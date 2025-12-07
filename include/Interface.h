@@ -1,12 +1,10 @@
 #ifndef _INTERFACE_H
 #define _INTERFACE_H
 
-#include "Vector.h"
 #include "types.h"
 
 struct Creature;
-struct NewPikiGameSetupSection;
-struct TitleSetupSection;
+struct Vector3f;
 
 /**
  * @brief Game movie interface message commands.
@@ -43,101 +41,6 @@ struct GameInterface {
 
 	// _00 = VTBL
 	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct GameMovieInterface : public GameInterface {
-	GameMovieInterface(NewPikiGameSetupSection* section)
-	{
-		mMessageLimit = 32;
-		mMessageCount = 0;
-		mSection      = section;
-	}
-
-	/**
-	 * @brief TODO
-	 */
-	struct SimpleMessage {
-		int mMessageId; // _00
-		int mData;      // _04
-	};
-
-	/**
-	 * @brief TODO
-	 */
-	struct ComplexMessage {
-		ComplexMessage() { }
-
-		int mMovieIdx;      // _00
-		int _UNUSED04;      // _04
-		Creature* mTarget;  // _08
-		Vector3f mPosition; // _0C
-		Vector3f mRotation; // _18
-		int mFlags;         // _24
-		bool mIsPlaying;    // _28
-	};
-
-	virtual void message(int msgId, int data) // _08
-	{
-		if (mMessageCount >= mMessageLimit) {
-			return;
-		}
-
-		mMesg[mMessageCount].mMessageId = msgId;
-		mMesg[mMessageCount].mData      = data;
-
-		mMessageCount++;
-	}
-	virtual void movie(int id, int a1, Creature* obj, Vector3f* pos, Vector3f* dir, u32 flags, bool a2) // _0C
-	{
-		if (mComplexMesgCount >= mMessageLimit) {
-			return;
-		}
-		mCompMesg[mComplexMesgCount].mMovieIdx = id;
-		mCompMesg[mComplexMesgCount]._UNUSED04 = a1;
-		mCompMesg[mComplexMesgCount].mTarget   = obj;
-		if (!pos) {
-			mCompMesg[mComplexMesgCount].mPosition.set(0.0f, 0.0f, 0.0f);
-		} else {
-			mCompMesg[mComplexMesgCount].mPosition = *pos;
-		}
-		if (!dir) {
-			mCompMesg[mComplexMesgCount].mRotation.set(0.0f, 0.0f, 0.0f);
-		} else {
-			mCompMesg[mComplexMesgCount].mRotation = *dir;
-		}
-		mCompMesg[mComplexMesgCount].mFlags     = flags;
-		mCompMesg[mComplexMesgCount].mIsPlaying = a2;
-
-		mComplexMesgCount++;
-	}
-	virtual void parseMessages();        // _10
-	virtual void parse(SimpleMessage&);  // _18
-	virtual void parse(ComplexMessage&); // _1C
-
-	// _00 = VTBL
-	NewPikiGameSetupSection* mSection; //_04
-	int mMessageLimit;                 // _08
-	SimpleMessage mMesg[32];           // _0C
-	int mMessageCount;                 // _10C
-	ComplexMessage mCompMesg[32];      // _110
-	int mComplexMesgCount;             // _690
-};
-
-/**
- * @brief TODO
- *
- * @note Size: 0x8.
- */
-struct TitlesMovieInterface : public GameInterface {
-	TitlesMovieInterface(TitleSetupSection* section) { mSection = section; }
-
-	virtual void message(int, int); // _08
-
-	// _00 = VTBL
-	TitleSetupSection* mSection; // _04
 };
 
 #endif
