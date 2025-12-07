@@ -168,14 +168,14 @@ public:
 	virtual Vector3f getCentre() { return mSRT.t; }       // _58
 	virtual bool needShadow() { return mNeedShadow; }     // _90
 	virtual f32 getShadowSize() { return mShadowSize; }   // _70
-	virtual bool stimulate(Interaction&);                 // _A0
+	virtual bool stimulate(immut Interaction&);           // _A0
 	virtual void wallCallback(Plane&, DynCollObject*);    // _B4
 	virtual void update() { }                             // _E0
 	virtual void refresh(Graphics&) { }                   // _EC
 	virtual void refresh2d(Graphics&);                    // _F0
 	virtual void doKill() { }                             // _10C
 	virtual void exitCourse() { }                         // _110
-	virtual void collisionCallback(CollEvent&) { }        // _A8
+	virtual void collisionCallback(immut CollEvent&) { }  // _A8
 	virtual bool isBossBgm() { return false; }            // _114
 	virtual bool attackDefaultPortion() { return false; } // _118
 	virtual void bombDamageCounter(CollPart*) { }         // _11C

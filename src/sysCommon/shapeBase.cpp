@@ -383,7 +383,7 @@ CamDataInfo::CamDataInfo()
  * Address:	8002A998
  * Size:	000334
  */
-void CamDataInfo::update(f32 currentFrame, Matrix4f& mtx)
+void CamDataInfo::update(f32 currentFrame, immut Matrix4f& mtx)
 {
 	volatile f32 val1;
 	volatile f32 val2;
@@ -833,7 +833,7 @@ void AnimData::extractSRT(SRT& srt, int, AnimDataInfo* info, f32 p4)
  * Address:	8002C2BC
  * Size:	000150
  */
-void AnimData::makeAnimSRT(int boneId, Matrix4f* parent, Matrix4f* output, AnimDataInfo* info, f32 pos)
+void AnimData::makeAnimSRT(int boneId, immut Matrix4f* parent, Matrix4f* output, AnimDataInfo* info, f32 pos)
 {
 	int frameNum = pos;
 	if (frameNum < 0 || frameNum > mTotalFrameCount) {
@@ -3029,7 +3029,7 @@ void BaseShape::createCollisions(int gridSize)
  * Address:	80034900
  * Size:	000150
  */
-void BaseShape::calcBasePose(Matrix4f& target)
+void BaseShape::calcBasePose(immut Matrix4f& target)
 {
 	for (int i = 0; i < mJointCount; i++) {
 		SRT srt;
@@ -3039,7 +3039,7 @@ void BaseShape::calcBasePose(Matrix4f& target)
 
 		int parentIndex = mJointList[i].mParentIndex;
 		Matrix4f initialPose;
-		Matrix4f* currentMatrix = parentIndex == -1 ? &target : &mJointList[parentIndex].mAnimMatrix;
+		immut Matrix4f* currentMatrix = parentIndex == -1 ? &target : &mJointList[parentIndex].mAnimMatrix;
 		mJointList[i].mAnimMatrix.makeConcatSRT(currentMatrix, initialPose, srt);
 		mJointList[i].mAnimMatrix.inverse(&mJointList[i].mInverseAnimMatrix);
 	}
@@ -3298,7 +3298,7 @@ void AnimFrameCacher::cacheFrameSpace(int p1, AnimCacheInfo* info)
  * Address:	80035314
  * Size:	0002E0
  */
-void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
+void BaseShape::updateAnim(Graphics& gfx, immut Matrix4f& mtx, f32* p3)
 {
 	gsys->mTimer->start("updateAnim", true);
 	gsys->mAnimatedPolygons++;
@@ -3329,7 +3329,7 @@ void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
 			}
 
 			if (data->mTotalFrameCount) {
-				Matrix4f& srt = (mJointList[i].mParentIndex != -1) ? mAnimMatrices[mJointList[i].mParentIndex] : mtx;
+				immut Matrix4f& srt = (mJointList[i].mParentIndex != -1) ? mAnimMatrices[mJointList[i].mParentIndex] : mtx;
 
 				data->makeAnimSRT(data->mAnimJointIndices[i], &srt, &mAnimMatrices[i], &data->mAnimInfo[i], *frame);
 			} else {
@@ -3346,7 +3346,7 @@ void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
 			srt.r = joint->mSRT.r;
 			srt.t = joint->mSRT.t;
 			Matrix4f tmpMtx;
-			Matrix4f* jointMtx = (joint->mParentIndex == -1) ? &mtx : &mJointList[joint->mParentIndex].mAnimMatrix;
+			immut Matrix4f* jointMtx = (joint->mParentIndex == -1) ? &mtx : &mJointList[joint->mParentIndex].mAnimMatrix;
 			joint->mAnimMatrix.makeConcatSRT(jointMtx, tmpMtx, srt);
 			joint++;
 		}

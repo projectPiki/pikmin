@@ -287,35 +287,35 @@ struct Pellet : public DualCreature, public PaniAnimKeyListener {
 public:
 	Pellet();
 
-	virtual void init(Vector3f&);                        // _28
-	virtual void startAI(int);                           // _34
-	virtual f32 getiMass();                              // _38
-	virtual f32 getSize();                               // _3C
-	virtual f32 getCylinderHeight();                     // _44
-	virtual void doSave(RandomAccessStream&);            // _50
-	virtual void doLoad(RandomAccessStream&);            // _54
-	virtual Vector3f getCentre();                        // _58
-	virtual bool isVisible();                            // _74
-	virtual bool isAtari();                              // _84
-	virtual bool isAlive();                              // _88
-	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual bool isFree();                               // _9C
-	virtual bool stimulate(Interaction&);                // _A0
-	virtual void collisionCallback(CollEvent&);          // _A8
-	virtual void bounceCallback();                       // _AC
-	virtual void startWaterEffect();                     // _CC
-	virtual void finishWaterEffect();                    // _D0
-	virtual void update();                               // _E0
-	virtual void postUpdate(int, f32);                   // _E4
-	virtual void refresh(Graphics&);                     // _EC
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _12C (weak)
+	virtual void init(immut Vector3f&);                        // _28
+	virtual void startAI(int);                                 // _34
+	virtual f32 getiMass();                                    // _38
+	virtual f32 getSize();                                     // _3C
+	virtual f32 getCylinderHeight();                           // _44
+	virtual void doSave(RandomAccessStream&);                  // _50
+	virtual void doLoad(RandomAccessStream&);                  // _54
+	virtual Vector3f getCentre();                              // _58
+	virtual bool isVisible();                                  // _74
+	virtual bool isAtari();                                    // _84
+	virtual bool isAlive();                                    // _88
+	virtual bool ignoreAtari(Creature*);                       // _98
+	virtual bool isFree();                                     // _9C
+	virtual bool stimulate(immut Interaction&);                // _A0
+	virtual void collisionCallback(immut CollEvent&);          // _A8
+	virtual void bounceCallback();                             // _AC
+	virtual void startWaterEffect();                           // _CC
+	virtual void finishWaterEffect();                          // _D0
+	virtual void update();                                     // _E0
+	virtual void postUpdate(int, f32);                         // _E4
+	virtual void refresh(Graphics&);                           // _EC
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _12C (weak)
 
 	int getState();
 	void setTrySound(bool);
 	void startPick();
 	void finishPick();
 	void startGoal();
-	void doCarry(Creature*, Vector3f&, u16);
+	void doCarry(Creature*, immut Vector3f&, u16);
 	f32 getBottomRadius();
 	bool startStickTeki(Creature*, f32);
 	void endStickTeki(Creature*);
@@ -323,7 +323,7 @@ public:
 	bool stickSlot(int);
 	void stickOffSlot(int);
 	int getMinFreeSlotIndex();
-	int getNearestFreeSlotIndex(Vector3f&);
+	int getNearestFreeSlotIndex(immut Vector3f&);
 	int getRandomFreeSlotIndex();
 	Vector3f getSlotLocalPos(int, f32);
 	Vector3f getSlotGlobalPos(int, f32);

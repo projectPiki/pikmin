@@ -18,7 +18,7 @@ typedef int (*StreamCallback)(u32, s32);
 
 void Init_StreamAudio(void);
 void Get_StreamAudio_Handle(int);
-BOOL StreamAudio_Start(u32, int, char*, int, int, StreamHeader_*);
+BOOL StreamAudio_Start(u32, int, immut char*, int, int, StreamHeader_*);
 void RegisterStreamCallback(StreamCallback);
 void Jac_Decode_ADPCM(u8*, s16*, s16*, u32, u8, s16*);
 BOOL StreamSyncCheckReady(u32);

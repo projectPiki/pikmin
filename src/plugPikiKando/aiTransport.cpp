@@ -295,7 +295,7 @@ void ActTransport::setSlotIndex()
  * Address:	800AF5F0
  * Size:	000194
  */
-void ActTransport::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

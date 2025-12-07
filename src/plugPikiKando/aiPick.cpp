@@ -175,7 +175,7 @@ void ActFlower::init(Creature*)
  * Address:	800BD090
  * Size:	000120
  */
-void ActFlower::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActFlower::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

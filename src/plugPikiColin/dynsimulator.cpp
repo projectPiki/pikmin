@@ -36,7 +36,7 @@ void CollState::resetCollisions(Shape* shape)
  * Address:	........
  * Size:	000080
  */
-bool CollState::add(Vector3f& normal, Vector3f& contactPt, RigidBody* collider)
+bool CollState::add(immut Vector3f& normal, immut Vector3f& contactPt, RigidBody* collider)
 {
 	if (mCollisionCount < 10) {
 		mStatus                                    = 1;
@@ -130,7 +130,7 @@ void RigidBody::render(Graphics& gfx)
  * Address:	8004E0CC
  * Size:	000050
  */
-void RigidBody::applyCMForce(Vector3f& force)
+void RigidBody::applyCMForce(immut Vector3f& force)
 {
 	mLinearAccel.x += force.x * mMass;
 	mLinearAccel.y += force.y * mMass;

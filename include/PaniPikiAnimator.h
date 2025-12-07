@@ -134,9 +134,9 @@ struct PaniPikiAnimMgr {
 
 	void init(AnimMgr*, AnimContext*, AnimContext*, PaniMotionTable*);
 	void changeContext(AnimContext*, AnimContext*);
-	void startMotion(PaniMotionInfo*, PaniMotionInfo*);
-	void finishMotion(PaniMotionInfo*, PaniMotionInfo*);
-	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void startMotion(immut PaniMotionInfo*, immut PaniMotionInfo*);
+	void finishMotion(immut PaniMotionInfo*, immut PaniMotionInfo*);
+	void startMotion(immut PaniMotionInfo&, immut PaniMotionInfo&);
 	void finishMotion(PaniAnimKeyListener*);
 	void updateAnimation(f32);
 	void updateContext();

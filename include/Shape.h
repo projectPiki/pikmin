@@ -256,7 +256,7 @@ struct BaseShape : public CoreNode {
 	void initIni(bool);
 	void initialise();
 	void createCollisions(int);
-	void calcBasePose(Matrix4f&);
+	void calcBasePose(immut Matrix4f&);
 	AnimData* loadDck(char*, RandomAccessStream&);
 	AnimData* importDck(char*, CmdStream*);
 	AnimData* loadDca(char*, RandomAccessStream&);
@@ -265,7 +265,7 @@ struct BaseShape : public CoreNode {
 	void backupAnimOverrides(AnimContext**);
 	void restoreAnimOverrides();
 	void overrideAnim(int, AnimContext*);
-	void updateAnim(Graphics&, Matrix4f&, f32*);
+	void updateAnim(Graphics&, immut Matrix4f&, f32*);
 	void calcWeightedMatrices();
 	void makeNormalIndexes(u16*);
 	f32 calcJointWorldPos(Graphics&, int, Vector3f&);
@@ -282,7 +282,7 @@ struct BaseShape : public CoreNode {
 	CollTriInfo* findCollTri(Vector3f&, Vector3f&, Vector3f&, char*);
 
 	// DLL inlines:
-	CollGroup* getCollTris(Vector3f& pos)
+	CollGroup* getCollTris(immut Vector3f& pos)
 	{
 		int x = (pos.x - mCourseExtents.mMin.x) / mGridSize;
 		int z = (pos.z - mCourseExtents.mMin.z) / mGridSize;

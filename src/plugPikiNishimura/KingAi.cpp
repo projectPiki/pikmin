@@ -75,7 +75,7 @@ void KingAi::initAI(King* king)
  * Address:	8016C404
  * Size:	00007C
  */
-void KingAi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void KingAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:
@@ -759,7 +759,7 @@ void KingAi::resultFlagSeen()
  * Address:	........
  * Size:	0000C0
  */
-bool KingAi::attackInArea(Creature* target, Vector3f* centre)
+bool KingAi::attackInArea(Creature* target, immut Vector3f* centre)
 {
 	if (qdist2(target->mSRT.t.x, target->mSRT.t.z, centre->x, centre->z) < C_KING_PROP(mKing).mAttackTerritoryRadius()
 	    && qdist2(target->mSRT.t.x, target->mSRT.t.z, mAttackPosition.x, mAttackPosition.z) < C_KING_PROP(mKing).mNormalAttackRangeXZ()
@@ -795,7 +795,7 @@ bool KingAi::inJumpAngle(Creature* target)
  * Address:	........
  * Size:	000148
  */
-bool KingAi::jumpAttackInArea(Creature* target, Vector3f* centre)
+bool KingAi::jumpAttackInArea(Creature* target, immut Vector3f* centre)
 {
 	if (qdist2(target->mSRT.t.x, target->mSRT.t.z, centre->x, centre->z) < C_KING_PROP(mKing).mAttackTerritoryRadius()
 	    && qdist2(target->mSRT.t.x, target->mSRT.t.z, mKing->mSRT.t.x, mKing->mSRT.t.z) < C_KING_PROP(mKing).mJumpAttackRangeXZ()

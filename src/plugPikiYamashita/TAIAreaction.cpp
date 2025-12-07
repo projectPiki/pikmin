@@ -23,7 +23,7 @@ DEFINE_PRINT("TAIAreaction")
  * Address:	801A8490
  * Size:	000050
  */
-bool TAIAhitCheckFlyingPiki::actByEvent(TekiEvent& event)
+bool TAIAhitCheckFlyingPiki::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Entity && event.mOther->mObjType == OBJTYPE_Piki
 	    && static_cast<Piki*>(event.mOther)->getState() == PIKISTATE_Flying) {
@@ -192,7 +192,7 @@ bool TAIAinWater::act(Teki& teki)
  * Address:	801A89CC
  * Size:	000068
  */
-bool TAIAinWater::actByEvent(TekiEvent& event)
+bool TAIAinWater::actByEvent(immut TekiEvent& event)
 {
 	bool isWater = false;
 	if (event.mEventType == TekiEventType::Ground) {
@@ -248,7 +248,7 @@ bool TAIAinWaterDamage::act(Teki& teki)
  * Address:	801A8B34
  * Size:	0000A8
  */
-bool TAIAinWaterDamage::actByEvent(TekiEvent& event)
+bool TAIAinWaterDamage::actByEvent(immut TekiEvent& event)
 {
 	bool res = TAIAinWater::actByEvent(event);
 	if (res) {

@@ -15,7 +15,7 @@ public:
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 protected:
 	// _04     = VTBL
@@ -146,7 +146,7 @@ public:
 	}
 
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 protected:
 	// _04     = VTBL
@@ -167,7 +167,7 @@ public:
 	}
 
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 protected:
 	void createEffect(Teki&);

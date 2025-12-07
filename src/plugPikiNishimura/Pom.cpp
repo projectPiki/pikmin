@@ -60,7 +60,7 @@ f32 Pom::getiMass()
  * Address:	80178134
  * Size:	000050
  */
-void Pom::init(Vector3f&)
+void Pom::init(immut Vector3f&)
 {
 	mCollisionRadius        = 20.0f;
 	mIsOrganic              = false;
@@ -180,7 +180,7 @@ void Pom::doAnimation()
  * Address:	801784AC
  * Size:	000054
  */
-void Pom::collisionCallback(CollEvent& event)
+void Pom::collisionCallback(immut CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki || event.mCollider->mObjType == OBJTYPE_Navi) {
 		if (!mIsPikiOrPlayerTouching) {

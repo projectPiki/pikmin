@@ -65,7 +65,7 @@ struct MoviePlayer {
 	void resetMovieList();
 	void fixMovieList();
 	void initMovie(MovieInfo*, int);
-	void startMovie(int movieIdx, int, Creature* target, Vector3f* pos, Vector3f* rot, u32 p6, bool isPlaying);
+	void startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 p6, bool isPlaying);
 	void sndStartMovie(MovieInfo*);
 	void initMovieFlags(MovieInfo*);
 	void sndStopMovie(MovieInfo*);
@@ -83,7 +83,7 @@ struct MoviePlayer {
 	void nextFrame();
 	void backFrame();
 
-	void setGameCamInfo(bool isGameCam, f32 fov, Vector3f& camPos, Vector3f& targetPos)
+	void setGameCamInfo(bool isGameCam, f32 fov, immut Vector3f& camPos, immut Vector3f& targetPos)
 	{
 		mIsGameCam              = isGameCam;
 		mPreCutsceneCamFov      = fov;

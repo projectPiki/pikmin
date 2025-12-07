@@ -106,7 +106,7 @@ void KoganeAi::initAI(Kogane* kogane)
  * Address:	8017646C
  * Size:	00007C
  */
-void KoganeAi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void KoganeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

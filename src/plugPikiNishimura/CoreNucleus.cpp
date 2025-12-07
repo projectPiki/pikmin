@@ -61,7 +61,7 @@ f32 CoreNucleus::getiMass()
  * Address:	8017AA70
  * Size:	000064
  */
-void CoreNucleus::init(Vector3f& pos)
+void CoreNucleus::init(immut Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
 	mSRT.s.set(0.0f, 0.0f, 0.0f);
@@ -156,7 +156,7 @@ void CoreNucleus::doAnimation()
  * Address:	8017AC98
  * Size:	000054
  */
-void CoreNucleus::collisionCallback(CollEvent& event)
+void CoreNucleus::collisionCallback(immut CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki && static_cast<Piki*>(event.mCollider)->getState() == PIKISTATE_Flying) {
 		mSlime->mDoCrashContract = true;

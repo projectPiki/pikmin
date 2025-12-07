@@ -137,7 +137,7 @@ f32 BTeki::viewGetHeight()
  * Address:	8014408C
  * Size:	0000A4
  */
-void BTeki::viewDraw(Graphics& gfx, Matrix4f& mat)
+void BTeki::viewDraw(Graphics& gfx, immut Matrix4f& mat)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mTekiAnimator->updateContext();
@@ -205,7 +205,7 @@ bool BTeki::isPellet(int objType)
  * Address:	8014422C
  * Size:	000050
  */
-f32 BTeki::calcCircleDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f32 rad2)
+f32 BTeki::calcCircleDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
 {
 	return qdist2(pos1.x, pos1.z, pos2.x, pos2.z) - rad1 - rad2;
 }
@@ -225,7 +225,7 @@ bool BTeki::alwaysUpdatePlatform()
  * Address:	80144290
  * Size:	0000A8
  */
-f32 BTeki::calcSphereDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f32 rad2)
+f32 BTeki::calcSphereDistanceStatic(immut Vector3f& pos1, f32 rad1, immut Vector3f& pos2, f32 rad2)
 {
 	return pos1.distance(pos2) - rad1 - rad2;
 }
@@ -235,7 +235,7 @@ f32 BTeki::calcSphereDistanceStatic(Vector3f& pos1, f32 rad1, Vector3f& pos2, f3
  * Address:	80144338
  * Size:	000238
  */
-bool BTeki::moveTowardStatic(Vector3f& currentPosition, Vector3f& targetPosition, f32 speed, Vector3f& output)
+bool BTeki::moveTowardStatic(immut Vector3f& currentPosition, immut Vector3f& targetPosition, f32 speed, Vector3f& output)
 {
 	NVector3f vec1(targetPosition);
 	vec1.y = 0.0f;
@@ -572,7 +572,7 @@ f32 BTeki::getVelocityAnimationSpeed(f32 p1)
  * Address:	801451E0
  * Size:	000080
  */
-void BTeki::animationKeyUpdated(PaniAnimKeyEvent& event)
+void BTeki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (event.mEventType == KEY_PlaySound) {
 		playTableSound(event.mValue);
@@ -805,7 +805,7 @@ void BTeki::updateTimers()
  * Address:	80145A88
  * Size:	000074
  */
-bool BTeki::stimulate(Interaction& interaction)
+bool BTeki::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
 		return interaction.actTeki(static_cast<Teki*>(this));
@@ -883,7 +883,7 @@ void BTeki::releasePlatCollisions()
  */
 void BTeki::createDeadEffect()
 {
-	Vector3f& effectPos = getBoundingSphereCentre();
+	immut Vector3f& effectPos = getBoundingSphereCentre();
 	int carcassSize     = getParameterI(TPI_CarcassSize);
 	if (carcassSize == 2) {
 		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, effectPos, nullptr, nullptr);
@@ -910,7 +910,7 @@ void BTeki::createDeadEffect()
  */
 void BTeki::createSoulEffect()
 {
-	Vector3f& effectPos = getBoundingSphereCentre();
+	immut Vector3f& effectPos = getBoundingSphereCentre();
 	int carcassSize     = getParameterI(TPI_CarcassSize);
 	if (carcassSize == 2) {
 		effectMgr->create(EffectMgr::EFF_Teki_SoulS, effectPos, nullptr, nullptr);
@@ -1241,7 +1241,7 @@ bool BTeki::cullableSphere(Creature& target, f32 radius)
  * Address:	80146C58
  * Size:	0000BC
  */
-bool BTeki::inSectorPosition(Vector3f& p1, f32 p2, f32 p3)
+bool BTeki::inSectorPosition(immut Vector3f& p1, f32 p2, f32 p3)
 {
 	NVector3f pos(getPosition());
 	f32 dist = pos.distanceXZ(p1);
@@ -1387,7 +1387,7 @@ bool BTeki::attackableCreature(Creature& target)
  * Address:	80147300
  * Size:	0000F0
  */
-f32 BTeki::calcTargetAngle(Vector3f& targetPos)
+f32 BTeki::calcTargetAngle(immut Vector3f& targetPos)
 {
 	STACK_PAD_VAR(1);
 
@@ -1401,7 +1401,7 @@ f32 BTeki::calcTargetAngle(Vector3f& targetPos)
  * Address:	801473F0
  * Size:	0001DC
  */
-bool BTeki::moveToward(Vector3f& target, f32 speed)
+bool BTeki::moveToward(immut Vector3f& target, f32 speed)
 {
 	return moveTowardStatic(getPosition(), target, speed, mTargetVelocity);
 }
@@ -1473,7 +1473,7 @@ bool BTeki::insideDirection(Vector3f&)
  * Address:	801476E0
  * Size:	000254
  */
-Creature* BTeki::getClosestNaviPiki(Condition& cond, f32* outDist)
+Creature* BTeki::getClosestNaviPiki(immut Condition& cond, f32* outDist)
 {
 	Creature* navi = naviMgr->getNavi();
 	if (!cond.satisfy(navi)) {
@@ -1509,7 +1509,7 @@ Creature* BTeki::getClosestNaviPiki(Condition& cond, f32* outDist)
  * Address:	80147934
  * Size:	0000DC
  */
-bool BTeki::attackTarget(Creature& target, f32 range, f32 damage, Condition& cond)
+bool BTeki::attackTarget(Creature& target, f32 range, f32 damage, immut Condition& cond)
 {
 	if (!cond.satisfy(&target)) {
 		return false;
@@ -1542,7 +1542,7 @@ void BTeki::outputHitCenter(Vector3f& outCenter)
  * Address:	........
  * Size:	0001F4
  */
-bool BTeki::attackRangeNaviPiki(Interaction&, Condition&)
+bool BTeki::attackRangeNaviPiki(immut Interaction&, immut Condition&)
 {
 	// UNUSED FUNCTION
 }
@@ -1552,7 +1552,7 @@ bool BTeki::attackRangeNaviPiki(Interaction&, Condition&)
  * Address:	........
  * Size:	00015C
  */
-bool BTeki::interactTeki(Interaction&, Condition&)
+bool BTeki::interactTeki(immut Interaction&, immut Condition&)
 {
 	// UNUSED FUNCTION
 }
@@ -1562,7 +1562,7 @@ bool BTeki::interactTeki(Interaction&, Condition&)
  * Address:	80147B18
  * Size:	00007C
  */
-bool BTeki::interactNaviPiki(Interaction& interaction, Condition& cond)
+bool BTeki::interactNaviPiki(immut Interaction& interaction, immut Condition& cond)
 {
 	bool navi = interactNavi(interaction, cond);
 	bool piki = interactPiki(interaction, cond);
@@ -1575,7 +1575,7 @@ bool BTeki::interactNaviPiki(Interaction& interaction, Condition& cond)
  * Address:	80147B94
  * Size:	000090
  */
-bool BTeki::interactNavi(Interaction& interaction, Condition& cond)
+bool BTeki::interactNavi(immut Interaction& interaction, immut Condition& cond)
 {
 	bool res   = false;
 	Navi* navi = naviMgr->getNavi();
@@ -1592,7 +1592,7 @@ bool BTeki::interactNavi(Interaction& interaction, Condition& cond)
  * Address:	80147C24
  * Size:	000150
  */
-bool BTeki::interactPiki(Interaction& interaction, Condition& cond)
+bool BTeki::interactPiki(immut Interaction& interaction, immut Condition& cond)
 {
 	bool res = false;
 	Iterator iter(pikiMgr);
@@ -1713,7 +1713,7 @@ void BTeki::flickLower(InteractFlick& flick)
  * Address:	801482EC
  * Size:	000174
  */
-bool BTeki::checkNaviPiki(Condition& cond)
+bool BTeki::checkNaviPiki(immut Condition& cond)
 {
 	Navi* navi = naviMgr->getNavi();
 	if (cond.satisfy(navi)) {
@@ -1736,7 +1736,7 @@ bool BTeki::checkNaviPiki(Condition& cond)
  * Address:	80148460
  * Size:	000148
  */
-int BTeki::countPikis(Condition& cond)
+int BTeki::countPikis(immut Condition& cond)
 {
 	int count = 0;
 	Iterator iter(pikiMgr);
@@ -1755,7 +1755,7 @@ int BTeki::countPikis(Condition& cond)
  * Address:	........
  * Size:	000148
  */
-int BTeki::countTekis(Condition& cond)
+int BTeki::countTekis(immut Condition& cond)
 {
 	int count = 0;
 	Iterator iter(tekiMgr);
@@ -1794,7 +1794,7 @@ int BTeki::getFlickDamageCount(int pikiCount)
  * Address:	801485FC
  * Size:	000040
  */
-void BTeki::eventPerformed(TekiEvent& event)
+void BTeki::eventPerformed(immut TekiEvent& event)
 {
 	TekiStrategy* tekiEvent = getStrategy();
 	tekiEvent->eventPerformed(event);
@@ -1805,7 +1805,7 @@ void BTeki::eventPerformed(TekiEvent& event)
  * Address:	8014863C
  * Size:	000098
  */
-void BTeki::collisionCallback(CollEvent& event)
+void BTeki::collisionCallback(immut CollEvent& event)
 {
 	if (!isAlive()) {
 		return;
@@ -1856,7 +1856,7 @@ void BTeki::wallCallback(Plane&, DynCollObject*)
  * Address:	80148790
  * Size:	000050
  */
-bool BTeki::interact(TekiInteractionKey& key)
+bool BTeki::interact(immut TekiInteractionKey& key)
 {
 	TekiStrategy* strat = getStrategy();
 	return strat->interact(*static_cast<Teki*>(this), key);
@@ -1867,7 +1867,7 @@ bool BTeki::interact(TekiInteractionKey& key)
  * Address:	801487E0
  * Size:	000148
  */
-bool BTeki::interactDefault(TekiInteractionKey& key)
+bool BTeki::interactDefault(immut TekiInteractionKey& key)
 {
 	STACK_PAD_VAR(1);
 	if (key.mInteractionType == TekiInteractType::Attack) {
@@ -1948,7 +1948,7 @@ f32 BTeki::getYFromSeaLevel()
  * Address:	801489D8
  * Size:	000074
  */
-void BTeki::makePositionRoute(Vector3f& pos1, Vector3f& pos2, bool includeBlockedPaths)
+void BTeki::makePositionRoute(immut Vector3f& pos1, immut Vector3f& pos2, bool includeBlockedPaths)
 {
 	int idx2 = getTargetNearestWayPoint(pos2)->mIndex;
 	int idx1 = getTargetNearestWayPoint(pos1)->mIndex;
@@ -1983,7 +1983,7 @@ void BTeki::makeWayPointRoute(int p1, int p2, bool includeBlockedPaths)
  * Address:	80148AE4
  * Size:	000034
  */
-WayPoint* BTeki::getTargetNearestWayPoint(Vector3f& pos)
+WayPoint* BTeki::getTargetNearestWayPoint(immut Vector3f& pos)
 {
 	return routeMgr->findNearestWayPoint(mPathHandle, pos, false);
 }
@@ -2180,7 +2180,7 @@ void BTeki::drawTekiDebugInfoDefault(Graphics& gfx)
  * Address:	80149374
  * Size:	0000F8
  */
-void BTeki::drawRange(Graphics& gfx, Vector3f& centre, f32 range, Colour& colour)
+void BTeki::drawRange(Graphics& gfx, immut Vector3f& centre, f32 range, immut Colour& colour)
 {
 	Matrix4f mtx1;
 	Matrix4f mtx2;
@@ -2202,7 +2202,7 @@ void BTeki::refresh2d(Graphics& gfx)
 	}
 
 	if (getTekiOption(TEKIOPT_LifeGaugeVisible)) {
-		Vector3f& pos = getCentre();
+		immut Vector3f& pos = getCentre();
 		mLifeGauge.mPosition.input(pos);
 		mLifeGauge.mOffset.y = getParameterF(TPF_LifeGaugeOffset);
 		mLifeGauge.mScale    = 5000.0f / gfx.mCamera->mNear;
@@ -2331,7 +2331,7 @@ Matrix4f& BTeki::getCameraAnimationMatrix(int idx)
  * Address:	........
  * Size:	000080
  */
-void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, Matrix4f& mtx2)
+void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& mtx2)
 {
 	Matrix4f& animMtx = getCameraAnimationMatrix(idx);
 	NMatrix4f tmp;
@@ -2345,7 +2345,7 @@ void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, Matrix4f& mtx2)
  * Address:	80149848
  * Size:	0000A8
  */
-void BTeki::outputWorldAnimationPosition(Vector3f& p1, int p2, Matrix4f& p3)
+void BTeki::outputWorldAnimationPosition(Vector3f& p1, int p2, immut Matrix4f& p3)
 {
 	NMatrix4f tmp;
 	outputWorldAnimationMatrix(tmp, p2, p3);
@@ -2357,7 +2357,7 @@ void BTeki::outputWorldAnimationPosition(Vector3f& p1, int p2, Matrix4f& p3)
  * Address:	801498F0
  * Size:	000044
  */
-int BTeki::getPositionMapCode(Vector3f& pos)
+int BTeki::getPositionMapCode(immut Vector3f& pos)
 {
 	CollTriInfo* currentTri = mapMgr->getCurrTri(pos.x, pos.z, true);
 	if (currentTri == nullptr) {
@@ -2433,7 +2433,7 @@ void BTeki::stopParticleGenerator(int param_1)
  * Address:	80149A40
  * Size:	000030
  */
-void BTeki::setParticleGeneratorPosition(int param_1, Vector3f& effectPos)
+void BTeki::setParticleGeneratorPosition(int param_1, immut Vector3f& effectPos)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {
@@ -2446,7 +2446,7 @@ void BTeki::setParticleGeneratorPosition(int param_1, Vector3f& effectPos)
  * Address:	80149A70
  * Size:	000030
  */
-void BTeki::setParticleGeneratorDirection(int param_1, Vector3f& effectDir)
+void BTeki::setParticleGeneratorDirection(int param_1, immut Vector3f& effectDir)
 {
 	zen::particleGenerator* particleGenerator = mParticleGenerators[param_1];
 	if (particleGenerator != nullptr) {

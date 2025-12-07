@@ -414,7 +414,7 @@ int MoviePlayer::translateIndex(int idx, int stage)
  * Address:	80077160
  * Size:	00049C
  */
-void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos, Vector3f* rot, u32 mask, bool isPlaying)
+void MoviePlayer::startMovie(int movieIdx, int, Creature* target, immut Vector3f* pos, immut Vector3f* rot, u32 mask, bool isPlaying)
 {
 	MovieInfo* info;
 	if (movieIdx < 0) {

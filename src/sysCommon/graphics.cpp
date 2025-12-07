@@ -85,7 +85,7 @@ void PVWPolygonColourInfo::animate(f32* data, Colour& col)
  * Address:	........
  * Size:	0000A0
  */
-f32 subExtract(f32 time, AKeyInfo& src, AKeyInfo& dest)
+f32 subExtract(f32 time, immut AKeyInfo& src, immut AKeyInfo& dest)
 {
 	f32 a = time - src.mKeyframePosition;
 	f32 b = 1.0f / (dest.mKeyframePosition - src.mKeyframePosition);
@@ -816,7 +816,7 @@ int Font::stringWidth(char* str)
  * Address:	........
  * Size:	0003A0
  */
-void GfxInfo::createCollData(Vector3f* pos, f32)
+void GfxInfo::createCollData(immut Vector3f* pos, f32)
 {
 	mTriangles = new CollTriInfo[_1C[0]];
 	mBox.resetBound();
@@ -1307,7 +1307,7 @@ void TexAttr::read(RandomAccessStream& stream)
  * Address:	800291B4
  * Size:	0002BC
  */
-void Graphics::drawCylinder(Vector3f& p1, Vector3f& p2, f32 p3, Matrix4f& p4)
+void Graphics::drawCylinder(immut Vector3f& p1, immut Vector3f& p2, f32 p3, immut Matrix4f& p4)
 {
 	useTexture(nullptr, GX_TEXMAP0);
 
@@ -1342,7 +1342,7 @@ void Graphics::drawCylinder(Vector3f& p1, Vector3f& p2, f32 p3, Matrix4f& p4)
  * Address:	........
  * Size:	0001E8
  */
-void Graphics::drawCircle(Vector3f&, f32, Matrix4f&)
+void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
@@ -1352,7 +1352,7 @@ void Graphics::drawCircle(Vector3f&, f32, Matrix4f&)
  * Address:	80029470
  * Size:	0001FC
  */
-void Graphics::drawSphere(Vector3f& p1, f32 p2, Matrix4f& p3)
+void Graphics::drawSphere(immut Vector3f& p1, f32 p2, immut Matrix4f& p3)
 {
 	useTexture(nullptr, GX_TEXMAP0);
 
@@ -1378,7 +1378,7 @@ void Graphics::drawSphere(Vector3f& p1, f32 p2, Matrix4f& p3)
  * Address:	8002966C
  * Size:	000170
  */
-void Graphics::perspPrintf(Font* font, Vector3f& pos, int p3, int p4, char* fmt, ...)
+void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, char* fmt, ...)
 {
 	char buf[PATH_MAX];
 	va_list vlist;
@@ -1440,7 +1440,7 @@ int Graphics::calcLighting(f32 intensity)
  * Address:	........
  * Size:	0001D0
  */
-int Graphics::calcSphereLighting(Vector3f&, f32)
+int Graphics::calcSphereLighting(immut Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1450,7 +1450,7 @@ int Graphics::calcSphereLighting(Vector3f&, f32)
  * Address:	........
  * Size:	0003A4
  */
-int Graphics::calcBoxLighting(BoundBox&)
+int Graphics::calcBoxLighting(immut BoundBox&)
 {
 	// UNUSED FUNCTION
 }

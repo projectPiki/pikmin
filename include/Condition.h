@@ -11,7 +11,7 @@ struct Creature;
 struct Condition {
 	Condition() { }
 
-	virtual bool satisfy(Creature*) { return true; } // _08
+	virtual bool satisfy(Creature*) immut { return true; } // _08
 
 	// _00 = VTBL
 };
@@ -20,7 +20,7 @@ struct Condition {
  * @brief TODO
  */
 struct CndIsAtari : public Condition {
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00 = VTBL
 };
@@ -29,7 +29,7 @@ struct CndIsAtari : public Condition {
  * @brief TODO
  */
 struct CndIsVisible : public Condition {
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00 = VTBL
 	// TODO: members
@@ -39,7 +39,7 @@ struct CndIsVisible : public Condition {
  * @brief TODO
  */
 struct CndStickMouth : public Condition {
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00 = VTBL
 	Creature* mMouthOwner; // _04

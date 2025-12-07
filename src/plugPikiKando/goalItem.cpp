@@ -68,7 +68,7 @@ static void printMatrix(char* name, Matrix4f& mat)
  * Address:	800EA714
  * Size:	000040
  */
-bool GoalItem::insideSafeArea(Vector3f& pos)
+bool GoalItem::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f diff = pos - mSRT.t;
 	if (diff.x * diff.x + diff.z * diff.z < 2500.0f) {

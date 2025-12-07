@@ -151,7 +151,7 @@ struct CollPart {
 	bool isDamagable();
 	CollPart* getNext();
 	bool collide(Creature*, Vector3f&);
-	bool collide(Vector3f&, f32, Vector3f&);
+	bool collide(immut Vector3f&, f32, Vector3f&);
 	void makeSphere(Sphere&);
 	void makeCylinder(Cylinder&);
 	bool samePlatShape(Shape*);
@@ -238,12 +238,12 @@ public:
 
 	void enableStick();
 	void disableStick();
-	CollPart* checkCollisionSpecial(Vector3f&, f32, CndCollPart*);
+	CollPart* checkCollisionSpecial(immut Vector3f&, f32, CndCollPart*);
 	CollPart* checkCollision(Creature*, Vector3f&);
 	bool checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
 	CollPart* getBoundingSphere();
 	CollPart* getSphere(u32 id);
-	CollPart* getNearestCollPart(Vector3f&, u32);
+	CollPart* getNearestCollPart(immut Vector3f&, u32);
 	CollPart* getRandomCollPart(u32);
 	CollPart* getPlatform(DynCollObject*);
 	void updateInfo(Graphics&, bool);
@@ -261,7 +261,7 @@ public:
 private:
 	void startUpdateRec(int);
 	void stopUpdateRec(int);
-	CollPart* checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*);
+	CollPart* checkCollisionSpecialRec(int, immut Vector3f&, f32, CndCollPart*);
 	CollPart* checkCollisionRec(Creature*, int, Vector3f&);
 	bool checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
 
@@ -311,8 +311,8 @@ struct BaseCollTriInfo {
 struct CollTriInfo : public BaseCollTriInfo {
 	CollTriInfo() { }
 
-	void init(RoomInfo*, Vector3f*);
-	int behindEdge(Vector3f&);
+	void init(RoomInfo*, immut Vector3f*);
+	int behindEdge(immut Vector3f&);
 
 	bool inTriClampTo(Vector3f& pos)
 	{
@@ -382,7 +382,7 @@ struct CollState {
 
 	// unused/inlined:
 	void resetCollisions(Shape*);
-	bool add(Vector3f&, Vector3f&, RigidBody*);
+	bool add(immut Vector3f&, immut Vector3f&, RigidBody*);
 
 	int mStatus;               // _00
 	f32 _04;                   // _04

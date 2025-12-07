@@ -70,7 +70,7 @@ bool CPlate::canNaviRunFast()
  * Address:	800A5988
  * Size:	000004
  */
-void CPlate::init(Vector3f&)
+void CPlate::init(immut Vector3f&)
 {
 }
 
@@ -79,7 +79,7 @@ void CPlate::init(Vector3f&)
  * Address:	800A598C
  * Size:	0001C0
  */
-void CPlate::setPos(Vector3f& position, f32 angle, Vector3f& velocity)
+void CPlate::setPos(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
 	f32 offset = mCPlateParms.mStartOffset();
 	if (speedy_sqrtf(mCurrentVelocity.x * mCurrentVelocity.x + mCurrentVelocity.z * mCurrentVelocity.z) > 5.0f) {
@@ -102,7 +102,7 @@ void CPlate::setPos(Vector3f& position, f32 angle, Vector3f& velocity)
  * Address:	800A5B4C
  * Size:	0001BC
  */
-void CPlate::setPosGray(Vector3f& position, f32 angle, Vector3f& velocity)
+void CPlate::setPosGray(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
 	f32 offset = mCPlateParms.mStartOffset();
 	if (speedy_sqrtf(mCurrentVelocity.x * mCurrentVelocity.x + mCurrentVelocity.z * mCurrentVelocity.z) > 5.0f) {
@@ -124,7 +124,7 @@ void CPlate::setPosGray(Vector3f& position, f32 angle, Vector3f& velocity)
  * Address:	........
  * Size:	0001E0
  */
-void CPlate::setPosNeutral(Vector3f& position, f32 angle, Vector3f& velocity)
+void CPlate::setPosNeutral(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
 	setPos(position, angle, velocity);
 	mIsNeutral   = true;
@@ -285,7 +285,7 @@ void CPlate::sortByColor(Piki* piki)
  * Address:	800A6394
  * Size:	0002DC
  */
-void CPlate::rearrangeSlot(Vector3f& p1, f32, Vector3f&)
+void CPlate::rearrangeSlot(immut Vector3f& p1, f32, immut Vector3f&)
 {
 	for (int i = mUsedSlotCount - 1; i >= 1; i--) {
 		for (int j = i; j >= 1; j--) {

@@ -24,7 +24,7 @@ DEFINE_PRINT("bombItem")
  * Address:	800EA190
  * Size:	0000A8
  */
-void BombItem::collisionCallback(CollEvent& coll)
+void BombItem::collisionCallback(immut CollEvent& coll)
 {
 	Creature* obj = coll.mCollider;
 	int state     = getCurrState()->getID();

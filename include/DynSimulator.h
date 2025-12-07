@@ -89,17 +89,17 @@ struct RigidBody : public Node {
 			mCollisionBounds.expandBound(state.mBodyPoints[i + mHookPointCount]);
 		}
 	}
-	virtual bool checkForCollisions(int, CollState&);                                                             // _48
-	virtual void updateVecQuats(int, f32);                                                                        // _4C
-	virtual void updateViewInfo(int, int);                                                                        // _50
-	virtual void applyBodyFriction(int configIdx, Vector3f& contactNormal, Vector3f& contactPoint, Vector3f& vel) // _54
+	virtual bool checkForCollisions(int, CollState&);                                                                               // _48
+	virtual void updateVecQuats(int, f32);                                                                                          // _4C
+	virtual void updateViewInfo(int, int);                                                                                          // _50
+	virtual void applyBodyFriction(int configIdx, immut Vector3f& contactNormal, immut Vector3f& contactPoint, immut Vector3f& vel) // _54
 	{
 		Vector3f frictionForce(vel);
 		frictionForce.project(contactNormal);           // keep only tangential component
 		frictionForce.multiply(-vel.length() * 0.125f); // scale friction by velocity + oppose motion
 		applyForce(configIdx, Vector3f(frictionForce), contactPoint);
 	}
-	virtual void makeBodyQuat(Quat&) { }                 // _58
+	virtual void makeBodyQuat(immut Quat&) { }           // _58
 	virtual void initRender(int);                        // _5C
 	virtual void shadrender(Graphics&, LightCamera*) { } // _60
 	virtual f32 getViewScale() { return 1.0f; }          // _64
@@ -107,9 +107,9 @@ struct RigidBody : public Node {
 	virtual void applyGroundForces(int, CollGroup*);     // _6C
 
 	void initializeBody();
-	void applyCMForce(Vector3f&);
+	void applyCMForce(immut Vector3f&);
 
-	void applyForce(int configIdx, Vector3f& force, Vector3f& appliedPoint)
+	void applyForce(int configIdx, immut Vector3f& force, immut Vector3f& appliedPoint)
 	{
 		Vector3f arm = appliedPoint - mIntegrationStates[configIdx].mPosition;
 		mLinearAccel.x += force.x * mMass;

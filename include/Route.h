@@ -209,14 +209,14 @@ public:
 	PathFinder* getPathFinder(u32 handle);
 	int getNumWayPoints(u32 handle);
 	Vector3f getSafePosition(u32 handle, Vector3f& pos);
-	void findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, Vector3f& pos, bool allowWater, bool requireOpen,
-	                     bool avoidDestination);
-	void findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, Vector3f& pos, bool allowWater,
+	void findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos, bool allowWater,
+	                     bool requireOpen, bool avoidDestination);
+	void findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos, bool allowWater,
 	                             bool requireOpen, bool avoidDestination);
-	WayPoint* findNearestWayPoint(u32 handle, Vector3f& pos, bool excludeWater);
-	WayPoint* findNearestOffWayPoint(u32 handle, Vector3f& pos, bool excludeWater);
+	WayPoint* findNearestWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater);
+	WayPoint* findNearestOffWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater);
 	void createOffPlane(u32 handle, Plane& plane, WayPoint* wp);
-	WayPoint* findNearestWayPointAll(u32 handle, Vector3f& pos);
+	WayPoint* findNearestWayPointAll(u32 handle, immut Vector3f& pos);
 	WayPoint* getWayPoint(u32 handle, int wpIdx);
 	void construct(MapMgr* map);
 	void initLinks();
@@ -310,10 +310,10 @@ public:
 	int findSync(Buffer* bufferList, int startWPIdx, int destWPIdx, bool includeBlockedPaths);
 	WayPoint* getWayPoint(int wpIdx);
 	int selectWay(Buffer& buf, int destWPIdx, Buffer* bufferList, int wpCount, bool includeBlockedPaths);
-	int findSyncOnyon(Vector3f& startPos, Buffer* bufferList, int startWPIdx, int goalType, bool ignoreClosedWaypoints);
+	int findSyncOnyon(immut Vector3f& startPos, Buffer* bufferList, int startWPIdx, int goalType, bool ignoreClosedWaypoints);
 	int selectWayOnyon(int additionalCost, int goalType, Buffer& buf, int destWPIdx, Buffer* bufferList, int visitedBufferCount,
 	                   bool ignoreClosedWaypoints);
-	int selectSecondBestWayOnyon(Vector3f& curPos, int& secondBestCost, int goalType, Buffer& buf, int destWPIdx, Buffer* bufferList,
+	int selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBestCost, int goalType, Buffer& buf, int destWPIdx, Buffer* bufferList,
 	                             int bufIdx, bool ignoreClosedWaypoints);
 
 	// unused/inlined:

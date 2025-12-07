@@ -34,15 +34,15 @@ struct Interaction {
 	{
 	}
 
-	virtual bool actCommon(Creature*) { return true; }       // _08
-	virtual bool actPiki(Piki*) { return true; }             // _0C
-	virtual bool actTeki(Teki*) { return true; }             // _10
-	virtual bool actNavi(Navi*) { return true; }             // _14
-	virtual bool actBoss(Boss*) { return true; }             // _18
-	virtual bool actPellet(Pellet*) { return true; }         // _1C
-	virtual bool actHinderRock(HinderRock*) { return true; } // _20
-	virtual bool actBridge(Bridge*) { return true; }         // _24
-	virtual bool actItem(ItemCreature*) { return true; }     // _28
+	virtual bool actCommon(Creature*) immut { return true; }       // _08
+	virtual bool actPiki(Piki*) immut { return true; }             // _0C
+	virtual bool actTeki(Teki*) immut { return true; }             // _10
+	virtual bool actNavi(Navi*) immut { return true; }             // _14
+	virtual bool actBoss(Boss*) immut { return true; }             // _18
+	virtual bool actPellet(Pellet*) immut { return true; }         // _1C
+	virtual bool actHinderRock(HinderRock*) immut { return true; } // _20
+	virtual bool actBridge(Bridge*) immut { return true; }         // _24
+	virtual bool actItem(ItemCreature*) immut { return true; }     // _28
 
 	// _00 = VTBL
 	Creature* mOwner; // _04, creature causing the interaction
@@ -60,14 +60,14 @@ struct InteractAttack : public Interaction {
 	{
 	}
 
-	virtual bool actCommon(Creature*);   // _08
-	virtual bool actPiki(Piki*);         // _0C
-	virtual bool actTeki(Teki*);         // _10
-	virtual bool actNavi(Navi*);         // _14
-	virtual bool actBoss(Boss*);         // _18
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actCommon(Creature*) immut;   // _08
+	virtual bool actPiki(Piki*) immut;         // _0C
+	virtual bool actTeki(Teki*) immut;         // _10
+	virtual bool actNavi(Navi*) immut;         // _14
+	virtual bool actBoss(Boss*) immut;         // _18
+	virtual bool actItem(ItemCreature*) immut; // _28
 
-	int getDamagePortion();
+	int getDamagePortion() immut;
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -85,7 +85,7 @@ struct InteractBikkuri : public Interaction {
 	{
 	}
 
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actItem(ItemCreature*) immut; // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -104,11 +104,11 @@ struct InteractBomb : public Interaction {
 	}
 
 	// need this to not be in order, otherwise vtable generates in interactBattle
-	virtual bool actTeki(Teki*);         // _10
-	virtual bool actPiki(Piki*);         // _0C
-	virtual bool actNavi(Navi*);         // _14
-	virtual bool actBoss(Boss*);         // _18
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actTeki(Teki*) immut;         // _10
+	virtual bool actPiki(Piki*) immut;         // _0C
+	virtual bool actNavi(Navi*) immut;         // _14
+	virtual bool actBoss(Boss*) immut;         // _18
+	virtual bool actItem(ItemCreature*) immut; // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -127,7 +127,7 @@ struct InteractBreak : public Interaction {
 		_0C         = p3;
 	}
 
-	virtual bool actBridge(Bridge*); // _24
+	virtual bool actBridge(Bridge*) immut; // _24
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -145,8 +145,8 @@ struct InteractBubble : public Interaction {
 		mDamage = damage;
 	}
 
-	virtual bool actPiki(Piki*); // _0C
-	virtual bool actNavi(Navi*); // _14
+	virtual bool actPiki(Piki*) immut; // _0C
+	virtual bool actNavi(Navi*) immut; // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -164,8 +164,8 @@ struct InteractBuild : public Interaction {
 		mProgressRate = rate;
 	}
 
-	virtual bool actBridge(Bridge*);     // _24
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actBridge(Bridge*) immut;     // _24
+	virtual bool actItem(ItemCreature*) immut; // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -184,8 +184,8 @@ struct InteractBury : public Interaction {
 		_0C         = p3;
 	}
 
-	virtual bool actPiki(Piki*); // _0C
-	virtual bool actNavi(Navi*); // _14
+	virtual bool actPiki(Piki*) immut; // _0C
+	virtual bool actNavi(Navi*) immut; // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -199,7 +199,7 @@ struct InteractBury : public Interaction {
 struct InteractChangeColor : public Interaction {
 	inline InteractChangeColor(); // TODO: probably
 
-	virtual bool actPiki(Piki*); // _0C
+	virtual bool actPiki(Piki*) immut; // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -212,7 +212,7 @@ struct InteractChangeColor : public Interaction {
 struct InteractChangeHappa : public Interaction {
 	inline InteractChangeHappa(); // TODO: probably
 
-	virtual bool actPiki(Piki*); // _0C
+	virtual bool actPiki(Piki*) immut; // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -229,8 +229,8 @@ struct InteractFire : public Interaction {
 		mDamage = damage;
 	}
 
-	virtual bool actPiki(Piki*); // _0C
-	virtual bool actNavi(Navi*); // _14
+	virtual bool actPiki(Piki*) immut; // _0C
+	virtual bool actNavi(Navi*) immut; // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -249,12 +249,12 @@ struct InteractFlick : public Interaction {
 		mAngle     = angle;
 	}
 
-	virtual bool actCommon(Creature*);   // _08
-	virtual bool actPiki(Piki*);         // _0C
-	virtual bool actTeki(Teki*);         // _10
-	virtual bool actNavi(Navi*);         // _14
-	virtual bool actBoss(Boss*);         // _18
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actCommon(Creature*) immut;   // _08
+	virtual bool actPiki(Piki*) immut;         // _0C
+	virtual bool actTeki(Teki*) immut;         // _10
+	virtual bool actNavi(Navi*) immut;         // _14
+	virtual bool actBoss(Boss*) immut;         // _18
+	virtual bool actItem(ItemCreature*) immut; // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -272,7 +272,7 @@ struct InteractFlute : public Interaction {
 	{
 	}
 
-	virtual bool actTeki(Teki*); // _10
+	virtual bool actTeki(Teki*) immut; // _10
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -283,13 +283,13 @@ struct InteractFlute : public Interaction {
  * @brief TODO
  */
 struct InteractGeyzer : public Interaction {
-	inline InteractGeyzer(Creature* owner, Vector3f& p2)
+	inline InteractGeyzer(Creature* owner, immut Vector3f& p2)
 	    : Interaction(owner)
 	    , _08(p2)
 	{
 	}
 
-	virtual bool actNavi(Navi*); // _14
+	virtual bool actNavi(Navi*) immut; // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -305,7 +305,7 @@ struct InteractGrab : public Interaction {
 	{
 	}
 
-	virtual bool actCommon(Creature*); // _08
+	virtual bool actCommon(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -316,7 +316,7 @@ struct InteractGrab : public Interaction {
  * @brief TODO
  */
 struct InteractHitEffect : public Interaction {
-	InteractHitEffect(Creature* owner, Vector3f& effPos, Vector3f& effDir, CollPart* part)
+	InteractHitEffect(Creature* owner, immut Vector3f& effPos, immut Vector3f& effDir, CollPart* part)
 	    : Interaction(owner)
 	    , mEffectPos(effPos)
 	    , mEffectDir(effDir)
@@ -324,8 +324,8 @@ struct InteractHitEffect : public Interaction {
 	{
 	}
 
-	virtual bool actTeki(Teki*); // _10
-	virtual bool actBoss(Boss*); // _18
+	virtual bool actTeki(Teki*) immut; // _10
+	virtual bool actBoss(Boss*) immut; // _18
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -344,9 +344,9 @@ struct InteractKill : public Interaction {
 		_08 = p2;
 	}
 
-	virtual bool actPiki(Piki*);     // _0C
-	virtual bool actNavi(Navi*);     // _14
-	virtual bool actPellet(Pellet*); // _1C
+	virtual bool actPiki(Piki*) immut;     // _0C
+	virtual bool actNavi(Navi*) immut;     // _14
+	virtual bool actPellet(Pellet*) immut; // _1C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -363,9 +363,9 @@ struct InteractPress : public Interaction {
 		mDamage = damage;
 	}
 
-	virtual bool actPiki(Piki*); // _0C
-	virtual bool actTeki(Teki*); // _10
-	virtual bool actNavi(Navi*); // _14
+	virtual bool actPiki(Piki*) immut; // _0C
+	virtual bool actTeki(Teki*) immut; // _10
+	virtual bool actNavi(Navi*) immut; // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -381,9 +381,9 @@ struct InteractPullout : public Interaction {
 	{
 	}
 
-	virtual bool actCommon(Creature*);   // _08
-	virtual bool actPiki(Piki*);         // _0C
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actCommon(Creature*) immut;   // _08
+	virtual bool actPiki(Piki*) immut;         // _0C
+	virtual bool actItem(ItemCreature*) immut; // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -399,7 +399,7 @@ struct InteractPush : public Interaction {
 	{
 	}
 
-	virtual bool actHinderRock(HinderRock*); // _20
+	virtual bool actHinderRock(HinderRock*) immut; // _20
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -416,7 +416,7 @@ struct InteractRelease : public Interaction {
 		_08 = p2;
 	}
 
-	virtual bool actCommon(Creature*); // _08
+	virtual bool actCommon(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -429,7 +429,7 @@ struct InteractRelease : public Interaction {
 struct InteractSlimeAttack : public Interaction {
 	inline InteractSlimeAttack(); // TODO: probably
 
-	virtual bool actCommon(Creature*); // _08
+	virtual bool actCommon(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -445,7 +445,7 @@ struct InteractSpore : public Interaction {
 	{
 	}
 
-	virtual bool actPiki(Piki*); // _0C
+	virtual bool actPiki(Piki*) immut; // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -461,7 +461,7 @@ struct InteractSuck : public Interaction {
 	{
 	}
 
-	virtual bool actNavi(Navi*); // _14
+	virtual bool actNavi(Navi*) immut; // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -479,12 +479,12 @@ struct InteractSwallow : public Interaction {
 		mMouthPart = mouthPart;
 	}
 
-	virtual bool actCommon(Creature*);   // _08
-	virtual bool actPiki(Piki*);         // _0C
-	virtual bool actTeki(Teki*);         // _10
-	virtual bool actNavi(Navi*);         // _14
-	virtual bool actPellet(Pellet*);     // _1C
-	virtual bool actItem(ItemCreature*); // _28
+	virtual bool actCommon(Creature*) immut;   // _08
+	virtual bool actPiki(Piki*) immut;         // _0C
+	virtual bool actTeki(Teki*) immut;         // _10
+	virtual bool actNavi(Navi*) immut;         // _14
+	virtual bool actPellet(Pellet*) immut;     // _1C
+	virtual bool actItem(ItemCreature*) immut; // _28
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -501,7 +501,7 @@ struct InteractTalk : public Interaction {
 	{
 	}
 
-	virtual bool actPiki(Piki*); // _0C
+	virtual bool actPiki(Piki*) immut; // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -517,7 +517,7 @@ struct InteractThrowAway : public Interaction {
 	{
 	}
 
-	virtual bool actPiki(Piki*); // _0C
+	virtual bool actPiki(Piki*) immut; // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -533,7 +533,7 @@ struct InteractWarn : public Interaction {
 	{
 	}
 
-	virtual bool actPiki(Piki*); // _0C
+	virtual bool actPiki(Piki*) immut; // _0C
 
 	// _00     = VTBL
 	// _00-_08 = Interaction
@@ -551,9 +551,9 @@ struct InteractWind : public Interaction {
 	{
 	}
 
-	virtual bool actCommon(Creature*); // _08
-	virtual bool actPiki(Piki*);       // _0C
-	virtual bool actNavi(Navi*);       // _14
+	virtual bool actCommon(Creature*) immut; // _08
+	virtual bool actPiki(Piki*) immut;       // _0C
+	virtual bool actNavi(Navi*) immut;       // _14
 
 	// _00     = VTBL
 	// _00-_08 = Interaction

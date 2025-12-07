@@ -21,7 +21,7 @@ DEFINE_PRINT("tekiinteraction");
  * Address:	........
  * Size:	00000C
  */
-TekiInteractionKey::TekiInteractionKey(int type, Interaction* interaction)
+TekiInteractionKey::TekiInteractionKey(int type, immut Interaction* interaction)
 {
 	mInteractionType = type;
 	mInteraction     = interaction;
@@ -32,7 +32,7 @@ TekiInteractionKey::TekiInteractionKey(int type, Interaction* interaction)
  * Address:	8014A40C
  * Size:	000044
  */
-bool InteractAttack::actTeki(Teki* teki)
+bool InteractAttack::actTeki(Teki* teki) immut
 {
 	return teki->interact(TekiInteractionKey(TekiInteractType::Attack, this));
 }
@@ -42,7 +42,7 @@ bool InteractAttack::actTeki(Teki* teki)
  * Address:	8014A450
  * Size:	000090
  */
-bool InteractBomb::actTeki(Teki* teki)
+bool InteractBomb::actTeki(Teki* teki) immut
 {
 	f32 bombFactor = teki->getParameterF(TPF_BombDamageRate);
 	return teki->interact(TekiInteractionKey(TekiInteractType::Attack, &InteractAttack(mOwner, nullptr, mDamage * bombFactor, false)));
@@ -53,7 +53,7 @@ bool InteractBomb::actTeki(Teki* teki)
  * Address:	8014A4E0
  * Size:	000044
  */
-bool InteractHitEffect::actTeki(Teki* teki)
+bool InteractHitEffect::actTeki(Teki* teki) immut
 {
 	return teki->interact(TekiInteractionKey(TekiInteractType::HitEffect, this));
 }
@@ -63,7 +63,7 @@ bool InteractHitEffect::actTeki(Teki* teki)
  * Address:	8014A524
  * Size:	000008
  */
-bool InteractSwallow::actTeki(Teki*)
+bool InteractSwallow::actTeki(Teki*) immut
 {
 	return true;
 }
@@ -73,7 +73,7 @@ bool InteractSwallow::actTeki(Teki*)
  * Address:	8014A52C
  * Size:	000058
  */
-bool InteractPress::actTeki(Teki* teki)
+bool InteractPress::actTeki(Teki* teki) immut
 {
 	teki->eventPerformed(TekiEvent(TekiEventType::Pressed, teki, mOwner));
 	return true;
@@ -84,7 +84,7 @@ bool InteractPress::actTeki(Teki* teki)
  * Address:	8014A584
  * Size:	000008
  */
-bool InteractFlick::actTeki(Teki*)
+bool InteractFlick::actTeki(Teki*) immut
 {
 	return true;
 }

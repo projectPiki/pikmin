@@ -122,10 +122,10 @@ enum {
  * @brief TODO
  */
 struct TekiInteractionKey {
-	TekiInteractionKey(int type, Interaction* interaction);
+	TekiInteractionKey(int type, immut Interaction* interaction);
 
-	int mInteractionType;      // _00
-	Interaction* mInteraction; // _04
+	int mInteractionType;            // _00
+	immut Interaction* mInteraction; // _04
 };
 
 BEGIN_ENUM_TYPE(TekiEventType)
@@ -186,56 +186,56 @@ struct BTeki : public Creature, virtual public PaniAnimKeyListener, public Pelle
 public:
 	BTeki();
 
-	virtual bool alwaysUpdatePlatform();                 // _18
-	virtual void startAI(int);                           // _34
-	virtual f32 getiMass();                              // _38
-	virtual void doStore(CreatureInf*);                  // _48
-	virtual void doRestore(CreatureInf*);                // _4C
-	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual bool stimulate(Interaction&);                // _A0
-	virtual void collisionCallback(CollEvent&);          // _A8
-	virtual void bounceCallback();                       // _AC
-	virtual void wallCallback(Plane&, DynCollObject*);   // _B4
-	virtual void dump();                                 // _C8
-	virtual void update();                               // _E0
-	virtual void refresh(Graphics&);                     // _EC
-	virtual void refresh2d(Graphics&);                   // _F0
-	virtual void doAI();                                 // _104
-	virtual void doAnimation();                          // _108
-	virtual void viewStartTrembleMotion(f32);            // _148
-	virtual void viewSetMotionSpeed(f32);                // _14C
-	virtual void viewDoAnimation();                      // _150
-	virtual void viewFinishMotion();                     // _154
-	virtual void viewDraw(Graphics&, Matrix4f&);         // _158
-	virtual void viewKill();                             // _15C
-	virtual Vector3f viewGetScale();                     // _160
-	virtual f32 viewGetBottomRadius();                   // _164
-	virtual f32 viewGetHeight();                         // _168
-	virtual void init(int tekiType);                     // _16C
-	virtual void reset();                                // _170
-	virtual void startMotion(int);                       // _174
-	virtual void die();                                  // _178
-	virtual void updateTimers();                         // _17C
-	virtual void gravitate(f32);                         // _180
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _184 (weak)
-	virtual f32 getTekiCollisionSize();                  // _188
-	virtual void makeDamaged();                          // _18C
-	virtual void startDamageMotion(f32, f32);            // _190
-	virtual Teki* generateTeki(int);                     // _194
-	virtual Teki* spawnTeki(int);                        // _198
-	virtual void shootBall(Creature&);                   // _19C
-	virtual void eventPerformed(TekiEvent&);             // _1A0
-	virtual bool interact(TekiInteractionKey&);          // _1A4
-	virtual bool interactDefault(TekiInteractionKey&);   // _1A8
-	virtual void drawDefault(Graphics&);                 // _1AC
-	virtual void drawTekiShape(Graphics&);               // _1B0
-	virtual void drawTekiDebugInfo(Graphics&);           // _1B4
-	virtual void drawTekiDebugInfoDefault(Graphics&);    // _1B8
-	virtual void playTableSound(int);                    // _1BC
-	virtual void playSound(int);                         // _1C0
-	virtual void stopSound(int);                         // _1C4
-	virtual void createTekiEffect(int);                  // _1C8
-	virtual void setTekiOption(int opt)                  // _1CC
+	virtual bool alwaysUpdatePlatform();                       // _18
+	virtual void startAI(int);                                 // _34
+	virtual f32 getiMass();                                    // _38
+	virtual void doStore(CreatureInf*);                        // _48
+	virtual void doRestore(CreatureInf*);                      // _4C
+	virtual bool ignoreAtari(Creature*);                       // _98
+	virtual bool stimulate(immut Interaction&);                // _A0
+	virtual void collisionCallback(immut CollEvent&);          // _A8
+	virtual void bounceCallback();                             // _AC
+	virtual void wallCallback(Plane&, DynCollObject*);         // _B4
+	virtual void dump();                                       // _C8
+	virtual void update();                                     // _E0
+	virtual void refresh(Graphics&);                           // _EC
+	virtual void refresh2d(Graphics&);                         // _F0
+	virtual void doAI();                                       // _104
+	virtual void doAnimation();                                // _108
+	virtual void viewStartTrembleMotion(f32);                  // _148
+	virtual void viewSetMotionSpeed(f32);                      // _14C
+	virtual void viewDoAnimation();                            // _150
+	virtual void viewFinishMotion();                           // _154
+	virtual void viewDraw(Graphics&, immut Matrix4f&);         // _158
+	virtual void viewKill();                                   // _15C
+	virtual Vector3f viewGetScale();                           // _160
+	virtual f32 viewGetBottomRadius();                         // _164
+	virtual f32 viewGetHeight();                               // _168
+	virtual void init(int tekiType);                           // _16C
+	virtual void reset();                                      // _170
+	virtual void startMotion(int);                             // _174
+	virtual void die();                                        // _178
+	virtual void updateTimers();                               // _17C
+	virtual void gravitate(f32);                               // _180
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _184 (weak)
+	virtual f32 getTekiCollisionSize();                        // _188
+	virtual void makeDamaged();                                // _18C
+	virtual void startDamageMotion(f32, f32);                  // _190
+	virtual Teki* generateTeki(int);                           // _194
+	virtual Teki* spawnTeki(int);                              // _198
+	virtual void shootBall(Creature&);                         // _19C
+	virtual void eventPerformed(immut TekiEvent&);             // _1A0
+	virtual bool interact(immut TekiInteractionKey&);          // _1A4
+	virtual bool interactDefault(immut TekiInteractionKey&);   // _1A8
+	virtual void drawDefault(Graphics&);                       // _1AC
+	virtual void drawTekiShape(Graphics&);                     // _1B0
+	virtual void drawTekiDebugInfo(Graphics&);                 // _1B4
+	virtual void drawTekiDebugInfoDefault(Graphics&);          // _1B8
+	virtual void playTableSound(int);                          // _1BC
+	virtual void playSound(int);                               // _1C0
+	virtual void stopSound(int);                               // _1C4
+	virtual void createTekiEffect(int);                        // _1C8
+	virtual void setTekiOption(int opt)                        // _1CC
 	{
 		mTekiOptions |= opt;
 	}
@@ -293,71 +293,71 @@ public:
 	bool nearestAngleTarget(Creature*);
 	bool cullableCenter(Creature&, f32);
 	bool cullableSphere(Creature&, f32);
-	bool inSectorPosition(Vector3f&, f32, f32);
+	bool inSectorPosition(immut Vector3f&, f32, f32);
 	bool visibleCreature(Creature&);
 	bool separateCreature(Creature&);
 	bool contactCreature(Creature&);
 	bool attackableCreature(Creature&);
-	f32 calcTargetAngle(Vector3f&);
-	bool moveToward(Vector3f&, f32);
+	f32 calcTargetAngle(immut Vector3f&);
+	bool moveToward(immut Vector3f&, f32);
 	bool turnToward(f32 targetAngle, f32 turnSpeed);
 	void rotateTeki(f32);
-	Creature* getClosestNaviPiki(Condition&, f32*);
-	bool attackTarget(Creature&, f32, f32, Condition&);
+	Creature* getClosestNaviPiki(immut Condition&, f32*);
+	bool attackTarget(Creature&, f32, f32, immut Condition&);
 	void outputHitCenter(Vector3f&);
-	bool interactNaviPiki(Interaction&, Condition&);
-	bool interactNavi(Interaction&, Condition&);
-	bool interactPiki(Interaction&, Condition&);
+	bool interactNaviPiki(immut Interaction&, immut Condition&);
+	bool interactNavi(immut Interaction&, immut Condition&);
+	bool interactPiki(immut Interaction&, immut Condition&);
 	void flick();
 	void flick(InteractFlick&, InteractFlick&);
 	void flickUpper();
 	void flickUpper(InteractFlick&);
 	void flickLower();
 	void flickLower(InteractFlick&);
-	bool checkNaviPiki(Condition&);
-	int countPikis(Condition&);
+	bool checkNaviPiki(immut Condition&);
+	int countPikis(immut Condition&);
 	int getFlickDamageCount(int);
 	f32 getGravity();
 	TekiStrategy* getStrategy();
 	f32 getSeaLevel();
 	f32 getYFromSeaLevel();
-	void makePositionRoute(Vector3f&, Vector3f&, bool);
+	void makePositionRoute(immut Vector3f&, immut Vector3f&, bool);
 	void makeWayPointRoute(int, int, bool);
-	WayPoint* getTargetNearestWayPoint(Vector3f&);
+	WayPoint* getTargetNearestWayPoint(immut Vector3f&);
 	WayPoint* getNearestWayPoint();
 	WayPoint* getWayPoint(int);
 	WayPoint* getRouteWayPoint(int);
 	void updateLifeGauge();
-	void drawRange(Graphics&, Vector3f&, f32, Colour&);
+	void drawRange(Graphics&, immut Vector3f&, f32, immut Colour&);
 	CollPart* getFreeSlot();
 	bool isFreeCollPart(CollPart*);
-	void outputWorldAnimationPosition(Vector3f&, int, Matrix4f&);
-	int getPositionMapCode(Vector3f&);
+	void outputWorldAnimationPosition(Vector3f&, int, immut Matrix4f&);
+	int getPositionMapCode(immut Vector3f&);
 	int getPositionMapCode();
 	bool inWaterTeki();
 	void moveNestPosition();
 	void startParticleGenerator(int);
 	void stopParticleGenerator(int);
-	void setParticleGeneratorPosition(int, Vector3f&);
-	void setParticleGeneratorDirection(int, Vector3f&);
+	void setParticleGeneratorPosition(int, immut Vector3f&);
+	void setParticleGeneratorDirection(int, immut Vector3f&);
 	f32 calcCollisionDistance(Creature&);
 	f32 getCollisionSize();
-	void setCorpsePartJoint(int, int);                          // unused
-	void outputDirectionPosition(Vector3f&, f32, f32);          // unused
-	void jumpTo(Vector3f&, f32);                                // unused
-	bool insideDirection(Vector3f&);                            // unused
-	bool attackRangeNaviPiki(Interaction&, Condition&);         // unused
-	bool interactTeki(Interaction&, Condition&);                // unused
-	int countTekis(Condition&);                                 // unused
-	Matrix4f& getCameraAnimationMatrix(int);                    // unused
-	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
-	Vector3f getCollisionCenter();                              // unused
+	void setCorpsePartJoint(int, int);                                // unused
+	void outputDirectionPosition(Vector3f&, f32, f32);                // unused
+	void jumpTo(Vector3f&, f32);                                      // unused
+	bool insideDirection(Vector3f&);                                  // unused
+	bool attackRangeNaviPiki(immut Interaction&, immut Condition&);   // unused
+	bool interactTeki(immut Interaction&, immut Condition&);          // unused
+	int countTekis(immut Condition&);                                 // unused
+	Matrix4f& getCameraAnimationMatrix(int);                          // unused
+	void outputWorldAnimationMatrix(Matrix4f&, int, immut Matrix4f&); // unused
+	Vector3f getCollisionCenter();                                    // unused
 
 	static bool arrivedAt(f32, f32);
 	static bool isPellet(int);
-	static f32 calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32);
-	static f32 calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32);
-	static bool moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&);
+	static f32 calcCircleDistanceStatic(immut Vector3f&, f32, immut Vector3f&, f32);
+	static f32 calcSphereDistanceStatic(immut Vector3f&, f32, immut Vector3f&, f32);
+	static bool moveTowardStatic(immut Vector3f&, immut Vector3f&, f32, Vector3f&);
 
 	// these are all correct name-wise according to the map or the DLL.
 	void setDirection(f32 dir) { mFaceDirection = dir; }
@@ -390,12 +390,12 @@ public:
 
 	// NB: THIS INLINE NEEDS TO BE ABOVE STOPMOVE OR TAIIWAGEN SDATA BREAKS
 	static void outputDirectionVector(f32 angle, Vector3f& outVec) { outVec.set(NMathF::sin(angle), 0.0f, NMathF::cos(angle)); }
-	static f32 calcDirection(Vector3f& dir) { return NMathF::atan2(dir.x, dir.z); }
+	static f32 calcDirection(immut Vector3f& dir) { return NMathF::atan2(dir.x, dir.z); }
 
-	void inputDirectionVector(Vector3f& dir) { setDirection(calcDirection(dir)); }
+	void inputDirectionVector(immut Vector3f& dir) { setDirection(calcDirection(dir)); }
 
-	void inputVelocity(Vector3f& vel) { mVelocity.input(vel); }
-	void inputDrive(Vector3f& drive) { mTargetVelocity.input(drive); }
+	void inputVelocity(immut Vector3f& vel) { mVelocity.input(vel); }
+	void inputDrive(immut Vector3f& drive) { mTargetVelocity.input(drive); }
 	void stopVelocity() { inputVelocity(Vector3f(0.0f, 0.0f, 0.0f)); }
 	void stopDrive() { inputDrive(Vector3f(0.0f, 0.0f, 0.0f)); }
 	void stopMove()
@@ -426,7 +426,7 @@ public:
 	f32 getScale() { return getScaleRate() * 1.0f; }
 
 	f32 calcSphereDistance(Creature& other) { return getPosition().distance(other.getPosition()); }
-	f32 calcTargetDirection(Vector3f& targetPos)
+	f32 calcTargetDirection(immut Vector3f& targetPos)
 	{
 		Vector3f dir;
 		dir.sub2(targetPos, getPosition());
@@ -519,7 +519,7 @@ public:
 	NTeki();
 
 	void sendMessage(int);
-	void receiveMessage(TekiMessage&);
+	void receiveMessage(immut TekiMessage&);
 
 	// _00       = VTBL
 	// _000-_454 = BTeki
@@ -573,8 +573,8 @@ public:
 	}
 
 	bool isNaviWatch();
-	void moveTowardPriorityFaceDir(Vector3f&, f32);
-	void moveTowardPriorityFaceDir(Vector3f&, f32, f32);
+	void moveTowardPriorityFaceDir(immut Vector3f&, f32);
+	void moveTowardPriorityFaceDir(immut Vector3f&, f32, f32);
 	bool turnToTarget();
 	void flyingStay(f32);
 	void killStickToMouthPiki();
@@ -667,7 +667,7 @@ public:
 	void setSpeed(f32 speed) { mSpeed = speed; }
 	void addSpeed(f32 amt) { mSpeed += amt; }
 
-	void initCylinderTYpePtclCallBack(Teki* p1, Vector3f& p2, Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7,
+	void initCylinderTYpePtclCallBack(Teki* p1, immut Vector3f& p2, immut Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7,
 	                                  TAIeffectAttackEventCallBack* cb)
 	{
 		mCylinderCallBack.init(&mEffectAttackParam, p1, p2, p3, p4, p5, p6, p7, cb);
@@ -677,7 +677,8 @@ public:
 	void initEventTypePtclCallBack() { mEventCallBack.init(&mEffectAttackParam); }
 	zen::CallBack1<zen::particleGenerator*>* getEventTypePtclCallBack() { return &mEventCallBack; }
 
-	void initConeTypePtclCallBack(Teki* p1, Vector3f& p2, Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7, TAIeffectAttackEventCallBack* cb)
+	void initConeTypePtclCallBack(Teki* p1, immut Vector3f& p2, immut Vector3f& p3, f32 p4, f32 p5, f32 p6, f32 p7,
+	                              TAIeffectAttackEventCallBack* cb)
 	{
 		mConeCallBack.init(&mEffectAttackParam, p1, p2, p3, p4, p5, p6, p7, cb);
 	}

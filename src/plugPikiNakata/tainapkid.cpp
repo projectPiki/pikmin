@@ -970,7 +970,7 @@ void TaiNapkidStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
  * Address:	8013885C
  * Size:	0000BC
  */
-bool TekiNapkidTargetPikiCondition::satisfy(Creature* target)
+bool TekiNapkidTargetPikiCondition::satisfy(Creature* target) immut
 {
 	if (target->mObjType != OBJTYPE_Piki) {
 		return false;
@@ -998,7 +998,7 @@ bool TekiNapkidTargetPikiCondition::satisfy(Creature* target)
  * Address:	80138918
  * Size:	0000A0
  */
-bool TekiNapkidShortRangeCondition::satisfy(Creature* target)
+bool TekiNapkidShortRangeCondition::satisfy(Creature* target) immut
 {
 	if (target->mObjType != OBJTYPE_Piki) {
 		return false;

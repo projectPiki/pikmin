@@ -30,9 +30,9 @@ enum PaniTestMode {
 struct PaniTestNode : public Node, public PaniAnimKeyListener {
 	PaniTestNode();
 
-	virtual void update();                               // _10
-	virtual void draw(Graphics&);                        // _14
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _3C
+	virtual void update();                                     // _10
+	virtual void draw(Graphics&);                              // _14
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _3C
 
 	void setTestMode(int);
 	void updatePikis();

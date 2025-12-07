@@ -137,7 +137,7 @@ void ActPulloutCreature::cleanup()
  * Address:	800BDB60
  * Size:	000078
  */
-void ActPulloutCreature::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActPulloutCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action1:

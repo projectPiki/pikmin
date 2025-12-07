@@ -57,7 +57,7 @@ static void* GetCallStack()
  * Address:	80007440
  * Size:	00008C
  */
-static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, char* errorArg)
+static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, immut char* errorArg)
 {
 	if (DVDT_PAUSE_FLAG == TRUE) {
 		OSSleepThread(&dvdt_sleep);
@@ -79,10 +79,10 @@ static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, ch
  * Address:	800074E0
  * Size:	00004C
  */
-void DVDT_SetRootPath(char* path)
+void DVDT_SetRootPath(immut char* path)
 {
 	// don't ask.
-	char** REF_path = &path;
+	immut char** REF_path = &path;
 	if (strlen(path) < 31) {
 		strcpy(audio_root_path, path);
 	}
@@ -93,7 +93,7 @@ void DVDT_SetRootPath(char* path)
  * Address:	80007540
  * Size:	000080
  */
-void DVDT_ExtendPath(char* dst, char* ext)
+void DVDT_ExtendPath(char* dst, immut char* ext)
 {
 	if (*audio_root_path != NULL) {
 		strcpy(dst, audio_root_path);
@@ -262,7 +262,7 @@ s32 DVDT_LoadtoDRAM_Main(void* dvdCall)
  * Address:	80007900
  * Size:	000084
  */
-s32 DVDT_LoadtoDRAM(u32 owner, char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
+s32 DVDT_LoadtoDRAM(u32 owner, immut char* name, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
 {
 	DVDCall call;
 	DVDCall* pCall = &call;
@@ -480,7 +480,7 @@ s32 DVDT_LoadtoARAM_Main(void* dvdCall)
  * Address:	80007DE0
  * Size:	000084
  */
-s32 DVDT_LoadtoARAM(u32 owner, char* path, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
+s32 DVDT_LoadtoARAM(u32 owner, immut char* path, u32 dst, u32 src, u32 length, u32* status, Jac_DVDCallback callback)
 {
 	DVDCall call;
 	DVDCall* pCall = &call;
@@ -565,10 +565,10 @@ void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
  * Address:	80007E80
  * Size:	000070
  */
-s32 DVDT_CheckFile(char* file)
+s32 DVDT_CheckFile(immut char* file)
 {
 	char path[64];
-	char** REF_file = &file;
+	immut char** REF_file = &file;
 	static DVDFileInfo finfo;
 
 	DVDT_ExtendPath(path, file);
@@ -587,10 +587,10 @@ s32 DVDT_CheckFile(char* file)
  * Address:	80007F00
  * Size:	000070
  */
-s32 DVDT_LoadFile(char* file, u8* p2)
+s32 DVDT_LoadFile(immut char* file, u8* p2)
 {
 	vu32 status     = 0;
-	char** REF_file = &file;
+	immut char** REF_file = &file;
 	STACK_PAD_VAR(2);
 	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, (u32*)&status, NULL);
 
@@ -677,7 +677,7 @@ void Jac_RegisterDVDErrorCallback(void (*)(char*, u8*))
  * Address:	80007FC0
  * Size:	000030
  */
-s32 Jac_RegisterExtFastOpen(char* ext)
+s32 Jac_RegisterExtFastOpen(immut char* ext)
 {
 	char file[64];
 	DVDT_ExtendPath(file, ext);
@@ -693,10 +693,10 @@ static u32 dvd_entrynum[32];
  * Address:	80008000
  * Size:	000100
  */
-s32 Jac_RegisterFastOpen(char* file)
+s32 Jac_RegisterFastOpen(immut char* file)
 {
 	volatile int num;
-	char** REF_file = &file;
+	immut char** REF_file = &file;
 	STACK_PAD_VAR(3);
 	if (strlen(file) > 63) {
 		return -1;
@@ -727,7 +727,7 @@ s32 Jac_RegisterFastOpen(char* file)
  * Address:	80008100
  * Size:	000050
  */
-BOOL Jac_DVDOpen(char* name, DVDFileInfo* info)
+BOOL Jac_DVDOpen(immut char* name, DVDFileInfo* info)
 {
 	int entry = Jac_RegisterFastOpen(name);
 

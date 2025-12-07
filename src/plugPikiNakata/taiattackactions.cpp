@@ -233,7 +233,7 @@ void TaiAnimationSwallowingAction::finish(Teki& teki)
  * Address:	80128010
  * Size:	000088
  */
-bool TaiBangingAction::actByEvent(TekiEvent& event)
+bool TaiBangingAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Entity) {
 		event.mOther->stimulate(InteractPress(event.mTeki, event.mTeki->getParameterF(TPF_AttackPower)));

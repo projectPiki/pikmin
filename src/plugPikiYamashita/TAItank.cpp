@@ -566,7 +566,7 @@ void TAItankStrategy::act(Teki& teki)
  * Address:	801A46EC
  * Size:	0000C4
  */
-bool TAItankStrategy::interact(Teki& teki, TekiInteractionKey& key)
+bool TAItankStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	switch (key.mInteractionType) {
 	case TekiInteractType::Attack:

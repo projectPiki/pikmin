@@ -17,14 +17,14 @@ struct DynBuildShape;
 struct WorkObject : public ItemCreature {
 	WorkObject(); // unused/inlined
 
-	virtual bool isVisible() { return true; }         // _74
-	virtual bool isAlive() { return true; }           // _88
-	virtual void doKill();                            // _10C
-	virtual void finalSetup() { }                     // _158
-	virtual bool isBridge() { return false; }         // _15C
-	virtual bool isHinderRock() { return false; }     // _160
-	virtual bool isFinished() { return false; }       // _164
-	virtual bool workable(Vector3f&) { return true; } // _168
+	virtual bool isVisible() { return true; }               // _74
+	virtual bool isAlive() { return true; }                 // _88
+	virtual void doKill();                                  // _10C
+	virtual void finalSetup() { }                           // _158
+	virtual bool isBridge() { return false; }               // _15C
+	virtual bool isHinderRock() { return false; }           // _160
+	virtual bool isFinished() { return false; }             // _164
+	virtual bool workable(immut Vector3f&) { return true; } // _168
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
@@ -93,16 +93,16 @@ struct Bridge : public WorkObject {
 public:
 	Bridge(Shape*, bool);
 
-	virtual bool insideSafeArea(Vector3f&);                   // _10
+	virtual bool insideSafeArea(immut Vector3f&);             // _10
 	virtual void startAI(int);                                // _34
 	virtual void doSave(RandomAccessStream&);                 // _50
 	virtual void doLoad(RandomAccessStream&);                 // _54
-	virtual bool stimulate(Interaction&);                     // _A0
+	virtual bool stimulate(immut Interaction&);               // _A0
 	virtual void dump();                                      // _C8
 	virtual void update();                                    // _E0
 	virtual void refresh(Graphics&);                          // _EC
 	virtual bool isFinished();                                // _164
-	virtual bool workable(Vector3f&);                         // _168
+	virtual bool workable(immut Vector3f&);                   // _168
 	virtual bool isBridge() { return true; }                  // _15C
 	virtual bool alwaysUpdatePlatform() { return _424 != 0; } // _18
 	virtual void finalSetup() { _424 = 3; }                   // _158
@@ -116,7 +116,7 @@ public:
 	void setStageFinished(int, bool);
 	Vector3f getStagePos(int);
 	f32 getStageZ(int);
-	void getBridgePos(Vector3f&, f32&, f32&);
+	void getBridgePos(immut Vector3f&, f32&, f32&);
 	Vector3f getBridgeZVec();
 	Vector3f getBridgeXVec();
 	Vector3f getStartPos();
@@ -158,27 +158,27 @@ struct HinderRock : public WorkObject {
 public:
 	HinderRock(Shape*);
 
-	virtual bool insideSafeArea(Vector3f&);      // _10
-	virtual void startAI(int);                   // _34
-	virtual void doSave(RandomAccessStream&);    // _50
-	virtual void doLoad(RandomAccessStream&);    // _54
-	virtual f32 getCentreSize();                 // _5C
-	virtual bool stimulate(Interaction&);        // _A0
-	virtual void update();                       // _E0
-	virtual void refresh(Graphics&);             // _EC
-	virtual bool isHinderRock() { return true; } // _160
-	virtual bool isFinished();                   // _164
-	virtual bool workable(Vector3f&);            // _168
+	virtual bool insideSafeArea(immut Vector3f&); // _10
+	virtual void startAI(int);                    // _34
+	virtual void doSave(RandomAccessStream&);     // _50
+	virtual void doLoad(RandomAccessStream&);     // _54
+	virtual f32 getCentreSize();                  // _5C
+	virtual bool stimulate(immut Interaction&);   // _A0
+	virtual void update();                        // _E0
+	virtual void refresh(Graphics&);              // _EC
+	virtual bool isHinderRock() { return true; }  // _160
+	virtual bool isFinished();                    // _164
+	virtual bool workable(immut Vector3f&);       // _168
 
 	void beginPush();
 	void endPush();
 	Vector3f getZVector();
 	Vector3f getXVector();
-	u8 getPlaneFlag(Vector3f&);
+	u8 getPlaneFlag(immut Vector3f&);
 	Vector3f getVertex(int);
 
 	// unused/inlined:
-	int getPlaneIndex(Vector3f&);
+	int getPlaneIndex(immut Vector3f&);
 	Vector3f getTangentPos(f32);
 
 	bool isMoving() { return mIsMoving; }

@@ -206,7 +206,7 @@ int ActStone::exeAttack()
  * Address:	800A74EC
  * Size:	00030C
  */
-void ActStone::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActStone::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

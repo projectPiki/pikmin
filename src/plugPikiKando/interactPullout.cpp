@@ -25,7 +25,7 @@ DEFINE_PRINT("interactPullout");
  * Address:	8007CB38
  * Size:	000008
  */
-bool InteractPullout::actCommon(Creature*)
+bool InteractPullout::actCommon(Creature*) immut
 {
 	return true;
 }
@@ -35,7 +35,7 @@ bool InteractPullout::actCommon(Creature*)
  * Address:	8007CB40
  * Size:	0002BC
  */
-bool InteractPullout::actPiki(Piki* piki)
+bool InteractPullout::actPiki(Piki* piki) immut
 {
 	if (piki->getState() == PIKISTATE_Nukare) {
 		PRINT(" ---- %x is being pulling out\n", piki);

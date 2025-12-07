@@ -46,29 +46,29 @@ struct CullFrustum {
 		mFar  = 1000.0f;
 	}
 
-	bool isPointVisible(Vector3f&, f32);
+	bool isPointVisible(immut Vector3f&, f32);
 	void draw(Graphics&);
 	void updateViewPlanes(f32, f32, f32, f32);
 	void createViewPlanes();
 	void update(f32, f32, f32, f32);
-	void calcVectors(Vector3f&, Vector3f&);
-	void calcLookAt(Vector3f&, Vector3f&, Vector3f*);
+	void calcVectors(immut Vector3f&, immut Vector3f&);
+	void calcLookAt(immut Vector3f&, immut Vector3f&, immut Vector3f*);
 
 	// unused/inlined:
-	void vectorToWorldPlane(Vector3f&, CullingPlane&);
+	void vectorToWorldPlane(immut Vector3f&, CullingPlane&);
 	void additionalPlanes(CullFrustum*);
 	void createVecs();
 	void createInvVecs();
-	void calcLookFrom(Vector3f&, Vector3f&);
+	void calcLookFrom(immut Vector3f&, immut Vector3f&);
 
-	void projectVector(Vector3f& vec, Vector3f& projVec)
+	void projectVector(immut Vector3f& vec, Vector3f& projVec)
 	{
 		projVec.x = vec.dot(mViewXAxis);
 		projVec.y = vec.dot(mViewYAxis);
 		projVec.z = vec.dot(mViewZAxis);
 	}
 
-	void setBoundOffset(Vector3f* pos)
+	void setBoundOffset(immut Vector3f* pos)
 	{
 		mHasBoundOffset = pos != nullptr;
 		if (mHasBoundOffset) {
@@ -76,9 +76,9 @@ struct CullFrustum {
 		}
 	}
 
-	int isBoundVisible(BoundBox& bound, int planeFlag)
+	int isBoundVisible(immut BoundBox& bound, int planeFlag)
 	{
-		f32* boundArray = (f32*)&bound;
+		immut f32* boundArray = (immut f32*)&bound;
 		for (int i = 0; i < mActivePlaneCount; i++) {
 			CullingPlane* plane = mPlanePointers[i];
 			if (plane->mIsEnabled && (planeFlag & (1 << i))) {
@@ -193,7 +193,7 @@ struct LightCamera : public Camera {
 struct CamDataInfo {
 	CamDataInfo();
 
-	void update(f32, Matrix4f&);
+	void update(f32, immut Matrix4f&);
 
 	Vector3f mCameraPosition;    // _00
 	Vector3f mCameraLookAt;      // _0C

@@ -67,7 +67,7 @@ void SpiderAi::initAI(Spider* spider)
  * Address:	80153908
  * Size:	00007C
  */
-void SpiderAi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void SpiderAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

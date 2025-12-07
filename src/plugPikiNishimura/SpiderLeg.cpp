@@ -1053,7 +1053,7 @@ void SpiderLeg::setIdealCentre(Vector3f& centre)
  * Address:	8015814C
  * Size:	00020C
  */
-void SpiderLeg::setRealCentre(Vector3f& centre)
+void SpiderLeg::setRealCentre(immut Vector3f& centre)
 {
 	mCentreVelocity.multiply(C_SPIDER_PROP(mSpider)._3B4());
 
@@ -1134,7 +1134,7 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
  * Address:	........
  * Size:	0000E4
  */
-void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, Matrix4f& animMtx)
+void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, immut Matrix4f& animMtx)
 {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -1417,7 +1417,7 @@ void SpiderLeg::setKneeDirection()
  * Address:	........
  * Size:	00028C
  */
-void SpiderLeg::getJointMatrix(Vector3f& vec1, Vector3f& vec2, Vector3f& vec3, Matrix4f& animMtx)
+void SpiderLeg::getJointMatrix(immut Vector3f& vec1, immut Vector3f& vec2, immut Vector3f& vec3, Matrix4f& animMtx)
 {
 	Vector3f xAxis(1.0f, 0.0f, 0.0f);
 	Vector3f yAxis(0.0f, 1.0f, 0.0f);

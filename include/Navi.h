@@ -44,36 +44,36 @@ public:
 
 	Navi(CreatureProp*, int);
 
-	virtual void viewKill();                             // _154
-	virtual void viewDraw(Graphics&, Matrix4f&);         // _158
-	virtual f32 viewGetBottomRadius();                   // _15C
-	virtual f32 viewGetHeight();                         // _160
-	virtual void viewStartTrembleMotion(f32);            // _164
-	virtual f32 getiMass();                              // _38
-	virtual f32 getSize();                               // _3C
-	virtual bool isVisible();                            // _74
-	virtual bool isBuried();                             // _80
-	virtual bool isAtari();                              // _84
-	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual bool stimulate(Interaction&);                // _A0
-	virtual void sendMsg(Msg*);                          // _A4
-	virtual void collisionCallback(CollEvent&);          // _A8
-	virtual void bounceCallback();                       // _AC
-	virtual void jumpCallback();                         // _B0
-	virtual void wallCallback(Plane&, DynCollObject*);   // _B4
-	virtual void offwallCallback(DynCollObject*);        // _B8
-	virtual void dump();                                 // _C8
-	virtual bool isRopable();                            // _D4
-	virtual void update();                               // _E0
-	virtual void postUpdate(int, f32);                   // _E4
-	virtual void refresh(Graphics&);                     // _EC
-	virtual void refresh2d(Graphics&);                   // _F0
-	virtual void demoDraw(Graphics&, Matrix4f*);         // _FC
-	virtual void doAI();                                 // _104
-	virtual void doKill();                               // _10C
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168
-	virtual bool mayIstick() { return false; }           // _D8 (weak)
-	virtual f32 getShadowSize() { return 20.0f; }        // _70 (weak)
+	virtual void viewKill();                                   // _154
+	virtual void viewDraw(Graphics&, immut Matrix4f&);         // _158
+	virtual f32 viewGetBottomRadius();                         // _15C
+	virtual f32 viewGetHeight();                               // _160
+	virtual void viewStartTrembleMotion(f32);                  // _164
+	virtual f32 getiMass();                                    // _38
+	virtual f32 getSize();                                     // _3C
+	virtual bool isVisible();                                  // _74
+	virtual bool isBuried();                                   // _80
+	virtual bool isAtari();                                    // _84
+	virtual bool ignoreAtari(Creature*);                       // _98
+	virtual bool stimulate(immut Interaction&);                // _A0
+	virtual void sendMsg(Msg*);                                // _A4
+	virtual void collisionCallback(immut CollEvent&);          // _A8
+	virtual void bounceCallback();                             // _AC
+	virtual void jumpCallback();                               // _B0
+	virtual void wallCallback(Plane&, DynCollObject*);         // _B4
+	virtual void offwallCallback(DynCollObject*);              // _B8
+	virtual void dump();                                       // _C8
+	virtual bool isRopable();                                  // _D4
+	virtual void update();                                     // _E0
+	virtual void postUpdate(int, f32);                         // _E4
+	virtual void refresh(Graphics&);                           // _EC
+	virtual void refresh2d(Graphics&);                         // _F0
+	virtual void demoDraw(Graphics&, immut Matrix4f*);         // _FC
+	virtual void doAI();                                       // _104
+	virtual void doKill();                                     // _10C
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _168
+	virtual bool mayIstick() { return false; }                 // _D8 (weak)
+	virtual f32 getShadowSize() { return 20.0f; }              // _70 (weak)
 
 	bool demoCheck();
 	bool isNuking();
@@ -82,7 +82,7 @@ public:
 	void decPlatePiki();
 	int getPlatePikis();
 	void startDayEnd();
-	void updateDayEnd(Vector3f&);
+	void updateDayEnd(immut Vector3f&);
 	void enterAllPikis();
 	void startDamageEffect();
 	void finishDamage();
@@ -90,7 +90,7 @@ public:
 	void rideUfo();
 	void reset();
 	void findNextThrowPiki();
-	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void startMotion(immut PaniMotionInfo&, immut PaniMotionInfo&);
 	void enableMotionBlend();
 	void updateWalkAnimation();
 	void callPikis(f32);
@@ -104,8 +104,8 @@ public:
 	void draw(Graphics&);
 	void renderCircle(Graphics&);
 	bool orimaDamaged();
-	void throwPiki(Piki*, Vector3f&);
-	void swapMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void throwPiki(Piki*, immut Vector3f&);
+	void swapMotion(immut PaniMotionInfo&, immut PaniMotionInfo&);
 	void finishLook();
 	void updateLook();
 

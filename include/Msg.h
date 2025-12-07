@@ -43,21 +43,21 @@ struct Msg {
  * @note will need to fix saiEvents.cpp when this gets worked out
  */
 struct MsgAnim : public Msg {
-	inline MsgAnim(PaniAnimKeyEvent* event) // adjust when type of _04 is known
+	inline MsgAnim(immut PaniAnimKeyEvent* event) // adjust when type of _04 is known
 	    : Msg(MSG_Anim)
 	    , mKeyEvent(event)
 	{
 	}
 
 	// _00-_04 = Msg
-	PaniAnimKeyEvent* mKeyEvent; // _04, probably a pointer to a struct with a u32 or int at _00
+	immut PaniAnimKeyEvent* mKeyEvent; // _04, probably a pointer to a struct with a u32 or int at _00
 };
 
 /**
  * @brief TODO
  */
 struct MsgBounce : public Msg {
-	inline MsgBounce(Vector3f& normal)
+	inline MsgBounce(immut Vector3f& normal)
 	    : Msg(MSG_Bounce)
 	    , mNormal(normal)
 	{
@@ -71,7 +71,7 @@ struct MsgBounce : public Msg {
  * @brief TODO
  */
 struct MsgCollide : public Msg {
-	inline MsgCollide(CollEvent& event)
+	inline MsgCollide(immut CollEvent& event)
 	    : Msg(MSG_Collide)
 	    , mEvent(event)
 	{

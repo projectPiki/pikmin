@@ -71,7 +71,7 @@ void YaiStrategy::act(Teki& teki)
  * Address:	801E97F4
  * Size:	0000AC
  */
-void YaiStrategy::eventPerformed(TekiEvent& event)
+void YaiStrategy::eventPerformed(immut TekiEvent& event)
 {
 	Teki* teki     = event.mTeki;
 	int startState = teki->mStateID;

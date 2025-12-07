@@ -273,7 +273,7 @@ struct TaiTargetNearestCollisionAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -305,7 +305,7 @@ struct TaiSmashedAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -336,7 +336,7 @@ struct TaiPressedAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction

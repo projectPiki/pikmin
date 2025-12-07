@@ -499,7 +499,7 @@ void PcamCamera::startMotion(int zoom, int incl)
  * Address:	80122FF8
  * Size:	00007C
  */
-void PcamCamera::startMotion(PcamMotionInfo& info)
+void PcamCamera::startMotion(immut PcamMotionInfo& info)
 {
 	PRINT_NAKATA("startMotion\n");
 	mPrevMotionInfo   = mTargetMotionInfo;

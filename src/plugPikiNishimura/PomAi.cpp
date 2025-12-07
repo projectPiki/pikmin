@@ -82,7 +82,7 @@ void PomAi::initAI(Pom* pom)
  * Address:	80178760
  * Size:	00007C
  */
-void PomAi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void PomAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

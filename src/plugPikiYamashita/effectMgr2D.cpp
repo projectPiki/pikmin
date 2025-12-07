@@ -109,7 +109,7 @@ zen::EffectMgr2D::EffectMgr2D(int numPtclGens, int numParticles, int numChildPar
  * Address:	801E9B3C
  * Size:	00004C
  */
-zen::particleGenerator* zen::EffectMgr2D::create(u32 effID, Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cb1,
+zen::particleGenerator* zen::EffectMgr2D::create(u32 effID, immut Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cb1,
                                                  zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
 {
 	return mEffects[effID]->create(mParticleManager, pos, cb1, cb2);

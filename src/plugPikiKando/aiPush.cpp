@@ -234,7 +234,7 @@ int ActPush::exeGo()
  * Address:	800BE654
  * Size:	0002D4
  */
-void ActPush::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActPush::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_LoopStart:

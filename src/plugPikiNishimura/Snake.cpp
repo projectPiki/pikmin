@@ -78,7 +78,7 @@ f32 Snake::getiMass()
  * Address:	8015ACD4
  * Size:	0000B8
  */
-void Snake::init(Vector3f& pos)
+void Snake::init(immut Vector3f& pos)
 {
 	mCollisionRadius = 15.0f;
 	setShadowSize(30.0f);

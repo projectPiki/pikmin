@@ -476,7 +476,7 @@ int ActPutBomb::exec()
  * Address:	800BFF10
  * Size:	000038
  */
-void ActPutBomb::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActPutBomb::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

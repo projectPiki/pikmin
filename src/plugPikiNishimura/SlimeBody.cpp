@@ -157,7 +157,7 @@ void SlimeBody::setSpherePosition()
  * Address:	........
  * Size:	000128
  */
-f32 SlimeBody::calcVertexScore(Vector3f* vertex, Vector3f* creatureNormals, f32* creatureScores)
+f32 SlimeBody::calcVertexScore(immut Vector3f* vertex, Vector3f* creatureNormals, f32* creatureScores)
 {
 	f32 score = 0.0f;
 	for (int i = 0; i < bossMgr->mSlimeCreatureCount; i++) {
@@ -176,7 +176,7 @@ f32 SlimeBody::calcVertexScore(Vector3f* vertex, Vector3f* creatureNormals, f32*
  * Address:	8016AA10
  * Size:	0002EC
  */
-void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, Vector3f* vertical)
+void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vector3f* vertical)
 {
 	Vector3f creatureNormals[4];
 	Vector3f minNormal(outVertex->x, outVertex->y, outVertex->z);

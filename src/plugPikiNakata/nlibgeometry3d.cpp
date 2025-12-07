@@ -30,7 +30,7 @@ NLine::NLine()
  * Address:	8011D3FC
  * Size:	000070
  */
-NLine::NLine(NVector3f& pos, NVector3f& dir)
+NLine::NLine(immut NVector3f& pos, immut NVector3f& dir)
 {
 	construct(pos, dir);
 }
@@ -40,7 +40,7 @@ NLine::NLine(NVector3f& pos, NVector3f& dir)
  * Address:	8011D46C
  * Size:	000034
  */
-void NLine::construct(NVector3f& pos, NVector3f& dir)
+void NLine::construct(immut NVector3f& pos, immut NVector3f& dir)
 {
 	mPosition.input(pos);
 	mDirection.input(dir);
@@ -51,7 +51,7 @@ void NLine::construct(NVector3f& pos, NVector3f& dir)
  * Address:	........
  * Size:	000060
  */
-NLine::NLine(NLine& other)
+NLine::NLine(immut NLine& other)
 {
 	construct(other);
 }
@@ -61,7 +61,7 @@ NLine::NLine(NLine& other)
  * Address:	........
  * Size:	000034
  */
-void NLine::construct(NLine& other)
+void NLine::construct(immut NLine& other)
 {
 	construct(other.mPosition, other.mDirection);
 }
@@ -71,7 +71,7 @@ void NLine::construct(NLine& other)
  * Address:	8011D4A0
  * Size:	0000C0
  */
-f32 NLine::calcDistance(NVector3f& point, f32* vertProj)
+f32 NLine::calcDistance(immut NVector3f& point, f32* vertProj) immut
 {
 	NVector3f NRef pos = NVector3f();
 	f32 proj       = calcVerticalProjection(point);
@@ -89,7 +89,7 @@ f32 NLine::calcDistance(NVector3f& point, f32* vertProj)
  * Address:	........
  * Size:	0002AC
  */
-f32 NLine::calcDistance(NLine& other, f32* closestPointThisLine, f32* closestPointOtherLine)
+f32 NLine::calcDistance(immut NLine& other, f32* closestPointThisLine, f32* closestPointOtherLine) immut
 {
 	f32 directionsAlignment = mDirection.dot(other.getDirection());
 
@@ -137,7 +137,7 @@ f32 NLine::calcDistance(NLine& other, f32* closestPointThisLine, f32* closestPoi
  * Address:	........
  * Size:	000044
  */
-void NLine::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
+void NLine::outputVerticalPosition(immut NVector3f& point, NVector3f& outPos) immut
 {
 	outputPosition(calcVerticalProjection(point), outPos);
 }
@@ -147,7 +147,7 @@ void NLine::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
  * Address:	8011D560
  * Size:	000064
  */
-f32 NLine::calcVerticalProjection(NVector3f& point)
+f32 NLine::calcVerticalProjection(immut NVector3f& point) immut
 {
 	NVector3f NRef sep = NVector3f(mPosition, point);
 	return mDirection.dot(sep);
@@ -158,7 +158,7 @@ f32 NLine::calcVerticalProjection(NVector3f& point)
  * Address:	8011D5C4
  * Size:	00009C
  */
-void NLine::outputPosition(f32 t, NVector3f& outPos)
+void NLine::outputPosition(f32 t, NVector3f& outPos) immut
 {
 	NVector3f NRef tmp = NVector3f();
 	tmp.scale2(t, mDirection);
@@ -170,7 +170,7 @@ void NLine::outputPosition(f32 t, NVector3f& outPos)
  * Address:	........
  * Size:	0000A8
  */
-void NLine::outputPositionY(f32 p1, NVector3f& outPos)
+void NLine::outputPositionY(f32 p1, NVector3f& outPos) immut
 {
 	outputPosition((p1 - mPosition.y) / mDirection.y, outPos);
 }
@@ -191,7 +191,7 @@ void NLine::transform(NTransform3D& transform)
  * Address:	8011D6AC
  * Size:	000038
  */
-void NLine::println()
+void NLine::println() immut
 {
 	PRINT_NAKATA("position:\n");
 	mPosition.println();
@@ -472,7 +472,7 @@ void NPlane::transform(NTransform3D& transform)
  * Address:	8011D938
  * Size:	000024
  */
-void NPlane::println()
+void NPlane::println() immut
 {
 	PRINT_NAKATA("normal:\n");
 	mNormal.println();
@@ -594,7 +594,7 @@ void NSegment::makeProjectionY()
  * Address:	........
  * Size:	000040
  */
-void NSegment::println()
+void NSegment::println() immut
 {
 	NLine::println();
 	PRINT_NAKATA("edge:\n");

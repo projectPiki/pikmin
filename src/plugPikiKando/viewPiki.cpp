@@ -463,7 +463,7 @@ void Piki::updateLook()
  * Address:	800D9A68
  * Size:	000678
  */
-void ViewPiki::demoDraw(Graphics& gfx, Matrix4f* mtx)
+void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
 	Vector3f pos;
 	if (AIPerf::optLevel <= 2 || mOptUpdateContext.updatable()) {

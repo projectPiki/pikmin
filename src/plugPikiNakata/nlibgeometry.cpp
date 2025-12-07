@@ -33,7 +33,7 @@ NAxisAngle4f::NAxisAngle4f()
  * Address:	8011BC80
  * Size:	000058
  */
-NAxisAngle4f::NAxisAngle4f(NVector3f& axis, f32 angle)
+NAxisAngle4f::NAxisAngle4f(immut NVector3f& axis, f32 angle)
 {
 	construct(axis, angle);
 }
@@ -43,7 +43,7 @@ NAxisAngle4f::NAxisAngle4f(NVector3f& axis, f32 angle)
  * Address:	8011BCD8
  * Size:	000020
  */
-void NAxisAngle4f::construct(NVector3f& axis, f32 angle)
+void NAxisAngle4f::construct(immut NVector3f& axis, f32 angle)
 {
 	inputAxis(axis);
 	setAngle(angle);
@@ -64,7 +64,7 @@ NMatrix4f::NMatrix4f()
  * Address:	........
  * Size:	000030
  */
-NMatrix4f::NMatrix4f(Matrix4f& mat)
+NMatrix4f::NMatrix4f(immut Matrix4f& mat)
 {
 	construct(mat);
 }
@@ -74,7 +74,7 @@ NMatrix4f::NMatrix4f(Matrix4f& mat)
  * Address:	8011BD78
  * Size:	000020
  */
-void NMatrix4f::construct(Matrix4f& mat)
+void NMatrix4f::construct(immut Matrix4f& mat)
 {
 	input(mat);
 }
@@ -106,7 +106,7 @@ void NMatrix4f::construct(f32 x00, f32 x01, f32 x02, f32 x03, f32 x10, f32 x11, 
  * Address:	........
  * Size:	000030
  */
-NMatrix4f::NMatrix4f(Mtx44 mtx)
+NMatrix4f::NMatrix4f(immut Mtx44 mtx)
 {
 	construct(mtx);
 }
@@ -116,7 +116,7 @@ NMatrix4f::NMatrix4f(Mtx44 mtx)
  * Address:	........
  * Size:	000020
  */
-void NMatrix4f::construct(Mtx44 mtx)
+void NMatrix4f::construct(immut Mtx44 mtx)
 {
 	input(mtx);
 }
@@ -126,7 +126,7 @@ void NMatrix4f::construct(Mtx44 mtx)
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::input(Mtx44 mtx)
+void NMatrix4f::input(immut Mtx44 mtx)
 {
 	NMathf::copyArray44(mMtx, mtx);
 }
@@ -136,7 +136,7 @@ void NMatrix4f::input(Mtx44 mtx)
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::output(Mtx44 mtx)
+void NMatrix4f::output(Mtx44 mtx) immut
 {
 	NMathf::copyArray44(mtx, mMtx);
 }
@@ -146,7 +146,7 @@ void NMatrix4f::output(Mtx44 mtx)
  * Address:	8011BE08
  * Size:	000090
  */
-void NMatrix4f::input(Matrix4f& mat)
+void NMatrix4f::input(immut Matrix4f& mat)
 {
 	NMathf::copyArray44(this->mMtx, mat.mMtx);
 }
@@ -197,7 +197,7 @@ void NMatrix4f::setRow(int row, f32 x, f32 y, f32 z)
  * Address:	........
  * Size:	000024
  */
-void NMatrix4f::inputRow(int row, Vector3f& vec)
+void NMatrix4f::inputRow(int row, immut Vector3f& vec)
 {
 	setRow(row, vec.x, vec.y, vec.z);
 }
@@ -207,7 +207,7 @@ void NMatrix4f::inputRow(int row, Vector3f& vec)
  * Address:	........
  * Size:	000028
  */
-void NMatrix4f::inputRow(int row, Vector3f& vec, f32 trans)
+void NMatrix4f::inputRow(int row, immut Vector3f& vec, f32 trans)
 {
 	inputRow(row, vec);
 	mMtx[row][3] = trans;
@@ -218,7 +218,7 @@ void NMatrix4f::inputRow(int row, Vector3f& vec, f32 trans)
  * Address:	........
  * Size:	000024
  */
-void NMatrix4f::outputRow(int row, Vector3f& outRow)
+void NMatrix4f::outputRow(int row, Vector3f& outRow) immut
 {
 	outRow.set(mMtx[row][0], mMtx[row][1], mMtx[row][2]);
 }
@@ -228,7 +228,7 @@ void NMatrix4f::outputRow(int row, Vector3f& outRow)
  * Address:	........
  * Size:	0000B0
  */
-void NMatrix4f::inputRows(NVector3f& row0, NVector3f& row1, NVector3f& row2)
+void NMatrix4f::inputRows(immut NVector3f& row0, immut NVector3f& row1, immut NVector3f& row2)
 {
 	inputRow(0, row0, 0.0f);
 	inputRow(1, row1, 0.0f);
@@ -253,7 +253,7 @@ void NMatrix4f::setCol(int col, f32 x, f32 y, f32 z)
  * Address:	........
  * Size:	000024
  */
-void NMatrix4f::inputCol(int col, Vector3f& input)
+void NMatrix4f::inputCol(int col, immut Vector3f& input)
 {
 	setCol(col, input.x, input.y, input.z);
 }
@@ -263,7 +263,7 @@ void NMatrix4f::inputCol(int col, Vector3f& input)
  * Address:	........
  * Size:	000028
  */
-void NMatrix4f::inputCol(int col, Vector3f& input, f32 trans)
+void NMatrix4f::inputCol(int col, immut Vector3f& input, f32 trans)
 {
 	inputCol(col, input);
 	mMtx[3][col] = trans;
@@ -274,7 +274,7 @@ void NMatrix4f::inputCol(int col, Vector3f& input, f32 trans)
  * Address:	8011BF04
  * Size:	000024
  */
-void NMatrix4f::outputCol(int col, Vector3f& output)
+void NMatrix4f::outputCol(int col, Vector3f& output) immut
 {
 	output.set(mMtx[0][col], mMtx[1][col], mMtx[2][col]);
 }
@@ -284,7 +284,7 @@ void NMatrix4f::outputCol(int col, Vector3f& output)
  * Address:	........
  * Size:	0000B0
  */
-void NMatrix4f::inputCols(NVector3f& col0, NVector3f& col1, NVector3f& col2)
+void NMatrix4f::inputCols(immut NVector3f& col0, immut NVector3f& col1, immut NVector3f& col2)
 {
 	inputCol(0, col0, 0.0f);
 	inputCol(1, col1, 0.0f);
@@ -297,7 +297,7 @@ void NMatrix4f::inputCols(NVector3f& col0, NVector3f& col1, NVector3f& col2)
  * Address:	........
  * Size:	000020
  */
-void NMatrix4f::mul(Matrix4f& mtx)
+void NMatrix4f::mul(immut Matrix4f& mtx)
 {
 	multiply(mtx);
 }
@@ -307,7 +307,7 @@ void NMatrix4f::mul(Matrix4f& mtx)
  * Address:	........
  * Size:	000030
  */
-void NMatrix4f::mul2(Matrix4f& mtx, Matrix4f& outMtx)
+void NMatrix4f::mul2(immut Matrix4f& mtx, Matrix4f& outMtx) immut
 {
 	multiplyTo(mtx, outMtx);
 }
@@ -360,7 +360,7 @@ void NMatrix4f::makeIdentRow(int row)
  * Address:	........
  * Size:	000004
  */
-void NMatrix4f::println()
+void NMatrix4f::println() immut
 {
 	for (int i = 0; i < 4; i++) {
 		PRINT_NAKATA("|%f,%f,%f,%f|\n", mMtx[i][0], mMtx[i][1], mMtx[i][2], mMtx[i][3]);
@@ -382,7 +382,7 @@ NOrientation::NOrientation()
  * Address:	8011BF4C
  * Size:	000050
  */
-NOrientation::NOrientation(Vector3f& direction)
+NOrientation::NOrientation(immut Vector3f& direction)
 {
 	construct(direction);
 }
@@ -392,7 +392,7 @@ NOrientation::NOrientation(Vector3f& direction)
  * Address:	8011BF9C
  * Size:	000078
  */
-void NOrientation::construct(Vector3f& direction)
+void NOrientation::construct(immut Vector3f& direction)
 {
 	input(direction, NVector3f(0.0f, 1.0f, 0.0f));
 }
@@ -402,7 +402,7 @@ void NOrientation::construct(Vector3f& direction)
  * Address:	........
  * Size:	000060
  */
-NOrientation::NOrientation(Vector3f& direction, Vector3f& up)
+NOrientation::NOrientation(immut Vector3f& direction, immut Vector3f& up)
 {
 	construct(direction, up);
 }
@@ -412,7 +412,7 @@ NOrientation::NOrientation(Vector3f& direction, Vector3f& up)
  * Address:	........
  * Size:	000034
  */
-void NOrientation::construct(Vector3f& direction, Vector3f& up)
+void NOrientation::construct(immut Vector3f& direction, immut Vector3f& up)
 {
 	input(direction, up);
 }
@@ -445,7 +445,7 @@ void NOrientation::normalize()
  * Address:	........
  * Size:	00004C
  */
-void NOrientation::transform(NTransform3D& transform)
+void NOrientation::transform(immut NTransform3D& transform)
 {
 	transform.transform(mDirection);
 	transform.transform(mUpVector);
@@ -456,7 +456,7 @@ void NOrientation::transform(NTransform3D& transform)
  * Address:	........
  * Size:	00004C
  */
-void NOrientation::outputRight(NVector3f& outRight)
+void NOrientation::outputRight(NVector3f& outRight) immut
 {
 	outRight.cross(mDirection, mUpVector);
 }
@@ -466,7 +466,7 @@ void NOrientation::outputRight(NVector3f& outRight)
  * Address:	8011C0E8
  * Size:	00004C
  */
-void NOrientation::outputLeft(NVector3f& outLeft)
+void NOrientation::outputLeft(NVector3f& outLeft) immut
 {
 	outLeft.cross(mUpVector, mDirection);
 }
@@ -499,7 +499,7 @@ void NOrientation::makeUp()
  * Address:	........
  * Size:	000124
  */
-void NOrientation::outputTransform(NTransform3D& transform)
+void NOrientation::outputTransform(NTransform3D& transform) immut
 {
 	NVector3f NRef left = NVector3f();
 	outputLeft(left);
@@ -512,7 +512,7 @@ void NOrientation::outputTransform(NTransform3D& transform)
  * Address:	........
  * Size:	000068
  */
-void NOrientation::inputTransform(NTransform3D& transform)
+void NOrientation::inputTransform(immut NTransform3D& transform)
 {
 	transform.outputCol(1, mUpVector);
 	transform.outputCol(2, mDirection);
@@ -525,7 +525,7 @@ void NOrientation::inputTransform(NTransform3D& transform)
  * Address:	........
  * Size:	0000CC
  */
-void NOrientation::outputRotation(NTransform3D& transform)
+void NOrientation::outputRotation(NTransform3D& transform) immut
 {
 	NVector3f NRef left = NVector3f();
 	outputLeft(left);
@@ -540,7 +540,7 @@ void NOrientation::outputRotation(NTransform3D& transform)
  * Address:	........
  * Size:	000034
  */
-void NOrientation::inputRotation(NTransform3D& transform)
+void NOrientation::inputRotation(immut NTransform3D& transform)
 {
 	transform.outputCol(1, mUpVector);
 	transform.outputCol(1, mDirection);
@@ -551,7 +551,7 @@ void NOrientation::inputRotation(NTransform3D& transform)
  * Address:	........
  * Size:	000034
  */
-void NOrientation::println()
+void NOrientation::println() immut
 {
 	PRINT_NAKATA("fore:");
 	mDirection.println();
@@ -594,7 +594,7 @@ void NPolar3f::construct(f32 rad, f32 inc, f32 azi)
  * Address:	........
  * Size:	000030
  */
-NPolar3f::NPolar3f(NPolar3f& other)
+NPolar3f::NPolar3f(immut NPolar3f& other)
 {
 	construct(other);
 }
@@ -604,7 +604,7 @@ NPolar3f::NPolar3f(NPolar3f& other)
  * Address:	........
  * Size:	00002C
  */
-void NPolar3f::construct(NPolar3f& other)
+void NPolar3f::construct(immut NPolar3f& other)
 {
 	set(other.mRadius, other.mInclination, other.mAzimuth);
 }
@@ -614,7 +614,7 @@ void NPolar3f::construct(NPolar3f& other)
  * Address:	8011C3E0
  * Size:	000030
  */
-NPolar3f::NPolar3f(Vector3f& point)
+NPolar3f::NPolar3f(immut Vector3f& point)
 {
 	construct(point);
 }
@@ -624,7 +624,7 @@ NPolar3f::NPolar3f(Vector3f& point)
  * Address:	8011C410
  * Size:	000020
  */
-void NPolar3f::construct(Vector3f& point)
+void NPolar3f::construct(immut Vector3f& point)
 {
 	input(point);
 }
@@ -646,7 +646,7 @@ void NPolar3f::set(f32 radius, f32 inclination, f32 azimuth)
  * Address:	........
  * Size:	00001C
  */
-void NPolar3f::input(NPolar3f& other)
+void NPolar3f::input(immut NPolar3f& other)
 {
 	set(other.mRadius, other.mInclination, other.mAzimuth);
 }
@@ -656,7 +656,7 @@ void NPolar3f::input(NPolar3f& other)
  * Address:	8011C440
  * Size:	0000A8
  */
-void NPolar3f::input(Vector3f& point)
+void NPolar3f::input(immut Vector3f& point)
 {
 	set(point.length(), NMathF::atan2(NMathF::length(point.x, point.z), point.y), NMathF::atan2(point.x, point.z));
 }
@@ -666,7 +666,7 @@ void NPolar3f::input(Vector3f& point)
  * Address:	8011C4E8
  * Size:	0000A4
  */
-void NPolar3f::output(Vector3f& point)
+void NPolar3f::output(Vector3f& point) immut
 {
 	f32 sinInc = NMathF::sin(mInclination);
 	f32 cosInc = NMathF::cos(mInclination);
@@ -692,7 +692,7 @@ void NPolar3f::negate()
  * Address:	........
  * Size:	000054
  */
-void NPolar3f::interpolate(NPolar3f& start, NPolar3f& end, f32 t)
+void NPolar3f::interpolate(immut NPolar3f& start, immut NPolar3f& end, f32 t)
 {
 	set(NMathF::interpolate(start.mRadius, end.mRadius, t), NMathF::interpolate(start.mInclination, end.mInclination, t),
 	    NMathF::interpolate(start.mAzimuth, end.mAzimuth, t));
@@ -736,7 +736,7 @@ bool NPolar3f::clampMeridian(f32 angle)
  * Address:	........
  * Size:	000004
  */
-void NPolar3f::println()
+void NPolar3f::println() immut
 {
 	PRINT_NAKATA("(%f,%f,%f)\n", mRadius, mInclination, mAzimuth);
 }
@@ -767,7 +767,7 @@ NPosture2D::NPosture2D(Vector3f& trans, f32 dir)
  * Address:	........
  * Size:	000020
  */
-void NPosture2D::construct(Vector3f& trans, f32 dir)
+void NPosture2D::construct(immut Vector3f& trans, f32 dir)
 {
 	mTranslation.input(trans);
 	mDirection = dir;
@@ -833,7 +833,7 @@ void NPosture2D::readData(Stream& input)
  * Address:	........
  * Size:	000024
  */
-void NPosture2D::println()
+void NPosture2D::println() immut
 {
 	PRINT_NAKATA("translation:");
 	mTranslation.println();
@@ -856,7 +856,7 @@ NPosture3D::NPosture3D()
  * Address:	........
  * Size:	000060
  */
-NPosture3D::NPosture3D(NPosture3D& other)
+NPosture3D::NPosture3D(immut NPosture3D& other)
 {
 	construct(other);
 }
@@ -866,7 +866,7 @@ NPosture3D::NPosture3D(NPosture3D& other)
  * Address:	........
  * Size:	00005C
  */
-void NPosture3D::construct(NPosture3D& other)
+void NPosture3D::construct(immut NPosture3D& other)
 {
 	input(other);
 }
@@ -876,7 +876,7 @@ void NPosture3D::construct(NPosture3D& other)
  * Address:	8011C6C0
  * Size:	000070
  */
-NPosture3D::NPosture3D(Vector3f& view, Vector3f& watch)
+NPosture3D::NPosture3D(immut Vector3f& view, immut Vector3f& watch)
 {
 	construct(view, watch);
 }
@@ -886,7 +886,7 @@ NPosture3D::NPosture3D(Vector3f& view, Vector3f& watch)
  * Address:	8011C730
  * Size:	000034
  */
-void NPosture3D::construct(Vector3f& view, Vector3f& watch)
+void NPosture3D::construct(immut Vector3f& view, immut Vector3f& watch)
 {
 	mViewpoint.input(view);
 	mWatchpoint.input(watch);
@@ -912,7 +912,7 @@ void NPosture3D::normalize()
  * Address:	8011C838
  * Size:	000034
  */
-void NPosture3D::outputRelative(NVector3f& dir)
+void NPosture3D::outputRelative(NVector3f& dir) immut
 {
 	dir.sub2(mWatchpoint, mViewpoint);
 }
@@ -922,7 +922,7 @@ void NPosture3D::outputRelative(NVector3f& dir)
  * Address:	........
  * Size:	000054
  */
-void NPosture3D::outputUnitVector(NVector3f& dir)
+void NPosture3D::outputUnitVector(NVector3f& dir) immut
 {
 	outputRelative(dir);
 	dir.normalize();
@@ -933,7 +933,7 @@ void NPosture3D::outputUnitVector(NVector3f& dir)
  * Address:	........
  * Size:	00004C
  */
-void NPosture3D::transform(NTransform3D& transform)
+void NPosture3D::transform(immut NTransform3D& transform)
 {
 	transform.transform(mViewpoint);
 	transform.transform(mWatchpoint);
@@ -944,7 +944,7 @@ void NPosture3D::transform(NTransform3D& transform)
  * Address:	8011C86C
  * Size:	000064
  */
-void NPosture3D::translate(Vector3f& offset)
+void NPosture3D::translate(immut Vector3f& offset)
 {
 	mViewpoint.add(offset);
 	mWatchpoint.add(offset);
@@ -955,7 +955,7 @@ void NPosture3D::translate(Vector3f& offset)
  * Address:	........
  * Size:	000064
  */
-void NPosture3D::rotate(NVector3f& p1, NPolar3f& p2)
+void NPosture3D::rotate(immut NVector3f& p1, immut NPolar3f& p2)
 {
 	rotatePoint(mViewpoint, p1, p2);
 	rotatePoint(mWatchpoint, p1, p2);
@@ -966,7 +966,7 @@ void NPosture3D::rotate(NVector3f& p1, NPolar3f& p2)
  * Address:	........
  * Size:	0001CC
  */
-void NPosture3D::rotatePoint(NVector3f& p1, NVector3f& p2, NPolar3f& p3)
+void NPosture3D::rotatePoint(NVector3f& p1, immut NVector3f& p2, immut NPolar3f& p3) immut
 {
 	NVector3f NRef tempVec = NVector3f();
 	NPolar3f NRef tempPol  = NPolar3f();
@@ -985,7 +985,7 @@ void NPosture3D::rotatePoint(NVector3f& p1, NVector3f& p2, NPolar3f& p3)
  * Address:	........
  * Size:	000070
  */
-void NPosture3D::interpolate(NPosture3D& start, NPosture3D& end, f32 t)
+void NPosture3D::interpolate(immut NPosture3D& start, immut NPosture3D& end, f32 t)
 {
 	mViewpoint.interpolate(start.mViewpoint, end.mViewpoint, t);
 	mWatchpoint.interpolate(start.mWatchpoint, end.mWatchpoint, t);
@@ -996,7 +996,7 @@ void NPosture3D::interpolate(NPosture3D& start, NPosture3D& end, f32 t)
  * Address:	........
  * Size:	0000D8
  */
-void NPosture3D::input(NPosture2D& other2D)
+void NPosture3D::input(immut NPosture2D& other2D)
 {
 	inputViewpoint(other2D.getTranslation());
 
@@ -1012,7 +1012,7 @@ void NPosture3D::input(NPosture2D& other2D)
  * Address:	........
  * Size:	000094
  */
-void NPosture3D::output(NPosture2D& out2D)
+void NPosture3D::output(NPosture2D& out2D) immut
 {
 	out2D.inputTranslation(mViewpoint);
 	NVector3f NRef dir = NVector3f();
@@ -1025,7 +1025,7 @@ void NPosture3D::output(NPosture2D& out2D)
  * Address:	........
  * Size:	000078
  */
-void NPosture3D::outputTransform(NPosture3D& p1, NTransform3D& outTransform)
+void NPosture3D::outputTransform(immut NPosture3D& p1, NTransform3D& outTransform) immut
 {
 	NTransform3D NRef temp = NTransform3D();
 	outputInverseTransform(outTransform);
@@ -1038,7 +1038,7 @@ void NPosture3D::outputTransform(NPosture3D& p1, NTransform3D& outTransform)
  * Address:	........
  * Size:	0002A0
  */
-void NPosture3D::outputTransform(NTransform3D& transform)
+void NPosture3D::outputTransform(NTransform3D& transform) immut
 {
 	transform.inputTranslation(mViewpoint);
 	NVector3f NRef dir = NVector3f();
@@ -1054,7 +1054,7 @@ void NPosture3D::outputTransform(NTransform3D& transform)
  * Address:	........
  * Size:	000418
  */
-void NPosture3D::outputInverseTransform(NTransform3D& invTransform)
+void NPosture3D::outputInverseTransform(NTransform3D& invTransform) immut
 {
 	NTransform3D NRef trans1 = NTransform3D();
 	NTransform3D NRef trans2 = NTransform3D();
@@ -1081,7 +1081,7 @@ void NPosture3D::outputInverseTransform(NTransform3D& invTransform)
  * Address:	........
  * Size:	00010C
  */
-void NPosture3D::inputTransform(NTransform3D& transform)
+void NPosture3D::inputTransform(immut NTransform3D& transform)
 {
 	transform.outputTranslation(mViewpoint);
 	NOrientation NRef orient = NOrientation();
@@ -1094,7 +1094,7 @@ void NPosture3D::inputTransform(NTransform3D& transform)
  * Address:	........
  * Size:	00006C
  */
-f32 NPosture3D::calcDirection()
+f32 NPosture3D::calcDirection() immut
 {
 	NVector3f NRef dir = NVector3f();
 	outputRelative(dir);
@@ -1117,7 +1117,7 @@ void NPosture3D::readData(Stream& input)
  * Address:	........
  * Size:	000038
  */
-void NPosture3D::println()
+void NPosture3D::println() immut
 {
 	mViewpoint.println();
 	mWatchpoint.println();
@@ -1169,7 +1169,7 @@ void NLowerMatrix::construct(f32* values, int dim)
  * Address:	........
  * Size:	000060
  */
-void NLowerMatrix::solve(NVector& inVec, NVector& outVec)
+void NLowerMatrix::solve(immut NVector& inVec, NVector& outVec)
 {
 	outVec.mValues[0] = inVec.mValues[0];
 	for (int i = 1; i < mDimension; i++) {
@@ -1182,7 +1182,7 @@ void NLowerMatrix::solve(NVector& inVec, NVector& outVec)
  * Address:	........
  * Size:	000058
  */
-void NLowerMatrix::println()
+void NLowerMatrix::println() immut
 {
 	for (int i = 0; i < mDimension - 1; i++) {
 		PRINT_NAKATA("l[%d]:%f\n", i, mLower[i]);
@@ -1216,7 +1216,7 @@ void NUpperMatrix::construct(f32* centreVals, f32* upperVals, int dim)
  * Address:	........
  * Size:	000180
  */
-void NUpperMatrix::solve(NVector& inVec, NVector& outVec)
+void NUpperMatrix::solve(immut NVector& inVec, NVector& outVec)
 {
 	outVec.mValues[mDimension - 1] = inVec.mValues[mDimension - 1] / mCentre[mDimension - 1];
 
@@ -1230,7 +1230,7 @@ void NUpperMatrix::solve(NVector& inVec, NVector& outVec)
  * Address:	........
  * Size:	0000A4
  */
-void NUpperMatrix::println()
+void NUpperMatrix::println() immut
 {
 	for (int i = 0; i < mDimension; i++) {
 		PRINT_NAKATA("e[%d]:%f\n", i, mCentre[i]);
@@ -1282,7 +1282,7 @@ void LUMatrix::setDimension(int dim)
  * Address:	........
  * Size:	00022C
  */
-void LUMatrix::solve(NVector& inVec, NVector& outVec)
+void LUMatrix::solve(immut NVector& inVec, NVector& outVec)
 {
 	f32 vals[16];
 	decompose();
@@ -1314,7 +1314,7 @@ void LUMatrix::decompose()
  * Address:	........
  * Size:	0000F0
  */
-void LUMatrix::println()
+void LUMatrix::println() immut
 {
 	for (int i = 0; i < mDimension; i++) {
 		PRINT_NAKATA("e[%d]:%f\n", i, mCentreVals[i]);
@@ -1341,7 +1341,7 @@ NTransform3D::NTransform3D()
  * Address:	........
  * Size:	000098
  */
-NTransform3D::NTransform3D(NMatrix4f& mtx)
+NTransform3D::NTransform3D(immut NMatrix4f& mtx)
 {
 	construct(mtx);
 }
@@ -1351,7 +1351,7 @@ NTransform3D::NTransform3D(NMatrix4f& mtx)
  * Address:	........
  * Size:	000020
  */
-void NTransform3D::construct(NMatrix4f& mtx)
+void NTransform3D::construct(immut NMatrix4f& mtx)
 {
 	construct(mtx);
 }
@@ -1361,7 +1361,7 @@ void NTransform3D::construct(NMatrix4f& mtx)
  * Address:	........
  * Size:	000090
  */
-void NTransform3D::translate(Vector3f& offset)
+void NTransform3D::translate(immut Vector3f& offset)
 {
 	NVector3f NRef trans = NVector3f();
 	outputTranslation(trans);
@@ -1374,7 +1374,7 @@ void NTransform3D::translate(Vector3f& offset)
  * Address:	8011CB08
  * Size:	00019C
  */
-void NTransform3D::rotate(Vector3f& point)
+void NTransform3D::rotate(immut Vector3f& point)
 {
 	NTransform3D NRef rotation = NTransform3D();
 	outputRotation(rotation);
@@ -1493,7 +1493,7 @@ void NTransform3D::rotate(Vector3f& point)
  * Address:	8011CCA4
  * Size:	00002C
  */
-void NTransform3D::transform(Vector3f& point)
+void NTransform3D::transform(Vector3f& point) immut
 {
 	point.multMatrix(*this);
 }
@@ -1503,7 +1503,7 @@ void NTransform3D::transform(Vector3f& point)
  * Address:	........
  * Size:	000044
  */
-void NTransform3D::transform(Vector3f& p1, Vector3f& p2)
+void NTransform3D::transform(immut Vector3f& p1, Vector3f& p2) immut
 {
 	p2 = p1;
 	transform(p2);
@@ -1514,7 +1514,7 @@ void NTransform3D::transform(Vector3f& p1, Vector3f& p2)
  * Address:	........
  * Size:	000184
  */
-void NTransform3D::transform(NVector& vec)
+void NTransform3D::transform(NVector& vec) immut
 {
 	f32 vals[4];
 	NVector tmp(vals, 4);
@@ -1532,7 +1532,7 @@ void NTransform3D::transform(NVector& vec)
  * Address:	........
  * Size:	00018C
  */
-void NTransform3D::transform(NVector& p1, NVector& p2)
+void NTransform3D::transform(immut NVector& p1, NVector& p2) immut
 {
 	p2.input(p1);
 	transform(p2);
@@ -1543,7 +1543,7 @@ void NTransform3D::transform(NVector& p1, NVector& p2)
  * Address:	........
  * Size:	000094
  */
-void NTransform3D::inputVector(Vector3f& vec)
+void NTransform3D::inputVector(immut Vector3f& vec)
 {
 	makeIdentity();
 	inputTranslation(vec);
@@ -1554,7 +1554,7 @@ void NTransform3D::inputVector(Vector3f& vec)
  * Address:	8011CCD0
  * Size:	000024
  */
-void NTransform3D::inputAxisAngle(NAxisAngle4f& axisAngle)
+void NTransform3D::inputAxisAngle(immut NAxisAngle4f& axisAngle)
 {
 	makeRotate(axisAngle.getAxis(), axisAngle.getAngle());
 }
@@ -1564,7 +1564,7 @@ void NTransform3D::inputAxisAngle(NAxisAngle4f& axisAngle)
  * Address:	........
  * Size:	00001C
  */
-void NTransform3D::inputTranslation(Vector3f& trans)
+void NTransform3D::inputTranslation(immut Vector3f& trans)
 {
 	inputCol(3, trans);
 }
@@ -1574,7 +1574,7 @@ void NTransform3D::inputTranslation(Vector3f& trans)
  * Address:	........
  * Size:	00001C
  */
-void NTransform3D::outputTranslation(Vector3f& trans)
+void NTransform3D::outputTranslation(Vector3f& trans) immut
 {
 	outputCol(3, trans);
 }
@@ -1584,7 +1584,7 @@ void NTransform3D::outputTranslation(Vector3f& trans)
  * Address:	........
  * Size:	00004C
  */
-void NTransform3D::inputRotation(Matrix4f& rotMtx)
+void NTransform3D::inputRotation(immut Matrix4f& rotMtx)
 {
 	for (int i = 0; i < 3; i++) {
 		setRow(i, rotMtx.mMtx[i][0], rotMtx.mMtx[i][1], rotMtx.mMtx[i][2]);
@@ -1596,7 +1596,7 @@ void NTransform3D::inputRotation(Matrix4f& rotMtx)
  * Address:	8011CCF4
  * Size:	0000CC
  */
-void NTransform3D::outputRotation(Matrix4f& rotMtx)
+void NTransform3D::outputRotation(Matrix4f& rotMtx) immut
 {
 	NVector3f NRef row = NVector3f();
 	for (int i = 0; i < 3; i++) {
@@ -1612,7 +1612,7 @@ void NTransform3D::outputRotation(Matrix4f& rotMtx)
  * Address:	........
  * Size:	0000E4
  */
-void NTransform3D::inputRotation(NAxisAngle4f& axisAngle)
+void NTransform3D::inputRotation(immut NAxisAngle4f& axisAngle)
 {
 	NTransform3D NRef trans = NTransform3D();
 	trans.inputAxisAngle(axisAngle);
@@ -1669,7 +1669,7 @@ void NVector::makeZero()
  * Address:	........
  * Size:	00003C
  */
-void NVector::add(NVector&)
+void NVector::add(immut NVector&)
 {
 	// UNUSED FUNCTION
 }
@@ -1679,7 +1679,7 @@ void NVector::add(NVector&)
  * Address:	........
  * Size:	000118
  */
-f32 NVector::dot(NVector&)
+f32 NVector::dot(immut NVector&) immut
 {
 	// UNUSED FUNCTION
 }
@@ -1689,7 +1689,7 @@ f32 NVector::dot(NVector&)
  * Address:	........
  * Size:	000034
  */
-void NVector::input(NVector&)
+void NVector::input(immut NVector&)
 {
 	// UNUSED FUNCTION
 }
@@ -1699,7 +1699,7 @@ void NVector::input(NVector&)
  * Address:	........
  * Size:	000058
  */
-void NVector::println()
+void NVector::println() immut
 {
 	// UNUSED FUNCTION
 	for (int i = 0; i < mSize; i++) {
@@ -1712,7 +1712,7 @@ void NVector::println()
  * Address:	........
  * Size:	00002C
  */
-void NVector3f::printVector3f(Vector3f& vec)
+void NVector3f::printVector3f(immut Vector3f& vec)
 {
 	NVector3f(vec).print();
 }
@@ -1722,7 +1722,7 @@ void NVector3f::printVector3f(Vector3f& vec)
  * Address:	8011CE28
  * Size:	00002C
  */
-void NVector3f::printlnVector3f(Vector3f& vec)
+void NVector3f::printlnVector3f(immut Vector3f& vec)
 {
 	NVector3f(vec).println();
 }
@@ -1742,7 +1742,7 @@ NVector3f::NVector3f()
  * Address:	8011CE80
  * Size:	000040
  */
-NVector3f::NVector3f(Vector3f& vec)
+NVector3f::NVector3f(immut Vector3f& vec)
 {
 	construct(vec);
 }
@@ -1752,7 +1752,7 @@ NVector3f::NVector3f(Vector3f& vec)
  * Address:	8011CEC0
  * Size:	00001C
  */
-void NVector3f::construct(Vector3f& vec)
+void NVector3f::construct(immut Vector3f& vec)
 {
 	set(vec.x, vec.y, vec.z);
 }
@@ -1782,7 +1782,7 @@ void NVector3f::construct(f32 x, f32 y, f32 z)
  * Address:	8011CF2C
  * Size:	000040
  */
-NVector3f::NVector3f(Vector3f& start, Vector3f& end)
+NVector3f::NVector3f(immut Vector3f& start, immut Vector3f& end)
 {
 	construct(start, end);
 }
@@ -1792,7 +1792,7 @@ NVector3f::NVector3f(Vector3f& start, Vector3f& end)
  * Address:	8011CF6C
  * Size:	000034
  */
-void NVector3f::construct(Vector3f& start, Vector3f& end)
+void NVector3f::construct(immut Vector3f& start, immut Vector3f& end)
 {
 	set(end.x - start.x, end.y - start.y, end.z - start.z);
 }
@@ -1802,7 +1802,7 @@ void NVector3f::construct(Vector3f& start, Vector3f& end)
  * Address:	........
  * Size:	000054
  */
-void NVector3f::interpolate(Vector3f& start, Vector3f& end, f32 t)
+void NVector3f::interpolate(immut Vector3f& start, immut Vector3f& end, f32 t)
 {
 	set(NMathF::interpolate(start.x, end.x, t), NMathF::interpolate(start.y, end.y, t), NMathF::interpolate(start.z, end.z, t));
 }
@@ -1812,7 +1812,7 @@ void NVector3f::interpolate(Vector3f& start, Vector3f& end, f32 t)
  * Address:	........
  * Size:	0000B4
  */
-bool NVector3f::isZero()
+bool NVector3f::isZero() immut
 {
 	return (NMathF::isZero(x) && NMathF::isZero(y) && NMathF::isZero(z));
 }
@@ -1822,7 +1822,7 @@ bool NVector3f::isZero()
  * Address:	........
  * Size:	0000F0
  */
-bool NVector3f::equals(Vector3f& vec)
+bool NVector3f::equals(immut Vector3f& vec) immut
 {
 	return NVector3f(*this, vec).isZero();
 }
@@ -1832,7 +1832,7 @@ bool NVector3f::equals(Vector3f& vec)
  * Address:	........
  * Size:	000058
  */
-bool NVector3f::isVertical(Vector3f& vec)
+bool NVector3f::isVertical(immut Vector3f& vec) immut
 {
 	return NMathF::isZero(dot(vec));
 }
@@ -1842,7 +1842,7 @@ bool NVector3f::isVertical(Vector3f& vec)
  * Address:	8011CFA0
  * Size:	000074
  */
-bool NVector3f::isParallel(Vector3f& vec)
+bool NVector3f::isParallel(immut Vector3f& vec) immut
 {
 	return NMathF::equals(NMathf::absolute(dot(vec)), 1.0f);
 }
@@ -1852,7 +1852,7 @@ bool NVector3f::isParallel(Vector3f& vec)
  * Address:	........
  * Size:	000144
  */
-void NVector3f::makeUnitVector(Vector3f& start, Vector3f& end)
+void NVector3f::makeUnitVector(immut Vector3f& start, immut Vector3f& end)
 {
 	sub2(end, start);
 	f32 dist = length();
@@ -1868,7 +1868,7 @@ void NVector3f::makeUnitVector(Vector3f& start, Vector3f& end)
  * Address:	........
  * Size:	000088
  */
-void NVector3f::outputQuat(f32 theta, Quat& q)
+void NVector3f::outputQuat(f32 theta, Quat& q) immut
 {
 	f32 scale = NMathF::sin(theta / 2.0f);
 	q.set(scale * x, scale * y, scale * z, NMathF::cos(theta / 2.0f));
@@ -1879,7 +1879,7 @@ void NVector3f::outputQuat(f32 theta, Quat& q)
  * Address:	........
  * Size:	0000E0
  */
-f32 NVector3f::calcAngle(NVector3f& other)
+f32 NVector3f::calcAngle(immut NVector3f& other) immut
 {
 	f32 proj = dot(other);
 	if (proj > 1.0f) {
@@ -1898,7 +1898,7 @@ f32 NVector3f::calcAngle(NVector3f& other)
  * Address:	........
  * Size:	000098
  */
-f32 NVector3f::calcLargerAngle(NVector3f& other)
+f32 NVector3f::calcLargerAngle(immut NVector3f& other) immut
 {
 	return TAU - calcAngle(other);
 	// UNUSED FUNCTION
@@ -1909,7 +1909,7 @@ f32 NVector3f::calcLargerAngle(NVector3f& other)
  * Address:	........
  * Size:	000004
  */
-void NVector3f::print()
+void NVector3f::print() immut
 {
 	PRINT_NAKATA("(%f,%f,%f)", x, y, z);
 }
@@ -1919,7 +1919,7 @@ void NVector3f::print()
  * Address:	8011D014
  * Size:	000004
  */
-void NVector3f::println()
+void NVector3f::println() immut
 {
 	PRINT_NAKATA("(%f,%f,%f)\n", x, y, z);
 }

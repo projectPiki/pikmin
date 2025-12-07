@@ -84,7 +84,7 @@ void ActBreakWall::procCollideMsg(Piki* piki, MsgCollide* msg)
  * Address:	800AE3C4
  * Size:	000190
  */
-void ActBreakWall::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActBreakWall::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

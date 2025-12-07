@@ -15,8 +15,8 @@ struct PcamCamera;
 struct PeveCameraPostureIO : public NPosture3DIO {
 	PeveCameraPostureIO();
 
-	virtual void input(NPosture3D& posture) { mCamera->inputPosture(posture); }         // _08
-	virtual void output(NPosture3D& outPosture) { mCamera->outputPosture(outPosture); } // _0C
+	virtual void input(immut NPosture3D& posture) { mCamera->inputPosture(posture); }         // _08
+	virtual void output(NPosture3D& outPosture) immut { mCamera->outputPosture(outPosture); } // _0C
 
 	void construct(PcamCamera*);
 
@@ -31,8 +31,8 @@ struct PeveCameraPostureIO : public NPosture3DIO {
 struct PeveCameraViewpointIO : public NVector3fIO {
 	PeveCameraViewpointIO();
 
-	virtual void input(NVector3f& viewPt) { mCamera->inputViewpoint(viewPt); }              // _08
-	virtual void output(NVector3f& outViewPt) { outViewPt.input(mCamera->getViewpoint()); } // _0C
+	virtual void input(immut NVector3f& viewPt) { mCamera->inputViewpoint(viewPt); }              // _08
+	virtual void output(NVector3f& outViewPt) immut { outViewPt.input(mCamera->getViewpoint()); } // _0C
 
 	// unused/inlined:
 	void construct(PcamCamera*);
@@ -48,8 +48,8 @@ struct PeveCameraViewpointIO : public NVector3fIO {
 struct PeveCameraWatchpointIO : public NVector3fIO {
 	PeveCameraWatchpointIO();
 
-	virtual void input(NVector3f& watchPt) { mCamera->inputWatchpoint(watchPt); }              // _08
-	virtual void output(NVector3f& outWatchPt) { outWatchPt.input(mCamera->getWatchpoint()); } // _0C
+	virtual void input(immut NVector3f& watchPt) { mCamera->inputWatchpoint(watchPt); }              // _08
+	virtual void output(NVector3f& outWatchPt) immut { outWatchPt.input(mCamera->getWatchpoint()); } // _0C
 
 	// unused/inlined:
 	void construct(PcamCamera*);
@@ -65,7 +65,7 @@ struct PeveCameraWatchpointIO : public NVector3fIO {
 struct PeveClampVector3fIO : public NVector3fIOClass {
 	PeveClampVector3fIO();
 
-	virtual void input(NVector3f&); // _08
+	virtual void input(immut NVector3f&); // _08
 
 	void construct();
 
@@ -83,8 +83,8 @@ struct PeveClampVector3fIO : public NVector3fIOClass {
 struct PeveCreaturePositionIO : public NVector3fIO {
 	PeveCreaturePositionIO();
 
-	virtual void input(NVector3f& vec) { mCreature->inputPosition(vec); }         // _08
-	virtual void output(NVector3f& outVec) { mCreature->outputPosition(outVec); } // _0C
+	virtual void input(immut NVector3f& vec) { mCreature->inputPosition(vec); }         // _08
+	virtual void output(NVector3f& outVec) immut { mCreature->outputPosition(outVec); } // _0C
 
 	// unused/inlined:
 	void construct(Creature*);

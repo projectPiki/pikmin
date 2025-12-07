@@ -99,7 +99,7 @@ SnakeBody::SnakeBody(Snake* snake)
  * Address:	80160088
  * Size:	00009C
  */
-void SnakeBody::init(Vector3f&, Snake* snake)
+void SnakeBody::init(immut Vector3f&, Snake* snake)
 {
 	mSnake         = snake;
 	mIsDying       = false;
@@ -354,7 +354,7 @@ void SnakeBody::makeVectorMatrix()
  * Address:	........
  * Size:	0000F4
  */
-void SnakeBody::createDeadPellet(Vector3f& pelletPos, int itemIdx)
+void SnakeBody::createDeadPellet(immut Vector3f& pelletPos, int itemIdx)
 {
 	if (itemIdx >= 0) {
 		int itemColour = mSnake->getItemColour();

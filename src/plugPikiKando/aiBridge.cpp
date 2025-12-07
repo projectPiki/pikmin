@@ -289,7 +289,7 @@ void ActBridge::doWork(int mins)
  * Address:	800AD150
  * Size:	0000B0
  */
-void ActBridge::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActBridge::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	STACK_PAD_VAR(1);
 	switch (event.mEventType) {

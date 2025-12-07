@@ -72,7 +72,7 @@ void King::bombDamageCounter(CollPart*)
  * Address:	8016BDD0
  * Size:	000084
  */
-void King::init(Vector3f&)
+void King::init(immut Vector3f&)
 {
 	mCollisionRadius = 50.0f;
 	setInvincible(true);

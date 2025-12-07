@@ -78,7 +78,7 @@ static inline void readDDF_Colour(Colour* outColour, u8*& data, u32 size)
  * Address:	8019CD0C
  * Size:	00024C
  */
-void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, Vector3f& pos, zen::particleMdlManager* mdlMgr,
+void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut Vector3f& pos, zen::particleMdlManager* mdlMgr,
                                   zen::CallBack1<zen::particleGenerator*>* cb1,
                                   zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
 {

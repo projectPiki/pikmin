@@ -24,7 +24,7 @@ DEFINE_PRINT(nullptr)
  * Address:	........
  * Size:	0000C4
  */
-void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
+void CullFrustum::vectorToWorldPlane(immut Vector3f& vec, CullingPlane& worldPlane)
 {
 	projectVector(vec, worldPlane.mPlane.mNormal);
 	worldPlane.mPlane.mOffset = worldPlane.mPlane.mNormal.dot(mPosition);
@@ -35,7 +35,7 @@ void CullFrustum::vectorToWorldPlane(Vector3f& vec, CullingPlane& worldPlane)
  * Address:	80041584
  * Size:	00006C
  */
-bool CullFrustum::isPointVisible(Vector3f& point, f32 cutoff)
+bool CullFrustum::isPointVisible(immut Vector3f& point, f32 cutoff)
 {
 	for (int i = 0; i < mActivePlaneCount; i++) {
 		Plane* plane = &mPlanePointers[i]->mPlane;
@@ -337,7 +337,7 @@ void CullFrustum::update(f32 aspectRatio, f32 fov, f32 near, f32 far)
  * Address:	80042DA4
  * Size:	000268
  */
-void CullFrustum::calcVectors(Vector3f& eyePos, Vector3f& targetPos)
+void CullFrustum::calcVectors(immut Vector3f& eyePos, immut Vector3f& targetPos)
 {
 	mPosition = eyePos;
 	mFocus    = targetPos;
@@ -374,7 +374,7 @@ void CullFrustum::calcVectors(Vector3f& eyePos, Vector3f& targetPos)
  * Address:	8004300C
  * Size:	00003C
  */
-void CullFrustum::calcLookAt(Vector3f& p1, Vector3f& p2, Vector3f* p3)
+void CullFrustum::calcLookAt(immut Vector3f& p1, immut Vector3f& p2, immut Vector3f* p3)
 {
 	mLookAtMtx.makeLookat(p1, p2, p3);
 	mLookAtMtx.inverse(&mInverseLookAtMtx);
@@ -385,7 +385,7 @@ void CullFrustum::calcLookAt(Vector3f& p1, Vector3f& p2, Vector3f* p3)
  * Address:	........
  * Size:	00003C
  */
-void CullFrustum::calcLookFrom(Vector3f&, Vector3f&)
+void CullFrustum::calcLookFrom(immut Vector3f&, immut Vector3f&)
 {
 	// UNUSED FUNCTION
 }

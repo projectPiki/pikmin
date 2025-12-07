@@ -662,7 +662,7 @@ void TaiTargetNestAction::start(Teki& teki)
  * Address:	80135AA0
  * Size:	000180
  */
-bool TaiHeadOnCollisionAvoidanceAction::actByEvent(TekiEvent& event)
+bool TaiHeadOnCollisionAvoidanceAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Entity) {
 		Creature* other = event.mOther;

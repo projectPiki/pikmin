@@ -49,7 +49,7 @@ void TekiStrategy::act(Teki&)
  * Address:	8014D1BC
  * Size:	000004
  */
-void TekiStrategy::eventPerformed(TekiEvent&)
+void TekiStrategy::eventPerformed(immut TekiEvent&)
 {
 }
 
@@ -87,7 +87,7 @@ void TekiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
  * Address:	8014D22C
  * Size:	000034
  */
-bool TekiStrategy::interact(Teki& teki, TekiInteractionKey& key)
+bool TekiStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	return teki.interactDefault(key);
 }

@@ -29,7 +29,7 @@ DEFINE_PRINT(nullptr)
  * Address: ........
  * Size:    0000C0
  */
-bool Plane::equal(Plane& other)
+bool Plane::equal(immut Plane& other)
 {
 	// UNUSED FUNCTION
 }
@@ -121,7 +121,7 @@ void CullingPlane::CheckMinMaxDir()
  * Address: ........
  * Size:    0000AC
  */
-void Vector3f::rotateTranspose(Matrix4f&)
+void Vector3f::rotateTranspose(immut Matrix4f&)
 {
 	// FAKE but easiest way to juggle the float ordering
 	Vector3f vec;
@@ -140,7 +140,7 @@ void Vector3f::rotateTranspose(Matrix4f&)
  * Address: 8003760C
  * Size:    0000AC
  */
-void Vector3f::rotate(Matrix4f& mtx)
+void Vector3f::rotate(immut Matrix4f& mtx)
 {
 	Vector3f vec;
 	vec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z;
@@ -155,7 +155,7 @@ void Vector3f::rotate(Matrix4f& mtx)
  * Address: 800376B8
  * Size:    000094
  */
-void Vector3f::rotateTo(Matrix4f& mtx, Vector3f& outVec)
+void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
 	outVec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z;
 	outVec.y = mtx.mMtx[1][0] * x + mtx.mMtx[1][1] * y + mtx.mMtx[1][2] * z;
@@ -167,7 +167,7 @@ void Vector3f::rotateTo(Matrix4f& mtx, Vector3f& outVec)
  * Address: 8003774C
  * Size:    0000C4
  */
-void Vector3f::multMatrix(Matrix4f& mtx)
+void Vector3f::multMatrix(immut Matrix4f& mtx)
 {
 	Vector3f vec;
 	vec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z + mtx.mMtx[0][3];
@@ -181,7 +181,7 @@ void Vector3f::multMatrix(Matrix4f& mtx)
  * Address: 80037810
  * Size:    0000AC
  */
-void Vector3f::multMatrixTo(Matrix4f& mtx, Vector3f& outVec)
+void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
 	outVec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z + mtx.mMtx[0][3];
 	outVec.y = mtx.mMtx[1][0] * x + mtx.mMtx[1][1] * y + mtx.mMtx[1][2] * z + mtx.mMtx[1][3];
@@ -193,7 +193,7 @@ void Vector3f::multMatrixTo(Matrix4f& mtx, Vector3f& outVec)
  * Address: ........
  * Size:    000110
  */
-void Vector3f::rotate(Quat&)
+void Vector3f::rotate(immut Quat&)
 {
 	// UNUSED FUNCTION
 }
@@ -203,7 +203,7 @@ void Vector3f::rotate(Quat&)
  * Address: ........
  * Size:    000104
  */
-void Vector3f::rotateInverse(Quat&)
+void Vector3f::rotateInverse(immut Quat&)
 {
 	// UNUSED FUNCTION
 }
@@ -213,7 +213,7 @@ void Vector3f::rotateInverse(Quat&)
  * Address: 800378BC
  * Size:    0004E4
  */
-void Quat::fromMat3f(Matrix3f& mtx)
+void Quat::fromMat3f(immut Matrix3f& mtx)
 {
 	f32 diag = mtx.mMtx[0][0] + mtx.mMtx[1][1] + mtx.mMtx[2][2];
 	f32 a    = 0.25f * (1.0f + diag);                        // f4
@@ -297,7 +297,7 @@ void Quat::fromMat3f(Matrix3f& mtx)
  * Address: 80037DA0
  * Size:    0000A4
  */
-void Quat::rotate(Vector3f& axis, f32 angle)
+void Quat::rotate(immut Vector3f& axis, f32 angle)
 {
 	f32 theta  = 0.5f * angle;
 	f32 sinVal = sinf(theta);
@@ -313,7 +313,7 @@ void Quat::rotate(Vector3f& axis, f32 angle)
  * Address: 80037E44
  * Size:    0000EC
  */
-void Quat::multiply(Quat& other)
+void Quat::multiply(immut Quat& other)
 {
 	Quat tmp;
 	tmp.s   = other.s * s - other.v.x * v.x - other.v.y * v.y - other.v.z * v.z;
@@ -328,7 +328,7 @@ void Quat::multiply(Quat& other)
  * Address: ........
  * Size:    000104
  */
-void Quat::multiplyTo(Quat& other, Quat& outQuat)
+void Quat::multiplyTo(immut Quat& other, Quat& outQuat)
 {
 	outQuat.s   = other.s * s - other.v.x * v.x - other.v.y * v.y - other.v.z * v.z;
 	outQuat.v.x = (other.v.y * v.z + (other.s * v.x + other.v.x * s)) - other.v.z * v.y;
@@ -355,7 +355,7 @@ void Quat::normalise()
  * Address: 80038004
  * Size:    000080
  */
-void Quat::genVectorX(Vector3f& outVec)
+void Quat::genVectorX(Vector3f& outVec) immut
 {
 	f32 yy   = v.y * v.y;
 	f32 zz   = v.z * v.z;
@@ -375,7 +375,7 @@ void Quat::genVectorX(Vector3f& outVec)
  * Address: 80038084
  * Size:    000080
  */
-void Quat::genVectorY(Vector3f& outVec)
+void Quat::genVectorY(Vector3f& outVec) immut
 {
 	f32 xy   = v.x * v.y;
 	f32 sz   = s * v.z;
@@ -395,7 +395,7 @@ void Quat::genVectorY(Vector3f& outVec)
  * Address: 80038104
  * Size:    000080
  */
-void Quat::genVectorZ(Vector3f& outVec)
+void Quat::genVectorZ(Vector3f& outVec) immut
 {
 	f32 xz   = v.x * v.z;
 	f32 sy   = s * v.y;
@@ -415,7 +415,7 @@ void Quat::genVectorZ(Vector3f& outVec)
  * Address: 80038184
  * Size:    000164
  */
-void Quat::slerp(Quat& other, f32 t, int)
+void Quat::slerp(immut Quat& other, f32 t, int)
 {
 	f32 dot = v.x * other.v.x + v.y * other.v.y + v.z * other.v.z + s * other.s;
 	BOOL isNegative;
@@ -452,7 +452,7 @@ void Quat::slerp(Quat& other, f32 t, int)
  * Address: 800382E8
  * Size:    0002A0
  */
-void Quat::fromEuler(Vector3f& angles)
+void Quat::fromEuler(immut Vector3f& angles)
 {
 	STACK_PAD_VAR(3);
 
@@ -591,11 +591,11 @@ f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
  * Address: 80038678
  * Size:    0001BC
  */
-void CollTriInfo::init(RoomInfo* info, Vector3f* vertices)
+void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 {
 	for (int i = 0; i < 3; ++i) {
-		Vector3f& nextVertex    = vertices[mVertexIndices[(i + 1) % 3]];
-		Vector3f& currentVertex = vertices[mVertexIndices[i % 3]];
+		immut Vector3f& nextVertex    = vertices[mVertexIndices[(i + 1) % 3]];
+		immut Vector3f& currentVertex = vertices[mVertexIndices[i % 3]];
 
 		Vector3f edgeNormal = nextVertex - currentVertex;
 
@@ -611,7 +611,7 @@ void CollTriInfo::init(RoomInfo* info, Vector3f* vertices)
  * Address: 80038834
  * Size:    0000C4
  */
-int CollTriInfo::behindEdge(Vector3f& point)
+int CollTriInfo::behindEdge(immut Vector3f& point)
 {
 	for (int i = 0; i < 3; i++) {
 		if (mEdgePlanes[i].dist(point) < 0.0f) {

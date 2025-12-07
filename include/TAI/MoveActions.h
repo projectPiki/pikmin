@@ -503,7 +503,7 @@ struct TaiHeadOnCollisionAvoidanceAction : public TaiAction {
 		_08 = speed;
 	}
 
-	virtual bool actByEvent(TekiEvent& event); // _14
+	virtual bool actByEvent(immut TekiEvent& event); // _14
 
 	// _04 = VTBL
 	// _00-_08 = TaiAction

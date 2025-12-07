@@ -75,7 +75,7 @@ void SnakeAi::initAI(Snake* snake)
  * Address:	8015B35C
  * Size:	00007C
  */
-void SnakeAi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void SnakeAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

@@ -54,7 +54,7 @@ struct RopeItem : public RopeCreature {
 public:
 	RopeItem(CreatureProp*, Shape*);
 
-	virtual void init(Vector3f&);               // _28
+	virtual void init(immut Vector3f&);         // _28
 	virtual void startAI(int);                  // _34
 	virtual f32 getiMass();                     // _38
 	virtual f32 getSize();                      // _3C

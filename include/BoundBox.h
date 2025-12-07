@@ -6,7 +6,7 @@
 struct Graphics;
 
 struct BoundBox {
-	BoundBox(Vector3f& min, Vector3f& max)
+	BoundBox(immut Vector3f& min, immut Vector3f& max)
 	{
 		mMin = min;
 		mMax = max;
@@ -20,7 +20,7 @@ struct BoundBox {
 		mMax.set(-32768.0f, -32768.0f, -32768.0f);
 	}
 
-	void expandBound(BoundBox& other)
+	void expandBound(immut BoundBox& other)
 	{
 		if (other.mMin.x < mMin.x) {
 			mMin.x = other.mMin.x;
@@ -43,7 +43,7 @@ struct BoundBox {
 		}
 	}
 
-	void expandBound(Vector3f& other)
+	void expandBound(immut Vector3f& other)
 	{
 		if (other.x < mMin.x) {
 			mMin.x = other.x;
@@ -66,7 +66,7 @@ struct BoundBox {
 		}
 	}
 
-	bool intersects(BoundBox& other)
+	bool intersects(immut BoundBox& other) immut
 	{
 		if (other.mMin.x <= mMax.x && other.mMax.x >= mMin.x && other.mMin.y <= mMax.y && other.mMax.y >= mMin.y && other.mMin.z <= mMax.z
 		    && other.mMax.z >= mMin.z) {

@@ -103,7 +103,7 @@ int ActRescue::exec()
  * Address:	800C1510
  * Size:	00006C
  */
-void ActRescue::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActRescue::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

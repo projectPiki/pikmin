@@ -23,12 +23,12 @@ struct NVector {
 	void makeZero();
 
 	// unused/inlined:
-	void add(NVector&);
-	f32 dot(NVector&);
-	void input(NVector&);
-	void println();
+	void add(immut NVector&);
+	f32 dot(immut NVector&) immut;
+	void input(immut NVector&);
+	void println() immut;
 
-	int getDimension() { return mSize; }
+	int getDimension() immut { return mSize; }
 
 	f32* mValues; // _00, array of size mSize
 	int mSize;    // _04
@@ -39,34 +39,34 @@ struct NVector {
  */
 struct NVector3f : public Vector3f {
 	NVector3f();
-	NVector3f(Vector3f&);
+	NVector3f(immut Vector3f&);
 	NVector3f(f32, f32, f32);
-	NVector3f(Vector3f&, Vector3f&);
+	NVector3f(immut Vector3f&, immut Vector3f&);
 
-	void construct(Vector3f&);
+	void construct(immut Vector3f&);
 	void construct(f32, f32, f32);
-	void construct(Vector3f&, Vector3f&);
-	bool isParallel(Vector3f&);
-	void println();
+	void construct(immut Vector3f&, immut Vector3f&);
+	bool isParallel(immut Vector3f&) immut;
+	void println() immut;
 	bool normalizeCheck();
 	void normalize();
 
 	// unused/inlined:
-	void interpolate(Vector3f&, Vector3f&, f32);
-	bool isZero();
-	bool equals(Vector3f&);
-	bool isVertical(Vector3f&);
-	void makeUnitVector(Vector3f&, Vector3f&);
-	void outputQuat(f32, Quat&);
-	f32 calcAngle(NVector3f&);
-	f32 calcLargerAngle(NVector3f&);
-	void print();
+	void interpolate(immut Vector3f&, immut Vector3f&, f32);
+	bool isZero() immut;
+	bool equals(immut Vector3f&) immut;
+	bool isVertical(immut Vector3f&) immut;
+	void makeUnitVector(immut Vector3f&, immut Vector3f&);
+	void outputQuat(f32, Quat&) immut;
+	f32 calcAngle(immut NVector3f&) immut;
+	f32 calcLargerAngle(immut NVector3f&) immut;
+	void print() immut;
 	void normalizeByLength(f32);
-	static void printVector3f(Vector3f&);
-	static void printlnVector3f(Vector3f&);
+	static void printVector3f(immut Vector3f&);
+	static void printlnVector3f(immut Vector3f&);
 
-	f32 distanceXZ(Vector3f& other) { return NMathF::length(x - other.x, z - other.z); }
-	f32 lengthXZ() { return NMathF::length(x, z); }
+	f32 distanceXZ(immut Vector3f& other) immut { return NMathF::length(x - other.x, z - other.z); }
+	f32 lengthXZ() immut { return NMathF::length(x, z); }
 
 	// _00-_0C = Vector3f
 };
@@ -77,8 +77,8 @@ struct NVector3f : public Vector3f {
  * @note Size: 0x4.
  */
 struct NVector3fIO {
-	virtual void input(NVector3f&)  = 0; // _08
-	virtual void output(NVector3f&) = 0; // _0C
+	virtual void input(immut NVector3f&)  = 0; // _08
+	virtual void output(NVector3f&) immut = 0; // _0C
 
 	// _00 = VTBL
 };
@@ -89,8 +89,8 @@ struct NVector3fIO {
  * @note Size: 0x10.
  */
 struct NVector3fIOClass : public NVector3fIO {
-	virtual void input(NVector3f& vec) { _04.input(vec); }         // _08
-	virtual void output(NVector3f& outVec) { _04.output(outVec); } // _0C
+	virtual void input(immut NVector3f& vec) { _04.input(vec); }         // _08
+	virtual void output(NVector3f& outVec) immut { _04.output(outVec); } // _0C
 
 	// _00 = VTBL
 	// _00-_04 = NVector3fIO
@@ -103,34 +103,34 @@ struct NVector3fIOClass : public NVector3fIO {
 struct NMatrix4f : public Matrix4f {
 	NMatrix4f();
 	NMatrix4f(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
-	NMatrix4f(Matrix4f&); // unused/inlined
-	NMatrix4f(Mtx);       // unused/inlined
+	NMatrix4f(immut Matrix4f&); // unused/inlined
+	NMatrix4f(immut Mtx);       // unused/inlined
 
-	void construct(Matrix4f&);
-	void input(Matrix4f&);
+	void construct(immut Matrix4f&);
+	void input(immut Matrix4f&);
 	void set(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
-	void outputCol(int, Vector3f&);
+	void outputCol(int, Vector3f&) immut;
 	void makeIdentRow(int);
 
 	// unused/inlined:
 	void construct(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
-	void construct(Mtx);
-	void input(Mtx);
-	void output(Mtx);
+	void construct(immut Mtx);
+	void input(immut Mtx);
+	void output(Mtx) immut;
 	void setRow(int, f32, f32, f32);
-	void inputRow(int, Vector3f&);
-	void inputRow(int, Vector3f&, f32);
-	void outputRow(int, Vector3f&);
-	void inputRows(NVector3f&, NVector3f&, NVector3f&);
+	void inputRow(int, immut Vector3f&);
+	void inputRow(int, immut Vector3f&, f32);
+	void outputRow(int, Vector3f&) immut;
+	void inputRows(immut NVector3f&, immut NVector3f&, immut NVector3f&);
 	void setCol(int, f32, f32, f32);
-	void inputCol(int, Vector3f&);
-	void inputCol(int, Vector3f&, f32);
-	void inputCols(NVector3f&, NVector3f&, NVector3f&);
-	void mul(Matrix4f&);
-	void mul2(Matrix4f&, Matrix4f&);
+	void inputCol(int, immut Vector3f&);
+	void inputCol(int, immut Vector3f&, f32);
+	void inputCols(immut NVector3f&, immut NVector3f&, immut NVector3f&);
+	void mul(immut Matrix4f&);
+	void mul2(immut Matrix4f&, Matrix4f&) immut;
 	void scale(f32);
 	void transpose();
-	void println();
+	void println() immut;
 
 	void makeIdentity()
 	{
@@ -152,7 +152,7 @@ struct NSpecialMatrix {
 	// unused/inlined:
 	void construct(int);
 
-	int getDimension() { return mDimension; }
+	int getDimension() immut { return mDimension; }
 
 	// _00 = VTBL
 	int mDimension; // _04
@@ -167,10 +167,10 @@ struct NUpperMatrix : public NSpecialMatrix {
 
 	// unused/inlined:
 	void construct(f32*, f32*, int);
-	void solve(NVector&, NVector&);
-	void println();
+	void solve(immut NVector&, NVector&);
+	void println() immut;
 
-	f32 getCenter(int idx) { return mCentre[idx]; }
+	f32 getCenter(int idx) immut { return mCentre[idx]; }
 	void setCenter(int idx, f32 val) { mCentre[idx] = val; }
 	void setUpper(int idx, f32 val) { mUpper[idx] = val; }
 
@@ -189,10 +189,10 @@ struct NLowerMatrix : public NSpecialMatrix {
 
 	// unused/inlined:
 	void construct(f32*, int);
-	void solve(NVector&, NVector&);
-	void println();
+	void solve(immut NVector&, NVector&);
+	void println() immut;
 
-	f32 getLower(int idx) { return mLower[idx - 1]; }
+	f32 getLower(int idx) immut { return mLower[idx - 1]; }
 	void setLower(int idx, f32 val) { mLower[idx - 1] = val; }
 
 	// _00     = VTBL
@@ -210,9 +210,9 @@ struct LUMatrix : public NSpecialMatrix {
 
 	// unused/inlined:
 	void construct(f32*, f32*, f32*, int);
-	void solve(NVector&, NVector&);
+	void solve(immut NVector&, NVector&);
 	void decompose();
-	void println();
+	void println() immut;
 
 	void setCenter(int, f32); // DLL, to do
 	void setLower(int, f32);  // DLL, to do
@@ -231,35 +231,39 @@ struct LUMatrix : public NSpecialMatrix {
  * @brief TODO
  */
 struct NOrientation {
-	NOrientation(Vector3f&);
-	NOrientation();                     // unused/inlined
-	NOrientation(Vector3f&, Vector3f&); // unused/inlined
+	NOrientation(immut Vector3f&);
+	NOrientation();                                 // unused/inlined
+	NOrientation(immut Vector3f&, immut Vector3f&); // unused/inlined
 
-	void construct(Vector3f&);
+	void construct(immut Vector3f&);
 	void normalize();
-	void outputLeft(NVector3f&);
+	void outputLeft(NVector3f&) immut;
 	void makeUp();
 
 	// unused/inlined:
-	void construct(Vector3f&, Vector3f&);
-	void transform(NTransform3D&);
-	void outputRight(NVector3f&);
-	void outputTransform(NTransform3D&);
-	void inputTransform(NTransform3D&);
-	void outputRotation(NTransform3D&);
-	void inputRotation(NTransform3D&);
-	void println();
+	void construct(immut Vector3f&, immut Vector3f&);
+	void transform(immut NTransform3D&);
+	void outputRight(NVector3f&) immut;
+	void outputTransform(NTransform3D&) immut;
+	void inputTransform(immut NTransform3D&);
+	void outputRotation(NTransform3D&) immut;
+	void inputRotation(immut NTransform3D&);
+	void println() immut;
 
 	NVector3f& getFore() { return mDirection; }
 	NVector3f& getUp() { return mUpVector; }
 
-	void input(Vector3f& direction, Vector3f& up)
+	void input(immut Vector3f& direction, immut Vector3f& up)
 	{
 		mDirection.input(direction);
 		mUpVector.input(up);
 	}
 
-	void inputUp(Vector3f& up) { mUpVector.input(up); }
+	void inputUp(immut Vector3f& up) { mUpVector.input(up); }
+
+	// FABRICATED, but necessary for opt-in const-correctness...
+	const NVector3f& getFore() const { return mDirection; }
+	const NVector3f& getUp() const { return mUpVector; }
 
 	NVector3f mDirection; // _00, a.k.a. 'fore'/forward
 	NVector3f mUpVector;  // _0C, a.k.a. 'up'
@@ -270,24 +274,24 @@ struct NOrientation {
  */
 struct NPolar3f {
 	NPolar3f();
-	NPolar3f(Vector3f&);
-	NPolar3f(f32, f32, f32); // unused/inlined
-	NPolar3f(NPolar3f&);     // unused/inlined
+	NPolar3f(immut Vector3f&);
+	NPolar3f(f32, f32, f32);   // unused/inlined
+	NPolar3f(immut NPolar3f&); // unused/inlined
 
-	void construct(Vector3f&);
+	void construct(immut Vector3f&);
 	void set(f32 radius, f32 incl, f32 azimuth);
-	void input(Vector3f&);
-	void output(Vector3f&);
+	void input(immut Vector3f&);
+	void output(Vector3f&) immut;
 
 	// unused/inlined:
 	void construct(f32, f32, f32);
-	void construct(NPolar3f&);
-	void input(NPolar3f&);
+	void construct(immut NPolar3f&);
+	void input(immut NPolar3f&);
 	void negate();
-	void interpolate(NPolar3f&, NPolar3f&, f32);
+	void interpolate(immut NPolar3f&, immut NPolar3f&, f32);
 	void roundMeridian();
 	bool clampMeridian(f32);
-	void println();
+	void println() immut;
 
 	void round()
 	{
@@ -297,9 +301,9 @@ struct NPolar3f {
 
 	void roundAzimuth() { mAzimuth = NMathF::roundAngle(mAzimuth); }
 
-	void add(NPolar3f& other) { add2(*this, other); } // yeah, really
+	void add(immut NPolar3f& other) { add2(*this, other); } // yeah, really
 
-	void add2(NPolar3f& pol1, NPolar3f& pol2)
+	void add2(immut NPolar3f& pol1, immut NPolar3f& pol2)
 	{
 		mRadius      = pol1.mRadius + pol2.mRadius;
 		mInclination = pol1.mInclination + pol2.mInclination;
@@ -319,14 +323,17 @@ struct NPolar3f {
  */
 struct NAxisAngle4f {
 	NAxisAngle4f(); // unused/inlined
-	NAxisAngle4f(NVector3f&, f32);
+	NAxisAngle4f(immut NVector3f&, f32);
 
-	void construct(NVector3f&, f32);
+	void construct(immut NVector3f&, f32);
 
 	NVector3f& getAxis() { return mAxis; }
-	f32 getAngle() { return mAngle; }
-	void inputAxis(NVector3f& axis) { mAxis.input(axis); }
+	f32 getAngle() immut { return mAngle; }
+	void inputAxis(immut NVector3f& axis) { mAxis.input(axis); }
 	void setAngle(f32 angle) { mAngle = angle; }
+
+	// FABRICATED, but necessary for opt-in const-correctness...
+	const NVector3f& getAxis() const { return mAxis; }
 
 	NVector3f mAxis; // _00
 	f32 mAngle;      // _0C
@@ -342,17 +349,20 @@ struct NPosture2D {
 	virtual void readData(Stream&); // _08
 
 	// unused/inlined:
-	void construct(Vector3f&, f32);
+	void construct(immut Vector3f&, f32);
 	void outputTransform(NTransform3D&);
 	void outputInverseTransform(NTransform3D&);
 	void outputAxisAngle(NAxisAngle4f&);
-	void println();
+	void println() immut;
 
 	NVector3f& getTranslation() { return mTranslation; }
-	f32 getDirection() { return mDirection; }
+	f32 getDirection() immut { return mDirection; }
 
-	void inputTranslation(Vector3f& trans) { mTranslation.input(trans); }
+	void inputTranslation(immut Vector3f& trans) { mTranslation.input(trans); }
 	void setDirection(f32 dir) { mDirection = dir; }
+
+	// FABRICATED, but necessary for opt-in const-correctness...
+	const NVector3f& getTranslation() const { return mTranslation; }
 
 	// _00 = VTBL
 	NVector3f mTranslation; // _04
@@ -364,49 +374,53 @@ struct NPosture2D {
  */
 struct NPosture3D {
 	NPosture3D();
-	NPosture3D(Vector3f&, Vector3f&);
-	NPosture3D(NPosture3D&); // unused/inlined
+	NPosture3D(immut Vector3f&, immut Vector3f&);
+	NPosture3D(immut NPosture3D&); // unused/inlined
 
 	virtual void readData(Stream&); // _08
 
-	void construct(Vector3f&, Vector3f&);
+	void construct(immut Vector3f&, immut Vector3f&);
 	void normalize();
-	void outputRelative(NVector3f&);
-	void translate(Vector3f&);
+	void outputRelative(NVector3f&) immut;
+	void translate(immut Vector3f&);
 
 	// unused/inlined:
-	void construct(NPosture3D&);
-	void outputUnitVector(NVector3f&);
-	void transform(NTransform3D&);
-	void rotate(NVector3f&, NPolar3f&);
-	void rotatePoint(NVector3f&, NVector3f&, NPolar3f&);
-	void interpolate(NPosture3D&, NPosture3D&, f32);
-	void input(NPosture2D&);
-	void output(NPosture2D&);
-	void outputTransform(NPosture3D&, NTransform3D&);
-	void outputTransform(NTransform3D&);
-	void outputInverseTransform(NTransform3D&);
-	void inputTransform(NTransform3D&);
-	f32 calcDirection();
-	void println();
+	void construct(immut NPosture3D&);
+	void outputUnitVector(NVector3f&) immut;
+	void transform(immut NTransform3D&);
+	void rotate(immut NVector3f&, immut NPolar3f&);
+	void rotatePoint(NVector3f&, immut NVector3f&, immut NPolar3f&) immut;
+	void interpolate(immut NPosture3D&, immut NPosture3D&, f32);
+	void input(immut NPosture2D&);
+	void output(NPosture2D&) immut;
+	void outputTransform(immut NPosture3D&, NTransform3D&) immut;
+	void outputTransform(NTransform3D&) immut;
+	void outputInverseTransform(NTransform3D&) immut;
+	void inputTransform(immut NTransform3D&);
+	f32 calcDirection() immut;
+	void println() immut;
 
 	NVector3f& getViewpoint() { return mViewpoint; }
-	void inputViewpoint(Vector3f& view) { mViewpoint.input(view); }
+	void inputViewpoint(immut Vector3f& view) { mViewpoint.input(view); }
 
 	NVector3f& getWatchpoint() { return mWatchpoint; }
-	void inputWatchpoint(Vector3f& watch) { mWatchpoint.input(watch); }
+	void inputWatchpoint(immut Vector3f& watch) { mWatchpoint.input(watch); }
 
-	void input(NPosture3D& other)
+	void input(immut NPosture3D& other)
 	{
 		inputViewpoint(other.getViewpoint());
 		inputWatchpoint(other.getWatchpoint());
 	}
 
-	void output(NPosture3D& output)
+	void output(NPosture3D& output) immut
 	{
 		output.inputViewpoint(mViewpoint);
 		output.inputWatchpoint(mWatchpoint);
 	}
+
+	// FABRICATED, but necessary for opt-in const-correctness...
+	const NVector3f& getViewpoint() const { return mViewpoint; }
+	const NVector3f& getWatchpoint() const { return mWatchpoint; }
 
 	// _00 = VTBL
 	NVector3f mViewpoint;  // _04, i.e. where we *are*
@@ -417,8 +431,8 @@ struct NPosture3D {
  * @brief TODO
  */
 struct NPosture3DIO {
-	virtual void input(NPosture3D&)  = 0; // _08
-	virtual void output(NPosture3D&) = 0; // _0C
+	virtual void input(immut NPosture3D&)  = 0; // _08
+	virtual void output(NPosture3D&) immut = 0; // _0C
 
 	// _00 = VTBL
 };
@@ -428,24 +442,24 @@ struct NPosture3DIO {
  */
 struct NTransform3D : public NMatrix4f {
 	NTransform3D();
-	NTransform3D(NMatrix4f&); // unused/inlined
+	NTransform3D(immut NMatrix4f&); // unused/inlined
 
-	void rotate(Vector3f&);
-	void transform(Vector3f&);
-	void inputAxisAngle(NAxisAngle4f&);
-	void outputRotation(Matrix4f&);
+	void rotate(immut Vector3f&);
+	void transform(Vector3f&) immut;
+	void inputAxisAngle(immut NAxisAngle4f&);
+	void outputRotation(Matrix4f&) immut;
 
 	// unused/inlined:
-	void construct(NMatrix4f&);
-	void translate(Vector3f&);
-	void transform(Vector3f&, Vector3f&);
-	void transform(NVector&);
-	void transform(NVector&, NVector&);
-	void inputVector(Vector3f&);
-	void inputTranslation(Vector3f&);
-	void outputTranslation(Vector3f&);
-	void inputRotation(Matrix4f&);
-	void inputRotation(NAxisAngle4f&);
+	void construct(immut NMatrix4f&);
+	void translate(immut Vector3f&);
+	void transform(immut Vector3f&, Vector3f&) immut;
+	void transform(NVector&) immut;
+	void transform(immut NVector&, NVector&) immut;
+	void inputVector(immut Vector3f&);
+	void inputTranslation(immut Vector3f&);
+	void outputTranslation(Vector3f&) immut;
+	void inputRotation(immut Matrix4f&);
+	void inputRotation(immut NAxisAngle4f&);
 
 	// _00-_40 = NMatrix4f
 };

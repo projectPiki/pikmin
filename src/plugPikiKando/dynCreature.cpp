@@ -185,7 +185,7 @@ void DynCreature::disablePickOffset()
  * Address:	80092C14
  * Size:	000100
  */
-void DynCreature::addParticle(f32 mass, Vector3f& position)
+void DynCreature::addParticle(f32 mass, immut Vector3f& position)
 {
 	DynParticle* ptcl = particleHeap->getFreeOne();
 	if (ptcl) {

@@ -1010,7 +1010,7 @@ void PlayerState::UfoParts::stopMotion()
  * Address:	80080E00
  * Size:	0001F0
  */
-void PlayerState::UfoParts::animationKeyUpdated(PaniAnimKeyEvent& event)
+void PlayerState::UfoParts::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	int anim     = mAnimator.mLowerAnimator.mMotionIdx;
 	UfoItem* ufo = itemMgr->getUfo();

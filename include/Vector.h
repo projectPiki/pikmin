@@ -58,17 +58,17 @@ struct Vector3f {
 	}
 
 	void set(const Vector3f& other) { set(other.x, other.y, other.z); }
-	void input(Vector3f& other) { set(other.x, other.y, other.z); }
-	void output(Vector3f& outVec) { outVec.set(x, y, z); }
+	void input(immut Vector3f& other) { set(other.x, other.y, other.z); }
+	void output(Vector3f& outVec) immut { outVec.set(x, y, z); }
 
-	f32 length() { return std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z)); }
-	f32 squaredLength() { return SQUARE(x) + SQUARE(y) + SQUARE(z); }
+	f32 length() immut { return std::sqrtf(SQUARE(x) + SQUARE(y) + SQUARE(z)); }
+	f32 squaredLength() immut { return SQUARE(x) + SQUARE(y) + SQUARE(z); }
 
 	// TODO: implementions are guessed, a manual check if accurate required
-	f32 DP(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
-	f32 dot(Vector3f& other) { return x * other.x + y * other.y + z * other.z; }
+	f32 DP(immut Vector3f& other) immut { return x * other.x + y * other.y + z * other.z; }
+	f32 dot(immut Vector3f& other) immut { return x * other.x + y * other.y + z * other.z; }
 
-	f32 distance(Vector3f& to)
+	f32 distance(immut Vector3f& to) immut
 	{
 		Vector3f result;
 		result.sub2(to, *this);
@@ -84,7 +84,7 @@ struct Vector3f {
 		return norm;
 	}
 
-	void CP(Vector3f& other)
+	void CP(immut Vector3f& other)
 	{
 		Vector3f tmp;
 		tmp.x = y * other.z - z * other.y;
@@ -95,35 +95,35 @@ struct Vector3f {
 		z     = tmp.z;
 	}
 
-	void cross(Vector3f& vec1, Vector3f& vec2)
+	void cross(immut Vector3f& vec1, immut Vector3f& vec2)
 	{
 		set(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z, vec1.x * vec2.y - vec1.y * vec2.x);
 	}
 
-	void add(Vector3f& other)
+	void add(immut Vector3f& other)
 	{
 		x += other.x;
 		y += other.y;
 		z += other.z;
 	}
 
-	void add2(Vector3f& a, Vector3f& b) { set(a.x + b.x, a.y + b.y, a.z + b.z); }
+	void add2(immut Vector3f& a, immut Vector3f& b) { set(a.x + b.x, a.y + b.y, a.z + b.z); }
 
-	void sub(Vector3f& other)
+	void sub(immut Vector3f& other)
 	{
 		x -= other.x;
 		y -= other.y;
 		z -= other.z;
 	}
 
-	void sub(Vector3f& a, Vector3f& b)
+	void sub(immut Vector3f& a, immut Vector3f& b)
 	{
 		x = a.x - b.x;
 		y = a.y - b.y;
 		z = a.z - b.z;
 	}
 
-	void sub2(Vector3f& a, Vector3f& b) { set(a.x - b.x, a.y - b.y, a.z - b.z); }
+	void sub2(immut Vector3f& a, immut Vector3f& b) { set(a.x - b.x, a.y - b.y, a.z - b.z); }
 
 	void div(f32 divisor)
 	{
@@ -146,7 +146,7 @@ struct Vector3f {
 		z *= scale;
 	}
 
-	void scale2(f32 scale, Vector3f& vec)
+	void scale2(f32 scale, immut Vector3f& vec)
 	{
 		x = scale * vec.x;
 		y = scale * vec.y;
@@ -160,7 +160,7 @@ struct Vector3f {
 		z = -z;
 	}
 
-	void bounce(Vector3f& surface, f32 elasticity)
+	void bounce(immut Vector3f& surface, f32 elasticity)
 	{
 		f32 dp = -DP(surface) * elasticity;
 		if (dp > 0.0f) {
@@ -170,26 +170,26 @@ struct Vector3f {
 		}
 	}
 
-	void lerpTo(Vector3f& other, f32 t, Vector3f& outVec)
+	void lerpTo(immut Vector3f& other, f32 t, Vector3f& outVec)
 	{
 		outVec.x = (other.x - x) * t + x;
 		outVec.y = (other.y - y) * t + y;
 		outVec.z = (other.z - z) * t + z;
 	}
 
-	void rotate(Matrix4f&);
-	void rotateTo(Matrix4f&, Vector3f&);
-	void multMatrix(Matrix4f&);
-	void multMatrixTo(Matrix4f&, Vector3f&);
-	void rotateTranspose(Matrix4f&);
-	void rotate(Quat&);
-	void rotateInverse(Quat&);
+	void rotate(immut Matrix4f&);
+	void rotateTo(immut Matrix4f&, Vector3f&);
+	void multMatrix(immut Matrix4f&);
+	void multMatrixTo(immut Matrix4f&, Vector3f&);
+	void rotateTranspose(immut Matrix4f&);
+	void rotate(immut Quat&);
+	void rotateInverse(immut Quat&);
 
 	// unused/inlined (ALL HAVE NOT BEEN CHECKED FOR ACCURACY):
 	void normalize() { normalise(); }
 
 	// NB: this gets the orthogonal component, not the projected component.
-	void project(Vector3f& dirToRemove)
+	void project(immut Vector3f& dirToRemove)
 	{
 		f32 projAmt = DP(dirToRemove);
 		x           = -(projAmt * dirToRemove.x - x);
@@ -197,18 +197,18 @@ struct Vector3f {
 		z           = -(projAmt * dirToRemove.z - z);
 	}
 
-	void middle(Vector3f& a, Vector3f& b)
+	void middle(immut Vector3f& a, immut Vector3f& b)
 	{
 		add2(a, b);
 		scale(0.5f);
 	}
 
-	bool isSame(Vector3f& other)
+	bool isSame(immut Vector3f& other) immut
 	{
 		return __fabsf(x - other.x) < 0.0001f && __fabsf(y - other.y) < 0.0001f && __fabsf(z - other.z) < 0.0001f;
 	}
 
-	void add(Vector3f& a, Vector3f& b)
+	void add(immut Vector3f& a, immut Vector3f& b)
 	{
 		x = a.x + b.x;
 		y = a.y + b.y;
@@ -305,18 +305,18 @@ struct Quat {
 
 	Quat(f32 _x, f32 _y, f32 _z, f32 _s) { set(_x, _y, _z, _s); }
 
-	void fromMat3f(Matrix3f&);
-	void rotate(Vector3f&, f32);
-	void multiply(Quat&);
+	void fromMat3f(immut Matrix3f&);
+	void rotate(immut Vector3f&, f32);
+	void multiply(immut Quat&);
 	void normalise();
-	void genVectorX(Vector3f&);
-	void genVectorY(Vector3f&);
-	void genVectorZ(Vector3f&);
-	void slerp(Quat&, f32, int);
-	void fromEuler(Vector3f&);
+	void genVectorX(Vector3f&) immut;
+	void genVectorY(Vector3f&) immut;
+	void genVectorZ(Vector3f&) immut;
+	void slerp(immut Quat&, f32, int);
+	void fromEuler(immut Vector3f&);
 
 	// unused/inlined:
-	void multiplyTo(Quat&, Quat&);
+	void multiplyTo(immut Quat&, Quat&);
 
 	// this is the only inline according to the DLL.
 	void set(f32 _x, f32 _y, f32 _z, f32 _s)

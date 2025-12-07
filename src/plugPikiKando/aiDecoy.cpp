@@ -100,7 +100,7 @@ void ActDecoy::cleanup()
  * Address:	800B79D8
  * Size:	000004
  */
-void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActDecoy::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 

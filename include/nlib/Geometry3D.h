@@ -12,29 +12,33 @@ struct NLine;
  * @brief TODO
  */
 struct NLine {
-	NLine(NVector3f&, NVector3f&);
-	NLine();       // unused/inlined
-	NLine(NLine&); // unused/inlined
+	NLine(immut NVector3f&, immut NVector3f&);
+	NLine();             // unused/inlined
+	NLine(immut NLine&); // unused/inlined
 
 	virtual void transform(NTransform3D&); // _08
-	virtual void println();                // _0C
+	virtual void println() immut;          // _0C
 
-	void construct(NVector3f&, NVector3f&);
-	f32 calcDistance(NVector3f&, f32*);
-	f32 calcVerticalProjection(NVector3f&);
-	void outputPosition(f32, NVector3f&);
+	void construct(immut NVector3f&, immut NVector3f&);
+	f32 calcDistance(immut NVector3f&, f32*) immut;
+	f32 calcVerticalProjection(immut NVector3f&) immut;
+	void outputPosition(f32, NVector3f&) immut;
 
 	// unused/inlined:
-	void construct(NLine&);
-	f32 calcDistance(NLine&, f32*, f32*);
-	void outputVerticalPosition(NVector3f&, NVector3f&);
-	void outputPositionY(f32, NVector3f&);
+	void construct(immut NLine&);
+	f32 calcDistance(immut NLine&, f32*, f32*) immut;
+	void outputVerticalPosition(immut NVector3f&, NVector3f&) immut;
+	void outputPositionY(f32, NVector3f&) immut;
 
 	NVector3f& getDirection() { return mDirection; }
 	NVector3f& getPosition() { return mPosition; }
 
 	void inputDirection(NVector3f&, NVector3f&); // DLL, to do
 	void inputPosition(NVector3f&);              // DLL, to do
+
+	// FAKE, but necessary for opt-in const-correctness...
+	const NVector3f& getDirection() const { return mDirection; }
+	const NVector3f& getPosition() const { return mPosition; }
 
 	// _00 = VTBL
 	NVector3f mPosition;  // _04
@@ -53,7 +57,7 @@ struct NPlane {
 	NPlane(NPlane&);                            // unused/inlined
 
 	virtual void transform(NTransform3D&); // _08
-	virtual void println();                // _0C
+	virtual void println() immut;          // _0C
 
 	void construct(NVector3f& normal, NVector3f& point);
 	void outputVerticalPosition(NVector3f&, NVector3f&);
@@ -97,7 +101,7 @@ struct NSegment : public NLine {
 	NSegment(NSegment&);              // unused/inlined
 
 	virtual void transform(NTransform3D&); // _08
-	virtual void println();                // _0C
+	virtual void println() immut;          // _0C
 	virtual void translate(NVector3f&);    // _10
 	virtual void makeProjectionY();        // _14
 

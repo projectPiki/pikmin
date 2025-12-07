@@ -1068,7 +1068,7 @@ TAIbeatleStrategy::TAIbeatleStrategy()
  * Address:	801C6D64
  * Size:	000140
  */
-bool TAIbeatleStrategy::interact(Teki& teki, TekiInteractionKey& key)
+bool TAIbeatleStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	STACK_PAD_VAR(1);
 

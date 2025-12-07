@@ -321,7 +321,7 @@ public:
 		}
 		return res;
 	}
-	virtual bool actByEvent(TekiEvent& event) // _14
+	virtual bool actByEvent(immut TekiEvent& event) // _14
 	{
 		bool res = false;
 		if (event.mEventType == TekiEventType::Entity) {
@@ -1174,7 +1174,7 @@ TAImiurinStrategy::TAImiurinStrategy()
  * Address:	801D80A0
  * Size:	0000C4
  */
-bool TAImiurinStrategy::interact(Teki& teki, TekiInteractionKey& interaction)
+bool TAImiurinStrategy::interact(Teki& teki, immut TekiInteractionKey& interaction)
 {
 	switch (interaction.mInteractionType) {
 	case TekiInteractType::Attack:

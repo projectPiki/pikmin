@@ -89,7 +89,7 @@ struct CylinderTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 public:
 	virtual bool invoke(zen::particleGenerator*); // _08
 
-	void init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
+	void init(TAIeffectAttackParam*, Teki*, immut Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	void hitCheckCommon(zen::particleGenerator*, Creature*);
 
 	// unused/inlined:
@@ -108,7 +108,7 @@ struct ConeTypeCallBack : public zen::CallBack1<zen::particleGenerator*> {
 public:
 	virtual bool invoke(zen::particleGenerator*); // _08
 
-	void init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
+	void init(TAIeffectAttackParam*, Teki*, immut Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*);
 	void hitCheckCommon(zen::particleGenerator*, Creature*);
 
 	// unused/inlined:

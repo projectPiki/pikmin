@@ -5,7 +5,7 @@
 
 typedef struct seqp_ seqp_;
 
-void Jaf_InitSeqArchive2(char*, u8*, u8*);
+void Jaf_InitSeqArchive2(immut char*, u8*, u8*);
 u32 Jaf_CheckSeqSize(u32 arcHandleMask);
 u32 Jaf_LoadSeq(u32, u8*);
 void Jaf_ClearSeq(u32);

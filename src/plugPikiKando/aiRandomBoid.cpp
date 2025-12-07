@@ -20,7 +20,7 @@ DEFINE_PRINT("aiRandomBoid")
  * Address:	800C0A10
  * Size:	0002F8
  */
-void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActRandomBoid::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:

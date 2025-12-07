@@ -247,7 +247,7 @@ PelCreature::PelCreature(int objType, ItemShapeObject* shape, CreatureProp* prop
  * Address:	80092434
  * Size:	000050
  */
-void PelCreature::init(Vector3f& pos)
+void PelCreature::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
 	if (mItemShape) {

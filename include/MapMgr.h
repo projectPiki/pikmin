@@ -20,7 +20,7 @@ struct MapLightMgr;
  * @brief TODO
  */
 struct MoveTrace {
-	MoveTrace(Vector3f& position, Vector3f& velocity, f32 radius, bool p4)
+	MoveTrace(immut Vector3f& position, immut Vector3f& velocity, f32 radius, bool p4)
 	{
 		mIgnoreDynamic = p4;
 		mPosition      = position;

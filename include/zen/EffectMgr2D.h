@@ -84,7 +84,7 @@ struct EffectRegister2D {
 		}
 	}
 
-	particleGenerator* create(particleManager& mgr, Vector3f& pos, CallBack1<particleGenerator*>* cb1,
+	particleGenerator* create(particleManager& mgr, immut Vector3f& pos, CallBack1<particleGenerator*>* cb1,
 	                          CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
 		return mgr.createGenerator(mData, mTex1, mTex2, pos, cb1, cb2);
@@ -103,7 +103,7 @@ struct EffectRegister2D {
 struct EffectMgr2D {
 	EffectMgr2D(int, int, int);
 
-	particleGenerator* create(u32, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
+	particleGenerator* create(u32, immut Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
 	                          zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*);
 	void update();
 	void draw(Graphics&);

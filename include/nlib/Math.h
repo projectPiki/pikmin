@@ -9,7 +9,7 @@
 
 template <typename T>
 struct NMath {
-	static void copyArray44(Mtx44 output, Mtx44 input)
+	static void copyArray44(Mtx44 output, immut Mtx44 input)
 	{
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {

@@ -138,7 +138,7 @@ void ActBoMake::cleanup()
  * Address:	800AC6B0
  * Size:	000078
  */
-void ActBoMake::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActBoMake::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:

@@ -248,7 +248,7 @@ bool TaiTargetNearestAssailantAction::act(Teki& teki)
  * Address:	8013F05C
  * Size:	00013C
  */
-bool TaiTargetNearestCollisionAction::actByEvent(TekiEvent& event)
+bool TaiTargetNearestCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	Teki* teki = event.mTeki;
 	if (event.mEventType != TekiEventType::Entity) {
@@ -285,7 +285,7 @@ bool TaiStickedAction::act(Teki& teki)
  * Address:	8013F1D8
  * Size:	000050
  */
-bool TaiSmashedAction::actByEvent(TekiEvent& event)
+bool TaiSmashedAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Entity) {
 		Teki* teki      = event.mTeki;
@@ -315,7 +315,7 @@ void TaiBeingPressedAction::start(Teki& teki)
  * Address:	8013F298
  * Size:	00001C
  */
-bool TaiPressedAction::actByEvent(TekiEvent& event)
+bool TaiPressedAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Pressed) {
 		PRINT_NAKATA("TaiPressedAction::actByEvent:EVENT_PRESSED:%08x\n", event.mTeki);

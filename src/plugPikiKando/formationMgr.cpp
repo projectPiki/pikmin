@@ -227,7 +227,7 @@ void FormationMgr::slide(Creature* target, int idx)
  * Address:	........
  * Size:	0000CC
  */
-void FormationMgr::add(Vector3f& p1, Vector3f& p2)
+void FormationMgr::add(immut Vector3f& p1, immut Vector3f& p2)
 {
 	Colour col;
 	col.set(int(255.0f * p2.x), int(255.0f * p2.y), int(255.0f * p2.z), 255);
@@ -333,7 +333,7 @@ void FormationMgr::rearrange()
  * Address:	........
  * Size:	000060
  */
-void FormationMgr::setOffset(Vector3f& offset)
+void FormationMgr::setOffset(immut Vector3f& offset)
 {
 	mOffset = offset;
 	for (int i = 0; i < mMax; i++) {
@@ -520,7 +520,7 @@ Rope::Rope()
  * Address:	........
  * Size:	000A1C
  */
-void Rope::move(Vector3f& targetPos, Vector3f& initialVel, Vector3f& p3)
+void Rope::move(immut Vector3f& targetPos, immut Vector3f& initialVel, immut Vector3f& p3)
 {
 	Vector3f projectedPos = targetPos + initialVel * gsys->getFrameTime();
 	Vector3f vec2         = projectedPos - mPosition;

@@ -20,7 +20,7 @@ DEFINE_PRINT(nullptr)
  * Address:	800C2C54
  * Size:	000004
  */
-void ActWatch::AnimListener::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActWatch::AnimListener::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 

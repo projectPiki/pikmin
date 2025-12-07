@@ -401,7 +401,7 @@ BOOL Jac_CheckBootOk()
  * Address:	800171C0
  * Size:	000144
  */
-void Jac_Start(void* heap, u32 heapSize, u32 aramSize, char* rootPath)
+void Jac_Start(void* heap, u32 heapSize, u32 aramSize, immut char* rootPath)
 {
 	STACK_PAD_VAR(1);
 

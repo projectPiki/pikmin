@@ -910,7 +910,7 @@ void TAImarStrategy::act(Teki& teki)
  * Address:	801A6BEC
  * Size:	0000C4
  */
-bool TAImarStrategy::interact(Teki& teki, TekiInteractionKey& key)
+bool TAImarStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	switch (key.mInteractionType) {
 	case TekiInteractType::Attack:

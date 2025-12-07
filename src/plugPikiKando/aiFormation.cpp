@@ -22,7 +22,7 @@ DEFINE_PRINT("aiFormation")
  * Address:	800B98D8
  * Size:	00032C
  */
-void ActFormation::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActFormation::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

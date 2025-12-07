@@ -53,7 +53,7 @@ ItemMgr* itemMgr;
  * Address:	800F2978
  * Size:	000040
  */
-bool BuildingItem::insideSafeArea(Vector3f& pos)
+bool BuildingItem::insideSafeArea(immut Vector3f& pos)
 {
 	f32 z = pos.z - mSRT.t.z;
 	f32 x = pos.x - mSRT.t.x;
@@ -94,7 +94,7 @@ GoalItem* ItemMgr::getContainer(int color)
  * Address:	800F2AF4
  * Size:	000144
  */
-GoalItem* ItemMgr::getNearestContainer(Vector3f& pos, f32 radius)
+GoalItem* ItemMgr::getNearestContainer(immut Vector3f& pos, f32 radius)
 {
 	MeltingPotMgr* mgr = mMeltingPotMgr;
 
@@ -582,7 +582,7 @@ ItemCreature::ItemCreature(int objType, CreatureProp* props, Shape* shape)
  * Address:	800F5974
  * Size:	000070
  */
-void ItemCreature::init(Vector3f& pos)
+void ItemCreature::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
 	mSearchBuffer.init(mItemSearchData, 3);
@@ -780,7 +780,7 @@ void ItemCreature::refresh(Graphics& gfx)
  * Address:	800F5E98
  * Size:	000074
  */
-bool ItemCreature::stimulate(Interaction& interaction)
+bool ItemCreature::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
 		return interaction.actItem(this);
@@ -794,7 +794,7 @@ bool ItemCreature::stimulate(Interaction& interaction)
  * Address:	800F5F0C
  * Size:	000040
  */
-bool InteractBuild::actItem(ItemCreature* item)
+bool InteractBuild::actItem(ItemCreature* item) immut
 {
 	if (item->isObjType(OBJTYPE_BoBase)) {
 		return static_cast<BoBaseItem*>(item)->interactBuild(*this);
@@ -808,7 +808,7 @@ bool InteractBuild::actItem(ItemCreature* item)
  * Address:	800F5F4C
  * Size:	000040
  */
-bool InteractBikkuri::actItem(ItemCreature* item)
+bool InteractBikkuri::actItem(ItemCreature* item) immut
 {
 	if (item->isObjType(OBJTYPE_Pikihead)) {
 		return static_cast<PikiHeadItem*>(item)->interactBikkuri(*this);
@@ -821,7 +821,7 @@ bool InteractBikkuri::actItem(ItemCreature* item)
  * Address:	800F5F8C
  * Size:	000034
  */
-bool InteractFlick::actItem(ItemCreature* item)
+bool InteractFlick::actItem(ItemCreature* item) immut
 {
 	if (item->isObjType(OBJTYPE_GemItem)) {
 		static_cast<GemItem*>(item)->split();
@@ -835,7 +835,7 @@ bool InteractFlick::actItem(ItemCreature* item)
  * Address:	800F5FC0
  * Size:	000040
  */
-bool InteractSwallow::actItem(ItemCreature* item)
+bool InteractSwallow::actItem(ItemCreature* item) immut
 {
 	// why not use the inline????????????
 	if (item->mObjType == OBJTYPE_Pikihead) {
@@ -849,7 +849,7 @@ bool InteractSwallow::actItem(ItemCreature* item)
  * Address:	800F6000
  * Size:	000040
  */
-bool InteractPullout::actItem(ItemCreature* item)
+bool InteractPullout::actItem(ItemCreature* item) immut
 {
 	// why not use the inline????????????
 	if (item->mObjType == OBJTYPE_Weed) {
@@ -864,7 +864,7 @@ bool InteractPullout::actItem(ItemCreature* item)
  * Address:	800F6040
  * Size:	0002D4
  */
-bool InteractBomb::actItem(ItemCreature* item)
+bool InteractBomb::actItem(ItemCreature* item) immut
 {
 	if (item->isSluice()) {
 		BuildingItem* wall = static_cast<BuildingItem*>(item);
@@ -946,7 +946,7 @@ void BuildingItem::playEffect(int id)
  * Address:	800F6374
  * Size:	000270
  */
-bool InteractAttack::actItem(ItemCreature* item)
+bool InteractAttack::actItem(ItemCreature* item) immut
 {
 	if (item->mObjType == OBJTYPE_SluiceBomb || item->mObjType == OBJTYPE_SluiceBombHard) {
 		item->playEventSound(item, SEB_HARDESTWALL_HIT);

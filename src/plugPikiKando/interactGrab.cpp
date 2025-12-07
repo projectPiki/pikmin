@@ -21,7 +21,7 @@ DEFINE_PRINT("interactGrab")
  * Address:	8007C89C
  * Size:	00003C
  */
-bool InteractGrab::actCommon(Creature* creature)
+bool InteractGrab::actCommon(Creature* creature) immut
 {
 	bool result = creature->setStateGrabbed(mOwner);
 	if (creature->mObjType != OBJTYPE_Bomb) {
@@ -38,7 +38,7 @@ bool InteractGrab::actCommon(Creature* creature)
  * Address:	8007C8D8
  * Size:	000120
  */
-bool InteractRelease::actCommon(Creature* creature)
+bool InteractRelease::actCommon(Creature* creature) immut
 {
 	PRINT("RELEASE CALLED\n");
 	creature->resetStateGrabbed();

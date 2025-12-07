@@ -70,7 +70,7 @@ f32 Mizu::getiMass()
  * Address:	8017B54C
  * Size:	000040
  */
-void Mizu::initMizu(Vector3f&)
+void Mizu::initMizu(immut Vector3f&)
 {
 	mCollisionRadius = 10.0f;
 	setShadowNeed(1);
@@ -83,7 +83,7 @@ void Mizu::initMizu(Vector3f&)
  * Address:	8017B58C
  * Size:	000040
  */
-void Mizu::initGeyzer(Vector3f&)
+void Mizu::initGeyzer(immut Vector3f&)
 {
 	mCollisionRadius = 10.0f;
 	setShadowNeed(1);

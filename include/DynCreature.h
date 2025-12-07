@@ -20,7 +20,7 @@ public:
 
 	void enablePickOffset(f32);
 	void disablePickOffset();
-	void addParticle(f32, Vector3f&);
+	void addParticle(f32, immut Vector3f&);
 	void releaseAllParticles();
 	void initialiseSystem();
 	void simulate(f32);

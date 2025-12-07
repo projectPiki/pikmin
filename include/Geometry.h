@@ -10,16 +10,16 @@ struct Sphere;
  * @brief A representation of a cylinder in 3D space.
  */
 struct Cylinder {
-	Cylinder(Vector3f& startPoint, Vector3f& endPoint, f32 radius = 1.0f)
+	Cylinder(immut Vector3f& startPoint, immut Vector3f& endPoint, f32 radius = 1.0f)
 	    : mStartPoint(startPoint)
 	    , mEndPoint(endPoint)
 	    , mRadius(radius)
 	{
 	}
 
-	f32 get2dDist(Vector3f& point);
-	bool collide(const Sphere& sphere, Vector3f& pushVector, f32& depth);
-	f32 getPosRatio(const Vector3f& point); // 0-1 along the cylinder axis
+	f32 get2dDist(immut Vector3f& point) immut;
+	bool collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut;
+	f32 getPosRatio(const Vector3f& point) immut; // 0-1 along the cylinder axis
 
 	Vector3f mStartPoint; // _00
 	Vector3f mEndPoint;   // _0C
@@ -52,11 +52,11 @@ struct RectArea {
 		mMaxY = maxY;
 	}
 
-	int width() { return mMaxX - mMinX; }
-	int height() { return mMaxY - mMinY; }
+	int width() immut { return mMaxX - mMinX; }
+	int height() immut { return mMaxY - mMinY; }
 
 	// other DLL inlines to do:
-	bool pointInside(int, int);
+	bool pointInside(int, int) immut;
 
 	int mMinX; // _00, x1
 	int mMinY; // _04, y1
@@ -68,7 +68,7 @@ struct RectArea {
  * @brief TODO
  */
 struct Sphere {
-	Sphere(Vector3f& centre, f32 radius)
+	Sphere(immut Vector3f& centre, f32 radius)
 	    : mCentre(centre)
 	    , mRadius(radius)
 	{
@@ -83,7 +83,7 @@ struct Sphere {
  */
 struct Tube {
 	// DLL inlines to do:
-	Tube(Vector3f& start, Vector3f& end, f32 startRad, f32 endRad)
+	Tube(immut Vector3f& start, immut Vector3f& end, f32 startRad, f32 endRad)
 	    : mStartPoint(start)
 	    , mEndPoint(end)
 	    , mStartRadius(startRad)
@@ -93,14 +93,14 @@ struct Tube {
 
 	Tube() { } // TODO: check this
 
-	f32 getYRatio(f32 heightToCheck);
-	bool collide(const Sphere&, Vector3f&, f32&);
-	f32 getPosRatio(const Vector3f&);
-	void getPosGradient(Vector3f&, f32, Vector3f&, Vector3f&);
-	Vector3f setPos(f32);
+	f32 getYRatio(f32 heightToCheck) immut;
+	bool collide(const Sphere&, Vector3f&, f32&) immut;
+	f32 getPosRatio(const Vector3f&) immut;
+	void getPosGradient(Vector3f&, f32, Vector3f&, Vector3f&) immut;
+	Vector3f setPos(f32) immut;
 
 	// unused/inlined:
-	f32 getRatioRadius(f32);
+	f32 getRatioRadius(f32) immut;
 
 	// TODO: members
 	Vector3f mStartPoint; // _00

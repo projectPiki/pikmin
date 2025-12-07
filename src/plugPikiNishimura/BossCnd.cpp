@@ -25,7 +25,7 @@ DEFINE_PRINT(nullptr);
  * Address:	8014FAFC
  * Size:	000040
  */
-bool CndIsAlive::satisfy(Creature* target)
+bool CndIsAlive::satisfy(Creature* target) immut
 {
 	if (target) {
 		return target->isAlive();
@@ -38,7 +38,7 @@ bool CndIsAlive::satisfy(Creature* target)
  * Address:	8014FB3C
  * Size:	0000C8
  */
-bool CndBossFlick::satisfy(Creature* target)
+bool CndBossFlick::satisfy(Creature* target) immut
 {
 	if (target && target->isAlive() && !target->isStickToMouth() && target->getStickObject() == mBoss) {
 		if (NsMathF::getRand(1.0f) < static_cast<BossProp*>(mBoss->mProps)->mBossProps.mFlickChance()) {
@@ -54,7 +54,7 @@ bool CndBossFlick::satisfy(Creature* target)
  * Address:	8014FC04
  * Size:	000070
  */
-bool CndStickBossKill::satisfy(Creature* target)
+bool CndStickBossKill::satisfy(Creature* target) immut
 {
 	if (target && target->isAlive() && target->getStickObject() == mBoss) {
 		return true;
@@ -67,7 +67,7 @@ bool CndStickBossKill::satisfy(Creature* target)
  * Address:	8014FC74
  * Size:	00007C
  */
-bool CndStickMouthKill::satisfy(Creature* target)
+bool CndStickMouthKill::satisfy(Creature* target) immut
 {
 	if (target && target->isAlive() && target->isStickToMouth() && target->getStickObject() == mBoss) {
 		return true;
@@ -80,7 +80,7 @@ bool CndStickMouthKill::satisfy(Creature* target)
  * Address:	8014FCF0
  * Size:	000098
  */
-bool CndBossCollKill::satisfy(Creature* target)
+bool CndBossCollKill::satisfy(Creature* target) immut
 {
 	if (target && target->isAlive() && !target->isStickToMouth() && target->getStickObject() == mBoss) {
 		if (mCollID == target->getStickPart()->getID().mId) {

@@ -26,10 +26,10 @@ void Jac_RegisterARAMCallback(ARAMCallback callback)
  * Address:	8000D8A0
  * Size:	000064
  */
-u32 LoadAram(char* filepath, u32* status, u32 dst)
+u32 LoadAram(immut char* filepath, u32* status, u32 dst)
 {
-	char** REF_filepath = &filepath;
-	u32* REF_dst        = &dst;
+	immut char** REF_filepath = &filepath;
+	u32* REF_dst              = &dst;
 
 	if (DVDT_LoadtoARAM(0, filepath, dst, 0, 0, status, NULL) == -1) {
 		return 0;
@@ -42,12 +42,12 @@ u32 LoadAram(char* filepath, u32* status, u32 dst)
  * Address:	8000D920
  * Size:	000068
  */
-u32 LoadAramSingle(char* filepath, u32 src, u32 length, u32* status, u32 dst)
+u32 LoadAramSingle(immut char* filepath, u32 src, u32 length, u32* status, u32 dst)
 {
 	STACK_PAD_VAR(1);
-	char** REF_filepath = &filepath;
-	u32* REF_src        = &src;
-	u32* REF_length     = &length;
+	immut char** REF_filepath = &filepath;
+	u32* REF_src              = &src;
+	u32* REF_length           = &length;
 
 	if (DVDT_LoadtoARAM(0, filepath, dst, src, length, status, NULL) == -1) {
 		return 0;
@@ -60,7 +60,7 @@ u32 LoadAramSingle(char* filepath, u32 src, u32 length, u32* status, u32 dst)
  * Address:	........
  * Size:	000030
  */
-void Jac_WaveDirectorySet(char* directory)
+void Jac_WaveDirectorySet(immut char* directory)
 {
 	strcpy(extdir, directory);
 }
@@ -123,7 +123,7 @@ static BOOL first = TRUE;
  * Address:	8000DAA0
  * Size:	0000F8
  */
-u32 LoadAram_Default(char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
+u32 LoadAram_Default(immut char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {
 	char filepath[140];
 
@@ -153,7 +153,7 @@ u32 LoadAram_Default(char* filename, u32 src, u32 length, u32* status, jaheap_* 
  * Address:	8000DBA0
  * Size:	000038
  */
-u32 LoadAram_All(char* filename, u32* status, jaheap_* heap)
+u32 LoadAram_All(immut char* filename, u32* status, jaheap_* heap)
 {
 	return ARCALL(filename, 0, 0, status, heap);
 }
@@ -163,7 +163,7 @@ u32 LoadAram_All(char* filename, u32* status, jaheap_* heap)
  * Address:	8000DBE0
  * Size:	000028
  */
-u32 LoadAram_One(char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
+u32 LoadAram_One(immut char* filename, u32 src, u32 length, u32* status, jaheap_* heap)
 {
 	return ARCALL(filename, src, length, status, heap);
 }

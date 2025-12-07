@@ -38,11 +38,11 @@ static u32 first = TRUE;
  * Address:	8001B3E0
  * Size:	0000D0
  */
-void Jaf_InitSeqArchive2(char* barcFilepath, u8* barcData, u8* param_3)
+void Jaf_InitSeqArchive2(immut char* barcFilepath, u8* barcData, u8* param_3)
 {
 	STACK_PAD_VAR(2);
 
-	char** REF_barcFilepath;
+	immut char** REF_barcFilepath;
 	size_t i;
 
 	REF_barcFilepath = &barcFilepath;

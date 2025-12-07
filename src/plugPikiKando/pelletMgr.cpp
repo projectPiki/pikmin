@@ -486,7 +486,7 @@ void Pellet::startGoal()
  * Address:	80095C3C
  * Size:	00016C
  */
-void Pellet::doCarry(Creature* carryingPiki, Vector3f& direction, u16 carrierCount)
+void Pellet::doCarry(Creature* carryingPiki, immut Vector3f& direction, u16 carrierCount)
 {
 	if (mCarryState == 1) {
 		mTransitionTimer -= gsys->getFrameTime();
@@ -727,7 +727,7 @@ int Pellet::getMinFreeSlotIndex()
  * Address:	800963CC
  * Size:	000160
  */
-int Pellet::getNearestFreeSlotIndex(Vector3f& pos)
+int Pellet::getNearestFreeSlotIndex(immut Vector3f& pos)
 {
 	f32 minDist    = 12800.0f;
 	int nearestIdx = -1;
@@ -966,7 +966,7 @@ void Pellet::finishMotion()
  * Address:	80096A5C
  * Size:	000098
  */
-void Pellet::init(Vector3f& pos)
+void Pellet::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
 	if (mShapeObject) {
@@ -1037,7 +1037,7 @@ void Pellet::doLoad(RandomAccessStream& input)
  * Address:	80096D70
  * Size:	000078
  */
-void Pellet::animationKeyUpdated(PaniAnimKeyEvent& event)
+void Pellet::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (isMotionFlag(PelletMotionFlags::UsePassive) && event.mEventType == KEY_LoopEnd && isUfoParts() && mConfig->mAnimSoundID() >= 0) {
 		playEventSound(this, mConfig->mAnimSoundID() + SE_UFOPARTS_SOUNDTYPE);
@@ -1421,7 +1421,7 @@ void Pellet::bounceCallback()
  * Address:	80097D84
  * Size:	000020
  */
-void Pellet::collisionCallback(CollEvent& event)
+void Pellet::collisionCallback(immut CollEvent& event)
 {
 	if (isCreatureFlag(CF_AllowFixPosition) && isCreatureFlag(CF_IsPositionFixed)) {
 		resetCreatureFlag(CF_IsPositionFixed);
@@ -1433,7 +1433,7 @@ void Pellet::collisionCallback(CollEvent& event)
  * Address:	80097DA4
  * Size:	000074
  */
-bool Pellet::stimulate(Interaction& interaction)
+bool Pellet::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
 		return interaction.actPellet(this);
@@ -1520,7 +1520,7 @@ void Pellet::doCreateColls(Graphics& gfx)
  * Address:	800982CC
  * Size:	000064
  */
-bool InteractSwallow::actPellet(Pellet* pellet)
+bool InteractSwallow::actPellet(Pellet* pellet) immut
 {
 	if (pellet->getState() == PELSTATE_Swallowed) {
 		return false;
@@ -1535,7 +1535,7 @@ bool InteractSwallow::actPellet(Pellet* pellet)
  * Address:	80098330
  * Size:	000148
  */
-bool InteractKill::actPellet(Pellet* pellet)
+bool InteractKill::actPellet(Pellet* pellet) immut
 {
 	if (pellet->mStuckMouthPart) {
 		Stickers stuckList(pellet);

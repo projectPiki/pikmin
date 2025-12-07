@@ -58,7 +58,7 @@ f32 Nucleus::getiMass()
  * Address:	8017A2C8
  * Size:	000060
  */
-void Nucleus::init(Vector3f&)
+void Nucleus::init(immut Vector3f&)
 {
 	mCollisionRadius = 20.0f;
 	mSRT.s.set(0.0f, 0.0f, 0.0f);

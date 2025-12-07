@@ -34,14 +34,14 @@ struct ID32 {
 	 * @param id The value to compare with the ID32.
 	 * @return True if the ID32 is equal to the given value, false otherwise.
 	 */
-	bool operator==(u32 id);
+	bool operator==(u32 id) immut;
 
 	/**
 	 * @brief Inequality operator that checks if the ID32 is not equal to the given value.
 	 * @param id The value to compare with the ID32.
 	 * @return True if the ID32 is not equal to the given value, false otherwise.
 	 */
-	bool operator!=(u32 id);
+	bool operator!=(u32 id) immut;
 
 	/**
 	 * @brief Checks if the given ID matches the ID stored in the ID32 object.
@@ -49,12 +49,12 @@ struct ID32 {
 	 * @param wild The alternative "wildcard" character to compare against.  Default is '*'.
 	 * @return true if the given ID matches the stored ID, false otherwise.
 	 */
-	bool match(u32 id, char wild = '*');
+	bool match(u32 id, char wild = '*') immut;
 
 	/**
 	 * @brief Prints the ID32's value and string ID to the console.
 	 */
-	void print();
+	void print() immut;
 
 	/**
 	 * @brief Reads the ID32's value and string ID from the given random access stream.
@@ -72,7 +72,7 @@ struct ID32 {
 	 * @brief Formats the ID32's string ID into the given character array.
 	 * @param str The character array to store the formatted string ID.
 	 */
-	void sprint(char* str);
+	void sprint(char* str) immut;
 
 	/**
 	 * @brief Updates the ID32's value based on its string ID.
@@ -88,7 +88,7 @@ struct ID32 {
 	 * @brief Writes the ID32's value and string ID to the given random access stream.
 	 * @param stream The random access stream to write to.
 	 */
-	void write(RandomAccessStream& stream);
+	void write(RandomAccessStream& stream) immut;
 
 	void genAge(AgeServer&, char*);
 	void ageChangeID() { updateID(); }
