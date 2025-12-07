@@ -293,6 +293,74 @@ protected:
 /**
  * @brief TODO
  */
+struct TAIAwatchNaviMiurin : public TaiAction {
+public:
+	TAIAwatchNaviMiurin(int nextState, int nextStateNaviBury)
+	    : TaiAction(nextState)
+	{
+		mNextStateOther      = nextState;
+		mNextStateIfNaviBury = nextStateNaviBury;
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res   = false;
+		Navi* navi = naviMgr->getNavi();
+		if (teki.mDamageCount > 0.0f) {
+			PRINT("MIURIN DAMAGE! \n");
+			res = true;
+		} else {
+			if (teki.visibleCreature(*navi) && navi->isNuking()) {
+				PRINT("     nuking!!!! \n");
+				res = true;
+			}
+		}
+
+		if (res) {
+			goNextState(teki);
+		}
+		return res;
+	}
+	virtual bool actByEvent(TekiEvent& event) // _14
+	{
+		bool res = false;
+		if (event.mEventType == TekiEventType::Entity) {
+			Creature* coll = event.mOther;
+			if (coll->mObjType == OBJTYPE_Navi) {
+				Navi* navi = (Navi*)coll;
+				if (navi->isNuking()) {
+					PRINT("     Nuking Navi touch Miurin. \n");
+					res = true;
+					goNextState(*event.mTeki);
+				}
+			}
+		}
+
+		return res;
+	}
+
+protected:
+	void goNextState(Teki& teki)
+	{
+		Navi* navi = naviMgr->getNavi();
+		teki.setCreaturePointer(0, navi);
+		if (navi->isBuried()) {
+			mNextState = mNextStateIfNaviBury;
+		} else {
+			mNextState = mNextStateOther;
+		}
+		PRINT("nextState %d \n", mNextState);
+	}
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	int mNextStateOther;      // _08
+	int mNextStateIfNaviBury; // _0C
+};
+
+/**
+ * @brief TODO
+ */
 struct TAIAoutsideTerritoryMiurin : public TAIAoutsideTerritory {
 public:
 	TAIAoutsideTerritoryMiurin(int nextState)
@@ -384,6 +452,36 @@ protected:
 
 	// _04     = VTBL
 	// _00-_08 = TAIAstickingPiki?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAcheckSatisfyMiurin : public TaiAction {
+public:
+	TAIAcheckSatisfyMiurin(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res   = false;
+		Navi* navi = naviMgr->getNavi();
+		if (navi->isBuried()) {
+			PRINT("navi is buried.\n");
+			res = true;
+		}
+		if (res) {
+			PRINT("SATISFY! \n");
+		}
+		return res;
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
 	// TODO: members
 };
 
@@ -550,104 +648,6 @@ protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAattackableTarget?
 	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TAIAcheckSatisfyMiurin : public TaiAction {
-public:
-	TAIAcheckSatisfyMiurin(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki& teki) // _10
-	{
-		bool res   = false;
-		Navi* navi = naviMgr->getNavi();
-		if (navi->isBuried()) {
-			PRINT("navi is buried.\n");
-			res = true;
-		}
-		if (res) {
-			PRINT("SATISFY! \n");
-		}
-		return res;
-	}
-
-protected:
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TAIAwatchNaviMiurin : public TaiAction {
-public:
-	TAIAwatchNaviMiurin(int nextState, int nextStateNaviBury)
-	    : TaiAction(nextState)
-	{
-		mNextStateOther      = nextState;
-		mNextStateIfNaviBury = nextStateNaviBury;
-	}
-
-	virtual bool act(Teki& teki) // _10
-	{
-		bool res   = false;
-		Navi* navi = naviMgr->getNavi();
-		if (teki.mDamageCount > 0.0f) {
-			PRINT("MIURIN DAMAGE! \n");
-			res = true;
-		} else {
-			if (teki.visibleCreature(*navi) && navi->isNuking()) {
-				PRINT("     nuking!!!! \n");
-				res = true;
-			}
-		}
-
-		if (res) {
-			goNextState(teki);
-		}
-		return res;
-	}
-	virtual bool actByEvent(TekiEvent& event) // _14
-	{
-		bool res = false;
-		if (event.mEventType == TekiEventType::Entity) {
-			Creature* coll = event.mOther;
-			if (coll->mObjType == OBJTYPE_Navi) {
-				Navi* navi = (Navi*)coll;
-				if (navi->isNuking()) {
-					PRINT("     Nuking Navi touch Miurin. \n");
-					res = true;
-					goNextState(*event.mTeki);
-				}
-			}
-		}
-
-		return res;
-	}
-
-protected:
-	void goNextState(Teki& teki)
-	{
-		Navi* navi = naviMgr->getNavi();
-		teki.setCreaturePointer(0, navi);
-		if (navi->isBuried()) {
-			mNextState = mNextStateIfNaviBury;
-		} else {
-			mNextState = mNextStateOther;
-		}
-		PRINT("nextState %d \n", mNextState);
-	}
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	int mNextStateOther;      // _08
-	int mNextStateIfNaviBury; // _0C
 };
 
 /**

@@ -127,119 +127,6 @@ void killDororoEffect(Teki& teki)
 
 /**
  * @brief TODO
- *
- * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
- */
-struct TAIAkillTouchPiki : public TaiAction {
-public:
-	TAIAkillTouchPiki(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki& teki) // _10
-	{
-		attack(teki, 'cent');
-		attack(teki, 'kb01');
-		attack(teki, 'mn01');
-		return false;
-	}
-
-protected:
-	void attack(Teki& teki, u32 partID)
-	{
-		CollPart* part = teki.mCollInfo->getSphere(partID);
-		if (!part) {
-			ERROR("CollPart [%c%c%c%c] is not found.\n", ((u8*)&partID)[0], ((u8*)&partID)[1], ((u8*)&partID)[2], ((u8*)&partID)[3]);
-			return;
-		}
-
-		f32 range  = part->mRadius * 1.5f;
-		Navi* navi = naviMgr->getNavi();
-		if (part->mCentre.distance(navi->getPosition()) < range) {
-			InteractAttack attack(&teki, nullptr, teki.getParameterF(TPF_AttackPower), false);
-			navi->stimulate(attack);
-		}
-
-		Iterator iter(pikiMgr);
-		CI_LOOP(iter)
-		{
-			Creature* piki = *iter;
-			if (piki && part->mCentre.distance(piki->getPosition()) < range) {
-				piki->stimulate(InteractKill(&teki, 0));
-				iter.dec();
-			}
-		}
-	}
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-};
-
-/**
- * @brief TODO
- *
- * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
- */
-struct TAIAtransformationDororo : public TAIAreserveMotion {
-public:
-	TAIAtransformationDororo(int nextState, int motionIdx)
-	    : TAIAreserveMotion(nextState, motionIdx)
-	{
-	}
-
-	virtual void start(Teki& teki) // _08
-	{
-		TAIAreserveMotion::start(teki);
-		teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
-		teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
-		teki.playEventSound(&teki, SE_DORORO_DEAD);
-	}
-	virtual bool act(Teki& teki) // _10
-	{
-		if (TAIAreserveMotion::act(teki) && teki.mCurrentAnimEvent == KEY_Finished) {
-			teki.flick();
-			teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
-			teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
-			corpse(teki);
-			teki.die();
-			for (int i = 0; i < 9; i++) {
-				zen::particleGenerator* ptclGen = teki.getPtclGenPtr((YTeki::ptclIndexFlag)i);
-				if (ptclGen) {
-					ptclGen->finish();
-				}
-			}
-			teki.playEventSound(&teki, SE_DORORO_CRASH);
-		}
-
-		return true;
-	}
-
-protected:
-	void corpse(Teki& teki)
-	{
-		int typeID = TekiMgr::getTypeId(teki.mTekiType);
-		ID32 unused(typeID);
-		teki.becomePellet(typeID, teki.getCentre(), teki.mFaceDirection);
-		if (!teki.mPellet) {
-			ERROR("?dieSoon:%08x:pellet==null\n", this);
-			return;
-		}
-		NVector3f vel;
-		teki.outputDirectionVector(vel);
-		vel.scale(teki.getParameterF(TPF_CorpseVelocityHoriz));
-		vel.y = teki.getParameterF(TPF_CorpseVelocityVert);
-		teki.mPellet->mVelocity.set(vel);
-		teki.detachGenerator();
-		teki.mDeadState = 2;
-	}
-
-	// _04     = VTBL
-	// _00-_0C = TAIAreserveMotion
-};
-
-/**
- * @brief TODO
  */
 struct TAIAinitDororo : public TaiAction {
 public:
@@ -392,6 +279,68 @@ protected:
 /**
  * @brief TODO
  *
+ * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
+ */
+struct TAIAtransformationDororo : public TAIAreserveMotion {
+public:
+	TAIAtransformationDororo(int nextState, int motionIdx)
+	    : TAIAreserveMotion(nextState, motionIdx)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAreserveMotion::start(teki);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_LIFE_GAUGE_VISIBLE);
+		teki.playEventSound(&teki, SE_DORORO_DEAD);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		if (TAIAreserveMotion::act(teki) && teki.mCurrentAnimEvent == KEY_Finished) {
+			teki.flick();
+			teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
+			teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
+			corpse(teki);
+			teki.die();
+			for (int i = 0; i < 9; i++) {
+				zen::particleGenerator* ptclGen = teki.getPtclGenPtr((YTeki::ptclIndexFlag)i);
+				if (ptclGen) {
+					ptclGen->finish();
+				}
+			}
+			teki.playEventSound(&teki, SE_DORORO_CRASH);
+		}
+
+		return true;
+	}
+
+protected:
+	void corpse(Teki& teki)
+	{
+		int typeID = TekiMgr::getTypeId(teki.mTekiType);
+		ID32 unused(typeID);
+		teki.becomePellet(typeID, teki.getCentre(), teki.mFaceDirection);
+		if (!teki.mPellet) {
+			ERROR("?dieSoon:%08x:pellet==null\n", this);
+			return;
+		}
+		NVector3f vel;
+		teki.outputDirectionVector(vel);
+		vel.scale(teki.getParameterF(TPF_CorpseVelocityHoriz));
+		vel.y = teki.getParameterF(TPF_CorpseVelocityVert);
+		teki.mPellet->mVelocity.set(vel);
+		teki.detachGenerator();
+		teki.mDeadState = 2;
+	}
+
+	// _04     = VTBL
+	// _00-_0C = TAIAreserveMotion
+};
+
+/**
+ * @brief TODO
+ *
  * @note This is defined here cause it needs to use the PRINT function in this file, sigh.
  */
 struct TAIAbirthDororo : public TAIAreserveMotion {
@@ -524,6 +473,57 @@ protected:
 	// _04     = VTBL
 	// _00-_08 = TAIAgoGoalPath?
 	// TODO: members
+};
+
+/**
+ * @brief TODO
+ *
+ * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
+ */
+struct TAIAkillTouchPiki : public TaiAction {
+public:
+	TAIAkillTouchPiki(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		attack(teki, 'cent');
+		attack(teki, 'kb01');
+		attack(teki, 'mn01');
+		return false;
+	}
+
+protected:
+	void attack(Teki& teki, u32 partID)
+	{
+		CollPart* part = teki.mCollInfo->getSphere(partID);
+		if (!part) {
+			ERROR("CollPart [%c%c%c%c] is not found.\n", ((u8*)&partID)[0], ((u8*)&partID)[1], ((u8*)&partID)[2], ((u8*)&partID)[3]);
+			return;
+		}
+
+		f32 range  = part->mRadius * 1.5f;
+		Navi* navi = naviMgr->getNavi();
+		if (part->mCentre.distance(navi->getPosition()) < range) {
+			InteractAttack attack(&teki, nullptr, teki.getParameterF(TPF_AttackPower), false);
+			navi->stimulate(attack);
+		}
+
+		Iterator iter(pikiMgr);
+		CI_LOOP(iter)
+		{
+			Creature* piki = *iter;
+			if (piki && part->mCentre.distance(piki->getPosition()) < range) {
+				piki->stimulate(InteractKill(&teki, 0));
+				iter.dec();
+			}
+		}
+	}
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
 };
 
 /**
