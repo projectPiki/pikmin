@@ -1,10 +1,12 @@
+#include "TAI/Kinoko.h"
+
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "MapMgr.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
+#include "TAI/EffectActions.h"
 #include "TAI/JudgementActions.h"
-#include "TAI/Kinoko.h"
 #include "TAI/MoveActions.h"
 #include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
@@ -24,6 +26,84 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F4
  */
 DEFINE_PRINT("taikinoko")
+
+/**
+ * @brief TODO
+ */
+struct TaiKinokoTurningOverAction : public TaiAction {
+	TaiKinokoTurningOverAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiKinokoChargingSporesAction : public TaiAction {
+	TaiKinokoChargingSporesAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiKinokoDischargingSporesAction : public TaiAction {
+	TaiKinokoDischargingSporesAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiKinokoTerritoryRunningAwayAction : public TaiAction {
+	TaiKinokoTerritoryRunningAwayAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiKinokoLegEffectAction : public TaiJointEffectAction {
+	TaiKinokoLegEffectAction(f32);
+
+	virtual void setType(Vector3f&, int, int); // _1C
+
+	// _04     = VTBL
+	// _00-_08 = TaiJointEffectAction?
+	// TODO: members
+};
 
 /*
  * --INFO--

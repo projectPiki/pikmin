@@ -1,9 +1,12 @@
+#include "TAI/Palm.h"
+
 #include "DayMgr.h"
 #include "DebugLog.h"
 #include "MapMgr.h"
 #include "Pellet.h"
 #include "SoundMgr.h"
-#include "TAI/Palm.h"
+#include "TAI/MotionActions.h"
+#include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
 #include "sysNew.h"
@@ -22,6 +25,160 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F0
  */
 DEFINE_PRINT("taipalm")
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmMotionAction : public TaiMotionAction {
+	TaiPalmMotionAction(int nextState, int motionIdx)
+	    : TaiMotionAction(nextState, motionIdx)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiMotionAction?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmDyingAction : public TaiDyingAction {
+	TaiPalmDyingAction(int motionIdx)
+	    : TaiDyingAction(motionIdx)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmDamagingAction : public TaiDamagingAction {
+	TaiPalmDamagingAction(int nextState, int p2)
+	    : TaiDamagingAction(nextState, p2)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmGrowingAction : public TaiAction {
+	TaiPalmGrowingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmGrowAction : public TaiAction {
+	TaiPalmGrowAction(int nextState, int timerIdx)
+	    : TaiAction(nextState)
+	{
+		mTimerIdx = timerIdx;
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	int mTimerIdx; // _08
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmFlowerDamageAction : public TaiAction {
+	TaiPalmFlowerDamageAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmSunflowerAction : public TaiAction {
+	TaiPalmSunflowerAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmSettingPelletAction : public TaiAction {
+	TaiPalmSettingPelletAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiPalmChangingColorAction : public TaiAction {
+	TaiPalmChangingColorAction(int p1, f32 p2, f32 p3)
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+		mTimerIdx      = p1;
+		mAvgTimerValue = p2;
+		mTimerRange    = p3;
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	void resetTimer(Teki&);
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	int mTimerIdx;      // _08
+	f32 mAvgTimerValue; // _0C
+	f32 mTimerRange;    // _10
+};
 
 /*
  * --INFO--

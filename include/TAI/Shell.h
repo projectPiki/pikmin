@@ -1,13 +1,11 @@
 #ifndef _TAI_SHELL_H
 #define _TAI_SHELL_H
 
-#include "PaniAnimator.h"
-#include "TAI/EffectActions.h"
-#include "TAI/MotionActions.h"
-#include "TekiParameters.h"
 #include "types.h"
 
-struct Creature;
+#include "PaniAnimator.h"
+#include "TAI/Action.h"
+#include "TekiParameters.h"
 
 /////////// Pearly Clamclamp (Shell) AI Actions ///////////
 
@@ -74,74 +72,6 @@ struct TaiShellStrategy : public TaiStrategy {
 	// TODO: members
 };
 
-/**
- * @brief TODO
- */
-struct TaiShellSetPositionAction : public TaiAction {
-	inline TaiShellSetPositionAction() // TODO: this is a guess
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	void setPosition(Teki&, Creature*);
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiShellSaveItemPositionAction : public TaiAction {
-	inline TaiShellSaveItemPositionAction() // TODO: this is a guess
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	void setPosition(Teki&, Creature*);
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiShellNaviPikiInsideAction : public TaiAction {
-	TaiShellNaviPikiInsideAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiShellEatAction : public TaiAction {
-	TaiShellEatAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
 /////////// Pearly Clamclamp (Pearl/Treasure) AI Actions ///////////
 
 /**
@@ -195,22 +125,6 @@ struct TaiPearlStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_10 = TaiStrategy
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiPearlTresureSoundAction : public TaiAction {
-	inline TaiPearlTresureSoundAction() // TODO: this is a guess
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
 	// TODO: members
 };
 

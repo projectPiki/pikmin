@@ -1,3 +1,5 @@
+#include "TAI/Iwagen.h"
+
 #include "DebugLog.h"
 #include "MapCode.h"
 #include "SoundMgr.h"
@@ -5,7 +7,6 @@
 #include "TAI/BasicActions.h"
 #include "TAI/CollisionActions.h"
 #include "TAI/EffectActions.h"
-#include "TAI/Iwagen.h"
 #include "TAI/MoveActions.h"
 #include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
@@ -24,6 +25,39 @@ DEFINE_ERROR(12)
  * Size:	0000F4
  */
 DEFINE_PRINT("taiiwagen")
+
+/**
+ * @brief TODO
+ */
+struct TaiIwagonDustEffectAction : public TaiAction {
+	TaiIwagonDustEffectAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiIwagonRollingAction : public TaiAction {
+	TaiIwagonRollingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
 
 /*
  * --INFO--
@@ -179,6 +213,23 @@ bool TaiIwagonRollingAction::act(Teki& teki)
 	teki.mTargetVelocity.input(teki.mActionVelocity);
 	return false;
 }
+
+/**
+ * @brief TODO
+ */
+struct TaiIwagenShootingAction : public TaiAction {
+	TaiIwagenShootingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
 
 /*
  * --INFO--

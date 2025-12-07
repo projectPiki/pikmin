@@ -1,3 +1,5 @@
+#include "TAI/Otimoti.h"
+
 #include "DebugLog.h"
 #include "MapCode.h"
 #include "MapMgr.h"
@@ -7,9 +9,9 @@
 #include "SoundMgr.h"
 #include "TAI/AttackActions.h"
 #include "TAI/BasicActions.h"
+#include "TAI/EffectActions.h"
 #include "TAI/JudgementActions.h"
 #include "TAI/MoveActions.h"
-#include "TAI/Otimoti.h"
 #include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
 #include "TAI/WaitActions.h"
@@ -29,6 +31,186 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F4
  */
 DEFINE_PRINT("taiotimoti")
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiStartDroppingWaterAction : public TaiAction {
+	TaiOtimotiStartDroppingWaterAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiFlickAction : public TaiAction {
+	TaiOtimotiFlickAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiFailToJumpAction : public TaiAction {
+	TaiOtimotiFailToJumpAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiJumpingAction : public TaiAction {
+	TaiOtimotiJumpingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiAirWaitingAction : public TaiAction {
+	TaiOtimotiAirWaitingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiDroppingAction : public TaiAction {
+	TaiOtimotiDroppingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&);           // _08
+	virtual bool act(Teki&);             // _10
+	virtual bool actByEvent(TekiEvent&); // _14
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiPressingAction : public TaiAction {
+	TaiOtimotiPressingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&);           // _08
+	virtual bool act(Teki&);             // _10
+	virtual bool actByEvent(TekiEvent&); // _14
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiBouncingAction : public TaiAction {
+	TaiOtimotiBouncingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki&);             // _10
+	virtual bool actByEvent(TekiEvent&); // _14
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiAttackingAction : public TaiAction {
+	TaiOtimotiAttackingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&);           // _08
+	virtual bool act(Teki&);             // _10
+	virtual bool actByEvent(TekiEvent&); // _14
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiAttackingEffectAction : public TaiAction {
+	inline TaiOtimotiAttackingEffectAction() // TODO: this is a guess
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiOtimotiLegEffectAction : public TaiJointEffectAction {
+	TaiOtimotiLegEffectAction(f32);
+
+	virtual void setType(Vector3f&, int, int); // _1C
+
+	// _04     = VTBL
+	// _00-_08 = TaiJointEffectAction?
+	// TODO: members
+};
 
 /*
  * --INFO--

@@ -1,12 +1,11 @@
 #ifndef _TAI_CHAPPY_H
 #define _TAI_CHAPPY_H
 
-#include "PaniAnimator.h"
-#include "TAI/EffectActions.h"
-#include "TAI/MotionActions.h"
-#include "TAI/ReactionActions.h"
-#include "TekiParameters.h"
 #include "types.h"
+
+#include "PaniAnimator.h"
+#include "TAI/Action.h"
+#include "TekiParameters.h"
 
 /**
  * @brief TODO
@@ -105,50 +104,6 @@ struct TaiChappyStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_14 = TaiStrategy
-};
-
-/**
- * @brief TODO
- */
-struct TaiChappyCryAction : public TaiAction {
-	TaiChappyCryAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiChappySmashedAction : public TaiSmashedAction {
-	TaiChappySmashedAction(int nextState)
-	    : TaiSmashedAction(nextState)
-	{
-	}
-
-	virtual bool actByEvent(TekiEvent&); // _14
-
-	// _04     = VTBL
-	// _00-_08 = TaiSmashedAction?
-};
-
-/**
- * @brief TODO
- */
-struct TaiChappyLegEffectAction : public TaiJointEffectAction {
-	TaiChappyLegEffectAction(f32);
-
-	virtual void setType(Vector3f&, int, int); // _1C
-
-	// _04     = VTBL
-	// _00-_08 = TaiJointEffectAction?
-	// TODO: members
 };
 
 #endif

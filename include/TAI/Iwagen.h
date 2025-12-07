@@ -1,10 +1,11 @@
 #ifndef _TAI_IWAGEN_H
 #define _TAI_IWAGEN_H
 
+#include "types.h"
+
 #include "PaniAnimator.h"
 #include "TAI/Action.h"
 #include "TekiParameters.h"
-#include "types.h"
 
 /////////// Rock AI Actions ///////////
 
@@ -46,39 +47,6 @@ struct TaiIwagonStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_14 = TaiStrategy
-};
-
-/**
- * @brief TODO
- */
-struct TaiIwagonDustEffectAction : public TaiAction {
-	TaiIwagonDustEffectAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiIwagonRollingAction : public TaiAction {
-	TaiIwagonRollingAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
 };
 
 /////////// Rock Spawner (unused) AI Actions ///////////
@@ -123,23 +91,6 @@ struct TaiIwagenStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_10 = TaiStrategy
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiIwagenShootingAction : public TaiAction {
-	TaiIwagenShootingAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
 	// TODO: members
 };
 

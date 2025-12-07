@@ -1,12 +1,16 @@
+#include "TAI/Chappy.h"
+
 #include "DebugLog.h"
 #include "MapMgr.h"
 #include "SoundMgr.h"
 #include "TAI/AttackActions.h"
 #include "TAI/BasicActions.h"
-#include "TAI/Chappy.h"
+#include "TAI/EffectActions.h"
 #include "TAI/JudgementActions.h"
 #include "TAI/MessageActions.h"
+#include "TAI/MotionActions.h"
 #include "TAI/MoveActions.h"
+#include "TAI/ReactionActions.h"
 #include "TAI/TimerActions.h"
 #include "TekiConditions.h"
 #include "teki.h"
@@ -24,6 +28,50 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F4
  */
 DEFINE_PRINT("taichappy")
+
+/**
+ * @brief TODO
+ */
+struct TaiChappyCryAction : public TaiAction {
+	TaiChappyCryAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiChappySmashedAction : public TaiSmashedAction {
+	TaiChappySmashedAction(int nextState)
+	    : TaiSmashedAction(nextState)
+	{
+	}
+
+	virtual bool actByEvent(TekiEvent&); // _14
+
+	// _04     = VTBL
+	// _00-_08 = TaiSmashedAction?
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiChappyLegEffectAction : public TaiJointEffectAction {
+	TaiChappyLegEffectAction(f32);
+
+	virtual void setType(Vector3f&, int, int); // _1C
+
+	// _04     = VTBL
+	// _00-_08 = TaiJointEffectAction?
+	// TODO: members
+};
 
 /*
  * --INFO--

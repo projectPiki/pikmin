@@ -1,10 +1,11 @@
 #ifndef _TAI_MIZINKO_H
 #define _TAI_MIZINKO_H
 
-#include "PaniAnimator.h"
-#include "TAI/TimerActions.h"
-#include "TekiParameters.h"
 #include "types.h"
+
+#include "PaniAnimator.h"
+#include "TAI/Action.h"
+#include "TekiParameters.h"
 
 /////////// Honeywisp Spawner AI Actions ///////////
 
@@ -37,39 +38,6 @@ struct TaiMizigenStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_10 = TaiStrategy
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizigenGeneratingAction : public TaiAction {
-	TaiMizigenGeneratingAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizigenNaviApprouchAction : public TaiAction {
-	TaiMizigenNaviApprouchAction(int nextState)
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
 	// TODO: members
 };
 
@@ -143,133 +111,6 @@ struct TaiMizinkoStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_10 = TaiStrategy
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoCryTimerAction : public TaiTimerAction {
-	TaiMizinkoCryTimerAction(int p1, f32 p2, f32 p3)
-	    : TaiTimerAction(TAI_NO_TRANSIT, p1, p2, p3)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiTimerAction?
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoMovingTimerAction : public TaiTimerAction {
-	TaiMizinkoMovingTimerAction(int nextState)
-	    : TaiTimerAction(nextState, 0, 0.0f, 0.0f)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_10 = TaiTimerAction
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoFadingAction : public TaiAction {
-	TaiMizinkoFadingAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoGoingAction : public TaiAction {
-	TaiMizinkoGoingAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoComingAction : public TaiAction {
-	TaiMizinkoComingAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoDropWaterAction : public TaiAction {
-	TaiMizinkoDropWaterAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoWaitingAction : public TaiAction {
-	TaiMizinkoWaitingAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiMizinkoFlyingAwayAction : public TaiAction {
-	TaiMizinkoFlyingAwayAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
 	// TODO: members
 };
 
