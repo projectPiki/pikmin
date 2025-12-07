@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Puffy Blowhog AI Actions ///////////
+/////////// Puffy Blowhog (フーセンドックリ) ///////////
 
 BEGIN_ENUM_TYPE(TAImarFloatParams)
 enum {

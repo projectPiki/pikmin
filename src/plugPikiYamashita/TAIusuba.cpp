@@ -46,8 +46,7 @@ struct TAIAflyUsuba : public TAIAmotion {
 		Vector3f vec1;
 		Vector3f vec2;
 		Vector3f vec3;
-		// NB: this struct was probably *in* TAIusuba.cpp - could move it eventually sometime if we want.
-		// PRINT("Usuba is flying. %f\n", teki.mTargetVelocity.y);
+		PRINT("Usuba is flying. %f\n", teki.mTargetVelocity.y);
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
 			teki.setFlyingSwitch(true);
 		}

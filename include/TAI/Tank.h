@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Fiery Blowhog AI Actions ///////////
+/////////// Fiery Blowhog (ブタドックリ) ///////////
 
 BEGIN_ENUM_TYPE(TAItankFloatParams)
 enum {

@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Male Sheargrub AI Actions ///////////
+/////////// Male Sheargrub (ウジンコ♂) ///////////
 
 /**
  * @brief

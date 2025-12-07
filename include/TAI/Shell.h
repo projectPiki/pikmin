@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// Pearly Clamclamp (Shell) AI Actions ///////////
+/////////// Pearly Clamclamp (ヤマシンジュ) [Shell] ///////////
 
 /**
  * @brief TODO
@@ -72,7 +72,7 @@ struct TaiShellStrategy : public TaiStrategy {
 	// TODO: members
 };
 
-/////////// Pearly Clamclamp (Pearl/Treasure) AI Actions ///////////
+/////////// Pearly Clamclamp (ヤマシンジュ) [Pearl / Ship Part] ///////////
 
 /**
  * @brief TODO

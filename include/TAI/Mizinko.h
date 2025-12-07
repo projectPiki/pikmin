@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// Honeywisp Spawner AI Actions ///////////
+/////////// Honeywisp (ピキマキ) [Generator] ///////////
 
 /**
  * @brief TODO
@@ -41,7 +41,7 @@ struct TaiMizigenStrategy : public TaiStrategy {
 	// TODO: members
 };
 
-/////////// Honeywisp AI Actions ///////////
+/////////// Honeywisp (ピキマキ) ///////////
 
 /**
  * @brief TODO

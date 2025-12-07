@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// Frog (Yellow and White) AI Actions ///////////
+/////////// Yellow Wollywog (イモガエル) / Wollywog (マロガエル) ///////////
 
 /**
  * @brief TODO

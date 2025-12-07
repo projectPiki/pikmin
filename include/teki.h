@@ -101,14 +101,14 @@ enum TekiTypes {
 	TEKI_Miurin   = 24, // 24, Mamuta
 	TEKI_Otama    = 25, // 25, Wogpole
 	TEKI_Usuba    = 26, // 26, Usuba (unused enemy, crashes)
-	TEKI_Yamash3  = 27, // 27, ? (unused enemy, crashes)
-	TEKI_Yamash4  = 28, // 28, ? (unused enemy, crashes)
-	TEKI_Yamash5  = 29, // 29, ? (unused enemy, crashes)
+	TEKI_Yamash3  = 27, // 27, ? (placeholder enemy, crashes)
+	TEKI_Yamash4  = 28, // 28, ? (placeholder enemy, crashes)
+	TEKI_Yamash5  = 29, // 29, ? (placeholder enemy, crashes)
 	TEKI_Namazu   = 30, // 30, Water Dumple
 	TEKI_Chappb   = 31, // 31, Dwarf Bulbear
 	TEKI_Swallob  = 32, // 32, Spotty Bulbear
 	TEKI_Frow     = 33, // 33, Wollywog
-	TEKI_Nakata1  = 34, // 34, ? (unused enemy, crashes)
+	TEKI_Nakata1  = 34, // 34, ? (placeholder enemy, crashes)
 	TEKI_TypeCount,     // 35
 };
 

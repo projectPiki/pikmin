@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// (Big) Bulborb AI Actions ///////////
+/////////// Spotty Bulborb (チャッピー) / Spotty Bulbear (クマチャッピー) ///////////
 
 /**
  * @brief TODO

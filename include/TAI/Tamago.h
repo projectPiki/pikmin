@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Giant Egg AI Actions ///////////
+/////////// Giant Egg (たまご) ///////////
 
 /**
  * @brief TODO

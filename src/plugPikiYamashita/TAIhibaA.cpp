@@ -108,8 +108,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note In TAIhibaA.cpp to match a function with a PRINT statement.
  */
 struct TAIAfireAttackHibaA : public TAIAreserveMotion {
 public:

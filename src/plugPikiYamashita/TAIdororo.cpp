@@ -116,7 +116,7 @@ void setDororoEffect(Teki& teki)
  */
 void killDororoEffect(Teki& teki)
 {
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < YTeki::PTCL_COUNT; i++) {
 		zen::particleGenerator* ptclGen = teki.getPtclGenPtr((YTeki::ptclIndexFlag)i);
 		if (ptclGen) {
 			ptclGen->finish();
@@ -144,7 +144,7 @@ public:
 	}
 	virtual bool act(Teki& teki) // _10
 	{
-		// PRINT("INIT FINISH \n");
+		PRINT("INIT FINISH \n");
 		return true;
 	}
 
@@ -224,8 +224,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note This is defined here cause it needs to use the PRINT function in this file, sigh.
  */
 struct TAIAbarkDororo : public TAIAmotionLoop {
 public:
@@ -278,8 +276,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
  */
 struct TAIAtransformationDororo : public TAIAreserveMotion {
 public:
@@ -303,7 +299,7 @@ public:
 			teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
 			corpse(teki);
 			teki.die();
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < YTeki::PTCL_COUNT; i++) {
 				zen::particleGenerator* ptclGen = teki.getPtclGenPtr((YTeki::ptclIndexFlag)i);
 				if (ptclGen) {
 					ptclGen->finish();
@@ -340,8 +336,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note This is defined here cause it needs to use the PRINT function in this file, sigh.
  */
 struct TAIAbirthDororo : public TAIAreserveMotion {
 public:
@@ -477,8 +471,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note This is defined here cause it needs to use the ERROR function in this file, sigh.
  */
 struct TAIAkillTouchPiki : public TaiAction {
 public:
@@ -528,8 +520,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note This is defined here cause it needs to use the anonymous namespace functions in this file, sigh.
  */
 struct TAIAdyingDororo : public TAIAdying {
 public:

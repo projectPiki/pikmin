@@ -349,8 +349,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note Lives here because it needs PRINT to match.
  */
 struct TAIAtakeOffKabekuiC : public TAIAreserveMotion {
 public:

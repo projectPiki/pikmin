@@ -9,7 +9,7 @@
 
 struct NVector3f;
 
-/////////// Breadbug AI Actions ///////////
+/////////// Breadbug (パンモドキ) ///////////
 
 /**
  * @brief TODO
@@ -95,7 +95,7 @@ struct TaiCollecStrategy : public TaiStrategy {
 	// TODO: members
 };
 
-/////////// Breadbug Nest AI Actions ///////////
+/////////// Breadbug (パンモドキ) [Nest] ///////////
 
 /**
  * @brief TODO

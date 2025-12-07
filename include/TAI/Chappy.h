@@ -7,6 +7,8 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
+/////////// Dwarf Bulborb (コチャッピー) / Dwarf Bulbear (チビクマ) / Water Dumple (ダンゴナマズ) ///////////
+
 /**
  * @brief TODO
  */

@@ -8,6 +8,8 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
+/////////// Mamuta (ミウリン) ///////////
+
 BEGIN_ENUM_TYPE(TAImiurinFloatParams)
 enum {
 	RelaxTime = TPF_COUNT, // 50
@@ -53,8 +55,6 @@ enum {
 	Groggy = 23,
 	COUNT, // 24
 } END_ENUM_TYPE;
-
-/////////// Mamuta AI Actions ///////////
 
 /**
  * @brief TODO

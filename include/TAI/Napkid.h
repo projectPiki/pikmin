@@ -7,7 +7,7 @@
 #include "TAI/MotionActions.h"
 #include "TekiParameters.h"
 
-/////////// Snitchbug AI Actions ///////////
+/////////// Swooping Snitchbug (サライムシ) ///////////
 
 /**
  * @brief TODO: name members
