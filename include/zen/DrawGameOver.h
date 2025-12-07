@@ -45,8 +45,8 @@ struct DrawGameOver {
 	 * @brief The type of "Game Over" screen to display.
 	 */
 	enum modeFlag {
-		MODE_GameOverA = 0, // The normal "gameover.blo" screen.
-		MODE_GameOverB = 1, // The alternative "gameove2.blo" screen.
+		MODE_NaviDown   = 0, // Uses "gameover.blo" screen.
+		MODE_Extinction = 1, // Uses "gameove2.blo" screen.
 	};
 
 	DrawGameOver();

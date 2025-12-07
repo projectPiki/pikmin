@@ -402,7 +402,7 @@ public:
 	    : GameModeBase("ゲームオーバー") // 'game over'
 	{
 		_0C = 0;
-		mGameOverScreen.start(zen::DrawGameOver::MODE_GameOverB, 40.0f);
+		mGameOverScreen.start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 		mCancelButton = KBBTN_Z;
 	}
 
@@ -415,10 +415,10 @@ public:
 			}
 			switch (_0C) {
 			case 0:
-				mGameOverScreen.start(zen::DrawGameOver::MODE_GameOverB, 40.0f);
+				mGameOverScreen.start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 				break;
 			case 1:
-				mGameOverScreen.start(zen::DrawGameOver::MODE_GameOverA, 40.0f);
+				mGameOverScreen.start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 				break;
 			}
 		}
