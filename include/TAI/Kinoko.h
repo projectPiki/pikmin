@@ -1,10 +1,11 @@
 #ifndef _TAI_KINOKO_H
 #define _TAI_KINOKO_H
 
-#include "PaniAnimator.h"
-#include "TAI/EffectActions.h"
-#include "TekiParameters.h"
 #include "types.h"
+
+#include "PaniAnimator.h"
+#include "TAI/Action.h"
+#include "TekiParameters.h"
 
 /////////// Puffstool AI Actions ///////////
 
@@ -85,84 +86,6 @@ struct TaiKinokoStrategy : public TaiStrategy {
 
 	// _00     = VTBL
 	// _00-_14 = TaiStrategy
-};
-
-/**
- * @brief TODO
- */
-struct TaiKinokoTurningOverAction : public TaiAction {
-	TaiKinokoTurningOverAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiKinokoChargingSporesAction : public TaiAction {
-	TaiKinokoChargingSporesAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiKinokoDischargingSporesAction : public TaiAction {
-	TaiKinokoDischargingSporesAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual void start(Teki&); // _08
-	virtual bool act(Teki&);   // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiKinokoTerritoryRunningAwayAction : public TaiAction {
-	TaiKinokoTerritoryRunningAwayAction()
-	    : TaiAction(TAI_NO_TRANSIT)
-	{
-	}
-
-	virtual bool act(Teki&); // _10
-
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TaiKinokoLegEffectAction : public TaiJointEffectAction {
-	TaiKinokoLegEffectAction(f32);
-
-	virtual void setType(Vector3f&, int, int); // _1C
-
-	// _04     = VTBL
-	// _00-_08 = TaiJointEffectAction?
-	// TODO: members
 };
 
 #endif

@@ -1,3 +1,5 @@
+#include "TAI/Mizinko.h"
+
 #include "DebugLog.h"
 #include "Graphics.h"
 #include "MizuItem.h"
@@ -6,9 +8,9 @@
 #include "SoundMgr.h"
 #include "TAI/BasicActions.h"
 #include "TAI/CollisionActions.h"
-#include "TAI/Mizinko.h"
 #include "TAI/MoveActions.h"
 #include "TAI/ReactionActions.h"
+#include "TAI/TimerActions.h"
 #include "sysNew.h"
 #include "teki.h"
 
@@ -25,6 +27,39 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F4
  */
 DEFINE_PRINT("taimizinko")
+
+/**
+ * @brief TODO
+ */
+struct TaiMizigenGeneratingAction : public TaiAction {
+	TaiMizigenGeneratingAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizigenNaviApprouchAction : public TaiAction {
+	TaiMizigenNaviApprouchAction(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
 
 /*
  * --INFO--
@@ -147,6 +182,133 @@ bool TaiMizigenNaviApprouchAction::act(Teki& teki)
 	PRINT_NAKATA("TaiMizigenNaviApprouchAction::act:%08x:%f,%f\n", &teki, naviDist, range);
 	return true;
 }
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoCryTimerAction : public TaiTimerAction {
+	TaiMizinkoCryTimerAction(int p1, f32 p2, f32 p3)
+	    : TaiTimerAction(TAI_NO_TRANSIT, p1, p2, p3)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiTimerAction?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoMovingTimerAction : public TaiTimerAction {
+	TaiMizinkoMovingTimerAction(int nextState)
+	    : TaiTimerAction(nextState, 0, 0.0f, 0.0f)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_10 = TaiTimerAction
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoFadingAction : public TaiAction {
+	TaiMizinkoFadingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoGoingAction : public TaiAction {
+	TaiMizinkoGoingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoComingAction : public TaiAction {
+	TaiMizinkoComingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoDropWaterAction : public TaiAction {
+	TaiMizinkoDropWaterAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual bool act(Teki&); // _10
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoWaitingAction : public TaiAction {
+	TaiMizinkoWaitingAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TaiMizinkoFlyingAwayAction : public TaiAction {
+	TaiMizinkoFlyingAwayAction()
+	    : TaiAction(TAI_NO_TRANSIT)
+	{
+	}
+
+	virtual void start(Teki&); // _08
+
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
 
 /*
  * --INFO--
