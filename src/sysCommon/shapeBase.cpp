@@ -196,9 +196,9 @@ void Joint::read(RandomAccessStream& stream)
 	mBounds.mMax.read(stream);
 	stream.readFloat();
 
-	mScale.read(stream);
-	mRotation.read(stream);
-	mTranslation.read(stream);
+	mSRT.s.read(stream);
+	mSRT.r.read(stream);
+	mSRT.t.read(stream);
 
 	mMatPolyCount = stream.readInt();
 	mMatPoly.initCore("");
@@ -3030,9 +3030,9 @@ void BaseShape::calcBasePose(Matrix4f& target)
 {
 	for (int i = 0; i < mJointCount; i++) {
 		SRT srt;
-		srt.s = mJointList[i].mScale;
-		srt.r = mJointList[i].mRotation;
-		srt.t = mJointList[i].mTranslation;
+		srt.s = mJointList[i].mSRT.s;
+		srt.r = mJointList[i].mSRT.r;
+		srt.t = mJointList[i].mSRT.t;
 
 		int parentIndex = mJointList[i].mParentIndex;
 		Matrix4f initialPose;
@@ -3339,9 +3339,9 @@ void BaseShape::updateAnim(Graphics& gfx, Matrix4f& mtx, f32* p3)
 		Joint* joint = &mJointList[0];
 		for (int i = 0; i < mJointCount; i++) {
 			SRT srt;
-			srt.s = joint->mScale;
-			srt.r = joint->mRotation;
-			srt.t = joint->mTranslation;
+			srt.s = joint->mSRT.s;
+			srt.r = joint->mSRT.r;
+			srt.t = joint->mSRT.t;
 			Matrix4f tmpMtx;
 			Matrix4f* jointMtx = (joint->mParentIndex == -1) ? &mtx : &mJointList[joint->mParentIndex].mAnimMatrix;
 			joint->mAnimMatrix.makeConcatSRT(jointMtx, tmpMtx, srt);
