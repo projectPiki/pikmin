@@ -63,9 +63,7 @@ struct Joint : public CoreNode {
 	int mParentIndex;            // _18
 	int mType;                   // _1C
 	int mFlags;                  // _20
-	Vector3f mScale;             // _24, this is an SRT apparently
-	Vector3f mRotation;          // _30
-	Vector3f mTranslation;       // _3C
+	SRT mSRT;                    // _24 scale, _30 rotation, _3C translation (position)
 	Matrix4f mAnimMatrix;        // _48
 	Matrix4f mInverseAnimMatrix; // _88
 	bool mIsBillboard;           // _C8
