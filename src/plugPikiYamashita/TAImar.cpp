@@ -183,6 +183,51 @@ protected:
 /**
  * @brief TODO
  */
+struct BreathEffect : public zen::CallBack1<Teki&> {
+public:
+	virtual bool invoke(Teki& teki) // _08
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			CollPart* mouth = teki.mCollInfo->getSphere('kuti');
+			f32 dist        = NMathF::cos(-27.0f * PI / 180.0f);
+			Vector3f dir1(NMathF::sin(teki.mFaceDirection) * dist, NMathF::sin(-27.0f * PI / 180.0f),
+			              NMathF::cos(teki.mFaceDirection) * dist);
+			f32 angle = 27.0f + 18.5f;
+			dist      = NMathF::cos(-angle * PI / 180.0f);
+			Vector3f dir2(NMathF::sin(teki.mFaceDirection) * dist, NMathF::sin(-angle * PI / 180.0f),
+			              NMathF::cos(teki.mFaceDirection) * dist);
+			teki.playEventSound(&teki, SE_MAR_WIND);
+
+			teki.initConeTypePtclCallBack(&teki, mouth->mCentre, Vector3f(dir2 * 750.0f), 1.0f,
+			                              teki.getParameterF(TAImarFloatParams::Unk51) * PI / 180.0f, 300.0f,
+			                              teki.getParameterF(TPF_AttackPower), &BreathEffect::eventCallBack);
+
+			zen::particleGenerator* ptclGen
+			    = effectMgr->create(EffectMgr::EFF_Mar_WindJet, mouth->mCentre, teki.getConeTypePtclCallBack(), nullptr);
+			teki.setPtclGenPtr(YTeki::PTCL_Unk0, ptclGen);
+			if (ptclGen) {
+				ptclGen->setEmitPos(mouth->mCentre);
+				ptclGen->setEmitDir(dir1);
+				ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
+			}
+
+			rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
+		}
+
+		return true;
+	}
+
+protected:
+	static TAIeffectAttackEventCallBackMar eventCallBack;
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct TAIAflyingDistanceMar : public TAIAflyingDistance {
 public:
 	TAIAflyingDistanceMar(int nextState, f32 p2, f32 p3)
@@ -556,52 +601,6 @@ protected:
 f32 TAIAdyingMar::effectScale0;
 f32 TAIAdyingMar::effectScale1;
 f32 TAIAdyingMar::effectStartCounter;
-
-/**
- * @brief TODO
- */
-struct BreathEffect : public zen::CallBack1<Teki&> {
-public:
-	virtual bool invoke(Teki& teki) // _08
-	{
-		if (teki.mCurrentAnimEvent == KEY_Action0) {
-			CollPart* mouth = teki.mCollInfo->getSphere('kuti');
-			f32 dist        = NMathF::cos(-27.0f * PI / 180.0f);
-			Vector3f dir1(NMathF::sin(teki.mFaceDirection) * dist, NMathF::sin(-27.0f * PI / 180.0f),
-			              NMathF::cos(teki.mFaceDirection) * dist);
-			f32 angle = 27.0f + 18.5f;
-			dist      = NMathF::cos(-angle * PI / 180.0f);
-			Vector3f dir2(NMathF::sin(teki.mFaceDirection) * dist, NMathF::sin(-angle * PI / 180.0f),
-			              NMathF::cos(teki.mFaceDirection) * dist);
-			teki.playEventSound(&teki, SE_MAR_WIND);
-
-			teki.initConeTypePtclCallBack(&teki, mouth->mCentre, Vector3f(dir2 * 750.0f), 1.0f,
-			                              teki.getParameterF(TAImarFloatParams::Unk51) * PI / 180.0f, 300.0f,
-			                              teki.getParameterF(TPF_AttackPower), &BreathEffect::eventCallBack);
-
-			zen::particleGenerator* ptclGen
-			    = effectMgr->create(EffectMgr::EFF_Mar_WindJet, mouth->mCentre, teki.getConeTypePtclCallBack(), nullptr);
-			teki.setPtclGenPtr(YTeki::PTCL_Unk0, ptclGen);
-			if (ptclGen) {
-				ptclGen->setEmitPos(mouth->mCentre);
-				ptclGen->setEmitDir(dir1);
-				ptclGen->setOrientedNormalVector(Vector3f(0.0f, 1.0f, 0.0f));
-			}
-
-			rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
-		}
-
-		return true;
-	}
-
-protected:
-	static TAIeffectAttackEventCallBackMar eventCallBack;
-
-	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
-};
-
 TAIeffectAttackEventCallBackMar BreathEffect::eventCallBack;
 
 /*

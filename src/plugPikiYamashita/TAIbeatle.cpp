@@ -36,6 +36,122 @@ DEFINE_PRINT("TAIbeatle")
  *
  * @note Defined in TAIbeatle.cpp
  */
+struct TAIAinitBeatle : public TaiAction {
+public:
+	inline TAIAinitBeatle(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		for (int i = 0; i < YTeki::PTCL_COUNT; i++) {
+			teki.setPtclGenPtr((YTeki::ptclIndexFlag)i, nullptr);
+		}
+
+		CollPart* leftEye = teki.mCollInfo->getSphere('me_l');
+		if (leftEye == nullptr) {
+			ERROR("No Left eye");
+		} else {
+			zen::particleGenerator* eyePtcl = effectMgr->create(EffectMgr::EFF_Beatle_EyeGlow, leftEye->mCentre, nullptr, nullptr);
+			if (eyePtcl != nullptr) {
+				eyePtcl->stopGen();
+			}
+
+			teki.setPtclGenPtr(YTeki::PTCL_Unk0, eyePtcl);
+		}
+
+		CollPart* rightEye = teki.mCollInfo->getSphere('me_r');
+		if (rightEye == nullptr) {
+			ERROR("No right eye");
+		} else {
+			zen::particleGenerator* eyePtcl = effectMgr->create(EffectMgr::EFF_Beatle_EyeGlow, rightEye->mCentre, nullptr, nullptr);
+			if (eyePtcl != nullptr) {
+				eyePtcl->stopGen();
+			}
+
+			teki.setPtclGenPtr(YTeki::PTCL_Unk1, eyePtcl);
+		}
+
+		teki.mCollisionRadius = 64.0f;
+	}
+
+	virtual bool act(Teki&) { return true; } // _10
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
+public:
+	TAIAcheckInsideRangePikiBeatle(int nextState, int pikiMax)
+	    : TAIAcheckInsideRangePiki(nextState, pikiMax, 0.0f)
+	{
+	}
+
+protected:
+	virtual f32 getRange(Teki& teki) { return teki.getParameterF(TPF_AttackRange); } // _20
+
+	// _04     = VTBL
+	// _00-_08 = TAIAcheckInsideRangePiki?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAdisableStick : public TaiAction {
+public:
+	inline TAIAdisableStick(int nextState) // TODO: this is a guess
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki& teki) { teki.disableStick(); } // _08
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAflickingBeatle : public TAIAflicking {
+public:
+	TAIAflickingBeatle(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
+	{
+	}
+
+protected:
+	virtual void flick(Teki& teki) // _1C
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			InteractFlick& flick1 = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
+			                                      getFlickDirection(teki));
+			InteractFlick& flick2 = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
+			                                      getFlickDirection(teki));
+			teki.flick(flick1, flick2);
+
+			effectMgr->create(EffectMgr::EFF_BigDustRing, teki.getPosition(), nullptr, nullptr);
+		}
+	}
+
+	// _04     = VTBL
+	// _00-_0C = TAIAflicking?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct TAIAflickingAfterMotionLoopBeatle : public TAIAflickingAfterMotionLoop {
 public:
 	TAIAflickingAfterMotionLoopBeatle(int nextState, int motionIdx) // TODO: check this when used
@@ -262,122 +378,6 @@ protected:
  * @brief TODO
  *
  * @note Defined in TAIbeatle.cpp
- */
-struct TAIAinitBeatle : public TaiAction {
-public:
-	inline TAIAinitBeatle(int nextState) // TODO: this is a guess
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual void start(Teki& teki) // _08
-	{
-		for (int i = 0; i < YTeki::PTCL_COUNT; i++) {
-			teki.setPtclGenPtr((YTeki::ptclIndexFlag)i, nullptr);
-		}
-
-		CollPart* leftEye = teki.mCollInfo->getSphere('me_l');
-		if (leftEye == nullptr) {
-			ERROR("No Left eye");
-		} else {
-			zen::particleGenerator* eyePtcl = effectMgr->create(EffectMgr::EFF_Beatle_EyeGlow, leftEye->mCentre, nullptr, nullptr);
-			if (eyePtcl != nullptr) {
-				eyePtcl->stopGen();
-			}
-
-			teki.setPtclGenPtr(YTeki::PTCL_Unk0, eyePtcl);
-		}
-
-		CollPart* rightEye = teki.mCollInfo->getSphere('me_r');
-		if (rightEye == nullptr) {
-			ERROR("No right eye");
-		} else {
-			zen::particleGenerator* eyePtcl = effectMgr->create(EffectMgr::EFF_Beatle_EyeGlow, rightEye->mCentre, nullptr, nullptr);
-			if (eyePtcl != nullptr) {
-				eyePtcl->stopGen();
-			}
-
-			teki.setPtclGenPtr(YTeki::PTCL_Unk1, eyePtcl);
-		}
-
-		teki.mCollisionRadius = 64.0f;
-	}
-
-	virtual bool act(Teki&) { return true; } // _10
-
-protected:
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TAIAcheckInsideRangePikiBeatle : public TAIAcheckInsideRangePiki {
-public:
-	TAIAcheckInsideRangePikiBeatle(int nextState, int pikiMax)
-	    : TAIAcheckInsideRangePiki(nextState, pikiMax, 0.0f)
-	{
-	}
-
-protected:
-	virtual f32 getRange(Teki& teki) { return teki.getParameterF(TPF_AttackRange); } // _20
-
-	// _04     = VTBL
-	// _00-_08 = TAIAcheckInsideRangePiki?
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TAIAdisableStick : public TaiAction {
-public:
-	inline TAIAdisableStick(int nextState) // TODO: this is a guess
-	    : TaiAction(nextState)
-	{
-	}
-
-	virtual void start(Teki& teki) { teki.disableStick(); } // _08
-
-protected:
-	// _04     = VTBL
-	// _00-_08 = TaiAction
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct TAIAflickingBeatle : public TAIAflicking {
-public:
-	TAIAflickingBeatle(int nextState, int motionIdx)
-	    : TAIAflicking(nextState, motionIdx)
-	{
-	}
-
-protected:
-	virtual void flick(Teki& teki) // _1C
-	{
-		if (teki.mCurrentAnimEvent == KEY_Action0) {
-			InteractFlick& flick1 = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-			                                      getFlickDirection(teki));
-			InteractFlick& flick2 = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
-			                                      getFlickDirection(teki));
-			teki.flick(flick1, flick2);
-
-			effectMgr->create(EffectMgr::EFF_BigDustRing, teki.getPosition(), nullptr, nullptr);
-		}
-	}
-
-	// _04     = VTBL
-	// _00-_0C = TAIAflicking?
-	// TODO: members
-};
-
-/**
- * @brief TODO
  */
 struct TAIArockAttack : public TAIAreserveMotion {
 public:

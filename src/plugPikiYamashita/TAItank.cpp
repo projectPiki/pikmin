@@ -161,6 +161,54 @@ protected:
 /**
  * @brief TODO
  */
+struct FireEffect : public zen::CallBack1<Teki&> {
+public:
+	virtual bool invoke(Teki& teki) // _08
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			CollPart* mouth = teki.mCollInfo->getSphere('kuti');
+			Vector3f dir(NMathF::sin(teki.mFaceDirection), 0.0f, NMathF::cos(teki.mFaceDirection));
+			if (mouth->mCentre.y > mapMgr->getMinY(mouth->mCentre.x, mouth->mCentre.z, true)) {
+				Vector3f pos;
+				pos = mouth->mCentre + dir * -15.0f;
+				teki.initCylinderTYpePtclCallBack(&teki, pos, Vector3f(dir * 10.0f * 30.0f), 0.5f, teki.getParameterF(TPF_AttackPower),
+				                                  200.0f, 20.0f, &FireEffect::eventCallBackFire);
+
+				zen::particleGenerator* ptclGen
+				    = effectMgr->create(EffectMgr::EFF_Tank_Fire, mouth->mCentre, teki.getCylinderTypePtclCallBack(), nullptr);
+				teki.setPtclGenPtr(YTeki::PTCL_Unk0, ptclGen);
+				if (ptclGen) {
+					ptclGen->setEmitPos(mouth->mCentre);
+					ptclGen->setEmitDir(dir);
+				}
+
+				teki.initEventTypePtclCallBack();
+				ptclGen = effectMgr->create(EffectMgr::EFF_Tank_Smoke, mouth->mCentre, teki.getEventTypePtclCallBack(), nullptr);
+				teki.setPtclGenPtr(YTeki::PTCL_Unk1, ptclGen);
+				if (ptclGen) {
+					ptclGen->setEmitPos(mouth->mCentre);
+					ptclGen->setEmitDir(dir);
+					teki.playEventSound(&teki, SE_TANK_FIRE);
+				}
+			}
+		}
+
+		return true;
+	}
+
+protected:
+	static TAIeffectAttackEventCallBackTank eventCallBackFire;
+
+	// _00     = VTBL
+	// _00-_04 = zen::CallBack1?
+	// TODO: members
+};
+
+TAIeffectAttackEventCallBackTank FireEffect::eventCallBackFire;
+
+/**
+ * @brief TODO
+ */
 struct TAIAstepBackTank : public TAIAstepBack {
 public:
 	TAIAstepBackTank(int nextState, int motionID)
@@ -234,54 +282,6 @@ protected:
 	// _00-_08 = TAIAattackableTarget?
 	// TODO: members
 };
-
-/**
- * @brief TODO
- */
-struct FireEffect : public zen::CallBack1<Teki&> {
-public:
-	virtual bool invoke(Teki& teki) // _08
-	{
-		if (teki.mCurrentAnimEvent == KEY_Action0) {
-			CollPart* mouth = teki.mCollInfo->getSphere('kuti');
-			Vector3f dir(NMathF::sin(teki.mFaceDirection), 0.0f, NMathF::cos(teki.mFaceDirection));
-			if (mouth->mCentre.y > mapMgr->getMinY(mouth->mCentre.x, mouth->mCentre.z, true)) {
-				Vector3f pos;
-				pos = mouth->mCentre + dir * -15.0f;
-				teki.initCylinderTYpePtclCallBack(&teki, pos, Vector3f(dir * 10.0f * 30.0f), 0.5f, teki.getParameterF(TPF_AttackPower),
-				                                  200.0f, 20.0f, &FireEffect::eventCallBackFire);
-
-				zen::particleGenerator* ptclGen
-				    = effectMgr->create(EffectMgr::EFF_Tank_Fire, mouth->mCentre, teki.getCylinderTypePtclCallBack(), nullptr);
-				teki.setPtclGenPtr(YTeki::PTCL_Unk0, ptclGen);
-				if (ptclGen) {
-					ptclGen->setEmitPos(mouth->mCentre);
-					ptclGen->setEmitDir(dir);
-				}
-
-				teki.initEventTypePtclCallBack();
-				ptclGen = effectMgr->create(EffectMgr::EFF_Tank_Smoke, mouth->mCentre, teki.getEventTypePtclCallBack(), nullptr);
-				teki.setPtclGenPtr(YTeki::PTCL_Unk1, ptclGen);
-				if (ptclGen) {
-					ptclGen->setEmitPos(mouth->mCentre);
-					ptclGen->setEmitDir(dir);
-					teki.playEventSound(&teki, SE_TANK_FIRE);
-				}
-			}
-		}
-
-		return true;
-	}
-
-protected:
-	static TAIeffectAttackEventCallBackTank eventCallBackFire;
-
-	// _00     = VTBL
-	// _00-_04 = zen::CallBack1?
-	// TODO: members
-};
-
-TAIeffectAttackEventCallBackTank FireEffect::eventCallBackFire;
 
 /*
  * --INFO--
