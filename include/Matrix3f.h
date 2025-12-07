@@ -18,7 +18,7 @@ struct Matrix3f {
 
 	Matrix3f() { identity(); }
 
-	Matrix3f(Mtx33 mtx)
+	Matrix3f(const Mtx33 mtx)
 	{
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++)

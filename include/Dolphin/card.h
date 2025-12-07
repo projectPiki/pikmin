@@ -296,7 +296,7 @@ s32 __CARDReadSegment(s32 channel, CARDCallback callback);
 s32 __CARDWritePage(s32 channel, CARDCallback callback);
 s32 __CARDEraseSector(s32 channel, u32 addr, CARDCallback callback);
 u16 __CARDGetFontEncode();
-void __CARDSetDiskID(const DVDDiskID* diskID);
+void __CARDSetDiskID(DVDDiskID* diskID);
 s32 __CARDGetControlBlock(s32 channel, CARDControl** card);
 s32 __CARDPutControlBlock(CARDControl* card, s32 result);
 s32 __CARDSync(s32 channel);

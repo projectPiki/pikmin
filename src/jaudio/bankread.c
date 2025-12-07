@@ -34,7 +34,7 @@ Bank_* Bank_Test(u8* ibnk_address)
 	}
 
 	for (i = 0; i < BANK_TEST_INST_COUNT; ++i) {
-		PTconvert(&startBank->mInstruments[i], base_addr);
+		PTconvert((void**)&startBank->mInstruments[i], base_addr);
 
 		Inst_* inst = startBank->mInstruments[i];
 		if (!inst) {
@@ -43,9 +43,9 @@ Bank_* Bank_Test(u8* ibnk_address)
 
 		// each instrument has two oscillators, effects, and sensors
 		for (j = 0; j < 2; j++) {
-			PTconvert(&inst->mOscillators[j], base_addr);
-			PTconvert(&inst->mEffects[j], base_addr);
-			PTconvert(&inst->mSensors[j], base_addr);
+			PTconvert((void**)&inst->mOscillators[j], base_addr);
+			PTconvert((void**)&inst->mEffects[j], base_addr);
+			PTconvert((void**)&inst->mSensors[j], base_addr);
 
 			if (inst->mOscillators[j]) {
 				PTconvert((void**)&inst->mOscillators[j]->attackVecOffset, base_addr);
@@ -55,17 +55,17 @@ Bank_* Bank_Test(u8* ibnk_address)
 
 		// each instrument also has a certain number of key regions
 		for (j = 0; j < inst->mKeyRegionCount; j++) {
-			PTconvert(&inst->mKeyRegions[j], base_addr);
+			PTconvert((void**)&inst->mKeyRegions[j], base_addr);
 
 			for (k = 0; k < inst->mKeyRegions[j]->mVelocityCount; k++) {
-				PTconvert(&inst->mKeyRegions[j]->mVelocities[k], base_addr);
+				PTconvert((void**)&inst->mKeyRegions[j]->mVelocities[k], base_addr);
 			}
 		}
 	}
 
 	// treat the next block of 100 as voices (for some reason)
 	for (i = 0; i < BANK_TEST_VOICE_COUNT; i++) {
-		PTconvert(&(startBank->mVoices + BANK_TEST_VOICE_OFFSET)[i], base_addr);
+		PTconvert((void**)&(startBank->mVoices + BANK_TEST_VOICE_OFFSET)[i], base_addr);
 
 		Voice_* voice = (startBank->mVoices + BANK_TEST_VOICE_OFFSET)[i];
 		if (!voice) {
@@ -73,13 +73,13 @@ Bank_* Bank_Test(u8* ibnk_address)
 		}
 
 		for (j = 0; j < voice->size; j++) {
-			PTconvert(&voice->_0C[j], base_addr);
+			PTconvert((void**)&voice->_0C[j], base_addr);
 		}
 	}
 
 	// treat the next block of 12 as percussion (for some reason)
 	for (i = 0; i < BANK_TEST_PERC_COUNT; i++) {
-		PTconvert(&(startBank->mPercs + BANK_TEST_PERC_OFFSET)[i], base_addr);
+		PTconvert((void**)&(startBank->mPercs + BANK_TEST_PERC_OFFSET)[i], base_addr);
 
 		Perc_* perc = (startBank->mPercs + BANK_TEST_PERC_OFFSET)[i];
 		if (!perc) {
@@ -87,18 +87,18 @@ Bank_* Bank_Test(u8* ibnk_address)
 		}
 
 		for (j = 0; j < 128; j++) {
-			PTconvert(&perc->mKeyRegions[j], base_addr);
+			PTconvert((void**)&perc->mKeyRegions[j], base_addr);
 
 			PercKeymap_* key = perc->mKeyRegions[j];
 			if (!key) {
 				continue;
 			}
 
-			PTconvert(&key->_08, base_addr);
-			PTconvert(&key->_0C, base_addr);
+			PTconvert((void**)&key->_08, base_addr);
+			PTconvert((void**)&key->_0C, base_addr);
 
 			for (k = 0; k < key->mVelocityCount; k++) {
-				PTconvert(&key->mVelocities[k], base_addr);
+				PTconvert((void**)&key->mVelocities[k], base_addr);
 			}
 		}
 	}

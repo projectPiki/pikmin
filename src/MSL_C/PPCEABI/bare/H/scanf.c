@@ -649,7 +649,7 @@ void scanf(void)
 int __vsscanf(const char* s, const char* format, va_list arg)
 {
 	__InStrCtrl isc;
-	isc.NextChar = (char*)s;
+	isc.NextChar = s;
 
 	if ((s == 0) || (*isc.NextChar == '\0')) {
 		return -1;

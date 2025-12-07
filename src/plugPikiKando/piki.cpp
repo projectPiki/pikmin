@@ -3019,7 +3019,7 @@ void Piki::dump()
 		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
 		if (flowCont.mNaviOnMap == 1) {
-			char* naviName;
+			const char* naviName;
 			if (mNavi) {
 				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
 			} else {
@@ -3075,7 +3075,7 @@ void Piki::dump()
 		      mPikiAnimMgr.getLowerAnimator().getCurrentMotionName());
 
 		if (flowCont.mNaviOnMap == 1) {
-			char* naviName;
+			const char* naviName;
 			if (mNavi) {
 				naviName = (mNavi == naviMgr->getNavi(0)) ? "player1" : "player2";
 			} else {

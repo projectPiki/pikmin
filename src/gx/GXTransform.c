@@ -5,7 +5,7 @@
  * Address:	........
  * Size:	000174
  */
-void GXProject(f32 x, f32 y, f32 z, Mtx mtx, f32* pm, f32* vp, f32* sx, f32* sy, f32* sz)
+void GXProject(f32 x, f32 y, f32 z, const Mtx mtx, f32* pm, f32* vp, f32* sx, f32* sy, f32* sz)
 {
 	Vec peye;
 	f32 xc;
@@ -128,7 +128,7 @@ void GXGetProjectionv(f32* ptr)
  * Address:	802143C8
  * Size:	000034
  */
-ASM void WriteMTXPS4x3(register Mtx mtx, register volatile f32* dest) {
+ASM void WriteMTXPS4x3(register const Mtx mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
     psq_l f0, 0x00(mtx), 0, qr0
     psq_l f1, 0x08(mtx), 0, qr0
@@ -150,7 +150,7 @@ ASM void WriteMTXPS4x3(register Mtx mtx, register volatile f32* dest) {
  * Address:	802143FC
  * Size:	000034
  */
-ASM void WriteMTXPS3x3from3x4(register Mtx mtx, register volatile f32 *dest)
+ASM void WriteMTXPS3x3from3x4(register const Mtx mtx, register volatile f32 *dest)
 {
 	#ifdef __MWERKS__
     psq_l f0, 0x00(mtx), 0, qr0
@@ -173,7 +173,7 @@ ASM void WriteMTXPS3x3from3x4(register Mtx mtx, register volatile f32 *dest)
  * Address:	........
  * Size:	00002C
  */
-ASM void WriteMTXPS3x3(register Mtx33 mtx, register volatile f32 *dest)
+ASM void WriteMTXPS3x3(register const Mtx33 mtx, register volatile f32 *dest)
 {
 	#ifdef __MWERKS__
     psq_l f0, 0x00(mtx), 0, qr0
@@ -194,7 +194,7 @@ ASM void WriteMTXPS3x3(register Mtx33 mtx, register volatile f32 *dest)
  * Address:	80214430
  * Size:	000024
  */
-ASM void WriteMTXPS4x2(register Mtx mtx, register volatile f32 *dest)
+ASM void WriteMTXPS4x2(register const Mtx mtx, register volatile f32 *dest)
 {
 	#ifdef __MWERKS__
     psq_l f0, 0x00(mtx), 0, qr0
@@ -220,7 +220,7 @@ do { \
  * Address:	80214454
  * Size:	00003C
  */
-void GXLoadPosMtxImm(Mtx mtx, u32 id)
+void GXLoadPosMtxImm(const Mtx mtx, u32 id)
 {
     u32 reg;
     u32 addr;
@@ -285,7 +285,7 @@ void GXLoadPosMtxIndx(u16 mtx_indx, u32 id)
  * Address:	80214490
  * Size:	000040
  */
-void GXLoadNrmMtxImm(Mtx mtx, u32 id)
+void GXLoadNrmMtxImm(const Mtx mtx, u32 id)
 {
     u32 reg;
     u32 addr;
@@ -317,7 +317,7 @@ void GXLoadNrmMtxImm(Mtx mtx, u32 id)
  * Address:	........
  * Size:	000040
  */
-void GXLoadNrmMtxImm3x3(Mtx33 mtx, u32 id)
+void GXLoadNrmMtxImm3x3(const Mtx33 mtx, u32 id)
 {
     u32 reg;
     u32 addr;

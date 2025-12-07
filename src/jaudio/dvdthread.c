@@ -592,7 +592,7 @@ s32 DVDT_LoadFile(char* file, u8* p2)
 	vu32 status     = 0;
 	char** REF_file = &file;
 	STACK_PAD_VAR(2);
-	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, &status, NULL);
+	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, (u32*)&status, NULL);
 
 	while (status == 0) { }
 
