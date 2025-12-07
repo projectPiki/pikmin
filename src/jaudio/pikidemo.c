@@ -223,7 +223,7 @@ BOOL Jac_DemoWalkCheck()
 	switch (current_demo_no) {
 	case DEMOID_GenericLanding:
 	case DEMOID_Unk100:
-	case DEMOID_LandingTutorial:
+	case DEMOID_LandingPractice:
 	case DEMOID_LandingForest:
 	case DEMOID_LandingCaveLast:
 	case DEMOID_LandingYakushima:
@@ -242,7 +242,7 @@ BOOL Jac_DemoCheckEvent(u8 evt)
 	if (Jac_DemoCheck()) {
 		switch (current_demo_no) {
 		case DEMOID_GenericDayEnd:
-		case DEMOID_DayEndTutorial:
+		case DEMOID_DayEndPractice:
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
 		case DEMOID_DayEndYakushima:
@@ -282,8 +282,8 @@ static void DoSequence(u32 cinID, u32 a2)
 
 		if (REF_flag[1] == 0xfff9) {
 			switch (cinID) {
-			case DEMOID_CollectFirstPartTutorial:
-				__Prepare_BGM(DEMOID_ShipUpgradeTutorial);
+			case DEMOID_CollectFirstPartPractice:
+				__Prepare_BGM(DEMOID_ShipUpgradePractice);
 				break;
 			case DEMOID_Unk24:
 				__Prepare_BGM(DEMOID_ShipUpgradeLast);
@@ -379,7 +379,7 @@ void Jac_StartDemo(u32 cinID)
 	}
 
 	switch (cinID) {
-	case DEMOID_TakeOffTutorial:
+	case DEMOID_TakeOffPractice:
 	case DEMOID_TakeOffForest:
 	case DEMOID_TakeOffCaveLast:
 	case DEMOID_TakeOffYakushima:
@@ -431,14 +431,14 @@ void Jac_StartDemo(u32 cinID)
 	case DEMOID_CollectPartCaveLast:
 	case DEMOID_CollectPartYakushima:
 	case DEMOID_Unk24:
-	case DEMOID_CollectPartTutorial:
+	case DEMOID_CollectPartPractice:
 		if (parts_bright_table[demo_parts_id] == 0) {
 			status = &DEMO_STATUS[DEMOID_ShipUpgradeNonSparkling];
 			cinID  = DEMOID_ShipUpgradeNonSparkling;
 		}
 		break;
 
-	case DEMOID_ChalDayEndTutorial:
+	case DEMOID_ChalDayEndPractice:
 	case DEMOID_ChalDayEndForest:
 	case DEMOID_ChalDayEndCave:
 	case DEMOID_ChalDayEndYakushima:
@@ -449,7 +449,7 @@ void Jac_StartDemo(u32 cinID)
 		}
 		break;
 
-	case DEMOID_LandingTutorial:
+	case DEMOID_LandingPractice:
 	case DEMOID_LandingForest:
 	case DEMOID_LandingCaveLast:
 	case DEMOID_LandingYakushima:
@@ -460,7 +460,7 @@ void Jac_StartDemo(u32 cinID)
 		}
 		break;
 
-	case DEMOID_DayEndTutorial:
+	case DEMOID_DayEndPractice:
 	case DEMOID_DayEndForest:
 	case DEMOID_DayEndCaveLast:
 	case DEMOID_DayEndYakushima:
@@ -534,9 +534,9 @@ void Jac_StartDemo(u32 cinID)
 
 	now_loading = 0;
 
-	if (cinID == DEMOID_CollectFirstPartTutorial) {
+	if (cinID == DEMOID_CollectFirstPartPractice) {
 		now_loading = 1;
-		__Prepare_BGM(DEMOID_ShipUpgradeTutorial);
+		__Prepare_BGM(DEMOID_ShipUpgradePractice);
 		if (now_loading) {
 			while (now_loading < 3)
 				;
@@ -768,13 +768,13 @@ void Jac_FinishDemo(void)
 		switch (cinID) {
 		// these all require a demo to be loaded after them
 		case DEMOID_OpeningIntroPt1:
-		case DEMOID_ShipUpgradeTutorial:
-		case DEMOID_CollectFirstPartTutorial:
+		case DEMOID_ShipUpgradePractice:
+		case DEMOID_CollectFirstPartPractice:
 		case DEMOID_Unk24: // collect final ship part?
 			break;
 
 		case DEMOID_GenericDayEnd:
-		case DEMOID_DayEndTutorial:
+		case DEMOID_DayEndPractice:
 		case DEMOID_DayEndForest:
 		case DEMOID_DayEndCaveLast:
 		case DEMOID_DayEndYakushima:
@@ -848,7 +848,7 @@ void __Prepare_BGM(u32 cinID)
 
 	switch (cinID) {
 	// no BGM for take off cutscenes
-	case DEMOID_TakeOffTutorial:
+	case DEMOID_TakeOffPractice:
 	case DEMOID_TakeOffForest:
 	case DEMOID_TakeOffCaveLast:
 	case DEMOID_TakeOffYakushima:
@@ -942,7 +942,7 @@ void Jac_PrepareDemo(u32 cinID)
 	}
 
 	switch (cinID) {
-	case DEMOID_TakeOffTutorial:
+	case DEMOID_TakeOffPractice:
 	case DEMOID_TakeOffForest:
 	case DEMOID_TakeOffCaveLast:
 	case DEMOID_TakeOffYakushima:

@@ -44,23 +44,23 @@ static MovieListInfo movieTitles[] = {
 	{ DEMOID_CollectFirstPellet, "cinemas/demo14.cin" },
 	{ DEMOID_PushFirstBox, "cinemas/demo15.cin" },
 	{ DEMOID_DiscoverMainEngine, "cinemas/demo16.cin" },
-	{ DEMOID_ShipUpgradeTutorial, "cinemas/demo17.cin" },
-	{ DEMOID_CollectFirstPartTutorial, "cinemas/demo20.cin" },
+	{ DEMOID_ShipUpgradePractice, "cinemas/demo17.cin" },
+	{ DEMOID_CollectFirstPartPractice, "cinemas/demo20.cin" },
 	{ DEMOID_Unk80, "cinemas/demo80.cin" },
 	{ DEMOID_ShipUpgradeForest, "cinemas/demo18.cin" },
 	{ DEMOID_ShipUpgradeCave, "cinemas/demo19.cin" },
 	{ DEMOID_ShipUpgradeYakushima, "cinemas/demo25.cin" },
 	{ DEMOID_ShipUpgradeLast, "cinemas/demo26.cin" },
-	{ DEMOID_CollectPartTutorial, "cinemas/demo79.cin" },
+	{ DEMOID_CollectPartPractice, "cinemas/demo79.cin" },
 	{ DEMOID_CollectPartForest, "cinemas/demo21.cin" },
 	{ DEMOID_CollectPartCaveLast, "cinemas/demo22.cin" },
 	{ DEMOID_CollectPartYakushima, "cinemas/demo23.cin" },
 	{ DEMOID_Unk24, "cinemas/demo24.cin" },
-	{ DEMOID_DayEndTutorial, "cinemas/demo28.cin" },
+	{ DEMOID_DayEndPractice, "cinemas/demo28.cin" },
 	{ DEMOID_DayEndForest, "cinemas/demo29.cin" },
 	{ DEMOID_DayEndCaveLast, "cinemas/demo30.cin" },
 	{ DEMOID_DayEndYakushima, "cinemas/demo31.cin" },
-	{ DEMOID_ChalDayEndTutorial, "cinemas/demo32.cin" },
+	{ DEMOID_ChalDayEndPractice, "cinemas/demo32.cin" },
 	{ DEMOID_ChalDayEndForest, "cinemas/demo33.cin" },
 	{ DEMOID_ChalDayEndCave, "cinemas/demo34.cin" },
 	{ DEMOID_ChalDayEndYakushima, "cinemas/demo35.cin" },
@@ -69,23 +69,23 @@ static MovieListInfo movieTitles[] = {
 	{ DEMOID_Unk37, "cinemas/demo37.cin" },
 	{ DEMOID_Unk38, "cinemas/demo38.cin" },
 	{ DEMOID_Unk39, "cinemas/demo39.cin" },
-	{ DEMOID_LandingTutorial, "cinemas/demo40.cin" },
+	{ DEMOID_LandingPractice, "cinemas/demo40.cin" },
 	{ DEMOID_LandingForest, "cinemas/demo41.cin" },
 	{ DEMOID_LandingCaveLast, "cinemas/demo42.cin" },
 	{ DEMOID_LandingYakushima, "cinemas/demo43.cin" },
-	{ DEMOID_PikminInOnyonTutorial, "cinemas/demo44.cin" },
+	{ DEMOID_PikminInOnyonPractice, "cinemas/demo44.cin" },
 	{ DEMOID_PikminInOnyonForest, "cinemas/demo45.cin" },
 	{ DEMOID_Extinction, "cinemas/demo46.cin" },
-	{ DEMOID_ExtDayEndTutorial, "cinemas/demo47.cin" },
+	{ DEMOID_ExtDayEndPractice, "cinemas/demo47.cin" },
 	{ DEMOID_ExtDayEndForest, "cinemas/demo48.cin" },
 	{ DEMOID_ExtDayEndCaveLast, "cinemas/demo49.cin" },
 	{ DEMOID_ExtDayEndYakushima, "cinemas/demo50.cin" },
 	{ DEMOID_OlimarDown, "cinemas/demo51.cin" },
-	{ DEMOID_OliDownDayEndTutorial, "cinemas/demo52.cin" },
+	{ DEMOID_OliDownDayEndPractice, "cinemas/demo52.cin" },
 	{ DEMOID_OliDownDayEndForest, "cinemas/demo53.cin" },
 	{ DEMOID_OliDownDayEndCaveLast, "cinemas/demo54.cin" },
 	{ DEMOID_OliDownDayEndYakushima, "cinemas/demo55.cin" },
-	{ DEMOID_TakeOffTutorial, "cinemas/demo56.cin" },
+	{ DEMOID_TakeOffPractice, "cinemas/demo56.cin" },
 	{ DEMOID_TakeOffForest, "cinemas/demo57.cin" },
 	{ DEMOID_TakeOffCaveLast, "cinemas/demo58.cin" },
 	{ DEMOID_TakeOffYakushima, "cinemas/demo59.cin" },
@@ -99,7 +99,7 @@ static MovieListInfo movieTitles[] = {
 	{ DEMOID_Unk66, "cinemas/demo66.cin" },
 	{ DEMOID_Unk67, "cinemas/demo67.cin" },
 	{ DEMOID_YellowWithBomb, "cinemas/demo68.cin" },
-	{ DEMOID_BadEndingTutorial, "cinemas/demo69.cin" },
+	{ DEMOID_BadEndingPractice, "cinemas/demo69.cin" },
 	{ DEMOID_BadEndingForest, "cinemas/demo70.cin" },
 	{ DEMOID_BadEndingCaveLast, "cinemas/demo71.cin" },
 	{ DEMOID_BadEndingYakushima, "cinemas/demo72.cin" },
@@ -254,29 +254,29 @@ int movie04table[STAGE_COUNT]
 int movie09table[STAGE_COUNT]
     = { DEMOID_MeetRedPikmin, DEMOID_MeetYellowPikmin, DEMOID_MeetBluePikmin, DEMOID_MeetBluePikmin, DEMOID_MeetBluePikmin };
 int movie17table[STAGE_COUNT]
-    = { DEMOID_ShipUpgradeTutorial, DEMOID_ShipUpgradeForest, DEMOID_ShipUpgradeCave, DEMOID_ShipUpgradeYakushima, DEMOID_ShipUpgradeLast };
-int movie20table[STAGE_COUNT] = { DEMOID_CollectPartTutorial, DEMOID_CollectPartForest, DEMOID_CollectPartCaveLast,
+    = { DEMOID_ShipUpgradePractice, DEMOID_ShipUpgradeForest, DEMOID_ShipUpgradeCave, DEMOID_ShipUpgradeYakushima, DEMOID_ShipUpgradeLast };
+int movie20table[STAGE_COUNT] = { DEMOID_CollectPartPractice, DEMOID_CollectPartForest, DEMOID_CollectPartCaveLast,
 	                              DEMOID_CollectPartYakushima, DEMOID_CollectPartCaveLast };
 int movie18table[STAGE_COUNT]
     = { DEMOID_Unk80, DEMOID_ShipUpgradeForest, DEMOID_ShipUpgradeCave, DEMOID_ShipUpgradeYakushima, DEMOID_ShipUpgradeLast };
 int movie28table[STAGE_COUNT]
-    = { DEMOID_DayEndTutorial, DEMOID_DayEndForest, DEMOID_DayEndCaveLast, DEMOID_DayEndYakushima, DEMOID_DayEndCaveLast };
+    = { DEMOID_DayEndPractice, DEMOID_DayEndForest, DEMOID_DayEndCaveLast, DEMOID_DayEndYakushima, DEMOID_DayEndCaveLast };
 int movie32table[STAGE_COUNT]
-    = { DEMOID_ChalDayEndTutorial, DEMOID_ChalDayEndForest, DEMOID_ChalDayEndCave, DEMOID_ChalDayEndYakushima, DEMOID_ChalDayEndLast };
+    = { DEMOID_ChalDayEndPractice, DEMOID_ChalDayEndForest, DEMOID_ChalDayEndCave, DEMOID_ChalDayEndYakushima, DEMOID_ChalDayEndLast };
 int movie40table[STAGE_COUNT]
-    = { DEMOID_LandingTutorial, DEMOID_LandingForest, DEMOID_LandingCaveLast, DEMOID_LandingYakushima, DEMOID_LandingCaveLast };
-int movie44table[STAGE_COUNT] = { DEMOID_PikminInOnyonTutorial, DEMOID_PikminInOnyonForest, DEMOID_PikminInOnyonForest,
+    = { DEMOID_LandingPractice, DEMOID_LandingForest, DEMOID_LandingCaveLast, DEMOID_LandingYakushima, DEMOID_LandingCaveLast };
+int movie44table[STAGE_COUNT] = { DEMOID_PikminInOnyonPractice, DEMOID_PikminInOnyonForest, DEMOID_PikminInOnyonForest,
 	                              DEMOID_PikminInOnyonForest, DEMOID_PikminInOnyonForest };
 int movie47table[STAGE_COUNT]
-    = { DEMOID_ExtDayEndTutorial, DEMOID_ExtDayEndForest, DEMOID_ExtDayEndCaveLast, DEMOID_ExtDayEndYakushima, DEMOID_ExtDayEndCaveLast };
-int movie52table[STAGE_COUNT] = { DEMOID_OliDownDayEndTutorial, DEMOID_OliDownDayEndForest, DEMOID_OliDownDayEndCaveLast,
+    = { DEMOID_ExtDayEndPractice, DEMOID_ExtDayEndForest, DEMOID_ExtDayEndCaveLast, DEMOID_ExtDayEndYakushima, DEMOID_ExtDayEndCaveLast };
+int movie52table[STAGE_COUNT] = { DEMOID_OliDownDayEndPractice, DEMOID_OliDownDayEndForest, DEMOID_OliDownDayEndCaveLast,
 	                              DEMOID_OliDownDayEndYakushima, DEMOID_OliDownDayEndCaveLast };
 int movie56table[STAGE_COUNT]
-    = { DEMOID_TakeOffTutorial, DEMOID_TakeOffForest, DEMOID_TakeOffCaveLast, DEMOID_TakeOffYakushima, DEMOID_DayEndTakeOffLast };
+    = { DEMOID_TakeOffPractice, DEMOID_TakeOffForest, DEMOID_TakeOffCaveLast, DEMOID_TakeOffYakushima, DEMOID_DayEndTakeOffLast };
 int movie60table[STAGE_COUNT] = { DEMOID_Unk60, DEMOID_Unk61, DEMOID_Unk62, DEMOID_Unk63, DEMOID_Unk62 };
 int movie64table[STAGE_COUNT] = { DEMOID_Unk64, DEMOID_Unk65, DEMOID_Unk66, DEMOID_Unk67, DEMOID_Unk66 };
 int movie69table[STAGE_COUNT]
-    = { DEMOID_BadEndingTutorial, DEMOID_BadEndingForest, DEMOID_BadEndingCaveLast, DEMOID_BadEndingYakushima, DEMOID_BadEndingCaveLast };
+    = { DEMOID_BadEndingPractice, DEMOID_BadEndingForest, DEMOID_BadEndingCaveLast, DEMOID_BadEndingYakushima, DEMOID_BadEndingCaveLast };
 
 MovieTransInfo transTable[] = {
 	{
@@ -430,7 +430,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	info->initCore(movie->mCinFileName);
 	info->mMovieIndex = translatedIdx;
 	info->mMaskFlags  = mask;
-	if (translatedIdx == DEMOID_PikminInOnyonTutorial || translatedIdx == DEMOID_PikminInOnyonForest) {
+	if (translatedIdx == DEMOID_PikminInOnyonPractice || translatedIdx == DEMOID_PikminInOnyonForest) {
 		gsys->startLoading(nullptr, false, 0);
 	} else {
 		gsys->startLoading(nullptr, true, 60);

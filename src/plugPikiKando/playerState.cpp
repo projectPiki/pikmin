@@ -1316,7 +1316,7 @@ void PlayerState::preloadHenkaMovie()
 		level = 5;
 	}
 
-	int movies[5] = { DEMOID_ShipUpgradeTutorial, DEMOID_ShipUpgradeForest, DEMOID_ShipUpgradeCave, DEMOID_ShipUpgradeYakushima,
+	int movies[5] = { DEMOID_ShipUpgradePractice, DEMOID_ShipUpgradeForest, DEMOID_ShipUpgradeCave, DEMOID_ShipUpgradeYakushima,
 		              DEMOID_ShipUpgradeLast };
 	if (level != mShipUpgradeLevel) {
 		gameflow.mGameInterface->movie(movies[level - 1], 0, nullptr, nullptr, nullptr, -1, true);

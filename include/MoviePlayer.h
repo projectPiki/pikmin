@@ -123,7 +123,7 @@ enum CinDemoIDs {
 	DEMOID_OlimarWakeUp    = 3,
 
 	DEMOID_FindOnyon       = 4, // translated for each stage
-	DEMOID_FindRedOnyon    = 4, // a.k.a. tutorial
+	DEMOID_FindRedOnyon    = 4, // a.k.a. practice
 	DEMOID_FindYellowOnyon = 5, // a.k.a. forest
 	DEMOID_FindBlueOnyon   = 6, // a.k.a. cave - yakushima + last use this one too
 
@@ -131,7 +131,7 @@ enum CinDemoIDs {
 	DEMOID_WaitForFirstSprout = 8,
 
 	DEMOID_MeetPikmin       = 9,  // translated for each stage
-	DEMOID_MeetRedPikmin    = 9,  // a.k.a. tutorial
+	DEMOID_MeetRedPikmin    = 9,  // a.k.a. practice
 	DEMOID_MeetYellowPikmin = 10, // a.k.a. forest
 	DEMOID_MeetBluePikmin   = 11, // a.k.a. cave - yakushima + last use this one too
 
@@ -142,12 +142,12 @@ enum CinDemoIDs {
 	DEMOID_DiscoverMainEngine = 16,
 
 	DEMOID_ShipUpgrade         = 17, // translated for each stage
-	DEMOID_ShipUpgradeTutorial = 17,
+	DEMOID_ShipUpgradePractice = 17,
 	DEMOID_ShipUpgradeForest   = 18,
 	DEMOID_ShipUpgradeCave     = 19,
 
 	DEMOID_CollectPart              = 79, // translated for each stage
-	DEMOID_CollectFirstPartTutorial = 20,
+	DEMOID_CollectFirstPartPractice = 20,
 	DEMOID_CollectPartForest        = 21,
 	DEMOID_CollectPartCaveLast      = 22,
 	DEMOID_CollectPartYakushima     = 23,
@@ -157,13 +157,13 @@ enum CinDemoIDs {
 	// ...
 
 	DEMOID_DayEnd          = 28, // translated for each stage
-	DEMOID_DayEndTutorial  = 28,
+	DEMOID_DayEndPractice  = 28,
 	DEMOID_DayEndForest    = 29,
 	DEMOID_DayEndCaveLast  = 30,
 	DEMOID_DayEndYakushima = 31,
 
 	DEMOID_ChalDayEnd          = 32, // translated for each stage
-	DEMOID_ChalDayEndTutorial  = 32,
+	DEMOID_ChalDayEndPractice  = 32,
 	DEMOID_ChalDayEndForest    = 33,
 	DEMOID_ChalDayEndCave      = 34,
 	DEMOID_ChalDayEndYakushima = 35,
@@ -173,31 +173,31 @@ enum CinDemoIDs {
 	DEMOID_Unk39               = 39,
 
 	DEMOID_Landing          = 40, // translated for each stage
-	DEMOID_LandingTutorial  = 40, // for both story and challenge modes
+	DEMOID_LandingPractice  = 40, // for both story and challenge modes
 	DEMOID_LandingForest    = 41, // for both story and challenge modes
 	DEMOID_LandingCaveLast  = 42, // for both story and challenge modes
 	DEMOID_LandingYakushima = 43, // for both story and challenge modes
 
 	DEMOID_PikminInOnyon         = 44, // translated for each stage
-	DEMOID_PikminInOnyonTutorial = 44,
+	DEMOID_PikminInOnyonPractice = 44,
 	DEMOID_PikminInOnyonForest   = 45,
 	DEMOID_Extinction            = 46,
 
 	DEMOID_ExtDayEnd          = 47, // translated for each stage
-	DEMOID_ExtDayEndTutorial  = 47, // day ends after extinction
+	DEMOID_ExtDayEndPractice  = 47, // day ends after extinction
 	DEMOID_ExtDayEndForest    = 48,
 	DEMOID_ExtDayEndCaveLast  = 49,
 	DEMOID_ExtDayEndYakushima = 50,
 	DEMOID_OlimarDown         = 51,
 
 	DEMOID_OliDownDayEnd          = 52, // translated for each stage
-	DEMOID_OliDownDayEndTutorial  = 52, // day ends after olimar is at 0 health
+	DEMOID_OliDownDayEndPractice  = 52, // day ends after olimar is at 0 health
 	DEMOID_OliDownDayEndForest    = 53,
 	DEMOID_OliDownDayEndCaveLast  = 54,
 	DEMOID_OliDownDayEndYakushima = 55,
 
 	DEMOID_TakeOff          = 56, // translated for each stage
-	DEMOID_TakeOffTutorial  = 56, // taking off at day end
+	DEMOID_TakeOffPractice  = 56, // taking off at day end
 	DEMOID_TakeOffForest    = 57,
 	DEMOID_TakeOffCaveLast  = 58,
 	DEMOID_TakeOffYakushima = 59,
@@ -216,7 +216,7 @@ enum CinDemoIDs {
 	DEMOID_YellowWithBomb = 68,
 
 	DEMOID_BadEnding           = 69, // translated for each stage
-	DEMOID_BadEndingTutorial   = 69, // also used for start of neutral ending
+	DEMOID_BadEndingPractice   = 69, // also used for start of neutral ending
 	DEMOID_BadEndingForest     = 70,
 	DEMOID_BadEndingCaveLast   = 71,
 	DEMOID_BadEndingYakushima  = 72,
@@ -226,7 +226,7 @@ enum CinDemoIDs {
 	DEMOID_GoodEndingOnyons    = 76, // ship flying in space with the onyons
 	DEMOID_EndingSpace         = 77, // flying through space (good and neutral)
 	DEMOID_CollectRadar        = 78,
-	DEMOID_CollectPartTutorial = 79,
+	DEMOID_CollectPartPractice = 79,
 
 	DEMOID_CHECK_BGM_CAT       = 80, // used by pikidemo functions to double check for bgm music
 	DEMOID_Unk80               = 80,
