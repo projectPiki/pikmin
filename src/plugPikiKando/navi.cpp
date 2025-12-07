@@ -409,13 +409,13 @@ void Navi::startDamageEffect()
 	}
 
 	if (mHealth <= 1.0f) {
-		gameflow.mGameInterface->message(14, 0);
+		gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
 		GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
 
 	} else if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
 	           && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
-		gameflow.mGameInterface->message(0, 24);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 24);
 	}
 
 	zen::particleGenerator* ptclGenA = effectMgr->create(EffectMgr::EFF_Navi_DamageA, part->mCentre, nullptr, nullptr);
@@ -458,7 +458,7 @@ void Navi::finishDamage()
 		if (!gameflow.mMoviePlayer->mIsActive && mHealth <= 0.25f * NAVI_PROP.mHealth()
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_OlimarLowHealth)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_OlimarLowHealth);
-			gameflow.mGameInterface->message(0, 24);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 24);
 		}
 	}
 

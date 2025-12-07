@@ -211,7 +211,7 @@ bool zen::DrawHurryUp::endStatus()
 		if (playerState && !gameflow.mMoviePlayer->mIsActive && !playerState->mDemoFlags.isFlag(DEMOFLAG_FirstHurryUp)
 		    && !playerState->mDemoFlags.isFlag(DEMOFLAG_FirstHurryUp)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstHurryUp);
-			gameflow.mGameInterface->message(0, 19);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 19);
 		}
 	}
 

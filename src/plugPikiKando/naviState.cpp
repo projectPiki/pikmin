@@ -957,7 +957,7 @@ void NaviUfoState::exec(Navi* navi)
 	}
 
 	if (mState == 2 && --mRecoveryTimer == 0) {
-		gameflow.mGameInterface->message(0, 25);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 25);
 		mState = 3;
 	}
 
@@ -1040,7 +1040,7 @@ void NaviContainerState::init(Navi* navi)
 
 	GameStat::update();
 	PRINT("START CONAINER WINDOW ***\n");
-	gameflow.mGameInterface->message(3, 0);
+	gameflow.mGameInterface->message(MOVIECMD_HideHUD, 0);
 	containerWindow->start((zen::DrawContainer::containerType)navi->mGoalItem->mOnionColour, store, 10000, pikisInParty,
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField(), exitPikis + GameStat::mapPikis,
 	                       AIConstant::_instance->mConstants.mMaxPikisOnField());
@@ -1094,7 +1094,7 @@ void NaviContainerState::exec(Navi* navi)
 {
 	int a;
 	if (containerWindow->update(a)) {
-		gameflow.mGameInterface->message(4, 0);
+		gameflow.mGameInterface->message(MOVIECMD_ShowHUD, 0);
 		PRINT("result is %d\n", a);
 		if (a > 0) {
 			enterPikis(navi, a);
@@ -3230,8 +3230,8 @@ void NaviDeadState::init(Navi* navi)
 {
 	GameStat::orimaDead = true;
 	playerState->mResultFlags.setOn(RESFLAG_OlimarDown);
-	gameflow.mGameInterface->message(14, 0);
-	gameflow.mGameInterface->message(16, 1);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_StageFinish, TRUE);
 	navi->mMotionSpeed = 30.0f;
 	navi->startMotion(PaniMotionInfo(PIKIANIM_ODead, navi), PaniMotionInfo(PIKIANIM_ODead));
 	seSystem->playPlayerSe(SE_PLAYER_DOWN);
@@ -3274,7 +3274,7 @@ void NaviDeadState::procAnimMsg(Navi* navi, MsgAnim* msg)
 {
 	switch (msg->mKeyEvent->mEventType) {
 	case 0:
-		gameflow.mGameInterface->message(5, 1);
+		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, TRUE);
 		break;
 	}
 }
@@ -3298,8 +3298,8 @@ void NaviPikiZeroState::init(Navi* navi)
 {
 	// 'TOTAL ANNIHILATION!' etc lol
 	PRINT("ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! ZENMETSU! \n");
-	gameflow.mGameInterface->message(14, 0);
-	gameflow.mGameInterface->message(16, 1);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
+	gameflow.mGameInterface->message(MOVIECMD_StageFinish, TRUE);
 	playerState->mResultFlags.setOn(RESFLAG_PikminExtinction);
 	_12 = 30;
 	GameCoreSection::startPause(COREPAUSE_Unk1 | COREPAUSE_Unk3 | COREPAUSE_Unk16);
@@ -3313,7 +3313,7 @@ void NaviPikiZeroState::init(Navi* navi)
 void NaviPikiZeroState::exec(Navi* navi)
 {
 	if (--_12 == 0) {
-		gameflow.mGameInterface->message(5, 0);
+		gameflow.mGameInterface->message(MOVIECMD_GameEndCondition, FALSE);
 	}
 }
 
@@ -3352,7 +3352,7 @@ NaviStartingState::NaviStartingState()
  */
 void NaviStartingState::init(Navi* navi)
 {
-	gameflow.mGameInterface->message(14, 0);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Walk, navi), PaniMotionInfo(PIKIANIM_Walk));
 
 	UfoItem* ufo = itemMgr->getUfo();
@@ -3472,7 +3472,7 @@ void NaviStartingState::procAnimMsg(Navi* navi, MsgAnim* msg)
  */
 void NaviStartingState::cleanup(Navi* navi)
 {
-	gameflow.mGameInterface->message(14, 1);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->finishLook();
@@ -3498,7 +3498,7 @@ void NaviPartsAccessState::init(Navi* navi)
 	navi->startMotion(PaniMotionInfo(PIKIANIM_Punch, navi), PaniMotionInfo(PIKIANIM_Punch));
 	navi->mVelocity.set(0.0f, 0.0f, 0.0f);
 	navi->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
-	gameflow.mGameInterface->message(14, 0);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
 	GameCoreSection::startPause(0x8001);
 	_10 = false;
 
@@ -3527,7 +3527,7 @@ void NaviPartsAccessState::cleanup(Navi* navi)
 {
 	GameCoreSection::finishPause();
 	Jac_FinishPartsFindDemo();
-	gameflow.mGameInterface->message(14, 1);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
 }
 
 /*
@@ -3618,7 +3618,7 @@ void NaviUfoAccessState::procAnimMsg(Navi* navi, MsgAnim* msg)
 			_10                    = true;
 			gameflow.mMovieType    = 0;
 			gameflow.mMovieInfoNum = -1;
-			gameflow.mGameInterface->message(0, 17);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 17);
 		}
 		break;
 	}

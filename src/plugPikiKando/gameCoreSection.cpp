@@ -85,7 +85,7 @@ DEFINE_PRINT("gameCoreSection")
  */
 void GameCoreSection::startTextDemo(Creature*, int textDemoID)
 {
-	gameflow.mGameInterface->message(0, textDemoID);
+	gameflow.mGameInterface->message(MOVIECMD_TextDemo, textDemoID);
 }
 
 /*
@@ -108,7 +108,7 @@ void GameCoreSection::updateTextDemo()
 		textDemoTimer--;
 		attentionCamera->update();
 		if (textDemoTimer == 0) {
-			gameflow.mGameInterface->message(0, textDemoIndex);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, textDemoIndex);
 			textDemoState = 2;
 		}
 		break;
@@ -1206,7 +1206,7 @@ void GameCoreSection::finalSetup()
 			playerState->mDemoFlags.setFlag(DEMOFLAG_PostExtinctionSeed, nullptr);
 			playerState->mHasExtinctionDemoPlayed = true;
 		} else {
-			gameflow.mGameInterface->movie(64, 0, nullptr, nullptr, nullptr, -1, true);
+			gameflow.mGameInterface->movie(DEMOID_Unk64Cat, 0, nullptr, nullptr, nullptr, -1, true);
 			playerState->mHasExtinctionDemoPlayed = true;
 		}
 	}
@@ -1585,7 +1585,7 @@ void GameCoreSection::updateAI()
 		seSystem->playSysSe(SYSSE_TIME_SIGNAL);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNoon)) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNoon);
-			gameflow.mGameInterface->message(0, 31);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 31);
 		}
 	} else if (!mIsTimePastQuarter3 && gameflow.mWorldClock.mCurrentTime >= timeQuarter3) {
 		mIsTimePastQuarter3 = true;
