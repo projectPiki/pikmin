@@ -65,15 +65,15 @@ struct PelletAnimator {
 	PelletAnimator();
 
 	void init(AnimContext*, AnimContext*, AnimMgr*, PaniMotionTable*);
-	void finishMotion(PaniMotionInfo*, PaniMotionInfo*);
-	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
-	void startMotion(PaniMotionInfo&);
+	void finishMotion(immut PaniMotionInfo*, immut PaniMotionInfo*);
+	void startMotion(immut PaniMotionInfo&, immut PaniMotionInfo&);
+	void startMotion(immut PaniMotionInfo&);
 	void updateAnimation(f32, f32);
 	void updateContext();
 
 	// unused/inlined:
-	void startMotion(PaniMotionInfo*, PaniMotionInfo*);
-	void finishMotion(PaniAnimKeyListener*);
+	void startMotion(immut PaniMotionInfo*, immut PaniMotionInfo*);
+	void finishMotion(immut PaniAnimKeyListener*);
 
 	PaniPelletAnimator& getLowerAnimator() { return mLowerAnimator; }
 	PaniPelletAnimator& getUpperAnimator() { return mUpperAnimator; }

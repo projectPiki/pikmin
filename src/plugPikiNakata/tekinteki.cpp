@@ -68,7 +68,7 @@ void NTeki::sendMessage(int msg)
  * Address:	8014BCE0
  * Size:	000054
  */
-void NTeki::receiveMessage(TekiMessage& msg)
+void NTeki::receiveMessage(immut TekiMessage& msg)
 {
 	eventPerformed(TekiEvent(TekiEventType::WakeUpCall, static_cast<Teki*>(this), msg.mTeki));
 }

@@ -70,20 +70,20 @@ public:
 	virtual bool isDone(int idx) { return idx >= mTotalSlotCount; } // _14
 
 	bool canNaviRunFast();
-	void init(Vector3f&);
-	void setPos(Vector3f&, f32, Vector3f&);
-	void setPosGray(Vector3f&, f32, Vector3f&);
+	void init(immut Vector3f&);
+	void setPos(immut Vector3f&, f32, immut Vector3f&);
+	void setPosGray(immut Vector3f&, f32, immut Vector3f&);
 	int getSlot(Creature*, SlotChangeListner*);
 	void changeFlower(Piki*);
 	void releaseSlot(Creature*, int);
 	bool validSlot(int);
 	void sortByColor(Piki*);
-	void rearrangeSlot(Vector3f&, f32, Vector3f&);
+	void rearrangeSlot(immut Vector3f&, f32, immut Vector3f&);
 	void refresh(int, f32);
 	void refreshSlot();
 
 	// unused/inlined:
-	void setPosNeutral(Vector3f&, f32, Vector3f&);
+	void setPosNeutral(immut Vector3f&, f32, immut Vector3f&);
 	void postUpdate(f32);
 
 protected:

@@ -65,8 +65,8 @@ struct TAIbeatleParameters : public TekiParameters {
 struct TAIbeatleStrategy : public YaiStrategy {
 	TAIbeatleStrategy();
 
-	virtual void act(Teki&);                           // _0C
-	virtual bool interact(Teki&, TekiInteractionKey&); // _20
+	virtual void act(Teki&);                                 // _0C
+	virtual bool interact(Teki&, immut TekiInteractionKey&); // _20
 
 	// _00     = VTBL
 	// _00-_10 = YaiStrategy?

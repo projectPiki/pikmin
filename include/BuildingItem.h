@@ -37,15 +37,15 @@ struct BuildingItemProp : public CreatureProp {
 struct BuildingItem : public ItemCreature {
 	BuildingItem(int objType, CreatureProp* props, ItemShapeObject* shape, SimpleAI* ai);
 
-	virtual bool insideSafeArea(Vector3f&);   // _10
-	virtual void startAI(int);                // _34
-	virtual f32 getiMass() { return 0.0f; }   // _38 (weak)
-	virtual void doStore(CreatureInf*);       // _48
-	virtual void doRestore(CreatureInf*);     // _4C
-	virtual void doSave(RandomAccessStream&); // _50
-	virtual void doLoad(RandomAccessStream&); // _54
-	virtual f32 getBoundingSphereRadius();    // _64
-	virtual bool isAlive()                    // _88
+	virtual bool insideSafeArea(immut Vector3f&); // _10
+	virtual void startAI(int);                    // _34
+	virtual f32 getiMass() { return 0.0f; }       // _38 (weak)
+	virtual void doStore(CreatureInf*);           // _48
+	virtual void doRestore(CreatureInf*);         // _4C
+	virtual void doSave(RandomAccessStream&);     // _50
+	virtual void doLoad(RandomAccessStream&);     // _54
+	virtual f32 getBoundingSphereRadius();        // _64
+	virtual bool isAlive()                        // _88
 	{
 		return mNumStages > mCurrStage;
 	}

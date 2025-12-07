@@ -43,7 +43,7 @@ struct Material : public CoreNode {
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
 
-	void setColour(Colour& color)
+	void setColour(immut Colour& color)
 	{
 		if (mLightingInfo.mCtrlFlag & LightingControlFlags::EnableSpecular) {
 			mTevInfo->mTevColRegs[0].mAnimatedColor.r = color.r;

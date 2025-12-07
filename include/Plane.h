@@ -13,14 +13,14 @@ struct Plane {
 	Plane() { }
 
 	// unused/inlined:
-	bool equal(Plane&);
+	bool equal(immut Plane&);
 	f32 calcRadScale();
 	void reflect(Vector3f&);
 	void reflectVector(Vector3f&);
 	void bounceVector(Vector3f&, f32);
 	void frictionVector(Vector3f&, f32);
 
-	f32 dist(Vector3f& point) { return mNormal.DP(point) - mOffset; }
+	f32 dist(immut Vector3f& point) immut { return mNormal.DP(point) - mOffset; }
 
 	void read(RandomAccessStream& input)
 	{

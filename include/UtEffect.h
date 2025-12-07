@@ -439,8 +439,8 @@ struct UfoSuckEffect : public WhistleTemplate {
 struct PermanentEffect {
 	PermanentEffect();
 
-	void init(Vector3f&, int);
-	void updatePos(Vector3f&);
+	void init(immut Vector3f&, int);
+	void updatePos(immut Vector3f&);
 	void changeEffect(int);
 	void stop();
 	void restart();

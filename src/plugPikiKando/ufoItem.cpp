@@ -90,7 +90,7 @@ DEFINE_PRINT("ufoItem")
  * Address:	800E7018
  * Size:	0000B4
  */
-bool UfoItem::insideSafeArea(Vector3f& pos)
+bool UfoItem::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f diff = pos - mSRT.t;
 	f32 dist      = diff.x * diff.x + diff.z * diff.z;
@@ -593,7 +593,7 @@ void UfoItem::finishSuck(Pellet* pelt)
  * Address:	800E82A8
  * Size:	000454
  */
-void UfoItem::animationKeyUpdated(PaniAnimKeyEvent& event)
+void UfoItem::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	int anim = mAnimator.getMotionIndex(0);
 	if (event.mEventType == KEY_Finished) {
@@ -1003,7 +1003,7 @@ void UfoItem::refresh(Graphics& gfx)
  * Address:	800E9288
  * Size:	000504
  */
-void UfoItem::demoDraw(Graphics& gfx, Matrix4f* mtx)
+void UfoItem::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
 	for (int i = 0; i < 4; i++) {
 		mLightAnims[i].update();

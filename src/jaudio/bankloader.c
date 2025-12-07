@@ -35,7 +35,7 @@ struct AddrSize {
  * Address:	8001D9A0
  * Size:	0000E0
  */
-void Bank_Setup(char* filename)
+void Bank_Setup(immut char* filename)
 {
 	u32 i;
 

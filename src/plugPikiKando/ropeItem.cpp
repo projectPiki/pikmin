@@ -60,7 +60,7 @@ f32 RopeItem::getSize()
  * Address:	800EDA9C
  * Size:	00004C
  */
-void RopeItem::init(Vector3f& pos)
+void RopeItem::init(immut Vector3f& pos)
 {
 	f32 scale = 1.0f;
 	mSRT.s.set(scale, scale, scale);

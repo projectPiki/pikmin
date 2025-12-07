@@ -42,7 +42,7 @@ AICreature::AICreature(CreatureProp* props)
  * Address:	8007D310
  * Size:	00006C
  */
-void AICreature::collisionCallback(CollEvent& event)
+void AICreature::collisionCallback(immut CollEvent& event)
 {
 	Creature* collider = event.mCollider;
 	MsgCollide msg(event);
@@ -70,7 +70,7 @@ void AICreature::bounceCallback()
  * Address:	8007D3DC
  * Size:	0000B4
  */
-void AICreature::animationKeyUpdated(PaniAnimKeyEvent& event)
+void AICreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	(mObjType == OBJTYPE_Goal); // this isn't even in the DLL lol, but it's necessary
 

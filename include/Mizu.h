@@ -66,8 +66,8 @@ public:
 	virtual bool attackDefaultPortion();            // _118
 	virtual void drawShape(Graphics&);              // _120
 
-	void initMizu(Vector3f&);
-	void initGeyzer(Vector3f&);
+	void initMizu(immut Vector3f&);
+	void initGeyzer(immut Vector3f&);
 
 private:
 	// _00      = VTBL
@@ -133,7 +133,7 @@ public:
 	void update();
 
 private:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 	void setEveryFrame();
 	void naviGeyzerJump();

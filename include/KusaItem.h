@@ -74,7 +74,7 @@ struct BoBaseItem : public ItemCreature {
 	virtual void update();                    // _E0
 	virtual void refresh(Graphics&);          // _EC
 
-	bool interactBuild(InteractBuild&);
+	bool interactBuild(immut InteractBuild&);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

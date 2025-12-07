@@ -73,7 +73,7 @@ void MizuAi::initGeyzer(Mizu* geyzer)
  * Address:	8017BA48
  * Size:	000004
  */
-void MizuAi::animationKeyUpdated(PaniAnimKeyEvent&)
+void MizuAi::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 

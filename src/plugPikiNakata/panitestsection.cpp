@@ -343,7 +343,7 @@ void PaniTestNode::updateTekis()
  * Address:	80120DCC
  * Size:	00006C
  */
-void PaniTestNode::animationKeyUpdated(PaniAnimKeyEvent& event)
+void PaniTestNode::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	PRINT("animationKeyUpdated:%d\n", event.mEventType);
 	mAnimationEvent = event.mEventType;

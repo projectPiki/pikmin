@@ -289,7 +289,7 @@ int ActKinoko::exeBoid()
  * Address:	800B5558
  * Size:	000098
  */
-void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActKinoko::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

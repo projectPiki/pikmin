@@ -76,8 +76,8 @@ struct TAImarParameters : public TekiParameters {
 struct TAImarStrategy : public YaiStrategy {
 	TAImarStrategy();
 
-	virtual void act(Teki&);                           // _0C
-	virtual bool interact(Teki&, TekiInteractionKey&); // _20
+	virtual void act(Teki&);                                 // _0C
+	virtual bool interact(Teki&, immut TekiInteractionKey&); // _20
 
 	// _00     = VTBL
 	// _00-_10 = YaiStrategy?

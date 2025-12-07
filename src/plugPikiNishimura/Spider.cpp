@@ -61,7 +61,7 @@ f32 Spider::getiMass()
  * Address:	801532A4
  * Size:	0000C4
  */
-void Spider::init(Vector3f&)
+void Spider::init(immut Vector3f&)
 {
 	mCollisionRadius = 64.0f;
 #if defined(VERSION_PIKIDEMO)

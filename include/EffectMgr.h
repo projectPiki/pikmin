@@ -54,7 +54,7 @@ struct SmokeEmitter : public Node {
 	virtual void draw(Graphics&); // _14
 
 	// unused/inlined:
-	Smoke* emit(Vector3f&, Vector3f&);
+	Smoke* emit(immut Vector3f&, immut Vector3f&);
 	void update(f32);
 
 	// _00     = VTBL
@@ -513,14 +513,14 @@ public:
 	void draw(Graphics&);
 	void drawshapes(Graphics&);
 	void exit();
-	zen::particleGenerator* create(EffectMgr::effTypeTable, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
+	zen::particleGenerator* create(EffectMgr::effTypeTable, immut Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
 	                               zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*);
-	EffShpInst* create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f&);
+	EffShpInst* create(EffectMgr::modelTypeTable, immut Vector3f&, immut Vector3f&, immut Vector3f&);
 	EffShpInst* getShapeInst();
 	void killAllShapes();
 
 	// unused/inlined:
-	zen::particleMdl* create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32,
+	zen::particleMdl* create(EffectMgr::simpleTypeTable, immut Vector3f&, s16, immut Vector3f&, immut Vector3f&, f32, f32,
 	                         zen::CallBack1<zen::particleMdl*>*);
 	void putShapeInst(EffShpInst*);
 
@@ -565,7 +565,7 @@ extern EffectMgr* effectMgr;
 struct EffectParticleRegistration {
 	EffectParticleRegistration(char*, char*, char*); // unused/inlined
 
-	virtual zen::particleGenerator* create(Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cbGen,
+	virtual zen::particleGenerator* create(immut Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cbGen,
 	                                       zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl) // _08
 	{
 		return effectMgr->mPtclMgr.createGenerator(mPtclData, mPtclTex, mChildPtclTex, pos, cbGen, cbPtcl);
@@ -583,7 +583,7 @@ struct EffectParticleRegistration {
 struct EffectGeometryRegistration {
 	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
 
-	virtual EffShpInst* create(Vector3f&, Vector3f&, Vector3f&); // _08
+	virtual EffShpInst* create(immut Vector3f&, immut Vector3f&, immut Vector3f&); // _08
 
 	// _00 = VTBL
 	EffectShape* mEffectShape; // _04
@@ -597,7 +597,7 @@ struct EffectGeometryRegistration {
 struct EffectSimpleParticleRegistration {
 	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
 
-	zen::particleMdl* create(s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size, f32 rotSpeed,
+	zen::particleMdl* create(s16 lifeTime, immut Vector3f& globalPos, immut Vector3f& vel, immut Vector3f& accel, f32 size, f32 rotSpeed,
 	                         zen::CallBack1<zen::particleMdl*>* cbPtcl)
 	{
 		return effectMgr->mPtclMgr.createParticle(mSimpleTex, lifeTime, globalPos, vel, accel, size, rotSpeed, mPrimColor, mEnvColor,

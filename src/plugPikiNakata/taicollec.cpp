@@ -65,7 +65,7 @@ struct TaiCollecLetGoOfPelletAction : public TaiAction {
 	}
 
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -857,7 +857,7 @@ void TaiCollecStrategy::outputUndergroundPosition(Teki& teki, NVector3f& outPosi
  * Address:	8012C9DC
  * Size:	0001F0
  */
-bool TekiCollecTargetPelletCondition::satisfy(Creature* target)
+bool TekiCollecTargetPelletCondition::satisfy(Creature* target) immut
 {
 	if (target->mObjType != OBJTYPE_Pellet) {
 		return false;
@@ -978,7 +978,7 @@ bool TaiCollecLetGoOfPelletAction::act(Teki& teki)
  * Address:	8012CD58
  * Size:	000074
  */
-bool TaiCollecLetGoOfPelletAction::actByEvent(TekiEvent& event)
+bool TaiCollecLetGoOfPelletAction::actByEvent(immut TekiEvent& event)
 {
 	Teki* teki       = event.mTeki;
 	Creature* target = teki->getCreaturePointer(2);

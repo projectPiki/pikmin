@@ -289,7 +289,7 @@ void PikiHeadItem::refresh(Graphics& gfx)
  * Address:	800ECFF4
  * Size:	000108
  */
-bool PikiHeadItem::interactBikkuri(InteractBikkuri& act)
+bool PikiHeadItem::interactBikkuri(immut InteractBikkuri& act)
 {
 	PikiMgr::meBirthMode = true;
 	Piki* piki           = (Piki*)pikiMgr->birth();
@@ -318,7 +318,7 @@ bool PikiHeadItem::interactBikkuri(InteractBikkuri& act)
  * Address:	800ED0FC
  * Size:	000100
  */
-bool PikiHeadItem::interactSwallow(InteractSwallow& act)
+bool PikiHeadItem::interactSwallow(immut InteractSwallow& act)
 {
 	PikiMgr::meBirthMode = true;
 	Piki* piki           = (Piki*)pikiMgr->birth();

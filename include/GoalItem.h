@@ -57,7 +57,7 @@ struct GoalLeg {
 struct GoalItem : public Suckable, public zen::CallBack2<zen::particleGenerator*, zen::particleMdl*> {
 	GoalItem(CreatureProp*, ItemShapeObject*, ItemShapeObject*, ItemShapeObject*, SimpleAI*);
 
-	virtual bool insideSafeArea(Vector3f&);                          // _10
+	virtual bool insideSafeArea(immut Vector3f&);                    // _10
 	virtual void startAI(int);                                       // _34
 	virtual f32 getiMass();                                          // _38
 	virtual f32 getSize();                                           // _3C

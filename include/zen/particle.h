@@ -293,8 +293,8 @@ public:
 
 	~particleGenerator() { }
 
-	void init(u8* data, Texture* tex, Texture* childTex, Vector3f& pos, particleMdlManager* mdlMgr, CallBack1<particleGenerator*>* cbGen,
-	          CallBack2<particleGenerator*, particleMdl*>* cbPtcl);
+	void init(u8* data, Texture* tex, Texture* childTex, immut Vector3f& pos, particleMdlManager* mdlMgr,
+	          CallBack1<particleGenerator*>* cbGen, CallBack2<particleGenerator*, particleMdl*>* cbPtcl);
 	bool update(f32 timeStep);
 	void draw(Graphics& gfx);
 	void RotAxisX(Mtx&, f32&, f32&);
@@ -310,11 +310,11 @@ public:
 
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
-	void setEmitPos(Vector3f& pos) { mEmitPos = pos; }
+	void setEmitPos(immut Vector3f& pos) { mEmitPos = pos; }
 	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
-	void setEmitDir(Vector3f& dir) { mEmitDir = dir; }
-	void setEmitVelocity(Vector3f& vel) { mEmitVelocity = vel; }
-	void setOrientedNormalVector(Vector3f& vec) { mOrientedNormal = vec; }
+	void setEmitDir(immut Vector3f& dir) { mEmitDir = dir; }
+	void setEmitVelocity(immut Vector3f& vel) { mEmitVelocity = vel; }
+	void setOrientedNormalVector(immut Vector3f& vec) { mOrientedNormal = vec; }
 	void setCallBack(CallBack1<particleGenerator*>* cb1, CallBack2<particleGenerator*, particleMdl*>* cb2)
 	{
 		mCallBack1 = cb1;
@@ -361,7 +361,7 @@ public:
 
 	void killParticle(particleMdl* ptcl) { pmPutParticle(ptcl); }
 
-	void setAirField(Vector3f& vel, bool set)
+	void setAirField(immut Vector3f& vel, bool set)
 	{
 		mAirFieldVelocity.set(vel);
 		pmSwitch(set, PTCLFLAG_UseAirField);
@@ -389,7 +389,7 @@ public:
 		pmSwitch(set, PTCLFLAG_UseVortexField);
 	}
 
-	void setGravityField(Vector3f& accel, bool set)
+	void setGravityField(immut Vector3f& accel, bool set)
 	{
 		mGravFieldAccel.set(accel);
 		pmSwitch(set, PTCLFLAG_UseGravityField);
@@ -655,7 +655,7 @@ public:
 	}
 
 	void init(u32 numPtclGens, u32 numParticles, u32 numChildParticles, f32 p4);
-	particleGenerator* createGenerator(u8*, Texture*, Texture*, Vector3f&, CallBack1<particleGenerator*>*,
+	particleGenerator* createGenerator(u8*, Texture*, Texture*, immut Vector3f&, CallBack1<particleGenerator*>*,
 	                                   CallBack2<particleGenerator*, particleMdl*>*);
 	void update();
 	void draw(Graphics& gfx);
@@ -669,8 +669,8 @@ public:
 	void debugUpdate();
 	void debugDraw(Graphics&);
 
-	particleMdl* createParticle(Texture* simpleTex, s16 lifeTime, Vector3f& globalPos, Vector3f& vel, Vector3f& accel, f32 size,
-	                            f32 rotSpeed, Colour primColor, Colour envColor, CallBack1<particleMdl*>* cbPtcl)
+	particleMdl* createParticle(Texture* simpleTex, s16 lifeTime, immut Vector3f& globalPos, immut Vector3f& vel, immut Vector3f& accel,
+	                            f32 size, f32 rotSpeed, Colour primColor, Colour envColor, CallBack1<particleMdl*>* cbPtcl)
 	{
 		return mSimplePtclMgr.create(simpleTex, lifeTime, globalPos, vel, accel, size, rotSpeed, primColor, envColor, cbPtcl);
 	}
@@ -730,8 +730,8 @@ public:
 
 	// unused/inlined:
 	particleGenerator* getPtclGenPtr(u32 idx);
-	void setEmitPos(Vector3f&);
-	void setEmitDir(Vector3f&);
+	void setEmitPos(immut Vector3f&);
+	void setEmitDir(immut Vector3f&);
 	void setCallBack(CallBack1<particleGenerator*>*, CallBack2<particleGenerator*, particleMdl*>*);
 	void start();
 	void stop();

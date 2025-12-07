@@ -604,7 +604,7 @@ Vector3f RouteMgr::getSafePosition(u32, Vector3f& pos)
  * Address:	800A050C
  * Size:	000474
  */
-void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, Vector3f& pos, bool allowWater,
+void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos, bool allowWater,
                                bool requireOpen, bool avoidDestination)
 {
 	// Convert handle to index in group list
@@ -688,8 +688,8 @@ void RouteMgr::findNearestEdge(WayPoint** outNearestStart, WayPoint** outNearest
  * Address:	800A0980
  * Size:	000768
  */
-void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, Vector3f& pos, bool allowWater,
-                                       bool requireOpen, bool avoidDestination)
+void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** outNearestEnd, u32 handle, immut Vector3f& pos,
+                                       bool allowWater, bool requireOpen, bool avoidDestination)
 {
 	int idx = id2idx(handle);
 	if (idx == -1) {
@@ -803,7 +803,7 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint** outNearestStart, WayPoint** ou
  * Address:	800A10E8
  * Size:	00016C
  */
-WayPoint* RouteMgr::findNearestWayPoint(u32 handle, Vector3f& pos, bool excludeWater)
+WayPoint* RouteMgr::findNearestWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater)
 {
 	int idx = id2idx(handle);
 	if (idx != -1) {
@@ -840,7 +840,7 @@ WayPoint* RouteMgr::findNearestWayPoint(u32 handle, Vector3f& pos, bool excludeW
  * Address:	800A1254
  * Size:	00016C
  */
-WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, Vector3f& pos, bool excludeWater)
+WayPoint* RouteMgr::findNearestOffWayPoint(u32 handle, immut Vector3f& pos, bool excludeWater)
 {
 	int idx = id2idx(handle);
 	if (idx != -1) {
@@ -933,7 +933,7 @@ void RouteMgr::dump(u32 handle)
  * Address:	800A153C
  * Size:	00013C
  */
-WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, Vector3f& pos)
+WayPoint* RouteMgr::findNearestWayPointAll(u32 handle, immut Vector3f& pos)
 {
 	int idx = id2idx(handle);
 	if (idx != -1) {
@@ -1380,7 +1380,8 @@ int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
  * Address:	800A2000
  * Size:	000580
  */
-int PathFinder::findSyncOnyon(Vector3f& startPos, PathFinder::Buffer* bufferList, int startWPIdx, int goalType, bool ignoreClosedWaypoints)
+int PathFinder::findSyncOnyon(immut Vector3f& startPos, PathFinder::Buffer* bufferList, int startWPIdx, int goalType,
+                              bool ignoreClosedWaypoints)
 {
 	int destWPIdx = -1;
 
@@ -1652,7 +1653,7 @@ int PathFinder::selectWayOnyon(int additionalCost, int goalType, PathFinder::Buf
  * Address:	800A27E4
  * Size:	00052C
  */
-int PathFinder::selectSecondBestWayOnyon(Vector3f& curPos, int& secondBestCost, int goalType, PathFinder::Buffer& buf, int destWPIdx,
+int PathFinder::selectSecondBestWayOnyon(immut Vector3f& curPos, int& secondBestCost, int goalType, PathFinder::Buffer& buf, int destWPIdx,
                                          PathFinder::Buffer* bufferList, int bufIdx, bool ignoreClosedWaypoints)
 {
 	int pathCosts[8];        // Cost values for each valid link

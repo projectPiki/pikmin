@@ -22,7 +22,7 @@ struct CollEvent;
 struct AICreature : public Creature, public PaniAnimKeyListener {
 	AICreature(CreatureProp*);
 
-	virtual void collisionCallback(CollEvent&);                                     // _A8
+	virtual void collisionCallback(immut CollEvent&);                               // _A8
 	virtual void bounceCallback();                                                  // _AC
 	virtual void refresh(Graphics&) = 0;                                            // _EC
 	virtual void doKill()           = 0;                                            // _10C
@@ -39,7 +39,7 @@ struct AICreature : public Creature, public PaniAnimKeyListener {
 	virtual f32 getMotionSpeed() { return -123.4f; }                                // _148 (weak)
 	virtual void setMotionSpeed(f32) { }                                            // _14C (weak)
 	virtual void stopMotion() { }                                                   // _150 (weak)
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&);                            // _154 (weak)
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&);                      // _154 (weak)
 
 	void clearEventFlags();
 	void setEventFlag(int, bool);

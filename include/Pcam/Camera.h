@@ -112,7 +112,7 @@ struct PcamCamera : public NCamera {
 	void makeWatchObjectViewpoint(NVector3f&, NVector3f&);
 	void updateTimers();
 	void startMotion(int, int);
-	void startMotion(PcamMotionInfo&);
+	void startMotion(immut PcamMotionInfo&);
 	void finishMotion();
 	f32 getGoalDistance();
 	f32 getCurrentAngle();

@@ -209,7 +209,7 @@ public:
 		{
 		}
 
-		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+		virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 		// _00 = VTBL
 		TopAction* mAction; // _04
@@ -358,14 +358,14 @@ public:
 
 	ActAttack(Piki*);
 
-	virtual ~ActAttack() { }                             // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void resume();                               // _54
-	virtual void restart();                              // _58
-	virtual bool resumable();                            // _5C
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual ~ActAttack() { }                                   // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void resume();                                     // _54
+	virtual void restart();                                    // _58
+	virtual bool resumable();                                  // _5C
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 protected:
 	void startLost();
@@ -401,11 +401,11 @@ public:
 
 	ActBoMake(Piki*);
 
-	virtual ~ActBoMake() { }                             // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual ~ActBoMake() { }                                   // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 	void initApproach();
 	int exeApproach();
@@ -448,11 +448,11 @@ struct ActBoreOneshot : public Action, virtual PaniAnimKeyListener {
 public:
 	ActBoreOneshot(Piki*);
 
-	virtual ~ActBoreOneshot() { }                        // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual ~ActBoreOneshot() { }                              // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	void finish();
 
@@ -473,11 +473,11 @@ struct ActBoreRest : public Action, virtual PaniAnimKeyListener {
 public:
 	ActBoreRest(Piki*);
 
-	virtual ~ActBoreRest() { }                           // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual ~ActBoreRest() { }                                 // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	void sitDown();
 
@@ -551,11 +551,11 @@ struct ActBoreTalk : public Action, virtual PaniAnimKeyListener {
 public:
 	ActBoreTalk(Piki*);
 
-	virtual ~ActBoreTalk() { }                           // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual ~ActBoreTalk() { }                                 // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	void startTalk();
 
@@ -625,12 +625,12 @@ public:
 
 	ActBreakWall(Piki*);
 
-	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActBreakWall() { }                          // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual void procCollideMsg(Piki*, MsgCollide*);           // _1C
+	virtual ~ActBreakWall() { }                                // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 	int gotoWall();
 	void initBreakWall();
@@ -676,9 +676,9 @@ public:
 	virtual void cleanup();       // _50
 
 protected:
-	virtual void procWallMsg(Piki*, MsgWall*);           // _28
-	virtual void dump();                                 // _3C
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void procWallMsg(Piki*, MsgWall*);                 // _28
+	virtual void dump();                                       // _3C
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	bool collideBridgeSurface();
 	bool collideBridgeBlocker();
@@ -841,11 +841,11 @@ struct ActDecoy : public Action, public PaniAnimKeyListener {
 public:
 	ActDecoy(Piki*);
 
-	virtual ~ActDecoy() { }                              // _44 (weak)
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
+	virtual ~ActDecoy() { }                                    // _44 (weak)
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70 (weak)
 
 protected:
 	Creature* findTeki();
@@ -1012,11 +1012,11 @@ struct ActFlower : public Action, virtual PaniAnimKeyListener {
 public:
 	ActFlower(Piki*);
 
-	virtual ~ActFlower() { }                             // _44 (weak)
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
+	virtual ~ActFlower() { }                                   // _44 (weak)
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64 (weak)
 
 protected:
 	// _00     = VTBL
@@ -1045,7 +1045,7 @@ public:
 	virtual void cleanup();       // _50
 
 protected:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70 (weak)
 
 	void getFormPoint();
 
@@ -1112,15 +1112,15 @@ struct ActFree : public Action, virtual PaniAnimKeyListener {
 public:
 	ActFree(Piki*);
 
-	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActFree() { }                               // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual bool resumable() { return true; }            // _5C
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void procCollideMsg(Piki*, MsgCollide*);           // _1C
+	virtual ~ActFree() { }                                     // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual bool resumable() { return true; }                  // _5C
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
-	void initBoid(Vector3f&, f32);
+	void initBoid(immut Vector3f&, f32);
 	void exeBoid();
 
 protected:
@@ -1244,14 +1244,14 @@ struct ActJumpAttack : public Action, public PaniAnimKeyListener {
 public:
 	ActJumpAttack(Piki*);
 
-	virtual void procBounceMsg(Piki*, MsgBounce*);       // _0C
-	virtual void procStickMsg(Piki*, MsgStick*);         // _10
-	virtual void procCollideMsg(Piki*, MsgCollide*);     // _1C
-	virtual ~ActJumpAttack() { }                         // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual void procBounceMsg(Piki*, MsgBounce*);             // _0C
+	virtual void procStickMsg(Piki*, MsgStick*);               // _10
+	virtual void procCollideMsg(Piki*, MsgCollide*);           // _1C
+	virtual ~ActJumpAttack() { }                               // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 	void attackHit();
 	void doClimb();
@@ -1298,7 +1298,7 @@ public:
 	virtual void cleanup();       // _50
 
 protected:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	void initStick();
 	int exeStick();
@@ -1337,11 +1337,11 @@ public:
 
 	ActMine(Piki*);
 
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual ~ActMine() { }                               // _44 (weak)
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual ~ActMine() { }                                     // _44 (weak)
 
 	void initWatch();
 	int exeMine();
@@ -1384,11 +1384,11 @@ public:
 
 	ActPick(Piki*);
 
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70 (weak)
-	virtual ~ActPick() { }                               // _44 (weak)
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70 (weak)
+	virtual ~ActPick() { }                                     // _44 (weak)
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
 
 protected:
 	// _00     = VTBL
@@ -1516,11 +1516,11 @@ public:
 
 	ActPulloutCreature(Piki*);
 
-	virtual ~ActPulloutCreature() { }                    // _44 (weak)
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual ~ActPulloutCreature() { }                          // _44 (weak)
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 protected:
 	// _00     = VTBL
@@ -1555,7 +1555,7 @@ public:
 	virtual void cleanup();       // _50
 
 protected:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64 (weak)
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64 (weak)
 
 	bool collideRockSurface();
 
@@ -1633,11 +1633,11 @@ public:
 
 	ActPutBomb(Piki*);
 
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
-	virtual ~ActPutBomb() { }                            // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
+	virtual ~ActPutBomb() { }                                  // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
 
 protected:
 	virtual void procCollideMsg(Piki*, MsgCollide*); // _1C
@@ -1730,7 +1730,7 @@ public:
 			mPiki   = piki;
 		}
 
-		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+		virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 		// _00 = VTBL
 		ActRandomBoid* mAction; // _04
@@ -1791,7 +1791,7 @@ public:
 	int exeThrow();
 
 protected:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	// _00     = VTBL
 	// _00-_14 = Action
@@ -1884,11 +1884,11 @@ public:
 
 	ActShootCreature(Piki*);
 
-	virtual ~ActShootCreature() { }                      // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual ~ActShootCreature() { }                            // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 protected:
 	// _00     = VTBL
@@ -1920,11 +1920,11 @@ public:
 
 	ActStone(Piki*);
 
-	virtual ~ActStone() { }                              // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual ~ActStone() { }                                    // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 	void initApproach();
 	int exeApproach();
@@ -1978,7 +1978,7 @@ public:
 	inline BOOL doLandOnly() { return useWaterRoute() ? FALSE : TRUE; }
 
 protected:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _64
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _64
 
 	void initWait();
 	int exeWait();
@@ -2061,7 +2061,7 @@ public:
 			mActor       = piki;
 		}
 
-		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+		virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 		// _00 = VTBL
 		ActWatch* mOwnerAction; // _04
@@ -2107,11 +2107,11 @@ public:
 
 	ActWeed(Piki*);
 
-	virtual ~ActWeed() { }                               // _44
-	virtual void init(Creature*);                        // _48
-	virtual int exec();                                  // _4C
-	virtual void cleanup();                              // _50
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _70
+	virtual ~ActWeed() { }                                     // _44
+	virtual void init(Creature*);                              // _48
+	virtual int exec();                                        // _4C
+	virtual void cleanup();                                    // _50
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _70
 
 	void initApproach();
 	int exeApproach();

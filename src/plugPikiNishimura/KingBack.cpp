@@ -57,7 +57,7 @@ f32 KingBack::getiMass()
  * Address:	80179F0C
  * Size:	00004C
  */
-void KingBack::init(Vector3f&)
+void KingBack::init(immut Vector3f&)
 {
 	mCollisionRadius = 20.0f;
 	mIsOrganic       = false;

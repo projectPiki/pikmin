@@ -202,7 +202,7 @@ int ActWeed::exeNuking()
  * Address:	800C37BC
  * Size:	0002B4
  */
-void ActWeed::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActWeed::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

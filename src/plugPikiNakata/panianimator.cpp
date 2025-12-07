@@ -175,7 +175,7 @@ void PaniAnimator::updateContext()
  * Address:	8011F1C0
  * Size:	000070
  */
-void PaniAnimator::startMotion(PaniMotionInfo& info)
+void PaniAnimator::startMotion(immut PaniMotionInfo& info)
 {
 	if (mAnimInfo) {
 		mMotionIdx        = info.mMotionIdx;
@@ -192,7 +192,7 @@ void PaniAnimator::startMotion(PaniMotionInfo& info)
  * Address:	8011F230
  * Size:	0000B0
  */
-void PaniAnimator::finishMotion(PaniMotionInfo& info)
+void PaniAnimator::finishMotion(immut PaniMotionInfo& info)
 {
 	if (!mAnimInfo) {
 		return;

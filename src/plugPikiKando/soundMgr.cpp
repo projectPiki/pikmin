@@ -696,7 +696,7 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
  * Address:	800A4408
  * Size:	00002C
  */
-void SeSystem::playPikiSound(int id, Vector3f& sourcePos)
+void SeSystem::playPikiSound(int id, immut Vector3f& sourcePos)
 {
 	playSoundDirect(JACEVENT_Piki, id, sourcePos);
 }
@@ -706,7 +706,7 @@ void SeSystem::playPikiSound(int id, Vector3f& sourcePos)
  * Address:	800A4434
  * Size:	000394
  */
-void SeSystem::playSoundDirect(int eventType, int sound, Vector3f& sourcePos)
+void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourcePos)
 {
 	if (mIsClosed) {
 		PRINT("seSystem は閉店です!\n");
@@ -926,7 +926,7 @@ void SeSystem::dumpEvents()
  * Address:	800A4E58
  * Size:	000368
  */
-void SeSystem::update(Graphics& gfx, Vector3f& listenerPos)
+void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 {
 	if (mIsClosed) {
 		PRINT("... seSystem closed\n");
@@ -989,7 +989,7 @@ void SeSystem::update(Graphics& gfx, Vector3f& listenerPos)
  * Address:	800A51C8
  * Size:	0000FC
  */
-void SeSystem::calcCameraPos(Vector3f& objectPos, Vector3f& normalisedCamDir)
+void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamDir)
 {
 	Vector3f tmpDir         = objectPos;
 	Vector3f tmpListenerPos = mListenerPosition;

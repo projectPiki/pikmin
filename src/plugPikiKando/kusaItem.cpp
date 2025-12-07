@@ -279,7 +279,7 @@ void BoBaseItem::refresh(Graphics& gfx)
  * Address:	800E6538
  * Size:	000110
  */
-bool BoBaseItem::interactBuild(InteractBuild& build)
+bool BoBaseItem::interactBuild(immut InteractBuild& build)
 {
 	if (mStickItem) {
 		mStickItem->mHealth = mStickItem->mHealth + build.mProgressRate * 0.4f;

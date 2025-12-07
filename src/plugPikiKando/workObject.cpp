@@ -540,7 +540,7 @@ HinderRock::HinderRock(Shape* shape)
  * Address:	8009C094
  * Size:	000074
  */
-bool HinderRock::insideSafeArea(Vector3f& pos)
+bool HinderRock::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f pos2 = mSRT.t;
 	Cylinder cyl(pos2, mDestinationPosition, 1.0f);
@@ -646,7 +646,7 @@ Vector3f HinderRock::getXVector()
  * Address:	........
  * Size:	0000CC
  */
-int HinderRock::getPlaneIndex(Vector3f& pos)
+int HinderRock::getPlaneIndex(immut Vector3f& pos)
 {
 	if (mPlanes[0].dist(pos) < 0.0f) {
 		return 0;
@@ -665,7 +665,7 @@ int HinderRock::getPlaneIndex(Vector3f& pos)
  * Address:	8009C458
  * Size:	0000F8
  */
-u8 HinderRock::getPlaneFlag(Vector3f& pos)
+u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 {
 	u8 res = 0;
 	if (mPlanes[0].dist(pos) > 0.0f) {
@@ -766,7 +766,7 @@ Vector3f HinderRock::getVertex(int vtx)
  * Address:	8009C998
  * Size:	000074
  */
-bool HinderRock::stimulate(Interaction& act)
+bool HinderRock::stimulate(immut Interaction& act)
 {
 	if (!act.actCommon(this)) {
 		return false;
@@ -780,7 +780,7 @@ bool HinderRock::stimulate(Interaction& act)
  * Address:	8009CA0C
  * Size:	000018
  */
-bool InteractPush::actHinderRock(HinderRock* obj)
+bool InteractPush::actHinderRock(HinderRock* obj) immut
 {
 	Vector3f unused(0.0f, 110.0f, 0.0f);
 	obj->mTotalPushStrength += mStrength;
@@ -810,7 +810,7 @@ void HinderRock::refresh(Graphics& gfx)
  * Address:	8009CAE4
  * Size:	00011C
  */
-bool HinderRock::workable(Vector3f& pos)
+bool HinderRock::workable(immut Vector3f& pos)
 {
 	u8 flag = getPlaneFlag(pos);
 	if (flag != 6 && flag != 4 && flag != 12) {
@@ -995,7 +995,7 @@ void HinderRock::startAI(int)
  * Address:	8009D5C8
  * Size:	000154
  */
-bool Bridge::workable(Vector3f& pos)
+bool Bridge::workable(immut Vector3f& pos)
 {
 	f32 x, z;
 	getBridgePos(pos, x, z);
@@ -1082,7 +1082,7 @@ Bridge::Bridge(Shape* shape, bool a3)
  * Address:	8009D9E0
  * Size:	000074
  */
-bool Bridge::stimulate(Interaction& i)
+bool Bridge::stimulate(immut Interaction& i)
 {
 	if (!i.actCommon(this)) {
 		return false;
@@ -1251,7 +1251,7 @@ void Bridge::doSave(RandomAccessStream& data)
  * Address:	8009E124
  * Size:	0000B0
  */
-bool Bridge::insideSafeArea(Vector3f& pos)
+bool Bridge::insideSafeArea(immut Vector3f& pos)
 {
 	Vector3f bridgePos = mSRT.t;
 	Vector3f stage     = getStagePos(mStageCount - 1);
@@ -1459,7 +1459,7 @@ f32 Bridge::getStageZ(int stage)
  * Address:	8009EA74
  * Size:	0000E8
  */
-void Bridge::getBridgePos(Vector3f& origin, f32& xProjection, f32& zProjection)
+void Bridge::getBridgePos(immut Vector3f& origin, f32& xProjection, f32& zProjection)
 {
 	Vector3f diff = origin - getStartPos();
 	diff.y        = 0.0f;
@@ -1596,7 +1596,7 @@ void Bridge::startStageFinished(int stageIndex, bool isFinished)
  * Address:	8009F14C
  * Size:	0000A0
  */
-bool InteractBuild::actBridge(Bridge* bridge)
+bool InteractBuild::actBridge(Bridge* bridge) immut
 {
 	f32& buildProgress = bridge->mStageProgressList[mCurrentStage];
 	bridge->playEventSound(bridge, SEB_CONSTRUCTION);
@@ -1617,7 +1617,7 @@ bool InteractBuild::actBridge(Bridge* bridge)
  * Address:	8009F1EC
  * Size:	0002E8
  */
-bool InteractBreak::actBridge(Bridge* bridge)
+bool InteractBreak::actBridge(Bridge* bridge) immut
 {
 	f32* progress = &bridge->mStageProgressList[mStageIndex];
 	*progress -= _0C;

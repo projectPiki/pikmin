@@ -21,7 +21,7 @@ static u32 JV_CURRENT_ARCS = 0; // TODO: type unknown, init unclear
  * Address:	........
  * Size:	000028
  */
-void JV_InitHeader(char*)
+void JV_InitHeader(immut char*)
 {
 	// UNUSED FUNCTION
 }
@@ -31,10 +31,10 @@ void JV_InitHeader(char*)
  * Address:	8000E580
  * Size:	000138
  */
-BOOL JV_InitHeader_M(char* fileName, u8* barcData, u8* p3)
+BOOL JV_InitHeader_M(immut char* fileName, u8* barcData, u8* p3)
 {
 	STACK_PAD_VAR(1);
-	char** REF_p1 = &fileName;
+	immut char** REF_p1 = &fileName;
 	if (!barcData) {
 		// if no barc data, read from disk
 		u32 size = DVDT_CheckFile(fileName);
@@ -81,7 +81,7 @@ BOOL JV_InitHeader_M(char* fileName, u8* barcData, u8* p3)
  * Address:	8000E6C0
  * Size:	00007C
  */
-u32 JV_GetArchiveHandle(char* name)
+u32 JV_GetArchiveHandle(immut char* name)
 {
 	u32 i;
 
@@ -101,7 +101,7 @@ u32 JV_GetArchiveHandle(char* name)
  * Address:	........
  * Size:	0000E8
  */
-void JV_GetLogicalHandleS(char*, char*)
+void JV_GetLogicalHandleS(immut char*, immut char*)
 {
 	// UNUSED FUNCTION
 }
@@ -111,7 +111,7 @@ void JV_GetLogicalHandleS(char*, char*)
  * Address:	........
  * Size:	000154
  */
-void JV_GetLogicalHandle(char*)
+void JV_GetLogicalHandle(immut char*)
 {
 	// idk what this is or where it's meant to be, but it's static, size 0x3C, and in a function.
 	static struct {

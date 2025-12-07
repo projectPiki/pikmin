@@ -37,7 +37,7 @@ struct PaniAnimKeyEvent {
  */
 struct PaniAnimKeyListener {
 
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&) = 0; // _08
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&) = 0; // _08
 
 	// _00 = VTBL
 };
@@ -83,8 +83,8 @@ struct PaniAnimator : public Animator {
 	virtual void updateContext();             // _18
 
 	void init(AnimContext*, AnimMgr*, PaniMotionTable*);
-	void startMotion(PaniMotionInfo&);
-	void finishMotion(PaniMotionInfo&);
+	void startMotion(immut PaniMotionInfo&);
+	void finishMotion(immut PaniMotionInfo&);
 	void checkConstantKeys();
 	void checkConstantKey(int);
 	void checkEventKeys(f32, f32);

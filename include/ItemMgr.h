@@ -40,9 +40,9 @@ struct ItemCreature : public AICreature {
 public:
 	ItemCreature(int objType, CreatureProp*, Shape*);
 
-	virtual void init(Vector3f&);            // _28
+	virtual void init(immut Vector3f&);      // _28
 	virtual f32 getHeight() { return 0.0f; } // _40
-	virtual bool stimulate(Interaction&);    // _A0
+	virtual bool stimulate(immut Interaction&); // _A0
 	virtual void update();                   // _E0
 	virtual void refresh(Graphics&);         // _EC
 	virtual void doAI();                     // _104
@@ -100,7 +100,7 @@ struct ItemMgr : public PolyObjectMgr {
 	virtual void refresh2d(Graphics&); // _80
 
 	GoalItem* getContainer(int color);
-	GoalItem* getNearestContainer(Vector3f&, f32);
+	GoalItem* getNearestContainer(immut Vector3f&, f32);
 	UfoItem* getUfo();
 	void addUseList(int);
 	ItemShapeObject* getPelletShapeObject(int, int);

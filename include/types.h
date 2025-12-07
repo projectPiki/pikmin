@@ -99,6 +99,21 @@ typedef u16 wchar_t;
 #define nullptr 0
 #endif
 
+// Here's some fun facts about the non-standard C++ that `immut` and `NRef` exist to eliminate:
+//  - According to https://isocpp.org/wiki/faq/cpp11-language#rval, binding rvalues to non-const references has been forbidden since C++98.
+//  - IBM's C/C++ compiler has the option `-qlanglvl=compatrvaluebinding`, for which its documentation says "the C++ Standard (2003)
+//    indicates that an rvalue can only be bound to a const lvalue reference".
+//  - MSVC allows rvalues to bind to non-const references by default.  However, by specifying the `/Zc:referenceBinding` option, "the
+//    compiler follows section 8.5.3 of the C++11 standard".
+// So was it C++98, 03, or 11?  Nobody can agree on what / when to blame, but MWCC 1.2.5 is definitely a standards non-compliant compiler.
+
+// This entire codebase is cripplingly const-incorrect.  The result of a constructor being bound to a non-const reference in function
+// parameters is done all the time.  Part of the promise of a matching decomp is that the original codebase is represented as closely
+// as possible, warts and all, but portability (MWCC 1.2.5 was the *last* version of the MWCC to allow this non-standard behavior) is
+// also desireable.  Luckily, almost all const-incorrectness in the codebase is merely a result of apathy, so this cv-qualifier macro
+// exists to document and fix the places that could have been const-correct but weren't.
+#define immut TERNARY_BUILD_MATCHING(, const)
+
 // Nakata had a bad habit of writing mutable references to lifetime-extended rvalues when a value type would have sufficed, so this macro
 // is named for him.  MWCC 1.2.5 sometimes optimizes `Type foo = Type(...)` *really* poorly compared to `Type foo(...)`, so unless you are
 // using a different compiler, this const-correctness fix might generate worse code.

@@ -105,7 +105,7 @@ void ActAttack::startLost()
  * Address:	800A8564
  * Size:	0000FC
  */
-void ActAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:
@@ -759,7 +759,7 @@ void ActJumpAttack::attackHit()
  * Address:	800A9EA0
  * Size:	00012C
  */
-void ActJumpAttack::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActJumpAttack::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

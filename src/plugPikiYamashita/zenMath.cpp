@@ -82,7 +82,7 @@ f32 zen::getDistPointAndLine(Vector3f point, Vector3f lineStartPt, Vector3f line
  * Address:	8019BAE0
  * Size:	000180
  */
-void zen::makeRotMatrix(Vector3f& axis, Matrix3f& rotMtx)
+void zen::makeRotMatrix(immut Vector3f& axis, Matrix3f& rotMtx)
 {
 	Vector3f xVec;
 	Vector3f zVec;

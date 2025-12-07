@@ -48,7 +48,7 @@ void ActPick::Initialiser::initialise(Action* action)
  * Address:	800A7A7C
  * Size:	0000D4
  */
-void ActPick::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActPick::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

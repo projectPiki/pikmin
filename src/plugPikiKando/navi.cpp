@@ -67,7 +67,7 @@ DEFINE_PRINT("navi");
  * Address:	800F82E8
  * Size:	00009C
  */
-void Navi::viewDraw(Graphics& gfx, Matrix4f& mtx)
+void Navi::viewDraw(Graphics& gfx, immut Matrix4f& mtx)
 {
 	gfx.useMatrix(Matrix4f::ident, 0);
 	mNaviAnimMgr.updateContext();
@@ -212,7 +212,7 @@ void Navi::startDayEnd()
  * Size:	000410
  * @note: 	100A1AD0 in plugPiki.dll
  */
-void Navi::updateDayEnd(Vector3f& pos)
+void Navi::updateDayEnd(immut Vector3f& pos)
 {
 	if (mIsDayEnd) {
 		mIsDayEnd = 0;
@@ -708,7 +708,7 @@ void Navi::findNextThrowPiki()
  * Address:	800FA870
  * Size:	000038
  */
-void Navi::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
+void Navi::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	mNaviAnimMgr.startMotion(motion1, motion2);
 	mPreBlendLowerMotionID = -1;
@@ -973,7 +973,7 @@ void Navi::update()
  * Address:	800FB1E8
  * Size:	0001F4
  */
-void Navi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void Navi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	// sure kando.
 	int lowerMotionID = mNaviAnimMgr.getLowerAnimator().getCurrentMotionIndex();
@@ -1631,7 +1631,7 @@ void Navi::letPikiWork()
  * Address:	800FD594
  * Size:	000370
  */
-void Navi::collisionCallback(CollEvent& event)
+void Navi::collisionCallback(immut CollEvent& event)
 {
 	Creature* collider = event.mCollider;
 	if (collider != _2FC) {
@@ -2123,7 +2123,7 @@ void Navi::refresh(Graphics& gfx)
  * Address:	800FF1EC
  * Size:	0000E8
  */
-void Navi::demoDraw(Graphics& gfx, Matrix4f* mtx)
+void Navi::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 {
 	mShadowCaster.mSourcePosition.set(mSRT.t.x + 75.0f, mSRT.t.y + 100.0f, mSRT.t.z + 25.0f);
 	mShadowCaster.mTargetPosition.set(mSRT.t.x, mSRT.t.y + 10.0f, mSRT.t.z);
@@ -2266,7 +2266,7 @@ void Navi::procDamage(f32)
  * Address:	800FF968
  * Size:	000074
  */
-bool Navi::stimulate(Interaction& interaction)
+bool Navi::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
 		return interaction.actNavi(this);
@@ -2280,7 +2280,7 @@ bool Navi::stimulate(Interaction& interaction)
  * Address:	800FF9DC
  * Size:	0000C4
  */
-bool InteractGeyzer::actNavi(Navi* navi)
+bool InteractGeyzer::actNavi(Navi* navi) immut
 {
 	if (navi->isDamaged()) {
 		return false;
@@ -2306,7 +2306,7 @@ bool InteractGeyzer::actNavi(Navi* navi)
  * Address:	800FFAA0
  * Size:	0000FC
  */
-bool InteractBury::actNavi(Navi* navi)
+bool InteractBury::actNavi(Navi* navi) immut
 {
 	NaviState* state = navi->mStateMachine->getNaviState(navi);
 	if (state->invincible(navi)) {
@@ -2331,7 +2331,7 @@ bool InteractBury::actNavi(Navi* navi)
  * Address:	800FFB9C
  * Size:	000094
  */
-bool InteractWind::actNavi(Navi* navi)
+bool InteractWind::actNavi(Navi* navi) immut
 {
 	NaviState* state = navi->mStateMachine->getNaviState(navi);
 	if (state->invincible(navi)) {
@@ -2348,7 +2348,7 @@ bool InteractWind::actNavi(Navi* navi)
  * Address:	800FFC30
  * Size:	000114
  */
-bool InteractSuck::actNavi(Navi* navi)
+bool InteractSuck::actNavi(Navi* navi) immut
 {
 	PRINT_GLOBAL("actNavi");
 	if (!navi->isAlive()) {
@@ -2390,7 +2390,7 @@ bool InteractSuck::actNavi(Navi* navi)
  * Address:	800FFD44
  * Size:	0001A4
  */
-bool InteractAttack::actNavi(Navi* navi)
+bool InteractAttack::actNavi(Navi* navi) immut
 {
 	if (navi->isDamaged()) {
 		return false;
@@ -2421,7 +2421,7 @@ bool InteractAttack::actNavi(Navi* navi)
  * Address:	800FFEE8
  * Size:	000110
  */
-bool InteractPress::actNavi(Navi* navi)
+bool InteractPress::actNavi(Navi* navi) immut
 {
 	if (navi->isDamaged()) {
 		return false;
@@ -2450,7 +2450,7 @@ bool InteractPress::actNavi(Navi* navi)
  * Address:	800FFFF8
  * Size:	0001B8
  */
-bool InteractSwallow::actNavi(Navi* navi)
+bool InteractSwallow::actNavi(Navi* navi) immut
 {
 	PRINT("NAVI GOT SWALLOW INTERACTION !\n");
 	if (!navi->startDamage()) {
@@ -2482,7 +2482,7 @@ bool InteractSwallow::actNavi(Navi* navi)
  * Address:	801001B0
  * Size:	000118
  */
-bool InteractBomb::actNavi(Navi* navi)
+bool InteractBomb::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getNaviState(navi)->invincible(navi)) {
 		return false;
@@ -2524,7 +2524,7 @@ bool Navi::orimaDamaged()
  * Address:	80100348
  * Size:	000144
  */
-bool InteractFlick::actNavi(Navi* navi)
+bool InteractFlick::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getCurrID(navi) == NAVISTATE_PikiZero) {
 		return false;
@@ -2561,7 +2561,7 @@ bool InteractFlick::actNavi(Navi* navi)
  * Address:	8010048C
  * Size:	0000F0
  */
-bool InteractBubble::actNavi(Navi* navi)
+bool InteractBubble::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getNaviState(navi)->invincible(navi)) {
 		return false;
@@ -2585,7 +2585,7 @@ bool InteractBubble::actNavi(Navi* navi)
  * Address:	8010057C
  * Size:	0000F0
  */
-bool InteractFire::actNavi(Navi* navi)
+bool InteractFire::actNavi(Navi* navi) immut
 {
 	if (navi->mStateMachine->getNaviState(navi)->invincible(navi)) {
 		return false;
@@ -2633,7 +2633,7 @@ void Navi::dump()
  * Address:	8010072C
  * Size:	000234
  */
-void Navi::throwPiki(Piki* piki, Vector3f& pos)
+void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 {
 	f32 unused = mFaceDirection + PI;
 	piki->mActiveAction->abandon(nullptr);
@@ -2677,7 +2677,7 @@ void Navi::throwLocus(Vector3f&)
  * Address:	80100960
  * Size:	00005C
  */
-void Navi::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
+void Navi::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	STACK_PAD_VAR(4);
 

@@ -28,7 +28,7 @@ DEFINE_PRINT("CreatureStick");
  * Address:	8008F9C4
  * Size:	000160
  */
-void Creature::interactStickers(Creature* stuckTo, Interaction& interaction, Condition* condition)
+void Creature::interactStickers(Creature* stuckTo, immut Interaction& interaction, immut Condition* condition)
 {
 	Stickers stuckList(stuckTo);
 	Iterator iter(&stuckList);
@@ -48,7 +48,7 @@ void Creature::interactStickers(Creature* stuckTo, Interaction& interaction, Con
  * Address:	8008FB24
  * Size:	000174
  */
-void Creature::killStickers(Creature* stuckTo, Condition* cond, int p3)
+void Creature::killStickers(Creature* stuckTo, immut Condition* cond, int p3)
 {
 	InteractKill kill(stuckTo, p3);
 	interactStickers(stuckTo, kill, cond);
@@ -111,7 +111,7 @@ bool Creature::isStickToSphere()
  * Address:	........
  * Size:	0003E8
  */
-void Creature::adjustStickObject(Vector3f&)
+void Creature::adjustStickObject(immut Vector3f&)
 {
 	// UNUSED FUNCTION
 }

@@ -256,7 +256,7 @@ void PeveClampVector3fIO::construct()
  * Address:	801259DC
  * Size:	0000DC
  */
-void PeveClampVector3fIO::input(NVector3f& vec)
+void PeveClampVector3fIO::input(immut NVector3f& vec)
 {
 	_04.input(vec);
 	f32 len = _04.length();

@@ -37,7 +37,7 @@ enum {
 struct DoorItem : public ItemCreature {
 	DoorItem(int objType, CreatureProp* props, Shape* shape);
 
-	virtual void init(Vector3f&);            // _28
+	virtual void init(immut Vector3f&);      // _28
 	virtual void startAI(int);               // _34
 	virtual f32 getiMass();                  // _38
 	virtual f32 getSize();                   // _3C

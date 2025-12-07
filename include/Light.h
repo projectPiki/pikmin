@@ -66,7 +66,7 @@ struct LFlareGroup : public CoreNode {
 		mBlendMode = 1;
 	}
 
-	void addLFlare(Colour& color, Vector3f& pos, Vector2f& size, Vector2f* a5, Vector2f* a6)
+	void addLFlare(immut Colour& color, immut Vector3f& pos, immut Vector2f& size, immut Vector2f* a5, immut Vector2f* a6)
 	{
 		LFInfo* info = gsys->getLFlareInfo();
 		if (!info) {

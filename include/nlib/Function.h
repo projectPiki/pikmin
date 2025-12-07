@@ -23,7 +23,7 @@ struct NPolynomialFunction : public NFunction {
 	NPolynomialFunction(f32*, NPolynomialFunction&); // unused/inlined
 
 	virtual f32 getValue(f32); // _08
-	virtual void println();    // _0C
+	virtual void println() immut; // _0C
 
 	void construct(f32*, int);
 
@@ -58,7 +58,7 @@ struct NClampLinearFunction : public NLinearFunction {
 	NClampLinearFunction(f32*);
 
 	virtual f32 getValue(f32); // _08
-	virtual void println();    // _0C
+	virtual void println() immut; // _0C
 
 	void construct(f32*);
 	void makeClampLinearFunction(f32, f32, f32, f32);

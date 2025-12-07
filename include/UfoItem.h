@@ -106,24 +106,24 @@ public:
 
 	UfoItem(CreatureProp*, UfoShapeObject*);
 
-	virtual bool insideSafeArea(Vector3f&);              // _10
-	virtual void startAI(int);                           // _34
-	virtual f32 getiMass();                              // _38
-	virtual f32 getSize();                               // _3C
-	virtual bool needShadow();                           // _90
-	virtual bool ignoreAtari(Creature*);                 // _98
-	virtual void update();                               // _E0
-	virtual void refresh(Graphics&);                     // _EC
-	virtual void demoDraw(Graphics&, Matrix4f*);         // _FC
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _154
-	virtual Vector3f getGoalPos();                       // _15C
-	virtual f32 getGoalPosRadius();                      // _160
-	virtual Vector3f getSuckPos();                       // _164
-	virtual void suckMe(Pellet*);                        // _168
-	virtual void finishSuck(Pellet*);                    // _16C
-	virtual int getRouteIndex() { return mWaypointID; }  // _170
-	virtual bool isVisible() { return true; }            // _74
-	virtual bool isAlive() { return true; }              // _88
+	virtual bool insideSafeArea(immut Vector3f&);              // _10
+	virtual void startAI(int);                                 // _34
+	virtual f32 getiMass();                                    // _38
+	virtual f32 getSize();                                     // _3C
+	virtual bool needShadow();                                 // _90
+	virtual bool ignoreAtari(Creature*);                       // _98
+	virtual void update();                                     // _E0
+	virtual void refresh(Graphics&);                           // _EC
+	virtual void demoDraw(Graphics&, immut Matrix4f*);         // _FC
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _154
+	virtual Vector3f getGoalPos();                             // _15C
+	virtual f32 getGoalPosRadius();                            // _160
+	virtual Vector3f getSuckPos();                             // _164
+	virtual void suckMe(Pellet*);                              // _168
+	virtual void finishSuck(Pellet*);                          // _16C
+	virtual int getRouteIndex() { return mWaypointID; }        // _170
+	virtual bool isVisible() { return true; }                  // _74
+	virtual bool isAlive() { return true; }                    // _88
 
 	void setSpotTurn(bool);
 	void setSpotActive(bool);

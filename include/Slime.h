@@ -173,8 +173,8 @@ private:
 	void makeInnerPosition();
 	void makeMaxRadius();
 	void setSpherePosition();
-	f32 calcVertexScore(Vector3f*, Vector3f*, f32*);
-	void sortPosition(Vector3f*, Vector3f*, Vector3f*);
+	f32 calcVertexScore(immut Vector3f*, Vector3f*, f32*);
+	void sortPosition(Vector3f*, Vector3f*, immut Vector3f*);
 	void makeSlimeBody();
 	void setJointPosition(BossShapeObject*, Graphics&);
 
@@ -194,21 +194,21 @@ private:
 struct SlimeCreature : public Creature {
 	SlimeCreature(CreatureProp*);
 
-	virtual f32 getiMass();                 // _38
-	virtual f32 getSize();                  // _3C
-	virtual Vector3f getCentre();           // _58
-	virtual void setCentre(Vector3f&) { }   // _6C
-	virtual bool isAtari();                 // _84
-	virtual bool isAlive();                 // _88
-	virtual bool isFixed() { return true; } // _8C
-	virtual bool ignoreAtari(Creature*);    // _98
-	virtual void update();                  // _E0
-	virtual void refresh(Graphics&);        // _EC
-	virtual void doAI();                    // _104
-	virtual void doAnimation();             // _108
-	virtual void doKill();                  // _10C
+	virtual f32 getiMass();                     // _38
+	virtual f32 getSize();                      // _3C
+	virtual Vector3f getCentre();               // _58
+	virtual void setCentre(immut Vector3f&) { } // _6C
+	virtual bool isAtari();                     // _84
+	virtual bool isAlive();                     // _88
+	virtual bool isFixed() { return true; }     // _8C
+	virtual bool ignoreAtari(Creature*);        // _98
+	virtual void update();                      // _E0
+	virtual void refresh(Graphics&);            // _EC
+	virtual void doAI();                        // _104
+	virtual void doAnimation();                 // _108
+	virtual void doKill();                      // _10C
 
-	void init(Vector3f&, Slime*);
+	void init(immut Vector3f&, Slime*);
 
 	// _00      = VTBL
 	// _00-_2B8 = Creature
@@ -360,17 +360,17 @@ struct Slime : public Boss {
 
 	Slime(CreatureProp*, BossShapeObject*);
 
-	virtual void init(Vector3f&);               // _28
-	virtual f32 getiMass();                     // _38
-	virtual f32 getCentreSize();                // _5C
-	virtual void collisionCallback(CollEvent&); // _A8
-	virtual void update();                      // _E0
-	virtual void refresh(Graphics&);            // _EC
-	virtual void doAI();                        // _104
-	virtual void doAnimation();                 // _108
-	virtual void doKill();                      // _10C
-	virtual void exitCourse();                  // _110
-	virtual void drawShape(Graphics&);          // _120
+	virtual void init(immut Vector3f&);               // _28
+	virtual f32 getiMass();                           // _38
+	virtual f32 getCentreSize();                      // _5C
+	virtual void collisionCallback(immut CollEvent&); // _A8
+	virtual void update();                            // _E0
+	virtual void refresh(Graphics&);                  // _EC
+	virtual void doAI();                              // _104
+	virtual void doAnimation();                       // _108
+	virtual void doKill();                            // _10C
+	virtual void exitCourse();                        // _110
+	virtual void drawShape(Graphics&);                // _120
 
 private:
 	// _00      = VTBL

@@ -200,7 +200,7 @@ PermanentEffect::PermanentEffect()
  * Address:	8011439C
  * Size:	00008C
  */
-void PermanentEffect::init(Vector3f& pos, int effType)
+void PermanentEffect::init(immut Vector3f& pos, int effType)
 {
 	if (mPtclGen) {
 		return;
@@ -219,7 +219,7 @@ void PermanentEffect::init(Vector3f& pos, int effType)
  * Address:	80114428
  * Size:	000034
  */
-void PermanentEffect::updatePos(Vector3f& pos)
+void PermanentEffect::updatePos(immut Vector3f& pos)
 {
 	mPosition = pos;
 	if (mPtclGen) {

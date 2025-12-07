@@ -66,16 +66,16 @@ struct CoreNucleus : public Boss {
 public:
 	CoreNucleus(CreatureProp*);
 
-	virtual void init(Vector3f& pos);           // _28
-	virtual f32 getiMass();                     // _38
-	virtual void collisionCallback(CollEvent&); // _A8
-	virtual void update();                      // _E0
-	virtual void refresh(Graphics&);            // _EC
-	virtual void doAI();                        // _104
-	virtual void doAnimation();                 // _108
-	virtual void doKill();                      // _10C
-	virtual void exitCourse();                  // _110
-	virtual void drawShape(Graphics&);          // _120
+	virtual void init(immut Vector3f& pos);           // _28
+	virtual f32 getiMass();                           // _38
+	virtual void collisionCallback(immut CollEvent&); // _A8
+	virtual void update();                            // _E0
+	virtual void refresh(Graphics&);                  // _EC
+	virtual void doAI();                              // _104
+	virtual void doAnimation();                       // _108
+	virtual void doKill();                            // _10C
+	virtual void exitCourse();                        // _110
+	virtual void drawShape(Graphics&);                // _120
 
 private:
 	// _00      = VTBL
@@ -100,7 +100,7 @@ public:
 	void setHitMotionStart();
 
 private:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 	void keyAction0();
 	void keyAction1();

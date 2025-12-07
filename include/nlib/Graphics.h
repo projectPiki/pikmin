@@ -19,27 +19,31 @@ struct NCamera {
 	void makeCamera();
 
 	NVector3f& getViewpoint() { return mViewpoint; }
-	void inputViewpoint(Vector3f& viewPt) { mViewpoint.input(viewPt); }
+	void inputViewpoint(immut Vector3f& viewPt) { mViewpoint.input(viewPt); }
 
 	NVector3f& getWatchpoint() { return mWatchpoint; }
-	void inputWatchpoint(Vector3f& watchPt) { mWatchpoint.input(watchPt); }
+	void inputWatchpoint(immut Vector3f& watchPt) { mWatchpoint.input(watchPt); }
 
-	f32 getAspect() { return mCamera->mAspectRatio; }
+	f32 getAspect() immut { return mCamera->mAspectRatio; }
 	void setAspect(f32 aspect) { mCamera->mAspectRatio = aspect; }
 
-	f32 getFov() { return mCamera->mFov; }
+	f32 getFov() immut { return mCamera->mFov; }
 	void setFov(f32 fov) { mCamera->mFov = fov; }
 
-	void outputPosture(NPosture3D& outPosture)
+	void outputPosture(NPosture3D& outPosture) immut
 	{
 		outPosture.inputViewpoint(mViewpoint);
 		outPosture.inputWatchpoint(mWatchpoint);
 	}
-	void inputPosture(NPosture3D& posture)
+	void inputPosture(immut NPosture3D& posture)
 	{
 		inputViewpoint(posture.getViewpoint());
 		inputWatchpoint(posture.getWatchpoint());
 	}
+
+	// FABRICATED, but necessary for opt-in const-correctness...
+	const NVector3f& getViewpoint() const { return mViewpoint; }
+	const NVector3f& getWatchpoint() const { return mWatchpoint; }
 
 	f32 mRotationAngle;    // _00
 	Camera* mCamera;       // _04

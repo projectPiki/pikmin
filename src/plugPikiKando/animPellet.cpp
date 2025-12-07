@@ -130,7 +130,7 @@ void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr*
  * Address:	........
  * Size:	000058
  */
-void PelletAnimator::startMotion(PaniMotionInfo* lowerMotionInfo, PaniMotionInfo* upperMotionInfo)
+void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
 {
 	if (lowerMotionInfo) {
 		mLowerAnimator.startMotion(*lowerMotionInfo);
@@ -146,7 +146,7 @@ void PelletAnimator::startMotion(PaniMotionInfo* lowerMotionInfo, PaniMotionInfo
  * Address:	80099A10
  * Size:	000058
  */
-void PelletAnimator::finishMotion(PaniMotionInfo* lowerMotionInfo, PaniMotionInfo* upperMotionInfo)
+void PelletAnimator::finishMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
 {
 	if (lowerMotionInfo) {
 		mLowerAnimator.finishMotion(*lowerMotionInfo);
@@ -161,7 +161,7 @@ void PelletAnimator::finishMotion(PaniMotionInfo* lowerMotionInfo, PaniMotionInf
  * Address:	80099A68
  * Size:	000058
  */
-void PelletAnimator::startMotion(PaniMotionInfo& lowerMotionInfo, PaniMotionInfo& upperMotionInfo)
+void PelletAnimator::startMotion(immut PaniMotionInfo& lowerMotionInfo, immut PaniMotionInfo& upperMotionInfo)
 {
 	startMotion(&lowerMotionInfo, &upperMotionInfo);
 }
@@ -171,7 +171,7 @@ void PelletAnimator::startMotion(PaniMotionInfo& lowerMotionInfo, PaniMotionInfo
  * Address:	80099AC0
  * Size:	000028
  */
-void PelletAnimator::startMotion(PaniMotionInfo& motionInfo)
+void PelletAnimator::startMotion(immut PaniMotionInfo& motionInfo)
 {
 	startMotion(&motionInfo, nullptr);
 }
@@ -181,7 +181,7 @@ void PelletAnimator::startMotion(PaniMotionInfo& motionInfo)
  * Address:	........
  * Size:	000084
  */
-void PelletAnimator::finishMotion(PaniAnimKeyListener*)
+void PelletAnimator::finishMotion(immut PaniAnimKeyListener*)
 {
 	// UNUSED FUNCTION
 }

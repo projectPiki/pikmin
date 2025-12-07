@@ -33,7 +33,7 @@ SlimeCreature::SlimeCreature(CreatureProp* props)
  * Address:	8016B2F0
  * Size:	000080
  */
-void SlimeCreature::init(Vector3f& pos, Slime* slime)
+void SlimeCreature::init(immut Vector3f& pos, Slime* slime)
 {
 	mSlime           = slime;
 	mCollisionRadius = 20.0f;

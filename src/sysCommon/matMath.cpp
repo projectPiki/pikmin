@@ -14,7 +14,7 @@ Matrix4f Matrix4f::ident;
  * Size:	000088
  */
 
-Matrix4f::Matrix4f(Mtx44 mtx)
+Matrix4f::Matrix4f(immut Mtx44 mtx)
 {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -84,7 +84,7 @@ void Matrix4f::makePerspective(f32, f32, f32, f32)
  * Size:	0000C0
  * @note ChatGPT 1 shotted this, props to our assistant dev!
  */
-void Matrix4f::makeRotate(Vector3f& axis, f32 angleSin, f32 angleCos)
+void Matrix4f::makeRotate(immut Vector3f& axis, f32 angleSin, f32 angleCos)
 {
 	f32 x = axis.x;
 	f32 y = axis.y;
@@ -118,7 +118,7 @@ void Matrix4f::makeRotate(Vector3f& axis, f32 angleSin, f32 angleCos)
  * Address:	8003DEC8
  * Size:	00006C
  */
-void Matrix4f::makeRotate(Vector3f& axis, f32 angle)
+void Matrix4f::makeRotate(immut Vector3f& axis, f32 angle)
 {
 	f32 angleSin = sinf(angle);
 	f32 angleCos = cosf(angle);
@@ -161,7 +161,7 @@ void Matrix4f::rotate(f32, f32, f32)
  * Address:	8003DF34
  * Size:	0001A0
  */
-void Matrix4f::multiply(Matrix4f& other)
+void Matrix4f::multiply(immut Matrix4f& other)
 {
 	Matrix4f result;
 
@@ -182,7 +182,7 @@ void Matrix4f::multiply(Matrix4f& other)
  * Address:	8003E0D4
  * Size:	000020
  */
-void Matrix4f::multiplyTo(Matrix4f& mtxB, Matrix4f& outMtx)
+void Matrix4f::multiplyTo(immut Matrix4f& mtxB, Matrix4f& outMtx) immut
 {
 	PSMTXConcat(mMtx, mtxB.mMtx, outMtx.mMtx);
 }
@@ -192,7 +192,7 @@ void Matrix4f::multiplyTo(Matrix4f& mtxB, Matrix4f& outMtx)
  * Address:	8003E0F4
  * Size:	00019C
  */
-void Matrix4f::makeSRT(Vector3f& scale, Vector3f& rotation, Vector3f& translation)
+void Matrix4f::makeSRT(immut Vector3f& scale, immut Vector3f& rotation, immut Vector3f& translation)
 {
 	STACK_PAD_VAR(6);
 
@@ -233,7 +233,7 @@ void Matrix4f::makeSRT(Vector3f& scale, Vector3f& rotation, Vector3f& translatio
  * Address:	8003E290
  * Size:	0001AC
  */
-void Matrix4f::makeConcatSRT(Matrix4f* a, Matrix4f& b, SRT& srt)
+void Matrix4f::makeConcatSRT(immut Matrix4f* a, Matrix4f& b, immut SRT& srt)
 {
 	STACK_PAD_VAR(6);
 
@@ -386,7 +386,7 @@ void Matrix4f::translate(f32, f32, f32)
  * Address:	8003E7BC
  * Size:	0000C4
  */
-void Matrix4f::scale(Vector3f& scaleVector)
+void Matrix4f::scale(immut Vector3f& scaleVector)
 {
 	mMtx[0][0] *= scaleVector.x;
 	mMtx[1][0] *= scaleVector.x;
@@ -409,7 +409,7 @@ void Matrix4f::scale(Vector3f& scaleVector)
  * Address:	........
  * Size:	0003C0
  */
-void Matrix4f::makeLookfrom(Vector3f&, Vector3f&)
+void Matrix4f::makeLookfrom(immut Vector3f&, immut Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -419,7 +419,7 @@ void Matrix4f::makeLookfrom(Vector3f&, Vector3f&)
  * Address:	8003E880
  * Size:	000300
  */
-void Matrix4f::makeLookat(Vector3f& cameraPos, Vector3f& targetPos, Vector3f* optionalUp)
+void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& targetPos, immut Vector3f* optionalUp)
 {
 	Vector3f forward;
 	Vector3f right;
@@ -453,7 +453,7 @@ void Matrix4f::makeLookat(Vector3f& cameraPos, Vector3f& targetPos, Vector3f* op
  * Address:	8003EB80
  * Size:	000100
  */
-void Matrix4f::makeLookat(Vector3f& cameraPos, Vector3f& rightDir, Vector3f& upDir, Vector3f& backDir)
+void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, immut Vector3f& upDir, immut Vector3f& backDir)
 {
 	setRow(0, rightDir);
 	mMtx[0][3] = -cameraPos.DP(rightDir);
@@ -510,7 +510,7 @@ void Matrix4f::transposeTo(Matrix4f& dest)
  * Address:	8003ED04
  * Size:	00012C
  */
-void Matrix4f::makeVQS(Vector3f& translation, Quat& rotation, Vector3f& scale)
+void Matrix4f::makeVQS(immut Vector3f& translation, immut Quat& rotation, immut Vector3f& scale)
 {
 	f32 yy2 = 2.0f * rotation.v.y * rotation.v.y;
 	f32 zz2 = 2.0f * rotation.v.z * rotation.v.z;

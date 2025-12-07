@@ -98,7 +98,7 @@ int YTeki::getMapAttribute()
  * Address:	801A2AC8
  * Size:	000034
  */
-void YTeki::moveTowardPriorityFaceDir(Vector3f& p1, f32 p2)
+void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2)
 {
 	moveTowardPriorityFaceDir(p1, p2, getParameterF(TPF_TurnVelocity));
 }
@@ -108,7 +108,7 @@ void YTeki::moveTowardPriorityFaceDir(Vector3f& p1, f32 p2)
  * Address:	801A2AFC
  * Size:	000150
  */
-void YTeki::moveTowardPriorityFaceDir(Vector3f& p1, f32 p2, f32 turnSpeed)
+void YTeki::moveTowardPriorityFaceDir(immut Vector3f& p1, f32 p2, f32 turnSpeed)
 {
 	STACK_PAD_VAR(4);
 

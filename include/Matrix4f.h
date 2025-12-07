@@ -16,21 +16,21 @@ struct Plane;
  */
 struct Matrix4f {
 	Matrix4f() { }
-	Matrix4f(Mtx44); // stripped, only in matMath.cpp
+	Matrix4f(immut Mtx44); // stripped, only in matMath.cpp
 
 	void makeIdentity();
-	void makeRotate(Vector3f&, f32, f32);
-	void makeRotate(Vector3f&, f32);
-	void multiply(Matrix4f&);
-	void multiplyTo(Matrix4f&, Matrix4f&);
-	void makeSRT(Vector3f&, Vector3f&, Vector3f&);
-	void makeConcatSRT(Matrix4f*, Matrix4f&, SRT&);
+	void makeRotate(immut Vector3f&, f32, f32);
+	void makeRotate(immut Vector3f&, f32);
+	void multiply(immut Matrix4f&);
+	void multiplyTo(immut Matrix4f&, Matrix4f&) immut;
+	void makeSRT(immut Vector3f&, immut Vector3f&, immut Vector3f&);
+	void makeConcatSRT(immut Matrix4f*, Matrix4f&, immut SRT&);
 	void inverse(Matrix4f*);
-	void scale(Vector3f&);
-	void makeLookat(Vector3f& cameraPos, Vector3f& targetPos, Vector3f* optionalUp);
-	void makeLookat(Vector3f& cameraPos, Vector3f& rightDir, Vector3f& upDir, Vector3f& backDir);
+	void scale(immut Vector3f&);
+	void makeLookat(immut Vector3f& cameraPos, immut Vector3f& targetPos, immut Vector3f* optionalUp);
+	void makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, immut Vector3f& upDir, immut Vector3f& backDir);
 	void transposeTo(Matrix4f&);
-	void makeVQS(Vector3f&, Quat&, Vector3f&);
+	void makeVQS(immut Vector3f&, immut Quat&, immut Vector3f&);
 
 	// unused/inlined:
 	void blend(Matrix4f&, f32);
@@ -45,14 +45,14 @@ struct Matrix4f {
 	void rotateY(f32);
 	void rotateZ(f32);
 	void translate(f32, f32, f32);
-	void makeLookfrom(Vector3f&, Vector3f&);
+	void makeLookfrom(immut Vector3f&, immut Vector3f&);
 	void makeProjection(Vector3f&, Plane&);
 	void makeReflection(Plane&);
 	void makeBillVector(Vector3f&, Matrix4f&, Vector3f&);
 
 	void makeSRT(SRT srt) { makeSRT(srt.s, srt.r, srt.t); }
 
-	inline void set(Matrix4f& other)
+	inline void set(immut Matrix4f& other)
 	{
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -93,7 +93,7 @@ struct Matrix4f {
 		mMtx[2][colNum] = col.z;
 	}
 
-	void setTranslation(Vector3f& trans)
+	void setTranslation(immut Vector3f& trans)
 	{
 		mMtx[0][3] = trans.x;
 		mMtx[1][3] = trans.y;

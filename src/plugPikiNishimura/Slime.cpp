@@ -83,7 +83,7 @@ f32 Slime::getiMass()
  * Address:	80163F1C
  * Size:	00027C
  */
-void Slime::init(Vector3f& pos)
+void Slime::init(immut Vector3f& pos)
 {
 	mCollisionRadius = 20.0f;
 	setIsOrganic(0);
@@ -223,7 +223,7 @@ void Slime::doAnimation()
  * Address:	80164404
  * Size:	000168
  */
-void Slime::collisionCallback(CollEvent& event)
+void Slime::collisionCallback(immut CollEvent& event)
 {
 	if (event.mCollider->mObjType == OBJTYPE_Piki || event.mCollider->mObjType == OBJTYPE_Navi) {
 		if (event.mCollider->isAlive() && event.mCollider->isVisible() && !event.mCollider->isBuried()) {

@@ -42,7 +42,7 @@ ActFree::ActFree(Piki* piki)
  * Address:	800BA6CC
  * Size:	0000D0
  */
-void ActFree::initBoid(Vector3f& targetPosition, f32 radius)
+void ActFree::initBoid(immut Vector3f& targetPosition, f32 radius)
 {
 	mIsBoidActive   = true;
 	mTargetPosition = targetPosition;
@@ -156,7 +156,7 @@ void ActFree::cleanup()
  * Address:	800BAD00
  * Size:	000004
  */
-void ActFree::animationKeyUpdated(PaniAnimKeyEvent&)
+void ActFree::animationKeyUpdated(immut PaniAnimKeyEvent&)
 {
 }
 

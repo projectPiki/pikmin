@@ -22,7 +22,7 @@ DEFINE_PRINT("taicollisionactions")
  * Address:	8012E48C
  * Size:	000014
  */
-bool TaiBounceAction::actByEvent(TekiEvent& event)
+bool TaiBounceAction::actByEvent(immut TekiEvent& event)
 {
 	return event.mEventType == TekiEventType::Ground;
 }
@@ -32,7 +32,7 @@ bool TaiBounceAction::actByEvent(TekiEvent& event)
  * Address:	8012E4A0
  * Size:	000014
  */
-bool TaiGroundCollisionAction::actByEvent(TekiEvent& event)
+bool TaiGroundCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	return event.mEventType == TekiEventType::Ground;
 }
@@ -42,7 +42,7 @@ bool TaiGroundCollisionAction::actByEvent(TekiEvent& event)
  * Address:	8012E4B4
  * Size:	000014
  */
-bool TaiWallCollisionAction::actByEvent(TekiEvent& event)
+bool TaiWallCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	PRINT_NAKATA("TaiWallCollisionAction::actByEvent:%08x,%d\n", event.mTeki, event.mEventType);
 	return event.mEventType == TekiEventType::Wall;
@@ -53,7 +53,7 @@ bool TaiWallCollisionAction::actByEvent(TekiEvent& event)
  * Address:	8012E4C8
  * Size:	000014
  */
-bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event)
+bool TaiCreatureCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	return event.mEventType == TekiEventType::Entity;
 }
@@ -63,7 +63,7 @@ bool TaiCreatureCollisionAction::actByEvent(TekiEvent& event)
  * Address:	8012E4DC
  * Size:	00003C
  */
-bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
+bool TaiPikiCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	if (!TaiCreatureCollisionAction::actByEvent(event)) {
 		return false;
@@ -82,7 +82,7 @@ bool TaiPikiCollisionAction::actByEvent(TekiEvent& event)
  * Address:	8012E518
  * Size:	00003C
  */
-bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
+bool TaiNaviCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	if (!TaiCreatureCollisionAction::actByEvent(event)) {
 		return false;
@@ -101,7 +101,7 @@ bool TaiNaviCollisionAction::actByEvent(TekiEvent& event)
  * Address:	8012E554
  * Size:	000054
  */
-bool TaiTekiTypeCollisionAction::actByEvent(TekiEvent& event)
+bool TaiTekiTypeCollisionAction::actByEvent(immut TekiEvent& event)
 {
 	if (!TaiCreatureCollisionAction::actByEvent(event)) {
 		return false;

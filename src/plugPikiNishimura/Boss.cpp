@@ -635,7 +635,7 @@ void Boss::wallCallback(Plane& plane, DynCollObject* wallObject)
  * Address:	8014F658
  * Size:	000114
  */
-bool InteractAttack::actBoss(Boss* boss)
+bool InteractAttack::actBoss(Boss* boss) immut
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
 		switch (getDamagePortion()) {
@@ -667,7 +667,7 @@ bool InteractAttack::actBoss(Boss* boss)
  * Address:	8014F774
  * Size:	00003C
  */
-bool InteractFlick::actBoss(Boss* boss)
+bool InteractFlick::actBoss(Boss* boss) immut
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
 		boss->addDamagePoint(mDamage);
@@ -682,7 +682,7 @@ bool InteractFlick::actBoss(Boss* boss)
  * Address:	8014F7B0
  * Size:	000084
  */
-bool InteractBomb::actBoss(Boss* boss)
+bool InteractBomb::actBoss(Boss* boss) immut
 {
 	if (boss->getAlive() && !boss->getInvincible()) {
 		boss->addDamagePoint(C_BOSS_PROP(boss).mBombDamageMultiplier() * mDamage);
@@ -700,7 +700,7 @@ bool InteractBomb::actBoss(Boss* boss)
  * Address:	8014F838
  * Size:	000110
  */
-bool InteractHitEffect::actBoss(Boss* boss)
+bool InteractHitEffect::actBoss(Boss* boss) immut
 {
 	switch (boss->mObjType) {
 	case OBJTYPE_Spider:
@@ -733,7 +733,7 @@ bool InteractHitEffect::actBoss(Boss* boss)
  * Address:	8014F948
  * Size:	00006C
  */
-bool Boss::stimulate(Interaction& interaction)
+bool Boss::stimulate(immut Interaction& interaction)
 {
 	bool res = interaction.actCommon(this);
 	if (res) {

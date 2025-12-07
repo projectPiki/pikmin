@@ -815,7 +815,7 @@ void DGXGraphics::setPerspective(Mtx mtx, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5
  * Address:	80048A30
  * Size:	00019C
  */
-void DGXGraphics::setOrthogonal(Mtx mtx, RectArea& bounds)
+void DGXGraphics::setOrthogonal(Mtx mtx, immut RectArea& bounds)
 {
 #if defined(VERSION_PIKIDEMO) || defined(VERSION_GPIP01_00)
 	C_MTXOrtho(mtx, bounds.mMinY, bounds.mMaxY, bounds.mMinX, bounds.mMaxX, 0.0f, -1.0f);
@@ -841,7 +841,7 @@ void DGXGraphics::setOrthogonal(Mtx mtx, RectArea& bounds)
  * Address:	80048BCC
  * Size:	00003C
  */
-void DGXGraphics::setScissor(RectArea& bounds)
+void DGXGraphics::setScissor(immut RectArea& bounds)
 {
 	GXSetScissor(bounds.mMinX, bounds.mMinY, bounds.width(), bounds.height());
 }
@@ -851,7 +851,7 @@ void DGXGraphics::setScissor(RectArea& bounds)
  * Address:	80048C08
  * Size:	000098
  */
-void DGXGraphics::setViewport(RectArea& bounds)
+void DGXGraphics::setViewport(immut RectArea& bounds)
 {
 	GXSetViewport(bounds.mMinX, bounds.mMinY, bounds.width(), bounds.height(), 0.0f, 1.0f);
 }
@@ -861,7 +861,7 @@ void DGXGraphics::setViewport(RectArea& bounds)
  * Address:	80048CA0
  * Size:	000030
  */
-void DGXGraphics::setViewportOffset(RectArea& bounds)
+void DGXGraphics::setViewportOffset(immut RectArea& bounds)
 {
 	GXSetScissorBoxOffset(-bounds.mMinX, -bounds.mMinY);
 }
@@ -1443,7 +1443,7 @@ void DGXGraphics::drawMeshes(Camera&, Shape* shape)
  * Address:	8004A12C
  * Size:	00009C
  */
-void DGXGraphics::setColour(Colour& color, bool set)
+void DGXGraphics::setColour(immut Colour& color, bool set)
 {
 	mPrimaryColour = color;
 	if (set) {
@@ -1465,7 +1465,7 @@ void DGXGraphics::setColour(Colour& color, bool set)
  * Address:	8004A1C8
  * Size:	00000C
  */
-void DGXGraphics::setAuxColour(Colour& color)
+void DGXGraphics::setAuxColour(immut Colour& color)
 {
 	mAuxiliaryColour = color;
 }
@@ -1475,7 +1475,7 @@ void DGXGraphics::setAuxColour(Colour& color)
  * Address:	8004A1D4
  * Size:	000060
  */
-void DGXGraphics::setPrimEnv(Colour* col1, Colour* col2)
+void DGXGraphics::setPrimEnv(immut Colour* col1, immut Colour* col2)
 {
 	if (col1) {
 		GXSetTevColor(GX_TEVREG0, *(GXColor*)col1);
@@ -1490,7 +1490,7 @@ void DGXGraphics::setPrimEnv(Colour* col1, Colour* col2)
  * Address:	8004A234
  * Size:	00000C
  */
-void DGXGraphics::setClearColour(Colour& color)
+void DGXGraphics::setClearColour(immut Colour& color)
 {
 	mBufferClearColour = color;
 }
@@ -1536,7 +1536,7 @@ void DGXGraphics::setFog(bool set)
  * Address:	8004A328
  * Size:	000040
  */
-void DGXGraphics::setFog(bool set, Colour& color, f32 density, f32 start, f32 end)
+void DGXGraphics::setFog(bool set, immut Colour& color, f32 density, f32 start, f32 end)
 {
 	mFogColour  = color;
 	mFogStart   = start;
@@ -1691,7 +1691,7 @@ bool DGXGraphics::initParticle(bool a)
  * Address:	8004A9BC
  * Size:	000328
  */
-void DGXGraphics::drawRotParticle(Camera& cam, Vector3f& pos, u16 angle, f32 radius)
+void DGXGraphics::drawRotParticle(Camera& cam, immut Vector3f& pos, u16 angle, f32 radius)
 {
 	gsys->mPolygonCount += 2;
 
@@ -1726,7 +1726,7 @@ void DGXGraphics::drawRotParticle(Camera& cam, Vector3f& pos, u16 angle, f32 rad
  * Address:	8004ACE4
  * Size:	00027C
  */
-void DGXGraphics::drawParticle(Camera& cam, Vector3f& pos, f32 size)
+void DGXGraphics::drawParticle(Camera& cam, immut Vector3f& pos, f32 size)
 {
 	gsys->mPolygonCount += 2;
 	u32 primClr = *(u32*)&mPrimaryColour;
@@ -1762,7 +1762,7 @@ void DGXGraphics::drawParticle(Camera& cam, Vector3f& pos, f32 size)
  * Address:	8004AF60
  * Size:	000128
  */
-void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& extents, Vector2f& uvMin, Vector2f& uvMax)
+void DGXGraphics::drawCamParticle(Camera& cam, immut Vector3f& pos, immut Vector2f& extents, immut Vector2f& uvMin, immut Vector2f& uvMax)
 {
 	gsys->mPolygonCount += 2;
 
@@ -1804,7 +1804,7 @@ void DGXGraphics::drawCamParticle(Camera& cam, Vector3f& pos, Vector2f& extents,
  * Address:	8004B088
  * Size:	0000F4
  */
-void DGXGraphics::drawLine(Vector3f& start, Vector3f& end)
+void DGXGraphics::drawLine(immut Vector3f& start, immut Vector3f& end)
 {
 	useTexture(nullptr, GX_TEXMAP0);
 	GXClearVtxDesc();
@@ -1829,7 +1829,7 @@ void DGXGraphics::drawLine(Vector3f& start, Vector3f& end)
  * Address:	8004B17C
  * Size:	000224
  */
-void DGXGraphics::drawPoints(Vector3f* points, int count)
+void DGXGraphics::drawPoints(immut Vector3f* points, int count)
 {
 	useTexture(nullptr, GX_TEXMAP0);
 	GXClearVtxDesc();
@@ -1853,7 +1853,7 @@ void DGXGraphics::drawPoints(Vector3f* points, int count)
  * Address:	8004B3A0
  * Size:	0003D8
  */
-void DGXGraphics::drawOneTri(Vector3f* vertices, Vector3f* normals, Vector2f* texCoords, int count)
+void DGXGraphics::drawOneTri(immut Vector3f* vertices, immut Vector3f* normals, immut Vector2f* texCoords, int count)
 {
 	gsys->mPolygonCount++;
 	GXClearVtxDesc();
@@ -1893,7 +1893,7 @@ void DGXGraphics::drawOneTri(Vector3f* vertices, Vector3f* normals, Vector2f* te
  * Address:	8004B778
  * Size:	00021C
  */
-void DGXGraphics::blatRectangle(RectArea& rect)
+void DGXGraphics::blatRectangle(immut RectArea& rect)
 {
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -1939,7 +1939,7 @@ void DGXGraphics::blatRectangle(RectArea& rect)
  * Address:	8004B994
  * Size:	0001C8
  */
-void DGXGraphics::testRectangle(RectArea& rect)
+void DGXGraphics::testRectangle(immut RectArea& rect)
 {
 	u32 primClr = *(u32*)&mPrimaryColour;
 	GXClearVtxDesc();
@@ -1978,7 +1978,7 @@ void DGXGraphics::testRectangle(RectArea& rect)
  * Address:	8004BB5C
  * Size:	00046C
  */
-void DGXGraphics::drawRectangle(RectArea& bounds, RectArea& texCoords, Vector3f* offset)
+void DGXGraphics::drawRectangle(immut RectArea& bounds, immut RectArea& texCoords, immut Vector3f* offset)
 {
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -2016,7 +2016,7 @@ void DGXGraphics::drawRectangle(RectArea& bounds, RectArea& texCoords, Vector3f*
  * Address:	8004BFC8
  * Size:	0001DC
  */
-void DGXGraphics::lineRectangle(RectArea& rect)
+void DGXGraphics::lineRectangle(immut RectArea& rect)
 {
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);
@@ -2053,7 +2053,7 @@ void DGXGraphics::lineRectangle(RectArea& rect)
  * Address:	8004C1A4
  * Size:	0001AC
  */
-void DGXGraphics::fillRectangle(RectArea& rect)
+void DGXGraphics::fillRectangle(immut RectArea& rect)
 {
 	GXClearVtxDesc();
 	GXSetVtxDesc(GX_VA_POS, GX_DIRECT);

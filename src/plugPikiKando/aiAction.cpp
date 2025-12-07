@@ -238,7 +238,7 @@ void Action::cleanup()
  * Address:	800C4514
  * Size:	0000DC
  */
-void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent& event)
+void TopAction::MotionListener::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:

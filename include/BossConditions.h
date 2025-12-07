@@ -10,7 +10,7 @@
  */
 struct CndIsAlive : public Condition {
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_04 = Condition
@@ -25,7 +25,7 @@ struct CndBossFlick : public Condition {
 	{
 	}
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_04 = Condition
@@ -37,7 +37,7 @@ struct CndBossFlick : public Condition {
  */
 struct CndStickBossKill : public Condition {
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_04 = Condition
@@ -50,7 +50,7 @@ struct CndStickBossKill : public Condition {
 struct CndStickMouthKill : public Condition {
 	CndStickMouthKill(Creature* boss) { mBoss = boss; }
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_04 = Condition
@@ -62,7 +62,7 @@ struct CndStickMouthKill : public Condition {
  */
 struct CndBossCollKill : public Condition {
 
-	virtual bool satisfy(Creature*); // _08
+	virtual bool satisfy(Creature*) immut; // _08
 
 	// _00     = VTBL
 	// _00-_04 = Condition

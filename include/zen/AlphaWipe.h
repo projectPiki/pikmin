@@ -45,7 +45,7 @@ struct AlphaWipe {
 	void draw(Graphics&);
 	void start(f32, f32, typeFlag);
 
-	void setColour(Colour& start, Colour& end)
+	void setColour(immut Colour& start, immut Colour& end)
 	{
 		mStartColor = start;
 		mEndColor   = end;

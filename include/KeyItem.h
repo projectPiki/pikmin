@@ -38,15 +38,15 @@ enum {
 struct KeyItem : public Creature {
 	KeyItem(CreatureProp*, Shape*);
 
-	virtual void init(Vector3f&);               // _28
-	virtual void startAI(int);                  // _34
-	virtual f32 getiMass();                     // _38
-	virtual f32 getSize();                      // _3C
-	virtual f32 getHeight() { return 0.0f; }    // _40
-	virtual bool isVisible();                   // _74
-	virtual void collisionCallback(CollEvent&); // _A8
-	virtual void update();                      // _E0
-	virtual void refresh(Graphics&);            // _EC
+	virtual void init(immut Vector3f&);               // _28
+	virtual void startAI(int);                        // _34
+	virtual f32 getiMass();                           // _38
+	virtual f32 getSize();                            // _3C
+	virtual f32 getHeight() { return 0.0f; }          // _40
+	virtual bool isVisible();                         // _74
+	virtual void collisionCallback(immut CollEvent&); // _A8
+	virtual void update();                            // _E0
+	virtual void refresh(Graphics&);                  // _EC
 
 protected:
 	virtual void doKill(); // _10C

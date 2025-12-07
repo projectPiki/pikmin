@@ -542,7 +542,7 @@ void ActBoreTalk::cleanup()
  * Address:	800AB838
  * Size:	000024
  */
-void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActBoreTalk::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (mIsLookHandledElsewhere && event.mEventType == KEY_Finished) {
 		mIsAnimFinished = true;
@@ -665,7 +665,7 @@ void ActBoreOneshot::cleanup()
  * Address:	800ABA28
  * Size:	000018
  */
-void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActBoreOneshot::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (event.mEventType == KEY_Finished) {
 		mIsAnimFinished = true;
@@ -785,7 +785,7 @@ void ActBoreRest::cleanup()
  * Address:	800ABF20
  * Size:	000104
  */
-void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActBoreRest::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:

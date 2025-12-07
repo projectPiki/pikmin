@@ -110,7 +110,7 @@ public:
 	void dump();
 
 	/// Sets current emitter position.
-	void setPosition(Vector3f& pos) { mSourcePosition = pos; }
+	void setPosition(immut Vector3f& pos) { mSourcePosition = pos; }
 
 protected:
 	/// STRIPPED - initialises new event of given type with updated position and event handle.
@@ -252,10 +252,10 @@ public:
 	void resetSystem();
 
 	/// Plays sound of given (game) ID at given position, with Piki event type.
-	void playPikiSound(int soundID, Vector3f& sourcePos);
+	void playPikiSound(int soundID, immut Vector3f& sourcePos);
 
 	/// Plays sound of given type, (game) ID at given position by reusing an existing context.
-	void playSoundDirect(int eventType, int soundID, Vector3f& sourcePos);
+	void playSoundDirect(int eventType, int soundID, immut Vector3f& sourcePos);
 
 	/// Renders "SE [index]" above each current active sound event.
 	void draw3d(Graphics& gfx);
@@ -267,10 +267,10 @@ public:
 	void dumpEvents();
 
 	/// Sets listener position, updates all events, and checks for boss background music.
-	void update(Graphics& gfx, Vector3f& listenerPos);
+	void update(Graphics& gfx, immut Vector3f& listenerPos);
 
 	/// Calculates the offset/direction(!) from the listener to the given sound position, scaled by cutoff distance.
-	void calcCameraPos(Vector3f& soundPos, Vector3f& normalisedOffsetDir);
+	void calcCameraPos(immut Vector3f& soundPos, Vector3f& normalisedOffsetDir);
 
 	/// Converts given (game) sound ID to jaudio sound ID using the soundTable.
 	int getJacID(int soundID);

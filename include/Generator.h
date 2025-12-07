@@ -37,7 +37,7 @@ enum GenCarryOverFlags {
  * @brief TODO
  */
 struct BirthInfo {
-	void set(Vector3f& pos, Vector3f& rot, Vector3f& scale, Generator* gen)
+	void set(immut Vector3f& pos, immut Vector3f& rot, immut Vector3f& scale, Generator* gen)
 	{
 		mPosition  = pos;
 		mRotation  = rot;

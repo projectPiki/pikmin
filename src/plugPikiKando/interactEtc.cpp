@@ -24,7 +24,7 @@ DEFINE_PRINT("interactEtc")
  * Address:	8007C9F8
  * Size:	00003C
  */
-bool InteractTalk::actPiki(Piki* piki)
+bool InteractTalk::actPiki(Piki* piki) immut
 {
 	MsgTarget msg(mOwner);
 	piki->mActiveAction->procMsg(&msg);
@@ -36,7 +36,7 @@ bool InteractTalk::actPiki(Piki* piki)
  * Address:	8007CA34
  * Size:	000104
  */
-bool InteractWarn::actPiki(Piki* piki)
+bool InteractWarn::actPiki(Piki* piki) immut
 {
 	int state = piki->getState();
 	if (!piki->isAlive()) {

@@ -172,7 +172,7 @@ void ActShootCreature::cleanup()
  * Address:	800C2700
  * Size:	0000AC
  */
-void ActShootCreature::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActShootCreature::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

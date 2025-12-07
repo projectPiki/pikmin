@@ -14,10 +14,10 @@ struct TaiState;
 struct YaiStrategy : public TekiStrategy {
 	YaiStrategy(int, int);
 
-	virtual void start(Teki&);               // _08
-	virtual void act(Teki&);                 // _0C
-	virtual void eventPerformed(TekiEvent&); // _10
-	virtual void draw(Teki&, Graphics&);     // _18
+	virtual void start(Teki&);                     // _08
+	virtual void act(Teki&);                       // _0C
+	virtual void eventPerformed(immut TekiEvent&); // _10
+	virtual void draw(Teki&, Graphics&);           // _18
 
 	void setState(int index, TaiState* state) { mStateList[index] = state; }
 

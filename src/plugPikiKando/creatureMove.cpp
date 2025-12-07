@@ -326,7 +326,7 @@ void Creature::moveNew(f32 deltaTime)
  * Address:	........
  * Size:	0002E8
  */
-CollTriInfo* Creature::checkForward(Vector3f&, f32, f32&)
+CollTriInfo* Creature::checkForward(immut Vector3f&, f32, f32&)
 {
 	// UNUSED FUNCTION
 }
@@ -336,7 +336,7 @@ CollTriInfo* Creature::checkForward(Vector3f&, f32, f32&)
  * Address:	........
  * Size:	000130
  */
-CollTriInfo* Creature::getNextTri(CollTriInfo*, Vector3f&, int&)
+CollTriInfo* Creature::getNextTri(CollTriInfo*, immut Vector3f&, int&)
 {
 	// UNUSED FUNCTION
 }
@@ -371,7 +371,7 @@ Plane* Creature::getNearestPlane(CollTriInfo* tri)
  * Address:	........
  * Size:	000010
  */
-void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, Colour&)
+void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&)
 {
 	// UNUSED FUNCTION
 }

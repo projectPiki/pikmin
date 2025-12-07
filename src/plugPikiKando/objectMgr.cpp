@@ -153,7 +153,7 @@ void ObjectMgr::refresh(Graphics& gfx)
 	}
 }
 
-Creature* ObjectMgr::findClosest(Vector3f& pos, Condition* cond)
+Creature* ObjectMgr::findClosest(immut Vector3f& pos, immut Condition* cond)
 {
 	Creature* ret = nullptr;
 	f32 maxDist   = 12800.0f;
@@ -182,7 +182,7 @@ Creature* ObjectMgr::findClosest(Vector3f& pos, Condition* cond)
  * Address:	800E0CB0
  * Size:	000274
  */
-Creature* ObjectMgr::findClosest(Vector3f& pos, f32 maxLen, Condition* cond)
+Creature* ObjectMgr::findClosest(immut Vector3f& pos, f32 maxLen, immut Condition* cond)
 {
 	Creature* ret = nullptr;
 	f32 maxDist   = 12800.0f;

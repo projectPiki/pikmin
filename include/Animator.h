@@ -232,7 +232,7 @@ struct AnimData : public CoreNode {
 	}
 
 	virtual void extractSRT(SRT&, int, AnimDataInfo*, f32);                         // _10
-	virtual void makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32);        // _14
+	virtual void makeAnimSRT(int, immut Matrix4f*, Matrix4f*, AnimDataInfo*, f32);  // _14
 	virtual void detach();                                                          // _18
 	virtual void writeType(RandomAccessStream&) { }                                 // _1C
 

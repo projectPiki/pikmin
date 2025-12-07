@@ -12,7 +12,7 @@ namespace zen {
  */
 struct DrawLifeCircle {
 public:
-	DrawLifeCircle(Vector3f& p1, f32 p2)
+	DrawLifeCircle(immut Vector3f& p1, f32 p2)
 	{
 		_08                = p1;
 		mRadius            = p2;
@@ -36,7 +36,7 @@ protected:
  */
 struct DrawNaviLifeCircle : public DrawLifeCircle {
 public:
-	DrawNaviLifeCircle(int p1, Vector3f& p2, f32 p3)
+	DrawNaviLifeCircle(int p1, immut Vector3f& p2, f32 p3)
 	    : DrawLifeCircle(p2, p3)
 	{
 		mNaviIndex = p1;

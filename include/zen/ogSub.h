@@ -45,7 +45,7 @@ public:
 	void startFadeIn(f32, f32, f32);
 	void startFadeOut(f32, f32, f32);
 
-	void setColorTab(u16 p1, Colour* p2, Colour* p3, f32 p4)
+	void setColorTab(u16 p1, immut Colour* p2, immut Colour* p3, f32 p4)
 	{
 		if (p1 < 20) {
 			mPrimaryColors[p1]   = *p2;
@@ -247,7 +247,7 @@ void cnvSpecialNumberHyphen(char*);
 bool getStringCVS(char*, char*, short);
 ::Texture* loadTexExp(const char*, bool, bool);
 void makePathName(const char*, const char*, char*);
-void makeRotMatrix(Vector3f&, Matrix3f&);
+void makeRotMatrix(immut Vector3f&, Matrix3f&);
 void setNumberTag(P2DScreen*, u32, int*, int);
 void setOffsetSub(P2DPicture*);
 void setSpecialNumber(int, int);

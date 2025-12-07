@@ -36,7 +36,7 @@ bool EventTypeCallBack::invoke(zen::particleGenerator* ptclGen)
  * Address:	801C4998
  * Size:	0001E0
  */
-void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
+void CylinderTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
                                 TAIeffectAttackEventCallBack* eventCB)
 {
 	mParam = param;
@@ -132,7 +132,7 @@ bool CylinderTypeCallBack::invoke(zen::particleGenerator* ptclGen)
  * Address:	801C5098
  * Size:	0001E8
  */
-void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
+void ConeTypeCallBack::init(TAIeffectAttackParam* param, Teki* teki, immut Vector3f& p3, Vector3f p4, f32 p5, f32 p6, f32 p7, f32 p8,
                             TAIeffectAttackEventCallBack* eventCB)
 {
 	mParam = param;

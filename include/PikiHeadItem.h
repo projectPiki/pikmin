@@ -61,8 +61,8 @@ struct PikiHeadItem : public ItemCreature {
 	bool canPullout();
 	void setPermanentEffects(bool);
 	void setColor(int);
-	bool interactBikkuri(InteractBikkuri&);
-	bool interactSwallow(InteractSwallow&);
+	bool interactBikkuri(immut InteractBikkuri&);
+	bool interactSwallow(immut InteractSwallow&);
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature

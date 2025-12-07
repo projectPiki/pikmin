@@ -85,67 +85,67 @@ struct Creature : public RefCountable, public EventTalker {
 public:
 	Creature(CreatureProp*);
 
-	virtual bool insideSafeArea(Vector3f&) { return true; }        // _10 (weak)
-	virtual bool platAttachable() { return false; }                // _14 (weak)
-	virtual bool alwaysUpdatePlatform() { return false; }          // _18
-	virtual bool doDoAI() { return true; }                         // _1C (weak)
-	virtual void setRouteTracer(RouteTracer*) { }                  // _20 (weak)
-	virtual void init();                                           // _24
-	virtual void init(Vector3f& pos);                              // _28
-	virtual void resetPosition(Vector3f& pos);                     // _2C
-	virtual void initParam(int) { }                                // _30 (weak)
-	virtual void startAI(int) { }                                  // _34 (weak)
-	virtual f32 getiMass() { return 100.0f; }                      // _38 (weak)
-	virtual f32 getSize() { return 15.0f; }                        // _3C (weak)
-	virtual f32 getHeight() { return 0.0f; }                       // _40 (weak)
-	virtual f32 getCylinderHeight() { return 10.0f; }              // _44 (weak)
-	virtual void doStore(CreatureInf*) { }                         // _48 (weak)
-	virtual void doRestore(CreatureInf*) { }                       // _4C (weak)
-	virtual void doSave(RandomAccessStream&) { }                   // _50 (weak)
-	virtual void doLoad(RandomAccessStream&) { }                   // _54 (weak)
-	virtual Vector3f getCentre();                                  // _58
-	virtual f32 getCentreSize();                                   // _5C
-	virtual Vector3f getBoundingSphereCentre();                    // _60
-	virtual f32 getBoundingSphereRadius();                         // _64
-	virtual Vector3f getShadowPos() { return mSRT.t; }             // _68 (weak)
-	virtual void setCentre(Vector3f& centre) { mSRT.t = centre; }  // _6C (weak)
-	virtual f32 getShadowSize();                                   // _70
-	virtual bool isVisible() { return true; }                      // _74
-	virtual bool isOrganic() { return true; }                      // _78 (weak)
-	virtual bool isTerrible();                                     // _7C
-	virtual bool isBuried() { return false; }                      // _80 (weak)
-	virtual bool isAtari() { return true; }                        // _84 (weak)
-	virtual bool isAlive() { return mHealth > 0.0f; }              // _88 (weak)
-	virtual bool isFixed() { return false; }                       // _8C (weak)
-	virtual bool needShadow();                                     // _90
-	virtual bool needFlick(Creature*) { return true; }             // _94 (weak)
-	virtual bool ignoreAtari(Creature*) { return false; }          // _98 (weak)
-	virtual bool isFree() { return isCreatureFlag(CF_Free) != 0; } // _9C (weak)
-	virtual bool stimulate(Interaction&);                          // _A0
-	virtual void sendMsg(Msg*) { }                                 // _A4 (weak)
-	virtual void collisionCallback(CollEvent&) { }                 // _A8 (weak)
-	virtual void bounceCallback() { }                              // _AC (weak)
-	virtual void jumpCallback() { }                                // _B0 (weak)
-	virtual void wallCallback(Plane&, DynCollObject*) { }          // _B4
-	virtual void offwallCallback(DynCollObject*) { }               // _B8 (weak)
-	virtual void stickCallback(Creature*) { }                      // _BC (weak)
-	virtual void offstickCallback(Creature*) { }                   // _C0 (weak)
-	virtual void stickToCallback(Creature*) { }                    // _C4 (weak)
-	virtual void dump() { }                                        // _C8 (weak)
-	virtual void startWaterEffect() { }                            // _CC (weak)
-	virtual void finishWaterEffect() { }                           // _D0 (weak)
-	virtual bool isRopable() { return false; }                     // _D4 (weak)
-	virtual bool mayIstick() { return false; }                     // _D8 (weak)
-	virtual int getFormationPri() { return 128; }                  // _DC (weak)
-	virtual void update();                                         // _E0
-	virtual void postUpdate(int, f32);                             // _E4
-	virtual void stickUpdate();                                    // _E8
-	virtual void refresh(Graphics&) = 0;                           // _EC
-	virtual void refresh2d(Graphics&) { }                          // _F0 (weak)
-	virtual void renderAtari(Graphics&);                           // _F4
-	virtual void drawShadow(Graphics&);                            // _F8
-	virtual void demoDraw(Graphics&, Matrix4f*) { }                // _FC
-	virtual Vector3f getCatchPos(Creature*);                       // _100
+	virtual bool insideSafeArea(immut Vector3f&) { return true; }       // _10 (weak)
+	virtual bool platAttachable() { return false; }                     // _14 (weak)
+	virtual bool alwaysUpdatePlatform() { return false; }               // _18
+	virtual bool doDoAI() { return true; }                              // _1C (weak)
+	virtual void setRouteTracer(RouteTracer*) { }                       // _20 (weak)
+	virtual void init();                                                // _24
+	virtual void init(immut Vector3f& pos);                             // _28
+	virtual void resetPosition(immut Vector3f& pos);                    // _2C
+	virtual void initParam(int) { }                                     // _30 (weak)
+	virtual void startAI(int) { }                                       // _34 (weak)
+	virtual f32 getiMass() { return 100.0f; }                           // _38 (weak)
+	virtual f32 getSize() { return 15.0f; }                             // _3C (weak)
+	virtual f32 getHeight() { return 0.0f; }                            // _40 (weak)
+	virtual f32 getCylinderHeight() { return 10.0f; }                   // _44 (weak)
+	virtual void doStore(CreatureInf*) { }                              // _48 (weak)
+	virtual void doRestore(CreatureInf*) { }                            // _4C (weak)
+	virtual void doSave(RandomAccessStream&) { }                        // _50 (weak)
+	virtual void doLoad(RandomAccessStream&) { }                        // _54 (weak)
+	virtual Vector3f getCentre();                                       // _58
+	virtual f32 getCentreSize();                                        // _5C
+	virtual Vector3f getBoundingSphereCentre();                         // _60
+	virtual f32 getBoundingSphereRadius();                              // _64
+	virtual Vector3f getShadowPos() { return mSRT.t; }                  // _68 (weak)
+	virtual void setCentre(immut Vector3f& centre) { mSRT.t = centre; } // _6C (weak)
+	virtual f32 getShadowSize();                                        // _70
+	virtual bool isVisible() { return true; }                           // _74
+	virtual bool isOrganic() { return true; }                           // _78 (weak)
+	virtual bool isTerrible();                                          // _7C
+	virtual bool isBuried() { return false; }                           // _80 (weak)
+	virtual bool isAtari() { return true; }                             // _84 (weak)
+	virtual bool isAlive() { return mHealth > 0.0f; }                   // _88 (weak)
+	virtual bool isFixed() { return false; }                            // _8C (weak)
+	virtual bool needShadow();                                          // _90
+	virtual bool needFlick(Creature*) { return true; }                  // _94 (weak)
+	virtual bool ignoreAtari(Creature*) { return false; }               // _98 (weak)
+	virtual bool isFree() { return isCreatureFlag(CF_Free) != 0; }      // _9C (weak)
+	virtual bool stimulate(immut Interaction&);                         // _A0
+	virtual void sendMsg(Msg*) { }                                      // _A4 (weak)
+	virtual void collisionCallback(immut CollEvent&) { }                // _A8 (weak)
+	virtual void bounceCallback() { }                                   // _AC (weak)
+	virtual void jumpCallback() { }                                     // _B0 (weak)
+	virtual void wallCallback(Plane&, DynCollObject*) { }               // _B4
+	virtual void offwallCallback(DynCollObject*) { }                    // _B8 (weak)
+	virtual void stickCallback(Creature*) { }                           // _BC (weak)
+	virtual void offstickCallback(Creature*) { }                        // _C0 (weak)
+	virtual void stickToCallback(Creature*) { }                         // _C4 (weak)
+	virtual void dump() { }                                             // _C8 (weak)
+	virtual void startWaterEffect() { }                                 // _CC (weak)
+	virtual void finishWaterEffect() { }                                // _D0 (weak)
+	virtual bool isRopable() { return false; }                          // _D4 (weak)
+	virtual bool mayIstick() { return false; }                          // _D8 (weak)
+	virtual int getFormationPri() { return 128; }                       // _DC (weak)
+	virtual void update();                                              // _E0
+	virtual void postUpdate(int, f32);                                  // _E4
+	virtual void stickUpdate();                                         // _E8
+	virtual void refresh(Graphics&) = 0;                                // _EC
+	virtual void refresh2d(Graphics&) { }                               // _F0 (weak)
+	virtual void renderAtari(Graphics&);                                // _F4
+	virtual void drawShadow(Graphics&);                                 // _F8
+	virtual void demoDraw(Graphics&, immut Matrix4f*) { }               // _FC
+	virtual Vector3f getCatchPos(Creature*);                            // _100
 
 protected:
 	virtual void doAI() { }        // _104 (weak)
@@ -163,7 +163,7 @@ public:
 	bool isBoss();
 	void enableStick();
 	void disableStick();
-	CollPart* getNearestCollPart(Vector3f&, u32);
+	CollPart* getNearestCollPart(immut Vector3f&, u32);
 	CollPart* getRandomCollPart(u32);
 	void playEventSound(Creature*, int);
 	void stopEventSound(Creature*, int);
@@ -171,18 +171,18 @@ public:
 	u32 getGeneratorID();
 	bool setStateGrabbed(Creature*);
 	void resetStateGrabbed();
-	void turnTo(Vector3f&);
+	void turnTo(immut Vector3f&);
 	void detachGenerator();
 	void kill(bool);
 	void updateStatic();
 	void updateAI();
 	void moveVelocity();
-	bool getAvoid(Vector3f&, Vector3f&);
+	bool getAvoid(immut Vector3f&, immut Vector3f&);
 	void moveRotation(f32);
 	void moveNew(f32);
 	Plane* getNearestPlane(CollTriInfo*);
-	void interactStickers(Creature*, Interaction&, Condition*);
-	void killStickers(Creature*, Condition*, int);
+	void interactStickers(Creature*, immut Interaction&, immut Condition*);
+	void killStickers(Creature*, immut Condition*, int);
 	void startClimb();
 	void endClimb();
 	bool isStickToPlatform();
@@ -200,14 +200,14 @@ public:
 
 	// unused/inlined:
 	void startFixPosition();
-	bool insideSphere(Sphere&);
-	void adjustDistance(Vector3f&, f32);
+	bool insideSphere(immut Sphere&);
+	void adjustDistance(immut Vector3f&, f32);
 	int getAtariType();
-	CollTriInfo* checkForward(Vector3f&, f32, f32&);
-	CollTriInfo* getNextTri(CollTriInfo*, Vector3f&, int&);
-	void renderCollTriInfo(Graphics&, CollTriInfo*, Colour&);
+	CollTriInfo* checkForward(immut Vector3f&, f32, f32&);
+	CollTriInfo* getNextTri(CollTriInfo*, immut Vector3f&, int&);
+	void renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&);
 	bool isStickToSphere();
-	void adjustStickObject(Vector3f&);
+	void adjustStickObject(immut Vector3f&);
 	bool isStickLeader();
 
 	// these are ONE PAIR of the inlines.
@@ -277,8 +277,8 @@ public:
 
 	// were these necessary Nakata.
 	Vector3f& getPosition() { return mSRT.t; }
-	void inputPosition(Vector3f& pos) { mSRT.t = pos; }
-	void outputPosition(Vector3f& pos) { pos = mSRT.t; }
+	void inputPosition(immut Vector3f& pos) { mSRT.t = pos; }
+	void outputPosition(Vector3f& pos) immut { pos = mSRT.t; }
 
 	// we're grabbed if we're held by something
 	bool isGrabbed() { return !mHoldingCreature.isNull(); }

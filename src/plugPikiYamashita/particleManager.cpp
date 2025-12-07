@@ -66,7 +66,7 @@ void zen::particleManager::init(u32 numPtclGens, u32 numParticles, u32 numChildP
  * Address:	801A1288
  * Size:	000074
  */
-zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture* tex, Texture* childTex, Vector3f& pos,
+zen::particleGenerator* zen::particleManager::createGenerator(u8* data, Texture* tex, Texture* childTex, immut Vector3f& pos,
                                                               zen::CallBack1<zen::particleGenerator*>* cbGen,
                                                               zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {

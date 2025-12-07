@@ -65,10 +65,10 @@ void ID32::setID(u32 id)
  * Address:	80043EE8
  * Size:	0000A8
  */
-bool ID32::match(u32 id, char wild)
+bool ID32::match(u32 id, char wild) immut
 {
-	char* other = reinterpret_cast<char*>(&id);
-	char* self  = reinterpret_cast<char*>(&mId);
+	immut char* other = reinterpret_cast<immut char*>(&id);
+	immut char* self  = reinterpret_cast<immut char*>(&mId);
 
 	for (int i = 0; i < 4; i++) {
 		if (other[i] != wild && other[i] != self[i]) {
@@ -133,7 +133,7 @@ void ID32::operator=(u32 other)
  * Address:	80043FE0
  * Size:	000014
  */
-bool ID32::operator==(u32 other)
+bool ID32::operator==(u32 other) immut
 {
 	return mId == other;
 }
@@ -143,7 +143,7 @@ bool ID32::operator==(u32 other)
  * Address:	80043FF4
  * Size:	000014
  */
-bool ID32::operator!=(u32 other)
+bool ID32::operator!=(u32 other) immut
 {
 	return mId != other;
 }
@@ -157,9 +157,9 @@ bool ID32::operator!=(u32 other)
  * Address:	80044008
  * Size:	000094
  */
-void ID32::write(RandomAccessStream& stream)
+void ID32::write(RandomAccessStream& stream) immut
 {
-	char* id = reinterpret_cast<char*>(&mId);
+	immut char* id = reinterpret_cast<immut char*>(&mId);
 
 	stream.writeByte(id[3]);
 	stream.writeByte(id[2]);
@@ -192,7 +192,7 @@ void ID32::read(RandomAccessStream& stream)
  * Address:	80044158
  * Size:	000004
  */
-void ID32::print()
+void ID32::print() immut
 {
 	PRINT("id (%x) is %s\n", mId, mStringID);
 }
@@ -210,7 +210,7 @@ void ID32::print()
  * Address:	8004415C
  * Size:	000038
  */
-void ID32::sprint(char* buffer)
+void ID32::sprint(char* buffer) immut
 {
 	buffer[0] = (char)((this->mId & 0xFF000000) >> 24);
 	buffer[1] = (char)((this->mId & 0xFF0000) >> 16);

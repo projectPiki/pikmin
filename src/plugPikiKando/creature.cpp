@@ -184,7 +184,7 @@ void Creature::disableStick()
  * Address:	8008A35C
  * Size:	000070
  */
-CollPart* Creature::getNearestCollPart(Vector3f& p1, u32 p2)
+CollPart* Creature::getNearestCollPart(immut Vector3f& p1, u32 p2)
 {
 	if (mCollInfo && mCollInfo->hasInfo()) {
 		return mCollInfo->getNearestCollPart(p1, p2);
@@ -273,7 +273,7 @@ void Creature::stopEventSound(Creature* target, int soundID)
  * Address:	........
  * Size:	0000C4
  */
-bool Creature::insideSphere(Sphere& sphere)
+bool Creature::insideSphere(immut Sphere& sphere)
 {
 	Vector3f diff = sphere.mCentre - mSRT.t;
 	if (diff.length() <= sphere.mRadius) {
@@ -385,7 +385,7 @@ u32 Creature::getGeneratorID()
  * Address:	8008A874
  * Size:	000028
  */
-bool Creature::stimulate(Interaction& interaction)
+bool Creature::stimulate(immut Interaction& interaction)
 {
 	PRINT("objType=%s creature %x got interaction %x\n", ObjType::getName(mObjType), &interaction);
 	return false;
@@ -436,7 +436,7 @@ void Creature::resetStateGrabbed()
  * Address:	8008AA3C
  * Size:	000048
  */
-void Creature::turnTo(Vector3f& targetDir)
+void Creature::turnTo(immut Vector3f& targetDir)
 {
 	mFaceDirection = atan2f(targetDir.x - mSRT.t.x, targetDir.z - mSRT.t.z);
 }
@@ -446,7 +446,7 @@ void Creature::turnTo(Vector3f& targetDir)
  * Address:	........
  * Size:	0000FC
  */
-void Creature::adjustDistance(Vector3f& targetPos, f32 targetDist)
+void Creature::adjustDistance(immut Vector3f& targetPos, f32 targetDist)
 {
 	Vector3f sep = targetPos - mSRT.t;
 	f32 dist     = sep.length();
@@ -510,7 +510,7 @@ void Creature::init()
  * Address:	8008AC04
  * Size:	000064
  */
-void Creature::init(Vector3f& pos)
+void Creature::init(immut Vector3f& pos)
 {
 	Creature::init();
 	resetPosition(pos);
@@ -533,7 +533,7 @@ int Creature::getAtariType()
  * Address:	8008AC68
  * Size:	000034
  */
-void Creature::resetPosition(Vector3f& pos)
+void Creature::resetPosition(immut Vector3f& pos)
 {
 	mSRT.t        = pos;
 	mLastPosition = pos;
@@ -1374,7 +1374,7 @@ void Creature::moveVelocity()
  * Address:	8008D53C
  * Size:	000008
  */
-bool Creature::getAvoid(Vector3f&, Vector3f&)
+bool Creature::getAvoid(immut Vector3f&, immut Vector3f&)
 {
 	return false;
 }

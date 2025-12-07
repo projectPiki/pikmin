@@ -188,7 +188,7 @@ static void InitAudio1(StreamHeader_* header, u8* data, u32 size)
  * Address:	8001E020
  * Size:	0003BC
  */
-void Jac_HVQM_Init(const char* movieFilePath, u8* data, u32 bufferSize)
+void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 {
 	// TODO: Use this in more places below instead of hardcoding 0x40000
 	u32 audioBufferSize = 0x40000;

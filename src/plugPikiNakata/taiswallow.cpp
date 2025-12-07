@@ -38,7 +38,7 @@ struct TaiSwallowReceiveMessageAction : public TaiAction {
 		_08 = p2;
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -653,7 +653,7 @@ void TaiSwallowStrategy::draw(Teki& teki, Graphics& gfx)
  * Address:	80141478
  * Size:	000128
  */
-bool TaiSwallowStrategy::interact(Teki& teki, TekiInteractionKey& key)
+bool TaiSwallowStrategy::interact(Teki& teki, immut TekiInteractionKey& key)
 {
 	if (key.mInteractionType == TekiInteractType::Attack) {
 		InteractAttack* attack = (InteractAttack*)key.mInteraction;
@@ -707,7 +707,7 @@ void TaiSwallowStrategy::drawDebugInfo(Teki& teki, Graphics& gfx)
  * Address:	801415F8
  * Size:	00001C
  */
-bool TaiSwallowReceiveMessageAction::actByEvent(TekiEvent& event)
+bool TaiSwallowReceiveMessageAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::WakeUpCall) {
 		PRINT_NAKATA("TaiSwallowReceiveMessageAction::act:%08x\n", event.mTeki);

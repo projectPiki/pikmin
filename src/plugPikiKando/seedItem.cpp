@@ -58,7 +58,7 @@ f32 SeedItem::getSize()
  * Address:	800EDEB4
  * Size:	000044
  */
-void SeedItem::init(Vector3f& pos)
+void SeedItem::init(immut Vector3f& pos)
 {
 	Creature::init(pos);
 	mSearchBuffer.init(mSearch, 3);

@@ -193,7 +193,7 @@ void ActMine::cleanup()
  * Address:	800B9784
  * Size:	0000C0
  */
-void ActMine::animationKeyUpdated(PaniAnimKeyEvent& event)
+void ActMine::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Finished:

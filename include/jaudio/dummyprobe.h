@@ -8,9 +8,9 @@ extern "C" {
 #endif // ifdef __cplusplus
 
 //////////// JAUDIO DUMMY PROBE FUNCTIONS ////////////
-void Probe_Start(s32 id, const char* label);
+void Probe_Start(s32 id, immut char* label);
 void Probe_Finish(s32 id);
-void Console_printf(char*, ...);
+void Console_printf(immut char*, ...);
 
 ///////////////////////////////////////////////////////
 

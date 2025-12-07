@@ -316,7 +316,7 @@ static s32 StreamAudio_Callback(void*);
  * Address:	8001C140
  * Size:	000318
  */
-BOOL StreamAudio_Start(u32 ctrlID, int soundId, char* name, int r6, int r7, StreamHeader_* header)
+BOOL StreamAudio_Start(u32 ctrlID, int soundId, immut char* name, int r6, int r7, StreamHeader_* header)
 {
 	StreamCtrl_* ctrl = &SC[ctrlID];
 	int i;

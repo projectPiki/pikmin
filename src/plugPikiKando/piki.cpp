@@ -64,7 +64,7 @@ DEFINE_PRINT("piki");
  * Address:	800C6558
  * Size:	000300
  */
-bool Piki::isSafeMePos(Vector3f& pos)
+bool Piki::isSafeMePos(immut Vector3f& pos)
 {
 	for (int i = PikiMinColor; i < PikiColorCount; i++) {
 		GoalItem* onyon = itemMgr->getContainer(i);
@@ -381,7 +381,7 @@ int Piki::moveRouteTraceDynamic(f32 p1)
  * Address:	800C7028
  * Size:	0004C0
  */
-bool Piki::initRouteTrace(Vector3f& targetPos, bool p2)
+bool Piki::initRouteTrace(immut Vector3f& targetPos, bool p2)
 {
 	if (mRouteHandle) {
 		routeMgr->getPathFinder('test')->releaseHandle(mRouteHandle);
@@ -1475,7 +1475,7 @@ void Piki::sendMsg(Msg* msg)
  * Address:	800C9EB8
  * Size:	000074
  */
-bool Piki::stimulate(Interaction& interaction)
+bool Piki::stimulate(immut Interaction& interaction)
 {
 	if (interaction.actCommon(this)) {
 		return interaction.actPiki(this);
@@ -1567,7 +1567,7 @@ void Piki::finishDamage()
  * Address:	800CA110
  * Size:	0000DC
  */
-void Piki::animationKeyUpdated(PaniAnimKeyEvent& event)
+void Piki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	if (mPikiAnimMgr.getUpperAnimator().getCurrentMotionIndex() == 56 && event.mEventType == KEY_PlayEffect) {
 		EffectParm parm(mSRT.t);
@@ -1913,7 +1913,7 @@ void Piki::bounceCallback()
  * Address:	800CA9D8
  * Size:	000234
  */
-void Piki::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
+void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	int state = getState();
 
@@ -2030,7 +2030,7 @@ bool Piki::doMotionBlend()
  * Address:	........
  * Size:	00005C
  */
-void Piki::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
+void Piki::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	f32 upperCounter = mPikiAnimMgr.getUpperAnimator().mAnimationCounter;
 	f32 lowerCounter = mPikiAnimMgr.getLowerAnimator().mAnimationCounter;
@@ -2049,7 +2049,7 @@ void Piki::swapMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
  * Address:	800CAC54
  * Size:	000190
  */
-void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
+void Piki::checkBridgeWall(Creature* object, immut Vector3f& direction)
 {
 	int state = getState();
 	if (isHolding()) {
@@ -2087,7 +2087,7 @@ void Piki::checkBridgeWall(Creature* object, Vector3f& direction)
  * Address:	800CADE4
  * Size:	000B78
  */
-void Piki::collisionCallback(CollEvent& event)
+void Piki::collisionCallback(immut CollEvent& event)
 {
 	Creature* collider = event.mCollider;
 	CollPart* collPart = event.mColliderPart;
@@ -2370,7 +2370,7 @@ f32 Piki::getSpeed(f32 speedRatio)
  * Address:	800CBDD8
  * Size:	0000C4
  */
-void Piki::setSpeed(f32 speedRatio, Vector3f& direction)
+void Piki::setSpeed(f32 speedRatio, immut Vector3f& direction)
 {
 	f32 scale = 1.0f; // i guess they were playing around with this?
 	f32 max   = pikiMgr->mPikiParms->mPikiParms.mMaxLeafMoveSpeed() * scale;
@@ -2441,7 +2441,7 @@ f32 Piki::getiMass()
  * Address:	800CBFDC
  * Size:	000068
  */
-void Piki::resetPosition(Vector3f& pos)
+void Piki::resetPosition(immut Vector3f& pos)
 {
 	Creature::resetPosition(pos);
 	mShadowPos = pos;

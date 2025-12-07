@@ -99,7 +99,7 @@ f32 NPolynomialFunction::getCoefficient(int)
  * Address:	8011B820
  * Size:	000058
  */
-void NPolynomialFunction::println()
+void NPolynomialFunction::println() immut
 {
 	PRINT_NAKATA("NPolynomialFunction:%d\n", mData.getDimension());
 	for (int i = 0; i < mData.getDimension(); i++) {
@@ -196,7 +196,7 @@ f32 NClampLinearFunction::getValue(f32 p1)
  * Address:	8011BAE0
  * Size:	000058
  */
-void NClampLinearFunction::println()
+void NClampLinearFunction::println() immut
 {
 	NPolynomialFunction::println();
 }

@@ -13,7 +13,7 @@ struct TaiBounceAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -28,7 +28,7 @@ struct TaiGroundCollisionAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -43,7 +43,7 @@ struct TaiWallCollisionAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -58,7 +58,7 @@ struct TaiCreatureCollisionAction : public TaiAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -73,7 +73,7 @@ struct TaiPikiCollisionAction : public TaiCreatureCollisionAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiCreatureCollisionAction?
@@ -88,7 +88,7 @@ struct TaiNaviCollisionAction : public TaiCreatureCollisionAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiCreatureCollisionAction?
@@ -104,7 +104,7 @@ struct TaiTekiTypeCollisionAction : public TaiCreatureCollisionAction {
 		mTekiType = tekiType;
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiCreatureCollisionAction?

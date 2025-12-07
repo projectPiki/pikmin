@@ -208,7 +208,7 @@ struct SnakeBody {
 public:
 	SnakeBody(Snake*);
 
-	void init(Vector3f&, Snake*);
+	void init(immut Vector3f&, Snake*);
 	void killCallBackEffect(bool);
 	void refresh(BossShapeObject*, Graphics&);
 	void update();
@@ -224,7 +224,7 @@ private:
 	void makeNewPosition();
 	void makeResultPosition();
 	void makeVectorMatrix();
-	void createDeadPellet(Vector3f&, int);
+	void createDeadPellet(immut Vector3f&, int);
 	void createDeadHeadEffect();
 	void createDeadBodyEffect();
 	void makeDeadPattern01();
@@ -308,17 +308,17 @@ public:
 
 	Snake(CreatureProp*);
 
-	virtual void init(Vector3f&);      // _28
-	virtual f32 getiMass();            // _38
-	virtual f32 getCentreSize();       // _5C
-	virtual void update();             // _E0
-	virtual void refresh(Graphics&);   // _EC
-	virtual void refresh2d(Graphics&); // _F0
-	virtual void doAI();               // _104
-	virtual void doAnimation();        // _108
-	virtual void doKill();             // _10C
-	virtual void exitCourse();         // _110
-	virtual void drawShape(Graphics&); // _120
+	virtual void init(immut Vector3f&); // _28
+	virtual f32 getiMass();             // _38
+	virtual f32 getCentreSize();        // _5C
+	virtual void update();              // _E0
+	virtual void refresh(Graphics&);    // _EC
+	virtual void refresh2d(Graphics&);  // _F0
+	virtual void doAI();                // _104
+	virtual void doAnimation();         // _108
+	virtual void doKill();              // _10C
+	virtual void exitCourse();          // _110
+	virtual void drawShape(Graphics&);  // _120
 
 	void setBossType(bool);
 
@@ -347,7 +347,7 @@ public:
 	void update();
 
 private:
-	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+	virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 	void keyAction0();
 	void keyAction1();

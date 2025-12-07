@@ -96,7 +96,7 @@ public:
 	struct UfoParts : public PaniAnimKeyListener {
 		UfoParts() { }
 
-		virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
+		virtual void animationKeyUpdated(immut PaniAnimKeyEvent&); // _08
 
 		void initAnim(PelletShapeObject*);
 

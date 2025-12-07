@@ -123,7 +123,7 @@ struct TaiOtimotiDroppingAction : public TaiAction {
 
 	virtual void start(Teki&);           // _08
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -141,7 +141,7 @@ struct TaiOtimotiPressingAction : public TaiAction {
 
 	virtual void start(Teki&);           // _08
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -158,7 +158,7 @@ struct TaiOtimotiBouncingAction : public TaiAction {
 	}
 
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -176,7 +176,7 @@ struct TaiOtimotiAttackingAction : public TaiAction {
 
 	virtual void start(Teki&);           // _08
 	virtual bool act(Teki&);             // _10
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiAction
@@ -959,7 +959,7 @@ bool TaiOtimotiDroppingAction::act(Teki& teki)
  * Address:	8013D518
  * Size:	000060
  */
-bool TaiOtimotiDroppingAction::actByEvent(TekiEvent& event)
+bool TaiOtimotiDroppingAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Ground) {
 		PRINT_NAKATA("!TaiOtimotiDroppingAction::actByEvent:EVENT_BOUNCED:%08x\n", event.mTeki);
@@ -999,7 +999,7 @@ bool TaiOtimotiPressingAction::act(Teki& teki)
  * Address:	8013D608
  * Size:	00021C
  */
-bool TaiOtimotiPressingAction::actByEvent(TekiEvent& event)
+bool TaiOtimotiPressingAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mEventType == TekiEventType::Ground) {
 		event.mTeki->finishFlying();
@@ -1042,7 +1042,7 @@ bool TaiOtimotiBouncingAction::act(Teki& teki)
  * Address:	8013D82C
  * Size:	000008
  */
-bool TaiOtimotiBouncingAction::actByEvent(TekiEvent&)
+bool TaiOtimotiBouncingAction::actByEvent(immut TekiEvent&)
 {
 	return false;
 }
@@ -1089,7 +1089,7 @@ bool TaiOtimotiAttackingAction::act(Teki& teki)
  * Address:	8013D8E8
  * Size:	000008
  */
-bool TaiOtimotiAttackingAction::actByEvent(TekiEvent&)
+bool TaiOtimotiAttackingAction::actByEvent(immut TekiEvent&)
 {
 	return false;
 }

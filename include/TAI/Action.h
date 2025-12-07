@@ -24,7 +24,7 @@ struct TaiAction {
 	virtual void start(Teki& teki) { }                                                            // _08
 	virtual void finish(Teki& teki) { }                                                           // _0C
 	virtual bool act(Teki& teki) { return 0; }                                                    // _10
-	virtual bool actByEvent(TekiEvent& event) { return 0; }                                       // _14
+	virtual bool actByEvent(immut TekiEvent& event) { return 0; }                                 // _14
 	virtual bool hasNextState() { return (mNextState >= 0 || mNextState == TAI_RETURN_TRANSIT); } // _18
 };
 
@@ -50,10 +50,10 @@ struct TaiOnceAction : public TaiAction {
 struct TaiSerialAction : public TaiAction {
 	TaiSerialAction(int nextState, int count);
 
-	virtual void start(Teki& teki);            // _08
-	virtual void finish(Teki& teki);           // _0C
-	virtual bool act(Teki& teki);              // _10
-	virtual bool actByEvent(TekiEvent& event); // _14
+	virtual void start(Teki& teki);                  // _08
+	virtual void finish(Teki& teki);                 // _0C
+	virtual bool act(Teki& teki);                    // _10
+	virtual bool actByEvent(immut TekiEvent& event); // _14
 
 	void setAction(int idx, TaiAction* action) { mActionQueue[idx] = action; }
 
@@ -145,7 +145,7 @@ struct TaiDependenceAction : public TaiAction {
 		}
 		return false;
 	}
-	virtual bool actByEvent(TekiEvent& event) // _14
+	virtual bool actByEvent(immut TekiEvent& event) // _14
 	{
 		if (mPrimaryAction->actByEvent(event)) {
 			return mDependentAction->actByEvent(event);
@@ -165,10 +165,10 @@ struct TaiDependenceAction : public TaiAction {
 struct TaiState {
 	TaiState(int count);
 
-	virtual void start(Teki& teki);                // _08
-	virtual void finish(Teki& teki);               // _0C
-	virtual bool act(Teki& teki);                  // _10
-	virtual bool eventPerformed(TekiEvent& event); // _14
+	virtual void start(Teki& teki);                      // _08
+	virtual void finish(Teki& teki);                     // _0C
+	virtual bool act(Teki& teki);                        // _10
+	virtual bool eventPerformed(immut TekiEvent& event); // _14
 
 	void setAction(int idx, TaiAction* action) { mActions[idx] = action; }
 
@@ -185,9 +185,9 @@ struct TaiState {
 struct TaiStrategy : public TekiStrategy {
 	TaiStrategy(int, int);
 
-	virtual void start(Teki& teki);                // _08
-	virtual void act(Teki& teki);                  // _0C
-	virtual void eventPerformed(TekiEvent& event); // _10
+	virtual void start(Teki& teki);                      // _08
+	virtual void act(Teki& teki);                        // _0C
+	virtual void eventPerformed(immut TekiEvent& event); // _10
 
 	void init(int, int);
 

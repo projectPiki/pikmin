@@ -51,7 +51,7 @@ f32 KeyItem::getSize()
  * Address:	800ED2B4
  * Size:	000054
  */
-void KeyItem::init(Vector3f& pos)
+void KeyItem::init(immut Vector3f& pos)
 {
 	f32 scale = 1.0f;
 	mSRT.s.set(scale, scale, scale);
@@ -123,7 +123,7 @@ void KeyItem::update()
  * Address:	800ED47C
  * Size:	000004
  */
-void KeyItem::collisionCallback(CollEvent&)
+void KeyItem::collisionCallback(immut CollEvent&)
 {
 }
 
@@ -214,7 +214,7 @@ f32 DoorItem::getSize()
  * Address:	800ED670
  * Size:	000054
  */
-void DoorItem::init(Vector3f& pos)
+void DoorItem::init(immut Vector3f& pos)
 {
 	ItemCreature::init(pos);
 	f32 scale = 1.0f;

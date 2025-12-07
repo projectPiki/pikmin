@@ -16,14 +16,14 @@ struct TekiInteractionKey;
 struct TekiStrategy {
 	TekiStrategy();
 
-	virtual void start(Teki& teki);                             // _08
-	virtual void act(Teki& teki);                               // _0C
-	virtual void eventPerformed(TekiEvent&);                    // _10
-	virtual void createEffect(Teki& teki, int);                 // _14
-	virtual void draw(Teki& teki, Graphics& gfx);               // _18
-	virtual void drawDebugInfo(Teki& teki, Graphics& gfx);      // _1C
-	virtual bool interact(Teki& teki, TekiInteractionKey& key); // _20
-	virtual void spawnCorpseParts(Teki& teki);                  // _24
+	virtual void start(Teki& teki);                                   // _08
+	virtual void act(Teki& teki);                                     // _0C
+	virtual void eventPerformed(immut TekiEvent&);                    // _10
+	virtual void createEffect(Teki& teki, int);                       // _14
+	virtual void draw(Teki& teki, Graphics& gfx);                     // _18
+	virtual void drawDebugInfo(Teki& teki, Graphics& gfx);            // _1C
+	virtual bool interact(Teki& teki, immut TekiInteractionKey& key); // _20
+	virtual void spawnCorpseParts(Teki& teki);                        // _24
 
 	// _00 = VTBL
 };

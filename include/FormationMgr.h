@@ -21,7 +21,7 @@ struct Rope {
 	Rope(); // unused/inlined
 
 	// unused/inlined:
-	void move(Vector3f&, Vector3f&, Vector3f&);
+	void move(immut Vector3f&, immut Vector3f&, immut Vector3f&);
 	void refresh(Graphics&);
 
 	Vector3f _UNUSED00; // _00
@@ -101,10 +101,10 @@ public:
 	Vector3f getLastCentre();
 	FormPoint* getFormPoint(Creature*);
 	void exit(Creature*);
-	void add(Vector3f&, Vector3f&);
+	void add(immut Vector3f&, immut Vector3f&);
 	void clear();
 	void rearrange();
-	void setOffset(Vector3f&);
+	void setOffset(immut Vector3f&);
 	void setAngOffset(f32);
 
 protected:

@@ -54,7 +54,7 @@ struct TaiChappySmashedAction : public TaiSmashedAction {
 	{
 	}
 
-	virtual bool actByEvent(TekiEvent&); // _14
+	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
 	// _00-_08 = TaiSmashedAction?
@@ -606,7 +606,7 @@ bool TaiChappyCryAction::act(Teki& teki)
  * Address:	8012A7BC
  * Size:	000048
  */
-bool TaiChappySmashedAction::actByEvent(TekiEvent& event)
+bool TaiChappySmashedAction::actByEvent(immut TekiEvent& event)
 {
 	if (event.mTeki->getParameterI(CHAPPYPI_SmashType) == 1) {
 		return false;

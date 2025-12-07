@@ -762,7 +762,7 @@ void Generator::render(Graphics& gfx)
 		f32 s = 0.5f;
 		scale.set(s, s, s);
 
-		Vector3f& pos = getPos();
+		immut Vector3f& pos = getPos();
 		mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), pos);
 
 		gfx.calcViewMatrix(mtx1, mtx2);
@@ -1253,7 +1253,7 @@ void GenTypeOne::setBirthInfo(BirthInfo& info, Generator* gen)
 	Vector3f rot;
 	rot.set(deg2rad(_38()), deg2rad(_48()), deg2rad(_58()));
 
-	Vector3f& p = gen->getPos();
+	immut Vector3f& p = gen->getPos();
 	info.set(pos, rot, p, gen);
 }
 
@@ -1273,7 +1273,7 @@ void GenTypeOne::render(Graphics& gfx, Generator* gen)
 	f32 s = 2.0f;
 	scale.set(s, s, s);
 
-	Vector3f& pos = gen->getPos();
+	immut Vector3f& pos = gen->getPos();
 	mtx1.makeSRT(scale, rot, pos);
 	gfx.calcViewMatrix(mtx1, mtx2);
 
@@ -1327,7 +1327,7 @@ void GenTypeAtOnce::setBirthInfo(BirthInfo& info, Generator* gen)
 		vec = gen->getPos();
 	}
 
-	Vector3f& pos = gen->getPos();
+	immut Vector3f& pos = gen->getPos();
 	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), pos, gen);
 }
 
@@ -1377,7 +1377,7 @@ void GenTypeInitRand::setBirthInfo(BirthInfo& info, Generator* gen)
 		vec = gen->getPos();
 	}
 
-	Vector3f& pos = gen->getPos();
+	immut Vector3f& pos = gen->getPos();
 	info.set(vec, Vector3f(0.0f, 0.0f, 0.0f), pos, gen);
 }
 
@@ -1435,7 +1435,7 @@ void GenAreaCircle::render(Graphics& gfx, Generator* gen)
 	Vector3f scale;
 	f32 radius = mRadius() / 100.0f;
 	scale.set(radius, 1.0f, radius);
-	Vector3f& v = gen->getPos();
+	immut Vector3f& v = gen->getPos();
 	mtx1.makeSRT(scale, Vector3f(0.0f, 0.0f, 0.0f), v);
 	gfx.calcViewMatrix(mtx1, mtx2);
 	gfx.useMatrix(mtx2, 0);

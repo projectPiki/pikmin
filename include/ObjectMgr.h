@@ -18,22 +18,22 @@ struct ObjectMgr : public Traversable, public Node {
 	{
 	}
 
-	virtual Creature* getCreature(int) = 0;                           // _08
-	virtual int getFirst()             = 0;                           // _0C
-	virtual int getNext(int)           = 0;                           // _10
-	virtual bool isDone(int)           = 0;                           // _14
-	virtual ~ObjectMgr() { }                                          // _48
-	virtual void update();                                            // _4C
-	virtual void postUpdate(int, f32);                                // _50
-	virtual void stickUpdate();                                       // _54
-	virtual void refresh(Graphics&);                                  // _58
-	virtual void drawShadow(Graphics&, Texture*);                     // _5C
-	virtual int getSize() = 0;                                        // _60
-	virtual int getMax()  = 0;                                        // _64
-	virtual Creature* findClosest(Vector3f&, f32, Condition*);        // _68
-	virtual Creature* findClosest(Vector3f&, Condition*);             // _6C
-	virtual void search(ObjectMgr*);                                  // _70
-	virtual void killAll();                                           // _74
+	virtual Creature* getCreature(int) = 0;                                // _08
+	virtual int getFirst()             = 0;                                // _0C
+	virtual int getNext(int)           = 0;                                // _10
+	virtual bool isDone(int)           = 0;                                // _14
+	virtual ~ObjectMgr() { }                                               // _48
+	virtual void update();                                                 // _4C
+	virtual void postUpdate(int, f32);                                     // _50
+	virtual void stickUpdate();                                            // _54
+	virtual void refresh(Graphics&);                                       // _58
+	virtual void drawShadow(Graphics&, Texture*);                          // _5C
+	virtual int getSize() = 0;                                             // _60
+	virtual int getMax()  = 0;                                             // _64
+	virtual Creature* findClosest(immut Vector3f&, f32, immut Condition*); // _68
+	virtual Creature* findClosest(immut Vector3f&, immut Condition*);      // _6C
+	virtual void search(ObjectMgr*);                                       // _70
+	virtual void killAll();                                                // _74
 
 	void invalidateSearch();
 	void store();

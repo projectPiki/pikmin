@@ -393,7 +393,7 @@ SmokeEmitter::SmokeEmitter(int count, Texture* tex)
  * Address:	........
  * Size:	0000F0
  */
-SmokeEmitter::Smoke* SmokeEmitter::emit(Vector3f& pos, Vector3f& vel)
+SmokeEmitter::Smoke* SmokeEmitter::emit(immut Vector3f& pos, immut Vector3f& vel)
 {
 	if (mInactiveSmokeList->mNext != mInactiveSmokeList) {
 		Smoke* smoke     = mInactiveSmokeList->mNext;
@@ -659,7 +659,7 @@ EffectGeometryRegistration::EffectGeometryRegistration(char* modelFile, char* an
  * Address:	8019C0B0
  * Size:	0000FC
  */
-EffShpInst* EffectGeometryRegistration::create(Vector3f& pos, Vector3f& scale, Vector3f& rot)
+EffShpInst* EffectGeometryRegistration::create(immut Vector3f& pos, immut Vector3f& scale, immut Vector3f& rot)
 {
 	EffShpInst* inst = effectMgr->getShapeInst();
 	if (inst) {
@@ -823,7 +823,8 @@ void EffectMgr::exit()
  * Address:	8019CB38
  * Size:	000044
  */
-zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cbGen,
+zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, immut Vector3f& pos,
+                                          zen::CallBack1<zen::particleGenerator*>* cbGen,
                                           zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl)
 {
 	return mParticles[effID]->create(pos, cbGen, cbPtcl);
@@ -834,7 +835,7 @@ zen::particleGenerator* EffectMgr::create(EffectMgr::effTypeTable effID, Vector3
  * Address:	8019CBBC
  * Size:	000044
  */
-EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, Vector3f& pos, Vector3f& scale, Vector3f& rot)
+EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, immut Vector3f& pos, immut Vector3f& scale, immut Vector3f& rot)
 {
 	return mModels[modID]->create(pos, scale, rot);
 }
@@ -844,8 +845,8 @@ EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, Vector3f& pos, Ve
  * Address:	........
  * Size:	000060
  */
-zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, Vector3f& globalPos, s16 lifeTime, Vector3f& vel, Vector3f& accel,
-                                    f32 size, f32 rotSpeed, zen::CallBack1<zen::particleMdl*>* cbPtcl)
+zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, immut Vector3f& globalPos, s16 lifeTime, immut Vector3f& vel,
+                                    immut Vector3f& accel, f32 size, f32 rotSpeed, zen::CallBack1<zen::particleMdl*>* cbPtcl)
 {
 	return mSimpleParticles[simpleID]->create(lifeTime, globalPos, vel, accel, size, rotSpeed, cbPtcl);
 }

@@ -43,7 +43,7 @@ static char* _typeStr[] = {
  * Address:	80086CC4 in DOL, 100E7340 in DLL
  * Size:	0002DC
  */
-f32 Cylinder::get2dDist(Vector3f& point)
+f32 Cylinder::get2dDist(immut Vector3f& point) immut
 {
 	// Calculate cylinder direction vector
 	Vector3f cylinderDir = mEndPoint - mStartPoint;
@@ -77,7 +77,7 @@ f32 Cylinder::get2dDist(Vector3f& point)
  * Address:	80086FA0 in DOL, 100E7530 in DLL
  * Size:	0003C0
  */
-bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
+bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 {
 	// Calculate cylinder direction and normalize it
 	Vector3f cylinderDir = mEndPoint - mStartPoint;
@@ -128,7 +128,7 @@ bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
  * Address:	80087360
  * Size:	00002C
  */
-f32 Tube::getYRatio(f32 heightToCheck)
+f32 Tube::getYRatio(f32 heightToCheck) immut
 {
 	const f32 r = mEndPoint.y - mStartPoint.y;
 	if (r != 0.0f) {
@@ -143,7 +143,7 @@ f32 Tube::getYRatio(f32 heightToCheck)
  * Address:	8008738C
  * Size:	00033C
  */
-bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
+bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 {
 	Vector3f axisVec = mEndPoint - mStartPoint;
 	Vector3f dir     = axisVec;
@@ -176,7 +176,7 @@ bool Tube::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth)
  * Address:	800876C8
  * Size:	0000E4
  */
-f32 Cylinder::getPosRatio(const Vector3f& vec)
+f32 Cylinder::getPosRatio(const Vector3f& vec) immut
 {
 	Vector3f axisVec = mEndPoint - mStartPoint;
 	Vector3f dir     = axisVec;
@@ -189,7 +189,7 @@ f32 Cylinder::getPosRatio(const Vector3f& vec)
  * Address:	800877AC
  * Size:	0000E4
  */
-f32 Tube::getPosRatio(const Vector3f& pos)
+f32 Tube::getPosRatio(const Vector3f& pos) immut
 {
 	Vector3f axisVec = mEndPoint - mStartPoint;
 	Vector3f dir     = axisVec;
@@ -203,7 +203,7 @@ f32 Tube::getPosRatio(const Vector3f& pos)
  * Address:	........
  * Size:	000020
  */
-f32 Tube::getRatioRadius(f32 ratio)
+f32 Tube::getRatioRadius(f32 ratio) immut
 {
 	return (1.0f - ratio) * mStartRadius + ratio * mEndRadius;
 }
@@ -213,7 +213,7 @@ f32 Tube::getRatioRadius(f32 ratio)
  * Address:	80087890
  * Size:	000238
  */
-void Tube::getPosGradient(Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vector3f& surfaceGrad)
+void Tube::getPosGradient(Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vector3f& surfaceGrad) immut
 {
 	Vector3f tubePos = setPos(t);
 	Vector3f normal  = inputPos - tubePos;
@@ -233,7 +233,7 @@ void Tube::getPosGradient(Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vecto
  * Address:	80087AC8
  * Size:	0000F8
  */
-Vector3f Tube::setPos(f32 t)
+Vector3f Tube::setPos(f32 t) immut
 {
 	Vector3f pos = mStartPoint;
 	pos          = pos + t * (mEndPoint - mStartPoint);
@@ -527,7 +527,7 @@ bool CollPart::collide(Creature* collider, Vector3f& pushVector)
  * Address:	........
  * Size:	000158
  */
-bool CollPart::collide(Vector3f& pos, f32 radius, Vector3f& pushVector)
+bool CollPart::collide(immut Vector3f& pos, f32 radius, Vector3f& pushVector)
 {
 	if (!isCylinderType()) {
 		Vector3f sep = pos - mCentre;
@@ -784,7 +784,7 @@ void CollInfo::stopUpdateRec(int childIdx)
  * Address:	80088D38
  * Size:	0001C0
  */
-CollPart* CollInfo::checkCollisionSpecial(Vector3f& pos, f32 radius, CndCollPart* cond)
+CollPart* CollInfo::checkCollisionSpecial(immut Vector3f& pos, f32 radius, CndCollPart* cond)
 {
 	Vector3f vec;
 	for (int i = 0; i < mPartsCount; i++) {
@@ -802,7 +802,7 @@ CollPart* CollInfo::checkCollisionSpecial(Vector3f& pos, f32 radius, CndCollPart
  * Address:	........
  * Size:	000008
  */
-CollPart* CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
+CollPart* CollInfo::checkCollisionSpecialRec(int, immut Vector3f&, f32, CndCollPart*)
 {
 	return nullptr;
 }
@@ -920,7 +920,7 @@ CollPart* CollInfo::getSphere(u32 id)
  * Address:	80089770
  * Size:	00017C
  */
-CollPart* CollInfo::getNearestCollPart(Vector3f& pos, u32 tag)
+CollPart* CollInfo::getNearestCollPart(immut Vector3f& pos, u32 tag)
 {
 	f32 minDist           = 1280000.0f;
 	CollPart* nearestPart = nullptr;

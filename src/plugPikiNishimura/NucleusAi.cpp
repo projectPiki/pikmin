@@ -47,7 +47,7 @@ void NucleusAi::initAI(Nucleus* nucleus)
  * Address:	8017A5D8
  * Size:	00007C
  */
-void NucleusAi::animationKeyUpdated(PaniAnimKeyEvent& event)
+void NucleusAi::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 {
 	switch (event.mEventType) {
 	case KEY_Action0:

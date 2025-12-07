@@ -70,7 +70,7 @@ void PaniPikiAnimMgr::changeContext(AnimContext* context1, AnimContext* context2
  * Address:	8011F9B8
  * Size:	000058
  */
-void PaniPikiAnimMgr::startMotion(PaniMotionInfo* motion1, PaniMotionInfo* motion2)
+void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo* motion1, immut PaniMotionInfo* motion2)
 {
 	if (motion1) {
 		mUpperAnimator.startMotion(*motion1);
@@ -85,7 +85,7 @@ void PaniPikiAnimMgr::startMotion(PaniMotionInfo* motion1, PaniMotionInfo* motio
  * Address:	8011FA10
  * Size:	000058
  */
-void PaniPikiAnimMgr::finishMotion(PaniMotionInfo* motion1, PaniMotionInfo* motion2)
+void PaniPikiAnimMgr::finishMotion(immut PaniMotionInfo* motion1, immut PaniMotionInfo* motion2)
 {
 	if (motion1) {
 		mUpperAnimator.finishMotion(*motion1);
@@ -100,7 +100,7 @@ void PaniPikiAnimMgr::finishMotion(PaniMotionInfo* motion1, PaniMotionInfo* moti
  * Address:	8011FA68
  * Size:	000058
  */
-void PaniPikiAnimMgr::startMotion(PaniMotionInfo& motion1, PaniMotionInfo& motion2)
+void PaniPikiAnimMgr::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
 	startMotion(&motion1, &motion2);
 }

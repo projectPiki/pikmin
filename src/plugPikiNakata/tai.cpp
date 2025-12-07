@@ -76,7 +76,7 @@ bool TaiSerialAction::act(Teki& teki)
  * Address:	80126FDC
  * Size:	0000B4
  */
-bool TaiSerialAction::actByEvent(TekiEvent& event)
+bool TaiSerialAction::actByEvent(immut TekiEvent& event)
 {
 	Teki* teki = event.mTeki;
 	if (mActionQueue[teki->mCurrentQueueId]->actByEvent(event)) {
@@ -160,7 +160,7 @@ bool TaiState::act(Teki& teki)
  * Address:	801272F0
  * Size:	0000F4
  */
-bool TaiState::eventPerformed(TekiEvent& event)
+bool TaiState::eventPerformed(immut TekiEvent& event)
 {
 	// NON-MATCHING
 	for (int i = 0; i < mCount; i++) {
@@ -242,7 +242,7 @@ void TaiStrategy::act(Teki& teki)
  * Address:	80127574
  * Size:	000090
  */
-void TaiStrategy::eventPerformed(TekiEvent& event)
+void TaiStrategy::eventPerformed(immut TekiEvent& event)
 {
 	Teki* teki  = event.mTeki;
 	int stateID = teki->mStateID;
