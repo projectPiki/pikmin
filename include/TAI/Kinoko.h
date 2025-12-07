@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// Puffstool AI Actions ///////////
+/////////// Puffstool (ボケナメコ) ///////////
 
 /**
  * @brief TODO

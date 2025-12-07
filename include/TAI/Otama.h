@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Wolpole AI Actions ///////////
+/////////// Wogpole (オタマ) ///////////
 
 BEGIN_ENUM_TYPE(TAIotamaFloatParams)
 enum {

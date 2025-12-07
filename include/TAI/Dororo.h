@@ -9,7 +9,7 @@
 
 struct CollPart;
 
-/////////// Smoky Progg AI Actions ///////////
+/////////// Smoky Progg (ドドロ) ///////////
 
 /**
  * @brief TODO

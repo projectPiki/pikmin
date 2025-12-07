@@ -33,8 +33,6 @@ DEFINE_PRINT("TAIbeatle")
 
 /**
  * @brief TODO
- *
- * @note Defined in TAIbeatle.cpp
  */
 struct TAIAinitBeatle : public TaiAction {
 public:
@@ -376,8 +374,6 @@ protected:
 
 /**
  * @brief TODO
- *
- * @note Defined in TAIbeatle.cpp
  */
 struct TAIArockAttack : public TAIAreserveMotion {
 public:

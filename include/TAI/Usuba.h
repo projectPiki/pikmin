@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Usuba (Unused Enemy) AI Actions ///////////
+/////////// Usuba (ウスバ) [Unused Enemy] ///////////
 
 /**
  * @brief TODO

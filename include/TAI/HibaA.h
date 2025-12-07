@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Fire Geyser AI Actions ///////////
+/////////// Fire Geyser (間欠炎) ///////////
 
 BEGIN_ENUM_TYPE(TAIhibaAFloatParams)
 enum {

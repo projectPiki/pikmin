@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Armored Cannon Beetle AI Actions ///////////
+/////////// Armored Cannon Beetle (フタクチドックリ) ///////////
 
 BEGIN_ENUM_TYPE(TAIbeatleFloatParms)
 enum {

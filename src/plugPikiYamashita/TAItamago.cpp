@@ -40,7 +40,7 @@ public:
 	{
 		bool res = teki.isNaviWatch();
 		if (res) {
-			// PRINT("COUNT START! ==============================-\n");
+			PRINT("COUNT START! ==============================-\n");
 		}
 		return res;
 	}

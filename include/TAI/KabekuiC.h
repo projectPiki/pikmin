@@ -8,7 +8,7 @@
 #include "TekiParameters.h"
 #include "YaiStrategy.h"
 
-/////////// Shearwig AI Actions ///////////
+/////////// Shearwig (トビンコ) ///////////
 
 BEGIN_ENUM_TYPE(TAIkabekuiCFloatParms)
 enum {

@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// Rock AI Actions ///////////
+/////////// Rolling Rock (岩) ///////////
 
 /**
  * @brief TODO
@@ -49,7 +49,7 @@ struct TaiIwagonStrategy : public TaiStrategy {
 	// _00-_14 = TaiStrategy
 };
 
-/////////// Rock Spawner (unused) AI Actions ///////////
+/////////// Iwagen (岩源) [Unused Enemy] ///////////
 
 /**
  * @brief TODO

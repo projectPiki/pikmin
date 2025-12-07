@@ -7,7 +7,7 @@
 #include "TAI/Action.h"
 #include "TekiParameters.h"
 
-/////////// Pellet Posy AI Actions ///////////
+/////////// Pellet Posy (ペレット草) ///////////
 
 /**
  * @brief TODO
