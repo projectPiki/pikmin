@@ -751,7 +751,7 @@ ModeState* MessageModeState::update(u32& result)
 				mMessageTimer               = 2.0f;
 				mapMgr->mTargetDesaturation = 1.0f;
 				if ((gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) && gameoverWindow) {
-					gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
+					gameoverWindow->start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 				}
 				mMessagePhase = 1;
 			}
@@ -784,7 +784,7 @@ ModeState* MessageModeState::update(u32& result)
 				if (gameflow.mWorldClock.mCurrentDay != MAX_DAYS) {
 					gameflow.mMoviePlayer->startMovie(DEMOID_OliDownDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
 					if (gameoverWindow) {
-						gameoverWindow->start((zen::DrawGameOver::modeFlag)0, 40.0f);
+						gameoverWindow->start(zen::DrawGameOver::MODE_NaviDown, 40.0f);
 					}
 				}
 			} else {
@@ -1694,7 +1694,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 					gameflow.mMoviePlayer->startMovie(DEMOID_ExtDayEnd, 0, nullptr, nullptr, nullptr, -1, true);
 					gameflow.mWorldClock.setTime(gameflow.mParameters->mEndHour());
 					if (gameoverWindow) {
-						gameoverWindow->start(zen::DrawGameOver::modeFlag(1), 40.0f);
+						gameoverWindow->start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 					}
 					mapMgr->mTargetFadeLevel = 0.0f;
 				} else {
@@ -1707,7 +1707,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 				gameflow.mMoviePlayer->startMovie(DEMOID_Extinction, 0, navi, &navi->mSRT.t, &navi->mSRT.r, -1, true);
 				if (gameflow.mIsChallengeMode || gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 					if (gameoverWindow) {
-						gameoverWindow->start(zen::DrawGameOver::modeFlag(1), 40.0f);
+						gameoverWindow->start(zen::DrawGameOver::MODE_Extinction, 40.0f);
 					}
 				}
 			}

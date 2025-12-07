@@ -245,7 +245,7 @@ zen::DrawGameOver::DrawGameOver()
 	mGameOverA    = new DrawGameOverScreen("screen/blo/gameover.blo");
 	mGameOverB    = new DrawGameOverScreen("screen/blo/gameove2.blo");
 	mState        = GameOverState::Inactive;
-	mMode         = MODE_GameOverA;
+	mMode         = MODE_NaviDown;
 	mStateTimer   = 0.0f;
 	mActiveScreen = 0;
 }
@@ -261,11 +261,11 @@ void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag mode, f32 p2)
 	mMode          = mode;
 	mInputWaitTime = p2;
 	switch (mMode) {
-	case MODE_GameOverA:
+	case MODE_NaviDown:
 		mActiveScreen = mGameOverA;
 		break;
 
-	case MODE_GameOverB:
+	case MODE_Extinction:
 		mActiveScreen = mGameOverB;
 		break;
 
