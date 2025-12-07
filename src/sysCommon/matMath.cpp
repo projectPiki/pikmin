@@ -194,7 +194,7 @@ void Matrix4f::multiplyTo(Matrix4f& mtxB, Matrix4f& outMtx)
  */
 void Matrix4f::makeSRT(Vector3f& scale, Vector3f& rotation, Vector3f& translation)
 {
-	u32 stackFix[6];
+	STACK_PAD_VAR(6);
 
 	f32 sinX = sinf(rotation.x);
 	f32 sinY = sinf(rotation.y);
@@ -235,7 +235,7 @@ void Matrix4f::makeSRT(Vector3f& scale, Vector3f& rotation, Vector3f& translatio
  */
 void Matrix4f::makeConcatSRT(Matrix4f* a, Matrix4f& b, SRT& srt)
 {
-	u32 stackFix[6];
+	STACK_PAD_VAR(6);
 
 	f32 sinX = sinf(srt.r.x);
 	f32 sinY = sinf(srt.r.y);
