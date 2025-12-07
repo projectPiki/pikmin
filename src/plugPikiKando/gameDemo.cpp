@@ -175,7 +175,7 @@ void DemoFlags::update()
 	}
 
 	if (mCurrentDemoIndex == DEMOFLAG_FirstBombExplode) {
-		gameflow.mGameInterface->message(0, 20);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 20);
 		PRINT("*** BOMB TIME OUT * OG_BOMBINFO!\n");
 		setFlagOnly(mCurrentDemoIndex);
 	} else {

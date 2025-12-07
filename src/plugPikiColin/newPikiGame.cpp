@@ -590,9 +590,9 @@ ModeState* RunningModeState::update(u32& result)
 		if (playerState->getCurrParts() != MAX_UFO_PARTS && gameflow.mWorldClock.mCurrentDay == MAX_DAYS) {
 			if (playerState->happyEndable()) {
 				flowCont._244 = 1;
-				gameflow.mGameInterface->message(MOVIECMD_StartTutorial, 28);
+				gameflow.mGameInterface->message(MOVIECMD_TextDemo, 28);
 			} else {
-				gameflow.mGameInterface->message(MOVIECMD_StartTutorial, 28);
+				gameflow.mGameInterface->message(MOVIECMD_TextDemo, 28);
 			}
 		}
 	}
@@ -616,7 +616,7 @@ ModeState* RunningModeState::update(u32& result)
 		} else if (!gameflow.mIsChallengeMode && mController->keyClick(KBBTN_Y)
 		           && gameflow.mWorldClock.mTimeOfDay < gameflow.mParameters->mEndHour() - 0.125f && !gameflow.mIsUiOverlayActive
 		           && !mesgsPending) {
-			gameflow.mGameInterface->message(MOVIECMD_CreateSettingsMenu, 0);
+			gameflow.mGameInterface->message(MOVIECMD_CreateMenuWindow, 0);
 			mCachedPauseFlag            = gameflow.mIsUiOverlayActive;
 			gameflow.mIsUiOverlayActive = TRUE;
 		}
@@ -1633,7 +1633,7 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	OSReport("!!!!!!!!!!! Got message %d : %d\n", id, data);
 #endif
 	switch (id) {
-	case MOVIECMD_StartTutorial:
+	case MOVIECMD_TextDemo:
 		// Data from here uses the DEMOID_* define (cutscene ID)
 		PRINT("***** START TUTORIAL WINDOW\n");
 		int partId    = -1;
@@ -1759,11 +1759,13 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	case MOVIECMD_SetInputEnabled:
 		gameflow.mIsGameplayInputEnabled = data;
 		break;
+	case MOVIECMD_CountDownLastSecond:
+		break;
 	case MOVIECMD_StageFinish:
 		PRINT("GOT STAGE FINISH MESSAGE!!!\n");
 		gamecore->forceDayEnd();
 		break;
-	case MOVIECMD_CreateSettingsMenu:
+	case MOVIECMD_CreateMenuWindow:
 		createMenuWindow();
 		break;
 	}

@@ -386,7 +386,7 @@ void MoviePlayer::startMovie(int movieIdx, int, Creature* target, Vector3f* pos,
 	}
 
 	if (movieIdx == DEMOID_Unk12) { // title screen?
-		gameflow.mGameInterface->message(MOVIECMD_StartTutorial, 17);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 17);
 		return;
 	}
 

@@ -2472,7 +2472,7 @@ void PikiGrowupState::procAnimMsg(Piki* piki, MsgAnim* msg)
 		playerState->mResultFlags.setOn(RESFLAG_PikminSeeds);
 		if (!playerState->mDemoFlags.isFlag(DEMOFLAG_FirstNectar) && !gameflow.mMoviePlayer->mIsActive && piki->aiCullable()) {
 			playerState->mDemoFlags.setFlagOnly(DEMOFLAG_FirstNectar);
-			gameflow.mGameInterface->message(0, 22);
+			gameflow.mGameInterface->message(MOVIECMD_TextDemo, 22);
 		}
 		if (piki->mMode == PikiMode::FormationMode) {
 			piki->mNavi->mPlateMgr->changeFlower(piki);
@@ -2895,7 +2895,7 @@ void PikiNukareWaitState::init(Piki* piki)
 	if ((piki->mColor == Red && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckRedPikmin))
 	    || (piki->mColor == Yellow && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckYellowPikmin))
 	    || (piki->mColor == Blue && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckBluePikmin))) {
-		gameflow.mGameInterface->message(14, 0);
+		gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
 	}
 }
 
@@ -2947,7 +2947,7 @@ void PikiNukareState::init(Piki* piki)
 	piki->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 	playerState->mDemoFlags.setFlagOnly(DEMOFLAG_NoPikminTimeout);
 	piki->finishLook();
-	gameflow.mGameInterface->message(14, 0);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, FALSE);
 }
 
 /*
@@ -2968,7 +2968,7 @@ void PikiNukareState::cleanup(Piki* piki)
 {
 	if (playerState->isTutorial() && !playerState->mDemoFlags.isFlag(DEMOFLAG_Pluck15thPikmin) && GameStat::allPikis >= 15) {
 		playerState->mDemoFlags.setFlagOnly(DEMOFLAG_Pluck15thPikmin);
-		gameflow.mGameInterface->message(0, 30);
+		gameflow.mGameInterface->message(MOVIECMD_TextDemo, 30);
 	}
 
 	if (piki->mColor == Red && !playerState->mDemoFlags.isFlag(DEMOFLAG_PluckRedPikmin)) {
@@ -2998,7 +2998,7 @@ void PikiNukareState::cleanup(Piki* piki)
 		gameflow.mGamePrefs.openStage(STAGE_Cave);
 	}
 
-	gameflow.mGameInterface->message(14, 1);
+	gameflow.mGameInterface->message(MOVIECMD_SetInputEnabled, TRUE);
 }
 
 /*

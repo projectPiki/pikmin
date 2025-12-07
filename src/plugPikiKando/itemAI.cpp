@@ -960,7 +960,7 @@ void GoalAI::EmitPiki::act(AICreature* item)
 			if (!gameflow.mMoviePlayer->mIsActive && !playerState->mIsChallengeMode
 			    && !playerState->mDemoFlags.isFlag(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset)) {
 				playerState->mDemoFlags.setFlagOnly(flowCont.mCurrentStage->mStageID + DEMOFLAG_PikminLimitOffset);
-				gameflow.mGameInterface->message(0, 21);
+				gameflow.mGameInterface->message(MOVIECMD_TextDemo, 21);
 			}
 			PRINT("COUNTER UP!\n");
 		}

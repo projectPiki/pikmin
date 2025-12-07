@@ -125,7 +125,7 @@ void zen::DrawCountDown::update()
 
 		// when we reach '1', send some message
 		if (digit != mPrevDigit && digit == 2) {
-			gameflow.mGameInterface->message(15, 0);
+			gameflow.mGameInterface->message(MOVIECMD_CountDownLastSecond, 0);
 		}
 		// don't show the Gather your Pikmin! message in challenge mode
 		if (!gameflow.mIsChallengeMode) {

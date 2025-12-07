@@ -4,6 +4,7 @@
 #include "GoalItem.h"
 #include "Interface.h"
 #include "MapMgr.h"
+#include "MoviePlayer.h"
 #include "Pellet.h"
 #include "PlayerState.h"
 #include "Stickers.h"
@@ -309,7 +310,7 @@ void PelletGoalState::init(Pellet* pelt)
 			gameflow.mMovieInfoNum = pelletMgr->getUfoIndexFromID(pelt->mConfig->mModelId.mId);
 			gameflow.mMovieType    = check ? 2 : 0;
 			PRINT("suicomi movie :- type = %d : info = %d\n", gameflow.mMovieType, gameflow.mMovieInfoNum);
-			gameflow.mGameInterface->movie(79, 0, pelt, &pelt->mSRT.t, &pelt->mSRT.r, -1, true);
+			gameflow.mGameInterface->movie(DEMOID_CollectPart, 0, pelt, &pelt->mSRT.t, &pelt->mSRT.r, -1, true);
 		}
 		playerState->preloadHenkaMovie();
 
