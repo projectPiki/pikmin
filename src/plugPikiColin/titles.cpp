@@ -9,6 +9,8 @@
 #include "jaudio/piki_scene.h"
 #include "jaudio/verysimple.h"
 
+struct TitleSetupSection;
+
 zen::ogScrTitleMgr* titleWindow;
 bool titleWindowOn;
 zen::DrawHiScore* totalWindow;
@@ -29,6 +31,20 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F0
  */
 DEFINE_PRINT("Titles")
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
+struct TitlesMovieInterface : public GameInterface {
+	TitlesMovieInterface(TitleSetupSection* section) { mSection = section; }
+
+	virtual void message(int, int); // _08
+
+	// _00 = VTBL
+	TitleSetupSection* mSection; // _04
+};
 
 /**
  * @brief TODO
