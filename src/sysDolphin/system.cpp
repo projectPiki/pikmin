@@ -1,10 +1,6 @@
 #include "system.h"
 
-#if defined(VERSION_GPIP01_00)
-#include "bigFont_PAL.h"
-#else
 #include "bigFont.h"
-#endif
 
 #include "AtxStream.h"
 #include "BaseApp.h"
