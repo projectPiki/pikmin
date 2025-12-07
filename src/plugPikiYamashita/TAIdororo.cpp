@@ -1,16 +1,25 @@
+#include "TAI/Dororo.h"
+
 #include "DebugLog.h"
 #include "ItemMgr.h"
 #include "MapCode.h"
+#include "NaviMgr.h"
 #include "Pcam/CameraManager.h"
+#include "Pellet.h"
 #include "PikiHeadItem.h"
 #include "PikiMgr.h"
 #include "PlayerState.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
+#include "TAI/Aattack.h"
 #include "TAI/Aeffect.h"
 #include "TAI/Ajudge.h"
-#include "TAI/Dororo.h"
+#include "TAI/Amove.h"
+#include "TAI/Areaction.h"
+#include "TAI/EffectAttack.h"
 #include "TekiConditions.h"
+#include "TekiParameters.h"
+#include "zen/CallBack.h"
 
 /*
  * --INFO--
@@ -231,6 +240,103 @@ protected:
 
 /**
  * @brief TODO
+ */
+struct TAIAinitDororo : public TaiAction {
+public:
+	TAIAinitDororo(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		teki.mCollisionRadius = 64.0f;
+		teki.mPathHandle      = 'test';
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
+		teki.setDesire(0.0f);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		// PRINT("INIT FINISH \n");
+		return true;
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAgravityDororo : public TaiAction {
+public:
+	TAIAgravityDororo(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setDororoGravity(gsys->getFrameTime() * 0.98f);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		if (teki.getYFromSeaLevel() > 0.0f) {
+			teki.mTargetVelocity.y -= teki.getDororoGravity();
+		} else {
+			teki.mTargetVelocity.y = 0.0f;
+		}
+
+		teki.mVelocity.y = teki.mTargetVelocity.y;
+		return false;
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAcheckBarkDororo : public TaiAction {
+public:
+	TAIAcheckBarkDororo(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		bool doBark = false;
+		Iterator iter(itemMgr->getPikiHeadMgr());
+		CI_LOOP(iter)
+		{
+			Creature* sprout = *iter;
+			if (sprout && sprout->getPosition().distance(teki.getPosition()) < teki.getParameterF(TPF_VisibleRange)) {
+				teki.addDesire(gsys->getFrameTime());
+			}
+		}
+
+		if (teki.getDesire() > 4.0f) {
+			teki.setDesire(0.0f);
+			doBark = true;
+		}
+
+		return doBark;
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+	// TODO: members
+};
+
+/**
+ * @brief TODO
  *
  * @note This is defined here cause it needs to use the PRINT function in this file, sigh.
  */
@@ -331,6 +437,92 @@ public:
 protected:
 	// _04     = VTBL
 	// _00-_0C = TAIAreserveMotion
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAwaitDororo : public TAIAwait {
+public:
+	TAIAwaitDororo(int nextState, int motionIdx)
+	    : TAIAwait(nextState, motionIdx, 0.0f)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAwait::start(teki);
+		teki.setFrameCounterMax(teki.getParameterF(DOROROPF_WaitTime) + zen::Rand(teki.getParameterF(DOROROPF_WaitTime)));
+	}
+
+protected:
+	virtual f32 getWaitCounterMax(Teki& teki) { return teki.getFrameCounterMax(); } // _1C
+
+	// _04     = VTBL
+	// _00-_08 = TAIAwait?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAflickingDororo : public TAIAflicking {
+public:
+	TAIAflickingDororo(int nextState, int motionIdx)
+	    : TAIAflicking(nextState, motionIdx)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAflicking::start(teki);
+		if (teki.isNaviWatch()) {
+			playerState->mResultFlags.setOn(RESFLAG_Dororo);
+		}
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			teki.playEventSound(&teki, SE_DORORO_SWING);
+		}
+		return TAIAflicking::act(teki);
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TAIAflicking?
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAgoGoalPathDororo : public TAIAgoGoalPath {
+public:
+	TAIAgoGoalPathDororo(int nextState, int motionIdx)
+	    : TAIAgoGoalPath(nextState, motionIdx)
+	{
+	}
+
+protected:
+	virtual f32 getWalkVelocity(Teki& teki) // _20
+	{
+		int pikiCount   = teki.countPikis(TekiStickerCondition(&teki));
+		f32 speedFactor = f32(pikiCount) / teki.getParameterF(DOROROPF_PikiNumForMaxDrag);
+		if (speedFactor > 1.0f) {
+			speedFactor = 1.0f;
+		}
+
+		speedFactor = (1.0f - teki.getParameterF(DOROROPF_WalkingSpeedDragFactor) * speedFactor);
+
+		return teki.getParameterF(TPF_WalkVelocity) * speedFactor;
+
+		TekiStickerCondition(nullptr);
+	}
+
+	// _04     = VTBL
+	// _00-_08 = TAIAgoGoalPath?
 	// TODO: members
 };
 

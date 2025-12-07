@@ -1,8 +1,15 @@
-#include "DebugLog.h"
-#include "SoundMgr.h"
-#include "TAI/Amove.h"
 #include "TAI/Tamago.h"
+
+#include "DebugLog.h"
+#include "Pcam/CameraManager.h"
+#include "RumbleMgr.h"
+#include "SoundMgr.h"
+#include "TAI/Aattack.h"
+#include "TAI/Amove.h"
+#include "TAI/Areaction.h"
+#include "TAI/EffectAttack.h"
 #include "teki.h"
+#include "zen/CallBack.h"
 #include "zen/Math.h"
 
 /*
@@ -18,6 +25,156 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  * Size:	0000F4
  */
 DEFINE_PRINT("TAItamago")
+
+/**
+ * @brief TODO
+ */
+struct TAIAcountStartTamago : public TaiAction {
+public:
+	TAIAcountStartTamago(int nextState)
+	    : TaiAction(nextState)
+	{
+	}
+
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = teki.isNaviWatch();
+		if (res) {
+			// PRINT("COUNT START! ==============================-\n");
+		}
+		return res;
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_08 = TaiAction
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAhatch : public TAIAmotion {
+public:
+	TAIAhatch(int nextState, int motionIdx)
+	    : TAIAmotion(nextState, motionIdx)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAmotion::start(teki);
+		teki.disableStick();
+		teki.setTekiOption(BTeki::TEKI_OPTION_INVINCIBLE);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			birth(teki);
+			teki.flick();
+		}
+		if (teki.mCurrentAnimEvent == KEY_Finished) {
+			teki.die();
+			res = true;
+		}
+
+		return res;
+	}
+
+protected:
+	void birth(Teki& teki)
+	{
+		Vector3f effPos(teki.getPosition());
+		effPos.y += 35.0f;
+		effectMgr->create(EffectMgr::EFF_Tamago_DeadFragments, effPos, nullptr, nullptr);
+		effectMgr->create(EffectMgr::EFF_Tamago_DeadSmoke, effPos, nullptr, nullptr);
+		teki.flick();
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ATARI);
+		teki.mPlatMgr.release();
+
+		teki.spawnTeki(teki.getParameterI(TPI_SpawnType));
+		teki.playEventSound(&teki, SE_DORORO_EGG_CRASH);
+		cameraMgr->startVibrationEvent(2, teki.getPosition());
+		rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());
+	}
+
+	// _04     = VTBL
+	// _00-_0C = TAIAmotion
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAtimerReactionTamago : public TAIAtimerReaction {
+public:
+	TAIAtimerReactionTamago(int nextState)
+	    : TAIAtimerReaction(nextState, 0.0f)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		teki.setFrameCounter(0.0f);
+		teki.setFrameCounterMax(teki.getParameterF(TAMAGOPF_MinEmergenceTime)
+		                        + zen::Rand(teki.getParameterF(TAMAGOPF_MaxEmergenceTime) - teki.getParameterF(TAMAGOPF_MinEmergenceTime)));
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		return TAIAtimerReaction::act(teki);
+	}
+
+protected:
+	virtual f32 getFrameMax(Teki& teki) // _1C
+	{
+		return teki.getFrameCounterMax();
+	}
+
+	// _04     = VTBL
+	// _00-_0C = TAIAtimerReaction
+};
+
+/**
+ * @brief TODO
+ */
+struct TAIAdyingTamago : public TAIAmotion {
+public:
+	TAIAdyingTamago(int nextState, int motionIdx)
+	    : TAIAmotion(nextState, motionIdx)
+	{
+	}
+
+	virtual void start(Teki& teki) // _08
+	{
+		TAIAmotion::start(teki);
+		teki.disableStick();
+		teki.setTekiOption(BTeki::TEKI_OPTION_INVINCIBLE);
+		teki.clearTekiOption(BTeki::TEKI_OPTION_ALIVE);
+	}
+	virtual bool act(Teki& teki) // _10
+	{
+		bool res = false;
+		if (teki.mCurrentAnimEvent == KEY_Action0) {
+			Vector3f effPos(teki.getPosition());
+			effPos.y += 35.0f;
+			effectMgr->create(EffectMgr::EFF_Tamago_DeadFragments, effPos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Tamago_EyeGlow, effPos, nullptr, nullptr);
+			effectMgr->create(EffectMgr::EFF_Tamago_DeadFumes, effPos, nullptr, nullptr);
+			teki.playEventSound(&teki, SE_DORORO_EGG_CRASH);
+		}
+		if (teki.mCurrentAnimEvent == KEY_Finished) {
+			teki.die();
+			res = true;
+		}
+
+		return res;
+	}
+
+protected:
+	// _04     = VTBL
+	// _00-_0C = TAIAmotion
+	// TODO: members
+};
 
 /*
  * --INFO--
