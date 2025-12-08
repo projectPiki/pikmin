@@ -118,9 +118,9 @@ bool TaiAnimationSwallowingAction::act(Teki& teki)
 			numSlots = mouth->getChildCount();
 		}
 
-		InteractKill& kill = InteractKill(&teki, 0);
-		bool check1        = false;
-		Navi* navi         = naviMgr->getNavi();
+		InteractKill NRef kill = InteractKill(&teki, 0);
+		bool check1            = false;
+		Navi* navi             = naviMgr->getNavi();
 
 		if (andCond3.satisfy(navi)) {
 			navi->stimulate(InteractSwallow(&teki, nullptr, 0));

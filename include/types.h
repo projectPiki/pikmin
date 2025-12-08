@@ -99,6 +99,11 @@ typedef u16 wchar_t;
 #define nullptr 0
 #endif
 
+// Nakata had a bad habit of writing mutable references to lifetime-extended rvalues when a value type would have sufficed, so this macro
+// is named for him.  MWCC 1.2.5 sometimes optimizes `Type foo = Type(...)` *really* poorly compared to `Type foo(...)`, so unless you are
+// using a different compiler, this const-correctness fix might generate worse code.
+#define NRef TERNARY_BUILD_MATCHING(&, )
+
 // Random and useful macros
 #define PATH_MAX  (256)                     // Max path length
 #define MAX(a, b) (((a) > (b)) ? (a) : (b)) // Returns the maximum of a and b

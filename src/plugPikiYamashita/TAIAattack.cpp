@@ -332,8 +332,8 @@ bool TAIAflicking::act(Teki& teki)
 void TAIAflicking::flick(Teki& teki)
 {
 	if (teki.mCurrentAnimEvent == KEY_Action0) {
-		InteractFlick& flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-		                                     getFlickDirection(teki));
+		InteractFlick NRef flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
+		                                         getFlickDirection(teki));
 		teki.flick(flick, flick);
 	}
 }
@@ -378,8 +378,8 @@ bool TAIAflickingReserveMotion::act(Teki& teki)
 void TAIAflickingReserveMotion::flick(Teki& teki)
 {
 	if (teki.mCurrentAnimEvent == KEY_Action0) {
-		InteractFlick& flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-		                                     getFlickDirection(teki));
+		InteractFlick NRef flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
+		                                         getFlickDirection(teki));
 		teki.flick(flick, flick);
 	}
 }

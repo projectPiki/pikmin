@@ -70,9 +70,9 @@ void PeveAccelerationEvent::makeAccelerationEvent(PeveCondition* cond, NVector3f
 void PeveAccelerationEvent::update()
 {
 	PeveEvent::update();
-	NVector3f& pos   = NVector3f();
-	NVector3f& vel   = NVector3f();
-	NVector3f& accel = NVector3f();
+	NVector3f NRef pos   = NVector3f();
+	NVector3f NRef vel   = NVector3f();
+	NVector3f NRef accel = NVector3f();
 
 	mPositionIO->output(pos);
 	mVelocityIO->output(vel);
@@ -110,7 +110,7 @@ void PeveParabolaEvent::makeParabolaEvent(PeveCondition* cond, NVector3fIO* vecI
 	_2C.setMaxLength(maxLength);
 	_2C.input(p3);
 
-	NVector3f& vec1 = NVector3f(0.0f, -p5, 0.0f);
+	NVector3f NRef vec1 = NVector3f(0.0f, -p5, 0.0f);
 	_1C.input(vec1);
 	makeAccelerationEvent(cond, vecIO, &_2C, &_1C);
 }
@@ -319,7 +319,7 @@ void PeveFunctionCurveEvent::reset()
 void PeveFunctionCurveEvent::update()
 {
 	PeveEvent::update();
-	NVector3f& vec1 = NVector3f();
+	NVector3f NRef vec1 = NVector3f();
 	mFunction->outputPosition(_10, vec1);
 	_14->input(vec1);
 	if (_24) {
@@ -360,13 +360,13 @@ void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition* cond, NVect
 void PeveHomingPositionEvent::update()
 {
 	PeveEvent::update();
-	NVector3f& vec1 = NVector3f();
+	NVector3f NRef vec1 = NVector3f();
 	_10->output(vec1);
 
-	NVector3f& vec2 = NVector3f();
+	NVector3f NRef vec2 = NVector3f();
 	_14->output(vec2);
 
-	NVector3f& vec3 = NVector3f(vec1, vec2);
+	NVector3f NRef vec3 = NVector3f(vec1, vec2);
 	vec3.scale(_18);
 	vec1.add(vec3);
 	_10->input(vec1);

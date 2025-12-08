@@ -109,10 +109,10 @@ void PeveDistanceCondition::construct(f32 threshold, NVector3fIO* vecIOA, NVecto
  */
 void PeveDistanceCondition::update()
 {
-	NVector3f& vecA = NVector3f();
+	NVector3f NRef vecA = NVector3f();
 	mVectorIOA->output(vecA);
 
-	NVector3f& vecB = NVector3f();
+	NVector3f NRef vecB = NVector3f();
 	mVectorIOB->output(vecB);
 
 	f32 dist = vecA.distance(vecB);
@@ -150,10 +150,10 @@ void PeveComparisonYCondition::construct(NVector3fIO* vecIOA, NVector3fIO* vecIO
  */
 void PeveComparisonYCondition::update()
 {
-	NVector3f& vecA = NVector3f();
+	NVector3f NRef vecA = NVector3f();
 	mVectorIOA->output(vecA);
 
-	NVector3f& vecB = NVector3f();
+	NVector3f NRef vecB = NVector3f();
 	mVectorIOB->output(vecB);
 
 	if (vecA.y > vecB.y) {

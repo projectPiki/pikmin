@@ -73,7 +73,7 @@ void NLine::construct(NLine& other)
  */
 f32 NLine::calcDistance(NVector3f& point, f32* vertProj)
 {
-	NVector3f& pos = NVector3f();
+	NVector3f NRef pos = NVector3f();
 	f32 proj       = calcVerticalProjection(point);
 	outputPosition(proj, pos);
 
@@ -109,16 +109,16 @@ f32 NLine::calcDistance(NLine& other, f32* closestPointThisLine, f32* closestPoi
 		return distance;
 	}
 
-	NVector3f& otherOrigin  = NVector3f(other.getPosition());
+	NVector3f NRef otherOrigin = NVector3f(other.getPosition());
 	f32 otherOrigProjection = -otherOrigin.dot(other.getDirection());
 	f32 paramOnOtherLine
 	    = (otherOrigin.dot(mDirection) * directionsAlignment + otherOrigProjection) / (1.0f - directionsAlignment * directionsAlignment);
 	f32 paramOnThisLine = otherOrigin.dot(mDirection) + paramOnOtherLine * directionsAlignment;
 
-	NVector3f& closestPointThis = NVector3f();
+	NVector3f NRef closestPointThis = NVector3f();
 	outputPosition(paramOnThisLine, closestPointThis);
 
-	NVector3f& closestPointOther = NVector3f();
+	NVector3f NRef closestPointOther = NVector3f();
 	other.outputPosition(paramOnOtherLine, closestPointOther);
 
 	if (closestPointThisLine) {
@@ -149,7 +149,7 @@ void NLine::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
  */
 f32 NLine::calcVerticalProjection(NVector3f& point)
 {
-	NVector3f& sep = NVector3f(mPosition, point);
+	NVector3f NRef sep = NVector3f(mPosition, point);
 	return mDirection.dot(sep);
 }
 
@@ -160,7 +160,7 @@ f32 NLine::calcVerticalProjection(NVector3f& point)
  */
 void NLine::outputPosition(f32 t, NVector3f& outPos)
 {
-	NVector3f& tmp = NVector3f();
+	NVector3f NRef tmp = NVector3f();
 	tmp.scale2(t, mDirection);
 	outPos.add2(mPosition, tmp);
 }
@@ -388,7 +388,7 @@ void NPlane::outputPosition(NVector3f& outPos)
 void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 {
 	f32 t          = judge(point);
-	NVector3f& tmp = NVector3f();
+	NVector3f NRef tmp = NVector3f();
 	tmp.scale2(-t, mNormal);
 	outPos.add2(point, tmp);
 }
@@ -460,7 +460,7 @@ f32 NPlane::calcY(f32, f32)
  */
 void NPlane::transform(NTransform3D& transform)
 {
-	NVector3f& tmp = NVector3f();
+	NVector3f NRef tmp = NVector3f();
 	outputPosition(tmp);
 	transform.rotate(mNormal);
 	transform.transform(tmp);

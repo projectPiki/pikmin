@@ -1641,7 +1641,7 @@ void BTeki::flick(InteractFlick& upperFlick, InteractFlick& lowerFlick)
  */
 void BTeki::flickUpper()
 {
-	InteractFlick& flick = InteractFlick(this, getParameterF(TPF_UpperFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
+	InteractFlick NRef flick = InteractFlick(this, getParameterF(TPF_UpperFlickPower), 0.0f, FLICK_BACKWARDS_ANGLE);
 	flickUpper(flick);
 }
 
@@ -1676,7 +1676,7 @@ void BTeki::flickUpper(InteractFlick& flick)
  */
 void BTeki::flickLower()
 {
-	InteractFlick& flick
+	InteractFlick NRef flick
 	    = InteractFlick(this, getParameterF(TPF_LowerFlickPower), getParameterF(TPF_LowerAttackPower), FLICK_BACKWARDS_ANGLE);
 	flickLower(flick);
 }

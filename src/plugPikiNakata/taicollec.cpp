@@ -1035,7 +1035,7 @@ bool TaiCollecVisibleHeightPelletLostAction::act(Teki& teki)
 		return true;
 	}
 
-	TekiVisibleHeightCondition& cond = TekiVisibleHeightCondition(&teki);
+	TekiVisibleHeightCondition NRef cond = TekiVisibleHeightCondition(&teki);
 	if (!cond.satisfy(target)) {
 		PRINT_NAKATA("TaiCollecVisibleHeightPelletLostAction::act:!condition.satisfy:%08x,%08x\n", &teki, target);
 		teki.setCreaturePointer(3, target);
@@ -1073,7 +1073,7 @@ bool TaiCollecPelletLostAction::act(Teki& teki)
 		return true;
 	}
 
-	TekiAndCondition& cond
+	TekiAndCondition NRef cond
 	    = TekiAndCondition(&TekiVisibleCondition(&teki), &TekiCollecTargetPelletCondition(&teki, teki.getParameterI(COLLECPI_CarryPower)));
 	if (!cond.satisfy(target)) {
 		teki.clearCreaturePointer(0);
@@ -1099,7 +1099,7 @@ bool TaiCollecPelletDisappearedAction::act(Teki& teki)
 		return true;
 	}
 
-	TekiVisibleCondition& cond = TekiVisibleCondition(&teki);
+	TekiVisibleCondition NRef cond = TekiVisibleCondition(&teki);
 	if (!cond.satisfy(target)) {
 		PRINT("!TaiCollecPelletDisappearedAction::act:!condition.satisfy:%08x,%d\n", &teki, teki.mStateID);
 		teki.clearCreaturePointer(2);
@@ -1243,7 +1243,7 @@ bool TaiCollecWinCarryingAction::act(Teki& teki)
 		return false;
 	}
 
-	TekiCollecTargetPelletCondition& cond = TekiCollecTargetPelletCondition(&teki, teki.getParameterI(COLLECPI_CarryPower));
+	TekiCollecTargetPelletCondition NRef cond = TekiCollecTargetPelletCondition(&teki, teki.getParameterI(COLLECPI_CarryPower));
 	if (!cond.satisfy(target)) {
 		return false;
 	}
@@ -1265,7 +1265,7 @@ bool TaiCollecDefeatCarryingAction::act(Teki& teki)
 		return false;
 	}
 
-	TekiCollecTargetPelletCondition& cond = TekiCollecTargetPelletCondition(&teki, teki.getParameterI(COLLECPI_CarryPower));
+	TekiCollecTargetPelletCondition NRef cond = TekiCollecTargetPelletCondition(&teki, teki.getParameterI(COLLECPI_CarryPower));
 	if (cond.satisfy(target)) {
 		return false;
 	}
