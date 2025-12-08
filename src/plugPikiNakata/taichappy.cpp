@@ -584,9 +584,9 @@ TaiChappyStrategy::TaiChappyStrategy(TekiParameters* params)
  */
 bool TaiChappyCryAction::act(Teki& teki)
 {
-	TekiAndCondition& cond = TekiAndCondition(&TekiTypeCondition(TEKI_Swallow),
-	                                          &TekiAndCondition(&TekiOrCondition(&TekiStateCondition(15), &TekiStateCondition(1)),
-	                                                            &TekiDistanceCondition(&teki, teki.getParameterF(TPF_MessageRange))));
+	TekiAndCondition NRef cond = TekiAndCondition(&TekiTypeCondition(TEKI_Swallow),
+	                                              &TekiAndCondition(&TekiOrCondition(&TekiStateCondition(15), &TekiStateCondition(1)),
+	                                                                &TekiDistanceCondition(&teki, teki.getParameterF(TPF_MessageRange))));
 	Creature* bulborb      = tekiMgr->findClosest(teki.getPosition(), &cond);
 	if (!bulborb) {
 		return false;

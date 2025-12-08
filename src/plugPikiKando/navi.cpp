@@ -1797,8 +1797,8 @@ void Navi::makeVelocity(bool p1)
 		_74C.set(0.0f, 0.0f, 0.0f);
 	}
 	f32 angle               = NMathF::atan2(mNaviCamera->mViewXAxis.z, mNaviCamera->mViewXAxis.x);
-	NAxisAngle4f& axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
-	NTransform3D& transform = NTransform3D();
+	NAxisAngle4f NRef axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
+	NTransform3D NRef transform = NTransform3D();
 	transform.inputAxisAngle(axisAngle);
 
 	if (!p1) {
@@ -1895,9 +1895,9 @@ void Navi::makeVelocity(bool p1)
 void Navi::makeCStick(bool p1)
 {
 	f32 angle               = NMathF::atan2(mNaviCamera->mViewXAxis.z, mNaviCamera->mViewXAxis.x);
-	NAxisAngle4f& axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
+	NAxisAngle4f NRef axisAngle = NAxisAngle4f(NVector3f(0.0f, 1.0f, 0.0f), angle);
 
-	NTransform3D& transform = NTransform3D();
+	NTransform3D NRef transform = NTransform3D();
 	transform.inputAxisAngle(axisAngle);
 
 	NVector3f subStick(mKontroller->getSubStickX(), 0.0f, -mKontroller->getSubStickY());

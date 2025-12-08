@@ -1006,8 +1006,8 @@ bool TaiOtimotiPressingAction::actByEvent(TekiEvent& event)
 		event.mTeki->clearTekiOption(BTeki::TEKI_OPTION_GRAVITATABLE);
 		Teki* teki = event.mTeki;
 
-		InteractPress& press = InteractPress(teki, teki->getParameterF(TPF_AttackPower));
-		TekiAndCondition& cond
+		InteractPress NRef press = InteractPress(teki, teki->getParameterF(TPF_AttackPower));
+		TekiAndCondition NRef cond
 		    = TekiAndCondition(&TekiRecognitionCondition(teki), &TekiAndCondition(&TekiDistanceCondition(teki, teki->getAttackRange()),
 		                                                                          &TekiNotCondition(&TekiStickerCondition(teki))));
 		teki->interactNaviPiki(press, cond);

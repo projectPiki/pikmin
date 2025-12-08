@@ -132,10 +132,10 @@ protected:
 	virtual void flick(Teki& teki) // _1C
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
-			InteractFlick& flick1 = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-			                                      getFlickDirection(teki));
-			InteractFlick& flick2 = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
-			                                      getFlickDirection(teki));
+			InteractFlick NRef flick1 = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower),
+			                                          teki.getParameterF(TPF_UpperAttackPower), getFlickDirection(teki));
+			InteractFlick NRef flick2 = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower),
+			                                          teki.getParameterF(TPF_LowerAttackPower), getFlickDirection(teki));
 			teki.flick(flick1, flick2);
 
 			effectMgr->create(EffectMgr::EFF_BigDustRing, teki.getPosition(), nullptr, nullptr);

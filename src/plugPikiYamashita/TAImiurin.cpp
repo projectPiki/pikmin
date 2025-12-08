@@ -126,8 +126,8 @@ public:
 	{
 		TAIAmotion::start(teki);
 		teki.setFrameCounter(0.0f);
-		InteractFlick& flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-		                                     teki.mFaceDirection + PI);
+		InteractFlick NRef flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
+		                                         teki.mFaceDirection + PI);
 		teki.flick(flick, flick);
 		cameraMgr->startVibrationEvent(3, teki.getPosition());
 		rumbleMgr->start(RUMBLE_Unk11, 0, teki.getPosition());

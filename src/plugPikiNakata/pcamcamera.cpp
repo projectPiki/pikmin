@@ -351,12 +351,12 @@ void PcamCamera::update()
  */
 void PcamCamera::makePosture()
 {
-	NVector3f& target = NVector3f();
-	NVector3f& polar  = NVector3f();
+	NVector3f NRef target = NVector3f();
+	NVector3f NRef polar  = NVector3f();
 	outputTargetWatchpoint(target);
 
 	f32 homingSpeed    = getCurrentHomingSpeed();
-	NVector3f& moveDir = NVector3f();
+	NVector3f NRef moveDir = NVector3f();
 	moveDir.sub2(target, getWatchpoint());
 	moveDir.scale(homingSpeed);
 	target.add2(getWatchpoint(), moveDir);
@@ -391,7 +391,7 @@ void PcamCamera::makePosture()
 	polar.add2(getViewpoint(), moveDir);
 	makeWatchObjectViewpoint(target, polar);
 
-	NPosture3D& posture = NPosture3D(polar, target);
+	NPosture3D NRef posture = NPosture3D(polar, target);
 	inputPosture(posture);
 
 	f32 fov = getFov();
@@ -617,7 +617,7 @@ f32 PcamCamera::calcCurrentDistance()
  */
 f32 PcamCamera::calcCurrentDirection()
 {
-	NPosture3D& posture = NPosture3D();
+	NPosture3D NRef posture = NPosture3D();
 	outputPosture(posture);
 	return posture.calcDirection() + NMathF::pi;
 }
@@ -629,7 +629,7 @@ f32 PcamCamera::calcCurrentDirection()
  */
 f32 PcamCamera::calcTargetDistance()
 {
-	NVector3f& targetPos = NVector3f(mTargetCreature->mSRT.t);
+	NVector3f NRef targetPos = NVector3f(mTargetCreature->mSRT.t);
 	return targetPos.distance(getViewpoint());
 }
 

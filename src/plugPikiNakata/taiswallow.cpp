@@ -743,8 +743,8 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 		return true;
 	}
 
-	TekiAndCondition& cond = TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiLowerCondition(&teki));
-	int pikiCount          = teki.countPikis(cond);
+	TekiAndCondition NRef cond = TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiLowerCondition(&teki));
+	int pikiCount              = teki.countPikis(cond);
 	f32 linFuncValues[2];
 	NClampLinearFunction linFunc(linFuncValues);
 	linFunc.makeClampLinearFunction(0.0f, 1.0f, teki.getParameterF(SWALLOWPF_TurnVelocityFuncMaxCount),
@@ -808,9 +808,9 @@ bool TaiSwallowFlickingAction::act(Teki& teki)
 void TaiSwallowFlickingAction::flick(Teki& teki)
 {
 	teki.flickUpper();
-	InteractFlick& flick
+	InteractFlick NRef flick
 	    = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower), FLICK_BACKWARDS_ANGLE);
-	TekiAndCondition& cond
+	TekiAndCondition NRef cond
 	    = TekiAndCondition(&TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickingCondition())),
 	                       &TekiAndCondition(&TekiDistanceCondition(&teki, teki.getLowerRange()),
 	                                         &TekiAngleCondition(&teki, teki.getParameterF(SWALLOWPF_FlickLowerAngle))));
@@ -829,9 +829,9 @@ void TaiSwallowFlickingAction::flick(Teki& teki)
 bool TaiSwallowSwallowingFlickAction::act(Teki& teki)
 {
 	if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_0)) {
-		InteractFlick& flick = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
-		                                     teki.getDirection() + NMathF::pi);
-		TekiAndCondition& cond
+		InteractFlick NRef flick = InteractFlick(&teki, teki.getParameterF(TPF_LowerFlickPower), teki.getParameterF(TPF_LowerAttackPower),
+		                                         teki.getDirection() + NMathF::pi);
+		TekiAndCondition NRef cond
 		    = TekiAndCondition(&TekiAndCondition(&TekiRecognitionCondition(&teki), &TekiNotCondition(&TekiStickingCondition())),
 		                       &TekiAndCondition(&TekiDistanceCondition(&teki, teki.getLowerRange()),
 		                                         &TekiAngleCondition(&teki, teki.getParameterF(SWALLOWPF_FlickLowerAngle))));

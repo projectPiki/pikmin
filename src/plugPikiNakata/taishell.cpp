@@ -381,7 +381,7 @@ bool TaiShellNaviPikiInsideAction::act(Teki& teki)
 	NVector3f spawnPos;
 	teki.outputSpawnPosition(spawnPos);
 
-	TekiPositionDistanceCondition& distCond = TekiPositionDistanceCondition(spawnPos, teki.getAttackableRange());
+	TekiPositionDistanceCondition NRef distCond = TekiPositionDistanceCondition(spawnPos, teki.getAttackableRange());
 	return teki.checkNaviPiki(distCond);
 
 	// idk man.

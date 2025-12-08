@@ -428,12 +428,12 @@ void NOrientation::normalize()
 		makeUp();
 	}
 
-	NVector3f& left = NVector3f();
+	NVector3f NRef left = NVector3f();
 	outputLeft(left);
 
-	NTransform3D& transform = NTransform3D();
+	NTransform3D NRef transform = NTransform3D();
 
-	NAxisAngle4f& axisAngle = NAxisAngle4f(left, NMathF::pi / 2.0f);
+	NAxisAngle4f NRef axisAngle = NAxisAngle4f(left, NMathF::pi / 2.0f);
 
 	transform.inputAxisAngle(axisAngle);
 	mUpVector.input(mDirection);
@@ -478,7 +478,7 @@ void NOrientation::outputLeft(NVector3f& outLeft)
  */
 void NOrientation::makeUp()
 {
-	NOrientation& orient = NOrientation(mDirection);
+	NOrientation NRef orient = NOrientation(mDirection);
 
 	if (!orient.mDirection.isParallel(NVector3f(0.0f, 1.0f, 0.0f))) {
 		orient.inputUp(NVector3f(0.0f, 1.0f, 0.0f));
@@ -501,7 +501,7 @@ void NOrientation::makeUp()
  */
 void NOrientation::outputTransform(NTransform3D& transform)
 {
-	NVector3f& left = NVector3f();
+	NVector3f NRef left = NVector3f();
 	outputLeft(left);
 
 	transform.inputCols(left, mUpVector, mDirection);
@@ -527,7 +527,7 @@ void NOrientation::inputTransform(NTransform3D& transform)
  */
 void NOrientation::outputRotation(NTransform3D& transform)
 {
-	NVector3f& left = NVector3f();
+	NVector3f NRef left = NVector3f();
 	outputLeft(left);
 
 	transform.inputCol(0, left);
@@ -781,7 +781,7 @@ void NPosture2D::construct(Vector3f& trans, f32 dir)
 void NPosture2D::outputTransform(NTransform3D& transform)
 {
 	transform.inputTranslation(mTranslation);
-	NAxisAngle4f& axisAngle = NAxisAngle4f();
+	NAxisAngle4f NRef axisAngle = NAxisAngle4f();
 	outputAxisAngle(axisAngle);
 	transform.inputRotation(axisAngle);
 }
@@ -793,13 +793,13 @@ void NPosture2D::outputTransform(NTransform3D& transform)
  */
 void NPosture2D::outputInverseTransform(NTransform3D& transform)
 {
-	NTransform3D& trans1 = NTransform3D();
-	NTransform3D& trans2 = NTransform3D();
-	NVector3f& pos       = NVector3f(mTranslation);
+	NTransform3D NRef trans1 = NTransform3D();
+	NTransform3D NRef trans2 = NTransform3D();
+	NVector3f NRef pos       = NVector3f(mTranslation);
 	pos.negate();
 	trans1.inputTranslation(pos);
 
-	NAxisAngle4f& axisAngle = NAxisAngle4f();
+	NAxisAngle4f NRef axisAngle = NAxisAngle4f();
 	axisAngle.inputAxis(NVector3f(0.0f, 1.0f, 0.0f));
 	axisAngle.setAngle(-mDirection);
 	trans2.inputRotation(axisAngle);
@@ -899,7 +899,7 @@ void NPosture3D::construct(Vector3f& view, Vector3f& watch)
  */
 void NPosture3D::normalize()
 {
-	NVector3f& dir = NVector3f();
+	NVector3f NRef dir = NVector3f();
 	outputRelative(dir);
 	if (NMathF::isZero(dir.length())) {
 		PRINT_NAKATA("?normalize:zero:" MISSING_NEWLINE);
@@ -968,8 +968,8 @@ void NPosture3D::rotate(NVector3f& p1, NPolar3f& p2)
  */
 void NPosture3D::rotatePoint(NVector3f& p1, NVector3f& p2, NPolar3f& p3)
 {
-	NVector3f& tempVec = NVector3f();
-	NPolar3f& tempPol  = NPolar3f();
+	NVector3f NRef tempVec = NVector3f();
+	NPolar3f NRef tempPol  = NPolar3f();
 
 	tempVec.sub2(p1, p2);
 
@@ -1000,7 +1000,7 @@ void NPosture3D::input(NPosture2D& other2D)
 {
 	inputViewpoint(other2D.getTranslation());
 
-	NVector3f& watch = NVector3f();
+	NVector3f NRef watch = NVector3f();
 	watch.set(NMathF::sin(other2D.getDirection()), 0.0f, NMathF::cos(other2D.getDirection()));
 	watch.add(mViewpoint);
 
@@ -1015,7 +1015,7 @@ void NPosture3D::input(NPosture2D& other2D)
 void NPosture3D::output(NPosture2D& out2D)
 {
 	out2D.inputTranslation(mViewpoint);
-	NVector3f& dir = NVector3f();
+	NVector3f NRef dir = NVector3f();
 	outputRelative(dir);
 	out2D.setDirection(NMathF::atan2(dir.x, dir.z));
 }
@@ -1027,7 +1027,7 @@ void NPosture3D::output(NPosture2D& out2D)
  */
 void NPosture3D::outputTransform(NPosture3D& p1, NTransform3D& outTransform)
 {
-	NTransform3D& temp = NTransform3D();
+	NTransform3D NRef temp = NTransform3D();
 	outputInverseTransform(outTransform);
 	p1.outputTransform(temp);
 	outTransform.mul(temp);
@@ -1041,10 +1041,10 @@ void NPosture3D::outputTransform(NPosture3D& p1, NTransform3D& outTransform)
 void NPosture3D::outputTransform(NTransform3D& transform)
 {
 	transform.inputTranslation(mViewpoint);
-	NVector3f& dir = NVector3f();
+	NVector3f NRef dir = NVector3f();
 	dir.sub2(mWatchpoint, mViewpoint);
 	dir.normalize();
-	NOrientation& orient = NOrientation(dir);
+	NOrientation NRef orient = NOrientation(dir);
 	orient.normalize();
 	orient.outputRotation(transform);
 }
@@ -1056,19 +1056,19 @@ void NPosture3D::outputTransform(NTransform3D& transform)
  */
 void NPosture3D::outputInverseTransform(NTransform3D& invTransform)
 {
-	NTransform3D& trans1 = NTransform3D();
-	NTransform3D& trans2 = NTransform3D();
+	NTransform3D NRef trans1 = NTransform3D();
+	NTransform3D NRef trans2 = NTransform3D();
 
-	NVector3f& pos = NVector3f(mViewpoint);
+	NVector3f NRef pos = NVector3f(mViewpoint);
 	pos.negate();
 
 	trans1.inputTranslation(pos);
 
-	NVector3f& dir = NVector3f();
+	NVector3f NRef dir = NVector3f();
 	dir.sub2(mWatchpoint, mViewpoint);
 	dir.normalize();
 
-	NOrientation& orient = NOrientation(dir);
+	NOrientation NRef orient = NOrientation(dir);
 	orient.normalize();
 	orient.outputRotation(trans2);
 
@@ -1084,7 +1084,7 @@ void NPosture3D::outputInverseTransform(NTransform3D& invTransform)
 void NPosture3D::inputTransform(NTransform3D& transform)
 {
 	transform.outputTranslation(mViewpoint);
-	NOrientation& orient = NOrientation();
+	NOrientation NRef orient = NOrientation();
 	orient.inputRotation(transform);
 	mWatchpoint.add2(mViewpoint, orient.getFore());
 }
@@ -1096,7 +1096,7 @@ void NPosture3D::inputTransform(NTransform3D& transform)
  */
 f32 NPosture3D::calcDirection()
 {
-	NVector3f& dir = NVector3f();
+	NVector3f NRef dir = NVector3f();
 	outputRelative(dir);
 	return NMathF::atan2(dir.x, dir.z);
 }
@@ -1286,7 +1286,7 @@ void LUMatrix::solve(NVector& inVec, NVector& outVec)
 {
 	f32 vals[16];
 	decompose();
-	NVector& tmp = NVector(vals, mDimension);
+	NVector NRef tmp = NVector(vals, mDimension);
 	mLower.solve(inVec, tmp);
 	mUpper.solve(tmp, outVec);
 }
@@ -1363,7 +1363,7 @@ void NTransform3D::construct(NMatrix4f& mtx)
  */
 void NTransform3D::translate(Vector3f& offset)
 {
-	NVector3f& trans = NVector3f();
+	NVector3f NRef trans = NVector3f();
 	outputTranslation(trans);
 	trans.add(offset);
 	inputTranslation(trans);
@@ -1376,7 +1376,7 @@ void NTransform3D::translate(Vector3f& offset)
  */
 void NTransform3D::rotate(Vector3f& point)
 {
-	NTransform3D& rotation = NTransform3D();
+	NTransform3D NRef rotation = NTransform3D();
 	outputRotation(rotation);
 	rotation.rotate(point);
 	STACK_PAD_STRUCT(3);
@@ -1598,7 +1598,7 @@ void NTransform3D::inputRotation(Matrix4f& rotMtx)
  */
 void NTransform3D::outputRotation(Matrix4f& rotMtx)
 {
-	NVector3f& row = NVector3f();
+	NVector3f NRef row = NVector3f();
 	for (int i = 0; i < 3; i++) {
 		outputRow(i, row);
 		rotMtx.mMtx[i][0] = row.x;
@@ -1614,7 +1614,7 @@ void NTransform3D::outputRotation(Matrix4f& rotMtx)
  */
 void NTransform3D::inputRotation(NAxisAngle4f& axisAngle)
 {
-	NTransform3D& trans = NTransform3D();
+	NTransform3D NRef trans = NTransform3D();
 	trans.inputAxisAngle(axisAngle);
 	inputRotation(trans);
 }

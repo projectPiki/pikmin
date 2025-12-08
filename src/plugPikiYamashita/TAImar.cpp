@@ -442,8 +442,8 @@ protected:
 	virtual void flick(Teki& teki) // _1C
 	{
 		if (teki.mCurrentAnimEvent == KEY_Action0) {
-			InteractFlick& flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower), teki.getParameterF(TPF_UpperAttackPower),
-			                                     getFlickDirection(teki));
+			InteractFlick NRef flick = InteractFlick(&teki, teki.getParameterF(TPF_UpperFlickPower),
+			                                         teki.getParameterF(TPF_UpperAttackPower), getFlickDirection(teki));
 			teki.flickUpper(flick);
 		}
 	}

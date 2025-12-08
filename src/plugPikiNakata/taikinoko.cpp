@@ -553,7 +553,7 @@ bool TaiKinokoDischargingSporesAction::act(Teki& teki)
 			teki.flickUpper();
 		} else if (teki.getAnimationKeyOption(BTeki::ANIMATION_KEY_OPTION_ACTION_2)) {
 			PRINT_NAKATA("TaiKinokoDischargingSporesAction:act:%08x:ACTION_2:\n", &teki);
-			InteractSpore& spore = InteractSpore(&teki);
+			InteractSpore NRef spore = InteractSpore(&teki);
 			TekiAndCondition andCond(&TekiRecognitionCondition(&teki), &TekiDistanceCondition(&teki, teki.getAttackRange()));
 			teki.interactNaviPiki(spore, andCond);
 			rumbleMgr->start(RUMBLE_Unk6, 0, teki.getPosition());
