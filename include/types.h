@@ -40,6 +40,26 @@ typedef volatile f128 vf128;
 typedef u16 wchar_t;
 #endif
 
+// Here we check if the decomp build system is configured for a non-matching build, and define `BUILD_MATCHING` if it is not.
+// Please do not use the `DTK_CONFIG_NONMATCHING` macro for any other purpose, and instead check if the the `BUILD_MATCHING`
+// macro is defined.  This is to ensure the codebase doesn't require any preprocessor macros to be defined by the build system.
+#if defined(DTK_CONFIG_NONMATCHING) && !DTK_CONFIG_NONMATCHING
+#define BUILD_MATCHING
+#endif
+
+// Defining this macro enables fixes for known crashes and mistakes.
+#if !defined(BUILD_MATCHING) && !defined(BUGFIX)
+#define BUGFIX
+#endif
+
+// Defining this macro enables development features removed from the final game.
+#if !defined(BUILD_MATCHING) && !defined(DEVELOP)
+// #define DEVELOP
+#endif
+
+// For when you have to pass something as a macro argument that contains commas.
+#define MACRO_ARG(...) __VA_ARGS__
+
 // Workaround to introduce scoped enums (A feature of C++11 and onward).
 #define BEGIN_ENUM_TYPE(name) \
 	struct name {             \
@@ -54,6 +74,13 @@ typedef u16 wchar_t;
 #define TERNARY_BUGFIX(fixed, buggy) fixed
 #else
 #define TERNARY_BUGFIX(fixed, buggy) buggy
+#endif
+
+// For undesireable code necessary to produce a matching build, use this instead of a clunky #if #else #endif.
+#if defined(BUILD_MATCHING)
+#define TERNARY_BUILD_MATCHING(matching, nonmatching) matching
+#else
+#define TERNARY_BUILD_MATCHING(matching, nonmatching) nonmatching
 #endif
 
 // Workarounds for our version of C++ and other stupidities
@@ -84,14 +111,7 @@ typedef u16 wchar_t;
 #define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)       // True if X is not aligned to N bytes, else false
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))  // Align object to num bytes (num should be power of two)
 
-#ifdef __MWERKS__
-#define BUMP_REGISTER(reg) \
-	{                      \
-		asm { mr reg, reg }   \
-	}
-#else
-#define BUMP_REGISTER(reg) (void)0
-#endif
+#define BUMP_REGISTER(reg) TERNARY_BUILD_MATCHING(MACRO_ARG({ asm { mr reg, reg } }), (void)0)
 
 // clang-format off
 #define REPEAT1(x)  x
@@ -115,13 +135,13 @@ typedef u16 wchar_t;
 #define REPEAT(x, n) REPEAT##n(x)
 
 // Somehow this overwhelms the automatic inlining score and stops unwanted function inlining
-#define FORCE_DONT_INLINE REPEAT16(REPEAT10((void*)0))
+#define FORCE_DONT_INLINE TERNARY_BUILD_MATCHING(REPEAT16(REPEAT10((void*)0)), (void)0)
 
 // Add an unused local variable to pad the stack by some number of words
-#define STACK_PAD_VAR(n) do { int pad[n]; } while (0)
+#define STACK_PAD_VAR(n) TERNARY_BUILD_MATCHING(do { int pad[n]; } while (0), (void)0)
 
 // Create a temporary struct to pad the stack by some number of words
-#define STACK_PAD_STRUCT(n) if (0) (struct { int pad[n]; }){}
+#define STACK_PAD_STRUCT(n) TERNARY_BUILD_MATCHING(if (0)(struct { int pad[n]; }) {}, (void)0)
 
 inline void padStack(void)
 {
@@ -129,10 +149,10 @@ inline void padStack(void)
 }
 
 // Add an unused variable in an inline function to pad the stack by some number of words
-#define STACK_PAD_INLINE(n) REPEAT(padStack(), n)
+#define STACK_PAD_INLINE(n) TERNARY_BUILD_MATCHING(REPEAT(padStack(), n), (void)0)
 
 // Uses a ternary to pad the stack by some number of words
-#define STACK_PAD_TERNARY(expr, n) REPEAT((expr) ? "fake" : "fake", n)
+#define STACK_PAD_TERNARY(expr, n) TERNARY_BUILD_MATCHING(REPEAT((expr) ? "fake" : "fake", n), (void)0)
 
 #ifdef __MWERKS__
 #define WEAKFUNC        __declspec(weak)

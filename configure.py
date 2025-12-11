@@ -213,8 +213,7 @@ cflags_base = [
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
-    # "-DBUGFIX",
-    # "-DDEVELOP",
+    f"-DDTK_CONFIG_NONMATCHING={config.non_matching:d}",
 ]
 
 # Debug flags
@@ -248,6 +247,7 @@ cflags_jaudio = [
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
+    f"-DDTK_CONFIG_NONMATCHING={config.non_matching:d}",
     "-common on",
     "-func_align 32",
     "-lang c++",
