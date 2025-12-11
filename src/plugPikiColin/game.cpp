@@ -290,6 +290,15 @@ void OnePlayerSection::init()
 			break;
 
 		case ONEPLAYER_NewPikiGame:
+			// The exact position of this DLL-exclusive code is unclear because some of the following code is DOL-exclusive.
+#ifdef WIN32
+			_nsPrint = FALSE;
+			_yPrint  = FALSE;
+			_kPrint  = FALSE;
+			_nPrint  = FALSE;
+			_cPrint  = FALSE;
+#endif
+
 			if (!gsys->mIsLoadingActive) {
 				gsys->startLoading(&gameflow.mGameLoadIdler, true, 60);
 			}
@@ -303,7 +312,6 @@ void OnePlayerSection::init()
 			} else {
 				gameflow.mLevelBannerTexture = tex;
 			}
-			// It is somewhere before this PRINT that all of the BOOLs controlling user PRINTs are set to FALSE.
 			PRINT("making new MAINGAME\n");
 			currentSection = new NewPikiGameSection();
 			break;
