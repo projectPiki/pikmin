@@ -167,7 +167,7 @@ int ActBridge::exeDetour()
  */
 void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 {
-	mBridgeWallNormal = *msg->mWallNormal;
+	mBridgeWallNormal = msg->mWallPlane->mNormal;
 	_33               = 8;
 }
 

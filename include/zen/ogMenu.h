@@ -70,7 +70,7 @@ private:
 	returnStatusFlag mUpdateResultStatus; // _04
 	P2DPane* mRootPane;                   // _08
 	f32 mCurrentAngle;                    // _0C
-	vf32 mTargetAngle;                    // _10
+	f32 mTargetAngle;                     // _10
 	f32 mAngularVelocity;                 // _14
 	int mMenuDisplayMode;                 // _18
 	f32 mOrbitRadius;                     // _1C

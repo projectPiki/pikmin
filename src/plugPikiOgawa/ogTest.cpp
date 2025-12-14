@@ -332,7 +332,8 @@ void zen::OgTestScreen::update()
 		mActiveMode = TESTMODE_INACTIVE;
 	}
 
-	int fileCheckRes = mFileChkSelMgr->update(mController, CardQuickInfo());
+	CardQuickInfo info;
+	int fileCheckRes = mFileChkSelMgr->update(mController, info);
 	if (fileCheckRes >= ogScrFileChkSelMgr::FILECHKSEL_Exit) {
 		mActiveMode = TESTMODE_INACTIVE;
 		PRINT("File Check & Select (%d)\n", fileCheckRes);

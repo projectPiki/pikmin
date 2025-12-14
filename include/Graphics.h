@@ -32,10 +32,10 @@ struct Vector3f;
  * @brief Enum for graphics manager render state flags.
  */
 enum GraphicsRenderFlags {
-	GFXRENDER_Unk1 = 0x100,  ///< 0x100, unknown.
-	GFXRENDER_Unk2 = 0x200,  ///< 0x200, unknown.
-	GFXRENDER_Unk3 = 0x400,  ///< 0x400, unknown.
-	GFXRENDER_Unk4 = 0x8000, ///< 0x8000, unknown.
+	GFXRENDER_Unk1 = 1 << 8,  ///< 0x100, unknown.
+	GFXRENDER_Unk2 = 1 << 9,  ///< 0x200, unknown.
+	GFXRENDER_Unk3 = 1 << 10, ///< 0x400, unknown.
+	GFXRENDER_Unk4 = 1 << 15, ///< 0x8000, unknown.
 };
 
 struct GColor {

@@ -3,6 +3,11 @@
 #include "String.h"
 #include <stl/string.h>
 
+// operator new[] is used without this header being included.
+#if defined(BUGFIX)
+#include "sysNew.h"
+#endif
+
 /*
  * --INFO--
  * Address:	800250B0

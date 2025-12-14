@@ -210,7 +210,7 @@ BOOL DVDOpen(char* fileName, DVDFileInfo* fileInfo)
 	entry = DVDConvertPathToEntrynum(fileName);
 
 	if (0 > entry) {
-		DVDGetCurrentDir(currentDir, 128);
+		DVDGetCurrentDir(currentDir, sizeof(currentDir));
 		OSReport("Warning: DVDOpen(): file '%s' was not found under %s.\n", fileName, currentDir);
 		return FALSE;
 	}

@@ -30,7 +30,7 @@ struct P2DPaneLibrary {
 	static void printUseTexName(char*, IDelegate1<char*>*);
 
 	// DLL inlines:
-	static int makeTag(char* str) { return ((u8)str[0] << 24) | ((u8)str[1] << 16) | ((u8)str[2] << 8) | (u8)str[3]; }
+	static int makeTag(char* str) { return (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3]; }
 };
 
 /**

@@ -1,15 +1,19 @@
 #include "PowerPC_EABI_Support/Runtime/runtime.h"
 
-/* macros for GPR/FPR resting and saving */
+/* macros for GPR/FPR/VR saving and restoring */
 #define SAVE_FPR(reg)    _savefpr_##reg
 #define RESTORE_FPR(reg) _restfpr_##reg
 #define SAVE_GPR(reg)    _savegpr_##reg
 #define RESTORE_GPR(reg) _restgpr_##reg
+#define SAVE_VR(reg)     __savev##reg
+#define RESTORE_VR(reg)  __restv##reg
 
 #define ENTRY_SAVE_FPR(reg)    entry SAVE_FPR(reg)
 #define ENTRY_RESTORE_FPR(reg) entry RESTORE_FPR(reg)
 #define ENTRY_SAVE_GPR(reg)    entry SAVE_GPR(reg)
 #define ENTRY_RESTORE_GPR(reg) entry RESTORE_GPR(reg)
+#define ENTRY_SAVE_VR(reg)     entry SAVE_VR(reg)
+#define ENTRY_RESTORE_VR(reg)  entry RESTORE_VR(reg)
 
 #define save_restore_reg r11
 
@@ -101,6 +105,32 @@ void RESTORE_GPR(28)(void);
 void RESTORE_GPR(29)(void);
 void RESTORE_GPR(30)(void);
 void RESTORE_GPR(31)(void);
+
+void SAVE_VR(20)(void);
+void SAVE_VR(21)(void);
+void SAVE_VR(22)(void);
+void SAVE_VR(23)(void);
+void SAVE_VR(24)(void);
+void SAVE_VR(25)(void);
+void SAVE_VR(26)(void);
+void SAVE_VR(27)(void);
+void SAVE_VR(28)(void);
+void SAVE_VR(29)(void);
+void SAVE_VR(30)(void);
+void SAVE_VR(31)(void);
+
+void RESTORE_VR(20)(void);
+void RESTORE_VR(21)(void);
+void RESTORE_VR(22)(void);
+void RESTORE_VR(23)(void);
+void RESTORE_VR(24)(void);
+void RESTORE_VR(25)(void);
+void RESTORE_VR(26)(void);
+void RESTORE_VR(27)(void);
+void RESTORE_VR(28)(void);
+void RESTORE_VR(29)(void);
+void RESTORE_VR(30)(void);
+void RESTORE_VR(31)(void);
 
 static const u32 __constants[] = {
 	0x00000000, 0x00000000, 0x41F00000, 0x00000000, 0x41E00000, 0x00000000,

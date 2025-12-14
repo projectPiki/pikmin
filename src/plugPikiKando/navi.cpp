@@ -1397,10 +1397,7 @@ bool Navi::procActionButton()
 				UfoItem* ship = itemMgr->getUfo();
 				// No nullptr check means any stage with UFO parts and without the SS Dolphin will crash when the
 				// action button is pressed.  This is relevant for some leftover test maps.
-#ifdef BUGFIX
-				if (ship)
-#endif
-				{
+				if (TERNARY_BUGFIX(ship, true)) {
 					Vector3f pelShipSep = pellet->mSRT.t - ship->getGoalPos();
 					f32 distFromShip    = std::sqrtf(pelShipSep.x * pelShipSep.x + pelShipSep.z * pelShipSep.z);
 					if (distFromShip < 30.0f && pellet->mCarrierCounter != 0) {
