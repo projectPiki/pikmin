@@ -178,13 +178,13 @@ struct MsgWall : public Msg {
 	inline MsgWall(Plane& plane, DynCollObject* wall)
 	    : Msg(MSG_Wall)
 	{
-		mWallNormal = &plane.mNormal;
-		mWall       = wall;
+		mWallPlane      = &plane;
+		mWallCollObject = wall;
 	}
 
 	// _00-_04 = Msg
-	Vector3f* mWallNormal; // _04, might be Plane*?
-	DynCollObject* mWall;  // _08
+	Plane* mWallPlane;              // _04
+	DynCollObject* mWallCollObject; // _08
 };
 
 #endif

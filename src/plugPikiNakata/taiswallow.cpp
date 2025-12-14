@@ -732,13 +732,14 @@ bool TaiSwallowTurningAction::act(Teki& teki)
 	Creature* target = teki.getCreaturePointer(0);
 	if (!target) {
 		// Looks like someone was copying and pasting code lol (me too buddy, me too)
-		PRINT_NAKATA("!TaiTurnAction::act:target==null:%08x\n", &teki);
+		PRINT_NAKATA(TERNARY_BUGFIX("!TaiSwallowTurningAction", "!TaiTurnAction") "::act:target==null:%08x\n", &teki);
 		return true;
 	}
 
 	TekiRecognitionCondition recogCond(&teki);
 	if (!recogCond.satisfy(target)) {
-		PRINT_NAKATA("!TaiTurnAction::act:!condition.satisfy:%08x\n", &teki); // And again
+		// Same copy-paste mistake as above
+		PRINT_NAKATA(TERNARY_BUGFIX("!TaiSwallowTurningAction", "!TaiTurnAction") "::act:!condition.satisfy:%08x\n", &teki);
 		return true;
 	}
 

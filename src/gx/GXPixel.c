@@ -99,7 +99,7 @@ void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor
  * Address:	........
  * Size:	0001C8
  */
-void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const f32 projmtx[4][4])
+void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const Mtx44 projmtx)
 {
 	f32 xi;
 	f32 iw;

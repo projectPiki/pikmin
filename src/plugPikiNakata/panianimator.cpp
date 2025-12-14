@@ -237,7 +237,7 @@ void PaniAnimator::animate(f32 speed)
 		return;
 	}
 
-	speed *= NSystem::system->getFrameTime();
+	speed *= NSystem::getFrameTime();
 	mAnimationCounter += speed;
 
 	checkConstantKeys();

@@ -95,7 +95,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 #if defined(VERSION_PIKIDEMO)
 #else
 	GXRenderModeObj* rmode;
-	f32 identity_mtx[3][4];
+	Mtx identity_mtx;
 #endif
 	GXColor clear = { 64, 64, 64, 255 };
 	GXColor black = { 0, 0, 0, 0 };
@@ -381,7 +381,7 @@ GXFifoObj* GXInit(void* base, u32 size)
 void __GXInitGX()
 {
 	GXRenderModeObj* rmode;
-	f32 identity_mtx[3][4];
+	Mtx identity_mtx;
 	GXColor clear = { 64, 64, 64, 255 };
 	GXColor black = { 0, 0, 0, 0 };
 	GXColor white = { 255, 255, 255, 255 };

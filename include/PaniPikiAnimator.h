@@ -117,7 +117,7 @@ struct PaniPikiAnimator : public PaniAnimator {
 	}
 
 	static PaniMotionTable* createMotionTable();
-	static char* motionLabels[90];
+	static char* motionLabels[PIKIANIM_COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator

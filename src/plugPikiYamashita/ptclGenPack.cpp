@@ -47,9 +47,16 @@ particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx)
  * Address:	........
  * Size:	000048
  */
-void PtclGenPack::setEmitPos(Vector3f&)
+void PtclGenPack::setEmitPos(Vector3f& pos)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (matching by size)
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->setEmitPos(pos);
+		}
+	}
 }
 
 /*
@@ -73,9 +80,16 @@ void PtclGenPack::setEmitPosPtr(Vector3f* posPtr)
  * Address:	........
  * Size:	000048
  */
-void PtclGenPack::setEmitDir(Vector3f&)
+void PtclGenPack::setEmitDir(Vector3f& pos)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (matching by size)
+	u32 i;
+	particleGenerator** genList = mGeneratorList;
+	for (i = 0; i < mLimit; i++, genList++) {
+		if (*genList) {
+			(*genList)->setEmitDir(pos);
+		}
+	}
 }
 
 /*

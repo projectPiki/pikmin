@@ -180,7 +180,7 @@ void ActCrowd::procCollideMsg(Piki*, MsgCollide* msg)
 void ActCrowd::procWallMsg(Piki*, MsgWall* msg)
 {
 	if (mCPlateSlotID != -1) {
-		_70 = *msg->mWallNormal;
+		_70 = msg->mWallPlane->mNormal;
 		_35 = true;
 	}
 }

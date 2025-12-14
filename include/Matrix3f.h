@@ -18,11 +18,11 @@ struct Matrix3f {
 
 	Matrix3f() { identity(); }
 
-	Matrix3f(float (*arr)[3])
+	Matrix3f(Mtx33 mtx)
 	{
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++)
-				(*this)(row, col) = arr[row][col];
+				(*this)(row, col) = mtx[row][col];
 		}
 	};
 
@@ -70,7 +70,7 @@ public:
 		return *this;
 	}
 
-	f32 mMtx[3][3]; // _00
+	Mtx33 mMtx; // _00
 };
 
 // DLL inlines:

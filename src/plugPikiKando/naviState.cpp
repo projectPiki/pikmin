@@ -822,7 +822,7 @@ void NaviWalkState::procWallMsg(Navi* navi, MsgWall* msg)
 		_1C = 0.0f;
 	}
 
-	Vector3f nrm         = *msg->mWallNormal;
+	Vector3f nrm         = msg->mWallPlane->mNormal;
 	navi->mFaceDirection = atan2f(-nrm.x, -nrm.z);
 }
 

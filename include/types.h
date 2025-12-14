@@ -94,25 +94,6 @@ typedef u16 wchar_t;
 #endif
 
 // clang-format off
-
-#define FORCE_DONT_INLINE \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; \
-	(void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0; (void*)0;
-
 #define REPEAT1(x)  x
 #define REPEAT2(x)  REPEAT1(x); x
 #define REPEAT3(x)  REPEAT2(x); x
@@ -125,8 +106,16 @@ typedef u16 wchar_t;
 #define REPEAT10(x) REPEAT9(x); x
 #define REPEAT11(x) REPEAT10(x); x
 #define REPEAT12(x) REPEAT11(x); x
+#define REPEAT13(x) REPEAT12(x); x
+#define REPEAT14(x) REPEAT13(x); x
+#define REPEAT15(x) REPEAT14(x); x
+#define REPEAT16(x) REPEAT15(x); x
+// clang-format on
 
 #define REPEAT(x, n) REPEAT##n(x)
+
+// Somehow this overwhelms the automatic inlining score and stops unwanted function inlining
+#define FORCE_DONT_INLINE REPEAT16(REPEAT10((void*)0))
 
 // Add an unused local variable to pad the stack by some number of words
 #define STACK_PAD_VAR(n) do { int pad[n]; } while (0)
@@ -134,14 +123,16 @@ typedef u16 wchar_t;
 // Create a temporary struct to pad the stack by some number of words
 #define STACK_PAD_STRUCT(n) if (0) (struct { int pad[n]; }){}
 
+inline void padStack(void)
+{
+	int pad = 0;
+}
+
 // Add an unused variable in an inline function to pad the stack by some number of words
-inline void padStack(void) { int pad = 0; }
 #define STACK_PAD_INLINE(n) REPEAT(padStack(), n)
 
 // Uses a ternary to pad the stack by some number of words
 #define STACK_PAD_TERNARY(expr, n) REPEAT((expr) ? "fake" : "fake", n)
-
-// clang-format on
 
 #ifdef __MWERKS__
 #define WEAKFUNC        __declspec(weak)

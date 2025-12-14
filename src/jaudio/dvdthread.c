@@ -82,10 +82,9 @@ static s32 DVDReadMutex(DVDFileInfo* fileInfo, void* addr, s32 len, s32 offs, ch
 void DVDT_SetRootPath(char* path)
 {
 	// don't ask.
-	char** pPath = &path;
-	char* p      = *pPath;
-	if (strlen(p) < 31) {
-		strcpy(audio_root_path, p);
+	char** REF_path = &path;
+	if (strlen(path) < 31) {
+		strcpy(audio_root_path, path);
 	}
 }
 
@@ -569,11 +568,10 @@ void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
 s32 DVDT_CheckFile(char* file)
 {
 	char path[64];
-	char** pFile = &file;
-	char* f      = *pFile;
+	char** REF_file = &file;
 	static DVDFileInfo finfo;
 
-	DVDT_ExtendPath(path, f);
+	DVDT_ExtendPath(path, file);
 
 	if (!Jac_DVDOpen(path, &finfo)) {
 		return 0;
@@ -591,10 +589,10 @@ s32 DVDT_CheckFile(char* file)
  */
 s32 DVDT_LoadFile(char* file, u8* p2)
 {
-	char** pFile = &file;
-	vu32 status  = 0;
-	STACK_PAD_VAR(3);
-	DVDT_LoadtoDRAM(0, *pFile, (u32)p2, 0, 0, &status, NULL);
+	vu32 status     = 0;
+	char** REF_file = &file;
+	STACK_PAD_VAR(2);
+	DVDT_LoadtoDRAM(0, file, (u32)p2, 0, 0, &status, NULL);
 
 	while (status == 0) { }
 
@@ -698,16 +696,15 @@ static u32 dvd_entrynum[32];
 s32 Jac_RegisterFastOpen(char* file)
 {
 	volatile int num;
-	char** pFile = &file;
-	char* f      = *pFile;
+	char** REF_file = &file;
 	STACK_PAD_VAR(3);
-	if (strlen(f) > 63) {
+	if (strlen(file) > 63) {
 		return -1;
 	}
 
 	int i;
 	for (i = 0; i < dvdfile_dics; i++) {
-		if (!strcmp(dvd_file[i], f)) {
+		if (!strcmp(dvd_file[i], file)) {
 			return dvd_entrynum[i];
 		}
 	}
@@ -715,10 +712,10 @@ s32 Jac_RegisterFastOpen(char* file)
 		return -1;
 	}
 
-	num = DVDConvertPathToEntrynum(f);
+	num = DVDConvertPathToEntrynum(file);
 
 	if (num != -1) {
-		strcpy(dvd_file[dvdfile_dics], f);
+		strcpy(dvd_file[dvdfile_dics], file);
 		dvd_entrynum[dvdfile_dics] = num;
 		dvdfile_dics++;
 	}

@@ -67,11 +67,11 @@ void ID32::setID(u32 id)
  */
 bool ID32::match(u32 id, char wild)
 {
-	u8* other = reinterpret_cast<u8*>(&id);
-	u8* self  = reinterpret_cast<u8*>(&mId);
+	char* other = reinterpret_cast<char*>(&id);
+	char* self  = reinterpret_cast<char*>(&mId);
 
 	for (int i = 0; i < 4; i++) {
-		if (other[i] != (u8)wild && other[i] != self[i]) {
+		if (other[i] != wild && other[i] != self[i]) {
 			return false;
 		}
 	}
@@ -90,7 +90,7 @@ bool ID32::match(u32 id, char wild)
  */
 void ID32::updateID()
 {
-	u8* id = reinterpret_cast<u8*>(&mId);
+	char* id = reinterpret_cast<char*>(&mId);
 
 	for (int i = 0; i < 4; i++) {
 		id[i] = this->mStringID[i];
@@ -109,7 +109,7 @@ void ID32::updateID()
  */
 void ID32::updateString()
 {
-	u8* id = reinterpret_cast<u8*>(&mId);
+	char* id = reinterpret_cast<char*>(&mId);
 
 	for (int i = 0; i < 4; i++) {
 		mStringID[i] = id[i];
@@ -159,7 +159,7 @@ bool ID32::operator!=(u32 other)
  */
 void ID32::write(RandomAccessStream& stream)
 {
-	u8* id = reinterpret_cast<u8*>(&mId);
+	char* id = reinterpret_cast<char*>(&mId);
 
 	stream.writeByte(id[3]);
 	stream.writeByte(id[2]);
@@ -178,7 +178,7 @@ void ID32::write(RandomAccessStream& stream)
  */
 void ID32::read(RandomAccessStream& stream)
 {
-	u8* id = reinterpret_cast<u8*>(&mId);
+	char* id = reinterpret_cast<char*>(&mId);
 	id[3]  = stream.readByte();
 	id[2]  = stream.readByte();
 	id[1]  = stream.readByte();
@@ -212,10 +212,10 @@ void ID32::print()
  */
 void ID32::sprint(char* buffer)
 {
-	buffer[0] = (u8)((this->mId & 0xFF000000) >> 24);
-	buffer[1] = (u8)((this->mId & 0xFF0000) >> 16);
-	buffer[2] = (u8)((this->mId & 0xFF00) >> 8);
-	buffer[3] = (u8)(this->mId & 0xFF);
+	buffer[0] = (char)((this->mId & 0xFF000000) >> 24);
+	buffer[1] = (char)((this->mId & 0xFF0000) >> 16);
+	buffer[2] = (char)((this->mId & 0xFF00) >> 8);
+	buffer[3] = (char)(this->mId & 0xFF);
 	buffer[4] = 0;
 }
 

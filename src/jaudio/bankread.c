@@ -36,7 +36,7 @@ Bank_* Bank_Test(u8* ibnk_address)
 	for (i = 0; i < BANK_TEST_INST_COUNT; ++i) {
 		PTconvert(&startBank->mInstruments[i], base_addr);
 
-		Inst_* inst = (Inst_*)startBank->mInstruments[i];
+		Inst_* inst = startBank->mInstruments[i];
 		if (!inst) {
 			continue;
 		}
@@ -65,9 +65,9 @@ Bank_* Bank_Test(u8* ibnk_address)
 
 	// treat the next block of 100 as voices (for some reason)
 	for (i = 0; i < BANK_TEST_VOICE_COUNT; i++) {
-		PTconvert(&(startBank->mInstruments + BANK_TEST_VOICE_OFFSET)[i], base_addr);
+		PTconvert(&(startBank->mVoices + BANK_TEST_VOICE_OFFSET)[i], base_addr);
 
-		Voice_* voice = (Voice_*)(startBank->mInstruments + BANK_TEST_VOICE_OFFSET)[i];
+		Voice_* voice = (startBank->mVoices + BANK_TEST_VOICE_OFFSET)[i];
 		if (!voice) {
 			continue;
 		}
@@ -79,9 +79,9 @@ Bank_* Bank_Test(u8* ibnk_address)
 
 	// treat the next block of 12 as percussion (for some reason)
 	for (i = 0; i < BANK_TEST_PERC_COUNT; i++) {
-		PTconvert(&(startBank->mInstruments + BANK_TEST_PERC_OFFSET)[i], base_addr);
+		PTconvert(&(startBank->mPercs + BANK_TEST_PERC_OFFSET)[i], base_addr);
 
-		Perc_* perc = (Perc_*)(startBank->mInstruments + BANK_TEST_PERC_OFFSET)[i];
+		Perc_* perc = (startBank->mPercs + BANK_TEST_PERC_OFFSET)[i];
 		if (!perc) {
 			continue;
 		}

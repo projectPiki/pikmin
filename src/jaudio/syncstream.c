@@ -146,7 +146,6 @@ static void LoadADPCM(StreamCtrl_*, int);
  */
 static void __LoadFin(s32 size, DVDFileInfo* fileinfo)
 {
-
 	StreamCtrl_* ctrl;
 
 	for (int i = 0; i < ARRAY_SIZE(SC); i++) {
