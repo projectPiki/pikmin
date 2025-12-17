@@ -48,7 +48,7 @@ void MemStat::reset()
  * Address:	80086738
  * Size:	000110
  */
-void MemStat::start(char* name)
+void MemStat::start(immut char* name)
 {
 	if (!memStat) {
 		return;
@@ -82,7 +82,7 @@ void MemStat::start(char* name)
  * Address:	80086848
  * Size:	000078
  */
-void MemStat::end(char* name)
+void MemStat::end(immut char* name)
 {
 	if (!memStat) {
 		return;
@@ -116,7 +116,7 @@ void MemStat::end(char* name)
  * Address:	........
  * Size:	000034
  */
-int MemStat::getMemorySize(char* name)
+int MemStat::getMemorySize(immut char* name)
 {
 	// UNUSED FUNCTION
 	if (MemInfo* info = getInfo(name)) {
@@ -158,7 +158,7 @@ void MemStat::print()
  * Address:	800868F4
  * Size:	000024
  */
-MemInfo* MemStat::getInfo(char* name)
+MemInfo* MemStat::getInfo(immut char* name)
 {
 	return getInfoRec(name, &mInfoListRoot);
 }
@@ -206,7 +206,7 @@ void MemStat::printInfoRec(MemInfo* info, int indentation)
  * Address:	80086B50
  * Size:	000174
  */
-MemInfo* MemStat::getInfoRec(char* name, MemInfo* info)
+MemInfo* MemStat::getInfoRec(immut char* name, MemInfo* info)
 {
 	if (strcmp(info->mName, name) == 0) {
 		return info;

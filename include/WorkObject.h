@@ -69,10 +69,10 @@ public:
 	Creature* birth(int, int);
 
 	// unused/inlined:
-	static int getNameIndex(char*);
-	static char* getName(int);
-	static int getShapeNameIndex(char*);
-	static char* getShapeName(int);
+	static int getNameIndex(immut char*);
+	static immut char* getName(int);
+	static int getShapeNameIndex(immut char*);
+	static immut char* getShapeName(int);
 	void addUseList(int);
 
 protected:

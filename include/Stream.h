@@ -15,7 +15,7 @@ struct Stream {
 	Stream() { }
 
 	// _04 = VTBL
-	char* mPath; // _00
+	immut char* mPath; // _00
 
 	virtual int readInt();                      // _08
 	virtual u8 readByte();                      // _0C
@@ -28,17 +28,17 @@ struct Stream {
 	virtual void writeByte(u8);                 // _28
 	virtual void writeShort(s16);               // _2C
 	virtual void writeFloat(f32);               // _30
-	virtual void writeString(char*);            // _34
-	virtual void writeString(String&);          // _38
+	virtual void writeString(immut char*);      // _34
+	virtual void writeString(immut String&);    // _38
 	virtual void read(void*, int);              // _3C
-	virtual void write(void*, int);             // _40
+	virtual void write(immut void*, int);       // _40
 	virtual int getPending();                   // _44
 	virtual int getAvailable();                 // _48
 	virtual void close();                       // _4C
 	virtual bool getClosing() { return false; } // _50 (weak)
 	virtual void flush() { }                    // _54 (weak)
 
-	void print(char*, ...);
+	void print(immut char*, ...);
 };
 
 /**
@@ -146,7 +146,7 @@ struct RamStream : public RandomAccessStream {
 		memcpy(dest, (const void*)((int)mBufferAddr + mPosition), size);
 		mPosition += size;
 	}
-	virtual void write(void* src, int size) // _40 (weak)
+	virtual void write(immut void* src, int size) // _40 (weak)
 	{
 		memcpy((void*)((int)mBufferAddr + mPosition), src, size);
 		mPosition += size;

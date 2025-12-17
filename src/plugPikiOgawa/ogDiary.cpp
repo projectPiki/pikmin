@@ -27,9 +27,9 @@ DEFINE_PRINT("OgDiarySection")
 
 // Table of blo files used for diary entries
 namespace zen {
-static char* bloFile_Diary_Table[10];
-static char** bloFiles_default_Diary[2] = { &bloFile_Res_Table[1], nullptr };
-static char** bloFiles_Diary[2]         = { bloFile_Diary_Table, nullptr };
+static immut char* bloFile_Diary_Table[10];
+static immut char** bloFiles_default_Diary[2] = { &bloFile_Res_Table[1], nullptr };
+static immut char** bloFiles_Diary[2]         = { bloFile_Diary_Table, nullptr };
 }; // namespace zen
 
 /*

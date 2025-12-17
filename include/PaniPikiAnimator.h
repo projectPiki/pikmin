@@ -107,7 +107,7 @@ enum PikiNaviAnim {
 struct PaniPikiAnimator : public PaniAnimator {
 	PaniPikiAnimator();
 
-	char* getCurrentMotionName()
+	immut char* getCurrentMotionName()
 	{
 		if (mMotionIdx >= 0) {
 			return motionLabels[mMotionIdx];
@@ -117,7 +117,7 @@ struct PaniPikiAnimator : public PaniAnimator {
 	}
 
 	static PaniMotionTable* createMotionTable();
-	static char* motionLabels[PIKIANIM_COUNT];
+	static immut char* motionLabels[PIKIANIM_COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator

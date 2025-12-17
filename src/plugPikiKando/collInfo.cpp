@@ -28,7 +28,7 @@ DEFINE_PRINT("collInfo");
 
 Matrix4f invCamMat;
 
-static char* _typeStr[] = {
+static immut char* _typeStr[] = {
 	"COLLISION",   // PART_Collision
 	"BOUNDSPHERE", // PART_BoundSphere
 	"REFERENCE",   // PART_Reference
@@ -403,7 +403,7 @@ CollPart::CollPart()
  * Address:	80087E84
  * Size:	00001C
  */
-char* CollPart::getTypeString()
+immut char* CollPart::getTypeString()
 {
 	return _typeStr[mPartType];
 }

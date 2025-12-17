@@ -19,10 +19,10 @@ struct FlowController {
 		mNaviOnMap = 0;
 	}
 
-	void readMapList(char*);
+	void readMapList(immut char*);
 
 	// unused/inlined:
-	void setStage(char*);
+	void setStage(immut char*);
 
 	// TODO: members
 	StageInfo mRootInfo;           // _00

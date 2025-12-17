@@ -257,10 +257,10 @@ struct BaseShape : public CoreNode {
 	void initialise();
 	void createCollisions(int);
 	void calcBasePose(immut Matrix4f&);
-	AnimData* loadDck(char*, RandomAccessStream&);
-	AnimData* importDck(char*, CmdStream*);
-	AnimData* loadDca(char*, RandomAccessStream&);
-	AnimData* loadAnimation(char* path, bool isRelativePath);
+	AnimData* loadDck(immut char*, RandomAccessStream&);
+	AnimData* importDck(immut char*, CmdStream*);
+	AnimData* loadDca(immut char*, RandomAccessStream&);
+	AnimData* loadAnimation(immut char* path, bool isRelativePath);
 	Matrix4f& getAnimMatrix(int);
 	void backupAnimOverrides(AnimContext**);
 	void restoreAnimOverrides();
@@ -277,7 +277,7 @@ struct BaseShape : public CoreNode {
 	void drawlights(Graphics&, Camera&);
 	void drawroutes(Graphics&, Camera&);
 	void skipChunk(RandomAccessStream&, u32);
-	void importDca(char*, CmdStream*);
+	void importDca(immut char*, CmdStream*);
 	void calcJointWorldScale(Graphics&, int, Vector3f&);
 	CollTriInfo* findCollTri(Vector3f&, Vector3f&, Vector3f&, char*);
 

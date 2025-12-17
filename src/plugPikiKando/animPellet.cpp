@@ -80,7 +80,7 @@ void PelletAnimInfo::read(RandomAccessStream& stream)
  * Address:	8009982C
  * Size:	000140
  */
-PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char* str3, int overrideJoint)
+PelletShapeObject::PelletShapeObject(immut char* str1, Shape* shape, immut char* str2, immut char* str3, int overrideJoint)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
@@ -103,7 +103,7 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 	}
 }
 
-char* PaniPelletAnimator::motionLabels[PelletMotion::COUNT] = { "Carry", "Appear", "3", "4", "5", "6", "7" };
+immut char* PaniPelletAnimator::motionLabels[PelletMotion::COUNT] = { "Carry", "Appear", "3", "4", "5", "6", "7" };
 
 /*
  * --INFO--

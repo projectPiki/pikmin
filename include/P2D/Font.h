@@ -23,9 +23,9 @@ struct FntobjInfo : public GfxobjInfo {
  * @brief TODO
  */
 struct P2DFont {
-	P2DFont(char*);
+	P2DFont(immut char*);
 
-	Font* loadFont(char* fileName, int&, int&);
+	Font* loadFont(immut char* fileName, int&, int&);
 	void setGX();
 	void setGradColor(const Colour& topColour, const Colour& bottomColour);
 	f32 getWidth(int charCode, int drawWidth);

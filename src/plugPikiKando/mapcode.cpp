@@ -14,7 +14,7 @@ int MapCode::getAttribute(CollTriInfo* triInfo)
 };
 
 // I'm not sure how this was originally coded, but when this array was stripped I think it bloated the .sdata2 of this TU.
-static char* mapcodeNames[] = {
+static immut char* mapcodeNames[] = {
 	"solid", "rock", "grass", "wood", "mud", "water", "hole",
 };
 
@@ -23,7 +23,7 @@ static char* mapcodeNames[] = {
  * Address:	........
  * Size:	000018
  */
-char* MapCode::getAttributeName(int num)
+immut char* MapCode::getAttributeName(int num)
 {
 	// UNUSED FUNCTION (matching by size)
 	return mapcodeNames[num];

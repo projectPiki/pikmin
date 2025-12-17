@@ -17,7 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("mapParts")
 
-char* MapParts::shapeFiles[4] = {
+immut char* MapParts::shapeFiles[4] = {
 	"mapparts/cone.mod",
 	"mapparts/cylinder.mod",
 	"mapparts/cube.mod",
@@ -29,7 +29,7 @@ char* MapParts::shapeFiles[4] = {
  * Address:	801184A8
  * Size:	000018
  */
-char* MapParts::getShapeFile(int idx)
+immut char* MapParts::getShapeFile(int idx)
 {
 	return shapeFiles[idx];
 }

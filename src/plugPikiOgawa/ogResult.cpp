@@ -27,7 +27,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("OgResultSection")
 
 namespace zen {
-char* bloFile_Res_Table[] = {
+immut char* bloFile_Res_Table[] = {
 	"END",
 	"screen/blo/re_a_00.blo",
 	"screen/blo/re_a_01.blo",

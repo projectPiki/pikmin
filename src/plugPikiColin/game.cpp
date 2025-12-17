@@ -100,7 +100,7 @@ void StageInfo::parseGenerators(CmdStream* commands)
  * Address:	........
  * Size:	000094
  */
-void FlowController::setStage(char* fileName)
+void FlowController::setStage(immut char* fileName)
 {
 	FOREACH_NODE(StageInfo, mRootInfo.mChild, stage)
 	{
@@ -119,7 +119,7 @@ void FlowController::setStage(char* fileName)
  * Address:	800532C8
  * Size:	000378
  */
-void FlowController::readMapList(char* fileName)
+void FlowController::readMapList(immut char* fileName)
 {
 	mRootInfo.initCore("stages");
 	RandomAccessStream* file = gsys->openFile(fileName, true, true);
@@ -195,7 +195,7 @@ void FlowController::readMapList(char* fileName)
 	file->close();
 }
 
-static char* levNames[] = {
+static immut char* levNames[] = {
 	"intro/map0.bti", "intro/map1.bti", "intro/map2.bti", "intro/map3.bti", "intro/map4.bti",
 };
 

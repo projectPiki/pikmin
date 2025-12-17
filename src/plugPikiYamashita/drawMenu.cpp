@@ -243,7 +243,7 @@ bool zen::DrawMenuTitle::update(f32 p1)
  * Address:	801C30FC
  * Size:	000AFC
  */
-zen::DrawMenu::DrawMenu(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
+zen::DrawMenu::DrawMenu(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
 {
 	mState         = STATUS_Unk0;

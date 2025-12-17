@@ -93,20 +93,20 @@ struct ObjCollInfo : public CoreNode {
 	// unused/inlined:
 	void getCentreSize(Vector3f&, f32&);
 	void showInfo(Graphics&, Matrix4f&);
-	void saveini(char*, RandomAccessStream&);
+	void saveini(immut char*, RandomAccessStream&);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	ID32 mId;                 // _14
-	ID32 mCode;               // _20
-	u32 mCollType;            // _2C, see ObjCollType enum
-	s32 mJointIndex;          // _30
-	Vector3f mCentrePosition; // _34
-	f32 mRadius;              // _40
-	BaseShape* mParentShape;  // _44
-	Shape* mPlatShape;        // _48
-	char* mPlatformName;      // _4C
-	u32 mFlags;               // _50, see ObjCollFlags enum
+	ID32 mId;                  // _14
+	ID32 mCode;                // _20
+	u32 mCollType;             // _2C, see ObjCollType enum
+	s32 mJointIndex;           // _30
+	Vector3f mCentrePosition;  // _34
+	f32 mRadius;               // _40
+	BaseShape* mParentShape;   // _44
+	Shape* mPlatShape;         // _48
+	immut char* mPlatformName; // _4C
+	u32 mFlags;                // _50, see ObjCollFlags enum
 };
 
 /**
@@ -139,7 +139,7 @@ struct CollPart {
 	int getChildCount();
 	CollPart* getChild();
 	CollPart* getChildAt(int);
-	char* getTypeString();
+	immut char* getTypeString();
 	ID32 getID();
 	ID32 getCode();
 	Matrix4f getMatrix();

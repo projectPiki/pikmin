@@ -36,11 +36,11 @@ DEFINE_PRINT("soundMgr")
  * @note Size: 0x14.
  */
 struct SoundTableInfo {
-	int mSeID;      ///< _00, game-code sound ID, see PikiSoundID enum.
-	int mJacID;     ///< _04, jaudio-code sound IDs, enums split mainly by event type.
-	char* mSeName;  ///< _08, sound effect name.
-	BOOL mLoopType; ///< _0C, whether to loop the sound effect.
-	int mEventType; ///< _10, jaudio-related event type, see JacEventType enum.
+	int mSeID;           ///< _00, game-code sound ID, see PikiSoundID enum.
+	int mJacID;          ///< _04, jaudio-code sound IDs, enums split mainly by event type.
+	immut char* mSeName; ///< _08, sound effect name.
+	BOOL mLoopType;      ///< _0C, whether to loop the sound effect.
+	int mEventType;      ///< _10, jaudio-related event type, see JacEventType enum.
 };
 
 /// Global sound effect information object, to convert between game code and jaudio code requirements.
@@ -1025,7 +1025,7 @@ int SeSystem::getJacID(int soundID)
  * Address:	........
  * Size:	000018
  */
-char* SeSystem::getSoundName(int soundID)
+immut char* SeSystem::getSoundName(int soundID)
 {
 	if (soundID < 0 || soundID > mMaxSoundID) {
 		PRINT("soundID = %d\n", soundID);

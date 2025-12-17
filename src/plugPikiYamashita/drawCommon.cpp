@@ -32,7 +32,7 @@ Texture* zen::NumberTex::shadowTexTable[10];
  * Address:	801BF574
  * Size:	000108
  */
-zen::DrawScreen::DrawScreen(char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr)
+zen::DrawScreen::DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr)
 {
 	mScreen.set(bloFileName, useAlphaMgr, useTexAnimMgr, true);
 	if (grafContext) {
@@ -280,7 +280,7 @@ void zen::P2DPaneLibrary::printTag(P2DPane* pane)
  * Address:	........
  * Size:	000100
  */
-void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<char*>* delegate)
+void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<immut char*>* delegate)
 {
 	PSUTreeIterator<P2DPane> iter(pane->getPaneTree()->getFirstChild());
 	while (iter != pane->getPaneTree()->getEndChild()) {
@@ -301,7 +301,7 @@ void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<char*>* dele
  * Address:	........
  * Size:	000120
  */
-void zen::P2DPaneLibrary::printUseTexName(char* bloFileName, IDelegate1<char*>* delegate)
+void zen::P2DPaneLibrary::printUseTexName(immut char* bloFileName, IDelegate1<immut char*>* delegate)
 {
 	P2DScreen screen;
 	screen.set(bloFileName, false, false, true);

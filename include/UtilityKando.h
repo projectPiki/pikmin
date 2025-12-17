@@ -43,18 +43,18 @@ struct BitFlags {
  * @brief TODO
  */
 struct LoopChecker {
-	LoopChecker(char* loopName, f32 timeLimit);
+	LoopChecker(immut char* loopName, f32 timeLimit);
 
 	void update();
 
-	f32 mLoopTimer;  // _00, counts down. at 0, throws an error
-	char* mLoopName; // _04
+	f32 mLoopTimer;        // _00, counts down. at 0, throws an error
+	immut char* mLoopName; // _04
 };
 
 // utility functions
 int selectRandomly(Choice* choiceList, int numChoices);
 void drawBatten(Graphics&, Vector3f&, f32);
-void drawBattenPole(Graphics&, Vector3f&, f32, char*);
+void drawBattenPole(Graphics&, Vector3f&, f32, immut char*);
 void drawArrow(Graphics&, Vector3f&, Vector3f&, f32);
 void CRSplineDraw(Graphics&, int, Vector3f*);
 void drawCube(Graphics&, Vector3f&, f32);

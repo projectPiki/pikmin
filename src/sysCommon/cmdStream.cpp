@@ -202,7 +202,7 @@ void CmdStream::copyToToken(int length)
  * Address:	80040F1C
  * Size:	000194
  */
-char* CmdStream::skipLine()
+immut char* CmdStream::skipLine()
 {
 	fillBuffer(false);
 
@@ -232,7 +232,7 @@ char* CmdStream::skipLine()
  * Address:	800410B0
  * Size:	000324
  */
-char* CmdStream::getToken(bool skipComments)
+immut char* CmdStream::getToken(bool skipComments)
 {
 	fillBuffer(false);
 
@@ -294,7 +294,7 @@ char CmdStream::nextChar()
  * Address:	800413D4
  * Size:	0000B4
  */
-bool CmdStream::isToken(char* str)
+bool CmdStream::isToken(immut char* str)
 {
 	if (strlen(mCurrentToken) == 0 || strlen(mCurrentToken) != strlen(str)) {
 		return false;

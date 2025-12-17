@@ -499,7 +499,7 @@ void preloadLanguage()
  * Address:	80051FEC
  * Size:	00009C
  */
-Texture* GameFlow::setLoadBanner(char* texPath)
+Texture* GameFlow::setLoadBanner(immut char* texPath)
 {
 	int heapIdx = gsys->mActiveHeapIdx;
 	gsys->resetHeap(SYSHEAP_Load, 2);
@@ -698,7 +698,7 @@ void GameFlow::softReset()
  * Address:	80052D10
  * Size:	000024
  */
-Shape* GameFlow::loadShape(char* filename, bool p2)
+Shape* GameFlow::loadShape(immut char* filename, bool p2)
 {
 	return gsys->loadShape(filename, p2);
 }
@@ -720,7 +720,7 @@ void GameFlow::update()
  * Address:	80052D60
  * Size:	0000D0
  */
-void GameFlow::addGenNode(char* name, CoreNode* node)
+void GameFlow::addGenNode(immut char* name, CoreNode* node)
 {
 	mGenFlow->add(new GameGenNode((name) ? name : node->mName, node));
 }

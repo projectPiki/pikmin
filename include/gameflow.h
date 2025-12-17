@@ -106,7 +106,7 @@ struct GameChalQuickInfo {
  * @brief TODO
  */
 struct LangMode {
-	void set(char* dir, char* arc, char* bun, char* blo, char* tex)
+	void set(immut char* dir, immut char* arc, immut char* bun, immut char* blo, immut char* tex)
 	{
 		mDirPath = dir;
 		mArcPath = arc;
@@ -115,11 +115,11 @@ struct LangMode {
 		mTexPath = tex;
 	}
 
-	char* mDirPath; // _00
-	char* mArcPath; // _04
-	char* mBunPath; // _08
-	char* mBloPath; // _0C
-	char* mTexPath; // _10
+	immut char* mDirPath; // _00
+	immut char* mArcPath; // _04
+	immut char* mBunPath; // _08
+	immut char* mBloPath; // _0C
+	immut char* mTexPath; // _10
 };
 
 /**
@@ -128,7 +128,7 @@ struct LangMode {
  * @note Size: 0x24.
  */
 struct GameGenNode : public Node {
-	inline GameGenNode(char* name, CoreNode* node)
+	inline GameGenNode(immut char* name, CoreNode* node)
 	    : Node(name)
 	{
 		mNode = node;
@@ -492,11 +492,11 @@ struct GameFlow : public Node {
 	void menuChangeFilter(Menu&);
 	void menuIncreaseFilter(Menu&);
 	void menuDecreaseFilter(Menu&);
-	Texture* setLoadBanner(char*);
+	Texture* setLoadBanner(immut char*);
 	void hardReset(BaseApp*);
 	void softReset();
-	Shape* loadShape(char*, bool);
-	void addGenNode(char*, CoreNode*);
+	Shape* loadShape(immut char*, bool);
+	void addGenNode(immut char*, CoreNode*);
 
 	// unused/inlined:
 	void addOptionsMenu(Menu*);

@@ -33,7 +33,7 @@ DEFINE_PRINT("demoEvent")
  * Address:	........
  * Size:	000090
  */
-char* DemoEventMgr::getEventName(int, int)
+immut char* DemoEventMgr::getEventName(int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -43,7 +43,7 @@ char* DemoEventMgr::getEventName(int, int)
  * Address:	........
  * Size:	000018
  */
-char* DemoEventMgr::getSenderName(int)
+immut char* DemoEventMgr::getSenderName(int)
 {
 	// UNUSED FUNCTION
 }

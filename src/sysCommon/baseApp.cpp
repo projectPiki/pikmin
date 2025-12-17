@@ -85,7 +85,7 @@ void BaseApp::startAgeServer()
 	if (newServer->Open()) {
 		mAgeServer = newServer;
 
-		char* windowName = Name();
+		immut char* windowName = Name();
 		mAgeServer->NewNodeWindow(windowName);
 		read(*(RandomAccessStream*)mAgeServer);
 		mAgeServer->Done();

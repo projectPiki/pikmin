@@ -317,7 +317,7 @@ AnimKey* AnimInfo::addKeyFrame()
  * Address:	800508A4
  * Size:	000234
  */
-AnimMgr::AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath)
+AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath)
 {
 	setName("AnimMgr");
 	mModel       = model;
@@ -331,7 +331,7 @@ AnimMgr::AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath)
  * Address:	80050B04
  * Size:	0001E8
  */
-void AnimMgr::loadAnims(char* animPath, char* bundlePath)
+void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 {
 	if (!animPath) {
 		return;
@@ -388,7 +388,7 @@ void AnimMgr::loadAnims(char* animPath, char* bundlePath)
  * Address:	80050CEC
  * Size:	00008C
  */
-AnimInfo* AnimMgr::addAnimation(char* animPath, bool isRelativePath)
+AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
 {
 	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mModel, animPath, isRelativePath));
 	mAnimList.add(info);

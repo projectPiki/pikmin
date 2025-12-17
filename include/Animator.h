@@ -224,7 +224,7 @@ struct AnimData : public CoreNode {
 		_38        = 0;
 	}
 
-	AnimData(char* name)
+	AnimData(immut char* name)
 	    : CoreNode(name)
 	{
 		mAnimFlags = 0;
@@ -264,7 +264,7 @@ struct AnimDca : public AnimData {
 	{
 	}
 
-	AnimDca(char* name)
+	AnimDca(immut char* name)
 	    : AnimData(StdSystem::stringDup(name))
 	{
 	}
@@ -283,7 +283,7 @@ struct AnimDca : public AnimData {
  */
 struct AnimDck : public AnimData {
 	AnimDck(BaseShape*, int);
-	AnimDck(char* name)
+	AnimDck(immut char* name)
 	    : AnimData(StdSystem::stringDup(name))
 	{
 	}
@@ -594,16 +594,16 @@ struct AnimMgr : public CoreNode {
 	};
 
 	/// Constructor, also loads animations and bundle file info.
-	AnimMgr(Shape* model, char* animPath, int flags, char* bundlePath);
+	AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath);
 
 	/// Reads information for manager parameters and all managed animations.
 	virtual void read(RandomAccessStream& input); // _0C
 
 	/// Loads all parameter and animation information, including bundle.
-	void loadAnims(char* animPath, char* bundlePath);
+	void loadAnims(immut char* animPath, immut char* bundlePath);
 
 	/// Adds and loads new animation into list from specified file.
-	AnimInfo* addAnimation(char* animPath, bool isRelativePath);
+	AnimInfo* addAnimation(immut char* animPath, bool isRelativePath);
 
 	/// Gets number of managed animations in list.
 	int countAnims();

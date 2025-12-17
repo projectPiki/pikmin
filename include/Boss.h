@@ -141,7 +141,7 @@ public:
  * @brief TODO
  */
 struct BossShapeObject {
-	BossShapeObject(Shape*, char*);
+	BossShapeObject(Shape*, immut char*);
 
 	Shape* mShape;            // _00
 	AnimContext mAnimContext; // _04

@@ -82,7 +82,7 @@ void DVDStream::init()
  * Address:	800447DC
  * Size:	000254
  */
-RandomAccessStream* System::openFile(char* path, bool isRelativePath, bool)
+RandomAccessStream* System::openFile(immut char* path, bool isRelativePath, bool)
 {
 	char strPath[PATH_MAX];
 	sprintf(strPath, "%s", isRelativePath ? mActiveDir : "");
@@ -249,7 +249,7 @@ void System::updateSysClock()
  * Address:	80044DA8
  * Size:	00039C
  */
-void System::parseArchiveDirectory(char* path1, char* path2)
+void System::parseArchiveDirectory(immut char* path1, immut char* path2)
 {
 	int free      = gsys->getHeap(gsys->mActiveHeapIdx)->getFree();
 	f32 startTime = getTime();
@@ -589,7 +589,7 @@ void initBigFont()
 }
 
 #if defined(VERSION_GPIP01_00)
-static char* e_errorMessages[] = {
+static immut char* e_errorMessages[] = {
 	"Reading Game Disc...",
 	nullptr,
 	"An error has occurred.",
@@ -617,7 +617,7 @@ static char* e_errorMessages[] = {
 	nullptr,
 };
 
-static char* f_errorMessages[] = {
+static immut char* f_errorMessages[] = {
 	"Lecture du disque...",
 	nullptr,
 	"Une erreur est survenue.",
@@ -645,7 +645,7 @@ static char* f_errorMessages[] = {
 	nullptr,
 };
 
-static char* g_errorMessages[] = {
+static immut char* g_errorMessages[] = {
 	"Disc wird gelesen...",
 	nullptr,
 	"Ein Fehler ist aufgetreten.",
@@ -673,7 +673,7 @@ static char* g_errorMessages[] = {
 	nullptr,
 };
 
-static char* s_errorMessages[] = {
+static immut char* s_errorMessages[] = {
 	"Leyendo el disco...",
 	nullptr,
 	"Se ha producido un error.",
@@ -701,7 +701,7 @@ static char* s_errorMessages[] = {
 	nullptr,
 };
 
-static char* i_errorMessages[] = {
+static immut char* i_errorMessages[] = {
 	"Lettura del disco...",
 	nullptr,
 	"Si è verificato un errore.",
@@ -728,7 +728,7 @@ static char* i_errorMessages[] = {
 	nullptr,
 };
 
-static char** errorList[30] = {
+static immut char** errorList[30] = {
 	&e_errorMessages[0], &e_errorMessages[2], &e_errorMessages[8], &e_errorMessages[14], &e_errorMessages[17], &e_errorMessages[20],
 	&f_errorMessages[0], &f_errorMessages[2], &f_errorMessages[8], &f_errorMessages[14], &f_errorMessages[17], &f_errorMessages[20],
 	&g_errorMessages[0], &g_errorMessages[3], &g_errorMessages[8], &g_errorMessages[14], &g_errorMessages[17], &g_errorMessages[20],
@@ -736,7 +736,7 @@ static char** errorList[30] = {
 	&i_errorMessages[0], &i_errorMessages[2], &i_errorMessages[8], &i_errorMessages[14], &i_errorMessages[17], &i_errorMessages[20],
 };
 #else
-static char* errorMessages[] = {
+static immut char* errorMessages[] = {
 	"Reading Game Disc...",
 	nullptr,
 	"An error has occurred.",
@@ -764,7 +764,7 @@ static char* errorMessages[] = {
 	nullptr,
 };
 
-static char** errorList[6] = {
+static immut char** errorList[6] = {
 	&errorMessages[0], &errorMessages[2], &errorMessages[8], &errorMessages[14], &errorMessages[17], &errorMessages[20],
 };
 #endif
@@ -788,9 +788,9 @@ void System::showDvdError(Graphics& gfx)
 	if (mDvdErrorCode) { // DvdError::ReadingDisc or higher
 		int y = 160;
 #if defined(VERSION_GPIP01_00)
-		char** errors = errorList[mDvdErrorCode + _1A0 * 6];
+		immut char** errors = errorList[mDvdErrorCode + _1A0 * 6];
 #else
-		char** errors = errorList[mDvdErrorCode];
+		immut char** errors = errorList[mDvdErrorCode];
 #endif
 		while (*errors) {
 			gfx.texturePrintf(bigFont, 320 - (bigFont->stringWidth(*errors) / 2), y += 28, *errors);
@@ -911,7 +911,7 @@ bool System::hasDebugInfo()
  * Address:	........
  * Size:	0000b8
  */
-void System::halt(char* file, int line, char* message)
+void System::halt(immut char* file, int line, immut char* message)
 {
 #if 0 // DLL's version
 	char buffer[2048];
@@ -1276,7 +1276,7 @@ FILE* fopen(char*, char*)
 	return nullptr;
 }
 
-RandomAccessStream* System::createFile(char* name, BOOL useRoot)
+RandomAccessStream* System::createFile(immut char* name, BOOL useRoot)
 {
 	const char* b;
 	const char* c;

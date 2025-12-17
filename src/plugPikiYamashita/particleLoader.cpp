@@ -20,7 +20,7 @@ DEFINE_PRINT("particleLoader")
  * Address:	801A0F24
  * Size:	000158
  */
-u8* zen::particleLoader::load(char* fileName, bool p2)
+u8* zen::particleLoader::load(immut char* fileName, bool p2)
 {
 	BinobjInfo* obj = (BinobjInfo*)gsys->findGfxObject(fileName, '_bin');
 	if (obj) {
@@ -53,7 +53,7 @@ u8* zen::particleLoader::load(char* fileName, bool p2)
  * Address:	801A107C
  * Size:	000084
  */
-u8* zen::particleLoader::pmFind(char* fileName)
+u8* zen::particleLoader::pmFind(immut char* fileName)
 {
 	PCRData* pcr;
 	u8* data = nullptr;

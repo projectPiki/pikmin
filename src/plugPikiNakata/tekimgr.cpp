@@ -28,7 +28,7 @@ DEFINE_PRINT("tekiMgr");
 
 TekiMgr* tekiMgr;
 
-char* TekiMgr::typeNames[TEKI_TypeCount] = {
+immut char* TekiMgr::typeNames[TEKI_TypeCount] = {
 	"frog",     // 0, Yellow Wollywog
 	"iwagen",   // 1, Iwagen (unused enemy)
 	"iwagon",   // 2, Rolling Boulder
@@ -119,7 +119,7 @@ void TekiMgr::initTekiMgr()
  * Address:	........
  * Size:	00007C
  */
-int TekiMgr::getTypeIndex(char* typeName)
+int TekiMgr::getTypeIndex(immut char* typeName)
 {
 	for (int i = 0; i < TEKI_TypeCount; i++) {
 		if (strcmp(typeNames[i], typeName) == 0) {

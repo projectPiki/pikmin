@@ -30,7 +30,7 @@ public:
 			mTextures[idx] = texture;
 		}
 	}
-	char* getTexName() { return mTexName; }
+	immut char* getTexName() { return mTexName; }
 
 	u8 getAlpha() const { return mAlpha; }
 	void setAlpha(u8 alpha) { mAlpha = alpha; }
@@ -104,7 +104,7 @@ private:
 	P2DWrapmode mWrapT;    // _104
 	Colour mWhite;         // _108
 	Colour mBlack;         // _10C
-	char* mTexName;        // _110
+	immut char* mTexName;  // _110
 };
 
 #endif

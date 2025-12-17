@@ -16,9 +16,9 @@ struct ogMsgCtrlTagMgr;
 struct setTenmetuAlpha;
 
 struct TextInfoType {
-	char* mScreenResourcePath; // _00
-	s16 mMsgUniqueId;          // _04
-	s16 mMsgSegmentCount;      // _06
+	immut char* mScreenResourcePath; // _00
+	s16 mMsgUniqueId;                // _04
+	s16 mMsgSegmentCount;            // _06
 };
 
 /**
@@ -40,14 +40,14 @@ public:
 		STATE_TransitionToInactive, // A transitional state before the manager becomes fully inactive, follows STATE_FadingOut
 	};
 
-	ogScrMessageMgr(char*);
+	ogScrMessageMgr(immut char*);
 
 	void resetPage();
 	void start(int);
 	void setPage(int);
 	void nextPage();
 	void backPage();
-	void MakeAndSetPageInfo(char***);
+	void MakeAndSetPageInfo(immut char***);
 	void dispAll();
 	void fadeOut();
 	MessageStatus update(Controller*);
@@ -88,7 +88,7 @@ public:
 private:
 	s16 SearchTopPage(int);
 	void setMessagePage(int);
-	s16 makePageInfo(char***);
+	s16 makePageInfo(immut char***);
 	void cnvSingleMulti(char*);
 	void cnvButtonIcon(char*);
 	void setPageInfoSub();
@@ -131,10 +131,10 @@ private:
 	s16 mActivePaneCount;               // _A59C
 #if defined(VERSION_PIKIDEMO)
 #else
-	char mButtonTagChars[12];         // _A59E
-	char mButtonTagIconStrings[34];   // _A5AA, unknown size
-	char* mDefaultButtonMarkupColour; // _A5CC
-	char* mButtonMarkupColours[8];    // _A5D0
+	char mButtonTagChars[12];               // _A59E
+	char mButtonTagIconStrings[34];         // _A5AA, unknown size
+	immut char* mDefaultButtonMarkupColour; // _A5CC
+	immut char* mButtonMarkupColours[8];    // _A5D0
 #endif
 };
 

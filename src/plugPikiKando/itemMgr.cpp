@@ -141,7 +141,7 @@ UfoItem* ItemMgr::getUfo()
  * Address:	........
  * Size:	000110
  */
-ItemShapeObject::ItemShapeObject(Shape* shape, char* objName, char* file)
+ItemShapeObject::ItemShapeObject(Shape* shape, immut char* objName, immut char* file)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;
@@ -638,7 +638,7 @@ f32 ItemCreature::getCurrentMotionCounter()
  * Address:	800F5A08
  * Size:	00002C
  */
-char* ItemCreature::getCurrentMotionName()
+immut char* ItemCreature::getCurrentMotionName()
 {
 	return mItemAnimator.getCurrentMotionName();
 }

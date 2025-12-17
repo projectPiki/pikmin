@@ -113,10 +113,10 @@ typedef u16 wchar_t;
 // So was it C++98, 03, or 11?  Nobody can agree on what / when to blame, but MWCC 1.2.5 is definitely a standards non-compliant compiler.
 
 // This entire codebase is cripplingly const-incorrect.  The result of a constructor being bound to a non-const reference in function
-// parameters is done all the time.  Part of the promise of a matching decomp is that the original codebase is represented as closely
-// as possible, warts and all, but portability (MWCC 1.2.5 was the *last* version of the MWCC to allow this non-standard behavior) is
-// also desireable.  Luckily, almost all const-incorrectness in the codebase is merely a result of apathy, so this cv-qualifier macro
-// exists to document and fix the places that could have been const-correct but weren't.
+// parameters is done all the time, not to mention the mutable string literals.  Part of the promise of a matching decomp is that the
+// original codebase is represented as closely as possible, warts and all, but portability (MWCC 1.2.5 was the *last* version of MWCC
+// to allow this non-standard behavior) is also desireable.  Luckily, almost all const-incorrectness in the codebase is merely a result
+// of apathy, so this cv-qualifier macro exists to document and fix the places that could have been const-correct but weren't.
 #define immut TERNARY_BUILD_MATCHING(, const)
 
 // Nakata had a bad habit of writing mutable references to lifetime-extended rvalues when a value type would have sufficed, so this macro

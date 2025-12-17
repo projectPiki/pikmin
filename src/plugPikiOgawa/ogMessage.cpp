@@ -228,7 +228,7 @@ void zen::ogScrMessageMgr::backPage()
  * Address:	8018BE3C
  * Size:	0001DC
  */
-s16 zen::ogScrMessageMgr::makePageInfo(char*** data)
+s16 zen::ogScrMessageMgr::makePageInfo(immut char*** data)
 {
 	int idx = 0;
 	for (int i = 0; i < 0x99; i++) {
@@ -237,7 +237,7 @@ s16 zen::ogScrMessageMgr::makePageInfo(char*** data)
 			break;
 		}
 		while (true) {
-			char* str = data[i][a];
+			immut char* str = data[i][a];
 			if (strcmp(str, "END") == 0) {
 				break;
 			}
@@ -476,7 +476,7 @@ void zen::ogScrMessageMgr::ReadAllScreen()
  * Address:	8018C55C
  * Size:	000048
  */
-void zen::ogScrMessageMgr::MakeAndSetPageInfo(char*** data)
+void zen::ogScrMessageMgr::MakeAndSetPageInfo(immut char*** data)
 {
 	mPageInfoEntryCount = makePageInfo(data);
 	setMessagePage(0);
@@ -487,7 +487,7 @@ void zen::ogScrMessageMgr::MakeAndSetPageInfo(char*** data)
  * Address:	8018C5A4
  * Size:	0002A4
  */
-zen::ogScrMessageMgr::ogScrMessageMgr(char* path)
+zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 {
 	mBaseScreen = new P2DScreen;
 	mBaseScreen->set(path, true, true, true);

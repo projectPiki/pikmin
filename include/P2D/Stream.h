@@ -13,7 +13,7 @@ struct Colour;
 struct P2DStream {
 	P2DStream(RandomAccessStream* stream) { mStream = stream; }
 
-	char* getResource(int);
+	immut char* getResource(int);
 	void align(int);
 
 	// unused/inlined:

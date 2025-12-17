@@ -52,7 +52,7 @@ void ObjCollInfo::showInfo(Graphics&, Matrix4f&)
  * Address:	........
  * Size:	0001AC
  */
-void ObjCollInfo::saveini(char*, RandomAccessStream&)
+void ObjCollInfo::saveini(immut char*, RandomAccessStream&)
 {
 	// UNUSED FUNCTION
 }

@@ -17,7 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("panitekianimator")
 
-char* PaniTekiAnimator::motionLabels[TekiMotion::COUNT] = {
+immut char* PaniTekiAnimator::motionLabels[TekiMotion::COUNT] = {
 	"DEAD",         // 0
 	"DAMAGE",       // 1
 	"WAIT_1",       // 2

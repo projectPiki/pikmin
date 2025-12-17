@@ -50,7 +50,7 @@ public:
 		MODE_Unk3 = 3,
 	};
 
-	DGIScreenMgr(char* bloFileName)
+	DGIScreenMgr(immut char* bloFileName)
 	{
 		_04   = 0.0f;
 		_08   = 0.5f;

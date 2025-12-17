@@ -22,7 +22,7 @@ DEFINE_PRINT("BossShapeObj");
  * Address:	80152684
  * Size:	000110
  */
-BossShapeObject::BossShapeObject(Shape* shape, char* bossName)
+BossShapeObject::BossShapeObject(Shape* shape, immut char* bossName)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = nullptr;

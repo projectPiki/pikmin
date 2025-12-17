@@ -5,7 +5,7 @@
  * Address:	........
  * Size:	000070
  */
-bool String::isSame(char* str)
+bool String::isSame(immut char* str)
 {
 	const char* currentChar = mString;
 
@@ -26,7 +26,7 @@ bool String::isSame(char* str)
  * Address:	800258F0
  * Size:	000024
  */
-int String::getLength()
+int String::getLength() immut
 {
 	const char* str = mString;
 	int len = 0;

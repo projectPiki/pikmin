@@ -261,7 +261,7 @@ void RouteGroup::loadini(CmdStream* s)
  * Address:	........
  * Size:	0001C0
  */
-void RouteGroup::saveini(char* name, RandomAccessStream& s)
+void RouteGroup::saveini(immut char* name, RandomAccessStream& s)
 {
 	s.print("\n%sroute {\n", name);
 	s.print("%s\tid\t\t%s\n", name, mStringID);

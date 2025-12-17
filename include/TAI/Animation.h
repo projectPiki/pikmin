@@ -11,7 +11,7 @@
  * @note Size: 0xC.
  */
 struct TAIanimation {
-	TAIanimation(int tekiType, char* bunFile)
+	TAIanimation(int tekiType, immut char* bunFile)
 	{
 		if (tekiMgr->isUsingType(tekiType)) {
 			mAnimMgr = tekiMgr->mTekiShapes[tekiType]->mAnimMgr;
@@ -22,7 +22,7 @@ struct TAIanimation {
 		mAnimInfo = nullptr;
 	}
 
-	AnimInfo* addAnimation(char* anim);
+	AnimInfo* addAnimation(immut char* anim);
 
 	void addInfoKey(int index, int value) { mAnimInfo->addInfoKey(new AnimKey(index, value)); }
 

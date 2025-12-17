@@ -55,7 +55,7 @@ struct ogScrTutorialMgr {
 	zen::ogScrTutorialMgr::TutorialStatus mStatus; // _04
 };
 
-extern char** bloFiles_Tutorial[];
+extern immut char** bloFiles_Tutorial[];
 
 } // namespace zen
 

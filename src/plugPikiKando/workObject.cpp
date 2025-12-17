@@ -36,7 +36,7 @@ f32 bridgeGrad[5]     = { 0.0f, 8.0f, -8.0f, 0.0f, 0.0f };
 
 struct GenObjInfo {
 	s32 mType;
-	char* mName;
+	immut char* mName;
 };
 
 GenObjInfo info[] = {
@@ -49,7 +49,7 @@ GenObjInfo shpInfo[] = {
 	{ 0, "bridge 4" }, { 1, "slope up 4" }, { 2, "slope down 4" }, { 3, "stone 10" }, { 4, "bridge 13" }, { 5, "meck" },
 };
 
-char* files[] = {
+immut char* files[] = {
 	"objects/bridge/brd_test.mod",   "objects/bridge/slp_u_4.mod",  "objects/bridge/slp_d_4.mod",
 	"objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod",
 };
@@ -118,7 +118,7 @@ void WorkObject::doKill()
  * Address:	........
  * Size:	000070
  */
-int WorkObjectMgr::getNameIndex(char* name)
+int WorkObjectMgr::getNameIndex(immut char* name)
 {
 	// mType == 2 is the end
 	for (GenObjInfo* i = info; i->mType != 2; i++) {
@@ -135,7 +135,7 @@ int WorkObjectMgr::getNameIndex(char* name)
  * Address:	........
  * Size:	000038
  */
-char* WorkObjectMgr::getName(int type)
+immut char* WorkObjectMgr::getName(int type)
 {
 	// mType == 2 is the end
 	for (GenObjInfo* i = info; i->mType != 2; i++) {
@@ -152,7 +152,7 @@ char* WorkObjectMgr::getName(int type)
  * Address:	........
  * Size:	000070
  */
-int WorkObjectMgr::getShapeNameIndex(char* name)
+int WorkObjectMgr::getShapeNameIndex(immut char* name)
 {
 	// mType == 5 is the end
 	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {
@@ -170,7 +170,7 @@ int WorkObjectMgr::getShapeNameIndex(char* name)
  * Address:	........
  * Size:	000038
  */
-char* WorkObjectMgr::getShapeName(int type)
+immut char* WorkObjectMgr::getShapeName(int type)
 {
 	// mType == 5 is the end
 	for (GenObjInfo* i = shpInfo; i->mType != 5; i++) {

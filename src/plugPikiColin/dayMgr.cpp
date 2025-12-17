@@ -103,14 +103,14 @@ struct PositionMenu : public Menu {
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<PositionMenu, Menu&>(this, &menuIncrease));
 	}
 
-	void updateComponent(Menu& menu, char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
 	Vector3f* mPosition;     // _B4
 	bool mIsSmallAdjustment; // _B8
 	f32* mComponentValue;    // _BC
-	char* mComponentName;    // _C0
+	immut char* mComponentName; // _C0
 };
 
 /**
@@ -196,13 +196,13 @@ struct ColourMenu : public Menu {
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<ColourMenu, Menu&>(this, &menuIncrease));
 	}
 
-	void updateComponent(Menu& menu, char* name, u8* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %d", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, u8* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %d", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
 	Colour* mColour;      // _B4
 	u8* mComponentValue;  // _B8, this is a pointer to the component value (R, G, B, A) of mColour
-	char* mComponentName; // _BC, this is the component name ("R", "G", "B", "A")
+	immut char* mComponentName; // _BC, this is the component name ("R", "G", "B", "A")
 };
 
 /**
@@ -261,14 +261,14 @@ struct FogMenu : public Menu {
 		addKeyEvent(KeyEventType::Input, KBBTN_X, new Delegate1<FogMenu, Menu&>(this, &menuIncrease));
 	}
 
-	void updateComponent(Menu& menu, char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
 	f32* mNear;           // _B4
 	f32* mFar;            // _B8
 	f32* mComponentValue; // _BC
-	char* mComponentName; // _C0
+	immut char* mComponentName; // _C0
 };
 
 static char* lightTypeNames[4] = { "OFF", "PARALLEL", "POINT", "SPOT" };
@@ -358,7 +358,7 @@ struct LightMenu : public Menu {
 		addMenu(new ColourMenu(&mLight->mDiffuseColour, mController, gsys->mConsFont, true), 0, "colour");
 	}
 
-	void updateComponent(Menu& menu, char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
+	void updateComponent(Menu& menu, immut char* name, f32* valuePtr) { sprintf(menu.mCurrentItem->mName, "%s = %.2f", name, *valuePtr); }
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
@@ -367,7 +367,7 @@ struct LightMenu : public Menu {
 	Light* mLight;          // _BC
 	f32* mSpotFov;          // _C0
 	f32* mActiveValuePtr;   // _C4
-	char* mActiveValueName; // _C8
+	immut char* mActiveValueName; // _C8
 };
 
 struct DaySetMenu : public Menu {
@@ -411,7 +411,7 @@ struct DaySetMenu : public Menu {
  * Address:	........
  * Size:	000034
  */
-void DayMgr::updateComponent(Menu& menu, char* name, int* valuePtr)
+void DayMgr::updateComponent(Menu& menu, immut char* name, int* valuePtr)
 {
 	sprintf(menu.mCurrentItem->mName, "%s = %d", name, *valuePtr);
 }

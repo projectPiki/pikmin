@@ -784,7 +784,7 @@ int Font::charToIndex(u16 c)
  * Address:	80028134
  * Size:	0000E0
  */
-int Font::stringWidth(char* str)
+int Font::stringWidth(immut char* str)
 {
 	int width = 0;
 	while (*str) {
@@ -1014,7 +1014,7 @@ u32 TexImg::convFormat(u32 inFmt)
 	// UNUSED FUNCTION
 }
 
-static char* fmtNames[] = {
+static immut char* fmtNames[] = {
 	"TEX_FMT_RGB565", "TEX_FMT_S3TC", "TEX_FMT_RGB5A3", "TEX_FMT_I4", "TEX_FMT_I8", "TEX_FMT_IA4", "TEX_FMT_IA8", "TEX_FMT_RGBA8",
 };
 
@@ -1023,7 +1023,7 @@ static char* fmtNames[] = {
  * Address:	........
  * Size:	000018
  */
-char* TexImg::formatName(u32 format)
+immut char* TexImg::formatName(u32 format)
 {
 	return fmtNames[format];
 }
@@ -1168,7 +1168,7 @@ static const char* btipalFmts[] = {
  * Address:	........
  * Size:	000004
  */
-void TexImg::dumpBti(Texture* tex, char* name, RandomAccessStream& input, RandomAccessStream& output)
+void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, RandomAccessStream& output)
 {
 #ifdef WIN32
 	// read BTI function
@@ -1386,7 +1386,7 @@ void Graphics::drawSphere(immut Vector3f& p1, f32 p2, immut Matrix4f& p3)
  * Address:	8002966C
  * Size:	000170
  */
-void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, char* fmt, ...)
+void Graphics::perspPrintf(Font* font, immut Vector3f& pos, int p3, int p4, immut char* fmt, ...)
 {
 	char buf[PATH_MAX];
 	va_list vlist;

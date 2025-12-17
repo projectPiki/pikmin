@@ -22,7 +22,7 @@ struct GameStat {
 		operator int() { return mCount; }
 
 		// unused/inlined:
-		void dump(char*);
+		void dump(immut char*);
 
 		int mCount; // _00
 	};
@@ -44,7 +44,7 @@ struct GameStat {
 		void inc(int color) { mCounts[color]++; }
 
 		// unused/inlined:
-		void dump(char*);
+		void dump(immut char*);
 
 		int mCounts[PikiColorCount]; // _00, indexed by piki color
 	};

@@ -34,7 +34,7 @@ struct DynObjBody : public RigidBody {
 
 	void applyWorldSpring(int, int, Vector3f&);
 	void initBodyCollisions();
-	void readScript(MapMgr*, char*);
+	void readScript(MapMgr*, immut char*);
 
 	// _00        = VTBL
 	// _00-_132B4 = RigidBody

@@ -32,7 +32,7 @@ enum PlantTypes {
  * @brief TODO
  */
 struct PlantShapeObject {
-	PlantShapeObject(Shape* shape, char* plantName, char* fileName);
+	PlantShapeObject(Shape* shape, immut char* plantName, immut char* fileName);
 
 	Shape* mShape;            // _00
 	AnimMgr* mAnimMgr;        // _04
@@ -162,7 +162,7 @@ public:
 	bool usePlantType(int);
 
 	// unused/inlined:
-	char* getPlantName(int);
+	immut char* getPlantName(int);
 	void addUseList(int);
 	Creature* birth();
 

@@ -90,7 +90,7 @@ void setTextColor(P2DTextBox* tbox, P2DPicture* pic)
  * Address:	8017EAF8
  * Size:	000088
  */
-bool getStringCVS(char* p1, char* p2, s16 p3)
+bool getStringCVS(char* p1, immut char* p2, s16 p3)
 {
 	s16 count = 512;
 	while (p3 > 0) {
@@ -147,7 +147,7 @@ PikaAlphaMgr::PikaAlphaMgr(P2DScreen* screen)
 
 		P2DPicture* pic  = (P2DPicture*)parent;
 		P2DTextBox* tbox = (P2DTextBox*)pane;
-		char* text       = tbox->getString();
+		immut char* text = tbox->getString();
 		tbox->hide();
 		getStringCVS(str, text, 0);
 		f32 val0 = atof(str);
@@ -616,10 +616,10 @@ void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
 ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox* tbox)
 {
 	char tmpStr[512];
-	mTextureCount = 0;
-	mPicture      = pic;
-	mTextBox      = tbox;
-	char* text    = mTextBox->getString();
+	mTextureCount    = 0;
+	mPicture         = pic;
+	mTextBox         = tbox;
+	immut char* text = mTextBox->getString();
 
 	for (int i = 0; i < 100; i++) {
 		if (getStringCVS(tmpStr, text, 2 * i)) {
@@ -893,7 +893,7 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  * Address:	801805F4
  * Size:	0003A8
  */
-bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
+bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
 {
 	STACK_PAD_VAR(1);
 	int a               = *p2;

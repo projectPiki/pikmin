@@ -150,7 +150,7 @@ bool BitFlags::isFlag(u16 flag)
  * Address:	801163EC
  * Size:	00000C
  */
-LoopChecker::LoopChecker(char* name, f32 time)
+LoopChecker::LoopChecker(immut char* name, f32 time)
 {
 	mLoopTimer = time;
 	mLoopName  = name;
@@ -193,7 +193,7 @@ void drawBatten(Graphics& gfx, Vector3f& pos, f32 size)
  * Address:	8011658C
  * Size:	000424
  */
-void drawBattenPole(Graphics& gfx, Vector3f& pos, f32 size, char* name)
+void drawBattenPole(Graphics& gfx, Vector3f& pos, f32 size, immut char* name)
 {
 	Vector3f pos2(pos);
 	pos2.y = mapMgr->getMinY(pos2.x, pos2.z, true);

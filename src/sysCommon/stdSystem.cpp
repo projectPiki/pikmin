@@ -125,7 +125,7 @@ void StdSystem::getAppMemory(char* buffer)
  * Address:	8003F078
  * Size:	000090
  */
-GfxobjInfo* StdSystem::findGfxObject(char* str, u32 id)
+GfxobjInfo* StdSystem::findGfxObject(immut char* str, u32 id)
 {
 	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
 		if (info->mId == id && !strcmp(info->mString, str)) {
@@ -141,7 +141,7 @@ GfxobjInfo* StdSystem::findGfxObject(char* str, u32 id)
  * Address:	........
  * Size:	00009C
  */
-GfxobjInfo* StdSystem::findAnyGfxObject(char* str, u32 id)
+GfxobjInfo* StdSystem::findAnyGfxObject(immut char* str, u32 id)
 {
 	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
 		if (info->mId == id) {
@@ -158,7 +158,7 @@ GfxobjInfo* StdSystem::findAnyGfxObject(char* str, u32 id)
  * Address:	8003F108
  * Size:	0000F4
  */
-Texture* StdSystem::loadTexture(char* path, bool unk)
+Texture* StdSystem::loadTexture(immut char* path, bool unk)
 {
 	GfxobjInfo* foundObj = findGfxObject(path, '_tex');
 	if (foundObj) {
@@ -191,7 +191,7 @@ GfxobjInfo* StdSystem::findTexture(Texture*)
  * Address:	8003F204
  * Size:	0001A8
  */
-Shape* StdSystem::loadShape(char* path, bool mayExist)
+Shape* StdSystem::loadShape(immut char* path, bool mayExist)
 {
 	Shape* result = nullptr;
 	if (mayExist) {
@@ -207,7 +207,7 @@ Shape* StdSystem::loadShape(char* path, bool mayExist)
 		sprintf(shapePathBuffer, "%s", path);
 
 		// Isolate the first and second half of the path
-		char* remainingPath = nullptr;
+		immut char* remainingPath = nullptr;
 		for (int i = strlen(shapePathBuffer) - 1; i >= 0; i--) {
 			u8 target = '?';
 			if ((u8)path[i] != target) {
@@ -240,7 +240,7 @@ Shape* StdSystem::loadShape(char* path, bool mayExist)
  * Address:	8003F3AC
  * Size:	0000A0
  */
-AnimData* StdSystem::findAnimation(char* path)
+AnimData* StdSystem::findAnimation(immut char* path)
 {
 	GfxobjInfo* info = findGfxObject(path, '_anm');
 	return info ? ((AnmobjInfo*)info)->mAnimation : nullptr;
@@ -251,7 +251,7 @@ AnimData* StdSystem::findAnimation(char* path)
  * Address:	........
  * Size:	0000AC
  */
-AnimData* StdSystem::findAnyAnimation(char* path)
+AnimData* StdSystem::findAnyAnimation(immut char* path)
 {
 	GfxobjInfo* info = findAnyGfxObject(path, '_anm');
 	if (info) {
@@ -266,7 +266,7 @@ AnimData* StdSystem::findAnyAnimation(char* path)
  * Address:	........
  * Size:	000098
  */
-AnimData* StdSystem::findIndexAnimation(char*, int)
+AnimData* StdSystem::findIndexAnimation(immut char*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -276,7 +276,7 @@ AnimData* StdSystem::findIndexAnimation(char*, int)
  * Address:	8003F44C
  * Size:	0000A4
  */
-int StdSystem::findAnyIndex(char* prefix, char* fullStr)
+int StdSystem::findAnyIndex(immut char* prefix, immut char* fullStr)
 {
 	int index = 0;
 	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {
@@ -299,7 +299,7 @@ int StdSystem::findAnyIndex(char* prefix, char* fullStr)
  * Address:	8003F4F0
  * Size:	0000BC
  */
-AnimData* StdSystem::loadAnimation(Shape* model, char* path, bool isRelativePath)
+AnimData* StdSystem::loadAnimation(Shape* model, immut char* path, bool isRelativePath)
 {
 	GfxobjInfo* found = findGfxObject(path, '_anm');
 	if (found) {
@@ -319,7 +319,7 @@ AnimData* StdSystem::loadAnimation(Shape* model, char* path, bool isRelativePath
  * Address:	8003F5AC
  * Size:	0000B8
  */
-void StdSystem::addAnimation(AnimData* data, char* path)
+void StdSystem::addAnimation(AnimData* data, immut char* path)
 {
 	AnmobjInfo* newInfo = new AnmobjInfo();
 	newInfo->mString    = StdSystem::stringDup(path);
@@ -403,7 +403,7 @@ void StdSystem::invalidateObjs(u32 lowerBound, u32 upperBound)
  * Address:	8003F7F8
  * Size:	0000D4
  */
-void StdSystem::addTexture(Texture* texture, char* path)
+void StdSystem::addTexture(Texture* texture, immut char* path)
 {
 	TexobjInfo* newInfo = new TexobjInfo();
 	newInfo->mString    = StdSystem::stringDup(path);
@@ -429,7 +429,7 @@ void StdSystem::initSoftReset()
  * Address:	8003F8DC
  * Size:	000108
  */
-Shape* StdSystem::getShape(char* a2, char* shapeName, char* modelTexturePath, bool a5)
+Shape* StdSystem::getShape(immut char* a2, immut char* shapeName, immut char* modelTexturePath, bool a5)
 {
 	Shape* result                  = nullptr;
 	RandomAccessStream* fileStream = gsys->openFile(a2, a5, true);
@@ -561,7 +561,7 @@ void StdSystem::flushLFlares(Graphics& gfx)
  * Address:	8003FDD4
  * Size:	000560
  */
-void StdSystem::loadBundle(char* pPath, bool loadWithCache)
+void StdSystem::loadBundle(immut char* pPath, bool loadWithCache)
 {
 	RandomAccessStream* fs = openFile(pPath, true, true);
 	if (!fs) {
@@ -636,7 +636,7 @@ void StdSystem::loadBundle(char* pPath, bool loadWithCache)
  * Address:	80040340
  * Size:	00005C
  */
-char* StdSystem::stringDup(char* str)
+char* StdSystem::stringDup(immut char* str)
 {
 	size_t len   = strlen(str) + 1;
 	char* outStr = new char[len];
@@ -713,7 +713,7 @@ void TextureCacher::cacheTexture(CacheTexture* tex)
 
 #ifdef WIN32
 
-void StdSystem::ageAnyAnimations(AgeServer& server, char* path)
+void StdSystem::ageAnyAnimations(AgeServer& server, immut char* path)
 {
 	int i = 0;
 	for (GfxobjInfo* info = mGfxobjInfo.mNext; info != &mGfxobjInfo; info = info->mNext) {

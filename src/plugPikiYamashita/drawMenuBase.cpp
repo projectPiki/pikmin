@@ -23,7 +23,7 @@ DEFINE_PRINT("drawMenuBase")
  * Address:	801F014C
  * Size:	000438
  */
-zen::DrawMenuBase::DrawMenuBase(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
+zen::DrawMenuBase::DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr)
     : DrawScreen(bloFileName, nullptr, useAlphaMgr, useTexAnimMgr)
 {
 	P2DPane* rootPane = mScreen.search('root', true);

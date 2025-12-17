@@ -37,7 +37,7 @@ struct KIO {
 	void copyEfb(u8*, u16, u16);
 
 	static bool fbCopy;
-	static char* haltMessage;
+	static immut char* haltMessage;
 	static int kontMode; // see KontMode enum
 
 	// TODO: members

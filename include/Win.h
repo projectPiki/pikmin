@@ -43,10 +43,10 @@ struct GmWin : public CoreNode {
 	virtual void doRender(Graphics& gfx);                                                                         // _1C unused/inlined
 	virtual void render(Graphics& gfx);                                                                           // _20
 	virtual void printStart(Graphics& gfx);                                                                       // _24
-	virtual void print(Graphics& gfx, int posX, int posY, char* message);                                         // _28
-	virtual void printcentre(Graphics& gfx, int posY, char* message);                                             // _2C
-	virtual void printleft(Graphics& gfx, int posY, char* message);                                               // _30
-	virtual void printright(Graphics& gfx, int posY, char* message);                                              // _34
+	virtual void print(Graphics& gfx, int posX, int posY, immut char* message);                                   // _28
+	virtual void printcentre(Graphics& gfx, int posY, immut char* message);                                       // _2C
+	virtual void printleft(Graphics& gfx, int posY, immut char* message);                                         // _30
+	virtual void printright(Graphics& gfx, int posY, immut char* message);                                        // _34
 	virtual void texture(Graphics& gfx, Texture* texture, int minX, int minY, int maxX, int maxY, RectArea area); // _38
 	virtual void texturecentre(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area);  // _3C
 	virtual void textureleft(Graphics& gfx, Texture* texture, int minY, int width, int height, RectArea area);    // _40

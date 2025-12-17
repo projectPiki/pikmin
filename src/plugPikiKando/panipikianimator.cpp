@@ -17,7 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("panipikianimator");
 
-char* PaniPikiAnimator::motionLabels[PIKIANIM_COUNT] = {
+immut char* PaniPikiAnimator::motionLabels[PIKIANIM_COUNT] = {
 	"RUN",      "NIGERU",    "WALK",      "WAIT",        "PICK",     // 0-4
 	"NUKU",     "NUKARERU",  "DEAD",      "DEAD2",       "DEAD3",    // 5-9
 	"DAMAGE",   "ASIBUMI",   "OCARRY",    "LSUBERU",     "RSUBERU",  // 10-14

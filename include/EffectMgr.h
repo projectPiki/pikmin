@@ -79,14 +79,14 @@ struct EffectShape : public CoreNode {
 	{
 	}
 
-	EffectShape(char* modelFile)
+	EffectShape(immut char* modelFile)
 	    : CoreNode("")
 	{
 		initShape(modelFile);
 	}
 
 	// unused/inlined:
-	void initShape(char*);
+	void initShape(immut char*);
 	bool update();
 	void refresh(Graphics&, Matrix4f&, f32*);
 
@@ -563,7 +563,7 @@ extern EffectMgr* effectMgr;
  * @brief TODO
  */
 struct EffectParticleRegistration {
-	EffectParticleRegistration(char*, char*, char*); // unused/inlined
+	EffectParticleRegistration(immut char*, immut char*, immut char*); // unused/inlined
 
 	virtual zen::particleGenerator* create(immut Vector3f& pos, zen::CallBack1<zen::particleGenerator*>* cbGen,
 	                                       zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cbPtcl) // _08
@@ -581,7 +581,7 @@ struct EffectParticleRegistration {
  * @brief TODO
  */
 struct EffectGeometryRegistration {
-	EffectGeometryRegistration(char*, char*, f32, u8); // unused/inlined
+	EffectGeometryRegistration(immut char*, immut char*, f32, u8); // unused/inlined
 
 	virtual EffShpInst* create(immut Vector3f&, immut Vector3f&, immut Vector3f&); // _08
 
@@ -595,7 +595,7 @@ struct EffectGeometryRegistration {
  * @brief TODO
  */
 struct EffectSimpleParticleRegistration {
-	EffectSimpleParticleRegistration(char*, Colour, Colour); // unused/inlined
+	EffectSimpleParticleRegistration(immut char*, Colour, Colour); // unused/inlined
 
 	zen::particleMdl* create(s16 lifeTime, immut Vector3f& globalPos, immut Vector3f& vel, immut Vector3f& accel, f32 size, f32 rotSpeed,
 	                         zen::CallBack1<zen::particleMdl*>* cbPtcl)

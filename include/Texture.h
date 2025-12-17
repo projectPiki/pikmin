@@ -61,15 +61,15 @@ struct TexAttr : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int mIndex;            // _14
-	int mTextureIndex;     // _18
-	s16 mTilingType;       // _1C
-	s16 mFlags;            // _1E
-	u16 mUseOffsetImgData; // _20
-	f32 mLODBias;          // _24
-	char* mTextureName;    // _28
-	Texture* mTexture;     // _2C
-	TexImg* mImage;        // _30
+	int mIndex;               // _14
+	int mTextureIndex;        // _18
+	s16 mTilingType;          // _1C
+	s16 mFlags;               // _1E
+	u16 mUseOffsetImgData;    // _20
+	f32 mLODBias;             // _24
+	immut char* mTextureName; // _28
+	Texture* mTexture;        // _2C
+	TexImg* mImage;           // _30
 };
 
 /**
@@ -143,13 +143,13 @@ struct TexImg : public CoreNode {
 
 	static int calcDataSize(int texFmt, int width, int height);
 	static void getTileSize(int texFmt, u32& tileSizeX, u32& tileSizeY);
-	static char* formatName(u32 texFmt);
+	static immut char* formatName(u32 texFmt);
 
 	// unused/inlined:
 	u32 convFormat(u32);
 	void setColour(Colour&);
 	void readTexData(Texture*, RandomAccessStream&, u8*);
-	void dumpBti(Texture*, char*, RandomAccessStream&, RandomAccessStream&);
+	void dumpBti(Texture*, immut char*, RandomAccessStream&, RandomAccessStream&);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -255,9 +255,9 @@ struct CacheInfo {
 		mPrev->mNext = mNext;
 	}
 
-	char* mName;      // _00
-	CacheInfo* mPrev; // _04
-	CacheInfo* mNext; // _08
+	immut char* mName; // _00
+	CacheInfo* mPrev;  // _04
+	CacheInfo* mNext;  // _08
 };
 
 /**

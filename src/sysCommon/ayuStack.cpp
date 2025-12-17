@@ -23,7 +23,7 @@ DEFINE_PRINT("AyuStack");
  * Address:	........
  * Size:	000070
  */
-void AyuStack::create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled)
+void AyuStack::create(immut char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled)
 {
 	mAllocType         = allocType;
 	mIsActive          = true;
@@ -171,7 +171,7 @@ void AyuStack::pop()
  * Address:	80024908
  * Size:	000074
  */
-void AyuHeap::init(char* name, int allocType, void* stackTop, int stackSize)
+void AyuHeap::init(immut char* name, int allocType, void* stackTop, int stackSize)
 {
 	create(name, allocType, stackTop, stackSize, false);
 	_24 = 0;

@@ -723,7 +723,7 @@ void DynObjBody::initBodyCollisions()
  * Address:	80064510
  * Size:	0003A4
  */
-void DynObjBody::readScript(MapMgr* map, char* fileName)
+void DynObjBody::readScript(MapMgr* map, immut char* fileName)
 {
 	RandomAccessStream* stream = gsys->openFile(fileName, true, true);
 	if (!stream) {
@@ -1857,7 +1857,7 @@ void MapMgr::traceMove(Creature* creature, MoveTrace& trace, f32 timeStep)
  * Address:	80069424
  * Size:	000070
  */
-Shape* MapMgr::loadPlatshape(char* path)
+Shape* MapMgr::loadPlatshape(immut char* path)
 {
 	Shape* shp       = nullptr;
 	GfxobjInfo* info = gsys->findGfxObject(path, '_shp');

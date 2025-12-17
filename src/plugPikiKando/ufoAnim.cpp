@@ -25,11 +25,11 @@ DEFINE_PRINT(nullptr);
  */
 UfoShapeObject::UfoShapeObject(Shape* shape)
 {
-	mAnimContexts   = new AnimContext[8];
-	mShape          = shape;
-	char* path      = "objects/ufo/ufo0705.bin";
-	mAnimMgr        = new AnimMgr(shape, path, ANIMMGR_LOAD_BUNDLE, nullptr);
-	mAnimMgr->mName = "ufo shape";
+	mAnimContexts    = new AnimContext[8];
+	mShape           = shape;
+	immut char* path = "objects/ufo/ufo0705.bin";
+	mAnimMgr         = new AnimMgr(shape, path, ANIMMGR_LOAD_BUNDLE, nullptr);
+	mAnimMgr->mName  = "ufo shape";
 
 	mShape->overrideAnim(0, &mAnimContexts[0]);
 	mShape->overrideAnim(38, &mAnimContexts[1]);
@@ -41,7 +41,7 @@ UfoShapeObject::UfoShapeObject(Shape* shape)
 	mShape->overrideAnim(53, &mAnimContexts[7]);
 }
 
-char* PaniUfoAnimator::motionLabels[UfoMotion::COUNT] = {
+immut char* PaniUfoAnimator::motionLabels[UfoMotion::COUNT] = {
 	"wait tut", "wait",    "takeoff",   "henka1",    "henka1b",   "henka1d",   "henka2",    "henka2d",    "henka3",
 	"henka4a",  "henka4b", "takeoff-1", "takeoff-2", "takeoff-3", "takeoff-4", "takeoff-5", "open-close",
 };

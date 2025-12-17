@@ -45,7 +45,7 @@ void Timers::newFrame()
  * Address:	800409A4
  * Size:	000004
  */
-void Timers::_start(char* name, bool set)
+void Timers::_start(immut char* name, bool set)
 {
 #if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
 	if (gsys->mTimerState != TS_Full && set) {
@@ -90,7 +90,7 @@ void Timers::_start(char* name, bool set)
  * Address:	800409A8
  * Size:	000004
  */
-void Timers::_stop(char* name)
+void Timers::_stop(immut char* name)
 {
 #if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
 	for (TimerInf* info = mTimerList; info; info = info->mNext) {

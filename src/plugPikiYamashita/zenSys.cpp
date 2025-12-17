@@ -59,5 +59,5 @@ Texture* zen::loadTexExp(const char* textureName, bool useDirectory, bool makePa
 		return gsys->loadTexture(fullPath, true);
 	}
 
-	return gsys->loadTexture((char*)textureName, true);
+	return gsys->loadTexture((immut char*)textureName, true);
 }

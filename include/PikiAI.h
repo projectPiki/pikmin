@@ -37,7 +37,7 @@ enum ActionResults {
 struct Reaction {
 	struct Info { }; // TODO: The ILK says this exists.
 
-	static char* info[9];
+	static immut char* info[9];
 };
 
 BEGIN_ENUM_TYPE(PikiAction)
@@ -140,15 +140,15 @@ public:
 	void setChildren(int, ...);
 
 	// only DLL inlines:
-	char* getName() { return mName; }
-	void setName(char* name) { mName = name; }
+	immut char* getName() { return mName; }
+	void setName(immut char* name) { mName = name; }
 
 	// _00 = VTBL
 	Child* mChildActions; // _04, array of mChildCount Children
 	s16 mCurrActionIdx;   // _08
 	s16 mChildCount;      // _0A
 	Piki* mPiki;          // _0C
-	char* mName;          // _10
+	immut char* mName;    // _10
 };
 
 /**

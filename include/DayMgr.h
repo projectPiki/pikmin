@@ -109,7 +109,7 @@ struct DayMgr {
 	void init(CmdStream*);
 
 	// unused/inlined:
-	void updateComponent(Menu&, char*, int*);
+	void updateComponent(Menu&, immut char*, int*);
 	void updateLightCount(Menu&);
 	void updateTime(Menu&);
 
