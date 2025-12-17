@@ -985,7 +985,7 @@ void MemoryCard::initBannerArea(CARDStat& state, char* p2)
 	STACK_PAD_VAR(1);
 }
 
-static char* errCodes[] = {
+static const char* errCodes[] = {
 	"No Error",      "ERR! No Card", "ERR! Not a Card",    "ERR! Card Fullup", "ERR! Card Broken", "ERR! Card Wrong Country",
 	"ERR! Unusable", "ERR! Unknown", "ERR! No Files Left",
 };
@@ -1946,7 +1946,7 @@ bool MemoryCard::isFileBroken()
  */
 void MemoryCard::breakFile()
 {
-	static char* sectionNames[] = {
+	static const char* sectionNames[] = {
 		"banner", "options 0", "options 1", "gamefile 0", "gamefile 1", "gamefile 2", "gamefile 3",
 	};
 	// UNUSED FUNCTION

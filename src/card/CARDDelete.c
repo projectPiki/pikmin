@@ -94,7 +94,7 @@ s32 CARDFastDelete(s32 channel, s32 fileNo)
  * Address:	........
  * Size:	000110
  */
-s32 CARDDeleteAsync(s32 chan, char* fileName, CARDCallback callback)
+s32 CARDDeleteAsync(s32 chan, const char* fileName, CARDCallback callback)
 {
 	// UNUSED FUNCTION
 }

@@ -41,7 +41,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GameFlow");
 
-static char* timopts[] = { " [off]", "  [on]", "[full]" };
+static const char* timopts[] = { " [off]", "  [on]", "[full]" };
 
 /*
  * --INFO--
@@ -295,7 +295,7 @@ void GameFlow::addOptionsMenu(Menu* parent)
 	parent->addOption(0, collsBuf, new Delegate1<GameFlow, Menu&>(this, &menuToggleColls), true);
 }
 
-static char* filterNames[] = {
+static const char* filterNames[] = {
 	"custom",
 	"DF off",
 };

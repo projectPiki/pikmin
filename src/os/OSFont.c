@@ -129,7 +129,7 @@ u32 OSLoadFont(OSFontHeader* fontInfo, void* temp)
  * Address:	........
  * Size:	0002CC
  */
-char* OSGetFontTexel(char*, void*, s32, s32, s32*)
+char* OSGetFontTexel(const char*, void*, s32, s32, s32*)
 {
 	// UNUSED FUNCTION
 }

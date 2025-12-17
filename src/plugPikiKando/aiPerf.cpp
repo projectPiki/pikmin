@@ -61,7 +61,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("aiPerf");
 
-char* gridStrings[] = { "[grid off]", "[grid xyz]", "[grid xz]" };
+const char* gridStrings[] = { "[grid off]", "[grid xyz]", "[grid xz]" };
 
 /*
  * --INFO--
@@ -121,8 +121,8 @@ void AIPerf::addMenu(Menu* menu)
 	sprintf(modeText, "%s", AIPerf::generatorMode ? "Generator Mode" : "Game Mode");
 	menu->addOption(0, modeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleGeneratorMode), true);
 
-	char* moveTypeText = new char[0x40];
-	char* moveTypes[]  = { "stop", "no stop", "slip" };
+	char* moveTypeText      = new char[0x40];
+	const char* moveTypes[] = { "stop", "no stop", "slip" };
 	sprintf(moveTypeText, "%s", moveTypes[AIPerf::moveType]);
 	menu->addOption(0, moveTypeText, new Delegate1<AIPerf, Menu&>(this, &AIPerf::toggleMoveType), true);
 

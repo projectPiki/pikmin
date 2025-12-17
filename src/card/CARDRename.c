@@ -75,7 +75,7 @@ s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDC
  * Address:	8020D340
  * Size:	000048
  */
-s32 CARDRename(s32 channel, char* oldName, char* newName)
+s32 CARDRename(s32 channel, const char* oldName, const char* newName)
 {
 	s32 result = CARDRenameAsync(channel, oldName, newName, __CARDSyncCallback);
 

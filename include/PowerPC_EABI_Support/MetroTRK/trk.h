@@ -62,7 +62,7 @@ void TRKLoadContext(OSContext* ctx, u32);
 void TRKSaveExtended1Block();
 void TRKRestoreExtended1Block();
 int InitMetroTRKCommTable(int);
-void TRK_board_display(char*);
+void TRK_board_display(const char*);
 ////////////////////////////////////
 
 ////////// GDEV FUNCTIONS //////////
@@ -161,7 +161,7 @@ void ReserveEXI2Port(void);
 ////////////////////////////////////
 
 /////////// MW FUNCTIONS ///////////
-void MWTRACE(u8, char*, ...);
+void MWTRACE(u8, const char*, ...);
 ////////////////////////////////////
 
 //////// SUPPORT FUNCTIONS /////////

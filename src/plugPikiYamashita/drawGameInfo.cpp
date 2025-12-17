@@ -29,7 +29,7 @@ DEFINE_PRINT("drawGameInfo")
 
 namespace {
 
-char* pikiTexNametable[19] = {
+const char* pikiTexNametable[19] = {
 	"screen/tex/piki0.bti",   "screen/tex/bp_l64.bti",  "screen/tex/bp_b64.bti",  "screen/tex/bp_f64.bti",  "screen/tex/bp_lb64.bti",
 	"screen/tex/bp_bb64.bti", "screen/tex/bp_fb64.bti", "screen/tex/rp_l64.bti",  "screen/tex/rp_b64.bti",  "screen/tex/rp_f64.bti",
 	"screen/tex/rp_lb64.bti", "screen/tex/rp_bb64.bti", "screen/tex/rp_fb64.bti", "screen/tex/yp_l64.bti",  "screen/tex/yp_b64.bti",

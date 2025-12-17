@@ -350,7 +350,7 @@ void ResultFlags::dump()
 		}
 
 #if 0 // This all seems to be DLL exclusive
-		char* strs[4];
+		const char* strs[4];
 		strs[3]  = nullptr;
 		int type = info[id].type();
 		if (type < 0x191) {
@@ -371,7 +371,7 @@ void ResultFlags::dump()
 			prev = flagTable[i].type();
 		}
 		prev          = flagTable[i].type();
-		char* strs[3] = { "OFF", "ON", "SEEN" };
+		const char* strs[3] = { "OFF", "ON", "SEEN" };
 
 		// The final game version of this print probably cut out the strs[3], since its not set in final
 		PRINT(" ENUM_RESULT_%s_G%02d_P00 = %s : %d pages\n", strs[3], p++, strs[getFlag(flagTable[i].mScreenId)],

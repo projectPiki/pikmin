@@ -787,7 +787,7 @@ void Generator::render(Graphics& gfx)
 	}
 }
 
-char* coStrings[] = { "なし", "常に" };
+const char* coStrings[] = { "なし", "常に" };
 
 /*
  * --INFO--

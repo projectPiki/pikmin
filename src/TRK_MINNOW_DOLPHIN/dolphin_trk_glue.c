@@ -251,7 +251,7 @@ void UnreserveEXI2Port(void)
  * Address:	80220794
  * Size:	000024
  */
-void TRK_board_display(char* str)
+void TRK_board_display(const char* str)
 {
 	OSReport(str);
 }

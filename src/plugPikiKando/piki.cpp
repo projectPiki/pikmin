@@ -2977,26 +2977,26 @@ void Piki::changeMode(int newMode, Navi* navi)
 }
 
 // This seems to be an outdated reference to the PikiStateID enum.
-char* states_str[] = {
+const char* states_str[] = {
 	"NORMAL",    "GROW",   "BURY",   "NUKARE",  "DYING",   "DEAD",    "BUTUKARI",
 	"TRANSFORM", "GROWUP", "ABSORB", "ILLEGAL", "ILLEGAL", "ILLEGAL", "ILLEGAL",
 };
 
-char* _standStr[STANDTYPE_COUNT] = {
+const char* _standStr[STANDTYPE_COUNT] = {
 	"GROUND",
 	"TEKIPLAT",
 	"PLAT",
 	"AIR",
 };
 
-char* _modeStr[PikiMode::COUNT] = {
+const char* _modeStr[PikiMode::COUNT] = {
 	"FREE_MODE",   "FORMATION_MODE", "ATTACK_MODE",    "NUKU_MODE",      "GUARD_MODE",   "PICK_MODE",   "DECOY_MODE",
 	"ARROW_MODE",  "CARRY_MODE",     "TRANSPORT_MODE", "ROPE_MODE",      "ENTER_MODE",   "EXIT_MODE",   "BREAKWALL_MODE",
 	"MINE_MODE",   "KINOKO_MODE",    "BRIDGE_MODE",    "PUSHSTONE_MODE", "PUTBOMB_MODE", "RESCUE_MODE", "WEED_MODE",
 	"PEBBLE_MODE", "BOMAKE_MODE",    "BO_MODE",        "WARRIOR_MODE",
 };
 
-static char* _colorNames[PikiColorCount] = {
+static const char* _colorNames[PikiColorCount] = {
 	"blue",
 	"red",
 	"yellow",
@@ -3020,7 +3020,7 @@ void Piki::dump()
 		PRINT(" * callable = %s\n", mIsCallable ? "true" : "false");
 
 		// this feels like it should be a ternary but that spawns inline calls.
-		char* actionName;
+		const char* actionName;
 		if (mActiveAction->getCurrAction()) {
 			actionName = mActiveAction->getCurrAction()->getName();
 		} else {
@@ -3076,7 +3076,7 @@ void Piki::dump()
 		PRINT(" * callable = %s\n", mIsCallable ? "true" : "false");
 
 		// this feels like it should be a ternary but that spawns inline calls.
-		char* actionName;
+		const char* actionName;
 		if (mActiveAction->getCurrAction()) {
 			actionName = mActiveAction->getCurrAction()->getName();
 		} else {

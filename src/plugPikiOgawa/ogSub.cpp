@@ -751,8 +751,8 @@ void setSpecialNumber(int idx, int value)
  */
 void cnvSpecialNumber(char* str)
 {
-	char* tmp  = str;
-	char* work = wkstr;
+	const char* tmp = str;
+	char* work      = wkstr;
 	strcpy(formatStr, "%d");
 
 	while (true) {
@@ -896,10 +896,10 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 {
 	STACK_PAD_VAR(1);
-	int a         = *p2;
-	char* tmpStr1 = &p1[*p2];
-	char b        = *tmpStr1;
-	*p3           = 0.0f;
+	int a               = *p2;
+	const char* tmpStr1 = &p1[*p2];
+	char b              = *tmpStr1;
+	*p3                 = 0.0f;
 
 	if (b == 0) {
 		return true;
@@ -916,7 +916,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 		c   = a + 2;
 	} else if (b == 0x1B) { // esc character
 		c       = a + 1;
-		char* d = p1 + c;
+		const char* d = p1 + c;
 		if (strncmp(d, "CC", 2) == 0 || strncmp(d, "GC", 2) == 0 || strncmp(d, "TM", 2) == 0 || strncmp(d, "Z", 1) == 0
 		    || strncmp(d, "CA", 2) == 0 || strncmp(d, "GA", 2) == 0 || strncmp(d, "TB", 2) == 0 || strncmp(d, "BS", 2) == 0
 		    || strncmp(d, "CU", 2) == 0 || strncmp(d, "CD", 2) == 0 || strncmp(d, "CL", 2) == 0 || strncmp(d, "CR", 2) == 0
@@ -929,7 +929,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(char* p1, s16* p2, f32* p3)
 				*p3 = 0.25f;
 				c += 2;
 			} else {
-				char* tmp = strstr(d, "]");
+				const char* tmp = strstr(d, "]");
 				if (tmp) {
 					int count = tmp - d + 1;
 					strncpy(workString, d, count);
@@ -1006,9 +1006,9 @@ void TypingTextMgr::update()
  */
 void cnvSpecialNumberHyphen(char* str)
 {
-	char* tmp  = str;
-	char* work = wkstr;
-	int num    = 0;
+	const char* tmp = str;
+	char* work      = wkstr;
+	int num         = 0;
 	strcpy(formatStr, "%d");
 
 	while (true) {
