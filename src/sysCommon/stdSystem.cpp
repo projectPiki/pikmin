@@ -8,7 +8,6 @@
 #include "Light.h"
 #include "Shape.h"
 #include "Texture.h"
-#include "VersionGroups.h"
 #include "sysNew.h"
 
 /*

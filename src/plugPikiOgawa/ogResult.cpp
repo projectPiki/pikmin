@@ -6,7 +6,6 @@
 #include "P2D/Screen.h"
 #include "PlayerState.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "jaudio/verysimple.h"
 #include "zen/DrawCM.h"
 #include "zen/ogMessage.h"

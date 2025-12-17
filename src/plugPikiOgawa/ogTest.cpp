@@ -7,7 +7,6 @@
 #include "Geometry.h"
 #include "Graphics.h"
 #include "MemoryCard.h"
-#include "VersionGroups.h"
 #include "stl/stdio.h"
 #include "sysNew.h"
 #include "zen/ZenController.h"

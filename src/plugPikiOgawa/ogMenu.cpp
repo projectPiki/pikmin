@@ -10,7 +10,6 @@
 #include "P2D/Screen.h"
 #include "PlayerState.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "jaudio/verysimple.h"
 #include "nlib/Math.h"

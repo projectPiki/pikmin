@@ -3,7 +3,6 @@
 
 #include "GlobalGameOptions.h"
 #include "Vector.h"
-#include "VersionGroups.h"
 #include "types.h"
 
 struct P2DPane;

@@ -10,7 +10,6 @@
 #include "PlayerState.h"
 #include "Traversable.h"
 #include "UfoItem.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 
 DemoEventMgr* demoEventMgr;

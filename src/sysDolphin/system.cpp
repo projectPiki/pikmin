@@ -18,7 +18,6 @@
 #include "Font.h"
 #include "Graphics.h"
 #include "LoadIdler.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "jaudio/interface.h"
 #include "jaudio/verysimple.h"

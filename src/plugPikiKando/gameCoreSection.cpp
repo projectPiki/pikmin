@@ -41,7 +41,6 @@
 #include "UfoItem.h"
 #include "UpdateMgr.h"
 #include "UtEffect.h"
-#include "VersionGroups.h"
 #include "WorkObject.h"
 #include "gameflow.h"
 #include "sysNew.h"

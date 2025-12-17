@@ -1,8 +1,0 @@
-#ifndef _VERSIONGROUPS_H
-#define _VERSIONGROUPS_H
-
-#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
-#define VERSION_PIKIDEMO
-#endif
-
-#endif

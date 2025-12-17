@@ -5,7 +5,6 @@
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "jaudio/verysimple.h"
 #include "sysNew.h"

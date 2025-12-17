@@ -5,7 +5,6 @@
 #include "Kontroller.h"
 #include "MapMgr.h"
 #include "NaviMgr.h"
-#include "VersionGroups.h"
 
 /*
  * --INFO--

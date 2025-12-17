@@ -5,7 +5,6 @@
 #include "P2D/Screen.h"
 #include "P2D/TextBox.h"
 #include "PlayerState.h"
-#include "VersionGroups.h"
 #include "sysNew.h"
 #include "zen/DrawMenu.h"
 

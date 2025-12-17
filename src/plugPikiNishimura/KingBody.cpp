@@ -9,7 +9,6 @@
 #include "RadarInfo.h"
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 
 /*
  * --INFO--

@@ -8,7 +8,6 @@
 #include "MapMgr.h"
 #include "Matrix4f.h"
 #include "UtilityKando.h"
-#include "VersionGroups.h"
 #include "sysNew.h"
 
 /*

@@ -12,7 +12,6 @@
 #include "PikiState.h"
 #include "Shape.h"
 #include "UfoItem.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "sysNew.h"
 

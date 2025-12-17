@@ -5,7 +5,6 @@
 #include "P2D/Graph.h"
 #include "PUT/Geometry.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "nlib/Math.h"
 #include "sysNew.h"
