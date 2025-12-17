@@ -169,7 +169,7 @@ NumberPel numberPellets[13] = {
  * Address:	80094F74
  * Size:	0001C8
  */
-void PelletView::becomePellet(u32 id, Vector3f& pos, f32 direction)
+void PelletView::becomePellet(u32 id, Vector3f NRef pos, f32 direction)
 {
 	if (mPellet) {
 		PRINT("becomePellet twice **\n");
@@ -1022,6 +1022,7 @@ void Pellet::doLoad(RandomAccessStream& input)
 #endif
 	else {
 		PRINT("PARTS MOVED !!! (%.1f %.1f %.1f)\n", displacement.x, displacement.y, displacement.z);
+		// This is really evil (mSRT.t is silently mutated), but ultimately doesn't matter (mSRT.t is overwritten).
 		mSRT.t = routeMgr->getSafePosition('test', mSRT.t);
 	}
 

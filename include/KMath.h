@@ -54,7 +54,7 @@ f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, Matr
                 Vector3f& separationVel);
 Vector3f CRSpline(f32 t, Vector3f* ctrlPts);
 Vector3f CRSplineTangent(f32 t, Vector3f* ctrlPts);
-Vector3f getThrowVelocity(Vector3f& startPos, f32 horizSpeed, Vector3f& targetPos, Vector3f& targetDir);
+Vector3f getThrowVelocity(Vector3f& startPos, f32 horizSpeed, Vector3f& targetPos, Vector3f NRef targetDir);
 f32 getCameraSafeAngle(Vector3f& cameraPos, f32 checkDistance, f32 heightWeighting);
 
 #endif
