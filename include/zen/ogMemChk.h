@@ -1,7 +1,6 @@
 #ifndef _ZEN_OGMEMCHK_H
 #define _ZEN_OGMEMCHK_H
 
-#include "VersionGroups.h"
 #include "types.h"
 
 struct Controller;

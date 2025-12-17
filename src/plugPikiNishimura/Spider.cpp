@@ -2,7 +2,6 @@
 #include "DayMgr.h"
 #include "DebugLog.h"
 #include "Graphics.h"
-#include "VersionGroups.h"
 
 /*
  * --INFO--

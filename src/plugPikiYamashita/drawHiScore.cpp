@@ -3,7 +3,6 @@
 #include "Graphics.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "sysNew.h"
 
 /*

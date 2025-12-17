@@ -13,7 +13,6 @@
 #include "Graphics.h"
 #include "MemStat.h"
 #include "MoviePlayer.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "sysNew.h"
 #include "timers.h"

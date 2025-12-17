@@ -8,7 +8,6 @@
 #include "ItemMgr.h"
 #include "PlayerState.h"
 #include "RumbleMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "jaudio/pikidemo.h"
 #include "system.h"

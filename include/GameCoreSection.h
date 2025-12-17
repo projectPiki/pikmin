@@ -3,7 +3,6 @@
 
 #include "Light.h"
 #include "Node.h"
-#include "VersionGroups.h"
 #include "types.h"
 
 struct Camera;

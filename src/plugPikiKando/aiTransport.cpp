@@ -20,7 +20,6 @@
 #include "Stickers.h"
 #include "UfoItem.h"
 #include "UtilityKando.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "teki.h"
 #include "zen/Math.h"

@@ -1,7 +1,6 @@
 #ifndef _TIMERS_H
 #define _TIMERS_H
 
-#include "VersionGroups.h"
 #include "types.h"
 
 struct Graphics;

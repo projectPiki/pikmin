@@ -11,7 +11,6 @@
 #include "RadarInfo.h"
 #include "SoundMgr.h"
 #include "UfoItem.h"
-#include "VersionGroups.h"
 #include "jaudio/verysimple.h"
 #include "sysNew.h"
 #include "zen/ogSub.h"

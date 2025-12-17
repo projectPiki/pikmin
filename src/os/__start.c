@@ -1,7 +1,5 @@
 #include "Dolphin/__start.h"
 
-#include "VersionGroups.h"
-
 #pragma section code_type ".init"
 
 #if defined(VERSION_PIKIDEMO)

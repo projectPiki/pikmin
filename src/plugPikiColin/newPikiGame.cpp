@@ -20,7 +20,6 @@
 #include "PlayerState.h"
 #include "Section.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "jaudio/pikidemo.h"
 #include "sysNew.h"

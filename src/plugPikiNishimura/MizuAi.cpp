@@ -6,7 +6,6 @@
 #include "NaviMgr.h"
 #include "NsMath.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 
 /*
  * --INFO--

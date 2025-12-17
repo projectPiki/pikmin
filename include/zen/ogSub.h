@@ -3,7 +3,6 @@
 
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
-#include "VersionGroups.h"
 #include "types.h"
 
 struct Matrix3f;

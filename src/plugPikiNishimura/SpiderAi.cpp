@@ -11,7 +11,6 @@
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
 #include "Spider.h"
-#include "VersionGroups.h"
 
 static u32 spiderSE[] = { SE_SPIDER_WALK, SE_SPIDER_LAND, SE_SPIDER_SWING, SE_SPIDER_DEAD, SE_SPIDER_BOMB };
 

@@ -1,7 +1,6 @@
 #include "DebugLog.h"
 #include "Dolphin/gx.h"
 #include "P2D/Graph.h"
-#include "VersionGroups.h"
 
 /*
  * --INFO--

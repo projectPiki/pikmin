@@ -2,7 +2,6 @@
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "jaudio/verysimple.h"
 #include "nlib/Math.h"
 #include "sysNew.h"

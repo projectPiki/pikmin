@@ -5,7 +5,6 @@
 #include "P2D/Picture.h"
 #include "P2D/TextBox.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "jaudio/verysimple.h"
 #include "sysNew.h"
 #include "zen/DrawCommon.h"

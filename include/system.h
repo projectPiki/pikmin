@@ -11,7 +11,6 @@
 #include "Dolphin/rand.h"
 #include "GfxObject.h"
 #include "Stream.h"
-#include "VersionGroups.h"
 #include "types.h"
 
 struct DGXGraphics;

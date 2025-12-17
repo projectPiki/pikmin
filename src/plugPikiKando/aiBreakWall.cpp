@@ -7,7 +7,6 @@
 #include "PikiAI.h"
 #include "PikiState.h"
 #include "UtEffect.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 
 /*

@@ -3,7 +3,6 @@
 
 #include "Camera.h"
 #include "Section.h"
-#include "VersionGroups.h"
 #include "types.h"
 
 struct Font;

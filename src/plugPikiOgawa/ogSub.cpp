@@ -5,7 +5,6 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtold.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/strtoul.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "nlib/Math.h"
 #include "sysNew.h"

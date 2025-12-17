@@ -47,6 +47,11 @@ typedef u16 wchar_t;
 #define BUILD_MATCHING
 #endif
 
+// The following version group macro is for conditionally-compiled code shared among all three demo versions.
+#if defined(VERSION_DPIJ01_PIKIDEMO) || defined(VERSION_G98E01_PIKIDEMO) || defined(VERSION_G98P01_PIKIDEMO)
+#define VERSION_PIKIDEMO
+#endif
+
 // Defining this macro enables fixes for known crashes and mistakes.
 #if !defined(BUILD_MATCHING) && !defined(BUGFIX)
 #define BUGFIX

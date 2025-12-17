@@ -1,7 +1,6 @@
 #ifndef _DOLPHIN_MTX_H
 #define _DOLPHIN_MTX_H
 
-#include "VersionGroups.h"
 #include "types.h"
 
 #ifdef __cplusplus

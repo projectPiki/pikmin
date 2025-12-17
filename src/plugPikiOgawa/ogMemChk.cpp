@@ -4,7 +4,6 @@
 #include "P2D/Graph.h"
 #include "P2D/Screen.h"
 #include "SoundMgr.h"
-#include "VersionGroups.h"
 #include "gameflow.h"
 #include "jaudio/verysimple.h"
 #include "zen/EffectMgr2D.h"

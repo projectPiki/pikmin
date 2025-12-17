@@ -1,7 +1,6 @@
 #include "MemStat.h"
 #include "DebugLog.h"
 #include "Dolphin/os.h"
-#include "VersionGroups.h"
 #include "stl/string.h"
 #include "sysNew.h"
 #include "system.h"
