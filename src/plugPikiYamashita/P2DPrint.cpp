@@ -486,11 +486,11 @@ void P2DPrint::doCtrlCode(int inputChar)
  */
 s32 P2DPrint::getNumber(const u8** strPtr, s32 defaultValue, s32 invalidValue, int base)
 {
-	const u8* inputStr = *strPtr;
-	s32 value          = defaultValue;
+	const char* inputStr = (const char*)*strPtr;
+	s32 value            = defaultValue;
 
 	// number needs to be enclosed with []s to be valid
-	if (*inputStr != (u32)'[') {
+	if (*inputStr != '[') {
 		return defaultValue;
 	}
 
@@ -511,16 +511,16 @@ s32 P2DPrint::getNumber(const u8** strPtr, s32 defaultValue, s32 invalidValue, i
 				value = (value << 8) | 0xFF; // set alpha to max
 			} else {
 				// invalid format!
-				*strPtr = inputStr;
+				*strPtr = (const u8*)inputStr;
 				return invalidValue;
 			}
 		}
 	}
 
 	// number needs to be enclosed with []s to be valid
-	if (endStr[0] != (u32)']') {
+	if (endStr[0] != ']') {
 		// invalid format!
-		*strPtr = inputStr;
+		*strPtr = (const u8*)inputStr;
 		return invalidValue;
 	}
 

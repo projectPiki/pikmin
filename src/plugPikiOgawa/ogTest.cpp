@@ -54,7 +54,7 @@ zen::OgTestScreen::OgTestScreen()
 	mMapMode         = 0;
 	mSaveMode        = 0;
 	_38A             = 0;
-	mPauseMode       = false;
+	mChallengeModePause = false;
 	mFileChkSelMode  = false;
 	mSelectedMode    = TESTMODE_Title;
 	Texture* fontTex = gsys->loadTexture("bigFont.bti", true);
@@ -169,11 +169,11 @@ void zen::OgTestScreen::modeSelectSub()
 
 	if (mSelectedMode == TESTMODE_Pause) {
 		if (mController->keyClick(KBBTN_MSTICK_RIGHT | KBBTN_CSTICK_RIGHT)) {
-			mPauseMode = true;
+			mChallengeModePause = true;
 		}
 
 		if (mController->keyClick(KBBTN_MSTICK_LEFT | KBBTN_CSTICK_LEFT)) {
-			mPauseMode = false;
+			mChallengeModePause = false;
 		}
 	}
 
@@ -228,7 +228,7 @@ void zen::OgTestScreen::modeSelectSub()
 		break;
 
 	case 8:
-		mPauseMgr->start(mPauseMode);
+		mPauseMgr->start(mChallengeModePause);
 		mActiveMode = 8;
 		break;
 
@@ -402,7 +402,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		sprintf(optionsTexts[5], "check & select(%d)", mFileChkSelMode); // 'Check  and Select (%d)'
 		sprintf(optionsTexts[6], "diary (%d)", mDiaryMode);              // 'Diary (%d)'
 		sprintf(optionsTexts[7], "result");                              // 'Results'
-		sprintf(optionsTexts[8], "pause (%d)", mPauseMode);              // 'Pause (%d)'
+		sprintf(optionsTexts[8], "pause (%d)", mChallengeModePause);     // 'Pause (%d)'
 		sprintf(optionsTexts[9], "total");                               // 'Total Score'
 		sprintf(optionsTexts[10], "start");                              // 'Start'
 #else
@@ -414,7 +414,7 @@ void zen::OgTestScreen::draw(Graphics& gfx)
 		sprintf(optionsTexts[5], "チェック＆セレクト(%d)", mFileChkSelMode); // 'Check  and Select (%d)'
 		sprintf(optionsTexts[6], "日記 (%d)", mDiaryMode);                   // 'Diary (%d)'
 		sprintf(optionsTexts[7], "リザルト");                                // 'Results'
-		sprintf(optionsTexts[8], "ポーズ (%d)", mPauseMode);                 // 'Pause (%d)'
+		sprintf(optionsTexts[8], "ポーズ (%d)", mChallengeModePause);        // 'Pause (%d)'
 		sprintf(optionsTexts[9], "トータル成績");                            // 'Total Score'
 		sprintf(optionsTexts[10], "スタート");                               // 'Start'
 #endif

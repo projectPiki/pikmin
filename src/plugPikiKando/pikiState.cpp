@@ -3355,7 +3355,7 @@ void PikiEmotionState::init(Piki* piki)
 		seSystem->playPikiSound(soundChoices[randIdx], piki->mSRT.t);
 		piki->startMotion(PaniMotionInfo(motionID, piki), PaniMotionInfo(motionID));
 		piki->mPikiAnimMgr.finishMotion(piki);
-		PRINT("play sound %d\n", motionID); // wrong variable kando
+		PRINT("play sound %d\n", TERNARY_BUGFIX(soundChoices[randIdx], motionID)); // wrong variable kando
 	} break;
 
 	case PikiEmotion::Happy: {

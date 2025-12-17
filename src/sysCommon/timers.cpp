@@ -47,7 +47,7 @@ void Timers::newFrame()
  */
 void Timers::_start(char* name, bool set)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
 	if (gsys->mTimerState != TS_Full && set) {
 		return;
 	}
@@ -92,7 +92,7 @@ void Timers::_start(char* name, bool set)
  */
 void Timers::_stop(char* name)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
 	for (TimerInf* info = mTimerList; info; info = info->mNext) {
 		if (strcmp(info->mTimerName, name) == 0) {
 			info->mDuration += (gsys->getTime() - info->mStartTime);
@@ -121,7 +121,7 @@ void Timers::showTimes()
  */
 void Timers::draw(Graphics& gfx, Font* font)
 {
-#if defined(VERSION_G98E01_PIKIDEMO)
+#if defined(DEVELOP) || defined(VERSION_G98E01_PIKIDEMO)
 	gfx.useTexture(nullptr, GX_TEXMAP0);
 	for (TimerInf* info = mTimerList; info; info = info->mNext) {
 		info->mSampleTime++;

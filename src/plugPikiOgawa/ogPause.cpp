@@ -29,7 +29,7 @@ DEFINE_PRINT("OgPauseSection")
  */
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
-	mMode        = 0;
+	mIsChallengeMode = false;
 	mBlackScreen = new P2DScreen();
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
 	// this might be P2DTextBox instead, unsure
@@ -84,11 +84,11 @@ zen::ogScrPauseMgr::ogScrPauseMgr()
  * Address:	8018263C
  * Size:	00008C
  */
-void zen::ogScrPauseMgr::start(bool p1)
+void zen::ogScrPauseMgr::start(bool isChallengeMode)
 {
-	mMode = p1;
+	mIsChallengeMode = isChallengeMode;
 
-	if (mMode != 0) {
+	if (mIsChallengeMode) {
 		mTextBox5->setString(_3C);
 		mTextBox6->setString(_3C);
 	} else {
@@ -179,7 +179,7 @@ zen::ogScrPauseMgr::PauseStatus zen::ogScrPauseMgr::update(Controller* controlle
 			mTextBox1->hide();
 			mTextBox2->hide();
 			mTextBox3->hide();
-			if (mMode) {
+			if (mIsChallengeMode) {
 				mTextBox1->show();
 			} else {
 				mTextBox2->show();

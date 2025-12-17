@@ -998,9 +998,10 @@ void Graphics::flushCachedShapes()
 	mRenderState = oldRenderState;
 }
 
-static u32 convFmts[]
-    = { TEX_FMT_I4,   TEX_FMT_I8,   TEX_FMT_IA4,  TEX_FMT_IA8,  TEX_FMT_RGB565, TEX_FMT_RGB5A3, TEX_FMT_RGBA8, TEX_FMT_NULL,
-	    TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL,   TEX_FMT_NULL,   TEX_FMT_S3TC };
+static u32 convFmts[] = {
+	TEX_FMT_I4,   TEX_FMT_I8,   TEX_FMT_IA4,  TEX_FMT_IA8,  TEX_FMT_RGB565, TEX_FMT_RGB5A3, TEX_FMT_RGBA8, TEX_FMT_NULL,
+	TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL,   TEX_FMT_NULL,   TEX_FMT_S3TC,
+};
 
 /*
  * --INFO--
@@ -1013,8 +1014,9 @@ u32 TexImg::convFormat(u32 inFmt)
 	// UNUSED FUNCTION
 }
 
-static char* fmtNames[]
-    = { "TEX_FMT_RGB565", "TEX_FMT_S3TC", "TEX_FMT_RGB5A3", "TEX_FMT_I4", "TEX_FMT_I8", "TEX_FMT_IA4", "TEX_FMT_IA8", "TEX_FMT_RGBA8" };
+static char* fmtNames[] = {
+	"TEX_FMT_RGB565", "TEX_FMT_S3TC", "TEX_FMT_RGB5A3", "TEX_FMT_I4", "TEX_FMT_I8", "TEX_FMT_IA4", "TEX_FMT_IA8", "TEX_FMT_RGBA8",
+};
 
 /*
  * --INFO--
@@ -1150,10 +1152,16 @@ void TexImg::readTexData(Texture* tex, RandomAccessStream& stream, u8* data)
 	tex->decodeData(this);
 }
 
-static char* btitexFmts[] = { "GX_TF_I4", "GX_TF_I8", "GX_TF_IA4", "GX_TF_IA8", "GX_TF_RGB565", "GX_TF_RGB5A3", "GX_TF_RGBA8", "INVALID",
-	                          "INVALID",  "INVALID",  "INVALID",   "INVALID",   "INVALID",      "INVALID",      "GX_TF_CMPR" };
+static char* btitexFmts[] = {
+	"GX_TF_I4", "GX_TF_I8", "GX_TF_IA4", "GX_TF_IA8", "GX_TF_RGB565", "GX_TF_RGB5A3", "GX_TF_RGBA8", "INVALID",
+	"INVALID",  "INVALID",  "INVALID",   "INVALID",   "INVALID",      "INVALID",      "GX_TF_CMPR",
+};
 
-static char* btipalFmts[] = { "GX_TF_C4", "GX_TF_C8", "GX_TF_C14X2" };
+static char* btipalFmts[] = {
+	"GX_TF_C4",
+	"GX_TF_C8",
+	"GX_TF_C14X2",
+};
 
 /*
  * --INFO--

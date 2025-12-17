@@ -67,6 +67,7 @@ enum {
 	BomakeMode,    // 22
 	BoMode,        // 23
 	WarriorMode,   // 24
+	COUNT,
 } END_ENUM_TYPE;
 
 /**

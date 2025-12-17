@@ -22,7 +22,7 @@ public:
 	virtual void makeResident();                // _0C
 	virtual ~P2DTextBox() { }                   // _10 (weak)
 
-	char* getString() const { return mText; }
+	char* getString() { return mText; }
 	void setString(char* text) { mText = text; }
 
 	void getFontColor(Colour& charColor, Colour& gradColor)

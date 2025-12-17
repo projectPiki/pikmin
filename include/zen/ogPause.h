@@ -58,7 +58,7 @@ struct ogScrPauseMgr {
 	P2DTextBox* mTextBox6;   // _38
 	char* _3C;               // _3c, unknown
 	char* _40;               // _40, unknown
-	bool mMode;              // _44
+	bool mIsChallengeMode;   // _44
 	P2DPicture* mBackPane1;  // _48
 	P2DPicture* mBackPane2;  // _4c
 	f32 mFrameTimer;         // _50

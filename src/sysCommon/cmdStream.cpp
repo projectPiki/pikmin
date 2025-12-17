@@ -5,7 +5,7 @@
 #include "stl/string.h"
 #include "sysNew.h"
 
-u8* CmdStream::statbuff;
+char* CmdStream::statbuff;
 
 /*
  * --INFO--
@@ -35,7 +35,7 @@ void CmdStream::init(Stream* stream)
 	mBuffer = nullptr;
 
 	if (!CmdStream::statbuff) {
-		CmdStream::statbuff = new u8[0x8000];
+		CmdStream::statbuff = new char[0x8000];
 	}
 
 	memset(CmdStream::statbuff, 0, 0x8000);
@@ -296,7 +296,7 @@ char CmdStream::nextChar()
  */
 bool CmdStream::isToken(char* str)
 {
-	if (!strlen(mCurrentToken) || strlen(mCurrentToken) != strlen(str)) {
+	if (strlen(mCurrentToken) == 0 || strlen(mCurrentToken) != strlen(str)) {
 		return false;
 	}
 

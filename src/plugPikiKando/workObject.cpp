@@ -49,8 +49,10 @@ GenObjInfo shpInfo[] = {
 	{ 0, "bridge 4" }, { 1, "slope up 4" }, { 2, "slope down 4" }, { 3, "stone 10" }, { 4, "bridge 13" }, { 5, "meck" },
 };
 
-char* files[] = { "objects/bridge/brd_test.mod", "objects/bridge/slp_u_4.mod", "objects/bridge/slp_d_4.mod",
-	              "objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod" };
+char* files[] = {
+	"objects/bridge/brd_test.mod",   "objects/bridge/slp_u_4.mod",  "objects/bridge/slp_d_4.mod",
+	"objects/hinderrock/cube10.mod", "objects/bridge/brd_long.mod",
+};
 
 /*
  * --INFO--

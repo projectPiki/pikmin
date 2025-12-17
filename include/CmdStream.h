@@ -93,10 +93,10 @@ struct CmdStream {
 	/**
 	 * @brief The static buffer used by the CmdStream.
 	 */
-	static u8* statbuff;
+	static char* statbuff;
 
 	Stream* mStream;           // _00
-	u8* mBuffer;               // _04
+	char* mBuffer;             // _04
 	char mCurrentToken[0x100]; // _08
 	int mTotalStreamSize;      // _108
 	int mBufferUsed;           // _10C

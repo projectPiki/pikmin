@@ -59,7 +59,7 @@ BaseParm::BaseParm(Parameters* parm, ayuID id)
  */
 void Parameters::write(RandomAccessStream& output)
 {
-	BaseParm* parm; // for stack
+	STACK_PAD_VAR(1);
 
 	FOREACH_NODE(BaseParm, mHead, node)
 	{
@@ -108,7 +108,7 @@ void Parameters::read(RandomAccessStream& input)
 		}
 
 		if (!added) {
-			input.read((void*)bloat, len);
+			input.read(bloat, len);
 		}
 	}
 }

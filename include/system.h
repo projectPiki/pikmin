@@ -100,7 +100,7 @@ struct BinobjInfo : public GfxobjInfo {
 
 	// _1C     = VTBL
 	// _00-_20 = GfxobjInfo
-	char* mData; // _20
+	u8* mData; // _20
 };
 
 /**
@@ -235,14 +235,14 @@ struct StdSystem {
 	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                                         // _10
 	virtual void copyCacheToRam(u32, u32, u32) { }                                                  // _14
 	virtual void copyWaitUntilDone() { }                                                            // _18
-	virtual void copyCacheToTexture(struct CacheTexture*) { }                                       // _1C
+	virtual void copyCacheToTexture(CacheTexture*) { }                                              // _1C
 #if defined(VERSION_PIKIDEMO)                                                                       //
 	virtual void forceHardReset() { }                                                               // _20
 #endif                                                                                              //
 	virtual void Activate(bool) { }                                                                 // _20
 	virtual void parseArchiveDirectory(char*, char*) { }                                            // _24
 	virtual void sndPlaySe(u32) = 0;                                                                // _28
-	virtual void startLoading(struct LoadIdler*, bool, u32) { }                                     // _2C
+	virtual void startLoading(LoadIdler*, bool, u32) { }                                            // _2C
 	virtual void endLoading() { }                                                                   // _30
 
 	int mPolygonCount;            // _1A4
@@ -545,7 +545,5 @@ struct DVDStream : public RandomAccessStream {
 
 extern int glnWidth;
 extern int glnHeight;
-
-extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 
 #endif

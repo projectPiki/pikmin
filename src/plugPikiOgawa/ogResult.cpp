@@ -365,7 +365,7 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	if (mHasYellow) {
 		mPaneYellowPikis->show();
 	}
-	mPageInfoPtr = (char**)&mDiaryPathList;
+	mPageInfoPtr = mDiaryPathList;
 	_554         = 0;
 
 	mMesgScreen = new ogScrMessageMgr("screen/blo/tu_base.blo");

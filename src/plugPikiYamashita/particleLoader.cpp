@@ -24,7 +24,7 @@ u8* zen::particleLoader::load(char* fileName, bool p2)
 {
 	BinobjInfo* obj = (BinobjInfo*)gsys->findGfxObject(fileName, '_bin');
 	if (obj) {
-		return (u8*)obj->mData;
+		return obj->mData;
 	}
 
 	u8* data = pmFind(fileName);

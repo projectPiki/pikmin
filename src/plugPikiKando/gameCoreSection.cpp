@@ -1842,8 +1842,9 @@ void GameCoreSection::draw1D(Graphics& gfx)
  */
 void GameCoreSection::draw2D(Graphics& gfx)
 {
-	static char* triNames[]
-	    = { "", "HIDE PIKI", "HIDE TEKI", "HIDE ITEM", "HIDE BOSS", "HIDE PELLET", "HIDE WORK", "HIDE PLANTS", "HIDE MAP", "HIDE 2D" };
+	static char* triNames[] = {
+		"", "HIDE PIKI", "HIDE TEKI", "HIDE ITEM", "HIDE BOSS", "HIDE PELLET", "HIDE WORK", "HIDE PLANTS", "HIDE MAP", "HIDE 2D",
+	};
 	Matrix4f mtx;
 	gfx.setOrthogonal(mtx.mMtx, RectArea(0, 0, gfx.mScreenWidth, gfx.mScreenHeight));
 	gfx.setColour(Colour(255, 255, 255, 255), true);

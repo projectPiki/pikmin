@@ -112,8 +112,6 @@ struct ParaParameterInfoF : public ParaParameterInfo<f32> {
 		mMax  = 0.0f;
 	}
 
-	inline void set(char* name, f32 min, f32 max) { ParaParameterInfo<f32>::init(name, min, max); }
-
 	// TODO: members
 };
 

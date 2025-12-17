@@ -55,14 +55,14 @@ struct Timers {
 
 	void start(char* name, bool p2)
 	{
-#if defined(VERSION_PIKIDEMO)
+#if defined(DEVELOP) || defined(VERSION_PIKIDEMO)
 		_start(name, p2);
 #endif
 	}
 
 	void stop(char* name)
 	{
-#if defined(VERSION_PIKIDEMO)
+#if defined(DEVELOP) || defined(VERSION_PIKIDEMO)
 		_stop(name);
 #endif
 	}
@@ -75,7 +75,7 @@ struct Timers {
 // For some reason, certain functions cannot have known timers added to them without messing up matching.  At the same time, other functions
 // require known timers to be added in order to match, so it's not like they were *all* originally behind a macro.  This macro aims to solve
 // the first case (timers that cannot exist in retail but did exist in demo versions), but one should avoid these macros whenever possible.
-#if !defined(DEVELOP) && (defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00))
+#if defined(BUILD_MATCHING) && (defined(VERSION_GPIE01_00) || defined(VERSION_GPIE01_01) || defined(VERSION_GPIP01_00))
 #define MATCHING_START_TIMER(name, p2) (void)0
 #define MATCHING_STOP_TIMER(name)      (void)0
 #else

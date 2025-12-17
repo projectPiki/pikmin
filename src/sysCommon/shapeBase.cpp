@@ -82,7 +82,7 @@ void DispList::read(RandomAccessStream& stream)
 
 	stream.skipPadding(0x20);
 
-	mData = new (0x20) char[mDataLength];
+	mData = new (0x20) u8[mDataLength];
 	stream.read(mData, mDataLength);
 }
 
@@ -2583,8 +2583,8 @@ void BaseShape::initIni(bool p1)
 		int idx = -1;
 		if (light->mMatSource) {
 			for (int i = 0; i < (int)strlen(light->mMatSource); i++) {
-				u8* src = (u8*)light->mMatSource;
-				if (src[i] == (u32)':') {
+				STACK_PAD_VAR(1);
+				if (light->mMatSource[i] == ':') {
 					sscanf(&light->mMatSource[i + 1], "%d", &idx);
 					break;
 				}
@@ -3438,10 +3438,10 @@ void BaseShape::makeNormalIndexes(u16* indices)
 			MtxGroup* group    = &mesh->mMtxGroupList[j];
 			DispList* dispList = group->mDispList;
 			for (int k = 0; k < group->mDispLength; k++) {
-				u8* data    = (u8*)dispList->mData;
+				u8* data    = dispList->mData;
 				u32 dataLen = dispList->mDataLength;
 
-				while (dataLen && data < (u8*)&dispList->mData[dataLen]) {
+				while (dataLen && data < dispList->mData + dataLen) {
 					int first = *data++;
 					if (!first) {
 						dataLen = 0;

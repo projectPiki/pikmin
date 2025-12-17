@@ -1054,7 +1054,7 @@ void Navi::callPikis(f32 radius)
 			static_cast<PikiFlownState*>(piki->getCurrState())->_10 = 0.0f;
 		}
 
-		if ((piki->mNavi == this || !piki->mNavi) && !piki->isKinoko() && piki->isAlive() && !piki->isBuried()
+		if ((piki->mNavi == this || piki->mNavi == nullptr) && !piki->isKinoko() && piki->isAlive() && !piki->isBuried()
 		    && (piki->mMode != PikiMode::FormationMode || piki->getState() == PIKISTATE_Emotion) && piki->mIsCallable
 		    && state != PIKISTATE_Nukare && state != PIKISTATE_Swallowed && state != PIKISTATE_Drown && state != PIKISTATE_Absorb
 		    && state != PIKISTATE_LookAt && state != PIKISTATE_Pressed && dist < radius) {

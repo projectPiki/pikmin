@@ -74,6 +74,7 @@ enum CreatureStandType {
 	STANDTYPE_TekiPlatform = 1, // on a platform which has an associated creature
 	STANDTYPE_Platform     = 2, // on a platform with no associated creature
 	STANDTYPE_Air          = 3, // no floor tri or platform
+	STANDTYPE_COUNT,
 };
 
 /**
