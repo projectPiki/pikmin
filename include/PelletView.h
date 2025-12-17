@@ -29,7 +29,7 @@ struct PelletView {
 	virtual f32 viewGetHeight()       = 0;                                 // _2C
 	virtual Vector3f viewGetScale() { return Vector3f(1.0f, 1.0f, 1.0f); } // _30 (weak)
 
-	void becomePellet(u32, Vector3f&, f32);
+	void becomePellet(u32, Vector3f NRef, f32);
 
 	// _00 = VTBL
 	Pellet* mPellet; // _04

@@ -117,7 +117,7 @@ Vector3f CRSplineTangent(f32 t, Vector3f* ctrlPts)
  * Address:	80112CE4
  * Size:	00022C
  */
-Vector3f getThrowVelocity(Vector3f& startPos, f32 horizSpeed, Vector3f& targetPos, Vector3f& targetDir)
+Vector3f getThrowVelocity(Vector3f& startPos, f32 horizSpeed, Vector3f& targetPos, Vector3f NRef targetDir)
 {
 	Vector3f displacement = startPos - targetPos;
 
