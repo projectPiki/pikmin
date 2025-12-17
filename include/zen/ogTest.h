@@ -79,7 +79,7 @@ private:
 	s16 mMapMode;                        // _386
 	s16 mSaveMode;                       // _388
 	s16 _38A;                            // _38A
-	bool mPauseMode;                     // _38C
+	bool mChallengeModePause;            // _38C
 	bool mFileChkSelMode;                // _38D
 	bool mTitleMode;                     // _38E
 	ogScrResultMgr* mResultMgr;          // _390

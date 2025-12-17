@@ -28,7 +28,7 @@ bool String::isSame(char* str)
  */
 int String::getLength()
 {
-	u8* str = reinterpret_cast<u8*>(mString);
+	const char* str = mString;
 	int len = 0;
 	while (*(str++)) {
 		len++;

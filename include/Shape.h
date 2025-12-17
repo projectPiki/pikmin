@@ -156,7 +156,7 @@ struct DispList : public CoreNode {
 	// _00-_14 = CoreNode
 	int mFlags;         // _14
 	int mDataLength;    // _18
-	char* mData;        // _1C
+	u8* mData;          // _1C
 	int _20;            // _20
 	int mNodeCount;     // _24
 	int mFaceCount;     // _28

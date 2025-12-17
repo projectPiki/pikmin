@@ -384,7 +384,7 @@ void GXSetCurrentMtx(u32 id)
  * Address:	8021450C
  * Size:	000084
  */
-void GXLoadTexMtxImm(const f32 mtx[][4], u32 id, GXTexMtxType type)
+void GXLoadTexMtxImm(const Mtx mtx, u32 id, GXTexMtxType type)
 {
     u32 reg;
     u32 addr;

@@ -40,7 +40,7 @@ struct AyuCache {
 	u32 amountFree();
 
 	MemHead mFreeBlockHead;      // _00
-	s8 _;                        // _0C, padding to align
+	u8 _0C[0x10 - 0x0c];         // _0C, padding to align
 	MemHead mAllocatedBlockHead; // _10
 	u32 mBlockGuardValue;        // _1C, Magic number (e.g., 0x87654321) used as a guard/canary for memory blocks
 	u32 mCurrentAllocationTag;   // _20, tag value (0-255) applied to new allocations via mallocL, stored in the high byte of MemHead's flag

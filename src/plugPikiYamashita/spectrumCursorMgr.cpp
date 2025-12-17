@@ -194,8 +194,8 @@ void zen::SpectrumCursorMgr::initScale(f32 scale)
  */
 u32 zen::SpectrumCursorMgr::makeTag(u32 tag, int idx)
 {
-	u8 buf[8];
-	sprintf((char*)buf, "*%02d*", idx);
+	char buf[8];
+	sprintf(buf, "*%02d*", idx);
 	buf[0] = tag >> 24;
 	buf[3] = tag & 0xFF;
 	return *(u32*)buf;

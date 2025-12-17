@@ -36,7 +36,7 @@ struct PelletState : public AState<Pellet> {
 	inline PelletState(int stateID, char* name)
 	    : AState(stateID)
 	{
-		mName = name;
+		setName(name);
 	}
 
 	// _00     = VTBL

@@ -610,7 +610,7 @@ void StdSystem::loadBundle(char* pPath, bool loadWithCache)
 		}
 		case 0: // Binary Data
 		{
-			char* data = new char[size];
+			u8* data = new u8[size];
 			fs->read(data, size);
 
 			BinobjInfo* newInfo = new BinobjInfo();

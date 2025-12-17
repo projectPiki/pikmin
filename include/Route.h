@@ -93,8 +93,9 @@ struct RouteGroup : public EditNode {
 	{
 		mIntID = id;
 
+		char* str = reinterpret_cast<char*>(&mIntID);
 		for (int i = 0; i < 4; i++) {
-			mStringID[i] = reinterpret_cast<char*>(&mIntID)[i];
+			mStringID[i] = str[i];
 		}
 
 		mStringID[4] = '\0';

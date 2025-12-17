@@ -30,6 +30,8 @@ typedef enum JacEventType {
 	JACEVENT_PikiWater = 5,  ///< 5, water-related pikmin sound effects.
 	JACEVENT_Piki      = 6,  ///< 6, all other pikmin sound effects.
 	JACEVENT_Ufo       = 7,  ///< 7, ufo (ship) related sound effects.
+	JACEVENT_Dame      = 8,  ///< 8, idk (see `SeSystem::draw2d`)
+	JACEVENT_COUNT,
 } JacEventType;
 
 //////////// JAUDIO PIKMIN INTERFACE FUNCTIONS ////////////

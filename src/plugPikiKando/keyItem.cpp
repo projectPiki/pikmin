@@ -168,8 +168,8 @@ DoorItem::DoorItem(int objType, CreatureProp* props, Shape* shape)
 {
 	mStateId              = DoorState::Inactive;
 	mFadeTimer            = 0.0f;
-	mDestinationStagePath = 0;
-	mLabelText            = 0;
+	mDestinationStagePath = nullptr;
+	mLabelText            = nullptr;
 }
 
 /*
