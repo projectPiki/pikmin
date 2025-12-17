@@ -243,7 +243,7 @@ BOOL DVDClose(DVDFileInfo* fileInfo)
  * Address:	........
  * Size:	000038
  */
-static u32 myStrncpy(char* dest, char* src, u32 maxlen)
+static u32 myStrncpy(char* dest, const char* src, u32 maxlen)
 {
 	u32 i = maxlen;
 
@@ -502,7 +502,7 @@ s32 DVDGetFileInfoStatus(DVDFileInfo* fileInfo)
  * Address:	........
  * Size:	000084
  */
-BOOL DVDOpenDir(char* dirName, DVDDir* dir)
+BOOL DVDOpenDir(const char* dirName, DVDDir* dir)
 {
 	// UNUSED FUNCTION
 }

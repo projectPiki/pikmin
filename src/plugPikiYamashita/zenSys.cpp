@@ -49,7 +49,7 @@ Texture* zen::loadTexExp(const char* textureName, bool useDirectory, bool makePa
 {
 	if (useDirectory) {
 		char fullPath[PATH_MAX];
-		char* dirPath = gsys->mTexDir;
+		const char* dirPath = gsys->mTexDir;
 		if (makePath) {
 			zen::makePathName(dirPath, textureName, fullPath);
 		} else {

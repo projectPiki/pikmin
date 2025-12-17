@@ -313,7 +313,7 @@ void Creature::endStickObject()
 	resetCreatureFlag(CF_StuckToObject);
 }
 
-char* _standType[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
+const char* _standType[] = { "GROUND", "TEKIPLAT", "PLAT", "AIR" };
 
 /*
  * --INFO--

@@ -1278,8 +1278,8 @@ FILE* fopen(char*, char*)
 
 RandomAccessStream* System::createFile(char* name, BOOL useRoot)
 {
-	char* b;
-	char* c;
+	const char* b;
+	const char* c;
 
 	if (useRoot) {
 		b = mActiveDir;

@@ -57,7 +57,7 @@ error:
  * Address:	8020C018
  * Size:	000218
  */
-s32 CARDCreateAsync(s32 channel, char* fileName, u32 size, CARDFileInfo* fileInfo, CARDCallback callback)
+s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo, CARDCallback callback)
 {
 	CARDControl* card;
 	CARDDirectoryBlock* dir;
@@ -124,7 +124,7 @@ s32 CARDCreateAsync(s32 channel, char* fileName, u32 size, CARDFileInfo* fileInf
  * Address:	8020C230
  * Size:	000048
  */
-s32 CARDCreate(s32 channel, char* fileName, u32 size, CARDFileInfo* fileInfo)
+s32 CARDCreate(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo)
 {
 	s32 result = CARDCreateAsync(channel, fileName, size, fileInfo, __CARDSyncCallback);
 	if (result < 0) {

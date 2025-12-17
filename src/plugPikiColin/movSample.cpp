@@ -43,7 +43,7 @@ struct MovSampleSetupSection : public Node {
 		_30         = 0;
 		gsys->setFade(1.0f, 3.0f);
 
-		static char* movieNames[6] = {
+		static const char* movieNames[6] = {
 			"../MovieData/cntA_S.h4m", "../MovieData/cntB_S.h4m", "../MovieData/cntC_S.h4m",
 			"../MovieData/cntD_S.h4m", "../MovieData/sr_S.h4m",   "../MovieData/srhp_S.h4m",
 		};

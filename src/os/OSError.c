@@ -8,7 +8,7 @@ static OSErrorHandler OSErrorTable[OS_ERROR_MAX];
  * Address:	801F7890
  * Size:	000080
  */
-void OSReport(char* msg, ...)
+void OSReport(const char* msg, ...)
 {
 	va_list args;
 
@@ -22,7 +22,7 @@ void OSReport(char* msg, ...)
  * Address:	801F7910
  * Size:	00012C
  */
-void OSPanic(char* file, int line, char* msg, ...)
+void OSPanic(const char* file, int line, const char* msg, ...)
 {
 	va_list args;
 	u32 i;

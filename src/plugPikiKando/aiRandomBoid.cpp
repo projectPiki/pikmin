@@ -179,7 +179,7 @@ int ActRandomBoid::exec()
 	STACK_PAD_VAR(13);
 }
 
-static char* stateName[] = {
+static const char* stateName[] = {
 	"ランダム", // 'random'
 	"Boid",
 	"停止", // 'stop'

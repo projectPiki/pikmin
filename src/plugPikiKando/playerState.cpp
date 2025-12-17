@@ -1372,7 +1372,7 @@ void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 
 			if (AIPerf::kandoOnly) {
 				// This is the extent to which I'm willing to document this bug (size is off-by-one but animation "7" is unused).
-				char* names[PelletMotion::COUNT - 1] = { "carry", "assign", "after", "piston", "special", "6" };
+				const char* names[PelletMotion::COUNT - 1] = { "carry", "assign", "after", "piston", "special", "6" };
 				STACK_PAD_VAR(1);
 				ID32 id(parts->mModelID);
 				PRINT("* parts(%s) : motion(%s) : (%.1f|%.1f) frame\n", names[parts->mPartVisType], id.mStringID);

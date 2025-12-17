@@ -43,7 +43,7 @@ int matIndex;
 int usedIndex;
 int _dlindx;
 
-static char* modes[5] = {
+static const char* modes[5] = {
 	"NONE", "OPA", "TEX", "NONE", "XLU",
 };
 
@@ -2055,7 +2055,7 @@ void BaseShape::resolveTextureNames()
 {
 	if (mTextureNameList) {
 		for (int i = 0; i < mAttrListMatCount; i++) {
-			char* texName = mTextureNameList[i];
+			const char* texName = mTextureNameList[i];
 			char filepath[PATH_MAX];
 			sprintf(filepath, "%s%s", gsys->mTextureBase2, texName);
 			mResolvedTextureList[i] = gsys->loadTexture(filepath, true);

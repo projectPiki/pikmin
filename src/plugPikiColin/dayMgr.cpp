@@ -723,8 +723,8 @@ void DayMgr::setFog(Graphics& gfx, Colour* color)
  */
 void DayMgr::menuDumpSettings(Menu&)
 {
-	static char* settingnames[5] = { "night", "morning", "day", "evening", "movie" };
-	static char* lightnames[7]   = { "main light", "sub light", "+1", "+2", "+3", "+4", "+5" };
+	static const char* settingnames[5] = { "night", "morning", "day", "evening", "movie" };
+	static const char* lightnames[7]   = { "main light", "sub light", "+1", "+2", "+3", "+4", "+5" };
 
 	BOOL old           = gsys->mTogglePrint;
 	gsys->mTogglePrint = TRUE;

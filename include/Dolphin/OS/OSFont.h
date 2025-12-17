@@ -51,7 +51,7 @@ char* OSGetFontTexture(const char* string, void** image, s32* x, s32* y, s32* wi
 u32 OSLoadFont(OSFontHeader* fontInfo, void* temp);
 
 // Unused/inlined in P2.
-char* OSGetFontTexel(char* string, void* image, s32 pos, s32 stride, s32* width);
+char* OSGetFontTexel(const char* string, void* image, s32 pos, s32 stride, s32* width);
 
 //////////////////////////////////
 

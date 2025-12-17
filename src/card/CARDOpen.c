@@ -69,7 +69,7 @@ s32 __CARDIsPublic(CARDDir* ent)
  * Address:	........
  * Size:	000148
  */
-s32 __CARDGetFileNo(CARDControl* card, char* fileName, s32* outFileNo)
+s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 {
 	CARDDirectoryBlock* dir;
 	CARDDir* entry;
@@ -143,7 +143,7 @@ s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo)
  * Address:	8020BD18
  * Size:	000174
  */
-s32 CARDOpen(s32 chan, char* fileName, CARDFileInfo* fileInfo)
+s32 CARDOpen(s32 chan, const char* fileName, CARDFileInfo* fileInfo)
 {
 	CARDControl* card;
 	CARDDirectoryBlock* dir;

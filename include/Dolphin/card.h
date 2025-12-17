@@ -243,13 +243,13 @@ s32 CARDFormatAsync(s32 channel, CARDCallback callback);
 s32 CARDFormat(s32 channel);
 
 // CARD open/close.
-s32 CARDOpen(s32 channel, char* fileName, CARDFileInfo* fileInfo);
+s32 CARDOpen(s32 channel, const char* fileName, CARDFileInfo* fileInfo);
 s32 CARDFastOpen(s32 channel, s32 fileNo, CARDFileInfo* fileInfo);
 s32 CARDClose(CARDFileInfo* fileInfo);
 
 // CARD create/read/write functions.
-s32 CARDCreate(s32 channel, char* fileName, u32 size, CARDFileInfo* fileInfo);
-s32 CARDCreateAsync(s32 channel, char* fileName, u32 size, CARDFileInfo* fileInfo, CARDCallback callback);
+s32 CARDCreate(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo);
+s32 CARDCreateAsync(s32 channel, const char* fileName, u32 size, CARDFileInfo* fileInfo, CARDCallback callback);
 s32 CARDRead(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset);
 s32 CARDReadAsync(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset, CARDCallback callback);
 s32 CARDWrite(CARDFileInfo* fileInfo, void* addr, s32 length, s32 offset);
@@ -262,7 +262,7 @@ s32 CARDFastDelete(s32 channel, s32 fileNo);
 
 // CARD rename functions.
 s32 CARDRenameAsync(s32 channel, const char* oldName, const char* newName, CARDCallback callback);
-s32 CARDRename(s32 channel, char* oldName, char* newName);
+s32 CARDRename(s32 channel, const char* oldName, const char* newName);
 
 // CARD status functions.
 s32 CARDGetStatus(s32 channel, s32 fileNo, CARDStat* state);

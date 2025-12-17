@@ -521,7 +521,7 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 				gfx.setColour(Colour(255, 255, 255, 255), 1);
 			}
 
-			char* strs[6] = { "A", "B", "C", "D", "E", "F" };
+			const char* strs[6] = { "A", "B", "C", "D", "E", "F" };
 			char buf[256];
 			int formMode = act->mMode;
 			int cb       = gfx.setCBlending(0);

@@ -70,9 +70,9 @@ typedef struct DVDDir {
 
 // Struct for directory entries (size 0xC).
 typedef struct DVDDirEntry {
-	u32 entryNum; // _00
-	BOOL isDir;   // _04
-	char* name;   // _08
+	u32 entryNum;     // _00
+	BOOL isDir;       // _04
+	const char* name; // _08
 } DVDDirEntry;
 
 // Struct for handing queues.
@@ -133,7 +133,7 @@ BOOL DVDSetAutoInvalidation(BOOL doAutoInval);
 void* DVDGetFSTLocation();
 
 // DVD Dir functions.
-BOOL DVDOpenDir(char* dirName, DVDDir* dir);
+BOOL DVDOpenDir(const char* dirName, DVDDir* dir);
 BOOL DVDReadDir(DVDDir* dir, DVDDirEntry* dirEntry);
 BOOL DVDCloseDir(DVDDir* dir);
 BOOL DVDGetCurrentDir(char* path, u32 maxLength);

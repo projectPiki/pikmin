@@ -137,11 +137,11 @@ static int oldTexs[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 GColor GColors[1];
 
-static char* mtxTypes[] = {
+static const char* mtxTypes[] = {
 	"GX_TEXMTX0", "GX_TEXMTX1", "GX_TEXMTX2", "GX_TEXMTX3", "GX_TEXMTX4",  "GX_TEXMTX5",
 	"GX_TEXMTX6", "GX_TEXMTX7", "GX_TEXMTX8", "GX_TEXMTX9", "GX_IDENTITY",
 };
-static char* genSrcs[] = {
+static const char* genSrcs[] = {
 	"GX_TG_POS",       "GX_TG_NRM",       "GX_TG_BINRM",     "GX_TG_TANGENT",   "GX_TG_TEX0",      "GX_TG_TEX1",      "GX_TG_TEX2",
 	"GX_TG_TEX3",      "GX_TG_TEX4",      "GX_TG_TEX5",      "GX_TG_TEX6",      "GX_TG_TEX7",      "GX_TG_TEXCOORD0", "GX_TG_TEXCOORD1",
 	"GX_TG_TEXCOORD2", "GX_TG_TEXCOORD3", "GX_TG_TEXCOORD4", "GX_TG_TEXCOORD5", "GX_TG_TEXCOORD6", "GX_TG_COLOR0",    "GX_TG_COLOR1",
@@ -2106,9 +2106,9 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
 	GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 
-	int xPos     = x;
-	int yPos     = y;
-	char* bufPtr = buf;
+	int xPos           = x;
+	int yPos           = y;
+	const char* bufPtr = buf;
 	while (*bufPtr) {
 #if defined(VERSION_GPIP01_00)
 		char z = *bufPtr;

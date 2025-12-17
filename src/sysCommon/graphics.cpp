@@ -675,7 +675,7 @@ void Font::setTexture(Texture* tex, int numRows, int numCols)
 // this needs to be in a function, but it straight up never gets used, so.
 static void unusedStatic()
 {
-	static char* mappingTypes[3] = { "Normal", "Projection", "Environ" };
+	static const char* mappingTypes[3] = { "Normal", "Projection", "Environ" };
 }
 
 static u16 sjis_convert_table[0x258] = {
@@ -1152,12 +1152,12 @@ void TexImg::readTexData(Texture* tex, RandomAccessStream& stream, u8* data)
 	tex->decodeData(this);
 }
 
-static char* btitexFmts[] = {
+static const char* btitexFmts[] = {
 	"GX_TF_I4", "GX_TF_I8", "GX_TF_IA4", "GX_TF_IA8", "GX_TF_RGB565", "GX_TF_RGB5A3", "GX_TF_RGBA8", "INVALID",
 	"INVALID",  "INVALID",  "INVALID",   "INVALID",   "INVALID",      "INVALID",      "GX_TF_CMPR",
 };
 
-static char* btipalFmts[] = {
+static const char* btipalFmts[] = {
 	"GX_TF_C4",
 	"GX_TF_C8",
 	"GX_TF_C14X2",

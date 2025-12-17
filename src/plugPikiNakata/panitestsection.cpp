@@ -416,7 +416,7 @@ void PaniTestNode::draw(Graphics& gfx)
 	gfx.texturePrintf(gsys->mConsFont, 0, 440, "VerticalDegree:%d", int(NMathF::r2d(mCamMgr->mCamera->getPolar().mInclination)));
 	gfx.texturePrintf(gsys->mConsFont, 0, 430, "Speed:%3.1f", mAnimationSpeed);
 
-	char* motionLabel = nullptr;
+	const char* motionLabel = nullptr;
 	switch (mTestMode) {
 	case PANITEST_Piki:
 		motionLabel = PaniPikiAnimator::motionLabels[mMotionId];
