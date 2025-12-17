@@ -26,7 +26,7 @@ struct UfoShapeObject;
  * @note Size: 0x18.
  */
 struct ItemShapeObject {
-	ItemShapeObject(Shape*, char*, char*);
+	ItemShapeObject(Shape*, immut char*, immut char*);
 
 	Shape* mShape;            // _00
 	AnimMgr* mAnimMgr;        // _04
@@ -40,23 +40,23 @@ struct ItemCreature : public AICreature {
 public:
 	ItemCreature(int objType, CreatureProp*, Shape*);
 
-	virtual void init(immut Vector3f&);      // _28
-	virtual f32 getHeight() { return 0.0f; } // _40
+	virtual void init(immut Vector3f&);         // _28
+	virtual f32 getHeight() { return 0.0f; }    // _40
 	virtual bool stimulate(immut Interaction&); // _A0
-	virtual void update();                   // _E0
-	virtual void refresh(Graphics&);         // _EC
-	virtual void doAI();                     // _104
-	virtual void doAnimation();              // _108
-	virtual void startMotion(int);           // _130
-	virtual void finishMotion();             // _134
-	virtual void finishMotion(f32);          // _138
-	virtual void startMotion(int, f32);      // _13C
-	virtual char* getCurrentMotionName();    // _140
-	virtual f32 getCurrentMotionCounter();   // _144
-	virtual f32 getMotionSpeed();            // _148
-	virtual void setMotionSpeed(f32);        // _14C
-	virtual void stopMotion();               // _150
-	virtual void finalSetup();               // _158 (weak)
+	virtual void update();                      // _E0
+	virtual void refresh(Graphics&);            // _EC
+	virtual void doAI();                        // _104
+	virtual void doAnimation();                 // _108
+	virtual void startMotion(int);              // _130
+	virtual void finishMotion();                // _134
+	virtual void finishMotion(f32);             // _138
+	virtual void startMotion(int, f32);         // _13C
+	virtual immut char* getCurrentMotionName(); // _140
+	virtual f32 getCurrentMotionCounter();      // _144
+	virtual f32 getMotionSpeed();               // _148
+	virtual void setMotionSpeed(f32);           // _14C
+	virtual void stopMotion();                  // _150
+	virtual void finalSetup();                  // _158 (weak)
 
 protected:
 	virtual void doKill(); // _10C

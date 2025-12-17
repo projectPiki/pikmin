@@ -195,10 +195,10 @@ struct Graphics {
 	virtual void blatRectangle(immut RectArea&)                                   = 0;     // _D8
 	virtual void lineRectangle(immut RectArea&)                                   = 0;     // _DC
 	virtual void testRectangle(immut RectArea&) { }                                        // _E0
-	virtual void initProjTex(bool, LightCamera*)                            = 0;           // _E4
-	virtual void initReflectTex(bool)                                       = 0;           // _E8
-	virtual void texturePrintf(Font* font, int x, int y, char* format, ...) = 0;           // _EC
-	virtual void perspPrintf(Font*, immut Vector3f&, int, int, char*, ...);                // _F0
+	virtual void initProjTex(bool, LightCamera*)                                  = 0;     // _E4
+	virtual void initReflectTex(bool)                                             = 0;     // _E8
+	virtual void texturePrintf(Font* font, int x, int y, immut char* format, ...) = 0;     // _EC
+	virtual void perspPrintf(Font*, immut Vector3f&, int, int, immut char*, ...);          // _F0
 };
 
 /**
@@ -260,7 +260,7 @@ struct DGXGraphics : public Graphics {
 	virtual void testRectangle(immut RectArea&);                                                               // _E0
 	virtual void initProjTex(bool, LightCamera*);                                                              // _E4
 	virtual void initReflectTex(bool);                                                                         // _E8
-	virtual void texturePrintf(Font* font, int x, int y, char* format, ...);                                   // _EC
+	virtual void texturePrintf(Font* font, int x, int y, immut char* format, ...);                             // _EC
 	virtual void useMatrixQuick(Matrix4f&, int);                                                               // _F4
 	virtual void drawOutline(Camera&, Shape*) { }                                                              // _F8 (weak)
 	virtual void drawOneStrip(immut Vector3f*, immut Vector3f*, immut Vector2f*, int) { }                      // _A4 (weak)
@@ -277,10 +277,10 @@ struct DGXGraphics : public Graphics {
 	// unused/inlined:
 	void GXReInit();
 	void showCrash(u16, OSContext*);
-	void showError(char*, char*, int);
+	void showError(immut char*, immut char*, int);
 	void directDrawChar(int, int, int);
 	void directDrawChar(RectArea&, RectArea&);
-	void directPrint(int, int, char*, ...);
+	void directPrint(int, int, immut char*, ...);
 	void directErase(RectArea&, bool);
 
 	static DGXGraphics* gfx;

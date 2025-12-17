@@ -34,7 +34,7 @@ struct AICreature : public Creature, public PaniAnimKeyListener {
 	virtual void finishMotion() { }                                                 // _134 (weak)
 	virtual void finishMotion(f32) { }                                              // _138 (weak)
 	virtual void startMotion(int, f32) { }                                          // _13C (weak)
-	virtual char* getCurrentMotionName() { return "noname"; }                       // _140 (weak)
+	virtual immut char* getCurrentMotionName() { return "noname"; }                 // _140 (weak)
 	virtual f32 getCurrentMotionCounter() { return -123.4f; }                       // _144 (weak)
 	virtual f32 getMotionSpeed() { return -123.4f; }                                // _148 (weak)
 	virtual void setMotionSpeed(f32) { }                                            // _14C (weak)

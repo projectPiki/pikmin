@@ -3050,7 +3050,7 @@ void BaseShape::calcBasePose(immut Matrix4f& target)
  * Address:	80034A50
  * Size:	0000E8
  */
-AnimData* BaseShape::loadDck(char* name, RandomAccessStream& s)
+AnimData* BaseShape::loadDck(immut char* name, RandomAccessStream& s)
 {
 	AnimDck* pDck = new AnimDck(name);
 	pDck->mModel  = this;
@@ -3069,7 +3069,7 @@ AnimData* BaseShape::loadDck(char* name, RandomAccessStream& s)
  * Address:	80034B38
  * Size:	0001E0
  */
-AnimData* BaseShape::importDck(char* name, CmdStream* cmds)
+AnimData* BaseShape::importDck(immut char* name, CmdStream* cmds)
 {
 	AnimDck* data;
 	if (!name) {
@@ -3097,7 +3097,7 @@ AnimData* BaseShape::importDck(char* name, CmdStream* cmds)
  * Address:	80034D18
  * Size:	0000DC
  */
-AnimData* BaseShape::loadDca(char* name, RandomAccessStream& s)
+AnimData* BaseShape::loadDca(immut char* name, RandomAccessStream& s)
 {
 	AnimDca* pDca = new AnimDca(name);
 	pDca->mModel  = this;
@@ -3115,7 +3115,7 @@ AnimData* BaseShape::loadDca(char* name, RandomAccessStream& s)
  * Address:	........
  * Size:	000138
  */
-void BaseShape::importDca(char* name, CmdStream* cmds)
+void BaseShape::importDca(immut char* name, CmdStream* cmds)
 {
 	AnimDca* data;
 	if (!name) {
@@ -3139,7 +3139,7 @@ void BaseShape::importDca(char* name, CmdStream* cmds)
  * Address:	80034DF4
  * Size:	0001C4
  */
-AnimData* BaseShape::loadAnimation(char* name, bool isRelativePath)
+AnimData* BaseShape::loadAnimation(immut char* name, bool isRelativePath)
 {
 	RandomAccessStream* stream = gsys->openFile(name, isRelativePath, true);
 	if (stream) {

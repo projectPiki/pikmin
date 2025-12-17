@@ -54,7 +54,7 @@ u8 GoalItem::demoHideFlag;
  * Address:	........
  * Size:	000004
  */
-static void printMatrix(char* name, Matrix4f& mat)
+static void printMatrix(immut char* name, Matrix4f& mat)
 {
 	PRINT("++++ MATRIX %s ++++\n", name);
 	for (int i = 0; i < 4; ++i) {

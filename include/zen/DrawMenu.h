@@ -171,7 +171,7 @@ public:
 
 	typedef bool (DrawMenuBase::*ModeFunc)(Controller*);
 
-	DrawMenuBase(char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr);
+	DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr);
 
 	virtual void draw(Graphics&);                           // _10
 	virtual bool update(Controller*);                       // _14
@@ -229,7 +229,7 @@ public:
 		STATUS_Unk3 = 3,
 	};
 
-	DrawMenu(char*, bool, bool);
+	DrawMenu(immut char*, bool, bool);
 
 	void start(int);
 	bool update(Controller*);

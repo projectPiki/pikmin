@@ -25,14 +25,14 @@ struct CmdStream {
 	 * @brief Skips the current line in the command stream.
 	 * @return A pointer to the next line in the command stream.
 	 */
-	char* skipLine();
+	immut char* skipLine();
 
 	/**
 	 * @brief Retrieves the next token from the command stream.
 	 * @param skipWhitespace Flag indicating whether to skip whitespace characters.
 	 * @return A pointer to the next token in the command stream.
 	 */
-	char* getToken(bool skipWhitespace);
+	immut char* getToken(bool skipWhitespace);
 
 	/**
 	 * @brief Retrieves the next character from the command stream.
@@ -70,7 +70,7 @@ struct CmdStream {
 	 * @param token The token to check.
 	 * @return True if the token matches the given string, false otherwise.
 	 */
-	bool isToken(char* token);
+	bool isToken(immut char* token);
 
 	/**
 	 * @brief Checks if the current line in the command stream is a comment.

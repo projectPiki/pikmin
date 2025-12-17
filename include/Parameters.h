@@ -56,7 +56,7 @@ struct Parameters {
  */
 template <typename T>
 struct Parm : public BaseParm {
-	Parm(Parameters* owner, T value, T min, T max, ayuID id, char* str)
+	Parm(Parameters* owner, T value, T min, T max, ayuID id, immut char* str)
 	    : BaseParm(owner, id)
 	{
 		mValue = value;

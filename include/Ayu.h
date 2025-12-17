@@ -8,9 +8,9 @@
  */
 struct ayuID {
 	ayuID() { mID = 0; }
-	ayuID(char* id) { Set(id); }
+	ayuID(immut char* id) { Set(id); }
 
-	void Set(char* id) { mID = *(s32*)id; }
+	void Set(immut char* id) { mID = *(s32*)id; }
 	s32& Num() { return mID; };
 
 	s32 mID; // _00
@@ -61,7 +61,7 @@ struct AyuStack {
 	void pop();
 
 	// unused/inlined:
-	void create(char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
+	void create(immut char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled);
 	void reset();
 	void checkStack();
 
@@ -86,7 +86,7 @@ struct AyuStack {
 	u32 mStackLimit;        // _18
 	bool mProtectOverflow;  // _1C
 	bool mIsActive;         // _1D
-	char* mName;            // _20
+	immut char* mName;      // _20
 };
 
 /**
@@ -97,7 +97,7 @@ struct AyuStack {
 struct AyuHeap : public AyuStack {
 	AyuHeap() { }
 
-	void init(char* name, int allocType, void* stackTop, int stackSize);
+	void init(immut char* name, int allocType, void* stackTop, int stackSize);
 
 	// _00-_24 = AyuStack
 	u8 _24; // _24

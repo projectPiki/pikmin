@@ -22,7 +22,7 @@ struct RoutePoint;
  * @brief Base node class for editable nodes in the route editor
  */
 struct EditNode : public CoreNode {
-	EditNode(char* name)
+	EditNode(immut char* name)
 	    : CoreNode(name)
 	{
 	}
@@ -113,7 +113,7 @@ struct RouteGroup : public EditNode {
 	}
 
 	// unused/inlined:
-	void saveini(char* filename, RandomAccessStream& stream);
+	void saveini(immut char* filename, RandomAccessStream& stream);
 
 	// _00     = VTBL
 	// _00-_14 = EditNode

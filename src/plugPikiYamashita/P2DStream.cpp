@@ -22,7 +22,7 @@ DEFINE_PRINT("P2DStream");
  * Address:	801B3274
  * Size:	0000C4
  */
-char* P2DStream::getResource(int dataType)
+immut char* P2DStream::getResource(int dataType)
 {
 	u8 refType = mStream->readByte();
 	u8 resSize = mStream->readByte();

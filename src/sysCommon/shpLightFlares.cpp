@@ -54,7 +54,7 @@ void LightFlare::loadini(CmdStream* commands)
  * Address:	........
  * Size:	0000B0
  */
-void LightFlare::saveini(char*, RandomAccessStream&)
+void LightFlare::saveini(immut char*, RandomAccessStream&)
 {
 	mName = "NULL";
 	// UNUSED FUNCTION
@@ -65,7 +65,7 @@ void LightFlare::saveini(char*, RandomAccessStream&)
  * Address:	........
  * Size:	0001E8
  */
-void LightGroup::saveini(char*, RandomAccessStream&)
+void LightGroup::saveini(immut char*, RandomAccessStream&)
 {
 	// UNUSED FUNCTION
 }
@@ -111,7 +111,7 @@ void LightGroup::loadini(CmdStream* commands)
 		}
 
 		if (commands->isToken("texture")) {
-			char* texSrc = commands->getToken(true);
+			immut char* texSrc = commands->getToken(true);
 			if (strcmp(texSrc, "NULL") != 0) {
 				mTexSource = StdSystem::stringDup(texSrc);
 			} else {
@@ -121,7 +121,7 @@ void LightGroup::loadini(CmdStream* commands)
 		}
 
 		if (commands->isToken("material")) {
-			char* matSrc = commands->getToken(true);
+			immut char* matSrc = commands->getToken(true);
 			if (strcmp(matSrc, "NULL") != 0) {
 				mMatSource = StdSystem::stringDup(matSrc);
 			} else {

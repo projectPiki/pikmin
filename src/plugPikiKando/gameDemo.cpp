@@ -212,7 +212,7 @@ void DemoFlags::loadCard(RandomAccessStream& data)
  * Address:	80082448
  * Size:	00007C
  */
-void DemoFlags::registerDemoFlag(int index, char* name, u16 movieIndex, u16 a2, bool a3)
+void DemoFlags::registerDemoFlag(int index, immut char* name, u16 movieIndex, u16 a2, bool a3)
 {
 	if (mCurrentDataIndex != index) {
 		PRINT("<%s> curr=%d idx=%d\n", name, mCurrentDataIndex, index);

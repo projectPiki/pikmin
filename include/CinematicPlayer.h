@@ -238,7 +238,7 @@ struct SceneCut : public CoreNode {
 		mKey.mPrev = mKey.mNext = &mKey;
 	}
 
-	ActorInstance* addInstance(char*);
+	ActorInstance* addInstance(immut char*);
 
 #ifdef WIN32
 	virtual void genAge(AgeServer&);
@@ -284,7 +284,7 @@ struct CineShapeObject : public CoreNode {
 	}
 
 	/// STRIPPED - initialises model and animation manager.
-	void init(char* modelPath, char* animPath, char* bundlePath);
+	void init(immut char* modelPath, immut char* animPath, immut char* bundlePath);
 
 #ifdef WIN32
 	virtual void genAge(AgeServer&);
@@ -292,11 +292,11 @@ struct CineShapeObject : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	Shape* mModel;         ///< _14, parent model.
-	char* mAnimFilePath;   ///< _18, path to animations file.
-	char* mBundleFilePath; ///< _1C, path to bundle file.
-	AnimContext mContext;  ///< _20, context for animations.
-	AnimMgr* mMgr;         ///< _30, animation manager.
+	Shape* mModel;               ///< _14, parent model.
+	immut char* mAnimFilePath;   ///< _18, path to animations file.
+	immut char* mBundleFilePath; ///< _1C, path to bundle file.
+	AnimContext mContext;        ///< _20, context for animations.
+	AnimMgr* mMgr;               ///< _30, animation manager.
 };
 
 /**
@@ -309,13 +309,13 @@ struct CineShapeObject : public CoreNode {
 struct CinematicPlayer {
 
 	/// Constructor - initialises given cutscene file.
-	CinematicPlayer(char* cinFilePath);
+	CinematicPlayer(immut char* cinFilePath);
 
 	/// Initialises player, loads given cutscene file, and initialises current scene.
-	void init(char* cinFilePath);
+	void init(immut char* cinFilePath);
 
 	/// Loads cutscene from given file path, including unpacking all command information.
-	void loadCin(char* cinFilePath);
+	void loadCin(immut char* cinFilePath);
 
 	/// Reads in scene data from file and sets as current scene.
 	void addScene(SceneData* scene);
@@ -327,7 +327,7 @@ struct CinematicPlayer {
 	void addActor(CineShapeObject* actor);
 
 	/// Sets up a new actor with given file paths, adds to actor list, and initialises.
-	void addActor(char* modelFilePath, char* animFilePath, char* bundleFilePath);
+	void addActor(immut char* modelFilePath, immut char* animFilePath, immut char* bundleFilePath);
 
 	/// Creates new scene cut with first data from scene list, and adds to scene cut list.
 	SceneCut* addSceneCut();
@@ -345,7 +345,7 @@ struct CinematicPlayer {
 	void refresh(Graphics& gfx);
 
 	/// STRIPPED - sets up new scene with given .dsk file path, reads in data, and sets as current scene.
-	SceneData* addScene(char* dskFilePath);
+	SceneData* addScene(immut char* dskFilePath);
 
 	// DLL exclusive functions (use -DWIN32)
 	void genAge(AgeServer&);
@@ -358,11 +358,11 @@ struct CinematicPlayer {
 	void ageRefreshSection(AgeServer&);
 	void ageSave(AgeServer&);
 	void genSection(AgeServer&);
-	void saveCin(char*);
+	void saveCin(immut char*);
 	static void truncateName(char*);
 
 	/// Retrieves actor information from overall actor list based on .mod file path.
-	CineShapeObject* findActor(char* modFilePath)
+	CineShapeObject* findActor(immut char* modFilePath)
 	{
 		for (CineShapeObject* actor = (CineShapeObject*)mActorList.mChild; actor; actor = (CineShapeObject*)actor->mNext) {
 			if (!strcmp(actor->mName, modFilePath)) {

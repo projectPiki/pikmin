@@ -45,7 +45,7 @@ struct LightFlare : public CoreNode {
 
 	// unused/inlined:
 	void loadini(CmdStream*);
-	void saveini(char*, RandomAccessStream&);
+	void saveini(immut char*, RandomAccessStream&);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
@@ -195,7 +195,7 @@ struct LightGroup : public CoreNode {
 	void refresh(Graphics&, Matrix4f*);
 
 	// unused/inlined:
-	void saveini(char*, RandomAccessStream&);
+	void saveini(immut char*, RandomAccessStream&);
 
 	inline LFlareGroup* getLFlareGroup() { return mFlareGroup; }
 
@@ -207,8 +207,8 @@ struct LightGroup : public CoreNode {
 	Texture* mTexture;        // _20
 	Vector3f mDirection;      // _24
 	Colour mLightColour;      // _30
-	char* mTexSource;         // _34
-	char* mMatSource;         // _38
+	immut char* mTexSource;   // _34
+	immut char* mMatSource;   // _38
 	Texture* mHaloTex;        // _3C
 	LightFlare mFlares;       // _40
 	Shape* mParentShape;      // _64

@@ -156,9 +156,10 @@ void Stream::writeFloat(f32 f)
  * Address:	800253C8
  * Size:	00003C
  */
-void Stream::writeString(char* str)
+void Stream::writeString(immut char* str)
 {
-	String s(str, 0);
+	// `String` can't decide if it wants to be owning or non-owning.
+	String s(const_cast<char*>(str), 0);
 	writeString(s);
 }
 
@@ -167,7 +168,7 @@ void Stream::writeString(char* str)
  * Address:	80025404
  * Size:	0000D4
  */
-void Stream::writeString(String& s)
+void Stream::writeString(immut String& s)
 {
 	s32 length = ALIGN_NEXT(s.getLength(), 4);
 	writeInt(length);
@@ -184,7 +185,7 @@ void Stream::writeString(String& s)
  * Address:	........
  * Size:	0000C4
  */
-void Stream::print(char* fmt, ...)
+void Stream::print(immut char* fmt, ...)
 {
 	char dest[1024];
 	va_list args;
@@ -219,7 +220,7 @@ void Stream::read(void*, int)
  * Address:	800254DC
  * Size:	000004
  */
-void Stream::write(void*, int)
+void Stream::write(immut void*, int)
 {
 }
 

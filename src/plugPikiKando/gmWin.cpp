@@ -128,7 +128,7 @@ void GmWin::placeCentre()
  * Address:	8011202C
  * Size:	000050
  */
-void GmWin::print(Graphics& gfx, int posX, int posY, char* message)
+void GmWin::print(Graphics& gfx, int posX, int posY, immut char* message)
 {
 	gfx.texturePrintf(font, posX + mPosX, posY + mPosY, message);
 }
@@ -138,7 +138,7 @@ void GmWin::print(Graphics& gfx, int posX, int posY, char* message)
  * Address:	8011207C
  * Size:	000080
  */
-void GmWin::printcentre(Graphics& gfx, int posY, char* message)
+void GmWin::printcentre(Graphics& gfx, int posY, immut char* message)
 {
 	const int windowWidth = mWidth >> 1;
 	const int stringWidth = font->stringWidth(message) >> 1;
@@ -150,7 +150,7 @@ void GmWin::printcentre(Graphics& gfx, int posY, char* message)
  * Address:	801120FC
  * Size:	000080
  */
-void GmWin::printright(Graphics& gfx, int posY, char* message)
+void GmWin::printright(Graphics& gfx, int posY, immut char* message)
 {
 	const int windowWidth = mWidth;
 	const int stringWidth = font->stringWidth(message);
@@ -162,7 +162,7 @@ void GmWin::printright(Graphics& gfx, int posY, char* message)
  * Address:	8011217C
  * Size:	000058
  */
-void GmWin::printleft(Graphics& gfx, int posY, char* message)
+void GmWin::printleft(Graphics& gfx, int posY, immut char* message)
 {
 	gfx.texturePrintf(font, 32 + mPosX, posY + mPosY, message);
 }

@@ -716,7 +716,7 @@ void CheckChan(jc_* jc)
  * Address:	........
  * Size:	0000AC
  */
-void PrintChan(char* str, jc_* jc, u32 id)
+void PrintChan(immut char* str, jc_* jc, u32 id)
 {
 	// UNUSED FUNCTION
 }

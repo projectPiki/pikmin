@@ -21,8 +21,8 @@ struct Creature;
  * @note Size: 0x8.
  */
 struct SeInfo {
-	int mJacPlayerSeID; ///< _00, see JacOrimaSoundID enum.
-	char* mSeName;      ///< _04, name of sound effect.
+	int mJacPlayerSeID;  ///< _00, see JacOrimaSoundID enum.
+	immut char* mSeName; ///< _04, name of sound effect.
 };
 
 /**
@@ -175,7 +175,7 @@ protected:
 	SeInfo* findInfo(int jacSeID);
 
 	/// Adds a new info to the list with given Jac player sound ID and name (unless maxed out).
-	void addInfo(int jacSeID, char* seName);
+	void addInfo(int jacSeID, immut char* seName);
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -279,7 +279,7 @@ public:
 	void exitCourse();
 
 	/// STRIPPED - gets name of sound based on input (game) sound ID.
-	char* getSoundName(int soundID);
+	immut char* getSoundName(int soundID);
 
 	/// STRIPPED - gets event type of sound based on input (game) sound ID.
 	int getEventType(int soundID);

@@ -30,7 +30,7 @@ DEFINE_PRINT("GameCourseClearSection")
  */
 struct GameModeBase {
 public:
-	GameModeBase(char* name)
+	GameModeBase(immut char* name)
 	{
 		mName         = name;
 		mCancelButton = KBBTN_Z;
@@ -47,12 +47,12 @@ public:
 	}
 	virtual void draw(Graphics& gfx) { } // _0C
 
-	char* getModeName() { return mName; }
+	immut char* getModeName() { return mName; }
 
 protected:
 	// _00 = VTBL
 	int mCancelButton; // _04
-	char* mName;       // _08
+	immut char* mName; // _08
 };
 
 /**
@@ -155,7 +155,7 @@ protected:
 				gfx.setAuxColour(Colour(200, 215, 192, 255));
 			}
 
-			char* name = mModes[i]->getModeName();
+			immut char* name = mModes[i]->getModeName();
 			gfx.texturePrintf(font, 320 - font->stringWidth(name) / 2, i * font->stringHeight(name) + 70, name);
 		}
 	}

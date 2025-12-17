@@ -2086,7 +2086,7 @@ void DGXGraphics::fillRectangle(immut RectArea& rect)
  * Address:	8004C350
  * Size:	000404
  */
-void DGXGraphics::texturePrintf(Font* font, int x, int y, char* format, ...)
+void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ...)
 {
 	char buf[PATH_MAX];
 	va_list vlist;
@@ -2190,7 +2190,7 @@ void DGXGraphics::showCrash(u16, OSContext*)
  * Address:	........
  * Size:	000184
  */
-void DGXGraphics::showError(char* msg1, char* fileName, int line)
+void DGXGraphics::showError(immut char* msg1, immut char* fileName, int line)
 {
 	OSReport("ERROR: %s", msg1);
 	OSReport("ERROR: in %s at line %d", fileName, line);
@@ -2246,7 +2246,7 @@ void DGXGraphics::directDrawChar(RectArea&, RectArea&)
  * Address:	........
  * Size:	0001D8
  */
-void DGXGraphics::directPrint(int, int, char*, ...)
+void DGXGraphics::directPrint(int, int, immut char*, ...)
 {
 	// UNUSED FUNCTION
 }

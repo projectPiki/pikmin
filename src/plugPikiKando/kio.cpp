@@ -20,7 +20,7 @@ DEFINE_PRINT(nullptr);
 
 KIO* kio;
 bool KIO::fbCopy;
-char* KIO::haltMessage;
+immut char* KIO::haltMessage;
 int KIO::kontMode = 2;
 
 /*

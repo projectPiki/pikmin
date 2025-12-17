@@ -254,7 +254,7 @@ PlantMgr::PlantMgr(MapMgr* mgr)
 }
 
 // see PlantTypes enum for more info on what these are
-static char* plantNames[PLANT_COUNT] = {
+static immut char* plantNames[PLANT_COUNT] = {
 	"clover",   // 0
 	"chidome",  // 1
 	"hutaba",   // 2
@@ -274,7 +274,7 @@ static char* plantNames[PLANT_COUNT] = {
  * Address:	........
  * Size:	000018
  */
-char* PlantMgr::getPlantName(int plantType)
+immut char* PlantMgr::getPlantName(int plantType)
 {
 	return plantNames[plantType];
 }
@@ -291,7 +291,7 @@ void PlantMgr::initialise()
 			continue;
 		}
 
-		char* name = plantNames[i];
+		immut char* name = plantNames[i];
 		char shapeFile[256];
 		sprintf(shapeFile, "objects/plants/%s.mod", name);
 
@@ -366,7 +366,7 @@ Creature* PlantMgr::birth()
  * Address:	8011ABB4
  * Size:	000118
  */
-PlantShapeObject::PlantShapeObject(Shape* shape, char* plantName, char* fileName)
+PlantShapeObject::PlantShapeObject(Shape* shape, immut char* plantName, immut char* fileName)
 {
 	mShape               = shape;
 	mShape->mFrameCacher = plantMgr->mAnimFrameCacher;

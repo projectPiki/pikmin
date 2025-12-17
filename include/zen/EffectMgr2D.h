@@ -73,7 +73,7 @@ namespace zen {
  * @note Size: 0xC.
  */
 struct EffectRegister2D {
-	EffectRegister2D(particleLoader& loader, char* pcrFile, char* tex1File, char* tex2File)
+	EffectRegister2D(particleLoader& loader, immut char* pcrFile, immut char* tex1File, immut char* tex2File)
 	{
 		mData = loader.load(pcrFile, true);
 		mTex1 = gsys->loadTexture(tex1File, true);

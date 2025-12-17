@@ -67,7 +67,7 @@ ObjType _info[] = {
  * Address:	80094A38
  * Size:	000048
  */
-char* ObjType::getName(int index)
+immut char* ObjType::getName(int index)
 {
 	for (int slot = 0; _info[slot].mIndex != OBJTYPE_NULL; slot++) {
 		if (index == _info[slot].mIndex) {
@@ -82,7 +82,7 @@ char* ObjType::getName(int index)
  * Address:	80094A80
  * Size:	000094
  */
-int ObjType::getIndex(char* name)
+int ObjType::getIndex(immut char* name)
 {
 	for (int slot = 0; _info[slot].mIndex != OBJTYPE_NULL; slot++) {
 		if (strcmp(name, _info[slot].mName) == 0) {

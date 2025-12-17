@@ -179,7 +179,7 @@ struct ogMsgCtrlTagMgr {
 public:
 	ogMsgCtrlTagMgr();
 
-	bool CheckCtrlTag(char*, s16*, f32*);
+	bool CheckCtrlTag(immut char*, s16*, f32*);
 
 private:
 	char mOnesWaitChar[8];    // _00
@@ -243,7 +243,7 @@ f32 calcPuruPuruScale(f32);
 int getSpecialNumber(int);
 void cnvSpecialNumber(char*);
 void cnvSpecialNumberHyphen(char*);
-bool getStringCVS(char*, char*, short);
+bool getStringCVS(char*, immut char*, short);
 ::Texture* loadTexExp(const char*, bool, bool);
 void makePathName(const char*, const char*, char*);
 void makeRotMatrix(immut Vector3f&, Matrix3f&);

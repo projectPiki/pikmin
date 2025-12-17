@@ -184,7 +184,7 @@ protected:
  */
 struct DrawGameOverScreen {
 public:
-	DrawGameOverScreen(char* bloFileName)
+	DrawGameOverScreen(immut char* bloFileName)
 	{
 		mScreen      = new DrawScreen(bloFileName, nullptr, true, true);
 		mLetterCount = 0;

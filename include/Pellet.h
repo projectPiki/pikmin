@@ -219,7 +219,7 @@ struct PelletProp : public CreatureProp {
  * @brief TODO
  */
 struct PelletShapeObject {
-	PelletShapeObject(char*, Shape*, char*, char*, int);
+	PelletShapeObject(immut char*, Shape*, immut char*, immut char*, int);
 
 	bool isMotionFlag(u8 flag) { return mMotionFlag & flag; }
 	void setMotionFlag(u8 flag) { mMotionFlag |= flag; }

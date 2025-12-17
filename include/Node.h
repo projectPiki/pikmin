@@ -14,7 +14,7 @@ struct VQS;
  * @brief TODO
  */
 struct Node : public CoreNode {
-	Node(char* name = "<Node>")
+	Node(immut char* name = "<Node>")
 	    : CoreNode(name)
 	{
 		init(name);
@@ -29,7 +29,7 @@ struct Node : public CoreNode {
 	virtual void concat(Matrix4f&) { concat(); }           // _28 (weak)
 	virtual Matrix4f* getModelMatrix() { return nullptr; } // _2C (weak)
 
-	void init(char*);
+	void init(immut char*);
 
 	// Inlined functions
 	bool getFlag(int);
@@ -101,7 +101,7 @@ struct FaceNode : public CoreNode {
  * @brief TODO
  */
 struct SRTNode : public Node {
-	SRTNode(char* name); // unused/inlined
+	SRTNode(immut char* name); // unused/inlined
 
 	virtual void update();                                    // _10
 	virtual void concat(Matrix4f&) { }                        // _28 (weak)
@@ -132,8 +132,8 @@ struct NodeMgr {
 
 	inline CoreNode& firstNode() { return mRootNode; }
 
-	CoreNode* findNode(char*, CoreNode*);
-	void recFindNode(CoreNode*, char*);
+	CoreNode* findNode(immut char*, CoreNode*);
+	void recFindNode(CoreNode*, immut char*);
 	void Del(Node*);
 
 	bool mDelete;       // _00

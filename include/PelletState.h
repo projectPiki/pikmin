@@ -33,7 +33,7 @@ struct PelletStateMachine : public StateMachine<Pellet> {
  * @brief TODO
  */
 struct PelletState : public AState<Pellet> {
-	inline PelletState(int stateID, char* name)
+	inline PelletState(int stateID, immut char* name)
 	    : AState(stateID)
 	{
 		setName(name);

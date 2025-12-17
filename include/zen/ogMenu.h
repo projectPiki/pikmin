@@ -35,7 +35,7 @@ public:
 	returnStatusFlag update(Controller*, bool, bool);
 
 	// unused/inlined:
-	void setScreen(char*);
+	void setScreen(immut char*);
 	void calcAngleSpeed(f32);
 	bool draw(Graphics&);
 

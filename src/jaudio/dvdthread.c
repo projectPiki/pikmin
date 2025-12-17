@@ -625,7 +625,7 @@ void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback)
  * Address:	........
  * Size:	000064
  */
-void Jac_CheckFile(char*)
+void Jac_CheckFile(immut char*)
 {
 	static DVDFileInfo finfo;
 	// UNUSED FUNCTION
@@ -636,7 +636,7 @@ void Jac_CheckFile(char*)
  * Address:	........
  * Size:	0000B4
  */
-void Jac_LoadFile(char*, u8*)
+void Jac_LoadFile(immut char*, u8*)
 {
 	static DVDFileInfo finfo;
 	// UNUSED FUNCTION
@@ -667,7 +667,7 @@ void DVDT_UnPause()
  * Address:	........
  * Size:	000008
  */
-void Jac_RegisterDVDErrorCallback(void (*)(char*, u8*))
+void Jac_RegisterDVDErrorCallback(void (*)(immut char*, u8*))
 {
 	// UNUSED FUNCTION
 }

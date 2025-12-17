@@ -26,11 +26,11 @@ struct P2DPaneLibrary {
 	// unused/inlined:
 	static void setMirror(P2DPane*, P2DMirror);
 	static void printTag(P2DPane*);
-	static void printUseTexName(P2DPane*, IDelegate1<char*>*);
-	static void printUseTexName(char*, IDelegate1<char*>*);
+	static void printUseTexName(P2DPane*, IDelegate1<immut char*>*);
+	static void printUseTexName(immut char*, IDelegate1<immut char*>*);
 
 	// DLL inlines:
-	static int makeTag(char* str) { return (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3]; }
+	static int makeTag(immut char* str) { return (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3]; }
 };
 
 /**
@@ -40,7 +40,7 @@ struct P2DPaneLibrary {
  */
 struct DrawScreen {
 public:
-	DrawScreen(char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr);
+	DrawScreen(immut char* bloFileName, P2DGrafContext* grafContext, bool useAlphaMgr, bool useTexAnimMgr);
 
 	virtual void update(); // _08
 	virtual void draw();   // _0C

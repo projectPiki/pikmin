@@ -22,7 +22,7 @@ DEFINE_PRINT(nullptr)
  * Address:	801B5C64
  * Size:	000150
  */
-Font* P2DFont::loadFont(char* name, int& rows, int& columns)
+Font* P2DFont::loadFont(immut char* name, int& rows, int& columns)
 {
 	Font* font       = nullptr;
 	FntobjInfo* info = (FntobjInfo*)gsys->findGfxObject(name, 'font');
@@ -59,7 +59,7 @@ Font* P2DFont::loadFont(char* name, int& rows, int& columns)
  * Address:	801B5DB4
  * Size:	0000BC
  */
-P2DFont::P2DFont(char* fileName)
+P2DFont::P2DFont(immut char* fileName)
 {
 	int rows, columns;
 	mFont     = loadFont(fileName, rows, columns);

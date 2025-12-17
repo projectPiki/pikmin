@@ -102,7 +102,7 @@ int CoreNode::getChildCount()
  * Address:	800406A0
  * Size:	00009C
  */
-void CoreNode::load(char* dirPath, char* fileName, u32)
+void CoreNode::load(immut char* dirPath, immut char* fileName, u32)
 {
 	char filePath[PATH_MAX];
 	sprintf(filePath, "%s%s", dirPath, fileName);
@@ -118,7 +118,7 @@ void CoreNode::load(char* dirPath, char* fileName, u32)
  * Address:	8004073C
  * Size:	000028
  */
-void Node::init(char* name)
+void Node::init(immut char* name)
 {
 	initCore(name);
 	mFlags = 0x1 | 0x2;
@@ -169,7 +169,7 @@ void Node::render(Graphics& gfx)
  * Address:	........
  * Size:	000128
  */
-SRTNode::SRTNode(char* name = "<SRTNode>")
+SRTNode::SRTNode(immut char* name = "<SRTNode>")
     : Node(name)
 {
 	// UNUSED FUNCTION
@@ -227,7 +227,7 @@ void NodeMgr::Del(Node* node)
  * Address:	........
  * Size:	0000EC
  */
-void NodeMgr::recFindNode(CoreNode*, char*)
+void NodeMgr::recFindNode(CoreNode*, immut char*)
 {
 	// UNUSED FUNCTION
 }
@@ -237,7 +237,7 @@ void NodeMgr::recFindNode(CoreNode*, char*)
  * Address:	........
  * Size:	0000A8
  */
-CoreNode* NodeMgr::findNode(char*, CoreNode*)
+CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
 {
 	// UNUSED FUNCTION
 }

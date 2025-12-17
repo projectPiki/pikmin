@@ -769,9 +769,9 @@ public:
 	void setUsingType(int, bool);
 
 	static void initTekiMgr();
-	static int getTypeIndex(char*);
+	static int getTypeIndex(immut char*);
 
-	static char* getTypeName(int idx) { return typeNames[idx]; }
+	static immut char* getTypeName(int idx) { return typeNames[idx]; }
 	static int getTypeId(int idx) { return typeIds[idx]; }
 
 	bool isUsingType(int type) { return mUsingType[type]; }
@@ -781,7 +781,7 @@ public:
 protected:
 	virtual Creature* createObject(); // _80
 
-	static char* typeNames[TEKI_TypeCount];
+	static immut char* typeNames[TEKI_TypeCount];
 	static int typeIds[TEKI_TypeCount];
 
 	// This, like `BTeki`, clearly was never properly encapsulated.

@@ -1842,7 +1842,7 @@ void GameCoreSection::draw1D(Graphics& gfx)
  */
 void GameCoreSection::draw2D(Graphics& gfx)
 {
-	static char* triNames[] = {
+	static immut char* triNames[] = {
 		"", "HIDE PIKI", "HIDE TEKI", "HIDE ITEM", "HIDE BOSS", "HIDE PELLET", "HIDE WORK", "HIDE PLANTS", "HIDE MAP", "HIDE 2D",
 	};
 	Matrix4f mtx;

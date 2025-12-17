@@ -100,7 +100,7 @@ public:
 		Vector3f _28;       // _28
 	};
 
-	DrawCMCSmenu(char* bloFileName)
+	DrawCMCSmenu(immut char* bloFileName)
 	    : DrawMenuBase(bloFileName, true, true)
 	{
 		mMenuExpansions = new MenuExpansion[mOptionCount];

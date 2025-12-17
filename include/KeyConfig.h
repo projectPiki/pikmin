@@ -19,7 +19,7 @@ struct KeyConfig : public Node {
 	struct Key : public Node {
 		virtual void read(RandomAccessStream&); // _0C
 
-		void set(char* name, int bind)
+		void set(immut char* name, int bind)
 		{
 			setName(name);
 			mBind = bind;

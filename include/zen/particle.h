@@ -22,9 +22,9 @@ struct Vector3f;
  * @note Size 0xC. This is used by effectMgr and effectMgr2D to load in particle file addresses.
  */
 struct PtclLoadInfo {
-	char* mPCRPath;  // _00
-	char* mTex1Path; // _04
-	char* mTex2Path; // _08
+	immut char* mPCRPath;  // _00
+	immut char* mTex1Path; // _04
+	immut char* mTex2Path; // _08
 };
 
 /**
@@ -33,10 +33,10 @@ struct PtclLoadInfo {
  * @note Size 0x10. This is used by effectMgr to load in geometry for EffShpInst things
  */
 struct GeometryLoadInfo {
-	char* mMODPath;  // _00
-	char* mAnimPath; // _04
-	f32 mScale;      // _08
-	u8 mLoopMax;     // _0C
+	immut char* mMODPath;  // _00
+	immut char* mAnimPath; // _04
+	f32 mScale;            // _08
+	u8 mLoopMax;           // _0C
 };
 
 /**
@@ -45,9 +45,9 @@ struct GeometryLoadInfo {
  * @note Size 0xC. This is used by effectMgr to load in simple particle info.
  */
 struct SimplePtclLoadInfo {
-	char* mBTIPath; // _00
-	GXColor _04;    // _04
-	GXColor _08;    // _08
+	immut char* mBTIPath; // _00
+	GXColor _04;          // _04
+	GXColor _08;          // _08
 };
 
 namespace zen {
@@ -562,14 +562,14 @@ protected:
  */
 struct PCRData : public zenList {
 public:
-	PCRData(char* name, u32 bufSize) { pmSet(name, bufSize); }
+	PCRData(immut char* name, u32 bufSize) { pmSet(name, bufSize); }
 
-	char* getName() { return mName; }
+	immut char* getName() { return mName; }
 	u8* getDataBuf() { return mDataBuf; }
 
 protected:
 	// DLL inlines to do:
-	u8* pmSet(char* name, u32 bufSize)
+	u8* pmSet(immut char* name, u32 bufSize)
 	{
 		mName    = StdSystem::stringDup(name);
 		mDataBuf = new (0x20) u8[bufSize];
@@ -577,8 +577,8 @@ protected:
 
 	// _00     = VTBL
 	// _00-_0C = zenList
-	char* mName;  // _0C
-	u8* mDataBuf; // _10
+	immut char* mName; // _0C
+	u8* mDataBuf;      // _10
 };
 
 /**
@@ -588,15 +588,15 @@ protected:
  */
 struct particleLoader : public zenListManager {
 public:
-	u8* load(char*, bool);
+	u8* load(immut char*, bool);
 
 	// unused/inlined:
 	~particleLoader();
 
 protected:
-	u8* pmFind(char*);
+	u8* pmFind(immut char*);
 
-	PCRData* pmCreatePCRData(char* name, u32 bufSize)
+	PCRData* pmCreatePCRData(immut char* name, u32 bufSize)
 	{
 		PCRData* data = new PCRData(name, bufSize);
 		put(data);

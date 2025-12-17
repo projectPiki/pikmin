@@ -21,7 +21,7 @@ void Jac_Pause(void)
  * Address:	80017460
  * Size:	000070
  */
-void Jac_StreamMovieInit(char* filepath, u8* param_2, int param_3)
+void Jac_StreamMovieInit(immut char* filepath, u8* param_2, int param_3)
 {
 	if (Jac_GetCurrentScene() == SCENE_Unk1 && !demo_fade_flag) {
 		Jac_EasyCrossFade(1, 50);

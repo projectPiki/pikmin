@@ -144,34 +144,34 @@ struct StdSystem {
 	AyuHeap* getHeap(int heapIdx);
 	void resetHeap(int heapIdx, int flag);
 	int setHeap(int);
-	GfxobjInfo* findGfxObject(char*, u32);
-	Texture* loadTexture(char*, bool);
-	Shape* loadShape(char*, bool);
-	AnimData* findAnimation(char*);
-	int findAnyIndex(char*, char*);
-	AnimData* loadAnimation(Shape* model, char* path, bool isRelativePath);
-	void addAnimation(AnimData*, char*);
+	GfxobjInfo* findGfxObject(immut char*, u32);
+	Texture* loadTexture(immut char*, bool);
+	Shape* loadShape(immut char*, bool);
+	AnimData* findAnimation(immut char*);
+	int findAnyIndex(immut char*, immut char*);
+	AnimData* loadAnimation(Shape* model, immut char* path, bool isRelativePath);
+	void addAnimation(AnimData*, immut char*);
 	void addGfxObject(GfxobjInfo*);
 	void attachObjs();
 	void detachObjs();
 	void invalidateObjs(u32, u32);
-	void addTexture(Texture*, char*);
-	Shape* getShape(char*, char*, char*, bool);
+	void addTexture(Texture*, immut char*);
+	Shape* getShape(immut char*, immut char*, immut char*, bool);
 	void initLFlares(int);
 	void resetLFlares();
 	LFInfo* getLFlareInfo();
 	LFlareGroup* registerLFlare(Texture*);
 	void flushLFlares(Graphics&);
-	void loadBundle(char*, bool);
+	void loadBundle(immut char*, bool);
 
 	void getAppMemory(char*);
-	GfxobjInfo* findAnyGfxObject(char*, u32);
+	GfxobjInfo* findAnyGfxObject(immut char*, u32);
 	GfxobjInfo* findTexture(Texture*);
-	AnimData* findAnyAnimation(char*);
-	AnimData* findIndexAnimation(char*, int);
+	AnimData* findAnyAnimation(immut char*);
+	AnimData* findIndexAnimation(immut char*, int);
 
 	// Static functions
-	static char* stringDup(char*);
+	static char* stringDup(immut char*);
 	static f32 getHalfRand(f32 max) { return max * (f32(rand()) / 32767.0f - 0.5f); }
 
 	// Inline functions
@@ -182,17 +182,17 @@ struct StdSystem {
 		mFadeStart = start;
 		mFadeEnd   = end;
 	}
-	void set2DRoot(char* bloDir, char* texDir)
+	void set2DRoot(immut char* bloDir, immut char* texDir)
 	{
 		mBloDir = bloDir;
 		mTexDir = texDir;
 	}
-	inline void setTextureBase(char* base1, char* base2)
+	inline void setTextureBase(immut char* base1, immut char* base2)
 	{
 		mTextureBase1 = base1;
 		mTextureBase2 = base2;
 	}
-	inline void setDataRoot(char* dir) { mDataRoot = dir; }
+	inline void setDataRoot(immut char* dir) { mDataRoot = dir; }
 	inline void softReset() { mSysOpPending = true; }
 	inline void clearPending() { mSysOpPending = false; } // no idea what this should be called
 	inline void Shutdown() { mSystemFlags = SystemFlags::Shutdown; }
@@ -217,10 +217,10 @@ struct StdSystem {
 	TextureCacher* mCacher;        // _38
 	u32 mMatrixCount;              // _3C
 	Matrix4f* mMatrices;           // _40
-	char* mBloDir;                 // _44
-	char* mTexDir;                 // _48
-	char* mActiveDir;              // _4C
-	char* mDataRoot;               // _50
+	immut char* mBloDir;           // _44
+	immut char* mTexDir;           // _48
+	immut char* mActiveDir;        // _4C
+	immut char* mDataRoot;         // _50
 	AyuHeap mHeaps[SYSHEAP_COUNT]; // _54 (54:sys, 7C:ovl, A4:app, CC:load, F4:teki, 11C:movie, 144:message, 16C:lang)
 	int mActiveHeapIdx;            // _194
 	BOOL mForcePrint;              // _198
@@ -230,20 +230,20 @@ struct StdSystem {
 #endif
 
 	// the vtable has to be at 0x1A0, so it's in the middle, yes.
-	virtual void initSoftReset();                                                                   // _08
-	virtual RandomAccessStream* openFile(char* path, bool isRelativePath, bool) { return nullptr; } // _0C
-	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                                         // _10
-	virtual void copyCacheToRam(u32, u32, u32) { }                                                  // _14
-	virtual void copyWaitUntilDone() { }                                                            // _18
-	virtual void copyCacheToTexture(CacheTexture*) { }                                              // _1C
-#if defined(VERSION_PIKIDEMO)                                                                       //
-	virtual void forceHardReset() { }                                                               // _20
-#endif                                                                                              //
-	virtual void Activate(bool) { }                                                                 // _20
-	virtual void parseArchiveDirectory(char*, char*) { }                                            // _24
-	virtual void sndPlaySe(u32) = 0;                                                                // _28
-	virtual void startLoading(LoadIdler*, bool, u32) { }                                            // _2C
-	virtual void endLoading() { }                                                                   // _30
+	virtual void initSoftReset();                                                                         // _08
+	virtual RandomAccessStream* openFile(immut char* path, bool isRelativePath, bool) { return nullptr; } // _0C
+	virtual u32 copyRamToCache(u32, u32, u32) { return 0; }                                               // _10
+	virtual void copyCacheToRam(u32, u32, u32) { }                                                        // _14
+	virtual void copyWaitUntilDone() { }                                                                  // _18
+	virtual void copyCacheToTexture(CacheTexture*) { }                                                    // _1C
+#if defined(VERSION_PIKIDEMO)                                                                             //
+	virtual void forceHardReset() { }                                                                     // _20
+#endif                                                                                                    //
+	virtual void Activate(bool) { }                                                                       // _20
+	virtual void parseArchiveDirectory(immut char*, immut char*) { }                                      // _24
+	virtual void sndPlaySe(u32) = 0;                                                                      // _28
+	virtual void startLoading(LoadIdler*, bool, u32) { }                                                  // _2C
+	virtual void endLoading() { }                                                                         // _30
 
 	int mPolygonCount;            // _1A4
 	u32 mMaterialCount;           // _1A8
@@ -258,8 +258,8 @@ struct StdSystem {
 	Graphics* mGraphics;          // _1CC
 	GfxobjInfo mGfxobjInfo;       // _1D0
 	bool mHasGfxObjects;          // _1F0
-	char* mTextureBase1;          // _1F4
-	char* mTextureBase2;          // _1F8
+	immut char* mTextureBase1;    // _1F4
+	immut char* mTextureBase2;    // _1F8
 	Shape* mCurrentShape;         // _1FC
 	CoreNode mDvdRoot;            // _200
 	CoreNode mAramRoot;           // _214
@@ -272,7 +272,7 @@ struct StdSystem {
 	u32 mDvdBytesRead;            // _240
 
 	// .dll only functions
-	void ageAnyAnimations(AgeServer&, char*);
+	void ageAnyAnimations(AgeServer&, immut char*);
 };
 
 /**
@@ -319,19 +319,19 @@ enum {
 struct System : public StdSystem {
 	System();
 
-	virtual void initSoftReset();                            // _08
-	virtual RandomAccessStream* openFile(char*, bool, bool); // _0C
-	virtual u32 copyRamToCache(u32, u32, u32);               // _10
-	virtual void copyCacheToRam(u32, u32, u32);              // _14
-	virtual void copyWaitUntilDone();                        // _18
-	virtual void copyCacheToTexture(CacheTexture*);          // _1C
-#if defined(VERSION_PIKIDEMO)                                //
-	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }  // _20
-#endif                                                       //
-	virtual void parseArchiveDirectory(char*, char*);        // _24
-	virtual void sndPlaySe(u32);                             // _28
-	virtual void startLoading(LoadIdler*, bool, u32);        // _2C
-	virtual void endLoading();                               // _30
+	virtual void initSoftReset();                                  // _08
+	virtual RandomAccessStream* openFile(immut char*, bool, bool); // _0C
+	virtual u32 copyRamToCache(u32, u32, u32);                     // _10
+	virtual void copyCacheToRam(u32, u32, u32);                    // _14
+	virtual void copyWaitUntilDone();                              // _18
+	virtual void copyCacheToTexture(CacheTexture*);                // _1C
+#if defined(VERSION_PIKIDEMO)                                      //
+	virtual void forceHardReset() { mIsDemoTimeUp = TRUE; }        // _20
+#endif                                                             //
+	virtual void parseArchiveDirectory(immut char*, immut char*);  // _24
+	virtual void sndPlaySe(u32);                                   // _28
+	virtual void startLoading(LoadIdler*, bool, u32);              // _2C
+	virtual void endLoading();                                     // _30
 
 	~System();
 
@@ -347,12 +347,12 @@ struct System : public StdSystem {
 	void nudgeDvdThread();
 	void startDvdThread();
 	void Initialise();
-	RandomAccessStream* createFile(char*, BOOL);
+	RandomAccessStream* createFile(immut char*, BOOL);
 
 	// unused/inlined:
 	void findAddress(u32);
 	bool hasDebugInfo();
-	static void halt(char* file, int line, char* message);
+	static void halt(immut char* file, int line, immut char* message);
 
 	static void* alloc(size_t);
 
@@ -437,10 +437,10 @@ struct LogStream : public Stream {
 
 		mBufPosition = 0;
 	}
-	virtual void write(void* data, int size) // _40 (weak)
+	virtual void write(immut void* data, int size) // _40 (weak)
 	{
 		for (int i = 0; i < size; i++) {
-			char c = ((char*)data)[i];
+			char c = ((immut char*)data)[i];
 			if (c == 0xA) { // line feed
 				flush();
 				continue;
@@ -488,7 +488,7 @@ struct AramStream : public RandomAccessStream {
 		mOffset += readSize;
 	}
 
-	inline void init(char* path, u32 address, int pending)
+	inline void init(immut char* path, u32 address, int pending)
 	{
 		mPath        = path;
 		mPending     = pending;

@@ -207,9 +207,9 @@ struct MapParts : public DynCollShape {
 	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
 	virtual void init() { }                                   // _48
 
-	static char* getShapeFile(int);
+	static immut char* getShapeFile(int);
 
-	static char* shapeFiles[4];
+	static immut char* shapeFiles[4];
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape
@@ -313,7 +313,7 @@ struct MapMgr {
 	f32 findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);
-	Shape* loadPlatshape(char*);
+	Shape* loadPlatshape(immut char*);
 	CreatureCollPart* requestCollPart(ObjCollInfo*, Creature*);
 
 	// unused/inlined:

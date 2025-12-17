@@ -55,7 +55,7 @@ public:
 	virtual void makeResident(); // _0C
 	virtual ~P2DWindow() { }     // _10
 
-	Texture* loadResource(char*);
+	Texture* loadResource(immut char*);
 
 protected:
 	virtual void drawSelf(int, int);            // _2C
@@ -67,10 +67,10 @@ private:
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	char* mTLTexName;                   // _EC
-	char* mTRTexName;                   // _F0
-	char* mBLTexName;                   // _F4
-	char* mBRTexName;                   // _F8
+	immut char* mTLTexName;             // _EC
+	immut char* mTRTexName;             // _F0
+	immut char* mBLTexName;             // _F4
+	immut char* mBRTexName;             // _F8
 	PUTRect mWindowBounds;              // _FC
 	P2DWindowTexture* mTLCornerTexture; // _104
 	P2DWindowTexture* mTRCornerTexture; // _108

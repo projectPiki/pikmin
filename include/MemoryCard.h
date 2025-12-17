@@ -84,7 +84,7 @@ protected:
 	void writeCurrentGame(RandomAccessStream*, PlayState&);
 	void readCurrentGame(RandomAccessStream*);
 
-	void initBannerArea(CARDStat&, char*);
+	void initBannerArea(CARDStat&, immut char*);
 	void initFileArea(int, int);
 	void initOptionsArea(int);
 

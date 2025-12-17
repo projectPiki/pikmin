@@ -33,13 +33,13 @@ struct AState : public Receiver<T> {
 	// only inlines according to the DLL
 	int getID() { return mStateID; }
 	void setMachine(StateMachine<T>* owner) { mStateMachine = owner; }
-	char* getName() { return mName; }
-	void setName(char* name) { mName = name; }
+	immut char* getName() { return mName; }
+	void setName(immut char* name) { mName = name; }
 
 	// _00 = VTBL
 	int mStateID;                   // _04
 	StateMachine<T>* mStateMachine; // _08
-	char* mName;                    // _0C
+	immut char* mName;              // _0C
 };
 
 /**
@@ -128,7 +128,7 @@ struct StateMachine {
 
 	int getLastStateID() { return mLastStateID; }
 
-	char* getCurrName(T* target)
+	immut char* getCurrName(T* target)
 	{
 		AState<T>* state = target->getCurrState();
 		if (state) {

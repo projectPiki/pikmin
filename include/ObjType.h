@@ -73,11 +73,11 @@ enum EObjType {
 };
 
 struct ObjType {
-	static char* getName(int);
-	static int getIndex(char*);
+	static immut char* getName(int);
+	static int getIndex(immut char*);
 
 	EObjType mIndex; // _00
-	char* mName; // _04
+	immut char* mName; // _04
 };
 
 #endif

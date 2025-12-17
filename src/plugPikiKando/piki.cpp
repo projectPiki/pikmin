@@ -2865,7 +2865,7 @@ void Piki::realAI()
  * Address:	........
  * Size:	00002C
  */
-char* Piki::getCurrentMotionName()
+immut char* Piki::getCurrentMotionName()
 {
 	return mPikiAnimMgr.getUpperAnimator().getCurrentMotionName();
 }

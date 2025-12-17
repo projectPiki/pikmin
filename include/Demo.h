@@ -59,11 +59,11 @@ enum EDemoFlags {
 struct DemoFlag {
 	// TODO: this - only gets returned by DemoFlags::getDemoFlag smh
 
-	char* mName;     // _00
-	u16 mIndex;      // _04
-	s16 mMovieIndex; // _06
-	u16 _08;         // _08
-	bool _0A;        // _0A
+	immut char* mName; // _00
+	u16 mIndex;        // _04
+	s16 mMovieIndex;   // _06
+	u16 _08;           // _08
+	bool _0A;          // _0A
 };
 
 /**
@@ -101,7 +101,7 @@ struct DemoFlags {
 	void update();
 	void saveCard(RandomAccessStream&);
 	void loadCard(RandomAccessStream&);
-	void registerDemoFlag(int, char*, u16, u16, bool);
+	void registerDemoFlag(int, immut char*, u16, u16, bool);
 	bool isFlag(int);
 	void resetFlag(int);
 	void setFlag(int, Creature*);
@@ -131,8 +131,8 @@ struct DemoEventMgr {
 	void act(int, int);
 
 	// unused/inlined:
-	char* getEventName(int, int);
-	char* getSenderName(int);
+	immut char* getEventName(int, int);
+	immut char* getSenderName(int);
 
 	int getEventMax() { return 6; }
 	int getSenderMax() { return 0x20; }

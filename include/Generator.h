@@ -63,7 +63,7 @@ struct Factory {
 	struct Member {
 		u32 mID;              // _00
 		GenFunc mGenFunction; // _04
-		char* mName;          // _08
+		immut char* mName;    // _08
 		u32 mVersion;         // _0C
 	};
 
@@ -84,7 +84,7 @@ struct Factory {
 		return nullptr;
 	}
 
-	void registerMember(u32 id, GenFunc func, char* name, u32 version)
+	void registerMember(u32 id, GenFunc func, immut char* name, u32 version)
 	{
 		if (mSpawnerCount >= mMaxSpawners) {
 			return;
@@ -230,7 +230,7 @@ struct GeneratorList {
  * @brief TODO
  */
 struct GenBase : public Parameters {
-	GenBase(u32 id, char* type, char* name);
+	GenBase(u32 id, immut char* type, immut char* name);
 
 	virtual void doWrite(RandomAccessStream&) { }        // _08
 	virtual void ramSaveParameters(RandomAccessStream&); // _0C
@@ -252,15 +252,15 @@ struct GenBase : public Parameters {
 	// _00-_04 = Parameters
 	u32 mID;      // _08
 	u32 mVersion; // _0C
-	char* mType;  // _10
-	char* mName;  // _14
+	immut char* mType; // _10
+	immut char* mName; // _14
 };
 
 /**
  * @brief TODO
  */
 struct GenObject : public GenBase {
-	inline GenObject(u32 id, char* name) // probably
+	inline GenObject(u32 id, immut char* name) // probably
 	    : GenBase(id, "object type", name)
 	{
 	}
@@ -639,7 +639,7 @@ public:
  * @brief TODO
  */
 struct GenType : public GenBase {
-	inline GenType(u32 id, char* name)
+	inline GenType(u32 id, immut char* name)
 	    : GenBase(id, "time type", name)
 	    , _18(this, 0, 0, 0, "b00", nullptr)
 	    , mAdjustFaceDirection(this, 0, 0, 0, "b01", nullptr)
@@ -754,7 +754,7 @@ public:
  * @brief TODO
  */
 struct GenArea : public GenBase {
-	inline GenArea(u32 id, char* name)
+	inline GenArea(u32 id, immut char* name)
 	    : GenBase(id, "area type", name)
 	{
 	}

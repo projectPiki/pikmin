@@ -28,7 +28,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("GameSetup");
 
-static char* shapeList[10][2] = {
+static immut char* shapeList[10][2] = {
 	{ "objects/pellets/white1.mod", "objects/pellets/white1.anm" },
 	{ "objects/pellets/white2.mod", "objects/pellets/white2.anm" },
 	{ "objects/pellets/white3.mod", "objects/pellets/white3.anm" },
@@ -41,7 +41,7 @@ static char* shapeList[10][2] = {
 	{ nullptr, nullptr },
 };
 
-static char* shapeList2[18][2] = {
+static immut char* shapeList2[18][2] = {
 	{ "objects/ufo/ufo0705.mod", "objects/ufo/ufo0705.anm" },
 	{ "objects/ufoparts/soto1.mod", "objects/ufoparts/soto1.anm" },
 	{ "objects/ufoparts/soto2.mod", "objects/ufoparts/soto2.anm" },
@@ -62,7 +62,7 @@ static char* shapeList2[18][2] = {
 	{ nullptr, nullptr },
 };
 
-static char* arambundleList[][2] = {
+static immut char* arambundleList[][2] = {
 	{ "archives/tekis.dir", "dataDir/archives/tekis.arc" },
 	{ "archives/bosses.dir", "dataDir/archives/bosses.arc" },
 	{ "archives/tekipara.dir", "dataDir/archives/tekipara.arc" },
@@ -101,7 +101,7 @@ void GameSetupSection::preCacheShapes()
 	gsys->mAramRoot.initCore("");
 	gsys->mFileList = (DirEntry*)&gsys->mAramRoot;
 
-	char** bundlePair;
+	immut char** bundlePair;
 	for (bundlePair = arambundleList[0]; bundlePair[0]; bundlePair += 2) {
 		gsys->parseArchiveDirectory(bundlePair[0], bundlePair[1]);
 	}

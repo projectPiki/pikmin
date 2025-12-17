@@ -17,7 +17,7 @@ struct CoreNode : public ANode {
 	 * @brief Constructs a CoreNode object with the specified name.
 	 * @param name The name of the CoreNode.
 	 */
-	CoreNode(char* name = "CoreNode") { initCore(name); }
+	CoreNode(immut char* name = "CoreNode") { initCore(name); }
 
 #ifdef WIN32
 	virtual void genAge(AgeServer&) { }
@@ -33,7 +33,7 @@ struct CoreNode : public ANode {
 	 * @brief Initializes the core data of the CoreNode.
 	 * @param name The name of the CoreNode.
 	 */
-	void initCore(char* name)
+	void initCore(immut char* name)
 	{
 		mParent = mNext = mChild = nullptr;
 		setName(name);
@@ -73,7 +73,7 @@ struct CoreNode : public ANode {
 	 * @brief Gets the name of the CoreNode.
 	 * @return The name of the CoreNode.
 	 */
-	char* Name() { return mName; }
+	immut char* Name() { return mName; }
 
 	/**
 	 * @brief Gets the number of child nodes of the CoreNode.
@@ -96,15 +96,15 @@ struct CoreNode : public ANode {
 	 * @brief Sets the name of the CoreNode.
 	 * @param name The name to set.
 	 */
-	void setName(char* name) { mName = name; }
+	void setName(immut char* name) { mName = name; }
 
-	void load(char* dirPath, char* fileName, u32);
+	void load(immut char* dirPath, immut char* fileName, u32);
 
 	void genRead(AgeServer&) { }
 	void genWrite(AgeServer&) { }
 
 	// _00 = VTBL
-	char* mName;       // _04
+	immut char* mName; // _04
 	CoreNode* mParent; // _08
 	CoreNode* mNext;   // _0C
 	CoreNode* mChild;  // _10

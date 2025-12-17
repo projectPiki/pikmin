@@ -14,7 +14,7 @@ struct String {
 	String(int length) { init(length); }
 	String(char* str, int length) { init(str, length); }
 
-	int getLength();
+	int getLength() immut;
 
 	// unused/inlined:
 	f32 toFloat();
@@ -26,7 +26,7 @@ struct String {
 	u32 calcHash(char*);
 	u32 calcHash();
 	int toInt(char*);
-	bool isSame(char*);
+	bool isSame(immut char*);
 
 	void init(int length)
 	{

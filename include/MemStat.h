@@ -37,18 +37,18 @@ public:
 	MemStat();
 
 	void reset();
-	void start(char* name);
-	void end(char* name);
+	void start(immut char* name);
+	void end(immut char* name);
 	void print();
 
 	// unused/inlined:
-	int getMemorySize(char*);
+	int getMemorySize(immut char*);
 	int getRestMemory();
 
 protected:
-	MemInfo* getInfo(char*);
+	MemInfo* getInfo(immut char*);
 	void printInfoRec(MemInfo*, int);
-	MemInfo* getInfoRec(char*, MemInfo*);
+	MemInfo* getInfoRec(immut char*, MemInfo*);
 
 	MemInfo mInfoListRoot;       // _00
 	MemInfo* mCurrentInfo;       // _18

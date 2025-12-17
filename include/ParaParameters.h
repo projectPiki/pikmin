@@ -12,14 +12,14 @@ struct Stream;
 template <typename T>
 struct ParaParameterInfo {
 
-	void init(char* name, T min, T max)
+	void init(immut char* name, T min, T max)
 	{
 		mName = name;
 		mMin  = min;
 		mMax  = max;
 	}
 
-	char* mName; // _00
+	immut char* mName; // _00
 	T mMin;      // _04
 	T mMax;      // _08
 };

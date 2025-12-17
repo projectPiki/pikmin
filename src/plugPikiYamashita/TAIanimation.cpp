@@ -21,7 +21,7 @@ DEFINE_PRINT(nullptr);
  * Address:	801A3594
  * Size:	00003C
  */
-AnimInfo* TAIanimation::addAnimation(char* anim)
+AnimInfo* TAIanimation::addAnimation(immut char* anim)
 {
 	mAnimInfo = mAnimMgr->addAnimation(anim, true);
 	if (!mAnimInfo) {

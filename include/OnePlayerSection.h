@@ -49,8 +49,8 @@ struct StageInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	char* mStageName;          // _14
-	char* mFileName;           // _18
+	immut char* mStageName;    // _14
+	immut char* mFileName;     // _18
 	BOOL mIsVisible;           // _1C
 	BOOL mHasInitialised;      // _20
 	u16 mStageIndex;           // _24, order stage is loaded in from file

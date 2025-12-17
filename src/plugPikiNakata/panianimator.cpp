@@ -17,7 +17,7 @@ DEFINE_ERROR(3)
  */
 DEFINE_PRINT("panianimator");
 
-char* PaniAnimator::keyNames[6] = {
+immut char* PaniAnimator::keyNames[6] = {
 	"loop start", "loop end", "action 0", "action 1", "action 2", "action 3",
 };
 

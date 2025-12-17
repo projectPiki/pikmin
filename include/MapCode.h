@@ -28,7 +28,7 @@ struct MapCode {
 	static bool isBald(CollTriInfo*);
 
 	// unused/inlined
-	static char* getAttributeName(int); // UNUSED
+	static immut char* getAttributeName(int); // UNUSED
 };
 
 #endif

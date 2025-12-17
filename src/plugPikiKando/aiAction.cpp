@@ -22,7 +22,7 @@ DEFINE_ERROR(13)
  */
 DEFINE_PRINT("aiAction")
 
-char* Reaction::info[9] = {
+immut char* Reaction::info[9] = {
 	"-", "WATCH", "ESCAPE", "CHASE", "GOTO", "PICK", "PUT", "KICK", "FORMATION",
 };
 

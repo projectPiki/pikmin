@@ -137,7 +137,7 @@ struct PaniAnimator : public Animator {
 	    int getKeyType(int);
 	*/
 
-	static char* keyNames[6];
+	static immut char* keyNames[6];
 
 	// _30     = VTBL
 	// _00-_34 = Animator
@@ -159,7 +159,7 @@ struct PaniAnimator : public Animator {
 struct PaniItemAnimator : public PaniAnimator {
 	PaniItemAnimator();
 
-	char* getCurrentMotionName()
+	immut char* getCurrentMotionName()
 	{
 		if (mMotionIdx < 0) {
 			return "NULL";
@@ -170,7 +170,7 @@ struct PaniItemAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[15];
+	static immut char* motionLabels[15];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
@@ -197,7 +197,7 @@ struct PaniPelletAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[PelletMotion::COUNT];
+	static immut char* motionLabels[PelletMotion::COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
@@ -223,7 +223,7 @@ struct PaniPlantAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[PlantMotion::COUNT];
+	static immut char* motionLabels[PlantMotion::COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator
@@ -257,10 +257,10 @@ struct PaniTekiAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[TekiMotion::COUNT];
+	static immut char* motionLabels[TekiMotion::COUNT];
 
 	// DLL inline:
-	char* getCurrentMotionName()
+	immut char* getCurrentMotionName()
 	{
 		if (mMotionIdx < 0) {
 			return "NULL";
@@ -303,7 +303,7 @@ struct PaniUfoAnimator : public PaniAnimator {
 
 	static PaniMotionTable* createMotionTable();
 
-	static char* motionLabels[UfoMotion::COUNT];
+	static immut char* motionLabels[UfoMotion::COUNT];
 
 	// _30     = VTBL
 	// _00-_54 = PaniAnimator

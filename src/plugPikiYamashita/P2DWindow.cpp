@@ -36,7 +36,7 @@ void P2DWindow::makeResident()
  * Address:	........
  * Size:	000038
  */
-Texture* P2DWindow::loadResource(char* name)
+Texture* P2DWindow::loadResource(immut char* name)
 {
 	Texture* tex = nullptr;
 

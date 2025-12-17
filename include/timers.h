@@ -10,7 +10,7 @@ struct Font;
  * @note Size: 0x28.
  */
 struct TimerInf {
-	TimerInf(char* name)
+	TimerInf(immut char* name)
 	{
 		mNext        = nullptr;
 		mTimerName   = name;
@@ -23,16 +23,16 @@ struct TimerInf {
 		_20          = 0;
 	}
 
-	char* mTimerName; // _00
-	f32 mStartTime;   // _04
-	f32 mDuration;    // _08
-	f32 mAverageTime; // _0C
-	f32 mPeakTime;    // _10
-	f32 mDecayTime;   // _14
-	int mSampleTime;  // _18
-	u32 _1C;          // _1C
-	u8 _20;           // _20
-	TimerInf* mNext;  // _24
+	immut char* mTimerName; // _00
+	f32 mStartTime;         // _04
+	f32 mDuration;          // _08
+	f32 mAverageTime;       // _0C
+	f32 mPeakTime;          // _10
+	f32 mDecayTime;         // _14
+	int mSampleTime;        // _18
+	u32 _1C;                // _1C
+	u8 _20;                 // _20
+	TimerInf* mNext;        // _24
 };
 
 /**
@@ -48,19 +48,19 @@ struct Timers {
 
 	void reset();
 	void newFrame();
-	void _start(char*, bool);
-	void _stop(char*);
+	void _start(immut char*, bool);
+	void _stop(immut char*);
 	void showTimes();
 	void draw(Graphics&, Font*);
 
-	void start(char* name, bool p2)
+	void start(immut char* name, bool p2)
 	{
 #if defined(DEVELOP) || defined(VERSION_PIKIDEMO)
 		_start(name, p2);
 #endif
 	}
 
-	void stop(char* name)
+	void stop(immut char* name)
 	{
 #if defined(DEVELOP) || defined(VERSION_PIKIDEMO)
 		_stop(name);

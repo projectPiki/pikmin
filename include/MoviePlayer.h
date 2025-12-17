@@ -16,7 +16,7 @@ struct Vector3f;
  */
 struct MovieListInfo {
 	int mMovieID;       // _00
-	char* mCinFileName; // _04
+	immut char* mCinFileName; // _04
 };
 
 /**

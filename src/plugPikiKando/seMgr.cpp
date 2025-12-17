@@ -80,7 +80,7 @@ SeInfo* SeMgr::findInfo(int jacSeID)
  * Address:	800A35D0
  * Size:	000034
  */
-void SeMgr::addInfo(int jacSeID, char* seName)
+void SeMgr::addInfo(int jacSeID, immut char* seName)
 {
 	if (mSENum >= mMaxInfos) {
 		PRINT("maxInfos !\n");

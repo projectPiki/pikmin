@@ -192,7 +192,7 @@ public:
 	bool doMotionBlend();
 	void swapMotion(immut PaniMotionInfo&, immut PaniMotionInfo&);
 	void setSpeed(f32);
-	char* getCurrentMotionName();
+	immut char* getCurrentMotionName();
 
 	// NB: these are all the DLL inlines. No more.
 

@@ -37,7 +37,7 @@ static AnimContext* bcs[0x100];
  * Address:	........
  * Size:	0000A0
  */
-void CineShapeObject::init(char* modelPath, char* animPath, char* bundlePath)
+void CineShapeObject::init(immut char* modelPath, immut char* animPath, immut char* bundlePath)
 {
 	mModel = gameflow.loadShape(modelPath, true);
 	if (animPath) {
@@ -51,7 +51,7 @@ void CineShapeObject::init(char* modelPath, char* animPath, char* bundlePath)
  * Address:	8006FA1C
  * Size:	0001BC
  */
-void CinematicPlayer::init(char* cinFilePath)
+void CinematicPlayer::init(immut char* cinFilePath)
 {
 	// reset cutscene-specific things
 	mTotalDuration       = 0;
@@ -87,7 +87,7 @@ void CinematicPlayer::init(char* cinFilePath)
  * Address:	8006FBD8
  * Size:	0001B0
  */
-CinematicPlayer::CinematicPlayer(char* cinFilePath)
+CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 {
 	// reset essential things
 	mFlags              = 0;
@@ -108,7 +108,7 @@ CinematicPlayer::CinematicPlayer(char* cinFilePath)
  * Address:	8006FEB8
  * Size:	000720
  */
-void CinematicPlayer::loadCin(char* cinFilePath)
+void CinematicPlayer::loadCin(immut char* cinFilePath)
 {
 	mCurrentData = nullptr;
 	Stream* file = gsys->openFile(cinFilePath, true, true);
@@ -295,7 +295,7 @@ void CinematicPlayer::addScene(SceneData* scene)
  * Address:	........
  * Size:	000124
  */
-SceneData* CinematicPlayer::addScene(char* dskFilePath)
+SceneData* CinematicPlayer::addScene(immut char* dskFilePath)
 {
 	SceneData* data = new SceneData;
 	data->mName     = dskFilePath;
@@ -335,7 +335,7 @@ void CinematicPlayer::addActor(CineShapeObject* actor)
  * Address:	........
  * Size:	000128
  */
-void CinematicPlayer::addActor(char* modelFilePath, char* animFilePath, char* bundleFilePath)
+void CinematicPlayer::addActor(immut char* modelFilePath, immut char* animFilePath, immut char* bundleFilePath)
 {
 	CineShapeObject* actor = new CineShapeObject;
 	actor->mName           = modelFilePath;
@@ -538,7 +538,7 @@ void CinematicPlayer::refresh(Graphics& gfx)
  * Address:	80071058
  * Size:	000190
  */
-ActorInstance* SceneCut::addInstance(char* modelFilePath)
+ActorInstance* SceneCut::addInstance(immut char* modelFilePath)
 {
 	ActorInstance* actor = new ActorInstance;
 	actor->mParentPlayer = mParentPlayer;
@@ -1309,8 +1309,8 @@ void CinematicPlayer::ageAddActor(AgeServer& server)
 	String s2;
 	String s3;
 
-	char* path1;
-	char* path2;
+	immut char* path1;
+	immut char* path2;
 
 	if (server.getOpenFilename(s1, "Shape Files (*.mod)|*.mod|")) {
 		truncateName(s1.mString);
@@ -1396,7 +1396,7 @@ void CinematicPlayer::ageSave(AgeServer& server)
 	}
 }
 
-void CinematicPlayer::saveCin(char* path)
+void CinematicPlayer::saveCin(immut char* path)
 {
 	RandomAccessStream* file = gsys->createFile(path, FALSE);
 	if (file == nullptr) {

@@ -32,7 +32,7 @@ void AtxStream::close()
  * Address:	80043924
  * Size:	0000D8
  */
-bool AtxStream::open(char* name, int port)
+bool AtxStream::open(immut char* name, int port)
 {
 	AtxRouter* router = gsys->getAtxRouter();
 	if (!router)
@@ -58,7 +58,7 @@ bool AtxStream::open(char* name, int port)
  * Address:	800439FC
  * Size:	000094
  */
-void AtxStream::write(void* buffer, int count)
+void AtxStream::write(immut void* buffer, int count)
 {
 	AtxRouter* router = gsys->getAtxRouter();
 	router->lock();
@@ -149,7 +149,7 @@ void AtxStream::flush()
  * Address:	........
  * Size:	000170
  */
-// void AtxFileStream::open(char*, u32)
+// void AtxFileStream::open(immut char*, u32)
 // {
 // 	// UNUSED FUNCTION
 // }
@@ -185,7 +185,7 @@ void AtxFileStream::read(void* buffer, int length)
  * Address:	80043D0C
  * Size:	0000AC
  */
-void AtxFileStream::write(void* buffer, int length)
+void AtxFileStream::write(immut void* buffer, int length)
 {
 	mAtxStream.writeInt(101);
 	mAtxStream.writeInt(length);
@@ -254,7 +254,7 @@ void AtxFileStream::setLength(int length)
 
 // This a .dll exclusive function, equivalence is not guaranteed!
 
-bool AtxFileStream::open(char* path, u32 a)
+bool AtxFileStream::open(immut char* path, u32 a)
 {
 	if (!mAtxStream.open("fil", 3)) {
 		PRINT("Could not open file service!!\n");

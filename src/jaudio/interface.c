@@ -79,7 +79,7 @@ void Jac_DebugCall(void)
  * Address:	........
  * Size:	000048
  */
-void __print_thread(char*, OSThread*)
+void __print_thread(immut char*, OSThread*)
 {
 	// UNUSED FUNCTION
 }

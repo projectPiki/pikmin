@@ -17,7 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
  */
 DEFINE_PRINT("paniPlantAnimator")
 
-char* PaniPlantAnimator::motionLabels[PlantMotion::COUNT] = {
+immut char* PaniPlantAnimator::motionLabels[PlantMotion::COUNT] = {
 	"1", "2", "3", "4", "5", "6", "7",
 };
 

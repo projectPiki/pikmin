@@ -89,7 +89,7 @@ void GameStat::update()
  * Address:	........
  * Size:	000004
  */
-void GameStat::Counter::dump(char* name)
+void GameStat::Counter::dump(immut char* name)
 {
 	PRINT("<%s> %d\n", name, mCount);
 }
@@ -99,7 +99,7 @@ void GameStat::Counter::dump(char* name)
  * Address:	........
  * Size:	000004
  */
-void GameStat::ColCounter::dump(char* name)
+void GameStat::ColCounter::dump(immut char* name)
 {
 	PRINT("<%s> %d (%d + %d + %d)\n", name, int(mCounts), mCounts[Blue], mCounts[Red], mCounts[Yellow]);
 }

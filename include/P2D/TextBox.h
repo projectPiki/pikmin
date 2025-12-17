@@ -61,7 +61,7 @@ protected:
 private:
 	// _00     = VTBL
 	// _00-_EC = P2DPane
-	char* mFontString;              // _EC
+	immut char* mFontString;        // _EC
 	P2DFont* mFont;                 // _F0
 	Colour mCharColor;              // _F4
 	Colour mGradColor;              // _F8

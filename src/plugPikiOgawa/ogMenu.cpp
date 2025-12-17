@@ -43,7 +43,7 @@ static f32 RotateAngleData[]
  * Address:	........
  * Size:	000060
  */
-void zen::ogDrawScrMenu::setScreen(char* path)
+void zen::ogDrawScrMenu::setScreen(immut char* path)
 {
 	PRINT("setScreen(%s) \n", path);
 	mScreen->set(path, true, true, true);

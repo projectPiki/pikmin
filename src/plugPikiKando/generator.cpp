@@ -91,7 +91,7 @@ static void sprintID(char*, u32)
  * Address:	800DACB4
  * Size:	000030
  */
-GenBase::GenBase(u32 id, char* type, char* name)
+GenBase::GenBase(u32 id, immut char* type, immut char* name)
     : mID(id)
     , mType(type)
     , mName(name)

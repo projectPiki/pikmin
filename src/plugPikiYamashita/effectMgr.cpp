@@ -515,7 +515,7 @@ void SmokeEmitter::draw(Graphics& gfx)
  * Address:	........
  * Size:	0000A0
  */
-EffectParticleRegistration::EffectParticleRegistration(char* pcrFile, char* ptclTexFile, char* childPtclTexFile)
+EffectParticleRegistration::EffectParticleRegistration(immut char* pcrFile, immut char* ptclTexFile, immut char* childPtclTexFile)
 {
 	mPtclData = effectMgr->mPtclLoader.load(pcrFile, true);
 	mPtclTex  = gsys->loadTexture(ptclTexFile, true);
@@ -536,7 +536,7 @@ EffectParticleRegistration::EffectParticleRegistration(char* pcrFile, char* ptcl
  * Address:	........
  * Size:	000060
  */
-void EffectShape::initShape(char* modelFile)
+void EffectShape::initShape(immut char* modelFile)
 {
 	mModel = gameflow.loadShape(modelFile, true);
 	mModel->mSystemFlags |= ShapeFlags::AlwaysRedraw;
@@ -639,7 +639,7 @@ void EffShpInst::draw(Graphics& gfx)
  * Address:	........
  * Size:	000124
  */
-EffectGeometryRegistration::EffectGeometryRegistration(char* modelFile, char* animFile, f32 scale, u8 loopMax)
+EffectGeometryRegistration::EffectGeometryRegistration(immut char* modelFile, immut char* animFile, f32 scale, u8 loopMax)
 {
 	mEffectShape = new EffectShape(modelFile);
 	if (mEffectShape) {
@@ -686,7 +686,7 @@ EffShpInst* EffectGeometryRegistration::create(immut Vector3f& pos, immut Vector
  * Address:	........
  * Size:	000064
  */
-EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(char* texFile, Colour p2, Colour p3)
+EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(immut char* texFile, Colour p2, Colour p3)
 {
 	mSimpleTex = gsys->loadTexture(texFile, true);
 	mPrimColor = p2;
