@@ -15,7 +15,7 @@ struct BaseParm {
 	BaseParm(Parameters*, ayuID);
 
 	// _08    = VTBL
-	char* mID;       // _00
+	ayuID mID;       // _00
 	BaseParm* mNext; // _04
 
 #ifdef WIN32
