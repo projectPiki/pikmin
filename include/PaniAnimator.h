@@ -176,12 +176,13 @@ struct PaniItemAnimator : public PaniAnimator {
 	// _00-_54 = PaniAnimator
 };
 
+// Names gotten from `PlayerState::renderParts` and `PaniPelletAnimator::motionLabels`.
 BEGIN_ENUM_TYPE(PelletMotion)
 enum {
 	Carry   = 0, // 'c' (Also used as a static pose by setting motion speed to 0.0f)
 	Appear  = 1, // 'a' (Animation as it attaches to UFO, but not what is used at start of day)
 	After   = 2, // 'f' (Animation after attached to UFO, see `playerState::startAfterMotions`)
-	Passive = 3, // 'p' (secondary "upper" animation, see `PelletMotionFlags::UsePassive`)
+	Piston  = 3, // 'p' (secondary "upper" animation, see `PelletMotionFlags::UsePiston`)
 	Special = 4, // 's' (UFO liftoff animation, see `PlayerState::startSpecialMotions`)
 	Unused5 = 5, //
 	Unused6 = 6, //

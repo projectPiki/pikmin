@@ -199,8 +199,8 @@ enum PelletMgrMovieFlags {
 
 BEGIN_ENUM_TYPE(PelletMotionFlags)
 enum {
-	Unknown    = 1 << 0, // This doesn't mean anything, as it is enabled for all Pellets.
-	UsePassive = 1 << 1, // This pellet has an upper animation, e.g. the Main Engine or Gluon Drive.
+	Unknown   = 1 << 0, // This doesn't mean anything, as it is enabled for all Pellets.
+	UsePiston = 1 << 1, // This pellet has an upper animation, e.g. the Main Engine or Gluon Drive.
 } END_ENUM_TYPE;
 
 /**

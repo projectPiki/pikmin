@@ -99,7 +99,7 @@ PelletShapeObject::PelletShapeObject(char* str1, Shape* shape, char* str2, char*
 
 	if (overrideJoint != -1) {
 		mShape->overrideAnim(overrideJoint, &mAnimatorB);
-		setMotionFlag(PelletMotionFlags::UsePassive);
+		setMotionFlag(PelletMotionFlags::UsePiston);
 	}
 }
 
@@ -219,7 +219,7 @@ PaniMotionTable* PaniPelletAnimator::createMotionTable()
 	table->setMotion(PelletMotion::Carry, new PaniMotion(PelletMotion::Carry));
 	table->setMotion(PelletMotion::Appear, new PaniMotion(PelletMotion::Appear));
 	table->setMotion(PelletMotion::After, new PaniMotion(PelletMotion::After));
-	table->setMotion(PelletMotion::Passive, new PaniMotion(PelletMotion::Passive));
+	table->setMotion(PelletMotion::Piston, new PaniMotion(PelletMotion::Piston));
 	table->setMotion(PelletMotion::Special, new PaniMotion(PelletMotion::Special));
 	table->setMotion(PelletMotion::Unused5, new PaniMotion(PelletMotion::Unused5));
 	table->setMotion(PelletMotion::Unused6, new PaniMotion(PelletMotion::Unused6));
