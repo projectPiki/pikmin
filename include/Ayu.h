@@ -7,11 +7,13 @@
  * @brief TODO
  */
 struct ayuID {
-	inline ayuID(char* id) { Set(id); }
+	ayuID() { mID = 0; }
+	ayuID(char* id) { Set(id); }
 
-	void Set(char* id) { mID = *(u32*)id; }
+	void Set(char* id) { mID = *(s32*)id; }
+	s32& Num() { return mID; };
 
-	u32 mID; // _00
+	s32 mID; // _00
 };
 
 struct MemHead {

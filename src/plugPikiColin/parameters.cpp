@@ -28,7 +28,6 @@ DEFINE_PRINT(nullptr);
  * Size:	00006C
  */
 BaseParm::BaseParm(Parameters* parm, ayuID id)
-    : mID(nullptr)
 {
 	BaseParm* node2;
 	BaseParm* node1;
@@ -49,7 +48,7 @@ BaseParm::BaseParm(Parameters* parm, ayuID id)
 		parm->mHead = this;
 	}
 
-	mID   = (char*)id.mID;
+	mID   = id;
 	mNext = nullptr;
 }
 
@@ -64,7 +63,7 @@ void Parameters::write(RandomAccessStream& output)
 
 	FOREACH_NODE(BaseParm, mHead, node)
 	{
-		output.writeInt((int)node->mID & 0xFFFFFF00 | node->size());
+		output.writeInt(node->mID.Num() & 0xFFFFFF00 | node->size());
 		node->write(output);
 	}
 
@@ -89,7 +88,7 @@ int Parameters::sizeInFile()
 void Parameters::read(RandomAccessStream& input)
 {
 	u8 bloat[256];
-	u8 why[0x8]; // just for stack smh
+	STACK_PAD_VAR(1);
 	while (true) {
 		int val = input.readInt();
 		if (val == -1) {
@@ -101,7 +100,7 @@ void Parameters::read(RandomAccessStream& input)
 
 		FOREACH_NODE(BaseParm, mHead, node)
 		{
-			if (id == (int)node->mID) {
+			if (id == node->mID.Num()) {
 				added = true;
 				node->read(input);
 				break;
