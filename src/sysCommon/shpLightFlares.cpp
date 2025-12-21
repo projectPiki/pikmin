@@ -150,10 +150,10 @@ void LightGroup::loadini(CmdStream* commands)
  * Address:	80035F58
  * Size:	0001CC
  */
-void LightGroup::refresh(Graphics& gfx, Matrix4f* lightMtx)
+void LightGroup::refresh(Graphics& gfx, immut Matrix4f* lightMtx)
 {
 	if (mFlares.Child() && mFlareGroup) {
-		Matrix4f* mtx = mJointIndex == -1 ? lightMtx : &mParentShape->getAnimMatrix(mJointIndex);
+		immut Matrix4f* mtx = mJointIndex == -1 ? lightMtx : &mParentShape->getAnimMatrix(mJointIndex);
 
 		FOREACH_NODE(LightFlare, mFlares.Child(), flare)
 		{
@@ -161,8 +161,8 @@ void LightGroup::refresh(Graphics& gfx, Matrix4f* lightMtx)
 			flarePos.multMatrix(*mtx);
 
 			// WTF?
-			Vector3f* mtxVec = reinterpret_cast<Vector3f*>(mtx);
-			f32 flareSize    = mtxVec->length() * flare->mSize;
+			immut Vector3f* mtxVec = reinterpret_cast<immut Vector3f*>(mtx);
+			f32 flareSize          = mtxVec->length() * flare->mSize;
 			Vector2f size(flareSize, flareSize);
 
 			mFlareGroup->addLFlare(mLightColour, flarePos, size, nullptr, nullptr);

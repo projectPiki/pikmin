@@ -102,7 +102,7 @@ struct Matrix4f {
 		mMtx[2][3] = z;
 	}
 
-	static Matrix4f ident;
+	static immut Matrix4f ident;
 
 	Mtx44 mMtx; // _00-_40
 };

@@ -1928,7 +1928,7 @@ void BaseShape::drawobjcolls(Graphics&, Camera&)
  */
 void BaseShape::drawlights(Graphics& gfx, Camera& cam)
 {
-	Matrix4f* activeMtx = gfx.mActiveMatrix;
+	immut Matrix4f* activeMtx = gfx.mActiveMatrix;
 	if (mLightGroup.Child()) {
 		for (LightGroup* light = (LightGroup*)mLightGroup.Child(); light; light = (LightGroup*)light->mNext) {
 			light->refresh(gfx, activeMtx);
@@ -1956,7 +1956,7 @@ void BaseShape::drawroutes(Graphics& gfx, Camera& cam)
  */
 void BaseShape::drawculled(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats)
 {
-	Matrix4f* mtx = gfx.mActiveMatrix;
+	immut Matrix4f* mtx = gfx.mActiveMatrix;
 	gfx.initMesh((Shape*)this);
 	int culledJointCount = 0;
 	if (dynMats) {
@@ -2031,7 +2031,7 @@ void BaseShape::drawshape(Graphics& gfx, Camera& cam, ShapeDynMaterials* dynMats
 				}
 			}
 
-			Matrix4f* activeMtx = gfx.mActiveMatrix;
+			immut Matrix4f* activeMtx = gfx.mActiveMatrix;
 			gfx.drawMeshes(cam, (Shape*)this);
 			gfx.useMatrix(*activeMtx, 0);
 			drawlights(gfx, cam);
