@@ -640,7 +640,7 @@ void ViewPiki::refresh(Graphics& gfx)
 
 	if (getState() == PIKISTATE_Swallowed && mSwallowMouthPart) {
 		Matrix4f mouthMtx = mSwallowMouthPart->getJointMatrix();
-		f32 swallowScale  = 1.0f / ((Vector3f*)&mouthMtx)->length();
+		f32 swallowScale  = 1.0f / reinterpret_cast<Vector3f&>(mouthMtx).length();
 		if (swallowScale <= 0.0f) {
 			PRINT_GLOBAL("swallow scale=%f", swallowScale);
 			swallowScale = 1.0f;

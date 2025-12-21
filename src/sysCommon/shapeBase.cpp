@@ -2171,7 +2171,7 @@ void BaseShape::read(RandomAccessStream& stream)
 
 			mVertexCount = stream.readInt();
 			stream.skipPadding(0x20);
-			mVertexList = (Vector3f*)(new (0x20) Vec[mVertexCount]); // hmm.
+			mVertexList = reinterpret_cast<Vector3f*>(new (0x20) Vec[mVertexCount]); // hmm.
 			for (int i = 0; i < mVertexCount; i++) {
 				mVertexList[i].read(stream);
 			}
@@ -2187,7 +2187,7 @@ void BaseShape::read(RandomAccessStream& stream)
 
 			mNormalCount = stream.readInt();
 			stream.skipPadding(0x20);
-			mNormalList = (Vector3f*)(new (0x20) Vec[mNormalCount]); // hmm
+			mNormalList = reinterpret_cast<Vector3f*>(new (0x20) Vec[mNormalCount]); // hmm
 			for (int i = 0; i < mNormalCount; i++) {
 				mNormalList[i].read(stream);
 			}
@@ -2203,11 +2203,11 @@ void BaseShape::read(RandomAccessStream& stream)
 
 			mNBTCount = stream.readInt();
 			stream.skipPadding(0x20);
-			mNBTList = (NBT*)(new (0x20) Vec[3 * mNBTCount]);
+			mNBTList = reinterpret_cast<NBT*>(new (0x20) Vec[3 * mNBTCount]);
 			for (int i = 0; i < mNBTCount; i++) {
-				((Vector3f*)mNBTList)[3 * i].read(stream);
-				((Vector3f*)mNBTList)[3 * i + 1].read(stream);
-				((Vector3f*)mNBTList)[3 * i + 2].read(stream);
+				reinterpret_cast<Vector3f*>(mNBTList)[3 * i].read(stream);
+				reinterpret_cast<Vector3f*>(mNBTList)[3 * i + 1].read(stream);
+				reinterpret_cast<Vector3f*>(mNBTList)[3 * i + 2].read(stream);
 			}
 
 			after = gsys->getHeap(SYSHEAP_App)->getFree();
