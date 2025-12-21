@@ -1414,7 +1414,7 @@ NaviIdleState::NaviIdleState()
  */
 void NaviIdleState::init(Navi* navi)
 {
-	Choice motionIDs[4] = {
+	immut Choice motionIDs[4] = {
 		{ PIKIANIM_Rinbow, 0.1f },
 		{ PIKIANIM_Sagasu2, 0.1f },
 		{ PIKIANIM_Wait, 0.5f },
