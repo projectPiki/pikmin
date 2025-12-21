@@ -7,18 +7,21 @@
  */
 bool String::isSame(immut char* str)
 {
+	// UNUSED FUNCTION (Matching by size)
 	const char* currentChar = mString;
-
 	while (*currentChar && *str) {
-		if (*currentChar != *str) {
+		if (*currentChar++ != *str++) {
 			return false;
 		}
-
-		currentChar++;
-		str++;
 	}
 
-	return !(*currentChar || *str);
+	bool failed;
+	if (*currentChar == '\0' && *str == '\0') {
+		failed = false;
+	} else {
+		failed = true;
+	}
+	return !failed;
 }
 
 /**
@@ -36,11 +39,12 @@ int String::getLength() immut
 }
 
 /**
- * @TODO: Documentation
+ * @brief This function was never implemented; it just returns 0.0f.
  * @note UNUSED Size: 000008
  */
-f32 String::toFloat()
+float String::toFloat()
 {
+	// UNUSED FUNCTION (Matching by size)
 	return 0.0f;
 }
 
@@ -50,16 +54,21 @@ f32 String::toFloat()
  */
 int String::toInt()
 {
+	// UNUSED FUNCTION (Matching by size)
+	char c;
+	int result;
+
 	const char* str = mString;
-	int result      = 0;
+	int prevResult  = 0;
 	bool isNegative = false;
 
 	// Check for hexadecimal prefix "0x"
 	if (str[0] == '0' && str[1] == 'x') {
+		result = 0;
 		str += 2; // Skip "0x"
 
-		while (*str) {
-			char c = *str;
+		// Parse hexadecimal number
+		while ((c = *str++)) {
 			int digitValue;
 
 			if (c >= '0' && c <= '9') {
@@ -72,34 +81,40 @@ int String::toInt()
 				return 0; // Invalid character
 			}
 
-			result = result * 16 + digitValue;
-			str++;
+			result += digitValue;
+			if (*str != '\0') {
+				// The DLL says a left-shift was used, and it wouldn't lie, right?
+				result <<= 4; // Multiply by 16
+			}
 		}
-
-		return result;
 	} else {
 		// Parse decimal number
-		while (*str) {
-			char c = *str;
+		while (true) { // Did you know MSVC without optimizations will write `while (true)` as `MOV EAX, 1`, `TEST EAX, EAX`, and `JZ`?
+			c = *str++;
+
+			// Check if it's a digit
+			if ((c < '0' || c > '9') && c != '-') {
+				return 0; // Invalid character
+			}
 
 			// Check for minus sign
 			if (c == '-') {
 				isNegative = true;
-				str++;
 				continue;
 			}
 
-			// Check if it's a digit
-			if (c < '0' || c > '9') {
-				return 0; // Invalid character
+			// The pointless updating of `prevResult` is what was missing to match by size (and is shown in the assembly of the DLL).
+			result = (prevResult += c - '0');
+			if (*str == '\0' || *str == '.' || *str < '0' || *str > '9') {
+				break;
 			}
-
-			result = result * 10 + (c - '0');
-			str++;
+			prevResult = result * 10;
 		}
-
-		return isNegative ? -result : result;
+		if (isNegative) {
+			result = -result;
+		}
 	}
+	return result;
 }
 
 /**
@@ -108,6 +123,7 @@ int String::toInt()
  */
 int String::getLength(char* str)
 {
+	// UNUSED FUNCTION (Matching by size)
 	String tempStr(str, 0);
 	return tempStr.getLength();
 }
@@ -118,6 +134,7 @@ int String::getLength(char* str)
  */
 bool String::isSame(char* a, char* b)
 {
+	// UNUSED FUNCTION (Matching by size)
 	String aStr(a, 0);
 	return aStr.isSame(b);
 }
@@ -126,10 +143,11 @@ bool String::isSame(char* a, char* b)
  * @TODO: Documentation
  * @note UNUSED Size: 00005C
  */
-char* String::dup(char* s)
+char* String::dup(char* str)
 {
-	char* newStr = new char[String::getLength(s) + 1];
-	String::copy(newStr, s);
+	// UNUSED FUNCTION (Matching by size)
+	char* newStr = new char[getLength(str) + 1];
+	copy(newStr, str);
 	return newStr;
 }
 
@@ -137,67 +155,113 @@ char* String::dup(char* s)
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-// void String::contains(char*, char*)
-// {
-// 	// UNUSED FUNCTION
-// }
+bool String::contains(char* str, char* substr)
+{
+	// UNUSED FUNCTION (Matching by size)
+#if defined(BUGFIX)
+	char* submatchStart = str;
+#endif
+	char* substrBackup = substr;
+	while (*str && *substr) {
+		if (*str++ == *substr++) {
+			if (*substr == '\0') {
+				return true;
+			}
+		} else {
+			// Consider `str` = "112" and `substr` = "12".  The character at index 1 of `str` is skipped, so the submatch isn't found.
+#if defined(BUGFIX)
+			str = ++submatchStart;
+#endif
+			substr = substrBackup;
+		}
+	}
+
+	// This is to handle the case in which `substr` = "".
+	return TERNARY_BUGFIX(*substrBackup == '\0', false);
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 00001C
  */
-char* String::copy(char* a, char* b)
+char* String::copy(char* out, char* str)
 {
-	while ((*a++ = *b++))
-		;
-
-	return a;
+	// UNUSED FUNCTION (Matching by size)
+	while ((*out++ = *str++)) { }
+	return out;
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000058
  */
-// void String::copyUntil(char*, char*, char, char**)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000030
- */
-void String::concat(char*, char*)
+bool String::copyUntil(char* out, char* str, char delim, char** end)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	while (*str != delim && *str != '\0') {
+		*out++ = *str++;
+	}
+	*out = '\0';
+	if (end != nullptr) {
+		*end = str;
+	}
+	return *str == delim;
 }
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-// void String::calcHash(char*)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-/**
- * @TODO: Documentation
- * @note UNUSED Size: 000040
- */
-// void String::calcHash()
-// {
-// 	// UNUSED FUNCTION
-// }
+void String::concat(char* out, char* str)
+{
+	// UNUSED FUNCTION (Matching by size)
+	while (*out++) { }          // Loop until one-past-end of `out`.
+	out--;                      // Backtrack by one character.
+	while (*out++ = *str++) { } // Concatenate.
+}
 
 /**
  * @TODO: Documentation
  * @note UNUSED Size: 000030
  */
-//  void String::toInt(char*)
-//  {
-// 	 // UNUSED FUNCTION
-//  }
+u32 String::calcHash(char* str)
+{
+	// UNUSED FUNCTION (Matching by size)
+	String tempStr(str, 0);
+	return tempStr.calcHash();
+}
+
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
+ */
+u32 String::calcHash()
+{
+	// UNUSED FUNCTION (Matching by size)
+	u32 hash                = 0;
+	const char* currentChar = mString;
+	while (*currentChar) {
+		hash = (hash << 4) + *currentChar++;
+
+		u32 highNibble = hash & 0xf0000000;
+		if (highNibble != 0) {
+			hash ^= highNibble >> 24;
+		}
+		hash &= ~highNibble;
+	}
+	return hash;
+}
+
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
+ */
+int String::toInt(char* str)
+{
+	// UNUSED FUNCTION (Matching by size)
+	String tempStr(str, 0);
+	return tempStr.toInt();
+}
 
 /**
  * @TODO: Documentation
