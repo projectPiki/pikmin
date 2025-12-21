@@ -343,8 +343,8 @@ struct NAxisAngle4f {
  * @brief TODO
  */
 struct NPosture2D {
-	NPosture2D();               // unused/inlined
-	NPosture2D(Vector3f&, f32); // unused/inlined
+	NPosture2D();                     // unused/inlined
+	NPosture2D(immut Vector3f&, f32); // unused/inlined
 
 	virtual void readData(Stream&); // _08
 

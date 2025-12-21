@@ -133,10 +133,10 @@ struct MapObjAnimator : public Animator {
 struct DynMapObject : public DynCollShape {
 	DynMapObject(MapMgr*, MapAnimShapeObject*);
 
-	virtual void update();                                    // _10
-	virtual void draw(Graphics&);                             // _14
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
-	virtual void refresh(Graphics&);                          // _44
+	virtual void update();                                                // _10
+	virtual void draw(Graphics&);                                         // _14
+	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&); // _38
+	virtual void refresh(Graphics&);                                      // _44
 
 	void nextState();
 
@@ -166,9 +166,9 @@ struct MapObjectPart : public DynCollShape {
 		mMapParent  = 0;
 	}
 
-	virtual void update() { }                                            // _10
-	virtual void refresh(Graphics&) { }                                  // _44
-	virtual void touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2) // _38
+	virtual void update() { }                                                        // _10
+	virtual void refresh(Graphics&) { }                                              // _44
+	virtual void touchCallback(Plane& plane, immut Vector3f& a1, immut Vector3f& a2) // _38
 	{
 		if (mMapParent)
 			mMapParent->touchCallback(plane, a1, a2);
@@ -202,10 +202,10 @@ struct MapParts : public DynCollShape {
 		mCurrentPart = nullptr;
 	}
 
-	virtual void read(RandomAccessStream&) { }                // _0C
-	virtual void update() { }                                 // _10
-	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
-	virtual void init() { }                                   // _48
+	virtual void read(RandomAccessStream&) { }                            // _0C
+	virtual void update() { }                                             // _10
+	virtual void applyVelocity(Plane&, immut Vector3f&, immut Vector3f&); // _34
+	virtual void init() { }                                               // _48
 
 	static immut char* getShapeFile(int);
 
@@ -301,7 +301,7 @@ struct MapMgr {
 	void preRender(Graphics&);
 	void drawShadowCasters(Graphics&);
 	void refresh(Graphics&);
-	void showCollisions(Vector3f&);
+	void showCollisions(immut Vector3f&);
 	void drawXLU(Graphics&);
 	void postrefresh(Graphics&);
 	void updatePos(f32, f32);
@@ -310,7 +310,7 @@ struct MapMgr {
 	f32 getMinY(f32, f32, bool);
 	f32 getMaxY(f32, f32, bool);
 	CollTriInfo* getCurrTri(f32, f32, bool);
-	f32 findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&);
+	f32 findEdgePenetration(CollTriInfo&, immut Vector3f*, immut Vector3f&, f32, Vector3f&);
 	void recTraceMove(CollGroup*, MoveTrace&, f32);
 	void traceMove(Creature*, MoveTrace&, f32);
 	Shape* loadPlatshape(immut char*);

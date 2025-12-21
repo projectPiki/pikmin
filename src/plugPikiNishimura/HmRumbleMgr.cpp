@@ -342,7 +342,7 @@ void RumbleMgr::start(int type, int ctrlNum, f32* valuePtr)
  * Address:	8017CDD4
  * Size:	000120
  */
-void RumbleMgr::start(int type, int ctrlNum, Vector3f& sourcePos)
+void RumbleMgr::start(int type, int ctrlNum, immut Vector3f& sourcePos)
 {
 	if (!mIsDisabled && mIsEnabled) {
 		if (mControlerMgrs[ctrlNum]) {

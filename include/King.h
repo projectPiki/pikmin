@@ -528,7 +528,7 @@ public:
 		return true;
 	}
 
-	void set(King* king, Vector3f* emitPos, bool* isActive)
+	void set(King* king, immut Vector3f* emitPos, bool* isActive)
 	{
 		mKing          = king;
 		mRippleEmitPos = emitPos;
@@ -540,7 +540,7 @@ private:
 	// _00-_04 = zen::CallBack1
 	bool* mIsActiveRef;       // _04
 	King* mKing;              // _08
-	Vector3f* mRippleEmitPos; // _0C
+	immut Vector3f* mRippleEmitPos; // _0C
 };
 
 /**
@@ -574,7 +574,7 @@ public:
 		return true;
 	}
 
-	void set(Vector3f* start, Vector3f* end, King* king)
+	void set(immut Vector3f* start, immut Vector3f* end, King* king)
 	{
 		mStartPos = start;
 		mEndPos   = end;
@@ -584,8 +584,8 @@ public:
 private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	Vector3f* mStartPos; // _04
-	Vector3f* mEndPos;   // _08
+	immut Vector3f* mStartPos; // _04
+	immut Vector3f* mEndPos;   // _08
 	King* mKing;         // _0C
 };
 

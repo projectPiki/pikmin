@@ -867,8 +867,8 @@ struct Generator : public Node {
 	// DLL inlines to make:
 	void changeNaviPos();
 	void setNaviPos();
-	void setOffset(Vector3f& ofs) { mGenOffset = ofs; }
-	void setPos(Vector3f& pos) { mGenPosition = pos; }
+	void setOffset(immut Vector3f& ofs) { mGenOffset = ofs; }
+	void setPos(immut Vector3f& pos) { mGenPosition = pos; }
 	// int isCarryOver();
 
 	void genAge(AgeServer&);

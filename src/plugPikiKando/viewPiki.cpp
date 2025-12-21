@@ -348,7 +348,7 @@ void ViewPiki::update()
  * Address:	800D9624
  * Size:	0000A0
  */
-void Piki::startHimaLook(Vector3f* pos)
+void Piki::startHimaLook(immut Vector3f* pos)
 {
 	mLookatPosPtr = pos;
 	mLookTimer    = false;

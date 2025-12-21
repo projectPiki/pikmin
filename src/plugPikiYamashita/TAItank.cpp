@@ -262,7 +262,7 @@ protected:
  */
 struct TAIApatrolTank : public TAIApatrol {
 public:
-	TAIApatrolTank(int nextState, int p2, int leftMotionID, int rightMotionID, Vector3f* p5, int p6)
+	TAIApatrolTank(int nextState, int p2, int leftMotionID, int rightMotionID, immut Vector3f* p5, int p6)
 	    : TAIApatrol(nextState, p2, leftMotionID, rightMotionID, p5, p6, true)
 	{
 	}

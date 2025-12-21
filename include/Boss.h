@@ -183,7 +183,7 @@ public:
 
 	void initBoss(BirthInfo&, int);
 	void calcFlickPiki();
-	void createPellet(Vector3f&, f32, bool);
+	void createPellet(immut Vector3f&, f32, bool);
 	bool changeDirection(f32);
 	void stopMovement();
 	void calcBossDamage();
@@ -200,14 +200,14 @@ public:
 	int getStickMouthPikiCount();
 	int getStickNoMouthPikiCount();
 	void killStickToMouthPiki();
-	int getMapAttribute(Vector3f&);
+	int getMapAttribute(immut Vector3f&);
 	bool insideAndInSearch();
 	void updateBoss();
 	void refreshViewCulling(Graphics&);
 
 	// unused/inlined:
 	void towardFaceDirection(f32);
-	bool checkInWater(Vector3f&);
+	bool checkInWater(immut Vector3f&);
 
 	f32 getAnimTimer() { return mAnimTimer; }
 	void addAnimTimer(f32 val) { mAnimTimer += val; }
@@ -230,7 +230,7 @@ public:
 	Creature* getTargetCreature() { return mTargetCreature; }
 	void setTargetCreature(Creature* target) { mTargetCreature = target; }
 	Vector3f* getTargetPosition() { return &mTargetPosition; }
-	void setTargetPosition(Vector3f& pos) { mTargetPosition = pos; }
+	void setTargetPosition(immut Vector3f& pos) { mTargetPosition = pos; }
 
 	int getCurrentState() { return mCurrentStateID; }
 	void setCurrentState(int stateID) { mCurrentStateID = stateID; }
@@ -260,7 +260,7 @@ public:
 	bool getAlive() { return mCurrentLife > 0.0f; }
 
 	Vector3f* getInitPosition() { return &mInitPosition; }
-	void setInitPosition(Vector3f& pos) { mInitPosition = pos; }
+	void setInitPosition(immut Vector3f& pos) { mInitPosition = pos; }
 
 	f32 getCurrentLife() { return mCurrentLife; }
 	f32 getMaxLife() { return mMaxLife; }

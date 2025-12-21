@@ -12,7 +12,7 @@ const f32 zen::DrawLifeCircle::TRI_NUM = 128.0f;
  * Address:	........
  * Size:	0000A8
  */
-void zen::zenGraphics::drawOneTri(Vector3f* vertices, Colour& color)
+void zen::zenGraphics::drawOneTri(immut Vector3f* vertices, Colour& color)
 {
 	GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, 3);
 	u32 gxColor = reinterpret_cast<u32&>(color);

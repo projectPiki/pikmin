@@ -134,7 +134,7 @@ public:
 		_2F0        = 0;
 	}
 
-	void startLook(Vector3f* pos)
+	void startLook(immut Vector3f* pos)
 	{
 		mLookAtPosPtr = pos;
 		_2F0          = 0;
@@ -156,7 +156,7 @@ public:
 	bool mIsPellet;                      // _2E1, is lying down/carryable
 	Kontroller* mKontroller;             // _2E4
 	Camera* mNaviCamera;                 // _2E8, could be CullFrustum*, but probably Camera*
-	Vector3f* mLookAtPosPtr;             // _2EC
+	immut Vector3f* mLookAtPosPtr;       // _2EC
 	u8 _2F0;                             // _2F0
 	f32 _2F4;                            // _2F4
 	f32 _2F8;                            // _2F8

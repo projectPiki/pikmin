@@ -721,7 +721,7 @@ static bool pointInsideTri(KTri& tri, Vector3f& point)
  * Address: 80039024
  * Size:    000260
  */
-f32 triRectDistance(Vector3f* vertex1, Vector3f* vertex2, Vector3f* vertex3, BoundBox& boundingBox, bool)
+f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vector3f* vertex3, BoundBox& boundingBox, bool)
 {
 	// Project triangle vertices onto XZ plane (y=0)
 	Vector3f projVertex1 = *vertex1;
@@ -814,7 +814,7 @@ f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV
  * Address: 8003942C
  * Size:    000070
  */
-bool KRect::inside(Vector3f& point)
+bool KRect::inside(immut Vector3f& point)
 {
 	Vector3f rectMin = mBotTri.Origin();
 
@@ -842,7 +842,7 @@ KTri::KTri()
  * Address: 800394C8
  * Size:    0000C4
  */
-void KTri::set(Vector3f& pointA, Vector3f& pointB, Vector3f& pointC)
+void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& pointC)
 {
 	mVertA  = pointA;
 	mSideAB = pointB - pointA;
@@ -2520,7 +2520,7 @@ f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
  * Address: 8003D87C
  * Size:    000540
  */
-f32 sqrDistance(Vector3f& point, KTri& tri, f32* outBaryU, f32* outBaryV)
+f32 sqrDistance(immut Vector3f& point, KTri& tri, f32* outBaryU, f32* outBaryV)
 {
 	Vector3f pointToOrigin = tri.Origin() - point;
 	f32 sqrLenEdge0        = tri.Edge0().squaredLength();

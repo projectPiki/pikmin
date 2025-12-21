@@ -88,7 +88,7 @@ public:
 	{
 		mBounds.move(x, y);
 	}
-	virtual void move(Vector3f& newPos) // _18
+	virtual void move(immut Vector3f& newPos) // _18
 	{
 		mBounds.move(newPos.x, newPos.y);
 		mPaneZ = newPos.z;

@@ -213,7 +213,7 @@ f32 Tube::getRatioRadius(f32 ratio) immut
  * Address:	80087890
  * Size:	000238
  */
-void Tube::getPosGradient(Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vector3f& surfaceGrad) immut
+void Tube::getPosGradient(immut Vector3f& inputPos, f32 t, Vector3f& surfacePos, Vector3f& surfaceGrad) immut
 {
 	Vector3f tubePos = setPos(t);
 	Vector3f normal  = inputPos - tubePos;

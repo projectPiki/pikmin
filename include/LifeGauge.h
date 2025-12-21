@@ -79,7 +79,7 @@ struct LifeGauge {
 	void updValue(f32, f32);
 	void adjustValue();
 	void refresh(Graphics&);
-	void countOn(Vector3f&, int, int);
+	void countOn(immut Vector3f&, int, int);
 	void countOff();
 
 	Vector3f mPosition;             // _00

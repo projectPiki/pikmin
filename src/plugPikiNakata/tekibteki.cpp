@@ -1928,7 +1928,7 @@ TekiStrategy* BTeki::getStrategy()
  */
 f32 BTeki::getSeaLevel()
 {
-	Vector3f& pos = getPosition();
+	immut Vector3f& pos = getPosition();
 	return mapMgr->getMinY(pos.x, pos.z, true);
 }
 
@@ -1939,7 +1939,7 @@ f32 BTeki::getSeaLevel()
  */
 f32 BTeki::getYFromSeaLevel()
 {
-	Vector3f& pos = getPosition();
+	immut Vector3f& pos = getPosition();
 	return pos.y - getSeaLevel();
 }
 

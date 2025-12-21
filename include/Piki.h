@@ -142,7 +142,7 @@ public:
 	void updateWalkAnimation();
 	void realAI();
 	void changeMode(int, Navi*);
-	void startHimaLook(Vector3f*);
+	void startHimaLook(immut Vector3f*);
 	void finishLook();
 	bool isLooking();
 	void updateLook();
@@ -203,7 +203,7 @@ public:
 	void setCurrState(AState<Piki>* state) { mCurrentState = state; }
 
 	// 100AEBD0 in plugPiki
-	void startLook(Vector3f* other)
+	void startLook(immut Vector3f* other)
 	{
 		mLookatPosPtr = other;
 
@@ -258,7 +258,7 @@ public:
 	bool mIsLooking;                      // _330
 	f32 _334;                             // _334
 	SmartPtr<Creature> mLookAtCreature;   // _338
-	Vector3f* mLookatPosPtr;              // _33C
+	immut Vector3f* mLookatPosPtr;        // _33C
 	u8 mLookTimer;                        // _340
 	f32 mHorizontalRotation;              // _344
 	f32 mVerticalRotation;                // _348

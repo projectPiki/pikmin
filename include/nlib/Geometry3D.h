@@ -81,9 +81,9 @@ struct NPlane {
 	f32 calcAngle(NPlane&);
 	f32 calcY(f32, f32);
 
-	f32 judge(Vector3f& point) { return mNormal.dot(point) + mDifference; }
+	f32 judge(immut Vector3f& point) { return mNormal.dot(point) + mDifference; }
 
-	void setDifference(Vector3f& point) { mDifference = -mNormal.dot(point); }
+	void setDifference(immut Vector3f& point) { mDifference = -mNormal.dot(point); }
 
 	NVector3f& getNormal() { return mNormal; }
 

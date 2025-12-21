@@ -39,7 +39,7 @@ immut char* MapParts::getShapeFile(int idx)
  * Address:	801184C0
  * Size:	00005C
  */
-void MapParts::applyVelocity(Plane&, Vector3f&, Vector3f& force)
+void MapParts::applyVelocity(Plane&, immut Vector3f&, immut Vector3f& force)
 {
 	mVelocity = mVelocity + force;
 }

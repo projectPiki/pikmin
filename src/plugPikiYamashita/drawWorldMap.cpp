@@ -262,7 +262,7 @@ public:
 
 		mSparkleGenerator = WMeffMgr->create(EFF2D_MapOnyonSparkle, Vector3f(0.0f, 0.0f, 0.0f), nullptr, nullptr);
 	}
-	void update(Vector3f& scale)
+	void update(immut Vector3f& scale)
 	{
 		Vector3f vec1 = mTargetPos - mCurrentPos;
 		f32 time      = 60.0f * gsys->getFrameTime();

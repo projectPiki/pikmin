@@ -1131,7 +1131,7 @@ f32 Creature::getShadowSize()
  * Address:	........
  * Size:	000164
  */
-void showTri(Graphics& gfx, Vector3f& vec, CollTriInfo* tri)
+void showTri(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 {
 	Vector3f tmpV3[3];
 	Vector2f tmpV2[3];
@@ -1150,7 +1150,7 @@ void showTri(Graphics& gfx, Vector3f& vec, CollTriInfo* tri)
  * Address:	8008C40C
  * Size:	0002B4
  */
-static void recTraceShadowTris(Graphics& gfx, Vector3f& vec, CollTriInfo* tri)
+static void recTraceShadowTris(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 {
 	showTri(gfx, vec, tri);
 
@@ -1184,7 +1184,7 @@ static void recTraceShadowTris(Graphics& gfx, Vector3f& vec, CollTriInfo* tri)
  * Address:	........
  * Size:	000098
  */
-void calcShadowTris(Graphics& gfx, Vector3f& vec, f32 rad)
+void calcShadowTris(Graphics& gfx, immut Vector3f& vec, f32 rad)
 {
 	numTris          = 0;
 	CollTriInfo* tri = mapMgr->getCurrTri(vec.x, vec.z, true);

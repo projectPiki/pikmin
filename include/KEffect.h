@@ -12,13 +12,13 @@ struct Creature;
  * @brief TODO
  */
 struct EffectParm {
-	EffectParm(Vector3f* p1)
+	EffectParm(immut Vector3f* p1)
 	{
 		mPositionRef = p1;
 		mScale       = 1.0f;
 	}
 
-	EffectParm(Vector3f& pos)
+	EffectParm(immut Vector3f& pos)
 	{
 		mPosition = pos;
 		mScale    = 1.0f;
@@ -27,7 +27,7 @@ struct EffectParm {
 	EffectParm(Creature* owner) { mOwner = owner; }
 
 	// DLL inline ctors to make/check:
-	EffectParm(Vector3f& pos, Vector3f& dir)
+	EffectParm(immut Vector3f& pos, immut Vector3f& dir)
 	{
 		// need to confirm
 		mPosition  = pos;
@@ -35,12 +35,12 @@ struct EffectParm {
 		mScale     = 1.0f;
 	}
 
-	Vector3f mPosition;     // _00
-	Vector3f mDirection;    // _0C
-	u8 _18[0x8];            // _18, unknown
-	Vector3f* mPositionRef; // _20
-	f32 mScale;             // _24
-	Creature* mOwner;       // _28
+	Vector3f mPosition;           // _00
+	Vector3f mDirection;          // _0C
+	u8 _18[0x8];                  // _18, unknown
+	immut Vector3f* mPositionRef; // _20
+	f32 mScale;                   // _24
+	Creature* mOwner;             // _28
 };
 
 /**

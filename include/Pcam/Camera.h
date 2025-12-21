@@ -149,7 +149,7 @@ struct PcamCamera : public NCamera {
 	f32 getDirection();
 
 	static f32 angleToMeridian(f32 angle) { return NMathF::d2r(90.0f - angle); }
-	static f32 calcDirection(Vector3f& vec) { return NMathF::atan2(vec.x, vec.z); }
+	static f32 calcDirection(immut Vector3f& vec) { return NMathF::atan2(vec.x, vec.z); }
 
 	// _50     = VTBL
 	// _00-_20 = NCamera

@@ -175,7 +175,7 @@ void LoopChecker::update()
  * Address:	80116420
  * Size:	00016C
  */
-void drawBatten(Graphics& gfx, Vector3f& pos, f32 size)
+void drawBatten(Graphics& gfx, immut Vector3f& pos, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	Vector3f p1, p2, p3, p4;
@@ -193,7 +193,7 @@ void drawBatten(Graphics& gfx, Vector3f& pos, f32 size)
  * Address:	8011658C
  * Size:	000424
  */
-void drawBattenPole(Graphics& gfx, Vector3f& pos, f32 size, immut char* name)
+void drawBattenPole(Graphics& gfx, immut Vector3f& pos, f32 size, immut char* name)
 {
 	Vector3f pos2(pos);
 	pos2.y = mapMgr->getMinY(pos2.x, pos2.z, true);
@@ -223,7 +223,7 @@ void drawBattenPole(Graphics& gfx, Vector3f& pos, f32 size, immut char* name)
  * Address:	801169B0
  * Size:	00026C
  */
-void drawArrow(Graphics& gfx, Vector3f& p1, Vector3f& p2, f32 size)
+void drawArrow(Graphics& gfx, immut Vector3f& p1, immut Vector3f& p2, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.setColour(Colour(255, 125, 0, 255), true);
@@ -254,7 +254,7 @@ void drawArrow(Graphics& gfx, Vector3f& p1, Vector3f& p2, f32 size)
  * Address:	80116C1C
  * Size:	0001E8
  */
-void CRSplineDraw(Graphics& gfx, int numSides, Vector3f* origin)
+void CRSplineDraw(Graphics& gfx, int numSides, immut Vector3f* origin)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.setColour(Colour(255, 10, 100, 255), true);
@@ -282,7 +282,7 @@ void CRSplineDraw(Graphics& gfx, int numSides, Vector3f* origin)
  * Address:	80116E04
  * Size:	0003C0
  */
-void drawCube(Graphics& gfx, Vector3f& pos, f32 size)
+void drawCube(Graphics& gfx, immut Vector3f& pos, f32 size)
 {
 	gfx.useMatrix(gfx.mCamera->mLookAtMtx, 0);
 	gfx.setColour(Colour(255, 125, 0, 255), true);
