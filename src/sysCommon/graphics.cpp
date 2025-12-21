@@ -874,7 +874,8 @@ Graphics::Graphics()
 	mCurrentMaterial = nullptr;
 	mLightCam        = nullptr;
 
-	Matrix4f::ident.makeIdentity();
+	// Well I suppose this has to initialize *somewhere*.
+	const_cast<Matrix4f&>(Matrix4f::ident).makeIdentity();
 
 	mCurrentMaterialHandler = nullptr;
 	mDefaultMaterialHandler = new MaterialHandler();

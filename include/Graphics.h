@@ -89,8 +89,8 @@ struct Graphics {
 	// _3B4 = VTBL
 	int mRenderMode;                          // _00, 0 = localNtsc480IntDf, 1 = progressiveRenderMode
 	u32 mRenderState;                         // _04
-	Matrix4f* mMatrix;                        // _08
-	Matrix4f* mActiveMatrix;                  // _0C
+	immut Matrix4f* mMatrix;                  // _08
+	immut Matrix4f* mActiveMatrix;            // _0C
 	Light mLight;                             // _10
 	Camera* mCamera;                          // _2E4
 	Texture* mActiveTexture[8];               // _2E8
@@ -158,8 +158,8 @@ struct Graphics {
 	virtual void setPointSize(f32)                                                                            = 0; // _64
 	virtual f32 setLineWidth(f32)                                                                             = 0; // _68
 	virtual void setCamera(Camera*)                                                                           = 0; // _6C
-	virtual void calcViewMatrix(Matrix4f&, Matrix4f&)                                                         = 0; // _70
-	virtual void useMatrix(Matrix4f&, int)                                                                    = 0; // _74
+	virtual void calcViewMatrix(immut Matrix4f&, Matrix4f&)                                                   = 0; // _70
+	virtual void useMatrix(immut Matrix4f&, int)                                                              = 0; // _74
 	virtual void setClippingPlane(bool, Plane*)                                                               = 0; // _78
 	virtual void initMesh(Shape*)                                                                             = 0; // _7C
 	virtual void drawSingleMatpoly(Shape*, Joint::MatPoly*)                                                   = 0; // _80
@@ -232,8 +232,8 @@ struct DGXGraphics : public Graphics {
 	virtual void setPointSize(f32) { }                                                                         // _64 (weak)
 	virtual f32 setLineWidth(f32);                                                                             // _68
 	virtual void setCamera(Camera*);                                                                           // _6C
-	virtual void calcViewMatrix(Matrix4f&, Matrix4f&);                                                         // _70
-	virtual void useMatrix(Matrix4f&, int);                                                                    // _74
+	virtual void calcViewMatrix(immut Matrix4f&, Matrix4f&);                                                   // _70
+	virtual void useMatrix(immut Matrix4f&, int);                                                              // _74
 	virtual void setClippingPlane(bool, Plane*) { }                                                            // _78 (weak)
 	virtual void initMesh(Shape*);                                                                             // _7C
 	virtual void drawSingleMatpoly(Shape*, Joint::MatPoly*);                                                   // _80
@@ -261,7 +261,7 @@ struct DGXGraphics : public Graphics {
 	virtual void initProjTex(bool, LightCamera*);                                                              // _E4
 	virtual void initReflectTex(bool);                                                                         // _E8
 	virtual void texturePrintf(Font* font, int x, int y, immut char* format, ...);                             // _EC
-	virtual void useMatrixQuick(Matrix4f&, int);                                                               // _F4
+	virtual void useMatrixQuick(immut Matrix4f&, int);                                                         // _F4
 	virtual void drawOutline(Camera&, Shape*) { }                                                              // _F8 (weak)
 	virtual void drawOneStrip(immut Vector3f*, immut Vector3f*, immut Vector2f*, int) { }                      // _A4 (weak)
 

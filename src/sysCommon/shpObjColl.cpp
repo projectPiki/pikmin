@@ -29,7 +29,7 @@ DEFINE_PRINT("shpObjColl");
  */
 void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 {
-	Matrix4f& identity = mJointIndex != -1 ? mParentShape->getAnimMatrix(mJointIndex) : Matrix4f::ident;
+	immut Matrix4f& identity = mJointIndex != -1 ? mParentShape->getAnimMatrix(mJointIndex) : Matrix4f::ident;
 
 	centre = mCentrePosition;
 	centre.multMatrix(identity);

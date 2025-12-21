@@ -632,7 +632,7 @@ void DGXGraphics::setCamera(Camera* a1)
  * Address:	80048294
  * Size:	00002C
  */
-void DGXGraphics::calcViewMatrix(Matrix4f& mtx1, Matrix4f& mtx2)
+void DGXGraphics::calcViewMatrix(immut Matrix4f& mtx1, Matrix4f& mtx2)
 {
 	mMatrix = &mtx1;
 	mCamera->mLookAtMtx.multiplyTo(mtx1, mtx2);
@@ -906,7 +906,7 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
  * Address:	80048DA4
  * Size:	000168
  */
-void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
+void DGXGraphics::useMatrixQuick(immut Matrix4f& mtx, int id)
 {
 	int gxID      = id * 3;
 	mActiveMatrix = &mtx;
@@ -965,7 +965,7 @@ void DGXGraphics::useMatrixQuick(Matrix4f& mtx, int id)
  * Address:	80048F0C
  * Size:	000054
  */
-void DGXGraphics::useMatrix(Matrix4f& mtx, int a)
+void DGXGraphics::useMatrix(immut Matrix4f& mtx, int a)
 {
 	useMatrixQuick(mtx, a);
 	mCurrentMatrixId = a * 3;

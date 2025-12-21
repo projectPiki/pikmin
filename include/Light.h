@@ -192,7 +192,7 @@ struct LightGroup : public CoreNode {
 #endif
 
 	void loadini(CmdStream*);
-	void refresh(Graphics&, Matrix4f*);
+	void refresh(Graphics&, immut Matrix4f*);
 
 	// unused/inlined:
 	void saveini(immut char*, RandomAccessStream&);
