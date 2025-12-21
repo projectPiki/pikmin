@@ -1534,7 +1534,7 @@ void Navi::offwallCallback(DynCollObject* wall)
  * Address:	800FD278
  * Size:	000058
  */
-void Navi::wallCallback(Plane& wallPlane, DynCollObject* wallObj)
+void Navi::wallCallback(immut Plane& wallPlane, DynCollObject* wallObj)
 {
 	mWallPlane   = &wallPlane;
 	_7B4         = 1;

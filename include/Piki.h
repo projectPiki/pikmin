@@ -116,7 +116,7 @@ public:
 	virtual void collisionCallback(immut CollEvent&);          // _A8
 	virtual void bounceCallback();                             // _AC
 	virtual void jumpCallback();                               // _B0
-	virtual void wallCallback(Plane&, DynCollObject*);         // _B4
+	virtual void wallCallback(immut Plane&, DynCollObject*);   // _B4
 	virtual void offwallCallback(DynCollObject*);              // _B8
 	virtual void stickToCallback(Creature*);                   // _C4
 	virtual void dump();                                       // _C8
@@ -305,7 +305,7 @@ public:
 	u8 _4D4[0x4];                         // _4D4, unknown
 	int _4D8;                             // _4D8
 	Piki* mPushTargetPiki;                // _4DC
-	Plane* mWallPlane;                    // _4E0
+	immut Plane* mWallPlane;              // _4E0
 	DynCollObject* mWallObj;              // _4E4
 	int _4E8;                             // _4E8
 	f32 _4EC;                             // _4EC

@@ -133,10 +133,10 @@ struct MapObjAnimator : public Animator {
 struct DynMapObject : public DynCollShape {
 	DynMapObject(MapMgr*, MapAnimShapeObject*);
 
-	virtual void update();                                                // _10
-	virtual void draw(Graphics&);                                         // _14
-	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&); // _38
-	virtual void refresh(Graphics&);                                      // _44
+	virtual void update();                                                      // _10
+	virtual void draw(Graphics&);                                               // _14
+	virtual void touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&); // _38
+	virtual void refresh(Graphics&);                                            // _44
 
 	void nextState();
 
@@ -166,9 +166,9 @@ struct MapObjectPart : public DynCollShape {
 		mMapParent  = 0;
 	}
 
-	virtual void update() { }                                                        // _10
-	virtual void refresh(Graphics&) { }                                              // _44
-	virtual void touchCallback(Plane& plane, immut Vector3f& a1, immut Vector3f& a2) // _38
+	virtual void update() { }                                                              // _10
+	virtual void refresh(Graphics&) { }                                                    // _44
+	virtual void touchCallback(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2) // _38
 	{
 		if (mMapParent)
 			mMapParent->touchCallback(plane, a1, a2);
@@ -202,10 +202,10 @@ struct MapParts : public DynCollShape {
 		mCurrentPart = nullptr;
 	}
 
-	virtual void read(RandomAccessStream&) { }                            // _0C
-	virtual void update() { }                                             // _10
-	virtual void applyVelocity(Plane&, immut Vector3f&, immut Vector3f&); // _34
-	virtual void init() { }                                               // _48
+	virtual void read(RandomAccessStream&) { }                                  // _0C
+	virtual void update() { }                                                   // _10
+	virtual void applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f&); // _34
+	virtual void init() { }                                                     // _48
 
 	static immut char* getShapeFile(int);
 

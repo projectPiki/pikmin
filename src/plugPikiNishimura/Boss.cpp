@@ -628,7 +628,7 @@ void Boss::refresh2d(Graphics& gfx)
  * Address:	8014F628
  * Size:	000030
  */
-void Boss::wallCallback(Plane& plane, DynCollObject* wallObject)
+void Boss::wallCallback(immut Plane& plane, DynCollObject* wallObject)
 {
 	mIsOnWall       = true;
 	mWallPlane      = plane;

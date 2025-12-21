@@ -1846,7 +1846,7 @@ void BTeki::bounceCallback()
  * Address:	80148740
  * Size:	000050
  */
-void BTeki::wallCallback(Plane&, DynCollObject*)
+void BTeki::wallCallback(immut Plane&, DynCollObject*)
 {
 	eventPerformed(TekiEvent(TekiEventType::Wall, static_cast<Teki*>(this)));
 }

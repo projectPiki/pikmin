@@ -159,27 +159,27 @@ struct Boss : public Creature {
 public:
 	Boss(CreatureProp*);
 
-	virtual bool isAlive() { return mIsAlive; }           // _88
-	virtual bool isAtari() { return mIsAtari; }           // _84
-	virtual bool isVisible() { return mIsVisible; }       // _74
-	virtual bool isOrganic() { return mIsOrganic; }       // _78
-	virtual bool isFixed() { return true; }               // _8C
-	virtual bool ignoreAtari(Creature*) { return false; } // _98
-	virtual Vector3f getCentre() { return mSRT.t; }       // _58
-	virtual bool needShadow() { return mNeedShadow; }     // _90
-	virtual f32 getShadowSize() { return mShadowSize; }   // _70
-	virtual bool stimulate(immut Interaction&);           // _A0
-	virtual void wallCallback(Plane&, DynCollObject*);    // _B4
-	virtual void update() { }                             // _E0
-	virtual void refresh(Graphics&) { }                   // _EC
-	virtual void refresh2d(Graphics&);                    // _F0
-	virtual void doKill() { }                             // _10C
-	virtual void exitCourse() { }                         // _110
-	virtual void collisionCallback(immut CollEvent&) { }  // _A8
-	virtual bool isBossBgm() { return false; }            // _114
-	virtual bool attackDefaultPortion() { return false; } // _118
-	virtual void bombDamageCounter(CollPart*) { }         // _11C
-	virtual void drawShape(Graphics&);                    // _120
+	virtual bool isAlive() { return mIsAlive; }              // _88
+	virtual bool isAtari() { return mIsAtari; }              // _84
+	virtual bool isVisible() { return mIsVisible; }          // _74
+	virtual bool isOrganic() { return mIsOrganic; }          // _78
+	virtual bool isFixed() { return true; }                  // _8C
+	virtual bool ignoreAtari(Creature*) { return false; }    // _98
+	virtual Vector3f getCentre() { return mSRT.t; }          // _58
+	virtual bool needShadow() { return mNeedShadow; }        // _90
+	virtual f32 getShadowSize() { return mShadowSize; }      // _70
+	virtual bool stimulate(immut Interaction&);              // _A0
+	virtual void wallCallback(immut Plane&, DynCollObject*); // _B4
+	virtual void update() { }                                // _E0
+	virtual void refresh(Graphics&) { }                      // _EC
+	virtual void refresh2d(Graphics&);                       // _F0
+	virtual void doKill() { }                                // _10C
+	virtual void exitCourse() { }                            // _110
+	virtual void collisionCallback(immut CollEvent&) { }     // _A8
+	virtual bool isBossBgm() { return false; }               // _114
+	virtual bool attackDefaultPortion() { return false; }    // _118
+	virtual void bombDamageCounter(CollPart*) { }            // _11C
+	virtual void drawShape(Graphics&);                       // _120
 
 	void initBoss(BirthInfo&, int);
 	void calcFlickPiki();
