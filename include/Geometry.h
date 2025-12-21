@@ -96,7 +96,7 @@ struct Tube {
 	f32 getYRatio(f32 heightToCheck) immut;
 	bool collide(const Sphere&, Vector3f&, f32&) immut;
 	f32 getPosRatio(const Vector3f&) immut;
-	void getPosGradient(Vector3f&, f32, Vector3f&, Vector3f&) immut;
+	void getPosGradient(immut Vector3f&, f32, Vector3f&, Vector3f&) immut;
 	Vector3f setPos(f32) immut;
 
 	// unused/inlined:

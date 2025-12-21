@@ -408,7 +408,7 @@ void LifeGauge::refresh(Graphics& gfx)
  * Address:	8005CF6C
  * Size:	000148
  */
-void LifeGauge::countOn(Vector3f& p1, int p2, int p3)
+void LifeGauge::countOn(immut Vector3f& p1, int p2, int p3)
 {
 	if (!mActiveGauge) {
 		mCurrentDisplayHealthRatio = p2;

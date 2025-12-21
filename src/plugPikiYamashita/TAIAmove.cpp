@@ -693,7 +693,7 @@ void TAIApatrol::changeStatus(int status, Teki& teki)
  * Address:	801AA6CC
  * Size:	00007C
  */
-TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionID, Vector3f* p5, int p6, bool p7)
+TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionID, immut Vector3f* p5, int p6, bool p7)
     : TAIAturnToTarget(nextState, leftMotionID, rightMotionID, p7)
 {
 	_20 = p2;
@@ -708,8 +708,8 @@ TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionI
  */
 void TAIApatrol::setTargetPosition(Teki& teki)
 {
-	Vector3f& vec = _18[teki.getTableIndex()];
-	f32 rad       = teki.getParameterF(TPF_DangerTerritoryRange);
+	immut Vector3f& vec = _18[teki.getTableIndex()];
+	f32 rad             = teki.getParameterF(TPF_DangerTerritoryRange);
 	teki.mTargetPosition.set(vec.x * rad + teki.mPersonality->mNestPosition.x, vec.y * rad + teki.mPersonality->mNestPosition.y,
 	                         vec.z * rad + teki.mPersonality->mNestPosition.z);
 	teki.setFrameCounter(0.0f);

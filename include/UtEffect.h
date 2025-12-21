@@ -56,7 +56,7 @@ enum {
  * @brief TODO
  */
 struct BurnEffect : public KEffect {
-	BurnEffect(Vector3f* vec)
+	BurnEffect(immut Vector3f* vec)
 	{
 		_0C   = vec;
 		mEfxA = 0;
@@ -73,7 +73,7 @@ struct BurnEffect : public KEffect {
 	// _04     = VTBL2
 	// _08     = VTBL3
 	// _00-_0C = KEffect
-	Vector3f* _0C;                 // _0C
+	immut Vector3f* _0C;           // _0C
 	zen::particleGenerator* mEfxA; // _10
 	zen::particleGenerator* mEfxB; // _14
 };

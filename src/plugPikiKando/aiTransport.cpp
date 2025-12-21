@@ -924,8 +924,8 @@ int ActTransport::moveGuruGuru()
 	mPiki->mVelocity.set(50.0f * (f32(numStickers) / f32(minWeight)), 0.0f, 0.0f);
 
 	if (isStickLeader() && mPathIndex != -1) {
-		WayPoint* wp    = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
-		Vector3f& wpPos = wp->mPosition;
+		WayPoint* wp          = routeMgr->getWayPoint('test', mPiki->mPathBuffers[mPathIndex].mWayPointIdx);
+		immut Vector3f& wpPos = wp->mPosition;
 
 		if (wp->mIsOpen && !(wp->mFlags & WayPointFlags::Pebble) && crPointOpen(mPathIndex + 1)) {
 			PRINT("curr = %d : currBase = %d\n", mPathIndex, mNextPathIndex);

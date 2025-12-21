@@ -140,7 +140,7 @@ struct MapLightMgr {
 		}
 	}
 
-	void touchLights(Vector3f& pos)
+	void touchLights(immut Vector3f& pos)
 	{
 		for (int i = 0; i < mLightCount; i++) {
 			if (mLights[i]->mTargetPhaseAngle != HALF_PI) {
@@ -413,7 +413,7 @@ void DynMapObject::nextState()
  * Address:	800621C8
  * Size:	00003C
  */
-void DynMapObject::touchCallback(Plane&, Vector3f&, Vector3f&)
+void DynMapObject::touchCallback(Plane&, immut Vector3f&, immut Vector3f&)
 {
 	switch (mState) {
 	case 0:
@@ -511,7 +511,7 @@ static f32 Kdl = 1.25f;
  * Address:	8006255C
  * Size:	000030
  */
-void DynCollObjBody::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
+void DynCollObjBody::touchCallback(Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
 	mParentRigidBody->touchCallback(plane, a1, a2);
 }
@@ -521,7 +521,7 @@ void DynCollObjBody::touchCallback(Plane& plane, Vector3f& a1, Vector3f& a2)
  * Address:	8006258C
  * Size:	000030
  */
-void DynCollObjBody::applyVelocity(Plane& plane, Vector3f& a1, Vector3f& a2)
+void DynCollObjBody::applyVelocity(Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
 	mParentRigidBody->applyVelocity(plane, a1, a2);
 }
@@ -531,7 +531,7 @@ void DynCollObjBody::applyVelocity(Plane& plane, Vector3f& a1, Vector3f& a2)
  * Address:	800625BC
  * Size:	0001B8
  */
-void DynObjBody::touchCallback(Plane& plane, Vector3f& p2, Vector3f& p3)
+void DynObjBody::touchCallback(Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
 		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
@@ -546,7 +546,7 @@ void DynObjBody::touchCallback(Plane& plane, Vector3f& p2, Vector3f& p3)
  * Address:	80062774
  * Size:	0001B8
  */
-void DynObjBody::applyVelocity(Plane& plane, Vector3f& p2, Vector3f& p3)
+void DynObjBody::applyVelocity(Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
 		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
@@ -616,7 +616,7 @@ void DynObjBody::initRender(int)
  * Address:	80063B34
  * Size:	0003E8
  */
-void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, Vector3f& p3)
+void DynObjBody::applyWorldSpring(int configIdx, int attachPointIdx, immut Vector3f& p3)
 {
 	STACK_PAD_VAR(4);
 	configuration& config = mIntegrationStates[configIdx];
@@ -1156,7 +1156,7 @@ void MapMgr::refresh(Graphics& gfx)
  * Address:	80066360
  * Size:	00078C
  */
-void MapMgr::showCollisions(Vector3f& pos)
+void MapMgr::showCollisions(immut Vector3f& pos)
 {
 	mDebugFocusPoint = pos;
 	f32 a            = 64.0f;
@@ -1618,13 +1618,13 @@ CollTriInfo* MapMgr::getCurrTri(f32 x, f32 z, bool doCheckDynColl)
  * Address:	80068334
  * Size:	0002EC
  */
-f32 MapMgr::findEdgePenetration(CollTriInfo& tri, Vector3f* vertexList, Vector3f& pos, f32 rad, Vector3f& normal)
+f32 MapMgr::findEdgePenetration(CollTriInfo& tri, immut Vector3f* vertexList, immut Vector3f& pos, f32 rad, Vector3f& normal)
 {
 	for (int i = 0; i < 3; i++) {
 		f32 dist = tri.mEdgePlanes[i].dist(pos);
 		if (dist < 0.0f && dist >= -rad) {
-			Vector3f& vtx1 = vertexList[tri.mVertexIndices[i % 3]];
-			Vector3f& vtx2 = vertexList[tri.mVertexIndices[(i + 1) % 3]];
+			immut Vector3f& vtx1 = vertexList[tri.mVertexIndices[i % 3]];
+			immut Vector3f& vtx2 = vertexList[tri.mVertexIndices[(i + 1) % 3]];
 
 			Vector3f edge12 = vtx2 - vtx1;
 			f32 edgeLen     = edge12.x * edge12.x + edge12.y * edge12.y + edge12.z * edge12.z;

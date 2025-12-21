@@ -133,7 +133,7 @@ void PcamCameraManager::updateVibrationEvent()
  * Address:	80123FD8
  * Size:	000148
  */
-void PcamCameraManager::startVibrationEvent(int eventIdx, Vector3f& p2)
+void PcamCameraManager::startVibrationEvent(int eventIdx, immut Vector3f& p2)
 {
 	PRINT("startVibrationEvent:%d,%d\n", mCurrEventIndex, eventIdx);
 	if (mCurrEventIndex < 0 || mCurrEventIndex >= eventIdx) {

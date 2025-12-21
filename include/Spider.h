@@ -426,7 +426,7 @@ public:
 		return true;
 	}
 
-	void set(Vector3f* p1, Spider* spider)
+	void set(immut Vector3f* p1, Spider* spider)
 	{
 		mPosition = p1;
 		mSpider   = spider;
@@ -435,7 +435,7 @@ public:
 private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	Vector3f* mPosition; // _04
+	immut Vector3f* mPosition; // _04
 	Spider* mSpider;     // _08
 };
 
@@ -464,7 +464,7 @@ public:
 		return true;
 	}
 
-	void set(Vector3f* start, Vector3f* end, Spider* spider)
+	void set(immut Vector3f* start, immut Vector3f* end, Spider* spider)
 	{
 		mStartPoint = start;
 		mEndPoint   = end;
@@ -474,8 +474,8 @@ public:
 private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	Vector3f* mStartPoint; // _04
-	Vector3f* mEndPoint;   // _08
+	immut Vector3f* mStartPoint; // _04
+	immut Vector3f* mEndPoint;   // _08
 	Spider* mSpider;       // _0C
 };
 

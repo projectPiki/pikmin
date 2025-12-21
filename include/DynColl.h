@@ -25,10 +25,10 @@ struct DynCollObject : public Node {
 		mCreature           = nullptr;
 	}
 
-	virtual void adjust(Creature*) { }                           // _30
-	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&) { } // _34
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&) { } // _38
-	virtual Shape* getShape() { return nullptr; }                // _3C
+	virtual void adjust(Creature*) { }                                       // _30
+	virtual void applyVelocity(Plane&, immut Vector3f&, immut Vector3f&) { } // _34
+	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&) { } // _38
+	virtual Shape* getShape() { return nullptr; }                            // _3C
 
 	// _00     = VTBL
 	// _00-_20 = Node
@@ -98,10 +98,10 @@ struct DynCollObjBody : public DynCollShape {
 		mParentRigidBody = nullptr;
 	}
 
-	virtual void update() { }                                 // _10
-	virtual void adjust(Creature*) { }                        // _30
-	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _34
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
+	virtual void update() { }                                             // _10
+	virtual void adjust(Creature*) { }                                    // _30
+	virtual void applyVelocity(Plane&, immut Vector3f&, immut Vector3f&); // _34
+	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&); // _38
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape

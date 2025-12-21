@@ -311,7 +311,7 @@ public:
 	zenListManager& getPtclMdlListManager() { return mPtclMdlListManager; }
 
 	void setEmitPos(immut Vector3f& pos) { mEmitPos = pos; }
-	void setEmitPosPtr(Vector3f* posPtr) { mEmitPosPtr = posPtr; }
+	void setEmitPosPtr(immut Vector3f* posPtr) { mEmitPosPtr = posPtr; }
 	void setEmitDir(immut Vector3f& dir) { mEmitDir = dir; }
 	void setEmitVelocity(immut Vector3f& vel) { mEmitVelocity = vel; }
 	void setOrientedNormalVector(immut Vector3f& vec) { mOrientedNormal = vec; }
@@ -324,7 +324,7 @@ public:
 		mCallBack2 = cb2;
 	}
 
-	Vector3f& getGPos()
+	immut Vector3f& getGPos()
 	{
 		if (mEmitPosPtr) {
 			return *mEmitPosPtr;
@@ -333,7 +333,7 @@ public:
 	}
 
 	// these are the same for some reason
-	Vector3f& getEmitPos()
+	immut Vector3f& getEmitPos()
 	{
 		if (mEmitPosPtr) {
 			return *mEmitPosPtr;
@@ -450,7 +450,7 @@ protected:
 	// _00     = VTBL
 	// _00-_0C = zenList
 	Vector3f mEmitPos;                    // _0C
-	Vector3f* mEmitPosPtr;                // _18
+	immut Vector3f* mEmitPosPtr;          // _18
 	Vector3f mEmitVelocity;               // _1C
 	zenListManager mPtclMdlListManager;   // _28
 	zenListManager mPtclChildListManager; // _38
@@ -721,7 +721,7 @@ public:
 	}
 
 	void setPtclGenPtr(u32, particleGenerator*);
-	void setEmitPosPtr(Vector3f*);
+	void setEmitPosPtr(immut Vector3f*);
 	void startGen();
 	void stopGen();
 	void finish();

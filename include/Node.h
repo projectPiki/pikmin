@@ -112,9 +112,9 @@ struct SRTNode : public Node {
 	Vector3f& getRotation() { return mSRT.r; }
 	Vector3f& getScale() { return mSRT.s; }
 	Vector3f& getWorldPosition() { return reinterpret_cast<Vector3f&>(mWorldMtx.mMtx[3]); }
-	void setPosition(Vector3f& pos) { mSRT.t = pos; }
-	void setRotation(Vector3f& rot) { mSRT.r = rot; }
-	void setScale(Vector3f& scale) { mSRT.s = scale; }
+	void setPosition(immut Vector3f& pos) { mSRT.t = pos; }
+	void setRotation(immut Vector3f& rot) { mSRT.r = rot; }
+	void setScale(immut Vector3f& scale) { mSRT.s = scale; }
 
 	// _00 - VTBL
 	// _00 - _14 - CoreNode

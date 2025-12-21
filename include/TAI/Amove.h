@@ -379,7 +379,7 @@ protected:
  */
 struct TAIApatrol : public TAIAturnToTarget {
 public:
-	TAIApatrol(int, int, int, int, Vector3f*, int, bool);
+	TAIApatrol(int, int, int, int, immut Vector3f*, int, bool);
 
 	virtual void start(Teki&);                     // _08
 	virtual bool act(Teki&);                       // _10
@@ -392,9 +392,9 @@ protected:
 
 	// _04     = VTBL
 	// _00-_18 = TAIAturnToTarget
-	Vector3f* _18; // _18
-	int _1C;       // _1C
-	int _20;       // _20
+	immut Vector3f* _18; // _18
+	int _1C;             // _1C
+	int _20;             // _20
 };
 
 /**

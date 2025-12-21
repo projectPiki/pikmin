@@ -757,7 +757,7 @@ NPosture2D::NPosture2D()
  * Address:	........
  * Size:	000068
  */
-NPosture2D::NPosture2D(Vector3f& trans, f32 dir)
+NPosture2D::NPosture2D(immut Vector3f& trans, f32 dir)
 {
 	construct(trans, dir);
 }

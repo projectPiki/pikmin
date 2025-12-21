@@ -212,14 +212,14 @@ void RigidBody::applyGroundForces(int configIdx, CollGroup* collGroup)
 	}
 
 	for (int i = 0; i < mBoundingPointCount; i++) {
-		Vector3f& bodyPt = config.mBodyPoints[i + mHookPointCount];
-		bool skipTriCalc = collGroup ? false : true;
+		immut Vector3f& bodyPt = config.mBodyPoints[i + mHookPointCount];
+		bool skipTriCalc       = collGroup ? false : true;
 		for (int j = 0; !skipTriCalc && j < collGroup->mTriCount; j++) {
-			CollTriInfo* triangle = collGroup->mTriangleList[j];
-			Plane* triPlane       = &triangle->mTriangle;
-			Vector3f& posCoM      = config.mPosition;
-			f32 triPtDist         = triPlane->dist(bodyPt);
-			f32 triCoMDist        = triPlane->dist(posCoM);
+			CollTriInfo* triangle  = collGroup->mTriangleList[j];
+			Plane* triPlane        = &triangle->mTriangle;
+			immut Vector3f& posCoM = config.mPosition;
+			f32 triPtDist          = triPlane->dist(bodyPt);
+			f32 triCoMDist         = triPlane->dist(posCoM);
 
 			if (triPtDist < 0.0f && triCoMDist > 0.0f) {
 				// body point is on other side of triangle to CoM - collision!
@@ -305,7 +305,7 @@ void RigidBody::calculateVertices(int configIdx)
 {
 	configuration& state  = mIntegrationStates[configIdx];
 	configuration& state2 = mIntegrationStates[configIdx]; // why
-	Vector3f& pos         = state.mPosition;
+	immut Vector3f& pos   = state.mPosition;
 
 	for (int i = 0; i < mBoundingPointCount + mHookPointCount; i++) {
 		state2.mBodyPoints[i] = pos + state.mOrientationMtx * mBodyPoints[i];

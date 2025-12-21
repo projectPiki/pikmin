@@ -138,7 +138,7 @@ struct GameMovieInterface : public GameInterface {
 
 		mMessageCount++;
 	}
-	virtual void movie(int id, int a1, Creature* obj, Vector3f* pos, Vector3f* dir, u32 flags, bool a2) // _0C
+	virtual void movie(int id, int a1, Creature* obj, immut Vector3f* pos, immut Vector3f* dir, u32 flags, bool a2) // _0C
 	{
 		if (mComplexMesgCount >= mMessageLimit) {
 			return;

@@ -50,7 +50,7 @@ protected:
 };
 
 struct zenGraphics {
-	static void drawOneTri(Vector3f*, Colour&);
+	static void drawOneTri(immut Vector3f*, Colour&);
 	static void setTevFillPolygon();
 };
 } // namespace zen

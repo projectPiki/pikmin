@@ -158,7 +158,7 @@ public:
 	}
 
 protected:
-	void setLagrangeFunction(Vector3f* coes)
+	void setLagrangeFunction(immut Vector3f* coes)
 	{
 		setLagrangeCoe(mLagrangeCoeffsX, coes[0].x, coes[1].x, coes[2].x);
 		setLagrangeCoe(mLagrangeCoeffsY, coes[0].y, coes[1].y, coes[2].y);

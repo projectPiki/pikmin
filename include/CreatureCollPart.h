@@ -26,9 +26,9 @@ struct CreatureCollPart : public DynCollShape {
 		mOwner        = nullptr;
 	}
 
-	virtual void update() { }                                 // _10 (weak)
-	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _38
-	virtual void refresh(Graphics&) { }                       // _44 (weak)
+	virtual void update() { }                                             // _10 (weak)
+	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&); // _38
+	virtual void refresh(Graphics&) { }                                   // _44 (weak)
 
 	// _00      = VTBL
 	// _00-_140 = DynCollShape

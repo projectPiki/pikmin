@@ -14,7 +14,7 @@ struct OdoMeter {
 	OdoMeter();
 
 	void start(f32 startTime, f32 maxDistance);
-	bool moving(Vector3f& start, Vector3f& target);
+	bool moving(immut Vector3f& start, immut Vector3f& target);
 
 	void reset()
 	{

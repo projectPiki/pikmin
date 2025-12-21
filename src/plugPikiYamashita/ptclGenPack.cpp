@@ -64,7 +64,7 @@ void PtclGenPack::setEmitPos(immut Vector3f& pos)
  * Address:	801DA0A4
  * Size:	000034
  */
-void PtclGenPack::setEmitPosPtr(Vector3f* posPtr)
+void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 {
 	u32 i;
 	particleGenerator** genList = mGeneratorList;

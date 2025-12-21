@@ -24,7 +24,7 @@ DEFINE_PRINT("creatureCollPart")
  * Address:	8008E0BC
  * Size:	000004
  */
-void CreatureCollPart::touchCallback(Plane&, Vector3f&, Vector3f&)
+void CreatureCollPart::touchCallback(Plane&, immut Vector3f&, immut Vector3f&)
 {
 }
 

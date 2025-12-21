@@ -53,10 +53,10 @@ struct LoopChecker {
 
 // utility functions
 int selectRandomly(Choice* choiceList, int numChoices);
-void drawBatten(Graphics&, Vector3f&, f32);
-void drawBattenPole(Graphics&, Vector3f&, f32, immut char*);
-void drawArrow(Graphics&, Vector3f&, Vector3f&, f32);
-void CRSplineDraw(Graphics&, int, Vector3f*);
-void drawCube(Graphics&, Vector3f&, f32);
+void drawBatten(Graphics&, immut Vector3f&, f32);
+void drawBattenPole(Graphics&, immut Vector3f&, f32, immut char*);
+void drawArrow(Graphics&, immut Vector3f&, immut Vector3f&, f32);
+void CRSplineDraw(Graphics&, int, immut Vector3f*);
+void drawCube(Graphics&, immut Vector3f&, f32);
 
 #endif

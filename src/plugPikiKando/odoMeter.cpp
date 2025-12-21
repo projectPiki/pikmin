@@ -45,7 +45,7 @@ void OdoMeter::start(f32 startTime, f32 maxDistance)
  * Address:	800CD82C
  * Size:	000124
  */
-bool OdoMeter::moving(Vector3f& startPosition, Vector3f& endPosition)
+bool OdoMeter::moving(immut Vector3f& startPosition, immut Vector3f& endPosition)
 {
 	if (mRemainingTime > 0.0f) {
 		mRemainingTime -= gsys->getFrameTime();

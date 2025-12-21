@@ -37,7 +37,7 @@ struct PcamCameraManager : public Node {
 
 	void startCamera(Creature*);
 	void updateVibrationEvent();
-	void startVibrationEvent(int, Vector3f&);
+	void startVibrationEvent(int, immut Vector3f&);
 	void outputNaviPosition(Vector3f&);
 
 	// unused/inlined:

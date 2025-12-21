@@ -34,10 +34,10 @@ enum GameMovieCommand {
  * @brief TODO
  */
 struct GameInterface {
-	virtual void message(int, int) { }                                           // _08
-	virtual void movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool) { } // _0C
-	virtual void parseMessages() { }                                             // _10
-	virtual void parse(int, int) { }                                             // _14
+	virtual void message(int, int) { }                                                       // _08
+	virtual void movie(int, int, Creature*, immut Vector3f*, immut Vector3f*, u32, bool) { } // _0C
+	virtual void parseMessages() { }                                                         // _10
+	virtual void parse(int, int) { }                                                         // _14
 
 	// _00 = VTBL
 	// TODO: members

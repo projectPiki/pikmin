@@ -157,7 +157,7 @@ public:
 
 	void reset();
 	void start(int, int, f32*);
-	void start(int, int, Vector3f&);
+	void start(int, int, immut Vector3f&);
 	void stop();
 	void stop(int, int);
 	void update();

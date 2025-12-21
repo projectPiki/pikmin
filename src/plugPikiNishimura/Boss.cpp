@@ -106,7 +106,7 @@ void Boss::calcFlickPiki()
  * Address:	8014E110
  * Size:	0002A0
  */
-void Boss::createPellet(Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
+void Boss::createPellet(immut Vector3f& bossPos, f32 vertSpeed, bool hasUfoPart)
 {
 	if (mItemCount != 0) {
 		// release first item in a random 180 degree cone
@@ -505,7 +505,7 @@ void Boss::killStickToMouthPiki()
  * Address:	........
  * Size:	000050
  */
-bool Boss::checkInWater(Vector3f& pos)
+bool Boss::checkInWater(immut Vector3f& pos)
 {
 	// UNUSED FUNCTION (Matching by size)
 	CollTriInfo* tri = mapMgr->getCurrTri(pos.x, pos.z, true);
@@ -520,7 +520,7 @@ bool Boss::checkInWater(Vector3f& pos)
  * Address:	8014F370
  * Size:	000050
  */
-int Boss::getMapAttribute(Vector3f& pos)
+int Boss::getMapAttribute(immut Vector3f& pos)
 {
 	int attr         = ATTR_NULL;
 	CollTriInfo* tri = mapMgr->getCurrTri(pos.x, pos.z, true);
