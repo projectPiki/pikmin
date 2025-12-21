@@ -26,7 +26,7 @@ DEFINE_PRINT("utKando");
  * Address:	80116110
  * Size:	0000B0
  */
-int selectRandomly(Choice* choice, int num)
+int selectRandomly(immut Choice* choice, int num)
 {
 	f32 lower = gsys->getRand(1.0f);
 	f32 total = 0.0f;

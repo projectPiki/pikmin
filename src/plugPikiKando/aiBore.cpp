@@ -153,7 +153,7 @@ void ActFreeSelect::determine()
 		return;
 	}
 
-	Choice choices[CHILD_COUNT] = {
+	immut Choice choices[CHILD_COUNT] = {
 		{ CHILD_Watch, 0.2f },
 		{ CHILD_BoreTalk, 0.1f },
 		{ CHILD_BoreOneshot, 0.3f },
@@ -369,7 +369,7 @@ void ActBoreSelect::determine()
 		return;
 	}
 
-	Choice choices[CHILD_COUNT] = {
+	immut Choice choices[CHILD_COUNT] = {
 		{ CHILD_Watch, 0.1f },
 		{ CHILD_BoreTalk, 0.5f },
 		{ CHILD_BoreOneshot, 0.3f },
@@ -625,7 +625,7 @@ void ActBoreOneshot::finish()
 void ActBoreOneshot::init(Creature* creature)
 {
 	mIsAnimFinished   = false;
-	Choice choices[4] = {
+	immut Choice choices[4] = {
 		{ PIKIANIM_Akubi, 0.35f },
 		{ PIKIANIM_Rinbow, 0.35f },
 		{ PIKIANIM_Sagasu2, 0.2f },

@@ -3056,7 +3056,7 @@ PikiAutoNukiState::PikiAutoNukiState()
  */
 void PikiAutoNukiState::init(Piki* piki)
 {
-	Choice motionChoice[1] = { PIKIANIM_Kaifuku, 1.0f }; // lol
+	immut Choice motionChoice[1] = { PIKIANIM_Kaifuku, 1.0f }; // lol
 	int motionIdx          = selectRandomly(motionChoice, 1);
 	piki->mPikiAnimMgr.startMotion(PaniMotionInfo(motionIdx, piki), PaniMotionInfo(motionIdx));
 	mToCreateEffect = false;
@@ -3207,7 +3207,7 @@ PikiDyingState::PikiDyingState()
 void PikiDyingState::init(Piki* piki)
 {
 	piki->mActiveAction->abandon(nullptr);
-	Choice motionChoices[3] = {
+	immut Choice motionChoices[3] = {
 		{ PIKIANIM_Dead, 0.33f },
 		{ PIKIANIM_Dead2, 0.33f },
 		{ PIKIANIM_Dead3, 0.33f },
@@ -3340,7 +3340,7 @@ void PikiEmotionState::init(Piki* piki)
 
 	switch (piki->mEmotion) {
 	case PikiEmotion::Excited: {
-		Choice motionChoices[2] = {
+		immut Choice motionChoices[2] = {
 			{ PIKIANIM_Jump_B1, 0.5f },
 			{ PIKIANIM_Gattu, 0.5f },
 		};
@@ -3359,7 +3359,7 @@ void PikiEmotionState::init(Piki* piki)
 	} break;
 
 	case PikiEmotion::Happy: {
-		Choice motionChoices[3] = {
+		immut Choice motionChoices[3] = {
 			{ PIKIANIM_Jump_B1, 0.33f },
 			{ PIKIANIM_Jump, 0.33f },
 			{ PIKIANIM_RotJump, 0.33f },
@@ -3379,7 +3379,7 @@ void PikiEmotionState::init(Piki* piki)
 	} break;
 
 	case PikiEmotion::Searching: {
-		Choice motionChoices[2] = {
+		immut Choice motionChoices[2] = {
 			{ PIKIANIM_Sagasu, 0.5f },
 			{ PIKIANIM_Sagasu2, 0.5f },
 		};
@@ -3390,7 +3390,7 @@ void PikiEmotionState::init(Piki* piki)
 	} break;
 
 	case PikiEmotion::Confused: {
-		Choice motionChoices[2] = {
+		immut Choice motionChoices[2] = {
 			{ PIKIANIM_Gakkari, 0.5f },
 			{ PIKIANIM_Sagasu2, 0.5f },
 		};
@@ -3432,7 +3432,7 @@ void PikiEmotionState::init(Piki* piki)
 	} break;
 
 	case PikiEmotion::ShipPartCheer: {
-		Choice motionChoices[5] = {
+		immut Choice motionChoices[5] = {
 			{ PIKIANIM_Jump, 0.2f },   { PIKIANIM_Jump_B1, 0.2f }, { PIKIANIM_RotJump, 0.2f },
 			{ PIKIANIM_Rinbow, 0.2f }, { PIKIANIM_Gattu, 0.2f },
 		};
