@@ -205,23 +205,23 @@ public:
 	// 100AEBD0 in plugPiki
 	void startLook(Vector3f* other)
 	{
-		mLookatTarget = other;
+		mLookatPosPtr = other;
 
 		mLookTimer = 0;
 		mIsLooking = false;
 
-		mLookAtTarget.reset();
+		mLookAtCreature.reset();
 	}
 
 	void forceFinishLook()
 	{
-		mLookatTarget       = 0;
+		mLookatPosPtr       = 0;
 		mVerticalRotation   = 0.0f;
 		mHorizontalRotation = 0.0f;
 		mLookTimer          = 0;
 		mIsLooking          = false;
 
-		mLookAtTarget.reset();
+		mLookAtCreature.reset();
 	}
 
 	bool isFired() { return mFiredState == 1; }
@@ -257,8 +257,8 @@ public:
 	Creature* mRouteTargetCreature;       // _32C
 	bool mIsLooking;                      // _330
 	f32 _334;                             // _334
-	SmartPtr<Creature> mLookAtTarget;     // _338
-	Vector3f* mLookatTarget;              // _33C
+	SmartPtr<Creature> mLookAtCreature;   // _338
+	Vector3f* mLookatPosPtr;              // _33C
 	u8 mLookTimer;                        // _340
 	f32 mHorizontalRotation;              // _344
 	f32 mVerticalRotation;                // _348

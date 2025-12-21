@@ -1960,7 +1960,7 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 	case PIKIANIM_Wait:
 	case PIKIANIM_Iraira:
 	case PIKIANIM_Suwaru:
-		Creature* target = mLookAtTarget.getPtr();
+		Creature* target = mLookAtCreature.getPtr();
 		if (!isLooking()) {
 			if (!target) {
 				int rand = gsys->getRand(1.0f) * 2.0f;
@@ -1973,7 +1973,7 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 			}
 
 			startHimaLook(&target->mSRT.t);
-			mLookAtTarget.set(target);
+			mLookAtCreature.set(target);
 			return;
 		}
 
@@ -1992,7 +1992,7 @@ void Piki::startMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& moti
 				PRINT("++++++++++++ PIKI STICK TO AND START LOOK !\n");
 			}
 
-			mLookAtTarget.set(target);
+			mLookAtCreature.set(target);
 		}
 		return;
 
@@ -2297,7 +2297,7 @@ void Piki::collisionCallback(immut CollEvent& event)
 Piki::Piki(CreatureProp* prop)
     : Creature(prop)
 {
-	mLookatTarget = nullptr;
+	mLookatPosPtr = nullptr;
 	if (routeMgr) {
 		int numWP = routeMgr->getNumWayPoints('test');
 		if (numWP > 0) {
@@ -2461,8 +2461,8 @@ void Piki::init(Navi* navi)
 	mRouteHandle         = 0;
 	mUseAsyncPathfinding = false;
 	_528                 = 0.0f;
-	mLookAtTarget.clear();
-	mLookatTarget = nullptr;
+	mLookAtCreature.clear();
+	mLookatPosPtr = nullptr;
 	mIsLooking    = false;
 	forceFinishLook();
 	mEmotion          = PikiEmotion::None;
@@ -2567,9 +2567,9 @@ void Piki::updateLookCreature()
 		return;
 	}
 
-	Creature* target = mLookAtTarget.getPtr();
+	Creature* target = mLookAtCreature.getPtr();
 	if (target && (!target->isVisible() || !target->isAlive())) {
-		mLookAtTarget.reset();
+		mLookAtCreature.reset();
 		target = nullptr;
 	}
 
@@ -2577,7 +2577,7 @@ void Piki::updateLookCreature()
 	if (target) {
 		minDist = qdist2(mSRT.t.x, mSRT.t.z, target->mSRT.t.x, target->mSRT.t.z) - target->getBoundingSphereRadius();
 		if (minDist > 200.0f) {
-			mLookAtTarget.reset();
+			mLookAtCreature.reset();
 			target  = nullptr;
 			minDist = 128000.0f;
 		}
@@ -2599,13 +2599,13 @@ void Piki::updateLookCreature()
 
 	if (target != newTarget && gsys->getRand(1.0f) > 0.2f) {
 		if (target) {
-			mLookAtTarget.reset();
+			mLookAtCreature.reset();
 		}
 		if (gsys->getRand(1.0f) > 0.2f) {
 			newTarget = mNavi;
 		}
 
-		mLookAtTarget.set(newTarget);
+		mLookAtCreature.set(newTarget);
 	}
 }
 

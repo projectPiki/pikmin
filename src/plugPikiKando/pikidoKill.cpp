@@ -40,7 +40,7 @@ void Piki::doKill()
 		mUseAsyncPathfinding = 0;
 	}
 
-	mLookAtTarget.clear();
+	mLookAtCreature.clear();
 
 	if (mIsPanicked) {
 		mPanickedEffect->kill();

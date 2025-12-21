@@ -350,10 +350,10 @@ void ViewPiki::update()
  */
 void Piki::startHimaLook(Vector3f* pos)
 {
-	mLookatTarget = pos;
+	mLookatPosPtr = pos;
 	mLookTimer    = false;
 	mIsLooking    = false;
-	mLookAtTarget.reset();
+	mLookAtCreature.reset();
 	mIsLooking = true;
 	_334       = gsys->getRand(1.0f) * 3.0f + 4.0f;
 }
@@ -365,7 +365,7 @@ void Piki::startHimaLook(Vector3f* pos)
  */
 void Piki::finishLook()
 {
-	mLookatTarget = nullptr;
+	mLookatPosPtr = nullptr;
 	mLookTimer    = 10;
 	mIsLooking    = false;
 }
@@ -377,7 +377,7 @@ void Piki::finishLook()
  */
 bool Piki::isLooking()
 {
-	return mLookatTarget != nullptr;
+	return mLookatPosPtr != nullptr;
 }
 
 /*
@@ -391,8 +391,8 @@ void Piki::updateLook()
 	f32 rotationSpeed = 0.05f;
 	f32 horizontalDistance;
 	f32 verticalAngle;
-	if (mLookatTarget) {
-		Vector3f targetOffset = *mLookatTarget - mSRT.t;
+	if (mLookatPosPtr) {
+		Vector3f targetOffset = *mLookatPosPtr - mSRT.t;
 		horizontalAngle       = atan2f(targetOffset.x, targetOffset.z);
 		horizontalDistance    = std::sqrtf(targetOffset.x * targetOffset.x + targetOffset.z * targetOffset.z);
 		verticalAngle         = atan2f(targetOffset.y, horizontalDistance);
@@ -657,9 +657,9 @@ void ViewPiki::refresh(Graphics& gfx)
 
 	if ((AIPerf::useLOD && _528 < 1200.0f && aiCullable()) || !AIPerf::useLOD) {
 #if defined(VERSION_PIKIDEMO)
-		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed)
+		if ((mLookatPosPtr || mLookTimer) && getState() != PIKISTATE_Swallowed)
 #else
-		if ((mLookatTarget || mLookTimer) && getState() != PIKISTATE_Swallowed && mMode != PikiMode::ExitMode)
+		if ((mLookatPosPtr || mLookTimer) && getState() != PIKISTATE_Swallowed && mMode != PikiMode::ExitMode)
 #endif
 		{
 			updateLook();
