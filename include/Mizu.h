@@ -18,8 +18,8 @@ public:
 	/**
 	 * @brief Mizu genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
-	struct MizuProperties : public Parameters {
-		inline MizuProperties() // TODO
+	struct Parms : public Parameters {
+		inline Parms() // TODO
 		{
 		}
 
@@ -39,7 +39,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	MizuProperties mMizuProps; // _200
+	Parms mMizuProps; // _200
 };
 
 /**

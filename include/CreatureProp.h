@@ -15,8 +15,8 @@ struct CreatureProp {
 	/**
 	 * @brief TODO
 	 */
-	struct Properties : public Parameters {
-		inline Properties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mFriction(this, 0.5f, 0.0f, 1.0f, "s00", nullptr)       // 'friction'
 		    , mWallReflection(this, 0.5f, 0.0f, 1.0f, "s01", nullptr) // 'wallReflection'
 		    , mFaceDirAdjust(this, 0.25f, 0.0f, 1.0f, "s02", nullptr) // 'faceDirAdjust'
@@ -36,7 +36,7 @@ struct CreatureProp {
 	CreatureProp() { }
 
 	// _54 = VTBL
-	Properties mCreatureProps; // _00
+	Parms mCreatureProps; // _00
 
 	virtual void read(RandomAccessStream& input) { mCreatureProps.read(input); }; // _08
 };

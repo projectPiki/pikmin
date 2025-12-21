@@ -74,8 +74,8 @@ public:
 	 *
 	 * @note Offset comments are relative to SlimeProp for ease of use.
 	 */
-	struct SlimeProperties : public Parameters {
-		inline SlimeProperties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mDetectionRadius(this, 100.0f, 0.0f, 0.0f, "p00", nullptr)
 		    , mMaxMoveSpeed(this, 50.0f, 0.0f, 0.0f, "s00", nullptr)
 		    , mMinMoveSpeed(this, 20.0f, 0.0f, 0.0f, "s01", nullptr)
@@ -151,7 +151,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	SlimeProperties mSlimeProps; // _200
+	Parms mSlimeProps; // _200
 };
 
 /**
