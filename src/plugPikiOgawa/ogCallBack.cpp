@@ -38,7 +38,7 @@ zen::TextColorCallBack::TextColorCallBack(P2DPane* pane)
  * Address:	80198E18
  * Size:	0000C4
  */
-void zen::TextColorCallBack::setTargetColor(Colour& tCharColor, Colour& tGradColor, f32 duration)
+void zen::TextColorCallBack::setTargetColor(immut Colour& tCharColor, immut Colour& tGradColor, f32 duration)
 {
 	mTargetCharColor    = tCharColor;
 	mTargetGradColor    = tGradColor;

@@ -25,7 +25,7 @@ struct GaugeInfo : public CoreNode {
 	}
 
 	void update();
-	void showDigits(Vector3f, Colour&, int, f32, f32);
+	void showDigits(Vector3f, immut Colour&, int, f32, f32);
 	void refresh(Graphics&);
 
 	// unused/inlined:

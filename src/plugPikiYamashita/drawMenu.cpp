@@ -25,7 +25,7 @@ DEFINE_PRINT("drawMenu")
  * Address:	801C277C
  * Size:	0000AC
  */
-void zen::DrawMenuText::init(bool useNewColors, Colour& charColor, Colour& gradColor)
+void zen::DrawMenuText::init(bool useNewColors, immut Colour& charColor, immut Colour& gradColor)
 {
 	if (useNewColors) {
 		mBlendTimer = 0.5f;
@@ -94,7 +94,7 @@ void zen::DrawMenuText::setScale(f32 xScale, f32 yScale)
  * Address:	801C291C
  * Size:	0005C4
  */
-void zen::DrawMenuText::update(bool isIncreasing, Colour& charBlend, Colour& gradBlend)
+void zen::DrawMenuText::update(bool isIncreasing, immut Colour& charBlend, immut Colour& gradBlend)
 {
 	Colour newCharColor;
 	Colour newGradColor;

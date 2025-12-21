@@ -17,7 +17,7 @@ public:
 	TextColorCallBack(P2DPane* parent);
 
 	// Configures a new color transition with specified target colors and duration.
-	void setTargetColor(Colour& targetCharacterColour, Colour& targetGradientColour, f32 transitionDuration);
+	void setTargetColor(immut Colour& targetCharacterColour, immut Colour& targetGradientColour, f32 transitionDuration);
 
 private:
 	virtual bool invoke(P2DPane* UNUSED); // _08
