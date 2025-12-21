@@ -1814,7 +1814,7 @@ void RouteMgr::refresh(Graphics& gfx)
  * Address:	800A2E44
  * Size:	000224
  */
-static void drawBattenPoleSpec(Graphics& gfx, immut Vector3f& pos, f32 height, immut char* labelText, Colour& labelColor)
+static void drawBattenPoleSpec(Graphics& gfx, immut Vector3f& pos, f32 height, immut char* labelText, immut Colour& labelColor)
 {
 	Vector3f bottom(pos);
 	bottom.y = mapMgr->getMinY(bottom.x, bottom.z, true);

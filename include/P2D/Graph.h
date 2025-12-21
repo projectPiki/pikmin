@@ -37,7 +37,7 @@ public:
 	virtual void setScissor();   // _1C
 
 	void scissor(const PUTRect& pos);
-	void setColor(Colour&, Colour&, Colour&, Colour&);
+	void setColor(immut Colour&, immut Colour&, immut Colour&, immut Colour&);
 	void setLineWidth(u8 width);
 
 	// unused/inlined:
@@ -50,7 +50,7 @@ public:
 	void polylineTo(PUTPoint*, int);
 	void polylineTo(int*, int);
 
-	void setColor(Colour& colour) { setColor(colour, colour, colour, colour); }
+	void setColor(immut Colour& colour) { setColor(colour, colour, colour, colour); }
 
 protected:
 	virtual void setLookat() { } // _20

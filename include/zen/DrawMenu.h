@@ -34,9 +34,9 @@ public:
 		mTextPane   = 0;
 	}
 
-	void init(bool useNewColors, Colour& charColor, Colour& gradColor);
+	void init(bool useNewColors, immut Colour& charColor, immut Colour& gradColor);
 	void setPane(P2DPane* textPane, P2DPane* parentPane);
-	void update(bool, Colour&, Colour&);
+	void update(bool, immut Colour&, immut Colour&);
 
 	// unused/inlined:
 	void setScale(f32 xScale, f32 yScale);
@@ -103,9 +103,9 @@ public:
 		return isNotPic;
 	}
 
-	void init(bool p1, Colour& p2, Colour& p3) { mText->init(p1, p2, p3); }
+	void init(bool p1, immut Colour& p2, immut Colour& p3) { mText->init(p1, p2, p3); }
 
-	void update(bool p1, Colour& p2, Colour& p3) { mText->update(p1, p2, p3); }
+	void update(bool p1, immut Colour& p2, immut Colour& p3) { mText->update(p1, p2, p3); }
 
 	int getIconLPosH() { return mIconLPane->getPosH(); }
 	int getIconLPosV() { return mIconLPane->getPosV(); }

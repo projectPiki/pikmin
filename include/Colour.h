@@ -33,7 +33,7 @@ struct Colour {
 	// unused/inlined:
 	void write(Stream&);
 
-	void lerpTo(Colour& target, f32 ratio, Colour& outColour)
+	void lerpTo(immut Colour& target, f32 ratio, Colour& outColour)
 	{
 		outColour.r = (f32(target.r) - f32(r)) * ratio + f32(r);
 		outColour.g = (f32(target.g) - f32(g)) * ratio + f32(g);

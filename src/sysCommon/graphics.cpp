@@ -1079,7 +1079,7 @@ int TexImg::calcDataSize(int format, int width, int height)
  * Address:	........
  * Size:	00005C
  */
-void TexImg::setColour(Colour&)
+void TexImg::setColour(immut Colour&)
 {
 	// UNUSED FUNCTION
 }

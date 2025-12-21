@@ -130,7 +130,7 @@ void P2DGrafContext::place(const PUTRect& position)
  * Address:	801AFB78
  * Size:	0000AC
  */
-void P2DGrafContext::setColor(Colour& p1, Colour& p2, Colour& p3, Colour& p4)
+void P2DGrafContext::setColor(immut Colour& p1, immut Colour& p2, immut Colour& p3, immut Colour& p4)
 {
 	_18 = p1;
 	_1C = p2;
