@@ -3487,7 +3487,7 @@ f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 	Matrix4f& orig = getAnimMatrix(index);
 	worldPos.multMatrix(getAnimMatrix(index));
 	worldPos.multMatrix(gfx.mCamera->mInverseLookAtMtx);
-	return ((Vector3f&)orig).length();
+	return reinterpret_cast<Vector3f&>(orig).length();
 }
 
 /*
