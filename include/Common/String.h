@@ -16,19 +16,11 @@ struct String {
 	String(int length) { init(length); }
 	String(char* str, int length) { init(str, length); }
 
-	int getLength() immut;
-
-	// unused/inlined:
-	f32 toFloat();
-	int toInt();
-	char* dup(char*);
-	bool contains(char*, char*);
-	char* copy(char*, char*);
-	bool copyUntil(char*, char*, char, char**);
-	u32 calcHash(char*);
-	u32 calcHash();
-	int toInt(char*);
-	bool isSame(immut char*);
+	void init(char* str)
+	{
+		mString = str;
+		// `mLength` is uninitialized!
+	}
 
 	void init(int length)
 	{
@@ -42,9 +34,43 @@ struct String {
 		mLength = length;
 	}
 
+	static bool equals(char* lhs, char* rhs) { return isSame(lhs, rhs); }
+
 	static bool isSame(char*, char*);
-	static void concat(char*, char*);
+	bool isSame(immut char*);
+	bool isSame(String* other) { return isSame(other->mString); }
+
+	static bool contains(char*, char*);
+	static bool contains(char* str, char c)
+	{
+		char substr[] = { c, '\0' };
+		return contains(str, substr);
+	}
+	bool contains(char* substr) { return contains(mString, substr); }
+
+	static char* dup(char*);
+	char* dup() { return dup(mString); }
+
+	static bool isWhiteSpace(char c)
+	{
+		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c < ' ';
+	}
+
+	// There isn't a static version of this function (probably because it's unimplemented).
+	float toFloat();
+
+	static int toInt(char*);
+	int toInt();
+
 	static int getLength(char*);
+	int getLength() immut;
+
+	static u32 calcHash(char*);
+	u32 calcHash();
+
+	static char* copy(char*, char*);
+	static bool copyUntil(char*, char*, char, char**);
+	static void concat(char*, char*);
 
 	int mLength;   // _00
 	char* mString; // _04
