@@ -50,7 +50,7 @@ void P2DPane::printTagName(bool doPrint)
  * Address:	801B06B8
  * Size:	000048
  */
-void P2DPane::drawSelf(int, int, Matrix4f* drawMtx)
+void P2DPane::drawSelf(int, int, immut Matrix4f* drawMtx)
 {
 	if (mCallBack) {
 		Matrix4f posMtx;

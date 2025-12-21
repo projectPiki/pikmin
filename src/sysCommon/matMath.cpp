@@ -52,7 +52,7 @@ void Matrix4f::makeIdentity()
  * Address:	........
  * Size:	0000D8
  */
-void Matrix4f::blend(Matrix4f&, f32)
+void Matrix4f::blend(immut Matrix4f&, f32)
 {
 	// UNUSED FUNCTION
 }

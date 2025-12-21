@@ -1380,7 +1380,7 @@ void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 			STACK_PAD_VAR(1);
 			parts->mAnimator.updateAnimation(parts->mMotionSpeed, 30.0f);
 			parts->mAnimator.updateContext();
-			Matrix4f& temp = shape->getAnimMatrix(parts->mRepairAnimJointIndex);
+			immut Matrix4f& temp = shape->getAnimMatrix(parts->mRepairAnimJointIndex);
 			parts->mRepairEffectPosition.set(0.0f, 0.0f, 0.0f);
 			shape->calcJointWorldPos(gfx, parts->mRepairAnimJointIndex, parts->mRepairEffectPosition);
 			Matrix4f mtx = temp;
@@ -1393,7 +1393,7 @@ void PlayerState::renderParts(Graphics& gfx, Shape* shape)
 	if (mIsNaviPilot) {
 		mOlimarAnimMgr.updateAnimation(30.0f);
 		mOlimarAnimMgr.updateContext();
-		Matrix4f& mtx = shape->getAnimMatrix(11);
+		immut Matrix4f& mtx = shape->getAnimMatrix(11);
 		Matrix4f mtx2;
 		mtx2.makeSRT(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(0.0f, PI, 0.0f), Vector3f(0.0f, -10.0f, 0.0f));
 		Matrix4f mtx3;

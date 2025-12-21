@@ -182,7 +182,7 @@ void P2DPicture::drawSelf(int x, int y)
  * Address:	801B1D7C
  * Size:	000078
  */
-void P2DPicture::drawSelf(int x, int y, Matrix4f* mtx)
+void P2DPicture::drawSelf(int x, int y, immut Matrix4f* mtx)
 {
 	if (mTextures[0]) {
 		drawFullSet(mGlobalBounds.mMinX + x, mGlobalBounds.mMinY + y, getWidth(), getHeight(), mBinding, mMirror, mTumble, mWrapS, mWrapT,
@@ -196,7 +196,7 @@ void P2DPicture::drawSelf(int x, int y, Matrix4f* mtx)
  * Size:	000664
  */
 void P2DPicture::drawFullSet(int x, int y, int width, int height, P2DBinding binding, P2DMirror mirror, bool tumble, P2DWrapmode wrapS,
-                             P2DWrapmode wrapT, Matrix4f* mtx)
+                             P2DWrapmode wrapT, immut Matrix4f* mtx)
 {
 	int outX = x;
 	int outY = y;
@@ -352,7 +352,7 @@ void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
  * Size:	000234
  */
 void P2DPicture::drawTexCoord(int x, int y, int width, int height, f32 p5, f32 p6, f32 p7, f32 p8, f32 p9, f32 p10, f32 p11, f32 p12,
-                              Matrix4f* mtx)
+                              immut Matrix4f* mtx)
 {
 	for (int i = 0; i < mTextureCount; i++) {
 		load(i);

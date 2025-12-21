@@ -102,7 +102,7 @@ void P2DTextBox::drawSelf(int param1, int param2)
  * Address:	801B47A8
  * Size:	000198
  */
-void P2DTextBox::drawSelf(int param1, int param2, Matrix4f* mtx)
+void P2DTextBox::drawSelf(int param1, int param2, immut Matrix4f* mtx)
 {
 	if (mFont == nullptr) {
 		printTagName(false);

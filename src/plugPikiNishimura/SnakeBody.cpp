@@ -1127,7 +1127,7 @@ void SnakeBody::setDeadScale(Matrix4f* animMatrices)
  * Address:	80162AE4
  * Size:	0001E0
  */
-void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, Matrix4f* animMatrices)
+void SnakeBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
 {
 	Matrix4f mtx1; // unused? lol.
 	Matrix4f inv8;

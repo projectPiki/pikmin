@@ -2333,7 +2333,7 @@ Matrix4f& BTeki::getCameraAnimationMatrix(int idx)
  */
 void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& mtx2)
 {
-	Matrix4f& animMtx = getCameraAnimationMatrix(idx);
+	immut Matrix4f& animMtx = getCameraAnimationMatrix(idx);
 	NMatrix4f tmp;
 	tmp.construct(animMtx);
 	tmp.makeIdentRow(3);

@@ -50,7 +50,7 @@ struct KSegment {
 // Global utility functions:
 bool isNan(f32 x);
 void makePostureMatrix(Vector3f& col0, Vector3f& col1, Vector3f& col2, Matrix4f& outMtx);
-f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, Matrix4f& inertiaTensor, Vector3f& relativeVel,
+f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, immut Matrix4f& inertiaTensor, Vector3f& relativeVel,
                 Vector3f& separationVel);
 Vector3f CRSpline(f32 t, Vector3f* ctrlPts);
 Vector3f CRSplineTangent(f32 t, Vector3f* ctrlPts);

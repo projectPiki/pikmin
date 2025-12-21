@@ -288,9 +288,9 @@ struct AnimDck : public AnimData {
 	{
 	}
 
-	virtual void read(RandomAccessStream&);                                  // _0C
-	virtual void extractSRT(SRT&, int, AnimDataInfo*, f32);                  // _10
-	virtual void makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
+	virtual void read(RandomAccessStream&);                                        // _0C
+	virtual void extractSRT(SRT&, int, AnimDataInfo*, f32);                        // _10
+	virtual void makeAnimSRT(int, immut Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
 
 	void parse(CmdStream*);
 	void getAnimInfo(CmdStream*);

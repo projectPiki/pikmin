@@ -546,7 +546,7 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
  * Address:	........
  * Size:	000004
  */
-static void printMatrix(immut char* name, Matrix4f& mat)
+static void printMatrix(immut char* name, immut Matrix4f& mat)
 {
 	// I can't find this function in the DLL at the moment and nothing in this decomp currently uses it.  See also: goalItem.cpp where this
 	// implementation is copied from and dynCreature.cpp wherein the function has known uses but the DLL shows an empty implementation.

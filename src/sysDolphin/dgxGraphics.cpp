@@ -891,7 +891,7 @@ void DGXGraphics::initProjTex(bool set, LightCamera* cam)
 		MTXLightPerspective(mProjectionTextureMatrix, cam->mFov, cam->mAspectRatio, cam->mProjectionScale.x, -cam->mProjectionScale.y, 0.5f,
 		                    0.5f);
 #endif
-		Matrix4f& camMtx = cam->mLookAtMtx;
+		immut Matrix4f& camMtx = cam->mLookAtMtx;
 		PSMTXConcat(mProjectionTextureMatrix, camMtx.mMtx, mProjectionTextureMatrix);
 		PSMTXConcat(mProjectionTextureMatrix, Matrix4f::ident.mMtx, mtx);
 		GXLoadTexMtxImm(mtx, 30, GX_MTX3x4);

@@ -182,9 +182,9 @@ protected:
 		mtx.makeIdentity();
 		drawSelf(x, y, &mtx);
 	}
-	virtual void drawSelf(int x, int y, Matrix4f* transform); // _30
-	virtual P2DPane* search(u32 tag, bool doPanicOnNull);     // _34
-	virtual void makeMatrix(int x, int y);                    // _38
+	virtual void drawSelf(int x, int y, immut Matrix4f* transform); // _30
+	virtual P2DPane* search(u32 tag, bool doPanicOnNull);           // _34
+	virtual void makeMatrix(int x, int y);                          // _38
 
 	void update();
 	void draw(int xOffs, int yOffs, const P2DGrafContext* grafContext, bool applyScissor);

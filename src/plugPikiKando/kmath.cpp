@@ -58,7 +58,7 @@ void makePostureMatrix(Vector3f& col0, Vector3f& col1, Vector3f& col2, Matrix4f&
  * Address:	801127BC
  * Size:	0001B0
  */
-f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, Matrix4f& inertiaTensor, Vector3f& relativeVel,
+f32 calcImpulse(Vector3f& relativePos, f32 mass, Vector3f& collisionNormal, immut Matrix4f& inertiaTensor, Vector3f& relativeVel,
                 Vector3f& separationVel)
 {
 	f32 normalSpeed    = collisionNormal.DP(relativeVel);

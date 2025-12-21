@@ -175,7 +175,7 @@ struct ActorInstance : public CoreNode {
 	void exitInstance();
 	void initInstance();
 	void checkEventKeys(f32, f32, Vector3f&);
-	void refresh(Matrix4f&, Graphics&, f32*);
+	void refresh(immut Matrix4f&, Graphics&, f32*);
 
 	// unused/inlined:
 	void onceInit();

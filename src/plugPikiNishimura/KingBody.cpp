@@ -485,7 +485,7 @@ void KingBody::makeBlending(Matrix4f* animMatrices)
  * Address:	801744F0
  * Size:	000230
  */
-void KingBody::copyJointPosition(Matrix4f* animMatrices)
+void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 {
 	// TODO: sort out what these joints correspond to
 	mOldFootPosList[0] = mFootPosList[0];
@@ -518,7 +518,7 @@ void KingBody::copyJointPosition(Matrix4f* animMatrices)
  * Address:	........
  * Size:	000080
  */
-void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, Matrix4f* animMatrices)
+void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
 {
 	for (int i = 0; i < 66; i++) {
 		Matrix4f& jointMtx = shapeObj->mShape->getAnimMatrix(i);

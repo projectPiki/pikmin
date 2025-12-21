@@ -914,7 +914,7 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
  * Address:	80072234
  * Size:	000F10
  */
-void ActorInstance::refresh(Matrix4f& mtx, Graphics& gfx, f32* p3)
+void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 {
 	// feels like a typo.
 	if ((mFlags & CAF_AllObjMasks) && !(gameflow.mMoviePlayer->mMaskFlags & (mFlags & CAF_AllObjMasks))) {

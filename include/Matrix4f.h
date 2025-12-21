@@ -33,7 +33,7 @@ struct Matrix4f {
 	void makeVQS(immut Vector3f&, immut Quat&, immut Vector3f&);
 
 	// unused/inlined:
-	void blend(Matrix4f&, f32);
+	void blend(immut Matrix4f&, f32);
 	void makeOrtho(f32, f32, f32, f32, f32, f32, f32);
 	void makePerspective(f32 fovY, f32 aspectRatio, f32 nearZ, f32 farZ);
 	void makeBallRotate(Vector3f&);
@@ -70,9 +70,9 @@ struct Matrix4f {
 		}
 	}
 
-	void getRow(int rowNum, Vector3f& row) { row.set(mMtx[rowNum][0], mMtx[rowNum][1], mMtx[rowNum][2]); }
+	void getRow(int rowNum, Vector3f& row) immut { row.set(mMtx[rowNum][0], mMtx[rowNum][1], mMtx[rowNum][2]); }
 
-	void getColumn(int colNum, Vector3f& col) { col.set(mMtx[0][colNum], mMtx[1][colNum], mMtx[2][colNum]); }
+	void getColumn(int colNum, Vector3f& col) immut { col.set(mMtx[0][colNum], mMtx[1][colNum], mMtx[2][colNum]); }
 
 	void setRow(int rowNum, const Vector3f& row)
 	{
