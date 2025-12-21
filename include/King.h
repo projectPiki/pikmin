@@ -312,8 +312,8 @@ private:
 	void makeAnimation(BossShapeObject*, Graphics&, Matrix4f*);
 	void checkBlendingParm(Matrix4f*);
 	void makeBlending(Matrix4f*);
-	void copyJointPosition(Matrix4f*);
-	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
+	void copyJointPosition(immut Matrix4f*);
+	void returnJoint(BossShapeObject*, Graphics&, immut Matrix4f*);
 
 	King* mKing;                                                  ///< _00
 	bool mIsBlending;                                             ///< _04

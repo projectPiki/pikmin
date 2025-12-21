@@ -31,7 +31,7 @@ DynParticleHeap* particleHeap;
  * Address:	........
  * Size:	000004
  */
-static void printMatrix(immut char* name, Matrix4f& mat)
+static void printMatrix(immut char* name, immut Matrix4f& mat)
 {
 	// This implementation borrowed from goalItem.cpp inflates the stack too much to be left in matching builds.
 	// According to the DLL, this TU's implementation of this function was genuinely empty / commented-out.

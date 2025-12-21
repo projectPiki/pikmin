@@ -58,12 +58,12 @@ public:
 	Texture* loadResource(immut char*);
 
 protected:
-	virtual void drawSelf(int, int);            // _2C
-	virtual void drawSelf(int, int, Matrix4f*); // _30
+	virtual void drawSelf(int, int);                  // _2C
+	virtual void drawSelf(int, int, immut Matrix4f*); // _30
 	void drawContents(const PUTRect&);
 
 private:
-	void draw_private(const PUTRect&, const PUTRect&, Matrix4f*);
+	void draw_private(const PUTRect&, const PUTRect&, immut Matrix4f*);
 
 	// _00     = VTBL
 	// _00-_EC = P2DPane

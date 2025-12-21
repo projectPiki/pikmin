@@ -229,8 +229,8 @@ void Joint::render(Graphics& gfx)
 
 		gfx.useMaterial(matPoly->mMaterial);
 		for (int j = 0; j < mesh->mMtxGroupCount; ++j) {
-			MtxGroup* mtxGroup        = &mesh->mMtxGroupList[j];
-			Matrix4f* matrixArray[10] = { &Matrix4f::ident };
+			MtxGroup* mtxGroup              = &mesh->mMtxGroupList[j];
+			immut Matrix4f* matrixArray[10] = { &Matrix4f::ident };
 			for (int k = 0; k < mtxGroup->mDependencyLength; ++k) {
 				int depIndex = mtxGroup->mDependencyList[k];
 				if (depIndex == -1)
@@ -238,7 +238,7 @@ void Joint::render(Graphics& gfx)
 
 				VtxMatrix* vtxMatrix = &mParentShape->mVtxMatrixList[depIndex];
 				// A lot wrong here.
-				Matrix4f* matrix
+				immut Matrix4f* matrix
 				    = mParentShape->mCurrentAnimation->m_state
 				        ? BaseShape::getAnimMatrix(mParentShape,
 				                                   vtxMatrix->mIndex + (vtxMatrix->mHasPartialWeights ? 0 : mParentShape->mJointCount))
@@ -259,7 +259,7 @@ void Joint::render(Graphics& gfx)
 					int* normalIndex   = faceNode->mNrmIdx;
 					int* texCoordIndex = faceNode->mTexCoords[0];
 					for (int n = 0; n < faceNode->mFaceCount; ++n) {
-						Matrix4f* matrix            = matrixIndex ? matrixArray[*matrixIndex++] : matrixArray[0];
+						immut Matrix4f* matrix      = matrixIndex ? matrixArray[*matrixIndex++] : matrixArray[0];
 						Vector3f* vertex            = &vertices[*vertexIndex++];
 						Vector3f* transformedVertex = &unk_101C8B68++;
 						vertex->multMatrixTo(*matrix, *transformedVertex);
@@ -1569,7 +1569,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
  * Address:	8002EC1C
  * Size:	0000CC
  */
-void AnimDck::makeAnimSRT(int a, Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
+void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
 {
 	SRT& srt = anim->mSRT;
 	extractSRT(srt, a, anim, time);
@@ -3378,8 +3378,8 @@ void BaseShape::calcWeightedMatrices()
 			Matrix4f weighted;
 			PSMTXConcat(getAnimMatrix(idx).mMtx, mJointList[idx].mInverseAnimMatrix.mMtx, weighted.mMtx);
 
-			register Matrix4f& mtx1 = weighted;
-			register Matrix4f& mtx2 = mAnimMatrices[mJointCount + i];
+			register immut Matrix4f& mtx1 = weighted;
+			register Matrix4f& mtx2       = mAnimMatrices[mJointCount + i];
 
 			f32 weights[2]         = {};
 			register f32* weightsR = weights;
@@ -3484,10 +3484,10 @@ f32 BaseShape::calcJointWorldPos(Graphics& gfx, int index, Vector3f& worldPos)
 		return 0.0f;
 	}
 
-	Matrix4f& orig = getAnimMatrix(index);
+	immut Matrix4f& orig = getAnimMatrix(index);
 	worldPos.multMatrix(getAnimMatrix(index));
 	worldPos.multMatrix(gfx.mCamera->mInverseLookAtMtx);
-	return reinterpret_cast<Vector3f&>(orig).length();
+	return reinterpret_cast<immut Vector3f&>(orig).length();
 }
 
 /*
@@ -3502,7 +3502,7 @@ void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 	}
 
 	getAnimMatrix(index);
-	Matrix4f& animMtx = getAnimMatrix(index);
+	immut Matrix4f& animMtx = getAnimMatrix(index);
 	worldDir.rotate(animMtx);
 	worldDir.rotate(gfx.mCamera->mInverseLookAtMtx);
 }

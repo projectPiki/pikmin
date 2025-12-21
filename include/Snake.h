@@ -241,7 +241,7 @@ private:
 	void setDeadPattern01(Matrix4f*);
 	void setDeadPattern02(Matrix4f*);
 	void setDeadScale(Matrix4f*);
-	void returnJoint(BossShapeObject*, Graphics&, Matrix4f*);
+	void returnJoint(BossShapeObject*, Graphics&, immut Matrix4f*);
 
 public:
 	Snake* mSnake;                                               // _00

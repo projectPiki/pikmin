@@ -80,10 +80,10 @@ protected:
 	bool insert(Texture*, u8, f32);
 	void initinfo();
 
-	virtual void drawSelf(int, int);            // _2C
-	virtual void drawSelf(int, int, Matrix4f*); // _30
-	void drawFullSet(int, int, int, int, P2DBinding, P2DMirror, bool, P2DWrapmode, P2DWrapmode, Matrix4f*);
-	void drawTexCoord(int, int, int, int, f32, f32, f32, f32, f32, f32, f32, f32, Matrix4f*);
+	virtual void drawSelf(int, int);                  // _2C
+	virtual void drawSelf(int, int, immut Matrix4f*); // _30
+	void drawFullSet(int, int, int, int, P2DBinding, P2DMirror, bool, P2DWrapmode, P2DWrapmode, immut Matrix4f*);
+	void drawTexCoord(int, int, int, int, f32, f32, f32, f32, f32, f32, f32, f32, immut Matrix4f*);
 
 	void setTevMode();
 	bool append(Texture* texture, f32 p2) { return insert(texture, mTextureCount, p2); }

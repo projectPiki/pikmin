@@ -113,7 +113,7 @@ void P2DWindow::drawSelf(int x, int y)
  * Address:	801B3C98
  * Size:	000098
  */
-void P2DWindow::drawSelf(int x, int y, Matrix4f* mtx)
+void P2DWindow::drawSelf(int x, int y, immut Matrix4f* mtx)
 {
 	PUTRect bounds(mGlobalBounds.mMinX, mGlobalBounds.mMinY, mGlobalBounds.mMaxX, mGlobalBounds.mMaxY);
 	bounds.add(x, y);
@@ -126,7 +126,7 @@ void P2DWindow::drawSelf(int x, int y, Matrix4f* mtx)
  * Address:	801B3D30
  * Size:	000394
  */
-void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds, Matrix4f* transform)
+void P2DWindow::draw_private(const PUTRect& bounds, const PUTRect& windowBounds, immut Matrix4f* transform)
 {
 	if (bounds.getWidth() >= mMinWidth && bounds.getHeight() >= mMinHeight) {
 		Matrix4f mtx1;

@@ -55,8 +55,8 @@ public:
 	int getCursorY() { return mCursorY; }
 
 protected:
-	virtual void drawSelf(int, int);            // _2C
-	virtual void drawSelf(int, int, Matrix4f*); // _30
+	virtual void drawSelf(int, int);                  // _2C
+	virtual void drawSelf(int, int, immut Matrix4f*); // _30
 
 private:
 	// _00     = VTBL
