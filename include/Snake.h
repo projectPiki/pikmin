@@ -56,8 +56,8 @@ public:
 	 *
 	 * @note Offset comments are relative to SnakeProp for ease of use.
 	 */
-	struct SnakeProperties : public Parameters {
-		inline SnakeProperties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mType1DetectionRadius(this, 150.0f, 0.0f, 500.0f, "p00", "")
 		    , mType1AppearDist(this, 100.0f, 0.0f, 300.0f, "p01", "")
 		    , mType2AppearFrontDist(this, 200.0f, 0.0f, 500.0f, "u00", "2:Front Length")
@@ -173,7 +173,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	SnakeProperties mSnakeProps; // _200
+	Parms mSnakeProps; // _200
 };
 
 // https://intns.github.io/media/snake_joints.png

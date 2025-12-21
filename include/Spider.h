@@ -44,8 +44,8 @@ public:
 	 *
 	 * @note Offset comments are relative to SpiderProp for ease of use.
 	 */
-	struct SpiderProperties : public Parameters {
-		inline SpiderProperties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : _204(this, 1.5f, 0.1f, 10.0f, "p10", "Motion Speed (UP)")
 		    , _214(this, 0.113f, 0.0f, 0.5f, "p11", "Speed Down")
 		    , _224(this, 0.37f, 0.1f, 1.0f, "p12", "")
@@ -171,7 +171,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	SpiderProperties mSpiderProps; // _200
+	Parms mSpiderProps; // _200
 };
 
 /**

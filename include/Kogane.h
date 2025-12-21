@@ -37,8 +37,8 @@ public:
 	 *
 	 * @note Offset comments are relative to KoganeProp for ease of use.
 	 */
-	struct KoganeProperties : public Parameters {
-		inline KoganeProperties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mAppearTriggerRadius(this, 30.0f, 0.0f, 0.0f, "o00", nullptr)
 		    , mAppearScaleUpSpeed(this, 6.0f, 0.0f, 0.0f, "o01", nullptr)
 		    , mDisappearScaleDownSpeed(this, 6.0f, 0.0f, 0.0f, "o02", nullptr)
@@ -88,7 +88,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	KoganeProperties mKoganeProps; // _200
+	Parms mKoganeProps; // _200
 };
 
 /**

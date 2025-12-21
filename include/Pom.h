@@ -24,8 +24,8 @@ public:
 	 *
 	 * @note Offset comments are relative to PomProp for ease of use.
 	 */
-	struct PomProperties : public Parameters {
-		inline PomProperties() // TODO
+	struct Parms : public Parameters {
+		inline Parms() // TODO
 		    : mSquashAmount(this, 0.2f, 0.0f, 0.0f, "s00", nullptr)
 		    , mSquashPersistence(this, 0.5f, 0.0f, 0.0f, "s01", nullptr)
 		    , mSquashMultiplier(this, 0.15f, 0.0f, 0.0f, "s02", nullptr)
@@ -69,7 +69,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	PomProperties mPomProps; // _200
+	Parms mPomProps; // _200
 };
 
 /**

@@ -64,8 +64,8 @@ public:
 	 *
 	 * @note Offset comments are relative to KingProp for ease of use.
 	 */
-	struct KingProperties : public Parameters {
-		inline KingProperties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mKingWalkSpeed(this, 60.0f, 0.0f, 0.0f, "o00", nullptr)
 		    , mWalkingTurnSpeed(this, 0.5f, 0.0f, 0.0f, "o01", nullptr)
 		    , mTurningTurnSpeed(this, 0.5f, 0.0f, 0.0f, "o02", nullptr)
@@ -169,7 +169,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	KingProperties mKingProps; // _200
+	Parms mKingProps; // _200
 };
 
 /**
@@ -180,8 +180,8 @@ public:
 	/**
 	 * @brief KingBack genuinely doesn't have any specific properties, but still needs this. Go figure.
 	 */
-	struct KingBackProperties : public Parameters {
-		inline KingBackProperties() // TODO
+	struct Parms : public Parameters {
+		inline Parms() // TODO
 		{
 		}
 
@@ -201,7 +201,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	KingBackProperties mKingBackProps; // _200
+	Parms mKingBackProps; // _200
 };
 
 /**

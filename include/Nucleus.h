@@ -26,8 +26,8 @@ public:
 	 *
 	 * @note Offset comments are relative to NucleusProp for ease of use.
 	 */
-	struct NucleusProperties : public Parameters {
-		inline NucleusProperties() // TODO
+	struct Parms : public Parameters {
+		inline Parms() // TODO
 		{
 		}
 
@@ -47,7 +47,7 @@ public:
 	// _1EC      = VTBL 2
 	// _00-_1EC  = BossProp
 	// _1EC-_200 = CoreNode
-	NucleusProperties mNucleusProps; // _200
+	Parms mNucleusProps; // _200
 };
 
 /**

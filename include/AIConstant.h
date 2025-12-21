@@ -19,8 +19,8 @@ struct AIConstant : public Node {
 	 *
 	 * @note Offset comments are relative to AIConstant for ease of use.
 	 */
-	struct Constants : public Parameters {
-		inline Constants()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mGravity(this, 550.0f, 0.0f, 0.0f, "p00", nullptr)
 		    , _34(this, 1, 0, 0, "p01", nullptr)
 		    , _44(this, 1, 0, 0, "p02", nullptr)
@@ -86,7 +86,7 @@ struct AIConstant : public Node {
 
 	// _00     = VTBL
 	// _00-_20 = Node
-	Constants mConstants; // _20
+	Parms mConstants; // _20
 };
 
 #endif

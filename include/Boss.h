@@ -66,8 +66,8 @@ public:
 	 *
 	 * @note Offset comments are relative to BossProp for ease of use.
 	 */
-	struct Properties : public Parameters {
-		inline Properties()
+	struct Parms : public Parameters {
+		inline Parms()
 		    : mTerritoryRadius(this, 200.0f, 0.0f, 0.0f, "b00", nullptr)
 		    , mMaxWaitRadius(this, 100.0f, 0.0f, 0.0f, "b01", nullptr)
 		    , mSearchRadius(this, 100.0f, 0.0f, 0.0f, "b02", nullptr)
@@ -134,7 +134,7 @@ public:
 
 	// _54     = VTBL
 	// _00-_58 = CreatureProp
-	Properties mBossProps; // _58
+	Parms mBossProps; // _58
 };
 
 /**
