@@ -15,7 +15,7 @@ const f32 zen::DrawLifeCircle::TRI_NUM = 128.0f;
 void zen::zenGraphics::drawOneTri(immut Vector3f* vertices, immut Colour& color)
 {
 	GXBegin(GX_TRIANGLEFAN, GX_VTXFMT0, 3);
-	u32 gxColor = reinterpret_cast<immut u32&>(color);
+	u32 gxColor = *reinterpret_cast<immut u32*>(&color);
 	for (int i = 0; i < 3; i++, vertices++) {
 		GXPosition3f32(vertices->x, vertices->y, vertices->z);
 		GXColor1u32(gxColor);
