@@ -215,7 +215,7 @@ public:
 
 	void forceFinishLook()
 	{
-		mLookatPosPtr       = 0;
+		mLookatPosPtr       = nullptr;
 		mVerticalRotation   = 0.0f;
 		mHorizontalRotation = 0.0f;
 		mLookTimer          = 0;

@@ -505,9 +505,14 @@ void Boss::killStickToMouthPiki()
  * Address:	........
  * Size:	000050
  */
-bool Boss::checkInWater(Vector3f&)
+bool Boss::checkInWater(Vector3f& pos)
 {
-	// UNUSED FUNCTION
+	// UNUSED FUNCTION (Matching by size)
+	CollTriInfo* tri = mapMgr->getCurrTri(pos.x, pos.z, true);
+	if (tri && MapCode::getAttribute(tri) == ATTR_Water) {
+		return true;
+	}
+	return false;
 }
 
 /*

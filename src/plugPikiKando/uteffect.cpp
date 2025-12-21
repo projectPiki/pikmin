@@ -464,7 +464,7 @@ void BurnEffect::emit(EffectParm& parm)
 	if (mEfxA) {
 		mEfxA->setEmitPosPtr(parm.mPositionRef);
 		mEfxA->setOrientedNormalVector(Vector3f(1.0f, 0.0f, 0.0f));
-		Vector3f vel(_0C[0]);
+		Vector3f vel(*_0C);
 		vel.y = 0.0f;
 		vel.multiply(0.01f);
 		mEfxA->setAirField(Vector3f(vel), true);
@@ -473,7 +473,7 @@ void BurnEffect::emit(EffectParm& parm)
 	mEfxB = effectMgr->create(EffectMgr::EFF_Piki_FireSparkles, *parm.mPositionRef, this, nullptr);
 	if (mEfxB) {
 		mEfxB->setEmitPosPtr(parm.mPositionRef);
-		Vector3f vel(_0C[0]);
+		Vector3f vel(*_0C);
 		vel.y = 0.0f;
 		vel.multiply(0.01f);
 		mEfxB->setAirField(Vector3f(vel), true);
