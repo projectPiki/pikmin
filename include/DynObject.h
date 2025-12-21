@@ -25,12 +25,12 @@ struct DynObjBody : public RigidBody {
 		RigidBody::initDimensions(x, y, z);
 		mMass = (x / 2) * (y / 2) * (z / 2) * 0.000075f;
 	}
-	virtual void render(Graphics&);                                       // _18
-	virtual void computeForces(int, f32);                                 // _34
-	virtual void integrate(int, int, f32);                                // _38
-	virtual void initRender(int);                                         // _5C
-	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&); // _70
-	virtual void applyVelocity(Plane&, immut Vector3f&, immut Vector3f&); // _74
+	virtual void render(Graphics&);                                             // _18
+	virtual void computeForces(int, f32);                                       // _34
+	virtual void integrate(int, int, f32);                                      // _38
+	virtual void initRender(int);                                               // _5C
+	virtual void touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&); // _70
+	virtual void applyVelocity(immut Plane&, immut Vector3f&, immut Vector3f&); // _74
 
 	void applyWorldSpring(int, int, immut Vector3f&);
 	void initBodyCollisions();
@@ -64,7 +64,7 @@ struct DynObjBridge : public DynObjBody {
  */
 struct DynObjPushable : public DynObjBody {
 	virtual void render(Graphics&);                                          // _18
-	virtual void touchCallback(Plane&, immut Vector3f&, immut Vector3f&) { } // _70
+	virtual void touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&) { } // _70
 
 	// _00        = VTBL
 	// _00-_1331C = DynObjBody

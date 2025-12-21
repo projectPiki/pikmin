@@ -413,7 +413,7 @@ void DynMapObject::nextState()
  * Address:	800621C8
  * Size:	00003C
  */
-void DynMapObject::touchCallback(Plane&, immut Vector3f&, immut Vector3f&)
+void DynMapObject::touchCallback(immut Plane&, immut Vector3f&, immut Vector3f&)
 {
 	switch (mState) {
 	case 0:
@@ -511,7 +511,7 @@ static f32 Kdl = 1.25f;
  * Address:	8006255C
  * Size:	000030
  */
-void DynCollObjBody::touchCallback(Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
+void DynCollObjBody::touchCallback(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
 	mParentRigidBody->touchCallback(plane, a1, a2);
 }
@@ -521,7 +521,7 @@ void DynCollObjBody::touchCallback(Plane& plane, immut Vector3f& a1, immut Vecto
  * Address:	8006258C
  * Size:	000030
  */
-void DynCollObjBody::applyVelocity(Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
+void DynCollObjBody::applyVelocity(immut Plane& plane, immut Vector3f& a1, immut Vector3f& a2)
 {
 	mParentRigidBody->applyVelocity(plane, a1, a2);
 }
@@ -531,7 +531,7 @@ void DynCollObjBody::applyVelocity(Plane& plane, immut Vector3f& a1, immut Vecto
  * Address:	800625BC
  * Size:	0001B8
  */
-void DynObjBody::touchCallback(Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
+void DynObjBody::touchCallback(immut Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
 		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;
@@ -546,7 +546,7 @@ void DynObjBody::touchCallback(Plane& plane, immut Vector3f& p2, immut Vector3f&
  * Address:	80062774
  * Size:	0001B8
  */
-void DynObjBody::applyVelocity(Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
+void DynObjBody::applyVelocity(immut Plane& plane, immut Vector3f& p2, immut Vector3f& p3)
 {
 	if (plane.mNormal.DP(p3) < 0.0f) {
 		Vector3f vec = plane.mNormal.DP(p3) * plane.mNormal;

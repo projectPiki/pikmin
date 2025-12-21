@@ -195,7 +195,7 @@ public:
 	virtual bool stimulate(immut Interaction&);                // _A0
 	virtual void collisionCallback(immut CollEvent&);          // _A8
 	virtual void bounceCallback();                             // _AC
-	virtual void wallCallback(Plane&, DynCollObject*);         // _B4
+	virtual void wallCallback(immut Plane&, DynCollObject*);   // _B4
 	virtual void dump();                                       // _C8
 	virtual void update();                                     // _E0
 	virtual void refresh(Graphics&);                           // _EC

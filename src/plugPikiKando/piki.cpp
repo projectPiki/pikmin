@@ -1757,7 +1757,7 @@ void Piki::offwallCallback(DynCollObject* wall)
  * Address:	800CA528
  * Size:	000058
  */
-void Piki::wallCallback(Plane& wallPlane, DynCollObject* wall)
+void Piki::wallCallback(immut Plane& wallPlane, DynCollObject* wall)
 {
 	_4E8       = 1;
 	mWallPlane = &wallPlane;

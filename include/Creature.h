@@ -127,7 +127,7 @@ public:
 	virtual void collisionCallback(immut CollEvent&) { }                // _A8 (weak)
 	virtual void bounceCallback() { }                                   // _AC (weak)
 	virtual void jumpCallback() { }                                     // _B0 (weak)
-	virtual void wallCallback(Plane&, DynCollObject*) { }               // _B4
+	virtual void wallCallback(immut Plane&, DynCollObject*) { }         // _B4
 	virtual void offwallCallback(DynCollObject*) { }                    // _B8 (weak)
 	virtual void stickCallback(Creature*) { }                           // _BC (weak)
 	virtual void offstickCallback(Creature*) { }                        // _C0 (weak)

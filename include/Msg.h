@@ -175,7 +175,7 @@ struct MsgUser : public Msg {
  * @brief TODO
  */
 struct MsgWall : public Msg {
-	inline MsgWall(Plane& plane, DynCollObject* wall)
+	inline MsgWall(immut Plane& plane, DynCollObject* wall)
 	    : Msg(MSG_Wall)
 	{
 		mWallPlane      = &plane;
@@ -183,7 +183,7 @@ struct MsgWall : public Msg {
 	}
 
 	// _00-_04 = Msg
-	Plane* mWallPlane;              // _04
+	immut Plane* mWallPlane;        // _04
 	DynCollObject* mWallCollObject; // _08
 };
 

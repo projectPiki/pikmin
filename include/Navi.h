@@ -60,7 +60,7 @@ public:
 	virtual void collisionCallback(immut CollEvent&);          // _A8
 	virtual void bounceCallback();                             // _AC
 	virtual void jumpCallback();                               // _B0
-	virtual void wallCallback(Plane&, DynCollObject*);         // _B4
+	virtual void wallCallback(immut Plane&, DynCollObject*);   // _B4
 	virtual void offwallCallback(DynCollObject*);              // _B8
 	virtual void dump();                                       // _C8
 	virtual bool isRopable();                                  // _D4
@@ -209,7 +209,7 @@ public:
 	Vector3f mDayEndPosition;            // _790
 	Vector3f _79C;                       // _79C
 	f32 mAiTickTimer;                    // _7A8
-	Plane* mWallPlane;                   // _7AC
+	immut Plane* mWallPlane;             // _7AC
 	DynCollObject* mWallCollObj;         // _7B0
 	int _7B4;                            // _7B4
 	int _7B8;                            // _7B8
