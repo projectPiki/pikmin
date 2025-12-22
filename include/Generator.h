@@ -426,11 +426,11 @@ struct GenObjectMapObject : public GenObject {
 struct GenObjectMapParts : public GenObject {
 	inline GenObjectMapParts()
 	    : GenObject('mpar', "マップパーツを生む") // 'generate map parts',
-	    , _18(this, 1, 1, 1, "p00", nullptr)
-	    , _28(this, 100, 100, 100, "p01", nullptr)
-	    , _38(this, 0.0f, 0.0f, 0.0f, "p02", nullptr)
-	    , _48(this, 2.0f, 2.0f, 2.0f, "p04", nullptr)
-	    , _58(this, 60.0f, 60.0f, 60.0f, "p03", nullptr)
+	    , _18(this, 1, 1, 1, "p00", "稼動最低人数")
+	    , _28(this, 100, 100, 100, "p01", "稼動最大人数")
+	    , _38(this, 0.0f, 0.0f, 0.0f, "p02", "起動までの時間")
+	    , _48(this, 2.0f, 2.0f, 2.0f, "p04", "終点での停止時間")
+	    , _58(this, 60.0f, 60.0f, 60.0f, "p03", "スピード")
 	{
 		mPartKind       = 0;
 		mShapeIndex     = 0;
@@ -519,8 +519,8 @@ struct GenObjectPellet : public GenObject {
 struct GenObjectPiki : public GenObject {
 	inline GenObjectPiki()
 	    : GenObject('piki', "create PIKI")
-	    , mSpawnState(this, 0, 0, 2, "p00", nullptr)
-	    , mSpawnColor(this, 0, 0, 3, "p01", nullptr)
+	    , mSpawnState(this, 0, 0, 2, "p00", "state (0:buried) (1:free) (2:team)")
+	    , mSpawnColor(this, 0, 0, 3, "p01", "color (0-2:3 random)")
 	{
 	}
 
@@ -641,8 +641,8 @@ public:
 struct GenType : public GenBase {
 	inline GenType(u32 id, immut char* name)
 	    : GenBase(id, "time type", name)
-	    , _18(this, 0, 0, 0, "b00", nullptr)
-	    , mCarryOver(this, 0, 0, 0, "b01", nullptr)
+	    , _18(this, 0, 0, 0, "b00", "復活日数")
+	    , mCarryOver(this, 0, 0, 0, "b01", "キャリーオーバー")
 	{
 	}
 
@@ -667,7 +667,7 @@ struct GenType : public GenBase {
 struct GenTypeAtOnce : public GenType {
 	inline GenTypeAtOnce()
 	    : GenType('aton', "最初から全部生む") // 'generate everything from the beginning'
-	    , mMaxCount(this, 1, 0, 0, "p00", nullptr)
+	    , mMaxCount(this, 1, 0, 0, "p00", "数")
 	{
 	}
 
@@ -688,8 +688,8 @@ struct GenTypeAtOnce : public GenType {
 struct GenTypeInitRand : public GenType {
 	inline GenTypeInitRand()
 	    : GenType('irnd', "最初から生む（ランダム）") // 'generate from the beginning (random)'
-	    , _38(this, 1, 0, 0, "p00", nullptr)
-	    , mMaxCount(this, 5, 0, 0, "p01", nullptr)
+	    , _38(this, 1, 0, 0, "p00", "最低数")
+	    , mMaxCount(this, 5, 0, 0, "p01", "最高数")
 	{
 	}
 
@@ -711,9 +711,9 @@ struct GenTypeInitRand : public GenType {
 struct GenTypeOne : public GenType {
 	inline GenTypeOne()
 	    : GenType('1one', "１つだけうむ") // 'just one thing'
-	    , _38(this, 0, 0, 0, "p00", nullptr)
-	    , _48(this, 0, 0, 0, "p01", nullptr)
-	    , _58(this, 0, 0, 0, "p02", nullptr)
+	    , _38(this, 0, 0, 0, "p00", "回転(x)")
+	    , _48(this, 0, 0, 0, "p01", "回転(y)")
+	    , _58(this, 0, 0, 0, "p02", "回転(z)")
 	{
 	}
 
@@ -779,7 +779,7 @@ struct GenArea : public GenBase {
 struct GenAreaCircle : public GenArea {
 	inline GenAreaCircle()
 	    : GenArea('circ', "inside circle")
-	    , mRadius(this, 50.0f, 0.0f, 0.0f, "p00", nullptr)
+	    , mRadius(this, 50.0f, 0.0f, 0.0f, "p00", "半径")
 	{
 	}
 

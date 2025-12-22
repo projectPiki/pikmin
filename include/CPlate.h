@@ -30,9 +30,9 @@ public:
 	 */
 	struct Parms : public Parameters {
 		Parms()
-		    : mStartOffset(this, 30.0f, 0.0f, 100.0f, "p00", nullptr)    // 'start offset'
-		    , mLengthLimit(this, 150.0f, 10.0f, 1000.0f, "p01", nullptr) // 'length limit'
-		    , mMaxPosSize(this, 12.0f, 1.0f, 50.0f, "p02", nullptr)      // 'position size (maximum)'
+		    : mStartOffset(this, 30.0f, 0.0f, 100.0f, "p00", "先頭オフセット")         // 'start offset'
+		    , mLengthLimit(this, 150.0f, 10.0f, 1000.0f, "p01", "長さリミット")        // 'length limit'
+		    , mMaxPosSize(this, 12.0f, 1.0f, 50.0f, "p02", "ポジションの大きさ(最大)") // 'position size (maximum)'
 		{
 		}
 

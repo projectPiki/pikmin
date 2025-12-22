@@ -17,11 +17,11 @@ struct CreatureProp {
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mFriction(this, 0.5f, 0.0f, 1.0f, "s00", nullptr)       // 'friction'
-		    , mWallReflection(this, 0.5f, 0.0f, 1.0f, "s01", nullptr) // 'wallReflection'
-		    , mFaceDirAdjust(this, 0.25f, 0.0f, 1.0f, "s02", nullptr) // 'faceDirAdjust'
-		    , mAcceleration(this, 0.1f, 0.01f, 2.0f, "s03", nullptr)  // 'accel'
-		    , mBounceFactor(this, 0.3f, 0.01f, 2.0f, "s04", nullptr)  // 'bounceFactor'
+		    : mFriction(this, 0.5f, 0.0f, 1.0f, "s00", MATCHING_PARM_NAME("friction"))
+		    , mWallReflection(this, 0.5f, 0.0f, 1.0f, "s01", MATCHING_PARM_NAME("wallReflection"))
+		    , mFaceDirAdjust(this, 0.25f, 0.0f, 1.0f, "s02", MATCHING_PARM_NAME("faceDirAdjust"))
+		    , mAcceleration(this, 0.1f, 0.01f, 2.0f, "s03", MATCHING_PARM_NAME("accel"))
+		    , mBounceFactor(this, 0.3f, 0.01f, 2.0f, "s04", MATCHING_PARM_NAME("bounceFactor"))
 		{
 		}
 

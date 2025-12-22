@@ -27,10 +27,10 @@ DEFINE_PRINT("courseDebug");
  */
 GenObjectDebug::GenObjectDebug()
     : GenObject('debg', "Debug Switches")
-    , mCollision(this, 0, 0, 0, "p00", nullptr)
-    , mPikiNoAttack(this, 0, 0, 0, "p01", nullptr)
-    , mNoCarryover(this, 0, 0, 0, "p02", nullptr)
-    , mPelletDebug(this, 0, 0, 0, "p03", nullptr)
+    , mCollision(this, 0, 0, 0, "p00", "collision debug")
+    , mPikiNoAttack(this, 0, 0, 0, "p01", "ピキの攻撃力を０にする")
+    , mNoCarryover(this, 0, 0, 0, "p02", "ピキを次の面にもちこさない")
+    , mPelletDebug(this, 0, 0, 0, "p03", "ペレットデバッグ")
 {
 }
 

@@ -447,19 +447,19 @@ struct GameFlow : public Node {
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mStartHour(this, 7.0f, 0.0f, 0.0f, "t00", nullptr)
-		    , mEndHour(this, 19.0f, 0.0f, 0.0f, "t01", nullptr)
-		    , mDaySpeedFactor(this, 20.0f, 0.0f, 0.0f, "p00", nullptr)
-		    , mMorningStart(this, 7.0f, 0.0f, 0.0f, "p01", nullptr)
-		    , mMorningMid(this, 8.0f, 0.0f, 0.0f, "s01", nullptr)
-		    , mMorningEnd(this, 9.0f, 0.0f, 0.0f, "p02", nullptr)
-		    , mNightStart(this, 17.5f, 0.0f, 0.0f, "p03", nullptr)
-		    , mNightMid(this, 18.5f, 0.0f, 0.0f, "s03", nullptr)
-		    , mNightEnd(this, 19.5f, 0.0f, 0.0f, "p04", nullptr)
-		    , mNightWarning(this, 16.0f, 0.0f, 0.0f, "p05", nullptr)
-		    , mNightCountdown(this, 18.5f, 0.0f, 0.0f, "p06", nullptr)
-		    , mTekiAbility(this, 1, 0, 0, "x99", nullptr)
-		    , mGameTitle(this, String("blah", 0), String("", 0), String("", 0), "x98", nullptr)
+		    : mStartHour(this, 7.0f, 0.0f, 0.0f, "t00", "startHour")
+		    , mEndHour(this, 19.0f, 0.0f, 0.0f, "t01", "endHour")
+		    , mDaySpeedFactor(this, 20.0f, 0.0f, 0.0f, "p00", "daySpeed")
+		    , mMorningStart(this, 7.0f, 0.0f, 0.0f, "p01", "mornStart")
+		    , mMorningMid(this, 8.0f, 0.0f, 0.0f, "s01", "mornMid")
+		    , mMorningEnd(this, 9.0f, 0.0f, 0.0f, "p02", "mornEnd")
+		    , mNightStart(this, 17.5f, 0.0f, 0.0f, "p03", "nightStart")
+		    , mNightMid(this, 18.5f, 0.0f, 0.0f, "s03", "nightMid")
+		    , mNightEnd(this, 19.5f, 0.0f, 0.0f, "p04", "nightEnd")
+		    , mNightWarning(this, 16.0f, 0.0f, 0.0f, "p05", "nightWarning")
+		    , mNightCountdown(this, 18.5f, 0.0f, 0.0f, "p06", "nightTimer")
+		    , mTekiAbility(this, 1, 0, 0, "x99", "tekiAbility")
+		    , mGameTitle(this, String("blah", 0), String("", 0), String("", 0), "x98", "gameTitle")
 		{
 		}
 

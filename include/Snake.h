@@ -58,8 +58,8 @@ public:
 	 */
 	struct Parms : public Parameters {
 		inline Parms()
-		    : mType1DetectionRadius(this, 150.0f, 0.0f, 500.0f, "p00", "")
-		    , mType1AppearDist(this, 100.0f, 0.0f, 300.0f, "p01", "")
+		    : mType1DetectionRadius(this, 150.0f, 0.0f, 500.0f, "p00", "1:出現エリア")
+		    , mType1AppearDist(this, 100.0f, 0.0f, 300.0f, "p01", "1:ターゲットとの距離")
 		    , mType2AppearFrontDist(this, 200.0f, 0.0f, 500.0f, "u00", "2:Front Length")
 		    , mType2AppearSideDist(this, 100.0f, 0.0f, 500.0f, "u01", "2:Side Length")
 		    , mType2AppearVertDist(this, 50.0f, 0.0f, 300.0f, "u02", "2:Vertical Length")

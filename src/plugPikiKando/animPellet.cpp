@@ -22,8 +22,8 @@ DEFINE_PRINT("animPellet");
  * @TODO: Documentation
  */
 PelletAnimInfo::PelletAnimInfo()
-    : mFolderPath(this, String("pellets", 0), String("", 0), String("", 0), "x00", nullptr)
-    , mFileName(this, String("noname", 0), String("", 0), String("", 0), "x01", nullptr)
+    : mFolderPath(this, String("pellets", 0), String("", 0), String("", 0), "x00", "dirName")
+    , mFileName(this, String("noname", 0), String("", 0), String("", 0), "x01", "theName")
 {
 	mID.setID('none');
 	mCreationType  = PCT_Resident;

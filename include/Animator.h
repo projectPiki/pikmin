@@ -392,8 +392,8 @@ struct AnimInfo : public CoreNode {
 
 		/// Constructor.
 		Parms()
-		    : mFlags(this, 2, 0, 0, "p00", nullptr)
-		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", nullptr)
+		    : mFlags(this, 2, 0, 0, "p00", "flags")
+		    , mSpeed(this, 30.0f, 0.0f, 0.0f, "spd", "speed")
 		{
 		}
 
@@ -583,8 +583,8 @@ struct AnimMgr : public CoreNode {
 
 		/// Constructor.
 		Parms()
-		    : _18(this, 2, 0, 0, "a00", nullptr)
-		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", nullptr)
+		    : _18(this, 2, 0, 0, "a00", "flags")
+		    , mBasePath(this, String("base dir", 0), String("", 0), String("", 0), "a01", "baseAnimDir")
 		{
 		}
 

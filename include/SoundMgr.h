@@ -41,9 +41,9 @@ struct SeConstant : public Node {
 
 		/// Constructor with default values (overwritten by file load).
 		Parms()
-		    : mSECutoffDist(this, 700.0f, 0.0f, 0.0f, "p00", nullptr)
-		    , mBossBGMStartDist(this, 400.0f, 0.0f, 0.0f, "p01", nullptr)
-		    , mBossBGMEndDist(this, 800.0f, 0.0f, 0.0f, "p02", nullptr)
+		    : mSECutoffDist(this, 700.0f, 0.0f, 0.0f, "p00", "レベル音距離")
+		    , mBossBGMStartDist(this, 400.0f, 0.0f, 0.0f, "p01", "ボスＢＧＭ開始距離")
+		    , mBossBGMEndDist(this, 800.0f, 0.0f, 0.0f, "p02", "ボスＢＧＭ終了距離")
 		{
 		}
 
