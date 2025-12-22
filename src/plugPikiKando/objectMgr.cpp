@@ -957,11 +957,7 @@ void PolyObjectMgr::searchSelf()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	800E29B8
- * Size:	000404
- *
+/**
  * Searches for nearby objects and populates each object's search buffer with potential interaction targets.
  * Uses spatial partitioning and culling for performance optimization.
  * @param otherMgr The object manager containing potential target objects
