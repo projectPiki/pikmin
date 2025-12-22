@@ -15,40 +15,36 @@ const PTMF __ptmf_null = { 0, 0, 0 };
 
 void __ptmf_scall(...);
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void __ptmf_test(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void __ptmf_cmpr(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void __ptmf_call(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void __ptmf_call4(void)
 {
@@ -77,20 +73,18 @@ loc_0x20:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void __ptmf_scall4(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void __ptmf_cast(void)
 {
