@@ -373,11 +373,8 @@ void zen::ogScrMemChkMgr::DispAcup(bool set)
 void zen::ogScrMemChkMgr::MakeDefFileStart()
 {
 	mMakeDefaultMgr->start();
-	mStatus = MakeDefaultFile;
-#if defined(VERSION_PIKIDEMO)
-#else
+	mStatus    = MakeDefaultFile;
 	mWaitTimer = 0.0f;
-#endif
 }
 
 /**
@@ -680,12 +677,7 @@ zen::ogScrMemChkMgr::MemChkStatus zen::ogScrMemChkMgr::update(Controller* input)
 	case Formatting:
 		DispYesNo(false);
 		DispAcup(true);
-#if defined(VERSION_PIKIDEMO)
-		if (mWaitTimer > 6.0f)
-#else
-		if (checkTypingAll() && mWaitTimer > 6.0f)
-#endif
-		{
+		if (checkTypingAll() && mWaitTimer > 6.0f) {
 			mEfxA->finish();
 			mEfxB->finish();
 			bool format = true;
