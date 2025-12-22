@@ -125,10 +125,6 @@ u16 GetAtanTable(f32 x, f32 y)
  * @param x The x-coordinate of the vector.
  * @param y The y-coordinate of the vector.
  * @return u16 The angle in the scaled 16-bit format.
- *
- * --INFO--
- * Address:	8011DB48
- * Size:	0002C0
  */
 u16 atan(f32 x, f32 y)
 {

@@ -143,10 +143,6 @@ void SeMgr::leaveBattle()
 
 /**
  * @note This function is never passed anything except 0 in retail.
- *
- * --INFO--
- * Address:	800A363C
- * Size:	000038
  */
 void SeMgr::setPikiNum(int pikiNum)
 {
