@@ -1070,11 +1070,7 @@ static inline s32 GetMCAotSum(VideoState* ws, s32 sum[16], u8 nbasis, u8* nestTo
 	    >> 4;
 }
 
-/*
- * --INFO--
- * Address:	8001FE1C
- * Size:	0003D0
- *
+/**
  * @note: AOT = Adaptive Orthogonal Transform, apparently
  */
 static void IntraAotBlock(VideoState* ws, u8* blk, int blkWidth, u8 dcv, u8 nbasis, int p)
@@ -1306,11 +1302,7 @@ static void setMCTarget(MCHandler* mch, int direct)
 	}
 }
 
-/*
- * --INFO--
- * Address:	800209E8
- * Size:	00009C
- *
+/**
  * @note Copy 4x4 samples without interpolation.
  */
 inline void _MotionComp_00(u8* cP, int cWidth, u8* tP, int tWidth)
@@ -1344,11 +1336,7 @@ inline void _MotionComp_00(u8* cP, int cWidth, u8* tP, int tWidth)
 	cP += cWidth;
 }
 
-/*
- * --INFO--
- * Address:	80020A84
- * Size:	0001AC
- *
+/**
  * @note Offset vertically by half a sample
  */
 inline void _MotionComp_01(u8* cP, int cWidth, u8* tP, int tWidth)
@@ -1389,11 +1377,7 @@ inline void _MotionComp_01(u8* cP, int cWidth, u8* tP, int tWidth)
 	cP += cWidth;
 }
 
-/*
- * --INFO--
- * Address:	80020C30
- * Size:	00019C
- *
+/**
  * @note Offset vertically by half a sample
  */
 inline void _MotionComp_10(u8* cP, int cWidth, u8* tP, int tWidth)
@@ -1427,11 +1411,7 @@ inline void _MotionComp_10(u8* cP, int cWidth, u8* tP, int tWidth)
 	cP += cWidth;
 }
 
-/*
- * --INFO--
- * Address:	80020DCC
- * Size:	0002AC
- *
+/**
  * @note Offset by half a sample in both directions
  */
 inline void _MotionComp_11(u8* cP, int cWidth, u8* tP, int tWidth)
@@ -1478,11 +1458,7 @@ static void _MotionComp(u8* cP, int cWidth, u8* tP, int tWidth, int selector)
 	func[selector](cP, cWidth, tP, tWidth);
 }
 
-/*
- * --INFO--
- * Address:	80021078
- * Size:	000A00
- *
+/**
  * @note hpel = half-pixel offset. DX = horizontal, DY = vertical.
  */
 
