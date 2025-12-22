@@ -38,10 +38,9 @@ u32 GetRandom_ulimit(u32 limit)
 	return GetRandom_u32() % limit;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void GetRandom_slimit(void)
 {

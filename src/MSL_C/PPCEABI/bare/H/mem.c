@@ -69,10 +69,9 @@ void* memchr(u8* s, int c, size_t n)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void __memrchr(void)
 {

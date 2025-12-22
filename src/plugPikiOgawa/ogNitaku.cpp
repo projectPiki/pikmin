@@ -5,17 +5,15 @@
 #include "sysNew.h"
 #include "zen/TextColorCallBack.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgNitakuSection")
 
@@ -68,10 +66,9 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void zen::ogNitakuMgr::MoveCursorYes(f32 rate)
 {
@@ -82,10 +79,9 @@ void zen::ogNitakuMgr::MoveCursorYes(f32 rate)
 	mIsYes = true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void zen::ogNitakuMgr::MoveCursorNo(f32 rate)
 {
@@ -96,10 +92,9 @@ void zen::ogNitakuMgr::MoveCursorNo(f32 rate)
 	mIsYes = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000150
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000150
  */
 void zen::ogNitakuMgr::InitCursor()
 {
@@ -129,10 +124,9 @@ void zen::ogNitakuMgr::start()
 	cursorEnable(0.2f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000154
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000154
  */
 void zen::ogNitakuMgr::stop()
 {

@@ -11,10 +11,9 @@ u32* __piReg;
 GXBool __GXinBegin;
 #endif
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 ASM BOOL IsWriteGatherBufferEmpty(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -24,10 +23,9 @@ ASM BOOL IsWriteGatherBufferEmpty(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 static void EnableWriteGatherPipe(void)
 {
@@ -38,10 +36,9 @@ static void EnableWriteGatherPipe(void)
 	PPCMthid2(hid2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 static void DisableWriteGatherPipe(void)
 {

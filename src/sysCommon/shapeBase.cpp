@@ -21,17 +21,15 @@
 #include "system.h"
 #include "timers.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(23)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shapeBase")
 
@@ -47,10 +45,9 @@ static const char* modes[5] = {
 	"NONE", "OPA", "TEX", "NONE", "XLU",
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void Envelope::read(RandomAccessStream& stream)
 {
@@ -127,10 +124,9 @@ void Mesh::read(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void Joint::recShowHierarchy()
 {
@@ -143,10 +139,9 @@ void Joint::recShowHierarchy()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void Joint::overrideAnim(AnimContext* anim)
 {
@@ -199,10 +194,9 @@ void Joint::read(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00043C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00043C
  */
 void Joint::render(Graphics& gfx)
 {
@@ -855,10 +849,9 @@ void AnimData::detach()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void AnimData::initData()
 {
@@ -1534,10 +1527,9 @@ void AnimDck::makeAnimSRT(int a, immut Matrix4f* mtx1, Matrix4f* mtx2, AnimDataI
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 void BaseShape::exportIni(RandomAccessStream& stream, bool doSkipLights)
 {
@@ -1834,30 +1826,27 @@ void BaseShape::makeInstance(ShapeDynMaterials& dynMats, int p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void recShowInfos(Graphics&, ObjCollInfo*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void BaseShape::drawobjcolls(Graphics&, Camera&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void BaseShape::drawlights(Graphics& gfx, Camera& cam)
 {
@@ -1869,10 +1858,9 @@ void BaseShape::drawlights(Graphics& gfx, Camera& cam)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void BaseShape::drawroutes(Graphics& gfx, Camera& cam)
 {
@@ -2025,10 +2013,9 @@ void BaseShape::resolveTextureNames()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void BaseShape::skipChunk(RandomAccessStream& stream, u32 amt)
 {
@@ -3019,10 +3006,9 @@ AnimData* BaseShape::loadDca(immut char* name, RandomAccessStream& s)
 	return pDca;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000138
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000138
  */
 void BaseShape::importDca(immut char* name, CmdStream* cmds)
 {
@@ -3133,10 +3119,9 @@ AnimFrameCacher::AnimFrameCacher(int num)
 	mInfo.mNext = mInfo.mPrev = &mInfo;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void AnimFrameCacher::updateInfo(AnimCacheInfo* info)
 {
@@ -3146,10 +3131,9 @@ void AnimFrameCacher::updateInfo(AnimCacheInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void AnimFrameCacher::removeOldest()
 {
@@ -3392,20 +3376,18 @@ void BaseShape::calcJointWorldDir(Graphics& gfx, int index, Vector3f& worldDir)
 	worldDir.rotate(gfx.mCamera->mInverseLookAtMtx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void BaseShape::calcJointWorldScale(Graphics&, int, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 CollTriInfo* BaseShape::findCollTri(Vector3f&, Vector3f&, Vector3f&, char*)
 {

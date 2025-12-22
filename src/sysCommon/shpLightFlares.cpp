@@ -7,24 +7,21 @@
 #include "stl/string.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shpLightFlares");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00011C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00011C
  */
 void LightFlare::loadini(CmdStream* commands)
 {
@@ -49,10 +46,9 @@ void LightFlare::loadini(CmdStream* commands)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 void LightFlare::saveini(immut char*, RandomAccessStream&)
 {
@@ -60,10 +56,9 @@ void LightFlare::saveini(immut char*, RandomAccessStream&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001E8
  */
 void LightGroup::saveini(immut char*, RandomAccessStream&)
 {

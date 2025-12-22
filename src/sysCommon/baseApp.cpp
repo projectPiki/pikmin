@@ -4,17 +4,15 @@
 #include "DebugLog.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("baseApp");
 
@@ -31,10 +29,9 @@ BaseApp::BaseApp()
 	nodeMgr->firstNode().add(this);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 int BaseApp::idleupdate()
 {
@@ -65,10 +62,9 @@ int BaseApp::idleupdate()
 	return hasUpdates;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void BaseApp::startAgeServer()
 {
@@ -91,10 +87,9 @@ void BaseApp::startAgeServer()
 #endif
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void BaseApp::stopAgeServer()
 {

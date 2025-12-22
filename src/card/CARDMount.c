@@ -18,10 +18,9 @@ BOOL CARDProbe(s32 channel)
 	return EXIProbe(channel);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000164
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000164
  */
 s32 CARDProbeEx(s32 channel, s32* memSize, s32* sectorSize)
 {

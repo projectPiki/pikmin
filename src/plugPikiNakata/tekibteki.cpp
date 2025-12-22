@@ -46,17 +46,15 @@ const int BTeki::ANIMATION_KEY_OPTION_ACTION_2  = 1 << KEY_Action2;
 const int BTeki::ANIMATION_KEY_OPTION_LOOPSTART = 1 << KEY_LoopStart;
 const int BTeki::ANIMATION_KEY_OPTION_LOOPEND   = 1 << KEY_LoopEnd;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(57)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("teki");
 
@@ -387,10 +385,9 @@ void BTeki::prepareEffects()
 	STACK_PAD_TERNARY(mParticleGenPack, 4);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void BTeki::setCorpsePartJoint(int partIdx, int jointIdx)
 {
@@ -991,10 +988,9 @@ Teki* BTeki::generateTeki(int tekiType)
 	return teki;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 void BTeki::outputDirectionPosition(Vector3f& outPos, f32 dist, f32 height)
 {
@@ -1314,20 +1310,18 @@ void BTeki::rotateTeki(f32 speed)
 	setDirection(faceDir + amt);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000218
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000218
  */
 void BTeki::jumpTo(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000168
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000168
  */
 bool BTeki::insideDirection(Vector3f&)
 {
@@ -1397,20 +1391,18 @@ void BTeki::outputHitCenter(Vector3f& outCenter)
 	outCenter.add2(getPosition(), dir);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001F4
  */
 bool BTeki::attackRangeNaviPiki(immut Interaction&, immut Condition&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00015C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00015C
  */
 bool BTeki::interactTeki(immut Interaction&, immut Condition&)
 {
@@ -1588,10 +1580,9 @@ int BTeki::countPikis(immut Condition& cond)
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 int BTeki::countTekis(immut Condition& cond)
 {
@@ -2090,20 +2081,18 @@ void BTeki::createTekiEffect(int effectID)
 	strategy->createEffect(*(Teki*)this, effectID);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 Matrix4f& BTeki::getCameraAnimationMatrix(int idx)
 {
 	return mTekiShape->mShape->getAnimMatrix(idx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void BTeki::outputWorldAnimationMatrix(Matrix4f& mtx1, int idx, immut Matrix4f& mtx2)
 {
@@ -2231,10 +2220,9 @@ f32 BTeki::getCollisionSize()
 	return getCentreSize();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 Vector3f BTeki::getCollisionCenter()
 {

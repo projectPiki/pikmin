@@ -13,17 +13,15 @@
 #include "zen/Number.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(38)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawGameInfo")
 
@@ -768,10 +766,9 @@ void zen::DrawGameInfo::draw(Graphics& gfx)
 	mModeScreenMgr->draw(&perspGraph);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void zen::DrawGameInfo::upperDisplayOn()
 {
@@ -779,20 +776,18 @@ void zen::DrawGameInfo::upperDisplayOn()
 	mUpperScreenMgr->displayOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void zen::DrawGameInfo::upperDisplayOff()
 {
 	mUpperScreenMgr->displayOff();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void zen::DrawGameInfo::lowerDisplayOn()
 {
@@ -802,10 +797,9 @@ void zen::DrawGameInfo::lowerDisplayOn()
 	mModeScreenMgr->displayOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void zen::DrawGameInfo::lowerDisplayOff()
 {
@@ -863,40 +857,36 @@ void zen::DrawGameInfo::lowerFrameOut(f32 p1, bool p2)
 	mModeScreenMgr->frameOut(p1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 bool zen::DrawGameInfo::isUpperFrameIn()
 {
 	return mUpperScreenMgr->isFrameIn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 bool zen::DrawGameInfo::isUpperFrameOut()
 {
 	return mUpperScreenMgr->isFrameOut();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 bool zen::DrawGameInfo::isLowerFrameIn()
 {
 	return mLowerScreenMgr->isFrameIn() && mModeScreenMgr->isFrameIn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 bool zen::DrawGameInfo::isLowerFrameOut()
 {

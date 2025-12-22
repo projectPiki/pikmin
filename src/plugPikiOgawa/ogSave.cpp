@@ -14,17 +14,15 @@
 #include "zen/ogNitaku.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgSaveSection")
 
@@ -125,10 +123,9 @@ void zen::ogSaveMgr::start()
 	mBackPicture->setAlpha(0);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000138
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000138
  */
 void zen::ogSaveMgr::startDirectSave(s16 state)
 {

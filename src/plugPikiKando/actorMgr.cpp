@@ -3,34 +3,30 @@
 
 ActorMgr* actorMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("genActor");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E4
  */
 ActorMgr::ActorMgr(MapMgr*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 Creature* ActorMgr::createObject()
 {
@@ -54,10 +50,9 @@ Actor* ActorMgr::newActor(int p1)
 	return actor;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 ActorMgr::~ActorMgr()
 {

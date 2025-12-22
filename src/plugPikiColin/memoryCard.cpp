@@ -8,17 +8,15 @@
 #include "stl/string.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("MemoryCard")
 
@@ -353,10 +351,9 @@ static immut char p_card_v_data[0xC00] = {
 static immut char* icon_datas[] = { p_icon_data, nullptr, nullptr, p_icon_data, nullptr, nullptr, nullptr, o_icon_data };
 static immut char* icon_pals[]  = { p_icon_palette };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void MemoryCard::GetBlockSize(s32)
 {
@@ -379,10 +376,9 @@ int MemoryCard::getGameFileOffset(int id)
 	return id * 0x8000 + 0x6000;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void* MemoryCard::getBannerPtr()
 {
@@ -390,10 +386,9 @@ void* MemoryCard::getBannerPtr()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void* MemoryCard::getOptionsPtr(int idx)
 {
@@ -401,10 +396,9 @@ void* MemoryCard::getOptionsPtr(int idx)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void* MemoryCard::getGameFilePtr(int idx)
 {
@@ -419,10 +413,9 @@ void* MemoryCard::FAKE_getGameFilePtr(int idx)
 	return &cardData[gameFileOffset];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 RamStream* MemoryCard::getBannerStream()
 {
@@ -430,20 +423,18 @@ RamStream* MemoryCard::getBannerStream()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 RamStream* MemoryCard::getOptionsStream(int idx)
 {
 	return new RamStream(getOptionsPtr(idx), 0x2000);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 RamStream* MemoryCard::getGameFileStream(int idx)
 {
@@ -483,20 +474,18 @@ bool MemoryCard::hasCardFinished()
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void MemoryCard::waitPolling()
 {
 	while (!hasCardFinished()) { }
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void MemoryCard::createFile(CARDStat& state)
 {
@@ -508,10 +497,9 @@ void MemoryCard::createFile(CARDStat& state)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void MemoryCard::writeOneBanner()
 {
@@ -521,10 +509,9 @@ void MemoryCard::writeOneBanner()
 	waitPolling();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B8
  */
 void MemoryCard::writeOneOption(int idx)
 {
@@ -535,10 +522,9 @@ void MemoryCard::writeOneOption(int idx)
 	waitPolling();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void MemoryCard::writeOneGameFile(int idx)
 {
@@ -954,10 +940,9 @@ static const char* errCodes[] = {
 	"ERR! Unusable", "ERR! Unknown", "ERR! No Files Left",
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000404
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000404
  */
 void MemoryCard::initFileArea(int idx, int p2)
 {
@@ -1885,10 +1870,9 @@ bool MemoryCard::isFileBroken()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 void MemoryCard::breakFile()
 {

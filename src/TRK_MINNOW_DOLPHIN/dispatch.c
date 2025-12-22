@@ -25,10 +25,9 @@ DSError TRKInitializeDispatcher()
 	return DS_NoError;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 DSError TRKOverrideDispatch(TRKBuffer* buffer)
 {

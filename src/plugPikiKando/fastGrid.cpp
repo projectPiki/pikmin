@@ -8,17 +8,15 @@ u8* FastGrid::aiGridMap;
 u16 FastGrid::aiGridSize;
 u16 FastGrid::aiGridShift = 12;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("fastGrid")
 
@@ -56,10 +54,9 @@ void FastGrid::clearAIGrid()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void FastGrid::addAIGrid()
 {
@@ -234,20 +231,18 @@ void FastGrid::updateAIGrid(const Vector3f& pos, bool p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000820
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000820
  */
 void FastGrid::renderAIGrid2D(Graphics&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000348
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000348
  */
 void FastGrid::renderAIGrid(Graphics&)
 {

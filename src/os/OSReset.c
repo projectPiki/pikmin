@@ -39,20 +39,18 @@ void OSRegisterResetFunction(OSResetFunctionInfo* info)
 	tmp->next = info;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void OSUnregisterResetFunction(OSResetFunctionInfo*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 BOOL CallResetFunctions(BOOL final)
 {
@@ -127,10 +125,9 @@ _jump4:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 static void KillThreads(void)
 {
@@ -202,10 +199,9 @@ void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu)
 	OSEnableScheduler();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 u32 OSGetResetCode(void)
 {

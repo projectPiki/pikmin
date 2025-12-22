@@ -1,9 +1,8 @@
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 /*
 void TRKMessageAdd(void)
@@ -12,10 +11,9 @@ void TRKMessageAdd(void)
 }
 */
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 /*
 void TRKMessageGet(void)

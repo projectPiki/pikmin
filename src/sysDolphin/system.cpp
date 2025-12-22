@@ -24,17 +24,15 @@
 #include "sysNew.h"
 #include "timers.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(21)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("System")
 
@@ -64,10 +62,9 @@ static char lastName[PATH_MAX];
 static DVDStream dvdStream;
 static BufferedInputStream dvdBufferedStream;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void DVDStream::init()
 {
@@ -465,10 +462,9 @@ void ParseMapFile()
 	file->close();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void System::findAddress(u32)
 {
@@ -530,10 +526,9 @@ System::System()
 	mTimer            = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void sysErrorHandler(u16, OSContext*, u32, u32)
 {
@@ -862,20 +857,18 @@ System::~System()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 bool System::hasDebugInfo()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000b8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000b8
  */
 void System::halt(immut char* file, int line, immut char* message)
 {

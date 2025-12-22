@@ -13,17 +13,15 @@
 #include "stl/limits.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pcamcamera")
 
@@ -34,10 +32,9 @@ PcamMotionInfo::PcamMotionInfo()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void PcamMotionInfo::init(f32 dist, f32 angle, f32 fov, f32 watchAdjust, f32 naviWatchWeight, f32 blur)
 {
@@ -49,10 +46,9 @@ void PcamMotionInfo::init(f32 dist, f32 angle, f32 fov, f32 watchAdjust, f32 nav
 	mBlur            = blur;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void PcamMotionInfo::println()
 {
@@ -277,10 +273,9 @@ void PcamCamera::startAttention()
 	mCurrentAzimuth = mPolarDir.mAzimuth;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void PcamCamera::playCameraSound(int soundID)
 {
@@ -480,10 +475,9 @@ void PcamCamera::finishMotion()
 	startMotion(PcamMotionInfo(mPrevMotionInfo));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 f32 PcamCamera::getChangingMotionRate()
 {
@@ -524,20 +518,18 @@ f32 PcamCamera::getCurrentHomingSpeed()
 	return getParameterF(PCAMF_HomingSpeed);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 f32 PcamCamera::getCurrentWatchAdjustment()
 {
 	return NMathF::interpolate(mPrevMotionInfo.mWatchAdjustment, mTargetMotionInfo.mWatchAdjustment, getChangingMotionRate());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 f32 PcamCamera::getCurrentNaviWatchWeight()
 {
@@ -560,10 +552,9 @@ f32 PcamCamera::calcCurrentDistance()
 	return getWatchpoint().distance(getViewpoint());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 f32 PcamCamera::calcCurrentDirection()
 {
@@ -572,10 +563,9 @@ f32 PcamCamera::calcCurrentDirection()
 	return posture.calcDirection() + NMathF::pi;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 f32 PcamCamera::calcTargetDistance()
 {
@@ -583,10 +573,9 @@ f32 PcamCamera::calcTargetDistance()
 	return targetPos.distance(getViewpoint());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 f32 PcamCamera::getTargetDirection()
 {
@@ -672,10 +661,9 @@ void PcamCamera::outputTargetWatchpoint(NVector3f& outWatchPt)
 	outWatchPt.y += adjust;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void PcamCamera::makePolar()
 {
@@ -684,10 +672,9 @@ void PcamCamera::makePolar()
 	mPolarDir.input(dir);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 void PcamCamera::printInfo(Graphics& gfx, Font* font)
 {

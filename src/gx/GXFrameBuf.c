@@ -322,10 +322,9 @@ GXRenderModeObj GXRmHW         = { 1,
 	                               { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 },
 	                               { 0, 0, 21, 22, 21, 0, 0 } };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000120
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000120
  */
 void GXAdjustForOverscan(GXRenderModeObj* rmin, GXRenderModeObj* rmout, u16 hor, u16 ver)
 {
@@ -806,10 +805,9 @@ void GXClearBoundingBox(void)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void GXReadBoundingBox(u16* left, u16* top, u16* right, u16* bottom)
 {

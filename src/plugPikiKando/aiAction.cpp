@@ -8,17 +8,15 @@
 #include "PikiState.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiAction")
 
@@ -483,10 +481,9 @@ void TopAction::restart()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void TopAction::knowledgeCheck()
 {
@@ -509,10 +506,9 @@ TopAction::ObjBore::ObjBore()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int TopAction::ObjBore::getIndex(int id)
 {
@@ -525,10 +521,9 @@ int TopAction::ObjBore::getIndex(int id)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000134
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000134
  */
 void TopAction::ObjBore::addBoredom(int id, f32 inc)
 {
@@ -560,10 +555,9 @@ void TopAction::ObjBore::addBoredom(int id, f32 inc)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000124
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 void TopAction::ObjBore::update()
 {
@@ -590,10 +584,9 @@ TopAction::Boredom::Boredom()
 	mNextAvailableIndex   = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int TopAction::Boredom::getIndex(int id)
 {
@@ -606,10 +599,9 @@ int TopAction::Boredom::getIndex(int id)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 f32 TopAction::Boredom::getBoredom(int boreID, int objID)
 {
@@ -627,10 +619,9 @@ f32 TopAction::Boredom::getBoredom(int boreID, int objID)
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 void TopAction::Boredom::addBoredom(int boreID, int objID, f32 p2)
 {
@@ -652,10 +643,9 @@ void TopAction::Boredom::addBoredom(int boreID, int objID, f32 p2)
 	mBoredomCollectors[idx].addBoredom(objID, p2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000134
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000134
  */
 void TopAction::Boredom::update()
 {
@@ -664,10 +654,9 @@ void TopAction::Boredom::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000180
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000180
  */
 void TopAction::Boredom::draw2d(Graphics& gfx, int id)
 {

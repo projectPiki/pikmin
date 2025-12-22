@@ -4,17 +4,15 @@
 #include "Slime.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SlimeBody");
 
@@ -70,10 +68,9 @@ void SlimeBody::init(Slime* slime)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000124
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 void SlimeBody::traceCreaturePosition()
 {
@@ -88,10 +85,9 @@ void SlimeBody::traceCreaturePosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void SlimeBody::makeCentrePosition()
 {
@@ -103,10 +99,9 @@ void SlimeBody::makeCentrePosition()
 	mSlime->mSRT.t.multiply(0.25f); // Average of 4 parts
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void SlimeBody::makeInnerPosition()
 {
@@ -116,10 +111,9 @@ void SlimeBody::makeInnerPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B8
  */
 void SlimeBody::makeMaxRadius()
 {
@@ -134,10 +128,9 @@ void SlimeBody::makeMaxRadius()
 	mMaxRadius += C_SLIME_PROP(mSlime).mMaxRadiusCompensation();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void SlimeBody::setSpherePosition()
 {
@@ -148,10 +141,9 @@ void SlimeBody::setSpherePosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 f32 SlimeBody::calcVertexScore(immut Vector3f* vertex, Vector3f* creatureNormals, f32* creatureScores)
 {
@@ -203,10 +195,9 @@ void SlimeBody::sortPosition(Vector3f* outVertex, Vector3f* outNormal, immut Vec
 	outNormal->normalise();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void SlimeBody::makeSlimeBody()
 {
@@ -232,10 +223,9 @@ void SlimeBody::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000118
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000118
  */
 void SlimeBody::setJointPosition(BossShapeObject* shape, Graphics& gfx)
 {

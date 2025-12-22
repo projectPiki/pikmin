@@ -17,17 +17,15 @@ static u32 pomSE[] = {
 	SE_KING_CHEEK, SE_PONGASHI_CLOSE, SE_PONGASHI_EAT, SE_PONGASHI_SHOT, SE_PONGASHI_DEAD, SE_PONGASHI_TOUCH,
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("PomAi");
 
@@ -119,19 +117,17 @@ void PomAi::keyAction1()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void PomAi::keyAction2()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void PomAi::keyAction3()
 {
@@ -218,10 +214,9 @@ void PomAi::setCollideSound(Creature* collider)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void PomAi::setEveryFrame()
 {
@@ -231,10 +226,9 @@ void PomAi::setEveryFrame()
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void PomAi::checkSwayAndScale()
 {
@@ -249,10 +243,9 @@ void PomAi::checkSwayAndScale()
 	mPrevStickPikiCount = stickPikiCount;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void PomAi::calcSwayAndScale()
 {
@@ -266,10 +259,9 @@ void PomAi::calcSwayAndScale()
 	mDeformAmount += C_POM_PROP(mPom).mSquashMultiplier() * -mCurrentDeform;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void PomAi::setInitPosition()
 {
@@ -344,10 +336,9 @@ void PomAi::createPikiHead()
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void PomAi::emitPomOpenEffect(u32 collPartID)
 {
@@ -358,10 +349,9 @@ void PomAi::emitPomOpenEffect(u32 collPartID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000198
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000198
  */
 void PomAi::createPomOpenEffect()
 {
@@ -400,10 +390,9 @@ void PomAi::calcPetalStickers()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void PomAi::resultFlagOn()
 {
@@ -412,40 +401,36 @@ void PomAi::resultFlagOn()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void PomAi::resultFlagSeen()
 {
 	playerState->mResultFlags.setSeen(RESFLAG_Pom);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool PomAi::isMotionFinishTransit()
 {
 	return mPom->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 bool PomAi::deadTransit()
 {
 	return (mReleasedSeedCount >= mMaxSeedCount) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool PomAi::petalOpenTransit()
 {
@@ -456,20 +441,18 @@ bool PomAi::petalOpenTransit()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 bool PomAi::petalShakeTransit()
 {
 	return mHasCollided;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 bool PomAi::petalCloseTransit()
 {
@@ -487,10 +470,9 @@ bool PomAi::petalCloseTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001BC
  */
 bool PomAi::dischargeTransit()
 {
@@ -509,10 +491,9 @@ bool PomAi::dischargeTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void PomAi::initDie(int nextState)
 {
@@ -547,10 +528,9 @@ void PomAi::initWait(int nextState)
 	mPom->mIsPikiOrPlayerTouching = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001E4
  */
 void PomAi::initPetalOpen(int nextState)
 {
@@ -563,10 +543,9 @@ void PomAi::initPetalOpen(int nextState)
 	mPlaySound   = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void PomAi::initPetalShake(int nextState)
 {
@@ -580,10 +559,9 @@ void PomAi::initPetalShake(int nextState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void PomAi::initPetalClose(int nextState)
 {
@@ -618,10 +596,9 @@ void PomAi::initDischarge(int nextState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void PomAi::dieState()
 {
@@ -633,39 +610,35 @@ void PomAi::dieState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void PomAi::waitState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void PomAi::openState()
 {
 	calcPetalStickers();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void PomAi::shakeState()
 {
 	calcPetalStickers();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void PomAi::closeState()
 {
@@ -674,10 +647,9 @@ void PomAi::closeState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void PomAi::dischargeState()
 {

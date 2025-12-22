@@ -12,17 +12,15 @@
 #include "jaudio/pikidemo.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(27)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("MoviePlayer")
 
@@ -116,10 +114,9 @@ static MovieListInfo movieTitles[] = {
 	{ DEMOID_NULL, nullptr },
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 bool MovieInfo::update()
 {
@@ -131,10 +128,9 @@ bool MovieInfo::update()
 	return !isFinished;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 bool MovieInfo::setCamera(Graphics& gfx)
 {
@@ -147,10 +143,9 @@ bool MovieInfo::setCamera(Graphics& gfx)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void MovieInfo::refresh(Graphics&)
 {
@@ -195,10 +190,9 @@ void MoviePlayer::fixMovieList()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 MovieListInfo* MoviePlayer::findMovie(int id)
 {
@@ -381,10 +375,9 @@ MovieTransInfo transTable[] = {
 	{ DEMOID_NULL, nullptr },
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 int MoviePlayer::translateIndex(int idx, int stage)
 {
@@ -592,10 +585,9 @@ void MoviePlayer::initMovieFlags(MovieInfo* info)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void MoviePlayer::sndFrameMovie(MovieInfo*)
 {
@@ -792,20 +784,18 @@ void MoviePlayer::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void MoviePlayer::nextFrame()
 {
 	static_cast<MovieInfo*>(mPlayInfoList.mChild)->mPlayer->mCurrentPlaybackTime++;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void MoviePlayer::backFrame()
 {

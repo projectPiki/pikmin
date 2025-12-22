@@ -15,17 +15,15 @@ bool PikiMgr::meBirthMode;
 bool PikiMgr::meNukiMode;
 bool PikiMgr::containerExitMode;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("pikiMgr");
 
@@ -54,10 +52,9 @@ Creature* PikiMgr::birth()
 	return MonoObjectMgr::birth();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 CPlate* PikiMgr::getFormationPikis()
 {
@@ -118,10 +115,9 @@ Creature* PikiMgr::createObject()
 	return piki;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 bool PikiMgr::lostAllPikis()
 {
@@ -144,10 +140,9 @@ void PikiMgr::refresh(Graphics& graphics)
 	MonoObjectMgr::refresh(graphics);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000114
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000114
  */
 void PikiMgr::refresh2d(Graphics& gfx)
 {

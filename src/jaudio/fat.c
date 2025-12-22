@@ -313,10 +313,9 @@ u8 FAT_ReadByte(u16 a, u32 b)
 	return *ptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 u16 FAT_ReadWord(u16 a, u32 b)
 {
@@ -330,20 +329,18 @@ u16 FAT_ReadWord(u16 a, u32 b)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void FAT_ReadWordD(u16 a, u32 b)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 u32 FAT_ReadLong(u16 a, u32 b)
 {
@@ -353,10 +350,9 @@ u32 FAT_ReadLong(u16 a, u32 b)
 	return *(u32*)FAT_GetPointer(a, b);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void FAT_ReadLongD(u16 a1, u32 a2)
 {

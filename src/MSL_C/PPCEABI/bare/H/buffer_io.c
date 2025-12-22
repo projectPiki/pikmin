@@ -1,18 +1,16 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void __convert_from_newlines(char* p, size_t* n)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void __convert_to_newlines(void)
 {
@@ -31,10 +29,9 @@ void __prep_buffer(FILE* file)
 	return;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void __load_buffer(void)
 {
@@ -71,20 +68,18 @@ int __flush_buffer(FILE* file, size_t* length)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 void setvbuf(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void setbuf(void)
 {

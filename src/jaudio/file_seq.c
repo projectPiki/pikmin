@@ -164,10 +164,9 @@ BOOL Jaf_StopSeq(u32 index)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void Jaf_GetJamHandle(u32)
 {
@@ -182,10 +181,9 @@ seqp_* Jaf_HandleToSeq(u32 index)
 	return &rootseq[index];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void Jaf_LoadStartFinish(u32)
 {
@@ -248,10 +246,9 @@ u32 __LoadSeqA(u32 param_1, u32 param_2, u8* param_3, void (*param_4)(u32))
 	return JV_LoadFile_Async2(val1, param_3, 0, seqSize, param_4, (u32)&as[index]);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void Jaf_LoadStartSeqA(u32, u32, u8*)
 {

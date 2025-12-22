@@ -135,10 +135,9 @@ static struct ActionStatus {
 };
 static f32 EVENT_DIST_SCALE[8] = { 1.0f, 1.0f, 2.0f, 0.8f, 1.2f, 1.0f, 1.2f, 2.0f };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void Jac_Debug_ActionEntry(void)
 {
@@ -588,10 +587,9 @@ void Jac_InitAllEvent(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void Jac_DestroyNotThisEvent(void)
 {

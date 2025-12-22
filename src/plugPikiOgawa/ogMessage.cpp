@@ -68,27 +68,24 @@ static char kanji_convert_table[] ATTRIBUTE_ALIGN(32) = {
 	"績匹累替角更包獰吹遇悪似謎守有軽様告武器危崩順形養境届両衛貫渦砕淵裂凡義務貴毎賊突測庭円翔魅夫秩低爆住笑"
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void searchKanjiCode(u16 id)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgMessageSection")
 
@@ -105,10 +102,9 @@ s16 zen::ogScrMessageMgr::SearchTopPage(int a)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void zen::ogScrMessageMgr::setMessagePage(int page)
 {
@@ -435,10 +431,9 @@ void zen::ogScrMessageMgr::setPageInfoSub()
 	gsys->setHeap(old);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void zen::ogScrMessageMgr::ReadAllScreen()
 {
@@ -510,10 +505,9 @@ zen::ogScrMessageMgr::ogScrMessageMgr(immut char* path)
 	P2DPaneLibrary::setFamilyAlpha(mBaseScreen, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void zen::ogScrMessageMgr::setScreenAlpha(u8 alpha)
 {

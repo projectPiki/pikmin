@@ -6,17 +6,15 @@
 #include "teki.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(19)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIeffectAttack")
 
@@ -72,10 +70,9 @@ void CylinderTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creat
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003E4
  */
 void CylinderTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 {
@@ -202,10 +199,9 @@ void ConeTypeCallBack::hitCheckCommon(zen::particleGenerator* ptclGen, Creature*
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000214
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000214
  */
 void ConeTypeCallBack::hitCheck(zen::particleGenerator* ptclGen)
 {

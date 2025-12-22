@@ -287,10 +287,9 @@ u64 __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int), void* 
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000124
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 void strtoll(void)
 {
@@ -325,10 +324,9 @@ u32 strtoul(const char* str, char** end, int base)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void strtoull(void)
 {
@@ -372,30 +370,27 @@ int atoi(const char* str)
 	return strtol(str, NULL, 10);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 void atol(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000124
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 void strtoimax(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void strtoumax(void)
 {

@@ -5,44 +5,39 @@
 
 RumbleMgr* rumbleMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr);
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 ChannelDataMgr::ChannelDataMgr()
 {
 	mDataTbl = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void ChannelDataMgr::init()
 {
 	mDataTbl = channelDataTbl;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 ChannelData* ChannelDataMgr::getChannelDataTbl(int row)
 {
@@ -61,10 +56,9 @@ ChannelMgr::ChannelMgr()
 	mData            = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void ChannelMgr::init(ChannelDataMgr* dataMgr)
 {
@@ -76,10 +70,9 @@ void ChannelMgr::init(ChannelDataMgr* dataMgr)
 	mDataMgr         = dataMgr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void ChannelMgr::reset()
 {
@@ -138,10 +131,9 @@ f32 ChannelMgr::update()
 	return mRumbleIntensity;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 ControlerMgr::ControlerMgr()
 {
@@ -149,10 +141,9 @@ ControlerMgr::ControlerMgr()
 	mChannelMgrs     = new ChannelMgr[32];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000188
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000188
  */
 void ControlerMgr::init()
 {
@@ -162,10 +153,9 @@ void ControlerMgr::init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 void ControlerMgr::reset()
 {
@@ -188,10 +178,9 @@ void ControlerMgr::start(int idx, f32* valuePtr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A4
  */
 void ControlerMgr::stop()
 {
@@ -202,10 +191,9 @@ void ControlerMgr::stop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000114
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000114
  */
 void ControlerMgr::stop(int type)
 {
@@ -216,10 +204,9 @@ void ControlerMgr::stop(int type)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 f32 ControlerMgr::update()
 {
@@ -270,10 +257,9 @@ RumbleMgr::RumbleMgr(bool p1, bool p2, bool p3, bool p4)
 	mIsDisabled = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001F8
  */
 void RumbleMgr::init()
 {
@@ -404,10 +390,9 @@ void RumbleMgr::rumbleOption(bool p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void RumbleMgr::rumblePause(bool)
 {

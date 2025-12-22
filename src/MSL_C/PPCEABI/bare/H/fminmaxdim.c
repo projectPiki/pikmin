@@ -3,20 +3,18 @@
 #define __HI(x) (((s32*)&x)[0])
 #define __LO(x) (((s32*)&x)[1])
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void fmax(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void fmin(void)
 {
@@ -49,10 +47,9 @@ int __fpclassifyd__Fd(f64 x)
 	return FP_NORMAL;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void fdim(void)
 {

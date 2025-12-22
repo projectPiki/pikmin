@@ -154,10 +154,9 @@ void Stream::writeString(immut String& s)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 void Stream::print(immut char* fmt, ...)
 {
@@ -170,10 +169,9 @@ void Stream::print(immut char* fmt, ...)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 // void Stream::vPrintf(char*, std::@class$1stream_cpp*)
 // {
@@ -217,10 +215,9 @@ void Stream::close()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void RandomAccessStream::writeTo(int p1, void*, int)
 {
@@ -229,30 +226,27 @@ void RandomAccessStream::writeTo(int p1, void*, int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 // void RandomAccessStream::readFrom(int, void*, int)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 // void RandomAccessStream::writeIntTo(int, int)
 // {
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 // void RandomAccessStream::readIntFrom(int)
 // {

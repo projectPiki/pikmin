@@ -83,20 +83,18 @@ s32 CARDFastDelete(s32 channel, s32 fileNo)
 	return __CARDSync(channel);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 s32 CARDDeleteAsync(s32 chan, const char* fileName, CARDCallback callback)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void CARDDelete(void)
 {

@@ -232,20 +232,18 @@ u16 Jac_BnkVirtualToPhysical(u16 vID)
 	return BNK_V2P_TABLE[vID];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 u16 Jac_BnkPhysicalToVirtual(u16 bnk)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 u16 Jac_WsPhysicalToVirtual(u16 ws)
 {

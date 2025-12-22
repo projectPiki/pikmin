@@ -3,24 +3,21 @@
 #include "nlib/Function.h"
 #include "nlib/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibfunction");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 NPolynomialFunction::NPolynomialFunction(f32*, int)
 {
@@ -35,20 +32,18 @@ void NPolynomialFunction::construct(f32* coefficients, int degree)
 	mData.construct(coefficients, degree + 1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 NPolynomialFunction::NPolynomialFunction(f32*, NPolynomialFunction&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
 {
@@ -56,10 +51,9 @@ void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
 	                         // UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00029C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00029C
  */
 void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
 {
@@ -80,10 +74,9 @@ f32 NPolynomialFunction::getValue(f32 p1)
 	return value;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 f32 NPolynomialFunction::getCoefficient(int)
 {
@@ -101,10 +94,9 @@ void NPolynomialFunction::println() immut
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 NLinearFunction::NLinearFunction(f32* values)
     : NPolynomialFunction(values, 1)
@@ -112,20 +104,18 @@ NLinearFunction::NLinearFunction(f32* values)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void NLinearFunction::construct(f32* values)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void NLinearFunction::makeLinearFunction(f32, f32, f32, f32)
 {
@@ -214,19 +204,17 @@ f32 NVibrationFunction::getValue(f32 p1)
 	return mAmplitude * sinf(mPhase + mAngularFreq * p1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 NFunction3D::NFunction3D()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void NFunction3D::construct(NFunction* funX, NFunction* funY, NFunction* funZ)
 {

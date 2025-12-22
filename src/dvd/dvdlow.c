@@ -52,10 +52,9 @@ void __DVDInitWA(void)
 	OSInitAlarm();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 static BOOL ProcessNextCommand(void)
 {
@@ -208,10 +207,9 @@ static void AlarmHandlerForTimeout(OSAlarm* alarm, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 static void SetTimeoutAlarm(OSTime timeout)
 {
@@ -245,20 +243,18 @@ static void Read(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void AudioBufferOn(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 BOOL HitCache(DVDBuffer* cur, DVDBuffer* prev)
 {
@@ -273,10 +269,9 @@ BOOL HitCache(DVDBuffer* cur, DVDBuffer* prev)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 static void DoJustRead(void* addr, u32 length, u32 offset, DVDLowCallback callback)
 {
@@ -310,10 +305,9 @@ static void SeekTwiceBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallba
 	DVDLowSeek(newOffset, callback);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 static void WaitBeforeRead(void* addr, u32 length, u32 offset, DVDLowCallback callback, OSTime timeout)
 {
@@ -515,40 +509,36 @@ void DVDLowReset()
 	LastResetEnd  = __OSGetSystemTime();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void DVDLowSetResetCoverCallback(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void DoBreak(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void AlarmHandlerForBreak(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void SetBreakAlarm(void)
 {
@@ -577,10 +567,9 @@ DVDLowCallback DVDLowClearCallback()
 	return old;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void DVDLowGetCoverStatus(void)
 {

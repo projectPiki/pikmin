@@ -425,30 +425,27 @@ void Jac_StartDemoSound(u32 id)
 	} while (StreamSyncPlayAudio(1.0f, 0, stream_level, stream_level) != 1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void Jac_CheckReadyDemoSound(u32 a)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void Jac_StreamSetup(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void Jac_StreamUpdate(void)
 {

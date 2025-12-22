@@ -149,10 +149,9 @@ UARTError TRKWriteUARTN(const void* bytes, u32 length)
 	return writeErr == 0 ? 0 : -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 UARTError WriteUARTFlush(void)
 {
@@ -169,10 +168,9 @@ UARTError WriteUARTFlush(void)
 	return readErr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 UARTError WriteUART1(u8 arg0)
 {
@@ -180,10 +178,9 @@ UARTError WriteUART1(u8 arg0)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 UARTError TRKReadUARTPoll(u8* arg0)
 {

@@ -38,10 +38,9 @@ BOOL Jac_CheckStreamRemain(u32 size)
 	return (buf->streamRemain < size) ? FALSE : TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 u32 Jac_GetStreamRemain()
 {

@@ -3,24 +3,21 @@
 #include "Vector.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void zen::ZenQuat::GetMatrix(const Quat&, Matrix3f& outMtx)
 {
@@ -28,20 +25,18 @@ void zen::ZenQuat::GetMatrix(const Quat&, Matrix3f& outMtx)
 	                          // UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void zen::ZenQuat::GetMatrix(const Quat&, Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000238
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000238
  */
 void zen::ZenQuat::GetRotate(const Quat&, Vector3f&)
 {

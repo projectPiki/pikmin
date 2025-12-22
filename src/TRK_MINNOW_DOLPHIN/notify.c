@@ -1,10 +1,9 @@
 
 #include "PowerPC_EABI_Support/MetroTRK/trk.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 inline DSError TRKWaitForACK(TRKBuffer* msg, MessageCommandID cmd)
 {

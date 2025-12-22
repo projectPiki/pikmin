@@ -69,10 +69,9 @@ static void __init_cpp(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void __fini_cpp(void)
 {

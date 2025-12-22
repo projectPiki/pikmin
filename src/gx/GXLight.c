@@ -28,10 +28,9 @@ void GXInitLightAttn(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2, f32 k0, f32 k1,
 	obj->k[2] = k2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void GXInitLightAttnA(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2)
 {
@@ -45,10 +44,9 @@ void GXInitLightAttnA(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2)
 	obj->a[2] = a2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void GXGetLightAttnA(GXLightObj* lt_obj, f32* a0, f32* a1, f32* a2)
 {
@@ -62,10 +60,9 @@ void GXGetLightAttnA(GXLightObj* lt_obj, f32* a0, f32* a1, f32* a2)
 	*a2 = obj->a[2];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void GXInitLightAttnK(GXLightObj* lt_obj, f32 k0, f32 k1, f32 k2)
 {
@@ -79,10 +76,9 @@ void GXInitLightAttnK(GXLightObj* lt_obj, f32 k0, f32 k1, f32 k2)
 	obj->k[2] = k2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void GXGetLightAttnK(GXLightObj* lt_obj, f32* k0, f32* k1, f32* k2)
 {
@@ -96,10 +92,9 @@ void GXGetLightAttnK(GXLightObj* lt_obj, f32* k0, f32* k1, f32* k2)
 	*k2 = obj->k[2];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000180
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000180
  */
 void GXInitLightSpot(GXLightObj* lt_obj, f32 cutoff, GXSpotFn spot_func)
 {
@@ -164,10 +159,9 @@ void GXInitLightSpot(GXLightObj* lt_obj, f32 cutoff, GXSpotFn spot_func)
 	obj->a[2] = a2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 void GXInitLightDistAttn(GXLightObj* lt_obj, f32 ref_dist, f32 ref_br, GXDistAttnFn dist_func)
 {
@@ -228,10 +222,9 @@ void GXInitLightPos(GXLightObj* lt_obj, f32 x, f32 y, f32 z)
 	obj->lpos[2] = z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void GXGetLightPos(GXLightObj* lt_obj, f32* x, f32* y, f32* z)
 {
@@ -261,10 +254,9 @@ void GXInitLightDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 	obj->ldir[2] = -nz;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void GXGetLightDir(GXLightObj* lt_obj, f32* nx, f32* ny, f32* nz)
 {
@@ -305,10 +297,9 @@ void GXInitSpecularDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz)
 	obj->lpos[2] = -nz * (1024.0f * 1024.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void GXInitSpecularDirHA(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz, f32 hx, f32 hy, f32 hz)
 {
@@ -340,10 +331,9 @@ void GXInitLightColor(GXLightObj* lt_obj, GXColor color)
 	obj->Color = (color.r << 24) | (color.g << 16) | (color.b << 8) | color.a;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void GXGetLightColor(GXLightObj* lt_obj, GXColor* color)
 {
@@ -446,10 +436,9 @@ void GXLoadLightObjImm(GXLightObj* lt_obj, GXLightID light)
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void GXLoadLightObjIndx(u32 lt_obj_indx, GXLightID light)
 {

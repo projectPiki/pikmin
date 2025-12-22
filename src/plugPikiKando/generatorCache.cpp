@@ -6,17 +6,15 @@
 #include "gameflow.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(11)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GeneratorCache");
 
@@ -588,10 +586,9 @@ void GeneratorCache::saveGeneratorCreature(Generator* gen)
 	cache->mCreatureCacheSize += pos;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void GeneratorCache::Cache::dump()
 {

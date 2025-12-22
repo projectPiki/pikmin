@@ -18,17 +18,15 @@
 #include "sysNew.h"
 #include "timers.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("BossMgr");
 
@@ -143,20 +141,18 @@ void BossMgr::addUseCount(int bossID, int count)
 	mUseCounts[bossID] += count;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 bool BossMgr::useBoss(int bossID)
 {
 	return mUseCounts[bossID] > 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 int BossMgr::getUseCount(int bossID)
 {
@@ -358,10 +354,9 @@ void BossMgr::constructBoss()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void BossMgr::animatorInit(Boss* boss)
 {
@@ -370,10 +365,9 @@ void BossMgr::animatorInit(Boss* boss)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 void BossMgr::initSpider(int count)
 {
@@ -384,10 +378,9 @@ void BossMgr::initSpider(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initSnake(int count)
 {
@@ -398,10 +391,9 @@ void BossMgr::initSnake(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initBoxSnake(int count)
 {
@@ -432,10 +424,9 @@ void BossMgr::initSlime(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initKing(int count)
 {
@@ -446,10 +437,9 @@ void BossMgr::initKing(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initKogane(int count)
 {
@@ -460,10 +450,9 @@ void BossMgr::initKogane(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initPom(int count)
 {
@@ -474,10 +463,9 @@ void BossMgr::initPom(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initKingBack(int count)
 {
@@ -488,10 +476,9 @@ void BossMgr::initKingBack(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initMizu(int count)
 {
@@ -502,10 +489,9 @@ void BossMgr::initMizu(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void BossMgr::initGeyzer(int count)
 {
@@ -516,10 +502,9 @@ void BossMgr::initGeyzer(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
 {
@@ -540,10 +525,9 @@ void BossMgr::setBossParam(Boss* boss, GenObjectBoss* genBoss)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E4
  */
 Boss* BossMgr::createBoss(int bossID)
 {

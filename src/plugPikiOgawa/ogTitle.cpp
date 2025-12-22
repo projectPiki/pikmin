@@ -10,24 +10,21 @@
 #include "zen/ZenController.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgTitleSection")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void zen::ogScrTitleMgr::getGamePrefs()
 {
@@ -39,10 +36,9 @@ void zen::ogScrTitleMgr::getGamePrefs()
 	mChildMode  = gameflow.mGamePrefs.getChildMode();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void zen::ogScrTitleMgr::setGamePrefs()
 {

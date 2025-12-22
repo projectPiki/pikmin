@@ -23,10 +23,9 @@ DSPchannel_* GetDspHandle(u8 idx)
 	return &CH_BUF[idx];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 DSPchannel_* GetDspHandleNc(u8)
 {
@@ -41,10 +40,9 @@ FXBuffer* GetFxHandle(u8 idx)
 	return &FX_BUF[idx];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 FXBuffer* GetFxHandleNc(u8 idx)
 {
@@ -62,10 +60,9 @@ void DSP_SetPitch(u8 idx, u16 pitch)
 	buf->resamplingRatio = pitch;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void DSP_SetPitch_Indirect(u8 idx, f32, f32)
 {
@@ -326,30 +323,27 @@ void DSP_FlushChannel(u8 idx)
 	DCFlushRangeNoSync(&CH_BUF[idx], sizeof(DSPchannel_));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void DSP_CacheChannel(u8 idx)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void DSP_FlushChannelAll()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void DSP_CacheChannelAll()
 {

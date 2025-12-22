@@ -334,20 +334,18 @@ void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 	(void)&movieFilePath;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void hvqm_proc(void* data)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void OSInitFastCast(void)
 {
@@ -364,10 +362,9 @@ static void hvqm_forcestop()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 void Jac_HVQM_ThreadStart(void)
 {
@@ -514,10 +511,9 @@ void Jac_HVQM_ForceStop(void)
 	hvqm_forcestop();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void Jac_CountReadyPictures(void)
 {

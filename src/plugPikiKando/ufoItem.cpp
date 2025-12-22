@@ -10,10 +10,9 @@
 #include "UtEffect.h"
 #include "gameflow.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
@@ -78,10 +77,9 @@ static const EffectMgr::effTypeTable unusedEffects[3] = {
 	EffectMgr::EFF_Onyon_HaloRingYellow,
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("ufoItem")
 
@@ -259,10 +257,9 @@ void UfoItem::finishConeEffect()
 	utEffectMgr->kill(mConeEffectId);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void UfoItem::initLevelFlag(int level)
 {
@@ -426,10 +423,9 @@ void UfoItem::LightAnimator::start(int id)
 	setSpeed(30.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void UfoItem::LightAnimator::update()
 {

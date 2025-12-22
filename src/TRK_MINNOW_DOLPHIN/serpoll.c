@@ -3,20 +3,18 @@
 void* gTRKInputPendingPtr;
 static TRKFramingState gTRKFramingState;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void TRKDiscardFrame(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void TRKRejectFrame(void)
 {
@@ -59,10 +57,9 @@ TRKBufferID TRKTestForPacket(void)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void TRKProcessFrame(void)
 {

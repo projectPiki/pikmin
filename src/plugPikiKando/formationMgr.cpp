@@ -4,17 +4,15 @@
 #include "Graphics.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(8)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("formation")
 
@@ -78,10 +76,9 @@ Vector3f FormationMgr::getLastCentre()
 	return centre;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 FormationMgr::FormationMgr()
 {
@@ -102,10 +99,9 @@ FormationMgr::FormationMgr()
 	mAngOffset = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 FormPoint::FormPoint()
 {
@@ -206,10 +202,9 @@ void FormationMgr::slide(Creature* target, int idx)
 	target->mFormPoint     = &mFormPoints[freeIdx];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void FormationMgr::add(immut Vector3f& p1, immut Vector3f& p2)
 {
@@ -221,10 +216,9 @@ void FormationMgr::add(immut Vector3f& p1, immut Vector3f& p2)
 	mFormPointCount++;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int FormationMgr::getIndex(Creature* target)
 {
@@ -236,10 +230,9 @@ int FormationMgr::getIndex(Creature* target)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int FormationMgr::getFptIndex(FormPoint* point)
 {
@@ -280,10 +273,9 @@ void FormationMgr::exit(Creature* target)
 	mCount--;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void FormationMgr::clear()
 {
@@ -301,19 +293,17 @@ void FormationMgr::clear()
 	mCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void FormationMgr::rearrange()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void FormationMgr::setOffset(immut Vector3f& offset)
 {
@@ -323,10 +313,9 @@ void FormationMgr::setOffset(immut Vector3f& offset)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void FormationMgr::setAngOffset(f32 offset)
 {
@@ -476,10 +465,9 @@ void WingArranger::arrange(FormationMgr* mgr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 Rope::Rope()
 {
@@ -487,10 +475,9 @@ Rope::Rope()
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000A1C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000A1C
  */
 void Rope::move(immut Vector3f& targetPos, immut Vector3f& initialVel, immut Vector3f& p3)
 {
@@ -511,10 +498,9 @@ void Rope::move(immut Vector3f& targetPos, immut Vector3f& initialVel, immut Vec
 	mPosition = projectedPos + mRadius * vec3;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000170
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000170
  */
 void Rope::refresh(Graphics& gfx)
 {
@@ -531,20 +517,18 @@ void Rope::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 Spine::Spine()
 {
 	mTargetCreature.clear();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000340
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000340
  */
 void Spine::init(Creature* target)
 {
@@ -576,10 +560,9 @@ void Spine::init(Creature* target)
 	_UNUSED10.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000A8C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000A8C
  */
 void Spine::preMove()
 {
@@ -587,19 +570,17 @@ void Spine::preMove()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void Spine::postMove()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void Spine::move()
 {
@@ -607,10 +588,9 @@ void Spine::move()
 	preMove();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void Spine::refresh(Graphics& gfx)
 {

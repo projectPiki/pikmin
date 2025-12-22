@@ -30,10 +30,9 @@ void __OSResetSWInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 	__PIRegs[PI_INTRPT_SRC] = 2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 OSResetCallback OSSetResetCallback(OSResetCallback)
 {

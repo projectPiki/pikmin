@@ -5,10 +5,9 @@ static GXDrawDoneCallback DrawDoneCB;
 static u8 DrawDone;
 static OSThreadQueue FinishQueue;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void GXSetMisc(GXMiscToken token, u32 val)
 {
@@ -53,10 +52,9 @@ void GXFlush(void)
 	PPCSync();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void GXResetWriteGatherPipe(void)
 {
@@ -83,10 +81,9 @@ void __GXAbort(void)
 	__GXAbortWait(20);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void GXAbortFrame(void)
 {
@@ -94,10 +91,9 @@ void GXAbortFrame(void)
 	__GXCleanGPFifo();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 void GXSetDrawSync(u16 token)
 {
@@ -117,10 +113,9 @@ void GXSetDrawSync(u16 token)
 	gx->bpSent = GX_FALSE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 u16 GXReadDrawSync(void)
 {
@@ -128,10 +123,9 @@ u16 GXReadDrawSync(void)
 	return token;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void GXSetDrawDone(void)
 {
@@ -147,10 +141,9 @@ void GXSetDrawDone(void)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void GXWaitDrawDone(void)
 {
@@ -185,10 +178,9 @@ void GXPixModeSync(void)
 	gx->bpSent = GX_TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void GXTexModeSync(void)
 {
@@ -312,10 +304,9 @@ void GXPokeZMode(GXBool compare_enable, GXCompare func, GXBool update_enable)
 	__peReg[0] = reg;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void GXPeekARGB(u16 x, u16 y, u32* color)
 {
@@ -327,10 +318,9 @@ void GXPeekARGB(u16 x, u16 y, u32* color)
 	*color = *(u32*)addr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void GXPokeARGB(u16 x, u16 y, u32 color)
 {
@@ -342,10 +332,9 @@ void GXPokeARGB(u16 x, u16 y, u32 color)
 	*(u32*)addr = color;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void GXPeekZ(u16 x, u16 y, u32* z)
 {
@@ -357,10 +346,9 @@ void GXPeekZ(u16 x, u16 y, u32* z)
 	*z = *(u32*)addr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void GXPokeZ(u16 x, u16 y, u32 z)
 {
@@ -372,10 +360,9 @@ void GXPokeZ(u16 x, u16 y, u32 z)
 	*(u32*)addr = z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 GXDrawSyncCallback GXSetDrawSyncCallback(GXDrawSyncCallback cb)
 {
@@ -411,10 +398,9 @@ static void GXTokenInterruptHandler(__OSInterrupt interrupt, OSContext* context)
 	__peReg[5] = reg;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 GXDrawDoneCallback GXSetDrawDoneCallback(GXDrawDoneCallback cb)
 {
@@ -469,10 +455,9 @@ void __GXPEInit(void)
 	__peReg[5] = reg;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000134
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000134
  */
 u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 {
@@ -539,10 +524,9 @@ u32 GXCompressZ16(u32 z24, GXZFmt16 zfmt)
 	return z16;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00011C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00011C
  */
 u32 GXDecompressZ16(u32 z16, GXZFmt16 zfmt)
 {

@@ -7,17 +7,15 @@
 #include "zen/EffectMgr2D.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawFinalResult")
 
@@ -177,10 +175,9 @@ bool zen::DrawTotalScore::update(Controller* controller)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void zen::DrawTotalScore::draw(Graphics& gfx)
 {
@@ -188,10 +185,9 @@ void zen::DrawTotalScore::draw(Graphics& gfx)
 	mEffectMgr2D->draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void zen::DrawTotalScore::sleep()
 {
@@ -199,10 +195,9 @@ void zen::DrawTotalScore::sleep()
 	setMode(MODE_Sleep);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void zen::DrawTotalScore::start()
 {
@@ -249,10 +244,9 @@ void zen::DrawTotalScore::setMode(zen::DrawTotalScore::modeFlag mode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00010C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00010C
  */
 void zen::DrawTotalScore::setEffect(P2DPane* pane, int effID)
 {

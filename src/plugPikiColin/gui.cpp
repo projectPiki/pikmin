@@ -6,17 +6,15 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/printf.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
@@ -60,10 +58,9 @@ Menu::Menu(Controller* controller, Font* font, bool useCustomPosition)
 	mNextMenu               = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void Menu::KeyEvent::insertAfter(Menu::KeyEvent* key)
 {
@@ -74,10 +71,9 @@ void Menu::KeyEvent::insertAfter(Menu::KeyEvent* key)
 	mNext        = key;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void Menu::KeyEvent::remove()
 {
@@ -85,10 +81,9 @@ void Menu::KeyEvent::remove()
 	mPrev->mNext = mNext;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void Menu::MenuItem::insertAfter(Menu::MenuItem* item)
 {
@@ -99,10 +94,9 @@ void Menu::MenuItem::insertAfter(Menu::MenuItem* item)
 	mNext        = item;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void Menu::MenuItem::remove()
 {
@@ -110,10 +104,9 @@ void Menu::MenuItem::remove()
 	mPrev->mNext = mNext;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 Menu::KeyEvent::KeyEvent(int eventType, int inputCode, IDelegate1<Menu&>* delegate)
 {
@@ -143,20 +136,18 @@ Menu::MenuItem::MenuItem(int type, int filterIndex, char* name, IDelegate1<Menu&
 	mEventList->mNext = mEventList->mPrev = mEventList;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Menu::setOnEnter(IDelegate1<Menu&>* callback)
 {
 	mOnEnterCallBack = callback;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Menu::setOnExit(IDelegate1<Menu&>* callback)
 {

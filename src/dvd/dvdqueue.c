@@ -35,10 +35,9 @@ BOOL __DVDPushWaitingQueue(int idx, struct DVDQueue* newTail)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void PopWaitingQueuePrio(void)
 {
@@ -113,20 +112,18 @@ BOOL __DVDDequeueWaitingQueue(DVDQueue* queue)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void __DVDIsBlockInWaitingQueue(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00010C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00010C
  */
 void DVDDumpWaitingQueue(void)
 {

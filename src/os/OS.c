@@ -70,10 +70,9 @@ void* __OSSavedRegionEnd;
 static void OSExceptionInit(void);
 static void OSDefaultExceptionHandler(__OSException exception, OSContext* context);
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 u32 __OSIsDebuggerPresent(void)
 {
@@ -81,10 +80,9 @@ u32 __OSIsDebuggerPresent(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 static ASM void __OSInitFPRs(void) {
 #ifdef __MWERKS__ // clang-format off

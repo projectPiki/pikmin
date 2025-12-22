@@ -26,24 +26,21 @@ static int numTris;
 static CollTriInfo* baseTri;
 static f32 checkRadius;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(32)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Creature");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void Creature::startFixPosition()
 {
@@ -238,10 +235,9 @@ void Creature::stopEventSound(Creature* target, int soundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 bool Creature::insideSphere(immut Sphere& sphere)
 {
@@ -393,10 +389,9 @@ void Creature::turnTo(immut Vector3f& targetDir)
 	mFaceDirection = atan2f(targetDir.x - mSRT.t.x, targetDir.z - mSRT.t.z);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000FC
  */
 void Creature::adjustDistance(immut Vector3f& targetPos, f32 targetDist)
 {
@@ -466,10 +461,9 @@ void Creature::init(immut Vector3f& pos)
 	resetCreatureFlag(CF_StuckToMouth);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 int Creature::getAtariType()
 {
@@ -903,10 +897,9 @@ f32 centreDist(Creature* c1, Creature* c2)
 	return sep.length();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 f32 sphereDistQuick(Creature* c1, Creature* c2)
 {
@@ -1046,10 +1039,9 @@ f32 Creature::getShadowSize()
 	return mSRT.s.x * getSize();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000164
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000164
  */
 void showTri(Graphics& gfx, immut Vector3f& vec, CollTriInfo* tri)
 {
@@ -1097,10 +1089,9 @@ static void recTraceShadowTris(Graphics& gfx, immut Vector3f& vec, CollTriInfo* 
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void calcShadowTris(Graphics& gfx, immut Vector3f& vec, f32 rad)
 {

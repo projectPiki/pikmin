@@ -203,10 +203,9 @@ void __GXSetVCD(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001B4
  */
 void GXGetVtxDesc(GXAttr attr, GXAttrType* type)
 {
@@ -289,10 +288,9 @@ void GXGetVtxDesc(GXAttr attr, GXAttrType* type)
 	*type = cpType;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void GXGetVtxDescv(GXVtxDescList* vcd)
 {
@@ -454,10 +452,9 @@ void __GXSetVAT(void)
 	gx->dirtyVAT = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000248
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000248
  */
 void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type, u8* frac)
 {
@@ -543,10 +540,9 @@ void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList* vat)
 {

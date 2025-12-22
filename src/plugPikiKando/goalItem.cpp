@@ -31,17 +31,15 @@ static f32 rotateX[1] = { 0.0f };
 static f32 rotateY[1] = { 0.0f };
 static f32 rotateZ[1] = { 0.0f };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(29)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("goalItem")
 
@@ -49,10 +47,9 @@ static u32 leg_ids[3] = { 'leg1', 'leg2', 'leg3' };
 
 u8 GoalItem::demoHideFlag;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
 {
@@ -502,10 +499,9 @@ void GoalItem::startConeShrink()
 	_3FC           = mSpotModelEff->mSRT.s;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void GoalItem::updateConeShrink()
 {
@@ -537,10 +533,9 @@ void GoalItem::startConeEmit()
 	mConeSizeTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void GoalItem::updateConeEmit()
 {

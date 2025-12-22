@@ -234,20 +234,18 @@ s32 __CARDClearStatus(s32 channel)
 	return err ? CARD_RESULT_NOCARD : CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void __CARDSleep(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void __CARDWakeup(void)
 {
@@ -281,10 +279,9 @@ static void TimeoutHandler(OSAlarm* alarm, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 static void SetupTimeoutAlarm(CARDControl* card)
 {
@@ -498,10 +495,9 @@ s32 __CARDWritePage(s32 channel, CARDCallback callback)
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E0
  */
 void __CARDErase(void)
 {
@@ -679,20 +675,18 @@ s32 CARDFreeBlocks(s32 channel, s32* byteNotUsed, s32* filesNotUsed)
 	return __CARDPutControlBlock(card, CARD_RESULT_READY);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void CARDGetEncoding(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void CARDGetMemSize(void)
 {

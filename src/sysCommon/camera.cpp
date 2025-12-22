@@ -5,24 +5,21 @@
 #include "Texture.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 void CullFrustum::vectorToWorldPlane(immut Vector3f& vec, CullingPlane& worldPlane)
 {
@@ -245,20 +242,18 @@ void CullFrustum::createViewPlanes()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void CullFrustum::additionalPlanes(CullFrustum*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void CullFrustum::createVecs()
 {
@@ -278,10 +273,9 @@ void CullFrustum::createVecs()
 	mViewZAxis.z = -mLookAtMtx.mMtx[2][2];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void CullFrustum::createInvVecs()
 {
@@ -366,20 +360,18 @@ void CullFrustum::calcLookAt(immut Vector3f& p1, immut Vector3f& p2, immut Vecto
 	mLookAtMtx.inverse(&mInverseLookAtMtx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void CullFrustum::calcLookFrom(immut Vector3f&, immut Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00015C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00015C
  */
 void Camera::camReflect(Camera&, Plane&)
 {
@@ -412,10 +404,9 @@ f32 Camera::projectWorldPoint(Graphics& gfx, Vector3f& point)
 	return point.z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000170
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000170
  */
 f32 Camera::projectCamPoint(Vector3f&)
 {

@@ -78,10 +78,9 @@ void Play_DirectPCM(dspch_* dspch, s16* baseAddr, u16 loopStart, u32 length)
 	DSP_FlushChannel(dspch->buffer_idx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void Get_DirectPCM_LoopRemain(DSPchannel_* channel)
 {
@@ -279,10 +278,9 @@ void Init_StreamAudio(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void Get_StreamAudio_Handle(void)
 {
@@ -961,10 +959,9 @@ static void __StreamChgPitch(StreamCtrl_* ctrl)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void StreamChgPitch(void)
 {
@@ -1068,10 +1065,9 @@ BOOL StreamSetDVDPause(u32 ctrlID, BOOL isPaused)
 	return tmp;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void StreamCheckRemainBuffers(void)
 {
@@ -1087,20 +1083,18 @@ u8 StreamCheckAudioFormat(u32 ctrlID)
 	return ctrl->header.audioFormat;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void StreamCheckBufferEmpty(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void StreamCheckBufferRemainSize(void)
 {

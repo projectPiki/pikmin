@@ -8,17 +8,15 @@
 #include "WorkObject.h"
 #include "nlib/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(22)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAmove")
 
@@ -334,10 +332,9 @@ bool TAIAapproachTargetPriorityFaceDir::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 void TAIAlookAround::setTargetDirection(Teki& teki, f32 angle)
 {
@@ -413,10 +410,9 @@ bool TAIAlookAround::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 int TAIAturnToTarget::getTurnMotionIndex(Teki& teki)
 {
@@ -599,10 +595,9 @@ bool TAIAwait::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void TAIApatrol::changeStatus(int status, Teki& teki)
 {
@@ -629,10 +624,9 @@ TAIApatrol::TAIApatrol(int nextState, int p2, int leftMotionID, int rightMotionI
 	_1C = p6;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void TAIApatrol::setTargetPosition(Teki& teki)
 {
@@ -1043,10 +1037,9 @@ bool TAIAflyingBase::act(Teki& teki)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000144
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000144
  */
 void TAIAflyingInTerritory::setTargetPosition(Teki& teki)
 {

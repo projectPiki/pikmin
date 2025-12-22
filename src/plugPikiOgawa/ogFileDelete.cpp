@@ -6,17 +6,15 @@
 #include "zen/ogFileSelect.h"
 #include "zen/ogNitaku.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT(nullptr)
 
@@ -32,10 +30,9 @@ void zen::ogScrFileSelectMgr::setOperateMode_Delete()
 	mCopyRightCursor.scale(0.0f, 0.001f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000178
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000178
  */
 void zen::ogScrFileSelectMgr::DeleteEffectStart()
 {

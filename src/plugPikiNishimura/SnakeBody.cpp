@@ -10,17 +10,15 @@
 #include "Snake.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SnakeBody");
 
@@ -123,10 +121,9 @@ void SnakeBody::initBlending(f32 blendRate)
 	mBlendingRate  = blendRate;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 void SnakeBody::updateBlendingRatio()
 {
@@ -142,10 +139,9 @@ void SnakeBody::updateBlendingRatio()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void SnakeBody::setInitializePosition()
 {
@@ -153,10 +149,9 @@ void SnakeBody::setInitializePosition()
 	mSnake->mSRT.t.z = mSnake->getInitPosition()->z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000FC
  */
 void SnakeBody::copyAnimPosition()
 {
@@ -169,10 +164,9 @@ void SnakeBody::copyAnimPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00010C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00010C
  */
 void SnakeBody::makeHeadDirection()
 {
@@ -229,10 +223,9 @@ void SnakeBody::makeTurnVelocity()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 void SnakeBody::makeNewPosition()
 {
@@ -334,10 +327,9 @@ void SnakeBody::makeVectorMatrix()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void SnakeBody::createDeadPellet(immut Vector3f& pelletPos, int itemIdx)
 {
@@ -457,20 +449,18 @@ void SnakeBody::makeDeadPattern01()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void SnakeBody::makeDeadPattern02()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void SnakeBody::makeDeadScaleParms()
 {
@@ -791,10 +781,9 @@ void SnakeBody::update()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 void SnakeBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx)
 {
@@ -959,10 +948,9 @@ void SnakeBody::caseOfMatrix(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00082C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00082C
  */
 void SnakeBody::checkBlendingParm(Matrix4f* animMatrices)
 {
@@ -1063,20 +1051,18 @@ void SnakeBody::setDeadPattern01(Matrix4f* animMatrices)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000268
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000268
  */
 void SnakeBody::setDeadPattern02(Matrix4f*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void SnakeBody::setDeadScale(Matrix4f* animMatrices)
 {

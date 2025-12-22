@@ -10,24 +10,21 @@ GemTable table[5] = {
 	{ 20, 50, 20, 20, 10, 0, 64.0f }, { 50, 200, 50, 0, 0, 0, 16.0f },
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("gemItem")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 bool GemItem::ignoreAtari(Creature*)
 {
@@ -41,10 +38,9 @@ bool GemItem::ignoreAtari(Creature*)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void GemItem::setAtariFree()
 {
@@ -52,10 +48,9 @@ void GemItem::setAtariFree()
 	playEventSound(this, SE_PELLET_BORN);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void GemItem::bounceCallback()
 {
@@ -66,10 +61,9 @@ void GemItem::bounceCallback()
 	mIsFree = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, SimpleAI* ai, f32 a1, int, int)
     : ItemCreature(p2, props, shapes[0])
@@ -83,10 +77,9 @@ GemItem::GemItem(CreatureProp* props, int p2, Shape** shapes, Shape**, Shape**, 
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void GemItem::initParam(int type)
 {
@@ -119,10 +112,9 @@ void GemItem::setColorType(int col)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000FC
  */
 void GemItem::startAI(int)
 {
@@ -143,10 +135,9 @@ void GemItem::startAI(int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000278
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000278
  */
 void GemItem::update()
 {
@@ -189,10 +180,9 @@ void GemItem::update()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 bool GemItem::reachCapacity()
 {
@@ -200,10 +190,9 @@ bool GemItem::reachCapacity()
 	return mMaxAttachedObjects < stick.getNumStickers();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00019C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00019C
  */
 void GemItem::updateLiftup()
 {
@@ -225,10 +214,9 @@ void GemItem::updateLiftup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void GemItem::startPick(f32 val)
 {
@@ -243,10 +231,9 @@ void GemItem::startPick(f32 val)
 	mIsBeingLifted = true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void GemItem::finishPick()
 {
@@ -259,20 +246,18 @@ void GemItem::finishPick()
 	resetCreatureFlag(CF_IsFlying);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 f32 GemItem::getSize()
 {
 	return 41.0f * mSizeScale / 0.4f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 f32 GemItem::getiMass()
 {
@@ -321,10 +306,9 @@ void GemItem::split()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void GemItem::refresh(Graphics& gfx)
 {
@@ -332,10 +316,9 @@ void GemItem::refresh(Graphics& gfx)
 	mCollInfo->updateInfo(gfx, false);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void GemItem::doStore(CreatureInf* inf)
 {
@@ -343,10 +326,9 @@ void GemItem::doStore(CreatureInf* inf)
 	inf->mObjInfo2 = mColor;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void GemItem::doRestore(CreatureInf* inf)
 {
@@ -357,10 +339,9 @@ void GemItem::doRestore(CreatureInf* inf)
 	PRINT("DO RESTORE END ****\n");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void GemItem::doKill()
 {
@@ -368,10 +349,9 @@ void GemItem::doKill()
 	itemMgr->kill(this); // guess here because I cant tell from the dll
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 bool GemItem::isAlive()
 {
@@ -379,10 +359,9 @@ bool GemItem::isAlive()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void GemItem::setRouteTracer(RouteTracer*)
 {

@@ -217,10 +217,9 @@ ASM static void __save_fpr(void)
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void _savevr(void)
 {
@@ -273,10 +272,9 @@ ASM static void __restore_fpr(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 ASM static void __save_gpr(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -321,10 +319,9 @@ ASM static void __save_gpr(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 ASM static void __restore_gpr(void)
 {
@@ -370,10 +367,9 @@ ASM static void __restore_gpr(void)
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void _restorevr(void)
 {
@@ -780,10 +776,9 @@ ASM void __shr2i(void) {
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 ASM void __cvt_sll_dbl(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -839,10 +834,9 @@ zero:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 ASM void __cvt_ull_dbl(void) {
 #ifdef __MWERKS__ // clang-format off
@@ -950,10 +944,9 @@ zero:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 ASM void __cvt_ull_flt(void) {
 #ifdef __MWERKS__ // clang-format off

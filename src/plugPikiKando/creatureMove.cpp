@@ -13,17 +13,15 @@
 #include "PikiState.h"
 #include "RopeCreature.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(28)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CreatureMove")
 
@@ -315,20 +313,18 @@ void Creature::moveNew(f32 deltaTime)
 	STACK_PAD_TERNARY(mPreviousTriangle, 3);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002E8
  */
 CollTriInfo* Creature::checkForward(immut Vector3f&, f32, f32&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000130
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000130
  */
 CollTriInfo* Creature::getNextTri(CollTriInfo*, immut Vector3f&, int&)
 {
@@ -358,10 +354,9 @@ Plane* Creature::getNearestPlane(CollTriInfo* tri)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, immut Colour&)
 {

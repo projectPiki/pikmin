@@ -78,20 +78,18 @@ static void DRAM_TO_DRAM_DMA(u32 src, u32 dst, u32 totalSize)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void Jac_GetUnlockHeap(jaheap_*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void Jac_CheckAlloc(jaheap_*)
 {
@@ -201,10 +199,9 @@ BOOL Jac_SetGroupHeap(jaheap_* heapA, jaheap_* heapB)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void Jac_CutdownHeap(jaheap_*)
 {
@@ -485,20 +482,18 @@ void Jac_GarbageCollection_St(jaheap_* heap)
 	heap->usedSize = dst - heap->startAddress;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void Jac_CheckFreeHeap_Total(jaheap_*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void Jac_CheckFreeHeap_Linear(jaheap_*)
 {

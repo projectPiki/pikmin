@@ -87,10 +87,9 @@ static void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min)
 	*py = (s8)(signY * y);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 static void ClampTrigger(u8* trigger)
 {

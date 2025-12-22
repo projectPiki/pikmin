@@ -9,17 +9,15 @@
 
 AttentionCamera* attentionCamera;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("attentionCamera")
 
@@ -46,10 +44,9 @@ AttentionCamera::AttentionCamera()
 	mFaderCount++;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void AttentionCamera::start(u32 tag, Creature* target, f32 p3, f32 p4)
 {
@@ -116,10 +113,9 @@ void AttentionCamera::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void AttentionCamera::setFader(u32 tag)
 {
@@ -134,10 +130,9 @@ void AttentionCamera::setFader(u32 tag)
 	mActiveFader = mFaders[idx];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void NoiseFunction::init(int count)
 {
@@ -148,10 +143,9 @@ void NoiseFunction::init(int count)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 f32 NoiseFunction::getValue(f32 x)
 {
@@ -160,10 +154,9 @@ f32 NoiseFunction::getValue(f32 x)
 	return (1.0f - roundX) * mValues[boundX] + roundX * mValues[(int)(x + 1.0f) % mCount];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000EC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000EC
  */
 void TurbulenceFun::init(int p1, int count)
 {
@@ -172,10 +165,9 @@ void TurbulenceFun::init(int p1, int count)
 	mFrequency = p1 / count;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000240
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000240
  */
 f32 TurbulenceFun::getValue(f32 x)
 {

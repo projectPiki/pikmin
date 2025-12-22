@@ -279,20 +279,18 @@ static u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current)
 	return mask;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 u32 OSGetInterruptMask(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 u32 OSSetInterruptMask(u32)
 {

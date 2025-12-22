@@ -5,17 +5,15 @@
 #include "PSU/LinkList.h"
 #include "PSU/Tree.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(30) // Why is this one suddenly capitalized?
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("P2DPane");
 
@@ -72,10 +70,9 @@ void P2DPaneCallBackBase::checkPaneType(P2DPane* pane, P2DPaneType type)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void P2DPane::init()
 {
@@ -134,10 +131,9 @@ P2DPane::P2DPane(P2DPane* parent, u16 paneType, bool, u32 tag, const PUTRect& p5
 	init();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000158
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000158
  */
 P2DPane::P2DPane(u32 tag, const PUTRect& rect)
     : mPaneTree(this)
@@ -149,10 +145,9 @@ P2DPane::P2DPane(u32 tag, const PUTRect& rect)
 	init();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 P2DPane::P2DPane(u16 paneType, u32 tag, const PUTRect& rect)
     : mPaneTree(this)
@@ -328,10 +323,9 @@ void P2DPane::makeMatrix(int x, int y)
 	mLocalMtx.mMtx[2][3] += mLocalMtx.mMtx[2][0] * -mOffsetX + mLocalMtx.mMtx[2][1] * -mOffsetY;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000114
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000114
  */
 void P2DPane::setCullBack(bool isCullBack)
 {

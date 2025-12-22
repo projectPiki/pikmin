@@ -72,20 +72,18 @@ static u16 taps[25] = { 496, 476, 430, 372, 297, 219, 142, 70, 12, 226, 203, 192
 // forward declaring statics
 static u32 getCurrentFieldEvenOdd();
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void getEncoderType(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 static int cntlzd(u64 bit)
 {
@@ -104,10 +102,9 @@ static int cntlzd(u64 bit)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 static BOOL VISetRegs(void)
 {
@@ -198,10 +195,9 @@ static void __VIRetraceHandler(__OSInterrupt interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 VIRetraceCallback VISetPreRetraceCallback(VIRetraceCallback callback)
 {
@@ -323,10 +319,9 @@ void __VIInit(VITVMode mode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000160
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000160
  */
 static void AdjustPosition(u16 acv)
 {
@@ -349,10 +344,9 @@ static void AdjustPosition(u16 acv)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 static void ImportAdjustingValues(void)
 {
@@ -460,10 +454,9 @@ void VIWaitForRetrace(void)
 	OSRestoreInterrupts(interrupt);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 static void setInterruptRegs(VITimingInfo* tm)
 {
@@ -484,10 +477,9 @@ static void setInterruptRegs(VITimingInfo* tm)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 static void setPicConfig(u16 fbSizeX, VIXFBMode xfbMode, u16 panPosX, u16 panSizeX, u8* wordPerLine, u8* std, u8* wpl, u8* xof)
 {
@@ -501,10 +493,9 @@ static void setPicConfig(u16 fbSizeX, VIXFBMode xfbMode, u16 panPosX, u16 panSiz
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 static void setBBIntervalRegs(VITimingInfo* tm)
 {
@@ -528,10 +519,9 @@ static void setBBIntervalRegs(VITimingInfo* tm)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 static void setScalingRegs(u16 panSizeX, u16 dispSizeX, BOOL is3D)
 {
@@ -554,10 +544,9 @@ static void setScalingRegs(u16 panSizeX, u16 dispSizeX, BOOL is3D)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 static void calcFbbs(u32 bufAddr, u16 panPosX, u16 panPosY, u8 wordPerLine, VIXFBMode xfbMode, u16 dispPosY, u32* tfbb, u32* bfbb)
 {
@@ -631,10 +620,9 @@ static void setFbbRegs(VIPositionInfo* hv, u32* tfbb, u32* bfbb, u32* rtfbb, u32
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 static void setHorizontalRegs(VITimingInfo* tm, u16 dispPosX, u16 dispSizeX)
 {
@@ -823,10 +811,9 @@ void VIConfigure(const GXRenderModeObj* obj)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000384
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000384
  */
 void VIConfigurePan(u16 panPosX, u16 panPosY, u16 panSizeX, u16 panSizeY)
 {
@@ -872,10 +859,9 @@ void VISetNextFrameBuffer(void* fb)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void VISetNextRightFrameBuffer(void* fb)
 {
@@ -898,10 +884,9 @@ void VISetBlack(BOOL isBlack)
 	OSRestoreInterrupts(interrupt);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void VISet3D(void)
 {
@@ -916,10 +901,9 @@ u32 VIGetRetraceCount(void)
 	return retraceCount;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 static u32 getCurrentHalfLine(void)
 {
@@ -967,20 +951,18 @@ static u32 getCurrentFieldEvenOdd()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 u32 VIGetNextField(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 u32 VIGetCurrentLine(void)
 {
@@ -1009,20 +991,18 @@ u32 VIGetDTVStatus(void)
 	return (stat & 1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002C8
  */
 void __VISetAdjustingValues(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void __VIGetAdjustingValues(void)
 {

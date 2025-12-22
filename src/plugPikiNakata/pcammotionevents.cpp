@@ -3,17 +3,15 @@
 #include "Pcam/MotionEvents.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pcammotionevents")
 
@@ -92,10 +90,9 @@ void PcamDamageEvent::makePcamDamageEvent()
 	                   -mVibrationFrequency / mVibrationDuration);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera* camera)
     : PeveEvent(0)
@@ -105,10 +102,9 @@ PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera* camera)
 	mMoveScale = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void PcamRandomMoveEvent::makePcamRandomMoveEvent()
 {

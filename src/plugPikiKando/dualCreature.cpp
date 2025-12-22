@@ -6,17 +6,15 @@
 #include "MapMgr.h"
 #include "NaviMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
@@ -89,10 +87,9 @@ bool DualCreature::onGround()
 	return isCreatureFlag(CF_IsOnGround) != 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void DualCreature::createCollisions(Graphics& gfx)
 {
@@ -207,10 +204,9 @@ void DualCreature::refresh(Graphics& gfx)
 	_43E = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 PelCreature::PelCreature(int objType, ItemShapeObject* shape, CreatureProp* props, MapMgr* mgr)
     : mItemCollInfo(0)

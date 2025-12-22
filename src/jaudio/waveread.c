@@ -107,10 +107,9 @@ CtrlGroup_* Wave_Test(u8* data)
 	return CGRP_ARRAY[0];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void GetSound_Test(u32 id)
 {

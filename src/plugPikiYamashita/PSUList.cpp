@@ -21,10 +21,9 @@ PSUPtrLink::~PSUPtrLink()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 PSUPtrList::PSUPtrList(bool)
 {
@@ -53,10 +52,9 @@ void PSUPtrList::initiate()
 	mLinkCount = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void PSUPtrList::setFirst(PSUPtrLink* link)
 {
@@ -93,20 +91,18 @@ bool PSUPtrList::append(PSUPtrLink* link)
 	return isEmpty;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 bool PSUPtrList::prepend(PSUPtrLink*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001DC
  */
 bool PSUPtrList::insert(PSUPtrLink*, PSUPtrLink*)
 {
@@ -143,10 +139,9 @@ bool PSUPtrList::remove(PSUPtrLink* link)
 	return isUnlinked;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 PSUPtrLink* PSUPtrList::getNthLink(u32) const
 {

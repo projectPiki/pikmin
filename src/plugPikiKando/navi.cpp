@@ -48,17 +48,15 @@ bool DelayPikiBirth = true;
 
 static f32 controllerLen;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(89)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("navi");
 
@@ -114,10 +112,9 @@ bool Navi::isNuking()
 	return mStateMachine->getCurrID(this) == NAVISTATE_Nuku;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void Navi::startMovie(bool doStopEffects)
 {
@@ -142,10 +139,9 @@ void Navi::startMovieInf()
 	mStateMachine->transit(this, NAVISTATE_DemoInf);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 bool Navi::movieMode()
 {
@@ -342,10 +338,9 @@ bool Navi::isRopable()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 bool Navi::startDamage()
 {
@@ -506,10 +501,9 @@ Navi::Navi(CreatureProp* props, int naviID)
 	_770 = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 void Navi::Locus::update()
 {
@@ -669,10 +663,9 @@ void Navi::enableMotionBlend()
 	mNaviAnimMgr.getLowerAnimator().mAnimationCounter = 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 bool Navi::doMotionBlend()
 {
@@ -1263,10 +1256,9 @@ void Navi::doAI()
 	_7B4 = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void Navi::doAttack()
 {
@@ -1276,10 +1268,9 @@ void Navi::doAttack()
 	_7D8.reset();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 bool Navi::insideOnyon()
 {
@@ -2139,10 +2130,9 @@ void Navi::sendMsg(Msg* msg)
 	mStateMachine->procMsg(this, msg);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void Navi::procDamage(f32)
 {
@@ -2519,10 +2509,9 @@ void Navi::throwPiki(Piki* piki, immut Vector3f& pos)
 	piki->mVolatileVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001DC
  */
 void Navi::throwLocus(Vector3f&)
 {
@@ -2545,10 +2534,9 @@ void Navi::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motio
 	*frame2 = val2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002D4
  */
 void Navi::renderParabola(Graphics& gfx, f32 height, f32 len)
 {

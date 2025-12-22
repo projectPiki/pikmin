@@ -22,17 +22,15 @@
 #include "gameflow.h"
 #include "teki.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(33)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("itemAI")
 
@@ -910,10 +908,9 @@ void GoalAI::Effect::act(AICreature* item)
 	item->playEventSound(item, SE_CONTAINER_PELLETIN2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001AC
  */
 GemAI::GemAI()
 {

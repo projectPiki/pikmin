@@ -7,17 +7,15 @@
 
 MemStat* memStat;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(4)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("memStat");
 
@@ -103,10 +101,9 @@ void MemStat::end(immut char* name)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 int MemStat::getMemorySize(immut char* name)
 {
@@ -117,10 +114,9 @@ int MemStat::getMemorySize(immut char* name)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 int MemStat::getRestMemory()
 {

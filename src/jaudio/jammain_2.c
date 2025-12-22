@@ -159,10 +159,9 @@ static u32 __24Read(seqp_* track)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 static u32 __32Read(seqp_* track)
 {
@@ -653,70 +652,63 @@ u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
 	return track->trackPort[reg - 64].value;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void Jam_WritePortApp(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void Jam_ReadPortApp(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void Jam_CheckExportApp(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void Jam_CheckImportApp(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void Jam_WritePortIndirect(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void Jam_ReadPortIndirect(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 void Jam_CheckPortIndirect(void)
 {
@@ -776,40 +768,36 @@ BOOL Jam_CheckPortAppDirect(seqp_* track, u32 param_2, u16 param_3)
 	return FALSE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void Jam_WritePort(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void Jam_ReadPort(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void Jam_WritePortChild(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void Jam_WritePortBros(void)
 {
@@ -1022,20 +1010,18 @@ void Jam_OffExtSwitchD(OuterParam_* ext, u16 param_2)
 	ext->updateFlags |= param_2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void Jam_SetExtSwitchDirectD(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void Jam_SetExtFirFilter(void)
 {
@@ -1075,20 +1061,18 @@ void Jam_OffExtSwitch(seqp_* track, u16 param_2)
 	Jam_OffExtSwitchD(track->outerParams, param_2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void Jam_SetExtSwitchDirect(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void Jam_SetExtFirFilterP(void)
 {
@@ -1117,10 +1101,9 @@ void Jam_OnExtSwitchP(seqp_* track, u8 index, u16 param_3)
 	Jam_OnExtSwitchD(track->childOuterParams[index], param_3);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void Jam_OffExtSwitchP(seqp_* track, u8 index, u16 param_3)
 {
@@ -1130,20 +1113,18 @@ void Jam_OffExtSwitchP(seqp_* track, u8 index, u16 param_3)
 	Jam_OffExtSwitchD(track->childOuterParams[index], param_3);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void Jam_SetExtSwitchDirectP(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void Jam_CheckRunningCounter(void)
 {
@@ -1159,10 +1140,9 @@ BOOL Jam_RegisterTrackCallback(TrackCallback callback)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void Jam_SetTrackExtPanPower(void)
 {
@@ -1551,10 +1531,9 @@ void Jam_MuteTrack(seqp_* track, u8 param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void Jam_MuteChildTracks(void)
 {

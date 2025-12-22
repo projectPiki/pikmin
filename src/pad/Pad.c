@@ -75,10 +75,9 @@ static OSResetFunctionInfo ResetFunctionInfo = {
 	NULL,
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 static u16 GetWirelessID(s32 chan)
 {
@@ -91,10 +90,9 @@ static u16 GetWirelessID(s32 chan)
 	return id;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 static void SetWirelessID(s32 chan, u16 id)
 {
@@ -133,10 +131,9 @@ static int DoReset(void)
 	return rc;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 static void PADEnable(s32 chan)
 {
@@ -153,10 +150,9 @@ static void PADEnable(s32 chan)
 	SIEnablePolling(EnabledBits);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 static void ProbeWireless(s32 chan)
 {
@@ -201,10 +197,9 @@ static void PADProbeCallback(s32 chan, u32 error, OSContext* context)
 	DoReset();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 static void PADDisable(s32 chan)
 {
@@ -626,10 +621,9 @@ void PADSetSamplingRate(u32 msec)
 	SIEnablePolling(EnabledBits);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void PADControlAllMotors(const u32* commandArray)
 {
@@ -704,10 +698,9 @@ void PADSetSpec(u32 spec)
 	Spec = spec;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 u32 PADGetSpec(void)
 {
@@ -777,10 +770,9 @@ static void SPEC1_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 	status->substickY -= 128;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 static s8 ClampS8(s8 var, s8 org)
 {
@@ -797,10 +789,9 @@ static s8 ClampS8(s8 var, s8 org)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 static u8 ClampU8(u8 var, u8 org)
 {
@@ -881,10 +872,9 @@ static void SPEC2_MakeStatus(s32 chan, PADStatus* status, u32 data[2])
 	status->triggerRight = ClampU8(status->triggerRight, origin->triggerRight);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 int PADGetType(s32 chan, u32* type)
 {
@@ -899,10 +889,9 @@ int PADGetType(s32 chan, u32* type)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 BOOL PADSync(void)
 {
@@ -910,10 +899,9 @@ BOOL PADSync(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void PADSetAnalogMode(u32 mode)
 {
@@ -956,10 +944,9 @@ static BOOL OnReset(BOOL f)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void __PADDisableXPatch(void)
 {

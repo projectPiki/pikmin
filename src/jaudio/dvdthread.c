@@ -99,10 +99,9 @@ void DVDT_ExtendPath(char* dst, immut char* ext)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 s32 DVDT_AddTaskHigh(TaskCallback, void*, size_t)
 {
@@ -348,10 +347,9 @@ s32 DVDT_CloseBuffer(u8* buf)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void DVDT_GetCurrentBuffer(u8**)
 {
@@ -463,10 +461,9 @@ s32 DVDT_LoadtoARAM(u32 owner, immut char* path, u32 dst, u32 src, u32 length, u
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void ARAM_DMAfinish2(u32)
 {
@@ -475,10 +472,9 @@ void ARAM_DMAfinish2(u32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void DVDT_ARAMtoDRAM_Main(void*)
 {
@@ -488,10 +484,9 @@ void DVDT_ARAMtoDRAM_Main(void*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void DVDT_DRAMtoARAM_Main(void*)
 {
@@ -499,10 +494,9 @@ void DVDT_DRAMtoARAM_Main(void*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void DVDT_ARAMtoDRAM(u32, u32, u32, u32, u32*, void (*)(u32))
 {
@@ -510,10 +504,9 @@ void DVDT_ARAMtoDRAM(u32, u32, u32, u32, u32*, void (*)(u32))
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
 {
@@ -574,10 +567,9 @@ void DVDT_CheckPass(u32 owner, u32* status, Jac_DVDCallback callback)
 	DVDT_AddTask((TaskCallback)__DVDT_CheckBack, cb, 0x58);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void Jac_CheckFile(immut char*)
 {
@@ -585,10 +577,9 @@ void Jac_CheckFile(immut char*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void Jac_LoadFile(immut char*, u8*)
 {
@@ -596,30 +587,27 @@ void Jac_LoadFile(immut char*, u8*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void DVDT_Pause()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void DVDT_UnPause()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Jac_RegisterDVDErrorCallback(void (*)(immut char*, u8*))
 {

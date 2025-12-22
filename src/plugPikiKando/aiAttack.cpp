@@ -12,17 +12,15 @@
 #include "teki.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(25)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiAttack")
 
@@ -84,10 +82,9 @@ void ActAttack::init(Creature* creature)
 	mIsAttackFinished = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void ActAttack::startLost()
 {
@@ -172,10 +169,9 @@ Creature* ActAttack::findTarget()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002C8
  */
 Creature* ActAttack::decideTarget()
 {
@@ -351,10 +347,9 @@ void ActJumpAttack::init(Creature* creature)
 	mTargetCollider = creature->getNearestCollPart(mPiki->mSRT.t, '*t**');
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 Vector3f ActJumpAttack::getAttackPos()
 {
@@ -364,10 +359,9 @@ Vector3f ActJumpAttack::getAttackPos()
 	return mTarget.getPtr()->getCentre();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 f32 ActJumpAttack::getAttackSize()
 {

@@ -122,10 +122,9 @@ BOOL Bank_Regist(void* ibnk, u32 param_2)
 	return __Bank_Regist_Inner((u8*)ibnk, param_2, ((Ibnk_*)ibnk)->_08);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 BOOL Bank_Regist_Direct(void* ibnk, u32 param_2, u32 param_3)
 {

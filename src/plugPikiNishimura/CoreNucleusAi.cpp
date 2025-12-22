@@ -3,17 +3,15 @@
 #include "EffectMgr.h"
 #include "Slime.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CoreNucleusAi");
 
@@ -76,20 +74,18 @@ void CoreNucleusAi::keyAction1()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::keyAction2()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::keyAction3()
 {
@@ -127,10 +123,9 @@ void CoreNucleusAi::setHitMotionStart()
 	mIsHit = true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void CoreNucleusAi::setEveryFrame()
 {
@@ -138,10 +133,9 @@ void CoreNucleusAi::setEveryFrame()
 	setSlimeDamagePoint();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void CoreNucleusAi::setBossPosition()
 {
@@ -149,70 +143,63 @@ void CoreNucleusAi::setBossPosition()
 	mCore->mSRT.t.z = mCore->mSlime->mCorePosition.z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void CoreNucleusAi::setSlimeDamagePoint()
 {
 	mCore->mSlime->mSlimeAi->addDamagePoint(mCore->getDamagePoint());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void CoreNucleusAi::afterProcessing()
 {
 	mCore->setDamagePoint(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool CoreNucleusAi::dieTransit()
 {
 	return !mCore->getAlive();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool CoreNucleusAi::isMotionFinishTransit()
 {
 	return mCore->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool CoreNucleusAi::damageTransit()
 {
 	return (mCore->getDamagePoint() > 0.0f) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 bool CoreNucleusAi::hitMotionStartTransit()
 {
 	return mIsHit;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void CoreNucleusAi::initDie(int val)
 {
@@ -227,10 +214,9 @@ void CoreNucleusAi::initDie(int val)
 	mCore->doKill();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void CoreNucleusAi::initDamage(int val)
 {
@@ -240,10 +226,9 @@ void CoreNucleusAi::initDamage(int val)
 	mCore->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void CoreNucleusAi::initFollow(int val)
 {
@@ -253,10 +238,9 @@ void CoreNucleusAi::initFollow(int val)
 	mIsHit = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void CoreNucleusAi::initHit(int val)
 {
@@ -270,37 +254,33 @@ void CoreNucleusAi::initHit(int val)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::dieState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::damageState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::followState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CoreNucleusAi::hitState()
 {

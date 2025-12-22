@@ -2,24 +2,21 @@
 #include "DebugLog.h"
 #include "Dolphin/os.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("itemObject");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 ItemBall::ItemBall(Shape* shape, CreatureProp* props)
     : ItemCreature(0, props, shape)
@@ -52,10 +49,9 @@ bool ItemBall::isVisible()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 ItemObject::ItemObject(int objType, Shape* shape)
     : ItemCreature(objType, nullptr, shape)

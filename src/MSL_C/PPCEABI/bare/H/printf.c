@@ -1035,10 +1035,9 @@ int printf(const char* format, ...)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 int fprintf(FILE*, const char* format, ...)
 {
@@ -1060,20 +1059,18 @@ int vprintf(const char* format, va_list arg)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void vfprintf(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 int vsnprintf(char* s, size_t n, const char* format, va_list arg)
 {
@@ -1096,10 +1093,9 @@ int vsprintf(char* s, const char* format, va_list arg)
 	return vsnprintf(s, UINT_MAX, format, arg);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 int snprintf(char* s, size_t n, const char* format, ...)
 {

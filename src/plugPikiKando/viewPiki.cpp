@@ -15,17 +15,15 @@
 #include "gameflow.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(31)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("viewPiki")
 
@@ -50,10 +48,9 @@ void PikiShapeObject::init()
 	_instances[0] = _instances[1] = _instances[2] = _instances[3] = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 PikiShapeObject* PikiShapeObject::create(int index)
 {
@@ -503,10 +500,9 @@ void ViewPiki::demoDraw(Graphics& gfx, immut Matrix4f* mtx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
 {
@@ -681,10 +677,9 @@ void ViewPiki::refresh(Graphics& gfx)
 	demoDraw(gfx, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void ViewPiki::refresh2d(Graphics&, int)
 {

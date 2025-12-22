@@ -2,24 +2,21 @@
 #include "Graphics.h"
 #include "zen/particle.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("simpleParticle")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000150
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000150
  */
 zen::particleMdl* zen::simplePtclManager::create(Texture* tex, s16 lifeTime, const Vector3f& globalPos, const Vector3f& vel,
                                                  const Vector3f& accel, f32 size, f32 rotSpeed, const Colour& primColor,

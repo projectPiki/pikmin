@@ -25,10 +25,9 @@ static void Add_Queue(CmdQueue* cmdQueue)
 	curr->next = cmdQueue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void Del_Queue(CmdQueue*)
 {
@@ -50,20 +49,18 @@ void Jal_AddCmdQueue(CmdQueue* cmdQueue, seqp_* track, u8 param_3)
 	OSRestoreInterrupts(restoreInterrupts);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void Jal_RemoveCmdQueue(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void Jal_SendCmdQueue(void)
 {

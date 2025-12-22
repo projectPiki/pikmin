@@ -45,17 +45,15 @@ Colour Piki::kinokoColors[6] = {
 
 bool Piki::directDumpMode;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(43)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("piki");
 
@@ -194,10 +192,9 @@ f32 Piki::getAttackPower()
 	return pikiMgr->mPikiParms->mPikiParms.mYellowAttackPower();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 PikiState* Piki::getPikiState()
 {
@@ -309,10 +306,9 @@ int Piki::findRoute(int sourceWaypointIndex, int destWaypointIndex, bool isRetry
 	return handle;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 bool Piki::initRouteTraceDynamic(Creature* target)
 {
@@ -632,10 +628,9 @@ void Piki::startFire()
 	mIsPanicked = true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void Piki::updateFire()
 {
@@ -806,10 +801,9 @@ void Piki::actOnSituaton()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 int Piki::getNaviID()
 {
@@ -865,10 +859,9 @@ int Piki::getState()
 	return mCurrentState->getID();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 int Piki::getLastState()
 {
@@ -1499,10 +1492,9 @@ void Piki::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	sendMsg(&msg);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void Piki::birthBuried()
 {
@@ -1578,10 +1570,9 @@ bool Piki::isVisible()
 	        && state != PIKISTATE_AutoNuki && state != PIKISTATE_NukareWait && state != PIKISTATE_Swallowed);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 bool Piki::isGrowable()
 {
@@ -1589,10 +1580,9 @@ bool Piki::isGrowable()
 	return isBuried() && state != PIKISTATE_Absorb && state != PIKISTATE_GrowUp;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 bool Piki::isTamable()
 {
@@ -1629,10 +1619,9 @@ bool Piki::isThrowable()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void Piki::growup()
 {
@@ -1903,20 +1892,18 @@ void Piki::enableMotionBlend()
 	mPikiAnimMgr.getLowerAnimator().startMotion(PaniMotionInfo(PIKIANIM_Asibumi));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 bool Piki::doMotionBlend()
 {
 	return mBlendMotionIdx != -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void Piki::swapMotion(immut PaniMotionInfo& motion1, immut PaniMotionInfo& motion2)
 {
@@ -2207,10 +2194,9 @@ Piki::Piki(CreatureProp* prop)
 	mFSM->init(this);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void Piki::setSpeed(f32 speedRatio)
 {
@@ -2716,10 +2702,9 @@ void Piki::realAI()
 	_4E8 = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 immut char* Piki::getCurrentMotionName()
 {

@@ -21,26 +21,23 @@
 #include "TekiParameters.h"
 #include "zen/CallBack.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(32)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIdororo")
 
 namespace {
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 CollPart* getCollPartPtr(Teki& teki, u32 partID)
 {
@@ -108,10 +105,9 @@ void setDororoEffect(Teki& teki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void killDororoEffect(Teki& teki)
 {

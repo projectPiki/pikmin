@@ -7,17 +7,15 @@
 #include "zen/ogFileSelect.h"
 #include "zen/ogNitaku.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgFileSelectSection")
 
@@ -52,10 +50,9 @@ void zen::ogScrFileSelectMgr::setOperateMode_Copy()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void zen::ogScrFileSelectMgr::MoveCpyCursor(int id, f32 a2)
 {

@@ -5,17 +5,15 @@
 #include "Matrix4f.h"
 #include "Vector.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TODO: Replace")
 
@@ -52,10 +50,9 @@ void NsCalculation::calcMatrix(const Vector3f& xVec, const Vector3f& yVec, const
 	mtx.setTranslation(transVec);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
 {
@@ -127,10 +124,9 @@ void NsCalculation::calcJointPos(const Vector3f& topPosition, const Vector3f& bo
 	bottomJointPosition.z = rootVal * botToTop.z + topPosition.z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001E8
  */
 int NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
 {
@@ -155,10 +151,9 @@ void NsCalculation::calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 	outMtx.mMtx[2][2] = inMtx.mMtx[2][2];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void NsCalculation::calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)
 {

@@ -6,17 +6,15 @@
 #include "sysNew.h"
 #include "teki.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("animPellet");
 
@@ -113,10 +111,9 @@ void PelletAnimator::init(AnimContext* context1, AnimContext* context2, AnimMgr*
 	mUpperAnimator.init(context2, mgr, motionTable);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void PelletAnimator::startMotion(immut PaniMotionInfo* lowerMotionInfo, immut PaniMotionInfo* upperMotionInfo)
 {
@@ -158,10 +155,9 @@ void PelletAnimator::startMotion(immut PaniMotionInfo& motionInfo)
 	startMotion(&motionInfo, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void PelletAnimator::finishMotion(immut PaniAnimKeyListener*)
 {

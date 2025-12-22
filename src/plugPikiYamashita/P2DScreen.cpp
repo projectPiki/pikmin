@@ -7,17 +7,15 @@
 #include "sysNew.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(37)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DScreen")
 
@@ -75,10 +73,9 @@ void P2DScreen::set(const char* bloFileName, bool useAlphaMgr, bool useTexAnimMg
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void P2DScreen::set(RandomAccessStream* input)
 {
@@ -137,10 +134,9 @@ P2DPane* P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 P2DPane* P2DScreen::stop()
 {

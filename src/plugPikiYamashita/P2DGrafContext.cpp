@@ -4,24 +4,21 @@
 #include "P2D/Graph.h"
 #include "PUT/Geometry.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DGrafContext");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 P2DGrafContext::P2DGrafContext(const PUTRect&)
 {
@@ -166,50 +163,45 @@ void P2DGrafContext::setLineWidth(u8 width)
 	GXSetLineWidth(mLineWidth, GX_TO_ZERO);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00016C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00016C
  */
 void P2DGrafContext::fillBox(const PUTRect&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void P2DGrafContext::drawFrame(const PUTRect&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 void P2DGrafContext::line(PUTPoint, PUTPoint)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 void P2DGrafContext::lineTo(PUTPoint)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001D0
  */
 void P2DGrafContext::polyline(PUTPoint* param_1, int param_2)
 {
@@ -219,10 +211,9 @@ void P2DGrafContext::polyline(PUTPoint* param_1, int param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001E4
  */
 void P2DGrafContext::polyline(int* param_1, int param_2)
 {
@@ -232,10 +223,9 @@ void P2DGrafContext::polyline(int* param_1, int param_2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001F8
  */
 void P2DGrafContext::polylineTo(PUTPoint* param_1, int param_2)
 {
@@ -244,10 +234,9 @@ void P2DGrafContext::polylineTo(PUTPoint* param_1, int param_2)
 	// more stuff
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000218
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000218
  */
 void P2DGrafContext::polylineTo(int* param_1, int param_2)
 {

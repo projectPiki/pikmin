@@ -24,10 +24,9 @@ void PUTRect::copy(const PUTRect& other)
 	mMaxY = other.mMaxY;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void PUTRect::add(const PUTPoint& point)
 {
@@ -76,10 +75,9 @@ bool PUTRect::intersect(const PUTRect& other)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void PUTRect::move(const PUTPoint& point)
 {
@@ -117,10 +115,9 @@ void PUTRect::resize(int width, int height)
 	mMaxY = mMinY + height;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void PUTRect::reform(int, int, int, int)
 {

@@ -14,10 +14,9 @@ void Probe_Finish(s32 id)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void Console_printf(immut char*, ...)
 {

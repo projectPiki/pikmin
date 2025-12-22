@@ -5,20 +5,18 @@ static OSAlarmQueue AlarmQueue;
 
 static void DecrementerExceptionHandler(__OSException exception, OSContext* context);
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 int OSCheckAlarmQueue(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 static void SetTimer(OSAlarm* alarm)
 {
@@ -128,10 +126,9 @@ void OSSetAbsAlarm(OSAlarm* alarm, OSTime tick, OSAlarmHandler handler)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void OSSetPeriodicAlarm(OSAlarm*, OSTime, OSTime, OSAlarmHandler)
 {

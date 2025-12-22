@@ -19,10 +19,9 @@ static u8 SendCount = 0x80;
 #define IS_FALSE(x)        !IS_TRUE(x)
 #define ROUND_UP(x, align) (((x) + (align) - 1) & (-(align)))
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void DBGEXIInit()
 {
@@ -30,10 +29,9 @@ void DBGEXIInit()
 	__EXIRegs[10] = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 
 static u32 DBGEXISelect(u32 v)
@@ -45,10 +43,9 @@ static u32 DBGEXISelect(u32 v)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 BOOL DBGEXIDeselect(void)
 {
@@ -56,10 +53,9 @@ BOOL DBGEXIDeselect(void)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 static BOOL DBGEXISync()
 {
@@ -102,30 +98,27 @@ static BOOL DBGEXIImm(void* buffer, s32 bytecounter, u32 write)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void DBGEXIClearInterrupts(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void DBGCheckID(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 static BOOL DBGWriteMailbox(u32 p1)
 {
@@ -313,10 +306,9 @@ void DBInitInterrupts(void)
 	__OSUnmaskInterrupts(0x40);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000150
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000150
  */
 static void CheckMailBox(void)
 {

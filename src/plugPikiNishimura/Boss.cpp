@@ -15,17 +15,15 @@
 #include "Stickers.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Boss");
 
@@ -174,10 +172,9 @@ bool Boss::changeDirection(f32 turnSpeed)
 	return notFacingTarget;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000FC
  */
 void Boss::towardFaceDirection(f32)
 {
@@ -458,10 +455,9 @@ void Boss::killStickToMouthPiki()
 	killStickers(this, &CndStickMouthKill(this), 0);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 bool Boss::checkInWater(immut Vector3f& pos)
 {
@@ -501,10 +497,9 @@ bool Boss::insideAndInSearch()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void Boss::recoveryLife()
 {

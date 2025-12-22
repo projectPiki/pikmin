@@ -3,17 +3,15 @@
 #include "Matrix3f.h"
 #include "zen/particle.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(29)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("particleGenerator")
 
@@ -361,10 +359,9 @@ void zen::particleGenerator::pmSetDDF(u8* data)
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 f32 zen::particleGenerator::pmIntpManual(f32* frameThresholds, f32* values)
 {
@@ -375,10 +372,9 @@ f32 zen::particleGenerator::pmIntpManual(f32* frameThresholds, f32* values)
 	return values[i - 1];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 f32 zen::particleGenerator::pmIntpLinear(f32* frameThresholds, f32* values)
 {

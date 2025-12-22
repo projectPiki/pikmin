@@ -62,10 +62,9 @@ static void init_global_constants()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 static void set_border(_tagHVQData* p)
 {
@@ -108,10 +107,9 @@ static void setHVQPlaneDesc(SeqObj* obj, int id, u8 h_samp, u8 v_samp)
 	p->imgUscan[2] = (p->imgUscan[1] = p->plane_width << 2) + 4;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 static void setCode(BitBuffer* const str, u8* top)
 {
@@ -201,10 +199,9 @@ static s16 _readTree(Tree* const dst, BitBuffer* const str)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 static void readTree(BitBufferWithTree* const code, int is_signed, int scale)
 {
@@ -249,10 +246,9 @@ static inline int decodeSOvfSym(BitBufferWithTree* buf, int range_min, int range
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 static inline int decodeUOvfSym(BitBufferWithTree* code, int range_max)
 {
@@ -1231,10 +1227,9 @@ static void initMCHandler(VideoState* ws, MCHandler* mch, u8* lin_top, u8* forw,
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 static void resetMCHandler(VideoState* state, MCHandler* mch, u8* lin_top)
 {
@@ -1918,10 +1913,9 @@ static void getMVector(int* vec, BitBufferWithTree* code, int fcode)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 static void initMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 {
@@ -1931,10 +1925,9 @@ static void initMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 static int getMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 {
@@ -1946,10 +1939,9 @@ static int getMCBproc(BitBufferWithTree* code, RLDecoder* flag)
 	return flag->status;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 static void initMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 {
@@ -1961,10 +1953,9 @@ static void initMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 static int getMCBtype(BitBufferWithTree* code, RLDecoder* flag)
 {

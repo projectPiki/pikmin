@@ -7,17 +7,15 @@
 #include "zen/Number.h"
 #include "zen/TexAnim.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(26)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("DrawContainer")
 
@@ -196,10 +194,9 @@ void zen::DrawContainer::setDispParam()
 	mDeltaPikiNum     = Abs(mTransferDelta);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 bool zen::DrawContainer::waitStatus()
 {
@@ -211,10 +208,9 @@ bool zen::DrawContainer::waitStatus()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000404
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000404
  */
 bool zen::DrawContainer::startStatus()
 {
@@ -325,10 +321,9 @@ bool zen::DrawContainer::operationStatus()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000384
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000384
  */
 bool zen::DrawContainer::endStatus()
 {

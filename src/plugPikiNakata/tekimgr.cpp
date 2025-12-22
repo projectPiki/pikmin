@@ -12,17 +12,15 @@
 #include "teki.h"
 #include "timers.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("tekiMgr");
 
@@ -112,10 +110,9 @@ void TekiMgr::initTekiMgr()
 	tekiMgr = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 int TekiMgr::getTypeIndex(immut char* typeName)
 {
@@ -344,10 +341,9 @@ void TekiMgr::setUsingTypeTable(bool isUsingType)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void TekiMgr::setUsingType(int tekiType, bool isUsing)
 {

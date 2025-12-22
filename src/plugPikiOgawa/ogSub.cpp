@@ -11,17 +11,15 @@
 #include "zen/DrawCommon.h"
 #include "zen/Number.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgSubSection");
 
@@ -391,10 +389,9 @@ void setTenmetuAlpha::startFadeOut(f32 p1, f32 p2, f32 p3)
 	mMode         = MODE_FadeOut;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 void setTenmetuAlpha::calcAlpha(f32 p1)
 {
@@ -554,10 +551,9 @@ ogFadeMgr::ogFadeStatusFlag ogFadeMgr::update()
 	return mState;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void movePicturePos(P2DPicture* alignPic, P2DPicture* movingPic)
 {
@@ -609,10 +605,9 @@ ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen* screen, P2DPicture* pic, P2DTextBox*
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 void ogTexAnimSubMgr::update()
 {

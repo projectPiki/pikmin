@@ -9,17 +9,15 @@
 #include "RopeCreature.h"
 #include "Stickers.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(16)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CreatureStick");
 
@@ -86,20 +84,18 @@ bool Creature::isStickToPlatform()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 bool Creature::isStickToSphere()
 {
 	return !isStickToPlatform();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003E8
  */
 void Creature::adjustStickObject(immut Vector3f&)
 {
@@ -214,10 +210,9 @@ void Creature::startStickObjectTube(Creature* obj, CollPart* stickPart)
 	makePostureMatrix(xVec, yVec, zVec, mConstrainedMoveMtx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void Creature::startStickObjectPellet(Pellet* pellet, int slotIdx, f32 offset)
 {
@@ -336,10 +331,9 @@ bool Creature::startStick(Creature* stickTarget, CollPart* stickPart)
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 bool Creature::isStickLeader()
 {

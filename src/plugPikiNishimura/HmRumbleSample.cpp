@@ -11,10 +11,9 @@ RumbleSample::RumbleSample(int chan)
 	mChannel          = chan;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void RumbleSample::init()
 {

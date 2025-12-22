@@ -2,17 +2,15 @@
 #include "Vector.h"
 #include "zen/particle.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("ptclGenPack")
 
@@ -30,20 +28,18 @@ void PtclGenPack::setPtclGenPtr(u32 idx, particleGenerator* gen)
 	}
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 particleGenerator* PtclGenPack::getPtclGenPtr(u32 idx)
 {
 	return mGeneratorList[idx];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void PtclGenPack::setEmitPos(immut Vector3f& pos)
 {
@@ -71,10 +67,9 @@ void PtclGenPack::setEmitPosPtr(immut Vector3f* posPtr)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void PtclGenPack::setEmitDir(immut Vector3f& pos)
 {
@@ -88,10 +83,9 @@ void PtclGenPack::setEmitDir(immut Vector3f& pos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
@@ -128,20 +122,18 @@ void PtclGenPack::stopGen()
 	return;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void PtclGenPack::start()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void PtclGenPack::stop()
 {
@@ -195,30 +187,27 @@ bool PtclGenPack::checkStopGen()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 bool PtclGenPack::checkStop()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 bool PtclGenPack::checkEmit()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 bool PtclGenPack::checkActive()
 {

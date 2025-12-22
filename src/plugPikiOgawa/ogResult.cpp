@@ -12,17 +12,15 @@
 #include "zen/ogSave.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgResultSection")
 
@@ -375,10 +373,9 @@ void zen::ogScrResultMgr::ogScrResultMgrSub()
 	mSaveMgr = new ogSaveMgr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void zen::ogScrResultMgr::check1000(int val, P2DPane* pane1, P2DPane* pane2, int x)
 {
@@ -390,10 +387,9 @@ void zen::ogScrResultMgr::check1000(int val, P2DPane* pane1, P2DPane* pane2, int
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 void zen::ogScrResultMgr::setEnumResultTable(EnumResult* result)
 {
@@ -532,10 +528,9 @@ void zen::ogScrResultMgr::start()
 	STACK_PAD_VAR(18);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void zen::ogScrResultMgr::StartRESULT()
 {

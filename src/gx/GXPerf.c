@@ -352,10 +352,9 @@ void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1)
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00014c
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00014c
  */
 void GXReadGPMetric(u32* cnt0, u32* cnt1)
 {
@@ -489,10 +488,9 @@ void GXClearGPMetric(void)
 	__cpReg[2] = reg;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002c
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002c
  */
 u32 GXReadGP0Metric(void)
 {
@@ -502,10 +500,9 @@ u32 GXReadGP0Metric(void)
 	return cnt0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002c
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002c
  */
 u32 GXReadGP1Metric(void)
 {
@@ -515,10 +512,9 @@ u32 GXReadGP1Metric(void)
 	return cnt1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000e4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000e4
  */
 void GXReadMemMetric(u32* cp_req, u32* tc_req, u32* cpu_rd_req, u32* cpu_wr_req, u32* dsp_req, u32* io_req, u32* vi_req, u32* pe_req,
                      u32* rf_req, u32* fi_req)
@@ -568,10 +564,9 @@ void GXReadMemMetric(u32* cp_req, u32* tc_req, u32* cpu_rd_req, u32* cpu_wr_req,
 	*fi_req = (ctrh << 16) | ctrl;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000a8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000a8
  */
 void GXClearMemMetric(void)
 {
@@ -599,10 +594,9 @@ void GXClearMemMetric(void)
 	__memReg[43] = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void GXReadPixMetric(u32* top_pixels_in, u32* top_pixels_out, u32* bot_pixels_in, u32* bot_pixels_out, u32* clr_pixels_in, u32* copy_clks)
 {
@@ -635,10 +629,9 @@ void GXReadPixMetric(u32* top_pixels_in, u32* top_pixels_out, u32* bot_pixels_in
 	*copy_clks = (ctrh << 16) | ctrl;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void GXClearPixMetric(void)
 {
@@ -653,10 +646,9 @@ void GXClearPixMetric(void)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void GXSetVCacheMetric(GXVCachePerf attr)
 {
@@ -668,10 +660,9 @@ void GXSetVCacheMetric(GXVCachePerf attr)
 	GX_WRITE_SOME_REG4(8, 0x10, reg, -12);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void GXReadVCacheMetric(u32* check, u32* miss, u32* stall)
 {
@@ -690,20 +681,18 @@ void GXReadVCacheMetric(u32* check, u32* miss, u32* stall)
 	*stall = (hi << 16) | lo;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001c
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001c
  */
 void GXClearVCacheMetric(void)
 {
 	GX_WRITE_SOME_REG4(8, 0, 0, -12);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void GXInitXfRasMetric(void)
 {
@@ -718,10 +707,9 @@ void GXInitXfRasMetric(void)
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void GXReadXfRasMetric(u32* xf_wait_in, u32* xf_wait_out, u32* ras_busy, u32* clocks)
 {
@@ -744,10 +732,9 @@ void GXReadXfRasMetric(u32* xf_wait_in, u32* xf_wait_out, u32* ras_busy, u32* cl
 	*xf_wait_out = (ctrh << 16) | ctrl;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 u32 GXReadClksPerVtx(void)
 {

@@ -5,40 +5,36 @@ static BOOL WriteSram(void* buffer, u32 offset, u32 size);
 
 static SramControlBlock Scb ATTRIBUTE_ALIGN(32);
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000118
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000118
  */
 static BOOL GetRTC(u32* rtc)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00022C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00022C
  */
 static BOOL __OSGetRTC(u32* rtc)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 static BOOL __OSSetRTC(u32 rtc)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00011C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00011C
  */
 static BOOL ReadSram(void* buffer)
 {
@@ -117,10 +113,9 @@ void __OSInitSram(void)
 	Scb.offset               = RTC_SRAM_SIZE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 static void* LockSram(u32 offset)
 {
@@ -218,40 +213,36 @@ BOOL __OSSyncSram(void)
 	return Scb.sync;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void __OSCheckSram(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000124
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 BOOL __OSReadROM(void* buffer, s32 length, s32 offset)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void __OSReadROMCallback(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void __OSReadROMAsync(void)
 {
@@ -337,60 +328,54 @@ void OSSetProgressiveMode(u32 mode)
 	__OSUnlockSram(TRUE);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void OSGetVideoMode(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 void OSSetVideoMode(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 u8 OSGetLanguage(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void OSSetLanguage(u8)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void __OSGetBootMode(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 void __OSSetBootMode(void)
 {

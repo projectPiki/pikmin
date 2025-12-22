@@ -23,17 +23,15 @@ int PlayerState::totalUfoParts = MAX_UFO_PARTS;
 bool preloadUFO = false;
 PlayerState* playerState;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(20)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("PlayerState")
 
@@ -44,10 +42,9 @@ UfoPartsInfo partsInfo[5] = {
 
 char unusedStr[] = { "ペレットマネージャ" };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 TimeGraph::TimeGraph()
 {
@@ -56,10 +53,9 @@ TimeGraph::TimeGraph()
 	mStartTime = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void TimeGraph::create(u16 startTime, u16 endTime)
 {
@@ -70,10 +66,9 @@ void TimeGraph::create(u16 startTime, u16 endTime)
 	init();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void TimeGraph::init()
 {
@@ -82,10 +77,9 @@ void TimeGraph::init()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void TimeGraph::set(u16 time, int color, int num)
 {
@@ -96,10 +90,9 @@ void TimeGraph::set(u16 time, int color, int num)
 	mEntries[entryIdx].set(color, num);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 int TimeGraph::get(u16 time, int color)
 {
@@ -300,10 +293,9 @@ void PlayerState::setChallengeMode()
 	mShipEffectPartFlag = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void PlayerState::setDebugMode()
 {
@@ -322,10 +314,9 @@ int PlayerState::getPartsGetCount(int stageID)
 	return mStagePartsCollected[stageID];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 int PlayerState::getCardPikiCount(int color)
 {
@@ -344,10 +335,9 @@ int PlayerState::getCardUfoPartsCount()
 	return mCurrParts;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 int PlayerState::getUfoPercentage()
 {
@@ -615,10 +605,9 @@ void PlayerState::setDisplayPikiCount(int color)
 	mDisplayPikiFlag |= 1 << color;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 void PlayerState::init()
 {
@@ -749,10 +738,9 @@ int PlayerState::getFinalDeadPikis()
 	return mTotalDeadPikiNum;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 int PlayerState::getFinalBornPikis()
 {
@@ -831,10 +819,9 @@ int PlayerState::getCurrParts()
 	return mCurrParts;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 int PlayerState::getRestParts()
 {
@@ -901,10 +888,9 @@ void PlayerState::UfoParts::initAnim(PelletShapeObject* shape)
 	mAnimator.startMotion(PaniMotionInfo(PelletMotion::Carry));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void PlayerState::UfoParts::startMotion(int id)
 {
@@ -913,10 +899,9 @@ void PlayerState::UfoParts::startMotion(int id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void PlayerState::UfoParts::startMotion(int id1, int id2)
 {
@@ -925,10 +910,9 @@ void PlayerState::UfoParts::startMotion(int id1, int id2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void PlayerState::UfoParts::stopMotion()
 {
@@ -1237,10 +1221,9 @@ void PlayerState::preloadHenkaMovie()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void PlayerState::lostUfoParts(u32 partID)
 {

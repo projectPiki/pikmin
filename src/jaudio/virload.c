@@ -16,10 +16,9 @@ static Barc* JV_ARC[16]; // Pointers to BARC metadata (*.hed). In practice, just
 
 static u32 JV_CURRENT_ARCS = 0; // TODO: type unknown, init unclear
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void JV_InitHeader(immut char*)
 {
@@ -92,20 +91,18 @@ u32 JV_GetArchiveHandle(immut char* name)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E8
  */
 void JV_GetLogicalHandleS(immut char*, immut char*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000154
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000154
  */
 void JV_GetLogicalHandle(immut char*)
 {
@@ -116,10 +113,9 @@ void JV_GetLogicalHandle(immut char*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void JV_GetHandle(u32)
 {
@@ -172,10 +168,9 @@ u32 JV_CheckSize(u32 handle)
 	return entry->size;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void __JV_Callback(u32)
 {
@@ -244,10 +239,9 @@ u32 JV_LoadFile_Async2(u32 handle, u8* dst, u32 p3, u32 length, void (*callback)
 	return length;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void JV_GetMemoryFile(u32)
 {

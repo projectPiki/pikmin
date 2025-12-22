@@ -17,17 +17,15 @@
 #include "sysNew.h"
 #include "timers.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("mapMgr")
 
@@ -216,10 +214,9 @@ void DynCollShape::createDupCollData()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001FC
  */
 void DynCollShape::drawAtari(Graphics& gfx)
 {
@@ -337,10 +334,9 @@ void MapObjAnimator::finishOneShot()
 	PRINT("%08x : finished animation : %f!!\n", this, mAnimationCounter);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000364
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000364
  */
 DynMapObject::DynMapObject(MapMgr* map, MapAnimShapeObject* obj)
     : DynCollShape(obj->mShape)
@@ -1176,10 +1172,9 @@ void MapMgr::showCollisions(immut Vector3f& pos)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 bool MapMgr::closeCollTri(CollGroup*, CollTriInfo*)
 {

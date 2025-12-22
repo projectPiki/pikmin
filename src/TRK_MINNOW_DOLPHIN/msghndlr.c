@@ -44,10 +44,9 @@ DSError TRKStandardACK(TRKBuffer* buffer, MessageCommandID commandID, DSReplyErr
 	return TRKSendACK(buffer);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void TRKDoError(void)
 {

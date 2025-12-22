@@ -1,10 +1,9 @@
 #include "Dolphin/gx.h"
 #include "P2D/Graph.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 P2DOrthoGraph::P2DOrthoGraph()
     : P2DGrafContext(0, 0, 0, 0) // TODO: fix later
@@ -12,10 +11,9 @@ P2DOrthoGraph::P2DOrthoGraph()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 P2DOrthoGraph::P2DOrthoGraph(const PUTRect& rect)
     : P2DGrafContext(rect)
@@ -53,10 +51,9 @@ void P2DOrthoGraph::setPort()
 	GXSetProjection(mProjectionMtx.mMtx, GX_ORTHOGRAPHIC);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void P2DOrthoGraph::setOrtho(const PUTRect& p1, int p2, int p3)
 {
@@ -65,10 +62,9 @@ void P2DOrthoGraph::setOrtho(const PUTRect& p1, int p2, int p3)
 	mLogicalNearZ      = -p2;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E4
  */
 void P2DOrthoGraph::setOrigin(int x, int y)
 {

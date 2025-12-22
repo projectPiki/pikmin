@@ -2,17 +2,15 @@
 #include "DebugLog.h"
 #include "Light.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
@@ -156,50 +154,45 @@ void Light::setLightSpot(f32 angle, int spotMode)
 	mLightValuesSet = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void Light::setLightParallel()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000218
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000218
  */
 void Light::calcLightSizes()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 f32 Light::calcLightMapRadius()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 f32 Light::calcLightObjRadius()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001C4
  */
 void Light::refresh(Graphics&, LFlareGroup*)
 {

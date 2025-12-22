@@ -7,10 +7,9 @@
 
 const f32 zen::DrawLifeCircle::TRI_NUM = 128.0f;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void zen::zenGraphics::drawOneTri(immut Vector3f* vertices, immut Colour& color)
 {
@@ -23,10 +22,9 @@ void zen::zenGraphics::drawOneTri(immut Vector3f* vertices, immut Colour& color)
 	GXEnd();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 void zen::zenGraphics::setTevFillPolygon()
 {

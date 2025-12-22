@@ -255,10 +255,9 @@ DSError TRKAppendBuffer1_ui64(TRKBuffer* buffer, const u64 data)
 	return TRKAppendBuffer(buffer, (const void*)bigEndianData, sizeof(data));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 void TRKAppendBuffer1_ui128(void)
 {
@@ -280,10 +279,9 @@ DSError TRKAppendBuffer_ui8(TRKBuffer* buffer, const u8* data, int count)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void TRKAppendBuffer_ui16(void)
 {
@@ -305,20 +303,18 @@ DSError TRKAppendBuffer_ui32(TRKBuffer* buffer, const u32* data, int count)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void TRKAppendBuffer_ui64(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void TRKAppendBuffer_ui128(void)
 {
@@ -428,10 +424,9 @@ DSError TRKReadBuffer1_ui64(TRKBuffer* buffer, u64* data)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 void TRKReadBuffer1_ui128(void)
 {
@@ -453,10 +448,9 @@ DSError TRKReadBuffer_ui8(TRKBuffer* buffer, u8* data, int count)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void TRKReadBuffer_ui16(void)
 {
@@ -478,20 +472,18 @@ DSError TRKReadBuffer_ui32(TRKBuffer* buffer, u32* data, int count)
 	return err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void TRKReadBuffer_ui64(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void TRKReadBuffer_ui128(void)
 {

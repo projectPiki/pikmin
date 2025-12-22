@@ -11,10 +11,9 @@ jaheap_ aram_mother;
 ARAMCallback ARCALL    = &LoadAram_Default;
 static char extdir[64] = "/Banks/";
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Jac_RegisterARAMCallback(ARAMCallback callback)
 {
@@ -51,20 +50,18 @@ u32 LoadAramSingle(immut char* filepath, u32 src, u32 length, u32* status, u32 d
 	return dst;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void Jac_WaveDirectorySet(immut char* directory)
 {
 	strcpy(extdir, directory);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 jaheap_* Get_AramMotherHeap(void)
 {

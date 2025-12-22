@@ -31,17 +31,15 @@
 #include "gameflow.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(45)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("itemMgr")
 
@@ -128,10 +126,9 @@ UfoItem* ItemMgr::getUfo()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 ItemShapeObject::ItemShapeObject(Shape* shape, immut char* objName, immut char* file)
 {
@@ -264,10 +261,9 @@ Creature* MeltingPotMgr::birth(int objType)
 	return creature;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 ObjectMgr* ItemMgr::getMgr(int)
 {
@@ -275,20 +271,18 @@ ObjectMgr* ItemMgr::getMgr(int)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000120
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000120
  */
 int ItemMgr::getPikiNum()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 bool ItemMgr::useObjType(int type)
 {
@@ -359,10 +353,9 @@ ItemMgr::ItemMgr()
 	mPikiHeadMgr   = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void ItemMgr::showInfo()
 {
@@ -390,10 +383,9 @@ ItemShapeObject* ItemMgr::getPelletShapeObject(int, int)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 Shape* ItemMgr::getUfoShape()
 {

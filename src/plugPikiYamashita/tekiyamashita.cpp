@@ -15,17 +15,15 @@
 #include "TAI/Usuba.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("tekiyamashita")
 
@@ -89,10 +87,9 @@ void TekiYamashita::makeTekis(TekiMgr* mgr)
 	mgr->mTekiSoundTables[TEKI_Otama] = new TAIotamaSoundTable();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000488
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000488
  */
 void TekiYamashita::makeDefaultAnimations()
 {

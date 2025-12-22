@@ -15,10 +15,9 @@ void DBInit(void)
 	DBVerbose                       = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void DBIsDebuggerPresent(void)
 {
@@ -67,20 +66,18 @@ int __DBIsExceptionMarked(u8 a)
 	return __DBInterface->unk4 & (1 << a);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void __DBMarkException(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void __DBSetPresent(void)
 {

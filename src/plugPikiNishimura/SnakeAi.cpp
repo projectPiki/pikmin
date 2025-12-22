@@ -18,17 +18,15 @@ static u32 snakeSE[] = {
 	SE_SNAKE_TURN,   SE_SNAKE_MOGAKU, SE_KING_DEAD2,  SE_SNAKE_DEAD2,
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("SnakeAi");
 
@@ -140,19 +138,17 @@ void SnakeAi::keyAction1()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SnakeAi::keyAction2()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SnakeAi::keyAction3()
 {
@@ -190,10 +186,9 @@ void SnakeAi::playSound(int snakeSoundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void SnakeAi::setEveryFrame()
 {
@@ -205,10 +200,9 @@ void SnakeAi::setEveryFrame()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void SnakeAi::setInitPosition()
 {
@@ -218,10 +212,9 @@ void SnakeAi::setInitPosition()
 	mSnake->mSRT.t.z  = initPos->z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void SnakeAi::setUnderPosition()
 {
@@ -229,10 +222,9 @@ void SnakeAi::setUnderPosition()
 	mSnake->mSRT.t = mSnake->mSpawnPosition;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00012C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00012C
  */
 void SnakeAi::setAppearPosition01()
 {
@@ -246,10 +238,9 @@ void SnakeAi::setAppearPosition01()
 	mSnake->mSRT.t = appearPos;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002A0
  */
 void SnakeAi::setAppearPosition02()
 {
@@ -418,20 +409,18 @@ void SnakeAi::naviNudge()
 	mSnake->getTargetCreature()->stimulate(nudge);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void SnakeAi::setMouthCollPart(int partNum)
 {
 	mMouthSlotFlag |= (1 << partNum);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 int SnakeAi::getMouthCollPart(int partNum)
 {
@@ -693,10 +682,9 @@ bool SnakeAi::appearType02()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void SnakeAi::resultFlagOn()
 {
@@ -705,30 +693,27 @@ void SnakeAi::resultFlagOn()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void SnakeAi::resultFlagSeen()
 {
 	playerState->mResultFlags.setSeen(RESFLAG_Snake);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SnakeAi::dieTransit()
 {
 	return !mSnake->getAlive();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 bool SnakeAi::struggleTransit()
 {
@@ -874,10 +859,9 @@ bool SnakeAi::collPartMaxTransit()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 bool SnakeAi::eatPikiTransit()
 {
@@ -887,20 +871,18 @@ bool SnakeAi::eatPikiTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SnakeAi::intoGroundTransit()
 {
 	return mSnake->flickPikiTransit();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 bool SnakeAi::diveTimerTransit()
 {
@@ -910,10 +892,9 @@ bool SnakeAi::diveTimerTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 bool SnakeAi::underTimerTransit()
 {
@@ -923,10 +904,9 @@ bool SnakeAi::underTimerTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 bool SnakeAi::appearTransit()
 {
@@ -937,10 +917,9 @@ bool SnakeAi::appearTransit()
 	return appearType02();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void SnakeAi::initDie(int nextState)
 {
@@ -952,10 +931,9 @@ void SnakeAi::initDie(int nextState)
 	resultFlagSeen();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void SnakeAi::initStruggle(int nextState)
 {
@@ -967,10 +945,9 @@ void SnakeAi::initStruggle(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void SnakeAi::initChase(int nextState)
 {
@@ -1014,10 +991,9 @@ void SnakeAi::initAttack(int nextState, f32 frame)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void SnakeAi::initEat(int nextState)
 {
@@ -1028,10 +1004,9 @@ void SnakeAi::initEat(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void SnakeAi::initWait(int nextState)
 {
@@ -1043,10 +1018,9 @@ void SnakeAi::initWait(int nextState)
 	mSnake->mSnakeBody->initBlending(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void SnakeAi::initGointo(int nextState)
 {
@@ -1061,10 +1035,9 @@ void SnakeAi::initGointo(int nextState)
 	cameraMgr->startVibrationEvent(4, mSnake->mSRT.t);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 void SnakeAi::initUnder(int nextState)
 {
@@ -1521,10 +1494,9 @@ void SnakeAi::initAppear(int nextState)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 void SnakeAi::dieState()
 {
@@ -1580,37 +1552,33 @@ void SnakeAi::struggleState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SnakeAi::chaseState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SnakeAi::attackState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SnakeAi::eatState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void SnakeAi::waitState()
 {
@@ -1621,19 +1589,17 @@ void SnakeAi::waitState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SnakeAi::gointoState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void SnakeAi::underState()
 {

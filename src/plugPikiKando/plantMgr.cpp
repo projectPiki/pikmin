@@ -10,17 +10,15 @@
 #include "gameflow.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("plantMgr");
 
@@ -46,10 +44,9 @@ void Plant::startMotion(int motionID)
 	mPlantAnimator.startMotion(PaniMotionInfo(motionID, this));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void Plant::reset(int plantType)
 {
@@ -152,10 +149,9 @@ void Plant::doKill()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000170
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000170
  */
 PlantAI::PlantAI()
 {
@@ -247,10 +243,9 @@ static immut char* plantNames[PLANT_COUNT] = {
 	"hae",      // 11
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 immut char* PlantMgr::getPlantName(int plantType)
 {
@@ -304,10 +299,9 @@ bool PlantMgr::usePlantType(int type)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void PlantMgr::addUseList(int plantType)
 {
@@ -319,10 +313,9 @@ void PlantMgr::addUseList(int plantType)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000150
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000150
  */
 Creature* PlantMgr::birth()
 {
@@ -352,10 +345,9 @@ PlantShapeObject::PlantShapeObject(Shape* shape, immut char* plantName, immut ch
 	mShape->overrideAnim(0, &mAnimContext);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 GenObjectPlant::GenObjectPlant()
     : GenObject('plnt', "create Plant")
