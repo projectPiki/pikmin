@@ -17,16 +17,14 @@
 SeSystem* seSystem;
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(11)
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000F4
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("soundMgr")
 
@@ -443,9 +441,8 @@ void SeContext::setContext(Creature* obj, int type)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000044
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 Vector3f SeContext::getPos()
 {
@@ -456,9 +453,8 @@ Vector3f SeContext::getPos()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00001C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 int SeContext::getObjType()
 {
@@ -469,9 +465,8 @@ int SeContext::getObjType()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000098
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void SeContext::createEvent(int eventType)
 {
@@ -542,9 +537,8 @@ bool SeContext::releaseEvent()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000030
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void SeContext::dump()
 {
@@ -770,9 +764,8 @@ bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00005C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 int SeSystem::getEvent(s32 handle)
 {
@@ -979,9 +972,8 @@ int SeSystem::getJacID(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000018
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 immut char* SeSystem::getSoundName(int soundID)
 {
@@ -993,9 +985,8 @@ immut char* SeSystem::getSoundName(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000018
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 int SeSystem::getEventType(int soundID)
 {
@@ -1007,9 +998,8 @@ int SeSystem::getEventType(int soundID)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000024
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SeSystem::isLoopType(int soundID)
 {

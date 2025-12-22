@@ -8,16 +8,14 @@
 char* CmdStream::statbuff;
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000F4
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("cmdStream")
 
@@ -48,9 +46,8 @@ void CmdStream::init(Stream* stream)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000004
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 CmdStream::CmdStream()
 {

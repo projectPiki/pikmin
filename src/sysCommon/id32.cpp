@@ -6,9 +6,8 @@
 #include "sysNew.h"
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 

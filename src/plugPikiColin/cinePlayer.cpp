@@ -16,16 +16,14 @@
 #include "zen/Math.h"
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000F4
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CinePlayer")
 
@@ -33,9 +31,8 @@ DEFINE_PRINT("CinePlayer")
 static AnimContext* bcs[0x100];
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000A0
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void CineShapeObject::init(immut char* modelPath, immut char* animPath, immut char* bundlePath)
 {
@@ -283,9 +280,8 @@ void CinematicPlayer::addScene(SceneData* scene)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000124
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 SceneData* CinematicPlayer::addScene(immut char* dskFilePath)
 {
@@ -319,9 +315,8 @@ void CinematicPlayer::addActor(CineShapeObject* actor)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000128
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 void CinematicPlayer::addActor(immut char* modelFilePath, immut char* animFilePath, immut char* bundleFilePath)
 {
@@ -528,9 +523,8 @@ ActorInstance* SceneCut::addInstance(immut char* modelFilePath)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000024
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 int SceneCut::countEKeys()
 {
@@ -542,9 +536,8 @@ int SceneCut::countEKeys()
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00005C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void ActorInstance::onceInit()
 {

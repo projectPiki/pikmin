@@ -11,23 +11,20 @@
 #include "system.h"
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000F0
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("AnimMgr");
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000084
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void AnimInfo::initAnimData(AnimData* data)
 {
@@ -364,9 +361,8 @@ AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000A4
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 AnimInfo* AnimMgr::findAnim(int idx)
 {
