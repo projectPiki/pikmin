@@ -8,17 +8,15 @@
 #include "gameflow.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiBridge")
 
@@ -68,10 +66,9 @@ void ActBridge::dump()
 	PRINT("zdist is %.1f\n", zdist);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 bool ActBridge::collideBridgeSurface()
 {
@@ -86,10 +83,9 @@ bool ActBridge::collideBridgeSurface()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B8
  */
 bool ActBridge::collideBridgeBlocker()
 {
@@ -132,20 +128,18 @@ int ActBridge::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void ActBridge::initDetour()
 {
 	mState = STATE_Detour;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 int ActBridge::exeDetour()
 {
@@ -161,10 +155,9 @@ void ActBridge::procWallMsg(Piki* piki, MsgWall* msg)
 	_33               = 8;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000134
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000134
  */
 void ActBridge::initClimb()
 {
@@ -181,10 +174,9 @@ void ActBridge::initClimb()
 	PRINT("climb vel (%.1f %.1f %.1f)\n", mClimbingVelocity.x, mClimbingVelocity.y, mClimbingVelocity.z);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 int ActBridge::exeClimb()
 {
@@ -197,10 +189,9 @@ int ActBridge::exeClimb()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void ActBridge::initApproach()
 {
@@ -209,10 +200,9 @@ void ActBridge::initApproach()
 	mPiki->startMotion(PaniMotionInfo(PIKIANIM_Walk, this), PaniMotionInfo(PIKIANIM_Walk));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000328
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000328
  */
 int ActBridge::exeApproach()
 {
@@ -220,50 +210,45 @@ int ActBridge::exeApproach()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void ActBridge::initGo()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003F0
  */
 int ActBridge::exeGo()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E8
  */
 void ActBridge::initWork()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000414
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000414
  */
 int ActBridge::exeWork()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void ActBridge::doWork(int mins)
 {
@@ -304,10 +289,9 @@ void ActBridge::cleanup()
 	mPiki->unsetFlag80();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void ActBridge::newInitApproach()
 {

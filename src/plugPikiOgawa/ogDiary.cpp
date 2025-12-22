@@ -11,17 +11,15 @@
 #include "zen/ogResult.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgDiarySection")
 
@@ -150,10 +148,9 @@ void zen::ogScrDiaryMgr::start(s16 a1, s16 day)
 	mMesgMgr->dispAll();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16 day)
 {
@@ -222,20 +219,18 @@ void zen::ogScrDiaryMgr::exit()
 	mMesgMgr->fadeOut();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void zen::ogScrDiaryMgr::setCursorXY(P2DTextBox* textBox)
 {
 	mMesgMgr->setCursorXY(textBox);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 void zen::ogScrDiaryMgr::updateDiary(Controller* input)
 {
@@ -279,10 +274,9 @@ zen::ogDrawDiary::ogDrawDiary()
 	mScreen->setOffset(320, 240);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void zen::ogDrawDiary::start()
 {
@@ -290,10 +284,9 @@ void zen::ogDrawDiary::start()
 	mStatus      = Closed;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B8
  */
 void zen::ogDrawDiary::setOffset()
 {
@@ -387,10 +380,9 @@ zen::ogDrawDiary::DiaryStatus zen::ogDrawDiary::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A8
  */
 void zen::ogDrawDiary::draw(Graphics& gfx)
 {

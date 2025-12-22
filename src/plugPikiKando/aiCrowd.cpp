@@ -14,17 +14,15 @@
 
 static bool newVer = true;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(20)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiCrowd")
 
@@ -98,10 +96,9 @@ void ActCrowd::init(Creature* target)
 	mOdometer.start(2.0f, 20.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void ActCrowd::initRouteMove()
 {
@@ -113,10 +110,9 @@ void ActCrowd::initRouteMove()
 	mLostChildTimer = 5.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void ActCrowd::exeRouteMove()
 {
@@ -126,10 +122,9 @@ void ActCrowd::exeRouteMove()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void ActCrowd::setFormed()
 {
@@ -551,10 +546,9 @@ void ActCrowd::finishZawatuki()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 void ActCrowd::startBoredom()
 {
@@ -571,10 +565,9 @@ void ActCrowd::startBoredom()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void ActCrowd::startTalk()
 {

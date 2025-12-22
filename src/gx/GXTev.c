@@ -321,10 +321,9 @@ void GXSetTevSwapModeTable(GXTevSwapSel table, GXTevColorChan red, GXTevColorCha
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void GXSetTevClampMode(GXTevStageID stage, GXTevClampMode mode)
 {

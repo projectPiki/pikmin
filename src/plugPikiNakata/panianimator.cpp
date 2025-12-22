@@ -3,17 +3,15 @@
 #include "nlib/System.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(3)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("panianimator");
 
@@ -54,10 +52,9 @@ PaniMotion::PaniMotion(int animID)
 	init(animID, 1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 PaniMotion::PaniMotion(int animID, int p2)
 {
@@ -343,10 +340,9 @@ f32 PaniAnimator::getKeyValueByKeyType(int type)
 	return 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void PaniAnimator::checkCounter_4DEBUG()
 {

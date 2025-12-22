@@ -92,10 +92,9 @@ void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001C8
  */
 void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const Mtx44 projmtx)
 {

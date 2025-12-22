@@ -4,54 +4,48 @@
 #include "nlib/System.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("peveconditions")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 PeveBooleanCondition::PeveBooleanCondition()
 {
 	construct(false);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void PeveBooleanCondition::construct(bool value)
 {
 	mValue = value;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 PeveDependenceCondition::PeveDependenceCondition()
 {
 	construct(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void PeveDependenceCondition::construct(PeveCondition* cond)
 {
@@ -75,20 +69,18 @@ void PeveTimeCondition::construct(f32 limit)
 	mLimit    = limit;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 PeveDistanceCondition::PeveDistanceCondition()
 {
 	construct(1.0f, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void PeveDistanceCondition::construct(f32 threshold, NVector3fIO* vecIOA, NVector3fIO* vecIOB)
 {
@@ -115,20 +107,18 @@ void PeveDistanceCondition::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 PeveComparisonYCondition::PeveComparisonYCondition()
 {
 	construct(nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void PeveComparisonYCondition::construct(NVector3fIO* vecIOA, NVector3fIO* vecIOB)
 {

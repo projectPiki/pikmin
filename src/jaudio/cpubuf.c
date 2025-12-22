@@ -79,10 +79,9 @@ s16* CpubufProcess(DSPBUF_EVENTS event)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void MixCpu(s32)
 {

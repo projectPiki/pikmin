@@ -4,24 +4,21 @@
 #include "NaviMgr.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("genNavi");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 // GenObjectNavi::GenObjectNavi()
 //     : GenObject('navi', "プレイヤー２を生む")

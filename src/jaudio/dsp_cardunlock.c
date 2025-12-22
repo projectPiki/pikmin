@@ -227,10 +227,9 @@ int __CARDUnlock(int chan, u8 flashID[12])
 	return CARD_RESULT_READY;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 static void InitCallback(void* dspTask)
 {

@@ -10,24 +10,21 @@
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("KingBody");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00017C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00017C
  */
 void KingBody::setSalivaEffect()
 {
@@ -241,10 +238,9 @@ void KingBody::initBlending(f32 blendRate)
 	mBlendingRate  = blendRate;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void KingBody::updateBlendingRatio()
 {
@@ -256,10 +252,9 @@ void KingBody::updateBlendingRatio()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void KingBody::checkOnGround()
 {
@@ -334,10 +329,9 @@ void KingBody::emitOnGroundEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D4
  */
 void KingBody::emitSlipEffect()
 {
@@ -350,10 +344,9 @@ void KingBody::emitSlipEffect()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void KingBody::copyOnGround()
 {
@@ -375,10 +368,9 @@ void KingBody::update()
 	copyOnGround();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00012C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00012C
  */
 void KingBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx, Matrix4f* animMatrices)
 {
@@ -392,10 +384,9 @@ void KingBody::makeAnimation(BossShapeObject* shapeObj, Graphics& gfx, Matrix4f*
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000AD0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000AD0
  */
 void KingBody::checkBlendingParm(Matrix4f* animMatrices)
 {
@@ -487,10 +478,9 @@ void KingBody::copyJointPosition(immut Matrix4f* animMatrices)
 	animMatrices[13].getColumn(3, mMouthPos);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void KingBody::returnJoint(BossShapeObject* shapeObj, Graphics& gfx, immut Matrix4f* animMatrices)
 {

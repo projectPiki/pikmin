@@ -6,17 +6,15 @@
 #include "Shape.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("DGXGraphics")
 
@@ -509,10 +507,9 @@ void DGXGraphics::beginRender()
 	GXInvalidateVtxCache();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void DGXGraphics::GXReInit()
 {
@@ -2050,10 +2047,9 @@ void DGXGraphics::texturePrintf(Font* font, int x, int y, immut char* format, ..
 	STACK_PAD_TERNARY(font, 4);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A0
  */
 void DGXGraphics::showCrash(u16, OSContext*)
 {
@@ -2061,10 +2057,9 @@ void DGXGraphics::showCrash(u16, OSContext*)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000184
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000184
  */
 void DGXGraphics::showError(immut char* msg1, immut char* fileName, int line)
 {
@@ -2097,40 +2092,36 @@ static char sFontData[] = {
 	0x10, 0x00, 0x00, 0x02, 0x22, 0x00, 0x20, 0x80, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 void DGXGraphics::directDrawChar(int, int, int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 void DGXGraphics::directDrawChar(RectArea&, RectArea&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001D8
  */
 void DGXGraphics::directPrint(int, int, immut char*, ...)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 void DGXGraphics::directErase(RectArea&, bool)
 {

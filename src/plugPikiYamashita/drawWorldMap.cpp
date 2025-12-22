@@ -21,17 +21,15 @@ u8 mapNoScr2Game[5] = { WM_Yakushima, WM_Forest, WM_Practice, WM_Cave, WM_Last }
 u8 mapNoGame2Scr[5] = { WMSCR_Practice, WMSCR_Forest, WMSCR_Cave, WMSCR_Yakushima, WMSCR_Last };
 } // namespace
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(26)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawWorldMap")
 
@@ -1665,10 +1663,9 @@ const f32 zen::WorldMapCursorMgr::ONYON_OFFSET_Z   = 0.0f;
 const int WorldMapCoursePoint::EVENT_NONE          = 0;
 const int WorldMapCoursePoint::EVENT_APPEAR_FINISH = 1;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 zen::DrawWorldMap::~DrawWorldMap()
 {
@@ -1914,10 +1911,9 @@ void zen::DrawWorldMap::draw(Graphics& gfx)
 	mPause.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000AA4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000AA4
  */
 void zen::DrawWorldMap::setCoursePoint(zen::DrawWorldMap::startPlaceFlag placeFlag)
 {

@@ -27,10 +27,9 @@ ARCallback ARRegisterDMACallback(ARCallback callback)
 	return oldCb;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void ARGetDMAStatus(void)
 {
@@ -62,30 +61,27 @@ void ARStartDMA(u32 type, u32 mainmem_addr, u32 aram_addr, u32 length)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void ARAlloc(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void ARFree(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void ARCheckInit(void)
 {
@@ -128,20 +124,18 @@ u32 ARInit(u32* stack_index_addr, u32 num_entries)
 	return __AR_StackPointer;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void ARReset(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void ARSetSize(void)
 {
@@ -156,10 +150,9 @@ u32 ARGetBaseAddress()
 	return __AR_ARAM_USR_BASE_ADDR;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void ARGetSize(void)
 {
@@ -189,20 +182,18 @@ void __ARHandler(__OSInterrupt interrupt, OSContext* context)
 	OSSetCurrentContext(context);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void __ARWaitForDMA(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 {
@@ -226,10 +217,9 @@ void __ARWriteDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 	} while ((__DSPRegs[DSP_CONTROL_STATUS] & 0x200));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void __ARReadDMA(u32 mmem_addr, u32 aram_addr, u32 length)
 {

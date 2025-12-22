@@ -181,10 +181,9 @@ void Effecter_Overwrite_1ShotD(jc_* jc, Osc_* osc, u32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void Effecter_Overwrite_1Shot(jc_* jc, Osc_* osc1, Osc_* osc2)
 {
@@ -627,40 +626,36 @@ void UpdatePanPower_1Shot(jc_* channel, f32 leftPower, f32 rightPower, f32 cente
 	channel->panMatrices[0].values[2] = centerPower / val;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void CountChan(jc_* jc)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void CountChanD(jc_* jc)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void CheckChan(jc_* jc)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void PrintChan(immut char* str, jc_* jc, u32 id)
 {
@@ -786,10 +781,9 @@ u32 One_CheckInstWave(SOUNDID_ sound)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void Get_CtrlWave(SOUNDID_ sound)
 {

@@ -42,20 +42,18 @@ ASM u32 OSGetTick(void)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void __SetTime(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void __OSSetTime(void)
 {
@@ -78,20 +76,18 @@ OSTime __OSGetSystemTime(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void __OSSetTick(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 static BOOL IsLeapYear(s32 year)
 {
@@ -99,20 +95,18 @@ static BOOL IsLeapYear(s32 year)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void GetYearDays(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 static s32 GetLeapDays(s32 year)
 {
@@ -452,10 +446,9 @@ void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* cal)
 
 #pragma dont_inline reset
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002E0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002E0
  */
 OSTime OSCalendarTimeToTicks(OSCalendarTime*)
 {

@@ -417,40 +417,36 @@ u16 jdsp[] ATTRIBUTE_ALIGN(32) = {
 #endif
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void WRITEIO(u32, u16)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void READIO(u32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void CHKCDCR(u8)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void DSPCall()
 {

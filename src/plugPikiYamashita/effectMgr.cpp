@@ -5,17 +5,15 @@
 #include "MemStat.h"
 #include "gameflow.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(24)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("effectMgr")
 
@@ -366,10 +364,9 @@ SimplePtclLoadInfo simplePtclLoadInfo[EffectMgr::SIMPLE_COUNT] = {
 
 EffectMgr* effectMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001C0
  */
 SmokeEmitter::SmokeEmitter(int count, Texture* tex)
 {
@@ -388,10 +385,9 @@ SmokeEmitter::SmokeEmitter(int count, Texture* tex)
 	mModel     = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 SmokeEmitter::Smoke* SmokeEmitter::emit(immut Vector3f& pos, immut Vector3f& vel)
 {
@@ -418,10 +414,9 @@ SmokeEmitter::Smoke* SmokeEmitter::emit(immut Vector3f& pos, immut Vector3f& vel
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00016C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00016C
  */
 void SmokeEmitter::update(f32 timeStep)
 {
@@ -508,10 +503,9 @@ void SmokeEmitter::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 EffectParticleRegistration::EffectParticleRegistration(immut char* pcrFile, immut char* ptclTexFile, immut char* childPtclTexFile)
 {
@@ -529,10 +523,9 @@ EffectParticleRegistration::EffectParticleRegistration(immut char* pcrFile, immu
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void EffectShape::initShape(immut char* modelFile)
 {
@@ -541,20 +534,18 @@ void EffectShape::initShape(immut char* modelFile)
 	mModel->makeInstance(mDynMats, 0);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 bool EffectShape::update()
 {
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void EffectShape::refresh(Graphics& gfx, Matrix4f& mtx, f32* p4)
 {
@@ -567,10 +558,9 @@ void EffectShape::refresh(Graphics& gfx, Matrix4f& mtx, f32* p4)
 	mModel->drawshape(gfx, *gfx.mCamera, &mDynMats);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void EffShpInst::initEffShpInst()
 {
@@ -612,10 +602,9 @@ bool EffShpInst::update()
 	return isDone;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000130
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000130
  */
 void EffShpInst::draw(Graphics& gfx)
 {
@@ -630,10 +619,9 @@ void EffShpInst::draw(Graphics& gfx)
 	mEffectShape->refresh(gfx, mtx2, &_3C);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000124
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000124
  */
 EffectGeometryRegistration::EffectGeometryRegistration(immut char* modelFile, immut char* animFile, f32 scale, u8 loopMax)
 {
@@ -675,10 +663,9 @@ EffShpInst* EffectGeometryRegistration::create(immut Vector3f& pos, immut Vector
 	return inst;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(immut char* texFile, Colour p2, Colour p3)
 {
@@ -818,10 +805,9 @@ EffShpInst* EffectMgr::create(EffectMgr::modelTypeTable modID, immut Vector3f& p
 	return mModels[modID]->create(pos, scale, rot);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 zen::particleMdl* EffectMgr::create(EffectMgr::simpleTypeTable simpleID, immut Vector3f& globalPos, s16 lifeTime, immut Vector3f& vel,
                                     immut Vector3f& accel, f32 size, f32 rotSpeed, zen::CallBack1<zen::particleMdl*>* cbPtcl)
@@ -845,10 +831,9 @@ EffShpInst* EffectMgr::getShapeInst()
 	return inst;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void EffectMgr::putShapeInst(EffShpInst* inst)
 {

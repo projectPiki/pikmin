@@ -6,17 +6,15 @@
 
 System* NSystem::system;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibsystem")
 
@@ -128,100 +126,90 @@ void NNode::removeAllChildren()
 	mNodeArray->removeAll();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 NListNode::NListNode()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void NListNode::addChild(NListNode*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void NListNode::removeChild(NListNode*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 int NListNode::getChildCount()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void NListNode::addChild(int, NListNode*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NListNode::toString()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 NList::NList()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void NList::addList(NList*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NList::toString()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 NHeap::NHeap(int size)
 {

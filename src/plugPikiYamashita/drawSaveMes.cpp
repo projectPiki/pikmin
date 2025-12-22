@@ -8,17 +8,15 @@
 #include "zen/DrawSave.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawSaveMes")
 
@@ -99,10 +97,9 @@ void zen::DrawSaveMes::saveError()
 	setMode(MODE_Unk7);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void zen::DrawSaveMes::hide()
 {

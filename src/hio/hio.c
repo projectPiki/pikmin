@@ -36,20 +36,18 @@ static void DbgHandler(__OSInterrupt interrupt, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 static void TxHandler(s32 chan, OSContext* context)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 static void RxHandler(s32 chan, OSContext* context)
 {
@@ -234,10 +232,9 @@ BOOL HIOWriteMailbox(u32 word)
 	return !err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000144
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000144
  */
 BOOL HIORead(u32 addr, void* buffer, s32 size)
 {
@@ -274,30 +271,27 @@ BOOL HIOWrite(u32 addr, void* buffer, s32 size)
 	return !err;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 BOOL HIOReadAsync(u32 addr, void* buffer, s32 size, HIOCallback callback)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 BOOL HIOWriteAsync(u32 addr, void* buffer, s32 size, HIOCallback callback)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000130
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000130
  */
 BOOL HIOReadStatus(u32* status)
 {

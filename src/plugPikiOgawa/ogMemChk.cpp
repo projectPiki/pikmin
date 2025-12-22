@@ -11,17 +11,15 @@
 #include "zen/ogNitaku.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgMemChkSection")
 
@@ -188,10 +186,9 @@ zen::ogScrMemChkMgr::ogScrMemChkMgr()
 
 #if defined(VERSION_PIKIDEMO)
 #else
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void zen::ogScrMemChkMgr::SetNitaku_Y_N()
 {
@@ -202,10 +199,9 @@ void zen::ogScrMemChkMgr::SetNitaku_Y_N()
 	mNoPane2->setString(mNoText);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void zen::ogScrMemChkMgr::SetNitaku_W_R()
 {
@@ -215,10 +211,9 @@ void zen::ogScrMemChkMgr::SetNitaku_W_R()
 	mNoPane2->setString(mRetryText);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void zen::ogScrMemChkMgr::SetNitaku_F_N()
 {
@@ -229,10 +224,9 @@ void zen::ogScrMemChkMgr::SetNitaku_F_N()
 }
 #endif
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 void zen::ogScrMemChkMgr::StartSub()
 {
@@ -372,10 +366,9 @@ void zen::ogScrMemChkMgr::DispAcup(bool set)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void zen::ogScrMemChkMgr::MakeDefFileStart()
 {
@@ -384,10 +377,9 @@ void zen::ogScrMemChkMgr::MakeDefFileStart()
 	mWaitTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void zen::ogScrMemChkMgr::RepairFileStart()
 {
@@ -469,10 +461,9 @@ void zen::ogScrMemChkMgr::DebugStart(int state)
 	start();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000120
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000120
  */
 void zen::ogScrMemChkMgr::FormatEffectStart()
 {
@@ -486,20 +477,18 @@ void zen::ogScrMemChkMgr::FormatEffectStart()
 	mEfxB = mEfxMgr->create(EFF2D_Unk40, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 bool zen::ogScrMemChkMgr::checkTypingAll()
 {
 	return mActiveTextMgr->check() == TypingTextMgr::STATE_Complete ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 {
@@ -516,10 +505,9 @@ void zen::ogScrMemChkMgr::checkErrNitaku(ogNitakuMgr* mgr, Controller* input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void zen::ogScrMemChkMgr::setNoCard()
 {

@@ -1,9 +1,8 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void mblen(void)
 {
@@ -34,20 +33,18 @@ int mbtowc(wchar_t* pwc, const char* s, size_t n)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void wctomb(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void mbstowcs(void)
 {

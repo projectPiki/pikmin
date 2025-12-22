@@ -8,17 +8,15 @@
 #include "String.h"
 #include "Vector.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
@@ -66,10 +64,9 @@ void Parameters::write(RandomAccessStream& output)
 	output.writeInt(-1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 int Parameters::sizeInFile()
 {
@@ -107,40 +104,36 @@ void Parameters::read(RandomAccessStream& input)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void Parm<Colour>::read(RandomAccessStream&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void Parm<Colour>::write(RandomAccessStream&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void Parm<Vector3f>::read(RandomAccessStream&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void Parm<Vector3f>::write(RandomAccessStream&)
 {

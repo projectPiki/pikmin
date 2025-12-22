@@ -138,10 +138,9 @@ char* strcat(char* dst, const char* src)
 	return (dst);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 char* strncat(char* dst, const char* src, size_t n)
 {
@@ -261,70 +260,63 @@ char* strchr(const char* str, int chr)
 	return (c ? 0 : (char*)p);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 int strcoll(const char* lhs, const char* rhs)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 size_t strxfrm(char* dst, const char* src, size_t n)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 char* strrchr(const char* str, int ch)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C4
  */
 char* strpbrk(const char* dst, const char* breakset)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 size_t strspn(const char* dst, const char* src)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 size_t strcspn(const char* dst, const char* src)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 char* strtok(char* str, const char* delim)
 {
@@ -361,20 +353,18 @@ char* strstr(const char* str, const char* substr)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 char* strerror(int errnum)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void __strerror(void)
 {

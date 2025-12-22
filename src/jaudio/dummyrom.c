@@ -11,40 +11,36 @@ static u32 AUDIO_ARAM_TOP;
 static u32 CARD_SECURITY_BUFFER;
 static u32 SELECTED_ARAM_SIZE;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void GetNeosRomTop()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void mesg_finishcall(u32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void ARAMStartDMAmesg(u32, u32, u32, u32, s32, OSMesgQueue_s*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void ARAMStartDMA(u32, u32, u32, u32, s32, u32*, void (*)())
 {
@@ -59,10 +55,9 @@ void Jac_SetAudioARAMSize(u32 size)
 	SELECTED_ARAM_SIZE = size;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void ARAlloc2(u32)
 {

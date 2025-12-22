@@ -8,17 +8,15 @@
 #include "teki.h"
 #include "zen/CallBack.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIusuba")
 
@@ -70,10 +68,9 @@ struct TAIAflyUsuba : public TAIAmotion {
 	// _00-_0C = TAIAmotion
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 TAIusubaSoundTable::TAIusubaSoundTable()
     : PaniSoundTable(7)
@@ -135,10 +132,9 @@ TAIusubaParameters::TAIusubaParameters()
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001D8
  */
 TAIusubaStrategy::TAIusubaStrategy()
     : YaiStrategy(USUBASTATE_COUNT, USUBASTATE_Fly)

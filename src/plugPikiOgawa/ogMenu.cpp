@@ -17,17 +17,15 @@
 #include "zen/ogRader.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgMenuSection")
 
@@ -38,10 +36,9 @@ static f32 RotateAngleData[]
 
 } // namespace zen
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void zen::ogDrawScrMenu::setScreen(immut char* path)
 {
@@ -64,10 +61,9 @@ zen::ogDrawScrMenu::ogDrawScrMenu()
 	mMenuDisplayMode = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void zen::ChkAngle(f32* out)
 {
@@ -84,10 +80,9 @@ void zen::ChkAngle(f32* out)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void zen::ogDrawScrMenu::calcAngleSpeed(f32 angle)
 {
@@ -149,10 +144,9 @@ zen::ogDrawScrMenu::returnStatusFlag zen::ogDrawScrMenu::update(Controller* inpu
 	return mUpdateResultStatus;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 bool zen::ogDrawScrMenu::draw(Graphics& gfx)
 {
@@ -192,10 +186,9 @@ zen::ogDrawScrController::ogDrawScrController()
 	mIsColorInverted    = true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void zen::ogDrawScrController::setWinColor()
 {
@@ -205,10 +198,9 @@ void zen::ogDrawScrController::setWinColor()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void zen::ogDrawScrController::setOriginalColor()
 {
@@ -223,10 +215,9 @@ void zen::ogDrawScrController::setOriginalColor()
 	mIsColorInverted = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void zen::ogDrawScrController::setHantenColor()
 {
@@ -397,20 +388,18 @@ void zen::ogDrawScrInfo::start()
 	PRINT("ScrInfo end STAGE(%d)\n", flowCont.mCurrentStage->mStageID);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void zen::ogDrawScrInfo::update(Controller*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000170
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000170
  */
 zen::ogDrawScrInfo2::ogDrawScrInfo2()
 {
@@ -423,30 +412,27 @@ zen::ogDrawScrInfo2::ogDrawScrInfo2()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void zen::ogDrawScrInfo2::start()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void zen::ogDrawScrInfo2::update(Controller*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void zen::ogDrawScrInfo2::drawHougaku(Graphics& gfx)
 {
@@ -524,10 +510,9 @@ void zen::ogScrMenuMgr::start()
 	seSystem->playSysSe(SYSSE_CMENU_ON);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void zen::ogScrMenuMgr::updateInfo(Controller* input)
 {
@@ -544,10 +529,9 @@ void zen::ogScrMenuMgr::updateInfo(Controller* input)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void zen::ogScrMenuMgr::updateCont(Controller* input)
 {

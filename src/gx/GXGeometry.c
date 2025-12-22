@@ -75,10 +75,9 @@ void GXSetLineWidth(u8 width, GXTexOffset texOffsets)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void GXGetLineWidth(u8* width, GXTexOffset* texOffsets)
 {
@@ -100,10 +99,9 @@ void GXSetPointSize(u8 pointSize, GXTexOffset texOffsets)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void GXGetPointSize(u8* pointSize, GXTexOffset* texOffsets)
 {
@@ -151,10 +149,9 @@ void GXSetCullMode(GXCullMode mode)
 	gx->dirtyState |= 4;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void GXGetCullMode(GXCullMode* mode)
 {

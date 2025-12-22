@@ -1,9 +1,8 @@
 #include "Dolphin/gx.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000174
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000174
  */
 void GXProject(f32 x, f32 y, f32 z, const Mtx mtx, f32* pm, f32* vp, f32* sx, f32* sy, f32* sz)
 {
@@ -69,10 +68,9 @@ void GXSetProjection(const Mtx44 mtx, GXProjectionType type)
 	gx->bpSent = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void GXSetProjectionv(const f32* ptr)
 {
@@ -103,10 +101,9 @@ void GXSetProjectionv(const f32* ptr)
 
 #define qr0 0
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void GXGetProjectionv(f32* ptr)
 {
@@ -161,10 +158,9 @@ ASM void WriteMTXPS3x3from3x4(register const Mtx mtx, register volatile f32* des
 	#endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 ASM void WriteMTXPS3x3(register const Mtx33 mtx, register volatile f32* dest) {
 #ifdef __MWERKS__ // clang-format off
@@ -244,10 +240,9 @@ void GXLoadPosMtxImm(const Mtx mtx, u32 id)
 		(reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift));                        \
 	} while (0)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void GXLoadPosMtxIndx(u16 mtx_indx, u32 id)
 {
@@ -297,10 +292,9 @@ void GXLoadNrmMtxImm(const Mtx mtx, u32 id)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void GXLoadNrmMtxImm3x3(const Mtx33 mtx, u32 id)
 {
@@ -329,10 +323,9 @@ void GXLoadNrmMtxImm3x3(const Mtx33 mtx, u32 id)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void GXLoadNrmMtxIndx3x3(u16 mtx_indx, u32 id)
 {
@@ -408,10 +401,9 @@ void GXLoadTexMtxImm(const Mtx mtx, u32 id, GXTexMtxType type)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void GXLoadTexMtxIndx(u16 mtx_indx, u32 id, GXTexMtxType type)
 {
@@ -497,10 +489,9 @@ void GXSetViewport(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz)
 	GXSetViewportJitter(left, top, wd, ht, nearz, farz, 1U);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void GXGetViewportv(f32* vp)
 {
@@ -546,10 +537,9 @@ void GXSetScissor(u32 left, u32 top, u32 wd, u32 ht)
 	gx->bpSent = 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void GXGetScissor(u32* left, u32* top, u32* wd, u32* ht)
 {

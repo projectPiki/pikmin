@@ -338,10 +338,9 @@ s32 CARDCheckAsync(s32 channel, CARDCallback callback)
 	return CARDCheckExAsync(channel, &bytes, callback);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void CARDCheckEx(void)
 {

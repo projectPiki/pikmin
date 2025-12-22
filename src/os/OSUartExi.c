@@ -24,10 +24,9 @@ u32 ReadUARTN(void* bytes, u32 len)
 	return 4;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 static int QueueLength(void)
 {

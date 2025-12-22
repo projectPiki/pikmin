@@ -7,84 +7,75 @@
 CardUtilThread CardThread;
 CardUtilControl CardControl;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("CardUtil")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void CardUtilNumFiles()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void CardUtilLockDirectory()
 {
 	OSLockMutex(&CardControl.mMutex2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void CardUtilUnlockDirectory()
 {
 	OSUnlockMutex(&CardControl.mMutex2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 s32 CardUtilByteNotUsed()
 {
 	return CardControl.mByteNotUsed;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 s32 CardUtilBlocksNotUsed()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 s32 CardUtilFilesNotUsed()
 {
 	return CardControl.mFilesNotUsed;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 s32 CardUtilSectorSize()
 {
@@ -129,10 +120,9 @@ static int DoMount(s32 channel, void* a2)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 static int DoUnmount(s32 channel)
 {
@@ -142,10 +132,9 @@ static int DoUnmount(s32 channel)
 	return CARDUnmount(channel);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 static int DoFormat(s32 channel)
 {
@@ -333,10 +322,9 @@ static int DoList(s32 chan, CardUtilDirent* dirent)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 static int DoOpen(s32 chan, s32 fileNo, void* addr)
 {
@@ -358,10 +346,9 @@ static int DoOpen(s32 chan, s32 fileNo, void* addr)
 	return res3;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 static int DoWrite(s32 chan, s32 fileNo, void* addr, u32 length, u32 offset)
 {
@@ -568,20 +555,18 @@ void CardUtilUnmount(s32 channel)
 	CardUtilCommand(channel, CARDCMD_Unmount, 0, nullptr, 0, 0);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void CardUtilList(s32, CardUtilDirent*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void CardUtilFormat(s32)
 {
@@ -900,30 +885,27 @@ void CardUtilInit(void* stack, u32 stackSize, s32 prio)
 	OSResumeThread(&CardThread.mThread);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000238
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000238
  */
 void CardUtilDrawIcon(int, int, int, void*, void*, u16, u16, int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000168
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000168
  */
 void CardUtilDrawAnimatedIcon(CardUtilDirent*, int, int, int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void CardUtilGetProgress(s32)
 {

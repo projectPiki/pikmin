@@ -9,17 +9,15 @@
 #include "PlantMgr.h"
 #include "teki.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("searchSys")
 
@@ -270,10 +268,9 @@ void SearchBuffer::init(SearchData* data, int p2)
 	invalidate();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E4
  */
 void SearchBuffer::operator=(SearchBuffer& other)
 {
@@ -290,10 +287,9 @@ void SearchBuffer::operator=(SearchBuffer& other)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int SearchBuffer::getIndex(Creature* obj)
 {
@@ -317,10 +313,9 @@ void SearchBuffer::clear()
 	_1C             = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SearchBuffer::reset()
 {

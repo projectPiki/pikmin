@@ -13,17 +13,15 @@
 #include "RumbleMgr.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("KoganeAi");
 
@@ -147,19 +145,17 @@ void KoganeAi::keyAction1()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void KoganeAi::keyAction2()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void KoganeAi::keyAction3()
 {
@@ -194,10 +190,9 @@ void KoganeAi::playSound(int koganeSoundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void KoganeAi::setEveryFrame()
 {
@@ -244,10 +239,9 @@ void KoganeAi::setMapAttribute()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void KoganeAi::checkAppearTimeCounter()
 {
@@ -256,10 +250,9 @@ void KoganeAi::checkAppearTimeCounter()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 void KoganeAi::calcScaleUp()
 {
@@ -328,10 +321,9 @@ void KoganeAi::setRouteTargetPosition()
 	mKogane->setTargetPosition(targetPos);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void KoganeAi::makeTargetRandom()
 {
@@ -343,10 +335,9 @@ void KoganeAi::makeTargetRandom()
 	mKogane->mTargetVelocity.multiply(C_KOGANE_PROP(mKogane).mMoveSpeed());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void KoganeAi::makeStopMoving()
 {
@@ -450,10 +441,9 @@ void KoganeAi::createPellet()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void KoganeAi::resultFlagOn()
 {
@@ -462,20 +452,18 @@ void KoganeAi::resultFlagOn()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool KoganeAi::dieTransit()
 {
 	return (mKogane->getAttackTimer() > mAppearTimer) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool KoganeAi::isMotionFinishTransit()
 {
@@ -520,20 +508,18 @@ bool KoganeAi::appearTransit()
 	return mKogane->mIsAppear;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 bool KoganeAi::startWalkTransit()
 {
 	return mKogane->getWalkTimer() > _1C;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 bool KoganeAi::stopWalkTransit()
 {
@@ -541,10 +527,9 @@ bool KoganeAi::stopWalkTransit()
 	return (qdist2(targetPos->x, targetPos->z, mKogane->mSRT.t.x, mKogane->mSRT.t.z) < 10.0f) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 bool KoganeAi::changeTargetTransit()
 {
@@ -558,20 +543,18 @@ bool KoganeAi::changeTargetTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool KoganeAi::createPelletTransit()
 {
 	return mKogane->_3B9;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void KoganeAi::initDie(int nextState)
 {
@@ -580,10 +563,9 @@ void KoganeAi::initDie(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002CC
  */
 void KoganeAi::initAppear(int nextState)
 {
@@ -602,10 +584,9 @@ void KoganeAi::initAppear(int nextState)
 	effectMgr->create(EffectMgr::EFF_CloudOfDust_2, mKogane->mSRT.t, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00045C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00045C
  */
 void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
 {
@@ -627,10 +608,9 @@ void KoganeAi::initWalkRandom(int nextState, bool isRandomPos)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000164
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000164
  */
 void KoganeAi::initStopWalk(int nextState)
 {
@@ -680,10 +660,9 @@ void KoganeAi::initCreate(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void KoganeAi::dieState()
 {
@@ -700,10 +679,9 @@ void KoganeAi::dieState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000180
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000180
  */
 void KoganeAi::walkRandomState()
 {
@@ -714,10 +692,9 @@ void KoganeAi::walkRandomState()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void KoganeAi::stopWalkState()
 {
@@ -725,10 +702,9 @@ void KoganeAi::stopWalkState()
 	calcScaleUp();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void KoganeAi::createState()
 {

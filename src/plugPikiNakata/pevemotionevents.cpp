@@ -3,24 +3,21 @@
 #include "nlib/Geometry.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pevemotionevents")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 PeveWaitEvent::PeveWaitEvent()
     : PeveEvent(0)
@@ -28,10 +25,9 @@ PeveWaitEvent::PeveWaitEvent()
 	mTimeCondition.construct(1.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void PeveWaitEvent::makeWaitEvent(f32 waitTime)
 {
@@ -227,10 +223,9 @@ f32 PeveCircleMoveEvent::calcAngle()
 	return NMathF::atan2(vec3.x, vec3.z);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
     : PeveParallelEvent(2)
@@ -238,30 +233,27 @@ PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32, NVector3fIO*, NVector3fIO*, NVector3fIO*, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 PeveFunctionCurveEvent::PeveFunctionCurveEvent()
     : PeveEvent(0)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition* cond, NVector3fIO* vecIO, NFunction3D* func, f32 p4, f32 p5, bool p6)
 {
@@ -297,20 +289,18 @@ void PeveFunctionCurveEvent::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 PeveHomingPositionEvent::PeveHomingPositionEvent()
     : PeveEvent(0)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition* cond, NVector3fIO* vecIOA, NVector3fIO* vecIOB, f32 p4)
 {
@@ -338,10 +328,9 @@ void PeveHomingPositionEvent::update()
 	_10->input(vec1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 PeveHomingPostureEvent::PeveHomingPostureEvent()
     : PeveParallelEvent(0)
@@ -349,10 +338,9 @@ PeveHomingPostureEvent::PeveHomingPostureEvent()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, f32, PeveCondition*, NVector3fIO*,
                                                     NVector3fIO*, f32)
@@ -360,10 +348,9 @@ void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 PeveInterpolationEvent::PeveInterpolationEvent(int p1, NPool<SplineSegment>* p2)
     : PeveEvent(0)
@@ -373,10 +360,9 @@ PeveInterpolationEvent::PeveInterpolationEvent(int p1, NPool<SplineSegment>* p2)
 	_14                 = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void PeveInterpolationEvent::makeInterpolationEvent(PeveCondition* cond, NPosture3DIO* postureIO)
 {
@@ -428,10 +414,9 @@ void PeveInterpolationEvent::update()
 	mAlpha.passTime(fTime);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 PeveMoveEvent::PeveMoveEvent()
     : PeveEvent(0)
@@ -439,10 +424,9 @@ PeveMoveEvent::PeveMoveEvent()
 	mBoolCondition.construct(true);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void PeveMoveEvent::makeMoveEvent(NPosture3DIO* postureIO, NPosture3D& posture)
 {

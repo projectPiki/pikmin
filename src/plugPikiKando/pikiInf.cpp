@@ -8,24 +8,21 @@
 
 PikiInfMgr pikiInfMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("pikiInf");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 PikiInfMgr::PikiInfMgr()
 {
@@ -141,20 +138,18 @@ void PikiInfMgr::clear()
 	mPikiCounts[Blue][Flower] = mPikiCounts[Red][Flower] = mPikiCounts[Yellow][Flower] = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 int PikiInfMgr::getTotal()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 BaseInf::BaseInf()
 {
@@ -205,10 +200,9 @@ void BaseInf::loadCard(RandomAccessStream& card)
 	mRotation.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000EC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000EC
  */
 BPikiInf::BPikiInf()
 {
@@ -323,10 +317,9 @@ int MonoInfMgr::getFreeNum()
 	mFreeList.getChildCount();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void MonoInfMgr::saveCard(RandomAccessStream&)
 {
@@ -365,10 +358,9 @@ BaseInf* BPikiInfMgr::newInf()
 	return new BPikiInf();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void BPikiInfMgr::initGame()
 {
@@ -400,60 +392,54 @@ int BPikiInfMgr::getPikiCount(int color)
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void CreatureInfMgr::beginRegister(int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void CreatureInfMgr::registerType(int, InfFuncType1, InfFuncType2)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CreatureInfMgr::endRegister()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 CreatureInf* CreatureInfMgr::getStoreFun(int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 CreatureInf* CreatureInfMgr::getRestoreFun(int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 CreatureInf::CreatureInf()
 {
@@ -512,20 +498,18 @@ void CreatureInf::doRestore(Creature* owner)
 	owner->doRestore(this);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void CreatureInfMgr::updateUseList()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00022C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00022C
  */
 void CreatureInfMgr::restoreAll()
 {

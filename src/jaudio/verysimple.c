@@ -74,10 +74,9 @@ BOOL Jac_PauseCheck()
 	return pausemode | container;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void Jac_UpdateRocketParam(void)
 {
@@ -254,10 +253,9 @@ void Jac_StopSystemSe(s32 id)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void Jac_PlaySe(u32)
 {
@@ -346,10 +344,9 @@ static void AuxBusInit()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void Jac_SetThreadPriority(void)
 {
@@ -415,10 +412,9 @@ void Jac_Start(void* heap, u32 heapSize, u32 aramSize, immut char* rootPath)
 	Jac_InitStreamSystem();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void Jac_StopSoundAll(void)
 {
@@ -456,10 +452,9 @@ static void __ResetCounter()
 	count = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void Jac_Silence_Check(void)
 {

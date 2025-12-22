@@ -10,34 +10,30 @@
 
 DemoParms* demoParms;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(12)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("demoFlag")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 DemoParms::DemoParms()
 {
 	load("parms/", "demo.bin", true);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000120
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000120
  */
 DemoParms::Parms::Parms()
     : mOnionBootTriggerRadius(this, 150.0f, 0.0f, 1000.0f, "p00", "コンテナ接近距離")

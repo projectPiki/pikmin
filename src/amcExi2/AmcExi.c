@@ -4,10 +4,9 @@
 static ECB Ecb;
 static ECB* exi = &Ecb;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000144
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000144
  */
 static void CompleteTransfer()
 {
@@ -73,10 +72,9 @@ s32 AmcEXIImm(void* buf, s32 len, u32 type, EXICallback cb)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void AmcEXIDma(void)
 {
@@ -141,20 +139,18 @@ void* AmcEXISetExiCallback(EXICallback cb)
 	return exiCallback;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void AmcEXIEnable32MHz(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void AmcEXIDisable32MHz(void)
 {
@@ -203,10 +199,9 @@ s32 AmcEXIDeselect()
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001DC
  */
 void AmcTCIntrruptHandler(void)
 {

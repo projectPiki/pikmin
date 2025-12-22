@@ -75,10 +75,9 @@ BOOL DspExtraTaskCheck()
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void Jac_IPLDspSec(void)
 {
@@ -95,10 +94,9 @@ void Jac_DSPcardDecodeAsync(void* task, void* cmd, DSPCallback callback)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void Jac_DSPagbDecodeAsync(void*, void*, void (*)(void*))
 {

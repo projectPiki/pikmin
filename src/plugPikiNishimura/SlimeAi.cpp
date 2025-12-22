@@ -11,17 +11,15 @@
 #include "Slime.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
@@ -61,10 +59,9 @@ void SlimeAi::addDamagePoint(f32 damage)
 	mSlime->addDamagePoint(damage);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void SlimeAi::setEveryFrame()
 {
@@ -80,10 +77,9 @@ void SlimeAi::setEveryFrame()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void SlimeAi::afterProcessing()
 {
@@ -157,10 +153,9 @@ void SlimeAi::calcStickersRatio()
 	mMinLength     = complRatio * C_SLIME_PROP(mSlime).mNormalMinLength() + mStickersRatio * C_SLIME_PROP(mSlime).mMinLengthAtSticking();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void SlimeAi::setLeaderIndex()
 {
@@ -175,10 +170,9 @@ void SlimeAi::setLeaderIndex()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000194
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000194
  */
 void SlimeAi::makeInterrelation()
 {
@@ -190,10 +184,9 @@ void SlimeAi::makeInterrelation()
 	    + 0.6667f * mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mSRT.t;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void SlimeAi::makeBodyThickness()
 {
@@ -313,10 +306,9 @@ void SlimeAi::moveFlagCheck()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void SlimeAi::makeTargetPosition()
 {
@@ -379,10 +371,9 @@ void SlimeAi::setMidPointVelocity()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000584
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000584
  */
 void SlimeAi::walkAllState()
 {
@@ -511,10 +502,9 @@ void SlimeAi::inCaseOfContract()
 	mContractHitType = SLIMEHIT_NoHit;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000120
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000120
  */
 void SlimeAi::setDieGoal()
 {
@@ -525,10 +515,9 @@ void SlimeAi::setDieGoal()
 	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition = midPoint;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000204
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000204
  */
 void SlimeAi::setContractGoal()
 {
@@ -542,10 +531,9 @@ void SlimeAi::setContractGoal()
 	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition = midPoint - offsetFromMid;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000204
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000204
  */
 void SlimeAi::setExpansionGoal()
 {
@@ -560,10 +548,9 @@ void SlimeAi::setExpansionGoal()
 	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mTargetPosition = midPoint - offsetFromMid;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F8
  */
 void SlimeAi::setAppearGoal()
 {
@@ -574,10 +561,9 @@ void SlimeAi::setAppearGoal()
 	mSlime->mSlimeCreatures[SLIMECREATURE_CoreOuter]->mTargetPosition = *mSlime->getInitPosition() + initialSep * naviDir;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000154
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000154
  */
 void SlimeAi::bothEndsToGoal()
 {
@@ -597,10 +583,9 @@ void SlimeAi::bothEndsToGoal()
 	mSlime->mSlimeCreatures[SLIMECREATURE_NucleusOuter]->mVelocity.add(velOffset);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void SlimeAi::bothEndsToAppearGoal()
 {
@@ -631,40 +616,36 @@ void SlimeAi::makeTargetRandom()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void SlimeAi::setVelocity(f32 speed)
 {
 	mSlime->mLeaderSpeed = speed;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool SlimeAi::motionFinishTransit()
 {
 	return mSlime->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SlimeAi::dieTransit()
 {
 	return !mSlime->getAlive();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 bool SlimeAi::outSideChaseRangeTransit()
 {
@@ -676,10 +657,9 @@ bool SlimeAi::outSideChaseRangeTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 bool SlimeAi::inSideWaitRangeTransit()
 {
@@ -795,10 +775,9 @@ bool SlimeAi::targetLostTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 bool SlimeAi::collisionContractTransit()
 {
@@ -808,10 +787,9 @@ bool SlimeAi::collisionContractTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 bool SlimeAi::dissolutionContractTransit()
 {
@@ -821,10 +799,9 @@ bool SlimeAi::dissolutionContractTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 bool SlimeAi::finishContractTransit()
 {
@@ -834,10 +811,9 @@ bool SlimeAi::finishContractTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SlimeAi::finishExpansionTransit()
 {
@@ -876,10 +852,9 @@ bool SlimeAi::appearTransit()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SlimeAi::disAppearTransit()
 {
@@ -925,10 +900,9 @@ void SlimeAi::initDie(int nextState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void SlimeAi::initWalk(int nextState)
 {
@@ -943,10 +917,9 @@ void SlimeAi::initWalk(int nextState)
 #endif
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 void SlimeAi::initChase(int nextState)
 {
@@ -955,10 +928,9 @@ void SlimeAi::initChase(int nextState)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000360
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000360
  */
 void SlimeAi::initContract(int nextState)
 {
@@ -972,10 +944,9 @@ void SlimeAi::initContract(int nextState)
 	mSlime->mCore->mCoreAi->setHitMotionStart();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000268
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000268
  */
 void SlimeAi::initExpansion(int nextState)
 {
@@ -987,10 +958,9 @@ void SlimeAi::initExpansion(int nextState)
 	setExpansionGoal();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000174
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000174
  */
 void SlimeAi::initAppear(int nextState)
 {
@@ -1006,10 +976,9 @@ void SlimeAi::initAppear(int nextState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E0
  */
 void SlimeAi::initDisAppear(int nextState)
 {
@@ -1028,10 +997,9 @@ void SlimeAi::initDisAppear(int nextState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000420
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000420
  */
 void SlimeAi::dieState()
 {
@@ -1050,10 +1018,9 @@ void SlimeAi::dieState()
 	mSlime->addAttackTimer(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00020C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00020C
  */
 void SlimeAi::walkRandomState()
 {
@@ -1062,10 +1029,9 @@ void SlimeAi::walkRandomState()
 	walkAllState();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E0
  */
 void SlimeAi::walkGoHomeState()
 {
@@ -1074,10 +1040,9 @@ void SlimeAi::walkGoHomeState()
 	walkAllState();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 void SlimeAi::chaseNaviState()
 {
@@ -1086,10 +1051,9 @@ void SlimeAi::chaseNaviState()
 	walkAllState();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 void SlimeAi::chasePikiState()
 {
@@ -1098,10 +1062,9 @@ void SlimeAi::chasePikiState()
 	walkAllState();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002C8
  */
 void SlimeAi::contractState()
 {
@@ -1110,10 +1073,9 @@ void SlimeAi::contractState()
 	setMidPointVelocity();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002C8
  */
 void SlimeAi::expansionState()
 {
@@ -1122,10 +1084,9 @@ void SlimeAi::expansionState()
 	setMidPointVelocity();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SlimeAi::stayState()
 {
@@ -1198,10 +1159,9 @@ void SlimeAi::appearState()
 	setMidPointVelocity();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001B4
  */
 void SlimeAi::disAppearState()
 {

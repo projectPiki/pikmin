@@ -263,10 +263,9 @@ f128 __strtold(int max_width, int (*ReadProc)(void*, int, int), void* ReadProcAr
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void strtod(void)
 {

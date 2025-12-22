@@ -3,17 +3,15 @@
 #include "Graphics.h"
 #include "nlib/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("effectMgr2D")
 
@@ -77,10 +75,9 @@ PtclLoadInfo ptclInfo[52] =
 // clang-format on
 } // namespace
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000068
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000068
  */
 zen::EffectMgr2D::~EffectMgr2D()
 {

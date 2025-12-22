@@ -20,17 +20,15 @@
 #include "teki.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(33)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("pel");
 
@@ -755,10 +753,9 @@ Vector3f Pellet::getSlotGlobalPos(int slotID, f32 offset)
 	return globalPos;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void Pellet::initSlotFlags()
 {
@@ -825,10 +822,9 @@ void Pellet::initPellet(PelletShapeObject* shapeObj, PelletConfig* config)
 	PRINT("*** MATERIAL : %d\n", mShapeDynMaterials.mParent);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void Pellet::initPellet(PelletView* view, PelletConfig* config)
 {
@@ -852,10 +848,9 @@ void Pellet::startCarryMotion(f32 speed)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void Pellet::stopMotion()
 {
@@ -1059,10 +1054,9 @@ void Pellet::startAI(int doSpawnScaleOff)
 	mIsAIActive = true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void Pellet::startAppear()
 {
@@ -1590,10 +1584,9 @@ PelletMgr::PelletMgr(MapMgr* mgr)
 	mMovieFlags = PELMOVIE_Unk1 | PELMOVIE_Unk2 | PELMOVIE_Unk3;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 bool PelletMgr::useShape(u32 pelletID)
 {
@@ -1661,10 +1654,9 @@ PelletConfig* PelletMgr::getConfigFromIdx(int idx)
 	return static_cast<PelletConfig*>(config);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 ID32 PelletMgr::getConfigIdAt(int idx)
 {

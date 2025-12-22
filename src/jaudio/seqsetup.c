@@ -49,10 +49,9 @@ void Jaq_Reset(void)
 	Jam_InitRegistTrack();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Jaq_GetRemainFreeTracks(void)
 {

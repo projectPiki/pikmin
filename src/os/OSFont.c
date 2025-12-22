@@ -1,30 +1,27 @@
 #include "Dolphin/os.h"
 #include "Dolphin/vi.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 void GetFontCode(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000174
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000174
  */
 void Decode(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void GetFontSize(void)
 {
@@ -92,80 +89,72 @@ u16 OSGetFontEncode(void)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void ReadROM(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00016C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00016C
  */
 void ReadFont(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000EC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000EC
  */
 u32 OSLoadFont(OSFontHeader* fontInfo, void* temp)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002CC
  */
 char* OSGetFontTexel(const char*, void*, s32, s32, s32*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003B0
  */
 void ExpandFontSheet(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A4
  */
 BOOL OSInitFont(OSFontHeader* font)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000178
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000178
  */
 char* OSGetFontTexture(const char* string, void** image, s32* x, s32* y, s32* width)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 char* OSGetFontWidth(const char* string, s32* width)
 {

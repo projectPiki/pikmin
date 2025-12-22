@@ -3,17 +3,15 @@
 #include "DebugLog.h"
 #include "Graphics.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Spider");
 
@@ -108,10 +106,9 @@ void Spider::update()
 	doAnimation();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void Spider::draw(Graphics& gfx)
 {

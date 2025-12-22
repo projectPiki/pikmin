@@ -10,17 +10,15 @@
 #include "zen/EffectMgr2D.h"
 #include "zen/ogNitaku.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgFileSelectSection")
 
@@ -146,10 +144,9 @@ void zen::ogScrFileSelectMgr::CloseYesNoWindow()
 	mDataAnimationTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
 {
@@ -173,10 +170,9 @@ void zen::ogScrFileSelectMgr::UpDateYesNoWindow()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void zen::ogScrFileSelectMgr::setOperateMode_Normal()
 {
@@ -325,10 +321,9 @@ void zen::ogScrFileSelectMgr::setFileData(int fileNum)
 	setNumberTag(screen, 'yc_r', yellowNum, 1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00013C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00013C
  */
 void zen::ogScrFileSelectMgr::set_SM_C()
 {
@@ -597,10 +592,9 @@ void zen::ogScrFileSelectMgr::SetTitleMsg(zen::ogScrFileSelectMgr::titleMessageF
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B8
  */
 void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
 {
@@ -618,10 +612,9 @@ void zen::ogScrFileSelectMgr::ScaleAnimeTitle()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void zen::ogScrFileSelectMgr::ScaleAnimeData()
 {
@@ -692,10 +685,9 @@ void zen::ogScrFileSelectMgr::setDataNumber(int p1)
 	mCursorMoveEffectPikminGroup = mFxMgr->create(EFF2D_Unk35, pos2, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void zen::ogScrFileSelectMgr::init()
 {
@@ -769,10 +761,9 @@ zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void zen::ogScrFileSelectMgr::setDataScale()
 {
@@ -979,10 +970,9 @@ void zen::ogScrFileSelectMgr::start(bool saveMode, int fileSelMode)
 	PRINT("///////////// ogScrFileSelectMgr start() end //////////////\n");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void zen::ogScrFileSelectMgr::BeginFadeOut()
 {
@@ -990,10 +980,9 @@ void zen::ogScrFileSelectMgr::BeginFadeOut()
 	mSelectionConfirmEffectTimer = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 int zen::ogScrFileSelectMgr::CanToCopy(int p1)
 {
@@ -1137,10 +1126,9 @@ void zen::ogScrFileSelectMgr::TailEffectStart()
 	mSelectionConfirmEffectPikminGroup = mFxMgr->create(EFF2D_Unk33, pos, nullptr, nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void zen::ogScrFileSelectMgr::TailEffectMove(int x, int y)
 {
@@ -1152,10 +1140,9 @@ void zen::ogScrFileSelectMgr::TailEffectMove(int x, int y)
 	mSelectionConfirmEffectOnyon->setEmitPos(pos);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 void zen::ogScrFileSelectMgr::TailEffectMoveM(int x, int y)
 {
@@ -1167,10 +1154,9 @@ void zen::ogScrFileSelectMgr::TailEffectMoveM(int x, int y)
 	mSelectionConfirmEffectPikminGroup->setEmitPos(pos);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void zen::ogScrFileSelectMgr::quit()
 {

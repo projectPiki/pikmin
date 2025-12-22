@@ -8,17 +8,15 @@ UpdateMgr* pikiLookUpdateMgr;
 UpdateMgr* pikiOptUpdateMgr;
 UpdateMgr* tekiOptUpdateMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(5)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("updateMgr");
 
@@ -178,20 +176,18 @@ void UpdateMgr::removeClient(UpdateContext* client)
 	mClientCount--;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void UpdateMgr::balanceClient(UpdateContext*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000130
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000130
  */
 void UpdateMgr::showInfo(Graphics&, int, int)
 {

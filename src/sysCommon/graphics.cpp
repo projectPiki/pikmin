@@ -13,24 +13,21 @@
 #include "stl/math.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Graphics");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void Colour::write(Stream& s)
 {
@@ -40,10 +37,9 @@ void Colour::write(Stream& s)
 	a = s.readByte();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void PVWLightingInfo::read(RandomAccessStream& s)
 {
@@ -78,10 +74,9 @@ void PVWPolygonColourInfo::animate(f32* data, Colour& col)
 	mAlphaInfo.extract(mCurrentFrame, col);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 f32 subExtract(f32 time, immut AKeyInfo& src, immut AKeyInfo& dest)
 {
@@ -472,10 +467,9 @@ void PVWTextureData::read(RandomAccessStream& stream)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void PVWTexGenData::read(RandomAccessStream& input)
 {
@@ -777,10 +771,9 @@ int Font::stringWidth(immut char* str)
 	return width + 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003A0
  */
 void GfxInfo::createCollData(immut Vector3f* pos, f32)
 {
@@ -952,10 +945,9 @@ static u32 convFmts[] = {
 	TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL, TEX_FMT_NULL,   TEX_FMT_NULL,   TEX_FMT_S3TC,
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 u32 TexImg::convFormat(u32 inFmt)
 {
@@ -967,10 +959,9 @@ static immut char* fmtNames[] = {
 	"TEX_FMT_RGB565", "TEX_FMT_S3TC", "TEX_FMT_RGB5A3", "TEX_FMT_I4", "TEX_FMT_I8", "TEX_FMT_IA4", "TEX_FMT_IA8", "TEX_FMT_RGBA8",
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 immut char* TexImg::formatName(u32 format)
 {
@@ -1020,10 +1011,9 @@ int TexImg::calcDataSize(int format, int width, int height)
 	return size;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void TexImg::setColour(immut Colour&)
 {
@@ -1073,10 +1063,9 @@ void TexImg::getTileSize(int format, u32& xSize, u32& ySize)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00014C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00014C
  */
 void TexImg::readTexData(Texture* tex, RandomAccessStream& stream, u8* data)
 {
@@ -1106,10 +1095,9 @@ static const char* btipalFmts[] = {
 	"GX_TF_C14X2",
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void TexImg::dumpBti(Texture* tex, immut char* name, RandomAccessStream& input, RandomAccessStream& output)
 {
@@ -1278,10 +1266,9 @@ void Graphics::drawCylinder(immut Vector3f& p1, immut Vector3f& p2, f32 p3, immu
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001E8
  */
 void Graphics::drawCircle(immut Vector3f&, f32, immut Matrix4f&)
 {
@@ -1370,20 +1357,18 @@ int Graphics::calcLighting(f32 intensity)
 	s32 unused[2];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001D0
  */
 int Graphics::calcSphereLighting(immut Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003A4
  */
 int Graphics::calcBoxLighting(immut BoundBox&)
 {

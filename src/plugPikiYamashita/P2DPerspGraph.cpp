@@ -2,24 +2,21 @@
 #include "Dolphin/gx.h"
 #include "P2D/Graph.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DPersGraph") // nice typo
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 P2DPerspGraph::P2DPerspGraph()
     : P2DGrafContext(0, 0, 0, 0) // TODO: fix later
@@ -27,10 +24,9 @@ P2DPerspGraph::P2DPerspGraph()
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 P2DPerspGraph::P2DPerspGraph(const PUTRect& rect, f32, f32, f32)
     : P2DGrafContext(rect)
@@ -72,10 +68,9 @@ void P2DPerspGraph::setFovy(f32 fovy)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void P2DPerspGraph::getMatrix(Matrix4f& mtx)
 {
@@ -122,10 +117,9 @@ void P2DPerspGraph::setLookat()
 	makeLookat();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void P2DPerspGraph::setDistance(f32 distance)
 {

@@ -10,17 +10,15 @@
 #include "zen/Number.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(23)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawCommon")
 
@@ -126,10 +124,9 @@ void zen::P2DPaneLibrary::setAlpha(P2DPane* pane, u8 alpha)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void zen::P2DPaneLibrary::setMirror(P2DPane* pane, P2DMirror mirror)
 {
@@ -238,10 +235,9 @@ void zen::P2DPaneLibrary::changeParent(P2DPane* pane, P2DPane* newParent)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void zen::P2DPaneLibrary::printTag(P2DPane* pane)
 {
@@ -253,10 +249,9 @@ void zen::P2DPaneLibrary::printTag(P2DPane* pane)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<immut char*>* delegate)
 {
@@ -274,10 +269,9 @@ void zen::P2DPaneLibrary::printUseTexName(P2DPane* pane, IDelegate1<immut char*>
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000120
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000120
  */
 void zen::P2DPaneLibrary::printUseTexName(immut char* bloFileName, IDelegate1<immut char*>* delegate)
 {

@@ -12,10 +12,9 @@ static u32 __ARQChunkSize;
 
 static volatile BOOL __ARQ_init_flag = FALSE;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void __ARQPopTaskQueueHi()
 {
@@ -100,20 +99,18 @@ void __ARQInterruptServiceRoutine(void)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void __ARQInitTempQueue(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void __ARQPushTempQueue(void)
 {
@@ -140,10 +137,9 @@ void ARQInit()
 	__ARQ_init_flag = TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void ARQReset(void)
 {
@@ -206,50 +202,45 @@ void ARQPostRequest(ARQRequest* task, u32 owner, u32 type, u32 priority, u32 sou
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void ARQRemoveRequest(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00011C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00011C
  */
 void ARQRemoveOwnerRequest(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void ARQFlushQueue(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void ARQSetChunkSize(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void ARQGetChunkSize(void)
 {

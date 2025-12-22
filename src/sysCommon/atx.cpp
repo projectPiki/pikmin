@@ -3,17 +3,15 @@
 #include "DebugLog.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
@@ -62,20 +60,18 @@ void AtxStream::write(immut void* buffer, int count)
 	router->unlock();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 // void AtxRouter::unlock()
 // {
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 // void AtxRouter::lock()
 // {
@@ -122,20 +118,18 @@ void AtxStream::flush()
 	router->unlock();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 // void AtxCommandStream::checkCommands()
 // {
 // 	// UNUSED FUNCTION
 // }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000170
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000170
  */
 // void AtxFileStream::open(immut char*, u32)
 // {

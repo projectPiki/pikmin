@@ -6,17 +6,15 @@
 #include "sysNew.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawMenu")
 
@@ -72,10 +70,9 @@ void zen::DrawMenuText::setPane(P2DPane* textPane, P2DPane* parentPane)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void zen::DrawMenuText::setScale(f32 xScale, f32 yScale)
 {
@@ -164,10 +161,9 @@ void zen::DrawMenuTitle::wait()
 	mMode = MODE_Wait;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void zen::DrawMenuTitle::operation()
 {
@@ -444,20 +440,18 @@ void zen::DrawMenu::updateMenuPanes()
 	mRightCursorMgr.update();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void zen::DrawMenu::setMirror(P2DPane*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003E4
  */
 void zen::DrawMenu::updateSpectPanes(P2DPane*, P2DPicture**, bool)
 {

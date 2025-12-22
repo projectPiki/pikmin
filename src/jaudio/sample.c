@@ -8,20 +8,18 @@ typedef enum DECODER_FORMAT {
 
 typedef struct SD_ SD_;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void Limit16(s32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void Jac_mixcopy(s16*, s16*, s16*, s32)
 {
@@ -39,10 +37,9 @@ void Jac_imixcopy(s16* ta, s16* tb, s16* td, s32 s)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void Jac_bcopyW(s16*, s16*, s32)
 {
@@ -171,60 +168,54 @@ void Jac_bzero(void* dest, s32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void SampleDecoder_Alloc(u8*, s32, DECODER_FORMAT, s32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00010C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00010C
  */
 void SampleDecoder_Init(SD_*, s32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001FC
  */
 void SampleGet(SD_*, s32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00022C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00022C
  */
 void SampleDecoder(SD_*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void DecodeADPCM(u8*, s16*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void DecodeADPCM2(u8*, s16*)
 {

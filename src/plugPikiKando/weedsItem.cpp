@@ -4,17 +4,15 @@
 #include "MapMgr.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(6)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("weeds")
 
@@ -410,10 +408,9 @@ Grass* GrassGen::getRandomGrass()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 WeedsGen::WeedsGen(Shape* shape, CreatureProp* props)
     : ItemCreature(0, props, shape)
@@ -471,10 +468,9 @@ void WeedsGen::startAI(int ai)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 Weed::Weed()
     : ItemCreature(0, nullptr, nullptr)

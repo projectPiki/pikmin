@@ -26,24 +26,21 @@ static int legId[9] = {
 };
 } // namespace Kumo
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SpiderLeg");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void SpiderLeg::setHalfDeadEffect(u32 legCollPartID, int jointIdx, int legNum)
 {
@@ -121,10 +118,9 @@ void SpiderLeg::setDeadBombEffect(u32 legCollPartID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
 {
@@ -140,10 +136,9 @@ void SpiderLeg::setSmallSparkEffect(u32 legCollPartID, int* p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 void SpiderLeg::setPerishEffect(u32 legCollPartID, int p2)
 {
@@ -172,10 +167,9 @@ void SpiderLeg::createHalfDeadEffect()
 	setHalfDeadEffect('leg4', 2, 3);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void SpiderLeg::createHalfDeadFallEffect(int idx)
 {
@@ -813,10 +807,9 @@ void SpiderLeg::setWalkNewPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000210
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000210
  */
 void SpiderLeg::checkGroundTimer()
 {
@@ -902,10 +895,9 @@ void SpiderLeg::makeNewPosition()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void SpiderLeg::calcSpiderDirection()
 {
@@ -917,10 +909,9 @@ void SpiderLeg::calcSpiderDirection()
 	mSpider->mFaceDirection = mSpider->mSRT.r.y;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void SpiderLeg::calcShakeOffDirection()
 {
@@ -958,10 +949,9 @@ void SpiderLeg::calcStickersPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void SpiderLeg::calcShakeOff()
 {
@@ -1027,10 +1017,9 @@ void SpiderLeg::setRealCentre(immut Vector3f& centre)
 	mCurrentCentre.z += mCentreVelocity.z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000310
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000310
  */
 void SpiderLeg::setCentrePosition()
 {
@@ -1081,10 +1070,9 @@ void SpiderLeg::updateAnimation(const BossShapeObject* shapeObj, Graphics& gfx, 
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E4
  */
 void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, immut Matrix4f& animMtx)
 {
@@ -1099,10 +1087,9 @@ void SpiderLeg::setJointMatrix(const BossShapeObject* shapeObj, immut Matrix4f& 
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 void SpiderLeg::setLength()
 {
@@ -1146,10 +1133,9 @@ void SpiderLeg::getHeight()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E8
  */
 void SpiderLeg::getLegController()
 {
@@ -1163,10 +1149,9 @@ void SpiderLeg::getLegController()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void SpiderLeg::setQuatParameter()
 {
@@ -1274,10 +1259,9 @@ void SpiderLeg::emitOnGroundEffect(int legNum)
 	mCentreVelocity.y -= 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 void SpiderLeg::onGroundFunction()
 {
@@ -1291,10 +1275,9 @@ void SpiderLeg::onGroundFunction()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 void SpiderLeg::emitOffGroundEffect()
 {
@@ -1352,10 +1335,9 @@ void SpiderLeg::setKneeDirection()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00028C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00028C
  */
 void SpiderLeg::getJointMatrix(immut Vector3f& vec1, immut Vector3f& vec2, immut Vector3f& vec3, Matrix4f& animMtx)
 {
@@ -1375,10 +1357,9 @@ void SpiderLeg::getJointMatrix(immut Vector3f& vec1, immut Vector3f& vec2, immut
 	NsCalculation::calcMatrix(xAxis, yAxis, zAxis, vec1, animMtx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000184
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000184
  */
 void SpiderLeg::calcQuatToMatrix(int legNum)
 {
@@ -1419,10 +1400,9 @@ void SpiderLeg::create3Joint(BossShapeObject* shapeObj, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 {
@@ -1438,10 +1418,9 @@ void SpiderLeg::createMatrixScale(BossShapeObject* shapeObj, Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SpiderLeg::setGroundFlag()
 {
@@ -1450,10 +1429,9 @@ void SpiderLeg::setGroundFlag()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void SpiderLeg::checkMotionFinished()
 {

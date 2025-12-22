@@ -7,17 +7,15 @@
 #include "NsMath.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("MizuAi");
 
@@ -86,10 +84,9 @@ void MizuAi::killCallBackEffect(bool p1)
 	effectMgr->kill(mPuffCallBack, nullptr, p1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void MizuAi::setEveryFrame()
 {
@@ -99,10 +96,9 @@ void MizuAi::setEveryFrame()
 	mMizu->mSRT.t.z = vec->z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E4
  */
 void MizuAi::naviGeyzerJump()
 {
@@ -115,30 +111,27 @@ void MizuAi::naviGeyzerJump()
 	navi->stimulate(InteractGeyzer(mMizu, targetPos));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 bool MizuAi::readyTransit()
 {
 	return (mMizu->getFlickDamageCount() >= C_BOSS_PROP(mMizu).mFlickDamageCountD()) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 bool MizuAi::jetTransit()
 {
 	return mMizu->_3B8 ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool MizuAi::waitTransit()
 {
@@ -229,19 +222,17 @@ void MizuAi::initJet(int stateID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void MizuAi::waitState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00011C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00011C
  */
 void MizuAi::readyState()
 {
@@ -269,10 +260,9 @@ void MizuAi::readyState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void MizuAi::jetState()
 {

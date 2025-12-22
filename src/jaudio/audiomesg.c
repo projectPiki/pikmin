@@ -11,10 +11,9 @@ void Jac_InitMessageQueue(Jac_MessageQueue* queue, OSMessage* msgArray, s32 coun
 	queue->usedCount  = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void Jac_SendMessageBlock(Jac_MessageQueue*, OSMessage)
 {
@@ -73,10 +72,9 @@ BOOL Jac_ReceiveMessage_Fast(Jac_MessageQueue* queue, OSMessage* outMsg)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void Jac_JamMessage(Jac_MessageQueue*, OSMessage)
 {

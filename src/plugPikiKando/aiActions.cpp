@@ -4,17 +4,15 @@
 #include "PikiAI.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiActions");
 
@@ -98,10 +96,9 @@ int ActPick::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 ActPut::ActPut(Piki* piki)
     : Action(piki, false)

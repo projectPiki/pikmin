@@ -11,10 +11,9 @@ static dspch_ DSPCH[DSPCH_LENGTH] ATTRIBUTE_ALIGN(32);
 static int old_time;
 static u32 history[10] = { 0xF4240 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 dspch_* GetDSPchannelHandle(u32 idx)
 {
@@ -279,10 +278,9 @@ BOOL BreakLowerActiveDSPchannel(u8 id)
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void UpdateDSPchannel(dspch_* chan)
 {

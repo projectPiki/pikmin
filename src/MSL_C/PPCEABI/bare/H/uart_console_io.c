@@ -68,10 +68,9 @@ u32 __close_console(void)
 	return 0x0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void __init_uart_console(void)
 {

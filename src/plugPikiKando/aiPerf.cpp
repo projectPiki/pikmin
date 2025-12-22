@@ -47,17 +47,15 @@ int AIPerf::viewCullCnt;
 int AIPerf::outsideViewCnt;
 int AIPerf::drawshapeCullCnt;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiPerf");
 
@@ -195,10 +193,9 @@ void AIPerf::toggleShowRoute(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::showRoute ? "Route Debug [on]" : "Route Debug [off]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void AIPerf::toggleAIGrid(Menu& menu)
 {
@@ -260,10 +257,9 @@ void AIPerf::toggleSoundDebug(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::soundDebug ? "Sound Debug [on]" : "Sound Debug [off]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void AIPerf::toggleUpdateMgr(Menu& menu)
 {
@@ -271,10 +267,9 @@ void AIPerf::toggleUpdateMgr(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useUpdateMgr ? "updateMgr [on]" : "updateMgr [off]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void AIPerf::togglePikiMabiki(Menu& menu)
 {
@@ -282,10 +277,9 @@ void AIPerf::togglePikiMabiki(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::pikiMabiki ? "pikiMabiki [on]" : "pikiMabiki [off]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void AIPerf::togglePsOptimise(Menu& menu)
 {
@@ -302,10 +296,9 @@ void AIPerf::toggleCollSort(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::useCollSort ? "[use Coll Sort]" : "[ignore Coll Sort]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void AIPerf::toggleIteratorCull(Menu& menu)
 {
@@ -313,10 +306,9 @@ void AIPerf::toggleIteratorCull(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", AIPerf::iteratorCull ? "[it-cull on]" : "[it-cull off]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void AIPerf::toggleUseGrid(Menu& menu)
 {
@@ -324,10 +316,9 @@ void AIPerf::toggleUseGrid(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "%s", gridStrings[AIPerf::useGrid]);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void AIPerf::incGridShift(Menu& menu)
 {
@@ -338,10 +329,9 @@ void AIPerf::incGridShift(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "grid shift %d", AIPerf::gridShift);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void AIPerf::decGridShift(Menu& menu)
 {
@@ -456,10 +446,9 @@ void AIPerf::decUfoLevel(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "UFO Level %d", AIPerf::ufoLevel);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void AIPerf::toggleUpdateSearchBuffer(Menu& menu)
 {

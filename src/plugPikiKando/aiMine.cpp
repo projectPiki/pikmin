@@ -4,17 +4,15 @@
 #include "ItemObject.h"
 #include "PikiAI.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
@@ -50,20 +48,18 @@ void ActMine::initWatch()
 	mPiki->mTargetVelocity.set(0.0f, 0.0f, 0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 int ActMine::exeWatch()
 {
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E8
  */
 int ActMine::exeGo()
 {
@@ -79,10 +75,9 @@ int ActMine::exeGo()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void ActMine::initMine()
 {
@@ -91,10 +86,9 @@ void ActMine::initMine()
 	mIsMineActionReady = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void ActMine::initGo()
 {

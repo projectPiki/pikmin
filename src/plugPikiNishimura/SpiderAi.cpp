@@ -14,17 +14,15 @@
 
 static u32 spiderSE[] = { SE_SPIDER_WALK, SE_SPIDER_LAND, SE_SPIDER_SWING, SE_SPIDER_DEAD, SE_SPIDER_BOMB };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("SpiderAi");
 
@@ -111,19 +109,17 @@ void SpiderAi::keyAction1()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SpiderAi::keyAction2()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void SpiderAi::keyAction3()
 {
@@ -155,10 +151,9 @@ void SpiderAi::playSound(int spiderSoundID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void SpiderAi::setEveryFrame()
 {
@@ -170,10 +165,9 @@ void SpiderAi::setEveryFrame()
 	checkHalfDead();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void SpiderAi::checkFlickPiki()
 {
@@ -186,10 +180,9 @@ void SpiderAi::checkFlickPiki()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void SpiderAi::checkHalfDead()
 {
@@ -203,10 +196,9 @@ void SpiderAi::checkHalfDead()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void SpiderAi::resultFlagOn()
 {
@@ -215,90 +207,81 @@ void SpiderAi::resultFlagOn()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void SpiderAi::resultFlagSeen()
 {
 	playerState->mResultFlags.setSeen(RESFLAG_Spider);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SpiderAi::dieTransit()
 {
 	return !mSpider->getAlive();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool SpiderAi::isMotionFinishTransit()
 {
 	return mSpider->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SpiderAi::outSideChaseRangeTransit()
 {
 	return mSpider->outSideChaseRangeTransit();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SpiderAi::inSideWaitRangeTransit()
 {
 	return mSpider->inSideWaitRangeTransit();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SpiderAi::chaseNaviTransit()
 {
 	return mSpider->chaseNaviTransit();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SpiderAi::chasePikiTransit()
 {
 	return mSpider->chasePikiTransit();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 bool SpiderAi::shakeOffTransit()
 {
 	return mSpider->getMotionFinish() && mCanFlick;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool SpiderAi::targetLostTransit()
 {
@@ -366,10 +349,9 @@ bool SpiderAi::appearTransit()
 	return false; // Still in transit or not triggered
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void SpiderAi::initDie(int nextState)
 {
@@ -382,10 +364,9 @@ void SpiderAi::initDie(int nextState)
 	resultFlagSeen();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void SpiderAi::initWalk(int nextState)
 {
@@ -402,10 +383,9 @@ void SpiderAi::initWalk(int nextState)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 void SpiderAi::initShakeOff(int nextState)
 {
@@ -417,10 +397,9 @@ void SpiderAi::initShakeOff(int nextState)
 	resultFlagOn();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 void SpiderAi::initAppear(int nextState)
 {
@@ -438,10 +417,9 @@ void SpiderAi::initAppear(int nextState)
 	mSpider->mFaceDirection = mSpider->mSRT.r.y;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000114
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000114
  */
 void SpiderAi::initWait(int nextState)
 {
@@ -503,60 +481,54 @@ void SpiderAi::dieState()
 	mSpider->addAttackTimer(gsys->getFrameTime());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void SpiderAi::walkRandomState()
 {
 	mSpider->makeTargetRandom(30.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void SpiderAi::walkGoHomeState()
 {
 	mSpider->setTargetPosition(*mSpider->getInitPosition());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SpiderAi::chaseNaviState()
 {
 	mSpider->makeTargetCreature();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SpiderAi::chasePikiState()
 {
 	mSpider->makeTargetCreature();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SpiderAi::shakeOffState()
 {
 	mSpider->makeTargetCreature();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void SpiderAi::waitState()
 {
@@ -565,10 +537,9 @@ void SpiderAi::waitState()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void SpiderAi::appearState()
 {

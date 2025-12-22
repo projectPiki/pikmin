@@ -11,17 +11,15 @@
 #include "UtilityKando.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(16)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("routeMgr")
 
@@ -30,10 +28,9 @@ int PathFinder::avoidWayPointIndex = -1;
 
 RouteMgr* routeMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 PathFinder::PathFinder(RouteMgr::Group& group)
 {
@@ -48,10 +45,9 @@ PathFinder::PathFinder(RouteMgr::Group& group)
 	mClient      = new Client[mMaxClients];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 int PathFinder::handle2idx(u32 handle)
 {
@@ -149,10 +145,9 @@ void PathFinder::releaseHandle(u32 handle)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void PathFinder::updateASync()
 {
@@ -875,10 +870,9 @@ void RouteMgr::createOffPlane(u32 handle, Plane& plane, WayPoint* wp)
 	plane.mOffset = direction.DP(wp->mPosition); // Dot product gives offset from origin
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void RouteMgr::dump(u32 handle)
 {
@@ -1060,10 +1054,9 @@ int RouteMgr::id2idx(u32 id)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 u32 RouteMgr::idx2id(int idx)
 {
@@ -1089,110 +1082,99 @@ int RouteMgr::getColinIndex(RouteGroup* group, RoutePoint* point)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 RouteTracer::RouteTracer()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 RouteTracer::Context::PointInfo::PointInfo()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000764
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000764
  */
 void RouteTracer::render(Graphics&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000278
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000278
  */
 void RouteTracer::Context::makeContext(RouteTracer*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002EC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002EC
  */
 void RouteTracer::Context::setTarget(RouteTracer*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000224
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000224
  */
 int RouteTracer::Context::recognise(RouteTracer*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 bool RouteTracer::noLink()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 void RouteTracer::startConsult(Creature*, PathFinder*, PathFinder::Buffer*, int, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000364
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000364
  */
 void RouteTracer::updateState()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 Vector3f RouteTracer::getTarget()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 int WayPoint::getLinkIndex(int idx)
 {
@@ -1311,10 +1293,9 @@ void WayPoint::initLinkInfos()
 	PathFinder::clearMode();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 int PathFinder::findFirstStepOnyon(int, int, PathFinder::Buffer*)
 {

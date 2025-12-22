@@ -41,10 +41,9 @@ static inline void* DLAddFront(struct HeapCell* neighbor, struct HeapCell* cell)
 	return cell;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void DLLookup(void)
 {
@@ -68,10 +67,9 @@ static inline HeapCell* DLExtract(struct HeapCell* list, struct HeapCell* cell)
 	return list;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 static HeapCell* DLInsert(HeapCell* list, HeapCell* cell, void* unused /* needed to match OSFreeToHeap */)
 {
@@ -109,20 +107,18 @@ static HeapCell* DLInsert(HeapCell* list, HeapCell* cell, void* unused /* needed
 	return cell;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void DLOverlap(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void DLSize(void)
 {
@@ -174,20 +170,18 @@ void* OSAllocFromHeap(OSHeapHandle heap, u32 size)
 	return (u8*)cell + ALIGNMENT;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000284
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000284
  */
 void OSAllocFixed(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void OSFreeToHeap(OSHeapHandle heap, void* ptr)
 {
@@ -207,10 +201,9 @@ void OSFreeToHeap(OSHeapHandle heap, void* ptr)
 	hd->free      = DLInsert(hd->free, cell, list);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap)
 {
@@ -249,10 +242,9 @@ void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps)
 	return arenaStart;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 OSHeapHandle OSCreateHeap(void* start, void* end)
 {
@@ -276,60 +268,54 @@ OSHeapHandle OSCreateHeap(void* start, void* end)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void OSDestroyHeap(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 void OSAddToHeap(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000360
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000360
  */
 s32 OSCheckHeap(int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void OSReferentSize(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void OSDumpHeap(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void OSVisitAllocated(void)
 {

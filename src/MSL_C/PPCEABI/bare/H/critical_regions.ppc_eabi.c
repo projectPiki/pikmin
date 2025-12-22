@@ -1,9 +1,8 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void __init_critical_regions(void)
 {

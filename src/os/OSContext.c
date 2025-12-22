@@ -185,20 +185,18 @@ _return:
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void OSLoadFPUContext(register OSContext* fpuContext)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void OSSaveFPUContext(register OSContext* fpuContext)
 {
@@ -381,20 +379,18 @@ ASM u32 OSGetStackPointer(void) {
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 u32 OSSwitchStack(register u32 newsp)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 int OSSwitchFiber(register u32 pc, register u32 newsp)
 {
@@ -585,10 +581,9 @@ void __OSContextInit(void)
 	DBPrintf("FPU-unavailable handler installed\n");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00012C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00012C
  */
 void OSFillFPUContext(register OSContext* context)
 {

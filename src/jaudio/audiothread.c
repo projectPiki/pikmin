@@ -51,10 +51,9 @@ int DspSyncCountCheck()
 	return intcount;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Jac_GetDacRate(void)
 {
@@ -103,10 +102,9 @@ static void AudioSync()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void NeosSync()
 {
@@ -236,10 +234,9 @@ static volatile OSPriority pri  = 0;
 static volatile OSPriority pri2 = 0;
 static volatile OSPriority pri3 = 0;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void SetAudioThreadPriority(void)
 {

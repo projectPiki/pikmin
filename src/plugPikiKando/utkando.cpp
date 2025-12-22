@@ -7,17 +7,15 @@
 #include "sysNew.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("utKando");
 
@@ -109,10 +107,9 @@ void BitFlags::setFlag(u16 flag)
 	mFlags[flag >> 3] |= 1 << u16(flag - 8 * (flag >> 3));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void BitFlags::resetFlag(u16 flag)
 {

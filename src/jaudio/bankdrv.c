@@ -22,10 +22,9 @@ Inst_* Bank_InstChange(Bank_* bank, volatile u32 VOLATILE_index)
 	return bank->mInstruments[index];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 Voice_* Bank_VoiceChange(Bank_* bank, volatile u32 VOLATILE_index)
 {
@@ -122,10 +121,9 @@ Vmap_* Bank_GetPercVmap(Perc_* perc, u8 keyIdx, u8 vel)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 int Bank_GetVoiceMap(Voice_* voice, u16 id)
 {

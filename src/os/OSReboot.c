@@ -43,10 +43,9 @@ static ASM void Run(register u32 addr)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 static void ReadApploader(DVDCommandBlock* dvdCmd, void* addr, u32 offset, u32 numBytes)
 {

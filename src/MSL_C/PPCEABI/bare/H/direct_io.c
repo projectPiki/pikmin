@@ -1,10 +1,9 @@
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/direct_io.h"
 #include "PowerPC_EABI_Support/MSL_C/MSL_Common/ansi_files.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000378
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000378
  */
 void fread(void)
 {

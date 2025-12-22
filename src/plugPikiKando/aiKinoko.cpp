@@ -5,17 +5,15 @@
 #include "PikiAI.h"
 #include "SoundMgr.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(22)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("aiKinoko")
 
@@ -61,10 +59,9 @@ int ActKinoko::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void ActKinoko::initStick()
 {
@@ -91,10 +88,9 @@ int ActKinoko::exeStick()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 void ActKinoko::initJump()
 {

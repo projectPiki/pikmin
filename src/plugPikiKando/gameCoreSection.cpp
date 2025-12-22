@@ -64,17 +64,15 @@ zen::DrawContainer* containerWindow;
 zen::DrawHurryUp* hurryupWindow;
 zen::DrawAccount* accountWindow;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("gameCoreSection")
 
@@ -311,30 +309,27 @@ void GameCoreSection::endMovie(int movieIdx)
 	STACK_PAD_VAR(6);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 bool GameCoreSection::hideTeki()
 {
 	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & GameHideFlags::ShowTeki);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 bool GameCoreSection::hideAllPellet()
 {
 	return gameflow.mMoviePlayer->mIsActive && !(mHideFlags & GameHideFlags::ShowPellets);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 bool GameCoreSection::hidePelletExceptSucked()
 {
@@ -778,40 +773,36 @@ void GameCoreSection::exitStage()
 	flowCont.mNaviOnMap = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 ASM void ps_vec3f_add(Vector3f&, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 ASM void ps_vec3f_sub(Vector3f&, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 ASM void ps_vec3f_multiply(Vector3f&, f32&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 ASM void asmTest(f32, f32)
 {
@@ -1757,10 +1748,9 @@ void GameCoreSection::draw(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000374
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000374
  */
 void drawRectangle(Graphics& gfx, RectArea& p2, RectArea& p3, Vector3f* p4)
 {

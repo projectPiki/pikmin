@@ -6,17 +6,15 @@
 
 NodeMgr* nodeMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Node");
 
@@ -149,10 +147,9 @@ void Node::render(Graphics& gfx)
 	draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 SRTNode::SRTNode(immut char* name = "<SRTNode>")
     : Node(name)
@@ -203,20 +200,18 @@ void NodeMgr::Del(Node* node)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000EC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000EC
  */
 void NodeMgr::recFindNode(CoreNode*, immut char*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 CoreNode* NodeMgr::findNode(immut char*, CoreNode*)
 {
@@ -231,10 +226,9 @@ NodeMgr::NodeMgr()
 	mDelete = false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 NodeMgr::~NodeMgr()
 {

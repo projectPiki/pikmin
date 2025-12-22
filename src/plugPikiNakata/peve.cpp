@@ -3,17 +3,15 @@
 #include "Peve/Event.h"
 #include "Peve/IO.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("peve")
 
@@ -34,10 +32,9 @@ PeveEvent::PeveEvent(int count)
 	mEventOptions = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 PeveParallelEvent::PeveParallelEvent(int count)
     : PeveEvent(count)
@@ -133,40 +130,36 @@ bool PeveSerialEvent::isFinished()
 	return true;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 PeveCameraViewpointIO::PeveCameraViewpointIO()
 {
 	construct(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void PeveCameraViewpointIO::construct(PcamCamera* camera)
 {
 	mCamera = camera;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 PeveCameraWatchpointIO::PeveCameraWatchpointIO()
 {
 	construct(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void PeveCameraWatchpointIO::construct(PcamCamera* camera)
 {
@@ -189,20 +182,18 @@ void PeveCameraPostureIO::construct(PcamCamera* camera)
 	mCamera = camera;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 PeveCreaturePositionIO::PeveCreaturePositionIO()
 {
 	construct(nullptr);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void PeveCreaturePositionIO::construct(Creature* creature)
 {

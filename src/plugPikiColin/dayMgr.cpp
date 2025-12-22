@@ -8,17 +8,15 @@
 #include "gameflow.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 DEFINE_PRINT(nullptr) //! TODO: Why is the size not proper?
 
@@ -406,10 +404,9 @@ struct DaySetMenu : public Menu {
 	TimeSetting* mTimeSettings; // _B4
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void DayMgr::updateComponent(Menu& menu, immut char* name, int* valuePtr)
 {
@@ -497,10 +494,9 @@ DayMgr::DayMgr(MapMgr* map, Controller* control)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 void DayMgr::updateLightCount(Menu& menu)
 {
@@ -533,10 +529,9 @@ void DayMgr::menuDecreaseLights(Menu& menu)
 	updateLightCount(menu);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void DayMgr::updateTime(Menu& menu)
 {

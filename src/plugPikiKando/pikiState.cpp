@@ -26,17 +26,15 @@
 #include "gameflow.h"
 #include "teki.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(46)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pikiState")
 
@@ -1345,10 +1343,9 @@ void PikiCliffState::exec(Piki* piki)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void PikiCliffState::startFall(Piki* piki)
 {
@@ -2293,10 +2290,9 @@ void PikiWaveState::procAnimMsg(Piki* piki, MsgAnim* msg)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void PikiWaveState::waveAttack(Piki* piki)
 {

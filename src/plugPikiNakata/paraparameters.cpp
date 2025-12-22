@@ -3,24 +3,21 @@
 #include "Dolphin/os.h"
 #include "Stream.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("paraparameters");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 ParaParametersI::ParaParametersI(int count, ParaParameterInfoI* info)
     : ParaParameters<int>(count, info)
@@ -57,10 +54,9 @@ void ParaParametersI::print()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 ParaParametersF::ParaParametersF(int count, ParaParameterInfoF* info)
     : ParaParameters<f32>(count, info)

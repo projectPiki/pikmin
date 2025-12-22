@@ -16,24 +16,21 @@ static Colour lglev3;
 
 LifeGaugeMgr* lgMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Gauges")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void GaugeInfo::init()
 {
@@ -183,10 +180,9 @@ void LifeGaugeMgr::refresh(Graphics& gfx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 GaugeInfo* LifeGaugeMgr::getGaugeInfo()
 {
@@ -200,10 +196,9 @@ GaugeInfo* LifeGaugeMgr::getGaugeInfo()
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void LifeGaugeMgr::addLG(GaugeInfo* info)
 {
@@ -255,10 +250,9 @@ void LifeGauge::updValue(f32 currHealth, f32 maxHealth)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void LifeGauge::adjustValue()
 {

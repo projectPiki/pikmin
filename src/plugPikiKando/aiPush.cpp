@@ -4,17 +4,15 @@
 #include "PikiMgr.h"
 #include "WorkObject.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("aiPush")
 
@@ -48,10 +46,9 @@ void ActPush::init(Creature* target)
 	_44                = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 bool ActPush::collideRockSurface()
 {
@@ -94,10 +91,9 @@ int ActPush::exec()
 	return ACTOUT_Continue;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void ActPush::initApproach()
 {

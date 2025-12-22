@@ -159,10 +159,9 @@ static void cbForStateError(u32 intType)
 	stateReady();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 static void stateError(u32 error)
 {
@@ -225,10 +224,9 @@ static u32 CategorizeError(u32 error)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 static BOOL CheckCancel(u32 resume)
 {
@@ -1035,10 +1033,9 @@ BOOL DVDReadAbsAsyncPrio(DVDCommandBlock* block, void* addr, s32 length, s32 off
 	return idle;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void DVDSeekAbsAsyncPrio(void)
 {
@@ -1095,10 +1092,9 @@ BOOL DVDPrepareStreamAbsAsync(DVDCommandBlock* block, u32 length, u32 offset, DV
 	return idle;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 BOOL DVDCancelStreamAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
@@ -1152,230 +1148,207 @@ static void cbForCancelStreamSync(s32 result, DVDCommandBlock* block)
 	OSWakeupThread(&__DVDThreadQueue);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 static BOOL DVDStopStreamAtEndAsync(DVDCommandBlock* block, DVDCBCallback callback)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void DVDStopStreamAtEnd(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void cbForStopStreamAtEndSync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void DVDGetStreamErrorStatusAsync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void DVDGetStreamErrorStatus(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void cbForGetStreamErrorStatusSync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void DVDGetStreamPlayAddrAsync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void DVDGetStreamPlayAddr(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void cbForGetStreamPlayAddrSync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void DVDGetStreamStartAddrAsync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void DVDGetStreamStartAddr(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void cbForGetStreamStartAddrSync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void DVDGetStreamLengthAsync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void DVDGetStreamLength(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void cbForGetStreamLengthSync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void __DVDAudioBufferConfig(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 void DVDChangeDiskAsyncForBS(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 BOOL DVDChangeDiskAsync(DVDCommandBlock*, DVDDiskID*, DVDCBCallback)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 s32 DVDChangeDisk(DVDCommandBlock*, DVDDiskID*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void cbForChangeDiskSync(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D0
  */
 BOOL DVDInquiryAsync(DVDCommandBlock* block, DVDDriveInfo* info, DVDCBCallback callback)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C8
  */
 void DVDInquiry(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void cbForInquirySync(void)
 {
@@ -1394,20 +1367,18 @@ void DVDReset()
 	ResumeFromHere            = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void DVDResetRequired(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 s32 DVDGetCommandBlockStatus(const DVDCommandBlock* block)
 {
@@ -1449,20 +1420,18 @@ s32 DVDGetDriveStatus()
 	return result;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 int DVDSetAutoInvalidation(int newValue)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 static void DVDPause()
 {
@@ -1475,10 +1444,9 @@ static void DVDPause()
 	OSRestoreInterrupts(level);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void DVDResume()
 {
@@ -1638,10 +1606,9 @@ static void cbForCancelSync(s32 result, DVDCommandBlock* block)
 	OSWakeupThread(&__DVDThreadQueue);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000EC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000EC
  */
 static BOOL DVDCancelAllAsync(DVDCBCallback callback)
 {
@@ -1670,20 +1637,18 @@ static BOOL DVDCancelAllAsync(DVDCBCallback callback)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000138
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000138
  */
 s32 DVDCancelAll()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void cbForCancelAllSync(void)
 {

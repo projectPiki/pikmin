@@ -74,10 +74,9 @@ void __OSUnlockAllMutex(OSThread* thread)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000BC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000BC
  */
 BOOL OSTryLockMutex(OSMutex* mutex)
 {
@@ -130,10 +129,9 @@ void OSSignalCond(OSCond* cond)
 	OSWakeupThread(&cond->queue);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 void IsMember(void)
 {

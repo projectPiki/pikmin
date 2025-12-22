@@ -8,24 +8,21 @@
 #include "zen/ogFileSelect.h"
 #include "zen/ogMemChk.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgFileChkSelectSection")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void zen::ogScrFileChkSelMgr::init()
 {
@@ -47,10 +44,9 @@ zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 	mFileSelectMgr = new ogScrFileSelectMgr();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void zen::ogScrFileChkSelMgr::startSub()
 {

@@ -5,24 +5,21 @@
 #include "Route.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shpRoutes")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 RoutePoint::RoutePoint()
     : CoreNode("rp")
@@ -34,10 +31,9 @@ RoutePoint::RoutePoint()
 	mRadius = 10.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001D4
  */
 void RoutePoint::refresh(Graphics& gfx)
 {
@@ -246,10 +242,9 @@ void RouteGroup::loadini(CmdStream* s)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001C0
  */
 void RouteGroup::saveini(immut char* name, RandomAccessStream& s)
 {

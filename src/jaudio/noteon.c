@@ -161,10 +161,9 @@ s32 GateON(seqp_* track, s32 channelId, s32 key, s32 velocity, s32 playId)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void ProgramChange(s32 chan)
 {

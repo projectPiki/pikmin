@@ -156,10 +156,9 @@ s32 CARDRead(CARDFileInfo* fileInfo, void* buffer, s32 length, s32 offset)
 	return __CARDSync(fileInfo->chan);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 void CARDCancel(void)
 {

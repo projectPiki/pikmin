@@ -7,10 +7,9 @@ static u8* pucEXI2InputPending = &ucEXI2InputPending;
 static s32 fExi2Selected;
 static EXICallback TRK_Callback;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 static void EXI2_SetTRKCallback(EXICallback monitorCallback)
 {
@@ -30,10 +29,9 @@ static void EXI2_CallBack(s32 chan, OSContext* context)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 static s32 EXI2_Select(s32 freq, s32)
 {
@@ -46,10 +44,9 @@ static s32 EXI2_Select(s32 freq, s32)
 	return status;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 static void EXI2_ToWriteMode(void)
 {
@@ -59,10 +56,9 @@ static void EXI2_ToWriteMode(void)
 	AmcEXISync();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 static void EXI2_ToReadMode(u16 bufAddr)
 {
@@ -72,10 +68,9 @@ static void EXI2_ToReadMode(u16 bufAddr)
 	AmcEXISync();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B4
  */
 static s32 EXI2_StartRead(void)
 {
@@ -99,10 +94,9 @@ static s32 EXI2_StartRead(void)
 	return status;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 static void EXI2_FinishRead(void)
 {
@@ -111,10 +105,9 @@ static void EXI2_FinishRead(void)
 	*pucEXI2InputPending = 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A8
  */
 static s32 EXI2_SendCmd(u8 bufAddrHi, u32 bufAddrLo, s32 bufAddr2, u32 p4)
 {
@@ -295,10 +288,9 @@ void EXI2_Unreserve(void)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 void EXI2_GetStatusReg(void)
 {

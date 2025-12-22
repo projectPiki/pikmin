@@ -14,34 +14,30 @@
 
 DemoEventMgr* demoEventMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("demoEvent")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 immut char* DemoEventMgr::getEventName(int, int)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 immut char* DemoEventMgr::getSenderName(int)
 {

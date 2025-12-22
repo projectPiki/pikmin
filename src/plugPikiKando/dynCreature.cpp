@@ -10,26 +10,23 @@
 #include "UtilityKando.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr);
 
 DynParticleHeap* particleHeap;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 static void printMatrix(immut char* name, immut Matrix4f& mat)
 {
@@ -100,10 +97,9 @@ DynParticleHeap::DynParticleHeap(int numParticles)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000060
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000060
  */
 DynParticle* DynParticleHeap::getFreeOne()
 {
@@ -116,10 +112,9 @@ DynParticle* DynParticleHeap::getFreeOne()
 	return ptcl;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void DynParticleHeap::releaseOne(DynParticle* ptcl)
 {
@@ -416,10 +411,9 @@ void DynCreature::simulate(f32 timeStep)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000254
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000254
  */
 void DynCreature::applyTorque(int, f32)
 {
@@ -480,10 +474,9 @@ void DynCreature::createInvInertiaTensor()
 	mInertiaTensor.inverse(&mInvInertiaTensor);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void DynCreature::calcModelMatrix(Matrix4f& modelMtx)
 {
@@ -540,10 +533,9 @@ void DynCreature::doKill()
 #endif
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000928
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000928
  */
 void DynCreature::simulate2(f32)
 {

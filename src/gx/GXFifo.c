@@ -18,10 +18,9 @@ void* __GXCurrentBP;
 static char __data_0[] = "[GXOverflowHandler]";
 #endif
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 static void GXOverflowHandler(s16 interrupt, OSContext* context)
 {
@@ -45,10 +44,9 @@ static void GXOverflowHandler(s16 interrupt, OSContext* context)
 	OSSuspendThread(__GXCurrentThread);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 static void GXUnderflowHandler(s16 interrupt, OSContext* context)
 {
@@ -65,10 +63,9 @@ static void GXUnderflowHandler(s16 interrupt, OSContext* context)
 	__GXWriteFifoIntEnable(1U, 0U);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 static void GXBreakPointHandler(s16 interrupt, OSContext* context)
 {
@@ -297,10 +294,9 @@ void __GXSaveCPUFifoAux(struct __GXFifoObj* realFifo)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void GXSaveGPFifo(GXFifoObj* fifo)
 {
@@ -318,10 +314,9 @@ void GXSaveGPFifo(GXFifoObj* fifo)
 	SOME_MACRO2(realFifo);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void GXGetGPStatus(GXBool* overhi, GXBool* underlow, GXBool* readIdle, GXBool* cmdIdle, GXBool* brkpt)
 {
@@ -333,10 +328,9 @@ void GXGetGPStatus(GXBool* overhi, GXBool* underlow, GXBool* readIdle, GXBool* c
 	*brkpt       = (int)GET_REG_FIELD(gx->cpStatus, 1, 4);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void GXGetFifoStatus(GXFifoObj* fifo, GXBool* overhi, GXBool* underflow, u32* fifoCount, GXBool* cpuWrite, GXBool* gpRead, GXBool* fifowrap)
 {
@@ -361,10 +355,9 @@ void GXGetFifoStatus(GXFifoObj* fifo, GXBool* overhi, GXBool* underflow, u32* fi
 	*gpRead    = (GPFifo == realFifo);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void GXGetFifoPtrs(GXFifoObj* fifo, void** readPtr, void** writePtr)
 {
@@ -387,10 +380,9 @@ void GXGetFifoPtrs(GXFifoObj* fifo, void** readPtr, void** writePtr)
 	*writePtr = realFifo->wrPtr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void* GXGetFifoBase(GXFifoObj* fifo)
 {
@@ -399,10 +391,9 @@ void* GXGetFifoBase(GXFifoObj* fifo)
 	return realFifo->base;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 u32 GXGetFifoSize(GXFifoObj* fifo)
 {
@@ -411,10 +402,9 @@ u32 GXGetFifoSize(GXFifoObj* fifo)
 	return realFifo->size;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void GXGetFifoLimits(GXFifoObj* fifo, u32* hi, u32* lo)
 {
@@ -424,10 +414,9 @@ void GXGetFifoLimits(GXFifoObj* fifo, u32* hi, u32* lo)
 	*lo = realFifo->loWatermark;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 GXBreakPtCallback GXSetBreakPtCallback(GXBreakPtCallback cb)
 {
@@ -441,10 +430,9 @@ GXBreakPtCallback GXSetBreakPtCallback(GXBreakPtCallback cb)
 
 void* __GXCurrentBP;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void GXEnableBreakPt(void* break_pt)
 {
@@ -463,10 +451,9 @@ void GXEnableBreakPt(void* break_pt)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void GXDisableBreakPt(void)
 {
@@ -537,10 +524,9 @@ void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr)
 	__cpReg[2] = gx->cpClr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void __GXInsaneWatermark(void)
 {
@@ -551,10 +537,9 @@ void __GXInsaneWatermark(void)
 	__cpReg[21]           = (realFifo->hiWatermark & 0x3FFFFFFF) >> 16;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000FC
  */
 void __GXCleanGPFifo(void)
 {
@@ -592,10 +577,9 @@ OSThread* GXSetCurrentGXThread(void)
 	return prev;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 OSThread* GXGetCurrentGXThread(void)
 {
@@ -610,30 +594,27 @@ GXFifoObj* GXGetCPUFifo(void)
 	return (GXFifoObj*)CPUFifo;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 GXFifoObj* GXGetGPFifo(void)
 {
 	return (GXFifoObj*)GPFifo;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 u32 GXGetOverflowCount(void)
 {
 	return __GXOverflowCount;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 u32 GXResetOverflowCount(void)
 {
@@ -650,10 +631,9 @@ u32 GXResetOverflowCount(void)
 		(reg) = ((u32)(reg) & ~(mask)) | ((u32)(val));                                           \
 	} while (0)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 volatile void* GXRedirectWriteGatherPipe(void* ptr)
 {
@@ -689,10 +669,9 @@ volatile void* GXRedirectWriteGatherPipe(void* ptr)
 	return (volatile void*)GXFIFO_ADDR;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001B4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001B4
  */
 void GXRestoreWriteGatherPipe(void)
 {

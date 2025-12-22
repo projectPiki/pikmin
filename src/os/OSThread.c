@@ -72,10 +72,9 @@ OSThread* OSGetCurrentThread(void)
 	return __OSCurrentThread;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 static void __OSSwitchThread(OSThread* nextThread)
 {
@@ -85,10 +84,9 @@ static void __OSSwitchThread(OSThread* nextThread)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 BOOL OSIsThreadSuspended(OSThread* thread)
 {
@@ -103,10 +101,9 @@ BOOL OSIsThreadTerminated(OSThread* thread)
 	return (thread->state == OS_THREAD_STATE_MORIBUND || thread->state == OS_THREAD_STATE_NULL) ? TRUE : FALSE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 static BOOL __OSIsThreadActive(OSThread* thread)
 {
@@ -153,10 +150,9 @@ s32 OSEnableScheduler(void)
 	return count;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 static void SetRun(OSThread* thread)
 {
@@ -231,10 +227,9 @@ static OSThread* SetEffectivePriority(OSThread* thread, OSPriority priority)
 	return NULL;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 static void UpdatePriority(OSThread* thread)
 {
@@ -507,10 +502,9 @@ BOOL OSJoinThread(OSThread* thread, void** val)
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A0
  */
 void OSDetachThread(OSThread* thread)
 {
@@ -624,10 +618,9 @@ void OSWakeupThread(OSThreadQueue* threadQueue)
 	OSRestoreInterrupts(enabled);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 BOOL OSSetThreadPriority(OSThread*, s32)
 {
@@ -642,20 +635,18 @@ OSPriority OSGetThreadPriority(OSThread* thread)
 	return thread->base;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 OSThread* OSSetIdleFunction(OSIdleFunction idleFunc, void* param, void* stack, u32 stackSize)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 OSThread* OSGetIdleFunction(void)
 {
@@ -688,10 +679,9 @@ static int CheckThreadQueue(OSThreadQueue* queue)
 	return 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00002C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00002C
  */
 static BOOL IsMember(OSThreadQueue* queue, OSThread* thread)
 {

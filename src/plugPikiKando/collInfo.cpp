@@ -12,17 +12,15 @@
 
 #include "DebugLog.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(9)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("collInfo");
 
@@ -188,10 +186,9 @@ f32 Tube::getPosRatio(const Vector3f& pos) immut
 	return dir.DP(pos - mStartPoint) / len;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 f32 Tube::getRatioRadius(f32 ratio) immut
 {
@@ -226,10 +223,9 @@ Vector3f Tube::setPos(f32 t) immut
 	return pos;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00007C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00007C
  */
 void CollPartUpdater::updateCollPart(CollPart* part)
 {
@@ -279,10 +275,9 @@ bool CollPart::isClimbable()
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 bool CollPart::isDamagable()
 {
@@ -344,10 +339,9 @@ CollPart* CollPart::getChildAt(int idx)
 	return &mParentInfo->mCollParts[currIdx];
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 CollPart* CollPart::getNext()
 {
@@ -464,10 +458,9 @@ void CollPart::update(Graphics& gfx, bool p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A4
  */
 bool CollPart::collide(Creature* collider, Vector3f& pushVector)
 {
@@ -484,10 +477,9 @@ bool CollPart::collide(Creature* collider, Vector3f& pushVector)
 	return false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000158
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000158
  */
 bool CollPart::collide(immut Vector3f& pos, f32 radius, Vector3f& pushVector)
 {
@@ -596,10 +588,9 @@ void CollPart::makeTube(Tube& tube)
 	tube.mEndRadius   = other->mRadius;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void CollPart::makeSphere(Sphere& sphere)
 {
@@ -607,10 +598,9 @@ void CollPart::makeSphere(Sphere& sphere)
 	sphere.mRadius = mRadius;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CollPart::makeCylinder(Cylinder&)
 {
@@ -618,10 +608,9 @@ void CollPart::makeCylinder(Cylinder&)
 	ERROR("mail to saru\n");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 bool CollPart::samePlatShape(Shape* shape)
 {
@@ -667,10 +656,9 @@ void CollInfo::disableStick()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void CollInfo::startUpdate(u32 partID)
 {
@@ -681,10 +669,9 @@ void CollInfo::startUpdate(u32 partID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A8
  */
 void CollInfo::startUpdateRec(int childIdx)
 {
@@ -699,10 +686,9 @@ void CollInfo::startUpdateRec(int childIdx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void CollInfo::stopUpdate(u32 partID)
 {
@@ -713,10 +699,9 @@ void CollInfo::stopUpdate(u32 partID)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A8
  */
 void CollInfo::stopUpdateRec(int childIdx)
 {
@@ -747,10 +732,9 @@ CollPart* CollInfo::checkCollisionSpecial(immut Vector3f& pos, f32 radius, CndCo
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 CollPart* CollInfo::checkCollisionSpecialRec(int, immut Vector3f&, f32, CndCollPart*)
 {
@@ -969,10 +953,9 @@ void CollInfo::initInfo(Shape* shape, CollPart* parts, u32* ids)
 	makeTree();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000DC
  */
 void CollInfo::dumpInfo()
 {
@@ -985,10 +968,9 @@ void CollInfo::dumpInfo()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000B0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000B0
  */
 void CollInfo::makeTubes(u32 partID, int count)
 {
@@ -1118,10 +1100,9 @@ int CollInfo::getId2Index(u32 id)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 int CollInfo::getIndex(ObjCollInfo* objInfo)
 {

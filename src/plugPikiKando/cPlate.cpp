@@ -7,17 +7,15 @@
 #include "SlotChangeListner.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(10)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("cPlate");
 
@@ -107,10 +105,9 @@ void CPlate::setPosGray(immut Vector3f& position, f32 angle, immut Vector3f& vel
 	STACK_PAD_VAR(2);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001E0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001E0
  */
 void CPlate::setPosNeutral(immut Vector3f& position, f32 angle, immut Vector3f& velocity)
 {
@@ -166,10 +163,9 @@ void CPlate::releaseSlot(Creature* occupant, int idx)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000118
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000118
  */
 void CPlate::swapSlot(int idx1, int idx2)
 {
@@ -377,10 +373,9 @@ void CPlate::update()
 	STACK_PAD_VAR(12);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void CPlate::postUpdate(f32)
 {

@@ -57,10 +57,9 @@ static u32 CompleteTransfer(void)
 	return sr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 void SITransferNext(s32 chan)
 {
@@ -166,10 +165,9 @@ static BOOL __SITransfer(s32 chan, void* output, u32 outputBytes, void* input, u
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000108
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000108
  */
 void SISync(void)
 {
@@ -192,10 +190,9 @@ void SISetCommand(s32 chan, u32 command)
 	__SIRegs[3 * chan] = command;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000014
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000014
  */
 void SIGetCommand(void)
 {

@@ -7,17 +7,15 @@
 #include "sysNew.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(14)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT("Texture");
 
@@ -38,10 +36,9 @@ Texture::Texture()
 	mTexObj      = new GXTexObj();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void Texture::offsetGLtoGX(int, int)
 {
@@ -140,10 +137,9 @@ u8 Texture::getAlpha(int x, int y)
 	*/
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D4
  */
 u8 Texture::getRed(int, int)
 {

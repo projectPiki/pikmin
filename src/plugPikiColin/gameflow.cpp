@@ -27,17 +27,15 @@ GameFlow gameflow;
 BaseApp* app;
 static f32 llspin;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("GameFlow");
 
@@ -98,10 +96,9 @@ void GameFlow::drawLoadLogo(Graphics& gfx, bool p2, Texture* p3, f32 p4)
 	STACK_PAD_VAR(1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 void WorldClock::setClockSpd(f32 speed)
 {
@@ -121,10 +118,9 @@ void WorldClock::setTime(f32 time)
 	mLastRecordedTime = mTimeOfDay;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void WorldClock::reset(f32 speed)
 {
@@ -137,10 +133,9 @@ void WorldClock::reset(f32 speed)
 	setClockSpd(speed);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 f32 WorldClock::age(f32 p1)
 {
@@ -237,10 +232,9 @@ void GameFlow::menuToggleColls(Menu& menu)
 	sprintf(menu.mCurrentItem->mName, "Toggle Colls %s", (gsys->mToggleColls) ? " [on]" : "[off]");
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0004DC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0004DC
  */
 void GameFlow::addOptionsMenu(Menu* parent)
 {
@@ -321,10 +315,9 @@ void GameFlow::menuDecreaseFilter(Menu& menu)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000214
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000214
  */
 void GameFlow::addFilterMenu(Menu* parent)
 {

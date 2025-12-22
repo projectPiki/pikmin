@@ -71,10 +71,9 @@ BOOL OSReceiveMessage(OSMessageQueue* queue, OSMessage* buffer, s32 flags)
 	return TRUE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D4
  */
 BOOL OSJamMessage(OSMessageQueue* queue, OSMessage msg, s32 flags)
 {

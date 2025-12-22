@@ -6,17 +6,15 @@
 #include "WorkObject.h"
 #include "teki.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("TAIAjudge")
 
@@ -219,10 +217,9 @@ bool TAIAvisiblePiki::act(Teki& teki)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 bool TAIAattackableTarget::checkDist(Teki& teki)
 {

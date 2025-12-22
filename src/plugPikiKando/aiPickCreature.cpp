@@ -1,17 +1,15 @@
 #include "DebugLog.h"
 #include "PikiAI.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(7)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("pickCreature\n")
 
@@ -36,20 +34,18 @@ void ActPickCreature::init(Creature* target)
 	AndAction::init(target);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void ActPickCreature::InitGoto::initialise(Action*, Action*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00019C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00019C
  */
 ActDeliver::ActDeliver(Piki* piki)
     : AndAction(piki)

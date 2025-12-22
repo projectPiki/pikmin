@@ -13,10 +13,9 @@ void Add_PortcmdOnce(u32* a1)
 	Add_Portcmd(&cmd_once, a1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void Add_PortcmdStay(void)
 {
@@ -79,20 +78,18 @@ static int Get_Portcmd(JPorthead_* port)
 	return a;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void Cancel_Portcmd(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 void Cancel_PortcmdStay(void)
 {
@@ -162,30 +159,27 @@ void Jac_Portcmd_Init(void)
 	Jac_RegisterPlayerCallback(Portcmd_Main, 0);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 void JP_Pitch1Shot(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void JP_Start1Shot(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void JP_Stop1Shot(void)
 {

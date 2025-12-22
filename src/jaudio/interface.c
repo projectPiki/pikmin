@@ -56,20 +56,18 @@ void Jac_Gsync()
 	Jac_EventFrameCheck();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void Jac_DebugCall(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 void __print_thread(immut char*, OSThread*)
 {
@@ -97,10 +95,9 @@ void Jac_SetProcessStatus(u32 processStat)
 	current_process = processStat;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void Jac_CheckStreamBufferEmpty(void)
 {

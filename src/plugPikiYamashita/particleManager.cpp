@@ -2,17 +2,15 @@
 #include "Graphics.h"
 #include "zen/particle.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(19)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("particleManager");
 
@@ -94,10 +92,9 @@ void zen::particleManager::update()
 	mInactiveGenList.merge(&_20); // merges _20 into _10
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void zen::particleManager::calcActiveList()
 {
@@ -106,10 +103,9 @@ void zen::particleManager::calcActiveList()
 	mActiveChildParticleCount = mMaxChildParticles - mMdlMgr.getSleepPtclChildNum();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void zen::particleManager::debugUpdate()
 {
@@ -153,10 +149,9 @@ void zen::particleManager::cullingDraw(Graphics& gfx)
 	mSimplePtclMgr.draw(gfx);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void zen::particleManager::debugDraw(Graphics&)
 {

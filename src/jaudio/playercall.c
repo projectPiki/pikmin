@@ -29,10 +29,9 @@ s32 Jac_CheckPlayerCallback(PlayerCallBack callback, void* arg)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000040
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000040
  */
 void Jac_RejectPlayerCallback(void)
 {

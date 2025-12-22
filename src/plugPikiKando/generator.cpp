@@ -11,17 +11,15 @@
 #include "sysNew.h"
 #include "teki.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(17)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("generator");
 
@@ -36,10 +34,9 @@ GeneratorMgr* onceGeneratorMgr;
 GeneratorMgr* limitGeneratorMgr;
 GeneratorList* generatorList;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 static void writeID(RandomAccessStream& output, u32 id)
 {
@@ -51,10 +48,9 @@ static void writeID(RandomAccessStream& output, u32 id)
 	output.writeByte(outID[0]);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 static u32 readID(RandomAccessStream& input)
 {
@@ -67,19 +63,17 @@ static u32 readID(RandomAccessStream& input)
 	return outID;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 static void printID(u32)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000028
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000028
  */
 static void sprintID(char*, u32)
 {
@@ -97,20 +91,18 @@ GenBase::GenBase(u32 id, immut char* type, immut char* name)
 	mVersion = '____';
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void GenBase::writeVersion(RandomAccessStream& output)
 {
 	writeID(output, getLatestVersion());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00016C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00016C
  */
 void GenBase::write(RandomAccessStream& output)
 {
@@ -142,20 +134,18 @@ void GenBase::ramLoadParameters(RandomAccessStream& input)
 	Parameters::read(input);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void GenBase::readVersion(RandomAccessStream& input)
 {
 	mVersion = readID(input);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void GenBase::read(RandomAccessStream& input)
 {
@@ -182,20 +172,18 @@ static GenObject* makeObjectPiki()
 	return new GenObjectPiki;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 GenObject* GenObjectFactory::getProduct(u32 id)
 {
 	return factory->create(id);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E8
  */
 void GenObjectFactory::createInstance()
 {
@@ -237,20 +225,18 @@ static GenType* makeTypeInitRand()
 	return new GenTypeInitRand;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 GenType* GenTypeFactory::getProduct(u32 id)
 {
 	return factory->create(id);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001FC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001FC
  */
 void GenTypeFactory::createInstance()
 {
@@ -384,20 +370,18 @@ static GenArea* makePointArea()
 	return new GenAreaPoint;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 GenArea* GenAreaFactory::getProduct(u32 id)
 {
 	return factory->create(id);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A4
  */
 void GenAreaFactory::createInstance()
 {
@@ -483,20 +467,18 @@ Generator::Generator(int)
 	setDayLimit(-1);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 Generator::~Generator()
 {
 	mNextGenerator = nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 void Generator::updateUseList()
 {
@@ -1005,10 +987,9 @@ void GeneratorMgr::read(RandomAccessStream& input, bool p2)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D4
  */
 void GeneratorMgr::write(RandomAccessStream& output)
 {
@@ -1024,10 +1005,9 @@ void GeneratorMgr::write(RandomAccessStream& output)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void GeneratorMgr::setNaviPos()
 {
@@ -1037,10 +1017,9 @@ void GeneratorMgr::setNaviPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000050
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000050
  */
 void GeneratorMgr::changeNaviPos()
 {
@@ -1117,10 +1096,9 @@ Creature* GenObjectPiki::birth(BirthInfo& info)
 	return piki;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 f32 deg2rad(int val)
 {

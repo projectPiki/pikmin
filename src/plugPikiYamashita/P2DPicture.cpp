@@ -5,17 +5,15 @@
 #include "Texture.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(35)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("P2DPicture")
 
@@ -63,10 +61,9 @@ P2DPicture::~P2DPicture()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 P2DPicture::P2DPicture()
 {
@@ -306,20 +303,18 @@ void P2DPicture::drawFullSet(int x, int y, int width, int height, P2DBinding bin
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00040C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00040C
  */
 void P2DPicture::draw(int, int, int, int, bool, bool, bool)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002F4
  */
 void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
 {
@@ -802,10 +797,9 @@ void P2DPicture::swap(f32& val1, f32& val2)
 	val2    = tmp;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00017C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00017C
  */
 void P2DPicture::drawTest()
 {

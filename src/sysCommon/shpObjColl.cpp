@@ -8,24 +8,21 @@
 #include "sysNew.h"
 #include "system.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("shpObjColl");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000128
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000128
  */
 void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 {
@@ -37,20 +34,18 @@ void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 	radius = centre.length() * mRadius;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00016C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00016C
  */
 void ObjCollInfo::showInfo(Graphics&, Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001AC
  */
 void ObjCollInfo::saveini(immut char*, RandomAccessStream&)
 {

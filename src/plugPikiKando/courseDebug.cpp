@@ -9,24 +9,21 @@ int CourseDebug::pikiNoAttack;
 int CourseDebug::noCarryover;
 int CourseDebug::pelletDebug;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("courseDebug");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00011C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00011C
  */
 GenObjectDebug::GenObjectDebug()
     : GenObject('debg', "Debug Switches")

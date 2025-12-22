@@ -35,10 +35,9 @@ static void SetExiInterruptMask(s32 chan, EXIControl* exi)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000164
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000164
  */
 static void CompleteTransfer(s32 chan)
 {
@@ -227,10 +226,9 @@ EXICallback EXISetExiCallback(s32 chan, EXICallback exiCallback)
 	return prev;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void EXIProbeReset(void)
 {
@@ -595,10 +593,9 @@ u32 EXIGetState(s32 chan)
 	return (u32)exi->state;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0002D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002D4
  */
 s32 EXIGetID(s32 chan, u32 dev, u32* id)
 {

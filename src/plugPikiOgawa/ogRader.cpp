@@ -15,17 +15,15 @@
 #include "sysNew.h"
 #include "zen/ogSub.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("OgRaderSection")
 
@@ -37,10 +35,9 @@ static f32 map_area_data[5][3] = { { -698.0f, 2024.0f, 2880.0f },
 	                               { -44.0f, 1504.0f, 2322.0f } };
 }; // namespace zen
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 Vector3f zen::ogRaderMgr::ogCalcDispXZ(Vector3f in)
 {
@@ -54,10 +51,9 @@ Vector3f zen::ogRaderMgr::ogCalcDispXZ(Vector3f in)
 	return disp;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void zen::setOffsetSub(P2DPicture* pic)
 {
@@ -203,10 +199,9 @@ zen::ogRaderMgr::ogRaderMgr()
 	STACK_PAD_TERNARY(mStatus, 5);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void zen::ogRaderMgr::setRaderScale(f32 scale)
 {
@@ -217,10 +212,9 @@ void zen::ogRaderMgr::setRaderScale(f32 scale)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00004C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00004C
  */
 void zen::ogRaderMgr::chaseRaderScale(f32 scale)
 {
@@ -250,10 +244,9 @@ void zen::ogRaderMgr::setRaderScroll(int x, int y)
 	_424->move(x, y);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00025C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00025C
  */
 void zen::ogRaderMgr::getOrimaPos()
 {
@@ -272,10 +265,9 @@ void zen::ogRaderMgr::getOrimaPos()
 	setRaderScroll(x, y);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000158
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000158
  */
 void zen::ogRaderMgr::getContainerPos()
 {
@@ -293,10 +285,9 @@ void zen::ogRaderMgr::getContainerPos()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 void zen::ogRaderMgr::getRocketPos()
 {
@@ -418,10 +409,9 @@ void zen::ogRaderMgr::startSub()
 	_38 = 0.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void zen::ogRaderMgr::start()
 {
@@ -478,10 +468,9 @@ void zen::ogRaderMgr::MapOn()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void zen::ogRaderMgr::MapOff()
 {
@@ -802,10 +791,9 @@ zen::ogRaderMgr::RaderStatus zen::ogRaderMgr::update(Controller* input)
 	return mStatus;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000098
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000098
  */
 void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 {
@@ -825,10 +813,9 @@ void zen::ogRaderMgr::RotatePos(f32* x, f32* y)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00045C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00045C
  */
 void zen::ogRaderMgr::DrawCircle(u8, u8, u8, u8, f32)
 {

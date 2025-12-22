@@ -16,10 +16,9 @@ static immut char* mapcodeNames[] = {
 	"solid", "rock", "grass", "wood", "mud", "water", "hole",
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000018
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000018
  */
 immut char* MapCode::getAttributeName(int num)
 {

@@ -5,24 +5,21 @@
 #include "DebugLog.h"
 #include "sysNew.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(13)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("objectMgr");
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 void boundSphereDist(Creature*, Creature*)
 {
@@ -75,10 +72,9 @@ void ObjectMgr::store()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void ObjectMgr::restore()
 {
@@ -301,10 +297,9 @@ void MonoObjectMgr::update()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int MonoObjectMgr::getEmptyIndex()
 {
@@ -316,10 +311,9 @@ int MonoObjectMgr::getEmptyIndex()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int MonoObjectMgr::getIndex(Creature* obj)
 {
@@ -713,10 +707,9 @@ void PolyObjectMgr::endRegister()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 int PolyObjectMgr::getEmptyIndex()
 {
@@ -729,10 +722,9 @@ int PolyObjectMgr::getEmptyIndex()
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 int PolyObjectMgr::getIndex(Creature* obj)
 {
@@ -746,10 +738,9 @@ int PolyObjectMgr::getIndex(Creature* obj)
 	return ret;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000048
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000048
  */
 int PolyObjectMgr::getTemplateIndex(int id)
 {

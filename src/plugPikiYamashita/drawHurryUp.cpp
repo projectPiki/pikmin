@@ -8,17 +8,15 @@
 #include "sysNew.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("drawHurryUp")
 
@@ -109,10 +107,9 @@ void zen::DrawHurryUp::startStatus()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 void zen::DrawHurryUp::enlargeStatus()
 {
@@ -130,10 +127,9 @@ void zen::DrawHurryUp::enlargeStatus()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void zen::DrawHurryUp::brightShotStatus()
 {
@@ -152,10 +148,9 @@ void zen::DrawHurryUp::brightShotStatus()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void zen::DrawHurryUp::brightStatus()
 {

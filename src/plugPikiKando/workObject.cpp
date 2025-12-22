@@ -16,17 +16,15 @@
 
 WorkObjectMgr* workObjectMgr;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(15)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("workObject");
 
@@ -84,10 +82,9 @@ void WorkObjectMgr::finalSetup()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00008C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00008C
  */
 WorkObject::WorkObject()
     : ItemCreature(OBJTYPE_WorkObject, nullptr, nullptr)
@@ -105,10 +102,9 @@ void WorkObject::doKill()
 	mLifeGauge.countOff();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 int WorkObjectMgr::getNameIndex(immut char* name)
 {
@@ -122,10 +118,9 @@ int WorkObjectMgr::getNameIndex(immut char* name)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 immut char* WorkObjectMgr::getName(int type)
 {
@@ -139,10 +134,9 @@ immut char* WorkObjectMgr::getName(int type)
 	return nullptr;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 int WorkObjectMgr::getShapeNameIndex(immut char* name)
 {
@@ -157,10 +151,9 @@ int WorkObjectMgr::getShapeNameIndex(immut char* name)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000038
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000038
  */
 immut char* WorkObjectMgr::getShapeName(int type)
 {
@@ -204,10 +197,9 @@ void WorkObjectMgr::loadShapes()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void WorkObjectMgr::addUseList(int index)
 {
@@ -298,10 +290,9 @@ int WorkObjectMgr::getSize()
 	return mRootNode.getChildCount();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00015C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00015C
  */
 GenObjectWorkObject::GenObjectWorkObject()
     : GenObject('work', "仕事オブジェクト")
@@ -587,10 +578,9 @@ Vector3f HinderRock::getXVector()
 	return diff;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 int HinderRock::getPlaneIndex(immut Vector3f& pos)
 {
@@ -627,10 +617,9 @@ u8 HinderRock::getPlaneFlag(immut Vector3f& pos)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000E8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000E8
  */
 Vector3f HinderRock::getTangentPos(f32 mod)
 {

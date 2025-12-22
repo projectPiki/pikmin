@@ -24,17 +24,15 @@
 #include "teki.h"
 #include "zen/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(74)
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("Transport")
 
@@ -73,10 +71,9 @@ void ActTransport::turnOver()
 	pellet->mAngularMomentum = pellet->mAngularMomentum + torqueDir;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000A4
  */
 void ActTransport::initWait()
 {
@@ -87,10 +84,9 @@ void ActTransport::initWait()
 	mWaitTimer = 3.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 int ActTransport::exeWait()
 {
@@ -157,10 +153,9 @@ f32 ActTransport::getCarriers()
 	FORCE_DONT_INLINE;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00001C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00001C
  */
 int ActTransport::getNumStickers()
 {
@@ -171,10 +166,9 @@ int ActTransport::getNumStickers()
 	return 0;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 int ActTransport::calcNumStickers()
 {
@@ -310,10 +304,9 @@ void ActTransport::animationKeyUpdated(immut PaniAnimKeyEvent& event)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void ActTransport::initJump()
 {
@@ -1136,10 +1129,9 @@ bool ActTransport::crPointOpen(int idx)
 	return wp->mIsOpen && !(wp->mFlags & WayPointFlags::Pebble);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 f32 ActTransport::crGetRadius(int idx)
 {

@@ -7,10 +7,9 @@ f32 sintable[0x1000];
 f32 costable[0x1000];
 immut Matrix4f Matrix4f::ident;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 
 Matrix4f::Matrix4f(immut Mtx44 mtx)
@@ -45,30 +44,27 @@ void Matrix4f::makeIdentity()
 	mMtx[3][3] = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void Matrix4f::blend(immut Matrix4f&, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0001A4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0001A4
  */
 void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000CC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000CC
  */
 void Matrix4f::makePerspective(f32, f32, f32, f32)
 {
@@ -118,30 +114,27 @@ void Matrix4f::makeRotate(immut Vector3f& axis, f32 angle)
 	makeRotate(axis, angleSin, angleCos);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000178
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000178
  */
 void Matrix4f::makeBallRotate(Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void Matrix4f::rotate(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000138
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000138
  */
 void Matrix4f::rotate(f32, f32, f32)
 {
@@ -313,50 +306,45 @@ void Matrix4f::inverse(Matrix4f* inv)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000244
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000244
  */
 void Matrix4f::makeAligned(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void Matrix4f::rotateX(f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void Matrix4f::rotateY(f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void Matrix4f::rotateZ(f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 void Matrix4f::translate(f32, f32, f32)
 {
@@ -384,10 +372,9 @@ void Matrix4f::scale(immut Vector3f& scaleVector)
 	mMtx[3][2] *= scaleVector.z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0003C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0003C0
  */
 void Matrix4f::makeLookfrom(immut Vector3f&, immut Vector3f&)
 {
@@ -446,20 +433,18 @@ void Matrix4f::makeLookat(immut Vector3f& cameraPos, immut Vector3f& rightDir, i
 	mMtx[3][3] = 1.0f;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000164
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000164
  */
 void Matrix4f::makeProjection(Vector3f&, Plane&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000140
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000140
  */
 void Matrix4f::makeReflection(Plane&)
 {

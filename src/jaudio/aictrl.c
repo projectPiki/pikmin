@@ -39,10 +39,9 @@ void Jac_HeapSetup(void* heap, s32 size)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 void GetAudioHeapRemain(void)
 {
@@ -74,10 +73,9 @@ void* OSAlloc2(u32 size)
 	return alloc;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000054
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000054
  */
 void OSFree2(void)
 {
@@ -103,50 +101,45 @@ void Jac_Init()
 	STACK_PAD_VAR(4);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 u32 Jac_GetCurrentVCounter(void)
 {
 	return JAC_VFRAME_COUNTER;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void HaltDSPSignal(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void HaltDSP(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void RunDSP(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void CheckHaltDSP(void)
 {
@@ -320,10 +313,9 @@ static void MixInterleaveTrack(s16* track, s32 nSamples, MixCallback callback)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 MixCallback Jac_GetMixcallback(u8* mixmode)
 {
@@ -331,10 +323,9 @@ MixCallback Jac_GetMixcallback(u8* mixmode)
 	return ext_mixcallback;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void Jac_RegisterMixcallback(MixCallback callback, u8 mixmode)
 {
@@ -412,10 +403,9 @@ void Jac_UpdateDAC()
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000008
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000008
  */
 void Jac_RegisterDacCallback(DACCallback callback)
 {

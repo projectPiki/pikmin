@@ -2,70 +2,63 @@
 #define OS_STRING_TABLE_ADDR 0x800030D0
 #define OS_BASE_CACHED       0x80003000
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void OSNotifyLink(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void OSNotifyUnlink(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 void OSSetStringTable(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000274
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000274
  */
 void Relocate(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000200
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000200
  */
 void OSLink(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00020C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00020C
  */
 void Undo(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void OSUnlink(void)
 {

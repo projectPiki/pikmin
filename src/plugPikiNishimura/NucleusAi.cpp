@@ -3,17 +3,15 @@
 #include "Nucleus.h"
 #include "Slime.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("NucleusAi");
 
@@ -76,19 +74,17 @@ void NucleusAi::keyAction1()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NucleusAi::keyAction2()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NucleusAi::keyAction3()
 {
@@ -117,10 +113,9 @@ void NucleusAi::playSound(int)
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000044
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000044
  */
 void NucleusAi::setEveryFrame()
 {
@@ -129,10 +124,9 @@ void NucleusAi::setEveryFrame()
 	setSlimeDamagePoint();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void NucleusAi::setBossPosition()
 {
@@ -140,60 +134,54 @@ void NucleusAi::setBossPosition()
 	mNucleus->mSRT.t.z = mNucleus->mSlime->mNucleusPosition.z;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000030
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000030
  */
 void NucleusAi::setSlimeDamagePoint()
 {
 	mNucleus->mSlime->mSlimeAi->addDamagePoint(mNucleus->getDamagePoint());
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000010
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000010
  */
 void NucleusAi::afterProcessing()
 {
 	mNucleus->setDamagePoint(0.0f);
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool NucleusAi::dieTransit()
 {
 	return !mNucleus->getAlive();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00000C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00000C
  */
 bool NucleusAi::isMotionFinishTransit()
 {
 	return mNucleus->getMotionFinish();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 bool NucleusAi::damageTransit()
 {
 	return (mNucleus->getDamagePoint() > 0.0f) ? true : false;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000D8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D8
  */
 void NucleusAi::initDie(int val)
 {
@@ -208,10 +196,9 @@ void NucleusAi::initDie(int val)
 	mNucleus->doKill();
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void NucleusAi::initDamage(int val)
 {
@@ -221,10 +208,9 @@ void NucleusAi::initDamage(int val)
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Damage, this));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000064
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000064
  */
 void NucleusAi::initFollow(int val)
 {
@@ -234,28 +220,25 @@ void NucleusAi::initFollow(int val)
 	mNucleus->mAnimator.startMotion(PaniMotionInfo(TekiMotion::Wait1, this));
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NucleusAi::dieState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NucleusAi::damageState()
 {
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000004
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000004
  */
 void NucleusAi::followState()
 {

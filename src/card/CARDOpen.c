@@ -58,10 +58,9 @@ s32 __CARDIsPublic(CARDDir* ent)
 	return CARD_RESULT_NOPERM;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 s32 __CARDGetFileNo(CARDControl* card, const char* fileName, s32* outFileNo)
 {

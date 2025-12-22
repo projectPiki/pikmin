@@ -6,10 +6,9 @@
 
 static BOOL demo_fade_flag;
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void Jac_Pause(void)
 {

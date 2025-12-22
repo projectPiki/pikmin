@@ -1,17 +1,15 @@
 #include "DebugLog.h"
 #include "nlib/Math.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("nlibmath");
 
@@ -94,10 +92,9 @@ u16 AtanTable[] = {
 	0x1FEC, 0x1FF1, 0x1FF6, 0x1FFB, 0x2000
 };
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 u16 GetAtanTable(f32 x, f32 y)
 {
@@ -167,10 +164,9 @@ u16 atan(f32 x, f32 y)
 	return res;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000058
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000058
  */
 f32 NMathF::remainder(f32, f32)
 {

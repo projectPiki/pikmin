@@ -4,24 +4,21 @@
 #include "Graphics.h"
 #include "Matrix3f.h"
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F4
  */
 DEFINE_PRINT("DynSimulator")
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000024
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000024
  */
 void CollState::resetCollisions(Shape* shape)
 {
@@ -31,10 +28,9 @@ void CollState::resetCollisions(Shape* shape)
 	mResetCount++;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 bool CollState::add(immut Vector3f& normal, immut Vector3f& contactPt, RigidBody* collider)
 {
@@ -360,30 +356,27 @@ void DynSimulator::doSimulation(f32 p1, f32 p2, Shape* p3)
 	mWriteTargetRenderBufferIndex ^= 1;
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void DynSimulator::evolveSimulation(f32, Shape*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void DynSimulator::Integrate(f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00005C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00005C
  */
 void DynSimulator::CalculateVertices(int)
 {
@@ -400,20 +393,18 @@ void DynSimulator::updateVecQuats(f32 p1)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 int DynSimulator::CheckForCollisions(int, Shape*)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000090
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000090
  */
 void DynSimulator::ResolveCollisions(int)
 {
