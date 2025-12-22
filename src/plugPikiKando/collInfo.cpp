@@ -39,9 +39,7 @@ static immut char* _typeStr[] = {
 };
 
 /*
- * --INFO--
- * Address:	80086CC4 in DOL, 100E7340 in DLL
- * Size:	0002DC
+ * Address:	100E7340 in DLL
  */
 f32 Cylinder::get2dDist(immut Vector3f& point) immut
 {
@@ -73,9 +71,7 @@ f32 Cylinder::get2dDist(immut Vector3f& point) immut
 }
 
 /*
- * --INFO--
- * Address:	80086FA0 in DOL, 100E7530 in DLL
- * Size:	0003C0
+ * Address:	100E7530 in DLL
  */
 bool Cylinder::collide(const Sphere& sphere, Vector3f& pushVector, f32& depth) immut
 {

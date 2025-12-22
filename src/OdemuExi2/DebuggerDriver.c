@@ -441,11 +441,6 @@ void DBOpen(void)
 	return;
 }
 
-/*
- *  * --INFO--
- * Address:	80221F54
- * Size:	000004
- */
 void DBClose(void)
 {
 	return;

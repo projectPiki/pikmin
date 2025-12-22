@@ -19,8 +19,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("id32");
 
 /**
- * Address:	80043E5C
- * Size:	000038
  * @brief Default constructor.
  */
 ID32::ID32()

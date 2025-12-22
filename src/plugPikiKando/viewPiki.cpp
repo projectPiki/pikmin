@@ -380,9 +380,7 @@ bool Piki::isLooking()
 }
 
 /*
- * --INFO--
- * Address:	800D96F0, 100DE380 in DLL
- * Size:	000378
+ * Address:	100DE380 in DLL
  */
 void Piki::updateLook()
 {

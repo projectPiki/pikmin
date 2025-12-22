@@ -2044,9 +2044,7 @@ void NAlpha::reset()
 }
 
 /*
- * --INFO--
- * Address:	8011D1E8 (1004BE90 in plugPiki)
- * Size:	000198
+ * Address:	1004BE90 in plugPiki
  */
 f32 NAlpha::getValue(f32 input)
 {
