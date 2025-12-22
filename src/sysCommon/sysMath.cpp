@@ -10,74 +10,66 @@
 #include "Plane.h"
 #include "stl/math.h"
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 DEFINE_PRINT(nullptr)
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0000C0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000C0
  */
 bool Plane::equal(immut Plane& other)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000148
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000148
  */
 f32 Plane::calcRadScale()
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000074
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000074
  */
 void Plane::reflect(Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void Plane::reflectVector(Vector3f&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void Plane::bounceVector(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000084
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000084
  */
 void Plane::frictionVector(Vector3f&, f32)
 {
@@ -114,10 +106,9 @@ void CullingPlane::CheckMinMaxDir()
 	}
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0000AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000AC
  */
 void Vector3f::rotateTranspose(immut Matrix4f&)
 {
@@ -178,20 +169,18 @@ void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 	outVec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z + mtx.mMtx[2][3];
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000110
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000110
  */
 void Vector3f::rotate(immut Quat&)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void Vector3f::rotateInverse(immut Quat&)
 {
@@ -307,10 +296,9 @@ void Quat::multiply(immut Quat& other)
 	*this   = tmp;
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void Quat::multiplyTo(immut Quat& other, Quat& outQuat)
 {
@@ -510,10 +498,9 @@ f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 	return (x1 + y1) - (0.5f * min);
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000080
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000080
  */
 f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
 {
@@ -797,10 +784,9 @@ void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& p
 	mSideAC = pointC - pointA;
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000020
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000020
  */
 KSegment::KSegment()
 {

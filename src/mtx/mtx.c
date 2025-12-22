@@ -7,10 +7,9 @@
 static f32 Unit01[] = { 0.0f, 1.0f };
 extern f32 sinf(f32);
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00003C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00003C
  */
 void C_MTXIdentity(Mtx mtx)
 {
@@ -51,20 +50,18 @@ void PSMTXIdentity(register Mtx m)
 #endif
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00006C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00006C
  */
 void C_MTXCopy(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000034
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000034
  */
 ASM void PSMTXCopy(const register Mtx src, register Mtx dst)
 {
@@ -88,10 +85,9 @@ ASM void PSMTXCopy(const register Mtx src, register Mtx dst)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0002A8
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002A8
  */
 void C_MTXConcat(void)
 {
@@ -203,10 +199,9 @@ ASM void PSMTXConcat(const register Mtx mA, // r3
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00009C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00009C
  */
 void C_MTXTranspose(void)
 {
@@ -246,10 +241,9 @@ void PSMTXTranspose(const register Mtx src, register Mtx xPose)
 #endif
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0002AC
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0002AC
  */
 void C_MTXInverse(void)
 {
@@ -332,50 +326,45 @@ ASM u32 PSMTXInverse(const register Mtx src, register Mtx inv)
 #endif // clang-format on
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00021C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00021C
  */
 void C_MTXInvXpose(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0000D4
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000D4
  */
 void PSMTXInvXpose(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000070
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000070
  */
 void MTXRotRad(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000104
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000104
  */
 void MTXRotTrig(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000118
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000118
  */
 void MTXRotAxisRad(void)
 {
@@ -403,10 +392,9 @@ void MTXTrans(Mtx m, f32 xT, f32 yT, f32 zT)
 	m[2][3] = zT;
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000078
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000078
  */
 void MTXTransApply(void)
 {
@@ -434,50 +422,45 @@ void MTXScale(Mtx m, f32 xS, f32 yS, f32 zS)
 	m[2][3] = 0.0f;
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void MTXScaleApply(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    0000F0
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 0000F0
  */
 void MTXQuat(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000100
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000100
  */
 void MTXReflect(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    00018C
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 00018C
  */
 void MTXLookAt(void)
 {
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000094
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000094
  */
 void MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 scaleT, f32 transS, f32 transT)
 {
@@ -584,10 +567,9 @@ void MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f3
 	*/
 }
 
-/*
- * --INFO--
- * Address: ........
- * Size:    000088
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000088
  */
 void MTXLightOrtho(void)
 {
