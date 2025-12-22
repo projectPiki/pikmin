@@ -73,9 +73,6 @@ void Matrix4f::makePerspective(f32, f32, f32, f32)
 }
 
 /*
- * --INFO--
- * Address:	8003DE08
- * Size:	0000C0
  * @note ChatGPT 1 shotted this, props to our assistant dev!
  */
 void Matrix4f::makeRotate(immut Vector3f& axis, f32 angleSin, f32 angleCos)

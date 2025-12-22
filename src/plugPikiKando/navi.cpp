@@ -152,9 +152,6 @@ void Navi::startDayEnd()
 }
 
 /*
- * --INFO--
- * Address:	800F8570
- * Size:	000410
  * @note: 	100A1AD0 in plugPiki.dll
  */
 void Navi::updateDayEnd(immut Vector3f& pos)

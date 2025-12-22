@@ -20,9 +20,6 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("TODO: Replace")
 
 /*
- * --INFO--
- * Address:	8017C2C8
- * Size:	0000C0
  * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
 void NsCalculation::calcLagrange(f32 t, const Vector3f* controlPts, Vector3f& outPoint)

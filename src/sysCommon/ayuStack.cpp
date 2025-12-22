@@ -76,9 +76,6 @@ void AyuStack::checkStack()
 }
 
 /**
- * --INFO--
- * Address:	800246E4
- * Size:	0000BC
  * Resets allocations based on bit flags (upper or lower stack).
  * @param resetFlags Bitmask indicating which stack direction to reset.
  */
@@ -108,9 +105,6 @@ void AyuStack::reset(int resetFlags)
 }
 
 /**
- * --INFO--
- * Address:	800247A0
- * Size:	000114
  * Allocates space from the stack, growing according to alloc type.
  * @param requestedSizeBytes Number of bytes requested.
  * @return Pointer to allocated region or nullptr on overflow.
@@ -165,9 +159,6 @@ void* AyuStack::push(int requestedSizeBytes)
 }
 
 /**
- * --INFO--
- * Address:	800248B4
- * Size:	000054
  * Frees the most recent allocation from the stack.
  */
 void AyuStack::pop()
@@ -185,9 +176,6 @@ void AyuStack::pop()
 }
 
 /**
- * --INFO--
- * Address:	80024908
- * Size:	000074
  * Initialises an AyuHeap wrapper around a stack region.
  * @param name Heap name for debugging.
  * @param allocFlags Allocation direction flags.
@@ -201,9 +189,6 @@ void AyuHeap::init(immut char* name, int allocFlags, void* stackBase, int stackS
 }
 
 /**
- * --INFO--
- * Address:	8002497C
- * Size:	000068
  * Constructs a cache of the given size, aligned to 32 bytes.
  * @param cacheSize Desired cache size in bytes.
  */
@@ -217,9 +202,6 @@ AyuCache::AyuCache(u32 cacheSize)
 }
 
 /**
- * --INFO--
- * Address:	800249E4
- * Size:	000198
  * Initialises cache metadata and free lists.
  * @param bufferStart Start address of cache buffer.
  * @param bufferEnd End address of cache buffer.
@@ -300,9 +282,6 @@ void linkChunk(MemHead* node, u32 tagAndSize, MemHead* listHead)
 }
 
 /**
- * --INFO--
- * Address:	80024B7C
- * Size:	000120
  * Allocates a block from the cache, splitting free blocks as needed.
  * @param sizeBytes Size in bytes to allocate.
  * @return Pointer to allocated block or nullptr if none fit.
@@ -346,9 +325,6 @@ void* AyuCache::mallocL(u32 sizeBytes)
 }
 
 /**
- * --INFO--
- * Address:	80024C9C
- * Size:	000114
  * Frees a cache block and coalesces adjacent free space.
  * @param ptr Pointer previously returned by mallocL.
  */
@@ -410,9 +386,6 @@ u32 AyuCache::amountFree()
 }
 
 /**
- * --INFO--
- * Address:	80024DB0
- * Size:	000018
  * Checks whether the allocated list is empty.
  */
 bool AyuCache::isEmpty()
@@ -421,9 +394,6 @@ bool AyuCache::isEmpty()
 }
 
 /**
- * --INFO--
- * Address:	80024DC8
- * Size:	000034
  * Returns the size of the largest free block in bytes.
  */
 u32 AyuCache::largestBlockFree()

@@ -449,9 +449,6 @@ void AllStop_1Shot(jcs_* jcs)
 }
 
 /*
- * --INFO--
- * Address:	80015D40
- * Size:	00006C
  * Note: Equivalent to `JASChannel::sweepProc` in later JAudio.
  */
 static BOOL Extra_Update(jc_* jc, JCSTATUS status)
@@ -484,9 +481,6 @@ void SetPitchTarget_1Shot(jc_* jc, f32 pitch, u32 steps)
 }
 
 /*
- * --INFO--
- * Address:	80015E00
- * Size:	000090
  * Note: (Roughly) Equivalent to `JASChannel::setKeySweepTarget` in later JAudio.
  */
 void SetKeyTarget_1Shot(jc_* jc, u8 key, u32 steps)

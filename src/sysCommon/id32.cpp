@@ -27,9 +27,6 @@ ID32::ID32()
 }
 
 /**
- * --INFO--
- * Address:	80043E94
- * Size:	000030
  * @brief Constructs an ID32.
  * @param id Initial ID value.
  */
@@ -39,9 +36,6 @@ ID32::ID32(u32 id)
 }
 
 /**
- * --INFO--
- * Address:	80043EC4
- * Size:	000024
  * @brief Sets the ID.
  * @param id ID value to store.
  */
@@ -52,9 +46,6 @@ void ID32::setID(u32 id)
 }
 
 /**
- * --INFO--
- * Address:	80043EE8
- * Size:	0000A8
  * @brief Matches an ID with a wildcard byte.
  * @param id Value to compare.
  * @param wild Wildcard byte to treat as "match any".
@@ -75,9 +66,6 @@ bool ID32::match(u32 id, char wild) immut
 }
 
 /**
- * --INFO--
- * Address:	80043F90
- * Size:	000024
  * @brief Updates mId from mStringID.
  */
 void ID32::updateID()
@@ -90,9 +78,6 @@ void ID32::updateID()
 }
 
 /**
- * --INFO--
- * Address:	80043FB4
- * Size:	00002C
  * @brief Updates mStringID from mId.
  */
 void ID32::updateString()
@@ -119,9 +104,6 @@ void ID32::operator=(u32 other)
 }
 
 /**
- * --INFO--
- * Address:	80043FE0
- * Size:	000014
  * @brief Equality operator.
  */
 bool ID32::operator==(u32 other) immut
@@ -130,9 +112,6 @@ bool ID32::operator==(u32 other) immut
 }
 
 /**
- * --INFO--
- * Address:	80043FF4
- * Size:	000014
  * @brief Inequality operator.
  */
 bool ID32::operator!=(u32 other) immut
@@ -141,9 +120,6 @@ bool ID32::operator!=(u32 other) immut
 }
 
 /**
- * --INFO--
- * Address:	80044008
- * Size:	000094
  * @brief Writes mId as 4 bytes.
  * @param stream Stream to write to.
  */
@@ -158,9 +134,6 @@ void ID32::write(RandomAccessStream& stream) immut
 }
 
 /**
- * --INFO--
- * Address:	8004409C
- * Size:	0000BC
  * @brief Reads mId and updates mStringID.
  * @param stream Stream to read from.
  */
@@ -176,9 +149,6 @@ void ID32::read(RandomAccessStream& stream)
 }
 
 /**
- * --INFO--
- * Address:	80044158
- * Size:	000004
  * @brief Prints the ID.
  */
 void ID32::print() immut
@@ -187,9 +157,6 @@ void ID32::print() immut
 }
 
 /**
- * --INFO--
- * Address:	8004415C
- * Size:	000038
  * @brief Formats mId into a 4-char string.
  * @param buffer Output buffer (>= 5 bytes).
  */
