@@ -332,6 +332,7 @@ void GXGetGPStatus(GXBool* overhi, GXBool* underlow, GXBool* readIdle, GXBool* c
 	*cmdIdle     = (int)GET_REG_FIELD(gx->cpStatus, 1, 3);
 	*brkpt       = (int)GET_REG_FIELD(gx->cpStatus, 1, 4);
 }
+
 /*
  * --INFO--
  * Address:	........

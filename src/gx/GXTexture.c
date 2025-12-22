@@ -395,6 +395,7 @@ void* GXGetTexObjData(const GXTexObj* to)
 	ASSERTMSGLINE(0x366, to, "Texture Object Pointer is null");
 	return (void*)(GET_REG_FIELD(t->image3, 21, 0) << 5);
 }
+
 /*
  * --INFO--
  * Address:	........

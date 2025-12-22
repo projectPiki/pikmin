@@ -168,6 +168,7 @@ void SnakeBody::copyAnimPosition()
 		}
 	}
 }
+
 /*
  * --INFO--
  * Address:	........

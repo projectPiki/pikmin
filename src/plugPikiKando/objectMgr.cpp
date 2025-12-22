@@ -18,6 +18,7 @@ DEFINE_ERROR(13)
  * Size:	0000F4
  */
 DEFINE_PRINT("objectMgr");
+
 /*
  * --INFO--
  * Address:	........
