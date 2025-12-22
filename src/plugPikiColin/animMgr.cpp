@@ -42,11 +42,6 @@ void AnimInfo::initAnimData(AnimData* data)
 	mData = data;
 }
 
-/**
- * --INFO--
- * Address:	80050024
- * Size:	0000DC
- */
 void AnimInfo::checkAnimData()
 {
 	AnimKey* animKey = mAnimKeys.mNext;
@@ -71,11 +66,6 @@ void AnimInfo::checkAnimData()
 	}
 }
 
-/**
- * --INFO--
- * Address:	80050100
- * Size:	00027C
- */
 AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
     : CoreNode("")
 {
@@ -103,32 +93,17 @@ AnimInfo::AnimInfo(AnimMgr* mgr, AnimData* data)
 	setIndex();
 }
 
-/**
- * --INFO--
- * Address:	8005037C
- * Size:	000048
- */
 void AnimInfo::setIndex()
 {
 	mIndex = gsys->findAnyIndex(mMgr->mParams.mBasePath().mString, mData->mName);
 }
 
-/**
- * --INFO--
- * Address:	800503C4
- * Size:	000024
- */
 void AnimInfo::setAnimFlags(u32 flags)
 {
 	mParams.mFlags(flags);
 	updateAnimFlags();
 }
 
-/**
- * --INFO--
- * Address:	800503E8
- * Size:	000024
- */
 int AnimInfo::countAKeys()
 {
 	int count    = 0;
@@ -140,11 +115,6 @@ int AnimInfo::countAKeys()
 	return count;
 }
 
-/**
- * --INFO--
- * Address:	8005040C
- * Size:	000024
- */
 int AnimInfo::countIKeys()
 {
 	int count    = 0;
@@ -156,11 +126,6 @@ int AnimInfo::countIKeys()
 	return count;
 }
 
-/**
- * --INFO--
- * Address:	80050430
- * Size:	000024
- */
 int AnimInfo::countEKeys()
 {
 	int count    = 0;
@@ -172,11 +137,6 @@ int AnimInfo::countEKeys()
 	return count;
 }
 
-/**
- * --INFO--
- * Address:	80050454
- * Size:	000038
- */
 AnimKey* AnimInfo::getInfoKey(int idx)
 {
 	int i        = 0;
@@ -190,11 +150,6 @@ AnimKey* AnimInfo::getInfoKey(int idx)
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	8005048C
- * Size:	000038
- */
 AnimKey* AnimInfo::getEventKey(int idx)
 {
 	int i        = 0;
@@ -208,11 +163,6 @@ AnimKey* AnimInfo::getEventKey(int idx)
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	800504C4
- * Size:	000038
- */
 int AnimInfo::getKeyValue(int idx)
 {
 	int i        = 0;
@@ -226,11 +176,6 @@ int AnimInfo::getKeyValue(int idx)
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	800504FC
- * Size:	0002F8
- */
 void AnimInfo::doread(RandomAccessStream& input, int version)
 {
 	String str(nullptr, 0);
@@ -289,21 +234,11 @@ void AnimInfo::doread(RandomAccessStream& input, int version)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80050814
- * Size:	000010
- */
 void AnimInfo::updateAnimFlags()
 {
 	mData->mAnimFlags = mParams.mFlags();
 }
 
-/**
- * --INFO--
- * Address:	80050824
- * Size:	000080
- */
 AnimKey* AnimInfo::addKeyFrame()
 {
 	AnimKey* keyFrame     = new AnimKey();
@@ -312,11 +247,6 @@ AnimKey* AnimInfo::addKeyFrame()
 	return keyFrame;
 }
 
-/**
- * --INFO--
- * Address:	800508A4
- * Size:	000234
- */
 AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bundlePath)
 {
 	setName("AnimMgr");
@@ -326,11 +256,6 @@ AnimMgr::AnimMgr(Shape* model, immut char* animPath, int flags, immut char* bund
 	loadAnims(animPath, bundlePath);
 }
 
-/**
- * --INFO--
- * Address:	80050B04
- * Size:	0001E8
- */
 void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 {
 	if (!animPath) {
@@ -383,11 +308,6 @@ void AnimMgr::loadAnims(immut char* animPath, immut char* bundlePath)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80050CEC
- * Size:	00008C
- */
 AnimInfo* AnimMgr::addAnimation(immut char* animPath, bool isRelativePath)
 {
 	AnimInfo* info = new AnimInfo(this, gsys->loadAnimation(mModel, animPath, isRelativePath));
@@ -418,11 +338,6 @@ AnimInfo* AnimMgr::findAnim(int idx)
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	80050D78
- * Size:	000020
- */
 int AnimMgr::countAnims()
 {
 	int count = 0;
@@ -434,11 +349,6 @@ int AnimMgr::countAnims()
 	return count;
 }
 
-/**
- * --INFO--
- * Address:	80050D98
- * Size:	0001D8
- */
 void AnimMgr::read(RandomAccessStream& input)
 {
 	int version   = input.readInt();
@@ -455,11 +365,6 @@ void AnimMgr::read(RandomAccessStream& input)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80050F70
- * Size:	00021C
- */
 void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int lastKeyFrameIdx)
 {
 	mAnimInfo = mMgr->findAnim(animID);
@@ -488,30 +393,15 @@ void Animator::startAnim(int playState, int animID, int firstKeyFrameIdx, int la
 	mEndKeyIndex   = lastKeyFrameIdx;
 }
 
-/**
- * --INFO--
- * Address:	8005118C
- * Size:	000004
- */
 void Animator::finishLoop()
 {
 }
 
-/**
- * --INFO--
- * Address:	80051190
- * Size:	000030
- */
 void Animator::finishOneShot()
 {
 	startAnim(mPostOneShotPlayState, mPostOneShotAnimID, mPostOneShotStartKeyIndex, mPostOneShotEndKeyIndex);
 }
 
-/**
- * --INFO--
- * Address:	800511C0
- * Size:	00005C
- */
 void Animator::updateContext()
 {
 	mContext->mData         = mAnimInfo->mData;
@@ -521,11 +411,6 @@ void Animator::updateContext()
 	}
 }
 
-/**
- * --INFO--
- * Address:	8005121C
- * Size:	00023C
- */
 void Animator::animate(f32 animSpeed)
 {
 	animSpeed = (mAnimInfo->mParams.mFlags() & ANIMFLAG_UseDynamicSpeed) ? animSpeed : mAnimInfo->mParams.mSpeed();

@@ -24,11 +24,6 @@ DEFINE_PRINT("seMgr");
 /// Global sound effect manager object.
 SeMgr* seMgr;
 
-/**
- * --INFO--
- * Address:	800A3428
- * Size:	000180
- */
 SeMgr::SeMgr()
 {
 	mBattleCount = 0;
@@ -49,11 +44,6 @@ SeMgr::SeMgr()
 	addInfo(JACORIMA_PikiCalled, "Piki Called");
 }
 
-/**
- * --INFO--
- * Address:	800A35A8
- * Size:	000028
- */
 void SeMgr::playNaviSound(s32 stickX, s32 stickY)
 {
 	Jac_Orima_Formation(stickX, stickY);
@@ -75,11 +65,6 @@ SeInfo* SeMgr::findInfo(int jacSeID)
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	800A35D0
- * Size:	000034
- */
 void SeMgr::addInfo(int jacSeID, immut char* seName)
 {
 	if (mSENum >= mMaxInfos) {
@@ -92,11 +77,6 @@ void SeMgr::addInfo(int jacSeID, immut char* seName)
 	mSENum++;
 }
 
-/**
- * --INFO--
- * Address:	800A3604
- * Size:	000004
- */
 void SeMgr::update()
 {
 }
@@ -148,21 +128,11 @@ void SeMgr::stopSoundAll()
 	// UNUSED FUNCTION
 }
 
-/**
- * --INFO--
- * Address:	800A3608
- * Size:	000010
- */
 void SeMgr::joinBattle()
 {
 	mBattleCount++;
 }
 
-/**
- * --INFO--
- * Address:	800A3618
- * Size:	000024
- */
 void SeMgr::leaveBattle()
 {
 	mBattleCount--;
@@ -188,11 +158,6 @@ void SeMgr::setPikiNum(int pikiNum)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A3674
- * Size:	0000E4
- */
 void SeWin::doRender(Graphics& gfx)
 {
 	char buffer[60];
@@ -205,11 +170,6 @@ void SeWin::doRender(Graphics& gfx)
 	printcentre(gfx, 140, buffer);
 }
 
-/**
- * --INFO--
- * Address:	800A3758
- * Size:	0002E4
- */
 void SeWin::update()
 {
 	STACK_PAD_VAR(2); // sigh
@@ -302,11 +262,6 @@ void SeWin::update()
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A3A3C
- * Size:	00007C
- */
 void SeWin::open()
 {
 	if (mStatus == GMWIN_Opening) {
@@ -328,11 +283,6 @@ void SeWin::open()
 	seMgr->stopBGM();
 }
 
-/**
- * --INFO--
- * Address:	800A3AB8
- * Size:	00004C
- */
 void SeWin::close()
 {
 	if (mStatus == GMWIN_Closing) {

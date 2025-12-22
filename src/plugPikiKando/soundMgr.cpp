@@ -398,11 +398,6 @@ SoundTableInfo soundTable[] = {
 	{ SE_KINOKOPIKI_ATTACK, JACORIMA_KinokoPikiAttack, "SE_KINOKOPIKI_ATTACK", FALSE, JACEVENT_Player },
 };
 
-/**
- * --INFO--
- * Address:	800A3C5C
- * Size:	000070
- */
 SeContext::SeContext()
 {
 	mEventHandle = -1;
@@ -413,11 +408,6 @@ SeContext::SeContext()
 	mClock = 0;
 }
 
-/**
- * --INFO--
- * Address:	800A3CCC
- * Size:	000068
- */
 SeContext::SeContext(Creature* obj, int eventType)
 {
 	mEventHandle = -1;
@@ -428,11 +418,6 @@ SeContext::SeContext(Creature* obj, int eventType)
 	mClock = 0;
 }
 
-/**
- * --INFO--
- * Address:	800A3D34
- * Size:	00009C
- */
 void SeContext::setContext(Creature* obj, int type)
 {
 	if (mEventHandle != -1) {
@@ -486,11 +471,6 @@ void SeContext::createEvent(int eventType)
 	mEventHandle = seSystem->createEvent(this, mEventType, (SVector_*)&mSourceListenerOffset);
 }
 
-/**
- * --INFO--
- * Address:	800A3DD0
- * Size:	0000D4
- */
 void SeContext::playSound(int soundID)
 {
 	int jacID = seSystem->getJacID(soundID);
@@ -508,11 +488,6 @@ void SeContext::playSound(int soundID)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A3EA4
- * Size:	000048
- */
 void SeContext::stopSound(int soundID)
 {
 	int jacID = seSystem->getJacID(soundID);
@@ -521,11 +496,6 @@ void SeContext::stopSound(int soundID)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A3EEC
- * Size:	000094
- */
 void SeContext::update()
 {
 	// this function is empty in the DLL
@@ -536,11 +506,6 @@ void SeContext::update()
 	Jac_UpdateEventPosition(mEventHandle, (SVector_*)&mSourceListenerOffset);
 }
 
-/**
- * --INFO--
- * Address:	800A3F80
- * Size:	000058
- */
 bool SeContext::releaseEvent()
 {
 	PRINT_KANDO("releaseEvent : %x : handle = %d\n", this, mEventHandle);
@@ -567,11 +532,6 @@ void SeContext::dump()
 	      mSourceListenerOffset.y, mSourceListenerOffset.z);
 }
 
-/**
- * --INFO--
- * Address:	800A3FD8
- * Size:	000120
- */
 SeSystem::SeSystem()
 {
 	mIsClosed            = true;
@@ -590,11 +550,6 @@ SeSystem::SeSystem()
 	mClock           = 0;
 }
 
-/**
- * --INFO--
- * Address:	800A410C
- * Size:	000078
- */
 void SeSystem::initEvent()
 {
 	Jac_InitAllEvent();
@@ -609,21 +564,11 @@ void SeSystem::initEvent()
 	mClock    = 0;
 }
 
-/**
- * --INFO--
- * Address:	800A4184
- * Size:	000078
- */
 void SeSystem::resetSystem()
 {
 	initEvent();
 }
 
-/**
- * --INFO--
- * Address:	800A41FC
- * Size:	00020C
- */
 int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffset)
 {
 	if (mIsClosed) {
@@ -691,21 +636,11 @@ int SeSystem::createEvent(SeContext* context, int eventType, SVector_* soundOffs
 	return newHandle;
 }
 
-/**
- * --INFO--
- * Address:	800A4408
- * Size:	00002C
- */
 void SeSystem::playPikiSound(int id, immut Vector3f& sourcePos)
 {
 	playSoundDirect(JACEVENT_Piki, id, sourcePos);
 }
 
-/**
- * --INFO--
- * Address:	800A4434
- * Size:	000394
- */
 void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourcePos)
 {
 	if (mIsClosed) {
@@ -746,11 +681,6 @@ void SeSystem::playSoundDirect(int eventType, int sound, immut Vector3f& sourceP
 	PRINT(" ** [ReUse] sysSeContext %d\n", sysSeContext);
 }
 
-/**
- * --INFO--
- * Address:	800A47C8
- * Size:	000108
- */
 bool SeSystem::destroyEvent(SeContext* context, s32 handle)
 {
 	if (mIsClosed) {
@@ -813,11 +743,6 @@ int SeSystem::getEvent(s32 handle)
 	return -1;
 }
 
-/**
- * --INFO--
- * Address:	800A48D0
- * Size:	000048
- */
 int SeSystem::getEvent(SeContext* context)
 {
 	int index = 0;
@@ -829,11 +754,6 @@ int SeSystem::getEvent(SeContext* context)
 	return -1;
 }
 
-/**
- * --INFO--
- * Address:	800A4918
- * Size:	0001B8
- */
 void SeSystem::draw3d(Graphics& gfx)
 {
 	char str[PATH_MAX];
@@ -855,11 +775,6 @@ void SeSystem::draw3d(Graphics& gfx)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A4AD0
- * Size:	0002D0
- */
 void SeSystem::draw2d(Graphics& gfx)
 {
 	char str[PATH_MAX];
@@ -895,11 +810,6 @@ void SeSystem::draw2d(Graphics& gfx)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A4DA0
- * Size:	0000B8
- */
 void SeSystem::dumpEvents()
 {
 	PRINT("***** SE EVENTS ****** %d / %d \n", mCurrentEventCount, mMaxEventCount);
@@ -921,11 +831,6 @@ void SeSystem::dumpEvents()
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A4E58
- * Size:	000368
- */
 void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 {
 	if (mIsClosed) {
@@ -984,11 +889,6 @@ void SeSystem::update(Graphics& gfx, immut Vector3f& listenerPos)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800A51C8
- * Size:	0000FC
- */
 void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamDir)
 {
 	Vector3f tmpDir         = objectPos;
@@ -1006,11 +906,6 @@ void SeSystem::calcCameraPos(immut Vector3f& objectPos, Vector3f& normalisedCamD
 	normalisedCamDir = tmpDir;
 }
 
-/**
- * --INFO--
- * Address:	800A52C4
- * Size:	000018
- */
 int SeSystem::getJacID(int soundID)
 {
 	if (soundID < 0 || soundID > mMaxSoundID) {
@@ -1062,11 +957,6 @@ bool SeSystem::isLoopType(int soundID)
 	return soundTable[soundID].mLoopType == TRUE;
 }
 
-/**
- * --INFO--
- * Address:	800A52DC
- * Size:	000098
- */
 void SeSystem::exitCourse()
 {
 	PRINT("*** BEFORE EXIT COUSE ***\n");
@@ -1077,41 +967,21 @@ void SeSystem::exitCourse()
 	mIsClosed = true;
 }
 
-/**
- * --INFO--
- * Address:	800A5374
- * Size:	000034
- */
 void SeSystem::playSysSe(int soundID)
 {
 	Jac_PlaySystemSe(seSystem->getJacID(soundID));
 }
 
-/**
- * --INFO--
- * Address:	800A53A8
- * Size:	000034
- */
 void SeSystem::stopSysSe(int soundID)
 {
 	Jac_StopSystemSe(seSystem->getJacID(soundID));
 }
 
-/**
- * --INFO--
- * Address:	800A53DC
- * Size:	000034
- */
 void SeSystem::playPlayerSe(int soundID)
 {
 	Jac_PlayOrimaSe(seSystem->getJacID(soundID));
 }
 
-/**
- * --INFO--
- * Address:	800A5410
- * Size:	000034
- */
 void SeSystem::stopPlayerSe(int soundID)
 {
 	Jac_StopOrimaSe(seSystem->getJacID(soundID));

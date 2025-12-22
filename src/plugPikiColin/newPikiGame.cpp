@@ -464,11 +464,6 @@ static void handleTutorialWindow(u32& unused, Controller* controller)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80056E84
- * Size:	000118
- */
 BaseGameSection::BaseGameSection()
     : Node("")
 {
@@ -483,11 +478,6 @@ BaseGameSection::BaseGameSection()
 	mFadeSpeed        = 0.5f;
 }
 
-/**
- * --INFO--
- * Address:	80056F9C
- * Size:	000244
- */
 void BaseGameSection::draw(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -534,11 +524,6 @@ void BaseGameSection::draw(Graphics& gfx)
 	mCurrentModeState->postUpdate();
 }
 
-/**
- * --INFO--
- * Address:	800571E4
- * Size:	000128
- */
 ModeState* IntroGameModeState::update(u32& result)
 {
 	result = UPDATE_AI;
@@ -556,11 +541,6 @@ ModeState* IntroGameModeState::update(u32& result)
 	return this;
 }
 
-/**
- * --INFO--
- * Address:	8005730C
- * Size:	000640
- */
 ModeState* RunningModeState::update(u32& result)
 {
 	result = UPDATE_ALL; // Enable all update types
@@ -675,11 +655,6 @@ ModeState* RunningModeState::update(u32& result)
 	return this;
 }
 
-/**
- * --INFO--
- * Address:	80057950
- * Size:	000078
- */
 void IntroGameModeState::postRender(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -689,11 +664,6 @@ void IntroGameModeState::postRender(Graphics& gfx)
 	}
 }
 
-/**
- * --INFO--
- * Address:	800579C8
- * Size:	000294
- */
 void RunningModeState::postRender(Graphics& gfx)
 {
 	Matrix4f mtx1;
@@ -735,11 +705,6 @@ void RunningModeState::postRender(Graphics& gfx)
 	pauseWindow->draw(gfx);
 }
 
-/**
- * --INFO--
- * Address:	80057C5C
- * Size:	000360
- */
 ModeState* MessageModeState::update(u32& result)
 {
 	if (flowCont.mGameEndCondition == 2) {
@@ -806,11 +771,6 @@ ModeState* MessageModeState::update(u32& result)
 	return this;
 }
 
-/**
- * --INFO--
- * Address:	80057FBC
- * Size:	000474
- */
 ModeState* DayOverModeState::update(u32& result)
 {
 	STACK_PAD_VAR(1);
@@ -951,11 +911,6 @@ ModeState* DayOverModeState::update(u32& result)
 	return this;
 }
 
-/**
- * --INFO--
- * Address:	80058430
- * Size:	000250
- */
 void DayOverModeState::makeTotalScoreWindow()
 {
 	GameQuickInfo info;
@@ -989,11 +944,6 @@ void DayOverModeState::makeTotalScoreWindow()
 	totalWindow = new zen::DrawFinalResult(record);
 }
 
-/**
- * --INFO--
- * Address:	80058680
- * Size:	000368
- */
 ModeState* DayOverModeState::initialisePhaseOne()
 {
 	if (playerState->getCurrParts() == MAX_UFO_PARTS) {
@@ -1057,11 +1007,6 @@ ModeState* DayOverModeState::initialisePhaseOne()
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	800589E8
- * Size:	000410
- */
 ModeState* DayOverModeState::initialisePhaseTwo()
 {
 	gsys->startLoading(nullptr, true, 120);
@@ -1136,11 +1081,6 @@ ModeState* DayOverModeState::initialisePhaseTwo()
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	80058DF8
- * Size:	000258
- */
 ModeState* DayOverModeState::initialisePhaseThree()
 {
 	gsys->startLoading(nullptr, true, 120);
@@ -1180,11 +1120,6 @@ ModeState* DayOverModeState::initialisePhaseThree()
 	return nullptr;
 }
 
-/**
- * --INFO--
- * Address:	80059050
- * Size:	00013C
- */
 ModeState* DayOverModeState::initialisePhaseFour()
 {
 	gameflow.mMoviePlayer->fixMovieList();
@@ -1601,11 +1536,6 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 	int _3DC;                      ///< 3DC
 };
 
-/**
- * --INFO--
- * Address:	8005918C
- * Size:	0000C0
- */
 void GameMovieInterface::parseMessages()
 {
 	for (int i = 0; i < mMessageCount; i++) {
@@ -1620,11 +1550,6 @@ void GameMovieInterface::parseMessages()
 	mComplexMesgCount = 0;
 }
 
-/**
- * --INFO--
- * Address:	8005924C
- * Size:	000428
- */
 void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 {
 	int id   = msg.mMessageId;
@@ -1771,22 +1696,12 @@ void GameMovieInterface::parse(GameMovieInterface::SimpleMessage& msg)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80059674
- * Size:	00004C
- */
 void GameMovieInterface::parse(GameMovieInterface::ComplexMessage& msg)
 {
 	gameflow.mMoviePlayer->startMovie(msg.mMovieIdx, msg._UNUSED04, msg.mTarget, &msg.mPosition, &msg.mRotation, msg.mFlags,
 	                                  msg.mIsPlaying);
 }
 
-/**
- * --INFO--
- * Address:	800596C0
- * Size:	000724
- */
 NewPikiGameSection::NewPikiGameSection()
 {
 	Node::init("<NewPikiGameSection>");

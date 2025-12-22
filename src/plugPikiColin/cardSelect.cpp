@@ -199,11 +199,6 @@ struct CardSelectSetupSection : public Node {
 	int mJacSetupCountdown;  ///< _34, frame countdown before setting up audio scene (CM only).
 };
 
-/**
- * --INFO--
- * Address:	8005503C
- * Size:	00023C
- */
 CardSelectSection::CardSelectSection()
 {
 	Node::init("<CardSelectSection>");

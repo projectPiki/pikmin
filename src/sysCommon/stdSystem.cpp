@@ -34,11 +34,6 @@ void AnmobjInfo::detach()
 	mAnimation->detach();
 }
 
-/**
- * --INFO--
- * Address:	8003EE64
- * Size:	000144
- */
 StdSystem::StdSystem()
     : mDvdRoot("CoreNode")
     , mAramRoot("CoreNode")

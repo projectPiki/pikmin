@@ -46,11 +46,6 @@ void CineShapeObject::init(immut char* modelPath, immut char* animPath, immut ch
 	}
 }
 
-/**
- * --INFO--
- * Address:	8006FA1C
- * Size:	0001BC
- */
 void CinematicPlayer::init(immut char* cinFilePath)
 {
 	// reset cutscene-specific things
@@ -82,11 +77,6 @@ void CinematicPlayer::init(immut char* cinFilePath)
 	}
 }
 
-/**
- * --INFO--
- * Address:	8006FBD8
- * Size:	0001B0
- */
 CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 {
 	// reset essential things
@@ -103,11 +93,6 @@ CinematicPlayer::CinematicPlayer(immut char* cinFilePath)
 	mSceneSkipFlag = SCENESKIP_NULL;
 }
 
-/**
- * --INFO--
- * Address:	8006FEB8
- * Size:	000720
- */
 void CinematicPlayer::loadCin(immut char* cinFilePath)
 {
 	mCurrentData = nullptr;
@@ -272,11 +257,6 @@ void CinematicPlayer::loadCin(immut char* cinFilePath)
 	STACK_PAD_VAR(1);
 }
 
-/**
- * --INFO--
- * Address:	800705D8
- * Size:	0000B4
- */
 void CinematicPlayer::addScene(SceneData* scene)
 {
 	Stream* data = gsys->openFile(scene->mName, true, true);
@@ -304,11 +284,6 @@ SceneData* CinematicPlayer::addScene(immut char* dskFilePath)
 	return data;
 }
 
-/**
- * --INFO--
- * Address:	8007068C
- * Size:	000090
- */
 SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 {
 	// grab a new scene cut
@@ -320,11 +295,6 @@ SceneCut* CinematicPlayer::addCut(int sceneID, int startFrame, int endFrame)
 	scene->mEndFrame   = endFrame;
 }
 
-/**
- * --INFO--
- * Address:	8007071C
- * Size:	0000A0
- */
 void CinematicPlayer::addActor(CineShapeObject* actor)
 {
 	actor->init(actor->mName, actor->mAnimFilePath, actor->mBundleFilePath);
@@ -345,11 +315,6 @@ void CinematicPlayer::addActor(immut char* modelFilePath, immut char* animFilePa
 	addActor(actor);
 }
 
-/**
- * --INFO--
- * Address:	800707BC
- * Size:	000138
- */
 SceneCut* CinematicPlayer::addSceneCut()
 {
 	SceneCut* cut      = new SceneCut;
@@ -360,11 +325,6 @@ SceneCut* CinematicPlayer::addSceneCut()
 	return cut;
 }
 
-/**
- * --INFO--
- * Address:	800708F4
- * Size:	000084
- */
 void CinematicPlayer::skipScene(int sceneSkipFlag)
 {
 	if (mCurrentScene) {
@@ -378,11 +338,6 @@ void CinematicPlayer::skipScene(int sceneSkipFlag)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80070978
- * Size:	000574
- */
 BOOL CinematicPlayer::update()
 {
 	BOOL isFinished = FALSE;
@@ -495,11 +450,6 @@ BOOL CinematicPlayer::update()
 	return isFinished;
 }
 
-/**
- * --INFO--
- * Address:	80070EEC
- * Size:	0000C4
- */
 void CinematicPlayer::addLights(Graphics& gfx)
 {
 	if (!mCurrentData) {
@@ -514,11 +464,6 @@ void CinematicPlayer::addLights(Graphics& gfx)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80070FB0
- * Size:	0000A8
- */
 void CinematicPlayer::refresh(Graphics& gfx)
 {
 	Matrix4f mtx;
@@ -533,11 +478,6 @@ void CinematicPlayer::refresh(Graphics& gfx)
 	}
 }
 
-/**
- * --INFO--
- * Address:	80071058
- * Size:	000190
- */
 ActorInstance* SceneCut::addInstance(immut char* modelFilePath)
 {
 	ActorInstance* actor = new ActorInstance;
@@ -577,11 +517,6 @@ void ActorInstance::onceInit()
 	// UNUSED FUNCTION
 }
 
-/**
- * --INFO--
- * Address:	800711E8
- * Size:	0000C4
- */
 void ActorInstance::exitInstance()
 {
 	if (effectMgr) {
@@ -602,11 +537,6 @@ void ActorInstance::exitInstance()
 	}
 }
 
-/**
- * --INFO--
- * Address:	800712AC
- * Size:	0001BC
- */
 void ActorInstance::initInstance()
 {
 	mActiveActor = mDefaultActor;
@@ -655,11 +585,6 @@ void ActorInstance::initInstance()
 	}
 }
 
-/**
- * --INFO--
- * Address:	80071468
- * Size:	000DCC
- */
 void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 {
 	for (int i = 0; i < mAnimator.mAnimInfo->countEKeys(); i++) {
@@ -909,11 +834,6 @@ void ActorInstance::checkEventKeys(f32 curTime, f32 prevTime, Vector3f& pos)
 	STACK_PAD_VAR(4);
 }
 
-/**
- * --INFO--
- * Address:	80072234
- * Size:	000F10
- */
 void ActorInstance::refresh(immut Matrix4f& mtx, Graphics& gfx, f32* p3)
 {
 	// feels like a typo.
