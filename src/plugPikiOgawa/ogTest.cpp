@@ -473,7 +473,7 @@ zen::OgTestSection::OgTestSection()
 void zen::OgTestSection::init()
 {
 	int msgHeapSize = 0x19800;
-	gsys->mHeaps[SYSHEAP_Message].init("message", 2, new u8[msgHeapSize], msgHeapSize);
+	gsys->mHeaps[SYSHEAP_Message].init("message", AYU_STACK_GROW_UP, new u8[msgHeapSize], msgHeapSize);
 	OgTestScreen* screen = new OgTestScreen();
 	add(screen);
 }

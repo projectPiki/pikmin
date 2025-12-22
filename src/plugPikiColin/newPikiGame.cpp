@@ -345,7 +345,7 @@ static void createMenuWindow()
 	PRINT("using movie heap!\n");
 
 	gsys->setHeap(SYSHEAP_Movie);
-	int oldtype = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
+	int oldtype = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
 
 	menuWindow = new zen::ogScrMenuMgr;
 	menuWindow->start();
@@ -401,7 +401,7 @@ static void createTutorialWindow(int tutorialId, int partId, bool hasAudio)
 	}
 	gsys->setHeap(SYSHEAP_Movie);
 
-	int oldtype    = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
+	int oldtype    = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
 	tutorialWindow = new zen::ogScrTutorialMgr;
 	tutorialWindow->start((zen::ogScrTutorialMgr::EnumTutorial)tutorialId);
 
@@ -1244,9 +1244,10 @@ struct NewPikiGameSetupSection : public BaseGameSection {
 		flowCont.mDayOverSeqStarted = 0;
 
 		int size1 = 0x280000;
-		gsys->mHeaps[4].init("teki", 2, new u8[size1], size1); // size 0xa00000 in the DLL
+		gsys->mHeaps[4].init("teki", AYU_STACK_GROW_UP, new u8[size1],
+		                     size1); // size 0xa00000 in the DLL
 		int size2 = 0x40000;
-		gsys->mHeaps[5].init("movie", 2, new u8[size2], size2);
+		gsys->mHeaps[5].init("movie", AYU_STACK_GROW_UP, new u8[size2], size2);
 
 		PRINT("now doing map!\n");
 		memStat->start("mapMgr");

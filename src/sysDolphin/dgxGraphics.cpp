@@ -219,7 +219,7 @@ DGXGraphics::DGXGraphics(bool flag)
 #endif
 
 	int backup = gsys->getHeap(gsys->mActiveHeapIdx)->mAllocType;
-	gsys->getHeap(gsys->mActiveHeapIdx)->setAllocType(2);
+	gsys->getHeap(gsys->mActiveHeapIdx)->setAllocType(AYU_STACK_GROW_UP);
 
 	mDisplayBuffer = new (0x20) u8[sFrameSize];
 	u16* test      = (u16*)mDisplayBuffer;

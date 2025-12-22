@@ -1,48 +1,59 @@
 #include "Ayu.h"
-
 #include "DebugLog.h"
 #include "sysNew.h"
 #include "system.h"
 
-/*
+#define AYU_STACK_GUARD_WORD 0x12345678
+
+#define AYU_CACHE_GUARD_WORD 0x87654321
+#define AYU_CACHE_FREE_FLAG  0xFF000000
+
+/**
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
 DEFINE_ERROR(7)
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
 DEFINE_PRINT("AyuStack");
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000070
+ * Creates and initializes a stack region with optional overflow protection.
+ * @param name Name for debugging.
+ * @param allocFlags Allocation mode flags (bitmask of AYU_STACK_GROW_*).
+ * @param stackBase Start address of the stack memory.
+ * @param stackSizeBytes Size of the stack region in bytes.
+ * @param enableOverflowGuard Enables guard word for overflow checks when true.
  */
-void AyuStack::create(immut char* name, int allocType, void* stackTop, int stackSize, bool isProtectionEnabled)
+void AyuStack::create(immut char* name, int allocFlags, void* stackBase, int stackSizeBytes, bool enableOverflowGuard)
 {
-	mAllocType         = allocType;
+	mAllocType         = allocFlags;
 	mIsActive          = true;
 	mName              = name;
-	mInitialStackTop   = (u32)stackTop;
-	mInitialStackLimit = mInitialStackTop + stackSize;
+	mInitialStackTop   = (u32)stackBase;
+	mInitialStackLimit = mInitialStackTop + stackSizeBytes;
 	mSize              = mInitialStackLimit - mInitialStackTop;
-	mProtectOverflow   = isProtectionEnabled;
+	mProtectOverflow   = enableOverflowGuard;
 	if (mProtectOverflow) {
-		((u32*)mInitialStackTop)[0] = 0x12345678;
+		((u32*)mInitialStackTop)[0] = AYU_STACK_GUARD_WORD; // Guard for overflow detection.
 	}
 
 	reset();
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	00001C
+ * Resets stack pointers to their initial positions.
  */
 void AyuStack::reset()
 {
@@ -51,27 +62,30 @@ void AyuStack::reset()
 	mTotalSize  = 0;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000024
+ * Verifies guard values to detect stack corruption.
  */
 void AyuStack::checkStack()
 {
-	if (mAllocType & 2 && mStackTop - *((u32*)mStackTop - 2) != mInitialStackTop) {
+	if (mAllocType & AYU_STACK_GROW_UP && mStackTop - *((u32*)mStackTop - 2) != mInitialStackTop) {
 		ERROR("trashed memory stack (%s)\n", mName);
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	800246E4
  * Size:	0000BC
+ * Resets allocations based on bit flags (upper or lower stack).
+ * @param resetFlags Bitmask indicating which stack direction to reset.
  */
-void AyuStack::reset(int i)
+void AyuStack::reset(int resetFlags)
 {
-	if (i & 2) {
-		int prev = setAllocType(i);
+	if (resetFlags & AYU_STACK_GROW_UP) {
+		int prev = setAllocType(resetFlags);
 		gsys->invalidateObjs(mInitialStackTop, mStackTop);
 
 		while (mStackTop != mInitialStackTop) {
@@ -81,8 +95,8 @@ void AyuStack::reset(int i)
 		setAllocType(prev);
 	}
 
-	if (i & 1) {
-		int prev = setAllocType(i);
+	if (resetFlags & AYU_STACK_GROW_DOWN) {
+		int prev = setAllocType(resetFlags);
 		gsys->invalidateObjs(mStackLimit, mInitialStackLimit);
 
 		while (mStackLimit != mInitialStackLimit) {
@@ -93,23 +107,26 @@ void AyuStack::reset(int i)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	800247A0
  * Size:	000114
+ * Allocates space from the stack, growing according to alloc type.
+ * @param requestedSizeBytes Number of bytes requested.
+ * @return Pointer to allocated region or nullptr on overflow.
  */
-void* AyuStack::push(int requestedSize)
+void* AyuStack::push(int requestedSizeBytes)
 {
-	if (!requestedSize) {
-		requestedSize = 1;
+	if (!requestedSizeBytes) {
+		requestedSizeBytes = 1;
 	}
 
-	if (IS_NOT_ALIGNED(requestedSize, 8)) {
-		requestedSize = ALIGN_NEXT(requestedSize, 8);
+	if (IS_NOT_ALIGNED(requestedSizeBytes, 8)) {
+		requestedSizeBytes = ALIGN_NEXT(requestedSizeBytes, 8);
 	}
 
-	if (mAllocType == 2) {
-		if (mStackTop + (requestedSize + 8) > mStackLimit) {
+	if (mAllocType == AYU_STACK_GROW_UP) {
+		if (mStackTop + (requestedSizeBytes + 8) > mStackLimit) {
 			return nullptr;
 		}
 
@@ -124,11 +141,11 @@ void* AyuStack::push(int requestedSize)
 			stackStart   = mStackTop;
 		}
 
-		mTotalSize += (requestedSize + 8);
-		mStackTop += (requestedSize + 8);
-		*(u32*)(mStackTop - 8) = previousSize + (requestedSize + 8);
+		mTotalSize += (requestedSizeBytes + 8);
+		mStackTop += (requestedSizeBytes + 8);
+		*(u32*)(mStackTop - 8) = previousSize + (requestedSizeBytes + 8);
 
-		if (mAllocType & 2) {
+		if (mAllocType & AYU_STACK_GROW_UP) {
 			if (mStackTop - *(u32*)(mStackTop - 8) > mInitialStackTop) {
 				(mStackTop);
 			}
@@ -136,25 +153,26 @@ void* AyuStack::push(int requestedSize)
 
 		return (void*)stackStart;
 	} else {
-		if (mStackLimit - (requestedSize + 8) < mStackTop) {
+		if (mStackLimit - (requestedSizeBytes + 8) < mStackTop) {
 			return nullptr;
 		}
 
-		mTotalSize += (requestedSize + 8);
-		mStackLimit -= (requestedSize + 8);
-		*(u32*)mStackLimit = (requestedSize + 8);
+		mTotalSize += (requestedSizeBytes + 8);
+		mStackLimit -= (requestedSizeBytes + 8);
+		*(u32*)mStackLimit = (requestedSizeBytes + 8);
 		return (void*)(mStackLimit + 8);
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	800248B4
  * Size:	000054
+ * Frees the most recent allocation from the stack.
  */
 void AyuStack::pop()
 {
-	if (mAllocType == 2) {
+	if (mAllocType == AYU_STACK_GROW_UP) {
 		u32 subVal = *(u32*)(mStackTop - 8);
 		mTotalSize -= subVal;
 		mStackTop -= subVal;
@@ -166,21 +184,28 @@ void AyuStack::pop()
 	mStackLimit += diffVal;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80024908
  * Size:	000074
+ * Initialises an AyuHeap wrapper around a stack region.
+ * @param name Heap name for debugging.
+ * @param allocFlags Allocation direction flags.
+ * @param stackBase Start of the heap memory.
+ * @param stackSizeBytes Size of the heap region in bytes.
  */
-void AyuHeap::init(immut char* name, int allocType, void* stackTop, int stackSize)
+void AyuHeap::init(immut char* name, int allocFlags, void* stackBase, int stackSizeBytes)
 {
-	create(name, allocType, stackTop, stackSize, false);
+	create(name, allocFlags, stackBase, stackSizeBytes, false);
 	_24 = 0;
 }
 
-/*
+/**
  * --INFO--
  * Address:	8002497C
  * Size:	000068
+ * Constructs a cache of the given size, aligned to 32 bytes.
+ * @param cacheSize Desired cache size in bytes.
  */
 AyuCache::AyuCache(u32 cacheSize)
 {
@@ -191,30 +216,33 @@ AyuCache::AyuCache(u32 cacheSize)
 	init(bufAddr, bufAddr + alignedSize);
 }
 
-/*
+/**
  * --INFO--
  * Address:	800249E4
  * Size:	000198
+ * Initialises cache metadata and free lists.
+ * @param bufferStart Start address of cache buffer.
+ * @param bufferEnd End address of cache buffer.
  */
-void AyuCache::init(u32 a2, u32 a3)
+void AyuCache::init(u32 bufferStart, u32 bufferEnd)
 {
 	mTotalAllocatedUnits            = 0;
-	mTotalCacheSizeBytes            = (a3 - a2);
+	mTotalCacheSizeBytes            = (bufferEnd - bufferStart);
 	mCurrentAllocationTag           = 0;
 	mAllocatedBlockHead.mNext       = &mAllocatedBlockHead;
 	mAllocatedBlockHead.mPrev       = &mAllocatedBlockHead;
 	mAllocatedBlockHead.mTagAndSize = 0;
-	mBlockGuardValue                = 0x87654321;
+	mBlockGuardValue                = AYU_CACHE_GUARD_WORD;
 
-	u32* ptr = (u32*)a2;
+	u32* ptr = (u32*)bufferStart;
 	ptr[1]   = (u32)this;
 	ptr[2]   = (u32)this;
-	ptr[0]   = ((a3 - a2) >> 4) - 0x1000001;
-	ptr[3]   = 0x87654321;
+	ptr[0]   = ((bufferEnd - bufferStart) >> 4) - 0x1000001;
+	ptr[3]   = AYU_CACHE_GUARD_WORD;
 
-	mFreeBlockHead.mNext       = (MemHead*)a2;
-	mFreeBlockHead.mPrev       = (MemHead*)a2;
-	mFreeBlockHead.mTagAndSize = 0xFF000000;
+	mFreeBlockHead.mNext       = (MemHead*)bufferStart;
+	mFreeBlockHead.mPrev       = (MemHead*)bufferStart;
+	mFreeBlockHead.mTagAndSize = AYU_CACHE_FREE_FLAG;
 
 	for (int i = 0; i < 256; i++) {
 		mPageIndexPool[i] = i;
@@ -223,29 +251,32 @@ void AyuCache::init(u32 a2, u32 a3)
 	mNextPageSlot = 0;
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000018
+ * Retrieves the next page index for allocation.
  */
 int AyuCache::getIndex()
 {
 	return mPageIndexPool[mNextPageSlot++];
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000060
+ * Attempts to release a page index back to the pool.
+ * // UNUSED FUNCTION
  */
-void AyuCache::releaseIndex(int idx)
+void AyuCache::releaseIndex(int index)
 {
 	for (int i = 0;; i++) {
 		if (i >= mNextPageSlot) {
-			ERROR("Could not release the index %d\n", idx);
+			ERROR("Could not release the index %d\n", index);
 		}
 
-		if (mPageIndexPool[i] == idx) {
+		if (mPageIndexPool[i] == index) {
 			break;
 		}
 	}
@@ -253,28 +284,32 @@ void AyuCache::releaseIndex(int idx)
 	// UNUSED FUNCTION
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000020
+ * Links a chunk into a doubly-linked list with given tag/size.
  */
-void linkChunk(MemHead* p1, u32 p2, MemHead* p3)
+void linkChunk(MemHead* node, u32 tagAndSize, MemHead* listHead)
 {
-	p1->mNext        = p3;
-	p1->mPrev        = p3->mPrev;
-	p3->mPrev        = p1;
-	p1->mPrev->mNext = p1;
-	p1->mTagAndSize  = p2;
+	node->mNext        = listHead;
+	node->mPrev        = listHead->mPrev;
+	listHead->mPrev    = node;
+	node->mPrev->mNext = node;
+	node->mTagAndSize  = tagAndSize;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80024B7C
  * Size:	000120
+ * Allocates a block from the cache, splitting free blocks as needed.
+ * @param sizeBytes Size in bytes to allocate.
+ * @return Pointer to allocated block or nullptr if none fit.
  */
-void* AyuCache::mallocL(u32 size)
+void* AyuCache::mallocL(u32 sizeBytes)
 {
-	u32 a          = (size + 0xF) >> 4;
+	u32 a          = (sizeBytes + 0xF) >> 4;
 	MemHead* chunk = nullptr;
 	for (MemHead* i = mFreeBlockHead.mNext; i != &mFreeBlockHead; i = i->mNext) {
 		int b = (i->mTagAndSize & 0xFFFFFF) - a;
@@ -305,19 +340,21 @@ void* AyuCache::mallocL(u32 size)
 
 	mTotalAllocatedUnits += chunk->mTagAndSize & 0xFFFFFF;
 	MemHead* next     = chunk + 1;
-	next->mTagAndSize = 0x12345678;
+	next->mTagAndSize = AYU_STACK_GUARD_WORD;
 
 	return ((u32*)chunk + 4);
 }
 
-/*
+/**
  * --INFO--
  * Address:	80024C9C
  * Size:	000114
+ * Frees a cache block and coalesces adjacent free space.
+ * @param ptr Pointer previously returned by mallocL.
  */
-void AyuCache::cacheFree(void* cache)
+void AyuCache::cacheFree(void* ptr)
 {
-	MemHead* blockToFree = (MemHead*)((u32)cache - 16);
+	MemHead* blockToFree = (MemHead*)((u32)ptr - 16);
 	mTotalAllocatedUnits -= blockToFree->mTagAndSize & 0xFFFFFF;
 
 	// Find insertion point in the address-sorted free list
@@ -350,40 +387,44 @@ void AyuCache::cacheFree(void* cache)
 	}
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	00007C
+ * Deletes all entries matching an id (unused stub).
  */
 void AyuCache::deleteIdAll(u32)
 {
 	// UNUSED FUNCTION
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	00002C
+ * Returns amount of free cache space (unused stub).
  */
 u32 AyuCache::amountFree()
 {
 	// UNUSED FUNCTION
 }
 
-/*
+/**
  * --INFO--
  * Address:	80024DB0
  * Size:	000018
+ * Checks whether the allocated list is empty.
  */
 bool AyuCache::isEmpty()
 {
 	return mAllocatedBlockHead.mNext == &mAllocatedBlockHead;
 }
 
-/*
+/**
  * --INFO--
  * Address:	80024DC8
  * Size:	000034
+ * Returns the size of the largest free block in bytes.
  */
 u32 AyuCache::largestBlockFree()
 {

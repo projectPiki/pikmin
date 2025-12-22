@@ -232,7 +232,7 @@ void MoviePlayer::initMovie(MovieInfo* info, int)
 	if (heapid == SYSHEAP_App) {
 		PRINT("using movie heap!\n");
 		gsys->setHeap(SYSHEAP_Movie);
-		type = gsys->getHeap(SYSHEAP_Movie)->setAllocType(1);
+		type = gsys->getHeap(SYSHEAP_Movie)->setAllocType(AYU_STACK_GROW_DOWN);
 	}
 	info->mPlayer = new CinematicPlayer(info->mName);
 	if (mIsGameCam && info->mPlayer->mFlags & CinePlayerFlags::CameraBlend) {

@@ -554,7 +554,7 @@ void GameFlow::hardReset(BaseApp* baseApp)
 	mMemoryCard.init();
 
 	PRINT("load heap\n");
-	gsys->mHeaps[SYSHEAP_Load].init("load", 2, new u8[size], size);
+	gsys->mHeaps[SYSHEAP_Load].init("load", AYU_STACK_GROW_UP, new u8[size], size);
 	mLoadBannerTexture    = nullptr;
 	mLevelBannerTexture   = setLoadBanner("intro/nintendo.bti");
 	mLevelBannerFadeValue = 1.0f;
@@ -600,17 +600,17 @@ void GameFlow::softReset()
 
 	if (mGameSectionID != mNextSectionID) {
 		gsys->resetHeap(1, 2);
-		gsys->getHeap(SYSHEAP_Ovl)->setAllocType(2);
+		gsys->getHeap(SYSHEAP_Ovl)->setAllocType(AYU_STACK_GROW_UP);
 		app->useHeap(1);
 		PRINT("*------------------------------------------- section change\n");
 		AyuHeap* heap = gsys->getHeap(SYSHEAP_Ovl);
 		int max       = heap->getMaxFree();
-		int type      = heap->setAllocType(2);
+		int type      = heap->setAllocType(AYU_STACK_GROW_UP);
 		u8* buf       = new u8[heap->getMaxFree()];
 		heap->setAllocType(type);
-		gsys->mHeaps[SYSHEAP_App].init("app", 2, buf, max);
+		gsys->mHeaps[SYSHEAP_App].init("app", AYU_STACK_GROW_UP, buf, max);
 		app->useHeap(2);
-		gsys->getHeap(gsys->getHeapNum())->setAllocType(1);
+		gsys->getHeap(gsys->getHeapNum())->setAllocType(AYU_STACK_GROW_DOWN);
 
 		switch (mGameSectionID) {
 		case SECTION_NinLogo:
@@ -637,12 +637,12 @@ void GameFlow::softReset()
 			break;
 		}
 
-		gsys->getHeap(gsys->getHeapNum())->setAllocType(2);
+		gsys->getHeap(gsys->getHeapNum())->setAllocType(AYU_STACK_GROW_UP);
 	}
 
 	gsys->resetHeap(2, 2);
 
-	gsys->getHeap(SYSHEAP_App)->setAllocType(2);
+	gsys->getHeap(SYSHEAP_App)->setAllocType(AYU_STACK_GROW_UP);
 	app->useHeap(2);
 	PRINT("*------------------------------------------- softReset %.2fk free\n", gsys->getHeap(SYSHEAP_App)->getFree() / 1024.0f);
 	mGenFlow->init("GameFlow");

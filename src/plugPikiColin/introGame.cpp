@@ -111,7 +111,7 @@ struct IntroGameSetupSection : public BaseGameSection {
 		mDayManager = new DayMgr(nullptr, mController);
 
 		int size = 0x500000;
-		gsys->mHeaps[SYSHEAP_Movie].init("movie", 2, new u8[size], size);
+		gsys->mHeaps[SYSHEAP_Movie].init("movie", AYU_STACK_GROW_UP, new u8[size], size);
 		gameflow.mMoviePlayer->startMovie(DEMOID_OpeningIntroPt1, 0, nullptr, nullptr, nullptr, -1, true);
 		gameflow.mMoviePlayer->startMovie(DEMOID_OpeningIntroPt2, 0, nullptr, nullptr, nullptr, -1, true);
 		gsys->setFade(1.0f, 3.0f);

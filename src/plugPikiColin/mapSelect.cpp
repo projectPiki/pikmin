@@ -277,7 +277,7 @@ MapSelectSection::MapSelectSection()
 	flowCont._24C = 0;
 	flowCont._250 = 0;
 	int size      = 0x19800;
-	gsys->mHeaps[SYSHEAP_Message].init("message", 2, System::alloc(size), size);
+	gsys->mHeaps[SYSHEAP_Message].init("message", AYU_STACK_GROW_UP, System::alloc(size), size);
 	gsys->startLoading(nullptr, true, 60);
 
 	add(new MapSelectSetupSection);

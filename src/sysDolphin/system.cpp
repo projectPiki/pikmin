@@ -515,7 +515,7 @@ void System::hardReset()
 
 	mCacher  = new TextureCacher(0x96000);
 	int size = 0x20000;
-	gsys->mHeaps[SYSHEAP_Lang].init("language", 2, alloc(size), size);
+	gsys->mHeaps[SYSHEAP_Lang].init("language", AYU_STACK_GROW_UP, alloc(size), size);
 	preloadLanguage();
 
 	mTotalFrames = 0;
@@ -816,7 +816,7 @@ void System::Initialise()
 	if (mHeapEnd < 0x1800000) {
 		useSymbols = false;
 	}
-	mHeaps[0].init("sys", 1, (void*)mHeapStart, mHeapEnd);
+	mHeaps[0].init("sys", AYU_STACK_GROW_DOWN, (void*)mHeapStart, mHeapEnd);
 	setHeap(SYSHEAP_Sys);
 	sysCon = new LogStream;
 	errCon = sysCon;

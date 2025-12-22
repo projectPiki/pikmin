@@ -255,7 +255,7 @@ GameSetupSection::GameSetupSection()
 {
 	Node::init("<GameSetupSection>");
 	AyuHeap* heap = gsys->getHeap(SYSHEAP_App);
-	int allocType = heap->setAllocType(1);
+	int allocType = heap->setAllocType(AYU_STACK_GROW_DOWN);
 
 	memStat = new MemStat();
 

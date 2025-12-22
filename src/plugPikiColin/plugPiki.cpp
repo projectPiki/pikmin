@@ -33,14 +33,14 @@ void PlugPikiApp::hardReset()
 	gameflow.hardReset(this);
 	AyuHeap* heap = gsys->getHeap(SYSHEAP_Sys);
 	int max       = heap->getMaxFree();
-	int type      = heap->setAllocType(2);
+	int type      = heap->setAllocType(AYU_STACK_GROW_UP);
 	u8* buf       = new u8[heap->getMaxFree()];
 	heap->setAllocType(type);
 
-	gsys->getHeap(SYSHEAP_Ovl)->init("ovl", 2, buf, max);
+	gsys->getHeap(SYSHEAP_Ovl)->init("ovl", AYU_STACK_GROW_UP, buf, max);
 
 	gsys->resetHeap(SYSHEAP_Ovl, 1);
-	gsys->getHeap(SYSHEAP_Ovl)->setAllocType(1);
+	gsys->getHeap(SYSHEAP_Ovl)->setAllocType(AYU_STACK_GROW_DOWN);
 	useHeap(SYSHEAP_Ovl);
 	gsys->softReset();
 }
