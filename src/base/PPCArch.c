@@ -12,10 +12,8 @@
 #define MOVE_TO_MSR(rS)         (void)0
 #endif
 
-/*
- * --INFO--
- * Address: 801F5944
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 u32 PPCMfmsr(void)
 {
@@ -24,10 +22,8 @@ u32 PPCMfmsr(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F594C
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 void PPCMtmsr(register u32 value)
 {
@@ -64,10 +60,8 @@ void PPCAndCMsr(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801F5954
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 u32 PPCMfhid0(void)
 {
@@ -98,10 +92,8 @@ u32 PPCMfhid1(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F595C
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 u32 PPCMfl2cr(void)
 {
@@ -110,20 +102,16 @@ u32 PPCMfl2cr(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F5964
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 void PPCMtl2cr(register u32 value)
 {
 	MOVE_TO_SPR(L2CR, value);
 }
 
-/*
- * --INFO--
- * Address: 801F596C
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 void PPCMtdec(register u32 value)
 {
@@ -142,10 +130,8 @@ u32 PPCMfdec(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F5974
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 void PPCSync(void)
 {
@@ -164,10 +150,8 @@ void PPCEieio(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801F597C
- * Size:    000014
+/**
+ * @TODO: Documentation
  */
 void PPCHalt(void)
 {
@@ -337,10 +321,8 @@ void PPCMtsia(register u32 value)
 	MOVE_TO_SPR(SIA, value);
 }
 
-/*
- * --INFO--
- * Address: 801F5990
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 u32 PPCMfhid2(void)
 {
@@ -349,10 +331,8 @@ u32 PPCMfhid2(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F5998
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 void PPCMthid2(register u32 value)
 {
@@ -371,10 +351,8 @@ u32 PPCMfwpar(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F59A0
- * Size:    000008
+/**
+ * @TODO: Documentation
  */
 void PPCMtwpar(register u32 value)
 {

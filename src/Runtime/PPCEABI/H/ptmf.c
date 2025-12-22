@@ -55,10 +55,8 @@ void __ptmf_call4(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 80214D30
- * Size:    000028
+/**
+ * @TODO: Documentation
  */
 ASM void __ptmf_scall(...)
 {
