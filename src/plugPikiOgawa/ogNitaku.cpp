@@ -2,6 +2,7 @@
 #include "DebugLog.h"
 #include "P2D/Screen.h"
 #include "SoundMgr.h"
+#include "jaudio/verysimple.h"
 #include "sysNew.h"
 #include "zen/TextColorCallBack.h"
 
@@ -22,9 +23,12 @@ DEFINE_PRINT("OgNitakuSection")
  */
 zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* text2, P2DTextBox* text3, bool startYes, bool canCancel)
 {
-	mScreen          = screen;
-	mTextBoxA        = text1;
-	mTextBoxB        = text2;
+	mScreen = screen;
+#if defined(VERSION_PIKIDEMO)
+#else
+	mTextBoxA = text1;
+	mTextBoxB = text2;
+#endif
 	P2DPane* pane_l0 = mScreen->search('i00l', true);
 	P2DPane* pane_r0 = mScreen->search('i00r', true);
 	P2DPane* pane_l1 = mScreen->search('i01l', true);
@@ -46,14 +50,25 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen* screen, P2DTextBox* text1, P2DTextBox* 
 	mLeftCursorMgr.init(mScreen, mRootPane, 'z00l', _48, _4C);
 	mRightCursorMgr.init(mScreen, mRootPane, 'z00r', _88, _8C);
 	cursorDisable(0.001f);
+#if defined(VERSION_PIKIDEMO)
+	mMesgColorA = new TextColorCallBack(text1);
+	text1->setCallBack(mMesgColorA);
+	mMesgColorB = new TextColorCallBack(text2);
+	text2->setCallBack(mMesgColorB);
+	_A4 = text3->getCharColor();
+	_A8 = text3->getGradColor();
+	_AC = text1->getCharColor();
+	_B0 = text1->getGradColor();
+#else
 	mMesgColorA = new TextColorCallBack(mTextBoxA);
 	mTextBoxA->setCallBack(mMesgColorA);
 	mMesgColorB = new TextColorCallBack(mTextBoxB);
 	mTextBoxB->setCallBack(mMesgColorB);
-	_A4         = text3->getCharColor();
-	_A8         = text3->getGradColor();
-	_AC         = mTextBoxA->getCharColor();
-	_B0         = mTextBoxA->getGradColor();
+	_A4 = text3->getCharColor();
+	_A8 = text3->getGradColor();
+	_AC = mTextBoxA->getCharColor();
+	_B0 = mTextBoxA->getGradColor();
+#endif
 	mDoStartYes = startYes;
 	mCanCancel  = canCancel;
 	mStatus     = Status_0;
@@ -181,14 +196,22 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			} else {
 				MoveCursorYes(0.25f);
 			}
+#if defined(VERSION_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Move1); // Wrong enum
+#else
 			seSystem->playSysSe(SYSSE_MOVE1);
+#endif
 		} else if (input->keyClick(KBBTN_MSTICK_DOWN)) {
 			if (mIsYes) {
 				MoveCursorNo(0.25f);
 			} else {
 				MoveCursorYes(0.25f);
 			}
+#if defined(VERSION_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Move1); // Wrong enum
+#else
 			seSystem->playSysSe(SYSSE_MOVE1);
+#endif
 		} else if (input->keyClick(KBBTN_START | KBBTN_A)) {
 			if (mIsYes) {
 				mStatus2 = ExitSuccess;
@@ -199,7 +222,11 @@ zen::ogNitakuMgr::NitakuStatus zen::ogNitakuMgr::update(Controller* input)
 			mWaitTimer = 0.0f;
 			mStatus    = Exiting;
 			cursorDisable(0.2f);
+#if defined(VERSION_PIKIDEMO)
+			seSystem->playSysSe(JACSYS_Decide1); // Wrong enum
+#else
 			seSystem->playSysSe(SYSSE_DECIDE1);
+#endif
 		} else if (mCanCancel && input->keyClick(KBBTN_B)) {
 			mStatus2   = Status_4;
 			mWaitTimer = 0.0f;

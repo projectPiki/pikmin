@@ -828,7 +828,10 @@ ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  */
 bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
 {
+#if defined(VERSION_PIKIDEMO)
+#else
 	STACK_PAD_VAR(1);
+#endif
 	int a               = *p2;
 	const char* tmpStr1 = &p1[*p2];
 	char b              = *tmpStr1;
@@ -879,15 +882,17 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
 	} else if (b & 0x80) {
 		c = a + 2;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
+	}
 #if defined(VERSION_PIKIDEMO)
 #else
-	} else if (strchr(mHankakuWaitChars, b)) {
+	else if (strchr(mHankakuWaitChars, b)) {
 		PRINT("Hit HANKAKU WAIT!!\n");
 		*p3 = 0.25f;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
 		c = a + 1;
+	}
 #endif
-	} else {
+	else {
 		c = a + 1;
 		SeSystem::playSysSe(SYSSE_TYPEWRITER);
 	}
