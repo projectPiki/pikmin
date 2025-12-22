@@ -26,15 +26,15 @@ public:
 	void setType(int, PikiShapeObject*, CreatureProp*, SimpleAI*);
 
 	// unused/inlined:
-	virtual void startAI(int);              // _34
-	virtual void refresh(Graphics&);        // _EC
-	virtual void update();                  // _E0
-	virtual void doAnimation();             // _108
-	virtual void doAI();                    // _104
-	virtual void startMotion(int);          // _130
-	virtual void startMotion(int, f32);     // _13C
-	virtual void finishMotion();            // _134
-	virtual void finishMotion(f32);         // _138
+	virtual void startAI(int);          // _34
+	virtual void refresh(Graphics&);    // _EC
+	virtual void update();              // _E0
+	virtual void doAnimation();         // _108
+	virtual void doAI();                // _104
+	virtual void startMotion(int);      // _130
+	virtual void startMotion(int, f32); // _13C
+	virtual void finishMotion();        // _134
+	virtual void finishMotion(f32);     // _138
 
 protected:
 	virtual void doKill(); // _10C

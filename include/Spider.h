@@ -436,7 +436,7 @@ private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
 	immut Vector3f* mPosition; // _04
-	Spider* mSpider;     // _08
+	Spider* mSpider;           // _08
 };
 
 /**
@@ -476,7 +476,7 @@ private:
 	// _00-_04 = zen::CallBack1
 	immut Vector3f* mStartPoint; // _04
 	immut Vector3f* mEndPoint;   // _08
-	Spider* mSpider;       // _0C
+	Spider* mSpider;             // _0C
 };
 
 /**

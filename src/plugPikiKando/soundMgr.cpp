@@ -878,7 +878,7 @@ void SeSystem::draw2d(Graphics& gfx)
 	        mListenerPosition.y, mListenerPosition.z, mClock);
 	gfx.texturePrintf(gsys->mConsFont, 30, 70, str);
 
-	int y                = 90;
+	int y                             = 90;
 	const char* names[JACEVENT_COUNT] = { "-----", "battle", "pellet", "onyon", "build", "water", "free", "????", "DAME" };
 	for (int i = 0; i < mMaxEventCount; i++) {
 		if (mEvents[i].mContext) {

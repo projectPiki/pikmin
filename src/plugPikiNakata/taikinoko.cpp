@@ -266,8 +266,8 @@ TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters* params)
 
 	TaiTurningAwayAction* turningAwayAction
 	    = new TaiTurningAwayAction(KINOKOSTATE_RunningAway, TekiMotion::WaitAct1, params->getF(TPF_TurnVelocity));
-	TaiNotAction* notVisTargetAction        = new TaiNotAction(KINOKOSTATE_RunningAway, new TaiVisibleTargetAction(TAI_NO_TRANSIT));
-	TaiTimerAction* timerAction2 = new TaiTimerAction(KINOKOSTATE_RunningAway, 0, params->getF(KINOKOPF_TurningAwayPeriod), 0.0f);
+	TaiNotAction* notVisTargetAction = new TaiNotAction(KINOKOSTATE_RunningAway, new TaiVisibleTargetAction(TAI_NO_TRANSIT));
+	TaiTimerAction* timerAction2     = new TaiTimerAction(KINOKOSTATE_RunningAway, 0, params->getF(KINOKOPF_TurningAwayPeriod), 0.0f);
 	TaiCounterattackSimultaneousDamageAction* counterAttackAction2 = new TaiCounterattackSimultaneousDamageAction(KINOKOSTATE_RunningAway);
 
 	// TURNING AWAY STATE - turning to LEG IT

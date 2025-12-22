@@ -121,8 +121,8 @@ struct TaiOtimotiDroppingAction : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&);           // _08
-	virtual bool act(Teki&);             // _10
+	virtual void start(Teki&);                 // _08
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
@@ -139,8 +139,8 @@ struct TaiOtimotiPressingAction : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&);           // _08
-	virtual bool act(Teki&);             // _10
+	virtual void start(Teki&);                 // _08
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
@@ -157,7 +157,7 @@ struct TaiOtimotiBouncingAction : public TaiAction {
 	{
 	}
 
-	virtual bool act(Teki&);             // _10
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL
@@ -174,8 +174,8 @@ struct TaiOtimotiAttackingAction : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&);           // _08
-	virtual bool act(Teki&);             // _10
+	virtual void start(Teki&);                 // _08
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL

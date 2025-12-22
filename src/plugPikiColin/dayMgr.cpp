@@ -107,9 +107,9 @@ struct PositionMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	Vector3f* mPosition;     // _B4
-	bool mIsSmallAdjustment; // _B8
-	f32* mComponentValue;    // _BC
+	Vector3f* mPosition;        // _B4
+	bool mIsSmallAdjustment;    // _B8
+	f32* mComponentValue;       // _BC
 	immut char* mComponentName; // _C0
 };
 
@@ -200,8 +200,8 @@ struct ColourMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	Colour* mColour;      // _B4
-	u8* mComponentValue;  // _B8, this is a pointer to the component value (R, G, B, A) of mColour
+	Colour* mColour;            // _B4
+	u8* mComponentValue;        // _B8, this is a pointer to the component value (R, G, B, A) of mColour
 	immut char* mComponentName; // _BC, this is the component name ("R", "G", "B", "A")
 };
 
@@ -265,9 +265,9 @@ struct FogMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	f32* mNear;           // _B4
-	f32* mFar;            // _B8
-	f32* mComponentValue; // _BC
+	f32* mNear;                 // _B4
+	f32* mFar;                  // _B8
+	f32* mComponentValue;       // _BC
 	immut char* mComponentName; // _C0
 };
 
@@ -362,11 +362,11 @@ struct LightMenu : public Menu {
 
 	// _00     = VTBL
 	// _00-_B4 = Menu
-	int mSelectedLightType; //_B4, basically, is this a SPOT or a POINT light?
-	int* mLightAttachType;  //_B8
-	Light* mLight;          // _BC
-	f32* mSpotFov;          // _C0
-	f32* mActiveValuePtr;   // _C4
+	int mSelectedLightType;       //_B4, basically, is this a SPOT or a POINT light?
+	int* mLightAttachType;        //_B8
+	Light* mLight;                // _BC
+	f32* mSpotFov;                // _C0
+	f32* mActiveValuePtr;         // _C4
 	immut char* mActiveValueName; // _C8
 };
 

@@ -373,10 +373,10 @@ BOOL StreamAudio_Start(u32 ctrlID, int soundId, immut char* name, int r6, int r7
 
 	switch (ctrl->header.audioFormat) {
 	case AUDIOFRMT_16BIT_PCM:
-		ctrl->chunkSize = 0x2400; 
+		ctrl->chunkSize = 0x2400;
 		break;
 	case AUDIOFRMT_8BIT_PCM:
-		ctrl->chunkSize = 0x1200; 
+		ctrl->chunkSize = 0x1200;
 		break;
 
 	case AUDIOFRMT_ADPCM:
@@ -424,7 +424,7 @@ static u32 __Decode(StreamCtrl_* ctrl);
  */
 static s32 StreamAudio_Callback(void* data)
 {
-	StreamCtrl_* ctrl = (StreamCtrl_*)data;
+	StreamCtrl_* ctrl       = (StreamCtrl_*)data;
 	int bufferUpdatePending = 0;
 	u32 channelIdx;
 	STACK_PAD_VAR(2);

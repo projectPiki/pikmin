@@ -236,8 +236,7 @@ void _savevr(void)
  * Address:	80214E70
  * Size:	00004C
  */
-ASM static void __restore_fpr(void)
-{
+ASM static void __restore_fpr(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
 		ENTRY_RESTORE_FPR(14)
@@ -285,8 +284,7 @@ ASM static void __restore_fpr(void)
  * Address:	........
  * Size:	00004C
  */
-ASM static void __save_gpr(void)
-{
+ASM static void __save_gpr(void) {
 #ifdef __MWERKS__ // clang-format off
 		nofralloc
 		ENTRY_SAVE_GPR(14)

@@ -2611,8 +2611,8 @@ void NaviNukuState::cleanup(Navi* navi)
 {
 	if (!_14 && navi->mIsPlucking) {
 		PRINT("renzoku %d + 1 nuki !!\n", navi->mFastPluckKeyTaps);
-		navi->mFastPluckKeyTaps   = 0;
-		navi->mNoPluckTimer       = 0;
+		navi->mFastPluckKeyTaps = 0;
+		navi->mNoPluckTimer     = 0;
 	}
 	playerState->mTotalPluckedPikiCount++;
 	PRINT("** player pulled out %d pikmins so far\n", playerState->mTotalPluckedPikiCount);

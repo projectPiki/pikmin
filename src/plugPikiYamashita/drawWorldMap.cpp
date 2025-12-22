@@ -1696,9 +1696,9 @@ zen::DrawWorldMap::DrawWorldMap()
 	mLineScreen  = new DrawScreen("screen/blo/w_line.blo", nullptr, true, true);
 	mBackScreen  = new DrawScreen("screen/blo/w_back.blo", nullptr, true, true);
 
-	mModeTimer            = 0.0f;
-	mCurrentMode          = DrawWorldMapMode::Null;
-	mReturnStatus         = RETURNSTATUS_Null;
+	mModeTimer    = 0.0f;
+	mCurrentMode  = DrawWorldMapMode::Null;
+	mReturnStatus = RETURNSTATUS_Null;
 
 	// SET UP COURSE POINTS
 	mCoursePointMgr = new WorldMapCoursePointMgr();
@@ -1806,9 +1806,9 @@ bool zen::DrawWorldMap::update(Controller* controller)
 			DrawWMPause::returnStatusFlag pauseState = mPause.update(controller);
 			if (pauseState != DrawWMPause::CourseSelected) {
 				if (pauseState == DrawWMPause::Cancelled) {
-					mCurrentMode          = DrawWorldMapMode::Null;
-					res                   = true;
-					mReturnStatus         = RETURNSTATUS_WorldMapPaused;
+					mCurrentMode  = DrawWorldMapMode::Null;
+					res           = true;
+					mReturnStatus = RETURNSTATUS_WorldMapPaused;
 				} else {
 					mCurrentMode = DrawWorldMapMode::Operation;
 				}

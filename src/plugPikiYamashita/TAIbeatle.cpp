@@ -885,17 +885,17 @@ TAIbeatleStrategy::TAIbeatleStrategy()
 
 	TAIArandomWalk* unused2 = new TAIArandomWalk(TAI_NO_TRANSIT, TekiMotion::Move1);
 
-	TAIAlookAround* lookAroundAct = new TAIAlookAround(TAI_NO_TRANSIT, TekiMotion::Wait1, TekiMotion::Type1, TekiMotion::Type2);
-	TAIAvisibleNavi* visibleNaviAct                      = new TAIAvisibleNavi(TAIbeatleStateID::Unk6);
-	TAIAvisiblePikiBeatle* visiblePikiAct                = new TAIAvisiblePikiBeatle(TAIbeatleStateID::Unk6);
+	TAIAlookAround* lookAroundAct         = new TAIAlookAround(TAI_NO_TRANSIT, TekiMotion::Wait1, TekiMotion::Type1, TekiMotion::Type2);
+	TAIAvisibleNavi* visibleNaviAct       = new TAIAvisibleNavi(TAIbeatleStateID::Unk6);
+	TAIAvisiblePikiBeatle* visiblePikiAct = new TAIAvisiblePikiBeatle(TAIbeatleStateID::Unk6);
 	TAIAturnFocusCreature* focusOnCreatureAct
 	    = new TAIAturnFocusCreature(TAIbeatleStateID::Unk8, TekiMotion::Type1, TekiMotion::Type2, true);
 	TAIAunvisibleTarget* unvisibleTargetAct              = new TAIAunvisibleTarget(TAIbeatleStateID::Unk2);
 	TAIAapproachTargetPriorityFaceDir* approachTargetAct = new TAIAapproachTargetPriorityFaceDir(TAIbeatleStateID::Unk8, TekiMotion::Move1);
 
 	TAIAinsideOptionalRangeBeatle* inOptionalRange = new TAIAinsideOptionalRangeBeatle(TAIbeatleStateID::Unk8);
-	TAIArockAttack* rockAttack = new TAIArockAttack(TAIbeatleStateID::Unk13, TAIbeatleStateID::Unk11, TekiMotion::Attack);
-	TAIAoutsideTerritory* outsideTerritoryAct      = new TAIAoutsideTerritory(TAIbeatleStateID::Unk9);
+	TAIArockAttack* rockAttack                = new TAIArockAttack(TAIbeatleStateID::Unk13, TAIbeatleStateID::Unk11, TekiMotion::Attack);
+	TAIAoutsideTerritory* outsideTerritoryAct = new TAIAoutsideTerritory(TAIbeatleStateID::Unk9);
 
 	TAIAturnHome* turnHomeAct = new TAIAturnHome(TAIbeatleStateID::Unk10, TekiMotion::Type1, TekiMotion::Type2);
 	TAIAgoingHome* goHomeAct  = new TAIAgoingHome(TAIbeatleStateID::Unk2, TekiMotion::Move1);

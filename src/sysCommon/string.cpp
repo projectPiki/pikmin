@@ -29,7 +29,7 @@ bool String::isSame(immut char* str)
 int String::getLength() immut
 {
 	const char* str = mString;
-	int len = 0;
+	int len         = 0;
 	while (*(str++)) {
 		len++;
 	}

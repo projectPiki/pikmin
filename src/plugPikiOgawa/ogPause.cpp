@@ -30,7 +30,7 @@ DEFINE_PRINT("OgPauseSection")
 zen::ogScrPauseMgr::ogScrPauseMgr()
 {
 	mIsChallengeMode = false;
-	mBlackScreen = new P2DScreen();
+	mBlackScreen     = new P2DScreen();
 	mBlackScreen->set("screen/blo/black.blo", false, false, true);
 	// this might be P2DTextBox instead, unsure
 	mBlackPane = static_cast<P2DPicture*>(mBlackScreen->search('blck', true));

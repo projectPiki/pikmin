@@ -313,9 +313,9 @@ void UpdateDSPchannel(dspch_* chan)
 void UpdateDSPchannelAll()
 {
 	// Calculate delta time since last update
-	int tick    = OSGetTick();
-	u32 old     = tick - old_time;
-	old_time    = tick;
+	int tick = OSGetTick();
+	u32 old  = tick - old_time;
+	old_time = tick;
 
 	// Get subframe index based on DSP sync status and store timing history
 	int subframeIdx      = JAC_SUBFRAMES - DspSyncCountCheck();

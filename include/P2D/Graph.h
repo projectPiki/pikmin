@@ -32,9 +32,9 @@ public:
 	{
 		place(PUTRect(x0, y0, x0 + width, y0 + height));
 	}
-	virtual void setPort();      // _14
-	virtual void setup2D();      // _18
-	virtual void setScissor();   // _1C
+	virtual void setPort();    // _14
+	virtual void setup2D();    // _18
+	virtual void setScissor(); // _1C
 
 	void scissor(const PUTRect& pos);
 	void setColor(immut Colour&, immut Colour&, immut Colour&, immut Colour&);

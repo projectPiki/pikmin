@@ -163,9 +163,9 @@ public:
 	ogDrawScrMenu mMinimapScreenMenu; // _00
 
 private:
-	P2DPane* mMapsPane;               // _24
-	Vector3f mMapAnchorPosition;      // _28
-	P2DPane* mDirectionArrowPane;     // _34
+	P2DPane* mMapsPane;           // _24
+	Vector3f mMapAnchorPosition;  // _28
+	P2DPane* mDirectionArrowPane; // _34
 };
 
 // This struct is completely inlined

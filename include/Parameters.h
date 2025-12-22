@@ -22,9 +22,9 @@ struct BaseParm {
 	virtual void genAge(AgeServer&);
 #endif
 
-	virtual int size() = 0;                            // _08
-	virtual void write(RandomAccessStream&) { }        // _0C
-	virtual void read(RandomAccessStream&) { }         // _10
+	virtual int size() = 0;                     // _08
+	virtual void write(RandomAccessStream&) { } // _0C
+	virtual void read(RandomAccessStream&) { }  // _10
 };
 
 /**
@@ -62,9 +62,9 @@ struct Parm : public BaseParm {
 		mValue = value;
 	}
 
-	virtual int size() { return sizeof(T); }        // _08
-	virtual void write(RandomAccessStream&);        // _0C
-	virtual void read(RandomAccessStream&);         // _10
+	virtual int size() { return sizeof(T); } // _08
+	virtual void write(RandomAccessStream&); // _0C
+	virtual void read(RandomAccessStream&);  // _10
 
 	T& operator()() { return mValue; }
 	void operator()(T val) { mValue = val; }

@@ -355,7 +355,7 @@ void PcamCamera::makePosture()
 	NVector3f NRef polar  = NVector3f();
 	outputTargetWatchpoint(target);
 
-	f32 homingSpeed    = getCurrentHomingSpeed();
+	f32 homingSpeed        = getCurrentHomingSpeed();
 	NVector3f NRef moveDir = NVector3f();
 	moveDir.sub2(target, getWatchpoint());
 	moveDir.scale(homingSpeed);

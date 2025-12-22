@@ -3057,7 +3057,7 @@ PikiAutoNukiState::PikiAutoNukiState()
 void PikiAutoNukiState::init(Piki* piki)
 {
 	immut Choice motionChoice[1] = { PIKIANIM_Kaifuku, 1.0f }; // lol
-	int motionIdx          = selectRandomly(motionChoice, 1);
+	int motionIdx                = selectRandomly(motionChoice, 1);
 	piki->mPikiAnimMgr.startMotion(PaniMotionInfo(motionIdx, piki), PaniMotionInfo(motionIdx));
 	mToCreateEffect = false;
 	piki->mVelocity.set(0.0f, 0.0f, 0.0f);

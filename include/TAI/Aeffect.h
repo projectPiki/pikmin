@@ -35,8 +35,8 @@ public:
 		init(effID, true, soundID, rumbleID, sinkThreshold, footNum, jointID0, jointID1, jointID2, jointID3);
 	}
 
-	virtual void start(Teki&);                 // _08
-	virtual bool act(Teki&);                   // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual void setType(Vector3f&, int, int); // _1C

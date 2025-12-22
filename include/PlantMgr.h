@@ -66,7 +66,7 @@ protected:
 public:
 	// _00      = VTBL
 	// _00-_304 = AICreature
-	u16 mPlantType;                   // _304, see PlantTypes enum
+	u16 mPlantType; // _304, see PlantTypes enum
 
 protected:
 	f32 mMotionSpeed;                 // _308

@@ -43,10 +43,10 @@ public:
 protected:
 	// _00      = VTBL
 	// _00-_43C = DynCreature
-	bool mIsRealDynamics;        // _43C
+	bool mIsRealDynamics;         // _43C
 	bool mIsCollisionInitialised; // _43D
 	bool _43E;                    // _43E
-	bool mIsDynamicsSimpleFixed; // _43F
+	bool mIsDynamicsSimpleFixed;  // _43F
 };
 
 /**

@@ -64,7 +64,7 @@ struct TaiCollecLetGoOfPelletAction : public TaiAction {
 	{
 	}
 
-	virtual bool act(Teki&);             // _10
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 	// _04     = VTBL

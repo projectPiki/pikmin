@@ -173,9 +173,9 @@ public:
 
 	DrawMenuBase(immut char* bloFileName, bool useAlphaMgr, bool useTexAnimMgr);
 
-	virtual void draw(Graphics&);                           // _10
-	virtual bool update(Controller*);                       // _14
-	virtual void start();                                   // _18
+	virtual void draw(Graphics&);     // _10
+	virtual bool update(Controller*); // _14
+	virtual void start();             // _18
 
 	// unused/inlined:
 	~DrawMenuBase() { }

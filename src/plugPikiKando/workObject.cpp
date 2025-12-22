@@ -902,7 +902,7 @@ void HinderRock::update()
 		mVelocity = mDestinationPosition - mSRT.t;
 		if (std::sqrtf(mVelocity.x * mVelocity.x + mVelocity.z * mVelocity.z) < 4.0f) {
 			mSRT.t = mDestinationPosition;
-			mState    = 2;
+			mState = 2;
 			mWayPoint->setFlag(true);
 			seSystem->playSysSe(SYSSE_WORK_FINISH);
 			PRINT("つきざました！\n"); // 'it's here!'

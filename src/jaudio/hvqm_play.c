@@ -47,8 +47,8 @@ struct PICControl {
 } pic_ctrl[24];
 
 struct DVDControl {
-	int _00;   // _00
-	u8 mState; // _04
+	int _00;         // _00
+	u8 mState;       // _04
 	int mFileOffset; // _08
 	int mLoadedSize; // _0C
 } dvd_ctrl[3];
@@ -119,7 +119,7 @@ static void __LoadFin(u32 a)
 {
 	dvd_active--;
 
-	dvd_ctrl[dvdcount % 3].mState = 2;
+	dvd_ctrl[dvdcount % 3].mState      = 2;
 	dvd_ctrl[dvdcount % 3].mFileOffset = dvdcount << 0x13;
 	dvd_ctrl[dvdcount % 3].mLoadedSize = dvdload_size;
 
@@ -243,8 +243,8 @@ void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 	while (status == 0) { }
 
 	dvd_ctrl[0].mFileOffset = 0;
-	dvd_ctrl[0].mState = 2;
-	dvd_ctrl[0].mLoadedSize    = 0x80000;
+	dvd_ctrl[0].mState      = 2;
+	dvd_ctrl[0].mLoadedSize = 0x80000;
 	dvdcount++;
 	strcpy(filename, movieFilePath);
 	__ReLoad();
@@ -301,7 +301,7 @@ void Jac_HVQM_Init(immut char* movieFilePath, u8* data, u32 bufferSize)
 
 	header.audioFormat = audioFormat;
 	header._0C         = 0x10;
-	header.frameRate          = 30; // 30 FPS
+	header.frameRate   = 30; // 30 FPS
 
 	for (int i = 0; i < 4; i++) {
 		header._10[i] = 0;
@@ -590,7 +590,7 @@ int Jac_GetPicture(void* data, int* x, int* y)
 		if (pic_ctrl[i].mBufferState && frame == pic_ctrl[i].mFrameNumber) {
 			pic_ctrl[i].mBufferState = 2;
 			*(void**)data            = pic_ctrl[i].mPicBuffer;
-			drop_picture_flag = 0;
+			drop_picture_flag        = 0;
 			if (index != -1 && index != i) {
 				pic_ctrl[index].mBufferState = 0;
 			}

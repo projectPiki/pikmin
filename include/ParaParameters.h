@@ -20,8 +20,8 @@ struct ParaParameterInfo {
 	}
 
 	immut char* mName; // _00
-	T mMin;      // _04
-	T mMax;      // _08
+	T mMin;            // _04
+	T mMax;            // _08
 };
 
 /**

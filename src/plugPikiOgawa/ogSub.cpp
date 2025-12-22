@@ -915,7 +915,7 @@ bool ogMsgCtrlTagMgr::CheckCtrlTag(immut char* p1, s16* p2, f32* p3)
 		*p3 = 0.25f;
 		c   = a + 2;
 	} else if (b == 0x1B) { // esc character
-		c       = a + 1;
+		c             = a + 1;
 		const char* d = p1 + c;
 		if (strncmp(d, "CC", 2) == 0 || strncmp(d, "GC", 2) == 0 || strncmp(d, "TM", 2) == 0 || strncmp(d, "Z", 1) == 0
 		    || strncmp(d, "CA", 2) == 0 || strncmp(d, "GA", 2) == 0 || strncmp(d, "TB", 2) == 0 || strncmp(d, "BS", 2) == 0

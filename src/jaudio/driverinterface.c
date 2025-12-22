@@ -759,7 +759,7 @@ static void KillBrokenLogicalChannels(dspch_* ch)
 static int CommonCallbackLogicalChannel(dspch_* ch, u32 eventType)
 {
 	u32 activeOscCount = 0;
-	jc_* jc = ch->logicalChan;
+	jc_* jc            = ch->logicalChan;
 	u32 oscIndex;
 	dspch_** REF_ch = &ch;
 	jc_** REF_jc    = &jc;
@@ -918,7 +918,7 @@ BOOL StopLogicalChannel(jc_* jc)
 		return FALSE;
 	}
 
-	ch->logicalChanCb   = NULL;
+	ch->logicalChanCb             = NULL;
 	jc->dspChannel->callbackTimer = 0;
 	DSP_PlayStop(jc->dspChannel->buffer_idx);
 	DSP_FlushChannel(jc->dspChannel->buffer_idx);
