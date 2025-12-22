@@ -55,11 +55,6 @@ void __ptmf_call4(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 80214D30
- * Size:    000028
- */
 ASM void __ptmf_scall(...)
 {
 #ifdef __MWERKS__ // clang-format off

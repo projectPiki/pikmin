@@ -84,11 +84,6 @@ void Plane::frictionVector(Vector3f&, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 8003756C
- * Size:    0000A0
- */
 void CullingPlane::CheckMinMaxDir()
 {
 	if (mPlane.mNormal.x < 0.0f) {
@@ -135,11 +130,6 @@ void Vector3f::rotateTranspose(immut Matrix4f&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 8003760C
- * Size:    0000AC
- */
 void Vector3f::rotate(immut Matrix4f& mtx)
 {
 	Vector3f vec;
@@ -150,11 +140,6 @@ void Vector3f::rotate(immut Matrix4f& mtx)
 	*this = vec;
 }
 
-/*
- * --INFO--
- * Address: 800376B8
- * Size:    000094
- */
 void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
 	outVec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z;
@@ -162,11 +147,6 @@ void Vector3f::rotateTo(immut Matrix4f& mtx, Vector3f& outVec)
 	outVec.z = mtx.mMtx[2][0] * x + mtx.mMtx[2][1] * y + mtx.mMtx[2][2] * z;
 }
 
-/*
- * --INFO--
- * Address: 8003774C
- * Size:    0000C4
- */
 void Vector3f::multMatrix(immut Matrix4f& mtx)
 {
 	Vector3f vec;
@@ -176,11 +156,6 @@ void Vector3f::multMatrix(immut Matrix4f& mtx)
 	*this = vec;
 }
 
-/*
- * --INFO--
- * Address: 80037810
- * Size:    0000AC
- */
 void Vector3f::multMatrixTo(immut Matrix4f& mtx, Vector3f& outVec)
 {
 	outVec.x = mtx.mMtx[0][0] * x + mtx.mMtx[0][1] * y + mtx.mMtx[0][2] * z + mtx.mMtx[0][3];
@@ -208,11 +183,6 @@ void Vector3f::rotateInverse(immut Quat&)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 800378BC
- * Size:    0004E4
- */
 void Quat::fromMat3f(immut Matrix3f& mtx)
 {
 	f32 diag = mtx.mMtx[0][0] + mtx.mMtx[1][1] + mtx.mMtx[2][2];
@@ -292,11 +262,6 @@ void Quat::fromMat3f(immut Matrix3f& mtx)
 	v.z *= n;
 }
 
-/*
- * --INFO--
- * Address: 80037DA0
- * Size:    0000A4
- */
 void Quat::rotate(immut Vector3f& axis, f32 angle)
 {
 	f32 theta  = 0.5f * angle;
@@ -308,11 +273,6 @@ void Quat::rotate(immut Vector3f& axis, f32 angle)
 	multiply(quat);
 }
 
-/*
- * --INFO--
- * Address: 80037E44
- * Size:    0000EC
- */
 void Quat::multiply(immut Quat& other)
 {
 	Quat tmp;
@@ -336,11 +296,6 @@ void Quat::multiplyTo(immut Quat& other, Quat& outQuat)
 	outQuat.v.z = (other.v.x * v.y + (other.s * v.z + other.v.z * s)) - other.v.y * v.x;
 }
 
-/*
- * --INFO--
- * Address: 80037F30
- * Size:    0000D4
- */
 void Quat::normalise()
 {
 	f32 factor = 1.0f / std::sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + s * s);
@@ -350,11 +305,6 @@ void Quat::normalise()
 	s *= factor;
 }
 
-/*
- * --INFO--
- * Address: 80038004
- * Size:    000080
- */
 void Quat::genVectorX(Vector3f& outVec) immut
 {
 	f32 yy   = v.y * v.y;
@@ -370,11 +320,6 @@ void Quat::genVectorX(Vector3f& outVec) immut
 	outVec.z = 2.0f * xz - 2.0f * sy;
 }
 
-/*
- * --INFO--
- * Address: 80038084
- * Size:    000080
- */
 void Quat::genVectorY(Vector3f& outVec) immut
 {
 	f32 xy   = v.x * v.y;
@@ -390,11 +335,6 @@ void Quat::genVectorY(Vector3f& outVec) immut
 	outVec.z = 2.0f * yz + 2.0f * sx;
 }
 
-/*
- * --INFO--
- * Address: 80038104
- * Size:    000080
- */
 void Quat::genVectorZ(Vector3f& outVec) immut
 {
 	f32 xz   = v.x * v.z;
@@ -410,11 +350,6 @@ void Quat::genVectorZ(Vector3f& outVec) immut
 	outVec.z = (1.0f - 2.0f * xx) - (2.0f * yy);
 }
 
-/*
- * --INFO--
- * Address: 80038184
- * Size:    000164
- */
 void Quat::slerp(immut Quat& other, f32 t, int)
 {
 	f32 dot = v.x * other.v.x + v.y * other.v.y + v.z * other.v.z + s * other.s;
@@ -447,11 +382,6 @@ void Quat::slerp(immut Quat& other, f32 t, int)
 	s   = tComp * s + t * other.s;
 }
 
-/*
- * --INFO--
- * Address: 800382E8
- * Size:    0002A0
- */
 void Quat::fromEuler(immut Vector3f& angles)
 {
 	STACK_PAD_VAR(3);
@@ -483,11 +413,6 @@ void Quat::fromEuler(immut Vector3f& angles)
 	normalise();
 }
 
-/*
- * --INFO--
- * Address: 80038588
- * Size:    00002C
- */
 f32 roundAng(f32 x)
 {
 	if (x < 0.0f) {
@@ -501,11 +426,6 @@ f32 roundAng(f32 x)
 	return x;
 }
 
-/*
- * --INFO--
- * Address: 800385B4
- * Size:    000074
- */
 f32 angDist(f32 angle1, f32 angle2)
 {
 	f32 angle = roundAng(angle1 - angle2);
@@ -516,11 +436,6 @@ f32 angDist(f32 angle1, f32 angle2)
 	return angle;
 }
 
-/*
- * --INFO--
- * Address: 80038628
- * Size:    000050
- */
 f32 qdist2(f32 x0, f32 y0, f32 x1, f32 y1)
 {
 	f32 min;
@@ -586,11 +501,6 @@ f32 qdist3(f32 x0, f32 y0, f32 z0, f32 x1, f32 y1, f32 z1)
 	return (min + mid) / 2.0f + max;
 }
 
-/*
- * --INFO--
- * Address: 80038678
- * Size:    0001BC
- */
 void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 {
 	for (int i = 0; i < 3; ++i) {
@@ -606,11 +516,6 @@ void CollTriInfo::init(RoomInfo* info, immut Vector3f* vertices)
 	}
 }
 
-/*
- * --INFO--
- * Address: 80038834
- * Size:    0000C4
- */
 int CollTriInfo::behindEdge(immut Vector3f& point)
 {
 	for (int i = 0; i < 3; i++) {
@@ -622,11 +527,6 @@ int CollTriInfo::behindEdge(immut Vector3f& point)
 	return -1;
 }
 
-/*
- * --INFO--
- * Address: 800388F8
- * Size:    000644
- */
 void BoundBox::draw(Graphics& gfx)
 {
 	// Top face
@@ -676,11 +576,6 @@ void BoundBox::draw(Graphics& gfx)
 	gfx.drawOneTri(triangleVertices, nullptr, unk2, 4);
 }
 
-/*
- * --INFO--
- * Address: 80038F3C
- * Size:    0000E8
- */
 static bool pointInsideTri(KTri& tri, Vector3f& point)
 {
 	Vector3f vertex1;
@@ -716,11 +611,6 @@ static bool pointInsideTri(KTri& tri, Vector3f& point)
 	return true;
 }
 
-/*
- * --INFO--
- * Address: 80039024
- * Size:    000260
- */
 f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vector3f* vertex3, BoundBox& boundingBox, bool)
 {
 	// Project triangle vertices onto XZ plane (y=0)
@@ -790,11 +680,6 @@ f32 triRectDistance(immut Vector3f* vertex1, immut Vector3f* vertex2, immut Vect
 	return distanceTriRect(projTriangle, projRectangle, &a, &b, &c, &d);
 }
 
-/*
- * --INFO--
- * Address: 80039284
- * Size:    0001A8
- */
 f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV, f32* p5, f32* p6)
 {
 	f32 sqrDist = sqrDistance(tri, rect, barycentricU, barycentricV, p5, p6);
@@ -809,11 +694,6 @@ f32 distanceTriRect(KTri& tri, KRect& rect, f32* barycentricU, f32* barycentricV
 	return std::sqrtf(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003942C
- * Size:    000070
- */
 bool KRect::inside(immut Vector3f& point)
 {
 	Vector3f rectMin = mBotTri.Origin();
@@ -828,20 +708,10 @@ bool KRect::inside(immut Vector3f& point)
 	return false;
 }
 
-/*
- * --INFO--
- * Address: 8003949C
- * Size:    00002C
- */
 KTri::KTri()
 {
 }
 
-/*
- * --INFO--
- * Address: 800394C8
- * Size:    0000C4
- */
 void KTri::set(immut Vector3f& pointA, immut Vector3f& pointB, immut Vector3f& pointC)
 {
 	mVertA  = pointA;
@@ -861,11 +731,6 @@ KSegment::KSegment()
 
 f32 gs_fTolerance = 0.00001f;
 
-/*
- * --INFO--
- * Address: 8003958C
- * Size:    0018C4
- */
 f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5)
 {
 	Vector3f segToTri    = tri.Origin() - segment.Origin();
@@ -1364,11 +1229,6 @@ f32 sqrDistance(KSegment& segment, KTri& tri, f32* outP3, f32* outP4, f32* outP5
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003AE50
- * Size:    000828
- */
 f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 {
 	Vector3f origToOrig   = segment1.Origin() - segment2.Origin();
@@ -1642,11 +1502,6 @@ f32 sqrDistance(KSegment& segment1, KSegment& segment2, f32* outP3, f32* outP4)
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003B678
- * Size:    001D9C
- */
 f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 {
 
@@ -2407,11 +2262,6 @@ f32 sqrDistance(KSegment& segment, KRect& rect, f32* p3, f32* p4, f32* p5)
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003D414
- * Size:    000468
- */
 f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 {
 	f32 tmpP3, tmpP4, tmpP32, tmpP42;
@@ -2515,11 +2365,6 @@ f32 sqrDistance(KTri& tri, KRect& rect, f32* p3, f32* p4, f32* p5, f32* p6)
 	return absF(sqrDist);
 }
 
-/*
- * --INFO--
- * Address: 8003D87C
- * Size:    000540
- */
 f32 sqrDistance(immut Vector3f& point, KTri& tri, f32* outBaryU, f32* outBaryV)
 {
 	Vector3f pointToOrigin = tri.Origin() - point;

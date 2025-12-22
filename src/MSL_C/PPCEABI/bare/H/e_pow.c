@@ -1,8 +1,3 @@
-/*
- * --INFO--
- * Address: 8021A9B0
- * Size:    000818
- */
 
 //========================================================================
 //
@@ -121,11 +116,6 @@
 #include "fdlibm.h"
 #include "types.h"
 
-/*
- * --INFO--
- * Address: 8021B1C8
- * Size:    000020
- */
 f64 scalbn(f64 p1, int p2)
 {
 	return ldexp(p1, p2);

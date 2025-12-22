@@ -286,21 +286,11 @@ const u8 __upper_map[256] = {
 	0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF,
 };
 
-/*
- * --INFO--
- * Address: 80215DDC
- * Size:    000028
- */
 int tolower(int c)
 {
 	return (c == -1) ? -1 : __lower_map[c & 0xff];
 }
 
-/*
- * --INFO--
- * Address: 80215DB4
- * Size:    000028
- */
 int toupper(int c)
 {
 	return (c == -1) ? -1 : __upper_map[c & 0xff];

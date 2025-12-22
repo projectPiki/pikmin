@@ -12,11 +12,6 @@
 #define MOVE_TO_MSR(rS)         (void)0
 #endif
 
-/*
- * --INFO--
- * Address: 801F5944
- * Size:    000008
- */
 u32 PPCMfmsr(void)
 {
 	register u32 result;
@@ -24,11 +19,6 @@ u32 PPCMfmsr(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F594C
- * Size:    000008
- */
 void PPCMtmsr(register u32 value)
 {
 	MOVE_TO_MSR(value);
@@ -64,11 +54,6 @@ void PPCAndCMsr(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801F5954
- * Size:    000008
- */
 u32 PPCMfhid0(void)
 {
 	register u32 result;
@@ -98,11 +83,6 @@ u32 PPCMfhid1(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F595C
- * Size:    000008
- */
 u32 PPCMfl2cr(void)
 {
 	register u32 result;
@@ -110,21 +90,11 @@ u32 PPCMfl2cr(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F5964
- * Size:    000008
- */
 void PPCMtl2cr(register u32 value)
 {
 	MOVE_TO_SPR(L2CR, value);
 }
 
-/*
- * --INFO--
- * Address: 801F596C
- * Size:    000008
- */
 void PPCMtdec(register u32 value)
 {
 	MOVE_TO_SPR(dec, value);
@@ -142,11 +112,6 @@ u32 PPCMfdec(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F5974
- * Size:    000008
- */
 void PPCSync(void)
 {
 #ifdef __MWERKS__
@@ -164,11 +129,6 @@ void PPCEieio(void)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address: 801F597C
- * Size:    000014
- */
 void PPCHalt(void)
 {
 	__sync();
@@ -337,11 +297,6 @@ void PPCMtsia(register u32 value)
 	MOVE_TO_SPR(SIA, value);
 }
 
-/*
- * --INFO--
- * Address: 801F5990
- * Size:    000008
- */
 u32 PPCMfhid2(void)
 {
 	register u32 result;
@@ -349,11 +304,6 @@ u32 PPCMfhid2(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F5998
- * Size:    000008
- */
 void PPCMthid2(register u32 value)
 {
 	MOVE_TO_SPR(HID2, value);
@@ -371,11 +321,6 @@ u32 PPCMfwpar(void)
 	return result;
 }
 
-/*
- * --INFO--
- * Address: 801F59A0
- * Size:    000008
- */
 void PPCMtwpar(register u32 value)
 {
 	MOVE_TO_SPR(WPAR, value);
