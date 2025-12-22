@@ -1,16 +1,22 @@
 #include "MapSelect.h"
+#include "Camera.h"
+#include "Controller.h"
 #include "DebugLog.h"
 #include "Delegate.h"
 #include "Demo.h"
 #include "FlowController.h"
+#include "Font.h"
 #include "Graphics.h"
 #include "Menu.h"
 #include "gameflow.h"
 #include "jaudio/piki_scene.h"
 #include "sysNew.h"
+#include "system.h"
+#include "zen/DrawCM.h"
+#include "zen/DrawWorldMap.h"
 
-zen::DrawCMcourseSelect* selectWindow;
-zen::DrawWorldMap* mapWindow;
+static zen::DrawCMcourseSelect* selectWindow;
+static zen::DrawWorldMap* mapWindow;
 
 /**
  * @TODO: Documentation

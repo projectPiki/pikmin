@@ -1,22 +1,31 @@
+#include "Camera.h"
+#include "CinematicPlayer.h"
 #include "Controller.h"
+#include "DayMgr.h"
 #include "DebugLog.h"
 #include "Delegate.h"
+#include "Font.h"
 #include "Graphics.h"
 #include "Interface.h"
+#include "Light.h"
 #include "Menu.h"
 #include "TitlesSection.h"
 #include "gameflow.h"
 #include "jaudio/piki_scene.h"
 #include "jaudio/verysimple.h"
+#include "sysNew.h"
+#include "zen/DrawHiScore.h"
+#include "zen/ogStart.h"
+#include "zen/ogTitle.h"
 
 struct TitleSetupSection;
 
-zen::ogScrTitleMgr* titleWindow;
-bool titleWindowOn;
-zen::DrawHiScore* totalWindow;
-bool totalWindowOn;
-zen::ogScrStartMgr* startWindow;
-bool startWindowOn;
+static zen::ogScrTitleMgr* titleWindow;
+static bool titleWindowOn;
+static zen::DrawHiScore* totalWindow;
+static bool totalWindowOn;
+static zen::ogScrStartMgr* startWindow;
+static bool startWindowOn;
 
 /**
  * @TODO: Documentation
