@@ -98,11 +98,10 @@ int StdSystem::setHeap(int newHeapIdx)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000068
- * Writes current app heap free space into the supplied buffer.
+ * @brief Writes current app heap free space into the supplied buffer.
  * @param buffer Output string buffer.
+ *
+ * @note UNUSED Size: 000068
  */
 void StdSystem::getAppMemory(char* buffer)
 {
@@ -127,12 +126,11 @@ GfxobjInfo* StdSystem::findGfxObject(immut char* str, u32 id)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	00009C
  * Searches for any graphics object whose id matches and prefix matches.
  * @param str Name prefix to match.
  * @param id Object type identifier.
+ *
+ * @note UNUSED Size: 00009C
  */
 GfxobjInfo* StdSystem::findAnyGfxObject(immut char* str, u32 id)
 {
@@ -170,10 +168,8 @@ Texture* StdSystem::loadTexture(immut char* path, bool unk)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000034
- * Unused stub for finding a texture object.
+ * @brief Unused stub for finding a texture object.
+ * @note UNUSED Size: 000034
  */
 GfxobjInfo* StdSystem::findTexture(Texture*)
 {
@@ -240,11 +236,10 @@ AnimData* StdSystem::findAnimation(immut char* path)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	0000AC
- * Attempts to find any animation with a matching prefix.
+ * @brief Attempts to find any animation with a matching prefix.
  * @param path Prefix of the animation path.
+ *
+ * @note UNUSED Size: 0000AC
  */
 AnimData* StdSystem::findAnyAnimation(immut char* path)
 {
@@ -257,10 +252,9 @@ AnimData* StdSystem::findAnyAnimation(immut char* path)
 }
 
 /**
- * --INFO--
- * Address:	........
- * Size:	000098
- * Placeholder for index-based animation lookup.
+ * @brief Placeholder for index-based animation lookup.
+ *
+ * @note UNUSED Size: 000098
  */
 AnimData* StdSystem::findIndexAnimation(immut char*, int)
 {

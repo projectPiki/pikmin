@@ -421,14 +421,13 @@ void SearchBuffer::insert(Creature* creature, f32 distance)
 	}
 }
 
-/*
- * --INFO--
- * Address:	........
- * Size:	000114
- * Note:	Size isnt exact, but close enough for a stripped function
+/**
+ * @TODO: Documentation
+ * @note UNUSED Size: 000114
  */
 void SearchBuffer::update()
 {
+	// Size isnt exact, but close enough for a stripped function
 	for (int i = 0; i < mCurrentEntries; i++) {
 		int frameSinceLastSeen = mDataList[i].mSearchIteration;
 
