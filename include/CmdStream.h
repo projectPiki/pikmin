@@ -3,105 +3,31 @@
 
 #include "Stream.h"
 
-/**
- * @struct CmdStream
- * @brief Represents a command stream.
- *
- * @note Size: 0x11C.
- */
+// Lightweight command stream parser built on top of a Stream.
 struct CmdStream {
-	/**
-	 * @brief Default constructor.
-	 */
 	CmdStream();
-
-	/**
-	 * @brief Constructor that takes a Stream object.
-	 * @param stream The Stream object to initialize the CmdStream with.
-	 */
 	CmdStream(Stream* stream);
-
-	/**
-	 * @brief Skips the current line in the command stream.
-	 * @return A pointer to the next line in the command stream.
-	 */
 	immut char* skipLine();
-
-	/**
-	 * @brief Retrieves the next token from the command stream.
-	 * @param skipWhitespace Flag indicating whether to skip whitespace characters.
-	 * @return A pointer to the next token in the command stream.
-	 */
-	immut char* getToken(bool skipWhitespace);
-
-	/**
-	 * @brief Retrieves the next character from the command stream.
-	 * @return The next character in the command stream.
-	 */
+	immut char* getToken(bool skipComments);
 	char nextChar();
-
-	/**
-	 * @brief Fills the buffer with data from the command stream.
-	 * @param copyToToken Flag indicating whether to copy data to the current token.
-	 */
-	void fillBuffer(bool copyToToken);
-
-	/**
-	 * @brief Copies data from the buffer to the current token.
-	 * @param size The number of bytes to copy.
-	 */
-	void copyToToken(int size);
-
-	/**
-	 * @brief Checks if a character is a whitespace character.
-	 * @param c The character to check.
-	 * @return True if the character is a whitespace character, false otherwise.
-	 */
-	bool whiteSpace(char c);
-
-	/**
-	 * @brief Checks if the command stream has reached the end of commands.
-	 * @return True if the end of commands has been reached, false otherwise.
-	 */
+	void fillBuffer(bool force);
+	void copyToToken(int length);
+	bool whiteSpace(char toCheck);
 	bool endOfCmds();
-
-	/**
-	 * @brief Checks if a token matches a given string.
-	 * @param token The token to check.
-	 * @return True if the token matches the given string, false otherwise.
-	 */
-	bool isToken(immut char* token);
-
-	/**
-	 * @brief Checks if the current line in the command stream is a comment.
-	 * @return True if the current line is a comment, false otherwise.
-	 */
+	bool isToken(immut char* str);
 	bool LineIsComment();
-
-	/**
-	 * @brief Checks if the command stream has reached the end of a section.
-	 * @return True if the end of a section has been reached, false otherwise.
-	 */
 	bool endOfSection();
-
-	/**
-	 * @brief Initializes the CmdStream with a Stream object.
-	 * @param stream The Stream object to initialize the CmdStream with.
-	 */
 	inline void init(Stream* stream);
 
-	/**
-	 * @brief The static buffer used by the CmdStream.
-	 */
 	static char* statbuff;
 
-	Stream* mStream;           // _00
-	char* mBuffer;             // _04
-	char mCurrentToken[0x100]; // _08
-	int mTotalStreamSize;      // _108
-	int mBufferUsed;           // _10C
-	int mBufferOffset;         // _110
-	int mCurrentPosition;      // _114
+	Stream* mStream;           // _00, backing stream
+	char* mBuffer;             // _04, pointer into statbuff (sliding window)
+	char mCurrentToken[0x100]; // _08, token/line scratch buffer
+	int mTotalStreamSize;      // _108, total readable bytes in stream
+	int mBufferUsed;           // _10C, bytes currently loaded in buffer
+	int mBufferOffset;         // _110, absolute stream offset corresponding to buffer[0]
+	int mCurrentPosition;      // _114, absolute stream offset of the read cursor
 	u8 _118[0x4];              // _118, unknown
 };
 

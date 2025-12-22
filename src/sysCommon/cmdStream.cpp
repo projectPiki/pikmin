@@ -7,14 +7,14 @@
 
 char* CmdStream::statbuff;
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
 DEFINE_ERROR(__LINE__) // Never used in the DLL
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	0000F4
@@ -22,13 +22,10 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("cmdStream")
 
 /**
- * @brief Initializes the CmdStream with the given Stream object.
- *
- * @param stream The Stream object to be used by the CmdStream.
- *
  * --INFO--
  * Address:	........
  * Size:	0000AC
+ * @param stream Backing stream to read from.
  */
 void CmdStream::init(Stream* stream)
 {
@@ -38,6 +35,7 @@ void CmdStream::init(Stream* stream)
 		CmdStream::statbuff = new char[0x8000];
 	}
 
+	// One shared static buffer is used for all CmdStream instances.
 	memset(CmdStream::statbuff, 0, 0x8000);
 
 	mStream          = stream;
@@ -49,7 +47,7 @@ void CmdStream::init(Stream* stream)
 	fillBuffer(true);
 }
 
-/*
+/**
  * --INFO--
  * Address:	........
  * Size:	000004
@@ -58,10 +56,11 @@ CmdStream::CmdStream()
 {
 }
 
-/*
+/**
  * --INFO--
  * Address:	80040B7C
  * Size:	0000B0
+ * @param stream Backing stream to read from.
  */
 CmdStream::CmdStream(Stream* stream)
 {
@@ -69,23 +68,18 @@ CmdStream::CmdStream(Stream* stream)
 }
 
 /**
- * @brief Fills the buffer of the command stream.
- *
- * This function is responsible for filling the buffer of the command stream.
- * If the 'force' parameter is set to true, the buffer will be filled regardless of its current state.
- *
- * @param force Indicates whether to force the buffer to be filled.
- *
  * --INFO--
  * Address:	80040C2C
  * Size:	0000EC
+ * @brief Refills the internal buffer if needed.
+ * @param force When true, always refill; otherwise refill when the read cursor crosses the half-buffer boundary.
  */
 void CmdStream::fillBuffer(bool force)
 {
 	if (force || mCurrentPosition - mBufferOffset >= 0x4000) {
 		if (mBufferUsed) {
+			// Keep the newest 0x4000 bytes and make room for more.
 			memcpy(&mBuffer[mBufferOffset], &mBuffer[mBufferOffset + 0x4000], 0x4000);
-
 			mBuffer -= 0x4000;
 			mBufferOffset += 0x4000;
 		}
@@ -101,14 +95,12 @@ void CmdStream::fillBuffer(bool force)
 }
 
 /**
- * Checks if the given character is a white space.
- *
- * @param toCheck The character to be checked.
- * @return True if the character is a white space, false otherwise.
- *
  * --INFO--
  * Address:	80040D18
  * Size:	000040
+ * @brief Checks whether a character is treated as a token separator.
+ * @param toCheck Character to test.
+ * @return True if the character is treated as whitespace/separator.
  */
 bool CmdStream::whiteSpace(char toCheck)
 {
@@ -120,15 +112,11 @@ bool CmdStream::whiteSpace(char toCheck)
 }
 
 /**
- * @brief Checks if the end of the commands in the stream has been reached.
- *
- * This function fills the buffer and then skips any whitespace characters in the stream.
- *
- * @return true if the end of the commands has been reached, false otherwise.
- *
  * --INFO--
  * Address:	80040D58
  * Size:	000174
+ * @brief Advances past whitespace and checks for end-of-commands sentinel.
+ * @return True if at end of stream or a terminator byte is encountered.
  */
 bool CmdStream::endOfCmds()
 {
@@ -150,14 +138,11 @@ bool CmdStream::endOfCmds()
 }
 
 /**
- * Checks if the current line in the command stream is a comment.
- * A line is considered a comment if it starts with '#' or '//' characters.
- *
- * @return true if the line is a comment, false otherwise.
- *
  * --INFO--
  * Address:	........
  * Size:	00003C
+ * @brief Checks whether the current line starts with a comment marker ('#' or '//').
+ * @return True if the current line is a comment.
  */
 bool CmdStream::LineIsComment()
 {
@@ -169,14 +154,11 @@ bool CmdStream::LineIsComment()
 }
 
 /**
- * Copies a specified number of characters from the buffer to the current token.
- * Replaces any tab characters with spaces.
- *
- * @param length The number of characters to copy.
- *
  * --INFO--
  * Address:	80040ECC
  * Size:	000050
+ * @brief Copies a span from the buffer into the token buffer, normalizing tabs.
+ * @param length Number of characters to copy.
  */
 void CmdStream::copyToToken(int length)
 {
@@ -194,13 +176,11 @@ void CmdStream::copyToToken(int length)
 }
 
 /**
- * Skips the current line in the command stream and returns a pointer to the next line.
- *
- * @return A pointer to the next line in the command stream.
- *
  * --INFO--
  * Address:	80040F1C
  * Size:	000194
+ * @brief Copies the remainder of the current line into the token buffer and advances to the next line.
+ * @return Pointer to the token buffer containing the skipped line.
  */
 immut char* CmdStream::skipLine()
 {
@@ -213,6 +193,7 @@ immut char* CmdStream::skipLine()
 
 	copyToToken(currentPos - mCurrentPosition);
 
+	// Skip line terminators (handles both '\n' and '\r').
 	while (mBuffer[currentPos] == '\n' || mBuffer[currentPos] == '\r') {
 		currentPos++;
 	}
@@ -223,14 +204,12 @@ immut char* CmdStream::skipLine()
 }
 
 /**
- * Retrieves the next token from the command stream.
- *
- * @param hasComments Flag indicating whether to skip comment lines.
- * @return Pointer to the next token in the command stream.
- *
  * --INFO--
  * Address:	800410B0
  * Size:	000324
+ * @brief Parses and returns the next token from the stream.
+ * @param skipComments When true, comment lines are skipped before tokenization.
+ * @return Pointer to the token buffer containing the next token.
  */
 immut char* CmdStream::getToken(bool skipComments)
 {
@@ -246,6 +225,7 @@ immut char* CmdStream::getToken(bool skipComments)
 	bool tokenInParenthesis = 0;
 
 	if (mBuffer[currChar] == '"' || mBuffer[currChar] == '\'') {
+		// Quoted token: consume until the matching quote.
 		tokenInParenthesis = true;
 		++currChar;
 		++mCurrentPosition;
@@ -262,6 +242,7 @@ immut char* CmdStream::getToken(bool skipComments)
 		currChar++;
 	}
 
+	// Consume separators after the token.
 	while (currChar < mTotalStreamSize && whiteSpace(mBuffer[currChar])) {
 		currChar++;
 	}
@@ -271,13 +252,11 @@ immut char* CmdStream::getToken(bool skipComments)
 }
 
 /**
- * Returns the current character in the command stream buffer.
- *
- * @return The current character in the buffer.
- *
  * --INFO--
  * Address:	........
  * Size:	000010
+ * @brief Returns the current character without advancing.
+ * @return Current character at the read cursor.
  */
 char CmdStream::nextChar()
 {
@@ -285,14 +264,12 @@ char CmdStream::nextChar()
 }
 
 /**
- * Checks if the given string matches the current token.
- *
- * @param str The string to compare with the current token.
- * @return True if the string matches the current token, false otherwise.
- *
  * --INFO--
  * Address:	800413D4
  * Size:	0000B4
+ * @brief Compares the current token buffer to a string.
+ * @param str String to compare against the current token.
+ * @return True if the token matches exactly.
  */
 bool CmdStream::isToken(immut char* str)
 {
@@ -310,13 +287,11 @@ bool CmdStream::isToken(immut char* str)
 }
 
 /**
- * Checks if the current position in the command stream buffer is at the end of a section.
- *
- * @return true if the current position is at the end of a section, false otherwise.
- *
  * --INFO--
  * Address:	80041488
  * Size:	0000FC
+ * @brief Checks whether the next non-buffer-refill character ends a section.
+ * @return True if the next character is '}'.
  */
 bool CmdStream::endOfSection()
 {
