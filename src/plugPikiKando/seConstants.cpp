@@ -17,9 +17,7 @@ DEFINE_ERROR(__LINE__) // Never used in the DLL
 DEFINE_PRINT("seConstant")
 
 /**
- * --INFO--
- * Address:	800A3B04
- * Size:	000134
+ * @TODO: Documentation
  */
 SeConstant::SeConstant()
 {

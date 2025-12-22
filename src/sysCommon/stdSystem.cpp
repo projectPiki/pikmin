@@ -35,9 +35,7 @@ void AnmobjInfo::detach()
 }
 
 /**
- * --INFO--
- * Address:	8003EE64
- * Size:	000144
+ * @TODO: Documentation
  */
 StdSystem::StdSystem()
     : mDvdRoot("CoreNode")

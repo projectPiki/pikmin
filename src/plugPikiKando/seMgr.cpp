@@ -25,9 +25,7 @@ DEFINE_PRINT("seMgr");
 SeMgr* seMgr;
 
 /**
- * --INFO--
- * Address:	800A3428
- * Size:	000180
+ * @TODO: Documentation
  */
 SeMgr::SeMgr()
 {
@@ -50,9 +48,7 @@ SeMgr::SeMgr()
 }
 
 /**
- * --INFO--
- * Address:	800A35A8
- * Size:	000028
+ * @TODO: Documentation
  */
 void SeMgr::playNaviSound(s32 stickX, s32 stickY)
 {
@@ -76,9 +72,7 @@ SeInfo* SeMgr::findInfo(int jacSeID)
 }
 
 /**
- * --INFO--
- * Address:	800A35D0
- * Size:	000034
+ * @TODO: Documentation
  */
 void SeMgr::addInfo(int jacSeID, immut char* seName)
 {
@@ -93,9 +87,7 @@ void SeMgr::addInfo(int jacSeID, immut char* seName)
 }
 
 /**
- * --INFO--
- * Address:	800A3604
- * Size:	000004
+ * @TODO: Documentation
  */
 void SeMgr::update()
 {
@@ -149,9 +141,7 @@ void SeMgr::stopSoundAll()
 }
 
 /**
- * --INFO--
- * Address:	800A3608
- * Size:	000010
+ * @TODO: Documentation
  */
 void SeMgr::joinBattle()
 {
@@ -159,9 +149,7 @@ void SeMgr::joinBattle()
 }
 
 /**
- * --INFO--
- * Address:	800A3618
- * Size:	000024
+ * @TODO: Documentation
  */
 void SeMgr::leaveBattle()
 {
@@ -189,9 +177,7 @@ void SeMgr::setPikiNum(int pikiNum)
 }
 
 /**
- * --INFO--
- * Address:	800A3674
- * Size:	0000E4
+ * @TODO: Documentation
  */
 void SeWin::doRender(Graphics& gfx)
 {
@@ -206,9 +192,7 @@ void SeWin::doRender(Graphics& gfx)
 }
 
 /**
- * --INFO--
- * Address:	800A3758
- * Size:	0002E4
+ * @TODO: Documentation
  */
 void SeWin::update()
 {
@@ -303,9 +287,7 @@ void SeWin::update()
 }
 
 /**
- * --INFO--
- * Address:	800A3A3C
- * Size:	00007C
+ * @TODO: Documentation
  */
 void SeWin::open()
 {
@@ -329,9 +311,7 @@ void SeWin::open()
 }
 
 /**
- * --INFO--
- * Address:	800A3AB8
- * Size:	00004C
+ * @TODO: Documentation
  */
 void SeWin::close()
 {
