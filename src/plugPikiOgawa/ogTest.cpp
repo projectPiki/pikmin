@@ -45,20 +45,20 @@ DEFINE_PRINT("OgTestSection")
 zen::OgTestScreen::OgTestScreen()
 {
 	setName("OgTestScreen");
-	mController      = new Controller();
-	_20              = 0;
-	mActiveMode      = TESTMODE_INACTIVE;
-	mTutorialMode    = 0;
-	mDiaryMode       = 0;
-	mMemChkMode      = 0;
-	mMapMode         = 0;
-	mSaveMode        = 0;
-	_38A             = 0;
+	mController         = new Controller();
+	_20                 = 0;
+	mActiveMode         = TESTMODE_INACTIVE;
+	mTutorialMode       = 0;
+	mDiaryMode          = 0;
+	mMemChkMode         = 0;
+	mMapMode            = 0;
+	mSaveMode           = 0;
+	_38A                = 0;
 	mChallengeModePause = false;
-	mFileChkSelMode  = false;
-	mSelectedMode    = TESTMODE_Title;
-	Texture* fontTex = gsys->loadTexture("bigFont.bti", true);
-	mFont            = new Font();
+	mFileChkSelMode     = false;
+	mSelectedMode       = TESTMODE_Title;
+	Texture* fontTex    = gsys->loadTexture("bigFont.bti", true);
+	mFont               = new Font();
 	mFont->setTexture(fontTex, 21, 42);
 	gsys->setFade(1.0f, 3.0f);
 

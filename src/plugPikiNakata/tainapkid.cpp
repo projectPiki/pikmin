@@ -766,7 +766,7 @@ TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters* params)
 	setState(TaiNapkidStateID::Carrying, state);
 
 	TaiContinuousMotionAction* throwMotionThenCarrying = new TaiContinuousMotionAction(TaiNapkidStateID::Carrying, TekiMotion::WaitAct1);
-	TaiNapkidThrowingPikiAction* throwPiki = new TaiNapkidThrowingPikiAction;
+	TaiNapkidThrowingPikiAction* throwPiki             = new TaiNapkidThrowingPikiAction;
 	TaiNotAction* noMouthStickersThenWander
 	    = new TaiNotAction(TaiNapkidStateID::Wandering, new TaiHasStickersInMouthAction(TAI_NO_TRANSIT));
 

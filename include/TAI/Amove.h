@@ -56,8 +56,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);          // _08
-	virtual bool act(Teki&);            // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual bool checkArrival(Teki&);   // _1C
@@ -115,8 +115,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);        // _08
-	virtual bool act(Teki&);          // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual bool checkArrival(Teki&); // _1C
@@ -179,8 +179,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);          // _08
-	virtual bool act(Teki&);            // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getVelocity(Teki& teki) // _1C
@@ -203,8 +203,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);          // _08
-	virtual bool act(Teki&);            // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getVelocity(Teki& teki) // _1C
@@ -254,8 +254,8 @@ public:
 		_14              = p4;
 	}
 
-	virtual void start(Teki&);              // _08
-	virtual bool act(Teki&);                // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getTurnVelocity(Teki& teki) // _1C
@@ -360,8 +360,8 @@ public:
 		mWaitCounterMax = waitCounterMax;
 	}
 
-	virtual void start(Teki&);                // _08
-	virtual bool act(Teki&);                  // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getWaitCounterMax(Teki& teki) // _1C
@@ -381,8 +381,8 @@ struct TAIApatrol : public TAIAturnToTarget {
 public:
 	TAIApatrol(int, int, int, int, immut Vector3f*, int, bool);
 
-	virtual void start(Teki&);                     // _08
-	virtual bool act(Teki&);                       // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getTimeout(Teki&) { return 5.0f; } // _20
@@ -407,8 +407,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);          // _08
-	virtual bool act(Teki&);            // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getVelocity(Teki& teki) // _1C
@@ -489,8 +489,8 @@ struct TAIAflyingBase : public TaiAction {
 	{
 	}
 
-	virtual void start(Teki&);                    // _08
-	virtual bool act(Teki&);                      // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getFlyingStayVelocity(Teki& teki) // _1C
@@ -538,8 +538,8 @@ struct TAIAflyingToGoal : public TAIAreserveMotion {
 	{
 	}
 
-	virtual void start(Teki&);                                                           // _08
-	virtual bool act(Teki&);                                                             // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual bool goal(Teki&) { return true; }                                            // _1C
@@ -582,8 +582,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);               // _08
-	virtual bool act(Teki&);                 // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getGoalAreaRange(Teki& teki) // _28
@@ -612,7 +612,7 @@ public:
 	virtual bool act(Teki&);   // _10
 
 protected:
-	virtual bool goal(Teki&);  // _1C
+	virtual bool goal(Teki&); // _1C
 
 	// _04     = VTBL 1
 	// _08     = VTBL 2
@@ -631,8 +631,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);                // _08
-	virtual bool act(Teki&);                  // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getFlyingVelocity(Teki& teki) // _1C
@@ -659,8 +659,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);            // _08
-	virtual bool act(Teki&);              // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual void landingEffect(Teki&) { } // _1C
@@ -680,8 +680,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);       // _08
-	virtual bool act(Teki&);         // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual void startFlying(Teki&); // _1C

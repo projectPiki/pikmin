@@ -624,7 +624,7 @@ void ActBoreOneshot::finish()
  */
 void ActBoreOneshot::init(Creature* creature)
 {
-	mIsAnimFinished   = false;
+	mIsAnimFinished         = false;
 	immut Choice choices[4] = {
 		{ PIKIANIM_Akubi, 0.35f },
 		{ PIKIANIM_Rinbow, 0.35f },

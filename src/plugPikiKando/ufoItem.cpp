@@ -773,8 +773,8 @@ bool UfoItem::ignoreAtari(Creature*)
  */
 void UfoItem::startTakeoff()
 {
-	int idx          = playerState->mShipUpgradeLevel - 1;
-	int motions[5]   = { UfoMotion::Takeoff1, UfoMotion::Takeoff1, UfoMotion::Takeoff2, UfoMotion::Takeoff3, UfoMotion::Takeoff3 };
+	int idx        = playerState->mShipUpgradeLevel - 1;
+	int motions[5] = { UfoMotion::Takeoff1, UfoMotion::Takeoff1, UfoMotion::Takeoff2, UfoMotion::Takeoff3, UfoMotion::Takeoff3 };
 	if (idx < 0) {
 		idx = 0;
 	}

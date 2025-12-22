@@ -370,7 +370,7 @@ void ResultFlags::dump()
 			p    = 0;
 			prev = flagTable[i].type();
 		}
-		prev          = flagTable[i].type();
+		prev                = flagTable[i].type();
 		const char* strs[3] = { "OFF", "ON", "SEEN" };
 
 		// The final game version of this print probably cut out the strs[3], since its not set in final

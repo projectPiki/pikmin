@@ -91,11 +91,11 @@ struct LFlareGroup : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u32 _14;                    // _14
-	Texture* mTexture;          // _18
-	Material* mMaterial;        // _1C
-	LFInfo* mLFInfo;            // _20
-	u32 mBlendMode;             // _24
+	u32 _14;             // _14
+	Texture* mTexture;   // _18
+	Material* mMaterial; // _1C
+	LFInfo* mLFInfo;     // _20
+	u32 mBlendMode;      // _24
 };
 
 /**

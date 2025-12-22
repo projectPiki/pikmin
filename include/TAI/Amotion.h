@@ -50,8 +50,8 @@ public:
 		mFrameMax = frameMax;
 	}
 
-	virtual void start(Teki&);     // _08
-	virtual bool act(Teki&);       // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getFrameMax(Teki&) // _1C (weak)

@@ -538,8 +538,8 @@ public:
 private:
 	// _00     = VTBL
 	// _00-_04 = zen::CallBack1
-	bool* mIsActiveRef;       // _04
-	King* mKing;              // _08
+	bool* mIsActiveRef;             // _04
+	King* mKing;                    // _08
 	immut Vector3f* mRippleEmitPos; // _0C
 };
 
@@ -586,7 +586,7 @@ private:
 	// _00-_04 = zen::CallBack1
 	immut Vector3f* mStartPos; // _04
 	immut Vector3f* mEndPos;   // _08
-	King* mKing;         // _0C
+	King* mKing;               // _0C
 };
 
 /**

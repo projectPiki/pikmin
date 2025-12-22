@@ -54,7 +54,7 @@ public:
 	{
 	}
 
-	virtual bool act(Teki&);                        // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual f32 getLifePercentThreshold(Teki&) = 0; // _1C
@@ -74,7 +74,7 @@ public:
 	{
 	}
 
-	virtual bool act(Teki&);                        // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual f32 getLifePercentThreshold(Teki&) = 0; // _1C
@@ -94,7 +94,7 @@ public:
 	{
 	}
 
-	virtual bool act(Teki&);                   // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual bool setTargetPosition(Teki&) = 0; // _1C
@@ -160,7 +160,7 @@ public:
 		mRange   = range;
 	}
 
-	virtual bool act(Teki&);                           // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual int getPikiMax(Teki&) { return mPikiMax; } // _1C
@@ -254,7 +254,7 @@ public:
 	{
 	}
 
-	virtual bool act(Teki&);   // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual bool judge(Teki&); // _1C
@@ -296,8 +296,8 @@ public:
 		mStickingPikiNum = stickNum;
 	}
 
-	virtual void start(Teki&) { }                              // _08
-	virtual bool act(Teki&);                                   // _10
+	virtual void start(Teki&) { } // _08
+	virtual bool act(Teki&);      // _10
 
 protected:
 	virtual int getPikiNum(Teki&) { return mStickingPikiNum; } // _1C

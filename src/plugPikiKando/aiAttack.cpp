@@ -61,15 +61,15 @@ void ActAttack::init(Creature* creature)
 
 	if (!creature) {
 		PRINT("commander is 0 karl gotti!!!!!!!!!!1\n"); // lol
-		mPlayerObject = nullptr;
+		mPlayerObject   = nullptr;
 		_20             = nullptr;
 		mTargetIsPlayer = false;
 	} else if (creature->mObjType == OBJTYPE_Navi) {
-		mPlayerObject = creature;
+		mPlayerObject   = creature;
 		mTargetIsPlayer = true;
-		creature      = findTarget();
+		creature        = findTarget();
 	} else {
-		mPlayerObject = nullptr;
+		mPlayerObject   = nullptr;
 		_20             = nullptr;
 		mTargetIsPlayer = false;
 	}

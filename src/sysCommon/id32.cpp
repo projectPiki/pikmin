@@ -179,10 +179,10 @@ void ID32::write(RandomAccessStream& stream) immut
 void ID32::read(RandomAccessStream& stream)
 {
 	char* id = reinterpret_cast<char*>(&mId);
-	id[3]  = stream.readByte();
-	id[2]  = stream.readByte();
-	id[1]  = stream.readByte();
-	id[0]  = stream.readByte();
+	id[3]    = stream.readByte();
+	id[2]    = stream.readByte();
+	id[1]    = stream.readByte();
+	id[0]    = stream.readByte();
 
 	updateString();
 }

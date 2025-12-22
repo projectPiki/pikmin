@@ -250,8 +250,8 @@ struct GenBase : public Parameters {
 
 	// _04 = VTBL
 	// _00-_04 = Parameters
-	u32 mID;      // _08
-	u32 mVersion; // _0C
+	u32 mID;           // _08
+	u32 mVersion;      // _0C
 	immut char* mType; // _10
 	immut char* mName; // _14
 };
@@ -836,9 +836,9 @@ struct Generator : public Node {
 	Generator();
 	Generator(int);
 
-	virtual void read(RandomAccessStream&);        // _0C
-	virtual void update();                         // _10
-	virtual void render(Graphics&);                // _18
+	virtual void read(RandomAccessStream&); // _0C
+	virtual void update();                  // _10
+	virtual void render(Graphics&);         // _18
 
 	bool isExpired();
 	void loadCreature(RandomAccessStream&);

@@ -74,7 +74,7 @@ void NLine::construct(immut NLine& other)
 f32 NLine::calcDistance(immut NVector3f& point, f32* vertProj) immut
 {
 	NVector3f NRef pos = NVector3f();
-	f32 proj       = calcVerticalProjection(point);
+	f32 proj           = calcVerticalProjection(point);
 	outputPosition(proj, pos);
 
 	if (vertProj) {
@@ -110,7 +110,7 @@ f32 NLine::calcDistance(immut NLine& other, f32* closestPointThisLine, f32* clos
 	}
 
 	NVector3f NRef otherOrigin = NVector3f(other.getPosition());
-	f32 otherOrigProjection = -otherOrigin.dot(other.getDirection());
+	f32 otherOrigProjection    = -otherOrigin.dot(other.getDirection());
 	f32 paramOnOtherLine
 	    = (otherOrigin.dot(mDirection) * directionsAlignment + otherOrigProjection) / (1.0f - directionsAlignment * directionsAlignment);
 	f32 paramOnThisLine = otherOrigin.dot(mDirection) + paramOnOtherLine * directionsAlignment;
@@ -387,7 +387,7 @@ void NPlane::outputPosition(NVector3f& outPos)
  */
 void NPlane::outputVerticalPosition(NVector3f& point, NVector3f& outPos)
 {
-	f32 t          = judge(point);
+	f32 t              = judge(point);
 	NVector3f NRef tmp = NVector3f();
 	tmp.scale2(-t, mNormal);
 	outPos.add2(point, tmp);

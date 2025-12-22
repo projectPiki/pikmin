@@ -83,7 +83,8 @@ void zen::particleGenerator::init(u8* data, Texture* tex1, Texture* tex2, immut 
                                   zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>* cb2)
 {
 	if (data) {
-		if (false) { // this is unreachable in the DLL, had to do some digging to drag it out
+		// this is unreachable in the DLL, had to do some digging to drag it out
+		if (false) {
 			PRINT("VERSION FLAG [%s]\n", "1-01"); // The actual code is more nuanced (array of strings, but it always loads the first one?)
 			ERROR(" [%c%c%c%c] is wrong pcr version.\n", data[0], data[1], data[2], data[3]);
 		}

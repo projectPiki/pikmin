@@ -231,9 +231,9 @@ struct LifePinchCallBack : public P2DPaneCallBack {
 
 	// _00     = VTBL
 	// _00-_04 = P2DPaneCallBack
-	f32 _04; // _04
-	f32 _08; // _08
-	int _0C; // _0C
+	f32 _04;  // _04
+	f32 _08;  // _08
+	int _0C;  // _0C
 	bool _10; // _10
 };
 

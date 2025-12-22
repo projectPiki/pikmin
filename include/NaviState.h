@@ -646,8 +646,8 @@ struct NaviPikiZeroState : public NaviState {
 	// _00-_10 = NaviState
 	bool _10; // _10
 	bool _11; // _11
-	u16 _12; // _12
-	u32 _14; // _14
+	u16 _12;  // _12
+	u32 _14;  // _14
 };
 
 /**

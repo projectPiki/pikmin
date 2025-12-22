@@ -15,7 +15,7 @@ struct Vector3f;
  * @note Size: 0x8.
  */
 struct MovieListInfo {
-	int mMovieID;       // _00
+	int mMovieID;             // _00
 	immut char* mCinFileName; // _04
 };
 

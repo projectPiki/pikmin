@@ -55,8 +55,8 @@ struct DoorItem : public ItemCreature {
 
 	// _00      = VTBL
 	// _00-_3C8 = ItemCreature
-	f32 mFadeTimer;              // _3C8
-	DoorState::Type mStateId;    // _3CC
+	f32 mFadeTimer;                    // _3C8
+	DoorState::Type mStateId;          // _3CC
 	immut char* mDestinationStagePath; // _3D0
 	immut char* mLabelText;            // _3D4
 };

@@ -76,7 +76,7 @@ struct ObjType {
 	static immut char* getName(int);
 	static int getIndex(immut char*);
 
-	EObjType mIndex; // _00
+	EObjType mIndex;   // _00
 	immut char* mName; // _04
 };
 

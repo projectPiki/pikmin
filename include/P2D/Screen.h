@@ -25,9 +25,9 @@ public:
 		mTexAnimMgr = nullptr;
 	}
 
-	virtual void loadResource();                                       // _08
-	virtual ~P2DScreen();                                              // _10
-	virtual P2DPane* search(u32, bool);                                // _34
+	virtual void loadResource();        // _08
+	virtual ~P2DScreen();               // _10
+	virtual P2DPane* search(u32, bool); // _34
 
 	void update();
 	void draw(int, int, const P2DGrafContext*);

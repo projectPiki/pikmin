@@ -125,7 +125,7 @@ public:
 		_08 = p2;
 	}
 
-	virtual bool act(Teki&);                         // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual bool judgeDamage(Teki&) { return true; } // _1C
@@ -145,7 +145,7 @@ public:
 	{
 	}
 
-	virtual bool act(Teki&);             // _10
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 protected:
@@ -166,7 +166,7 @@ public:
 		_0C     = p3;
 	}
 
-	virtual bool act(Teki&);             // _10
+	virtual bool act(Teki&);                   // _10
 	virtual bool actByEvent(immut TekiEvent&); // _14
 
 protected:

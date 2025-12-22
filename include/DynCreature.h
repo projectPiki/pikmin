@@ -49,8 +49,8 @@ protected:
 public:
 	// _00      = VTBL
 	// _00-_2B8 = Creature
-	Vector3f mAngularMomentum; // _2B8
-	Vector3f mAngularVelocity; // _2C4
+	Vector3f mAngularMomentum;       // _2B8
+	Vector3f mAngularVelocity;       // _2C4
 	f32 mPickOffset;                 // _2D0
 	u16 mParticleCount;              // _2D4, might be s16
 	DynParticle* mParticleList;      // _2D8

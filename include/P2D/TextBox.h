@@ -18,9 +18,9 @@ struct P2DTextBox : public P2DPane {
 public:
 	P2DTextBox(P2DPane*, RandomAccessStream*, u16);
 
-	virtual void loadResource();                // _08
-	virtual void makeResident();                // _0C
-	virtual ~P2DTextBox() { }                   // _10 (weak)
+	virtual void loadResource(); // _08
+	virtual void makeResident(); // _0C
+	virtual ~P2DTextBox() { }    // _10 (weak)
 
 	char* getString() { return mText; }
 	void setString(char* text) { mText = text; }

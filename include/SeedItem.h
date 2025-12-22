@@ -29,13 +29,13 @@ struct SeedItem : public Creature {
 public:
 	SeedItem(CreatureProp*, Shape**);
 
-	virtual void init(immut Vector3f&);      // _28
-	virtual f32 getSize();                   // _3C
-	virtual bool isVisible();                // _74
-	virtual bool isAtari();                  // _84
-	virtual void update();                   // _E0
-	virtual void refresh(Graphics&);         // _EC
-	virtual void doAI();                     // _104
+	virtual void init(immut Vector3f&);            // _28
+	virtual f32 getSize();                         // _3C
+	virtual bool isVisible();                      // _74
+	virtual bool isAtari();                        // _84
+	virtual void update();                         // _E0
+	virtual void refresh(Graphics&);               // _EC
+	virtual void doAI();                           // _104
 	virtual bool stimulate(immut Interaction& act) // _A0
 	{
 		act.actCommon(this);

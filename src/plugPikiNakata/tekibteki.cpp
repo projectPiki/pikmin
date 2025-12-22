@@ -884,7 +884,7 @@ void BTeki::releasePlatCollisions()
 void BTeki::createDeadEffect()
 {
 	immut Vector3f& effectPos = getBoundingSphereCentre();
-	int carcassSize     = getParameterI(TPI_CarcassSize);
+	int carcassSize           = getParameterI(TPI_CarcassSize);
 	if (carcassSize == 2) {
 		effectMgr->create(EffectMgr::EFF_Teki_DeathWaveS, effectPos, nullptr, nullptr);
 		effectMgr->create(EffectMgr::EFF_Teki_DeathGlowS, effectPos, nullptr, nullptr);
@@ -911,7 +911,7 @@ void BTeki::createDeadEffect()
 void BTeki::createSoulEffect()
 {
 	immut Vector3f& effectPos = getBoundingSphereCentre();
-	int carcassSize     = getParameterI(TPI_CarcassSize);
+	int carcassSize           = getParameterI(TPI_CarcassSize);
 	if (carcassSize == 2) {
 		effectMgr->create(EffectMgr::EFF_Teki_SoulS, effectPos, nullptr, nullptr);
 	} else if (carcassSize == 1) {

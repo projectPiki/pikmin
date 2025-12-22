@@ -18,8 +18,8 @@ public:
 		_10 = p3;
 	}
 
-	virtual void start(Teki&);                                // _08
-	virtual bool act(Teki&);                                  // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getDamage(Teki&) { return 1.0f; }             // _1C
@@ -47,8 +47,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);                           // _08
-	virtual bool act(Teki&);                             // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getFrameMax(Teki&) { return mFrameMax; } // _1C
@@ -106,8 +106,8 @@ public:
 		mCallBack = cb;
 	}
 
-	virtual void start(Teki&);                                // _08
-	virtual bool act(Teki&);                                  // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getPreviousAnimSpeed(Teki&) { return 30.0f; } // _1C
@@ -129,7 +129,7 @@ public:
 		mDamageCountLimit = damageCountLimit;
 	}
 
-	virtual bool act(Teki&);                                             // _10
+	virtual bool act(Teki&); // _10
 
 protected:
 	virtual int getDamageCountLimit(Teki&) { return mDamageCountLimit; } // _1C
@@ -149,8 +149,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);                                             // _08
-	virtual bool act(Teki&);                                               // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual void flick(Teki&);                                             // _1C
@@ -171,8 +171,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);                                             // _08
-	virtual bool act(Teki&);                                               // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual void flick(Teki&);                                             // _1C
@@ -195,8 +195,8 @@ public:
 		_10 = p2;
 	}
 
-	virtual void start(Teki&);                             // _08
-	virtual bool act(Teki&);                               // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual f32 getPikiAttackSize(Teki&) { return 15.0f; } // _1C
@@ -221,8 +221,8 @@ public:
 	{
 	}
 
-	virtual void start(Teki&);     // _08
-	virtual bool act(Teki&);       // _10
+	virtual void start(Teki&); // _08
+	virtual bool act(Teki&);   // _10
 
 protected:
 	virtual void eatEffect(Teki&); // _1C

@@ -97,9 +97,9 @@ public:
 protected:
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	int mState;            // _10
+	int mState;              // _10
 	bool mHasAbsorbedNectar; // _14
-	Creature* mNectar;     // _18
+	Creature* mNectar;       // _18
 };
 
 /**
@@ -704,7 +704,7 @@ public:
 protected:
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	f32 mStunTimer;   // _10
+	f32 mStunTimer;     // _10
 	bool mIsInvincible; // _14
 };
 
