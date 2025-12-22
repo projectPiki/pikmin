@@ -57,9 +57,6 @@ CmdStream::CmdStream()
 }
 
 /**
- * --INFO--
- * Address:	80040B7C
- * Size:	0000B0
  * @param stream Backing stream to read from.
  */
 CmdStream::CmdStream(Stream* stream)
@@ -68,9 +65,6 @@ CmdStream::CmdStream(Stream* stream)
 }
 
 /**
- * --INFO--
- * Address:	80040C2C
- * Size:	0000EC
  * @brief Refills the internal buffer if needed.
  * @param force When true, always refill; otherwise refill when the read cursor crosses the half-buffer boundary.
  */
@@ -95,9 +89,6 @@ void CmdStream::fillBuffer(bool force)
 }
 
 /**
- * --INFO--
- * Address:	80040D18
- * Size:	000040
  * @brief Checks whether a character is treated as a token separator.
  * @param toCheck Character to test.
  * @return True if the character is treated as whitespace/separator.
@@ -112,9 +103,6 @@ bool CmdStream::whiteSpace(char toCheck)
 }
 
 /**
- * --INFO--
- * Address:	80040D58
- * Size:	000174
  * @brief Advances past whitespace and checks for end-of-commands sentinel.
  * @return True if at end of stream or a terminator byte is encountered.
  */
@@ -154,9 +142,6 @@ bool CmdStream::LineIsComment()
 }
 
 /**
- * --INFO--
- * Address:	80040ECC
- * Size:	000050
  * @brief Copies a span from the buffer into the token buffer, normalizing tabs.
  * @param length Number of characters to copy.
  */
@@ -176,9 +161,6 @@ void CmdStream::copyToToken(int length)
 }
 
 /**
- * --INFO--
- * Address:	80040F1C
- * Size:	000194
  * @brief Copies the remainder of the current line into the token buffer and advances to the next line.
  * @return Pointer to the token buffer containing the skipped line.
  */
@@ -204,9 +186,6 @@ immut char* CmdStream::skipLine()
 }
 
 /**
- * --INFO--
- * Address:	800410B0
- * Size:	000324
  * @brief Parses and returns the next token from the stream.
  * @param skipComments When true, comment lines are skipped before tokenization.
  * @return Pointer to the token buffer containing the next token.
@@ -264,9 +243,6 @@ char CmdStream::nextChar()
 }
 
 /**
- * --INFO--
- * Address:	800413D4
- * Size:	0000B4
  * @brief Compares the current token buffer to a string.
  * @param str String to compare against the current token.
  * @return True if the token matches exactly.
@@ -287,9 +263,6 @@ bool CmdStream::isToken(immut char* str)
 }
 
 /**
- * --INFO--
- * Address:	80041488
- * Size:	0000FC
  * @brief Checks whether the next non-buffer-refill character ends a section.
  * @return True if the next character is '}'.
  */

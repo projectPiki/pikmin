@@ -218,9 +218,6 @@ static BOOL __ConditionCheck(seqp_* track, u8 param_2)
 }
 
 /*
- * --INFO--
- * Address:	8000F820
- * Size:	000090
  * Note: Equivalent to `JASTrack::seqTimeToDspTime` in later JAudio
  */
 int Jam_SEQtimeToDSPtime(seqp_* track, s32 noteDuration, u8 velocityPercent)
@@ -645,9 +642,6 @@ void Jam_WriteRegXY(seqp_* track, u32 param_2)
 }
 
 /*
- * --INFO--
- * Address:	80010340
- * Size:	00003C
  * Note: Equivalent to `JASTrack::exchangeRegisterValue` in later JAudio.
  */
 u32 __ExchangeRegisterValue(seqp_* track, u8 reg)
@@ -1635,9 +1629,6 @@ void Jam_UnPauseTrack(seqp_* track, u8 param_2)
 }
 
 /*
- * --INFO--
- * Address:	80011720
- * Size:	000028
  * Note: Equivalent to `JASIntrMgr::request` in later JAudio.
  */
 void Jam_SetInterrupt(seqp_* track, u16 interrupt)
@@ -2651,9 +2642,6 @@ u32 RegCmd_Process(seqp_* track, BOOL isFromRegister, u32 param_3)
 static u8 osc_table[] = { 0x01, 0x02, 0x08, 0x04, 0x10 };
 
 /*
- * --INFO--
- * Address:	80012EC0
- * Size:	0008C0
  * Note: (Roughly) Equivalent to `JASTrack::mainProc` in later JAudio.
  */
 s32 Jam_SeqmainNote(seqp_* track, u8 isMuted)
