@@ -66,9 +66,6 @@ void Envelope::read(RandomAccessStream& stream)
 }
 
 /*
- * --INFO--
- * Address:	80029F98
- * Size:	000100
  * Regswaps
  */
 void DispList::read(RandomAccessStream& stream)
